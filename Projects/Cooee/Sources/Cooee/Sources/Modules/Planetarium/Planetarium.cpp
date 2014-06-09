@@ -45,7 +45,7 @@ void Planetarium::onKeyPressed(char inputed)
 		onDraw();
 		break;
 
-	case LG::MENU:
+	case LG::SPACE:
 		focusing->is_closed = ! focusing->is_closed;
 		root.updateLines(0);
 		onDraw();
