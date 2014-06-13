@@ -75,11 +75,11 @@ namespace LG
 
 	void Window::call(Window& dialog)
 	{
+		dialog._caller = this;
 		type_index ind = Core::windows.pushFront(dialog);
 		if(ind == NE_INDEX_ERROR) return;
 
 		Window& pushed = Core::windows[ind];
-		pushed._caller = this;
 	}
 
 }
