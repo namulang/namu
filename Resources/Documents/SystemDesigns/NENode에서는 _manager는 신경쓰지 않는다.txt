@@ -1,0 +1,9 @@
+serialize:
+	순수하게 노드정보만 들어갔다 나오게 되고, _manager는 ManagedNodeList에 _onEnroll 되는 순간 외
+	부로부터 주입된다.
+	
+_release:
+	_manager는 초기화 되지 않음.
+	
+_operator==:
+	_manager 완전 무시

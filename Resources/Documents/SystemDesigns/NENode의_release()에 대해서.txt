@@ -1,0 +1,3 @@
+//				_manager->_onUnenroll 해버리면, 존재는 하지만 등록은 되지 않은게 되버린다.
+	//				이건 ManagedNodeList 입장에서 보면 동기화되지 않은것이기 때문에
+	//				Node::_release에서는 순수 노드정보만 release 한다.

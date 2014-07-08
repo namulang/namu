@@ -1,0 +1,12 @@
+NEExportable::Identifier i;
+NEExportable::ModuleHeader h;
+
+h == i는 안된다.
+그러나 i == h는 가능하다.
+
+왜냐하면 operator==를 호출하는 객체가 누구냐가 중요하기 때문이다.
+h.operator==(h&)
+i.operator==(i&)
+로 되어있고,
+
+ModuleHeader : public Identfier 이기때문이다.

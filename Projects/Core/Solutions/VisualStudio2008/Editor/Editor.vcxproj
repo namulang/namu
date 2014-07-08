@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Developer.Debug|Win32">
+      <Configuration>Developer.Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Developer.Release|Win32">
+      <Configuration>Developer.Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4B2AB67C-0649-4BC7-B684-38866C4ADDB5}</ProjectGuid>
+    <RootNamespace>NEComponentEditor</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'">
+    <OutDir>$(SolutionDir)..\..\Binaries\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)..\..\Binaries\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'">
+    <OutDir>$(SolutionDir)..\..\Binaries\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;EDITOR_EXPORTS;DEVELOPER;CORES_BUILD_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(ProjectName).dev.dbg.dll</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).dev.dbg.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\Binaries $(SolutionDir)..\..\..\..\SDK\Libraries</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;EDITOR_EXPORTS;CORES_BUILD_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\Binaries $(SolutionDir)..\..\..\..\SDK\Libraries</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;EDITOR_EXPORTS;DEVELOPER;CORES_BUILD_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(ProjectName).dev.dll</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(TargetDir)$(TargetName).dev.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\Binaries $(SolutionDir)..\..\..\..\SDK\Libraries</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\EntryPoints\header.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Includes\includeKernal.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Commons\Typedefs\NENodeCollector\NENodeCollector.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Commons\Units\NENodeDepthUnit\NENodeDepthUnit.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NEPanelList\NEPanelList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\NEManagedScriptList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\innerclass\Banks\Banks.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NENodeDepthList\NENodeDepthList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEStack\NEComponentSet\NEComponentSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEStack\NEPanelSet\NEPanelSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NEScriptSelector\NEScriptSelector.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\Templates\Templates.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\Templates\Templates.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\Editor.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ErrorCode\ErrorCode.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\Factory\Factory.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ModifiableSettings\ModifiableSettings.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEEventHandler\NEEventHandler.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\NEPanelManager.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\ErrorCode\ErrorCode.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeader\DLLHeader.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeaderList\DLLHeaderList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor\NEScriptEditor.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor\innerclass\ErrorCode\ErrorCode.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\EditDebugMacro\EditDebugMacro.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEComponent.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NETextComponent\NETextComponent.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEListComponent.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NECheckListComponent\NECheckListComponent.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEModifiableListComponent\NEModifiableListComponent.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NESwitchComponent\NESwitchComponent.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEButtonComponent\NEButtonComponent.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\NEPanel.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog\NEDialog.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\innerclass\BaseConnector\BaseConnector.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\EntryPoints\main.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Commons\Units\NENodeDepthUnit\NENodeDepthUnit.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\NEManagedScriptList.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\innerclass\Banks\Banks.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NEScriptSelector\NEScriptSelector.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\Editor.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\Factory\Factory.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ModifiableSettings\ModifiableSettings.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEEventHandler\NEEventHandler.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\NEPanelManager.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeader\DLLHeader.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor\NEScriptEditor.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEComponent.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NETextComponent\NETextComponent.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEListComponent.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NECheckListComponent\NECheckListComponent.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEModifiableListComponent\NEModifiableListComponent.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NESwitchComponent\NESwitchComponent.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEButtonComponent\NEButtonComponent.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\NEPanel.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog\NEDialog.cpp" />
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\innerclass\BaseConnector\BaseConnector.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VersionNo.ini" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

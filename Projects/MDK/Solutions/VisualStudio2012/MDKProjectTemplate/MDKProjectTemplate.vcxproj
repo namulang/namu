@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Developer.Debug|Win32">
+      <Configuration>Developer.Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Developer.Release|Win32">
+      <Configuration>Developer.Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Sources\ProjectTemplate\1033\mdk_wizard.css" />
+    <None Include="..\..\..\Sources\ProjectTemplate\1033\NewStyles.css" />
+    <None Include="..\..\..\Sources\ProjectTemplate\HTML\1033\default.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Sources\ProjectTemplate\HTML\1033\Page_2.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Sources\ProjectTemplate\HTML\1033\Page_3.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Sources\ProjectTemplate\HTML\1033\Page_4.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Sources\ProjectTemplate\HTML\1033\Page_5.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="..\..\..\Sources\ProjectTemplate\Scripts\1033\default.js" />
+    <None Include="..\..\..\Sources\ProjectTemplate\Vsz\1033\VisualStudio2008\MDK Project Template.vsdir" />
+    <None Include="..\..\..\Sources\ProjectTemplate\Vsz\1033\VisualStudio2008\MDK Project Template.vsz" />
+    <None Include="..\..\..\Sources\ProjectTemplate\Vsz\1033\VisualStudio2012\MDK Project Template.vsdir" />
+    <None Include="..\..\..\Sources\ProjectTemplate\Vsz\1033\VisualStudio2012\MDK Project Template.vsz" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Sources\ProjectTemplate\1033\Images\DottedHori.gif" />
+    <Image Include="..\..\..\Sources\ProjectTemplate\1033\Images\DottedVert.gif" />
+    <Image Include="..\..\..\Sources\ProjectTemplate\1033\Images\spacer.gif" />
+    <Image Include="..\..\..\Sources\ProjectTemplate\Images\MDK Project Template.gif" />
+    <Image Include="..\..\..\Sources\ProjectTemplate\Images\MDK Project Template_Background.gif" />
+    <Image Include="..\..\..\Sources\ProjectTemplate\Vsz\1033\VisualStudio2008\MDK Project Template.ico" />
+    <Image Include="..\..\..\Sources\ProjectTemplate\Vsz\1033\VisualStudio2012\MDK Project Template.ico" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>MDKProjectWizard</ProjectName>
+    <ProjectGuid>{2B1274FB-672C-41BC-A24E-489647EBEAD8}</ProjectGuid>
+    <RootNamespace>MDK Project Template</RootNamespace>
+    <Keyword>CustomAppWizProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

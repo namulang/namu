@@ -1,0 +1,38 @@
+차후에 구현할 내용.
+
+
+void main()
+{
+	ModuleSelector selector;
+
+	selector.setNodeType(...);
+
+	class MyFilter : public NEModuleFilter
+	{
+	public:
+		virtual bool isValidModule(NEModule& module)
+		{
+			return (module.getId() < limit_of_id);
+		}
+		
+		int limit_of_id;
+	}
+
+	MyFilter my_filter;
+	
+	selector.setFilter(my_filter);
+	
+	int count = 0;
+	while(true)
+	{
+		NEModule& module = selector.getModule();
+		if( ! &module)
+			break;
+			
+		count++;
+		if(count > 2)
+			my_filter.limit_of_id = 10; // 필터링을 더 느슨하게 한다.		
+			
+		cout << module.getHeader().getName().toCharPointer();
+	}
+}

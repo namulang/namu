@@ -1,0 +1,65 @@
+- 개요	:
+	각 노드가 누구의 소유인지를 알 수 있는 링크드 리스트의 형태다.
+	
+- fact	:
+	1.	NEManagedNodeList, NEManagedNodeSet에서 Managed라는 것의 의미는 노드를 관리하는
+		주체라는 뜻이다.
+	2.	_onEnroll과 _onUnenroll은 관리 대상에 추가/삭제 하는 것을 의미한다.
+	3.	Managed되는 대상의 범위는 각 주체(이하 매니져)가 소유하고 있는 메모리 범위 내이다.
+		다시 말하면,
+		각 매니져는 Collector의 형태(size와 length를 가지고 있는 스택이나 링크드 리스트
+		의 형태인 메모리 관리 클래스)로 되어있으므로 여기에 존재하는 노드만 관리 대상이 
+		된다.
+	4.	외부에서 새로운 노드가 관리 대상이 될 수 없다.
+		이 경우는 외부의 노드가 "복사" 되서 내부에서 생성되어질 뿐이다.
+	5.	4번에 의해서, 일단 한번 관리 대상이 된 노드는 소멸될때까지 관리 대상이 된다.
+	6.	각 노드가 누구의 관리대상의 소유인지를 알 수 있기 위해서, 각 노드는 _manager라고 하는
+		매니져의 주소값을 가지고 있다.
+		일반적인 경우는 0이 된다.
+	7.	6의 언급한 매니져의 주소값은, 오직 매니져클래스와 NENode 클래스 자체에서만 다룰 수
+		있으며, 이를 위해서 friend가 선언되어 있다.
+	8.	NEManagedNodeList는 _onEnroll에 관한 관리(포인터 관리 Collector)기능도 겸하고 있다(포함 관계)
+	9.	NEManagedNodeSetKey라는 키가 있다.
+	10.	9번에 의해서, 노드는 NEManagedNodeList 안에 있을 수도 있지만, NEManagedNodeSet 
+		안에 잇을 수도 있다.
+	11.	NEManagedNodeSet은 노드 안에 존재하는 노드셋을 지칭하는 것이다.
+	12.	NENodeSetKey를 만들 수 없다. 노드A 안에 존재하는 노드셋 B는,  노드A 가 누구에게 _onEnroll
+		됬는가에 따라서, 노드셋B에 삽입되는 노드들이 등록될 매니져가 결정된다.
+		다시말하면,
+		노드셋B에 등록한 노드도 자동으로 누군가에게 등록할 필요가 있을지도 모른다.
+	13.	이를 해결하기 위해서 NEManagedNodeSet은 NENode와 마찬가지로 _manager를 갖고 있다.
+	
+		
+- 상세한 동작	:
+	1.	생성
+		1.	외부에 이미 만들어진 노드 B가 존재하고, 매니져 클래스 A 가 존재한다고 가정한다.
+		2.	A에 B를 삽입(insert)하면, A는 B를 복사해서 새로운 인스턴스C를 내부에 생성한다.
+		3.	C를 _onEnroll 한다.
+		4.	C의 모듈셋부터 해서 "깊이탐색"을 실시하여 새로운 노드셋키(= NEManagedNodeSetKey)
+			가 있는지 탐색한다.
+		5.	발견한다면, NEManagedNodeSet에 _manager를 A의 주소로 삽입한다.
+			일단 삽입만 하면, NEManagedNodeSet이 알아서 A에게 _onEnroll 요청을 하게 된다.
+			
+	2. 소멸
+		시나리오 1. NEManagedNodeList에서 노드셋키가 없는 노드A를 삭제:
+			1. 먼저 노드A를 _onUnenroll한다.
+			2. 노드A를 삭제한다.
+	
+		시나리오 2. NEManagedNodeList B에서 노드셋C가 존재하는 노드A를 삭제:
+			1. 노드 A를 _onUnenroll 한다.
+			2. 노드 A를 삭제한다.
+			3. 소멸 도중 내부에 존재하는 노드셋C의 소멸자가 호출됨
+			4. 노드셋C의 소멸자에서 가지고있는 노드를 전부 _onUnenroll 한다.
+			
+			
+			
+-----------------------------------------------------
+이런건 어때.
+	NEMangedNodeList에서 bool _is_destructing를 가지고 있다.
+	소멸자가 호출되면 _is_destructing = true;
+	그리고 NENode::소멸자에서 _manager.isDestructing() == true 이면 _onUnenroll을 호출하지 않는다.
+	이거라면
+		1. 다른 개발자가 세세한 내용(왜, 소멸자에서 미리 pop()을 해야 하는가) 등을 몰라도 됨
+		2. 퍼포먼스의 이점이 있음.
+	
+	

@@ -1,0 +1,38 @@
+NEKey파트에는 여러가지 키들이 존재한다.
+크게 2종류로 나눌수 있는데 셀렉터키와 일반 키(NEKeyTemplate)이다.
+여기서는 각 종류별로 작동이 가능한 연산자 오버로딩을 모두 소개한다.
+
+	1. 최대한 가능한 연산자 오버로딩.
+		만약 어떤 키가 모든 연산자 오버로딩을 지원한다면, 그 키는 다음의 연산자 오버로딩이
+		가능하다는 뜻이다.
+			operator=,
+			operator== / operator!=
+			operator+=
+			
+		단, 다음은 불가능하다.
+			operator+
+			operator-=
+			operator (타입)
+			operator[]
+			
+	2. 각 키의 클래스 별로 정리
+		2.1. 일반 키.
+			operator=, operator== / operatro!=, operator+= 지원한다.
+			생성자를 통해서 NEKey&가 가능하다.
+		2.2. 셀렉터 키.
+			operator=와 operator==만 가능하며, 겉으로는 NEKey를 받는다고하다.
+			실제로는 타입이 완전히 일치해야만 작동이 된다.
+			예를들면 다음은 동작하지 않는다.
+			NEKey& key = NEScriptSelector();
+			NENodeSelector selector = key; // 내부에서 RESULT_TYPE_ERROR 발생.
+			
+		2.3. NEKey 공통클래스.
+			operator=, operator== / operator!=, operator+= 가 가능하다.
+			
+	3. 요약
+		즉, 모든 키는 키끼리 연산을 시도할 수 있지만, 타입에 따라서 되는 연산이 존재하고
+		불가능한 타입끼리는 내부에서 RESULT_TYPE_ERROR가 발생한다.
+		
+	4. 만약 연산도중 에러가 발생했는지 여부를 알고 싶다면 
+		assign, extend, isEqualTo를 명시적으로 사용하면 된다.
+		

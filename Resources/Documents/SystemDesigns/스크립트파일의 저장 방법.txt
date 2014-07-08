@@ -1,0 +1,10 @@
+스크립트 파일은 기본적으로 다음과 같은 구조로 되어있다.
+
+	1. 헤더
+	2. 스크립트 내용
+	3. Banks
+	
+여기서 1, 2번까지가 Kernal에서 인식하는 부분이고 3번은 Editor만 추가적으로 인식되는 부분이다.
+다시말하면, Editor는, 123을 다 로드할 수 있어야 한다.
+1,2는 Kernal::ScriptManager를 호출해서 serialize 시킨후, 이를 Synchronizer가 synchronizeFrom
+을 통해서 가져오는 방법을 사용한다.

@@ -1,0 +1,5 @@
+PEBrowse Professional for Win32 V1.12
+
+New Version.  PEBrowsePro is a GUI-substitute for Microsoft's DUMPBIN and Borland's TDUMP utilities.  Information is displayed in a handy MDI interface.  Information on imports, exports, and resources is just a mouse-click away.  You can disassemble any part of an executable that follows the Portable Executable (Win32) specification, including EXE, DLL, OCX, SYS, etc. files.  You can also extract resources in their raw format and/or as resource compiler statements.  In addition, PEBrowsePro has the ability to display ANY file of any size and perform searching by hex-values, ANSI string, or UNICODE string values.  Optional integrated API help added.  Start disassemble at a selected address.  Disassembly listings enhanced (object code display optional, jumptable references added).  Supports PEBrowsePro session creation/restore.  Win2k support.  FREEWARE WIN95/98/NT/2000
+
+utility dump binary browse resource tool freeware

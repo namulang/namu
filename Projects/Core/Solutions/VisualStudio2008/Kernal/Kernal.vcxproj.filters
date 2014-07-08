@@ -1,0 +1,836 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Reources">
+      <UniqueIdentifier>{50b3a92e-5ddb-4050-b54b-386d14011cc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{3864d44d-7db0-4ce3-afcd-edc5c93c2c41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{95852e3b-4e07-40f4-943d-484a0662a566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject">
+      <UniqueIdentifier>{96ec1140-18d6-41e0-bd4c-6c6a15b7ac0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector">
+      <UniqueIdentifier>{ddbeb252-1c7e-46cf-9215-90ad77a5df63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack">
+      <UniqueIdentifier>{ce5f9ee4-0a4b-4716-8b9a-c9b2fff835ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEKeySet">
+      <UniqueIdentifier>{76521a49-7954-4373-92a5-e0d52b15fc6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet">
+      <UniqueIdentifier>{6415c66e-0ccd-47db-ba59-6564c22aeaae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEManagedModuleSet">
+      <UniqueIdentifier>{fbf08f6e-6bc0-42f3-a91b-e31e2c6d2a38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NENodeSet">
+      <UniqueIdentifier>{4858034d-8958-437d-b538-061c95904201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NEManagedNodeSet">
+      <UniqueIdentifier>{c756052c-2b15-4594-9449-4df713ceee3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEUByteSet">
+      <UniqueIdentifier>{0eabb0b9-785d-44bb-9278-7915ab30c78b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEUIntSet">
+      <UniqueIdentifier>{50f84a94-ab63-4a04-9a1e-6a54290c9771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEShortCutSet">
+      <UniqueIdentifier>{d234d686-5781-47f0-a553-407155626788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEBooleanSet">
+      <UniqueIdentifier>{11909ff5-c8a2-4853-9e41-82e2a43c624d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEShortSet">
+      <UniqueIdentifier>{c8f07bb1-52b8-40bc-bc93-a568500c6301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEFloatSet">
+      <UniqueIdentifier>{f9c445ce-2b93-47d7-a88f-eb148a0b8445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEDoubleSet">
+      <UniqueIdentifier>{9eb5f5b0-70e1-435b-a660-0e2c99efbbaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEByteSet">
+      <UniqueIdentifier>{0634b200-4959-41e2-86cc-68670dad00f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet">
+      <UniqueIdentifier>{4759fe6c-4e5c-44c5-a9a9-419d5114a5c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet\NEWString">
+      <UniqueIdentifier>{f937a6b7-61d6-47ef-86ac-8261ae4ee9eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEInt64Set">
+      <UniqueIdentifier>{f8ce3018-c6b1-43ad-aa5c-28eca0cc0e5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEIntSet">
+      <UniqueIdentifier>{735e8a2b-6961-4984-94d6-633cfa67fc3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NECodeSet">
+      <UniqueIdentifier>{4ba80f51-58bf-4aed-a086-1bdb10ab2a36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NECodeSet\NEModuleScriptCodeSet">
+      <UniqueIdentifier>{90ed2f75-5a3b-40b8-9d79-fccca744a362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NECharSet">
+      <UniqueIdentifier>{20a62dae-4e6d-4442-8add-cd9363b9b3e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NECharSet\NEString">
+      <UniqueIdentifier>{3d199185-c201-42f6-9114-03dffcfbb559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEUShortSet">
+      <UniqueIdentifier>{022a2c79-1692-4266-8357-ebe800dd018c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NENodeIdSet">
+      <UniqueIdentifier>{01621735-92a2-47f2-a21a-4f4e452d9e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList">
+      <UniqueIdentifier>{3adb84e3-f42e-4a8a-811a-ca1b24ef9a52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\innerclass">
+      <UniqueIdentifier>{708b6ecd-ee3f-496e-b6b5-ffba2aee82cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIterator">
+      <UniqueIdentifier>{9aa8bf90-4ccb-4ed8-a044-2903d2561062}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\innerclass\Iterator">
+      <UniqueIdentifier>{14b5415b-e432-44d9-bd2d-4250582bde0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIteratorWithPolyMorphism">
+      <UniqueIdentifier>{6ae9fe61-11f4-4b0b-a5f9-29a3c5688fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NEModuleList">
+      <UniqueIdentifier>{414b69e3-5a3b-47ae-a874-354529bdd644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NENodeList">
+      <UniqueIdentifier>{3bbd90a6-9f87-4cf0-9cb7-ebdbccd714c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList">
+      <UniqueIdentifier>{cf1c2a84-c267-47aa-a902-dc518b530f69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedNodeList">
+      <UniqueIdentifier>{bb1bf427-cd48-42d0-8df1-78058deacc62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NEShortCut">
+      <UniqueIdentifier>{de52c18e-b55a-4402-a245-454368ab65c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NEStringList">
+      <UniqueIdentifier>{3612840f-7f92-4121-b435-ff30cdb6fa8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NEWStringList">
+      <UniqueIdentifier>{57a19151-9c0f-46fa-890d-ba0dcf9eba3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NEModuleDepthList">
+      <UniqueIdentifier>{012d5a13-d0bd-4064-9506-15476a908b9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit">
+      <UniqueIdentifier>{d7fc69d3-946a-4850-acc8-f1b8c330ca5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit">
+      <UniqueIdentifier>{eccbb35c-b106-4642-aad4-61b920a42d44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NENode">
+      <UniqueIdentifier>{78d1cc0f-1e37-4ffa-9647-3e689f6044fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule">
+      <UniqueIdentifier>{f9e0ebd1-f434-4331-8c1d-7ee0193dbe1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager">
+      <UniqueIdentifier>{f784edff-da2f-441a-a1b8-f5c80f2cd99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass">
+      <UniqueIdentifier>{b5ffe3b3-35d1-47a3-99aa-a6e8c465b57a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\DebugMacro">
+      <UniqueIdentifier>{bc85c4a1-4a25-4960-9f71-ff64b287e3f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\FlagSet">
+      <UniqueIdentifier>{09e3c6a1-afa5-4991-a4d9-7ab733173305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\Flag">
+      <UniqueIdentifier>{43811194-bf43-4cb8-95e1-c24eaf00e0bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\ErrorCode">
+      <UniqueIdentifier>{6306feee-81ae-4428-a9a2-91ba0039f19e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\define">
+      <UniqueIdentifier>{a4b6a709-fe73-4c06-af08-04e36cd1669d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager">
+      <UniqueIdentifier>{42bd869f-21d0-4146-b5a1-831c4b061659}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\define">
+      <UniqueIdentifier>{d0a8757b-3023-44c4-a8b0-db94814274f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\innerclass">
+      <UniqueIdentifier>{9e4559dc-3e9a-4476-9282-80481aac91b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\innerclass\ErrorCode">
+      <UniqueIdentifier>{090a1fd9-eece-47fe-ac4e-a330ff4c5c63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager">
+      <UniqueIdentifier>{8aa907c9-8df8-4ed9-abcf-bc85c0131a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\innerclass">
+      <UniqueIdentifier>{60bbfc9f-b67e-496d-83d2-11ff45252d4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\innerclass\LocalStack">
+      <UniqueIdentifier>{d7c3bb76-ba7c-42e7-9363-bed79d9bf1ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager">
+      <UniqueIdentifier>{9ded1f8a-eee2-44c1-8c71-f0aefbe83d2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\define">
+      <UniqueIdentifier>{fa182f14-5006-4531-b337-379c2626909f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass">
+      <UniqueIdentifier>{d14f5955-b16d-4ad7-8428-6b8eef373aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\ErrorCode">
+      <UniqueIdentifier>{4aadc9ef-23ea-4e8d-9672-4a783637cf69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\DLLHeader">
+      <UniqueIdentifier>{b045da7a-fed5-4e21-8f28-2f6a1407672d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager">
+      <UniqueIdentifier>{439c0b15-3347-4b01-ac7e-7737ff5d5faa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\innerclass">
+      <UniqueIdentifier>{7d486738-6b4b-4a14-bf11-f5733ea74416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\innerclass\ScriptHeader">
+      <UniqueIdentifier>{cf103cd7-fb47-4deb-9652-6b71660333bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\innerclass">
+      <UniqueIdentifier>{518b4ef8-6c7b-44b5-900e-726eb48c4df3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\innerclass\BaseConnector">
+      <UniqueIdentifier>{7bf9b21e-41c8-4517-993c-325b91f02d55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal">
+      <UniqueIdentifier>{147232cc-35e6-4126-b8cb-85ee0e4476ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\define">
+      <UniqueIdentifier>{95eb48d2-26fd-495d-bb07-bbc4a8638778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass">
+      <UniqueIdentifier>{309ecb0f-4ef2-403f-be79-6718acc3688f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\ErrorCode">
+      <UniqueIdentifier>{239d94f5-8640-44aa-bf2f-f0889eb06a03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Factory">
+      <UniqueIdentifier>{86642cd9-4871-4f98-8df8-b7b4ca495227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings">
+      <UniqueIdentifier>{b5c433ae-c637-4656-9edc-daaaf70b01ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\ModifiableSettings">
+      <UniqueIdentifier>{81c97f6a-611b-4209-a6b4-82f20461dc25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey">
+      <UniqueIdentifier>{a8c541e0-6473-405c-a292-3e95736efce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NEKeyTemplate">
+      <UniqueIdentifier>{cff55947-f11f-4e85-bce0-4c8a25889bf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NEKeyTemplate\Templates">
+      <UniqueIdentifier>{0836b1dc-927c-4f2d-aff6-17b3116d1eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface">
+      <UniqueIdentifier>{ec9b4e1b-d58d-43dc-a57a-d251643f04c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase">
+      <UniqueIdentifier>{8baa2fa5-3354-4850-914d-1d787950f452}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelector">
+      <UniqueIdentifier>{6ff45e2e-d6dc-4820-90ed-17acd064878c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate">
+      <UniqueIdentifier>{db611ee0-de3f-407e-be38-f45316c35e0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\Templates">
+      <UniqueIdentifier>{d746465d-24f2-4c3d-8de6-c56437857a3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate">
+      <UniqueIdentifier>{e6b87049-4b19-4fc2-8cb7-677e1e4ac0b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\Templates">
+      <UniqueIdentifier>{9a57cb67-0365-4098-ad11-18666ee8deaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons">
+      <UniqueIdentifier>{aefe1267-b8a9-451e-91e9-aa0fb3391120}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Units">
+      <UniqueIdentifier>{6361d345-469c-4433-a112-b8f21a5808a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Units\NEModuleDepthUnit">
+      <UniqueIdentifier>{5d0456ae-51a4-4b4c-ad9b-826a0211943b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Functions">
+      <UniqueIdentifier>{22b6c0fb-5909-4ae6-9117-05a5e0262738}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Functions\NEBinaryTemplates">
+      <UniqueIdentifier>{1c06f826-605c-4110-828c-a52b2ed9970a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Functions\NEBinaryTemplates\NEBinaryLoaderTemplates">
+      <UniqueIdentifier>{efc4905e-8342-41e9-97b5-e273dd66bbd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Functions\NEBinaryTemplates\NEBinarySaverTemplates">
+      <UniqueIdentifier>{c38c2105-93ac-4903-9239-5a6f1b79448e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Functions\NEResult">
+      <UniqueIdentifier>{f76f388c-d9ac-47bb-aedb-fe6c78feb246}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Functions\NEResult\define">
+      <UniqueIdentifier>{64ea7e0c-657e-41bc-bd4e-f58ce88ddc4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Functions\NEResult\innerclass">
+      <UniqueIdentifier>{e9ed2044-1f28-4a3c-bb9b-99ffbb210491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Functions\NEResult\innerclass\Level">
+      <UniqueIdentifier>{5581a4a0-1dda-4974-84fa-f1a81f440b49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Functions\NETemplateChecker">
+      <UniqueIdentifier>{e6a939ab-ea47-4de5-96ba-48daf6837a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Interfaces">
+      <UniqueIdentifier>{68a00c22-5cdd-493f-b613-e543596f7a80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Interfaces\NEInitializable">
+      <UniqueIdentifier>{ce2365fa-35af-43bb-99d7-d73e5730593f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Interfaces\NEInitializable\NEExportable">
+      <UniqueIdentifier>{dec0ce3f-1012-44d4-abbe-c2d5abb63ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass">
+      <UniqueIdentifier>{be4741d3-55f8-49c0-a96f-bba167bbcb5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier">
+      <UniqueIdentifier>{a1457845-e0f6-424f-bc69-71cfd4589526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header">
+      <UniqueIdentifier>{7ea21d51-ec75-4129-a9ee-ab34a7b69523}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\ModuleHeader">
+      <UniqueIdentifier>{6283c509-a51d-453f-957e-8e5fcf69154e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Interfaces\NEEnrollable">
+      <UniqueIdentifier>{70e2d7ce-5908-47f9-af4c-5ec74004e6fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Interfaces\NEBeManaged">
+      <UniqueIdentifier>{4ef4a94a-f1df-409a-8185-ccc7f9a7520c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Enums">
+      <UniqueIdentifier>{e65bb332-1a47-42f6-b169-3f0a838d2fb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Enums\NEType">
+      <UniqueIdentifier>{20cce304-8ae9-4abb-971a-40aee3187f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Enums\CodeType">
+      <UniqueIdentifier>{dfa7399c-cc28-4afa-b8b4-db4f15f6958b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Typedefs">
+      <UniqueIdentifier>{cd3261c2-80c5-429d-8bc0-fbe89c68dd67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Typedefs\NETString">
+      <UniqueIdentifier>{c9ebc2a1-5785-4f2d-bdc6-b041432aa56f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{d1f98aac-0a0d-48b8-beb4-975296f5177f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{30b66248-f529-413b-b8f5-88b32d087c1b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VersionNo.ini">
+      <Filter>Reources</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NECollector.inl">
+      <Filter>Sources\Modules\NEObject\NECollector</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEPointerCollector.inl">
+      <Filter>Sources\Modules\NEObject\NECollector</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEPointerStack.inl">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEPointerStackWithPolyMorphism.inl">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEStack.inl">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEList.inl">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEPointerList.inl">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEPointerListWithPolyMorphism.inl">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIterator\PointerIterator.inl">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIterator</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\Iterator\Iterator.inl">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\innerclass\Iterator</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIteratorWithPolyMorphism\PointerIteratorWithPolyMorphism.inl">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIteratorWithPolyMorphism</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKeyTemplate\NEKeyTemplate.inl">
+      <Filter>Sources\Modules\NEObject\NEKey\NEKeyTemplate</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEModuleSelectorTemplate.inl">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\NEKeySelectorTemplate.inl">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEObject.cpp">
+      <Filter>Sources\Modules\NEObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEKeySet\NEKeySet.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEKeySet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEModuleSet.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEManagedModuleSet\NEManagedModuleSet.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEManagedModuleSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NENodeSet.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NENodeSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NEManagedNodeSet\NEManagedNodeSet.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NEManagedNodeSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEShortCutSet\NEShortCutSet.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEShortCutSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet\NEWString\NEWString.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet\NEWString</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECodeSet\NEModuleScriptCodeSet\NEModuleScriptCodeSet.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NECodeSet\NEModuleScriptCodeSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECharSet\NEString\NEString.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NECharSet\NEString</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEEnrollableNodeList.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedNodeList\NEManagedNodeList.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedNodeList</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NEUnit.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NENamedUnit.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NENode\NENode.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NENode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModule.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\NEDebugManager.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\Flag\Flag.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\Flag</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\NEINIManager.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\NENodeManager.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\innerclass\LocalStack\LocalStack.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\innerclass\LocalStack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\NEModuleManager.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\DLLHeader\DLLHeader.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\DLLHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\NEScriptManager.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\innerclass\ScriptHeader\ScriptHeader.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\innerclass\ScriptHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\innerclass\BaseConnector\BaseConnector.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\innerclass\BaseConnector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\Kernal.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Factory\Factory.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\Settings.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\ModifiableSettings\ModifiableSettings.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\ModifiableSettings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKey.cpp">
+      <Filter>Sources\Modules\NEObject\NEKey</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKeyTemplate\NEKeyTemplate.cpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NEKeyTemplate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorInterface.cpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelectorBase.cpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelector\NENodeSelector.cpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Units\NEModuleDepthUnit\NEModuleDepthUnit.cpp">
+      <Filter>Sources\Commons\Units\NEModuleDepthUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEBinaryTemplates\NEBinaryLoaderTemplates\NEBinaryLoaderTemplates.cpp">
+      <Filter>Sources\Commons\Functions\NEBinaryTemplates\NEBinaryLoaderTemplates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEBinaryTemplates\NEBinarySaverTemplates\NEBinarySaverTemplates.cpp">
+      <Filter>Sources\Commons\Functions\NEBinaryTemplates\NEBinarySaverTemplates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEResult\NEResult.cpp">
+      <Filter>Sources\Commons\Functions\NEResult</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\NEExportable.cpp">
+      <Filter>Sources\Commons\Interfaces\NEInitializable\NEExportable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Identifier.cpp">
+      <Filter>Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\Header.cpp">
+      <Filter>Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\ModuleHeader\ModuleHeader.cpp">
+      <Filter>Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\ModuleHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Enums\NEType\NEType.cpp">
+      <Filter>Sources\Commons\Enums\NEType</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEObject.hpp">
+      <Filter>Sources\Modules\NEObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NECollector.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEPointerCollector.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEPointerStack.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEPointerStackWithPolyMorphism.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEStack.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEKeySet\NEKeySet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEKeySet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEModuleSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEManagedModuleSet\NEManagedModuleSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEManagedModuleSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NENodeSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NENodeSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NEManagedNodeSet\NEManagedNodeSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NEManagedNodeSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEUByteSet\NEUByteSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEUByteSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEUIntSet\NEUIntSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEUIntSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEShortCutSet\NEShortCutSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEShortCutSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEBooleanSet\NEBooleanSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEBooleanSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEShortSet\NEShortSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEShortSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEFloatSet\NEFloatSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEFloatSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEDoubleSet\NEDoubleSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEDoubleSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEByteSet\NEByteSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEByteSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet\NEWCharSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet\NEWString\NEWString.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet\NEWString</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEInt64Set\NEInt64Set.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEInt64Set</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEIntSet\NEIntSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEIntSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECodeSet\NECodeSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NECodeSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECodeSet\NEModuleScriptCodeSet\NEModuleScriptCodeSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NECodeSet\NEModuleScriptCodeSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECharSet\NECharSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NECharSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECharSet\NEString\NEString.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NECharSet\NEString</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEUShortSet\NEUShortSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEUShortSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeIdSet\NENodeIdSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NENodeIdSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEPointerList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEPointerListWithPolyMorphism.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIterator\PointerIterator.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIterator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\Iterator\Iterator.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\innerclass\Iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIteratorWithPolyMorphism\PointerIteratorWithPolyMorphism.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIteratorWithPolyMorphism</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEModuleList\NEModuleList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NEModuleList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NENodeList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NENodeList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEEnrollableNodeList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedNodeList\NEManagedNodeList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedNodeList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEShortCut\NEShortCut.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NEShortCut</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEStringList\NEStringList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NEStringList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEWStringList\NEWStringList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NEWStringList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEModuleDepthList\NEModuleDepthList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NEModuleDepthList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NEUnit.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NENamedUnit.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NENode\NENode.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NENode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModule.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\NEDebugManager.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\DebugMacro\DebugMacro.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\DebugMacro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\FlagSet\FlagSet.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\FlagSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\Flag\Flag.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\Flag</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\define\define.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\NEINIManager.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\define\define.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\NENodeManager.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\innerclass\LocalStack\LocalStack.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\innerclass\LocalStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\NEModuleManager.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\define\define.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\DLLHeader\DLLHeader.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\DLLHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\NEScriptManager.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\innerclass\ScriptHeader\ScriptHeader.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\innerclass\ScriptHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\innerclass\BaseConnector\BaseConnector.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\innerclass\BaseConnector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\Kernal.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\define\define.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Factory\Factory.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\Settings.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\ModifiableSettings\ModifiableSettings.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\ModifiableSettings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKey.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKeyTemplate\NEKeyTemplate.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NEKeyTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKeyTemplate\Templates\Templates.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NEKeyTemplate\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorInterface.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelectorBase.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelector\NENodeSelector.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEModuleSelectorTemplate.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\Templates\Templates.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\NEKeySelectorTemplate.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\Templates\Templates.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Units\NEModuleDepthUnit\NEModuleDepthUnit.hpp">
+      <Filter>Sources\Commons\Units\NEModuleDepthUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEBinaryTemplates\NEBinaryLoaderTemplates\NEBinaryLoaderTemplates.hpp">
+      <Filter>Sources\Commons\Functions\NEBinaryTemplates\NEBinaryLoaderTemplates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEBinaryTemplates\NEBinarySaverTemplates\NEBinarySaverTemplates.hpp">
+      <Filter>Sources\Commons\Functions\NEBinaryTemplates\NEBinarySaverTemplates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEResult\NEResult.hpp">
+      <Filter>Sources\Commons\Functions\NEResult</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEResult\define\define.hpp">
+      <Filter>Sources\Commons\Functions\NEResult\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEResult\innerclass\Level\Level.hpp">
+      <Filter>Sources\Commons\Functions\NEResult\innerclass\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NETemplateChecker\NETemplateChecker.hpp">
+      <Filter>Sources\Commons\Functions\NETemplateChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEInitializable.hpp">
+      <Filter>Sources\Commons\Interfaces\NEInitializable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\NEExportable.hpp">
+      <Filter>Sources\Commons\Interfaces\NEInitializable\NEExportable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Identifier.hpp">
+      <Filter>Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\Header.hpp">
+      <Filter>Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\ModuleHeader\ModuleHeader.hpp">
+      <Filter>Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\ModuleHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEEnrollable\NEEnrollable.hpp">
+      <Filter>Sources\Commons\Interfaces\NEEnrollable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEBeManaged\NEBeManaged.hpp">
+      <Filter>Sources\Commons\Interfaces\NEBeManaged</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Enums\NEType\NEType.hpp">
+      <Filter>Sources\Commons\Enums\NEType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Enums\CodeType\CodeType.hpp">
+      <Filter>Sources\Commons\Enums\CodeType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Typedefs\NETString\NETString.hpp">
+      <Filter>Sources\Commons\Typedefs\NETString</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Includes\IncludeFileAccess.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

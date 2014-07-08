@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="C Console Project"
+	ProjectGUID="{1B40594D-7394-4C2A-95C2-983850B26E95}"
+	RootNamespace="C Console Project"
+	Keyword="CustomAppWizProj">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="1">
+			<Tool
+				Name="VCCLCompilerTool"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			ConfigurationType="1">
+			<Tool
+				Name="VCCLCompilerTool"/>
+			<Tool
+				Name="VCCustomBuildTool"/>
+			<Tool
+				Name="VCLinkerTool"/>
+			<Tool
+				Name="VCMIDLTool"/>
+			<Tool
+				Name="VCPostBuildEventTool"/>
+			<Tool
+				Name="VCPreBuildEventTool"/>
+			<Tool
+				Name="VCPreLinkEventTool"/>
+			<Tool
+				Name="VCResourceCompilerTool"/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
+			<Tool
+				Name="VCManagedWrapperGeneratorTool"/>
+			<Tool
+				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Template Files"
+			Filter="txt">
+			<File
+				RelativePath=".\Templates\1033\main.c">
+			</File>
+		</Filter>
+		<Filter
+			Name="HTML Files"
+			Filter="htm">
+			<File
+				RelativePath=".\Html\1033\default.htm"
+				DeploymentContent="TRUE">
+			</File>
+			<File
+				RelativePath=".\Html\1033\Page_2.htm"
+				DeploymentContent="TRUE">
+			</File>
+		</Filter>
+		<Filter
+			Name="Image Files"
+			Filter="bmp">
+		</Filter>
+		<Filter
+			Name="Script Files"
+			Filter="js">
+			<File
+				RelativePath=".\Scripts\1033\default.js">
+			</File>
+		</Filter>
+		<Filter
+			Name="Miscellaneous Files"
+			Filter="vsz;vsdir;ico;vcproj;csproj;css;inf">
+			<File
+				RelativePath=".\C Console Project.ico">
+			</File>
+			<File
+				RelativePath=".\C Console Project.vsdir">
+			</File>
+			<File
+				RelativePath=".\C Console Project.vsz">
+			</File>
+			<File
+				RelativePath=".\default.vcproj">
+			</File>
+			<File
+				RelativePath=".\1033\styles.css">
+			</File>
+			<File
+				RelativePath=".\Templates\1033\Templates.inf">
+			</File>
+		</Filter>
+		<File
+			RelativePath=".\Images\C Console Project.gif">
+		</File>
+		<File
+			RelativePath=".\Images\C Console Project_Background.gif">
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{f0edf1c8-cbef-48bf-9e8e-485fdbb07a39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons">
+      <UniqueIdentifier>{61a6653e-7e78-477c-9700-6cf83a932dcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{8f39849a-2126-4485-bc86-c06149782265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{175ef1b8-6afa-41c7-bf34-06b29f76a51c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{364d979f-d408-47a3-b01f-240ea5e27c4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\MessageBox">
+      <UniqueIdentifier>{0ad1df50-3c33-4363-a057-34a4f0238536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\MessageBox\define">
+      <UniqueIdentifier>{26e2ce4f-124f-42ea-8c80-004f36a444c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\MessageBox\Execute">
+      <UniqueIdentifier>{29e8f99e-0e12-4875-b945-237f98ea2755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\MessageBox\Execute\innerclass">
+      <UniqueIdentifier>{70db3d19-fea7-4331-b187-45a4ed41294a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\MessageBox\Execute\innerclass\ErrorCode">
+      <UniqueIdentifier>{4bc14d9b-0809-4322-a63c-b5b333603f1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{6d354b4a-96dc-4970-86b5-464d9201dba8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\MessageboxModule\Sources\Commons\EntryPoint.hpp">
+      <Filter>Sources\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\MessageboxModule\Sources\Includes\include.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\MessageboxModule\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\MessageboxModule\Sources\Modules\MessageBox\MessageBox.hpp">
+      <Filter>Sources\Modules\MessageBox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\MessageboxModule\Sources\Modules\MessageBox\define\define.hpp">
+      <Filter>Sources\Modules\MessageBox\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\MessageboxModule\Sources\Modules\MessageBox\Execute\MessageBox.hpp">
+      <Filter>Sources\Modules\MessageBox\Execute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\MessageboxModule\Sources\Modules\MessageBox\Execute\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\MessageBox\Execute\innerclass\ErrorCode</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\MessageboxModule\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\MessageboxModule\Sources\Modules\MessageBox\Execute\MessageBox.cpp">
+      <Filter>Sources\Modules\MessageBox\Execute</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

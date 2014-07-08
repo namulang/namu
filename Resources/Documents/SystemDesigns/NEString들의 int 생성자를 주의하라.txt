@@ -1,0 +1,4 @@
+NEString data(2);는 
+data[2] 의 의미가 아니라, 
+
+data = "2"의 의미다.

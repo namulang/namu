@@ -1,0 +1,3 @@
+포인터값 자체를 할당하는 경우는 const_cast 사용
+	int* = const int*(를 하는 경우만 허용)
+단, 다형성을 보존하는 경우는, source.clone()을 사용함으로써 const_cast를 사용하지 않는다

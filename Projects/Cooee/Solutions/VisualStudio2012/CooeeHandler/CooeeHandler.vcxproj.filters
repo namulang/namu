@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{e3d87d69-c136-4f74-a07f-ad7f7a248cdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons">
+      <UniqueIdentifier>{2c43190b-34a3-463a-82b1-4bc05c64f060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{60607e23-3b42-46af-88ed-038df891c531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{f753843f-787c-4280-8682-3c3b3e4073f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{d7820fba-14f4-4fc8-b493-fd2e8e9add99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\CooeeHandler">
+      <UniqueIdentifier>{5ac846bf-1045-4724-93d0-a39ba6db15bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\CooeeHandler\define">
+      <UniqueIdentifier>{da372709-e709-4fc4-ae8d-8c45110ded2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\CooeeHandler\Execute">
+      <UniqueIdentifier>{58633a53-7b0f-4442-9b16-8b6721933e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\CooeeHandler\Execute\innerclass">
+      <UniqueIdentifier>{14b6bdb2-e5a8-486a-9cbc-01b0a4b04341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\CooeeHandler\Execute\innerclass\ErrorCode">
+      <UniqueIdentifier>{0f853aca-d734-41cb-aaf6-bd543f6d5e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{51fb459c-7c8d-4617-92d5-3556b6d62f32}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\CooeeHandler\Sources\Commons\EntryPoint.hpp">
+      <Filter>Sources\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\CooeeHandler\Sources\Includes\include.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\CooeeHandler\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\CooeeHandler\Sources\Modules\CooeeHandler\CooeeHandler.hpp">
+      <Filter>Sources\Modules\CooeeHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\CooeeHandler\Sources\Modules\CooeeHandler\define\define.hpp">
+      <Filter>Sources\Modules\CooeeHandler\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\CooeeHandler\Sources\Modules\CooeeHandler\Execute\CooeeHandler.hpp">
+      <Filter>Sources\Modules\CooeeHandler\Execute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\CooeeHandler\Sources\Modules\CooeeHandler\Execute\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\CooeeHandler\Execute\innerclass\ErrorCode</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\CooeeHandler\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\CooeeHandler\Sources\Modules\CooeeHandler\Execute\CooeeHandler.cpp">
+      <Filter>Sources\Modules\CooeeHandler\Execute</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

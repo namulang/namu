@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WindowModules Solutions", "WindowModules Solutions", "{3F9FCC96-71C2-4418-B28C-230A4D2F8651}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{D9D5ADA6-AA56-49D9-9D41-5C4A7662D688}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{052FE856-AAF6-4C70-9B7A-6AFB204F4427}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ButtonPackage", "ButtonModule\ButtonPackage.vcproj", "{3A716FD9-56FD-495E-812F-124AA379B55F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MessagePackage", "MessageboxModule\MessagePackage.vcproj", "{2D233BA4-2EC7-47EA-BD07-37D33E4261C3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WindowModule", "WindowModule\Window Module.vcproj", "{D6C23411-259E-4451-A7D8-72A0CFBD0404}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ListModule", "ListModule\ListModule.vcproj", "{73EA601E-7B01-4D44-A3EB-B23FFF538444}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Developer.Debug|Win32 = Developer.Debug|Win32
+		Developer.Release|Win32 = Developer.Release|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A716FD9-56FD-495E-812F-124AA379B55F}.Developer.Debug|Win32.ActiveCfg = Developer.Debug|Win32
+		{3A716FD9-56FD-495E-812F-124AA379B55F}.Developer.Debug|Win32.Build.0 = Developer.Debug|Win32
+		{3A716FD9-56FD-495E-812F-124AA379B55F}.Developer.Release|Win32.ActiveCfg = Developer.Release|Win32
+		{3A716FD9-56FD-495E-812F-124AA379B55F}.Developer.Release|Win32.Build.0 = Developer.Release|Win32
+		{3A716FD9-56FD-495E-812F-124AA379B55F}.Release|Win32.ActiveCfg = Release|Win32
+		{3A716FD9-56FD-495E-812F-124AA379B55F}.Release|Win32.Build.0 = Release|Win32
+		{2D233BA4-2EC7-47EA-BD07-37D33E4261C3}.Developer.Debug|Win32.ActiveCfg = Developer.Debug|Win32
+		{2D233BA4-2EC7-47EA-BD07-37D33E4261C3}.Developer.Debug|Win32.Build.0 = Developer.Debug|Win32
+		{2D233BA4-2EC7-47EA-BD07-37D33E4261C3}.Developer.Release|Win32.ActiveCfg = Developer.Release|Win32
+		{2D233BA4-2EC7-47EA-BD07-37D33E4261C3}.Developer.Release|Win32.Build.0 = Developer.Release|Win32
+		{2D233BA4-2EC7-47EA-BD07-37D33E4261C3}.Release|Win32.ActiveCfg = Release|Win32
+		{2D233BA4-2EC7-47EA-BD07-37D33E4261C3}.Release|Win32.Build.0 = Release|Win32
+		{D6C23411-259E-4451-A7D8-72A0CFBD0404}.Developer.Debug|Win32.ActiveCfg = Developer.Debug|Win32
+		{D6C23411-259E-4451-A7D8-72A0CFBD0404}.Developer.Debug|Win32.Build.0 = Developer.Debug|Win32
+		{D6C23411-259E-4451-A7D8-72A0CFBD0404}.Developer.Release|Win32.ActiveCfg = Developer.Release|Win32
+		{D6C23411-259E-4451-A7D8-72A0CFBD0404}.Developer.Release|Win32.Build.0 = Developer.Release|Win32
+		{D6C23411-259E-4451-A7D8-72A0CFBD0404}.Release|Win32.ActiveCfg = Release|Win32
+		{D6C23411-259E-4451-A7D8-72A0CFBD0404}.Release|Win32.Build.0 = Release|Win32
+		{73EA601E-7B01-4D44-A3EB-B23FFF538444}.Developer.Debug|Win32.ActiveCfg = Developer.Debug|Win32
+		{73EA601E-7B01-4D44-A3EB-B23FFF538444}.Developer.Debug|Win32.Build.0 = Developer.Debug|Win32
+		{73EA601E-7B01-4D44-A3EB-B23FFF538444}.Developer.Release|Win32.ActiveCfg = Developer.Release|Win32
+		{73EA601E-7B01-4D44-A3EB-B23FFF538444}.Developer.Release|Win32.Build.0 = Developer.Release|Win32
+		{73EA601E-7B01-4D44-A3EB-B23FFF538444}.Release|Win32.ActiveCfg = Release|Win32
+		{73EA601E-7B01-4D44-A3EB-B23FFF538444}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D9D5ADA6-AA56-49D9-9D41-5C4A7662D688} = {3F9FCC96-71C2-4418-B28C-230A4D2F8651}
+		{052FE856-AAF6-4C70-9B7A-6AFB204F4427} = {3F9FCC96-71C2-4418-B28C-230A4D2F8651}
+		{3A716FD9-56FD-495E-812F-124AA379B55F} = {D9D5ADA6-AA56-49D9-9D41-5C4A7662D688}
+		{2D233BA4-2EC7-47EA-BD07-37D33E4261C3} = {D9D5ADA6-AA56-49D9-9D41-5C4A7662D688}
+		{D6C23411-259E-4451-A7D8-72A0CFBD0404} = {D9D5ADA6-AA56-49D9-9D41-5C4A7662D688}
+		{73EA601E-7B01-4D44-A3EB-B23FFF538444} = {D9D5ADA6-AA56-49D9-9D41-5C4A7662D688}
+	EndGlobalSection
+EndGlobal

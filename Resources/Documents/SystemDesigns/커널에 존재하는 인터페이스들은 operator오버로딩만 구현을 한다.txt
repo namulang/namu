@@ -1,0 +1,12 @@
+virtual인 함수들은, 일체 구현을 하지 않는다.
+즉, virtual release() 와 같은 함수들은 인터페이스에서 미리 구현을 하지 않는다.
+그러나 연산자 오버로딩은 ADT도 존재해야 한다(Collector에서 쓰이기 때문에)
+따라서 그와 같은 경우는 인터페이스에서 구현을 해 놓는다.
+	예)
+		NEDebugManager::operator=(...)
+		{
+			setDebugMode(source.getDebugMode());
+			.
+			.
+			.
+		}

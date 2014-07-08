@@ -1,0 +1,662 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{3da9f5c8-41c4-4412-bd24-1d665ccfe902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons">
+      <UniqueIdentifier>{0186094b-cd8a-4fda-83dd-fc3715774bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{93f7ddaa-74b6-446a-a25b-beea89ccabcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{086212d9-7006-4907-ba15-4df909764e5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{22ca2b6a-f0d3-4f88-b01b-98e8810f5857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Enabler">
+      <UniqueIdentifier>{4b5ad871-e24a-4459-9f9a-814ac417ca56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Enabler\define">
+      <UniqueIdentifier>{b34bee88-3594-470a-b016-d66dd4f3a05c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Enabler\innerclass">
+      <UniqueIdentifier>{b839e184-71ca-4dde-ba36-0fc621aabaa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Enabler\innerclass\ErrorCode">
+      <UniqueIdentifier>{5ef2235b-8667-4d52-ae9e-fc5366c27b69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Assigner">
+      <UniqueIdentifier>{f36790cd-825b-4b26-9176-d91e557fa0b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Assigner\define">
+      <UniqueIdentifier>{1acbe561-2eb3-4e3c-8102-2ac3cfed4ee3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Assigner\innerclass">
+      <UniqueIdentifier>{0cb3116f-341c-48fa-87f3-18cb4243f471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Assigner\innerclass\ErrorCode">
+      <UniqueIdentifier>{f093e402-2d07-40b1-bdd0-1a0e8782877f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\FrameCounter">
+      <UniqueIdentifier>{421e3b54-e6ab-40f2-b791-2939ae6fd2d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\FrameCounter\define">
+      <UniqueIdentifier>{26f025ce-0d61-41b5-8585-802ac054f3d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\FrameCounter\innerclass">
+      <UniqueIdentifier>{a4c3109d-346a-49fc-9a55-46981767a063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\FrameCounter\innerclass\ErrorCode">
+      <UniqueIdentifier>{342c07c0-ff07-4f8f-a2b6-d4c02574beee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Timer">
+      <UniqueIdentifier>{d8ef65a8-e138-4ae0-8a84-e2c179314c29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Timer\define">
+      <UniqueIdentifier>{b2600611-3201-4d93-8012-f92de83f3144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Timer\innerclass">
+      <UniqueIdentifier>{970d3bc7-6e0d-442e-b55e-c7123a0a2398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Timer\innerclass\ErrorCode">
+      <UniqueIdentifier>{8f6b5eee-b0f6-43ee-b431-6b6fae50926e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\If">
+      <UniqueIdentifier>{3a2aeb61-5c64-4ed1-b270-99eb4d8bcd03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\If\define">
+      <UniqueIdentifier>{f1db9dd0-1e1e-49f7-9406-091a4153871f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\If\innerclass">
+      <UniqueIdentifier>{43b1599d-4857-421c-90d4-0618b8b2e2a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\If\innerclass\ErrorCode">
+      <UniqueIdentifier>{837cced2-61c8-4e48-96f9-a512153b4fdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Looper">
+      <UniqueIdentifier>{2067a494-1352-42d3-a482-ae4d0fa75d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Looper\define">
+      <UniqueIdentifier>{8fb870d7-62fe-46ca-9f6f-5d32fd65c538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Looper\innerclass">
+      <UniqueIdentifier>{c768243b-24de-4cd0-bbd6-9259b871a30c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Looper\innerclass\ErrorCode">
+      <UniqueIdentifier>{716196e3-7b7d-4e85-8223-d2aee13e19ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\IfElse">
+      <UniqueIdentifier>{09d7aacf-b74d-48ba-8321-159c983114b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\IfElse\define">
+      <UniqueIdentifier>{79be1294-d055-436b-8bd8-9edb5ec95819}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\IfElse\innerclass">
+      <UniqueIdentifier>{b70dc1b0-4610-49cf-a14b-7e0c1f7f41a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\IfElse\innerclass\ErrorCode">
+      <UniqueIdentifier>{d9ec9b3e-e3d3-440a-8c28-ab5854d70507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Extender">
+      <UniqueIdentifier>{a7b7eda4-2ad1-4abd-8c94-c2d68604e331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Extender\define">
+      <UniqueIdentifier>{0e93fb04-d9ca-4873-9812-d865a35497de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Extender\innerclass">
+      <UniqueIdentifier>{f368f42c-6920-48c8-96f7-1bc6993956d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Extender\innerclass\ErrorCode">
+      <UniqueIdentifier>{8cf4a19c-fdf1-45ba-9fd6-6e6b8411ac6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementInserter">
+      <UniqueIdentifier>{fab646d2-1ce4-4def-a1e0-891ba9f690e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementInserter\define">
+      <UniqueIdentifier>{6b6ad213-6c95-4729-94b9-5eb50fdc2eb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementInserter\innerclass">
+      <UniqueIdentifier>{cae293ca-e8c3-4fd2-b217-8235775ad4da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementInserter\innerclass\ErrorCode">
+      <UniqueIdentifier>{a350f7bb-0d74-469d-9eda-c70a7a1f1805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementRemover">
+      <UniqueIdentifier>{54b9cded-691a-4ef9-bf50-62bcce397cb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementRemover\define">
+      <UniqueIdentifier>{11126877-b1ac-4d06-a13a-32462bea226f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementRemover\innerclass">
+      <UniqueIdentifier>{f2bc4c10-7fe3-49a0-95d9-81931d521f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementRemover\innerclass\ErrorCode">
+      <UniqueIdentifier>{e63e1c43-db53-4717-9d7e-cd941191633c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NameChanger">
+      <UniqueIdentifier>{6be579b9-9fab-466e-a479-e53a32bd51b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NameChanger\define">
+      <UniqueIdentifier>{7fee016e-337f-4ba3-96a5-349a3f363c28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NameChanger\innerclass">
+      <UniqueIdentifier>{f25ca313-1c06-4bda-8dac-cb2e896ef6f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NameChanger\innerclass\ErrorCode">
+      <UniqueIdentifier>{bd8ff8b7-5e9d-4fdf-9b75-8688cfedf2d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\BinarySaver">
+      <UniqueIdentifier>{a50d4e2c-0711-4596-9503-c16725e5c993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\BinarySaver\define">
+      <UniqueIdentifier>{364e7d26-e346-4d63-9bf9-bb7584876538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\BinarySaver\innerclass">
+      <UniqueIdentifier>{bd358d71-5158-4fa2-b65f-bfe8fbb8dcb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\BinarySaver\innerclass\ErrorCode">
+      <UniqueIdentifier>{7cdc6493-3c51-426b-9735-74fa70b4d93d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\BinaryLoader">
+      <UniqueIdentifier>{a7dc4892-7308-4470-9e49-dc0ee67752a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\BinaryLoader\define">
+      <UniqueIdentifier>{1a4e2609-c795-4abf-8442-4c2d3aa5c7cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\BinaryLoader\innerclass">
+      <UniqueIdentifier>{423c637e-6867-4b06-bd8f-f313275cdad4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\BinaryLoader\innerclass\ErrorCode">
+      <UniqueIdentifier>{d8601e48-ca90-449f-81b0-74645ebf499a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ErrorSpy">
+      <UniqueIdentifier>{f4427d46-4bf6-42fb-b4b6-71d353d338e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ErrorSpy\define">
+      <UniqueIdentifier>{1ad84a70-ec82-4b1e-9368-fb0181cdfdee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ErrorSpy\innerclass">
+      <UniqueIdentifier>{8267abd2-a11f-4c19-afe2-44b598c8d076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ErrorSpy\innerclass\ErrorCode">
+      <UniqueIdentifier>{0af509d6-2bc6-43a8-9748-14c62358784f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\FileLister">
+      <UniqueIdentifier>{85e39248-9767-4440-971e-0279baa39b26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\FileLister\innerclass">
+      <UniqueIdentifier>{745f8123-4d0a-4979-8df6-2f79d1e1b386}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\FileLister\innerclass\ErrorCode">
+      <UniqueIdentifier>{32de8e3f-851b-4899-8dd4-a264d6886ab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\FileLister\define">
+      <UniqueIdentifier>{cbadab84-e84b-4343-b99b-f1c8e0b7e766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Logic">
+      <UniqueIdentifier>{d0c34969-abd7-4908-b1aa-bce828fe5e66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Logic\define">
+      <UniqueIdentifier>{153207b0-249c-4fec-8bd9-173019cb83ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Logic\innerclass">
+      <UniqueIdentifier>{14e9453c-4639-4156-a693-237177e095ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Logic\innerclass\ErrorCode">
+      <UniqueIdentifier>{dcb8b45d-595d-4aaa-b21a-d8b7bea4776b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Logic\innerclass\OperatorType">
+      <UniqueIdentifier>{beb569fe-c90c-42b5-a4c4-1dc9c1c5be40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\PriorityChanger">
+      <UniqueIdentifier>{2fdd1540-747c-4c42-ad59-05de00e94a31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\PriorityChanger\innerclass">
+      <UniqueIdentifier>{d10a721b-7457-4513-a4bd-365760b53389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\PriorityChanger\innerclass\ErrorCode">
+      <UniqueIdentifier>{5e188378-3c50-4d72-9fd5-708dd58a3176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\PriorityChanger\define">
+      <UniqueIdentifier>{89d4b5b7-0681-415b-bf1c-d476cdf2cd34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\GroupChanger">
+      <UniqueIdentifier>{7dfe2cd5-30e3-4ff5-ad30-c246e27cfb9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\GroupChanger\innerclass">
+      <UniqueIdentifier>{129790c2-bbc5-4340-ab56-a9b8cc981274}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\GroupChanger\innerclass\ErrorCode">
+      <UniqueIdentifier>{1c53b602-408d-4135-84fa-b80c1326d013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\GroupChanger\define">
+      <UniqueIdentifier>{b1a7b55e-79fe-4ea7-8577-7343f279873d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementExtractor">
+      <UniqueIdentifier>{906042eb-7359-4574-8b40-ce3ac472abdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementExtractor\inneclass">
+      <UniqueIdentifier>{deda7a57-9265-42a0-877d-2145bacd7e65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementExtractor\inneclass\ErrorCode">
+      <UniqueIdentifier>{10b385db-d0a4-4555-9972-efe497651f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ElementExtractor\define">
+      <UniqueIdentifier>{17d10ced-ab32-460a-8efa-1e96c94fd2e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Exactor">
+      <UniqueIdentifier>{5a3a7924-899a-4c1b-9943-d6bd88c141dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Exactor\define">
+      <UniqueIdentifier>{8b1f5c6c-4cf1-40c3-845d-6d8b7a2f1fa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Exactor\innerclass">
+      <UniqueIdentifier>{3c2593a8-e109-4174-93e0-adeb63772414}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Exactor\innerclass\ErrorCode">
+      <UniqueIdentifier>{03cdcbfd-4829-4c73-812f-4f047685746f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeCreator">
+      <UniqueIdentifier>{f1915e6a-134f-402f-84f0-9b4cc95fba69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeCreator\innerclass">
+      <UniqueIdentifier>{3e6cb631-4f3d-47b2-aa9e-dc9b8f8c5d22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeCreator\innerclass\ErrorCode">
+      <UniqueIdentifier>{7e1de907-e72e-4403-a854-f7df510be63b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeCreator\define">
+      <UniqueIdentifier>{4ee7b007-e566-4309-8f47-a442155a488b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeRemover">
+      <UniqueIdentifier>{123302d3-29e2-48f3-ab02-38ecfb4fa66c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeRemover\define">
+      <UniqueIdentifier>{ca4e722f-b536-472f-9413-d196b20d5a8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeRemover\innerclass">
+      <UniqueIdentifier>{c60e10ef-8a51-4cd1-8792-4f34f03d8e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeRemover\innerclass\ErrorCode">
+      <UniqueIdentifier>{e30aec41-a501-46e0-8e91-c55010642085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ScriptFileLister">
+      <UniqueIdentifier>{539a662b-f383-4b3c-87d8-3db4499ace1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ScriptFileLister\define">
+      <UniqueIdentifier>{947c6540-2ba0-4776-b146-9219af44c3fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ScriptFileLister\inneclass">
+      <UniqueIdentifier>{5ea5977d-ee02-4200-a2bc-60d0be2da0a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ScriptFileLister\inneclass\ErrorCode">
+      <UniqueIdentifier>{baf4a5fd-e99e-4acf-9741-33b32940101c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeFileLister">
+      <UniqueIdentifier>{30312d8c-45d3-471f-a83f-51517ebea5a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeFileLister\define">
+      <UniqueIdentifier>{cb848b4a-3f1c-4c0b-87f2-21b0566687dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeFileLister\innerclass">
+      <UniqueIdentifier>{fc99a8d4-4d6c-4312-88a9-aa7c9bf9c810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NodeFileLister\innerclass\ErrorCode">
+      <UniqueIdentifier>{1534f3b7-9a80-49b5-a103-8a6dae145dd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\StorerTemplate">
+      <UniqueIdentifier>{8a832922-6cbf-4714-b0fe-9ef6143de81d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\StorerTemplate\innerclass">
+      <UniqueIdentifier>{8f1a3238-8b4e-48bf-9848-61cbd9304832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\StorerTemplate\innerclass\Connector">
+      <UniqueIdentifier>{5451bbbe-6acd-45d1-9cb2-971bad88abc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\StorerTemplate\innerclass\ErrorCode">
+      <UniqueIdentifier>{b2cfcf5b-5049-4004-998b-326d389bf499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\StorerTemplate\define">
+      <UniqueIdentifier>{1897e8ca-ecf5-4a50-a857-5e08bbc8177e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\StorerTemplate\Templates">
+      <UniqueIdentifier>{c1003c64-0b61-42fc-85db-41123df371d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{c7f5b9b3-6dec-4456-8c30-644ed589a306}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\Commons\EntryPoint.hpp">
+      <Filter>Sources\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Includes\include.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Enabler\Enabler.hpp">
+      <Filter>Sources\Modules\Enabler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Enabler\define\define.hpp">
+      <Filter>Sources\Modules\Enabler\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Enabler\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\Enabler\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Assigner\Assigner.hpp">
+      <Filter>Sources\Modules\Assigner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Assigner\define\define.hpp">
+      <Filter>Sources\Modules\Assigner\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Assigner\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\Assigner\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\FrameCounter\FrameCounter.hpp">
+      <Filter>Sources\Modules\FrameCounter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\FrameCounter\define\define.hpp">
+      <Filter>Sources\Modules\FrameCounter\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\FrameCounter\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\FrameCounter\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Timer\Timer.hpp">
+      <Filter>Sources\Modules\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Timer\define\define.hpp">
+      <Filter>Sources\Modules\Timer\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Timer\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\Timer\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\If\If.hpp">
+      <Filter>Sources\Modules\If</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\If\define\define.hpp">
+      <Filter>Sources\Modules\If\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\If\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\If\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Looper\Looper.hpp">
+      <Filter>Sources\Modules\Looper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Looper\define\define.hpp">
+      <Filter>Sources\Modules\Looper\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Looper\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\Looper\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\IfElse\IfElse.hpp">
+      <Filter>Sources\Modules\IfElse</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\IfElse\define\define.hpp">
+      <Filter>Sources\Modules\IfElse\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\IfElse\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\IfElse\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Extender\Extender.hpp">
+      <Filter>Sources\Modules\Extender</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Extender\define\define.hpp">
+      <Filter>Sources\Modules\Extender\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Extender\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\Extender\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ElementInserter\ElementInserter.hpp">
+      <Filter>Sources\Modules\ElementInserter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ElementInserter\define\define.hpp">
+      <Filter>Sources\Modules\ElementInserter\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ElementInserter\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\ElementInserter\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ElementRemover\ElementRemover.hpp">
+      <Filter>Sources\Modules\ElementRemover</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ElementRemover\define\define.hpp">
+      <Filter>Sources\Modules\ElementRemover\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ElementRemover\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\ElementRemover\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NameChanger\NameChanger.hpp">
+      <Filter>Sources\Modules\NameChanger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NameChanger\define\define.hpp">
+      <Filter>Sources\Modules\NameChanger\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NameChanger\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NameChanger\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\BinarySaver\BinarySaver.hpp">
+      <Filter>Sources\Modules\BinarySaver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\BinarySaver\define\define.hpp">
+      <Filter>Sources\Modules\BinarySaver\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\BinarySaver\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\BinarySaver\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\BinaryLoader\BinaryLoader.hpp">
+      <Filter>Sources\Modules\BinaryLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\BinaryLoader\define\define.hpp">
+      <Filter>Sources\Modules\BinaryLoader\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\BinaryLoader\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\BinaryLoader\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ErrorSpy\ErrorSpy.hpp">
+      <Filter>Sources\Modules\ErrorSpy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ErrorSpy\define\define.hpp">
+      <Filter>Sources\Modules\ErrorSpy\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ErrorSpy\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\ErrorSpy\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\FileLister\FileLister.hpp">
+      <Filter>Sources\Modules\FileLister</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\FileLister\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\FileLister\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\FileLister\define\define.hpp">
+      <Filter>Sources\Modules\FileLister\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Logic\Logic.hpp">
+      <Filter>Sources\Modules\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Logic\define\define.hpp">
+      <Filter>Sources\Modules\Logic\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Logic\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\Logic\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Logic\innerclass\OperatorType\OperatorType.hpp">
+      <Filter>Sources\Modules\Logic\innerclass\OperatorType</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\PriorityChanger\PriorityChanger.hpp">
+      <Filter>Sources\Modules\PriorityChanger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\PriorityChanger\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\PriorityChanger\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\PriorityChanger\define\define.hpp">
+      <Filter>Sources\Modules\PriorityChanger\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\GroupChanger\GroupChanger.hpp">
+      <Filter>Sources\Modules\GroupChanger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\GroupChanger\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\GroupChanger\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\GroupChanger\define\define.hpp">
+      <Filter>Sources\Modules\GroupChanger\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ElementExtractor\ElementExtractor.hpp">
+      <Filter>Sources\Modules\ElementExtractor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ElementExtractor\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\ElementExtractor\inneclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ElementExtractor\define\define.hpp">
+      <Filter>Sources\Modules\ElementExtractor\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Exactor\Exactor.hpp">
+      <Filter>Sources\Modules\Exactor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Exactor\define\define.hpp">
+      <Filter>Sources\Modules\Exactor\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\Exactor\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\Exactor\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NodeCreator\NodeCreator.hpp">
+      <Filter>Sources\Modules\NodeCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NodeCreator\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NodeCreator\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NodeCreator\define\define.hpp">
+      <Filter>Sources\Modules\NodeCreator\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NodeRemover\NodeRemover.hpp">
+      <Filter>Sources\Modules\NodeRemover</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NodeRemover\define\define.hpp">
+      <Filter>Sources\Modules\NodeRemover\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NodeRemover\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NodeRemover\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ScriptFileLister\ScriptFileLister.hpp">
+      <Filter>Sources\Modules\ScriptFileLister</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ScriptFileLister\define\define.hpp">
+      <Filter>Sources\Modules\ScriptFileLister\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\ScriptFileLister\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\ScriptFileLister\inneclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NodeFileLister\NodeFileLister.hpp">
+      <Filter>Sources\Modules\NodeFileLister</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NodeFileLister\define\define.hpp">
+      <Filter>Sources\Modules\NodeFileLister\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\NodeFileLister\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NodeFileLister\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\StorerTemplate\StorerTemplate.hpp">
+      <Filter>Sources\Modules\StorerTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\StorerTemplate\innerclass\Connector\Connector.hpp">
+      <Filter>Sources\Modules\StorerTemplate\innerclass\Connector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\StorerTemplate\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\StorerTemplate\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\StorerTemplate\define\define.hpp">
+      <Filter>Sources\Modules\StorerTemplate\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Modules\StorerTemplate\Templates\Templates.hpp">
+      <Filter>Sources\Modules\StorerTemplate\Templates</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\Enabler\Enabler.cpp">
+      <Filter>Sources\Modules\Enabler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\Assigner\Assigner.cpp">
+      <Filter>Sources\Modules\Assigner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\FrameCounter\FrameCounter.cpp">
+      <Filter>Sources\Modules\FrameCounter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\Timer\Timer.cpp">
+      <Filter>Sources\Modules\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\If\If.cpp">
+      <Filter>Sources\Modules\If</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\Looper\Looper.cpp">
+      <Filter>Sources\Modules\Looper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\IfElse\IfElse.cpp">
+      <Filter>Sources\Modules\IfElse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\Extender\Extender.cpp">
+      <Filter>Sources\Modules\Extender</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\ElementInserter\ElementInserter.cpp">
+      <Filter>Sources\Modules\ElementInserter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\ElementRemover\ElementRemover.cpp">
+      <Filter>Sources\Modules\ElementRemover</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\NameChanger\NameChanger.cpp">
+      <Filter>Sources\Modules\NameChanger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\BinarySaver\BinarySaver.cpp">
+      <Filter>Sources\Modules\BinarySaver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\BinaryLoader\BinaryLoader.cpp">
+      <Filter>Sources\Modules\BinaryLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\ErrorSpy\ErrorSpy.cpp">
+      <Filter>Sources\Modules\ErrorSpy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\FileLister\FileLister.cpp">
+      <Filter>Sources\Modules\FileLister</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\Logic\Logic.cpp">
+      <Filter>Sources\Modules\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\PriorityChanger\PriorityChanger.cpp">
+      <Filter>Sources\Modules\PriorityChanger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\GroupChanger\GroupChanger.cpp">
+      <Filter>Sources\Modules\GroupChanger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\ElementExtractor\ElementExtractor.cpp">
+      <Filter>Sources\Modules\ElementExtractor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\Exactor\Exactor.cpp">
+      <Filter>Sources\Modules\Exactor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\NodeCreator\NodeCreator.cpp">
+      <Filter>Sources\Modules\NodeCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\NodeRemover\NodeRemover.cpp">
+      <Filter>Sources\Modules\NodeRemover</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\ScriptFileLister\ScriptFileLister.cpp">
+      <Filter>Sources\Modules\ScriptFileLister</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Modules\NodeFileLister\NodeFileLister.cpp">
+      <Filter>Sources\Modules\NodeFileLister</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Sources\Modules\StorerTemplate\StorerTemplate.inl">
+      <Filter>Sources\Modules\StorerTemplate</Filter>
+    </None>
+    <None Include="..\..\..\Sources\Modules\StorerTemplate\innerclass\Connector\Connector.inl">
+      <Filter>Sources\Modules\StorerTemplate\innerclass\Connector</Filter>
+    </None>
+  </ItemGroup>
+</Project>

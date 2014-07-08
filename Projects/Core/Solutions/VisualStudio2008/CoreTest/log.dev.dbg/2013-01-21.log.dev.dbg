@@ -1,0 +1,144 @@
+
+01/21/13	19:42:31
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		114 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(114)
+-----------------------------------------------------------
+
+01/21/13	19:42:31
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		55 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(55)
+-----------------------------------------------------------
+
+01/21/13	19:45:47
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		114 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(114)
+-----------------------------------------------------------
+
+01/21/13	19:45:47
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		55 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(55)
+-----------------------------------------------------------
+
+01/21/13	19:46:21
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		114 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(114)
+-----------------------------------------------------------
+
+01/21/13	19:46:21
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		55 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(55)
+-----------------------------------------------------------
+
+01/21/13	19:46:35
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		114 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(114)
+-----------------------------------------------------------
+
+01/21/13	19:46:35
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		55 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(55)
+-----------------------------------------------------------
+
+01/21/13	19:46:48
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		114 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(114)
+-----------------------------------------------------------
+
+01/21/13	19:46:48
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		55 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(55)
+-----------------------------------------------------------
+
+01/21/13	19:48:46
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		114 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(114)
+-----------------------------------------------------------
+
+01/21/13	19:48:46
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		55 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(55)
+-----------------------------------------------------------

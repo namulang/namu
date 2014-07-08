@@ -1,0 +1,780 @@
+
+07/07/14	23:47:20
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : locale.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:47:20
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : log directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:47:20
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setLogDirectory(const class NE::NEWString &)
+line :		122 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(122)
+-----------------------------------------------------------
+
+07/07/14	23:47:20
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : script directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:47:20
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setScriptDirectory(const class NE::NEWString &)
+line :		152 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(152)
+-----------------------------------------------------------
+
+07/07/14	23:47:20
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : node_directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:47:20
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setNodeDirectory(const class NE::NEWString &)
+line :		182 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(182)
+-----------------------------------------------------------
+
+07/07/14	23:47:21
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : debug flag.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:48:24
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : locale.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:48:24
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : log directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:48:25
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setLogDirectory(const class NE::NEWString &)
+line :		122 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(122)
+-----------------------------------------------------------
+
+07/07/14	23:48:25
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : script directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:48:25
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setScriptDirectory(const class NE::NEWString &)
+line :		152 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(152)
+-----------------------------------------------------------
+
+07/07/14	23:48:25
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : node_directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:48:25
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setNodeDirectory(const class NE::NEWString &)
+line :		182 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(182)
+-----------------------------------------------------------
+
+07/07/14	23:48:25
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : debug flag.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:50:05
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : locale.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:50:05
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : log directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:50:05
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setLogDirectory(const class NE::NEWString &)
+line :		122 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(122)
+-----------------------------------------------------------
+
+07/07/14	23:50:05
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : script directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:50:06
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setScriptDirectory(const class NE::NEWString &)
+line :		152 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(152)
+-----------------------------------------------------------
+
+07/07/14	23:50:06
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : node_directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:50:06
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setNodeDirectory(const class NE::NEWString &)
+line :		182 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(182)
+-----------------------------------------------------------
+
+07/07/14	23:50:06
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : debug flag.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:53:48
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : locale.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:53:48
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : log directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:53:48
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setLogDirectory(const class NE::NEWString &)
+line :		122 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(122)
+-----------------------------------------------------------
+
+07/07/14	23:53:48
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : script directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:53:48
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setScriptDirectory(const class NE::NEWString &)
+line :		152 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(152)
+-----------------------------------------------------------
+
+07/07/14	23:53:48
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : node_directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:53:48
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setNodeDirectory(const class NE::NEWString &)
+line :		182 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(182)
+-----------------------------------------------------------
+
+07/07/14	23:53:48
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : debug flag.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:55:50
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : locale.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:55:50
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : log directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:55:50
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setLogDirectory(const class NE::NEWString &)
+line :		122 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(122)
+-----------------------------------------------------------
+
+07/07/14	23:55:50
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : script directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:55:50
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setScriptDirectory(const class NE::NEWString &)
+line :		152 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(152)
+-----------------------------------------------------------
+
+07/07/14	23:55:50
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : node_directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:55:50
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setNodeDirectory(const class NE::NEWString &)
+line :		182 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(182)
+-----------------------------------------------------------
+
+07/07/14	23:55:50
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : debug flag.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:56:27
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : locale.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:56:27
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : log directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:56:27
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setLogDirectory(const class NE::NEWString &)
+line :		122 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(122)
+-----------------------------------------------------------
+
+07/07/14	23:56:27
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : script directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:56:27
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setScriptDirectory(const class NE::NEWString &)
+line :		152 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(152)
+-----------------------------------------------------------
+
+07/07/14	23:56:27
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : node_directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:56:27
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setNodeDirectory(const class NE::NEWString &)
+line :		182 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(182)
+-----------------------------------------------------------
+
+07/07/14	23:56:27
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : debug flag.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:56:28
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+07/07/14	23:56:28
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+07/07/14	23:57:49
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : locale.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:57:49
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : log directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:57:49
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setLogDirectory(const class NE::NEWString &)
+line :		122 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(122)
+-----------------------------------------------------------
+
+07/07/14	23:57:50
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : script directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:57:50
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setScriptDirectory(const class NE::NEWString &)
+line :		152 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(152)
+-----------------------------------------------------------
+
+07/07/14	23:57:50
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : node_directory.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------
+
+07/07/14	23:57:50
+-----------------------------------------------------------
+ : 
+-----------------------------------------------------------
+domain :	Kernal
+type :		Warning
+function :	int __thiscall NE::Kernal::ModifiableSettings::setNodeDirectory(const class NE::NEWString &)
+line :		182 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\kernal\innerclass\modifiablesettings\modifiablesettings.cpp(182)
+-----------------------------------------------------------
+
+07/07/14	23:57:50
+-----------------------------------------------------------
+E201001C13 : INI로부터 데이터 읽기 실패
+데이터를 읽어 올수 없었습니다.
+호출한 모듈에게 에러를 반환합니다. 만약, 모듈에서 에러를 대처하는 코드가 존재한다면 기본값이 세팅될 것 입니다.
+카테고리 : Kernal.dev.dbg - haku - 1
+키 제목 : debug flag.dev.dbg
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEINIManager::read(const class NE::NEWString &,const class NE::NEWString &,class NE::NEWString &) const
+line :		215 
+z:\projects\progressing\node\projects\core\sources\kernal\sources\modules\neinimanager\neinimanager.cpp(215)
+-----------------------------------------------------------

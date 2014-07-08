@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Developer.Debug|Win32">
+      <Configuration>Developer.Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Developer.Release|Win32">
+      <Configuration>Developer.Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2E36334E-1255-4620-B093-E6FA88C34B40}</ProjectGuid>
+    <RootNamespace>Kernal</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'">
+    <OutDir>$(ProjectDir)..\..\..\Binaries\Core\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental />
+    <TargetName>$(ProjectName).dev.dbg</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\..\Binaries\Core\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName).dev</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\..\Binaries\Core\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;KERNAL_EXPORTS;DEVELOPER;CORES_BUILD_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(ProjectDir)..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\Core $(ProjectDir)..\..\..\..\..\SDK\Libraries\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;KERNAL_EXPORTS;DEVELOPER;CORES_BUILD_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(ProjectDir)..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\Core $(ProjectDir)..\..\..\..\..\SDK\Libraries\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;KERNAL_EXPORTS;CORES_BUILD_MODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(ProjectDir)..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\Core $(ProjectDir)..\..\..\..\..\SDK\Libraries\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="VersionNo.ini" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NECollector.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEPointerCollector.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEPointerStack.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEPointerStackWithPolyMorphism.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEStack.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEList.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEPointerList.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEPointerListWithPolyMorphism.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIterator\PointerIterator.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\Iterator\Iterator.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIteratorWithPolyMorphism\PointerIteratorWithPolyMorphism.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKeyTemplate\NEKeyTemplate.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEModuleSelectorTemplate.inl" />
+    <None Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\NEKeySelectorTemplate.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEObject.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEKeySet\NEKeySet.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEModuleSet.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEManagedModuleSet\NEManagedModuleSet.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NENodeSet.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NEManagedNodeSet\NEManagedNodeSet.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEShortCutSet\NEShortCutSet.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet\NEWString\NEWString.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECodeSet\NEModuleScriptCodeSet\NEModuleScriptCodeSet.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECharSet\NEString\NEString.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEEnrollableNodeList.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedNodeList\NEManagedNodeList.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\FlagSet\FlagSet.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NEUnit.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NENamedUnit.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NENode\NENode.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModule.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\NEDebugManager.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\Flag\Flag.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\NEINIManager.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\NENodeManager.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\innerclass\LocalStack\LocalStack.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\NEModuleManager.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\DLLHeader\DLLHeader.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\NEScriptManager.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\innerclass\ScriptHeader\ScriptHeader.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\innerclass\BaseConnector\BaseConnector.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\Kernal.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Factory\Factory.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\Settings.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\ModifiableSettings\ModifiableSettings.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKey.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKeyTemplate\NEKeyTemplate.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorInterface.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelectorBase.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelector\NENodeSelector.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Units\NEModuleDepthUnit\NEModuleDepthUnit.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEBinaryTemplates\NEBinaryLoaderTemplates\NEBinaryLoaderTemplates.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEBinaryTemplates\NEBinarySaverTemplates\NEBinarySaverTemplates.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEResult\NEResult.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\NEExportable.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Identifier.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\Header.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\ModuleHeader\ModuleHeader.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\Commons\Enums\NEType\NEType.cpp" />
+    <ClCompile Include="..\..\..\Sources\Kernal\Sources\EntryPoints\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEObject.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NECollector.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEPointerCollector.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEPointerStack.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEPointerStackWithPolyMorphism.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEStack.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEKeySet\NEKeySet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEModuleSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEManagedModuleSet\NEManagedModuleSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NENodeSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NEManagedNodeSet\NEManagedNodeSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEUByteSet\NEUByteSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEUIntSet\NEUIntSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEShortCutSet\NEShortCutSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEBooleanSet\NEBooleanSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEShortSet\NEShortSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEFloatSet\NEFloatSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEDoubleSet\NEDoubleSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEByteSet\NEByteSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet\NEWCharSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet\NEWString\NEWString.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEInt64Set\NEInt64Set.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEIntSet\NEIntSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECodeSet\NECodeSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECodeSet\NEModuleScriptCodeSet\NEModuleScriptCodeSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECharSet\NECharSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECharSet\NEString\NEString.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEUShortSet\NEUShortSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeIdSet\NENodeIdSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEPointerList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEPointerListWithPolyMorphism.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIterator\PointerIterator.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\Iterator\Iterator.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\innerclass\PointerIteratorWithPolyMorphism\PointerIteratorWithPolyMorphism.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEModuleList\NEModuleList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NENodeList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEEnrollableNodeList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedNodeList\NEManagedNodeList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEShortCut\NEShortCut.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEStringList\NEStringList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEWStringList\NEWStringList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NEModuleDepthList\NEModuleDepthList.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NEUnit.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NENamedUnit.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NENode\NENode.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModule.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\NEDebugManager.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\DebugMacro\DebugMacro.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\FlagSet\FlagSet.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\Flag\Flag.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\ErrorCode\ErrorCode.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\NEINIManager.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\innerclass\ErrorCode\ErrorCode.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\NENodeManager.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\innerclass\LocalStack\LocalStack.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\NEModuleManager.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\ErrorCode\ErrorCode.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\DLLHeader\DLLHeader.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\NEScriptManager.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\innerclass\ScriptHeader\ScriptHeader.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\innerclass\BaseConnector\BaseConnector.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\Kernal.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\ErrorCode\ErrorCode.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Factory\Factory.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\Settings.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\ModifiableSettings\ModifiableSettings.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKey.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKeyTemplate\NEKeyTemplate.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKeyTemplate\Templates\Templates.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorInterface.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelectorBase.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelector\NENodeSelector.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEModuleSelectorTemplate.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\Templates\Templates.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\NEKeySelectorTemplate.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\Templates\Templates.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Units\NEModuleDepthUnit\NEModuleDepthUnit.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEBinaryTemplates\NEBinaryLoaderTemplates\NEBinaryLoaderTemplates.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEBinaryTemplates\NEBinarySaverTemplates\NEBinarySaverTemplates.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEResult\NEResult.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEResult\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NEResult\innerclass\Level\Level.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Functions\NETemplateChecker\NETemplateChecker.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEInitializable.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\NEExportable.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Identifier.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\Header.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\ModuleHeader\ModuleHeader.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEEnrollable\NEEnrollable.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEBeManaged\NEBeManaged.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Enums\NEType\NEType.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Enums\CodeType\CodeType.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Commons\Typedefs\NETString\NETString.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\Includes\IncludeFileAccess.hpp" />
+    <ClInclude Include="..\..\..\Sources\Kernal\Sources\EntryPoints\header.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{c5dc7151-4487-48c8-8c35-59ccea0b6f09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons">
+      <UniqueIdentifier>{b7dbe95f-1d89-466a-9e8f-a80f0767696b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{59e1bde0-4364-4ec4-a1d2-c4750e33e8fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{25ed2b44-7687-4f3b-aea1-bbc5f5802823}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{95fd5b7e-5650-4a99-9ff4-abc020cae129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardPanelManager">
+      <UniqueIdentifier>{b12ad88e-67bb-4bc5-af21-5978c921d6c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardPanelManager\define">
+      <UniqueIdentifier>{e2cea196-ab27-4077-bde0-b6cb4d125218}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardPanelManager\Execute">
+      <UniqueIdentifier>{3fee3f7b-3499-441b-87a7-e2f34b8adf4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardPanelManager\Execute\innerclass">
+      <UniqueIdentifier>{09a0d6a6-6073-456a-a3fd-6102cfa18f0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardPanelManager\Execute\innerclass\ErrorCode">
+      <UniqueIdentifier>{4b4af98e-ed27-4a2e-9d2a-622aca19a305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardPanelManager\Execute\innerclass\StandardPanelDLLHeader">
+      <UniqueIdentifier>{478e94b5-29a6-4d79-8afb-2c307e129baf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptEditor">
+      <UniqueIdentifier>{33a00433-0176-4da7-99da-910c9cd71b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptEditor\define">
+      <UniqueIdentifier>{19a26a80-50f8-41fd-86c9-a098ae2f9ace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptEditor\Execute">
+      <UniqueIdentifier>{20483ceb-42be-486f-91de-44b6bcdb04c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptEditor\Execute\innerclass">
+      <UniqueIdentifier>{bfed91a3-5bd0-406d-8dc3-9b22a17cc176}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptEditor\Execute\innerclass\ErrorCode">
+      <UniqueIdentifier>{5ea4a6ef-8401-4eda-931b-32c58b84e859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList">
+      <UniqueIdentifier>{649ad9b7-863e-410e-a86a-196e06905ea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\innerclass">
+      <UniqueIdentifier>{59b71973-460f-4fb9-a2ac-c8d7e2fa5968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\innerclass\StandardBanks">
+      <UniqueIdentifier>{1c6c7940-57b2-463a-b8f0-ab3f3d5f480f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{1f24fc50-2cc2-4619-9cdf-186368fcce61}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Commons\EntryPoint.hpp">
+      <Filter>Sources\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Includes\include.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\NEStandardPanelManager.hpp">
+      <Filter>Sources\Modules\NEStandardPanelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\define\define.hpp">
+      <Filter>Sources\Modules\NEStandardPanelManager\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\Execute\NEStandardPanelManager.hpp">
+      <Filter>Sources\Modules\NEStandardPanelManager\Execute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\Execute\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEStandardPanelManager\Execute\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\Execute\innerclass\StandardPanelDLLHeader\StandardPanelDLLHeader.hpp">
+      <Filter>Sources\Modules\NEStandardPanelManager\Execute\innerclass\StandardPanelDLLHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\NEStandardScriptEditor.hpp">
+      <Filter>Sources\Modules\NEStandardScriptEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\define\define.hpp">
+      <Filter>Sources\Modules\NEStandardScriptEditor\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\NEStandardScriptEditor.hpp">
+      <Filter>Sources\Modules\NEStandardScriptEditor\Execute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEStandardScriptEditor\Execute\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\StandardManagedScriptList.hpp">
+      <Filter>Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\innerclass\StandardBanks\StandardBanks.hpp">
+      <Filter>Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\innerclass\StandardBanks</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\Execute\NEStandardPanelManager.cpp">
+      <Filter>Sources\Modules\NEStandardPanelManager\Execute</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\Execute\innerclass\StandardPanelDLLHeader\StandardPanelDLLHeader.cpp">
+      <Filter>Sources\Modules\NEStandardPanelManager\Execute\innerclass\StandardPanelDLLHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\NEStandardScriptEditor.cpp">
+      <Filter>Sources\Modules\NEStandardScriptEditor\Execute</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\StandardManagedScriptList.cpp">
+      <Filter>Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\innerclass\StandardBanks\StandardBanks.cpp">
+      <Filter>Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\innerclass\StandardBanks</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VersionNo.ini">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,132 @@
+최적화 시키지 않은 오리지날 코드.
+
+
+
+//	카메라 1개를 렌더링 하기전에 실행해야할 필터링작업을 수행한다.
+void	CShader::preFiltering(CCamera* camera)
+{
+	if ( _iniShaderOn)
+	{
+		if (_last_preserve_index) // last preserve가 존재하는가?
+		{
+			if ( camera->isPreserved() ) // 이카메라는 preserve를 사용하는가
+			{
+				if (camera == _last_preserve_index) // 만약 이 카메라가 마지막 preserve인가?
+				{
+					// preserve가 있는 상황에서 마지막 preserve 필터
+					//	X (최신에다가)
+					return;
+				}
+				else
+				{
+					// preserve가 있는 상황에서 중간 preserve 필터
+					//	X (최신에다가)
+					return;
+				}
+			}
+			else 
+			{
+				if (camera->isThereEnabledFilter()) // 필터가 존재하는가
+				{
+					// preserve가 있는 상황에서 개별 필터
+					//	swap 비최신, 버퍼클리어
+					swapToOldTarget();
+					clearBuffer(DEFAULT_CENGINE_RENDERTARGET_BACKGROUND);
+				}
+				else
+				{
+					// preserve가 있는 상황에서 그냥 렌더링
+					//	X (최신에다가)
+				}
+			}
+		}
+		else
+		{
+			if (camera->isThereEnabledFilter()) // 필터가 존재하는가
+			{
+				// preserve가 없고, 개별 필터
+				swapToOldTarget();
+				clearBuffer(DEFAULT_CENGINE_RENDERTARGET_BACKGROUND);
+			}
+			else
+			{
+				// preserve 없고, 그냥 렌더링
+				//	X (메인프레임)
+			}
+		}
+	}
+	else // 셰이더가 꺼져있음
+	{
+		// 오직 그냥 렌더링			
+		//	X (메인프레임)
+	}
+}
+//	렌더링 후, 필터링을 하기 위한 마무리작업
+void	CShader::postFiltering(CCamera* camera, LPDIRECT3DVERTEXBUFFER9 vertex_buffer)
+{
+	if ( _iniShaderOn)
+	{
+		if (_last_preserve_index) // last preserve가 존재하는가?
+		{
+			if (camera->isPreserved()) // 이카메라는 preserve를 사용하는가
+			{
+				if (camera == _last_preserve_index) // 만약 이 카메라가 마지막 preserve인가?
+				{
+					// preserve가 있는 상황에서 마지막 preserve 필터
+					//	메인프레임으로 타겟 변경 (처음 메인프레임에 그리는 시점. 이미 버퍼클리어가 되어있음)
+					//	텍스쳐는 최신
+					swapToMainFrame();
+					filtering(camera, _temp_texture[getRecentIndex()], vertex_buffer);
+					initializeLastPreserveCamera();
+				}
+				else
+				{
+					// preserve가 있는 상황에서 중간 preserve 필터
+					//	타겟: 비최신 -> 버퍼클리어.
+					//	텍스쳐: 최신
+					//	그리고, 최신을 갱신함
+					swapToOldTarget();
+					clearBuffer(DEFAULT_CENGINE_RENDERTARGET_BACKGROUND);
+					filtering(camera, _temp_texture[getRecentIndex()], vertex_buffer);
+					swapOldToRecentIndex();
+				}
+			}
+			else 
+			{
+				if (camera->isThereEnabledFilter()) // 필터가 존재하는가
+				{
+					// preserve가 있는 상황에서 개별 필터
+					//	타겟: 최신
+					//	텍스쳐: 비최신
+					swapToRecentTarget();
+					filtering(camera, _temp_texture[getOldIndex()], vertex_buffer);
+				}
+				else
+				{
+					// preserve가 있는 상황에서 그냥 렌더링
+					//	X (최신에다가)
+				}
+			}
+		}
+		else
+		{
+			if (camera->isThereEnabledFilter()) // 필터가 존재하는가
+			{
+				// preserve가 없고, 개별 필터
+				//	버퍼:
+				swapToMainFrame();
+				filtering(camera, _temp_texture[getOldIndex()], vertex_buffer);					
+			}
+			else
+			{
+				// preserve 없고, 그냥 렌더링
+				//	X (메인프레임)
+			}
+		}
+	}
+	else // 셰이더가 꺼져있음
+	{
+		// 오직 그냥 렌더링			
+		//	X (메인프레임)
+	}
+}	

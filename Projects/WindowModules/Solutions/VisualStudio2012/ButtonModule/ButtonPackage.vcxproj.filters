@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{fddbbf60-6a07-40ff-a71a-ba52ee23fa8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons">
+      <UniqueIdentifier>{c810f309-59e9-4ed0-8363-240e2bcf285e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{e094aba7-91a2-4196-9302-00d4174a0bbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{1f8cd340-b51a-46d8-8ef9-febaf8140290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{e79dde1c-7fa3-44a2-8b3f-6df6ad2e5008}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Button">
+      <UniqueIdentifier>{d0b4c455-7cd3-4e80-94a4-498d732a11e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Button\define">
+      <UniqueIdentifier>{0d6e1a51-5931-4695-b000-115d7307aea1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Button\Execute">
+      <UniqueIdentifier>{bf7ce525-6c2b-4b26-bcb4-d1bca05c2e75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Button\Execute\innerclass">
+      <UniqueIdentifier>{2443a93f-b7a9-4846-834e-3d475312500a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Button\Execute\innerclass\ErrorCode">
+      <UniqueIdentifier>{e6599c56-26bb-40dc-96a7-bde3e39fb568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Button\Execute\innerclass\ButtonConnector">
+      <UniqueIdentifier>{d9ad75f0-dd99-4f20-addd-afc4dcf94517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ButtonClickSpy">
+      <UniqueIdentifier>{05a2249b-3934-453b-a510-bb894995550c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ButtonClickSpy\define">
+      <UniqueIdentifier>{38cc40dd-15a2-4fbb-9733-00bb5748f2e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ButtonClickSpy\innerclass">
+      <UniqueIdentifier>{492c6792-8100-4bb9-a28c-12f38f60e0f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\ButtonClickSpy\innerclass\ErrorCode">
+      <UniqueIdentifier>{12c1b40b-e773-42b4-8792-57d1705ccb8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{8f5b26bc-af01-4c2a-ac22-b64fea2bdb1f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Commons\EntryPoint.hpp">
+      <Filter>Sources\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Includes\include.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Button.hpp">
+      <Filter>Sources\Modules\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\define\define.hpp">
+      <Filter>Sources\Modules\Button\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\Button.hpp">
+      <Filter>Sources\Modules\Button\Execute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\Button\Execute\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\innerclass\ButtonConnector\ButtonConnector.hpp">
+      <Filter>Sources\Modules\Button\Execute\innerclass\ButtonConnector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\ButtonClickSpy\ButtonClickSpy.hpp">
+      <Filter>Sources\Modules\ButtonClickSpy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\ButtonClickSpy\define\define.hpp">
+      <Filter>Sources\Modules\ButtonClickSpy\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\ButtonClickSpy\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\ButtonClickSpy\innerclass\ErrorCode</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\ButtonModule\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\Button.cpp">
+      <Filter>Sources\Modules\Button\Execute</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\innerclass\ButtonConnector\ButtonConnector.cpp">
+      <Filter>Sources\Modules\Button\Execute\innerclass\ButtonConnector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\ButtonModule\Sources\Modules\ButtonClickSpy\ButtonClickSpy.cpp">
+      <Filter>Sources\Modules\ButtonClickSpy</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

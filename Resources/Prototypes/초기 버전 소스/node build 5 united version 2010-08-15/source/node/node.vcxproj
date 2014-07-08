@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3A6E6FBE-6E5A-4ED2-82D3-2A09D53E6497}</ProjectGuid>
+    <RootNamespace>node</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <AssemblerOutput />
+      <AssemblerListingLocation>$(IntDir)asm</AssemblerListingLocation>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <ShowProgress>NotSet</ShowProgress>
+      <ManifestFile>$(OutDir)$(ProjectName).exe.manifest</ManifestFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <Profile>false</Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <AssemblerOutput />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <ManifestFile>$(OutDir)$(ProjectName).exe.manifest</ManifestFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="text\filter_route.txt" />
+    <Text Include="text\preFiltering_postFiltering_모든 경우의 수.txt" />
+    <Text Include="text\검색 매크로.txt" />
+    <Text Include="text\매크로 설명.txt" />
+    <Text Include="text\인라인을 사용하는 함수의 조건.txt" />
+    <Text Include="text\클래스 헤더파일 양식.txt" />
+    <Text Include="text\프로그램안에서 유니코드와 멀티바이트를 어떻게 하나.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\define.hpp" />
+    <ClInclude Include="source\CHUB.hpp" />
+    <ClInclude Include="source\CError.hpp" />
+    <ClInclude Include="source\CEngine.hpp" />
+    <ClInclude Include="source\CArea.hpp" />
+    <ClInclude Include="source\CRgb.hpp" />
+    <ClInclude Include="source\CArgb.hpp" />
+    <ClInclude Include="source\CTexture.hpp" />
+    <ClInclude Include="source\CFilter.hpp" />
+    <ClInclude Include="source\CBlurFilter.hpp" />
+    <ClInclude Include="source\CNoiseFilter.hpp" />
+    <ClInclude Include="source\CBloomFilter.hpp" />
+    <ClInclude Include="source\CShader.hpp" />
+    <ClInclude Include="source\CINI.hpp" />
+    <ClInclude Include="source\CScripter.hpp" />
+    <ClInclude Include="source\CCamera.hpp" />
+    <ClInclude Include="source\CFilterData.hpp" />
+    <ClInclude Include="source\CBlurFilterData.hpp" />
+    <ClInclude Include="source\CNoiseFilterData.hpp" />
+    <ClInclude Include="source\CBloomFilterData.hpp" />
+    <ClInclude Include="source\CWindow.hpp" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\CHUB.cpp" />
+    <ClCompile Include="source\CError.cpp" />
+    <ClCompile Include="source\CEngine.cpp" />
+    <ClCompile Include="source\CArea.cpp" />
+    <ClCompile Include="source\CRgb.cpp" />
+    <ClCompile Include="source\CArgb.cpp" />
+    <ClCompile Include="source\CTexture.cpp" />
+    <ClCompile Include="source\CFilter.cpp" />
+    <ClCompile Include="source\CBlurFilter.cpp" />
+    <ClCompile Include="source\CNoiseFilter.cpp" />
+    <ClCompile Include="source\CBloomFilter.cpp" />
+    <ClCompile Include="source\CShader.cpp" />
+    <ClCompile Include="source\CINI.cpp" />
+    <ClCompile Include="source\CScripter.cpp" />
+    <ClCompile Include="source\CCamera.cpp" />
+    <ClCompile Include="source\CBlurFilterData.cpp" />
+    <ClCompile Include="source\CNoiseFilterData.cpp" />
+    <ClCompile Include="source\CBloomFilterData.cpp" />
+    <ClCompile Include="source\CWindow.cpp" />
+    <ClCompile Include="source\WndProc.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="node.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\resource\graphic\background.png" />
+    <Image Include="..\resource\graphic\background2.jpg" />
+    <Image Include="..\resource\graphic\car.bmp" />
+    <Image Include="..\resource\graphic\correction_test.png" />
+    <Image Include="..\resource\graphic\game.bmp" />
+    <Image Include="..\resource\graphic\logo.bmp" />
+    <Image Include="..\resource\graphic\noisemap.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\resource\shader\bloom.fx.fx" />
+    <FxCompile Include="..\resource\shader\blur.fx.fx" />
+    <FxCompile Include="..\resource\shader\noise.fx.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\resource\shader\bloom.shader" />
+    <None Include="..\resource\shader\blur.shader" />
+    <None Include="..\resource\shader\noise.shader" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

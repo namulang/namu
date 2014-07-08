@@ -1,0 +1,25 @@
+﻿빌드 시작: 2012-10-22 오후 4:39:25
+     1>2 노드의 "Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\FileSystem\FileSystem.vcxproj" 프로젝트(Build 대상)입니다.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(346,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D FILESYSTEM_EXPORTS /D DEVELOPER /D CORES_BUILD_MODE /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Developer.Debug\\" /Fd"Developer.Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\Sources\FileSystem\Sources\EntryPoints\main.cpp
+         main.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\FileSystem\..\..\..\Binaries\Core\FileSystem.dev.dbg.dll" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\FileSystem.dev.dbg.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\FileSystem.dev.dbg.lib" /MACHINE:X86 /SAFESEH /DLL Developer.Debug\main.obj
+         Developer.Debug\NEFileSystem.obj
+         Developer.Debug\TaskUnit.obj
+         FileSystem.vcxproj -> Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\FileSystem\..\..\..\Binaries\Core\FileSystem.dev.dbg.dll
+       PostBuildEvent:
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\FileSystem\..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\FileSystem\VersionNo.ini Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\FileSystem\..\..\..\..\..\SDK\Libraries\
+         :VCEnd
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileSystem.dev.dbg.dll
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileSystem.dev.dbg.exp
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileSystem.dev.dbg.ilk
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileSystem.dev.dbg.lib
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileSystem.dev.dbg.pdb
+         5개 파일이 복사되었습니다.
+     1>"Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\FileSystem\FileSystem.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:02.01

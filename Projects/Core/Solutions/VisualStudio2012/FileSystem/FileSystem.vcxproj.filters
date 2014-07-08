@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{cc4ea7dc-2d52-4f26-af8b-75053f210b92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{f713de9f-962d-4295-9a1f-eb8f385acb6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{89370d4f-4584-431f-9353-7d9e81886578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEFileSystem">
+      <UniqueIdentifier>{158da18c-d3ba-44ec-abd7-90833c61d01b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEFileSystem\innerclass">
+      <UniqueIdentifier>{15206e01-6d76-4f27-b8f0-777cb2cf21c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEFileSystem\innerclass\TaskUnit">
+      <UniqueIdentifier>{95223e59-dac5-4221-9320-a377bf04118c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\FileSystem\Sources\Includes\IncludeMacro.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\FileSystem\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\FileSystem\Sources\Modules\NEFileSystem\NEFileSystem.hpp">
+      <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\FileSystem\Sources\Modules\NEFileSystem\innerclass\TaskUnit\TaskUnit.hpp">
+      <Filter>Sources\Modules\NEFileSystem\innerclass\TaskUnit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\FileSystem\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\FileSystem\Sources\Modules\NEFileSystem\NEFileSystem.cpp">
+      <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\FileSystem\Sources\Modules\NEFileSystem\innerclass\TaskUnit\TaskUnit.cpp">
+      <Filter>Sources\Modules\NEFileSystem\innerclass\TaskUnit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VersionNo.ini">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+</Project>

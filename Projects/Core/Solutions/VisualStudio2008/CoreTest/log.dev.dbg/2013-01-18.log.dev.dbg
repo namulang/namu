@@ -1,0 +1,13 @@
+
+01/18/13	13:18:52
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		99 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(99)
+-----------------------------------------------------------

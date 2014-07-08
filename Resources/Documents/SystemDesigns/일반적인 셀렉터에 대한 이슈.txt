@@ -1,0 +1,33 @@
+2012.4.07 현재 버전으로, 셀렉터 파트의 계층도는 다음과 같다.
+
+	NEKey
+		NENodeSelectorInterface
+			NENodeSelector
+				NEModuleSelectorTemplate<NENodeSelector>
+					NEKeySelectorTemplate<NEModuleSelectorTemplate<NENodeSelector>
+			NEScriptSelector
+				NEModuleSelectorTemplate<NEScriptSelector>
+					NEKeySelectorTemplate<NEModuleSelectorTemplate<NEScriptSelector>
+					
+계층도를 보면 알겠지만, 템플릿을 사용하기 때문에 서로 인터페이스가 같음에도 불구하고
+modifyAnyKeySelector(NEKeySelectorInterface& interface)
+{
+	interface.getKey();
+}
+
+처럼 구성하는 것이 불가능하다.
+
+이걸 가능하게만드는 계층도가 존재했었으나, 다른 부분에서 문제가 있었고 계층도 자체도 지저분
+했었다.
+그래서 현재는 그걸 없애고 예전처럼 지원하지 않는 상태로 돌아가있다.
+
+다만, 다음처럼 꼼수는 가능하다.
+
+typedef NEKeySelectorTemplate<NEModuleSelectorTemplate<NENodeSelector> KeySelector;
+
+
+KeySelector& general_interface = reinterpret_cast<KeySelector&>( NEKeySelector or NEScriptKeySelector );
+modifyAnyKeySelector( general_interface );
+
+어짜피 같은 템플릿을 사용하고 있기 때문에 함수가 완전히 일치하며, 대다수의 모든 함수가 virtual
+이기때문에 가능하다.

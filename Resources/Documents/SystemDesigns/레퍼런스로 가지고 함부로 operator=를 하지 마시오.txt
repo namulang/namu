@@ -1,0 +1,12 @@
+NEManagedNodeList& nodelist = Kernal::getInstance().getNodeManager().getManagedNodeList();
+NEManagedNodeList& new_nodelist = nodelist.clone();
+
+nodelist = new_nodelist;
+
+ADT끼리 하면 안된다. 절대로!
+
+하려면
+
+StandardNodeList nodelist = StandardNodeList();
+
+이렇게 형이 확정된걸로 하라.

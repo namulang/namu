@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="DXSprite">
+</Property><Property Name="솔루션 파일" Value="C:\Users\Taehoon\Desktop\DXSprite\DXSprite.sln">
+</Property><Property Name="Date" Value="2013년 8월 1일 목요일">
+</Property><Property Name="Time" Value="오후 16:18">
+</Property></Properties><Event ErrorLevel="0" Project="DXSprite" Source="DXSprite.vcproj" Description="단일 스레드 런타임 라이브러리 스위치(/MLd, /ML)가 C++ 컴파일러에서 제거되었습니다. 해당 프로젝트는 다중 스레드 런타임 라이브러리 스위치(/MTd, /MT)를 사용하도록 자동으로 변환되었습니다.">
+</Event><Event ErrorLevel="0" Project="DXSprite" Source="DXSprite.vcproj" Description="로컬 IIS 서버에 대한 웹 배포가 더 이상 지원되지 않습니다. 웹 배포 빌드 도구가 프로젝트 설정에서 제거되었습니다.">
+</Event><Event ErrorLevel="0" Project="DXSprite" Source="DXSprite.vcproj" Description="Visual C++에서는 이제 C 및 C++ 라이브러리를 더욱 안전하게 사용할 수 있습니다. 이를 위해 새 함수 및 향상된 함수, 추가 검사 및 유효성 검사, 내부 디자인 변경 등이 제공됩니다. 이러한 라이브러리는 기본적으로 사용하도록 설정됩니다. 프로젝트를 빌드할 때 안전하지 않은 함수 또는 매개 변수에 대한 경고가 표시될 수 있습니다. 경고에서는 일반적으로 더 안전한 다른 코딩 스타일 또는 함수를 제안합니다. 코드를 보다 안전하게 만들려면 이러한 경고에 따라 수정하는 것이 좋습니다. 자세한 내용은 설명서에서 'CRT의 보안 향상' 및 '확인된 반복기'를 검색하면 볼 수 있습니다.">
+</Event><Event ErrorLevel="0" Project="DXSprite" Source="DXSprite.vcproj" Description="ISO 표준 C++와의 호환성을 높이기 위해 C/C++ 컴파일러의 기본 설정이 수정되었습니다. 변경된 내용에는 표준 C++에서 for 루프 범위 지정 및 네이티브 형식 wchar_t 지원이 포함됩니다. 이러한 변경 사항으로 인해 기존 코드를 컴파일하려면 코드를 수정하거나 기존 컴파일러 옵션을 변경해야 할 수 있습니다.">
+</Event><Event ErrorLevel="1" Project="DXSprite" Source="DXSprite.vcproj" Description="Visual C++ 프로젝트가 기본적으로 포함 Windows SxS 매니페스트를 만들어야 하는 요구 사항 때문에 이제 프로젝트의 매니페스트 파일은 매니페스트 도구를 사용하여 자동으로 빌드됩니다. 제대로 작동하도록 하려면 빌드를 변경해야 할 수 있습니다. 예를 들어 매니페스트 파일에 포함된 종속성 정보를 소스 코드에서 포함된 헤더 파일의 &quot;#pragma comment(linker,&quot;&lt;insert dependency here&gt;&quot;)&quot;로 변환하는 것이 좋습니다. 프로젝트가 이미 리소스 파일(.rc)을 통해 RT_MANIFEST 리소스 섹션에 매니페스트를 포함하고 있는 경우 프로젝트를 올바로 빌드하려면 이 줄을 주석 처리해야 할 수 있습니다.">
+</Event><Event ErrorLevel="1" Project="DXSprite" Source="DXSprite.vcproj" Description="C++ 컴파일러 규칙이 변경되어 프로젝트를 오류 없이 빌드하려면 코드를 변경해야 합니다. C++ 컴파일러의 이전 버전에서는 멤버 함수 이름(예: MemberFunctionName)으로 멤버 함수의 포인터를 지정할 수 있었습니다. C++ 표준에서는 주소 연산자(예: &amp;ClassName::MemberFunctionName)를 사용하는 정규화된 이름이 필요합니다. Windows Forms 디자이너에서 사용하는 폼 또는 컨트롤이 프로젝트에 포함되어 있는 경우 디자이너에서 생성한 코드는 이벤트 처리기에 사용된 대리자 구문의 비호환 구문을 사용하므로 InitializeComponent에 포함되어 있는 코드를 변경해야 합니다.">
+</Event><Event ErrorLevel="1" Project="DXSprite" Source="DXSprite.vcproj" Description="이 응용 프로그램이 Windows Vista의 UAC(사용자 계정 컨트롤) 기능과 관련된 설정을 포함하도록 업데이트되었습니다. 기본적으로 이 응용 프로그램은 UAC를 사용하는 Windows Vista에서 실행되는 경우 이 응용 프로그램을 시작한 프로세스와 같은 권한으로 실행되도록 표시됩니다. 이렇게 표시되면 가상화를 사용하여 응용 프로그램을 실행할 수도 없습니다. UAC 관련 설정은 프로젝트의 속성 페이지에서 변경할 수 있습니다.">
+</Event><Event ErrorLevel="0" Project="DXSprite" Source="DXSprite.vcproj" Description="프로젝트가 업그레이드되었습니다.">
+</Event><Event ErrorLevel="3" Project="DXSprite" Source="DXSprite.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="DXSprite.sln" Description="솔루션을 변환했습니다.">
+</Event><Event ErrorLevel="3" Project="" Source="DXSprite.sln" Description="Converted">
+</Event></UpgradeLog>

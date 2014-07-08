@@ -1,0 +1,64 @@
+NEModuleDepthUnit은 NEModuleSelectorTemplate의 innerclass로 사용하면 될텐데, 이걸 ]
+common/unit으로 빼놓는 이유가 무엇인가?
+
+Template의 innerclass로 두게 되면은 Template클래스 간의 호환이 안되기 때문이다.
+즉, NEModuleDepthUnit 자체는 하나밖에 없으나, Template이라는 네임스코프가 다르기때문에
+다른 클래스로 서로 인식될 가능성이 있기 때문이다.
+
+정말그런가?
+	-> 테스트
+	
+		#include <iostream>
+		using std::cout;
+
+		template <typename T>
+		class A
+		{
+		public:
+			class Inner
+			{
+			public:
+				int age;
+				void print()
+				{
+					cout << "age : " << age << std::endl;
+				}
+			};
+
+
+			T data;
+		};
+
+
+		void main()
+		{
+			A<int> a;
+			A<float> b;
+
+			A<int>::Inner a_inner, a_inner2;
+			A<float>::Inner b_inner;
+
+
+		//	a_inner = a_inner2;
+			a_inner = b_inner;
+
+
+
+		}
+		
+	테스트 결과. 역시 안된다. 다른 클래스로 인식됨.
+	
+그럼 어떻게 해야 하는가?
+	1. 기존 처럼 common/unit에 놓는다.
+	2. NEObject에 위치해 한다.
+	3. NEModuleSElectorInterface에 위치해 한다.
+	4. 템플릿에 두면 템플릿클래스가 나올때마다 innerclass의 정의가 코드에 추가되는지 확인하고,
+	만약 아닐 경우에는 그냥 템플릿 클래스에 위치한다. (= 호환을 포기한다.)
+	
+	일단 1번으로 다시 되돌리는 걸로 하기로 했다.
+	그럼 NENodeDepthUnit도 이곳에 위치하게 되겠네.
+	
+	
+	이걸 정하고, 커널을 빌드하고 에디터의 셀렉터도 똑같이 일치시키고,
+	다시 커널로 돌아와서 
+ 

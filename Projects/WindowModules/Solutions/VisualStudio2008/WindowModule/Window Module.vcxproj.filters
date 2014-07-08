@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{7d1c859e-d1f9-4a5b-8a7a-e784e3c6fab6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons">
+      <UniqueIdentifier>{916ea416-b43e-43da-8c5d-14291fc1f1cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{bdda4dbb-34bc-4ffd-9692-88edb200601f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{6e607cb0-9dcc-458f-a687-4dc4c32fd8f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{114ced98-6337-44c8-862f-20ab6950032b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDManager">
+      <UniqueIdentifier>{78c247a8-0ee4-4502-85c1-33236b4da1ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WND">
+      <UniqueIdentifier>{3280ee22-4e33-424c-a658-424d1a3ae3d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WND\define">
+      <UniqueIdentifier>{90181c50-3c61-4993-8112-a0d32f371d5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WND\Window">
+      <UniqueIdentifier>{837838e6-fb9b-4e1b-81e6-1a00ebc079d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WND\Window\define">
+      <UniqueIdentifier>{d56dd05b-c8a8-4de6-985a-395cf23feb3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WND\Window\innerclass">
+      <UniqueIdentifier>{754aedb9-52bb-4356-a01d-6054571c804f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WND\Window\innerclass\ErrorCode">
+      <UniqueIdentifier>{bdd60e27-9062-45c0-9f00-5d9132d71660}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WND\Window\innerclass\WindowConnector">
+      <UniqueIdentifier>{53fa81d6-ab4d-40dc-b774-67c67ed0bd5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WND\innerclass">
+      <UniqueIdentifier>{2a7828ae-cd7b-45f9-a021-568230f374b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WND\innerclass\WNDConnector">
+      <UniqueIdentifier>{ab99f50b-7bb9-49f8-b20d-ba6d8c76239c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDShowManipulator">
+      <UniqueIdentifier>{5cdafc1e-f56c-4382-8ac1-66ec1ccfc59d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDShowManipulator\define">
+      <UniqueIdentifier>{66e3a880-5e8b-42f2-b016-f6826370b015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDShowManipulator\innerclass">
+      <UniqueIdentifier>{9a2ab1da-797e-4d82-9add-e083f5fc7bed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDShowManipulator\innerclass\ErrorCode">
+      <UniqueIdentifier>{62858931-0716-4c0a-822a-891045bd0d20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDDomainManipulator">
+      <UniqueIdentifier>{8417cfed-91ee-4c21-a693-13fdeee309a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDDomainManipulator\define">
+      <UniqueIdentifier>{93652c68-3b77-4b0e-aad4-68fff7c605d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDDomainManipulator\innerclass">
+      <UniqueIdentifier>{7553558e-d21e-4b7d-a97e-746809f25e1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDDomainManipulator\innerclass\ErrorCode">
+      <UniqueIdentifier>{31aec56a-1a08-455b-9efc-e68d587f8dd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDSpy">
+      <UniqueIdentifier>{ae1c5f91-5d92-42e5-b4e3-7ceefbcfb7a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDSpy\MouseSpy">
+      <UniqueIdentifier>{ec314777-21bb-4c4f-b371-b468c3836c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDSpy\MouseSpy\define">
+      <UniqueIdentifier>{25666992-0697-4ca3-8210-9da3f7237da6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDSpy\MouseSpy\innerclass">
+      <UniqueIdentifier>{3113c2e7-7ff9-4a25-8384-8cb64208aeb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDSpy\MouseSpy\innerclass\ErrorCode">
+      <UniqueIdentifier>{8adcc600-8a7a-4d1d-82f2-102737265a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\WNDSpy\MouseSpy\innerclass\MouseSpyConnector">
+      <UniqueIdentifier>{c7a8b917-1f9d-4912-99ec-fd1606477ba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{5fa057f4-f45e-4ac9-92fc-d65deb14ec76}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Commons\EntryPoint.hpp">
+      <Filter>Sources\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Includes\include.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDManager\WNDManager.hpp">
+      <Filter>Sources\Modules\WNDManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\WND.hpp">
+      <Filter>Sources\Modules\WND</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\define\define.hpp">
+      <Filter>Sources\Modules\WND\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\Window\Window.hpp">
+      <Filter>Sources\Modules\WND\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\Window\define\define.hpp">
+      <Filter>Sources\Modules\WND\Window\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\Window\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\WND\Window\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\Window\innerclass\WindowConnector\WindowConnector.hpp">
+      <Filter>Sources\Modules\WND\Window\innerclass\WindowConnector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\innerclass\WNDConnector\WNDConnector.hpp">
+      <Filter>Sources\Modules\WND\innerclass\WNDConnector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDShowManipulator\WNDShowManipulator.hpp">
+      <Filter>Sources\Modules\WNDShowManipulator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDShowManipulator\define\define.hpp">
+      <Filter>Sources\Modules\WNDShowManipulator\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDShowManipulator\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\WNDShowManipulator\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDDomainManipulator\WNDDomainManipulator.hpp">
+      <Filter>Sources\Modules\WNDDomainManipulator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDDomainManipulator\define\define.hpp">
+      <Filter>Sources\Modules\WNDDomainManipulator\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDDomainManipulator\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\WNDDomainManipulator\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDSpy\WNDSpy.hpp">
+      <Filter>Sources\Modules\WNDSpy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDSpy\MouseSpy\MouseSpy.hpp">
+      <Filter>Sources\Modules\WNDSpy\MouseSpy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDSpy\MouseSpy\define\define.hpp">
+      <Filter>Sources\Modules\WNDSpy\MouseSpy\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDSpy\MouseSpy\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\WNDSpy\MouseSpy\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDSpy\MouseSpy\innerclass\MouseSpyConnector\MouseSpyConnector.hpp">
+      <Filter>Sources\Modules\WNDSpy\MouseSpy\innerclass\MouseSpyConnector</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDManager\WNDManager.cpp">
+      <Filter>Sources\Modules\WNDManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\WND.cpp">
+      <Filter>Sources\Modules\WND</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\Window\Window.cpp">
+      <Filter>Sources\Modules\WND\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\Window\innerclass\WindowConnector\WindowConnector.cpp">
+      <Filter>Sources\Modules\WND\Window\innerclass\WindowConnector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\Modules\WND\innerclass\WNDConnector\WNDConnector.cpp">
+      <Filter>Sources\Modules\WND\innerclass\WNDConnector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDShowManipulator\WNDShowManipulator.cpp">
+      <Filter>Sources\Modules\WNDShowManipulator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDDomainManipulator\WNDDomainManipulator.cpp">
+      <Filter>Sources\Modules\WNDDomainManipulator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDSpy\WNDSpy.cpp">
+      <Filter>Sources\Modules\WNDSpy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDSpy\MouseSpy\MouseSpy.cpp">
+      <Filter>Sources\Modules\WNDSpy\MouseSpy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\WindowModule\Sources\Modules\WNDSpy\MouseSpy\innerclass\MouseSpyConnector\MouseSpyConnector.cpp">
+      <Filter>Sources\Modules\WNDSpy\MouseSpy\innerclass\MouseSpyConnector</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\VersionNo.ini">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+</Project>

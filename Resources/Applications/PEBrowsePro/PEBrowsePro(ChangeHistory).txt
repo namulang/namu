@@ -1,0 +1,269 @@
+V 7.4.4
+
+- Preserve position in disassembly and memory listboxes when adjusting the display.
+- Fixed toolbar display when opening a file.
+- A resource containing only nulls was considered to be a text file -- this is now fixed.
+- Fixed invalid index value after a failed search in Structure and ILDisassembly displays.
+- Changed "COM Runtime" to "CLR Header" in directory displays
+- Added library name to table identifier in imports structure
+- Use the existing caption to seed the caption change dialogbox.
+- Always display the local variables listbox (since hiding it disables the splitter -- for some unknown reason.)
+- Flip accelerators for adjusting the disassembly start 1 or 16 bytes.
+- Fix for variable displays that exceed MAX_TEXTSIZE.
+- Re-enabled search in memory dump display.
+- Fixed invalid index value after a failed search.
+
+Changes since V 7.4.4
+- Changed default settings that were true to false; changed tests in the code to handle this - NOTE: THIS WILL CHANGE ANY SAVED SETTINGS.
+- Deleting default XML file installation.
+- Removed index and button display from the XML settings.
+- Index and button display will not be persisted from session to session (but still can be controlled within the session.)
+
+Changes since V 7.4.5
+- Stupid cut & paste error created a bug in reading initial window size settings.
+- Correct display address when dumping resources.
+- Added in the memory dump window the option to set a new zero-base.
+- Sort delay load entries by name (like import table entries).
+
+Changes since V 7.4.6
+- Added separate jump highlight color.
+
+Changes since V 7.4.7
+- Fixed popup sort variables menu item.
+- Fixed repeat search bug in memory dump window.
+- DbgHelp V.6.4.4.3 now included in installation script.
+
+Changes since V 7.4.8
+- Changed local variables display from listbox to stringgrid control.
+- Changed local variable display when the request is force variable display.
+
+Changes since V 7.5
+- Display menu-item hints.
+- Display debug symbol options in statusbar.
+- Corrected occasional crash when there were local variables from the debug symbols but no references.
+
+Changes since V 7.5.2
+- Corrected crash in error and window messages search when repeating the search after a not found message.
+- Changed default value for forcing local variable display to true.
+- Fixed display of missing local variable names when there is an intervening jump statement to the routine.
+- Correct positioning bug when disassembling relocation references.
+- Give the user a chance to preserve remarks in a session file if any were created.
+
+Changes since V 7.5.3
+- Additional file information displayed.
+- Initial implementation of favorites option in main index.
+
+Changes since V 7.6
+- Added jump target highlighting color.
+- New window type - Disassembly Links.
+- Fixed crash when saving disassembly to a file.
+- Corrected bug in disassembly where symbols names would disappear when the disassembly was in lower-case.
+
+Changes since V 7.7
+- Use original directory of session file as the initial directory when updating and saving the session file.
+- Corrected a number of disassembly display bugs.
+
+Changes since V 7.7.1
+- Implemented local variable renaming.
+
+Changes since V 7.7.2
+- Added opcode explanation display in disassembly statusbar when a line is selected.
+- Added new option to display local variables that have been suppressed because there are no references.
+
+Changes since V 7.8
+- Added new popup menuitem - toggle to highlight passive jump targets.
+
+Changes since V 7.8.1
+- Added configuration option to control highlighting of all jump target statements.
+- Added intelligent JE/JZ displays.
+- Changed the meaning of one of the persistent settings to control the number of lines displayed in the disassembly popup window.
+- Stopped displaying the jump/call hints in the mainwindow statusbar.
+- Display session filename in file information dialogbox.
+- Added popup menuitem for displaying jump/call target popups.
+
+Changes since V 7.9
+- Enhancements to CLR Header structure display including the display of all metadata in its raw format.
+
+Changes since V 7.10
+- Added scrolling commands to top and bottom of display.
+
+Changes since V 7.10.1
+- Added extended analysis option, i.e., disassembling all statements including the contents of internal call statements, from a starting address.
+
+Changes since V 7.11.1
+
+Changes since V 7.11.2
+
+Changes since V 7.11.3
+
+Changes since V 7.11.4
+
+Changes since V 7.11.5
+- Removed goto listbox and back menu item from memory display.
+
+Changes since V 7.11.6
+
+Changes since V 7.11.7
+
+Changes since V 7.11.8
+- Reposition index selection at last known node after index refresh.
+- Added previous disassembly/dump/etc. history listbox to display.
+
+Changes since V 7.11.9
+- Flipped positions of local variable and disassembly listing displays.
+
+Changes since V 7.12.1
+
+Changes since V 7.12.2
+
+Changes since V 7.12.3
+
+Changes since V 7.12.4
+
+Changes since V 7.12.5
+
+Changes since V 7.12.7
+- Added sort by name or address option in subroutines display.
+
+Changes since V 7.12.8
+- Changed call tree disassembly menu item to the EIP of the call statement.
+
+Changes since V 7.13
+- Improvements to subroutine display.
+- Missing exception handler statements now included in disassembly listing.
+
+Changes since V 7.13.1
+- Subroutine and module order forms added to session information.
+- Added in the scratch pad font change menu item.
+
+Changes since V 7.13.2
+- Added uninstall support
+- Modified disassembly listing by introducing new code interval indicators.
+- Initial support for 64-bit PE binaries (disassembly implementation is incomplete).
+
+Changes since V 8.0.0
+- Display section name in disassembly listing.
+- Tools/Configure menu item changed to open specified tabsheet.
+
+Changes since V 8.0.1
+- Added source code setting (line & file vs. all).
+
+Changes since V 8.0.2
+- Removed code that read and saved (deprecated) settings in the system registry.
+- Display an error message when the settings file could not be created.
+- Removed redundant data in disassembly engine.
+
+Changes since V 8.0.3
+- Extensive work on disassembly engine.
+- Added DUMPBIN mode to disassembly display.
+
+Changes since V 8.1
+- Sort delay-load imports by name if requested.
+- Added dump menuitem to subroutines display.
+- Added sort menuitem to relocation display.
+- Added debug symbol list build suppression option.
+- Added _NT_SYMBOL_PATH text file to installation.
+- Improved DIA support.
+- Added sort by child count to subroutine and global xref displays.
+- Installation script now creates a shortcut.
+
+Changes since V 8.2
+- Enhanced debug-symbol class heirarchy view.
+- Added up/down one level menuitems to call-tree display.
+- Improved subroutine display by searching the debug symbols (when available) and adding missing items.
+- Added Show Path menuitem to disassembly display.
+- Excluded more data areas inside of code sections when disassembling.
+
+Changes since V 9.1
+- Added zero/null register references in disassembly listing.
+- Fixed entry-point disassembly, analyze, etc. menu display.
+- Tweaked default configuration settings.
+- Fixed crash in subroutine count sorting request.
+- Fixed crash in extended analysis disassembly display.
+- Converted PEFile to VS.NET 2005
+- Many Dia support enhancements.
+
+Changes since V 9.2
+- Fixed unsorted index option
+- Display offsets and bit position for struct members (using DIA).
+
+Changes since V 9.2.1
+- Added index sort mode display to statusbar.
+
+Changes since V 9.2.2
+- Fixed several issues with 64-bit code and resolving symbolic addresses.
+- Eliminated menu item "Show Links Before" in disassembly links display.
+- Improved disassembly links display by creating new links when an instruction is a target of a jump.
+- Remove calltree items through registers when sorting by called address, name, or when pruning duplicates.
+
+Changes since V 9.2.3
+- Fixed crash when displaying debug directory structure.
+- Added popup sort menuitems in call-tree display.
+- Fixed local variable renaming problem.
+
+Changes since V 9.2.4
+- Dia information included in debug symbol copy request.
+- Fixed the persistent classview setting.
+- Fixed problem with details for .NET metadata in 64-bit executables.
+
+Changes since V 9.2.5
+- Added disassemble target menuitem to call-tree display.
+- Fixed index address displays for export and debug symbol items with 64-bit executables.
+- Updated structure TLS and LoadConfig displays.
+- Added locate return instructions menuitem in disassembly display.
+- Added optional header characteristics field to display and code.
+- Sort calltree by stack parameter count.
+
+Changes since V 9.3.0
+- Fixed missing embedded symbol display when lowercase display is requested.
+- Fixed clipboard copy bug in links display.
+- Display chain counts in links display.
+- Auto-open starting link in links display.
+- Added memory dump with QWORD alignment.
+- Fixed memory dump display with 64-bit binaries.
+
+Changes since V 9.3.1
+- Allow disassembly of DOSHeader and FileHeader nodes.
+
+Changes since V 9.3.2
+- Fixed incorrect address display for 64-bit memory dumps.
+- Fixed disassembly in 64-bit for ADD,SUB, etc. immediate instructions.
+- Fixed register-highlighting for 64-bit executables.
+- Fix for frame information display - new record type for 64-bit executables.
+
+Changes since V 9.3.3
+- Corrected starting location for the dump of security directory.
+- When debug symbols were not created with 64-bit executables, now offer to rebase the module and try again.
+
+Changes since V 9.3.4
+- Fixed regression bug that disabled support for source code displays.
+
+Changes since V 9.3.5
+- Fixed bug when PEBrowse launches a child PEBrowse and no disassembly is displayed.
+
+Changes since V 9.3.6
+- Fixed address displays in COM interface display.
+- Fixed synch node in disassembly window.
+- Added menu item to hide jump and jump target offsets and addresses.
+
+Changes since V 9.3.7
+
+Changes since V 9.3.8
+
+Changes since V 9.3.9
+- bug fixes
+- upgrade compiler
+
+Changes since V 10.0.1
+- Various bug fixes.
+- Fixed node sync operation.
+- Fixed/enhanced debug symbol class heirarchy display.
+- Cleanup string displays in debug symbols node.
+
+Changes since V 10.1
+- Disassemble at offset menuitem.
+- Various bug fixes.
+
+Changes since V 10.1.2
+- Fixed reference bug.
+- Fixed crash when opening managed C++ executables.

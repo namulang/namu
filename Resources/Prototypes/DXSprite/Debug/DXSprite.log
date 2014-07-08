@@ -1,0 +1,29 @@
+﻿빌드 시작: 2013-10-16 오후 6:07:30
+     1>2 노드의 "Z:\Projects\Node\Resources\Prototypes\DXSprite\DXSprite.vcxproj" 프로젝트(build 대상)입니다.
+     1>InitializeBuildStatus:
+         "AlwaysCreate"이(가) 지정되었기 때문에 "Debug\DXSprite.unsuccessfulbuild"을(를) 만들고 있습니다.
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+       ResourceCompile:
+         모든 출력이 최신 상태입니다.
+       ManifestResourceCompile:
+         모든 출력이 최신 상태입니다.
+       Link:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"Debug\DXSprite.exe" /INCREMENTAL /NOLOGO d3dx9.lib d3d9.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\DXSprite.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"Debug\DXSprite.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Debug\DXSprite.lib" /MACHINE:X86 Debug\DXSprite.res
+         Debug\DXSprite.exe.embed.manifest.res
+         Debug\main.obj
+       Manifest:
+         c:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\DXSprite.exe.embed.manifest" /manifest Debug\DXSprite.exe.intermediate.manifest
+         모든 출력이 최신 상태입니다.
+       LinkEmbedManifest:
+         모든 출력이 최신 상태입니다.
+         DXSprite.vcxproj -> Z:\Projects\Node\Resources\Prototypes\DXSprite\Debug\DXSprite.exe
+       FinalizeBuildStatus:
+         "Debug\DXSprite.unsuccessfulbuild" 파일을 삭제하고 있습니다.
+         "Debug\DXSprite.lastbuildstate"에 연결(touching)하고 있습니다.
+     1>"Z:\Projects\Node\Resources\Prototypes\DXSprite\DXSprite.vcxproj" 프로젝트를 빌드했습니다(build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:03.96

@@ -1,0 +1,75 @@
+﻿빌드 시작: 2012-10-22 오후 5:02:05
+     1>2 노드의 "Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\StandardModule.vcxproj" 프로젝트(Build 대상)입니다.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D _USRDLL /D DEVELOPER /D StandardModule_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Developer.Debug\\" /Fd"Developer.Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\Sources\EntryPoints\main.cpp ..\..\..\Sources\Modules\Assigner\Assigner.cpp ..\..\..\Sources\Modules\BinaryLoader\BinaryLoader.cpp ..\..\..\Sources\Modules\BinarySaver\BinarySaver.cpp ..\..\..\Sources\Modules\ElementExtractor\ElementExtractor.cpp ..\..\..\Sources\Modules\ElementInserter\ElementInserter.cpp ..\..\..\Sources\Modules\ElementRemover\ElementRemover.cpp ..\..\..\Sources\Modules\Enabler\Enabler.cpp ..\..\..\Sources\Modules\ErrorSpy\ErrorSpy.cpp ..\..\..\Sources\Modules\Exactor\Exactor.cpp ..\..\..\Sources\Modules\Extender\Extender.cpp ..\..\..\Sources\Modules\FileLister\FileLister.cpp ..\..\..\Sources\Modules\FrameCounter\FrameCounter.cpp ..\..\..\Sources\Modules\GroupChanger\GroupChanger.cpp ..\..\..\Sources\Modules\IfElse\IfElse.cpp ..\..\..\Sources\Modules\If\If.cpp ..\..\..\Sources\Modules\Logic\Logic.cpp ..\..\..\Sources\Modules\Looper\Looper.cpp ..\..\..\Sources\Modules\NameChanger\NameChanger.cpp ..\..\..\Sources\Modules\NodeCreator\NodeCreator.cpp ..\..\..\Sources\Modules\NodeFileLister\NodeFileLister.cpp ..\..\..\Sources\Modules\NodeRemover\NodeRemover.cpp ..\..\..\Sources\Modules\PriorityChanger\PriorityChanger.cpp ..\..\..\Sources\Modules\ScriptFileLister\ScriptFileLister.cpp ..\..\..\Sources\Modules\Timer\Timer.cpp
+         Timer.cpp
+         ScriptFileLister.cpp
+         PriorityChanger.cpp
+         NodeRemover.cpp
+         NodeFileLister.cpp
+         NodeCreator.cpp
+         NameChanger.cpp
+         Looper.cpp
+         Logic.cpp
+         If.cpp
+         IfElse.cpp
+         GroupChanger.cpp
+         FrameCounter.cpp
+         FileLister.cpp
+         Extender.cpp
+         Exactor.cpp
+         ErrorSpy.cpp
+         Enabler.cpp
+         ElementRemover.cpp
+         ElementInserter.cpp
+         코드를 생성하고 있습니다...
+         컴파일하고 있습니다...
+         ElementExtractor.cpp
+         BinarySaver.cpp
+         BinaryLoader.cpp
+         Assigner.cpp
+         main.cpp
+         코드를 생성하고 있습니다...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\..\..\..\Binaries\StandardModule\StandardModule.dev.dbg.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\..\..\..\Binaries\StandardModule\StandardModule.dev.dbg.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\..\..\..\Binaries\StandardModule\StandardModule.dev.dbg.lib" /MACHINE:X86 /SAFESEH /DLL Developer.Debug\main.obj
+         Developer.Debug\Enabler.obj
+         Developer.Debug\Assigner.obj
+         Developer.Debug\FrameCounter.obj
+         Developer.Debug\Timer.obj
+         Developer.Debug\If.obj
+         Developer.Debug\Looper.obj
+         Developer.Debug\IfElse.obj
+         Developer.Debug\Extender.obj
+         Developer.Debug\ElementInserter.obj
+         Developer.Debug\ElementRemover.obj
+         Developer.Debug\NameChanger.obj
+         Developer.Debug\BinarySaver.obj
+         Developer.Debug\BinaryLoader.obj
+         Developer.Debug\ErrorSpy.obj
+         Developer.Debug\FileLister.obj
+         Developer.Debug\Logic.obj
+         Developer.Debug\PriorityChanger.obj
+         Developer.Debug\GroupChanger.obj
+         Developer.Debug\ElementExtractor.obj
+         Developer.Debug\Exactor.obj
+         Developer.Debug\NodeCreator.obj
+         Developer.Debug\NodeRemover.obj
+         Developer.Debug\ScriptFileLister.obj
+         Developer.Debug\NodeFileLister.obj
+     1>main.obj : warning LNK4075: '/EDITANDCONTINUE'이(가) '/SAFESEH' 사양으로 인해 무시됩니다.
+            Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\..\..\..\Binaries\StandardModule\StandardModule.dev.dbg.lib 라이브러리 및 Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\..\..\..\Binaries\StandardModule\StandardModule.dev.dbg.exp 개체를 생성하고 있습니다.
+         StandardModule.vcxproj -> Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\..\..\..\Binaries\StandardModule\StandardModule.dev.dbg.dll
+       PostBuildEvent:
+         Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\VersionNo.ini Z:\Node\Projects\StandardModules\Binaries\StandardModule\..\StandardModule Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\..\..\..\..\..\SDK\Libraries\Modules
+         :VCEnd
+         Z:\Node\Projects\StandardModules\Binaries\StandardModule\..\StandardModule\StandardModule.dev.dbg.dll
+         Z:\Node\Projects\StandardModules\Binaries\StandardModule\..\StandardModule\StandardModule.dev.dbg.exp
+         Z:\Node\Projects\StandardModules\Binaries\StandardModule\..\StandardModule\StandardModule.dev.dbg.ilk
+         Z:\Node\Projects\StandardModules\Binaries\StandardModule\..\StandardModule\StandardModule.dev.dbg.lib
+         Z:\Node\Projects\StandardModules\Binaries\StandardModule\..\StandardModule\StandardModule.dev.dbg.pdb
+         5개 파일이 복사되었습니다.
+     1>"Z:\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\StandardModule.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:33.39

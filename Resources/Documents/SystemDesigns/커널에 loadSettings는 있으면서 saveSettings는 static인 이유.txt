@@ -1,0 +1,2 @@
+saveSettings시 iniManager에서 Keranl::getInstance().getSettings()를 이용하기 때문에 커널 단독으로
+saveSettings가 불가능하기 때문이다.

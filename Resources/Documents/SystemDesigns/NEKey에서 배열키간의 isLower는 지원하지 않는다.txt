@@ -1,0 +1,5 @@
+NEKey에서 assign에서도 배열키는 자기자신과만 assign이 된다.
+			자기자신조차도 operator<도 지원하지 않는다. (NEString도 포함)
+
+일반키는 타 타입을 자신의 형태로 assign이 가능하다.			
+isLower도 지원한다.

@@ -1,0 +1,16 @@
+﻿빌드 시작: 2012-10-22 오후 5:05:00
+     1>2 노드의 "Z:\Node\Projects\Cooee\Solutions\VisualStudio2012\Cooee\Cooee.vcxproj" 프로젝트(Build 대상)입니다.
+     1>Link:
+         Cooee.vcxproj -> Z:\Node\Projects\Cooee\Solutions\VisualStudio2012\Cooee\..\..\..\Binaries\Cooee\Cooee.dev.dbg.exe
+       PostBuildEvent:
+         Z:\Node\Projects\Cooee\Solutions\VisualStudio2012\Cooee\..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe Z:\Node\Projects\Cooee\Solutions\VisualStudio2012\Cooee\VersionNo.ini Z:\Node\Projects\Cooee\Binaries\Cooee\..\Cooee Z:\Node\Projects\Cooee\Solutions\VisualStudio2012\Cooee\..\..\..\..\..\SDK\Libraries\
+         :VCEnd
+         Z:\Node\Projects\Cooee\Binaries\Cooee\..\Cooee\Cooee.dev.dbg.exe
+         Z:\Node\Projects\Cooee\Binaries\Cooee\..\Cooee\Cooee.dev.dbg.ilk
+         Z:\Node\Projects\Cooee\Binaries\Cooee\..\Cooee\Cooee.dev.dbg.pdb
+         3개 파일이 복사되었습니다.
+     1>"Z:\Node\Projects\Cooee\Solutions\VisualStudio2012\Cooee\Cooee.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:00.31

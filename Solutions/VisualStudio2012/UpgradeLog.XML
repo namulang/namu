@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Node">
+</Property><Property Name="솔루션 파일" Value="Z:\HDDMount\Loaded\Projects\Node\Solutions\VisualStudio2012\Node.sln">
+</Property><Property Name="Date" Value="2012년 12월 8일 토요일">
+</Property><Property Name="Time" Value="오후 13:21">
+</Property></Properties><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\FileSystem\FileSystem.vcxproj" Source="FileSystem" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="FileSystem" Source="..\..\Projects\Core\Solutions\VisualStudio2012\FileSystem\FileSystem.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="FileSystem" Source="..\..\Projects\Core\Solutions\VisualStudio2012\FileSystem\FileSystem.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Macro\Macro.vcxproj" Source="Macro" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="Macro" Source="..\..\Projects\Core\Solutions\VisualStudio2012\Macro\Macro.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="Macro" Source="..\..\Projects\Core\Solutions\VisualStudio2012\Macro\Macro.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\FileAccess\FileAccess.vcxproj" Source="FileAccess" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="FileAccess" Source="..\..\Projects\Core\Solutions\VisualStudio2012\FileAccess\FileAccess.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="FileAccess" Source="..\..\Projects\Core\Solutions\VisualStudio2012\FileAccess\FileAccess.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\Kernal.vcxproj" Source="Kernal" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="Kernal" Source="..\..\Projects\Core\Solutions\VisualStudio2012\Kernal\Kernal.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="Kernal" Source="..\..\Projects\Core\Solutions\VisualStudio2012\Kernal\Kernal.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Editor\Editor.vcxproj" Source="Editor" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="Editor" Source="..\..\Projects\Core\Solutions\VisualStudio2012\Editor\Editor.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="Editor" Source="..\..\Projects\Core\Solutions\VisualStudio2012\Editor\Editor.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\StandardEditorManager\StandardEditorManager.vcxproj" Source="StandardEditorManager" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="StandardEditorManager" Source="..\..\Projects\Core\Solutions\VisualStudio2012\StandardEditorManager\StandardEditorManager.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="StandardEditorManager" Source="..\..\Projects\Core\Solutions\VisualStudio2012\StandardEditorManager\StandardEditorManager.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\StandardKernalManager.vcxproj" Source="StandardKernalManager" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="StandardKernalManager" Source="..\..\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\StandardKernalManager.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="StandardKernalManager" Source="..\..\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\StandardKernalManager.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\AfterBuild\Solutions\VisualStudio2012\AfterBuild\AfterBuild.vcxproj" Source="AfterBuild" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="AfterBuild" Source="..\..\Projects\AfterBuild\Solutions\VisualStudio2012\AfterBuild\AfterBuild.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="AfterBuild" Source="..\..\Projects\AfterBuild\Solutions\VisualStudio2012\AfterBuild\AfterBuild.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\Cooee\Solutions\VisualStudio2012\Cooee\Cooee.vcxproj" Source="Cooee" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="Cooee" Source="..\..\Projects\Cooee\Solutions\VisualStudio2012\Cooee\Cooee.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="Cooee" Source="..\..\Projects\Cooee\Solutions\VisualStudio2012\Cooee\Cooee.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\Cooee\Solutions\VisualStudio2012\CooeeHandler\CooeeHandler.vcxproj" Source="CooeeHandler" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="CooeeHandler" Source="..\..\Projects\Cooee\Solutions\VisualStudio2012\CooeeHandler\CooeeHandler.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="CooeeHandler" Source="..\..\Projects\Cooee\Solutions\VisualStudio2012\CooeeHandler\CooeeHandler.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\StandardModule.vcxproj" Source="StandardModule" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="StandardModule" Source="..\..\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\StandardModule.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="StandardModule" Source="..\..\Projects\StandardModules\Solutions\VisualStudio2012\StandardModule\StandardModule.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\WindowModules\Solutions\VisualStudio2012\ButtonModule\ButtonPackage.vcxproj" Source="ButtonPackage" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="ButtonPackage" Source="..\..\Projects\WindowModules\Solutions\VisualStudio2012\ButtonModule\ButtonPackage.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="ButtonPackage" Source="..\..\Projects\WindowModules\Solutions\VisualStudio2012\ButtonModule\ButtonPackage.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\WindowModules\Solutions\VisualStudio2012\MessageboxModule\MessagePackage.vcxproj" Source="MessagePackage" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="MessagePackage" Source="..\..\Projects\WindowModules\Solutions\VisualStudio2012\MessageboxModule\MessagePackage.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="MessagePackage" Source="..\..\Projects\WindowModules\Solutions\VisualStudio2012\MessageboxModule\MessagePackage.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\WindowModules\Solutions\VisualStudio2012\WindowModule\Window Module.vcxproj" Source="Window Module" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="Window Module" Source="..\..\Projects\WindowModules\Solutions\VisualStudio2012\WindowModule\Window Module.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="Window Module" Source="..\..\Projects\WindowModules\Solutions\VisualStudio2012\WindowModule\Window Module.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\WindowModules\Solutions\VisualStudio2012\ListModule\ListModule.vcxproj" Source="ListModule" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="ListModule" Source="..\..\Projects\WindowModules\Solutions\VisualStudio2012\ListModule\ListModule.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="ListModule" Source="..\..\Projects\WindowModules\Solutions\VisualStudio2012\ListModule\ListModule.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\MDK\Solutions\VisualStudio2012\MDKProjectTemplate\MDKProjectTemplate.vcxproj" Source="MDKProjectTemplate" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="MDKProjectTemplate" Source="..\..\Projects\MDK\Solutions\VisualStudio2012\MDKProjectTemplate\MDKProjectTemplate.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="MDKProjectTemplate" Source="..\..\Projects\MDK\Solutions\VisualStudio2012\MDKProjectTemplate\MDKProjectTemplate.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="2" Project="Z:\HDDMount\Loaded\Projects\Node\Projects\MDK\Solutions\VisualStudio2012\MDK\MDK.vcxproj" Source="MDK" Description="프로젝트 파일이 손상되어 프로젝트를 로드할 수 없습니다.">
+</Event><Event ErrorLevel="2" Project="MDK" Source="..\..\Projects\MDK\Solutions\VisualStudio2012\MDK\MDK.vcxproj" Description="프로젝트를 업그레이드하지 못했습니다.">
+</Event><Event ErrorLevel="3" Project="MDK" Source="..\..\Projects\MDK\Solutions\VisualStudio2012\MDK\MDK.vcxproj" Description="변환되지 않음">
+</Event><Event ErrorLevel="0" Project="" Source="Node.sln" Description="솔루션 파일은 변환하지 않아도 됩니다.">
+</Event><Event ErrorLevel="3" Project="" Source="Node.sln" Description="변환 필요 없음">
+</Event></UpgradeLog>

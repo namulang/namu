@@ -1,0 +1,13 @@
+클래스 템플릿 선언시에 NE_DLL을 사용하면 된다.
+커널에 존재하는 NEList의 경우,
+
+	class NEList 
+	{
+	
+로 되어있으나,
+
+	class NE_DLL NEList
+	{
+	
+로 바꾸면, 커널에서만 사용 가능하게 된다.
+class NE_DLL을 적는다면 inl혹은 정의부도 NE_DLL은 선언해야 한다.

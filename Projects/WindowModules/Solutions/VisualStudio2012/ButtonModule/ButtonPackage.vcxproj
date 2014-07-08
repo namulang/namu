@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Developer.Debug|Win32">
+      <Configuration>Developer.Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Developer.Release|Win32">
+      <Configuration>Developer.Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3A716FD9-56FD-495E-812F-124AA379B55F}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'">
+    <OutDir>$(ProjectDir)..\..\..\Binaries\$(ProjectName)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>$(ProjectName).dev.dbg</TargetName>
+    <IncludePath>Z:\HDDMount\Loaded\Projects\Node\SDK\Includes;$(IncludePath)</IncludePath>
+    <LibraryPath>Z:\HDDMount\Loaded\Projects\Node\SDK\Libraries\Modules;Z:\HDDMount\Loaded\Projects\Node\SDK\Libraries;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\..\Binaries\$(ProjectName)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>Z:\HDDMount\Loaded\Projects\Node\SDK\Includes;$(IncludePath)</IncludePath>
+    <LibraryPath>Z:\HDDMount\Loaded\Projects\Node\SDK\Libraries\Modules;Z:\HDDMount\Loaded\Projects\Node\SDK\Libraries;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\..\Binaries\$(ProjectName)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName).dev</TargetName>
+    <IncludePath>Z:\HDDMount\Loaded\Projects\Node\SDK\Includes;$(IncludePath)</IncludePath>
+    <LibraryPath>Z:\HDDMount\Loaded\Projects\Node\SDK\Libraries\Modules;Z:\HDDMount\Loaded\Projects\Node\SDK\Libraries;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32; _DEBUG; _WINDOWS; _UNICODE; _USRDLL; DEVELOPER; ButtonPackage_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(ProjectDir)..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\$(ProjectName) $(ProjectDir)..\..\..\..\..\SDK\Libraries\Modules</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32; NDEBUG; _WINDOWS; _UNICODE; _USRDLL; ButtonPackage_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(ProjectDir)..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\$(ProjectName) $(ProjectDir)..\..\..\..\..\SDK\Libraries\Modules</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32; NDEBUG; _WINDOWS; _UNICODE; _USRDLL; DEVELOPER; ButtonPackage_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(ProjectDir)..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\$(ProjectName) $(ProjectDir)..\..\..\..\..\SDK\Libraries\Modules</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Commons\EntryPoint.hpp" />
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Includes\include.hpp" />
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\EntryPoints\header.hpp" />
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Button.hpp" />
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\Button.hpp" />
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\innerclass\ErrorCode\ErrorCode.hpp" />
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\innerclass\ButtonConnector\ButtonConnector.hpp" />
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\ButtonClickSpy\ButtonClickSpy.hpp" />
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\ButtonClickSpy\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\ButtonModule\Sources\Modules\ButtonClickSpy\innerclass\ErrorCode\ErrorCode.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\ButtonModule\Sources\EntryPoints\main.cpp" />
+    <ClCompile Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\Button.cpp" />
+    <ClCompile Include="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\innerclass\ButtonConnector\ButtonConnector.cpp" />
+    <ClCompile Include="..\..\..\Sources\ButtonModule\Sources\Modules\ButtonClickSpy\ButtonClickSpy.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

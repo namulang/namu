@@ -1,0 +1,481 @@
+
+05/17/14	18:00:38
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	18:00:38
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	18:00:38
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	18:05:44
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	18:05:45
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	18:05:45
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	18:54:19
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	18:54:19
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	18:54:19
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	18:56:21
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	18:56:21
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	18:56:21
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:08:14
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:08:14
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	19:08:14
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:10:21
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:10:21
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	19:10:21
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:11:16
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:11:16
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	19:11:16
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:11:33
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:11:34
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	19:11:34
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:13:17
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:13:17
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	19:13:17
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:13:37
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:13:37
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	19:13:37
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:14:00
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:14:00
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	19:14:00
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:14:29
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:14:29
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	19:14:29
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:41:04
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------
+
+05/17/14	19:41:04
+-----------------------------------------------------------
+ : ScriptManager의 Header가 손상되었습니다. 초기화를 중단합니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Error
+function :	int __thiscall NE::NEStandardScriptManager::initialize(void)
+line :		56 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp(56)
+-----------------------------------------------------------
+
+05/17/14	19:41:04
+-----------------------------------------------------------
+I201021C38 : 존재하지 않는 메인 스크립트
+스크립트 데이터에 메인스크립트를 비롯하여 어떠한 스크립트도 없습니다.
+따라서 커널은 어떠한 동작도 하지 않을 것입니다.
+-----------------------------------------------------------
+domain :	Kernal
+type :		Information
+function :	int __thiscall NE::NEStandardNodeManager::initialize(void)
+line :		118 
+..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp(118)
+-----------------------------------------------------------

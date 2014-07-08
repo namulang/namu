@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{b7bdfef2-256e-4fbf-8184-0108c7bf73a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{f4fda4e2-a8ef-41e0-b21e-6081169e6c24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons">
+      <UniqueIdentifier>{704b56ab-e5b0-4d93-8fcf-119cd946ebe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Typedefs">
+      <UniqueIdentifier>{a22c6653-8ca9-490c-b1d4-c293784b6821}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Typedefs\NENodeCollector">
+      <UniqueIdentifier>{47aa01ac-713c-435d-8b6d-9a5380c51615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Units">
+      <UniqueIdentifier>{6eb61b1c-0232-4eb9-96c3-0b309892b126}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons\Units\NENodeDepthUnit">
+      <UniqueIdentifier>{452755ff-d6ad-4d9d-95bc-035e2a4446d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{4e75d134-40ff-4647-b501-144aa7353239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject">
+      <UniqueIdentifier>{da5ba929-32e4-45bb-bf24-e235b33f392e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector">
+      <UniqueIdentifier>{94d1e3bb-ff4f-4bb8-8306-99269cd795e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList">
+      <UniqueIdentifier>{16278ecc-5cf1-4411-814b-880f49f12191}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NEPanelList">
+      <UniqueIdentifier>{b1932284-a6c5-4eff-a069-1c76f85c6fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NENodeList">
+      <UniqueIdentifier>{352c8aee-5655-439d-96c6-3a74b819d0c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList">
+      <UniqueIdentifier>{56418828-c524-4d65-9266-ec17fa8427ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList">
+      <UniqueIdentifier>{de96c3bf-1218-4ac3-90da-68314696b446}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\innerclass">
+      <UniqueIdentifier>{55644108-7874-4eee-b8c9-51bc5f434924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\innerclass\Banks">
+      <UniqueIdentifier>{059b7a57-e4e4-420f-9c92-c462f0f94753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEList\NENodeDepthList">
+      <UniqueIdentifier>{ebd44fa8-2faa-47f9-b8a8-721f8c42eb12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack">
+      <UniqueIdentifier>{eccdfda0-7434-4646-b1c6-56863ab7022e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEComponentSet">
+      <UniqueIdentifier>{0b2a8bc9-b22b-48fe-8edc-2b41af3b94b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NECollector\NEStack\NEPanelSet">
+      <UniqueIdentifier>{79feefb3-a12e-4110-812b-8ced01cdd257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey">
+      <UniqueIdentifier>{ffd78852-aaab-4876-b076-d6f3508ba3b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface">
+      <UniqueIdentifier>{531d9b78-2c3c-41fe-a1b8-9abbb4eb3b45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase">
+      <UniqueIdentifier>{7761e2fd-ca02-42c2-a6c6-26f18b68a50d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NEScriptSelector">
+      <UniqueIdentifier>{16bf6bb5-e597-42d5-97b6-c654e242b4d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate">
+      <UniqueIdentifier>{71d91bc5-6679-4ac8-94b2-af3fd8073355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\Templates">
+      <UniqueIdentifier>{056499e9-4827-4c62-95ce-b49c5b01b223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate">
+      <UniqueIdentifier>{e93f69fc-40a8-4409-b880-fa034825a241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\Templates">
+      <UniqueIdentifier>{04abae87-96b8-4380-8530-4917ab6d270e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit">
+      <UniqueIdentifier>{edd0c8f1-4c93-4aaf-b179-76abb547ac13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit">
+      <UniqueIdentifier>{fdd6c99f-9e67-4979-93a8-5c249762311b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule">
+      <UniqueIdentifier>{bbfa9214-ca15-48ac-9959-19ff6f4704c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor">
+      <UniqueIdentifier>{c1c6acba-e038-4abe-b7b0-1b3c5b55687b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\define">
+      <UniqueIdentifier>{7bd64994-4a4e-449e-a5e8-8249e9446954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass">
+      <UniqueIdentifier>{779f9931-0721-4b97-9181-b5dc42062dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ErrorCode">
+      <UniqueIdentifier>{eca22c08-09a3-46ef-8021-9e3130d25499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\Factory">
+      <UniqueIdentifier>{a09b1fd8-e1f1-4afa-9616-25d6aa509316}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ModifiableSettings">
+      <UniqueIdentifier>{0e491ae4-959b-40a6-8b1d-1945e1498535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEEventHandler">
+      <UniqueIdentifier>{cb8819f6-c4c3-4695-87ed-ba24522af17d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager">
+      <UniqueIdentifier>{52ad5e9f-6d17-40e2-81a6-8dcfe78a66c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass">
+      <UniqueIdentifier>{ee1addd5-41e7-42c1-ad81-a251a7330476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\ErrorCode">
+      <UniqueIdentifier>{30e03c0a-d1af-467d-8d80-1f470a0eb050}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeader">
+      <UniqueIdentifier>{45f79732-94a4-4c5e-b8a9-3534b7821aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeaderList">
+      <UniqueIdentifier>{442dd569-373c-41aa-bf61-88b8641d271f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\define">
+      <UniqueIdentifier>{3c084e6e-65ab-458e-b161-0b78dbba416a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor">
+      <UniqueIdentifier>{09864a77-6cb0-4a22-a8ef-1920c0357f6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor\innerclass">
+      <UniqueIdentifier>{b252ad93-2d49-423b-93d8-9c0f73ab6498}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor\innerclass\ErrorCode">
+      <UniqueIdentifier>{75bc8855-91e5-4d8a-93cc-007c83a0073f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager">
+      <UniqueIdentifier>{b9e5e913-3028-41fe-9e7e-03ba4e001111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass">
+      <UniqueIdentifier>{704372b1-0a3e-4b67-a37a-5aac2d073e9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\EditDebugMacro">
+      <UniqueIdentifier>{cf86945a-0ffa-4405-b937-1966e815cded}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEComponent">
+      <UniqueIdentifier>{19406abc-5afe-4f3d-8ed7-32ad50cd0a77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEComponent\NETextComponent">
+      <UniqueIdentifier>{92a167ff-c434-4555-ba01-11810f218fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent">
+      <UniqueIdentifier>{a1615cd1-822b-4c86-a668-18f82be7906d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NECheckListComponent">
+      <UniqueIdentifier>{9c0bb41d-a915-41dc-9c42-b3017bba3662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEModifiableListComponent">
+      <UniqueIdentifier>{25ff6404-1c26-4118-951c-e5807e2fa37d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEComponent\NESwitchComponent">
+      <UniqueIdentifier>{d9dab3be-e047-4701-92b0-630b885c9353}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEComponent\NEButtonComponent">
+      <UniqueIdentifier>{aca5179f-873a-4d87-a363-d8cfa7d2350e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEPanel">
+      <UniqueIdentifier>{139d9e01-39f3-4c27-bb36-4e6c4fb43f54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog">
+      <UniqueIdentifier>{40852503-f6b4-430a-997d-91e53ab83b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog\define">
+      <UniqueIdentifier>{de4001e1-5259-4829-aea8-1832c9ae5fba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEPanel\innerclass">
+      <UniqueIdentifier>{f7648b8f-1357-41a0-8ecf-af9626dee2f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEObject\NEUnit\NEPanel\innerclass\BaseConnector">
+      <UniqueIdentifier>{d88440d2-c554-4c3e-862a-17374ef4fd28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Includes\includeKernal.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Commons\Typedefs\NENodeCollector\NENodeCollector.hpp">
+      <Filter>Sources\Commons\Typedefs\NENodeCollector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Commons\Units\NENodeDepthUnit\NENodeDepthUnit.hpp">
+      <Filter>Sources\Commons\Units\NENodeDepthUnit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NEPanelList\NEPanelList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NEPanelList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\NEManagedScriptList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\innerclass\Banks\Banks.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\innerclass\Banks</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NENodeDepthList\NENodeDepthList.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NENodeDepthList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEStack\NEComponentSet\NEComponentSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEComponentSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEStack\NEPanelSet\NEPanelSet.hpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEStack\NEPanelSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NEScriptSelector\NEScriptSelector.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NEScriptSelector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\Templates\Templates.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\Templates\Templates.hpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NEModuleSelectorTemplate\NEKeySelectorTemplate\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\Editor.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\define\define.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\Factory\Factory.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ModifiableSettings\ModifiableSettings.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ModifiableSettings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEEventHandler\NEEventHandler.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEEventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\NEPanelManager.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeader\DLLHeader.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeaderList\DLLHeaderList.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeaderList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\define\define.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor\NEScriptEditor.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\EditDebugMacro\EditDebugMacro.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\EditDebugMacro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEComponent.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NETextComponent\NETextComponent.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NETextComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEListComponent.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NECheckListComponent\NECheckListComponent.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NECheckListComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEModifiableListComponent\NEModifiableListComponent.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEModifiableListComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NESwitchComponent\NESwitchComponent.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NESwitchComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEButtonComponent\NEButtonComponent.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NEButtonComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\NEPanel.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEPanel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog\NEDialog.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog\define\define.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\innerclass\BaseConnector\BaseConnector.hpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEPanel\innerclass\BaseConnector</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Commons\Units\NENodeDepthUnit\NENodeDepthUnit.cpp">
+      <Filter>Sources\Commons\Units\NENodeDepthUnit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\NEManagedScriptList.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\innerclass\Banks\Banks.cpp">
+      <Filter>Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedScriptList\innerclass\Banks</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NEScriptSelector\NEScriptSelector.cpp">
+      <Filter>Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NEScriptSelector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\Editor.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\Factory\Factory.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ModifiableSettings\ModifiableSettings.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Editor\innerclass\ModifiableSettings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEEventHandler\NEEventHandler.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEEventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\NEPanelManager.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeader\DLLHeader.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEPanelManager\innerclass\DLLHeader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor\NEScriptEditor.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEComponent.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NETextComponent\NETextComponent.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NETextComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEListComponent.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NECheckListComponent\NECheckListComponent.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NECheckListComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEModifiableListComponent\NEModifiableListComponent.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NEListComponent\NEModifiableListComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NESwitchComponent\NESwitchComponent.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NESwitchComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEComponent\NEButtonComponent\NEButtonComponent.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEComponent\NEButtonComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\NEPanel.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEPanel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog\NEDialog.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEPanel\NEDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Editor\Sources\Modules\NEObject\NEUnit\NEPanel\innerclass\BaseConnector\BaseConnector.cpp">
+      <Filter>Sources\Modules\NEObject\NEUnit\NEPanel\innerclass\BaseConnector</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VersionNo.ini">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+</Project>

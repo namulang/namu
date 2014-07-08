@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Developer.Debug|Win32">
+      <Configuration>Developer.Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Developer.Release|Win32">
+      <Configuration>Developer.Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{997AD499-777F-4C97-97E3-C2AB28E66946}</ProjectGuid>
+    <RootNamespace>StandardEditorManager</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.50727.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'">
+    <OutDir>$(SolutionDir)..\..\Binaries\Modules\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)..\..\Binaries\Modules\</OutDir>
+    <IntDir>$(SolutionDir)../binary/$(Configuration)/module\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'">
+    <OutDir>$(SolutionDir)..\..\Binaries\Modules\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32; _DEBUG; _WINDOWS; _UNICODE; _USRDLL; DEVELOPER; StandardEditorManager_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(ProjectName).dev.dbg.dll</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\Binaries $(SolutionDir)..\..\..\..\SDK\Libraries</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32; NDEBUG; _WINDOWS; _UNICODE; _USRDLL; StandardEditorManager_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\Binaries $(SolutionDir)..\..\..\..\SDK\Libraries</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Developer.Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32; NDEBUG; _WINDOWS; _UNICODE; _USRDLL; StandardEditorManager_EXPORTS;DEVELOPER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CallingConvention>Cdecl</CallingConvention>
+      <CompileAs>CompileAsCpp</CompileAs>
+    </ClCompile>
+    <Link>
+      <OutputFile>$(OutDir)$(ProjectName).dev.dll</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe $(ProjectDir)VersionNo.ini $(TargetDir)..\Binaries $(SolutionDir)..\..\..\..\SDK\Libraries</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Commons\EntryPoint.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Includes\include.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\EntryPoints\header.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\NEStandardPanelManager.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\Execute\NEStandardPanelManager.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\Execute\innerclass\ErrorCode\ErrorCode.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\Execute\innerclass\StandardPanelDLLHeader\StandardPanelDLLHeader.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\NEStandardScriptEditor.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\define\define.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\NEStandardScriptEditor.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\ErrorCode\ErrorCode.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\StandardManagedScriptList.hpp" />
+    <ClInclude Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\innerclass\StandardBanks\StandardBanks.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\EntryPoints\main.cpp" />
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\Execute\NEStandardPanelManager.cpp" />
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardPanelManager\Execute\innerclass\StandardPanelDLLHeader\StandardPanelDLLHeader.cpp" />
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\NEStandardScriptEditor.cpp" />
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\StandardManagedScriptList.cpp" />
+    <ClCompile Include="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\StandardManagedScriptList\innerclass\StandardBanks\StandardBanks.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VersionNo.ini" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

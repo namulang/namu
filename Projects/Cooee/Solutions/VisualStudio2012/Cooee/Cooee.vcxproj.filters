@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{dc7ba969-7608-4bde-ac36-fe7421bdb837}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{ec18306e-8997-4297-8f88-1337af159b65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Runnable">
+      <UniqueIdentifier>{f540e073-b07a-40c7-9327-91bc64eba098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Commander">
+      <UniqueIdentifier>{eb019c0f-b924-4432-b2d9-fc825272a170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\Commander\define">
+      <UniqueIdentifier>{433d3cb0-b583-47c5-8491-dd4db8e99849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{1bb200d6-d7d1-4afd-b96e-3c352c7e5119}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Interfaces">
+      <UniqueIdentifier>{8a081644-08c7-469a-9eba-de6305ae55bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Interfaces\Interface">
+      <UniqueIdentifier>{75db65e1-2f0c-4138-bac6-d7567f58db53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Interfaces\Interface\commands">
+      <UniqueIdentifier>{a109a8c9-90a6-458b-b4e0-650e0ef2b459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Interfaces\Interface\commands\innerclass">
+      <UniqueIdentifier>{967237ac-f854-4eda-919d-c01d89d5b258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Interfaces\Interface\commands\innerclass\CommandMacro">
+      <UniqueIdentifier>{aff3c162-0b22-4be7-9786-9cbbc02ff08e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{fd803cd0-c8fc-40e6-937c-e5b599117a12}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\Cooee\Sources\Includes\include.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Cooee\Sources\Modules\Runnable\Runnable.hpp">
+      <Filter>Sources\Modules\Runnable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Cooee\Sources\Modules\Commander\Commander.hpp">
+      <Filter>Sources\Modules\Commander</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Cooee\Sources\Modules\Commander\define\define.hpp">
+      <Filter>Sources\Modules\Commander\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Cooee\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Cooee\Sources\Interfaces\Interface\Interface.hpp">
+      <Filter>Sources\Interfaces\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Cooee\Sources\Interfaces\Interface\commands\commands.hpp">
+      <Filter>Sources\Interfaces\Interface\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Cooee\Sources\Interfaces\Interface\commands\innerclass\CommandMacro\CommandMacro.hpp">
+      <Filter>Sources\Interfaces\Interface\commands\innerclass\CommandMacro</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\Cooee\Sources\Modules\Runnable\Runnable.cpp">
+      <Filter>Sources\Modules\Runnable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Cooee\Sources\Modules\Commander\Commander.cpp">
+      <Filter>Sources\Modules\Commander</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Cooee\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Cooee\Sources\Interfaces\Interface\Interface.cpp">
+      <Filter>Sources\Interfaces\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\Cooee\Sources\Interfaces\Interface\commands\commands.cpp">
+      <Filter>Sources\Interfaces\Interface\commands</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

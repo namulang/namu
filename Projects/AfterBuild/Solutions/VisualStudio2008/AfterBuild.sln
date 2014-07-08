@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AfterBuild", "AfterBuild\AfterBuild.vcproj", "{761A5BAB-04FD-4051-B8D7-B8320AFEE46C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AfterBuild Solutions", "AfterBuild Solutions", "{83CA4443-E1A1-4CF9-9CD5-1697C3FDD898}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{5B3D721E-C49A-4C64-BCA5-EF35250804F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{94056B0C-7181-4BB7-ACB2-3224F0DC66F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{761A5BAB-04FD-4051-B8D7-B8320AFEE46C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{761A5BAB-04FD-4051-B8D7-B8320AFEE46C}.Debug|Win32.Build.0 = Debug|Win32
+		{761A5BAB-04FD-4051-B8D7-B8320AFEE46C}.Release|Win32.ActiveCfg = Release|Win32
+		{761A5BAB-04FD-4051-B8D7-B8320AFEE46C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5B3D721E-C49A-4C64-BCA5-EF35250804F1} = {83CA4443-E1A1-4CF9-9CD5-1697C3FDD898}
+		{94056B0C-7181-4BB7-ACB2-3224F0DC66F6} = {83CA4443-E1A1-4CF9-9CD5-1697C3FDD898}
+		{761A5BAB-04FD-4051-B8D7-B8320AFEE46C} = {5B3D721E-C49A-4C64-BCA5-EF35250804F1}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,36 @@
+TABLE.contents2 {
+	border-top:		solid thick #eee;
+	border-left:	dotted thick #999;
+	border-bottom:	solid thick #333;
+	border-right:	solid thick #999;
+	width:			200px;
+}
+
+TABLE.contents TR {	
+	text-align: center;
+	width: 200px;
+}
+
+TABLE.contents INPUT {
+	width: 100%;
+}
+
+TABLE.contents SELECT {
+	width: 100%;
+}
+
+TABLE.contents OPTION {
+	width: 100%;
+}
+
+TABLE.contents TD {
+	width: 200px;
+	text-align: left;
+}
+
+.description {
+	font-size: xx-small;
+	font-family: Verdana;
+	width: 450px;
+	height: 200px;
+}

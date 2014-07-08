@@ -1,0 +1,132 @@
+﻿빌드 시작: 2012-10-22 오후 4:39:45
+     1>2 노드의 "Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\Kernal.vcxproj" 프로젝트(Build 대상)입니다.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(346,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D KERNAL_EXPORTS /D DEVELOPER /D CORES_BUILD_MODE /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Developer.Debug\\" /Fd"Developer.Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\Sources\Kernal\Sources\Commons\Enums\NEType\NEType.cpp ..\..\..\Sources\Kernal\Sources\Commons\Functions\NEBinaryTemplates\NEBinaryLoaderTemplates\NEBinaryLoaderTemplates.cpp ..\..\..\Sources\Kernal\Sources\Commons\Functions\NEBinaryTemplates\NEBinarySaverTemplates\NEBinarySaverTemplates.cpp ..\..\..\Sources\Kernal\Sources\Commons\Functions\NEResult\NEResult.cpp ..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\NEExportable.cpp ..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\Header.cpp ..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Header\ModuleHeader\ModuleHeader.cpp ..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEExportable\innerclass\Identifier\Identifier.cpp ..\..\..\Sources\Kernal\Sources\Commons\Units\NEModuleDepthUnit\NEModuleDepthUnit.cpp ..\..\..\Sources\Kernal\Sources\EntryPoints\main.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEEnrollableNodeList.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEList\NENodeList\NEEnrollableNodeList\NEManagedNodeList\NEManagedNodeList.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECharSet\NEString\NEString.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NECodeSet\NEModuleScriptCodeSet\NEModuleScriptCodeSet.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEKeySet\NEKeySet.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEManagedModuleSet\NEManagedModuleSet.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEModuleSet\NEModuleSet.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NEManagedNodeSet\NEManagedNodeSet.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NENodeSet\NENodeSet.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEShortCutSet\NEShortCutSet.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NECollector\NEStack\NEWCharSet\NEWString\NEWString.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKey.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NEKeyTemplate\NEKeyTemplate.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelectorBase.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorBase\NENodeSelector\NENodeSelector.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEKey\NENodeSelectorInterface\NENodeSelectorInterface.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEObject.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\Kernal.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Factory\Factory.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\ModifiableSettings\ModifiableSettings.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\Kernal\innerclass\Settings\Settings.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\NEDebugManager.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\FlagSet\FlagSet.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEDebugManager\innerclass\Flag\Flag.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEINIManager\NEINIManager.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModule.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\NEModuleManager.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEModuleManager\innerclass\DLLHeader\DLLHeader.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\NENodeManager.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NENodeManager\innerclass\LocalStack\LocalStack.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\NEScriptManager.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\NEScriptManager\innerclass\ScriptHeader\ScriptHeader.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NEModule\innerclass\BaseConnector\BaseConnector.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NENamedUnit.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NENamedUnit\NENode\NENode.cpp ..\..\..\Sources\Kernal\Sources\Modules\NEObject\NEUnit\NEUnit.cpp
+         NEType.cpp
+         코드를 생성하고 있습니다...
+         컴파일하고 있습니다...
+         NEUnit.cpp
+         NENode.cpp
+         NENamedUnit.cpp
+         BaseConnector.cpp
+         ScriptHeader.cpp
+         NEScriptManager.cpp
+         LocalStack.cpp
+         NENodeManager.cpp
+         DLLHeader.cpp
+         NEModuleManager.cpp
+         NEModule.cpp
+         NEINIManager.cpp
+         Flag.cpp
+         FlagSet.cpp
+         NEDebugManager.cpp
+         Settings.cpp
+         ModifiableSettings.cpp
+         Factory.cpp
+         Kernal.cpp
+         NEObject.cpp
+         코드를 생성하고 있습니다...
+         컴파일하고 있습니다...
+         NENodeSelectorInterface.cpp
+         NENodeSelector.cpp
+         NENodeSelectorBase.cpp
+         NEKeyTemplate.cpp
+         NEKey.cpp
+         NEWString.cpp
+         NEShortCutSet.cpp
+         NENodeSet.cpp
+         NEManagedNodeSet.cpp
+         NEModuleSet.cpp
+         NEManagedModuleSet.cpp
+         NEKeySet.cpp
+         NEModuleScriptCodeSet.cpp
+         NEString.cpp
+         NEManagedNodeList.cpp
+         NEEnrollableNodeList.cpp
+         main.cpp
+         NEModuleDepthUnit.cpp
+         Identifier.cpp
+         ModuleHeader.cpp
+         코드를 생성하고 있습니다...
+         컴파일하고 있습니다...
+         Header.cpp
+         NEExportable.cpp
+         NEResult.cpp
+         NEBinarySaverTemplates.cpp
+         NEBinaryLoaderTemplates.cpp
+         코드를 생성하고 있습니다...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\..\..\..\Binaries\Core\Kernal.dev.dbg.dll" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\..\..\..\Binaries\Core\Kernal.dev.dbg.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\..\..\..\Binaries\Core\Kernal.dev.dbg.lib" /MACHINE:X86 /SAFESEH /DLL Developer.Debug\NEObject.obj
+         Developer.Debug\NEKeySet.obj
+         Developer.Debug\NEModuleSet.obj
+         Developer.Debug\NEManagedModuleSet.obj
+         Developer.Debug\NENodeSet.obj
+         Developer.Debug\NEManagedNodeSet.obj
+         Developer.Debug\NEShortCutSet.obj
+         Developer.Debug\NEWString.obj
+         Developer.Debug\NEModuleScriptCodeSet.obj
+         Developer.Debug\NEString.obj
+         Developer.Debug\NEEnrollableNodeList.obj
+         Developer.Debug\NEManagedNodeList.obj
+         Developer.Debug\FlagSet.obj
+         Developer.Debug\NEUnit.obj
+         Developer.Debug\NENamedUnit.obj
+         Developer.Debug\NENode.obj
+         Developer.Debug\NEModule.obj
+         Developer.Debug\NEDebugManager.obj
+         Developer.Debug\Flag.obj
+         Developer.Debug\NEINIManager.obj
+         Developer.Debug\NENodeManager.obj
+         Developer.Debug\LocalStack.obj
+         Developer.Debug\NEModuleManager.obj
+         Developer.Debug\DLLHeader.obj
+         Developer.Debug\NEScriptManager.obj
+         Developer.Debug\ScriptHeader.obj
+         Developer.Debug\BaseConnector.obj
+         Developer.Debug\Kernal.obj
+         Developer.Debug\Factory.obj
+         Developer.Debug\Settings.obj
+         Developer.Debug\ModifiableSettings.obj
+         Developer.Debug\NEKey.obj
+         Developer.Debug\NEKeyTemplate.obj
+         Developer.Debug\NENodeSelectorInterface.obj
+         Developer.Debug\NENodeSelectorBase.obj
+         Developer.Debug\NENodeSelector.obj
+         Developer.Debug\NEModuleDepthUnit.obj
+         Developer.Debug\NEBinaryLoaderTemplates.obj
+         Developer.Debug\NEBinarySaverTemplates.obj
+         Developer.Debug\NEResult.obj
+         Developer.Debug\NEExportable.obj
+         Developer.Debug\Identifier.obj
+         Developer.Debug\Header.obj
+         Developer.Debug\ModuleHeader.obj
+         Developer.Debug\NEType.obj
+         Developer.Debug\main.obj
+     1>NEObject.obj : warning LNK4075: '/EDITANDCONTINUE'이(가) '/SAFESEH' 사양으로 인해 무시됩니다.
+            Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\..\..\..\Binaries\Core\Kernal.dev.dbg.lib 라이브러리 및 Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\..\..\..\Binaries\Core\Kernal.dev.dbg.exp 개체를 생성하고 있습니다.
+         Kernal.vcxproj -> Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\..\..\..\Binaries\Core\Kernal.dev.dbg.dll
+       PostBuildEvent:
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\VersionNo.ini Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\..\..\..\..\..\SDK\Libraries\
+         :VCEnd
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileAccess.dev.dbg.dll
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileAccess.dev.dbg.exp
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileAccess.dev.dbg.ilk
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileAccess.dev.dbg.lib
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileAccess.dev.dbg.pdb
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileSystem.dev.dbg.dll
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileSystem.dev.dbg.exp
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileSystem.dev.dbg.ilk
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileSystem.dev.dbg.lib
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\FileSystem.dev.dbg.pdb
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\Kernal.dev.dbg.dll
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\Kernal.dev.dbg.exp
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\Kernal.dev.dbg.ilk
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\Kernal.dev.dbg.lib
+         Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Binaries\Core\..\Core\Kernal.dev.dbg.pdb
+         15개 파일이 복사되었습니다.
+     1>"Z:\HDDMount\Loaded\Projects\Node\Projects\Core\Solutions\VisualStudio2012\Kernal\Kernal.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:01:16.63

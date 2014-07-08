@@ -1,0 +1,104 @@
+#include "NEArgumentSet.hpp"
+#include "../../Commons/Interfaces/NEArgumentInterfaceBase/NEArgumentInterfaceBase.hpp"
+#include "../Kernal/Kernal.hpp"
+
+namespace NE
+{
+	NEArgumentSet::NEArgumentSet(NEModule* owner, type_count size)
+		: SuperClass(size), _owner(owner)
+	{
+
+	}
+
+	NEArgumentSet::NEArgumentSet(NEModule* owner, const ThisClass& rhs)
+		: SuperClass(rhs), _owner(owner)
+	{
+
+	}
+
+	NEArgumentSet::NEArgumentSet(NEModule* owner)
+		: SuperClass(), _owner(owner)
+	{
+
+	}
+
+	type_index NEArgumentSet::insert(type_index index, NEArgumentInterfaceBase& base)
+	{
+		return base._onInsertedInArguments(index, *this);
+	}
+	type_index NEArgumentSet::push(NEArgumentInterfaceBase& base)
+	{
+		return base._onInsertedInArguments(getLength(), *this);
+	}
+	type_index NEArgumentSet::pushFront(NEArgumentInterfaceBase& base)
+	{
+		return base._onInsertedInArguments(0, *this);
+	}
+
+	NEBinaryFileSaver& NEArgumentSet::serialize(NEBinaryFileSaver& saver) const
+	{
+		//	@임시:
+		//	NEArgument의 Serialize 정책:
+		//		이런 다형성을 이용한 배열은 원형패턴을 이용해서 원본으로부터 인스턴스를 복사하는
+		//		과정이 serialize에 포함되어야 한다. 그러나, Argument는 인스턴스가 들어있다고 가정하고
+		//		serialize를 수행한다.
+		//		인스턴스를 채워오기 위해서 원형패턴의 Manager 역할을 수행하는 주체가 만들기에는 역할이
+		//		작기 때문이다.
+		//		어짜피 임시 코드 이므로 NEModule이 _onFetchArguement의 함수에서 인스턴스를 가져오는 역할
+		//		을 수행할 것이며, 이말은 NEArgumentSet::serialize는 반드시 외부에서 호출되는 것이 아니라
+		//		NEModule내에서만 호출이 되어야 한다는 의미가 된다.
+		saver << getLength();
+
+		for(int n=0; n < getLength() ;n++)
+			saver << getElement(n);
+
+		return saver;
+	}
+
+	NEBinaryFileLoader& NEArgumentSet::serialize(NEBinaryFileLoader& loader)
+	{
+		/*
+			NEArgument의 인스턴스는 다형성을 사용하므로 원칙적으로 load가 불가능하다.
+			virtual NEModule::_bindArguments를 호출한다.
+		*/
+		
+		//	pre:
+		if( ! _owner)
+		{
+			KERNAL_ERROR(" NEArgumentSet serialize load를 하고 싶지만 Owner가 등록되지 않으므로 인스턴스를 생성할 수 없다.");
+			return loader;
+		}
+
+
+
+		//	main:
+		//		인스턴스 생성:
+		_owner->_bindArguments();	//	다시 콜백되어 ThisClass::push를 호출한다.
+		//		생성한 인스턴스를 바탕으로 load 시퀸스 개시:
+		type_count length = 0;
+		loader >> length;
+		if(length != getLength())
+			KERNAL_ERROR("길이가 맞지 않는다. 어디선가 데이터가 꼬였다");
+
+		for(int n=0; n < getLength() ;n++)
+			loader >> getElement(n);
+
+		return loader;
+	}
+
+	NEModule& NEArgumentSet::getOwner()
+	{
+		return *_owner;
+	}
+
+	const NEModule& NEArgumentSet::getOwner() const
+	{
+		return *_owner;
+	}
+
+	NEArgumentSet& NEArgumentSet::operator=(const ThisClass& rhs)
+	{
+		return *this;
+	}
+
+}

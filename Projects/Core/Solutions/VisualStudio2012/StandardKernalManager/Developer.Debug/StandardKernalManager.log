@@ -1,0 +1,42 @@
+﻿빌드 시작: 2012-10-22 오후 5:01:35
+     1>2 노드의 "Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\StandardKernalManager.vcxproj" 프로젝트(Build 대상)입니다.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D _USRDLL /D DEVELOPER /D StandardKernalManager_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Developer.Debug\\" /Fd"Developer.Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\..\..\Sources\StandardKernalManager\Sources\EntryPoints\main.cpp ..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp ..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardLocalStack\StandardLocalStack.cpp ..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardManagedNodeList\StandardManagedNodeList.cpp ..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardScriptShortCutSet\StandardScriptShortCutSet.cpp ..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardNameShortCutSet\StandardNameShortCutSet.cpp ..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardGroupShortCutSet\StandardGroupShortCutSet.cpp ..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardPriorityShortCutSet\StandardPriorityShortCutSet.cpp ..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp ..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\innerclass\StandardScriptHeader\StandardScriptHeader.cpp
+         StandardScriptHeader.cpp
+         NEStandardScriptManager.cpp
+         StandardPriorityShortCutSet.cpp
+         StandardGroupShortCutSet.cpp
+         StandardNameShortCutSet.cpp
+         StandardScriptShortCutSet.cpp
+         StandardManagedNodeList.cpp
+         StandardLocalStack.cpp
+         NEStandardNodeManager.cpp
+         main.cpp
+         코드를 생성하고 있습니다...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\..\..\..\Binaries\StandardKernalManager\StandardKernalManager.dev.dbg.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\..\..\..\Binaries\StandardKernalManager\StandardKernalManager.dev.dbg.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\..\..\..\Binaries\StandardKernalManager\StandardKernalManager.dev.dbg.lib" /MACHINE:X86 /SAFESEH /DLL Developer.Debug\main.obj
+         Developer.Debug\NEStandardNodeManager.obj
+         Developer.Debug\StandardLocalStack.obj
+         Developer.Debug\StandardManagedNodeList.obj
+         Developer.Debug\StandardScriptShortCutSet.obj
+         Developer.Debug\StandardNameShortCutSet.obj
+         Developer.Debug\StandardGroupShortCutSet.obj
+         Developer.Debug\StandardPriorityShortCutSet.obj
+         Developer.Debug\NEStandardScriptManager.obj
+         Developer.Debug\StandardScriptHeader.obj
+            Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\..\..\..\Binaries\StandardKernalManager\StandardKernalManager.dev.dbg.lib 라이브러리 및 Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\..\..\..\Binaries\StandardKernalManager\StandardKernalManager.dev.dbg.exp 개체를 생성하고 있습니다.
+         StandardKernalManager.vcxproj -> Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\..\..\..\Binaries\StandardKernalManager\StandardKernalManager.dev.dbg.dll
+       PostBuildEvent:
+         Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\..\..\..\..\..\Resources\Applications\AfterBuild\AfterBuild.exe Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\VersionNo.ini Z:\Node\Projects\Core\Binaries\StandardKernalManager\..\StandardKernalManager Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\..\..\..\..\..\SDK\Libraries\Modules
+         :VCEnd
+         Z:\Node\Projects\Core\Binaries\StandardKernalManager\..\StandardKernalManager\StandardKernalManager.dev.dbg.dll
+         Z:\Node\Projects\Core\Binaries\StandardKernalManager\..\StandardKernalManager\StandardKernalManager.dev.dbg.exp
+         Z:\Node\Projects\Core\Binaries\StandardKernalManager\..\StandardKernalManager\StandardKernalManager.dev.dbg.ilk
+         Z:\Node\Projects\Core\Binaries\StandardKernalManager\..\StandardKernalManager\StandardKernalManager.dev.dbg.lib
+         Z:\Node\Projects\Core\Binaries\StandardKernalManager\..\StandardKernalManager\StandardKernalManager.dev.dbg.pdb
+         5개 파일이 복사되었습니다.
+     1>"Z:\Node\Projects\Core\Solutions\VisualStudio2012\StandardKernalManager\StandardKernalManager.vcxproj" 프로젝트를 빌드했습니다(Build 대상).
+
+빌드했습니다.
+
+경과 시간: 00:00:13.89

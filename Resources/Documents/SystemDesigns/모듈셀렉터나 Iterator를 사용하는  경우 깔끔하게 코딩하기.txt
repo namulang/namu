@@ -1,0 +1,18 @@
+NEModule* module = NE_NULL;
+
+while( module = &(selector.getModule()) )
+{
+	코드...
+}
+
+와 같은 코드가 더 깔끔하게 보기 좋다.
+
+Iterator* iterator = list.getIterator(0);
+
+while(iterator)
+{
+
+	코드...
+
+	iterator = iterator->getNext();
+}

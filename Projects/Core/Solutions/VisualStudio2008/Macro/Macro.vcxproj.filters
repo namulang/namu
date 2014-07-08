@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Sources\Commons">
+      <UniqueIdentifier>{172a8bbf-2042-4ead-b25d-b79932954eaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{faa89e1c-19c3-4ffc-8be6-10624b72e6ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{ffd1128b-88ca-4ff6-ac3a-f0e6eea264a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\DLLMacro">
+      <UniqueIdentifier>{f24bbd8e-a4af-49c8-bb2a-cf650a08ee81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\MemoryLeakMacro">
+      <UniqueIdentifier>{1ea67e48-8eb6-45bd-95ab-f52ec83dcd8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{5c8c99a3-cf67-4472-b451-0134579216f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\Macro\Sources\Commons\CommonDefine.hpp">
+      <Filter>Sources\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Macro\Sources\Commons\CommonTypedef.hpp">
+      <Filter>Sources\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Macro\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Macro\Sources\Modules\DLLMacro\SetDLLEXPORT.hpp">
+      <Filter>Sources\Modules\DLLMacro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Macro\Sources\Modules\DLLMacro\SetDLLIMPORT.hpp">
+      <Filter>Sources\Modules\DLLMacro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Macro\Sources\Modules\MemoryLeakMacro\MemoryLeak.hpp">
+      <Filter>Sources\Modules\MemoryLeakMacro</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\Macro\Sources\Includes\include.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

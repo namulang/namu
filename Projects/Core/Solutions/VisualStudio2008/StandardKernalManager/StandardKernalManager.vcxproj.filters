@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{f01dc744-7fff-46ce-9150-a37d32cf8ab4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Commons">
+      <UniqueIdentifier>{544d0d7d-f723-462c-ab32-c65e75feff17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Includes">
+      <UniqueIdentifier>{1f38f414-f5cd-47f0-87c5-342725976da4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\EntryPoints">
+      <UniqueIdentifier>{7e0cc18b-dd2c-4d61-9859-7c188590a254}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules">
+      <UniqueIdentifier>{31b1ee29-9da5-459f-b93d-5d4b90356e5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager">
+      <UniqueIdentifier>{d2142dee-23ce-4199-9573-7b6d0364fa88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager\define">
+      <UniqueIdentifier>{626f6c6b-5bdf-4cb5-bc31-ab162f5cb086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager\Execute">
+      <UniqueIdentifier>{980f17d5-c38a-49a6-80f4-e2b0be37203a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager\Execute\innerclass">
+      <UniqueIdentifier>{ad66cd03-e03c-498e-8cd0-754b730daed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager\Execute\innerclass\ErrorCode">
+      <UniqueIdentifier>{d6d8491f-067d-491b-b795-070ab73e66e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardLocalStack">
+      <UniqueIdentifier>{2d066009-9be2-42c0-950b-f4b4d4d4c1a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardManagedNodeList">
+      <UniqueIdentifier>{a94ff2d6-a2be-4d77-b9e9-7ef289622ef4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardScriptShortCutSet">
+      <UniqueIdentifier>{ad702bf0-667d-4834-98dd-061317f98f90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardNameShortCutSet">
+      <UniqueIdentifier>{d8c3dd28-4adf-44a7-abe2-91aefbecbddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardGroupShortCutSet">
+      <UniqueIdentifier>{05f65d19-5d87-4179-9375-947f94defaa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardPriorityShortCutSet">
+      <UniqueIdentifier>{73723d3f-fc79-498c-86f4-87a5f956f006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptManager">
+      <UniqueIdentifier>{e55af2f1-117c-42af-b5e9-e98c91791e87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptManager\define">
+      <UniqueIdentifier>{76ba4c6f-a0fd-4af0-af1b-7131de4694d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptManager\Execute">
+      <UniqueIdentifier>{660653c5-42d4-45d0-998f-c3dcfd81190a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptManager\Execute\innerclass">
+      <UniqueIdentifier>{72a4aa6f-0184-4565-99e4-7b1a897cedd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptManager\Execute\innerclass\ErrorCode">
+      <UniqueIdentifier>{57859a68-f3a1-4344-bf32-142c81dbb9ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Modules\NEStandardScriptManager\Execute\innerclass\StandardScriptHeader">
+      <UniqueIdentifier>{59d12967-b332-404f-8cb0-5e2acad1ce52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{95452972-a85f-4df1-a1b2-06b6e1a8000f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Commons\EntryPoint.hpp">
+      <Filter>Sources\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Includes\include.hpp">
+      <Filter>Sources\Includes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\EntryPoints\header.hpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\NEStandardNodeManager.hpp">
+      <Filter>Sources\Modules\NEStandardNodeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\define\define.hpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.hpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardLocalStack\StandardLocalStack.hpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardLocalStack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardManagedNodeList\StandardManagedNodeList.hpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardManagedNodeList</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardScriptShortCutSet\StandardScriptShortCutSet.hpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardScriptShortCutSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardNameShortCutSet\StandardNameShortCutSet.hpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardNameShortCutSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardGroupShortCutSet\StandardGroupShortCutSet.hpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardGroupShortCutSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardPriorityShortCutSet\StandardPriorityShortCutSet.hpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardPriorityShortCutSet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\NEStandardScriptManager.hpp">
+      <Filter>Sources\Modules\NEStandardScriptManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\define\define.hpp">
+      <Filter>Sources\Modules\NEStandardScriptManager\define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.hpp">
+      <Filter>Sources\Modules\NEStandardScriptManager\Execute</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\innerclass\ErrorCode\ErrorCode.hpp">
+      <Filter>Sources\Modules\NEStandardScriptManager\Execute\innerclass\ErrorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\innerclass\StandardScriptHeader\StandardScriptHeader.hpp">
+      <Filter>Sources\Modules\NEStandardScriptManager\Execute\innerclass\StandardScriptHeader</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Sources\StandardKernalManager\Sources\EntryPoints\main.cpp">
+      <Filter>Sources\EntryPoints</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\NEStandardNodeManager.cpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardLocalStack\StandardLocalStack.cpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardLocalStack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardManagedNodeList\StandardManagedNodeList.cpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardManagedNodeList</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardScriptShortCutSet\StandardScriptShortCutSet.cpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardScriptShortCutSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardNameShortCutSet\StandardNameShortCutSet.cpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardNameShortCutSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardGroupShortCutSet\StandardGroupShortCutSet.cpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardGroupShortCutSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardPriorityShortCutSet\StandardPriorityShortCutSet.cpp">
+      <Filter>Sources\Modules\NEStandardNodeManager\Execute\innerclass\StandardPriorityShortCutSet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\NEStandardScriptManager.cpp">
+      <Filter>Sources\Modules\NEStandardScriptManager\Execute</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Sources\StandardKernalManager\Sources\Modules\NEStandardScriptManager\Execute\innerclass\StandardScriptHeader\StandardScriptHeader.cpp">
+      <Filter>Sources\Modules\NEStandardScriptManager\Execute\innerclass\StandardScriptHeader</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VersionNo.ini">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+</Project>

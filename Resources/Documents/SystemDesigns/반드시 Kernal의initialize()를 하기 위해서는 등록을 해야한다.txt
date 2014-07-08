@@ -1,0 +1,2 @@
+왜냐하면 Kernal::getInstance().getSettings()를 한뒤에 경로 정보들을 이용해서 작업을 하기 
+때문이다.
