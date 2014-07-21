@@ -46,7 +46,7 @@ void Planetarium::onKeyPressed(char inputed)
 		break;
 
 	case LG::MENU:
-		
+		call(Filter());
 		break;
 
 	case LG::SPACE:

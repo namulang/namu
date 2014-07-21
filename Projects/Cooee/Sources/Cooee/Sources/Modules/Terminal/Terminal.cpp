@@ -45,7 +45,7 @@ void Terminal::onKeyPressed(char inputed)
 
 	if(inputed == LG::SPACE)
 	{
-		call(Planetarium(1, 1, 78, 23));
+		call(Planetarium());
 		(dynamic_cast<Planetarium&>(LG::Core::windows[0])).setFocus(::Core::getObjectBy(path));
 	}
 }

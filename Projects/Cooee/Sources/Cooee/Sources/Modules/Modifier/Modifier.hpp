@@ -58,7 +58,7 @@ public:
 	{
 		regist(1, &sw);
 	}
-				 
+
 	virtual void onUpdateData()
 	{
 		sw.setValue(value);
@@ -81,7 +81,7 @@ public:
 
 	FUNC_CLONE(Modifier<NEBooleanKey>)
 
-	LG::SwitchGliph sw;
+		LG::SwitchGliph sw;
 	NEBooleanKey::Trait& value;
 };
 
@@ -113,9 +113,9 @@ public:
 	public:
 		MenuList() : ListGliph(0, 25, 18, 30, 6, BLACK, WHITE, WHITE, LIGHTRED), codelist_display_index(-1) {}
 		FUNC_CLONE(MenuList)
-		FUNC_TO_OWNER(Modifier<NENodeSelector>)
+			FUNC_TO_OWNER(Modifier<NENodeSelector>)
 
-		NEString createNodeTypeStringFrom(NECodeType::CodeType type)
+			NEString createNodeTypeStringFrom(NECodeType::CodeType type)
 		{
 			switch(type)
 			{
@@ -177,7 +177,7 @@ public:
 				codes_to_str = NEString("[") + codelist_display_index + "]" + bank[c[codelist_display_index]] + "(" + c[codelist_display_index] + ")";
 				break;
 			}
-			
+
 			items.push("   " + codes_to_str);
 		}
 		virtual void onUpdateData()
@@ -225,13 +225,13 @@ public:
 						{
 						public:
 							FUNC_TO_CALLER(Modifier<NENodeSelector>)
-							FUNC_CLONE(CodeInputer)
+								FUNC_CLONE(CodeInputer)
 
-							CodeInputer() : LG::InputWindow("새로 추가할 CODE를 좌우 방향키로 선택하세요", BLACK, WHITE) 
+								CodeInputer() : LG::InputWindow("새로 추가할 CODE를 좌우 방향키로 선택하세요", BLACK, WHITE) 
 							{
-								
+
 							}
-		
+
 							virtual void onUpdateData()
 							{
 								const NETStringList& bank = toCaller().menulist.getProperBankFrom(toCaller().key.getNodeType());								
@@ -278,12 +278,8 @@ public:
 						case NECodeType::PRIORITY:	case NECodeType::NAME:
 							toOwner()->call(CodeInputer());
 							break;
-
-						default:
-							::Core::pushMessage(NEString("타입 ") + createNodeTypeStringFrom(type) + "은 코드타입을 지정할 수 없습니다.");
-							break;
 						}
-						
+
 					}
 					else if(codelist_display_index >= 0)
 					{
@@ -436,13 +432,13 @@ public:
 				toOwner()->delete_me = true;
 			}			
 		}
-		
+
 		int codelist_display_index;
 	};
 
 	FUNC_CLONE(Modifier)
 
-	NENodeSelector& key;
+		NENodeSelector& key;
 	Gliph header, count_header, bind_header, code_type_header, use_and_header, codelist_header;
 	MenuList menulist;
 };
@@ -471,270 +467,7 @@ public:
 	public:
 		MenuList() : ListGliph(0, 25, 18, 30, 6, BLACK, WHITE, WHITE, LIGHTRED), codelist_display_index(-1) {}
 		FUNC_CLONE(MenuList)
-		FUNC_TO_OWNER(Modifier<NEModuleSelector>)
-
-		NEString createNodeTypeStringFrom(NECodeType::CodeType type)
-		{
-			switch(type)
-			{
-			case NECodeType::ME:		return "ME";
-			case NECodeType::SCRIPT:	return "SCRIPT";
-			case NECodeType::NAME:		return "NAME";
-			case NECodeType::RECENT:	return "RECENT";
-			case NECodeType::ALL:		return "ALL";
-			default:					return "ERROR! UNKNOWN!";
-			}
-		}
-		void updateList()
-		{
-			NEModuleSelector& k = toOwner()->key;
-			if( ! &k) return;
-
-			items.create(3);
-			items.push(NEString("   ") + k.isUsingAutoBinding());
-			items.push(NEString("   ") + createNodeTypeStringFrom(k.getModuleType()));
-			
-			NEString codes_to_str;
-			const NEIntSet& c = k.getModuleCodeSet();
-			
-			if(	k.getModuleType() == NECodeType::ALL	||
-				k.getModuleType() == NECodeType::RECENT	||
-				k.getModuleType() == NECodeType::ME		)
-			{
-				codes_to_str = "NOT NEEDED!";				
-				codelist_display_index = -1;
-			}
-			else
-			{
-				switch(codelist_display_index)
-				{
-				case -2:	codes_to_str = "NEW";	break;
-				case -1:	
-					codes_to_str = "CODES: ";
-					for(int n=0; n < c.getLength() ;n++)
-						codes_to_str += NEString(c[n]) + " ";
-					break;
-
-				default:
-					codes_to_str = NEString("[") + codelist_display_index + "]" + c[codelist_display_index];
-					break;
-				}
-			}
-
-			items.push("   " + codes_to_str);
-		}
-		virtual void onUpdateData()
-		{
-			if(items.getLength() < 3)
-				updateList();
-
-			for(int n=0; n < 3 ;n++)
-			{
-				NEString& item = items[n];
-				if(n == choosed)
-				{
-					item[0] = '<';
-					item[1] = '-';
-					item[2] = ' ';
-					item += " ->";
-				}
-				else if(item.getLength() > 0 && item[0] == '<')
-				{
-					item[0] = ' ';
-					item[1] = ' ';
-					item[2] = ' ';
-					item.pop();
-					item.pop();
-					item.pop();
-					item[item.getLengthLastIndex()] = '\0';
-				}
-			}
-
-		}
-
-		virtual void onKeyPressed(char inputed)
-		{
-			ListGliph::onKeyPressed(inputed);
-			NEModuleSelector& key = toOwner()->key;
-
-			switch(inputed)
-			{
-			case CONFIRM:
-				if(choosed == 2)
-				{
-					if(codelist_display_index == -2)
-					{
-						class CodeInputer : public LG::InputWindow
-						{
-						public:
-							FUNC_TO_CALLER(Modifier<NEModuleSelector>)
-							FUNC_CLONE(CodeInputer)
-
-							CodeInputer() : LG::InputWindow("새로 추가할 CODE를 입력하세요.", BLACK, WHITE) 
-							{
-
-							}
-
-							virtual void onInputed()
-							{
-								NECodeSet copied = toCaller().key.getModuleCodeSet();
-								if(copied.getLength() == copied.getSize())
-									copied.resize(copied.getSize() + 1);
-								copied.push(input.text.toInt());
-								toCaller().key.setModuleCodeSet(copied);
-
-								toCaller().menulist.items.release();
-								toCaller().menulist.onUpdateData();
-								toCaller().menulist.onDraw();
-								delete_me = true;
-							}
-						};
-
-						NECodeType::CodeType type = toOwner()->key.getModuleType();
-						switch(type)
-						{
-						case NECodeType::SCRIPT:	case NECodeType::NAME:
-							toOwner()->call(CodeInputer());
-							break;
-
-						default:
-							::Core::pushMessage(NEString("타입 ") + createNodeTypeStringFrom(type) + "은 코드타입을 지정할 수 없습니다.");
-							break;
-						}
-
-					}
-					else if(codelist_display_index >= 0)
-					{
-						NECodeSet copied = toOwner()->key.getModuleCodeSet();
-						copied.remove(codelist_display_index);
-						copied.resize(copied.getLength());
-						toOwner()->key.setModuleCodeSet(copied);
-						if(codelist_display_index > copied.getLengthLastIndex())
-							codelist_display_index = copied.getLengthLastIndex();
-
-						items.release();
-						onUpdateData();
-						onDraw();
-					}
-				}
-				break;
-
-			case UP:
-			case DOWN:
-				onUpdateData();
-				onDraw();
-				break;
-
-			case LEFT:
-				switch(choosed)
-				{
-				case 0:	//	AutoBind
-					if(key.isUsingAutoBinding())
-						key.isUsingAutoBinding() = false;
-					break;
-
-				case 1:	//	CodeType
-					switch(key.getModuleType())
-					{
-					case NECodeType::RECENT:
-						key.setModuleType(NECodeType::ME);
-						break;
-					case NECodeType::SCRIPT:
-						key.setModuleType(NECodeType::RECENT);
-						break;
-					case NECodeType::NAME:
-						key.setModuleType(NECodeType::SCRIPT);
-						break;				
-					case NECodeType::ALL:
-						key.setModuleType(NECodeType::NAME);
-						break;
-					}
-					break;
-
-				case 2:
-					if(codelist_display_index > -2)
-						codelist_display_index--;
-					break;
-				}
-				items.release();
-				onUpdateData();
-				onDraw();
-				break;
-
-			case RIGHT:
-				switch(choosed)
-				{
-				case 0:	//	AutoBind
-					if( ! key.isUsingAutoBinding())
-						key.isUsingAutoBinding() = true;
-					break;
-
-				case 1:	//	CodeType
-					switch(key.getModuleType())
-					{
-					case NECodeType::ME:
-						key.setModuleType(NECodeType::RECENT);
-						break;
-					case NECodeType::RECENT:
-						key.setModuleType(NECodeType::SCRIPT);
-						break;
-					case NECodeType::SCRIPT:
-						key.setModuleType(NECodeType::NAME);
-						break;
-					case NECodeType::NAME:
-						key.setModuleType(NECodeType::ALL);
-						break;
-					}
-					break;
-				case 2:
-					if(codelist_display_index < key.getModuleCodeSet().getLengthLastIndex())
-						codelist_display_index++;
-				}
-				items.release();
-				onUpdateData();
-				onDraw();
-				break;
-
-			case CANCEL:
-				toOwner()->delete_me = true;
-			}			
-		}
-
-		int codelist_display_index;
-	};
-
-	FUNC_CLONE(Modifier)
-
-	NEModuleSelector& key;
-	Gliph bind_header, code_type_header, use_and_header, codelist_header;
-	MenuList menulist;
-};
-
-template <>
-class Modifier<NEKeySelector> : public Window
-{
-public:
-	Modifier(NEKeySelector& new_key)
-		: Window(4, 17, 52, 8, LIGHTGRAY, DARKGRAY), key(new_key),
-		bind_header		(0, 15, 18, 10, 1, WHITE, LIGHTRED, "ModuleBind?"),
-		code_type_header(0, 15, 19, 10, 1, WHITE, LIGHTRED, "ModuleType"),
-		codelist_header	(0, 15, 20, 10, 1, WHITE, LIGHTRED, "ModuleCodes")
-	{
-		regist(4, &bind_header, &code_type_header, &codelist_header, &menulist);
-	}
-	Modifier(const Modifier& rhs)
-		: Window(rhs), key(rhs.key), bind_header(rhs.bind_header), code_type_header(rhs.code_type_header), 
-		codelist_header(rhs.codelist_header), menulist(rhs.menulist)
-	{
-		regist(4, &bind_header, &code_type_header, &codelist_header, &menulist);
-	}
-
-	class MenuList : public ListGliph
-	{
-	public:
-		MenuList() : ListGliph(0, 25, 18, 30, 6, BLACK, WHITE, WHITE, LIGHTRED), codelist_display_index(-1) {}
-		FUNC_CLONE(MenuList)
-		FUNC_TO_OWNER(Modifier<NEKeySelector>)
+			FUNC_TO_OWNER(Modifier<NEModuleSelector>)
 
 			NEString createNodeTypeStringFrom(NECodeType::CodeType type)
 		{
@@ -859,10 +592,6 @@ public:
 						case NECodeType::SCRIPT:	case NECodeType::NAME:
 							toOwner()->call(CodeInputer());
 							break;
-
-						default:
-							::Core::pushMessage(NEString("타입 ") + createNodeTypeStringFrom(type) + "은 코드타입을 지정할 수 없습니다.");
-							break;
 						}
 
 					}
@@ -968,7 +697,166 @@ public:
 
 	FUNC_CLONE(Modifier)
 
-	NEKeySelector& key;
+		NEModuleSelector& key;
 	Gliph bind_header, code_type_header, use_and_header, codelist_header;
+	MenuList menulist;
+};
+
+template <>
+class Modifier<NEKeySelector> : public Window
+{
+public:
+	Modifier(NEKeySelector& new_key)
+		: Window(4, 17, 52, 8, LIGHTGRAY, DARKGRAY), key(new_key),
+		bind_header		(0, 15, 18, 10, 1, WHITE, LIGHTRED, "AutoBind?"),
+		keyname_header	(0, 15, 19, 10, 1, WHITE, LIGHTRED, "KeyName")
+	{
+		regist(3, &bind_header, &keyname_header, &menulist);
+	}
+	Modifier(const Modifier& rhs)
+		: Window(rhs), key(rhs.key), bind_header(rhs.bind_header), keyname_header(rhs.keyname_header), menulist(rhs.menulist)
+	{
+		regist(3, &bind_header, &keyname_header, &menulist);
+	}
+
+	class MenuList : public ListGliph
+	{
+	public:
+		MenuList() : ListGliph(0, 25, 18, 30, 6, BLACK, WHITE, WHITE, LIGHTRED) {}
+		FUNC_CLONE(MenuList)
+			FUNC_TO_OWNER(Modifier<NEKeySelector>)
+
+			void updateList()
+		{
+			NEKeySelector& k = toOwner()->key;
+			if( ! &k) return;
+
+			items.create(2);
+			items.push(NEString("   ") + k.isUsingAutoBinding());
+			items.push(NEString("   ") + k.getKeyName());
+		}
+		virtual void onUpdateData()
+		{
+			if(items.getLength() < 2)
+				updateList();
+
+			for(int n=0; n < 2 ;n++)
+			{
+				NEString& item = items[n];
+				if(n == choosed)
+				{
+					item[0] = '<';
+					item[1] = '-';
+					item[2] = ' ';
+					if(item.getLength() > 1 && item[item.getLengthLastIndex()-1] != '>')
+						item += " ->";
+				}
+				else if(item.getLength() > 0 && item[0] == '<')
+				{
+					item[0] = ' ';
+					item[1] = ' ';
+					item[2] = ' ';
+					item.pop();
+					item.pop();
+					item.pop();
+					item[item.getLengthLastIndex()] = '\0';
+				}
+			}
+
+		}
+
+		virtual void onKeyPressed(char inputed)
+		{
+			ListGliph::onKeyPressed(inputed);
+			NEKeySelector& key = toOwner()->key;
+
+			switch(inputed)
+			{
+			case CONFIRM:
+				if(choosed == 1)
+				{			
+					class CodeInputer : public LG::InputWindow
+					{
+					public:
+						FUNC_TO_CALLER(Modifier<NEKeySelector>)
+							FUNC_CLONE(CodeInputer)
+
+							CodeInputer(const NEStringList& names) : LG::InputWindow("새로 추가할 키의 이름을 좌우방향키로 선택하세요. \n물론 직접 이름을 입력 할 수도 있어요.", BLACK, WHITE) 
+						{
+							input.history = names;
+							input.history_idx = 0;
+							input.text = input.history[input.history_idx];
+						}
+
+						virtual void onInputed()
+						{
+							toCaller().key.setKeyName(input.text);
+
+							toCaller().menulist.items.release();
+							toCaller().menulist.onUpdateData();
+							toCaller().menulist.onDraw();
+							delete_me = true;
+						}
+					};
+
+					// @임시 테스트를 위해서 노드쪽 셀렉터를 강제 할당
+					key.setNodeType(NECodeType::ALL);
+					key.setManager(NEType::NESCRIPT_EDITOR);
+
+					//	현재 Selector가 가져올 수 있는 노드들에 있는 모든 키 이름을 Preset으로 보내기:
+					NEStringList bucket;
+					NENode* itr=0;
+					while(itr = &key.getNode())
+					{
+						NEKeyCodeSet& ks = itr->getKeySet();
+
+						for(int n=0; n < ks.getLength() ;n++)
+							if(bucket.find(ks[n].getName()) == NE_INDEX_ERROR)
+								bucket.push(ks[n].getName());
+					}
+
+					toOwner()->call(CodeInputer(bucket));					
+				}
+				break;
+
+			case UP:
+			case DOWN:
+				onUpdateData();
+				onDraw();
+				break;
+
+			case LEFT:
+				if(choosed == 0)
+				{
+					if(key.isUsingAutoBinding())
+						key.isUsingAutoBinding() = false;
+					items.release();
+					onUpdateData();
+					onDraw();		
+				}				
+				break;
+
+			case RIGHT:
+				if(choosed == 0)
+				{
+			case 0:	//	AutoBind
+				if( ! key.isUsingAutoBinding())
+					key.isUsingAutoBinding() = true;
+				items.release();
+				onUpdateData();
+				onDraw();
+				}
+				break;
+
+			case CANCEL:
+				toOwner()->delete_me = true;
+			}			
+		}
+	};
+
+	FUNC_CLONE(Modifier)
+
+		NEKeySelector& key;
+	Gliph bind_header, keyname_header;
 	MenuList menulist;
 };
