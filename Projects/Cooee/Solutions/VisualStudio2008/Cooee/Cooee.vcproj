@@ -334,6 +334,10 @@
 							Name="Modifier"
 							>
 							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\Modifier\Modifier.cpp"
+								>
+							</File>
+							<File
 								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\Modifier\Modifier.hpp"
 								>
 							</File>
@@ -431,6 +435,30 @@
 						RelativePath="..\..\..\Sources\Cooee\Sources\Modules\Planet\Planet.hpp"
 						>
 					</File>
+				</Filter>
+				<Filter
+					Name="PopUpMenu"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Cooee\Sources\Modules\PopUpMenu\PopUpMenu.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Window"
+					>
+					<Filter
+						Name="FilterModifier"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Cooee\Sources\Modules\FilterModifier\FilterModifier.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\Sources\Cooee\Sources\Modules\FilterModifier\FilterModifier.hpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 			<Filter

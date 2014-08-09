@@ -53,43 +53,44 @@ public:
 
 	//	반환값:	마지막에 값이 채워진 라인.
 	//			자식의 열은 항상 내 위치 + 4 이기때문에 계산이 가능하다. 따라서 반환할 필요도 없지.
-	int generate(NEObject& obj, NEArrayTemplate<NEObject*>& selected, Planet* parent = 0, int your_y = 0)
+	int generate(NEObject& obj, Planet* parent = 0, int your_y = 0)
 	{
 		planets.release();
 		updateMe(obj, parent, your_y);
 
 		//	OBJ Casting 해서 Container 혹은 Module, Key로 뽑아내기
 		//	그 구체클래스에 맞게 generate함수를 호출하기
-		int n = _generateMorphing(obj, selected);
-		markWhenISelected(selected);
-		return n;
+		return _generateMorphing(obj);
 	}
-	void markWhenISelected(NEArrayTemplate<NEObject*>& selected)
+	void markColor(NEArrayTemplate<NEObject*>& selected)
 	{
-		if(selected.find(this) >= 0)
+		if(selected.find(real) >= 0)
 		{
 			fore = CYAN;
 			back = LIGHTCYAN;
-		}		
+		}
+
+		for(PlanetList::Iterator* itr=planets.getIterator(0); itr ;itr=itr->getNext())
+			itr->getValue().markColor(selected);
 	}
-	int _generateMorphing(NEObject& obj, NEArrayTemplate<NEObject*>& selected)
+	int _generateMorphing(NEObject& obj)
 	{
 		if(obj.isSubClassOf(NEType::NEKEY))
 			return _generate((NEKey&) obj);
 		else if(obj.isSubClassOf(NEType::NEKEY_CODESET))
-			return _generate((NEKeyCodeSet&) obj, selected);
+			return _generate((NEKeyCodeSet&) obj);
 		else if(obj.isSubClassOf(NEType::NEMODULE))
 			return _generate((NEModule&) obj);
 		else if(obj.isSubClassOf(NEType::NEMODULE_CODESET_KEY))
-			return _generate((NEModuleCodeSetKey&) obj, selected);
+			return _generate((NEModuleCodeSetKey&) obj);
 		else if(obj.isSubClassOf(NEType::NEMODULE_CODESET))
-			return _generate((NEModuleCodeSet&) obj, selected);
+			return _generate((NEModuleCodeSet&) obj);
 		else if(obj.isSubClassOf(NEType::NENODE))
-			return _generate((NENode&) obj, selected);
+			return _generate((NENode&) obj);
 		else if(obj.isSubClassOf(NEType::NENODE_CODESET))
-			return _generate((NENodeCodeSet&) obj, selected);
+			return _generate((NENodeCodeSet&) obj);
 		else if(obj.isSubClassOf(NEType::NENODE_CODESET_KEY))
-			return _generate((NENodeCodeSetKey&) obj, selected);
+			return _generate((NENodeCodeSetKey&) obj);
 
 		return y;
 	}
@@ -101,7 +102,7 @@ public:
 
 		return y + 1;
 	}
-	int _generate(NEKeyCodeSet& keyset, NEArrayTemplate<NEObject*>& selected)
+	int _generate(NEKeyCodeSet& keyset)
 	{
 		setText("KeySet");
 		fore = BLACK;
@@ -109,7 +110,7 @@ public:
 
 		int next_vacant = y + 1;
 		for(int n=0; n < keyset.getLength() ;n++)
-			next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(keyset[n], selected, this, next_vacant);
+			next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(keyset[n], this, next_vacant);
 
 		return next_vacant;
 	}
@@ -121,7 +122,7 @@ public:
 
 		return y + 1;
 	}
-	int _generate(NEModuleCodeSet& ms, NEArrayTemplate<NEObject*>& selected)
+	int _generate(NEModuleCodeSet& ms)
 	{
 		setText("ModuleSet");
 		fore = BLACK;
@@ -129,36 +130,36 @@ public:
 
 		int next_vacant = y + 1;
 		for(int n=0; n < ms.getLength() ;n++)
-			next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(ms[n], selected, this, next_vacant);
+			next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(ms[n], this, next_vacant);
 
 		return next_vacant;
 	}
-	int _generate(NEModuleCodeSetKey& msk, NEArrayTemplate<NEObject*>& selected)
+	int _generate(NEModuleCodeSetKey& msk)
 	{
-		int to_return = _generate(msk.getValue(), selected);
+		int to_return = _generate(msk.getValue());
 		setText("[MS]" + msk.getName());
 
 		return to_return;
 	}
-	int _generate(NENode& node, NEArrayTemplate<NEObject*>& selected)
+	int _generate(NENode& node)
 	{
 		const NETString& name = Editor::getInstance().getScriptEditor().getBanks().getScriptBank()[node.getScriptCode()];
 		setText(name);
 		fore = WHITE;
 		back = GREEN;
 
-		int next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(node.getKeySet(), selected, this, y + 1);		
-		return ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(node.getModuleSet(), selected, this, next_vacant);
+		int next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(node.getKeySet(), this, y + 1);
+		return ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(node.getModuleSet(), this, next_vacant);
 	}
-	int _generate(NENodeCodeSetKey& nsk, NEArrayTemplate<NEObject*>& selected)
+	int _generate(NENodeCodeSetKey& nsk)
 	{
-		int to_return = _generate(nsk.getValue(), selected);
+		int to_return = _generate(nsk.getValue());
 
 		setText("[NS]" + nsk.getName());
 		return to_return;
 	}
 
-	int _generate(NENodeCodeSet& ns, NEArrayTemplate<NEObject*>& selected)
+	int _generate(NENodeCodeSet& ns)
 	{
 		setText("NodeSet");
 		fore = BLACK;
@@ -166,7 +167,7 @@ public:
 
 		int next_vacant = y + 1;
 		for(int n=0; n < ns.getLength() ;n++)
-			next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(ns[n], selected, this, next_vacant);
+			next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(ns[n], this, next_vacant);
 
 		return next_vacant;
 	}
