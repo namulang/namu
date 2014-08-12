@@ -459,6 +459,22 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="ListWindow"
+						>
+						<Filter
+							Name="Filter"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\Filter\Filter.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\Filter\Filter.hpp"
+								>
+							</File>
+						</Filter>
+					</Filter>
 				</Filter>
 			</Filter>
 			<Filter
