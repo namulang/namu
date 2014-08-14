@@ -27,3 +27,5 @@ Binaries/
 !Applications/SDKBuilder/sdkbuilder.bat
 *.ini
 !VersionNo.ini
+SDK/
+*.rsp
