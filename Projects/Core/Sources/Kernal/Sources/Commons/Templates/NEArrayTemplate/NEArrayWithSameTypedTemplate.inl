@@ -347,7 +347,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	type_result NEArrayTemplate<InsideType, false, InsideType, type>::remove(type_index index) 
+	type_index NEArrayTemplate<InsideType, false, InsideType, type>::remove(type_index index) 
 	{
 		//	pre:
 		//		파라메터검사:
