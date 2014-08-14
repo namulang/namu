@@ -62,7 +62,7 @@ namespace NE
 		//		»ó¼Ó:
 		//			NESpecifiedInsertable:
 	public:
-		virtual type_result insert(type_index index, const InsideType* const source);
+		virtual type_index insert(type_index index, const InsideType* const source);
 		virtual type_index remove(type_index index);
 		//			NEReservedCollectorTemplate:
 	public:
