@@ -4,6 +4,7 @@
 #include "../KeySetTerminal/KeySetTerminal.hpp"
 #include "../Modifier/Modifier.hpp"
 #include "../../Commons/Templates/ContainerModifier/ContainerModifier.hpp"
+#include "../Planetarium/Planetarium.hpp"
 
 Commander Core::commander = Commander();
 NEString Core::path("/");
@@ -110,13 +111,13 @@ void Core::openModifierFrom(NEKey& key)
 		::LG::Core::open(ContainerModifier<NEWStringSetKey, NEWStringKey>((NEWStringSetKey&)key));
 		break;
 	case NEType::NENODE_SELECTOR:
-		//::LG::Core::open();
+		LG::Core::open(Planetarium((NENodeSelector*)&key, 5, 3, 70, 18));
 		break;
 	case NEType::NEMODULE_SELECTOR:
-		//::LG::Core::open();
+		LG::Core::open(Planetarium((NEModuleSelector*)&key, 5, 3, 70, 18));
 		break;
 	case NEType::NEKEY_SELECTOR:
-		//::LG::Core::open();
+		LG::Core::open(Planetarium((NEKeySelector*)&key, 5, 3, 70, 18));
 		break;
 
 

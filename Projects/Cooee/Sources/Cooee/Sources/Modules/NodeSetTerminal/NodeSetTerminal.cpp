@@ -1,6 +1,7 @@
 #include "NodeSetTerminal.hpp"
 #include "../ModuleEncyclo/ModuleEncyclo.hpp"
 #include "../Core/Core.hpp"
+#include "../NodeTerminal/NodeTerminal.hpp"
 
 void NodeSetTerminal::ContentList::onKeyPressed(char inputed) 
 {
@@ -40,7 +41,7 @@ void NodeSetTerminal::GeniusGate::onKeyPressed(char inputed)
 			if(text == "" || text.getLength() <= 0)
 				text = toOwner()->contents.createCommand();
 
-			LG::Core::windows.pushFront(ModuleSetTerminal("/0/m"));
+			LG::Core::windows.pushFront(NodeTerminal(toOwner()->path + "/" + toOwner()->contents.choosed));
 			return;
 
 			NEString& msg = Core::commander.command(text);

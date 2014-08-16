@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Modifier/Modifier.hpp"
+#include "../../Includes/Includes.hpp"
 
 class Planetarium;
 
@@ -17,14 +17,9 @@ public:
 	NEString createModifierStateString(NENodeSelector& filter, type_bool is_user_choosed);
 
 	virtual void onUpdateData();
-	virtual void onDraw();
 	void _updateSwitchWhenFilterExisted(NENodeSelector& filter);
 
 	virtual void onKeyPressed(char inputed);
 	virtual void onItemChoosed(type_index item_index, const NEString& chosen_content);
-
-	Modifier<NENodeSelector> node_modifier;
-	Modifier<NEModuleSelector>* module_modifier;
-	Modifier<NEKeySelector>* key_modifier;
-	int focused_index;
+	void _switchOn();
 };

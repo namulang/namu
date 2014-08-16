@@ -23,10 +23,12 @@ namespace LG
 		}
 		static void setColor(int tcolor, int bcolor)
 		{
+			if(color_lock) return;
 			SetConsoleTextAttribute(output_handle, bcolor << 4 | tcolor);
 		}
 		static void setColor(WORD color)
 		{
+			if(color_lock) return;
 			SetConsoleTextAttribute(output_handle, color);
 		}
 		static WORD getColor()
@@ -51,6 +53,11 @@ namespace LG
 			COORD temp = {cs.dwMaximumWindowSize.X, cs.dwMaximumWindowSize.Y};
 			return temp;
 		}
+		
+		static void setColorLock(bool to_lock)
+		{
+			color_lock = to_lock;
+		}
 
 		static void setCursorTo(type_ushort x, type_ushort y)
 		{
@@ -67,5 +74,6 @@ namespace LG
 		static type_ushort max_width;
 		static type_ushort max_height;	
 		static WindowList windows;
+		static bool color_lock;
 	};
 }

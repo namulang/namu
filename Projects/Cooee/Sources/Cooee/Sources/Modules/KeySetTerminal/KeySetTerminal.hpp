@@ -24,7 +24,7 @@ public:
 	{
 	public:
 		Header()
-			: Gliph(0, 0, 0, 30, 2, BLACK, LIGHTGRAY,
+			: Gliph(0, 0, 0, 30, 2, BLACK, LIGHTMAGENTA,
 			"KeyName   KeyType   KeyData\n"
 			"========================================") {}
 		Header(const Header& rhs)

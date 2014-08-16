@@ -2,42 +2,17 @@
 #include "../Planetarium/Planetarium.hpp"
 
 Filter::Filter() 
-: ListWindow("", 4, 17, 10, 8, LIGHTGRAY, DARKGRAY), node_modifier(toCaller().getNodeFilter()), 
-module_modifier(0), key_modifier(0), focused_index(-1)
+: LG::ListWindow("", 4, 17, 20, 5, LIGHTGRAY, DARKGRAY)
 {			
-	if(&toCaller().getModuleFilter())
-	{
-		module_modifier = new Modifier<NEModuleSelector>(toCaller().getModuleFilter());
-		module_modifier->owner = this;
-	}
-	if(&toCaller().getKeyFilter())
-	{
-		key_modifier = new Modifier<NEKeySelector>(toCaller().getKeyFilter());
-		key_modifier->owner = this;
-	}
+
 }
 
-Filter::Filter( const Filter& rhs ) : LG::ListWindow(rhs), node_modifier(rhs.node_modifier),
-module_modifier(0), key_modifier(0)
+Filter::Filter(const Filter& rhs ) : LG::ListWindow(rhs)
 {
-	if(rhs.module_modifier)
-	{
-		module_modifier = new Modifier<NEModuleSelector>(*rhs.module_modifier);
-		module_modifier->owner = this;
-	}
-	if(rhs.key_modifier)
-	{
-		key_modifier = new Modifier<NEKeySelector>(*rhs.key_modifier);
-		key_modifier->owner = this;
-	}
 }
 
 Filter::~Filter()
 {
-	if(module_modifier)
-		delete module_modifier;
-	if(key_modifier)
-		delete key_modifier;
 }
 
 NE::NEString Filter::createModifierStateString( NENodeSelector& filter, type_bool is_user_choosed )
@@ -45,14 +20,14 @@ NE::NEString Filter::createModifierStateString( NENodeSelector& filter, type_boo
 	if( ! &filter)
 		return "NOT SUPPORTED";
 
-	NEString to_return = ! is_user_choosed ? to_return = "[X]" : to_return = "[O]";
+	NEString to_return = ! is_user_choosed ? "[X]" : "[O]";
 
 	return to_return + filter.getTypeName();
 }
 
 void Filter::onUpdateData()
 {
-	ListWindow::onUpdateData();
+	LG::ListWindow::onUpdateData();
 	NEBooleanSet& switches = toCaller().switches;
 
 	type_count to_create = 1;
@@ -62,28 +37,10 @@ void Filter::onUpdateData()
 		to_create++;
 
 	list.items.create(to_create);
-	list.items.push(createModifierStateString(toCaller().getNodeFilter(), switches[0]));
+	NENodeSelector dummy = toCaller().getNodeFilter();	//	getType을 했을때 다형성을 무시하고 NodeSelector가 나오게 하기 위해서
+	list.items.push(createModifierStateString(dummy, switches[0]));
 	list.items.push(createModifierStateString(toCaller().getModuleFilter(), switches[1]));
 	list.items.push(createModifierStateString(toCaller().getKeyFilter(), switches[2]));
-
-	switch(focused_index)
-	{
-	case 0:	return node_modifier.onUpdateData();
-	case 1: if(module_modifier)	return module_modifier->onUpdateData();
-	case 2: if(key_modifier) return key_modifier->onUpdateData();
-	}
-}
-
-void Filter::onDraw()
-{
-	ListWindow::onDraw();
-
-	switch(focused_index)
-	{
-	case 0: return node_modifier.onDraw();
-	case 1: if(module_modifier) return module_modifier->onDraw();
-	case 2: if(key_modifier) return key_modifier->onDraw();
-	}
 }
 
 void Filter::_updateSwitchWhenFilterExisted( NENodeSelector& filter )
@@ -92,10 +49,10 @@ void Filter::_updateSwitchWhenFilterExisted( NENodeSelector& filter )
 
 	if( ! &filter) return;
 	type_index n = 0;
-	if(filter.isSubClassOf(NEType::NEMODULE_SELECTOR))
-		n = 1;
-	else if(filter.isSubClassOf(NEType::NEKEY_SELECTOR))
+	if(filter.isSubClassOf(NEType::NEKEY_SELECTOR))
 		n = 2;
+	else if(filter.isSubClassOf(NEType::NEMODULE_SELECTOR))
+		n = 1;
 	else
 		return;	//	여기에 들어오면 안됨.
 
@@ -108,91 +65,84 @@ void Filter::_updateSwitchWhenFilterExisted( NENodeSelector& filter )
 			switches[other] = false;
 		onUpdateData();
 		onDraw();
+		toCaller().onUpdateData();
+		toCaller().onDraw();
 	}
 }
 
 void Filter::onKeyPressed( char inputed )
 {
+	LG::ListWindow::onKeyPressed(inputed);
+
 	NEBooleanSet& switches = toCaller().switches;
-	switch(focused_index)
+	
+	switch(inputed)
 	{
-	case -1:
-		switch(inputed)
-		{
-		case LEFT:
-			if( ! switches[focused_index]) 
-				return;
-			switches[focused_index] = false;
-			if(focused_index == 0)
-				switches[1] = switches[2] = false;
-			onUpdateData();
-			onDraw();
-			break;
-
-		case RIGHT:
-			switch(focused_index)
-			{
-			case 1:
-				{
-					NEModuleSelector& ms = toCaller().getModuleFilter();
-					_updateSwitchWhenFilterExisted(ms);
-				}
-				break;
-
-			case 2:
-				{
-					NEKeySelector& ks = toCaller().getKeyFilter();
-					_updateSwitchWhenFilterExisted(ks);
-				}
-				break;
-
-			}
-
-			ListWindow::onKeyPressed(inputed);
-			break;
-		}
+	case LEFT:
+		if( ! switches[list.choosed]) 
+			return;
+		switches[list.choosed] = false;
+		if(list.choosed == 0)
+			switches[1] = switches[2] = false;
+		onUpdateData();
+		onDraw();
+		toCaller().onUpdateData();
+		toCaller().onDraw();
 		break;
 
-	case 0: 
-		if(inputed == LG::CANCEL)
-		{
-			focused_index = -1;
-			onDraw();
-		}
-		else
-			node_modifier.onKeyPressed(inputed);
-		break;
-
-	case 1: 
-		if(inputed == LG::CANCEL)
-		{
-			focused_index = -1;
-			onDraw();
-		}
-		else
-			if(module_modifier)
-				module_modifier->onKeyPressed(inputed);
-		break;
-
-	case 2: 
-		if(inputed == LG::CANCEL)
-		{
-			focused_index = -1;
-			onDraw();
-		}
-		else
-			if(key_modifier)
-				key_modifier->onKeyPressed(inputed);
+	case RIGHT:
+		_switchOn();
 		break;
 	}
 }
 
-void Filter::onItemChoosed( type_index item_index, const NEString& chosen_content )
+void Filter::_switchOn()
 {
-	if(item_index == 1 && ! module_modifier) return;
-	if(item_index == 2 && ! key_modifier) return;
+	NEBooleanSet& switches = toCaller().switches;
+	switch(list.choosed)
+	{
+	case 0:
+		switches[0] = true;
+		onUpdateData();
+		onDraw();
+		toCaller().onUpdateData();
+		toCaller().onDraw();
+		break;
 
-	focused_index = item_index;
-	onUpdateData();
-	onDraw();
+	case 1:
+		{
+			NEModuleSelector& ms = toCaller().getModuleFilter();
+			_updateSwitchWhenFilterExisted(ms);
+		}
+		break;
+
+	case 2:
+		{
+			NEKeySelector& ks = toCaller().getKeyFilter();
+			_updateSwitchWhenFilterExisted(ks);
+		}
+		break;
+	}
+}
+
+void Filter::onItemChoosed(type_index item_index, const NEString& chosen_content)
+{
+	NEBooleanSet& switches = toCaller().switches;
+	if( ! switches[item_index])
+		_switchOn();
+	
+	switch(item_index)
+	{
+	case 0:
+		call(Modifier<NENodeSelector>());
+		break;
+
+	case 1:
+		call(Modifier<NEModuleSelector>());
+		break;
+
+	case 2:
+		call(Modifier<NEKeySelector>());
+		break;
+	}
 }

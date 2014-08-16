@@ -62,12 +62,45 @@ public:
 		//	그 구체클래스에 맞게 generate함수를 호출하기
 		return _generateMorphing(obj);
 	}
-	void markColor(NEArrayTemplate<NEObject*>& selected)
+	void markColor(NEListTemplate<NEObject*>& selected)
 	{
 		if(selected.find(real) >= 0)
 		{
 			fore = CYAN;
 			back = LIGHTCYAN;
+		}
+		else
+		{
+			if(real->isSubClassOf(NEType::NEKEY))
+			{
+				fore = WHITE;	
+				back = DARKGRAY;
+			}
+			else if(real->isSubClassOf(NEType::NEKEY_CODESET))
+			{
+				fore = BLACK;	
+				back = LIGHTGRAY;
+			}
+			else if(real->isSubClassOf(NEType::NEMODULE))
+			{
+				fore = WHITE;	
+				back = RED;
+			}
+			else if(real->isSubClassOf(NEType::NEMODULE_CODESET))
+			{
+				fore = BLACK;	
+				back = LIGHTRED;
+			}
+			else if(real->isSubClassOf(NEType::NENODE))
+			{
+				fore = WHITE;	
+				back = GREEN;
+			}
+			else
+			{
+				fore = BLACK;
+				back = WHITE;
+			}
 		}
 
 		for(PlanetList::Iterator* itr=planets.getIterator(0); itr ;itr=itr->getNext())
@@ -97,16 +130,12 @@ public:
 	int _generate(NEKey& key)
 	{
 		setText(key.getName());
-		fore = WHITE;
-		back = DARKGRAY;
 
 		return y + 1;
 	}
 	int _generate(NEKeyCodeSet& keyset)
 	{
 		setText("KeySet");
-		fore = BLACK;
-		back = LIGHTGRAY;
 
 		int next_vacant = y + 1;
 		for(int n=0; n < keyset.getLength() ;n++)
@@ -117,16 +146,12 @@ public:
 	int _generate(NEModule& module)
 	{
 		setText(module.getHeader().getName());
-		fore = WHITE;
-		back = RED;
 
 		return y + 1;
 	}
 	int _generate(NEModuleCodeSet& ms)
 	{
 		setText("ModuleSet");
-		fore = BLACK;
-		back = LIGHTRED;
 
 		int next_vacant = y + 1;
 		for(int n=0; n < ms.getLength() ;n++)
@@ -145,8 +170,6 @@ public:
 	{
 		const NETString& name = Editor::getInstance().getScriptEditor().getBanks().getScriptBank()[node.getScriptCode()];
 		setText(name);
-		fore = WHITE;
-		back = GREEN;
 
 		int next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(node.getKeySet(), this, y + 1);
 		return ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(node.getModuleSet(), this, next_vacant);
@@ -162,8 +185,6 @@ public:
 	int _generate(NENodeCodeSet& ns)
 	{
 		setText("NodeSet");
-		fore = BLACK;
-		back = LIGHTGREEN;
 
 		int next_vacant = y + 1;
 		for(int n=0; n < ns.getLength() ;n++)

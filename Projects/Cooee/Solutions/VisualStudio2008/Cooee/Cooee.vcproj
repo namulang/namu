@@ -448,18 +448,6 @@
 					Name="Window"
 					>
 					<Filter
-						Name="FilterModifier"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Cooee\Sources\Modules\FilterModifier\FilterModifier.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Cooee\Sources\Modules\FilterModifier\FilterModifier.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
 						Name="ListWindow"
 						>
 						<Filter

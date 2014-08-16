@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../InputTerminal/InputTerminal.hpp"
-#include "../FilterModifier/FilterModifier.hpp"
 
 template <typename KEY>
 class Modifier : public InputTerminal
@@ -56,10 +55,10 @@ public:
 class Filter;
 
 template <>
-class Modifier<NENodeSelector> : public FilterModifier
+class Modifier<NENodeSelector> : public Window
 {
 public:
-	Modifier(NENodeSelector& new_key);
+	Modifier();
 	Modifier(const Modifier& rhs);
 
 	class MenuList : public ListGliph
@@ -80,19 +79,18 @@ public:
 	};
 
 	FUNC_CLONE(Modifier)
-	FUNC_TO_OWNER(Filter)
+	FUNC_TO_CALLER(Filter)
 
-	NENodeSelector& key;
 	Gliph header, count_header, bind_header, code_type_header, use_and_header, codelist_header;
 	MenuList menulist;
 };
 
 template <>
-class Modifier<NEModuleSelector> : public FilterModifier
+class Modifier<NEModuleSelector> : public Window
 {
 public:
-	Modifier(NEModuleSelector& new_key)
-		: FilterModifier(4, 17, 52, 8, LIGHTGRAY, DARKGRAY), key(new_key),
+	Modifier()
+		: Window(4, 17, 52, 8, LIGHTGRAY, DARKGRAY),
 		bind_header		(0, 15, 18, 10, 1, WHITE, LIGHTRED, "ModuleBind?"),
 		code_type_header(0, 15, 19, 10, 1, WHITE, LIGHTRED, "ModuleType"),
 		codelist_header	(0, 15, 20, 10, 1, WHITE, LIGHTRED, "ModuleCodes")
@@ -100,7 +98,7 @@ public:
 		regist(4, &bind_header, &code_type_header, &codelist_header, &menulist);
 	}
 	Modifier(const Modifier& rhs)
-		: FilterModifier(rhs), key(rhs.key), bind_header(rhs.bind_header), code_type_header(rhs.code_type_header), 
+		: Window(rhs), bind_header(rhs.bind_header), code_type_header(rhs.code_type_header), 
 		codelist_header(rhs.codelist_header), menulist(rhs.menulist)
 	{
 		regist(4, &bind_header, &code_type_header, &codelist_header, &menulist);
@@ -125,44 +123,7 @@ public:
 			default:					return "ERROR! UNKNOWN!";
 			}
 		}
-		void updateList()
-		{
-			NEModuleSelector& k = toOwner()->key;
-			if( ! &k) return;
-
-			items.create(3);
-			items.push(NEString("   ") + k.isUsingAutoBinding());
-			items.push(NEString("   ") + createNodeTypeStringFrom(k.getModuleType()));
-
-			NEString codes_to_str;
-			const NEIntSet& c = k.getModuleCodeSet();
-
-			if(	k.getModuleType() == NECodeType::ALL	||
-				k.getModuleType() == NECodeType::RECENT	||
-				k.getModuleType() == NECodeType::ME		)
-			{
-				codes_to_str = "NOT NEEDED!";				
-				codelist_display_index = -1;
-			}
-			else
-			{
-				switch(codelist_display_index)
-				{
-				case -2:	codes_to_str = "NEW";	break;
-				case -1:	
-					codes_to_str = "CODES: ";
-					for(int n=0; n < c.getLength() ;n++)
-						codes_to_str += NEString(c[n]) + " ";
-					break;
-
-				default:
-					codes_to_str = NEString("[") + codelist_display_index + "]" + c[codelist_display_index];
-					break;
-				}
-			}
-
-			items.push("   " + codes_to_str);
-		}
+		void updateList();
 		virtual void onUpdateData()
 		{
 			if(items.getLength() < 3)
@@ -198,25 +159,25 @@ public:
 	};
 
 	FUNC_CLONE(Modifier)
+	FUNC_TO_CALLER(Filter)
 
-	NEModuleSelector& key;
 	Gliph bind_header, code_type_header, use_and_header, codelist_header;
 	MenuList menulist;
 };
 
 template <>
-class Modifier<NEKeySelector> : public FilterModifier
+class Modifier<NEKeySelector> : public Window
 {
 public:
-	Modifier(NEKeySelector& new_key)
-		: FilterModifier(4, 17, 52, 8, LIGHTGRAY, DARKGRAY), key(new_key),
+	Modifier()
+		: Window(4, 17, 52, 8, LIGHTGRAY, DARKGRAY), 
 		bind_header		(0, 15, 18, 10, 1, WHITE, LIGHTRED, "AutoBind?"),
 		keyname_header	(0, 15, 19, 10, 1, WHITE, LIGHTRED, "KeyName")
 	{
 		regist(3, &bind_header, &keyname_header, &menulist);
 	}
 	Modifier(const Modifier& rhs)
-		: FilterModifier(rhs), key(rhs.key), bind_header(rhs.bind_header), keyname_header(rhs.keyname_header), menulist(rhs.menulist)
+		: Window(rhs), bind_header(rhs.bind_header), keyname_header(rhs.keyname_header), menulist(rhs.menulist)
 	{
 		regist(3, &bind_header, &keyname_header, &menulist);
 	}
@@ -228,15 +189,7 @@ public:
 		FUNC_CLONE(MenuList)
 		FUNC_TO_OWNER(Modifier<NEKeySelector>)
 
-		void updateList()
-		{
-			NEKeySelector& k = toOwner()->key;
-			if( ! &k) return;
-
-			items.create(2);
-			items.push(NEString("   ") + k.isUsingAutoBinding());
-			items.push(NEString("   ") + k.getKeyName());
-		}
+		void updateList();
 		virtual void onUpdateData()
 		{
 			if(items.getLength() < 2)
@@ -271,8 +224,8 @@ public:
 	};
 
 	FUNC_CLONE(Modifier)
+	FUNC_TO_CALLER(Filter)
 
-		NEKeySelector& key;
 	Gliph bind_header, keyname_header;
 	MenuList menulist;
 };

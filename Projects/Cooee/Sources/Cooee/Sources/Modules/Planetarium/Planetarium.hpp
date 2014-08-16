@@ -9,9 +9,10 @@
 class Planetarium : public Window
 {
 public:
-	Planetarium(int new_x = 1, int new_y = 1, int new_width = 78, int new_height = 23, int fore = WHITE, int back = BLUE, NENodeSelector* new_specified = 0)
-		: Window(), root(this, 0), switches(3), specified_filter(new_specified)
+	Planetarium(NENodeSelector* new_specified = 0, int new_x = 1, int new_y = 1, int new_width = 78, int new_height = 23, int fore = WHITE, int back = BLUE)
+		: Window(), root(this, 0), switches(3), specified_filter(new_specified), header(0, new_x+5, new_y+1, new_width-10, 1, BLACK, LIGHTCYAN, "\t~ Planetarium ~")
 	{
+		regist(1, &header);
 		x = new_x;
 		y = new_y;
 		width = new_width;
@@ -21,14 +22,24 @@ public:
 
 		for(int n=0; n < switches.getSize() ;n++)
 			switches.push(false);
+		if(specified_filter)
+		{
+			header.text += NEString("\tModifying...") + specified_filter->getTypeName();
+			switches[0] = true;
+			if(specified_filter->isSubClassOf(NEType::NEKEY_SELECTOR))
+				switches[2] = true;
+			else
+				switches[1] = true;
+		}
 	}
 	Planetarium(const Planetarium& rhs)
 		: Window(rhs), root(this, 0), screen_x(rhs.screen_x), screen_y(rhs.screen_y),
 		default_key_filter(rhs.default_key_filter), default_module_filter(rhs.default_module_filter), 
-		switches(rhs.switches), specified_filter(rhs.specified_filter)
+		switches(rhs.switches), specified_filter(rhs.specified_filter), header(rhs.header)
 	{
 		focusing = &root;
 		setFocus(root);
+		regist(1, &header);
 	}
 
 	FUNC_CLONE(Planetarium)
@@ -43,31 +54,47 @@ public:
 		getKeyFilter().NENodeSelector::operator=(getModuleFilter());
 	}
 
-	void getSelectedByFilter(NEArrayTemplate<NEObject*>& selected)
+	void getSelectedByFilter(NEListTemplate<NEObject*>& selected)
 	{
 		//	현재 어떤 Filter가 활성화 되어있는 지를 판단한다:
 		if(switches[2])
+		{
+			NEType::Type backup = getKeyFilter().getManagerType();
+			getKeyFilter().setManager(NEType::NESCRIPT_EDITOR);
 			while(NEKey* itr = &getKeyFilter().getKey())
 				selected.push(itr);
-		else if(switches[1])
+			getKeyFilter().setManager(backup);
+		}
+		if(switches[1])
+		{
+			NEType::Type backup = getModuleFilter().getManagerType();
+			getModuleFilter().setManager(NEType::NESCRIPT_EDITOR);
 			while(NEModule* itr = &getModuleFilter().getModule())
 				selected.push(itr);
-		else if(switches[0])
+			getModuleFilter().setManager(backup);
+		}
+		if(switches[0])
+		{
+			NEType::Type backup = getNodeFilter().getManagerType();
+			getNodeFilter().setManager(NEType::NESCRIPT_EDITOR);
 			while(NENode* itr = &getNodeFilter().getNode())
 				selected.push(itr);
+			getNodeFilter().setManager(backup);
+		}
 	}
 
 	virtual void onUpdateData()
 	{
 		synchroSelectors();
 
-		NEArrayTemplate<NEObject*> selected;
+		NEListTemplate<NEObject*> selected;
 		getSelectedByFilter(selected);
 
 		generate(Editor::getInstance().getScriptEditor().getScriptNodes());
 		root.updateLines(0);
 		root.markColor(selected);
 	}
+	virtual void onKeyPressed(char inputed);
 
 	virtual void onDraw()
 	{
@@ -143,8 +170,12 @@ public:
 
 		return default_module_filter;
 	}
+	bool isSelectorModifingMode() const 
+	{
+		return specified_filter != 0x00;
+	}
 
-
+	Gliph header;
 	Planet root;
 	int screen_x, screen_y;
 	Planet* focusing;

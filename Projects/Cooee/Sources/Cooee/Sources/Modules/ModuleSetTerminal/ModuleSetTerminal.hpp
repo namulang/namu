@@ -6,7 +6,7 @@
 class ModuleSetTerminal : public Terminal {
 public:
 	ModuleSetTerminal(const NEString& new_path, type_ushort x=20, type_ushort y=4)
-		: Terminal(new_path, NEType::NEMODULE_CODESET, x, y, 40, 17, BLACK, DARKGRAY) 
+		: Terminal(new_path, NEType::NEMODULE_CODESET, x, y, 30, 17, BLACK, DARKGRAY) 
 	{
 		regist(6, &header, &namelist, &commentlist, &navigator, &colon, &gate); 
 		navigator.text = path; 
@@ -40,7 +40,7 @@ public:
 	class ModuleNameList : public ListGliph
 	{
 	public:
-		ModuleNameList() : ListGliph(0, 10, 7, 15, 14, BLACK, RED, WHITE, LIGHTRED) {}
+		ModuleNameList() : ListGliph(0, 10, 7, 10, 14, BLACK, RED, WHITE, LIGHTRED) {}
 		ModuleNameList(const ModuleNameList& rhs) : ListGliph(rhs) {}
 		FUNC_TO_OWNER(ModuleSetTerminal)
 		FUNC_CLONE(ModuleNameList)
@@ -63,14 +63,14 @@ public:
 	class ModuleCommentList : public ListGliph
 	{
 	public:
-		ModuleCommentList() : ListGliph(0, 30, 7, 25, 14, BLACK, WHITE, WHITE, LIGHTRED) {}
+		ModuleCommentList() : ListGliph(0, 30, 7, 20, 14, BLACK, WHITE, WHITE, LIGHTRED) {}
 		ModuleCommentList(const ModuleCommentList& rhs) : ListGliph(rhs) {}
 		FUNC_TO_OWNER(ModuleSetTerminal)
 		FUNC_CLONE(ModuleCommentList)
 
 		virtual void onUpdateData() {
 
-			x = toOwner()->x + 15;
+			x = toOwner()->x + 10;
 			y = toOwner()->y + 2;
 
 			const NEModuleCodeSet& ms = toOwner()->castObject();
@@ -91,9 +91,9 @@ public:
 	};
 	class ListHeader : public Gliph {
 	public:
-		ListHeader() : Gliph(0, 10, 5, 60, 2, BLACK, LIGHTGRAY) {
+		ListHeader() : Gliph(0, 10, 5, 30, 2, BLACK, LIGHTCYAN) {
 			text = 
-				"     Mod.Name		Comment\n"
+				"Mod.Name	Comment\n"
 				"========================================";
 		}
 		ListHeader(const ListHeader& rhs) : Gliph(rhs) {}
@@ -109,7 +109,7 @@ public:
 
 	class Navigator : public BaseNavigator {
 	public:
-		Navigator() : BaseNavigator("ModuelSet", 10, 20, 27, 1, BLACK, WHITE) {}
+		Navigator() : BaseNavigator("ModuelSet", 10, 20, 17, 1, BLACK, WHITE) {}
 		Navigator(const Navigator& rhs) : BaseNavigator(rhs) {}
 		FUNC_CLONE(Navigator)
 		FUNC_TO_OWNER(ModuleSetTerminal)		
@@ -130,7 +130,7 @@ public:
 		FUNC_TO_OWNER(ModuleSetTerminal)
 		virtual void onUpdateData()
 		{
-			x = toOwner()->x + 27;
+			x = toOwner()->x + 17;
 			y = toOwner()->y + 16;
 		}
 	};
@@ -142,7 +142,7 @@ public:
 		FUNC_TO_OWNER(ModuleSetTerminal)
 		virtual void onUpdateData()
 		{
-			x = toOwner()->x + 30;
+			x = toOwner()->x + 20;
 			y = toOwner()->y + 16;
 		}
 		bool hinted;

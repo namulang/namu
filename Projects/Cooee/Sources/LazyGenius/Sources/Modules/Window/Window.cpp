@@ -48,11 +48,7 @@ namespace LG
 	void Window::onDraw() {
 		if( ! isShowing()) return;
 
-		Gliph::onDraw();
-
-		for(GliphList::Iterator* itr=gliphs.getIterator(0); itr ; itr=itr->getNext()) {
-			itr->getValue().onDraw();
-		}
+		draw();
 	}			
 
 	bool Window::operator!=(const Window& rhs) const
@@ -80,6 +76,15 @@ namespace LG
 		if(ind == NE_INDEX_ERROR) return;
 
 		Window& pushed = Core::windows[ind];
+	}
+
+	void Window::draw()
+	{
+		Gliph::onDraw();
+
+		for(GliphList::Iterator* itr=gliphs.getIterator(0); itr ; itr=itr->getNext()) {
+			itr->getValue().onDraw();
+		}
 	}
 
 }

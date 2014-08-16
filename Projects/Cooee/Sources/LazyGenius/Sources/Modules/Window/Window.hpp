@@ -23,6 +23,7 @@ namespace LG
 		virtual void onUpdateData();
 		virtual void onTerminate();
 		virtual void onDraw();
+		void draw();
 		Window& getCaller() { return *_caller; }
 		const Window& getCaller() const { return *_caller; }
 		void call(Window& dialog);

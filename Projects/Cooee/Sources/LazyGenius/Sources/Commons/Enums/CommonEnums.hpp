@@ -18,6 +18,7 @@ namespace LG
 		DOWN = 80,
 		LEFT = 75,
 		RIGHT = 77,
+		MAP = 47,
 		SPACE = 32
 	};
 }
