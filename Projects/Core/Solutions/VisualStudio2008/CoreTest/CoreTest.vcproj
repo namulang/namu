@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;DEVELOPER;CORES_BUILD_MODE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -115,7 +115,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;DEVELOPER;CORES_BUILD_MODE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -176,7 +176,35 @@
 				Name="EntryPoints"
 				>
 				<File
-					RelativePath="..\..\..\Sources\CoreTest\main.cpp"
+					RelativePath="..\..\..\Sources\CoreTester\Sources\EntryPoints\EntryPoints.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\CoreTester\Sources\EntryPoints\Headers.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Modules"
+				>
+				<Filter
+					Name="TestCase"
+					>
+					<File
+						RelativePath="..\..\..\Sources\CoreTester\Sources\Modules\TestCase\TestCase.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\Sources\CoreTester\Sources\Modules\TestCase\TestCase.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Includes"
+				>
+				<File
+					RelativePath="..\..\..\Sources\CoreTester\Sources\Includes\Includes.hpp"
 					>
 				</File>
 			</Filter>

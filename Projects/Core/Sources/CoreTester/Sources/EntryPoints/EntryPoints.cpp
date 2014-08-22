@@ -1,14 +1,9 @@
 #include <iostream>
 #include <Windows.h>
 #include <iomanip>
-#pragma comment(lib, "winmm.lib")
 using namespace std;
-
-#define DEVELOPER
-#define CORES_BUILD_MODE
-#include "../Kernal/Sources/EntryPoints/Headers.hpp"
+#include "Headers.hpp"
 using namespace NE;
-#pragma comment(lib, "../../../Binaries/Core/Kernal.dev.dbg.lib")
 
 class MyMod : public NEModule
 {
@@ -47,10 +42,7 @@ public:
 };
 
 
-enum COLOR
-{		
-	BLACK=0, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN, LIGHTGRAY, DARKGRAY, LIGHTBLUE, LIGHTGREEN, LIGHTCYAN, LIGHTRED, LIGHTMAGENTA, YELLOW, WHITE, UNKNOWN
-};
+
 enum SPECIAL_KEY
 {
 	CANCEL = 27,
@@ -65,14 +57,6 @@ enum SPECIAL_KEY
 	RIGHT = 77,
 	SPACE = 32
 };
-static void setColor(int tcolor, int bcolor)
-{
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), bcolor << 4 | tcolor);
-}
-static void setColor(WORD color)
-{
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-}
 
 
 
@@ -84,57 +68,6 @@ void init()
 	added.setScript(ms[ms.getLengthLastIndex()-1].getScriptCode()+1);
 }
 
-class TestCase
-{
-public:
-	TestCase(const NEString& name)
-		: _name(name) {}
-	void test()
-	{
-		unsigned int prev = _getTime();
-		bool result = onTest();
-		_printResult(result, _getTime() - prev);
-	}
-	virtual bool onTest() = 0;
-	
-	const NEString& getName() const
-	{
-		return _name;
-	}
-	NEString& getName() 
-	{
-		return _name;
-	}
-
-private:
-	virtual void _printResult(bool is_success, int process_time) const
-	{
-		if(is_success)
-			setColor(LIGHTGREEN, BLACK);
-		else
-			setColor(RED, BLACK);
-		NEString result = is_success ? "Success" : "Failure";
-		
-		cout	<< "[ " << result.toCharPointer() << " : ";
-		cout.width(6); cout.fill(' ');
-		cout	<< process_time;
-		cout	<< "ms ] ";
-		
-		setColor(LIGHTGRAY, BLACK);
-		cout	<< getName().toCharPointer() << endl;
-
-	}
-	unsigned int _getTime() {
-		bool _is_once = false;
-		if( ! _is_once)
-			timeBeginPeriod(1);
-
-		return timeGetTime();
-	}
-
-private:
-	NEString _name;
-};
 class Test1 : public TestCase
 {
 public:
@@ -237,7 +170,7 @@ public:
 		ns.resize(7);
 		if(ns.getLength() < 3 || ns.getSize() != 7) return false;
 		ns.resize(3);
-	
+
 		ms.create(5);
 		NEKeyCodeSet& ks = tg.getKeySet();
 		ms.push(MyMod());
@@ -249,7 +182,7 @@ public:
 		ms.resize(15);
 		if(ms.getLength() != 4 || ms.getSize() != 15) return false;
 		ms.resize(1);
-		
+
 		ks.create(5);
 		ks.push(NEIntKey(5));
 		ks.push(NEFloatKey(4.5f));
@@ -262,7 +195,7 @@ public:
 		if(ks.getLength() < 5)	return false;
 		ks.resize(4);
 		if(ks.getLength() < 4)	return false;
-		
+
 		ns.release();
 		return true;
 	}
@@ -386,7 +319,7 @@ public:
 
 		ks.resize(9);		
 		ks.resize(4);
-		
+
 		NEModuleSelector ms1;
 		ms1.setNodeType(NECodeType::GROUP);
 		NECodeSet ii(1);
@@ -496,7 +429,7 @@ public:
 			if(tk.getValue() != "gogoood!")
 				return false;
 		}
-		
+
 		return true;
 	}
 };
@@ -573,13 +506,13 @@ public:
 void main()
 {
 	cout	<< "CoreTester.		v0.0.1a build on 2014.08.16\n"
-			<< "This program will test kernel with some sequencial jobs. It can takes a minutes by circumstances.\n"
-			<< "If test has been successed, the result will be announced in front of test statement with color green. And the processing time will be displayed next of it.\n\n";
+		<< "This program will test kernel with some sequencial jobs. It can takes a minutes by circumstances.\n"
+		<< "If test has been successed, the result will be announced in front of test statement with color green. And the processing time will be displayed next of it.\n\n";
 
 	NE_MEMORYLEAK;
 
 	std::wcout.imbue( std::locale("korean") );
-	
+
 	Test8().test();
 	init();	
 	Test1().test();
