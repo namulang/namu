@@ -16,8 +16,15 @@ namespace LG
 
 	void TextGliph::makeToHistory() 
 	{
-		history.pushFront(text);
-		text.release();
+		int index = history.find(text);
+		if(index == NE_INDEX_ERROR)
+			history.pushFront(text);
+		else
+		{
+			NEString picked = history[index];
+			history.remove(index);
+			history.pushFront(picked);
+		}
 		history_idx = -1;
 	}
 
@@ -47,7 +54,6 @@ namespace LG
 			break;
 		case CONFIRM:
 			makeToHistory();
-			text = "";
 			break;
 		case LEFT: 
 			if(history_idx > 0) {

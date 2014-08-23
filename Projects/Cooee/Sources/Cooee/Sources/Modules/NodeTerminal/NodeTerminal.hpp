@@ -13,7 +13,7 @@ public:
 		name_header(0, 2, 8, 5, 1, WHITE, LIGHTRED, "Name "),
 		group_header(0, 2, 9, 9, 1, WHITE, LIGHTRED, "Group"),
 		priority_header(0, 2, 10, 5, 1, WHITE, LIGHTRED, "Prior"),
-		ks_terminal(new_path+"/k", 17, 5), ms_terminal(new_path+"/m", 47, 5), focused(0), codelist_display_index(-1)
+		ks_terminal(new_path+"/k", 17, 5), ms_terminal(new_path+"/m", 0, 47, 5), focused(0), codelist_display_index(-1)
 	{
 		regist(9, &header, &script_header, &name_header, &group_header, &priority_header, &attributes, &navigator, &colon, &gate);
 	}

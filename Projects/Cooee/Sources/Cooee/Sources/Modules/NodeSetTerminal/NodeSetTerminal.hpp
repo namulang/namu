@@ -5,7 +5,7 @@
 
 class NodeSetTerminal : public Terminal {
 public:
-	NodeSetTerminal(const NEString& new_path = "/") 
+	NodeSetTerminal(const NEString& new_path = "/", NEKey* real_key = 0) 
 		: Terminal(new_path, NEType::NENODE_CODESET, 1, 1, 78, 23, BLACK, DARKGRAY) 
 	{ 
 		regist(5, &header, &contents, &navigator, &colon, &gate);

@@ -9,17 +9,17 @@
 Commander Core::commander = Commander();
 NEString Core::path("/");
 
-void Core::openModifierFrom(const NEString& path)
+void Core::openModifierFrom(const NEString& path, NEKey* real_key)
 {
 	NEObject& obj = getObjectBy(path);
 	if( ! &obj) return;
 
 	if(	obj.isSubClassOf(NEType::NEMODULE_CODESET_KEY)	||
 		obj.isSubClassOf(NEType::NEMODULE_CODESET)		)
-		::LG::Core::open(ModuleSetTerminal(path)); 
+		::LG::Core::open(ModuleSetTerminal(path, real_key)); 
 	else if(obj.isSubClassOf(NEType::NENODE_CODESET_KEY)	||
 			obj.isSubClassOf(NEType::NENODE_CODESET)		)
-		::LG::Core::open(NodeSetTerminal(path));
+		::LG::Core::open(NodeSetTerminal(path, real_key));
 	else if(obj.isSubClassOf(NEType::NEKEY_CODESET))
 		::LG::Core::open(KeySetTerminal(path));
 	else

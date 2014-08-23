@@ -14,7 +14,7 @@ public:
 	{
 		::LG::Core::windows.pushFront(LG::MessageWindow(msg, WHITE, LIGHTRED));
 	}
-	static void openModifierFrom(const NEString& path);
+	static void openModifierFrom(const NEString& path, NEKey* real_key = 0);
 	static void openModifierFrom(NEKey& key);
 	static type_index _getPositionTypeAndIndex(const NEString& position, int& type)
 	{

@@ -2,46 +2,112 @@
 #include "../Planetarium/Planetarium.hpp"
 
 Modifier<NEBooleanKey>::Modifier(NEBooleanKey& key) 
-	: Terminal("", NEType::NEBOOLEAN_KEY, 30, 10, 20, 5, WHITE, BLACK),
-	sw(0, 38, 13, 4, LIGHTRED, WHITE), value(key.getValue())
+	: Terminal("", NEType::NEBOOLEAN_KEY, 20, 7, 40, 7, WHITE, BLACK),
+	sw(0, 38, 13, 4, LIGHTRED, WHITE), value(key.getValue()),
+	name_lable(0, 0, 0, 8, 1, WHITE, LIGHTRED, "키 이름:"),
+	value_lable(0, 0, 0, 8, 1, WHITE,LIGHTRED, "키 값:"), name_text(0, 0, 0, 22, 1, WHITE, BLACK),
+	focused_text(1), real_key(&key)
 {
-	regist(1, &sw);
+	name_lable.y = y + 3;
+	name_lable.x = x + 3;
+	value_lable.y = name_lable.y + 2;
+	value_lable.x = name_lable.x;
+	name_text.x = sw.x = name_lable.x + name_lable.width;
+	name_text.y = name_lable.y;
+	sw.y = value_lable.y;
+
+	regist(4, &sw, &name_lable, &value_lable, &name_text);
 }
 
 Modifier<NEBooleanKey>::Modifier(NEBooleanKey::Trait& new_value) 
 	: Terminal("", NEType::NEBOOLEAN_KEY, 30, 10, 20, 5, WHITE, BLACK),
-	sw(0, 38, 13, 4, LIGHTRED, WHITE), value(new_value)
+	sw(0, 38, 13, 4, LIGHTRED, WHITE), value(new_value), real_key(0)
 {
 	regist(1, &sw);
 }
 
 
 Modifier<NEBooleanKey>::Modifier(const Modifier& rhs) 
-	: Terminal(rhs), sw(rhs.sw), value(rhs.value)
+: Terminal(rhs), sw(rhs.sw), value(rhs.value), name_lable(rhs.name_lable),
+value_lable(rhs.value_lable), name_text(rhs.name_text), focused_text(rhs.focused_text),
+real_key(rhs.real_key)
 {
-	regist(1, &sw);
+	if(rhs.gliphs.getLength() > 2)
+		regist(4, &sw, &name_lable, &value_lable, &name_text);
 }
 
 
 void Modifier<NEBooleanKey>::onUpdateData()
 {
+	Gliph&	focused = ! focused_text ? (Gliph&)name_text : sw,
+	 	 &	else_one = &focused == &name_text ? (Gliph&) sw : name_text;
+
+	focused.fore = WHITE;
+	focused.back = LIGHTRED;
+	else_one.fore = LIGHTGRAY;
+	else_one.back = DARKGRAY;
+	else_one.onUpdateData();
+	focused.onUpdateData();
 	sw.setValue(value);
+	name_text.text = real_key ? real_key->getName() : "";
 }
 
+void Modifier<NEBooleanKey>::_setInputed(Gliph& target)
+{
+	target.fore = WHITE;
+	target.back = LIGHTGREEN;
+}
 
 void Modifier<NEBooleanKey>::onKeyPressed(char inputed) 
 {
-	Terminal::onKeyPressed(inputed);
-
-	switch(inputed) 
+	switch(inputed)
 	{
-	case CONFIRM:
-		value = sw.getValue();
+	case UP:
+		if(focused_text > 0)
+		{
+			focused_text--;
+			onUpdateData();
+			onDraw();
+		}
+		break;
 
-	case CANCEL:
+	case DOWN:
+		if(focused_text < 1)
+		{
+			focused_text++;
+			onUpdateData();
+			onDraw();
+		}
+		break;
+
+	case CANCEL:			
 		delete_me = true;
 		break;
+
+	case CONFIRM:
+		if( ! focused_text && real_key)
+		{
+			real_key->getName() = name_text.text;
+			_setInputed(name_text);
+			name_text.onDraw();
+		}
+		else
+		{
+			value = sw.getValue();
+
+			_setInputed(sw);
+			sw.onDraw();
+
+			if( ! real_key)
+				delete_me = true;
+		}
+		break;
 	}
+
+	if( ! focused_text)
+		name_text.onKeyPressed(inputed);
+	else
+		sw.onKeyPressed(inputed);
 }
 
 

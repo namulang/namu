@@ -5,8 +5,8 @@
 
 class ModuleSetTerminal : public Terminal {
 public:
-	ModuleSetTerminal(const NEString& new_path, type_ushort x=20, type_ushort y=4)
-		: Terminal(new_path, NEType::NEMODULE_CODESET, x, y, 30, 17, BLACK, DARKGRAY) 
+	ModuleSetTerminal(const NEString& new_path, NEKey* new_real_key = 0, type_ushort x=20, type_ushort y=4)
+		: Terminal(new_path, NEType::NEMODULE_CODESET, x, y, 30, 17, BLACK, DARKGRAY), real_key(new_real_key)
 	{
 		regist(6, &header, &namelist, &commentlist, &navigator, &colon, &gate); 
 		navigator.text = path; 
@@ -18,7 +18,8 @@ public:
 
 	}
 	ModuleSetTerminal(const ModuleSetTerminal& rhs) 
-		: Terminal(rhs), header(rhs.header), namelist(rhs.namelist), navigator(rhs.navigator), colon(rhs.colon), gate(rhs.gate)
+		: Terminal(rhs), header(rhs.header), namelist(rhs.namelist), navigator(rhs.navigator), colon(rhs.colon), 
+		gate(rhs.gate), real_key(rhs.real_key)
 	{ 
 		regist(6, &header, &namelist, &commentlist, &navigator, &colon, &gate);
 		navigator.text = path;
@@ -52,7 +53,9 @@ public:
 
 			const NEModuleCodeSet& ms = toOwner()->castObject();
 			if( ! &ms) return;
-			items.create(ms.getLength());
+			items.create(ms.getLength() + 1);
+			if(toOwner()->real_key)
+				items.push(NEString("≈∞ ¿Ã∏ß : "));
 			for(int n=0; n < ms.getLength() ;n++)
 				items.push(ms[n].getHeader().getName());
 
@@ -75,7 +78,9 @@ public:
 
 			const NEModuleCodeSet& ms = toOwner()->castObject();
 			if( ! &ms) return;
-			items.create(ms.getLength());
+			items.create(ms.getLength() + 1);
+			if(toOwner()->real_key)
+				items.push(toOwner()->real_key->getName());
 			for(int n=0; n < ms.getLength() ;n++)
 				items.push(ms[n].getHeader().getComment());
 
@@ -156,4 +161,5 @@ public:
 	Navigator navigator;
 	Colon colon;
 	GeniusGate gate;
+	NEKey* real_key;
 };

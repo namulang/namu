@@ -17,10 +17,15 @@ namespace LG
 
 		virtual void onUpdateData()
 		{
+			back.y = nobe.y = y;
+			back.fore = nobe.back = fore;
+			back.back = nobe.fore = this->Gliph::back;
+
 			if( ! _value)
 			{
 				nobe.x = x;
 				back.x = x + 1;
+				back.y = y;
 				nobe.text = "X";
 			}
 			else

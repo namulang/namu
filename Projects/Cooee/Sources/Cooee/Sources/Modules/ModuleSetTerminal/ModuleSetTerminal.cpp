@@ -1,6 +1,21 @@
 #include "ModuleSetTerminal.hpp"
 #include "../ModuleEncyclo/ModuleEncyclo.hpp"
 
+class NameInputWindow : public ::LG::InputWindow
+{
+public:
+	NameInputWindow(const NEString& default_string) : InputWindow("새로운 키의 이름을 입력해주시기 바랍니다.", BLACK, LIGHTCYAN, default_string) {}
+
+	FUNC_TO_CALLER(ModuleSetTerminal)
+	FUNC_CLONE(NameInputWindow)
+
+	virtual void onInputed()
+	{
+		toCaller().real_key->getName() = input.text;
+		delete_me = true;
+	}
+};
+
 void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed) 
 {
 	ListGliph::onKeyPressed(inputed);
@@ -12,7 +27,11 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 		
 			if(choosed < 0 || choosed > ms.getLengthLastIndex())	return;
 
-			LG::Core::windows.pushFront(ModuleEncyclo(false, &toOwner()->castObject()[choosed]));
+			int index = toOwner()->real_key ? choosed-1 : choosed;
+			if(index == -1)
+				toOwner()->call(NameInputWindow(toOwner()->real_key->getName()));
+			else
+				LG::Core::windows.pushFront(ModuleEncyclo(false, &toOwner()->castObject()[index]));
 		}	
 		break;
 	case CANCEL:
