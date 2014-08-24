@@ -3,6 +3,21 @@
 #include "../Core/Core.hpp"
 #include "../NodeTerminal/NodeTerminal.hpp"
 
+class NodeNameInputWindow : public ::LG::InputWindow
+{
+public:
+	NodeNameInputWindow(const NEString& default_string) : InputWindow("새로운 키의 이름을 입력해주시기 바랍니다.", BLACK, LIGHTCYAN, default_string) {}
+
+	FUNC_TO_CALLER(NodeSetTerminal)
+	FUNC_CLONE(NodeNameInputWindow)
+
+	virtual void onInputed()
+	{
+		toCaller().real_key->getName() = input.text;
+		delete_me = true;
+	}
+};
+
 void NodeSetTerminal::ContentList::onKeyPressed(char inputed) 
 {
 	ListGliph::onKeyPressed(inputed);
@@ -41,12 +56,16 @@ void NodeSetTerminal::GeniusGate::onKeyPressed(char inputed)
 			if(text == "" || text.getLength() <= 0)
 				text = toOwner()->contents.createCommand();
 
-			LG::Core::windows.pushFront(NodeTerminal(toOwner()->path + "/" + toOwner()->contents.choosed));
+			type_index	choosed = toOwner()->contents.choosed,
+						index = toOwner()->real_key ? choosed-1 : choosed;
+			if(index == -1)
+				toOwner()->call(NodeNameInputWindow(toOwner()->real_key->getName()));
+			else
+				LG::Core::windows.pushFront(NodeTerminal(toOwner()->path + "/" + index));
 			return;
-
-			NEString& msg = Core::commander.command(text);
-			if(msg.getLength() > 0)
-				Core::pushMessage(msg);
+// 			NEString& msg = Core::commander.command(text);
+// 			if(msg.getLength() > 0)
+// 				Core::pushMessage(msg);
 		}
 		break;
 	case CANCEL:

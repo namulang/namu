@@ -5,8 +5,8 @@
 
 class NodeSetTerminal : public Terminal {
 public:
-	NodeSetTerminal(const NEString& new_path = "/", NEKey* real_key = 0) 
-		: Terminal(new_path, NEType::NENODE_CODESET, 1, 1, 78, 23, BLACK, DARKGRAY) 
+	NodeSetTerminal(const NEString& new_path = "/", NEKey* new_real_key = 0)
+		: Terminal(new_path, NEType::NENODE_CODESET, 1, 1, 78, 23, BLACK, DARKGRAY), real_key(new_real_key)
 	{ 
 		regist(5, &header, &contents, &navigator, &colon, &gate);
 		navigator.text = path;
@@ -18,7 +18,8 @@ public:
 		}
 	}
 	NodeSetTerminal(const NodeSetTerminal& rhs) 
-		: Terminal(rhs), header(rhs.header), contents(rhs.contents), navigator(rhs.navigator), colon(rhs.colon), gate(rhs.gate)
+		: Terminal(rhs), header(rhs.header), contents(rhs.contents), navigator(rhs.navigator), colon(rhs.colon), 
+		gate(rhs.gate), real_key(rhs.real_key)
 	{ 
 		regist(5, &header, &contents, &navigator, &colon, &gate);
 		navigator.text = path;
@@ -66,7 +67,10 @@ public:
 		virtual void onUpdateData() {
 			NENodeCodeSet& ns = toOwner()->castObject();
 			if( ! &ns) return;
-			items.create(ns.getLength());
+			items.create(ns.getLength() + 1);
+			NEKey* rk = toOwner()->real_key;
+			if(rk)
+				items.push("Å° ÀÌ¸§ : " + rk->getName());
 			NETStringList& names = Editor::getInstance().getScriptEditor().getBanks().getScriptBank();
 			for(int n=0; n < ns.getLength() ;n++) {
 				NEString	s_idx = ns[n].getScriptCode(),
@@ -116,8 +120,8 @@ public:
 		}
 		GeniusGate(const GeniusGate& rhs) : TextGliph(rhs), hinted(rhs.hinted) {}
 		FUNC_CLONE(GeniusGate)
-			FUNC_TO_OWNER(NodeSetTerminal)
-			bool hinted;
+		FUNC_TO_OWNER(NodeSetTerminal)
+		bool hinted;
 
 		virtual void onKeyPressed(char inputed);
 	};
@@ -127,4 +131,5 @@ public:
 	Navigator navigator;
 	Colon colon;
 	GeniusGate gate;
+	NEKey* real_key;
 };

@@ -102,7 +102,7 @@ public:
 			return _searchNodeSet(nodeset, work_position);
 		}
 		
-		return key;
+		return key; 
 	}
 
 	static NEObject& _searchNodeSet(NENodeCodeSet& nodeset, NEStringSet& work_position)
@@ -115,10 +115,7 @@ public:
 			return *null_pointer;
 		}
 		if(work_position.getLength() <= 0)
-		{
-			pushMessage("문자열이 잘못되었습니다. 제대로 /를 사용해서 위치를 구분했나요?");
-			return *null_pointer;
-		}
+			return nodeset;
 		NEString& position = work_position[0];
 		int type = 0; // 0은 unknown을 의미한다.
 		int index = _getPositionTypeAndIndex(position, type);
