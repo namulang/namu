@@ -20,8 +20,8 @@ namespace NE
 		}
 
 	public:
-		T& getBindedKey() { return getBinded(); }
-		const T& getBindedKey() const { return getBinded(); }
+		T& getBindedKey() { return static_cast<T&>(getBinded()); }
+		const T& getBindedKey() const { return static_cast<T&>(getBinded()); }
 
 	public:
 		virtual NEObject& clone() const
@@ -32,11 +32,8 @@ namespace NE
 	public:
 		typename T::Trait& getValue() 
 		{
-			if( ! isBinded())
-				bind(); 
-
 			if(isBinded())
-				return getValue();
+				return getBindedKey().getValue();
 			else
 			{
 				T::Trait* nullpoint = 0;

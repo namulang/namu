@@ -80,6 +80,8 @@ namespace NE
 			KERNAL_ERROR(" : ");
 			return NE_INDEX_ERROR;
 		}
+		//	Owner ¼³Á¤:
+		keyset[keycode]._owner = this;
 
 		if(isEnlisted())
 		{

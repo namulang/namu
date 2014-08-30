@@ -39,6 +39,9 @@ namespace NE
 		NEModule& getOwner();
 		const NEModule& getOwner() const;
 
+	public:
+		bool isBinded() const;
+
 	private:	//	!Important private임에 유의하라. 자세한 내용은 serialize(NEBinaryFileSaver& saver) const의 구현부 주석을 참조할 것
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;	//	virtual을 사용해야 하므로 private임에도 앞에 언더바(_)를 붙이지 않는다
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);

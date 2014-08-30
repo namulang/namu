@@ -30,7 +30,7 @@ public:
 	virtual type_result execute()
 	{
 		a.getValue() = a.getValue()++;
-		cout << (a.getValue() == 5 ? "SUCCESS!": "FAILURE") << "\n";
+		cout << (a.getValue() == 6 ? "SUCCESS!": "FAILURE") << "\n";
 
 		return RESULT_SUCCESS;
 	}
@@ -623,6 +623,37 @@ public:
 		return true;
 	}
 };
+
+class Test13 : public TestCase
+{
+public:
+	Test13() : TestCase("does inner binding of keys works well?") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+
+		manager.initialize();
+
+		NENode& node1 = ns[ns.push(NENode())];
+		node1.getKeySet().create(5);
+		node1.getKeySet().push(NEIntKey());
+		node1.getKeySet().push(NEFloatKey());
+		node1.getKeySet().push(NEDoubleKey());
+		node1.getKeySet().push(NENodeSelector());		
+		node1.getKeySet().push(NEModuleCodeSetKey(NEModuleCodeSet(), "modulecodeset"));
+		
+		for(int n=0; n < node1.getKeySet().getLength() ;n++)
+			if(&node1.getKeySet()[n].getOwner() != &node1.getKeySet())
+				return false;
+		return true;
+	}
+};
 //class Test : public TestCase
 //{
 //public:
@@ -653,6 +684,7 @@ void main()
 	Test8().test();
 	init();	
 	Test1().test();
+	Test13().test();
 	Test2().test();
 	Test3().test();
 	Test4().test();
