@@ -102,4 +102,18 @@ namespace NE
 		return true;
 	}
 
+	type_result NEArgumentSet::bind()
+	{
+		type_result to_return = RESULT_SUCCESS;
+
+		for(int n=0; n < getLength() ;n++)
+		{
+			NEArgumentBase& arg = getElement(n);
+			if( ! arg.isBinded())
+				to_return |= arg.bind();
+		}
+
+		return to_return;
+	}
+
 }

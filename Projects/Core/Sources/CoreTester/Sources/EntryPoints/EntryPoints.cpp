@@ -27,7 +27,7 @@ public:
 		return RESULT_SUCCESS;
 	}
 
-	virtual type_result execute()
+	virtual type_result _onExecute()
 	{
 		a.getValue() = a.getValue()++;
 		cout << (a.getValue() == 6 ? "SUCCESS!": "FAILURE") << "\n";
@@ -616,10 +616,19 @@ public:
 		node1.getKeySet().create(1);
 		node1.getKeySet().push(NEIntKey(5, "age"));
 		node1.getModuleSet().create(1);
+		//	바인딩 정책:
+		//		0.0.1a.2014.08.31	현재, 바인딩은 Manager객체에 의해 NEModule::execute()가 이루어 져야 실시된다.
+		//		바인딩이 되지 않았으나 getValue를 호출하면 기본값이 나오게 된다.
 		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
-
-		if(module1.a.getValue() != 5)
+		if(module1.a.getValue() != 18)	//	아직 바인딩이 되지 않았으므로, 기본값이 나와야 한다
 			return false;
+		
+		manager.execute();	//	바인딩이 실시된다
+
+		if(module1.a.getValue() == 18)
+			return false;
+
+
 		return true;
 	}
 };
