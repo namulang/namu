@@ -15,8 +15,16 @@ public:
 	NEArgumentInterfaceTemplate<NEIntKey> a;
 	virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
 	{
-		a.getDefault().getValue() = 55;		
 		return tray.push(&a);
+	}
+
+	virtual type_result initialize()
+	{
+		NEModule::initialize();
+
+		a.getDefault().getValue() = 55;
+
+		return RESULT_SUCCESS;
 	}
 
 	virtual type_result execute()
@@ -116,7 +124,7 @@ public:
 class Test2 : public TestCase
 {
 public:
-	Test2()	: TestCase("module arguments and binder tests with deep copying.") {}
+	Test2()	: TestCase("arguments binder tests.") {}
 	virtual bool onTest() 
 	{
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
@@ -134,7 +142,7 @@ public:
 		NEModuleCodeSet& ms = tg.getModuleSet();
 		ms.create(2);
 		NEModule& m = ms[ms.push(MyMod())];
-		m.getArguments()[0].getBinder().setKeyName("age");
+		m.getArguments()[0].setKeyName("age");
 
 		manager.execute();
 		ns.release();
@@ -486,6 +494,135 @@ public:
 		return true;
 	}
 };
+class Test9 : public TestCase
+{
+public:
+	Test9()	: TestCase("argument interface deep copy test.") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+
+		manager.initialize();
+
+		MyMod mine;
+		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
+		mine.a.getConcreteInstance().setKeyName("age");
+		mine.a.getDefault().getValue() = 18;
+
+		NENode& node1 = ns[ns.push(NENode())];
+		node1.getKeySet().create(1);
+		node1.getKeySet().push(NEIntKey(5, "age"));
+		node1.getModuleSet().create(1);
+		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
+
+		if(	mine.a.getDefault().getValue() != module1.a.getDefault().getValue())
+			return false;
+		return true;			
+	}
+};
+class Test10 : public TestCase
+{
+public:
+	Test10() : TestCase("argument interface deep copy test.") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+
+		manager.initialize();
+
+		MyMod mine;
+		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
+		mine.a.getConcreteInstance().setKeyName("age");
+		mine.a.getDefault().getValue() = 18;
+
+		NENode& node1 = ns[ns.push(NENode())];
+		node1.getKeySet().create(1);
+		node1.getKeySet().push(NEIntKey(5, "age"));
+		node1.getModuleSet().create(1);
+		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
+
+		if(	mine.a.getDefault().getValue() != module1.a.getDefault().getValue())
+			return false;
+		return true;			
+	}
+};
+class Test11 : public TestCase
+{
+public:
+	Test11() : TestCase("argument deep copy test.") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+
+		manager.initialize();
+
+		MyMod mine;
+		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
+		mine.a.getConcreteInstance().setKeyName("age");
+		mine.a.getDefault().getValue() = 18;
+
+		NENode& node1 = ns[ns.push(NENode())];
+		node1.getKeySet().create(1);
+		node1.getKeySet().push(NEIntKey(5, "age"));
+		node1.getModuleSet().create(1);
+		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
+
+		if(	mine.a.getConcreteInstance().getKeyName() != module1.a.getConcreteInstance().getKeyName())
+			return false;
+
+		return true;			
+	}
+};
+class Test12 : public TestCase
+{
+public:
+	Test12() : TestCase("argument binding test.") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+
+		manager.initialize();
+
+		MyMod mine;
+		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
+		mine.a.getConcreteInstance().setKeyName("age");
+		mine.a.getDefault().getValue() = 18;
+
+		NENode& node1 = ns[ns.push(NENode())];
+		node1.getKeySet().create(1);
+		node1.getKeySet().push(NEIntKey(5, "age"));
+		node1.getModuleSet().create(1);
+		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
+
+		if(module1.a.getValue() != 5)
+			return false;
+		return true;
+	}
+};
 //class Test : public TestCase
 //{
 //public:
@@ -522,6 +659,10 @@ void main()
 	Test5().test();
 	Test6().test();
 	Test7().test();
+	Test9().test();
+	Test10().test();
+	Test11().test();
+	Test12().test();
 
 	Kernal::saveSettings();
 	delete &Kernal::getInstance();

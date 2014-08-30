@@ -14,67 +14,45 @@ namespace NE
 
 	public:	
 		NEArgumentTemplate() 
-			: SuperClass(T().getType()), _binded(0x00) 
+			: SuperClass(T().getType())
 		{
 			
 		}
 
 	public:
-		bool operator==(const ThisClass& rhs) const
-		{		
-			if(SuperClass::operator!=(rhs)) return false;
-
-			return	_binded == _binded;
-		}
-		bool operator!=(const ThisClass& rhs) const
-		{
-			return ! operator==(rhs);
-		}
-
-	public:
-		T& getBindedKey() { return *_binded; }
-		const T& getBindedKey() const { return _binded; }
+		T& getBindedKey() { return getBinded(); }
+		const T& getBindedKey() const { return getBinded(); }
 
 	public:
 		virtual NEObject& clone() const
 		{
 			return *(new ThisClass(*this));
 		}
-		virtual void release()
-		{
-			SuperClass::release();
-
-			_binded = 0x00;
-		}
-
-
+		
 	public:
 		typename T::Trait& getValue() 
 		{
-			if( ! _binded)
+			if( ! isBinded())
 				bind(); 
 
-			if(_binded)
-				return _binded->getValue();
+			if(isBinded())
+				return getValue();
 			else
 			{
 				T::Trait* nullpoint = 0;
 				return *nullpoint;
 			}
 		}
-		type_result bind()
+		virtual type_result bind()
 		{
-			if(getBinder().isBinded())	return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+			if(isBinded())	return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 
-			type_result result = getBinder().bind();
-			if( ! NEResult::hasError(result)							&&	//	바인딩이 제대로 되고
-				getBinder().getBinded().isSubClassOf(getTypeToBeBinded())	)	//	타입이 맞다면(이름일치 여부는 _binder가 확인해준다.
-				_binded = &static_cast<T&>(getBinder().getBinded());
+			type_result result = SuperClass::bind();
+			if( NEResult::hasError(result)						||	
+				! getBinded().isSubClassOf(getTypeToBeBinded())	)
+				return RESULT_TYPE_ERROR | result;
 
 			return result;
 		}
-
-	private:
-		T* _binded;
 	};
 }

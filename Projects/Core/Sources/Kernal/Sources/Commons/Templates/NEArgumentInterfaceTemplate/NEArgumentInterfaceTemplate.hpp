@@ -13,7 +13,6 @@ namespace NE
 		typedef NEArgumentInterfaceTemplate ThisClass;
 		typedef NEArgumentInterfaceBase SuperClass;
 		typedef NEArgumentTemplate<T> ConcreteClass;
-		typedef ThisClass ITArgument;	// @important 이거 작동하지 않는다!
 
 	public:
 		friend class NEArguments;
@@ -22,7 +21,7 @@ namespace NE
 		NEArgumentInterfaceTemplate() 
 			: _concrete_class(0x00) {}
 		NEArgumentInterfaceTemplate(const ThisClass& rhs)
-			: _concrete_class(rhs._concrete_class), _default(rhs._default) {}
+			: NEArgumentInterfaceBase(rhs), _concrete_class(0x00), _default(rhs._default) {}
 		NEArgumentInterfaceTemplate(const T& new_default)
 			: _concrete_class(0x00), _default(new_default) {}
 
@@ -32,14 +31,16 @@ namespace NE
 			if(this == &src) return *this;
 
 			_default = src._default;
-			//	구체클래스 깊은복사 실행:
-			//		정책:
-			//			생성시 인터페이스에 구체클래스 인스턴스를 바인딩한다.
-			//			이후, 인터페이스를 통해서만 구체클래스의 인스턴스를 관리한다.
-			//			이 정책을 따르면 항상 인스턴스가 오염되지 않도록 보장 가능.
-			if(	_concrete_class && src._concrete_class												&&
-				_concrete_class->getTypeToBeBinded() == src._concrete_class->getTypeToBeBinded()	)
-				*_concrete_class = *src._concrete_class;				
+			//	정책:
+			//		"	절대로 내부 바인딩의 결과는 공유 및 할당하지 않는다.
+			//			내부 바인딩을 "할 수 있는" 정보만 넘겨줘서, 그 놈이 바인딩 다시 하도록 하라	"
+			//		그래서 바인딩 결과물인 _concreate_class는 넘겨주지 않는다. 
+			//		대신 default_value 같은 것만 할당 시켜준다.
+			//		밑에 처럼 하지 않는다는 거야.
+			//	
+			// 			if(	_concrete_class && src._concrete_class												&&
+			// 				_concrete_class->getTypeToBeBinded() == src._concrete_class->getTypeToBeBinded()	)
+			// 				*_concrete_class = *src._concrete_class;				
 
 			return *this;
 		}
@@ -107,4 +108,9 @@ namespace NE
 		ConcreteClass* _concrete_class;
 		T _default;
 	};
+//	템플릿 클래스의 별칭 사용에 관하여:
+//		template<typename T>
+// 		typedef NEArgumentInterfaceTemplate ITArgument;
+//		아쉽게도 아직은 지원되지 않는다. 해당 기능은 alias template이라고 하여,
+//		C++ x11부터 지원이 된다. (거기서부터는 using을 사용한다)
 }

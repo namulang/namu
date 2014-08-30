@@ -59,21 +59,10 @@ namespace NE
 	{
 		/*
 			NEArgument의 인스턴스는 다형성을 사용하므로 원칙적으로 load가 불가능하다.
-			virtual NEModule::_bindArguments를 호출한다.
+			그래서 오직 NEModule에서만 호출되어야 한다.
+			외부에서 호출할 수 없도록 private로 접근제한자가 걸려있다.
 		*/
-		
-		//	pre:
-		if( ! _owner)
-		{
-			KERNAL_ERROR(" NEArgumentSet serialize load를 하고 싶지만 Owner가 등록되지 않으므로 인스턴스를 생성할 수 없다.");
-			return loader;
-		}
-
-
-
 		//	main:
-		//		인스턴스 생성:
-		_owner->_bindArguments();	//	다시 콜백되어 ThisClass::push를 호출한다.
 		//		생성한 인스턴스를 바탕으로 load 시퀸스 개시:
 		type_count length = 0;
 		loader >> length;
@@ -98,6 +87,10 @@ namespace NE
 
 	NEArgumentSet& NEArgumentSet::operator=(const ThisClass& rhs)
 	{
+		if(this == &rhs) return *this;
+
+		SuperClass::operator=(rhs);
+
 		return *this;
 	}
 
