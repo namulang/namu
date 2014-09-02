@@ -355,6 +355,18 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="ModuleTerminal"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Cooee\Sources\Modules\ModuleTerminal\ModuleTerminal.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\Sources\Cooee\Sources\Modules\ModuleTerminal\ModuleTerminal.hpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Core"

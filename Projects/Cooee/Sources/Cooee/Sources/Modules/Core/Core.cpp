@@ -126,7 +126,7 @@ void Core::openModifierFrom(NEKey& key)
 	}
 }
 
-NEObject& Core::getObjectBy(const NEString& path)
+NEObject& Core::getObjectBy(const NEString& path, onObjectFound& handler)
 {
 	NERootNodeCodeSet& nodelist = Editor::getInstance().getScriptEditor().getScriptNodes();	
 	NEObject* nullpointer = 0;
@@ -159,18 +159,19 @@ NEObject& Core::getObjectBy(const NEString& path)
 	}
 
 	NENode& node = nodelist[index];
+	handler.onNodeFound(node);
 	splited.popFront();
 
 	if(splited.getLength() > 0)
 		if(splited[0] == "m")
 		{
 			splited.popFront();
-			return _searchModuleSet(node.getModuleSet(), splited);
+			return _searchModuleSet(node.getModuleSet(), splited, handler);
 		}
 		else if(splited[0] == "k")
 		{
 			splited.popFront();
-			return _searchKeySet(node.getKeySet(), splited);
+			return _searchKeySet(node.getKeySet(), splited, handler);
 		}
 		else
 		{

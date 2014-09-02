@@ -1,5 +1,6 @@
 #include "ModuleSetTerminal.hpp"
 #include "../ModuleEncyclo/ModuleEncyclo.hpp"
+#include "../ModuleTerminal/ModuleTerminal.hpp"
 
 class NameInputWindow : public ::LG::InputWindow
 {
@@ -31,7 +32,8 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 			if(index == -1)
 				toOwner()->call(NameInputWindow(toOwner()->real_key->getName()));
 			else
-				LG::Core::windows.pushFront(ModuleEncyclo(false, &toOwner()->castObject()[index]));
+				LG::Core::open(ModuleTerminal(toOwner()->path + "/" + choosed));
+				//LG::Core::windows.pushFront(ModuleEncyclo(false, &toOwner()->castObject()[index]));
 		}	
 		break;
 	case CANCEL:

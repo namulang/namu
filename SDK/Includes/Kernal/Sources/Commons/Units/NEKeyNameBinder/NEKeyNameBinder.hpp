@@ -14,47 +14,30 @@ namespace NE
 	public:
 		NEKeyNameBinder();
 		NEKeyNameBinder(const NETString& new_keyname);
+		NEKeyNameBinder(const ThisClass& rhs);
 
 	public:
 		const NETString& getKeyName() const;
 		type_result setKeyName(const NETString& new_keyname);
 
 	public:
-		type_result bind();
+		NEKeyNameBinder& operator=(const NEKeyNameBinder& rhs);
+		bool operator==(const NEKeyNameBinder& rhs) const;
+		bool operator!=(const NEKeyNameBinder& rhs) const;
 
 	public:
-		virtual void release()
-		{
-			_keyname.release();
-			SuperClass::release();
-		}
-		virtual type_result isValid() const
-		{
-			type_result result = 0;
-			if(result = _keyname.isValid())	return result;
+		virtual type_result bind();
 
-			return SuperClass::isValid();
-		}
-		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader)
-		{
-			SuperClass::serialize(loader);
+	public:
+		virtual void release();
+		virtual type_result isValid() const;
+		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
+		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
+		virtual NEObject& clone() const;
+		virtual NEType::Type getType() const;
 
-			return loader >> _keyname;
-		}
-		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
-		{
-			SuperClass::serialize(saver);
-
-			return saver << _keyname;
-		}
-		virtual NEObject& clone() const
-		{
-			return *(new ThisClass(*this));
-		}
-		virtual NEType::Type getType() const
-		{
-			return NEType::NEKEY_NAME_BINDER;
-		}
+	private:
+		NEKeyNameBinder& _assign(const ThisClass& rhs);
 
 	private:
 		NETString _keyname;

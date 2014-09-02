@@ -6,6 +6,14 @@
 class Core
 {
 public:	
+	class onObjectFound
+	{
+	public:
+		virtual void onKeyFound(NEKey& target) {}
+		virtual void onNodeFound(NENode& target) {}
+		virtual void onModuleFound(NEModule& module) {}
+	};
+
 	static NEObject& getCurrentObjectFromPath()
 	{
 		return getObjectBy(path);
@@ -31,7 +39,7 @@ public:
 		return index_to_be_returned;
 	}
 
-	static NEObject& _searchModuleSet(NEModuleCodeSet& moduleset, NEStringSet& work_position)
+	static NEObject& _searchModuleSet(NEModuleCodeSet& moduleset, NEStringSet& work_position, onObjectFound& handler = onObjectFound())
 	{
 		//	pre:
 		NEObject* null_pointer = NE_NULL;	
@@ -60,6 +68,7 @@ public:
 
 		//	main:
 		NEModule& module = moduleset[index];
+		handler.onModuleFound(module);
 		work_position.popFront();			
 		if(work_position.getLength() > 0)
 			pushMessage("어라? 모듈은 경로가 마지막에 해당하는데, 뒤에 또 뭐가 있네요? 경로가 꼬인듯?\n일단, 모듈만 반환합니다.");
@@ -67,7 +76,7 @@ public:
 		return module;
 	}
 
-	static NEObject& _searchKeySet(NEKeyCodeSet& keyset, NEStringSet& work_position)
+	static NEObject& _searchKeySet(NEKeyCodeSet& keyset, NEStringSet& work_position, onObjectFound& handler = onObjectFound())
 	{
 		//	pre:
 		NEObject* null_pointer = NE_NULL;	
@@ -85,6 +94,7 @@ public:
 
 		//	main:
 		NEKey& key = keyset[index];
+		handler.onKeyFound(key);
 
 		work_position.popFront();
 		if(key.isSubClassOf(NEType::NEMODULE_CODESET_KEY))
@@ -92,20 +102,20 @@ public:
 			NEModuleCodeSetKey& modulesetkey = static_cast<NEModuleCodeSetKey&>(key);
 			NEModuleCodeSet& moduleset = modulesetkey.getValue();
 
-			return _searchModuleSet(moduleset, work_position);			
+			return _searchModuleSet(moduleset, work_position, handler);
 		} 
 		else if(key.isSubClassOf(NEType::NENODE_CODESET_KEY))
 		{
 			NENodeCodeSetKey& managed_nodesetkey = static_cast<NENodeCodeSetKey&>(key);
 			NENodeCodeSet& nodeset = managed_nodesetkey.getValue();
 
-			return _searchNodeSet(nodeset, work_position);
+			return _searchNodeSet(nodeset, work_position, handler);
 		}
 		
 		return key; 
 	}
 
-	static NEObject& _searchNodeSet(NENodeCodeSet& nodeset, NEStringSet& work_position)
+	static NEObject& _searchNodeSet(NENodeCodeSet& nodeset, NEStringSet& work_position, onObjectFound& handler = onObjectFound())
 	{
 		//	pre:
 		NEObject* null_pointer = NE_NULL;	
@@ -134,6 +144,7 @@ public:
 
 		//	main:
 		NENode& node = nodeset[index];
+		handler.onNodeFound(node);
 
 		work_position.popFront();
 		if(work_position.getLength() > 0)
@@ -145,7 +156,7 @@ public:
 		else
 			return node;
 	}
-	static NEObject& getObjectBy(const NEString& path);
+	static NEObject& getObjectBy(const NEString& path, onObjectFound& handler = onObjectFound());
 	static NEString createPathBy(const NEObject& target);
 
 	static Commander commander;

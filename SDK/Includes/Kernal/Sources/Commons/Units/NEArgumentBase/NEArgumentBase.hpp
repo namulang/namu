@@ -4,32 +4,31 @@
 
 namespace NE
 {
-	class NE_DLL NEArgumentBase : public NEObject
+	class NE_DLL NEArgumentBase : public NEKeyNameBinder
 	{
 	public:
 		typedef NEArgumentBase ThisClass;
-		typedef NEObject SuperClass;
+		typedef NEKeyNameBinder SuperClass;
 
 	public:
 		NEArgumentBase(NEType::Type type);
+		NEArgumentBase(const ThisClass& rhs);
 
 	public:
 		bool operator==(const NEArgumentBase& source) const;
 		bool operator!=(const NEArgumentBase& source) const;
 
 	public:
-		NEKeyNameBinder& getBinder();
-		const NEKeyNameBinder& getBinder() const;
 		NEType::Type getTypeToBeBinded() const;
 
 	public:
+		virtual NEObject& clone() const;
 		virtual type_result isValid() const;
 		virtual void release();
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 
 	private:
-		NEKeyNameBinder _binder;
 		NEType::Type _type_validation;
 	};
 }
