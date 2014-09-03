@@ -44,8 +44,16 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 
 	ListGliph::onKeyPressed(inputed);
 
-	if(inputed == CONFIRM)
+	switch(inputed)
+	{
+	case CONFIRM:
 		toOwner()->call(CodeInputer(_getOwnerNodeOf(toOwner()->castObject())));
+		break;
+
+	case CANCEL:
+		toOwner()->delete_me = true;
+		break;
+	}		
 }
 
 NENode& ModuleTerminal::ArgumentNameList::_getOwnerNodeOf(NEModule& target)

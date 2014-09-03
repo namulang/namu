@@ -8,12 +8,12 @@ public:
 	class Header : public Gliph
 	{
 	public:
-		Header() : Gliph(0, 5, 5, 70, 1, WHITE, LIGHTCYAN, "\t\t\t\tModule") {}		
+		Header() : Gliph(0, 5, 5, 70, 1, BLACK, LIGHTCYAN, "\t\t\t\t\t\t\t\tModule") {}		
 	};
 	class ModulePanel : public Gliph 
 	{
 	public:
-		ModulePanel() : Gliph(0, 5, 6, 40, 3, WHITE, LIGHTRED) {}
+		ModulePanel() : Gliph(0, 5, 6, 35, 3, WHITE, LIGHTRED) {}
 		ModulePanel(const ModulePanel& rhs) : Gliph(rhs) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 		FUNC_CLONE(ModulePanel)	
@@ -29,7 +29,7 @@ public:
 	class ContentPanel : public Gliph
 	{
 	public:
-		ContentPanel() : Gliph(0, 5, 9, 40, 10, BLACK, WHITE) {}
+		ContentPanel() : Gliph(0, 5, 9, 35, 10, BLACK, WHITE) {}
 		ContentPanel(const ContentPanel& rhs) : Gliph(rhs) {}
 		FUNC_CLONE(ContentPanel)
 		FUNC_TO_OWNER(ModuleTerminal)
@@ -44,8 +44,8 @@ public:
 	{
 	public:
 		ArgumentHeader()
-			: Gliph(0, 40, 6, 30, 2, BLACK, LIGHTMAGENTA,
-			"KeyName     KeyType\n"
+			: Gliph(0, 40, 6, 35, 2, BLACK, LIGHTMAGENTA,
+			"KeyName			KeyType\n"
 			"========================================") {}
 		ArgumentHeader(const Header& rhs)
 			: Gliph(rhs) {}
@@ -56,7 +56,7 @@ public:
 	class ArgumentNameList : public ListGliph
 	{
 	public:
-		ArgumentNameList() : ListGliph(0, 40, 8, 15, 10, LIGHTRED, RED, WHITE, LIGHTRED) {}
+		ArgumentNameList() : ListGliph(0, 40, 8, 18, 10, LIGHTRED, RED, WHITE, LIGHTRED) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 		FUNC_CLONE(ArgumentNameList)
 		virtual void onUpdateData()
@@ -77,7 +77,7 @@ public:
 	class ArgumentTypeList : public ListGliph
 	{
 	public:
-		ArgumentTypeList() : ListGliph(0, 55, 8, 15, 10, BLACK, WHITE, WHITE, LIGHTRED) {}
+		ArgumentTypeList() : ListGliph(0, 58, 8, 18, 11, BLACK, WHITE, WHITE, LIGHTRED) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 		FUNC_CLONE(ArgumentTypeList)
 		virtual void onUpdateData()
@@ -100,7 +100,7 @@ public:
 	};
 
 	ModuleTerminal(const NEString& new_path)
-		: Terminal(new_path, NEType::NEMODULE, 4, 4, 72, 16, BLACK, DARKGRAY)
+		: Terminal(new_path, NEType::NEMODULE, 4, 4, 72, 16, BLACK, CYAN)
 	{
 		regist(6, &header, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist);
 	}

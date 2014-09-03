@@ -1,0 +1,1 @@
+@echo 매니페스트 리소스 최종 업데이트:  %TIME%(%DATE%) > .\Developer.Debug\mt.dep
