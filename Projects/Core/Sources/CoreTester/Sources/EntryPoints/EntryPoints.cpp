@@ -21,11 +21,14 @@ public:
 	virtual type_result _onArgumentsFetched()
 	{
 		a.getDefault().getValue()++;
+		getArguments().create(1);
 		return getArguments().push(a);
 	}
 
 	virtual type_result initialize()
 	{
+		NEModule::initialize();
+
 		a.getDefault().getValue() += 5;
 		return RESULT_SUCCESS;
 	}
