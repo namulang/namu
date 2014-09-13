@@ -60,6 +60,11 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 	case CANCEL:
 		toOwner()->delete_me = true;
 		break;
+
+	case UP:
+	case DOWN:
+		onDraw();
+		break;
 	}		
 }
 
