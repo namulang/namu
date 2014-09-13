@@ -13,7 +13,7 @@ namespace LG
 		class NE_DLL InputBox : public TextGliph
 		{
 		public:
-			InputBox(u fore, u back) : TextGliph(0, 30, 15, 20, 1, back, fore) {}
+			InputBox(u fore, u back) : TextGliph(0, 25, 15, 30, 1, back, fore) {}
 			InputBox(const InputBox& rhs) : TextGliph(rhs) {}
 			FUNC_CLONE(InputBox)
 			FUNC_TO_OWNER(InputWindow)
