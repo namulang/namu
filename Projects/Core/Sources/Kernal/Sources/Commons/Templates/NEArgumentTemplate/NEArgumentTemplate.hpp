@@ -12,7 +12,12 @@ namespace NE
 		typedef NEArgumentBase SuperClass;
 
 	public:	
-		NEArgumentTemplate(const T::Trait& default_value)
+		NEArgumentTemplate()
+			: SuperClass(T().getType()), _default
+		{
+
+		}
+		NEArgumentTemplate(typename const T::Trait& default_value)
 			: SuperClass(T().getType()), _default(default_value)
 		{
 			
