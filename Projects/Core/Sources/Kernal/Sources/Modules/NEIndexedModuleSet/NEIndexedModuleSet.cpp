@@ -101,6 +101,7 @@ namespace NE
 		//		아이디 할당:
 		//			타겟팅:
 		NEModule& module = getElement(inputed_index);
+		module.initialize();
 		if(&module)
 			module._id = _generateId();	
 		//		되돌리기:
@@ -271,12 +272,11 @@ namespace NE
 				//					NEModule::NEModuleCodeSet이 복사되면서 push(NEModuleCodeSet&)을 호출
 				//					push(NEModuleCodeSet&)에서 NEIndexedKeySet으로부터 clone으로 키를 복제
 				NEEnlistableManager* nullpointer = NE_NULL;
-				insert(n, module);
-				NEModule& element = getElement(n);
+				insert(n, module);				
 				//				데이터 로드:
 				//					여기서 NEModuleCodeSet::serialize를 호출
 				//					serialize에서 NEKeyCodeSetjuyhg
-				loader >> element; // 여기서 다시 NEModule::serialize()에서 initialize를 호출한다
+				loader >> getElement(n); // 여기서 다시 NEModule::serialize()에서 initialize를 호출한다
 			}
 			//	스킵로드:
 			//		스킵을 사용하는가?:	파일포인터가 다음 모듈시작점과 다르다면

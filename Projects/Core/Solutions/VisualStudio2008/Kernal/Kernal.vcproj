@@ -903,6 +903,10 @@
 								Name="NEModuleSet"
 								>
 								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleSet\NEModuleSet.cpp"
+									>
+								</File>
+								<File
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleSet\NEModuleSet.hpp"
 									>
 								</File>

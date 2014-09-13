@@ -78,40 +78,6 @@ namespace NE
 
 
 		//	post:
-		//		모듈 인자 정보 획득:
-		/*
-				원인:
-					1. _bindArgument()에서는 NEArgumentSet::release를 호출하게 된다.
-					2. NEArgument::push(~~) 과정을 통해서 binding이 이루어지게 된다.
-				문제:
-					복사생성자를 호출하는 경우, NEArgumentSet이 복사되고나서 
-					_bindArguments가 호출된다. 따라서 기껏 복사된 모든 NEArgumentSet
-					의 모든 내용이 사라지게 된다.
-				해결방법:
-					크게 3가지를 생각해볼 수 있다.
-					1. 근본적인 흐름 순서를 바꾼다. 
-					= 아마도 클래스간의 결합도를 낮춤으로 가능하리라 여겨진다. 
-					가장 베스트지만, 설계가 어렵고, 시간이 오래걸린다.
-					
-					2. 복사->_bindArgument 호출순서를 서로 바꾼다. 
-					= 즉 _bindArgument가 호출되고나서 복사생성자가 호출된단 얘긴데
-					이는 부모클래스의 복사생성자 호출우선순위가 상당히 높은 편이므로
-					힘들다.
-					그럼 복사생성자에 해당하는 부분이 차후에 NEModuleCodeSet에 의해서
-					수행되는 방법을 생각해볼 수 있다. 즉, NEArgumentSet::operator=가
-					2번 수행되는 것이다.
-
-				알고리즘:
-					1. 일단 바인딩을 수행한다.
-					2. src에 NEArgumentSet에 데이터가 들어있다면 바인딩 이후, 다시한번
-						NEArgumentSet::operator=()를 수행한다.
-		*/
-		//	Argument Reassigning Process:
-		NEModule& added = moduleset[modulecode];
-		added.initialize(); 
-		if(source.getArguments().getLength() > 0)
-			added.getArguments() = source.getArguments();
-
 		return index;
 	}
 	type_index NEModuleCodeSet::remove(type_index index)

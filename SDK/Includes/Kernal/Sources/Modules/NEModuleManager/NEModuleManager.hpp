@@ -88,7 +88,6 @@ namespace NE
 		void _pushDLLPathToDLLHeaderSet();
 		bool _linkDLLsUsingInputedPath();
 		type_result _pushDLLHeader(NEModuleManager::DLLHeader& header);
-		void _initializeModule();
 		void _reportErrorsIfThereAreModulesNotFeched();
 
 		//	¸â¹öº¯¼ö:		

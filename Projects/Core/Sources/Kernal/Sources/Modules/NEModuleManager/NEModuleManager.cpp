@@ -238,7 +238,6 @@ namespace NE
 		//		모듈 Fetch:
 		_linkDLL();
 		_linkModule();
-		_initializeModule();
 		
 		return RESULT_SUCCESS;
 	}
@@ -391,18 +390,11 @@ namespace NE
 		_moduleset.create(buffer.getLength());
 
 		//		buffer로부터의 복사:
-		int count = 0;
 		for(NEModuleList::Iterator* iterator = buffer.getIterator(0); iterator != NE_NULL ;iterator = iterator->getNext())		
 		{
-			//	ID 변경:				
-			//		타겟팅:
 			NEModule& target = iterator->getValue();
-			//		변경:
-			target._scriptcode = count; // NEModuleManager <---friend--- NEModule			
-			//	최종적으로 복사:
-			_moduleset.push(target);
-			//	카운터 증가:
-			count++;						
+			_moduleset.push(target);	//	내부에서 Module.id, _onArgumentFetched, _onModuleFetched가 각각 호출 됨.
+
 			KERNAL_INFORMATION(" 모듈 추가됨\n모듈명: %s", target.getHeader().getName().toCharPointer());
 		}
 	}
@@ -690,21 +682,7 @@ namespace NE
 
 		return RESULT_SUCCESS;
 	}
-
-
-	/*
-		최종적으로 수집된 모듈을 initialize 호출.
-		이는 모듈 생성자에서 initialize()를 둘 수 없기 때문이다.
-	*/
-	void NEModuleManager::_initializeModule()
-	{
-		for(int n=0;n < _moduleset.getLength() ;n++)
-		{
-			_moduleset[n]._onArgumentsFetched();
-			_moduleset[n]._onModuleFetched();
-		}
-	}
-
+	
 	void NEModuleManager::_pushDLLPathToDLLHeaderSet()
 	{
 		//	pre:
