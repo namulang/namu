@@ -10,7 +10,7 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 		virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
 
 		CodeInputer(NENode& new_owner) 
-			: LG::InputWindow("새로 추가할 키의 이름을 좌우방향키로 선택하세요. \n물론 직접 이름을 입력 할 수도 있어요.", BLACK, WHITE),
+			: LG::InputWindow("새로 추가할 키의 이름을 좌우방향키로 선택하세요. \n물론 직접 이름을 입력 할 수도 있어요.", BLACK, YELLOW),
 			owner(new_owner)
 		{
 			
