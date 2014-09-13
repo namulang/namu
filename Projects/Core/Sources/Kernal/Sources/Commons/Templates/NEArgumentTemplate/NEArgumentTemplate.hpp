@@ -9,7 +9,6 @@ namespace NE
 	{
 	public:
 		typedef NEArgumentTemplate ThisClass;
-		typedef ThisClass TArgument;
 		typedef NEArgumentBase SuperClass;
 
 	public:	

@@ -22,8 +22,6 @@ public:
 	{
 		NEModule::initialize();
 
-		a.getDefault().getValue() = 55;
-
 		return RESULT_SUCCESS;
 	}
 
@@ -511,7 +509,7 @@ public:
 		manager.initialize();
 
 		MyMod mine;
-		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
+		//mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
 		mine.a.getConcreteInstance().setKeyName("age");
 		mine.a.getDefault().getValue() = 18;
 
@@ -519,7 +517,7 @@ public:
 		node1.getKeySet().create(1);
 		node1.getKeySet().push(NEIntKey(5, "age"));
 		node1.getModuleSet().create(1);
-		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
+		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];	//	여기 안에서 _bindArugument가 호출된다.
 
 		if(	mine.a.getDefault().getValue() != module1.a.getDefault().getValue())
 			return false;
@@ -660,6 +658,31 @@ public:
 		for(int n=0; n < node1.getKeySet().getLength() ;n++)
 			if(&node1.getKeySet()[n].getOwner() != &node1.getKeySet())
 				return false;
+		return true;
+	}
+};
+
+class Test14 : public TestCase
+{
+public:
+	Test14() : TestCase("has module been initialized when it's born on a container.") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+
+		manager.initialize();
+
+		NENode& node1 = ns[ns.push(NENode())];
+		node1.getModuleSet().create(1);
+		NEModule& node1.getModuleSet().push(MyMod());
+
+
 		return true;
 	}
 };

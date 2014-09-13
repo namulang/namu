@@ -699,7 +699,9 @@ namespace NE
 	void NEModuleManager::_initializeModule()
 	{
 		for(int n=0;n < _moduleset.getLength() ;n++)
+		{
 			_moduleset[n]._onModuleFetched();
+		}
 	}
 
 	void NEModuleManager::_pushDLLPathToDLLHeaderSet()

@@ -56,7 +56,7 @@ public:
 	class ArgumentNameList : public ListGliph
 	{
 	public:
-		ArgumentNameList() : ListGliph(0, 40, 8, 18, 10, LIGHTRED, RED, WHITE, LIGHTRED) {}
+		ArgumentNameList() : ListGliph(0, 40, 8, 17, 11, LIGHTRED, RED, WHITE, LIGHTRED) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 		FUNC_CLONE(ArgumentNameList)
 		virtual void onUpdateData()
@@ -77,7 +77,7 @@ public:
 	class ArgumentTypeList : public ListGliph
 	{
 	public:
-		ArgumentTypeList() : ListGliph(0, 58, 8, 18, 11, BLACK, WHITE, WHITE, LIGHTRED) {}
+		ArgumentTypeList() : ListGliph(0, 57, 8, 17, 11, BLACK, WHITE, WHITE, LIGHTRED) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 		FUNC_CLONE(ArgumentTypeList)
 		virtual void onUpdateData()

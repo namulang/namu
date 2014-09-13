@@ -108,7 +108,7 @@ namespace NE
 		*/
 		//	Argument Reassigning Process:
 		NEModule& added = moduleset[modulecode];
-		added._bindArguments();
+		added.initialize(); 
 		if(source.getArguments().getLength() > 0)
 			added.getArguments() = source.getArguments();
 
