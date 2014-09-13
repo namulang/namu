@@ -23,7 +23,7 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 
 			for(int n=0; n < ks.getLength() ;n++)
 				if(input.history.find(ks[n].getName()) == NE_INDEX_ERROR)
-					input.history.push(ks[n].getName());
+					input.history.push(ks[n].getName() + "(" + ks[n].getTypeName() + ")");
 
 			input.history_idx = 0;
 			input.text = input.history[input.history_idx];
@@ -33,8 +33,15 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 		{
 			NEModule& m = toCaller().castObject();
 			NEArgumentBase& arg = m.getArguments()[toCaller().argument_namelist.choosed];
+
+			NEStringSet splited;
+			input.text.split("(", splited);
+			splited.pop();
+			NEString keyname;
+			for(int n=0; n < splited.getLength(); n++)
+				keyname += splited[n];
 		
-			arg.setKeyName(input.text);
+			arg.setKeyName(keyname);
 			
 			delete_me = true;
 		}
