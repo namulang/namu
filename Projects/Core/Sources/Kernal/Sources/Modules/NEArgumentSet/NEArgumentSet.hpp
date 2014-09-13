@@ -6,15 +6,15 @@
 namespace NE
 {
 	template
-	class NE_DLL NEArrayTemplate<NEArgumentBase*, true>;
+	class NE_DLL NEArrayTemplate<NEArgumentBase*, false>;
 	
 	class NEArgumentInterfaceBase;
 	
-	class NE_DLL NEArgumentSet : public NEArrayTemplate<NEArgumentBase*, true>
+	class NE_DLL NEArgumentSet : public NEArrayTemplate<NEArgumentBase*, false>
 	{
 	public:
 		typedef NEArgumentSet ThisClass;
-		typedef NEArrayTemplate<NEArgumentBase*, true> SuperClass;
+		typedef NEArrayTemplate<NEArgumentBase*, false> SuperClass;
 
 	public:
 		friend class NEModule;	//	NEModule 내에서만 serialize를 사용하도록 하기 위함.
