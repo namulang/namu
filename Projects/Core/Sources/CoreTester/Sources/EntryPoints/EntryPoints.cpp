@@ -4,11 +4,46 @@
 using namespace std;
 #include "Headers.hpp"
 using namespace NE;
-
 class MyMod : public NEModule
 {
 public:
-	MyMod()
+	MyMod()	: a(28)
+	{
+
+	}
+	void setScript(type_code new1)
+	{
+		_scriptcode = new1;
+	}
+	NEArgumentTemplate<NEIntKey> a;
+	virtual type_result _onArgumentsFetched()
+	{		
+		getArguments().create(1);
+		return getArguments().push(a);
+	}
+
+	virtual type_result _onExecute()
+	{
+		return RESULT_SUCCESS;
+	}
+	virtual const NEExportable::ModuleHeader& getHeader() const
+	{
+		static NEExportable::ModuleHeader _header;
+		if(_header.getName().getLength() <= 0)
+		{
+			_header.getName() = "MyMod";
+			_header.getDeveloper() = "kniz";
+			_header.setRevision(1);
+		}
+
+		return _header;
+	}
+	virtual NEObject& clone() const { return * (new MyMod(*this)); }
+};
+class MyMod2 : public NEModule
+{
+public:
+	MyMod2()
 		: a(100)
 	{
 
@@ -44,14 +79,14 @@ public:
 		static NEExportable::ModuleHeader _header;
 		if(_header.getName().getLength() <= 0)
 		{
-			_header.getName() = "MyMod";
+			_header.getName() = "MyMod2";
 			_header.getDeveloper() = "kniz";
 			_header.setRevision(1);
 		}
 
 		return _header;
 	}
-	virtual NEObject& clone() const { return * (new MyMod(*this)); }
+	virtual NEObject& clone() const { return * (new MyMod2(*this)); }
 };
 
 enum SPECIAL_KEY
@@ -368,7 +403,6 @@ public:
 		ns.push(NENode());
 
 		NENode& tg = ns[ns.push(NENode())];
-		NEModuleCodeSet& ms = tg.getModuleSet();
 		{
 			NECodeSet a(1);
 			a.push(1);
@@ -381,15 +415,18 @@ public:
 		ns.resize(5);
 		ns.resize(7);
 		ns.resize(3);
+		NEModuleCodeSet& ms = ns[1].getModuleSet();
 		ms.create(5);
 		NEKeyCodeSet& ks = tg.getKeySet();
-		ms.push(MyMod());
 		ms.push(MyMod());
 		ms.push(MyMod());
 		ms.push(MyMod());
 
 		ms.resize(15);
 		ms.resize(1);
+		ms.push(MyMod());
+		MyMod& mym = (MyMod&) ms[0];
+		mym.a.getDefault().getValue() = 1000;
 
 		ks.create(5);
 		ks.push(NEIntKey(5));
@@ -440,6 +477,10 @@ public:
 			if(tk.getValue() != "gogoood!")
 				return false;
 		}
+
+		MyMod& mym1 = (MyMod&) ns[1].getModuleSet()[0];
+		if(mym1.a.getDefault().getValue() != 1000)
+			return false;
 
 		return true;
 	}
@@ -519,7 +560,7 @@ public:
 		//	2. cloned = MyMod().clone();	; value = 100
 		//	3. cloned.initialize()			; value = 105
 		//	3-1. cloned.onArgumentFetched()	; value = 106
-		MyMod& mod = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(MyMod())];
+		MyMod2& mod = (MyMod2&) node1.getModuleSet()[node1.getModuleSet().push(MyMod2())];
 
 		mod.execute();	//					; value = 212
 
