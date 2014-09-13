@@ -27,6 +27,18 @@ namespace NE
 		{
 			return *(new ThisClass(*this));
 		}
+		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
+		{
+			SuperClass::serialize(saver);
+
+			return saver << _default;
+		}
+		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader)
+		{
+			SuperClass::serialize(loader);
+
+			return loader >> _default;
+		}
 		
 	public:
 		typename T::Trait& getValue() 
