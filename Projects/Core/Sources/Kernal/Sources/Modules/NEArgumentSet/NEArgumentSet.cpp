@@ -1,23 +1,22 @@
 #include "NEArgumentSet.hpp"
-#include "../../Commons/Interfaces/NEArgumentInterfaceBase/NEArgumentInterfaceBase.hpp"
 #include "../Kernal/Kernal.hpp"
 
 namespace NE
 {
-	NEArgumentSet::NEArgumentSet(NEModule* owner, type_count size)
-		: SuperClass(size), _owner(owner)
+	NEArgumentSet::NEArgumentSet(type_count size)
+		: SuperClass(size)
 	{
 
 	}
 
-	NEArgumentSet::NEArgumentSet(NEModule* owner, const ThisClass& rhs)
-		: SuperClass(rhs), _owner(owner)
+	NEArgumentSet::NEArgumentSet(const ThisClass& rhs)
+		: SuperClass(rhs)
 	{
 
 	}
 
-	NEArgumentSet::NEArgumentSet(NEModule* owner)
-		: SuperClass(), _owner(owner)
+	NEArgumentSet::NEArgumentSet()
+		: SuperClass()
 	{
 
 	}
@@ -60,16 +59,6 @@ namespace NE
 			loader >> getElement(n);
 
 		return loader;
-	}
-
-	NEModule& NEArgumentSet::getOwner()
-	{
-		return *_owner;
-	}
-
-	const NEModule& NEArgumentSet::getOwner() const
-	{
-		return *_owner;
 	}
 
 	NEArgumentSet& NEArgumentSet::operator=(const ThisClass& rhs)
