@@ -700,6 +700,7 @@ namespace NE
 	{
 		for(int n=0;n < _moduleset.getLength() ;n++)
 		{
+			_moduleset[n]._onArgumentsFetched();
 			_moduleset[n]._onModuleFetched();
 		}
 	}
