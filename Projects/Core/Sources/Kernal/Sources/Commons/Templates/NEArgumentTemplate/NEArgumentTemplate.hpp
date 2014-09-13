@@ -34,10 +34,7 @@ namespace NE
 			if(isBinded())
 				return getBindedKey().getValue();
 			else
-			{
-				T::Trait* nullpoint = 0;
-				return *nullpoint;
-			}
+				return _default.getValue();
 		}
 		virtual type_result bind()
 		{
@@ -50,5 +47,16 @@ namespace NE
 
 			return result;
 		}
+		const T& getDefault() const
+		{
+			return _default;
+		}
+		T& getDefault()
+		{
+			return _default;
+		}
+
+	private:
+		T _default;
 	};
 }
