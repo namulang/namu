@@ -13,7 +13,7 @@ namespace NE
 
 	public:	
 		NEArgumentTemplate()
-			: SuperClass(T().getType()), _default
+			: SuperClass(T().getType())
 		{
 
 		}
