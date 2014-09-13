@@ -22,19 +22,6 @@ namespace NE
 
 	}
 
-	type_index NEArgumentSet::insert(type_index index, NEArgumentInterfaceBase& base)
-	{
-		return base._onInsertedInArguments(index, *this);
-	}
-	type_index NEArgumentSet::push(NEArgumentInterfaceBase& base)
-	{
-		return base._onInsertedInArguments(getLength(), *this);
-	}
-	type_index NEArgumentSet::pushFront(NEArgumentInterfaceBase& base)
-	{
-		return base._onInsertedInArguments(0, *this);
-	}
-
 	NEBinaryFileSaver& NEArgumentSet::serialize(NEBinaryFileSaver& saver) const
 	{
 		//	@юс╫ц:

@@ -529,14 +529,6 @@
 							>
 						</File>
 					</Filter>
-					<Filter
-						Name="NEArgumentInterfaceBase"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEArgumentInterfaceBase\NEArgumentInterfaceBase.hpp"
-							>
-						</File>
-					</Filter>
 				</Filter>
 				<Filter
 					Name="Enums"
@@ -849,15 +841,7 @@
 						Name="NEArgumentTemplate"
 						>
 						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEArgumentTemplate\NEArgumentTemplate.cpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="NEArgumentInterfaceTemplate"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEArgumentInterfaceTemplate\NEArgumentInterfaceTemplate.hpp"
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEArgumentTemplate\NEArgumentTemplate.hpp"
 							>
 						</File>
 					</Filter>

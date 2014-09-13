@@ -25,14 +25,6 @@ namespace NE
 		NEArgumentSet(NEModule* owner, const ThisClass& rhs);
 
 	public:
-		using SuperClass::insert;
-		type_index insert(type_index index, NEArgumentInterfaceBase& base);
-		using SuperClass::push;
-		type_index push(NEArgumentInterfaceBase& base);
-		using SuperClass::pushFront;
-		type_index pushFront(NEArgumentInterfaceBase& base);
-
-	public:
 		ThisClass& operator=(const ThisClass& rhs);
 
 	public:
