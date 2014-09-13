@@ -8,27 +8,31 @@ using namespace NE;
 class MyMod : public NEModule
 {
 public:
+	MyMod()
+		: a(100)
+	{
+
+	}
 	void setScript(type_code new1)
 	{
 		_scriptcode = new1;
 	}
-	NEArgumentInterfaceTemplate<NEIntKey> a;
-	virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
+	NEArgumentTemplate<NEIntKey> a;
+	virtual type_result _onArgumentsFetched()
 	{
-		return tray.push(&a);
+		a.getDefault().getValue()++;
+		return getArguments().push(a);
 	}
 
 	virtual type_result initialize()
 	{
-		NEModule::initialize();
-
+		a.getDefault().getValue() += 5;
 		return RESULT_SUCCESS;
 	}
 
 	virtual type_result _onExecute()
 	{
-		a.getValue() = a.getValue()++;
-		cout << (a.getValue() == 6 ? "SUCCESS!": "FAILURE") << "\n";
+		a.getDefault().getValue() *= 2;
 
 		return RESULT_SUCCESS;
 	}
@@ -46,8 +50,6 @@ public:
 	}
 	virtual NEObject& clone() const { return * (new MyMod(*this)); }
 };
-
-
 
 enum SPECIAL_KEY
 {
@@ -495,7 +497,7 @@ public:
 class Test9 : public TestCase
 {
 public:
-	Test9()	: TestCase("argument interface deep copy test.") {}
+	Test9()	: TestCase("module argument copy policy test") {}
 	virtual bool onTest() 
 	{
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
@@ -508,20 +510,17 @@ public:
 
 		manager.initialize();
 
-		MyMod mine;
-		//mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
-		mine.a.getConcreteInstance().setKeyName("age");
-		mine.a.getDefault().getValue() = 18;
-
 		NENode& node1 = ns[ns.push(NENode())];
-		node1.getKeySet().create(1);
-		node1.getKeySet().push(NEIntKey(5, "age"));
 		node1.getModuleSet().create(1);
-		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];	//	여기 안에서 _bindArugument가 호출된다.
+		//	1. MyMod() 생성자 호출			; value = 100
+		//	2. cloned = MyMod().clone();	; value = 100
+		//	3. cloned.initialize()			; value = 105
+		//	3-1. cloned.onArgumentFetched()	; value = 106
+		MyMod& mod = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(MyMod())];
 
-		if(	mine.a.getDefault().getValue() != module1.a.getDefault().getValue())
-			return false;
-		return true;			
+		mod.execute();	//					; value = 212
+
+		return mod.a.getDefault().getValue() == 212;
 	}
 };
 class Test10 : public TestCase
@@ -542,7 +541,7 @@ public:
 
 		MyMod mine;
 		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
-		mine.a.getConcreteInstance().setKeyName("age");
+		mine.a.setKeyName("age");
 		mine.a.getDefault().getValue() = 18;
 
 		NENode& node1 = ns[ns.push(NENode())];
@@ -573,8 +572,7 @@ public:
 		manager.initialize();
 
 		MyMod mine;
-		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
-		mine.a.getConcreteInstance().setKeyName("age");
+		mine.a.setKeyName("age");
 		mine.a.getDefault().getValue() = 18;
 
 		NENode& node1 = ns[ns.push(NENode())];
@@ -583,7 +581,7 @@ public:
 		node1.getModuleSet().create(1);
 		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
 
-		if(	mine.a.getConcreteInstance().getKeyName() != module1.a.getConcreteInstance().getKeyName())
+		if(	mine.a.getKeyName() != module1.a.getKeyName())
 			return false;
 
 		return true;			
@@ -606,8 +604,7 @@ public:
 		manager.initialize();
 
 		MyMod mine;
-		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
-		mine.a.getConcreteInstance().setKeyName("age");
+		mine.a.setKeyName("age");
 		mine.a.getDefault().getValue() = 18;
 
 		NENode& node1 = ns[ns.push(NENode())];
@@ -661,31 +658,6 @@ public:
 		return true;
 	}
 };
-
-class Test14 : public TestCase
-{
-public:
-	Test14() : TestCase("has module been initialized when it's born on a container.") {}
-	virtual bool onTest() 
-	{
-		NENodeManager& manager = Kernal::getInstance().getNodeManager();
-		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
-		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
-		const NEModuleSet& moduleset = moduler.getModuleSet();
-		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
-
-		manager.initialize();
-
-		NENode& node1 = ns[ns.push(NENode())];
-		node1.getModuleSet().create(1);
-		NEModule& node1.getModuleSet().push(MyMod());
-
-
-		return true;
-	}
-};
 //class Test : public TestCase
 //{
 //public:
@@ -706,8 +678,8 @@ public:
 void main()
 {
 	cout	<< "CoreTester.		v0.0.1a build on 2014.08.16\n"
-		<< "This program will test kernel with some sequencial jobs. It can takes a minutes by circumstances.\n"
-		<< "If test has been successed, the result will be announced in front of test statement with color green. And the processing time will be displayed next of it.\n\n";
+			<< "This program will test kernel with some sequencial jobs. It can takes a minutes by circumstances.\n"
+			<< "If test has been successed, the result will be announced in front of test statement with color green. And the processing time will be displayed next of it.\n\n";
 
 	NE_MEMORYLEAK;
 
