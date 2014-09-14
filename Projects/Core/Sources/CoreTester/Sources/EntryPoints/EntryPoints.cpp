@@ -530,6 +530,10 @@ public:
 		kernal.initialize();
 		kernal.getDebugManager().setDebugMode(false);	//	디버그 모드를 끈다. 로그 없앰
 
+		if( ! &kernal.getNodeManager()	||
+			! &kernal.getScriptManager())
+			return false;
+
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
 		ss.setMaxPriorityCodeIndex(5);
@@ -702,6 +706,31 @@ public:
 		return true;
 	}
 };
+class Test14 : public TestCase
+{
+public:
+	Test14()	: TestCase("initiating a editor.") {}
+	virtual bool onTest() 
+	{
+		Editor::Factory factory;
+		factory.getPanelManagerIdentifier() = NEExportable::Identifier("NEStandardPanelManager", "haku", 1);
+		factory.getScriptEditorIdentifier() = NEExportable::Identifier("NEStandardScriptEditor", "haku", 1);
+		factory.getEventHandlerIdentifier() = NEExportable::Identifier("CooeeHandler", "haku", 1);
+		factory.getDefaultSettings().setPanelDirectory("Panels");
+		Editor created = factory.create();
+		Editor::setInstance( *(new Editor(created)) );
+
+		Editor& editor = Editor::getInstance();
+		editor.initialize();
+		
+		if( ! &editor.getPanelManager()	||
+			! &editor.getScriptEditor()	||
+			! &editor.getEventHandler()	)
+			return false;
+		
+		return true;
+	}
+};
 //class Test : public TestCase
 //{
 //public:
@@ -730,6 +759,7 @@ void main()
 	std::wcout.imbue( std::locale("korean") );
 
 	Test8().test();
+	Test14().test();
 	init();	
 	Test1().test();
 	Test13().test();

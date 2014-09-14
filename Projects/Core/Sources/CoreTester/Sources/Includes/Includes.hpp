@@ -1,3 +1,3 @@
 #pragma once
 
-#include "../../../Kernal/Sources/EntryPoints/Headers.hpp"
+#include "../../../Editor/Sources/EntryPoints/Headers.hpp"
