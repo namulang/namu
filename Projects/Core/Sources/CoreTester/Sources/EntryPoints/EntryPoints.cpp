@@ -715,7 +715,7 @@ public:
 		Editor::Factory factory;
 		factory.getPanelManagerIdentifier() = NEExportable::Identifier("NEStandardPanelManager", "haku", 1);
 		factory.getScriptEditorIdentifier() = NEExportable::Identifier("NEStandardScriptEditor", "haku", 1);
-		factory.getEventHandlerIdentifier() = NEExportable::Identifier("CooeeHandler", "haku", 1);
+		factory.getEventHandlerIdentifier() = NEExportable::Identifier("CooeeHandler", "kniz", 1);
 		factory.getDefaultSettings().setPanelDirectory("Panels");
 		Editor created = factory.create();
 		Editor::setInstance( *(new Editor(created)) );
