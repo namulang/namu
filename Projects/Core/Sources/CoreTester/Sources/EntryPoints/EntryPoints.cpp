@@ -774,6 +774,7 @@ void main()
 	Test12().test();
 
 	Kernal::saveSettings();
+	delete &Editor::getInstance();
 	delete &Kernal::getInstance();
 
 	system("pause");
