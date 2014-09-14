@@ -534,6 +534,14 @@
 								Name="VCCLCompilerTool"
 							/>
 						</FileConfiguration>
+						<FileConfiguration
+							Name="Developer.Release|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\..\..\Sources\Cooee\Sources\Interfaces\Interface\Interface.hpp"
@@ -547,6 +555,14 @@
 							>
 							<FileConfiguration
 								Name="Developer.Debug|Win32"
+								ExcludedFromBuild="true"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+								/>
+							</FileConfiguration>
+							<FileConfiguration
+								Name="Developer.Release|Win32"
 								ExcludedFromBuild="true"
 								>
 								<Tool
@@ -593,6 +609,14 @@
 					>
 					<FileConfiguration
 						Name="Developer.Debug|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Developer.Release|Win32"
 						ExcludedFromBuild="true"
 						>
 						<Tool

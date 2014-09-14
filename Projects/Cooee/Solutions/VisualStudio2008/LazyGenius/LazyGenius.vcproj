@@ -169,7 +169,7 @@
 			Name="Developer.Release|Win32"
 			OutputDirectory="$(ProjectDir)..\..\..\Binaries\$(ProjectName)\"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -192,7 +192,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;LAZYGENIUSFRAMEWORK_EXPORTS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;LAZYGENIUSFRAMEWORK_EXPORTS;DEVELOPER"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -210,7 +210,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="$(OutDir)\$(ProjectName).dev.dbg.dll"
+				OutputFile="$(OutDir)\$(ProjectName).dev.dll"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
