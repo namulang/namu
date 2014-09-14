@@ -166,7 +166,7 @@
 		</Configuration>
 		<Configuration
 			Name="Developer.Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)..\..\..\Binaries\Core"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"

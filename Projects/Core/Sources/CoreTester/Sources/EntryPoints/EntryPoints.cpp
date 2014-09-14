@@ -720,6 +720,8 @@ public:
 		Editor created = factory.create();
 		Editor::setInstance( *(new Editor(created)) );
 
+		NEINIManager& ini = Kernal::getInstance().getINIManager();
+
 		Editor& editor = Editor::getInstance();
 		editor.initialize();
 		
