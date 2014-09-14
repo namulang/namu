@@ -279,9 +279,7 @@ public:
 		ns.resize(3);
 		ms.create(5);
 		NEKeyCodeSet& ks = tg.getKeySet();
-		const NEModule& outer = Kernal::getInstance().getModuleManager().getModuleSet()[4];
 		ms.push(MyMod());
-		ms.push(outer);
 		ms.push(MyMod());
 		ms.push(MyMod());
 
@@ -347,9 +345,7 @@ public:
 		ns.resize(3);
 		ms.create(5);
 		NEKeyCodeSet& ks = tg.getKeySet();
-		const NEModule& outer = Kernal::getInstance().getModuleManager().getModuleSet()[4];
 		ms.push(MyMod());
-		ms.push(outer);
 		ms.push(MyMod());
 		ms.push(MyMod());
 
@@ -374,6 +370,7 @@ public:
 		ms1.initializeReferingPoint();
 		NECodeSet is(1);
 		ms1.setModuleType(NECodeType::SCRIPT);
+		const NEModule& outer = moduler.getModule(NEExportable::Identifier("MyMod", "kniz", 1));
 		is.push(outer.getScriptCode());
 		ms1.setModuleCodeSet(is);
 
