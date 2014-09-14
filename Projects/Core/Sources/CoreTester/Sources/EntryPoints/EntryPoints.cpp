@@ -761,8 +761,8 @@ void main()
 	std::wcout.imbue( std::locale("korean") );
 
 	Test8().test();
+	init();
 	Test14().test();
-	init();	
 	Test1().test();
 	Test13().test();
 	Test2().test();
