@@ -345,9 +345,10 @@ public:
 		ns.resize(3);
 		ms.create(5);
 		NEKeyCodeSet& ks = tg.getKeySet();
-		ms.push(MyMod());
-		ms.push(MyMod());
-		ms.push(MyMod());
+		const NEModule& outer = moduler.getModule(NEExportable::Identifier("MyMod", "kniz", 1));
+		ms.push(outer);
+		ms.push(outer);
+		ms.push(outer);
 
 		ms.resize(15);
 		ms.resize(3);
@@ -370,7 +371,6 @@ public:
 		ms1.initializeReferingPoint();
 		NECodeSet is(1);
 		ms1.setModuleType(NECodeType::SCRIPT);
-		const NEModule& outer = moduler.getModule(NEExportable::Identifier("MyMod", "kniz", 1));
 		is.push(outer.getScriptCode());
 		ms1.setModuleCodeSet(is);
 
