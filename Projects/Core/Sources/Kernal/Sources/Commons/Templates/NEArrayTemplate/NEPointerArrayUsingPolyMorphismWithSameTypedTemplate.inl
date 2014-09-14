@@ -367,7 +367,7 @@ namespace NE
 		//	post:
 		_data[index] = static_cast<InsideType*>( &(source->clone()) );
 		_length++;
-		return RESULT_SUCCESS;
+		return index;
 	}
 
 
