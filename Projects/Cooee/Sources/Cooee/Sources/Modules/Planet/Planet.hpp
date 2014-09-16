@@ -108,9 +108,7 @@ public:
 	}
 	int _generateMorphing(NEObject& obj)
 	{
-		if(obj.isSubClassOf(NEType::NEKEY))
-			return _generate((NEKey&) obj);
-		else if(obj.isSubClassOf(NEType::NEKEY_CODESET))
+		if(obj.isSubClassOf(NEType::NEKEY_CODESET))
 			return _generate((NEKeyCodeSet&) obj);
 		else if(obj.isSubClassOf(NEType::NEMODULE))
 			return _generate((NEModule&) obj);
@@ -124,6 +122,8 @@ public:
 			return _generate((NENodeCodeSet&) obj);
 		else if(obj.isSubClassOf(NEType::NENODE_CODESET_KEY))
 			return _generate((NENodeCodeSetKey&) obj);
+		else if(obj.isSubClassOf(NEType::NEKEY))
+			return _generate((NEKey&) obj);
 
 		return y;
 	}
