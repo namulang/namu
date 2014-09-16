@@ -730,6 +730,25 @@ public:
 		return true;
 	}
 };
+
+class NECodeSetInsertionTest : public TestCase
+{
+public:
+	NECodeSetInsertionTest() : TestCase("test NECodeSet's filtering functions.") {}
+	virtual bool onTest() 
+	{
+		NECodeSet cs(5);
+		for(int n=0; n < 5 ;n++)
+			cs.push(n);
+		
+		cs.resize(10);
+		type_index	result1 = cs.push(1);
+		type_result result2 = cs.setElement(3, 2);
+
+		return	result1 == NE_INDEX_ERROR			&& 
+				NEResult::isActionAborted(result2);
+	}
+};
 //class Test : public TestCase
 //{
 //public:
@@ -761,6 +780,7 @@ void main()
 	init();
 	Test14().test();
 	Test1().test();
+	NECodeSetInsertionTest().test();
 	Test13().test();
 	Test2().test();
 	Test3().test();
