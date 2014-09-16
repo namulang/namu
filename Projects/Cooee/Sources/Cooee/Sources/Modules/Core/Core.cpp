@@ -22,6 +22,10 @@ void Core::openModifierFrom(const NEString& path, NEKey* real_key)
 		::LG::Core::open(NodeSetTerminal(path, real_key));
 	else if(obj.isSubClassOf(NEType::NEKEY_CODESET))
 		::LG::Core::open(KeySetTerminal(path));
+	else if(obj.isSubClassOf(NEType::NENODE))
+		::LG::Core::open(NodeTerminal(path));
+	else if(obj.isSubClassOf(NEType::NEMODULE))
+		::LG::Core::open(ModuleTerminal(path));
 	else
 		::Core::pushMessage("경로 " + path + "에 있는 객체에 대한 적당한 수정자가 없습니다.");
 }
