@@ -78,10 +78,10 @@ namespace NE
 	protected:
 		virtual type_result _onChangeNameCode(NENode& target, type_code new_namecode);
 		virtual type_result _onChangePriorityCode(NENode& target, type_code new_prioritycode);
-		virtual type_result _onChangeGroupCode(NENode& target, const NEIntSet& new_groupcodeset);
+		virtual type_result _onChangeGroupCode(NENode& target, const NECodeSet& new_groupcodeset);
 		void _setScriptCode(NENode& target, type_code new_scriptcode) const;
 		void _setNameCode(NENode& target, type_code new_namecode) const;
-		void _setGroupCode(NENode& target, const NEIntSet& new_groupcode) const;
+		void _setGroupCode(NENode& target, const NECodeSet& new_groupcode) const;
 		void _setPriorityCode(NENode& target, type_code new_priority) const;
 
 	protected:

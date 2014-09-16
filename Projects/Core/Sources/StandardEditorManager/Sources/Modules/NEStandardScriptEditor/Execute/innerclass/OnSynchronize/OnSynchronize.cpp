@@ -10,7 +10,7 @@ namespace NE
 	{
 		owner._setNameCode(target, new_namecode);
 	}
-	void NEStandardScriptEditor::OnSynchronize::_setGroupCode(NEStandardScriptEditor& owner, NENode& target, const NEIntSet& new_groupcode) const
+	void NEStandardScriptEditor::OnSynchronize::_setGroupCode(NEStandardScriptEditor& owner, NENode& target, const NECodeSet& new_groupcode) const
 	{
 		owner._setGroupCode(target, new_groupcode);
 	}

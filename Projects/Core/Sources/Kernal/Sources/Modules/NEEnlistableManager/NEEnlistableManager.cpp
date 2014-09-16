@@ -189,7 +189,7 @@ namespace NE
 		target._namecode = new_namecode;
 	}
 
-	void NEEnlistableManager::_setGroupCode(NENode& target, const NEIntSet& new_groupcode) const
+	void NEEnlistableManager::_setGroupCode(NENode& target, const NECodeSet& new_groupcode) const
 	{
 		target._groupcodeset = new_groupcode;
 	}
@@ -253,7 +253,7 @@ namespace NE
 		return shortcutset._enlist(target, real_index);
 	}
 
-	type_result NEEnlistableManager::_onChangeGroupCode(NENode& target, const NEIntSet& new_groupcodeset)
+	type_result NEEnlistableManager::_onChangeGroupCode(NENode& target, const NECodeSet& new_groupcodeset)
 	{
 		if(target.getGroupCode() == new_groupcodeset) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 

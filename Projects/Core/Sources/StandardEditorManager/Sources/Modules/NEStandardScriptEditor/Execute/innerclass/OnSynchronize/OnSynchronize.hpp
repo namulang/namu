@@ -6,6 +6,6 @@ public:
 protected:
 	void _setScriptCode(NEStandardScriptEditor& owner, NENode& target, type_code new_scriptcode) const;
 	void _setNameCode(NEStandardScriptEditor& owner, NENode& target, type_code new_namecode) const;
-	void _setGroupCode(NEStandardScriptEditor& owner, NENode& target, const NEIntSet& new_groupcode) const;
+	void _setGroupCode(NEStandardScriptEditor& owner, NENode& target, const NECodeSet& new_groupcode) const;
 	void _setPriorityCode(NEStandardScriptEditor& owner, NENode& target, type_code new_priority) const;
 };
