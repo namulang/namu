@@ -13,6 +13,8 @@ namespace NE
 
 	public:
 		const NEKey& getKey(NEType::Type type) const;
+		const NEKey& getKey(const NEString& type_name) const;
+		const NEKeySet& getKeySet() const;
 
 	public:
 		virtual type_result initialize();
