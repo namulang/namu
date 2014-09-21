@@ -749,6 +749,26 @@ public:
 				NEResult::isActionAborted(result2);
 	}
 };
+
+
+class NEKeyManagerTypeTest : public TestCase
+{
+public:
+	NEKeyManagerTypeTest() : TestCase("is NEKeyManager accessible with some types?") {}
+	virtual bool onTest() 
+	{
+		NEKeyManager& km = Kernal::getInstance().getKeyManager();
+		NEIntKey ik(5);
+		const NEKey	&	result1 = km.getKey(ik.getType()),
+					&	result2 = km.getKey(ik.getTypeName());
+
+		if(	result1.getType() != result2.getType()	||
+			result1.getType() != NEType::NEINT_KEY	)
+			return false;
+
+		return true;
+	}
+};
 //class Test : public TestCase
 //{
 //public:
@@ -781,6 +801,7 @@ void main()
 	Test14().test();
 	Test1().test();
 	NECodeSetInsertionTest().test();
+	NEKeyManagerTypeTest().test();
 	Test13().test();
 	Test2().test();
 	Test3().test();

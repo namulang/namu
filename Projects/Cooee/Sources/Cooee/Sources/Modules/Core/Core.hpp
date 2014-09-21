@@ -18,6 +18,15 @@ public:
 	{
 		return getObjectBy(path);
 	}
+	static type_result setPathToBeCopied(const NEString& new_path)
+	{
+		NEObject& obj = getObjectBy(new_path);
+		if( ! &obj)
+			return RESULT_TYPE_WARNING | RESULT_ABORT_ACTION;
+
+		path_to_be_copied = new_path;
+		return RESULT_SUCCESS;
+	}
 	static void pushMessage(const NEString& msg)
 	{
 		::LG::Core::windows.pushFront(LG::MessageWindow(msg, WHITE, LIGHTRED));
@@ -27,7 +36,7 @@ public:
 	static type_index _getPositionTypeAndIndex(const NEString& position, int& type)
 	{
 		int index_to_be_returned = position.getLength() > 1 ? position.extract(0, position.getLengthLastIndex()).toInt() : NE_INDEX_ERROR;
-		
+
 		switch(position[0])
 		{
 		case 'n':	type = 1;	break;	// node
@@ -111,7 +120,7 @@ public:
 
 			return _searchNodeSet(nodeset, work_position, handler);
 		}
-		
+
 		return key; 
 	}
 
@@ -161,4 +170,5 @@ public:
 
 	static Commander commander;
 	static NEString path;
+	static NEString path_to_be_copied;
 };

@@ -2,12 +2,15 @@
 #include "../ModuleSetTerminal/ModuleSetTerminal.hpp"
 #include "../NodeSetTerminal/NodeSetTerminal.hpp"
 #include "../KeySetTerminal/KeySetTerminal.hpp"
+#include "../ModuleTerminal/ModuleTerminal.hpp"
+#include "../NodeTerminal/NodeTerminal.hpp"
 #include "../Modifier/Modifier.hpp"
 #include "../../Commons/Templates/ContainerModifier/ContainerModifier.hpp"
 #include "../Planetarium/Planetarium.hpp"
 
 Commander Core::commander = Commander();
 NEString Core::path("/");
+NEString Core::path_to_be_copied;
 
 void Core::openModifierFrom(const NEString& path, NEKey* real_key)
 {
@@ -18,7 +21,7 @@ void Core::openModifierFrom(const NEString& path, NEKey* real_key)
 		obj.isSubClassOf(NEType::NEMODULE_CODESET)		)
 		::LG::Core::open(ModuleSetTerminal(path, real_key)); 
 	else if(obj.isSubClassOf(NEType::NENODE_CODESET_KEY)	||
-			obj.isSubClassOf(NEType::NENODE_CODESET)		)
+		obj.isSubClassOf(NEType::NENODE_CODESET)		)
 		::LG::Core::open(NodeSetTerminal(path, real_key));
 	else if(obj.isSubClassOf(NEType::NEKEY_CODESET))
 		::LG::Core::open(KeySetTerminal(path));
@@ -139,7 +142,7 @@ NEObject& Core::getObjectBy(const NEString& path, onObjectFound& handler)
 		! &path										||
 		path == ""									)
 		return nodelist;
-	
+
 
 	//	main:
 	NEStringSet splited;
@@ -279,7 +282,7 @@ NE::NEString Core::createPathBy(const NEObject& target)
 	NENodeCodeSet& ns = Editor::getInstance().getScriptEditor().getScriptNodes();
 	if(&ns == &target)
 		return "/";
-	
+
 	__s_ns(ns, target, to_return);
 
 	return to_return;
