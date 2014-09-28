@@ -246,7 +246,7 @@ public:
 
 						case NECodeType::GROUP:
 							{
-								NEIntSet cs = node.getGroupCode();
+								NECodeSet cs = node.getGroupCode();
 								cs.resize(cs.getLength() + 1);
 								cs.push(input.history_idx);
 								node.setGroupCode(cs);
@@ -267,7 +267,7 @@ public:
 				if(choosed == 1 && toOwner()->codelist_display_index >= 0)
 				{
 					NENode& node = toOwner()->castObject();
-					NEIntSet cs = node.getGroupCode();
+					NECodeSet cs = node.getGroupCode();
 					cs.remove(toOwner()->codelist_display_index);					
 					cs.resize(cs.getLength());
 					node.setGroupCode(cs);		
