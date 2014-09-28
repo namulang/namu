@@ -51,10 +51,21 @@ namespace NE
 			if(_keyset[n].getType() == type)
 				return _keyset[n];
 
-		KERNAL_ERROR("에구, 손님 그런 키는 없는 뎁쇼\n\t: 요청한 키는 %s(%d)", NEType::getTypeName(type), type);
+		KERNAL_ERROR("주어진 타입에 알맞는 키를 못찾았습니다.\n\t: 요청한 키는 %s(%d)", NEType::getTypeName(type), type);
 		NEKey* nullpointer = 0x00;
 		return *nullpointer;
 	}
+
+	const NEKey NE_DLL &NEKeyManager::getKey(const NEString& type_name) const
+	{
+		for(int n=0; n < _keyset.getLength() ;n++)
+			if(type_name == _keyset[n].getTypeName())
+				return _keyset[n];
+
+		const NEKey* nullpointer = 0x00;
+		return *nullpointer;
+	}
+
 	type_result NEKeyManager::initialize()
 	{
 		_keyset.create(31);
@@ -121,7 +132,7 @@ namespace NE
 	{
 		return *(new NEKeyManager(*this));
 	}
-	const NEKeySet& NEKeyManager::getKeySet() const
+	const NEKeySet NE_DLL &NEKeyManager::getKeySet() const
 	{
 		return _keyset;
 	}
