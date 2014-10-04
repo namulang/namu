@@ -148,7 +148,7 @@ public:
 class HelpCommand : public Command
 {
 public:
-	HelpCommand() : Command("help h"
+	HelpCommand() : Command("help h",
 		"도움말 사전을 연다. 현재는 모듈 백과사전만 열 수 있다.\n"
 		"별칭	: help\n"
 		"사용법	: help -module\n"
@@ -158,7 +158,7 @@ public:
 class HeaderCommand : public Command
 {
 public:
-	HeaderCommand() : Command("header head hd"
+	HeaderCommand() : Command("header head hd",
 		"스크립트 헤더를 수정할 수 있는 화면을 연다.\n"
 		"별칭	: header, head, hd\n"
 		"사용법	: header") {}

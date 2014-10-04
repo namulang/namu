@@ -474,6 +474,18 @@
 								>
 							</File>
 						</Filter>
+						<Filter
+							Name="HeaderModifier"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\HeaderModifier\HeaderModifier.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\HeaderModifier\HeaderModifier.hpp"
+								>
+							</File>
+						</Filter>
 					</Filter>
 				</Filter>
 			</Filter>
