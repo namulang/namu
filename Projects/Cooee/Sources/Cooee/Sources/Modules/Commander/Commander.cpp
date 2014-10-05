@@ -24,3 +24,13 @@ NEString Commander::command(const NEString& commandline)
 
 	return command_name + "이란 명령어는 없다구요.\n오타? 아님 착각?";
 }
+
+Command& Commander::getCommand(const NEString& command_name)
+{
+	for(int n=0; n < getLength(); n++)
+		if(getElement(n).names.find(command_name) != NE_INDEX_ERROR)
+			return getElement(n);
+
+	Command* nullpointer = 0x00;
+	return *nullpointer;
+}

@@ -22,6 +22,7 @@ public:
 	}
 
 	NEString command(const NEString& commandline);
+	Command& getCommand(const NEString& command_name);
 
 private:
 	void _initializeCommands()
