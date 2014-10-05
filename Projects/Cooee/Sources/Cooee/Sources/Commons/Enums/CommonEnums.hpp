@@ -18,7 +18,9 @@ namespace LG
 		DOWN = 80,
 		LEFT = 75,
 		RIGHT = 77,
-		MAP = 47,
-		SPACE = 32
+		MAP = 3,
+		SPACE = 32,
+		COPY,
+		PASTE
 	};
 }
