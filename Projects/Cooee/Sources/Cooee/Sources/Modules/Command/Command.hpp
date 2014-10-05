@@ -149,7 +149,7 @@ class HelpCommand : public Command
 {
 public:
 	HelpCommand() : Command("help h",
-		"도움말 사전을 연다. 현재는 모듈 백과사전만 열 수 있다.\n"
+		"도움말 사전을 연다. 모듈 백과사전과 명령어 사전을 열 수 있다.\n"
 		"별칭	: help\n"
 		"사용법	: help (명령어들을 열람한다)\n"
 		"		: help -module\n"

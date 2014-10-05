@@ -384,27 +384,13 @@ NE::NEString HelpCommand::execute(const NEStringSet& parameters)
 	switch(parameters.getLength())
 	{
 	case 0:
-		{
-			NEString message = "다음과 같은 명령어들을 사용할 수 있다.";
-			int count_for_newline = 0;
-			for(int n=0; n < ::Core::commander.getLength() ;n++)
-			{				
-				message += ::Core::commander[n].names[0];
-				if(count_for_newline++ >= 3)
-				{
-					count_for_newline = 0;
-					message += "\n";
-				}
-				message += "\t";
-			}
-		}
-		
+		if(parameters[0] == "-command")
+			LG::Core::open(CommandListWindow());
 		break;
+
 	case 1:
 		if(parameters[0] == "-module")
-			LG::Core::open(ModuleEncyclo());
-		else if(parameters[0] == "-command")
-			LG::Core::open(CommandListWindow());
+			LG::Core::open(ModuleEncyclo());		
 		break;
 
 	case 2:		
