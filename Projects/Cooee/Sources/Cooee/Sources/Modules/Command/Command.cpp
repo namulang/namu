@@ -2,6 +2,8 @@
 #include "../Core/Core.hpp"
 #include "../Planetarium/Planetarium.hpp"
 #include "../HeaderModifier/HeaderModifier.hpp"
+#include "../CommandListWindow/CommandListWindow.hpp"
+#include "../ModuleEncyclo/ModuleEncyclo.hpp"
 
 Command::Command(const NEString& names_delimetered_with_space, const NEString& new_help)
 : help(new_help)
@@ -401,6 +403,8 @@ NE::NEString HelpCommand::execute(const NEStringSet& parameters)
 	case 1:
 		if(parameters[0] == "-module")
 			LG::Core::open(ModuleEncyclo());
+		else if(parameters[0] == "-command")
+			LG::Core::open(CommandListWindow());
 		break;
 
 	case 2:		
@@ -410,7 +414,7 @@ NE::NEString HelpCommand::execute(const NEStringSet& parameters)
 			if( ! obj.isSubClassOf(NEType::NEMODULE))
 				return NEString("ERROR: 주어진 경로(") + parameters[1] + ")는 모듈이 아닙니다.";
 
-			LG::Core::open(ModuleEncyclo(static_cast<NEModule&>(obj)));
+			LG::Core::open(ModuleEncyclo(false, static_cast<NEModule*>(&obj)));
 		}
 		break;
 
