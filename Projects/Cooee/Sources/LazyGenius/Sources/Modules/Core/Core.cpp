@@ -7,4 +7,5 @@ namespace LG
 	type_ushort NE_DLL Core::max_height = Core::getMaxCursorPosition().Y;
 	WindowList NE_DLL Core::windows;
 	bool NE_DLL Core::color_lock = false;
+	char NE_DLL Core::inputed = 0;
 }

@@ -10,11 +10,13 @@ namespace LG
 		static void sendKeyPipe()
 		{
 			if( _kbhit()) {
-				char inputed = _getch();
+				inputed = _getch();
 				if(&windows[0])
 					windows[0].onKeyPressed(inputed);
 			}		
-
+		}
+		static void collectGarbages()
+		{
 			windows.collectGarbages();
 		}
 		static void open(Window& window)
@@ -75,5 +77,7 @@ namespace LG
 		static type_ushort max_height;	
 		static WindowList windows;
 		static bool color_lock;
+
+		static char inputed;
 	};
 }
