@@ -85,6 +85,7 @@ void Modifier<NEBooleanKey>::onKeyPressed(char inputed)
 		break;
 
 	case CONFIRM:
+	case ENTER:
 		if( ! focused_text && real_key)
 		{
 			real_key->getName() = name_text.text;
@@ -440,6 +441,7 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 		break;
 
 	case CANCEL:
+	case CLOSE:
 		toOwner()->delete_me = true;
 	}
 }
@@ -649,6 +651,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 		break;
 
 	case CANCEL:
+	case CLOSE:
 		toOwner()->delete_me = true;
 	}			
 }
@@ -748,6 +751,7 @@ void Modifier<NEKeySelector>::MenuList::onKeyPressed(char inputed)
 		break;
 
 	case CANCEL:
+	case CLOSE:
 		toOwner()->delete_me = true;
 	}			
 }

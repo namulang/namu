@@ -58,6 +58,7 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 		break;
 
 	case CANCEL:
+	case CLOSE:
 		toOwner()->delete_me = true;
 		break;
 

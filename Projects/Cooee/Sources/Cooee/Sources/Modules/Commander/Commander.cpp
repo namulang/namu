@@ -14,7 +14,7 @@ NEString Commander::command(const NEString& commandline)
 		Command& command = getElement(n);
 		NEStringSet& names = command.names;
 
-		if(names.find(command_name))
+		if(names.find(command_name) >= 0)
 		{
 			NEString result = command.execute(splited);
 			if(result.extract(0, 5) == "ERROR:")
@@ -33,4 +33,25 @@ Command& Commander::getCommand(const NEString& command_name)
 
 	Command* nullpointer = 0x00;
 	return *nullpointer;
+}
+
+void Commander::_initializeCommands()
+{
+	create(14);
+	push(HelpCommand());
+	push(ListCommand());
+	push(CloseCommand());
+	push(VersionCommand());
+	push(PlanetarizeCommand());
+
+	push(CopyCommand());
+	push(AddCommand());
+	push(DeleteCommand());
+	push(PasteCommand());
+	push(RunCommand());
+
+	push(SaveCommand());
+	push(LoadCommand());
+	push(NewCommand());
+	push(HeaderCommand());
 }

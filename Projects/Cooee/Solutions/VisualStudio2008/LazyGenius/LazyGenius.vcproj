@@ -276,17 +276,13 @@
 				<Filter
 					Name="Enumerations"
 					>
-					<Filter
-						Name="CommonEnums"
+					<File
+						RelativePath="..\..\..\Sources\LazyGenius\Sources\Commons\Enumerations\CommonEnumerations.hpp"
 						>
-						<File
-							RelativePath="..\..\..\Sources\LazyGenius\Sources\Commons\Enums\CommonEnums.hpp"
-							>
-						</File>
-					</Filter>
+					</File>
 				</Filter>
 				<Filter
-					Name="Defins"
+					Name="Defines"
 					>
 					<Filter
 						Name="Macros"

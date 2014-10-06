@@ -486,6 +486,18 @@
 								>
 							</File>
 						</Filter>
+						<Filter
+							Name="CommandListWindow"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\CommandListWindow\CommandListWindow.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\CommandListWindow\CommandListWindow.hpp"
+								>
+							</File>
+						</Filter>
 					</Filter>
 				</Filter>
 			</Filter>
@@ -505,16 +517,12 @@
 				Name="Commons"
 				>
 				<Filter
-					Name="Templates"
+					Name="Defines"
 					>
-					<Filter
-						Name="ContainerModifier"
+					<File
+						RelativePath="..\..\..\Sources\Cooee\Sources\Commons\Defines\specification.hpp"
 						>
-						<File
-							RelativePath="..\..\..\Sources\Cooee\Sources\Commons\Templates\ContainerModifier\ContainerModifier.hpp"
-							>
-						</File>
-					</Filter>
+					</File>
 				</Filter>
 			</Filter>
 		</Filter>

@@ -29,6 +29,10 @@ namespace LG
 	}
 
 	void Window::onKeyPressed(char inputed)	{
+
+		if(inputed == CLOSE)
+			delete_me = true;
+
 		for(GliphList::Iterator* itr=gliphs.getIterator(0); itr ; itr=itr->getNext()) {
 			itr->getValue().onKeyPressed(inputed);
 		}

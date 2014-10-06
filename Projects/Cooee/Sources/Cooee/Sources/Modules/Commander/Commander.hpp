@@ -25,8 +25,5 @@ public:
 	Command& getCommand(const NEString& command_name);
 
 private:
-	void _initializeCommands()
-	{
-
-	}
+	void _initializeCommands();
 };

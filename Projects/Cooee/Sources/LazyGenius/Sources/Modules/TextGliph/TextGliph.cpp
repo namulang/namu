@@ -34,6 +34,7 @@ namespace LG
 		{
 		case '\t': case -32: case UP: case DOWN:
 			break;
+
 		case BACKSPACE:
 			if(history_idx != -1) {
 				text.release();
@@ -52,21 +53,25 @@ namespace LG
 				
 
 			break;
-		case CONFIRM:
+
+		case ENTER:
 			makeToHistory();
 			break;
+
 		case LEFT: 
 			if(history_idx > 0) {
 				history_idx--;
 				text = history[history_idx];
 			}
 			break;
+
 		case RIGHT: 
 			if(history_idx < history.getLengthLastIndex()) {
 				history_idx++;
 				text = history[history_idx];
 			}
 			break;			
+
 		default:
 			if(text.getSize() <= 0)
 				text.create(50);			

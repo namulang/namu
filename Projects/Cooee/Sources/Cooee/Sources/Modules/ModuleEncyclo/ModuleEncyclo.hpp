@@ -93,8 +93,10 @@ class ModuleEncyclo : public Window
 					Core::commander.command("add ");
 				}
 				break;
+
 			case CANCEL:
 				toOwner()->delete_me = true;
+				break;
 			}
 		}
 

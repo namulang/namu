@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../../Includes/Includes.hpp"
-#include "../../Commons/Enums/CommonEnums.hpp"
 #include "../../Commons/Defines/ClassMacros/ClassMacros.hpp"
+#include "../../Commons/Enumerations/CommonEnumerations.hpp"
 
 namespace LG 
 {

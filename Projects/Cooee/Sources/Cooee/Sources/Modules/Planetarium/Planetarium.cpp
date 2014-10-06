@@ -10,6 +10,10 @@ void Planetarium::onKeyPressed(char inputed)
 	type_index n = 0;
 	switch(inputed)
 	{
+	case MAP:
+		delete_me = true;
+		break;
+
 	case UP:
 		if( ! focusing->parent) return;
 		n = focusing->parent->planets.find(focusing);
@@ -48,7 +52,7 @@ void Planetarium::onKeyPressed(char inputed)
 		onDraw();
 		break;
 
-	case LG::MENU:
+	case LG::CANCEL:
 		call(Filter());
 		break;
 
@@ -68,10 +72,6 @@ void Planetarium::onKeyPressed(char inputed)
 			::Core::openModifierFrom((NEKey&) *focusing->real);
 		else
 			::Core::openModifierFrom(::Core::createPathBy(*focusing->real));
-		break;
-
-	case CANCEL:
-		delete_me = true;
 		break;
 	}
 }

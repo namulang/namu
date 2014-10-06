@@ -384,8 +384,7 @@ NE::NEString HelpCommand::execute(const NEStringSet& parameters)
 	switch(parameters.getLength())
 	{
 	case 0:
-		if(parameters[0] == "-command")
-			LG::Core::open(CommandListWindow());
+		LG::Core::open(CommandListWindow());
 		break;
 
 	case 1:
