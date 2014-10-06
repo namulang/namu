@@ -7,13 +7,17 @@ namespace LG
 	class NE_DLL Core
 	{
 	public:
-		static void sendKeyPipe()
+		static bool sendKeyPipe()
 		{
 			if( _kbhit()) {
 				inputed = _getch();
 				if(&windows[0])
 					windows[0].onKeyPressed(inputed);
+				return true;
 			}		
+
+			inputed = 0;
+			return false;
 		}
 		static void collectGarbages()
 		{
