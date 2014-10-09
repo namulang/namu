@@ -26,50 +26,28 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 	{
 	case UP:
 	case DOWN:
-		{
-			toOwner()->gate.text = createCommand();
-			toOwner()->gate.hinted = true;
-			onDraw();
-		}
+		onDraw();
 		break;
 	case ADD:
 		LG::Core::windows.pushFront(ModuleEncyclo(true));
 		break;
-	case REMOVE:
-		NEString& msg = ::Core::commander.command(NEString("remove ") + choosed);
-		if(msg.getLength() > 0)
-			Core::pushMessage(msg);
-		break;
-	}			
-}
 
-void NodeSetTerminal::GeniusGate::onKeyPressed(char inputed) 
-{
-	switch(inputed) 
-	{
-	case BACKSPACE:		
-		break;
-	case ADD: case REMOVE:
-		return;	//	Å° ¹«È¿
 	case CONFIRM:
 		{
 			if(text == "" || text.getLength() <= 0)
 				text = toOwner()->contents.createCommand();
 
 			type_index	choosed = toOwner()->contents.choosed,
-						index = toOwner()->real_key ? choosed-1 : choosed;
+				index = toOwner()->real_key ? choosed-1 : choosed;
 			if(index == -1)
 				toOwner()->call(NodeNameInputWindow(toOwner()->real_key->getName()));
 			else
-				LG::Core::windows.pushFront(NodeTerminal(toOwner()->path + "/" + index));
+				LG::Core::windows.pushFront(NodeTerminal(toOwner()->getPath() + "/" + index));
 			return;
-// 			NEString& msg = Core::commander.command(text);
-// 			if(msg.getLength() > 0)
-// 				Core::pushMessage(msg);
 		}
 		break;
-	case CANCEL:
 
+	case CANCEL:
 		class Really : public ::LG::QueryWindow
 		{
 		public:
@@ -94,9 +72,15 @@ void NodeSetTerminal::GeniusGate::onKeyPressed(char inputed)
 		if(LG::Core::windows.getLength() == 1)
 			toOwner()->call(Really());
 		else
-			toOwner()->delete_me = true;
+			toOwner()->delete_me = true;		
 		break;
-	}
 
-	TextGliph::onKeyPressed(inputed);
+	case REMOVE:
+		NEString& msg = ::Core::commander.command(NEString("remove ") + choosed);
+		if(msg.getLength() > 0)
+			Core::pushMessage(msg);
+		break;
+	}			
+
+
 }

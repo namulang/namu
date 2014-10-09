@@ -20,18 +20,26 @@ public:
 	Terminal(const Terminal& rhs);
 
 	virtual void onUpdateData();
-
 	virtual void onKeyPressed(char inputed);
+	void setPath(const NEString& new_path);
+	const NEString& getPath() const;
 
-	void setObjectFrom(const NEString& new_path) {
-		path = new_path;
-		_setObject();
-	}
-
-	NEString path;
+	NEString _path;
 	NEObject* instance;
 	NEType::Type to_chk_valid;
 	Status status;
+
+
+	class Navigator : public LG::Gliph {
+	public:
+		Navigator() : LG::Gliph(0, 1, 23, 78, 1, DARKGRAY, LIGHTGRAY) {}
+		Navigator(const Navigator& rhs) : Gliph(rhs) {}
+		FUNC_CLONE(Navigator)
+		FUNC_TO_OWNER(Terminal)
+
+		virtual void onUpdateData();
+	};
+	Navigator navigator;
 
 protected:
 	void _setObject();

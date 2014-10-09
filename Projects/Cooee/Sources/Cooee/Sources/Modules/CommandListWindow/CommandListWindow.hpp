@@ -6,7 +6,7 @@ class CommandListWindow : public LG::ListWindow
 {
 public:
 	CommandListWindow()
-		: LG::ListWindow("Command List", 15, 4, 10, 10, BLACK, WHITE, WHITE, BROWN) {}
+		: LG::ListWindow("Command List", 15, 4, 15, 10, BLUE, WHITE, WHITE, BROWN) {}
 
 	FUNC_CLONE(CommandListWindow)
 	virtual void onUpdateData();

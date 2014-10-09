@@ -83,7 +83,7 @@ NENode& ModuleTerminal::ArgumentNameList::_getOwnerNodeOf(NEModule& target)
 	};
 
 	MyHandler myhandler;
-	Core::getObjectBy(toOwner()->path, myhandler);
+	Core::getObjectBy(toOwner()->getPath(), myhandler);
 	
 	return *myhandler.last_pointer;
 }

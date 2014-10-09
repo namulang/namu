@@ -55,16 +55,16 @@ NE::NEString VersionCommand::execute(const NEStringSet& parameters)
 
 NE::NEString PlanetarizeCommand::execute(const NEStringSet& parameters)
 {
-	Planetarium planetarium;
+	LG::Core::open(Planetarium());
 
 	if(parameters.getLength() > 0)
 	{
 		NEObject& parsed = ::Core::getObjectBy(parameters[0]);
 		if( ! &parsed) return "ERROR: 주어진 경로가 잘못되었네요.\n주어진 경로 : " + parameters[0];
+		Planetarium& planetarium = dynamic_cast<Planetarium&>(LG::Core::windows[0]);
 		planetarium.setFocus(parsed);
 	}
 
-	LG::Core::open(planetarium);
 	return "";
 }
 
@@ -196,41 +196,38 @@ NE::NEString DeleteCommand::execute(const NEStringSet& parameters)
 	NENodeCodeSet* ncs = 0x00;
 	NEModuleCodeSet* mcs = 0x00;
 	type_result result = RESULT_SUCCESS;
-	switch(parent->getType())
-	{
-	case NEType::NENODE_CODESET_KEY:
+	if(parent->isSubClassOf(NEType::NENODE_CODESET_KEY))
 		ncs = &((NENodeCodeSetKey*) parent)->getValue();
-
-	case NEType::NENODE_CODESET:
+	if(parent->isSubClassOf(NEType::NENODE_CODESET))
+	{
 		if( ! ncs)
 			ncs = (NENodeCodeSet*) parent;
 		if(idx_to_del > ncs->getLengthLastIndex())
 			return "ERROR: 인덱스가 실제보다 더 큽니다.";
 		ncs->remove(idx_to_del);
-		break;
+		return "";
+	}
 
-	case NEType::NEMODULE_CODESET_KEY:
+	if(parent->isSubClassOf(NEType::NEMODULE_CODESET_KEY))
 		mcs = &((NEModuleCodeSetKey*) parent)->getValue();
 
-	case NEType::NEMODULE_CODESET:
+	if(parent->isSubClassOf(NEType::NEMODULE_CODESET))
+	{
 		if( ! mcs)
 			mcs = (NEModuleCodeSet*) parent;
 		if(idx_to_del > mcs->getLengthLastIndex())
 			return "ERROR: 인덱스가 실제보다 더 큽니다.";
 		mcs->remove(idx_to_del);
-		break;
+		return "";
+	}
 
-	case NEType::NEKEY_CODESET:
-		{
-			NEKeyCodeSet& kcs = (NEKeyCodeSet&) *parent;
-			if(idx_to_del > kcs.getLengthLastIndex())
-				return "ERROR: 인덱스가 실제보다 더 큽니다.";
-			kcs.remove(idx_to_del);
-		}
-		break;
-
-	default:
-		return "ERROR: 주어진 경로는 삭제가 불가능 합니다.";
+	if(parent->isSubClassOf(NEType::NEKEY_CODESET))
+	{
+		NEKeyCodeSet& kcs = (NEKeyCodeSet&) *parent;
+		if(idx_to_del > kcs.getLengthLastIndex())
+			return "ERROR: 인덱스가 실제보다 더 큽니다.";
+		kcs.remove(idx_to_del);
+		return "";
 	}
 
 	return (NEResult::hasError(result)) ? "ERROR: 삽입 도중 에러가 발생했습니다." : "";
@@ -239,7 +236,7 @@ NE::NEString DeleteCommand::execute(const NEStringSet& parameters)
 NE::NEString OrphanCommand::_searchParent(const NEString& full_path, type_index& index_to_insert, NEObject** parent_to_insert)
 {
 	NEStringSet splited;
-	full_path.split("/\\", splited);
+	full_path.split("/", splited);
 	if(splited.getLength() <= 0)
 		return "ERROR: 주어진 경로가 \"/\" 여서는 안됍니다.";
 	NEString parent_path = "/";
@@ -266,48 +263,42 @@ NE::NEString PasteCommand::execute(const NEStringSet& parameters)
 
 	NEObject& source = ::Core::getObjectBy(::Core::path_to_be_copied);
 	if( ! parent) return "ERROR: 주어진 경로(" + parameters[0] + ")가 잘못되었습니다.";
-	switch(parent->getType())
-	{
-	case NEType::NENODE_CODESET_KEY:
+	if(parent->isSubClassOf(NEType::NENODE_CODESET_KEY))
 		ncs = &((NENodeCodeSetKey*)parent)->getValue();
-
-	case NEType::NENODE_CODESET:
+	if(parent->isSubClassOf(NEType::NENODE_CODESET))
+	{
 		if( ! ncs)
 			ncs = (NENodeCodeSet*) parent;
-		{
-			if(source.getType() != NEType::NENODE)			
-				return "ERROR: 주어진 경로에 " + NEString(source.getTypeName()) + "을 넣을 수 없습니다.";
-			NENode& node = static_cast<NENode&>(source);
+	
+		if(source.getType() != NEType::NENODE)			
+			return "ERROR: 주어진 경로에 " + NEString(source.getTypeName()) + "을 넣을 수 없습니다.";
+		NENode& node = static_cast<NENode&>(source);
 
-			result = ncs->insert(index, node);
-		}		
-		break;
-
-	case NEType::NEMODULE_CODESET_KEY:
+		result = ncs->insert(index, node);
+	}
+	
+	if(parent->isSubClassOf(NEType::NEMODULE_CODESET_KEY))
 		mcs = &((NEModuleCodeSetKey*)parent)->getValue();
 
-	case NEType::NEMODULE_CODESET:
+	if(parent->isSubClassOf(NEType::NEMODULE_CODESET))
+	{
 		if( ! mcs)
 			mcs = (NEModuleCodeSet*) parent;
-		{
-			if(source.getType() != NEType::NEMODULE)
-				return "ERROR: 주어진 경로에 " + NEString(source.getTypeName()) + "을 넣을 수 없습니다.";
-			NEModule& module = static_cast<NEModule&>(source);
+		if(source.getType() != NEType::NEMODULE)
+			return "ERROR: 주어진 경로에 " + NEString(source.getTypeName()) + "을 넣을 수 없습니다.";
+		NEModule& module = static_cast<NEModule&>(source);
 
-			result = mcs->insert(index, module);
-		}
-		break;
+		result = mcs->insert(index, module);
+	}
 
-	case NEType::NEKEY_CODESET:
-		{
-			NEKeyCodeSet& kcs = (NEKeyCodeSet&) *parent;
-			if(source.getType() != NEType::NEKEY)
-				return "ERROR: 주어진 경로에 " + NEString(source.getTypeName()) + "을 넣을 수 없습니다.";
-			NEKey& key = static_cast<NEKey&>(source);
+	if(parent->isSubClassOf(NEType::NEKEY_CODESET))
+	{
+		NEKeyCodeSet& kcs = (NEKeyCodeSet&) *parent;
+		if(source.getType() != NEType::NEKEY)
+			return "ERROR: 주어진 경로에 " + NEString(source.getTypeName()) + "을 넣을 수 없습니다.";
+		NEKey& key = static_cast<NEKey&>(source);
 
-			result = kcs.insert(index, key);
-		}
-		break;
+		result = kcs.insert(index, key);
 	}
 
 	return (NEResult::hasError(result)) ? "ERROR: 삽입 도중 에러가 발생했습니다." : "";

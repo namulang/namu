@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../Terminal/Terminal.hpp"
-#include "../BaseNavigator/BaseNavigator.hpp"
 
 class KeySetTerminal : public Terminal
 {
@@ -9,15 +8,11 @@ public:
 	KeySetTerminal(const NEString& new_path, type_ushort x=25, type_ushort y=4) 
 		: Terminal(new_path, NEType::NEKEY_CODESET, x, y, 30, 17, BLACK, DARKGRAY)
 	{
-		regist(7, &header, &names, &types, &data, &navigator, &colon, &gate);
-		navigator.text = path;		
+		regist(4, &header, &names, &types, &data);
 	}	
-	KeySetTerminal(const KeySetTerminal& rhs) : Terminal(rhs), header(rhs.header), names(rhs.names), types(rhs.types), data(rhs.data),
-		navigator(rhs.navigator), colon(rhs.colon), gate(rhs.gate)
+	KeySetTerminal(const KeySetTerminal& rhs) : Terminal(rhs), header(rhs.header), names(rhs.names), types(rhs.types), data(rhs.data)
 	{
-		regist(7, &header, &names, &types, &data, &navigator, &colon, &gate);
-		navigator.text = text;
-
+		regist(4, &header, &names, &types, &data);
 	}
 
 	class Header : public Gliph
@@ -116,43 +111,6 @@ public:
 				onDraw();
 		}
 	};
-	class Navigator : public BaseNavigator {
-	public:
-		Navigator() : BaseNavigator("KeySet", 0, 16, 17, 1, BLACK, WHITE) {}
-		Navigator(const Navigator& rhs) : BaseNavigator(rhs) {}
-		FUNC_CLONE(Navigator)
-		FUNC_TO_OWNER(KeySetTerminal)		
-		virtual void onUpdateData()
-		{
-			x = toOwner()->x;
-			y = toOwner()->y + 16;
-		}
-	};
-	class Colon : public Gliph {
-	public:
-		Colon() : Gliph(0, 17, 17, 3, 1, WHITE, LIGHTRED, " > ") {}
-		Colon(const Colon& rhs) : Gliph(rhs) {}
-		FUNC_CLONE(Colon)
-		FUNC_TO_OWNER(KeySetTerminal)
-		virtual void onUpdateData()
-		{
-			x = toOwner()->x + 17;
-			y = toOwner()->y + 16;
-		}
-	};
-	class GeniusGate : public TextGliph {
-	public:
-		GeniusGate() : TextGliph(0, 20, 17, 10, 1, WHITE, LIGHTRED), hinted(false) {}
-		GeniusGate(const GeniusGate& rhs) : TextGliph(rhs), hinted(rhs.hinted) {}
-		FUNC_CLONE(GeniusGate)
-		FUNC_TO_OWNER(KeySetTerminal)
-		virtual void onUpdateData()
-		{
-			x = toOwner()->x + 20;
-			y = toOwner()->y + 16;
-		}
-		bool hinted;
-	};
 
 	FUNC_CLONE(KeySetTerminal)
 
@@ -165,7 +123,4 @@ public:
 	KeyNameList names;
 	KeyTypeList types;
 	KeyDataList data;
-	Navigator navigator;
-	Colon colon;
-	GeniusGate gate;
 };

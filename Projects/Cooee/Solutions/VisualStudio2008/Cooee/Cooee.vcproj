@@ -413,18 +413,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="BaseNavigator"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Cooee\Sources\Modules\BaseNavigator\BaseNavigator.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\Sources\Cooee\Sources\Modules\BaseNavigator\BaseNavigator.hpp"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="Planetarium"
 					>
 					<File

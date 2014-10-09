@@ -74,11 +74,11 @@ public:
 			}
 			break;
 
-		case CANCEL:			
+		case CLOSE:			
 			delete_me = true;
 			break;
 
-		case CONFIRM:
+		case ENTER:
 			if( ! focused_text && real_key)
 			{
 				real_key->getName() = name_text.text;

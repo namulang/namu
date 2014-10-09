@@ -1,15 +1,13 @@
 #pragma once
 
 #include "../Terminal/Terminal.hpp"
-#include "../BaseNavigator/BaseNavigator.hpp"
 
 class NodeSetTerminal : public Terminal {
 public:
 	NodeSetTerminal(const NEString& new_path = "/", NEKey* new_real_key = 0)
 		: Terminal(new_path, NEType::NENODE_CODESET, 1, 1, 78, 23, BLACK, DARKGRAY), real_key(new_real_key)
 	{ 
-		regist(5, &header, &contents, &navigator, &colon, &gate);
-		navigator.text = path;
+		regist(2, &header, &contents);
 
 		if( ! instance)	//	setObject를 실패했다면
 		{
@@ -18,12 +16,10 @@ public:
 		}
 	}
 	NodeSetTerminal(const NodeSetTerminal& rhs) 
-		: Terminal(rhs), header(rhs.header), contents(rhs.contents), navigator(rhs.navigator), colon(rhs.colon), 
-		gate(rhs.gate), real_key(rhs.real_key)
+		: Terminal(rhs), header(rhs.header), contents(rhs.contents), real_key(rhs.real_key)
 	{ 
-		regist(5, &header, &contents, &navigator, &colon, &gate);
-		navigator.text = path;
-
+		regist(2, &header, &contents);
+		
 		if( ! instance)	//	setObject를 실패했다면
 		{
 			to_chk_valid = NEType::NENODE_CODESET_KEY;
@@ -98,38 +94,9 @@ public:
 			}
 		}
 	};
-	class Navigator : public BaseNavigator {
-	public:
-		Navigator() : BaseNavigator("NodeSet", 3, 23, 52, 1, BLACK, WHITE) {			
-		}
-		Navigator(const Navigator& rhs) : BaseNavigator(rhs) {}
-		FUNC_CLONE(Navigator)
-		FUNC_TO_OWNER(NodeSetTerminal)
-	};
-	class Colon : public Gliph {
-	public:
-		Colon() : Gliph(0, 57, 23, 3, 1, WHITE, LIGHTRED) { text = " > ";}
-		Colon(const Colon& rhs) : Gliph(rhs) {}
-		FUNC_CLONE(Colon)
-			FUNC_TO_OWNER(NodeSetTerminal)
-	};
-	class GeniusGate : public TextGliph {
-	public:
-		GeniusGate() : TextGliph(0, 60, 23, 19, 1, WHITE, LIGHTRED), hinted(false) {
-
-		}
-		GeniusGate(const GeniusGate& rhs) : TextGliph(rhs), hinted(rhs.hinted) {}
-		FUNC_CLONE(GeniusGate)
-		FUNC_TO_OWNER(NodeSetTerminal)
-		bool hinted;
-
-		virtual void onKeyPressed(char inputed);
-	};
-
+	
 	ListHeader header;
 	ContentList contents;
 	Navigator navigator;
-	Colon colon;
-	GeniusGate gate;
 	NEKey* real_key;
 };

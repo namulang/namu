@@ -17,7 +17,7 @@ public:
 	virtual void onTextInputed() = 0;
 
 	virtual void onKeyPressed(char inputed) {
-		if(inputed == CONFIRM)
+		if(inputed == ENTER)
 		{
 			delete_me = true;
 			onTextInputed();

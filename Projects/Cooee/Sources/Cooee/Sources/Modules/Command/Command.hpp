@@ -96,10 +96,10 @@ public:
 class PasteCommand : public OrphanCommand
 {
 public:
-	PasteCommand() : OrphanCommand("paste, p",
+	PasteCommand() : OrphanCommand("paste p",
 		"미리 예약해둔 경로를 복사하여, 특정 경로에 붙여넣는다. 원본과 붙여넣을 경로의 타입이 일치되어야 한다.\n"
 		"별칭	: paste, p\n"
-		"사용법	: paste <붙여넣을 경로>") {}
+		"사용법	: paste <붙여넣을 경로>/<붙여넣을 인덱스>") {}
 	FUNC_CLONE(PasteCommand)
 	virtual NEString execute(const NEStringSet& parameters);
 };

@@ -13,5 +13,6 @@ void CommandListWindow::onUpdateData()
 
 void CommandListWindow::onItemChoosed(type_index item_index, const NEString& chosen_content)
 {
-	::Core::pushMessage(::Core::commander.getCommand(chosen_content).help);
+	LG::Core::open(LG::MessageWindow(::Core::commander.getCommand(chosen_content).help, 
+		WHITE, MAGENTA, "   OK", 10, 8, 60, 9));
 }

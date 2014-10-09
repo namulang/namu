@@ -84,7 +84,6 @@ void Modifier<NEBooleanKey>::onKeyPressed(char inputed)
 		delete_me = true;
 		break;
 
-	case CONFIRM:
 	case ENTER:
 		if( ! focused_text && real_key)
 		{
@@ -247,8 +246,8 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 					{
 						switch(inputed)
 						{
-						case CANCEL:
-						case CONFIRM:
+						case CLOSE:
+						case ENTER:
 						case LEFT:
 						case RIGHT:
 							InputWindow::onKeyPressed(inputed);

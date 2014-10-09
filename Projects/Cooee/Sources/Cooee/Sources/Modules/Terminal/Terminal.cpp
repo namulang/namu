@@ -3,21 +3,23 @@
 #include "../Planetarium/Planetarium.hpp"
 
 Terminal::Terminal(const NEString& new_path, NEType::Type new_to_chk_valid, int x, int y, int w, int h, int back, int fore)
-: Window(x, y, w, h, back, fore), path(new_path), to_chk_valid(new_to_chk_valid), instance(0)
+: Window(x, y, w, h, back, fore), to_chk_valid(new_to_chk_valid), instance(0)
 {
-	regist(1, &status);
-	_setObject();
+	regist(2, &status, &navigator);
+	setPath(new_path);
 }
 
-Terminal::Terminal(const Terminal& rhs) : Window(rhs), path(rhs.path), to_chk_valid(rhs.to_chk_valid), instance(0) 
+Terminal::Terminal(const Terminal& rhs) 
+: Window(rhs), _path(rhs._path), to_chk_valid(rhs.to_chk_valid), instance(0), navigator(rhs.navigator), status(rhs.status)
+
 {
-	regist(1, &status);
-	_setObject();
+	regist(2, &status, &navigator);
+	setPath(rhs._path);
 }
 
 void Terminal::_setObject()
 {
-	instance = &::Core::getObjectBy(path);
+	instance = &::Core::getObjectBy(_path);
 	if( ! instance)	
 		return;
 	
@@ -32,7 +34,7 @@ void Terminal::onUpdateData()
 {
 	if( ! instance)
 	{
-		::Core::pushMessage("주어진 경로 : " + path + "에 적합한 객체가 없습니다.");
+		::Core::pushMessage("주어진 경로 : " + _path + "에 적합한 객체가 없습니다.");
 		delete_me = true;
 	}
 
@@ -46,8 +48,33 @@ void Terminal::onKeyPressed(char inputed)
 	if(inputed == LG::MAP)
 	{
 		call(Planetarium());
-		(dynamic_cast<Planetarium&>(LG::Core::windows[0])).setFocus(::Core::getObjectBy(path));
+		(dynamic_cast<Planetarium&>(LG::Core::windows[0])).setFocus(::Core::getObjectBy(_path));
 	}
+}
+
+void Terminal::setPath(const NEString& new_path)
+{
+	_path = new_path;
+
+	for(int n=0; n < _path.getLength() ;n++)
+		if(	_path[n] == '\\'||
+			_path[n] == '/'	)
+		{
+			int slash_n = n;
+			while(	++slash_n < _path.getLengthLastIndex()		&&
+				(_path[slash_n] == '\\' || _path[slash_n] == '/'))
+				_path.remove(slash_n--);
+		}
+
+	if(_path.getSize() > _path.getLength())
+		_path.resize(_path.getLength());
+
+	_setObject();
+}
+
+const NEString& Terminal::getPath() const
+{
+	return _path; 
 }
 
 void Terminal::Status::onUpdateData()
@@ -63,4 +90,16 @@ void Terminal::Status::onUpdateData()
 	text = " > " + NEString(NEType::getTypeName(owner.to_chk_valid));
 
 	onDraw();
+}
+
+void Terminal::Navigator::onUpdateData()
+{
+	width = toOwner()->width;
+	x = toOwner()->x;
+	y = toOwner()->y + toOwner()->height - 1;
+	height = 1;
+
+	NEString type_name = toOwner()->instance ? toOwner()->instance->getTypeName() : NEType::getTypeName(NEType::UNDEFINED);
+	text = NEString("[") + type_name + NEString("] : ") + 
+		toOwner()->getPath();
 }

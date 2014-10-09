@@ -15,14 +15,14 @@ public:
 		priority_header(0, 2, 10, 5, 1, WHITE, LIGHTRED, "Prior"),
 		ks_terminal(new_path+"/k", 17, 5), ms_terminal(new_path+"/m", 0, 47, 5), focused(0), codelist_display_index(-1)
 	{
-		regist(9, &header, &script_header, &name_header, &group_header, &priority_header, &attributes, &navigator, &colon, &gate);
+		regist(6, &header, &script_header, &name_header, &group_header, &priority_header, &attributes);
 	}
 	NodeTerminal(const NodeTerminal& rhs)
 		: Terminal(rhs), header(rhs.header), script_header(rhs.script_header), name_header(rhs.name_header),
 		group_header(rhs.group_header), priority_header(rhs.priority_header), ms_terminal(rhs.ms_terminal),
-		ks_terminal(rhs.ks_terminal), focused(rhs.focused), navigator(rhs.navigator), colon(rhs.colon), gate(rhs.gate), codelist_display_index(rhs.codelist_display_index)
+		ks_terminal(rhs.ks_terminal), focused(rhs.focused), codelist_display_index(rhs.codelist_display_index)
 	{
-		regist(9, &header, &script_header, &name_header, &group_header, &priority_header, &attributes, &navigator, &colon, &gate);
+		regist(6, &header, &script_header, &name_header, &group_header, &priority_header, &attributes);
 	}
 	virtual void onUpdateData()
 	{
@@ -226,8 +226,18 @@ public:
 					{
 						switch(inputed)
 						{
-						case CANCEL:
 						case CONFIRM:
+							inputed = ENTER;
+							InputWindow::onKeyPressed(inputed);
+							break;
+
+						case CANCEL:
+							inputed = CLOSE;
+							InputWindow::onKeyPressed(inputed);
+							break;
+
+						case ENTER:
+						case CLOSE:
 						case LEFT:
 						case RIGHT:
 							InputWindow::onKeyPressed(inputed);
@@ -309,38 +319,12 @@ public:
 		return (NENode&) *instance;
 	}
 
-	class Navigator : public BaseNavigator {
-	public:
-		Navigator() : BaseNavigator("Node", 3, 22, 63, 1, BLACK, WHITE) {}
-		Navigator(const Navigator& rhs) : BaseNavigator(rhs) {}
-		FUNC_CLONE(Navigator)	
-	};
-	class Colon : public Gliph {
-	public:
-		Colon() : Gliph(0, 63, 22, 3, 1, WHITE, LIGHTRED) 
-		{ 
-			text = " > ";
-		}
-		Colon(const Colon& rhs) : Gliph(rhs) {}
-		FUNC_CLONE(Colon)
-	};
-	class GeniusGate : public TextGliph {
-	public:
-		GeniusGate() : TextGliph(0, 66, 22, 11, 1, WHITE, LIGHTRED){}
-		GeniusGate(const GeniusGate& rhs) : TextGliph(rhs) {}
-		FUNC_CLONE(GeniusGate)
-	};
-
-
 	FUNC_CLONE(NodeTerminal)
 
 	Gliph header, script_header, name_header, group_header, priority_header;
 	Attributes attributes;
 	ModuleSetTerminal ms_terminal;
 	KeySetTerminal ks_terminal;
-	Navigator navigator;
-	Colon colon;
-	GeniusGate gate;
 	int focused;
 	int codelist_display_index;
 };
