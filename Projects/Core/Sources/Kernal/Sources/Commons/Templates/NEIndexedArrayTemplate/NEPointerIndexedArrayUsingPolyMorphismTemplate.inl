@@ -53,8 +53,6 @@ namespace NE
 	template <typename Type, NEType::Type type>
 	const NEIndexedArrayTemplate<Type*, true, type>& NEIndexedArrayTemplate<Type*, true, type>::operator=(const ThisClass& source) 
 	{
-		NEReservedCollectorTemplate::operator=(source);
-
 		return _assign(source);
 	}
 
@@ -635,7 +633,7 @@ namespace NE
 	{
 		//	pre:
 		//		파라메터 검사:
-		if(index < 0) return RESULT_TYPE_WARNING | RESULT_WRONG_PARAMETER | RESULT_ABORT_ACTION;
+		if(index < 0) return RESULT_TYPE_WARNING | RESULT_WRONG_PARAMETER | RESULT_ABORT_ACTION;		
 		if(_length <= 0) return RESULT_TYPE_WARNING | RESULT_WRONG_BOUNDARY | RESULT_ABORT_ACTION;
 
 

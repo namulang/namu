@@ -53,8 +53,6 @@ namespace NE
 	template <typename InsideType, NEType::Type type>
 	const NEArrayTemplate<InsideType*, true, InsideType*, type>& NEArrayTemplate<InsideType*, true, InsideType*, type>::operator=(const ThisClass& source) 
 	{
-		NEReservedCollectorTemplate::operator=(source);
-
 		return _assign(source);
 	}
 

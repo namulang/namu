@@ -57,9 +57,7 @@ namespace NE
 		const ThisClass& source
 		)
 	{
-		NEReservedCollectorTemplate<InsideType*>::operator=(source);
-
-		return _assign(source);
+		return _assign(source);	//	안에서 _size, _length가 할당된다.
 	}
 
 

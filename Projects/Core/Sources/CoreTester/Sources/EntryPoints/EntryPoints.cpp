@@ -772,7 +772,7 @@ public:
 class IndexedArrayReturningHeapMemory : public TestCase
 {
 public:
-	IndexedArrayReturningHeapMemory() : TestCase("check that indexed-Array returns used heap memory on time.") {}
+	IndexedArrayReturningHeapMemory() : TestCase("check that indexed-array returns heap memory on time") {}
 	virtual bool onTest()
 	{
 		class MyInt : public NEObject
@@ -877,6 +877,178 @@ public:
 		return true;
 	}
 };
+class ArrayAssigningTest : public TestCase
+{
+public:
+	ArrayAssigningTest() : TestCase("array assigning test.") {}
+	virtual bool onTest()
+	{
+		NEArrayTemplate<int> arr, arr2;
+		arr.create(3);
+		arr.push(1);
+		arr.push(2);
+		arr.push(3);
+		arr2.create(1);
+		arr2.push(4);
+
+		arr = arr2;
+
+		return	arr.getSize() == arr2.getSize()		&&
+				arr.getLength() == arr2.getLength() &&
+				arr[0] == arr2[0] &&				
+				arr[0] == 4;
+	}
+};
+class PointerArrayAssigningTest : public TestCase
+{
+public:
+	PointerArrayAssigningTest() : TestCase("pointer-array assigning test.") {}
+	virtual bool onTest()
+	{
+		int a=0, b=1, c=2, d=4;
+		NEArrayTemplate<int*, false> arr, arr2, temp;
+		arr.create(3);
+		arr.push(&a);
+		arr.push(&b);
+		arr.push(&c);
+		arr2.create(1);
+		arr2.push(&d);
+
+		arr = arr2;
+
+		return	arr.getSize() == arr2.getSize()		&&
+				arr.getLength() == arr2.getLength() &&
+				arr[0] == arr2[0]					&&
+				arr[0] == 4;
+	}
+};
+class HeapedPointerArrayAssigningTest : public TestCase
+{
+public:
+	HeapedPointerArrayAssigningTest() : TestCase("array that manages instances with heap assigning test.") {}
+
+	class MyInt : public NEObject
+	{
+	public:
+		MyInt(int dd)	: datum(dd) {}			
+		MyInt(const MyInt& src) : datum(src.datum) {}
+		virtual NEObject& clone() const { return *(new MyInt(*this)); }
+		virtual void release() {}
+		virtual type_result isValid() const { return 0; }
+		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const { return saver << datum; }
+		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader) { return loader >> datum; }
+
+		int datum;
+	};
+	class MyContainer : public NEArrayTemplate<MyInt*, true> 
+	{
+	public:
+	};
+
+	virtual bool onTest()
+	{
+		MyContainer arr, arr2;
+		arr.create(1);
+		arr.push(MyInt(1));		
+		arr2.create(3);
+		arr2.push(MyInt(4));
+		arr2.push(MyInt(2));
+		arr2.push(MyInt(3));
+
+		arr = arr2;
+
+		return	arr.getSize() == arr2.getSize()	&&
+			arr.getLength() == arr2.getLength() &&
+			arr[0].datum == arr2[0].datum		&&
+			arr[0].datum == 4;
+	}
+};
+class IndexedArrayAssigningTest : public TestCase
+{
+public:
+	IndexedArrayAssigningTest() : TestCase("indexed array assigning test.") {}
+	virtual bool onTest()
+	{
+		NEIndexedArrayTemplate<int> arr, arr2;
+		arr.create(3);
+		arr.push(1);
+		arr.push(2);
+		arr.push(3);
+		arr2.create(1);
+		arr2.push(4);
+
+		arr = arr2;
+
+		return	arr.getSize() == arr2.getSize()		&&
+				arr.getLength() == arr2.getLength() &&
+				arr[0] == arr2[0] &&				
+				arr[0] == 4;
+	}
+};
+class PointerIndexedArrayAssigningTest : public TestCase
+{
+public:
+	PointerIndexedArrayAssigningTest() : TestCase("pointer-indexed array assigning test.") {}
+	virtual bool onTest()
+	{
+		int a=0, b=1, c=2, d=4;
+		NEIndexedArrayTemplate<int*,false> arr, arr2, temp;
+		arr.create(3);
+		arr.push(&a);
+		arr.push(&b);
+		arr.push(&c);
+		arr2.create(1);
+		arr2.push(&d);
+
+		arr = arr2;
+
+		return	arr.getSize() == arr2.getSize()		&&
+			arr.getLength() == arr2.getLength() &&
+			arr[0] == arr2[0]					&&
+			arr[0] == 4;
+	}
+};
+class HeapedPointerIndexedArrayAssigningTest : public TestCase
+{
+public:
+	HeapedPointerIndexedArrayAssigningTest() : TestCase("pointer-indexed one with heap assigning test.") {}
+
+	class MyInt : public NEObject
+	{
+	public:
+		MyInt(int dd)	: datum(dd) {}			
+		MyInt(const MyInt& src) : datum(src.datum) {}
+		virtual NEObject& clone() const { return *(new MyInt(*this)); }
+		virtual void release() {}
+		virtual type_result isValid() const { return 0; }
+		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const { return saver << datum; }
+		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader) { return loader >> datum; }
+
+		int datum;
+	};
+	class MyContainer : public NEIndexedArrayTemplate<MyInt*, true> 
+	{
+	public:
+	};
+
+	virtual bool onTest()
+	{
+		MyContainer arr, arr2;
+		arr.create(1);
+		arr.push(MyInt(1));		
+		arr2.create(3);
+		arr2.pushFront(MyInt(4));
+		arr2.pushFront(MyInt(2));
+		arr2.pushFront(MyInt(3));
+
+		arr = arr2;
+
+		return	arr.getSize() == arr2.getSize()	&&
+			arr.getLength() == arr2.getLength() &&
+			arr[0].datum == arr2[0].datum		&&
+			arr[0].datum == 4;
+	}
+};
 //class Test : public TestCase
 //{
 //public:
@@ -904,11 +1076,19 @@ void main()
 
 	std::wcout.imbue( std::locale("korean") );
 
-	IndexedArrayReturningHeapMemory().test();
-	IndexedArrayFileSerializeTest().test();
 	Test8().test();
 	init();
 	Test14().test();
+	system("pause");
+	system("cls");
+	ArrayAssigningTest().test();
+	PointerArrayAssigningTest().test();
+	HeapedPointerArrayAssigningTest().test();
+	IndexedArrayAssigningTest().test();
+	PointerIndexedArrayAssigningTest().test();
+	HeapedPointerIndexedArrayAssigningTest().test();
+	IndexedArrayReturningHeapMemory().test();
+	IndexedArrayFileSerializeTest().test();
 	Test1().test();
 	NECodeSetInsertionTest().test();
 	NEKeyManagerTypeTest().test();
