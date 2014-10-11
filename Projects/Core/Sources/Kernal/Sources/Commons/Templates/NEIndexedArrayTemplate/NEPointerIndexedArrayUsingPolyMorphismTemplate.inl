@@ -208,7 +208,8 @@ namespace NE
 		_returnHeapMemory(index);
 		//			포인터 변경:
 		_data[index] = static_cast<Type*>( &(source->clone()) ); // clone (= virtual 복사생성자 )으로 값을 삽입한다
-		
+		_occupiedset[index] = true;
+
 		return NE_INDEX_ERROR;
 	}
 
@@ -420,13 +421,6 @@ namespace NE
 		//		포인터(= 데이터 ) 삭제:
 		//			메모리 해제:	포인터를 삭제하기 전에 동적으로 생성한 메모리를 먼저 해제해야 한다
 		_returnHeapMemory(index);
-		//		소유권 소멸:
-		/*
-					객체가 실제로 사라지는 건 insert에서 덮어씌워진다.
-					메모리가 반환되는 건, NEIndexedArrayTemplate 자체가 반환될때다.
-		*/
-		_occupiedset[index] = false;
-
 
 
 		//	post:
@@ -647,13 +641,13 @@ namespace NE
 
 
 		//	main:
-		//		메모리해제:	포인터가 유효하면, 메모리를 먼저 해제하고 포인터를 NULL로 한다.
-		if(_data[index])
-		{
+		//		메모리해제:	먼저, 소유권을 확인한다.
+		if(_occupiedset[index])
 			delete _data[index];
-
-			_data[index] = NE_NULL;
-		} 
+		//		소유권 소멸:
+		//			객체가 실제로 사라지는 건 insert에서 덮어씌워진다.
+		//			메모리가 반환되는 건, NEIndexedArrayTemplate 자체가 반환될때다.
+		_occupiedset[index] = false;
 
 		return RESULT_SUCCESS;
 	}
