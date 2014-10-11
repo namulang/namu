@@ -769,6 +769,114 @@ public:
 		return true;
 	}
 };
+class IndexedArrayReturningHeapMemory : public TestCase
+{
+public:
+	IndexedArrayReturningHeapMemory() : TestCase("check that indexed-Array returns used heap memory on time.") {}
+	virtual bool onTest()
+	{
+		class MyInt : public NEObject
+		{
+		public:
+			MyInt(int dd)	: datum(dd) {}			
+			MyInt(const MyInt& src) : datum(src.datum) {}
+			virtual NEObject& clone() const { return *(new MyInt(*this)); }
+			virtual void release() {}
+			virtual type_result isValid() const { return 0; }
+			virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const { return saver; }
+			virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader) { return loader; }
+
+			int datum;
+		};
+		NEIndexedArrayTemplate<MyInt*, true> arr;
+		arr.create(5);
+		arr.push(MyInt(1));
+		arr.push(MyInt(2));
+		arr.push(MyInt(3));
+		arr.push(MyInt(4));
+		arr.push(MyInt(5));
+		arr.remove(2);
+		return 
+			! NEResult::hasError(arr.insert(2, MyInt(100)))	&&
+			arr[2].datum == 100;
+	}
+};
+class IndexedArrayFileSerializeTest : public TestCase
+{
+public:
+	IndexedArrayFileSerializeTest() : TestCase("indexed array can be saved to/ loaded from file?") {}
+	virtual bool onTest()
+	{
+		class MyInt : public NEObject
+		{
+		public:
+			MyInt(int dd)	: datum(dd) {}			
+			MyInt(const MyInt& src) : datum(src.datum) {}
+			virtual NEObject& clone() const { return *(new MyInt(*this)); }
+			virtual void release() {}
+			virtual type_result isValid() const { return 0; }
+			virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const { return saver << datum; }
+			virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader) { return loader >> datum; }
+
+			int datum;
+		};
+		class MyContainer : public NEIndexedArrayTemplate<MyInt*, true> 
+		{
+		public:
+			virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
+			{
+				NEIndexedArrayTemplate<MyInt*, true>::serialize(saver);
+
+				for(int n=0; n < getSize(); n++)
+					if(getOccupiedSet()[n])
+						saver << getElement(n);
+
+				return saver;
+			}
+			virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader)
+			{
+				NEIndexedArrayTemplate<MyInt*, true>::serialize(loader);
+
+				_length = 0;
+
+				for(int n=0; n < getSize() ;n++)
+					if(getOccupiedSet()[n])
+					{
+						int datum = 0;
+						loader >> datum;
+
+						_occupiedset[n] = false;
+						insert(n, MyInt(datum));
+					}
+
+				return loader;
+			}
+		};	
+		MyContainer arr;
+		arr.create(5);
+		arr.pushFront(MyInt(1));
+		arr.pushFront(MyInt(2));
+		arr.pushFront(MyInt(3));
+		arr.pushFront(MyInt(4));
+		arr.pushFront(MyInt(5));
+		
+		NEBinaryFileSaver saver(_T("IndexedArrayFileSerializeTest.dat"));
+		saver.open();
+		saver << arr;
+		saver.close();
+
+		NEBinaryFileLoader loader(_T("IndexedArrayFileSerializeTest.dat"));
+		loader.open();
+		loader >> arr;
+		loader.close();
+
+		for(int n=0; n < arr.getLength() ;n++)
+			if(arr[n].datum != n+1)
+				return false;
+		
+		return true;
+	}
+};
 //class Test : public TestCase
 //{
 //public:
@@ -796,6 +904,8 @@ void main()
 
 	std::wcout.imbue( std::locale("korean") );
 
+	IndexedArrayReturningHeapMemory().test();
+	IndexedArrayFileSerializeTest().test();
 	Test8().test();
 	init();
 	Test14().test();
