@@ -29,7 +29,6 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 		onDraw();
 		break;
 	case ADD:
-		LG::Core::windows.pushFront(ModuleEncyclo(true));
 		break;
 
 	case CONFIRM:

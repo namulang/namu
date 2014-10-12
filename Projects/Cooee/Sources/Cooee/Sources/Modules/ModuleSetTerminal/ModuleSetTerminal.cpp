@@ -42,9 +42,24 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 		else
 			toOwner()->delete_me = true;
 		break;
+
+	case ADD:		
+		{	
+			NEString path = toOwner()->getPath() + "/";
+			NEObject& obj = ::Core::getObjectBy(path);
+			NEModuleCodeSet& mcs = static_cast<NEModuleCodeSet&>(obj);
+			if( ! obj.isSubClassOf(NEType::NEMODULE_CODESET))
+				return;
+
+			path += (choosed < 0 || items.getLength() < 0) ? mcs.getLength() : choosed;
+			LG::Core::windows.pushFront(ModuleEncyclo(0, path));
+		}
+		break;
+
 	case UP:
 	case DOWN:
 		onDraw();
+		break;
 	}	
 }
 

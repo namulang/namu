@@ -68,14 +68,19 @@ public:
 	FUNC_CLONE(CopyCommand)
 	virtual NEString execute(const NEStringSet& parameters);
 };
-
-
-class AddCommand : public Command
+class OrphanCommand : public Command
+{
+public:
+	OrphanCommand(const NEString& names, const NEString& help)
+		: Command(names, help) {}
+	NEString _searchParent(const NEString& full_path, type_index& index_to_insert, NEObject** parent_to_insert);
+};
+class AddCommand : public OrphanCommand
 {
 public:
 	AddCommand(const NEString& names, const NEString& help)
-		: Command(names, help) {}
-	AddCommand() : Command("add a",
+		: OrphanCommand(names, help) {}
+	AddCommand() : OrphanCommand("add a",
 		"주어진 경로에 새로운 개체를 하나 추가한다.\n"
 		"별칭	: add, a\n"
 		"사용법	: add -node <추가할 NodeCodeSet/Key의 경로>\n"
@@ -85,13 +90,6 @@ public:
 	virtual NEString execute(const NEStringSet& parameters);
 private:
 	NEType::Type _findKeyTypeBy(const NEString& type_name);
-};
-class OrphanCommand : public Command
-{
-public:
-	OrphanCommand(const NEString& names, const NEString& help)
-		: Command(names, help) {}
-	NEString _searchParent(const NEString& full_path, type_index& index_to_insert, NEObject** parent_to_insert);
 };
 class PasteCommand : public OrphanCommand
 {

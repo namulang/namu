@@ -4,6 +4,7 @@
 #include "../HeaderModifier/HeaderModifier.hpp"
 #include "../CommandListWindow/CommandListWindow.hpp"
 #include "../ModuleEncyclo/ModuleEncyclo.hpp"
+#include "../NodeSetTerminal/NodeSetTerminal.hpp"
 
 Command::Command(const NEString& names_delimetered_with_space, const NEString& new_help)
 : help(new_help)
@@ -128,31 +129,33 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 	} 
 	else if(parameters[0] == "-module")
 	{
+		type_index index_to_add = NE_INDEX_ERROR;
+		NEObject* parent = 0x00;
 		if(parameters.getLength() < 5) return NEString("ERROR: 인자의 갯수가 5개여야 합니다. \n현재 인자 수 : ") + parameters.getLength();
-		NEObject& parsed = ::Core::getObjectBy(parameters[4]);
-		if( ! &parsed) return "ERROR: 경로가 잘못 됐네요.";
+		_searchParent(parameters[4], index_to_add, &parent);				
+		if( ! &parent) return "ERROR: 경로가 잘못 됐네요.";
 
 		NEExportable::Identifier identifier(parameters[1], parameters[2], parameters[3].toInt());
 
-		switch(parsed.getType())
+		switch(parent->getType())
 		{
 		case NEType::NEMODULE_CODESET_KEY:
-			msc = &((NEModuleCodeSetKey&) parsed).getValue();
+			msc = &(((NEModuleCodeSetKey*) parent)->getValue());
 
 		case NEType::NEMODULE_CODESET:
 			{
 				if( ! msc)
-					msc = (NEModuleCodeSet*) &parsed;
+					msc = (NEModuleCodeSet*) parent;
 
 				if(msc->getLength() >= msc->getSize())
-					msc->resize(nsc->getSize() + 1);
+					msc->resize(msc->getSize() + 1);
 
-				msc->push(Kernal::getInstance().getModuleManager().getModule(identifier));
+				msc->insert(index_to_add, Kernal::getInstance().getModuleManager().getModule(identifier));
 			}			
 			break;
 
 		default:
-			return NEString("ERROR: 잘못된 경로입니다. 주어진 타입이 ") + parsed.getTypeName();
+			return NEString("ERROR: 잘못된 경로입니다. 주어진 타입이 ") + parent->getTypeName();
 		}
 	}
 	else if(parameters[0] == "-key")
@@ -356,17 +359,77 @@ NE::NEString LoadCommand::execute(const NEStringSet& parameters)
 {
 	if(parameters.getLength() <= 0) return "ERROR: 읽어들일 파일명을 입력해주세요.";
 
-	NEEventHandler& handler = Editor::getInstance().getEventHandler();
-	if(NEResult::hasError(handler.loadScriptFile(NETString(parameters[0]))))
-		return "ERROR: 파일 로드 실패.";
+	class Really : public LG::QueryWindow
+	{
+	public:
+		Really(const NEString& path) 
+			: LG::QueryWindow("저장되지 않는 내용은 사라지는데, 괜찮겠어요?", LIGHTRED, RED, true),
+			_filepath(path) {}
+		virtual NEObject& clone() const { return *(new Really(*this)); }
+		virtual void onButtonPressed(bool witch_button)
+		{
+			if(witch_button)
+			{
+				NEEventHandler& handler = Editor::getInstance().getEventHandler();
+				if(NEResult::hasError(handler.loadScriptFile(NETString(_filepath))))
+				{
+					::Core::pushMessage("ERROR: 파일 로드 실패.");
+					return;
+				}
+
+				for(LG::WindowList::Iterator* i=LG::Core::windows.getIterator(0)
+					; i
+					; i=i->getNext())
+				{
+					i->getValue().delete_me = true;
+				}
+
+				LG::Core::open(NodeSetTerminal());
+			}
+
+			delete_me = true;
+		}
+
+		NEString _filepath;
+	};
+
+	LG::Core::open(Really(parameters[0]));
 
 	return "";
 }
 NE::NEString NewCommand::execute(const NEStringSet& parameters)
 {
-	NEEventHandler& handler = Editor::getInstance().getEventHandler();
-	if(NEResult::hasError(handler.initializeNewFile()))
-		return "ERROR: 새로운 파일 시작 실패.";
+	class Really : public LG::QueryWindow
+	{
+	public:
+		Really() : LG::QueryWindow("저장되지 않는 내용은 사라지는데, 괜찮겠어요?", LIGHTRED, RED, true) {}
+		virtual NEObject& clone() const { return *(new Really(*this)); }
+		virtual void onButtonPressed(bool witch_button)
+		{
+			if(witch_button)
+			{
+				NEEventHandler& handler = Editor::getInstance().getEventHandler();
+				if(NEResult::hasError(handler.initializeNewFile()))
+				{
+					::Core::pushMessage("ERROR: 새로운 파일 시작 실패.");
+					return;
+				}
+
+				for(LG::WindowList::Iterator* i=LG::Core::windows.getIterator(0)
+					; i
+					; i=i->getNext())
+				{
+					i->getValue().delete_me = true;
+				}
+
+				LG::Core::open(NodeSetTerminal());
+			}
+
+			delete_me = true;
+		}
+	};
+
+	LG::Core::open(Really());
 
 	return "";
 }
@@ -390,7 +453,7 @@ NE::NEString HelpCommand::execute(const NEStringSet& parameters)
 			if( ! obj.isSubClassOf(NEType::NEMODULE))
 				return NEString("ERROR: 주어진 경로(") + parameters[1] + ")는 모듈이 아닙니다.";
 
-			LG::Core::open(ModuleEncyclo(false, static_cast<NEModule*>(&obj)));
+			LG::Core::open(ModuleEncyclo(static_cast<NEModule*>(&obj)));
 		}
 		break;
 

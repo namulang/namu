@@ -42,12 +42,12 @@ public:
 		NEScriptManager::ScriptHeader& h = Editor::getInstance().getScriptEditor().getScriptHeader();
 
 		list.items.create(6+codes_display_indexes.getLength());
-		list.items.push("이름\t:"	+ h.getName());
-		list.items.push("개발자\t:"	+ h.getDeveloper());
-		list.items.push("개정횟수\t:"+ h.getRevision());
-		list.items.push("출시일\t:"	+ h.getReleaseDate());
-		list.items.push("설명\t:"	+ h.getComment());
-		list.items.push("연락처\t:"	+ h.getContact());
+		list.items.push("이  름 : " + h.getName());
+		list.items.push("개발자 : " + h.getDeveloper());
+		list.items.push("개  정 : " + h.getRevision());
+		list.items.push("출시일 : " + h.getReleaseDate());
+		list.items.push("설  명 : " + h.getComment());
+		list.items.push("연락처 : " + h.getContact());
 
 		_pushCodeLists();
 	}
@@ -63,10 +63,11 @@ public:
 			string_to_be_changed(data) {}
 		StringInputWindow(const StringInputWindow& rhs)
 			: LG::InputWindow(rhs), string_to_be_changed(rhs.string_to_be_changed) {}
-		
+		FUNC_CLONE(StringInputWindow)
 		virtual void onInputed()
 		{
 			string_to_be_changed = input.text;
+			delete_me = true;
 		}
 
 		NETString& string_to_be_changed;
@@ -77,7 +78,38 @@ public:
 	{
 	public:
 		CodePopUpMenu(NECodeType::CodeType codetype, type_index code)
-			: LG::ListWindow("Code PopUp Menu", 40, 9, 60, 5, BLACK, WHITE, WHITE, LIGHTBLUE), _codetype(codetype), _code(code) {}
+			: LG::ListWindow("Code PopUp Menu", 10, 9, 70, 5, BLACK, WHITE, WHITE, LIGHTBLUE), _codetype(codetype), _code(code)
+		{
+			if(_code < 0)
+			{
+				type_index to_return = _getMaxCodeIndex(_codetype) + 1;
+				if(to_return == -2)
+				{
+					EDITOR_WARNING(" : 잘못된 ScriptHeader의 코드를 조작하려 했습니다.");
+
+					delete_me = true;
+				}
+				
+				_code = to_return;
+			}
+		}
+
+		type_index _getMaxCodeIndex(NECodeType::CodeType from)
+		{
+			const NEScriptManager::ScriptHeader& h = Editor::getInstance().getScriptEditor().getScriptHeader();
+			switch(from)
+			{
+			case NECodeType::NAME:
+				return h.getMaxNameCodeIndex();
+			case NECodeType::GROUP:
+				return h.getMaxGroupCodeIndex();
+			case NECodeType::PRIORITY:
+				return h.getMaxPriorityCodeIndex();
+			default:
+				return -2;
+			}
+		}
+
 		CodePopUpMenu(const CodePopUpMenu& rhs)
 			: LG::ListWindow(rhs), _codetype(rhs._codetype), _code(rhs._code) {}
 		FUNC_CLONE(CodePopUpMenu)

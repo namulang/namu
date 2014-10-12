@@ -3,23 +3,6 @@
 
 namespace 
 {
-	class StringInputWindow : public LG::InputWindow
-	{
-	public:
-		StringInputWindow(NETString& data)
-			: LG::InputWindow("새로운 값을 입력하세요", BLACK, YELLOW, data),
-			string_to_be_changed(data) {}
-		StringInputWindow(const StringInputWindow& rhs)
-			: InputWindow(rhs), string_to_be_changed(rhs.string_to_be_changed) {}
-
-		virtual void onInputed()
-		{
-			string_to_be_changed = input.text;
-		}
-
-		NETString& string_to_be_changed;
-	};
-
 	NETStringList& _getProperBankBy(NECodeType::CodeType codetype)
 	{
 		NEScriptEditor::Banks& banks = Editor::getInstance().getScriptEditor().getBanks();
@@ -72,14 +55,15 @@ void HeaderModifier::CodePopUpMenu::onItemChoosed(type_index index, const NEStri
 			_onModifyCodeName();
 		else
 			_onAddNewCode();
-
 		break;
+
 	case 1:	//	이름 수정하기
 		_onModifyCodeName();
 		break;
 
 	case 2:	//	코드 삭제하기
 		_onRemoveCode();
+		break;
 
 	default:
 		::Core::pushMessage("ERROR: 그러한 명령은 없습니다.");
@@ -96,21 +80,34 @@ void HeaderModifier::CodePopUpMenu::_onModifyCodeName()
 
 void HeaderModifier::CodePopUpMenu::_onAddNewCode()
 {
-	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
-
-	switch(_codetype)
+	if( ! _code)
 	{
-	case NECodeType::NAME:		ed.insertNameCode(_code);		break;
-	case NECodeType::GROUP:		ed.insertGroupCode(_code);		break;
-	case NECodeType::PRIORITY:	ed.insertPriorityCode(_code);	break;				
+		::Core::pushMessage("ERROR: 0번 코드는 기본 코드입니다. 추가 / 삭제가 불가능합니다.");
+		return;
 	}
 
-	_onModifyCodeName();
+	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
+
+	type_result result = 0;
+	switch(_codetype)
+	{
+	case NECodeType::NAME:		result = ed.insertNameCode(_code);		break;
+	case NECodeType::GROUP:		result = ed.insertGroupCode(_code);		break;
+	case NECodeType::PRIORITY:	result = ed.insertPriorityCode(_code);	break;				
+	}
+
+	if( ! NEResult::hasError(result))
+		_onModifyCodeName();
 }
 
 
 void HeaderModifier::CodePopUpMenu::_onRemoveCode()
 {
+	if( ! _code)
+	{
+		::Core::pushMessage("ERROR: 0번 코드는 기본 코드입니다. 추가 / 삭제가 불가능합니다.");
+		return;
+	}
 	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
 
 	switch(_codetype)
@@ -164,8 +161,12 @@ void HeaderModifier::onItemChoosed(type_index index, const NEString& chosen_cont
 	case 9:	
 		if(ct == NECodeType::UNDEFINED)
 			ct = NECodeType::PRIORITY;
-
-		call(CodePopUpMenu(ct, codes_display_indexes[index-6]));
+		
+		{
+			type_code code = codes_display_indexes[index-6];
+			if(code != -1)
+				call(CodePopUpMenu(ct, code));
+		}		
 		break;
 	}
 }
@@ -176,15 +177,14 @@ void HeaderModifier::_pushCodeLists()
 
 	for(int code_type_n=0; code_type_n < codes_display_indexes.getLength(); code_type_n++)
 	{
-		NEString to_show;
-		if(list.choosed == code_type_n + 6)
-			to_show = "<-";
+		NEString to_show = (list.choosed == code_type_n + 6) ? "<-" : "  ";
+		
 		switch(code_type_n)
 		{
-		case 0:	to_show = "[NAME] "; break;
-		case 1: to_show = "[SCRI] "; break;
-		case 2: to_show = "[GROU] "; break;
-		case 3: to_show = "[PRIO] "; break;
+		case 0:	to_show += "[NAME] "; break;
+		case 1: to_show += "[SCRI] "; break;
+		case 2: to_show += "[GROU] "; break;
+		case 3: to_show += "[PRIO] "; break;
 		}
 
 		int index = codes_display_indexes[code_type_n];
@@ -231,22 +231,28 @@ NE::NEString HeaderModifier::_generateCodeListNames(int index)
 
 void HeaderModifier::onKeyPressed(char inputed)
 {
-	ListWindow::onUpdateData();
-
 	int codetype = list.choosed - 6;
-	if(codetype < 6	||	codetype > 9)	return;
-	const NETStringList& bank = _getProperBankBy(codetype);
-
-	switch(inputed)
+	if(codetype >= 0 && codetype <= 3)
 	{
-	case LEFT:
-		if(codes_display_indexes[codetype] > -2)
-			codes_display_indexes[codetype]--;
-		break;
+		const NETStringList& bank = _getProperBankBy(codetype);
 
-	case RIGHT:
-		if(codes_display_indexes[codetype] < bank.getLengthLastIndex())
-			codes_display_indexes[codetype]++;
-		break;
-	}
+		switch(inputed)
+		{
+		case LEFT:
+			if(codes_display_indexes[codetype] > -2)
+				codes_display_indexes[codetype]--;
+			break;
+
+		case RIGHT:
+			if(codes_display_indexes[codetype] < bank.getLengthLastIndex())
+				codes_display_indexes[codetype]++;
+			break;
+		}
+	}	
+
+	ListWindow::onKeyPressed(inputed);
+
+	onUpdateData();
+
+	onDraw();
 }

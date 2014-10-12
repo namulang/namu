@@ -80,7 +80,7 @@ void Modifier<NEBooleanKey>::onKeyPressed(char inputed)
 		}
 		break;
 
-	case CANCEL:			
+	case CLOSE:			
 		delete_me = true;
 		break;
 

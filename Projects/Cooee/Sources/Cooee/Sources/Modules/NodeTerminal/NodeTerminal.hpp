@@ -69,6 +69,7 @@ public:
 		switch(inputed)
 		{
 		case CANCEL:
+		case CLOSE:
 			delete_me = true;
 			break;
 
