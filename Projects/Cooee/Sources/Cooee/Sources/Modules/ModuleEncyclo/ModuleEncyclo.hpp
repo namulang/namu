@@ -31,92 +31,38 @@ class ModuleEncyclo : public Window
 	class ModuleList : public ListGliph
 	{
 	public:
-		ModuleList(bool new_use_adding, NEModule* new_want_to_browse = 0) 
+		ModuleList(NEModule* new_want_to_browse = 0) 
 			: ListGliph(0, 1, 2, 20, 22, BLACK, WHITE, WHITE, LIGHTRED), 
-			use_adding(new_use_adding), want_to_browse(new_want_to_browse) {}
-		ModuleList(const ModuleList& rhs) : ListGliph(rhs), use_adding(rhs.use_adding), want_to_browse(rhs.want_to_browse) { }
+			want_to_browse(new_want_to_browse) {}
+		ModuleList(const ModuleList& rhs) : ListGliph(rhs), want_to_browse(rhs.want_to_browse) { }
 		FUNC_TO_OWNER(ModuleEncyclo)
 		FUNC_CLONE(ModuleList)
 
-		virtual void onUpdateData() {
-			const NEModuleSet& ms = Kernal::getInstance().getModuleManager().getModuleSet();
-			items.create(ms.getLength());
-			for(int n=0; n < ms.getLength() ;n++)
-				items.push(ms[n].getHeader().getName());
-
-			onDraw();
-			_focusWhatWantToBrowse();
-			setPanelsTextByChoosed();
-			toOwner()->panel.onDraw();
-			toOwner()->content.onDraw();
-		}
-
-		NEString createModulePanelText(const NEModule& target) 
-		{
-			const NEExportable::ModuleHeader& h = target.getHeader();
-			return	"\n"
-					"\t>\t" + h.getName() + "\n"
-					"\t \tby " + h.getDeveloper() + " on " + h.getReleaseDate() + "\n"
-					"\n";
-		}
-		void setPanelsTextByChoosed()
-		{
-			const NEModule& t = Kernal::getInstance().getModuleManager().getModuleSet()[choosed];
-			if( ! &t)
-			{
-				toOwner()->content.text = "\n\tThere is no data to display";
-				return;
-			}
-
-			toOwner()->panel.text = createModulePanelText(t);
-			toOwner()->content.text = t.getHeader().getComment();
-		}
-
-		virtual void onKeyPressed(char inputed) {
-
-			ListGliph::onKeyPressed(inputed);
-
-			switch(inputed) {
-			case UP:
-			case DOWN:
-				{
-					setPanelsTextByChoosed();
-
-					onDraw();
-					toOwner()->panel.onDraw();
-					toOwner()->content.onDraw();
-				}
-				break;
-			case CONFIRM:
-				if(use_adding) 
-				{
-					Core::commander.command("add ");
-				}
-				break;
-
-			case CANCEL:
-				toOwner()->delete_me = true;
-				break;
-			}
-		}
-
+		virtual void onUpdateData();
+		NEString createModulePanelText(const NEModule& target);		
+		void setPanelsTextByChoosed();
+		virtual void onKeyPressed(char inputed);
 		void _focusWhatWantToBrowse();
-		bool use_adding;
-
 		NEModule* want_to_browse;
 	};
 
 public:
-	ModuleEncyclo(bool new_use_adding = false, NEModule* want_to_browse = 0) 
-		: Window(1, 1, 78, 23, BLACK, DARKGRAY), list(new_use_adding, want_to_browse)
+	ModuleEncyclo(NEModule* want_to_browse = 0, const NEString& new_path_to_added = "") 
+		: Window(1, 1, 78, 23, BLACK, DARKGRAY), list(want_to_browse), path_to_added(new_path_to_added)
 	{ 
-		regist(4, &status, &panel, &list, &content);		
+		regist(4, &status, &panel, &list, &content);
 	}
-	ModuleEncyclo(CONST ModuleEncyclo & rhs) : Window(rhs), list(rhs.list), content(rhs.content), panel(rhs.panel) { regist(4, &status, &panel, &list, &content); }
+	ModuleEncyclo(CONST ModuleEncyclo & rhs) 
+		: Window(rhs), list(rhs.list), content(rhs.content), panel(rhs.panel), path_to_added(rhs.path_to_added)
+	{ 
+		regist(4, &status, &panel, &list, &content); 
+	}
 	NEObject& clone() const { return *(new ModuleEncyclo(*this)); }
+	bool isAddingMode() const { return path_to_added != ""; }
 
 	Status status;
 	ModulePanel panel;
 	ModuleList list;
 	ContentPanel content;
+	NEString path_to_added;
 };
