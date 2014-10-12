@@ -138,7 +138,7 @@ namespace NE
 
 
 		//	main:
-		type_index nodecode = _getElement(index);
+		type_index& nodecode = _getElement(index);
 		if( ! &nodecode)
 		{
 			KERNAL_ERROR(" : 주어진 인덱스가 범위를 벗어난 잘못된 참조입니다.");
@@ -191,7 +191,13 @@ namespace NE
 
 
 		//	main:
-		type_index nodecode = _getElement(index);
+		type_index& nodecode = _getElement(index);
+		if( ! &nodecode)
+		{
+			KERNAL_ERROR(" : 주어진 인덱스가 범위를 벗어난 잘못된 참조입니다.");
+
+			return RESULT_TYPE_ERROR;
+		}
 		return nodeset.setElement(nodecode, source);
 	}
 	type_index NENodeCodeSet::find(const NENode& source) const

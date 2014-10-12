@@ -117,7 +117,14 @@ namespace NE
 
 
 		//	main:
-		type_index modulecode = _getElement(index);
+		type_index& modulecode = _getElement(index);
+		if( ! &modulecode)
+		{
+			KERNAL_ERROR(" : 주어진 인덱스가 범위를 벗어난 잘못된 참조입니다.");
+
+			return *nullpointer;
+		}
+
 		return moduleset[modulecode];
 	}
 	const NEModule& NEModuleCodeSet::getElement(type_index index) const
@@ -134,7 +141,14 @@ namespace NE
 
 
 		//	main:
-		type_index modulecode = _getElement(index);
+		const type_code& modulecode = _getElement(index);
+		if( ! &modulecode)
+		{
+			KERNAL_ERROR(" : 주어진 인덱스가 범위를 벗어난 잘못된 참조입니다.");
+
+			return *nullpointer;
+		}
+
 		return moduleset[modulecode];
 	}
 	type_result NEModuleCodeSet::setElement(type_index index, const NEModule& source)
@@ -151,7 +165,13 @@ namespace NE
 
 		//	main:
 		//	TEST: 이코드만으로도 제대로 node::unlist가 동작하는가?
-		type_index modulecode = _getElement(index);
+		type_index& modulecode = _getElement(index);
+		if( ! &modulecode)
+		{
+			KERNAL_ERROR(" : 주어진 인덱스가 범위를 벗어난 잘못된 참조입니다.");
+
+			return RESULT_TYPE_ERROR;
+		}
 		return moduleset.setElement(modulecode, source);
 	}
 	type_index NEModuleCodeSet::find(const NEModule& source) const

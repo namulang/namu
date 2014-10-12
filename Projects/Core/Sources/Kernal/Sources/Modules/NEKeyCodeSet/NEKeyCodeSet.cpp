@@ -132,7 +132,14 @@ namespace NE
 
 
 		//	main:
-		type_index keycode = _getElement(index);
+		type_index& keycode = _getElement(index);
+		if( ! &keycode)
+		{
+			KERNAL_ERROR(" : 주어진 인덱스가 범위를 벗어난 잘못된 참조입니다.");
+
+			return *nullpointer;
+		}
+		
 		return keyset[keycode];
 	}
 	const NEKey& NEKeyCodeSet::getElement(type_index index) const
@@ -149,7 +156,14 @@ namespace NE
 
 
 		//	main:
-		type_index keycode = _getElement(index);
+		const type_code& keycode = _getElement(index);
+		if( ! &keycode)
+		{
+			KERNAL_ERROR(" : 주어진 인덱스가 범위를 벗어난 잘못된 참조입니다.");
+
+			return *nullpointer;
+		}
+
 		return keyset[keycode];
 	}
 	type_result NEKeyCodeSet::setElement(type_index index, const NEKey& source)
@@ -165,7 +179,13 @@ namespace NE
 
 
 		//	main:
-		type_index keycode = _getElement(index);
+		type_index& keycode = _getElement(index);
+		if( ! &keycode)
+		{
+			KERNAL_ERROR(" : 주어진 인덱스가 범위를 벗어난 잘못된 참조입니다.");
+
+			return RESULT_TYPE_ERROR;
+		}
 
 		return keyset.setElement(keycode, source);
 	}
