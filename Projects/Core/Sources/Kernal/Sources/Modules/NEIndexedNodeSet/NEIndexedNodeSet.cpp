@@ -299,6 +299,12 @@ namespace NE
 	{
 		//	노드의 _unlist 호출:
 		NENode& node = getElement(index);
+		if( ! &node	|| ! getOccupiedSet()[index])
+		{
+			KERNAL_WARNING(" : IndexedNodeSet에서 존재하지 않는 노드를 삭제하려했습니다.")
+			return RESULT_ABORT_ACTION | RESULT_TYPE_WARNING;
+		}
+
 		type_result result = node._onUnlisted();
 		
 		return result |= SuperClass::remove(index);
