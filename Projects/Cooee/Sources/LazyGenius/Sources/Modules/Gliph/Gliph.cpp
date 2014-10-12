@@ -18,30 +18,33 @@ namespace LG
 	{
 		WORD backup = Core::getColor();
 		COORD backup_pos = Core::getCursorPosition();
-		Core::setColor(fore, back);
+
+		BackBuffer& buf = Core::back_buffer;
+
+		buf.setColor(fore, back);
 
 		int count = 0;
 		int skip = 0;
 		for(int y1=y; y1 < y+height ;y1++) {
-			Core::setCursorTo(x, y1);
+			buf.setBufferPointer(x, y1);
 			for(int x1=x; x1 < x+width ;x1++) {
 
 				if(skip > 0) 
 				{
 					skip--;
-					std::cout << " ";
+					buf << " ";
 					continue;
 				}
 				if(text.getLength() <= count) {
-					std::cout << " ";
+					buf << " ";
 					continue;
 				}
 				switch(text[count]) {
-				case '\t':	skip = 4-1; std::cout << " ";
+				case '\t':	skip = 4-1; buf << " ";
 					break;
-				case '\n':	skip = x+width - x1-1; std::cout << " ";
+				case '\n':	skip = x+width - x1-1; buf << " ";
 					break;
-				default: std::cout << text[count];
+				default: buf << text[count];
 
 				}
 

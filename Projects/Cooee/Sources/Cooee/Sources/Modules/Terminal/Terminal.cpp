@@ -77,6 +77,13 @@ const NEString& Terminal::getPath() const
 	return _path; 
 }
 
+void Terminal::onFocused()
+{
+	_setObject();
+
+	Window::onFocused();
+}
+
 void Terminal::Status::onUpdateData()
 {
 	Terminal& owner = *toOwner();

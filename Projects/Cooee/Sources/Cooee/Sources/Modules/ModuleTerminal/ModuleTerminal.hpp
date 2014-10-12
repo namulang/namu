@@ -18,13 +18,7 @@ public:
 		FUNC_TO_OWNER(ModuleTerminal)
 		FUNC_CLONE(ModulePanel)	
 
-		virtual void onUpdateData()
-		{
-			const NEExportable::ModuleHeader& header = toOwner()->castObject().getHeader();
-			text =	"name:	" + header.getName() + " rev#" + header.getRevision() + "\n" +
-					"madeby:" + header.getDeveloper() + "\n" +
-					"on:	" + header.getReleaseDate();
-		}
+		virtual void onUpdateData();
 	};
 	class ContentPanel : public Gliph
 	{

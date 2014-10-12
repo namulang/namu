@@ -103,34 +103,30 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 
 	NENodeCodeSet* nsc = 0;
 	NEModuleCodeSet* msc = 0;		
+	type_index index_to_add = NE_INDEX_ERROR;
+	NEObject* parent = 0x00;
 	if(parameters[0] == "-node")
 	{
 		if(parameters.getLength() < 2) return NEString("ERROR: 인자의 갯수가 2개여야 합니다. \n현재 인자 수 : ") + parameters.getLength();
-		NEObject& parsed = ::Core::getObjectBy(parameters[1]);
-		if( ! &parsed) return "ERROR: 경로가 잘못 됐네요.";
-		switch(parsed.getType())
+		_searchParent(parameters[1], index_to_add, &parent);
+		if( ! parent) return "ERROR: 경로가 잘못 됐네요.";
+		if(parent->isSubClassOf(NEType::NENODE_CODESET_KEY))
+			nsc = &((NENodeCodeSetKey&) parent).getValue();
+		if(parent->isSubClassOf(NEType::NENODE_CODESET))
 		{
-		case NEType::NENODE_CODESET_KEY:
-			nsc = &((NENodeCodeSetKey&) parsed).getValue();
-
-		case NEType::NENODE_CODESET:
 			if( ! nsc)
-				nsc = (NENodeCodeSet*) &parsed;
+				nsc = (NENodeCodeSet*) parent;
 
 			if(nsc->getLength() >= nsc->getSize())
 				nsc->resize(nsc->getSize() + 1);
 
 			nsc->push(NENode());
-			break;
-
-		default:
-			return NEString("ERROR: 잘못된 경로입니다. 주어진 타입이 ") + parsed.getTypeName();
 		}
+		else
+			return NEString("ERROR: 잘못된 경로입니다. 주어진 타입이 ") + parent->getTypeName();
 	} 
 	else if(parameters[0] == "-module")
 	{
-		type_index index_to_add = NE_INDEX_ERROR;
-		NEObject* parent = 0x00;
 		if(parameters.getLength() < 5) return NEString("ERROR: 인자의 갯수가 5개여야 합니다. \n현재 인자 수 : ") + parameters.getLength();
 		_searchParent(parameters[4], index_to_add, &parent);				
 		if( ! &parent) return "ERROR: 경로가 잘못 됐네요.";
@@ -164,24 +160,24 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 
 		const NEKey& source = Kernal::getInstance().getKeyManager().getKey(_findKeyTypeBy(parameters[1]));
 		if( ! &source) return "ERROR: " + parameters[1] + "에 해당하는 키가 없습니다.";
-		NEObject& parsed = ::Core::getObjectBy(parameters[2]);
-		if( ! &parsed) return "ERROR: 경로가 잘못 됐네요.";
+		_searchParent(parameters[2], index_to_add, &parent);
+		if( ! parent) return "ERROR: 경로가 잘못 됐네요.";
 
-		switch(parsed.getType())
+		switch(parent->getType())
 		{
 		case NEType::NEKEY_CODESET:
 			{
-				NEKeyCodeSet& kcs = (NEKeyCodeSet&) parsed;
-				if(kcs.getLength() >= kcs.getSize())
-					kcs.resize(kcs.getSize() + 1);
+				NEKeyCodeSet* kcs = (NEKeyCodeSet*) parent;
+				if(kcs->getLength() >= kcs->getSize())
+					kcs->resize(kcs->getSize() + 1);
 
-				kcs.push(source);
+				kcs->push(source);
 			}
 
 			break;
 
 		default:
-			return NEString("ERROR: 잘못된 경로입니다. 주어진 타입이 ") + parsed.getTypeName();
+			return NEString("ERROR: 잘못된 경로입니다. 주어진 타입이 ") + parent->getTypeName();
 		}
 	}
 

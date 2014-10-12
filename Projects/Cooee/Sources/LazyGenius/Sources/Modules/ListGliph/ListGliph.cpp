@@ -24,15 +24,16 @@ namespace LG
 
 		COORD backup_pos = Core::getCursorPosition();
 		WORD backup_color = Core::getColor();
+		BackBuffer& buf = Core::back_buffer;
 
 		for(int y1=0; y1 < items.getLength() ;y1++) {
 			if(y1+1 > height)	continue;			
 
-			Core::setCursorTo(x, y + y1);
+			buf.setBufferPointer(x, y + y1);
 			if(y1 == choosed)
-				Core::setColor(choosed_fore, choosed_back);
+				buf.setColor(choosed_fore, choosed_back);
 			else
-				Core::setColor(fore, back);
+				buf.setColor(fore, back);
 
 			NEString s = (items.getLength() > height && y1+1 == height) ? " . . . " : items[y1];
 			s.resize(width + 1);
@@ -42,7 +43,7 @@ namespace LG
 					s.push(' ');				
 			s.push('\0');
 
-			std::cout << s.toCharPointer();
+			buf << s.toCharPointer();
 		}
 
 		Core::setColor(backup_color);

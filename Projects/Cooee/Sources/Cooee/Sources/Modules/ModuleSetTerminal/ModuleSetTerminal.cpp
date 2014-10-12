@@ -32,7 +32,10 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 			if(index == -1)
 				toOwner()->call(NameInputWindow(toOwner()->real_key->getName()));
 			else
-				LG::Core::open(ModuleTerminal(toOwner()->getPath() + "/" + index));
+			{
+				if(index <= items.getLengthLastIndex())
+					LG::Core::open(ModuleTerminal(toOwner()->getPath() + "/" + index));
+			}
 				//LG::Core::windows.pushFront(ModuleEncyclo(false, &toOwner()->castObject()[index]));
 		}	
 		break;

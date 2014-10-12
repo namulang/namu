@@ -21,6 +21,7 @@ public:
 
 	virtual void onUpdateData();
 	virtual void onKeyPressed(char inputed);
+	virtual void onFocused();
 	void setPath(const NEString& new_path);
 	const NEString& getPath() const;
 

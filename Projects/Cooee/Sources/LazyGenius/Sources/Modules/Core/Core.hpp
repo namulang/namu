@@ -1,12 +1,17 @@
 #pragma once
 
 #include "../WindowList/WindowList.hpp"
+#include "../BackBuffer/BackBuffer.hpp"
 
 namespace LG
 {
 	class NE_DLL Core
 	{
-	public:
+	public:		
+		static void initializeBackBuffer()
+		{
+			back_buffer.create(80, 25);
+		}
 		static bool sendKeyPipe()
 		{
 			if( _kbhit()) {
@@ -18,6 +23,10 @@ namespace LG
 
 			inputed = 0;
 			return false;
+		}
+		static void drawBackBuffer()
+		{
+			
 		}
 		static void collectGarbages()
 		{
@@ -81,6 +90,9 @@ namespace LG
 		static type_ushort max_height;	
 		static WindowList windows;
 		static bool color_lock;
+		static const int WIDTH;
+		static const int HEIGHT;
+		static BackBuffer back_buffer;
 
 		static char inputed;
 	};

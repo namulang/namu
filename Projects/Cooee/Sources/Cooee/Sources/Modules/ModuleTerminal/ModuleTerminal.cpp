@@ -87,3 +87,17 @@ NENode& ModuleTerminal::ArgumentNameList::_getOwnerNodeOf(NEModule& target)
 	
 	return *myhandler.last_pointer;
 }
+
+void ModuleTerminal::ModulePanel::onUpdateData()
+{
+	if( ! &toOwner()->castObject())
+	{
+		toOwner()->delete_me = true;
+
+		::Core::pushMessage("잘못된 경로로 참조했습니다.");				
+	}
+	const NEExportable::ModuleHeader& header = toOwner()->castObject().getHeader();
+	text =	"name:	" + header.getName() + " rev#" + header.getRevision() + "\n" +
+		"madeby:" + header.getDeveloper() + "\n" +
+		"on:	" + header.getReleaseDate();
+}

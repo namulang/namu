@@ -461,6 +461,18 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="BackBuffer"
+					>
+					<File
+						RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\BackBuffer\BackBuffer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\BackBuffer\BackBuffer.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

@@ -10,11 +10,15 @@ void KeySetTerminal::KeyNameList::onKeyPressed(char inputed)
 		{
 			NEKeyCodeSet& ks = toOwner()->castObject();
 			if(choosed >= 0 || choosed <= items.getLengthLastIndex())				
+			{
+				if( ! &ks[choosed])
+					return;
 				if(	ks[choosed].isSubClassOf(NEType::NEMODULE_CODESET_KEY)	||
 					ks[choosed].isSubClassOf(NEType::NENODE_CODESET_KEY)	)
 					::Core::openModifierFrom(toOwner()->getPath() + "/" + choosed, &ks[choosed]);
 				else				
 					::Core::openModifierFrom(ks[choosed]);
+			}
 		}
 		break;
 	case CANCEL:

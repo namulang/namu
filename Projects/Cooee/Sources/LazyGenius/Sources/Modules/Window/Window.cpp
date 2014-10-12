@@ -91,6 +91,10 @@ namespace LG
 		}
 	}
 
-}
+	void Window::onFocused()
+	{
+		onUpdateData();
+	}
 
+}
 #pragma warning(pop)

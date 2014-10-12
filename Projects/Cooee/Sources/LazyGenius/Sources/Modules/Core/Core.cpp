@@ -8,4 +8,5 @@ namespace LG
 	WindowList NE_DLL Core::windows;
 	bool NE_DLL Core::color_lock = false;
 	char NE_DLL Core::inputed = 0;
+	BackBuffer NE_DLL Core::back_buffer;
 }

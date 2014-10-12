@@ -28,10 +28,9 @@ namespace LG
 			return n;
 		}
 		void _updateNewWindow() {
-			system("cls");
 			Window* itr = 0;
 			if( itr = &getElement(0) ) {
-				itr->onUpdateData();
+				itr->onFocused();
 				itr->onDraw();
 			}
 		}

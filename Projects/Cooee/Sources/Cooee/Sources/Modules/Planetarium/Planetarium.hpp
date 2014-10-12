@@ -103,6 +103,13 @@ public:
 		root.onDraw();
 	}
 
+	virtual void onFocused()
+	{
+		root.planets.release();
+
+		Window::onFocused();
+	}
+
 	void generate(NEObject& real_root_object)
 	{
 		if(root.planets.getLength() <= 0)
