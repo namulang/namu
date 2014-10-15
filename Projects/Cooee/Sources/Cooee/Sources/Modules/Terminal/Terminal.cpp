@@ -95,8 +95,6 @@ void Terminal::Status::onUpdateData()
 	fore = BLACK;
 
 	text = " > " + NEString(NEType::getTypeName(owner.to_chk_valid));
-
-	onDraw();
 }
 
 void Terminal::Navigator::onUpdateData()

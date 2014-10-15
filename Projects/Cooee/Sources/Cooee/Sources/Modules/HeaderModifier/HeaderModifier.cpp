@@ -253,6 +253,4 @@ void HeaderModifier::onKeyPressed(char inputed)
 	ListWindow::onKeyPressed(inputed);
 
 	onUpdateData();
-
-	onDraw();
 }

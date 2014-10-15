@@ -75,13 +75,6 @@ public:
 
 			//ListGliph::onUpdateData();
 		}
-		virtual void onKeyPressed(char inputed)
-		{
-			ListGliph::onKeyPressed(inputed);
-
-			if(inputed == UP || inputed == DOWN)
-				onDraw();
-		}
 	};
 	class KeyDataList : public ListGliph
 	{
@@ -102,13 +95,6 @@ public:
 				items.push(NEStringKey(ks[n]).getValue());
 
 			//ListGliph::onUpdateData();
-		}
-		virtual void onKeyPressed(char inputed)
-		{
-			ListGliph::onKeyPressed(inputed);
-
-			if(inputed == UP || inputed == DOWN)
-				onDraw();
 		}
 	};
 

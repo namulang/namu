@@ -24,9 +24,10 @@ namespace LG
 			inputed = 0;
 			return false;
 		}
-		static void drawBackBuffer()
+		static void draw()
 		{
-			
+			windows.draw();
+			LG::Core::back_buffer.draw();
 		}
 		static void collectGarbages()
 		{

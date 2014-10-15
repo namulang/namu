@@ -84,13 +84,6 @@ public:
 			for(int n=0; n < args.getLength() ;n++)
 				items.push(NEType::getTypeName(args[n].getTypeToBeBinded()));
 		}
-		virtual void onKeyPressed(char inputed)
-		{
-			ListGliph::onKeyPressed(inputed);
-
-			if(inputed == UP || inputed == DOWN)
-				onDraw();
-		}
 	};
 
 	ModuleTerminal(const NEString& new_path)

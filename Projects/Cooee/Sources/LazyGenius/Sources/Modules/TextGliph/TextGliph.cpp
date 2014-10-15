@@ -84,7 +84,5 @@ namespace LG
 				text.push('\0');
 			history_idx = -1;
 		}
-
-		onDraw();
 	}
 }

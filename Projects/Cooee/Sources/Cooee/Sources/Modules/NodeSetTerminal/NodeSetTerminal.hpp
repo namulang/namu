@@ -79,8 +79,6 @@ public:
 				makeStringFixed(k_cnt, 4);
 				items.push(" " + s_idx + "  " + name + "  " + m_cnt + "  " + k_cnt);
 			}
-				
-			onDraw();
 		}
 
 		void makeStringFixed(NEString& target_to_be_fixed, int to) {

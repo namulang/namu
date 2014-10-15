@@ -86,8 +86,7 @@ namespace LG
 
 	void Gliph::onUpdateData()
 	{
-		if( &owner && owner->isShowing())
-			onDraw();
+	
 	}
 
 }

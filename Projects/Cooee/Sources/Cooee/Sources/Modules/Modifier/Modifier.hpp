@@ -61,7 +61,6 @@ public:
 			{
 				focused_text--;
 				onUpdateData();
-				onDraw();
 			}
 			break;
 
@@ -70,7 +69,6 @@ public:
 			{
 				focused_text++;
 				onUpdateData();
-				onDraw();
 			}
 			break;
 
@@ -83,7 +81,6 @@ public:
 			{
 				real_key->getName() = name_text.text;
 				_setInputed(name_text);
-				name_text.onDraw();
 			}
 			else
 			{
@@ -92,7 +89,6 @@ public:
 				value = temp.getValue();
 
 				_setInputed(textbox);
-				textbox.onDraw();
 				
 				if( ! real_key)
 					delete_me = true;

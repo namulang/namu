@@ -58,11 +58,6 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 			LG::Core::windows.pushFront(ModuleEncyclo(0, path));
 		}
 		break;
-
-	case UP:
-	case DOWN:
-		onDraw();
-		break;
 	}	
 }
 

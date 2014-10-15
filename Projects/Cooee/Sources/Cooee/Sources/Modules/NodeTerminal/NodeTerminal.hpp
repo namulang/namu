@@ -79,13 +79,11 @@ public:
 				if(codelist_display_index > -2)
 					codelist_display_index--;
 				attributes.onUpdateData();
-				attributes.onDraw();
 			}
 			else if(focused > 0)
 			{
 				focused--;
 				onUpdateData();
-				onDraw();
 			}
 			break;
 
@@ -95,13 +93,11 @@ public:
 				if(codelist_display_index < castObject().getGroupCode().getLengthLastIndex())
 					codelist_display_index++;
 				attributes.onUpdateData();
-				attributes.onDraw();
 			} 
 			else if(focused < 2)
 			{
 				focused++;
 				onUpdateData();
-				onDraw();
 			}
 			break;
 
@@ -270,7 +266,6 @@ public:
 						}
 
 						toCaller().attributes.onUpdateData();
-						toCaller().attributes.onDraw();
 
 						delete_me = true;
 					}
@@ -288,8 +283,6 @@ public:
 				else
 					toOwner()->call(CodeInputer());
 			}
-
-			onDraw();
 		}
 
 		void _pushItemWith(const NETStringList& bank, const NEIntSet& groupcodes)

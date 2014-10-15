@@ -55,8 +55,6 @@ public:
 				items.push(NEString("≈∞ ¿Ã∏ß : "));
 			for(int n=0; n < ms.getLength() ;n++)
 				items.push(ms[n].getHeader().getName());
-
-			onDraw();
 		}
 		virtual void onKeyPressed(char inputed);
 	};
@@ -80,15 +78,6 @@ public:
 				items.push(toOwner()->real_key->getName());
 			for(int n=0; n < ms.getLength() ;n++)
 				items.push(ms[n].getHeader().getComment());
-
-			onDraw();
-		}
-		virtual void onKeyPressed(char inputed)
-		{
-			ListGliph::onKeyPressed(inputed);
-
-			if(inputed == UP || inputed == DOWN)
-				onDraw();
 		}
 	};
 	class ListHeader : public Gliph {

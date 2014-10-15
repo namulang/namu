@@ -156,13 +156,13 @@ namespace LG
 	void LG::BackBuffer::draw()
 	{
 		Buffer& front = getFrontBuffer(),
-			back = getBackBuffer();
+				back = getBackBuffer();
 
 		for(int h=0; h < back.getLength() ;h++)
 			for(int w=0; w < back[h].getLength() ;w++)
 			{
 				Pixel& new_p = back[h][w],
-					& old_p = front[h][w];
+					 & old_p = front[h][w];
 				if(new_p == old_p)
 					continue;
 

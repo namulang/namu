@@ -69,8 +69,8 @@ namespace LG
 
 	bool Window::isShowing() const
 	{
-		return	Core::windows.getLength() > 0	&&
-				&Core::windows[0] == this;
+		//	return	Core::windows.getLength() > 0	&& &Core::windows[0] == this;
+		return true;
 	}
 
 	void Window::call(Window& dialog)
@@ -86,9 +86,8 @@ namespace LG
 	{
 		Gliph::onDraw();
 
-		for(GliphList::Iterator* itr=gliphs.getIterator(0); itr ; itr=itr->getNext()) {
+		for(GliphList::Iterator* itr=gliphs.getIterator(0); itr ; itr=itr->getNext())
 			itr->getValue().onDraw();
-		}
 	}
 
 	void Window::onFocused()

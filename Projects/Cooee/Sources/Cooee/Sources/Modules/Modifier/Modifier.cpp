@@ -67,7 +67,6 @@ void Modifier<NEBooleanKey>::onKeyPressed(char inputed)
 		{
 			focused_text--;
 			onUpdateData();
-			onDraw();
 		}
 		break;
 
@@ -76,7 +75,6 @@ void Modifier<NEBooleanKey>::onKeyPressed(char inputed)
 		{
 			focused_text++;
 			onUpdateData();
-			onDraw();
 		}
 		break;
 
@@ -89,14 +87,12 @@ void Modifier<NEBooleanKey>::onKeyPressed(char inputed)
 		{
 			real_key->getName() = name_text.text;
 			_setInputed(name_text);
-			name_text.onDraw();
 		}
 		else
 		{
 			value = sw.getValue();
 
 			_setInputed(sw);
-			sw.onDraw();
 
 			if( ! real_key)
 				delete_me = true;
@@ -265,11 +261,9 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 						copied.push(input.history_idx);
 						key.setCodeSet(copied);
 						planetarium.onUpdateData();
-						planetarium.onDraw();
 						toCaller().menulist.codelist_display_index = -1;
 						toCaller().menulist.items.release();
 						toCaller().menulist.onUpdateData();
-						toCaller().menulist.onDraw();
 						delete_me = true;
 					}
 				};
@@ -294,11 +288,9 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 					codelist_display_index = copied.getLengthLastIndex();
 
 				planetarium.onUpdateData();
-				planetarium.onDraw();
 
 				items.release();
 				onUpdateData();
-				onDraw();
 			}
 		}
 		break;
@@ -306,7 +298,6 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 	case UP:
 	case DOWN:
 		onUpdateData();
-		onDraw();
 		break;
 
 	case LEFT:
@@ -370,9 +361,7 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 		items.release();
 
 		planetarium.onUpdateData();
-		planetarium.onDraw();
 		onUpdateData();
-		onDraw();
 		break;
 
 	case RIGHT:
@@ -434,9 +423,7 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 		}
 		items.release();
 		planetarium.onUpdateData();
-		planetarium.onDraw();
 		onUpdateData();
-		onDraw();
 		break;
 
 	case CANCEL:
@@ -531,10 +518,8 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 						key.setModuleCodeSet(copied);
 						toCaller().menulist.codelist_display_index = -1;
 						planetarium.onUpdateData();
-						planetarium.onDraw();
 						toCaller().menulist.items.release();
 						toCaller().menulist.onUpdateData();
-						toCaller().menulist.onDraw();
 						delete_me = true;
 					}
 
@@ -560,11 +545,9 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 					codelist_display_index = copied.getLengthLastIndex();
 
 				planetarium.onUpdateData();
-				planetarium.onDraw();
 
 				items.release();
 				onUpdateData();
-				onDraw();
 			}
 		}
 		break;
@@ -572,7 +555,6 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 	case UP:
 	case DOWN:
 		onUpdateData();
-		onDraw();
 		break;
 
 	case LEFT:
@@ -608,9 +590,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 		}
 		items.release();
 		onUpdateData();
-		onDraw();
 		planetarium.onUpdateData();
-		planetarium.onDraw();
 		break;
 
 	case RIGHT:
@@ -644,9 +624,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 		}
 		items.release();
 		onUpdateData();
-		onDraw();
 		planetarium.onUpdateData();
-		planetarium.onDraw();
 		break;
 
 	case CANCEL:
@@ -711,10 +689,8 @@ void Modifier<NEKeySelector>::MenuList::onKeyPressed(char inputed)
 
 					key.setKeyName(input.text);
 					planetarium.onUpdateData();
-					planetarium.onDraw();
 					toCaller().menulist.items.release();
 					toCaller().menulist.onUpdateData();
-					toCaller().menulist.onDraw();
 					delete_me = true;
 				}
 			};
@@ -726,7 +702,6 @@ void Modifier<NEKeySelector>::MenuList::onKeyPressed(char inputed)
 	case UP:
 	case DOWN:
 		onUpdateData();
-		onDraw();
 		break;
 
 	case LEFT:
@@ -734,8 +709,7 @@ void Modifier<NEKeySelector>::MenuList::onKeyPressed(char inputed)
 		{
 			key.isUsingAutoBinding() = false;
 			items.release();
-			onUpdateData();
-			onDraw();		
+			onUpdateData();	
 		}				
 		break;
 
@@ -745,7 +719,6 @@ void Modifier<NEKeySelector>::MenuList::onKeyPressed(char inputed)
 			key.isUsingAutoBinding() = true;
 			items.release();
 			onUpdateData();
-			onDraw();
 		}
 		break;
 

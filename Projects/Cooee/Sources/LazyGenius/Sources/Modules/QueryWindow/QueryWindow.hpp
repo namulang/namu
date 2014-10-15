@@ -31,12 +31,10 @@ namespace LG
 			case LEFT:
 				if( ! panel.isFocused())
 					panel.setFocus(true);
-				onDraw();
 				break;
 			case RIGHT:
 				if( ! no.isFocused())
 					no.setFocus(true);
-				onDraw();
 				break;
 			}
 		}

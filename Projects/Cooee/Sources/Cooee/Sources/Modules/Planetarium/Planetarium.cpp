@@ -22,7 +22,6 @@ void Planetarium::onKeyPressed(char inputed)
 		if(n > 0)
 			focusing = &focusing->parent->planets[n-1];
 		setFocus(*focusing);
-		onDraw();
 		break;
 
 	case DOWN:
@@ -33,7 +32,6 @@ void Planetarium::onKeyPressed(char inputed)
 		if(n < focusing->parent->planets.getLengthLastIndex())
 			focusing = &focusing->parent->planets[n+1];
 		setFocus(*focusing);
-		onDraw();
 		break;
 
 	case LEFT:
@@ -41,7 +39,6 @@ void Planetarium::onKeyPressed(char inputed)
 
 		focusing = focusing->parent;
 		setFocus(*focusing);
-		onDraw();
 		break;
 
 	case RIGHT:
@@ -49,7 +46,6 @@ void Planetarium::onKeyPressed(char inputed)
 			! focusing->is_closed				)
 			focusing = &focusing->planets[0];
 		setFocus(*focusing);
-		onDraw();
 		break;
 
 	case LG::CANCEL:
@@ -59,11 +55,9 @@ void Planetarium::onKeyPressed(char inputed)
 	case LG::SPACE:
 		focusing->is_closed = ! focusing->is_closed;
 		root.updateLines(0);
-		onDraw();
 		break;
 
 	case CONFIRM:
-		onDraw();
 		if(focusing->real->isSubClassOf(NEType::NEMODULE_CODESET_KEY))
 			::Core::openModifierFrom(::Core::createPathBy(*focusing->real));
 		else if(focusing->real->isSubClassOf(NEType::NENODE_CODESET_KEY))

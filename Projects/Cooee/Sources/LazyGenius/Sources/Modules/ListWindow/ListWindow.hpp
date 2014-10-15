@@ -34,9 +34,7 @@ namespace LG
 			case CONFIRM:
 				onItemChoosed(list.choosed, list.items[list.choosed]);
 				break;
-			}		
-
-			onDraw();
+			}
 		}
 		virtual void onItemChoosed(type_index item_index, const NEString& chosen_content) = 0;
 

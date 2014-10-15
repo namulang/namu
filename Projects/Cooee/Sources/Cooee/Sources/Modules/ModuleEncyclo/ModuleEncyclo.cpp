@@ -18,14 +18,9 @@ void ModuleEncyclo::ModuleList::onKeyPressed(char inputed)
 	{
 	case UP:
 	case DOWN:
-		{
-			setPanelsTextByChoosed();
-
-			onDraw();
-			toOwner()->panel.onDraw();
-			toOwner()->content.onDraw();
-		}
+		setPanelsTextByChoosed();
 		break;
+
 	case CONFIRM:
 		if(toOwner()->isAddingMode())
 		{
@@ -75,9 +70,6 @@ void ModuleEncyclo::ModuleList::onUpdateData()
 	for(int n=0; n < ms.getLength() ;n++)
 		items.push(ms[n].getHeader().getName());
 
-	onDraw();
 	_focusWhatWantToBrowse();
 	setPanelsTextByChoosed();
-	toOwner()->panel.onDraw();
-	toOwner()->content.onDraw();
 }

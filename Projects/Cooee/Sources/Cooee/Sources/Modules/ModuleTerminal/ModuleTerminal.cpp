@@ -61,11 +61,6 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 	case CLOSE:
 		toOwner()->delete_me = true;
 		break;
-
-	case UP:
-	case DOWN:
-		onDraw();
-		break;
 	}		
 }
 

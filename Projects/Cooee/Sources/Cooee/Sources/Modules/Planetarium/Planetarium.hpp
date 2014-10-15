@@ -141,7 +141,6 @@ public:
 	{
 		screen_x = x - (width / 2);
 		screen_y = y - (height / 2);
-		onDraw();
 	}
 
 	NEKeySelector& getKeyFilter()

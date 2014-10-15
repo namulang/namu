@@ -9,10 +9,12 @@ void Planet::putPixel(int virtual_x, int virtual_y, char shape, int fore/*=UNKNO
 	fore = fore == LG::UNKNOWN ? planetarium->fore : fore;
 	back = back == LG::UNKNOWN ? planetarium->back : back;
 
-	LG::Core::setCursorTo(real_x, real_y);
+	LG::BackBuffer& buf = LG::Core::back_buffer;
+	buf.setBufferPointer(real_x, real_y);
 	WORD backup = LG::Core::getColor();
-	LG::Core::setColor(fore, back);
-	cout << shape;
+	buf.setColor(fore, back);
+	buf << shape;
+
 	LG::Core::setColor(backup);
 }
 

@@ -86,9 +86,7 @@ void Filter::_updateSwitchWhenFilterExisted( NENodeSelector& filter )
 		if(switches[other])
 			switches[other] = false;
 		onUpdateData();
-		onDraw();
 		toCaller().onUpdateData();
-		toCaller().onDraw();
 	}
 }
 
@@ -108,9 +106,7 @@ void Filter::onKeyPressed( char inputed )
 		if(index == 0)
 			switches[1] = switches[2] = false;
 		onUpdateData();
-		onDraw();
 		toCaller().onUpdateData();
-		toCaller().onDraw();
 		break;
 
 	case RIGHT:
@@ -128,9 +124,7 @@ void Filter::_switchOn()
 	case 0:
 		switches[0] = true;
 		onUpdateData();
-		onDraw();
 		toCaller().onUpdateData();
-		toCaller().onDraw();
 		break;
 
 	case 1:

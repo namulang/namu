@@ -24,10 +24,6 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 
 	switch(inputed) 
 	{
-	case UP:
-	case DOWN:
-		onDraw();
-		break;
 	case ADD:
 		break;
 
