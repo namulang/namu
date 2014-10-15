@@ -156,13 +156,13 @@ namespace LG
 	void LG::BackBuffer::draw()
 	{
 		Buffer& front = getFrontBuffer(),
-				back = getBackBuffer();
+			back = getBackBuffer();
 
 		for(int h=0; h < back.getLength() ;h++)
 			for(int w=0; w < back[h].getLength() ;w++)
 			{
 				Pixel& new_p = back[h][w],
-					 & old_p = front[h][w];
+					& old_p = front[h][w];
 				if(new_p == old_p)
 					continue;
 
@@ -170,6 +170,14 @@ namespace LG
 				Core::setCursorTo(w, h);
 				Core::setColor(new_p.fore_color, new_p.back_color);
 				std::cout << new_p.character;
+				if((new_p.character & 0x80) == 0x80)
+				{				
+					w++;
+					Pixel& next_new_p = back[h][w],
+						& next_old_p = front[h][w];
+					next_old_p = next_new_p;
+					std::cout << next_new_p.character;
+				}
 			}
 
 		_swapBuffer();
