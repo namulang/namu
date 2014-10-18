@@ -101,6 +101,7 @@ namespace LG
 		int getXBufferPointer() const;
 		int getYBufferPointer() const;
 		void setForeColor(int new_fore);
+		void setColorLock(bool locking);
 		void setBackColor(int new_back);
 		void setColor(int new_fore, int new_back);
 		void readyBufferToDraw();
@@ -133,5 +134,6 @@ namespace LG
 
 		Buffer _buffer[2];
 		int _focused_buffer_index;
+		bool _is_color_locked;
 	};
 }
