@@ -563,7 +563,7 @@ public:
 		//	3-1. cloned.onArgumentFetched()	; value = 106
 		MyMod2& mod = (MyMod2&) node1.getModuleSet()[node1.getModuleSet().push(MyMod2())];
 
-		mod.execute();	//					; value = 212
+		manager.execute();	//					; value = 212
 
 		return mod.a.getDefault().getValue() == 212;
 	}
