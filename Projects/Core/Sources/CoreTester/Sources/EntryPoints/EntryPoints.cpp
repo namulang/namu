@@ -1049,6 +1049,21 @@ public:
 			arr[0].datum == 4;
 	}
 };
+class StringFindingTest : public TestCase
+{
+public:
+	StringFindingTest() : TestCase("does string finding algorithm work?") {}
+
+	virtual bool onTest()
+	{
+		NEString testcase = "helloloothisampleadingoogleappleomaxe";
+		NEString sample = "ple";
+
+		NEIntSet output = testcase.find(sample);
+		
+		return output.getLength() == 2 && output[0] == 14 && output[1] == 29;
+	}
+};
 //class Test : public TestCase
 //{
 //public:
@@ -1081,6 +1096,7 @@ void main()
 	Test14().test();
 	system("pause");
 	system("cls");
+	StringFindingTest().test();
 	ArrayAssigningTest().test();
 	PointerArrayAssigningTest().test();
 	HeapedPointerArrayAssigningTest().test();
