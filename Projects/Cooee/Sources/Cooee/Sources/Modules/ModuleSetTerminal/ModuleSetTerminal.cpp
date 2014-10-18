@@ -1,6 +1,7 @@
 #include "ModuleSetTerminal.hpp"
 #include "../ModuleEncyclo/ModuleEncyclo.hpp"
 #include "../ModuleTerminal/ModuleTerminal.hpp"
+#include "../MainPopUpMenu/MainPopUpMenu.hpp"
 
 class NameInputWindow : public ::LG::InputWindow
 {
@@ -40,10 +41,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 		}	
 		break;
 	case CANCEL:
-		if(LG::Core::windows.getLength() == 1)
-			Core::pushMessage("여기가 최상위 노드.\n우리에겐, 더 돌아갈 장소따윈 없어요.");
-		else
-			toOwner()->delete_me = true;
+		LG::Core::open(MainPopUpMenu());
 		break;
 
 	case ADD:		

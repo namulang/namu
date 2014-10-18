@@ -93,6 +93,8 @@ public:
 		}
 	};
 	
+	virtual void onKeyPressed(char inputed);
+	
 	ListHeader header;
 	ContentList contents;
 	Navigator navigator;

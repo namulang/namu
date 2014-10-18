@@ -1,5 +1,6 @@
 #include "KeySetTerminal.hpp"
 #include "../Core/Core.hpp"
+#include "../MainPopUpMenu/MainPopUpMenu.hpp"
 
 void KeySetTerminal::KeyNameList::onKeyPressed(char inputed)
 {
@@ -22,7 +23,7 @@ void KeySetTerminal::KeyNameList::onKeyPressed(char inputed)
 		}
 		break;
 	case CANCEL:
-		toOwner()->delete_me = true;
+		LG::Core::open(MainPopUpMenu());
 		break;
 	}	
 }

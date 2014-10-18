@@ -5,6 +5,7 @@
 #include "../CommandListWindow/CommandListWindow.hpp"
 #include "../ModuleEncyclo/ModuleEncyclo.hpp"
 #include "../NodeSetTerminal/NodeSetTerminal.hpp"
+#include "../GuideEncyclo/GuideEncyclo.hpp"
 
 Command::Command(const NEString& names_delimetered_with_space, const NEString& new_help)
 : help(new_help)
@@ -434,12 +435,14 @@ NE::NEString HelpCommand::execute(const NEStringSet& parameters)
 	switch(parameters.getLength())
 	{
 	case 0:
-		LG::Core::open(CommandListWindow());
+		LG::Core::open(GuideEncyclo());
 		break;
 
 	case 1:
 		if(parameters[0] == "-module")
-			LG::Core::open(ModuleEncyclo());		
+			LG::Core::open(ModuleEncyclo());	
+		else if(parameters[0] == "-command")
+			LG::Core::open(CommandListWindow());
 		break;
 
 	case 2:		

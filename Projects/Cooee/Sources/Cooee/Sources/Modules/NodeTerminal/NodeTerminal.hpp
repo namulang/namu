@@ -40,85 +40,32 @@ public:
 	}
 	virtual void onDraw()
 	{
+		LG::BackBuffer& buf = LG::Core::back_buffer;
 		if(focused != 0)
 		{
-			LG::Core::setColor(BLACK, LIGHTGRAY);
-			LG::Core::setColorLock(true);
+			buf.setColor(BLACK, LIGHTGRAY);
+			buf.setColorLock(true);
 		}
 		Terminal::onDraw();
-		LG::Core::setColorLock(false);
+		buf.setColorLock(false);
 
 		if(focused != 1)
 		{
-			LG::Core::setColor(BLACK, DARKGRAY);
-			LG::Core::setColorLock(true);
+			buf.setColor(BLACK, DARKGRAY);
+			buf.setColorLock(true);
 		}
 		ks_terminal.draw();
-		LG::Core::setColorLock(false);
+		buf.setColorLock(false);
 
 		if(focused != 2)
 		{
-			LG::Core::setColor(BLACK, DARKGRAY);
-			LG::Core::setColorLock(true);
+			buf.setColor(BLACK, DARKGRAY);
+			buf.setColorLock(true);
 		}
 		ms_terminal.draw();
-		LG::Core::setColorLock(false);
+		buf.setColorLock(false);
 	}
-	virtual void onKeyPressed(char inputed)
-	{
-		switch(inputed)
-		{
-		case CANCEL:
-		case CLOSE:
-			delete_me = true;
-			break;
-
-		case LEFT:
-			if(focused == 0 && attributes.choosed == 1)
-			{
-				if(codelist_display_index > -2)
-					codelist_display_index--;
-				attributes.onUpdateData();
-			}
-			else if(focused > 0)
-			{
-				focused--;
-				onUpdateData();
-			}
-			break;
-
-		case RIGHT:
-			if(focused == 0 && attributes.choosed == 1)
-			{
-				if(codelist_display_index < castObject().getGroupCode().getLengthLastIndex())
-					codelist_display_index++;
-				attributes.onUpdateData();
-			} 
-			else if(focused < 2)
-			{
-				focused++;
-				onUpdateData();
-			}
-			break;
-
-		default:
-			switch(focused)
-			{
-			case 0:
-				Terminal::onKeyPressed(inputed);
-				break;
-
-			case 1:
-				ks_terminal.onKeyPressed(inputed);
-				break;
-
-			case 2:
-				ms_terminal.onKeyPressed(inputed);
-				break;
-			}
-			break;
-		}
-	}
+	virtual void onKeyPressed(char inputed);
 
 	class Attributes : public ListGliph
 	{

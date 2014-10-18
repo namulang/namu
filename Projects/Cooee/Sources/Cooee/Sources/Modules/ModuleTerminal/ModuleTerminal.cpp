@@ -1,5 +1,6 @@
 #include "ModuleTerminal.hpp"
 #include "../Core/Core.hpp"
+#include "../MainPopUpMenu/MainPopUpMenu.hpp"
 
 void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 {
@@ -57,7 +58,10 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 		toOwner()->call(CodeInputer(_getOwnerNodeOf(toOwner()->castObject())));
 		break;
 
-	case CANCEL:
+	case CANCEL:	
+		LG::Core::open(MainPopUpMenu());
+		break;
+
 	case CLOSE:
 		toOwner()->delete_me = true;
 		break;

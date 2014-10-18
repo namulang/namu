@@ -437,14 +437,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="PopUpMenu"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Cooee\Sources\Modules\PopUpMenu\PopUpMenu.hpp"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="Window"
 					>
 					<Filter
@@ -486,7 +478,107 @@
 								>
 							</File>
 						</Filter>
+						<Filter
+							Name="RunDebuggingPopUpMenu"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\RunDebuggingPopUpMenu\RunDebuggingPopUpMenu.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\RunDebuggingPopUpMenu\RunDebuggingPopUpMenu.hpp"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="ScriptFilePopUpMenu"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\ScriptFilePopUpMenu\ScriptFilePopUpMenu.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\ScriptFilePopUpMenu\ScriptFilePopUpMenu.hpp"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="ObservePopUpMenu"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\ObservePopUpMenu\ObservePopUpMenu.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\ObservePopUpMenu\ObservePopUpMenu.hpp"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="MainPopUpMenu"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\MainPopUpMenu\MainPopUpMenu.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\MainPopUpMenu\MainPopUpMenu.hpp"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="HelpPopUpMenu"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\HelpPopUpMenu\HelpPopUpMenu.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\HelpPopUpMenu\HelpPopUpMenu.hpp"
+								>
+							</File>
+						</Filter>
 					</Filter>
+					<Filter
+						Name="InputWindow"
+						>
+						<Filter
+							Name="CommandInputWindow"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\CommandInputWindow\CommandInputWindow.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\CommandInputWindow\CommandInputWindow.hpp"
+								>
+							</File>
+						</Filter>
+					</Filter>
+					<Filter
+						Name="QueryWindow"
+						>
+						<Filter
+							Name="Really"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\Really\Really.hpp"
+								>
+							</File>
+						</Filter>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="GuideEncyclo"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Cooee\Sources\Modules\GuideEncyclo\GuideEncyclo.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\Sources\Cooee\Sources\Modules\GuideEncyclo\GuideEncyclo.hpp"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

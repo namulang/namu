@@ -2,6 +2,8 @@
 #include "../ModuleEncyclo/ModuleEncyclo.hpp"
 #include "../Core/Core.hpp"
 #include "../NodeTerminal/NodeTerminal.hpp"
+#include "../MainPopUpMenu/MainPopUpMenu.hpp"
+#include "../Really/Really.hpp"
 
 class NodeNameInputWindow : public ::LG::InputWindow
 {
@@ -43,31 +45,7 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 		break;
 
 	case CANCEL:
-		class Really : public ::LG::QueryWindow
-		{
-		public:
-			Really()
-				: QueryWindow("종료할려고요? 이렇게 재밌는 프로그램을 놔두고?", WHITE, LIGHTBLUE)
-			{
-				panel.text = "그만할래ㅜ";
-				panel.width = 15;
-				no.text = "버튼을 잘못 눌렀음";
-				no.width = 20;
-			}
-			virtual void onButtonPressed(bool witch_button)
-			{
-				if(witch_button)
-					getCaller().delete_me = delete_me = true;
-
-				delete_me = true;
-			}
-			NEObject& clone() const { return *(new Really(*this)); }
-		};
-
-		if(LG::Core::windows.getLength() == 1)
-			toOwner()->call(Really());
-		else
-			toOwner()->delete_me = true;		
+		LG::Core::open(MainPopUpMenu());
 		break;
 
 	case REMOVE:
@@ -78,4 +56,15 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 	}			
 
 
+}
+
+void NodeSetTerminal::onKeyPressed(char inputed)
+{
+	if(inputed == CLOSE)
+	{
+		if(LG::Core::windows.getLength() == 1)
+			call(Really());
+	}
+	else
+		Terminal::onKeyPressed(inputed);
 }
