@@ -22,14 +22,15 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 {
 	ListGliph::onKeyPressed(inputed);
 
+	int index = toOwner()->real_key ? choosed-1 : choosed;
+
 	switch(inputed) {
 	case CONFIRM:
 		{
 			const NEModuleSet& ms = Kernal::getInstance().getModuleManager().getModuleSet();
 		
 			if(choosed < 0 || choosed > ms.getLengthLastIndex())	return;
-
-			int index = toOwner()->real_key ? choosed-1 : choosed;
+			
 			if(index == -1)
 				toOwner()->call(NameInputWindow(toOwner()->real_key->getName()));
 			else
@@ -55,6 +56,11 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 			path += (choosed < 0 || items.getLength() < 0) ? mcs.getLength() : choosed;
 			LG::Core::windows.pushFront(ModuleEncyclo(0, path));
 		}
+		break;
+
+	case REMOVE:
+		if(choosed >= 0)
+			::Core::commander.command(NEString("delete ") + toOwner()->getPath() + "/" + choosed);
 		break;
 	}	
 }

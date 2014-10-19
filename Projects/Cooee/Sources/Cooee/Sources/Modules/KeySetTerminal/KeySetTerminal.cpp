@@ -1,6 +1,7 @@
 #include "KeySetTerminal.hpp"
 #include "../Core/Core.hpp"
 #include "../MainPopUpMenu/MainPopUpMenu.hpp"
+#include "../KeyEncyclo/KeyEncyclo.hpp"
 
 void KeySetTerminal::KeyNameList::onKeyPressed(char inputed)
 {
@@ -24,6 +25,14 @@ void KeySetTerminal::KeyNameList::onKeyPressed(char inputed)
 		break;
 	case CANCEL:
 		LG::Core::open(MainPopUpMenu());
+		break;
+
+	case ADD:
+		LG::Core::open(KeyEncyclo(toOwner()->getPath() + "/" + choosed));
+		break;
+
+	case REMOVE:
+		::Core::commander.command(NEString("delete ") + toOwner()->getPath() + "/" + choosed);
 		break;
 	}	
 }

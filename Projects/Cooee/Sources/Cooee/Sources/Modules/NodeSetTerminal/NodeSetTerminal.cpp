@@ -24,9 +24,14 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 {
 	ListGliph::onKeyPressed(inputed);
 
+	type_index	choosed = toOwner()->contents.choosed,
+				index	= toOwner()->real_key ? choosed-1 : choosed;
+
 	switch(inputed) 
 	{
 	case ADD:
+		if(index >= 0)
+			::Core::commander.command(NEString("add -node ") + toOwner()->getPath() + "/" + index);
 		break;
 
 	case CONFIRM:
@@ -34,8 +39,6 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 			if(text == "" || text.getLength() <= 0)
 				text = toOwner()->contents.createCommand();
 
-			type_index	choosed = toOwner()->contents.choosed,
-				index = toOwner()->real_key ? choosed-1 : choosed;
 			if(index == -1)
 				toOwner()->call(NodeNameInputWindow(toOwner()->real_key->getName()));
 			else
@@ -49,9 +52,8 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 		break;
 
 	case REMOVE:
-		NEString& msg = ::Core::commander.command(NEString("remove ") + choosed);
-		if(msg.getLength() > 0)
-			Core::pushMessage(msg);
+		if(index >= 0)
+			::Core::commander.command(NEString("delete ") + toOwner()->getPath() + "/" + choosed);		
 		break;
 	}			
 

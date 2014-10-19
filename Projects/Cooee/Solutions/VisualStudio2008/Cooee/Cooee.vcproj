@@ -580,6 +580,14 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="KeyEncyclo"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Cooee\Sources\Modules\KeyEncyclo\KeyEncyclo.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="EntryPoints"
