@@ -11,6 +11,7 @@
 Commander Core::commander = Commander();
 NEString Core::path("/");
 NEString Core::path_to_be_copied;
+bool Core::is_cutting_off = false;
 
 void Core::openModifierFrom(const NEString& path, NEKey* real_key)
 {

@@ -25,7 +25,17 @@ public:
 			return RESULT_TYPE_WARNING | RESULT_ABORT_ACTION;
 
 		path_to_be_copied = new_path;
+
+		is_cutting_off = false;
 		return RESULT_SUCCESS;
+	}
+	static type_result setPathToBeCutOff(const NEString& new_path)
+	{
+		type_result r = setPathToBeCopied(new_path);
+		if( ! NEResult::hasError(r))
+			is_cutting_off = true;
+
+		return r;
 	}
 	static void pushMessage(const NEString& msg)
 	{
@@ -171,4 +181,5 @@ public:
 	static Commander commander;
 	static NEString path;
 	static NEString path_to_be_copied;
+	static bool is_cutting_off;
 };
