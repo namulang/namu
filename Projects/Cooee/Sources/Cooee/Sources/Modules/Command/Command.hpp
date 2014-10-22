@@ -68,6 +68,18 @@ public:
 	FUNC_CLONE(CopyCommand)
 	virtual NEString execute(const NEStringSet& parameters);
 };
+class CutCommand : public Command
+{
+public:
+	CutCommand() : Command("cut",
+		"잘라낼 경로를 예약해둔다. paste 명령어를 이 경로를 복사하고 원본을 삭제한다.\n"
+		"별칭	: cut\n"
+		"사용법	: cut<원본 경로>\n"
+		"		  cut <원본 경로> <복사될 경로>") {}
+	FUNC_CLONE(CutCommand)
+		virtual NEString execute(const NEStringSet& parameters);
+};
+
 class OrphanCommand : public Command
 {
 public:

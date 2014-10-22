@@ -88,6 +88,24 @@ NE::NEString CopyCommand::execute(const NEStringSet& parameters)
 	}	
 }
 
+NE::NEString CutCommand::execute(const NEStringSet& parameters)
+{
+	type_result result = RESULT_SUCCESS;
+	switch(parameters.getLength())
+	{
+	case 1:
+		::Core::setPathToBeCutOff(parameters[0]);
+		return "";
+
+	case 2:
+		::Core::setPathToBeCutOff(parameters[0]);
+		return ::Core::commander.command("paste " + parameters[1]);
+
+	default:
+		return "ERROR: 경로를 입력하세요";
+	}	
+}
+
 NEType::Type AddCommand::_findKeyTypeBy(const NEString& type_name)
 {
 	const NEKeySet& ks = Kernal::getInstance().getKeyManager().getKeySet();
@@ -196,6 +214,14 @@ NE::NEString DeleteCommand::execute(const NEStringSet& parameters)
 	NENodeCodeSet* ncs = 0x00;
 	NEModuleCodeSet* mcs = 0x00;
 	type_result result = RESULT_SUCCESS;
+
+	::Core::setPathToBeCopied("");
+	//	왜 복사용 Path를 지우는 가:
+	//		이미 지워진 경로를 참조 할 수 있기 때문이다.
+	//		제대로 하려면 Delete해서 복사용 Path 자신이나 조상들 중 
+	//		하나를 삭제한다면, Path를 null로 만들어야 하나
+	//		조상을 알아내는 방법이 현재는 없으므로 귀찮음.
+
 	if(parent->isSubClassOf(NEType::NENODE_CODESET_KEY))
 		ncs = &((NENodeCodeSetKey*) parent)->getValue();
 	if(parent->isSubClassOf(NEType::NENODE_CODESET))
@@ -250,57 +276,93 @@ NE::NEString OrphanCommand::_searchParent(const NEString& full_path, type_index&
 	return "";
 }
 
+//	Paste:
+//		Paste의 동작:
+//			Paste의 사전 공통 부분:
+//				타겟 경로(= parameters[0]) 가 원본 경로(= ::Core::path_to_be_copied)
+//				의 타입을 각각 얻어낸다. 이하 타겟타입, 원본 타입이라 한다.
+//				다음은, Paste 동작의 종류와 그쪽으로 분기하는 조건을 서술한다.
+//
+//			N:1 삽입 연산:	타겟객체 안에 원본객체를 하나 삽입한다. (push)
+//							타겟 타입이 원본타입의 Container 일 경우.
+//							Container 여부는 직접 if 문으로 확인 할 수 밖에 없다. 
+//							(프레임워크의 RTTI가 빈약하다)
+//
+//			N:1 지정 삽입:	미리 어느 index로 넣고 싶다는 인덱스도 제공을 한 상태이다.
+//							N:1과 동일하되, push 가 아니라 insert로 연산한다.
+//
+//		Paste 알고리즘:
+//			타입 검사하고 캐스팅을 하는 부분은 함수 템플릿으로 대체한다.
+//			각 함수 템플릿은 연산이 성공 할 시 true를 반환한다.
+//			Paste 함수에서는 반환값이 true가 나올때까지 가능한 한 모든 조합의 
+//			함수템플릿을 호출한다.
+//			
+//		N:1 삽입(지정) 용 함수 템플릿
+template <typename KeyContainer, typename Source>
+bool _pasteInKeyContainer(NEObject& cont, NEObject& src, NEType::Type src_type, type_index index = -1)
+{
+	NEType::Type cont_type = KeyContainer().getType();
+
+	if( ! &cont							||
+		! &src							||
+		! cont.isSubClassOf(cont_type)	||
+		! src.isSubClassOf(src_type)	)
+		return false;
+
+	KeyContainer& c = static_cast<KeyContainer&>(cont);
+	Source& s = static_cast<Source&>(src);
+
+	if(c.getLength() == c.getSize())
+		c.resize(c.getLength() + 1);
+
+	if(index != -1)
+		c.insert(index, s);
+	else
+		c.push(s);
+
+	return true;
+}
+//	Helper 함수 템플릿:
+template <typename Target, typename Source>
+bool _pasteTryEverything(NEObject& target, NEObject& parent, NEObject& source, NEType::Type src_type, type_index index)
+{
+	if(_pasteInKeyContainer<Target, Source>(parent, source, src_type, index))
+		return true;
+
+	return _pasteInKeyContainer<Target, Source>(target, source, src_type);
+}
+//	Paste 함수:
 NE::NEString PasteCommand::execute(const NEStringSet& parameters)
 {
 	if(parameters.getLength() <= 0) return "ERROR: 경로를 입력하세요";
+	if(	::Core::path_to_be_copied.getLength() <= 1) return "ERROR: 복사할 원본을 정해주세요";
 
 	NENodeCodeSet* ncs = 0;
 	NEModuleCodeSet* mcs = 0;
 	type_result result = RESULT_SUCCESS;
+
 	NEObject* parent = 0;
 	type_index index;
 	_searchParent(parameters[0], index, &parent);
 
 	NEObject& source = ::Core::getObjectBy(::Core::path_to_be_copied);
-	if( ! parent) return "ERROR: 주어진 경로(" + parameters[0] + ")가 잘못되었습니다.";
-	if(parent->isSubClassOf(NEType::NENODE_CODESET_KEY))
-		ncs = &((NENodeCodeSetKey*)parent)->getValue();
-	if(parent->isSubClassOf(NEType::NENODE_CODESET))
+	NEObject& target = ::Core::getObjectBy(parameters[0]);
+
+
+	//	main:
+	if( ! _pasteTryEverything<NENodeCodeSet, NENode>(target, *parent, source, NEType::NENODE, index))
+		if( ! _pasteTryEverything<NEModuleCodeSet, NEModule>(target, *parent, source, NEType::NEMODULE, index))
+			if( ! _pasteTryEverything<NEKeyCodeSet, NEKey>(target, *parent, source, NEType::NEKEY, index))
+				return NEString("ERROR: 주어진 타겟(") + target.getTypeName() + ")과 원본(" + 
+				source.getTypeName() + ") 간에는 Paste가 불가능 합니다.";
+
+
+	//	post:
+	if(::Core::is_cutting_off)
 	{
-		if( ! ncs)
-			ncs = (NENodeCodeSet*) parent;
-	
-		if(source.getType() != NEType::NENODE)			
-			return "ERROR: 주어진 경로에 " + NEString(source.getTypeName()) + "을 넣을 수 없습니다.";
-		NENode& node = static_cast<NENode&>(source);
-
-		result = ncs->insert(index, node);
+		::Core::commander.command("delete " + ::Core::path_to_be_copied);
+		::Core::setPathToBeCopied("");
 	}
-	
-	if(parent->isSubClassOf(NEType::NEMODULE_CODESET_KEY))
-		mcs = &((NEModuleCodeSetKey*)parent)->getValue();
-
-	if(parent->isSubClassOf(NEType::NEMODULE_CODESET))
-	{
-		if( ! mcs)
-			mcs = (NEModuleCodeSet*) parent;
-		if(source.getType() != NEType::NEMODULE)
-			return "ERROR: 주어진 경로에 " + NEString(source.getTypeName()) + "을 넣을 수 없습니다.";
-		NEModule& module = static_cast<NEModule&>(source);
-
-		result = mcs->insert(index, module);
-	}
-
-	if(parent->isSubClassOf(NEType::NEKEY_CODESET))
-	{
-		NEKeyCodeSet& kcs = (NEKeyCodeSet&) *parent;
-		if(source.getType() != NEType::NEKEY)
-			return "ERROR: 주어진 경로에 " + NEString(source.getTypeName()) + "을 넣을 수 없습니다.";
-		NEKey& key = static_cast<NEKey&>(source);
-
-		result = kcs.insert(index, key);
-	}
-
 	return (NEResult::hasError(result)) ? "ERROR: 삽입 도중 에러가 발생했습니다." : "";
 }
 
@@ -343,7 +405,7 @@ NE::NEString SaveCommand::execute(const NEStringSet& parameters)
 {
 	NEString filename = (parameters.getLength() <= 0) ?
 		Kernal::getInstance().getScriptManager().getScriptFilePath()
-	:
+		:
 	parameters[0];
 
 	NEEventHandler& handler = Editor::getInstance().getEventHandler();
