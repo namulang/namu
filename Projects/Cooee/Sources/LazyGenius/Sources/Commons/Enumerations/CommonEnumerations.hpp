@@ -27,6 +27,7 @@ namespace LG
 		REMOVE		= 83,	//	del			
 		COPY		= 'c',
 		PASTE		= 'p',
+		CUT			= 'u',
 		HELP		= '?',
 		//		Ãß°¡Å°:
 		COMMAND		= '~'
