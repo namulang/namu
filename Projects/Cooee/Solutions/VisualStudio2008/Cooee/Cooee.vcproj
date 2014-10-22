@@ -538,6 +538,18 @@
 								>
 							</File>
 						</Filter>
+						<Filter
+							Name="EditPopUpMenu"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\EditPopUpMenu\EditPopUpMenu.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\EditPopUpMenu\EditPopUpMenu.hpp"
+								>
+							</File>
+						</Filter>
 					</Filter>
 					<Filter
 						Name="InputWindow"

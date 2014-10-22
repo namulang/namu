@@ -109,6 +109,8 @@ public:
 		NEString& position = work_position[0];
 		int type = 0; // 0은 unknown을 의미한다.
 		int index = position.toInt();
+		if(index < 0 || index > keyset.getLengthLastIndex())
+			return *null_pointer;
 
 
 		//	main:
@@ -168,12 +170,25 @@ public:
 		work_position.popFront();
 		if(work_position.getLength() > 0)
 		{
-			NEModuleCodeSet& moduleset = node.getModuleSet();
-
-			return _searchModuleSet(moduleset, work_position);
+			if(work_position[0] == "m")
+			{
+				work_position.popFront();
+				return _searchModuleSet(node.getModuleSet(), work_position, handler);
+			}
+			else if(work_position[0] == "k")
+			{
+				work_position.popFront();
+				return _searchKeySet(node.getKeySet(), work_position, handler);
+			}
+			else
+			{
+				pushMessage("주어진 path = " + path + " 가 잘못되었습니다. 적당한 객체를 찾지 못했습니다.");
+				return *null_pointer;
+			}
 		}
 		else
 			return node;
+
 	}
 	static NEObject& getObjectBy(const NEString& path, onObjectFound& handler = onObjectFound());
 	static NEString createPathBy(const NEObject& target);

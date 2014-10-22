@@ -6,7 +6,7 @@ void NodeTerminal::onKeyPressed(char inputed)
 	switch(inputed)
 	{
 	case CANCEL:
-		LG::Core::open(MainPopUpMenu());
+		LG::Core::open(MainPopUpMenu(*this));
 		break;
 
 	case CLOSE:

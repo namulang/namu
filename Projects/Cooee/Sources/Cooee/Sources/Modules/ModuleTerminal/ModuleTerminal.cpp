@@ -59,7 +59,7 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 		break;
 
 	case CANCEL:	
-		LG::Core::open(MainPopUpMenu());
+		LG::Core::open(MainPopUpMenu(*toOwner()));
 		break;
 
 	case CLOSE:

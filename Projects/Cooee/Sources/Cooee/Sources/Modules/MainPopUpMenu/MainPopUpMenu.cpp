@@ -4,13 +4,14 @@
 #include "../ObservePopUpMenu/ObservePopUpMenu.hpp"
 #include "../HelpPopUpMenu/HelpPopUpMenu.hpp"
 #include "../CommandInputWindow/CommandInputWindow.hpp"
+#include "../EditPopUpMenu/EditPopUpMenu.hpp"
 #include "../Really/Really.hpp"
 
 void MainPopUpMenu::onUpdateData()
 {
 	ListWindow::onUpdateData();
 
-	list.items.create(8);
+	list.items.create(9);
 	list.items.push("스크립트 파일 >");	
 	/*
 		list.items.push("새로 시작");
@@ -18,6 +19,14 @@ void MainPopUpMenu::onUpdateData()
 		list.items.push("저장하기");		
 		list.items.push("헤더 관리");
 	*/		
+	list.items.push("편집 > ");
+	/*
+		list.items.push("여기에 추가");
+		list.items.push("이거 삭제");
+		list.items.push("복사");
+		list.items.push("잘라내기");
+		list.items.push("붙여넣기");		
+	*/
 	list.items.push("실행 & 디버깅 >");
 	/*
 		list.items.push("실행");
@@ -64,23 +73,27 @@ void MainPopUpMenu::onItemChoosed(type_index index, const NEString& chosen_conte
 		call(ScriptFilePopUpMenu());
 		break;
 
-	case 1:	//	실행 & 디버깅 >
+	case 1:	//	편집 >
+		call(EditPopUpMenu());
+		break;
+
+	case 2:	//	실행 & 디버깅 >
 		call(RunDebuggingPopUpMenu());
 		break;
 
-	case 2:	//	관측 >
+	case 3:	//	관측 >
 		call(ObservePopUpMenu());
 		break;
 
-	case 3:	//	콘솔 윈도우
+	case 4:	//	콘솔 윈도우
 		call(CommandInputWindow());
 		break;
 
-	case 5:	//	현자의 말
+	case 6:	//	현자의 말
 		call(HelpPopUpMenu());
 		break;
 
-	case 7:	//	뒤로가기
+	case 8:	//	뒤로가기
 		if(LG::Core::windows.getLength() <= 2)
 			call(Really());
 		else
@@ -90,8 +103,9 @@ void MainPopUpMenu::onItemChoosed(type_index index, const NEString& chosen_conte
 	}
 }
 
-MainPopUpMenu::MainPopUpMenu()
-	: LG::ListWindow("Main Menu", 20, 5, 20, 9, BLACK, WHITE, WHITE, LIGHTRED)
+MainPopUpMenu::MainPopUpMenu(Window& new_caller)
+	: LG::ListWindow("Main Menu", 20, 5, 20, 10, BLACK, WHITE, WHITE, LIGHTRED), 
+	caller(new_caller)
 {
 
 }

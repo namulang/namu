@@ -30,6 +30,11 @@ public:
 	FUNC_CLONE(ModuleSetTerminal)
 
 	NEModuleCodeSet& castObject() {
+		if( ! instance)
+		{
+			NEModuleCodeSet* nullpointer = 0x00;
+			return *nullpointer;
+		}
 		if(to_chk_valid == NEType::NEMODULE_CODESET)
 			return (NEModuleCodeSet&) *instance;
 		else

@@ -7,6 +7,8 @@ void KeySetTerminal::KeyNameList::onKeyPressed(char inputed)
 {
 	ListGliph::onKeyPressed(inputed);
 
+	NEString path = toOwner()->getPath() + "/" + choosed;
+
 	switch(inputed) {
 	case CONFIRM:
 		{
@@ -24,15 +26,30 @@ void KeySetTerminal::KeyNameList::onKeyPressed(char inputed)
 		}
 		break;
 	case CANCEL:
-		LG::Core::open(MainPopUpMenu());
+		LG::Core::open(MainPopUpMenu(*toOwner()));
 		break;
 
 	case ADD:
-		LG::Core::open(KeyEncyclo(toOwner()->getPath() + "/" + choosed));
+		LG::Core::open(KeyEncyclo(path));
+		toOwner()->onUpdateData();
 		break;
 
 	case REMOVE:
-		::Core::commander.command(NEString("delete ") + toOwner()->getPath() + "/" + choosed);
+		::Core::commander.command(NEString("delete ") + path);
+		toOwner()->onUpdateData();
+		break;
+
+	case COPY:
+		::Core::commander.command("copy " + path);
+		break;
+
+	case PASTE:
+		::Core::commander.command("paste " + path);
+		toOwner()->onUpdateData();
+		break;
+
+	case CUT:
+		::Core::commander.command("cut " + path);
 		break;
 	}	
 }

@@ -136,58 +136,20 @@ void Core::openModifierFrom(NEKey& key)
 
 NEObject& Core::getObjectBy(const NEString& path, onObjectFound& handler)
 {
-	NERootNodeCodeSet& nodelist = Editor::getInstance().getScriptEditor().getScriptNodes();	
+	NERootNodeCodeSet& nodeset = Editor::getInstance().getScriptEditor().getScriptNodes();	
 	NEObject* nullpointer = 0;
 	if( ! &Kernal::getInstance()					||
 		! &Kernal::getInstance().getNodeManager()	||
 		! &path										||
 		path == ""									)
-		return nodelist;
+		return nodeset;
 
 
 	//	main:
 	NEStringSet splited;
 	path.split("/", splited);
-	if(splited.getLength() < 1 || splited[0] == "")
-		return nodelist;
-
-	NEString& position = splited[0];
-	int type = 0; // 0은 unknown을 의미한다.
-	int index = _getPositionTypeAndIndex(position, type);
-
-	if(type < 0 && type > 1)
-	{
-		pushMessage(NEString("잘못된 위치 문자열입니다 : " + position + "타입이 Node가 아닙니다."));
-		return *nullpointer;
-	}
-	if(index < 0 || index > nodelist.getLengthLastIndex())
-	{
-		pushMessage("잘못된 인덱스. 0보다 작거나, root의 크기를 넘습니다.");
-		return *nullpointer;
-	}
-
-	NENode& node = nodelist[index];
-	handler.onNodeFound(node);
-	splited.popFront();
-
-	if(splited.getLength() > 0)
-		if(splited[0] == "m")
-		{
-			splited.popFront();
-			return _searchModuleSet(node.getModuleSet(), splited, handler);
-		}
-		else if(splited[0] == "k")
-		{
-			splited.popFront();
-			return _searchKeySet(node.getKeySet(), splited, handler);
-		}
-		else
-		{
-			pushMessage("주어진 path = " + path + " 가 잘못되었습니다. 적당한 객체를 찾지 못했습니다.");
-			return *nullpointer;
-		}
-	else
-		return node;
+	
+	return _searchNodeSet(nodeset, splited, handler);
 }
 
 namespace

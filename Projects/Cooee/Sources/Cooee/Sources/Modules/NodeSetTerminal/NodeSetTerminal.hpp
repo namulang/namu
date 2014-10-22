@@ -29,6 +29,9 @@ public:
 	FUNC_CLONE(NodeSetTerminal)
 
 	NENodeCodeSet& castObject() {
+		NENodeCodeSet* nullpointer = 0x00;
+		if( ! instance)
+			return *nullpointer;
 		if(to_chk_valid == NEType::NENODE_CODESET)
 			return (NENodeCodeSet&) *instance;
 		else

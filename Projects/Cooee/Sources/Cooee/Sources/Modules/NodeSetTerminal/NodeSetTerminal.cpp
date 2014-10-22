@@ -26,14 +26,10 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 
 	type_index	choosed = toOwner()->contents.choosed,
 				index	= toOwner()->real_key ? choosed-1 : choosed;
+	NEString path = toOwner()->getPath() + "/" + choosed;
 
 	switch(inputed) 
 	{
-	case ADD:
-		if(index >= 0)
-			::Core::commander.command(NEString("add -node ") + toOwner()->getPath() + "/" + index);
-		break;
-
 	case CONFIRM:
 		{
 			if(text == "" || text.getLength() <= 0)
@@ -48,16 +44,47 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 		break;
 
 	case CANCEL:
-		LG::Core::open(MainPopUpMenu());
+		LG::Core::open(MainPopUpMenu(*toOwner()));
 		break;
 
 	case REMOVE:
 		if(index >= 0)
-			::Core::commander.command(NEString("delete ") + toOwner()->getPath() + "/" + choosed);		
+			::Core::commander.command(NEString("delete ") + path);
+		else
+			::Core::commander.command("delete " + toOwner()->getPath());
+		toOwner()->onUpdateData();
 		break;
-	}			
 
+	case ADD:
+		if(index >= 0)
+			::Core::commander.command(NEString("add -node ") + path);
+		else
+			::Core::commander.command("add -node " + toOwner()->getPath());
+		toOwner()->onUpdateData();
+		break;
 
+	case COPY:
+		if(index >= 0)
+			::Core::commander.command("copy " + path);
+		else
+			::Core::commander.command("copy " + toOwner()->getPath());
+		break;
+
+	case PASTE:
+		if(index >= 0)
+			::Core::commander.command("paste " + path);
+		else
+			::Core::commander.command("paste " + toOwner()->getPath());
+		toOwner()->onUpdateData();
+		break;
+
+	case CUT:
+		if(index >= 0)
+			::Core::commander.command("cut " + path);
+		else
+			::Core::commander.command("cut " + toOwner()->getPath());
+		break;
+	}
 }
 
 void NodeSetTerminal::onKeyPressed(char inputed)

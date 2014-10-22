@@ -23,6 +23,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 	ListGliph::onKeyPressed(inputed);
 
 	int index = toOwner()->real_key ? choosed-1 : choosed;
+	NEString path = toOwner()->getPath() + "/" + choosed;
 
 	switch(inputed) {
 	case CONFIRM:
@@ -42,7 +43,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 		}	
 		break;
 	case CANCEL:
-		LG::Core::open(MainPopUpMenu());
+		LG::Core::open(MainPopUpMenu(*toOwner()));
 		break;
 
 	case ADD:		
@@ -60,7 +61,28 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 
 	case REMOVE:
 		if(choosed >= 0)
+		{
 			::Core::commander.command(NEString("delete ") + toOwner()->getPath() + "/" + choosed);
+			toOwner()->onUpdateData();
+		}
+		break;
+
+	case COPY:
+		if(choosed >= 0)
+			::Core::commander.command("copy " + path);
+		break;
+
+	case CUT:
+		if(choosed >= 0)
+			::Core::commander.command("cut " + path);
+		break;
+
+	case PASTE:
+		if(choosed >= 0)
+		{
+			::Core::commander.command("paste " + path);
+			toOwner()->onUpdateData();
+		}
 		break;
 	}	
 }

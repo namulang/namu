@@ -26,7 +26,7 @@ namespace LG
 		ADD			= 82,	//	ins
 		REMOVE		= 83,	//	del			
 		COPY		= 'c',
-		PASTE		= 'p',
+		PASTE		= 'v',
 		CUT			= 'u',
 		HELP		= '?',
 		//		Ãß°¡Å°:
