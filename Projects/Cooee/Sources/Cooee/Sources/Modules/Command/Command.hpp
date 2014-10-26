@@ -188,3 +188,17 @@ public:
 	FUNC_CLONE(HeaderCommand)
 	virtual NEString execute(const NEStringSet& parameters);
 };
+class ObserveCommand : public Command
+{
+public:
+	ObserveCommand() : Command("observe ob",
+		"현재 화면에 보여지는 구조를, 작성중인 스크립트와 "
+		"실행중인 영역 중 어떤 것을 보여줄지 지정한다.\n"
+		"별칭	: observe, ob\n"
+		"사용법	: observe	(스크립트, 실행영역을 번갈아가며 전환)\n"
+		"		  observe -debug (실행영역으로 전환)\n"
+		"		  observe -script (스크립트 영역으로 전환)") {}
+	FUNC_CLONE(ObserveCommand)
+		virtual NEString execute(const NEStringSet& parameters);
+	void _markDeletionToAllWindows();
+};

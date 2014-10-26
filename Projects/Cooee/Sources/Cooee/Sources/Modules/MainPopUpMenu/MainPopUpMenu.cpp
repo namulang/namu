@@ -6,6 +6,7 @@
 #include "../CommandInputWindow/CommandInputWindow.hpp"
 #include "../EditPopUpMenu/EditPopUpMenu.hpp"
 #include "../Really/Really.hpp"
+#include "../Core/Core.hpp"
 
 void MainPopUpMenu::onUpdateData()
 {
@@ -94,10 +95,10 @@ void MainPopUpMenu::onItemChoosed(type_index index, const NEString& chosen_conte
 		break;
 
 	case 8:	//	뒤로가기
-		if(LG::Core::windows.getLength() <= 2)
+		if(::Core::getFocusedWindowList().getLength() <= 2)
 			call(Really());
 		else
-			LG::Core::windows[1].delete_me = true;
+			::Core::getFocusedWindowList()[1].delete_me = true;
 		delete_me = true;
 		break;		
 	}

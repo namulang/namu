@@ -12,6 +12,8 @@ Commander Core::commander = Commander();
 NEString Core::path("/");
 NEString Core::path_to_be_copied;
 bool Core::is_cutting_off = false;
+int Core::test_running_count = 0;
+LG::WindowList Core::debug_windows;
 
 void Core::openModifierFrom(const NEString& path, NEKey* real_key)
 {
@@ -21,7 +23,7 @@ void Core::openModifierFrom(const NEString& path, NEKey* real_key)
 	if(	obj.isSubClassOf(NEType::NEMODULE_CODESET_KEY)	||
 		obj.isSubClassOf(NEType::NEMODULE_CODESET)		)
 		::LG::Core::open(ModuleSetTerminal(path, real_key)); 
-	else if(obj.isSubClassOf(NEType::NENODE_CODESET_KEY)	||
+	else if(obj.isSubClassOf(NEType::NENODE_CODESET_KEY)||
 		obj.isSubClassOf(NEType::NENODE_CODESET)		)
 		::LG::Core::open(NodeSetTerminal(path, real_key));
 	else if(obj.isSubClassOf(NEType::NEKEY_CODESET))
@@ -136,7 +138,12 @@ void Core::openModifierFrom(NEKey& key)
 
 NEObject& Core::getObjectBy(const NEString& path, onObjectFound& handler)
 {
-	NERootNodeCodeSet& nodeset = Editor::getInstance().getScriptEditor().getScriptNodes();	
+	bool is_test_running = Editor::getInstance().getEventHandler().isTestRunning();
+	
+	NERootNodeCodeSet& nodeset = is_test_running ? 
+			Kernal::getInstance().getNodeManager().getRootNodes()
+		:
+			Editor::getInstance().getScriptEditor().getScriptNodes();	
 	NEObject* nullpointer = 0;
 	if( ! &Kernal::getInstance()					||
 		! &Kernal::getInstance().getNodeManager()	||
@@ -249,4 +256,25 @@ NE::NEString Core::createPathBy(const NEObject& target)
 	__s_ns(ns, target, to_return);
 
 	return to_return;
+}
+
+LG::WindowList& Core::getFocusedWindowList()
+{
+	NEEventHandler& handler = Editor::getInstance().getEventHandler();
+	if(handler.isTestRunning())
+		return ::Core::debug_windows;
+	else
+		return LG::Core::windows;
+}
+
+void Core::initializeWindows(LG::WindowList& windows)
+{
+	for(LG::WindowList::Iterator* i=windows.getIterator(0)
+		; i
+		; i=i->getNext())
+	{
+		i->getValue().delete_me = true;
+	}
+
+	LG::Core::open(NodeSetTerminal());
 }

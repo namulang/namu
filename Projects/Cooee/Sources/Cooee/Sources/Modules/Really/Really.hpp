@@ -13,15 +13,6 @@ public:
 		no.text = "버튼을 잘못 눌렀음";
 		no.width = 20;
 	}
-	virtual void onButtonPressed(bool witch_button)
-	{
-		if(witch_button)
-		{
-			for(LG::WindowList::Iterator* itr = LG::Core::windows.getIterator(0); itr ;itr=itr->getNext())
-				itr->getValue().delete_me = true;
-		}
-
-		delete_me = true;
-	}
+	virtual void onButtonPressed(bool witch_button);
 	NEObject& clone() const { return *(new Really(*this)); }
 };

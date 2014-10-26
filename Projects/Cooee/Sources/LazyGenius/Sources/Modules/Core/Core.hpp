@@ -15,19 +15,11 @@ namespace LG
 		static bool sendKeyPipe()
 		{
 			if( _kbhit()) {
-				inputed = _getch();
-				if(&windows[0])
-					windows[0].onKeyPressed(inputed);
+				inputed = _getch();				
 				return true;
 			}		
 
-			inputed = 0;
 			return false;
-		}
-		static void draw()
-		{
-			windows.draw();
-			LG::Core::back_buffer.draw();
 		}
 		static void collectGarbages()
 		{

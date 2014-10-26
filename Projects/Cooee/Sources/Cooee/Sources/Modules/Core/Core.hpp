@@ -13,7 +13,11 @@ public:
 		virtual void onNodeFound(NENode& target) {}
 		virtual void onModuleFound(NEModule& module) {}
 	};
-
+	static void initializeWindows(LG::WindowList& windows);
+	static void runTest(int frame_count = -1)
+	{
+		test_running_count = frame_count;
+	}
 	static NEObject& getCurrentObjectFromPath()
 	{
 		return getObjectBy(path);
@@ -39,7 +43,7 @@ public:
 	}
 	static void pushMessage(const NEString& msg)
 	{
-		::LG::Core::windows.pushFront(LG::MessageWindow(msg, WHITE, LIGHTRED));
+		::Core::getFocusedWindowList().pushFront(LG::MessageWindow(msg, WHITE, LIGHTRED));
 	}
 	static void openModifierFrom(const NEString& path, NEKey* real_key = 0);
 	static void openModifierFrom(NEKey& key);
@@ -192,9 +196,12 @@ public:
 	}
 	static NEObject& getObjectBy(const NEString& path, onObjectFound& handler = onObjectFound());
 	static NEString createPathBy(const NEObject& target);
+	static LG::WindowList& getFocusedWindowList();
 
 	static Commander commander;
 	static NEString path;
 	static NEString path_to_be_copied;
 	static bool is_cutting_off;
+	static int test_running_count;
+	static LG::WindowList debug_windows;
 };

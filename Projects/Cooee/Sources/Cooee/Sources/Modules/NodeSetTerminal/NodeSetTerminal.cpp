@@ -38,7 +38,7 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 			if(index == -1)
 				toOwner()->call(NodeNameInputWindow(toOwner()->real_key->getName()));
 			else
-				LG::Core::windows.pushFront(NodeTerminal(toOwner()->getPath() + "/" + index));
+				::Core::getFocusedWindowList().pushFront(NodeTerminal(toOwner()->getPath() + "/" + index));
 			return;
 		}
 		break;
@@ -91,7 +91,7 @@ void NodeSetTerminal::onKeyPressed(char inputed)
 {
 	if(inputed == CLOSE)
 	{
-		if(LG::Core::windows.getLength() == 1)
+		if(::Core::getFocusedWindowList().getLength() == 1)
 			call(Really());
 	}
 	else

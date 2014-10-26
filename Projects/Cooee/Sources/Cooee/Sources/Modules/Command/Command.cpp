@@ -42,7 +42,7 @@ NE::NEString ListCommand::execute(const NEStringSet& parameters)
 
 NE::NEString CloseCommand::execute(const NEStringSet& parameters)
 {
-	LG::WindowList& wins = LG::Core::windows;
+	LG::WindowList& wins = ::Core::getFocusedWindowList();
 	if(wins.getLength() > 0)
 		wins[0].delete_me = true;
 
@@ -51,7 +51,7 @@ NE::NEString CloseCommand::execute(const NEStringSet& parameters)
 
 NE::NEString VersionCommand::execute(const NEStringSet& parameters)
 {
-	LG::Core::windows.pushFront(LG::MessageWindow(NEString(_VERSION_STRING) + "\n\tby " + _DEVELOPER + "\n\ton " + _DATE, WHITE, LIGHTRED));
+	::Core::getFocusedWindowList().pushFront(LG::MessageWindow(NEString(_VERSION_STRING) + "\n\tby " + _DEVELOPER + "\n\ton " + _DATE, WHITE, LIGHTRED));
 	return "";
 }
 
@@ -63,7 +63,7 @@ NE::NEString PlanetarizeCommand::execute(const NEStringSet& parameters)
 	{
 		NEObject& parsed = ::Core::getObjectBy(parameters[0]);
 		if( ! &parsed) return "ERROR: 주어진 경로가 잘못되었네요.\n주어진 경로 : " + parameters[0];
-		Planetarium& planetarium = dynamic_cast<Planetarium&>(LG::Core::windows[0]);
+		Planetarium& planetarium = dynamic_cast<Planetarium&>(::Core::getFocusedWindowList()[0]);
 		planetarium.setFocus(parsed);
 	}
 
@@ -369,36 +369,34 @@ NE::NEString PasteCommand::execute(const NEStringSet& parameters)
 NE::NEString RunCommand::execute(const NEStringSet& parameters)
 {
 	NEEventHandler& handler = Editor::getInstance().getEventHandler();
-	type_count	max_frame_count = 0,
-		frame_count = 0;
 
-	if(parameters.getLength() > 0)
+	if(parameters.getLength() <= 0)
 	{
-		if(parameters[0] == "-new")
+		if(handler.isTestRunning())
+			handler.resumeTest();
+		else
 			handler.initiateTest();
-		else 
-			max_frame_count = parameters[0].toInt();
 	}
 	else
-		handler.resumeTest();
-
-	cout << "CANCLE키를 누르면 언제든 중단 가능합니다.\n";
-
-	char inputed = 0;
-	while(inputed != LG::CANCEL)
 	{
-		frame_count++;
-		if(max_frame_count > 0 && frame_count > max_frame_count)
-			break;
-
-		Kernal::getInstance().getNodeManager().execute();		 
-
-		if(_kbhit())
-			inputed = _getch();
+		if(parameters[0] == "-new")
+		{
+			handler.initiateTest();
+			::Core::initializeWindows(::Core::debug_windows);
+		}
+		else
+		{
+			::Core::test_running_count = parameters[0].toInt();
+			if(handler.isTestRunning())
+				handler.resumeTest();
+			else
+			{
+				handler.initiateTest();
+				::Core::initializeWindows(::Core::debug_windows);
+			}
+		}
 	}
 
-	handler.pauseTest();
-	cout << frame_count << " 프레임 진행하였다.\n";
 	return "";
 }
 NE::NEString SaveCommand::execute(const NEStringSet& parameters)
@@ -436,14 +434,8 @@ NE::NEString LoadCommand::execute(const NEStringSet& parameters)
 					return;
 				}
 
-				for(LG::WindowList::Iterator* i=LG::Core::windows.getIterator(0)
-					; i
-					; i=i->getNext())
-				{
-					i->getValue().delete_me = true;
-				}
-
-				LG::Core::open(NodeSetTerminal());
+				::Core::initializeWindows(::Core::debug_windows);
+				::Core::initializeWindows(LG::Core::windows);
 			}
 
 			delete_me = true;
@@ -474,14 +466,8 @@ NE::NEString NewCommand::execute(const NEStringSet& parameters)
 					return;
 				}
 
-				for(LG::WindowList::Iterator* i=LG::Core::windows.getIterator(0)
-					; i
-					; i=i->getNext())
-				{
-					i->getValue().delete_me = true;
-				}
-
-				LG::Core::open(NodeSetTerminal());
+				::Core::initializeWindows(::Core::debug_windows);
+				::Core::initializeWindows(LG::Core::windows);
 			}
 
 			delete_me = true;
@@ -527,5 +513,26 @@ NE::NEString HelpCommand::execute(const NEStringSet& parameters)
 NE::NEString HeaderCommand::execute(const NEStringSet& parameters)
 {
 	LG::Core::open(HeaderModifier());
+	return "";
+}
+NE::NEString ObserveCommand::execute(const NEStringSet& parameters)
+{
+	NEEventHandler& handler = Editor::getInstance().getEventHandler();
+	type_result r = RESULT_SUCCESS;
+	if(parameters.getLength() <= 0)
+		if(handler.isTestRunning())
+			r = handler.pauseTest();
+		else
+			r = handler.resumeTest();
+	else if(parameters[0] == "-debug")
+		r = handler.resumeTest();	
+	else if(parameters[0] == "-script")
+		r = handler.pauseTest();
+	else
+		r = RESULT_TYPE_ERROR | RESULT_ABORT_ACTION;
+
+	if(NEResult::hasError(r))
+		return "ERROR: 실패했습니다. 디버깅을 하지 않았거나, 옵션이 잘못되었습니다.";
+
 	return "";
 }
