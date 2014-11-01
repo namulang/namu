@@ -69,3 +69,20 @@ void Planetarium::onKeyPressed(char inputed)
 		break;
 	}
 }
+
+void Planetarium::onUpdateData()
+{
+	synchroSelectors();
+
+	NEListTemplate<NEObject*> selected;
+	getSelectedByFilter(selected);
+
+	NENodeCodeSet& ncs = ::Core::isObservingDebug() ? 
+		Kernal::getInstance().getNodeManager().getRootNodes()
+		:
+	Editor::getInstance().getScriptEditor().getScriptNodes();
+	generate(ncs);
+
+	root.updateLines(0);
+	root.markColor(selected);
+}

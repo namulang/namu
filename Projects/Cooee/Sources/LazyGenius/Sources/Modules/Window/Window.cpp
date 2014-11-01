@@ -76,10 +76,10 @@ namespace LG
 	void Window::call(Window& dialog)
 	{
 		dialog._caller = this;
-		type_index ind = Core::windows.pushFront(dialog);
+		type_index ind = Core::getWindowList().pushFront(dialog);
 		if(ind == NE_INDEX_ERROR) return;
 
-		Window& pushed = Core::windows[ind];
+		Window& pushed = Core::getWindowList()[ind];
 	}
 
 	void Window::draw()
@@ -92,7 +92,7 @@ namespace LG
 
 	void Window::onFocused()
 	{
-		onUpdateData();
+
 	}
 
 }

@@ -105,11 +105,10 @@ namespace LG
 		void setBackColor(int new_back);
 		void setColor(int new_fore, int new_back);
 		void readyBufferToDraw();
-		Buffer& getBuffer();
-		const Buffer& getBuffer() const;
 		int getWidth() const;
 		int getHeight() const;
 		virtual void release();
+		void fill(const Pixel& pixel);
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
 		{
 			return saver;

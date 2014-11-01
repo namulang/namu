@@ -14,6 +14,7 @@ NEString Core::path_to_be_copied;
 bool Core::is_cutting_off = false;
 int Core::test_running_count = 0;
 LG::WindowList Core::debug_windows;
+LG::WindowList Core::script_windows;
 
 void Core::openModifierFrom(const NEString& path, NEKey* real_key)
 {
@@ -138,9 +139,7 @@ void Core::openModifierFrom(NEKey& key)
 
 NEObject& Core::getObjectBy(const NEString& path, onObjectFound& handler)
 {
-	bool is_test_running = Editor::getInstance().getEventHandler().isTestRunning();
-	
-	NERootNodeCodeSet& nodeset = is_test_running ? 
+	NERootNodeCodeSet& nodeset = ::Core::isObservingDebug() ? 
 			Kernal::getInstance().getNodeManager().getRootNodes()
 		:
 			Editor::getInstance().getScriptEditor().getScriptNodes();	
@@ -258,23 +257,12 @@ NE::NEString Core::createPathBy(const NEObject& target)
 	return to_return;
 }
 
-LG::WindowList& Core::getFocusedWindowList()
-{
-	NEEventHandler& handler = Editor::getInstance().getEventHandler();
-	if(handler.isTestRunning())
-		return ::Core::debug_windows;
-	else
-		return LG::Core::windows;
-}
-
 void Core::initializeWindows(LG::WindowList& windows)
 {
 	for(LG::WindowList::Iterator* i=windows.getIterator(0)
 		; i
 		; i=i->getNext())
-	{
 		i->getValue().delete_me = true;
-	}
 
-	LG::Core::open(NodeSetTerminal());
+	windows.pushFront(NodeSetTerminal());
 }

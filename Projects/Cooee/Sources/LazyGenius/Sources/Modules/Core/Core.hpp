@@ -21,13 +21,13 @@ namespace LG
 
 			return false;
 		}
-		static void collectGarbages()
+		static void collectGarbages(LG::WindowList& windows)
 		{
 			windows.collectGarbages();
 		}
 		static void open(Window& window)
 		{
-			windows.pushFront(window);
+			getWindowList().pushFront(window);
 		}
 		static void setColor(int tcolor, int bcolor)
 		{
@@ -78,10 +78,18 @@ namespace LG
 		{
 			SetConsoleCursorPosition(output_handle, coord);
 		}
+		static WindowList& getWindowList()
+		{
+			return *_windows;
+		}
+		static void setWindowList(WindowList& windows)
+		{
+			_windows = &windows;
+		}
+		static WindowList* _windows;
 		static HANDLE output_handle;
 		static type_ushort max_width;
-		static type_ushort max_height;	
-		static WindowList windows;
+		static type_ushort max_height;
 		static bool color_lock;
 		static const int WIDTH;
 		static const int HEIGHT;

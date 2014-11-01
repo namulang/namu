@@ -22,10 +22,10 @@ namespace LG
 		virtual type_index remove(type_index index)
 		{
 			type_index n = SuperClass::remove(index);
-			_updateNewWindow();
+			_focusNewWindow();
 			return n;
 		}
-		void _updateNewWindow() {
+		void _focusNewWindow() {
 			Window* itr = 0;
 			if(itr = &getElement(0))
 				itr->onFocused();

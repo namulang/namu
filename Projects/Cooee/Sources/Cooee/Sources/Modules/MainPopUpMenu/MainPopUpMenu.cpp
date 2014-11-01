@@ -95,10 +95,10 @@ void MainPopUpMenu::onItemChoosed(type_index index, const NEString& chosen_conte
 		break;
 
 	case 8:	//	뒤로가기
-		if(::Core::getFocusedWindowList().getLength() <= 2)
+		if(LG::Core::getWindowList().getLength() <= 2)
 			call(Really());
 		else
-			::Core::getFocusedWindowList()[1].delete_me = true;
+			LG::Core::getWindowList()[1].delete_me = true;
 		delete_me = true;
 		break;		
 	}

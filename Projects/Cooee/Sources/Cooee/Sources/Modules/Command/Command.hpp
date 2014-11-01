@@ -134,6 +134,7 @@ public:
 		"		  run -new (처음부터 다시 실행한다)") {}
 	FUNC_CLONE(RunCommand)
 	virtual NEString execute(const NEStringSet& parameters);
+	void _initiateDebug();
 };
 class SaveCommand : public Command
 {
@@ -197,8 +198,10 @@ public:
 		"별칭	: observe, ob\n"
 		"사용법	: observe	(스크립트, 실행영역을 번갈아가며 전환)\n"
 		"		  observe -debug (실행영역으로 전환)\n"
+		"		  observe -debug -force (예외처리 무시, 강제로 실행영역으로 전환)\n"
+		"		  observe -script -force (예외처리 무시, 스크립트 영역으로 전환)\n"
 		"		  observe -script (스크립트 영역으로 전환)") {}
 	FUNC_CLONE(ObserveCommand)
-		virtual NEString execute(const NEStringSet& parameters);
-	void _markDeletionToAllWindows();
+	virtual NEString execute(const NEStringSet& parameters);
+	void _switchTo(LG::WindowList& windows, bool is_forcing = false);
 };

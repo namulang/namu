@@ -135,6 +135,12 @@ namespace LG
 		setXBufferPointer(0);
 		setYBufferPointer(0);
 		setColor(LIGHTGRAY, BLACK);
+		
+		Pixel p;
+		p.character = ' ';
+		p.fore_color = 0;
+		p.back_color = 0;
+		fill(p);
 	}
 
 	int LG::BackBuffer::getWidth() const
@@ -209,4 +215,13 @@ namespace LG
 
 			_swapBuffer();
 	}
+
+	void BackBuffer::fill(const Pixel& pixel)
+	{
+		Buffer& buf = getBackBuffer();
+		for(int r=0; r < buf.getLength() ;r++)
+			for(int c=0; c < buf[r].getLength() ; c++)
+				buf[r][c] = pixel;
+	}
+
 }

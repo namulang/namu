@@ -83,17 +83,7 @@ public:
 		}
 	}
 
-	virtual void onUpdateData()
-	{
-		synchroSelectors();
-
-		NEListTemplate<NEObject*> selected;
-		getSelectedByFilter(selected);
-
-		generate(Editor::getInstance().getScriptEditor().getScriptNodes());
-		root.updateLines(0);
-		root.markColor(selected);
-	}
+	virtual void onUpdateData();
 	virtual void onKeyPressed(char inputed);
 
 	virtual void onDraw()

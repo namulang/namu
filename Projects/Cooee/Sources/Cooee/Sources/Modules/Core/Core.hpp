@@ -43,7 +43,7 @@ public:
 	}
 	static void pushMessage(const NEString& msg)
 	{
-		::Core::getFocusedWindowList().pushFront(LG::MessageWindow(msg, WHITE, LIGHTRED));
+		LG::Core::getWindowList().pushFront(LG::MessageWindow(msg, WHITE, LIGHTRED));
 	}
 	static void openModifierFrom(const NEString& path, NEKey* real_key = 0);
 	static void openModifierFrom(NEKey& key);
@@ -140,6 +140,11 @@ public:
 		return key; 
 	}
 
+	static bool isObservingDebug()
+	{
+		return &LG::Core::getWindowList() == &::Core::debug_windows;
+	}
+
 	static NEObject& _searchNodeSet(NENodeCodeSet& nodeset, NEStringSet& work_position, onObjectFound& handler = onObjectFound())
 	{
 		//	pre:
@@ -196,7 +201,6 @@ public:
 	}
 	static NEObject& getObjectBy(const NEString& path, onObjectFound& handler = onObjectFound());
 	static NEString createPathBy(const NEObject& target);
-	static LG::WindowList& getFocusedWindowList();
 
 	static Commander commander;
 	static NEString path;
@@ -204,4 +208,5 @@ public:
 	static bool is_cutting_off;
 	static int test_running_count;
 	static LG::WindowList debug_windows;
+	static LG::WindowList script_windows;
 };

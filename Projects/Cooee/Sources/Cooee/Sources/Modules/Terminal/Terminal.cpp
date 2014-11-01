@@ -48,7 +48,7 @@ void Terminal::onKeyPressed(char inputed)
 	if(inputed == LG::MAP)
 	{
 		call(Planetarium());
-		(dynamic_cast<Planetarium&>(::Core::getFocusedWindowList()[0])).setFocus(::Core::getObjectBy(_path));
+		(dynamic_cast<Planetarium&>(LG::Core::getWindowList()[0])).setFocus(::Core::getObjectBy(_path));
 	}
 }
 
@@ -91,7 +91,7 @@ void Terminal::Status::onUpdateData()
 	y = owner.y;
 	width = owner.width;
 	height = 1;
-	back = RED;
+	back = ::Core::isObservingDebug() ? YELLOW : RED;
 	fore = BLACK;
 
 	text = " > " + NEString(NEType::getTypeName(owner.to_chk_valid));

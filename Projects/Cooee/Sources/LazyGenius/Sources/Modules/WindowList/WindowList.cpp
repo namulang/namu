@@ -23,7 +23,7 @@ namespace LG
 		}
 
 		if(indexes.getLength() > 0)
-			_updateNewWindow();
+			_focusNewWindow();
 	}
 
 	void WindowList::draw()

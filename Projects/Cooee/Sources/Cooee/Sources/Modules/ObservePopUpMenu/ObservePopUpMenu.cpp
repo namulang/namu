@@ -14,10 +14,10 @@ void ObservePopUpMenu::onUpdateData()
 	NEEventHandler& handler = Editor::getInstance().getEventHandler();
 	if(	handler.getHeader().getName() == "CooeeHandler"	&&
 		handler.getHeader().getDeveloper() == "kniz"	)
-		if( ! handler.isTestRunning())
-			list.items.push("테스트 영역 관측");
-		else
+		if( ::Core::isObservingDebug() )
 			list.items.push("스크립트 영역 관측");
+		else
+			list.items.push("테스트 영역 관측");			
 }
 
 void ObservePopUpMenu::onItemChoosed(type_index item_index, const NEString& chosen_content)
@@ -28,10 +28,12 @@ void ObservePopUpMenu::onItemChoosed(type_index item_index, const NEString& chos
 	{
 	case 0:	//	플라네타리움
 		::Core::commander.command("planetarium");
-		delete_me = true;
+		toCaller().delete_me = delete_me = true;
 		break;
 
 	case 1:	//	관측
+		::Core::commander.command("observe");
+		toCaller().delete_me = delete_me = true;
 		break;
 	}
 }

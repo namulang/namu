@@ -39,7 +39,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 				if(index <= items.getLengthLastIndex())
 					LG::Core::open(ModuleTerminal(toOwner()->getPath() + "/" + index));
 			}
-				//::Core::getFocusedWindowList().pushFront(ModuleEncyclo(false, &toOwner()->castObject()[index]));
+				//LG::Core::getWindowList().pushFront(ModuleEncyclo(false, &toOwner()->castObject()[index]));
 		}	
 		break;
 	case CANCEL:
@@ -55,7 +55,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 				return;
 
 			path += (choosed < 0 || items.getLength() < 0) ? mcs.getLength() : choosed;
-			::Core::getFocusedWindowList().pushFront(ModuleEncyclo(0, path));
+			LG::Core::getWindowList().pushFront(ModuleEncyclo(0, path));
 		}
 		break;
 

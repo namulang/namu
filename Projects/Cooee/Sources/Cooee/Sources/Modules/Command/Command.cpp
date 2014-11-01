@@ -42,7 +42,7 @@ NE::NEString ListCommand::execute(const NEStringSet& parameters)
 
 NE::NEString CloseCommand::execute(const NEStringSet& parameters)
 {
-	LG::WindowList& wins = ::Core::getFocusedWindowList();
+	LG::WindowList& wins = LG::Core::getWindowList();
 	if(wins.getLength() > 0)
 		wins[0].delete_me = true;
 
@@ -51,7 +51,7 @@ NE::NEString CloseCommand::execute(const NEStringSet& parameters)
 
 NE::NEString VersionCommand::execute(const NEStringSet& parameters)
 {
-	::Core::getFocusedWindowList().pushFront(LG::MessageWindow(NEString(_VERSION_STRING) + "\n\tby " + _DEVELOPER + "\n\ton " + _DATE, WHITE, LIGHTRED));
+	LG::Core::getWindowList().pushFront(LG::MessageWindow(NEString(_VERSION_STRING) + "\n\tby " + _DEVELOPER + "\n\ton " + _DATE, WHITE, LIGHTRED));
 	return "";
 }
 
@@ -63,7 +63,7 @@ NE::NEString PlanetarizeCommand::execute(const NEStringSet& parameters)
 	{
 		NEObject& parsed = ::Core::getObjectBy(parameters[0]);
 		if( ! &parsed) return "ERROR: 주어진 경로가 잘못되었네요.\n주어진 경로 : " + parameters[0];
-		Planetarium& planetarium = dynamic_cast<Planetarium&>(::Core::getFocusedWindowList()[0]);
+		Planetarium& planetarium = dynamic_cast<Planetarium&>(LG::Core::getWindowList()[0]);
 		planetarium.setFocus(parsed);
 	}
 
@@ -72,6 +72,9 @@ NE::NEString PlanetarizeCommand::execute(const NEStringSet& parameters)
 
 NE::NEString CopyCommand::execute(const NEStringSet& parameters)
 {
+	if(::Core::isObservingDebug())
+		return "ERROR: 테스트 영역에서는 수정과 열람만 가능합니다.";
+
 	type_result result = RESULT_SUCCESS;
 	switch(parameters.getLength())
 	{
@@ -90,6 +93,9 @@ NE::NEString CopyCommand::execute(const NEStringSet& parameters)
 
 NE::NEString CutCommand::execute(const NEStringSet& parameters)
 {
+	if(::Core::isObservingDebug())
+		return "ERROR: 테스트 영역에서는 수정과 열람만 가능합니다.";
+
 	type_result result = RESULT_SUCCESS;
 	switch(parameters.getLength())
 	{
@@ -118,6 +124,8 @@ NEType::Type AddCommand::_findKeyTypeBy(const NEString& type_name)
 
 NE::NEString AddCommand::execute(const NEStringSet& parameters)
 {
+	if(::Core::isObservingDebug())
+		return "ERROR: 테스트 영역에서는 수정과 열람만 가능합니다.";
 	if(parameters.getLength() <= 0)	return "ERROR: Container의 경로를 입력하세요";
 
 	NENodeCodeSet* nsc = 0;
@@ -205,6 +213,8 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 
 NE::NEString DeleteCommand::execute(const NEStringSet& parameters)
 {
+	if(::Core::isObservingDebug())
+		return "ERROR: 테스트 영역에서는 수정과 열람만 가능합니다.";
 	if(parameters.getLength() <= 0)	return "ERROR: 경로를 입력하세요.";
 
 	type_index idx_to_del = 0;
@@ -334,6 +344,8 @@ bool _pasteTryEverything(NEObject& target, NEObject& parent, NEObject& source, N
 //	Paste 함수:
 NE::NEString PasteCommand::execute(const NEStringSet& parameters)
 {
+	if(::Core::isObservingDebug())
+		return "ERROR: 테스트 영역에서는 수정과 열람만 가능합니다.";
 	if(parameters.getLength() <= 0) return "ERROR: 경로를 입력하세요";
 	if(	::Core::path_to_be_copied.getLength() <= 1) return "ERROR: 복사할 원본을 정해주세요";
 
@@ -373,16 +385,24 @@ NE::NEString RunCommand::execute(const NEStringSet& parameters)
 	if(parameters.getLength() <= 0)
 	{
 		if(handler.isTestRunning())
+		{
 			handler.resumeTest();
+			::Core::test_running_count = -1;
+		}
 		else
+		{
 			handler.initiateTest();
+			_initiateDebug();
+			::Core::test_running_count = -1;
+		}
 	}
 	else
 	{
 		if(parameters[0] == "-new")
 		{
 			handler.initiateTest();
-			::Core::initializeWindows(::Core::debug_windows);
+			_initiateDebug();
+			::Core::test_running_count = -1;
 		}
 		else
 		{
@@ -392,13 +412,20 @@ NE::NEString RunCommand::execute(const NEStringSet& parameters)
 			else
 			{
 				handler.initiateTest();
-				::Core::initializeWindows(::Core::debug_windows);
+				_initiateDebug();
 			}
 		}
 	}
 
 	return "";
 }
+void RunCommand::_initiateDebug()
+{
+	::Core::initializeWindows(::Core::script_windows);
+	::Core::initializeWindows(::Core::debug_windows);
+	::Core::commander.command("observe -debug -force");
+}
+
 NE::NEString SaveCommand::execute(const NEStringSet& parameters)
 {
 	NEString filename = (parameters.getLength() <= 0) ?
@@ -435,7 +462,8 @@ NE::NEString LoadCommand::execute(const NEStringSet& parameters)
 				}
 
 				::Core::initializeWindows(::Core::debug_windows);
-				::Core::initializeWindows(LG::Core::windows);
+				::Core::initializeWindows(::Core::script_windows);
+				::Core::commander.command("observe -script -force");
 			}
 
 			delete_me = true;
@@ -467,7 +495,8 @@ NE::NEString NewCommand::execute(const NEStringSet& parameters)
 				}
 
 				::Core::initializeWindows(::Core::debug_windows);
-				::Core::initializeWindows(LG::Core::windows);
+				::Core::initializeWindows(::Core::script_windows);
+				::Core::commander.command("observe -script -force");
 			}
 
 			delete_me = true;
@@ -517,22 +546,28 @@ NE::NEString HeaderCommand::execute(const NEStringSet& parameters)
 }
 NE::NEString ObserveCommand::execute(const NEStringSet& parameters)
 {
-	NEEventHandler& handler = Editor::getInstance().getEventHandler();
-	type_result r = RESULT_SUCCESS;
 	if(parameters.getLength() <= 0)
-		if(handler.isTestRunning())
-			r = handler.pauseTest();
+	{
+		if(::Core::isObservingDebug())
+			_switchTo(::Core::script_windows);
 		else
-			r = handler.resumeTest();
-	else if(parameters[0] == "-debug")
-		r = handler.resumeTest();	
-	else if(parameters[0] == "-script")
-		r = handler.pauseTest();
+			_switchTo(::Core::debug_windows);
+	}
 	else
-		r = RESULT_TYPE_ERROR | RESULT_ABORT_ACTION;
-
-	if(NEResult::hasError(r))
-		return "ERROR: 실패했습니다. 디버깅을 하지 않았거나, 옵션이 잘못되었습니다.";
+	{
+		bool is_forcing = parameters.getLength() >= 2 ? parameters[1] == "-force" : false;
+		if(parameters[0] == "-debug")
+			_switchTo(::Core::debug_windows, is_forcing);
+		else if(parameters[0] == "-script")
+			_switchTo(::Core::script_windows, is_forcing);
+	}
 
 	return "";
+}
+void ObserveCommand::_switchTo(LG::WindowList& windows, bool is_forcing)
+{
+	if( ! is_forcing && windows.getLength() <= 0)
+		return;
+
+	LG::Core::setWindowList(windows);
 }
