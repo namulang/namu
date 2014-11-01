@@ -22,6 +22,8 @@ public:
 		name_text.y = name_lable.y;
 		textbox.y = value_lable.y;
 		textbox.width = name_text.width;
+		textbox.text = value;
+		name_text.text = real_key ? real_key->getName() : "";
 		
 		regist(3, &name_lable, &value_lable, &name_text);
 	}
@@ -48,8 +50,6 @@ public:
 		focused.back = LIGHTRED;
 		else_one.fore = LIGHTGRAY;
 		else_one.back = DARKGRAY;
-		textbox.text = value;
-		name_text.text = real_key ? real_key->getName() : "";
 	}
 
 	virtual void onKeyPressed(char inputed)

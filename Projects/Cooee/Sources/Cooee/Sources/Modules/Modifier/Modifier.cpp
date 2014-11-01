@@ -15,6 +15,8 @@ Modifier<NEBooleanKey>::Modifier(NEBooleanKey& key)
 	name_text.x = sw.x = name_lable.x + name_lable.width;
 	name_text.y = name_lable.y;
 	sw.y = value_lable.y;
+	sw.setValue(value);
+	name_text.text = real_key ? real_key->getName() : "";
 
 	regist(4, &sw, &name_lable, &value_lable, &name_text);
 }
@@ -48,8 +50,6 @@ void Modifier<NEBooleanKey>::onUpdateData()
 	else_one.back = DARKGRAY;
 	else_one.onUpdateData();
 	focused.onUpdateData();
-	sw.setValue(value);
-	name_text.text = real_key ? real_key->getName() : "";
 }
 
 void Modifier<NEBooleanKey>::_setInputed(Gliph& target)

@@ -32,6 +32,7 @@ void ModuleEncyclo::ModuleList::onKeyPressed(char inputed)
 				mh.getName() + " " + mh.getDeveloper() + " " + mh.getRevision() + " " + 
 				toOwner()->path_to_added);
 		}
+		toOwner()->delete_me = true;
 		break;
 
 	case CANCEL:
