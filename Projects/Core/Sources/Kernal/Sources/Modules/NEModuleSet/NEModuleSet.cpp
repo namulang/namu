@@ -45,7 +45,6 @@ namespace NE
 		NEModule& pushed = getElement(index);
 		pushed._scriptcode = index;
 
-		pushed._onArgumentsFetched();
 		pushed._onModuleFetched();
 	}
 }

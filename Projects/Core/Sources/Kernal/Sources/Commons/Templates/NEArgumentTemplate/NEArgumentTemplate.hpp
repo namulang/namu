@@ -12,68 +12,27 @@ namespace NE
 		typedef NEArgumentBase SuperClass;
 
 	public:	
-		NEArgumentTemplate()
-			: SuperClass(T().getType())
-		{
-
-		}
-		NEArgumentTemplate(typename const T::Trait& default_value)
-			: SuperClass(T().getType()), _default(default_value)
-		{
-			
-		}
+		NEArgumentTemplate();
+		NEArgumentTemplate(typename const T::Trait& default_value);
 
 	public:
-		T& getBindedKey() { return static_cast<T&>(getBinded()); }
-		const T& getBindedKey() const { return static_cast<T&>(getBinded()); }
+		T& getBindedKey();
+		const T& getBindedKey() const;
 
 	public:
-		virtual NEObject& clone() const
-		{
-			return *(new ThisClass(*this));
-		}
-		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
-		{
-			SuperClass::serialize(saver);
+		virtual NEObject& clone() const;
+		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
+		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 
-			return saver << _default;
-		}
-		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader)
-		{
-			SuperClass::serialize(loader);
-
-			return loader >> _default;
-		}
-		
 	public:
-		typename T::Trait& getValue() 
-		{
-			if(isBinded())
-				return getBindedKey().getValue();
-			else
-				return _default.getValue();
-		}
-		virtual type_result bind()
-		{
-			if(isBinded())	return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-
-			type_result result = SuperClass::bind();
-			if( NEResult::hasError(result)						||	
-				! getBinded().isSubClassOf(getTypeToBeBinded())	)
-				return RESULT_TYPE_ERROR | result;
-
-			return result;
-		}
-		const T& getDefault() const
-		{
-			return _default;
-		}
-		T& getDefault()
-		{
-			return _default;
-		}
+		typename T::Trait& getValue();
+		virtual type_result bind();
+		const T& getDefault() const;
+		T& getDefault();
 
 	private:
 		T _default;
 	};
 }
+
+#include "NEArgumentTemplate.inl"

@@ -365,6 +365,18 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="NEArgumentInterfaceBase"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NEArgumentInterfaceBase\NEArgumentInterfaceBase.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NEArgumentInterfaceBase\NEArgumentInterfaceBase.hpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Functions"
@@ -844,6 +856,22 @@
 							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEArgumentTemplate\NEArgumentTemplate.hpp"
 							>
 						</File>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEArgumentTemplate\NEArgumentTemplate.inl"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="NEITArgument"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEITArgument\NEITArgument.hpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEITArgument\NEITArgument.inl"
+							>
+						</File>
 					</Filter>
 				</Filter>
 			</Filter>
@@ -1216,6 +1244,14 @@
 								>
 								<File
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleDepthList\NEModuleDepthList.hpp"
+									>
+								</File>
+							</Filter>
+							<Filter
+								Name="NEArgumentInterfaceList"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentInterfaceList\NEArgumentInterfaceList.hpp"
 									>
 								</File>
 							</Filter>

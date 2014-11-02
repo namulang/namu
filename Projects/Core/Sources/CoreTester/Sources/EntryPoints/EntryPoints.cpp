@@ -15,11 +15,12 @@ public:
 	{
 		_scriptcode = new1;
 	}
-	NEArgumentTemplate<NEIntKey> a;
-	virtual type_result _onArgumentsFetched()
+	NEITArgument<NEIntKey> a;
+	virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
 	{		
-		getArguments().create(1);
-		return getArguments().push(a);
+		tray.push(a);
+
+		return RESULT_SUCCESS;
 	}
 
 	virtual type_result _onExecute()
@@ -52,12 +53,13 @@ public:
 	{
 		_scriptcode = new1;
 	}
-	NEArgumentTemplate<NEIntKey> a;
-	virtual type_result _onArgumentsFetched()
+	NEITArgument<NEIntKey> a;
+	virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
 	{
-		a.getDefault().getValue()++;
-		getArguments().create(1);
-		return getArguments().push(a);
+		a.getDefault().getValue()++;		
+		tray.push(a);
+		
+		return RESULT_SUCCESS;
 	}
 
 	virtual type_result initialize()
@@ -586,7 +588,7 @@ public:
 
 		MyMod mine;
 		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
-		mine.a.setKeyName("age");
+		mine.a.getConcreteInstance().setKeyName("age");
 		mine.a.getDefault().getValue() = 18;
 
 		NENode& node1 = ns[ns.push(NENode())];
@@ -595,7 +597,8 @@ public:
 		node1.getModuleSet().create(1);
 		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
 
-		if(	mine.a.getDefault().getValue() != module1.a.getDefault().getValue())
+		if(	mine.a.getDefault().getValue() != module1.a.getDefault().getValue()	||
+			&mine.a == &module1.a												)
 			return false;
 		return true;			
 	}
@@ -617,7 +620,8 @@ public:
 		manager.initialize();
 
 		MyMod mine;
-		mine.a.setKeyName("age");
+		mine.initialize();
+		mine.a.getConcreteInstance().setKeyName("age");
 		mine.a.getDefault().getValue() = 18;
 
 		NENode& node1 = ns[ns.push(NENode())];
@@ -626,7 +630,7 @@ public:
 		node1.getModuleSet().create(1);
 		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
 
-		if(	mine.a.getKeyName() != module1.a.getKeyName())
+		if(	mine.a.getConcreteInstance().getKeyName() != module1.a.getConcreteInstance().getKeyName())
 			return false;
 
 		return true;			
@@ -649,7 +653,8 @@ public:
 		manager.initialize();
 
 		MyMod mine;
-		mine.a.setKeyName("age");
+		mine.initialize();
+		mine.a.getConcreteInstance().setKeyName("age");
 		mine.a.getDefault().getValue() = 18;
 
 		NENode& node1 = ns[ns.push(NENode())];

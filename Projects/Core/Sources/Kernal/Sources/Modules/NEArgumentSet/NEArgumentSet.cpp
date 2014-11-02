@@ -1,5 +1,6 @@
 #include "NEArgumentSet.hpp"
 #include "../Kernal/Kernal.hpp"
+#include "../../Commons/Units/NEArgumentInterfaceBase/NEArgumentInterfaceBase.hpp"
 
 namespace NE
 {
@@ -90,6 +91,55 @@ namespace NE
 		}
 
 		return to_return;
+	}
+
+	type_index NEArgumentSet::insert(type_index index, NEArgumentInterfaceBase& basis)
+	{
+		type_result r = basis._onInsertedInArguments(index, *this);
+		r |= basis._onBindInstance(getElement(index));
+		if(NEResult::hasError(r))
+			return NE_INDEX_ERROR;
+
+		return index;
+	}
+
+	type_index NEArgumentSet::push(NEArgumentInterfaceList& basises)
+	{
+		typedef NEArgumentInterfaceList::Iterator Iterator;
+
+		for(Iterator* itr=basises.getIterator(0); itr ;itr=itr->getNext())
+			push(itr->getValue());
+
+		return RESULT_SUCCESS;
+	}	
+
+	NE::type_index NEArgumentSet::push(NEArgumentInterfaceBase& basis)
+	{
+		return insert(getLength(), basis);
+	}
+
+	NE::type_index NEArgumentSet::pushFront(NEArgumentInterfaceBase& basis)
+	{
+		return insert(0, basis);
+	}
+
+	type_result NEArgumentSet::bind(NEArgumentInterfaceList& basis)
+	{
+		int n=0;
+		for(int n=0; n < getLength() ;n++, basis.popFront())
+		{
+			NEArgumentBase& e = getElement(0);
+			NEArgumentInterfaceBase& base = basis[0];
+			
+			if(e.getTypeToBeBinded() != basis[0].getKeyType())
+				base._onInsertedInArguments(n, *this);
+			base._onBindInstance(e);
+		}
+
+
+		//	post:
+		push(basis);	//		남아있는 것들은 모두 추가한다.
+		return RESULT_SUCCESS;
 	}
 
 }
