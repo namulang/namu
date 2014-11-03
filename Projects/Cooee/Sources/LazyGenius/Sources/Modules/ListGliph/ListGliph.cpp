@@ -26,16 +26,36 @@ namespace LG
 		WORD backup_color = Core::getColor();
 		BackBuffer& buf = Core::back_buffer;
 
-		for(int y1=0; y1 < items.getLength() ;y1++) {
-			if(y1+1 > height)	continue;			
+		int half_height = (height / 2),
+			list_head_index = choosed - half_height,
+			bottom_limit_index = items.getLength()-height;	//	무조건 이거보단 list_head가 커야 한다.
+		if(bottom_limit_index < 0)
+			bottom_limit_index = 0;
+		if(list_head_index < 0)
+			list_head_index = 0;
+		if(list_head_index > bottom_limit_index)
+			list_head_index = bottom_limit_index;
 
-			buf.setBufferPointer(x, y + y1);
+		int last_index = list_head_index + height-1;
+		for(int y1=list_head_index; y1 <= last_index ;y1++) {
+			if(y1 > items.getLengthLastIndex())	continue;
+
+			int y_coordinate = y1 - list_head_index;
+			buf.setBufferPointer(x, y + y_coordinate);
 			if(y1 == choosed)
 				buf.setColor(choosed_fore, choosed_back);
 			else
 				buf.setColor(fore, back);
 
-			NEString s = (items.getLength() > height && y1+1 == height) ? " . . . " : items[y1];
+			bool	is_there_more_contents_after	= items.getLengthLastIndex() > last_index,
+					is_there_more_contents_before	= list_head_index != 0;
+
+			NEString s = 
+				(	(is_there_more_contents_after && y1 == last_index)			||
+					(is_there_more_contents_before && y1 == list_head_index)	)	? 
+				" . . . " 
+				: 
+			items[y1];
 			s.resize(width + 1);
 			s.pop();
 			if(s.getLength() < width)
@@ -49,6 +69,7 @@ namespace LG
 		Core::setColor(backup_color);
 		Core::setCursorTo(backup_pos);
 	}
+
 
 	void ListGliph::onKeyPressed(char inputed) {
 		switch(inputed) {
