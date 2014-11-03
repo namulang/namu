@@ -54,17 +54,17 @@ namespace NE
 		if(isBinded())
 			return getBindedKey().getValue();
 		else
-			return _default.getValue();
+			return _default;
 	}
 
 	template <typename T>
-	const T& NE::NEArgumentTemplate<T>::getDefault() const
+	typename const T::Trait& NE::NEArgumentTemplate<T>::getDefault() const
 	{
 		return _default;
 	}
 
 	template <typename T>
-	T& NE::NEArgumentTemplate<T>::getDefault()
+	typename T::Trait& NE::NEArgumentTemplate<T>::getDefault()
 	{
 		return _default;
 	}

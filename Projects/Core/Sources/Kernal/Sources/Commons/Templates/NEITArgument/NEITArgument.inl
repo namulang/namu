@@ -15,7 +15,7 @@ namespace NE
 	}
 
 	template <typename T>
-	NE::NEITArgument<T>::NEITArgument(const T& new_default)
+	NE::NEITArgument<T>::NEITArgument(typename const T::Trait& new_default)
 		: _concrete_class(0x00), _default(new_default) 
 	{
 
@@ -28,11 +28,11 @@ namespace NE
 	}
 
 	template <typename T>
-	const T& NE::NEITArgument<T>::getDefault() const
+	typename const T::Trait& NE::NEITArgument<T>::getDefault() const
 	{
 		if( ! _concrete_class) return *nullpoint;
 
-		const T& to_return = _concrete_class->getDefault();
+		typename const T::Trait& to_return = _concrete_class->getDefault();
 		if( ! &to_return)
 			return _default;
 
@@ -40,31 +40,29 @@ namespace NE
 	}
 
 	template <typename T>
-	T& NE::NEITArgument<T>::getDefault()
+	typename T::Trait& NE::NEITArgument<T>::getDefault()
 	{
-		static T nulled = T();
-		if( ! _concrete_class)
-			nulled = _default;
-		else
+		typename static T::Trait nulled = T::Trait();
+		if(_concrete_class)
 		{
-			const T& to_return = _concrete_class->getDefault();
-			if( ! &to_return)
-				nulled = _default;
-			else
-				nulled = to_return;	//	default가 외부에서 변경되어도 값이 유지되도록 한다.
+			typename T::Trait& to_return = _concrete_class->getDefault();
+
+			return to_return;	//	default가 외부에서 변경되어도 값이 유지되도록 한다.
 		}		
-		
+
+		nulled = _default;
 		return nulled;
 	}
+
 
 	template <typename T>
 	typename T::Trait& NE::NEITArgument<T>::getValue()
 	{
-		if( ! _concrete_class) return getDefault().getValue();
+		if( ! _concrete_class) return getDefault();
 
-		T::Trait& to_return = _concrete_class->getValue();
+		typename T::Trait& to_return = _concrete_class->getValue();
 		if( ! &to_return)
-			return getDefault().getValue();
+			return getDefault();
 
 		return to_return;
 	}
@@ -72,11 +70,11 @@ namespace NE
 	template <typename T>
 	typename const T::Trait& NE::NEITArgument<T>::getValue() const
 	{
-		if( ! _concrete_class) return getDefault().getValue();
+		if( ! _concrete_class) return getDefault();
 
-		const T::Trait& to_return = _concrete_class->getValue();
+		typename const T::Trait& to_return = _concrete_class->getValue();
 		if( ! &to_return)
-			return getDefault().getValue();
+			return getDefault();
 
 		return to_return;
 	}
@@ -87,7 +85,7 @@ namespace NE
 		if(rhs.getLength() == rhs.getSize())
 			rhs.resize(rhs.getLength() + 1);
 
-		ConcreteClass& pushed = (ConcreteClass&) rhs[rhs.insert(index, ConcreteClass())];
+		ConcreteClass& pushed = (ConcreteClass&) rhs[rhs.insert(index, ConcreteClass(_default))];
 		if( ! &pushed)
 			return RESULT_TYPE_WARNING;
 

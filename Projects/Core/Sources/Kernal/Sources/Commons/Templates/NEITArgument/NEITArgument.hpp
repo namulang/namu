@@ -20,7 +20,7 @@ namespace NE
 	public:
 		NEITArgument();
 		NEITArgument(const ThisClass& rhs);
-		NEITArgument(const T& new_default);
+		NEITArgument(typename const T::Trait& new_default);
 
 	public:
 		ThisClass& operator=(const ThisClass& src);
@@ -35,8 +35,8 @@ namespace NE
 		const T& getKey() const;
 		typename T::Trait& getValue();
 		typename const T::Trait& getValue() const;
-		const T& getDefault() const;
-		T& getDefault();
+		typename const T::Trait& getDefault() const;
+		typename T::Trait& getDefault();
 
 	private:
 		virtual type_result _onInsertedInArguments(type_index index, NEArgumentSet& rhs);
@@ -44,7 +44,7 @@ namespace NE
 
 	private:
 		ConcreteClass* _concrete_class;
-		T _default;
+		typename T::Trait _default;
 	};
 
 	//	템플릿 클래스의 별칭 사용에 관하여:

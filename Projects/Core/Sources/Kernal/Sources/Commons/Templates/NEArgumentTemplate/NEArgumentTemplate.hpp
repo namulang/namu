@@ -27,11 +27,11 @@ namespace NE
 	public:
 		typename T::Trait& getValue();
 		virtual type_result bind();
-		const T& getDefault() const;
-		T& getDefault();
+		typename const T::Trait& getDefault() const;
+		typename T::Trait& getDefault();
 
 	private:
-		T _default;
+		typename T::Trait _default;
 	};
 }
 

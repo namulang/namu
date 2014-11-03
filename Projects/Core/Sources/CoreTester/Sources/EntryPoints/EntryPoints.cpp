@@ -56,7 +56,7 @@ public:
 	NEITArgument<NEIntKey> a;
 	virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
 	{
-		a.getDefault().getValue()++;		
+		a.getDefault()++;		
 		tray.push(a);
 		
 		return RESULT_SUCCESS;
@@ -66,13 +66,13 @@ public:
 	{
 		NEModule::initialize();
 
-		a.getDefault().getValue() += 5;
+		a.getDefault() += 5;
 		return RESULT_SUCCESS;
 	}
 
 	virtual type_result _onExecute()
 	{
-		a.getDefault().getValue() *= 2;
+		a.getDefault() *= 2;
 
 		return RESULT_SUCCESS;
 	}
@@ -425,7 +425,7 @@ public:
 		ms.resize(1);
 		ms.push(MyMod());
 		MyMod& mym = (MyMod&) ms[0];
-		mym.a.getDefault().getValue() = 1000;
+		mym.a.getDefault() = 1000;
 
 		ks.create(5);
 		ks.push(NEIntKey(5));
@@ -478,7 +478,7 @@ public:
 		}
 
 		MyMod& mym1 = (MyMod&) ns[1].getModuleSet()[0];
-		if(mym1.a.getDefault().getValue() != 1000)
+		if(mym1.a.getDefault() != 1000)
 			return false;
 
 		return true;
@@ -562,12 +562,11 @@ public:
 		//	1. MyMod() 생성자 호출			; value = 100
 		//	2. cloned = MyMod().clone();	; value = 100
 		//	3. cloned.initialize()			; value = 105
-		//	3-1. cloned.onArgumentFetched()	; value = 106
 		MyMod2& mod = (MyMod2&) node1.getModuleSet()[node1.getModuleSet().push(MyMod2())];
 
-		manager.execute();	//					; value = 212
+		manager.execute();	//				; value = 210
 
-		return mod.a.getDefault().getValue() == 212;
+		return mod.a.getDefault() == 210;
 	}
 };
 class Test10 : public TestCase
@@ -589,7 +588,7 @@ public:
 		MyMod mine;
 		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
 		mine.a.getConcreteInstance().setKeyName("age");
-		mine.a.getDefault().getValue() = 18;
+		mine.a.getDefault() = 18;
 
 		NENode& node1 = ns[ns.push(NENode())];
 		node1.getKeySet().create(1);
@@ -597,7 +596,7 @@ public:
 		node1.getModuleSet().create(1);
 		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
 
-		if(	mine.a.getDefault().getValue() != module1.a.getDefault().getValue()	||
+		if(	mine.a.getDefault() != module1.a.getDefault()	||
 			&mine.a == &module1.a												)
 			return false;
 		return true;			
@@ -622,7 +621,7 @@ public:
 		MyMod mine;
 		mine.initialize();
 		mine.a.getConcreteInstance().setKeyName("age");
-		mine.a.getDefault().getValue() = 18;
+		mine.a.getDefault() = 18;
 
 		NENode& node1 = ns[ns.push(NENode())];
 		node1.getKeySet().create(1);
@@ -655,7 +654,7 @@ public:
 		MyMod mine;
 		mine.initialize();
 		mine.a.getConcreteInstance().setKeyName("age");
-		mine.a.getDefault().getValue() = 18;
+		mine.a.getDefault() = 18;
 
 		NENode& node1 = ns[ns.push(NENode())];
 		node1.getKeySet().create(1);
