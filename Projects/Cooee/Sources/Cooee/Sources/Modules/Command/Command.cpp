@@ -10,7 +10,7 @@
 
 //		N:1 삽입(지정) 용 함수 템플릿
 template <typename KeyContainer, typename Source>
-bool _pasteInKeyContainer(NEObject& cont, NEObject& src, NEType::Type src_type, type_index index = -1)
+bool _pasteInKeyContainer(NEObject& cont, const NEObject& src, NEType::Type src_type, type_index index = -1)
 {
 	NEType::Type cont_type = KeyContainer().getType();
 
@@ -21,7 +21,7 @@ bool _pasteInKeyContainer(NEObject& cont, NEObject& src, NEType::Type src_type, 
 		return false;
 
 	KeyContainer& c = static_cast<KeyContainer&>(cont);
-	Source& s = static_cast<Source&>(src);
+	const Source& s = static_cast<const Source&>(src);
 
 	if(c.getLength() == c.getSize())
 		c.resize(c.getLength() + 1);
@@ -36,7 +36,7 @@ bool _pasteInKeyContainer(NEObject& cont, NEObject& src, NEType::Type src_type, 
 
 //	Helper 함수 템플릿:
 template <typename Target, typename Source>
-bool _pasteTryEverything(NEObject& target, NEObject& parent, NEObject& source, NEType::Type src_type, type_index index)
+bool _pasteTryEverything(NEObject& target, NEObject& parent, const NEObject& source, NEType::Type src_type, type_index index)
 {
 	if(_pasteInKeyContainer<Target, Source>(parent, source, src_type, index))
 		return true;
