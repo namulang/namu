@@ -8,6 +8,42 @@
 #include "../GuideEncyclo/GuideEncyclo.hpp"
 #include "../Really/Really.hpp"
 
+//		N:1 삽입(지정) 용 함수 템플릿
+template <typename KeyContainer, typename Source>
+bool _pasteInKeyContainer(NEObject& cont, NEObject& src, NEType::Type src_type, type_index index = -1)
+{
+	NEType::Type cont_type = KeyContainer().getType();
+
+	if( ! &cont							||
+		! &src							||
+		! cont.isSubClassOf(cont_type)	||
+		! src.isSubClassOf(src_type)	)
+		return false;
+
+	KeyContainer& c = static_cast<KeyContainer&>(cont);
+	Source& s = static_cast<Source&>(src);
+
+	if(c.getLength() == c.getSize())
+		c.resize(c.getLength() + 1);
+
+	if(index != -1)
+		c.insert(index, s);
+	else
+		c.push(s);
+
+	return true;
+}
+
+//	Helper 함수 템플릿:
+template <typename Target, typename Source>
+bool _pasteTryEverything(NEObject& target, NEObject& parent, NEObject& source, NEType::Type src_type, type_index index)
+{
+	if(_pasteInKeyContainer<Target, Source>(parent, source, src_type, index))
+		return true;
+
+	return _pasteInKeyContainer<Target, Source>(target, source, src_type);
+}
+
 Command::Command(const NEString& names_delimetered_with_space, const NEString& new_help)
 : help(new_help)
 {
@@ -131,60 +167,37 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 {
 	if(::Core::isObservingDebug())
 		return "ERROR: 테스트 영역에서는 수정과 열람만 가능합니다.";
-	if(parameters.getLength() <= 0)	return "ERROR: Container의 경로를 입력하세요";
+	if(parameters.getLength() <= 0)    return "ERROR: Container의 경로를 입력하세요";
 
 	NENodeCodeSet* nsc = 0;
-	NEModuleCodeSet* msc = 0;		
+	NEModuleCodeSet* msc = 0;        
 	type_index index_to_add = NE_INDEX_ERROR;
 	NEObject* parent = 0x00;
+
 	if(parameters[0] == "-node")
 	{
 		if(parameters.getLength() < 2) return NEString("ERROR: 인자의 갯수가 2개여야 합니다. \n현재 인자 수 : ") + parameters.getLength();
 		_searchParent(parameters[1], index_to_add, &parent);
-		if( ! parent) return "ERROR: 경로가 잘못 됐네요.";
-		if(parent->isSubClassOf(NEType::NENODE_CODESET_KEY))
-			nsc = &((NENodeCodeSetKey&) parent).getValue();
-		if(parent->isSubClassOf(NEType::NENODE_CODESET))
-		{
-			if( ! nsc)
-				nsc = (NENodeCodeSet*) parent;
+		NEObject& target = ::Core::getObjectBy(parameters[1]);
 
-			if(nsc->getLength() >= nsc->getSize())
-				nsc->resize(nsc->getSize() + 1);
-
-			nsc->push(NENode());
-		}
-		else
-			return NEString("ERROR: 잘못된 경로입니다. 주어진 타입이 ") + parent->getTypeName();
+		NENode source;
+		if( ! _pasteTryEverything<NENodeCodeSet, NENode>(target, *parent, source, NEType::NENODE, index_to_add))
+			return    NEString("ERROR: 주어진 타겟(") + target.getTypeName() + ")과 원본(" + 
+			source.getTypeName() + ") 간에는 Paste가 불가능 합니다.";
 	} 
 	else if(parameters[0] == "-module")
 	{
 		if(parameters.getLength() < 5) return NEString("ERROR: 인자의 갯수가 5개여야 합니다. \n현재 인자 수 : ") + parameters.getLength();
-		_searchParent(parameters[4], index_to_add, &parent);				
-		if( ! &parent) return "ERROR: 경로가 잘못 됐네요.";
+		_searchParent(parameters[4], index_to_add, &parent);
+		NEObject& target = ::Core::getObjectBy(parameters[4]);
 
 		NEExportable::Identifier identifier(parameters[1], parameters[2], parameters[3].toInt());
+		const NEModule& source = Kernal::getInstance().getModuleManager().getModule(identifier);
+		if( ! &source) return "ERROR: 잘못된 Identifier 입니다.";
 
-		switch(parent->getType())
-		{
-		case NEType::NEMODULE_CODESET_KEY:
-			msc = &(((NEModuleCodeSetKey*) parent)->getValue());
-
-		case NEType::NEMODULE_CODESET:
-			{
-				if( ! msc)
-					msc = (NEModuleCodeSet*) parent;
-
-				if(msc->getLength() >= msc->getSize())
-					msc->resize(msc->getSize() + 1);
-
-				msc->insert(index_to_add, Kernal::getInstance().getModuleManager().getModule(identifier));
-			}			
-			break;
-
-		default:
-			return NEString("ERROR: 잘못된 경로입니다. 주어진 타입이 ") + parent->getTypeName();
-		}
+		if( ! _pasteTryEverything<NEModuleCodeSet, NEModule>(target, *parent, source, NEType::NEMODULE, index_to_add))
+			return    NEString("ERROR: 주어진 타겟(") + target.getTypeName() + ")과 원본(" + 
+			source.getTypeName() + ") 간에는 Paste가 불가능 합니다.";
 	}
 	else if(parameters[0] == "-key")
 	{
@@ -193,24 +206,11 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 		const NEKey& source = Kernal::getInstance().getKeyManager().getKey(_findKeyTypeBy(parameters[1]));
 		if( ! &source) return "ERROR: " + parameters[1] + "에 해당하는 키가 없습니다.";
 		_searchParent(parameters[2], index_to_add, &parent);
-		if( ! parent) return "ERROR: 경로가 잘못 됐네요.";
+		NEObject& target = ::Core::getObjectBy(parameters[2]);
 
-		switch(parent->getType())
-		{
-		case NEType::NEKEY_CODESET:
-			{
-				NEKeyCodeSet* kcs = (NEKeyCodeSet*) parent;
-				if(kcs->getLength() >= kcs->getSize())
-					kcs->resize(kcs->getSize() + 1);
-
-				kcs->push(source);
-			}
-
-			break;
-
-		default:
-			return NEString("ERROR: 잘못된 경로입니다. 주어진 타입이 ") + parent->getTypeName();
-		}
+		if( ! _pasteTryEverything<NEKeyCodeSet, NEKey>(target, *parent, source, NEType::NEKEY, index_to_add))
+			return    NEString("ERROR: 주어진 타겟(") + target.getTypeName() + ")과 원본(" + 
+			source.getTypeName() + ") 간에는 Paste가 불가능 합니다.";
 	}
 
 	return "";
@@ -312,41 +312,6 @@ NE::NEString OrphanCommand::_searchParent(const NEString& full_path, type_index&
 //			Paste 함수에서는 반환값이 true가 나올때까지 가능한 한 모든 조합의 
 //			함수템플릿을 호출한다.
 //			
-//		N:1 삽입(지정) 용 함수 템플릿
-template <typename KeyContainer, typename Source>
-bool _pasteInKeyContainer(NEObject& cont, NEObject& src, NEType::Type src_type, type_index index = -1)
-{
-	NEType::Type cont_type = KeyContainer().getType();
-
-	if( ! &cont							||
-		! &src							||
-		! cont.isSubClassOf(cont_type)	||
-		! src.isSubClassOf(src_type)	)
-		return false;
-
-	KeyContainer& c = static_cast<KeyContainer&>(cont);
-	Source& s = static_cast<Source&>(src);
-
-	if(c.getLength() == c.getSize())
-		c.resize(c.getLength() + 1);
-
-	if(index != -1)
-		c.insert(index, s);
-	else
-		c.push(s);
-
-	return true;
-}
-//	Helper 함수 템플릿:
-template <typename Target, typename Source>
-bool _pasteTryEverything(NEObject& target, NEObject& parent, NEObject& source, NEType::Type src_type, type_index index)
-{
-	if(_pasteInKeyContainer<Target, Source>(parent, source, src_type, index))
-		return true;
-
-	return _pasteInKeyContainer<Target, Source>(target, source, src_type);
-}
-//	Paste 함수:
 NE::NEString PasteCommand::execute(const NEStringSet& parameters)
 {
 	if(::Core::isObservingDebug())

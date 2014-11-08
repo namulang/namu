@@ -82,11 +82,7 @@ public:
 			return *null_pointer;
 		}
 		if(index < 0 || index > moduleset.getLengthLastIndex())
-		{
-			pushMessage("잘못된 인덱스. 0보다 작거나, 모듈셋의 크기를 넘습니다.");
 			return *null_pointer;
-		}
-
 
 
 		//	main:
@@ -165,11 +161,7 @@ public:
 			return *null_pointer;
 		}
 		if(index < 0 || index > nodeset.getLengthLastIndex())
-		{
-			pushMessage("잘못된 인덱스. 0보다 작거나, 노드셋의 크기를 넘습니다.");
 			return *null_pointer;
-		}
-
 
 
 		//	main:
