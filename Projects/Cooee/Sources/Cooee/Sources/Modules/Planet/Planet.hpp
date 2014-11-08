@@ -69,7 +69,7 @@ public:
 			fore = CYAN;
 			back = LIGHTCYAN;
 		}
-		else
+		else if(real)
 		{
 			if(real->isSubClassOf(NEType::NEKEY))
 			{
