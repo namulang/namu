@@ -43,13 +43,22 @@ void Terminal::onUpdateData()
 
 void Terminal::onKeyPressed(char inputed)
 {
-	Window::onKeyPressed(inputed);
+    if(inputed != LG::CLOSE)
+        Window::onKeyPressed(inputed);
 
-	if(inputed == LG::MAP)
-	{
-		call(Planetarium());
-		(dynamic_cast<Planetarium&>(LG::Core::getWindowList()[0])).setFocus(::Core::getObjectBy(_path));
-	}
+    switch(inputed)
+    {
+    case LG::MAP:
+        {
+            call(Planetarium());
+            (dynamic_cast<Planetarium&>(LG::Core::getWindowList()[0])).setFocus(::Core::getObjectBy(_path));
+        }
+        break;
+
+    case LG::CLOSE:
+        ::Core::commander.command("close " + getPath());
+        break;
+    }
 }
 
 void Terminal::setPath(const NEString& new_path)
