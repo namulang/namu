@@ -77,7 +77,7 @@ namespace NE
 		type_result result = SuperClass::bind();
 		if( NEResult::hasError(result)						||	
 			! getBinded().isSubClassOf(getTypeToBeBinded())	)
-			return RESULT_TYPE_ERROR | result;
+			return RESULT_TYPE_ERROR | unbind();
 
 		return result;
 	}

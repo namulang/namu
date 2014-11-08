@@ -25,10 +25,7 @@ namespace NE
 		_keyname = new_keyname;
 		
 		//	Release Binding Á¤º¸:
-		_real_index = NE_INDEX_ERROR;
-		_comparing_id = NE_INDEX_ERROR;
-
-		return RESULT_SUCCESS;
+		return unbind();
 	}
 
 	const NETString& NEKeyNameBinder::getKeyName() const

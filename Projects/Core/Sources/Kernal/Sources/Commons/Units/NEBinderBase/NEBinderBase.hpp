@@ -41,6 +41,9 @@ namespace NE
 		virtual NEObject& clone() const;
 		virtual NEType::Type getType() const;
 
+	public:
+		type_result unbind();
+
 	private:
 		const ThisClass& _assign(const ThisClass& source);
 		void _release();

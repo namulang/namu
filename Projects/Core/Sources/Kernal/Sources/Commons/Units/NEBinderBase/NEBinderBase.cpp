@@ -124,4 +124,12 @@ namespace NE
 	{
 		return NENodeSelector::_interface(_manager_type);
 	}
+
+	type_result NEBinderBase::unbind()
+	{
+		_real_index = NE_INDEX_ERROR;
+		_comparing_id = NE_INDEX_ERROR;
+
+		return RESULT_SUCCESS;
+	}
 }
