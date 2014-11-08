@@ -6,6 +6,7 @@
 #include "../ModuleEncyclo/ModuleEncyclo.hpp"
 #include "../NodeSetTerminal/NodeSetTerminal.hpp"
 #include "../GuideEncyclo/GuideEncyclo.hpp"
+#include "../Really/Really.hpp"
 
 Command::Command(const NEString& names_delimetered_with_space, const NEString& new_help)
 : help(new_help)
@@ -43,8 +44,12 @@ NE::NEString ListCommand::execute(const NEStringSet& parameters)
 NE::NEString CloseCommand::execute(const NEStringSet& parameters)
 {
 	LG::WindowList& wins = LG::Core::getWindowList();
-	if(wins.getLength() > 0)
+	if(wins.getLength() > 1)
 		wins[0].delete_me = true;
+	else if( ! ::Core::isObservingDebug())
+		::Core::commander.command("exit");
+	else
+		::Core::pushMessage("이 창은 닫을 수 없어요");
 
 	return "";
 }
@@ -570,4 +575,10 @@ void ObserveCommand::_switchTo(LG::WindowList& windows, bool is_forcing)
 		return;
 
 	LG::Core::setWindowList(windows);
+}
+NEString ExitCommand::execute(const NEStringSet& parameters)
+{
+	LG::Core::open(Really());
+
+	return "";
 }

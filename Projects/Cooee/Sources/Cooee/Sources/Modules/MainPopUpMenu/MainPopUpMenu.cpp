@@ -96,7 +96,7 @@ void MainPopUpMenu::onItemChoosed(type_index index, const NEString& chosen_conte
 
 	case 8:	//	뒤로가기
 		if(LG::Core::getWindowList().getLength() <= 2)
-			call(Really());
+			::Core::commander.command("exit");
 		else
 			LG::Core::getWindowList()[1].delete_me = true;
 		delete_me = true;

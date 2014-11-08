@@ -37,7 +37,7 @@ Command& Commander::getCommand(const NEString& command_name)
 
 void Commander::_initializeCommands()
 {
-	create(16);
+	create(17);
 	push(HelpCommand());
 	push(ListCommand());
 	push(CloseCommand());
@@ -57,4 +57,5 @@ void Commander::_initializeCommands()
 	push(CutCommand());
 
 	push(ObserveCommand());
+	push(ExitCommand());
 }

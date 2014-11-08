@@ -86,14 +86,3 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 		break;
 	}
 }
-
-void NodeSetTerminal::onKeyPressed(char inputed)
-{
-	if(inputed == CLOSE)
-	{
-		if(LG::Core::getWindowList().getLength() == 1)
-			call(Really());
-	}
-	else
-		Terminal::onKeyPressed(inputed);
-}

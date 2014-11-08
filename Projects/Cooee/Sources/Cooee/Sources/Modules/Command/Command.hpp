@@ -205,3 +205,13 @@ public:
 	virtual NEString execute(const NEStringSet& parameters);
 	void _switchTo(LG::WindowList& windows, bool is_forcing = false);
 };
+class ExitCommand : public Command
+{
+public:
+	ExitCommand() : Command("exit",
+		"프로그램을 종료한다.\n"
+		"별칭	: exit\n"
+		"사용법	: exit") {}
+	FUNC_CLONE(ExitCommand)
+	virtual NEString execute(const NEStringSet& parameters);
+};
