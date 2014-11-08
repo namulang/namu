@@ -11,9 +11,10 @@ namespace LG
 		ListGliph(const ListGliph& rhs);
 
 		virtual void onDraw();
+		virtual void onUpdateData();
 		virtual void onKeyPressed(char inputed);
 
-		type_ushort choosed;
+		type_short choosed;
 		NEStringSet items;
 		int choosed_fore, choosed_back;
 	};

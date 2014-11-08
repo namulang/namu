@@ -227,7 +227,8 @@ public:
 					item[0] = '<';
 					item[1] = '-';
 					item[2] = ' ';
-					item += " ->";
+					if(item.find(" ->") == NE_INDEX_ERROR)
+						item += " ->";
 				}
 				else if(item.getLength() > 0 && item[0] == '<')
 				{
@@ -293,7 +294,7 @@ public:
 					item[0] = '<';
 					item[1] = '-';
 					item[2] = ' ';
-					if(item.getLength() > 1 && item[item.getLengthLastIndex()-1] != '>')
+					if(item.find(" ->") == NE_INDEX_ERROR)
 						item += " ->";
 				}
 				else if(item.getLength() > 0 && item[0] == '<')

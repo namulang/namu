@@ -25,20 +25,24 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 	ListGliph::onKeyPressed(inputed);
 
 	type_index	choosed = toOwner()->contents.choosed,
-				index	= toOwner()->real_key ? choosed-1 : choosed;
-	NEString path = toOwner()->getPath() + "/" + index;
+				index   = toOwner()->real_key ? choosed-1 : choosed;
+	NEString	path	= toOwner()->getPath() + "/" + index;
 
 	switch(inputed) 
 	{
 	case CONFIRM:
 		{
-			if(text == "" || text.getLength() <= 0)
-				text = toOwner()->contents.createCommand();
+			//if(text == "" || text.getLength() <= 0)
+			//    text = toOwner()->contents.createCommand();
 
 			if(index == -1)
-				toOwner()->call(NodeNameInputWindow(toOwner()->real_key->getName()));
+			{
+				if(toOwner()->real_key)
+					toOwner()->call(NodeNameInputWindow(toOwner()->real_key->getName()));
+			}
 			else
-				LG::Core::getWindowList().pushFront(NodeTerminal(toOwner()->getPath() + "/" + index));
+				if(items.getLength() > 0)
+					::Core::commander.command("list " + toOwner()->getPath() + "/" + index);
 			return;
 		}
 		break;
@@ -48,10 +52,8 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 		break;
 
 	case REMOVE:
-		if(index >= 0)
-			::Core::commander.command(NEString("delete ") + path);
-		else
-			::Core::commander.command("delete " + toOwner()->getPath());
+		if(index >= 0 && items.getLength() > 0)
+			::Core::commander.command(NEString("delete ") + path);        
 		break;
 
 	case ADD:
@@ -59,6 +61,7 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 			::Core::commander.command(NEString("add -node ") + path);
 		else
 			::Core::commander.command("add -node " + toOwner()->getPath());
+		toOwner()->onUpdateData();
 		break;
 
 	case COPY:
@@ -73,6 +76,7 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 			::Core::commander.command("paste " + path);
 		else
 			::Core::commander.command("paste " + toOwner()->getPath());
+		toOwner()->onUpdateData();
 		break;
 
 	case CUT:

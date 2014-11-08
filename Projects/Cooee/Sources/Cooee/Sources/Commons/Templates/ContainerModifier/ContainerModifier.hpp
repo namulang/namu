@@ -19,6 +19,8 @@ public:
 
 		virtual void onUpdateData()
 		{
+			ListGliph::onUpdateData();
+
 			if( ! toOwner()) return;
 			KT& value = toOwner()->value;
 			if( ! &value) return;
@@ -32,43 +34,38 @@ public:
 		}
 		virtual void onKeyPressed(char inputed)
 		{
-			ListGliph::onKeyPressed(inputed);
+			int index = toOwner()->real_key ? choosed-1 : choosed;
 
 			switch(inputed)
 			{
-			case CANCEL:
+			case CLOSE:
 				toOwner()->delete_me = true;
 				break;
-			case CONFIRM:
+
+			case ADD:
 				{
-					class NameInputWindow : public ::LG::InputWindow
-					{
-					public:
-						NameInputWindow(const NEString& default_string) : InputWindow("새로운 키의 이름을 입력해주시기 바랍니다.", BLACK, LIGHTCYAN, default_string) {}
+					if(index < 0)
+						index = 0;
 
-						FUNC_TO_CALLER(ContainerModifier)
-						FUNC_CLONE(NameInputWindow)
-
-						virtual void onInputed()
-						{
-							toCaller().real_key->getName() = input.text;
-							delete_me = true;
-						}
-					};
-					NEKey* rk = toOwner()->real_key;
-					int index = rk ? choosed-1 : choosed;
-					if(index == -1)
-						toOwner()->call(NameInputWindow(rk->getName()));
-					else
-					{
-						typename KEY::Trait& key_value = toOwner()->value[index];
-						::LG::Core::open(Modifier<KEY>(key_value));	
-					}					
-				}				
+					KEYS::Trait& container = toOwner()->value;
+					if(container.getLength() == container.getSize())
+						container.resize(container.getLength() + 1);
+					KEY::Trait& inputed = container[container.insert(index, KEY::Trait())];
+					if(&inputed)
+						::LG::Core::open(Modifier<KEY>(inputed));
+				}
 				break;
 
-			case UP: case DOWN:
-				onDraw();
+			case REMOVE:
+				{					
+					if(index < 0)
+						index = 0;
+
+					KEYS::Trait& container = toOwner()->value;
+					container.remove(index);
+					if(container.getLength() == container.getSize())
+						container.resize(container.getLength() + 1);					
+				}
 				break;
 			}
 		}

@@ -37,7 +37,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 			else
 			{
 				if(index <= items.getLengthLastIndex())
-					LG::Core::open(ModuleTerminal(toOwner()->getPath() + "/" + index));
+					::Core::commander.command("list " + toOwner()->getPath() + "/" + index);
 			}
 				//LG::Core::getWindowList().pushFront(ModuleEncyclo(false, &toOwner()->castObject()[index]));
 		}	

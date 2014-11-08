@@ -41,6 +41,8 @@ public:
 		FUNC_CLONE(KeyNameList)
 		virtual void onUpdateData()
 		{
+			ListGliph::onUpdateData();
+
 			x = toOwner()->x;
 			y = toOwner()->y + 2;
 
@@ -63,6 +65,8 @@ public:
 		FUNC_CLONE(KeyTypeList)
 		virtual void onUpdateData()
 		{
+			ListGliph::onUpdateData();
+
 			x = toOwner()->x + 10;
 			y = toOwner()->y + 2;
 
@@ -84,6 +88,8 @@ public:
 		FUNC_CLONE(KeyDataList)
 		virtual void onUpdateData()
 		{
+			ListGliph::onUpdateData();
+
 			x = toOwner()->x + 20;
 			y = toOwner()->y + 2;
 

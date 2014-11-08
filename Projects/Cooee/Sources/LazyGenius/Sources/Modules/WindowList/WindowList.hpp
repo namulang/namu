@@ -12,10 +12,13 @@ namespace LG
 	public:
 		typedef NEListTemplate<Window*, true> SuperClass;
 
-		virtual type_index insert(type_index index, const Window* const source) {
+		virtual type_index insert(type_index index, const Window* const source) 
+		{
 			type_index n = SuperClass::insert(index, source);
 
 			getElement(n).onUpdateData();
+			if(n == 0)
+				getElement(n).onFocused();
 			return n;
 		}
 

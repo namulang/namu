@@ -31,6 +31,8 @@ void GuideEncyclo::GuideList::setPanelsTextByChoosed()
 
 void GuideEncyclo::GuideList::onUpdateData() 
 {
+	ListGliph::onUpdateData();
+
 	NEArrayTemplate<Guide>& guides = toOwner()->guides;
 	items.create(guides.getLength());
 

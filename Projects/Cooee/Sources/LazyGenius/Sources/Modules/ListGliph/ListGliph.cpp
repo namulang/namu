@@ -71,12 +71,31 @@ namespace LG
 	}
 
 
-	void ListGliph::onKeyPressed(char inputed) {
-		switch(inputed) {
-	case UP: if(choosed > 0) choosed--;
-		break;
-	case DOWN: if(choosed < items.getLengthLastIndex()) choosed++;
-		break;
-		}		
+	void ListGliph::onKeyPressed(char inputed) 
+	{
+		switch(inputed) 
+		{
+		case UP: 
+			choosed--;
+			if(choosed < 0) 
+				choosed = items.getLengthLastIndex();
+			break;
+
+		case DOWN: 
+			choosed++;
+			if(choosed > items.getLengthLastIndex())
+				choosed = 0;
+			break;
+		}        
+	}
+
+	void ListGliph::onUpdateData()
+	{
+		Gliph::onUpdateData();
+
+		if(choosed < 0)
+			choosed = 0;
+		else if(choosed > items.getLengthLastIndex())
+			choosed = items.getLengthLastIndex();
 	}
 }

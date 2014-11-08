@@ -10,4 +10,5 @@ void Really::onButtonPressed(bool witch_button)
 	}
 
 	delete_me = true;
+	::Core::commander.command("observe -script");
 }

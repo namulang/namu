@@ -67,8 +67,9 @@ void ScriptFilePopUpMenu::onItemChoosed(type_index index, const NEString& chosen
 
 			virtual void onItemChoosed(type_index chosen, const NEString& content)
 			{
-				if(chosen < 0) return;
-				
+				if(chosen < 0) return;				
+				if( ! &content) return;
+
 				::Core::commander.command("load " + content);
 				
 				getCaller().delete_me = delete_me = true;

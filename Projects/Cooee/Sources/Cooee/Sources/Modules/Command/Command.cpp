@@ -68,6 +68,7 @@ NE::NEString ListCommand::execute(const NEStringSet& parameters)
 {
 	const NEString& path = parameters[0];
 	NEObject& parsed = ::Core::getObjectBy(path);
+	if( ! &parsed) return "ERROR: " + path + "는 잘못된 경로 입니다.";
 
 	if(parsed.isSubClassOf(NEType::NEKEY))
 		::Core::openModifierFrom((NEKey&)parsed);
@@ -372,7 +373,13 @@ NE::NEString RunCommand::execute(const NEStringSet& parameters)
 		{
 			handler.initiateTest();
 			_initiateDebug();
-			::Core::test_running_count = -1;
+			::Core::test_running_count = parameters.getLength() > 1 ? parameters[1].toInt() : -1;
+		}
+		else if(parameters[0] == "-stop")
+		{
+			handler.stopTest();
+			::Core::commander.command("observe -script");
+			::Core::test_running_count = 0;
 		}
 		else
 		{
@@ -426,14 +433,13 @@ NE::NEString LoadCommand::execute(const NEStringSet& parameters)
 			{
 				NEEventHandler& handler = Editor::getInstance().getEventHandler();
 				if(NEResult::hasError(handler.loadScriptFile(NETString(_filepath))))
-				{
 					::Core::pushMessage("ERROR: 파일 로드 실패.");
-					return;
+				else
+				{
+					::Core::initializeWindows(::Core::debug_windows);
+					::Core::initializeWindows(::Core::script_windows);
+					::Core::commander.command("observe -script -force");
 				}
-
-				::Core::initializeWindows(::Core::debug_windows);
-				::Core::initializeWindows(::Core::script_windows);
-				::Core::commander.command("observe -script -force");
 			}
 
 			delete_me = true;

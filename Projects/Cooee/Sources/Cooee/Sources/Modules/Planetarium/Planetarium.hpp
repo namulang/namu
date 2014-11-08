@@ -85,19 +85,13 @@ public:
 
 	virtual void onUpdateData();
 	virtual void onKeyPressed(char inputed);
+	virtual void onFocused();
 
 	virtual void onDraw()
 	{
 		Window::onDraw();
 
 		root.onDraw();
-	}
-
-	virtual void onFocused()
-	{
-		root.planets.release();
-
-		Window::onFocused();
 	}
 
 	void generate(NEObject& real_root_object)

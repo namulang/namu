@@ -77,12 +77,21 @@ void Planetarium::onUpdateData()
 	NEListTemplate<NEObject*> selected;
 	getSelectedByFilter(selected);
 
+	root.updateLines(0);
+	root.markColor(selected);
+}
+
+void Planetarium::onFocused()
+{        
+	NEObject* real_object = focusing->real;
+	root.planets.release();
 	NENodeCodeSet& ncs = ::Core::isObservingDebug() ? 
 		Kernal::getInstance().getNodeManager().getRootNodes()
 		:
 	Editor::getInstance().getScriptEditor().getScriptNodes();
 	generate(ncs);
 
-	root.updateLines(0);
-	root.markColor(selected);
+	setFocus(*real_object);
+
+	Window::onFocused();
 }

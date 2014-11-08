@@ -19,6 +19,8 @@ public:
 
 	virtual void onUpdateData()
 	{
+		LG::ListWindow::onUpdateData();
+
 		NEKeyManager& km = Kernal::getInstance().getKeyManager();
 		const NEKeySet& ks = km.getKeySet();
 

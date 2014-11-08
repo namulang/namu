@@ -50,6 +50,8 @@ public:
 
 		virtual void onUpdateData() {
 
+			ListGliph::onUpdateData();
+
 			x = toOwner()->x;
 			y = toOwner()->y + 2;
 
@@ -72,6 +74,8 @@ public:
 		FUNC_CLONE(ModuleCommentList)
 
 		virtual void onUpdateData() {
+
+			ListGliph::onUpdateData();
 
 			x = toOwner()->x + 10;
 			y = toOwner()->y + 2;

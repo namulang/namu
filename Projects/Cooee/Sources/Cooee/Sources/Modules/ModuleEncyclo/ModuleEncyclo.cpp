@@ -65,6 +65,8 @@ NE::NEString ModuleEncyclo::ModuleList::createModulePanelText( const NEModule& t
 
 void ModuleEncyclo::ModuleList::onUpdateData() 
 {
+	ListGliph::onUpdateData();
+
 	const NEModuleSet& ms = Kernal::getInstance().getModuleManager().getModuleSet();
 	items.create(ms.getLength());
 	for(int n=0; n < ms.getLength() ;n++)

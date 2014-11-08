@@ -64,6 +64,9 @@ public:
 			return "mv " + splited[0];
 		}
 		virtual void onUpdateData() {
+			
+			ListGliph::onUpdateData();
+
 			NENodeCodeSet& ns = toOwner()->castObject();
 			if( ! &ns) return;
 			items.create(ns.getLength() + 1);

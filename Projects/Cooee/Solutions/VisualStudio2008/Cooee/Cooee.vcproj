@@ -604,6 +604,14 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Running"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Cooee\Sources\Modules\Running\Running.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="EntryPoints"
@@ -627,6 +635,18 @@
 						RelativePath="..\..\..\Sources\Cooee\Sources\Commons\Defines\specification.hpp"
 						>
 					</File>
+				</Filter>
+				<Filter
+					Name="Templates"
+					>
+					<Filter
+						Name="ContainerModifier"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Cooee\Sources\Commons\Templates\ContainerModifier\ContainerModifier.hpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 		</Filter>
