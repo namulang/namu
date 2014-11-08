@@ -23,7 +23,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 	ListGliph::onKeyPressed(inputed);
 
 	int index = toOwner()->real_key ? choosed-1 : choosed;
-	NEString path = toOwner()->getPath() + "/" + choosed;
+	NEString path = toOwner()->getPath() + "/" + index;
 
 	switch(inputed) {
 	case CONFIRM:
