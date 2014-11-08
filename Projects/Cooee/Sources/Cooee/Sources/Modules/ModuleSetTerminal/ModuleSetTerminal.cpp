@@ -61,10 +61,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 
 	case REMOVE:
 		if(choosed >= 0)
-		{
 			::Core::commander.command(NEString("delete ") + toOwner()->getPath() + "/" + choosed);
-			toOwner()->onUpdateData();
-		}
 		break;
 
 	case COPY:
@@ -79,10 +76,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 
 	case PASTE:
 		if(choosed >= 0)
-		{
 			::Core::commander.command("paste " + path);
-			toOwner()->onUpdateData();
-		}
 		break;
 	}	
 }

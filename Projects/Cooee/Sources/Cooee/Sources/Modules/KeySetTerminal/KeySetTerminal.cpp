@@ -31,12 +31,10 @@ void KeySetTerminal::KeyNameList::onKeyPressed(char inputed)
 
 	case ADD:
 		LG::Core::open(KeyEncyclo(path));
-		toOwner()->onUpdateData();
 		break;
 
 	case REMOVE:
 		::Core::commander.command(NEString("delete ") + path);
-		toOwner()->onUpdateData();
 		break;
 
 	case COPY:
@@ -45,7 +43,6 @@ void KeySetTerminal::KeyNameList::onKeyPressed(char inputed)
 
 	case PASTE:
 		::Core::commander.command("paste " + path);
-		toOwner()->onUpdateData();
 		break;
 
 	case CUT:

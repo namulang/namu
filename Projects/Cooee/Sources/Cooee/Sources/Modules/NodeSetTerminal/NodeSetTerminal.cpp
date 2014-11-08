@@ -52,7 +52,6 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 			::Core::commander.command(NEString("delete ") + path);
 		else
 			::Core::commander.command("delete " + toOwner()->getPath());
-		toOwner()->onUpdateData();
 		break;
 
 	case ADD:
@@ -60,7 +59,6 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 			::Core::commander.command(NEString("add -node ") + path);
 		else
 			::Core::commander.command("add -node " + toOwner()->getPath());
-		toOwner()->onUpdateData();
 		break;
 
 	case COPY:
@@ -75,7 +73,6 @@ void NodeSetTerminal::ContentList::onKeyPressed(char inputed)
 			::Core::commander.command("paste " + path);
 		else
 			::Core::commander.command("paste " + toOwner()->getPath());
-		toOwner()->onUpdateData();
 		break;
 
 	case CUT:

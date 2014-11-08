@@ -15,30 +15,18 @@ void NodeTerminal::onKeyPressed(char inputed)
 
 	case LEFT:
 		if(focused == 0 && attributes.choosed == 1)
-		{
 			if(codelist_display_index > -2)
 				codelist_display_index--;
-			attributes.onUpdateData();
-		}
 		else if(focused > 0)
-		{
 			focused--;
-			onUpdateData();
-		}
 		break;
 
 	case RIGHT:
 		if(focused == 0 && attributes.choosed == 1)
-		{
 			if(codelist_display_index < castObject().getGroupCode().getLengthLastIndex())
 				codelist_display_index++;
-			attributes.onUpdateData();
-		} 
 		else if(focused < 2)
-		{
 			focused++;
-			onUpdateData();
-		}
 		break;
 
 	default:
