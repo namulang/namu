@@ -222,8 +222,11 @@ NE::NEString HeaderModifier::_generateCodeListNames(int index)
 	{
 		to_show += i->getValue().extract(0, 4) + "[" + n++ + "] ";	//	5글자씩만
 
-		if(to_show.getLength() > 23)								//	최대 20글자까지만 출력
+		if(to_show.getLength() > 40)
+		{
+			to_show += "...";
 			break;
+		}
 	}
 
 	return to_show;
