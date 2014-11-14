@@ -66,6 +66,9 @@ ListCommand::ListCommand()
 
 NE::NEString ListCommand::execute(const NEStringSet& parameters) 
 {
+	if(parameters.getLength() <= 0)
+		return "ERROR: 인자가 필요합니다.";
+
 	const NEString& path = parameters[0];
 	NEObject& parsed = ::Core::getObjectBy(path);
 	if( ! &parsed) return "ERROR: " + path + "는 잘못된 경로 입니다.";
