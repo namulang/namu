@@ -399,6 +399,14 @@ NE::NEString PasteCommand::execute(const NEStringSet& parameters)
 
 NE::NEString RunCommand::execute(const NEStringSet& parameters)
 {
+	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
+	if(NEResult::hasError(ed.getScriptHeader().isValid()))
+	{
+		LG::Core::open(HeaderModifier());
+		return    "ERROR: 스크립트의 헤더가 잘못되어서 저장할 수 없습니다. \n"
+			"헤더의 내용(이름, 제작자등)이 비어있나요?";
+	}
+
 	NEEventHandler& handler = Editor::getInstance().getEventHandler();
 
 	if(parameters.getLength() <= 0)
@@ -453,6 +461,14 @@ void RunCommand::_initiateDebug()
 
 NE::NEString SaveCommand::execute(const NEStringSet& parameters)
 {
+	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
+	if(NEResult::hasError(ed.getScriptHeader().isValid()))
+	{
+		LG::Core::open(HeaderModifier());
+		return    "ERROR: 스크립트의 헤더가 잘못되어서 저장할 수 없습니다. \n"
+			"헤더의 내용(이름, 제작자등)이 비어있나요?";
+	}
+
 	NEString filename = (parameters.getLength() <= 0) ?
 		Kernal::getInstance().getScriptManager().getScriptFilePath()
 		:
