@@ -291,7 +291,7 @@ NE::NEString DeleteCommand::execute(const NEStringSet& parameters)
 			ncs = (NENodeCodeSet*) parent;
 		if(	idx_to_del > ncs->getLengthLastIndex()	||
 			idx_to_del < 0							)
-			return "ERROR: 인덱스가 실제보다 더 큽니다.";
+			return "ERROR: 인덱스 오류로 삭제 할 수 없습니다.";
 		ncs->remove(idx_to_del);
 		return "";
 	}
@@ -305,7 +305,7 @@ NE::NEString DeleteCommand::execute(const NEStringSet& parameters)
 			mcs = (NEModuleCodeSet*) parent;
 		if(	idx_to_del > ncs->getLengthLastIndex()	||
 			idx_to_del < 0							)
-			return "ERROR: 인덱스가 실제보다 더 큽니다.";
+			return "ERROR: 인덱스 오류로 삭제 할 수 없습니다.";
 		mcs->remove(idx_to_del);
 		return "";
 	}
@@ -315,7 +315,7 @@ NE::NEString DeleteCommand::execute(const NEStringSet& parameters)
 		NEKeyCodeSet& kcs = (NEKeyCodeSet&) *parent;
 		if(	idx_to_del > ncs->getLengthLastIndex()	||
 			idx_to_del < 0							)
-			return "ERROR: 인덱스가 실제보다 더 큽니다.";
+			return "ERROR: 인덱스 오류로 삭제 할 수 없습니다.";
 		kcs.remove(idx_to_del);
 		return "";
 	}
