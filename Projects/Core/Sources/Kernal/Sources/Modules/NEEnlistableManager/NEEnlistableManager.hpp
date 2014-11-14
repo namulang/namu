@@ -50,7 +50,6 @@ namespace NE
 		const NEIndexedKeySet& getKeySet() const;
 		const NEIndexedModuleSet& getModuleSet() const;
 		const NEIndexedNodeSet& getNodeSet() const;
-		bool isSynchronizationDisabled() const;
 
 	public:
 		virtual type_result initialize();
@@ -70,7 +69,6 @@ namespace NE
 		NEShortCutSet& _getNameShortCutSet();
 		NEShortCutSet& _getGroupShortCutSet();
 		NEShortCutSet& _getPriorityShortCutSet();
-		type_result _setSynchronizationDisabled(bool enable);
 		NEIndexedKeySet& _getKeySet();
 		NEIndexedModuleSet& _getModuleSet();
 		NEIndexedNodeSet& _getNodeSet();	
@@ -104,6 +102,5 @@ namespace NE
 		NENameShortCutSet _name_shortcutset;
 		NEIndexedNodeSet _nodeset;
 		NEIndexedModuleSet _moduleset;
-		bool _is_synchronization_disabled;
 	};
 }

@@ -23,7 +23,6 @@ namespace NE
 		: SuperClass(source), _nodeset(*this), _moduleset(*this), _keyset(*this)
 	{
 		_assign(source);
-		_is_synchronization_disabled = false;
 	}
 #pragma warning(pop)
 
@@ -74,7 +73,6 @@ namespace NE
 
 	type_result NEEnlistableManager::_enlist(NENode& target, type_index index/*= NE_INDEX_ERROR*/)
 	{
-		if(isSynchronizationDisabled()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 		if(index <= NE_INDEX_ERROR) 
 			index = _searchRealNodeIndex(target);
 
@@ -88,7 +86,6 @@ namespace NE
 
 	type_result NEEnlistableManager::_unlist(NENode& target, type_index index/*= NE_INDEX_ERROR*/)
 	{
-		if(isSynchronizationDisabled()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 		if(index <= NE_INDEX_ERROR) 
 			index = _searchRealNodeIndex(target);
 
@@ -151,11 +148,6 @@ namespace NE
 		result |= _nodeset.isValid();
 		result |= _moduleset.isValid();
 		result |= _keyset.isValid();
-		if(_is_synchronization_disabled)
-		{
-			ALERT_WARNING(" : 동기화 중지 스위치가 켜져있습니다.");
-			result |= RESULT_TYPE_WARNING;
-		}
 
 		return result;
 	}
@@ -163,11 +155,8 @@ namespace NE
 	NEBinaryFileLoader& NEEnlistableManager::serialize(NEBinaryFileLoader& loader)
 	{
 		SuperClass::serialize(loader);
-		_setSynchronizationDisabled(true);
 		
 		loader	>> _priority_shortcutset >> _script_shortcutset >> _group_shortcutset >> _name_shortcutset >> _nodeset >> _moduleset >> _keyset;
-
-		_setSynchronizationDisabled(false);
 		
 		return loader;
 	}
@@ -292,22 +281,8 @@ namespace NE
 		return result;
 	}
 
-	bool NEEnlistableManager::isSynchronizationDisabled() const
-	{
-		return _is_synchronization_disabled;
-	}
-
-	type_result NEEnlistableManager::_setSynchronizationDisabled(bool enable)
-	{
-		_is_synchronization_disabled = enable;
-
-		return RESULT_SUCCESS;
-	}
-
 	void NEEnlistableManager::_release()
 	{
-		_setSynchronizationDisabled(true);
-
 		_nodeset.release();
 		_moduleset.release();		
 		_keyset.release();
@@ -315,8 +290,6 @@ namespace NE
 		_script_shortcutset.release();
 		_group_shortcutset.release();
 		_name_shortcutset.release();		
-
-		_setSynchronizationDisabled(false);
 	}
 
 	const NEEnlistableManager& NEEnlistableManager::operator=(const ThisClass& source)
@@ -360,8 +333,7 @@ namespace NE
 			_group_shortcutset != source._group_shortcutset						||
 			_name_shortcutset != source._name_shortcutset						||
 			_nodeset != source._nodeset											||
-			_moduleset != source._moduleset										||
-			_is_synchronization_disabled != source._is_synchronization_disabled	)
+			_moduleset != source._moduleset										)
 			return false;
 		
 		return true;
