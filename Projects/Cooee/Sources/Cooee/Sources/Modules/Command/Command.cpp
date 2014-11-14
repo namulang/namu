@@ -64,19 +64,61 @@ ListCommand::ListCommand()
 {
 }
 
+void printShortCutSet(const NEShortCutSet& shorts)
+{
+	for(int n=0; n < shorts.getLength() ;n++)
+	{
+		cout << n << ": ";
+		for(int x=0; x < shorts[n].getLength() ;x++)
+			cout << shorts[n][x] << ", ";
+		cout << "\n";
+	}
+}
+
 NE::NEString ListCommand::execute(const NEStringSet& parameters) 
 {
 	if(parameters.getLength() <= 0)
 		return "ERROR: 인자가 필요합니다.";
 
-	const NEString& path = parameters[0];
-	NEObject& parsed = ::Core::getObjectBy(path);
-	if( ! &parsed) return "ERROR: " + path + "는 잘못된 경로 입니다.";
+	if(parameters[0] == "-cache")    //    shortcutset을 출력한다.
+	{
+		system("cls");
+		const NEEnlistableManager* mng = 0;
+		if( ! ::Core::isObservingDebug())
+		{
+			mng = &Editor::getInstance().getScriptEditor();
+			cout << "ScriptEditor:\n";
+		}
+		else
+		{
+			mng = &Kernal::getInstance().getNodeManager();
+			cout << "NodeManager:\n";
+		}
 
-	if(parsed.isSubClassOf(NEType::NEKEY))
-		::Core::openModifierFrom((NEKey&)parsed);
+		cout << "Script  -------------------------\n";    
+		printShortCutSet(mng->getScriptShortCutSet());
+		cout << "Name    -------------------------\n";    
+		printShortCutSet(mng->getNameShortCutSet());
+		cout << "Group   -------------------------\n";
+		printShortCutSet(mng->getGroupShortCutSet());
+		cout << "Priority-------------------------\n";    
+		printShortCutSet(mng->getPriorityShortCutSet());
+
+		system("pause");
+		LG::Core::back_buffer.readyBufferToDraw();
+	}
 	else
-		::Core::openModifierFrom(path);
+	{
+		const NEString& path = parameters[0];
+		NEObject& parsed = ::Core::getObjectBy(path);
+		if( ! &parsed)
+			return "ERROR: " + path + "가 잘못된 경로 입니다.";
+
+		if(parsed.isSubClassOf(NEType::NEKEY))
+			::Core::openModifierFrom((NEKey&)parsed);
+		else
+			::Core::openModifierFrom(path);
+	}
 
 	return "";
 }

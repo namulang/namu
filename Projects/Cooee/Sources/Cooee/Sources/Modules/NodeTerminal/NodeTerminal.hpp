@@ -165,7 +165,7 @@ public:
 					}
 					virtual void onUpdateData()
 					{
-						input.history_idx = input.history[input.history_idx];
+						NEString& history = input.history[input.history_idx];
 						if( &history)
 							input.text = history;
 					}
