@@ -38,26 +38,23 @@ namespace
 
 void HeaderModifier::CodePopUpMenu::onItemChoosed(type_index index, const NEString& chosen_content)
 {
-	if(	_codetype < NECodeType::NAME	||
-		_codetype > NECodeType::PRIORITY)
+	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
+	if(_codetype == NECodeType::SCRIPT)
 	{
-		::Core::pushMessage("ERROR: 잘못된 CodeType입니다.");
-		delete_me = true;
+		if(index == 0)
+			_onModifyCodeName();
+
 		return;
 	}
-	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
 
 	switch(index)
 	{
-	case 0:	
-		//	새로운 코드 삽입:
-		if(_codetype == NECodeType::SCRIPT)
-			_onModifyCodeName();
-		else
-			_onAddNewCode();
+	case 0:    
+		//    새로운 코드 삽입:
+		_onAddNewCode();
 		break;
 
-	case 1:	//	이름 수정하기
+	case 1:    //    이름 수정하기
 		_onModifyCodeName();
 		break;
 
