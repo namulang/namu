@@ -153,7 +153,7 @@ public:
 						return NECodeType::UNDEFINED;
 					}
 
-					virtual void onUpdateData()
+					virtual void onFocused()
 					{
 						NECodeType::CodeType type = getTypeFromAttributesList();
 
@@ -162,9 +162,12 @@ public:
 						int n=0;
 						for(const NETStringList::Iterator* itr=bank.getIterator(0); itr ;itr=itr->getNext())
 							input.history.push(itr->getValue() + "(" + n++ + ")");
-
-						input.history_idx = 0;
-						input.text = input.history[input.history_idx];
+					}
+					virtual void onUpdateData()
+					{
+						input.history_idx = input.history[input.history_idx];
+						if( &history)
+							input.text = history;
 					}
 					virtual void onKeyPressed(char inputed)
 					{

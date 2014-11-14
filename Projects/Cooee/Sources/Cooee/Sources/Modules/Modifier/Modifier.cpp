@@ -226,7 +226,7 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 
 					}
 
-					virtual void onUpdateData()
+					virtual void onFocused()
 					{
 						NENodeSelector& key = toCaller().toCaller().toCaller().getNodeFilter();
 						const NETStringList& bank = toCaller().menulist.getProperBankFrom(key.getNodeType());
@@ -236,7 +236,12 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 							input.history.push(itr->getValue() + "(" + n++ + ")");
 
 						input.history_idx = 0;
-						input.text = input.history[input.history_idx];
+					}
+					virtual void onUpdateData()
+					{
+						NEString& history = input.history[input.history_idx];
+						if( &history)
+							input.text = history;
 					}
 					virtual void onKeyPressed(char inputed)
 					{
@@ -485,7 +490,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 
 					}
 
-					virtual void onUpdateData()
+					virtual void onFocused()
 					{
 						lists.release();
 						NEModuleSelector& key = toCaller().toCaller().toCaller().getModuleFilter();
@@ -499,7 +504,12 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 						}
 
 						input.history_idx = 0;
-						input.text = input.history[input.history_idx];
+					}
+					virtual void onUpdateData()
+					{
+						NEString& history = input.history[input.history_idx];
+						if(&history)
+							input.text = history;
 					}
 
 					virtual void onInputed()
@@ -656,7 +666,7 @@ void Modifier<NEKeySelector>::MenuList::onKeyPressed(char inputed)
 				{
 				}
 
-				virtual void onUpdateData()
+				virtual void onFocused()
 				{
 					NEKeySelector& filter = toCaller().toCaller().toCaller().getKeyFilter();
 
@@ -680,7 +690,12 @@ void Modifier<NEKeySelector>::MenuList::onKeyPressed(char inputed)
 					filter.setManager(manager_backup);
 
 					input.history_idx = 0;
-					input.text = input.history[input.history_idx];
+				}
+				virtual void onUpdateData()
+				{
+					NEString& history = input.history[input.history_idx];
+					if( &history)
+						input.text = history;
 				}
 
 				virtual void onInputed()

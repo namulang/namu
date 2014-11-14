@@ -14,15 +14,19 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
             : LG::InputWindow("새로 추가할 키의 이름을 좌우방향키로 선택하세요. \n물론 직접 이름을 입력 할 수도 있어요.", BLACK, YELLOW),
             owner(new_owner)
         {
-            if( ! &owner) return;
-            const NEKeyCodeSet& ks = owner.getKeySet();
-            for(int n=0; n < ks.getLength() ;n++)
-                if(input.history.find(ks[n].getName()) == NE_INDEX_ERROR)
-                    input.history.push(ks[n].getName() + "(" + ks[n].getTypeName() + ")");
-
-            input.history_idx = 0;
+           
         }
 
+		virtual void onFocused()
+		{
+			if( ! &owner) return;
+			const NEKeyCodeSet& ks = owner.getKeySet();
+			for(int n=0; n < ks.getLength() ;n++)
+				if(input.history.find(ks[n].getName()) == NE_INDEX_ERROR)
+					input.history.push(ks[n].getName() + "(" + ks[n].getTypeName() + ")");
+
+			input.history_idx = 0;
+		}
         virtual void onUpdateData()
         {
             NEString& history = input.history[input.history_idx];
