@@ -67,7 +67,7 @@ namespace NE
 		{
 			NEKey& binded = getBinded();
 			if(binded.getType() == getTypeToBeBinded())
-				return getBindedKey();
+				return getBindedKey().getValue();
 
 			_default = binded;
 			return getDefault();
@@ -91,25 +91,12 @@ namespace NE
 	template <typename T>
 	typename const T::Trait& NE::NEArgumentTemplate<T>::getDefault() const
 	{
-		return _default;
+		return _default.getValue();
 	}
 
 	template <typename T>
 	typename T::Trait& NE::NEArgumentTemplate<T>::getDefault()
 	{
-		return _default;
-	}
-
-	template <typename T>
-	type_result NE::NEArgumentTemplate<T>::bind()
-	{
-		if(isBinded())	return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-
-		type_result result = SuperClass::bind();
-		if( NEResult::hasError(result)						||	
-			! getBinded().isSubClassOf(getTypeToBeBinded())	)
-			return RESULT_TYPE_ERROR | unbind();
-
-		return result;
+		return _default.getValue();
 	}
 }

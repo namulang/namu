@@ -1068,6 +1068,127 @@ public:
 		return output.getLength() == 2 && output[0] == 14 && output[1] == 29;
 	}
 };
+class RelativityTestOnSynchronize : public TestCase
+{
+public:
+	RelativityTestOnSynchronize() : TestCase("test Relativity when script sync. from scripteditor.") {}
+
+	virtual bool onTest()
+	{
+		NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
+		NEScriptManager& sm = Kernal::getInstance().getScriptManager();
+
+		ed.insertNameCode(1);
+		ed.insertNameCode(2);
+		ed.getScriptHeader().getName() = "RelativityTest";
+		ed.getScriptHeader().getDeveloper() = "CoreTester";
+		NENodeCodeSet& ncs = ed.getScriptNodes();
+		ncs.create(3);
+		{
+			NENode& node = ncs[ncs.push(NENode())];
+			NEKeyCodeSet& ks = node.getKeySet();
+			ks.create(1);
+			NENodeSelector nsel;
+			nsel.setNodeType(NECodeType::NAME);
+			NEIntSet is(2);
+			is.push(1);
+			is.push(2);
+			nsel.setCodeSet(is);
+			ks.push(nsel);
+		}
+		{
+			NENode node;
+			node.setNameCode(1);
+			ncs.push(node);
+		}
+		{
+			NENode node;
+			node.setNameCode(2);
+			ncs.push(node);
+		}
+
+		if(    ncs.getLength() != 3        ||
+			ncs[0].getNameCode() != 0    ||
+			ncs[1].getNameCode() != 1    ||
+			ncs[2].getNameCode() != 2    )
+			return false;
+
+		NEIntSet is(2);
+		is.push(1);
+		is.push(2);
+		NENodeSelector nsel;
+		{            
+			nsel.setManager(NEType::NESCRIPT_EDITOR);
+			nsel.setCodeSet(is);
+			nsel.setNodeType(NECodeType::NAME);
+
+			while(NENode* i = &nsel.getNode())
+			{
+				switch(i->getNameCode())
+				{
+				case 1:
+					if(i != &ncs[1])
+						return false;
+					break;
+
+				case 2:
+					if(i != &ncs[2])
+						return false;
+					break;
+				}
+			}
+		}
+
+		ed.synchronizeTo(sm);
+
+		{
+			const NENodeCodeSet& ncs = sm.getScriptNodes();
+			NENodeSelector nsel;
+			nsel.setManager(NEType::NESCRIPT_MANAGER);
+			nsel.setCodeSet(is);
+			nsel.setNodeType(NECodeType::NAME);
+
+			while(NENode* i = &nsel.getNode())
+			{
+				switch(i->getNameCode())
+				{
+				case 1:
+					if(i != &ncs[1])
+						return false;
+					break;
+
+				case 2:
+					if(i != &ncs[2])
+						return false;
+					break;
+				}
+			}
+		}
+
+		ed.release();
+		ed.synchronizeFrom(sm);
+
+		{
+			NENodeCodeSet& ncs1 = ed.getScriptNodes();
+			if(ncs.getLength() <= 0) return false;
+
+			NEKeyCodeSet& ks = ncs1[0].getKeySet();
+			if(ks.getLength() < 0) return false;
+			NEKey& k = ks[0];
+			if( ! k.isSubClassOf(NEType::NENODE_SELECTOR))
+				return false;
+
+			NENodeSelector& nsel1 = (NENodeSelector&) k;
+			const NEIntSet& cs = nsel1.getCodeSet();
+			if(    cs.getLength() < 2    ||
+				cs[0] != 1            ||
+				cs[1] != 2            )
+				return false;
+		}
+
+		return true;
+	}
+};
 //class Test : public TestCase
 //{
 //public:
@@ -1123,6 +1244,7 @@ void main()
 	Test10().test();
 	Test11().test();
 	Test12().test();
+	RelativityTestOnSynchronize().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
