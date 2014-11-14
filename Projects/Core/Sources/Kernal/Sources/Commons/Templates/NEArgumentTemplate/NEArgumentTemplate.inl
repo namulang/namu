@@ -27,6 +27,18 @@ namespace NE
 	}
 
 	template <typename T>
+	const T& NE::NEArgumentTemplate<T>::getDefaultKey() const
+	{
+		return _default;
+	}
+
+	template <typename T>
+	T& NE::NEArgumentTemplate<T>::getDefaultKey()
+	{
+		return _default;
+	}
+
+	template <typename T>
 	NEObject& NEArgumentTemplate<T>::clone() const
 	{
 		return *(new ThisClass(*this));
@@ -52,9 +64,28 @@ namespace NE
 	typename T::Trait& NE::NEArgumentTemplate<T>::getValue() 
 	{
 		if(isBinded())
-			return getBindedKey().getValue();
-		else
-			return _default;
+		{
+			NEKey& binded = getBinded();
+			if(binded.getType() == getTypeToBeBinded())
+				return getBindedKey();
+
+			_default = binded;
+			return getDefault();
+		}
+	}
+
+	template <typename T>
+	typename T::Trait& NE::NEArgumentTemplate<T>::getValue() const
+	{
+		if(isBinded())
+		{
+			NEKey& binded = getBinded();
+			if(binded.getType() == getTypeToBeBinded())
+				return getBindedKey();
+
+			_default = binded;
+			return getDefault();
+		}
 	}
 
 	template <typename T>

@@ -18,6 +18,8 @@ namespace NE
 	public:
 		T& getBindedKey();
 		const T& getBindedKey() const;
+		T& getDefaultKey();
+		const T& getDefaultKey() const;
 
 	public:
 		virtual NEObject& clone() const;
@@ -26,12 +28,12 @@ namespace NE
 
 	public:
 		typename T::Trait& getValue();
-		virtual type_result bind();
+		typename T::Trait& getValue() const;
 		typename const T::Trait& getDefault() const;
 		typename T::Trait& getDefault();
 
 	private:
-		typename T::Trait _default;
+		T _default;
 	};
 }
 
