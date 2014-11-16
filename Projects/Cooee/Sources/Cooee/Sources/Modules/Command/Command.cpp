@@ -303,7 +303,7 @@ NE::NEString DeleteCommand::execute(const NEStringSet& parameters)
 	{
 		if( ! mcs)
 			mcs = (NEModuleCodeSet*) parent;
-		if(	idx_to_del > ncs->getLengthLastIndex()	||
+		if(	idx_to_del > mcs->getLengthLastIndex()	||
 			idx_to_del < 0							)
 			return "ERROR: 인덱스 오류로 삭제 할 수 없습니다.";
 		mcs->remove(idx_to_del);
@@ -313,7 +313,7 @@ NE::NEString DeleteCommand::execute(const NEStringSet& parameters)
 	if(parent->isSubClassOf(NEType::NEKEY_CODESET))
 	{
 		NEKeyCodeSet& kcs = (NEKeyCodeSet&) *parent;
-		if(	idx_to_del > ncs->getLengthLastIndex()	||
+		if(	idx_to_del > kcs.getLengthLastIndex()	||
 			idx_to_del < 0							)
 			return "ERROR: 인덱스 오류로 삭제 할 수 없습니다.";
 		kcs.remove(idx_to_del);
