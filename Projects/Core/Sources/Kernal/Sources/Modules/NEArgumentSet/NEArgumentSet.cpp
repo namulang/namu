@@ -128,7 +128,7 @@ namespace NE
 		int n=0;
 		for(int n=0; n < getLength() ;n++, basis.popFront())
 		{
-			NEArgumentBase& e = getElement(0);
+			NEArgumentBase& e = getElement(n);
 			NEArgumentInterfaceBase& base = basis[0];
 			
 			if(e.getTypeToBeBinded() != basis[0].getKeyType())
