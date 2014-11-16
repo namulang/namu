@@ -213,6 +213,37 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 {
 	if(::Core::isObservingDebug())
 		return "ERROR: 테스트 영역에서는 수정과 열람만 가능합니다.";
+	NEEventHandler& handler = Editor::getInstance().getEventHandler();
+	if(handler.isTestRunning())
+	{        
+		class ReallyQuitDebugging : public LG::QueryWindow
+		{
+		public:
+			ReallyQuitDebugging(const NEStringSet& parameters) 
+				: LG::QueryWindow("이 작업을 수행하려면 디버깅을 종료해야 합니다.\n디버깅의 모든 내용은 사라지는데, 괜찮겠어요?", LIGHTRED, RED, true)                
+			{
+				command = "add ";
+				for(int n=0; n < parameters.getLength() ;n++)
+					command += parameters[n] + " ";
+			}
+			virtual NEObject& clone() const { return *(new ReallyQuitDebugging(*this)); }
+			virtual void onButtonPressed(bool witch_button)
+			{
+				if(witch_button)
+				{
+					::Core::commander.command("run -stop");
+					::Core::commander.command(command);
+				}
+
+				delete_me = true;
+			}
+
+			NEString command;
+		};
+
+		LG::Core::open(ReallyQuitDebugging(parameters));
+		return "";
+	}
 	if(parameters.getLength() <= 0)    return "ERROR: Container의 경로를 입력하세요";
 
 	NENodeCodeSet* nsc = 0;
@@ -267,6 +298,37 @@ NE::NEString DeleteCommand::execute(const NEStringSet& parameters)
 	if(::Core::isObservingDebug())
 		return "ERROR: 테스트 영역에서는 수정과 열람만 가능합니다.";
 	if(parameters.getLength() <= 0)	return "ERROR: 경로를 입력하세요.";
+	NEEventHandler& handler = Editor::getInstance().getEventHandler();
+	if(handler.isTestRunning())
+	{        
+		class ReallyQuitDebugging : public LG::QueryWindow
+		{
+		public:
+			ReallyQuitDebugging(const NEStringSet& parameters) 
+				: LG::QueryWindow("이 작업을 수행하려면 디버깅을 종료해야 합니다.\n디버깅의 모든 내용은 사라지는데, 괜찮겠어요?", LIGHTRED, RED, true)                
+			{
+				command = "delete ";
+				for(int n=0; n < parameters.getLength() ;n++)
+					command += parameters[n] + " ";
+			}
+			virtual NEObject& clone() const { return *(new ReallyQuitDebugging(*this)); }
+			virtual void onButtonPressed(bool witch_button)
+			{
+				if(witch_button)
+				{
+					::Core::commander.command("run -stop");
+					::Core::commander.command(command);
+				}
+
+				delete_me = true;
+			}
+
+			NEString command;
+		};
+
+		LG::Core::open(ReallyQuitDebugging(parameters));
+		return "";
+	}
 
 	type_index idx_to_del = 0;
 	NEObject* parent = 0x00;
@@ -367,6 +429,37 @@ NE::NEString PasteCommand::execute(const NEStringSet& parameters)
 		return "ERROR: 테스트 영역에서는 수정과 열람만 가능합니다.";
 	if(parameters.getLength() <= 0) return "ERROR: 경로를 입력하세요";
 	if(	::Core::path_to_be_copied.getLength() <= 1) return "ERROR: 복사할 원본을 정해주세요";
+	NEEventHandler& handler = Editor::getInstance().getEventHandler();
+	if(handler.isTestRunning())
+	{        
+		class ReallyQuitDebugging : public LG::QueryWindow
+		{
+		public:
+			ReallyQuitDebugging(const NEStringSet& parameters) 
+				: LG::QueryWindow("이 작업을 수행하려면 디버깅을 종료해야 합니다.\n디버깅의 모든 내용은 사라지는데, 괜찮겠어요?", LIGHTRED, RED, true)                
+			{
+				command = "paste ";
+				for(int n=0; n < parameters.getLength() ;n++)
+					command += parameters[n] + " ";
+			}
+			virtual NEObject& clone() const { return *(new ReallyQuitDebugging(*this)); }
+			virtual void onButtonPressed(bool witch_button)
+			{
+				if(witch_button)
+				{
+					::Core::commander.command("run -stop");
+					::Core::commander.command(command);
+				}
+
+				delete_me = true;
+			}
+
+			NEString command;
+		};
+
+		LG::Core::open(ReallyQuitDebugging(parameters));
+		return "";
+	}
 
 	NENodeCodeSet* ncs = 0;
 	NEModuleCodeSet* mcs = 0;

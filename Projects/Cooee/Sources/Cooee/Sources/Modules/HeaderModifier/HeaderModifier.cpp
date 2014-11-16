@@ -82,6 +82,11 @@ void HeaderModifier::CodePopUpMenu::_onAddNewCode()
 		::Core::pushMessage("ERROR: 0번 코드는 기본 코드입니다. 추가 / 삭제가 불가능합니다.");
 		return;
 	}
+	if(Editor::getInstance().getEventHandler().isTestRunning())
+	{
+		::Core::pushMessage("ERROR: 이 작업을 수행하려면, 디버깅을 먼저 종료해야 합니다.");
+		return;
+	}
 
 	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
 
@@ -103,6 +108,11 @@ void HeaderModifier::CodePopUpMenu::_onRemoveCode()
 	if( ! _code)
 	{
 		::Core::pushMessage("ERROR: 0번 코드는 기본 코드입니다. 추가 / 삭제가 불가능합니다.");
+		return;
+	}
+	if(Editor::getInstance().getEventHandler().isTestRunning())
+	{
+		::Core::pushMessage("ERROR: 이 작업을 수행하려면, 디버깅을 먼저 종료해야 합니다.");
 		return;
 	}
 	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
