@@ -528,6 +528,7 @@ NE::NEString RunCommand::execute(const NEStringSet& parameters)
 		{
 			handler.stopTest();
 			::Core::commander.command("observe -script");
+			::Core::initializeWindows(::Core::debug_windows);
 			::Core::test_running_count = 0;
 		}
 		else
