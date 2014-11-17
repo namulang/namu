@@ -328,7 +328,7 @@ namespace NE
 	{
 		SuperClass::_onArgumentsFetched(tray);
 
-		arg_title.getDefault().getValue() = "이름을 입력하세요.";
+		arg_title.getDefault() = "이름을 입력하세요.";
 		return tray.push(arg_title);
 	}
 

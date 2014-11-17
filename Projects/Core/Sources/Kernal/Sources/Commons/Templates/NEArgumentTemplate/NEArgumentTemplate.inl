@@ -70,8 +70,9 @@ namespace NE
 				return getBindedKey().getValue();
 
 			_default = binded;
-			return getDefault();
 		}
+
+		return getDefault();
 	}
 
 	template <typename T>
