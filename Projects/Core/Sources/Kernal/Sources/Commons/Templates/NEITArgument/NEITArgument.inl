@@ -120,7 +120,7 @@ namespace NE
 	T& NE::NEITArgument<T>::getKey()
 	{ 
 		if(_concrete_class)
-			return _concrete_class>getBindedKey();
+			return _concrete_class->getBindedKey();
 
 		T* nullpointer = 0;
 		return *nullpointer;
@@ -130,7 +130,7 @@ namespace NE
 	const T& NE::NEITArgument<T>::getKey() const
 	{
 		if(_concrete_class)
-			return _concrete_class>getBindedKey();
+			return _concrete_class->getBindedKey();
 
 		T* nullpointer = 0;
 		return *nullpointer;

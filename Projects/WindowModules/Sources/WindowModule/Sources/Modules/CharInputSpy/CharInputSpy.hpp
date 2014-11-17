@@ -11,15 +11,15 @@ namespace NE
 		typedef WNDSpy SuperClass;
 
 	public:
-		NEArgumentInterfaceTemplate<NEModuleSelector> arg_window_selector;
-		NEArgumentInterfaceTemplate<NETStringKey> arg_sentence;
-		NEArgumentInterfaceTemplate<NEUIntKey> arg_max_delay;
+		NEITArgument<NEModuleSelector> arg_window_selector;
+		NEITArgument<NETStringKey> arg_sentence;
+		NEITArgument<NEUIntKey> arg_max_delay;
 
 	protected:
 		virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
 		{
 			arg_window_selector.getValue().isUsingAutoBinding() = true;
-			arg_max_delay.getDefault().getValue() = 500;
+			arg_max_delay.getDefault() = 500;
 			tray.push(&arg_window_selector);
 			tray.push(&arg_sentence);
 			return tray.push(&arg_max_delay);

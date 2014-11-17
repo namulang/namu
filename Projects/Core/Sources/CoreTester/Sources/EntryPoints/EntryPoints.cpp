@@ -1189,6 +1189,27 @@ public:
 		return true;
 	}
 };
+class SelectorAssignOperatorTest : public TestCase
+{
+public:
+	SelectorAssignOperatorTest() : TestCase("can SELECTORS accept/assign to other keys?") {}
+	virtual bool onTest()
+	{
+		NENodeSelector b;
+		NEModuleSelector d;
+		NEKeySelector e;
+		NEIntKey a(55, "age");
+		NEFloatKey c(3.5f, "grade");
+
+		b = a; // ¿¡·¯
+		d = b;
+		e = b;
+		//b.NEKey::operator=(a); OK
+		//c == a;
+		return true;
+	}
+};
+
 //class Test : public TestCase
 //{
 //public:
@@ -1245,6 +1266,7 @@ void main()
 	Test11().test();
 	Test12().test();
 	RelativityTestOnSynchronize().test();
+	SelectorAssignOperatorTest().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
