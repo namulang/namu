@@ -39,7 +39,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 
-	type_result NE_DLL Window::execute()
+	type_result NE_DLL Window::_onExecute()
 	{	//	pre:
 		//		윈도우가 생성되지 않았다면 윈도우를 생성한다.
 		if( ! _hwnd)
