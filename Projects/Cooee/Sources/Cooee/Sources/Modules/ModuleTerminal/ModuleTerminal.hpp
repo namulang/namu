@@ -43,7 +43,7 @@ public:
 	class ContentPanel : public Gliph
 	{
 	public:
-		ContentPanel() : Gliph(0, 4, 7, 35, 8, LIGHTGRAY, DARKGRAY) {}
+		ContentPanel() : Gliph(0, 4, 7, 35, 8, DARKGRAY, LIGHTGRAY) {}
 		ContentPanel(const ContentPanel& rhs) : Gliph(rhs) {}
 		FUNC_CLONE(ContentPanel)
 		FUNC_TO_OWNER(ModuleTerminal)
