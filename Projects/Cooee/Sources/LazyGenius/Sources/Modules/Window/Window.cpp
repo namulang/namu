@@ -88,12 +88,13 @@ namespace LG
 
 		for(GliphList::Iterator* itr=gliphs.getIterator(0); itr ; itr=itr->getNext())
 			itr->getValue().onDraw();
+
+		_drawFrames();
 	}
 
 	void Window::onFocused()
 	{
 
 	}
-
 }
 #pragma warning(pop)

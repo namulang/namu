@@ -82,11 +82,46 @@ namespace LG
 
 		Core::setColor(backup);
 		Core::setCursorTo(backup_pos);
+
+		if(_has_frames)
+			_drawFrames();
 	}
 
 	void Gliph::onUpdateData()
 	{
 	
+	}
+
+	bool Gliph::hasFrames() const
+	{
+		return _has_frames;
+	}
+
+	void Gliph::setHavingFrames(bool have_frames)
+	{
+		_has_frames = have_frames;
+	}
+
+	void Gliph::_drawFrames() const
+	{
+		WORD backup = Core::getColor();
+		COORD backup_pos = Core::getCursorPosition();
+
+		BackBuffer& buf = Core::back_buffer;
+		buf.setColor(WHITE, BLACK);
+
+		int frame_x = x + width,
+			frame_y = y + height;
+		for(int d=1; d < height+1 ;d++)
+		{
+			buf.setBufferPointer(frame_x, y+d);
+			buf << ' ';
+		}
+		for(int d=1; d < width+1 ;d++)
+		{
+			buf.setBufferPointer(x+d, frame_y);
+			buf << ' ';
+		}
 	}
 
 }

@@ -7,13 +7,13 @@ class NodeTerminal : public Terminal
 {
 public:
 	NodeTerminal(const NEString& new_path)	//	width : 70, height : 17 + 4 + 1(header) + space(1) = 23
-		: Terminal(new_path, NEType::NENODE, 2, 2, 76, 22, WHITE, LIGHTGRAY),
-		header(0, 2, 3, 76, 1, WHITE, DARKGRAY, ""),
-		script_header(0, 2, 5, 15, 3, WHITE, LIGHTBLUE),
-		name_header(0, 2, 8, 5, 1, WHITE, LIGHTRED, "Name "),
-		group_header(0, 2, 9, 9, 1, WHITE, LIGHTRED, "Group"),
-		priority_header(0, 2, 10, 5, 1, WHITE, LIGHTRED, "Prior"),
-		ks_terminal(new_path+"/k", 17, 5), ms_terminal(new_path+"/m", 0, 47, 5), focused(0), codelist_display_index(-1)
+		: Terminal(new_path, NEType::NENODE, 2, 3, 76, 18, WHITE, LIGHTGRAY),
+		header(0, 2, 4, 76, 1, WHITE, DARKGRAY, ""),
+		script_header(0, 2, 4, 15, 1, BLACK, DARKGRAY),
+		name_header(0, 2, 5, 5, 1, DARKGRAY, LIGHTGRAY, "Name "),
+		group_header(0, 2, 6, 9, 1, DARKGRAY, LIGHTGRAY, "Group"),
+		priority_header(0, 2, 7, 5, 1, DARKGRAY, LIGHTGRAY, "Prior"),
+		ks_terminal(new_path+"/k", 17, 4), ms_terminal(new_path+"/m", 0, 48, 4), focused(0), codelist_display_index(-1)
 	{
 		regist(6, &header, &script_header, &name_header, &group_header, &priority_header, &attributes);
 	}
@@ -32,8 +32,7 @@ public:
 		if( ! &casted) return;
 		NEScriptEditor::Banks& banks = Editor::getInstance().getScriptEditor().getBanks();
 
-		script_header.text = NEString(" Base Stats\n===============") + 
-			"Scr#: " + banks.getScriptBank()[casted.getScriptCode()] + "[" + casted.getScriptCode() + "]";
+		script_header.text = "Scr#  " + banks.getScriptBank()[casted.getScriptCode()] + "[" + casted.getScriptCode() + "]";
 
 		ks_terminal.onUpdateData();
 		ms_terminal.onUpdateData();
@@ -41,29 +40,38 @@ public:
 	virtual void onDraw()
 	{
 		LG::BackBuffer& buf = LG::Core::back_buffer;
+		bool is_color_locked_already = buf.isColorLocked();
+
 		if(focused != 0)
 		{
 			buf.setColor(BLACK, LIGHTGRAY);
 			buf.setColorLock(true);
 		}
 		Terminal::onDraw();
-		buf.setColorLock(false);
+		if( ! is_color_locked_already)
+			buf.setColorLock(false);
+		status.onDraw();
 
-		if(focused != 1)
+		if(focused != 1 && ! buf.isColorLocked())
 		{
 			buf.setColor(BLACK, DARKGRAY);
 			buf.setColorLock(true);
 		}
 		ks_terminal.draw();
-		buf.setColorLock(false);
 
-		if(focused != 2)
+		if( ! is_color_locked_already)
+			buf.setColorLock(false);
+
+		if(focused != 2 && ! buf.isColorLocked())
 		{
 			buf.setColor(BLACK, DARKGRAY);
 			buf.setColorLock(true);
 		}
 		ms_terminal.draw();
-		buf.setColorLock(false);
+		
+		if( ! is_color_locked_already)
+			buf.setColorLock(false);
+		_drawFrames();
 	}
 	virtual void onKeyPressed(char inputed);
 
@@ -73,7 +81,7 @@ public:
 		FUNC_CLONE(Attributes)
 		FUNC_TO_OWNER(NodeTerminal)
 
-		Attributes() : ListGliph(0, 7, 8, 10, 3, BLACK, WHITE, WHITE, LIGHTRED)
+		Attributes() : ListGliph(0, 7, 5, 10, 3, BLACK, WHITE, CYAN, LIGHTCYAN)
 		{
 
 		}
@@ -162,6 +170,8 @@ public:
 						int n=0;
 						for(const NETStringList::Iterator* itr=bank.getIterator(0); itr ;itr=itr->getNext())
 							input.history.push(itr->getValue() + "(" + n++ + ")");
+
+						input.history_idx = 0;
 					}
 					virtual void onUpdateData()
 					{

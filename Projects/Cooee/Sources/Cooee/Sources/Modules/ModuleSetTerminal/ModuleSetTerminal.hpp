@@ -43,7 +43,7 @@ public:
 	class ModuleNameList : public ListGliph
 	{
 	public:
-		ModuleNameList() : ListGliph(0, 10, 7, 10, 14, BLACK, RED, WHITE, LIGHTRED) {}
+		ModuleNameList() : ListGliph(0, 10, 7, 11, 15, LIGHTCYAN, CYAN, CYAN, LIGHTCYAN) {}
 		ModuleNameList(const ModuleNameList& rhs) : ListGliph(rhs) {}
 		FUNC_TO_OWNER(ModuleSetTerminal)
 		FUNC_CLONE(ModuleNameList)
@@ -53,7 +53,7 @@ public:
 			ListGliph::onUpdateData();
 
 			x = toOwner()->x;
-			y = toOwner()->y + 2;
+			y = toOwner()->y + 1;
 
 			const NEModuleCodeSet& ms = toOwner()->castObject();
 			if( ! &ms) return;
@@ -68,7 +68,7 @@ public:
 	class ModuleCommentList : public ListGliph
 	{
 	public:
-		ModuleCommentList() : ListGliph(0, 30, 7, 20, 14, BLACK, WHITE, WHITE, LIGHTRED) {}
+		ModuleCommentList() : ListGliph(0, 30, 7, 20, 15, BLACK, WHITE, CYAN, LIGHTCYAN) {}
 		ModuleCommentList(const ModuleCommentList& rhs) : ListGliph(rhs) {}
 		FUNC_TO_OWNER(ModuleSetTerminal)
 		FUNC_CLONE(ModuleCommentList)
@@ -78,7 +78,7 @@ public:
 			ListGliph::onUpdateData();
 
 			x = toOwner()->x + 10;
-			y = toOwner()->y + 2;
+			y = toOwner()->y + 1;
 
 			const NEModuleCodeSet& ms = toOwner()->castObject();
 			if( ! &ms) return;
@@ -91,7 +91,7 @@ public:
 	};
 	class ListHeader : public Gliph {
 	public:
-		ListHeader() : Gliph(0, 10, 5, 30, 2, BLACK, LIGHTCYAN) {
+		ListHeader() : Gliph(0, 10, 5, 30, 1, DARKGRAY, LIGHTGRAY) {
 			text = 
 				"Mod.Name	Comment\n"
 				"========================================";

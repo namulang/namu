@@ -100,9 +100,8 @@ void Terminal::Status::onUpdateData()
 	y = owner.y;
 	width = owner.width;
 	height = 1;
-	back = ::Core::isObservingDebug() ? YELLOW : RED;
-	fore = BLACK;
-
+	back = ::Core::isObservingDebug() ? YELLOW : LIGHTRED;	
+	fore = ::Core::isObservingDebug() ? BLACK : WHITE;
 	text = " > " + NEString(NEType::getTypeName(owner.to_chk_valid));
 }
 

@@ -40,10 +40,9 @@ public:
 
 	class ListHeader : public Gliph {
 	public:
-		ListHeader() : Gliph(0, 1, 2, 78, 2, BLACK, LIGHTGRAY) {
+		ListHeader() : Gliph(0, 1, 2, 78, 1, DARKGRAY, LIGHTGRAY) {
 			text = 
-				" Script#  Name or Contents                                 Module#  Key#\n"
-				"==============================================================================";
+				" Script#  Name or Contents                                 Module#  Key#\n";
 		}
 		ListHeader(const ListHeader& rhs) : Gliph(rhs) {}
 		FUNC_CLONE(ListHeader)
@@ -51,7 +50,7 @@ public:
 	};
 	class ContentList : public ListGliph {
 	public:
-		ContentList() : ListGliph(0, 1, 4, 78, 19, BLACK, WHITE, WHITE, LIGHTRED) {}
+		ContentList() : ListGliph(0, 1, 3, 78, 20, BLACK, WHITE, CYAN, LIGHTCYAN) {}
 		ContentList(const ContentList& rhs) : ListGliph(rhs) {}
 		FUNC_CLONE(ContentList)
 		FUNC_TO_OWNER(NodeSetTerminal)

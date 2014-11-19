@@ -1,6 +1,8 @@
 #include "ModuleTerminal.hpp"
 #include "../Core/Core.hpp"
 #include "../MainPopUpMenu/MainPopUpMenu.hpp"
+#include "Windows.h"
+#pragma comment(lib, "winmm.lib")
 
 void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 {
@@ -100,7 +102,12 @@ void ModuleTerminal::ModulePanel::onUpdateData()
 		::Core::pushMessage("잘못된 경로로 참조했습니다.");				
 	}
 	const NEExportable::ModuleHeader& header = toOwner()->castObject().getHeader();
-	text =	"name:	" + header.getName() + " rev#" + header.getRevision() + "\n" +
-		"madeby:" + header.getDeveloper() + "\n" +
-		"on:	" + header.getReleaseDate();
+	text =	"\t"	+ header.getName() + " #" + header.getRevision() + "\n" +
+			"\tby:" + header.getDeveloper() + " on " + header.getReleaseDate();
+}
+
+ModuleTerminal::FloatingPanel::FloatingPanel()
+: LG::FloatingGliph(0, 0, 40, 3, DARKGRAY, LIGHTGRAY)
+{
+
 }

@@ -102,6 +102,7 @@ namespace LG
 		int getYBufferPointer() const;
 		void setForeColor(int new_fore);
 		void setColorLock(bool locking);
+		bool isColorLocked() const;
 		void setBackColor(int new_back);
 		void setColor(int new_fore, int new_back);
 		void readyBufferToDraw();

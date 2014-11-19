@@ -224,4 +224,9 @@ namespace LG
 				buf[r][c] = pixel;
 	}
 
+	bool BackBuffer::isColorLocked() const
+	{
+		return _is_color_locked;
+	}
+
 }

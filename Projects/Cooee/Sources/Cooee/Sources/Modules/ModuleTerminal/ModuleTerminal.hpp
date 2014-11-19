@@ -5,15 +5,35 @@
 class ModuleTerminal : public Terminal
 {
 public:
-	class Header : public Gliph
+
+	class FloatingPanel : public LG::FloatingGliph
 	{
 	public:
-		Header() : Gliph(0, 5, 5, 70, 1, BLACK, LIGHTCYAN, "\t\t\t\t\t\t\t\tModule") {}		
+		FUNC_CLONE(FloatingPanel)
+		FUNC_TO_OWNER(ModuleTerminal)
+
+		FloatingPanel();
+
+		virtual void onUpdateData()
+		{
+			int focused_arg_idx = toOwner()->argument_namelist.choosed,
+				focused_item_y = toOwner()->argument_namelist.y + focused_arg_idx;
+			x = 35;
+			y = focused_item_y + 3;
+
+			const NETStringSet& arg_comments = toOwner()->castObject().getHeader().getArgumentsComments();
+
+			if(focused_arg_idx < 0 || focused_arg_idx > arg_comments.getLengthLastIndex())
+				return;
+
+			text = NEString("Argument ") + focused_arg_idx + " : " + arg_comments[focused_arg_idx];
+		}
 	};
+
 	class ModulePanel : public Gliph 
 	{
 	public:
-		ModulePanel() : Gliph(0, 5, 6, 35, 3, WHITE, LIGHTRED) {}
+		ModulePanel() : Gliph(0, 4, 5, 35, 2, CYAN, LIGHTCYAN) {}
 		ModulePanel(const ModulePanel& rhs) : Gliph(rhs) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 		FUNC_CLONE(ModulePanel)	
@@ -23,7 +43,7 @@ public:
 	class ContentPanel : public Gliph
 	{
 	public:
-		ContentPanel() : Gliph(0, 5, 9, 35, 10, BLACK, WHITE) {}
+		ContentPanel() : Gliph(0, 4, 7, 35, 8, LIGHTGRAY, DARKGRAY) {}
 		ContentPanel(const ContentPanel& rhs) : Gliph(rhs) {}
 		FUNC_CLONE(ContentPanel)
 		FUNC_TO_OWNER(ModuleTerminal)
@@ -33,15 +53,15 @@ public:
 			text = header.getComment();
 		}
 	};
+	
 
 	class ArgumentHeader : public Gliph
 	{
 	public:
 		ArgumentHeader()
-			: Gliph(0, 40, 6, 35, 2, BLACK, LIGHTMAGENTA,
-			"KeyName			KeyType\n"
-			"========================================") {}
-		ArgumentHeader(const Header& rhs)
+			: Gliph(0, 39, 5, 37, 1, DARKGRAY, LIGHTGRAY,
+			"KeyName			KeyType") {}
+		ArgumentHeader(const ArgumentHeader& rhs)
 			: Gliph(rhs) {}
 		FUNC_CLONE(ArgumentHeader)
 		FUNC_TO_OWNER(ModuleTerminal)
@@ -50,7 +70,7 @@ public:
 	class ArgumentNameList : public ListGliph
 	{
 	public:
-		ArgumentNameList() : ListGliph(0, 40, 8, 17, 11, LIGHTRED, RED, WHITE, LIGHTRED) {}
+		ArgumentNameList() : ListGliph(0, 39, 6, 17, 12, LIGHTCYAN, CYAN, CYAN, LIGHTCYAN) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 		FUNC_CLONE(ArgumentNameList)
 		virtual void onUpdateData()
@@ -71,7 +91,7 @@ public:
 	class ArgumentTypeList : public ListGliph
 	{
 	public:
-		ArgumentTypeList() : ListGliph(0, 57, 8, 17, 11, BLACK, WHITE, WHITE, LIGHTRED) {}
+		ArgumentTypeList() : ListGliph(0, 56, 6, 20, 13, BLACK, WHITE, CYAN, LIGHTCYAN) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 		FUNC_CLONE(ArgumentTypeList)
 		virtual void onUpdateData()
@@ -89,14 +109,14 @@ public:
 	ModuleTerminal(const NEString& new_path)
 		: Terminal(new_path, NEType::NEMODULE, 4, 4, 72, 16, BLACK, CYAN)
 	{
-		regist(6, &header, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist);
+		regist(6, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist, &argument_panel);
 	}
 
 	ModuleTerminal(const ModuleTerminal& rhs)
-		: Terminal(rhs), header(rhs.header), module_panel(rhs.module_panel), content_panel(rhs.content_panel),
+		: Terminal(rhs), argument_panel(rhs.argument_panel), module_panel(rhs.module_panel), content_panel(rhs.content_panel),
 		argument_header(rhs.argument_header), argument_namelist(rhs.argument_namelist), argument_typelist(rhs.argument_typelist)
 	{
-		regist(6, &header, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist);
+		regist(6, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist, &argument_panel);
 	}
 
 	FUNC_CLONE(ModuleTerminal)
@@ -106,7 +126,7 @@ public:
 		return (NEModule&) *instance;
 	}
 
-	Header header;
+	FloatingPanel argument_panel;
 	ModulePanel module_panel;
 	ContentPanel content_panel;
 	ArgumentHeader argument_header;
