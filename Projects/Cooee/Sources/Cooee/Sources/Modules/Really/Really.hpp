@@ -10,8 +10,8 @@ public:
 	{
 		panel.text = "그만할래ㅜ";
 		panel.width = 15;
-		no.text = "버튼을 잘못 눌렀음";
-		no.width = 20;
+		no.text = "버튼 실수~";
+		no.width = 13;
 	}
 	virtual void onButtonPressed(bool witch_button);
 	NEObject& clone() const { return *(new Really(*this)); }
