@@ -9,6 +9,7 @@
 #include "../Modules/InputWindow/InputWindow.hpp"
 #include "../Modules/ListWindow/ListWindow.hpp"
 #include "../Commons/Defines/ClassMacros/ClassMacros.hpp"
+#include "../Modules/FloatingGliph/FloatingGliph.hpp"
 
 
 //	NEModule이 kernal에 있어야 하는 이유

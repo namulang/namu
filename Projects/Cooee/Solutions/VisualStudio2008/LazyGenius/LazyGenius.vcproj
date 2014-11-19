@@ -420,6 +420,18 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="FloatingGliph"
+						>
+						<File
+							RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\FloatingGliph\FloatingGliph.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\FloatingGliph\FloatingGliph.hpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Containers"
