@@ -28,7 +28,7 @@ public:
 			switches[0] = true;
 			if(specified_filter->isSubClassOf(NEType::NEKEY_SELECTOR))
 				switches[2] = true;
-			else
+			else if(specified_filter->isSubClassOf(NEType::NEMODULE_SELECTOR))
 				switches[1] = true;
 		}
 	}

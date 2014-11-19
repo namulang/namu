@@ -88,6 +88,14 @@ namespace NE
 			_header.getReleaseDate() = _T( _DATE );
 			_header.getModuleDependencies().create(_DEPENDENCIES_COUNT);
 			_header.setMaxErrorCodeCount(Window::ERROR_CODE_END - 1);
+			NETStringSet& args = _header.getArgumentsComments();
+			args.create(_KEY_NUMBER);
+			args.push(_KEY_COMMENT_1);
+			args.push(_KEY_COMMENT_2);
+			args.push(_KEY_COMMENT_3);
+			args.push(_KEY_COMMENT_4);
+			args.push(_KEY_COMMENT_5);
+			args.push(_KEY_COMMENT_6);
 		}
 
 		return _header;

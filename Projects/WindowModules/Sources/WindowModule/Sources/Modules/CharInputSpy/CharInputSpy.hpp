@@ -42,8 +42,13 @@ namespace NE
 				_header.getName() = "CharInputSpy";
 				_header.getDeveloper() = "kniz";
 				_header.setRevision(1);
-				_header.getComment() = "0번 윈도우를 통해서 사용자가 입력받은 글자를 1번에 보관합니다.\n키가 입력될때에만 TRUE를 반환합니다.\nKeyboardSpy가 어떤 키를 눌렀는지를 판단한다면, CharInputSpy는 어떤 글자가 입력되었는지를 판단한다는 데서 차이가 있음을 염두해 두세요.\n\t0번키:	Spying 할 윈도우(\"자동 바인딩\"이 기본값)\n\t1번키: 입력된 글자";
+				_header.getComment() = "텍스트박스 등에 문자를 입력하면 TRUE가 반환됩니다.\nKeyboardSpy가 어떤 키를 눌렀는지를 판단한다면, CharInputSpy는 어떤 글자가 입력되었는지를 판단한다는 데서 차이가 있음을 염두해 두세요.";
 				_header.getReleaseDate() = "2014-01-29";
+				NETStringSet& args = _header.getArgumentsComments();
+				args.create(3);
+				args.push("문자 입력을 감시할 윈도우(Window)");
+				args.push("[OUT] 입력한 문자를 이곳에 저장합니다.");
+				args.push("이 값만큼 감시할때 딜레이를 줍니다.");
 			}
 
 			return _header;
