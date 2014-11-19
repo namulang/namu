@@ -36,6 +36,8 @@ public:
 		{
 			int index = toOwner()->real_key ? choosed-1 : choosed;
 
+			ListGliph::onKeyPressed(inputed);
+
 			switch(inputed)
 			{
 			case CLOSE:
