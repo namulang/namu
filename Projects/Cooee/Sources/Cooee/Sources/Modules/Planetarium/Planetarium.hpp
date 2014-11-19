@@ -87,12 +87,7 @@ public:
 	virtual void onKeyPressed(char inputed);
 	virtual void onFocused();
 
-	virtual void onDraw()
-	{
-		Window::onDraw();
-
-		root.onDraw();
-	}
+	virtual void onDraw();
 
 	void generate(NEObject& real_root_object)
 	{

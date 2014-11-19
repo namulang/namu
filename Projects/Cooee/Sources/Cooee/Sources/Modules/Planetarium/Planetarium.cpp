@@ -95,3 +95,18 @@ void Planetarium::onFocused()
 
 	Window::onFocused();
 }
+
+void Planetarium::onDraw()
+{
+	LG::BackBuffer& buf = LG::Core::back_buffer;
+	bool is_color_locked = buf.isColorLocked();
+	if(is_color_locked)
+		buf.setColorLock(false);
+
+	Window::onDraw();
+
+	root.onDraw();
+
+	if(is_color_locked)
+		buf.setColorLock(true);
+}
