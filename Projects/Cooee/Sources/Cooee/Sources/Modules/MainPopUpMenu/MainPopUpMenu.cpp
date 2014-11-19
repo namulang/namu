@@ -105,7 +105,7 @@ void MainPopUpMenu::onItemChoosed(type_index index, const NEString& chosen_conte
 }
 
 MainPopUpMenu::MainPopUpMenu(Window& new_caller)
-	: LG::ListWindow("Main Menu", 20, 5, 20, 10, BLACK, WHITE, WHITE, LIGHTRED), 
+	: LG::ListWindow("Main Menu", 20, 5, 20, 12, BLACK, WHITE, WHITE, LIGHTRED), 
 	caller(new_caller)
 {
 

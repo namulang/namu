@@ -2,7 +2,7 @@
 #include "../Core/Core.hpp"
 
 RunDebuggingPopUpMenu::RunDebuggingPopUpMenu()
-: LG::ListWindow("½ÇÇà & µð¹ö±ë > ", 30, 8, 15, 5, BLACK, WHITE, WHITE, LIGHTBLUE)
+: LG::ListWindow("½ÇÇà & µð¹ö±ë > ", 30, 8, 20, 6, BLACK, WHITE, WHITE, LIGHTBLUE)
 {
 
 }

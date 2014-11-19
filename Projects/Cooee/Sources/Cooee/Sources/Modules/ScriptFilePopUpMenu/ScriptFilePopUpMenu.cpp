@@ -105,7 +105,7 @@ void ScriptFilePopUpMenu::onItemChoosed(type_index index, const NEString& chosen
 }
 
 ScriptFilePopUpMenu::ScriptFilePopUpMenu()
-	: LG::ListWindow("스크립트 파일 > ", 30, 8, 15, 5, BLACK, WHITE, WHITE, LIGHTCYAN)
+	: LG::ListWindow("스크립트 파일 > ", 30, 8, 11, 7, BLACK, WHITE, WHITE, LIGHTCYAN)
 {
 
 }

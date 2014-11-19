@@ -2,7 +2,7 @@
 #include "../Core/Core.hpp"
 
 ObservePopUpMenu::ObservePopUpMenu()
-: LG::ListWindow("관측 > ", 30, 8, 15, 5, BLACK, WHITE, WHITE, LIGHTGREEN)
+: LG::ListWindow("관측 > ", 30, 8, 19, 5, BLACK, WHITE, WHITE, LIGHTGREEN)
 {
 
 }

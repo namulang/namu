@@ -18,7 +18,7 @@ public:
 		{
 			int focused_arg_idx = toOwner()->argument_namelist.choosed,
 				focused_item_y = toOwner()->argument_namelist.y + focused_arg_idx;
-			x = 35;
+			x = 15;
 			y = focused_item_y + 3;
 
 			const NETStringSet& arg_comments = toOwner()->castObject().getHeader().getArgumentsComments();
@@ -43,7 +43,7 @@ public:
 	class ContentPanel : public Gliph
 	{
 	public:
-		ContentPanel() : Gliph(0, 4, 7, 35, 8, DARKGRAY, LIGHTGRAY) {}
+		ContentPanel() : Gliph(0, 4, 7, 35, 12, LIGHTCYAN, CYAN) {}
 		ContentPanel(const ContentPanel& rhs) : Gliph(rhs) {}
 		FUNC_CLONE(ContentPanel)
 		FUNC_TO_OWNER(ModuleTerminal)

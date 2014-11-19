@@ -30,7 +30,7 @@ void HelpPopUpMenu::onItemChoosed(type_index item_index, const NEString& chosen_
 }
 
 HelpPopUpMenu::HelpPopUpMenu()
-: LG::ListWindow("도움말 > ", 30, 8, 20, 5, BLACK, WHITE, WHITE, YELLOW)
+: LG::ListWindow("도움말 > ", 30, 8, 24, 6, BLACK, WHITE, BLACK, YELLOW)
 {
 
 }

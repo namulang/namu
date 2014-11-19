@@ -10,7 +10,7 @@ namespace LG
 	public:
 		typedef type_ushort u2;
 		ListWindow(const NEString& title, u2 x, u2 y, u2 w, u2 h, u2 fore, u2 back, u2 focused_fore = UNKNOWN, u2 focused_back = UNKNOWN, const NEStringSet& new_items = NEStringSet()) 
-			: Window(x, y, w, h, fore, back), header(0, x, y, w, 1, WHITE, BLACK, title), list(0, x+1, y+2, w-1, h-1, fore, back, focused_fore, focused_back)
+			: Window(x, y, w, h, fore, back), header(0, x, y, w, 1, WHITE, BLACK, title), list(0, x+1, y+2, w-1, h-3, fore, back, focused_fore, focused_back)
 		{
 			list.items = new_items;
 			regist(2, &header, &list);

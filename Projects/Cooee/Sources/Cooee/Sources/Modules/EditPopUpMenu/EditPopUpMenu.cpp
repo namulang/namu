@@ -48,7 +48,7 @@ void EditPopUpMenu::onItemChoosed(type_index index, const NEString& chosen_conte
 }
 
 EditPopUpMenu::EditPopUpMenu()
-: LG::ListWindow("편집 > ", 30, 8, 16, 6, BLACK, WHITE, WHITE, LIGHTGRAY)
+: LG::ListWindow("편집 > ", 30, 8, 17, 8, BLACK, WHITE, WHITE, LIGHTGRAY)
 {
 
 }

@@ -103,11 +103,11 @@ void ModuleTerminal::ModulePanel::onUpdateData()
 	}
 	const NEExportable::ModuleHeader& header = toOwner()->castObject().getHeader();
 	text =	"\t"	+ header.getName() + " #" + header.getRevision() + "\n" +
-			"\tby:" + header.getDeveloper() + " on " + header.getReleaseDate();
+			"\tby " + header.getDeveloper() + "\ton " + header.getReleaseDate();
 }
 
 ModuleTerminal::FloatingPanel::FloatingPanel()
-: LG::FloatingGliph(0, 0, 40, 3, DARKGRAY, WHITE)
+: LG::FloatingGliph(0, 0, 60, 3, DARKGRAY, WHITE)
 {
 
 }
