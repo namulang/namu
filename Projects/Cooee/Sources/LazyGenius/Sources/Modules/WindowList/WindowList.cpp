@@ -1,4 +1,5 @@
 #include "WindowList.hpp"
+#include "../Core/Core.hpp"
 
 namespace LG
 {
@@ -32,7 +33,22 @@ namespace LG
 		for(Iterator* itr=getIterator(0); itr ;itr=itr->getNext())
 			stack.push(&(itr->getValue()));
 
-		for(int n=stack.getLengthLastIndex(); n >= 0 ;n--)
+		WORD backup = Core::getColor();
+		Core::setColorLock(false);
+		Core::back_buffer.setColorLock(false);
+		Core::back_buffer.setColor(DARKGRAY, LIGHTGRAY);
+		Core::setColor(DARKGRAY, LIGHTGRAY);
+		Core::setColorLock(true);
+		Core::back_buffer.setColorLock(true);
+
+		for(int n=stack.getLengthLastIndex(); n >= 1 ;n--)
 			stack[n].onDraw();
+
+		Core::setColorLock(false);
+		Core::back_buffer.setColorLock(false);
+		Core::setColor(backup);
+
+		if(stack.getLength() > 0)
+			stack[0].onDraw();
 	}
 }
