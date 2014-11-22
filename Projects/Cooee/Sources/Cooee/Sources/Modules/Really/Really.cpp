@@ -10,5 +10,6 @@ void Really::onButtonPressed(bool witch_button)
 	}
 
 	delete_me = true;
+	Editor::getInstance().getEventHandler().stopTest();
 	::Core::commander.command("observe -script");
 }
