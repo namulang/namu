@@ -24,6 +24,7 @@ namespace NE
 			tray.push(&arg_sentence);
 			return tray.push(&arg_max_delay);
 		}
+		virtual type_result _onExecute();
 
 	public:
 		CharInputSpy()
@@ -53,9 +54,6 @@ namespace NE
 
 			return _header;
 		}
-
-	public:
-		virtual type_result execute();
 
 	public:
 		virtual void release()

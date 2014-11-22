@@ -113,7 +113,9 @@ void init()
 	NEModuleSet& ms = const_cast<NEModuleSet&>(Kernal::getInstance().getModuleManager().getModuleSet());
 	ms.resize(ms.getLength() + 1);
 	MyMod& added = (MyMod&) ms[ms.push(MyMod())];
-	added.setScript(ms[ms.getLengthLastIndex()-1].getScriptCode()+1);
+	if(ms.getLengthLastIndex() > 0)
+		added.setScript(ms[ms.getLengthLastIndex()-1].getScriptCode()+1);
+	added.setScript(0);
 }
 
 class Test1 : public TestCase
@@ -478,7 +480,7 @@ public:
 		}
 
 		MyMod& mym1 = (MyMod&) ns[1].getModuleSet()[0];
-		if(mym1.a.getDefault() != 1000)
+		if(mym1.a.getDefault() != 28)	//	default는 변경될 수 없어야 한다.
 			return false;
 
 		return true;
@@ -559,14 +561,15 @@ public:
 
 		NENode& node1 = ns[ns.push(NENode())];
 		node1.getModuleSet().create(1);
-		//	1. MyMod() 생성자 호출			; value = 100
-		//	2. cloned = MyMod().clone();	; value = 100
-		//	3. cloned.initialize()			; value = 105
+		//	1. MyMod() 생성자 호출			; default = 100
+		//	2. initailize에서 ++			; default = 101
+		//	2. cloned = MyMod().clone();	; default 변경 불가 = 101
+		//	3. cloned.initialize()			;			"
 		MyMod2& mod = (MyMod2&) node1.getModuleSet()[node1.getModuleSet().push(MyMod2())];
 
-		manager.execute();	//				; value = 210
+		manager.execute();	//				;			"
 
-		return mod.a.getDefault() == 210;
+		return mod.a.getDefault() == 101;	
 	}
 };
 class Test10 : public TestCase
@@ -597,7 +600,9 @@ public:
 		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
 
 		if(	mine.a.getDefault() != module1.a.getDefault()	||
-			&mine.a == &module1.a												)
+			&mine.a == &module1.a							||
+			mine.a.getConcreteInstance().getKeyName() !=	
+			module1.a.getConcreteInstance().getKeyName()	)
 			return false;
 		return true;			
 	}
@@ -652,9 +657,9 @@ public:
 		manager.initialize();
 
 		MyMod mine;
+		mine.a.getDefault() = 18;
 		mine.initialize();
 		mine.a.getConcreteInstance().setKeyName("age");
-		mine.a.getDefault() = 18;
 
 		NENode& node1 = ns[ns.push(NENode())];
 		node1.getKeySet().create(1);

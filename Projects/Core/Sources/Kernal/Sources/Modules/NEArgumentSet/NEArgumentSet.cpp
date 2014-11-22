@@ -74,7 +74,8 @@ namespace NE
 	bool NEArgumentSet::isBinded() const
 	{
 		for(int n=0; n < getLength() ;n++)
-			if( ! getElement(n).isBinded()) return false;
+			if( ! getElement(n).isBinded()) 
+				return false;
 
 		return true;
 	}
@@ -86,7 +87,8 @@ namespace NE
 		for(int n=0; n < getLength() ;n++)
 		{
 			NEArgumentBase& arg = getElement(n);
-			if( ! arg.isBinded())
+
+			if( arg.isNeedingBinding() && ! arg.isBinded())
 				to_return |= arg.bind();
 		}
 
@@ -142,4 +144,13 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 
+	type_result NEArgumentSet::update()
+	{
+		type_result result = RESULT_SUCCESS;
+
+		for(int n=0; n < getLength() ;n++)
+			result |= getElement(n).update();
+
+		return result;
+	}
 }

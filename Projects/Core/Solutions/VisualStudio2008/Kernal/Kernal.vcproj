@@ -541,6 +541,14 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="NEUpdatable"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEUpdatable\NEUpdatable.hpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Enums"
@@ -864,6 +872,10 @@
 					<Filter
 						Name="NEITArgument"
 						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEITArgument\NEITArgument.cpp"
+							>
+						</File>
 						<File
 							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEITArgument\NEITArgument.hpp"
 							>

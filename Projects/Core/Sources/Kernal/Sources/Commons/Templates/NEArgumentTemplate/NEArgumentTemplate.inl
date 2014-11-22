@@ -8,13 +8,6 @@ namespace NE
 	}
 
 	template <typename T>
-	NEArgumentTemplate<T>::NEArgumentTemplate(typename const T::Trait& default_value) 
-		: SuperClass(T().getType()), _default(default_value)
-	{
-
-	}
-
-	template <typename T>
 	T& NEArgumentTemplate<T>::getBindedKey()
 	{ 
 		return static_cast<T&>(getBinded()); 
@@ -27,37 +20,9 @@ namespace NE
 	}
 
 	template <typename T>
-	const T& NE::NEArgumentTemplate<T>::getDefaultKey() const
-	{
-		return _default;
-	}
-
-	template <typename T>
-	T& NE::NEArgumentTemplate<T>::getDefaultKey()
-	{
-		return _default;
-	}
-
-	template <typename T>
 	NEObject& NEArgumentTemplate<T>::clone() const
 	{
 		return *(new ThisClass(*this));
-	}
-
-	template <typename T>
-	NEBinaryFileSaver& NEArgumentTemplate<T>::serialize(NEBinaryFileSaver& saver) const
-	{
-		SuperClass::serialize(saver);
-
-		return saver << _default;
-	}
-
-	template <typename T>
-	NEBinaryFileLoader& NEArgumentTemplate<T>::serialize(NEBinaryFileLoader& loader)
-	{
-		SuperClass::serialize(loader);
-
-		return loader >> _default;
 	}
 
 	template <typename T>
@@ -69,10 +34,13 @@ namespace NE
 			if(binded.getType() == getTypeToBeBinded())
 				return getBindedKey().getValue();
 
-			_default = binded;
+			_for_casting = binded;
+			_setNeedingUpdate(true);
+			return _for_casting.getValue();
 		}
 
-		return getDefault();
+		T::Trait* nullpointer = 0x00;
+		return *nullpointer;
 	}
 
 	template <typename T>
@@ -84,20 +52,25 @@ namespace NE
 			if(binded.getType() == getTypeToBeBinded())
 				return getBindedKey();
 
-			_default = binded;
+			_default = binded;			
+			_setNeedingUpdate(true);
 			return getDefault();
 		}
+
+		const T::Trait* nullpointer = 0x00;
+		return *nullpointer;
 	}
 
 	template <typename T>
-	typename const T::Trait& NE::NEArgumentTemplate<T>::getDefault() const
+	type_result NEArgumentTemplate<T>::update()
 	{
-		return _default.getValue();
-	}
+		type_result result = RESULT_SUCCESS | RESULT_ABORT_ACTION;
+		if( ! isNeedingUpdate()) return result;
+		if( ! isBinded()) return result;
 
-	template <typename T>
-	typename T::Trait& NE::NEArgumentTemplate<T>::getDefault()
-	{
-		return _default.getValue();
+		NEKey& binded = getBinded();		
+		binded = _for_casting;
+
+		return RESULT_SUCCESS;
 	}
 }

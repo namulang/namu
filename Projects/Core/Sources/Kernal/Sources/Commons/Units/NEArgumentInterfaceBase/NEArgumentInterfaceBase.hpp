@@ -8,7 +8,7 @@ namespace NE
 	class NEArgumentSet;
 	class NEArgumentBase;
 
-	class NEArgumentInterfaceBase
+	class NE_DLL NEArgumentInterfaceBase
 	{
 	public:
 		friend class NEArgumentSet;

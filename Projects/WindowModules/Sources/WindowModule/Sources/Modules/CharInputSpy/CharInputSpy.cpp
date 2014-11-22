@@ -39,7 +39,7 @@ namespace
 
 namespace NE
 {
-	type_result CharInputSpy::execute()
+	type_result CharInputSpy::_onExecute()
 	{
 		NEModuleSelector& sel = arg_window_selector.getValue();
 		NEModule& m = sel.getModule();

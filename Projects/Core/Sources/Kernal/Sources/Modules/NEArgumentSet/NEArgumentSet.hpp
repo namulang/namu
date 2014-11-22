@@ -3,13 +3,14 @@
 #include "../../Commons/Templates/NEArrayTemplate/NEArrayTemplate.hpp"
 #include "../../Commons/Units/NEArgumentBase/NEArgumentBase.hpp"
 #include "../NEArgumentInterfaceList/NEArgumentInterfaceList.hpp"
+#include "../../Commons/Interfaces/NEUpdatable/NEUpdatable.hpp"
 
 namespace NE
 {
 	template
 	class NE_DLL NEArrayTemplate<NEArgumentBase*, true>;
-	
-	class NE_DLL NEArgumentSet : public NEArrayTemplate<NEArgumentBase*, true>
+
+	class NE_DLL NEArgumentSet : public NEArrayTemplate<NEArgumentBase*, true>, public NEUpdatable
 	{
 	public:
 		typedef NEArgumentSet ThisClass;
@@ -31,6 +32,9 @@ namespace NE
 
 	public:
 		ThisClass& operator=(const ThisClass& rhs);
+
+	public:
+		virtual type_result update();
 
 	public:	
 		type_result bind(NEArgumentInterfaceList& basises);

@@ -2,7 +2,7 @@
 
 namespace NE
 {
-	bool NEArgumentInterfaceBase::operator==(const NEArgumentInterfaceBase& rhs) const
+	bool NE_DLL NEArgumentInterfaceBase::operator==(const NEArgumentInterfaceBase& rhs) const
 	{
 		return this == &rhs;
 	}
