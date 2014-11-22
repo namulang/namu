@@ -18,9 +18,8 @@ namespace NE
 		friend class NEArguments;
 
 	public:
-		NEITArgument();
 		NEITArgument(const ThisClass& rhs);
-		NEITArgument(typename const T::Trait& new_default);
+		NEITArgument(typename const T::Trait& new_default = T::Trait());
 
 	public:
 		ThisClass& operator=(const ThisClass& src);
@@ -44,6 +43,7 @@ namespace NE
 
 	private:
 		ConcreteClass* _concrete_class;
+		typename T::Trait _constant_default;
 		typename T::Trait _default;
 	};
 

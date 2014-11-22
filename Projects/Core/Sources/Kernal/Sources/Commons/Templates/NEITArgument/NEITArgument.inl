@@ -1,13 +1,6 @@
 namespace NE
 {
 	template <typename T>
-	NEITArgument<T>::NEITArgument()
-		: _concrete_class(0x00) 
-	{
-
-	}
-
-	template <typename T>
 	NEITArgument<T>::NEITArgument(const ThisClass& rhs)
 		: NEArgumentInterfaceBase(rhs), _concrete_class(0x00), _default(rhs._default) 
 	{
@@ -30,28 +23,20 @@ namespace NE
 	template <typename T>
 	typename const T::Trait& NE::NEITArgument<T>::getDefault() const
 	{
-		if( ! _concrete_class) return *nullpoint;
+		ThisClass* unconsted = const_cast<ThisClass*>(this);
 
-		typename const T::Trait& to_return = _concrete_class->getDefault();
-		if( ! &to_return)
-			return _default;
-
-		return to_return;
+		return unconsted->getDefault();		
 	}
 
 	template <typename T>
 	typename T::Trait& NE::NEITArgument<T>::getDefault()
 	{
-		typename static T::Trait nulled = T::Trait();
-		if(_concrete_class)
-		{
-			typename T::Trait& to_return = _concrete_class->getDefault();
+		if( ! _concrete_class)
+			return _default;	
 
-			return to_return;	//	default가 외부에서 변경되어도 값이 유지되도록 한다.
-		}		
+		_constant_default = _default;
 
-		nulled = _default;
-		return nulled;
+		return _constant_default;
 	}
 
 
@@ -62,7 +47,7 @@ namespace NE
 
 		typename T::Trait& to_return = _concrete_class->getValue();
 		if( ! &to_return)
-			return getDefault();
+			return  getDefault();
 
 		return to_return;
 	}
@@ -85,7 +70,7 @@ namespace NE
 		if(rhs.getLength() == rhs.getSize())
 			rhs.resize(rhs.getLength() + 1);
 
-		ConcreteClass& pushed = (ConcreteClass&) rhs[rhs.insert(index, ConcreteClass(_default))];
+		ConcreteClass& pushed = (ConcreteClass&) rhs[rhs.insert(index, ConcreteClass())];
 		if( ! &pushed)
 			return RESULT_TYPE_WARNING;
 
@@ -145,7 +130,7 @@ namespace NE
 		//	정책:
 		//		"	절대로 내부 바인딩의 결과는 공유 및 할당하지 않는다.
 		//			내부 바인딩을 "할 수 있는" 정보만 넘겨줘서, 그 놈이 바인딩 다시 하도록 하라	"
-		//		그래서 바인딩 결과물인 _concreate_class는 넘겨주지 않는다. 
+		//		그래서 바99인딩 결과물인 _concreate_class는 넘겨주지 않는다. 
 		//		대신 default_value 같은 것만 할당 시켜준다.
 		//		밑에 처럼 하지 않는다는 거야.
 		//	
