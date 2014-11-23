@@ -1112,16 +1112,12 @@
 					Name="AgingTemplate"
 					>
 					<File
-						RelativePath="..\..\..\Sources\Modules\AgingTemplate\AgingTemplate.hpp"
+						RelativePath="..\..\..\Sources\Modules\AgingModule\AgingModule.cpp"
 						>
 					</File>
 					<Filter
 						Name="Templates"
 						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\AgingTemplate\Templates.hpp"
-							>
-						</File>
 					</Filter>
 					<Filter
 						Name="ManagedAgingTemplate"

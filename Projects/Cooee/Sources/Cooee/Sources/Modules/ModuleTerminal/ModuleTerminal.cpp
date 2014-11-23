@@ -43,7 +43,8 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 
 			NEStringSet splited;
 			input.text.split("(", splited);
-			splited.pop();
+			if(splited.getLength() > 0)
+				splited.pop();
 			NEString keyname;
 			for(int n=0; n < splited.getLength(); n++)
 				keyname += splited[n];

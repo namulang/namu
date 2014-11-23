@@ -1215,6 +1215,70 @@ public:
 	}
 };
 
+class KeySelectorAssigningTest : public TestCase
+{
+public:
+	KeySelectorAssigningTest()	: TestCase("does key selector cast itself implcitly when be assigned") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& nm = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ncs = nm.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+
+		nm.initialize();
+
+		ncs.create(3);
+		NEFloatKey* grade;
+		NEIntKey* age_2nd, *age;
+		{
+			NENode& node = ncs[ncs.push(NENode())];
+			NEKeyCodeSet& ks = node.getKeySet();
+			ks.create(1);
+			age = ((NEIntKey*) &ks[ks.push(NEIntKey(22, "age"))]);
+		}
+		{
+			ncs.push(ncs[0]);
+			ncs[1].getKeySet().resize(2);
+			age_2nd = (NEIntKey*) &ncs[1].getKeySet()[0];
+			grade = (NEFloatKey*) & ncs[1].getKeySet()[ncs[1].getKeySet().push(NEFloatKey(4.0, "grade"))];
+		}
+		NEIntSet ic(1);
+		ic.push(0);
+		{
+			NEKeySelector k1;			
+			k1.setNodeType(NECodeType::NAME);
+			k1.setCodeSet(ic);
+			k1.setKeyName("age");
+			NEKey* fetched = &k1.getKey();
+
+			if(age != fetched)
+				return false; // 탐색 포인터가 하나 증가되었다.
+
+			NEKeySelector k2;
+			k2.setNodeType(NECodeType::NAME);
+			k2.setCodeSet(ic);
+			k2.setKeyName("grade");
+
+			k1 += k2;	//	extend
+			if(age_2nd->getValue() != 22)	// KeySelector 끼리는 연산이 불가능하다. (무한 루프 이슈)
+				return false;
+			k1 += *grade;
+			if(	age_2nd->getValue() != 26	|| 
+				age->getValue() != 22		)
+				return false;
+			k1 = *grade;
+			if(age_2nd->getValue() != 4)
+				return false;
+		}
+
+		return true;
+	}
+};
+
 //class Test : public TestCase
 //{
 //public:
@@ -1272,6 +1336,7 @@ void main()
 	Test12().test();
 	RelativityTestOnSynchronize().test();
 	SelectorAssignOperatorTest().test();
+	KeySelectorAssigningTest().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();

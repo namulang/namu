@@ -1931,6 +1931,18 @@
 									</Filter>
 								</Filter>
 							</Filter>
+							<Filter
+								Name="NEKeyTemplateBase"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyTemplateBase\NEKeyTemplateBase.cpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyTemplateBase\NEKeyTemplateBase.hpp"
+									>
+								</File>
+							</Filter>
 						</Filter>
 					</Filter>
 				</Filter>
