@@ -1,8 +1,18 @@
+//	NEITArgument<NEKey>:	
+//	왜 필요한가:	
+//		키의 타입을 고려하지 않고 동작해야 하는 모듈이 있을 수 있기 때문이다.	
+//		예를들어, 키 간의 assign을 동작하는 모듈의 경우 키의 타입을 특화시키면	
+//		(NEIntKey 처럼) 각 키의 타입마다 모듈이 필요하게 된다.	
+//		(NEIntKeyAssignModule, NEFloatKeyAssignModule ...)	
+//		이 경우 물론, 외부의 키의 타입에 상관없이 implicit conversion 기능이	
+//		동작된다.	
+
 #pragma once
 
 #include "../../Units/NEArgumentInterfaceBase/NEArgumentInterfaceBase.hpp"
 #include "../NEArgumentTemplate/NEArgumentTemplate.hpp"
 #include "../../../Modules/NEArgumentSet/NEArgumentSet.hpp"
+#include "../../../Modules/NEKey/NEKey.hpp"
 
 namespace NE
 {

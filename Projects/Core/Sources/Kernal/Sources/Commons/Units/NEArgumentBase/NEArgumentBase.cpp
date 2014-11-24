@@ -20,7 +20,7 @@ namespace NE
 	bool NEArgumentBase::isNeedingBinding() const
 	{
 		return	getKeyName().getLength() > 0	&&
-			getKeyName()[0] != 0;
+				getKeyName()[0] != 0;
 	}
 	void NEArgumentBase::release() 
 	{

@@ -95,3 +95,90 @@ namespace NE
 	template
 	class NE_DLL NEITArgument<NENodeCodeSetKey>;
 }
+
+namespace NE	
+{	
+	NEITArgument<NEKey>::NEITArgument(const ThisClass& rhs)	
+		: NEArgumentInterfaceBase(rhs), _concrete_class(0x00)	
+	{	
+
+	}	
+
+	NEITArgument<NEKey>::NEITArgument()	
+		: _concrete_class(0x00)	
+	{	
+	}	
+
+	NEType::Type NEITArgument<NEKey>::getKeyType() const	
+	{	
+		return NEType::NEKEY;	
+	}	
+
+	bool NEITArgument<NEKey>::isValidToBind(const NEArgumentBase& rhs) const	
+	{	
+		return rhs.isSubClassOf(NEType::NEKEY);	
+	}
+	
+	type_result NE::NEITArgument<NEKey>::_onInsertedInArguments(type_index index, NEArgumentSet& rhs)	
+	{	
+		if (rhs.getLength() == rhs.getSize())	
+			rhs.resize(rhs.getLength() + 1);	
+		ConcreteClass& pushed = (ConcreteClass&)rhs[rhs.insert(index, ConcreteClass())];
+		if (!&pushed)	
+			return RESULT_TYPE_WARNING;	
+		return RESULT_SUCCESS;	
+	}	
+
+	type_result NE::NEITArgument<NEKey>::_onBindInstance(NEArgumentBase& concreted)	
+	{	
+		if(	!&concreted	||	
+			! isValidToBind(concreted)	)	
+			return RESULT_TYPE_WARNING;	
+		_concrete_class = static_cast<ConcreteClass*>(&concreted);	
+		return RESULT_SUCCESS;	
+	}	
+
+	NEITArgument<NEKey>::ConcreteClass& NE::NEITArgument<NEKey>::getConcreteInstance()	
+	{	
+		return *_concrete_class;	
+	}	
+
+	
+	const NEITArgument<NEKey>::ConcreteClass& NE::NEITArgument<NEKey>::getConcreteInstance() const	
+	{	
+		return *_concrete_class;	
+	}	
+
+	NEITArgument<NEKey>::T& NE::NEITArgument<NEKey>::getKey()	
+	{	
+		if (_concrete_class)	
+			return _concrete_class->getBinded();	
+		T* nullpointer = 0;	
+		return *nullpointer;	
+	}	
+
+	const NEITArgument<NEKey>::T& NE::NEITArgument<NEKey>::getKey() const	
+	{	
+		if (_concrete_class)	
+			return _concrete_class->getBinded();	
+		T* nullpointer = 0;	
+		return *nullpointer;	
+	}	
+
+	NEITArgument<NEKey>& NE::NEITArgument<NEKey>::operator=(const ThisClass& src)	
+	{	
+		if (this == &src) return *this;	
+
+		//	정책:	
+		//	"	절대로 내부 바인딩의 결과는 공유 및 할당하지 않는다.	
+		//	내부 바인딩을 "할 수 있는" 정보만 넘겨줘서, 그 놈이 바인딩 다시 하도록 하라	"	
+		//	그래서 바99인딩 결과물인 _concreate_class는 넘겨주지 않는다.	
+		//	대신 default_value 같은 것만 할당 시켜준다.	
+		//	밑에 처럼 하지 않는다는 거야.	
+		//	
+		// if(	_concrete_class && src._concrete_class	&&	
+		// _concrete_class>getTypeToBeBinded() == src._concrete_class>getTypeToBeBinded()	)	
+		// *_concrete_class = *src._concrete_class;	
+		return *this;	
+	}	
+}

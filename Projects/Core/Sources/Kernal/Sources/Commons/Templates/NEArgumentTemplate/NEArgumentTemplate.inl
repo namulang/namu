@@ -73,4 +73,24 @@ namespace NE
 
 		return RESULT_SUCCESS;
 	}
+
+
+	template <>	
+	class NE_DLL NEArgumentTemplate<NEKey> : public NEArgumentBase	
+	{	
+	public:	
+		typedef NEArgumentTemplate ThisClass;	
+		typedef NEArgumentBase SuperClass;	
+		typedef NEKey T;
+
+	public:
+		NEArgumentTemplate();
+		NEArgumentTemplate(const ThisClass& rhs);
+
+	public:	
+		virtual type_result update();	
+
+	public:	
+		virtual NEObject& clone() const;	
+	};
 }

@@ -861,6 +861,10 @@
 						Name="NEArgumentTemplate"
 						>
 						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEArgumentTemplate\NEArgumentTemplate.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEArgumentTemplate\NEArgumentTemplate.hpp"
 							>
 						</File>

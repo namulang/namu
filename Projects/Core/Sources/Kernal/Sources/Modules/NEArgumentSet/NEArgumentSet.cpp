@@ -133,7 +133,7 @@ namespace NE
 			NEArgumentBase& e = getElement(n);
 			NEArgumentInterfaceBase& base = basis[0];
 			
-			if(e.getTypeToBeBinded() != basis[0].getKeyType())
+			if(base.isValidToBind(e))
 				base._onInsertedInArguments(n, *this);
 			base._onBindInstance(e);
 		}

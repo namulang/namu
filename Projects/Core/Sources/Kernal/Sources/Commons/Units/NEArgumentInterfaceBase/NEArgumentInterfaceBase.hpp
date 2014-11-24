@@ -15,6 +15,7 @@ namespace NE
 
 	public:
 		virtual NEType::Type getKeyType() const = 0;
+		virtual bool isValidToBind(const NEArgumentBase& arg) const;
 
 	public:
 		bool operator==(const NEArgumentInterfaceBase& rhs) const;

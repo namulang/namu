@@ -80,8 +80,8 @@ namespace NE
 	template <typename T>
 	type_result NE::NEITArgument<T>::_onBindInstance(NEArgumentBase& concreted)
 	{
-		if( ! &concreted									||
-			concreted.getTypeToBeBinded() != getKeyType()	)
+		if( ! &concreted				||
+			! isValidToBind(concreted)	)
 			return RESULT_TYPE_WARNING;
 
 		_concrete_class = static_cast<ConcreteClass*>(&concreted);
@@ -141,3 +141,40 @@ namespace NE
 		return *this;
 	}
 }
+
+namespace NE	
+{	
+	template <>	
+	class NE_DLL NEITArgument<NEKey> : public NEArgumentInterfaceBase	
+	{	
+	public:	
+		typedef NEKey T;	
+		typedef NEITArgument<NEKey> ThisClass;	
+		typedef NEArgumentInterfaceBase SuperClass;	
+		typedef NEArgumentTemplate<T> ConcreteClass;	
+
+	public:	
+		NEITArgument();	
+		NEITArgument(const ThisClass& rhs);	
+
+	public:	
+		ThisClass& operator=(const ThisClass& src);	
+
+	public:	
+		virtual NEType::Type getKeyType() const;	
+		virtual bool isValidToBind(const NEArgumentBase& arg) const;	
+
+	public:	
+		ConcreteClass& getConcreteInstance();	
+		const ConcreteClass& getConcreteInstance() const;	
+		T& getKey();	
+		const T& getKey() const;	
+
+	private:	
+		virtual type_result _onInsertedInArguments(type_index index, NEArgumentSet& rhs);	
+		virtual type_result _onBindInstance(NEArgumentBase& concreted);	
+
+	private:	
+		ConcreteClass* _concrete_class;	
+	};	
+}	

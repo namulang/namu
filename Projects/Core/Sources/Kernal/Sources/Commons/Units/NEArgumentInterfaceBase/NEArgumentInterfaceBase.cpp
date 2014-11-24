@@ -1,4 +1,5 @@
 #include "NEArgumentInterfaceBase.hpp"
+#include "../NEArgumentBase/NEArgumentBase.hpp"
 
 namespace NE
 {
@@ -6,4 +7,10 @@ namespace NE
 	{
 		return this == &rhs;
 	}
+
+	bool NE_DLL NEArgumentInterfaceBase::isValidToBind(const NEArgumentBase& arg) const	
+	{	
+		return arg.getTypeToBeBinded() != getKeyType();	
+	}
+
 }
