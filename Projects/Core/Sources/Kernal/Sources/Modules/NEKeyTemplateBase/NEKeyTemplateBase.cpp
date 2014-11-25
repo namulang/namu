@@ -15,8 +15,9 @@ namespace NE
 		{
 			NEKeySelector copied = static_cast<const NEKeySelector&>(source);
 
-			while(NEKey* itr = &copied.getKey())
-				result |= assign(*itr);
+			NEKey& itr = copied.getKey();
+			if( &itr)
+				result |= assign(itr);
 		}
 
 		return result;
