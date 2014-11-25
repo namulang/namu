@@ -71,6 +71,7 @@ namespace NE
 		NEKey& binded = getBinded();		
 		binded = _for_casting;
 
+		_setNeedingUpdate(false);
 		return RESULT_SUCCESS;
 	}
 
