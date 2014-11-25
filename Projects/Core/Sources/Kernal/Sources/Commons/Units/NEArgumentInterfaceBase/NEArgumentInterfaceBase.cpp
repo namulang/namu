@@ -10,7 +10,7 @@ namespace NE
 
 	bool NE_DLL NEArgumentInterfaceBase::isValidToBind(const NEArgumentBase& arg) const	
 	{	
-		return arg.getTypeToBeBinded() != getKeyType();	
+		return arg.getTypeToBeBinded() == getKeyType();	
 	}
 
 }

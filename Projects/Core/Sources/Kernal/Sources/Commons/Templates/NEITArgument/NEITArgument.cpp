@@ -116,7 +116,7 @@ namespace NE
 
 	bool NEITArgument<NEKey>::isValidToBind(const NEArgumentBase& rhs) const	
 	{	
-		return rhs.isSubClassOf(NEType::NEKEY);	
+		return NEType::isValidHierachy(NEType::NEKEY, rhs.getTypeToBeBinded());
 	}
 	
 	type_result NE::NEITArgument<NEKey>::_onInsertedInArguments(type_index index, NEArgumentSet& rhs)	
