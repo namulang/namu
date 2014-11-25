@@ -1278,6 +1278,157 @@ public:
 		return true;
 	}
 };
+class GenericArgumentBindingTest : public TestCase
+{
+public:
+	GenericArgumentBindingTest() : TestCase("check out generic argument can be binded.") {}
+	virtual bool onTest() 
+	{
+		class Temp : public NEModule
+		{
+		public:
+			NEITArgument<NEKey> generic;
+
+			virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
+			{
+				tray.push(generic);
+
+				return 0;
+			}
+			virtual NEObject& clone() const
+			{
+				return *(new Temp(*this));
+			}
+			virtual const NEExportable::ModuleHeader& getHeader() const
+			{
+				static NEExportable::ModuleHeader _header;
+
+				if (NEResult::hasError(_header.isValid()))
+				{
+					_header.getName() = "Temp";
+					_header.getDeveloper() = "kniz";
+				}
+
+				return _header;
+			}
+		};
+
+		NENodeManager& nm = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ncs = nm.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+
+		nm.initialize();
+		Temp* temp = 0x00;
+		{
+			NENode& n = ncs[ncs.push(NENode())];
+			{
+				NEKeyCodeSet& ks = n.getKeySet();
+				ks.create(2);
+				ks.push(NEIntKey(22, "age"));
+				ks.push(NEStringKey("chales", "name"));
+			}
+			{
+				NEModuleCodeSet& ms = n.getModuleSet();
+				ms.create(1);
+				temp = (Temp*) &ms[ms.push(Temp())];
+				temp->generic.getConcreteInstance().setKeyName("age");								
+			}
+			n.execute();
+		}
+
+		if(	temp->generic.getKey().getName() != "age"				||
+			!temp->generic.getKey().isSubClassOf(NEType::NEINT_KEY)	)
+			return false;
+
+		return true;
+	}
+};
+
+class ArgumentConversionTest : public TestCase
+{
+public:
+	ArgumentConversionTest() : TestCase("test arguments conversion.") {}
+	virtual bool onTest() 
+	{
+		class Temp : public NEModule
+		{
+		public:
+			NEITArgument<NEFloatKey> grade;
+
+			virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
+			{
+				tray.push(grade);
+
+				return 0;
+			}
+			virtual type_result _onExecute()
+			{
+				grade.getValue() /= 2.0f;
+
+				return RESULT_SUCCESS;
+			}
+			virtual NEObject& clone() const
+			{
+				return *(new Temp(*this));
+			}
+			virtual const NEExportable::ModuleHeader& getHeader() const
+			{
+				static NEExportable::ModuleHeader _header;
+
+				if (NEResult::hasError(_header.isValid()))
+				{
+					_header.getName() = "Temp";
+					_header.getDeveloper() = "kniz";
+				}
+
+				return _header;
+			}
+		};
+
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		manager.initialize();
+
+		ns.create(1);
+		NENode& n = ns[ns.push(NENode())];
+
+		{
+			NEKeyCodeSet& ks = n.getKeySet();
+			ks.create(2);
+			ks.push(NEIntKey(4, "fake_grade"));
+			ks.push(NEFloatKey(8.0f, "real_grade"));
+		}
+		Temp* temp = 0x00;
+		{
+			NEModuleCodeSet& ms = n.getModuleSet();
+			ms.create(1);
+			temp = (Temp*) &ms[ms.push(Temp())];
+			temp->grade.getConcreteInstance().setKeyName("fake_grade");
+		}
+		n.execute();
+
+		if (temp->grade.getValue() != 2)
+			return false;		
+		temp->grade.getConcreteInstance().setKeyName("real_grade");
+		n.execute();
+		if (temp->grade.getValue() != 4.0f)
+			return false;
+		if (temp->grade.getConcreteInstance().isNeedingUpdate())	//	NeedingUpdate는 한번 Conversion이 끝나면 flag가 꺼져야 한다.
+			return false;
+
+		return true;
+
+	}
+};
 
 //class Test : public TestCase
 //{
@@ -1337,6 +1488,8 @@ void main()
 	RelativityTestOnSynchronize().test();
 	SelectorAssignOperatorTest().test();
 	KeySelectorAssigningTest().test();
+	GenericArgumentBindingTest().test();
+	ArgumentConversionTest().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
