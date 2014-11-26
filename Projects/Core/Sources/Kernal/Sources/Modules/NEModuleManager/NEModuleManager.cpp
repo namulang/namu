@@ -572,7 +572,8 @@ namespace NE
 					const NEExportable::Identifier& identifier = target_header;
 					KERNAL_WARNING("W201011C41 : 동일한 모듈 복수 존재\n같은 식별자를 지닌 모듈이 2개 이상 존재합니다.\n모듈매니져는 나중에 식별한 모듈은 읽지 않을 것입니다.\n동일한 모듈의 식별자:\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d", identifier.getName().toCharPointer(), identifier.getDeveloper().toCharPointer(), identifier.getRevision())
 #endif
-						break;
+					n--;
+					break;
 				}
 			}
 		}
