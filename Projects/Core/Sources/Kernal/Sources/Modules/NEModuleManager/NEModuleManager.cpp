@@ -393,7 +393,7 @@ namespace NE
 		for(NEModuleList::Iterator* iterator = buffer.getIterator(0); iterator != NE_NULL ;iterator = iterator->getNext())		
 		{
 			NEModule& target = iterator->getValue();
-			_moduleset.push(target);	//	내부에서 Module.id, _onArgumentFetched, _onModuleFetched가 각각 호출 됨.
+			_moduleset.push(target);	//	내부에서 Module.id, _onArgumentFetched, _onFetchModule가 각각 호출 됨.
 
 			KERNAL_INFORMATION(" 모듈 추가됨\n모듈명: %s", target.getHeader().getName().toCharPointer());
 		}

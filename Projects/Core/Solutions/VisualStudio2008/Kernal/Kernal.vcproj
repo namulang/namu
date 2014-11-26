@@ -1271,6 +1271,18 @@
 									>
 								</File>
 							</Filter>
+							<Filter
+								Name="NEArgumentBaseList"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentBaseList\NEArgumentBaseList.cpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentBaseList\NEArgumentBaseList.hpp"
+									>
+								</File>
+							</Filter>
 						</Filter>
 						<Filter
 							Name="NEIndexedArray"

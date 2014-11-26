@@ -25,6 +25,9 @@ namespace NE
 		bool operator!=(const ThisClass& source) const;
 
 	public:
+		virtual type_result unbind();
+
+	public:
 		type_index getRealIndex() const;
 		type_id getComparingId() const;
 		NEEnlistableManager& getManager();
@@ -39,10 +42,7 @@ namespace NE
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual type_result isValid() const;
 		virtual NEObject& clone() const;
-		virtual NEType::Type getType() const;
-
-	public:
-		type_result unbind();
+		virtual NEType::Type getType() const;		
 
 	private:
 		const ThisClass& _assign(const ThisClass& source);

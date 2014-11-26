@@ -332,9 +332,9 @@ namespace NE
 		}
 	}
 
-	type_result Window::_onArgumentsFetched(NEArgumentInterfaceList& tray)
+	type_result Window::_onFetchArguments(NEArgumentInterfaceList& tray)
 	{
-		SuperClass::_onArgumentsFetched(tray);
+		SuperClass::_onFetchArguments(tray);
 
 		arg_title.getDefault() = "이름을 입력하세요.";
 		return tray.push(arg_title);

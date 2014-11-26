@@ -5,8 +5,13 @@
 
 namespace NE
 {
+	class NEArgumentBaseList;
+
 	class NE_DLL NEArgumentBase : public NEKeyNameBinder, public NEUpdatable
 	{
+	public:
+		friend class NEModule;
+
 	public:
 		typedef NEArgumentBase ThisClass;
 		typedef NEKeyNameBinder SuperClass;
@@ -21,7 +26,11 @@ namespace NE
 
 	public:
 		NEType::Type getTypeToBeBinded() const;
-		bool isNeedingUpdate() const;
+		bool isUpdateReserved() const;
+		type_result reserveUpdate();
+
+	public:
+		virtual type_result unbind();
 
 	public:
 		virtual type_result isValid() const;
@@ -33,10 +42,13 @@ namespace NE
 		bool isNeedingBinding() const;
 
 	protected:
-		void _setNeedingUpdate(bool needing_update);
+		void _setUpdateReservedFlag(bool needing_update);
 
 	private:
 		NEType::Type _type_validation;
-		bool _is_needing_update;
+		bool _is_update_reserved;
+
+	private:
+		static NEArgumentBaseList& _getArguments();
 	};
 }

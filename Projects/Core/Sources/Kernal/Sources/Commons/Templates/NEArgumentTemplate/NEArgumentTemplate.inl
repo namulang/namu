@@ -35,7 +35,7 @@ namespace NE
 				return getBindedKey().getValue();
 
 			_for_casting = binded;
-			_setNeedingUpdate(true);
+			reserveUpdate();
 			return _for_casting.getValue();
 		}
 
@@ -53,7 +53,7 @@ namespace NE
 				return getBindedKey();
 
 			_default = binded;			
-			_setNeedingUpdate(true);
+			_setUpdateReservedFlag(true);
 			return getDefault();
 		}
 
@@ -65,13 +65,13 @@ namespace NE
 	type_result NEArgumentTemplate<T>::update()
 	{
 		type_result result = RESULT_SUCCESS | RESULT_ABORT_ACTION;
-		if( ! isNeedingUpdate()) return result;
+		if( ! isUpdateReserved()) return result;
 		if( ! isBinded()) return result;
 
 		NEKey& binded = getBinded();		
 		binded = _for_casting;
 
-		_setNeedingUpdate(false);
+		_setUpdateReservedFlag(false);
 		return RESULT_SUCCESS;
 	}
 

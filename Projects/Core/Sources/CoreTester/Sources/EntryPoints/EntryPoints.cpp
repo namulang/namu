@@ -16,7 +16,7 @@ public:
 		_scriptcode = new1;
 	}
 	NEITArgument<NEIntKey> a;
-	virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
+	virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray)
 	{		
 		tray.push(a);
 
@@ -54,7 +54,7 @@ public:
 		_scriptcode = new1;
 	}
 	NEITArgument<NEIntKey> a;
-	virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
+	virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray)
 	{
 		a.getDefault()++;		
 		tray.push(a);
@@ -1289,7 +1289,7 @@ public:
 		public:
 			NEITArgument<NEKey> generic;
 
-			virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
+			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray)
 			{
 				tray.push(generic);
 
@@ -1359,7 +1359,7 @@ public:
 		public:
 			NEITArgument<NEFloatKey> grade;
 
-			virtual type_result _onArgumentsFetched(NEArgumentInterfaceList& tray)
+			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray)
 			{
 				tray.push(grade);
 
@@ -1388,6 +1388,33 @@ public:
 				return _header;
 			}
 		};
+		class Temp2 : public NEModule
+		{
+		public:
+			NEITArgument<NEModuleSelector> temp;
+
+			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) {
+				tray.push(temp);
+				return 0;
+			}
+			virtual type_result _onExecute() {
+				temp.getValue().initializeReferingPoint();
+				Temp& t = (Temp&)temp.getValue().getModule();				
+				if (temp.getConcreteInstance().isBinded() && &t)
+					t.grade.getValue() *= 10;
+
+				return RESULT_SUCCESS;
+			}
+			virtual NEObject& clone() const { return *(new Temp2(*this)); }
+			virtual const NEExportable::ModuleHeader& getHeader() const {
+				static NEExportable::ModuleHeader _header;
+				if (NEResult::hasError(_header.isValid())) {
+					_header.getName() = "Temp2";
+					_header.getDeveloper() = "kniz";
+				}
+				return _header;
+			}
+		};
 
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
@@ -1399,34 +1426,55 @@ public:
 		manager.initialize();
 
 		ns.create(1);
-		NENode& n = ns[ns.push(NENode())];
-
+		NENode& n = ns[ns.push(NENode())];		
 		{
 			NEKeyCodeSet& ks = n.getKeySet();
-			ks.create(2);
+			ks.create(3);
 			ks.push(NEIntKey(4, "fake_grade"));
 			ks.push(NEFloatKey(8.0f, "real_grade"));
+			ks.push(NEModuleSelector("temp selector"));
 		}
 		Temp* temp = 0x00;
+		Temp2* temp2 = 0x00;
 		{
 			NEModuleCodeSet& ms = n.getModuleSet();
-			ms.create(1);
+			ms.create(2);
 			temp = (Temp*) &ms[ms.push(Temp())];
 			temp->grade.getConcreteInstance().setKeyName("fake_grade");
+			temp2 = (Temp2*)&ms[ms.push(Temp2())];			
 		}
-		n.execute();
 
-		if (temp->grade.getValue() != 2)
-			return false;		
-		temp->grade.getConcreteInstance().setKeyName("real_grade");
 		n.execute();
-		if (temp->grade.getValue() != 4.0f)
+		if (temp->grade.getValue() != 2)								//	바인딩 테스트
+			return false;		
+		if (!temp->grade.getConcreteInstance().isUpdateReserved())		//	외부에서 getValue()를 해도 reserve update 되는가?
 			return false;
-		if (temp->grade.getConcreteInstance().isNeedingUpdate())	//	NeedingUpdate는 한번 Conversion이 끝나면 flag가 꺼져야 한다.
+
+		temp->grade.getConcreteInstance().setKeyName("real_grade");		
+		if (temp->grade.getConcreteInstance().isUpdateReserved())		//	unbind시 update flag도 꺼지는가
+			return false;
+		n.execute();
+		if (temp->grade.getConcreteInstance().isUpdateReserved())		//	Conversion을 한 모든 Arg는, Module.execute 후에는 update가 완료되어야 한다.
+			return false;
+		if (temp->grade.getValue() != 4.0f)								//	keyname을 변경시, 재 바인딩 하는가
+			return false;		
+
+
+		temp->grade.getConcreteInstance().setKeyName("fake_grade");
+		temp2->temp.getConcreteInstance().setKeyName("temp selector");
+		n.execute();
+		if (temp->grade.getConcreteInstance().isUpdateReserved())
+			return false;
+		if (temp->grade.getValue() != 10.0f)							//	다른 모듈에서 셀렉터를 통해 인자에 접근한 경우도 conversion과 update가 완료되는가?
+			return false;
+
+		temp->grade.getValue() *= 2.0f;									//	모듈 밖 외부에서 Implicit Key Conversion Update가 동작하는가
+
+		n.execute();
+		if (temp->grade.getValue() != 100.0f)
 			return false;
 
 		return true;
-
 	}
 };
 

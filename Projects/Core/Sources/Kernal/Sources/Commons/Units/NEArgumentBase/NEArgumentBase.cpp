@@ -1,13 +1,21 @@
+
 #include "NEArgumentBase.hpp"
 #include "../../../Modules/Kernal/Kernal.hpp"
+#include "../../../Modules/NEArgumentBaseList/NEArgumentBaseList.hpp"
 
 namespace NE
 {
+	type_result NEArgumentBase::unbind()
+	{
+		_setUpdateReservedFlag(false);
+
+		return SuperClass::unbind();
+	}
 	bool NEArgumentBase::operator==(const NEArgumentBase& source) const
 	{
 		return	SuperClass::operator==(source)					&&
 			_type_validation == source._type_validation		&&
-			_is_needing_update == source._is_needing_update;
+			_is_update_reserved == source._is_update_reserved;
 	}
 	bool NEArgumentBase::operator!=(const NEArgumentBase& source) const
 	{
@@ -20,13 +28,13 @@ namespace NE
 	bool NEArgumentBase::isNeedingBinding() const
 	{
 		return	getKeyName().getLength() > 0	&&
-				getKeyName()[0] != 0;
+			getKeyName()[0] != 0;
 	}
 	void NEArgumentBase::release() 
 	{
 		SuperClass::release();
 
-		_is_needing_update = false;
+		_is_update_reserved = false;
 
 		_type_validation = NEType::UNDEFINED;
 	}
@@ -34,26 +42,26 @@ namespace NE
 	{
 		SuperClass::serialize(saver);
 
-		return saver << _type_validation << _is_needing_update;
+		return saver << _type_validation << _is_update_reserved;
 	}
 	NEBinaryFileLoader& NEArgumentBase::serialize(NEBinaryFileLoader& loader)
 	{
 		SuperClass::serialize(loader);
 
 		NEType::Type validator = NEType::UNDEFINED;
-		loader >> validator >> _is_needing_update;
+		loader >> validator >> _is_update_reserved;
 
 		return loader;		
 	}
 
 	NEArgumentBase::NEArgumentBase(NEType::Type type)
-		: _type_validation(type), _is_needing_update(false)
+		: _type_validation(type), _is_update_reserved(false)
 	{
 
 	}
 
 	NEArgumentBase::NEArgumentBase(const ThisClass& rhs)
-		: SuperClass(rhs), _type_validation(rhs._type_validation), _is_needing_update(rhs._is_needing_update)
+		: SuperClass(rhs), _type_validation(rhs._type_validation), _is_update_reserved(rhs._is_update_reserved)
 	{
 
 	}
@@ -63,13 +71,29 @@ namespace NE
 		return _type_validation;
 	}
 
-	bool NEArgumentBase::isNeedingUpdate() const
+	bool NEArgumentBase::isUpdateReserved() const
 	{
-		return _is_needing_update;
+		return _is_update_reserved;
 	}
 
-	void NEArgumentBase::_setNeedingUpdate(bool needing_update)
+	void NEArgumentBase::_setUpdateReservedFlag(bool new_state)
 	{
-		_is_needing_update = needing_update;
+		_is_update_reserved = new_state;
+	}
+
+	type_result NEArgumentBase::reserveUpdate()
+	{
+		if (isUpdateReserved()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+
+		_setUpdateReservedFlag(true);
+
+		return _getArguments().push(this);
+	}
+
+	NEArgumentBaseList& NEArgumentBase::_getArguments()
+	{
+		static NEArgumentBaseList list;
+
+		return list;
 	}
 }
