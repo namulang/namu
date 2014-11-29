@@ -16,7 +16,7 @@ namespace NE
 		NEITArgument<NEUIntKey> arg_max_delay;
 
 	protected:
-		virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray)
+		virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
 		{
 			arg_window_selector.getValue().isUsingAutoBinding() = true;
 			arg_max_delay.getDefault() = 500;

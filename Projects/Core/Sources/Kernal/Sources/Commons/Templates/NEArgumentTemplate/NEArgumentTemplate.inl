@@ -34,8 +34,11 @@ namespace NE
 			if(binded.getType() == getTypeToBeBinded())
 				return getBindedKey().getValue();
 
-			_for_casting = binded;
-			reserveUpdate();
+			if( ! isUpdateReserved())
+			{
+				_for_casting = binded;
+				reserveUpdate();
+			}
 			return _for_casting.getValue();
 		}
 
@@ -72,6 +75,7 @@ namespace NE
 		binded = _for_casting;
 
 		_setUpdateReservedFlag(false);
+		cancleUpdate();
 		return RESULT_SUCCESS;
 	}
 

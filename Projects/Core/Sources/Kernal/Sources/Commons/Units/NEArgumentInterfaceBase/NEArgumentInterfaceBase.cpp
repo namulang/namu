@@ -13,4 +13,8 @@ namespace NE
 		return arg.getTypeToBeBinded() == getKeyType();	
 	}
 
+	type_result NE_DLL NEArgumentInterfaceBase::isValid() const
+	{
+		return SuperClass::isValid();
+	}	
 }

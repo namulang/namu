@@ -17,6 +17,7 @@ namespace NE
 
 	public:
 		virtual type_result insert(type_index index, const T* const source);
+		virtual type_index remove(type_index index);
 		virtual type_result update();
 	};
 }

@@ -36,6 +36,14 @@ namespace NE
 
 	public:
 		virtual NEType::Type getKeyType() const;
+		virtual NEKey& getDefaultKey();
+		virtual const NEKey& getDefaultKey() const;
+
+	public:
+		virtual void release();
+		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
+		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
+		virtual NEObject& clone() const;
 
 	public:
 		ConcreteClass& getConcreteInstance();
@@ -44,6 +52,7 @@ namespace NE
 		const T& getKey() const;
 		typename T::Trait& getValue();
 		typename const T::Trait& getValue() const;
+		type_result setDefault(typename const T::Trait& source);
 		typename const T::Trait& getDefault() const;
 		typename T::Trait& getDefault();
 
@@ -54,9 +63,8 @@ namespace NE
 	private:
 		ConcreteClass* _concrete_class;
 		typename T::Trait _constant_default;
-		typename T::Trait _default;
+		T _default_key;
 	};
-
 	//	템플릿 클래스의 별칭 사용에 관하여:
 	//		template<typename T>
 	// 		typedef NEITArgument ITArgument;

@@ -34,9 +34,7 @@ namespace NE
 	{
 		SuperClass::release();
 
-		_is_update_reserved = false;
-
-		_type_validation = NEType::UNDEFINED;
+		_release();
 	}
 	NEBinaryFileSaver& NEArgumentBase::serialize(NEBinaryFileSaver& saver) const
 	{
@@ -46,6 +44,8 @@ namespace NE
 	}
 	NEBinaryFileLoader& NEArgumentBase::serialize(NEBinaryFileLoader& loader)
 	{
+		cancleUpdate();
+
 		SuperClass::serialize(loader);
 
 		NEType::Type validator = NEType::UNDEFINED;
@@ -90,10 +90,35 @@ namespace NE
 		return _getArguments().push(this);
 	}
 
+	type_result NEArgumentBase::cancleUpdate()
+	{
+		if( ! isUpdateReserved()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;		
+		_setUpdateReservedFlag(false);
+
+		type_index index = _getArguments().find(this);
+		if(index == NE_INDEX_ERROR)	return RESULT_TYPE_WARNING;
+
+		return _getArguments().remove(index);
+	}
+
 	NEArgumentBaseList& NEArgumentBase::_getArguments()
 	{
 		static NEArgumentBaseList list;
 
 		return list;
+	}
+
+	void NEArgumentBase::_release()
+	{
+		cancleUpdate();
+
+		_is_update_reserved = false;
+
+		_type_validation = NEType::UNDEFINED;
+	}
+
+	NEArgumentBase::~NEArgumentBase()
+	{
+		_release();
 	}
 }

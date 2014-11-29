@@ -21,6 +21,9 @@ namespace NE
 		NEArgumentBase(const ThisClass& rhs);
 
 	public:
+		~NEArgumentBase();
+
+	public:
 		bool operator==(const NEArgumentBase& source) const;
 		bool operator!=(const NEArgumentBase& source) const;
 
@@ -28,6 +31,7 @@ namespace NE
 		NEType::Type getTypeToBeBinded() const;
 		bool isUpdateReserved() const;
 		type_result reserveUpdate();
+		type_result cancleUpdate();
 
 	public:
 		virtual type_result unbind();
@@ -43,6 +47,9 @@ namespace NE
 
 	protected:
 		void _setUpdateReservedFlag(bool needing_update);
+
+	private:
+		void _release();
 
 	private:
 		NEType::Type _type_validation;

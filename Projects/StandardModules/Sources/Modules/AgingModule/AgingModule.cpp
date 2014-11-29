@@ -16,7 +16,7 @@ namespace NE
 		NEITArgument<NEIntKey> way;
 
 	protected:
-		virtual type_result _onFetchArgument(NEArgumentInterfaceList& tray)
+		virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
 		{
 			tray.push(target);
 			tray.push(value);

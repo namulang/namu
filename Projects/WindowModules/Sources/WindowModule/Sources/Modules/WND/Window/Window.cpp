@@ -332,7 +332,7 @@ namespace NE
 		}
 	}
 
-	type_result Window::_onFetchArguments(NEArgumentInterfaceList& tray)
+	type_result Window::_onFetchArguments(NEArgumentInterfaceList& tray) const
 	{
 		SuperClass::_onFetchArguments(tray);
 

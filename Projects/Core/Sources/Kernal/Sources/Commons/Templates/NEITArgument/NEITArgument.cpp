@@ -181,4 +181,39 @@ namespace NE
 		// *_concrete_class = *src._concrete_class;	
 		return *this;	
 	}	
+
+	NEObject& NEITArgument<NEKey>::clone() const
+	{
+		return *(new ThisClass(*this));
+	}
+
+	NEBinaryFileLoader& NEITArgument<NEKey>::serialize(NEBinaryFileLoader& loader)
+	{
+		return loader;
+	}
+
+	NEBinaryFileSaver& NEITArgument<NEKey>::serialize(NEBinaryFileSaver& saver) const
+	{
+		return saver;
+	}
+
+	void NEITArgument<NEKey>::release()
+	{
+		if (_concrete_class)
+			_concrete_class->release();
+	}
+
+	const NEKey& NEITArgument<NEKey>::getDefaultKey() const
+	{
+		NEKey* nullpointer = 0x00;
+
+		return *nullpointer;
+	}
+
+	NEKey& NEITArgument<NEKey>::getDefaultKey()
+	{
+		NEKey* nullpointer = 0x00;
+
+		return *nullpointer;
+	}
 }

@@ -16,7 +16,7 @@ public:
 		_scriptcode = new1;
 	}
 	NEITArgument<NEIntKey> a;
-	virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray)
+	virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
 	{		
 		tray.push(a);
 
@@ -54,9 +54,8 @@ public:
 		_scriptcode = new1;
 	}
 	NEITArgument<NEIntKey> a;
-	virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray)
-	{
-		a.getDefault()++;		
+	virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
+	{		
 		tray.push(a);
 		
 		return RESULT_SUCCESS;
@@ -67,6 +66,13 @@ public:
 		NEModule::initialize();
 
 		a.getDefault() += 5;
+		return RESULT_SUCCESS;
+	}
+
+	virtual type_result _onInitialize()
+	{
+		a.getDefault()++;
+
 		return RESULT_SUCCESS;
 	}
 
@@ -1289,7 +1295,7 @@ public:
 		public:
 			NEITArgument<NEKey> generic;
 
-			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray)
+			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
 			{
 				tray.push(generic);
 
@@ -1359,7 +1365,7 @@ public:
 		public:
 			NEITArgument<NEFloatKey> grade;
 
-			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray)
+			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
 			{
 				tray.push(grade);
 
@@ -1393,7 +1399,7 @@ public:
 		public:
 			NEITArgument<NEModuleSelector> temp;
 
-			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) {
+			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const {
 				tray.push(temp);
 				return 0;
 			}
@@ -1477,6 +1483,119 @@ public:
 		return true;
 	}
 };
+class ArgumentConstantLiteralTest : public TestCase
+{
+public:
+	ArgumentConstantLiteralTest() : TestCase("test that default value of argument interface is modifiable.") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+
+		manager.initialize();
+		{
+			NENode& n = ns[ns.push(NENode())];
+			NEModuleCodeSet& ms = n.getModuleSet();
+
+			MyMod* temp = 0x00;
+			ms.create(1);
+			{
+				temp = (MyMod*)&ms[ms.push(MyMod())];
+			}
+			n.execute();
+
+			if (temp->a.getValue() != 28)
+				return false;
+
+			temp->a.setDefault(8);
+			n.execute();
+			if (temp->a.getValue() != 8)
+				return false;
+		}
+
+		NETString filename = "ArgumentConstantLiteralTest.dat";
+		NEBinaryFileSaver saver(filename.toCharPointer());
+		saver.open();
+		if (!saver.isFileOpenSuccess())	return false;
+		saver << manager;
+		saver.close();
+
+		manager.release();
+
+		NEBinaryFileLoader loader(filename.toCharPointer());
+		loader.open();
+		if (!loader.isFileOpenSuccess()) return false;
+		loader >> manager;
+		loader.close();
+
+		{
+			NENodeCodeSet& ns = manager.getRootNodes();
+			if (ns.getLength() <= 0)	return false;
+
+			NEModuleCodeSet& ms = ns[1].getModuleSet();
+			if (ms.getLength() <= 0)	return false;
+
+			MyMod& temp = dynamic_cast<MyMod&>(ms[0]);
+			if ( ! &temp) return false;
+
+			if(temp.a.getConcreteInstance().isBinded()) return false;
+			if (temp.a.getValue() != 8)
+				return false;
+		}
+
+		return true;
+	}
+};
+class ArgumentInterfaceCanBeSaved : public TestCase
+{
+public:
+	ArgumentInterfaceCanBeSaved() : TestCase("can be default-value of argument saved?") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+
+		manager.initialize();
+		{
+			NEModuleCodeSet& ms = ns[0].getModuleSet();
+			ms.create(1);
+			MyMod& m = (MyMod&) ms[ms.push(MyMod())];
+			NEIntKey& ik = dynamic_cast<NEIntKey&>(m.a.getDefaultKey());
+			ik.getValue() = 100;
+		}
+
+		NEBinaryFileSaver saver(_T("arg-default-value-test.dat"));
+		saver.open();
+		if (!saver.isFileOpenSuccess())
+			return false;
+		saver << manager;
+		saver.close();
+
+		NEBinaryFileLoader loader(_T("arg-default-value-test.dat"));
+		loader.open();
+		if (!loader.isFileOpenSuccess())
+			return false;
+		loader >> manager;
+		loader.close();
+
+		MyMod& m = (MyMod&)manager.getRootNodes()[0].getModuleSet()[0];
+		if (!&m) return false;
+		if (m.a.getDefault() != 100)
+			return false;
+
+		return true;
+	}
+};
 
 //class Test : public TestCase
 //{
@@ -1538,6 +1657,8 @@ void main()
 	KeySelectorAssigningTest().test();
 	GenericArgumentBindingTest().test();
 	ArgumentConversionTest().test();
+	ArgumentConstantLiteralTest().test();
+	ArgumentInterfaceCanBeSaved().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();

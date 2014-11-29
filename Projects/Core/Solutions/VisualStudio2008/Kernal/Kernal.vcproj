@@ -1267,6 +1267,10 @@
 								Name="NEArgumentInterfaceList"
 								>
 								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentInterfaceList\NEArgumentInterfaceList.cpp"
+									>
+								</File>
+								<File
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentInterfaceList\NEArgumentInterfaceList.hpp"
 									>
 								</File>
