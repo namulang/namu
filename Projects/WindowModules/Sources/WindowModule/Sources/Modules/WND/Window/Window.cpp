@@ -20,14 +20,6 @@ namespace NE
 		_release();
 	}
 
-	/*
-		initialize는 처음 인스턴스가 생성될때 호출된다.
-		( * 즉, 모듈 매니져에서 처음으로 발생)
-
-		그 이후로는 복사생성자 -> serialize(loader)만 호출되므로,
-		intiailize에 기본값을 할당해놓으면 스크립트파일에서 값을 명시하지 않은 경우에
-		자동으로 기본값이 놓여지게 될것이다.
-	*/
 	type_result NE_DLL Window::initialize()
 	{
 		//	pre:
@@ -210,6 +202,7 @@ namespace NE
 		//	main:
 		_style = source._style;
 		_saved_title = source._saved_title;
+		arg_title = source.arg_title;
 		
 		return *this;
 	}
@@ -335,9 +328,15 @@ namespace NE
 	type_result Window::_onFetchArguments(NEArgumentList& tray)
 	{
 		SuperClass::_onFetchArguments(tray);
-
-		arg_title.getDefault() = "이름을 입력하세요.";
+		
 		return tray.push(arg_title);
+	}
+
+	type_result Window::_onFetchModule()
+	{
+		SuperClass::_onFetchModule();
+		
+		return arg_title.setDefault("이름을 입력하세요.");
 	}
 
 }
