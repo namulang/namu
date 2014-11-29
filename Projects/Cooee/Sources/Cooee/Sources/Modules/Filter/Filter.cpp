@@ -21,7 +21,7 @@ namespace
 	};
 }
 Filter::Filter() 
-: LG::ListWindow("", 4, 17, 20, 5, LIGHTGRAY, DARKGRAY)
+: LG::ListWindow("", 4, 17, 20, 6, LIGHTGRAY, DARKGRAY)
 {			
 
 }
