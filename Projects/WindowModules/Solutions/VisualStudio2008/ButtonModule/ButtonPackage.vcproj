@@ -323,18 +323,6 @@
 									>
 								</File>
 							</Filter>
-							<Filter
-								Name="ButtonConnector"
-								>
-								<File
-									RelativePath="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\innerclass\ButtonConnector\ButtonConnector.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\ButtonModule\Sources\Modules\Button\Execute\innerclass\ButtonConnector\ButtonConnector.hpp"
-									>
-								</File>
-							</Filter>
 						</Filter>
 					</Filter>
 				</Filter>
