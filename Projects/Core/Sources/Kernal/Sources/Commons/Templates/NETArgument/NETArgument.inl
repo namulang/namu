@@ -55,7 +55,8 @@ namespace NE
 	type_result NE::NETArgument<T>::setValue(typename const T::Trait& source)
 	{
 		NEKey& binded = getBinded();
-		if(	! &binded)	return RESULT_TYPE_WARNING | RESULT_ABORT_ACTION;
+		if(	! &binded)
+			return setDefault(source);
 
 
 		//	main:

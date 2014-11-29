@@ -317,14 +317,10 @@
 					</Filter>
 				</Filter>
 				<Filter
-					Name="Assign"
+					Name="BinaryALU"
 					>
 					<File
-						RelativePath="..\..\..\Sources\Modules\Assign\Assign.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\Sources\Modules\Assign\Assign.hpp"
+						RelativePath="..\..\..\Sources\Modules\BinaryALU\BinaryALU.hpp"
 						>
 					</File>
 				</Filter>
@@ -1017,58 +1013,6 @@
 					</Filter>
 				</Filter>
 				<Filter
-					Name="StorerTemplate"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Modules\StorerTemplate\StorerTemplate.hpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\Sources\Modules\StorerTemplate\StorerTemplate.inl"
-						>
-					</File>
-					<Filter
-						Name="innerclass"
-						>
-						<Filter
-							Name="Connector"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Modules\StorerTemplate\innerclass\Connector\Connector.hpp"
-								>
-							</File>
-							<File
-								RelativePath="..\..\..\Sources\Modules\StorerTemplate\innerclass\Connector\Connector.inl"
-								>
-							</File>
-						</Filter>
-						<Filter
-							Name="ErrorCode"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Modules\StorerTemplate\innerclass\ErrorCode\ErrorCode.hpp"
-								>
-							</File>
-						</Filter>
-					</Filter>
-					<Filter
-						Name="define"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\StorerTemplate\define\define.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="Templates"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\StorerTemplate\Templates\Templates.hpp"
-							>
-						</File>
-					</Filter>
-				</Filter>
-				<Filter
 					Name="NEBlockedModuleSet"
 					>
 					<File
@@ -1112,29 +1056,9 @@
 					Name="AgingTemplate"
 					>
 					<File
-						RelativePath="..\..\..\Sources\Modules\AgingModule\AgingModule.cpp"
+						RelativePath="..\..\..\Sources\Modules\AgingModule\AgingModule.hpp"
 						>
 					</File>
-					<Filter
-						Name="Templates"
-						>
-					</Filter>
-					<Filter
-						Name="ManagedAgingTemplate"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\ManagedAgingTemplate\ManagedAgingTemplate.hpp"
-							>
-						</File>
-						<Filter
-							Name="Templates"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Modules\ManagedAgingTemplate\Templates.hpp"
-								>
-							</File>
-						</Filter>
-					</Filter>
 				</Filter>
 				<Filter
 					Name="MessageSender"
@@ -1277,38 +1201,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="AssignWith"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Modules\AssignWith\AssignWith.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\Sources\Modules\AssignWith\AssignWith.hpp"
-						>
-					</File>
-					<Filter
-						Name="define"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\AssignWith\define\define.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="innerclass"
-						>
-						<Filter
-							Name="ErrorCode"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Modules\AssignWith\innerclass\ErrorCode\ErrorCode.hpp"
-								>
-							</File>
-						</Filter>
-					</Filter>
-				</Filter>
-				<Filter
 					Name="LogicWith"
 					>
 					<File
@@ -1343,14 +1235,6 @@
 							>
 						</Filter>
 					</Filter>
-				</Filter>
-				<Filter
-					Name="SelectorAssigner"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Modules\SelectorAssigner\SelectorAssigner.hpp"
-						>
-					</File>
 				</Filter>
 			</Filter>
 		</Filter>
