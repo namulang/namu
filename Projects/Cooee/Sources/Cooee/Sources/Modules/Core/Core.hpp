@@ -46,7 +46,7 @@ public:
 		LG::Core::getWindowList().pushFront(LG::MessageWindow(msg, WHITE, LIGHTRED));
 	}
 	static void openModifierFrom(const NEString& path, NEKey* real_key = 0);
-	static void openModifierFrom(NEKey& key);
+	static void openModifierFrom(NEKey& key, bool not_use_name = false);
 	static type_index _getPositionTypeAndIndex(const NEString& position, int& type)
 	{
 		int index_to_be_returned = position.getLength() > 1 ? position.extract(0, position.getLengthLastIndex()).toInt() : NE_INDEX_ERROR;

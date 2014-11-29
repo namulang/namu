@@ -1,13 +1,12 @@
 #pragma once
 
 #include "../NEKeyNameBinder/NEKeyNameBinder.hpp"
-#include "../../Interfaces/NEUpdatable/NEUpdatable.hpp"
 
 namespace NE
 {
 	class NEArgumentBaseList;
 
-	class NE_DLL NEArgumentBase : public NEKeyNameBinder, public NEUpdatable
+	class NE_DLL NEArgumentBase : public NEKeyNameBinder
 	{
 	public:
 		friend class NEModule;
@@ -29,33 +28,29 @@ namespace NE
 
 	public:
 		NEType::Type getTypeToBeBinded() const;
-		bool isUpdateReserved() const;
-		type_result reserveUpdate();
-		type_result cancleUpdate();
+		bool isValidToBind(const NEObject& to_be_bind) const;
+		const NEKey& getValueKey() const;
+		NEKey& getValueKey();
+
+	public:		
+		virtual type_result bind();
+		virtual NEKey& getDefaultKey() = 0;
+		virtual const NEKey& getDefaultKey() const = 0;
 
 	public:
-		virtual type_result unbind();
-
-	public:
+		virtual NEType::Type getType() const;
 		virtual type_result isValid() const;
 		virtual void release();
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 
 	public:
-		bool isNeedingBinding() const;
-
-	protected:
-		void _setUpdateReservedFlag(bool needing_update);
+		bool isNeedingBinding() const;		
 
 	private:
 		void _release();
 
 	private:
 		NEType::Type _type_validation;
-		bool _is_update_reserved;
-
-	private:
-		static NEArgumentBaseList& _getArguments();
 	};
 }

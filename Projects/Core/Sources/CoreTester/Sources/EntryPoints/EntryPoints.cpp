@@ -7,16 +7,12 @@ using namespace NE;
 class MyMod : public NEModule
 {
 public:
-	MyMod()	: a(28)
-	{
-
-	}
 	void setScript(type_code new1)
 	{
 		_scriptcode = new1;
 	}
-	NEITArgument<NEIntKey> a;
-	virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
+	NETArgument<NEIntKey> a;
+	virtual type_result _onFetchArguments(NEArgumentList& tray)
 	{		
 		tray.push(a);
 
@@ -44,41 +40,28 @@ public:
 class MyMod2 : public NEModule
 {
 public:
-	MyMod2()
-		: a(100)
-	{
-
-	}
 	void setScript(type_code new1)
 	{
 		_scriptcode = new1;
 	}
-	NEITArgument<NEIntKey> a;
-	virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
+	NETArgument<NEIntKey> a;
+	virtual type_result _onFetchArguments(NEArgumentList& tray)
 	{		
 		tray.push(a);
 		
 		return RESULT_SUCCESS;
 	}
 
-	virtual type_result initialize()
-	{
-		NEModule::initialize();
-
-		a.getDefault() += 5;
-		return RESULT_SUCCESS;
-	}
-
 	virtual type_result _onInitialize()
 	{
-		a.getDefault()++;
+		a.setDefault( a.getDefault() + 1 );
 
 		return RESULT_SUCCESS;
 	}
 
 	virtual type_result _onExecute()
 	{
-		a.getDefault() *= 2;
+		a.setDefault(a.getDefault() * 2);
 
 		return RESULT_SUCCESS;
 	}
@@ -433,7 +416,7 @@ public:
 		ms.resize(1);
 		ms.push(MyMod());
 		MyMod& mym = (MyMod&) ms[0];
-		mym.a.getDefault() = 1000;
+		mym.a.setDefault(1000);
 
 		ks.create(5);
 		ks.push(NEIntKey(5));
@@ -486,7 +469,7 @@ public:
 		}
 
 		MyMod& mym1 = (MyMod&) ns[1].getModuleSet()[0];
-		if(mym1.a.getDefault() != 28)	//	default는 변경될 수 없어야 한다.
+		if(mym1.a.getDefault() != 1000)	//	default는 변경될 수 있어야 한다.
 			return false;
 
 		return true;
@@ -535,7 +518,9 @@ public:
 
 		Kernal& kernal = Kernal::getInstance();
 		kernal.initialize();
-		kernal.getDebugManager().setDebugMode(false);	//	디버그 모드를 끈다. 로그 없앰
+		kernal.getDebugManager().setDebugMode(true);	//	디버그 모드를 끈다. 로그 없앰
+		kernal.getDebugManager().setConsoleEnabled(false);
+		kernal.getDebugManager().setDebugWindowEnabled(true);
 
 		if( ! &kernal.getNodeManager()	||
 			! &kernal.getScriptManager())
@@ -567,15 +552,15 @@ public:
 
 		NENode& node1 = ns[ns.push(NENode())];
 		node1.getModuleSet().create(1);
-		//	1. MyMod() 생성자 호출			; default = 100
-		//	2. initailize에서 ++			; default = 101
-		//	2. cloned = MyMod().clone();	; default 변경 불가 = 101
+		//	1. MyMod() 생성자 호출			; default = 0
+		//	2. initailize에서 ++			; default = 1
+		//	2. cloned = MyMod().clone();	; default 변경 불가 = 1
 		//	3. cloned.initialize()			;			"
 		MyMod2& mod = (MyMod2&) node1.getModuleSet()[node1.getModuleSet().push(MyMod2())];
 
-		manager.execute();	//				;			"
+		manager.execute();	//				;			"	= 2
 
-		return mod.a.getDefault() == 101;	
+		return mod.a.getDefault() == 2;	
 	}
 };
 class Test10 : public TestCase
@@ -596,8 +581,8 @@ public:
 
 		MyMod mine;
 		mine.initialize();	//	initialize 안에서 _bindArgument가 호출된다.
-		mine.a.getConcreteInstance().setKeyName("age");
-		mine.a.getDefault() = 18;
+		mine.a.setKeyName("age");
+		mine.a.setDefault(18);
 
 		NENode& node1 = ns[ns.push(NENode())];
 		node1.getKeySet().create(1);
@@ -607,8 +592,8 @@ public:
 
 		if(	mine.a.getDefault() != module1.a.getDefault()	||
 			&mine.a == &module1.a							||
-			mine.a.getConcreteInstance().getKeyName() !=	
-			module1.a.getConcreteInstance().getKeyName()	)
+			mine.a.getKeyName() !=	
+			module1.a.getKeyName()	)
 			return false;
 		return true;			
 	}
@@ -631,8 +616,8 @@ public:
 
 		MyMod mine;
 		mine.initialize();
-		mine.a.getConcreteInstance().setKeyName("age");
-		mine.a.getDefault() = 18;
+		mine.a.setKeyName("age");
+		mine.a.setDefault(18);
 
 		NENode& node1 = ns[ns.push(NENode())];
 		node1.getKeySet().create(1);
@@ -640,7 +625,7 @@ public:
 		node1.getModuleSet().create(1);
 		MyMod& module1 = (MyMod&) node1.getModuleSet()[node1.getModuleSet().push(mine)];
 
-		if(	mine.a.getConcreteInstance().getKeyName() != module1.a.getConcreteInstance().getKeyName())
+		if(	mine.a.getKeyName() != module1.a.getKeyName())
 			return false;
 
 		return true;			
@@ -663,9 +648,9 @@ public:
 		manager.initialize();
 
 		MyMod mine;
-		mine.a.getDefault() = 18;
+		mine.a.setDefault(18);
 		mine.initialize();
-		mine.a.getConcreteInstance().setKeyName("age");
+		mine.a.setKeyName("age");
 
 		NENode& node1 = ns[ns.push(NENode())];
 		node1.getKeySet().create(1);
@@ -680,7 +665,7 @@ public:
 		
 		manager.execute();	//	바인딩이 실시된다
 
-		if(module1.a.getValue() == 18)
+		if(module1.a.getValue() != 5)
 			return false;
 
 
@@ -1293,9 +1278,9 @@ public:
 		class Temp : public NEModule
 		{
 		public:
-			NEITArgument<NEKey> generic;
+			NETArgument<NEKey> generic;
 
-			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
+			virtual type_result _onFetchArguments(NEArgumentList& tray)
 			{
 				tray.push(generic);
 
@@ -1341,13 +1326,13 @@ public:
 				NEModuleCodeSet& ms = n.getModuleSet();
 				ms.create(1);
 				temp = (Temp*) &ms[ms.push(Temp())];
-				temp->generic.getConcreteInstance().setKeyName("age");								
+				temp->generic.setKeyName("age");								
 			}
 			n.execute();
 		}
 
-		if(	temp->generic.getKey().getName() != "age"				||
-			!temp->generic.getKey().isSubClassOf(NEType::NEINT_KEY)	)
+		if(	temp->generic.getValueKey().getName() != "age"				||
+			!temp->generic.getValueKey().isSubClassOf(NEType::NEINT_KEY)	)
 			return false;
 
 		return true;
@@ -1363,9 +1348,9 @@ public:
 		class Temp : public NEModule
 		{
 		public:
-			NEITArgument<NEFloatKey> grade;
+			NETArgument<NEFloatKey> grade;
 
-			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
+			virtual type_result _onFetchArguments(NEArgumentList& tray)
 			{
 				tray.push(grade);
 
@@ -1373,7 +1358,7 @@ public:
 			}
 			virtual type_result _onExecute()
 			{
-				grade.getValue() /= 2.0f;
+				grade.setValue(grade.getValue() / 2.0f);
 
 				return RESULT_SUCCESS;
 			}
@@ -1397,17 +1382,17 @@ public:
 		class Temp2 : public NEModule
 		{
 		public:
-			NEITArgument<NEModuleSelector> temp;
+			NETArgument<NEModuleSelector> temp;
 
-			virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const {
+			virtual type_result _onFetchArguments(NEArgumentList& tray) {
 				tray.push(temp);
 				return 0;
 			}
 			virtual type_result _onExecute() {
 				temp.getValue().initializeReferingPoint();
 				Temp& t = (Temp&)temp.getValue().getModule();				
-				if (temp.getConcreteInstance().isBinded() && &t)
-					t.grade.getValue() *= 10;
+				if (temp.isBinded() && &t)
+					t.grade.setValue(t.grade.getValue() * 10);
 
 				return RESULT_SUCCESS;
 			}
@@ -1446,35 +1431,28 @@ public:
 			NEModuleCodeSet& ms = n.getModuleSet();
 			ms.create(2);
 			temp = (Temp*) &ms[ms.push(Temp())];
-			temp->grade.getConcreteInstance().setKeyName("fake_grade");
+			temp->grade.setKeyName("fake_grade");
 			temp2 = (Temp2*)&ms[ms.push(Temp2())];			
 		}
 
 		n.execute();
-		if (temp->grade.getValue() != 2)								//	바인딩 테스트
-			return false;		
-		if (!temp->grade.getConcreteInstance().isUpdateReserved())		//	외부에서 getValue()를 해도 reserve update 되는가?
-			return false;
+		if (temp->grade.getValue() != 2)					//	바인딩 테스트
+			return false;				
 
-		temp->grade.getConcreteInstance().setKeyName("real_grade");		
-		if (temp->grade.getConcreteInstance().isUpdateReserved())		//	unbind시 update flag도 꺼지는가
-			return false;
-		n.execute();
-		if (temp->grade.getConcreteInstance().isUpdateReserved())		//	Conversion을 한 모든 Arg는, Module.execute 후에는 update가 완료되어야 한다.
-			return false;
-		if (temp->grade.getValue() != 4.0f)								//	keyname을 변경시, 재 바인딩 하는가
+		temp->grade.setKeyName("real_grade");		
+		
+		n.execute();		
+		if (temp->grade.getValue() != 4.0f)					//	keyname을 변경시, 재 바인딩 하는가
 			return false;		
 
 
-		temp->grade.getConcreteInstance().setKeyName("fake_grade");
-		temp2->temp.getConcreteInstance().setKeyName("temp selector");
-		n.execute();
-		if (temp->grade.getConcreteInstance().isUpdateReserved())
-			return false;
-		if (temp->grade.getValue() != 10.0f)							//	다른 모듈에서 셀렉터를 통해 인자에 접근한 경우도 conversion과 update가 완료되는가?
+		temp->grade.setKeyName("fake_grade");
+		temp2->temp.setKeyName("temp selector");
+		n.execute();		
+		if (temp->grade.getValue() != 10.0f)				//	다른 모듈에서 셀렉터를 통해 인자에 접근한 경우도 conversion과 update가 완료되는가?
 			return false;
 
-		temp->grade.getValue() *= 2.0f;									//	모듈 밖 외부에서 Implicit Key Conversion Update가 동작하는가
+		temp->grade.setValue(temp->grade.getValue() * 2.0f);//	모듈 밖 외부에서 Implicit Key Conversion Update가 동작하는가
 
 		n.execute();
 		if (temp->grade.getValue() != 100.0f)
@@ -1486,7 +1464,7 @@ public:
 class ArgumentConstantLiteralTest : public TestCase
 {
 public:
-	ArgumentConstantLiteralTest() : TestCase("test that default value of argument interface is modifiable.") {}
+	ArgumentConstantLiteralTest() : TestCase("test that default of argument interface is modifiable.") {}
 	virtual bool onTest() 
 	{
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
@@ -1509,7 +1487,7 @@ public:
 			}
 			n.execute();
 
-			if (temp->a.getValue() != 28)
+			if (temp->a.getValue() != 0)	//	바인딩이 안돼있다면 디폴트값인 0이 나오는가
 				return false;
 
 			temp->a.setDefault(8);
@@ -1543,7 +1521,7 @@ public:
 			MyMod& temp = dynamic_cast<MyMod&>(ms[0]);
 			if ( ! &temp) return false;
 
-			if(temp.a.getConcreteInstance().isBinded()) return false;
+			if(temp.a.isBinded()) return false;
 			if (temp.a.getValue() != 8)
 				return false;
 		}

@@ -365,18 +365,6 @@
 							>
 						</File>
 					</Filter>
-					<Filter
-						Name="NEArgumentInterfaceBase"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NEArgumentInterfaceBase\NEArgumentInterfaceBase.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NEArgumentInterfaceBase\NEArgumentInterfaceBase.hpp"
-							>
-						</File>
-					</Filter>
 				</Filter>
 				<Filter
 					Name="Functions"
@@ -858,34 +846,18 @@
 						</File>
 					</Filter>
 					<Filter
-						Name="NEArgumentTemplate"
+						Name="NETArgument"
 						>
 						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEArgumentTemplate\NEArgumentTemplate.cpp"
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NETArgument\NETArgument.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEArgumentTemplate\NEArgumentTemplate.hpp"
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NETArgument\NETArgument.hpp"
 							>
 						</File>
 						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEArgumentTemplate\NEArgumentTemplate.inl"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="NEITArgument"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEITArgument\NEITArgument.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEITArgument\NEITArgument.hpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEITArgument\NEITArgument.inl"
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NETArgument\NETArgument.inl"
 							>
 						</File>
 					</Filter>
@@ -1264,26 +1236,10 @@
 								</File>
 							</Filter>
 							<Filter
-								Name="NEArgumentInterfaceList"
+								Name="NEArgumentList"
 								>
 								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentInterfaceList\NEArgumentInterfaceList.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentInterfaceList\NEArgumentInterfaceList.hpp"
-									>
-								</File>
-							</Filter>
-							<Filter
-								Name="NEArgumentBaseList"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentBaseList\NEArgumentBaseList.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentBaseList\NEArgumentBaseList.hpp"
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentList\NEArgumentList.hpp"
 									>
 								</File>
 							</Filter>

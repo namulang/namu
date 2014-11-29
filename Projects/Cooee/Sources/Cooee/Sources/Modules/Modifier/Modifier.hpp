@@ -31,7 +31,7 @@ public:
 		: InputTerminal("", "주어진 키의 새로운 값을 입력하세요", NEType::NEKEY), 
 		value(new_value), real_key(0)
 	{
-
+		textbox.text = value;
 	}
 	Modifier(const Modifier& rhs) : InputTerminal(rhs), value(rhs.value), focused_text(rhs.focused_text),
 		value_lable(rhs.value_lable), name_text(rhs.name_text), name_lable(rhs.name_lable), 

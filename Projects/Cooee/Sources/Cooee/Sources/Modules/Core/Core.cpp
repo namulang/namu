@@ -36,105 +36,70 @@ void Core::openModifierFrom(const NEString& path, NEKey* real_key)
 	else
 		::Core::pushMessage("경로 " + path + "에 있는 객체에 대한 적당한 수정자가 없습니다.");
 }
-
-void Core::openModifierFrom(NEKey& key)
+template <typename K>
+bool __open(NEKey& key, bool not_use_name)
 {
-	switch(key.getType())
-	{
-	case NEType::NEBOOLEAN_KEY:
-		::LG::Core::open(Modifier<NEBooleanKey>((NEBooleanKey&)key));
-		break;
+	if (K().getType() != key.getType())
+		return false;
 
-	case NEType::NECHAR_KEY:
-		::LG::Core::open(Modifier<NECharKey>((NECharKey&)key));
-		break;
-	case NEType::NEWCHAR_KEY:
-		::LG::Core::open(Modifier<NEWCharKey>((NEWCharKey&)key));
-		break;
-	case NEType::NEBYTE_KEY:
-		::LG::Core::open(Modifier<NEByteKey>((NEByteKey&)key));
-		break;
-	case NEType::NEUBYTE_KEY:
-		::LG::Core::open(Modifier<NEUByteKey>((NEUByteKey&)key));
-		break;
-	case NEType::NESHORT_KEY:
-		::LG::Core::open(Modifier<NEShortKey>((NEShortKey&)key));
-		break;
-	case NEType::NEUSHORT_KEY:
-		::LG::Core::open(Modifier<NEUShortKey>((NEUShortKey&)key));
-		break;
-	case NEType::NEINT_KEY:
-		::LG::Core::open(Modifier<NEIntKey>((NEIntKey&)key));
-		break;
-	case NEType::NEUINT_KEY:
-		::LG::Core::open(Modifier<NEUIntKey>((NEUIntKey&)key));
-		break;
-	case NEType::NEINT64_KEY:
-		::LG::Core::open(Modifier<NEInt64Key>((NEInt64Key&)key));
-		break;
-	case NEType::NEFLOAT_KEY:
-		::LG::Core::open(Modifier<NEFloatKey>((NEFloatKey&)key));
-		break;
-	case NEType::NEDOUBLE_KEY:
-		::LG::Core::open(Modifier<NEDoubleKey>((NEDoubleKey&)key));
-		break;
-	case NEType::NESTRING_KEY:
-		::LG::Core::open(Modifier<NEStringKey>((NEStringKey&)key));
-		break;
-	case NEType::NEWSTRING_KEY:
-		::LG::Core::open(Modifier<NEWStringKey>((NEWStringKey&)key));
-		break;
+	K& casted = (K&)key;
+	if (not_use_name)
+		::LG::Core::open(Modifier<K>(casted.getValue()));
+	else
+		::LG::Core::open(Modifier<K>(casted));
 
-	case NEType::NEBOOLEAN_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEBooleanSetKey, NEBooleanKey>((NEBooleanSetKey&)key));
-		break;
-	case NEType::NEBYTE_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEByteSetKey, NEByteKey>((NEByteSetKey&)key));
-		break;
-	case NEType::NEUBYTE_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEUByteSetKey, NEUByteKey>((NEUByteSetKey&)key));
-		break;
-	case NEType::NESHORT_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEShortSetKey, NEShortKey>((NEShortSetKey&)key));
-		break;
-	case NEType::NEUSHORT_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEUShortSetKey, NEUShortKey>((NEUShortSetKey&)key));
-		break;
-	case NEType::NEINT_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEIntSetKey, NEIntKey>((NEIntSetKey&)key));
-		break;
-	case NEType::NEUINT_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEUIntSetKey, NEUIntKey>((NEUIntSetKey&)key));
-		break;
-	case NEType::NEINT64_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEInt64SetKey, NEInt64Key>((NEInt64SetKey&)key));
-		break;
-	case NEType::NEFLOAT_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEFloatSetKey, NEFloatKey>((NEFloatSetKey&)key));
-		break;
-	case NEType::NEDOUBLE_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEDoubleSetKey, NEDoubleKey>((NEDoubleSetKey&)key));
-		break;
-	case NEType::NESTRING_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEStringSetKey, NEStringKey>((NEStringSetKey&)key));
-		break;
-	case NEType::NEWSTRING_SET_KEY:
-		::LG::Core::open(ContainerModifier<NEWStringSetKey, NEWStringKey>((NEWStringSetKey&)key));
-		break;
-	case NEType::NENODE_SELECTOR:
-		LG::Core::open(Planetarium((NENodeSelector*)&key, 5, 3, 70, 18));
-		break;
-	case NEType::NEMODULE_SELECTOR:
+	return true;
+}
+template <typename K, typename KU>
+bool __open_c(NEKey& key, bool not_use_name)
+{
+	if (K().getType() != key.getType())
+		return false;
+
+	K& casted = (K&)key;
+	if (not_use_name)
+		::LG::Core::open(ContainerModifier<K, KU>(casted.getValue()));
+	else
+		::LG::Core::open(ContainerModifier<K, KU>(casted));
+
+	return true;
+}
+
+void Core::openModifierFrom(NEKey& key, bool not_use_name)
+{
+	if (__open<NEBooleanKey>(key, not_use_name))	return;
+	if (__open<NECharKey>(key, not_use_name))	return;
+	if (__open<NEWCharKey>(key, not_use_name))	return;
+	if (__open<NEByteKey>(key, not_use_name))	return;
+	if (__open<NEUByteKey>(key, not_use_name))	return;
+	if (__open<NEShortKey>(key, not_use_name))	return;
+	if (__open<NEUShortKey>(key, not_use_name))	return;
+	if (__open<NEIntKey>(key, not_use_name))	return;
+	if (__open<NEUIntKey>(key, not_use_name))	return;
+	if (__open<NEInt64Key>(key, not_use_name))	return;
+	if (__open<NEFloatKey>(key, not_use_name))	return;
+	if (__open<NEDoubleKey>(key, not_use_name))	return;
+	if (__open<NEStringKey>(key, not_use_name))	return;
+	if (__open<NEWStringKey>(key, not_use_name))	return;
+	if (__open_c<NEBooleanSetKey, NEBooleanKey>(key, not_use_name))	return;
+	if (__open_c<NEByteSetKey, NEByteKey>(key, not_use_name))		return;
+	if (__open_c<NEUByteSetKey, NEUByteKey>(key, not_use_name))		return;
+	if (__open_c<NEShortSetKey, NEShortKey>(key, not_use_name))		return;
+	if (__open_c<NEUShortSetKey, NEUShortKey>(key, not_use_name))	return;
+	if (__open_c<NEIntSetKey, NEIntKey>(key, not_use_name))			return;
+	if (__open_c<NEUIntSetKey, NEUIntKey>(key, not_use_name))		return;
+	if (__open_c<NEInt64SetKey, NEInt64Key>(key, not_use_name))		return;
+	if (__open_c<NEFloatSetKey, NEFloatKey>(key, not_use_name))		return;
+	if (__open_c<NEDoubleSetKey, NEDoubleKey>(key, not_use_name))	return;
+	if (__open_c<NEStringSetKey, NEStringKey>(key, not_use_name))	return;
+	if (__open_c<NEWStringSetKey, NEWStringKey>(key, not_use_name))	return;
+
+	if(key.getType() == NEType::NENODE_SELECTOR)
+		LG::Core::open(Planetarium((NENodeSelector*)&key, 5, 3, 70, 18));		
+	if(key.getType() == NEType::NEMODULE_SELECTOR)
 		LG::Core::open(Planetarium((NEModuleSelector*)&key, 5, 3, 70, 18));
-		break;
-	case NEType::NEKEY_SELECTOR:
-		LG::Core::open(Planetarium((NEKeySelector*)&key, 5, 3, 70, 18));
-		break;
-
-
-	default:
-		::Core::pushMessage("경로 " + path + "에 있는 객체에 대한 적당한 수정자가 없습니다.");
-	}
+	if(key.getType() == NEType::NEKEY_SELECTOR)
+		LG::Core::open(Planetarium((NEKeySelector*)&key, 5, 3, 70, 18));	
 }
 
 NEObject& Core::getObjectBy(const NEString& path, onObjectFound& handler)

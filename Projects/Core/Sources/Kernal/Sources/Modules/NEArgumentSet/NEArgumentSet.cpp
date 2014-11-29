@@ -1,6 +1,5 @@
 #include "NEArgumentSet.hpp"
 #include "../Kernal/Kernal.hpp"
-#include "../../Commons/Units/NEArgumentInterfaceBase/NEArgumentInterfaceBase.hpp"
 
 namespace NE
 {
@@ -62,15 +61,6 @@ namespace NE
 		return loader;
 	}
 
-	NEArgumentSet& NEArgumentSet::operator=(const ThisClass& rhs)
-	{
-		if(this == &rhs) return *this;
-
-		SuperClass::operator=(rhs);
-
-		return *this;
-	}
-
 	bool NEArgumentSet::isBinded() const
 	{
 		for(int n=0; n < getLength() ;n++)
@@ -85,72 +75,8 @@ namespace NE
 		type_result to_return = RESULT_SUCCESS;
 
 		for(int n=0; n < getLength() ;n++)
-		{
-			NEArgumentBase& arg = getElement(n);
-
-			if( arg.isNeedingBinding() && ! arg.isBinded())
-				to_return |= arg.bind();
-		}
+			to_return |= getElement(n).bind();
 
 		return to_return;
-	}
-
-	type_index NEArgumentSet::insert(type_index index, NEArgumentInterfaceBase& basis)
-	{
-		type_result r = basis._onInsertedInArguments(index, *this);
-		r |= basis._onBindInstance(getElement(index));
-		if(NEResult::hasError(r))
-			return NE_INDEX_ERROR;
-
-		return index;
-	}
-
-	type_index NEArgumentSet::push(NEArgumentInterfaceList& basises)
-	{
-		typedef NEArgumentInterfaceList::Iterator Iterator;
-
-		for(Iterator* itr=basises.getIterator(0); itr ;itr=itr->getNext())
-			push(itr->getValue());
-
-		return RESULT_SUCCESS;
-	}	
-
-	NE::type_index NEArgumentSet::push(NEArgumentInterfaceBase& basis)
-	{
-		return insert(getLength(), basis);
-	}
-
-	NE::type_index NEArgumentSet::pushFront(NEArgumentInterfaceBase& basis)
-	{
-		return insert(0, basis);
-	}
-
-	type_result NEArgumentSet::bind(NEArgumentInterfaceList& basis)
-	{
-		int n=0;
-		for(int n=0; n < getLength() ;n++, basis.popFront())
-		{
-			NEArgumentBase& e = getElement(n);
-			NEArgumentInterfaceBase& base = basis[0];
-			
-			if( ! base.isValidToBind(e))
-				base._onInsertedInArguments(n, *this);
-			base._onBindInstance(e);
-		}
-
-
-		//	post:
-		push(basis);	//		남아있는 것들은 모두 추가한다.
-		return RESULT_SUCCESS;
-	}
-
-	type_result NEArgumentSet::update()
-	{
-		type_result result = RESULT_SUCCESS;
-
-		for(int n=0; n < getLength() ;n++)
-			result |= getElement(n).update();
-
-		return result;
 	}
 }

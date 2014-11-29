@@ -25,8 +25,31 @@ public:
 
 			if(focused_arg_idx < 0 || focused_arg_idx > arg_comments.getLengthLastIndex())
 				return;
+			
+			NEStringKey arg_info("설명에 해당하는 Argument를 찾지 못했습니다.");
+			NEModule& owner = toOwner()->castObject();
+			if( ! &owner) return;
+			NEArgumentBase& arg = owner.getArguments()[focused_arg_idx];
+			if(&arg)
+			{
+				if(arg.isNeedingBinding())
+				{
+					arg_info = "지정한 Key : " + arg.getKeyName();
 
-			text = NEString("Argument ") + focused_arg_idx + " : " + arg_comments[focused_arg_idx];
+					NENode& node = toOwner()->getOwnerNodeOf(owner);
+					if( ! &node) return;
+					const NEKeyCodeSet& ks = node.getKeySet();
+					for(int n=0; n < ks.getLength() ;n++)
+						if(ks[n].getName() == arg.getKeyName())
+							arg_info += "[값: " + NEStringKey(ks[n]).getValue() + "]";					
+				}
+				else	//	기본값만 출력:
+				{
+					arg_info = "키 대신 넣을 기본값 : \"" + NEStringKey(arg.getDefaultKey()).getValue() + "\"";
+				}
+			}
+			
+			text = arg_info.getValue() + "\n" + arg_comments[focused_arg_idx];
 		}
 	};
 
@@ -84,9 +107,6 @@ public:
 				items.push(args[n].getKeyName());
 		}
 		virtual void onKeyPressed(char inputed);
-
-	private:
-		NENode& _getOwnerNodeOf(NEModule& target);
 	};
 	class ArgumentTypeList : public ListGliph
 	{
@@ -125,6 +145,8 @@ public:
 	{
 		return (NEModule&) *instance;
 	}
+
+	NENode& getOwnerNodeOf(NEModule& target);
 
 	FloatingPanel argument_panel;
 	ModulePanel module_panel;

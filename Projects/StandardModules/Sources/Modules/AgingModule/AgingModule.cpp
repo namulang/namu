@@ -11,12 +11,12 @@ namespace NE
 		typedef NEModule SuperClass;
 
 	public:
-		NEITArgument<NEKeySelector> target;
-		NEITArgument<NEFloatKey> value;
-		NEITArgument<NEIntKey> way;
+		NETArgument<NEKeySelector> target;
+		NETArgument<NEFloatKey> value;
+		NETArgument<NEIntKey> way;
 
 	protected:
-		virtual type_result _onFetchArguments(NEArgumentInterfaceList& tray) const
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
 			tray.push(target);
 			tray.push(value);
