@@ -122,6 +122,8 @@ public:
 	int focused_text;
 };
 
+
+
 template <>
 class Modifier<NEBooleanKey> : public Terminal
 {
@@ -215,6 +217,7 @@ public:
 			}
 		}
 		void updateList();
+		const NETStringList& getProperBankFrom(NECodeType::CodeType type);
 		virtual void onUpdateData()
 		{
 			if(items.getLength() < 3)

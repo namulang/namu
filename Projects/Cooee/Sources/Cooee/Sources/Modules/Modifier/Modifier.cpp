@@ -494,7 +494,11 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 					{
 						lists.release();
 						NEModuleSelector& key = toCaller().toCaller().toCaller().getModuleFilter();
-						if(key.getModuleType() == NECodeType::NAME) return;
+						if(key.getModuleType() == NECodeType::NAME) 
+						{
+							text = "새로 추가할 모듈 NameCode를 입력하세요.\n반드시 숫자로 입력하며, 자동 동기화가 안됩니다.";
+							return;
+						}
 
 						const NEModuleSet& m = Kernal::getInstance().getModuleManager().getModuleSet();
 						for(int n=0; n < m.getLength() ;n++)
@@ -510,6 +514,19 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 						NEString& history = input.history[input.history_idx];
 						if(&history)
 							input.text = history;
+					}
+
+					virtual void onKeyPressed(char inputed)
+					{
+						switch(inputed)
+						{
+						case LEFT:
+						case RIGHT:
+						case CLOSE:
+						case ENTER:
+						case MAP:
+							LG::InputWindow::onKeyPressed(inputed);
+						}
 					}
 
 					virtual void onInputed()
@@ -755,7 +772,8 @@ void Modifier<NEModuleSelector>::MenuList::updateList()
 
 	NEString codes_to_str;
 	const NEIntSet& c = k.getModuleCodeSet();
-
+	const NEModuleSet& ms = Kernal::getInstance().getModuleManager().getModuleSet();
+	
 	if(	k.getModuleType() == NECodeType::ALL	||
 		k.getModuleType() == NECodeType::RECENT	||
 		k.getModuleType() == NECodeType::ME		)
@@ -770,12 +788,26 @@ void Modifier<NEModuleSelector>::MenuList::updateList()
 		case -2:	codes_to_str = "NEW";	break;
 		case -1:	
 			codes_to_str = "CODES: ";
-			for(int n=0; n < c.getLength() ;n++)
-				codes_to_str += NEString(c[n]) + " ";
+			{
+				for(int n=0; n < c.getLength() ;n++)
+				{
+					const NEModule& f = ms[c[n]];
+					if( ! &f) continue;
+					
+					codes_to_str += f.getHeader().getName() + "[" + c[n] + "] ";
+				}
+			}
+			
 			break;
 
 		default:
-			codes_to_str = NEString("[") + codelist_display_index + "]" + c[codelist_display_index];
+			{
+				const NEModule& f = ms[c[codelist_display_index]];
+				if( ! &f)
+					codes_to_str = "해당하는 모듈을 찾을 수 없습니다.";
+				else
+					codes_to_str = NEString(codelist_display_index) + NEString("th: ") + f.getHeader().getName() + NEString("[") + NEString(c[codelist_display_index]) + "]" ;
+			}			
 			break;
 		}
 	}
@@ -791,4 +823,18 @@ void Modifier<NEKeySelector>::MenuList::updateList()
 	items.create(2);
 	items.push(NEString("   ") + k.isUsingAutoBinding());
 	items.push(NEString("   ") + k.getKeyName());
+}
+
+const NETStringList& Modifier<NEModuleSelector>::MenuList::getProperBankFrom( NECodeType::CodeType type )
+{
+	const NEScriptEditor::Banks& banks = Editor::getInstance().getScriptEditor().getBanks();
+	NETStringList* nullpointer = 0;
+	switch(type)
+	{
+	case NECodeType::SCRIPT:	return banks.getScriptBank();
+	case NECodeType::NAME:		return banks.getNameBank();
+	case NECodeType::GROUP:		return banks.getGroupBank();
+	case NECodeType::PRIORITY:	return banks.getPriorityBank();
+	default:		return *nullpointer;
+	}
 }
