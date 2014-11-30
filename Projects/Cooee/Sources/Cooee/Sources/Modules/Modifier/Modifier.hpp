@@ -10,7 +10,7 @@ public:
 		: InputTerminal("", "주어진 키의 새로운 값을 입력하세요", KEY().getType()),
 		value(key.getValue()), name_lable(0, 0, 0, 8, 1, WHITE, LIGHTRED, "키 이름:"),
 		value_lable(0, 0, 0, 8, 1, WHITE, LIGHTRED, "키 값:"), name_text(0, 0, 0, 22, 1, WHITE, BLACK),
-		focused_text(1), real_key(&key)
+		focused_text(0), real_key(&key)
 	{
 		y -= 3;
 		height += 6;
@@ -29,9 +29,10 @@ public:
 	}
 	Modifier(typename KEY::Trait& new_value)
 		: InputTerminal("", "주어진 키의 새로운 값을 입력하세요", NEType::NEKEY), 
-		value(new_value), real_key(0)
+		value_lable(0, 0, 0, 8, 1, WHITE, LIGHTRED, "키 값:"), focused_text(1), value(new_value), real_key(0)
 	{
 		textbox.text = value;
+		regist(1, &value_lable);
 	}
 	Modifier(const Modifier& rhs) : InputTerminal(rhs), value(rhs.value), focused_text(rhs.focused_text),
 		value_lable(rhs.value_lable), name_text(rhs.name_text), name_lable(rhs.name_lable), 
