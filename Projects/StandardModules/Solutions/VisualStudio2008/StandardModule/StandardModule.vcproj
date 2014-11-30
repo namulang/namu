@@ -1165,18 +1165,6 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="YourProject"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Modules\YourProject\YourProject.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\Sources\Modules\YourProject\YourProject.hpp"
-						>
-					</File>
-				</Filter>
-				<Filter
 					Name="StateModule"
 					>
 					<File
