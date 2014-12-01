@@ -14,6 +14,8 @@ void NodeTerminal::onKeyPressed(char inputed)
 		break;
 
 	case LEFT:
+		if( ! focused && enable.Gliph::back == CYAN	&& enable.getValue())
+			return enable.onKeyPressed(inputed);
 		if(focused == 0 && attributes.choosed == 1)
 		{
 			if(codelist_display_index > -2)
@@ -24,6 +26,8 @@ void NodeTerminal::onKeyPressed(char inputed)
 		break;
 
 	case RIGHT:
+		if( ! focused && enable.Gliph::back == CYAN && ! enable.getValue())
+			return enable.onKeyPressed(inputed);
 		if(focused == 0 && attributes.choosed == 1)
 		{
 			if(codelist_display_index < castObject().getGroupCode().getLengthLastIndex())
@@ -37,7 +41,30 @@ void NodeTerminal::onKeyPressed(char inputed)
 		switch(focused)
 		{
 		case 0:
-			Terminal::onKeyPressed(inputed);
+			switch(inputed)
+			{
+			case UP:
+				if(attributes.choosed <= 0)
+				{
+					enable.Gliph::back = CYAN;
+					enable.fore = LIGHTCYAN;
+					attributes.choosed = -1;
+				}
+				break;
+				
+			case DOWN:
+				if(attributes.choosed < 0)
+				{
+					enable.Gliph::back = DARKGRAY;
+					enable.fore = LIGHTGRAY;
+				}
+				break;
+			}
+
+			if(enable.Gliph::back == CYAN)
+				enable.onKeyPressed(inputed);
+			else
+				attributes.onKeyPressed(inputed);
 			break;
 
 		case 1:
