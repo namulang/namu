@@ -9,7 +9,7 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 	class ArgumentPopUp : public LG::ListWindow
 	{
 	public:
-		ArgumentPopUp() : LG::ListWindow("이 Argument의...", 30, 10, 20, 6, BLACK, WHITE, WHITE, LIGHTCYAN) {}
+		ArgumentPopUp() : LG::ListWindow("이 Argument의...", 30, 10, 20, 7, BLACK, WHITE, WHITE, LIGHTCYAN) {}
 		FUNC_TO_CALLER(ModuleTerminal)
 			virtual NEObject& clone() const {
 				return *(new ArgumentPopUp(*this));
@@ -160,7 +160,7 @@ void ModuleTerminal::ModulePanel::onUpdateData()
 }
 
 ModuleTerminal::FloatingPanel::FloatingPanel()
-: LG::FloatingGliph(0, 0, 60, 3, DARKGRAY, WHITE)
+: LG::FloatingGliph(0, 0, 60, 5, DARKGRAY, WHITE)
 {
 
 }
