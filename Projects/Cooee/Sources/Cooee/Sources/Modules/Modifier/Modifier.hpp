@@ -223,7 +223,7 @@ public:
 			if(items.getLength() < 3)
 				updateList();
 
-			for(int n=0; n < 3 ;n++)
+			for(int n=0; n < items.getLength() ;n++)
 			{
 				NEString& item = items[n];
 				if(n == choosed)

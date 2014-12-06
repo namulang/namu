@@ -164,8 +164,15 @@ void Filter::onItemChoosed(type_index item_index, const NEString& chosen_content
 		call(Modifier<NENodeSelector>());
 		break;
 
-	case 1:
-		call(Modifier<NEModuleSelector>());
+	case 1:		
+		{
+			NEString parsed = chosen_content.extract(3, chosen_content.getLengthLastIndex());
+			if(parsed == NEType::getTypeName(NEType::NEMODULE_SELECTOR))
+				call(Modifier<NEModuleSelector>());
+			else if(parsed == NEType::getTypeName(NEType::NEKEY_SELECTOR))
+				call(Modifier<NEKeySelector>());
+		}
+		
 		break;
 
 	case 2:
