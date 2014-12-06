@@ -140,7 +140,8 @@ public:
 		if(specified_filter)
 		{
 			NEModuleSelector* nullpointer = 0;
-			if(specified_filter->isSubClassOf(NEType::NEMODULE_SELECTOR))
+			if(	specified_filter->isSubClassOf(NEType::NEMODULE_SELECTOR)	&&
+				! specified_filter->isSubClassOf(NEType::NEKEY_SELECTOR)	)
 				return static_cast<NEModuleSelector&>(*specified_filter);
 
 			return *nullpointer;

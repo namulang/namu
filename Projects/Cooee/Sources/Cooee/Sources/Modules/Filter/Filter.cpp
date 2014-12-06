@@ -62,8 +62,10 @@ void Filter::onUpdateData()
 
 	NENodeSelector dummy = caller.getNodeFilter();	//	getType을 했을때 다형성을 무시하고 NodeSelector가 나오게 하기 위해서
 	list.items.push(createModifierStateString(dummy, switches[0]));
-	list.items.push(createModifierStateString(caller.getModuleFilter(), switches[1]));
-	list.items.push(createModifierStateString(caller.getKeyFilter(), switches[2]));
+	if(&caller.getModuleFilter())
+		list.items.push(createModifierStateString(caller.getModuleFilter(), switches[1]));
+	if(&caller.getKeyFilter())
+		list.items.push(createModifierStateString(caller.getKeyFilter(), switches[2]));
 }
 
 void Filter::_updateSwitchWhenFilterExisted( NENodeSelector& filter )
