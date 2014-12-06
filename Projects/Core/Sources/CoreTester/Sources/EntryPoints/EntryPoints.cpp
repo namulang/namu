@@ -1575,6 +1575,304 @@ public:
 	}
 };
 
+class CodeSynchroTest : public TestCase
+{
+public:
+	CodeSynchroTest() : TestCase("is codes synchronized when you insert/remove?") {}
+	virtual bool onTest() 
+	{
+		NEScriptEditor& manager = Editor::getInstance().getScriptEditor();
+		NERootNodeCodeSet& ns = manager.getScriptNodes();
+		NEScriptManager::ScriptHeader& header = manager.getScriptHeader();
+
+		manager.initialize();
+
+		manager.insertNameCode(1);
+		manager.insertGroupCode(1);
+		manager.insertPriorityCode(1);
+
+		class Temp : public NEModule
+		{
+		public:
+			NETArgument<NEModuleSelector> ms;
+			NETArgument<NENodeSelector> ns_group;
+			NETArgument<NENodeSelector> ns_name;
+
+		public:
+			virtual const NEExportable::ModuleHeader& getHeader() const
+			{
+				static NEExportable::ModuleHeader _header;
+
+				if(NEResult::hasError(_header.isValid()))
+				{
+					_header.getName() = "Temp";
+					_header.getDeveloper() = "kniz";				
+				}
+
+				return _header;
+			}
+			virtual type_result _onExecute()
+			{
+				return RESULT_SUCCESS;
+			}
+			virtual type_result _onFetchArguments(NEArgumentList& tray)
+			{
+				tray.push(ns_group);
+				tray.push(ns_name);
+				return tray.push(ms);
+			}
+			virtual NEObject& clone() const { return *(new Temp(*this)); }
+		};
+
+		Temp* t;
+		NENode* src;
+		NENodeSelector* key_ns;
+		{
+			src = &ns[ns.push(NENode())];
+			{
+				NEKeyCodeSet& ks = src->getKeySet();
+				ks.create(1);
+				key_ns = (NENodeSelector*) &ks[ks.push(NENodeSelector())];
+			}
+
+			src->setPriority(1);
+			NECodeSet c(2);
+			c.push(0);
+			c.push(1);
+			src->setGroupCode(c);
+			src->setNameCode(1);
+			{
+				NEModuleCodeSet& m = src->getModuleSet();
+				m.create(1);
+				t = (Temp*) &m[m.push(Temp())];				
+				NEModuleSelector* nms = &t->ms.getDefault();
+				nms->setManager(NEType::NESCRIPT_EDITOR);
+				nms->setNodeType(NECodeType::SCRIPT);
+				NECodeSet is(1);
+				is.setCodeType(NECodeType::SCRIPT);
+				is.push(1);
+				nms->setCodeSet(is);
+
+				NENodeSelector& ns_name = t->ns_name.getDefault();
+				ns_name.setManager(NEType::NESCRIPT_EDITOR);
+				ns_name.setNodeType(NECodeType::NAME);
+				is.setCodeType(NECodeType::NAME);
+				is[0] = 1;
+				ns_name.setCodeSet(is);
+
+				NENodeSelector& ns_group = t->ns_group.getDefault();
+				ns_group.setManager(NEType::NESCRIPT_EDITOR);
+				ns_group.setNodeType(NECodeType::GROUP);
+				is.setCodeType(NECodeType::GROUP);
+				is.resize(2);
+				is.push(1);
+				if (is.getLength() > 1	&&
+					is[0] == is[1]		)	//	중복은 안된다.
+					return false;
+				is.push(0);
+				ns_group.setCodeSet(is);
+
+
+				key_ns->setManager(NEType::NESCRIPT_EDITOR);
+				key_ns->setNodeType(NECodeType::PRIORITY);
+				is.setCodeType(NECodeType::PRIORITY);
+				is.create(1);
+				is.push(1);
+				key_ns->setCodeSet(is);
+			}
+
+			if (&t->ms.getValue().getNode() != src)	//	SCRIPT
+				return false;
+			if (&t->ns_name.getValue().getNode() != src) // NAME
+				return false;
+			if (&key_ns->getNode() != src) // PRIOR
+				return false;
+			if (&t->ns_group.getValue().getNode() != src) // GROUP
+				return false;
+
+			t->ms.getValue().initializeReferingPoint();
+			t->ns_name.getValue().initializeReferingPoint();
+			t->ns_group.getValue().initializeReferingPoint();
+			key_ns->initializeReferingPoint();
+		}
+
+		NENode* after;
+		{
+			after = &ns[ns.pushFront(NENode())];
+			NECodeSet ic(1);
+			ic.setCodeType(NECodeType::GROUP);
+			ic.push(1);
+			after->setGroupCode(ic);
+		}
+
+		manager.insertNameCode(1);
+		manager.insertGroupCode(1);
+		manager.insertPriorityCode(1);
+
+		//	src의 예상 상태:
+		//		NAME = 1		->	2
+		//		GROUP = 0,1		->	0, 2
+		//		PRIOR = 1		->	2
+		//		SCRIPT= 1		->	2
+		if (src->getNameCode() != 2)
+			return false;
+		if (src->getGroupCode().getLength() != 2)
+			return false;
+		if (src->getGroupCode()[1] != 2)
+			return false;
+		if (src->getPriority() != 2)
+			return false;
+		if(src->getScriptCode() != 2)
+			return false;
+
+		//	Key의 동기화 체크:
+		if (!key_ns)
+			return false;
+		if (key_ns->getCodeSet().getLength() < 1)
+			return false;
+		if(key_ns->getCodeSet()[0] != 2)
+			return false;
+
+		//	Argument 체크:
+		if (t->ms.getValue().getCodeSet()[0] != 2)
+			return false;
+		if (t->ns_name.getValue().getCodeSet()[0] != 2)
+			return false;
+		if (t->ns_group.getValue().getCodeSet().getLength() != 2	||
+			t->ns_group.getValue().getCodeSet()[0] != 2				||
+			t->ns_group.getValue().getCodeSet()[1] != 0				)
+			return false;		
+
+		return true;
+	}
+};
+
+class NodeSelectorTest : public TestCase
+{
+public:
+	NodeSelectorTest() : TestCase("validate node-selector with various sample tests.") {}
+	virtual bool onTest() 
+	{
+		NEScriptEditor& manager = Editor::getInstance().getScriptEditor();
+		NERootNodeCodeSet& rns = manager.getScriptNodes();
+
+		manager.initialize();
+
+		manager.insertNameCode(1);		
+		manager.insertNameCode(2);
+		manager.insertNameCode(3);
+		manager.insertGroupCode(1);
+		manager.insertGroupCode(2);
+		manager.insertPriorityCode(1);
+
+		NENode	*n0 = &rns[rns.push(NENode())],
+			*n1 = &rns[rns.push(NENode())], 
+			*n2 = &rns[rns.push(NENode())],
+			*n3 = &rns[rns.push(NENode())],
+			*n4 = &rns[rns.push(NENode())];
+		NECodeSet is(1);
+		is.setCodeType(NECodeType::GROUP);
+		is.push(0);
+		{
+			//	0
+			n0->setGroupCode(is);
+		}
+		{
+			//	1
+			is.create(1);
+			is.push(1);
+			n1->setNameCode(1);
+			n1->setGroupCode(is);
+			n1->setPriority(1);
+		}
+		{
+			//	0, 1, 2
+			is.resize(3);
+			is.push(0);
+			is.push(2);
+			n2->setNameCode(2);
+			n2->setGroupCode(is);
+			n2->setPriority(1);
+		}
+		{
+			//	0, 2
+			is.create(2);
+			is.push(0);
+			is.push(2);
+			n3->setNameCode(3);
+			n3->setGroupCode(is);
+			n3->setPriority(1);
+		}
+		{
+			//	1, 2
+			is.create(2);
+			is.push(1);
+			is.push(2);
+			n4->setNameCode(3);
+			n4->setGroupCode(is);
+			n4->setPriority(1);
+		}
+
+		NENodeSelector ns;
+		ns.setManager(NEType::NESCRIPT_EDITOR);
+		ns.setNodeType(NECodeType::GROUP);
+		NECodeSet is2(2);
+		is2.push(0);
+		is2.push(2);
+		ns.setCodeSet(is2);
+		ns.setUsingAndOperation(false);	//	OR 연산으로 처리.
+		ns.setCountLimit(2);
+
+		NEArrayTemplate<NENode*> pointers(8);
+		//	예상 되는 pointers의 내용:
+		//		[0]	=	n0		
+		//		[1]	=	n2
+		//		[2]	=	0x00
+		//		[3]	=	n3
+		//		[4] =	n4
+		//		[5]	=	0x00
+		//		[6]	=	n0
+		//		[7]	=	n2
+		//		[8]	=	0x00
+		for (int n = 0; n < pointers.getSize(); n++)
+			pointers.push(&ns.getNode());
+
+		if (pointers.getLength() != pointers.getSize()) return false;
+		if (&pointers[0] != n0) return false;
+		if (&pointers[1] != n2) return false;
+		if (&pointers[2] != 0x00) return false;
+		if (&pointers[3] != n3) return false;
+		if (&pointers[4] != n4) return false;
+		if (&pointers[5] != 0x00) return false;
+		if (&pointers[6] != n0) return false;
+		if (&pointers[7] != n2) return false;
+
+		pointers.create(12);
+		ns.setNodeType(NECodeType::ALL);
+		ns.setUsingAndOperation(false);
+		ns.setCountLimit(2);
+		for (int n = 0; n < pointers.getSize(); n++)
+			pointers.push(&ns.getNode());
+
+		if (pointers.getLength() != pointers.getSize()) return false;
+		//	pointers[0]은 처음 intialize시 추가된다.
+		if (&pointers[1] != n0) return false;
+		if (&pointers[2] != 0x00) return false;
+		if (&pointers[3] != n1) return false;
+		if (&pointers[4] != n2) return false;
+		if (&pointers[5] != 0x00) return false;
+		if (&pointers[6] != n3) return false;
+		if (&pointers[7] != n4) return false;
+		if (&pointers[8] != 0x00) return false;
+		//if (&pointers[] != n3) return false;
+		if (&pointers[10] != n0) return false;
+		if (&pointers[11] != 0x00) return false;
+
+
+		return true;
+	}
+};
+
 //class Test : public TestCase
 //{
 //public:
@@ -1637,6 +1935,8 @@ void main()
 	ArgumentConversionTest().test();
 	ArgumentConstantLiteralTest().test();
 	ArgumentInterfaceCanBeSaved().test();
+	CodeSynchroTest().test();
+	NodeSelectorTest().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
