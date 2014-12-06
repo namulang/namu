@@ -12,7 +12,7 @@ void _tmain(int argc, TCHAR** argv)
 	if(argc != 4)
 	{
 		cout	<<	"AfterBuild is a program launched after build one of the projects derived NodeEngine(Not Certified) SDK.\n"
-				<<	"this program will increase one build count and copy all of the files in \'Binaries\' directory of each projects.\n\n"
+				<<	"this program will increase one build count and copy all of those files to \'Binaries\' directory of each projects.\n\n"
 				<<	"Usage : \n"
 				<<	"\tAfterBuild.exe <ini path> <binary path> <the path to be copied>\n";
 		return;
