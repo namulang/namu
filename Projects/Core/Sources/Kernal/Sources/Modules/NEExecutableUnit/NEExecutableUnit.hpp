@@ -13,13 +13,17 @@
 #pragma once
 
 //	include:
-#include "../NEUnit/NEUnit.hpp"
+#include "../NESwitchableUnit/NESwitchableUnit.hpp"
 #include "../../Commons/Interfaces/NEExecutable/NEExcutable.hpp"
 
 namespace NE
 {
-	class NE_DLL NEExecutableUnit : public NEUnit, public NEExecutable
+	class NE_DLL NEExecutableUnit : public NESwitchableUnit, public NEExecutable
 	{
+	public:
+		typedef NESwitchableUnit SuperClass;
+		typedef NEExecutableUnit ThisClass;
+
 		//	생성자:
 	public:
 		NEExecutableUnit();
@@ -32,34 +36,15 @@ namespace NE
 		//	연산자 중첩:
 	public:
 		const NEExecutableUnit& operator=(const NEExecutableUnit& source);
-		bool operator==(const NEExecutableUnit& source) const;
-		bool operator!=(const NEExecutableUnit& source) const;
-
-		//	접근자:
-	public:
-		bool isEnable() const;
-		void setEnable(bool enable);
 
 		//	인터페이스:
 		//		상속:
 		//			NEUnit:
 	public:
 		virtual NEType::Type getType() const;
-		virtual void release();
-		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
-		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 
 		//		고유 인터페이스:
 	public:
 		virtual type_result execute() = 0;
-
-		//	내부함수:
-	private:
-		void _release();
-		const NEExecutableUnit& _assign(const NEExecutableUnit& source);
-
-		//	멤버변수:
-	protected:
-		bool _enable;
 	};
 }

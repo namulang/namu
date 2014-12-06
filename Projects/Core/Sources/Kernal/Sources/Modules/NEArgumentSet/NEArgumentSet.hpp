@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../Commons/Templates/NEArrayTemplate/NEArrayTemplate.hpp"
-#include "../../Commons/Units/NEArgumentBase/NEArgumentBase.hpp"
+#include "../NEArgumentBase/NEArgumentBase.hpp"
 
 namespace NE
 {

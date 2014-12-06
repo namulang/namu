@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../../../Modules/NEObject/NEObject.hpp"
-#include "../../Templates/NEEnlistableSetTemplate/NEEnlistableSetTempate.hpp"
+#include "../NESwitchableUnit/NESwitchableUnit.hpp"
+#include "../../Commons/Templates/NEEnlistableSetTemplate/NEEnlistableSetTempate.hpp"
 
 namespace NE
 {
 	class NEEnlistableManager;
 
-	class NE_DLL NEBinderBase : public NEObject
+	class NE_DLL NEBinderBase : public NESwitchableUnit
 	{
 		typedef NEBinderBase ThisClass;
-		typedef NEObject SuperClass;
+		typedef NESwitchableUnit SuperClass;
 
 	public:
 		ThisClass();

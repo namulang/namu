@@ -1,5 +1,5 @@
 #include "NEKeyBinder.hpp"
-#include "../../../Modules/Kernal/Kernal.hpp"
+#include "../Kernal/Kernal.hpp"
 
 namespace NE
 {

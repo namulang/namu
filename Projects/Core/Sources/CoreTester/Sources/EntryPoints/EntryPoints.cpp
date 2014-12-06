@@ -1494,6 +1494,8 @@ public:
 			n.execute();
 			if (temp->a.getValue() != 8)
 				return false;
+			temp->a.setEnable(false);
+			if (temp->a.isEnable()) return false;
 		}
 
 		NETString filename = "ArgumentConstantLiteralTest.dat";
@@ -1524,6 +1526,7 @@ public:
 			if(temp.a.isBinded()) return false;
 			if (temp.a.getValue() != 8)
 				return false;
+			if (temp.a.isEnable()) return false;
 		}
 
 		return true;

@@ -1,4 +1,4 @@
-#include "../../../Modules/Kernal/Kernal.hpp"
+#include "../Kernal/Kernal.hpp"
 
 namespace NE
 {
@@ -104,14 +104,16 @@ namespace NE
 
 	NEBinaryFileLoader& NEKeyNameBinder::serialize(NEBinaryFileLoader& loader)
 	{
-		//	상위클래스의 바인딩결과 정보는 공유(저장 및 로드)할 수 없다.
+		NESwitchableUnit::serialize(loader);
+		//	중간 클래스(NEBinderBase부터 NEKeyBinder)의 바인딩결과 정보는 공유(저장 및 로드)할 수 없다.		
 
 		return loader >> _keyname;
 	}
 
 	NEBinaryFileSaver& NEKeyNameBinder::serialize(NEBinaryFileSaver& saver) const
 	{
-		//	상위클래스의 바인딩결과 정보는 공유(저장 및 로드)할 수 없다.
+		NESwitchableUnit::serialize(saver);
+		//	중간 클래스(NEBinderBase부터 NEKeyBinder)의 바인딩결과 정보는 공유(저장 및 로드)할 수 없다.		
 
 		return saver << _keyname;
 	}
