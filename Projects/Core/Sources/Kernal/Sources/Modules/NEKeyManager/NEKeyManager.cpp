@@ -1,3 +1,6 @@
+#pragma warning(push)
+#pragma warning(disable : 4146)	//	unsigned에 -를 사용함
+
 #include "NEKeyManager.hpp"
 #include "define/define.hpp"
 #include "../Kernal/Kernal.hpp"
@@ -137,3 +140,4 @@ namespace NE
 		return _keyset;
 	}
 }
+#pragma warning(pop)

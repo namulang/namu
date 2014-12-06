@@ -13,13 +13,13 @@
 #pragma warning(disable : 4804)
 
 //	include:
-#include "../../Commons/Templates/NEKeyTemplate/NEKeyTemplate.hpp"
+#include "../../Commons/Templates/NEStringKeyTemplate/NEStringKeyTemplate.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NEKeyTemplate<NEString, NEType::NESTRING_KEY>;
-	typedef NEKeyTemplate<NEString, NEType::NESTRING_KEY> NEStringKey;
+	class NE_DLL NEStringKeyTemplate<NEString, NEType::NESTRING_KEY>;
+	typedef NEStringKeyTemplate<NEString, NEType::NESTRING_KEY> NEStringKey;
 }
 
 #pragma warning(pop)

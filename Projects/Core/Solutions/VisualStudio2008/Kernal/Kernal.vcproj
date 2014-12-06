@@ -533,10 +533,6 @@
 						Name="NEKeyTemplate"
 						>
 						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEKeyTemplate\NEKeyTemplate.cpp"
-							>
-						</File>
-						<File
 							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEKeyTemplate\NEKeyTemplate.hpp"
 							>
 						</File>
@@ -544,6 +540,38 @@
 							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEKeyTemplate\NEKeyTemplate.inl"
 							>
 						</File>
+						<Filter
+							Name="NEArithmeticKey"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NETArithmeticKey\NETArithmeticKey.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NETArithmeticKey\NETArithmeticKey.hpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NETArithmeticKey\NETArithmeticKey.inl"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="NEStringKeyTemplate"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEStringKeyTemplate\NEStringKeyTemplate.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEStringKeyTemplate\NEStringKeyTemplate.hpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEStringKeyTemplate\NEStringKeyTemplate.inl"
+								>
+							</File>
+						</Filter>
 					</Filter>
 					<Filter
 						Name="NECollectorTemplate"
@@ -851,42 +879,30 @@
 								Name="NEKeyTemplate"
 								>
 								<Filter
-									Name="NEBooleanKey"
+									Name="NEStringKeyTemplate"
 									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEBooleanKey\NEBooleanKey.hpp"
+									<Filter
+										Name="NEStringKey"
 										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEByteKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEByteKey\NEByteKey.hpp"
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEStringKey\NEStringKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEWStringKey"
 										>
-									</File>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEWStringKey\NEWStringKey.hpp"
+											>
+										</File>
+									</Filter>
 								</Filter>
 								<Filter
 									Name="NEByteSetKey"
 									>
 									<File
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEByteSetKey\NEByteSetKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NECharKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NECharKey\NECharKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEDoubleKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEDoubleKey\NEDoubleKey.hpp"
 										>
 									</File>
 								</Filter>
@@ -899,26 +915,10 @@
 									</File>
 								</Filter>
 								<Filter
-									Name="NEFloatKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEFloatKey\NEFloatKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
 									Name="NEFloatSetKey"
 									>
 									<File
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEFloatSetKey\NEFloatSetKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEInt64Key"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEInt64Key\NEInt64Key.hpp"
 										>
 									</File>
 								</Filter>
@@ -939,50 +939,10 @@
 									</File>
 								</Filter>
 								<Filter
-									Name="NEIntKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIntKey\NEIntKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEUIntKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUIntKey\NEUIntKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
 									Name="NEUIntSetKey"
 									>
 									<File
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUIntSetKey\NEUIntSetKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEShortKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEShortKey\NEShortKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEUShortKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUShortKey\NEUShortKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEUByteKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUByteKey\NEUByteKey.hpp"
 										>
 									</File>
 								</Filter>
@@ -1011,14 +971,6 @@
 									</File>
 								</Filter>
 								<Filter
-									Name="NEStringKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEStringKey\NEStringKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
 									Name="NEStringSetKey"
 									>
 									<File
@@ -1027,26 +979,10 @@
 									</File>
 								</Filter>
 								<Filter
-									Name="NEWStringKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEWStringKey\NEWStringKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
 									Name="NEWStringSetKEy"
 									>
 									<File
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEWStringSetKey\NEWStringSetKey.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEWCharKey"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEWCharKey\NEWCharKey.hpp"
 										>
 									</File>
 								</Filter>
@@ -1065,6 +1001,106 @@
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEBooleanSetKey\NEBooleanSetKey.hpp"
 										>
 									</File>
+								</Filter>
+								<Filter
+									Name="NETArithmeticKey"
+									>
+									<Filter
+										Name="NEUShortKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUShortKey\NEUShortKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEUIntKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUIntKey\NEUIntKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEUByteKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUByteKey\NEUByteKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEShortKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEShortKey\NEShortKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEIntKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIntKey\NEIntKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEInt64Key"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEInt64Key\NEInt64Key.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEFloatKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEFloatKey\NEFloatKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NECharKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NECharKey\NECharKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEDoubleKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEDoubleKey\NEDoubleKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEByteKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEByteKey\NEByteKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEBooleanKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEBooleanKey\NEBooleanKey.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEWCharKey"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEWCharKey\NEWCharKey.hpp"
+											>
+										</File>
+									</Filter>
 								</Filter>
 							</Filter>
 							<Filter

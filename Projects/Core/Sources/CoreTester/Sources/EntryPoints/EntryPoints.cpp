@@ -118,10 +118,10 @@ public:
 		buf.push(L'2');
 		buf.push(L'\0');
 		NEString	a(true),
-			b(buf),
-			c( unsigned short(55555)),
-			d( unsigned int(555555555)),
-			e( float(4.5f) );
+					b(buf),
+					c( unsigned short(55555)),
+					d( unsigned int(555555555)),
+					e( float(4.5f) );
 
 		if(	a != "true"			||
 			b != "12"			|| 
@@ -1876,6 +1876,50 @@ public:
 	}
 };
 
+class KeyConversionTest : public TestCase
+{
+public:
+	KeyConversionTest()	: TestCase("has key function to be converted to others?") {}
+	virtual bool onTest() 
+	{
+		NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
+		ed.initialize();
+
+		NENodeCodeSet& ns = ed.getScriptNodes();
+		NENode& n = ns[ns.push(NENode())];
+		n.getKeySet().create(2);
+		NEIntKey& ik = (NEIntKey&) n.getKeySet()[n.getKeySet().push(NEIntKey(33, "k1"))];
+		NEKeySelector& kk = (NEKeySelector&) n.getKeySet()[n.getKeySet().push(NEKeySelector("k2"))];
+
+		kk.setKeyName("k1");
+		n.execute();
+
+		NEStringKey sk("hello", "k2");
+
+		NEFloatKey fk(3.14f, "k3");
+		ik.multiply(ik, fk);
+		if(ik.getValue() != 99)
+			return false;
+		ik += NEStringKey("1");
+		if(ik.getValue() != 100)
+			return false;
+
+		fk.negate();
+		if(	fk.getValue() < -3.14f - 0.001f ||
+			fk.getValue() > -3.14f + 0.001f	)
+			return false;
+		fk = ik;
+		if(fk.getValue() != 100.0f)
+			return false;
+		fk.makeReciprocal();
+		if( 0.01-0.0001f > fk.getValue()	||
+			0.01+0.0001f < fk.getValue()	)
+			return false;
+
+		return true;
+	}
+};
+
 //class Test : public TestCase
 //{
 //public:
@@ -1940,6 +1984,7 @@ void main()
 	ArgumentInterfaceCanBeSaved().test();
 	CodeSynchroTest().test();
 	NodeSelectorTest().test();
+	KeyConversionTest().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
