@@ -10,9 +10,9 @@ public:
 	{
 	public:
 		FUNC_CLONE(FloatingPanel)
-			FUNC_TO_OWNER(ModuleTerminal)
+		FUNC_TO_OWNER(ModuleTerminal)
 
-			FloatingPanel();
+		FloatingPanel();
 
 		virtual void onUpdateData()
 		{
@@ -254,9 +254,9 @@ public:
 	public:
 		EnableSwitch() : LG::SwitchGliph(0, 62, 4, 8, DARKGRAY, LIGHTCYAN) {}
 		FUNC_CLONE(EnableSwitch)
-			FUNC_TO_OWNER(ModuleTerminal)
+		FUNC_TO_OWNER(ModuleTerminal)
 
-			virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(char inputed)
 		{
 			LG::SwitchGliph::onKeyPressed(inputed);
 			switch (inputed)
@@ -308,8 +308,8 @@ public:
 
 	EnableSwitch enable;
 	Gliph	enable_header,
-			namecode_header,
-			enable_back;
+		namecode_header,
+		enable_back;
 	NameGliph namecode;
 	FloatingPanel argument_panel;
 	ModulePanel module_panel;

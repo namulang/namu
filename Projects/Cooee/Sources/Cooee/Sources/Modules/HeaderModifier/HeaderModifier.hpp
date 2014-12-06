@@ -24,7 +24,7 @@ class HeaderModifier : public LG::ListWindow
 {
 public:
 	HeaderModifier() 
-		: LG::ListWindow("Header Modifier", 10, 6, 60, 11, BLACK, WHITE, WHITE, LIGHTGREEN)
+		: LG::ListWindow("Header Modifier", 10, 4, 60, 13, BLACK, WHITE, WHITE, LIGHTGREEN)
 	{
 		codes_display_indexes.create(4);
 		codes_display_indexes.push(-1);
@@ -78,7 +78,7 @@ public:
 	{
 	public:
 		CodePopUpMenu(NECodeType::CodeType codetype, type_index code)
-			: LG::ListWindow("Code PopUp Menu", 20, 9, 25, 5, BLACK, WHITE, WHITE, LIGHTBLUE), _codetype(codetype), _code(code)
+			: LG::ListWindow("Code PopUp Menu", 20, 9, 25, 6, BLACK, WHITE, WHITE, LIGHTBLUE), _codetype(codetype), _code(code)
 		{
 			if(_code < 0)
 			{
