@@ -91,6 +91,8 @@ public:
 				}
 				
 				_code = to_return;
+				_onAddNewCode();
+				delete_me = true;
 			}
 		}
 

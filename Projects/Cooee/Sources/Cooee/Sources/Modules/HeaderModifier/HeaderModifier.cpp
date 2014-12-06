@@ -71,6 +71,11 @@ void HeaderModifier::CodePopUpMenu::onItemChoosed(type_index index, const NEStri
 void HeaderModifier::CodePopUpMenu::_onModifyCodeName()
 {
 	NETStringList& bank = _getProperBankBy(_codetype);
+	if( ! &bank[_code])
+	{
+		::Core::pushMessage("ERROR: 주어진 이름이 존재하지 않습니다.");
+		return;
+	}
 	call(StringInputWindow(bank[_code]));
 	delete_me = true;
 }
