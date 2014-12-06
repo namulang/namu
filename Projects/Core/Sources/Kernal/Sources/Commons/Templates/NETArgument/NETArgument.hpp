@@ -44,6 +44,7 @@ namespace NE
 		virtual const NEKey& getDefaultKey() const;
 
 	public:
+		virtual NEType::Type getType() const;
 		virtual NEObject& clone() const;
 		virtual void release();
 		virtual type_result isValid() const;

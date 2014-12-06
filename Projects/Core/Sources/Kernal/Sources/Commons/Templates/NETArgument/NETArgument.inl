@@ -14,6 +14,12 @@ namespace NE
 	}
 
 	template <typename T>
+	NEType::Type NETArgument<T>::getType() const
+	{
+		return NEType::NETARGUMENT;
+	}
+
+	template <typename T>
 	typename const T::Trait& NE::NETArgument<T>::getValue() const
 	{
 		const NEKey& binded = getBinded();
