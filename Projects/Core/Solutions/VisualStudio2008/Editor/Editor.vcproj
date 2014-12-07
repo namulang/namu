@@ -628,22 +628,6 @@
 									</File>
 								</Filter>
 							</Filter>
-							<Filter
-								Name="innerclass"
-								>
-								<Filter
-									Name="BaseConnector"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Editor\Sources\Modules\NEPanel\innerclass\BaseConnector\BaseConnector.cpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Editor\Sources\Modules\NEPanel\innerclass\BaseConnector\BaseConnector.hpp"
-										>
-									</File>
-								</Filter>
-							</Filter>
 						</Filter>
 					</Filter>
 				</Filter>

@@ -1,5 +1,6 @@
 #pragma warning(push)
 #pragma warning(disable: 4146)
+
 #include "NETArgument.hpp"
 #include "../../../Modules/NEIntKey/NEIntKey.hpp"
 

@@ -143,7 +143,11 @@ namespace NE
 	type_result NETArithmeticKey<T, type>::makeReciprocal()
 	{
 		if (_value == 0)
-			return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+		{
+			_value = std::numeric_limits<T>::max();
+
+			return RESULT_TYPE_WARNING | RESULT_WRONG_BOUNDARY;
+		}
 
 		_value = 1 / _value;
 

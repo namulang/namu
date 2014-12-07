@@ -44,7 +44,7 @@ public:
 					const NEKeyCodeSet& ks = node.getKeySet();
 					for(int n=0; n < ks.getLength() ;n++)
 						if(ks[n].getName() == arg.getKeyName())
-							arg_info += "[값: " + NEStringKey(ks[n]).getValue() + "]";					
+							arg_info.getValue() += "[값: "+ NEStringKey(ks[n]).getValue() + "]";					
 				}
 				else	//	기본값만 출력:
 				{

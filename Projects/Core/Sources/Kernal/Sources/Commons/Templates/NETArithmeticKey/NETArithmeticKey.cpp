@@ -3,10 +3,6 @@
 #pragma warning(disable : 4804)
 #pragma warning(disable : 4146)	//	unsigned에 -를 사용함
 #include "NETArithmeticKey.hpp"
-namespace NE {
-	NETArithmeticKey<int, NEType::NEINT_KEY> a;
-}
-
 #include "../../../Modules/NEBooleanKey/NEBooleanKey.hpp"
 #include "../../../Modules/NEByteKey/NEByteKey.hpp"
 #include "../../../Modules/NECharKey/NECharKey.hpp"

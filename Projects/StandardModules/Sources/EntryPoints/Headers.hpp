@@ -2,6 +2,9 @@
 
 #include "../Commons/EntryPointName.hpp"
 #include "../Modules/Ager.hpp"
+#include "../Modules/ALU.hpp"
+#include "../Modules/BinaryFiler.hpp"
+#include "../Modules/ArrElement.hpp"
 
 #ifndef StandardModule_EXPORTS
 #	ifdef DEVELOPER

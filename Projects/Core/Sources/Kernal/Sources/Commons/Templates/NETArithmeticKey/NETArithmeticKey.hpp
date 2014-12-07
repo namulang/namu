@@ -1,6 +1,11 @@
 #pragma once
 
 #include "../NEKeyTemplate/NEKeyTemplate.hpp"
+#define NOMINMAX	//	max 매크로 define 금지
+#ifdef max
+#	undef max
+#endif
+#include <limits>
 
 namespace NE
 {
