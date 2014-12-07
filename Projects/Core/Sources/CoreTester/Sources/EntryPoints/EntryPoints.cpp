@@ -1418,22 +1418,27 @@ public:
 
 		ns.create(1);
 		NENode& n = ns[ns.push(NENode())];		
+		NEKeySelector* kk=0;
 		{
 			NEKeyCodeSet& ks = n.getKeySet();
-			ks.create(3);
+			ks.create(4);
 			ks.push(NEIntKey(4, "fake_grade"));
 			ks.push(NEFloatKey(8.0f, "real_grade"));
 			ks.push(NEModuleSelector("temp selector"));
+			kk = (NEKeySelector*)&ks[ks.push(NEKeySelector("ks"))];
 		}
+	
 		Temp* temp = 0x00;
 		Temp2* temp2 = 0x00;
 		{
 			NEModuleCodeSet& ms = n.getModuleSet();
 			ms.create(2);
 			temp = (Temp*) &ms[ms.push(Temp())];
-			temp->grade.setKeyName("fake_grade");
+			temp->grade.setKeyName("ks");
 			temp2 = (Temp2*)&ms[ms.push(Temp2())];			
 		}
+
+		kk->setKeyName("fake_grade");
 
 		n.execute();
 		if (temp->grade.getValue() != 2)					//	바인딩 테스트
