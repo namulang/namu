@@ -69,7 +69,7 @@ namespace NE
 
 	template <typename T, NEType::Type type>
 	NEStringKeyTemplate<T, type>::NEStringKeyTemplate(const T& source /*= T()*/, const NETString& keyname /*= ""*/)
-		: SuperClass(source)
+		: SuperClass(source, keyname)
 	{
 
 	}
