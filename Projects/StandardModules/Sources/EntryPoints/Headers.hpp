@@ -5,6 +5,7 @@
 #include "../Modules/ALU.hpp"
 #include "../Modules/BinaryFiler.hpp"
 #include "../Modules/ArrElement.hpp"
+#include "../Modules/If.hpp"
 
 #ifndef StandardModule_EXPORTS
 #	ifdef DEVELOPER

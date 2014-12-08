@@ -300,6 +300,10 @@
 					RelativePath="..\..\..\Sources\Modules\BinaryFiler.hpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\If.hpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

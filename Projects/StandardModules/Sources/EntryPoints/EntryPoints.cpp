@@ -27,6 +27,7 @@ namespace NE
 		modulelist.push( ALU() );
 		modulelist.push( BinaryFiler() );
 		modulelist.push( ArrElementer() );
+		modulelist.push( If() );
 		return modulelist;
 	}
 }
