@@ -58,7 +58,7 @@ namespace NE
 
 			if(_instance.isValid() != RESULT_NOTHING)
 			{
-				_instance.getName() = "Aging";
+				_instance.getName() = "Ager";
 				_instance.getDeveloper() = "kniz";
 				_instance.setRevision(1);
 				_instance.getReleaseDate() = "2013/08/16";
