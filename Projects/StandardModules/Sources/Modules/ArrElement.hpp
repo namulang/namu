@@ -79,7 +79,7 @@ namespace NE
 
 			return RESULT_SUCCESS;
 		}
-		virtual type_result _onFetchArguments(NEArgumentSet& tray)
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
 			tray.push(arg_method);
 			tray.push(arg_collector);

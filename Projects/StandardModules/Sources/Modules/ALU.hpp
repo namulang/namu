@@ -112,7 +112,7 @@ namespace NE
 
 			return result;
 		}
-		virtual type_result _onFetchArgument(NEArgumentSet& tray)
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
 			tray.push(arg_left_operand);
 			tray.push(arg_right_operand);
