@@ -75,6 +75,10 @@ namespace NE
 			KERNAL_ERROR(" : ");
 			return NE_INDEX_ERROR;
 		}
+		//	Owner 설정:
+		moduleset[modulecode]._owner = this;
+		moduleset[modulecode]._index = index;
+		
 
 
 		//	post:
@@ -241,7 +245,6 @@ namespace NE
 			localstack._setRecentResultCode(module.execute());
 			//			결과값 적용:	만약, 모듈중 하나라도 false 혹은 에러가 있다면, 에러여부를 리턴해야한다
 			localstack._setRecentModuleSetIndex(n);
-			localstack._setRecentModuleRealIndex(_getElement(n));
 			if(localstack.getRecentResultCode() & RESULT_FALSE)
 				result = result | RESULT_FALSE;			
 #ifdef DEVELOPER			

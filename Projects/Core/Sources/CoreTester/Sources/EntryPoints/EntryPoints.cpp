@@ -1925,6 +1925,29 @@ public:
 	}
 };
 
+class ModuleOwnerTest : public TestCase
+{
+public:
+	ModuleOwnerTest()	: TestCase("a module has owner.") {}
+	virtual bool onTest() 
+	{
+		NEScriptEditor& manager = Editor::getInstance().getScriptEditor();
+		NERootNodeCodeSet& ns = manager.getScriptNodes();
+		
+		manager.initialize();
+		NENode& n = ns[ns.push(NENode())];
+		n.getModuleSet().create(2);
+		n.getModuleSet().push(MyMod());
+		NEModule&m = n.getModuleSet()[n.getModuleSet().push(MyMod())];
+		m.execute();
+		if(&m.getOwner() != &n.getModuleSet())
+			return false;
+		const NENodeManager::LocalStack& ls = Kernal::getInstance().getNodeManager().getLocalStack();
+		if(ls.getRecentModuleSetIndex() != 1)
+			return false;
+	}
+};
+
 //class Test : public TestCase
 //{
 //public:
@@ -1990,6 +2013,7 @@ void main()
 	CodeSynchroTest().test();
 	NodeSelectorTest().test();
 	KeyConversionTest().test();
+	ModuleOwnerTest().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
