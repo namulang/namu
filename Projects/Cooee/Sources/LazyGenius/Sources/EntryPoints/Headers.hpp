@@ -10,6 +10,7 @@
 #include "../Modules/ListWindow/ListWindow.hpp"
 #include "../Commons/Defines/ClassMacros/ClassMacros.hpp"
 #include "../Modules/FloatingGliph/FloatingGliph.hpp"
+#include "../Modules/GearGliph/GearGliph.hpp"
 
 
 //	NEModule이 kernal에 있어야 하는 이유

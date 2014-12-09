@@ -15,6 +15,11 @@ namespace LG
 			setValue(false);
 		} 
 
+		virtual NEObject& clone() const
+		{
+			return *(new SwitchGliph(*this));
+		}
+
 		virtual void onUpdateData()
 		{
 			back.y = nobe.y = y;
@@ -41,11 +46,11 @@ namespace LG
 			{
 			case LEFT:
 				if(getValue())
-					setValue(false, true);
+					setValue(false);
 				break;
 			case RIGHT:
 				if( ! getValue())
-					setValue(true, true);
+					setValue(true);
 				break;
 			}
 		}
@@ -56,7 +61,7 @@ namespace LG
 		}
 
 		bool getValue() const { return _value; }
-		void setValue(bool new_value, bool drawing = false);
+		void setValue(bool new_value);
 
 		Gliph nobe, back;
 

@@ -419,6 +419,14 @@
 							RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\SwitchGliph\SwitchGliph.hpp"
 							>
 						</File>
+						<Filter
+							Name="GearGliph"
+							>
+							<File
+								RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\GearGliph\GearGliph.hpp"
+								>
+							</File>
+						</Filter>
 					</Filter>
 					<Filter
 						Name="FloatingGliph"

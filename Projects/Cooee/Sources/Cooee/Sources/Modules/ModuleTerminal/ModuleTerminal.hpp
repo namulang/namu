@@ -59,7 +59,7 @@ public:
 	class ModulePanel : public Gliph 
 	{
 	public:
-		ModulePanel() : Gliph(0, 4, 3, 35, 2, CYAN, LIGHTCYAN) {}
+		ModulePanel() : Gliph(0, 4, 3, 28, 2, CYAN, LIGHTCYAN) {}
 		ModulePanel(const ModulePanel& rhs) : Gliph(rhs) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 			FUNC_CLONE(ModulePanel)	
@@ -69,7 +69,7 @@ public:
 	class ContentPanel : public Gliph
 	{
 	public:
-		ContentPanel() : Gliph(0, 4, 5, 35, 12, LIGHTCYAN, CYAN) {}
+		ContentPanel() : Gliph(0, 4, 5, 28, 12, LIGHTCYAN, CYAN) {}
 		ContentPanel(const ContentPanel& rhs) : Gliph(rhs) {}
 		FUNC_CLONE(ContentPanel)
 			FUNC_TO_OWNER(ModuleTerminal)
@@ -96,7 +96,7 @@ public:
 	class ArgumentNameList : public ListGliph
 	{
 	public:
-		ArgumentNameList() : ListGliph(0, 39, 6, 17, 12, LIGHTCYAN, CYAN, CYAN, LIGHTCYAN) {}
+		ArgumentNameList() : ListGliph(0, 32, 6, 16, 12, LIGHTCYAN, CYAN, CYAN, LIGHTCYAN) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 			FUNC_CLONE(ArgumentNameList)
 			virtual void onUpdateData()
@@ -114,7 +114,7 @@ public:
 	class ArgumentTypeList : public ListGliph
 	{
 	public:
-		ArgumentTypeList() : ListGliph(0, 56, 6, 20, 13, BLACK, WHITE, CYAN, LIGHTCYAN) {}
+		ArgumentTypeList() : ListGliph(0, 60, 6, 16, 13, BLACK, WHITE, CYAN, LIGHTCYAN) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 			FUNC_CLONE(ArgumentTypeList)
 			virtual void onUpdateData()
@@ -127,8 +127,7 @@ public:
 			for (int n = 0; n < args.getLength(); n++)
 			{
 				const NEArgumentBase& arg = args[n];
-				NEString flag = arg.isEnable() ? "[O] " : "[X] ";
-				items.push(flag + NEType::getTypeName(args[n].getTypeToBeBinded()));
+				items.push(NEType::getTypeName(args[n].getTypeToBeBinded()));
 			}
 		}
 		virtual void onKeyPressed(char inputed)
@@ -179,10 +178,88 @@ public:
 
 	FUNC_CLONE(ModuleTerminal)
 
-		virtual void onFocused()
+	virtual void onFocused()
 	{
 		namecode.text = castObject().getNameCode();
 		enable.setValue(castObject().isEnable());
+		_createGears();
+	}
+
+	class MySwitch : public LG::SwitchGliph
+	{
+	public:
+		MySwitch(NEArgumentBase& new_arg) 
+			: SwitchGliph(0, 48, 6 + n, 12, LIGHTCYAN, WHITE), arg(new_arg)
+		{
+
+		};
+		MySwitch(const MySwitch& rhs)
+			: SwitchGliph(rhs), arg(rhs.arg) 
+		{
+
+		}
+
+		virtual NEObject& clone() const
+		{
+			return *(new MySwitch(*this));
+		}
+
+		NEArgumentBase& arg;
+	};
+	class MyGear : public LG::GearGliph
+	{
+	public:
+		MyGear(NEArgumentBase& new_arg, int y) 
+			: GearGliph(0, 48, y, 12, LIGHTCYAN, WHITE), arg(new_arg)
+		{
+
+		};
+		MyGear(const MyGear& rhs)
+			: GearGliph(rhs), arg(rhs.arg) 
+		{
+
+		}
+
+		virtual void onKeyPressed(char inputed)
+		{
+			GearGliph::onKeyPressed(inputed);
+
+			switch(inputed)
+			{
+			case LEFT:
+				if(getValue() < 0)
+
+			case RIGHT:
+			}
+		}
+
+		virtual NEObject& clone() const
+		{
+			return *(new MyGear(*this));
+		}
+
+		NEArgumentBase& arg;
+	};
+
+	void _createGears()
+	{
+		NEArgumentSet& args = castObject().getArguments();
+		gears.create(args.getLength());
+		for(int n=0; n < args.getLength() ;n++)
+		{
+			if(args[n].isOnlyForInput())
+			{
+				MySwitch sg(args[n], n);
+				sg.setValue(args[n].isEnable());
+				gears.push(sg);
+			}
+			else
+			{
+				MyGear gg(args[n], n);
+				gg.setValue()
+				gears.push();
+			}
+		}
 	}
 
 	virtual void onKeyPressed(char inputed)
@@ -272,7 +349,7 @@ public:
 	class NameGliph : public LG::Gliph
 	{
 	public:
-		NameGliph() : LG::Gliph(0, 56, 5, 20, 1, CYAN, LIGHTCYAN, "") {}
+		NameGliph() : LG::Gliph(0, 56, 5, 15, 1, CYAN, LIGHTCYAN, "") {}
 		FUNC_TO_OWNER(ModuleTerminal)
 			virtual void onKeyPressed(char inputed)
 		{
@@ -308,8 +385,9 @@ public:
 
 	EnableSwitch enable;
 	Gliph	enable_header,
-		namecode_header,
-		enable_back;
+			namecode_header,
+			enable_back;
+	NEArrayTemplate<Gliph*, true> gears;
 	NameGliph namecode;
 	FloatingPanel argument_panel;
 	ModulePanel module_panel;

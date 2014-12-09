@@ -16,7 +16,7 @@ namespace NE
 		typedef NEKeyNameBinder SuperClass;
 
 	public:
-		NEArgumentBase(NEType::Type type);
+		NEArgumentBase(NEType::Type type, bool is_only_for_input = false);
 		NEArgumentBase(const ThisClass& rhs);
 
 	public:
@@ -31,6 +31,8 @@ namespace NE
 		bool isValidToBind(const NEObject& to_be_bind) const;
 		const NEKey& getValueKey() const;
 		NEKey& getValueKey();
+		bool isOnlyForInput() const;
+		type_result setOnlyForUse(bool new_only_for_use);
 
 	public:		
 		virtual type_result bind();
@@ -52,5 +54,6 @@ namespace NE
 
 	private:
 		NEType::Type _type_validation;
+		bool		 _is_this_only_for_input;
 	};
 }

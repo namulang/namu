@@ -31,26 +31,27 @@ namespace NE
 	{
 		SuperClass::serialize(saver);
 
-		return saver << _type_validation;
+		return saver << _type_validation << _is_this_only_for_input;
 	}
 	NEBinaryFileLoader& NEArgumentBase::serialize(NEBinaryFileLoader& loader)
 	{
 		SuperClass::serialize(loader);
 
 		NEType::Type validator = NEType::UNDEFINED;
-		loader >> validator;
+		loader >> validator >> _is_this_only_for_input;
 
 		return loader;
 	}
 
-	NEArgumentBase::NEArgumentBase(NEType::Type type)
-		: _type_validation(type)
+	NEArgumentBase::NEArgumentBase(NEType::Type type, bool is_only_for_input)
+		: _type_validation(type), _is_this_only_for_input(is_only_for_input)
 	{
 
 	}
 
 	NEArgumentBase::NEArgumentBase(const ThisClass& rhs)
-		: SuperClass(rhs), _type_validation(rhs._type_validation)
+		: SuperClass(rhs), _type_validation(rhs._type_validation),
+		_is_this_only_for_input(rhs._is_this_only_for_input)
 	{
 
 	}
@@ -63,6 +64,7 @@ namespace NE
 	void NEArgumentBase::_release()
 	{
 		_type_validation = NEType::UNDEFINED;
+		_is_this_only_for_input = false;
 	}
 
 	NEArgumentBase::~NEArgumentBase()
@@ -100,4 +102,17 @@ namespace NE
 	{
 		return getBinded();
 	}
+
+	bool NEArgumentBase::isOnlyForInput() const
+	{
+		return _is_this_only_for_input;
+	}
+
+	type_result NEArgumentBase::setOnlyForUse(bool new_only_for_use)
+	{
+		_is_this_only_for_input = new_only_for_use;
+	
+		return RESULT_SUCCESS;
+	}
+
 }
