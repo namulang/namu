@@ -5,14 +5,36 @@
 class ModuleTerminal : public Terminal
 {
 public:
+	class GliphSet : public LG::Gliph
+	{
+	public:
+		GliphSet() : Gliph(0, 0, 0, 0, 0, 0, 0) {}
+		GliphSet(const GliphSet& rhs) : Gliph(rhs), arr(rhs.arr) {}
+		virtual void onDraw()
+		{
+			for(int n=0; n < arr.getLength() ;n++)
+				arr.getElement(n).onDraw();
+		}
+		virtual void onUpdateData()
+		{
+			for(int n=0; n < arr.getLength() ;n++)
+				arr.getElement(n).onUpdateData();
+		}
+		virtual void onKeyPressed(char inputed)
+		{
+			for(int n=0; n < arr.getLength() ;n++)
+				arr.getElement(n).onKeyPressed(inputed);
+		}
+		NEArrayTemplate<LG::Gliph*, true> arr;
+	};
 
 	class FloatingPanel : public LG::FloatingGliph
 	{
 	public:
 		FUNC_CLONE(FloatingPanel)
-		FUNC_TO_OWNER(ModuleTerminal)
+			FUNC_TO_OWNER(ModuleTerminal)
 
-		FloatingPanel();
+			FloatingPanel();
 
 		virtual void onUpdateData()
 		{
@@ -59,7 +81,7 @@ public:
 	class ModulePanel : public Gliph 
 	{
 	public:
-		ModulePanel() : Gliph(0, 4, 3, 28, 2, CYAN, LIGHTCYAN) {}
+		ModulePanel() : Gliph(0, 4, 3, 26, 2, CYAN, LIGHTCYAN) {}
 		ModulePanel(const ModulePanel& rhs) : Gliph(rhs) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 			FUNC_CLONE(ModulePanel)	
@@ -69,7 +91,7 @@ public:
 	class ContentPanel : public Gliph
 	{
 	public:
-		ContentPanel() : Gliph(0, 4, 5, 28, 12, LIGHTCYAN, CYAN) {}
+		ContentPanel() : Gliph(0, 4, 5, 26, 15, LIGHTCYAN, CYAN) {}
 		ContentPanel(const ContentPanel& rhs) : Gliph(rhs) {}
 		FUNC_CLONE(ContentPanel)
 			FUNC_TO_OWNER(ModuleTerminal)
@@ -85,8 +107,8 @@ public:
 	{
 	public:
 		ArgumentHeader()
-			: Gliph(0, 39, 5, 37, 1, DARKGRAY, LIGHTGRAY,
-			"KeyName			KeyType") {}
+			: Gliph(0, 30, 6, 45, 1, DARKGRAY, LIGHTGRAY,
+			"KeyName\t\tDirection\t  KeyType") {}
 		ArgumentHeader(const ArgumentHeader& rhs)
 			: Gliph(rhs) {}
 		FUNC_CLONE(ArgumentHeader)
@@ -96,7 +118,7 @@ public:
 	class ArgumentNameList : public ListGliph
 	{
 	public:
-		ArgumentNameList() : ListGliph(0, 32, 6, 16, 12, LIGHTCYAN, CYAN, CYAN, LIGHTCYAN) {}
+		ArgumentNameList() : ListGliph(0, 30, 7, 15, 13, LIGHTCYAN, CYAN, CYAN, LIGHTCYAN) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 			FUNC_CLONE(ArgumentNameList)
 			virtual void onUpdateData()
@@ -114,7 +136,7 @@ public:
 	class ArgumentTypeList : public ListGliph
 	{
 	public:
-		ArgumentTypeList() : ListGliph(0, 60, 6, 16, 13, BLACK, WHITE, CYAN, LIGHTCYAN) {}
+		ArgumentTypeList() : ListGliph(0, 60, 7, 15, 13, BLACK, WHITE, CYAN, LIGHTCYAN) {}
 		FUNC_TO_OWNER(ModuleTerminal)
 			FUNC_CLONE(ArgumentTypeList)
 			virtual void onUpdateData()
@@ -125,37 +147,33 @@ public:
 
 			items.create(args.getLength());
 			for (int n = 0; n < args.getLength(); n++)
-			{
-				const NEArgumentBase& arg = args[n];
 				items.push(NEType::getTypeName(args[n].getTypeToBeBinded()));
-			}
 		}
 		virtual void onKeyPressed(char inputed)
 		{
-			ListGliph::onKeyPressed(inputed);
-
-			NEModule& m = toOwner()->castObject();
-			if ( ! &m) return;
-			NEArgumentBase& arg = m.getArguments()[choosed];
-			if ( ! &arg) return;
+			ListGliph::onKeyPressed(inputed);			
 
 			switch(inputed)
 			{
-			case LEFT:	arg.setEnable(false);	break;
-
-			case RIGHT:	arg.setEnable(true);	break;
+			case LEFT:
+			case RIGHT:	
+				{
+					Gliph& g = toOwner()->gears.arr[choosed];
+					if( &g)
+						g.onKeyPressed(inputed);
+				}
+				break;
 			}
 		}
 	};
 
 	ModuleTerminal(const NEString& new_path)
-		: Terminal(new_path, NEType::NEMODULE, 4, 3, 72, 18, BLACK, CYAN),
-		enable_header(0, 39, 4, 37, 1, DARKGRAY, LIGHTGRAY, "Enable"),
-		namecode_header(0, 39, 5, 17, 1, DARKGRAY, LIGHTGRAY, "Namecode"),
-		enable_back(0, 56, 4, 20, 1, LIGHTGRAY, LIGHTGRAY)
+		: Terminal(new_path, NEType::NEMODULE, 4, 3, 72, 18, BLACK, DARKGRAY),
+		enable_header(0, 30, 4, 30, 1, DARKGRAY, LIGHTGRAY, "\t\t\t\t\t\tEnable"),
+		namecode_header(0, 30, 5, 30, 1, DARKGRAY, LIGHTGRAY, "\t\t\t\t\t  Namecode")
 	{
-		regist(11, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist, &argument_panel,
-			&enable_header, &enable_back, &enable, &namecode_header, &namecode);
+		regist(11, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist, &gears, &argument_panel,
+			&enable_header, &enable, &namecode_header, &namecode);
 
 		enable.Gliph::back = CYAN;
 		enable.Gliph::fore = LIGHTCYAN;
@@ -165,11 +183,10 @@ public:
 	ModuleTerminal(const ModuleTerminal& rhs)
 		: Terminal(rhs), argument_panel(rhs.argument_panel), module_panel(rhs.module_panel), content_panel(rhs.content_panel),
 		argument_header(rhs.argument_header), argument_namelist(rhs.argument_namelist), argument_typelist(rhs.argument_typelist),
-		enable(rhs.enable), enable_header(rhs.enable_header), namecode_header(rhs.namecode_header), namecode(rhs.namecode),
-		enable_back(rhs.enable_back)
+		enable(rhs.enable), enable_header(rhs.enable_header), namecode_header(rhs.namecode_header), namecode(rhs.namecode), gears(rhs.gears)	
 	{
-		regist(11, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist, &argument_panel,
-			&enable_header, &enable_back, &enable, &namecode_header, &namecode);
+		regist(11, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist, &gears, &argument_panel,
+			&enable_header, &enable, &namecode_header, &namecode);
 
 		enable.Gliph::back = CYAN;
 		enable.Gliph::fore = LIGHTCYAN;
@@ -178,86 +195,219 @@ public:
 
 	FUNC_CLONE(ModuleTerminal)
 
-	virtual void onFocused()
+		virtual void onFocused()
 	{
 		namecode.text = castObject().getNameCode();
 		enable.setValue(castObject().isEnable());
+		enable.text = enable.getValue() ? "------ON!------" : "------OFF-------";			
 		_createGears();
 	}
 
-	class MySwitch : public LG::SwitchGliph
+
+	class InputSwitch : public LG::SwitchGliph
 	{
 	public:
-		MySwitch(NEArgumentBase& new_arg) 
-			: SwitchGliph(0, 48, 6 + n, 12, LIGHTCYAN, WHITE), arg(new_arg)
+		InputSwitch(int y, NEArgumentBase& new_arg) : LG::SwitchGliph(0, 45, y, 7, LIGHTCYAN, CYAN), arg(new_arg) 
 		{
-
-		};
-		MySwitch(const MySwitch& rhs)
-			: SwitchGliph(rhs), arg(rhs.arg) 
-		{
-
+			nobe.back = DARKGRAY;
+			nobe.fore = WHITE;
+			setValue( ! arg.isEnable());
 		}
-
-		virtual NEObject& clone() const
+		virtual NEObject& clone() const 
 		{
-			return *(new MySwitch(*this));
+			return *(new InputSwitch(*this));
 		}
+		virtual void onUpdateData()
+		{
+			LG::SwitchGliph::onUpdateData();
+			if(getValue())	//	True면 실제 arg는 false.
+			{
+				nobe.text = "O";
+				text = "--OFF--";
+			}
+			else
+			{
+				nobe.text = "<";				
+				text = "-<-----";			
+			}
+		}
+		virtual void onKeyPressed(char inputed)
+		{
+			SwitchGliph::onKeyPressed(inputed);
 
+			if( ! getValue())
+				arg.setEnable(true);
+			else
+				arg.setEnable(false);
+		}
 		NEArgumentBase& arg;
 	};
-	class MyGear : public LG::GearGliph
+
+	class OutputSwitch : public LG::SwitchGliph
 	{
 	public:
-		MyGear(NEArgumentBase& new_arg, int y) 
-			: GearGliph(0, 48, y, 12, LIGHTCYAN, WHITE), arg(new_arg)
-		{
-
-		};
-		MyGear(const MyGear& rhs)
-			: GearGliph(rhs), arg(rhs.arg) 
-		{
-
+		OutputSwitch(int y, NEArgumentBase& new_arg) : LG::SwitchGliph(0, 53, y, 7, LIGHTCYAN, CYAN), arg(new_arg) 
+		{		
+			nobe.back = DARKGRAY;
+			nobe.fore = WHITE;
+			setValue(arg.isEnable());
 		}
+		virtual NEObject& clone() const 
+		{
+			return *(new OutputSwitch(*this));
+		}
+		virtual void onUpdateData()
+		{
+			SwitchGliph::onUpdateData();
+			if(getValue())
+			{
+				text = "----->-";
+				nobe.text = ">";
+			}
+			else
+			{
+				text = "---OFF-";
+				nobe.text = "O";
+			}
+		}	
+		virtual void onKeyPressed(char inputed)
+		{
+			SwitchGliph::onKeyPressed(inputed);
 
+			if(getValue())
+				arg.setEnable(true);
+			else
+				arg.setEnable(false);
+		}
+		NEArgumentBase& arg;
+	};
+
+	class InputOutputGear : public LG::GearGliph
+	{
+	public:
+		InputOutputGear(int y, NEArgumentBase& new_arg) 
+			: LG::GearGliph(0, 45, y, 15, LIGHTCYAN, CYAN), arg(new_arg) 
+		{		
+			nobe.back = DARKGRAY;
+			nobe.fore = WHITE;
+
+			switch(arg.getPurpose())
+			{
+			case NEArgumentBase::FOR_INPUT_ONLY:	setValue(-1);	break;
+			case NEArgumentBase::FOR_OUTPUT_ONLY:	setValue(1);	break;
+			default:								setValue(0);	break;
+			}				
+		}
+		virtual NEObject& clone() const 
+		{
+			return *(new InputOutputGear(*this));
+		}
+		virtual void onUpdateData()
+		{
+			LG::GearGliph::onUpdateData();
+			switch(getValue())
+			{
+			case -1:
+				arg.setPurpose(NEArgumentBase::FOR_INPUT_ONLY);
+				text = "<<-----------------";
+				break;
+
+			case 0:
+				text = "--------FF---------";
+				break;  
+
+			case 1:
+				arg.setPurpose(NEArgumentBase::FOR_OUTPUT_ONLY);
+				text = "------------->>";
+				break;
+			}
+		}
 		virtual void onKeyPressed(char inputed)
 		{
 			GearGliph::onKeyPressed(inputed);
 
-			switch(inputed)
+			switch(getValue())
+			{
+			case -1:
+				arg.setEnable(true);
+				arg.setPurpose(NEArgumentBase::FOR_INPUT_ONLY);
+				break;
+
+			case 0:
+				arg.setEnable(false);
+				arg.setPurpose(NEArgumentBase::UNDEFINED);
+				break;  
+
+			case 1:
+				arg.setEnable(true);
+				arg.setPurpose(NEArgumentBase::FOR_OUTPUT_ONLY);
+				break;
+			}			
+		}
+		NEArgumentBase& arg;
+	};
+
+	class EnableSwitch2 : public LG::SwitchGliph
+	{
+	public:
+		EnableSwitch2(int y, NEArgumentBase& new_arg) 
+			: LG::SwitchGliph(0, 45, y, 15, LIGHTCYAN, CYAN), arg(new_arg) 
+		{
+			setValue(arg.isEnable());
+			nobe.back = DARKGRAY;
+			nobe.fore = WHITE;
+		}
+		FUNC_CLONE(EnableSwitch2)
+
+			virtual void onUpdateData()
+		{
+			LG::SwitchGliph::onUpdateData();
+
+			text = arg.isEnable() ? "------ON!------" : "------OFF------";
+		}
+
+		virtual void onKeyPressed(char inputed)
+		{
+			LG::SwitchGliph::onKeyPressed(inputed);
+			switch (inputed)
 			{
 			case LEFT:
-				if(getValue() < 0)
-
 			case RIGHT:
+				arg.setEnable(getValue());
+				break;
 			}
-		}
 
-		virtual NEObject& clone() const
-		{
-			return *(new MyGear(*this));
+			text = getValue() ? "------ON!------" : "------OFF------";
 		}
-
 		NEArgumentBase& arg;
 	};
 
 	void _createGears()
 	{
 		NEArgumentSet& args = castObject().getArguments();
-		gears.create(args.getLength());
+		gears.arr.create(args.getLength());
+
 		for(int n=0; n < args.getLength() ;n++)
 		{
-			if(args[n].isOnlyForInput())
+			NEArgumentBase& arg = args[n];
+			switch(arg.getPurposeLimitation())
 			{
-				MySwitch sg(args[n], n);
-				sg.setValue(args[n].isEnable());
-				gears.push(sg);
-			}
-			else
-			{
-				MyGear gg(args[n], n);
-				gg.setValue()
-				gears.push();
+			case NEArgumentBase::FOR_INPUT_ONLY:
+				gears.arr.push(InputSwitch(7+n, arg));
+				break;
+
+			case NEArgumentBase::FOR_OUTPUT_ONLY:
+				gears.arr.push(OutputSwitch(7+n, arg));
+				break;
+
+			case NEArgumentBase::FOR_INPUT_OUTPUT:
+				gears.arr.push(InputOutputGear(7+n, arg));
+				break;
+
+			case NEArgumentBase::NOT_CONCERNED:
+			case NEArgumentBase::UNDEFINED:
+				gears.arr.push(EnableSwitch2(7+n, arg));
+
 			}
 		}
 	}
@@ -266,19 +416,18 @@ public:
 	{
 		switch (inputed)
 		{
-// 		case CANCEL:
-// 		case CLOSE:
-// 			Terminal::onKeyPressed(inputed);
-// 			break;
+		case CANCEL:
+		case CLOSE:
+			Terminal::onKeyPressed(inputed);
+			break;
 
 		case UP:
 			if (namecode.back == LIGHTCYAN)
 			{
 				namecode.back = WHITE;
 				namecode.fore = BLACK;
-				enable.Gliph::fore = LIGHTCYAN;
-				enable.Gliph::back = CYAN;
-				enable_back.back = WHITE;
+				enable.Gliph::fore = CYAN;
+				enable.Gliph::back = LIGHTCYAN;
 			}
 			else if (argument_typelist.choosed == 0)
 			{
@@ -286,26 +435,26 @@ public:
 				argument_namelist.choosed = -1;
 				namecode.back = LIGHTCYAN;
 				namecode.fore = CYAN;
-			}
+			}			
 			break;
 
 		case DOWN:
-			if (enable.Gliph::back == CYAN)
+			if (enable.Gliph::back == LIGHTCYAN)
 			{
-				enable.Gliph::back = DARKGRAY;
+				enable.Gliph::back = CYAN;
+				enable.fore = LIGHTCYAN;
 				namecode.back = LIGHTCYAN;
 				namecode.fore = CYAN;
-				enable_back.back = LIGHTGRAY;
 			}
 			else if (namecode.back == LIGHTCYAN)
 			{
 				namecode.back = WHITE;
 				namecode.fore = BLACK;			
-			}
-			break;
+			}			
+			break;				
 		}
 
-		if (enable.Gliph::back == CYAN)
+		if (enable.Gliph::back == LIGHTCYAN)
 			enable.onKeyPressed(inputed);
 		else if (namecode.back == LIGHTCYAN)
 			namecode.onKeyPressed(inputed);
@@ -316,6 +465,26 @@ public:
 			argument_panel.onKeyPressed(inputed);
 			module_panel.onKeyPressed(inputed);
 			content_panel.onKeyPressed(inputed);
+		}
+
+		switch(inputed)
+		{
+		case UP:
+		case DOWN:	
+			{
+				for(int n=0; n < gears.arr.getLength() ;n++)
+				{
+					gears.arr[n].back = CYAN;
+					gears.arr[n].fore = LIGHTCYAN;
+				}
+
+				Gliph& g = gears.arr[argument_typelist.choosed];
+				if( &g)
+				{		
+					g.back = LIGHTCYAN;
+					g.fore = CYAN;				
+				}
+			}
 		}
 	}
 
@@ -329,9 +498,18 @@ public:
 	class EnableSwitch : public LG::SwitchGliph
 	{
 	public:
-		EnableSwitch() : LG::SwitchGliph(0, 62, 4, 8, DARKGRAY, LIGHTCYAN) {}
+		EnableSwitch() : LG::SwitchGliph(0, 60, 4, 15, CYAN, DARKGRAY) 
+		{				
+		}
 		FUNC_CLONE(EnableSwitch)
-		FUNC_TO_OWNER(ModuleTerminal)
+			FUNC_TO_OWNER(ModuleTerminal)
+
+			virtual void onUpdateData()
+		{
+			LG::SwitchGliph::onUpdateData();
+			nobe.back = DARKGRAY;
+			nobe.fore = WHITE;
+		}
 
 		virtual void onKeyPressed(char inputed)
 		{
@@ -343,13 +521,15 @@ public:
 				toOwner()->castObject().setEnable(getValue());
 				break;
 			}
+
+			text = getValue() ? "------ON!------" : "------OFF-------";				
 		}
 	};
 
 	class NameGliph : public LG::Gliph
 	{
 	public:
-		NameGliph() : LG::Gliph(0, 56, 5, 15, 1, CYAN, LIGHTCYAN, "") {}
+		NameGliph() : LG::Gliph(0, 60, 5, 15, 1, CYAN, LIGHTCYAN, "") {}
 		FUNC_TO_OWNER(ModuleTerminal)
 			virtual void onKeyPressed(char inputed)
 		{
@@ -385,14 +565,13 @@ public:
 
 	EnableSwitch enable;
 	Gliph	enable_header,
-			namecode_header,
-			enable_back;
-	NEArrayTemplate<Gliph*, true> gears;
+			namecode_header;
 	NameGliph namecode;
 	FloatingPanel argument_panel;
 	ModulePanel module_panel;
 	ContentPanel content_panel;
 	ArgumentHeader argument_header;
 	ArgumentNameList argument_namelist;
-	ArgumentTypeList argument_typelist;
+	ArgumentTypeList argument_typelist;	
+	GliphSet gears;
 };

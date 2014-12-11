@@ -110,3 +110,45 @@ void Planetarium::onDraw()
 	if(is_color_locked)
 		buf.setColorLock(true);
 }
+
+void Planetarium::getSelectedByFilter(NEListTemplate<NEObject*>& selected)
+{
+	//	현재 어떤 Filter가 활성화 되어있는 지를 판단한다:
+	if (switches[2])
+	{
+		NEType::Type backup = getKeyFilter().getManagerType();
+		if (::Core::isObservingDebug())
+			getKeyFilter().setManager(NEType::NENODE_MANAGER);
+		else
+			getKeyFilter().setManager(NEType::NESCRIPT_EDITOR);
+
+		while (NEKey* itr = &getKeyFilter().getKey())
+			selected.push(itr);
+		getKeyFilter().setManager(backup);
+	}
+	if (switches[1])
+	{
+		NEType::Type backup = getModuleFilter().getManagerType();
+		if (::Core::isObservingDebug())
+			getModuleFilter().setManager(NEType::NENODE_MANAGER);
+		else
+			getModuleFilter().setManager(NEType::NESCRIPT_EDITOR);
+
+		while (NEModule* itr = &getModuleFilter().getModule())
+			selected.push(itr);
+		getModuleFilter().setManager(backup);
+	}
+	if (switches[0])
+	{
+		NEType::Type backup = getNodeFilter().getManagerType();
+		if (::Core::isObservingDebug())
+			getNodeFilter().setManager(NEType::NENODE_MANAGER);
+		else
+			getNodeFilter().setManager(NEType::NESCRIPT_EDITOR);
+
+		while (NENode* itr = &getNodeFilter().getNode())
+			selected.push(itr);
+		getNodeFilter().setManager(backup);
+	}
+}
+

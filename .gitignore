@@ -26,7 +26,6 @@ Binaries/
 !AfterBuild.exe
 !Applications/SDKBuilder/sdkbuilder.bat
 *.ini
-!VersionNo.ini
 SDK/
 *.rsp
 sdk_copy_into_your_sdk_folder/

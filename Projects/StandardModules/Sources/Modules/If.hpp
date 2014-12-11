@@ -24,7 +24,11 @@ namespace NE
 
 			return RESULT_SUCCESS;
 		}
+<<<<<<< HEAD
 		virtual type_result _onFetchArguments(NEArgumentList& tray)
+=======
+		virtual type_result _onFetchArgument(NEArgumentSet& tray)
+>>>>>>> 7cc208e99f52313036b5accd74a9b207b90d2e65
 		{
 			tray.push(arg_condition);
 			tray.push(arg_flags);
