@@ -1,8 +1,8 @@
 namespace NE
 {
 	template <typename T>
-	NETArgument<T>::NETArgument() 
-		: SuperClass(T().getType())
+	NETArgument<T>::NETArgument(NEArgumentBase::Purpose limitation) 
+		: SuperClass(T().getType(), limitation)
 	{
 
 	}

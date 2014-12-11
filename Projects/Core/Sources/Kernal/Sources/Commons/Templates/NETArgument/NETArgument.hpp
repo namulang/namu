@@ -31,7 +31,7 @@ namespace NE
 		typedef NEArgumentBase SuperClass;
 
 	public:	
-		NETArgument();
+		NETArgument(NEArgumentBase::Purpose limitation = NEArgumentBase::UNDEFINED);
 
 	public:
 		type_result setValue(typename const T::Trait& source);

@@ -1,12 +1,32 @@
 #include "NEArgumentBase.hpp"
 #include "../Kernal/Kernal.hpp"
 
+namespace 
+{
+	using namespace NE;
+	template <typename T>
+	void saveEnumeration(NEBinaryFileSaver& saver, T enumeration)
+	{
+		int buffer = static_cast<int>(enumeration);
+		saver << buffer;
+	}
+	template <typename T>
+	void loadEnumeration(NEBinaryFileLoader& loader, T& enumeration)
+	{
+		int buffer;
+		loader >> buffer;
+		enumeration = T(buffer);
+	}
+}
+
 namespace NE
 {
 	bool NEArgumentBase::operator==(const NEArgumentBase& source) const
 	{
 		return	SuperClass::operator==(source)				&&
-				_type_validation == source._type_validation	;
+			_type_validation == source._type_validation	&&
+			_limitation == source._limitation			&&
+			_purpose == source._purpose					;				
 	}
 	bool NEArgumentBase::operator!=(const NEArgumentBase& source) const
 	{
@@ -19,7 +39,7 @@ namespace NE
 	bool NEArgumentBase::isNeedingBinding() const
 	{
 		return	getKeyName().getLength() > 0	&&
-				getKeyName()[0] != 0;
+			getKeyName()[0] != 0;
 	}
 	void NEArgumentBase::release() 
 	{
@@ -27,33 +47,39 @@ namespace NE
 
 		_release();
 	}
+
 	NEBinaryFileSaver& NEArgumentBase::serialize(NEBinaryFileSaver& saver) const
 	{
 		SuperClass::serialize(saver);
 
-		return saver << _type_validation << _is_this_only_for_input;
+		saveEnumeration<NEType::Type>(saver, _type_validation);
+		saveEnumeration<Purpose>(saver, _purpose);
+		saveEnumeration<Purpose>(saver, _limitation);
+
+		return saver;
 	}
 	NEBinaryFileLoader& NEArgumentBase::serialize(NEBinaryFileLoader& loader)
 	{
 		SuperClass::serialize(loader);
 
 		NEType::Type validator = NEType::UNDEFINED;
-		loader >> validator >> _is_this_only_for_input;
+		loader >> validator;
+		loadEnumeration<Purpose>(loader, _purpose);
+		loadEnumeration<Purpose>(loader, _limitation);
 
 		return loader;
 	}
 
-	NEArgumentBase::NEArgumentBase(NEType::Type type, bool is_only_for_input)
-		: _type_validation(type), _is_this_only_for_input(is_only_for_input)
+	NEArgumentBase::NEArgumentBase(NEType::Type type, Purpose limitation)
+		: _type_validation(type), _limitation(limitation)
 	{
-
+		setPurpose(FOR_INPUT_OUTPUT);
 	}
 
 	NEArgumentBase::NEArgumentBase(const ThisClass& rhs)
-		: SuperClass(rhs), _type_validation(rhs._type_validation),
-		_is_this_only_for_input(rhs._is_this_only_for_input)
+		: SuperClass(rhs)
 	{
-
+		_assign(rhs);
 	}
 
 	NEType::Type NEArgumentBase::getTypeToBeBinded() const
@@ -61,10 +87,19 @@ namespace NE
 		return _type_validation;
 	}
 
+	NEArgumentBase& NEArgumentBase::_assign(const ThisClass& source)
+	{
+		_type_validation = source._type_validation;
+		_purpose = source._purpose;
+		_limitation = source._limitation;
+
+		return *this;
+	}
+
 	void NEArgumentBase::_release()
 	{
 		_type_validation = NEType::UNDEFINED;
-		_is_this_only_for_input = false;
+		_purpose = _limitation = FOR_INPUT_OUTPUT;		
 	}
 
 	NEArgumentBase::~NEArgumentBase()
@@ -90,7 +125,7 @@ namespace NE
 	{
 		return NEType::isValidHierachy(
 			getTypeToBeBinded(), to_be_bind.getType()
-		);
+			);
 	}
 
 	const NEKey& NEArgumentBase::getValueKey() const
@@ -102,17 +137,4 @@ namespace NE
 	{
 		return getBinded();
 	}
-
-	bool NEArgumentBase::isOnlyForInput() const
-	{
-		return _is_this_only_for_input;
-	}
-
-	type_result NEArgumentBase::setOnlyForUse(bool new_only_for_use)
-	{
-		_is_this_only_for_input = new_only_for_use;
-	
-		return RESULT_SUCCESS;
-	}
-
 }
