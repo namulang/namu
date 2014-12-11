@@ -266,10 +266,10 @@ public:
 	{
 		switch (inputed)
 		{
-		case CANCEL:
-		case CLOSE:
-			Terminal::onKeyPressed(inputed);
-			break;
+// 		case CANCEL:
+// 		case CLOSE:
+// 			Terminal::onKeyPressed(inputed);
+// 			break;
 
 		case UP:
 			if (namecode.back == LIGHTCYAN)
