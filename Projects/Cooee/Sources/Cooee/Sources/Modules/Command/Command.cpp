@@ -493,7 +493,7 @@ NE::NEString PasteCommand::execute(const NEStringSet& parameters)
 NE::NEString RunCommand::execute(const NEStringSet& parameters)
 {
 	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
-	if(NEResult::hasError(ed.getNEScriptHeader().isValid()))
+	if(NEResult::hasError(ed.getScriptHeader().isValid()))
 	{
 		LG::Core::open(HeaderModifier());
 		return    "ERROR: 스크립트의 헤더가 잘못되어서 저장할 수 없습니다. \n"
@@ -556,7 +556,7 @@ void RunCommand::_initiateDebug()
 NE::NEString SaveCommand::execute(const NEStringSet& parameters)
 {
 	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
-	if(NEResult::hasError(ed.getNEScriptHeader().isValid()))
+	if(NEResult::hasError(ed.getScriptHeader().isValid()))
 	{
 		LG::Core::open(HeaderModifier());
 		return    "ERROR: 스크립트의 헤더가 잘못되어서 저장할 수 없습니다. \n"

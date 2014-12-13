@@ -142,7 +142,7 @@ namespace NE
 	template <typename T, NEType::Type type>
 	type_result NETArithmeticKey<T, type>::makeReciprocal()
 	{
-		if (_value == 0)
+		if (_value == T(0))
 		{
 			_value = std::numeric_limits<T>::max();
 

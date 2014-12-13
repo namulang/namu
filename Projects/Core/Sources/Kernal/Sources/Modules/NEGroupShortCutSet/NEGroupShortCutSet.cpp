@@ -36,7 +36,7 @@ namespace NE
 
 	type_result NEGroupShortCutSet::_enlist(NENode& node, type_index node_real_index)
 	{
-		const NEIntSet& codeset = node.getGroupCode();
+		const NECodeSet& codeset = node.getGroupCode();
 		if(node_real_index < 0)
 		{
 			KERNAL_ERROR(" : ");
@@ -49,7 +49,7 @@ namespace NE
 		type_result result = RESULT_SUCCESS;
 		for(int n=0; n < codeset.getLength() ;n++)
 		{
-			type_code groupcode = codeset[n];
+			type_code groupcode = codeset[n].getCode();
 			if(	groupcode <= NE_HAS_NO_SCRIPTCODE	||
 				groupcode > getLengthLastIndex()	)
 			{
@@ -71,7 +71,7 @@ namespace NE
 	}
 	type_result NEGroupShortCutSet::_unlist(NENode& node, type_index node_real_index)
 	{
-		const NEIntSet& codeset = node.getGroupCode();
+		const NECodeSet& codeset = node.getGroupCode();
 		if(node_real_index < 0)
 		{
 			KERNAL_ERROR(" : ");
@@ -85,7 +85,7 @@ namespace NE
 
 		for(int n=0; n < codeset.getLength() ;n++)
 		{
-			type_code groupcode = codeset[n];
+			type_code groupcode = codeset[n].getCode();
 			if(	groupcode <= NE_HAS_NO_SCRIPTCODE	||
 				groupcode > getLengthLastIndex()	)
 			{

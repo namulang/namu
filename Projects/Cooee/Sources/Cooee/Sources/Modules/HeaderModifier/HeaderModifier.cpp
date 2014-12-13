@@ -134,7 +134,7 @@ void HeaderModifier::CodePopUpMenu::_onRemoveCode()
 
 void HeaderModifier::onItemChoosed(type_index index, const NEString& chosen_content)
 {
-	NEScriptHeader& h = Editor::getInstance().getScriptEditor().getNEScriptHeader();
+	NEScriptHeader& h = Editor::getInstance().getScriptEditor().getScriptHeader();
 	NECodeType::CodeType ct = NECodeType::UNDEFINED;
 	switch(index)
 	{

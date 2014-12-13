@@ -39,7 +39,7 @@ public:
 	{
 		ListWindow::onUpdateData();
 
-		NEScriptHeader& h = Editor::getInstance().getScriptEditor().getNEScriptHeader();
+		NEScriptHeader& h = Editor::getInstance().getScriptEditor().getScriptHeader();
 
 		list.items.create(6+codes_display_indexes.getLength());
 		list.items.push("¿Ã  ∏ß : " + h.getName());
@@ -98,7 +98,7 @@ public:
 
 		type_index _getMaxCodeIndex(NECodeType::CodeType from)
 		{
-			const NEScriptHeader& h = Editor::getInstance().getScriptEditor().getNEScriptHeader();
+			const NEScriptHeader& h = Editor::getInstance().getScriptEditor().getScriptHeader();
 			switch(from)
 			{
 			case NECodeType::NAME:

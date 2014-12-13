@@ -35,6 +35,8 @@
 #include "../NEKeySelector/NEKeySelector.hpp"
 #include "../NEModuleCodeSetKey/NEModuleCodeSetKey.hpp"
 #include "../NENodeCodeSetKey/NENodeCodeSetKey.hpp"
+#include "../NECodeKey/NECodeKey.hpp"
+#include "../NECodeSetKey/NECodeSetKey.hpp"
 
 namespace NE
 {
@@ -71,7 +73,7 @@ namespace NE
 
 	type_result NEKeyManager::initialize()
 	{
-		_keyset.create(31);
+		_keyset.create(33);
 		_keyset.push(NEBooleanKey());
 		_keyset.push(NECharKey());
 		_keyset.push(NEByteKey());
@@ -103,6 +105,8 @@ namespace NE
 		_keyset.push(NENodeSelector());
 		_keyset.push(NEModuleSelector());
 		_keyset.push(NEKeySelector());		
+		_keyset.push(NECodeKey());
+		_keyset.push(NECodeSetKey());	
 
 		return RESULT_SUCCESS;
 	}
