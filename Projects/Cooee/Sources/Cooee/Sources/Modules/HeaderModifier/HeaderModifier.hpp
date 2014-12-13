@@ -3,7 +3,7 @@
 #include "../../Includes/Includes.hpp"
 
 /*
-	ScriptHeader의 내용:
+	NEScriptHeader의 내용:
 		Name,
 		Developer,
 		Revision,
@@ -39,7 +39,7 @@ public:
 	{
 		ListWindow::onUpdateData();
 
-		NEScriptManager::ScriptHeader& h = Editor::getInstance().getScriptEditor().getScriptHeader();
+		NEScriptHeader& h = Editor::getInstance().getScriptEditor().getNEScriptHeader();
 
 		list.items.create(6+codes_display_indexes.getLength());
 		list.items.push("이  름 : " + h.getName());
@@ -85,7 +85,7 @@ public:
 				type_index to_return = _getMaxCodeIndex(_codetype) + 1;
 				if(to_return == -2)
 				{
-					EDITOR_WARNING(" : 잘못된 ScriptHeader의 코드를 조작하려 했습니다.");
+					EDITOR_WARNING(" : 잘못된 NEScriptHeader의 코드를 조작하려 했습니다.");
 
 					delete_me = true;
 				}
@@ -98,7 +98,7 @@ public:
 
 		type_index _getMaxCodeIndex(NECodeType::CodeType from)
 		{
-			const NEScriptManager::ScriptHeader& h = Editor::getInstance().getScriptEditor().getScriptHeader();
+			const NEScriptHeader& h = Editor::getInstance().getScriptEditor().getNEScriptHeader();
 			switch(from)
 			{
 			case NECodeType::NAME:

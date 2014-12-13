@@ -164,7 +164,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		NENode& tg = ns[ns.push(NENode())];
 		NEKeyCodeSet& ks = tg.getKeySet();
@@ -192,7 +192,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 		ns.push(NENode());
@@ -251,7 +251,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 		ns.push(NENode());
@@ -317,7 +317,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 		ns.push(NENode());
@@ -387,7 +387,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 		ns.push(NENode());
@@ -487,7 +487,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		NEString str = "wow/this/is/a//test";
 		NEStringSet split;
@@ -527,7 +527,7 @@ public:
 			return false;
 
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 		ss.setMaxPriorityCodeIndex(5);
 		ss.setMaxScriptCodeIndex(5);
 		ss.setMaxGroupCodeIndex(2);
@@ -546,7 +546,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 
@@ -575,7 +575,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 
@@ -610,7 +610,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 
@@ -643,7 +643,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 
@@ -685,7 +685,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 
@@ -1076,8 +1076,8 @@ public:
 
 		ed.insertNameCode(1);
 		ed.insertNameCode(2);
-		ed.getScriptHeader().getName() = "RelativityTest";
-		ed.getScriptHeader().getDeveloper() = "CoreTester";
+		ed.getNEScriptHeader().getName() = "RelativityTest";
+		ed.getNEScriptHeader().getDeveloper() = "CoreTester";
 		NENodeCodeSet& ncs = ed.getScriptNodes();
 		ncs.create(3);
 		{
@@ -1218,7 +1218,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		nm.initialize();
 
@@ -1310,7 +1310,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		nm.initialize();
 		Temp* temp = 0x00;
@@ -1413,7 +1413,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 		manager.initialize();
 
 		ns.create(1);
@@ -1478,7 +1478,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 		{
@@ -1549,7 +1549,7 @@ public:
 		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 
 		manager.initialize();
 		{
@@ -1591,7 +1591,7 @@ public:
 	{
 		NEScriptEditor& manager = Editor::getInstance().getScriptEditor();
 		NERootNodeCodeSet& ns = manager.getScriptNodes();
-		NEScriptManager::ScriptHeader& header = manager.getScriptHeader();
+		NEScriptHeader& header = manager.getNEScriptHeader();
 
 		manager.initialize();
 
@@ -1960,7 +1960,7 @@ public:
 //		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 //		const NEModuleSet& moduleset = moduler.getModuleSet();
 //		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
-//		NEScriptManager::ScriptHeader& ss = (NEScriptManager::ScriptHeader&) scripter.getScriptHeader();
+//		NEScriptHeader& ss = (NEScriptHeader&) scripter.getNEScriptHeader();
 //
 //	}
 //};

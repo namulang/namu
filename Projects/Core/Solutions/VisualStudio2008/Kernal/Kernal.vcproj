@@ -419,6 +419,18 @@
 									</Filter>
 								</Filter>
 							</Filter>
+							<Filter
+								Name="NEScriptHeader"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEScriptHeader\NEScriptHeader.cpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEScriptHeader\NEScriptHeader.hpp"
+									>
+								</File>
+							</Filter>
 						</Filter>
 					</Filter>
 					<Filter
@@ -1461,18 +1473,6 @@
 												<Filter
 													Name="innerclass"
 													>
-													<Filter
-														Name="ScriptHeader"
-														>
-														<File
-															RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEScriptManager\innerclass\ScriptHeader\ScriptHeader.cpp"
-															>
-														</File>
-														<File
-															RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEScriptManager\innerclass\ScriptHeader\ScriptHeader.hpp"
-															>
-														</File>
-													</Filter>
 												</Filter>
 											</Filter>
 											<Filter
