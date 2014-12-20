@@ -294,16 +294,24 @@
 						</File>
 					</Filter>
 					<Filter
-						Name="NECode"
+						Name="NECodeType"
 						>
 						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECode\NECode.cpp"
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECodeType\NECodeType.hpp"
 							>
 						</File>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECode\NECode.hpp"
+						<Filter
+							Name="NECode"
 							>
-						</File>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECode\NECode.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECode\NECode.hpp"
+								>
+							</File>
+						</Filter>
 					</Filter>
 				</Filter>
 				<Filter
@@ -502,14 +510,6 @@
 						</File>
 						<File
 							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Enums\NEType\NEType.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="NECodeType"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Enums\NECodeType\NECodeType.hpp"
 							>
 						</File>
 					</Filter>

@@ -8,31 +8,25 @@ namespace NE
 {
 	typedef NECode ThisClass;
 
-	const NEScriptHeader& _defaultScriptHeaderInterface()
+	NECode::NECode()
+		: SuperClass()
 	{
-		const NEScriptHeader* nullpointer = 0x00;
-		NEScriptManager& sm = Kernal::getInstance().getScriptManager();
-		if (!&sm)
-			return *nullpointer;
-
-		return sm.getScriptHeader();
+		_release();
 	}
 
-	NECode::GET_SCRIPTHEADER_INTERFACE NECode::_interface = _defaultScriptHeaderInterface;
-
-	type_result ThisClass::setIfValid(const ThisClass& source)
+	NECode::NECode(const NEExportable::Identifier& identifier)
+		: SuperClass(NECodeType::SCRIPT, true)
 	{
-		if( ! isAcceptable(source.getCodeType())) return RESULT_TYPE_WARNING | RESULT_ABORT_ACTION;
+		setCode(identifier);
+	}
 
-		return setCode(source.getCode());
-	}
-	NECode::NECode(type_code new_code)
-		: SuperClass(), _codetype(NECodeType::UNDEFINED)
+	NECode::NECode(NECodeType::CodeType codetype_to_be_fixed)
+		: SuperClass(codetype_to_be_fixed, true)
 	{
-		setCode(new_code);
+		_release();
 	}
-	NECode::NECode(NECodeType::CodeType new_codetype, type_code new_code)
-		: SuperClass(), _codetype(new_codetype)
+	NECode::NECode(type_code new_code, NECodeType::CodeType new_codetype, bool is_type_fixed)
+		: SuperClass(new_codetype, is_type_fixed)
 	{
 		setCode(new_code);
 	}
@@ -83,36 +77,29 @@ namespace NE
 	{
 
 	}
-	bool ThisClass::isAcceptable(NECodeType::CodeType codetype) const
-	{
-		if (codetype == NECodeType::UNDEFINED ||
-			_codetype == NECodeType::UNDEFINED)
-			return true;
-
-		return _codetype == codetype;
-	}
 	ThisClass& ThisClass::operator=(const ThisClass& source)
 	{
-		if (this == &source) return *this;
+		if(this == &source) return *this;
+		if( ! isAcceptableType(source))
+			return *this;	//	N / A 케이스
+
+		SuperClass::operator=(source);
 
 		return _assign(source);
 	}
 	ThisClass& ThisClass::_assign(const ThisClass& source)
 	{
-		if (source._codetype != NECodeType::UNDEFINED)
-			_codetype = source._codetype;
-		_code = source._code;
+		setCode(source.getCode());
 
 		return *this;
 	}
 	bool ThisClass::operator==(const ThisClass& source) const
 	{
-		return	_codetype == source._codetype	&&
-			_code == source._code;
+		return	SuperClass::operator==(source) && _code == source._code;
 	}
 	bool ThisClass::operator!=(const ThisClass& source) const
 	{
-		return !operator==(source);
+		return ! operator==(source);
 	}
 	bool ThisClass::operator<(const ThisClass& source) const
 	{
@@ -130,112 +117,93 @@ namespace NE
 	{
 		return _code >= source._code;
 	}	
-	ThisClass ThisClass::_operateWhenAcceptableByValue(const ThisClass& source, type_code new_code) const
+	ThisClass ThisClass::_createCode(const ThisClass& source, type_code new_code) const
 	{
-		if ( ! isAcceptable(source.getCodeType()))
-			return *this;
+		NECodeType type;
+		if (getCodeType() == source.getCodeType())
+			type = *this;
 
-		ThisClass to_return(*this);
-		to_return.setCode(new_code);
-
-		return to_return;
-	}
-	ThisClass& ThisClass::_operateWhenAcceptableByReference(const ThisClass& source, type_code new_code)
-	{
-		if (!isAcceptable(source.getCodeType()))
-			return *this;
-
-		setCode(new_code);
-		return *this;
+		return ThisClass(new_code, type.getCodeType(), type.isTypeFixed());
 	}
 
 	ThisClass ThisClass::operator+(const ThisClass& source) const
 	{
-		return _operateWhenAcceptableByValue(source, getCode() + source.getCode());
+		return _createCode(source, getCode() + source.getCode());
 	}
 	ThisClass ThisClass::operator-(const ThisClass& source) const
 	{
-		return _operateWhenAcceptableByValue(source, getCode() - source.getCode());
+		return _createCode(source, getCode() - source.getCode());
 	}
 	ThisClass ThisClass::operator*(const ThisClass& source) const
 	{
-		return _operateWhenAcceptableByValue(source, getCode() * source.getCode());
+		return _createCode(source, getCode() * source.getCode());
 	}
 	ThisClass ThisClass::operator/(const ThisClass& source) const
 	{
-		return _operateWhenAcceptableByValue(source, getCode() / source.getCode());
+		return _createCode(source, getCode() / source.getCode());
 	}
 	ThisClass ThisClass::operator%(const ThisClass& source) const
 	{
-		return _operateWhenAcceptableByValue(source, getCode() % source.getCode());
+		return _createCode(source, getCode() % source.getCode());
 	}
 	ThisClass& ThisClass::operator+=(const ThisClass& source)
 	{
-		return _operateWhenAcceptableByReference(source, getCode() + source.getCode());
+		_code += source._code;
+
+		return *this;
 	}
 	ThisClass& ThisClass::operator-=(const ThisClass& source)
 	{
-		return _operateWhenAcceptableByReference(source, getCode() - source.getCode());
+		_code -= source._code;
+
+		return *this;
 	}
 	ThisClass& ThisClass::operator*=(const ThisClass& source)
 	{
-		return _operateWhenAcceptableByReference(source, getCode() * source.getCode());
+		_code *= source._code;
+
+		return *this;
 	}
 	ThisClass& ThisClass::operator/=(const ThisClass& source)
 	{
-		return _operateWhenAcceptableByReference(source, getCode() / source.getCode());
+		_code /= source._code;
+
+		return *this;
 	}
 	ThisClass& ThisClass::operator%=(const ThisClass& source)
 	{
-		return _operateWhenAcceptableByReference(source, getCode() % source.getCode());
-	}
-	NECodeType::CodeType ThisClass::getCodeType() const
-	{
-		return _codetype;
-	}
-	type_result ThisClass::setCodeType(NECodeType::CodeType new_codetype)
-	{
-		_codetype = new_codetype;
+		_code %= source._code;
 
-		return setCode(getCode());
+		return *this;
 	}
 	type_code ThisClass::getCode() const
 	{
 		return _code;
 	}
-	type_code ThisClass::_getMaxCode() const
-	{
-		const NEScriptHeader& sh = _interface();
-		if (!&sh)
-			return NE_INDEX_ERROR;
+	type_result ThisClass::setCode(type_code new_code)
+	{		
+		_code = new_code;
 
-		type_code max_code = 0;
-		switch (_codetype)
+		return RESULT_SUCCESS;
+	}
+
+	type_result ThisClass::setCode(const NEExportable::Identifier& identifier)
+	{
+		const NEModule& fetched = Kernal::getInstance().getModuleManager().getModule(identifier);
+		if (!&fetched)
 		{
-		case NECodeType::SCRIPT:	return sh.getMaxScriptCodeIndex();				break;
-		case NECodeType::NAME:		return sh.getMaxNameCodeIndex();				break;
-		case NECodeType::GROUP:		return sh.getMaxGroupCodeIndex();				break;
-		case NECodeType::PRIORITY:	return sh.getMaxPriorityCodeIndex();			break;
-		case NECodeType::UNDEFINED:	return (type_code) numeric_limits<int>::max();	break;
+			KERNAL_ERROR("주어진 Identifier로 모듈을 가져오지 못했습니다.");
+			return RESULT_TYPE_ERROR | RESULT_ABORT_ACTION;
 		}
 
-		return NE_INDEX_ERROR;
-	}
-	type_result ThisClass::setCode(type_code new_code)
-	{
-		type_code max_code = _getMaxCode();
-		if(	max_code >= 0		&&
-			new_code > max_code	)
-			new_code = NE_INDEX_ERROR;
-
-		_code = new_code;
-		return RESULT_SUCCESS;
+		return setCode(fetched.getScriptCode().getCode());
 	}
 
 	void ThisClass::release()
 	{
-		_code = NE_INDEX_ERROR;
-		_codetype = NECodeType::UNDEFINED;
+		SuperClass::release();
+
+		_code = NE_INDEX_ERROR;		
 	}
 
 	NEObject& ThisClass::clone() const
@@ -245,10 +213,9 @@ namespace NE
 
 	NEBinaryFileSaver& ThisClass::serialize(NEBinaryFileSaver& saver) const
 	{
-		int converted = _codetype;
-		saver << converted;
-		
-		if(_codetype == NECodeType::SCRIPT)
+		SuperClass::serialize(saver);
+
+		if(getCodeType() == NECodeType::SCRIPT)
 			return _serializeAsScript(saver);
 
 		return saver << _code;
@@ -270,9 +237,8 @@ namespace NE
 		//	pre:
 		int to_convert = 0;
 		loader >> to_convert;
-		_codetype = NECodeType::CodeType(to_convert);
-		
-		if(_codetype == NECodeType::SCRIPT)
+
+		if(getCodeType() == NECodeType::SCRIPT)
 			return _serializeAsScript(loader);
 
 		return loader >> _code;
@@ -290,30 +256,16 @@ namespace NE
 		NEExportable::Identifier identifier;
 		loader >> identifier;
 		const NEModule& module = moduler.getModule(identifier);
-		_code = &module ? module.getScriptCode() : -1;
+		_code = &module ? module.getScriptCode().getCode() : -1;
 
 		return loader;
 	}
 
 	type_result ThisClass::isValid() const
 	{
-		using namespace NECodeType;
-
-		switch(_codetype)
-		{
-		case GROUP:	case PRIORITY:	case SCRIPT:	case NAME:	case UNDEFINED:
-			{
-				type_code max_code = _getMaxCode();
-				if(	_code > max_code	||
-					_code < 0			)
-						return RESULT_TYPE_ERROR;
-			}	
-			break;
-
-		default:
-			if(_code != -1)
-				return RESULT_TYPE_ERROR;
-		}
+		type_result result = SuperClass::isValid();
+		if(NEResult::hasError(result)) return result;
+		if(_code < 0) return RESULT_TYPE_WARNING;		
 
 		return RESULT_SUCCESS;
 	}
@@ -321,5 +273,10 @@ namespace NE
 	NEType::Type ThisClass::getType() const
 	{
 		return NEType::NECODE;
+	}
+
+	void ThisClass::_release()
+	{
+		_code = NE_DEFAULT;
 	}
 }
