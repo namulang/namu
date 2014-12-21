@@ -43,10 +43,7 @@ namespace NE
 		bool operator!=(const ThisClass& source) const;
 
 	public:
-		const NEShortCutSet& getScriptShortCutSet() const;
-		const NEShortCutSet& getNameShortCutSet() const;
-		const NEShortCutSet& getGroupShortCutSet() const;
-		const NEShortCutSet& getPriorityShortCutSet() const;
+		const NEShortCutSet& getShortCutSet(const NECodeType& type) const;
 		const NEIndexedKeySet& getKeySet() const;
 		const NEIndexedModuleSet& getModuleSet() const;
 		const NEIndexedNodeSet& getNodeSet() const;
@@ -65,22 +62,14 @@ namespace NE
 		//	내부 함수:
 	protected:	
 		//		접근자:
-		NEShortCutSet& _getScriptShortCutSet();
-		NEShortCutSet& _getNameShortCutSet();
-		NEShortCutSet& _getGroupShortCutSet();
-		NEShortCutSet& _getPriorityShortCutSet();
+		NEShortCutSet& _getShortCutSet(const NECodeType& type);
 		NEIndexedKeySet& _getKeySet();
 		NEIndexedModuleSet& _getModuleSet();
 		NEIndexedNodeSet& _getNodeSet();	
 
 	protected:
-		virtual type_result _onChangeNameCode(NENode& target, type_code new_namecode);
-		virtual type_result _onChangePriorityCode(NENode& target, type_code new_prioritycode);
-		virtual type_result _onChangeGroupCode(NENode& target, const NECodeSet& new_groupcodeset);
-		void _setScriptCode(NENode& target, type_code new_scriptcode) const;
-		void _setNameCode(NENode& target, type_code new_namecode) const;
-		void _setGroupCode(NENode& target, const NECodeSet& new_groupcode) const;
-		void _setPriorityCode(NENode& target, type_code new_priority) const;
+		virtual type_result _onChangeCode(NENode& target, const NECodeSet& new_code);
+		void _setCode(NENode& target, const NECodeSet& new_code) const;
 
 	protected:
 		virtual type_result _enlist(NENode& target, type_index index = NE_INDEX_ERROR);

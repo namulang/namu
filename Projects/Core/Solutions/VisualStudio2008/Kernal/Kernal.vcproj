@@ -382,6 +382,50 @@
 					Name="Interfaces"
 					>
 					<Filter
+						Name="NEOnEnlisted"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEOnEnlisted\NEOnEnlisted.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="NESpecifiedInsertable"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NESpecifiedInsertable\NEPointerSpecifiedInsertable.hpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NESpecifiedInsertable\NESpecifiedInsertable.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="NEExecutable"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEExecutable\NEExcutable.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="NEEnlistable"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEEnlistable\NEEnlistable.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="NEUpdatable"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEUpdatable\NEUpdatable.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
 						Name="NEInitializable"
 						>
 						<File
@@ -452,50 +496,6 @@
 								</File>
 							</Filter>
 						</Filter>
-					</Filter>
-					<Filter
-						Name="NEOnEnlisted"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEOnEnlisted\NEOnEnlisted.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="NESpecifiedInsertable"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NESpecifiedInsertable\NEPointerSpecifiedInsertable.hpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NESpecifiedInsertable\NESpecifiedInsertable.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="NEExecutable"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEExecutable\NEExcutable.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="NEEnlistable"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEEnlistable\NEEnlistable.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="NEUpdatable"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEUpdatable\NEUpdatable.hpp"
-							>
-						</File>
 					</Filter>
 				</Filter>
 				<Filter
