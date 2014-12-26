@@ -308,6 +308,22 @@
 									>
 								</File>
 							</Filter>
+							<Filter
+								Name="NETStringList"
+								>
+								<Filter
+									Name="NEBank"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Editor\Sources\Modules\NEBank\NEBank.cpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Editor\Sources\Modules\NEBank\NEBank.hpp"
+										>
+									</File>
+								</Filter>
+							</Filter>
 						</Filter>
 						<Filter
 							Name="NEStack"
