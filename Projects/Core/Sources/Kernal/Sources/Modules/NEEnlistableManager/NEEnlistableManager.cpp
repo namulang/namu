@@ -14,13 +14,21 @@ namespace NE
 #pragma warning(push)	
 #pragma warning(disable:4355)
 	NEEnlistableManager::NEEnlistableManager()
-		: SuperClass(), _nodeset(*this), _moduleset(*this), _keyset(*this)
+		: SuperClass(), _nodeset(*this), _moduleset(*this), _keyset(*this),
+		_script_shortcutset(NECodeType::SCRIPT),
+		_name_shortcutset(NECodeType::NAME),
+		_group_shortcutset(NECodeType::GROUP),
+		_priority_shortcutset(NECodeType::PRIORITY)
 	{
 		_release();
 	}
 
 	NEEnlistableManager::NEEnlistableManager(const NEEnlistableManager& source)
-		: SuperClass(source), _nodeset(*this), _moduleset(*this), _keyset(*this)
+		: SuperClass(source), _nodeset(*this), _moduleset(*this), _keyset(*this),
+		_script_shortcutset(source._script_shortcutset),
+		_name_shortcutset(source._name_shortcutset),
+		_group_shortcutset(source._group_shortcutset),
+		_priority_shortcutset(source._priority_shortcutset)
 	{
 		_assign(source);
 	}
@@ -35,7 +43,6 @@ namespace NE
 	{
 		if(index <= NE_INDEX_ERROR) 
 			index = _searchRealNodeIndex(target);
-
 
 
 		type_result result = _getShortCutSet(NECodeType::SCRIPT)._enlist(target, index);
@@ -128,26 +135,6 @@ namespace NE
 		return saver	<< _priority_shortcutset << _script_shortcutset << _group_shortcutset << _name_shortcutset << _nodeset << _moduleset << _keyset;
 	}
 
-	void NEEnlistableManager::_setScriptCode(NENode& target, type_code new_scriptcode) const
-	{
-		target._scriptcode = new_scriptcode;
-	}
-
-	void NEEnlistableManager::_setNameCode(NENode& target, type_code new_namecode) const
-	{
-		target._namecode = new_namecode;
-	}
-
-	void NEEnlistableManager::_setGroupCode(NENode& target, const NECodeSet& new_groupcode) const
-	{
-		target._groupcodeset = new_groupcode;
-	}
-
-	void NEEnlistableManager::_setPriorityCode(NENode& target, type_code new_priority) const
-	{
-		target._priority = new_priority;
-	}
-
 	type_index NEEnlistableManager::_searchRealNodeIndex(NENode& target) const
 	{
 		const NEIndexedNodeSet& nodeset = getNodeSet();
@@ -162,34 +149,15 @@ namespace NE
 		return NE_INDEX_ERROR;
 	}
 
-	type_result NEEnlistableManager::_onChangeNameCode(NENode& target, type_code new_namecode)
+	type_result NEEnlistableManager::_onChangeCode(NENode& target, const NECodeSet& new_codes)
 	{
-		if(target.getNameCode() == new_namecode) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+		if(target.getCodes(new_codes.getCodeType()) == new_codes) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 
 
-
+		//	main:
+		NECodeType::CodeType codetype = new_codes.getCodeType().getCodeType();
 		type_index real_index = _searchRealNodeIndex(target);
-		NEShortCutSet& shortcutset = _getNameShortCutSet();
-		type_result result = shortcutset._unlist(target, real_index);
-		if(NEResult::hasError(result))
-		{
-			ALERT_ERROR(" : unlist도중 에러가 발생했습니다.\n\t에러코드 : %d", result);
-			return result;
-		}
-
-		_setNameCode(target, new_namecode);
-
-		return shortcutset._enlist(target, real_index);
-	}
-
-	type_result NEEnlistableManager::_onChangePriorityCode(NENode& target, type_code new_prioritycode)
-	{
-		if(target.getPriority() == new_prioritycode) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-
-
-
-		type_index real_index = _searchRealNodeIndex(target);
-		NEShortCutSet& shortcutset = _getPriorityShortCutSet();
+		NEShortCutSet& shortcutset = _getShortCutSet(codetype);
 		type_result result = shortcutset._unlist(target, real_index);
 		if(NEResult::hasError(result))
 		{
@@ -197,27 +165,7 @@ namespace NE
 			return result;
 		}
 
-		_setPriorityCode(target, new_prioritycode);
-
-		return shortcutset._enlist(target, real_index);
-	}
-
-	type_result NEEnlistableManager::_onChangeGroupCode(NENode& target, const NECodeSet& new_groupcodeset)
-	{
-		if(target.getGroupCode() == new_groupcodeset) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-
-
-
-		type_index real_index = _searchRealNodeIndex(target);
-		NEShortCutSet& shortcutset = _getGroupShortCutSet();
-		type_result result = shortcutset._unlist(target, real_index);
-		if(NEResult::hasError(result))
-		{
-			ALERT_ERROR(" : ");
-			return result;
-		}
-
-		_setGroupCode(target, new_groupcodeset);
+		_setCodesDirectly(target, new_codes);
 
 		return shortcutset._enlist(target, real_index);
 	}
@@ -312,8 +260,9 @@ namespace NE
 
 
 		//	main:
-		switch(type)
+		switch(type.getCodeType())
 		{
+		case NECodeType::ALL:
 		case NECodeType::SCRIPT:	return _script_shortcutset;
 		case NECodeType::NAME:		return _name_shortcutset;
 		case NECodeType::GROUP:		return _group_shortcutset;
@@ -329,8 +278,8 @@ namespace NE
 		return unconsted->_getShortCutSet(type);
 	}
 
-	void NEEnlistableManager::_setCode(NENode& target, const NECodeSet& new_codes) const
+	type_result NEEnlistableManager::_setCodesDirectly(NENode& target, const NECodeSet& new_codes) const
 	{
-		target._setCode(new_codes)
+		return target._setCodesDirectly(new_codes);
 	}
 }

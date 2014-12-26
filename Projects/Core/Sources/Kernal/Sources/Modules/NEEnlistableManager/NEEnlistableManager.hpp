@@ -1,10 +1,7 @@
 #pragma once
 
 #include "../NEModule/NEModule.hpp"
-#include "../NEPriorityShortCutSet/NEPriorityShortCutSet.hpp"
-#include "../NEGroupShortCutSet/NEGroupShortCutSet.hpp"
-#include "../NEScriptShortCutSet/NEScriptShortCutSet.hpp"
-#include "../NENameShortCutSet/NENameShortCutSet.hpp"
+#include "../NEShortCutSet/NEShortCutSet.hpp"
 #include "../NEIndexedNodeSet/NEIndexedNodeSet.hpp"
 #include "../NEIndexedModuleSet/NEIndexedModuleSet.hpp"
 #include "../NEIndexedKeySet/NEIndexedKeySet.hpp"
@@ -69,7 +66,7 @@ namespace NE
 
 	protected:
 		virtual type_result _onChangeCode(NENode& target, const NECodeSet& new_code);
-		void _setCode(NENode& target, const NECodeSet& new_code) const;
+		type_result _setCodesDirectly(NENode& target, const NECodeSet& new_code) const;
 
 	protected:
 		virtual type_result _enlist(NENode& target, type_index index = NE_INDEX_ERROR);
@@ -85,10 +82,10 @@ namespace NE
 
 	private:
 		NEIndexedKeySet _keyset;
-		NEPriorityShortCutSet _priority_shortcutset;
-		NEScriptShortCutSet _script_shortcutset;
-		NEGroupShortCutSet _group_shortcutset;
-		NENameShortCutSet _name_shortcutset;
+		NEShortCutSet _priority_shortcutset;
+		NEShortCutSet _script_shortcutset;
+		NEShortCutSet _group_shortcutset;
+		NEShortCutSet _name_shortcutset;
 		NEIndexedNodeSet _nodeset;
 		NEIndexedModuleSet _moduleset;
 	};

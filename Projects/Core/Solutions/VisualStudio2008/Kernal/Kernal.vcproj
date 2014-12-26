@@ -297,6 +297,10 @@
 						Name="NECodeType"
 						>
 						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECodeType\NECodeType.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECodeType\NECodeType.hpp"
 							>
 						</File>
@@ -1498,10 +1502,6 @@
 													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEScriptManager\NEScriptManager.hpp"
 													>
 												</File>
-												<Filter
-													Name="innerclass"
-													>
-												</Filter>
 											</Filter>
 											<Filter
 												Name="NENodeManager"
@@ -1659,57 +1659,13 @@
 								Name="NEShortCutSet"
 								>
 								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEShortCutSet\NEShortCutSet.cpp"
+									>
+								</File>
+								<File
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEShortCutSet\NEShortCutSet.hpp"
 									>
 								</File>
-								<Filter
-									Name="NEScriptShortCutSet"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEScriptShortCutSet\NEScriptShortCutSet.cpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEScriptShortCutSet\NEScriptShortCutSet.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NENameShortCutSet"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENameShortCutSet\NENameShortCutSet.cpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENameShortCutSet\NENameShortCutSet.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEGroupShortCutSet"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEGroupShortCutSet\NEGroupShortCutSet.cpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEGroupShortCutSet\NEGroupShortCutSet.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEPriorityShortCutSet"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPriorityShortCutSet\NEPriorityShortCutSet.cpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPriorityShortCutSet\NEPriorityShortCutSet.hpp"
-										>
-									</File>
-								</Filter>
 							</Filter>
 							<Filter
 								Name="NEBooleanSet"

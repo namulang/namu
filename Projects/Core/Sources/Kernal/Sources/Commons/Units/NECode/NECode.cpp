@@ -36,6 +36,12 @@ namespace NE
 		_assign(source);
 	}
 
+	NECode::NECode(type_code new_code)
+		: SuperClass()
+	{
+		setCode(new_code);
+	}
+
 	NECode NECode::operator++()
 	{
 		NECode to_return(*this);
@@ -196,7 +202,7 @@ namespace NE
 			return RESULT_TYPE_ERROR | RESULT_ABORT_ACTION;
 		}
 
-		return setCode(fetched.getScriptCode().getCode());
+		return setCode(fetched.getScriptRawCode());
 	}
 
 	void ThisClass::release()
@@ -256,7 +262,7 @@ namespace NE
 		NEExportable::Identifier identifier;
 		loader >> identifier;
 		const NEModule& module = moduler.getModule(identifier);
-		_code = &module ? module.getScriptCode().getCode() : -1;
+		_code = &module ? module.getScriptRawCode() : -1;
 
 		return loader;
 	}
