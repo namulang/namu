@@ -86,6 +86,7 @@ namespace NE
 
 		//		고유 인터페이스:
 	public:
+		type_index find(const InsideType& source) const;
 		type_index popFront();
 		type_index pushFront(const InsideType* const source);
 		type_index pushFront(const InsideType& source);

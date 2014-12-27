@@ -266,6 +266,7 @@ namespace NE
 		case NECodeType::SCRIPT:	return _script_shortcutset;
 		case NECodeType::NAME:		return _name_shortcutset;
 		case NECodeType::GROUP:		return _group_shortcutset;
+		case NECodeType::PRIORITY:	return _priority_shortcutset;
 		}
 
 		return *nullpointer;

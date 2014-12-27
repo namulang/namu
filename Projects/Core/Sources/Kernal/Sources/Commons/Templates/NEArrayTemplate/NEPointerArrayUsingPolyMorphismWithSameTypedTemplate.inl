@@ -672,6 +672,12 @@ namespace NE
 	}
 
 	template <typename InsideType, NEType::Type type>
+	type_index NEArrayTemplate<InsideType*, true, InsideType*, type>::find(const InsideType& source) const
+	{
+		return find(&source);
+	}
+
+	template <typename InsideType, NEType::Type type>
 	type_index NEArrayTemplate<InsideType*, true, InsideType*, type>::pushFront(const InsideType& source)
 	{
 		return insert(0, &source);

@@ -202,7 +202,7 @@ namespace NE
 			return RESULT_TYPE_ERROR | RESULT_ABORT_ACTION;
 		}
 
-		return setCode(fetched.getScriptRawCode());
+		return setCode(fetched.getScriptCode());
 	}
 
 	void ThisClass::release()
@@ -262,7 +262,7 @@ namespace NE
 		NEExportable::Identifier identifier;
 		loader >> identifier;
 		const NEModule& module = moduler.getModule(identifier);
-		_code = &module ? module.getScriptRawCode() : -1;
+		_code = &module ? module.getScriptCode() : -1;
 
 		return loader;
 	}

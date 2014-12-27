@@ -9,7 +9,7 @@ class MyMod : public NEModule
 public:
 	void setScript(type_code new1)
 	{
-		_scriptcode = new1;
+		_scriptcode[0].setCode(new1);
 	}
 	NETArgument<NEIntKey> a;
 	virtual type_result _onFetchArguments(NEArgumentList& tray)
@@ -42,7 +42,7 @@ class MyMod2 : public NEModule
 public:
 	void setScript(type_code new1)
 	{
-		_scriptcode = new1;
+		_scriptcode[0].setCode(new1);
 	}
 	NETArgument<NEIntKey> a;
 	virtual type_result _onFetchArguments(NEArgumentList& tray)
@@ -259,9 +259,8 @@ public:
 		NENode& tg = ns[ns.push(NENode())];
 		NEModuleCodeSet& ms = tg.getModuleSet();
 		{
-			NECodeSet a(1);
-			a.push(1);
-			tg.setGroupCode(a);
+			NECodeSet a(NECode(1, NECodeType::GROUP));
+			tg.setCodes(a);
 		}
 		ns.push(NENode());
 		ns.push(NENode());
@@ -290,11 +289,9 @@ public:
 		ks.resize(4);
 
 		NEKeySelector s;
-		s.setNodeType(NECodeType::GROUP);
 		{
-			NECodeSet a(1);
-			a.push(1);
-			s.setCodeSet(a);
+			NECodeSet a(NECode(1, NECodeType::GROUP));
+			s.setCodes(a);
 			s.setKeyName("sentence");			
 		}
 		NETStringKey& tk = (NETStringKey&) s.getKey();
@@ -325,9 +322,8 @@ public:
 		NENode& tg = ns[ns.push(NENode())];
 		NEModuleCodeSet& ms = tg.getModuleSet();
 		{
-			NECodeSet a(1);
-			a.push(1);
-			tg.setGroupCode(a);
+			NECodeSet a(NECode(1, NECodeType::GROUP));
+			tg.setCodes(a);
 		}
 		ns.push(NENode());
 		ns.push(NENode());
@@ -356,16 +352,10 @@ public:
 		ks.resize(9);		
 		ks.resize(4);
 
-		NEModuleSelector ms1;
-		ms1.setNodeType(NECodeType::GROUP);
-		NECodeSet ii(1);
-		ii.push(1);
-		ms1.setCodeSet(ii);
+		NEModuleSelector ms1;		
+		ms1.setCodes(NECode(1, NECodeType::GROUP));
 		ms1.initializeReferingPoint();
-		NECodeSet is(1);
-		ms1.setModuleType(NECodeType::SCRIPT);
-		is.push(outer.getScriptCode());
-		ms1.setModuleCodeSet(is);
+		ms1.setModuleCodes(outer.getCodes(NECodeType::SCRIPT));
 
 		NEModule& found = ms1.getModule();
 		if( ! &found) return false;
@@ -393,11 +383,7 @@ public:
 		ns.push(NENode());
 
 		NENode& tg = ns[ns.push(NENode())];
-		{
-			NECodeSet a(1);
-			a.push(1);
-			tg.setGroupCode(a);
-		}
+		tg.setCodes(NECode(1, NECodeType::GROUP));
 		ns.push(NENode());
 		ns.push(NENode());
 		ns.push(NENode());
@@ -435,13 +421,8 @@ public:
 
 		{
 			NEKeySelector s;
-			s.setNodeType(NECodeType::GROUP);
-			{
-				NECodeSet a(1);
-				a.push(1);
-				s.setCodeSet(a);
-				s.setKeyName("sentence");			
-			}
+			s.setCodes(NECode(1, NECodeType::GROUP));
+			s.setKeyName("sentence");
 			NETStringKey& tk = (NETStringKey&) s.getKey(); 
 			if( ! &tk) return false;
 			if(tk.getValue() != "gogoood!") return false;
@@ -456,13 +437,8 @@ public:
 
 		{
 			NEKeySelector s;
-			s.setNodeType(NECodeType::GROUP);
-			{
-				NECodeSet a(1);
-				a.push(1);
-				s.setCodeSet(a);
-				s.setKeyName("sentence");			
-			}
+			s.setCodes(NECode(1, NECodeType::GROUP));
+			s.setKeyName("sentence");
 			NETStringKey& tk = (NETStringKey&) s.getKey();
 			if(tk.getValue() != "gogoood!")
 				return false;
@@ -528,9 +504,9 @@ public:
 
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
-		ss.setMaxPriorityCodeIndex(5);
-		ss.setMaxScriptCodeIndex(5);
-		ss.setMaxGroupCodeIndex(2);
+		ss.setMaxCode(NECode(5, NECodeType::PRIORITY));
+		ss.setMaxCode(NECode(5, NECodeType::SCRIPT));
+		ss.setMaxCode(NECode(2, NECodeType::GROUP));
 		return true;
 	}
 };
@@ -721,6 +697,7 @@ public:
 
 		Editor& editor = Editor::getInstance();
 		editor.initialize();
+
 		
 		if( ! &editor.getPanelManager()	||
 			! &editor.getScriptEditor()	||
@@ -739,11 +716,11 @@ public:
 	{
 		NECodeSet cs(5);
 		for(int n=0; n < 5 ;n++)
-			cs.push(n);
+			cs.push(NECode(n));
 		
 		cs.resize(10);
-		type_index	result1 = cs.push(1);
-		type_result result2 = cs.setElement(3, 2);
+		type_index	result1 = cs.push(NECode(1));
+		type_result result2 = cs.setElement(3, NECode(2));
 
 		return	result1 == NE_INDEX_ERROR			&& 
 				NEResult::isActionAborted(result2);
@@ -1074,49 +1051,45 @@ public:
 		NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
 		NEScriptManager& sm = Kernal::getInstance().getScriptManager();
 
-		ed.insertNameCode(1);
-		ed.insertNameCode(2);
+		ed.insertCode(NECode(1, NECodeType::NAME));
+		ed.insertCode(NECode(2, NECodeType::NAME));
 		ed.getScriptHeader().getName() = "RelativityTest";
 		ed.getScriptHeader().getDeveloper() = "CoreTester";
 		NENodeCodeSet& ncs = ed.getScriptNodes();
 		ncs.create(3);
+		NECodeSet is(NECodeType::NAME);
+		is.create(2);
+		is.push(NECode(1));
+		is.push(NECode(2));
 		{
 			NENode& node = ncs[ncs.push(NENode())];
 			NEKeyCodeSet& ks = node.getKeySet();
 			ks.create(1);
-			NENodeSelector nsel;
-			nsel.setNodeType(NECodeType::NAME);
-			NECodeSet is(2);
-			is.push(1);
-			is.push(2);
-			nsel.setCodeSet(is);
+			NENodeSelector nsel;			
+			nsel.setCodes(is);
 			ks.push(nsel);
 		}
 		{
 			NENode node;
-			node.setNameCode(1);
+			node.setCodes(NECode(1, NECodeType::NAME));
 			ncs.push(node);
 		}
 		{
 			NENode node;
-			node.setNameCode(2);
+			node.setCodes(NECode(2, NECodeType::NAME));
 			ncs.push(node);
 		}
 
-		if(    ncs.getLength() != 3        ||
+		if(	ncs.getLength() != 3			||
 			ncs[0].getNameCode() != 0    ||
 			ncs[1].getNameCode() != 1    ||
 			ncs[2].getNameCode() != 2    )
 			return false;
 
-		NECodeSet is(2);
-		is.push(1);
-		is.push(2);
 		NENodeSelector nsel;
 		{            
 			nsel.setManager(NEType::NESCRIPT_EDITOR);
-			nsel.setCodeSet(is);
-			nsel.setNodeType(NECodeType::NAME);
+			nsel.setCodes(is);
 
 			while(NENode* i = &nsel.getNode())
 			{
@@ -1141,8 +1114,7 @@ public:
 			const NENodeCodeSet& ncs = sm.getScriptNodes();
 			NENodeSelector nsel;
 			nsel.setManager(NEType::NESCRIPT_MANAGER);
-			nsel.setCodeSet(is);
-			nsel.setNodeType(NECodeType::NAME);
+			nsel.setCodes(is);
 
 			while(NENode* i = &nsel.getNode())
 			{
@@ -1175,8 +1147,8 @@ public:
 				return false;
 
 			NENodeSelector& nsel1 = (NENodeSelector&) k;
-			const NECodeSet& cs = nsel1.getCodeSet();
-			if(    cs.getLength() < 2    ||
+			const NECodeSet& cs = nsel1.getCodes();
+			if(	cs.getLength() < 2    ||
 				cs[0] != 1            ||
 				cs[1] != 2            )
 				return false;
@@ -1237,12 +1209,10 @@ public:
 			age_2nd = (NEIntKey*) &ncs[1].getKeySet()[0];
 			grade = (NEFloatKey*) & ncs[1].getKeySet()[ncs[1].getKeySet().push(NEFloatKey(4.0, "grade"))];
 		}
-		NECodeSet ic(1);
-		ic.push(0);
+		NECodeSet ic(NECode(1, NECodeType::NAME));
 		{
 			NEKeySelector k1;			
-			k1.setNodeType(NECodeType::NAME);
-			k1.setCodeSet(ic);
+			k1.setCodes(ic);
 			k1.setKeyName("age");
 			NEKey* fetched = &k1.getKey();
 
@@ -1250,8 +1220,7 @@ public:
 				return false; // 탐색 포인터가 하나 증가되었다.
 
 			NEKeySelector k2;
-			k2.setNodeType(NECodeType::NAME);
-			k2.setCodeSet(ic);
+			k2.setCodes(ic);
 			k2.setKeyName("grade");
 
 			k1 += k2;	//	extend
@@ -1595,9 +1564,9 @@ public:
 
 		manager.initialize();
 
-		manager.insertNameCode(1);
-		manager.insertGroupCode(1);
-		manager.insertPriorityCode(1);
+		manager.insertCode(NECode(1, NECodeType::NAME));
+		manager.insertCode(NECode(1, NECodeType::GROUP));
+		manager.insertCode(NECode(1, NECodeType::PRIORITY));
 
 		class Temp : public NEModule
 		{
@@ -1643,50 +1612,42 @@ public:
 				key_ns = (NENodeSelector*) &ks[ks.push(NENodeSelector())];
 			}
 
-			src->setPriority(1);
-			NECodeSet c(2);
-			c.push(0);
-			c.push(1);
-			src->setGroupCode(c);
-			src->setNameCode(1);
+			src->setCodes(NECode(1, NECodeType::PRIORITY));
+			NECodeSet c(NECodeType::GROUP);
+			c.create(2);
+			c.push(NECode(0));
+			c.push(NECode(1));
+			src->setCodes(c);
+			src->setCodes(NECode(1, NECodeType::NAME));
 			{
 				NEModuleCodeSet& m = src->getModuleSet();
 				m.create(1);
 				t = (Temp*) &m[m.push(Temp())];				
 				NEModuleSelector* nms = &t->ms.getDefault();
 				nms->setManager(NEType::NESCRIPT_EDITOR);
-				nms->setNodeType(NECodeType::SCRIPT);
-				NECodeSet is(1);
-				is.setCodeType(NECodeType::SCRIPT);
-				is.push(1);
-				nms->setCodeSet(is);
+				NECodeSet is;
+				is.create(1);
+				is.push(NECode(1, NECodeType::SCRIPT));
+				nms->setCodes(is);
 
 				NENodeSelector& ns_name = t->ns_name.getDefault();
 				ns_name.setManager(NEType::NESCRIPT_EDITOR);
-				ns_name.setNodeType(NECodeType::NAME);
-				is.setCodeType(NECodeType::NAME);
-				is[0] = 1;
-				ns_name.setCodeSet(is);
+				ns_name.setCodes(NECode(1, NECodeType::NAME));
 
 				NENodeSelector& ns_group = t->ns_group.getDefault();
 				ns_group.setManager(NEType::NESCRIPT_EDITOR);
-				ns_group.setNodeType(NECodeType::GROUP);
-				is.setCodeType(NECodeType::GROUP);
+				is[0].setCodeType(NECodeType::GROUP);
 				is.resize(2);
-				is.push(1);
+				is.push(NECode(1, NECodeType::GROUP));
 				if (is.getLength() > 1	&&
 					is[0] == is[1]		)	//	중복은 안된다.
 					return false;
-				is.push(0);
-				ns_group.setCodeSet(is);
+				is.push(NECode(0, NECodeType::GROUP));
+				ns_group.setCodes(is);
 
 
 				key_ns->setManager(NEType::NESCRIPT_EDITOR);
-				key_ns->setNodeType(NECodeType::PRIORITY);
-				is.setCodeType(NECodeType::PRIORITY);
-				is.create(1);
-				is.push(1);
-				key_ns->setCodeSet(is);
+				key_ns->setCodes(NECode(1, NECodeType::PRIORITY));
 			}
 
 			if (&t->ms.getValue().getNode() != src)	//	SCRIPT
@@ -1707,15 +1668,13 @@ public:
 		NENode* after;
 		{
 			after = &ns[ns.pushFront(NENode())];
-			NECodeSet ic(1);
-			ic.setCodeType(NECodeType::GROUP);
-			ic.push(1);
-			after->setGroupCode(ic);
+			NECodeSet ic(NECode(1, NECodeType::GROUP));
+			after->setCodes(ic);
 		}
 
-		manager.insertNameCode(1);
-		manager.insertGroupCode(1);
-		manager.insertPriorityCode(1);
+		manager.insertCode(NECode(1, NECodeType::NAME));
+		manager.insertCode(NECode(1, NECodeType::GROUP));
+		manager.insertCode(NECode(1, NECodeType::PRIORITY));
 
 		//	src의 예상 상태:
 		//		NAME = 1		->	2
@@ -1724,11 +1683,11 @@ public:
 		//		SCRIPT= 1		->	2
 		if (src->getNameCode() != 2)
 			return false;
-		if (src->getGroupCode().getLength() != 2)
+		if (src->getCodes(NECodeType::GROUP).getLength() != 2)
 			return false;
-		if (src->getGroupCode()[1] != 2)
+		if (src->getCodes(NECodeType::GROUP)[1] != 2)
 			return false;
-		if (src->getPriority() != 2)
+		if (src->getPriorityCode() != 2)
 			return false;
 		if(src->getScriptCode() != 2)
 			return false;
@@ -1736,19 +1695,19 @@ public:
 		//	Key의 동기화 체크:
 		if (!key_ns)
 			return false;
-		if (key_ns->getCodeSet().getLength() < 1)
+		if (key_ns->getCodes().getLength() < 1)
 			return false;
-		if(key_ns->getCodeSet()[0] != 2)
+		if(key_ns->getCodes()[0].getCode() != 2)
 			return false;
 
 		//	Argument 체크:
-		if (t->ms.getValue().getCodeSet()[0] != 2)
+		if (t->ms.getValue().getCodes()[0].getCode() != 2)
 			return false;
-		if (t->ns_name.getValue().getCodeSet()[0] != 2)
+		if (t->ns_name.getValue().getCodes()[0].getCode() != 2)
 			return false;
-		if (t->ns_group.getValue().getCodeSet().getLength() != 2	||
-			t->ns_group.getValue().getCodeSet()[0] != 2				||
-			t->ns_group.getValue().getCodeSet()[1] != 0				)
+		if (t->ns_group.getValue().getCodes().getLength() != 2	||
+			t->ns_group.getValue().getCodes()[0].getCode() != 2				||
+			t->ns_group.getValue().getCodes()[1].getCode() != 0				)
 			return false;		
 
 		return true;
@@ -1766,68 +1725,66 @@ public:
 
 		manager.initialize();
 
-		manager.insertNameCode(1);		
-		manager.insertNameCode(2);
-		manager.insertNameCode(3);
-		manager.insertGroupCode(1);
-		manager.insertGroupCode(2);
-		manager.insertPriorityCode(1);
+		manager.insertCode(NECode(1, NECodeType::NAME));
+		manager.insertCode(NECode(2, NECodeType::NAME));
+		manager.insertCode(NECode(3, NECodeType::NAME));
+		manager.insertCode(NECode(1, NECodeType::GROUP));
+		manager.insertCode(NECode(2, NECodeType::GROUP));
+		manager.insertCode(NECode(1, NECodeType::PRIORITY));
 
 		NENode	*n0 = &rns[rns.push(NENode())],
 			*n1 = &rns[rns.push(NENode())], 
 			*n2 = &rns[rns.push(NENode())],
 			*n3 = &rns[rns.push(NENode())],
 			*n4 = &rns[rns.push(NENode())];
-		NECodeSet is(1);
-		is.setCodeType(NECodeType::GROUP);
-		is.push(0);
+		NECodeSet is(NECode(0, NECodeType::GROUP));
 		{
 			//	0
-			n0->setGroupCode(is);
+			n0->setCodes(is);
 		}
 		{
 			//	1
 			is.create(1);
-			is.push(1);
+			is.push(NECode(1));
 			n1->setNameCode(1);
-			n1->setGroupCode(is);
-			n1->setPriority(1);
+			n1->setGroupCodes(is);
+			n1->setPriorityCode(1);
 		}
 		{
 			//	0, 1, 2
 			is.resize(3);
-			is.push(0);
-			is.push(2);
+			is.push(NECode(0));
+			is.push(NECode(2));
 			n2->setNameCode(2);
-			n2->setGroupCode(is);
-			n2->setPriority(1);
+			n2->setGroupCodes(is);
+			n2->setPriorityCode(1);
 		}
 		{
 			//	0, 2
 			is.create(2);
-			is.push(0);
-			is.push(2);
+			is.push(NECode(0));
+			is.push(NECode(2));
 			n3->setNameCode(3);
-			n3->setGroupCode(is);
-			n3->setPriority(1);
+			n3->setGroupCodes(is);
+			n3->setPriorityCode(1);
 		}
 		{
 			//	1, 2
 			is.create(2);
-			is.push(1);
-			is.push(2);
+			is.push(NECode(1));
+			is.push(NECode(2));
 			n4->setNameCode(3);
-			n4->setGroupCode(is);
-			n4->setPriority(1);
+			n4->setGroupCodes(is);
+			n4->setPriorityCode(1);
 		}
 
 		NENodeSelector ns;
 		ns.setManager(NEType::NESCRIPT_EDITOR);
-		ns.setNodeType(NECodeType::GROUP);
-		NECodeSet is2(2);
-		is2.push(0);
-		is2.push(2);
-		ns.setCodeSet(is2);
+		NECodeSet is2(NECodeType::GROUP);
+		is2.create(2);
+		is2.push(NECode(0));
+		is2.push(NECode(2));
+		ns.setCodes(is2);
 		ns.setUsingAndOperation(false);	//	OR 연산으로 처리.
 		ns.setCountLimit(2);
 
@@ -1856,7 +1813,7 @@ public:
 		if (&pointers[7] != n2) return false;
 
 		pointers.create(12);
-		ns.setNodeType(NECodeType::ALL);
+		ns.setCodes(NECodeType::ALL);
 		ns.setUsingAndOperation(false);
 		ns.setCountLimit(2);
 		for (int n = 0; n < pointers.getSize(); n++)
@@ -1982,29 +1939,29 @@ void main()
 	Test14().test();
 	system("pause");
 	system("cls");
-	StringFindingTest().test();
-	ArrayAssigningTest().test();
-	PointerArrayAssigningTest().test();
-	HeapedPointerArrayAssigningTest().test();
-	IndexedArrayAssigningTest().test();
-	PointerIndexedArrayAssigningTest().test();
-	HeapedPointerIndexedArrayAssigningTest().test();
-	IndexedArrayReturningHeapMemory().test();
-	IndexedArrayFileSerializeTest().test();
-	Test1().test();
-	NECodeSetInsertionTest().test();
-	NEKeyManagerTypeTest().test();
-	Test13().test();
-	Test2().test();
-	Test3().test();
-	Test4().test();
-	Test5().test();
-	Test6().test();
-	Test7().test();
-	Test9().test();
-	Test10().test();
-	Test11().test();
-	Test12().test();
+// 	StringFindingTest().test();
+// 	ArrayAssigningTest().test();
+// 	PointerArrayAssigningTest().test();
+// 	HeapedPointerArrayAssigningTest().test();
+// 	IndexedArrayAssigningTest().test();
+// 	PointerIndexedArrayAssigningTest().test();
+// 	HeapedPointerIndexedArrayAssigningTest().test();
+// 	IndexedArrayReturningHeapMemory().test();
+// 	IndexedArrayFileSerializeTest().test();
+// 	Test1().test();
+// 	NECodeSetInsertionTest().test();
+// 	NEKeyManagerTypeTest().test();
+// 	Test13().test();
+// 	Test2().test();
+// 	Test3().test();
+// 	Test4().test();
+// 	Test5().test();
+// 	Test6().test();
+// 	Test7().test();
+// 	Test9().test();
+// 	Test10().test();
+// 	Test11().test();
+ 	Test12().test();
 	RelativityTestOnSynchronize().test();
 	SelectorAssignOperatorTest().test();
 	KeySelectorAssigningTest().test();

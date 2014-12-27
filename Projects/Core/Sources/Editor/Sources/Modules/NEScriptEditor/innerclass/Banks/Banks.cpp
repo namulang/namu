@@ -30,4 +30,14 @@ namespace NE
 	{
 		return NEType::NESCRIPTEDITOR_BANKS;
 	}
+
+	type_result NEScriptEditor::Banks::initialize()
+	{
+		type_result result = create(4);
+
+		result |= push(NEBank(NECodeType::SCRIPT));
+		result |= push(NEBank(NECodeType::NAME));
+		result |= push(NEBank(NECodeType::GROUP));
+		return result |= push(NEBank(NECodeType::PRIORITY));
+	}
 }
