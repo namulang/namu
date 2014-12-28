@@ -9,9 +9,10 @@ namespace NE
 	}
 
 	NE_DLL NECodeType::NECodeType(CodeType new_codetype)
-		: SuperClass(), _codetype(new_codetype), _is_type_fixed(true)
+		: SuperClass(), _codetype(new_codetype), _is_type_fixed(false)
 	{
-
+		if(new_codetype != NECodeType::UNDEFINED)
+			_is_type_fixed = true;
 	}
 
 	NE_DLL NECodeType::NECodeType(CodeType new_codetype, bool is_type_fixed)
@@ -35,8 +36,8 @@ namespace NE
 
 	bool NE_DLL NECodeType::operator==(const ThisClass& source) const
 	{
-		return	_codetype == source._codetype			&&
-				_is_type_fixed == source._is_type_fixed	;
+		return	_codetype == source._codetype;
+				//_is_type_fixed == source._is_type_fixed	;
 	}
 
 	NECodeType::CodeType NE_DLL NECodeType::getCodeType() const 
@@ -47,7 +48,7 @@ namespace NE
 	type_result NE_DLL NECodeType::setCodeType(CodeType new_one) 
 	{
 		if(	isTypeFixed()			&&
-			new_one != UNDEFINED	)
+			_codetype != UNDEFINED	)
 			return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 
 		_codetype = new_one;

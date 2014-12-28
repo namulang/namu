@@ -253,6 +253,9 @@ public:
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
 
+		ss.setMaxCode(NECode(1, NECodeType::GROUP));
+
+
 		manager.initialize();
 		ns.push(NENode());
 
@@ -322,7 +325,7 @@ public:
 		NENode& tg = ns[ns.push(NENode())];
 		NEModuleCodeSet& ms = tg.getModuleSet();
 		{
-			NECodeSet a(NECode(1, NECodeType::GROUP));
+ 			NECodeSet a(NECode(1, NECodeType::GROUP));
 			tg.setCodes(a);
 		}
 		ns.push(NENode());
@@ -714,7 +717,7 @@ public:
 	NECodeSetInsertionTest() : TestCase("test NECodeSet's filtering functions.") {}
 	virtual bool onTest() 
 	{
-		NECodeSet cs(5);
+		NECodeSet cs(5, NECodeType::UNDEFINED);
 		for(int n=0; n < 5 ;n++)
 			cs.push(NECode(n));
 		
@@ -722,8 +725,9 @@ public:
 		type_index	result1 = cs.push(NECode(1));
 		type_result result2 = cs.setElement(3, NECode(2));
 
-		return	result1 == NE_INDEX_ERROR			&& 
-				NEResult::isActionAborted(result2);
+		return	cs.getLength() == 5					&&
+				NEResult::hasError(result1)		&& 
+				NEResult::isActionAborted(result2)	;
 	}
 };
 
@@ -915,6 +919,10 @@ public:
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const { return saver << datum; }
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader) { return loader >> datum; }
 
+		bool operator==(const MyInt& source) const {
+			return datum == source.datum;
+		}
+
 		int datum;
 	};
 	class MyContainer : public NEArrayTemplate<MyInt*, true> 
@@ -1057,7 +1065,8 @@ public:
 		ed.getScriptHeader().getDeveloper() = "CoreTester";
 		NENodeCodeSet& ncs = ed.getScriptNodes();
 		ncs.create(3);
-		NECodeSet is(NECodeType::NAME);
+		NECodeType t(NECodeType::NAME);
+		NECodeSet is(t);
 		is.create(2);
 		is.push(NECode(1));
 		is.push(NECode(2));
@@ -1148,9 +1157,9 @@ public:
 
 			NENodeSelector& nsel1 = (NENodeSelector&) k;
 			const NECodeSet& cs = nsel1.getCodes();
-			if(	cs.getLength() < 2    ||
-				cs[0] != 1            ||
-				cs[1] != 2            )
+			if(	cs.getLength() < 2						||
+				cs[0] != NECode(1, NECodeType::NAME)	||
+				cs[1] != NECode(2, NECodeType::NAME)	)
 				return false;
 		}
 
@@ -1613,7 +1622,7 @@ public:
 			}
 
 			src->setCodes(NECode(1, NECodeType::PRIORITY));
-			NECodeSet c(NECodeType::GROUP);
+			NECodeSet c((NECodeType(NECodeType::GROUP)));
 			c.create(2);
 			c.push(NECode(0));
 			c.push(NECode(1));
@@ -1780,7 +1789,7 @@ public:
 
 		NENodeSelector ns;
 		ns.setManager(NEType::NESCRIPT_EDITOR);
-		NECodeSet is2(NECodeType::GROUP);
+		NECodeSet is2((NECodeType(NECodeType::GROUP)));
 		is2.create(2);
 		is2.push(NECode(0));
 		is2.push(NECode(2));
@@ -1813,7 +1822,7 @@ public:
 		if (&pointers[7] != n2) return false;
 
 		pointers.create(12);
-		ns.setCodes(NECodeType::ALL);
+		ns.setCodes(NECodeType(NECodeType::ALL));
 		ns.setUsingAndOperation(false);
 		ns.setCountLimit(2);
 		for (int n = 0; n < pointers.getSize(); n++)
@@ -1939,29 +1948,29 @@ void main()
 	Test14().test();
 	system("pause");
 	system("cls");
-// 	StringFindingTest().test();
-// 	ArrayAssigningTest().test();
-// 	PointerArrayAssigningTest().test();
-// 	HeapedPointerArrayAssigningTest().test();
-// 	IndexedArrayAssigningTest().test();
-// 	PointerIndexedArrayAssigningTest().test();
-// 	HeapedPointerIndexedArrayAssigningTest().test();
-// 	IndexedArrayReturningHeapMemory().test();
-// 	IndexedArrayFileSerializeTest().test();
-// 	Test1().test();
-// 	NECodeSetInsertionTest().test();
-// 	NEKeyManagerTypeTest().test();
-// 	Test13().test();
-// 	Test2().test();
-// 	Test3().test();
-// 	Test4().test();
-// 	Test5().test();
-// 	Test6().test();
-// 	Test7().test();
-// 	Test9().test();
-// 	Test10().test();
-// 	Test11().test();
- 	Test12().test();
+	StringFindingTest().test();
+	ArrayAssigningTest().test();
+	PointerArrayAssigningTest().test();
+	HeapedPointerArrayAssigningTest().test();
+	IndexedArrayAssigningTest().test();
+	PointerIndexedArrayAssigningTest().test();
+	HeapedPointerIndexedArrayAssigningTest().test();
+	IndexedArrayReturningHeapMemory().test();
+	IndexedArrayFileSerializeTest().test();
+	Test1().test();
+	NECodeSetInsertionTest().test();
+	NEKeyManagerTypeTest().test();
+	Test13().test();
+	Test2().test();
+	Test3().test();
+	Test4().test();
+	Test5().test();
+	Test6().test();
+	Test7().test();
+	Test9().test();
+	Test10().test();
+	Test11().test();
+	Test12().test();
 	RelativityTestOnSynchronize().test();
 	SelectorAssignOperatorTest().test();
 	KeySelectorAssigningTest().test();

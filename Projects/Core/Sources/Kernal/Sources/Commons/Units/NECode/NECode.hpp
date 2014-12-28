@@ -38,9 +38,7 @@ namespace NE
 	public:
 		NECode();
 		NECode(const NEExportable::Identifier& identifier);
-		NECode(NECodeType::CodeType codetype_to_be_fixed);
-		NECode(type_code new_code);
-		NECode(type_code new_code, NECodeType::CodeType new_codetype, bool is_type_fixed = true);
+		NECode(type_code new_code, const NECodeType& codetype = NECodeType());
 		NECode(const ThisClass& source);
 
 	public:

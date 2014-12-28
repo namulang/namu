@@ -20,24 +20,14 @@ namespace NE
 		setCode(identifier);
 	}
 
-	NECode::NECode(NECodeType::CodeType codetype_to_be_fixed)
-		: SuperClass(codetype_to_be_fixed, true)
-	{
-		_release();
-	}
-	NECode::NECode(type_code new_code, NECodeType::CodeType new_codetype, bool is_type_fixed)
-		: SuperClass(new_codetype, is_type_fixed)
-	{
-		setCode(new_code);
-	}
 	NECode::NECode(const ThisClass& source)
 		: SuperClass(source)
 	{
 		_assign(source);
 	}
 
-	NECode::NECode(type_code new_code)
-		: SuperClass()
+	NECode::NECode(type_code new_code, const NECodeType& codetype /*= NECodeType()*/)
+		: SuperClass(codetype)
 	{
 		setCode(new_code);
 	}
@@ -129,7 +119,7 @@ namespace NE
 		if (getCodeType() == source.getCodeType())
 			type = *this;
 
-		return ThisClass(new_code, type.getCodeType(), type.isTypeFixed());
+		return ThisClass(new_code, NECodeType(type.getCodeType(), type.isTypeFixed()));
 	}
 
 	ThisClass ThisClass::operator+(const ThisClass& source) const
@@ -240,9 +230,7 @@ namespace NE
 
 	NEBinaryFileLoader& ThisClass::serialize(NEBinaryFileLoader& loader)
 	{
-		//	pre:
-		int to_convert = 0;
-		loader >> to_convert;
+		SuperClass::serialize(loader);
 
 		if(getCodeType() == NECodeType::SCRIPT)
 			return _serializeAsScript(loader);

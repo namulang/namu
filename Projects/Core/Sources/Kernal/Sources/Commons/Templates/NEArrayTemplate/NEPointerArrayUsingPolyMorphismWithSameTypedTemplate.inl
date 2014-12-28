@@ -229,7 +229,7 @@ namespace NE
 		//	main:
 		//		°Ë»ö:
 		for(type_index index=0; index < _length ;index++)
-			if( _data[index] == source)
+			if( *_data[index] == *source)
 				return index;
 
 
