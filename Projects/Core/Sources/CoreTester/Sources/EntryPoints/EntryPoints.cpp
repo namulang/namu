@@ -1208,6 +1208,7 @@ public:
 		NEIntKey* age_2nd, *age;
 		{
 			NENode& node = ncs[ncs.push(NENode())];
+			node.setCodes(NECode(1, NECodeType::NAME));
 			NEKeyCodeSet& ks = node.getKeySet();
 			ks.create(1);
 			age = ((NEIntKey*) &ks[ks.push(NEIntKey(22, "age"))]);
@@ -1636,6 +1637,7 @@ public:
 				nms->setManager(NEType::NESCRIPT_EDITOR);
 				NECodeSet is;
 				is.create(1);
+				is.getCodeType().setCodeType(NECodeType::SCRIPT);
 				is.push(NECode(1, NECodeType::SCRIPT));
 				nms->setCodes(is);
 
@@ -1652,6 +1654,7 @@ public:
 					is[0] == is[1]		)	//	중복은 안된다.
 					return false;
 				is.push(NECode(0, NECodeType::GROUP));
+				is.getCodeType().setCodeType(NECodeType::GROUP);
 				ns_group.setCodes(is);
 
 

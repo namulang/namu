@@ -69,6 +69,16 @@ namespace NE
 		return _code;
 	}
 
+	bool NECode::operator==(const type_code source) const
+	{
+		return getCode() == source;
+	}
+
+	bool NECode::operator!=(const type_code source) const
+	{
+		return ! operator==(source);
+	}
+
 	ThisClass::~ThisClass()
 	{
 

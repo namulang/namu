@@ -51,6 +51,8 @@ namespace NE
 		NECode operator--();
 		NECode& operator--(int);
 		bool operator==(const ThisClass& source) const;
+		bool operator==(const type_code source) const;
+		bool operator!=(const type_code source) const;
 		bool operator!=(const ThisClass& source) const;
 		bool operator<(const ThisClass& source) const;
 		bool operator<=(const ThisClass& source) const;
