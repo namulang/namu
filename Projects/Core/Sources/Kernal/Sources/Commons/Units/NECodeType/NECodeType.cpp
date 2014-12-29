@@ -47,8 +47,8 @@ namespace NE
 
 	type_result NE_DLL NECodeType::setCodeType(CodeType new_one) 
 	{
-		if(	isTypeFixed()			&&
-			_codetype != UNDEFINED	)
+		if(	new_one == UNDEFINED						||
+			(isTypeFixed() && _codetype != UNDEFINED)	)
 			return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 
 		_codetype = new_one;

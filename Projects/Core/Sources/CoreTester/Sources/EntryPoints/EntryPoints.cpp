@@ -1919,6 +1919,102 @@ public:
 	}
 };
 
+class CodeTypePolicyTest : public TestCase
+{
+public:
+	CodeTypePolicyTest() : TestCase("has NECodeType been implemented as policy we founded?") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
+
+		NECodeType t1(NECodeType::NAME, false);
+		NECodeType t2(NECodeType::GROUP, true);
+		NECodeType t3;
+
+		//	기본생성시 UNDEFINED, false로 되는가?
+		if(	t3 != NECodeType::UNDEFINED ||
+			t3.isTypeFixed()			)
+			return false;
+
+		//	UNDEFINED에 Type이 할당되는가?
+		t3 = t2;
+		if(	t3.getCodeType() != NECodeType::GROUP	||
+			t3.isTypeFixed()						)
+			return false;
+
+		t3 = NECodeType(NECodeType::UNDEFINED, true);
+		if(t3.getCodeType() == NECodeType::UNDEFINED)
+			return false;
+
+		t2 = t1;
+		if(	t2.getCodeType() != NECodeType::GROUP	||
+			! t2.isTypeFixed()						)
+			return false;
+
+
+		NECode	c1(0, NECodeType(NECodeType::NAME, false)),
+			c2(1, NECodeType(NECodeType::UNDEFINED, true)),
+			c3(2, NECodeType(NECodeType::GROUP, true));
+
+		c3++;
+		if(	c3 != 3																||
+			c3.getCodeType() != NECode(3, NECodeType(NECodeType::GROUP, false))	)
+			return false;
+
+		c1 += c2;
+		if(	c1 != 1								||
+			c1 != NECode(1, NECodeType::NAME)	)
+			return false;
+
+		NECodeSet	cs1,
+			cs2(NECode(4, NECodeType(NECodeType::PRIORITY, true))),
+			cs3((NECodeType(NECodeType::GROUP, true))),
+			cs4((NECodeType(NECodeType::UNDEFINED))),
+			cs5((NECodeType(NECodeType::UNDEFINED, true)));
+
+		//	create, release를 하더라도 CodeType은 유지가 되는가?
+		cs3.create(2);
+		if (cs3.getCodeType() != NECodeType(NECodeType::GROUP, false))	//	!= 연산에서 type fixed여부는 고려되지 않아야 한다.
+			return false;
+		cs1.create(2);
+
+		cs1.push(c1);	//	c1	=	NECode(1, NAME)
+		cs3.push(c1);
+		cs1.push(c2);	//	c2	=	NECode(
+		cs3.push(c2);
+		if(	cs1[0] != c1	||
+			cs1[1] != c2	)
+			return false;
+		//	CodeSet이 fixed면, 들어오는 Code도 Type이 자동으로 바뀌는가?
+		//	중복되면 삽입요청이 거부 되는가?
+		if(	cs3.getLength() > 1						||
+			cs3[0] != NECode(1, NECodeType::GROUP)	)
+			return false;
+
+		NECode c4(2, NECodeType(NECodeType::NAME, true));
+		cs3.push(c4);
+		if(cs3[1] == c4)
+			return false;
+
+		cs3[1].setCodeType(NECodeType::NAME);
+		if(cs3[1].getCodeType() == NECodeType::NAME)
+			return false;
+
+		cs3.setElement(1, c4);
+		//	setElement를 하는 경우에는 타입도 변경 가능하다.
+		if(cs3[1] != c4)
+			return false;
+
+		return true;
+	}
+};
+
 //class Test : public TestCase
 //{
 //public:
@@ -1985,6 +2081,7 @@ void main()
 	NodeSelectorTest().test();
 	KeyConversionTest().test();
 	ModuleOwnerTest().test();
+	CodeTypePolicyTest().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
