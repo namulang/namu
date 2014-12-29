@@ -40,6 +40,11 @@ namespace NE
 				//_is_type_fixed == source._is_type_fixed	;
 	}
 
+	bool NECodeType::operator==(const NECodeType::CodeType source) const
+	{
+		return _codetype == source;
+	}
+
 	NECodeType::CodeType NE_DLL NECodeType::getCodeType() const 
 	{
 		return _codetype;
@@ -117,4 +122,48 @@ namespace NE
 		return ! operator==(source);
 	}
 
+	bool NECodeType::operator!=(const NECodeType::CodeType source) const
+	{
+		return ! operator==(source);
+	}
+
+	bool NECodeType::operator<(const NECodeType::CodeType source) const
+	{
+		return _codetype < source;
+	}
+
+	bool NECodeType::operator<(const ThisClass& source) const
+	{
+		return _codetype < source._codetype;
+	}
+
+	bool NECodeType::operator<=(const NECodeType::CodeType source) const
+	{
+		return _codetype <= source;
+	}
+
+	bool NECodeType::operator<=(const ThisClass& source) const
+	{
+		return _codetype <= source._codetype;
+	}
+
+	bool NECodeType::operator>(const NECodeType::CodeType source) const
+	{
+		return _codetype > source;
+	}
+
+	bool NECodeType::operator>(const ThisClass& source) const
+	{
+		return _codetype > source._codetype;
+	}
+
+	bool NECodeType::operator>=(const NECodeType::CodeType source) const
+	{
+		return _codetype >= source;
+	}
+
+	bool NECodeType::operator>=(const ThisClass& source) const
+	{
+		return _codetype >= source._codetype;
+	}
 }

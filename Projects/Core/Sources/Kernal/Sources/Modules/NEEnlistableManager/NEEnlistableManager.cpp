@@ -155,9 +155,8 @@ namespace NE
 
 
 		//	main:
-		NECodeType::CodeType codetype = new_codes.getCodeType().getCodeType();
 		type_index real_index = _searchRealNodeIndex(target);
-		NEShortCutSet& shortcutset = _getShortCutSet(codetype);
+		NEShortCutSet& shortcutset = _getShortCutSet(new_codes.getCodeType());
 		type_result result = shortcutset._unlist(target, real_index);
 		if(NEResult::hasError(result))
 		{

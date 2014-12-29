@@ -11,10 +11,8 @@ namespace NE
 
 	NEBank NE_DLL &NEScriptEditor::Banks::getBank(const NECodeType& type)
 	{
-		NECodeType::CodeType ct = type.getCodeType();
-
 		for (int n = 0; n < getLength(); n++)
-			if (getElement(n).getCodeType().getCodeType() == ct)
+			if (getElement(n).getCodeType() == type)
 				return getElement(n);
 
 		NEBank* nullpointer = 0x00;
