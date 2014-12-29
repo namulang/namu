@@ -72,7 +72,7 @@ public:
 			NEKey* rk = toOwner()->real_key;
 			if(rk)
 				items.push("Å° ÀÌ¸§ : " + rk->getName());
-			NETStringList& names = Editor::getInstance().getScriptEditor().getBanks().getScriptBank();
+			NETStringList& names = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::SCRIPT);
 			for(int n=0; n < ns.getLength() ;n++) {
 				NEString	s_idx = ns[n].getScriptCode(),
 							name = names[s_idx.toInt()],

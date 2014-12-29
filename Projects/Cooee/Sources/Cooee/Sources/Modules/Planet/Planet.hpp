@@ -168,7 +168,7 @@ public:
 	}
 	int _generate(NENode& node)
 	{
-		const NETString& name = Editor::getInstance().getScriptEditor().getBanks().getScriptBank()[node.getScriptCode()];
+		const NETString& name = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::SCRIPT)[node.getScriptCode()];
 		setText(name);
 
 		int next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(node.getKeySet(), this, y + 1);

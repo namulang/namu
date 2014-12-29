@@ -102,11 +102,10 @@ public:
 			switch(from)
 			{
 			case NECodeType::NAME:
-				return h.getMaxNameCodeIndex();
 			case NECodeType::GROUP:
-				return h.getMaxGroupCodeIndex();
 			case NECodeType::PRIORITY:
-				return h.getMaxPriorityCodeIndex();
+				return h.getMaxCode(from).getCode();
+
 			default:
 				return -2;
 			}

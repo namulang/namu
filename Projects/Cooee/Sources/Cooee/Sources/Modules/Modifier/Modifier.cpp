@@ -154,10 +154,10 @@ const NETStringList& Modifier<NENodeSelector>::MenuList::getProperBankFrom(NECod
 	NETStringList* nullpointer = 0;
 	switch(type)
 	{
-	case NECodeType::SCRIPT:	return banks.getScriptBank();
-	case NECodeType::NAME:		return banks.getNameBank();
-	case NECodeType::GROUP:		return banks.getGroupBank();
-	case NECodeType::PRIORITY:	return banks.getPriorityBank();
+	case NECodeType::SCRIPT:	return banks.getBank(NECodeType::SCRIPT);
+	case NECodeType::NAME:		return banks.getBank(NECodeType::NAME);
+	case NECodeType::GROUP:		return banks.getBank(NECodeType::GROUP);
+	case NECodeType::PRIORITY:	return banks.getBank(NECodeType::PRIORITY);
 	default:		return *nullpointer;
 	}
 }
@@ -167,16 +167,18 @@ void Modifier<NENodeSelector>::MenuList::updateList()
 	NENodeSelector& k = toOwner()->toCaller().toCaller().getNodeFilter();
 	if( ! &k) return;
 
+	NECodeType::CodeType type = k.getCodes().getCodeType().getCodeType();
+
 	items.create(6);
 	items.push(NEString("   ") + NEType::getTypeName(k.getManagerType()));
 	items.push(NEString("   ") + k.getCountLimit());
 	items.push(NEString("   ") + k.isUsingAutoBinding());
-	items.push(NEString("   ") + createNodeTypeStringFrom(k.getNodeType()));
+	items.push(NEString("   ") + createNodeTypeStringFrom(type));
 	items.push(NEString("   ") + k.isUsingAndOperation());
 
-	const NETStringList& bank = getProperBankFrom(k.getNodeType());
+	const NETStringList& bank = getProperBankFrom(type);
 	NEString codes_to_str;
-	const NEIntSet& c = k.getCodeSet();
+	const NECodeSet& c = k.getCodes();
 	if( ! &bank)
 		codelist_display_index = -1;
 	switch(codelist_display_index)
@@ -187,14 +189,14 @@ void Modifier<NENodeSelector>::MenuList::updateList()
 		{				
 			codes_to_str = "CODES: ";
 			for(int n=0; n < c.getLength() ;n++)
-				codes_to_str += bank[c[n]] + "[" + c[n] + "] ";
+				codes_to_str += bank[c[n].getCode()] + "[" + c[n].getCode() + "] ";
 		}
 		else
 			codes_to_str = "NOT NEEDED!";
 		break;
 
 	default:
-		codes_to_str = NEString(codelist_display_index)+ "th: " + bank[c[codelist_display_index]] + "(" + c[codelist_display_index] + ")";
+		codes_to_str = NEString(codelist_display_index)+ "th: " + bank[c[codelist_display_index].getCode()] + "(" + c[codelist_display_index].getCode() + ")";
 		break;
 	}
 
@@ -207,8 +209,9 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 	ListGliph::onKeyPressed(inputed);
 	Planetarium& planetarium = toOwner()->toCaller().toCaller();
 	NENodeSelector& key = planetarium.getNodeFilter();
+	NECodeSet cs = key.getCodes();
+	NECodeType::CodeType type = cs.getCodeType().getCodeType();
 	
-
 	switch(inputed)
 	{
 	case CONFIRM:
@@ -229,7 +232,8 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 					virtual void onFocused()
 					{
 						NENodeSelector& key = toCaller().toCaller().toCaller().getNodeFilter();
-						const NETStringList& bank = toCaller().menulist.getProperBankFrom(key.getNodeType());
+						NECodeType::CodeType type = key.getCodes().getCodeType().getCodeType();
+						const NETStringList& bank = toCaller().menulist.getProperBankFrom(type);
 
 						int n=0;
 						for(const NETStringList::Iterator* itr=bank.getIterator(0); itr ;itr=itr->getNext())
@@ -260,11 +264,11 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 					{
 						Planetarium& planetarium = toCaller().toCaller().toCaller();
 						NENodeSelector& key = planetarium.getNodeFilter();
-						NEIntSet copied = key.getCodeSet();
+						NECodeSet copied = key.getCodes();
 						if(copied.getLength() == copied.getSize())
 							copied.resize(copied.getSize() + 1);
 						copied.push(input.history_idx);
-						key.setCodeSet(copied);
+						key.setCodes(copied);
 						planetarium.onUpdateData();
 						toCaller().menulist.codelist_display_index = -1;
 						toCaller().menulist.items.release();
@@ -273,7 +277,7 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 					}
 				};
 
-				NECodeType::CodeType type = key.getNodeType();
+				NECodeType::CodeType type = key.getCodes().getCodeType().getCodeType();
 				switch(type)
 				{
 				case NECodeType::SCRIPT:	case NECodeType::GROUP: 
@@ -285,10 +289,10 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			}
 			else if(codelist_display_index >= 0)
 			{
-				NEIntSet copied = key.getCodeSet();
+				NECodeSet copied = key.getCodes();
 				copied.remove(codelist_display_index);
 				copied.resize(copied.getLength());
-				key.setCodeSet(copied);
+				key.setCodes(copied);
 				if(codelist_display_index > copied.getLengthLastIndex())
 					codelist_display_index = copied.getLengthLastIndex();
 
@@ -331,27 +335,35 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 3:	//	CodeType
-			switch(key.getNodeType())
+			switch(type)
 			{
-			case NECodeType::RECENT:
-				key.setNodeType(NECodeType::ME);
+			case NECodeType::RECENT:	
+				cs.getCodeType().setCodeType(NECodeType::ME);
+				key.setCodes(cs);
 				break;
 			case NECodeType::SCRIPT:
-				key.setNodeType(NECodeType::RECENT);
+				cs.getCodeType().setCodeType(NECodeType::RECENT);
+				key.setCodes(cs);
 				break;
 			case NECodeType::NAME:
-				key.setNodeType(NECodeType::SCRIPT);
+				cs.getCodeType().setCodeType(NECodeType::SCRIPT);
+				key.setCodes(cs);
 				break;
 			case NECodeType::GROUP:
-				key.setNodeType(NECodeType::NAME);
+				cs.getCodeType().setCodeType(NECodeType::NAME);
+				key.setCodes(cs);
 				break;
 			case NECodeType::PRIORITY:
-				key.setNodeType(NECodeType::GROUP);
+				cs.getCodeType().setCodeType(NECodeType::GROUP);
+				key.setCodes(cs);
 				break;					
 			case NECodeType::ALL:
-				key.setNodeType(NECodeType::PRIORITY);
+				cs.getCodeType().setCodeType(NECodeType::PRIORITY);
+				key.setCodes(cs);
 				break;
 			}
+
+
 			break;
 		case 4:	//	Use &&
 			if(key.isUsingAndOperation())
@@ -394,25 +406,31 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 3:	//	CodeType
-			switch(key.getNodeType())
+			switch(type)
 			{
 			case NECodeType::ME:
-				key.setNodeType(NECodeType::RECENT);
+				cs.getCodeType().setCodeType(NECodeType::RECENT);
+				key.setCodes(cs);
 				break;
 			case NECodeType::RECENT:
-				key.setNodeType(NECodeType::SCRIPT);
+				cs.getCodeType().setCodeType(NECodeType::SCRIPT);
+				key.setCodes(cs);
 				break;
 			case NECodeType::SCRIPT:
-				key.setNodeType(NECodeType::NAME);
+				cs.getCodeType().setCodeType(NECodeType::NAME);
+				key.setCodes(cs);
 				break;
 			case NECodeType::NAME:
-				key.setNodeType(NECodeType::GROUP);
+				cs.getCodeType().setCodeType(NECodeType::GROUP);
+				key.setCodes(cs);
 				break;
 			case NECodeType::GROUP:
-				key.setNodeType(NECodeType::PRIORITY);
+				cs.getCodeType().setCodeType(NECodeType::PRIORITY);
+				key.setCodes(cs);
 				break;					
 			case NECodeType::PRIORITY:
-				key.setNodeType(NECodeType::ALL);
+				cs.getCodeType().setCodeType(NECodeType::ALL);
+				key.setCodes(cs);
 				break;
 			}
 			break;
@@ -423,7 +441,7 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 5:
-			if(codelist_display_index < key.getCodeSet().getLengthLastIndex())
+			if(codelist_display_index < key.getCodes().getLengthLastIndex())
 				codelist_display_index++;
 		}
 		items.release();
@@ -472,6 +490,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 	ListGliph::onKeyPressed(inputed);
 	Planetarium& planetarium = toOwner()->toCaller().toCaller();
 	NEModuleSelector& key = planetarium.getModuleFilter();
+	NECodeType::CodeType module_type = key.getModuleCodes().getCodeType().getCodeType();
 
 	switch(inputed)
 	{
@@ -494,7 +513,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 					{
 						lists.release();
 						NEModuleSelector& key = toCaller().toCaller().toCaller().getModuleFilter();
-						if(key.getModuleType() == NECodeType::NAME) 
+						if(key.getModuleCodes().getCodeType().getCodeType() == NECodeType::NAME) 
 						{
 							text = "새로 추가할 모듈 NameCode를 입력하세요.\n반드시 숫자로 입력하며, 자동 동기화가 안됩니다.";
 							return;
@@ -534,16 +553,16 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 						Planetarium& planetarium = toCaller().toCaller().toCaller();
 						NEModuleSelector& key = planetarium.getModuleFilter();
 
-						NECodeSet copied = key.getModuleCodeSet();
+						NECodeSet copied = key.getModuleCodes();
 						if(copied.getLength() == copied.getSize())
 							copied.resize(copied.getSize() + 1);
 						
-						if(input.history_idx >= 0 && key.getModuleType() == NECodeType::SCRIPT)
+						if(input.history_idx >= 0 && key.getModuleCodes().getCodeType().getCodeType() == NECodeType::SCRIPT)
 							copied.push(lists[input.history_idx]);
 						else
 							copied.push(input.text.toInt());
 
-						key.setModuleCodeSet(copied);
+						key.setModuleCodes(copied);
 						toCaller().menulist.codelist_display_index = -1;
 						planetarium.onUpdateData();
 						toCaller().menulist.items.release();
@@ -554,8 +573,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 					NEListTemplate<type_index> lists;
 				};
 
-				NECodeType::CodeType type = key.getModuleType();
-				switch(type)
+				switch(module_type)
 				{
 				case NECodeType::SCRIPT:	case NECodeType::NAME:
 					toOwner()->call(CodeInputer());
@@ -565,10 +583,10 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 			}
 			else if(codelist_display_index >= 0)
 			{
-				NECodeSet copied = key.getModuleCodeSet();
+				NECodeSet copied = key.getModuleCodes();
 				copied.remove(codelist_display_index);
 				copied.resize(copied.getLength());
-				key.setModuleCodeSet(copied);
+				key.setModuleCodes(copied);
 				if(codelist_display_index > copied.getLengthLastIndex())
 					codelist_display_index = copied.getLengthLastIndex();
 
@@ -594,7 +612,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 1:	//	CodeType
-			switch(key.getModuleType())
+			switch(module_type)
 			{
 			case NECodeType::RECENT:
 				key.setModuleType(NECodeType::ME);
@@ -831,10 +849,10 @@ const NETStringList& Modifier<NEModuleSelector>::MenuList::getProperBankFrom( NE
 	NETStringList* nullpointer = 0;
 	switch(type)
 	{
-	case NECodeType::SCRIPT:	return banks.getScriptBank();
-	case NECodeType::NAME:		return banks.getNameBank();
-	case NECodeType::GROUP:		return banks.getGroupBank();
-	case NECodeType::PRIORITY:	return banks.getPriorityBank();
+	case NECodeType::SCRIPT:	return banks.getBank(NECodeType::SCRIPT);
+	case NECodeType::NAME:		return banks.getBank(NECodeType::NAME);
+	case NECodeType::GROUP:		return banks.getBank(NECodeType::GROUP);
+	case NECodeType::PRIORITY:	return banks.getBank(NECodeType::PRIORITY);
 	default:		return *nullpointer;
 	}
 }

@@ -102,12 +102,12 @@ namespace NE
 				}
 				break;
 
-			case 6:		arg_target.getValueKey() = NEBooleanKey(lkey < rkey2);	break;
-			case 7:		arg_target.getValueKey() = NEBooleanKey(lkey <= rkey2);	break;
-			case 8:		arg_target.getValueKey() = NEBooleanKey(lkey > rkey2);	break;
-			case 9:		arg_target.getValueKey() = NEBooleanKey(lkey >= rkey2);	break;
-			case 10:	arg_target.getValueKey() = NEBooleanKey(lkey == rkey2);	break;
-			case 11:	arg_target.getValueKey() = NEBooleanKey(lkey != rkey2);	break;
+			case 6:		result |= _applyLogicOperation(NEBooleanKey(lkey < rkey2));	break;
+			case 7:		result |= _applyLogicOperation(NEBooleanKey(lkey <= rkey2));	break;
+			case 8:		result |= _applyLogicOperation(NEBooleanKey(lkey > rkey2));	break;
+			case 9:		result |= _applyLogicOperation(NEBooleanKey(lkey >= rkey2));	break;
+			case 10:	result |= _applyLogicOperation(NEBooleanKey(lkey == rkey2));	break;
+			case 11:	result |= _applyLogicOperation(NEBooleanKey(lkey != rkey2));	break;
 			}
 
 			return result;
@@ -120,6 +120,14 @@ namespace NE
 			tray.push(arg_method);
 
 			return RESULT_SUCCESS;
+		}
+
+	private:
+		type_result _applyLogicOperation(const NEBooleanKey& result)
+		{
+			arg_target.getValueKey() = result;
+
+			return result.getValue() ? RESULT_TRUE : RESULT_FALSE;
 		}
 
 	public:

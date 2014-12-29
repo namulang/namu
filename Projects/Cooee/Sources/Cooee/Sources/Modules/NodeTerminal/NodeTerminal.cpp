@@ -30,7 +30,7 @@ void NodeTerminal::onKeyPressed(char inputed)
 			return enable.onKeyPressed(inputed);
 		if(focused == 0 && attributes.choosed == 1)
 		{
-			if(codelist_display_index < castObject().getGroupCode().getLengthLastIndex())
+			if(codelist_display_index < castObject().getGroupCodes().getLengthLastIndex())
 				codelist_display_index++;
 		}
 		else if(focused < 2)

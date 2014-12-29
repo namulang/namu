@@ -12,7 +12,14 @@ public:
 	virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 	virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 	virtual void release();
-	bool operator!=(const Command& rhs) const;
+	bool operator==(const Command& rhs) const
+	{
+		return names == rhs.names && help == rhs.help;
+	}
+	bool operator!=(const Command& rhs) const
+	{
+		return ! operator==(rhs);
+	}
 };
 
 class ListCommand : public Command

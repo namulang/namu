@@ -9,10 +9,10 @@ namespace
 
 		switch(codetype)
 		{
-		case NECodeType::NAME:		return banks.getNameBank();
-		case NECodeType::SCRIPT:	return banks.getScriptBank();
-		case NECodeType::GROUP:		return banks.getGroupBank();
-		case NECodeType::PRIORITY:	return banks.getPriorityBank();
+		case NECodeType::NAME:		return banks.getBank(NECodeType::NAME);
+		case NECodeType::SCRIPT:	return banks.getBank(NECodeType::SCRIPT);
+		case NECodeType::GROUP:		return banks.getBank(NECodeType::GROUP);
+		case NECodeType::PRIORITY:	return banks.getBank(NECodeType::PRIORITY);
 		}
 
 		NETStringList* nullpointer = 0x00;
@@ -25,10 +25,10 @@ namespace
 
 		switch(index)
 		{
-		case 0:	return banks.getNameBank();
-		case 1: return banks.getScriptBank();
-		case 2: return banks.getGroupBank();
-		case 3: return banks.getPriorityBank();
+		case 0:	return banks.getBank(NECodeType::NAME);
+		case 1: return banks.getBank(NECodeType::SCRIPT);
+		case 2: return banks.getBank(NECodeType::GROUP);
+		case 3: return banks.getBank(NECodeType::PRIORITY);
 		}
 
 		NETStringList* nullpointer = 0x00;

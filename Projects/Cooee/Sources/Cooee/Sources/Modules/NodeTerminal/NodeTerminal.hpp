@@ -60,7 +60,7 @@ public:
 		if( ! &casted) return;
 		NEScriptEditor::Banks& banks = Editor::getInstance().getScriptEditor().getBanks();
 
-		script.text = banks.getScriptBank()[casted.getScriptCode()] + "[" + casted.getScriptCode() + "]";
+		script.text = banks.getBank(NECodeType::SCRIPT)[casted.getScriptCode()] + "[" + casted.getScriptCode() + "]";
 
 		ks_terminal.onUpdateData();
 		ms_terminal.onUpdateData();
@@ -121,12 +121,12 @@ public:
 
 			NEScriptEditor::Banks& banks = Editor::getInstance().getScriptEditor().getBanks();
 			items.create(3);
-			_pushItemWith(banks.getNameBank(), node.getNameCode());
+			_pushItemWith(banks.getBank(NECodeType::NAME), node.getNameCode());
 			
-			//_pushItemWith(banks.getGroupBank(), node.getGroupCode());
-			const NETStringList& bank = Editor::getInstance().getScriptEditor().getBanks().getGroupBank();
+			//_pushItemWith(banks.getBank(NECodeType::GROUP), node.getGroupCodes());
+			const NETStringList& bank = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::GROUP);
 			NEString codes_to_str;
-			const NEIntSet& c = toOwner()->castObject().getGroupCode();
+			const NECodeSet& c = toOwner()->castObject().getGroupCodes();
 			if( ! &bank)
 				toOwner()->codelist_display_index = -1;
 			switch(toOwner()->codelist_display_index)
@@ -135,17 +135,17 @@ public:
 				codes_to_str = "NEW";	break;
 			case -1:	
 				if( &bank)		
-					codes_to_str = NEString(toOwner()->castObject().getGroupCode().getLength()) + NEString(" codes");
+					codes_to_str = NEString(toOwner()->castObject().getGroupCodes().getLength()) + NEString(" codes");
 				break;
 
 			default:
-				codes_to_str = bank[c[toOwner()->codelist_display_index]] + "[" + c[toOwner()->codelist_display_index] + "]";
+				codes_to_str = bank[c[toOwner()->codelist_display_index].getCode()] + "[" + c[toOwner()->codelist_display_index].getCode() + "]";
 				break;
 			}
 
 			items.push(codes_to_str);
 
-			_pushItemWith(banks.getPriorityBank(), node.getPriority());
+			_pushItemWith(banks.getBank(NECodeType::PRIORITY), node.getPriorityCode());
 
 			NEString& item = items[choosed];
 			if( &item)
@@ -174,10 +174,10 @@ public:
 						NETStringList* nullpointer = 0;
 						switch(type)
 						{
-						case NECodeType::SCRIPT:	return banks.getScriptBank();
-						case NECodeType::NAME:		return banks.getNameBank();
-						case NECodeType::GROUP:		return banks.getGroupBank();
-						case NECodeType::PRIORITY:	return banks.getPriorityBank();
+						case NECodeType::SCRIPT:	return banks.getBank(NECodeType::SCRIPT);
+						case NECodeType::NAME:		return banks.getBank(NECodeType::NAME);
+						case NECodeType::GROUP:		return banks.getBank(NECodeType::GROUP);
+						case NECodeType::PRIORITY:	return banks.getBank(NECodeType::PRIORITY);
 						default:		return *nullpointer;
 						}
 					}
@@ -246,15 +246,15 @@ public:
 
 						case NECodeType::GROUP:
 							{
-								NECodeSet cs = node.getGroupCode();
+								NECodeSet cs = node.getGroupCodes();
 								cs.resize(cs.getLength() + 1);
-								cs.push(input.history_idx);
-								node.setGroupCode(cs);
+								cs.push(NECode(input.history_idx));
+								node.setGroupCodes(cs);
 							}
 							break;
 
 						case NECodeType::PRIORITY:
-							node.setPriority(input.history_idx);
+							node.setPriorityCode(input.history_idx);
 							break;
 						}
 
@@ -266,10 +266,10 @@ public:
 				if(choosed == 1 && toOwner()->codelist_display_index >= 0)
 				{
 					NENode& node = toOwner()->castObject();
-					NECodeSet cs = node.getGroupCode();
+					NECodeSet cs = node.getGroupCodes();
 					cs.remove(toOwner()->codelist_display_index);					
 					cs.resize(cs.getLength());
-					node.setGroupCode(cs);		
+					node.setGroupCodes(cs);		
 					toOwner()->codelist_display_index = toOwner()->codelist_display_index > cs.getLengthLastIndex() ? cs.getLengthLastIndex() : toOwner()->codelist_display_index;
 					onUpdateData();
 				}

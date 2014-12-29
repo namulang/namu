@@ -54,7 +54,6 @@ type_result Command::isValid() const {return 0;}
 NEBinaryFileSaver& Command::serialize(NEBinaryFileSaver& saver) const { return saver; }
 NEBinaryFileLoader& Command::serialize(NEBinaryFileLoader& loader) { return loader; }
 void Command::release() {}
-bool Command::operator!=(const Command& rhs) const { return names == rhs.names && help == rhs.help; }
 
 ListCommand::ListCommand() 
 : Command("list ls", 
@@ -96,13 +95,13 @@ NE::NEString ListCommand::execute(const NEStringSet& parameters)
 		}
 
 		cout << "Script  -------------------------\n";    
-		printShortCutSet(mng->getScriptShortCutSet());
+		printShortCutSet(mng->getShortCutSet(NECodeType::SCRIPT));
 		cout << "Name    -------------------------\n";    
-		printShortCutSet(mng->getNameShortCutSet());
+		printShortCutSet(mng->getShortCutSet(NECodeType::NAME));
 		cout << "Group   -------------------------\n";
-		printShortCutSet(mng->getGroupShortCutSet());
+		printShortCutSet(mng->getShortCutSet(NECodeType::GROUP));
 		cout << "Priority-------------------------\n";    
-		printShortCutSet(mng->getPriorityShortCutSet());
+		printShortCutSet(mng->getShortCutSet(NECodeType::PRIORITY));
 
 		system("pause");
 		LG::Core::back_buffer.readyBufferToDraw();

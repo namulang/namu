@@ -97,30 +97,24 @@ namespace NE
 	private:
 		void _executeKey(NEKey& collector, NEKey& unit)
 		{
-			if (collector.isSubClassOf(NEType::NEBOOLEAN_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NEBOOLEAN_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NEBYTE_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NEBYTE_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NEUBYTE_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NEUBYTE_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NESHORT_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NESHORT_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NEUSHORT_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NEUSHORT_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NEINT_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NEINT_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NEUINT_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NEUINT_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NEINT64_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NEINT64_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NEFLOAT_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NEFLOAT_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NEDOUBLE_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NEDOUBLE_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NESTRING_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NESTRING_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);
-			else if (collector.isSubClassOf(NEType::NEWSTRING_SET_KEY))
-				return _operate<NEBooleanSetKey, NEType::NEWSTRING_SET_KEY, NEBooleanKey>(collector, arg_index.getValue(), unit);			
+#define MAKE_COLLECTOR_BRANCH(TYPE, COLL, ELEM)	\
+	if (collector.isSubClassOf(NEType::##TYPE##)) \
+	return _operate<##COLL##, NEType::##TYPE##, ##ELEM##>(collector, arg_index.getValue(), unit)
+
+			MAKE_COLLECTOR_BRANCH(NEBOOLEAN_SET_KEY,	NEBooleanSetKey,	NEBooleanKey);
+			MAKE_COLLECTOR_BRANCH(NEBYTE_SET_KEY,		NEByteSetKey,		NEByteKey);
+			MAKE_COLLECTOR_BRANCH(NEUBYTE_SET_KEY,		NEUByteSetKey,		NEUByteKey);
+			MAKE_COLLECTOR_BRANCH(NESHORT_SET_KEY,		NEShortSetKey,		NEShortKey);
+			MAKE_COLLECTOR_BRANCH(NEUSHORT_SET_KEY,		NEUShortSetKey,		NEUShortKey);
+			MAKE_COLLECTOR_BRANCH(NEINT_SET_KEY,		NEIntSetKey,		NEIntKey);
+			MAKE_COLLECTOR_BRANCH(NEUINT_SET_KEY,		NEUIntSetKey,		NEUIntKey);
+			MAKE_COLLECTOR_BRANCH(NEINT64_SET_KEY,		NEInt64SetKey,		NEInt64Key);
+			MAKE_COLLECTOR_BRANCH(NEFLOAT_SET_KEY,		NEFloatSetKey,		NEFloatKey);
+			MAKE_COLLECTOR_BRANCH(NEDOUBLE_SET_KEY,		NEDoubleSetKey,		NEDoubleKey);
+			MAKE_COLLECTOR_BRANCH(NESTRING_SET_KEY,		NEStringSetKey,		NEStringKey);
+			MAKE_COLLECTOR_BRANCH(NEWSTRING_SET_KEY,	NEWStringSetKey,	NEWStringKey);
+			MAKE_COLLECTOR_BRANCH(NECODE_SET_KEY,		NECodeSetKey,		NECodeKey);
+#undef MAKE_COLLECTOR_BRANCH
 		}
 		template <typename CK, NEType::Type TYPE, typename UK>
 		void _operate(NEKey& ck, type_index index, NEKey& unit)
