@@ -38,4 +38,32 @@ namespace NE
 		result |= push(NEBank(NECodeType::GROUP));
 		return result |= push(NEBank(NECodeType::PRIORITY));
 	}
+
+	NEBinaryFileSaver& NEScriptEditor::Banks::serialize(NEBinaryFileSaver& saver) const
+	{
+		SuperClass::serialize(saver);
+
+		for (int n = 0; n < getLength(); n++)
+			saver << getElement(n);
+
+		return saver;
+	}
+
+	NEBinaryFileLoader& NEScriptEditor::Banks::serialize(NEBinaryFileLoader& loader)
+	{
+		SuperClass::serialize(loader);
+
+		int length = _length;
+		_length = 0;
+		for(int n = 0; n < length; n++)
+		{
+			NEBank sample;
+			loader >> sample;
+
+			push(sample);
+		}
+
+		return loader;
+	}
+
 }

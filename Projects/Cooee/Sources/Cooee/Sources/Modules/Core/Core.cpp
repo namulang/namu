@@ -81,6 +81,7 @@ void Core::openModifierFrom(NEKey& key, bool not_use_name)
 	if (__open<NEDoubleKey>(key, not_use_name))	return;
 	if (__open<NEStringKey>(key, not_use_name))	return;
 	if (__open<NEWStringKey>(key, not_use_name))	return;
+	if (__open<NECodeKey>(key, not_use_name))	return;
 	if (__open_c<NEBooleanSetKey, NEBooleanKey>(key, not_use_name))	return;
 	if (__open_c<NEByteSetKey, NEByteKey>(key, not_use_name))		return;
 	if (__open_c<NEUByteSetKey, NEUByteKey>(key, not_use_name))		return;
@@ -93,6 +94,7 @@ void Core::openModifierFrom(NEKey& key, bool not_use_name)
 	if (__open_c<NEDoubleSetKey, NEDoubleKey>(key, not_use_name))	return;
 	if (__open_c<NEStringSetKey, NEStringKey>(key, not_use_name))	return;
 	if (__open_c<NEWStringSetKey, NEWStringKey>(key, not_use_name))	return;
+	if (__open_c<NECodeSetKey, NECodeKey>(key, not_use_name))		return;
 
 	if(key.getType() == NEType::NENODE_SELECTOR)
 		LG::Core::open(Planetarium((NENodeSelector*)&key, 5, 3, 70, 18));		

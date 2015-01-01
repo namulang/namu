@@ -95,15 +95,7 @@ void HeaderModifier::CodePopUpMenu::_onAddNewCode()
 
 	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
 
-	type_result result = 0;
-	switch(_codetype)
-	{
-	case NECodeType::NAME:		result = ed.insertNameCode(_code);		break;
-	case NECodeType::GROUP:		result = ed.insertGroupCode(_code);		break;
-	case NECodeType::PRIORITY:	result = ed.insertPriorityCode(_code);	break;				
-	}
-
-	if( ! NEResult::hasError(result))
+	if( ! NEResult::hasError(ed.insertCode(NECode(_code, _codetype))))
 		_onModifyCodeName();
 }
 
@@ -122,12 +114,7 @@ void HeaderModifier::CodePopUpMenu::_onRemoveCode()
 	}
 	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
 
-	switch(_codetype)
-	{
-	case NECodeType::NAME:		ed.removeNameCode(_code);		break;
-	case NECodeType::GROUP:		ed.removeGroupCode(_code);		break;
-	case NECodeType::PRIORITY:	ed.removePriorityCode(_code);	break;
-	}
+	ed.removeCode(NECode(_code, _codetype));
 
 	delete_me = true;
 }

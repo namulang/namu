@@ -209,8 +209,7 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 	ListGliph::onKeyPressed(inputed);
 	Planetarium& planetarium = toOwner()->toCaller().toCaller();
 	NENodeSelector& key = planetarium.getNodeFilter();
-	NECodeSet cs = key.getCodes();
-	NECodeType::CodeType type = cs.getCodeType().getCodeType();
+	const NECodeType& type = key.getCodes().getCodeType();	
 	
 	switch(inputed)
 	{
@@ -267,7 +266,7 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 						NECodeSet copied = key.getCodes();
 						if(copied.getLength() == copied.getSize())
 							copied.resize(copied.getSize() + 1);
-						copied.push(input.history_idx);
+						copied.push(NECode(input.history_idx));
 						key.setCodes(copied);
 						planetarium.onUpdateData();
 						toCaller().menulist.codelist_display_index = -1;
@@ -335,36 +334,29 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 3:	//	CodeType
-			switch(type)
+			switch(type.getCodeType())
 			{
 			case NECodeType::RECENT:	
-				cs.getCodeType().setCodeType(NECodeType::ME);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::ME);
 				break;
 			case NECodeType::SCRIPT:
-				cs.getCodeType().setCodeType(NECodeType::RECENT);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::RECENT);
 				break;
 			case NECodeType::NAME:
-				cs.getCodeType().setCodeType(NECodeType::SCRIPT);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::SCRIPT);
 				break;
 			case NECodeType::GROUP:
-				cs.getCodeType().setCodeType(NECodeType::NAME);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::NAME);
 				break;
 			case NECodeType::PRIORITY:
-				cs.getCodeType().setCodeType(NECodeType::GROUP);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::GROUP);
 				break;					
 			case NECodeType::ALL:
-				cs.getCodeType().setCodeType(NECodeType::PRIORITY);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::PRIORITY);
 				break;
 			}
-
-
 			break;
+
 		case 4:	//	Use &&
 			if(key.isUsingAndOperation())
 				key.setUsingAndOperation(false);
@@ -406,31 +398,25 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 3:	//	CodeType
-			switch(type)
+			switch(type.getCodeType())
 			{
 			case NECodeType::ME:
-				cs.getCodeType().setCodeType(NECodeType::RECENT);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::RECENT);
 				break;
 			case NECodeType::RECENT:
-				cs.getCodeType().setCodeType(NECodeType::SCRIPT);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::SCRIPT);
 				break;
 			case NECodeType::SCRIPT:
-				cs.getCodeType().setCodeType(NECodeType::NAME);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::NAME);
 				break;
 			case NECodeType::NAME:
-				cs.getCodeType().setCodeType(NECodeType::GROUP);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::GROUP);
 				break;
 			case NECodeType::GROUP:
-				cs.getCodeType().setCodeType(NECodeType::PRIORITY);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::PRIORITY);
 				break;					
 			case NECodeType::PRIORITY:
-				cs.getCodeType().setCodeType(NECodeType::ALL);
-				key.setCodes(cs);
+				key.setCodesType(NECodeType::ALL);
 				break;
 			}
 			break;
@@ -558,9 +544,9 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 							copied.resize(copied.getSize() + 1);
 						
 						if(input.history_idx >= 0 && key.getModuleCodes().getCodeType().getCodeType() == NECodeType::SCRIPT)
-							copied.push(lists[input.history_idx]);
+							copied.push(NECode(lists[input.history_idx]));
 						else
-							copied.push(input.text.toInt());
+							copied.push(NECode(input.text.toInt()));
 
 						key.setModuleCodes(copied);
 						toCaller().menulist.codelist_display_index = -1;
@@ -615,16 +601,16 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 			switch(module_type)
 			{
 			case NECodeType::RECENT:
-				key.setModuleType(NECodeType::ME);
+				key.setModuleCodesType(NECodeType::ME);
 				break;
 			case NECodeType::SCRIPT:
-				key.setModuleType(NECodeType::RECENT);
+				key.setModuleCodesType(NECodeType::RECENT);
 				break;
 			case NECodeType::NAME:
-				key.setModuleType(NECodeType::SCRIPT);
+				key.setModuleCodesType(NECodeType::SCRIPT);
 				break;				
 			case NECodeType::ALL:
-				key.setModuleType(NECodeType::NAME);
+				key.setModuleCodesType(NECodeType::NAME);
 				break;
 			}
 			break;
@@ -648,24 +634,24 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 1:	//	CodeType
-			switch(key.getModuleType())
+			switch(key.getModuleCodesType().getCodeType())
 			{
 			case NECodeType::ME:
-				key.setModuleType(NECodeType::RECENT);
+				key.setModuleCodesType(NECodeType::RECENT);
 				break;
 			case NECodeType::RECENT:
-				key.setModuleType(NECodeType::SCRIPT);
+				key.setModuleCodesType(NECodeType::SCRIPT);
 				break;
 			case NECodeType::SCRIPT:
-				key.setModuleType(NECodeType::NAME);
+				key.setModuleCodesType(NECodeType::NAME);
 				break;
 			case NECodeType::NAME:
-				key.setModuleType(NECodeType::ALL);
+				key.setModuleCodesType(NECodeType::ALL);
 				break;
 			}
 			break;
 		case 2:
-			if(codelist_display_index < key.getModuleCodeSet().getLengthLastIndex())
+			if(codelist_display_index < key.getModuleCodes().getLengthLastIndex())
 				codelist_display_index++;
 		}
 		items.release();
@@ -786,15 +772,15 @@ void Modifier<NEModuleSelector>::MenuList::updateList()
 
 	items.create(3);
 	items.push(NEString("   ") + k.isUsingAutoBinding());
-	items.push(NEString("   ") + createNodeTypeStringFrom(k.getModuleType()));
+	items.push(NEString("   ") + createNodeTypeStringFrom(k.getModuleCodesType().getCodeType()));
 
 	NEString codes_to_str;
-	const NEIntSet& c = k.getModuleCodeSet();
+	const NECodeSet& c = k.getModuleCodes();
 	const NEModuleSet& ms = Kernal::getInstance().getModuleManager().getModuleSet();
 	
-	if(	k.getModuleType() == NECodeType::ALL	||
-		k.getModuleType() == NECodeType::RECENT	||
-		k.getModuleType() == NECodeType::ME		)
+	if(	k.getModuleCodesType() == NECodeType::ALL	||
+		k.getModuleCodesType() == NECodeType::RECENT	||
+		k.getModuleCodesType() == NECodeType::ME		)
 	{
 		codes_to_str = "NOT NEEDED!";				
 		codelist_display_index = -1;
@@ -809,22 +795,24 @@ void Modifier<NEModuleSelector>::MenuList::updateList()
 			{
 				for(int n=0; n < c.getLength() ;n++)
 				{
-					const NEModule& f = ms[c[n]];
+					const NEModule& f = ms[c[n].getCode()];
 					if( ! &f) continue;
-					
-					codes_to_str += f.getHeader().getName() + "[" + c[n] + "] ";
+
+					codes_to_str += f.getHeader().getName() + "[" + c[n].getCode() + "] ";
 				}
 			}
-			
+
 			break;
 
 		default:
 			{
-				const NEModule& f = ms[c[codelist_display_index]];
+				const NEModule& f = ms[c[codelist_display_index].getCode()];
 				if( ! &f)
 					codes_to_str = "해당하는 모듈을 찾을 수 없습니다.";
 				else
-					codes_to_str = NEString(codelist_display_index) + NEString("th: ") + f.getHeader().getName() + NEString("[") + NEString(c[codelist_display_index]) + "]" ;
+					codes_to_str = NEString(codelist_display_index) + 
+						NEString("th: ") + f.getHeader().getName() + 
+						NEString("[") + NEString(c[codelist_display_index].getCode()) + "]" ;
 			}			
 			break;
 		}

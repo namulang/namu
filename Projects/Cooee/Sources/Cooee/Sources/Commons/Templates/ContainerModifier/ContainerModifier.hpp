@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../../Modules/Terminal/Terminal.hpp"
+#include "../../../Modules/NameInputWindow/NameInputWindow.hpp"
 
 template <typename KEYS, typename KEY>
 class ContainerModifier : public Terminal
@@ -12,10 +13,10 @@ public:
 	{
 	public:
 		FUNC_CLONE(KeyContentList)
-		FUNC_TO_OWNER(ContainerModifier)
+			FUNC_TO_OWNER(ContainerModifier)
 
-		KeyContentList() 
-		: ListGliph(0, 25, 5, 30, 15, BLACK, WHITE, WHITE, LIGHTRED) {}
+			KeyContentList() 
+			: ListGliph(0, 25, 5, 30, 15, BLACK, WHITE, WHITE, LIGHTRED) {}
 
 		virtual void onUpdateData()
 		{
@@ -40,6 +41,11 @@ public:
 
 			switch(inputed)
 			{
+			case CONFIRM:
+				if(toOwner()->real_key)
+					toOwner()->call(NameInputWindow(toOwner()->real_key->getName()));
+				break;
+
 			case CLOSE:
 				toOwner()->delete_me = true;
 				break;

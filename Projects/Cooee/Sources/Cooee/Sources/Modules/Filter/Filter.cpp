@@ -1,25 +1,6 @@
 #include "Filter.hpp"
 #include "../Planetarium/Planetarium.hpp"
 
-namespace 
-{
-	class NameInputWindow : public ::LG::InputWindow
-	{
-	public:
-		NameInputWindow(const NEString& default_string) : InputWindow("새로운 키의 이름을 입력해주시기 바랍니다.", BLACK, LIGHTCYAN, default_string) {}
-
-		FUNC_TO_CALLER(Filter)
-		FUNC_CLONE(NameInputWindow)
-
-		virtual void onInputed()
-		{
-			Planetarium& planetarium = toCaller().toCaller();
-			if(planetarium.specified_filter)
-				planetarium.specified_filter->getName() = input.text;
-			delete_me = true;
-		}
-	};
-}
 Filter::Filter() 
 : LG::ListWindow("", 4, 17, 20, 6, LIGHTGRAY, DARKGRAY)
 {			

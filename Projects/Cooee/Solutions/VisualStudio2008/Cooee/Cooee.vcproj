@@ -566,6 +566,14 @@
 								>
 							</File>
 						</Filter>
+						<Filter
+							Name="NameInputWindow"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\NameInputWindow\NameInputWindow.hpp"
+								>
+							</File>
+						</Filter>
 					</Filter>
 					<Filter
 						Name="QueryWindow"
