@@ -2,10 +2,12 @@
 
 #include "../../Interfaces/NEOnEnlisted/NEOnEnlisted.hpp" 
 #include "../../Units/NEGlobalManagerOffer/NEGlobalManagerOffer.hpp"
+#include "../../../Modules/NENamedUnit/NENamedUnit.hpp"
 
 namespace NE
 {
 	class NEEnlistableManager;
+	class NENode;
 
 	template <typename T>
 	class NE_DLL NEEnlistableSetTemplate : public T, public NEOnEnlisted
@@ -101,4 +103,39 @@ namespace NE
 		NEEnlistableManager* _manager;
 		bool _is_enlisted;
 	};	
+
+	template <>
+	class NE_DLL NEEnlistableSetTemplate<NENamedUnit> : public NENamedUnit, public NEOnEnlisted
+	{
+	public:
+		typedef NEEnlistableSetTemplate<NENamedUnit> ThisClass;
+		typedef NENamedUnit SuperClass;
+
+	public:
+		NEEnlistableSetTemplate(const NECodeType& script_type, const NECodeType& name_type);
+		
+	public:
+		NEEnlistableSetTemplate(const ThisClass& source);
+
+	public:
+		const ThisClass& operator=(const ThisClass& source);
+
+	public:
+		NEEnlistableManager& getManager();
+		const NEEnlistableManager& getManager() const;
+		bool isManaged() const;
+		bool isEnlisted() const;
+
+	public:
+		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
+		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
+
+	protected:
+		type_result _setManager(NEEnlistableManager& manager);
+		type_result _setEnlisted(bool enlisted);
+
+	protected:
+		NEEnlistableManager* _manager;
+		bool _is_enlisted;
+	};
 }

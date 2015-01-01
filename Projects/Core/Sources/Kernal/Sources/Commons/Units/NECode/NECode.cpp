@@ -15,7 +15,7 @@ namespace NE
 	}
 
 	NECode::NECode(const NEExportable::Identifier& identifier)
-		: SuperClass(NECodeType::SCRIPT, true)
+		: SuperClass(NECodeType::MODULE_SCRIPT, true)
 	{
 		setCode(identifier);
 	}
@@ -221,7 +221,7 @@ namespace NE
 	{
 		SuperClass::serialize(saver);
 
-		if(getCodeType() == NECodeType::SCRIPT)
+		if(getCodeType() == NECodeType::MODULE_SCRIPT)
 			return _serializeAsScript(saver);
 
 		return saver << _code;
@@ -242,7 +242,7 @@ namespace NE
 	{
 		SuperClass::serialize(loader);
 
-		if(getCodeType() == NECodeType::SCRIPT)
+		if(getCodeType() == NECodeType::MODULE_SCRIPT)
 			return _serializeAsScript(loader);
 
 		return loader >> _code;

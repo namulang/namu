@@ -43,8 +43,9 @@ namespace NE
 	{
 		//		º¯°æ:
 		NEModule& pushed = getElement(index);
-		pushed._scriptcode.create(1);
-		pushed._scriptcode.push(NECode(index, NECodeType::SCRIPT));
+		NECodeSet& scripts = pushed._getScriptCodes();
+		scripts.create(1);
+		scripts.push(NECode(index, NECodeType::SCRIPT));
 
 		pushed._onFetchModule();
 	}

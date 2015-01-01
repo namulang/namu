@@ -152,11 +152,12 @@ namespace NE
 	type_result NEEnlistableManager::_onChangeCode(NENode& target, const NECodeSet& new_codes)
 	{
 		if(target.getCodes(new_codes.getCodeType()) == new_codes) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-
+		if (new_codes.getCodeType() == NECodeType::SCRIPT) return RESULT_TYPE_WARNING | RESULT_ABORT_ACTION;
 
 		//	main:
 		type_index real_index = _searchRealNodeIndex(target);
 		NEShortCutSet& shortcutset = _getShortCutSet(new_codes.getCodeType());
+		if (!&shortcutset)	return RESULT_TYPE_WARNING;
 		type_result result = shortcutset._unlist(target, real_index);
 		if(NEResult::hasError(result))
 		{

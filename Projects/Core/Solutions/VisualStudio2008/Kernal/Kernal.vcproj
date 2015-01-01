@@ -828,6 +828,10 @@
 							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEEnlistableSetTemplate\NEEnlistableSetTempate.hpp"
 							>
 						</File>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Templates\NEEnlistableSetTemplate\NEEnlistableSetTemplate.cpp"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="NETArgument"

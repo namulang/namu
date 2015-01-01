@@ -9,7 +9,8 @@ class MyMod : public NEModule
 public:
 	void setScript(type_code new1)
 	{
-		_scriptcode[0].setCode(new1);
+		NECode& c = (NECode&)getCodes(NECodeType::MODULE_SCRIPT)[0];
+		c.setCode(new1);
 	}
 	NETArgument<NEIntKey> a;
 	virtual type_result _onFetchArguments(NEArgumentList& tray)
@@ -42,7 +43,8 @@ class MyMod2 : public NEModule
 public:
 	void setScript(type_code new1)
 	{
-		_scriptcode[0].setCode(new1);
+		NECode& c = (NECode&)getCodes(NECodeType::MODULE_SCRIPT)[0];
+		c.setCode(new1);
 	}
 	NETArgument<NEIntKey> a;
 	virtual type_result _onFetchArguments(NEArgumentList& tray)
@@ -358,7 +360,7 @@ public:
 		NEModuleSelector ms1;		
 		ms1.setCodes(NECode(1, NECodeType::GROUP));
 		ms1.initializeReferingPoint();
-		ms1.setModuleCodes(outer.getCodes(NECodeType::SCRIPT));
+		ms1.setModuleCodes(outer.getCodes(NECodeType::MODULE_SCRIPT));
 
 		NEModule& found = ms1.getModule();
 		if( ! &found) return false;
@@ -1584,6 +1586,7 @@ public:
 			NETArgument<NEModuleSelector> ms;
 			NETArgument<NENodeSelector> ns_group;
 			NETArgument<NENodeSelector> ns_name;
+			NETArgument<NECodeSetKey>	csk;
 
 		public:
 			virtual const NEExportable::ModuleHeader& getHeader() const
@@ -1606,6 +1609,7 @@ public:
 			{
 				tray.push(ns_group);
 				tray.push(ns_name);
+				tray.push(csk);
 				return tray.push(ms);
 			}
 			virtual NEObject& clone() const { return *(new Temp(*this)); }
@@ -1632,7 +1636,7 @@ public:
 			{
 				NEModuleCodeSet& m = src->getModuleSet();
 				m.create(1);
-				t = (Temp*) &m[m.push(Temp())];				
+				t = (Temp*) &m[m.push(Temp())];	
 				NEModuleSelector* nms = &t->ms.getDefault();
 				nms->setManager(NEType::NESCRIPT_EDITOR);
 				NECodeSet is;
@@ -1677,6 +1681,15 @@ public:
 			key_ns->initializeReferingPoint();
 		}
 
+		NECodeSet cs = t->csk.getValue();		
+		cs.create(5);
+		cs.push(NECode(2, NECodeType::SCRIPT));
+		cs.push(NECode(1, NECodeType::NAME));
+		cs.push(NECode(0, NECodeType::GROUP));
+		cs.push(NECode(2, NECodeType::GROUP));
+		cs.push(NECode(3, NECodeType::PRIORITY));
+		t->csk.setValue(cs);
+
 		NENode* after;
 		{
 			after = &ns[ns.pushFront(NENode())];
@@ -1693,6 +1706,18 @@ public:
 		//		GROUP = 0,1		->	0, 2
 		//		PRIOR = 1		->	2
 		//		SCRIPT= 1		->	2
+		if(t->csk.getValue().getLength() < 5)
+			return false;
+		if(t->csk.getValue()[0] != NECode(3, NECodeType::SCRIPT))
+			return false;
+		if(t->csk.getValue()[1] != NECode(2, NECodeType::NAME))
+			return false;
+		if(t->csk.getValue()[2] != NECode(0, NECodeType::GROUP))
+			return false;
+		if(t->csk.getValue()[3] != NECode(3, NECodeType::GROUP))
+			return false;
+		if(t->csk.getValue()[4] != NECode(4, NECodeType::PRIORITY))
+			return false;
 		if (src->getNameCode() != 2)
 			return false;
 		if (src->getCodes(NECodeType::GROUP).getLength() != 2)
@@ -1702,6 +1727,8 @@ public:
 		if (src->getPriorityCode() != 2)
 			return false;
 		if(src->getScriptCode() != 2)
+			return false;
+		if(after->getScriptCode() != 0)
 			return false;
 
 		//	Key의 동기화 체크:
@@ -2085,7 +2112,7 @@ void main()
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
-	delete &Kernal::getInstance();
+ 	delete &Kernal::getInstance();
 
 	system("pause");
 }
