@@ -293,8 +293,8 @@ public:
 
 			switch(arg.getPurpose())
 			{
-			case NEArgumentBase::FOR_INPUT_ONLY:	setValue(-1);	break;
-			case NEArgumentBase::FOR_OUTPUT_ONLY:	setValue(1);	break;
+			case NEArgumentBase::READ_BY:	setValue(-1);	break;
+			case NEArgumentBase::WRITTEN:	setValue(1);	break;
 			default:								setValue(0);	break;
 			}				
 		}
@@ -308,7 +308,7 @@ public:
 			switch(getValue())
 			{
 			case -1:
-				arg.setPurpose(NEArgumentBase::FOR_INPUT_ONLY);
+				arg.setPurpose(NEArgumentBase::READ_BY);
 				text = "<<-----------------";
 				break;
 
@@ -317,7 +317,7 @@ public:
 				break;  
 
 			case 1:
-				arg.setPurpose(NEArgumentBase::FOR_OUTPUT_ONLY);
+				arg.setPurpose(NEArgumentBase::WRITTEN);
 				text = "------------->>";
 				break;
 			}
@@ -330,7 +330,7 @@ public:
 			{
 			case -1:
 				arg.setEnable(true);
-				arg.setPurpose(NEArgumentBase::FOR_INPUT_ONLY);
+				arg.setPurpose(NEArgumentBase::READ_BY);
 				break;
 
 			case 0:
@@ -340,7 +340,7 @@ public:
 
 			case 1:
 				arg.setEnable(true);
-				arg.setPurpose(NEArgumentBase::FOR_OUTPUT_ONLY);
+				arg.setPurpose(NEArgumentBase::WRITTEN);
 				break;
 			}			
 		}
@@ -392,15 +392,15 @@ public:
 			NEArgumentBase& arg = args[n];
 			switch(arg.getPurposeLimitation())
 			{
-			case NEArgumentBase::FOR_INPUT_ONLY:
+			case NEArgumentBase::READ_BY:
 				gears.arr.push(InputSwitch(7+n, arg));
 				break;
 
-			case NEArgumentBase::FOR_OUTPUT_ONLY:
+			case NEArgumentBase::WRITTEN:
 				gears.arr.push(OutputSwitch(7+n, arg));
 				break;
 
-			case NEArgumentBase::FOR_INPUT_OUTPUT:
+			case NEArgumentBase::READ_OR_WRITTEN:
 				gears.arr.push(InputOutputGear(7+n, arg));
 				break;
 

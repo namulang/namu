@@ -73,7 +73,7 @@ namespace NE
 	NEArgumentBase::NEArgumentBase(NEType::Type type, Purpose limitation)
 		: _type_validation(type), _limitation(limitation)
 	{
-		setPurpose(FOR_INPUT_OUTPUT);
+		setPurpose(READ_OR_WRITTEN);
 	}
 
 	NEArgumentBase::NEArgumentBase(const ThisClass& rhs)
@@ -99,7 +99,7 @@ namespace NE
 	void NEArgumentBase::_release()
 	{
 		_type_validation = NEType::UNDEFINED;
-		_purpose = _limitation = FOR_INPUT_OUTPUT;		
+		_purpose = _limitation = READ_OR_WRITTEN;		
 	}
 
 	NEArgumentBase::~NEArgumentBase()
