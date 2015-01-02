@@ -20,8 +20,10 @@ namespace NE
 	protected:
 		virtual type_result _onFetchModule()
 		{
-			arg_else.setEnable(false);
+			arg_logic.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_flags.setPurposeLimitation(NEArgumentBase::READ_BY);
 			arg_flags.setEnable(false);
+			arg_else.setEnable(false);
 
 			return RESULT_SUCCESS;
 		}
@@ -39,10 +41,14 @@ namespace NE
 	protected:
 		virtual type_result _onExecute()
 		{
-			if(_judgeConditions())
-				return _executeModules(arg_action);
+			type_result result = RESULT_FALSE;
+			if (_judgeConditions())
+			{
+				result = RESULT_TRUE;
+				return result |= _executeModules(arg_action);
+			}
 
-			return _executeModules(arg_else);
+			return result |= _executeModules(arg_else);
 		}
 	private:
 		type_result _executeModules(NETArgument<NEModuleCodeSetKey>& modules)
@@ -56,32 +62,37 @@ namespace NE
 		{
 			NEModuleCodeSet& conditions	= arg_condition.getValue();
 			NEBooleanSet& flags				= arg_flags.getValue();
-			type_int arg_logic				= arg_logic.getValue();
-			if(arg_logic == 4) return true;	//	ALWAYS
+			type_int logic					= arg_logic.getValue();
 
 			for(int n=0; n < conditions.getLength() ;n++)
 			{
-				type_bool	flag = (flags.isEnable() && n <= flags.getLengthLastIndex()) ?
-					flags[n] :
-				true;
-				type_bool	condition = NEResult::hasTrue(conditions[n].execute());
+				type_bool	flag = (arg_flags.isEnable() && n <= flags.getLengthLastIndex()) ?
+					flags[n] : true,
+					condition = NEResult::hasTrue(conditions[n].execute()),
+					result = flag == condition;
 
-				if( ! arg_logic.getValue())
+				switch (logic)
 				{
-					if(flag == condition)
-						return true;
-				}
-				else
-				{	//	And 연산:
-					if(flag != condition)
-						return false;
-				}
+				case 0:		//	AND TRUE	=	하나라도 FALSE면 FALSE
+					if( ! result)	return false;	break;
+
+				case 1:		//	AND FALSE	=	하나라도 TRUE면 FALSE
+					if(result)		return false;	break;
+
+				case 2:		//	OR TRUE		=	하나라도 TRUE면 TRUE
+					if(result)		return true;	break;
+
+				case 3:		//	OR FALSE	=	하나라도 FALSE면 TRUE
+					if( ! result)	return true;	break;
+
+				case 4:		//	ALWAYS
+					//	ALWAYS라 하더라도 Condtions 모듈은 실행이 되어야 한다.
+					break;
+				}				
 			}
 
-			if(arg_logic.getValue())	
-				return false;	//	OR연산에서 전부다 FALSE가 나온다면
-			else
-				return true;	//	AND연산에서 전부다 TRUE가 나오면
+			return	logic == 0 ||
+				logic == 1	;
 		}
 
 	public:

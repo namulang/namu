@@ -7,7 +7,6 @@ namespace NE
 	class NE_DLL BinaryFiler : public NEModule
 	{
 	public:
-		NETArgument<NEBooleanKey>		arg_is_load;
 		NETArgument<NETStringKey>		arg_path;		
 		NETArgument<NEIntKey>			arg_target0_manager_type;
 		NETArgument<NENodeSelector>		arg_target1;
@@ -28,7 +27,7 @@ namespace NE
 				_header.getReleaseDate() = "2014-12-03";
 				_header.getComment() =
 					"File을 로드 및 저장하는 모듈입니다.\n"
-					"Binary 및 Text 형태로 저장/로드가 가능하며, \n"
+					"Binary 및 Text 형태로 저장/로드가 가능하며, 경로를 INPUT으로하면 LOAD가, OUTPUT으로 하면 저장이 됩니다.\n"
 					"Target으로 Manager 전체의 내용이나 Selector로 특정한 데이터만 선택할 수 있습니다.\n"
 					"Target에는 총 4종류가 존재하며, disable될 시 연산에 적용되지 않습니다.\n\n"
 					"ManagerType은 다음과 같습니다.\n"
@@ -39,7 +38,7 @@ namespace NE
 				NETStringSet& argcomments = _header.getArgumentsComments();
 				argcomments.create(7);
 				argcomments.push("연산종류\n주어진 대상에 대하여, Load(true), Save(false)인지를 정합니다.");
-				argcomments.push("경로\n프로그램이 실행된 경로를 기준으로 파일의 위치를 적어줍니다. 이때, 파일명과 확장자까지 모두 적어줘야 합니다.\n예) ../resources/actor.bmp");
+				argcomments.push("경로\n프로그램이 실행된 경로를 기준으로 파일의 위치를 적어줍니다. 이때, 파일명과 확장자까지 모두 적어줘야 합니다.\n예) ../resources/actor.bmp\nWRITTEN으로 하면 LOAD가 되며, OUTPUT으로 하면 저장이 됩니다.");
 				argcomments.push("대상0\n시스템에 존재하는 Manager를 통채로 저장/로드 합니다.\n0: NodeManager, 1:ScriptManager, 2:ScriptEditor, 3:ModuleManager, 4:INIManager, 5:DebugManager, 6:PanelManager, 7:EventHandler");
 				argcomments.push("대상1\nSelector로 가져온 대상에 대하여 연산을 합니다.\n대상0과 마찬가지로, disabled 되면 적용되지 않습니다.");
 				argcomments.push("대상2\nSelector로 가져온 대상에 대하여 연산을 합니다.\n대상0과 마찬가지로, disabled 되면 적용되지 않습니다.");
@@ -53,13 +52,17 @@ namespace NE
 	protected:
 		virtual type_result _onExecute()
 		{
-			NEFileSaverFlag flag = ! arg_mode.isEnable() ? NEFileSaverFlag::NEFILESAVERFLAG_OVERWRITE : NEFileSaverFlag(arg_mode.getValue());
+			NEFileSaverFlag flag = ! arg_mode.isEnable() ? NEFileSaverFlag::NEFILESAVERFLAG_OVERWRITTEN : NEFileSaverFlag(arg_mode.getValue());
 			NEBinaryFileAccessor* accessor = 0x00;
-			if(arg_is_load.getValue())
+			if(arg_path.getPurpose() == NEArgumentBase::READ_BY)
 				accessor = &NEBinaryFileLoader(arg_path.getValue().toCharPointer());
-			else
+			else if(arg_path.getPurpose() == NEArgumentBase::WRITTEN)
 				accessor = &NEBinaryFileSaver(arg_path.getValue().toCharPointer(), flag);
-			
+			else
+			{
+				ALERT_ERROR("목적(Purpose)가 불분명 합니다.");
+				return RESULT_TYPE_ERROR;
+			}
 			accessor->open();
 			if( ! accessor->isFileOpenSuccess())
 			{
@@ -78,12 +81,12 @@ namespace NE
 				{
 				case 0:	tray.push(Kernal::getInstance().getNodeManager());		break;
 				case 1: tray.push(Kernal::getInstance().getScriptManager());	break;
-				//case 2:	tray.push(Editor::getInstance().getScriptEditor());		break;
+					//case 2:	tray.push(Editor::getInstance().getScriptEditor());		break;
 				case 2:	tray.push(Kernal::getInstance().getModuleManager());	break;
 				case 3:	tray.push(Kernal::getInstance().getINIManager());		break;
 				case 4:	tray.push(Kernal::getInstance().getDebugManager());		break;
-				//case 6:	tray.push(Editor::getInstance().getPanelManager());		break;
-				//case 7:	tray.push(Editor::getInstance().getEventHandler());		break;
+					//case 6:	tray.push(Editor::getInstance().getPanelManager());		break;
+					//case 7:	tray.push(Editor::getInstance().getEventHandler());		break;
 				default:
 					ALERT_WARNING("%d에 해당하는 Manager가 없습니다.", arg_target0_manager_type.getValue());
 
@@ -118,7 +121,6 @@ namespace NE
 
 		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
-			tray.push(arg_is_load);
 			tray.push(arg_path);
 			tray.push(arg_target0_manager_type);
 			tray.push(arg_target1);
@@ -129,10 +131,11 @@ namespace NE
 		}
 		virtual type_result _onFetchModule()
 		{
+			arg_path.setPurposeLimitation(NEArgumentBase::READ_BY_OR_WRITTEN);
+			arg_path.setPurpose(NEArgumentBase::READ_BY);
 			arg_target1.setEnable(false);
 			arg_target2.setEnable(false);
 			arg_target3.setEnable(false);
-			arg_is_load.setDefault(false);
 
 			return RESULT_SUCCESS;
 		}
