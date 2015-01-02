@@ -121,6 +121,10 @@ namespace NE
 
 			return RESULT_SUCCESS;
 		}
+		virtual type_result _onFetchModule()
+		{
+			return arg_method.setPurposeLimitation(NEArgumentBase::READ_BY);			
+		}
 
 	private:
 		type_result _applyLogicOperation(const NEBooleanKey& result)

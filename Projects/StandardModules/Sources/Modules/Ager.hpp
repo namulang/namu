@@ -20,7 +20,11 @@ namespace NE
 	protected:
 		virtual type_result _onFetchModule()
 		{
+			arg_value.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_way.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_top_border.setPurposeLimitation(NEArgumentBase::READ_BY);
 			arg_top_border.setEnable(false);
+			arg_bottom_border.setPurposeLimitation(NEArgumentBase::READ_BY);
 			arg_bottom_border.setEnable(false);			
 
 			return RESULT_SUCCESS;
@@ -67,7 +71,7 @@ namespace NE
 				args.create(5);
 				args.push("Target\nSet인 Key는 적용되지 않습니다.");
 				args.push("Delta\n매 프레임마다 Target을 증감시킬 값입니다. 양수를 입력하면 증가가, 음수를 입력하면 감소가 됩니다.");
-				args.push("\nDelta를 적용할 Function\n현재는 오직 1차 함수로만 변화되며, 이값은 사용되지 않습니다.\n예를들어 변화시킬값이 -5이면 매 프레임마다 키에 -5가 더해집니다.");
+				args.push("Function\nDelta를 적용할 수학적 함수\n현재는 오직 1차 함수로만 변화되며, 이값은 사용되지 않습니다.\n예를들어 변화시킬값이 -5이면 매 프레임마다 키에 -5가 더해집니다.");
 				args.push("상한값\nTarget이 증가될때 이 값보다 커지지 않도록 만듭니다.\ndisabled 되면 동작하지 않습니다.");
 				args.push("하한값\nTarget이 감소될때 이 값보다 작지 않도록 만듭니다.\ndisabled되면 동작하지 않습니다.");
 			}

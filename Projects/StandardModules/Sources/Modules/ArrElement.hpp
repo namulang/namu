@@ -79,6 +79,11 @@ namespace NE
 
 			return RESULT_SUCCESS;
 		}
+		virtual type_result _onFetchModule()
+		{
+			arg_method.setPurposeLimitation(NEArgumentBase::READ_BY);
+			return arg_index.setPurposeLimitation(NEArgumentBase::READ_BY);
+		}
 		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
 			tray.push(arg_method);

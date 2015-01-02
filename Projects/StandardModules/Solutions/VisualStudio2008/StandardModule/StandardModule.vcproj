@@ -304,6 +304,30 @@
 					RelativePath="..\..\..\Sources\Modules\If.hpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\KeyTagger.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\ModuleSelectorTagger.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\ModuleTagger.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\NamedUnitTagger.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\NodeSelectorTagger.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\NodeTagger.hpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
