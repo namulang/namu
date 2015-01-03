@@ -3,9 +3,16 @@
 #include "../Commons/EntryPointName.hpp"
 #include "../Modules/Ager.hpp"
 #include "../Modules/ALU.hpp"
-#include "../Modules/BinaryFiler.hpp"
 #include "../Modules/ArrElement.hpp"
+#include "../Modules/BinaryFiler.hpp"
 #include "../Modules/If.hpp"
+#include "../Modules/NodeTagger.hpp"
+#include "../Modules/ModuleTagger.hpp"
+#include "../Modules/KeyTagger.hpp"
+#include "../Modules/NodeSelectorTagger.hpp"
+//#include "../Modules/ModuleSelectorTagger.hpp"
+//#include "../Modules/KeySelectorTagger.hpp"
+//#include "../Modules/.hpp"
 
 #ifndef StandardModule_EXPORTS
 #	ifdef DEVELOPER

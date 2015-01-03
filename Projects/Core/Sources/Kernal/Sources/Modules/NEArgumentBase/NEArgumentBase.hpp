@@ -15,7 +15,7 @@
 //				여기서 주의할 점은, READ_BY, WRITTEN은 어디까지나 주체가 
 //				System 혹은 Module이라는 점이다.
 //
-//			READ_BY_OR_WRITTEN:
+//			READ_OR_WRITTEN:
 //				사용자는 인자에 대한 키와 함께 어떠한 용도로 사용되는지 명시도 요구
 //				되어진다.
 #pragma once

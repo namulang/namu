@@ -19,7 +19,6 @@ namespace NE
 			SuperClass::_onFetchArguments(tray);
 
 			tray.push(arg_module_codes);
-			tray.push(arg_use_module_auto_binding);
 
 			return RESULT_SUCCESS;
 		}
@@ -37,7 +36,7 @@ namespace NE
 				if (arg_module_codes.getPurpose() == NEArgumentBase::READ_BY)
 					result |= m.setModuleCodes(codes);
 				else
-					result |= arg_module_codes.setValue(n.getModuleCodes(codes.getCodeType()));
+					result |= arg_module_codes.setValue(m.getModuleCodes());
 			}			
 
 			return result;
@@ -45,14 +44,7 @@ namespace NE
 		virtual type_result _onExecute()
 		{
 			type_result result = RESULT_SUCCESS;
-			NEKeySelector& ks = arg_targets.getValue();
-			while(NEKey* k = &ks.getKey())
-			{
-				if (k->isSubClassOf(NEType::NENODE_SELECTOR))
-					result |= _passPipes(static_cast<NENodeSelector&>(*k));
-				if (k->isSubClassOf(NEType::NEMODULE_SELECTOR))
-					result |= _passPipes(static_cast<NEModuleSelector&>(*k));
-			}			
+			NEModuleSelector& ms = arg_targets.getValue();
 
 			return result;
 		}

@@ -60,7 +60,7 @@ namespace NE
 				//"\tEnable:\t객체의 활성화 여부.\n"
 				//"\tCodes:\t객체의 주어진 Code값들";					
 				NETStringSet args = supers.getArgumentsComments();
-				args.resize(3);
+				args.resize(args.getLength() + 1);
 				args.pushFront("Targets\n속성을 가져오거나 할당하게될 Node 들입니다.");
 			}
 

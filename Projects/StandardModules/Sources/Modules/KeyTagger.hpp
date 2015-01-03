@@ -4,15 +4,15 @@
 
 namespace NE
 {
-	class NE_DLL KeyTagger : public NamedUnitTagger
+	class NE_DLL KeyTagger : public NEModule
 	{
 	public:
 		typedef KeyTagger ThisClass;
-		typedef NamedUnitTagger SuperClass;
+		typedef NEModule SuperClass;
 
 	public:
-		NETArgument<NEModuleSelector>	arg_targets;
-		NETArgument<NETStringKey>		arg_name;
+		NETArgument<NEKeySelector>	arg_targets;
+		NETArgument<NETStringKey>	arg_name;
 
 	protected:
 		virtual type_result _onFetchArguments(NEArgumentList& tray)
@@ -20,25 +20,27 @@ namespace NE
 			tray.push(arg_targets);
 			tray.push(arg_name);
 
-			return SuperClass::_onFetchArguments(tray);
+			return RESULT_SUCCESS;
 		}
 		virtual type_result _onFetchModule()
 		{
-			SuperClass::_onFetchModule();
-
-			arg_name.setPurposeLimitation(NEArgumentBase::READ_BY_OR_WRITTEN);
+			arg_name.setPurposeLimitation(NEArgumentBase::READ_OR_WRITTEN);
 			arg_name.setEnable(false);
 			return RESULT_SUCCESS;
 		}
 
 	protected:
-		using SuperClass::_onExecute;
 		virtual type_result _onExecute()
 		{
 			type_result result = RESULT_SUCCESS;
-			NEModuleSelector& ns = arg_targets.getValue();
-			while (NEModule* n = &ns.getModule())
-				result |= _onExecute(*n);
+			NEKeySelector& ks = arg_targets.getValue();
+			while (NEKey* n = &ks.getKey())
+			{
+				if(arg_name.getPurpose() == NEArgumentBase::READ_BY)
+					n->getName() = arg_name.getValue();
+				else
+					result |= arg_name.setValue(n->getName());
+			}
 
 			return result;
 		}
@@ -65,7 +67,7 @@ namespace NE
 				_instance.getComment() =
 					"참조한 Module 객체들의 특정 속성값들을 가져오거나(get) 할당할 수 있습니다(set).\n"
 					"\tTargets:\t참조할 객체들\n"
-					"\tKeyName:\t키의 이름\n" +
+					"\tKeyName:\t키의 이름";
 					supers.getComment();
 				//"주어진 객체들의 다음과 같은 속성들에 대해서 값을 가져오거나 할당 할 수 있습니다.\n"
 				//"\tEnable:\t객체의 활성화 여부.\n"

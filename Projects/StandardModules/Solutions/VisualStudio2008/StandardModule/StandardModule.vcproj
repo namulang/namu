@@ -321,6 +321,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Sources\Modules\NodeSelectorBase.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Modules\NodeSelectorTagger.hpp"
 					>
 				</File>

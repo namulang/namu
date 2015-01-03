@@ -52,7 +52,7 @@ namespace NE
 	protected:
 		virtual type_result _onExecute()
 		{
-			NEFileSaverFlag flag = ! arg_mode.isEnable() ? NEFileSaverFlag::NEFILESAVERFLAG_OVERWRITTEN : NEFileSaverFlag(arg_mode.getValue());
+			NEFileSaverFlag flag = ! arg_mode.isEnable() ? NEFileSaverFlag::NEFILESAVERFLAG_OVERWRITE : NEFileSaverFlag(arg_mode.getValue());
 			NEBinaryFileAccessor* accessor = 0x00;
 			if(arg_path.getPurpose() == NEArgumentBase::READ_BY)
 				accessor = &NEBinaryFileLoader(arg_path.getValue().toCharPointer());
@@ -131,7 +131,7 @@ namespace NE
 		}
 		virtual type_result _onFetchModule()
 		{
-			arg_path.setPurposeLimitation(NEArgumentBase::READ_BY_OR_WRITTEN);
+			arg_path.setPurposeLimitation(NEArgumentBase::READ_OR_WRITTEN);
 			arg_path.setPurpose(NEArgumentBase::READ_BY);
 			arg_target1.setEnable(false);
 			arg_target2.setEnable(false);

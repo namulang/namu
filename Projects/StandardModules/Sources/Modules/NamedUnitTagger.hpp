@@ -17,9 +17,9 @@ namespace NE
 	protected:
 		virtual type_result _onFetchModule()
 		{
-			arg_enable.setPurposeLimitation(NEArgumentBase::READ_BY_OR_WRITTEN);
+			arg_enable.setPurposeLimitation(NEArgumentBase::READ_OR_WRITTEN);
 			arg_enable.setEnable(false);
-			arg_codes.setPurposeLimitation(NEArgumentBase::READ_BY_OR_WRITTEN);
+			arg_codes.setPurposeLimitation(NEArgumentBase::READ_OR_WRITTEN);
 			arg_codes.setEnable(false);
 
 			return RESULT_SUCCESS;
