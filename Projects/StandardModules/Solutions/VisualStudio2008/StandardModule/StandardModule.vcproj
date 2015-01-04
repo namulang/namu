@@ -293,6 +293,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Sources\Modules\ArgumentTagger.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Modules\ArrElement.hpp"
 					>
 				</File>
@@ -302,6 +306,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\Sources\Modules\If.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\Instancer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\KeySelectorTagger.hpp"
 					>
 				</File>
 				<File
@@ -321,11 +333,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Sources\Modules\NodeSelectorBase.hpp"
+					RelativePath="..\..\..\Sources\Modules\NodeSelectorTagger.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Sources\Modules\NodeSelectorTagger.hpp"
+					RelativePath="..\..\..\Sources\Modules\NodeSelectorTaggerBase.hpp"
 					>
 				</File>
 				<File

@@ -53,13 +53,9 @@ namespace NE
 		virtual const NEExportable::ModuleHeader& getHeader() const
 		{
 			static NEExportable::ModuleHeader _instance;
-			static bool is_triggered_once = false;
-
-			if (!is_triggered_once)
+			
+			if(_instance.isValid() != RESULT_NOTHING)
 			{
-				is_triggered_once = true;
-				NEExportable::ModuleHeader supers = SuperClass::getHeader();
-
 				_instance.getName() = "KeyTagger";
 				_instance.getDeveloper() = "kniz";
 				_instance.setRevision(1);
@@ -72,10 +68,10 @@ namespace NE
 				//"주어진 객체들의 다음과 같은 속성들에 대해서 값을 가져오거나 할당 할 수 있습니다.\n"
 				//"\tEnable:\t객체의 활성화 여부.\n"
 				//"\tCodes:\t객체의 주어진 Code값들";					
-				NETStringSet args = supers.getArgumentsComments();
-				args.resize(4);
-				args.pushFront("KeyName\n키의 이름입니다.");
-				args.pushFront("Targets\n속성을 가져오거나 할당하게될 Module 들입니다.");
+				NETStringSet& args = _instance.getArgumentsComments();
+				args.create(2);
+				args.push("Targets\n속성을 가져오거나 할당하게될 Module 들입니다.");
+				args.push("KeyName\n키의 이름입니다.");
 			}
 
 			return _instance;

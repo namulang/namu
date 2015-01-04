@@ -59,9 +59,11 @@ namespace NE
 				//"주어진 객체들의 다음과 같은 속성들에 대해서 값을 가져오거나 할당 할 수 있습니다.\n"
 				//"\tEnable:\t객체의 활성화 여부.\n"
 				//"\tCodes:\t객체의 주어진 Code값들";					
-				NETStringSet args = supers.getArgumentsComments();
-				args.resize(args.getLength() + 1);
-				args.pushFront("Targets\n속성을 가져오거나 할당하게될 Node 들입니다.");
+				NETStringSet& args = _instance.getArgumentsComments();
+				const NETStringSet& super = supers.getArgumentsComments();
+				args.create(super.getLength() + 1);
+				args.push("Targets\n속성을 가져오거나 할당하게될 Node 들입니다.");
+				args.push(super);
 			}
 
 			return _instance;
