@@ -33,11 +33,11 @@ namespace NE
 	template
 	class NE_DLL NETLimitedArgument<NENodeCodeSetKey>;
 	template
-	class NE_DLL NETLimitedArgument<NENodeSelector>;
+	class NE_DLL NETSelectorArgument<NENodeSelector>;
 	template
-	class NE_DLL NETLimitedArgument<NEModuleSelector>;
+	class NE_DLL NETSelectorArgument<NEModuleSelector>;
 	template
-	class NE_DLL NETLimitedArgument<NEKeySelector>;
+	class NE_DLL NETSelectorArgument<NEKeySelector>;
 
 	NETArgument<NEKey>::NETArgument(const ThisClass& rhs)
 		: SuperClass(rhs)

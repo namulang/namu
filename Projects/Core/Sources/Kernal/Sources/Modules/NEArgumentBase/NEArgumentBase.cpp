@@ -48,6 +48,15 @@ namespace NE
 		_release();
 	}
 
+	type_result NEArgumentBase::_onPrepareExecute()
+	{
+		return RESULT_SUCCESS;
+	}
+	type_result NEArgumentBase::_onPostExecute()
+	{
+		return RESULT_SUCCESS;
+	}
+
 	NEBinaryFileSaver& NEArgumentBase::serialize(NEBinaryFileSaver& saver) const
 	{
 		SuperClass::serialize(saver);

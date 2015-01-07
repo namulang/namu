@@ -109,29 +109,30 @@ void Modifier<NEBooleanKey>::onKeyPressed(char inputed)
 
 
 Modifier<NENodeSelector>::Modifier()
-	: Window(14, 17, 42, 8, LIGHTGRAY, DARKGRAY),
-	header			(0, 15, 18, 10, 1, WHITE, LIGHTRED, "Manager"),
-	count_header	(0, 15, 19, 10, 1, WHITE, LIGHTRED, "Count"),
-	bind_header		(0, 15, 20, 10, 1, WHITE, LIGHTRED, "Bind?"),
-	code_type_header(0, 15, 21, 10, 1, WHITE, LIGHTRED, "NodeType"),
-	use_and_header	(0,	15, 22, 10, 1, WHITE, LIGHTRED, "Use &&"),
-	codelist_header	(0, 15, 23, 10, 1, WHITE, LIGHTRED, "Codes")
+: Window(14, 16, 42, 9, LIGHTGRAY, DARKGRAY),
+header				(0, 15, 17, 10, 1, WHITE, LIGHTRED, "Manager"),
+count_header		(0, 15, 18, 10, 1, WHITE, LIGHTRED, "Count"),
+bind_header			(0, 15, 19, 10, 1, WHITE, LIGHTRED, "Bind?"),
+code_type_header	(0, 15, 20, 10, 1, WHITE, LIGHTRED, "NodeType"),
+use_and_header		(0,	15, 21, 10, 1, WHITE, LIGHTRED, "Use &&"),
+peeking_lock_header	(0, 15, 22, 10, 1, WHITE, LIGHTRED, "PeekLock"),
+codelist_header		(0, 15, 23, 10, 1, WHITE, LIGHTRED, "Codes")
 {
-	regist(7, &header, &count_header, &bind_header, &code_type_header, &use_and_header, &codelist_header, &menulist);
+	regist(8, &header, &count_header, &bind_header, &code_type_header, &use_and_header, &peeking_lock_header, &codelist_header, &menulist);
 }
 
 
 Modifier<NENodeSelector>::Modifier(const Modifier& rhs)
-	: Window(rhs), header(rhs.header), count_header(rhs.count_header), bind_header(rhs.bind_header), 
-	code_type_header(rhs.code_type_header), use_and_header(rhs.use_and_header), codelist_header(rhs.codelist_header), 
-	menulist(rhs.menulist)
+: Window(rhs), header(rhs.header), count_header(rhs.count_header), bind_header(rhs.bind_header), 
+code_type_header(rhs.code_type_header), use_and_header(rhs.use_and_header), codelist_header(rhs.codelist_header), 
+menulist(rhs.menulist), peeking_lock_header(rhs.peeking_lock_header)
 {
-	regist(7, &header, &count_header, &bind_header, &code_type_header, &use_and_header, &codelist_header, &menulist);
+	regist(8, &header, &count_header, &bind_header, &code_type_header, &use_and_header, &peeking_lock_header, &codelist_header, &menulist);
 }
 
 
 Modifier<NENodeSelector>::MenuList::MenuList() 
-	: ListGliph(0, 25, 18, 30, 6, BLACK, WHITE, WHITE, LIGHTRED), codelist_display_index(-1) {}
+: ListGliph(0, 25, 17, 30, 7, BLACK, WHITE, WHITE, LIGHTRED), codelist_display_index(-1) {}
 
 NEString Modifier<NENodeSelector>::MenuList::createNodeTypeStringFrom(NECodeType::CodeType type)
 {
@@ -169,12 +170,13 @@ void Modifier<NENodeSelector>::MenuList::updateList()
 
 	NECodeType::CodeType type = k.getCodes().getCodeType().getCodeType();
 
-	items.create(6);
+	items.create(7);
 	items.push(NEString("   ") + NEType::getTypeName(k.getManagerType()));
 	items.push(NEString("   ") + k.getCountLimit());
 	items.push(NEString("   ") + k.isUsingAutoBinding());
 	items.push(NEString("   ") + createNodeTypeStringFrom(type));
 	items.push(NEString("   ") + k.isUsingAndOperation());
+	items.push(NEString("   ") + k.isPeekingLocked());
 
 	const NETStringList& bank = getProperBankFrom(type);
 	NEString codes_to_str;
@@ -210,11 +212,11 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 	Planetarium& planetarium = toOwner()->toCaller().toCaller();
 	NENodeSelector& key = planetarium.getNodeFilter();
 	const NECodeType& type = key.getCodes().getCodeType();	
-	
+
 	switch(inputed)
 	{
 	case CONFIRM:
-		if(choosed == 5)
+		if(choosed == 6)
 		{
 			if(codelist_display_index == -2)
 			{
@@ -222,7 +224,7 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 				{
 				public:
 					FUNC_TO_CALLER(Modifier<NENodeSelector>)
-					virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
+						virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
 					CodeInputer() : LG::InputWindow("새로 추가할 CODE를 좌우 방향키로 선택하세요", BLACK, WHITE) 
 					{
 
@@ -363,6 +365,10 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 5:
+			key.isPeekingLocked() = ! key.isPeekingLocked();
+			break;
+
+		case 6:
 			if(codelist_display_index > -2)
 				codelist_display_index--;
 			break;
@@ -427,6 +433,10 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 5:
+			key.isPeekingLocked() = ! key.isPeekingLocked();
+			break;
+
+		case 6:
 			if(codelist_display_index < key.getCodes().getLengthLastIndex())
 				codelist_display_index++;
 		}

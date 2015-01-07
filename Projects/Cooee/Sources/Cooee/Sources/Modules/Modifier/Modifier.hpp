@@ -379,9 +379,9 @@ public:
 	};
 
 	FUNC_CLONE(Modifier)
-		FUNC_TO_CALLER(Filter)
+	FUNC_TO_CALLER(Filter)
 
-		Gliph header, count_header, bind_header, code_type_header, use_and_header, codelist_header;
+	Gliph header, count_header, bind_header, code_type_header, use_and_header, peeking_lock_header, codelist_header;
 	MenuList menulist;
 };
 

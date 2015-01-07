@@ -115,6 +115,10 @@ namespace NE
 	public:
 		bool isNeedingBinding() const;
 
+	protected:
+		virtual type_result _onPrepareExecute();
+		virtual type_result _onPostExecute();
+
 	private:
 		void _release();
 		ThisClass& _assign(const ThisClass& source);

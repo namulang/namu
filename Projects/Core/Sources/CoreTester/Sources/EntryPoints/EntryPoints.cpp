@@ -2042,6 +2042,196 @@ public:
 	}
 };
 
+class RecentNodeSelectingInifiniteTest : public TestCase
+{
+public:
+	RecentNodeSelectingInifiniteTest() : TestCase("test that NodeSelector works well in recent-mode.") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+
+
+		class MyMod : public NEModule {
+		public:
+			bool result;
+			virtual type_result _onExecute() {
+				using namespace NE;
+				NENodeSelector nsel;
+				{
+					nsel.setManager(NEType::NESCRIPT_EDITOR);
+					nsel.setCodes(NECodeType(NECodeType::RECENT));
+					result = false;
+					int start = timeGetTime();
+					while (NENode* i = &nsel.getNode())
+						if (timeGetTime() - start > 2000)	//	무한 루프를 돌지 않나?
+							return RESULT_TYPE_ERROR;
+
+					result = true;
+					return RESULT_SUCCESS;
+
+				}
+			}
+			virtual NEObject& clone() const {
+				return *(new MyMod(*this));
+			}
+			virtual const NE::NEExportable::ModuleHeader& getHeader() const {
+				using namespace NE;
+				static NEExportable::ModuleHeader _instance;
+				if (_instance.isValid() != RESULT_SUCCESS) {
+					_instance.getName() = "MyMod";
+					_instance.getDeveloper() = "kniz";
+				}
+				return _instance;
+			}
+		};
+
+		NENodeCodeSet& ncs = manager.getRootNodes();
+		ncs.create(3);
+		{
+			NENode& node = ncs[ncs.push(NENode())];
+			NEKeyCodeSet& ks = node.getKeySet();
+		}
+		MyMod* my;
+		{
+			NENode node;
+			node.setCodes(NECode(1, NECodeType::NAME));
+			NENode& n = ncs[ncs.push(node)];
+			n.getModuleSet().create(1);
+			my = (MyMod*)(&n.getModuleSet()[n.getModuleSet().push(MyMod())]);
+		}
+		{
+			NENode node;
+			ncs.push(node);
+		}
+
+		manager.execute();
+
+		return my->result;
+	}
+};
+
+
+class SelectorPeekingTest : public TestCase
+{
+public:
+	SelectorPeekingTest() : TestCase("test Peeking Lock function in selectors.") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
+		ed.initialize();
+		NENodeCodeSet& ns = ed.getScriptNodes();
+
+		ns.create(5);
+		for (int n = 0; n < 5; n++)
+			ns.push(NENode());
+
+		NEScriptManager& scm = Kernal::getInstance().getScriptManager();
+		const NENodeCodeSet& scmn = scm.getScriptNodes();
+		ed.getScriptHeader().getName() = "test";
+		ed.getScriptHeader().getDeveloper() = "kniz";
+		ed.synchronizeTo(scm);
+		manager.initialize();
+		NERootNodeCodeSet& rns = manager.getRootNodes();
+
+		class MyMod : public NEModule {
+		public:
+			NETArgument<NENodeSelector> sel;
+			NEListTemplate<NENode*> pointers;
+
+			virtual type_result _onFetchArguments(NEArgumentList& tray)
+			{
+				tray.push(sel);
+
+				return RESULT_SUCCESS;
+			}
+			virtual type_result _onExecute()
+			{
+				for (int n = 0; n < 4; n++)
+					pointers.push(&sel.getValue().getNode());
+
+				return RESULT_SUCCESS;
+			}
+			virtual NEObject& clone() const {
+				return *(new MyMod(*this));
+			}
+			virtual const NEExportable::ModuleHeader& getHeader() const {
+				static NEExportable::ModuleHeader _instance;
+				if (_instance.isValid() != RESULT_SUCCESS)
+				{
+					_instance.getName() = "MyMod";
+					_instance.getDeveloper() = "kniz";
+				}
+
+				return _instance;
+			}
+		};
+
+
+
+		manager.initialize();
+
+		NENode	*n0 = &rns[0],
+			*n1 = &rns[rns.push(scmn[1])],
+			*n2 = &rns[rns.push(scmn[2])],
+			*n3 = &rns[rns.push(scmn[3])],
+			*n4 = &rns[rns.push(scmn[4])];
+		MyMod* m;
+		NENodeSelector* ns11;
+		{
+			//	1, 2
+			NEModuleCodeSet& ms = n4->getModuleSet();
+			ms.create(1);			
+			m = (MyMod*)&ms[ms.push(MyMod())];
+			NEKeyCodeSet& ks = n4->getKeySet();
+			ks.create(1);
+			NENodeSelector ns1("selector");
+			NECodeSet is2((NECodeType(NECodeType::ALL)));
+			ns1.setManager(NEType::NENODE_MANAGER);
+			ns1.setCountLimit(2);
+			ns1.setCodes(is2);
+			ns11 = (NENodeSelector*) &ks[ks.push(ns1)];
+			m->sel.setKeyName("selector");			
+			if (ns11->isPeekingLocked()) return false;
+			n4->execute();
+			m->sel.setUsingPeekingLock(true);
+			n4->execute();			
+		}
+
+		if (ns11->isPeekingLocked()) return false;		
+		NEListTemplate<NENode*>& pointers = m->pointers;		
+		pointers.push(ns11->getNode());
+		pointers.push(ns11->getNode());
+		pointers.push(ns11->getNode());
+		pointers.push(ns11->getNode());
+		if(pointers.getLength() != 12) return false;
+		if (&pointers[0] != n0) return false;
+		if (&pointers[1] != n1) return false;
+		if (&pointers[2] != 0x00) return false;
+		if (&pointers[3] != n2) return false;
+
+		if (&pointers[4] != n2) return false;
+		if (&pointers[5] != 0x00) return false;
+		if (&pointers[6] != n2) return false;
+		if (&pointers[7] != 0x00) return false;
+
+		if (&pointers[8] != n3) return false;
+		if (&pointers[9] != 0x00) return false;
+		if (&pointers[10] != n4) return false;
+		if (&pointers[11] != n0) return false;
+
+
+
+
+
+		return true;
+	}
+};
+
 //class Test : public TestCase
 //{
 //public:
@@ -2109,6 +2299,8 @@ void main()
 	KeyConversionTest().test();
 	ModuleOwnerTest().test();
 	CodeTypePolicyTest().test();
+	RecentNodeSelectingInifiniteTest().test();
+	SelectorPeekingTest().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
