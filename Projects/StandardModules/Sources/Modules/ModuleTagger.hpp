@@ -63,7 +63,7 @@ namespace NE
 				const NETStringSet& super = supers.getArgumentsComments();
 				args.create(super.getLength() + 1);
 				args.push("Targets\n속성을 가져오거나 할당하게될 Module 들입니다.");
-				args.push(supers);
+				args.push(super);
 			}
 
 			return _instance;

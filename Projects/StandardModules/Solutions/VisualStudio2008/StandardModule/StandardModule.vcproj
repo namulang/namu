@@ -305,6 +305,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Sources\Modules\For.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\ForEach.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Modules\If.hpp"
 					>
 				</File>

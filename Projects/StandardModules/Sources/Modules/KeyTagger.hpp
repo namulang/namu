@@ -64,7 +64,6 @@ namespace NE
 					"참조한 Module 객체들의 특정 속성값들을 가져오거나(get) 할당할 수 있습니다(set).\n"
 					"\tTargets:\t참조할 객체들\n"
 					"\tKeyName:\t키의 이름";
-					supers.getComment();
 				//"주어진 객체들의 다음과 같은 속성들에 대해서 값을 가져오거나 할당 할 수 있습니다.\n"
 				//"\tEnable:\t객체의 활성화 여부.\n"
 				//"\tCodes:\t객체의 주어진 Code값들";					

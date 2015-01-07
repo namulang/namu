@@ -10,8 +10,10 @@
 #include "../Modules/ModuleTagger.hpp"
 #include "../Modules/KeyTagger.hpp"
 #include "../Modules/NodeSelectorTagger.hpp"
-//#include "../Modules/ModuleSelectorTagger.hpp"
-//#include "../Modules/KeySelectorTagger.hpp"
+#include "../Modules/ModuleSelectorTagger.hpp"
+#include "../Modules/KeySelectorTagger.hpp"
+#include "../Modules/ForEach.hpp"
+#include "../Modules/For.hpp"
 //#include "../Modules/.hpp"
 
 #ifndef StandardModule_EXPORTS
