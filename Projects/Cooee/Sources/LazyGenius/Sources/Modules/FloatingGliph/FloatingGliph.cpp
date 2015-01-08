@@ -18,7 +18,7 @@ namespace LG
 
 	void FloatingGliph::onDraw()
 	{
-		if(timeGetTime() - term_for_hiding >= 2500)
+		if(timeGetTime() - term_for_hiding >= 4500)
 			return;
 
 		Gliph::onDraw();

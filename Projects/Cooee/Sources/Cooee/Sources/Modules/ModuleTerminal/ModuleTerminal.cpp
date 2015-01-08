@@ -11,8 +11,8 @@ void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
 	public:
 		ArgumentPopUp() : LG::ListWindow("¿Ã Argument¿«...", 30, 10, 20, 7, BLACK, WHITE, WHITE, LIGHTCYAN) {}
 		FUNC_TO_CALLER(ModuleTerminal)
-			virtual NEObject& clone() const {
-				return *(new ArgumentPopUp(*this));
+		virtual NEObject& clone() const {
+			return *(new ArgumentPopUp(*this));
 		}
 
 		virtual void onUpdateData()
@@ -162,5 +162,5 @@ void ModuleTerminal::ModulePanel::onUpdateData()
 ModuleTerminal::FloatingPanel::FloatingPanel()
 : LG::FloatingGliph(0, 0, 60, 5, DARKGRAY, WHITE)
 {
-	term_for_hiding -= 4000;
+	term_for_hiding -= 4500;
 }

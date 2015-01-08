@@ -44,7 +44,7 @@ public:
 				return;
 
 			x = 15;
-			y = focused_item_y + 1;
+			y = focused_item_y - height - 1;
 
 			const NETStringSet& arg_comments = toOwner()->castObject().getHeader().getArgumentsComments();
 
@@ -172,8 +172,8 @@ public:
 		enable_header(0, 30, 4, 30, 1, DARKGRAY, LIGHTGRAY, "\t\t\t\t\t\tEnable"),
 		namecode_header(0, 30, 5, 30, 1, DARKGRAY, LIGHTGRAY, "\t\t\t\t\t  Namecode")
 	{
-		regist(11, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist, &gears, &argument_panel,
-			&enable_header, &enable, &namecode_header, &namecode);
+		regist(11, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist, &gears,
+			&enable_header, &enable, &namecode_header, &namecode, &argument_panel);
 
 		enable.Gliph::back = CYAN;
 		enable.Gliph::fore = LIGHTCYAN;
@@ -185,8 +185,8 @@ public:
 		argument_header(rhs.argument_header), argument_namelist(rhs.argument_namelist), argument_typelist(rhs.argument_typelist),
 		enable(rhs.enable), enable_header(rhs.enable_header), namecode_header(rhs.namecode_header), namecode(rhs.namecode), gears(rhs.gears)	
 	{
-		regist(11, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist, &gears, &argument_panel,
-			&enable_header, &enable, &namecode_header, &namecode);
+		regist(11, &module_panel, &content_panel, &argument_header, &argument_namelist, &argument_typelist, &gears,
+			&enable_header, &enable, &namecode_header, &namecode, &argument_panel);
 
 		enable.Gliph::back = CYAN;
 		enable.Gliph::fore = LIGHTCYAN;
@@ -204,10 +204,10 @@ public:
 	}
 
 
-	class InputSwitch : public LG::SwitchGliph
+	class OutputSwitch : public LG::SwitchGliph
 	{
 	public:
-		InputSwitch(int y, NEArgumentBase& new_arg) : LG::SwitchGliph(0, 45, y, 7, LIGHTCYAN, CYAN), arg(new_arg) 
+		OutputSwitch(int y, NEArgumentBase& new_arg) : LG::SwitchGliph(0, 45, y, 7, LIGHTCYAN, CYAN), arg(new_arg) 
 		{
 			nobe.back = DARKGRAY;
 			nobe.fore = WHITE;
@@ -215,7 +215,7 @@ public:
 		}
 		virtual NEObject& clone() const 
 		{
-			return *(new InputSwitch(*this));
+			return *(new OutputSwitch(*this));
 		}
 		virtual void onUpdateData()
 		{
@@ -223,12 +223,12 @@ public:
 			if(getValue())	//	True면 실제 arg는 false.
 			{
 				nobe.text = "O";
-				text = "--OFF--";
+				text = "-OFF---";
 			}
 			else
 			{
 				nobe.text = "<";				
-				text = "-<-----";			
+				text = "--WRITE";			
 			}
 		}
 		virtual void onKeyPressed(char inputed)
@@ -243,10 +243,10 @@ public:
 		NEArgumentBase& arg;
 	};
 
-	class OutputSwitch : public LG::SwitchGliph
+	class InputSwitch : public LG::SwitchGliph
 	{
 	public:
-		OutputSwitch(int y, NEArgumentBase& new_arg) : LG::SwitchGliph(0, 53, y, 7, LIGHTCYAN, CYAN), arg(new_arg) 
+		InputSwitch(int y, NEArgumentBase& new_arg) : LG::SwitchGliph(0, 53, y, 7, LIGHTCYAN, CYAN), arg(new_arg) 
 		{		
 			nobe.back = DARKGRAY;
 			nobe.fore = WHITE;
@@ -254,19 +254,19 @@ public:
 		}
 		virtual NEObject& clone() const 
 		{
-			return *(new OutputSwitch(*this));
+			return *(new InputSwitch(*this));
 		}
 		virtual void onUpdateData()
 		{
 			SwitchGliph::onUpdateData();
 			if(getValue())
 			{
-				text = "----->-";
+				text = "-READ--";
 				nobe.text = ">";
 			}
 			else
 			{
-				text = "---OFF-";
+				text = "-OFF---";
 				nobe.text = "O";
 			}
 		}	
@@ -309,7 +309,7 @@ public:
 			{
 			case -1:
 				arg.setPurpose(NEArgumentBase::READ_BY);
-				text = "<<-----------------";
+				text = "<<-----READ------";
 				break;
 
 			case 0:
@@ -318,7 +318,7 @@ public:
 
 			case 1:
 				arg.setPurpose(NEArgumentBase::WRITTEN);
-				text = "------------->>";
+				text = "-----WRITE--->>";
 				break;
 			}
 		}
