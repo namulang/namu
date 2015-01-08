@@ -25,13 +25,23 @@ namespace NE
 
 		modulelist.push( Ager() );
 		modulelist.push( ALU() );
-		modulelist.push( ArrElementer() );
+		modulelist.push( ArgumentTagger() );
+		modulelist.push( ArrTagger() );
 		modulelist.push( BinaryFiler() );
+		modulelist.push( BlockStatements() );
+		modulelist.push( Children() );
+		modulelist.push( For() );
+		modulelist.push( ForEach() );
+		modulelist.push( ForEachElement() );
 		modulelist.push( If() );
-		modulelist.push( NodeTagger() );
-		modulelist.push( ModuleTagger() );
+		modulelist.push( Instancer() );
+		modulelist.push( KeySelectorTagger() );
 		modulelist.push( KeyTagger() );
+		modulelist.push( ModuleSelectorTagger() );
+		modulelist.push( ModuleTagger() );
 		modulelist.push( NodeSelectorTagger() );
+		modulelist.push( NodeTagger() );
+
 		return modulelist;
 	}
 }

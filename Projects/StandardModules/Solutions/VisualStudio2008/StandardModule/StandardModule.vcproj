@@ -297,11 +297,19 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Sources\Modules\ArrElement.hpp"
+					RelativePath="..\..\..\Sources\Modules\ArrTagger.hpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\Sources\Modules\BinaryFiler.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\BlockStatements.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\Children.hpp"
 					>
 				</File>
 				<File
@@ -310,6 +318,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\Sources\Modules\ForEach.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\ForEachElement.hpp"
 					>
 				</File>
 				<File

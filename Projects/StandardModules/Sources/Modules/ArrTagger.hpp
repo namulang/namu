@@ -4,20 +4,22 @@
 
 namespace NE
 {
-	class NE_DLL ArrElementer : public NEModule
+	class NE_DLL ArrTagger : public NEModule
 	{
 	public:
 		NETArgument<NEIntKey>	arg_method;
 		NETArgument<NEKey>		arg_collector;
 		NETArgument<NEIntKey>	arg_index;
 		NETArgument<NEKey>		arg_unit;
+		NETArgument<NEIntKey>	arg_size;
+		NETArgument<NEIntKey>	arg_length;
 
 		virtual const NEExportable::ModuleHeader& getHeader() const
 		{
 			static NEExportable::ModuleHeader _header;
 			if (NEResult::hasError(_header.isValid()))
 			{
-				_header.getName() = "ArrElementer";
+				_header.getName() = "ArrTagger";
 				_header.getDeveloper() = "kniz";
 				_header.setRevision(2);
 				_header.getVersion() = "0.0.1a";
@@ -27,15 +29,21 @@ namespace NE
 					"특정 index의 요소에 대해 get, insert, remove를 수행하는 Module 입니다.\n"
 					"연산의 종류는 다음과 같습니다\n"
 					"\t0:\tget. 주어진 index에 위치한 요소를 Unit Argument에 담습니다.\n"
-					"\t1:\tinsert. 주어진 index에 Unit Argument의 값을 추가합니다.\n"
-					"\t2:\tremove. 주어진 index에 있는 원소를 삭제합니다. 만약 Index Argument가 disabled 된 경우, Unit과 일치하는 원소를 삭제합니다.\n"
-					"\t3:\tfind. Unit과 일치하는 값을 Collector에서 찾아 그 index를 저장합니다.못찾을 경우 -1이 나오게 됩니다.\n";
+					"\t1:\tset. 주어진 index에 UnitArgument를 할당합니다.\n"
+					"\t2:\tinsert. 주어진 index에 Unit Argument의 값을 추가합니다.\n"
+					"\t3:\tremove. 주어진 index에 있는 원소를 삭제합니다. 만약 Index Argument가 disabled 된 경우, Unit과 일치하는 원소를 삭제합니다.\n"
+					"\t4:\tfind. Unit과 일치하는 값을 Collector에서 찾아 그 index를 저장합니다.못찾을 경우 -1이 나오게 됩니다.\n"
+					"또한, 다음과 같은 속성들의 값을 가져올 수 있습니다.\n"
+					"\tSize: Container의 크기 입니다.\n"
+					"\tLength: Length 입니다.";
 				NETStringSet& argcomments = _header.getArgumentsComments();
-				argcomments.create(4);
+				argcomments.create(6);
 				argcomments.push("Method\n연산의 종류입니다.\n0: get[기본값], 1: insert, 2: remove, 3: find");
 				argcomments.push("Collector\n연산을 수행할 Collector Key입니다.");
 				argcomments.push("Index\n해당 Collector의 Index 입니다.");
 				argcomments.push("Unit\n연산에 따른 결과 및 인자로 사용됩니다.\nget에서는 index의 원소가 할당되어지고, insert에서는 주어진 index로 삽입됩니다.");
+				argcomments.push("Length\n해당 Collector의 Length 속성을 가져옵니다.");
+				argcomments.push("Size\n해당 Collector의 Size 속성을 가져옵니다,");
 			}
 
 			return _header;
@@ -75,6 +83,8 @@ namespace NE
 
 				if (collector_key)
 					collector_key_e = &collector_key->getKey();
+				else
+					break;
 			}
 
 			return RESULT_SUCCESS;
@@ -82,7 +92,13 @@ namespace NE
 		virtual type_result _onFetchModule()
 		{
 			arg_method.setPurposeLimitation(NEArgumentBase::READ_BY);
-			return arg_index.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_index.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_length.setPurposeLimitation(NEArgumentBase::WRITTEN);
+			arg_length.setEnable(false);
+			arg_size.setPurposeLimitation(NEArgumentBase::WRITTEN);
+			arg_size.setEnable(false);
+
+			return RESULT_SUCCESS;
 		}
 		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
@@ -90,13 +106,16 @@ namespace NE
 			tray.push(arg_collector);
 			tray.push(arg_index);
 			tray.push(arg_unit);
+			tray.push(arg_length);
+			tray.push(arg_size);
+
 			return RESULT_SUCCESS;
 		}
 
 	public:
 		virtual NEObject& clone() const
 		{
-			return *(new ArrElementer(*this));
+			return *(new ArrTagger(*this));
 		}
 
 	private:
@@ -104,7 +123,7 @@ namespace NE
 		{
 #define MAKE_COLLECTOR_BRANCH(TYPE, COLL, ELEM)	\
 	if (collector.isSubClassOf(NEType::##TYPE##)) \
-	return _operate<##COLL##, NEType::##TYPE##, ##ELEM##>(collector, arg_index.getValue(), unit)
+	return _operate<##COLL##::Trait, NEType::##TYPE##, ##ELEM##>(static_cast<COLL&>(collector).getValue(), arg_index.getValue(), unit)
 
 			MAKE_COLLECTOR_BRANCH(NEBOOLEAN_SET_KEY,	NEBooleanSetKey,	NEBooleanKey);
 			MAKE_COLLECTOR_BRANCH(NEBYTE_SET_KEY,		NEByteSetKey,		NEByteKey);
@@ -119,40 +138,48 @@ namespace NE
 			MAKE_COLLECTOR_BRANCH(NESTRING_SET_KEY,		NEStringSetKey,		NEStringKey);
 			MAKE_COLLECTOR_BRANCH(NEWSTRING_SET_KEY,	NEWStringSetKey,	NEWStringKey);
 			MAKE_COLLECTOR_BRANCH(NECODE_SET_KEY,		NECodeSetKey,		NECodeKey);
+			MAKE_COLLECTOR_BRANCH(NESTRING_KEY,			NEStringKey,		NECharKey);
+			MAKE_COLLECTOR_BRANCH(NEWSTRING_KEY,		NEWStringKey,		NEWCharKey);
 #undef MAKE_COLLECTOR_BRANCH
 		}
-		template <typename CK, NEType::Type TYPE, typename UK>
-		void _operate(NEKey& ck, type_index index, NEKey& unit)
+		template <typename C, NEType::Type TYPE, typename UK>
+		void _operate(C& c, type_index index, NEKey& unit)
 		{
-			if( ! ck.isSubClassOf(TYPE)) return;
-			CK& casted = static_cast<CK&>(ck);
-			if(index < 0 || index > casted.getValue().getLengthLastIndex()) return;
+			if(index < 0 || index > c.getLengthLastIndex()) return;
 
 			switch(arg_method.getValue())
 			{
 			case 0:	//	GET
-				unit = UK(casted.getValue()[index]);
+				unit = UK(c[index]);
 				break;
 
-			case 1:	//	INSERT				
-				casted.getValue().insert(index, UK(unit).getValue());
+			case 1:	//	SET
+				c.setElement(index, UK(unit).getValue());
 				break;
 
-			case 2:	//	REMOVE
+			case 2:	//	INSERT				
+				c.insert(index, UK(unit).getValue());
+				break;
+
+			case 3:	//	REMOVE
 				{
 					type_index n = NE_INDEX_ERROR;
 					if (!arg_index.isEnable())
-						n = casted.getValue().find(UK(unit).getValue());
+						n = c.find(UK(unit).getValue());
 
-					casted.getValue().remove(n);
+					c.remove(n);
 				}
 				break;
 
-			case 3:	//	FIND
-				arg_index.setValue(casted.getValue().find(UK(unit).getValue()));
+			case 4:	//	FIND
+				arg_index.setValue(c.find(UK(unit).getValue()));
 				break;
 			}
 
+			if (arg_length.isEnable())
+				arg_length.setValue(c.getLength());
+			if (arg_size.isEnable())
+				arg_size.setValue(c.getSize());
 
 			//	post:
 			return;

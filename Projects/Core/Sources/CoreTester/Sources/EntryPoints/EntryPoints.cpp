@@ -2245,7 +2245,7 @@ public:
 		arr.push(arr[0]);
 
 		if(arr.getLength() < 2) return false;
-		if(arr[0] == arr[1]) return false;
+		if(&arr[0] == &arr[1]) return false;
 		if(&arr[0] == &sample) return false;
 		if(arr[0] != sample) return false;
 
