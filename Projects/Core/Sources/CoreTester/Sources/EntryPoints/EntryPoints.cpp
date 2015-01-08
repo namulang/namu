@@ -1583,10 +1583,11 @@ public:
 		class Temp : public NEModule
 		{
 		public:
-			NETArgument<NEModuleSelector> ms;
-			NETArgument<NENodeSelector> ns_group;
-			NETArgument<NENodeSelector> ns_name;
-			NETArgument<NECodeSetKey>	csk;
+			NETArgument<NEModuleSelector>	ms;
+			NETArgument<NENodeSelector>		ns_group;
+			NETArgument<NENodeSelector>		ns_name;
+			NETArgument<NECodeSetKey>		csk;
+			NETArgument<NENodeCodeSetKey>	nsk;
 
 		public:
 			virtual const NEExportable::ModuleHeader& getHeader() const
@@ -1610,6 +1611,7 @@ public:
 				tray.push(ns_group);
 				tray.push(ns_name);
 				tray.push(csk);
+				tray.push(nsk);
 				return tray.push(ms);
 			}
 			virtual NEObject& clone() const { return *(new Temp(*this)); }
@@ -1633,7 +1635,7 @@ public:
 			c.push(NECode(1));
 			src->setCodes(c);
 			src->setCodes(NECode(1, NECodeType::NAME));
-			{
+			{				
 				NEModuleCodeSet& m = src->getModuleSet();
 				m.create(1);
 				t = (Temp*) &m[m.push(Temp())];	
@@ -1664,6 +1666,16 @@ public:
 
 				key_ns->setManager(NEType::NESCRIPT_EDITOR);
 				key_ns->setCodes(NECode(1, NECodeType::PRIORITY));
+				NENodeCodeSet& ncs1 = t->nsk.getValue();
+				{
+					ncs1.create(2);
+					NENode& n = ncs1[ncs1.push(NENode())];
+					NECodeSet ic1(3, NECodeType::GROUP);
+					ic1.push(NECode(1));
+					ic1.push(NECode(2));
+					ic1.push(NECode(3));
+					n.setCodes(ic1);
+				}
 			}
 
 			if (&t->ms.getValue().getNode() != src)	//	SCRIPT
@@ -1707,6 +1719,15 @@ public:
 		//		PRIOR = 1		->	2
 		//		SCRIPT= 1		->	2
 		if(t->csk.getValue().getLength() < 5)
+			return false;
+		NENodeCodeSet& myncs = t->nsk.getValue();
+		NENode& n = myncs[0];
+		if( ! &n)
+			return false;
+		const NECodeSet& mycs = n.getCodes(NECodeType::GROUP);
+		if(mycs.getLength() < 3)
+			return false;
+		if(mycs[0] != NECode(2, NECodeType::GROUP))
 			return false;
 		if(t->csk.getValue()[0] != NECode(3, NECodeType::SCRIPT))
 			return false;

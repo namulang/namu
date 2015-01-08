@@ -12,11 +12,12 @@ public:
 	virtual type_result synchronize(NEModuleCodeSet& mcs);
 	virtual type_result synchronize(NEKey& key);
 	virtual type_result synchronize(NECodeSet& cs);
-	virtual bool synchronize(NECode& code);
+	virtual type_result synchronize(NECode& code);
+	virtual type_result synchronize(NENode& target);
 
 protected:
 	void _setCodesDirectly(NENode& target, const NECodeSet& new_codes) const;
-	virtual type_result _onSynchronize(NENode& node_to_be_synchronized) = 0;	
+	
 	
 protected:
 	NEStandardScriptEditor& _owner;

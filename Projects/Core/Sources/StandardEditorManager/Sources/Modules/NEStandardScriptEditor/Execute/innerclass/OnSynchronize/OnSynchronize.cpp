@@ -36,7 +36,7 @@ namespace NE
 		{
 			if(_stop_finding) return result;
 			NENode& target = ncs[n];
-			result = _onSynchronize(target);
+			result = synchronize(target);
 
 			NEKeyCodeSet& kcs = target.getKeySet();
 			for(int n=0; n < kcs.getLength() ;n++)
@@ -47,8 +47,6 @@ namespace NE
 			}
 
 			result |= synchronize(target.getModuleSet());
-			//_owner._synchronizeCodesInKey(keyset[n], getCode(), _is_insertion_mode);
-			return result;
 		}
 
 		return result;
@@ -132,11 +130,14 @@ namespace NE
 				n++;
 		}
 
+		if(cs.getLength() < cs.getSize())
+			cs.resize(cs.getLength());
+
 		return RESULT_SUCCESS;
 	}
 
 	//	true 반환시 Code를 삭제하라는 뜻이다.
-	bool NEStandardScriptEditor::OnSynchronize::synchronize(NECode& code)
+	type_result NEStandardScriptEditor::OnSynchronize::synchronize(NECode& code)
 	{
 		const NECodeType& type = getCode();
 		const NECode& my_code = getCode();
@@ -158,4 +159,14 @@ namespace NE
 		return false;
 	}
 
+	type_result NEStandardScriptEditor::OnSynchronize::synchronize(NENode& target)
+	{
+		NECodeSet codeset = target.getCodes(getCode());
+
+		type_result result = synchronize(codeset);
+
+		_setCodesDirectly(target, codeset);
+
+		return result;
+	}
 }
