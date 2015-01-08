@@ -44,7 +44,7 @@ namespace NE
 				min = arg_min.getValue(),
 				delta = max - min,
 				scale_factor = static_cast<float>(rand()) / RAND_MAX,
-				answer = scale_factor * delta;
+				answer = min + scale_factor * delta;
 
 			arg_output.setValue(answer);
 
