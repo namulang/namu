@@ -32,9 +32,9 @@ public:
 	{
 	public:
 		FUNC_CLONE(FloatingPanel)
-			FUNC_TO_OWNER(ModuleTerminal)
+		FUNC_TO_OWNER(ModuleTerminal)
 
-			FloatingPanel();
+		FloatingPanel();
 
 		virtual void onUpdateData()
 		{
@@ -44,7 +44,7 @@ public:
 				return;
 
 			x = 15;
-			y = focused_item_y + 3;
+			y = focused_item_y + 1;
 
 			const NETStringSet& arg_comments = toOwner()->castObject().getHeader().getArgumentsComments();
 

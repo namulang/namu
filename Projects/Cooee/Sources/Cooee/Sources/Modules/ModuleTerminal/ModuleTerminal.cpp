@@ -160,7 +160,7 @@ void ModuleTerminal::ModulePanel::onUpdateData()
 }
 
 ModuleTerminal::FloatingPanel::FloatingPanel()
-: LG::FloatingGliph(0, 0, 60, 3, DARKGRAY, WHITE)
+: LG::FloatingGliph(0, 0, 60, 5, DARKGRAY, WHITE)
 {
-	term_for_hiding -= 2500;
+	term_for_hiding -= 4000;
 }
