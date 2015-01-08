@@ -290,6 +290,7 @@ public:
 			break;
 
 		case CLOSE:
+		case ENTER:
 			delete_me = true;
 			break;
 		}		
