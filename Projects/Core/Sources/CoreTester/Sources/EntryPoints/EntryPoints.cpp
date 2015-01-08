@@ -1935,7 +1935,7 @@ public:
 		n.getModuleSet().create(2);
 		n.getModuleSet().push(MyMod());
 		NEModule&m = n.getModuleSet()[n.getModuleSet().push(MyMod())];
-		m.execute();
+		n.getModuleSet().execute();
 		if(&m.getOwner() != &n.getModuleSet())
 			return false;
 		const NENodeManager::LocalStack& ls = Kernal::getInstance().getNodeManager().getLocalStack();
@@ -2201,7 +2201,7 @@ public:
 			m->sel.setUsingPeekingLock(true);
 			n4->execute();			
 		}
-
+		
 		if (ns11->isPeekingLocked()) return false;		
 		NEListTemplate<NENode*>& pointers = m->pointers;		
 		pointers.push(ns11->getNode());
@@ -2227,6 +2227,27 @@ public:
 
 
 
+
+		return true;
+	}
+};
+
+class StringSetDeepCopytest : public TestCase
+{
+public:
+	StringSetDeepCopytest()	: TestCase("test that StringSet manages instances on heap area.") {}
+	virtual bool onTest() 
+	{
+		NEStringSet arr;
+		arr.create(2);
+		NEString sample("hello");
+		arr.push(sample);
+		arr.push(arr[0]);
+
+		if(arr.getLength() < 2) return false;
+		if(arr[0] == arr[1]) return false;
+		if(&arr[0] == &sample) return false;
+		if(arr[0] != sample) return false;
 
 		return true;
 	}
@@ -2301,6 +2322,7 @@ void main()
 	CodeTypePolicyTest().test();
 	RecentNodeSelectingInifiniteTest().test();
 	SelectorPeekingTest().test();
+	StringSetDeepCopytest().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();

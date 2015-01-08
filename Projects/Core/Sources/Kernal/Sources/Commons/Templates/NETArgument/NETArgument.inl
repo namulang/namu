@@ -290,8 +290,6 @@ namespace NE
 		{
 			_use_peeking_lock = new_peeking_lock;
 
-			getValue().isPeekingLocked() = _use_peeking_lock;
-
 			return RESULT_SUCCESS;
 		}
 
