@@ -1902,7 +1902,8 @@ public:
 		if(ik.getValue() != 99)
 			return false;
 		ik += NEStringKey("1");
-		if(ik.getValue() != 100)
+		ik++;
+		if (ik.getValue() != 101)
 			return false;
 
 		fk.negate();
@@ -1910,8 +1911,8 @@ public:
 			fk.getValue() > -3.14f + 0.001f	)
 			return false;
 		fk = ik;
-		if(fk.getValue() != 100.0f)
-			return false;
+		if(fk.getValue() != 101.0f)
+			return false;		
 		fk.makeReciprocal();
 		if( 0.01-0.0001f > fk.getValue()	||
 			0.01+0.0001f < fk.getValue()	)

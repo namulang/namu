@@ -131,6 +131,28 @@ namespace NE
 	}
 
 	template <typename T, NEType::Type type>
+	type_result NETArithmeticKey<T, type>::increase()
+	{
+		_value++;
+
+		return RESULT_SUCCESS;
+	}
+
+	template <>
+	type_result NETArithmeticKey<type_bool, NEType::NEBOOLEAN_KEY>::increase();
+
+	template <typename T, NEType::Type type>
+	type_result NETArithmeticKey<T, type>::decrease()
+	{
+		_value--;
+
+		return RESULT_SUCCESS;
+	}
+
+	template <>
+	type_result NETArithmeticKey<type_bool, NEType::NEBOOLEAN_KEY>::decrease();
+
+	template <typename T, NEType::Type type>
 	type_result NETArithmeticKey<T, type>::multiply(NEKey& result, const NEKey& operand2) const
 	{
 		ThisClass converted;

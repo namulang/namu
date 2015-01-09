@@ -333,6 +333,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Sources\Modules\KeyboardSpy.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Modules\KeySelectorTagger.hpp"
 					>
 				</File>
@@ -362,6 +366,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\Sources\Modules\NodeTagger.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\Random.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\Timer.hpp"
 					>
 				</File>
 			</Filter>

@@ -35,12 +35,15 @@ namespace NE
 		modulelist.push( ForEachElement() );
 		modulelist.push( If() );
 		modulelist.push( Instancer() );
+		modulelist.push( KeyboardSpy() );
 		modulelist.push( KeySelectorTagger() );
 		modulelist.push( KeyTagger() );
 		modulelist.push( ModuleSelectorTagger() );
 		modulelist.push( ModuleTagger() );
 		modulelist.push( NodeSelectorTagger() );
 		modulelist.push( NodeTagger() );
+		modulelist.push( Random() );
+		modulelist.push( Timer() );
 
 		return modulelist;
 	}

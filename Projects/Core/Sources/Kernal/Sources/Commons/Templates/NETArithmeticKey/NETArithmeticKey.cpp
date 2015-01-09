@@ -940,5 +940,22 @@ namespace NE
 
 		return RESULT_SUCCESS;
 	}
+
+
+	template <>
+	type_result NE_DLL NETArithmeticKey<type_bool, NEType::NEBOOLEAN_KEY>::increase()
+	{
+		_value = !_value;
+
+		return RESULT_SUCCESS;
+	}
+
+	template <>
+	type_result NE_DLL NETArithmeticKey<type_bool, NEType::NEBOOLEAN_KEY>::decrease()
+	{
+		_value = !_value;
+
+		return RESULT_SUCCESS;
+	}
 }
 #pragma warning(pop)

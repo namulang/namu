@@ -499,7 +499,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 				{
 				public:
 					FUNC_TO_CALLER(Modifier<NEModuleSelector>)
-					virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
+						virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
 					CodeInputer() : LG::InputWindow("새로 추가할 CODE를 입력하세요.", BLACK, WHITE) 
 					{
 
@@ -509,7 +509,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 					{
 						lists.release();
 						NEModuleSelector& key = toCaller().toCaller().toCaller().getModuleFilter();
-						if(key.getModuleCodes().getCodeType().getCodeType() == NECodeType::NAME) 
+						if(key.getModuleCodes().getCodeType().getCodeType() == NECodeType::MODULE_NAME) 
 						{
 							text = "새로 추가할 모듈 NameCode를 입력하세요.\n반드시 숫자로 입력하며, 자동 동기화가 안됩니다.";
 							return;
@@ -541,6 +541,12 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 						case ENTER:
 						case MAP:
 							LG::InputWindow::onKeyPressed(inputed);
+							break;
+
+						default:
+							if (toCaller().toCaller().toCaller().getModuleFilter().getModuleCodes().getCodeType().getCodeType() == NECodeType::MODULE_NAME)
+								LG::InputWindow::onKeyPressed(inputed);
+							break;
 						}
 					}
 
@@ -552,11 +558,11 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 						NECodeSet copied = key.getModuleCodes();
 						if(copied.getLength() == copied.getSize())
 							copied.resize(copied.getSize() + 1);
-						
+
 						if(input.history_idx >= 0 && key.getModuleCodes().getCodeType().getCodeType() == NECodeType::SCRIPT)
-							copied.push(NECode(lists[input.history_idx]));
+							copied.push(NECode(lists[input.history_idx], NECodeType(NECodeType::SCRIPT, false)));
 						else
-							copied.push(NECode(input.text.toInt()));
+							copied.push(NECode(input.text.toInt(), NECodeType(NECodeType::NAME, false)));
 
 						key.setModuleCodes(copied);
 						toCaller().menulist.codelist_display_index = -1;
@@ -571,7 +577,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 
 				switch(module_type)
 				{
-				case NECodeType::SCRIPT:	case NECodeType::NAME:
+				case NECodeType::MODULE_SCRIPT:	case NECodeType::MODULE_NAME:
 					toOwner()->call(CodeInputer());
 					break;
 				}
@@ -613,14 +619,14 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 			case NECodeType::RECENT:
 				key.setModuleCodesType(NECodeType::ME);
 				break;
-			case NECodeType::SCRIPT:
+			case NECodeType::MODULE_SCRIPT:
 				key.setModuleCodesType(NECodeType::RECENT);
 				break;
-			case NECodeType::NAME:
-				key.setModuleCodesType(NECodeType::SCRIPT);
+			case NECodeType::MODULE_NAME:
+				key.setModuleCodesType(NECodeType::MODULE_SCRIPT);
 				break;				
 			case NECodeType::ALL:
-				key.setModuleCodesType(NECodeType::NAME);
+				key.setModuleCodesType(NECodeType::MODULE_NAME);
 				break;
 			}
 			break;
@@ -650,12 +656,12 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 				key.setModuleCodesType(NECodeType::RECENT);
 				break;
 			case NECodeType::RECENT:
-				key.setModuleCodesType(NECodeType::SCRIPT);
+				key.setModuleCodesType(NECodeType::MODULE_SCRIPT);
 				break;
-			case NECodeType::SCRIPT:
-				key.setModuleCodesType(NECodeType::NAME);
+			case NECodeType::MODULE_SCRIPT:
+				key.setModuleCodesType(NECodeType::MODULE_NAME);
 				break;
-			case NECodeType::NAME:
+			case NECodeType::MODULE_NAME:
 				key.setModuleCodesType(NECodeType::ALL);
 				break;
 			}

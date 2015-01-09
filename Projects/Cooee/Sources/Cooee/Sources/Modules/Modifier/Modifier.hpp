@@ -2,6 +2,7 @@
 
 #include "../InputTerminal/InputTerminal.hpp"
 #include "../NameInputWindow/NameInputWindow.hpp"
+#include "../CodeInputer/CodeInputer.hpp"
 
 template <typename KEY>
 class Modifier : public InputTerminal
@@ -33,6 +34,8 @@ public:
 		value_lable(0, 0, 0, 8, 1, WHITE, LIGHTRED, "키 값:"), focused_text(1), value(new_value), real_key(0)
 	{
 		textbox.text = value;
+		value_lable.y = y + 5;
+		value_lable.x = x + 3;
 		regist(1, &value_lable);
 	}
 	Modifier(const Modifier& rhs) : InputTerminal(rhs), value(rhs.value), focused_text(rhs.focused_text),
@@ -163,13 +166,14 @@ public:
 		regist(6, &name_lable, &type_lable, &value_lable, &name_text, &type_text, &value_text);		
 	}
 	Modifier(NECodeKey::Trait& new_value)
-		: Terminal("", NEType::NECODE_KEY, 20, 7, 40, 7, WHITE, BLACK),
+		: Terminal("", NEType::NECODE_KEY, 20, 8, 40, 5, BLACK, WHITE),
 		type_lable(0, 22, 10, 8, 1, WHITE, LIGHTRED, "Code Type:"),
-		value_lable(0, 22, 12, 8, 1, WHITE, LIGHTRED, "Code:"),
-		type_text(0, 30, 10, 8, 1, WHITE, BLACK),
-		value_text(0, 30, 12, 8, 1, WHITE, BLACK),
+		value_lable(0, 22, 11, 8, 1, WHITE, LIGHTRED, "Code:"),
+		type_text(0, 30, 10, 28, 1, WHITE, BLACK),
+		value_text(0, 30, 11, 8, 1, WHITE, BLACK),
 		focused(1), real_key(0), value(new_value)
 	{
+		text = "새로운 CodeKey를 만듭니다.";
 		regist(4, &type_lable, &value_lable, &type_text, &value_text);
 		type_text.text = createCodeTypeString(value.getCodeType());
 		value_text.text = NEString(value.getCode());
@@ -188,14 +192,16 @@ public:
 	{
 		switch(type.getCodeType())
 		{
-		case NECodeType::SCRIPT:	return "SCRIPT";
-		case NECodeType::NAME:		return "NAME";
-		case NECodeType::GROUP:		return "GROUP";
-		case NECodeType::PRIORITY:	return "PRIORITY";
-		case NECodeType::UNDEFINED:	return "UNDEFINED";
-		case NECodeType::ME:		return "ME";
-		case NECodeType::RECENT:	return "RECENT";
-		case NECodeType::ALL:		return "ALL";
+		case NECodeType::SCRIPT:		return "SCRIPT";
+		case NECodeType::NAME:			return "NAME";
+		case NECodeType::GROUP:			return "GROUP";
+		case NECodeType::PRIORITY:		return "PRIORITY";
+		case NECodeType::UNDEFINED:		return "UNDEFINED";
+		case NECodeType::MODULE_SCRIPT: return "MODULE_SCRIPT";
+		case NECodeType::MODULE_NAME:	return "MODULE_NAME";
+		case NECodeType::ME:			return "ME";
+		case NECodeType::RECENT:		return "RECENT";
+		case NECodeType::ALL:			return "ALL";
 		}
 
 		return "";
@@ -273,67 +279,13 @@ public:
 
 		case CONFIRM:
 			switch (focused) {
-		case 0:
-			if (real_key)
-				call(NameInputWindow(real_key->getName()));
-			break;
+			case 0:
+				if (real_key)
+					call(NameInputWindow(real_key->getName()));
+				break;
 
-		case 2:
-			class CodeInputer : public LG::InputWindow
-			{
-			public:
-				FUNC_TO_CALLER(Modifier<NECodeKey>)
-					virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
-				CodeInputer() : LG::InputWindow("새로 추가할 CODE를 입력하세요.", BLACK, WHITE)
-				{
-
-				}
-
-				virtual void onFocused()
-				{
-					NECode& value = toCaller().value;
-					NEBank& bank = Editor::getInstance().getScriptEditor().getBanks().getBank(value);
-					if (!&bank)
-					{
-						text = "뱅크를 가져오지 못했습니다. 에러";
-						return;
-					}
-
-					NETString& name = bank[value.getCode()];
-					if (!&name)
-					{
-						text = "잘못된 뱅크 인덱스입니다. 에러.";
-						return;
-					}
-
-					input.history.release();
-					for(NETStringList::Iterator* e = bank.getIterator(0); e; e = e->getNext())
-						input.history.push(e->getValue());
-
-					input.history_idx = value.getCode();
-				}
-				virtual void onUpdateData()
-				{
-					NEString& history = input.history[input.history_idx];
-					if (&history)
-						input.text = history;
-				}
-
-				virtual void onInputed()
-				{
-					NECode& value = toCaller().value;
-
-					int code = input.text.toInt();
-					value.setCode(code);
-
-					delete_me = true;
-				}
-			};
-
-			if (value.getCodeType() >= NECodeType::SCRIPT	&&
-				value.getCodeType() <= NECodeType::PRIORITY)
-				call(CodeInputer());
-
+			case 2:
+				call(CodeInputer(value));
 			}
 			break;
 

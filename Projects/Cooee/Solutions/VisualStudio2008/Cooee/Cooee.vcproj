@@ -574,6 +574,14 @@
 								>
 							</File>
 						</Filter>
+						<Filter
+							Name="CodeInputer"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Cooee\Sources\Modules\CodeInputer\CodeInputer.hpp"
+								>
+							</File>
+						</Filter>
 					</Filter>
 					<Filter
 						Name="QueryWindow"

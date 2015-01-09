@@ -36,7 +36,7 @@ namespace NE
 				{
 					arg_actions.getValue().execute();
 
-					arg_count++;
+					arg_count.getValueKey()++;
 				}					
 
 				if (collector_key)
@@ -121,6 +121,8 @@ namespace NE
 			MAKE_COLLECTOR_BRANCH(NESTRING_KEY, NEStringKey, NECharKey);
 			MAKE_COLLECTOR_BRANCH(NEWSTRING_KEY, NEWStringKey, NEWCharKey);
 #undef MAKE_COLLECTOR_BRANCH
+
+			return false;
 		}
 
 		template <typename C, NEType::Type TYPE, typename UK>

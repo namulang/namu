@@ -13,12 +13,15 @@
 #include "../Modules/ForEachElement.hpp"
 #include "../Modules/If.hpp"
 #include "../Modules/Instancer.hpp"
+#include "../Modules/KeyboardSpy.hpp"
 #include "../Modules/KeySelectorTagger.hpp"
 #include "../Modules/KeyTagger.hpp"
 #include "../Modules/ModuleSelectorTagger.hpp"
 #include "../Modules/ModuleTagger.hpp"
 #include "../Modules/NodeSelectorTagger.hpp"
 #include "../Modules/NodeTagger.hpp"
+#include "../Modules/Random.hpp"
+#include "../Modules/Timer.hpp"
 
 #ifndef StandardModule_EXPORTS
 #	ifdef DEVELOPER
