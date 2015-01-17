@@ -272,16 +272,12 @@
 					>
 				</File>
 				<Filter
-					Name="Templates"
+					Name="Template"
 					>
-					<Filter
-						Name="BinderTemplate"
+					<File
+						RelativePath="..\..\..\Sources\Commons\Templates\SelectorTemplate\TValidator.hpp"
 						>
-						<File
-							RelativePath="..\..\..\Sources\Commons\Templates\BinderTemplate\BinderTemplate.hpp"
-							>
-						</File>
-					</Filter>
+					</File>
 				</Filter>
 				<Filter
 					Name="Interface"
@@ -394,10 +390,6 @@
 				<Filter
 					Name="DX9Binder"
 					>
-					<File
-						RelativePath="..\..\..\Sources\Modules\DX9Binder\DX9Binder.hpp"
-						>
-					</File>
 					<Filter
 						Name="RenderableModule"
 						>
@@ -496,26 +488,6 @@
 									</Filter>
 								</Filter>
 							</Filter>
-						</Filter>
-					</Filter>
-					<Filter
-						Name="BufferClearer"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\BufferClearer\BufferClearer.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Modules\BufferClearer\BufferClearer.hpp"
-							>
-						</File>
-						<Filter
-							Name="define"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Modules\BufferClearer\define.hpp"
-								>
-							</File>
 						</Filter>
 					</Filter>
 					<Filter
@@ -936,30 +908,6 @@
 					</Filter>
 				</Filter>
 				<Filter
-					Name="Aging"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Modules\Aging\Aging.hpp"
-						>
-					</File>
-					<Filter
-						Name="FloatKeyAging"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\FloatKeyAging\FloatKeyAging.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="ColorKeyAging"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\ColorKeyAging\ColorKeyAging.hpp"
-							>
-						</File>
-					</Filter>
-				</Filter>
-				<Filter
 					Name="ModelBinder"
 					>
 					<File
@@ -997,6 +945,26 @@
 								</File>
 							</Filter>
 						</Filter>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="BufferClearer"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Modules\BufferClearer\BufferClearer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\Sources\Modules\BufferClearer\BufferClearer.hpp"
+						>
+					</File>
+					<Filter
+						Name="define"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Modules\BufferClearer\define.hpp"
+							>
+						</File>
 					</Filter>
 				</Filter>
 			</Filter>
