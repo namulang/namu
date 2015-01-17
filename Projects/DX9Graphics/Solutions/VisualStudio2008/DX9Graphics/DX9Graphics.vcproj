@@ -491,34 +491,6 @@
 						</Filter>
 					</Filter>
 					<Filter
-						Name="Presentor"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\Presentor\Presentor.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Modules\Presentor\Presentor.hpp"
-							>
-						</File>
-						<Filter
-							Name="define"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Modules\Presentor\define.hpp"
-								>
-							</File>
-						</Filter>
-					</Filter>
-					<Filter
-						Name="HierarchyLineDrawer"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\HierarchyLineDrawer\HierarchyLineDrawer.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
 						Name="Resource"
 						>
 						<File
