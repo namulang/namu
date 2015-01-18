@@ -20,6 +20,22 @@ namespace DX9Graphics
 		NETArgument<NEFloatKey> arg_rotate_y;
 		NETArgument<NEFloatKey> arg_rotate_z;
 
+	protected:
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
+		{
+			SuperClass::_onFetchArguments(tray);
+
+			tray.push(arg_rotate_x);
+			tray.push(arg_rotate_y);
+			tray.push(arg_rotate_z);
+
+			return RESULT_SUCCESS;
+		}
+		virtual type_result _onExecute()
+		{
+			rotation_matrix = createRotationMatrix();
+		}
+
 	public:		
 		D3DXVECTOR3 createYawPitchRollFrom(const D3DXVECTOR3& direction)
 		{
@@ -35,7 +51,15 @@ namespace DX9Graphics
 
 			return to_return;
 		}
+		D3DXVECTOR3 createDirectionVectorByYawPitchRoll(const D3DXVECTOR3& cannoncial)
+		{
+			D3DXMATRIXA16 mat;
+			D3DXMatrixRotationQuaternion(&mat, &_createQuaternionFromMyYawPitchRoll());
+			D3DXVECTOR3 to_return;
 
+			D3DXVec3TransformNormal(&to_return, &cannoncial, &mat);
+			return to_return;
+		}
 
 	public:
 		const NEExportable::ModuleHeader& getHeader() const
@@ -68,6 +92,14 @@ namespace DX9Graphics
 
 			return ret;
 		}
+		D3DXQUATERNION _createQuaternionFromMyYawPitchRoll()
+		{
+			D3DXQUATERNION to_return;
+			D3DXQuaternionRotationYawPitchRoll(&to_return, 
+				arg_rotate_y.getValue(), arg_rotate_x.getValue(), arg_rotate_z.getValue());
+
+			return to_return;
+		}
 		D3DXQUATERNION _createQuaternionFrom(const D3DXVECTOR3& direction)
 		{
 			D3DXVECTOR3 up(0, 1.0f, 0.0f);
@@ -90,15 +122,8 @@ namespace DX9Graphics
 
 			return qrot;
 		}
-		virtual type_result _onFetchArguments(NEArgumentList& tray)
-		{
-			SuperClass::_onFetchArguments(tray);
 
-			tray.push(arg_rotate_x);
-			tray.push(arg_rotate_y);
-			tray.push(arg_rotate_z);
-
-			return RESULT_SUCCESS;
-		}
+	protected:
+		D3DXMATRIX rotation_matrix;
 	};
 }

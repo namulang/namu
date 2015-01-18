@@ -61,6 +61,18 @@ namespace DX9Graphics
 
 			return to_return;
 		}
+		type_result forward(type_float distance)
+		{
+			return _moveByDelta(D3DXVECTOR3(0, 0, 1));
+		}
+		type_result stepAside(type_float distance)
+		{
+			return _moveByDelta(D3DXVECTOR3(1, 0, 0));
+		}
+		type_result goUp(type_float distance)
+		{
+			return _moveByDelta(D3DXVECTOR3(0, 1, 0));
+		}
 
 	public:
 		const NEExportable::ModuleHeader& getHeader() const
@@ -91,7 +103,12 @@ namespace DX9Graphics
 			return _instance;
 		}
 
-	protected:		
+	protected:
+		D3DXVECTOR3 _createDeltaBy(const D3DXVECTOR3& origin_direction_vector)
+		{
+			createRotationMatrix()
+		}
+
 		virtual type_result _onFetchModule()
 		{
 			arg_scale_x.setValue(1.0f);
@@ -99,7 +116,7 @@ namespace DX9Graphics
 			arg_scale_z.setValue(1.0f);
 			arg_red.setValue(255);
 			arg_green.setValue(255);
-			arg_blue.setValue(255);
+			arg_blue.setValue(255)
 			arg_alpha.setValue(255);
 
 			return RESULT_SUCCESS;
@@ -121,6 +138,18 @@ namespace DX9Graphics
 			tray.push(arg_alpha);
 			tray.push(arg_source_blend);
 			tray.push(arg_dest_blend);
+
+			return RESULT_SUCCESS;
+		}
+
+	private:
+		type_result _moveByDelta(const D3DXVECTOR3& origin_direction)
+		{
+			D3DXVECTOR3 direct = createDirectionVectorByYawPitchRoll(origin_direction);
+
+			arg_trans_x += direct.x * distance;
+			arg_trans_y += direct.y * distance;
+			arg_trans_z += direct.z * distance;
 
 			return RESULT_SUCCESS;
 		}

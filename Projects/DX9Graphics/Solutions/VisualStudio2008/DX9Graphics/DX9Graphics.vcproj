@@ -892,14 +892,6 @@
 									</File>
 								</Filter>
 							</Filter>
-							<Filter
-								Name="OrthoCamera"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\OrthoCamera\OrthoCamera.hpp"
-									>
-								</File>
-							</Filter>
 						</Filter>
 						<Filter
 							Name="Model"
