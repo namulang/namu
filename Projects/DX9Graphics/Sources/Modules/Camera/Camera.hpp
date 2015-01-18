@@ -13,6 +13,16 @@ namespace DX9Graphics
 		typedef NEArrayTemplate<ShaderProgram*, true> ShaderProgramSet;
 
 	public:
+		NETArgument<NENodeSelector>		arg_targets;		
+		NETArgument<NEUIntKey>			arg_viewport_x;
+		NETArgument<NEUIntKey>			arg_viewport_y;
+		NETArgument<NEUIntKey>			arg_viewport_width;
+		NETArgument<NEUIntKey>			arg_viewport_height;
+		NETArgument<NEUIntKey>			arg_viewport_minimum_z;
+		NETArgument<NEUIntKey>			arg_viewport_maximum_z;
+		NETArgument<NEModuleCodeSet>	arg_shaders;
+
+	public:
 		struct EulerAngles
 		{
 			EulerAngles() : x_axis_angle(0.0f), y_axis_angle(0.0f), z_axis_angle(0.0f) {}
@@ -101,313 +111,46 @@ namespace DX9Graphics
 		}
 
 	public:
-		NEModuleSelector& getDX9Selector()
-		{
-			const ThisClass* casted = (const ThisClass*) this;
-
-			return const_cast<NEModuleSelector&>(casted->getDX9Selector());
-		}
-		const NEModuleSelector& getDX9Selector() const
-		{
-			const NEKey& key = getKeySet()[15];
-			if( ! &key || ! key.isSubClassOf(NEType::NEMODULE_SELECTOR))
-			{
-				ALERT_ERROR("15번째 키는 NEMODULE_SELECTOR여야 합니다.");
-				NEModuleSelector* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			return static_cast<const NEModuleSelector&>(key);
-		}
-		NENodeSelector& getTargetSelector()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<NENodeSelector&>(consted_this->getTargetSelector());
-		}
-		const NENodeSelector& getTargetSelector() const
-		{
-			const NEKey& somekey = getKeySet()[16];
-			if( ! somekey.isSubClassOf(NEType::NENODE_SELECTOR))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 16번키가 NENODE_SELECTOR여야 합니다.");
-				const NENodeSelector* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NENodeSelector& target = static_cast<const NENodeSelector&>(somekey);
-			return target;
-		}
-		type_float& getUpX()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_float&>(consted_this->getUpX());
-		}
-		const type_float& getUpX() const
-		{
-			const NEKey& somekey = getKeySet()[17];
-			if( ! somekey.isSubClassOf(NEType::NEFLOAT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 17번키가 NEFLOAT_KEY여야 합니다.");
-				const type_float* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(somekey);
-			return target.getValue();
-		}
-		type_float& getUpY()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_float&>(consted_this->getUpY());
-		}
-		const type_float& getUpY() const
-		{
-			const NEKey& somekey = getKeySet()[18];
-			if( ! somekey.isSubClassOf(NEType::NEFLOAT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 18번키가 NEFLOAT_KEY여야 합니다.");
-				const type_float* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(somekey);
-			return target.getValue();
-		}
-		type_float& getUpZ()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_float&>(consted_this->getUpZ());
-		}
-		const type_float& getUpZ() const
-		{
-			const NEKey& somekey = getKeySet()[19];
-			if( ! somekey.isSubClassOf(NEType::NEFLOAT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 19번키가 NEFLOAT_KEY여야 합니다.");
-				const type_float* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(somekey);
-			return target.getValue();
-		}
-		type_float& isViewportMaximized()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_float&>(consted_this->isViewportMaximized());
-		}
-		const type_float& isViewportMaximized() const
-		{
-			const NEKey& somekey = getKeySet()[20];
-			if( ! somekey.isSubClassOf(NEType::NEBOOLEAN_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 20번키가 NEBOOLEAN_KEY여야 합니다.");
-				const type_float* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(somekey);
-			return target.getValue();
-		}
-		type_uint& getViewportX()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_uint&>(consted_this->getViewportX());
-		}
-		const type_uint& getViewportX() const
-		{
-			const NEKey& somekey = getKeySet()[21];
-			if( ! somekey.isSubClassOf(NEType::NEUINT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 21번키가 NEUINT_KEY여야 합니다.");
-				const type_uint* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEUIntKey& target = static_cast<const NEUIntKey&>(somekey);
-			return target.getValue();
-		}
-		type_uint& getViewportY()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_uint&>(consted_this->getViewportY());
-		}
-		const type_uint& getViewportY() const
-		{
-			const NEKey& somekey = getKeySet()[22];
-			if( ! somekey.isSubClassOf(NEType::NEUINT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 22번키가 NEUINT_KEY여야 합니다.");
-				const type_uint* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEUIntKey& target = static_cast<const NEUIntKey&>(somekey);
-			return target.getValue();
-		}
-		type_uint& getViewportWidth()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_uint&>(consted_this->getViewportWidth());
-		}
-		const type_uint& getViewportWidth() const
-		{
-			const NEKey& somekey = getKeySet()[23];
-			if( ! somekey.isSubClassOf(NEType::NEUINT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 23번키가 NEUINT_KEY여야 합니다.");
-				const type_uint* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEUIntKey& target = static_cast<const NEUIntKey&>(somekey);
-			return target.getValue();
-		}
-		type_uint& getViewportHeight()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_uint&>(consted_this->getViewportHeight());
-		}
-		const type_uint& getViewportHeight() const
-		{
-			const NEKey& somekey = getKeySet()[24];
-			if( ! somekey.isSubClassOf(NEType::NEUINT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 24번키가 NEUINT_KEY여야 합니다.");
-				const type_uint* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEUIntKey& target = static_cast<const NEUIntKey&>(somekey);
-			return target.getValue();
-		}
-		type_float& getViewportMinimumZ()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_float&>(consted_this->getViewportMinimumZ());
-		}
-		const type_float& getViewportMinimumZ() const
-		{
-			const NEKey& somekey = getKeySet()[25];
-			if( ! somekey.isSubClassOf(NEType::NEFLOAT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 25번키가 NEFLOAT_KEY여야 합니다.");
-				const type_float* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(somekey);
-			return target.getValue();
-		}
-		type_float& getViewportMaximumZ()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_float&>(consted_this->getViewportMaximumZ());
-		}
-		const type_float& getViewportMaximumZ() const
-		{
-			const NEKey& somekey = getKeySet()[26];
-			if( ! somekey.isSubClassOf(NEType::NEFLOAT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 26번키가 NEFLOAT_KEY여야 합니다.");
-				const type_float* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(somekey);
-			return target.getValue();
-		}		
-		NEModuleCodeSet& getShaderPrograms()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<NEModuleCodeSet&>(consted_this->getShaderPrograms());
-		}
-		const NEModuleCodeSet& getShaderPrograms() const
-		{
-			const NEKey& somekey = getKeySet()[27];
-			if( ! somekey.isSubClassOf(NEType::NEMODULE_CODESET_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 27번키가 NEMODULECODE_SET_KEY여야 합니다.");
-				const NEModuleCodeSet* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEModuleCodeSetKey& target = static_cast<const NEModuleCodeSetKey&>(somekey);
-			return target.getValue();
-		}
-		const D3DXVECTOR3& getLookVector() const { return _look; }
-		D3DXVECTOR3& getUpVector() { return _up; }
-		const D3DXVECTOR3& getUpVector() const { return _up; }
-		D3DXVECTOR3& getRightVector() { return _right; }
-		const D3DXVECTOR3& getRightVector() const { return _right; }
 		D3DXMATRIX& getViewMatrix() { return _view; }
 		const D3DXMATRIX& getViewMatrix() const { return _view; }
 		D3DXMATRIX& getProjectionMatrix() { return _projection; }
 		const D3DXMATRIX& getProjectionMatrix() const { return _projection; }
-		type_result setLookVector(D3DXVECTOR3& new_vector)
+
+	protected:
+		virtual type_result _onFetchModule()
 		{
-			EulerAngles converted;
-			converted.fromVector(new_vector);
-			getRotationX() = converted.x_axis_angle;
-			getRotationY() = converted.y_axis_angle;
-			//getRotationZ() = converted.z_axis_angle;
+			SuperClass::_onFetchModule();
+
+			arg_viewport_x.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_viewport_y.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_viewport_width.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_viewport_height.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_viewport_minimum_z.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_viewport_maximum_z.setPurposeLimitation(NEArgumentBase::READ_BY);
 
 			return RESULT_SUCCESS;
 		}
-		type_result setTranslationVector(D3DXVECTOR3& new_vector)
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
-			getTranslationX() = new_vector.x;
-			getTranslationY() = new_vector.y;
-			getTranslationZ() = new_vector.z;
+			tray.push(arg_targets);
 
-			return RESULT_SUCCESS;
-		}
-		type_result setUpVector(D3DXVECTOR3& new_vector)
-		{
-			getUpX() = new_vector.x;
-			getUpY() = new_vector.y;
-			getUpZ() = new_vector.z;
+			SuperClass::_onFetchArguments(tray);
+
+			tray.push(arg_viewport_x);			
+			tray.push(arg_viewport_y);			
+			tray.push(arg_viewport_width);		
+			tray.push(arg_viewport_height);		
+			tray.push(arg_viewport_minimum_z);	
+			tray.push(arg_viewport_maximum_z);	
+			tray.push(arg_shaders);	
 
 			return RESULT_SUCCESS;
 		}
 
 	public:
-		virtual type_result initialize()
+		const NEExportable::ModuleHeader& getHeader() const
 		{
-			SuperClass::initialize();
 
-			NEKeyCodeSet& keyset = getKeySet();
-			keyset.resize(keyset.getLength() + 13);
-			keyset.push(NEModuleSelector());	//	15:	DX9
-			keyset.push(NENodeSelector());		//	16:	촬영 대상
-			//	업 벡터:
-			keyset.push(NEFloatKey(0.0f));		//	17:	UpX
-			keyset.push(NEFloatKey(1.0f));		//	18:	UpY
-			keyset.push(NEFloatKey(0.0f));		//	19:	UpZ
-			//	viewport:
-			keyset.push(NEBooleanKey(true));	//	20:	isViewportMaximized
-			keyset.push(NEUIntKey(0));			//	21:	ViewportX
-			keyset.push(NEUIntKey(0));			//	22:	ViewportY
-			keyset.push(NEUIntKey(0));			//	23:	ViewportWidth
-			keyset.push(NEUIntKey(0));			//	24:	ViewportHeight
-			keyset.push(NEFloatKey(0.0f));		//	25:	ViewportMinimumZ
-			keyset.push(NEFloatKey(0.0f));		//	26:	ViewportMaximumZ
-			//	ShaderProgram:
-			keyset.push(NEModuleCodeSetKey());	//	27:	ShaderProgram
-
-			return RESULT_SUCCESS;
 		}
 		virtual type_result render()
 		{
@@ -693,6 +436,6 @@ namespace DX9Graphics
 		D3DXVECTOR3 _up;
 
 	public:
-		static const NECodeSet& getCameraCodeSet();
+		static const NECodeSet& getModuleScriptCodes();
 	};
 }
