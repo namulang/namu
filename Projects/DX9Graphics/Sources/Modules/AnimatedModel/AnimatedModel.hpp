@@ -13,6 +13,32 @@ namespace DX9Graphics
 		typedef Model SuperClass;
 
 	public:
+		NETArgument<NEIntKey>	arg_animation_index;
+		NETArgument<NEIntKey>	arg_key_frame;
+		NETArgument<NEIntKey>	arg_delay_per_frame;
+
+	protected:
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
+		{
+			SuperClass::_onFetchArguments(tray);
+
+			tray.push(arg_animation_index);
+			tray.push(arg_key_frame);
+			tray.push(arg_delay_per_frame);
+
+			return RESULT_SUCCESS;
+		}
+		virtual type_result _onFetchModule()
+		{
+			arg_delay_per_frame.setValue(-2);	//	-1 is Automatic, -2 : use the defaults defined on TabledTexture.
+			arg_delay_per_frame.setPurposeLimitation(NEArgumentBase::READ_BY);			
+			arg_animation_index.setPurposeLimitation(NEArgumentBase::READ_BY);
+
+			return RESULT_SUCCESS;
+		}
+		virtual type_result _onExecute();
+
+	public:
 		AnimatedModel()
 			: SuperClass()
 		{
@@ -22,10 +48,6 @@ namespace DX9Graphics
 			: SuperClass(source)
 		{
 			_assign(source);
-		}
-		~AnimatedModel()
-		{
-			
 		}
 
 	public:
@@ -45,85 +67,35 @@ namespace DX9Graphics
 			return ! operator==(source);
 		}
 
-	public:
-		type_int& getAnimationIndex()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_int&>(consted_this->getAnimationIndex());
-		}
-		const type_int& getAnimationIndex() const
-		{
-			const NEKey& somekey = getKeySet()[21];
-			if( ! somekey.isSubClassOf(NEType::NEINT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 21번키가 NEINT_KEY키여야 합니다.");
-				const type_int* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEIntKey& target = static_cast<const NEIntKey&>(somekey);
-			return target.getValue();
-		}
-		type_int& getKeyFrame()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_int&>(consted_this->getKeyFrame());
-		}
-		const type_int& getKeyFrame() const
-		{
-			const NEKey& somekey = getKeySet()[22];
-			if( ! somekey.isSubClassOf(NEType::NEINT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 22번키가 NEINT_KEY키여야 합니다.");
-				const type_int* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEIntKey& target = static_cast<const NEIntKey&>(somekey);
-			return target.getValue();
-		}	
-		type_int& getDelayPerFrame()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_int&>(consted_this->getDelayPerFrame());
-		}
-		const type_int& getDelayPerFrame() const
-		{
-			const NEKey& somekey = getKeySet()[23];
-			if( ! somekey.isSubClassOf(NEType::NEINT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 23번키가 NEINT_KEY키여야 합니다.");
-#pragma warning(push)
-#pragma warning(disable: 4172)
-				const type_int* nullpoint = 0;
-				return *nullpoint;
-#pragma warning(pop)
-			}
-
-			const NEIntKey& target = static_cast<const NEIntKey&>(somekey);
-			return target.getValue();
-		}
+	public:	
 		type_int getDelay() const { return _delay; }
 		type_result setDelay(type_int new_delay) { _delay = new_delay; return RESULT_SUCCESS; 	}
 
 	public:
-		virtual type_result execute();
-		virtual type_result initialize()
+		virtual const NEExportable::ModuleHeader& getHeader() const
 		{
-			SuperClass::initialize();
+			static NEExportable::ModuleHeader _header;
 
-			NEKeyCodeSet& keyset = getKeySet();
-			keyset.resize(keyset.getSize() + 3);
-			keyset.push(NEIntKey(0));				//	20:	AnimationIndex
-			keyset.push(NEIntKey(0));				//	21:	FrameKey
-			keyset.push(NEIntKey(-2));				//	22:	DelayPerFrame. -1은 AUTO로, TabledTexture에 할당된 Delay 타임을 그대로 사용한다.
+			if (_header.isValid() != RESULT_NOTHING)
+			{
+				_header.getName() = "AnimatedModel";
+				_header.getDeveloper() = "kniz";
+				_header.setRevision(1);
+				const NEExportable::ModuleHeader& super = SuperClass::getHeader();
+				_header.getComment() = super.getComment() + 
+					"\nAnimation 효과를 줄 수 있습니다.";
+				_header.getVersion() = "0.0.1a";
+				_header.getReleaseDate() = "2013-08-14";
+				NETStringSet& args = _header.getArgumentsComments();
+				args = super.getArgumentsComments();
+				args.resize(args.getLength() + 3);
+				args.push("AnimationIndex\n몇번째 애니메이션을 재생할 것인지 인덱스를 정해줍니다.");
+				args.push("KeyFrame\n해당 애니메이션의 Key Frame 입니다.");
+				args.push("DelayPerFrame\n한 프레임당 딜레이 입니다.\n시간이 아니라, 프레임 단위로 측정합니다.");
+			}
 
-			return RESULT_SUCCESS;
+			return _header;
 		}
-		virtual const NEExportable::ModuleHeader& getHeader() const;
 		virtual NEObject& clone() const
 		{
 			return *(new ThisClass(*this));
@@ -131,7 +103,7 @@ namespace DX9Graphics
 		virtual void release()
 		{
 			SuperClass::release();
-			
+
 			_release();
 		}
 
@@ -147,6 +119,9 @@ namespace DX9Graphics
 			if(this == &source) return *this;
 
 			_delay = source._delay;
+			arg_animation_index = source.arg_animation_index;
+			arg_key_frame = source.arg_key_frame;
+			arg_delay_per_frame = source.arg_delay_per_frame;
 
 			return *this;
 		}

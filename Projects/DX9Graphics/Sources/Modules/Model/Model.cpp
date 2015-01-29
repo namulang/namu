@@ -1,5 +1,4 @@
 #include "Model.hpp"
-#include "define.hpp"
 #include "../DX9/DX9.hpp"
 #include "../Sprite/Sprite.hpp"
 #include "../Texture/Texture.hpp"
@@ -9,162 +8,103 @@
 
 namespace DX9Graphics
 {
+	SpriteTexter& Model::getTexter()
+	{
+		return DX9::cast<SpriteTexter>(arg_texter_binder.getValue().getModule());
+	}
+	Texture& Model::getTexture()
+	{
+		return DX9::cast<Texture>(arg_texture_binder.getValue().getModule());
+	}
+	Sprite& Model::getModeling()
+	{
+		return DX9::cast<Sprite>(arg_modeling_binder.getValue().getModule());
+	}
+	type_result Model::_onExecute()
+	{
+		//	pre:			
+		if(!isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+
+
+		//	main:
+		//		ParentWorldMatrix 할당받기:
+		_parent_world = _getGlobalParentWorld();
+		_updateModelMatrix();
+		_updateWorldMatrix();
+
+
+		//	post:
+		//		자식 모듈셋 실행:
+		_executeChildren();
+		_getGlobalParentWorld() = _parent_world;
+		return RESULT_SUCCESS;
+	}
+
 	const NEExportable::ModuleHeader& Model::getHeader() const
 	{
 		static NEExportable::ModuleHeader _header;
 
 		if(_header.isValid() != RESULT_NOTHING)
 		{
-			_header.getName() = _T(_NAME);
-			_header.getDeveloper() = _T(_DEVELOPER);
-			_header.setRevision(_REVISION);
-			_header.getComment() = _T(_COMMENT);
-			_header.getVersion()  = _T(_VERSION);
-			_header.getReleaseDate() = _T(_DATE);
-			_header.getModuleDependencies().create(0);
-			_header.setMaxErrorCodeCount(1);
+			_header.getName()		= "Model";
+			_header.getDeveloper()	= "kniz";
+			_header.setRevision(1);
+			_header.getComment() = "3차원 공간에 바인딩한 Resource들을 상대 정보로써 표현하는 모듈입니다.\n평면 그림을 나타내는 텍스쳐를 물체를 나타내는 모델링에 씌워서 지정한 좌표와 방향, 크기로 출력합니다.";
+			_header.getVersion() = "0.0.1a";
+			_header.getReleaseDate() = "2013-08-08";
+
+			NETStringSet& args = _header.getArgumentsComments();
+			args = SuperClass::getHeader().getArgumentsComments();
+			args.resize(args.getLength() + 4);
+			args.push("Modeling\nSprite와 같은 모델링 모듈을 참조합니다.");
+			args.push("Texture\nSprite에 매핑해 그릴 텍스쳐 모듈을 참조합니다.");
+			args.push("Texter\nSprite를 그릴때 씌여질 문자정보를 저장한 SpriteTexter 모듈를 참조합니다.");
+			args.push("Children\n하위 계층구조 모델입니다.\n자식 모델은 부모 모델의 좌표,회전,크기를 원점으로 계산하는 상대값 입니다.");
 		}
 
 		return _header;
 	}
 
-	type_result Model::_bindModelingModule()
-	{
-		//	main:
-		const NECodeSet& codeset = Sprite::getSpriteCodeSet();		
-		NEModuleSelector& selector = getModelingSelector();
-		//		Identifier 획득:
-		while( &selector.getModule())
-		{
-			NEModule& module = selector.peekModule();
-			if(codeset.find(module.getScriptCode()) != NE_INDEX_ERROR)
-			{
-				selector.bind();
-				selector.initializeReferingPoint();
-				return RESULT_SUCCESS;
-			}
-		}
-
-
-		//	post:
-		ALERT_ERROR(" : 모듈 셀렉터로부터 메시를 찾지 못했습니다.");
-		return RESULT_TYPE_ERROR;
-	}
-
 	type_result Model::render()
 	{
-		if( ! isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-		if( ! isRenderable()) return RESULT_SUCCESS;
-		if( ! getModelingSelector().getBinder().isBinded())
-		{
-			ALERT_WARNING(" : 모델링 바인딩 실패로중지");
-			return RESULT_SUCCESS;
-		}
-		if( ! getTextureSelector().getBinder().isBinded())
-		{
-			ALERT_WARNING(" : 텍스쳐 바인딩 실패로 중지");
-			return RESULT_TYPE_ERROR;
-		}
+		if( ! isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;		
+		if( ! arg_modeling_binder.isEnable()||
+			! arg_texture_binder.isEnable()	) 
+			return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 
-		DockableResource& modeling = static_cast<DockableResource&>(getModelingSelector().getBinder().getBinded()),
-						& texture = static_cast<DockableResource&>(getTextureSelector().getBinder().getBinded());
+		DockableResource& modeling = DX9::cast<DockableResource>(arg_modeling_binder.getValue().getModule());
+		Texture& texture = DX9::cast<Texture>(arg_texture_binder.getValue().getModule());	
 
 		texture.dock(*this);
 		_updateRenderState();
 		return modeling.dock(*this);
 	}
 
-	type_result Model::_bindTextureModule()
+	const NECodeSet& Model::getModuleScriptCodes()
 	{
-		//	main:
-		NECodeSet& codeset = _getTextureCodeSet();		
-		NEModuleSelector& selector = getTextureSelector();
-		//		Identifier 획득:
-		while( &selector.getModule())
-		{
-			NEModule& module = selector.peekModule();
-			if(codeset.find(module.getScriptCode()) != NE_INDEX_ERROR)
-			{
-				selector.bind();
-				return RESULT_SUCCESS;
-			}
-		}
+		NECodeType type(NECodeType::MODULE_SCRIPT);
+		static NECodeSet instance(type);
 
-
-		//	post:
-		ALERT_ERROR(" : 모듈셀렉터로부터리소스를찾지못했습니다.");
-		return RESULT_TYPE_ERROR;
-	}
-
-	NECodeSet& Model::_getTextureCodeSet()
-	{
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
-		static NECodeSet codeset;
-		if(codeset.getLength() <= 0)
-		{
-			codeset.create(2);
-			codeset.setCodeType(NECodeType::SCRIPT);
-			codeset.push(Texture().getHeader());
-			codeset.push(TabledTexture().getHeader());			
-		}
-
-		return codeset;
-	}
-
-	const NECodeSet& Model::getScriptCodeSet()
-	{
-		static NECodeSet instance;
 		if(instance.getSize() <= 0)
 		{
-			NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
-			instance.create(2);
-			instance.setCodeType(NECodeType::SCRIPT);
-			instance.push(Model().getHeader());
-			instance.push(AnimatedModel().getHeader());
+			instance.create(1);
+			instance.push(NEExportable::Identifier("AnimatedModel.kniz"));
 		}
 
 		return instance;
 	}
 
-	type_result Model::_bindTexterModule()
-	{
-		//	pre:
-		if( ! isFontEnabled())	return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-		const NECodeSet& cs = SpriteTexter::getScriptCodeSet();
-		NEModuleSelector& sel = getTexterSelector();
-		//		Identifier 획득:
-		while(NEModule* itr = &sel.getModule())
-		{
-			if(cs.find(itr->getScriptCode()) != NE_INDEX_ERROR)
-			{
-				sel.bind();
-				return RESULT_SUCCESS;
-			}
-		}
-
-
-		//	post:
-		ALERT_ERROR(" : 모듈셀렉터로부터리소스를찾지못했습니다.");
-		return RESULT_TYPE_ERROR;
-	}
-
 	type_result Model::_updateRenderState()
 	{
-		NEModuleSelector& sel = getModelingSelector();
-		DX9Binder& binder = (DX9Binder&) sel.getModule();
-		sel.initializeReferingPoint();
-		DX9* dx9 = &binder ? &binder.getBinded() : 0;
-		LPDIRECT3DDEVICE9 dev = dx9 ? dx9->getDevice() : 0;
+		DX9& dx9 = DX9::getInstancedDX();
+		LPDIRECT3DDEVICE9 dev = &dx9 ? dx9.getDevice() : 0;
 		if( ! dev)
-		{
-			ALERT_WARNING("DX9 바인딩 실패로 RenderState 변경 실패");
-			return RESULT_TYPE_WARNING;
-		}
-		
-		
+			return ALERT_WARNING("DX9 바인딩 실패로 RenderState 변경 실패");
+
+
 		//	main:
-		type_byte	src = getSourceBlend(),
-					dest = getDestBlend();
+		type_byte	src = arg_source_blend.getValue(),
+					dest = arg_dest_blend.getValue();
 		if(src)
 			dev->SetRenderState(D3DRS_SRCBLEND, src);
 		if(dest)

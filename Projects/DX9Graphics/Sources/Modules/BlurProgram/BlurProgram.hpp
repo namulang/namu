@@ -18,7 +18,24 @@ namespace DX9Graphics
 		{
 			return *(new ThisClass(*this));
 		}
-		virtual const NEExportable::ModuleHeader& getHeader() const;
+		virtual const NEExportable::ModuleHeader& getHeader() const
+		{
+			static NEExportable::ModuleHeader _header;
+
+			if(_header.isValid() != RESULT_NOTHING)
+			{
+				_header.getName() = "BlurProgram";
+				_header.getDeveloper() = "kniz";
+				_header.setRevision(1);
+				_header.getComment() =
+					"Blur Posteffect를 줍니다.\n이전에 그려진 렌더링타겟에 Blur효과(흐림효과)를 줍니다.\n"
+					"TextureMultiplier가 작으면 작을 수록 흐림효과 강도가 강해집니다.";
+				_header.getVersion() = "0.0.1a";
+				_header.getReleaseDate() = "2013-08-23";				
+			}
+
+			return _header;
+		}
 
 	private:
 		virtual type_result _onRender(DX9& dx9, Camera& camera)
@@ -34,10 +51,8 @@ namespace DX9Graphics
 			RenderTargetSet& targets = _getRenderTargetSet(dx9);
 			ShaderHandleSet& handles = getShaderHandleSet();
 			if(targets.getSize() <= 0)
-			{
-				ALERT_ERROR("DX9 바인딩 실패로 렌더타겟을 생성하지 못했습니다.");
-				return RESULT_TYPE_ERROR;
-			}
+				return ALERT_ERROR("DX9 바인딩 실패로 렌더타겟을 생성하지 못했습니다.");
+
 			//			Matrix치환:
 			D3DXMATRIX new_w, new_v, new_p = _getOrthoMatrix();
 			D3DXMatrixIdentity(&new_w);
@@ -93,18 +108,13 @@ namespace DX9Graphics
 			type_int	tex_width = getRenderTargetWidth(),
 				tex_height = getRenderTargetHeight();
 			if( ! &getEffect())
-			{
-				ALERT_ERROR("이펙트가 초기화 되어있지 않아서 핸들로 값을 넘길 수 없습니다.");
-				return RESULT_TYPE_ERROR;
-			}
+				return ALERT_ERROR("이펙트가 초기화 되어있지 않아서 핸들로 값을 넘길 수 없습니다.");
+
 			ShaderHandle& width_handle = getShaderHandleSet()[1],
-						& height_handle = getShaderHandleSet()[2];
+				& height_handle = getShaderHandleSet()[2];
 			if( ! &width_handle		||	! width_handle.getHandle()	|| width_handle.isTechniqueHandle()		||
 				! &height_handle	||	! height_handle.getHandle()	|| height_handle.isTechniqueHandle()	)
-			{
-				ALERT_ERROR("잘못된 핸들값입니다.");
-				return RESULT_TYPE_ERROR;
-			}
+				return ALERT_ERROR("잘못된 핸들값입니다.");
 
 			getEffect().SetFloat(width_handle.getHandle(), static_cast<float>(tex_width));
 			getEffect().SetFloat(height_handle.getHandle(), static_cast<float>(tex_height));
@@ -136,6 +146,5 @@ namespace DX9Graphics
 
 			return _instance;
 		}
-
 	};
 }

@@ -5,6 +5,8 @@
 
 namespace DX9Graphics
 {
+	using namespace NE;
+
 	class NE_DLL Camera : public Particle
 	{
 	public:
@@ -18,9 +20,9 @@ namespace DX9Graphics
 		NETArgument<NEUIntKey>			arg_viewport_y;
 		NETArgument<NEUIntKey>			arg_viewport_width;
 		NETArgument<NEUIntKey>			arg_viewport_height;
-		NETArgument<NEUIntKey>			arg_viewport_minimum_z;
-		NETArgument<NEUIntKey>			arg_viewport_maximum_z;
-		NETArgument<NEModuleCodeSet>	arg_shaders;
+		NETArgument<NEFloatKey>			arg_viewport_minimum_z;
+		NETArgument<NEFloatKey>			arg_viewport_maximum_z;
+		NETArgument<NEModuleCodeSetKey>	arg_shaders;
 
 	public:
 		Camera()
@@ -39,7 +41,7 @@ namespace DX9Graphics
 		{
 			if(this == &source) return *this;
 
-			SuperClass::operator=(source);
+			NEModule::operator=(source);
 
 			return _assign(source);
 		}
@@ -74,7 +76,9 @@ namespace DX9Graphics
 			arg_viewport_y.setPurposeLimitation(NEArgumentBase::READ_BY);
 			arg_viewport_width.setPurposeLimitation(NEArgumentBase::READ_BY);
 			arg_viewport_height.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_viewport_minimum_z.setValue(1.0f);
 			arg_viewport_minimum_z.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_viewport_maximum_z.setValue(100.0f);
 			arg_viewport_maximum_z.setPurposeLimitation(NEArgumentBase::READ_BY);
 
 			return RESULT_SUCCESS;
@@ -103,14 +107,17 @@ namespace DX9Graphics
 
 			if(_header.getArgumentsComments().getLength() <= 0)
 			{
+				_header.getComment() = 
+					"렌더링을 수행할(영상을 화면에 찍을) 가상의 카메라를 생성합니다.\n"
+					"카메라는 자신의 위치와, 보고 있는 방향, 찍혀질 대상과, 찍을 방법, 렌더링 결과가 그려질 영역과 효과등을 지정할 수 있습니다.";
 				NETStringSet& args = _header.getArgumentsComments();
-				const NETStringSet& org = SuperClass::getHeader();
+				const NETStringSet& org = SuperClass::getHeader().getArgumentsComments();
 				args.resize(org.getLength() + 8);
 				args.push("Targets\n카메라가 촬영할 Particle Module을 가지고 있는 대상");
 				
 				args.push(org);
 
-				args.push("ViewportX\n화면에 그려지게될 영역의 X 좌표");
+				args.push("ViewportX\n화면에 그려지게될 영역의 X 좌표\nDisabled시, 자동으로 윈도우의 크기만큼 설정해줍니다.");
 				args.push("ViewportY\n화면에 그려지게될 영역의 Y 좌표");
 				args.push("ViewportWidth\n화면에 그려지게될 영역의 폭");
 				args.push("ViewportHeight\n화면에 그려지게될 영역의 높이");
@@ -134,7 +141,7 @@ namespace DX9Graphics
 
 			D3DVIEWPORT9 vp = createViewPort();
 			device->SetViewport(&vp);
-			_dockTransforms()
+			_dockTransforms();
 			/*
 				ModuleSet에 담긴 Module이 ShaderProgram의 하위클래스라는 걸
 				알 도리가 없음. getType이 지정되지 않기 때문에.
@@ -193,7 +200,7 @@ namespace DX9Graphics
 		
 		D3DVIEWPORT9 createViewPort() const
 		{
-			if(arg_viewport_x.isEnable()) return createMaximizedViewPort();
+			if( ! arg_viewport_x.isEnable()) return createMaximizedViewPort();
 
 			D3DVIEWPORT9 viewport = {
 				arg_viewport_x.getValue(), arg_viewport_y.getValue(), 
@@ -250,16 +257,16 @@ namespace DX9Graphics
 			//	타겟팅:				
 			D3DXVECTOR3	pos		= createTranslationVector(),
 						look_at = pos + _look,
-						up		= createDirectionVectorByYawPitchRoll(D3DXVECTOR3(0, 1, 0));
+						up		= createTransformedVectorByYawPitchRoll(D3DXVECTOR3(0, 1, 0));
 
 
 			//	main:			
-			D3DXMatrixLookAtLH(&_view, &pos, &look_at, &);
+			D3DXMatrixLookAtLH(&_view, &pos, &look_at, &up);
 			return RESULT_SUCCESS;
 		}	
 		type_result _updateLookVector()
 		{
-			_look = createDirectionVectorByYawPitchRoll(D3DXVECTOR3(0, 0, 1));
+			_look = createTransformedVectorByYawPitchRoll(D3DXVECTOR3(0, 0, 1));
 
 			return RESULT_SUCCESS;
 		}

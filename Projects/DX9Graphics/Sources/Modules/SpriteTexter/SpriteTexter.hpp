@@ -1,202 +1,138 @@
 #pragma once
 
-#include "../../Includes/Includes.hpp"
+#include "../../Commons/Templates/TValidator/TValidator.hpp"
+#include "../DXFont/DXFont.hpp"
 
 namespace DX9Graphics
 {
 	class Texture;
 
-	class NE_DLL SpriteTexter : public NEModule
+	class NE_DLL SpriteTexter : public TValidator<DXFont>
 	{
 	public:
 		typedef SpriteTexter ThisClass;
-		typedef NEModule SuperClass;
+		typedef TValidator<DXFont> SuperClass;
 
 	public:
-#include "Alignment.hpp"
+		enum Alignment
+		{
+			AV_TOP = DT_TOP,
+			AV_CENTER = DT_VCENTER,
+			AV_BOTTOM = DT_BOTTOM,
+			AH_LEFT = DT_LEFT,
+			AH_CENTER = DT_CENTER,
+			AH_RIGHT = DT_RIGHT
+		};
+
+	public:
+		NETArgument<NETStringKey>	arg_text;
+		NETArgument<NEUByteKey>		arg_horizontal_alignment;
+		NETArgument<NEUByteKey>		arg_vertical_alignment;
+		NETArgument<NEUByteKey>		arg_red;
+		NETArgument<NEUByteKey>		arg_green;
+		NETArgument<NEUByteKey>		arg_blue;
+		NETArgument<NEUByteKey>		arg_alpha;
+
+	protected:
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
+		{
+			SuperClass::_onFetchArguments(tray);
+
+			tray.push(arg_text);
+			tray.push(arg_horizontal_alignment);
+			tray.push(arg_vertical_alignment);
+			tray.push(arg_red);
+			tray.push(arg_green);
+			tray.push(arg_blue);
+			tray.push(arg_alpha);
+
+			return RESULT_SUCCESS;
+		}
+		virtual type_result _onFetchModule()
+		{
+			arg_text.setPurposeLimitation(NEArgumentBase::READ_BY);			
+			arg_horizontal_alignment.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_vertical_alignment.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_red.setValue(255);
+			arg_red.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_green.setValue(255);
+			arg_green.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_blue.setValue(255);
+			arg_blue.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_alpha.setValue(255);
+			arg_alpha.setPurposeLimitation(NEArgumentBase::READ_BY);
+
+			return RESULT_SUCCESS;
+		}
+
+		virtual type_result _onExecute()
+		{
+			return RESULT_SUCCESS;
+		}
 
 	public:		
-		const NEModuleSelector& getFontSelector() const
-		{
-			const NEKey& key = getKeySet()[0];
-			if( ! &key || ! key.isSubClassOf(NEType::NEMODULE_SELECTOR))
-			{
-				ALERT_ERROR("0번키는 NEMODULE_SELECTOR입니다.");
-				NEModuleSelector* nullpointer=0;
-				return *nullpointer;
-			}
-			return static_cast<const NEModuleSelector&>(key);
-		}
-		NEModuleSelector& getFontSelector()
-		{
-			const ThisClass* casted = (const ThisClass*) this;
-
-			return const_cast<NEModuleSelector&>(casted->getFontSelector());
-		}
-		const NETString& getText() const
-		{
-			const NEKey& key = getKeySet()[1];
-			if( ! &key || ! key.isSubClassOf(NEType::NETSTRING_KEY))
-			{
-				ALERT_ERROR("1키는 NETSTRING_KEY이어야 합니다.");
-				NETString* pointer=0;
-				return *pointer;
-			}
-
-			return static_cast<const NETStringKey&>(key).getValue();
-		}
-		NETString& getText()
-		{
-			const ThisClass* casted = (const ThisClass*) this;
-
-			return const_cast<NETString&>(casted->getText());
-		}
-		const type_ubyte& getHorizontalAlignment() const
-		{
-			const NEKey& key = getKeySet()[2];
-			if( ! &key || ! key.isSubClassOf(NEType::NEUBYTE_KEY))
-			{
-				ALERT_ERROR("2키는 NEUBYTE_KEY이어야 합니다.");
-				type_ubyte* pointer=0;
-				return *pointer;
-			}
-
-			return static_cast<const NEUByteKey&>(key).getValue();
-		}
-		type_ubyte& getHorizontalAlignment()
-		{
-			const ThisClass* casted = (const ThisClass*) this;
-
-			return const_cast<type_ubyte&>(casted->getHorizontalAlignment());
-		}
-		const type_ubyte& getVerticalAlignment() const
-		{
-			const NEKey& key = getKeySet()[3];
-			if( ! &key || ! key.isSubClassOf(NEType::NEUBYTE_KEY))
-			{
-				ALERT_ERROR("3키는 NEUBYTE_KEY이어야 합니다.");
-				type_ubyte* pointer=0;
-				return *pointer;
-			}
-
-			return static_cast<const NEUByteKey&>(key).getValue();
-		}
-		type_ubyte& getVerticalAlignment()
-		{
-			const ThisClass* casted = (const ThisClass*) this;
-
-			return const_cast<type_ubyte&>(casted->getVerticalAlignment());
-		}
-		const type_ubyte& getColorRed() const
-		{
-			const NEKey& key = getKeySet()[4];
-			if( ! &key || ! key.isSubClassOf(NEType::NEUBYTE_KEY))
-			{
-				ALERT_ERROR("4키는 NEUBYTE_KEY이어야 합니다.");
-				type_ubyte* pointer=0;
-				return *pointer;
-			}
-
-			return static_cast<const NEUByteKey&>(key).getValue();
-		}
-		type_ubyte& getColorRed()
-		{
-			const ThisClass* casted = (const ThisClass*) this;
-
-			return const_cast<type_ubyte&>(casted->getColorRed());
-		}
-		const type_ubyte& getColorGreen() const
-		{
-			const NEKey& key = getKeySet()[5];
-			if( ! &key || ! key.isSubClassOf(NEType::NEUBYTE_KEY))
-			{
-				ALERT_ERROR("5키는 NEUBYTE_KEY이어야 합니다.");
-				type_ubyte* pointer=0;
-				return *pointer;
-			}
-
-			return static_cast<const NEUByteKey&>(key).getValue();
-		}
-		type_ubyte& getColorGreen()
-		{
-			const ThisClass* casted = (const ThisClass*) this;
-
-			return const_cast<type_ubyte&>(casted->getColorGreen());
-		}
-		const type_ubyte& getColorBlue() const
-		{
-			const NEKey& key = getKeySet()[6];
-			if( ! &key || ! key.isSubClassOf(NEType::NEUBYTE_KEY))
-			{
-				ALERT_ERROR("6키는 NEUBYTE_KEY이어야 합니다.");
-				type_ubyte* pointer=0;
-				return *pointer;
-			}
-
-			return static_cast<const NEUByteKey&>(key).getValue();
-		}
-		type_ubyte& getColorBlue()
-		{
-			const ThisClass* casted = (const ThisClass*) this;
-
-			return const_cast<type_ubyte&>(casted->getColorBlue());
-		}
-		const type_ubyte& getColorAlpha() const
-		{
-			const NEKey& key = getKeySet()[7];
-			if( ! &key || ! key.isSubClassOf(NEType::NEUBYTE_KEY))
-			{
-				ALERT_ERROR("7키는 NEUBYTE_KEY이어야 합니다.");
-				type_ubyte* pointer=0;
-				return *pointer;
-			}
-
-			return static_cast<const NEUByteKey&>(key).getValue();
-		}
-		type_ubyte& getColorAlpha()
-		{
-			const ThisClass* casted = (const ThisClass*) this;
-
-			return const_cast<type_ubyte&>(casted->getColorAlpha());
-		}
 		type_uint createColor() const
 		{
-			return D3DCOLOR_RGBA(getColorRed(), getColorGreen(), getColorBlue(),
-				getColorAlpha());
+			return D3DCOLOR_RGBA(arg_red.getValue(), arg_green.getValue(), arg_blue.getValue(),
+				arg_alpha.getValue());
 		}
 
 	public:
-		virtual NEExportable::ModuleHeader& getHeader() const;
+		virtual NEExportable::ModuleHeader& getHeader() const
+		{
+			static NEExportable::ModuleHeader _header;
+
+			if (_header.isValid() != RESULT_NOTHING)
+			{
+				_header.getName() = _T("SpriteTexter");
+				_header.getDeveloper() = _T("kniz");
+				_header.setRevision(1);
+				_header.getComment() =
+					"Sprite에 출력될 글 정보를 나타냅니다.\n"
+					"출력하게될 문장과, 사용할 폰트 및 정렬과 관련된 데이터를 간직하고 있습니다.\n"
+					"이러한 SpriteTexter가 출력되려면 Model Module에서 참조해야 합니다";
+				_header.getVersion() = _T("0.0.1a");
+				_header.getReleaseDate() = _T("2013-10-05");
+				NETStringSet& args = _header.getArgumentsComments();
+				args.create(8);
+				args.push("사용할 DXFont 모듈");
+				args.push("출력할 글");
+				args.push("가로 정렬\n0:왼쪽	1:가운데	2:오른쪽");
+				args.push("세로 정렬\n0:위		4:가운데	8:아래");
+				args.push("빨강 성분\n출력할 글의 빨강 색상값. 0이면 빨강 성분 없으며, 최대값은 255 입니다.");
+				args.push("파랑 성분\n출력할 글의 파랑 색상값. 0이면 빨강 성분 없으며, 최대값은 255 입니다.");
+				args.push("초록 성분\n출력할 글의 초록 색상값. 0이면 빨강 성분 없으며, 최대값은 255 입니다.");
+				args.push("불투명도 성분\n출력할 글의 불투명도. 0이면 투명해 눈에 보이지 않습니다. 최대값은 255 입니다.");
+			}
+
+			return _header;
+		}
 
 	public:
-		virtual type_result initialize();
-
-	public:
-		virtual type_result execute();
-
-	public:
-		virtual NEObject& clone() const;
+		virtual NEObject& clone() const
+		{
+			return *(new ThisClass(*this));
+		}
 
 	public:
 		type_result render(LPD3DXSPRITE sprite, const Texture& texture);
 
 	private:
-		type_result _bindFont();
 		RECT _createFontArea(const Texture& texture);
 
 	public:
-		static const NECodeSet& getScriptCodeSet()
+		static const NECodeSet& getModuleScriptCodes()
 		{
-			static NECodeSet _instance;
-			
-			if(_instance.getSize() <= 0)
+			NECodeType type(NECodeType::MODULE_SCRIPT);
+			static NECodeSet instance(type);
+
+			if(instance.getSize() <= 0)
 			{
-				_instance.create(1);
-				_instance.setCodeType(NECodeType::SCRIPT);
-				_instance.push(SpriteTexter().getHeader());
+				instance.create(1);
+				instance.push(NEExportable::Identifier("SpriteTexter.kniz"));
 			}
 
-			return _instance;
+			return instance;
 		}
 	};
 }

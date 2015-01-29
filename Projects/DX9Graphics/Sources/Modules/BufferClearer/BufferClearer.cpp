@@ -1,5 +1,4 @@
 #include "BufferClearer.hpp"
-#include "define.hpp"
 #include "../DX9/DX9.hpp"
 
 namespace DX9Graphics

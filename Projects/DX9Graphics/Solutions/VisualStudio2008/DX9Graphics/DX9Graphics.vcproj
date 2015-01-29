@@ -275,7 +275,7 @@
 					Name="Template"
 					>
 					<File
-						RelativePath="..\..\..\Sources\Commons\Templates\SelectorTemplate\TValidator.hpp"
+						RelativePath="..\..\..\Sources\Commons\Templates\TValidator\TValidator.hpp"
 						>
 					</File>
 				</Filter>
@@ -287,6 +287,50 @@
 						>
 						<File
 							RelativePath="..\..\..\Sources\Commons\Interfaces\IRenderable\Renderable.hpp"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="Units"
+					>
+					<Filter
+						Name="RenderTarget"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Commons\Units\RenderTarget\RenderTarget.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\Sources\Commons\Units\RenderTarget\RenderTarget.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="RenderTargetSet"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Commons\Units\RenderTargetSet\RenderTargetSet.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\Sources\Commons\Units\RenderTargetSet\RenderTargetSet.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="ShaderHandle"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Commons\Units\ShaderHandle\ShaderHandle.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="ShaderHandleSet"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Commons\Units\ShaderHandleSet\ShaderHandleSet.hpp"
 							>
 						</File>
 					</Filter>
@@ -326,14 +370,6 @@
 						RelativePath="..\..\..\Sources\Modules\DX9\DX9.hpp"
 						>
 					</File>
-					<Filter
-						Name="define"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\DX9\define.hpp"
-							>
-						</File>
-					</Filter>
 					<Filter
 						Name="innerclass"
 						>
@@ -389,340 +425,32 @@
 								>
 							</File>
 						</Filter>
-					</Filter>
-				</Filter>
-				<Filter
-					Name="DX9Binder"
-					>
-					<Filter
-						Name="Resource"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\Resource\Resource.hpp"
-							>
-						</File>
 						<Filter
-							Name="DockableResource"
+							Name="define"
 							>
 							<File
-								RelativePath="..\..\..\Sources\Modules\DockableResource\DockableResource.hpp"
-								>
-							</File>
-							<Filter
-								Name="Sprite"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\Sprite\Sprite.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Modules\Sprite\Sprite.hpp"
-									>
-								</File>
-								<Filter
-									Name="define"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\Sprite\define.hpp"
-										>
-									</File>
-								</Filter>
-							</Filter>
-							<Filter
-								Name="FileResource"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\FileResource\FileResource.hpp"
-									>
-								</File>
-								<Filter
-									Name="Texture"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\Texture\Texture.cpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Modules\Texture\Texture.hpp"
-										>
-									</File>
-									<Filter
-										Name="TabledTexture"
-										>
-										<File
-											RelativePath="..\..\..\Sources\Modules\TabledTexture\TabledTexture.cpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Modules\TabledTexture\TabledTexture.hpp"
-											>
-										</File>
-										<Filter
-											Name="define"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Modules\TabledTexture\define.hpp"
-												>
-											</File>
-										</Filter>
-									</Filter>
-									<Filter
-										Name="define"
-										>
-										<File
-											RelativePath="..\..\..\Sources\Modules\Texture\define.hpp"
-											>
-										</File>
-									</Filter>
-								</Filter>
-							</Filter>
-						</Filter>
-						<Filter
-							Name="ShaderProgram"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Modules\ShaderProgram\ShaderProgram.cpp"
-								>
-							</File>
-							<File
-								RelativePath="..\..\..\Sources\Modules\ShaderProgram\ShaderProgram.hpp"
-								>
-							</File>
-							<Filter
-								Name="FixedProgram"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\FixedProgram\FixedProgram.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Modules\FixedProgram\FixedProgram.hpp"
-									>
-								</File>
-								<Filter
-									Name="define"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\FixedProgram\define.hpp"
-										>
-									</File>
-								</Filter>
-							</Filter>
-							<Filter
-								Name="BloomProgram"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\BloomProgram\BloomProgram.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Modules\BloomProgram\BloomProgram.hpp"
-									>
-								</File>
-								<Filter
-									Name="define"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\BloomProgram\define.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="HLSL"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\BloomProgram\bloom.fx.fx"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Modules\BloomProgram\bloom_hlsl.hpp"
-										>
-									</File>
-								</Filter>
-							</Filter>
-							<Filter
-								Name="BlurProgram"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\BlurProgram\BlurProgram.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Modules\BlurProgram\BlurProgram.hpp"
-									>
-								</File>
-								<Filter
-									Name="define"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\BlurProgram\define.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="HLSL"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\BlurProgram\blur.fx.fx"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Modules\BlurProgram\blur_hlsl.hpp"
-										>
-									</File>
-								</Filter>
-							</Filter>
-							<Filter
-								Name="NoiseProgram"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\NoiseProgram\NoiseProgram.hpp"
-									>
-								</File>
-							</Filter>
-							<Filter
-								Name="DOFProgram"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\DOFProgram\DOFProgram.hpp"
-									>
-								</File>
-							</Filter>
-							<Filter
-								Name="HDRProgram"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\HDRProgram\HDRProgram.hpp"
-									>
-								</File>
-							</Filter>
-							<Filter
-								Name="innerclass"
-								>
-								<Filter
-									Name="RenderTarget"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\ShaderProgram\RenderTarget.cpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Modules\ShaderProgram\RenderTarget.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="RenderTargetSet"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\ShaderProgram\RenderTargetSet.cpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Modules\ShaderProgram\RenderTargetSet.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="ShaderHandle"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\ShaderProgram\ShaderHandle.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="ShaderHandleSet"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\ShaderProgram\ShaderHandleSet.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="RenderTargetVertex"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\ShaderProgram\RenderTargetVertex.hpp"
-										>
-									</File>
-								</Filter>
-							</Filter>
-							<Filter
-								Name="define"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\ShaderProgram\define.hpp"
-									>
-								</File>
-							</Filter>
-							<Filter
-								Name="MosaicProgram"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\MosaicProgram\MosaicProgram.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Modules\MosaicProgram\MosaicProgram.hpp"
-									>
-								</File>
-								<Filter
-									Name="define"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\MosaicProgram\define.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="HLSL"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\MosaicProgram\mosaic.fx"
-										>
-									</File>
-								</Filter>
-							</Filter>
-						</Filter>
-						<Filter
-							Name="DXFont"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Modules\DXFont\DXFont.cpp"
-								>
-							</File>
-							<File
-								RelativePath="..\..\..\Sources\Modules\DXFont\DXFont.hpp"
+								RelativePath="..\..\..\Sources\Modules\DX9\define.hpp"
 								>
 							</File>
 						</Filter>
 					</Filter>
 				</Filter>
 				<Filter
-					Name="CameraSelector"
+					Name="ParticleValidator"
 					>
-					<File
-						RelativePath="..\..\..\Sources\Modules\CameraSelector\CameraSelector.hpp"
-						>
-					</File>
 					<Filter
-						Name="CameraManipulator"
+						Name="ParticleVelocity"
 						>
 						<File
-							RelativePath="..\..\..\Sources\Modules\CameraManipulator\CameraManipulator.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Modules\CameraManipulator\CameraManipulator.hpp"
+							RelativePath="..\..\..\Sources\Modules\ParticleVelocity\ParticleVelocity.hpp"
 							>
 						</File>
 					</Filter>
 					<Filter
-						Name="FollowingCamera"
+						Name="ParticleObserver"
 						>
 						<File
-							RelativePath="..\..\..\Sources\Modules\FollowingCamera.hpp"
+							RelativePath="..\..\..\Sources\Modules\ParticleObserver\ParticleObserver.hpp"
 							>
 						</File>
 					</Filter>
@@ -737,67 +465,19 @@
 							RelativePath="..\..\..\Sources\Modules\Picker\Picker.hpp"
 							>
 						</File>
-						<Filter
-							Name="define"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Modules\Picker\define.hpp"
-								>
-							</File>
-						</Filter>
 					</Filter>
 					<Filter
-						Name="CameraDirector"
+						Name="ParticleMediator"
 						>
 						<File
-							RelativePath="..\..\..\Sources\Modules\CameraDirector\CameraDirector.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Modules\CameraDirector\CameraDirector.hpp"
-							>
-						</File>
-						<Filter
-							Name="CameraChaser"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Modules\CameraChaser\CameraChaser.cpp"
-								>
-							</File>
-							<File
-								RelativePath="..\..\..\Sources\Modules\CameraChaser\CameraChaser.hpp"
-								>
-							</File>
-						</Filter>
-					</Filter>
-					<Filter
-						Name="CameraPosDirector"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\CameraPosDirector\CameraPosDirector.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Modules\CameraPosDirector\CameraPosDirector.hpp"
+							RelativePath="..\..\..\Sources\Modules\ParticleMediator\ParticleMediator.hpp"
 							>
 						</File>
 					</Filter>
 				</Filter>
 				<Filter
-					Name="ModelBinder"
+					Name="FontValidator"
 					>
-					<File
-						RelativePath="..\..\..\Sources\Modules\ModelBinder\ModelBinder.hpp"
-						>
-						<FileConfiguration
-							Name="Developer.Debug|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCustomBuildTool"
-							/>
-						</FileConfiguration>
-					</File>
 					<Filter
 						Name="SpriteTexter"
 						>
@@ -834,18 +514,14 @@
 						RelativePath="..\..\..\Sources\Modules\BufferClearer\BufferClearer.hpp"
 						>
 					</File>
-					<Filter
-						Name="define"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\BufferClearer\define.hpp"
-							>
-						</File>
-					</Filter>
 				</Filter>
 				<Filter
 					Name="EulerTransitor"
 					>
+					<File
+						RelativePath="..\..\..\Sources\Modules\EulerTransitor\EulerTransitor.cpp"
+						>
+					</File>
 					<File
 						RelativePath="..\..\..\Sources\Modules\EulerTransitor\EulerTransitor.hpp"
 						>
@@ -883,14 +559,6 @@
 									RelativePath="..\..\..\Sources\Modules\PerspectiveCamera\PerspectiveCamera.hpp"
 									>
 								</File>
-								<Filter
-									Name="define"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Modules\PerspectiveCamera\define.hpp"
-										>
-									</File>
-								</Filter>
 							</Filter>
 						</Filter>
 						<Filter
@@ -905,14 +573,6 @@
 								>
 							</File>
 							<Filter
-								Name="define"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Modules\Model\define.hpp"
-									>
-								</File>
-							</Filter>
-							<Filter
 								Name="AnimatedModel"
 								>
 								<File
@@ -923,20 +583,180 @@
 									RelativePath="..\..\..\Sources\Modules\AnimatedModel\AnimatedModel.hpp"
 									>
 								</File>
+							</Filter>
+						</Filter>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="AngleDirectionConverter"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Modules\AngleDirectionConverter\AngleDirectionConverter.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Resource"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Modules\Resource\Resource.hpp"
+						>
+					</File>
+					<Filter
+						Name="DockableResource"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Modules\DockableResource\DockableResource.hpp"
+							>
+						</File>
+						<Filter
+							Name="Sprite"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Modules\Sprite\Sprite.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Modules\Sprite\Sprite.hpp"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="FileResource"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Modules\FileResource\FileResource.hpp"
+								>
+							</File>
+							<Filter
+								Name="Texture"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Modules\Texture\Texture.cpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Modules\Texture\Texture.hpp"
+									>
+								</File>
 								<Filter
-									Name="define"
+									Name="TabledTexture"
 									>
 									<File
-										RelativePath="..\..\..\Sources\Modules\AnimatedModel\define.hpp"
+										RelativePath="..\..\..\Sources\Modules\TabledTexture\TabledTexture.cpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Modules\TabledTexture\TabledTexture.hpp"
 										>
 									</File>
 								</Filter>
 							</Filter>
 						</Filter>
 					</Filter>
+					<Filter
+						Name="ShaderProgram"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Modules\ShaderProgram\ShaderProgram.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\Sources\Modules\ShaderProgram\ShaderProgram.hpp"
+							>
+						</File>
+						<Filter
+							Name="FixedProgram"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Modules\FixedProgram\FixedProgram.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Modules\FixedProgram\FixedProgram.hpp"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="BloomProgram"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Modules\BloomProgram\BloomProgram.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Modules\BloomProgram\BloomProgram.hpp"
+								>
+							</File>
+							<Filter
+								Name="HLSL"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Modules\BloomProgram\bloom.fx.fx"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Modules\BloomProgram\bloom_hlsl.hpp"
+									>
+								</File>
+							</Filter>
+						</Filter>
+						<Filter
+							Name="BlurProgram"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Modules\BlurProgram\BlurProgram.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Modules\BlurProgram\BlurProgram.hpp"
+								>
+							</File>
+							<Filter
+								Name="HLSL"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Modules\BlurProgram\blur.fx.fx"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Modules\BlurProgram\blur_hlsl.hpp"
+									>
+								</File>
+							</Filter>
+						</Filter>
+						<Filter
+							Name="innerclass"
+							>
+							<Filter
+								Name="RenderTargetVertex"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Modules\ShaderProgram\RenderTargetVertex.hpp"
+									>
+								</File>
+							</Filter>
+						</Filter>
+					</Filter>
+					<Filter
+						Name="DXFont"
+						>
+						<File
+							RelativePath="..\..\..\Sources\Modules\DXFont\DXFont.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\Sources\Modules\DXFont\DXFont.hpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 		</Filter>
+		<File
+			RelativePath=".\DX9Graphics.rc"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

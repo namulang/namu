@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../DX9Binder/DX9Binder.hpp"
+#include "../../Includes/Includes.hpp"
 
 namespace DX9Graphics
 {
-	class NE_DLL Resource : public DX9Binder
+	class NE_DLL Resource : public NEModule
 	{
 	public:
-		typedef DX9Binder SuperClass;
+		typedef NEModule SuperClass;
 		typedef Resource ThisClass;
 
 	public:

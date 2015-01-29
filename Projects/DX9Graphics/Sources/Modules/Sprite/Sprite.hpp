@@ -14,6 +14,21 @@ namespace DX9Graphics
 		typedef DockableResource SuperClass;
 
 	public:
+		NETArgument<NEFloatKey>	arg_bounding_sphere_radius;
+
+	protected:
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
+		{
+			tray.push(arg_bounding_sphere_radius);
+
+			return RESULT_SUCCESS;
+		}
+		virtual type_result _onFetchModule()
+		{
+			return arg_bounding_sphere_radius.setPurposeLimitation(NEArgumentBase::READ_BY);			
+		}
+
+	public:
 		Sprite()
 			: SuperClass(), _sprite(0)
 		{
@@ -38,7 +53,7 @@ namespace DX9Graphics
 		}
 		virtual type_result releaseResource()
 		{
-			if(_sprite)
+			if (_sprite)
 				_sprite->Release();
 			_sprite = 0;
 
@@ -46,7 +61,7 @@ namespace DX9Graphics
 		}
 		virtual type_result execute()
 		{
-			if( ! _sprite)
+			if (!_sprite)
 				initializeResource();
 
 			return RESULT_SUCCESS;
@@ -72,18 +87,15 @@ namespace DX9Graphics
 		LPD3DXSPRITE _sprite;
 
 	public:
-		static const NECodeSet& getSpriteCodeSet()
+		static const NECodeSet& getModuleScriptCodes()
 		{
 			NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
-			static NECodeSet codeset;
-			if(codeset.getLength() <= 0)
-			{
-				type_code sprite_code = moduler.getModule(Sprite().getHeader())
-					.getScriptCode();
-
+			NECodeType type(NECodeType::MODULE_SCRIPT);
+			static NECodeSet codeset(type);
+			if (codeset.getLength() <= 0)
+			{				
 				codeset.create(1);
-				codeset.setCodeType(NECodeType::SCRIPT);
-				codeset.push(sprite_code);			
+				codeset.push(NEExportable::Identifier("Sprite"));
 			}
 
 			return codeset;

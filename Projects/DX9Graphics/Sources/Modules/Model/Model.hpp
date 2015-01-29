@@ -5,11 +5,52 @@
 
 namespace DX9Graphics
 {
+	class SpriteTexter;
+	class Modeling;
+	class Texture;
+	class Sprite;
+
 	class NE_DLL Model : public Particle
 	{
+	public:
 		typedef Model ThisClass;
 		typedef Particle SuperClass;
 		typedef type_result (ThisClass::*onSearched)(NEModule&);
+
+	public:
+		NETArgument<NEModuleSelector>	arg_modeling_binder;
+		NETArgument<NEModuleSelector>	arg_texture_binder;
+		NETArgument<NEModuleSelector>	arg_texter_binder;
+		NETArgument<NENodeCodeSetKey>	arg_children;
+
+	protected:
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
+		{
+			SuperClass::_onFetchArguments(tray);
+
+			tray.push(arg_modeling_binder);
+			tray.push(arg_texture_binder);
+			tray.push(arg_texter_binder);
+			tray.push(arg_children);
+
+			return RESULT_SUCCESS;
+		}
+		virtual type_result _onFetchModule()
+		{
+			SuperClass::_onFetchModule();
+
+			arg_modeling_binder.getValue().NENodeSelector::isUsingAutoBinding() = true;
+			arg_modeling_binder.getValue().isUsingAutoBinding() = true;
+			arg_texture_binder.getValue().NENodeSelector::isUsingAutoBinding() = true;
+			arg_texture_binder.getValue().isUsingAutoBinding() = true;
+			arg_texter_binder.getValue().NENodeSelector::isUsingAutoBinding() = true;
+			arg_texter_binder.getValue().isUsingAutoBinding() = true;
+			arg_texter_binder.setEnable(false);
+
+			return RESULT_SUCCESS;
+		}
+		virtual type_result _onExecute();
+
 
 	public:
 		Model()
@@ -23,123 +64,10 @@ namespace DX9Graphics
 			_assign(source);
 		}
 
-		virtual ~Model()
-		{
-
-		}
-	
-	public:		
-		NENodeCodeSet& getSubParticles()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<NENodeCodeSet&>(consted_this->getSubParticles());
-		}
-		const NENodeCodeSet& getSubParticles() const
-		{
-			const NEKey& somekey = getKeySet()[15];
-			if( ! somekey.isSubClassOf(NEType::NENODE_CODESET_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 15번키가 NENODECODESET_KEY여야 합니다.");
-				const NENodeCodeSet* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NENodeCodeSetKey& target = static_cast<const NENodeCodeSetKey&>(somekey);
-			return target.getValue();
-		}
-		type_bool& isRenderable()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_bool&>(consted_this->isRenderable());
-		}
-		const type_bool& isRenderable() const
-		{
-			const NEKey& somekey = getKeySet()[16];
-			if( ! somekey.isSubClassOf(NEType::NEBOOLEAN_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 16번키가 NEBOOLEAN_KEY키여야 합니다.");
-				const type_bool* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			return (static_cast<const NEBooleanKey&>(somekey)).getValue();
-		}
-		NEModuleSelector& getModelingSelector()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<NEModuleSelector&>(consted_this->getModelingSelector());
-		}
-		const NEModuleSelector& getModelingSelector() const
-		{
-			const NEKey& somekey = getKeySet()[17];
-			if( ! somekey.isSubClassOf(NEType::NEMODULE_SELECTOR))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 17번키가 NEMODULE_SELECTOR키여야 합니다.");
-				const NEModuleSelector* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEModuleSelector& target = static_cast<const NEModuleSelector&>(somekey);
-			return target;
-		}
-		NEModuleSelector& getTextureSelector()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<NEModuleSelector&>(consted_this->getTextureSelector());
-		}
-		const NEModuleSelector& getTextureSelector() const
-		{
-			const NEKey& somekey = getKeySet()[18];
-			if( ! somekey.isSubClassOf(NEType::NEMODULE_SELECTOR))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 18번키가 NEMODULE_SELECTOR키여야 합니다.");
-				const NEModuleSelector* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEModuleSelector& target = static_cast<const NEModuleSelector&>(somekey);
-			return target;
-		}
-		type_bool& isFontEnabled()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_bool&>(consted_this->isFontEnabled());
-		}
-		const type_bool& isFontEnabled() const
-		{
-			const NEKey& somekey = getKeySet()[19];
-			if( ! somekey.isSubClassOf(NEType::NEBOOLEAN_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 19번키가 NEBOOLEAN_KEY키여야 합니다.");
-				const type_bool* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			return (static_cast<const NEBooleanKey&>(somekey)).getValue();
-		}
-		NEModuleSelector& getTexterSelector()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<NEModuleSelector&>(consted_this->getTexterSelector());
-		}
-		const NEModuleSelector& getTexterSelector() const
-		{
-			const NEKey& somekey = getKeySet()[20];
-			if( ! somekey.isSubClassOf(NEType::NEMODULE_SELECTOR))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 20번키가 NEMODULE_SELECTOR키여야 합니다.");
-				const NEModuleSelector* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			return static_cast<const NEModuleSelector&>(somekey);
-		}
+	public:				
+		Texture& getTexture();
+		Sprite& getModeling();
+		SpriteTexter& getTexter();
 		const D3DXMATRIX& getModelMatrix() const { return _model; }
 		D3DXMATRIX& getModelMatrix() { return _model; }
 		const D3DXMATRIX& getWorldMatrix() const { return _world; }
@@ -171,55 +99,8 @@ namespace DX9Graphics
 		}
 
 	public:
-		virtual type_result render();
-		virtual type_result initialize()
-		{
-			SuperClass::initialize();
-			_release();
+		virtual type_result render();		
 
-			NEKeyCodeSet& keyset = getKeySet();
-			keyset.resize(keyset.getLength() + 6);
-			keyset.push(NENodeCodeSetKey());	//	14:	SubParticles
-			keyset.push(NEBooleanKey(1));		//	15:	렌더링하는가?
-			NEModuleSelector s;
-			s.isUsingAutoBinding() = true;			
-			keyset.push(s);	//	16:	Modeling 모듈
-			keyset.push(s);	//	17:	Texture 모듈
-			keyset.push(NEBooleanKey(0));		//	18:	텍스트 기능을 사용할 것인가?
-			keyset.push(NEModuleSelector());	//	19: 텍스터
-
-			return RESULT_SUCCESS;
-		}
-		virtual type_result execute()
-		{	
-			//	pre:			
-			if( ! isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-			type_bool is_renderable = isRenderable();
-			if( is_renderable				&&
-				! getTextureSelector().getBinder().isBinded())
-				_bindTextureModule();
-			if(is_renderable				&&
-				! getModelingSelector().getBinder().isBinded())
-				_bindModelingModule();
-			if( is_renderable				&&
-				isFontEnabled()				&& 
-				! getTexterSelector().getBinder().isBinded())
-				_bindTexterModule();
-			
-
-			//	main:
-			//		ParentWorldMatrix 할당받기:
-			_parent_world = _getGlobalParentWorld();
-			_updateModelMatrix();
-			_updateWorldMatrix();
-
-
-			//	post:
-			//		자식 모듈셋 실행:
-			_executeChildren();
-			_getGlobalParentWorld() = _parent_world;
-			return RESULT_SUCCESS;
-		}
 		virtual void release()
 		{
 			SuperClass::release();
@@ -248,7 +129,7 @@ namespace DX9Graphics
 			loader.execute((char*) &_model, sizeof(D3DXMATRIX));
 			loader.execute((char*) &_parent_world, sizeof(D3DXMATRIX));
 			loader.execute((char*) &_world, sizeof(D3DXMATRIX));
-	
+
 			return loader;			
 		}
 		virtual NEObject& clone() const
@@ -259,7 +140,7 @@ namespace DX9Graphics
 	private:
 		type_result _executeChildren()
 		{
-			NENodeCodeSet& nodeset = getSubParticles();
+			NENodeCodeSet& nodeset = arg_children.getValue();
 
 			for(int n=0; n < nodeset.getSize(); n++)
 			{
@@ -298,14 +179,14 @@ namespace DX9Graphics
 			_model = source._model;
 			_world= source._world;
 			_parent_world = source._parent_world;
+			arg_children = source.arg_children;
+			arg_modeling_binder = source.arg_modeling_binder;
+			arg_texture_binder = source.arg_texture_binder;
+			arg_texter_binder = source.arg_texter_binder;
 
 			return *this;
 		}
-		NECodeSet& _getModelingCodeSet();
-		type_result _bindModelingModule();
-		type_result _bindTextureModule();
-		type_result _bindTexterModule();
-		NECodeSet& _getTextureCodeSet();
+
 		type_result _updateRenderState();
 
 	private:
@@ -314,7 +195,7 @@ namespace DX9Graphics
 		D3DXMATRIX _parent_world;
 
 	public:
-		static const NECodeSet& getScriptCodeSet();
+		static const NECodeSet& getModuleScriptCodes();
 
 	private:
 		static D3DXMATRIX& _getGlobalParentWorld()
@@ -326,7 +207,7 @@ namespace DX9Graphics
 				D3DXMatrixIdentity(&_instance);
 				_is_first = false;
 			}
-			
+
 			return _instance;
 		}
 	};

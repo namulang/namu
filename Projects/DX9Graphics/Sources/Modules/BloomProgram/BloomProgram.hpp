@@ -14,40 +14,58 @@ namespace DX9Graphics
 		friend class DX9;
 
 	public:
-		type_float& getBloomLevel()
-		{
-			const ThisClass* casted = (const ThisClass*) this;
+		NETArgument<NEFloatKey>	arg_bloom_level;
 
-			return const_cast<type_float&>(casted->getBloomLevel());
-		}
-		const type_float& getBloomLevel() const
+	protected:
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
-			const NEKey& key = getKeySet()[4];
-			if( ! key.isSubClassOf(NEType::NEFLOAT_KEY))
-			{
-				ALERT_ERROR("4번키는 NEFLOAT_KEY여야 합니다");
-				type_float* nullpoint = 0;
-				return *nullpoint;
-			}
+			SuperClass::_onFetchArguments(tray);
 
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(key);
-			return target.getValue();
+			tray.push(arg_bloom_level);
+
+			return RESULT_SUCCESS;
 		}
+		virtual type_result _onFetchModule()
+		{
+			SuperClass::_onFetchModule();
+
+			arg_bloom_level.setValue(DEFAULT_BLOOM_LEVEL);
+			arg_bloom_level.setPurposeLimitation(NEArgumentBase::READ_BY);
+
+			return RESULT_SUCCESS;
+		}	
 
 	public:
-		virtual type_result initialize();
 		virtual NEObject& clone() const
 		{
 			return *(new ThisClass(*this));
 		}
-		virtual const NEExportable::ModuleHeader& getHeader() const;
+		virtual const NEExportable::ModuleHeader& getHeader() const
+		{
+			static NEExportable::ModuleHeader _header;
+
+			if(_header.isValid() != RESULT_NOTHING)
+			{
+				_header.getName() = "BloomProgram";
+				_header.getDeveloper() = "kniz";
+				_header.setRevision(1);
+				_header.getComment() = "Bloom Posteffect를 줍니다.\n이전에 그려진 렌더링타겟에 Bloom 효과를 줍니다.";
+				_header.getVersion() = "0.0.1a";
+				_header.getReleaseDate() = "2013-08-19";
+				NETStringSet& args = _header.getArgumentsComments();
+				args.create(1);
+				args.push("Bloom Level\nBloom효과의 강도를 뜻한다. 작을 수록 효과가 미미하다.");
+			}
+
+			return _header;
+		}
 
 	private:
 		virtual type_result _onRender(DX9& dx9, Camera& camera)
 		{
 			if( ! isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;		
 
-			
+
 			//	main:
 			//		준비:
 			LPDIRECT3DDEVICE9 device = dx9.getDevice();
@@ -57,10 +75,8 @@ namespace DX9Graphics
 			RenderTargetSet& targets = _getRenderTargetSet(dx9);
 			ShaderHandleSet& handles = getShaderHandleSet();
 			if(targets.getSize() <= 0)
-			{
-				ALERT_ERROR("DX9 바인딩 실패로 렌더타겟을 생성하지 못했습니다.");
-				return RESULT_TYPE_ERROR;
-			}
+				return ALERT_ERROR("DX9 바인딩 실패로 렌더타겟을 생성하지 못했습니다.");
+
 			//			Matrix치환:
 			D3DXMATRIX new_w, new_v, new_p = _getOrthoMatrix();
 			D3DXMatrixIdentity(&new_w);
@@ -85,14 +101,14 @@ namespace DX9Graphics
 			device->SetTexture(0, &targets.getFilledTarget().getTexture());
 			_renderTargetVertex(device);			
 			_endPassAndNotifyRenderTargetFilled(temp);
- 			//		2패스: Y방향 블러
- 			for(int pass=1; pass < 3 ;pass++)	//	0 <= pass <= 2
- 			{
- 				_beginPass(pass, device, temp.getEmptyTarget());
- 				device->SetTexture(0, &temp.getFilledTarget().getTexture());
- 				_renderTargetVertex(device);
- 				_endPassAndNotifyRenderTargetFilled(temp);				
- 			}
+			//		2패스: Y방향 블러
+			for(int pass=1; pass < 3 ;pass++)	//	0 <= pass <= 2
+			{
+				_beginPass(pass, device, temp.getEmptyTarget());
+				device->SetTexture(0, &temp.getFilledTarget().getTexture());
+				_renderTargetVertex(device);
+				_endPassAndNotifyRenderTargetFilled(temp);				
+			}
 			//		3패스: 합쳐서 최종 찍기
 			_beginFinalRenderPass(3, dx9);
 			device->SetTexture(0, &targets.getFilledTarget().getTexture());		//	가공(TEXTURE1)			
@@ -124,20 +140,15 @@ namespace DX9Graphics
 	private:
 		type_result _updateBloomLevel()
 		{
-			type_float& bloom = getBloomLevel();
-			if(bloom < 0.0f)
-				bloom = 0.0f;
+			type_float bloom = arg_bloom_level.getValue();
+			if (bloom < 0.0f)
+				arg_bloom_level.setValue(0.0f);
 			if( ! &getEffect())
-			{
-				ALERT_ERROR("이펙트가 초기화 되어있지 않아서 핸들로 값을 넘길 수 없습니다.");
-				return RESULT_TYPE_ERROR;
-			}
+				return ALERT_ERROR("이펙트가 초기화 되어있지 않아서 핸들로 값을 넘길 수 없습니다.");
+
 			ShaderHandle& handle = getShaderHandleSet()[1];
 			if( ! &handle || handle.isTechniqueHandle())
-			{
-				ALERT_ERROR("잘못된 핸들값입니다.");
-				return RESULT_TYPE_ERROR;
-			}
+				return ALERT_ERROR("잘못된 핸들값입니다.");
 
 			getEffect().SetFloat(handle.getHandle(), bloom);
 
@@ -146,20 +157,15 @@ namespace DX9Graphics
 		type_result _updateTextureSize()
 		{
 			type_int	tex_width = getRenderTargetWidth(),
-						tex_height = getRenderTargetHeight();
+				tex_height = getRenderTargetHeight();
 			if( ! &getEffect())
-			{
-				ALERT_ERROR("이펙트가 초기화 되어있지 않아서 핸들로 값을 넘길 수 없습니다.");
-				return RESULT_TYPE_ERROR;
-			}
+				return ALERT_ERROR("이펙트가 초기화 되어있지 않아서 핸들로 값을 넘길 수 없습니다.");
+
 			ShaderHandle& width_handle = getShaderHandleSet()[2],
-						& height_handle = getShaderHandleSet()[3];
+				& height_handle = getShaderHandleSet()[3];
 			if( ! &width_handle		||	! width_handle.getHandle()	|| width_handle.isTechniqueHandle()		||
 				! &height_handle	||	! height_handle.getHandle()	|| height_handle.isTechniqueHandle()	)
-			{
-				ALERT_ERROR("잘못된 핸들값입니다.");
-				return RESULT_TYPE_ERROR;
-			}
+				return ALERT_ERROR("잘못된 핸들값입니다.");
 
 			getEffect().SetFloat(width_handle.getHandle(), static_cast<float>(tex_width));
 			getEffect().SetFloat(height_handle.getHandle(), static_cast<float>(tex_height));
@@ -184,13 +190,14 @@ namespace DX9Graphics
 				_instance.create(2);
 				_instance.push(RenderTarget());
 				_instance.push(RenderTarget());
-				
+
 				for(int n=0; n < _instance.getSize() ;n++)
 					_instance[n].initialize(dx9);
 			}
 
 			return _instance;
 		}
+		static const float DEFAULT_BLOOM_LEVEL;
 
 	};
 }

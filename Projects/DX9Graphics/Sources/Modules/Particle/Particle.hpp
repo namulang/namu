@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../EulerTransitor/EulerTransitor.hpp"
-#include "../../Commons/Interfaces/IRenderable/IRenderable.hpp"
+#include "../../Commons/Interfaces/IRenderable/Renderable.hpp"
 
 namespace DX9Graphics
 {
@@ -10,10 +10,6 @@ namespace DX9Graphics
 	public:
 		typedef EulerTransitor SuperClass;
 		typedef Particle ThisClass;
-
-	public:
-		const float RADIAN_TO_DEGREE_ADJ = 180.0f / D3DX_PI;
-		const float DEGREE_TO_RADIAN_ADJ = D3DX_PI / 180.0f;
 
 	public:
 		NETArgument<NEFloatKey>	arg_trans_x;
@@ -32,10 +28,36 @@ namespace DX9Graphics
 		NETArgument<NEByteKey>	arg_source_blend;
 		NETArgument<NEByteKey>	arg_dest_blend;
 
+	public:
+		ThisClass& operator=(const ThisClass& rhs)
+		{
+			if (this == &rhs) return *this;
+
+			SuperClass::operator=(rhs);
+
+			arg_trans_x = rhs.arg_trans_x;
+			arg_trans_y = rhs.arg_trans_y;
+			arg_trans_z = rhs.arg_trans_z;
+			arg_rotate_x = rhs.arg_rotate_x;
+			arg_rotate_y = rhs.arg_rotate_y;
+			arg_rotate_z = rhs.arg_rotate_z;
+			arg_scale_x = rhs.arg_scale_x;
+			arg_scale_y = rhs.arg_scale_y;
+			arg_scale_z = rhs.arg_scale_z;
+			arg_red = rhs.arg_red;
+			arg_green = rhs.arg_green;
+			arg_blue = rhs.arg_blue;
+			arg_alpha = rhs.arg_alpha;
+			arg_source_blend = rhs.arg_source_blend;
+			arg_dest_blend = rhs.arg_dest_blend;
+
+			return *this;
+		}
+
 		type_uint createColor() const
 		{
-			return D3DCOLOR_RGBA(getColorRed(), getColorGreen(), getColorBlue(), 
-				getColorAlpha());
+			return D3DCOLOR_RGBA(arg_red.getValue(), arg_green.getValue(), arg_blue.getValue(), 
+				arg_alpha.getValue());
 		}
 		D3DXVECTOR3 createTranslationVector() const 
 		{ 
@@ -63,22 +85,22 @@ namespace DX9Graphics
 		}
 		type_result forward(type_float distance)
 		{
-			return _moveByDelta(D3DXVECTOR3(0, 0, 1));
+			return _moveByDelta(D3DXVECTOR3(0, 0, 1), distance);
 		}
 		type_result stepAside(type_float distance)
 		{
-			return _moveByDelta(D3DXVECTOR3(1, 0, 0));
+			return _moveByDelta(D3DXVECTOR3(1, 0, 0), distance);
 		}
 		type_result goUp(type_float distance)
 		{
-			return _moveByDelta(D3DXVECTOR3(0, 1, 0));
+			return _moveByDelta(D3DXVECTOR3(0, 1, 0), distance);
 		}
 
 	public:
 		const NEExportable::ModuleHeader& getHeader() const
 		{
 			static NEExportable::ModuleHeader _instance;
-			
+
 			if(_instance.getArgumentsComments().getLength() < 15)
 			{
 				NETStringSet& args = _instance.getArgumentsComments();
@@ -86,9 +108,9 @@ namespace DX9Graphics
 				args.push("TranslationX\n물체가 X 좌표로 얼마나 이동하였는지를 나타냅니다.");
 				args.push("TranslationY\n물체가 Y 좌표로 얼마나 이동하였는지를 나타냅니다.");
 				args.push("TranslationZ\n물체가 Z 좌표로 얼마나 이동하였는지를 나타냅니다.");
-				
+
 				args.push(SuperClass::getHeader().getArgumentsComments());
-				
+
 				args.push("ScalingX\n물체가 X축으로 크기 배율이 어떻게 되는지 나타냅니다.\n2.0이면 본래 크기의 2배 라는 뜻이 됩니다.");
 				args.push("ScalingY\n물체가 Y축으로 크기 배율이 어떻게 되는지 나타냅니다.");
 				args.push("ScalingZ\n물체가 Z축으로 크기 배율이 어떻게 되는지 나타냅니다.");
@@ -104,11 +126,6 @@ namespace DX9Graphics
 		}
 
 	protected:
-		D3DXVECTOR3 _createDeltaBy(const D3DXVECTOR3& origin_direction_vector)
-		{
-			createRotationMatrix()
-		}
-
 		virtual type_result _onFetchModule()
 		{
 			arg_scale_x.setValue(1.0f);
@@ -116,7 +133,7 @@ namespace DX9Graphics
 			arg_scale_z.setValue(1.0f);
 			arg_red.setValue(255);
 			arg_green.setValue(255);
-			arg_blue.setValue(255)
+			arg_blue.setValue(255);
 			arg_alpha.setValue(255);
 
 			return RESULT_SUCCESS;
@@ -143,15 +160,32 @@ namespace DX9Graphics
 		}
 
 	private:
-		type_result _moveByDelta(const D3DXVECTOR3& origin_direction)
+		type_result _moveByDelta(const D3DXVECTOR3& origin_direction, type_float distance)
 		{
-			D3DXVECTOR3 direct = createDirectionVectorByYawPitchRoll(origin_direction);
+			D3DXVECTOR3 new_direction = createTransformedVectorByYawPitchRoll(origin_direction);
 
-			arg_trans_x += direct.x * distance;
-			arg_trans_y += direct.y * distance;
-			arg_trans_z += direct.z * distance;
+			arg_trans_x.setValue(arg_trans_x.getValue() + new_direction.x * distance);
+			arg_trans_y.setValue(arg_trans_y.getValue() + new_direction.y * distance);
+			arg_trans_z.setValue(arg_trans_z.getValue() + new_direction.z * distance);
 
 			return RESULT_SUCCESS;
+		}
+
+	public:
+		static const NECodeSet& getModuleScriptCodes()
+		{
+			NECodeType type(NECodeType::MODULE_SCRIPT);
+			static NECodeSet codes(type);
+
+			if (codes.getLength() <= 0)
+			{
+				codes.create(3);
+				codes.push(NEExportable::Identifier("Model.kniz"));
+				codes.push(NEExportable::Identifier("Camera.kniz"));
+				codes.push(NEExportable::Identifier("AnimatedModel.kniz"));
+			}
+
+			return codes;
 		}
 	};
 }

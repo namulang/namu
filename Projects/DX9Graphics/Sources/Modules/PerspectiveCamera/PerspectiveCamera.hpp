@@ -11,120 +11,65 @@ namespace DX9Graphics
 		typedef PerspectiveCamera ThisClass;
 
 	public:
-		type_bool& isProjectionMatrixCreatedAutomatically()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
+		NETArgument<NEFloatKey> arg_fovy;		//	Field Of View
+		NETArgument<NEFloatKey> arg_aspect;		//	Width / Height
+		NETArgument<NEFloatKey> arg_minimum_z;	//	near z
+		NETArgument<NEFloatKey> arg_maximum_z;	//	far_z		
 
-			return const_cast<type_bool&>(consted_this->isProjectionMatrixCreatedAutomatically());
+	protected:
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
+		{
+			SuperClass::_onFetchArguments(tray);
+
+			tray.push(arg_fovy);
+			tray.push(arg_aspect);
+			tray.push(arg_minimum_z);
+			tray.push(arg_maximum_z);
+
+			return RESULT_SUCCESS;
 		}
-		const type_bool& isProjectionMatrixCreatedAutomatically() const
+		virtual type_result _onFetchModule()		
 		{
-			const NEKey& somekey = getKeySet()[28];
-			if( ! somekey.isSubClassOf(NEType::NEBOOLEAN_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 28번키는 NEFLOAT_KEY여야 합니다.");
-				type_bool* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEBooleanKey& target = static_cast<const NEBooleanKey&>(somekey);
-			return target.getValue();
-		}
-		type_float& getFOVY()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_float&>(consted_this->getFOVY());
-		}
-		const type_float& getFOVY() const
-		{
-			const NEKey& somekey = getKeySet()[29];
-			if( ! somekey.isSubClassOf(NEType::NEFLOAT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 29번키는 NEFLOAT_KEY여야 합니다.");
-				type_float* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(somekey);
-			return target.getValue();
-		}
-		type_float& getAspect()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_float&>(consted_this->getAspect());
-		}
-		const type_float& getAspect() const
-		{
-			const NEKey& somekey = getKeySet()[30];
-			if( ! somekey.isSubClassOf(NEType::NEFLOAT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 30번키는 NEFLOAT_KEY여야 합니다.");
-				type_float* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(somekey);
-			return target.getValue();
-		}
-		type_float& getPerpectiveMinimumZ()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_float&>(consted_this->getPerpectiveMinimumZ());
-		}
-		const type_float& getPerpectiveMinimumZ() const
-		{
-			const NEKey& somekey = getKeySet()[31];
-			if( ! somekey.isSubClassOf(NEType::NEFLOAT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 31번키는 NEFLOAT_KEY여야 합니다.");
-				type_float* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(somekey);
-			return target.getValue();
-		}
-		type_float& getPerspectiveMaximumZ()
-		{
-			const ThisClass* consted_this = (const ThisClass*) this;
-
-			return const_cast<type_float&>(consted_this->getPerspectiveMaximumZ());
-		}
-		const type_float& getPerspectiveMaximumZ() const
-		{
-			const NEKey& somekey = getKeySet()[32];
-			if( ! somekey.isSubClassOf(NEType::NEFLOAT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 32번키는 NEFLOAT_KEY여야 합니다.");
-				type_float* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEFloatKey& target = static_cast<const NEFloatKey&>(somekey);
-			return target.getValue();
-		}
-
-	public:
-		virtual type_result initialize()
-		{
-			SuperClass::initialize();
-
-			NEKeyCodeSet& keyset = getKeySet();
-			keyset.resize(keyset.getLength() + 5);
-			keyset.push(NEBooleanKey(true));		//	28:	isProjectionMatrixCreatedAutomatically
-			keyset.push(NEFloatKey(D3DX_PI / 4));	//	29:	FOVY; Field Of View Y
-			keyset.push(NEFloatKey(1.0f));			//	30:	aspect; w / h
-			keyset.push(NEFloatKey(1.0f));			//	31:	PerspectiveMinimumZ
-			keyset.push(NEFloatKey(100.0f));		//	32:	PerspectiveMaximumZ
+			arg_fovy.setValue(90);
+			arg_fovy.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_fovy.setEnable(false);
+			arg_aspect.setValue(640.0f / 480.0f);
+			arg_aspect.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_minimum_z.setValue(0.1f);
+			arg_minimum_z.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_maximum_z.setValue(1000.0f);
+			arg_maximum_z.setPurposeLimitation(NEArgumentBase::READ_BY);
 
 			return RESULT_SUCCESS;
 		}
 
 	public:
-		virtual NEExportable::ModuleHeader& getHeader() const;
+		virtual NEExportable::ModuleHeader& getHeader() const
+		{
+			static NEExportable::ModuleHeader _header;
+
+			if (_header.isValid() != RESULT_NOTHING)
+			{
+				const NEExportable::ModuleHeader& supers = SuperClass::getHeader();
+
+				_header.getName() = "PerpectiveCamera";
+				_header.getDeveloper() = "kniz";
+				_header.setRevision(1);
+				_header.getComment() = supers.getComment() +
+					"이 카메라는 원근법을 적용하여 그려내는 카메라입니다.";
+				_header.getVersion() = "0.0.1a";
+				_header.getReleaseDate() = "2013-08-10";
+				NETStringSet& args = _header.getArgumentsComments();
+				args = supers.getArgumentsComments();
+				args.resize(4);
+				args.push("Field Of View Y(FOVy : 시야각)\n카메라가 보는 방향으로 위아래 몇 도 만큼 영상에 포함되는 가를 결정합니다. 높을 수록 더 많은 영역을 그리게 됩니다.\nDisabled시, 자동으로 설정합니다.");
+				args.push("Aspect(종횡비)\nFOVy 값으로 정해진 높이에 대해서 너비를 곱해 결정합니다.\n1.0이면 FOVy로 결정된 높이와 너비가 같다는 뜻입니다.\n2.0이면 너비가 높이보다 2배 큽니다.");
+				args.push("Near Z\n물체와 카메라의 거리가 이 값보다 작은 경우는 그리지 않습니다.");
+				args.push("Far Z\n물체와 카메라의 거리가 이 값보다 큰 경우는 그리지 않습니다.");
+			}
+
+			return _header;
+		}
 
 	public:
 		virtual NEObject& clone() const
@@ -135,13 +80,13 @@ namespace DX9Graphics
 	private:
 		virtual type_result _updateProjectionMatrix()
 		{
-			type_float& fovy = getFOVY(),
-						aspect = getAspect(),
-						min_z = getPerpectiveMinimumZ(),
-						max_z = getPerspectiveMaximumZ();
+			type_float	fovy = arg_fovy.getValue(),
+				aspect = arg_aspect.getValue(),
+				min_z = arg_minimum_z.getValue(),
+				max_z = arg_maximum_z.getValue();
 
-			if(isProjectionMatrixCreatedAutomatically())
-				_updateProjectionVariablesAutomatically(fovy, aspect, min_z, max_z);
+			if( ! arg_fovy.isEnable())
+				_updateProjectionVariablesAutomatically();
 
 			D3DXMATRIX projection_matrix;
 			D3DXMatrixPerspectiveFovLH(&getProjectionMatrix(), 
@@ -150,8 +95,7 @@ namespace DX9Graphics
 
 			return RESULT_SUCCESS;
 		}
-		type_result _updateProjectionVariablesAutomatically(type_float& fovy, type_float& aspect, 
-			type_float& perspective_minimum_z, type_float& perspective_maximum_z)
+		type_result _updateProjectionVariablesAutomatically()
 		{
 			D3DVIEWPORT9 maximized = createMaximizedViewPort();
 			if(maximized.Height == 0)
@@ -159,23 +103,23 @@ namespace DX9Graphics
 
 
 			//	main:			
-			if(isViewportMaximized())
+			if( ! arg_viewport_x.isEnable())	//	when use maximized viewport,
 			{
-				aspect = (float) maximized.Width / maximized.Height;
-				fovy = 90;
+				arg_aspect.setValue((float)maximized.Width / maximized.Height);
+				arg_fovy.setValue(90);
 			}
 			else
 			{
-				type_uint vp_h = getViewportHeight();
+				type_uint vp_h = arg_viewport_height.getValue();
 
-				aspect = (float) getViewportWidth() / vp_h;
-				fovy = 90;
+				arg_aspect.setValue((float) arg_viewport_width.getValue() / vp_h);
+				arg_fovy.setValue(90);
 			}
 
 
 			//	post:
-			perspective_minimum_z = 0.1f;
-			perspective_maximum_z = 1000.0f;
+			arg_minimum_z.setValue(0.1f);
+			arg_maximum_z.setValue(1000.0f);
 			return RESULT_SUCCESS;
 		}
 	};

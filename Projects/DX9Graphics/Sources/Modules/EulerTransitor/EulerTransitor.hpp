@@ -12,8 +12,8 @@ namespace DX9Graphics
 		typedef EulerTransitor ThisClass;
 
 	public:
-		const float RADIAN_TO_DEGREE_ADJ = 180.0f / D3DX_PI;
-		const float DEGREE_TO_RADIAN_ADJ = D3DX_PI / 180.0f;
+		static const float RADIAN_TO_DEGREE_ADJ;
+		static const float DEGREE_TO_RADIAN_ADJ;
 
 	public:
 		NETArgument<NEFloatKey> arg_rotate_x;
@@ -33,35 +33,40 @@ namespace DX9Graphics
 		}
 		virtual type_result _onExecute()
 		{
-			rotation_matrix = createRotationMatrix();
+			rotation_matrix = createRotationMatrix(
+				createQuaternionFrom(arg_rotate_y.getValue(), arg_rotate_x.getValue(), arg_rotate_z.getValue())
+				);
+
+			return RESULT_SUCCESS;
 		}
 
-	public:		
-		D3DXVECTOR3 createYawPitchRollFrom(const D3DXVECTOR3& direction)
+	public:
+		ThisClass& operator=(const ThisClass& source)
 		{
-			return _createYawPitchRollFrom(_createQuaternionFrom(direction));
+			if (this == &source) return *this;
+
+			SuperClass::operator=(source);
+
+			arg_rotate_x = source.arg_rotate_x;
+			arg_rotate_y = source.arg_rotate_y;
+			arg_rotate_z = source.arg_rotate_z;
+
+			return *this;
+		}
+
+	public:
+		D3DXVECTOR3 createTransformedVectorByYawPitchRoll(const D3DXVECTOR3& origin) const;
+		D3DXVECTOR3 createYawPitchRoll() const
+		{
+			return D3DXVECTOR3(arg_rotate_y.getValue(), arg_rotate_x.getValue(), arg_rotate_z.getValue());
 		}
 		D3DXMATRIX createRotationMatrix() const
 		{
 			D3DXMATRIX to_return;
-			D3DXQUATERNION quat;
-			D3DXQuaternionRotationYawPitchRoll(&quat,
-				arg_rotate_x.getValue(), arg_rotate_y.getValue(), arg_rotate_z.getValue());
-			D3DXMatrixRotationQuaternion(&to_return, &quat);
+			D3DXMatrixRotationYawPitchRoll(&to_return, arg_rotate_y.getValue(), arg_rotate_x.getValue(), arg_rotate_z.getValue());
 
 			return to_return;
 		}
-		D3DXVECTOR3 createDirectionVectorByYawPitchRoll(const D3DXVECTOR3& cannoncial)
-		{
-			D3DXMATRIXA16 mat;
-			D3DXMatrixRotationQuaternion(&mat, &_createQuaternionFromMyYawPitchRoll());
-			D3DXVECTOR3 to_return;
-
-			D3DXVec3TransformNormal(&to_return, &cannoncial, &mat);
-			return to_return;
-		}
-
-	public:
 		const NEExportable::ModuleHeader& getHeader() const
 		{
 			static NEExportable::ModuleHeader _instance;
@@ -79,7 +84,10 @@ namespace DX9Graphics
 		}
 
 	protected:
-		D3DXVECTOR3 _createYawPitchRollFrom(const D3DXQUATERNION& q)
+		D3DXMATRIX rotation_matrix;
+
+	public:
+		static D3DXVECTOR3 createYawPitchRollFrom(const D3DXQUATERNION& q)
 		{
 			float sqw = q.w*q.w;
 			float sqx = q.x*q.x;
@@ -92,20 +100,23 @@ namespace DX9Graphics
 
 			return ret;
 		}
-		D3DXQUATERNION _createQuaternionFromMyYawPitchRoll()
+		static D3DXVECTOR3 createYawPitchRollFrom(const D3DXVECTOR3& direction)
+		{
+			return createYawPitchRollFrom(createQuaternionFrom(direction));
+		}		
+		static D3DXQUATERNION createQuaternionFrom(type_float yaw, type_float pitch, type_float roll)
 		{
 			D3DXQUATERNION to_return;
-			D3DXQuaternionRotationYawPitchRoll(&to_return, 
-				arg_rotate_y.getValue(), arg_rotate_x.getValue(), arg_rotate_z.getValue());
+			D3DXQuaternionRotationYawPitchRoll(&to_return, yaw, pitch, roll);
 
 			return to_return;
 		}
-		D3DXQUATERNION _createQuaternionFrom(const D3DXVECTOR3& direction)
+		static D3DXQUATERNION createQuaternionFrom(const D3DXVECTOR3& direction)
 		{
 			D3DXVECTOR3 up(0, 1.0f, 0.0f);
 			D3DXVECTOR3 right;
-			D3DXVec3Cross(&right, &up, &direction);  
-			D3DXVec3Cross(&up, &direction, &right); 
+			D3DXVec3Cross(&right, &up, &direction);
+			D3DXVec3Cross(&up, &direction, &right);
 
 			D3DXMATRIXA16 mBasis(
 				right.x, right.y, right.z, 0.0f,
@@ -115,15 +126,28 @@ namespace DX9Graphics
 
 			D3DXQUATERNION qrot;
 			qrot.w = (float)sqrt(1.0f + mBasis._11 + mBasis._22 + mBasis._33) / 2.0f;
-			float dfWScale = qrot.w * 4.0;
+			float dfWScale = qrot.w * 4.0f;
 			qrot.x = (float)((mBasis._32 - mBasis._23) / dfWScale);
 			qrot.y = (float)((mBasis._13 - mBasis._31) / dfWScale);
 			qrot.z = (float)((mBasis._21 - mBasis._12) / dfWScale);
 
 			return qrot;
 		}
+		static D3DXMATRIX createRotationMatrix(const D3DXQUATERNION& quat)
+		{
+			D3DXMATRIX to_return;
+			D3DXMatrixRotationQuaternion(&to_return, &quat);
 
-	protected:
-		D3DXMATRIX rotation_matrix;
+			return to_return;
+		}
+		static D3DXVECTOR3 createDirectionVectorFrom(type_float yaw, type_float pitch, type_float roll, const D3DXVECTOR3& cannoncial)
+		{
+			D3DXMATRIXA16 mat;
+			D3DXMatrixRotationQuaternion(&mat, &createQuaternionFrom(yaw, pitch, roll));
+			D3DXVECTOR3 to_return;
+
+			D3DXVec3TransformNormal(&to_return, &cannoncial, &mat);
+			return to_return;
+		}
 	};
 }

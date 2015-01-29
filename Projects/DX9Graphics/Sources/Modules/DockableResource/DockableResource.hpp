@@ -17,5 +17,21 @@ namespace DX9Graphics
 		{
 			return RESULT_SUCCESS;
 		}
-	};	
+
+	public:
+		static const NECodeSet& getModuleScriptCodes()
+		{
+			static NECodeSet _instance;
+
+			if(_instance.getLength() <= 0)
+			{
+				_instance.create(3);
+				_instance.push(NEExportable::Identifier("Sprite.kniz"));
+				_instance.push(NEExportable::Identifier("Texture.kniz"));
+				_instance.push(NEExportable::Identifier("TabledTexture.kniz"));
+			}
+
+			return _instance;
+		}
+	};
 }

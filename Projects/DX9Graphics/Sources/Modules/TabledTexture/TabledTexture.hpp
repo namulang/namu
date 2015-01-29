@@ -11,6 +11,37 @@ namespace DX9Graphics
 		typedef TabledTexture ThisClass;
 
 	public:
+		NETArgument<NEIntKey>		arg_max_row;
+		NETArgument<NEIntKey>		arg_max_column;
+		NETArgument<NEIntKey>		arg_delay_per_frame;
+		NETArgument<NEIntSetKey>	arg_column_count_per_row;
+
+	protected:
+		virtual type_result _onFetchModule()
+		{
+			SuperClass::_onFetchModule();
+
+			arg_max_row.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_max_column.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_delay_per_frame.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_column_count_per_row.setEnable(false);
+			arg_column_count_per_row.setPurposeLimitation(NEArgumentBase::READ_BY);
+
+			return RESULT_SUCCESS;
+		}
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
+		{
+			SuperClass::_onFetchArguments(tray);
+
+			tray.push(arg_max_row);
+			tray.push(arg_max_column);
+			tray.push(arg_delay_per_frame);
+			tray.push(arg_column_count_per_row);
+
+			return RESULT_SUCCESS;
+		}
+
+	public:
 		TabledTexture()
 			: SuperClass()
 		{
@@ -23,7 +54,7 @@ namespace DX9Graphics
 		}
 		~TabledTexture()
 		{
-			
+
 		}
 
 	public:
@@ -47,85 +78,6 @@ namespace DX9Graphics
 		}
 
 	public:
-		type_int& getMaxRow()
-		{
-			const ThisClass* consted_this = this;
-
-			return const_cast<type_int&>(consted_this->getMaxRow() );
-		}
-		const type_int& getMaxRow() const
-		{
-			const NEKey& somekey = getKeySet()[6];
-			if( ! somekey.isSubClassOf(NEType::NEINT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 6번키가 NEIntKey여야 합니다.");
-				const type_int* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEIntKey& target = static_cast<const NEIntKey&>(somekey);
-			return target.getValue();
-		}
-		type_int& getMaxColumn()
-		{
-			const ThisClass* consted_this = this;
-
-			return const_cast<type_int&>(consted_this->getMaxColumn() );
-		}
-		const type_int& getMaxColumn() const
-		{
-			const NEKey& somekey = getKeySet()[7];
-			if( ! somekey.isSubClassOf(NEType::NEINT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 7번키가 NEIntKey여야 합니다.");
-				const type_int* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEIntKey& target = static_cast<const NEIntKey&>(somekey);
-			return target.getValue();
-		}
-		type_int& getDelayPerFrame()
-		{
-			const ThisClass* consted_this = this;
-
-			return const_cast<type_int&>(consted_this->getDelayPerFrame() );
-		}
-		const type_int& getDelayPerFrame() const
-		{
-			const NEKey& somekey = getKeySet()[8];
-			if( ! somekey.isSubClassOf(NEType::NEINT_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 8번키가 NEIntKey여야 합니다.");
-				const type_int* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			const NEIntKey& target = static_cast<const NEIntKey&>(somekey);
-			return target.getValue();
-		}
-		NEIntSet& getColumnCountPerRow()
-		{
-			const ThisClass* consted_this = this;
-
-			return const_cast<NEIntSet&>(consted_this->getColumnCountPerRow() );
-		}
-		const NEIntSet& getColumnCountPerRow() const
-		{
-			const NEKey& somekey = getKeySet()[9];
-			if( ! somekey.isSubClassOf(NEType::NEINT_SET_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 9번키가 NEIntSetKey여야 합니다.");
-#pragma warning(push)
-#pragma warning(disable: 4172)
-				type_int* nullpoint = 0;
-				return *nullpoint;
-#pragma warning(pop)
-			}
-
-			const NEIntSetKey& target = static_cast<const NEIntSetKey&>(somekey);
-			return target.getValue();
-		}
 		type_int getRowExtractedFromModel() const { return _row_extracted_from_model; }
 		type_int getColumnExtractedFromModel() const { return _column_extracted_from_model; }		
 		RECT createTexelPosition(type_int animation_index, type_int frame_index) const
@@ -141,47 +93,82 @@ namespace DX9Graphics
 				return to_return;
 			}
 
-			
+
 
 			//	main:
-			type_float	width_per_1_frame		= static_cast<type_float>(getWidth()) / getMaxColumn(),
-						height_per_1_animation	= static_cast<type_float>(getHeight()) / getMaxRow();
+			type_float	width_per_1_frame		= static_cast<type_float>(getWidth()) / arg_max_column.getValue(),
+				height_per_1_animation	= static_cast<type_float>(getHeight()) / arg_max_row.getValue();
 			to_return.left = static_cast<LONG>(frame_index * width_per_1_frame);
 			to_return.top = static_cast<LONG>(animation_index * height_per_1_animation);
 			to_return.right = static_cast<LONG>((frame_index+1) * width_per_1_frame);
 			to_return.bottom = static_cast<LONG>((animation_index+1) * height_per_1_animation);
-			
+
 			return to_return;
 		}
 
 	public:
+		virtual const NEExportable::ModuleHeader& getHeader() const
+		{
+			static NEExportable::ModuleHeader _header;
+
+			if (_header.isValid() != RESULT_NOTHING)
+			{
+				const NEExportable::ModuleHeader& supers = SuperClass::getHeader();
+				_header.getName() = "TabledTexture";
+				_header.getDeveloper() = "kniz";
+				_header.setRevision(1);
+				_header.getComment() = supers.getComment() +
+					"TabledTexture는 이런 기존의 Texture 기능에, Animation의 기능을 제공합니다.\n"
+					"TabledTexture는 여러개의 Animation으로 이루어져 있고, 이는 행(row)으로 구분됩니다."
+					"각 Animation은 여러개의 KeyFrame 들로 이루어져 있고 이는 각 행의 열(column)으로 구분됩니다.\n"
+					"예를들어, 2번째 Animation의 5번째 KeyFrame의 그림은 다음과 같이 구해집니다.\n"
+					"주어진 그림(.bmp, .jpg 등)의 몇개의 행이 있는지(row_cnt), 최대 몇개의 열이 있는지(column_cnt)"
+					"를 구한 뒤, 그림을 각 행과 열의 숫자로 표(table)처럼 나눕니다.\n"
+					"그리고 2번째행의 5번째열 영역을 Texture로 사용하게 됩니다.";					
+				_header.getVersion() = "0.0.1a";
+				_header.getReleaseDate() = "2013-08-10";
+				NETStringSet& args = _header.getArgumentsComments();
+				args = supers.getArgumentsComments();
+				args.resize(3);
+				args.push("MaxRow\nTexture를 표의 형태의 영역으로 나눌때 몇개의 행인지 지정합니다.");
+				args.push("MaxColumn\nTexture를 표의 형태의 영역으로 나눌때 몇 개의 열인지 지정합니다.");
+				args.push("DelayPerFrame\nAnimation이 한 KeyFrame이 넘어갈때 걸리는 시간입니다.");
+				args.push("Customized Key Frame\nAnimation 마다 KeyFrame이 다를 경우, 각 Animation에 대한 KeyFrame 수를 입력합니다.\nEnable일때만 사용합니다.");
+			}
+
+			return _header;
+		}
 		virtual type_uint getWidthOfOneFrame() const
 		{
-			return getWidth() / getMaxColumn();
+			type_count max = arg_max_column.getValue();
+			if(arg_column_count_per_row.isEnable())
+			{
+				const NEIntSet& set = arg_column_count_per_row.getValue();
+				for (int n = 0; n < set.getLength(); n++)
+					if(set[n] > max)
+						max = set[n];
+			}
+
+			return getWidth() / max;
 		}
 		virtual type_uint getHeightOfOneFrame() const
 		{
-			return getHeight() / getMaxRow();
+			type_count max = arg_max_row.getValue();
+
+			if(arg_column_count_per_row.isEnable())
+			{
+				const NEIntSet& set = arg_column_count_per_row.getValue();
+
+				max = set.getLength() > max ? set.getLength() : max;
+			}
+
+			return getWidth() / max;
 		}
 		virtual type_result dock(Model& model);
 		virtual RECT createSourceRect() const 
 		{
 			return createTexelPosition(_row_extracted_from_model, _column_extracted_from_model);
 		}
-		virtual type_result initialize()
-		{
-			SuperClass::initialize();
-
-			NEKeyCodeSet& keyset = getKeySet();
-			keyset.resize(keyset.getLength() + 4);						
-			keyset.push(NEIntKey(1));			//	3:	텍스쳐 파일은 몇개의 Row로 나뉘어지는가
-			keyset.push(NEIntKey(1));			//	4:	텍스쳐 파일은 몇개의 col로 나뉘어지는가
-			keyset.push(NEIntKey(0));			//	5:	하나의 프레임당 필요로하는 Delay. -1은 무한.
-			keyset.push(NEIntSetKey());		//	6:	[row] = 사용중인 최대 col(row가0이면 일반 Texture의 형태로 출력)
-
-			return RESULT_SUCCESS;
-		}
-		virtual const NEExportable::ModuleHeader& getHeader() const;	
 		virtual NEObject& clone() const
 		{
 			return *(new ThisClass(*this));
@@ -192,20 +179,15 @@ namespace DX9Graphics
 			type_result result = SuperClass::isValid();
 			if(NEResult::hasError(result)) return result;
 			//		사용중인 Row당 Col수 체크:
-			const NEIntSet& columns = getColumnCountPerRow();
-			type_int	max_column = getMaxColumn(),
-						max_row = getMaxRow();
+			const NEIntSet& columns = arg_column_count_per_row.getValue();
+			type_int	max_column = arg_max_column.getValue(),
+				max_row = arg_max_row.getValue();
 			if(columns.getSize() > (type_int) max_row)
-			{
-				ALERT_ERROR("사용중인 Row의 수가 최대 Row Count를 넘었습니다.");
-				return RESULT_TYPE_ERROR;
-			}
+				return ALERT_ERROR("사용중인 Row의 수가 최대 Row Count를 넘었습니다.");
+
 			for(int n=0; n < columns.getSize() ;n++)
 				if(columns[n] < 0 || columns[n] > max_column)
-				{
-					ALERT_ERROR("사용중인 Column의 수가 최대 Column Count를 넘었습니다.");
-					return RESULT_TYPE_ERROR;
-				}
+					return ALERT_ERROR("사용중인 Column의 수가 최대 Column Count를 넘었습니다.");
 
 			return RESULT_SUCCESS;
 		}
@@ -219,7 +201,7 @@ namespace DX9Graphics
 	private:
 		bool _isFrameIndexOverflowed(type_int animation_index, type_int frame_index) const
 		{
-			const NEIntSet& table = getColumnCountPerRow();
+			const NEIntSet& table = arg_column_count_per_row.getValue();
 			if(animation_index < 0 || animation_index > static_cast<type_int>(table.getSizeLastIndex())) return true;
 			type_int max_frame_index = table[animation_index] - 1;
 			if(frame_index < 0 || frame_index > max_frame_index)	return true;
@@ -232,6 +214,10 @@ namespace DX9Graphics
 
 			_row_extracted_from_model = source._row_extracted_from_model;
 			_column_extracted_from_model = source._column_extracted_from_model;
+			arg_max_row = source.arg_max_row;
+			arg_max_column = source.arg_max_column;
+			arg_delay_per_frame = source.arg_delay_per_frame;
+			arg_column_count_per_row = source.arg_column_count_per_row;
 
 			return *this;
 		}

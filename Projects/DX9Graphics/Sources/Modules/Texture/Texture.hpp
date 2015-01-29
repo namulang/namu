@@ -22,6 +22,45 @@ namespace DX9Graphics
 		}
 
 	public:
+		NETArgument<NEUByteKey>	arg_transparent_red;
+		NETArgument<NEUByteKey>	arg_transparent_green;
+		NETArgument<NEUByteKey>	arg_transparent_blue;
+		NETArgument<NEUByteKey>	arg_transparent_alpha;
+
+	protected:
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
+		{
+			SuperClass::_onFetchArguments(tray);
+
+			tray.push(arg_transparent_red);
+			tray.push(arg_transparent_green);
+			tray.push(arg_transparent_blue);
+			tray.push(arg_transparent_alpha);
+
+			return RESULT_SUCCESS;
+		}
+		virtual type_result _onFetchModule()
+		{
+			SuperClass::_onFetchModule();
+
+			arg_transparent_red.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_transparent_green.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_transparent_blue.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_transparent_alpha.setValue(0);
+			arg_transparent_alpha.setPurposeLimitation(NEArgumentBase::READ_BY);
+
+			return RESULT_SUCCESS;
+		}
+		virtual type_result _onExecute()
+		{
+			if (!isEnable()) return RESULT_SUCCESS;
+			if (isResourceInitialized())
+				return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+
+			return initializeResource();
+		}
+
+	public:
 		IDirect3DTexture9& getTexture()
 		{
 			return *_texture;
@@ -30,80 +69,20 @@ namespace DX9Graphics
 		{
 			return *_texture;
 		}
-		type_ubyte& getTransparentColorRed()
+		type_uint getWidth() const
 		{
-			const ThisClass* consted_this = this;
+			if( ! _texture)
+				return ALERT_WARNING("텍스쳐가 없는데 너비를 알수가 없지요");
 
-			return const_cast<type_ubyte&>(consted_this->getTransparentColorRed() );
+			return _texture_description.Width;
 		}
-		const type_ubyte& getTransparentColorRed() const
+		type_uint getHeight() const
 		{
-			const NEKey& somekey = getKeySet()[2];
-			if( ! somekey.isSubClassOf(NEType::NEUBYTE_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 2번키가 NEUBYTE_KEY여야 합니다.");
-				const type_ubyte* nullpoint = 0;
-				return *nullpoint;
-			}
+			if( ! _texture)
+				return ALERT_WARNING("텍스쳐가 없는데 높이를 알수가 없지요");
 
-			return (static_cast<const NEUByteKey&>(somekey)).getValue();
+			return _texture_description.Height;
 		}
-		type_ubyte& getTransparentColorGreen()
-		{
-			const ThisClass* consted_this = this;
-
-			return const_cast<type_ubyte&>(consted_this->getTransparentColorGreen() );
-		}
-		const type_ubyte& getTransparentColorGreen() const
-		{
-			const NEKey& somekey = getKeySet()[3];
-			if( ! somekey.isSubClassOf(NEType::NEUBYTE_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 3번키가 NEUBYTE_KEY여야 합니다.");
-				const type_ubyte* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			return (static_cast<const NEUByteKey&>(somekey)).getValue();
-		}
-		type_ubyte& getTransparentColorBlue()
-		{
-			const ThisClass* consted_this = this;
-
-			return const_cast<type_ubyte&>(consted_this->getTransparentColorBlue() );
-		}
-		const type_ubyte& getTransparentColorBlue() const
-		{
-			const NEKey& somekey = getKeySet()[4];
-			if( ! somekey.isSubClassOf(NEType::NEUBYTE_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 4번키가 NEUBYTE_KEY여야 합니다.");
-				const type_ubyte* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			return (static_cast<const NEUByteKey&>(somekey)).getValue();
-		}
-		type_ubyte& getTransparentColorAlpha()
-		{
-			const ThisClass* consted_this = this;
-
-			return const_cast<type_ubyte&>(consted_this->getTransparentColorAlpha() );
-		}
-		const type_ubyte& getTransparentColorAlpha() const
-		{
-			const NEKey& somekey = getKeySet()[5];
-			if( ! somekey.isSubClassOf(NEType::NEUBYTE_KEY))
-			{
-				ALERT_ERROR("키의 배열이 이상합니다. 5번키가 NEUBYTE_KEY여야 합니다.");
-				const type_ubyte* nullpoint = 0;
-				return *nullpoint;
-			}
-
-			return (static_cast<const NEUByteKey&>(somekey)).getValue();
-		}
-		type_uint getWidth() const;
-		type_uint getHeight() const;
 		virtual type_uint getWidthOfOneFrame() const
 		{
 			return getWidth();
@@ -112,11 +91,14 @@ namespace DX9Graphics
 		{
 			return getHeight();
 		}
-		D3DSURFACE_DESC getTextureDescription() const;		
+		D3DSURFACE_DESC getTextureDescription() const
+		{
+			return _texture_description;
+		}
 		type_uint createColorKey() const
 		{
-			return D3DCOLOR_RGBA(getTransparentColorRed(), getTransparentColorGreen(), 
-				getTransparentColorBlue(), getTransparentColorAlpha());
+			return D3DCOLOR_RGBA(arg_transparent_red.getValue(), arg_transparent_green.getValue(), 
+				arg_transparent_blue.getValue(), arg_transparent_alpha.getValue());
 		}
 
 	public:
@@ -141,21 +123,32 @@ namespace DX9Graphics
 		}
 		virtual type_result initializeResource();
 		virtual type_result dock(Model& model);
-		virtual type_result initialize()
+		virtual const NEExportable::ModuleHeader& getHeader() const
 		{
-			SuperClass::initialize();
+			static NEExportable::ModuleHeader _instance;
 
-			NEKeyCodeSet& keyset = getKeySet();
-			keyset.resize(keyset.getLength() + 4);
-			keyset.push(NEUByteKey(getDefaultColorKeyRed()));	//	2:	ColorKeyRed
-			keyset.push(NEUByteKey(getDefaultColorKeyGreen()));	//	3:	ColorKeyGreen
-			keyset.push(NEUByteKey(getDefaultColorKeyBlue()));	//	4:	ColorKeyBlue
-			keyset.push(NEUByteKey(getDefaultColorKeyAlpha()));	//	5:	ColorKeyAlpha
+			if(NEResult::hasError(_instance.isValid()))
+			{
+				_instance.getName() = "Texture";
+				_instance.getDeveloper() = "kniz";
+				_instance.setRevision(1);
+				_instance.getComment() =
+					"모델링에 매핑하게 될 그림, 즉 텍스쳐 Module 입니다.\n"
+					"텍스쳐에는 배경색으로써, 로드시 지워질 부분을 ColorKey로써 지정할 수 있습니다.\n"
+					"예를들어, TransparentRed = 0, Blue = 0, Green = 0, Alpha = 255로 지정하면, 그림에서 검정색부분은 투명색이 됩니다.";
+				_instance.getVersion() = "0.0.1a";
+				_instance.getReleaseDate() = "2013-08-07";	
+				NETStringSet& args = _instance.getArgumentsComments();
+				args.create(5);
+				args.push("읽을 그림의 경로\n.jpg, .bmp, .png 등을 지원합니다.");
+				args.push("Transparent Red Key\n배경색의 빨강색 성분입니다. 255가 최대값입니다.");
+				args.push("Transparent Green Key\n배경색의 초록색 성분입니다. 255가 최대값입니다.");
+				args.push("Transparent Blue Key\n배경색의 파랑색 성분입니다. 255가 최대값입니다.");
+				args.push("Transparent Alpha Key\n배경색의 불투명도 입니다. 255가 최대값입니다.");
+			}
 
-			return RESULT_SUCCESS;
+			return _instance;
 		}
-		virtual type_result execute();
-		virtual const NEExportable::ModuleHeader& getHeader() const;
 		virtual void release()
 		{
 			SuperClass::release();
@@ -174,7 +167,7 @@ namespace DX9Graphics
 		{
 			return *(new Texture(*this));
 		}
-		
+
 	private:
 		bool _isTextureSizePowerOf2(D3DXIMAGE_INFO& image_info)
 		{
@@ -203,11 +196,5 @@ namespace DX9Graphics
 	private:
 		LPDIRECT3DTEXTURE9 _texture;
 		D3DSURFACE_DESC _texture_description;
-
-	public:
-		static type_ubyte getDefaultColorKeyRed();
-		static type_ubyte getDefaultColorKeyGreen();
-		static type_ubyte getDefaultColorKeyBlue();
-		static type_ubyte getDefaultColorKeyAlpha();
 	};
 }

@@ -6,12 +6,13 @@ namespace DX9Graphics
 {
 	const NECodeSet& getModuleScriptCodes()
 	{
-		static NECodeSet codes(NECodeType::MODULE_SCRIPT);		
+		NECodeType type(NECodeType::MODULE_SCRIPT);
+		static NECodeSet codes(type);
 
 		if(codes.getLength() <= 1)
 		{
 			codes.create(1);
-			codes.push(NECode("PerspectiveCamera.kniz"));
+			codes.push(NEExportable::Identifier("PerspectiveCamera.kniz"));
 		}
 
 		return codes;
