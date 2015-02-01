@@ -4,7 +4,7 @@
 
 namespace DX9Graphics
 {
-	const NECodeSet& getModuleScriptCodes()
+	const NECodeSet& Camera::getModuleScriptCodes()
 	{
 		NECodeType type(NECodeType::MODULE_SCRIPT);
 		static NECodeSet codes(type);

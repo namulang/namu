@@ -1,5 +1,4 @@
 #include "ShaderProgram.hpp"
-#include "../Model/Model.hpp"
 #include "../AnimatedModel/AnimatedModel.hpp"
 #include "../Camera/Camera.hpp"
 #include "RenderTargetVertex.hpp"
@@ -180,6 +179,58 @@ namespace DX9Graphics
 	{
 		device->SetRenderState(D3DRS_SRCBLEND, camera.arg_source_blend.getValue());
 		device->SetRenderState(D3DRS_DESTBLEND, camera.arg_dest_blend.getValue());
+		return RESULT_SUCCESS;
+	}
+
+	type_result ShaderProgram::initializeResource()
+	{
+		//	main:
+		if(isResourceInitialized()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+		DX9& dx9 = DX9::getInstancedDX();
+		if( ! &dx9)
+			return KERNAL_ERROR("디바이스가 초기화 되지 않았으므로 작업을 취소합니다.");
+
+		LPDIRECT3DDEVICE9 device = dx9.getDevice();	
+		if( ! _effect)
+		{
+			_initializeShader(device);
+			_bindHandles();				
+		}
+
+		SuperClass::initializeResource();
+
+		return RESULT_SUCCESS;
+	}
+
+	type_result ShaderProgram::_onRender(DX9& dx9, Camera& camera)
+	{
+		if( ! isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+		if( ! &dx9)
+			return ALERT_ERROR("DX9 바인딩 실패");
+
+		NEModuleSelector selector;
+		selector.NENodeSelector::operator=(camera.arg_targets.getValue());
+		selector.setModuleCodes(Model::getModuleScriptCodes());
+
+		LPDIRECT3DDEVICE9 device = dx9.getDevice();
+
+		if(NEResult::hasError(_standByFinalRenderTarget(dx9))) 
+			return ALERT_ERROR("최종 렌더타겟이 없습니다");
+
+		device->BeginScene();
+
+		while(&selector.getModule())
+		{
+			Model& model = static_cast<Model&>(selector.peekModule());
+
+			_updateBlendingStateToCamerasOne(device, camera);
+
+			_onRenderModel(device, camera, model);
+		}
+		device->EndScene();
+
+		_endFinalRenderTarget(_getRenderTargetSet(dx9));
+
 		return RESULT_SUCCESS;
 	}
 }
