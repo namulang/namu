@@ -50,7 +50,7 @@ namespace NE
 
 	NECode& NECode::operator--(int)
 	{
-		setCode(getCode() + 1);
+		setCode(getCode() - 1);
 
 		return *this;
 	}

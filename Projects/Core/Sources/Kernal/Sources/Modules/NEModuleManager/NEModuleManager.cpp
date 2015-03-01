@@ -96,8 +96,15 @@ namespace NE
 
 
 		//	main:
-		type_index	second_fit_index = -1; // 이름과 차선책. 만약 차선책조차 없다면 -1이 유지된다.
-		int	second_fit_revision = 0; // 차선책의 개정횟수
+		struct Fit
+		{
+			type_index	n;
+			type_int	rev;
+		};
+		Fit nearly_best_fit = { -1, -1 },	// Revision이 일치하지 않을 경우, Compatibility를 조사하여 가장 근접한 모듈을 찾아낸다.
+			most_fit = { -1, -1 };	// Compatiblity 정보조차 없을 경우, 가장 Revision이 큰 것을 반환한다.
+
+		type_int rev = identifer.getRevision();
 
 		for(type_index n=0; n < _moduleset.getLength() ;n++)
 		{
@@ -108,28 +115,33 @@ namespace NE
 			{
 				//	같은 종류의 모듈을 발견한 경우:
 				//		개정횟수마져 일치하면:
-				if(header.getRevision() == identifer.getRevision())
-				{
+				type_int target_rev = header.getRevision();
+				if(target_rev == rev)
 					//		최선책 발견:	더이상 검색할 이유가 없다.
 					return _moduleset.getElement(n);
-				}
 				else //	차선책 경합:
 				{
+					if (target_rev > most_fit.rev)
+					{
+						most_fit.rev = target_rev;
+						most_fit.n = n;
+					}
+
 					//		보다 최신 모듈인지 판단:	현재 알고있는 차선책의 개정횟수보다 큰가?
-					if(header.getRevision() > second_fit_revision)
+					if(target_rev > nearly_best_fit.rev)
 					{
 						//		호환성 판단:	호환이 가능한 버전인지 확인할 필요성이 생겼다.
-						const NEIntSet& compatibilities = header.getRevisionCompatibilities();
+						const NEIntSet& comps = header.getRevisionCompatibilities();						
 
-						for(type_index iterator=0; iterator < compatibilities.getLength() ;iterator++)
+						for (type_index c = 0; c < comps.getLength(); c++)
 						{
 							//		만약 타겟의 호환 가능한 개정횟수에, 인자로 주어진 모듈의 개정횟수가 포함된다면,					
-							if(identifer.getRevision() == compatibilities.getElement(iterator))
+							if(rev == comps[c])
 							{
 								//		타겟이 보다 높은 버전일 가능성이 크다.
 								//		차선책 갱신:	차선책을 갱신할 필요가 있다.
-								second_fit_revision = header.getRevision();
-								second_fit_index = n;
+								nearly_best_fit.rev = target_rev;
+								nearly_best_fit.n = n;
 							}
 						}
 					}
@@ -142,16 +154,21 @@ namespace NE
 		//	post:	모든 탐색을 실시했으나 최선책을 찾지 못했다.
 		//			차선책으로 갱신된 인덱스가 가리키는 모듈을 내보낸다.
 		//		차선책을 찾았다면:
-		if(second_fit_index != -1)
+		if(nearly_best_fit.n != NE_INDEX_ERROR)
 		{
-			KERNAL_WARNING("W201011C45 : 비슷한 모듈만 검색됨\n주어진 모듈의 이름, 개발자, 개정번호까지 일치하는 모듈은 없었습니다.\n개발자와 이름이 같은 것으로 보아, 동일한 모듈로 보이나, 개정번호가 다른 모듈은 찾았습니다.\n모듈 매니져는 이 모듈을 반환할 것입니다.\n찾으려는 식별자 :\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d\n대신 찾은 모듈의 개정번호 : %d", identifer.getName().toCharPointer(), identifer.getDeveloper().toCharPointer(), identifer.getRevision(), _moduleset.getElement(second_fit_index).getHeader().getRevision())
-			return _moduleset.getElement(second_fit_index);
+			KERNAL_INFORMATION("W201011C45 : 비슷한 모듈만 검색됨\n주어진 모듈의 이름, 개발자, 개정번호까지 일치하는 모듈은 없었습니다.\n개발자와 이름이 같은 것으로 보아, 동일한 모듈로 보이나, 개정번호가 다른 모듈은 찾았습니다.\n모듈 매니져는 이 모듈을 반환할 것입니다.\n찾으려는 식별자 :\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d\n대신 찾은 모듈의 개정번호 : %d", identifer.getName().toCharPointer(), identifer.getDeveloper().toCharPointer(), identifer.getRevision(), _moduleset[nearly_best_fit.n].getHeader().getRevision())
+				return _moduleset[nearly_best_fit.n];
 		}
-		else//	차선책을 찾지 못했다면:	만약 차선책조차 찾지 못했다면 처음에 second_fit_index로 주어졌던
-			//							더미모듈이 내보내질 것이다.
+		else if (most_fit.n != NE_INDEX_ERROR)
+		{
+			KERNAL_WARNING(" : 호환성이 만족되는 모듈조차 없었기에, 가장 최신 Revision의 모듈을 반환합니다.\n\t반환할 모듈 정보 : %s.%s.%d", identifer.getName().toCharPointer(), identifer.getDeveloper().toCharPointer(), most_fit.rev);
+			return _moduleset[most_fit.n];
+		}
+		//	차선책을 찾지 못했다면:	만약 차선책조차 찾지 못했다면 처음에 second_fit_index로 주어졌던
+		//							더미모듈이 내보내질 것이다.
 		{		
 			KERNAL_ERROR("E201011C44 : 일치하는 모듈 검색 실패\n주어진 모듈의 이름, 개발자와 일치하는 모듈이 없습니다. 모듈매니져는 더미모듈을 반환할 것입니다.\n찾으려는 식별자 :\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d", identifer.getName().toCharPointer(), identifer.getDeveloper().toCharPointer(), identifer.getRevision())
-			return *null_pointer;
+				return *null_pointer;
 		}
 	}
 

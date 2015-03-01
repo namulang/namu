@@ -8,7 +8,7 @@ namespace NE
 	{
 	public:
 		typedef ForEach ThisClass;
-		typedef NEModule SuperClass;
+		typedef NEModule SuperClass;		
 
 	public:
 		NETArgument<NEKey>				arg_selector;
@@ -33,34 +33,34 @@ namespace NE
 
 			//	main:
 			NENodeSelector& minimum_casted = static_cast<NENodeSelector&>(sel_key);
-			//		초기상태 기억:	작업이 끝나면 복원해줘야 한다.
-			bool origins_peeking_lock = minimum_casted.isPeekingLocked();
+			type_bool was_source_binded = minimum_casted.isBinded();
 			//		루프 시작:
 			while(_moveForward(minimum_casted))
 				arg_actions.getValue().execute();
 
 
 			//	post:
-			minimum_casted.isPeekingLocked() = origins_peeking_lock;
+			if( ! was_source_binded)
+				minimum_casted.unbind();
 			return RESULT_SUCCESS;
 		}
 
-	private:
+	private:		
 		bool _moveForward(NENodeSelector& target)
 		{
-			target.isPeekingLocked() = true;
+			target.unbind();
 
-			bool is_end_of_searching = false;
+			bool is_there_more = false;
 			if (target.isSubClassOf(NEType::NEKEY_SELECTOR))
-				is_end_of_searching = ! &(static_cast<NEKeySelector&>(target)).getKey();
+				is_there_more = &(static_cast<NEKeySelector&>(target)).getKey() != 0x00;
 			else if (target.isSubClassOf(NEType::NEMODULE_SELECTOR))
-				is_end_of_searching = ! &(static_cast<NEModuleSelector&>(target)).getModule();
+				is_there_more = &(static_cast<NEModuleSelector&>(target)).getModule() != 0x00;
 			else
-				is_end_of_searching = ! &target.getNode();
+				is_there_more = &target.getNode() != 0x00;
 
-			target.isPeekingLocked() = false;
+			target.bind();
 
-			return is_end_of_searching;
+			return is_there_more;
 		}
 
 	protected:

@@ -32,19 +32,24 @@ public:
 	{
 	public:
 		FUNC_CLONE(FloatingPanel)
-		FUNC_TO_OWNER(ModuleTerminal)
+			FUNC_TO_OWNER(ModuleTerminal)
 
-		FloatingPanel();
+			FloatingPanel();
 
 		virtual void onUpdateData()
 		{
-			int focused_arg_idx = toOwner()->argument_namelist.choosed,
-				focused_item_y = toOwner()->argument_namelist.y + focused_arg_idx;
-			if (focused_arg_idx < 0 || focused_arg_idx > toOwner()->argument_namelist.items.getLengthLastIndex())
+			int focused_arg_idx = toOwner()->argument_namelist.choosed;
+			Gliph& trg = toOwner()->gears.arr[focused_arg_idx];
+			if( ! &trg) return;
+
+			if(focused_arg_idx < 0 || focused_arg_idx > toOwner()->argument_namelist.items.getLengthLastIndex())
 				return;
 
 			x = 15;
-			y = focused_item_y - height - 1;
+
+			y = trg.y + 3;
+			if(y + height >= 25)
+				y = trg.y - 3 - height;
 
 			const NETStringSet& arg_comments = toOwner()->castObject().getHeader().getArgumentsComments();
 
@@ -412,6 +417,31 @@ public:
 		}
 	}
 
+	void _rearrangeGears()
+	{
+		int h = argument_namelist.height,
+			half_h = h / 2,
+			head_n = argument_namelist.choosed - half_h;
+		if (head_n < 0)
+			head_n = 0;
+		int	tail_n = head_n + h - 1;		
+		if(tail_n > argument_namelist.items.getLengthLastIndex())
+		{
+			tail_n = argument_namelist.items.getLengthLastIndex();
+			head_n = (tail_n - h + 1) > 0 ? (tail_n - h + 1) : 0;
+		}
+
+
+		for(int n = 0; n < gears.arr.getLength(); n++)
+		{
+			if(	n >= head_n		&&
+				n <= tail_n		)
+				gears.arr[n].y = 7 + (n - head_n);
+			else
+				gears.arr[n].y = 85;	//	OUT OF FRAME
+		}
+	}
+
 	virtual void onKeyPressed(char inputed)
 	{
 		switch (inputed)
@@ -435,7 +465,7 @@ public:
 				argument_namelist.choosed = -1;
 				namecode.back = LIGHTCYAN;
 				namecode.fore = CYAN;
-			}			
+			}		
 			break;
 
 		case DOWN:
@@ -485,6 +515,8 @@ public:
 					g.fore = CYAN;				
 				}
 			}
+			_rearrangeGears();
+			break;
 		}
 	}
 
@@ -565,7 +597,7 @@ public:
 
 	EnableSwitch enable;
 	Gliph	enable_header,
-			namecode_header;
+		namecode_header;
 	NameGliph namecode;
 	FloatingPanel argument_panel;
 	ModulePanel module_panel;

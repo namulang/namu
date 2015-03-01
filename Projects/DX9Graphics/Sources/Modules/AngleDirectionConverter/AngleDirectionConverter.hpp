@@ -20,7 +20,7 @@ namespace DX9Graphics
 		NETArgument<NEFloatKey>			arg_zpos;
 
 	protected:
-		virtual type_result _onFetchArguments(NEArgumentsList& tray)
+		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
 			tray.push(arg_x_angle);
 			tray.push(arg_y_angle);
@@ -37,29 +37,7 @@ namespace DX9Graphics
 
 			return RESULT_SUCCESS;
 		}
-		virtual type_result _onExecute()
-		{
-			if(arg_x_angle.getPurpose() == NEArgumentBase::READ_BY)
-			{	//	Angle -> Vector
-				D3DXVECTOR3 vector = DX9::createDirectionVectorFrom(arg_x_angle.getValue(), arg_y_angle.getValue(), arg_z_angle.getValue());
-
-				arg_xpos.setValue(vector.x);
-				arg_ypos.setValue(vector.y);
-				arg_zpos.setValue(vector.z);
-			}
-			else
-			{	//	Angle <- Vector
-				D3DXVECTOR3 angle = DX9::createYawPitchRollFrom(
-					D3DXVECTOR(arg_xpos.getValue(), arg_ypos.getValue(), arg_zpos.getValue())
-					);
-
-				arg_xpos = angle.x;
-				arg_ypos = angle.y;
-				arg_zpos = angle.z;
-			}
-
-			return RESULT_SUCCESS;
-		}
+		virtual type_result _onExecute();
 
 	public:
 		virtual NEExportable::ModuleHeader& getHeader() const
@@ -74,8 +52,8 @@ namespace DX9Graphics
 				_header.getComment() =
 					"오일러 각도와 방향벡터 간 변환을 해줍니다.\n"
 					"Pitch Argument의 Purpose를 READ로 하면 오일러각 -> 방향벡터로 변환됩니다.\n"
-					"반대로 WRITTEN으로 하면 오일러각 <- 방향벡터로 변환됩니다."
-					_header.getVersion() = _T("0.0.1a");
+					"반대로 WRITTEN으로 하면 오일러각 <- 방향벡터로 변환됩니다.";
+				_header.getVersion() = _T("0.0.1a");
 				_header.getReleaseDate() = _T("2015-01-26");
 				NETStringSet& args = _header.getArgumentsComments();
 				args.create(6);

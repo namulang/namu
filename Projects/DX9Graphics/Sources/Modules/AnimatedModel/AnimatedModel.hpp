@@ -30,6 +30,9 @@ namespace DX9Graphics
 		}
 		virtual type_result _onFetchModule()
 		{
+			SuperClass::_onFetchModule();
+
+			arg_delay_per_frame.setEnable(false);
 			arg_delay_per_frame.setValue(-2);	//	-1 is Automatic, -2 : use the defaults defined on TabledTexture.
 			arg_delay_per_frame.setPurposeLimitation(NEArgumentBase::READ_BY);			
 			arg_animation_index.setPurposeLimitation(NEArgumentBase::READ_BY);
@@ -91,7 +94,7 @@ namespace DX9Graphics
 				args.resize(args.getLength() + 3);
 				args.push("AnimationIndex\n몇번째 애니메이션을 재생할 것인지 인덱스를 정해줍니다.");
 				args.push("KeyFrame\n해당 애니메이션의 Key Frame 입니다.");
-				args.push("DelayPerFrame\n한 프레임당 딜레이 입니다.\n시간이 아니라, 프레임 단위로 측정합니다.");
+				args.push("DelayPerFrame\n한 프레임당 딜레이 입니다.\n시간이 아니라, 프레임 단위로 측정합니다.\n-2: TabledTexture의 기본값을 사용\t-1: 딜레이 무한대");
 			}
 
 			return _header;

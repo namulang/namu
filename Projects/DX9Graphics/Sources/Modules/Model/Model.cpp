@@ -10,15 +10,15 @@ namespace DX9Graphics
 {
 	SpriteTexter& Model::getTexter()
 	{
-		return DX9::cast<SpriteTexter>(arg_texter_binder.getValue().getModule());
+		return DX9::cast<SpriteTexter>(arg_texter_binder);
 	}
 	Texture& Model::getTexture()
 	{
-		return DX9::cast<Texture>(arg_texture_binder.getValue().getModule());
+		return DX9::cast<Texture>(arg_texture_binder);
 	}
 	Sprite& Model::getModeling()
 	{
-		return DX9::cast<Sprite>(arg_modeling_binder.getValue().getModule());
+		return DX9::cast<Sprite>(arg_modeling_binder);
 	}
 	type_result Model::_onExecute()
 	{
@@ -28,15 +28,13 @@ namespace DX9Graphics
 
 		//	main:
 		//		ParentWorldMatrix 할당받기:
-		_parent_world = _getGlobalParentWorld();
 		_updateModelMatrix();
 		_updateWorldMatrix();
 
 
 		//	post:
 		//		자식 모듈셋 실행:
-		_executeChildren();
-		_getGlobalParentWorld() = _parent_world;
+		_updateChildren();		
 		return RESULT_SUCCESS;
 	}
 
@@ -67,16 +65,20 @@ namespace DX9Graphics
 
 	type_result Model::render()
 	{
+		SuperClass::render();
+
 		if( ! isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;		
 		if( ! arg_modeling_binder.isEnable()||
 			! arg_texture_binder.isEnable()	) 
 			return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 
-		DockableResource& modeling = DX9::cast<DockableResource>(arg_modeling_binder.getValue().getModule());
-		Texture& texture = DX9::cast<Texture>(arg_texture_binder.getValue().getModule());	
+		DockableResource& modeling = DX9::cast<DockableResource>(arg_modeling_binder);
+		Texture& texture = DX9::cast<Texture>(arg_texture_binder);	
+		if( ! &texture)
+			return ALERT_ERROR("주어진 텍스쳐가 없습니다.");
 
 		texture.dock(*this);
-		_updateRenderState();
+
 		return modeling.dock(*this);
 	}
 
@@ -92,24 +94,5 @@ namespace DX9Graphics
 		}
 
 		return instance;
-	}
-
-	type_result Model::_updateRenderState()
-	{
-		DX9& dx9 = DX9::getInstancedDX();
-		LPDIRECT3DDEVICE9 dev = &dx9 ? dx9.getDevice() : 0;
-		if( ! dev)
-			return ALERT_WARNING("DX9 바인딩 실패로 RenderState 변경 실패");
-
-
-		//	main:
-		type_byte	src = arg_source_blend.getValue(),
-					dest = arg_dest_blend.getValue();
-		if(src)
-			dev->SetRenderState(D3DRS_SRCBLEND, src);
-		if(dest)
-			dev->SetRenderState(D3DRS_DESTBLEND, dest);
-
-		return RESULT_SUCCESS;
 	}
 }

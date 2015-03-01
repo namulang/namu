@@ -6,6 +6,9 @@
 
 namespace DX9Graphics
 {
+	D3DXMATRIX Sprite::adj;
+	D3DXMATRIX Sprite::adj_for_font;
+
 	type_result Sprite::dock(Model& model)
 	{
 		//	pre:
@@ -118,12 +121,11 @@ namespace DX9Graphics
 		//				모르겠다. 뒤에다 곱했을때는 스케일이 뻥튀기되는 에러도 사라졌고, 폰트도 제대로 
 		//				출력이 되는 것 같다. X축의 양의 방향과 회전방향도 제대로 동작하는 걸로 보인다.
 
-		static D3DXMATRIX adj, adj_for_font;
 		static type_bool is_adj_initialized = false;
 		if( ! is_adj_initialized)
 		{
 			D3DXMATRIX adjr, adjs;
-			D3DXMatrixRotationY(&adjr, D3DX_PI);
+			D3DXMatrixRotationX(&adjr, D3DX_PI);
 			D3DXMatrixScaling(&adjs, 0.02f, 0.02f, 0.02f);
 			adj = adjs * adjr;
 			D3DXMatrixTranslation(&adj_for_font, 0, 0, -0.5f);
@@ -165,16 +167,33 @@ namespace DX9Graphics
 			{
 				SpriteTexter& texter = model.getTexter();
 				Texture& texture = model.getTexture();
-				if( ! &texter	||
-					! &texture	)
-					return ALERT_WARNING(" : Texter나 Texture가 바인딩되지 않았습니다.");
+				if (!&texter ||
+					!&texture)
+				{
+					ALERT_WARNING(" : Texter나 Texture 둘중 하나가 바인딩이 안되어 있습니다.");
+					goto POST;	//	same as that break if blockstatements.
+				}
+					
 
 				world *= adj_for_font;
 				_sprite->SetTransform(&world);	//	Texter를 위해서 미리 폰트보정행렬을 Set한다.
 
 				texter.render(_sprite, texture);
 			}
+
+		POST:
 			_sprite->End();
+
+			/*
+				충돌 Volume Sphere는 Scale을 평균을 내어 계산하며, 계층구조를 고려하지 않는다.
+			*/
+			D3DXMATRIX sphere_scale;
+			type_float avg_scale = (model.arg_scale_x.getValue() + model.arg_scale_y.getValue()) / 2.0f;
+			D3DXMatrixScaling(&sphere_scale, avg_scale, avg_scale, avg_scale);
+
+			sphere_scale = sphere_scale * model.getWorldMatrix();
+
+			_renderSphere(dx9.getDevice(), sphere_scale);
 		}
 
 		return RESULT_SUCCESS;		

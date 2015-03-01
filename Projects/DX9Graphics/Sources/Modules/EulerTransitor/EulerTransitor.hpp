@@ -12,10 +12,6 @@ namespace DX9Graphics
 		typedef EulerTransitor ThisClass;
 
 	public:
-		static const float RADIAN_TO_DEGREE_ADJ;
-		static const float DEGREE_TO_RADIAN_ADJ;
-
-	public:
 		NETArgument<NEFloatKey> arg_rotate_x;
 		NETArgument<NEFloatKey> arg_rotate_y;
 		NETArgument<NEFloatKey> arg_rotate_z;
@@ -56,17 +52,8 @@ namespace DX9Graphics
 
 	public:
 		D3DXVECTOR3 createTransformedVectorByYawPitchRoll(const D3DXVECTOR3& origin) const;
-		D3DXVECTOR3 createYawPitchRoll() const
-		{
-			return D3DXVECTOR3(arg_rotate_y.getValue(), arg_rotate_x.getValue(), arg_rotate_z.getValue());
-		}
-		D3DXMATRIX createRotationMatrix() const
-		{
-			D3DXMATRIX to_return;
-			D3DXMatrixRotationYawPitchRoll(&to_return, arg_rotate_y.getValue(), arg_rotate_x.getValue(), arg_rotate_z.getValue());
-
-			return to_return;
-		}
+		D3DXVECTOR3 createYawPitchRoll() const;
+		D3DXMATRIX createRotationMatrix() const;
 		const NEExportable::ModuleHeader& getHeader() const
 		{
 			static NEExportable::ModuleHeader _instance;
@@ -76,8 +63,8 @@ namespace DX9Graphics
 				NETStringSet& args = _instance.getArgumentsComments();
 				args.resize(3);
 				args.push("RotationX\n물체가 X축을 기준으로 얼마나 회전하였는지를 나타냅니다.");
-				args.push("RotationY\n물체가 X축을 기준으로 얼마나 회전하였는지를 나타냅니다.");
-				args.push("RotationZ\n물체가 X축을 기준으로 얼마나 회전하였는지를 나타냅니다.");			
+				args.push("RotationY\n물체가 Y축을 기준으로 얼마나 회전하였는지를 나타냅니다.");
+				args.push("RotationZ\n물체가 Z축을 기준으로 얼마나 회전하였는지를 나타냅니다.");			
 			}
 
 			return _instance;
@@ -104,13 +91,7 @@ namespace DX9Graphics
 		{
 			return createYawPitchRollFrom(createQuaternionFrom(direction));
 		}		
-		static D3DXQUATERNION createQuaternionFrom(type_float yaw, type_float pitch, type_float roll)
-		{
-			D3DXQUATERNION to_return;
-			D3DXQuaternionRotationYawPitchRoll(&to_return, yaw, pitch, roll);
-
-			return to_return;
-		}
+		static D3DXQUATERNION createQuaternionFrom(type_float yaw, type_float pitch, type_float roll);
 		static D3DXQUATERNION createQuaternionFrom(const D3DXVECTOR3& direction)
 		{
 			D3DXVECTOR3 up(0, 1.0f, 0.0f);
@@ -140,10 +121,10 @@ namespace DX9Graphics
 
 			return to_return;
 		}
-		static D3DXVECTOR3 createDirectionVectorFrom(type_float yaw, type_float pitch, type_float roll, const D3DXVECTOR3& cannoncial)
+		static D3DXVECTOR3 createDirectionVectorFrom(type_float yaw_degree, type_float pitch_degree, type_float roll_degree, const D3DXVECTOR3& cannoncial)
 		{
 			D3DXMATRIXA16 mat;
-			D3DXMatrixRotationQuaternion(&mat, &createQuaternionFrom(yaw, pitch, roll));
+			D3DXMatrixRotationQuaternion(&mat, &createQuaternionFrom(yaw_degree, pitch_degree, roll_degree));
 			D3DXVECTOR3 to_return;
 
 			D3DXVec3TransformNormal(&to_return, &cannoncial, &mat);

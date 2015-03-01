@@ -23,7 +23,7 @@ namespace NE
 	type_result NEKeyNameBinder::setKeyName(const NETString& new_keyname)
 	{
 		_keyname = new_keyname;
-		
+
 		//	Release Binding 정보:
 		return unbind();
 	}
@@ -45,7 +45,7 @@ namespace NE
 	}
 
 	NEKeyNameBinder::NEKeyNameBinder(const NEKeyNameBinder& rhs)
-		: SuperClass(rhs)
+		: SuperClass()	//	복사생성자를 호출하지 않는다. 자세한 사항은 _assign 참조
 	{
 		_assign(rhs);
 	}
@@ -54,7 +54,7 @@ namespace NE
 	{
 		if(this == &rhs) return *this;
 
-		SuperClass::operator=(rhs);
+		//	SuperClass::operator=(rhs);	상위클래스로 메소드 체이닝 하지 않는다. 자세한 사항은 _assign 참조.
 
 		return _assign(rhs);
 	}
@@ -82,6 +82,9 @@ namespace NE
 		//		따라서 바인딩 정보는 할당하지 않고, keyname만 할당한다.
 		//		만약, "rhs가 바인딩하는 키의 값"을 할당하고 싶은 거라면,
 		//		this->getBinded() = rhs.getBinded(); 를 수행하면 된다.
+
+		//	상위 클래스중 바인딩 정보에 속하지 않는 Enable만 여기서 별도로 할당해 준다
+		setEnable(rhs.isEnable());
 
 		_keyname = rhs._keyname;
 

@@ -11,6 +11,7 @@
 #include "../Modules/For.hpp"
 #include "../Modules/ForEach.hpp"
 #include "../Modules/ForEachElement.hpp"
+#include "../Modules/FileLister.hpp"
 #include "../Modules/If.hpp"
 #include "../Modules/Instancer.hpp"
 #include "../Modules/KeyboardSpy.hpp"

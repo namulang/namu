@@ -27,7 +27,7 @@ void ScriptFilePopUpMenu::onItemChoosed(type_index index, const NEString& chosen
 		public:
 			NEStringSet real_paths;
 
-			LoadScript() : LG::ListWindow("읽어들일 파일을 선택하세요", 40, 10, 20, 6, BLACK, WHITE, WHITE, LIGHTMAGENTA)
+			LoadScript() : LG::ListWindow("읽어들일 파일을 선택하세요", 40, 10, 20, 12, BLACK, WHITE, WHITE, LIGHTMAGENTA)
 			{
 				updateFileList();
 			}

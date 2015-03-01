@@ -313,6 +313,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Sources\Modules\FileLister.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Modules\For.hpp"
 					>
 				</File>

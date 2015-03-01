@@ -33,6 +33,7 @@ namespace NE
 		modulelist.push( For() );
 		modulelist.push( ForEach() );
 		modulelist.push( ForEachElement() );
+		modulelist.push( FileLister() );
 		modulelist.push( If() );
 		modulelist.push( Instancer() );
 		modulelist.push( KeyboardSpy() );

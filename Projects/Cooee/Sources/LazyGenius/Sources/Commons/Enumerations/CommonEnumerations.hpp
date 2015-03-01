@@ -13,8 +13,8 @@ namespace LG
 		DOWN		= 80,
 		LEFT		= 75,
 		RIGHT		= 77,
-		CONFIRM		= 'z',
-		CANCEL		= 'x',	//	취소 / 메뉴키
+		CONFIRM		= 13,
+		CANCEL		= 8,	//	취소 / 메뉴키
 		//	입력용 키:
 		ENTER		= 13,
 		SPACE		= 32,	
@@ -25,9 +25,9 @@ namespace LG
 		MAP			= 71,	//	home
 		ADD			= 82,	//	ins
 		REMOVE		= 83,	//	del			
-		COPY		= 'c',
-		PASTE		= 'v',
-		CUT			= 'u',
+		COPY		= 4,	//	CTRL + C
+		PASTE		= 22,	//	CTRL + V
+		CUT			= 24,	//	CTRL + X
 		HELP		= '?',
 		//		추가키:
 		COMMAND		= '~'

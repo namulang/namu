@@ -25,7 +25,7 @@ namespace DX9Graphics
 		Camera* citr = 0;
 		while (citr = (Camera*)&cam_sel.getModule())
 		{
-			if (camera_codes.find(citr->getScriptCode()) == NE_INDEX_ERROR)
+			if (camera_codes.find(NECode(citr->getScriptCode(), NECodeType::MODULE_SCRIPT)) == NE_INDEX_ERROR)
 				continue;
 
 			Vectors ray = _createRayInWorldCoords(*citr);
@@ -33,7 +33,7 @@ namespace DX9Graphics
 			Model* mitr = 0;
 			while (mitr = (Model*)&model_sel.getModule())
 			{
-				if (model_codes.find(mitr->getScriptCode()) == NE_INDEX_ERROR)
+				if (model_codes.find(NECode(mitr->getScriptCode(), NECodeType::MODULE_SCRIPT)) == NE_INDEX_ERROR)
 					continue;
 
 				DockableResource& sprite = mitr->getModeling();
@@ -84,7 +84,7 @@ namespace DX9Graphics
 		//		ViewÁÂÇ¥ -> WorldÁÂÇ¥:
 		D3DXMATRIX invV;
 		D3DXMatrixInverse(&invV, 0, &v);
-			Vector ray_point(invV._41, invV._42, invV._43),
+		Vector ray_point(invV._41, invV._42, invV._43),
 			ray_direction(
 			ray_in_viewcoords.x*invV._11 + ray_in_viewcoords.y*invV._21 + ray_in_viewcoords.z*invV._31,
 			ray_in_viewcoords.x*invV._12 + ray_in_viewcoords.y*invV._22 + ray_in_viewcoords.z*invV._32,
@@ -124,10 +124,12 @@ namespace DX9Graphics
 		typedef D3DXVECTOR3 VEC;
 		VEC v1,v2,v3,v4;
 
-		D3DXVec3TransformCoord(&v1, &quad[0], &world);
-		D3DXVec3TransformCoord(&v2, &quad[1], &world);
-		D3DXVec3TransformCoord(&v3, &quad[2], &world);
-		D3DXVec3TransformCoord(&v4, &quad[3], &world);
+		D3DXMATRIX real_world = Sprite::adj * world;
+
+		D3DXVec3TransformCoord(&v1, &quad[0], &real_world);
+		D3DXVec3TransformCoord(&v2, &quad[1], &real_world);
+		D3DXVec3TransformCoord(&v3, &quad[2], &real_world);
+		D3DXVec3TransformCoord(&v4, &quad[3], &real_world);
 
 		float not_use = 0;
 		if(	! D3DXIntersectTri(&v1, &v2, &v3, &ray[0], &ray[1], &not_use, &not_use, &not_use)	&&

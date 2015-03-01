@@ -115,19 +115,18 @@ count_header		(0, 15, 18, 10, 1, WHITE, LIGHTRED, "Count"),
 bind_header			(0, 15, 19, 10, 1, WHITE, LIGHTRED, "Bind?"),
 code_type_header	(0, 15, 20, 10, 1, WHITE, LIGHTRED, "NodeType"),
 use_and_header		(0,	15, 21, 10, 1, WHITE, LIGHTRED, "Use &&"),
-peeking_lock_header	(0, 15, 22, 10, 1, WHITE, LIGHTRED, "PeekLock"),
-codelist_header		(0, 15, 23, 10, 1, WHITE, LIGHTRED, "Codes")
+codelist_header		(0, 15, 22, 10, 1, WHITE, LIGHTRED, "Codes")
 {
-	regist(8, &header, &count_header, &bind_header, &code_type_header, &use_and_header, &peeking_lock_header, &codelist_header, &menulist);
+	regist(7, &header, &count_header, &bind_header, &code_type_header, &use_and_header, &codelist_header, &menulist);
 }
 
 
 Modifier<NENodeSelector>::Modifier(const Modifier& rhs)
 : Window(rhs), header(rhs.header), count_header(rhs.count_header), bind_header(rhs.bind_header), 
 code_type_header(rhs.code_type_header), use_and_header(rhs.use_and_header), codelist_header(rhs.codelist_header), 
-menulist(rhs.menulist), peeking_lock_header(rhs.peeking_lock_header)
+menulist(rhs.menulist)
 {
-	regist(8, &header, &count_header, &bind_header, &code_type_header, &use_and_header, &peeking_lock_header, &codelist_header, &menulist);
+	regist(7, &header, &count_header, &bind_header, &code_type_header, &use_and_header, &codelist_header, &menulist);
 }
 
 
@@ -190,16 +189,44 @@ void Modifier<NENodeSelector>::MenuList::updateList()
 		if( &bank)
 		{				
 			codes_to_str = "CODES: ";
-			for(int n=0; n < c.getLength() ;n++)
-				codes_to_str += bank[c[n].getCode()] + "[" + c[n].getCode() + "] ";
+			for (int n = 0; n < c.getLength(); n++)
+			{
+				NEString name = "Unamed";
+				const NECode& code = c[n];
+				type_code real_code = -1;
+				if(&code)
+				{
+					real_code = code.getCode();
+					const NEString& element = bank[c[n].getCode()];
+					if(&element)
+						name = element;
+				}
+				
+				codes_to_str += name + "[" + real_code + "] ";
+			}
+
 		}
 		else
 			codes_to_str = "NOT NEEDED!";
 		break;
 
 	default:
-		codes_to_str = NEString(codelist_display_index)+ "th: " + bank[c[codelist_display_index].getCode()] + "(" + c[codelist_display_index].getCode() + ")";
-		break;
+		{
+			NEString name = "Unamed";
+			const NECode& code = c[codelist_display_index];
+			type_code real_code = -1;
+			
+			if(&code)
+			{
+				real_code = code.getCode();
+				const NEString& element = bank[code.getCode()];
+				if(&element)
+					name = element;
+			}
+
+			
+			codes_to_str = NEString(codelist_display_index) + "th: " + name + "(" + real_code + ")";
+		}
 	}
 
 	items.push("   " + codes_to_str);
@@ -559,10 +586,10 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 						if(copied.getLength() == copied.getSize())
 							copied.resize(copied.getSize() + 1);
 
-						if(input.history_idx >= 0 && key.getModuleCodes().getCodeType().getCodeType() == NECodeType::SCRIPT)
-							copied.push(NECode(lists[input.history_idx], NECodeType(NECodeType::SCRIPT, false)));
+						if(input.history_idx >= 0 && key.getModuleCodes().getCodeType().getCodeType() == NECodeType::MODULE_SCRIPT)
+							copied.push(NECode(lists[input.history_idx], NECodeType(NECodeType::MODULE_SCRIPT, false)));
 						else
-							copied.push(NECode(input.text.toInt(), NECodeType(NECodeType::NAME, false)));
+							copied.push(NECode(input.text.toInt(), NECodeType(NECodeType::MODULE_NAME, false)));
 
 						key.setModuleCodes(copied);
 						toCaller().menulist.codelist_display_index = -1;
@@ -814,7 +841,10 @@ void Modifier<NEModuleSelector>::MenuList::updateList()
 					const NEModule& f = ms[c[n].getCode()];
 					if( ! &f) continue;
 
-					codes_to_str += f.getHeader().getName() + "[" + c[n].getCode() + "] ";
+					if (c[n].getCodeType() == NECodeType::MODULE_SCRIPT)
+						codes_to_str += f.getHeader().getName() + "[" + c[n].getCode() + "] ";
+					else
+						codes_to_str += NEString(c[n].getCode()) + " ";
 				}
 			}
 
@@ -822,13 +852,23 @@ void Modifier<NEModuleSelector>::MenuList::updateList()
 
 		default:
 			{
-				const NEModule& f = ms[c[codelist_display_index].getCode()];
+				const NECode& code = c[codelist_display_index];
+				const NEModule& f = ms[code.getCode()];
 				if( ! &f)
 					codes_to_str = "해당하는 모듈을 찾을 수 없습니다.";
 				else
-					codes_to_str = NEString(codelist_display_index) + 
-						NEString("th: ") + f.getHeader().getName() + 
-						NEString("[") + NEString(c[codelist_display_index].getCode()) + "]" ;
+					switch (code.getCodeType())
+				{
+					case NECodeType::MODULE_SCRIPT:
+						codes_to_str = NEString(codelist_display_index) +
+							NEString("th: ") + f.getHeader().getName() +
+							NEString("[") + NEString(c[codelist_display_index].getCode()) + "]";
+						break;
+
+					case NECodeType::MODULE_NAME:
+						codes_to_str = NEString("[") + code.getCode() + "]";
+				}
+
 			}			
 			break;
 		}

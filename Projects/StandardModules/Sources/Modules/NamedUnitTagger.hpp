@@ -37,7 +37,7 @@ namespace NE
 		{
 			if(arg_enable.isEnable())
 			{
-				if(arg_enable.getPurpose() == NEArgumentBase::READ_BY)
+				if(arg_enable.getPurpose() == NEArgumentBase::WRITTEN)
 					target.setEnable(arg_enable.getValue());
 				else
 					arg_enable.setValue(target.isEnable());
@@ -46,7 +46,7 @@ namespace NE
 			{
 				const NECodeSet& codes = arg_codes.getValue();
 
-				if (arg_codes.getPurpose() == NEArgumentBase::READ_BY)
+				if (arg_codes.getPurpose() == NEArgumentBase::WRITTEN)
 					target.setCodes(codes);
 				else
 					arg_codes.setValue(target.getCodes(codes.getCodeType()));

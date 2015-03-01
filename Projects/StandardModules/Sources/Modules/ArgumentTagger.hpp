@@ -96,7 +96,7 @@ namespace NE
 				_instance.getComment() =
 					"Argument의 속성들을 가져오거나, 변경할 수 있습니다.\n"
 					"ModuleSelector로 변경하길 원하는 Argument를 소유한 Module을 가리키고,\n"
-					"Argument Indexes로 해당 Module의 Argument Index를 지정하면 됩니다.\n"
+					"Argument Indexes로 해당 Module의 Argument Index를 지정하면 됩니다. 복수개의 Argument를 선택할 수 있습니다.\n"
 					"Argument의 속성은 다음과 같습니다.\n"
 					"\tPurpose:\tArgument의 사용 목적입니다.\n"
 					"\tKeyName:\tArgument가 속한 Node의 KeySet 중에서, 어떤 키와 바인딩 되는지 결정하는 값입니다.";
@@ -104,11 +104,9 @@ namespace NE
 				NETStringSet& args = _instance.getArgumentsComments();
 				args.create(4);
 				args.push("Target Modules\n변경하고픈 Argument가 속한 모듈을 가리킵니다.");
-				args.push("ManagerType");
-				args.push("Codes for Node Selector");
-				args.push("CountLimit for Node Selector");
-				args.push("UseAndOperation for Node Selector");
-				args.push("UseAutoBinding for Node Selector");
+				args.push("Arugment Index\nTarget Module의 몇번째 Argument를 Tagging 할 것인지 지정합니다. 복수개가 될 수 있습니다.");
+				args.push("Argument의 Purpose 값\nInput을 하면 이 값을 읽ㅇ서 Target의 Index에 해당하는 Argument에 넣습니다.\nOutput을 하면 Target's Argument에서 값을 가져와 여기에 넣습니다.");
+				args.push("Argument Name");
 			}
 
 			return _instance;

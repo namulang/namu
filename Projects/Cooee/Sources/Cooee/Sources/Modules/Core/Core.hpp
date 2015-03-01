@@ -89,10 +89,47 @@ public:
 		NEModule& module = moduleset[index];
 		handler.onModuleFound(module);
 		work_position.popFront();			
-		if(work_position.getLength() > 0)
-			pushMessage("어라? 모듈은 경로가 마지막에 해당하는데, 뒤에 또 뭐가 있네요? 경로가 꼬인듯?\n일단, 모듈만 반환합니다.");
+		if (work_position.getLength() > 0)
+			return _searchArguments(module.getArguments(), work_position, handler);
 
 		return module;
+	}
+
+	static NEObject& _searchArguments(NEArgumentSet& args, NEStringSet& work_position, onObjectFound& handler = onObjectFound())
+	{
+		NEObject* nullpointer = NE_NULL;
+		if( ! &work_position)
+		{
+			pushMessage("작업위치 문자열이 없습니다.");
+			return *nullpointer;
+		}
+		if(work_position.getLength() <= 0)
+			return args;
+
+		type_index n = work_position[0].toInt();
+		if (n < 0 || n > args.getLengthLastIndex())
+		{
+			pushMessage(NEString("잘못된 위치 문자열 입니다. : ") + n);
+			return *nullpointer;
+		}
+
+		NEKey& dk = args[n].getDefaultKey();
+		if(dk.isSubClassOf(NEType::NEMODULE_CODESET_KEY))
+		{
+			NEModuleCodeSetKey& modulesetkey = static_cast<NEModuleCodeSetKey&>(dk);
+			NEModuleCodeSet& moduleset = modulesetkey.getValue();
+
+			return _searchModuleSet(moduleset, work_position, handler);
+		}
+		else if(dk.isSubClassOf(NEType::NENODE_CODESET_KEY))
+		{
+			NENodeCodeSetKey& managed_nodesetkey = static_cast<NENodeCodeSetKey&>(dk);
+			NENodeCodeSet& nodeset = managed_nodesetkey.getValue();
+
+			return _searchNodeSet(nodeset, work_position, handler);
+		}
+
+		return dk;
 	}
 
 	static NEObject& _searchKeySet(NEKeyCodeSet& keyset, NEStringSet& work_position, onObjectFound& handler = onObjectFound())

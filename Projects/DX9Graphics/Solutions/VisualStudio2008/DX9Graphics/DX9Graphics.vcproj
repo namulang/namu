@@ -466,14 +466,6 @@
 							>
 						</File>
 					</Filter>
-					<Filter
-						Name="ParticleMediator"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Modules\ParticleMediator\ParticleMediator.hpp"
-							>
-						</File>
-					</Filter>
 				</Filter>
 				<Filter
 					Name="FontValidator"
@@ -590,6 +582,10 @@
 				<Filter
 					Name="AngleDirectionConverter"
 					>
+					<File
+						RelativePath="..\..\..\Sources\Modules\AngleDirectionConverter\AngleDirectionConverter.cpp"
+						>
+					</File>
 					<File
 						RelativePath="..\..\..\Sources\Modules\AngleDirectionConverter\AngleDirectionConverter.hpp"
 						>
@@ -751,12 +747,20 @@
 						</File>
 					</Filter>
 				</Filter>
+				<Filter
+					Name="ModelMediator"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Modules\ModelMediator\ModelMediator.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\Sources\Modules\ModelMediator\ModelMediator.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
-		<File
-			RelativePath=".\DX9Graphics.rc"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

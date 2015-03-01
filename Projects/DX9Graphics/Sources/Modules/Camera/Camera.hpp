@@ -114,7 +114,7 @@ namespace DX9Graphics
 				const NETStringSet& org = SuperClass::getHeader().getArgumentsComments();
 				args.resize(org.getLength() + 8);
 				args.push("Targets\n카메라가 촬영할 Particle Module을 가지고 있는 대상");
-				
+
 				args.push(org);
 
 				args.push("ViewportX\n화면에 그려지게될 영역의 X 좌표\nDisabled시, 자동으로 윈도우의 크기만큼 설정해줍니다.");
@@ -128,46 +128,15 @@ namespace DX9Graphics
 
 			return _header;
 		}
-		virtual type_result render()
-		{
-			if( ! isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-			
-
-			//	main:
-			DX9& dx9 = DX9::getInstancedDX();
-			LPDIRECT3DDEVICE9 device = &dx9 ? dx9.getDevice() : 0;
-			if( ! device)
-				return ALERT_ERROR("DX9가 바인드 되지 않았습니다.");
-
-			D3DVIEWPORT9 vp = createViewPort();
-			device->SetViewport(&vp);
-			_dockTransforms();
-			/*
-				ModuleSet에 담긴 Module이 ShaderProgram의 하위클래스라는 걸
-				알 도리가 없음. getType이 지정되지 않기 때문에.
-				TypeManager가 추가되기 전까지는 현재는 그냥 Shader로 강제 캐스팅.
-			*/
-			NEModuleCodeSet& moduleset = arg_shaders.getValue();
-			for(int n=0; n < moduleset.getSize() ;n++)
-			{
-				ShaderProgram& program = static_cast<ShaderProgram&>(moduleset[n]);
-				program._render(*this);
-			}
-
-			return RESULT_SUCCESS;
-		}
+		virtual type_result render();
 		virtual type_result _onExecute()
 		{
 			if( ! isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-			
+
 			//	main:
 			_updateLookVector();
 			_updateViewMatrix();
-			_updateProjectionMatrix();
-
-			_dockTransforms();
-
-			return render();
+			return _updateProjectionMatrix();
 		}
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
 		{
@@ -197,7 +166,7 @@ namespace DX9Graphics
 		}
 
 	public:
-		
+
 		D3DVIEWPORT9 createViewPort() const
 		{
 			if( ! arg_viewport_x.isEnable()) return createMaximizedViewPort();
@@ -256,8 +225,8 @@ namespace DX9Graphics
 		{
 			//	타겟팅:				
 			D3DXVECTOR3	pos		= createTranslationVector(),
-						look_at = pos + _look,
-						up		= createTransformedVectorByYawPitchRoll(D3DXVECTOR3(0, 1, 0));
+				look_at = pos + _look,
+				up		= createTransformedVectorByYawPitchRoll(D3DXVECTOR3(0, 1, 0));
 
 
 			//	main:			
@@ -296,7 +265,8 @@ namespace DX9Graphics
 
 			return *this;
 		}
-	
+		type_index _getLastProgramIndex(NEModuleCodeSet& within);
+
 	private:
 		D3DXMATRIX _view;
 		D3DXMATRIX _projection;

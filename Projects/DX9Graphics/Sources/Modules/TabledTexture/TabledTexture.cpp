@@ -5,6 +5,8 @@ namespace DX9Graphics
 {	
 	type_result TabledTexture::dock(Model& model)
 	{
+		_validate();
+
 		static type_code animated_model_code = Kernal::getInstance().getModuleManager()
 			.getModule(AnimatedModel().getHeader()).getScriptCode();
 

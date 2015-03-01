@@ -7,14 +7,15 @@ namespace DX9Graphics
 {
 	type_result AnimatedModel::_onExecute()
 	{
-		SuperClass::execute();
+		SuperClass::_onExecute();
 
 		Texture& texture = getTexture();
+
 		static type_code tabled_code = -1;
 		if (tabled_code == -1)
 			tabled_code = Kernal::getInstance().getModuleManager().getModule(NEExportable::Identifier("TabledTexture.kniz")).getScriptCode();
 
-		if(	tabled_code == -1						||
+		if(	! &texture									||
 			texture.getScriptCode() != tabled_code	) return RESULT_TYPE_WARNING | RESULT_ABORT_ACTION;
 
 
@@ -77,9 +78,14 @@ namespace DX9Graphics
 
 	type_result AnimatedModel::_updateDelayBy(const TabledTexture& tabled)
 	{
+		if( ! arg_delay_per_frame.isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 		type_int	delay_count = arg_delay_per_frame.getValue();		
-		if(delay_count == -2)	//	Auto
+		if (delay_count == -2)	//	Auto
+		{
+			if( ! tabled.arg_delay_per_frame.isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+
 			delay_count = tabled.arg_delay_per_frame.getValue();
+		}			
 		if(delay_count == -1)	//	Infinite
 			return RESULT_SUCCESS;
 
@@ -93,7 +99,7 @@ namespace DX9Graphics
 				return ALERT_WARNING("Animation Index가 잘못되었습니다.");
 			}
 
-			arg_key_frame.getValueKey()++;
+			arg_key_frame.setValue(arg_key_frame.getValue() + 1);
 			if(arg_key_frame.getValue() >= max_frame_count)
 				arg_key_frame.setValue(0);
 

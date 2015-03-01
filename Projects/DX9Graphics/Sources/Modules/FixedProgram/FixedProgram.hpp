@@ -11,9 +11,6 @@ namespace DX9Graphics
 		typedef FixedProgram ThisClass;
 
 	public:
-		NETArgument<NEBooleanKey>	arg_is_source_rendertargets;
-
-	public:
 		virtual NEObject& clone() const
 		{
 			return *(new ThisClass(*this));
@@ -44,8 +41,20 @@ namespace DX9Graphics
 		virtual type_result _onRender(DX9& dx9, Camera& camera)
 		{
 			//	pre:
-			if(arg_final_render_target.getValue() != ShaderProgram::FINAL_RENDER_TARGET_PREVIOUS_BUFFER)
+			type_result result = RESULT_SUCCESS;
+			switch (arg_final_render_target)
+			{
+			case ShaderProgram::FINAL_RENDER_TARGET_NEW_BUFFER:
+			case ShaderProgram::FINAL_RENDER_TARGET_NEW_OUTPUT:
 				return SuperClass::_onRender(dx9, camera);
+				break;
+
+			case ShaderProgram::FINAL_RENDER_TARGET_OUTPUT:
+				arg_final_render_target = ShaderProgram::FINAL_RENDER_TARGET_PREVIOUS_BUFFER;
+				result = SuperClass::_onRender(dx9, camera);
+				arg_final_render_target = ShaderProgram::FINAL_RENDER_TARGET_OUTPUT;
+				break;
+			}
 
 			if( ! &dx9)
 				return ALERT_ERROR("DX9 바인딩 실패. 작업을 중지합니다.");

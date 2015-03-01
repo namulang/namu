@@ -29,6 +29,8 @@ namespace NE
 	template
 	class NE_DLL NETLimitedArgument<NEStringSetKey>;
 	template
+	class NE_DLL NETLimitedArgument<NEWStringSetKey>;
+	template
 	class NE_DLL NETLimitedArgument<NEModuleCodeSetKey>;
 	template
 	class NE_DLL NETLimitedArgument<NENodeCodeSetKey>;

@@ -167,7 +167,9 @@ namespace NE
 		}
 
 
-		return shortcut.remove(real_index);
-	}
+		if(shortcut.remove(index) == NE_INDEX_ERROR)
+			return RESULT_TYPE_WARNING;
 
+		return RESULT_SUCCESS;
+	}
 }

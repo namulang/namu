@@ -1564,6 +1564,7 @@ public:
 	}
 };
 
+
 class CodeSynchroTest : public TestCase
 {
 public:
@@ -1615,7 +1616,31 @@ public:
 				return tray.push(ms);
 			}
 			virtual NEObject& clone() const { return *(new Temp(*this)); }
+			virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
+			{
+				return NEModule::serialize(saver);
+			}
+			virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader)
+			{
+				return NEModule::serialize(loader);
+			}
 		};
+
+		NEEventHandler& handler = Editor::getInstance().getEventHandler();
+		if (!&handler) return false;
+		manager.getScriptHeader().getName() = "Temp";
+		manager.getScriptHeader().getDeveloper() = "Coretester";
+
+		{
+			NEModuleSet& ms = (NEModuleSet&)Kernal::getInstance().getModuleManager().getModuleSet();
+			ms.resize(ms.getLength() + 1);
+			Temp t;
+			NECodeSet& cs = (NECodeSet&)t.getCodes(NECodeType::MODULE_SCRIPT);
+			cs[0].setCode(ms.getLength());
+
+			ms.push(t);
+		}
+
 
 		Temp* t;
 		NENode* src;
@@ -1638,7 +1663,8 @@ public:
 			{				
 				NEModuleCodeSet& m = src->getModuleSet();
 				m.create(1);
-				t = (Temp*) &m[m.push(Temp())];	
+
+				t = (Temp*) &m[m.push(Kernal::getInstance().getModuleManager().getModule(NEExportable::Identifier("Temp.kniz")))];	
 				NEModuleSelector* nms = &t->ms.getDefault();
 				nms->setManager(NEType::NESCRIPT_EDITOR);
 				NECodeSet is;
@@ -1769,6 +1795,31 @@ public:
 			t->ns_group.getValue().getCodes()[0].getCode() != 2				||
 			t->ns_group.getValue().getCodes()[1].getCode() != 0				)
 			return false;		
+
+
+
+
+
+
+		handler.saveScriptFile(NETString("temp.dat"));
+		handler.loadScriptFile(NETString("temp.dat"));
+
+		NENodeManager& noder = Kernal::getInstance().getNodeManager();
+
+		src = &ns[2];	//	처음에 1에 넣고, pushFront를 했기에 2가 되었다.
+		t = (Temp*) &src->getModuleSet()[0];
+		if( ! t) return false;
+
+		//	Argument 체크:
+		if (t->ms.getValue().getCodes()[0].getCode() != 2)
+			return false;
+		if (t->ns_name.getValue().getCodes()[0].getCode() != 2)
+			return false;
+		if (t->ns_group.getValue().getCodes().getLength() != 2 ||
+			t->ns_group.getValue().getCodes()[0].getCode() != 2 ||
+			t->ns_group.getValue().getCodes()[1].getCode() != 0)
+			return false;
+
 
 		return true;
 	}
@@ -2111,6 +2162,8 @@ public:
 			}
 		};
 
+		manager.initialize();
+
 		NENodeCodeSet& ncs = manager.getRootNodes();
 		ncs.create(3);
 		{
@@ -2247,7 +2300,15 @@ public:
 		if (&pointers[11] != n0) return false;
 
 
+		NEModuleSelector mss;
+		mss.setCodes(NECodeType(NECodeType::ALL));
+		mss.setModuleCodes(NECodeType(NECodeType::ALL));
 
+		if (&mss.getModule() != &mss.peekModule()) return false;
+
+		mss.initializeReferingPoint();
+
+		if(&mss.getNode() != &mss.peekNode()) return false;
 
 
 		return true;
@@ -2270,6 +2331,167 @@ public:
 		if(&arr[0] == &arr[1]) return false;
 		if(&arr[0] == &sample) return false;
 		if(arr[0] != sample) return false;
+
+		return true;
+	}
+};
+
+
+class SelectorLock : public TestCase
+{
+public:
+	SelectorLock() : TestCase("test Locking function in selectors.") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
+		ed.initialize();
+		NENodeCodeSet& ns = ed.getScriptNodes();
+
+		ns.create(5);
+		for (int n = 0; n < 5; n++)
+			ns.push(NENode());
+
+		NEScriptManager& scm = Kernal::getInstance().getScriptManager();
+		const NENodeCodeSet& scmn = scm.getScriptNodes();
+		ed.getScriptHeader().getName() = "test";
+		ed.getScriptHeader().getDeveloper() = "kniz";
+		ed.synchronizeTo(scm);
+
+		class MyMod : public NEModule {
+		public:
+			NETArgument<NENodeSelector> sel;
+			NEListTemplate<NENode*> pointers;
+
+			virtual type_result _onFetchArguments(NEArgumentList& tray)
+			{
+				tray.push(sel);
+
+				return RESULT_SUCCESS;
+			}
+			virtual type_result _onExecute()
+			{
+				for (int n = 0; n < 4; n++)
+					pointers.push(&sel.getValue().getNode());
+
+				return RESULT_SUCCESS;
+			}
+			virtual NEObject& clone() const {
+				return *(new MyMod(*this));
+			}
+			virtual const NEExportable::ModuleHeader& getHeader() const {
+				static NEExportable::ModuleHeader _instance;
+				if (_instance.isValid() != RESULT_SUCCESS)
+				{
+					_instance.getName() = "MyMod";
+					_instance.getDeveloper() = "kniz";
+				}
+
+				return _instance;
+			}
+		};
+		NERootNodeCodeSet& rns = manager.getRootNodes();
+
+
+		{
+			//	Step# 1	-	순수 binding() 만으로 테스팅함
+			manager.initialize();
+
+			NENode	*n0 = &rns[0],
+				*n1 = &rns[rns.push(scmn[1])],
+				*n2 = &rns[rns.push(scmn[2])],
+				*n3 = &rns[rns.push(scmn[3])],
+				*n4 = &rns[rns.push(scmn[4])];
+
+			NEListTemplate<NENode*> pointers;
+
+			NENodeSelector sel;
+			sel.setCodes(NECodeType(NECodeType::ALL));
+			sel.setCountLimit(2);
+
+
+			for (int n = 0; n < 4; n++)
+				pointers.push(&sel.getValue().getNode());
+
+			if (&pointers[0] != n0) return false;
+			if (&pointers[1] != n1) return false;
+			if (&pointers[2] != 0x00) return false;
+			if (&pointers[3] != n2) return false;
+
+			sel.bind();
+			sel.initializeReferingPoint();
+			for (int n = 0; n < 4; n++)
+				pointers.push(&sel.getValue().getNode());
+
+			if (&pointers[4] != n2) return false;
+			if (&pointers[5] != 0x00) return false;
+			if (&pointers[6] != n2) return false;
+			if (&pointers[7] != 0x00) return false;
+
+			sel.unbind();
+			for (int n = 0; n < 4; n++)
+				pointers.push(&sel.getValue().getNode());
+
+			if (&pointers[8] != n3) return false;
+			if (&pointers[9] != 0x00) return false;
+			if (&pointers[10] != n4) return false;
+			if (&pointers[11] != n0) return false;
+		}
+
+
+		{
+			//	Step# 2	-	Argument로 테스트
+			manager.initialize();
+
+			NENode	*n0 = &rns[0],
+				*n1 = &rns[rns.push(scmn[1])],
+				*n2 = &rns[rns.push(scmn[2])],
+				*n3 = &rns[rns.push(scmn[3])],
+				*n4 = &rns[rns.push(scmn[4])];
+			MyMod* m;
+			NENodeSelector* ns11;
+			{
+				//	1, 2
+				NEModuleCodeSet& ms = n4->getModuleSet();
+				ms.create(1);
+				m = (MyMod*)&ms[ms.push(MyMod())];
+				NEKeyCodeSet& ks = n4->getKeySet();
+				ks.create(1);
+				NENodeSelector ns1("selector");
+				NECodeSet is2((NECodeType(NECodeType::ALL)));
+				ns1.setManager(NEType::NENODE_MANAGER);
+				ns1.setCountLimit(2);
+				ns1.setCodes(is2);
+				ns11 = (NENodeSelector*)&ks[ks.push(ns1)];
+				m->sel.setKeyName("selector");				
+				n4->execute();
+				m->sel.setWantingToLock(true);
+				n4->execute();
+			}
+
+			if (ns11->getBinder().isBinded()) return false;
+			NEListTemplate<NENode*>& pointers = m->pointers;
+			pointers.push(ns11->getNode());
+			pointers.push(ns11->getNode());
+			pointers.push(ns11->getNode());
+			pointers.push(ns11->getNode());
+			if (pointers.getLength() != 12) return false;
+			if (&pointers[0] != n0) return false;
+			if (&pointers[1] != n1) return false;
+			if (&pointers[2] != 0x00) return false;
+			if (&pointers[3] != n2) return false;
+
+			if (&pointers[4] != n2) return false;
+			if (&pointers[5] != 0x00) return false;
+			if (&pointers[6] != n2) return false;
+			if (&pointers[7] != 0x00) return false;
+
+			if (&pointers[8] != n3) return false;
+			if (&pointers[9] != 0x00) return false;
+			if (&pointers[10] != n4) return false;
+			if (&pointers[11] != n0) return false;
+
+		}
 
 		return true;
 	}
@@ -2345,6 +2567,7 @@ void main()
 	RecentNodeSelectingInifiniteTest().test();
 	SelectorPeekingTest().test();
 	StringSetDeepCopytest().test();
+	SelectorLock().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();

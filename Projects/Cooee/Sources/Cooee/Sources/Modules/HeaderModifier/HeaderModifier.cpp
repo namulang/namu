@@ -201,7 +201,13 @@ void HeaderModifier::_pushCodeLists()
 			{
 				to_show += NEString(index) + "th: ";
 				if(index >= 0)
-					to_show += _getProperBankBy(code_type_n)[index];
+				{
+					const NETStringList& bank = _getProperBankBy(code_type_n);
+					if(index > bank.getLengthLastIndex())
+						index = bank.getLengthLastIndex();
+
+					to_show += bank[index];
+				}
 			}
 		}
 

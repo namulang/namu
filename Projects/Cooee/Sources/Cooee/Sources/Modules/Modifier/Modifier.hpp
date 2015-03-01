@@ -290,7 +290,6 @@ public:
 			break;
 
 		case CLOSE:
-		case ENTER:
 			delete_me = true;
 			break;
 		}		
@@ -368,12 +367,12 @@ public:
 		{
 			switch(type)
 			{
-			case NECodeType::ME:		return "ME";
-			case NECodeType::SCRIPT:	return "SCRIPT";
-			case NECodeType::NAME:		return "NAME";
-			case NECodeType::RECENT:	return "RECENT";
-			case NECodeType::ALL:		return "ALL";
-			default:					return "ERROR! UNKNOWN!";
+			case NECodeType::ME:			return "ME";
+			case NECodeType::MODULE_SCRIPT:	return "MODULE_SCRIPT";
+			case NECodeType::MODULE_NAME:	return "MODULE_NAME";
+			case NECodeType::RECENT:		return "RECENT";
+			case NECodeType::ALL:			return "ALL";
+			default:						return "ERROR! UNKNOWN!";
 			}
 		}
 		void updateList();

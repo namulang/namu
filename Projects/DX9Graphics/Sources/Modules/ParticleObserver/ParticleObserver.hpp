@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../Commons/Templates/TValidator/TValidator.hpp"
-#include "../Particle/Paritcle.hpp"
+#include "../Particle/Particle.hpp"
 
 namespace DX9Graphics
 {
@@ -9,7 +9,7 @@ namespace DX9Graphics
 	class NE_DLL ParticleObserver : public TValidator<Particle>
 	{
 	public:
-		typedef SpriteTexter ThisClass;
+		typedef ParticleObserver ThisClass;
 		typedef TValidator<Particle> SuperClass;
 
 	public:
@@ -21,7 +21,7 @@ namespace DX9Graphics
 	protected:
 		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
-			SuperClass:_onFetchArguments(tray);
+			SuperClass::_onFetchArguments(tray);
 
 			tray.push(arg_target);
 			tray.push(arg_xpos);
@@ -47,19 +47,19 @@ namespace DX9Graphics
 			if(arg_target.isEnable())
 			{
 				arg_target.getValue().initializeReferingPoint();
-				target = &_cast(arg_target.getValue().getModule());
+				target = &cast(arg_target);
 			}
 			D3DXVECTOR3 target_point = _createTargetPoint(*target);
 
 
 			//	main:
 			NEModule* e = 0x00;
-			while(e = &arg_validator.getValue()getModule())
+			while(e = &arg_validator.getValue().getModule())
 			{
-				Particle& p = _cast(*e);
+				Particle& p = cast(*e);
 				if( ! &p) continue;
 
-				D3DXVECTOR3 direction = _createDirectionVector(*e, *target_point);
+				D3DXVECTOR3 direction = _createDirectionVector(p, target_point);
 				D3DXVec3Normalize(&direction, &direction);
 
 				D3DXVECTOR3 degree = DX9::createYawPitchRollFrom(DX9::createQuaternionFrom(direction));
@@ -84,8 +84,8 @@ namespace DX9Graphics
 				_header.getComment() =
 					"주어진 Particle의 RotateX, RotateY, RotateZ degree를 회전시켜서, 다른 Particle이나 특정 좌표로 바라보게 끔 합니다.\n"
 					"주의 : Target Argument 를 Disabled 해야 X,Y,Zpos 좌표값을 바라보게 합니다.\n"
-					"Source가 되는 Particle이 여러개가 되도록 할 수도 있습니다."
-					_header.getVersion() = _T("0.0.1a");
+					"Source가 되는 Particle이 여러개가 되도록 할 수도 있습니다.";
+				_header.getVersion() = _T("0.0.1a");
 				_header.getReleaseDate() = _T("2015-01-26");
 				NETStringSet& args = _header.getArgumentsComments();
 				args.create(5);

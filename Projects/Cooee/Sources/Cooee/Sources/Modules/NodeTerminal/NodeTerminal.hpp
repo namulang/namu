@@ -226,7 +226,6 @@ public:
 							InputWindow::onKeyPressed(inputed);
 							break;
 
-						case ENTER:
 						case CLOSE:
 						case LEFT:
 						case RIGHT:

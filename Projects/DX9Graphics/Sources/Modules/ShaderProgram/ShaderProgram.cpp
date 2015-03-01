@@ -5,6 +5,22 @@
 
 namespace DX9Graphics
 {
+	const NECodeSet& ShaderProgram::getModuleScriptCodes()
+	{
+		NECodeType type(NECodeType::MODULE_SCRIPT);
+		static NECodeSet codes(type);
+
+		if (codes.getLength() <= 1)
+		{
+			codes.create(3);
+			codes.push(NEExportable::Identifier("FixedProgram.kniz"));
+			codes.push(NEExportable::Identifier("BloomProgram.kniz"));
+			codes.push(NEExportable::Identifier("BlurProgram.kniz"));
+		}
+
+		return codes;
+	}
+
 	type_int ShaderProgram::getRenderTargetHeight() const
 	{
 		const DX9& dx9 = DX9::getInstancedDX();
@@ -37,8 +53,7 @@ namespace DX9Graphics
 
 
 		//	main:
-		type_byte option = arg_final_render_target.getValue();
-		switch(option)
+		switch(arg_final_render_target)
 		{
 		case FINAL_RENDER_TARGET_OUTPUT:	
 			device->SetRenderTarget(0, _original_surface);
@@ -48,8 +63,9 @@ namespace DX9Graphics
 			{
 				LPDIRECT3DSURFACE9 new_target = &(targets.getEmptyTarget().getSurface());
 				device->SetRenderTarget(0, new_target);
-				device->Clear(0, 0, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);				
-			}			
+			}
+		case FINAL_RENDER_TARGET_NEW_OUTPUT:
+				device->Clear(0, 0, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
 			break;
 
 		case FINAL_RENDER_TARGET_PREVIOUS_BUFFER:
@@ -60,7 +76,7 @@ namespace DX9Graphics
 			break;
 
 		default:
-			KERNAL_ERROR("잘못된 FINAL RENDER TARGET 값입니다.\n\t값 : %d", option);				
+			KERNAL_ERROR("잘못된 FINAL RENDER TARGET 값입니다.\n\t값 : %d", arg_final_render_target);				
 		}
 
 		return RESULT_SUCCESS;
@@ -170,18 +186,10 @@ namespace DX9Graphics
 
 	void ShaderProgram::_endFinalRenderTarget(RenderTargetSet& targets)
 	{
-		type_byte option = arg_final_render_target.getValue();
-		if(option == FINAL_RENDER_TARGET_NEW_BUFFER)
+		if(arg_final_render_target == FINAL_RENDER_TARGET_NEW_BUFFER)
 			targets.notifyTargetFilled();
 	}
-
-	type_result ShaderProgram::_updateBlendingStateToCamerasOne(LPDIRECT3DDEVICE9 device, Camera& camera)
-	{
-		device->SetRenderState(D3DRS_SRCBLEND, camera.arg_source_blend.getValue());
-		device->SetRenderState(D3DRS_DESTBLEND, camera.arg_dest_blend.getValue());
-		return RESULT_SUCCESS;
-	}
-
+	
 	type_result ShaderProgram::initializeResource()
 	{
 		//	main:
@@ -222,8 +230,6 @@ namespace DX9Graphics
 		while(&selector.getModule())
 		{
 			Model& model = static_cast<Model&>(selector.peekModule());
-
-			_updateBlendingStateToCamerasOne(device, camera);
 
 			_onRenderModel(device, camera, model);
 		}

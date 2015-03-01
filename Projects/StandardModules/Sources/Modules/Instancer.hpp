@@ -16,6 +16,7 @@ namespace NE
 	protected:
 		virtual type_result _onFetchModule()
 		{
+			arg_targets.getValue().setManager(NEType::NESCRIPT_MANAGER);
 			arg_targets.setPurposeLimitation(NEArgumentBase::READ_OR_WRITTEN);
 			arg_targets.setPurpose(NEArgumentBase::WRITTEN);
 
@@ -33,25 +34,14 @@ namespace NE
 		{
 			NENodeSelector& ns = arg_targets.getValue();
 
-			while(NENode* node = &ns.getNode())
-			{
-				NENodeCodeSet& ncs = node->getOwner();
-				if (!&ncs)
-				{
-					ALERT_WARNING(" : ");
-					continue;
-				}
+			type_result(ThisClass::*Function)(NENode&);
+			if (arg_targets.getPurpose() == NEArgumentBase::READ_BY)
+				Function = &ThisClass::_remove;
+			else
+				Function = &ThisClass::_insert;
 
-				for(int n = 0; n < ncs.getLength(); n++)
-					if (&ncs[n] == node)
-					{
-						type_result result = ncs.remove(n);
-						if (NEResult::hasError(result))
-							ALERT_ERROR(" : ");
-
-						break;
-					}
-			}
+			while (NENode* node = &ns.getNode())
+				(this->*Function)(*node);
 
 			return RESULT_SUCCESS;
 		}
@@ -80,6 +70,38 @@ namespace NE
 		virtual NEObject& clone() const
 		{
 			return *(new ThisClass(*this));
+		}
+
+	private:
+		type_result _insert(NENode& node)
+		{
+			NENodeManager& nm = Kernal::getInstance().getNodeManager();
+			if (!&nm)
+				return ALERT_ERROR(" : NodeManager가 없습니다.");
+
+			type_index n = nm.getRootNodes().push(node);
+			if (n < 0)
+				return ALERT_ERROR(" : 추가 도중 오류가 발생하였습니다.\n\t반환된 인덱스 값 : %d", n);
+
+			return RESULT_SUCCESS;
+		}
+		type_result _remove(NENode& node)
+		{
+			NENodeCodeSet& ncs = node.getOwner();
+			if (!&ncs)
+				return ALERT_WARNING(" : ");
+
+			for (int n = 0; n < ncs.getLength(); n++)
+				if (&ncs[n] == &node)
+				{
+					type_result result = ncs.remove(n);
+					if (NEResult::hasError(result))
+						return ALERT_ERROR(" : ");
+
+					return result;
+				}
+
+				return RESULT_TYPE_WARNING | RESULT_ABORT_ACTION;
 		}
 	};
 }

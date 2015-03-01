@@ -46,7 +46,7 @@ namespace DX9Graphics
 			arg_transparent_red.setPurposeLimitation(NEArgumentBase::READ_BY);
 			arg_transparent_green.setPurposeLimitation(NEArgumentBase::READ_BY);
 			arg_transparent_blue.setPurposeLimitation(NEArgumentBase::READ_BY);
-			arg_transparent_alpha.setValue(0);
+			arg_transparent_alpha.setValue(255);
 			arg_transparent_alpha.setPurposeLimitation(NEArgumentBase::READ_BY);
 
 			return RESULT_SUCCESS;

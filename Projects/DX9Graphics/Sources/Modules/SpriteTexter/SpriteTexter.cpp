@@ -12,7 +12,7 @@ namespace DX9Graphics
 		if( ! &texture)
 			return ALERT_ERROR("텍스쳐가 잘못되었습니다.");
 
-		DXFont& font = cast(arg_validator.getValue().getModule());
+		DXFont& font = cast(arg_validator);
 		if( ! &font)
 			return RESULT_TYPE_WARNING;
 		LPD3DXFONT fnt = font.getFont();

@@ -8,7 +8,7 @@ namespace DX9Graphics
 	class NE_DLL ParticleVelocity : public TValidator<Particle>
 	{
 	public:
-		typedef SpriteTexter ThisClass;
+		typedef ParticleVelocity ThisClass;
 		typedef TValidator<Particle> SuperClass;
 
 	public:
@@ -20,7 +20,7 @@ namespace DX9Graphics
 	protected:
 		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
-			SuperClass:_onFetchArguments(tray);
+			SuperClass::_onFetchArguments(tray);
 
 			tray.push(arg_direction_x_angle);
 			tray.push(arg_direction_y_angle);
@@ -49,15 +49,16 @@ namespace DX9Graphics
 
 			D3DXMATRIXA16 rmat = EulerTransitor::createRotationMatrix(
 				DX9::createQuaternionFrom(yaw, pitch, roll)
-			);
+				);
 
 			D3DXVECTOR3 delta;
 			D3DXVec3TransformNormal(&delta, &D3DXVECTOR3(0, 0, 1), &rmat);
+			delta *= arg_magnitude.getValue();
 
 			NEModule* e = 0x00;
 			while (e = &arg_validator.getValue().getModule())
 			{
-				Particle& particle = _cast(*e);
+				Particle& particle = cast(*e);
 				if( ! &particle) continue;
 
 				particle.arg_trans_x.setValue(particle.arg_trans_x.getValue() + delta.x);
@@ -82,7 +83,7 @@ namespace DX9Graphics
 					"Particle들을 특정한 방향으로 Magnitude 만큼 Particle의 X, Y, Z을 이동시킵니다.\n"
 					"여기서 특정한 방향은 기준방향에(= 벡터 0, 0, 1)을 X축 회전, Y축 회전, Z축 회전으로 "
 					"순차적으로 적용하여 정해집니다.\n";
-					"Particle에 속하는 Module은 Camera, Model, AnimatedModel 등이 있습니다.\n"
+				"Particle에 속하는 Module은 Camera, Model, AnimatedModel 등이 있습니다.\n"
 					"예를들어, 이 Particle들이 가지고 있는 X축 Angle, Y축 Angle, Z축 Angle을 "
 					"그대로 이 Module에 Angle에 할당하면, 물체가 향하는 방향으로 나아가게 됩니다.";
 				_header.getVersion() = _T("0.0.1a");

@@ -32,7 +32,7 @@ class ModuleEncyclo : public Window
 	{
 	public:
 		ModuleList(NEModule* new_want_to_browse = 0) 
-			: ListGliph(0, 1, 2, 20, 22, BLACK, WHITE, WHITE, LIGHTRED), 
+			: ListGliph(0, 1, 2, 20, 22, BLACK, WHITE, WHITE, LIGHTRED, true), 
 			want_to_browse(new_want_to_browse) {}
 		ModuleList(const ModuleList& rhs) : ListGliph(rhs), want_to_browse(rhs.want_to_browse) { }
 		FUNC_TO_OWNER(ModuleEncyclo)
@@ -50,12 +50,12 @@ public:
 	ModuleEncyclo(NEModule* want_to_browse = 0, const NEString& new_path_to_added = "") 
 		: Window(1, 1, 78, 23, BLACK, DARKGRAY), list(want_to_browse), path_to_added(new_path_to_added)
 	{ 
-		regist(4, &status, &panel, &list, &content);
+		regist(4, &status, &panel, &content, &list);
 	}
 	ModuleEncyclo(CONST ModuleEncyclo & rhs) 
 		: Window(rhs), list(rhs.list), content(rhs.content), panel(rhs.panel), path_to_added(rhs.path_to_added)
 	{ 
-		regist(4, &status, &panel, &list, &content); 
+		regist(4, &status, &panel, &content, &list);
 	}
 	NEObject& clone() const { return *(new ModuleEncyclo(*this)); }
 	bool isAddingMode() const { return path_to_added != ""; }

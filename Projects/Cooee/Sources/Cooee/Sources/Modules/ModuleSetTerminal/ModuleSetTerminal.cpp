@@ -2,21 +2,7 @@
 #include "../ModuleEncyclo/ModuleEncyclo.hpp"
 #include "../ModuleTerminal/ModuleTerminal.hpp"
 #include "../MainPopUpMenu/MainPopUpMenu.hpp"
-
-class NameInputWindow : public ::LG::InputWindow
-{
-public:
-	NameInputWindow(const NEString& default_string) : InputWindow("새로운 키의 이름을 입력해주시기 바랍니다.", BLACK, LIGHTCYAN, default_string) {}
-
-	FUNC_TO_CALLER(ModuleSetTerminal)
-	FUNC_CLONE(NameInputWindow)
-
-	virtual void onInputed()
-	{
-		toCaller().real_key->getName() = input.text;
-		delete_me = true;
-	}
-};
+#include "../NameInputWindow/NameInputWindow.hpp"
 
 void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed) 
 {
@@ -61,7 +47,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed)
 
 	case REMOVE:
 		if(choosed >= 0)
-			::Core::commander.command(NEString("delete ") + toOwner()->getPath() + "/" + choosed);
+			::Core::commander.command(NEString("delete ") + toOwner()->getPath() + "/" + index);
 		break;
 
 	case COPY:

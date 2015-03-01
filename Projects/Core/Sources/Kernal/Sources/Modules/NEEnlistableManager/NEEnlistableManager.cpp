@@ -159,11 +159,8 @@ namespace NE
 		NEShortCutSet& shortcutset = _getShortCutSet(new_codes.getCodeType());
 		if (!&shortcutset)	return RESULT_TYPE_WARNING;
 		type_result result = shortcutset._unlist(target, real_index);
-		if(NEResult::hasError(result))
-		{
-			ALERT_ERROR(" : ");
-			return result;
-		}
+		if (NEResult::hasError(result))
+			ALERT_WARNING(" : 이미 unlist 되어있는 노드입니다.");		
 
 		_setCodesDirectly(target, new_codes);
 

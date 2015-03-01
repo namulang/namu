@@ -1,25 +1,25 @@
 #include "ListGliph.hpp"
 #include "../Core/Core.hpp"
+#include "../FloatingGliph/FloatingGliph.hpp"
 
 namespace LG
 {
 	ListGliph::ListGliph(	Window* new_owner, type_ushort new_x, type_ushort new_y, type_ushort new_width, 
-							type_ushort new_height, type_ushort new_fore, type_ushort new_back, 
-							type_ushort new_choosed_fore, type_ushort new_choosed_back)
-		: Gliph(new_owner, new_x, new_y, new_width, new_height, new_fore, new_back), 
-		choosed_back(new_choosed_back), choosed_fore(new_choosed_fore), choosed(0) 
+		type_ushort new_height, type_ushort new_fore, type_ushort new_back, 
+		type_ushort new_choosed_fore, type_ushort new_choosed_back, bool new_use_matching)
+		: Gliph(new_owner, new_x, new_y, new_width, new_height, new_fore, new_back), use_matching(new_use_matching),
+		choosed_back(new_choosed_back), choosed_fore(new_choosed_fore), choosed(0)
 	{
 
 	}
 	ListGliph::ListGliph(const ListGliph& rhs)
 		: Gliph(rhs), items(rhs.items), choosed(rhs.choosed), choosed_back(rhs.choosed_back), 
-		choosed_fore(rhs.choosed_fore) 
+		choosed_fore(rhs.choosed_fore), use_matching(rhs.use_matching)
 	{
 
 	}
 
 	void ListGliph::onDraw() {
-
 		Gliph::onDraw();
 
 		COORD backup_pos = Core::getCursorPosition();
@@ -48,11 +48,11 @@ namespace LG
 				buf.setColor(fore, back);
 
 			bool	is_there_more_contents_after	= items.getLengthLastIndex() > last_index,
-					is_there_more_contents_before	= list_head_index != 0;
+				is_there_more_contents_before	= list_head_index != 0;
 
 			NEString s = 
 				(	(is_there_more_contents_after && y1 == last_index)			||
-					(is_there_more_contents_before && y1 == list_head_index)	)	? 
+				(is_there_more_contents_before && y1 == list_head_index)	)	? 
 				" . . . " 
 				: 
 			items[y1];
@@ -64,6 +64,13 @@ namespace LG
 			s.push('\0');
 
 			buf << s.toCharPointer();
+		}
+
+		if (matchingword.getLength() > 0 &&
+			use_matching)
+		{
+			FloatingGliph for_matchingword(x + width + 1, y + height / 2, matchingword.getLength() + 2, 1, CYAN, LIGHTGRAY, matchingword);
+			for_matchingword.onDraw();
 		}
 
 		Core::setColor(backup_color);
@@ -79,14 +86,58 @@ namespace LG
 			choosed--;
 			if(choosed < 0) 
 				choosed = items.getLengthLastIndex();
+			matchingword.release();
 			break;
 
 		case DOWN: 
 			choosed++;
 			if(choosed > items.getLengthLastIndex())
 				choosed = 0;
+			matchingword.release();
 			break;
+
+		case LEFT:	case RIGHT:	case CLOSE:	case MAP: case ADD: case REMOVE: case COPY:
+		case PASTE: case CUT: case HELP: case COMMAND: case CONFIRM: case CANCEL:
+			matchingword.release();
+			break;
+
+		default:
+			match(inputed);
 		}        
+	}
+
+	NEString ListGliph::toLower(const NEString& trg) const
+	{
+		NEString to_return(trg);
+
+		for (int n = 0; n < trg.getLength(); n++)
+			if(	trg[n] >= 'A'	&&
+				trg[n] <= 'Z'	)
+				to_return[n] = 'a' + (trg[n] - 'A');
+
+		return to_return;
+	}
+
+	void ListGliph::match(char inputed)
+	{
+		if( ! use_matching) return;
+		if( ! inputed) return;
+		NEString test_forward(toLower(matchingword + inputed));
+		type_index last_idx = test_forward.getLengthLastIndex() - 1; // without null character.
+		if(last_idx < 0) return;
+
+		for(int n = 0; n < items.getLength(); n++)
+		{
+
+			if(toLower(items[n].extract(0, last_idx)) == test_forward)
+			{
+				choosed = n;
+				matchingword = test_forward;
+				return;
+			}
+		}
+
+		matchingword.release();
 	}
 
 	void ListGliph::onUpdateData()
@@ -96,6 +147,6 @@ namespace LG
 		if(choosed < 0)
 			choosed = 0;
 		else if(choosed > items.getLengthLastIndex())
-			choosed = items.getLengthLastIndex();
+			choosed = items.getLengthLastIndex();	
 	}
 }

@@ -21,9 +21,16 @@ namespace DX9Graphics
 		{
 			SuperClass::_onFetchModule();
 
+			arg_max_row.setValue(1);
 			arg_max_row.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_max_column.setValue(1);
 			arg_max_column.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_delay_per_frame.setEnable(false);
 			arg_delay_per_frame.setPurposeLimitation(NEArgumentBase::READ_BY);
+
+			NEIntSet sample(1);
+			sample.push(1);
+			arg_column_count_per_row.getValue() = sample;
 			arg_column_count_per_row.setEnable(false);
 			arg_column_count_per_row.setPurposeLimitation(NEArgumentBase::READ_BY);
 
@@ -129,10 +136,10 @@ namespace DX9Graphics
 				_header.getReleaseDate() = "2013-08-10";
 				NETStringSet& args = _header.getArgumentsComments();
 				args = supers.getArgumentsComments();
-				args.resize(3);
+				args.resize(args.getLength() + 3);
 				args.push("MaxRow\nTexture를 표의 형태의 영역으로 나눌때 몇개의 행인지 지정합니다.");
 				args.push("MaxColumn\nTexture를 표의 형태의 영역으로 나눌때 몇 개의 열인지 지정합니다.");
-				args.push("DelayPerFrame\nAnimation이 한 KeyFrame이 넘어갈때 걸리는 시간입니다.");
+				args.push("DelayPerFrame\nAnimation이 한 KeyFrame이 넘어갈때 걸리는 시간입니다.\n-1 혹은 disabled면 딜레이 무한대 입니다.");
 				args.push("Customized Key Frame\nAnimation 마다 KeyFrame이 다를 경우, 각 Animation에 대한 KeyFrame 수를 입력합니다.\nEnable일때만 사용합니다.");
 			}
 
@@ -162,7 +169,7 @@ namespace DX9Graphics
 				max = set.getLength() > max ? set.getLength() : max;
 			}
 
-			return getWidth() / max;
+			return getHeight() / max;
 		}
 		virtual type_result dock(Model& model);
 		virtual RECT createSourceRect() const 
@@ -225,6 +232,13 @@ namespace DX9Graphics
 		{
 			_row_extracted_from_model = 0;
 			_column_extracted_from_model = 0;
+		}
+		void _validate()
+		{
+			if(arg_max_row.getValue() <= 0)
+				arg_max_row.setValue(1);
+			if(arg_max_column.getValue() <= 0)
+				arg_max_column.setValue(1);
 		}
 
 	private:

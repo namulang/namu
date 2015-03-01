@@ -122,9 +122,14 @@ void Planetarium::getSelectedByFilter(NEListTemplate<NEObject*>& selected)
 		else
 			getKeyFilter().setManager(NEType::NESCRIPT_EDITOR);
 
+		getKeyFilter().initializeReferingPoint();
 		while (NEKey* itr = &getKeyFilter().getKey())
 			selected.push(itr);
+
 		getKeyFilter().setManager(backup);
+		getKeyFilter().getBinder().unbind();
+		getKeyFilter().NENodeSelector::getBinder().unbind();
+		getKeyFilter().initializeReferingPoint();
 	}
 	if (switches[1])
 	{
@@ -134,9 +139,14 @@ void Planetarium::getSelectedByFilter(NEListTemplate<NEObject*>& selected)
 		else
 			getModuleFilter().setManager(NEType::NESCRIPT_EDITOR);
 
+		getModuleFilter().initializeReferingPoint();
 		while (NEModule* itr = &getModuleFilter().getModule())
 			selected.push(itr);
+
 		getModuleFilter().setManager(backup);
+		getModuleFilter().getBinder().unbind();
+		getModuleFilter().NENodeSelector::getBinder().unbind();
+		getModuleFilter().initializeReferingPoint();
 	}
 	if (switches[0])
 	{
@@ -146,9 +156,13 @@ void Planetarium::getSelectedByFilter(NEListTemplate<NEObject*>& selected)
 		else
 			getNodeFilter().setManager(NEType::NESCRIPT_EDITOR);
 
+		getNodeFilter().initializeReferingPoint();
+
 		while (NENode* itr = &getNodeFilter().getNode())
 			selected.push(itr);
+
 		getNodeFilter().setManager(backup);
+		getNodeFilter().getBinder().unbind();
+		getNodeFilter().initializeReferingPoint();
 	}
 }
-

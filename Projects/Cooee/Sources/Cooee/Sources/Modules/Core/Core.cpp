@@ -107,9 +107,9 @@ void Core::openModifierFrom(NEKey& key, bool not_use_name)
 NEObject& Core::getObjectBy(const NEString& path, onObjectFound& handler)
 {
 	NERootNodeCodeSet& nodeset = ::Core::isObservingDebug() ? 
-			Kernal::getInstance().getNodeManager().getRootNodes()
+		Kernal::getInstance().getNodeManager().getRootNodes()
 		:
-			Editor::getInstance().getScriptEditor().getScriptNodes();	
+	Editor::getInstance().getScriptEditor().getScriptNodes();	
 	NEObject* nullpointer = 0;
 	if( ! &Kernal::getInstance()					||
 		! &Kernal::getInstance().getNodeManager()	||
@@ -121,7 +121,7 @@ NEObject& Core::getObjectBy(const NEString& path, onObjectFound& handler)
 	//	main:
 	NEStringSet splited;
 	path.split("/", splited);
-	
+
 	return _searchNodeSet(nodeset, splited, handler);
 }
 
@@ -206,6 +206,14 @@ namespace
 				text = "/" + NEString(n);
 				return true;
 			}
+
+			const NEArgumentSet& args = ms[n].getArguments();
+			for (int arg_n = 0; arg_n < args.getLength(); arg_n++)
+				if (&args[arg_n] == &t)
+				{
+					return true;
+					text = "/" + NEString(arg_n);
+				}				
 		}
 
 		return false;

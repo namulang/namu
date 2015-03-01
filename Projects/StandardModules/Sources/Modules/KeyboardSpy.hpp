@@ -17,12 +17,23 @@ namespace NE
 		public:
 			typedef NETArgument<NETStringKey> SuperClass; 
 
+			VKey()
+				: _key_code(-1)
+			{
+
+			}
+
+			VKey(const VKey& rhs)
+				: SuperClass(rhs), _key_code(-1)
+			{
+
+			}
+
 			virtual type_result setValue(const NETString& source)
 			{
-				type_result result = SuperClass::setValue(source);
-				_key_code = getTransitionTable().find(source);
-				if(_key_code < 0)
-					return KERNAL_ERROR(" : sample = %s, n = %d", source.toCharPointer(), _key_code);
+				type_result result = SuperClass::setValue(source);				
+
+				_redefine(source);
 
 				return result;
 			}
@@ -45,9 +56,25 @@ namespace NE
 			}
 
 		public:
-			type_int getKeyCode() const
+			type_int getKeyCode()
 			{
+				const NETStringSet& table = getTransitionTable();
+				const NETString& source = getValue();
+				if(	_key_code == -1							||
+					_key_code > table.getLengthLastIndex()	||
+					table[_key_code] != source				)
+					_redefine(source);
+
 				return _key_code;
+			}
+
+		private:
+			void _redefine(const NETString& source)
+			{
+				_key_code = getTransitionTable().find(source);
+
+				if (_key_code < 0)
+					KERNAL_ERROR(" : sample = %s, n = %d", source.toCharPointer(), _key_code);
 			}
 
 		private:
@@ -59,262 +86,261 @@ namespace NE
 				static NETStringSet table(256);
 				if (table.getLength() < 250)
 				{
-					table.push(_T("VK_NULL"));
-					table.push(_T("VK_LBUTTON"));
-					table.push(_T("VK_RBUTTON"));
-					table.push(_T("VK_CANCEL"));
-					table.push(_T("VK_MBUTTON"));
-					table.push(_T("VK_XBUTTON1"));
-					table.push(_T("VK_XBUTTON2"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_BACK"));
-					table.push(_T("VK_TAB"));
-					table.push(_T("VK_RESERVED"));
-					table.push(_T("VK_RESERVED"));
-					table.push(_T("VK_CLEAR"));
-					table.push(_T("VK_RETURN"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_SHIFT"));
-					table.push(_T("VK_CONTROL"));
-					table.push(_T("VK_MENU"));
-					table.push(_T("VK_PAUSE"));
-					table.push(_T("VK_CAPITAL"));
-					table.push(_T("VK_HANGEUL"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_JUNJA"));
-					table.push(_T("VK_FINAL"));
-					table.push(_T("VK_HANJA"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_ESCAPE"));
-					table.push(_T("VK_CONVERT"));
-					table.push(_T("VK_NONCONVERT"));
-					table.push(_T("VK_ACCEPT"));
-					table.push(_T("VK_MODECHANGE"));
-					table.push(_T("VK_SPACE"));
-					table.push(_T("VK_PRIOR"));
-					table.push(_T("VK_NEXT"));
-					table.push(_T("VK_END"));
-					table.push(_T("VK_HOME"));
-					table.push(_T("VK_LEFT"));
-					table.push(_T("VK_UP"));
-					table.push(_T("VK_RIGHT"));
-					table.push(_T("VK_DOWN"));
-					table.push(_T("VK_SELECT"));
-					table.push(_T("VK_PRINT"));
-					table.push(_T("VK_EXECUTE"));
-					table.push(_T("VK_SNAPSHOT"));
-					table.push(_T("VK_INSERT"));
-					table.push(_T("VK_DELETE"));
-					table.push(_T("VK_HELP"));
-					table.push(_T("VK_0"));
-					table.push(_T("VK_1"));
-					table.push(_T("VK_2"));
-					table.push(_T("VK_3"));
-					table.push(_T("VK_4"));
-					table.push(_T("VK_5"));
-					table.push(_T("VK_6"));
-					table.push(_T("VK_7"));
-					table.push(_T("VK_8"));
-					table.push(_T("VK_9"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_A"));
-					table.push(_T("VK_B"));
-					table.push(_T("VK_C"));
-					table.push(_T("VK_D"));
-					table.push(_T("VK_E"));
-					table.push(_T("VK_F"));
-					table.push(_T("VK_G"));
-					table.push(_T("VK_H"));
-					table.push(_T("VK_I"));
-					table.push(_T("VK_J"));
-					table.push(_T("VK_K"));
-					table.push(_T("VK_L"));
-					table.push(_T("VK_M"));
-					table.push(_T("VK_N"));
-					table.push(_T("VK_O"));
-					table.push(_T("VK_P"));
-					table.push(_T("VK_Q"));
-					table.push(_T("VK_R"));
-					table.push(_T("VK_S"));
-					table.push(_T("VK_T"));
-					table.push(_T("VK_U"));
-					table.push(_T("VK_V"));
-					table.push(_T("VK_W"));
-					table.push(_T("VK_X"));
-					table.push(_T("VK_Y"));
-					table.push(_T("VK_Z"));
-					table.push(_T("VK_LWIN"));
-					table.push(_T("VK_RWIN"));
-					table.push(_T("VK_APPS"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_SLEEP"));
-					table.push(_T("VK_NUMPAD0"));
-					table.push(_T("VK_NUMPAD1"));
-					table.push(_T("VK_NUMPAD2"));
-					table.push(_T("VK_NUMPAD3"));
-					table.push(_T("VK_NUMPAD4"));
-					table.push(_T("VK_NUMPAD5"));
-					table.push(_T("VK_NUMPAD6"));
-					table.push(_T("VK_NUMPAD7"));
-					table.push(_T("VK_NUMPAD8"));
-					table.push(_T("VK_NUMPAD9"));
-					table.push(_T("VK_MULTIPLY"));
-					table.push(_T("VK_ADD"));
-					table.push(_T("VK_SEPARATOR"));
-					table.push(_T("VK_SUBTRACT"));
-					table.push(_T("VK_DECIMAL"));
-					table.push(_T("VK_DIVIDE"));
-					table.push(_T("VK_F1"));
-					table.push(_T("VK_F2"));
-					table.push(_T("VK_F3"));
-					table.push(_T("VK_F4"));
-					table.push(_T("VK_F5"));
-					table.push(_T("VK_F6"));
-					table.push(_T("VK_F7"));
-					table.push(_T("VK_F8"));
-					table.push(_T("VK_F9"));
-					table.push(_T("VK_F10"));
-					table.push(_T("VK_F11"));
-					table.push(_T("VK_F12"));
-					table.push(_T("VK_F13"));
-					table.push(_T("VK_F14"));
-					table.push(_T("VK_F15"));
-					table.push(_T("VK_F16"));
-					table.push(_T("VK_F17"));
-					table.push(_T("VK_F18"));
-					table.push(_T("VK_F19"));
-					table.push(_T("VK_F20"));
-					table.push(_T("VK_F21"));
-					table.push(_T("VK_F22"));
-					table.push(_T("VK_F23"));
-					table.push(_T("VK_F24"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_NUMLOCK"));
-					table.push(_T("VK_SCROLL"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_LSHIFT"));
-					table.push(_T("VK_RSHIFT"));
-					table.push(_T("VK_LCONTROL"));
-					table.push(_T("VK_RCONTROL"));
-					table.push(_T("VK_LMENU"));
-					table.push(_T("VK_RMENU"));
-					table.push(_T("VK_BROWSER_BACK"));
-					table.push(_T("VK_BROWSER_FORWARD"));
-					table.push(_T("VK_BROWSER_REFRESH"));
-					table.push(_T("VK_BROWSER_STOP"));
-					table.push(_T("VK_BROWSER_SEARCH"));
-					table.push(_T("VK_BROWSER_FAVORITES"));
-					table.push(_T("VK_BROWSER_HOME"));
-					table.push(_T("VK_VOLUME_MUTE"));
-					table.push(_T("VK_VOLUME_DOWN"));
-					table.push(_T("VK_VOLUME_UP"));
-					table.push(_T("VK_MEDIA_NEXT_TRACK"));
-					table.push(_T("VK_MEDIA_PREV_TRACK"));
-					table.push(_T("VK_MEDIA_STOP"));
-					table.push(_T("VK_MEDIA_PLAY_PAUSE"));
-					table.push(_T("VK_LAUNCH_MAIL"));
-					table.push(_T("VK_LAUNCH_MEDIA_SELECT"));
-					table.push(_T("VK_LAUNCH_APP1"));
-					table.push(_T("VK_LAUNCH_APP2"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_OEM_1"));
-					table.push(_T("VK_OEM_PLUS"));
-					table.push(_T("VK_OEM_COMMA"));
-					table.push(_T("VK_OEM_MINUS"));
-					table.push(_T("VK_OEM_PERIOD"));
-					table.push(_T("VK_OEM_2"));
-					table.push(_T("VK_OEM_3"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_OEM_4"));
-					table.push(_T("VK_OEM_5"));
-					table.push(_T("VK_OEM_6"));
-					table.push(_T("VK_OEM_7"));
-					table.push(_T("VK_OEM_8"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_OEM_102"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_PROCESSKEY"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_PACKET"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_UNDEFINED"));
-					table.push(_T("VK_ATTN"));
-					table.push(_T("VK_CRSEL"));
-					table.push(_T("VK_EXSEL"));
-					table.push(_T("VK_EREOF"));
-					table.push(_T("VK_PLAY"));
-					table.push(_T("VK_ZOOM"));
-					table.push(_T("VK_NONAME"));
-					table.push(_T("VK_PA1"));
-					table.push(_T("VK_OEM_CLEAR"));
-					table.push(_T("VK_UNDEFINED"));
+					table.push(_T("vk_null"));
+					table.push(_T("vk_lbutton"));
+					table.push(_T("vk_rbutton"));
+					table.push(_T("vk_cancel"));
+					table.push(_T("vk_mbutton"));
+					table.push(_T("vk_xbutton1"));
+					table.push(_T("vk_xbutton2"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_back"));
+					table.push(_T("vk_tab"));
+					table.push(_T("vk_reserved"));
+					table.push(_T("vk_reserved"));
+					table.push(_T("vk_clear"));
+					table.push(_T("vk_return"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_shift"));
+					table.push(_T("vk_control"));
+					table.push(_T("vk_menu"));
+					table.push(_T("vk_pause"));
+					table.push(_T("vk_capital"));
+					table.push(_T("vk_hangeul"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_junja"));
+					table.push(_T("vk_final"));
+					table.push(_T("vk_hanja"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_escape"));
+					table.push(_T("vk_convert"));
+					table.push(_T("vk_nonconvert"));
+					table.push(_T("vk_accept"));
+					table.push(_T("vk_modechange"));
+					table.push(_T("vk_space"));
+					table.push(_T("vk_prior"));
+					table.push(_T("vk_next"));
+					table.push(_T("vk_end"));
+					table.push(_T("vk_home"));
+					table.push(_T("vk_left"));
+					table.push(_T("vk_up"));
+					table.push(_T("vk_right"));
+					table.push(_T("vk_down"));
+					table.push(_T("vk_select"));
+					table.push(_T("vk_print"));
+					table.push(_T("vk_execute"));
+					table.push(_T("vk_snapshot"));
+					table.push(_T("vk_insert"));
+					table.push(_T("vk_delete"));
+					table.push(_T("vk_help"));
+					table.push(_T("vk_0"));
+					table.push(_T("vk_1"));
+					table.push(_T("vk_2"));
+					table.push(_T("vk_3"));
+					table.push(_T("vk_4"));
+					table.push(_T("vk_5"));
+					table.push(_T("vk_6"));
+					table.push(_T("vk_7"));
+					table.push(_T("vk_8"));
+					table.push(_T("vk_9"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_a"));
+					table.push(_T("vk_b"));
+					table.push(_T("vk_c"));
+					table.push(_T("vk_d"));
+					table.push(_T("vk_e"));
+					table.push(_T("vk_f"));
+					table.push(_T("vk_g"));
+					table.push(_T("vk_h"));
+					table.push(_T("vk_i"));
+					table.push(_T("vk_j"));
+					table.push(_T("vk_k"));
+					table.push(_T("vk_l"));
+					table.push(_T("vk_m"));
+					table.push(_T("vk_n"));
+					table.push(_T("vk_o"));
+					table.push(_T("vk_p"));
+					table.push(_T("vk_q"));
+					table.push(_T("vk_r"));
+					table.push(_T("vk_s"));
+					table.push(_T("vk_t"));
+					table.push(_T("vk_u"));
+					table.push(_T("vk_v"));
+					table.push(_T("vk_w"));
+					table.push(_T("vk_x"));
+					table.push(_T("vk_y"));
+					table.push(_T("vk_z"));
+					table.push(_T("vk_lwin"));
+					table.push(_T("vk_rwin"));
+					table.push(_T("vk_apps"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_sleep"));
+					table.push(_T("vk_numpad0"));
+					table.push(_T("vk_numpad1"));
+					table.push(_T("vk_numpad2"));
+					table.push(_T("vk_numpad3"));
+					table.push(_T("vk_numpad4"));
+					table.push(_T("vk_numpad5"));
+					table.push(_T("vk_numpad6"));
+					table.push(_T("vk_numpad7"));
+					table.push(_T("vk_numpad8"));
+					table.push(_T("vk_numpad9"));
+					table.push(_T("vk_multiply"));
+					table.push(_T("vk_add"));
+					table.push(_T("vk_separator"));
+					table.push(_T("vk_subtract"));
+					table.push(_T("vk_decimal"));
+					table.push(_T("vk_divide"));
+					table.push(_T("vk_f1"));
+					table.push(_T("vk_f2"));
+					table.push(_T("vk_f3"));
+					table.push(_T("vk_f4"));
+					table.push(_T("vk_f5"));
+					table.push(_T("vk_f6"));
+					table.push(_T("vk_f7"));
+					table.push(_T("vk_f8"));
+					table.push(_T("vk_f9"));
+					table.push(_T("vk_f10"));
+					table.push(_T("vk_f11"));
+					table.push(_T("vk_f12"));
+					table.push(_T("vk_f13"));
+					table.push(_T("vk_f14"));
+					table.push(_T("vk_f15"));
+					table.push(_T("vk_f16"));
+					table.push(_T("vk_f17"));
+					table.push(_T("vk_f18"));
+					table.push(_T("vk_f19"));
+					table.push(_T("vk_f20"));
+					table.push(_T("vk_f21"));
+					table.push(_T("vk_f22"));
+					table.push(_T("vk_f23"));
+					table.push(_T("vk_f24"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_numlock"));
+					table.push(_T("vk_scroll"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_lshift"));
+					table.push(_T("vk_rshift"));
+					table.push(_T("vk_lcontrol"));
+					table.push(_T("vk_rcontrol"));
+					table.push(_T("vk_lmenu"));
+					table.push(_T("vk_rmenu"));
+					table.push(_T("vk_browser_back"));
+					table.push(_T("vk_browser_forward"));
+					table.push(_T("vk_browser_refresh"));
+					table.push(_T("vk_browser_stop"));
+					table.push(_T("vk_browser_search"));
+					table.push(_T("vk_browser_favorites"));
+					table.push(_T("vk_browser_home"));
+					table.push(_T("vk_volume_mute"));
+					table.push(_T("vk_volume_down"));
+					table.push(_T("vk_volume_up"));
+					table.push(_T("vk_media_next_track"));
+					table.push(_T("vk_media_prev_track"));
+					table.push(_T("vk_media_stop"));
+					table.push(_T("vk_media_play_pause"));
+					table.push(_T("vk_launch_mail"));
+					table.push(_T("vk_launch_media_select"));
+					table.push(_T("vk_launch_app1"));
+					table.push(_T("vk_launch_app2"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_oem_1"));
+					table.push(_T("vk_oem_plus"));
+					table.push(_T("vk_oem_comma"));
+					table.push(_T("vk_oem_minus"));
+					table.push(_T("vk_oem_period"));
+					table.push(_T("vk_oem_2"));
+					table.push(_T("vk_oem_3"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_oem_4"));
+					table.push(_T("vk_oem_5"));
+					table.push(_T("vk_oem_6"));
+					table.push(_T("vk_oem_7"));
+					table.push(_T("vk_oem_8"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_oem_102"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_processkey"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_packet"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
+					table.push(_T("vk_attn"));
+					table.push(_T("vk_crsel"));
+					table.push(_T("vk_exsel"));
+					table.push(_T("vk_ereof"));
+					table.push(_T("vk_play"));
+					table.push(_T("vk_zoom"));
+					table.push(_T("vk_noname"));
+					table.push(_T("vk_pa1"));
+					table.push(_T("vk_oem_clear"));
+					table.push(_T("vk_undefined"));
 				}
 
 				return table;				
@@ -346,20 +372,31 @@ namespace NE
 			type_int real_code = arg_vkey.getKeyCode();
 
 			int state = GetAsyncKeyState(real_code);
-			if (state & 0x8000)
-			{
-				if (state & 0x0001)
-					arg_state.setValue(2);	//	PRESSING
-				else
-					arg_state.setValue(1);	//	DOWN
-			}
+			type_int	msb = state & 0x8000,
+						lsb = state & 0x0001;
+
+			if(	! msb && lsb)
+				arg_state.setValue(-1);			
+			else if (msb && ! lsb)
+				arg_state.setValue(1);
+			else if (msb && lsb)
+				arg_state.setValue(2);
 			else
-			{
-				if (state & 0x0001)
-					arg_state.setValue(-1);	//	UP
-				else
-					arg_state.setValue(0);	//	NOT INPUTED
-			}
+				arg_state.setValue(0);
+			//if(state & 0x8000)
+			//{
+			//	if (state & 0x0001)
+			//		arg_state.setValue(2);	//	PRESSING
+			//	else
+			//		arg_state.setValue(1);	//	DOWN
+			//}
+			//else
+			//{
+			//	if (state & 0x0001)
+			//		arg_state.setValue(-1);	//	UP
+			//	else
+			//		arg_state.setValue(0);	//	NOT INPUTED
+			//}
 
 			return arg_state.getValue() > 0 ? RESULT_TRUE : RESULT_FALSE;
 		}

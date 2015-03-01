@@ -15,9 +15,6 @@ namespace DX9Graphics
 		NETArgument<NEFloatKey>	arg_trans_x;
 		NETArgument<NEFloatKey> arg_trans_y;
 		NETArgument<NEFloatKey> arg_trans_z;
-		NETArgument<NEFloatKey> arg_rotate_x;
-		NETArgument<NEFloatKey> arg_rotate_y;
-		NETArgument<NEFloatKey> arg_rotate_z;
 		NETArgument<NEFloatKey> arg_scale_x;
 		NETArgument<NEFloatKey> arg_scale_y;
 		NETArgument<NEFloatKey> arg_scale_z;
@@ -25,8 +22,7 @@ namespace DX9Graphics
 		NETArgument<NEUByteKey> arg_green;
 		NETArgument<NEUByteKey> arg_blue;
 		NETArgument<NEUByteKey> arg_alpha;
-		NETArgument<NEByteKey>	arg_source_blend;
-		NETArgument<NEByteKey>	arg_dest_blend;
+		NETArgument<NEByteKey>	arg_blending;
 
 	public:
 		ThisClass& operator=(const ThisClass& rhs)
@@ -38,9 +34,6 @@ namespace DX9Graphics
 			arg_trans_x = rhs.arg_trans_x;
 			arg_trans_y = rhs.arg_trans_y;
 			arg_trans_z = rhs.arg_trans_z;
-			arg_rotate_x = rhs.arg_rotate_x;
-			arg_rotate_y = rhs.arg_rotate_y;
-			arg_rotate_z = rhs.arg_rotate_z;
 			arg_scale_x = rhs.arg_scale_x;
 			arg_scale_y = rhs.arg_scale_y;
 			arg_scale_z = rhs.arg_scale_z;
@@ -48,8 +41,7 @@ namespace DX9Graphics
 			arg_green = rhs.arg_green;
 			arg_blue = rhs.arg_blue;
 			arg_alpha = rhs.arg_alpha;
-			arg_source_blend = rhs.arg_source_blend;
-			arg_dest_blend = rhs.arg_dest_blend;
+			arg_blending = rhs.arg_blending;
 
 			return *this;
 		}
@@ -59,7 +51,7 @@ namespace DX9Graphics
 			return D3DCOLOR_RGBA(arg_red.getValue(), arg_green.getValue(), arg_blue.getValue(), 
 				arg_alpha.getValue());
 		}
-		D3DXVECTOR3 createTranslationVector() const 
+		virtual D3DXVECTOR3 createTranslationVector() const 
 		{ 
 			return D3DXVECTOR3(arg_trans_x.getValue(), arg_trans_y.getValue(), arg_trans_z.getValue()); 
 		}		
@@ -95,8 +87,13 @@ namespace DX9Graphics
 		{
 			return _moveByDelta(D3DXVECTOR3(0, 1, 0), distance);
 		}
+		type_result adjustBlendingOption();
 
 	public:
+		virtual type_result render()
+		{
+			return adjustBlendingOption();
+		}
 		const NEExportable::ModuleHeader& getHeader() const
 		{
 			static NEExportable::ModuleHeader _instance;
@@ -104,7 +101,7 @@ namespace DX9Graphics
 			if(_instance.getArgumentsComments().getLength() < 15)
 			{
 				NETStringSet& args = _instance.getArgumentsComments();
-				args.resize(15);
+				args.resize(14);
 				args.push("TranslationX\n물체가 X 좌표로 얼마나 이동하였는지를 나타냅니다.");
 				args.push("TranslationY\n물체가 Y 좌표로 얼마나 이동하였는지를 나타냅니다.");
 				args.push("TranslationZ\n물체가 Z 좌표로 얼마나 이동하였는지를 나타냅니다.");
@@ -118,8 +115,7 @@ namespace DX9Graphics
 				args.push("Green\n물체가 가지고 있는 초록색 성분 입니다.(최대255)");
 				args.push("Blue\n물체가 가지고 있는 파랑색 성분 입니다.(최대255)");
 				args.push("Alpha\n물체가 가지고 있는 불투명도 성분 입니다.(최대255)\n0에 가까울 수록 투명해 집니다.");
-				args.push("SourceBlending\nSource 블렌딩 방법입니다.\n0을 입력하면 Camera의 Source Blending 설정을 이어받습니다.");
-				args.push("DestBlending\nDest 블렌딩 방법입니다.\n0을 입력하면 Camera의 Dest Blending 설정을 이어받습니다.");
+				args.push("BlendingMethod\n블렌딩 방법입니다. 다음과 같은 종류만 가능합니다.\n0: Normal\t1: Darken\t2: Multpl\t3: Lightn\t4: Screen\n5: Subtra\t6: Linear Dodge(= Add)");
 			}
 
 			return _instance;
@@ -153,8 +149,7 @@ namespace DX9Graphics
 			tray.push(arg_green);
 			tray.push(arg_blue);
 			tray.push(arg_alpha);
-			tray.push(arg_source_blend);
-			tray.push(arg_dest_blend);
+			tray.push(arg_blending);
 
 			return RESULT_SUCCESS;
 		}
@@ -179,9 +174,8 @@ namespace DX9Graphics
 
 			if (codes.getLength() <= 0)
 			{
-				codes.create(3);
-				codes.push(NEExportable::Identifier("Model.kniz"));
-				codes.push(NEExportable::Identifier("Camera.kniz"));
+				codes.create(2);
+				codes.push(NEExportable::Identifier("PerspectiveCamera.kniz"));
 				codes.push(NEExportable::Identifier("AnimatedModel.kniz"));
 			}
 

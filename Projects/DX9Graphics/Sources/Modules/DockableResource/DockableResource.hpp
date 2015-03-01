@@ -21,13 +21,13 @@ namespace DX9Graphics
 	public:
 		static const NECodeSet& getModuleScriptCodes()
 		{
-			static NECodeSet _instance;
+			NECodeType type(NECodeType::MODULE_SCRIPT);
+			static NECodeSet _instance(type);
 
 			if(_instance.getLength() <= 0)
 			{
-				_instance.create(3);
+				_instance.create(2);
 				_instance.push(NEExportable::Identifier("Sprite.kniz"));
-				_instance.push(NEExportable::Identifier("Texture.kniz"));
 				_instance.push(NEExportable::Identifier("TabledTexture.kniz"));
 			}
 

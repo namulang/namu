@@ -23,7 +23,8 @@ namespace DX9Graphics
 		{
 			FINAL_RENDER_TARGET_OUTPUT			= 0,
 			FINAL_RENDER_TARGET_NEW_BUFFER		= 1,
-			FINAL_RENDER_TARGET_PREVIOUS_BUFFER	= 2
+			FINAL_RENDER_TARGET_PREVIOUS_BUFFER	= 2,
+			FINAL_RENDER_TARGET_NEW_OUTPUT		= 3
 		};
 		static const int RENDER_TARGET_VERTEX_FVF = (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
@@ -33,15 +34,14 @@ namespace DX9Graphics
 
 	public:
 		NETArgument<NEFloatKey>	arg_width_rate;
+		type_int arg_final_render_target;
 		NETArgument<NEFloatKey>	arg_height_rate;
-		NETArgument<NEByteKey>	arg_final_render_target;
 
 	protected:
 		virtual type_result _onFetchArguments(NEArgumentList& tray)
 		{
 			tray.push(arg_width_rate);
 			tray.push(arg_height_rate);
-			tray.push(arg_final_render_target);
 
 			return RESULT_SUCCESS;
 		}
@@ -49,7 +49,6 @@ namespace DX9Graphics
 		{
 			arg_width_rate.setValue(1.0f);
 			arg_height_rate.setValue(1.0f);
-			arg_final_render_target.setValue(FINAL_RENDER_TARGET_OUTPUT);
 
 			return RESULT_SUCCESS;
 		}
@@ -139,10 +138,9 @@ namespace DX9Graphics
 			if (_header.getArgumentsComments().getLength() <= 0)
 			{
 				NETStringSet& args = _header.getArgumentsComments();
-				args.create(3);
+				args.create(2);
 				args.push("Width Muliplier\n렌더링된 RenderTarget을 얼마의 너비 비율로 버퍼에 저장할 것인지를 정합니다.\n낮을수록 최종 결과물의 해상도가 낮아집니다.");
-				args.push("Height Muliplier\n렌더링된 RenderTarget을 얼마의 높이 비율로 버퍼에 저장할 것인지를 정합니다.\n낮을수록 최종 결과물의 해상도가 낮아집니다.");
-				args.push("Next RenderTarget\nShader를 적용하고 난 결과물을 어디에 보낼지 정합니다.\n0: 화면에 출력\t1:버퍼Clear 후 새로 그림\n2:이전 그림을 Source로 적용");
+				args.push("Height Muliplier\n렌더링된 RenderTarget을 얼마의 높이 비율로 버퍼에 저장할 것인지를 정합니다.\n낮을수록 최종 결과물의 해상도가 낮아집니다.");				
 			}
 
 			return _header;
@@ -232,6 +230,9 @@ namespace DX9Graphics
 		LPD3DXEFFECT _effect;
 		ShaderHandleSet _handles;
 		LPDIRECT3DSURFACE9 _original_surface;
+
+	public:
+		static const NECodeSet& getModuleScriptCodes();
 
 	protected:
 		static IDirect3DVertexBuffer9& _getRenderTargetVertex(LPDIRECT3DDEVICE9 device);

@@ -73,13 +73,18 @@ void Filter::_updateSwitchWhenFilterExisted( NENodeSelector& filter )
 	}
 }
 
-void Filter::onKeyPressed( char inputed )
+void Filter::onKeyPressed(char inputed)
 {
 	LG::ListWindow::onKeyPressed(inputed);
 
 	NEBooleanSet& switches = toCaller().switches;
 	int index = toCaller().specified_filter ? list.choosed-1 : list.choosed;
-	
+	if (index == 1)
+		if(&toCaller().getModuleFilter())
+			index = 1;
+		else if(&toCaller().getKeyFilter())
+			index = 2;
+
 	switch(inputed)
 	{
 	case LEFT:
@@ -113,7 +118,11 @@ void Filter::_switchOn()
 	case 1:
 		{
 			NEModuleSelector& ms = toCaller().getModuleFilter();
-			_updateSwitchWhenFilterExisted(ms);
+			NEKeySelector& ks = toCaller().getKeyFilter();
+			if(&ms)
+				_updateSwitchWhenFilterExisted(ms);
+			else if(&ks)
+				_updateSwitchWhenFilterExisted(ks);
 		}
 		break;
 

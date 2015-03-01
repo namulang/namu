@@ -16,11 +16,6 @@ namespace DX9Graphics
 		{
 
 		}
-		FileResource(const ThisClass& source)
-			: SuperClass(source)
-		{
-
-		}
 
 	public:
 		NETArgument<NETStringKey>	arg_path;

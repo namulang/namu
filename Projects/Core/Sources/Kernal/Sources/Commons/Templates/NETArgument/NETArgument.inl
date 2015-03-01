@@ -1,3 +1,4 @@
+
 namespace NE
 {
 	template <typename T>
@@ -225,6 +226,8 @@ namespace NE
 	template <>
 	class NE_DLL NETArgument<NEStringSetKey> : public NETLimitedArgument<NEStringSetKey>{};
 	template <>
+	class NE_DLL NETArgument<NEWStringSetKey> : public NETLimitedArgument<NEWStringSetKey>{};
+	template <>
 	class NE_DLL NETArgument<NEModuleCodeSetKey> : public NETLimitedArgument<NEModuleCodeSetKey>{};
 	template <>
 	class NE_DLL NETArgument<NENodeCodeSetKey> : public NETLimitedArgument<NENodeCodeSetKey>{};
@@ -274,23 +277,23 @@ namespace NE
 		{
 			return _default_key.getValue();
 		}
-		bool isPeekingLockActivated() const
+		bool isLocked() const
 		{
-			return _is_peeking_lock_activated;
+			return isWantingToLock() && ! _was_source_binded ;	//	원래 Source가 Lock이 아닌 상태였고, Argument는 Lock이 되길 원했다면
 		}
-		bool isUsingPeekingLock() const
+		bool isWantingToLock() const
 		{
-			return _use_peeking_lock;
-		}
-		bool wasKeyUsingPeekingLock() const
+			return _is_wanting_to_lock;
+		}		
+		type_result setWantingToLock(bool do_u_want_to_lock)
 		{
-			return _origins_peeking_lock;
-		}
-		type_result setUsingPeekingLock(bool new_peeking_lock)
-		{
-			_use_peeking_lock = new_peeking_lock;
+			_is_wanting_to_lock = do_u_want_to_lock;
 
 			return RESULT_SUCCESS;
+		}
+		bool wasSourceBindedAlready() const
+		{
+			return _was_source_binded;
 		}
 
 	public:
@@ -323,83 +326,55 @@ namespace NE
 		{
 			SuperClass::serialize(loader);
 
-			return loader >> _default_key >> _use_peeking_lock >> _origins_peeking_lock >> _is_peeking_lock_activated;
+			return loader >> _default_key >> _is_wanting_to_lock >> _was_source_binded;
 		}
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
 		{
 			SuperClass::serialize(saver);
 
-			return saver << _default_key << _use_peeking_lock << _origins_peeking_lock << _is_peeking_lock_activated;
+			return saver << _default_key << _is_wanting_to_lock << _was_source_binded;
 		}
 
 	private:
-		bool _canActivatePeekingLock(T& target)
-		{
-			//	Argument 값을 할당:
-			//		원본이 Lock이 걸려 있지 않을때만 Argument의 Lock이 적용된다.
-			//		다시 말하면, 원본이 Lock이 걸려 있다면, Argument의 값으로 unlock 할 수 없다.
-			return ! target.isPeekingLocked();
-		}
-		type_result _enterPeekingLockMode(T& target)
-		{
-			_is_peeking_lock_activated = _canActivatePeekingLock(target);
-			if( ! _is_peeking_lock_activated)
-			{
-				_origins_peeking_lock = false;
-
-				return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-			}
-
-
-			//	원본 저장:
-			_origins_peeking_lock = target.isPeekingLocked();
-			target.isPeekingLocked() = _use_peeking_lock;
-
-			return RESULT_SUCCESS;
-		}
-		type_result _leavePeekingLockMode(T& target)
-		{
-			if(isPeekingLockActivated())
-			{
-				target.isPeekingLocked() = _origins_peeking_lock;
-				_origins_peeking_lock = false;
-				_is_peeking_lock_activated = false;
-			}
-
-			return RESULT_SUCCESS;
-		}
 		virtual type_result _onPrepareExecute()
 		{
-			return _enterPeekingLockMode(getValue());
+			if(!isLocked())
+				return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+
+
+			//	원본 저장:			
+			getValue().bind();
+
+			return RESULT_SUCCESS;
 		}
 		virtual type_result _onPostExecute()
 		{
-			return _leavePeekingLockMode(getValue());
+			if(isLocked())
+				getValue().getBinder().unbind();
+
+			return RESULT_SUCCESS;
 		}
 		ThisClass& _assign(const ThisClass& source)
 		{
 			if(this == &source) return *this;
 
 			_default_key = source._default_key;
-			_use_peeking_lock = source._use_peeking_lock;
-			_origins_peeking_lock = source._origins_peeking_lock;
-			_is_peeking_lock_activated = source._is_peeking_lock_activated;
+			_is_wanting_to_lock = source._is_wanting_to_lock;
+			_was_source_binded = source._was_source_binded;
 
 			return *this;
 		}
 		void _release()
 		{
 			_default_key.release();
-			_use_peeking_lock = false;
-			_origins_peeking_lock = false;
-			_is_peeking_lock_activated = false;
+			_is_wanting_to_lock = false;
+			_was_source_binded = false;
 		}
 
 	private:
-		T _default_key;
-		bool _is_peeking_lock_activated;
-		bool _use_peeking_lock;
-		bool _origins_peeking_lock;
+		T _default_key;		
+		bool _was_source_binded;
+		bool _is_wanting_to_lock;
 	};
 
 	template <>

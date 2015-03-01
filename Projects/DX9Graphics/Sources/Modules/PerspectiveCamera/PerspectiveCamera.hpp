@@ -30,6 +30,8 @@ namespace DX9Graphics
 		}
 		virtual type_result _onFetchModule()		
 		{
+			SuperClass::_onFetchModule();
+
 			arg_fovy.setValue(90);
 			arg_fovy.setPurposeLimitation(NEArgumentBase::READ_BY);
 			arg_fovy.setEnable(false);
@@ -52,7 +54,7 @@ namespace DX9Graphics
 			{
 				const NEExportable::ModuleHeader& supers = SuperClass::getHeader();
 
-				_header.getName() = "PerpectiveCamera";
+				_header.getName() = "PerspectiveCamera";
 				_header.getDeveloper() = "kniz";
 				_header.setRevision(1);
 				_header.getComment() = supers.getComment() +
@@ -61,7 +63,7 @@ namespace DX9Graphics
 				_header.getReleaseDate() = "2013-08-10";
 				NETStringSet& args = _header.getArgumentsComments();
 				args = supers.getArgumentsComments();
-				args.resize(4);
+				args.resize(args.getLength() + 4);
 				args.push("Field Of View Y(FOVy : 시야각)\n카메라가 보는 방향으로 위아래 몇 도 만큼 영상에 포함되는 가를 결정합니다. 높을 수록 더 많은 영역을 그리게 됩니다.\nDisabled시, 자동으로 설정합니다.");
 				args.push("Aspect(종횡비)\nFOVy 값으로 정해진 높이에 대해서 너비를 곱해 결정합니다.\n1.0이면 FOVy로 결정된 높이와 너비가 같다는 뜻입니다.\n2.0이면 너비가 높이보다 2배 큽니다.");
 				args.push("Near Z\n물체와 카메라의 거리가 이 값보다 작은 경우는 그리지 않습니다.");

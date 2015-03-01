@@ -107,6 +107,10 @@ namespace DX9Graphics
 
 			_release();
 		}
+		virtual D3DXVECTOR3 createTranslationVector() const
+		{
+			return D3DXVECTOR3(_world._41, _world._42, _world._43);
+		}
 
 	public:
 		virtual const NEExportable::ModuleHeader& getHeader() const;
@@ -138,20 +142,30 @@ namespace DX9Graphics
 		}
 
 	private:
-		type_result _executeChildren()
+		type_result _updateChildren()
 		{
+			if( ! arg_children.isEnable()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 			NENodeCodeSet& nodeset = arg_children.getValue();
+			NEType::Type type = nodeset.getManager().getType();
 
-			for(int n=0; n < nodeset.getSize(); n++)
+
+			for(int n = 0; n < nodeset.getLength(); n++)
 			{
 				NENode& node = nodeset[n];
 
-				_getGlobalParentWorld() = _world;
-				node.execute();
+				NEModuleSelector sel;
+				NENodeBinder& binder = sel.NENodeSelector::getBinder();
+				binder.bind(node, type);
+				if( ! binder.isBinded()) continue;
+				sel.setModuleCodes(getModuleScriptCodes());
+
+				while(Model* m = static_cast<ThisClass*>(&sel.getModule()))
+					m->_parent_world = _world;
 			}
 
 			return RESULT_SUCCESS;
 		}
+
 		type_result _updateModelMatrix()
 		{
 			_model = createScalingMatrix() * createRotationMatrix() * createTranslationMatrix();
@@ -186,8 +200,6 @@ namespace DX9Graphics
 
 			return *this;
 		}
-
-		type_result _updateRenderState();
 
 	private:
 		D3DXMATRIX _model;
