@@ -2271,14 +2271,14 @@ public:
 			ns1.setCodes(is2);
 			ns11 = (NENodeSelector*) &ks[ks.push(ns1)];
 			m->sel.setKeyName("selector");			
-			if (ns11->isPeekingLocked()) return false;
+			m->sel.setWantingToLock(false);
 			n4->execute();
-			m->sel.setUsingPeekingLock(true);
+			m->sel.setWantingToLock(true);
 			n4->execute();			
 		}
 		
-		if (ns11->isPeekingLocked()) return false;		
-		NEListTemplate<NENode*>& pointers = m->pointers;		
+		if( ! m->sel.isWantingToLock()) return false;		
+		NEListTemplate<NENode*>& pointers = m->pointers;
 		pointers.push(ns11->getNode());
 		pointers.push(ns11->getNode());
 		pointers.push(ns11->getNode());
@@ -2565,13 +2565,12 @@ void main()
 	ModuleOwnerTest().test();
 	CodeTypePolicyTest().test();
 	RecentNodeSelectingInifiniteTest().test();
-	SelectorPeekingTest().test();
-	StringSetDeepCopytest().test();
 	SelectorLock().test();
+	StringSetDeepCopytest().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
- 	delete &Kernal::getInstance();
+	delete &Kernal::getInstance();
 
 	system("pause");
 }

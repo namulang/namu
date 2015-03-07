@@ -8,7 +8,7 @@
 namespace LG
 {
 	Window::Window(	type_ushort new_x, type_ushort new_y, type_ushort new_width, type_ushort new_height, 
-					type_ushort new_fore, type_ushort new_back, const NEString& new_text)
+		type_ushort new_fore, type_ushort new_back, const NEString& new_text)
 		: Gliph(0, new_x, new_y, new_width, new_height, new_fore, new_back, new_text), gliphs(this), focused_gliph_idx(0), delete_me(false), _caller(0)
 	{
 
@@ -17,6 +17,11 @@ namespace LG
 		: Gliph(rhs), gliphs(this), focused_gliph_idx(0), delete_me(rhs.delete_me), _caller(rhs._caller)
 	{
 
+	}
+
+	Window& Window::getCaller()
+	{
+		return *_caller;
 	}
 
 	void Window::regist(int count, ...) 
@@ -63,8 +68,8 @@ namespace LG
 	bool Window::operator==(const Window& rhs) const
 	{
 		return	delete_me == rhs.delete_me					&&
-				gliphs == rhs.gliphs						&&
-				focused_gliph_idx == rhs.focused_gliph_idx;
+			gliphs == rhs.gliphs						&&
+			focused_gliph_idx == rhs.focused_gliph_idx;
 	}
 
 	bool Window::isShowing() const

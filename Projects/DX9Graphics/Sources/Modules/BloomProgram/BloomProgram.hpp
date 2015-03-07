@@ -53,7 +53,8 @@ namespace DX9Graphics
 				_header.getVersion() = "0.0.1a";
 				_header.getReleaseDate() = "2013-08-19";
 				NETStringSet& args = _header.getArgumentsComments();
-				args.create(args.getLength() + 1);
+				args = SuperClass::getHeader().getArgumentsComments();
+				args.resize(args.getLength() + 1);
 				args.push("Bloom Level\nBloom효과의 강도를 뜻한다. 작을 수록 효과가 미미하다.");
 			}
 

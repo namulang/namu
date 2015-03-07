@@ -107,6 +107,7 @@ public:
 			return args;
 
 		type_index n = work_position[0].toInt();
+		work_position.popFront();
 		if (n < 0 || n > args.getLengthLastIndex())
 		{
 			pushMessage(NEString("잘못된 위치 문자열 입니다. : ") + n);

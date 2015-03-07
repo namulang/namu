@@ -8,26 +8,34 @@ namespace LG
 	};
 	enum SPECIAL_KEY
 	{
-		//	필수 키:
+		//	입력용 키:
+		ENTER		= 13,
+		SPACE		= 32,
+		BACKSPACE	= 8,
+		TAB			= 9,
+		ESCAPE		= 27,
 		UP			= 72,
 		DOWN		= 80,
 		LEFT		= 75,
 		RIGHT		= 77,
-		CONFIRM		= 13,
-		CANCEL		= 8,	//	취소 / 메뉴키
-		//	입력용 키:
-		ENTER		= 13,
-		SPACE		= 32,	
-		BACKSPACE	= 8,	//	Backspace
+		INSERT		= 82,
+		DEL			= 83,
+		CTRL_D		= 4,
+		CTRL_V		= 22,
+		CTRL_X		= 24,
+		HOME		= 71,		
+		//	필수 키:		
+		CONFIRM		= ENTER,	//	확인
+		CANCEL		= BACKSPACE,	//	취소 / 메뉴키
 		//	선택 키:
 		//		단축키:
-		CLOSE		= 27,	//	esc
-		MAP			= 71,	//	home
-		ADD			= 82,	//	ins
-		REMOVE		= 83,	//	del			
-		COPY		= 4,	//	CTRL + C
-		PASTE		= 22,	//	CTRL + V
-		CUT			= 24,	//	CTRL + X
+		CLOSE		= ESCAPE,
+		MAP			= HOME,	
+		ADD			= INSERT,
+		REMOVE		= DEL,
+		COPY		= CTRL_D,
+		PASTE		= CTRL_V,
+		CUT			= CTRL_X,
 		HELP		= '?',
 		//		추가키:
 		COMMAND		= '~'

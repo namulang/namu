@@ -2,11 +2,11 @@
 #include "../Planetarium/Planetarium.hpp"
 
 Modifier<NEBooleanKey>::Modifier(NEBooleanKey& key) 
-	: Terminal("", NEType::NEBOOLEAN_KEY, 20, 7, 40, 7, WHITE, BLACK),
-	sw(0, 38, 13, 4, LIGHTRED, WHITE), value(key.getValue()),
-	name_lable(0, 0, 0, 8, 1, WHITE, LIGHTRED, "키 이름:"),
-	value_lable(0, 0, 0, 8, 1, WHITE,LIGHTRED, "키 값:"), name_text(0, 0, 0, 22, 1, WHITE, BLACK),
-	focused_text(1), real_key(&key)
+: Terminal("", NEType::NEBOOLEAN_KEY, 20, 7, 40, 7, WHITE, BLACK),
+sw(0, 38, 13, 4, LIGHTRED, WHITE), value(key.getValue()),
+name_lable(0, 0, 0, 8, 1, WHITE, LIGHTRED, "키 이름:"),
+value_lable(0, 0, 0, 8, 1, WHITE,LIGHTRED, "키 값:"), name_text(0, 0, 0, 22, 1, WHITE, BLACK),
+focused_text(1), real_key(&key)
 {
 	name_lable.y = y + 3;
 	name_lable.x = x + 3;
@@ -22,8 +22,8 @@ Modifier<NEBooleanKey>::Modifier(NEBooleanKey& key)
 }
 
 Modifier<NEBooleanKey>::Modifier(NEBooleanKey::Trait& new_value) 
-	: Terminal("", NEType::NEBOOLEAN_KEY, 30, 10, 20, 5, WHITE, BLACK),
-	sw(0, 38, 13, 4, LIGHTRED, WHITE), value(new_value), real_key(0)
+: Terminal("", NEType::NEBOOLEAN_KEY, 30, 10, 20, 5, WHITE, BLACK),
+sw(0, 38, 13, 4, LIGHTRED, WHITE), value(new_value), real_key(0)
 {
 	regist(1, &sw);
 }
@@ -42,7 +42,7 @@ real_key(rhs.real_key)
 void Modifier<NEBooleanKey>::onUpdateData()
 {
 	Gliph&	focused = ! focused_text ? (Gliph&)name_text : sw,
-	 	 &	else_one = &focused == &name_text ? (Gliph&) sw : name_text;
+		&	else_one = &focused == &name_text ? (Gliph&) sw : name_text;
 
 	focused.fore = WHITE;
 	focused.back = LIGHTRED;
@@ -83,20 +83,17 @@ void Modifier<NEBooleanKey>::onKeyPressed(char inputed)
 		break;
 
 	case ENTER:
-		if( ! focused_text && real_key)
+		if(real_key)
 		{
 			real_key->getName() = name_text.text;
 			_setInputed(name_text);
 		}
-		else
-		{
-			value = sw.getValue();
 
-			_setInputed(sw);
+		value = sw.getValue();
 
-			if( ! real_key)
-				delete_me = true;
-		}
+		_setInputed(sw);
+
+		delete_me = true;
 		break;
 	}
 
@@ -169,13 +166,12 @@ void Modifier<NENodeSelector>::MenuList::updateList()
 
 	NECodeType::CodeType type = k.getCodes().getCodeType().getCodeType();
 
-	items.create(7);
+	items.create(6);
 	items.push(NEString("   ") + NEType::getTypeName(k.getManagerType()));
 	items.push(NEString("   ") + k.getCountLimit());
 	items.push(NEString("   ") + k.isUsingAutoBinding());
 	items.push(NEString("   ") + createNodeTypeStringFrom(type));
 	items.push(NEString("   ") + k.isUsingAndOperation());
-	items.push(NEString("   ") + k.isPeekingLocked());
 
 	const NETStringList& bank = getProperBankFrom(type);
 	NEString codes_to_str;
@@ -191,18 +187,8 @@ void Modifier<NENodeSelector>::MenuList::updateList()
 			codes_to_str = "CODES: ";
 			for (int n = 0; n < c.getLength(); n++)
 			{
-				NEString name = "Unamed";
-				const NECode& code = c[n];
-				type_code real_code = -1;
-				if(&code)
-				{
-					real_code = code.getCode();
-					const NEString& element = bank[c[n].getCode()];
-					if(&element)
-						name = element;
-				}
-				
-				codes_to_str += name + "[" + real_code + "] ";
+				NEString name = &bank[c[n].getCode()] ? bank[c[n].getCode()] : "Unamed";				
+				codes_to_str += name + "[" + c[n].getCode() + "] ";
 			}
 
 		}
@@ -212,21 +198,13 @@ void Modifier<NENodeSelector>::MenuList::updateList()
 
 	default:
 		{
-			NEString name = "Unamed";
-			const NECode& code = c[codelist_display_index];
-			type_code real_code = -1;
-			
-			if(&code)
-			{
-				real_code = code.getCode();
-				const NEString& element = bank[code.getCode()];
-				if(&element)
-					name = element;
-			}
-
-			
-			codes_to_str = NEString(codelist_display_index) + "th: " + name + "(" + real_code + ")";
+			type_code code = c[codelist_display_index].getCode();
+			NEString name = &bank[code] ? bank[code] : "Unamed";
+			codes_to_str = NEString(codelist_display_index) + "th: " + name + "(" + c[codelist_display_index].getCode() + ")";
 		}
+
+
+		break;
 	}
 
 	items.push("   " + codes_to_str);
@@ -243,18 +221,21 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 	switch(inputed)
 	{
 	case CONFIRM:
-		if(choosed == 6)
+		if(choosed == 5)
 		{
 			if(codelist_display_index == -2)
 			{
-				class CodeInputer : public LG::InputWindow
+				class CodeInputer : public LG::ListWindow
 				{
 				public:
 					FUNC_TO_CALLER(Modifier<NENodeSelector>)
 						virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
-					CodeInputer() : LG::InputWindow("새로 추가할 CODE를 좌우 방향키로 선택하세요", BLACK, WHITE) 
-					{
 
+					CodeInputer()
+						: LG::ListWindow("새로 추가할 코드를 선택하세요.",
+						25, 7, 30, 10, BLACK, LIGHTGREEN, LIGHTGREEN, BLACK)
+					{
+						list.use_matching = true;
 					}
 
 					virtual void onFocused()
@@ -263,39 +244,20 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 						NECodeType::CodeType type = key.getCodes().getCodeType().getCodeType();
 						const NETStringList& bank = toCaller().menulist.getProperBankFrom(type);
 
-						int n=0;
-						for(const NETStringList::Iterator* itr=bank.getIterator(0); itr ;itr=itr->getNext())
-							input.history.push(itr->getValue() + "(" + n++ + ")");
-
-						input.history_idx = 0;
-					}
-					virtual void onUpdateData()
-					{
-						NEString& history = input.history[input.history_idx];
-						if( &history)
-							input.text = history;
-					}
-					virtual void onKeyPressed(char inputed)
-					{
-						switch(inputed)
-						{
-						case CLOSE:
-						case ENTER:
-						case LEFT:
-						case RIGHT:
-							InputWindow::onKeyPressed(inputed);
-							break;
-						}
+						list.items.create(bank.getLength());
+						int n = 0;
+						for (const NETStringList::Iterator* itr = bank.getIterator(0); itr; itr = itr->getNext())
+							list.items.push(itr->getValue() + "(" + n++ + ")");
 					}
 
-					virtual void onInputed()						
+					virtual void onItemChoosed(type_index item_index, const NEString& chosen_content)
 					{
 						Planetarium& planetarium = toCaller().toCaller().toCaller();
 						NENodeSelector& key = planetarium.getNodeFilter();
 						NECodeSet copied = key.getCodes();
-						if(copied.getLength() == copied.getSize())
+						if (copied.getLength() == copied.getSize())
 							copied.resize(copied.getSize() + 1);
-						copied.push(NECode(input.history_idx));
+						copied.push(NECode(item_index));
 						key.setCodes(copied);
 						planetarium.onUpdateData();
 						toCaller().menulist.codelist_display_index = -1;
@@ -364,12 +326,9 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 
 		case 3:	//	CodeType
 			switch(type.getCodeType())
-			{
-			case NECodeType::RECENT:	
-				key.setCodesType(NECodeType::ME);
-				break;
+			{			
 			case NECodeType::SCRIPT:
-				key.setCodesType(NECodeType::RECENT);
+				key.setCodesType(NECodeType::ME);
 				break;
 			case NECodeType::NAME:
 				key.setCodesType(NECodeType::SCRIPT);
@@ -392,10 +351,6 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 5:
-			key.isPeekingLocked() = ! key.isPeekingLocked();
-			break;
-
-		case 6:
 			if(codelist_display_index > -2)
 				codelist_display_index--;
 			break;
@@ -434,11 +389,8 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			switch(type.getCodeType())
 			{
 			case NECodeType::ME:
-				key.setCodesType(NECodeType::RECENT);
-				break;
-			case NECodeType::RECENT:
 				key.setCodesType(NECodeType::SCRIPT);
-				break;
+				break;			
 			case NECodeType::SCRIPT:
 				key.setCodesType(NECodeType::NAME);
 				break;
@@ -460,10 +412,6 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 			break;
 
 		case 5:
-			key.isPeekingLocked() = ! key.isPeekingLocked();
-			break;
-
-		case 6:
 			if(codelist_display_index < key.getCodes().getLengthLastIndex())
 				codelist_display_index++;
 		}
@@ -480,10 +428,10 @@ void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
 
 void Modifier<NENodeSelector>::MenuList::onUpdateData()
 {
-	if(items.getLength() < 6)
+	if(items.getLength() < 5)
 		updateList();
 
-	for(int n=0; n < 6 ;n++)
+	for(int n=0; n < 5 ;n++)
 	{
 		NEString& item = items[n];
 		if(n == choosed)
@@ -522,14 +470,16 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 		{
 			if(codelist_display_index == -2)
 			{
-				class CodeInputer : public LG::InputWindow
+				class CodeInputer : public LG::ListWindow
 				{
 				public:
 					FUNC_TO_CALLER(Modifier<NEModuleSelector>)
 						virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
-					CodeInputer() : LG::InputWindow("새로 추가할 CODE를 입력하세요.", BLACK, WHITE) 
+					CodeInputer()
+						: LG::ListWindow("새로 추가할 코드를 선택하세요.",
+						25, 7, 30, 10, BLACK, LIGHTGREEN, LIGHTGREEN, BLACK)
 					{
-
+						list.use_matching = true;
 					}
 
 					virtual void onFocused()
@@ -543,41 +493,12 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 						}
 
 						const NEModuleSet& m = Kernal::getInstance().getModuleManager().getModuleSet();
+						list.items.create(m.getLength());
 						for(int n=0; n < m.getLength() ;n++)
-						{
-							input.history.push(m[n].getHeader().getName() + "(" + m[n].getScriptCode() + ")");
-							lists.push(n);
-						}
+							list.items.push(m[n].getHeader().getName() + "(" + m[n].getScriptCode() + ")");
+					}				
 
-						input.history_idx = 0;
-					}
-					virtual void onUpdateData()
-					{
-						NEString& history = input.history[input.history_idx];
-						if(&history)
-							input.text = history;
-					}
-
-					virtual void onKeyPressed(char inputed)
-					{
-						switch(inputed)
-						{
-						case LEFT:
-						case RIGHT:
-						case CLOSE:
-						case ENTER:
-						case MAP:
-							LG::InputWindow::onKeyPressed(inputed);
-							break;
-
-						default:
-							if (toCaller().toCaller().toCaller().getModuleFilter().getModuleCodes().getCodeType().getCodeType() == NECodeType::MODULE_NAME)
-								LG::InputWindow::onKeyPressed(inputed);
-							break;
-						}
-					}
-
-					virtual void onInputed()
+					virtual void onItemChoosed(type_index item_index, const NEString& chosen_content)
 					{
 						Planetarium& planetarium = toCaller().toCaller().toCaller();
 						NEModuleSelector& key = planetarium.getModuleFilter();
@@ -586,10 +507,10 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 						if(copied.getLength() == copied.getSize())
 							copied.resize(copied.getSize() + 1);
 
-						if(input.history_idx >= 0 && key.getModuleCodes().getCodeType().getCodeType() == NECodeType::MODULE_SCRIPT)
-							copied.push(NECode(lists[input.history_idx], NECodeType(NECodeType::MODULE_SCRIPT, false)));
+						if(item_index >= 0 && key.getModuleCodes().getCodeType().getCodeType() == NECodeType::MODULE_SCRIPT)
+							copied.push(NECode(item_index, NECodeType(NECodeType::MODULE_SCRIPT, false)));
 						else
-							copied.push(NECode(input.text.toInt(), NECodeType(NECodeType::MODULE_NAME, false)));
+							copied.push(NECode(chosen_content.toInt(), NECodeType(NECodeType::MODULE_NAME, false)));
 
 						key.setModuleCodes(copied);
 						toCaller().menulist.codelist_display_index = -1;
@@ -643,11 +564,8 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 		case 1:	//	CodeType
 			switch(module_type)
 			{
-			case NECodeType::RECENT:
-				key.setModuleCodesType(NECodeType::ME);
-				break;
 			case NECodeType::MODULE_SCRIPT:
-				key.setModuleCodesType(NECodeType::RECENT);
+				key.setModuleCodesType(NECodeType::ME);
 				break;
 			case NECodeType::MODULE_NAME:
 				key.setModuleCodesType(NECodeType::MODULE_SCRIPT);
@@ -678,11 +596,8 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 
 		case 1:	//	CodeType
 			switch(key.getModuleCodesType().getCodeType())
-			{
+			{			
 			case NECodeType::ME:
-				key.setModuleCodesType(NECodeType::RECENT);
-				break;
-			case NECodeType::RECENT:
 				key.setModuleCodesType(NECodeType::MODULE_SCRIPT);
 				break;
 			case NECodeType::MODULE_SCRIPT:
@@ -705,7 +620,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 	case CANCEL:
 	case CLOSE:
 		toOwner()->delete_me = true;
-	}			
+	}
 }
 
 
@@ -724,7 +639,7 @@ void Modifier<NEKeySelector>::MenuList::onKeyPressed(char inputed)
 			{
 			public:
 				FUNC_TO_CALLER(Modifier<NEKeySelector>)
-				virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
+					virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
 
 				CodeInputer() : LG::InputWindow("새로 추가할 키의 이름을 좌우방향키로 선택하세요. \n물론 직접 이름을 입력 할 수도 있어요.", BLACK, WHITE) 
 				{
@@ -820,7 +735,7 @@ void Modifier<NEModuleSelector>::MenuList::updateList()
 	NEString codes_to_str;
 	const NECodeSet& c = k.getModuleCodes();
 	const NEModuleSet& ms = Kernal::getInstance().getModuleManager().getModuleSet();
-	
+
 	if(	k.getModuleCodesType() == NECodeType::ALL	||
 		k.getModuleCodesType() == NECodeType::RECENT	||
 		k.getModuleCodesType() == NECodeType::ME		)

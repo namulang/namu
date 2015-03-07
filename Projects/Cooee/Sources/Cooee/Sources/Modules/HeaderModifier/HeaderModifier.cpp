@@ -116,6 +116,24 @@ void HeaderModifier::CodePopUpMenu::_onRemoveCode()
 
 	ed.removeCode(NECode(_code, _codetype));
 
+	//	UI의 탐색커서를 하나 감소시키기:
+	type_index cursor = NE_INDEX_ERROR;
+	switch (_codetype)
+	{
+	case NECodeType::NAME:		cursor = 0;	break;
+	case NECodeType::SCRIPT:	cursor = 1; break;
+	case NECodeType::GROUP:		cursor = 2; break;
+	case NECodeType::PRIORITY:	cursor = 3; break;
+	}
+	if(cursor >= 0)
+	{
+		type_code& code = toCaller().codes_display_indexes[cursor];
+		if(	&code		&&
+			code > 0	)
+			code--;
+	}
+
+
 	delete_me = true;
 }
 
@@ -160,7 +178,7 @@ void HeaderModifier::onItemChoosed(type_index index, const NEString& chosen_cont
 	case 9:	
 		if(ct == NECodeType::UNDEFINED)
 			ct = NECodeType::PRIORITY;
-		
+
 		{
 			type_code code = codes_display_indexes[index-6];
 			if(code != -1)
@@ -177,7 +195,7 @@ void HeaderModifier::_pushCodeLists()
 	for(int code_type_n=0; code_type_n < codes_display_indexes.getLength(); code_type_n++)
 	{
 		NEString to_show = (list.choosed == code_type_n + 6) ? "<-" : "  ";
-		
+
 		switch(code_type_n)
 		{
 		case 0:	to_show += "[NAME] "; break;
@@ -200,7 +218,7 @@ void HeaderModifier::_pushCodeLists()
 		default:
 			{
 				to_show += NEString(index) + "th: ";
-				if(index >= 0)
+				if (index >= 0)
 				{
 					const NETStringList& bank = _getProperBankBy(code_type_n);
 					if(index > bank.getLengthLastIndex())
@@ -208,11 +226,12 @@ void HeaderModifier::_pushCodeLists()
 
 					to_show += bank[index];
 				}
+
 			}
 		}
 
 		if(list.choosed == code_type_n + 6)
-		to_show += "->";
+			to_show += "->";
 		list.items.push(to_show);
 	}
 }

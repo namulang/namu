@@ -208,19 +208,5 @@ namespace DX9Graphics
 
 	public:
 		static const NECodeSet& getModuleScriptCodes();
-
-	private:
-		static D3DXMATRIX& _getGlobalParentWorld()
-		{
-			static D3DXMATRIX _instance;
-			static bool _is_first = true;
-			if(_is_first)
-			{
-				D3DXMatrixIdentity(&_instance);
-				_is_first = false;
-			}
-
-			return _instance;
-		}
 	};
 }

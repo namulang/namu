@@ -209,7 +209,8 @@ namespace
 
 			const NEArgumentSet& args = ms[n].getArguments();
 			for (int arg_n = 0; arg_n < args.getLength(); arg_n++)
-				if (&args[arg_n] == &t)
+				if(	&args[arg_n] == &t					||
+					&args[arg_n].getDefaultKey() == &t	)
 				{
 					return true;
 					text = "/" + NEString(arg_n);

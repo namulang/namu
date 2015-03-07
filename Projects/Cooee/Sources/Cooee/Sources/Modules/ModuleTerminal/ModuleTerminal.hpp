@@ -465,7 +465,12 @@ public:
 				argument_namelist.choosed = -1;
 				namecode.back = LIGHTCYAN;
 				namecode.fore = CYAN;
-			}		
+			}
+			else if(enable.Gliph::back == LIGHTCYAN)
+			{
+				enable.Gliph::back = CYAN;
+				enable.fore = LIGHTCYAN;
+			}
 			break;
 
 		case DOWN:
@@ -476,11 +481,11 @@ public:
 				namecode.back = LIGHTCYAN;
 				namecode.fore = CYAN;
 			}
-			else if (namecode.back == LIGHTCYAN)
+			else if(namecode.back == LIGHTCYAN)
 			{
 				namecode.back = WHITE;
 				namecode.fore = BLACK;			
-			}			
+			}
 			break;				
 		}
 

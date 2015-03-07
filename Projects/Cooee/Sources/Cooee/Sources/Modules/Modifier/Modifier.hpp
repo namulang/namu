@@ -82,22 +82,19 @@ public:
 			break;
 
 		case ENTER:
-			if( ! focused_text && real_key)
+			if(real_key)
 			{
 				real_key->getName() = name_text.text;
 				_setInputed(name_text);
 			}
-			else
-			{
-				KEY temp(value);
-				temp = NEStringKey(textbox.text);
-				value = temp.getValue();
 
-				_setInputed(textbox);
+			KEY temp(value);
+			temp = NEStringKey(textbox.text);
+			value = temp.getValue();
 
-				if( ! real_key)
-					delete_me = true;
-			}
+			_setInputed(textbox);
+
+			delete_me = true;
 			break;
 		}
 
@@ -222,9 +219,9 @@ public:
 		value_text.back = type_text.back = name_text.back = WHITE;		
 		Gliph* f = 0;
 		switch(focused) {
-		case 0:	f = &name_text;		break;
-		case 1: f = &type_text;		break;
-		case 2: f = &value_text;	break;
+case 0:	f = &name_text;		break;
+case 1: f = &type_text;		break;
+case 2: f = &value_text;	break;
 		}
 		if(f)
 		{
@@ -279,13 +276,13 @@ public:
 
 		case CONFIRM:
 			switch (focused) {
-			case 0:
-				if (real_key)
-					call(NameInputWindow(real_key->getName()));
-				break;
+		case 0:
+			if (real_key)
+				call(NameInputWindow(real_key->getName()));
+			break;
 
-			case 2:
-				call(CodeInputer(value));
+		case 2:
+			call(CodeInputer(value));
 			}
 			break;
 
@@ -312,6 +309,7 @@ class Modifier<NENodeSelector> : public Window
 public:
 	Modifier();
 	Modifier(const Modifier& rhs);
+	Modifier(NETArgument<NENodeSelector>& arg);
 
 	class MenuList : public ListGliph
 	{
@@ -331,10 +329,11 @@ public:
 	};
 
 	FUNC_CLONE(Modifier)
-	FUNC_TO_CALLER(Filter)
+		FUNC_TO_CALLER(Filter)
 
-	Gliph header, count_header, bind_header, code_type_header, use_and_header, peeking_lock_header, codelist_header;
+		Gliph header, count_header, bind_header, code_type_header, use_and_header, peeking_lock_header, codelist_header;
 	MenuList menulist;
+	NETArgument<NENodeSelector>* _arg;
 };
 
 template <>

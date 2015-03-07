@@ -41,9 +41,9 @@ namespace NE
 	protected:
 		virtual type_result _onExecute()
 		{
-			NETStringSet& list = arg_list.getValue();
+
 			type_bool	sub_dir = arg_search_sub_directory.getValue(),
-				name_only = arg_get_filename_only.getValue();
+						name_only = arg_get_filename_only.getValue();
 
 			NETStringList buffer;
 			NEFileSystem filer(arg_path.getValue().toCharPointer());
@@ -62,6 +62,7 @@ namespace NE
 
 
 			//	post:
+			NETStringSet& list = arg_list.getValue();
 			list.create(buffer.getLength());
 			for (NETStringList::Iterator* e = buffer.getIterator(0); e; e = e->getNext())
 				list.push(e->getValue());

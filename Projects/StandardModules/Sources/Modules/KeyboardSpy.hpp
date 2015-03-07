@@ -304,6 +304,7 @@ namespace NE
 					table.push(_T("vk_undefined"));
 					table.push(_T("vk_undefined"));
 					table.push(_T("vk_undefined"));
+					table.push(_T("vk_undefined"));
 					table.push(_T("vk_oem_4"));
 					table.push(_T("vk_oem_5"));
 					table.push(_T("vk_oem_6"));

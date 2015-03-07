@@ -58,14 +58,52 @@ void Planetarium::onKeyPressed(char inputed)
 		break;
 
 	case CONFIRM:
-		if(focusing->real->isSubClassOf(NEType::NEMODULE_CODESET_KEY))
-			::Core::openModifierFrom(::Core::createPathBy(*focusing->real));
-		else if(focusing->real->isSubClassOf(NEType::NENODE_CODESET_KEY))
-			::Core::openModifierFrom(::Core::createPathBy(*focusing->real));
-		else if(focusing->real->isSubClassOf(NEType::NEKEY))
-			::Core::openModifierFrom((NEKey&) *focusing->real);
+		NEString path = ::Core::createPathBy(*focusing->real);
+		if (!specified_filter)	//	일반 모드
+		{
+			if (focusing->real->isSubClassOf(NEType::NEMODULE_CODESET_KEY))
+				::Core::openModifierFrom(path);
+			else if (focusing->real->isSubClassOf(NEType::NENODE_CODESET_KEY))
+				::Core::openModifierFrom(path);
+			else if (focusing->real->isSubClassOf(NEType::NEKEY))
+				::Core::openModifierFrom((NEKey&)*focusing->real);
+			else
+				::Core::openModifierFrom(path);
+		}
 		else
-			::Core::openModifierFrom(::Core::createPathBy(*focusing->real));
+		{	//	선택 모드
+			class MyHandler : public ::Core::onObjectFound
+			{
+			public:
+				MyHandler() : last_found(0) {}
+				virtual void onKeyFound(NEKey& target) {}
+				virtual void onNodeFound(NENode& target) { last_found = &target; }
+				virtual void onModuleFound(NEModule& target) {}
+
+				NENode* last_found;
+			} handler;			
+			NEObject& object = ::Core::getObjectBy(path, handler);
+			if( ! &object	|| ! handler.last_found)
+			{
+				::Core::pushMessage(path + "에 해당하는 객체가 없습니다.");
+				return;
+			}
+
+			getNodeFilter().setCodes(handler.last_found->getCodes(NECodeType::SCRIPT));
+			if(	object.isSubClassOf(NEType::NEMODULE)	&&
+				&getModuleFilter()						)
+			{
+				NEModule& casted = static_cast<NEModule&>(object);
+				getModuleFilter().setModuleCodes(casted.getCodes(NECodeType::MODULE_SCRIPT));
+			}
+			if(	object.isSubClassOf(NEType::NEKEY)	&&
+				&getKeyFilter()						)
+			{
+				NEKey& casted = static_cast<NEKey&>(object);
+				getKeyFilter().setKeyName(casted.getName());
+			}				
+		}
+
 		break;
 	}
 }
@@ -158,11 +196,44 @@ void Planetarium::getSelectedByFilter(NEListTemplate<NEObject*>& selected)
 
 		getNodeFilter().initializeReferingPoint();
 
+		bool is_type_me = getNodeFilter().getCodes().getCodeType() == NECodeType::ME;
+		if(is_type_me)
+		{
+			class MyHandler : public ::Core::onObjectFound
+			{
+			public:
+				MyHandler() : last_found(0) {}
+				virtual void onKeyFound(NEKey& target) {}
+				virtual void onNodeFound(NENode& target) { last_found = &target; }
+				virtual void onModuleFound(NEModule& target) {}
+
+				NENode* last_found;
+			} handler;
+			if(specified_filter)
+			{
+				NEObject& parsed = ::Core::getObjectBy(::Core::createPathBy(*specified_filter), handler);
+				if(handler.last_found)
+				{
+					getNodeFilter().setCodes(handler.last_found->getCodes(NECodeType::SCRIPT));
+				}
+			}
+		}
+
+
 		while (NENode* itr = &getNodeFilter().getNode())
 			selected.push(itr);
+
+		if (is_type_me)
+		{
+			NECodeSet cs;
+			cs.getCodeType().setCodeType(NECodeType::ME);
+			getNodeFilter().setCodes(cs);
+		}
+
 
 		getNodeFilter().setManager(backup);
 		getNodeFilter().getBinder().unbind();
 		getNodeFilter().initializeReferingPoint();
+	}
 	}
 }
