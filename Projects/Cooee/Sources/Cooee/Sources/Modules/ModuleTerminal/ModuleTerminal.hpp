@@ -123,7 +123,7 @@ public:
 	class ArgumentNameList : public ListGliph
 	{
 	public:
-		ArgumentNameList() : ListGliph(0, 30, 7, 15, 13, LIGHTCYAN, CYAN, CYAN, LIGHTCYAN) {}
+		ArgumentNameList() : ListGliph(0, 30, 7, 15, 13, LIGHTCYAN, CYAN, CYAN, LIGHTCYAN) { use_sound = true; }
 		FUNC_TO_OWNER(ModuleTerminal)
 			FUNC_CLONE(ArgumentNameList)
 			virtual void onUpdateData()

@@ -22,6 +22,7 @@ void Planetarium::onKeyPressed(char inputed)
 		if(n > 0)
 			focusing = &focusing->parent->planets[n-1];
 		setFocus(*focusing);
+		LG::Core::play(LG::Core::SND_TICK);
 		break;
 
 	case DOWN:
@@ -32,6 +33,7 @@ void Planetarium::onKeyPressed(char inputed)
 		if(n < focusing->parent->planets.getLengthLastIndex())
 			focusing = &focusing->parent->planets[n+1];
 		setFocus(*focusing);
+		LG::Core::play(LG::Core::SND_TICK);
 		break;
 
 	case LEFT:
@@ -39,6 +41,7 @@ void Planetarium::onKeyPressed(char inputed)
 
 		focusing = focusing->parent;
 		setFocus(*focusing);
+		LG::Core::play(LG::Core::SND_TICK);
 		break;
 
 	case RIGHT:
@@ -46,6 +49,7 @@ void Planetarium::onKeyPressed(char inputed)
 			! focusing->is_closed				)
 			focusing = &focusing->planets[0];
 		setFocus(*focusing);
+		LG::Core::play(LG::Core::SND_TICK);
 		break;
 
 	case LG::CANCEL:
@@ -59,6 +63,7 @@ void Planetarium::onKeyPressed(char inputed)
 
 	case CONFIRM:
 		NEString path = ::Core::createPathBy(*focusing->real);
+		LG::Core::play(LG::Core::SND_CONFIRM);
 		if (!specified_filter)	//	일반 모드
 		{
 			if (focusing->real->isSubClassOf(NEType::NEMODULE_CODESET_KEY))

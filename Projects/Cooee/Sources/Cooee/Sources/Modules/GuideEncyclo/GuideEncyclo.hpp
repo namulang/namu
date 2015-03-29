@@ -73,7 +73,7 @@ public:
 	{
 	public:
 		GuideList() 
-			: LG::ListGliph(0, 1, 2, 20, 22, BLACK, WHITE, WHITE, LIGHTRED)	{}	
+			: LG::ListGliph(0, 1, 2, 20, 22, BLACK, WHITE, WHITE, LIGHTRED)	{ use_sound = true; }	
 		GuideList(const GuideList& rhs) : LG::ListGliph(rhs){ }
 		FUNC_TO_OWNER(GuideEncyclo)
 		FUNC_CLONE(GuideList)

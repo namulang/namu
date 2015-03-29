@@ -7,7 +7,29 @@ namespace LG
 {
 	class NE_DLL Core
 	{
-	public:		
+	public:
+		enum SoundList 
+		{
+			SND_UNDEFINED = -1,
+			SND_DEFAULT = 0,
+			SND_TICK = SND_DEFAULT,
+			SND_CONFIRM,
+			SND_TRANSITE,
+			SND_BLOCKED
+		};
+		static void play(SoundList snd) 
+		{
+			TCHAR* target_name = _T("./fx/tick.wav");
+
+			switch (snd) 
+			{
+				case SND_CONFIRM:	target_name = _T("./fx/confirm.wav");	break;
+				case SND_BLOCKED:	target_name = _T("./fx/blocked.wav");	break;
+				case SND_TRANSITE:	target_name = _T("./fx/transite.wav");	break;
+			}
+
+			PlaySound(target_name, NULL, SND_FILENAME | SND_ASYNC);
+		}
 		static void initializeBackBuffer()
 		{
 			back_buffer.create(80, 25);

@@ -111,7 +111,7 @@ public:
 
 		Attributes() : ListGliph(0, 7, 6, 10, 3, BLACK, WHITE, CYAN, LIGHTCYAN)
 		{
-
+			use_sound = true;
 		}
 
 		virtual void onUpdateData()

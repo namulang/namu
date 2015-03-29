@@ -18,11 +18,16 @@ void NodeTerminal::onKeyPressed(char inputed)
 			return enable.onKeyPressed(inputed);
 		if(focused == 0 && attributes.choosed == 1)
 		{
+			LG::Core::play(LG::Core::SND_TICK);
 			if(codelist_display_index > -2)
 				codelist_display_index--;
 		}
-		else if(focused > 0)
+		else if (focused > 0)
+		{
+			LG::Core::play(LG::Core::SND_TRANSITE);
 			focused--;
+		}
+
 		break;
 
 	case RIGHT:
@@ -30,11 +35,15 @@ void NodeTerminal::onKeyPressed(char inputed)
 			return enable.onKeyPressed(inputed);
 		if(focused == 0 && attributes.choosed == 1)
 		{
+			LG::Core::play(LG::Core::SND_TICK);
 			if(codelist_display_index < castObject().getGroupCodes().getLengthLastIndex())
 				codelist_display_index++;
 		}
-		else if(focused < 2)
+		else if (focused < 2)
+		{
+			LG::Core::play(LG::Core::SND_TRANSITE);
 			focused++;
+		}
 		break;
 
 	default:

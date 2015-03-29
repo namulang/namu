@@ -43,7 +43,7 @@ public:
 	class ModuleNameList : public ListGliph
 	{
 	public:
-		ModuleNameList() : ListGliph(0, 10, 7, 11, 15, LIGHTCYAN, CYAN, CYAN, LIGHTCYAN) {}
+		ModuleNameList() : ListGliph(0, 10, 7, 11, 15, LIGHTCYAN, CYAN, CYAN, LIGHTCYAN) { use_sound = true; }
 		ModuleNameList(const ModuleNameList& rhs) : ListGliph(rhs) {}
 		FUNC_TO_OWNER(ModuleSetTerminal)
 		FUNC_CLONE(ModuleNameList)

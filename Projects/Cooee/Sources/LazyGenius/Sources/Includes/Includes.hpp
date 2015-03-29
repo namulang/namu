@@ -4,6 +4,8 @@
 #include <conio.h>
 #include <iomanip>
 #include <Windows.h>
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
 
 #include <Macro/Sources/Modules/DLLMacro/SetDLLIMPORT.hpp>
 #include <Kernal/Sources/EntryPoints/Headers.hpp>

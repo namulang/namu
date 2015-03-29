@@ -16,10 +16,12 @@ namespace LG
 			regist(2, &header, &list);
 			list.choosed_back = focused_back == UNKNOWN ? list.fore : focused_back;
 			list.choosed_fore = focused_fore == UNKNOWN ? list.back : focused_fore;
+			list.use_sound = true;
 		}
 		ListWindow(const ListWindow& rhs) : Window(rhs), header(rhs.header), list(rhs.list) 
 		{
 			regist(2, &header, &list);
+			list.use_sound = true;
 		}
 
 		virtual void onKeyPressed(char inputed)

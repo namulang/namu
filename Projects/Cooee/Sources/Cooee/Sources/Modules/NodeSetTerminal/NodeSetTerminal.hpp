@@ -50,7 +50,7 @@ public:
 	};
 	class ContentList : public ListGliph {
 	public:
-		ContentList() : ListGliph(0, 1, 3, 78, 20, BLACK, WHITE, CYAN, LIGHTCYAN) {}
+		ContentList() : ListGliph(0, 1, 3, 78, 20, BLACK, WHITE, CYAN, LIGHTCYAN) { use_sound = true; }
 		ContentList(const ContentList& rhs) : ListGliph(rhs) {}
 		FUNC_CLONE(ContentList)
 		FUNC_TO_OWNER(NodeSetTerminal)

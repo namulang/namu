@@ -1,3 +1,4 @@
+
 #include "ListGliph.hpp"
 #include "../Core/Core.hpp"
 #include "../FloatingGliph/FloatingGliph.hpp"
@@ -6,15 +7,15 @@ namespace LG
 {
 	ListGliph::ListGliph(	Window* new_owner, type_ushort new_x, type_ushort new_y, type_ushort new_width, 
 		type_ushort new_height, type_ushort new_fore, type_ushort new_back, 
-		type_ushort new_choosed_fore, type_ushort new_choosed_back, bool new_use_matching)
+		type_ushort new_choosed_fore, type_ushort new_choosed_back, bool new_use_matching, bool new_use_sound)
 		: Gliph(new_owner, new_x, new_y, new_width, new_height, new_fore, new_back), use_matching(new_use_matching),
-		choosed_back(new_choosed_back), choosed_fore(new_choosed_fore), choosed(0)
+		choosed_back(new_choosed_back), choosed_fore(new_choosed_fore), choosed(0), use_sound(new_use_sound)
 	{
 
 	}
 	ListGliph::ListGliph(const ListGliph& rhs)
 		: Gliph(rhs), items(rhs.items), choosed(rhs.choosed), choosed_back(rhs.choosed_back), 
-		choosed_fore(rhs.choosed_fore), use_matching(rhs.use_matching)
+		choosed_fore(rhs.choosed_fore), use_matching(rhs.use_matching), use_sound(rhs.use_sound)
 	{
 
 	}
@@ -87,6 +88,8 @@ namespace LG
 			if(choosed < 0) 
 				choosed = items.getLengthLastIndex();
 			matchingword.release();
+			if(use_sound)
+				Core::play(Core::SND_TICK);
 			break;
 
 		case DOWN: 
@@ -94,11 +97,15 @@ namespace LG
 			if(choosed > items.getLengthLastIndex())
 				choosed = 0;
 			matchingword.release();
+			if(use_sound)
+				Core::play(Core::SND_TICK);
 			break;
 
 		case LEFT:	case RIGHT:	case CLOSE:	case MAP: case ADD: case REMOVE: case COPY:
 		case PASTE: case CUT: case HELP: case COMMAND: case CONFIRM: case CANCEL:
 			matchingword.release();
+			if(use_sound)
+				Core::play(Core::SND_CONFIRM);
 			break;
 
 		default:

@@ -81,7 +81,7 @@ public:
 	class KeyDataList : public ListGliph
 	{
 	public:
-		KeyDataList() : ListGliph(0, 20, 2, 11, 15, BLACK, WHITE, CYAN, LIGHTCYAN) {}
+		KeyDataList() : ListGliph(0, 20, 2, 11, 15, BLACK, WHITE, CYAN, LIGHTCYAN) { use_sound = true; }
 		FUNC_TO_OWNER(KeySetTerminal)
 		FUNC_CLONE(KeyDataList)
 		virtual void onUpdateData()
