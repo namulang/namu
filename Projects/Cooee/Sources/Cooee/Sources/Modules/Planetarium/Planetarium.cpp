@@ -235,5 +235,4 @@ void Planetarium::getSelectedByFilter(NEListTemplate<NEObject*>& selected)
 		getNodeFilter().getBinder().unbind();
 		getNodeFilter().initializeReferingPoint();
 	}
-	}
 }
