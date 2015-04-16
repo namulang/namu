@@ -19,13 +19,13 @@ namespace LG
 		};
 		static void play(SoundList snd) 
 		{
-			TCHAR* target_name = _T("./fx/tick.wav");
+			TCHAR* target_name = _T("./Sounds/tick.wav");
 
 			switch (snd) 
 			{
-			case SND_CONFIRM:	target_name = _T("./fx/confirm.wav");	break;
-			case SND_BLOCKED:	target_name = _T("./fx/blocked.wav");	break;
-			case SND_TRANSITE:	target_name = _T("./fx/transite.wav");	break;
+			case SND_CONFIRM:	target_name = _T("./Sounds/confirm.wav");	break;
+			case SND_BLOCKED:	target_name = _T("./Sounds/blocked.wav");	break;
+			case SND_TRANSITE:	target_name = _T("./Sounds/transite.wav");	break;
 			}
 
 			PlaySound(target_name, NULL, SND_FILENAME | SND_ASYNC);
