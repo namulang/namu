@@ -13,7 +13,7 @@ public:
 		FUNC_CLONE(EnableSwitch)
 		FUNC_TO_OWNER(NodeTerminal)
 
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			LG::SwitchGliph::onKeyPressed(inputed);
 			switch(inputed)
@@ -101,7 +101,7 @@ public:
 			buf.setColorLock(false);
 		_drawFrames();
 	}
-	virtual void onKeyPressed(char inputed);
+	virtual void onKeyPressed(int inputed);
 
 	class Attributes : public ListGliph
 	{
@@ -151,7 +151,7 @@ public:
 			if( &item)
 				item = "<- " + item + " ->";
 		}
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			ListGliph::onKeyPressed(inputed);
 
@@ -212,7 +212,7 @@ public:
 						if( &history)
 							input.text = history;
 					}
-					virtual void onKeyPressed(char inputed)
+					virtual void onKeyPressed(int inputed)
 					{
 						switch(inputed)
 						{

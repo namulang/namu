@@ -3,7 +3,7 @@
 
 namespace LG
 {
-	void MessageWindow::onKeyPressed(char inputed)
+	void MessageWindow::onKeyPressed(int inputed)
 	{
 		if (inputed == CONFIRM) {
 			Core::play(Core::SND_CONFIRM);

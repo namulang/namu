@@ -10,7 +10,7 @@ void ModuleEncyclo::ModuleList::_focusWhatWantToBrowse()
 	choosed = scr_idx;
 }
 
-void ModuleEncyclo::ModuleList::onKeyPressed(char inputed) 
+void ModuleEncyclo::ModuleList::onKeyPressed(int inputed) 
 {
 	ListGliph::onKeyPressed(inputed);
 

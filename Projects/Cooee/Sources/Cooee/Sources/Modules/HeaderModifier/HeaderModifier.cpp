@@ -256,7 +256,7 @@ NE::NEString HeaderModifier::_generateCodeListNames(int index)
 	return to_show;
 }
 
-void HeaderModifier::onKeyPressed(char inputed)
+void HeaderModifier::onKeyPressed(int inputed)
 {
 	int codetype = list.choosed - 6;
 	if(codetype >= 0 && codetype <= 3)

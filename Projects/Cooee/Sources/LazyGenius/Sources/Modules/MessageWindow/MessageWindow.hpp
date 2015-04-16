@@ -19,7 +19,7 @@ namespace LG
 		}
 		MessageWindow(const MessageWindow& rhs) : Window(rhs), panel(rhs.panel) { regist(1, &panel); }
 
-		virtual void onKeyPressed(char inputed);
+		virtual void onKeyPressed(int inputed);
 
 		Button panel;
 	};

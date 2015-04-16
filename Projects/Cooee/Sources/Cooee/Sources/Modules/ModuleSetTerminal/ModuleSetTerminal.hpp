@@ -63,7 +63,7 @@ public:
 			for(int n=0; n < ms.getLength() ;n++)
 				items.push(ms[n].getHeader().getName());
 		}
-		virtual void onKeyPressed(char inputed);
+		virtual void onKeyPressed(int inputed);
 	};
 	class ModuleCommentList : public ListGliph
 	{

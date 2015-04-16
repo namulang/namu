@@ -14,7 +14,7 @@ namespace LG
 		FUNC_CLONE(TextGliph)
 
 		void makeToHistory();
-		virtual void onKeyPressed(char inputed);
+		virtual void onKeyPressed(int inputed);
 
 		NEStringList history;
 		int history_idx;

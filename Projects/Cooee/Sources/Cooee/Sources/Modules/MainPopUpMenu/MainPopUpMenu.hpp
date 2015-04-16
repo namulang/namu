@@ -9,7 +9,7 @@ public:
 	FUNC_CLONE(MainPopUpMenu)
 
 	virtual void onUpdateData();
-	virtual void onKeyPressed(char inputed);
+	virtual void onKeyPressed(int inputed);
 	virtual void onItemChoosed(type_index index, const NEString& chosen_content);
 
 	Window& caller;

@@ -41,7 +41,7 @@ void Terminal::onUpdateData()
 	Window::onUpdateData();
 }
 
-void Terminal::onKeyPressed(char inputed)
+void Terminal::onKeyPressed(int inputed)
 {
     if(inputed != LG::CLOSE)
         Window::onKeyPressed(inputed);

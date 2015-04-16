@@ -173,7 +173,7 @@ public:
 };
 
 
-void ModuleTerminal::ArgumentNameList::onKeyPressed(char inputed)
+void ModuleTerminal::ArgumentNameList::onKeyPressed(int inputed)
 {
 
 

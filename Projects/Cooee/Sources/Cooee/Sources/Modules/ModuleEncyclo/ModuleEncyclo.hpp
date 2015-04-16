@@ -41,7 +41,7 @@ class ModuleEncyclo : public Window
 		virtual void onUpdateData();
 		NEString createModulePanelText(const NEModule& target);		
 		void setPanelsTextByChoosed();
-		virtual void onKeyPressed(char inputed);
+		virtual void onKeyPressed(int inputed);
 		void _focusWhatWantToBrowse();
 		NEModule* want_to_browse;
 	};

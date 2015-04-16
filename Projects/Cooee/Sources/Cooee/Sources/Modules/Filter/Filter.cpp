@@ -73,7 +73,7 @@ void Filter::_updateSwitchWhenFilterExisted( NENodeSelector& filter )
 	}
 }
 
-void Filter::onKeyPressed(char inputed)
+void Filter::onKeyPressed(int inputed)
 {
 	LG::ListWindow::onKeyPressed(inputed);
 

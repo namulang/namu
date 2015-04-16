@@ -23,7 +23,7 @@ namespace LG
 		bool operator==(const Gliph& rhs) const	{ return this == &rhs; }
 		bool operator!=(const Gliph& rhs) const { return ! operator==(rhs); }
 
-		virtual void onKeyPressed(char inputed)	{ }
+		virtual void onKeyPressed(int inputed)	{ }
 		virtual void onDraw();
 		type_ushort getRealX();
 		type_ushort getRealY();

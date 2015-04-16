@@ -79,7 +79,7 @@ namespace LG
 	}
 
 
-	void ListGliph::onKeyPressed(char inputed) 
+	void ListGliph::onKeyPressed(int inputed) 
 	{
 		switch(inputed) 
 		{

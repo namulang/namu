@@ -56,7 +56,7 @@ public:
 
 	void getSelectedByFilter(NEListTemplate<NEObject*>& selected);
 	virtual void onUpdateData();
-	virtual void onKeyPressed(char inputed);
+	virtual void onKeyPressed(int inputed);
 	virtual void onFocused();
 
 	virtual void onDraw();

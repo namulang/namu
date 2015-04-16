@@ -21,7 +21,7 @@ namespace LG
 		{
 			regist(1, &no);
 		}
-		virtual void onKeyPressed(char inputed) 
+		virtual void onKeyPressed(int inputed) 
 		{
 			switch(inputed)
 			{

@@ -33,7 +33,7 @@ namespace LG
 			gliphs.push(va_arg(args, Gliph*));
 	}
 
-	void Window::onKeyPressed(char inputed)	{
+	void Window::onKeyPressed(int inputed)	{
 
 		if(inputed == CLOSE)
 			delete_me = true;

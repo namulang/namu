@@ -24,7 +24,7 @@ namespace LG
 		Gliph::onDraw();
 	}
 
-	void FloatingGliph::onKeyPressed(char inputed)
+	void FloatingGliph::onKeyPressed(int inputed)
 	{
 		term_for_hiding = timeGetTime();
 	}

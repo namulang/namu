@@ -18,7 +18,7 @@ namespace LG
 			FUNC_CLONE(InputBox)
 			FUNC_TO_OWNER(InputWindow)
 
-			virtual void onKeyPressed(char inputed);
+			virtual void onKeyPressed(int inputed);
 		};
 
 		InputWindow(const NEString& new_text, u fore, u back, const NEString& default_input_text = "")

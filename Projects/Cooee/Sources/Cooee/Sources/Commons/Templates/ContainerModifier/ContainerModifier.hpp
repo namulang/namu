@@ -33,7 +33,7 @@ public:
 			for(int n=0; n < value.getLength(); n++)	
 				items.push(NEString(value[n]));
 		}
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			int index = toOwner()->real_key ? choosed-1 : choosed;
 
@@ -169,7 +169,7 @@ public:
 			for (int n = 0; n < value.getLength(); n++)
 				items.push(createCodeTypeString(value[n].getCodeType()) + " : " + value[n].getCode());
 		}
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			int index = toOwner()->real_key ? choosed - 2 : choosed;
 			NECodeSet& value = toOwner()->value;

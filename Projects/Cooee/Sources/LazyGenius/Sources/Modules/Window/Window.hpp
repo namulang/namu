@@ -19,7 +19,7 @@ namespace LG
 
 		FUNC_CLONE(Window)
 			void regist(int count, ...);
-		virtual void onKeyPressed(char inputed);
+		virtual void onKeyPressed(int inputed);
 		virtual void onUpdateData();
 		virtual void onTerminate();
 		virtual void onDraw();

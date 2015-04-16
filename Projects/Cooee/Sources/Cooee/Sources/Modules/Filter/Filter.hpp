@@ -19,7 +19,7 @@ public:
 	virtual void onUpdateData();
 	void _updateSwitchWhenFilterExisted(NENodeSelector& filter);
 
-	virtual void onKeyPressed(char inputed);
+	virtual void onKeyPressed(int inputed);
 	virtual void onItemChoosed(type_index item_index, const NEString& chosen_content);
 	void _switchOn();
 };

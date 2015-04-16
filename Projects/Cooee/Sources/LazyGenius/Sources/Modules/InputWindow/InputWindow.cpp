@@ -2,7 +2,7 @@
 
 namespace LG
 {
-	void InputWindow::InputBox::onKeyPressed(char inputed)
+	void InputWindow::InputBox::onKeyPressed(int inputed)
 	{
 		switch(inputed)
 		{

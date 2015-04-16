@@ -1,6 +1,6 @@
 #include "GuideEncyclo.hpp"
 
-void GuideEncyclo::GuideList::onKeyPressed(char inputed) 
+void GuideEncyclo::GuideList::onKeyPressed(int inputed) 
 {
 	ListGliph::onKeyPressed(inputed);
 

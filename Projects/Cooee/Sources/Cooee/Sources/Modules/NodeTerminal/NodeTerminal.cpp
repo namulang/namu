@@ -1,7 +1,7 @@
 #include "NodeTerminal.hpp"
 #include "../MainPopUpMenu/MainPopUpMenu.hpp"
 
-void NodeTerminal::onKeyPressed(char inputed)
+void NodeTerminal::onKeyPressed(int inputed)
 {
 	switch(inputed)
 	{

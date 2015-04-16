@@ -20,7 +20,7 @@ public:
 	}
 };
 
-void NodeSetTerminal::ContentList::onKeyPressed(char inputed) 
+void NodeSetTerminal::ContentList::onKeyPressed(int inputed) 
 {
 	ListGliph::onKeyPressed(inputed);
 

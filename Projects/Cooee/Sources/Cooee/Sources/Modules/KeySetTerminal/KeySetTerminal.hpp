@@ -53,7 +53,7 @@ public:
 
 			//ListGliph::onUpdateData();
 		}
-		virtual void onKeyPressed(char inputed);
+		virtual void onKeyPressed(int inputed);
 	};
 	class KeyTypeList : public ListGliph
 	{

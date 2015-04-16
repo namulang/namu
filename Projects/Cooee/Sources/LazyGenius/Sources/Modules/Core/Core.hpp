@@ -23,9 +23,9 @@ namespace LG
 
 			switch (snd) 
 			{
-				case SND_CONFIRM:	target_name = _T("./fx/confirm.wav");	break;
-				case SND_BLOCKED:	target_name = _T("./fx/blocked.wav");	break;
-				case SND_TRANSITE:	target_name = _T("./fx/transite.wav");	break;
+			case SND_CONFIRM:	target_name = _T("./fx/confirm.wav");	break;
+			case SND_BLOCKED:	target_name = _T("./fx/blocked.wav");	break;
+			case SND_TRANSITE:	target_name = _T("./fx/transite.wav");	break;
 			}
 
 			PlaySound(target_name, NULL, SND_FILENAME | SND_ASYNC);
@@ -38,6 +38,11 @@ namespace LG
 		{
 			if( _kbhit()) {
 				inputed = _getch();				
+				if (inputed == 0xE0 || inputed == 0x00)	{
+					// Æ¯¼öÅ° 
+					inputed <<= 8;
+					inputed |= _getch() & 0xFF;
+				}
 				return true;
 			}		
 
@@ -83,7 +88,7 @@ namespace LG
 			COORD temp = {cs.dwMaximumWindowSize.X, cs.dwMaximumWindowSize.Y};
 			return temp;
 		}
-		
+
 		static void setColorLock(bool to_lock)
 		{
 			color_lock = to_lock;
@@ -117,6 +122,6 @@ namespace LG
 		static const int HEIGHT;
 		static BackBuffer back_buffer;
 
-		static char inputed;
+		static int inputed;
 	};
 }

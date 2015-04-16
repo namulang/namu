@@ -145,7 +145,7 @@ public:
 	};
 	
 	virtual void onItemChoosed(type_index index, const NEString& chosen_content);
-	virtual void onKeyPressed(char inputed);
+	virtual void onKeyPressed(int inputed);
 
 	NEIntSet codes_display_indexes;
 };

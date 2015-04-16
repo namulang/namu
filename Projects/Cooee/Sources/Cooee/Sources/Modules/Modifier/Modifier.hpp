@@ -57,7 +57,7 @@ public:
 		else_one.back = DARKGRAY;
 	}
 
-	virtual void onKeyPressed(char inputed)
+	virtual void onKeyPressed(int inputed)
 	{
 		switch(inputed)
 		{
@@ -134,7 +134,7 @@ public:
 	Modifier(const Modifier& rhs);
 
 	virtual void onUpdateData();
-	virtual void onKeyPressed(char inputed);
+	virtual void onKeyPressed(int inputed);
 	void _setInputed(Gliph& target);
 	FUNC_CLONE(Modifier<NEBooleanKey>)
 
@@ -229,7 +229,7 @@ case 2: f = &value_text;	break;
 			f->back = CYAN;
 		}	
 	}
-	virtual void onKeyPressed(char inputed)
+	virtual void onKeyPressed(int inputed)
 	{
 		switch (inputed)
 		{
@@ -323,7 +323,7 @@ public:
 		void updateList();
 		virtual void onUpdateData();
 
-		virtual void onKeyPressed(char inputed);
+		virtual void onKeyPressed(int inputed);
 
 		int codelist_display_index;
 	};
@@ -406,7 +406,7 @@ public:
 
 		}
 
-		virtual void onKeyPressed(char inputed);
+		virtual void onKeyPressed(int inputed);
 
 		int codelist_display_index;
 	};
@@ -473,7 +473,7 @@ public:
 
 		}
 
-		virtual void onKeyPressed(char inputed);
+		virtual void onKeyPressed(int inputed);
 	};
 
 	FUNC_CLONE(Modifier)

@@ -55,7 +55,7 @@ public:
 		FUNC_CLONE(ContentList)
 		FUNC_TO_OWNER(NodeSetTerminal)
 
-		virtual void onKeyPressed(char inputed);
+		virtual void onKeyPressed(int inputed);
 		NEString createCommand() const
 		{
 			NEStringSet splited;

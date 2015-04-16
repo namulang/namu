@@ -20,7 +20,7 @@ public:
 			for(int n=0; n < arr.getLength() ;n++)
 				arr.getElement(n).onUpdateData();
 		}
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			for(int n=0; n < arr.getLength() ;n++)
 				arr.getElement(n).onKeyPressed(inputed);
@@ -136,7 +136,7 @@ public:
 			for (int n = 0; n < args.getLength(); n++)
 				items.push(args[n].getKeyName());
 		}
-		virtual void onKeyPressed(char inputed);		
+		virtual void onKeyPressed(int inputed);		
 	};
 	class ArgumentTypeList : public ListGliph
 	{
@@ -154,7 +154,7 @@ public:
 			for (int n = 0; n < args.getLength(); n++)
 				items.push(NEType::getTypeName(args[n].getTypeToBeBinded()));
 		}
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			ListGliph::onKeyPressed(inputed);			
 
@@ -236,7 +236,7 @@ public:
 				text = "--WRITE";			
 			}
 		}
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			SwitchGliph::onKeyPressed(inputed);
 
@@ -275,7 +275,7 @@ public:
 				nobe.text = "O";
 			}
 		}	
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			SwitchGliph::onKeyPressed(inputed);
 
@@ -327,7 +327,7 @@ public:
 				break;
 			}
 		}
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			GearGliph::onKeyPressed(inputed);
 
@@ -371,7 +371,7 @@ public:
 			text = arg.isEnable() ? "------ON!------" : "------OFF------";
 		}
 
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			LG::SwitchGliph::onKeyPressed(inputed);
 			switch (inputed)
@@ -442,7 +442,7 @@ public:
 		}
 	}
 
-	virtual void onKeyPressed(char inputed)
+	virtual void onKeyPressed(int inputed)
 	{
 		switch (inputed)
 		{
@@ -548,7 +548,7 @@ public:
 			nobe.fore = WHITE;
 		}
 
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			LG::SwitchGliph::onKeyPressed(inputed);
 			switch (inputed)
@@ -568,7 +568,7 @@ public:
 	public:
 		NameGliph() : LG::Gliph(0, 60, 5, 15, 1, CYAN, LIGHTCYAN, "") {}
 		FUNC_TO_OWNER(ModuleTerminal)
-			virtual void onKeyPressed(char inputed)
+			virtual void onKeyPressed(int inputed)
 		{
 			class CodeInputer : public LG::InputWindow
 			{

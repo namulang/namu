@@ -4,7 +4,7 @@
 #include "../Filter/Filter.hpp"
 #include "../Core/Core.hpp"
 
-void Planetarium::onKeyPressed(char inputed)
+void Planetarium::onKeyPressed(int inputed)
 {
 	Window::onKeyPressed(inputed);
 	type_index n = 0;

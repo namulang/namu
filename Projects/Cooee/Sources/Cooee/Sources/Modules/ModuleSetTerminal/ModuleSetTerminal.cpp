@@ -4,7 +4,7 @@
 #include "../MainPopUpMenu/MainPopUpMenu.hpp"
 #include "../NameInputWindow/NameInputWindow.hpp"
 
-void ModuleSetTerminal::ModuleNameList::onKeyPressed(char inputed) 
+void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed) 
 {
 	ListGliph::onKeyPressed(inputed);
 

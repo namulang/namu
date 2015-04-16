@@ -47,7 +47,7 @@ void MainPopUpMenu::onUpdateData()
 }
 
 
-void MainPopUpMenu::onKeyPressed(char inputed)
+void MainPopUpMenu::onKeyPressed(int inputed)
 {
 	ListWindow::onKeyPressed(inputed);
 

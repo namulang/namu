@@ -33,7 +33,7 @@ namespace LG
 				nobe.text = "O";
 			}
 		}
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			switch(inputed)
 			{

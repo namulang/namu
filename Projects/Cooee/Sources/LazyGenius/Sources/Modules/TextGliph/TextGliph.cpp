@@ -28,7 +28,7 @@ namespace LG
 		history_idx = -1;
 	}
 
-	void TextGliph::onKeyPressed(char inputed) 
+	void TextGliph::onKeyPressed(int inputed) 
 	{
 		switch(inputed) 
 		{

@@ -24,7 +24,7 @@ namespace LG
 			list.use_sound = true;
 		}
 
-		virtual void onKeyPressed(char inputed)
+		virtual void onKeyPressed(int inputed)
 		{
 			Window::onKeyPressed(inputed);
 

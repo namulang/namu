@@ -3,7 +3,7 @@
 #include "../MainPopUpMenu/MainPopUpMenu.hpp"
 #include "../KeyEncyclo/KeyEncyclo.hpp"
 
-void KeySetTerminal::KeyNameList::onKeyPressed(char inputed)
+void KeySetTerminal::KeyNameList::onKeyPressed(int inputed)
 {
 	ListGliph::onKeyPressed(inputed);
 

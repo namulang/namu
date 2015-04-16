@@ -58,7 +58,7 @@ void Modifier<NEBooleanKey>::_setInputed(Gliph& target)
 	target.back = LIGHTGREEN;
 }
 
-void Modifier<NEBooleanKey>::onKeyPressed(char inputed) 
+void Modifier<NEBooleanKey>::onKeyPressed(int inputed) 
 {
 	switch(inputed)
 	{
@@ -211,7 +211,7 @@ void Modifier<NENodeSelector>::MenuList::updateList()
 }
 
 
-void Modifier<NENodeSelector>::MenuList::onKeyPressed(char inputed)
+void Modifier<NENodeSelector>::MenuList::onKeyPressed(int inputed)
 {
 	ListGliph::onKeyPressed(inputed);
 	Planetarium& planetarium = toOwner()->toCaller().toCaller();
@@ -456,7 +456,7 @@ void Modifier<NENodeSelector>::MenuList::onUpdateData()
 
 }
 
-void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
+void Modifier<NEModuleSelector>::MenuList::onKeyPressed(int inputed)
 {
 	ListGliph::onKeyPressed(inputed);
 	Planetarium& planetarium = toOwner()->toCaller().toCaller();
@@ -624,7 +624,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(char inputed)
 }
 
 
-void Modifier<NEKeySelector>::MenuList::onKeyPressed(char inputed)
+void Modifier<NEKeySelector>::MenuList::onKeyPressed(int inputed)
 {
 	ListGliph::onKeyPressed(inputed);
 	Planetarium& planetarium = toOwner()->toCaller().toCaller();

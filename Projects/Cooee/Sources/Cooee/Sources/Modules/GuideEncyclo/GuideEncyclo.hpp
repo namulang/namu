@@ -80,7 +80,7 @@ public:
 
 		virtual void onUpdateData();
 		void setPanelsTextByChoosed();
-		virtual void onKeyPressed(char inputed);		
+		virtual void onKeyPressed(int inputed);		
 	};
 
 public:
