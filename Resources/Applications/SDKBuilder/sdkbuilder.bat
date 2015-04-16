@@ -2,7 +2,7 @@
 echo	.\
 @echo	off
 echo	*	Node SDK Builder 
-echo	*		ver 0.2.2
+echo	*		ver 0.2.3
 echo	*		2013. 08. 14
 echo	*		Only windows 7, 8 tested.
 echo	*
@@ -17,6 +17,8 @@ echo	*	You must run this after new version of Core solution has been builded.
 echo	*	this task takes some minutes till be finished.
 echo	*
 echo 	*	Updates :
+echo	*	0.2.3
+echo	*		- build sdk with some sound resources as contents of sounds.
 echo	*	0.2.2
 echo	*		- path problem issue has been solved. (now "" will be added at 
 echo	*		  the edge of path)
@@ -55,6 +57,7 @@ echo	*	Making stub directories.
 
 md "%target_directory%"
 md "%target_directory%\Libraries"
+md "%target_directory%\Libraries\Sounds"
 md "%target_directory%\Libraries\Modules"
 md "%target_directory%\Libraries\Scripts"
 md "%target_directory%\Includes"
@@ -74,6 +77,7 @@ echo	*
 
 copy /Y "%target_directory%\..\DeveloperGuide.docx" "%target_directory%"
 xcopy /e /h /Y /I "%source_directory%\Sources\*.*" "%target_directory%\Includes"
+xcopy /e /h /Y /I "%source_directory%\..\..\Resources\Sounds\*.*" "%target_directory%\Libraries\Sounds"
 xcopy /e /h /Y /I ".\..\..\..\Projects\MDK\Sources\*.*" "%target_directory%\Templates"
 xcopy /h /Y /I "%source_directory%\Binaries\Core\*.*" "%target_directory%\Libraries"
 xcopy /h /Y /I "%source_directory%\Binaries\StandardEditorManager" "%target_directory%\Libraries\Modules"
