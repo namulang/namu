@@ -145,7 +145,16 @@ public:
 	}
 	int _generate(NEModule& module)
 	{
-		setText(module.getHeader().getName());
+		NEBank& bank = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::MODULE_NAME);
+		NEString name = module.getHeader().getName();
+		if (module.getNameCode() > 0) {
+			const NETString& one = bank[module.getNameCode()];
+			if(&one)
+				name += " : " + one;
+		}
+		setText(name);
+		int right_blank = 79 - x;
+		width = name.getLength() < right_blank ? name.getLength() : right_blank;
 
 		return y + 1;
 	}
@@ -168,8 +177,17 @@ public:
 	}
 	int _generate(NENode& node)
 	{
-		const NETString& name = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::SCRIPT)[node.getScriptCode()];
+		NEScriptEditor::Banks& banks = Editor::getInstance().getScriptEditor().getBanks();
+		NEString name = banks.getBank(NECodeType::SCRIPT)[node.getScriptCode()];
+		if (node.getNameCode()) {
+			const NETString& one = banks.getBank(NECodeType::NAME)[node.getNameCode()];
+			if (&one)
+				name = one;
+		}
 		setText(name);
+
+		int right_blank = 79 - x;
+		width = name.getLength() < right_blank ? name.getLength() : right_blank;
 
 		int next_vacant = ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(node.getKeySet(), this, y + 1);
 		return ((Planet&)planets[planets.push(Planet(planetarium, this))]).generate(node.getModuleSet(), this, next_vacant);
