@@ -2336,6 +2336,30 @@ public:
 	}
 };
 
+class CodeOperator : public TestCase
+{
+public:
+	CodeOperator()	: TestCase("has NECode supported propel operator overloadings.") {}
+	virtual bool onTest() 
+	{
+		NECode code(5, NECodeType::NAME);
+
+		
+		if((code++).getCode() != 5) return false;
+		if(code.getCode() != 6) return false;
+		if((++code).getCode() != 7) return false;
+		if(code.getCode() != 7) return false;
+
+		code.setCode(5);
+
+		if((code--).getCode() != 5) return false;
+		if(code.getCode() != 4) return false;
+		if((--code).getCode() != 3) return false;
+		if(code.getCode() != 3) return false;
+
+		return true;
+	}
+};
 
 class SelectorLock : public TestCase
 {
@@ -2567,6 +2591,7 @@ void main()
 	RecentNodeSelectingInifiniteTest().test();
 	SelectorLock().test();
 	StringSetDeepCopytest().test();
+	CodeOperator().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();

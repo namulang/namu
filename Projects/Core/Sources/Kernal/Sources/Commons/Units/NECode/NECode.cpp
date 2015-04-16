@@ -32,7 +32,14 @@ namespace NE
 		setCode(new_code);
 	}
 
-	NECode NECode::operator++()
+	NECode& NECode::operator++()
+	{
+		setCode(getCode() + 1);
+
+		return *this;
+	}
+
+	NECode NECode::operator++(int)
 	{
 		NECode to_return(*this);
 
@@ -41,27 +48,20 @@ namespace NE
 		return to_return;
 	}
 
-	NECode& NECode::operator++(int)
-	{
-		setCode(getCode() + 1);
-
-		return *this;
-	}
-
-	NECode& NECode::operator--(int)
-	{
-		setCode(getCode() - 1);
-
-		return *this;
-	}
-
-	NECode NECode::operator--()
+	NECode NECode::operator--(int)
 	{
 		NECode to_return(*this);
 
 		setCode(getCode() - 1);
 
 		return to_return;
+	}
+
+	NECode& NECode::operator--()
+	{
+		setCode(getCode() - 1);
+
+		return *this;
 	}
 
 	NECode::operator type_code()
