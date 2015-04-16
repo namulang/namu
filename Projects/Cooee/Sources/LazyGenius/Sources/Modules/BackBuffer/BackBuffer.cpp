@@ -170,7 +170,7 @@ namespace LG
 	void LG::BackBuffer::draw()
 	{
 		Buffer& front = getFrontBuffer(),
-			back = getBackBuffer();
+			& back = getBackBuffer();
 
 		for(int h=0; h < back.getLength() ;h++)
 			for(int w=0; w < back[h].getLength() ;w++)
@@ -214,6 +214,9 @@ namespace LG
 			}
 
 			_swapBuffer();
+
+			Core::setColor(LIGHTGRAY, BLACK);
+			Core::setCursorTo(0, back.getLength());	//	means height
 	}
 
 	void BackBuffer::fill(const Pixel& pixel)
