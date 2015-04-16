@@ -40,6 +40,7 @@ namespace LG
 				inputed = _getch();				
 				if (inputed == 0xE0 || inputed == 0x00)	{
 					// Æ¯¼öÅ° 
+					inputed = 0xE0;
 					inputed <<= 8;
 					inputed |= _getch() & 0xFF;
 				}

@@ -3,6 +3,7 @@
 #include "../ModuleTerminal/ModuleTerminal.hpp"
 #include "../MainPopUpMenu/MainPopUpMenu.hpp"
 #include "../NameInputWindow/NameInputWindow.hpp"
+#include "../HeaderModifier/HeaderModifier.hpp"
 
 void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed) 
 {
@@ -29,6 +30,32 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed)
 			//LG::Core::getWindowList().pushFront(ModuleEncyclo(false, &toOwner()->castObject()[index]));
 		}	
 		break;
+
+	case LG::RENAME:
+		{
+			NEModule& chosen = toOwner()->castObject()[index];
+			if (!&chosen) {
+				::Core::pushMessage(NEString("선택한 Module을 찾을 수 없었습니다."));
+				return;
+			}
+
+			NEScriptEditor& se = Editor::getInstance().getScriptEditor();
+			NEBank& bank = se.getBanks().getBank(NECodeType::MODULE_NAME);
+
+			if (chosen.getNameCode() == NE_DEFAULT) {
+				bank.push(NETString("unamed"));
+				chosen.setNameCode(bank.getLengthLastIndex());
+			}
+
+			NETString& name = bank[chosen.getNameCode()];
+			if (!&bank) {
+				::Core::pushMessage("이 노드에 해당하는 NameBank를 찾을 수 없습니다.");
+				return;
+			}
+			toOwner()->call(HeaderModifier::StringInputWindow(name));
+		}
+		break;
+
 	case CANCEL:
 		LG::Core::open(MainPopUpMenu(*toOwner()));
 		break;

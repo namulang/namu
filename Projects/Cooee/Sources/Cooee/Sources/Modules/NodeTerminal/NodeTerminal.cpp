@@ -1,12 +1,37 @@
 #include "NodeTerminal.hpp"
 #include "../MainPopUpMenu/MainPopUpMenu.hpp"
+#include "../Core/Core.hpp"
+#include "../HeaderModifier/HeaderModifier.hpp"
 
 void NodeTerminal::onKeyPressed(int inputed)
 {
-	switch(inputed)
+	switch (inputed)
 	{
 	case CANCEL:
 		LG::Core::open(MainPopUpMenu(*this));
+		break;
+
+	case LG::RENAME:
+		if( ! focused) {
+			NENode& chosen = castObject();			
+			NEScriptEditor& se = Editor::getInstance().getScriptEditor();
+			NECode new_one(se.getScriptHeader().getMaxCode(NECodeType::NAME));
+
+			if (chosen.getNameCode() <= 0) {
+				se.insertCode(++new_one);
+				chosen.setCodes(new_one);
+			}
+
+			NETString& bank = se.getBanks().getBank(NECodeType::NAME)[chosen.getNameCode()];
+			if (!&bank) {
+				::Core::pushMessage("이 노드에 해당하는 NameBank를 찾을 수 없습니다.");
+				return;
+			}
+
+			call(HeaderModifier::StringInputWindow(bank));
+		}
+		else if(focused == 2)
+			ms_terminal.onKeyPressed(inputed);
 		break;
 
 	case CLOSE:

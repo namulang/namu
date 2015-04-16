@@ -48,6 +48,7 @@ namespace LG
 		COPY		= CTRL_D,
 		PASTE		= CTRL_V,
 		CUT			= CTRL_X,
+		RENAME		= F2,
 		HELP		= '?',
 		//		Ãß°¡Å°:
 		COMMAND		= '~'

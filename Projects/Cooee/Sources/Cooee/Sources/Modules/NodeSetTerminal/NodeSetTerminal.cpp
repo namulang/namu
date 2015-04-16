@@ -4,6 +4,7 @@
 #include "../NodeTerminal/NodeTerminal.hpp"
 #include "../MainPopUpMenu/MainPopUpMenu.hpp"
 #include "../Really/Really.hpp"
+#include "../HeaderModifier/HeaderModifier.hpp"
 
 class NodeNameInputWindow : public ::LG::InputWindow
 {
@@ -44,6 +45,31 @@ void NodeSetTerminal::ContentList::onKeyPressed(int inputed)
 				if(items.getLength() > 0)
 					::Core::commander.command("list " + toOwner()->getPath() + "/" + index);
 			return;
+		}
+		break;
+
+	case LG::RENAME:
+		{
+			NENode& chosen = toOwner()->castObject()[index];
+			if (!&chosen) {
+				::Core::pushMessage(NEString("인덱스 ") + index + NEString("에서 객체를 가져올 수 없었습니다."));
+				return;
+			}
+			NEScriptEditor& se = Editor::getInstance().getScriptEditor();
+			NECode new_one(se.getScriptHeader().getMaxCode(NECodeType::NAME));
+
+			if (chosen.getNameCode() <= 0) {
+				se.insertCode(++new_one);
+				chosen.setCodes(new_one);
+			}
+
+			NETString& bank = se.getBanks().getBank(NECodeType::NAME)[chosen.getNameCode()];
+			if (! &bank) {
+				::Core::pushMessage(NEString("인덱스 ") + index + "에 해당하는 NameBank를 찾을 수 없습니다.");
+				return;
+			}
+
+			toOwner()->call(HeaderModifier::StringInputWindow(bank));
 		}
 		break;
 
