@@ -13,6 +13,7 @@ namespace
 		case NECodeType::SCRIPT:	return banks.getBank(NECodeType::SCRIPT);
 		case NECodeType::GROUP:		return banks.getBank(NECodeType::GROUP);
 		case NECodeType::PRIORITY:	return banks.getBank(NECodeType::PRIORITY);
+		case NECodeType::MODULE_NAME: return banks.getBank(NECodeType::MODULE_NAME);
 		}
 
 		NETStringList* nullpointer = 0x00;
@@ -29,6 +30,7 @@ namespace
 		case 1: return banks.getBank(NECodeType::SCRIPT);
 		case 2: return banks.getBank(NECodeType::GROUP);
 		case 3: return banks.getBank(NECodeType::PRIORITY);
+		case 4: return banks.getBank(NECodeType::MODULE_NAME);
 		}
 
 		NETStringList* nullpointer = 0x00;
@@ -39,7 +41,8 @@ namespace
 void HeaderModifier::CodePopUpMenu::onItemChoosed(type_index index, const NEString& chosen_content)
 {
 	NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
-	if(_codetype == NECodeType::SCRIPT)
+	if(	_codetype == NECodeType::SCRIPT			||
+		_codetype == NECodeType::MODULE_NAME	)
 	{
 		if(index == 0)
 			_onModifyCodeName();
@@ -82,6 +85,12 @@ void HeaderModifier::CodePopUpMenu::_onModifyCodeName()
 
 void HeaderModifier::CodePopUpMenu::_onAddNewCode()
 {
+	if(_codetype == NECodeType::MODULE_NAME)
+	{
+		NEBank& bank = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::MODULE_NAME);
+		bank.push(NETString("unamed"));
+		_onModifyCodeName();
+	}
 	if( ! _code)
 	{
 		::Core::pushMessage("ERROR: 0번 코드는 기본 코드입니다. 추가 / 삭제가 불가능합니다.");
@@ -179,6 +188,10 @@ void HeaderModifier::onItemChoosed(type_index index, const NEString& chosen_cont
 		if(ct == NECodeType::UNDEFINED)
 			ct = NECodeType::PRIORITY;
 
+	case 10:
+		if (ct == NECodeType::UNDEFINED)
+			ct = NECodeType::MODULE_NAME;
+
 		{
 			type_code code = codes_display_indexes[index-6];
 			if(code != -1)
@@ -202,6 +215,7 @@ void HeaderModifier::_pushCodeLists()
 		case 1: to_show += "[SCRI] "; break;
 		case 2: to_show += "[GROU] "; break;
 		case 3: to_show += "[PRIO] "; break;
+		case 4: to_show += "[MODN] "; break;
 		}
 
 		int index = codes_display_indexes[code_type_n];
@@ -259,7 +273,7 @@ NE::NEString HeaderModifier::_generateCodeListNames(int index)
 void HeaderModifier::onKeyPressed(int inputed)
 {
 	int codetype = list.choosed - 6;
-	if(codetype >= 0 && codetype <= 3)
+	if(codetype >= 0 && codetype <= 4)
 	{
 		const NETStringList& bank = _getProperBankBy(codetype);
 

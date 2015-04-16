@@ -385,6 +385,18 @@
 									>
 								</File>
 							</Filter>
+							<Filter
+								Name="Banks"
+								>
+								<File
+									RelativePath="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\Banks\Banks.cpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\StandardEditorManager\Sources\Modules\NEStandardScriptEditor\Execute\innerclass\Banks\Banks.hpp"
+									>
+								</File>
+							</Filter>
 						</Filter>
 					</Filter>
 				</Filter>

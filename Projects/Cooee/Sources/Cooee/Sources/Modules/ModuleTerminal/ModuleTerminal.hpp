@@ -202,7 +202,9 @@ public:
 
 		virtual void onFocused()
 	{
-		namecode.text = castObject().getNameCode();
+		NEBank& bank = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::MODULE_NAME);
+		const NETString& name = bank[castObject().getNameCode()];
+		namecode.text = &name && name != "" ? name : castObject().getNameCode();
 		enable.setValue(castObject().isEnable());
 		enable.text = enable.getValue() ? "------ON!------" : "------OFF-------";			
 		_createGears();
@@ -298,9 +300,9 @@ public:
 
 			switch(arg.getPurpose())
 			{
-			case NEArgumentBase::READ_BY:	setValue(-1);	break;
-			case NEArgumentBase::WRITTEN:	setValue(1);	break;
-			default:								setValue(0);	break;
+			case NEArgumentBase::READ_BY:	setValue(1);	break;
+			case NEArgumentBase::WRITTEN:	setValue(-1);	break;
+			default:						setValue(0);	break;
 			}				
 		}
 		virtual NEObject& clone() const 
@@ -312,18 +314,18 @@ public:
 			LG::GearGliph::onUpdateData();
 			switch(getValue())
 			{
-			case -1:
+			case 1:
 				arg.setPurpose(NEArgumentBase::READ_BY);
-				text = "<<-----READ------";
+				text = "------READ--->>";
 				break;
 
 			case 0:
 				text = "--------FF---------";
 				break;  
 
-			case 1:
+			case -1:
 				arg.setPurpose(NEArgumentBase::WRITTEN);
-				text = "-----WRITE--->>";
+				text = "<<----WRITE----";
 				break;
 			}
 		}
@@ -333,7 +335,7 @@ public:
 
 			switch(getValue())
 			{
-			case -1:
+			case 1:
 				arg.setEnable(true);
 				arg.setPurpose(NEArgumentBase::READ_BY);
 				break;
@@ -343,7 +345,7 @@ public:
 				arg.setPurpose(NEArgumentBase::UNDEFINED);
 				break;  
 
-			case 1:
+			case -1:
 				arg.setEnable(true);
 				arg.setPurpose(NEArgumentBase::WRITTEN);
 				break;

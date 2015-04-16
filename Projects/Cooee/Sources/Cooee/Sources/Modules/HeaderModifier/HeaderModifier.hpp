@@ -24,9 +24,10 @@ class HeaderModifier : public LG::ListWindow
 {
 public:
 	HeaderModifier() 
-		: LG::ListWindow("Header Modifier", 10, 4, 60, 13, BLACK, WHITE, WHITE, LIGHTGREEN)
+		: LG::ListWindow("Header Modifier", 10, 4, 60, 14, BLACK, WHITE, WHITE, LIGHTGREEN)
 	{
-		codes_display_indexes.create(4);
+		codes_display_indexes.create(5);
+		codes_display_indexes.push(-1);
 		codes_display_indexes.push(-1);
 		codes_display_indexes.push(-1);
 		codes_display_indexes.push(-1);
@@ -82,8 +83,10 @@ public:
 		{
 			if(_code < 0)
 			{
-				type_index to_return = _getMaxCodeIndex(_codetype) + 1;
-				if(to_return == -2)
+				type_index to_return = -2;
+
+				to_return = _getMaxCodeIndex(_codetype) + 1;				
+				if (to_return == -2)
 				{
 					EDITOR_WARNING(" : 잘못된 NEScriptHeader의 코드를 조작하려 했습니다.");
 
@@ -101,6 +104,13 @@ public:
 			const NEScriptHeader& h = Editor::getInstance().getScriptEditor().getScriptHeader();
 			switch(from)
 			{
+			case NECodeType::MODULE_NAME:
+				{
+					const NEBank& bank = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::MODULE_NAME);
+					return bank.getLengthLastIndex();
+				}
+				break;
+
 			case NECodeType::NAME:
 			case NECodeType::GROUP:
 			case NECodeType::PRIORITY:
@@ -120,7 +130,8 @@ public:
 		{
 			LG::ListWindow::onUpdateData();
 
-			if(_codetype == NECodeType::SCRIPT)
+			if(	_codetype == NECodeType::SCRIPT		||
+				_codetype == NECodeType::MODULE_NAME)
 			{
 				list.items.create(1);
 				list.items.push("이름 수정하기");

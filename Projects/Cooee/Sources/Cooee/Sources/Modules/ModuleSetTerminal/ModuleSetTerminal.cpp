@@ -9,15 +9,16 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed)
 	ListGliph::onKeyPressed(inputed);
 
 	int index = toOwner()->real_key ? choosed-1 : choosed;
-	NEString path = toOwner()->getPath() + "/" + index;
+	NEString	path = toOwner()->getPath() + "/" + index,
+		push_path = toOwner()->getPath() + "/" + (index + 1);
 
 	switch(inputed) {
 	case CONFIRM:
 		{
 			const NEModuleSet& ms = Kernal::getInstance().getModuleManager().getModuleSet();
-		
+
 			if(choosed < 0 || choosed > ms.getLengthLastIndex())	return;
-			
+
 			if(index == -1)
 				toOwner()->call(NameInputWindow(toOwner()->real_key->getName()));
 			else
@@ -25,7 +26,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed)
 				if(index <= items.getLengthLastIndex())
 					::Core::commander.command("list " + toOwner()->getPath() + "/" + index);
 			}
-				//LG::Core::getWindowList().pushFront(ModuleEncyclo(false, &toOwner()->castObject()[index]));
+			//LG::Core::getWindowList().pushFront(ModuleEncyclo(false, &toOwner()->castObject()[index]));
 		}	
 		break;
 	case CANCEL:
@@ -40,7 +41,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed)
 			if( ! obj.isSubClassOf(NEType::NEMODULE_CODESET))
 				return;
 
-			path += (choosed < 0 || items.getLength() < 0) ? mcs.getLength() : choosed;
+			path += (choosed < 0 || items.getLength() <= 0) ? mcs.getLength() : choosed + 1;
 			LG::Core::getWindowList().pushFront(ModuleEncyclo(0, path));
 		}
 		break;
@@ -62,8 +63,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed)
 
 	case PASTE:
 		if(choosed >= 0)
-			::Core::commander.command("paste " + path);
+			::Core::commander.command("paste " + push_path);
 		break;
 	}	
 }
-
