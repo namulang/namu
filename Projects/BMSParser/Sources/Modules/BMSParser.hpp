@@ -69,10 +69,10 @@ namespace BMSFormatter_kniz
 			arg_type.setPurposeLimitation(NEArgumentBase::WRITTEN);
 			arg_value.setPurposeLimitation(NEArgumentBase::WRITTEN);
 			arg_resource_path.setPurposeLimitation(NEArgumentBase::WRITTEN);
-			arg_on_load_resource.setEnable(false);
+			arg_on_load_resource.setEnable(true);
 
 			arg_pos.setPurposeLimitation(NEArgumentBase::WRITTEN);
-			arg_on_found_note.setEnable(false);
+			arg_on_found_note.setEnable(true);
 
 			return RESULT_SUCCESS;
 		}
@@ -112,19 +112,19 @@ namespace BMSFormatter_kniz
 
 			NESequencialFileLoader loader(arg_path.getValue().toCharPointer());
 			loader.open();
-			if (!loader.isFileOpenSuccess()) return RESULT_TYPE_WARNING;
-
+			if (!loader.isFileOpenSuccess())
+				return ALERT_WARNING("주어진 %s 파일이 없습니다.", arg_path.getValue().toCharPointer());
 
 			while (!loader.isEndOfFile())
 			{
-				TCHAR buffer[256] = { 0, };
-				loader.readByLine(buffer, 256);
+				TCHAR buffer[512] = { 0, };
+				loader.readByLine(buffer, 512);
 				NETString line = buffer;
 				NETStringSet split;
 				line.split(" ", split);
 				NETString rhs;
 				for (int n = 1; n < split.getLength(); n++)
-					rhs += split[n];
+					rhs += split[n] + " ";
 
 				if (line[0] != '#') continue;
 
@@ -186,7 +186,7 @@ namespace BMSFormatter_kniz
 					{
 						is_header_handler_triggered = true;
 
-						if(arg_on_found_note.isEnable())
+						if (arg_on_found_headers.isEnable())
 							arg_on_found_headers.getValue().execute();
 					}
 
@@ -308,8 +308,10 @@ namespace BMSFormatter_kniz
 				for (int n = 0; n < length; n++)
 				{
 					arg_pos.setValue(base_position + n * pos_per_note);
-					type_int value = toIndex(line.extract(n * 2, n * 2 + 1));
+					NEString vv = line.extract(n * 2, n * 2 + 1);
+					type_int value = toIndex(vv);
 					if (!value) continue;
+					cout << vv.toCharPointer();
 					arg_value.setValue(value);
 
 					type_int t = arg_type.getValue().toInt();
