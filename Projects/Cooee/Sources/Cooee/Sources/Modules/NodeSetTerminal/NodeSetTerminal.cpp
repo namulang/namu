@@ -84,7 +84,7 @@ void NodeSetTerminal::ContentList::onKeyPressed(int inputed)
 
 	case ADD:
 		if(index >= 0)
-			::Core::commander.command(NEString("add -node ") + path);
+			::Core::commander.command(NEString("add -node ") + toOwner()->getPath() + "/" + (index+1));
 		else
 			::Core::commander.command("add -node " + toOwner()->getPath());
 		toOwner()->onUpdateData();
@@ -99,7 +99,7 @@ void NodeSetTerminal::ContentList::onKeyPressed(int inputed)
 
 	case PASTE:
 		if(index >= 0)
-			::Core::commander.command("paste " + path);
+			::Core::commander.command("paste " + toOwner()->getPath() + "/" + (index+1));
 		else
 			::Core::commander.command("paste " + toOwner()->getPath());
 		toOwner()->onUpdateData();

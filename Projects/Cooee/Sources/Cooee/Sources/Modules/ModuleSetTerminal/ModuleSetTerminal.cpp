@@ -61,15 +61,15 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed)
 		break;
 
 	case ADD:		
-		{	
+		{
+			int index = toOwner()->real_key ? choosed - 1 : choosed;
 			NEString path = toOwner()->getPath() + "/";
 			NEObject& obj = ::Core::getObjectBy(path);
 			NEModuleCodeSet& mcs = static_cast<NEModuleCodeSet&>(obj);
 			if( ! obj.isSubClassOf(NEType::NEMODULE_CODESET))
 				return;
 
-			path += (choosed < 0 || items.getLength() <= 0) ? mcs.getLength() : choosed + 1;
-			LG::Core::getWindowList().pushFront(ModuleEncyclo(0, path));
+			LG::Core::getWindowList().pushFront(ModuleEncyclo(0, push_path));
 		}
 		break;
 
