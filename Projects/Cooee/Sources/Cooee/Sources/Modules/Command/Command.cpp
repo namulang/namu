@@ -257,9 +257,12 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 		NEObject& target = ::Core::getObjectBy(parameters[1]);
 
 		NENode source;
-		if( ! _pasteTryEverything<NENodeCodeSet, NENode>(target, *parent, source, NEType::NENODE, index_to_add))
-			return    NEString("ERROR: 주어진 타겟(") + target.getTypeName() + ")과 원본(" + 
-			source.getTypeName() + ") 간에는 Paste가 불가능 합니다.";
+		if( ! _pasteTryEverything<NENodeCodeSet, NENode>(target, *parent, source, NEType::NENODE, index_to_add)) {
+			NETString	target_typename = &target ? target.getTypeName() : _T("NULL"),
+						source_typename = &source ? source.getTypeName() : _T("NULL");
+			return	NEString("ERROR: 주어진 타겟(") + target_typename + ")과 원본(" + 		
+					source_typename + ") 간에는 Paste가 불가능 합니다.";
+		}
 	} 
 	else if(parameters[0] == "-module")
 	{
@@ -271,9 +274,12 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 		const NEModule& source = Kernal::getInstance().getModuleManager().getModule(identifier);
 		if( ! &source) return "ERROR: 잘못된 Identifier 입니다.";
 
-		if( ! _pasteTryEverything<NEModuleCodeSet, NEModule>(target, *parent, source, NEType::NEMODULE, index_to_add))
-			return    NEString("ERROR: 주어진 타겟(") + target.getTypeName() + ")과 원본(" + 
-			source.getTypeName() + ") 간에는 Paste가 불가능 합니다.";
+		if( ! _pasteTryEverything<NEModuleCodeSet, NEModule>(target, *parent, source, NEType::NEMODULE, index_to_add)) {
+			NETString	target_typename = &target ? target.getTypeName() : _T("NULL"),
+						source_typename = &source ? source.getTypeName() : _T("NULL");
+			return	NEString("ERROR: 주어진 타겟(") + target_typename + ")과 원본(" + 
+					source_typename + ") 간에는 Paste가 불가능 합니다.";
+		}
 	}
 	else if(parameters[0] == "-key")
 	{
@@ -284,9 +290,12 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 		_searchParent(parameters[2], index_to_add, &parent);
 		NEObject& target = ::Core::getObjectBy(parameters[2]);
 
-		if( ! _pasteTryEverything<NEKeyCodeSet, NEKey>(target, *parent, source, NEType::NEKEY, index_to_add))
-			return    NEString("ERROR: 주어진 타겟(") + target.getTypeName() + ")과 원본(" + 
-			source.getTypeName() + ") 간에는 Paste가 불가능 합니다.";
+		if (!_pasteTryEverything<NEKeyCodeSet, NEKey>(target, *parent, source, NEType::NEKEY, index_to_add)) {
+			NETString	target_typename = &target ? target.getTypeName() : _T("NULL"),
+						source_typename = &source ? source.getTypeName() : _T("NULL");
+			return	NEString("ERROR: 주어진 타겟(") + target_typename + ")과 원본(" +
+					source_typename + ") 간에는 Paste가 불가능 합니다.";
+		}
 	}
 
 	return "";
