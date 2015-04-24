@@ -23,6 +23,7 @@
 #include "../Modules/NodeTagger.hpp"
 #include "../Modules/Random.hpp"
 #include "../Modules/Timer.hpp"
+#include "../Modules/SLU.hpp"
 
 #ifndef StandardModule_EXPORTS
 #	ifdef DEVELOPER

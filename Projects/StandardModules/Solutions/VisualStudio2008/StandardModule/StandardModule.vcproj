@@ -377,6 +377,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Sources\Modules\SLU.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Modules\Timer.hpp"
 					>
 				</File>

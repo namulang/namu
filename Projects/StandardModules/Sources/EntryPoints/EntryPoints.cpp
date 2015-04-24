@@ -45,6 +45,7 @@ namespace NE
 		modulelist.push( NodeTagger() );
 		modulelist.push( Random() );
 		modulelist.push( Timer() );
+		modulelist.push( SLU() );
 
 		return modulelist;
 	}
