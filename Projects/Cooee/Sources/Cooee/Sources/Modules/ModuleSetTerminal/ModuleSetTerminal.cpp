@@ -10,8 +10,10 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed)
 	ListGliph::onKeyPressed(inputed);
 
 	int index = toOwner()->real_key ? choosed-1 : choosed;
+	if (index > items.getLengthLastIndex())
+		index = items.getLengthLastIndex();
 	NEString	path = toOwner()->getPath() + "/" + index,
-		push_path = toOwner()->getPath() + "/" + (index + 1);
+				push_path = toOwner()->getPath() + "/" + (index + 1);
 
 	switch(inputed) {
 	case CONFIRM:

@@ -27,6 +27,8 @@ void NodeSetTerminal::ContentList::onKeyPressed(int inputed)
 
 	type_index	choosed = toOwner()->contents.choosed,
 				index   = toOwner()->real_key ? choosed-1 : choosed;
+	if(index > items.getLengthLastIndex()) 
+		index = items.getLengthLastIndex();
 	NEString	path	= toOwner()->getPath() + "/" + index;
 
 	switch(inputed) 
