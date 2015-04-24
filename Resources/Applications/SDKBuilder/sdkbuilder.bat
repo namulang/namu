@@ -1,9 +1,8 @@
-
 echo	.\
 @echo	off
 echo	*	Node SDK Builder 
-echo	*		ver 0.2.3
-echo	*		2013. 08. 14
+echo	*		ver 0.2.4
+echo	*		2015. 04. 20
 echo	*		Only windows 7, 8 tested.
 echo	*
 echo	*		by kniz. 
@@ -17,16 +16,23 @@ echo	*	You must run this after new version of Core solution has been builded.
 echo	*	this task takes some minutes till be finished.
 echo	*
 echo 	*	Updates :
-echo	*	0.2.3
+echo	*	0.2.4
+echo	*		- solved that xcopy can't be called causeof environmental variable(path).
+echo	*
+echo	*	0.2.3	2015-04-15
 echo	*		- build sdk with some sound resources as contents of sounds.
-echo	*	0.2.2
+echo	*
+echo	*	0.2.2	2013-08-14
 echo	*		- path problem issue has been solved. (now "" will be added at 
 echo	*		  the edge of path)
+echo	*
 echo	*	0.2.1
 echo	*		- fix to create sub directory which was named "Scripts" in 
 echo	*		  Library Directory.
+echo	*
 echo	*	0.2.0
 echo	*		- Manager packages will be added to ./Modules directory.
+echo	*
 echo	*	0.1.0
 echo	*		- now pdb files can be attachable with choose.
 echo	*		- MDK Templates has been seperated from Includes
@@ -34,6 +40,7 @@ echo	*		- some bug was fixed.
 echo	*	-----------------------------------------------------
 pause
 
+set Path=%Path%;%SystemRoot%\System32
 echo	*	Do you want generate SDK with PDB files?(y/n)
 set /p answer="	*	> "
 
