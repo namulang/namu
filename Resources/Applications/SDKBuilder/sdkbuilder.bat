@@ -84,6 +84,7 @@ echo	*
 
 copy /Y "%target_directory%\..\DeveloperGuide.docx" "%target_directory%"
 xcopy /e /h /Y /I "%source_directory%\Sources\*.*" "%target_directory%\Includes"
+xcopy /e /h /Y /I "%source_directory%\..\..\Resources\Scripts\*.*" "%target_directory%\Libraries\Scripts"
 xcopy /e /h /Y /I "%source_directory%\..\..\Resources\Sounds\*.*" "%target_directory%\Libraries\Sounds"
 xcopy /e /h /Y /I ".\..\..\..\Projects\MDK\Sources\*.*" "%target_directory%\Templates"
 xcopy /h /Y /I "%source_directory%\Binaries\Core\*.*" "%target_directory%\Libraries"
