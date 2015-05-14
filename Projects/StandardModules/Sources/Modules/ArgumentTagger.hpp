@@ -66,10 +66,37 @@ namespace NE
 
 			if(arg_purpose.isEnable())
 			{
-				if(arg_purpose.getPurpose() == NEArgumentBase::READ_BY)
-					result |= arg.setPurpose(NEArgumentBase::Purpose(arg_purpose.getValue()));
+				if (arg_purpose.getPurpose() == NEArgumentBase::READ_BY)
+				{
+					type_int purpose = 0;
+					type_int val = arg_purpose.getValue();
+					if (val < 0)
+					{
+						arg.setEnable(false);
+						val  *= -1;
+					}
+					else
+						arg.setEnable(true);
+
+					switch(val)
+					{
+					case 2:	arg.setPurpose(NEArgumentBase::READ_BY);	break;
+					case 1:	arg.setPurpose(NEArgumentBase::WRITTEN);	break;
+					}
+				}				
 				else
-					result |= arg_purpose.setValue(arg.getPurpose());
+				{
+					type_int val = 0;
+					switch (arg.getPurpose())
+					{
+					case NEArgumentBase::READ_BY:	val = 2; break;
+					case NEArgumentBase::WRITTEN:	val = 1; break;
+					}
+					if( ! arg.isEnable())
+						val *= -1;
+
+					arg_purpose.setValue(val);
+				}
 			}
 			if(arg_keyname.isEnable())
 			{
@@ -105,7 +132,7 @@ namespace NE
 				args.create(4);
 				args.push("Target Modules\n변경하고픈 Argument가 속한 모듈을 가리킵니다.");
 				args.push("Arugment Index\nTarget Module의 몇번째 Argument를 Tagging 할 것인지 지정합니다. 복수개가 될 수 있습니다.");
-				args.push("Argument의 Purpose 값\nInput을 하면 이 값을 읽ㅇ서 Target의 Index에 해당하는 Argument에 넣습니다.\nOutput을 하면 Target's Argument에서 값을 가져와 여기에 넣습니다.");
+				args.push("Argument의 Purpose 값\n음수 : Disable, 양수: Enable, 1:Write, 2: Read");
 				args.push("Argument Name");
 			}
 
