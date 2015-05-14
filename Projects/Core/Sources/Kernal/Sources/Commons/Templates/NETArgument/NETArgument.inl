@@ -257,9 +257,16 @@ namespace NE
 		typename T::Trait& getValue()
 		{
 			NEKey& binded = getBinded();
-			if (&binded					&&
-				isValidToBind(binded))
-				return static_cast<T&>(binded).getValue();
+			if (&binded)
+			{
+				if(isValidToBind(binded))
+					return (static_cast<T&>(binded)).getValue();
+				else
+				{
+					_for_casting = binded;
+					return _for_casting.getValue();
+				}
+			}
 
 			return getDefault();
 		}
@@ -326,19 +333,21 @@ namespace NE
 		{
 			SuperClass::serialize(loader);
 
-			return loader >> _default_key >> _is_wanting_to_lock >> _was_source_binded;
+			return loader >> _default_key >> _is_wanting_to_lock >> _was_source_binded >> _for_casting;
 		}
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
 		{
 			SuperClass::serialize(saver);
 
-			return saver << _default_key << _is_wanting_to_lock << _was_source_binded;
+			return saver << _default_key << _is_wanting_to_lock << _was_source_binded << _for_casting;
 		}
 
 	private:
 		virtual type_result _onPrepareExecute()
 		{
-			if(!isLocked())
+			if( ! isValidToBind(getBinded()))
+				_for_casting = _default_key;
+			if( ! isLocked())
 				return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 
 
@@ -348,7 +357,7 @@ namespace NE
 			return RESULT_SUCCESS;
 		}
 		virtual type_result _onPostExecute()
-		{
+		{			
 			if(isLocked())
 				getValue().getBinder().unbind();
 
@@ -361,6 +370,7 @@ namespace NE
 			_default_key = source._default_key;
 			_is_wanting_to_lock = source._is_wanting_to_lock;
 			_was_source_binded = source._was_source_binded;
+			_for_casting = source._for_casting;
 
 			return *this;
 		}
@@ -369,10 +379,12 @@ namespace NE
 			_default_key.release();
 			_is_wanting_to_lock = false;
 			_was_source_binded = false;
+			_for_casting.release();
 		}
 
 	private:
-		T _default_key;		
+		T _default_key;
+		mutable T _for_casting;
 		bool _was_source_binded;
 		bool _is_wanting_to_lock;
 	};

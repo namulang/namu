@@ -62,6 +62,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{D283B95A-B363-4F5C-B31F-4B1025580AB5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SDKBuilder", "SDKBuilder", "{75D4BDF3-0D40-46AD-B827-A0BD25472ACF}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Resources\Applications\SDKBuilder\sdkbuilder.bat = ..\..\Resources\Applications\SDKBuilder\sdkbuilder.bat
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing Project", "Testing Project", "{5292A705-32D0-484D-900C-C7C3E16016F7}"
 EndProject

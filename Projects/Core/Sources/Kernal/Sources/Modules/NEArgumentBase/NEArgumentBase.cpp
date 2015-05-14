@@ -132,6 +132,8 @@ namespace NE
 
 	bool NEArgumentBase::isValidToBind(const NEObject& to_be_bind) const
 	{
+		if( ! & to_be_bind) return false;
+
 		return NEType::isValidHierachy(
 			getTypeToBeBinded(), to_be_bind.getType()
 			);
