@@ -2521,6 +2521,105 @@ public:
 	}
 };
 
+class SuperClassOfSelectorAssigning : public TestCase
+{
+public:
+	SuperClassOfSelectorAssigning() : TestCase("implicit casting test between selector.") {}
+	virtual bool onTest() 
+	{
+		Kernal& kernel = Kernal::getInstance();;
+		NENodeManager& manager = kernel.getNodeManager();
+		NEKeyManager& keyer = kernel.getKeyManager();
+		NEModuleManager& moduler = kernel.getModuleManager();
+		NEScriptManager& scripter = kernel.getScriptManager();
+		NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
+
+		ed.initialize();
+		ed.getScriptHeader().getName() = "test";
+		ed.getScriptHeader().getDeveloper() = "kniz";
+		ed.getScriptHeader().setMaxCode(NECode(1, NECodeType::NAME));
+		ed.synchronizeTo(scripter);
+
+		manager.initialize();
+
+		NENodeSelector ns1("just sel");
+		NECode tmp(1, NECodeType::NAME);
+		NECodeSet tmps(tmp);
+		ns1.setCodes(tmps);
+		NEModuleSelector ms1;
+		NEKeySelector ks1;
+
+		ms1 = ks1 = ns1;
+		if(	ms1.getCodes().getLength() <= 0 || ms1.getCodes()[0] != tmp	||
+			ks1.getCodes().getLength() <= 0 || ks1.getCodes()[0] != tmp	)
+			return false;
+
+		class MyM : public NEModule
+		{
+		public:
+			NETArgument<NEKeySelector> arg_sel;
+			NETArgument<NEBooleanKey> arg_result;
+
+			virtual type_result _onFetchArguments(NEArgumentList& tray)
+			{
+				return tray.push(arg_sel);
+			}
+			virtual type_result _onExecute()
+			{
+				while(NEKey* e = &arg_sel.getValue().getKey())
+				{
+					NEIntKey i = *e;
+					if (i.getValue() != 55)
+						arg_result.setValue(false);
+
+					arg_result.setValue(true);
+				}
+
+				return RESULT_SUCCESS;
+			}
+			virtual const NEExportable::ModuleHeader& getHeader() const
+			{
+				static NEExportable::ModuleHeader instance;
+				if(NEResult::hasError(instance.isValid()))
+				{
+					instance.getName() = "SuperClassOfSelectorAssigning::MyM";
+					instance.getDeveloper() = "kniz";
+					instance.setRevision(1);
+				}
+				return instance;
+			}
+			virtual NEObject& clone() const 
+			{
+				return *(new MyM(*this));
+			}
+		};
+
+		NERootNodeCodeSet& nodes = manager.getRootNodes();
+		NENode& n0 = nodes[nodes.push(NENode())];
+		n0.setNameCode(1);
+		n0.getKeySet().create(1);
+		n0.getKeySet().push(NEIntKey(55, "real data")); 
+		NENode& n = nodes[nodes.push(NENode())];
+		NEKeyCodeSet& ks = n.getKeySet();
+		ks.create(1);
+		ks.push(ns1);
+		n.getModuleSet().create(1);
+		MyM& m = static_cast<MyM&>(n.getModuleSet()[n.getModuleSet().push(MyM())]);
+		m.arg_sel.setKeyName("just sel");
+		m.arg_sel.getValue().setKeyName("real data");
+
+		//	arg_sel이 "just sel" NodeSelector를 가리키고 있고,
+		//	just sel NodeSelector는 real data를 가리킨다.
+		//	arg_sel은 KeySelector인데, 들어온 Value Key가 NodeSelector일때는, 부족한 KeySelector분의 정보를 DefaultKey에서 보충하게 된다.
+		n.execute();
+
+		if (m.arg_result.getValue() == false)
+			return false;
+
+		return true;
+	}
+};
+
 //class Test : public TestCase
 //{
 //public:
@@ -2592,6 +2691,7 @@ void main()
 	SelectorLock().test();
 	StringSetDeepCopytest().test();
 	CodeOperator().test();
+	SuperClassOfSelectorAssigning().test();
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
