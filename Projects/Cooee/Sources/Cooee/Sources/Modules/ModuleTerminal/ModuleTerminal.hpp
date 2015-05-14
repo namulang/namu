@@ -242,6 +242,8 @@ public:
 		{
 			SwitchGliph::onKeyPressed(inputed);
 
+			arg.setPurpose(NEArgumentBase::WRITTEN);
+
 			if( ! getValue())
 				arg.setEnable(true);
 			else
@@ -281,6 +283,8 @@ public:
 		{
 			SwitchGliph::onKeyPressed(inputed);
 
+			arg.setPurpose(NEArgumentBase::READ_BY);
+
 			if(getValue())
 				arg.setEnable(true);
 			else
@@ -298,12 +302,16 @@ public:
 			nobe.back = DARKGRAY;
 			nobe.fore = WHITE;
 
-			switch(arg.getPurpose())
+			setValue(0);
+
+			if(arg.isEnable())
 			{
-			case NEArgumentBase::READ_BY:	setValue(1);	break;
-			case NEArgumentBase::WRITTEN:	setValue(-1);	break;
-			default:						setValue(0);	break;
-			}				
+				switch(arg.getPurpose())
+				{
+				case NEArgumentBase::READ_BY:	setValue(1);	break;
+				case NEArgumentBase::WRITTEN:	setValue(-1);	break;
+				}
+			}
 		}
 		virtual NEObject& clone() const 
 		{
@@ -312,6 +320,7 @@ public:
 		virtual void onUpdateData()
 		{
 			LG::GearGliph::onUpdateData();
+
 			switch(getValue())
 			{
 			case 1:
