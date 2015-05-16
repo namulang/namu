@@ -47,7 +47,7 @@ namespace NE
 				return RESULT_TRUE;
 			}
 
-			return RESULT_TRUE;
+			return RESULT_FALSE;
 		}
 
 	public:
