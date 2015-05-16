@@ -68,6 +68,10 @@ namespace DX9Graphics
 				if(branch)
 					delta = _createDeltaByTarget(target_trans, particle.createTranslationVector());
 
+				//	Normalize:
+				D3DXVec3Normalize(&delta, &delta);
+				delta *= arg_magnitude.getValue();
+
 				particle.arg_trans_x.setValue(particle.arg_trans_x.getValue() + delta.x);
 				particle.arg_trans_y.setValue(particle.arg_trans_y.getValue() + delta.y);
 				particle.arg_trans_z.setValue(particle.arg_trans_z.getValue() + delta.z);
@@ -77,11 +81,7 @@ namespace DX9Graphics
 		}
 		D3DXVECTOR3 _createDeltaByTarget(const D3DXVECTOR3& target_trans, const D3DXVECTOR3& my_pos) const
 		{
-			D3DXVECTOR3 delta = target_trans - my_pos;
-			D3DXVec3Normalize(&delta, &delta);
-			delta *= arg_magnitude.getValue();
-
-			return delta;
+			return target_trans - my_pos;
 		}
 		D3DXVECTOR3 _createDeltaByAngle() const
 		{			
@@ -121,8 +121,8 @@ namespace DX9Graphics
 				_header.getReleaseDate() = _T("2013-10-05");
 				NETStringSet& args = _header.getArgumentsComments();
 				args.create(6);
-				args.push("Magnitude\n아래의 인자로 정해지는 방향으로 얼마나 이동될지 정합니다.\n즉, 방향단위벡터의 길이 값입니다.");
 				args.push("Particle(s)\n대상이 되는 Particle Module들입니다.\nCamera, Model, AnimatedModel들이 여기에 속합니다.");
+				args.push("Magnitude\n아래의 인자로 정해지는 방향으로 얼마나 이동될지 정합니다.\n즉, 방향단위벡터의 길이 값입니다.");
 				args.push("Target\nParticle이 나아가고자 하는 목표 Particle 입니다.\nDisable로 할 경우, 아래의 Angle 값들로 방향을 정합니다.");
 				args.push("Direction Angle X\n이동이 적용될 방향을, 기준방향v(0, 0, 1)에 대한 X축 회전성분입니다.");
 				args.push("Direction Angle y\n이동이 적용될 방향을, 기준방향v(0, 0, 1)에 대한 Y축 회전성분입니다.");
