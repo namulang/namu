@@ -85,7 +85,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="xcopy /e /Y $(TargetDir)..\Binaries $(SolutionDir)..\..\..\..\Resources\Applications\AfterBuild\"
+				CommandLine="xcopy /e /Y $(TargetDir)..\Binaries $(SolutionDir)..\..\Resources\Applications\AfterBuild\"
 			/>
 		</Configuration>
 		<Configuration

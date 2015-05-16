@@ -40,7 +40,7 @@ void _tmain(int argc, TCHAR** argv)
 	WritePrivateProfileString(_T("Version"), _T("BuildNo"), buffer, ini_path);
 
 	{
-		TCHAR commandline[256] = { 0, };
+		TCHAR commandline[512] = { 0, };
 		_tcscpy(commandline, _T("xcopy /e /Y /I "));
 		_tcscat(commandline, binary_path);
 		_tcscat(commandline, _T(" "));
@@ -50,7 +50,7 @@ void _tmain(int argc, TCHAR** argv)
 	}
 	
 	{
-		TCHAR commandline[256] = { 0, };
+		TCHAR commandline[512] = { 0, };
 		_tcscpy(commandline, _T("xcopy /e /Y /I "));
 		_tcscat(commandline, binary_path);
 		_tcscat(commandline, _T("\\..\\..\\Dependencies\\Libraries "));
