@@ -82,21 +82,33 @@ public:
 			break;
 
 		case ENTER:
-			if(real_key)
 			{
-				real_key->getName() = name_text.text;
-				_setInputed(name_text);
+				if (real_key)
+				{
+					real_key->getName() = name_text.text;
+					_setInputed(name_text);
+				}
+
+				KEY temp(value);
+				temp = NEStringKey(textbox.text);
+				value = temp.getValue();
+
+				_setInputed(textbox);
+
+				delete_me = true;
+			}			
+			break;
+
+		case BACKSPACE:
+			if( ! key_pressed)
+			{
+				textbox.makeToHistory();
+				textbox.text = "";
 			}
-
-			KEY temp(value);
-			temp = NEStringKey(textbox.text);
-			value = temp.getValue();
-
-			_setInputed(textbox);
-
-			delete_me = true;
 			break;
 		}
+
+		key_pressed = true;
 
 		if( ! focused_text)
 			name_text.onKeyPressed(inputed);
@@ -113,6 +125,137 @@ public:
 	virtual void onTextInputed(){}
 
 	typename KEY::Trait& value;
+	KEY* real_key;
+	FUNC_CLONE(Modifier<KEY>)
+
+		Gliph name_lable, value_lable;
+	TextGliph name_text;
+	int focused_text;
+};
+
+template <>
+class Modifier<NEByteKey> : public InputTerminal
+{
+public:
+	typedef NEByteKey KEY;
+	Modifier(KEY& key)
+		: InputTerminal("", "주어진 키의 새로운 값을 입력하세요", KEY().getType()),
+		value(key.getValue()), name_lable(0, 0, 0, 8, 1, WHITE, LIGHTRED, "키 이름:"),
+		value_lable(0, 0, 0, 8, 1, WHITE, LIGHTRED, "키 값:"), name_text(0, 0, 0, 22, 1, WHITE, BLACK),
+		focused_text(0), real_key(&key)
+	{
+		y -= 3;
+		height += 6;
+		name_lable.y = y + 3;
+		name_lable.x = x + 3;
+		value_lable.y = y + 5;
+		value_lable.x = x + 3;
+		name_text.x = textbox.x = name_lable.x + name_lable.width;
+		name_text.y = name_lable.y;
+		textbox.y = value_lable.y;
+		textbox.width = name_text.width;
+		textbox.text.from(static_cast<int>(value));
+		name_text.text = real_key ? real_key->getName() : "";
+
+		regist(3, &name_lable, &value_lable, &name_text);
+	}
+	Modifier(KEY::Trait& new_value)
+		: InputTerminal("", "주어진 키의 새로운 값을 입력하세요", NEType::NEKEY),
+		value_lable(0, 0, 0, 8, 1, WHITE, LIGHTRED, "키 값:"), focused_text(1), value(new_value), real_key(0)
+	{
+		textbox.text.from(static_cast<int>(value));
+		value_lable.y = y + 5;
+		value_lable.x = x + 3;
+		regist(1, &value_lable);
+	}
+	Modifier(const Modifier& rhs) : InputTerminal(rhs), value(rhs.value), focused_text(rhs.focused_text),
+		value_lable(rhs.value_lable), name_text(rhs.name_text), name_lable(rhs.name_lable),
+		real_key(rhs.real_key)
+	{
+		if (rhs.gliphs.getLength() > 2)
+			regist(3, &name_lable, &value_lable, &name_text);
+	}
+
+	virtual void onUpdateData()
+	{
+		TextGliph&	focused = !focused_text ? name_text : textbox,
+			&	else_one = &focused == &name_text ? textbox : name_text;
+
+		focused.fore = WHITE;
+		focused.back = LIGHTRED;
+		else_one.fore = LIGHTGRAY;
+		else_one.back = DARKGRAY;
+	}
+
+	virtual void onKeyPressed(int inputed)
+	{
+		switch (inputed)
+		{
+		case UP:
+			if (focused_text > 0)
+			{
+				focused_text--;
+				onUpdateData();
+			}
+			break;
+
+		case DOWN:
+			if (focused_text < 1)
+			{
+				focused_text++;
+				onUpdateData();
+			}
+			break;
+
+		case CLOSE:
+			delete_me = true;
+			break;
+
+		case ENTER:
+			{
+				if (real_key)
+				{
+					real_key->getName() = name_text.text;
+					_setInputed(name_text);
+				}
+
+				KEY temp(value);
+				temp = NEStringKey(textbox.text);
+				value = temp.getValue();
+
+				_setInputed(textbox);
+
+				delete_me = true;
+			}
+			break;
+
+
+		case BACKSPACE:
+			if( ! key_pressed)
+			{
+				textbox.makeToHistory();
+				textbox.text = "";
+			}
+			break;
+		}
+
+		key_pressed = true;
+
+		if (!focused_text)
+			name_text.onKeyPressed(inputed);
+		else
+			textbox.onKeyPressed(inputed);
+	}
+
+	void _setInputed(Gliph& target)
+	{
+		target.fore = WHITE;
+		target.back = LIGHTGREEN;
+	}
+
+	virtual void onTextInputed(){}
+
+	KEY::Trait& value;
 	KEY* real_key;
 	FUNC_CLONE(Modifier<KEY>)
 
@@ -168,7 +311,7 @@ public:
 	virtual void onUpdateData()
 	{
 		TextGliph&	focused = ! focused_text ? name_text : textbox,
-				 &	else_one = &focused == &name_text ? textbox : name_text;
+			&	else_one = &focused == &name_text ? textbox : name_text;
 
 		focused.fore = WHITE;
 		focused.back = LIGHTRED;
@@ -201,22 +344,34 @@ public:
 			break;
 
 		case ENTER:
-			if(real_key)
 			{
-				real_key->getName() = name_text.text;
-				_setInputed(name_text);
+				if (real_key)
+				{
+					real_key->getName() = name_text.text;
+					_setInputed(name_text);
+				}
+
+				KEY temp(value);
+				_encodeEscapeSequences(textbox.text);
+				temp = NEStringKey(textbox.text);
+				value = temp.getValue();
+
+				_setInputed(textbox);
+
+				delete_me = true;
+			}			
+			break;
+
+		case BACKSPACE:
+			if( ! key_pressed)
+			{
+				textbox.makeToHistory();
+				textbox.text = "";
 			}
-
-			KEY temp(value);
-			_encodeEscapeSequences(textbox.text);
-			temp = NEStringKey(textbox.text);
-			value = temp.getValue();
-
-			_setInputed(textbox);
-
-			delete_me = true;
 			break;
 		}
+
+		key_pressed = true;
 
 		if( ! focused_text)
 			name_text.onKeyPressed(inputed);
@@ -284,7 +439,7 @@ public:
 	KEY* real_key;
 	FUNC_CLONE(StringModifier<KEY>)
 
-	Gliph name_lable, value_lable;
+		Gliph name_lable, value_lable;
 	TextGliph name_text;
 	int focused_text;
 };
@@ -667,8 +822,8 @@ public:
 	};
 
 	FUNC_CLONE(Modifier)
-	FUNC_TO_CALLER(Filter)
+		FUNC_TO_CALLER(Filter)
 
-	Gliph bind_header, keyname_header;
+		Gliph bind_header, keyname_header;
 	MenuList menulist;
 };

@@ -62,9 +62,9 @@ namespace DX9Graphics
 		//
 		//			World에 곱하는 공식:
 		//
-		//					새로운 Sprite용 행렬 = 주어진 World 행렬 * 보정행렬
+		//					새로운 Sprite용 행렬 = 보정행렬 * 주어진 World 행렬
 		//
-		//				보정행렬을 뒤에다 곱해야 한다. 앞에다 곱할 경우, 보정행렬은 부모Model행렬 위치에 
+		//				보정행렬을 앞에다 곱해야 한다. 뒤에다 곱할 경우, 보정행렬은 부모World행렬 위치에 
 		//				놓여지게되므로 보정행렬이 180도 회전해 있기 때문에 주어진World행렬의 Z의 부호가 
 		//				반대로 작용하게 된다.
 		//
@@ -114,11 +114,11 @@ namespace DX9Graphics
 		//				를 사용하여 Sprite위로 약간 올린다. 폰트 보정매트릭스는 "World보정매트릭스" 뒤에
 		//				곱해지게 되므로 최종 공식은 다음과 같다.
 		//				
-		//						=	주어진World행렬 * World보정행렬 * Font보정행렬
+		//						=	World보정행렬 * Font보정행렬 * 주어진World행렬
 		//			
 		//			문제점:
-		//				공식과 달리 World보정행렬을 앞에다 곱해줘야 제대로 동작하게 된다. 이유가 뭘까.
-		//				모르겠다. 뒤에다 곱했을때는 스케일이 뻥튀기되는 에러도 사라졌고, 폰트도 제대로 
+		//				World보정행렬을 앞에다 곱해줘야 제대로 동작하게 된다.
+		//				뒤에다 곱했을때는 스케일이 뻥튀기되는 에러도 사라졌고, 폰트도 제대로 
 		//				출력이 되는 것 같다. X축의 양의 방향과 회전방향도 제대로 동작하는 걸로 보인다.
 
 		static type_bool is_adj_initialized = false;
@@ -146,7 +146,7 @@ namespace DX9Graphics
 			dx9.getDevice()->SetTransform(D3DTS_WORLD, &e);
 			_sprite->Begin(D3DXSPRITE_DONOTMODIFY_RENDERSTATE | D3DXSPRITE_OBJECTSPACE);
 			//	제대로된 방법을 찾지 못해서 이런식으로 땜방하였다.
-			D3DXMATRIX world = adj * model.getWorldMatrix();
+			D3DXMATRIX world = /*adj **/ model.getWorldMatrix();
 			
 			_sprite->SetTransform(&world);
 			/*
@@ -160,8 +160,9 @@ namespace DX9Graphics
 			RECT source_rect = texture.createSourceRect();
 			type_uint	width = texture.getWidthOfOneFrame(),
 						height = texture.getHeightOfOneFrame();
-			D3DXVECTOR3 center_of_texture(width / 2.0f, height / 2.0f, 0.5),
+			D3DXVECTOR3 center_of_texture(width / 2.0f, height / 2.0f, 1.0f),
 						world_translation(world._41, world._42, world._43);			
+
 			_sprite->Draw(&texture.getTexture(), &source_rect, &center_of_texture, &world_translation, model.createColor());
 			if(model.arg_texter_binder.isEnable())
 			{
