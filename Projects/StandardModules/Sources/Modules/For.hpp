@@ -21,6 +21,7 @@ namespace NE
 		{
 			arg_iterator.setPurposeLimitation(NEArgumentBase::WRITTEN);
 			arg_start_index.setPurposeLimitation(NEArgumentBase::READ_BY);
+			arg_end.setValue(1);
 			arg_end.setPurposeLimitation(NEArgumentBase::READ_BY);
 
 			return RESULT_SUCCESS;
