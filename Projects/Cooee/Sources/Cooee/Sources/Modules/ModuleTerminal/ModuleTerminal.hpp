@@ -172,6 +172,7 @@ public:
 		}
 	};
 
+
 	ModuleTerminal(const NEString& new_path)
 		: Terminal(new_path, NEType::NEMODULE, 4, 3, 72, 18, BLACK, DARKGRAY),
 		enable_header(0, 30, 4, 30, 1, DARKGRAY, LIGHTGRAY, "\t\t\t\t\t\tEnable"),
@@ -182,7 +183,9 @@ public:
 
 		enable.Gliph::back = CYAN;
 		enable.Gliph::fore = LIGHTCYAN;
-		argument_namelist.choosed = argument_typelist.choosed = -1;
+		namecode.Gliph::back = WHITE;
+		namecode.Gliph::fore = BLACK;
+		argument_namelist.choosed = argument_typelist.choosed = 0;
 	}
 
 	ModuleTerminal(const ModuleTerminal& rhs)
@@ -195,7 +198,9 @@ public:
 
 		enable.Gliph::back = CYAN;
 		enable.Gliph::fore = LIGHTCYAN;
-		argument_namelist.choosed = argument_typelist.choosed = -1;
+		namecode.Gliph::back = WHITE;
+		namecode.Gliph::fore = BLACK;
+		argument_namelist.choosed = argument_typelist.choosed = 0;
 	}
 
 	FUNC_CLONE(ModuleTerminal)
