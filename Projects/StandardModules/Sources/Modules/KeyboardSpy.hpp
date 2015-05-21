@@ -12,19 +12,21 @@ namespace NE
 		typedef NEModule SuperClass;
 
 	public:
+		friend class VKey;
+
 		class VKey : public NETArgument<NETStringKey>
 		{
 		public:
 			typedef NETArgument<NETStringKey> SuperClass; 
 
-			VKey()
-				: _key_code(-1)
+			VKey(KeyboardSpy& owner)
+				: _key_code(-1), _owner(owner)
 			{
 
 			}
 
-			VKey(const VKey& rhs)
-				: SuperClass(rhs), _key_code(-1)
+			VKey(const VKey& rhs, KeyboardSpy& owner)
+				: SuperClass(rhs), _key_code(-1), _owner(owner)
 			{
 
 			}
@@ -34,12 +36,13 @@ namespace NE
 				type_result result = SuperClass::setValue(source);				
 
 				_redefine(source);
+				_owner.is_key_pressed_before = false;
 
 				return result;
 			}
 			virtual NEObject& clone() const
 			{
-				return *(new VKey(*this));
+				return *(new VKey(*this, _owner));
 			}
 			virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
 			{
@@ -79,6 +82,7 @@ namespace NE
 
 		private:
 			type_int _key_code;
+			KeyboardSpy& _owner;
 
 		public:
 			static const NETStringSet& getTransitionTable()
@@ -347,8 +351,20 @@ namespace NE
 				return table;				
 			}
 		};
+
+		KeyboardSpy() : NEModule(), arg_vkey(*this), is_key_pressed_before(false)
+		{
+
+		}
+		KeyboardSpy(const KeyboardSpy& rhs)
+			: NEModule(rhs), arg_vkey(rhs.arg_vkey, *this), arg_state(rhs.arg_state), is_key_pressed_before(rhs.is_key_pressed_before)
+		{
+
+		}
+
 		VKey arg_vkey;
 		NETArgument<NEIntKey> arg_state;
+		type_bool is_key_pressed_before;
 
 
 	protected:
@@ -370,36 +386,22 @@ namespace NE
 	protected:
 		virtual type_result _onExecute()
 		{
-			type_int real_code = arg_vkey.getKeyCode();
+			type_int	real_code = arg_vkey.getKeyCode();
+			type_bool	key_pressed = (GetAsyncKeyState(real_code) & 0x8000);
 
-			int state = GetAsyncKeyState(real_code);
-			type_int	msb = state & 0x8000,
-						lsb = state & 0x0001;
-
-			if(	! msb && lsb)
-				arg_state.setValue(-1);			
-			else if (msb && ! lsb)
-				arg_state.setValue(1);
-			else if (msb && lsb)
-				arg_state.setValue(2);
+			if (key_pressed)
+				if (is_key_pressed_before)
+					arg_state.setValue(1);	//	누르는 중	PRESSING
+				else
+					arg_state.setValue(2);	//	막 누름		DOWN
 			else
-				arg_state.setValue(0);
-			//if(state & 0x8000)
-			//{
-			//	if (state & 0x0001)
-			//		arg_state.setValue(2);	//	PRESSING
-			//	else
-			//		arg_state.setValue(1);	//	DOWN
-			//}
-			//else
-			//{
-			//	if (state & 0x0001)
-			//		arg_state.setValue(-1);	//	UP
-			//	else
-			//		arg_state.setValue(0);	//	NOT INPUTED
-			//}
+				if (is_key_pressed_before)
+					arg_state.setValue(-1);	//	막 뗌		UP
+				else
+					arg_state.setValue(0);
 
-			return arg_state.getValue() > 0 ? RESULT_TRUE : RESULT_FALSE;
+			is_key_pressed_before = key_pressed;
+			return key_pressed ? RESULT_TRUE : RESULT_FALSE;
 		}
 
 	public:
@@ -420,17 +422,17 @@ namespace NE
 					"해당 리스트는 Virtual-Key Codes(http://msdn.microsoft.com/ko-kr/library/windows/desktop/dd375731(v=vs.85).aspx)"
 					"를 참고하세요.\n"
 					"State : VKey의 상태를 조사하여 Int로 저장합니다. 상태는 총 4가지로 다음과 같습니다.\n"
-					"\t-1 : 눌렀다가 막 뗌(= UP)\n"
+					"\t-1  : 키를 막 뗌(= UP)\n"
 					"\t0  : 입력 없음\n"
-					"\t1  : 막 누르는 찰나(=DOWN)\n"
-					"\t2  : 누르는 중\n"
+					"\t1  : 누르는 중(= PRESSING)\n"
+					"\t2  : 막 누르는 찰나(= DOWN)\n"
 					"따라서 State가 양수이면 누름, 음수이면 누르지 않음으로 판단 할 수도 있으며, State 값이 누름이면 실행 결과로 TRUE를 반환합니다."
 					"누르지 않음이면 FALSE를 반환합니다.";
 
 				NETStringSet& args = _instance.getArgumentsComments();
 				args.create(2);
 				args.push("Virtual Key Code\n 눌렀는지 상태를 조사할 버튼 혹은 키 입니다.\nVK_A, VK_MBUTTON, VK_DOWN 식으로 입력합니다.\n다른 키는 MSDN의 Virtual Key Codes(http://msdn.microsoft.com/ko-kr/library/windows/desktop/dd375731(v=vs.85).aspx)를 참고하세요.");
-				args.push("State\nVirtual Key Code의 입력 상태가 저장됩니다.\n-1 : 눌렀다가 뗐음\t\t0: 입력 없음\n1: 막 눌렀음(=DOWN)\t\t2: 누르는 중(PRESSING)");
+				args.push("State\nVirtual Key Code의 입력 상태가 저장됩니다.\n-1 : 눌렀다가 뗐음(UP)\t\t0: 입력 없음\n1: 누르는 중(PRESSING)\t\t2: 막 눌렀음(=DOWN)");
 			}
 
 			return _instance;
@@ -439,5 +441,8 @@ namespace NE
 		{
 			return *(new ThisClass(*this));
 		}
+
+	private:
+
 	};
 }
