@@ -33,6 +33,7 @@ namespace NE
 		}
 
 	protected:
+
 		type_result _onExecute(NENamedUnit& target)
 		{
 			if(arg_enable.isEnable())
@@ -45,6 +46,8 @@ namespace NE
 			if(arg_codes.isEnable())
 			{
 				const NECodeSet& codes = arg_codes.getValue();
+				if (codes.getCodeType().getCodeType() == NEArgumentBase::UNDEFINED)
+					return ALERT_WARNING(" 잘못된 CodeSet의 CodeType(%d)입니다.", codes.getCodeType());
 
 				if (arg_codes.getPurpose() == NEArgumentBase::WRITTEN)
 					target.setCodes(codes);
