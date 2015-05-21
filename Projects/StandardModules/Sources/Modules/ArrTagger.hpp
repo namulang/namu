@@ -38,9 +38,9 @@ namespace NE
 					"\tLength: Length 입니다.";
 				NETStringSet& argcomments = _header.getArgumentsComments();
 				argcomments.create(6);
-				argcomments.push("Method\n연산의 종류입니다.\n0: get[기본값], 1: insert, 2: remove, 3: find");
+				argcomments.push("Method\n연산의 종류입니다.\n0: get[기본값], 1: set, 2: insert, 2: remove, 3: find");
 				argcomments.push("Collector\n연산을 수행할 Collector Key입니다.");
-				argcomments.push("Index\n해당 Collector의 Index 입니다.");
+				argcomments.push("Index\n해당 Collector의 Index 입니다. insert에서 -1은 push, remove에서 -1은 pop이 됩니다.");
 				argcomments.push("Unit\n연산에 따른 결과 및 인자로 사용됩니다.\nget에서는 index의 원소가 할당되어지고, insert에서는 주어진 index로 삽입됩니다.");
 				argcomments.push("Length\n해당 Collector의 Length 속성을 가져옵니다.");
 				argcomments.push("Size\n해당 Collector의 Size 속성을 가져옵니다,");
@@ -79,6 +79,8 @@ namespace NE
 
 					if (unit_key)
 						unit_key_e = &unit_key->getKey();
+					else
+						break;
 				}
 
 				if (collector_key)
@@ -145,23 +147,31 @@ namespace NE
 		template <typename C, NEType::Type TYPE, typename UK>
 		void _operate(C& c, type_index index, NEKey& unit)
 		{
-			if(index < 0 || index > c.getLengthLastIndex()) return;
-
 			switch(arg_method.getValue())
 			{
 			case 0:	//	GET
+				if (index < 0 || index > c.getLengthLastIndex()) return;
 				unit = UK(c[index]);
 				break;
 
 			case 1:	//	SET
+				if (index < 0 || index > c.getLengthLastIndex()) return;
 				c.setElement(index, UK(unit).getValue());
 				break;
 
-			case 2:	//	INSERT				
+			case 2:	//	INSERT
+				if(index < -1 || index > c.getLengthLastIndex()) return;
+				if (index == -1) index = c.getLength();
+
+				if (c.getLength() >= c.getSize())
+					c.resize(c.getLength() + (c.getLength() * 0.5 + 1));
+
 				c.insert(index, UK(unit).getValue());
 				break;
 
 			case 3:	//	REMOVE
+				if (index < -1 || index > c.getLengthLastIndex()) return;
+				if (index == -1) index = c.getLengthLastIndex();
 				{
 					type_index n = NE_INDEX_ERROR;
 					if (!arg_index.isEnable())
