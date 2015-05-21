@@ -289,6 +289,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Sources\Modules\XAudio2Decoder.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Modules\XAudio2Decoder.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Modules\XAudio2Manager.hpp"
 					>
 				</File>

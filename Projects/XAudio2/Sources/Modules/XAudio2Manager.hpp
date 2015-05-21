@@ -8,7 +8,8 @@ namespace XA2
 	{
 	public:
 		typedef XAudio2Manager ThisClass;
-		const int DEFAULT_CHANNEL_SIZE = 32;
+
+		static const int DEFAULT_CHANNEL_SIZE = 32;
 
 	private:
 		XAudio2Manager()

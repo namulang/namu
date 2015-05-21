@@ -128,7 +128,7 @@ namespace XA2
 		}
 
 	private:
-		IXAudio2Voice* _real_channel;
+		IXAudio2SourceVoice* _real_channel;
 
 	public:
 		static const NECodeSet& getModuleScriptCodes();

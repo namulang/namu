@@ -5,7 +5,11 @@
 
 namespace XA2
 {
+	using namespace NE;
+
+	typedef IXAudio2SourceVoice Channel;
+
 	template
-	class NE_DLL NEArrayTemplate<IXAudio2SourceVoice*, false>;
-	typedef NEArrayTemplate<IXAudio2SourceVoice*, false> Channels;
+	class NE_DLL NEArrayTemplate<Channel*, false>;
+	typedef NEArrayTemplate<Channel*, false> Channels;
 }
