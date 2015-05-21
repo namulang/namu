@@ -58,9 +58,12 @@ namespace NE
 		return _default_key;
 	}
 
+
 	template <typename T>
 	type_result NE::NETArgument<T>::setValue(typename const T::Trait& source)
 	{
+		if( ! &source)
+			return KERNAL_ERROR("Source가 NULL 입니다.");
 		NEKey& binded = getBinded();
 		if(	! &binded)
 			return setDefault(source);
