@@ -20,7 +20,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed)
 		{
 			const NEModuleSet& ms = Kernal::getInstance().getModuleManager().getModuleSet();
 
-			if(choosed < 0 || choosed > ms.getLengthLastIndex())	return;
+			if(choosed < 0 || choosed > items.getLengthLastIndex())	return;
 
 			if(index == -1)
 				toOwner()->call(NameInputWindow(toOwner()->real_key->getName()));
