@@ -171,7 +171,7 @@ public:
 		}
 		virtual void onKeyPressed(int inputed)
 		{
-			int index = toOwner()->real_key ? choosed - 2 : choosed;
+			int index = toOwner()->real_key ? choosed - 2 : choosed - 1;
 			NECodeSet& value = toOwner()->value;
 			bool is_focused_on_type =  false;
 			if (toOwner()->real_key)
@@ -192,7 +192,10 @@ public:
 				else
 				{
 					KEY::Trait& key_value = toOwner()->value[index];
-					::LG::Core::open(Modifier<KEY>(key_value));
+					if( ! &key_value)
+						LG::Core::play(LG::Core::SND_BLOCKED);
+					else
+						::LG::Core::open(Modifier<KEY>(key_value));
 				}
 				break;
 
