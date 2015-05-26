@@ -104,6 +104,8 @@ namespace NE
 		virtual type_result bind();
 		virtual NEKey& getDefaultKey() = 0;
 		virtual const NEKey& getDefaultKey() const = 0;
+		virtual NEKey& getKey();
+		virtual const NEKey& getKey() const;
 
 	public:
 		virtual NEType::Type getType() const;

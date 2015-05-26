@@ -148,4 +148,18 @@ namespace NE
 	{
 		return getBinded();
 	}
+
+	NEKey& NEArgumentBase::getKey() 
+	{
+		NEKey& binded = getBinded();
+
+		return &binded ? binded : getDefaultKey();
+	}
+
+	const NEKey& NEArgumentBase::getKey() const
+	{
+		const NEKey& binded = getBinded();
+
+		return &binded ? binded : getDefaultKey();
+	}
 }

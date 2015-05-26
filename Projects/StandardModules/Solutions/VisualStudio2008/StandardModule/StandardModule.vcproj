@@ -313,6 +313,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Sources\Modules\DoOnce.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Modules\FileLister.hpp"
 					>
 				</File>
