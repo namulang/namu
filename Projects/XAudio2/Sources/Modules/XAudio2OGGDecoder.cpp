@@ -5,9 +5,11 @@
 #ifdef	_DEBUG
 #	pragma comment(lib, "libogg.dbg.lib")
 #	pragma comment(lib, "libvorbis.dbg.lib")
+#	pragma comment(lib, "libvorbisfile.dbg.lib")
 #else
 #	pragma comment(lib, "libogg.lib")
 #	pragma comment(lib, "libvorbis.lib")
+#	pragma comment(lib, "libvorbisfile.lib")
 #endif
 
 namespace XA2
