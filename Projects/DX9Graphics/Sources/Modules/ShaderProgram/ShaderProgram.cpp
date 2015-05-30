@@ -65,7 +65,7 @@ namespace DX9Graphics
 				device->SetRenderTarget(0, new_target);
 			}
 		case FINAL_RENDER_TARGET_NEW_OUTPUT:
-				device->Clear(0, 0, D3DCLEAR_TARGET, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
+			device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 			break;
 
 		case FINAL_RENDER_TARGET_PREVIOUS_BUFFER:
