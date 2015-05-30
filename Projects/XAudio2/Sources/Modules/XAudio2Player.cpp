@@ -21,7 +21,6 @@ namespace XA2
 		else
 			result = mng.play(*this, loop_count);
 
-		arg_play_command.setValue(loop_count-1);
 		_is_paused = false;
 		return result;
 	}
