@@ -22,6 +22,10 @@ namespace XA2
 		{
 
 		}
+		virtual ~XAudio2Manager()
+		{
+			release();
+		}
 
 	public:
 		IXAudio2& getXAudio2()
@@ -70,61 +74,51 @@ namespace XA2
 			//	채널이 비어있다면 push:
 			type_index trg_n = -1;
 			for (int n = 0; n < _channels.getLength(); n++)
-				if (!&_channels[n] || isStopped(_channels[n]))
+				if(_channels[n].isStopped())
 				{
 					trg_n = n;
 					break;
 				}
-				if(trg_n == -1)
-					return ALERT_WARNING_IN_SPECIFIED_MODULE(NEExportable::Identifier("XAudio2Player.kniz")," : 비어있는 채널을 찾지 못했습니다. 재생을 중지합니다.");
-				//	해당 채널 Flush:
-				if (player._real_channel = &_channels[trg_n])
-				{
-					player._real_channel->Stop();
-					player._real_channel->DestroyVoice();
-					player._real_channel = 0;
-				}
+			if(trg_n == -1)
+				return ALERT_WARNING_IN_SPECIFIED_MODULE(NEExportable::Identifier("XAudio2Player.kniz")," : 비어있는 채널을 찾지 못했습니다. 재생을 중지합니다.");
+			//	RealChannel 값 채우기:
+			//		포인팅 & 해당 채널 Flush:
+			if(player._real_channel = &_channels[trg_n])
+				player._real_channel->release();
+			//		Decoder 레퍼런싱:
+			player._real_channel->decoder = &decoder;
+			//		Voice 생성:
+			if(FAILED(_xa2->CreateSourceVoice(&player._real_channel->voice, &decoder.getWaveFormatEX(), 0, XAUDIO2_DEFAULT_FREQ_RATIO, NULL, sendlist_ptr, NULL)))
+			{
+				player._real_channel->release();
+				player._real_channel = 0;
+				return ALERT_ERROR_IN_SPECIFIED_MODULE(NEExportable::Identifier("XAudio2Player.kniz"),
+				"경고XX:\t효과음소스보이스를 생성하지 못했습니다. 음악이 재생되지 않습니다. 파일명: %s", decoder.arg_filepath.getValue().toCharPointer());
+			}
+			//	TempBuffer 생성:
+			XAUDIO2_BUFFER buf = {0, };
+			buf.pAudioData = decoder.getWaveData();
+			buf.Flags = XAUDIO2_END_OF_STREAM; // let source-voice know not to expect any data will be followed after this.
+			buf.AudioBytes = decoder.arg_raw_pcm_size.getValue();
+			buf.LoopCount = loop_count;
 
-				if(FAILED(_xa2->CreateSourceVoice(&player._real_channel, &decoder.getWaveFormatEX(), 0, XAUDIO2_DEFAULT_FREQ_RATIO, NULL, sendlist_ptr, NULL)))
-					return ALERT_ERROR_IN_SPECIFIED_MODULE(NEExportable::Identifier("XAudio2Player.kniz"),
-					"경고XX:\t효과음소스보이스를 생성하지 못했습니다. 음악이 재생되지 않습니다. 파일명: %s", decoder.arg_filepath.getValue().toCharPointer());
-				//	TempBuffer 생성:
-				XAUDIO2_BUFFER buf = {0, };
-				buf.pAudioData = decoder.getWaveData();
-				buf.Flags = XAUDIO2_END_OF_STREAM; // let source-voice know not to expect any data will be followed after this.
-				buf.AudioBytes = decoder.arg_raw_pcm_size.getValue();
-				buf.LoopCount = loop_count;
+			//	TempBuffer Submit:
+			if(FAILED(player._real_channel->voice->SubmitSourceBuffer(&buf)))
+			{
+				return ALERT_ERROR_IN_SPECIFIED_MODULE(NEExportable::Identifier("XAudio2Player.kniz"),
+					": SourceVoice 버퍼에 디코딩된 PCM데이터를 Submit 하지 못했습니다.");
+				player._real_channel->release();
+				player._real_channel = 0;
+			}
 
-				//	TempBuffer Submit:
-				if(FAILED(player._real_channel->SubmitSourceBuffer(&buf)))
-				{
-					return ALERT_ERROR_IN_SPECIFIED_MODULE(NEExportable::Identifier("XAudio2Player.kniz"),
-						": SourceVoice 버퍼에 디코딩된 PCM데이터를 Submit 하지 못했습니다.");
-					player._real_channel->Stop();
-					player._real_channel->DestroyVoice();
-					player._real_channel = 0;
-				}
+			//	Start:
+			player._real_channel->voice->Start();
 
-				//	Start:
-				player._real_channel->Start();
-
-				return RESULT_SUCCESS;
+			return RESULT_SUCCESS;
 
 		}
 
 	public:
-		bool isStopped(Channel& channel) const
-		{
-			if( ! &channel) return true;
-
-			XAUDIO2_VOICE_STATE state;
-			channel.GetState(&state);
-
-			if (state.BuffersQueued > 0)
-				return false;
-			else
-				return true;
-		}
 		void initialize()
 		{
 			_initializeXAudio2();
@@ -177,8 +171,7 @@ namespace XA2
 				Channel& ch = _channels[_channels.getLengthLastIndex()];
 				if( ! &ch) continue;
 
-				ch.Stop();
-				ch.DestroyVoice();
+				ch.release();
 
 				_channels.pop();
 			}
@@ -188,7 +181,7 @@ namespace XA2
 			_releaseChannels();
 
 			for (int n = 0; n < DEFAULT_CHANNEL_SIZE; n++)
-				_channels.push(0);
+				_channels.push(Channel());
 		}
 
 	private:

@@ -15,24 +15,6 @@ namespace XA2
 		typedef XAudio2Mixer SuperClass;
 		friend class XAudio2Manager;
 
-		XAudio2Player()
-			: SuperClass(), _is_paused(false), _real_channel(0)
-		{
-
-		}
-		XAudio2Player(const ThisClass& source)
-			: SuperClass(source), _is_paused(source._is_paused), _real_channel(0),
-			arg_decoder(source.arg_decoder), arg_mixer(source.arg_mixer),
-			arg_play_command(source.arg_play_command)
-		{
-
-		}
-
-		virtual ~XAudio2Player()
-		{
-			stop();
-		}
-
 	public:
 		NETArgument<NEModuleSelector>	arg_decoder;
 		NETArgument<NEModuleSelector>	arg_mixer;
@@ -53,20 +35,20 @@ namespace XA2
 		bool isStopped() const;
 		virtual type_result setVolume(type_float new_volume)
 		{
-			if (!_real_channel)
+			if (!_real_channel && _real_channel->voice)
 				return RESULT_TYPE_WARNING;
 
-			_real_channel->SetVolume(new_volume);
+			_real_channel->voice->SetVolume(new_volume);
 
 			return arg_volume.setValue(new_volume);
 		}
 		virtual type_float getVolume() const
 		{
-			if( ! _real_channel)
+			if( ! _real_channel && _real_channel->voice)
 				return RESULT_TYPE_WARNING;
 
 			type_float to_return = 0.0f;
-			_real_channel->GetVolume(&to_return);
+			_real_channel->voice->GetVolume(&to_return);
 
 			return to_return;
 		}
@@ -107,7 +89,7 @@ namespace XA2
 				argcomments.create(4);				
 				argcomments.push("Decoder\n소리 정보를 담고 있는 디코더 1개를 여기에 연결합니다.");
 				argcomments.push("Mixer\n별도의 믹서로 라우팅하려면 여기에 믹서를 1개 연결합니다.");
-				argcomments.push("PlayCommand\n-1: 일시정지\t-2:멈춤\t양수: 재생 횟수\n한번 Command가 Execute되면 0(아무것도 안함)으로 Set 됩니다.");
+				argcomments.push("PlayCommand\n-3:멈춤\t-2: 일시정지\t-1: 무한 재생\t0: 아무것도 안함\n양수: 재생 횟수. 이후 0으로 Set 됩니다.");
 				argcomments.push(SuperClass::getHeader().getArgumentsComments()[0]);				
 			}
 
@@ -119,6 +101,8 @@ namespace XA2
 		{
 			SuperClass::_onFetchModule();
 
+			_real_channel = 0;
+			_is_paused = false;
 			arg_mixer.setEnable(false);
 			arg_decoder.setPurposeLimitation(NEArgumentBase::READ_BY);			
 			arg_play_command.setValue(1);

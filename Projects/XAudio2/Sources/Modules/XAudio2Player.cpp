@@ -14,7 +14,10 @@ namespace XA2
 		if (!&decoder || !decoder.arg_load_success.getValue())
 			return RESULT_TYPE_WARNING;
 		if(_is_paused)
-			_real_channel->Start();
+		{
+			if(_real_channel && _real_channel->voice)
+				_real_channel->voice->Start();
+		}
 		else
 			result = mng.play(*this, loop_count);
 
@@ -26,9 +29,7 @@ namespace XA2
 	{
 		if (!_real_channel) return RESULT_SUCCESS;
 
-		_real_channel->Stop();
-		_real_channel->DestroyVoice();
-		_real_channel = 0x00;
+		_real_channel->release();
 		_is_paused = false;
 		return RESULT_SUCCESS;
 	}
@@ -36,15 +37,16 @@ namespace XA2
 	{
 		if( ! _real_channel) return true;
 
-		return XAudio2Manager::getInstance().isStopped(*_real_channel);
+		return _real_channel->isStopped();
 	}
 	type_result XAudio2Player::pause()
 	{
-		if (!_real_channel) return RESULT_TYPE_WARNING;
-
 		arg_play_command.setValue(0);
+		
+		if (!_real_channel || ! _real_channel->voice) return RESULT_TYPE_WARNING;
+
 		_is_paused = true;
-		_real_channel->Stop();
+		_real_channel->voice->Stop();
 		return RESULT_SUCCESS;
 	}
 	type_result XAudio2Player::_onExecute()
@@ -56,7 +58,8 @@ namespace XA2
 			if (arg_volume.getPurpose() == NEArgumentBase::WRITTEN)
 				arg_volume.setValue(getVolume());
 			else
-				_real_channel->SetVolume(arg_volume.getValue());
+				if(_real_channel && _real_channel->voice)
+					_real_channel->voice->SetVolume(arg_volume.getValue());
 		}			
 
 		if (arg_play_command.isEnable())
@@ -65,11 +68,15 @@ namespace XA2
 			type_result result = RESULT_SUCCESS;
 			switch (command)
 			{
-			case -1:	return pause();
-			case -2:	return stop();
+			case -3:	return stop();
+			case -2:	return pause();
+			case -1:	return play(1);
 			default:
-				if (command > 0)
+				if(command > 0)
+				{
 					result = play(arg_play_command.getValue());
+					arg_play_command.setValue(0);
+				}
 			}
 		}	
 
