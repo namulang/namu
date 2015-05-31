@@ -43,7 +43,7 @@ namespace DX9Graphics
 
 
 					Vectors quad = _createQuadOfSprite(texture.getWidthOfOneFrame(), texture.getHeightOfOneFrame());
-				if (_isRayIntersectedToQuad(quad, ray, mitr->getWorldMatrix()))
+				if(_isRayIntersectedToQuad(quad, ray, mitr->getWorldMatrix()))
 				{
 					arg_is_picked.setValue(true);
 					cam_sel.initializeReferingPoint();
@@ -84,13 +84,14 @@ namespace DX9Graphics
 		//		ViewÁÂÇ¥ -> WorldÁÂÇ¥:
 		D3DXMATRIX invV;
 		D3DXMatrixInverse(&invV, 0, &v);
-		Vector ray_point(invV._41, invV._42, invV._43),
+		Vector ray_point(camera.arg_trans_x.getValue(), camera.arg_trans_y.getValue(), camera.arg_trans_z.getValue()),
 			ray_direction(
 			ray_in_viewcoords.x*invV._11 + ray_in_viewcoords.y*invV._21 + ray_in_viewcoords.z*invV._31,
 			ray_in_viewcoords.x*invV._12 + ray_in_viewcoords.y*invV._22 + ray_in_viewcoords.z*invV._32,
 			ray_in_viewcoords.x*invV._13 + ray_in_viewcoords.y*invV._23 + ray_in_viewcoords.z*invV._33
 			);
 
+		D3DXVec3Normalize(&ray_direction, &ray_direction);
 
 
 		//	post:		
@@ -124,7 +125,7 @@ namespace DX9Graphics
 		typedef D3DXVECTOR3 VEC;
 		VEC v1,v2,v3,v4;
 
-		D3DXMATRIX real_world = Sprite::adj * world;
+		D3DXMATRIX real_world = world;
 
 		D3DXVec3TransformCoord(&v1, &quad[0], &real_world);
 		D3DXVec3TransformCoord(&v2, &quad[1], &real_world);
