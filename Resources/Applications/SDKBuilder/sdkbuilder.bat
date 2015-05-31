@@ -1,7 +1,7 @@
 echo	.\
 @echo	off
 echo	*	Node SDK Builder 
-echo	*		ver 0.2.4
+echo	*		ver 0.2.5
 echo	*		2015. 04. 20
 echo	*		Only windows 7, 8 tested.
 echo	*
@@ -16,6 +16,9 @@ echo	*	You must run this after new version of Core solution has been builded.
 echo	*	this task takes some minutes till be finished.
 echo	*
 echo 	*	Updates :
+echo	*	0.2.5
+echo	*		- will also package script examples.
+echo	*
 echo	*	0.2.4
 echo	*		- solved that xcopy can't be called causeof environmental variable(path).
 echo	*
@@ -85,7 +88,7 @@ echo	*
 
 copy /Y "%target_directory%\..\DeveloperGuide.docx" "%target_directory%"
 xcopy /e /h /Y /I "%source_directory%\Sources\*.*" "%target_directory%\Includes"
-xcopy /e /h /Y /I "%source_directory%\..\..\Resources\Sounds\*.*" "%target_directory%\Libraries\Sounds"
+xcopy /e /h /Y /I "%source_directory%\..\..\Resources\SDK base files\*.*" "%target_directory%\Libraries\"
 xcopy /e /h /Y /I ".\..\..\..\Projects\MDK\Sources\*.*" "%target_directory%\Templates"
 xcopy /h /Y /I "%source_directory%\Binaries\Core\*.*" "%target_directory%\Libraries"
 xcopy /h /Y /I "%source_directory%\Binaries\StandardEditorManager" "%target_directory%\Libraries\Modules"
