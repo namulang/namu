@@ -790,6 +790,30 @@
 				</File>
 			</Filter>
 		</Filter>
+		<File
+			RelativePath=".\Cooee.rc"
+			>
+		</File>
+		<File
+			RelativePath=".\icon.ico"
+			>
+		</File>
+		<File
+			RelativePath=".\icon.png"
+			>
+		</File>
+		<File
+			RelativePath=".\icon1.ico"
+			>
+		</File>
+		<File
+			RelativePath=".\resource.h"
+			>
+		</File>
+		<File
+			RelativePath=".\resource1.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
