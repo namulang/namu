@@ -125,9 +125,9 @@ namespace DX9Graphics
 		if( ! is_adj_initialized)
 		{
 			D3DXMATRIX adjr, adjs;
-			D3DXMatrixRotationX(&adjr, D3DX_PI);
-			D3DXMatrixScaling(&adjs, 0.02f, 0.02f, 0.02f);
-			adj = adjs * adjr;
+			D3DXMatrixRotationX(&adj, D3DX_PI);
+			//D3DXMatrixScaling(&adjs, 0.02f, 0.02f, 0.02f);
+			//adj = adjs * adjr;
 			D3DXMatrixTranslation(&adj_for_font, 0, 0, -0.5f);
 			is_adj_initialized = true;
 		}
@@ -167,9 +167,9 @@ namespace DX9Graphics
 			RECT source_rect = texture.createSourceRect();
 			type_uint	width = texture.getWidthOfOneFrame(),
 						height = texture.getHeightOfOneFrame();
-			D3DXVECTOR3 center_of_texture(width / 2.0f, height / 2.0f, 0.5),
+			D3DXVECTOR3 center_of_texture(width / 2.0f, height / 2.0f, 0.0f),
 						world_translation(world._41, world._42, world._43);			
-			_sprite->Draw(&texture.getTexture(), /*&source_rect*/NULL, NULL/*&center_of_texture*/, NULL/*&world_translation*/, model.createColor());
+			_sprite->Draw(&texture.getTexture(), &source_rect, &center_of_texture, NULL, model.createColor());
 			if(model.arg_texter_binder.isEnable())
 			{
 				SpriteTexter& texter = model.getTexter();
@@ -179,8 +179,7 @@ namespace DX9Graphics
 				{
 					ALERT_WARNING(" : Texter나 Texture 둘중 하나가 바인딩이 안되어 있습니다.");
 					goto POST;	//	same as that break if blockstatements.
-				}
-					
+				}					
 
 				world *= adj_for_font;
 				_sprite->SetTransform(&world);	//	Texter를 위해서 미리 폰트보정행렬을 Set한다.
