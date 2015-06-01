@@ -1,5 +1,6 @@
 #include "Modifier.hpp"
 #include "../Planetarium/Planetarium.hpp"
+#include "../Core/Core.hpp"
 
 Modifier<NEBooleanKey>::Modifier(NEBooleanKey& key) 
 : Terminal("", NEType::NEBOOLEAN_KEY, 20, 7, 40, 7, WHITE, BLACK),
@@ -484,18 +485,83 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(int inputed)
 
 					virtual void onFocused()
 					{
-						lists.release();
-						NEModuleSelector& key = toCaller().toCaller().toCaller().getModuleFilter();
-						if(key.getModuleCodes().getCodeType().getCodeType() == NECodeType::MODULE_NAME) 
+						codes.release();
+						Planetarium& pl = toCaller().toCaller().toCaller();
+						NEModuleSelector key = pl.getModuleFilter();
+						class MyHandler : public ::Core::onObjectFound
 						{
-							text = "새로 추가할 모듈 NameCode를 입력하세요.\n반드시 숫자로 입력하며, 자동 동기화가 안됩니다.";
-							return;
+						public:
+							MyHandler() : last_found(0) {}
+							virtual void onKeyFound(NEKey& target) {}
+							virtual void onNodeFound(NENode& target) { last_found = &target; }
+							virtual void onModuleFound(NEModule& target) {}
+
+							NENode* last_found;
+						} handler;
+
+						if (::Core::isObservingDebug())
+							key.setManager(NEType::NENODE_MANAGER);
+						else
+							key.setManager(NEType::NESCRIPT_EDITOR);
+
+						if(pl.specified_filter &&  key.getCodes().getCodeType() == NECodeType::ME)
+						{
+							Planetarium& planetarium = toCaller().toCaller().toCaller();
+							if( ! &planetarium || !planetarium.focusing || !planetarium.focusing->real) return;
+							NEString path = ::Core::createPathBy(*(planetarium.focusing->real));
+							NEObject& object = ::Core::getObjectBy(path, handler);
+							if (!&object || !handler.last_found)
+							{
+								::Core::pushMessage(path + "에 해당하는 객체가 없습니다.");
+								return;
+							}
+
+							key.setCodes(handler.last_found->getCodes(NECodeType::SCRIPT));
 						}
 
-						const NEModuleSet& m = Kernal::getInstance().getModuleManager().getModuleSet();
-						list.items.create(m.getLength());
-						for(int n=0; n < m.getLength() ;n++)
-							list.items.push(m[n].getHeader().getName() + "(" + m[n].getScriptCode() + ")");
+						if(key.getModuleCodes().getCodeType().getCodeType() == NECodeType::MODULE_NAME) 
+						{
+							NEModuleSelector d_ms;
+							d_ms.setCodes(NECodeSet(NECode(0, NECodeType::ALL)));							
+							if (::Core::isObservingDebug())
+								d_ms.setManager(NEType::NENODE_MANAGER);
+							else
+								d_ms.setManager(NEType::NESCRIPT_EDITOR);
+
+							NEModuleSelector& module_sel = pl.specified_filter ? key : d_ms;
+							module_sel.isUsingAutoBinding() = false;
+							module_sel.NENodeSelector::isUsingAutoBinding() = false;
+							module_sel.setModuleCodes(NECodeSet(NECode(0, NECodeType::ALL)));
+							while(NEModule* e = &module_sel.getModule())
+							{
+								type_code namecode = e->getNameCode();
+								if (namecode > 0 && codes.find(namecode) == -1)
+									codes.push(namecode);
+							}
+
+							list.items.create(codes.getLength());
+							NEBank& namebank = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::MODULE_NAME);
+							if (!&namebank)
+							{
+								::Core::pushMessage("NameBank가 없습니다.");
+								return;
+							}
+
+							for(NEListTemplate<type_index>::Iterator* e = codes.getIterator(0); e ; e = e->getNext())
+							{
+								NETString& name = namebank[e->getValue()];
+
+								if(&name)
+									list.items.push(name + "[" + e->getValue() + "]");
+							}
+						}
+						else
+						{
+							const NEModuleSet& m = Kernal::getInstance().getModuleManager().getModuleSet();
+							list.items.create(m.getLength());
+							for (int n = 0; n < m.getLength(); n++)
+								list.items.push(m[n].getHeader().getName() + "(" + m[n].getScriptCode() + ")");
+						}						
 					}				
 
 					virtual void onItemChoosed(type_index item_index, const NEString& chosen_content)
@@ -510,7 +576,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(int inputed)
 						if(item_index >= 0 && key.getModuleCodes().getCodeType().getCodeType() == NECodeType::MODULE_SCRIPT)
 							copied.push(NECode(item_index, NECodeType(NECodeType::MODULE_SCRIPT, false)));
 						else
-							copied.push(NECode(chosen_content.toInt(), NECodeType(NECodeType::MODULE_NAME, false)));
+							copied.push(NECode(codes[item_index], NECodeType(NECodeType::MODULE_NAME, false)));
 
 						key.setModuleCodes(copied);
 						toCaller().menulist.codelist_display_index = -1;
@@ -520,7 +586,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(int inputed)
 						delete_me = true;
 					}
 
-					NEListTemplate<type_index> lists;
+					NEListTemplate<type_index> codes;
 				};
 
 				switch(module_type)
@@ -745,12 +811,14 @@ void Modifier<NEModuleSelector>::MenuList::updateList()
 	}
 	else
 	{
+		NEBank& module_namebank = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::MODULE_NAME);
+
 		switch(codelist_display_index)
 		{
 		case -2:	codes_to_str = "NEW";	break;
 		case -1:	
 			codes_to_str = "CODES: ";
-			{
+			{				
 				for(int n=0; n < c.getLength() ;n++)
 				{
 					const NEModule& f = ms[c[n].getCode()];
@@ -759,7 +827,12 @@ void Modifier<NEModuleSelector>::MenuList::updateList()
 					if (c[n].getCodeType() == NECodeType::MODULE_SCRIPT)
 						codes_to_str += f.getHeader().getName() + "[" + c[n].getCode() + "] ";
 					else
-						codes_to_str += NEString(c[n].getCode()) + " ";
+					{
+						NETString& name = module_namebank[c[n].getCode()];
+						if(&name)
+							codes_to_str += name + "[" + c[n].getCode() + "] ";
+					}
+
 				}
 			}
 
@@ -781,7 +854,10 @@ void Modifier<NEModuleSelector>::MenuList::updateList()
 						break;
 
 					case NECodeType::MODULE_NAME:
-						codes_to_str = NEString("[") + code.getCode() + "]";
+						NETString& name = module_namebank[code.getCode()];
+
+						if(&name)
+							codes_to_str = name + "[" + code.getCode() + "]";
 				}
 
 			}			
