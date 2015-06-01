@@ -95,11 +95,55 @@ void Planetarium::onKeyPressed(int inputed)
 			}
 
 			getNodeFilter().setCodes(handler.last_found->getCodes(NECodeType::SCRIPT));
-			if(	object.isSubClassOf(NEType::NEMODULE)	&&
-				&getModuleFilter()						)
+			if (object.isSubClassOf(NEType::NEMODULE) &&
+				&getModuleFilter())
 			{
 				NEModule& casted = static_cast<NEModule&>(object);
 				getModuleFilter().setModuleCodes(casted.getCodes(NECodeType::MODULE_SCRIPT));
+
+				NEType::Type manager_type = getModuleFilter().getManagerType();
+				bool node_auto_binding = getModuleFilter().NENodeSelector::isUsingAutoBinding();
+				bool module_auto_binding = getModuleFilter().isUsingAutoBinding();
+				getModuleFilter().isUsingAutoBinding() = false;
+				getModuleFilter().NENodeSelector::isUsingAutoBinding() = false;
+				if (::Core::isObservingDebug())
+					getModuleFilter().setManager(NEType::NENODE_MANAGER);
+				else
+					getModuleFilter().setManager(NEType::NESCRIPT_EDITOR);
+
+				NEModule* one = 0;
+				while (NEModule* e = &getModuleFilter().getModule())
+				{
+					if(one && e != one)
+					{
+						if (casted.getNameCode() == 0)
+						{
+							::Core::pushMessage("동일한 Module이 2개 있습니다. 선택하고 싶은 쪽에 NameCode를 부여하던가, 백스페이스로 필터를 열어 Manual로 조정하세요.");
+							getModuleFilter().setModuleCodes(casted.getCodes(NECodeType::MODULE_SCRIPT));
+						}
+						else
+						{
+							getModuleFilter().setModuleCodes(casted.getCodes(NECodeType::MODULE_NAME));
+							one = 0;
+							while (NEModule* e = &getModuleFilter().getModule())
+							{
+								if(one && e != one)
+								{
+									::Core::pushMessage("동일한 Module이 2개 있습니다. 선택하고 싶은 쪽에 NameCode를 부여하던가, 백스페이스로 필터를 열어 Manual로 조정하세요.");
+									getModuleFilter().setModuleCodes(casted.getCodes(NECodeType::MODULE_SCRIPT));
+									break;
+								}
+								one = e;
+							}
+						}
+						break;
+					}
+					one = e;
+				}
+
+				getModuleFilter().setManager(manager_type);
+				getModuleFilter().isUsingAutoBinding() = module_auto_binding;
+				getModuleFilter().NENodeSelector::isUsingAutoBinding() = node_auto_binding;
 			}
 			if(	object.isSubClassOf(NEType::NEKEY)	&&
 				&getKeyFilter()						)
