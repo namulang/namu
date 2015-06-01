@@ -50,7 +50,7 @@ void ModuleSetTerminal::ModuleNameList::onKeyPressed(int inputed)
 			}
 
 			NETString& name = bank[chosen.getNameCode()];
-			if (!&bank) {
+			if( ! &name) {
 				::Core::pushMessage("이 노드에 해당하는 NameBank를 찾을 수 없습니다.");
 				return;
 			}
