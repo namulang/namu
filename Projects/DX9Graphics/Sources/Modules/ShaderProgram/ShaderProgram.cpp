@@ -43,7 +43,7 @@ namespace DX9Graphics
 		return static_cast<type_int>(param.BackBufferWidth * arg_width_rate.getValue());
 	}
 
-	type_result ShaderProgram::_standByFinalRenderTarget(DX9& dx9)
+	type_result ShaderProgram::_standByFinalRenderTarget(DX9& dx9, EReadyRenderTarget which)
 	{
 		if( ! &dx9)
 			return KERNAL_ERROR("디바이스가 없으므로 실패");
@@ -53,22 +53,28 @@ namespace DX9Graphics
 
 
 		//	main:
-		switch(arg_final_render_target)
+		switch(which)
 		{
-		case FINAL_RENDER_TARGET_OUTPUT:	
+		case READY_RENDER_TARGET_OUTPUT:	
 			device->SetRenderTarget(0, _original_surface);
 			break;
 
-		case FINAL_RENDER_TARGET_NEW_BUFFER:
+		case READY_RENDER_TARGET_NEW_BUFFER:
 			{
 				LPDIRECT3DSURFACE9 new_target = &(targets.getEmptyTarget().getSurface());
 				device->SetRenderTarget(0, new_target);
+				_clear(device);
 			}
-		case FINAL_RENDER_TARGET_NEW_OUTPUT:
-			device->Clear(0, 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 			break;
 
-		case FINAL_RENDER_TARGET_PREVIOUS_BUFFER:
+		case READY_RENDER_TARGET_EMPTY_BUFFER:
+			{
+				LPDIRECT3DSURFACE9 previous = &(targets.getEmptyTarget().getSurface());
+				device->SetRenderTarget(0, previous);
+			}
+			break;
+
+		case READY_RENDER_TARGET_FILLED_BUFFER:
 			{
 				LPDIRECT3DSURFACE9 previous = &(targets.getFilledTarget().getSurface());
 				device->SetRenderTarget(0, previous);
@@ -177,16 +183,19 @@ namespace DX9Graphics
 
 
 		//	main:
+		//device->SetRenderState(D3DRS_ZENABLE, FALSE);
 		device->SetFVF(RENDER_TARGET_VERTEX_FVF);
 		device->SetStreamSource(0, &vertexes, 0, sizeof(RenderTargetVertex));
 		device->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);		
+		//device->SetRenderState(D3DRS_ZENABLE, TRUE);
 
 		return RESULT_SUCCESS;
 	}
 
 	void ShaderProgram::_endFinalRenderTarget(RenderTargetSet& targets)
 	{
-		if(arg_final_render_target == FINAL_RENDER_TARGET_NEW_BUFFER)
+		if(	arg_final_render_target == FIRST	|| 
+			arg_final_render_target == MIDDLE	)
 			targets.notifyTargetFilled();
 	}
 	
@@ -222,9 +231,6 @@ namespace DX9Graphics
 
 		LPDIRECT3DDEVICE9 device = dx9.getDevice();
 
-		if(NEResult::hasError(_standByFinalRenderTarget(dx9))) 
-			return ALERT_ERROR("최종 렌더타겟이 없습니다");
-
 		device->BeginScene();
 
 		while(&selector.getModule())
@@ -234,8 +240,6 @@ namespace DX9Graphics
 			_onRenderModel(device, camera, model);
 		}
 		device->EndScene();
-
-		_endFinalRenderTarget(_getRenderTargetSet(dx9));
 
 		return RESULT_SUCCESS;
 	}

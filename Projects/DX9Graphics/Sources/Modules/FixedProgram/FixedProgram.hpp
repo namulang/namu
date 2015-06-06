@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../ShaderProgram/ShaderProgram.hpp"
+#include "../Sprite/Sprite.hpp"
+#include "../TabledTexture/TabledTexture.hpp"
 
 namespace DX9Graphics
 {
@@ -44,51 +46,71 @@ namespace DX9Graphics
 			type_result result = RESULT_SUCCESS;
 			switch (arg_final_render_target)
 			{
-			case ShaderProgram::FINAL_RENDER_TARGET_NEW_BUFFER:
-			case ShaderProgram::FINAL_RENDER_TARGET_NEW_OUTPUT:
-				return SuperClass::_onRender(dx9, camera);
+			case ShaderProgram::ONLY_ONE:
+				if(NEResult::hasError(_standByFinalRenderTarget(dx9, ShaderProgram::READY_RENDER_TARGET_OUTPUT))) 
+					return ALERT_ERROR("최종 렌더타겟이 없습니다");
+
+				result = SuperClass::_onRender(dx9, camera);
 				break;
 
-			case ShaderProgram::FINAL_RENDER_TARGET_OUTPUT:
-				arg_final_render_target = ShaderProgram::FINAL_RENDER_TARGET_PREVIOUS_BUFFER;
+			case ShaderProgram::FIRST:
+				if(NEResult::hasError(_standByFinalRenderTarget(dx9, ShaderProgram::READY_RENDER_TARGET_NEW_BUFFER))) 
+					return ALERT_ERROR("최종 렌더타겟이 없습니다");
+
 				result = SuperClass::_onRender(dx9, camera);
-				arg_final_render_target = ShaderProgram::FINAL_RENDER_TARGET_OUTPUT;
+				_endFinalRenderTarget(_getRenderTargetSet(dx9));
+				break;
+
+			case ShaderProgram::MIDDLE:
+				if(NEResult::hasError(_standByFinalRenderTarget(dx9, ShaderProgram::READY_RENDER_TARGET_FILLED_BUFFER))) 
+					return ALERT_ERROR("최종 렌더타겟이 없습니다");
+
+				result = SuperClass::_onRender(dx9, camera);
+				break;
+
+			case ShaderProgram::LAST:
+				{
+					//	1-Pass:
+					arg_final_render_target = ShaderProgram::MIDDLE;
+					if(NEResult::hasError(_standByFinalRenderTarget(dx9, ShaderProgram::READY_RENDER_TARGET_FILLED_BUFFER))) 
+						return ALERT_ERROR("최종 렌더타겟이 없습니다");
+					result = SuperClass::_onRender(dx9, camera);
+
+					//	2-Pass:
+					arg_final_render_target = ShaderProgram::LAST;
+					if( ! &dx9)
+						return ALERT_ERROR("DX9 바인딩 실패. 작업을 중지합니다.");
+					LPDIRECT3DDEVICE9 device = dx9.getDevice();
+					RenderTargetSet& targets = _getRenderTargetSet(dx9);
+					if(targets.getSize() <= 0)
+						return ALERT_ERROR("DX9 바인딩 실패로 렌더타겟을 생성하지 못했습니다.");
+
+					//			Matrix치환:
+					D3DXMATRIX new_w, new_v, new_p = _getOrthoMatrix();
+					D3DXMatrixIdentity(&new_w);
+					D3DXMatrixLookAtLH(&new_v, &D3DXVECTOR3(0, 0, -1), &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 1, 0));
+					device->SetTransform(D3DTS_WORLD, &new_w);
+					device->SetTransform(D3DTS_VIEW, &new_v);
+					device->SetTransform(D3DTS_PROJECTION, &new_p);
+
+					//	main:
+					if(NEResult::hasError(_standByFinalRenderTarget(dx9, ShaderProgram::READY_RENDER_TARGET_OUTPUT)))
+						return ALERT_ERROR("최종 렌더타겟이 없습니다");
+					device->BeginScene();
+					device->SetTexture(0, &targets.getFilledTarget().getTexture());
+
+					device->SetRenderState(D3DRS_ZENABLE, FALSE);					
+					_renderTargetVertex(device);
+					_endFinalRenderTarget(targets);
+					device->SetRenderState(D3DRS_ZENABLE, TRUE);
+
+					//	post:
+					device->EndScene();
+				}			
 				break;
 			}
 
-			if( ! &dx9)
-				return ALERT_ERROR("DX9 바인딩 실패. 작업을 중지합니다.");
-
-			LPDIRECT3DDEVICE9 device = dx9.getDevice();
-			//		RenderTarget를 Quad 형태로 출력하기 위한 준비:
-			//			Matrix치환:
-			D3DXMATRIX new_w, new_v, new_p = _getOrthoMatrix();
-			D3DXMatrixIdentity(&new_w);
-			D3DXMatrixLookAtLH(&new_v, &D3DXVECTOR3(0, 0, -1), &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 1, 0));
-			device->SetTransform(D3DTS_WORLD, &new_w);
-			device->SetTransform(D3DTS_VIEW, &new_v);
-			device->SetTransform(D3DTS_PROJECTION, &new_p);
-			//			Effect 가져오기:
-			ID3DXEffect& effect = getEffect();
-			//			RenderTargetSet 가져오기:
-			RenderTargetSet& targets = _getRenderTargetSet(dx9);
-
-
-			//	main:
-			//		Output RenderTarget 준비:
-			if(NEResult::hasError(_standByFinalRenderTarget(dx9)))
-				return ALERT_ERROR("최종 렌더타겟이 없습니다");
-
-			device->BeginScene();
-
-			device->SetTexture(0, &targets.getFilledTarget().getTexture());
-			_renderTargetVertex(device);
-
-
-			//	post:
-			device->EndScene();
-			_endFinalRenderTarget(targets);
-			return RESULT_SUCCESS;
+			return result;
 		}
 		virtual LPCVOID _onRequestShaderCode(OUT type_int& size_of_binary) const { size_of_binary = 0; return 0; }
 		virtual type_result _onSetShaderHandles(ShaderHandleSet&) { return RESULT_SUCCESS; }

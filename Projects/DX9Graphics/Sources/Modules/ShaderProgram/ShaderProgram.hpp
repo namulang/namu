@@ -19,12 +19,19 @@ namespace DX9Graphics
 		typedef ShaderProgram ThisClass;
 
 	public:
-		enum ERenderTarget
+		enum EShaderProgramPosition
 		{
-			FINAL_RENDER_TARGET_OUTPUT			= 0,
-			FINAL_RENDER_TARGET_NEW_BUFFER		= 1,
-			FINAL_RENDER_TARGET_PREVIOUS_BUFFER	= 2,
-			FINAL_RENDER_TARGET_NEW_OUTPUT		= 3
+			FIRST,
+			MIDDLE,
+			LAST,
+			ONLY_ONE
+		};
+		enum EReadyRenderTarget
+		{			
+			READY_RENDER_TARGET_OUTPUT = 0x01,
+			READY_RENDER_TARGET_NEW_BUFFER = 0x02,
+			READY_RENDER_TARGET_FILLED_BUFFER = 0x04,
+			READY_RENDER_TARGET_EMPTY_BUFFER = 0x08
 		};
 		static const int RENDER_TARGET_VERTEX_FVF = (D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
@@ -75,10 +82,8 @@ namespace DX9Graphics
 			device->GetTransform(D3DTS_VIEW, &old_v);
 			device->GetTransform(D3DTS_PROJECTION, &old_p);
 
-
 			//	main:
 			_onRender(dx9, camera);
-
 
 			//	post:
 			device->SetTransform(D3DTS_WORLD, &old_w);
@@ -155,7 +160,7 @@ namespace DX9Graphics
 	protected:		
 		void _clear(LPDIRECT3DDEVICE9 device)
 		{
-			device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+			device->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 		}
 		void _beginPass(int new_pass, LPDIRECT3DDEVICE9 device, RenderTarget& new_one)
 		{
@@ -171,7 +176,13 @@ namespace DX9Graphics
 		}
 		type_result _beginFinalRenderPass(int new_pass, DX9& dx9)
 		{
-			_standByFinalRenderTarget(dx9);			
+			EReadyRenderTarget which = 
+				(ShaderProgram::arg_final_render_target == LAST		|| 
+				ShaderProgram::arg_final_render_target == ONLY_ONE	)	? 
+				READY_RENDER_TARGET_OUTPUT : 
+				READY_RENDER_TARGET_EMPTY_BUFFER;
+
+			_standByFinalRenderTarget(dx9, which);
 
 			_effect->BeginPass(new_pass);
 
@@ -190,7 +201,7 @@ namespace DX9Graphics
 			D3DXMatrixOrthoLH(&_instance, 2.0f, 2.0f, 0.0f, 1000.0f);
 			return _instance;
 		}
-		type_result _standByFinalRenderTarget(DX9& dx9);
+		type_result _standByFinalRenderTarget(DX9& dx9, EReadyRenderTarget which);
 
 	private:				
 		type_result _initializeShader(LPDIRECT3DDEVICE9 device);		
@@ -229,12 +240,12 @@ namespace DX9Graphics
 	private:
 		LPD3DXEFFECT _effect;
 		ShaderHandleSet _handles;
-		LPDIRECT3DSURFACE9 _original_surface;
+		public: LPDIRECT3DSURFACE9 _original_surface;
 
 	public:
 		static const NECodeSet& getModuleScriptCodes();
 
-	protected:
+	public:
 		static IDirect3DVertexBuffer9& _getRenderTargetVertex(LPDIRECT3DDEVICE9 device);
 		static RenderTargetSet& _getRenderTargetSet(DX9& dx9) 
 		{

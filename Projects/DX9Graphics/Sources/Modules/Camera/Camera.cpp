@@ -62,20 +62,20 @@ namespace DX9Graphics
 			ShaderProgram& program = static_cast<ShaderProgram&>(moduleset[n]);
 			if(			DX9::camera_index == 0x8001	&&
 						! last_program_n			)
-				program.arg_final_render_target = ShaderProgram::FINAL_RENDER_TARGET_NEW_OUTPUT;
+				program.arg_final_render_target = ShaderProgram::ONLY_ONE;
 
 			else if(	DX9::camera_index & 0x0001	&&
 						n == last_program_n			)
-				program.arg_final_render_target = ShaderProgram::FINAL_RENDER_TARGET_OUTPUT;
+				program.arg_final_render_target = ShaderProgram::LAST;
 
 			else if(	DX9::camera_index & 0x8000	&&
 						! n							)
-				program.arg_final_render_target = ShaderProgram::FINAL_RENDER_TARGET_NEW_BUFFER;
+				program.arg_final_render_target = ShaderProgram::FIRST;
 
 			else
-				program.arg_final_render_target = ShaderProgram::FINAL_RENDER_TARGET_PREVIOUS_BUFFER;
+				program.arg_final_render_target = ShaderProgram::MIDDLE;
 
-			program._render(*this);
+			program._render(*this);			
 		}
 
 		return RESULT_SUCCESS;

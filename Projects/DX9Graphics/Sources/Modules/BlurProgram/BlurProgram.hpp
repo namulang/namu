@@ -81,7 +81,7 @@ namespace DX9Graphics
 			_beginFinalRenderPass(1, dx9);
 			device->SetTexture(0, &temp.getFilledTarget().getTexture());		//	°¡°ø(TEXTURE1)
 			_renderTargetVertex(device);
-			effect.EndPass();
+			_endFinalRenderPass(targets);
 
 
 			//	post:
