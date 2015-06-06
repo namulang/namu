@@ -38,7 +38,7 @@ namespace NE
 		{
 			if(arg_enable.isEnable())
 			{
-				if(arg_enable.getPurpose() == NEArgumentBase::WRITTEN)
+				if(arg_enable.getPurpose() == NEArgumentBase::READ_BY)
 					target.setEnable(arg_enable.getValue());
 				else
 					arg_enable.setValue(target.isEnable());
@@ -49,7 +49,7 @@ namespace NE
 				if (codes.getCodeType().getCodeType() == NEArgumentBase::UNDEFINED)
 					return ALERT_WARNING(" 잘못된 CodeSet의 CodeType(%d)입니다.", codes.getCodeType());
 
-				if (arg_codes.getPurpose() == NEArgumentBase::WRITTEN)
+				if (arg_codes.getPurpose() == NEArgumentBase::READ_BY)
 					target.setCodes(codes);
 				else
 					arg_codes.setValue(target.getCodes(codes.getCodeType()));
