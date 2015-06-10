@@ -25,6 +25,7 @@
 #include "../Modules/Timer.hpp"
 #include "../Modules/SLU.hpp"
 #include "../Modules/DoOnce.hpp"
+#include "../Modules/Switch.hpp"
 
 #ifndef StandardModule_EXPORTS
 #	ifdef DEVELOPER
