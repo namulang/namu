@@ -385,6 +385,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Sources\Modules\Switch.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Modules\Timer.hpp"
 					>
 				</File>

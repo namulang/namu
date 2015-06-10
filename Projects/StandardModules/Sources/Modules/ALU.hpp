@@ -95,6 +95,7 @@ namespace NE
 					type_float calculator = 1.0f;
 					for (int n = 0; n <= roperand ;n++)
 						calculator *= loperand;
+					arg_target.setValue(calculator);
 				}
 				break;
 
