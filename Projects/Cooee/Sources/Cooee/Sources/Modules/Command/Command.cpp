@@ -259,9 +259,9 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 		NENode source;
 		if( ! _pasteTryEverything<NENodeCodeSet, NENode>(target, *parent, source, NEType::NENODE, index_to_add)) {
 			NETString	target_typename = &target ? target.getTypeName() : _T("NULL"),
-						source_typename = &source ? source.getTypeName() : _T("NULL");
+				source_typename = &source ? source.getTypeName() : _T("NULL");
 			return	NEString("ERROR: 주어진 타겟(") + target_typename + ")과 원본(" + 		
-					source_typename + ") 간에는 Paste가 불가능 합니다.";
+				source_typename + ") 간에는 Paste가 불가능 합니다.";
 		}
 	} 
 	else if(parameters[0] == "-module")
@@ -276,9 +276,9 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 
 		if( ! _pasteTryEverything<NEModuleCodeSet, NEModule>(target, *parent, source, NEType::NEMODULE, index_to_add)) {
 			NETString	target_typename = &target ? target.getTypeName() : _T("NULL"),
-						source_typename = &source ? source.getTypeName() : _T("NULL");
+				source_typename = &source ? source.getTypeName() : _T("NULL");
 			return	NEString("ERROR: 주어진 타겟(") + target_typename + ")과 원본(" + 
-					source_typename + ") 간에는 Paste가 불가능 합니다.";
+				source_typename + ") 간에는 Paste가 불가능 합니다.";
 		}
 	}
 	else if(parameters[0] == "-key")
@@ -292,9 +292,9 @@ NE::NEString AddCommand::execute(const NEStringSet& parameters)
 
 		if (!_pasteTryEverything<NEKeyCodeSet, NEKey>(target, *parent, source, NEType::NEKEY, index_to_add)) {
 			NETString	target_typename = &target ? target.getTypeName() : _T("NULL"),
-						source_typename = &source ? source.getTypeName() : _T("NULL");
+				source_typename = &source ? source.getTypeName() : _T("NULL");
 			return	NEString("ERROR: 주어진 타겟(") + target_typename + ")과 원본(" +
-					source_typename + ") 간에는 Paste가 불가능 합니다.";
+				source_typename + ") 간에는 Paste가 불가능 합니다.";
 		}
 	}
 
@@ -582,6 +582,7 @@ NE::NEString SaveCommand::execute(const NEStringSet& parameters)
 
 	return "";
 }
+NETString LoadCommand::filepath = "";
 NE::NEString LoadCommand::execute(const NEStringSet& parameters)
 {
 	if(parameters.getLength() <= 0) return "ERROR: 읽어들일 파일명을 입력해주세요.";
@@ -602,6 +603,7 @@ NE::NEString LoadCommand::execute(const NEStringSet& parameters)
 					::Core::pushMessage("ERROR: 파일 로드 실패.");
 				else
 				{
+					LoadCommand::filepath = _filepath;
 					::Core::initializeWindows(::Core::debug_windows);
 					::Core::initializeWindows(::Core::script_windows);
 					::Core::commander.command("observe -script -force");
@@ -636,6 +638,7 @@ NE::NEString NewCommand::execute(const NEStringSet& parameters)
 					return;
 				}
 
+				LoadCommand::filepath = "";
 				::Core::initializeWindows(::Core::debug_windows);
 				::Core::initializeWindows(::Core::script_windows);
 				::Core::commander.command("observe -script -force");

@@ -24,7 +24,7 @@ namespace LG
 		CTRL_V		= 22,
 		CTRL_X		= 24,
 		HOME		= 0xe047,		
-		F1			= 0x3b,
+		F1			= 0xe03b,
 		F2			= 0xe03c,
 		F3			= 0xe03d,
 		F4			= 0xe03e,

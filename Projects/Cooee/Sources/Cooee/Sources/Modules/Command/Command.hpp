@@ -162,7 +162,9 @@ public:
 		"별칭	: load, l\n"
 		"사용법	: load <읽어들일 파일명>") {}
 	FUNC_CLONE(LoadCommand)
-	virtual NEString execute(const NEStringSet& parameters);
+		virtual NEString execute(const NEStringSet& parameters);
+
+	static NETString filepath;
 };
 class NewCommand : public Command
 {
