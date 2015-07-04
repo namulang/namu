@@ -403,6 +403,7 @@ public:
 			}
 		}
 	}
+
 	void _encodeEscapeSequences(NEString& string)
 	{
 		for(int n=0; n < string.getLength() ;n++) 
@@ -420,6 +421,12 @@ public:
 				string.remove(n);
 				string.remove(n);
 				string.insert(n, '\t');
+				break;
+
+			case '\\':
+				string.remove(n);
+				string.remove(n);
+				string.insert(n, '\\');
 				break;
 			}
 		}
