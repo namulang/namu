@@ -2637,67 +2637,187 @@ public:
 //	}
 //};
 
-void main()
+
+#include <conio.h>
+enum State
 {
-	cout	<< "CoreTester.		v0.0.1a build on 2014.08.16\n"
-			<< "This program will test kernel with some sequencial jobs. It can takes a minutes by circumstances.\n"
-			<< "If test has been successed, the result will be announced in front of test statement with color green. And the processing time will be displayed next of it.\n\n";
+	HELP,
+	RUN_MAIN,
+	UNDEFINED,
+	TEST,
+	RUN,
+};
+
+State analyzeState(const NETStringSet& args)
+{
+	if(args.getLength() <= 0) return RUN_MAIN;
+	if (args.getLength() >= 2) return UNDEFINED;
+	if(args[0] == "-help") return HELP;
+	if(args[0] == "-test") return TEST;
+	if(args[0].find(".script") != NE_INDEX_ERROR) return RUN;
+
+	return UNDEFINED;
+}
+
+void printTitle()
+{
+	cout << "CoreTester.		v0.0.2a	build on 2015.06.19\n";
+}
+
+
+void main(int argc, char** argv)
+{
+	NEString executable_path;
+	NEString command = "";
+	{
+		char buf[256] = { 0, };
+		GetModuleFileNameA(0, buf, 256);
+		executable_path = buf;
+		NEStringSet splited;
+		executable_path.split("\\", splited);
+		for (int n = 0; n < splited.getLength() - 1; n++)
+			command += splited[n] + "\\";
+		SetCurrentDirectoryA(command.toCharPointer());
+	}
+
+	printTitle();
 
 	NE_MEMORYLEAK;
 
-	std::wcout.imbue( std::locale("korean") );
+	std::wcout.imbue(std::locale("korean"));
+
+	//	packaging:
+	NETStringSet args(argc);
+	for(int n = 1; n < argc; n++)
+		args.push(argv[n]);
+
+	State s = analyzeState(args);
+	NETString scriptfile = "";
 
 	Test8().test();
 	init();
 	Test14().test();
-	system("pause");
-	system("cls");
-	StringFindingTest().test();
-	ArrayAssigningTest().test();
-	PointerArrayAssigningTest().test();
-	HeapedPointerArrayAssigningTest().test();
-	IndexedArrayAssigningTest().test();
-	PointerIndexedArrayAssigningTest().test();
-	HeapedPointerIndexedArrayAssigningTest().test();
-	IndexedArrayReturningHeapMemory().test();
-	IndexedArrayFileSerializeTest().test();
-	Test1().test();
-	NECodeSetInsertionTest().test();
-	NEKeyManagerTypeTest().test();
-	Test13().test();
-	Test2().test();
-	Test3().test();
-	Test4().test();
-	Test5().test();
-	Test6().test();
-	Test7().test();
-	Test9().test();
-	Test10().test();
-	Test11().test();
-	Test12().test();
-	RelativityTestOnSynchronize().test();
-	SelectorAssignOperatorTest().test();
-	KeySelectorAssigningTest().test();
-	GenericArgumentBindingTest().test();
-	ArgumentConversionTest().test();
-	ArgumentConstantLiteralTest().test();
-	ArgumentInterfaceCanBeSaved().test();
-	CodeSynchroTest().test();
-	NodeSelectorTest().test();
-	KeyConversionTest().test();
-	ModuleOwnerTest().test();
-	CodeTypePolicyTest().test();
-	RecentNodeSelectingInifiniteTest().test();
-	SelectorLock().test();
-	StringSetDeepCopytest().test();
-	CodeOperator().test();
-	SuperClassOfSelectorAssigning().test();
+
+	cout << "\n\n";
+	switch (s)
+	{
+	case RUN_MAIN:
+		{
+			cout << "There is no options. So will trying to load \"main.script\" file automatically.\n";
+			scriptfile = "main." + Kernal::getInstance().getSettings().getScriptExtractor();
+		}
+	case RUN:
+		{
+			if(scriptfile == "")
+				scriptfile = args[0];
+
+			NEBinaryFileLoader loader(scriptfile.toCharPointer());
+			loader.open();
+			if (loader.isFileOpenSuccess())
+			{
+				NEScriptManager& sc = Kernal::getInstance().getScriptManager();
+				NENodeManager& noder = Kernal::getInstance().getNodeManager();
+				loader >> sc;
+				noder.initialize();
+
+				cout << "Please press ESCAPE when you want to quit.\n";
+				char ch = 0;
+				while (ch != 27)
+				{
+					if(_kbhit())
+						ch = getch();
+
+					noder.execute();
+				}
+			}
+			else
+				cout << "ERROR : couldn't load \"" << NEString(scriptfile).toCharPointer() << "\" file.\n";
+		}
+		break;
+
+	case UNDEFINED:
+		cout	<< "Oops! Execution failure.\n"
+			<< "please check that some options weren't fill in properly or not.\n"
+			<< "Or you may be see this message when try to execute \"main\" script but has no file existed.\n\n";
+	case HELP:
+		cout	<< "Usage:\n"
+			<< "\t" << argv[0] << " <filename of script to execute | one of Options>\n"
+			<< "\n"
+			<< "Options:\n"
+			<< "	<nothing>\n"
+			<< "	if you submit without any options, program will find and\n"
+			<< "	execute 'main.script' of workdirectory.\n"
+			<< "\n"
+			<< "	script file path\n"
+			<< "	load script file by given path. Of course, you can just drag \".script\" file on\n"
+			<< "	" << argv[0] << " this executable file.\n"
+			<< "\n"
+			<< "	-test\n"
+			<< "	will test kernel with some sequencial jobs. Takes some minutes\n"
+			<< "	by circumstances.\n"
+			<< "	If test has been successed, the result will be announced in \n"
+			<< "	front of test statement with color green.\n"
+			<< "	And the processed time will be displayed next of it.\n"				
+			<< "\n"
+			<< "	-help\n"
+			<< "	option for what you're watching.\n"
+			<< "\n";
+		break;
+
+	case TEST:
+		{			
+			system("pause");
+			system("cls");
+			StringFindingTest().test();
+			ArrayAssigningTest().test();
+			PointerArrayAssigningTest().test();
+			HeapedPointerArrayAssigningTest().test();
+			IndexedArrayAssigningTest().test();
+			PointerIndexedArrayAssigningTest().test();
+			HeapedPointerIndexedArrayAssigningTest().test();
+			IndexedArrayReturningHeapMemory().test();
+			IndexedArrayFileSerializeTest().test();
+			Test1().test();
+			NECodeSetInsertionTest().test();
+			NEKeyManagerTypeTest().test();
+			Test13().test();
+			Test2().test();
+			Test3().test();
+			Test4().test();
+			Test5().test();
+			Test6().test();
+			Test7().test();
+			Test9().test();
+			Test10().test();
+			Test11().test();
+			Test12().test();
+			RelativityTestOnSynchronize().test();
+			SelectorAssignOperatorTest().test();
+			KeySelectorAssigningTest().test();
+			GenericArgumentBindingTest().test();
+			ArgumentConversionTest().test();
+			ArgumentConstantLiteralTest().test();
+			ArgumentInterfaceCanBeSaved().test();
+			CodeSynchroTest().test();
+			NodeSelectorTest().test();
+			KeyConversionTest().test();
+			ModuleOwnerTest().test();
+			CodeTypePolicyTest().test();
+			RecentNodeSelectingInifiniteTest().test();
+			SelectorLock().test();
+			StringSetDeepCopytest().test();
+			CodeOperator().test();
+			SuperClassOfSelectorAssigning().test();
+
+		}
+		break;
+
+
+	}			
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
 	delete &Kernal::getInstance();
-
-	system("pause");
 }
 // 
 // class Mine : public NEArrayTemplate<int, false, NEString>
