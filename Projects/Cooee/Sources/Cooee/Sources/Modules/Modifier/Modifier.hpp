@@ -400,6 +400,13 @@ public:
 				string.insert(n, 't');
 				string.insert(n, '\\');
 				break;
+
+			case '\\':
+				if(string.getLength()+1 >= string.getSize())
+					string.resize(string.getLength()+2);
+				string.remove(n);
+				string.insert(n, '\\');
+				string.insert(n, '\\');
 			}
 		}
 	}
