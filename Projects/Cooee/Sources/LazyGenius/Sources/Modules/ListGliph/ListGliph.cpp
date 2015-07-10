@@ -1,4 +1,3 @@
-
 #include "ListGliph.hpp"
 #include "../Core/Core.hpp"
 #include "../FloatingGliph/FloatingGliph.hpp"
@@ -109,34 +108,21 @@ namespace LG
 			break;
 
 		default:
-			match(inputed);
+			match(matchingword + (char)inputed);
 		}        
 	}
 
-	NEString ListGliph::toLower(const NEString& trg) const
-	{
-		NEString to_return(trg);
-
-		for (int n = 0; n < trg.getLength(); n++)
-			if(	trg[n] >= 'A'	&&
-				trg[n] <= 'Z'	)
-				to_return[n] = 'a' + (trg[n] - 'A');
-
-		return to_return;
-	}
-
-	void ListGliph::match(char inputed)
+	void ListGliph::match(const NEString& new_matching_word)
 	{
 		if( ! use_matching) return;
-		if( ! inputed) return;
-		NEString test_forward(toLower(matchingword + inputed));
+		if( ! &new_matching_word) return;
+		NEString test_forward = new_matching_word.toLowerCase();
 		type_index last_idx = test_forward.getLengthLastIndex() - 1; // without null character.
 		if(last_idx < 0) return;
 
 		for(int n = 0; n < items.getLength(); n++)
-		{
-
-			if(toLower(items[n].extract(0, last_idx)) == test_forward)
+		{			
+			if(items[n].extract(0, last_idx).toLowerCase().isEqualElement(test_forward))
 			{
 				choosed = n;
 				matchingword = test_forward;
