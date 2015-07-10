@@ -6,10 +6,14 @@ namespace NE
 	{
 		using namespace NEType;
 		NENodeManager& noder = Kernal::getInstance().getNodeManager();				
-		const NEKeyCodeSet& ks = noder.getLocalStack().getRecentNode().getKeySet();	//	어쩌파 bind함수가 호출되는 시점은 NodeManager.execute()가 되는 시점뿐이기 때문에 _manager는 noder라고 가정한다.
+		NENodeManager::LocalStack& stack = noder.getLocalStack();
+		const NEKeyCodeSet& ks = stack.getRecentNode().getKeySet();	//	어쩌파 bind함수가 호출되는 시점은 NodeManager.execute()가 되는 시점뿐이기 때문에 _manager는 noder라고 가정한다.
+		if(_keyname.getLength() <= 0) return RESULT_TYPE_WARNING | RESULT_ABORT_ACTION | RESULT_INVALID_DATA;
 
-
-		//	main:		
+		//	main:
+		if(_keyname[0] == TCHAR('$'))
+			return _bindLocalKey();
+		//		속해있는 Node.KeySet에서 탐색:
 		for(int n=0; n < ks.getLength() ;n++)
 			if(ks[n].getName() == _keyname)
 				return SuperClass::bind(ks[n], NEType::NENODE_MANAGER);
@@ -17,6 +21,28 @@ namespace NE
 
 		//	post:
 		KERNAL_WARNING("KeyName 바인딩이 실패했습니다. 주어진 이름 %s이, 이 노드에 속하지 않은 것 같습니다.\n바인딩이 실패했으므로 기본값이 할당될 것입니다.", _keyname.toCharPointer());
+		return RESULT_TYPE_WARNING;
+	}
+
+	type_result NEKeyNameBinder::_bindLocalKey()
+	{
+		//		LocalKeys에서 탐색:
+		const NENodeManager::LocalStack::PersistentKeySet& local_keys = Kernal::getInstance().getNodeManager().getLocalStack().getLocalKeySet();
+		for(int n = 0; n < local_keys.getLength(); n++)
+		{
+			const NEKey& key = local_keys[n];
+			if (&key && key.getName().toLowerCase() == _keyname.toLowerCase())
+			{
+				type_result result = SuperClass::bind(key, NEType::LOCALSTACK);
+
+				if( ! NEResult::hasError(result))
+					_manager_type = NEType::LOCALSTACK;
+
+				return result;
+			}
+		}
+
+		_manager_type = NEType::NENODE_MANAGER;
 		return RESULT_TYPE_WARNING;
 	}
 

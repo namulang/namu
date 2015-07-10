@@ -38,6 +38,7 @@ namespace NE
 
 	private:
 		NEKeyNameBinder& _assign(const ThisClass& rhs);
+		type_result _bindLocalKey();
 
 	private:
 		NETString _keyname;

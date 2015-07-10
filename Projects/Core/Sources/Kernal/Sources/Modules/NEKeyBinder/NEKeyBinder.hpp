@@ -26,6 +26,10 @@ namespace NE
 		NEKey& getBinded();
 		const NEKey& getBinded() const;
 		type_result bind(const NEKey& key, NEType::Type manager_type);
+		type_bool isBindedLocalKey() const;
+
+	protected:
+		type_result _markToBindLocalKey();
 
 	private:
 		NEIndexedKeySet& _getKeySet();
