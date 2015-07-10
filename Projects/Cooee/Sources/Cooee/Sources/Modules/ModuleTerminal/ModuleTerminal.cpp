@@ -80,14 +80,14 @@ public:
 	}
 	virtual void onItemChoosed(type_index index, const NEString& chosen_content)
 	{
-		class CodeInputer : public LG::ListWindow
+		class CodeInputer : public LG::TextListWindow
 		{
 		public:
 			FUNC_TO_CALLER(ArgumentPopUp)
 				virtual NEObject& clone() const { return *(new CodeInputer(*this)); }
 
 			CodeInputer(NENode& new_owner)
-				: LG::ListWindow("새로 추가할 키를 선택하세요.",
+				: LG::TextListWindow("새로 추가할 키를 선택하세요.",
 				25, 7, 30, 10, BLACK,LIGHTGREEN,LIGHTGREEN, BLACK),
 				owner(new_owner)
 			{
@@ -98,24 +98,37 @@ public:
 			{
 				if (!&owner) return;
 				const NEKeyCodeSet& ks = owner.getKeySet();
-				list.items.create(ks.getLength());
+
+				NEModule& m = toCaller().toCaller().castObject();
+				NEArgumentBase& arg = m.getArguments()[toCaller().toCaller().argument_namelist.choosed];
+				list.text.text = arg.getKeyName();
+
+				list.items.create(ks.getLength());				
 				for (int n = 0; n < ks.getLength(); n++)
 					if(list.items.find(ks[n].getName()) == NE_INDEX_ERROR)
 						list.items.push(ks[n].getName() + "(" + ks[n].getTypeName() + ")");				
 			}
 
-			virtual void onItemChoosed(type_index item_index, const NEString& chosen_content)
+			virtual void onInputed(const NEString& inputed)
 			{
 				NEModule& m = toCaller().toCaller().castObject();
 				NEArgumentBase& arg = m.getArguments()[toCaller().toCaller().argument_namelist.choosed];
+				if (!&arg)
+				{
+					::Core::pushMessage("Argument를 찾지 못했습니다.");
+					return;
+				}
 
 				NEStringSet splited;
-				chosen_content.split("(", splited);
-				if (splited.getLength() > 0)
+				inputed.split("(", splited);
+				if(splited.getLength() > 0)
 					splited.pop();
 				NEString keyname;
 				for (int n = 0; n < splited.getLength(); n++)
 					keyname += splited[n];
+
+				if(keyname.getLength() <= 0)
+					keyname = inputed;
 
 				arg.setKeyName(keyname);
 
