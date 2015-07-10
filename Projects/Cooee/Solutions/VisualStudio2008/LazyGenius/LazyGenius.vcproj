@@ -316,6 +316,10 @@
 						Name="Window"
 						>
 						<File
+							RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\TextListWindow\TextListWindow.hpp"
+							>
+						</File>
+						<File
 							RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\Window\Window.cpp"
 							>
 						</File>
@@ -383,6 +387,18 @@
 							RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\ListGliph\ListGliph.hpp"
 							>
 						</File>
+						<Filter
+							Name="TextList"
+							>
+							<File
+								RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\TextList\TextList.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\LazyGenius\Sources\Modules\TextList\TextList.hpp"
+								>
+							</File>
+						</Filter>
 					</Filter>
 					<Filter
 						Name="TextGliph"
