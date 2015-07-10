@@ -106,8 +106,8 @@ namespace NE
 			case 10:	arg_target.setValue(loperand == roperand);	break;
 			case 11:	arg_target.setValue(loperand != roperand);	break;
 			case 12:	
-				arg_left_operand.setValue(roperand);
-				arg_target.setValue(roperand);		
+				arg_left_operand.getKey() = arg_right_operand.getKey();
+				arg_target.getKey() = arg_right_operand.getKey();
 				break;
 
 			case 13:
