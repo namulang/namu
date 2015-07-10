@@ -2620,6 +2620,29 @@ public:
 	}
 };
 
+class LowerUpperCaseTest : public TestCase
+{
+public:
+	LowerUpperCaseTest() : TestCase("") {}
+	virtual bool onTest() 
+	{
+		NEString	question = "HeLlO WoRlD!",
+					lower_answer = "hello world!",
+					upper_answer = "HELLO WORLD!";
+
+		NEString submited = ((const NEString)question).toLowerCase();
+		if(submited != lower_answer)
+			return false;
+		if(question != "HeLlO WoRlD!")
+			return false;
+		question.setUpperCase();
+		if (question != upper_answer)
+			return false;
+
+		return true;
+	}
+};
+
 //class Test : public TestCase
 //{
 //public:
@@ -2808,7 +2831,7 @@ void main(int argc, char** argv)
 			StringSetDeepCopytest().test();
 			CodeOperator().test();
 			SuperClassOfSelectorAssigning().test();
-
+			LowerUpperCaseTest().test();
 		}
 		break;
 
