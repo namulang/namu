@@ -205,7 +205,7 @@ public:
 
 	FUNC_CLONE(ModuleTerminal)
 
-		virtual void onFocused()
+	virtual void onFocused()
 	{
 		NEBank& bank = Editor::getInstance().getScriptEditor().getBanks().getBank(NECodeType::MODULE_NAME);
 		const NETString& name = bank[castObject().getNameCode()];

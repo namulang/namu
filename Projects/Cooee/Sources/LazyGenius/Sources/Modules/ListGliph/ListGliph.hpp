@@ -13,7 +13,7 @@ namespace LG
 		virtual void onDraw();
 		virtual void onUpdateData();
 		virtual void onKeyPressed(int inputed);
-		void match(const NEString& word);
+		bool match(const NEString& word);
 
 		NEString matchingword;
 		type_short choosed;

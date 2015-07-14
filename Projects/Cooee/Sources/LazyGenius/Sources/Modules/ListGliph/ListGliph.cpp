@@ -112,13 +112,13 @@ namespace LG
 		}        
 	}
 
-	void ListGliph::match(const NEString& new_matching_word)
+	bool ListGliph::match(const NEString& new_matching_word)
 	{
-		if( ! use_matching) return;
-		if( ! &new_matching_word && new_matching_word.getLength() <= 0) return;
+		if( ! use_matching) return false;
+		if( ! &new_matching_word && new_matching_word.getLength() <= 0) return false;
 		NEString test_forward = new_matching_word.toLowerCase();
 		type_index last_idx = test_forward.getLengthLastIndex() - 1; // without null character.
-		if(last_idx < 0) return;
+		if(last_idx < 0) return false;
 
 		for(int n = 0; n < items.getLength(); n++)
 		{			
@@ -126,11 +126,14 @@ namespace LG
 			{
 				choosed = n;
 				matchingword = test_forward;
-				return;
+				return true;
 			}
 		}
 
 		matchingword.release();
+		choosed = -1;
+		onDraw();
+		return false;
 	}
 
 	void ListGliph::onUpdateData()
