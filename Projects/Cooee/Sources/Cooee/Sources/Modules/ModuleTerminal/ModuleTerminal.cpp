@@ -93,13 +93,17 @@ public:
 				list.use_matching = true;
 			}
 
+
 			virtual void onFocused()
 			{
 				NEModule& m = toCaller().toCaller().castObject();
 				NEArgumentBase& arg = m.getArguments()[toCaller().toCaller().argument_namelist.choosed];
-				list.text.text = arg.getKeyName();
+				list.text.text = arg.getKeyName();			
 
 				list.items = _updateList(true);
+				if(	(list.text.text == "" || list.text.text.getLength() <= 0)	&&
+					list.items.getLength() > 0									)
+					list.text.text = list.items[0];
 			}
 
 			bool _findParsedKeyName(const NEStringSet& strs, const NEString& target)
@@ -116,6 +120,7 @@ public:
 
 			virtual void onInputed(const NEString& inputed)
 			{
+				if( ! &inputed) return;
 				NEModule& m = toCaller().toCaller().castObject();
 				NEArgumentBase& arg = m.getArguments()[toCaller().toCaller().argument_namelist.choosed];
 				//	주어진 입력이 LocalKeySet에 있는지, KeySet에 있는지를 확인하고
