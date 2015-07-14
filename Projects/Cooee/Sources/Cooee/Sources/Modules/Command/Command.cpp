@@ -572,14 +572,13 @@ NE::NEString SaveCommand::execute(const NEStringSet& parameters)
 	}
 
 	NEString filename = (parameters.getLength() <= 0) ?
-		Kernal::getInstance().getScriptManager().getScriptFilePath()
-		:
-	parameters[0];
+		LoadCommand::filepath : parameters[0];
 
 	NEEventHandler& handler = Editor::getInstance().getEventHandler();
 	if(NEResult::hasError(handler.saveScriptFile(NETString(filename))))
 		return NEString("ERROR: ") + filename + "으로 파일 저장 실패.";
 
+	LoadCommand::filepath = filename;
 	return "";
 }
 NETString LoadCommand::filepath = "";
