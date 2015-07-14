@@ -125,10 +125,11 @@ public:
 				NEArgumentBase& arg = m.getArguments()[toCaller().toCaller().argument_namelist.choosed];
 				//	주어진 입력이 LocalKeySet에 있는지, KeySet에 있는지를 확인하고
 				//	양쪽 모두에 없다면, 기본값으로 집어넣고 키이름을 ""로 만든다.
-				NEString keyname = _extractKeyName(inputed);
+				NEString	keyname = _extractKeyName(inputed),
+					lowerd = keyname.toLowerCase();
 
-				if(	! _findParsedKeyName(_updateListFromKeySet(true), keyname)		&&
-					! _findParsedKeyName(_updateListFromLocalKeySet(true), keyname)	)
+				if( ! _findParsedKeyName(_updateListFromKeySet(true), lowerd) &&
+					! _findParsedKeyName(_updateListFromLocalKeySet(true), lowerd))
 				{					
 					arg.getDefaultKey() = NEStringKey(inputed);
 					arg.setKeyName("");
