@@ -115,7 +115,7 @@ namespace LG
 	void ListGliph::match(const NEString& new_matching_word)
 	{
 		if( ! use_matching) return;
-		if( ! &new_matching_word) return;
+		if( ! &new_matching_word && new_matching_word.getLength() <= 0) return;
 		NEString test_forward = new_matching_word.toLowerCase();
 		type_index last_idx = test_forward.getLengthLastIndex() - 1; // without null character.
 		if(last_idx < 0) return;
