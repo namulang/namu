@@ -18,5 +18,6 @@ namespace LG
 		virtual void onInputed(const NEString& inputed) {}
 
 		TextGliph text;
+		bool erase_all;
 	};
 }

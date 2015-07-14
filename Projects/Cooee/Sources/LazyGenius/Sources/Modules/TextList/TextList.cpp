@@ -11,10 +11,11 @@ namespace LG
 		text.height = 1;		
 		text.width--;
 		y++;		
-		height--;	
+		height--;
+		erase_all = true;
 	}
 	TextList::TextList(const TextList& rhs)
-		: ListGliph(rhs), text(rhs.text)
+		: ListGliph(rhs), text(rhs.text), erase_all(rhs.erase_all)
 	{
 
 	}
@@ -29,6 +30,7 @@ namespace LG
 		text.onUpdateData();
 		ListGliph::onUpdateData();
 	}
+
 	void TextList::onKeyPressed(int inputed)
 	{
 		switch(inputed)
@@ -36,16 +38,25 @@ namespace LG
 		case UP: case DOWN:
 			ListGliph::onKeyPressed(inputed);
 			text.text = items[choosed];
+			erase_all = true;
 			break;
 
-		case CONFIRM:			
-			onInputed(text.text);
+		case CONFIRM:
+			{
+				NEString& inputed = match(text.text) ? items[choosed] : text.text;
+
+				onInputed(inputed);
+			}
 			ListGliph::onKeyPressed(inputed);
 			text.onKeyPressed(inputed);
+			erase_all = true;
 			break;
 
 		case BACKSPACE:
+			if(erase_all)
+				text.text = "";
 		default:
+			erase_all = false;
 			text.onKeyPressed(inputed);
 			match(text.text);
 		}
