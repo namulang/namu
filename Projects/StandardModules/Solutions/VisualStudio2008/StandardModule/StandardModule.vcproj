@@ -389,6 +389,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Sources\Modules\StringSpliter.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Modules\Switch.hpp"
 					>
 				</File>
