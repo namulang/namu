@@ -35,7 +35,8 @@ namespace NE
 					"예) Key1 = Key1 + Key2 \n\n"
 					"다만 Target이 배열인 경우에는 오동작하므로 주의바랍니다.\n"
 					"참고로 \"%\"은 나머지 연산자로써, 10 % 3 은 10을 3으로 나누고 남은 나머지인 1이 나오게 됩니다.\n"
-					"단항 연산인 =와 = ! 도 사용이 가능합니다.";
+					"단항 연산인 =와 = ! 도 사용이 가능합니다.\n"
+					"*.= 참조할당연산은 LeftOperand에 KeySelector가 있을때, KeySelector가 참조하고 있는 대상에 할당연산을 수행하는 연산자입니다.";
 				_header.getVersion()  = _T("0.0.1a");
 				_header.getReleaseDate() = _T("2014-11-27");
 				_header.getModuleDependencies().create(0);
@@ -45,7 +46,7 @@ namespace NE
 				args.push("LeftOperand\n연산이 될 대상1 입니다.\n");
 				args.push("RightOperand\n연산이 될 대상2 입니다.\n");
 				args.push("Target\n결과값이 들어갈 Key입니다.");
-				args.push("Operator(연산자)\n사용가능한 연산자 : \"+\" \"-\", \"*(곱셈)\", \"/\"(나눗셈), \"%\"(나머지연산), \"^\"n제곱, \"<\", \"<=\", \">\", \">=\", \"==\", \"!=\", \"=\", \"= !\"");
+				args.push("Operator(연산자)\n사용가능한 연산자 : \"+\" \"-\", \"*(곱셈)\", \"/\"(나눗셈), \"%\"(나머지연산), \"^\"n제곱, \"<\", \"<=\", \">\", \">=\", \"==\", \"!=\", \"=\", \"= !\", \"*.=\"");
 			}
 
 			return _header;
@@ -54,7 +55,7 @@ namespace NE
 	protected:
 		virtual type_result _onExecute()
 		{
-			static	NETStringSet opers(14);
+			static	NETStringSet opers(15);
 			if (opers.getLength() != opers.getSize())
 			{
 				opers.push("+");	//	idx 0
@@ -73,6 +74,7 @@ namespace NE
 				opers.push("!=");
 				opers.push("=");
 				opers.push("= !");
+				opers.push("*.=");	//	KeySelector 참조할당 : *key_sel = 
 			}
 
 			type_float	loperand = arg_left_operand.getValue(),
@@ -113,6 +115,19 @@ namespace NE
 			case 13:
 				arg_left_operand.setValue( ! roperand);
 				arg_target.setValue( ! roperand);
+				break;
+
+			case 14:
+				{
+					NEKeySelector& left_key = static_cast<NEKeySelector&>(arg_left_operand.getKey());	//	this statement is safe. because next statement is dependent of NEKey class.
+					if(left_key.isSubClassOf(NEType::NEKEY_SELECTOR))
+					{
+						NEKey& right_key = arg_right_operand.getKey();
+						while(NEKey* e = &left_key.getKey())
+							e->assign(right_key);
+					}
+				}				
+				break;
 			}
 
 			if(arg_target.getValue() == 0.0f)
