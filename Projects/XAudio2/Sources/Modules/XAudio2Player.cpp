@@ -73,7 +73,7 @@ namespace XA2
 			default:
 				if(command > 0)
 				{
-					result = play(arg_play_command.getValue());
+					result = play(arg_play_command.getValue()-1);
 					arg_play_command.setValue(0);
 				}
 			}
