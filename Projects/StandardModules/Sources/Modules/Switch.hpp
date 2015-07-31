@@ -56,7 +56,7 @@ namespace NE
 				NETStringSet& args = _instance.getArgumentsComments();
 				args.create(5);
 				args.push("Actions\nState 값과 일치하는 Actions 배열원소를 실행합니다.");
-				args.push("State\switch(State)");
+				args.push("State\nswitch(State)");
 			}
 
 			return _instance;

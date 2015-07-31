@@ -93,7 +93,6 @@ public:
 				list.use_matching = true;
 			}
 
-
 			virtual void onFocused()
 			{
 				NEModule& m = toCaller().toCaller().castObject();
@@ -175,8 +174,7 @@ public:
 					if (to_return.find(ks[n].getName()) == NE_INDEX_ERROR)
 						to_return.push(ks[n].getName() + "(" + ks[n].getTypeName() + ")");
 
-				if( ! force)
-					_local_keys_listed = false;
+				_local_keys_listed = false;
 				return to_return;
 			}		
 			NEString _extractKeyName(const NEString& full_string)
@@ -210,8 +208,7 @@ public:
 						to_return.push(k.getName() + "(" + k.getTypeName() + ")");
 				}					
 
-				if( ! force)
-					_local_keys_listed = true;
+				_local_keys_listed = true;
 				return to_return;
 			}
 
