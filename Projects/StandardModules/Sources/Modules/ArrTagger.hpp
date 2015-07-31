@@ -56,7 +56,7 @@ namespace NE
 				*unit_key_e = &arg_unit.getValueKey();
 			NEKeySelector	*collector_key		= 0,
 				*unit_key			= 0;
-			if (!collector_key_e || !unit_key_e) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+			if( ! collector_key_e && ! unit_key_e) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 
 			if (arg_collector.getValueKey().isSubClassOf(NEType::NEKEY_SELECTOR))
 			{
@@ -73,6 +73,30 @@ namespace NE
 			//	main:
 			while (collector_key_e)
 			{
+#define MAKE_COLLECTOR_BRANCH(TYPE, COLL)	\
+	if(	arg_length.isEnable()					&&	\
+	collector_key_e->isSubClassOf(NEType::##TYPE##))	\
+	_fetchLength<##COLL##::Trait>(static_cast<COLL&>(*collector_key_e).getValue());	\
+	if( arg_size.isEnable()						&&	\
+	collector_key_e->isSubClassOf(NEType::##TYPE##))	\
+	_fetchSize<##COLL##::Trait>(static_cast<COLL&>(*collector_key_e).getValue());
+				MAKE_COLLECTOR_BRANCH(NEBOOLEAN_SET_KEY, NEBooleanSetKey);
+				MAKE_COLLECTOR_BRANCH(NEBYTE_SET_KEY, NEByteSetKey);
+				MAKE_COLLECTOR_BRANCH(NEUBYTE_SET_KEY, NEUByteSetKey);
+				MAKE_COLLECTOR_BRANCH(NESHORT_SET_KEY, NEShortSetKey);
+				MAKE_COLLECTOR_BRANCH(NEUSHORT_SET_KEY, NEUShortSetKey);
+				MAKE_COLLECTOR_BRANCH(NEINT_SET_KEY, NEIntSetKey);
+				MAKE_COLLECTOR_BRANCH(NEUINT_SET_KEY, NEUIntSetKey);
+				MAKE_COLLECTOR_BRANCH(NEINT64_SET_KEY, NEInt64SetKey);
+				MAKE_COLLECTOR_BRANCH(NEFLOAT_SET_KEY, NEFloatSetKey);
+				MAKE_COLLECTOR_BRANCH(NEDOUBLE_SET_KEY, NEDoubleSetKey);
+				MAKE_COLLECTOR_BRANCH(NESTRING_SET_KEY, NEStringSetKey);
+				MAKE_COLLECTOR_BRANCH(NEWSTRING_SET_KEY, NEWStringSetKey);
+				MAKE_COLLECTOR_BRANCH(NECODE_SET_KEY, NECodeSetKey);
+				MAKE_COLLECTOR_BRANCH(NESTRING_KEY, NEStringKey);
+				MAKE_COLLECTOR_BRANCH(NEWSTRING_KEY, NEWStringKey);
+#undef MAKE_COLLECTOR_BRANCH
+
 				while (unit_key_e)
 				{
 					_executeKey(*collector_key_e, *unit_key_e);
@@ -87,7 +111,7 @@ namespace NE
 					collector_key_e = &collector_key->getKey();
 				else
 					break;
-			}
+			}		
 
 			return RESULT_SUCCESS;
 		}
@@ -147,7 +171,7 @@ namespace NE
 		template <typename C, NEType::Type TYPE, typename UK>
 		void _operate(C& c, type_index index, NEKey& unit)
 		{
-			switch(arg_method.getValue())
+			switch (arg_method.getValue())
 			{
 			case 0:	//	GET
 				if (index < 0 || index > c.getLengthLastIndex()) return;
@@ -160,7 +184,7 @@ namespace NE
 				break;
 
 			case 2:	//	INSERT
-				if(index < -1 || index > c.getLengthLastIndex()) return;
+				if (index < -1 || index > c.getLengthLastIndex()) return;
 				if (index == -1) index = c.getLength();
 
 				if (c.getLength() >= c.getSize())
@@ -186,12 +210,21 @@ namespace NE
 				break;
 			}
 
+			return;
+		}
+
+		template <typename C>
+		void _fetchLength(C& c)
+		{
 			if (arg_length.isEnable())
 				arg_length.setValue(c.getLength());
+			return;
+		}
+		template <typename C>
+		void _fetchSize(C& c)
+		{
 			if (arg_size.isEnable())
 				arg_size.setValue(c.getSize());
-
-			//	post:
 			return;
 		}
 	};
