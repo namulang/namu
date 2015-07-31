@@ -48,6 +48,7 @@ namespace NE
 		modulelist.push( SLU() );
 		modulelist.push( DoOnce() );
 		modulelist.push( Switch() );
+		modulelist.push( StringSpliter() );
 
 		return modulelist;
 	}

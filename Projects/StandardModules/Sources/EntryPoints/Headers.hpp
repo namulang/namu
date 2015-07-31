@@ -26,6 +26,7 @@
 #include "../Modules/SLU.hpp"
 #include "../Modules/DoOnce.hpp"
 #include "../Modules/Switch.hpp"
+#include "../Modules/StringSpliter.hpp"
 
 #ifndef StandardModule_EXPORTS
 #	ifdef DEVELOPER
