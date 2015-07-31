@@ -311,7 +311,9 @@ namespace BMSFormatter_kniz
 					NEString vv = line.extract(n * 2, n * 2 + 1);
 					type_int value = toIndex(vv);
 					if (!value) continue;
-					cout << vv.toCharPointer();
+#ifdef _DEBUG
+					cout << vv.toCharPointer() << "[" << value << "] on " << arg_pos.getValue() << " type is " << arg_type.getValue().toCharPointer() << "\n";
+#endif
 					arg_value.setValue(value);
 
 					type_int t = arg_type.getValue().toInt();
