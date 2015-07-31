@@ -40,8 +40,9 @@ namespace XA2
 		while(NEModule* e = &ms.getModule())
 		{
 			XAudio2Player& pl = static_cast<XAudio2Player&>(*e);
-			if(	&pl.getDecoder() == this	&&
-				! pl.isStopped()			)
+			if(	cs.find(pl.getScriptCode()) >= 0	&&
+				&pl.getDecoder() == this			&&
+				! pl.isStopped()					)
 				pl.stop();
 		}
 		//	Manager Å½»ö:
