@@ -6,7 +6,7 @@ namespace XA2
 	type_result XAudio2Player::play(type_count loop_count)
 	{
 		//	pre:
-		if (loop_count <= 0) return RESULT_SUCCESS;
+		if (loop_count < 0) return RESULT_SUCCESS;
 		type_result result = RESULT_SUCCESS;
 		XAudio2Manager& mng = XAudio2Manager::getInstance();
 		//		Decoder È¹µæ:

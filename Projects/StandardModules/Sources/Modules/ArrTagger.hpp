@@ -52,18 +52,18 @@ namespace NE
 	protected:
 		virtual type_result _onExecute()
 		{
-			NEKey			*collector_key_e = &arg_collector.getValueKey(),
-				*unit_key_e = &arg_unit.getValueKey();
+			NEKey	*collector_key_e = &arg_collector.getValueKey(),
+					*unit_key_e = &arg_unit.getValueKey();
 			NEKeySelector	*collector_key		= 0,
-				*unit_key			= 0;
-			if( ! collector_key_e && ! unit_key_e) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+							*unit_key			= 0;
+			if( ! collector_key_e) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 
-			if (arg_collector.getValueKey().isSubClassOf(NEType::NEKEY_SELECTOR))
+			if(arg_collector.getValueKey().isSubClassOf(NEType::NEKEY_SELECTOR))
 			{
 				collector_key = static_cast<NEKeySelector*>(&arg_collector.getValueKey());
 				collector_key_e = &collector_key->getKey();
 			}
-			if (arg_unit.getValueKey().isSubClassOf(NEType::NEKEY_SELECTOR))
+			if(unit_key_e && arg_unit.getValueKey().isSubClassOf(NEType::NEKEY_SELECTOR))
 			{
 				unit_key = static_cast<NEKeySelector*>(&arg_unit.getValueKey());
 				unit_key_e = &unit_key->getKey();
