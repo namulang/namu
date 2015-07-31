@@ -329,7 +329,7 @@ namespace NE
 		if(index < 0) return NE_INDEX_ERROR;
 		if(index > _length) return NE_INDEX_ERROR;
 		//		관련멤버변수 검사:
-		if(_length >= _size) return NE_INDEX_ERROR;
+		if(_length >= _size) resize(_size * 2 + 1);
 
 
 

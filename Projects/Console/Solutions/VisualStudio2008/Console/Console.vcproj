@@ -293,6 +293,10 @@
 					RelativePath="..\..\..\Sources\Console\Sources\Modules\Console.hpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\Sources\Console\Sources\Modules\ConsoleCommand.hpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

@@ -2643,6 +2643,71 @@ public:
 	}
 };
 
+class LowerUpperCaseTest : public TestCase
+{
+public:
+	LowerUpperCaseTest() : TestCase("String can make lower/uppercase") {}
+	virtual bool onTest() 
+	{
+		NEString	question = "HeLlO WoRlD!",
+			lower_answer = "hello world!",
+			upper_answer = "HELLO WORLD!";
+
+		NEString submited = ((const NEString)question).toLowerCase();
+		if(submited != lower_answer)
+			return false;
+		if(question != "HeLlO WoRlD!")
+			return false;
+		question.setUpperCase();
+		if (question != upper_answer)
+			return false;
+
+		return true;
+	}
+};
+
+class ScalableArrayTest : public TestCase
+{
+public:
+	ScalableArrayTest() : TestCase("Is class \"Array\" scalable when size overflowed.") {}
+	virtual bool onTest() 
+	{
+		NENodeManager& manager = Kernal::getInstance().getNodeManager();
+		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
+		NERootNodeCodeSet& ns = manager.getRootNodes();
+		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEModuleSet& moduleset = moduler.getModuleSet();
+		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
+		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
+
+		ns.create(0);
+		ns.push(NENode());
+		if (ns.getLength() != ns.getSize() ||
+			ns.getLength() != 1)
+			return false;
+		ns.push(NENode());
+		ns.push(NENode());
+
+		if (ns.getLength() != 3)
+			return false;
+
+		NEArrayTemplate<type_int> t;
+		if (t.getSize() != 0)
+			return false;
+		t.resize(5);		
+		t.push(1);
+		t.push(2);
+		t.push(3);
+		t.push(4);
+		t.push(5);
+		t.push(6);
+		if (t.getSize() != 5 * 2 + 1)
+			return false;
+
+		return true;		
+	}
+};
+
 //class Test : public TestCase
 //{
 //public:
@@ -2832,6 +2897,7 @@ void main(int argc, char** argv)
 			CodeOperator().test();
 			SuperClassOfSelectorAssigning().test();
 			LowerUpperCaseTest().test();
+			ScalableArrayTest().test();
 		}
 		break;
 
