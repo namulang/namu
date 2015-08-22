@@ -56,7 +56,9 @@ private:
 			cout.width(6); cout.fill(' ');
 			dm.printConsole(process_time);
 			dm.printConsole("ms ] ");
-		}	
+		}
+		else
+			dm.printConsole(result + " : ");
 
 		_setColor(LIGHTGRAY, BLACK);
 		dm.printConsole(getName() + "\n");

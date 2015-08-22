@@ -7,7 +7,7 @@ using namespace NE;
 
 NETString scriptfile;
 NEDebugManager* dm = 0;
-bool opt_show_frame = false;
+bool opt_show_frame = true;
 bool state_command_once = false;
 bool opt_open_console = false;
 bool state_error_happend = false;
@@ -2741,8 +2741,11 @@ void printTitle()
 	{
 		Kernal::getInstance().getDebugManager().printConsole(
 			"\n\n"
-			"CoreTester	v0.0.3 alpha build.\n"
-			"2015 (c) WorldFrameworks. Released on 2015.08.06\n"
+			"CoreTester	v0.0.4 alpha build.\n"
+			"2015 (c) kniz. Released on 2015.08.22\n"
+			"=====================================\n"
+			" @ if you want to know about option-flags, just add the \"-help\" option.\n"
+			"\n"
 			);
 		execute_once = true;
 	}
@@ -2865,9 +2868,9 @@ void commandHelp()
 		"	If you don't mention it, default value will be set to \"true\".\n"
 		"\n"
 		"-fr\n"
-		"	This option is for measuring fps(Frame Per Second. Unit is millisec)\n"
+		"	This option is for toggle a measuring fps(Frame Per Second. Unit is millisec)\n"
 		"	while running the script you inputed or testing bunch of internel jobs.\n"
-		"	(Test will be executed with -t option.\n"
+		"	(Test will be executed with -test option.\n"
 		"	If you don't mention it, default value will be set to \"false\".\n"
 		"\n"
 		"\n"
@@ -2884,14 +2887,14 @@ void commandHelp()
 		"	Also associating a file extention(.script) to this application on \n"
 		"	windows-environment will be allowed.\n"
 		"\n"
-		"-t\n"
+		"-test\n"
 		"	It'll test a kernel object with some sequencial jobs. Takes some\n"
 		"	minutes by circumstances.\n"
 		"	If test has been successed, the result will be announced in front of\n"
 		"	test statement with color green.\n"
 		"	And the processed time will be displayed next of it.\n"
 		"\n"
-		"-help\n"
+		"--help\n"
 		"	For what you're watching.\n"
 		);
 
@@ -2910,7 +2913,8 @@ void commandNotAllowed()
 	printTitle();
 
 	dm->printConsole(
-		"Oops! Execution failure.\n"
+		"\n"
+		" @ Oops! Execution failure.\n"
 		"please check that some options weren't fill in properly or not.\n"
 		"Or you may be see this message when try to execute \"main\" script but has no file existed.\n\n"
 		);
@@ -2973,36 +2977,37 @@ void commandTest()
 }
 void branch(NETStringSet& args)
 {
+	type_index n = -1;
 	//	State Option Handling:
-	if(args.getLength() > 0 && args[0] == "-fr")
+	if((n = args.find("-fr")) != -1)
 	{
 		opt_show_frame = true;
-		args.popFront();
+		args.remove(n);
 	}
-	if(args.getLength() > 0 && args[0] == "-l")
+	if((n = args.find("-l")) != -1)
 	{
 		opt_open_console = true;
-		args.popFront();
+		args.remove(n);
 	}
 
 	//	Action Option Handling:
-	if(args.getLength() <= 0) commandMainRun(args);
-	if(args.getLength() > 0 && args[0] == "-test") 
+	if((n = args.getLength()) <= 0) commandMainRun(args);
+	if((n = args.find("-test")) != -1)
 	{
 		commandTest();
-		args.popFront();
+		args.remove(n);
 		state_command_once = true;
 	}
-	if(args.getLength() > 0 && args[0] == "-help") 
+	if((n = args.find("--help")) != -1)
 	{
 		commandHelp();
-		args.popFront();
+		args.remove(n);
 		state_command_once = true;
 	}
-	if(args.getLength() > 0 && args[0].find(".script") != NE_INDEX_ERROR)
+	if(args[0].find(".script").getLength() > 0)
 	{
 		commandRun(args);
-		args.popFront();
+		args.remove(n);
 		state_command_once = true;
 	}
 	if( ! state_command_once) commandNotAllowed();
