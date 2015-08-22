@@ -1,3 +1,4 @@
+
 #pragma once
 
 #pragma comment(lib, "winmm.lib")
@@ -7,7 +8,7 @@
 
 #include "../../Includes/Includes.hpp"
 
-
+extern bool opt_show_frame;
 
 class TestCase
 {
@@ -47,13 +48,18 @@ private:
 			_setColor(RED, BLACK);
 		NEString result = is_success ? "Success" : "Failure";
 
-		cout	<< "[ " << result.toCharPointer() << " : ";
-		cout.width(6); cout.fill(' ');
-		cout	<< process_time;
-		cout	<< "ms ] ";
+		NEDebugManager& dm = Kernal::getInstance().getDebugManager();
+
+		if(opt_show_frame)
+		{
+			dm.printConsole("[ " + result + " : ");
+			cout.width(6); cout.fill(' ');
+			dm.printConsole(process_time);
+			dm.printConsole("ms ] ");
+		}	
 
 		_setColor(LIGHTGRAY, BLACK);
-		cout	<< getName().toCharPointer() << endl;
+		dm.printConsole(getName() + "\n");
 
 	}
 	unsigned int _getTime()

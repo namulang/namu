@@ -4,6 +4,14 @@
 using namespace std;
 #include "Headers.hpp"
 using namespace NE;
+
+NETString scriptfile;
+NEDebugManager* dm = 0;
+bool opt_show_frame = false;
+bool state_command_once = false;
+bool opt_open_console = false;
+bool state_error_happend = false;
+
 class MyMod : public NEModule
 {
 public:
@@ -2725,167 +2733,309 @@ State analyzeState(const NETStringSet& args)
 	return UNDEFINED;
 }
 
+
 void printTitle()
 {
-	cout << "CoreTester.		v0.0.2a	build on 2015.06.19\n";
+	static bool execute_once = false;
+	if(!execute_once)
+	{
+		Kernal::getInstance().getDebugManager().printConsole(
+			"\n\n"
+			"CoreTester	v0.0.3 alpha build.\n"
+			"2015 (c) WorldFrameworks. Released on 2015.08.06\n"
+			);
+		execute_once = true;
+	}
+
+}
+
+void branchWorkDirectory()
+{
+	NEString command = "";
+
+	char buf[256] = { 0, };
+	GetModuleFileNameA(0, buf, 256);
+	NEString executable_path = buf;
+	NEStringSet splited;
+	executable_path.split("\\", splited);
+	for (int n = 0; n < splited.getLength() - 1; n++)
+		command += splited[n] + "\\";
+	SetCurrentDirectoryA(command.toCharPointer());
+}
+NETStringSet purifyArgumentString(LPSTR lpCmdLine)
+{
+	NETString argv(lpCmdLine);
+	if (argv.getLength() > 0 && argv[0] == '\"')
+		argv.popFront();
+	if (argv.getLength() > 0 && argv[argv.getLengthLastIndex()] == '\"')
+		argv.pop();
+
+	NETStringSet args;
+	argv.split(_T(' '), args);
+	if (args.getLength() >= 1 && args[0] == "")
+		args.popFront();
+
+	return args;
 }
 
 
-void main(int argc, char** argv)
+void commandRun(NETStringSet& args)
 {
-	NEString executable_path;
-	NEString command = "";
+	//if(dm && !opt_open_console)
+	//	dm->closeConsole();
+
+	if(scriptfile == "" || scriptfile.getLength() <= 0)
+		scriptfile = args[0];
+
+	NEBinaryFileLoader loader(scriptfile.toCharPointer());
+	loader.open();
+	if( ! loader.isFileOpenSuccess())
 	{
-		char buf[256] = { 0, };
-		GetModuleFileNameA(0, buf, 256);
-		executable_path = buf;
-		NEStringSet splited;
-		executable_path.split("\\", splited);
-		for (int n = 0; n < splited.getLength() - 1; n++)
-			command += splited[n] + "\\";
-		SetCurrentDirectoryA(command.toCharPointer());
+		printTitle();
+		dm->printConsole("ERROR : couldn't load \"" + scriptfile + "\" file.\n");
+		state_error_happend = true;
+		return;
 	}
 
+	NEScriptManager& sc = Kernal::getInstance().getScriptManager();
+	NENodeManager& noder = Kernal::getInstance().getNodeManager();
+	loader >> sc;
+	noder.initialize();
+
+	//cout << "Please press ESCAPE when you want to quit.\n";
+	//char ch = 0;
+	while (1)
+	{
+		//if (_kbhit())
+		//	ch = getch();
+		static float aver = 0.0f;
+		static int aver_cnt = 0;
+		static int cnt = 0;
+		static int prev = 0;
+
+		if(opt_show_frame && ++cnt == 1)
+			prev = timeGetTime();
+
+		noder.execute();
+
+		if(dm && opt_show_frame && cnt >= 10)
+		{
+			printTitle();
+			int time = timeGetTime() - prev;
+			float fps = 10000.0f / time;
+			float sum = (aver*aver_cnt + fps);
+			aver = sum / ++aver_cnt;
+			NEString fps_string = fps;
+
+			cout << NEString(fps_string + "\taver. " + aver + "\n").toCharPointer();
+
+			cnt = 0;
+		}
+
+	}	
+}
+void commandMainRun(NETStringSet& args)
+{
+	scriptfile = "main." + Kernal::getInstance().getSettings().getScriptExtractor();
+	commandRun(args);
+}
+
+void commandHelp()
+{
+	if(dm)
+		dm->openConsole();
+
 	printTitle();
+
+	dm->printConsole(
+		"\n\n"
+		"Usage:\n"
+		"======\n"
+		"CoreTester.exe <filename of script to execute | options>\n"
+		"There are 2 types in a option.\n"
+		"\n"
+		"\n"
+		"Options for state:\n"
+		"==================\n"
+		"Make a flag be set. And flags specified will be applied on while running whole process.\n"
+		"\n"
+		"-l\n"
+		"	Make console window to leave a log message. Any sort of a message won't\n"
+		"	display on the screen during process other jobs.\n"
+		"	If you don't mention it, default value will be set to \"true\".\n"
+		"\n"
+		"-fr\n"
+		"	This option is for measuring fps(Frame Per Second. Unit is millisec)\n"
+		"	while running the script you inputed or testing bunch of internel jobs.\n"
+		"	(Test will be executed with -t option.\n"
+		"	If you don't mention it, default value will be set to \"false\".\n"
+		"\n"
+		"\n"
+		"\n"
+		"Options for job:\n"
+		"================\n"
+		"<nothing>\n"
+		"	If you execute application without any options, program will find 'main\n"
+		"	.script' in a work directory.\n"
+		"\n"
+		"<script file path>\n"
+		"	Load a script file by given path. Of course, you can just drag a \n"
+		"	\".script\" file on this .exe file itself.\n"
+		"	Also associating a file extention(.script) to this application on \n"
+		"	windows-environment will be allowed.\n"
+		"\n"
+		"-t\n"
+		"	It'll test a kernel object with some sequencial jobs. Takes some\n"
+		"	minutes by circumstances.\n"
+		"	If test has been successed, the result will be announced in front of\n"
+		"	test statement with color green.\n"
+		"	And the processed time will be displayed next of it.\n"
+		"\n"
+		"-help\n"
+		"	For what you're watching.\n"
+		);
+
+	state_error_happend = true;
+
+	//if( ! opt_open_console && dm)
+	//	dm->closeConsole();
+}
+void commandNotAllowed()
+{
+	state_error_happend = true;
+
+	if(dm)
+		dm->openConsole();
+
+	printTitle();
+
+	dm->printConsole(
+		"Oops! Execution failure.\n"
+		"please check that some options weren't fill in properly or not.\n"
+		"Or you may be see this message when try to execute \"main\" script but has no file existed.\n\n"
+		);
+	//if( ! opt_open_console && dm)
+	//	dm->closeConsole();
+}
+void commandTest()
+{
+	printTitle();
+
+	if(dm)
+		dm->openConsole();
+	system("pause");
+	system("cls");
+	StringFindingTest().test();
+	ArrayAssigningTest().test();
+	PointerArrayAssigningTest().test();
+	HeapedPointerArrayAssigningTest().test();
+	IndexedArrayAssigningTest().test();
+	PointerIndexedArrayAssigningTest().test();
+	HeapedPointerIndexedArrayAssigningTest().test();
+	IndexedArrayReturningHeapMemory().test();
+	IndexedArrayFileSerializeTest().test();
+	Test1().test();
+	NECodeSetInsertionTest().test();
+	NEKeyManagerTypeTest().test();
+	Test13().test();
+	Test2().test();
+	Test3().test();
+	Test4().test();
+	Test5().test();
+	Test6().test();
+	Test7().test();
+	Test9().test();
+	Test10().test();
+	Test11().test();
+	Test12().test();
+	RelativityTestOnSynchronize().test();
+	SelectorAssignOperatorTest().test();
+	KeySelectorAssigningTest().test();
+	GenericArgumentBindingTest().test();
+	ArgumentConversionTest().test();
+	ArgumentConstantLiteralTest().test();
+	ArgumentInterfaceCanBeSaved().test();
+	CodeSynchroTest().test();
+	NodeSelectorTest().test();
+	KeyConversionTest().test();
+	ModuleOwnerTest().test();
+	CodeTypePolicyTest().test();
+	RecentNodeSelectingInifiniteTest().test();
+	SelectorLock().test();
+	StringSetDeepCopytest().test();
+	CodeOperator().test();
+	SuperClassOfSelectorAssigning().test();
+	LowerUpperCaseTest().test();
+	ScalableArrayTest().test();
+	//if (dm && !opt_open_console)
+	//dm->closeConsole();
+	state_error_happend = true;
+}
+void branch(NETStringSet& args)
+{
+	//	State Option Handling:
+	if(args.getLength() > 0 && args[0] == "-fr")
+	{
+		opt_show_frame = true;
+		args.popFront();
+	}
+	if(args.getLength() > 0 && args[0] == "-l")
+	{
+		opt_open_console = true;
+		args.popFront();
+	}
+
+	//	Action Option Handling:
+	if(args.getLength() <= 0) commandMainRun(args);
+	if(args.getLength() > 0 && args[0] == "-test") 
+	{
+		commandTest();
+		args.popFront();
+		state_command_once = true;
+	}
+	if(args.getLength() > 0 && args[0] == "-help") 
+	{
+		commandHelp();
+		args.popFront();
+		state_command_once = true;
+	}
+	if(args.getLength() > 0 && args[0].find(".script") != NE_INDEX_ERROR)
+	{
+		commandRun(args);
+		args.popFront();
+		state_command_once = true;
+	}
+	if( ! state_command_once) commandNotAllowed();
+
+	if(state_error_happend) 
+		system("pause");
+}
+
+int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+	branchWorkDirectory();	
 
 	NE_MEMORYLEAK;
 
 	std::wcout.imbue(std::locale("korean"));
 
-	//	packaging:
-	NETStringSet args(argc);
-	for(int n = 1; n < argc; n++)
-		args.push(argv[n]);
-
-	State s = analyzeState(args);
-	NETString scriptfile = "";
+	//	packaging:	
+	NETStringSet args = purifyArgumentString(lpCmdLine);	
 
 	Test8().test();
+	dm = &Kernal::getInstance().getDebugManager();
 	init();
 	Test14().test();
 
-	cout << "\n\n";
-	switch (s)
-	{
-	case RUN_MAIN:
-		{
-			cout << "There is no options. So will trying to load \"main.script\" file automatically.\n";
-			scriptfile = "main." + Kernal::getInstance().getSettings().getScriptExtractor();
-		}
-	case RUN:
-		{
-			if(scriptfile == "")
-				scriptfile = args[0];
+	system("cls");
 
-			NEBinaryFileLoader loader(scriptfile.toCharPointer());
-			loader.open();
-			if (loader.isFileOpenSuccess())
-			{
-				NEScriptManager& sc = Kernal::getInstance().getScriptManager();
-				NENodeManager& noder = Kernal::getInstance().getNodeManager();
-				loader >> sc;
-				noder.initialize();
-
-				cout << "Please press ESCAPE when you want to quit.\n";
-				char ch = 0;
-				while (ch != 27)
-				{
-					if(_kbhit())
-						ch = getch();
-
-					noder.execute();
-				}
-			}
-			else
-				cout << "ERROR : couldn't load \"" << NEString(scriptfile).toCharPointer() << "\" file.\n";
-		}
-		break;
-
-	case UNDEFINED:
-		cout	<< "Oops! Execution failure.\n"
-			<< "please check that some options weren't fill in properly or not.\n"
-			<< "Or you may be see this message when try to execute \"main\" script but has no file existed.\n\n";
-	case HELP:
-		cout	<< "Usage:\n"
-			<< "\t" << argv[0] << " <filename of script to execute | one of Options>\n"
-			<< "\n"
-			<< "Options:\n"
-			<< "	<nothing>\n"
-			<< "	if you submit without any options, program will find and\n"
-			<< "	execute 'main.script' of workdirectory.\n"
-			<< "\n"
-			<< "	script file path\n"
-			<< "	load script file by given path. Of course, you can just drag \".script\" file on\n"
-			<< "	" << argv[0] << " this executable file.\n"
-			<< "\n"
-			<< "	-test\n"
-			<< "	will test kernel with some sequencial jobs. Takes some minutes\n"
-			<< "	by circumstances.\n"
-			<< "	If test has been successed, the result will be announced in \n"
-			<< "	front of test statement with color green.\n"
-			<< "	And the processed time will be displayed next of it.\n"				
-			<< "\n"
-			<< "	-help\n"
-			<< "	option for what you're watching.\n"
-			<< "\n";
-		break;
-
-	case TEST:
-		{			
-			system("pause");
-			system("cls");
-			StringFindingTest().test();
-			ArrayAssigningTest().test();
-			PointerArrayAssigningTest().test();
-			HeapedPointerArrayAssigningTest().test();
-			IndexedArrayAssigningTest().test();
-			PointerIndexedArrayAssigningTest().test();
-			HeapedPointerIndexedArrayAssigningTest().test();
-			IndexedArrayReturningHeapMemory().test();
-			IndexedArrayFileSerializeTest().test();
-			Test1().test();
-			NECodeSetInsertionTest().test();
-			NEKeyManagerTypeTest().test();
-			Test13().test();
-			Test2().test();
-			Test3().test();
-			Test4().test();
-			Test5().test();
-			Test6().test();
-			Test7().test();
-			Test9().test();
-			Test10().test();
-			Test11().test();
-			Test12().test();
-			RelativityTestOnSynchronize().test();
-			SelectorAssignOperatorTest().test();
-			KeySelectorAssigningTest().test();
-			GenericArgumentBindingTest().test();
-			ArgumentConversionTest().test();
-			ArgumentConstantLiteralTest().test();
-			ArgumentInterfaceCanBeSaved().test();
-			CodeSynchroTest().test();
-			NodeSelectorTest().test();
-			KeyConversionTest().test();
-			ModuleOwnerTest().test();
-			CodeTypePolicyTest().test();
-			RecentNodeSelectingInifiniteTest().test();
-			SelectorLock().test();
-			StringSetDeepCopytest().test();
-			CodeOperator().test();
-			SuperClassOfSelectorAssigning().test();
-			LowerUpperCaseTest().test();
-			ScalableArrayTest().test();
-		}
-		break;
-
-
-	}			
+	branch(args);
 
 	Kernal::saveSettings();
 	delete &Editor::getInstance();
 	delete &Kernal::getInstance();
 }
+
 // 
 // class Mine : public NEArrayTemplate<int, false, NEString>
 // {
