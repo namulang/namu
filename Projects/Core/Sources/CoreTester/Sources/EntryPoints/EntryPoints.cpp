@@ -2741,10 +2741,10 @@ void printTitle()
 	{
 		Kernal::getInstance().getDebugManager().printConsole(
 			"\n\n"
-			"CoreTester	v0.0.4 alpha build.\n"
-			"2015 (c) kniz. Released on 2015.08.22\n"
+			"CoreTester	v0.0.1 alpha build.\n"
+			"2015 (c) kniz. Released on 2015.08.28\n"
 			"=====================================\n"
-			" @ if you want to know about option-flags, just add the \"-help\" option.\n"
+			" @ if you want to know about option-flags, just add the \"--help\" option.\n"
 			"\n"
 			);
 		execute_once = true;
@@ -2981,12 +2981,12 @@ void branch(NETStringSet& args)
 	//	State Option Handling:
 	if((n = args.find("-fr")) != -1)
 	{
-		opt_show_frame = true;
+		opt_show_frame = ! opt_show_frame;
 		args.remove(n);
 	}
 	if((n = args.find("-l")) != -1)
 	{
-		opt_open_console = true;
+		opt_open_console = ! opt_open_console;
 		args.remove(n);
 	}
 
@@ -3004,7 +3004,7 @@ void branch(NETStringSet& args)
 		args.remove(n);
 		state_command_once = true;
 	}
-	if(args[0].find(".script").getLength() > 0)
+	if(args.getLength() > 0 && args[0].find(".script").getLength() > 0)
 	{
 		commandRun(args);
 		args.remove(n);
