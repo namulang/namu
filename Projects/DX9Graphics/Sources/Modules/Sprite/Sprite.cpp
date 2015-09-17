@@ -4,6 +4,16 @@
 #include "../Texture/Texture.hpp"
 #include "../SpriteTexter/SpriteTexter.hpp"
 
+// A structure for our custom vertex type
+struct CUSTOMVERTEX
+{
+	FLOAT x, y, z;      // The untransformed, 3D position for the vertex
+	DWORD color;        // The vertex color
+};
+
+// Our custom FVF, which describes our custom vertex structure
+#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_DIFFUSE)
+
 namespace DX9Graphics
 {
 	D3DXMATRIX Sprite::adj;
@@ -45,8 +55,29 @@ namespace DX9Graphics
 
 
 		//	post:
-		if(FAILED(D3DXCreateSprite(device, &_sprite)))
-			return ALERT_WARNING("스프라이트 생성을 실패했습니다.");
+		// Initialize three vertices for rendering a triangle
+		CUSTOMVERTEX g_Vertices[] =
+		{
+			{ -1.0f,-1.0f, 0.0f, 0xffff0000, },
+			{  -1.0f,1.0f, 0.0f, 0xff0000ff, },
+			{  1.0f, -1.0f, 0.0f, 0xffffffff, },
+			{  1.0f, 1.0f, 0.0f, 0xffffffff, },
+		};
+
+		// Create the vertex buffer.
+		if( FAILED( device->CreateVertexBuffer( 4 * sizeof( CUSTOMVERTEX ),
+			0, D3DFVF_CUSTOMVERTEX,
+			D3DPOOL_DEFAULT, &_sprite, NULL ) ) )
+		{
+			return E_FAIL;
+		}
+
+		// Fill the vertex buffer.
+		void* gpu_vertex = 0;
+		if( FAILED( _sprite->Lock( 0, sizeof( g_Vertices ), ( void** )&gpu_vertex, 0 ) ) )
+			return RESULT_TYPE_WARNING;
+		memcpy( gpu_vertex, g_Vertices, sizeof( g_Vertices ) );
+		_sprite->Unlock();
 
 		return RESULT_SUCCESS;
 	}
@@ -147,48 +178,17 @@ namespace DX9Graphics
 			//	깊이테스트 해제:
 			//		블렌딩을 위해서는 깊이테스트가 수행되어서는 안된다. 잠깐 깊이 테스트를 끈다.
 			device->SetRenderState(D3DRS_ZENABLE, FALSE);	
-			device->SetTransform(D3DTS_WORLD, &e);
-			_sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
-
+			//		사전 준비:
 			model.adjustBlendingOption();
-
-			//	제대로된 방법을 찾지 못해서 이런식으로 땜방하였다.
-			D3DXMATRIX world = adj * model.getWorldMatrix();
+			device->SetTransform(D3DTS_WORLD, &model.getWorldMatrix());
+			device->SetTexture(0, &model.getTexture().getTexture());
+			//		렌더링:
+			device->BeginScene();
+			device->SetStreamSource(0, _sprite, 0, sizeof(CUSTOMVERTEX));
+			device->SetFVF(D3DFVF_CUSTOMVERTEX);
+			device->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+			device->EndScene();
 			
-			_sprite->SetTransform(&world);
-			/*
-				Draw의메소드인자설명:
-					1	g_pTexture	:	텍스쳐
-					2	RECT		:	텍스쳐에서실제로사용할구역. UV좌표가정규화된0~1의값이라면이건텍스쳐자체를의미한다고보면된다.
-					3	VECTOR3		:	RECT에서설정한구역에서어느점을텍스쳐의중심점으로삼을것인지를지정한다.
-					4	VECTOR3		:	SetTransform에서설정한Translation Vector를지정한다.
-					5	DWORD		:	색상값.
-			*/
-			RECT source_rect = texture.createSourceRect();
-			type_uint	width = texture.getWidthOfOneFrame(),
-						height = texture.getHeightOfOneFrame();
-			D3DXVECTOR3 center_of_texture(width / 2.0f, height / 2.0f, 0.0f),
-						world_translation(world._41, world._42, world._43);			
-			_sprite->Draw(&texture.getTexture(), &source_rect, &center_of_texture, NULL, model.createColor());
-			if(model.arg_texter_binder.isEnable())
-			{
-				SpriteTexter& texter = model.getTexter();
-				Texture& texture = model.getTexture();
-				if (!&texter ||
-					!&texture)
-				{
-					ALERT_WARNING(" : Texter나 Texture 둘중 하나가 바인딩이 안되어 있습니다.");
-					goto POST;	//	same as that break if blockstatements.
-				}					
-
-				world *= adj_for_font;
-				_sprite->SetTransform(&world);	//	Texter를 위해서 미리 폰트보정행렬을 Set한다.
-
-				texter.render(_sprite, texture);
-			}
-
-		POST:
-			_sprite->End();
 			//	깊이 테스트 복원:
 			device->SetRenderState(D3DRS_ZENABLE, TRUE);
 
@@ -201,7 +201,7 @@ namespace DX9Graphics
 
 			sphere_scale = sphere_scale * model.getWorldMatrix();
 
-			_renderSphere(dx9.getDevice(), sphere_scale);
+			//_renderSphere(dx9.getDevice(), sphere_scale);
 		}
 
 		return RESULT_SUCCESS;		

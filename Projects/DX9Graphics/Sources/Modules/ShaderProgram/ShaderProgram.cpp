@@ -231,15 +231,12 @@ namespace DX9Graphics
 
 		LPDIRECT3DDEVICE9 device = dx9.getDevice();
 
-		device->BeginScene();
-
 		while(&selector.getModule())
 		{
 			Model& model = static_cast<Model&>(selector.peekModule());
 
 			_onRenderModel(device, camera, model);
-		}
-		device->EndScene();
+		}		
 
 		return RESULT_SUCCESS;
 	}

@@ -52,8 +52,8 @@ namespace DX9Graphics
 		}
 
 	public:
-		LPD3DXSPRITE getSprite() { return _sprite; }
-		const LPD3DXSPRITE getSprite() const { return _sprite; }
+		LPDIRECT3DVERTEXBUFFER9 getSprite() { return _sprite; }
+		const LPDIRECT3DVERTEXBUFFER9 getSprite() const { return _sprite; }
 
 	public:
 		virtual type_result dock(Model& model);
@@ -159,7 +159,7 @@ namespace DX9Graphics
 		}
 
 	private:
-		LPD3DXSPRITE _sprite;
+		LPDIRECT3DVERTEXBUFFER9 _sprite;
 		LPD3DXMESH _mesh;
 		type_float _radius;
 
