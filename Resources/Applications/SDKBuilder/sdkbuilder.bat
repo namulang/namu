@@ -45,8 +45,9 @@ rem add envrionmental variables for xcopy issue.
 set Path=%Path%;%SystemRoot%\System32
 
 rem create a temporary folder
-md tmp
 set TEMP=.\tmp
+rd "%TEMP%" /s /q
+md tmp
 
 set target_directory=.\..\..\..\SDK
 set source_directory=.\..\..\..\Projects\Core
@@ -116,7 +117,7 @@ echo	*
 echo	*
 pause
 
-if %isWantingNotToRemoveScriptFiles% == y (
+if %isWantingNotToRemoveResources% == y (
 echo	*
 echo	*
 echo	*	Preventing not to remove old resource files. . .
