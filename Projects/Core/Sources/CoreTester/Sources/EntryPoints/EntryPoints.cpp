@@ -7,6 +7,7 @@ using namespace NE;
 
 NETString scriptfile;
 NEDebugManager* dm = 0;
+
 bool opt_show_frame = true;
 bool state_command_once = false;
 bool opt_open_console = false;
