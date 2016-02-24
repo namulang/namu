@@ -524,6 +524,50 @@ public:
 		return true;
 	}
 };
+class ModuleFetchingTest : public TestCase
+{
+public:
+	ModuleFetchingTest()	: TestCase("ModuleManager can specify location which will be used to fetch modules.") {}
+	virtual bool onTest() 
+	{
+		Kernal& kernal = Kernal::getInstance();
+		if(kernal.getModuleManager().getModuleSet().getLength() <= 1)
+			return false;
+
+		return true;
+	}
+};
+class ModuleFetchesAllManagerModules : public TestCase
+{
+public:
+	ModuleFetchesAllManagerModules()	
+		: TestCase("Did Kernel fetch all of managers it needs?"), _error_happend(false) {}
+
+	virtual bool onTest()
+	{
+		Kernal& kernel = Kernal::getInstance();
+
+		_testManager(kernel.getNodeManager(), "NENodeManager");
+		_testManager(kernel.getScriptManager(), "NEScriptManager");
+
+		if(_error_happend)
+			 cout << " - doesn't exists. --> ";
+		return ! _error_happend;
+	}
+
+	private:
+		void _testManager(const NEModule& manager, const type_char* name) 
+		{
+			if( ! &manager)
+			{
+				cout << name << "\n";
+				_error_happend = true;
+			}
+		}
+
+	private:
+		bool _error_happend;
+};
 class Test9 : public TestCase
 {
 public:
@@ -720,6 +764,39 @@ public:
 		
 		return true;
 	}
+};
+
+class EditorFetchesAllManagerModules : public TestCase
+{
+public:
+	EditorFetchesAllManagerModules()	
+		: TestCase("Did Editor fetch all of managers it needs?"), _error_happend(false) {}
+
+	virtual bool onTest()
+	{
+		Editor& editor = Editor::getInstance();
+
+		_testManager(editor.getPanelManager(), "NEPanelManager");
+		_testManager(editor.getScriptEditor(), "NEScriptEditor");
+		_testManager(editor.getEventHandler(), "NEEventHandler");
+
+		if(_error_happend)
+			cout << " - doesn't exists. --> ";
+		return ! _error_happend;
+	}
+
+private:
+	void _testManager(const NEModule& manager, const type_char* name) 
+	{
+		if( ! &manager)
+		{
+			cout << name << "\n";
+			_error_happend = true;
+		}
+	}
+
+private:
+	bool _error_happend;
 };
 
 class NECodeSetInsertionTest : public TestCase
@@ -2930,6 +3007,9 @@ void commandTest()
 		dm->openConsole();
 	system("pause");
 	system("cls");
+	ModuleFetchingTest().test();
+	ModuleFetchesAllManagerModules().test();
+	EditorFetchesAllManagerModules().test();
 	StringFindingTest().test();
 	ArrayAssigningTest().test();
 	PointerArrayAssigningTest().test();
