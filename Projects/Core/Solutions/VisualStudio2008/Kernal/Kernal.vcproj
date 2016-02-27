@@ -1192,6 +1192,14 @@
 												>
 											</File>
 										</Filter>
+										<Filter
+											Name="NETCharKey"
+											>
+											<File
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETCharKey\NETCharKey.hpp"
+												>
+											</File>
+										</Filter>
 									</Filter>
 									<Filter
 										Name="NECodeSetKey"
@@ -1871,6 +1879,22 @@
 									>
 								</File>
 							</Filter>
+							<Filter
+								Name="NETStringSet"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETStringSet\NETStringSet.hpp"
+									>
+								</File>
+							</Filter>
+							<Filter
+								Name="NETString"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETString\NETString.hpp"
+									>
+								</File>
+							</Filter>
 						</Filter>
 						<Filter
 							Name="NEList"
@@ -1928,6 +1952,14 @@
 								>
 								<File
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentList\NEArgumentList.hpp"
+									>
+								</File>
+							</Filter>
+							<Filter
+								Name="NETStringList"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETStringList\NETStringList.hpp"
 									>
 								</File>
 							</Filter>
