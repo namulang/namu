@@ -519,42 +519,6 @@
 					</Filter>
 				</Filter>
 				<Filter
-					Name="Typedefs"
-					>
-					<Filter
-						Name="NETString"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Typedefs\NETString\NETString.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="NETStringKey"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Typedefs\NETStringKey\NETStringKey.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="NETCharKey"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Typedefs\NETCharKey\NETCharKey.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="NETStringSetKey"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Typedefs\NETStringSetKey\NETStringSetKey.hpp"
-							>
-						</File>
-					</Filter>
-				</Filter>
-				<Filter
 					Name="Templates"
 					>
 					<Filter
@@ -868,6 +832,10 @@
 				>
 				<File
 					RelativePath="..\..\..\Sources\Kernal\Sources\Includes\Includes.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Kernal\Sources\Includes\IncludeStringCollectors.hpp"
 					>
 				</File>
 			</Filter>
