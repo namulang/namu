@@ -4,7 +4,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	NEIndexedArrayTemplate<Type*, true, type>::NEIndexedArrayTemplate()
+	NETIndexedArray<Type*, true, type>::NETIndexedArray()
 		: SuperClass(0), _data(NE_NULL)
 	{
 		_release();
@@ -16,7 +16,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	NEIndexedArrayTemplate<Type*, true, type>::NEIndexedArrayTemplate(type_count size)
+	NETIndexedArray<Type*, true, type>::NETIndexedArray(type_count size)
 		: SuperClass(size), _data(NE_NULL)
 	{
 		create(size);
@@ -28,7 +28,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	NEIndexedArrayTemplate<Type*, true, type>::NEIndexedArrayTemplate(const ThisClass& source)
+	NETIndexedArray<Type*, true, type>::NETIndexedArray(const ThisClass& source)
 		: SuperClass(source), _data(NE_NULL)
 	{
 		_assign(source);
@@ -40,7 +40,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	NEIndexedArrayTemplate<Type*, true, type>::~NEIndexedArrayTemplate()
+	NETIndexedArray<Type*, true, type>::~NETIndexedArray()
 	{
 		_release();
 	}
@@ -51,7 +51,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	const NEIndexedArrayTemplate<Type*, true, type>& NEIndexedArrayTemplate<Type*, true, type>::operator=(const ThisClass& source) 
+	const NETIndexedArray<Type*, true, type>& NETIndexedArray<Type*, true, type>::operator=(const ThisClass& source) 
 	{
 		return _assign(source);
 	}
@@ -62,7 +62,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	NEIndexedArrayTemplate<Type*, true, type> NEIndexedArrayTemplate<Type*, true, type>::operator+(const ThisClass& source) const 
+	NETIndexedArray<Type*, true, type> NETIndexedArray<Type*, true, type>::operator+(const ThisClass& source) const 
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -90,7 +90,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	bool  NEIndexedArrayTemplate<Type*, true, type>::operator==(const ThisClass& source) const
+	bool  NETIndexedArray<Type*, true, type>::operator==(const ThisClass& source) const
 	{
 		if(this == &source) return true;
 		if(SuperClass::operator==(source) == false) return false;
@@ -104,7 +104,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	bool  NEIndexedArrayTemplate<Type*, true, type>::operator!=(const ThisClass& source) const
+	bool  NETIndexedArray<Type*, true, type>::operator!=(const ThisClass& source) const
 	{
 		return !(operator==(source));
 	}
@@ -116,7 +116,7 @@ namespace NE
 	//				2011-11-20	이태훈	버그 수정	source가 *this일 때 발생하게될 오류 대처 추가
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	const NEIndexedArrayTemplate<Type*, true, type>& NEIndexedArrayTemplate<Type*, true, type>::operator+=(const ThisClass& source)
+	const NETIndexedArray<Type*, true, type>& NETIndexedArray<Type*, true, type>::operator+=(const ThisClass& source)
 	{
 		if(this == &source)
 		{
@@ -139,7 +139,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	Type& NEIndexedArrayTemplate<Type*, true, type>::getElement(type_index index) 
+	Type& NETIndexedArray<Type*, true, type>::getElement(type_index index) 
 	{
 		//	pre:
 		//		널 레퍼런스:
@@ -163,7 +163,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	const Type& NEIndexedArrayTemplate<Type*, true, type>::getElement(type_index index) const 
+	const Type& NETIndexedArray<Type*, true, type>::getElement(type_index index) const 
 	{			
 		//	pre:
 		//		널 레퍼런스:
@@ -187,7 +187,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type*, true, type>::setElement(type_index index, const Type* const source)  
+	type_result NETIndexedArray<Type*, true, type>::setElement(type_index index, const Type* const source)  
 	{
 		//	pre:
 		//		파라메터검사:
@@ -221,7 +221,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type*, true, type>::find(const Type* const source) const
+	type_index NETIndexedArray<Type*, true, type>::find(const Type* const source) const
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -252,7 +252,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type*, true, type>::resize(type_count size) // 가지고있는 데이터는 보존한채 크기만 변경한다.
+	type_result NETIndexedArray<Type*, true, type>::resize(type_count size) // 가지고있는 데이터는 보존한채 크기만 변경한다.
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -282,7 +282,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type*, true, type>::push(const ThisClass& source)
+	type_result NETIndexedArray<Type*, true, type>::push(const ThisClass& source)
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -313,7 +313,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type*, true, type>::pushFront(const ThisClass& source)
+	type_result NETIndexedArray<Type*, true, type>::pushFront(const ThisClass& source)
 	{
 		//	pre:
 		//		파라메터검사:
@@ -348,7 +348,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	중간에 값을 삽입. 길이 == 크기 일경우, 전체 크기가 + 1 증가한다.
 	template <typename Type, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type*, true, type>::insert(type_index index, const Type* const source) 
+	type_index NETIndexedArray<Type*, true, type>::insert(type_index index, const Type* const source) 
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -403,7 +403,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type*, true, type>::remove(type_index index) 
+	type_index NETIndexedArray<Type*, true, type>::remove(type_index index) 
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -439,7 +439,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료				
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	bool  NEIndexedArrayTemplate<Type*, true, type>::isEqualSizeAndElement(const ThisClass& source) const
+	bool  NETIndexedArray<Type*, true, type>::isEqualSizeAndElement(const ThisClass& source) const
 	{
 		//	pre:
 		if(_size != source._size) return false;
@@ -461,7 +461,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	bool  NEIndexedArrayTemplate<Type*, true, type>::isEqualElement(const ThisClass& source) const
+	bool  NETIndexedArray<Type*, true, type>::isEqualElement(const ThisClass& source) const
 	{
 		//	pre:
 		if(getLengthLastIndex() != source.getLengthLastIndex()) return false;
@@ -484,7 +484,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type*, true, type>::isValid() const  
+	type_result NETIndexedArray<Type*, true, type>::isValid() const  
 	{
 		//	pre:
 		//		상위 클래스의 VALID 체크:
@@ -504,7 +504,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	void  NEIndexedArrayTemplate<Type*, true, type>::release()  
+	void  NETIndexedArray<Type*, true, type>::release()  
 	{		
 		_release();
 		/*
@@ -520,7 +520,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	NEType::Type NEIndexedArrayTemplate<Type*, true, type>::getType() const
+	NEType::Type NETIndexedArray<Type*, true, type>::getType() const
 	{
 		if(type == NEType::NEARRAY_TEMPLATE)
 			return NEType::NEPOINTER_ARRAY_WITH_POLYMORPHISM_TEMPLATE;
@@ -540,7 +540,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type*, true, type>::create(type_count size)
+	type_result NETIndexedArray<Type*, true, type>::create(type_count size)
 	{
 		release();
 
@@ -572,7 +572,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	const NEIndexedArrayTemplate<Type*, true, type>& NEIndexedArrayTemplate<Type*, true, type>::_assign(const ThisClass& source)
+	const NETIndexedArray<Type*, true, type>& NETIndexedArray<Type*, true, type>::_assign(const ThisClass& source)
 	{	//	pre:
 		if(this == &source) return *this;
 
@@ -604,7 +604,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	void  NEIndexedArrayTemplate<Type*, true, type>::_release() 
+	void  NETIndexedArray<Type*, true, type>::_release() 
 	{	
 		if(_data)
 		{
@@ -629,7 +629,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type*, true, type>::_returnHeapMemory(type_index index)
+	type_result NETIndexedArray<Type*, true, type>::_returnHeapMemory(type_index index)
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -644,7 +644,7 @@ namespace NE
 			delete _data[index];
 		//		소유권 소멸:
 		//			객체가 실제로 사라지는 건 insert에서 덮어씌워진다.
-		//			메모리가 반환되는 건, NEIndexedArrayTemplate 자체가 반환될때다.
+		//			메모리가 반환되는 건, NETIndexedArray 자체가 반환될때다.
 		_occupiedset[index] = false;
 
 		return RESULT_SUCCESS;
@@ -653,7 +653,7 @@ namespace NE
 
 
 	template <typename Type, NEType::Type type>
-	NEBinaryFileLoader& NEIndexedArrayTemplate<Type*, true, type>::serialize(NEBinaryFileLoader& loader)
+	NEBinaryFileLoader& NETIndexedArray<Type*, true, type>::serialize(NEBinaryFileLoader& loader)
 	{
 		/*
 			Serialize의 구현:
@@ -682,7 +682,7 @@ namespace NE
 
 
 	template <typename Type, NEType::Type type>
-	NEBinaryFileSaver& NEIndexedArrayTemplate<Type*, true, type>::serialize(NEBinaryFileSaver& saver) const
+	NEBinaryFileSaver& NETIndexedArray<Type*, true, type>::serialize(NEBinaryFileSaver& saver) const
 	{
 		SuperClass::serialize(saver);
 
@@ -692,7 +692,7 @@ namespace NE
 
 
 	template <typename Type, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type*, true, type>::_searchIndex(bool by_decreasing, bool target_is_occupied) const
+	type_index NETIndexedArray<Type*, true, type>::_searchIndex(bool by_decreasing, bool target_is_occupied) const
 	{
 		if( ! by_decreasing)
 		{
@@ -714,7 +714,7 @@ namespace NE
 
 
 	template <typename Type, NEType::Type type>
-	NEObject& NEIndexedArrayTemplate<Type*, true, type>::clone() const
+	NEObject& NETIndexedArray<Type*, true, type>::clone() const
 	{
 		return *(new ThisClass(*this));
 	}
@@ -722,7 +722,7 @@ namespace NE
 
 
 	template <typename Type, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type*, true, type>::push(const Type* const source)
+	type_index NETIndexedArray<Type*, true, type>::push(const Type* const source)
 	{
 		type_index highest_vacant_index = _searchIndex(true, false);
 		if(highest_vacant_index == NE_INDEX_ERROR) return NE_INDEX_ERROR;
@@ -731,13 +731,13 @@ namespace NE
 	}
 
 	template <typename Type, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type*, true, type>::insert(type_index index, const Type& source)
+	type_index NETIndexedArray<Type*, true, type>::insert(type_index index, const Type& source)
 	{
 		return insert(index, &source);
 	}
 
 	template <typename Type, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type*, true, type>::pop()
+	type_index NETIndexedArray<Type*, true, type>::pop()
 	{
 		type_index highest_occupied_index = _searchIndex(true, true);
 		if(highest_occupied_index == NE_INDEX_ERROR) return NE_INDEX_ERROR;
@@ -746,13 +746,13 @@ namespace NE
 	}
 
 	template <typename Type, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type*, true, type>::pushFront(const Type& source)
+	type_index NETIndexedArray<Type*, true, type>::pushFront(const Type& source)
 	{
 		return pushFront(&source);
 	}
 
 	template <typename Type, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type*, true, type>::pushFront(const Type* const source)
+	type_index NETIndexedArray<Type*, true, type>::pushFront(const Type* const source)
 	{
 		type_index lowest_vacant_index = _searchIndex(false, false);
 		if(lowest_vacant_index == NE_INDEX_ERROR) return NE_INDEX_ERROR;
@@ -761,7 +761,7 @@ namespace NE
 	}
 
 	template <typename Type, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type*, true, type>::popFront()
+	type_index NETIndexedArray<Type*, true, type>::popFront()
 	{
 		type_index lowest_occupied_index = _searchIndex(false, true);
 		if(lowest_occupied_index == NE_INDEX_ERROR) return NE_INDEX_ERROR;
@@ -772,7 +772,7 @@ namespace NE
 
 
 	template <typename Type, NEType::Type type>
-	const NEOccupiedSet& NEIndexedArrayTemplate<Type*, true, type>::getOccupiedSet() const
+	const NEOccupiedSet& NETIndexedArray<Type*, true, type>::getOccupiedSet() const
 	{
 		return _occupiedset;
 	}

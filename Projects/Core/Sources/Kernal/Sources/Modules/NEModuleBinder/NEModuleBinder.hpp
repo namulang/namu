@@ -13,7 +13,7 @@ namespace NE
 		typedef NEBinderBase SuperClass;
 
 		template <typename NodeSelector, NEType::Type type>
-		friend class NEModuleSelectorTemplate;
+		friend class NETModuleSelector;
 	public:
 		NEModuleBinder();
 		NEModuleBinder(const NEModule& module, NEType::Type manager_type);

@@ -35,7 +35,7 @@ namespace NE
 #include "innerclass/ErrorCode/ErrorCode.hpp"
 
 		//	typedef:
-		typedef class NE_DLL NEListTemplate<NEModuleManager::DLLHeader> DLLHeaderList;
+		typedef class NE_DLL NETList<NEModuleManager::DLLHeader> DLLHeaderList;
 
 		//	»ý¼ºÀÚ:
 	public:
@@ -97,5 +97,5 @@ namespace NE
 	};
 
 	template 
-	class NE_DLL NEListTemplate<NEModuleManager::DLLHeader, false>;
+	class NE_DLL NETList<NEModuleManager::DLLHeader, false>;
 }

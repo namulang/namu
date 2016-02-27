@@ -1,20 +1,20 @@
 #pragma once
 
-#include "../../Commons/Templates/NEArrayTemplate/NEArrayTemplate.hpp"
-#include "../../Commons/Templates/NEEnlistableSetTemplate/NEEnlistableSetTempate.hpp"
+#include "../NETArray/NETArray.hpp"
+#include "../NETEnlistableSet/NETEnlistableSet.hpp"
 #include "../NEModule/NEModule.hpp"
 
 namespace NE
 {
 	template 
-	class NE_DLL NEArrayTemplate<type_code, false, NEModule, NEType::NEMODULE_CODESET>;
+	class NE_DLL NETArray<type_code, false, NEModule, NEType::NEMODULE_CODESET>;
 	template 
-	class NE_DLL NEEnlistableSetTemplate< NEArrayTemplate<type_code, false, NEModule, NEType::NEMODULE_CODESET> >;
+	class NE_DLL NETEnlistableSet< NETArray<type_code, false, NEModule, NEType::NEMODULE_CODESET> >;
 
-	class NE_DLL NEModuleCodeSet : public NEEnlistableSetTemplate<NEArrayTemplate<type_code, false, NEModule, NEType::NEMODULE_CODESET> >, public NEExecutable
+	class NE_DLL NEModuleCodeSet : public NETEnlistableSet<NETArray<type_code, false, NEModule, NEType::NEMODULE_CODESET> >, public NEExecutable
 	{
 	public:
-		typedef NEEnlistableSetTemplate< NEArrayTemplate<type_code, false, NEModule, NEType::NEMODULE_CODESET> > SuperClass;
+		typedef NETEnlistableSet< NETArray<type_code, false, NEModule, NEType::NEMODULE_CODESET> > SuperClass;
 		typedef NEModuleCodeSet ThisClass;
 		typedef type_code InnerType;
 		typedef NEModule OuterType;

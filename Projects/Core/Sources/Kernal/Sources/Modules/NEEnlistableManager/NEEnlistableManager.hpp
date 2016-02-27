@@ -25,9 +25,9 @@ namespace NE
 		friend class NEModuleBinder;
 		friend class NEKeyBinder;
 		template <typename NodeSelector, NEType::Type type>
-		friend class NEModuleSelectorTemplate;
+		friend class NETModuleSelector;
 		template <typename ModuleSelector, NEType::Type type>
-		friend class NEKeySelectorTemplate;
+		friend class NETKeySelector;
 
 	public:
 		NEEnlistableManager();

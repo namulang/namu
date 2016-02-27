@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../NESwitchableUnit/NESwitchableUnit.hpp"
-#include "../../Commons/Templates/NEEnlistableSetTemplate/NEEnlistableSetTempate.hpp"
+#include "../NETEnlistableSet/NETEnlistableSet.hpp"
 
 namespace NE
 {

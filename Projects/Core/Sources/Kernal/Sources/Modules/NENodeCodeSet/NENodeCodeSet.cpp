@@ -368,14 +368,14 @@ namespace NE
 	{		
 		/*
 			왜 resize를 재정의 하는가:
-				NEArrayTemplate<T, bool, Q, Type>에서 정의한 resize 
+				NETArray<T, bool, Q, Type>에서 정의한 resize 
 				다른 원리로 동작하기 때문이다. 해당 함수에서는 clone
 				함수를 사용해서 담아둘 인스턴스를 임시 버퍼에 담아두는
 				역할을 수행하고 있는데, 실질적으로 이 코드는 NEIndexedNodeSet
 				에서 동작이 불가능한 코드이기 때문이다.
 				
 			왜 clone을 사용할 수 없는가:
-				관련한 내용은 NEEnlistableSetTemplate.hpp의 복사생성자 주석을 
+				관련한 내용은 NETEnlistableSet.hpp의 복사생성자 주석을 
 				참고하라.
 
 			알고리즘:	ShallowCopy로 효율을 높인다.

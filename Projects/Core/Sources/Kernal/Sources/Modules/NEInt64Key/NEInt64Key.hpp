@@ -13,7 +13,7 @@
 #pragma warning(disable : 4804)
 
 //	include:
-#include "../../Commons/Templates/NETArithmeticKey/NETArithmeticKey.hpp"
+#include "../NETArithmeticKey/NETArithmeticKey.hpp"
 
 namespace NE
 {

@@ -1,9 +1,9 @@
-#include "NEKeyTemplateBase.hpp"
+#include "NETKeyBase.hpp"
 #include "../NEKeySelector/NEKeySelector.hpp"
 
 namespace NE
 {
-	type_result NEKeyTemplateBase::assign(const NEKey& source)
+	type_result NETKeyBase::assign(const NEKey& source)
 	{
 		if( ! &source) return RESULT_TYPE_ERROR;
 		if( this == &source) return RESULT_TYPE_ERROR;
@@ -23,19 +23,19 @@ namespace NE
 		return result;
 	}
 
-	NEKeyTemplateBase::NEKeyTemplateBase(const NETString& new_keyname)
+	NETKeyBase::NETKeyBase(const NETString& new_keyname)
 		: SuperClass(new_keyname)
 	{
 
 	}
 
-	NEKeyTemplateBase::NEKeyTemplateBase(const ThisClass& source)
+	NETKeyBase::NETKeyBase(const ThisClass& source)
 		: SuperClass(source)
 	{
 
 	}
 
-	NEKeyTemplateBase::~NEKeyTemplateBase()
+	NETKeyBase::~NETKeyBase()
 	{
 
 	}

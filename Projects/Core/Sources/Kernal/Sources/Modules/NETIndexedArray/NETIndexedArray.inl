@@ -4,8 +4,8 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::NEIndexedArrayTemplate()
-		: NEReservedCollectorTemplate<Type>(), _data(NE_NULL)
+	NETIndexedArray<Type, pointerUseNewInstance, type>::NETIndexedArray()
+		: NETReservedCollector<Type>(), _data(NE_NULL)
 	{
 		_release();
 	}
@@ -16,8 +16,8 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::NEIndexedArrayTemplate(type_count size)
-		: NEReservedCollectorTemplate<Type>(size), _data(NE_NULL)
+	NETIndexedArray<Type, pointerUseNewInstance, type>::NETIndexedArray(type_count size)
+		: NETReservedCollector<Type>(size), _data(NE_NULL)
 	{
 		create(size);
 	}
@@ -28,8 +28,8 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::NEIndexedArrayTemplate(const ThisClass& source)
-		: NEReservedCollectorTemplate<Type>(), _data(NE_NULL)
+	NETIndexedArray<Type, pointerUseNewInstance, type>::NETIndexedArray(const ThisClass& source)
+		: NETReservedCollector<Type>(), _data(NE_NULL)
 	{
 		_assign(source);
 	}	
@@ -40,7 +40,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::~NEIndexedArrayTemplate()
+	NETIndexedArray<Type, pointerUseNewInstance, type>::~NETIndexedArray()
 	{
 		_release();
 	}
@@ -51,8 +51,8 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	const NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>&
-		NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::operator=
+	const NETIndexedArray<Type, pointerUseNewInstance, type>&
+		NETIndexedArray<Type, pointerUseNewInstance, type>::operator=
 		(
 		const ThisClass& source
 		)
@@ -66,8 +66,8 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>  
-		NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::operator+
+	NETIndexedArray<Type, pointerUseNewInstance, type>  
+		NETIndexedArray<Type, pointerUseNewInstance, type>::operator+
 		(
 		const ThisClass& source
 		) const
@@ -99,10 +99,10 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------	
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	bool  NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::operator==(const NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>& source) const
+	bool  NETIndexedArray<Type, pointerUseNewInstance, type>::operator==(const NETIndexedArray<Type, pointerUseNewInstance, type>& source) const
 	{
 		if(this == &source) return true;
-		if(NEReservedCollectorTemplate<Type>::operator==(source) == false) return false;
+		if(NETReservedCollector<Type>::operator==(source) == false) return false;
 
 		return isEqualElement(source);
 	}
@@ -113,7 +113,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	bool  NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::operator!=(const NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>& source) const
+	bool  NETIndexedArray<Type, pointerUseNewInstance, type>::operator!=(const NETIndexedArray<Type, pointerUseNewInstance, type>& source) const
 	{
 		return !(operator==(source));
 	}
@@ -125,8 +125,8 @@ namespace NE
 	//				2011-11-20	이태훈	버그 수정	source가 *this일 때 발생하게될 오류 대처 추가
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	const NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>&
-		NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::operator+=
+	const NETIndexedArray<Type, pointerUseNewInstance, type>&
+		NETIndexedArray<Type, pointerUseNewInstance, type>::operator+=
 		(
 		const ThisClass& source
 		)
@@ -152,7 +152,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	Type& NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::getElement(type_index index) 
+	Type& NETIndexedArray<Type, pointerUseNewInstance, type>::getElement(type_index index) 
 	{	
 		//	pre:
 		//		널 레퍼런스:
@@ -176,7 +176,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	const Type& NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::getElement(type_index index) const 
+	const Type& NETIndexedArray<Type, pointerUseNewInstance, type>::getElement(type_index index) const 
 	{	
 		//	pre:
 		//		널 레퍼런스:
@@ -200,7 +200,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::setElement(type_index index, const Type& source)
+	type_result NETIndexedArray<Type, pointerUseNewInstance, type>::setElement(type_index index, const Type& source)
 	{
 		//	pre:
 		//		파라메터검사:
@@ -227,7 +227,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::resize(type_count size) // 가지고있는 데이터는 보존한채 크기만 변경한다.
+	type_result NETIndexedArray<Type, pointerUseNewInstance, type>::resize(type_count size) // 가지고있는 데이터는 보존한채 크기만 변경한다.
 	{
 		//	pre:
 		if(size < 0) return RESULT_TYPE_INFORMATION | RESULT_ABORT_ACTION;
@@ -255,7 +255,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::push(const ThisClass& source)
+	type_result NETIndexedArray<Type, pointerUseNewInstance, type>::push(const ThisClass& source)
 	{
 		//	pre:
 		//		파라메터검사:
@@ -284,7 +284,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::pushFront(const ThisClass& source)
+	type_result NETIndexedArray<Type, pointerUseNewInstance, type>::pushFront(const ThisClass& source)
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -318,7 +318,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::insert(type_index index, const Type& source) 
+	type_index NETIndexedArray<Type, pointerUseNewInstance, type>::insert(type_index index, const Type& source) 
 	{
 		//	pre:
 		//		파라메터검사:
@@ -368,7 +368,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::remove(type_index index) 
+	type_index NETIndexedArray<Type, pointerUseNewInstance, type>::remove(type_index index) 
 	{
 		//	pre:
 		//		파라메터검사:
@@ -384,7 +384,7 @@ namespace NE
 		//		소유권 소멸:
 		/*
 					객체가 실제로 사라지는 건 insert에서 덮어씌워진다.
-					메모리가 반환되는 건, NEIndexedArrayTemplate 자체가 반환될때다.
+					메모리가 반환되는 건, NETIndexedArray 자체가 반환될때다.
 		*/
 		_occupiedset[index] = false;
 
@@ -408,7 +408,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	bool  NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::isEqualSizeAndElement(const ThisClass& source) const
+	bool  NETIndexedArray<Type, pointerUseNewInstance, type>::isEqualSizeAndElement(const ThisClass& source) const
 	{
 		//	pre:
 		if(_size != source._size) return false;
@@ -427,7 +427,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	bool  NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::isEqualElement(const ThisClass& source) const
+	bool  NETIndexedArray<Type, pointerUseNewInstance, type>::isEqualElement(const ThisClass& source) const
 	{
 		if(getLengthLastIndex() != source.getLengthLastIndex()) return false;
 		if(_occupiedset != source._occupiedset) return false;
@@ -447,10 +447,10 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type> 
-	type_result NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::isValid() const  
+	type_result NETIndexedArray<Type, pointerUseNewInstance, type>::isValid() const  
 	{
 		//	상위 클래스의 valid 체크:
-		type_result result = NEReservedCollectorTemplate<Type>::isValid();		
+		type_result result = NETReservedCollector<Type>::isValid();		
 		if(NEResult::hasError(result) == true) return result;
 		//	멤버변수의 valid 체크:
 		if(	_size > 0 && ! _data) return RESULT_TYPE_WARNING | RESULT_OUT_OF_MEMORY;
@@ -465,7 +465,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	void  NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::release()  
+	void  NETIndexedArray<Type, pointerUseNewInstance, type>::release()  
 	{		
 		_release();
 		/*
@@ -473,7 +473,7 @@ namespace NE
 				여기에서는 _release와 상위클래스의 release를 호출하는 순서가 뒤바뀌어야 한다.
 		*/
 
-		return NEReservedCollectorTemplate<Type>::release();
+		return NETReservedCollector<Type>::release();
 	}
 
 
@@ -482,10 +482,10 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	NEBinaryFileSaver  &NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::serialize(NEBinaryFileSaver& saver) const 
+	NEBinaryFileSaver  &NETIndexedArray<Type, pointerUseNewInstance, type>::serialize(NEBinaryFileSaver& saver) const 
 	{			
 		//	pre:
-		NEReservedCollectorTemplate::serialize(saver);		
+		NETReservedCollector::serialize(saver);		
 
 
 
@@ -511,11 +511,11 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	NEBinaryFileLoader& NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::serialize(NEBinaryFileLoader& loader)
+	NEBinaryFileLoader& NETIndexedArray<Type, pointerUseNewInstance, type>::serialize(NEBinaryFileLoader& loader)
 	{
 		//	pre:
 		ThisClass::release();
-		NEReservedCollectorTemplate::serialize(loader);		
+		NETReservedCollector::serialize(loader);		
 
 
 
@@ -546,7 +546,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	NEType::Type NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::getType() const
+	NEType::Type NETIndexedArray<Type, pointerUseNewInstance, type>::getType() const
 	{
 		return type;
 	}
@@ -561,7 +561,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_result NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::create(type_count size)
+	type_result NETIndexedArray<Type, pointerUseNewInstance, type>::create(type_count size)
 	{
 		release();
 
@@ -593,8 +593,8 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	const NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>&
-		NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::_assign
+	const NETIndexedArray<Type, pointerUseNewInstance, type>&
+		NETIndexedArray<Type, pointerUseNewInstance, type>::_assign
 		(
 		const ThisClass& source
 		)
@@ -631,7 +631,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	void  NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::_release() 
+	void  NETIndexedArray<Type, pointerUseNewInstance, type>::_release() 
 	{	
 		if(_data)
 			delete [] _data;
@@ -642,7 +642,7 @@ namespace NE
 
 
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::push(const Type& source)
+	type_index NETIndexedArray<Type, pointerUseNewInstance, type>::push(const Type& source)
 	{
 		type_index highest_vacant_index = _searchIndex(true, false);
 		if(highest_vacant_index == NE_INDEX_ERROR) return NE_INDEX_ERROR;
@@ -653,7 +653,7 @@ namespace NE
 
 
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::pop()
+	type_index NETIndexedArray<Type, pointerUseNewInstance, type>::pop()
 	{
 		type_index highest_occupied_index = _searchIndex(true, true);
 		if(highest_occupied_index == NE_INDEX_ERROR) return NE_INDEX_ERROR;
@@ -664,7 +664,7 @@ namespace NE
 
 	
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::pushFront(const Type& source)
+	type_index NETIndexedArray<Type, pointerUseNewInstance, type>::pushFront(const Type& source)
 	{
 		type_index lowest_vacant_index = _searchIndex(false, false);
 		if(lowest_vacant_index == NE_INDEX_ERROR) return NE_INDEX_ERROR;
@@ -675,7 +675,7 @@ namespace NE
 
 
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::popFront()
+	type_index NETIndexedArray<Type, pointerUseNewInstance, type>::popFront()
 	{
 		type_index lowest_occupied_index = _searchIndex(false, true);
 		if(lowest_occupied_index == NE_INDEX_ERROR) return NE_INDEX_ERROR;
@@ -693,7 +693,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//     	---------------------------------------------------------------------------------
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::find(const Type& source) const
+	type_index NETIndexedArray<Type, pointerUseNewInstance, type>::find(const Type& source) const
 	{
 		//	pre:
 		//		관련멤버변수 검사:
@@ -717,7 +717,7 @@ namespace NE
 
 
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	type_index NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::_searchIndex(bool by_descreasing, bool target_is_occupied) const
+	type_index NETIndexedArray<Type, pointerUseNewInstance, type>::_searchIndex(bool by_descreasing, bool target_is_occupied) const
 	{
 		if( ! by_descreasing)
 		{
@@ -739,14 +739,14 @@ namespace NE
 
 
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	NEObject& NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::clone() const
+	NEObject& NETIndexedArray<Type, pointerUseNewInstance, type>::clone() const
 	{
 		return static_cast<NEObject&>( *(new ThisClass(*this)) );
 	}
 
 
 	template <typename Type, bool pointerUseNewInstance, NEType::Type type>
-	const NEOccupiedSet& NEIndexedArrayTemplate<Type, pointerUseNewInstance, type>::getOccupiedSet() const
+	const NEOccupiedSet& NETIndexedArray<Type, pointerUseNewInstance, type>::getOccupiedSet() const
 	{
 		return _occupiedset;
 	}

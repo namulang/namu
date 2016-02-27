@@ -1,20 +1,20 @@
 #pragma once
 
-#include "../../Commons/Templates/NEEnlistableSetTemplate/NEEnlistableSetTempate.hpp"
-#include "../../Commons/Templates/NEArrayTemplate/NEArrayTemplate.hpp"
+#include "../NETEnlistableSet/NETEnlistableSet.hpp"
+#include "../NETArray/NETArray.hpp"
 #include "../NENode/NENode.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NEArrayTemplate<type_code, false, NENode, NEType::NENODE_CODESET>;
+	class NE_DLL NETArray<type_code, false, NENode, NEType::NENODE_CODESET>;
 	template
-	class NE_DLL NEEnlistableSetTemplate< NEArrayTemplate<type_code, false, NENode, NEType::NENODE_CODESET> >;
+	class NE_DLL NETEnlistableSet< NETArray<type_code, false, NENode, NEType::NENODE_CODESET> >;
 
-	class NE_DLL NENodeCodeSet : public NEEnlistableSetTemplate< NEArrayTemplate<type_code, false, NENode, NEType::NENODE_CODESET> >, public NEExecutable
+	class NE_DLL NENodeCodeSet : public NETEnlistableSet< NETArray<type_code, false, NENode, NEType::NENODE_CODESET> >, public NEExecutable
 	{
 	public:
-		typedef NEEnlistableSetTemplate< NEArrayTemplate<type_code, false, NENode, NEType::NENODE_CODESET> > SuperClass;
+		typedef NETEnlistableSet< NETArray<type_code, false, NENode, NEType::NENODE_CODESET> > SuperClass;
 		typedef NENodeCodeSet ThisClass;
 		typedef type_code InnerType;
 		typedef NENode OuterType;

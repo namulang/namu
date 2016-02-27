@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../../Interfaces/NEOnEnlisted/NEOnEnlisted.hpp" 
-#include "../../Units/NEGlobalManagerOffer/NEGlobalManagerOffer.hpp"
-#include "../../../Modules/NENamedUnit/NENamedUnit.hpp"
+#include "../../Commons/Interfaces/NEOnEnlisted/NEOnEnlisted.hpp" 
+#include "../../Commons/Units/NEGlobalManagerOffer/NEGlobalManagerOffer.hpp"
+#include "../NENamedUnit/NENamedUnit.hpp"
 
 namespace NE
 {
@@ -10,32 +10,32 @@ namespace NE
 	class NENode;
 
 	template <typename T>
-	class NE_DLL NEEnlistableSetTemplate : public T, public NEOnEnlisted
+	class NE_DLL NETEnlistableSet : public T, public NEOnEnlisted
 	{
 	public:
-		typedef NEEnlistableSetTemplate<T> ThisClass;
+		typedef NETEnlistableSet<T> ThisClass;
 		typedef T SuperClass;
 
 	public:
-		NEEnlistableSetTemplate()
+		NETEnlistableSet()
 			: T(), _manager(&NEGlobalManagerOffer::getGlobalManager()), _is_enlisted(false)
 		{
 			//	getGlobalManagerOnCopyConstructor에 관하여:
 			//		NEIndexedModuleSet.cpp에 관련 주석을 참고하라
 		}
-		NEEnlistableSetTemplate(NEEnlistableManager& manager)
+		NETEnlistableSet(NEEnlistableManager& manager)
 			: T(), _manager(&manager), _is_enlisted(false)
 		{
 
 		}
-		NEEnlistableSetTemplate(type_index size)
+		NETEnlistableSet(type_index size)
 			: T(size), _manager(&NEGlobalManagerOffer::getGlobalManager()), _is_enlisted(false)
 		{
 
 		}
 
 	public:		
-		NEEnlistableSetTemplate(const ThisClass& source)
+		NETEnlistableSet(const ThisClass& source)
 			: T(source), _manager(&NEGlobalManagerOffer::getGlobalManager()), _is_enlisted(false)
 		{
 			//	getGlobalManagerOnCopyConstructor에 관하여:
@@ -105,17 +105,17 @@ namespace NE
 	};	
 
 	template <>
-	class NE_DLL NEEnlistableSetTemplate<NENamedUnit> : public NENamedUnit, public NEOnEnlisted
+	class NE_DLL NETEnlistableSet<NENamedUnit> : public NENamedUnit, public NEOnEnlisted
 	{
 	public:
-		typedef NEEnlistableSetTemplate<NENamedUnit> ThisClass;
+		typedef NETEnlistableSet<NENamedUnit> ThisClass;
 		typedef NENamedUnit SuperClass;
 
 	public:
-		NEEnlistableSetTemplate(const NECodeType& script_type, const NECodeType& name_type);
+		NETEnlistableSet(const NECodeType& script_type, const NECodeType& name_type);
 		
 	public:
-		NEEnlistableSetTemplate(const ThisClass& source);
+		NETEnlistableSet(const ThisClass& source);
 
 	public:
 		const ThisClass& operator=(const ThisClass& source);

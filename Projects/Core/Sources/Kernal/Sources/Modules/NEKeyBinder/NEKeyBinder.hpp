@@ -13,7 +13,7 @@ namespace NE
 		typedef NEBinderBase SuperClass;
 
 		template <typename ModuleSelector, NEType::Type type>
-		friend class NEKeySelectorTemplate;
+		friend class NETKeySelector;
 
 	public:
 		virtual bool isBinded() const;

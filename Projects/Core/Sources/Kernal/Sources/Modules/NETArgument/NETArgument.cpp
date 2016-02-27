@@ -2,7 +2,7 @@
 #pragma warning(disable: 4146)
 
 #include "NETArgument.hpp"
-#include "../../../Modules/NEIntKey/NEIntKey.hpp"
+#include "../NEIntKey/NEIntKey.hpp"
 
 namespace NE
 {

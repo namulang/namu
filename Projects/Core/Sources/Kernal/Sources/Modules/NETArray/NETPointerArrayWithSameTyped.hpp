@@ -1,7 +1,7 @@
 //	---------------------------------------------------------------------------------
-//	클래스명:	NEArrayTemplate
+//	클래스명:	NETArray
 //	설명	:	Array의 형태로 데이터를 관리하는 클래스.
-//	관계	:	기반클래스.			NEReservedCollectorTemplate
+//	관계	:	기반클래스.			NETReservedCollector
 //	특성	:	배열의 특성을 그대로 구현한다. 각 엘리먼트는 추가/삽입/삭제의
 //				부하가 큰 반면, "검색"에 강하다.//				
 //	알고리즘:	만약 포인터를 삽입했을 경우, 해당 포인터로부터 가상복사생성자인 clone
@@ -15,12 +15,12 @@
 //					:	false일때 InsideType가 포인터일 경우, 포인터가 새로운 인스턴스를 가리키도록
 //						하지않고, shallowcopy만을 사용하겠다는 의미다.
 //						true일때는 NEPointerList.hpp를 참고하라.
-//				기본적으로 NEReservedCollectorTemplate의 함수를 모두 사용가능하다. (참조 할 것)
+//				기본적으로 NETReservedCollector의 함수를 모두 사용가능하다. (참조 할 것)
 //				기본 인터페이스
 //					1. push(InsideType*)			:	포인터의 형태로 삽입이 가능하다.
 //					2. pushFront(InsideType*)	:	포인터의 형태로 삽입이 가능하다.
-//					3. push(NEListTemplate&)	:	리스트 전부를 통째로 삽입한다.
-//					4. pushFront(NEListTemplate&)
+//					3. push(NETList&)	:	리스트 전부를 통째로 삽입한다.
+//					4. pushFront(NETList&)
 //	메모	:	
 //	히스토리:	2011-07-07	이태훈	개발 완료	
 //	---------------------------------------------------------------------------------
@@ -29,10 +29,10 @@
 namespace NE
 {
 	template <typename InsideType, NEType::Type type>
-	class NEArrayTemplate<InsideType*, false, InsideType*, type> : public NEReservedCollectorTemplate<InsideType*>, public NESpecifiedInsertable<InsideType*>
+	class NETArray<InsideType*, false, InsideType*, type> : public NETReservedCollector<InsideType*>, public NESpecifiedInsertable<InsideType*>
 	{
-		typedef NEReservedCollectorTemplate<InsideType*> SuperClass;
-		typedef NEArrayTemplate<InsideType*, false, InsideType*, type> ThisClass;
+		typedef NETReservedCollector<InsideType*> SuperClass;
+		typedef NETArray<InsideType*, false, InsideType*, type> ThisClass;
 
 	public:
 		using SuperClass::push;
@@ -41,13 +41,13 @@ namespace NE
 
 		//	생성자:
 	public:
-		NEArrayTemplate();
-		NEArrayTemplate(type_count size);
-		NEArrayTemplate(const ThisClass& source);
+		NETArray();
+		NETArray(type_count size);
+		NETArray(const ThisClass& source);
 
 		//	소멸자:
 	public:
-		virtual ~NEArrayTemplate();
+		virtual ~NETArray();
 
 		//	연산자 중첩:
 	public:
@@ -63,17 +63,17 @@ namespace NE
 	public:
 		virtual type_index insert(type_index index, const InsideType* const source);
 		virtual type_index remove(type_index index);
-		//			NEReservedCollectorTemplate:
+		//			NETReservedCollector:
 	public:
 		virtual type_result resize(type_index new_size);
 		virtual type_result create(type_count new_size);
-		//			NECollectorTemplate:
+		//			NETCollector:
 	public:
 		virtual const InsideType& getElement(type_index index) const; 
 		virtual InsideType& getElement(type_index index);
 		virtual type_result setElement(type_index index, const InsideType* const source);		
 		virtual type_index push(const InsideType* const source);
-		using NECollectorTemplate::push;
+		using NETCollector::push;
 		virtual type_index pop();
 		virtual type_index find(const InsideType* const source) const;
 		//			NEObject:
@@ -106,4 +106,4 @@ namespace NE
 	};
 }
 
-#include "NEPointerArrayWithSameTypedTemplate.inl"
+#include "NETPointerArrayWithSameTyped.inl"

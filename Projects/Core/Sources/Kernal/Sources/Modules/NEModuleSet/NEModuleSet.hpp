@@ -1,18 +1,18 @@
 #pragma once
 
 #include "../NEModule/NEModule.hpp"
-#include "../../Commons/Templates/NEArrayTemplate/NEArrayTemplate.hpp"
+#include "../NETArray/NETArray.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NEArrayTemplate<NEModule*, true, NEModule*, NEType::NEMODULESET>;
+	class NE_DLL NETArray<NEModule*, true, NEModule*, NEType::NEMODULESET>;
 	
-	class NEModuleSet : public NEArrayTemplate<NEModule*, true, NEModule*, NEType::NEMODULESET>
+	class NEModuleSet : public NETArray<NEModule*, true, NEModule*, NEType::NEMODULESET>
 	{
 	public:
 		typedef NEModuleSet ThisClass;
-		typedef NEArrayTemplate<NEModule*, true, NEModule*, NEType::NEMODULESET> SuperClass;
+		typedef NETArray<NEModule*, true, NEModule*, NEType::NEMODULESET> SuperClass;
 
 	public:
 		NEModuleSet();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../NEKeyTemplate/NEKeyTemplate.hpp"
+#include "../NETKey/NETKey.hpp"
 #define NOMINMAX	//	max 매크로 define 금지
 #ifdef max
 #	undef max
@@ -10,11 +10,11 @@
 namespace NE
 {
 	template <typename T, NEType::Type type>
-	class NETArithmeticKey : public NEKeyTemplate<T, type>
+	class NETArithmeticKey : public NETKey<T, type>
 	{
 	public:
 		typedef NETArithmeticKey ThisClass;
-		typedef NEKeyTemplate<T, type> SuperClass;
+		typedef NETKey<T, type> SuperClass;
 
 	public:
 		NETArithmeticKey(const T& source = T(), const NETString& keyname = "");

@@ -374,7 +374,7 @@ namespace NE
 		NEModuleList bucket; // 나중에 _moduleset로 값을 넘겨줄 리스트. DLL 엔트리 포인트로부터 여기에 모듈을 채우게 된다.			
 		//		버퍼에 데이터 축적:
 		for(type_index n=0; n < _dllheaderset.getLength() ;n++)
-			bucket.push( _dllheaderset[n].getEntryPoint()() ); // entrypoint로부터 NEListTemplate가 넘어온다.
+			bucket.push( _dllheaderset[n].getEntryPoint()() ); // entrypoint로부터 NETList가 넘어온다.
 		//		중복 제거 필터링:
 		_filterNestedName(bucket);
 		//		의존성 재정렬:

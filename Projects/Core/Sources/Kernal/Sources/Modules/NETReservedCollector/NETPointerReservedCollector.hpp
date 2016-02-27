@@ -1,7 +1,7 @@
 //	---------------------------------------------------------------------------------
-//	클래스명:	NEReservedCollectorTemplate
+//	클래스명:	NETReservedCollector
 //	설명	:	데이터를 관리하는 자료구조를 나타낸다.
-//	관계	:	기반클래스.	NECollectorTemplate
+//	관계	:	기반클래스.	NETCollector
 //	특성	:	데이터를 관리하는 핵심적인 함수가 가상함수로 되어있기 때문에 쉽게 
 //				다형성이 가능하다.
 //	알고리즘:	
@@ -29,23 +29,23 @@
 namespace NE
 {
 	template<typename OutsideType>
-	class NEReservedCollectorTemplate<OutsideType*> : public NECollectorTemplate<OutsideType*>
+	class NETReservedCollector<OutsideType*> : public NETCollector<OutsideType*>
 	{
 		//	생성자:
 	public:
-		NEReservedCollectorTemplate();
-		NEReservedCollectorTemplate(type_index size);
-		NEReservedCollectorTemplate(const NEReservedCollectorTemplate& source);
+		NETReservedCollector();
+		NETReservedCollector(type_index size);
+		NETReservedCollector(const NETReservedCollector& source);
 
 		//	소멸자:
 	public:
-		virtual ~NEReservedCollectorTemplate();	
+		virtual ~NETReservedCollector();	
 
 		//	연산자 중첩:
 	public:
-		const NEReservedCollectorTemplate<OutsideType*>& operator=(const NEReservedCollectorTemplate<OutsideType*>& source); 
-		bool operator==(const NEReservedCollectorTemplate<OutsideType*>& source) const;
-		bool operator!=(const NEReservedCollectorTemplate<OutsideType*>& source) const;
+		const NETReservedCollector<OutsideType*>& operator=(const NETReservedCollector<OutsideType*>& source); 
+		bool operator==(const NETReservedCollector<OutsideType*>& source) const;
+		bool operator!=(const NETReservedCollector<OutsideType*>& source) const;
 
 		//	접근자:	변수가 존재한다면 복사생성자를 구현한다. 구현한 복사생성자는 파생클래스에서 호출됨
 	public:		
@@ -66,7 +66,7 @@ namespace NE
 
 		//	내부함수:
 	private: 
-		const NEReservedCollectorTemplate<OutsideType*>& _assign(const NEReservedCollectorTemplate<OutsideType*>& source);
+		const NETReservedCollector<OutsideType*>& _assign(const NETReservedCollector<OutsideType*>& source);
 		void _release();
 
 		//	멤버변수:
@@ -75,4 +75,4 @@ namespace NE
 	}; 
 }
 
-#include "NEPointerReservedCollectorTemplate.inl"
+#include "NETPointerReservedCollector.inl"

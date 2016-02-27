@@ -4,7 +4,7 @@
 #pragma warning(disable : 4804)
 
 //	include:
-#include "../../Commons/Templates/NETArithmeticKey/NETArithmeticKey.hpp"
+#include "../NETArithmeticKey/NETArithmeticKey.hpp"
 #include "../../Commons/Units/NECode/NECode.hpp"
 
 namespace NE

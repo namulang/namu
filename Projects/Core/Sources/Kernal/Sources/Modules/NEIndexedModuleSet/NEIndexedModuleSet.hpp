@@ -1,21 +1,21 @@
 #pragma once
 
-#include "../../Commons/Templates/NEIndexedArrayTemplate/NEIndexedArrayTemplate.hpp"
-#include "../../Commons/Templates/NEEnlistableSetTemplate/NEEnlistableSetTempate.hpp"
+#include "../NETIndexedArray/NETIndexedArray.hpp"
+#include "../NETEnlistableSet/NETEnlistableSet.hpp"
 #include "../NEModule/NEModule.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NEIndexedArrayTemplate<NEModule*, true, NEType::NEINDEXED_MODULESET>;
+	class NE_DLL NETIndexedArray<NEModule*, true, NEType::NEINDEXED_MODULESET>;
 
 	template
-	class NE_DLL NEEnlistableSetTemplate< NEIndexedArrayTemplate<NEModule*, true, NEType::NEINDEXED_MODULESET> >;
+	class NE_DLL NETEnlistableSet< NETIndexedArray<NEModule*, true, NEType::NEINDEXED_MODULESET> >;
 
-	class NE_DLL NEIndexedModuleSet : public NEEnlistableSetTemplate< NEIndexedArrayTemplate<NEModule*, true, NEType::NEINDEXED_MODULESET> >
+	class NE_DLL NEIndexedModuleSet : public NETEnlistableSet< NETIndexedArray<NEModule*, true, NEType::NEINDEXED_MODULESET> >
 	{
 		typedef NEIndexedModuleSet ThisClass;
-		typedef NEEnlistableSetTemplate< NEIndexedArrayTemplate<NEModule*, true, NEType::NEINDEXED_MODULESET> > SuperClass;
+		typedef NETEnlistableSet< NETIndexedArray<NEModule*, true, NEType::NEINDEXED_MODULESET> > SuperClass;
 
 	public:
 		NEIndexedModuleSet(NEEnlistableManager& manager);

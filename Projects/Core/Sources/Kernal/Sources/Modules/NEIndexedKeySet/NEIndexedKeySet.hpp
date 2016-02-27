@@ -1,21 +1,21 @@
 #pragma once
 
-#include "../../Commons/Templates/NEIndexedArrayTemplate/NEIndexedArrayTemplate.hpp"
-#include "../../Commons/Templates/NEEnlistableSetTemplate/NEEnlistableSetTempate.hpp"
+#include "../NETIndexedArray/NETIndexedArray.hpp"
+#include "../NETEnlistableSet/NETEnlistableSet.hpp"
 #include "../NEKey/NEKey.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NEIndexedArrayTemplate<NEKey*, true, NEType::NEINDEXED_KEYSET>;
+	class NE_DLL NETIndexedArray<NEKey*, true, NEType::NEINDEXED_KEYSET>;
 
 	template
-	class NE_DLL NEEnlistableSetTemplate< NEIndexedArrayTemplate<NEKey*, true, NEType::NEINDEXED_KEYSET> >;
+	class NE_DLL NETEnlistableSet< NETIndexedArray<NEKey*, true, NEType::NEINDEXED_KEYSET> >;
 
-	class NE_DLL NEIndexedKeySet : public NEEnlistableSetTemplate< NEIndexedArrayTemplate<NEKey*, true, NEType::NEINDEXED_KEYSET> >
+	class NE_DLL NEIndexedKeySet : public NETEnlistableSet< NETIndexedArray<NEKey*, true, NEType::NEINDEXED_KEYSET> >
 	{
 		typedef NEIndexedKeySet ThisClass;
-		typedef NEEnlistableSetTemplate< NEIndexedArrayTemplate<NEKey*, true, NEType::NEINDEXED_KEYSET> > SuperClass;
+		typedef NETEnlistableSet< NETIndexedArray<NEKey*, true, NEType::NEINDEXED_KEYSET> > SuperClass;
 
 	public:
 		NEIndexedKeySet(NEEnlistableManager& manager);

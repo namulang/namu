@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../Commons/Templates/NEArrayTemplate/NEArrayTemplate.hpp"
-#include "../../Commons/Templates/NEEnlistableSetTemplate/NEEnlistableSetTempate.hpp"
+#include "../NETArray/NETArray.hpp"
+#include "../NETEnlistableSet/NETEnlistableSet.hpp"
 #include "../NETString/NETString.hpp"
 #include "../NEKey/NEKey.hpp"
 
@@ -9,14 +9,14 @@ namespace NE
 {
 	class NEIndexedKeySet;
 	template
-	class NE_DLL NEArrayTemplate<type_code, false, NEKey, NEType::NEKEY_CODESET>;
+	class NE_DLL NETArray<type_code, false, NEKey, NEType::NEKEY_CODESET>;
 	template
-	class NE_DLL NEEnlistableSetTemplate< NEArrayTemplate<type_code, false, NEKey, NEType::NEKEY_CODESET> >;
+	class NE_DLL NETEnlistableSet< NETArray<type_code, false, NEKey, NEType::NEKEY_CODESET> >;
 
-	class NE_DLL NEKeyCodeSet : public NEEnlistableSetTemplate< NEArrayTemplate<type_code, false, NEKey, NEType::NEKEY_CODESET> >
+	class NE_DLL NEKeyCodeSet : public NETEnlistableSet< NETArray<type_code, false, NEKey, NEType::NEKEY_CODESET> >
 	{
 	public:
-		typedef NEEnlistableSetTemplate< NEArrayTemplate<type_code, false, NEKey, NEType::NEKEY_CODESET> > SuperClass;
+		typedef NETEnlistableSet< NETArray<type_code, false, NEKey, NEType::NEKEY_CODESET> > SuperClass;
 		typedef NEKeyCodeSet ThisClass;
 		typedef type_code InnerType;
 		typedef NEKey OuterType;

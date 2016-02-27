@@ -857,7 +857,7 @@ public:
 
 			int datum;
 		};
-		NEIndexedArrayTemplate<MyInt*, true> arr;
+		NETIndexedArray<MyInt*, true> arr;
 		arr.create(5);
 		arr.push(MyInt(1));
 		arr.push(MyInt(2));
@@ -889,12 +889,12 @@ public:
 
 			int datum;
 		};
-		class MyContainer : public NEIndexedArrayTemplate<MyInt*, true> 
+		class MyContainer : public NETIndexedArray<MyInt*, true> 
 		{
 		public:
 			virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
 			{
-				NEIndexedArrayTemplate<MyInt*, true>::serialize(saver);
+				NETIndexedArray<MyInt*, true>::serialize(saver);
 
 				for(int n=0; n < getSize(); n++)
 					if(getOccupiedSet()[n])
@@ -904,7 +904,7 @@ public:
 			}
 			virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader)
 			{
-				NEIndexedArrayTemplate<MyInt*, true>::serialize(loader);
+				NETIndexedArray<MyInt*, true>::serialize(loader);
 
 				_length = 0;
 
@@ -952,7 +952,7 @@ public:
 	ArrayAssigningTest() : TestCase("array assigning test.") {}
 	virtual bool onTest()
 	{
-		NEArrayTemplate<int> arr, arr2;
+		NETArray<int> arr, arr2;
 		arr.create(3);
 		arr.push(1);
 		arr.push(2);
@@ -975,7 +975,7 @@ public:
 	virtual bool onTest()
 	{
 		int a=0, b=1, c=2, d=4;
-		NEArrayTemplate<int*, false> arr, arr2, temp;
+		NETArray<int*, false> arr, arr2, temp;
 		arr.create(3);
 		arr.push(&a);
 		arr.push(&b);
@@ -1013,7 +1013,7 @@ public:
 
 		int datum;
 	};
-	class MyContainer : public NEArrayTemplate<MyInt*, true> 
+	class MyContainer : public NETArray<MyInt*, true> 
 	{
 	public:
 	};
@@ -1042,7 +1042,7 @@ public:
 	IndexedArrayAssigningTest() : TestCase("indexed array assigning test.") {}
 	virtual bool onTest()
 	{
-		NEIndexedArrayTemplate<int> arr, arr2;
+		NETIndexedArray<int> arr, arr2;
 		arr.create(3);
 		arr.push(1);
 		arr.push(2);
@@ -1065,7 +1065,7 @@ public:
 	virtual bool onTest()
 	{
 		int a=0, b=1, c=2, d=4;
-		NEIndexedArrayTemplate<int*,false> arr, arr2, temp;
+		NETIndexedArray<int*,false> arr, arr2, temp;
 		arr.create(3);
 		arr.push(&a);
 		arr.push(&b);
@@ -1099,7 +1099,7 @@ public:
 
 		int datum;
 	};
-	class MyContainer : public NEIndexedArrayTemplate<MyInt*, true> 
+	class MyContainer : public NETIndexedArray<MyInt*, true> 
 	{
 	public:
 	};
@@ -1985,7 +1985,7 @@ public:
 		ns.setUsingAndOperation(false);	//	OR 연산으로 처리.
 		ns.setCountLimit(2);
 
-		NEArrayTemplate<NENode*> pointers(8);
+		NETArray<NENode*> pointers(8);
 		//	예상 되는 pointers의 내용:
 		//		[0]	=	n0		
 		//		[1]	=	n2
@@ -2302,7 +2302,7 @@ public:
 		class MyMod : public NEModule {
 		public:
 			NETArgument<NENodeSelector> sel;
-			NEListTemplate<NENode*> pointers;
+			NETList<NENode*> pointers;
 
 			virtual type_result _onFetchArguments(NEArgumentList& tray)
 			{
@@ -2364,7 +2364,7 @@ public:
 		}
 		
 		if( ! m->sel.isWantingToLock()) return false;		
-		NEListTemplate<NENode*>& pointers = m->pointers;
+		NETList<NENode*>& pointers = m->pointers;
 		pointers.push(ns11->getNode());
 		pointers.push(ns11->getNode());
 		pointers.push(ns11->getNode());
@@ -2471,7 +2471,7 @@ public:
 		class MyMod : public NEModule {
 		public:
 			NETArgument<NENodeSelector> sel;
-			NEListTemplate<NENode*> pointers;
+			NETList<NENode*> pointers;
 
 			virtual type_result _onFetchArguments(NEArgumentList& tray)
 			{
@@ -2513,7 +2513,7 @@ public:
 				*n3 = &rns[rns.push(scmn[3])],
 				*n4 = &rns[rns.push(scmn[4])];
 
-			NEListTemplate<NENode*> pointers;
+			NETList<NENode*> pointers;
 
 			NENodeSelector sel;
 			sel.setCodes(NECodeType(NECodeType::ALL));
@@ -2580,7 +2580,7 @@ public:
 			}
 
 			if (ns11->getBinder().isBinded()) return false;
-			NEListTemplate<NENode*>& pointers = m->pointers;
+			NETList<NENode*>& pointers = m->pointers;
 			pointers.push(ns11->getNode());
 			pointers.push(ns11->getNode());
 			pointers.push(ns11->getNode());
@@ -2755,7 +2755,7 @@ public:
 		if (ns.getLength() != 3)
 			return false;
 
-		NEArrayTemplate<type_int> t;
+		NETArray<type_int> t;
 		if (t.getSize() != 0)
 			return false;
 		t.resize(5);		
@@ -3123,10 +3123,10 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 }
 
 // 
-// class Mine : public NEArrayTemplate<int, false, NEString>
+// class Mine : public NETArray<int, false, NEString>
 // {
 // public:
-// 	typedef NEArrayTemplate<int, false, NEString> SuperClass;
+// 	typedef NETArray<int, false, NEString> SuperClass;
 // 	typedef int InnerType;
 // 	typedef NEString OuterType;
 // 	Mine() : SuperClass() {}
