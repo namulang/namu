@@ -14,6 +14,7 @@
 
 //	include:
 #include "../../Commons/Templates/NEKeyTemplate/NEKeyTemplate.hpp"
+#include "../NEStringSet/NEStringSet.hpp"
 
 namespace NE
 {

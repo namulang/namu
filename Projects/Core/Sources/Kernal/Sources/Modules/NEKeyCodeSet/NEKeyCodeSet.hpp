@@ -2,7 +2,7 @@
 
 #include "../../Commons/Templates/NEArrayTemplate/NEArrayTemplate.hpp"
 #include "../../Commons/Templates/NEEnlistableSetTemplate/NEEnlistableSetTempate.hpp"
-#include "../../Commons/Typedefs/NETString/NETString.hpp"
+#include "../NETString/NETString.hpp"
 #include "../NEKey/NEKey.hpp"
 
 namespace NE

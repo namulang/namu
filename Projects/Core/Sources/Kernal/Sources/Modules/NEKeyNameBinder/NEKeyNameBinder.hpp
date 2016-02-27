@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../NEKeyBinder/NEKeyBinder.hpp"
-#include "../../Commons/Typedefs/NETString/NETString.hpp"
+#include "../NETString/NETString.hpp"
 
 namespace NE
 {

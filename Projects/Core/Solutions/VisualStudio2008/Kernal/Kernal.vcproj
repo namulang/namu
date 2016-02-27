@@ -1855,6 +1855,22 @@
 									>
 								</File>
 							</Filter>
+							<Filter
+								Name="NEStringSet"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEStringSet\NEStringSet.hpp"
+									>
+								</File>
+							</Filter>
+							<Filter
+								Name="NEWStringSet"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEWStringSet\NEWStringSet.hpp"
+									>
+								</File>
+							</Filter>
 						</Filter>
 						<Filter
 							Name="NEList"
