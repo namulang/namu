@@ -54,7 +54,7 @@ public:
 		getKeyFilter().NENodeSelector::operator=(getModuleFilter());
 	}
 
-	void getSelectedByFilter(NEListTemplate<NEObject*>& selected);
+	void getSelectedByFilter(NETList<NEObject*>& selected);
 	virtual void onUpdateData();
 	virtual void onKeyPressed(int inputed);
 	virtual void onFocused();

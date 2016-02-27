@@ -56,7 +56,7 @@ namespace DX9Graphics
 				return loader >> x >> y >> z;
 			}
 		};
-		typedef NEArrayTemplate<Vector> Vectors;
+		typedef NETArray<Vector> Vectors;
 
 	public:		
 		virtual const NEExportable::ModuleHeader& getHeader() const

@@ -3,5 +3,5 @@
 #include "../Command/Command.hpp"
 
 template
-class NEArrayTemplate<Command*, true>;
-typedef NEArrayTemplate<Command*, true> CommandSet;
+class NETArray<Command*, true>;
+typedef NETArray<Command*, true> CommandSet;

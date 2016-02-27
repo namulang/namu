@@ -62,7 +62,7 @@ public:
 		//	그 구체클래스에 맞게 generate함수를 호출하기
 		return _generateMorphing(obj);
 	}
-	void markColor(NEListTemplate<NEObject*>& selected)
+	void markColor(NETList<NEObject*>& selected)
 	{
 		if(selected.find(real) >= 0)
 		{
@@ -225,7 +225,7 @@ public:
 		height = 1;
 	}
 
-	typedef NEListTemplate<Planet*, true> PlanetList;
+	typedef NETList<Planet*, true> PlanetList;
 	PlanetList planets;
 	NEObject* real;
 	Planet* parent;

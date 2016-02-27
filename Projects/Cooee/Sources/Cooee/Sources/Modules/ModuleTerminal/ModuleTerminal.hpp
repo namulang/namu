@@ -25,7 +25,7 @@ public:
 			for(int n=0; n < arr.getLength() ;n++)
 				arr.getElement(n).onKeyPressed(inputed);
 		}
-		NEArrayTemplate<LG::Gliph*, true> arr;
+		NETArray<LG::Gliph*, true> arr;
 	};
 
 	class FloatingPanel : public LG::FloatingGliph

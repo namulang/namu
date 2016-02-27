@@ -1,4 +1,4 @@
-class DisplayModeManager : public NEListTemplate<DisplayMode>
+class DisplayModeManager : public NETList<DisplayMode>
 {
 	friend class DX9;
 

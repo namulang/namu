@@ -73,7 +73,7 @@ namespace NE
 
 
 			//	main:
-			NEListTemplate<NEObject*> tray;
+			NETList<NEObject*> tray;
 
 			if(arg_target0_manager_type.isEnable())
 			{
@@ -108,7 +108,7 @@ namespace NE
 			NEBinaryFileLoader& casted_l = static_cast<NEBinaryFileLoader&>(*accessor);
 			NEBinaryFileSaver& casted_s = static_cast<NEBinaryFileSaver&>(*accessor);
 
-			for (NEListTemplate<NEObject*>::Iterator* e = tray.getIterator(0);
+			for (NETList<NEObject*>::Iterator* e = tray.getIterator(0);
 				e;
 				e = e->getNext())
 				if (accessor->isSaver())

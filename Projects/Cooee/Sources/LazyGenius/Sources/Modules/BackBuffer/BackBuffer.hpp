@@ -46,11 +46,11 @@ namespace LG
 		};
 
 		template
-		class NE_DLL NEArrayTemplate<Pixel>;
-		typedef NEArrayTemplate<Pixel> RowBuffer;
+		class NE_DLL NETArray<Pixel>;
+		typedef NETArray<Pixel> RowBuffer;
 		template
-		class NE_DLL NEArrayTemplate<RowBuffer>;
-		typedef NEArrayTemplate<RowBuffer> Buffer;
+		class NE_DLL NETArray<RowBuffer>;
+		typedef NETArray<RowBuffer> Buffer;
 
 
 		BackBuffer();

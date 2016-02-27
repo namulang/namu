@@ -5,12 +5,12 @@
 namespace LG
 {
 	template
-	class NE_DLL NEListTemplate<Window*, true>;
+	class NE_DLL NETList<Window*, true>;
 
-	class NE_DLL WindowList : public NEListTemplate<Window*, true>
+	class NE_DLL WindowList : public NETList<Window*, true>
 	{
 	public:
-		typedef NEListTemplate<Window*, true> SuperClass;
+		typedef NETList<Window*, true> SuperClass;
 
 		virtual type_index insert(type_index index, const Window* const source) 
 		{

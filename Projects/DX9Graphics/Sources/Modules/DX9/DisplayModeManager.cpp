@@ -4,14 +4,14 @@
 namespace DX9Graphics
 {
 	DX9::DisplayModeManager::DisplayModeManager()
-		: NEListTemplate<DisplayMode>()
+		: NETList<DisplayMode>()
 	{
 
 	}
 	type_index DX9::DisplayModeManager::findCorrespondingDisplayWithoutFormat(const DisplayMode& source)
 	{
 		int index_count = 0;
-		for(NEListTemplate<DisplayMode>::Iterator* iterator=getIterator(0); iterator ;iterator=iterator->getNext())
+		for(NETList<DisplayMode>::Iterator* iterator=getIterator(0); iterator ;iterator=iterator->getNext())
 		{
 			DisplayMode& displaymode = iterator->getValue();
 			if(	displaymode.Width == source.Width				&&

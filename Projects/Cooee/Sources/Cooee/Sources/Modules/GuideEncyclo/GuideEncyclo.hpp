@@ -111,5 +111,5 @@ public:
 	GuidePanel panel;
 	GuideList list;
 	ContentPanel content;
-	NEArrayTemplate<Guide> guides;
+	NETArray<Guide> guides;
 };

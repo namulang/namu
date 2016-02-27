@@ -5,13 +5,13 @@
 namespace DX9Graphics
 {
 	template
-	class NE_DLL NEArrayTemplate<ShaderHandle>;
+	class NE_DLL NETArray<ShaderHandle>;
 
-	class ShaderHandleSet : public NEArrayTemplate<ShaderHandle>
+	class ShaderHandleSet : public NETArray<ShaderHandle>
 	{
 	public:
 		typedef ShaderHandleSet ThisClass;
-		typedef NEArrayTemplate<ShaderHandle> SuperClass;
+		typedef NETArray<ShaderHandle> SuperClass;
 
 	public:
 		virtual NEObject& clone() const

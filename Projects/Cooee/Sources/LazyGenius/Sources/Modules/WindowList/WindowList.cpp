@@ -5,7 +5,7 @@ namespace LG
 {
 	void WindowList::collectGarbages()
 	{
-		NEListTemplate<type_index> indexes;
+		NETList<type_index> indexes;
 
 		int n=0;
 		for(Iterator* itr=getIterator(0); itr ;itr=itr->getNext())
@@ -17,7 +17,7 @@ namespace LG
 			n++;
 		}
 
-		for(NEListTemplate<type_index>::Iterator* itr=indexes.getIterator(0); itr ;itr=itr->getNext()) {
+		for(NETList<type_index>::Iterator* itr=indexes.getIterator(0); itr ;itr=itr->getNext()) {
 			type_index index = itr->getValue();
 			getElement(index).onTerminate();
 			SuperClass::remove(index);
@@ -29,7 +29,7 @@ namespace LG
 
 	void WindowList::draw()
 	{
-		NEArrayTemplate<Window*, false> stack(getLength());
+		NETArray<Window*, false> stack(getLength());
 		for(Iterator* itr=getIterator(0); itr ;itr=itr->getNext())
 			stack.push(&(itr->getValue()));
 

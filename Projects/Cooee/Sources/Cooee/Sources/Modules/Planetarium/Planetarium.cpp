@@ -161,7 +161,7 @@ void Planetarium::onUpdateData()
 {
 	synchroSelectors();
 
-	NEListTemplate<NEObject*> selected;
+	NETList<NEObject*> selected;
 	getSelectedByFilter(selected);
 
 	root.updateLines(0);
@@ -198,7 +198,7 @@ void Planetarium::onDraw()
 		buf.setColorLock(true);
 }
 
-void Planetarium::getSelectedByFilter(NEListTemplate<NEObject*>& selected)
+void Planetarium::getSelectedByFilter(NETList<NEObject*>& selected)
 {
 	//	현재 어떤 Filter가 활성화 되어있는 지를 판단한다:
 	if (switches[2])

@@ -547,7 +547,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(int inputed)
 								return;
 							}
 
-							for(NEListTemplate<type_index>::Iterator* e = codes.getIterator(0); e ; e = e->getNext())
+							for(NETList<type_index>::Iterator* e = codes.getIterator(0); e ; e = e->getNext())
 							{
 								NETString& name = namebank[e->getValue()];
 
@@ -586,7 +586,7 @@ void Modifier<NEModuleSelector>::MenuList::onKeyPressed(int inputed)
 						delete_me = true;
 					}
 
-					NEListTemplate<type_index> codes;
+					NETList<type_index> codes;
 				};
 
 				switch(module_type)

@@ -5,12 +5,12 @@
 namespace LG
 {
 	template
-	class NE_DLL NEListTemplate<Gliph*, false>;
+	class NE_DLL NETList<Gliph*, false>;
 	
-	class NE_DLL GliphList : public NEListTemplate<Gliph*, false>
+	class NE_DLL GliphList : public NETList<Gliph*, false>
 	{
 	public:
-		typedef NEListTemplate<Gliph*, false> SuperClass;
+		typedef NETList<Gliph*, false> SuperClass;
 
 		GliphList(Window* new_owner): owner(new_owner) {}
 		GliphList(Window* new_owner, const GliphList& rhs)
