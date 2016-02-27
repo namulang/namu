@@ -1356,6 +1356,38 @@
 								</Filter>
 							</Filter>
 						</Filter>
+						<Filter
+							Name="NEClassBase"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBase\NEClassBase.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBase\NEClassBase.hpp"
+								>
+							</File>
+							<Filter
+								Name="NETClass"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.hpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.inl"
+									>
+								</File>
+								<Filter
+									Name="define"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\define\ClassMacro.hpp"
+										>
+									</File>
+								</Filter>
+							</Filter>
+						</Filter>
 					</Filter>
 					<Filter
 						Name="NETCollector"
@@ -1855,6 +1887,18 @@
 									>
 									<File
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEWStringList\NEWStringList.hpp"
+										>
+									</File>
+								</Filter>
+								<Filter
+									Name="NEClassBaseList"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseList\NEClassBaseList.cpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseList\NEClassBaseList.hpp"
 										>
 									</File>
 								</Filter>
