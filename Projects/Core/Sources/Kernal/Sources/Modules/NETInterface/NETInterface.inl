@@ -1,57 +1,60 @@
 namespace NE
 {
 	template <typename T>
-	NETClass<T>::~NETClass()
+	NETInterface<T>::~NETInterface()
 	{
 
 	}
 
 	template <typename T>
-	NETClass<T>::NETClass(const NETClass& source)
+	NETInterface<T>::NETInterface(const NETInterface& source)
 		: NEClassBase(source)
 	{
 
 	}
 
 	template <typename T>
-	NETClass<T>::NETClass()
+	NETInterface<T>::NETInterface()
 		: NEClassBase()
 	{
 
 	}
 
 	template <typename T>
-	NEObject& NETClass<T>::clone() const
+	NEObject& NETInterface<T>::clone() const
 	{
 		return *(new This(*this));
 	}
 
 	template <typename T>
-	NEObject& NETClass<T>::instantiate() const
+	NEObject& NETInterface<T>::instantiate() const
 	{
-		return *(new Trait());
+		//	block:
+		//		Interface can't instantiate.
+		//		We will return null-referenced-pointer and leave a error message onto log.
+		Kernal::getInstance().
 	}
 
 	template <typename T>
-	const NEClassBaseList& NETClass<T>::getSubClasses() const
+	const NEClassBaseList& NETInterface<T>::getSubClasses() const
 	{
 		return getSubClassesStatically();
 	}
 
 	template <typename T>
-	const bool& NETClass<T>::isRegistered() const
+	const bool& NETInterface<T>::isRegistered() const
 	{
 		return isRegisteredStatically();
 	}
 
 	template <typename T>
-	const NEClassBaseList& NETClass<T>::getSuperClasses() const
+	const NEClassBaseList& NETInterface<T>::getSuperClasses() const
 	{
 		return getSuperClassesStatically();
 	}
 
 	template <typename T>
-	const NETString& NETClass<T>::getName() const
+	const NETString& NETInterface<T>::getName() const
 	{
 		return getNameStatically();
 	}
@@ -69,7 +72,7 @@ namespace NE
 
 #define GENERATE_STATIC_METHOD(return_type, method_name)	\
 	template <typename T>									\
-	const return_type &NETClass<T>::method_name()		\
+	const return_type &NETInterface<T>::method_name()		\
 	{														\
 		static return_type _inner;							\
 															\

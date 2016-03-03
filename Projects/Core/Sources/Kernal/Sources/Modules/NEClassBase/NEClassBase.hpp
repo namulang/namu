@@ -62,7 +62,10 @@ namespace NE
 		bool isSuperClassOf(const NEObject& parent) const;
 		bool isSubClassOf(const This& parent) const;
 		bool isSubClassOf(const NEObject& parent) const;
-		const This& getSuperClass() const;		
+		const This& getSuperClass() const;
+
+	protected:
+		type_result _leaveErrorOntoDebugManager(const type_char* message);
 
 	private:
 		//	these method were used only for TypeManager friend class.

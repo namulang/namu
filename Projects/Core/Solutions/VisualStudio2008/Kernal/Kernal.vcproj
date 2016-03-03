@@ -1368,23 +1368,43 @@
 								>
 							</File>
 							<Filter
-								Name="NETClass"
+								Name="define"
 								>
 								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.hpp"
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBase\define\ClassMacro.hpp"
+									>
+								</File>
+							</Filter>
+							<Filter
+								Name="NEInterfaceBase"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEInterfaceBase\NEInterfaceBase.cpp"
 									>
 								</File>
 								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.inl"
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEInterfaceBase\NEInterfaceBase.hpp"
 									>
 								</File>
 								<Filter
-									Name="define"
+									Name="NETInterface"
 									>
 									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\define\ClassMacro.hpp"
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETInterface\NETInterface.hpp"
 										>
 									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETInterface\NETInterface.inl"
+										>
+									</File>
+									<Filter
+										Name="NEClass"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.hpp"
+											>
+										</File>
+									</Filter>
 								</Filter>
 							</Filter>
 						</Filter>

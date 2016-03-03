@@ -7,12 +7,12 @@
 //	Author			:	2016-02-13	kniz
 //	---------------------------------------------------------------------------------
 #pragma once
-#define NE_DECLARE_CLASS(NAME, SUPER)						\
+#define NE_DECLARE_CLASS(NAME, SUPER, TYPE)					\
 	public:													\
 		typedef NAME			This;						\
-		typedef NETClass<This>	ThisClass;					\
+		typedef TYPE<This>	ThisClass;						\
 		typedef SUPER			Super;						\
-		typedef NETClass<Super>	SuperClass;					\
+		typedef TYPE<Super>	SuperClass;						\
 															\
 	public:													\
 		virtual const NEClassBase& getClass() const			\
@@ -25,8 +25,12 @@
 															\
 			return inner;									\
 		}
+#define NE_DECLARE_INTERFACE(NAME, SUPER)					\
+	NE_DECLARE_CLASS(NAME, SUPER, NETInterface)
+#define NE_DECLARE_CONCRETE_CLASS(NAME, SUPER)				\
+	NE_DECLARE_CLASS(NAME, SUPER, NETClass)
 
-#define NE_REGISTER_CLASS(NAME)								\
+#define NE_REGISTER_CLASS(NAME, TYPE)						\
 	namespace												\
 	{														\
 		class NAME##__Initiator								\
@@ -34,9 +38,13 @@
 		public:												\
 			NAME##__Initiator()								\
 			{												\
-				NETClass<NAME>().enroll();					\
+				TYPE<NAME>().enroll();					\
 			}												\
 		};													\
 															\
 		NAME##__Initiator NAME##__initiator;				\
 	}
+#define NE_REGISTER_INTERFACE(NAME)							\
+	NE_REGISTER_CLASS(NAME, NETInterface)
+#define NE_REGISTER_CONCRETE_CLASS(NAME)					\
+	NE_REGISTER_CLASS(NAME, NETClass)

@@ -1,6 +1,7 @@
 #include "NEClassBase.hpp"
 #include "../Kernal/Kernal.hpp"
 #include "../NEClassBaseList/NEClassBaseList.hpp"
+#include "../Kernal/Kernal.hpp"
 
 namespace NE
 {
@@ -137,5 +138,10 @@ namespace NE
 		if( ! &cm) return RESULT_TYPE_ERROR;
 
 		return cm.enroll(*this);
+	}
+
+	type_result NEClassBase::_leaveErrorOntoDebugManager(const type_char* message)
+	{
+		KERNAL_ERROR(message);
 	}
 }
