@@ -5,7 +5,7 @@
 namespace NE
 {
 	template <typename T>
-	class NETClass : public NETInterface
+	class NETClass : public NETInterface<T>
 	{
 		//	Declarations:
 	public:
@@ -17,12 +17,12 @@ namespace NE
 
 		//	Constructors:
 	public:
-		NETInterface();
-		NETInterface(const NETInterface& source);
+		NETClass();
+		NETClass(const NETClass& source);
 
 		//	Destructors:
 	public:
-		virtual ~NETInterface();
+		virtual ~NETClass();
 
 		//	Interfaces:
 		//		Virtuals:

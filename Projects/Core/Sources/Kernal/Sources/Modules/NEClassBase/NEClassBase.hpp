@@ -65,7 +65,7 @@ namespace NE
 		const This& getSuperClass() const;
 
 	protected:
-		type_result _leaveErrorOntoDebugManager(const type_char* message);
+		type_result _leaveLog(type_result result, const type_char* message);
 
 	private:
 		//	these method were used only for TypeManager friend class.

@@ -1,23 +1,20 @@
 #include "NEClassBaseList.hpp"
 
-typedef NEClassBaseList This;
-NE_REGISTER_CLASS(This)
-
 namespace NE
 {
-	This::This()
+	NEClassBaseList::NEClassBaseList()
 		: Super()
 	{
 
 	}
 
-	This::This(const This& rhs)
+	NEClassBaseList::NEClassBaseList(const NEClassBaseList& rhs)
 		: Super(rhs)
 	{
 
 	}
 
-	This::~This()
+	NEClassBaseList::~NEClassBaseList()
 	{
 
 	}

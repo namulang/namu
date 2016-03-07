@@ -140,8 +140,25 @@ namespace NE
 		return cm.enroll(*this);
 	}
 
-	type_result NEClassBase::_leaveErrorOntoDebugManager(const type_char* message)
+	type_result NEClassBase::_alert(type_result log_type, const type_tchar* message)
 	{
-		KERNAL_ERROR(message);
+		//	pre:
+		//		targetting:
+		Kernal& kernel = Kernal::getInstance();
+		if( ! &kernel) return RESULT_TYPE_ERROR;
+		NEDebugManager& debugger = kernel.getDebugManager();
+		
+		//	main:
+		type_int	bit_mask = RESULT_TYPE_ERROR | RESULT_TYPE_WARNING | RESULT_TYPE_INFORMATION;
+		
+		switch(log_type & bit_mask)
+		{
+		case RESULT_TYPE_ERROR:			RESULT_TYPE_ERROR(message);			break;
+
+		case RESULT_TYPE_WARNING:		RESULT_TYPE_WARNING(message);		break;
+		case RESULT_TYPE_INFORMATION:	RESULT_TYPE_INFORMATION(message);	break;
+		}
+
+		return log_type;
 	}
 }

@@ -29,10 +29,16 @@ namespace NE
 	template <typename T>
 	NEObject& NETInterface<T>::instantiate() const
 	{
-		//	block:
-		//		Interface can't instantiate.
-		//		We will return null-referenced-pointer and leave a error message onto log.
-		Kernal::getInstance().
+		NEObject* nullptr = 0x00;
+		_alert("")
+
+		return *nullptr;
+	}
+
+	template <typename T>
+	type_bool NE::NETInterface<T>::isInitiatable() const
+	{
+		return false;
 	}
 
 	template <typename T>

@@ -42,6 +42,7 @@ namespace NE
 		virtual const NETString& getName() const;
 		virtual const NEClassBaseList& getSuperClasses() const;
 		virtual const type_bool& isRegistered() const;
+		virtual type_bool isInitiatable() const;
 		virtual const NEClassBaseList& getSubClasses() const;
 		virtual NEObject& instantiate() const;
 		//			Inherited:
@@ -56,7 +57,7 @@ namespace NE
 	public:
 		static const NEClassBaseList& getSubClassesStatically();
 		static const NEClassBaseList& getSuperClassesStatically();
-		static const NEString& getNameStatically();
+		static const NETString& getNameStatically();
 		static const type_bool& isRegisteredStatically();
 	};
 }

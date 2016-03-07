@@ -22,6 +22,8 @@ namespace NE
 	class NE_DLL NEClassBaseList : public NETList<NEClassBase*, true>
 	{
 	public:
+#pragma warning(push)
+#pragma warning(disable: 4114)
 		//	to sidestep against wrong argument parsing of the macro below 
 		//	for preprocessor:
 		//		if original class name witch starts with 'NETList<NE~~" 
@@ -33,6 +35,7 @@ namespace NE
 		typedef NETList<NEClassBase*, true> Super;
 
 		NE_DECLARE_CLASS(NEClassBaseList, Super)
+#pragma warning(pop)
 
 	public:
 		NEClassBaseList();
