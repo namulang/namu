@@ -1397,6 +1397,10 @@
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETInterface\NETInterface.inl"
 										>
 									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.inl"
+										>
+									</File>
 									<Filter
 										Name="NEClass"
 										>

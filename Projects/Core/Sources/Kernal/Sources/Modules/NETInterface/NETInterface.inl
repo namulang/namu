@@ -30,13 +30,13 @@ namespace NE
 	NEObject& NETInterface<T>::instantiate() const
 	{
 		NEObject* nullptr = 0x00;
-		_alert("")
+		_alert(RESULT_TYPE_WARNING, _T("You can't instantiate interface class."));
 
 		return *nullptr;
 	}
 
 	template <typename T>
-	type_bool NE::NETInterface<T>::isInitiatable() const
+	type_bool NE::NETInterface<T>::isInstantiatable() const
 	{
 		return false;
 	}

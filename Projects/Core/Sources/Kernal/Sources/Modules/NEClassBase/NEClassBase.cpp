@@ -140,7 +140,7 @@ namespace NE
 		return cm.enroll(*this);
 	}
 
-	type_result NEClassBase::_alert(type_result log_type, const type_tchar* message)
+	type_result NEClassBase::_alert(type_result log_type, const type_tchar* message) const
 	{
 		//	pre:
 		//		targetting:

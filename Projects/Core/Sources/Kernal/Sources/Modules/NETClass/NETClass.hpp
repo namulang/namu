@@ -26,5 +26,13 @@ namespace NE
 
 		//	Interfaces:
 		//		Virtuals:
+		//			NETInterface:
+	public:
+		virtual type_bool isInstantiatable() const;
+		//			NEObject:
+	public:
+		virtual NEObject& instantiate() const;
 	};
 }
+
+#include "NETClass.inl"
