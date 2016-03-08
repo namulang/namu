@@ -63,3 +63,4 @@ namespace NE
 }
 
 #include "NETInterface.inl"
+#include "Specialization.inl"

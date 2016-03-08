@@ -535,6 +535,10 @@
 				Name="Includes"
 				>
 				<File
+					RelativePath="..\..\..\Sources\Kernal\Sources\Includes\includePrimitiveTypes.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Sources\Kernal\Sources\Includes\Includes.hpp"
 					>
 				</File>
@@ -1401,6 +1405,10 @@
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.inl"
 										>
 									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\Specialization.inl"
+										>
+									</File>
 									<Filter
 										Name="NEClass"
 										>
@@ -1409,6 +1417,42 @@
 											>
 										</File>
 									</Filter>
+								</Filter>
+							</Filter>
+						</Filter>
+						<Filter
+							Name="NEType"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEType\NEType.hpp"
+								>
+							</File>
+							<Filter
+								Name="NENumericType"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENumericType\NENumericType.hpp"
+									>
+								</File>
+								<Filter
+									Name="NEInteger"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEInteger\NEInteger.cpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEInteger\NEInteger.hpp"
+										>
+									</File>
+								</Filter>
+								<Filter
+									Name="NEFloat"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEFloat\NEFloat.hpp"
+										>
+									</File>
 								</Filter>
 							</Filter>
 						</Filter>

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../../Includes/includePrimitiveTypes.hpp"
 #include "../NETInterface/NETInterface.hpp"
 
 namespace NE
@@ -31,8 +32,23 @@ namespace NE
 		virtual type_bool isInstantiatable() const;
 		//			NEObject:
 	public:
+		virtual const NEClassBase& getClass() const;
 		virtual NEObject& instantiate() const;
+
+	public:
+		static const NEClassBase& getClassStatically()
+		{
+
+		}
 	};
+
+	template <typename T>
+	const NEClassBase& NE::NETClass<T>::getClass() const
+	{
+		
+	}
+
 }
 
 #include "NETClass.inl"
+#include "Specialization.inl"
