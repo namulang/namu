@@ -9,10 +9,7 @@
 //	---------------------------------------------------------------------------------
 #pragma once
 
-//	include:
 #include "../NEClassBase/NEClassBase.hpp"
-#include "define/ClassMacro.hpp"
-#include <typeinfo>
 
 namespace NE
 {
