@@ -76,6 +76,21 @@ namespace NE
 		return _inner;
 	}
 
+	template <typename T>
+	const NEClassBase& NE::NETInterface<T>::getClass() const
+	{
+		return getClassStatically();
+	}
+
+
+	template <typename T>
+	const NEClassBase& NETInterface<T>::getClassStatically()
+	{
+		static ThisClass _inner;
+
+		return _inner;
+	}
+
 #define GENERATE_STATIC_METHOD(return_type, method_name)	\
 	template <typename T>									\
 	const return_type &NETInterface<T>::method_name()		\
@@ -87,6 +102,6 @@ namespace NE
 
 	GENERATE_STATIC_METHOD(type_bool, isRegisteredStatically)	
 	GENERATE_STATIC_METHOD(NEClassBaseList, getSuperClassesStatically)
-	GENERATE_STATIC_METHOD(NEClassBaseList, getSubClassesStatically)
+	GENERATE_STATIC_METHOD(NEClassBaseList, getSubClassesStatically)	
 #undef GENERATE_STATIC_METHOD
 }

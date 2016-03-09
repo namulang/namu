@@ -39,11 +39,11 @@ namespace NE
 		//		Virtuals:
 	public:
 		virtual NEObject& instantiate() const = 0;
+		virtual type_bool isInstantiatable() const = 0;
 		virtual const NETString& getName() const = 0;
 		virtual const NEClassBaseList& getSuperClasses() const = 0;
 		virtual const bool& isRegistered() const = 0;
 		virtual const NEClassBaseList& getSubClasses() const = 0;
-		virtual const type_id& getClassId();
 
 		//			Inherits:
 		//				NEObject:
@@ -69,8 +69,7 @@ namespace NE
 
 	private:
 		//	these method were used only for TypeManager friend class.
-		void _setRegistered(bool new_value);
-		void _setClassId(type_id new_id);
+		void _setRegistered(bool new_value);	
 		type_result _registerSubClass(const NEClassBase& subclass);
 		type_result _registerSubClassAsMyChild(const NEClassBase& subclass);
 		NEClassBaseList& _getSubClasses();

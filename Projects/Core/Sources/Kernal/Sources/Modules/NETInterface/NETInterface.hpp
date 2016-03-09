@@ -10,6 +10,7 @@
 #pragma once
 
 #include "../NEClassBase/NEClassBase.hpp"
+#include "../NEClassBaseList/NEClassBaseList.hpp"
 
 namespace NE
 {
@@ -19,6 +20,7 @@ namespace NE
 		//	Declarations:
 	public:
 		typedef NETInterface<T> This;
+		typedef This ThisClass;
 		typedef NEClassBase Super;
 		typedef T Trait;
 		typedef typename Trait::Super SuperTrait;
@@ -33,8 +35,8 @@ namespace NE
 	public:
 		virtual ~NETInterface();
 
-		//	Interfaces:
-		//		Virtuals:
+		//	Inherited:
+		//		NEClassBase:
 	public:
 		virtual const NETString& getName() const;
 		virtual const NEClassBaseList& getSuperClasses() const;
@@ -42,13 +44,10 @@ namespace NE
 		virtual type_bool isInstantiatable() const;
 		virtual const NEClassBaseList& getSubClasses() const;
 		virtual NEObject& instantiate() const;
-		//			Inherited:
 		//				NEObject:
 	public:
+		virtual const NEClassBase& getClass() const;
 		virtual NEObject& clone() const;
-
-	public:
-		const NEClassBase& getSuperClass() const;
 
 		//	Statics:
 	public:
@@ -56,6 +55,7 @@ namespace NE
 		static const NEClassBaseList& getSuperClassesStatically();
 		static const NETString& getNameStatically();
 		static const type_bool& isRegisteredStatically();
+		static const NEClassBase& getClassStatically();
 	};
 }
 

@@ -20,6 +20,10 @@ namespace NE
 		virtual const NEClassBase& getClass() const;
 
 	public:
+		virtual type_result isValid() const;
+		virtual NEObject& clone() const;
+
+	public:
 		static const ThisClass& getClassStatically();
 	};
 }

@@ -5,8 +5,8 @@ namespace NE
 	{
 		if( ! isInstantiatable())
 		{
-			_alert(RESULT_TYPE_INFORMATION, _T("This class is a kind of Object "
-				"class, But can't instantiate."));
+			_alert(RESULT_TYPE_INFORMATION, 
+				_T("This class is a kind of Object class, But can't instantiate."));
 
 			NEObject* nullptr = 0x00;
 
