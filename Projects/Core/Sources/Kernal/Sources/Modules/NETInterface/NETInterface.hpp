@@ -11,6 +11,7 @@
 
 #include "../NEClassBase/NEClassBase.hpp"
 #include "../NEClassBaseList/NEClassBaseList.hpp"
+#include "../NEMetaInterface/NEMetaInterface.hpp"
 
 namespace NE
 {

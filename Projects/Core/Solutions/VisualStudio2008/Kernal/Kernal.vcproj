@@ -1415,6 +1415,26 @@
 									</Filter>
 								</Filter>
 							</Filter>
+							<Filter
+								Name="NETTemplate"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETTemplate\NETTemplate.hpp"
+									>
+								</File>
+							</Filter>
+							<Filter
+								Name="NEMetaInterface"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEMetaInterface\NEMetaInterface.hpp"
+									>
+								</File>
+							</Filter>
+							<Filter
+								Name="NEMetaClass"
+								>
+							</Filter>
 						</Filter>
 						<Filter
 							Name="NEType"
