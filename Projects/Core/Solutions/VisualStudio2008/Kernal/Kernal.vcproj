@@ -1400,11 +1400,18 @@
 									<File
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETInterface\NETInterface.inl"
 										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.inl"
+									<Filter
+										Name="NETConcreteClass"
 										>
-									</File>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETConcreteClass\NETConcreteClass.hpp"
+											>
+										</File>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETConcreteClass\NETConcreteClass.inl"
+											>
+										</File>
+									</Filter>
 									<Filter
 										Name="NEClass"
 										>
@@ -1434,6 +1441,26 @@
 							<Filter
 								Name="NEMetaClass"
 								>
+							</Filter>
+							<Filter
+								Name="NETClass"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.cpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETConcreteClass\Specialization.inl"
+									>
+								</File>
+								<Filter
+									Name="define"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\define\ClassMacro.hpp"
+										>
+									</File>
+								</Filter>
 							</Filter>
 						</Filter>
 						<Filter
