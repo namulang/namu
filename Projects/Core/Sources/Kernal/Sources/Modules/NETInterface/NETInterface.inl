@@ -36,12 +36,6 @@ namespace NE
 	}
 
 	template <typename T>
-	type_bool NE::NETInterface<T>::isInstantiatable() const
-	{
-		return false;
-	}
-
-	template <typename T>
 	const NEClassBaseList& NETInterface<T>::getSubClasses() const
 	{
 		return getSubClassesStatically();
@@ -86,7 +80,7 @@ namespace NE
 	template <typename T>
 	const NEClassBase& NETInterface<T>::getClassStatically()
 	{
-		static ThisClass _inner;
+		static MetaClass _inner;
 
 		return _inner;
 	}

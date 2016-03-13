@@ -1,15 +1,13 @@
 #pragma once
 
-#include "../NEClassBase/NEClassBase.hpp"
+#include "../NETConcreteClass/NETConcreteClass.hpp"
 
 namespace NE
 {
-	class NE_DLL NEMetaInterface : public NEClassBase
+	class NE_DLL NEInterfaceClass
 	{
 	public:
-		typedef NEMetaInterface This;
-		typedef This ThisClass;
+		typedef NEInterfaceClass This;
 		typedef NEClassBase Super;
-		typedef NETClass<NE
 	};
 }

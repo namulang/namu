@@ -1453,10 +1453,6 @@
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.inl"
 									>
 								</File>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETConcreteClass\Specialization.inl"
-									>
-								</File>
 								<Filter
 									Name="define"
 									>

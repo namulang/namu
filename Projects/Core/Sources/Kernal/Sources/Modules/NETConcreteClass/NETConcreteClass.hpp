@@ -1,54 +1,48 @@
 #pragma once
 
-#include "../../Includes/includePrimitiveTypes.hpp"
 #include "../NETInterface/NETInterface.hpp"
 
 namespace NE
 {
 	template <typename T>
-	class NETClass : public NETInterface<T>
+	class NETConcreteClass : public NETInterface<T>
 	{
 		//	Declarations:
 	public:
-		typedef NETClass<T> This;
+		typedef NETConcreteClass<T> This;
 		typedef NETInterface<T> Super;
+		typedef NETConcreteClass<NEConcreteClass> MetaClass;
 		typedef T Trait;
 		typedef typename Trait::Super SuperTrait;
 		typedef NETInterface<SuperTrait> SuperClass;
 
 		//	Constructors:
 	public:
-		NETClass();
-		NETClass(const NETClass& source);
+		NETConcreteClass();
+		NETConcreteClass(const NETConcreteClass& source);
 
 		//	Destructors:
 	public:
-		virtual ~NETClass();
+		virtual ~NETConcreteClass();
 
 		//	Interfaces:
 		//		Virtuals:
-		//			NETInterface:
-	public:
-		virtual type_bool isInstantiatable() const;
 		//			NEObject:
 	public:
 		virtual const NEClassBase& getClass() const;
 		virtual NEObject& instantiate() const;
 
 	public:
-		static const NEClassBase& getClassStatically()
-		{
-
-		}
+		static const NEClassBase& getClassStatically();
 	};
 
 	template <typename T>
-	const NEClassBase& NE::NETClass<T>::getClass() const
+	const NEClassBase& NE::NETConcreteClass<T>::getClass() const
 	{
 		
 	}
 
 }
 
-#include "NETClass.inl"
+#include "NETConcreteClass.inl"
 #include "Specialization.inl"

@@ -21,11 +21,10 @@ namespace NE
 		//	Declarations:
 	public:
 		typedef NETInterface<T> This;
-		typedef This ThisClass;
+		typedef NETClass<NEInterfaceClass> MetaClass;
 		typedef NEClassBase Super;
 		typedef T Trait;
-		typedef typename Trait::Super SuperTrait;
-		typedef NETInterface<SuperTrait> SuperClass;
+		typedef typename Trait::Super SuperTrait;		
 
 		//	Constructors:
 	public:
@@ -42,7 +41,6 @@ namespace NE
 		virtual const NETString& getName() const;
 		virtual const NEClassBaseList& getSuperClasses() const;
 		virtual const type_bool& isRegistered() const;
-		virtual type_bool isInstantiatable() const;
 		virtual const NEClassBaseList& getSubClasses() const;
 		virtual NEObject& instantiate() const;
 		//				NEObject:

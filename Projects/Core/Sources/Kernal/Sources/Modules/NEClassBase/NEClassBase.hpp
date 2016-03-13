@@ -40,6 +40,7 @@ namespace NE
 	public:
 		virtual NEObject& instantiate() const = 0;
 		virtual type_bool isInstantiatable() const = 0;
+		virtual type_bool isTemplate() const = 0;
 		virtual const NETString& getName() const = 0;
 		virtual const NEClassBaseList& getSuperClasses() const = 0;
 		virtual const bool& isRegistered() const = 0;
