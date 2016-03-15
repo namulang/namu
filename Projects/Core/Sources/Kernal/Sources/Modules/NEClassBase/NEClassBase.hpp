@@ -1,16 +1,16 @@
-//	---------------------------------------------------------------------------------
-//	클래스명:	NEClassBase
-//	설명	:	
-//	관계	:	
-//	특성	:	
-//	알고리즘:	
-//	사용방법:	
-//	메모	:	
-//	히스토리:	2016-02-09	이태훈	생성
-//	---------------------------------------------------------------------------------
+//    ---------------------------------------------------------------------------------
+//    클래스명:    NEClassBase
+//    설명    :    
+//    관계    :    
+//    특성    :    
+//    알고리즘:    
+//    사용방법:    
+//    메모    :    
+//    히스토리:    2016-02-09    이태훈    생성
+//    ---------------------------------------------------------------------------------
 #pragma once
 
-//	include:
+//    include:
 #include "../NEUnit/NEUnit.hpp"
 #include "../../Modules/NETString/NETString.hpp"
 
@@ -20,41 +20,44 @@ namespace NE
 
 	class NE_DLL NEClassBase : public NEUnit
 	{
-		//	Declarations:
+		//    Declarations:
 	public:
 		typedef NEClassBase This;
 		typedef NEUnit Super;
-		friend class NETypeManager;
+		friend class NEClassManager;
 
-		//	Constructors:
+		//    Constructors:
 	public:
 		NEClassBase();
 		NEClassBase(const NEClassBase& source);
 
-		//	Destructors:
+		//    Destructors:
 	public:
 		virtual ~NEClassBase();
 
-		//	Interfaces:
-		//		Virtuals:
+		//    Interfaces:
+		//        Virtuals:
 	public:
 		virtual NEObject& instantiate() const = 0;
 		virtual type_bool isInstantiatable() const = 0;
 		virtual type_bool isTemplate() const = 0;
-		virtual const NETString& getName() const = 0;
+		virtual type_bool isMetaClassDefined() const = 0;
+		virtual type_bool isBuiltInClass() const = 0;
+		virtual const type_bool& isRegistered() const = 0;
+		virtual const type_tchar* getName() const = 0;
+		virtual const This& getTraitClass() const = 0;
 		virtual const NEClassBaseList& getSuperClasses() const = 0;
-		virtual const bool& isRegistered() const = 0;
 		virtual const NEClassBaseList& getSubClasses() const = 0;
 
-		//			Inherits:
-		//				NEObject:
+		//            Inherits:
+		//                NEObject:
 	public:
 		virtual type_result isValid() const;
 		virtual void release();
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 
-		//		General interfaces:
+		//        General interfaces:
 	public:
 		type_result enroll();
 		bool isEqualTypeWith(const This& source) const;
@@ -69,8 +72,8 @@ namespace NE
 		type_result _alert(type_result result, const type_tchar* message) const;
 
 	private:
-		//	these method were used only for TypeManager friend class.
-		void _setRegistered(bool new_value);	
+		//    these method were used only for TypeManager friend class.
+		virtual type_result _setRegistered(type_bool new_value) = 0;
 		type_result _registerSubClass(const NEClassBase& subclass);
 		type_result _registerSubClassAsMyChild(const NEClassBase& subclass);
 		NEClassBaseList& _getSubClasses();

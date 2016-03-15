@@ -55,11 +55,6 @@ namespace NE
 		return isSubClassOf(parent.getClass());
 	}
 
-	void NEClassBase::_setRegistered(bool new_value)
-	{
-
-	}
-
 	type_result NEClassBase::_registerSubClass(const NEClassBase& subclass)
 	{
 		//	pre:
