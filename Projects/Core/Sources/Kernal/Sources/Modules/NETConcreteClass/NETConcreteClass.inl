@@ -1,7 +1,7 @@
 namespace NE
 {
 	template <typename T>
-	NEObject& NE::NETConcreteClass<T>::instantiate() const
+	NEObject& NETConcreteClass<T>::instantiate() const
 	{
 		if( ! isInstantiatable())
 		{
@@ -17,10 +17,8 @@ namespace NE
 	}
 
 	template <typename T>
-	const NEClassBase& getClassStatically()
+	NEObject& NETConcreteClass<T>::clone() const
 	{
-		static MetaClass _inner;
-
-		return _inner;
+		return *(This(*this));
 	}
 }

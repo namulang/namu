@@ -4,6 +4,8 @@
 
 namespace NE
 {
+	class NEObject;
+
 	template <typename T>
 	class NETBuiltInClassChecker : public NETypeChecker
 	{

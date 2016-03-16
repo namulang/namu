@@ -7,14 +7,14 @@
 namespace NE
 {
 	template
-	class NE_DLL NETArray<type_code, false, NENode, NEType::NENODE_CODESET>;
+	class NE_DLL NETArray<type_code, false, NENode>;
 	template
-	class NE_DLL NETEnlistableSet< NETArray<type_code, false, NENode, NEType::NENODE_CODESET> >;
+	class NE_DLL NETEnlistableSet< NETArray<type_code, false, NENode> >;
 
-	class NE_DLL NENodeCodeSet : public NETEnlistableSet< NETArray<type_code, false, NENode, NEType::NENODE_CODESET> >, public NEExecutable
+	class NE_DLL NENodeCodeSet : public NETEnlistableSet< NETArray<type_code, false, NENode> >, public NEExecutable
 	{
 	public:
-		typedef NETEnlistableSet< NETArray<type_code, false, NENode, NEType::NENODE_CODESET> > SuperClass;
+		typedef NETEnlistableSet< NETArray<type_code, false, NENode> > SuperClass;
 		typedef NENodeCodeSet ThisClass;
 		typedef type_code InnerType;
 		typedef NENode OuterType;

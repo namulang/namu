@@ -32,14 +32,17 @@
 
 namespace NE
 {
-	template <typename InsideType, NEType::Type type>
-	class NETArray<InsideType, false, InsideType, type> : public NETReservedCollector<InsideType>, public NESpecifiedInsertable<InsideType>
+	template <typename InsideType>
+	class NETArray<InsideType, false, InsideType> : public NETReservedCollector<InsideType>, public NESpecifiedInsertable<InsideType>
 	{	
-		//	생성자:
+		typedef NETArray<InsideType, false, InsideType> _This;
+
+		NE_DECLARE_CLASS(_This, NETReservedCollector<InsideType>)
+			//	생성자:
 	public:
 		NETArray();
 		NETArray(type_count size);
-		NETArray(const NETArray<InsideType, false, InsideType, type>& source);
+		NETArray(const This& source);
 
 		//	소멸자:
 	public:
@@ -47,11 +50,11 @@ namespace NE
 
 		//	연산자 중첩:
 	public:
-		const NETArray<InsideType, false, InsideType, type>& operator=(const NETArray<InsideType, false, InsideType, type>& source); 
-		NETArray<InsideType, false, InsideType, type> operator+(const NETArray<InsideType, false, InsideType, type>& source) const;
-		bool operator==(const NETArray<InsideType, false, InsideType, type>& source) const;
-		bool operator!=(const NETArray<InsideType, false, InsideType, type>& source) const;
-		const NETArray<InsideType, false, InsideType, type>& operator+=(const NETArray<InsideType, false, InsideType, type>& source);
+		const This& operator=(const This& source); 
+		This operator+(const This& source) const;
+		bool operator==(const This& source) const;
+		bool operator!=(const This& source) const;
+		const This& operator+=(const This& source);
 
 		//	인터페이스:
 		//		상속:
@@ -74,25 +77,23 @@ namespace NE
 		virtual type_index find(const InsideType& source) const;
 		//			NEObject:
 	public:
-		virtual NEObject& clone() const;
 		virtual type_result isValid() const; 
 		virtual void release(); 
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const; 
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
-		virtual NEType::Type getType() const;
 
 		//		고유 인터페이스:
 	public:
 		type_index pushFront(const InsideType& source);
 		type_index popFront();
-		type_result push(const NETArray<InsideType, false, InsideType, type>& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
-		type_result pushFront(const NETArray<InsideType, false, InsideType, type>& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
-		bool isEqualSizeAndElement(const NETArray<InsideType, false, InsideType, type>& source) const;
-		bool isEqualElement(const NETArray<InsideType, false, InsideType, type>& source) const;		
+		type_result push(const This& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
+		type_result pushFront(const This& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
+		bool isEqualSizeAndElement(const This& source) const;
+		bool isEqualElement(const This& source) const;		
 
 		//	내부함수:
 	private:
-		const NETArray<InsideType, false, InsideType, type>& _assign(const NETArray<InsideType, false, InsideType, type>& source);
+		const This& _assign(const This& source);
 		void _release();
 
 		//	멤버변수:

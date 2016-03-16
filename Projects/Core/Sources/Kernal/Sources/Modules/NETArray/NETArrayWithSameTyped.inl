@@ -4,7 +4,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	NETArray<InsideType, false, InsideType, type>::NETArray()
+	NETArray<InsideType, false, InsideType>::NETArray()
 		: NETReservedCollector<InsideType>(), _data(NE_NULL)
 	{
 		_release();
@@ -16,7 +16,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	NETArray<InsideType, false, InsideType, type>::NETArray(type_count size)
+	NETArray<InsideType, false, InsideType>::NETArray(type_count size)
 		: NETReservedCollector<InsideType>(size), _data(NE_NULL)
 	{
 		create(size);
@@ -28,7 +28,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	NETArray<InsideType, false, InsideType, type>::NETArray(const NETArray<InsideType, false, InsideType, type>& source)
+	NETArray<InsideType, false, InsideType>::NETArray(const NETArray<InsideType, false, InsideType>& source)
 		: NETReservedCollector<InsideType>(), _data(NE_NULL)
 	{
 		_assign(source);
@@ -40,7 +40,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	NETArray<InsideType, false, InsideType, type>::~NETArray()
+	NETArray<InsideType, false, InsideType>::~NETArray()
 	{
 		_release();
 	}
@@ -51,10 +51,10 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	const NETArray<InsideType, false, InsideType, type>&
-		NETArray<InsideType, false, InsideType, type>::operator=
+	const NETArray<InsideType, false, InsideType>&
+		NETArray<InsideType, false, InsideType>::operator=
 		(
-		const NETArray<InsideType, false, InsideType, type>& source
+		const NETArray<InsideType, false, InsideType>& source
 		)
 	{
 		return _assign(source);
@@ -66,20 +66,20 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	NETArray<InsideType, false, InsideType, type>  
-		NETArray<InsideType, false, InsideType, type>::operator+
+	NETArray<InsideType, false, InsideType>  
+		NETArray<InsideType, false, InsideType>::operator+
 		(
-		const NETArray<InsideType, false, InsideType, type>& source
+		const NETArray<InsideType, false, InsideType>& source
 		) const
 	{
 		//	pre:
 		//		파라메터 검사:
-		if(source._length <= 0)	return NETArray<InsideType, false, InsideType, type>(*this);
+		if(source._length <= 0)	return NETArray<InsideType, false, InsideType>(*this);
 
 
 
 		//	main:
-		NETArray<InsideType, false, InsideType, type> buffer(source._length + _length);
+		NETArray<InsideType, false, InsideType> buffer(source._length + _length);
 		buffer.push(*this);
 		buffer.push(source);
 
@@ -99,7 +99,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------	
 	template <typename InsideType, NEType::Type type>
-	bool  NETArray<InsideType, false, InsideType, type>::operator==(const NETArray<InsideType, false, InsideType, type>& source) const
+	bool  NETArray<InsideType, false, InsideType>::operator==(const NETArray<InsideType, false, InsideType>& source) const
 	{
 		if(this == &source) return true;
 		if(NETReservedCollector<InsideType>::operator==(source) == false) return false;
@@ -113,7 +113,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	bool  NETArray<InsideType, false, InsideType, type>::operator!=(const NETArray<InsideType, false, InsideType, type>& source) const
+	bool  NETArray<InsideType, false, InsideType>::operator!=(const NETArray<InsideType, false, InsideType>& source) const
 	{
 		return !(operator==(source));
 	}
@@ -125,15 +125,15 @@ namespace NE
 	//				2011-11-20	이태훈	버그 수정	source가 *this일 때 발생하게될 오류 대처 추가
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	const NETArray<InsideType, false, InsideType, type>&
-		NETArray<InsideType, false, InsideType, type>::operator+=
+	const NETArray<InsideType, false, InsideType>&
+		NETArray<InsideType, false, InsideType>::operator+=
 		(
-		const NETArray<InsideType, false, InsideType, type>& source
+		const NETArray<InsideType, false, InsideType>& source
 		)
 	{
 		if(this == &source)
 		{
-			NETArray<InsideType, false, InsideType, type> copyied(*this);
+			NETArray<InsideType, false, InsideType> copyied(*this);
 			resize(_length + copyied._length);
 			push(copyied);
 		}
@@ -152,7 +152,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	InsideType  &NETArray<InsideType, false, InsideType, type>::getElement(type_index index) 
+	InsideType  &NETArray<InsideType, false, InsideType>::getElement(type_index index) 
 	{	
 		InsideType* null_pointer = NE_NULL;
 		//	pre:
@@ -174,7 +174,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	const InsideType  &NETArray<InsideType, false, InsideType, type>::getElement(type_index index) const 
+	const InsideType  &NETArray<InsideType, false, InsideType>::getElement(type_index index) const 
 	{	
 		InsideType* null_pointer = NE_NULL;
 		//	pre:
@@ -196,7 +196,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	type_result NETArray<InsideType, false, InsideType, type>::setElement(type_index index, const InsideType& source)  
+	type_result NETArray<InsideType, false, InsideType>::setElement(type_index index, const InsideType& source)  
 	{
 		//	pre:
 		//		파라메터검사:
@@ -220,7 +220,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	type_result NETArray<InsideType, false, InsideType, type>::resize(type_count size) // 가지고있는 데이터는 보존한채 크기만 변경한다.
+	type_result NETArray<InsideType, false, InsideType>::resize(type_count size) // 가지고있는 데이터는 보존한채 크기만 변경한다.
 	{
 		//	pre:
 		if(size < 0) return RESULT_TYPE_INFORMATION | RESULT_ABORT_ACTION;
@@ -228,7 +228,7 @@ namespace NE
 
 
 		//	main:
-		NETArray<InsideType, false, InsideType, type> temp = *this; // use operator=
+		NETArray<InsideType, false, InsideType> temp = *this; // use operator=
 		create(size); // size도 내부에서 세팅됨.
 		push(temp); // temp 자동 소멸
 
@@ -247,7 +247,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	type_result  NETArray<InsideType, false, InsideType, type>::push(const NETArray<InsideType, false, InsideType, type>& source)
+	type_result  NETArray<InsideType, false, InsideType>::push(const NETArray<InsideType, false, InsideType>& source)
 	{
 		//	pre:
 		//		파라메터검사:
@@ -276,7 +276,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	type_result NETArray<InsideType, false, InsideType, type>::pushFront(const NETArray<InsideType, false, InsideType, type>& source)
+	type_result NETArray<InsideType, false, InsideType>::pushFront(const NETArray<InsideType, false, InsideType>& source)
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -310,7 +310,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 
 	template <typename InsideType, NEType::Type type>
-	type_index NETArray<InsideType, false, InsideType, type>::insert(type_index index, const InsideType& source) 
+	type_index NETArray<InsideType, false, InsideType>::insert(type_index index, const InsideType& source) 
 	{
 		//	pre:
 		//		파라메터검사:
@@ -347,7 +347,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	type_index NETArray<InsideType, false, InsideType, type>::remove(type_index index) 
+	type_index NETArray<InsideType, false, InsideType>::remove(type_index index) 
 	{
 		//	pre:
 		//		파라메터검사:
@@ -379,7 +379,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	type_index NETArray<InsideType, false, InsideType, type>::find(const InsideType& source) const
+	type_index NETArray<InsideType, false, InsideType>::find(const InsideType& source) const
 	{
 		//	pre:
 		//		관련멤버변수 검사:
@@ -412,7 +412,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	bool  NETArray<InsideType, false, InsideType, type>::isEqualSizeAndElement(const NETArray<InsideType, false, InsideType, type>& source) const
+	bool  NETArray<InsideType, false, InsideType>::isEqualSizeAndElement(const NETArray<InsideType, false, InsideType>& source) const
 	{
 		//	pre:
 		if(_size != source._size) return false;
@@ -431,7 +431,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	bool  NETArray<InsideType, false, InsideType, type>::isEqualElement(const NETArray<InsideType, false, InsideType, type>& source) const
+	bool  NETArray<InsideType, false, InsideType>::isEqualElement(const NETArray<InsideType, false, InsideType>& source) const
 	{
 		if(getLengthLastIndex() != source.getLengthLastIndex()) return false;
 
@@ -450,9 +450,9 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------	
 	template <typename InsideType, NEType::Type type>
-	NEObject& NETArray<InsideType, false, InsideType, type>::clone() const 
+	NEObject& NETArray<InsideType, false, InsideType>::clone() const 
 	{			
-		return *(new NETArray<InsideType, false, InsideType, type>(*this));
+		return *(new NETArray<InsideType, false, InsideType>(*this));
 	}
 
 
@@ -461,7 +461,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type> 
-	type_result NETArray<InsideType, false, InsideType, type>::isValid() const  
+	type_result NETArray<InsideType, false, InsideType>::isValid() const  
 	{
 		//	상위 클래스의 valid 체크:
 		type_result result = NETReservedCollector<InsideType>::isValid();
@@ -478,7 +478,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	void  NETArray<InsideType, false, InsideType, type>::release()  
+	void  NETArray<InsideType, false, InsideType>::release()  
 	{		
 		_release();
 		/*
@@ -495,7 +495,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	NEBinaryFileSaver  &NETArray<InsideType, false, InsideType, type>::serialize(NEBinaryFileSaver& saver) const 
+	NEBinaryFileSaver  &NETArray<InsideType, false, InsideType>::serialize(NEBinaryFileSaver& saver) const 
 	{			
 		//	pre:
 		NETReservedCollector::serialize(saver);		
@@ -519,10 +519,10 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	NEBinaryFileLoader& NETArray<InsideType, false, InsideType, type>::serialize(NEBinaryFileLoader& loader)
+	NEBinaryFileLoader& NETArray<InsideType, false, InsideType>::serialize(NEBinaryFileLoader& loader)
 	{
 		//	pre:
-		NETArray<InsideType, false, InsideType, type>::release();
+		NETArray<InsideType, false, InsideType>::release();
 		NETReservedCollector::serialize(loader);		
 
 
@@ -552,7 +552,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	NEType::Type NETArray<InsideType, false, InsideType, type>::getType() const
+	NEType::Type NETArray<InsideType, false, InsideType>::getType() const
 	{
 		return type;
 	}
@@ -567,7 +567,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	type_result NETArray<InsideType, false, InsideType, type>::create(type_count size)
+	type_result NETArray<InsideType, false, InsideType>::create(type_count size)
 	{
 		release();
 
@@ -595,10 +595,10 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	const NETArray<InsideType, false, InsideType, type>&
-		NETArray<InsideType, false, InsideType, type>::_assign
+	const NETArray<InsideType, false, InsideType>&
+		NETArray<InsideType, false, InsideType>::_assign
 		(
-		const NETArray<InsideType, false, InsideType, type>& source
+		const NETArray<InsideType, false, InsideType>& source
 		)
 	{	
 		if(this == &source) return *this;
@@ -614,7 +614,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType, NEType::Type type>
-	void  NETArray<InsideType, false, InsideType, type>::_release() 
+	void  NETArray<InsideType, false, InsideType>::_release() 
 	{	
 		if(_data)
 			delete [] _data;
@@ -624,7 +624,7 @@ namespace NE
 
 
 	template <typename InsideType, NEType::Type type>
-	type_index NETArray<InsideType, false, InsideType, type>::push(const InsideType& source)
+	type_index NETArray<InsideType, false, InsideType>::push(const InsideType& source)
 	{
 		return insert(getLength(), source);
 	}
@@ -632,7 +632,7 @@ namespace NE
 
 
 	template <typename InsideType, NEType::Type type>
-	type_index NETArray<InsideType, false, InsideType, type>::pop()
+	type_index NETArray<InsideType, false, InsideType>::pop()
 	{
 		return remove(getLengthLastIndex());
 	}
@@ -640,7 +640,7 @@ namespace NE
 
 	
 	template <typename InsideType, NEType::Type type>
-	type_index NETArray<InsideType, false, InsideType, type>::pushFront(const InsideType& source)
+	type_index NETArray<InsideType, false, InsideType>::pushFront(const InsideType& source)
 	{
 		return insert(0, source);
 	}
@@ -648,7 +648,7 @@ namespace NE
 
 
 	template <typename InsideType, NEType::Type type>
-	type_index NETArray<InsideType, false, InsideType, type>::popFront()
+	type_index NETArray<InsideType, false, InsideType>::popFront()
 	{
 		return remove(0);
 	}

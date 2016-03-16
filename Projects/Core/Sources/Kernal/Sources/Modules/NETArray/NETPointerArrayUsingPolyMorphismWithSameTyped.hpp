@@ -13,11 +13,11 @@
 //						가 true일때와 false일때의 동작의 차이를 살펴보자.
 //							1. NETArray<InsideType*, false> 일 때 
 //								: 포인터가 복사되어 엘리먼트로 들어간다. 단지 그 뿐이다.
-//							2. ThisClass 일 때
+//							2. This 일 때
 //								: 포인터가 가리키는 인스턴스까지 복사되어 들어간다.
 //								포인터로부터 복사된 엘리먼트는 포인터와는 별도의 인스
 //								턴스를 가진다.
-//						ThisClass의 이와 같은 동작은 InsideType* 다형성을 구현하고자 할때
+//						This의 이와 같은 동작은 InsideType* 다형성을 구현하고자 할때
 //						제대로 사용된다. 
 //	알고리즘:	NETArray<InsideType>와 동일하다. 해당 헤더파일을 참고할 것.
 //	사용방법:	NETArray<InsideType>와 동일하다. 해당 헤더파일을 참고할 것.
@@ -28,23 +28,23 @@
 
 namespace NE
 {
-	template <typename InsideType, NEType::Type type>
-	class NETArray<InsideType*, true, InsideType*, type> : public NETReservedCollector<InsideType*>, public NESpecifiedInsertable<InsideType*> // InsideType = NEKey
+	template <typename InsideType>
+	class NETArray<InsideType*, true, InsideType*> : public NETReservedCollector<InsideType*>, public NESpecifiedInsertable<InsideType*> // InsideType = NEKey
 	{
-		typedef NETReservedCollector<InsideType*> SuperClass;
-		typedef NETArray<InsideType*, true, InsideType*, type> ThisClass;
+		typedef NETArray<InsideType*, true, InsideType*> _This;
 
+		NE_DECLARE_CLASS(_This, NETReservedCollector<InsideType*>)
 	public:
-		using SuperClass::push;
-		using SuperClass::find;
-		using SuperClass::setElement;
-		using SuperClass::serialize;
+		using Super::push;
+		using Super::find;
+		using Super::setElement;
+		using Super::serialize;
 
 		//	생성자:
 	public:
 		NETArray();
 		NETArray(type_count size);
-		NETArray(const ThisClass& source);
+		NETArray(const This& source);
 
 		//	소멸자:
 	public:
@@ -52,11 +52,11 @@ namespace NE
 
 		//	연산자 중첩:
 	public:
-		const ThisClass& operator=(const ThisClass& source);
-		bool operator==(const ThisClass& source) const;
-		bool operator!=(const ThisClass& source) const;
-		const ThisClass& operator+=(const ThisClass& source);
-		ThisClass operator+(const ThisClass& source) const;
+		const This& operator=(const This& source);
+		bool operator==(const This& source) const;
+		bool operator!=(const This& source) const;
+		const This& operator+=(const This& source);
+		This operator+(const This& source) const;
 
 		//	인터페이스:
 		//		상속:
@@ -80,9 +80,7 @@ namespace NE
 	public:
 		virtual type_result isValid() const; 
 		virtual void release(); 
-		virtual NEType::Type getType() const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
-		virtual NEObject& clone() const;
 
 		//		고유 인터페이스:
 	public:
@@ -91,14 +89,14 @@ namespace NE
 		type_index pushFront(const InsideType* const source);
 		type_index pushFront(const InsideType& source);
 		type_index insert(type_index index, const InsideType& source);
-		type_result push(const ThisClass& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
-		type_result pushFront(const ThisClass& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
-		bool isEqualSizeAndElement(const ThisClass& source) const;
-		bool isEqualElement(const ThisClass& source) const;		
+		type_result push(const This& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
+		type_result pushFront(const This& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
+		bool isEqualSizeAndElement(const This& source) const;
+		bool isEqualElement(const This& source) const;		
 
 		//	내부함수:
 	private:
-		const ThisClass& _assign(const ThisClass& source);
+		const This& _assign(const This& source);
 		void _release();
 		type_result _returnHeapMemory(type_index index);
 

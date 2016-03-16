@@ -28,22 +28,22 @@
 
 namespace NE
 {
-	template <typename InsideType, NEType::Type type>
-	class NETArray<InsideType*, false, InsideType*, type> : public NETReservedCollector<InsideType*>, public NESpecifiedInsertable<InsideType*>
+	template <typename InsideType>
+	class NETArray<InsideType*, false, InsideType*> : public NETReservedCollector<InsideType*>, public NESpecifiedInsertable<InsideType*>
 	{
-		typedef NETReservedCollector<InsideType*> SuperClass;
-		typedef NETArray<InsideType*, false, InsideType*, type> ThisClass;
+		typedef NETArray<InsideType*, false, InsideType*> _This;
 
+		NE_DECLARE_CLASS(_This, NETReservedCollector<InsideType*>)
 	public:
-		using SuperClass::push;
-		using SuperClass::find;
-		using SuperClass::setElement;
+		using Super::push;
+		using Super::find;
+		using Super::setElement;
 
 		//	생성자:
 	public:
 		NETArray();
 		NETArray(type_count size);
-		NETArray(const ThisClass& source);
+		NETArray(const This& source);
 
 		//	소멸자:
 	public:
@@ -51,11 +51,11 @@ namespace NE
 
 		//	연산자 중첩:
 	public:
-		const ThisClass& operator=(const ThisClass& source);
-		bool operator==(const ThisClass& source) const;
-		bool operator!=(const ThisClass& source) const;
-		ThisClass operator+(const ThisClass& source) const;
-		const ThisClass& operator+=(const ThisClass& source);
+		const This& operator=(const This& source);
+		bool operator==(const This& source) const;
+		bool operator!=(const This& source) const;
+		This operator+(const This& source) const;
+		const This& operator+=(const This& source);
 
 		//	인터페이스:
 		//		상속:
@@ -80,9 +80,7 @@ namespace NE
 	public:
 		virtual type_result isValid() const; 
 		virtual void release(); 
-		virtual NEType::Type getType() const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
-		virtual NEObject& clone() const;
 
 		//		고유 인터페이스:
 	public:
@@ -90,14 +88,14 @@ namespace NE
 		type_index popFront();
 		type_index pushFront(const InsideType* const source);
 		type_index pushFront(const InsideType& source);
-		type_result push(const ThisClass& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
-		type_result pushFront(const ThisClass& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
-		bool isEqualSizeAndElement(const ThisClass& source) const;
-		bool isEqualElement(const ThisClass& source) const;		
+		type_result push(const This& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
+		type_result pushFront(const This& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
+		bool isEqualSizeAndElement(const This& source) const;
+		bool isEqualElement(const This& source) const;		
 
 		//	내부함수:
 	private:
-		const ThisClass& _assign(const ThisClass& source);
+		const This& _assign(const This& source);
 		void _release();
 
 		//	멤버변수:

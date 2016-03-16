@@ -7,7 +7,6 @@
 //	Author			:	2016-02-13	kniz
 //	---------------------------------------------------------------------------------
 #pragma once
-
 //	Class Macros:
 //		we're providing fully functioned macro only. please don't use macros which have NATIVE 
 //		word on its name. that's internal.
@@ -20,34 +19,36 @@
 //			order to support RTTI. 
 //			by defining these, users can template metaclass with NETClass without consideration 
 //			that it's a ADT or concrete class.
-#define NE_NATIVE_DECLARE_CLASS(NAME, SUPER, METACLASS)	\
-	public:												\
-	typedef NAME			This;						\
-	typedef SUPER			Super;						\
-	typedef METACLASS<NAME>	MetaClass;					\
-														\
-	public:												\
-		virtual const NEClassBase& getClass() const		\
-		{												\
-			return getClassStatically();				\
-		}												\
-														\
-	public:												\
-		static const ThisClass& getClassStatically()	\
-		{												\
-			static ThisClass inner;						\
-														\
-			return inner;								\
-		}												\
+#define NE_NATIVE_DECLARE_CLASS(NAME, SUPER, METACLASS)		\
+	public:													\
+		typedef NAME			This;						\
+		typedef SUPER			Super;						\
+		typedef METACLASS<NAME>	MetaClass;					\
+															\
+	public:													\
+		virtual const NEClassBase& getClass() const			\
+		{													\
+			return getClassStatically();					\
+		}													\
+															\
+	public:													\
+		static const NEClassBase& getClassStatically()		\
+		{													\
+			static NETClass<NAME> inner;					\
+															\
+			return inner;									\
+		}													\
 	private:
 
-#define NE_DECLARE_INTERFACE(NAME, SUPER)				\
+#define NE_DECLARE_INTERFACE(NAME, SUPER)					\
 	NE_NATIVE_DECLARE_CLASS(NAME, SUPER, NETInterface)
 
-#define NE_DECLARE_CLASS(NAME, SUPER)					\
-	NE_NATIVE_DECLARE_CLASS(NAME, SUPER, NETClass)
-
-#define NE_DECLARE_TEMPLATE(NAME, SUPER, TRAIT)			\
-	public:												\
-		typedef TRAIT Trait;							\
-	NE_NATIVE_DECLARE_CLASS(NAME, SUPER, NETTemplate)
+#define NE_DECLARE_CLASS(NAME, SUPER)						\
+	NE_NATIVE_DECLARE_CLASS(NAME, SUPER, NETConcreteClass)	\
+															\
+	public:													\
+		virtual NEObject& clone() const						\
+		{													\
+			return *(new This(*this));						\
+		}													\
+	private:

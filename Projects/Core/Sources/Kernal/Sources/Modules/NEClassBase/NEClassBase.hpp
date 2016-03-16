@@ -9,7 +9,6 @@
 //    히스토리:    2016-02-09    이태훈    생성
 //    ---------------------------------------------------------------------------------
 #pragma once
-
 //    include:
 #include "../NEUnit/NEUnit.hpp"
 #include "../../Modules/NETString/NETString.hpp"
@@ -38,17 +37,17 @@ namespace NE
 		//    Interfaces:
 		//        Virtuals:
 	public:
-		virtual NEObject& instantiate() const = 0;
-		virtual type_bool isInstantiatable() const = 0;
+		virtual type_bool isInstantiable() const = 0;
 		virtual type_bool isTemplate() const = 0;
 		virtual type_bool isMetaClassDefined() const = 0;
 		virtual type_bool isBuiltInClass() const = 0;
 		virtual const type_bool& isRegistered() const = 0;
-		virtual const type_tchar* getName() const = 0;
+		virtual const NEClassBase& getClass() const = 0;
 		virtual const This& getTraitClass() const = 0;
 		virtual const NEClassBaseList& getSuperClasses() const = 0;
 		virtual const NEClassBaseList& getSubClasses() const = 0;
-
+		virtual const NETString& getName() const = 0;
+		virtual NEObject& instantiate() const = 0;
 		//            Inherits:
 		//                NEObject:
 	public:
@@ -56,6 +55,10 @@ namespace NE
 		virtual void release();
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
+
+	protected:
+		//    these method were used only for TypeManager friend class.
+		virtual type_result _setRegistered(type_bool new_is_registered) = 0;
 
 		//        General interfaces:
 	public:
@@ -72,8 +75,6 @@ namespace NE
 		type_result _alert(type_result result, const type_tchar* message) const;
 
 	private:
-		//    these method were used only for TypeManager friend class.
-		virtual type_result _setRegistered(type_bool new_value) = 0;
 		type_result _registerSubClass(const NEClassBase& subclass);
 		type_result _registerSubClassAsMyChild(const NEClassBase& subclass);
 		NEClassBaseList& _getSubClasses();

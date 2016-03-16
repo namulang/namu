@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../NEAdam.hpp"
+#include "../NEAdam/NEAdam.hpp"
 
 namespace NE
 {

@@ -9,14 +9,14 @@ namespace NE
 {
 	class NEIndexedKeySet;
 	template
-	class NE_DLL NETArray<type_code, false, NEKey, NEType::NEKEY_CODESET>;
+	class NE_DLL NETArray<type_code, false, NEKey>;
 	template
-	class NE_DLL NETEnlistableSet< NETArray<type_code, false, NEKey, NEType::NEKEY_CODESET> >;
+	class NE_DLL NETEnlistableSet< NETArray<type_code, false, NEKey> >;
 
-	class NE_DLL NEKeyCodeSet : public NETEnlistableSet< NETArray<type_code, false, NEKey, NEType::NEKEY_CODESET> >
+	class NE_DLL NEKeyCodeSet : public NETEnlistableSet< NETArray<type_code, false, NEKey> >
 	{
 	public:
-		typedef NETEnlistableSet< NETArray<type_code, false, NEKey, NEType::NEKEY_CODESET> > SuperClass;
+		typedef NETEnlistableSet< NETArray<type_code, false, NEKey> > SuperClass;
 		typedef NEKeyCodeSet ThisClass;
 		typedef type_code InnerType;
 		typedef NEKey OuterType;

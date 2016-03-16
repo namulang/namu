@@ -303,7 +303,7 @@ namespace NE
 	{
 		/*
 			왜 resize를 재정의 하는가:
-				NETArray<T, bool, Q, Type>에서 정의한 resize 
+				NETArray<T, bool, Q>에서 정의한 resize 
 				다른 원리로 동작하기 때문이다. 해당 함수에서는 clone
 				함수를 사용해서 담아둘 인스턴스를 임시 버퍼에 담아두는
 				역할을 수행하고 있는데, 실질적으로 이 코드는 NEIndexedNodeSet

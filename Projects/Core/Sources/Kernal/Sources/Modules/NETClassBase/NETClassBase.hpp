@@ -1,56 +1,51 @@
 #pragma once
 
-#include "../NEClassBase/NEClassBase.hpp"
+#include "../../Includes/Includes.hpp"
 #include "../NETADTChecker/NETADTChecker.hpp"
+#include "../NETTemplateChecker/NETTemplateChecker.hpp"
 #include "../NETSuperClassDeterminder/NETSuperClassDeterminder.hpp"
 #include "../NETMetaClassDeterminder/NETMetaClassDeterminder.hpp"
 #include "../NETTraitDeterminder/NETTraitDeterminder.hpp"
-#include "../NETBuiltInChecker/NETBuiltInChecker.hpp"
+#include "../NETBuiltInClassChecker/NETBuiltInClassChecker.hpp"
+#include "../NETClass/define/ClassMacro.hpp"
+#include "../NEUnknown/NEUnknown.hpp"
 
 namespace NE
 {
+	template <typename T>
+	class NETInterface;
+	template <typename T>
+	class NETConcreteClass;
 
 	template <typename T>
 	class NETClassBase : public NEClassBase
 	{
 	public:
-		const type_tchar* getName() const
-		{
-			return typeid(T).name();
-		}
-		//    type determind:
-		typedef typename NETTraitDeterminder<T>::Trait Trait;
-		typedef typename NETMetaClassDeterminder<T>::MetaClass MetaClass;
+		NE_DECLARE_INTERFACE(NETClassBase<T>, NEClassBase)
+			//    type determind:
+			typedef typename NETTraitDeterminder<T>::Trait Trait;
+		typedef typename NETSuperClassDeterminder<T>::Super SuperTrait;
 
 	public:
-		virtual type_bool isHavingMetaClass() const
-		{
-			return IS_METACLASS_DEFINED;
-		}
-		virtual type_bool isInterface() const
-		{
-			return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
-		}
-		virtual type_bool isTemplate() const
-		{
-			return IS_TEMPLATE;
-		}
-		virtual type_bool isBuiltInClass() const
-		{
-			return IS_BUILT_IN_CLASS;
-		}
-		virtual const NEClassBase& getTraitClass()
-		{
-			return getTraitClassStatically();
-		}
+		virtual type_bool isMetaClassDefined() const;
+		virtual type_bool isInstantiable() const;
+		virtual type_bool isTemplate() const;
+		virtual type_bool isBuiltInClass() const;
+		virtual const type_bool& isRegistered() const;
+		virtual const NEClassBase& getTraitClass() const;
+		virtual const NEClassBaseList& getSuperClasses() const;
+		virtual const NEClassBaseList& getSubClasses() const;
+		virtual const NETString& getName() const;
 
 	public:
-		static const NEClassBase& getTraitClassStatically()
-		{
-			static NETClass<Trait> _inner;
+		static const NEClassBase& getTraitClassStatically();
+		static const NETString& getNameStatically();
+		static const type_bool& isRegisteredStatically();
+		static const NEClassBaseList& getSuperClassesStatically();
+		static const NEClassBaseList& getSubClassesStatically();
 
-			return _inner;
-		}
+	protected:
+		static type_result _setRegisteredStatically(type_bool new_is_registered);
 
 	public:
 		static const type_bool IS_ADT = NETADTChecker<T>::IS_ADT;
@@ -58,92 +53,7 @@ namespace NE
 		static const type_bool IS_BUILT_IN_CLASS = NETBuiltInClassChecker<T>::IS_BUILT_IN_CLASS;
 		static const type_bool IS_METACLASS_DEFINED = NETMetaClassChecker<T>::IS_METACLASS_DEFINED;
 	};
-
-	//    Specialize NETClass for not templating NETClass<Unknown> class reculsively.
-	template <>
-	class NETClassBase<NEUnknown> : public NEClassBase
-	{
-	public:
-		//    type determind:
-		typedef NEUnknown Trait;
-		typedef NETUnknownMetaClass<NEUnknown> MetaClass;
-
-		virtual type_bool isHavingMetaClass() const
-		{
-			return IS_METACLASS_DEFINED;
-		}
-		virtual type_bool isInterface() const
-		{
-			return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
-		}
-		virtual type_bool isTemplate() const
-		{
-			return IS_TEMPLATE;
-		}
-		virtual type_bool isBuiltInClass() const
-		{
-			return IS_BUILT_IN_CLASS;
-		}
-		virtual const NEClassBase& getTraitClass()
-		{
-			return getTraitClassStatically();
-		}
-
-	public:
-		static const NEClassBase& getTraitClassStatically()
-		{
-			static NETClassBase<NEUnknown> _inner;
-
-			return _inner;
-		}
-
-	public:
-		static const type_bool IS_ADT = true;
-		static const type_bool IS_TEMPLATE = false;
-		static const type_bool IS_BUILT_IN_CLASS = true;
-		static const type_bool IS_METACLASS_DEFINED = false;
-	};
-	template <>
-	class NETClassBase<NEAdam> : public NEClassBase
-	{
-	public:
-		//    type determind:
-		typedef NEUnknown Trait;
-		typedef NETUnknownMetaClass<NEAdam> MetaClass;
-
-		virtual type_bool isHavingMetaClass() const
-		{
-			return IS_METACLASS_DEFINED;
-		}
-		virtual type_bool isInterface() const
-		{
-			return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
-		}
-		virtual type_bool isTemplate() const
-		{
-			return IS_TEMPLATE;
-		}
-		virtual type_bool isBuiltInClass() const
-		{
-			return IS_BUILT_IN_CLASS;
-		}
-		virtual const NEClassBase& getTraitClass()
-		{
-			return getTraitClassStatically();
-		}
-
-	public:
-		static const NEClassBase& getTraitClassStatically()
-		{
-			static NETClassBase<NEAdam> _inner;
-
-			return _inner;
-		}
-
-	public:
-		static const type_bool IS_ADT = true;
-		static const type_bool IS_TEMPLATE = false;
-		static const type_bool IS_BUILT_IN_CLASS = true;
-		static const type_bool IS_METACLASS_DEFINED = false;
-	};
 }
+
+#include "NETClassBase.inl"
+#include "Specialization.hpp"

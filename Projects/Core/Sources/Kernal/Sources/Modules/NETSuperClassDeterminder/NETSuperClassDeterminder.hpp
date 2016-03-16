@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../NETSuperClassChecker/NETSuperClassChecker.hpp"
+#include "../NEUnknown/NEUnknown.hpp"
 
 namespace NE
 {
@@ -8,12 +9,12 @@ namespace NE
 	class NETSuperClassDeterminder : public NETypeChecker
 	{
 	public:
-		typedef typename T::MetaClass MetaClass;
+		typedef typename T::Super Super;
 	};
 	template <typename T>
 	class NETSuperClassDeterminder<T, false>
 	{
 	public:
-		typedef NEUnknown MetaClass;
+		typedef NEUnknown Super;
 	};
 }
