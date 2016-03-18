@@ -30,5 +30,3 @@ namespace NE
 		using NETClassBase<T>::getSubClassesStatically;
 	};
 }
-
-#include "NETClass.inl"

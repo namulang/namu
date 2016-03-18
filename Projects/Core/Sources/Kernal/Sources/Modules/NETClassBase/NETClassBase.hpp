@@ -1,10 +1,16 @@
 #pragma once
 
+#pragma message("NETClassBase1")
 #include "../../Includes/Includes.hpp"
+#pragma message("NETClassBase2")
 #include "../NETADTChecker/NETADTChecker.hpp"
+#pragma message("NETClassBase3")
 #include "../NETTemplateChecker/NETTemplateChecker.hpp"
+#pragma message("NETClassBase4")
 #include "../NETSuperClassDeterminder/NETSuperClassDeterminder.hpp"
+#pragma message("NETClassBase5")
 #include "../NETMetaClassDeterminder/NETMetaClassDeterminder.hpp"
+#pragma message("NETClassBase6")
 #include "../NETTraitDeterminder/NETTraitDeterminder.hpp"
 #include "../NETBuiltInClassChecker/NETBuiltInClassChecker.hpp"
 #include "../NETClass/define/ClassMacro.hpp"
@@ -20,10 +26,11 @@ namespace NE
 	template <typename T>
 	class NETClassBase : public NEClassBase
 	{
-	public:
 		NE_DECLARE_INTERFACE(NETClassBase<T>, NEClassBase)
-			//    type determind:
-			typedef typename NETTraitDeterminder<T>::Trait Trait;
+
+	public:
+		//    type determind:
+		typedef typename NETTraitDeterminder<T>::Trait Trait;
 		typedef typename NETSuperClassDeterminder<T>::Super SuperTrait;
 
 	public:
@@ -55,5 +62,9 @@ namespace NE
 	};
 }
 
+#pragma message("NETClassBase7")
+
 #include "NETClassBase.inl"
 #include "Specialization.hpp"
+
+#pragma message("NETClassBase8")

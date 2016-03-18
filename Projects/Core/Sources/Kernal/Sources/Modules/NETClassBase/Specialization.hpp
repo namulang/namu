@@ -87,5 +87,5 @@ namespace NE
 		static const type_bool IS_TEMPLATE = false;
 		static const type_bool IS_BUILT_IN_CLASS = true;
 		static const type_bool IS_METACLASS_DEFINED = false;
-	};
+	};	
 }
