@@ -18,8 +18,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETKey<NEWStringSet, NEType::NEWSTRING_SET_KEY>;
-	typedef NETKey<NEWStringSet, NEType::NEWSTRING_SET_KEY> NEWStringSetKey;
+	class NE_DLL NETKey<NEWStringSet>;
+	typedef NETKey<NEWStringSet> NEWStringSetKey;
 }
 
 #pragma warning(pop)

@@ -6,16 +6,14 @@
 
 namespace NE
 {
-	template <typename T, NEType::Type type>
-	class NETStringKeyize : public NETKey<T, type>
+	template <typename T>
+	class NETStringKeyize : public NETKey<T>
 	{
-	public:
-		typedef NETStringKeyize ThisClass;
-		typedef NETKey<T, type> SuperClass;
+		NE_DECLARE_CLASS(NETStringKeyize<T>, NETKey<T>)
 
 	public:
 		NETStringKeyize(const T& source = T(), const NETString& keyname = "");
-		NETStringKeyize(const ThisClass& source);
+		NETStringKeyize(const This& source);
 		NETStringKeyize(const NEKey& source);
 
 	public:
@@ -23,9 +21,6 @@ namespace NE
 		virtual bool isEqualTo(const NEKey& source) const;
 		virtual type_result add(NEKey& result, const NEKey& operand2) const;
 		virtual bool isLower(const NEKey& source) const;
-
-	public:
-		virtual NEObject& clone() const;
 	};
 }
 

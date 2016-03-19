@@ -9,16 +9,14 @@
 
 namespace NE
 {
-	template <typename T, NEType::Type type>
-	class NETArithmeticKey : public NETKey<T, type>
+	template <typename T>
+	class NETArithmeticKey : public NETKey<T>
 	{
-	public:
-		typedef NETArithmeticKey ThisClass;
-		typedef NETKey<T, type> SuperClass;
+		NE_DECLARE_CLASS(NETArithmeticKey<T>, NETKey<T>)
 
 	public:
 		NETArithmeticKey(const T& source = T(), const NETString& keyname = "");
-		NETArithmeticKey(const ThisClass& source);
+		NETArithmeticKey(const This& source);
 		NETArithmeticKey(const NEKey& source);
 
 	public:
@@ -31,9 +29,6 @@ namespace NE
 		virtual type_result multiply(NEKey& result, const NEKey& operand2) const;
 		virtual type_result makeReciprocal();
 		virtual type_result negate();
-
-	public:
-		virtual NEObject& clone() const;
 	};
 }
 

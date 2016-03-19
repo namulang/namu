@@ -18,8 +18,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETStringKeyize<NEString, NEType::NESTRING_KEY>;
-	typedef NETStringKeyize<NEString, NEType::NESTRING_KEY> NEStringKey;
+	class NE_DLL NETStringKeyize<NEString>;
+	typedef NETStringKeyize<NEString> NEStringKey;
 }
 
 #pragma warning(pop)
