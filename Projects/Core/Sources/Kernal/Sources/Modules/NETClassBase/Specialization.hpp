@@ -40,8 +40,6 @@ namespace NE
 		static const NEClassBaseList& getSubClassesStatically();
 		static const NEClassBase& getClassStatically();
 
-	protected:
-
 	public:
 		static const type_bool IS_ADT = true;
 		static const type_bool IS_TEMPLATE = false;
@@ -70,6 +68,7 @@ namespace NE
 		virtual const NEClassBaseList& getSubClasses() const;
 		virtual const NETString& getName() const;
 		virtual const NEClassBase& getClass() const;
+
 	protected:
 		virtual type_result _setRegistered(type_bool new_is_registered);
 
@@ -81,11 +80,100 @@ namespace NE
 		static const NEClassBaseList& getSubClassesStatically();
 		static const NEClassBase& getClassStatically();
 
-
 	public:
 		static const type_bool IS_ADT = true;
 		static const type_bool IS_TEMPLATE = false;
 		static const type_bool IS_BUILT_IN_CLASS = true;
 		static const type_bool IS_METACLASS_DEFINED = false;
 	};	
+
+	//	Because NEUnit, NEObject is a superclass of NEClassBase, You can't define it with 
+	//	NETClass class template. So, you should do it manually.
+	template <>
+	class NE_DLL NETClassBase<NEUnit> : public NEClassBase
+	{
+	public:
+		//	Can't use macro such as NE_DECLARE_CLASS:
+		//		We'll specify METACLASS to NETUnknownMetaClass because of given 
+		//		parameterized type, NEUnknown.
+		//		So, we should declare all typedefs in manual.
+		typedef NETClassBase<NEUnit> This;
+		typedef NEClassBase Super;
+		//	type determind:
+		typedef NEUnknown Trait;
+		typedef NETSuperClassDeterminder<NEUnit>::Super SuperTrait;
+		typedef NETInterface<NEUnit> MetaClass;
+
+	public:
+		virtual type_bool isMetaClassDefined() const;
+		virtual type_bool isInstantiable() const;
+		virtual type_bool isTemplate() const;
+		virtual type_bool isBuiltInClass() const;
+		virtual const type_bool& isRegistered() const;
+		virtual const NEClassBase& getTraitClass() const;
+		virtual const NEClassBaseList& getSuperClasses() const;
+		virtual const NEClassBaseList& getSubClasses() const;
+		virtual const NETString& getName() const;
+		virtual const NEClassBase& getClass() const;
+	protected:
+		virtual type_result _setRegistered(type_bool new_is_registered);
+
+	public:
+		static const NEClassBase& getTraitClassStatically();
+		static const NETString& getNameStatically();
+		static const type_bool& isRegisteredStatically();
+		static const NEClassBaseList& getSuperClassesStatically();
+		static const NEClassBaseList& getSubClassesStatically();
+		static const NEClassBase& getClassStatically();
+
+	public:
+		static const type_bool IS_ADT = true;
+		static const type_bool IS_TEMPLATE = false;
+		static const type_bool IS_BUILT_IN_CLASS = true;
+		static const type_bool IS_METACLASS_DEFINED = true;
+	};
+
+	template <>
+	class NE_DLL NETClassBase<NEClassBase> : public NEClassBase
+	{
+	public:
+		//	Can't use macro such as NE_DECLARE_CLASS:
+		//		We'll specify METACLASS to NETUnknownMetaClass because of given 
+		//		parameterized type, NEUnknown.
+		//		So, we should declare all typedefs in manual.
+		typedef NETClassBase<NEClassBase> This;
+		typedef NEClassBase Super;
+		//	type determind:
+		typedef NEUnknown Trait;
+		typedef NETSuperClassDeterminder<NEClassBase>::Super SuperTrait;
+		typedef NETInterface<NEClassBase> MetaClass;
+
+	public:
+		virtual type_bool isMetaClassDefined() const;
+		virtual type_bool isInstantiable() const;
+		virtual type_bool isTemplate() const;
+		virtual type_bool isBuiltInClass() const;
+		virtual const type_bool& isRegistered() const;
+		virtual const NEClassBase& getTraitClass() const;
+		virtual const NEClassBaseList& getSuperClasses() const;
+		virtual const NEClassBaseList& getSubClasses() const;
+		virtual const NETString& getName() const;
+		virtual const NEClassBase& getClass() const;
+	protected:
+		virtual type_result _setRegistered(type_bool new_is_registered);
+
+	public:
+		static const NEClassBase& getTraitClassStatically();
+		static const NETString& getNameStatically();
+		static const type_bool& isRegisteredStatically();
+		static const NEClassBaseList& getSuperClassesStatically();
+		static const NEClassBaseList& getSubClassesStatically();
+		static const NEClassBase& getClassStatically();
+
+	public:
+		static const type_bool IS_ADT = true;
+		static const type_bool IS_TEMPLATE = false;
+		static const type_bool IS_BUILT_IN_CLASS = true;
+		static const type_bool IS_METACLASS_DEFINED = true;
+	};
 }

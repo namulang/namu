@@ -1379,14 +1379,6 @@
 									>
 								</File>
 								<Filter
-									Name="NEMetaInterface"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEMetaInterface\NEMetaInterface.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
 									Name="NETClassBase"
 									>
 									<File
