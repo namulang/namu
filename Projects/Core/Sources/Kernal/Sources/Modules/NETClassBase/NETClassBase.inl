@@ -37,9 +37,9 @@ namespace NE
 	}
 
 	template <typename T>
-	const NEClassBaseList& NETClassBase<T>::getSubClasses() const
+	const NETString& NETClassBase<T>::getName() const
 	{
-		return getSubClassesStatically();
+		return getNameStatically();
 	}
 
 	template <typename T>
@@ -49,9 +49,9 @@ namespace NE
 	}
 
 	template <typename T>
-	const NETString& NETClassBase<T>::getName() const
+	const NEClassBaseList& NETClassBase<T>::getSubClasses() const
 	{
-		return getNameStatically();
+		return getSubClassesStatically();
 	}
 
 	template <typename T>
@@ -74,7 +74,7 @@ namespace NE
 	}
 
 	template <typename T>
-	type_result NETClassBase<T>::_setRegisteredStatically(type_bool new_is_registered)
+	type_result NETClassBase<T>::_setRegistered(type_bool new_is_registered)
 	{
 		type_bool& is_registered = const_cast<type_bool&>(isRegisteredStatically);
 
@@ -83,16 +83,26 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 
-#define GENERATE_STATIC_METHOD(return_type, method_name)	\
-	template <typename T>									\
-	const return_type &NETClassBase<T>::method_name()		\
-	{														\
-	static return_type _inner;							\
-	\
-	return _inner;										\
+	template <typename T>
+	const type_bool& NETClassBase<T>::isRegisteredStatically()
+	{
+		static type_bool _inner;
+
+		return _inner;
 	}
-	GENERATE_STATIC_METHOD(type_bool, isRegisteredStatically)
-		GENERATE_STATIC_METHOD(NEClassBaseList, getSuperClassesStatically)
-		GENERATE_STATIC_METHOD(NEClassBaseList, getSubClassesStatically)
-#undef GENERATE_STATIC_METHOD
+
+	template <typename T>
+	static const NEClassBaseList& NETClassBase<T>::getSuperClassesStatically()
+	{
+		static NEClassBaseList _inner;
+
+		return _inner;
+	}
+	template <typename T>
+	static const NEClassBaseList& NETClassBase<T>::getSubClassesStatically()
+	{
+		static NEClassBaseList _inner;
+
+		return _inner;
+	}
 }

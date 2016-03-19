@@ -1,5 +1,5 @@
 #include "NEClassBase.hpp"
-#include "../Kernal/Kernal.hpp"
+#include "../NETClass/NETClass.hpp"
 #include "../NEClassBaseList/NEClassBaseList.hpp"
 #include "../Kernal/Kernal.hpp"
 

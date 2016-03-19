@@ -12,6 +12,7 @@ namespace NE
 	//        supplicant hint about ADT from class author, the MetaClass typedef.
 	//
 	//        forward declaration:
+	
 	template <typename T>
 	class NETInterface;
 

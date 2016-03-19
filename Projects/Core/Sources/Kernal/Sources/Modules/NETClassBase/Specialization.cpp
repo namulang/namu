@@ -1,8 +1,5 @@
-#pragma message("1")
 #include "../NETClass/NETClass.hpp"
-#pragma message("2")
 #include "NETClassBase.hpp"
-#pragma message("3")
 #include "../NEWString/NEWString.hpp"
 #include "../NEString/NEString.hpp"
 

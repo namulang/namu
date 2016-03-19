@@ -7,7 +7,6 @@
 
 #include "../NEClassBase/NEClassBase.hpp"
 #include "../NETList/NETList.hpp"
-//#include "../NETClass/NETClass.hpp"
 
 namespace NE
 {
@@ -28,13 +27,11 @@ namespace NE
 		//		that macro will be regonize that you give to it 3 arguments
 		//		not 2, because of comma of the class template's one.		
 		typedef NETList<NEClassBase*, true> _Super;
-
+		
 		NE_DECLARE_CLASS(NEClassBaseList, Super)
-
 	public:
 		NEClassBaseList();
 		NEClassBaseList(const This& rhs);
-
 	public:
 		virtual ~NEClassBaseList();
 	};

@@ -10,7 +10,7 @@ namespace NE
 	//		So, if we use DECLARE_CLASS macro, Because of its using TClass as 
 	//		inline, we may fall into reculsively infinite INCLUDE loop.
 	//		Have to declare manually to use the forward declaration.
-	template <typename T>
+	template <typename T, typename MetaClass>
 	class NETClass;
 
 	class NE_DLL NEInteger : public NENumericType
