@@ -7,12 +7,6 @@ namespace NE
 	}
 
 	template <typename T>
-	type_bool NETClassBase<T>::isInstantiable() const
-	{
-		return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
-	}
-
-	template <typename T>
 	type_bool NETClassBase<T>::isTemplate() const
 	{
 		return IS_TEMPLATE;
@@ -76,7 +70,7 @@ namespace NE
 	template <typename T>
 	type_result NETClassBase<T>::_setRegistered(type_bool new_is_registered)
 	{
-		type_bool& is_registered = const_cast<type_bool&>(isRegisteredStatically);
+		type_bool& is_registered = const_cast<type_bool&>(isRegisteredStatically());
 
 		is_registered = new_is_registered;
 
@@ -92,17 +86,31 @@ namespace NE
 	}
 
 	template <typename T>
-	static const NEClassBaseList& NETClassBase<T>::getSuperClassesStatically()
+	const NEClassBaseList& NETClassBase<T>::getSuperClassesStatically()
 	{
 		static NEClassBaseList _inner;
 
 		return _inner;
 	}
 	template <typename T>
-	static const NEClassBaseList& NETClassBase<T>::getSubClassesStatically()
+	const NEClassBaseList& NETClassBase<T>::getSubClassesStatically()
 	{
 		static NEClassBaseList _inner;
 
 		return _inner;
+	}
+
+	template <typename T>
+	const NEClassBase& NETClassBase<T>::getClass() const
+	{
+		return getClassStatically();
+	}
+
+	template <typename T>
+	const NEClassBase& NETClassBase<T>::getClassStatically()
+	{
+		static NETClass<T> inner;
+
+		return inner;
 	}
 }

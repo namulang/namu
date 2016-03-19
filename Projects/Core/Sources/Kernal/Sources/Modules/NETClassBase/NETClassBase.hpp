@@ -20,10 +20,11 @@ namespace NE
 	template <typename T>
 	class NETClassBase : public NEClassBase
 	{
-		NE_DECLARE_INTERFACE(NETClassBase<T>, NEClassBase)
-
 	public:
+		typedef NETClassBase<T> This;
+		typedef NEClassBase Super;
 		//    type determind:
+		typedef typename NETMetaClassDeterminder<T>::MetaClass MetaClass;
 		typedef typename NETTraitDeterminder<T>::Trait Trait;
 		typedef typename NETSuperClassDeterminder<T>::Super SuperTrait;
 	
@@ -32,6 +33,7 @@ namespace NE
 		virtual type_bool isInstantiable() const;
 		virtual type_bool isTemplate() const;
 		virtual type_bool isBuiltInClass() const;
+		virtual const NEClassBase& getClass() const;
 		virtual const type_bool& isRegistered() const;
 		virtual const NEClassBase& getTraitClass() const;
 		virtual const NETString& getName() const;
@@ -39,6 +41,7 @@ namespace NE
 		virtual const NEClassBaseList& getSubClasses() const;
 
 	public:
+		static const NEClassBase& getClassStatically();
 		static const NEClassBase& getTraitClassStatically();
 		static const NETString& getNameStatically();
 		static const type_bool& isRegisteredStatically();
@@ -46,7 +49,7 @@ namespace NE
 		static const NEClassBaseList &getSubClassesStatically();
 
 	protected:
-		static type_result _setRegistered(type_bool new_is_registered);
+		virtual type_result _setRegistered(type_bool new_is_registered);
 
 	public:
 		static const type_bool IS_TEMPLATE = NETTemplateChecker<T>::IS_TEMPLATE;

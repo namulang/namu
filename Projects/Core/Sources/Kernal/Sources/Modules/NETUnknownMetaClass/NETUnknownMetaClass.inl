@@ -4,7 +4,7 @@ namespace NE
 	NEObject& NETUnknownMetaClass<T>::instantiate() const
 	{
 		NEObject* nullptr = 0x00;
-		_alert(RESULT_TYPE_WARNING, "can't instantiate unknown class.");
+		_alert(RESULT_TYPE_WARNING, _T("can't instantiate unknown class."));
 
 		return *nullptr;
 	}

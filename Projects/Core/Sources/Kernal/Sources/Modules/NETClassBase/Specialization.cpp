@@ -1,5 +1,6 @@
 #include "../NETClass/NETClass.hpp"
 #include "NETClassBase.hpp"
+#include "../NEClassBaseList/NEClassBaseList.hpp"
 #include "../NEWString/NEWString.hpp"
 #include "../NEString/NEString.hpp"
 
@@ -88,14 +89,14 @@ namespace NE
 
 	const NEClassBaseList& NETClassBase<NEUnknown>::getSuperClassesStatically()
 	{
-		static NEClassBaseList& _inner;
+		static NEClassBaseList _inner;
 
 		return _inner;
 	}
 
 	const NEClassBaseList& NETClassBase<NEUnknown>::getSubClassesStatically()
 	{
-		static NEClassBaseList& _inner;
+		static NEClassBaseList _inner;
 
 		return _inner;
 	}
@@ -149,12 +150,12 @@ namespace NE
 		return getSubClassesStatically();
 	}
 
-	const NETString& NETClassBase<NEAdam>::getName()
+	const NETString& NETClassBase<NEAdam>::getName() const
 	{
 		return getNameStatically();
 	}
 
-	const NEClassBase& NETClassBase<NEAdam>::getClass()
+	const NEClassBase& NETClassBase<NEAdam>::getClass() const
 	{
 		return getClassStatically();
 	}
@@ -191,14 +192,14 @@ namespace NE
 
 	const NEClassBaseList& NETClassBase<NEAdam>::getSuperClassesStatically()
 	{
-		static NEClassBaseList& _inner;
+		static NEClassBaseList _inner;
 
 		return _inner;
 	}
 
 	const NEClassBaseList& NETClassBase<NEAdam>::getSubClassesStatically()
 	{
-		static NEClassBaseList& _inner;
+		static NEClassBaseList _inner;
 
 		return _inner;
 	}

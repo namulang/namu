@@ -3,7 +3,7 @@ namespace NE
 	template <typename T>
 	NEObject& NETConcreteClass<T>::instantiate() const
 	{
-		if( ! isInstantiatable())
+		if( ! isInstantiable())
 		{
 			_alert(RESULT_TYPE_INFORMATION, 
 				_T("This class is a kind of Object class, But can't instantiate."));
@@ -13,12 +13,12 @@ namespace NE
 			return *nullptr;
 		}
 
-		return *(new Trait());
+		return *(new T());
 	}
 
 	template <typename T>
 	NEObject& NETConcreteClass<T>::clone() const
 	{
-		return *(This(*this));
+		return *(new This(*this));
 	}
 }

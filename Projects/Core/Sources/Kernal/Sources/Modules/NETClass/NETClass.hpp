@@ -27,6 +27,12 @@ namespace NE
 		using NETClassBase<T>::isRegisteredStatically;		
 
 	public:
+		virtual type_bool isInstantiable() const
+		{
+			return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
+		}
+
+	public:
 		//	Why this static variable was defined into NETClass, while the others are 
 		//	NETClassBase?:
 		//		NETADTChecker<T> checks given type T is a kind of ADT or not by lett

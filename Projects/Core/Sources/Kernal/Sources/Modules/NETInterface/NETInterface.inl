@@ -8,14 +8,14 @@ namespace NE
 
 	template <typename T>
 	NETInterface<T>::NETInterface(const NETInterface& source)
-		: NEClassBase(source)
+		: Super(source)
 	{
 
 	}
 
 	template <typename T>
 	NETInterface<T>::NETInterface()
-		: NEClassBase()
+		: Super()
 	{
 
 	}

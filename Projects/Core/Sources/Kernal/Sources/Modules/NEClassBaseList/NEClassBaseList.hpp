@@ -28,7 +28,7 @@ namespace NE
 		//		not 2, because of comma of the class template's one.		
 		typedef NETList<NEClassBase*, true> _Super;
 		
-		NE_DECLARE_CLASS(NEClassBaseList, Super)
+		NE_DECLARE_CLASS(NEClassBaseList, _Super)
 	public:
 		NEClassBaseList();
 		NEClassBaseList(const This& rhs);
