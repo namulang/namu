@@ -213,8 +213,108 @@ namespace NE
 
 
 
+	type_bool NETClassBase<NEObject>::isMetaClassDefined() const
+	{
+		return IS_METACLASS_DEFINED;
+	}
+
+	type_bool NETClassBase<NEObject>::isInstantiable() const
+	{
+		return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
+	}
+
+	type_bool NETClassBase<NEObject>::isTemplate() const
+	{
+		return IS_TEMPLATE;
+	}
+
+	type_bool NETClassBase<NEObject>::isBuiltInClass() const
+	{
+		return IS_BUILT_IN_CLASS;
+	}
+
+	const type_bool& NETClassBase<NEObject>::isRegistered() const
+	{
+		return isRegisteredStatically();
+	}
+
+	const NEClassBase& NETClassBase<NEObject>::getTraitClass() const
+	{
+		return getTraitClassStatically();
+	}
+
+	const NEClassBaseList& NETClassBase<NEObject>::getSuperClasses() const
+	{
+		return getSuperClassesStatically();
+	}
+
+	const NEClassBaseList& NETClassBase<NEObject>::getSubClasses() const
+	{
+		return getSubClassesStatically();
+	}
+
+	const NETString& NETClassBase<NEObject>::getName() const
+	{
+		return getNameStatically();
+	}
+
+	const NEClassBase& NETClassBase<NEObject>::getClass() const
+	{
+		return getClassStatically();
+	}
+
+	type_result NETClassBase<NEObject>::_setRegistered(type_bool new_is_registered)
+	{
+		type_bool& casted = const_cast<type_bool&>(isRegisteredStatically());
+
+		casted = new_is_registered;
+
+		return RESULT_SUCCESS;
+	}
+
+	const NEClassBase& NETClassBase<NEObject>::getTraitClassStatically()
+	{
+		static NETClass<NEObject> _inner;
+
+		return _inner;
+	}
+
+	const NETString& NETClassBase<NEObject>::getNameStatically()
+	{
+		static NETString _inner(typeid(Trait).name());
+
+		return _inner;
+	}
 
 
+
+	const type_bool& NETClassBase<NEUnit>::isRegisteredStatically()
+	{
+		static type_bool _inner = false;
+
+		return _inner;
+	}
+
+	const NEClassBaseList& NETClassBase<NEUnit>::getSuperClassesStatically()
+	{
+		static NEClassBaseList _inner;
+
+		return _inner;
+	}
+
+	const NEClassBaseList& NETClassBase<NEUnit>::getSubClassesStatically()
+	{
+		static NEClassBaseList _inner;
+
+		return _inner;
+	}
+
+	const NEClassBase& NETClassBase<NEUnit>::getClassStatically()
+	{
+		static NETClass<NEUnit> _inner;
+
+		return _inner;
+	}
 
 
 	type_bool NETClassBase<NEUnit>::isMetaClassDefined() const

@@ -20,6 +20,8 @@ namespace NE
 {
 	class NE_DLL NEExecutableUnit : public NESwitchableUnit, public NEExecutable
 	{
+		NE_DECLARE_INTERFACE(NEExecutableUnit, NESwitchableUnit)
+
 	public:
 		typedef NESwitchableUnit SuperClass;
 		typedef NEExecutableUnit ThisClass;
@@ -38,11 +40,6 @@ namespace NE
 		const NEExecutableUnit& operator=(const NEExecutableUnit& source);
 
 		//	인터페이스:
-		//		상속:
-		//			NEUnit:
-	public:
-		virtual NEType::Type getType() const;
-
 		//		고유 인터페이스:
 	public:
 		virtual type_result execute() = 0;

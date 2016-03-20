@@ -212,11 +212,6 @@ namespace NE
 		_code = NE_INDEX_ERROR;		
 	}
 
-	NEObject& ThisClass::clone() const
-	{
-		return *(new ThisClass(*this));
-	}
-
 	NEBinaryFileSaver& ThisClass::serialize(NEBinaryFileSaver& saver) const
 	{
 		SuperClass::serialize(saver);
@@ -272,11 +267,6 @@ namespace NE
 		if(_code < 0) return RESULT_TYPE_WARNING;		
 
 		return RESULT_SUCCESS;
-	}
-
-	NEType::Type ThisClass::getType() const
-	{
-		return NEType::NECODE;
 	}
 
 	void ThisClass::_release()

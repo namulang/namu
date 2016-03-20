@@ -28,6 +28,8 @@ namespace NE
 
 	class NE_DLL NEArgumentBase : public NEKeyNameBinder
 	{
+		NE_DECLARE_INTERFACE(NEArgumentBase, NEKeyNameBinder)
+
 	public:
 		friend class NEModule;
 
@@ -42,12 +44,8 @@ namespace NE
 		};
 
 	public:
-		typedef NEArgumentBase ThisClass;
-		typedef NEKeyNameBinder SuperClass;
-
-	public:
 		NEArgumentBase(NEType::Type type, Purpose limitation = UNDEFINED);
-		NEArgumentBase(const ThisClass& rhs);
+		NEArgumentBase(const This& rhs);
 
 	public:
 		~NEArgumentBase();
@@ -108,7 +106,6 @@ namespace NE
 		virtual const NEKey& getKey() const;
 
 	public:
-		virtual NEType::Type getType() const;
 		virtual type_result isValid() const;
 		virtual void release();
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
@@ -123,7 +120,7 @@ namespace NE
 
 	private:
 		void _release();
-		ThisClass& _assign(const ThisClass& source);
+		This& _assign(const This& source);
 
 	private:
 		NEType::Type	_type_validation;

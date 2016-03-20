@@ -6,14 +6,14 @@
 namespace NE
 {
 	NEBinderBase::NEBinderBase()
-		: SuperClass()
+		: Super()
 	{
 		_release();
 		_manager_type = NEType::NENODE_MANAGER;
 	}
 
-	NEBinderBase::NEBinderBase(const ThisClass& source)
-		: SuperClass(source)
+	NEBinderBase::NEBinderBase(const This& source)
+		: Super(source)
 	{
 		_assign(source);
 	}
@@ -23,16 +23,16 @@ namespace NE
 
 	}
 
-	const NEBinderBase& NEBinderBase::operator=(const ThisClass& source)
+	const NEBinderBase& NEBinderBase::operator=(const This& source)
 	{
-		SuperClass::operator=(source);
+		Super::operator=(source);
 
 		return _assign(source);
 	}
 
-	bool NEBinderBase::operator==(const ThisClass& source) const
+	bool NEBinderBase::operator==(const This& source) const
 	{
-		if(SuperClass::operator!=(source)) return false;
+		if(Super::operator!=(source)) return false;
 		if(_real_index != source._real_index) return false;
 		if(_comparing_id != source._comparing_id) return false;
 		if(_manager_type != source._manager_type) return false;
@@ -40,7 +40,7 @@ namespace NE
 		return true;
 	}
 
-	bool NEBinderBase::operator!=(const ThisClass& source) const
+	bool NEBinderBase::operator!=(const This& source) const
 	{
 		return ! operator==(source);
 	}
@@ -56,21 +56,21 @@ namespace NE
 
 	void NEBinderBase::release()
 	{
-		SuperClass::release();
+		Super::release();
 
 		_release();
 	}
 
 	NEBinaryFileLoader& NEBinderBase::serialize(NEBinaryFileLoader& loader)
 	{
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 
 		return loader >> _real_index >> _comparing_id >> _manager_type;
 	}
 
 	NEBinaryFileSaver& NEBinderBase::serialize(NEBinaryFileSaver& saver) const
 	{
-		SuperClass::serialize(saver);
+		Super::serialize(saver);
 
 		return saver << _real_index << _comparing_id << _manager_type;
 	}
@@ -87,17 +87,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 
-	NEObject& NEBinderBase::clone() const
-	{
-		return *(new NEBinderBase(*this));
-	}
-
-	NEType::Type NEBinderBase::getType() const
-	{
-		return NEType::NEBINDER_BASE;
-	}
-
-	const NEBinderBase& NEBinderBase::_assign(const ThisClass& source)
+	const NEBinderBase& NEBinderBase::_assign(const This& source)
 	{
 		if(this == &source) return *this;
 

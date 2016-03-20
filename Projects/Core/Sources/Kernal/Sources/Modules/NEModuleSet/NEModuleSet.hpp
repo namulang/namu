@@ -6,18 +6,18 @@
 namespace NE
 {
 	template
-	class NE_DLL NETArray<NEModule*, true, NEModule*, NEType::NEMODULESET>;
+	class NE_DLL NETArray<NEModule*, true, NEModule*>;
 	
-	class NEModuleSet : public NETArray<NEModule*, true, NEModule*, NEType::NEMODULESET>
+	class NEModuleSet : public NETArray<NEModule*, true, NEModule*>
 	{
-	public:
-		typedef NEModuleSet ThisClass;
-		typedef NETArray<NEModule*, true, NEModule*, NEType::NEMODULESET> SuperClass;
+		typedef NETArray<NEModule*, true, NEModule*> _Super;
+
+		NE_DECLARE_CLASS(NEModuleSet, _Super)
 
 	public:
 		NEModuleSet();
 		NEModuleSet(type_count size);
-		NEModuleSet(const NEModuleSet& rhs);
+		NEModuleSet(const This& rhs);
 
 	public:
 		virtual ~NEModuleSet();

@@ -8,17 +8,17 @@
 namespace NE
 {
 	NEKeyCodeSet::NEKeyCodeSet()
-		: SuperClass()
+		: Super()
 	{
 		
 	}
 	NEKeyCodeSet::NEKeyCodeSet(type_index size)
-		: SuperClass(size)
+		: Super(size)
 	{
 		
 	}
-	NEKeyCodeSet::NEKeyCodeSet(const NEKeyCodeSet& source)
-		: SuperClass(source)
+	NEKeyCodeSet::NEKeyCodeSet(const This& source)
+		: Super(source)
 	{
 		_assign(source);	//	이제, NENodeCodeSet::insert가 내부적으로 호출된다.
 	}
@@ -28,11 +28,11 @@ namespace NE
 		release();	//	여기서 해제 하지 않으면 상위클래스 소멸자에서 상위?클래스 release를 호출해버릴 것이다.
 	}
 
-	const NEKeyCodeSet& NEKeyCodeSet::operator+=(const NEKeyCodeSet& source)
+	const NEKeyCodeSet& NEKeyCodeSet::operator+=(const This& source)
 	{
 		if(this == &source)
 		{
-			NEKeyCodeSet copyied(*this);
+			This copyied(*this);
 			resize(_length + copyied._length);
 			push(copyied);
 		}
@@ -45,7 +45,7 @@ namespace NE
 		return *this;
 	}
 
-	NEKeyCodeSet NEKeyCodeSet::operator+(const NEKeyCodeSet& source) const
+	NEKeyCodeSet NEKeyCodeSet::operator+(const This& source) const
 	{
 		ThisClass buffer(getSize() + source.getSize());
 
@@ -218,14 +218,6 @@ namespace NE
 
 		return NE_INDEX_ERROR;
 	}
-	NEObject& NEKeyCodeSet::clone() const
-	{
-		return *(new ThisClass(*this));
-	}
-	NEType::Type NEKeyCodeSet::getType() const
-	{
-		return NEType::NEKEY_CODESET;
-	}
 	NEIndexedKeySet& NEKeyCodeSet::_getKeySet()
 	{
 		NEIndexedKeySet* nullpointer = 0x00;
@@ -289,7 +281,7 @@ namespace NE
 		return result;
 	}
 
-	const NEKeyCodeSet& NEKeyCodeSet::_assign(const NEKeyCodeSet& source)
+	const NEKeyCodeSet& NEKeyCodeSet::_assign(const This& source)
 	{
 		if(this == &source) return *this;
 
@@ -315,7 +307,7 @@ namespace NE
 
 			알고리즘:	ShallowCopy로 효율을 높인다.
 				이 방식은 인스턴스를 shallow copy함으로써 효율을 높이는 알고리즘이다.
-				InnerType이 OuterType보다 가벼울 경우에만 사용이 가능한 방법이며,
+				InnerTrait이 OuterTrait보다 가벼울 경우에만 사용이 가능한 방법이며,
 				만약 전보다 크기를 축소시키는 resize라면, 그 차이만큼 인스턴스를 삭제해야한다.
 
 				따라서 size가 5 -> 10으로 변경되는 경우, 이전 알고리즘은
@@ -343,7 +335,7 @@ namespace NE
 		//	main:
 		//		얇은 복사를 수행한다:	버퍼를 만든다. ArrayTemplate을 사용할 수 없다.
 		int length = getLength();
-		InnerType* buffer = new InnerType[_length];
+		InnerTrait* buffer = new InnerTrait[_length];
 		for(int n=0; n < length ;n++)
 			buffer[n] = _data[n];
 		//		resize:
@@ -364,6 +356,6 @@ namespace NE
 		while(getLength())
 			pop();
 
-		SuperClass::release();
+		Super::release();
 	}
 }

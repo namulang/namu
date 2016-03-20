@@ -16,7 +16,7 @@ namespace NE
 		//		속해있는 Node.KeySet에서 탐색:
 		for(int n=0; n < ks.getLength() ;n++)
 			if(ks[n].getName() == _keyname)
-				return SuperClass::bind(ks[n], NEType::NENODE_MANAGER);
+				return Super::bind(ks[n], NEType::NENODE_MANAGER);
 
 
 		//	post:
@@ -33,7 +33,7 @@ namespace NE
 			const NEKey& key = local_keys[n];
 			if (&key && key.getName().toLowerCase() == _keyname.toLowerCase())
 			{
-				type_result result = SuperClass::bind(key, NEType::LOCALSTACK);
+				type_result result = Super::bind(key, NEType::LOCALSTACK);
 
 				if( ! NEResult::hasError(result))
 					_manager_type = NEType::LOCALSTACK;
@@ -71,7 +71,7 @@ namespace NE
 	}
 
 	NEKeyNameBinder::NEKeyNameBinder(const NEKeyNameBinder& rhs)
-		: SuperClass()	//	복사생성자를 호출하지 않는다. 자세한 사항은 _assign 참조
+		: Super()	//	복사생성자를 호출하지 않는다. 자세한 사항은 _assign 참조
 	{
 		_assign(rhs);
 	}
@@ -80,14 +80,14 @@ namespace NE
 	{
 		if(this == &rhs) return *this;
 
-		//	SuperClass::operator=(rhs);	상위클래스로 메소드 체이닝 하지 않는다. 자세한 사항은 _assign 참조.
+		//	Super::operator=(rhs);	상위클래스로 메소드 체이닝 하지 않는다. 자세한 사항은 _assign 참조.
 
 		return _assign(rhs);
 	}
 
 	bool NEKeyNameBinder::operator==(const NEKeyNameBinder& rhs) const
 	{
-		return SuperClass::operator==(rhs) && _keyname == rhs._keyname;
+		return Super::operator==(rhs) && _keyname == rhs._keyname;
 	}
 
 	bool NEKeyNameBinder::operator!=(const NEKeyNameBinder& rhs) const
@@ -95,9 +95,9 @@ namespace NE
 		return ! operator==(rhs);
 	}
 
-	NEKeyNameBinder& NEKeyNameBinder::_assign(const ThisClass& rhs)
+	NEKeyNameBinder& NEKeyNameBinder::_assign(const This& rhs)
 	{
-		SuperClass::release();
+		Super::release();
 		//	왜 release()를 수행하는가:
 		//		NEKeyNameBinder는 Module객체 안에서만 scope가 유효한 클래스다.
 		//		따라서 다른 Module 객체에서는 다른 바인딩이 수행되어야 한다.
@@ -120,7 +120,7 @@ namespace NE
 	void NEKeyNameBinder::release()
 	{
 		_keyname.release();
-		SuperClass::release();
+		Super::release();
 	}
 
 	type_result NEKeyNameBinder::isValid() const
@@ -128,7 +128,7 @@ namespace NE
 		type_result result = 0;
 		if(result = _keyname.isValid())	return result;
 
-		return SuperClass::isValid();
+		return Super::isValid();
 	}
 
 	NEBinaryFileLoader& NEKeyNameBinder::serialize(NEBinaryFileLoader& loader)
@@ -145,15 +145,5 @@ namespace NE
 		//	중간 클래스(NEBinderBase부터 NEKeyBinder)의 바인딩결과 정보는 공유(저장 및 로드)할 수 없다.		
 
 		return saver << _keyname;
-	}
-
-	NEObject& NEKeyNameBinder::clone() const
-	{
-		return *(new ThisClass(*this));
-	}
-
-	NEType::Type NEKeyNameBinder::getType() const
-	{
-		return NEType::NEKEY_NAME_BINDER;
 	}
 }

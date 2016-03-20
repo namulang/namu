@@ -5,17 +5,17 @@
 namespace NE
 {
 	NEModuleCodeSet::NEModuleCodeSet()
-		: SuperClass()
+		: Super()
 	{
 		
 	}
 	NEModuleCodeSet::NEModuleCodeSet(type_index size)
-		: SuperClass(size)
+		: Super(size)
 	{
 		
 	}
-	NEModuleCodeSet::NEModuleCodeSet(const NEModuleCodeSet& source)
-		: SuperClass(source)
+	NEModuleCodeSet::NEModuleCodeSet(const This& source)
+		: Super(source)
 	{
 		_assign(source);	//	이제, NENodeCodeSet::insert가 내부적으로 호출된다.
 	}
@@ -25,11 +25,11 @@ namespace NE
 		release();	//	여기서 해제 하지 않으면 상위클래스 소멸자에서 상위클래스 release를 호출해버릴 것이다.
 	}
 
-	const NEModuleCodeSet& NEModuleCodeSet::operator+=(const NEModuleCodeSet& source)
+	const NEModuleCodeSet& NEModuleCodeSet::operator+=(const This& source)
 	{
 		if(this == &source)
 		{
-			NEModuleCodeSet copyied(*this);
+			This copyied(*this);
 			resize(_length + copyied._length);
 			push(copyied);
 		}
@@ -42,7 +42,7 @@ namespace NE
 		return *this;
 	}
 
-	NEModuleCodeSet NEModuleCodeSet::operator+(const NEModuleCodeSet& source) const
+	NEModuleCodeSet NEModuleCodeSet::operator+(const This& source) const
 	{
 		ThisClass buffer(getSize() + source.getSize());
 
@@ -207,14 +207,6 @@ namespace NE
 
 		return NE_INDEX_ERROR;
 	}
-	NEObject& NEModuleCodeSet::clone() const
-	{
-		return *(new ThisClass(*this));
-	}
-	NEType::Type NEModuleCodeSet::getType() const
-	{
-		return NEType::NEMODULE_CODESET;
-	}
 	type_result NEModuleCodeSet::execute()
 	{
 		//	pre:
@@ -227,7 +219,7 @@ namespace NE
 		//					모듈셋 안에 모듈셋이 있는 구조라면, 내부 모듈셋을 처리하고 다시
 		//					외부 모듈셋으로 돌아왔을때 실제 모듈셋과 로컬스택에 저장된 모듈
 		//					셋이 어긋날 수 있기 때문이다.
-		NEModuleCodeSet& before_stage_moduleset = localstack.getRecentModuleSet();
+		This& before_stage_moduleset = localstack.getRecentModuleSet();
 		localstack._setRecentModuleSet(*this);
 		localstack._setRecentResultCode(RESULT_NOTHING);
 
@@ -270,7 +262,7 @@ namespace NE
 		return RESULT_TRUE;
 	}
 
-	const NEModuleCodeSet& NEModuleCodeSet::_assign(const NEModuleCodeSet& source)
+	const NEModuleCodeSet& NEModuleCodeSet::_assign(const This& source)
 	{
 		if(this == &source) return *this;
 
@@ -296,7 +288,7 @@ namespace NE
 
 			알고리즘:	ShallowCopy로 효율을 높인다.
 				이 방식은 인스턴스를 shallow copy함으로써 효율을 높이는 알고리즘이다.
-				InnerType이 OuterType보다 가벼울 경우에만 사용이 가능한 방법이며,
+				InnerTrait이 OuterTrait보다 가벼울 경우에만 사용이 가능한 방법이며,
 				만약 전보다 크기를 축소시키는 resize라면, 그 차이만큼 인스턴스를 삭제해야한다.
 
 				따라서 size가 5 -> 10으로 변경되는 경우, 이전 알고리즘은
@@ -324,7 +316,7 @@ namespace NE
 		//	main:
 		//		얇은 복사를 수행한다:	버퍼를 만든다. ArrayTemplate을 사용할 수 없다.
 		int length = getLength();
-		InnerType* buffer = new InnerType[_length];
+		InnerTrait* buffer = new InnerTrait[_length];
 		for(int n=0; n < length ;n++)
 			buffer[n] = _data[n];
 		//		resize:
@@ -345,7 +337,7 @@ namespace NE
 		while(getLength())
 			pop();
 
-		SuperClass::release();
+		Super::release();
 	}
 
 	NEIndexedModuleSet& NEModuleCodeSet::_getModuleSet()

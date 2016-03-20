@@ -13,11 +13,13 @@ namespace NE
 
 	class NE_DLL NEModuleCodeSet : public NETEnlistableSet<NETArray<type_code, false, NEModule> >, public NEExecutable
 	{
+		typedef NETEnlistableSet<NETArray<type_code, false, NEModule>> _Super;
+
+		NE_DECLARE_CLASS(NEModuleCodeSet, _Super)
+
 	public:
-		typedef NETEnlistableSet< NETArray<type_code, false, NEModule> > SuperClass;
-		typedef NEModuleCodeSet ThisClass;
-		typedef type_code InnerType;
-		typedef NEModule OuterType;
+		typedef type_code InnerTrait;
+		typedef NEModule OuterTrait;
 
 	public:
 		friend class NENode;
@@ -27,14 +29,14 @@ namespace NE
 	public:
 		NEModuleCodeSet();
 		NEModuleCodeSet(type_index size);
-		NEModuleCodeSet(const NEModuleCodeSet& source);
+		NEModuleCodeSet(const This& source);
 
 	public:
 		virtual ~NEModuleCodeSet();
 
 	public:
-		const NEModuleCodeSet& operator+=(const NEModuleCodeSet& source);
-		NEModuleCodeSet operator+(const NEModuleCodeSet& source) const;
+		const This& operator+=(const This& source);
+		This operator+(const This& source) const;
 
 	public:
 		virtual type_result execute();
@@ -52,13 +54,11 @@ namespace NE
 
 	public:
 		virtual void release();
-		virtual NEObject& clone() const;
-		virtual NEType::Type getType() const;
 
 	protected:
 		NEIndexedModuleSet& _getModuleSet();
 		const NEIndexedModuleSet& _getModuleSet() const;
-		const NEModuleCodeSet& _assign(const NEModuleCodeSet& source);
+		const This& _assign(const This& source);
 
 	private:
 		virtual type_result _onEnlisted() { return RESULT_SUCCESS; }

@@ -45,11 +45,4 @@ namespace NE
 
 		return *this;	
 	}
-
-
-
-	NEType::Type NE_DLL NEExecutableUnit::getType() const
-	{
-		return NEType::NEEXCUTABLE_UNIT;
-	}
 }

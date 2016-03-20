@@ -19,6 +19,8 @@ namespace NE
 {
 	class NE_DLL NESwitchableUnit : public NEUnit
 	{
+		NE_DECLARE_INTERFACE(NESwitchableUnit, NEUnit)
+
 		//	생성자:
 	public:
 		NESwitchableUnit();
@@ -43,7 +45,6 @@ namespace NE
 		//		상속:
 		//			NEUnit:
 	public:
-		virtual NEType::Type getType() const;
 		virtual void release();
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);

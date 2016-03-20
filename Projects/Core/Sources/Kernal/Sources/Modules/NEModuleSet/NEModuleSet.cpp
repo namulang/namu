@@ -11,7 +11,7 @@ namespace NE
 	{
 
 	}
-	NEModuleSet::NEModuleSet(const NEModuleSet& rhs)
+	NEModuleSet::NEModuleSet(const This& rhs)
 		: SuperClass(rhs)
 	{
 

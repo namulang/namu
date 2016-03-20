@@ -31,6 +31,8 @@ namespace NE
 {
 	class NE_DLL NECode : public NECodeType
 	{
+		NE_DECLARE_CLASS(NECode, NECodeType)
+
 	public:
 		typedef NECode ThisClass;
 		typedef NECodeType SuperClass;
@@ -77,11 +79,9 @@ namespace NE
 
 	public:
 		virtual void release();
-		virtual NEObject& clone() const;
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 		virtual type_result isValid() const;
-		virtual NEType::Type getType() const;
 
 	private:
 		ThisClass& _assign(const ThisClass& source);

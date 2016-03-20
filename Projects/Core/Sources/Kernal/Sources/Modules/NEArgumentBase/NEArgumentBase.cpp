@@ -23,7 +23,7 @@ namespace NE
 {
 	bool NEArgumentBase::operator==(const NEArgumentBase& source) const
 	{
-		return	SuperClass::operator==(source)				&&
+		return	Super::operator==(source)				&&
 			_type_validation == source._type_validation	&&
 			_limitation == source._limitation			&&
 			_purpose == source._purpose					;				
@@ -43,7 +43,7 @@ namespace NE
 	}
 	void NEArgumentBase::release() 
 	{
-		SuperClass::release();
+		Super::release();
 
 		_release();
 	}
@@ -59,7 +59,7 @@ namespace NE
 
 	NEBinaryFileSaver& NEArgumentBase::serialize(NEBinaryFileSaver& saver) const
 	{
-		SuperClass::serialize(saver);
+		Super::serialize(saver);
 
 		saveEnumeration<NEType::Type>(saver, _type_validation);
 		saveEnumeration<Purpose>(saver, _purpose);
@@ -69,7 +69,7 @@ namespace NE
 	}
 	NEBinaryFileLoader& NEArgumentBase::serialize(NEBinaryFileLoader& loader)
 	{
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 
 		NEType::Type validator = NEType::UNDEFINED;
 		loader >> validator;
@@ -85,8 +85,8 @@ namespace NE
 		setPurpose(READ_OR_WRITTEN);
 	}
 
-	NEArgumentBase::NEArgumentBase(const ThisClass& rhs)
-		: SuperClass(rhs)
+	NEArgumentBase::NEArgumentBase(const This& rhs)
+		: Super(rhs)
 	{
 		_assign(rhs);
 	}
@@ -96,7 +96,7 @@ namespace NE
 		return _type_validation;
 	}
 
-	NEArgumentBase& NEArgumentBase::_assign(const ThisClass& source)
+	NEArgumentBase& NEArgumentBase::_assign(const This& source)
 	{
 		_type_validation = source._type_validation;
 		_purpose = source._purpose;
@@ -116,18 +116,13 @@ namespace NE
 
 	}
 
-	NEType::Type NEArgumentBase::getType() const
-	{
-		return NEType::NEARGUMENT_BASE;
-	}
-
 	type_result NEArgumentBase::bind()
 	{
 		if( ! isNeedingBinding()	||
 			isBinded()				)
 			return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 
-		return SuperClass::bind();
+		return Super::bind();
 	}
 
 	bool NEArgumentBase::isValidToBind(const NEObject& to_be_bind) const

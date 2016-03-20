@@ -7,14 +7,12 @@ namespace NE
 {
 	class NE_DLL NEKeyNameBinder : public NEKeyBinder
 	{
-	public:
-		typedef NEKeyNameBinder ThisClass;
-		typedef NEKeyBinder SuperClass;
+		NE_DECLARE_CLASS(NEKeyNameBinder, NEKeyBinder)
 
 	public:
 		NEKeyNameBinder();
 		NEKeyNameBinder(const NETString& new_keyname);
-		NEKeyNameBinder(const ThisClass& rhs);
+		NEKeyNameBinder(const This& rhs);
 
 	public:
 		const NETString& getKeyName() const;
@@ -33,11 +31,9 @@ namespace NE
 		virtual type_result isValid() const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
-		virtual NEObject& clone() const;
-		virtual NEType::Type getType() const;
 
 	private:
-		NEKeyNameBinder& _assign(const ThisClass& rhs);
+		NEKeyNameBinder& _assign(const This& rhs);
 		type_result _bindLocalKey();
 
 	private:

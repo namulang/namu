@@ -14,16 +14,6 @@ namespace NE
 		return	key.getId() == getComparingId();
 	}
 
-	NEObject& NEKeyBinder::clone() const
-	{
-		return *(new NEKeyBinder(*this));
-	}
-
-	NEType::Type NEKeyBinder::getType() const
-	{
-		return NEType::NEKEY_BINDER;
-	}
-
 	NEKey& NEKeyBinder::getBinded()
 	{
 		NEKey* nullpointer = NE_NULL;
@@ -124,7 +114,7 @@ ON_ERROR:
 
 	type_bool NEKeyBinder::isBindedLocalKey() const
 	{
-		return	_real_index == NE_INDEX_ERROR		&&
-			_comparing_id == NE_NULL			;
+		return	_real_index == NE_INDEX_ERROR	&&
+				_comparing_id == NE_NULL		;
 	}
 }

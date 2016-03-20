@@ -145,9 +145,4 @@ namespace NE
 
 		return *this;
 	}
-
-	NEType::Type NE_DLL NESwitchableUnit::getType() const
-	{
-		return NEType::NESWITCHABLE_UNIT;
-	}
 }

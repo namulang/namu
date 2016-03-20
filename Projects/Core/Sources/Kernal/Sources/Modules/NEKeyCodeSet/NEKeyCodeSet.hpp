@@ -15,11 +15,13 @@ namespace NE
 
 	class NE_DLL NEKeyCodeSet : public NETEnlistableSet< NETArray<type_code, false, NEKey> >
 	{
+		typedef NETEnlistableSet<NETArray<type_code, false, NEKey>> _Super;
+
+		NE_DECLARE_CLASS(NEKeyCodeSet, _Super)
+
 	public:
-		typedef NETEnlistableSet< NETArray<type_code, false, NEKey> > SuperClass;
-		typedef NEKeyCodeSet ThisClass;
-		typedef type_code InnerType;
-		typedef NEKey OuterType;
+		typedef type_code InnerTrait;
+		typedef NEKey OuterTrait;
 
 	public:
 		friend class NEIndexedModuleSet;
@@ -28,14 +30,14 @@ namespace NE
 	public:
 		NEKeyCodeSet();
 		NEKeyCodeSet(type_index size);
-		NEKeyCodeSet(const NEKeyCodeSet& source);
+		NEKeyCodeSet(const This& source);
 
 	public:
 		virtual ~NEKeyCodeSet();
 
 	public:
-		const NEKeyCodeSet& operator+=(const NEKeyCodeSet& source);
-		NEKeyCodeSet operator+(const NEKeyCodeSet& source) const;
+		const NEKeyCodeSet& operator+=(const This& source);
+		NEKeyCodeSet operator+(const This& source) const;
 
 	public:
 		virtual type_index insert(type_index, const NEKey& source);
@@ -50,8 +52,6 @@ namespace NE
 
 	public:
 		virtual void release();
-		virtual NEObject& clone() const;
-		virtual NEType::Type getType() const;
 
 	protected:
 		virtual type_result _onEnlisted();
@@ -60,6 +60,6 @@ namespace NE
 	protected:
 		NEIndexedKeySet& _getKeySet();
 		const NEIndexedKeySet& _getKeySet() const;
-		const NEKeyCodeSet& _assign(const NEKeyCodeSet& source);
+		const This& _assign(const This& source);
 	};
 }

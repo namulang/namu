@@ -9,18 +9,14 @@ namespace NE
 
 	class NE_DLL NEKeyBinder : public NEBinderBase
 	{
-		typedef NEKeyBinder ThisClass;
-		typedef NEBinderBase SuperClass;
-
+		NE_DECLARE_CLASS(NEKeyBinder, NEBinderBase)
+	
+	public:
 		template <typename ModuleSelector, NEType::Type type>
 		friend class NETKeySelector;
 
 	public:
 		virtual bool isBinded() const;
-
-	public:
-		virtual NEObject& clone() const;
-		virtual NEType::Type getType() const;
 
 	public:
 		NEKey& getBinded();

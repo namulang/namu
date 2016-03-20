@@ -9,20 +9,19 @@ namespace NE
 
 	class NE_DLL NEBinderBase : public NESwitchableUnit
 	{
-		typedef NEBinderBase ThisClass;
-		typedef NESwitchableUnit SuperClass;
-
+		NE_DECLARE_CLASS(NEBinderBase, NESwitchableUnit)
+		
 	public:
-		ThisClass();
-		ThisClass(const ThisClass& source);
+		NEBinderBase();
+		NEBinderBase(const This& source);
 
 	public:
 		virtual ~NEBinderBase();
 
 	public:
-		const ThisClass& operator=(const ThisClass& source);
-		bool operator==(const ThisClass& source) const;
-		bool operator!=(const ThisClass& source) const;
+		const This& operator=(const This& source);
+		bool operator==(const This& source) const;
+		bool operator!=(const This& source) const;
 
 	public:
 		virtual type_result unbind();
@@ -41,11 +40,9 @@ namespace NE
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual type_result isValid() const;
-		virtual NEObject& clone() const;
-		virtual NEType::Type getType() const;		
 
 	private:
-		const ThisClass& _assign(const ThisClass& source);
+		const This& _assign(const This& source);
 		void _release();
 
 	protected:

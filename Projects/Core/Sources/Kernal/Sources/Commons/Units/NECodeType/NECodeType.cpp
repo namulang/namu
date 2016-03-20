@@ -93,16 +93,6 @@ namespace NE
 		return loader >> _is_type_fixed;
 	}
 
-	NEObject NE_DLL &NECodeType::clone() const
-	{
-		return *(new ThisClass(*this));
-	}
-
-	NEType::Type NE_DLL NECodeType::getType() const
-	{
-		return NEType::NECODE_TYPE;
-	}
-
 	NECodeType NE_DLL &NECodeType::_assign(const ThisClass& source)
 	{
 		setCodeType(source._codetype);
