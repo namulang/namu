@@ -286,32 +286,30 @@ namespace NE
 		return _inner;
 	}
 
-
-
-	const type_bool& NETClassBase<NEUnit>::isRegisteredStatically()
+	const type_bool& NETClassBase<NEObject>::isRegisteredStatically()
 	{
 		static type_bool _inner = false;
 
 		return _inner;
 	}
 
-	const NEClassBaseList& NETClassBase<NEUnit>::getSuperClassesStatically()
+	const NEClassBaseList& NETClassBase<NEObject>::getSuperClassesStatically()
 	{
 		static NEClassBaseList _inner;
 
 		return _inner;
 	}
 
-	const NEClassBaseList& NETClassBase<NEUnit>::getSubClassesStatically()
+	const NEClassBaseList& NETClassBase<NEObject>::getSubClassesStatically()
 	{
 		static NEClassBaseList _inner;
 
 		return _inner;
 	}
 
-	const NEClassBase& NETClassBase<NEUnit>::getClassStatically()
+	const NEClassBase& NETClassBase<NEObject>::getClassStatically()
 	{
-		static NETClass<NEUnit> _inner;
+		static NETClass<NEObject> _inner;
 
 		return _inner;
 	}

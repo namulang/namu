@@ -48,6 +48,6 @@ namespace NE
 	protected:
 		type_index _real_index;
 		type_id _comparing_id;
-		NEType::Type _manager_type;
+		//NEType::Type _manager_type;
 	};
 }

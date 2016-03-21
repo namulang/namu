@@ -12,7 +12,7 @@ namespace NE
 		NE_DECLARE_CLASS(NEKeyBinder, NEBinderBase)
 	
 	public:
-		template <typename ModuleSelector, NEType::Type type>
+		template <typename ModuleSelector>
 		friend class NETKeySelector;
 
 	public:

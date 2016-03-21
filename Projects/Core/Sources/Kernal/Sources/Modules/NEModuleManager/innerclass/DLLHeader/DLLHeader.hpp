@@ -13,6 +13,14 @@ typedef NEModuleList (NE_FUNCTION_CALL *EntryPoint)(void);
 
 class NE_DLL DLLHeader : public NEObject
 {
+public:
+	//	Define typedefs for RTTI in manual:
+	//		because this class was designated to block calling 'clone()'
+	//		for some reason. so, we can't just use DECLARE_CLASS macro.
+	typedef DLLHeader This;
+	typedef NEObject Super;
+	typedef NETConcreteClass<This> MetaClass;
+
 	//	생성자:
 public:
 	DLLHeader();	
@@ -37,14 +45,14 @@ public:
 	const EntryPoint& getEntryPoint() const;
 	
 	//	인터페이스:
-	//		상속:
+	//		상속
 	//			NEObject:
 public:
+	virtual const NEClassBase& getClass() const;
 	virtual void release();
 	virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 	virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 	virtual type_result isValid() const;
-	virtual NEType::Type getType() const;
 
 private:
 	virtual NEObject& clone() const;
@@ -62,4 +70,7 @@ protected:
 	NETString _path;
 	HINSTANCE _instance;
 	EntryPoint _entrypoint;
+
+public:
+	static const NEClassBase& getClassStatically();
 };

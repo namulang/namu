@@ -6,7 +6,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	NE_DLL NEModuleManager::DLLHeader::DLLHeader()
-		: NEObject(), _instance(NE_NULL)
+		: Super(), _instance(NE_NULL)
 	{
 		release();
 	}
@@ -16,8 +16,8 @@ namespace NE
 	//	---------------------------------------------------------------------------------	
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	NE_DLL NEModuleManager::DLLHeader::DLLHeader(const DLLHeader& source)
-		: NEObject(source)
+	NE_DLL NEModuleManager::DLLHeader::DLLHeader(const This& source)
+		: Super(source)
 	{
 		_assign(source);
 	}
@@ -37,7 +37,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------	
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	const NEModuleManager::DLLHeader NE_DLL &NEModuleManager::DLLHeader::operator=(const NEModuleManager::DLLHeader& source)
+	const NEModuleManager::DLLHeader NE_DLL &NEModuleManager::DLLHeader::operator=(const This& source)
 	{
 		return _assign(source);
 	}
@@ -47,7 +47,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------	
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	bool NE_DLL NEModuleManager::DLLHeader::operator==(const NEModuleManager::DLLHeader& source) const
+	bool NE_DLL NEModuleManager::DLLHeader::operator==(const This& source) const
 	{
 		if(this == &source) return true;
 		if(_path != source._path) return false;
@@ -62,7 +62,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------	
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	bool NE_DLL NEModuleManager::DLLHeader::operator!=(const NEModuleManager::DLLHeader& source) const
+	bool NE_DLL NEModuleManager::DLLHeader::operator!=(const This& source) const
 	{
 		return !(operator==(source));
 	}
@@ -154,27 +154,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------	
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	NEType::Type NE_DLL NEModuleManager::DLLHeader::getType() const
-	{
-		return NEType::MODULE_DLL_HEADER;
-	}
-
-
-
-	//	---------------------------------------------------------------------------------	
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	NEObject NE_DLL &NEModuleManager::DLLHeader::clone() const
-	{
-		return *(new DLLHeader(*this));
-	}
-
-
-
-	//	---------------------------------------------------------------------------------	
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	const NEModuleManager::DLLHeader& NEModuleManager::DLLHeader::_assign(const NEModuleManager::DLLHeader& source)
+	const NEModuleManager::DLLHeader& NEModuleManager::DLLHeader::_assign(const This& source)
 	{
 		if(this == &source) return *this;
 
@@ -189,5 +169,18 @@ namespace NE
 	bool NEModuleManager::DLLHeader::isLoaded() const
 	{
 		return _entrypoint != NE_NULL;
+	}
+
+
+	const NEClassBase& NEModuleManager::DLLHeader::getClass() const
+	{
+		return getClassStatically();
+	}
+
+	const NEClassBase& NEModuleManager::DLLHeader::getClassStatically()
+	{
+		static NETClass<This> _inner;
+
+		return _inner;
 	}
 }

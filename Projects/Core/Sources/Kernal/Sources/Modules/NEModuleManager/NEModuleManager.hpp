@@ -26,6 +26,8 @@ namespace NE
 {
 	class NE_DLL NEModuleManager : public NEModule
 	{
+		NE_DECLARE_CLASS(NEModuleManager, NEModule)
+
 	public:
 		friend class Kernal;
 
@@ -35,18 +37,18 @@ namespace NE
 #include "innerclass/ErrorCode/ErrorCode.hpp"
 
 		//	typedef:
-		typedef class NE_DLL NETList<NEModuleManager::DLLHeader> DLLHeaderList;
+		typedef class NE_DLL NETList<This::DLLHeader> DLLHeaderList;
 
 		//	생성자:
 	public:
 		NEModuleManager();
-		NEModuleManager(const NEModuleManager& source);
+		NEModuleManager(const This& source);
 
 		//	연산자 오버로딩:
 	public:
-		const NEModuleManager& operator=(const NEModuleManager& source);
-		bool operator==(const NEModuleManager& source) const;
-		bool operator!=(const NEModuleManager& source) const;
+		const This& operator=(const This& source);
+		bool operator==(const This& source) const;
+		bool operator!=(const This& source) const;
 
 		//	소멸자:
 	public:
@@ -70,14 +72,12 @@ namespace NE
 		virtual type_result execute();
 		//			NEOject:
 	public:
-		virtual NEType::Type getType() const;
-		virtual NEObject& clone() const;
 		virtual type_result isValid() const;
 		virtual void release();
 
 		//	내부함수:
 	private:
-		const NEModuleManager& _assign(const NEModuleManager& source);
+		const This& _assign(const This& source);
 		void _release();
 		void _linkModule();
 		void _pushModuleSet(NEModuleList& buffer);
@@ -87,7 +87,7 @@ namespace NE
 		void _linkDLL();
 		void _pushDLLPathToDLLHeaderSet();
 		bool _linkDLLsUsingInputedPath();
-		type_result _pushDLLHeader(NEModuleManager::DLLHeader& header);
+		type_result _pushDLLHeader(This::DLLHeader& header);
 		void _reportErrorsIfThereAreModulesNotFeched();
 
 		//	멤버변수:		

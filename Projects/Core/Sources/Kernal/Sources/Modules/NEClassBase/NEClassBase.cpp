@@ -35,14 +35,14 @@ namespace NE
 		return isEqualTypeWith(source.getClass());
 	}
 
-	bool NE_DLL NEClassBase::isSuperClassOf(const This& parent) const
+	bool NE_DLL NEClassBase::isSuperOf(const This& parent) const
 	{
 		return Kernal::getInstance().getTypeManager().isHierarchy(*this, parent);
 	}
 
-	bool NE_DLL NEClassBase::isSuperClassOf(const NEObject& parent) const
+	bool NE_DLL NEClassBase::isSuperOf(const NEObject& parent) const
 	{
-		return isSuperClassOf(parent.getClass());
+		return isSuperOf(parent.getClass());
 	}
 
 	bool NE_DLL NEClassBase::isSubClassOf(const This& parent) const
@@ -68,7 +68,7 @@ namespace NE
 		//		Acquire static instance:	you can use this now. Above recursive trap has been cleared :)
 		static NETClass<NEObject> root_class;
 		//		This statement makes a recursive call in order to register super type.
-		const NEClassBase& super = subclass.getSuperClass();
+		const NEClassBase& super = subclass.getSuper();
 		if(*this == super) 
 			return _registerSubClassAsMyChild(subclass);
 
@@ -96,10 +96,10 @@ namespace NE
 		return const_cast<NEClassBaseList&>(getSubClasses());
 	}
 
-	const This NE_DLL &NEClassBase::getSuperClass() const
+	const This NE_DLL &NEClassBase::getSuper() const
 	{	
 		//	if there is no ancestors, this will return null-referenced "This&" type.
-		return getSuperClasses()[0];
+		return getSuperes()[0];
 	}
 
 	type_result NEClassBase::isValid() const

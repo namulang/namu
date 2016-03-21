@@ -8,7 +8,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	NE_DLL NEModuleManager::NEModuleManager()
-		: NEModule()
+		: Super()
 	{
 		_release();
 	}
@@ -19,7 +19,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	NE_DLL NEModuleManager::NEModuleManager(const NEModuleManager& source)
-		: NEModule(source)
+		: Super(source)
 	{
 		_assign(source);
 	}
@@ -41,7 +41,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	const NEModuleManager NE_DLL &NEModuleManager::operator=(const NEModuleManager& source)
 	{		
-		NEModule::operator=(source);
+		Super::operator=(source);
 
 		return _assign(source);
 	}
@@ -54,7 +54,7 @@ namespace NE
 	bool NE_DLL NEModuleManager::operator==(const NEModuleManager& source) const
 	{
 		if(this == &source) return true;
-		if(NEModule::operator==(source) == false) return false;
+		if(Super::operator==(source) == false) return false;
 		if(_dllheaderset != source._dllheaderset) return false;
 		if(_moduleset != source._moduleset) return false;
 		
@@ -211,29 +211,9 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	NEType::Type NE_DLL NEModuleManager::getType() const
-	{
-		return NEType::NEMODULE_MANAGER;
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	NEObject NE_DLL &NEModuleManager::clone() const
-	{		
-		return *(new NEModuleManager(*this));
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
 	type_result NE_DLL NEModuleManager::isValid() const
 	{						
-		type_result result = NEModule::isValid();
+		type_result result = Super::isValid();
 		if(NEResult::hasError(result)) return result | NEMODULE_IS_NOT_VALID;
 		result = _dllheaderset.isValid();
 		if(NEResult::hasError(result)) return result | DLL_HEADERSET_IS_NOT_VALID;
@@ -265,7 +245,7 @@ namespace NE
 	void NE_DLL NEModuleManager::release()
 	{
 		//	멤버함수 초기화
-		NEModule::release();
+		Super::release();
 
 		return _release();
 	}		
