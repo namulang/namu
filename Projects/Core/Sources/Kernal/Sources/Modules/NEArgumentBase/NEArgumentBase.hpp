@@ -44,7 +44,7 @@ namespace NE
 		};
 
 	public:
-		NEArgumentBase(NEType::Type type, Purpose limitation = UNDEFINED);
+		NEArgumentBase(/*NEType::Type type, */Purpose limitation = UNDEFINED);
 		NEArgumentBase(const This& rhs);
 
 	public:
@@ -55,7 +55,7 @@ namespace NE
 		bool operator!=(const NEArgumentBase& source) const;
 
 	public:
-		NEType::Type getTypeToBeBinded() const;
+		//NEType::Type getTypeToBeBinded() const;
 		bool isValidToBind(const NEObject& to_be_bind) const;
 		const NEKey& getValueKey() const;
 		NEKey& getValueKey();
@@ -123,7 +123,7 @@ namespace NE
 		This& _assign(const This& source);
 
 	private:
-		NEType::Type	_type_validation;
+		//NEType::Type	_type_validation;
 		Purpose			_purpose, 
 						_limitation;
 	};

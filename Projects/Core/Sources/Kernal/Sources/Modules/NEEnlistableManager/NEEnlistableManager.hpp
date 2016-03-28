@@ -10,8 +10,8 @@ namespace NE
 {
 	class NE_DLL NEEnlistableManager : public NEModule, public NEEnlistable
 	{
-		typedef NEModule SuperClass;
-		typedef NEEnlistableManager ThisClass;
+		NE_DECLARE_INTERFACE(NEEnlistableManager, NEModule)
+		
 		typedef NEIndexedKeySet* NEIndexedKeySetPointer;
 
 	public:
@@ -24,20 +24,20 @@ namespace NE
 		friend class NENodeBinder;
 		friend class NEModuleBinder;
 		friend class NEKeyBinder;
-		template <typename NodeSelector, NEType::Type type>
+		template <typename NodeSelector>
 		friend class NETModuleSelector;
-		template <typename ModuleSelector, NEType::Type type>
+		template <typename ModuleSelector>
 		friend class NETKeySelector;
 
 	public:
 		NEEnlistableManager();
-		NEEnlistableManager(const NEEnlistableManager& source);
+		NEEnlistableManager(const This& source);
 		~NEEnlistableManager();
 
 	public:
-		const ThisClass& operator=(const ThisClass& source);
-		bool operator==(const ThisClass& source) const;
-		bool operator!=(const ThisClass& source) const;
+		const This& operator=(const This& source);
+		bool operator==(const This& source) const;
+		bool operator!=(const This& source) const;
 
 	public:
 		const NEShortCutSet& getShortCutSet(const NECodeType& type) const;
@@ -51,7 +51,6 @@ namespace NE
 		//			NEObject:
 	public:
 		virtual void release();
-		virtual NEType::Type getType() const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual type_result isValid() const;
@@ -78,7 +77,7 @@ namespace NE
 		void _release();
 
 	private:
-		const ThisClass& _assign(const ThisClass& source);
+		const This& _assign(const This& source);
 
 	private:
 		NEIndexedKeySet _keyset;

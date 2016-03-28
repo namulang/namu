@@ -7,40 +7,39 @@
 namespace NE
 {
 	template
-	class NE_DLL NETIndexedArray<NEKey*, true, NEType::NEINDEXED_KEYSET>;
+	class NE_DLL NETIndexedArray<NEKey*, true>;
 
 	template
-	class NE_DLL NETEnlistableSet< NETIndexedArray<NEKey*, true, NEType::NEINDEXED_KEYSET> >;
+	class NE_DLL NETEnlistableSet< NETIndexedArray<NEKey*, true> >;
 
-	class NE_DLL NEIndexedKeySet : public NETEnlistableSet< NETIndexedArray<NEKey*, true, NEType::NEINDEXED_KEYSET> >
+	class NE_DLL NEIndexedKeySet : public NETEnlistableSet< NETIndexedArray<NEKey*, true> >
 	{
-		typedef NEIndexedKeySet ThisClass;
-		typedef NETEnlistableSet< NETIndexedArray<NEKey*, true, NEType::NEINDEXED_KEYSET> > SuperClass;
+		typedef NETEnlistableSet< NETIndexedArray<NEKey*, true> > _Super;
+
+		NE_DECLARE_CLASS(NEIndexedKeySet, _Super)
 
 	public:
 		NEIndexedKeySet(NEEnlistableManager& manager);
 		NEIndexedKeySet(type_count size);
-		NEIndexedKeySet(const NEIndexedKeySet& source);
+		NEIndexedKeySet(const This& source);
 
 	public:
 		virtual ~NEIndexedKeySet();
 
 	public:
-		const NEIndexedKeySet& operator+=(const NEIndexedKeySet& source);
-		NEIndexedKeySet operator+(const NEIndexedKeySet& source) const;
+		const NEIndexedKeySet& operator+=(const This& source);
+		NEIndexedKeySet operator+(const This& source) const;
 		
 	public:
-		using SuperClass::insert;
+		using Super::insert;
 		virtual type_index insert(type_index index, const NEKey* const source);
 		virtual type_result setElement(type_index index, const NEKey* const source);
-		using SuperClass::setElement;
+		using Super::setElement;
 		virtual type_result resize(type_index new_size);
 
 	public:
-		virtual NEType::Type getType() const;
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
-		virtual NEObject& clone() const;
 
 	public:
 		type_id peekLastGeneratedId() const;

@@ -7,40 +7,39 @@
 namespace NE
 {
 	template
-	class NE_DLL NETIndexedArray<NENode*, true, NEType::NEINDEXED_NODESET>;
+	class NE_DLL NETIndexedArray<NENode*, true>;
 
 	template 
-	class NE_DLL NETEnlistableSet< NETIndexedArray<NENode*, true, NEType::NEINDEXED_NODESET> >;
+	class NE_DLL NETEnlistableSet< NETIndexedArray<NENode*, true> >;
 
-	class NE_DLL NEIndexedNodeSet : public NETEnlistableSet< NETIndexedArray<NENode*, true, NEType::NEINDEXED_NODESET> >
+	class NE_DLL NEIndexedNodeSet : public NETEnlistableSet< NETIndexedArray<NENode*, true> >
 	{
-		typedef NEIndexedNodeSet ThisClass;
-		typedef NETEnlistableSet< NETIndexedArray<NENode*, true, NEType::NEINDEXED_NODESET> > SuperClass;
+		typedef NETEnlistableSet< NETIndexedArray<NENode*, true> > _Super;
+
+		NE_DECLARE_CLASS(NEIndexedNodeSet, _Super)
 
 	public:
 		NEIndexedNodeSet(NEEnlistableManager& manager);
 		NEIndexedNodeSet(type_count size);
-		NEIndexedNodeSet(const NEIndexedNodeSet& source);
+		NEIndexedNodeSet(const This& source);
 
 	public:
 		virtual ~NEIndexedNodeSet();
 	public:
-		const NEIndexedNodeSet& operator+=(const NEIndexedNodeSet& source);
-		NEIndexedNodeSet operator+(const NEIndexedNodeSet& source) const;		
+		const This& operator+=(const This& source);
+		This operator+(const This& source) const;		
 
 	public:
-		using SuperClass::insert;
+		using Super::insert;
 		virtual type_index insert(type_index index, const NENode* const source);
 		virtual type_result setElement(type_index index, const NENode* const source);
-		using SuperClass::setElement;
+		using Super::setElement;
 		virtual type_result remove(type_index index);
 		virtual type_result resize(type_index index);
 
 	public:
-		virtual NEType::Type getType() const;
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
-		virtual NEObject& clone() const;
 
 	public:
 		type_id peekLastGeneratedId() const;

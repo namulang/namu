@@ -21,7 +21,7 @@ namespace NE
 	public:
 		NEKey& getBinded();
 		const NEKey& getBinded() const;
-		type_result bind(const NEKey& key, NEType::Type manager_type);
+		type_result bind(const NEKey& key/*, NEType::Type manager_type*/);
 		type_bool isBindedLocalKey() const;
 
 	protected:

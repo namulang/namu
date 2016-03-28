@@ -7,19 +7,19 @@ namespace NE
 	type_id NEIndexedModuleSet::_last_generated_id = 0;
 
 	NEIndexedModuleSet::NEIndexedModuleSet(NEEnlistableManager& manager)
-		: SuperClass(manager)
+		: Super(manager)
 	{
 
 	}
 
 	NEIndexedModuleSet::NEIndexedModuleSet(type_count size)
-		: SuperClass(size)
+		: Super(size)
 	{
 
 	}
 
-	NEIndexedModuleSet::NEIndexedModuleSet(const NEIndexedModuleSet& source)
-		: SuperClass(source)
+	NEIndexedModuleSet::NEIndexedModuleSet(const This& source)
+		: Super(source)
 	{
 
 	}
@@ -29,14 +29,14 @@ namespace NE
 
 	}
 
-	const NEIndexedModuleSet& NEIndexedModuleSet::operator+=(const NEIndexedModuleSet& source)
+	const NEIndexedModuleSet& NEIndexedModuleSet::operator+=(const This& source)
 	{
-		SuperClass::operator+=(source);
+		Super::operator+=(source);
 
 		return *this;
 	}
 
-	NEIndexedModuleSet NEIndexedModuleSet::operator+(const NEIndexedModuleSet& source) const
+	NEIndexedModuleSet NEIndexedModuleSet::operator+(const This& source) const
 	{
 		ThisClass buffer(getSize() + source.getSize());
 
@@ -45,16 +45,6 @@ namespace NE
 
 		return buffer;
 	}
-
-	NEType::Type NEIndexedModuleSet::getType() const
-	{
-		return NEType::NEINDEXED_MODULESET;
-	}
-
-	NEObject& NEIndexedModuleSet::clone() const
-	{
-		return static_cast<NEObject&>( *(new ThisClass(*this)) );
-	}	
 
 	type_id NEIndexedModuleSet::peekLastGeneratedId() const
 	{
@@ -97,7 +87,7 @@ namespace NE
 		//			연산:
 		NEGlobalManagerOffer::_setGlobalManager(getManager());
 		//		복사:
-		type_index inputed_index = SuperClass::insert(index, source);
+		type_index inputed_index = Super::insert(index, source);
 		//		아이디 할당:
 		//			타겟팅:
 		NEModule& module = getElement(inputed_index);
@@ -128,7 +118,7 @@ namespace NE
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
 		NEGlobalManagerOffer::_setGlobalManager(getManager());
 
-		type_result result = SuperClass::setElement(index, source);
+		type_result result = Super::setElement(index, source);
 
 		NEGlobalManagerOffer::_setGlobalManager(push);
 
@@ -155,7 +145,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	NEBinaryFileSaver& NEIndexedModuleSet::serialize(NEBinaryFileSaver& saver) const
 	{
-		SuperClass::serialize(saver);
+		Super::serialize(saver);
 
 
 
@@ -222,7 +212,7 @@ namespace NE
 		//		타겟팅:
 		const NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
 		//		상위 함수 호출:
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 
 
 
@@ -306,7 +296,7 @@ namespace NE
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
 		NEGlobalManagerOffer::_setGlobalManager(getManager());
 
-		type_result result = SuperClass::resize(new_size);
+		type_result result = Super::resize(new_size);
 
 		NEGlobalManagerOffer::_setGlobalManager(push);
 		return result;

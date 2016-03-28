@@ -24,7 +24,7 @@ namespace NE
 	bool NEArgumentBase::operator==(const NEArgumentBase& source) const
 	{
 		return	Super::operator==(source)				&&
-			_type_validation == source._type_validation	&&
+			//_type_validation == source._type_validation	&&
 			_limitation == source._limitation			&&
 			_purpose == source._purpose					;				
 	}
@@ -61,7 +61,7 @@ namespace NE
 	{
 		Super::serialize(saver);
 
-		saveEnumeration<NEType::Type>(saver, _type_validation);
+		//saveEnumeration<NEType::Type>(saver, _type_validation);
 		saveEnumeration<Purpose>(saver, _purpose);
 		saveEnumeration<Purpose>(saver, _limitation);
 
@@ -71,16 +71,16 @@ namespace NE
 	{
 		Super::serialize(loader);
 
-		NEType::Type validator = NEType::UNDEFINED;
-		loader >> validator;
+		//NEType::Type validator = NEType::UNDEFINED;
+		//loader >> validator;
 		loadEnumeration<Purpose>(loader, _purpose);
 		loadEnumeration<Purpose>(loader, _limitation);
 
 		return loader;
 	}
 
-	NEArgumentBase::NEArgumentBase(NEType::Type type, Purpose limitation)
-		: _type_validation(type), _limitation(limitation)
+	NEArgumentBase::NEArgumentBase(/*NEType::Type type, */Purpose limitation)
+		: /*_type_validation(type), */_limitation(limitation)
 	{
 		setPurpose(READ_OR_WRITTEN);
 	}
@@ -91,14 +91,14 @@ namespace NE
 		_assign(rhs);
 	}
 
-	NEType::Type NEArgumentBase::getTypeToBeBinded() const
-	{
-		return _type_validation;
-	}
+// 	NEType::Type NEArgumentBase::getTypeToBeBinded() const
+// 	{
+// 		return _type_validation;
+// 	}
 
 	NEArgumentBase& NEArgumentBase::_assign(const This& source)
 	{
-		_type_validation = source._type_validation;
+		//_type_validation = source._type_validation;
 		_purpose = source._purpose;
 		_limitation = source._limitation;
 
@@ -107,7 +107,7 @@ namespace NE
 
 	void NEArgumentBase::_release()
 	{
-		_type_validation = NEType::UNDEFINED;
+		//_type_validation = NEType::UNDEFINED;
 		_purpose = _limitation = READ_OR_WRITTEN;		
 	}
 
@@ -129,9 +129,10 @@ namespace NE
 	{
 		if( ! & to_be_bind) return false;
 
-		return NEType::isValidHierachy(
-			getTypeToBeBinded(), to_be_bind.getType()
-			);
+// 		return NEType::isValidHierachy(
+// 			getTypeToBeBinded(), to_be_bind.getType()
+// 			);
+		return false;
 	}
 
 	const NEKey& NEArgumentBase::getValueKey() const

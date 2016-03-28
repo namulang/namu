@@ -6,19 +6,19 @@ namespace NE
 	type_id NEIndexedKeySet::_last_generated_id = 0;
 
 	NEIndexedKeySet::NEIndexedKeySet(NEEnlistableManager& manager)
-		: SuperClass(manager)
+		: Super(manager)
 	{
 
 	}
 
 	NEIndexedKeySet::NEIndexedKeySet(type_count size)
-		: SuperClass(size)
+		: Super(size)
 	{
 
 	}
 
-	NEIndexedKeySet::NEIndexedKeySet(const NEIndexedKeySet& source)
-		: SuperClass(source)
+	NEIndexedKeySet::NEIndexedKeySet(const This& source)
+		: Super(source)
 	{
 
 	}
@@ -28,14 +28,14 @@ namespace NE
 
 	}
 
-	const NEIndexedKeySet& NEIndexedKeySet::operator+=(const NEIndexedKeySet& source)
+	const NEIndexedKeySet& NEIndexedKeySet::operator+=(const This& source)
 	{
-		SuperClass::operator+=(source);
+		Super::operator+=(source);
 
 		return *this;
 	}
 
-	NEIndexedKeySet NEIndexedKeySet::operator+(const NEIndexedKeySet& source) const
+	NEIndexedKeySet NEIndexedKeySet::operator+(const This& source) const
 	{
 		ThisClass buffer(getSize() + source.getSize());
 
@@ -44,16 +44,6 @@ namespace NE
 
 		return buffer;
 	}
-
-	NEType::Type NEIndexedKeySet::getType() const
-	{
-		return NEType::NEINDEXED_KEYSET;
-	}
-
-	NEObject& NEIndexedKeySet::clone() const
-	{
-		return static_cast<NEObject&>( *(new ThisClass(*this)) );
-	}	
 
 	type_id NEIndexedKeySet::peekLastGeneratedId() const
 	{
@@ -90,7 +80,7 @@ namespace NE
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
 		NEGlobalManagerOffer::_setGlobalManager(getManager());
 
-		type_index inputed_index = SuperClass::insert(index, source);
+		type_index inputed_index = Super::insert(index, source);
 		//		아이디 할당:
 		//			타겟팅:
 		NEKey& key = getElement(inputed_index);
@@ -122,7 +112,7 @@ namespace NE
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
 		NEGlobalManagerOffer::_setGlobalManager(getManager());
 
-		type_result result = SuperClass::setElement(index, source);
+		type_result result = Super::setElement(index, source);
 
 		NEGlobalManagerOffer::_setGlobalManager(push);
 
@@ -133,7 +123,7 @@ namespace NE
 
 	NEBinaryFileSaver& NEIndexedKeySet::serialize(NEBinaryFileSaver& saver) const
 	{
-		SuperClass::serialize(saver);
+		Super::serialize(saver);
 
 
 
@@ -158,7 +148,7 @@ namespace NE
 	NEBinaryFileLoader& NEIndexedKeySet::serialize(NEBinaryFileLoader& loader)
 	{
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();		
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 
 
 
@@ -220,7 +210,7 @@ namespace NE
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
 		NEGlobalManagerOffer::_setGlobalManager(getManager());
 
-		type_result result = SuperClass::resize(new_size);
+		type_result result = Super::resize(new_size);
 
 		NEGlobalManagerOffer::_setGlobalManager(push);
 		return result;

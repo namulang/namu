@@ -42,21 +42,22 @@
 
 namespace NE
 {
-	template <typename Type, NEType::Type type>
-	class NETIndexedArray<Type*, false, type> : public NETReservedCollector<Type*>, public NESpecifiedInsertable<Type*>
+	template <typename Type>
+	class NETIndexedArray<Type*, false> : public NETReservedCollector<Type*>, public NESpecifiedInsertable<Type*>
 	{	
-		typedef NETIndexedArray<Type*, false, type> ThisClass;
-		typedef NETReservedCollector<Type*> SuperClass;	
+		typedef NETIndexedArray<Type*, false> _This;
+
+		NE_DECLARE_CLASS(_This, NETReservedCollector<Type*>)		
 
 	public:
-		using SuperClass::push;
-		using SuperClass::find;
-		using SuperClass::setElement;
+		using Super::push;
+		using Super::find;
+		using Super::setElement;
 		//	생성자:
 	public:
 		NETIndexedArray();
 		NETIndexedArray(type_count size);
-		NETIndexedArray(const ThisClass& source);
+		NETIndexedArray(const This& source);
 
 		//	소멸자:
 	public:
@@ -64,11 +65,11 @@ namespace NE
 
 		//	연산자 중첩:
 	public:
-		const ThisClass& operator=(const ThisClass& source); 
-		ThisClass operator+(const ThisClass& source) const;
-		bool operator==(const ThisClass& source) const;
-		bool operator!=(const ThisClass& source) const;
-		const ThisClass& operator+=(const ThisClass& source);
+		const This& operator=(const This& source); 
+		This operator+(const This& source) const;
+		bool operator==(const This& source) const;
+		bool operator!=(const This& source) const;
+		const This& operator+=(const This& source);
 
 		//	인터페이스:
 		//		접근자:
@@ -95,20 +96,18 @@ namespace NE
 		//			NEObject:
 	public:		
 		virtual type_result isValid() const;
-		virtual void release(); 		
-		virtual NEType::Type getType() const;
+		virtual void release();
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
-		virtual NEObject& clone() const;
 		
 		//		고유 인터페이스:
 	public:
 		type_index pushFront(const Type* source);
 		type_index popFront();
-		type_result push(const ThisClass& source);
-		type_result pushFront(const ThisClass& source);
-		bool isEqualSizeAndElement(const ThisClass& source) const;
-		bool isEqualElement(const ThisClass& source) const;
+		type_result push(const This& source);
+		type_result pushFront(const This& source);
+		bool isEqualSizeAndElement(const This& source) const;
+		bool isEqualElement(const This& source) const;
 		type_index insert(type_index index, const Type& source);
 		type_index pushFront(const Type& source);;
 
@@ -117,7 +116,7 @@ namespace NE
 
 		//	내부함수:
 	private:
-		const ThisClass& _assign(const ThisClass& source);
+		const This& _assign(const This& source);
 		void _release();
 
 		//	멤버변수:

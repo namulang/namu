@@ -14,17 +14,17 @@ namespace NE
 #pragma warning(push)	
 #pragma warning(disable:4355)
 	NEEnlistableManager::NEEnlistableManager()
-		: SuperClass(), _nodeset(*this), _moduleset(*this), _keyset(*this),
-		_script_shortcutset(NECodeType::SCRIPT),
-		_name_shortcutset(NECodeType::NAME),
-		_group_shortcutset(NECodeType::GROUP),
-		_priority_shortcutset(NECodeType::PRIORITY)
+		: Super(), _nodeset(*this), _moduleset(*this), _keyset(*this),
+		_script_shortcutset(/*NECodeType::SCRIPT*/),
+		_name_shortcutset(/*NECodeType::NAME*/),
+		_group_shortcutset(/*NECodeType::GROUP*/),
+		_priority_shortcutset(/*NECodeType::PRIORITY*/)
 	{
 		_release();
 	}
 
 	NEEnlistableManager::NEEnlistableManager(const NEEnlistableManager& source)
-		: SuperClass(source), _nodeset(*this), _moduleset(*this), _keyset(*this),
+		: Super(source), _nodeset(*this), _moduleset(*this), _keyset(*this),
 		_script_shortcutset(source._script_shortcutset),
 		_name_shortcutset(source._name_shortcutset),
 		_group_shortcutset(source._group_shortcutset),
@@ -34,21 +34,16 @@ namespace NE
 	}
 #pragma warning(pop)
 
-	NEType::Type NEEnlistableManager::getType() const
-	{
-		return NEType::NEENLISTABLE_MANAGER;
-	}
-
 	type_result NEEnlistableManager::_enlist(NENode& target, type_index index/*= NE_INDEX_ERROR*/)
 	{
 		if(index <= NE_INDEX_ERROR) 
 			index = _searchRealNodeIndex(target);
 
 
-		type_result result = _getShortCutSet(NECodeType::SCRIPT)._enlist(target, index);
-		result |= _getShortCutSet(NECodeType::NAME)._enlist(target, index);
-		result |= _getShortCutSet(NECodeType::GROUP)._enlist(target, index);
-		return result |= _getShortCutSet(NECodeType::PRIORITY)._enlist(target, index);
+		type_result result = _getShortCutSet(/*NECodeType::SCRIPT*/)._enlist(target, index);
+		result |= _getShortCutSet(/*NECodeType::NAME*/)._enlist(target, index);
+		result |= _getShortCutSet(/*NECodeType::GROUP*/)._enlist(target, index);
+		return result |= _getShortCutSet(/*NECodeType::PRIORITY*/)._enlist(target, index);
 	}
 
 	type_result NEEnlistableManager::_unlist(NENode& target, type_index index/*= NE_INDEX_ERROR*/)
@@ -58,10 +53,10 @@ namespace NE
 
 
 
-		type_result result = _getShortCutSet(NECodeType::SCRIPT)._unlist(target, index);
-		result |= _getShortCutSet(NECodeType::NAME)._unlist(target, index);
-		result |= _getShortCutSet(NECodeType::GROUP)._unlist(target, index);
-		result |= _getShortCutSet(NECodeType::PRIORITY)._unlist(target, index);
+		type_result result = _getShortCutSet(/*NECodeType::SCRIPT*/)._unlist(target, index);
+		result |= _getShortCutSet(/*NECodeType::NAME*/)._unlist(target, index);
+		result |= _getShortCutSet(/*NECodeType::GROUP*/)._unlist(target, index);
+		result |= _getShortCutSet(/*NECodeType::PRIORITY*/)._unlist(target, index);
 
 		target._manager = NE_NULL;
 
@@ -100,14 +95,14 @@ namespace NE
 
 	void NEEnlistableManager::release()
 	{
-		SuperClass::release();
+		Super::release();
 	
 		_release();
 	}
 
 	type_result NEEnlistableManager::isValid() const
 	{
-		type_result result = SuperClass::isValid();
+		type_result result = Super::isValid();
 		result |= _priority_shortcutset.isValid();
 		result |= _group_shortcutset.isValid();
 		result |= _script_shortcutset.isValid();
@@ -121,7 +116,7 @@ namespace NE
 
 	NEBinaryFileLoader& NEEnlistableManager::serialize(NEBinaryFileLoader& loader)
 	{
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 		
 		loader	>> _priority_shortcutset >> _script_shortcutset >> _group_shortcutset >> _name_shortcutset >> _nodeset >> _moduleset >> _keyset;
 		
@@ -130,7 +125,7 @@ namespace NE
 
 	NEBinaryFileSaver& NEEnlistableManager::serialize(NEBinaryFileSaver& saver) const
 	{
-		SuperClass::serialize(saver);
+		Super::serialize(saver);
 
 		return saver	<< _priority_shortcutset << _script_shortcutset << _group_shortcutset << _name_shortcutset << _nodeset << _moduleset << _keyset;
 	}
@@ -197,14 +192,14 @@ namespace NE
 		_name_shortcutset.release();		
 	}
 
-	const NEEnlistableManager& NEEnlistableManager::operator=(const ThisClass& source)
+	const NEEnlistableManager& NEEnlistableManager::operator=(const This& source)
 	{
-		SuperClass::operator=(source);
+		Super::operator=(source);
 
 		return _assign(source);
 	}
 
-	const NEEnlistableManager& NEEnlistableManager::_assign(const ThisClass& source)
+	const NEEnlistableManager& NEEnlistableManager::_assign(const This& source)
 	{
 		if(this == &source) return *this;
 
@@ -229,9 +224,9 @@ namespace NE
 
 	}
 
-	bool NEEnlistableManager::operator==(const ThisClass& source) const
+	bool NEEnlistableManager::operator==(const This& source) const
 	{
-		if(SuperClass::operator!=(source)) return false;
+		if(Super::operator!=(source)) return false;
 		if(	_keyset != source._keyset											||
 			_priority_shortcutset != source._priority_shortcutset				||
 			_script_shortcutset != source._script_shortcutset					||
@@ -244,7 +239,7 @@ namespace NE
 		return true;
 	}
 
-	bool NEEnlistableManager::operator!=(const ThisClass& source) const
+	bool NEEnlistableManager::operator!=(const This& source) const
 	{
 		return ! operator==(source);
 	}
@@ -256,22 +251,22 @@ namespace NE
 			return *nullpointer;
 
 
-		//	main:
-		switch(type.getCodeType())
-		{
-		case NECodeType::ALL:
-		case NECodeType::SCRIPT:	return _script_shortcutset;
-		case NECodeType::NAME:		return _name_shortcutset;
-		case NECodeType::GROUP:		return _group_shortcutset;
-		case NECodeType::PRIORITY:	return _priority_shortcutset;
-		}
+// 		//	main:
+// 		switch(type.getCodeType())
+// 		{
+// 		case NECodeType::ALL:
+// 		case NECodeType::SCRIPT:	return _script_shortcutset;
+// 		case NECodeType::NAME:		return _name_shortcutset;
+// 		case NECodeType::GROUP:		return _group_shortcutset;
+// 		case NECodeType::PRIORITY:	return _priority_shortcutset;
+// 		}
 
 		return *nullpointer;
 	}
 
 	const NEShortCutSet& NEEnlistableManager::getShortCutSet(const NECodeType& type) const
 	{
-		ThisClass* unconsted = const_cast<ThisClass*>(this);
+		This* unconsted = const_cast<This*>(this);
 
 		return unconsted->_getShortCutSet(type);
 	}

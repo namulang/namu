@@ -9,7 +9,7 @@ namespace NE
 		: Super()
 	{
 		_release();
-		_manager_type = NEType::NENODE_MANAGER;
+		//_manager_type = NEType::NENODE_MANAGER;
 	}
 
 	NEBinderBase::NEBinderBase(const This& source)
@@ -35,7 +35,7 @@ namespace NE
 		if(Super::operator!=(source)) return false;
 		if(_real_index != source._real_index) return false;
 		if(_comparing_id != source._comparing_id) return false;
-		if(_manager_type != source._manager_type) return false;
+		//if(_manager_type != source._manager_type) return false;
 
 		return true;
 	}
@@ -65,14 +65,14 @@ namespace NE
 	{
 		Super::serialize(loader);
 
-		return loader >> _real_index >> _comparing_id >> _manager_type;
+		return loader >> _real_index >> _comparing_id;// >> _manager_type;
 	}
 
 	NEBinaryFileSaver& NEBinderBase::serialize(NEBinaryFileSaver& saver) const
 	{
 		Super::serialize(saver);
 
-		return saver << _real_index << _comparing_id << _manager_type;
+		return saver << _real_index << _comparing_id;// << _manager_type;
 	}
 
 	type_result NEBinderBase::isValid() const
@@ -80,9 +80,9 @@ namespace NE
 		using namespace NEType;
 		if(_real_index <= NE_INDEX_ERROR) return RESULT_TYPE_ERROR;
 		if(_comparing_id <= NE_HAS_NO_ID) return RESULT_TYPE_ERROR;
-		if( _manager_type != UNDEFINED								&& 
-			! isValidHierachy(NEENLISTABLE_MANAGER, _manager_type)	)	//	UNDEFINED나 MANAGER의 하위클래만 통과.
-			return RESULT_TYPE_ERROR;
+// 		if( _manager_type != UNDEFINED								&& 
+// 			! isValidHierachy(NEENLISTABLE_MANAGER, _manager_type)	)	//	UNDEFINED나 MANAGER의 하위클래만 통과.
+// 			return RESULT_TYPE_ERROR;
 
 		return RESULT_SUCCESS;
 	}
@@ -93,7 +93,7 @@ namespace NE
 
 		_real_index = source._real_index;
 		_comparing_id = source._comparing_id;
-		_manager_type = source._manager_type;
+		//_manager_type = source._manager_type;
 
 		return *this;
 	}
@@ -102,7 +102,7 @@ namespace NE
 	{
 		_real_index = NE_INDEX_ERROR;
 		_comparing_id = NE_INDEX_ERROR;
-		_manager_type = NEType::UNDEFINED;
+		//_manager_type = NEType::UNDEFINED;
 	}
 
 	type_index NEBinderBase::getRealIndex() const
@@ -117,12 +117,15 @@ namespace NE
 
 	NEEnlistableManager& NEBinderBase::getManager()
 	{
-		return NENodeSelector::_interface(_manager_type);
+		NEEnlistableManager* nullptr = 0x00;
+		return *nullptr; //NENodeSelector::_interface(_manager_type);
 	}
 
 	const NEEnlistableManager& NEBinderBase::getManager() const
 	{
-		return NENodeSelector::_interface(_manager_type);
+		const NEEnlistableManager* nullptr = 0x00;
+		
+		return *nullptr;//NENodeSelector::_interface(_manager_type);
 	}
 
 	type_result NEBinderBase::unbind()

@@ -4,19 +4,19 @@
 namespace NE
 {
 	NE_DLL NEShortCutSet::NEShortCutSet()
-		: SuperClass()
+		: Super()
 	{
 
 	}
 
 	NE_DLL NEShortCutSet::NEShortCutSet(const NECodeType& type)
-		: SuperClass(), _type(type)
+		: Super(), _type(type)
 	{
 
 	}
 
-	NE_DLL NEShortCutSet::NEShortCutSet(const ThisClass& source)
-		: SuperClass(source), _type(source._type)
+	NE_DLL NEShortCutSet::NEShortCutSet(const This& source)
+		: Super(source), _type(source._type)
 	{
 
 	}
@@ -26,25 +26,25 @@ namespace NE
 
 	}
 
-	NEShortCutSet NE_DLL &NEShortCutSet::operator=(const ThisClass& source)
+	NEShortCutSet NE_DLL &NEShortCutSet::operator=(const This& source)
 	{
 		if(this == &source) return *this;
 
-		SuperClass::operator=(source);
+		Super::operator=(source);
 
 		_type = source._type;
 
 		return *this;
 	}
 
-	bool NE_DLL NEShortCutSet::operator==(const ThisClass& source) const
+	bool NE_DLL NEShortCutSet::operator==(const This& source) const
 	{
-		if(SuperClass::operator!=(source)) return false;
+		if(Super::operator!=(source)) return false;
 
 		return _type == source._type;
 	}
 
-	bool NE_DLL NEShortCutSet::operator!=(const ThisClass& source) const
+	bool NE_DLL NEShortCutSet::operator!=(const This& source) const
 	{
 		return ! operator==(source);
 	}
@@ -54,33 +54,23 @@ namespace NE
 		return _type;
 	}
 
-	NEObject NE_DLL &NEShortCutSet::clone() const
-	{
-		return *(new ThisClass(*this));
-	}
-
 	void NE_DLL NEShortCutSet::release()
 	{
-		SuperClass::release();
+		Super::release();
 
 		_type.release();
 	}
 
-	NEType::Type NE_DLL NEShortCutSet::getType() const
-	{
-		return NEType::NESHORTCUTSET;
-	}
-
 	NEBinaryFileSaver NE_DLL &NEShortCutSet::serialize(NEBinaryFileSaver& saver) const
 	{
-		SuperClass::serialize(saver);
+		Super::serialize(saver);
 
 		return saver << _type;
 	}
 
 	NEBinaryFileLoader NE_DLL &NEShortCutSet::serialize(NEBinaryFileLoader& loader)
 	{
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 
 		return loader >> _type;
 	}

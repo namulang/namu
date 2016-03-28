@@ -68,12 +68,12 @@ namespace NE
 	{
 		using namespace NEType;
 		//	pre:
-		if (!isValidHierachy(NEENLISTABLE_MANAGER, manager_type) && ! isValidHierachy(NEType::LOCALSTACK, manager_type))
-		{
-			KERNAL_ERROR("주어진 Manager가 null 이거나 NEEnlistableManager 혹은 LocalStack이 아닙니다.");
-			goto ON_ERROR;
-		}
-		_manager_type = manager_type;
+// 		if (!isValidHierachy(NEENLISTABLE_MANAGER, manager_type) && ! isValidHierachy(NEType::LOCALSTACK, manager_type))
+// 		{
+// 			KERNAL_ERROR("주어진 Manager가 null 이거나 NEEnlistableManager 혹은 LocalStack이 아닙니다.");
+// 			goto ON_ERROR;
+// 		}
+		//_manager_type = manager_type;
 
 		const NEIndexedKeySet& cont = _getKeySet();
 		if( ! &cont)

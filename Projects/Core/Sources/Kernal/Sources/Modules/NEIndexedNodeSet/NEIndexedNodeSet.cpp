@@ -6,19 +6,19 @@ namespace NE
 	type_id NEIndexedNodeSet::_last_generated_id = 0;
 
 	NEIndexedNodeSet::NEIndexedNodeSet(NEEnlistableManager& manager)
-		: SuperClass(manager)
+		: Super(manager)
 	{
 
 	}
 
 	NEIndexedNodeSet::NEIndexedNodeSet(type_count size)
-		: SuperClass(size)
+		: Super(size)
 	{
 
 	}
 
-	NEIndexedNodeSet::NEIndexedNodeSet(const NEIndexedNodeSet& source)
-		: SuperClass(source)
+	NEIndexedNodeSet::NEIndexedNodeSet(const This& source)
+		: Super(source)
 	{
 
 	}
@@ -28,32 +28,22 @@ namespace NE
 
 	}
 
-	const NEIndexedNodeSet& NEIndexedNodeSet::operator+=(const NEIndexedNodeSet& source)
+	const NEIndexedNodeSet& NEIndexedNodeSet::operator+=(const This& source)
 	{
-		SuperClass::operator+=(source);
+		Super::operator+=(source);
 
 		return *this;
 	}
 
 	NEIndexedNodeSet NEIndexedNodeSet::operator+(const NEIndexedNodeSet& source) const
 	{
-		ThisClass buffer(getSize() + source.getSize());
+		This buffer(getSize() + source.getSize());
 
 		buffer.push(*this);
 		buffer.push(source);
 
 		return buffer;
 	}
-
-	NEType::Type NEIndexedNodeSet::getType() const
-	{
-		return NEType::NEINDEXED_NODESET;
-	}
-
-	NEObject& NEIndexedNodeSet::clone() const
-	{
-		return static_cast<NEObject&>( *(new ThisClass(*this)) );
-	}	
 
 	type_id NEIndexedNodeSet::peekLastGeneratedId() const
 	{
@@ -97,7 +87,7 @@ namespace NE
 		//				3. source의 실제타입에 상관없이 제대로 복사를 하는 함수로는 현재,
 		//				clone(가상복사생성자)가 유일하다.
 		//				4. clone은 어떠한 파라메터도 받지 않도록 작성되어있다.
-		//				5. SuperClass::insert에서는 clone로 생성된 T*를 보관해 두는데, 
+		//				5. Super::insert에서는 clone로 생성된 T*를 보관해 두는데, 
 		//				source.keyset은 clone을 통해서도 복사가 불가능하다.
 		//				복사가 되려면, 복사생성된 객체에 manager가 할당되어 있어야 keyset이
 		//				manager 포인터를 갖고 인스턴스를 등록하기 때문이다.
@@ -150,7 +140,7 @@ namespace NE
 		//					다른 manager 영역에 있는 객체를 생성하고자 할때가 있을 수도 있다.
 		//
 		//			적용시점:
-		//				SuperClass인 IndexedArrayTemplate에서 clone이 사용되기 직전마다 _setGlobalManager
+		//				Super인 IndexedArrayTemplate에서 clone이 사용되기 직전마다 _setGlobalManager
 		//				를 해줘야한다. 최종적으로 적용 대상은 다음과 같다.
 		//					1. insert
 		//					2. resize
@@ -163,7 +153,7 @@ namespace NE
 		//			연산:
 		NEGlobalManagerOffer::_setGlobalManager(getManager());
 		//		복사:
-		type_index inputed_index = SuperClass::insert(index, source);
+		type_index inputed_index = Super::insert(index, source);
 		//		아이디 할당:
 		//			타겟팅:
 		NENode& node = getElement(inputed_index);
@@ -232,7 +222,7 @@ namespace NE
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
 		NEGlobalManagerOffer::_setGlobalManager(getManager());
 
-		type_result result = SuperClass::setElement(index, source);
+		type_result result = Super::setElement(index, source);
 
 		NEGlobalManagerOffer::_setGlobalManager(push);
 
@@ -243,7 +233,7 @@ namespace NE
 
 	NEBinaryFileSaver& NEIndexedNodeSet::serialize(NEBinaryFileSaver& saver) const
 	{
-		SuperClass::serialize(saver);
+		Super::serialize(saver);
 		
 		for(int n=0; n < getSize() ;n++)
 		{
@@ -261,7 +251,7 @@ namespace NE
 		//	pre:
 		//		상위 함수 호출:
 		//			내부에서 size, length와 _occupiedset을 load 해서 가지고 온다.
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 		
 
 		//	main:
@@ -307,7 +297,7 @@ namespace NE
 
 		type_result result = node._onUnlisted();
 		
-		return result |= SuperClass::remove(index);
+		return result |= Super::remove(index);
 	}
 
 	type_result NEIndexedNodeSet::_onEnlisted()
@@ -320,7 +310,7 @@ namespace NE
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
 		NEGlobalManagerOffer::_setGlobalManager(getManager());
 		
-		type_result result = SuperClass::resize(new_size);
+		type_result result = Super::resize(new_size);
 
 		NEGlobalManagerOffer::_setGlobalManager(push);
 

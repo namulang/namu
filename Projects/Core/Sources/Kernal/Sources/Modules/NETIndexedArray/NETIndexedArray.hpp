@@ -47,16 +47,18 @@
 
 namespace NE
 {
-	template <typename Type, bool pointerUseNewInstance = false, NEType::Type type = NEType::NEINDEXED_ARRAY_TEMPLATE>
+	template <typename Type, bool pointerUseNewInstance = false>
 	class NETIndexedArray : public NETReservedCollector<Type>, public NESpecifiedInsertable<Type>
 	{	
-		typedef NETIndexedArray<Type, pointerUseNewInstance, type> ThisClass;
+		typedef NETIndexedArray<Type, pointerUseNewInstance> _This;
+
+		NE_DECLARE_CLASS(_This, NETReservedCollector<Type>)
 
 		//	생성자:
 	public:
 		NETIndexedArray();
 		NETIndexedArray(type_count size);
-		NETIndexedArray(const ThisClass& source);
+		NETIndexedArray(const This& source);
 
 		//	소멸자:
 	public:
@@ -64,11 +66,11 @@ namespace NE
 
 		//	연산자 중첩:
 	public:
-		const ThisClass& operator=(const ThisClass& source); 
-		ThisClass operator+(const ThisClass& source) const;
-		bool operator==(const ThisClass& source) const;
-		bool operator!=(const ThisClass& source) const;
-		const ThisClass& operator+=(const ThisClass& source);
+		const This& operator=(const This& source); 
+		This operator+(const This& source) const;
+		bool operator==(const This& source) const;
+		bool operator!=(const This& source) const;
+		const This& operator+=(const This& source);
 
 		//	인터페이스:
 		//		접근자:
@@ -94,28 +96,26 @@ namespace NE
 		virtual type_index find(const Type& source) const;
 		//			NEObject:
 	public:
-		virtual NEObject& clone() const;
 		virtual type_result isValid() const;
 		virtual void release();
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
-		virtual NEType::Type getType() const;
 		
 		//		고유 인터페이스:
 	public:
 		type_index pushFront(const Type& source);
 		type_index popFront();
-		type_result push(const ThisClass& source);
-		type_result pushFront(const ThisClass& source);
-		bool isEqualSizeAndElement(const ThisClass& source) const;
-		bool isEqualElement(const ThisClass& source) const;
+		type_result push(const This& source);
+		type_result pushFront(const This& source);
+		bool isEqualSizeAndElement(const This& source) const;
+		bool isEqualElement(const This& source) const;
 
 	protected:
 		type_index _searchIndex(bool by_decreasing, bool target_is_occupied) const;
 
 		//	내부함수:
 	private:
-		const ThisClass& _assign(const ThisClass& source);
+		const This& _assign(const This& source);
 		void _release();
 
 		//	멤버변수:
