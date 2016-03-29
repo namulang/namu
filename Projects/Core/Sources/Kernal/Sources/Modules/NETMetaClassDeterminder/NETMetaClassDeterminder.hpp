@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../NETMetaClassChecker/NETMetaClassChecker.hpp"
-
 namespace NE
 {
 	//    MetaClassDeterminder:

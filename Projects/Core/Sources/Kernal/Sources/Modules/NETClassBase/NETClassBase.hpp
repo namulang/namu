@@ -1,22 +1,22 @@
 #pragma once
 
 #include "../../Includes/Includes.hpp"
+#include "../NETClass/define/ClassMacro.hpp"
+#include "../NEClassBase/NEClassBase.hpp"
+#include "../NEWString/NEWString.hpp"
+#include "../NEString/NEString.hpp"
+#include "../NETString/NETString.hpp"
+#include "../NEClassBaseList/NEClassBaseList.hpp"
 #include "../NETADTChecker/NETADTChecker.hpp"
 #include "../NETTemplateChecker/NETTemplateChecker.hpp"
 #include "../NETSuperClassDeterminder/NETSuperClassDeterminder.hpp"
 #include "../NETMetaClassDeterminder/NETMetaClassDeterminder.hpp"
 #include "../NETTraitDeterminder/NETTraitDeterminder.hpp"
 #include "../NETBuiltInClassChecker/NETBuiltInClassChecker.hpp"
-#include "../NETClass/define/ClassMacro.hpp"
 #include "../NEUnknown/NEUnknown.hpp"
 
 namespace NE
 {
-	template <typename T>
-	class NETInterface;
-	template <typename T>
-	class NETConcreteClass;
-
 	template <typename T>
 	class NETClassBase : public NEClassBase
 	{

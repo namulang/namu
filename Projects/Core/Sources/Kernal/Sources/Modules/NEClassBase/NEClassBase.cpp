@@ -24,33 +24,33 @@ namespace NE
 
 	}
 
-	bool NE_DLL NEClassBase::isEqualTypeWith(const This& source) const
+	type_bool NE_DLL NEClassBase::isEqualTypeWith(const This& source) const
 	{
 		return	&source							&&
 				&getName() == &source.getName()	;
 	}
 
-	bool NE_DLL NEClassBase::isEqualTypeWith(const NEObject& source) const
+	type_bool NE_DLL NEClassBase::isEqualTypeWith(const NEObject& source) const
 	{
 		return isEqualTypeWith(source.getClass());
 	}
 
-	bool NE_DLL NEClassBase::isSuperOf(const This& parent) const
+	type_bool NE_DLL NEClassBase::isSuperClassOf(const This& parent) const
 	{
-		return Kernal::getInstance().getTypeManager().isHierarchy(*this, parent);
+		return Kernal::getInstance().getClassManager().isHierarchy(*this, parent);
 	}
 
-	bool NE_DLL NEClassBase::isSuperOf(const NEObject& parent) const
+	type_bool NE_DLL NEClassBase::isSuperClassOf(const NEObject& parent) const
 	{
-		return isSuperOf(parent.getClass());
+		return isSuperClassOf(parent.getClass());
 	}
 
-	bool NE_DLL NEClassBase::isSubClassOf(const This& parent) const
+	type_bool NE_DLL NEClassBase::isSubClassOf(const This& parent) const
 	{
-		return Kernal::getInstance().getTypeManager().isHierarchy(parent, *this);
+		return Kernal::getInstance().getClassManager().isHierarchy(parent, *this);
 	}
 
-	bool NE_DLL NEClassBase::isSubClassOf(const NEObject& parent) const
+	type_bool NE_DLL NEClassBase::isSubClassOf(const NEObject& parent) const
 	{
 		return isSubClassOf(parent.getClass());
 	}
@@ -129,7 +129,7 @@ namespace NE
 		if(isRegistered()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
 		Kernal& kernel = Kernal::getInstance();
 		if( ! &kernel) return RESULT_TYPE_ERROR;
-		NETypeManager& cm = kernel.getTypeManager();
+		NEClassManager& cm = kernel.getClassManager();
 		if( ! &cm) return RESULT_TYPE_ERROR;
 
 		return cm.enroll(*this);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../Includes/Includes.hpp"
+
 namespace NE
 {
 	class NE_DLL NETypeChecker

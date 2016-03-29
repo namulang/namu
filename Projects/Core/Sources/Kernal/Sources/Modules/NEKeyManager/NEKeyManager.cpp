@@ -40,26 +40,26 @@
 
 namespace NE
 {
-	bool NEKeyManager::operator==(const NEKeyManager& source) const
+	bool NEKeyManager::operator==(const This& source) const
 	{
 		if(this == &source) return true;
 
 		return NEModule::operator==(source);	
 	}
-	bool NEKeyManager::operator!=(const NEKeyManager& source) const
+	bool NEKeyManager::operator!=(const This& source) const
 	{
 		return ! operator==(source);
 	}
-	const NEKey& NEKeyManager::getKey(NEType::Type type) const
-	{
-		for(int n=0; n < _keyset.getLength() ;n++)
-			if(_keyset[n].getType() == type)
-				return _keyset[n];
-
-		KERNAL_ERROR("주어진 타입에 알맞는 키를 못찾았습니다.\n\t: 요청한 키는 %s(%d)", NEType::getTypeName(type), type);
-		NEKey* nullpointer = 0x00;
-		return *nullpointer;
-	}
+// 	const NEKey& NEKeyManager::getKey(NEType::Type type) const
+// 	{
+// 		for(int n=0; n < _keyset.getLength() ;n++)
+// 			if(_keyset[n].getType() == type)
+// 				return _keyset[n];
+// 
+// 		KERNAL_ERROR("주어진 타입에 알맞는 키를 못찾았습니다.\n\t: 요청한 키는 %s(%d)", NEType::getTypeName(type), type);
+// 		NEKey* nullpointer = 0x00;
+// 		return *nullpointer;
+// 	}
 
 	const NEKey NE_DLL &NEKeyManager::getKey(const NEString& type_name) const
 	{
@@ -130,14 +130,6 @@ namespace NE
 	type_result NEKeyManager::execute()
 	{
 		return RESULT_SUCCESS;
-	}
-	NEType::Type NEKeyManager::getType() const
-	{
-		return NEType::NEKEY_MANAGER;
-	}
-	NEObject& NEKeyManager::clone() const
-	{
-		return *(new NEKeyManager(*this));
 	}
 	const NEKeySet NE_DLL &NEKeyManager::getKeySet() const
 	{

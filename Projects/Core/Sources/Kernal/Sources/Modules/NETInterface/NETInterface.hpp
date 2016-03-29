@@ -8,6 +8,7 @@
 //	Author			:	2016-02-13	kniz	Creations
 //	---------------------------------------------------------------------------------
 #pragma once
+
 #include "../NETClassBase/NETClassBase.hpp"
 
 namespace NE

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../NEClassBase/NEClassBase.hpp"
+#include "../NETMetaClassDeterminder/NETMetaClassDeterminder.hpp"
 #include "../NETInterface/NETInterface.hpp"
 #include "../NETConcreteClass/NETConcreteClass.hpp"
 #include "../NETUnknownMetaClass/NETUnknownMetaClass.hpp"

@@ -7,12 +7,14 @@ namespace NE
 {
 	class NE_DLL NEKeyManager : public NEModule
 	{
-	public:
-		bool operator==(const NEKeyManager& source) const;
-		bool operator!=(const NEKeyManager& source) const;
+		NE_DECLARE_CLASS(NEKeyManager, NEModule)
 
 	public:
-		const NEKey& getKey(NEType::Type type) const;
+		bool operator==(const This& source) const;
+		bool operator!=(const This& source) const;
+
+	public:
+		//const NEKey& getKey(NEType::Type type) const;
 		const NEKey& getKey(const NEString& type_name) const;
 		const NEKeySet& getKeySet() const;
 
@@ -22,10 +24,6 @@ namespace NE
 		
 	private:
 		type_result execute();
-
-	public:
-		virtual NEType::Type getType() const;
-		virtual NEObject& clone() const;
 
 	protected:
 		NEKeySet _keyset;

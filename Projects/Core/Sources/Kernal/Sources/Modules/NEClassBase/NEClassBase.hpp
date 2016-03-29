@@ -9,13 +9,17 @@
 //    히스토리:    2016-02-09    이태훈    생성
 //    ---------------------------------------------------------------------------------
 #pragma once
+
 //    include:
 #include "../NEUnit/NEUnit.hpp"
 #include "../../Modules/NETString/NETString.hpp"
 
 namespace NE
 {
-	class NEClassBaseList;
+	class NEClassBase;
+	template <typename T, type_bool pointerUseNewHeap>
+	class NE_DLL NETList;
+	typedef NETList<NEClassBase*, true> NEClassBaseList;
 
 	class NE_DLL NEClassBase : public NEUnit
 	{
@@ -63,12 +67,12 @@ namespace NE
 		//        General interfaces:
 	public:
 		type_result enroll();
-		bool isEqualTypeWith(const This& source) const;
-		bool isEqualTypeWith(const NEObject& source) const;
-		bool isSuperClassOf(const This& parent) const;
-		bool isSuperClassOf(const NEObject& parent) const;
-		bool isSubClassOf(const This& parent) const;
-		bool isSubClassOf(const NEObject& parent) const;
+		type_bool isEqualTypeWith(const This& source) const;
+		type_bool isEqualTypeWith(const NEObject& source) const;
+		type_bool isSuperClassOf(const This& parent) const;
+		type_bool isSuperClassOf(const NEObject& parent) const;
+		type_bool isSubClassOf(const This& parent) const;
+		type_bool isSubClassOf(const NEObject& parent) const;
 		const This& getSuperClass() const;
 
 	protected:

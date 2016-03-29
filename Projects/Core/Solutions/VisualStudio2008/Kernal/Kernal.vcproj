@@ -1397,6 +1397,10 @@
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBase\Specialization.hpp"
 										>
 									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBase\SpecializationNEClassBaseList.hpp"
+										>
+									</File>
 									<Filter
 										Name="NETInterface"
 										>

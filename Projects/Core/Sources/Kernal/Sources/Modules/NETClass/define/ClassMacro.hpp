@@ -7,6 +7,18 @@
 //	Author			:	2016-02-13	kniz
 //	---------------------------------------------------------------------------------
 #pragma once
+
+//	template class forward declaration:
+//		This macro can be included far earlier than derived class of NETClassBase below.
+//		See include section of the NETClassBase.hpp file.
+namespace NE
+{
+	template <typename T>
+	class NETInterface;
+	template <typename T>
+	class NETConcreteClass;
+}
+
 //	Class Macros:
 //		we're providing fully functioned macro only. please don't use macros which have NATIVE 
 //		word on its name. that's internal.
