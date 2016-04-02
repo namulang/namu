@@ -2131,6 +2131,14 @@
 									>
 								</File>
 							</Filter>
+							<Filter
+								Name="NEHeaderBase"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEHeaderBase\NEHeaderBase.hpp"
+									>
+								</File>
+							</Filter>
 						</Filter>
 					</Filter>
 					<Filter
