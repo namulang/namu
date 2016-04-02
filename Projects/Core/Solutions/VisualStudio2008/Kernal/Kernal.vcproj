@@ -2080,6 +2080,50 @@
 								</Filter>
 							</Filter>
 						</Filter>
+						<Filter
+							Name="NEIdentifier"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIdentifier\NEIdentifier.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIdentifier\NEIdentifier.hpp"
+								>
+							</File>
+							<Filter
+								Name="innerclass"
+								>
+								<Filter
+									Name="Bean"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIdentifier\innerclass\Bean.hpp"
+										>
+									</File>
+								</Filter>
+							</Filter>
+							<Filter
+								Name="NEClassIdentifier"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassIdentifier\NEClassIdentifier.cpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassIdentifier\NEClassIdentifier.hpp"
+									>
+								</File>
+							</Filter>
+							<Filter
+								Name="NEPackage"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackage\NEPackage.hpp"
+									>
+								</File>
+							</Filter>
+						</Filter>
 					</Filter>
 					<Filter
 						Name="NEUnknown"

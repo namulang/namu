@@ -1,41 +1,4 @@
-//	---------------------------------------------------------------------------------
-//	클래스명:	NEModuleManager::DLLHeader
-//	설명	:	모듈매니져에 의해서 fetch되는 DLL의 헤더.
-//				나중에 DLL을 닫을때 필요해 진다.
-//	관계	:	기반클래스.	NEObject
-//	특성	:	
-//	알고리즘:	
-//	사용방법:	
-//	메모	:	
-//	히스토리:	2011-07-07	이태훈	개발 완료	
-//	---------------------------------------------------------------------------------
-typedef NEModuleList (NE_FUNCTION_CALL *EntryPoint)(void);
 
-class NE_DLL DLLHeader : public NEObject
-{
-public:
-	//	Define typedefs for RTTI in manual:
-	//		because this class was designated to block calling 'clone()'
-	//		for some reason. so, we can't just use DECLARE_CLASS macro.
-	typedef DLLHeader This;
-	typedef NEObject Super;
-	typedef NETConcreteClass<This> MetaClass;
-
-	//	생성자:
-public:
-	DLLHeader();	
-	DLLHeader(const DLLHeader& source);	
-
-	//	소멸자:
-public:
-	~DLLHeader();
-
-	//	연산자 중첩:
-public:	
-	const DLLHeader& operator=(const DLLHeader& source);
-	bool operator==(const DLLHeader& source) const;
-	bool operator!=(const DLLHeader& source) const;
-	
 public:
 	NETString& getPath();
 	const NETString& getPath() const;
