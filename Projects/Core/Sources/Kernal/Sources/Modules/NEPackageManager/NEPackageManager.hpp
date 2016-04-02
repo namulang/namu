@@ -1,5 +1,5 @@
 //	---------------------------------------------------------------------------------
-//	클래스명:	NEModuleManager
+//	클래스명:	NEPackageManager
 //	설명	:	모듈을 관리하는 관리자 클래스.
 //	관계	:	기반클래스.	NEModule
 //	특성	:	노드엔진에 기본적으로 포함되는 모듈클래스다.
@@ -20,29 +20,25 @@
 //	include:
 #include "../NENode/NENode.hpp"
 #include "../NEModuleSet/NEModuleSet.hpp"
-#include "../NEModuleList/NEModuleList.hpp" // innerclass에서 사용하기 위해서
+#include "../NEPackageSet/NEPackageSet.hpp"
 
 namespace NE
 {
-	class NE_DLL NEModuleManager : public NEModule
+	class NE_DLL NEPackageManager : public NEModule
 	{
-		NE_DECLARE_CLASS(NEModuleManager, NEModule)
+		NE_DECLARE_CLASS(NEPackageManager, NEModule)
 
 	public:
 		friend class Kernal;
 
 		//	내부클래스:
 	public:
-#include "innerclass/DLLHeader/DLLHeader.hpp"
 #include "innerclass/ErrorCode/ErrorCode.hpp"
-
-		//	typedef:
-		typedef class NE_DLL NETList<This::DLLHeader> DLLHeaderList;
 
 		//	생성자:
 	public:
-		NEModuleManager();
-		NEModuleManager(const This& source);
+		NEPackageManager();
+		NEPackageManager(const This& source);
 
 		//	연산자 오버로딩:
 	public:
@@ -52,13 +48,12 @@ namespace NE
 
 		//	소멸자:
 	public:
-		virtual ~NEModuleManager();
+		virtual ~NEPackageManager();
 
 		//	접근자:
 	public:
-		const NEModule& getModule(const NEExportable::Identifier& identifer) const;
-		const DLLHeaderList& getDllHeaderSet() const;
-		const NEModuleSet& getModuleSet() const;
+		const NEPackage& findPackage(const NEIdentifier& package_identifier) const;
+		const NEPackageSet& getPackages() const;
 		
 		//	인터페이스:
 		//		상속:
@@ -92,10 +87,6 @@ namespace NE
 
 		//	멤버변수:		
 	protected:		
-		DLLHeaderList _dllheaderset;
-		NEModuleSet _moduleset;
+		NEPackageSet _packages;
 	};
-
-	template 
-	class NE_DLL NETList<NEModuleManager::DLLHeader, false>;
 }

@@ -209,4 +209,11 @@ namespace NE
 		return ! operator==(source);
 	}
 
+	type_bool NEIdentifier::isNearlyEqualTo(const This& rhs) const
+	{
+		if( ! &rhs) return false;
+
+		return	rhs.getName() == getName()		&&
+				rhs.getAuthor() == getAuthor()	;
+	}
 }

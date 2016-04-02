@@ -2,12 +2,13 @@
 #pragma once
 
 #include "../NEIdentifier/NEIdentifier.hpp"
+#include "../NEClassBaseList/NEClassBaseList.hpp"
 
 namespace NE
 {
 	typedef NEClassBaseList (NE_FUNCTION_CALL *EntryPoint)(void);
 
-	class NE_DLL NEPackage : public NEIdentifier
+	class NE_DLL NEPackage : public NEPackageHeader
 	{
 		//	Define typedefs for RTTI in manual:
 		//		because this class was designated to block calling 'clone()'
@@ -59,6 +60,7 @@ namespace NE
 		NETString _path;
 		HINSTANCE _instance;
 		EntryPoint _entrypoint;
+		NEIntSet _compatible_revisions;
 		NEClassBaseList _components;
 
 	public:

@@ -210,7 +210,7 @@ namespace NE
 		//			serialize 도중에 무사히 enlist, unlist가 동작되는지?
 		//	pre:
 		//		타겟팅:
-		const NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		//		상위 함수 호출:
 		Super::serialize(loader);
 

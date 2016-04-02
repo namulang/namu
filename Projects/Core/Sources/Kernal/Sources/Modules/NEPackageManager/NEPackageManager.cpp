@@ -1,4 +1,4 @@
-#include "NEModuleManager.hpp"
+#include "NEPackageManager.hpp"
 #include "../Kernal/Kernal.hpp"
 #include "define/define.hpp"
 
@@ -7,7 +7,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	NE_DLL NEModuleManager::NEModuleManager()
+	NE_DLL NEPackageManager::NEPackageManager()
 		: Super()
 	{
 		_release();
@@ -18,7 +18,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	NE_DLL NEModuleManager::NEModuleManager(const NEModuleManager& source)
+	NE_DLL NEPackageManager::NEPackageManager(const This& source)
 		: Super(source)
 	{
 		_assign(source);
@@ -29,7 +29,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	NE_DLL NEModuleManager::~NEModuleManager()
+	NE_DLL NEPackageManager::~NEPackageManager()
 	{
 
 	}
@@ -39,7 +39,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	const NEModuleManager NE_DLL &NEModuleManager::operator=(const NEModuleManager& source)
+	const NEPackageManager NE_DLL &NEPackageManager::operator=(const This& source)
 	{		
 		Super::operator=(source);
 
@@ -51,12 +51,11 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	bool NE_DLL NEModuleManager::operator==(const NEModuleManager& source) const
+	bool NE_DLL NEPackageManager::operator==(const This& source) const
 	{
 		if(this == &source) return true;
 		if(Super::operator==(source) == false) return false;
-		if(_dllheaderset != source._dllheaderset) return false;
-		if(_moduleset != source._moduleset) return false;
+		if(_packages != source._packages) return false;
 		
 		return true;
 	}
@@ -66,7 +65,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	bool NE_DLL NEModuleManager::operator!=(const NEModuleManager& source) const
+	bool NE_DLL NEPackageManager::operator!=(const This& source) const
 	{
 		return !(operator==(source));
 	}
@@ -89,10 +88,10 @@ namespace NE
 	//	메모	:	식별자란, "이름", "개정번호", "제작자"를 말한다.
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	const NEModule NE_DLL &NEModuleManager::getModule(const NEExportable::Identifier& identifer) const
+	const NEPackage NE_DLL &NEPackageManager::findPackage(const NEIdentifier& identifier) const
 	{
 		//	pre:
-		NEModule* null_pointer = NE_NULL;
+		NEPackage* null_pointer = NE_NULL;
 
 
 		//	main:
@@ -104,21 +103,21 @@ namespace NE
 		Fit nearly_best_fit = { -1, -1 },	// Revision이 일치하지 않을 경우, Compatibility를 조사하여 가장 근접한 모듈을 찾아낸다.
 			most_fit = { -1, -1 };	// Compatiblity 정보조차 없을 경우, 가장 Revision이 큰 것을 반환한다.
 
-		type_int rev = identifer.getRevision();
+		type_int rev = identifier.getInterfaceRevision();
 
-		for(type_index n=0; n < _moduleset.getLength() ;n++)
+		for(type_index n=0; n < _packages.getLength() ;n++)
 		{
-			const NEExportable::ModuleHeader& header = _moduleset.getElement(n).getHeader();
+			const NEIdentifier& e = _packages[n];
 
 			//	만약 제작자와 이름이 같다면:
-			if(identifer.isSameModule(header))
+			if(identifier.isNearlyEqualTo(e))
 			{
 				//	같은 종류의 모듈을 발견한 경우:
 				//		개정횟수마져 일치하면:
-				type_int target_rev = header.getRevision();
+				type_int target_rev = e.getInterfaceRevision();
 				if(target_rev == rev)
 					//		최선책 발견:	더이상 검색할 이유가 없다.
-					return _moduleset.getElement(n);
+					return e;
 				else //	차선책 경합:
 				{
 					if (target_rev > most_fit.rev)
@@ -156,18 +155,18 @@ namespace NE
 		//		차선책을 찾았다면:
 		if(nearly_best_fit.n != NE_INDEX_ERROR)
 		{
-			KERNAL_INFORMATION("W201011C45 : 비슷한 모듈만 검색됨\n주어진 모듈의 이름, 개발자, 개정번호까지 일치하는 모듈은 없었습니다.\n개발자와 이름이 같은 것으로 보아, 동일한 모듈로 보이나, 개정번호가 다른 모듈은 찾았습니다.\n모듈 매니져는 이 모듈을 반환할 것입니다.\n찾으려는 식별자 :\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d\n대신 찾은 모듈의 개정번호 : %d", identifer.getName().toCharPointer(), identifer.getDeveloper().toCharPointer(), identifer.getRevision(), _moduleset[nearly_best_fit.n].getHeader().getRevision())
-				return _moduleset[nearly_best_fit.n];
+			KERNAL_INFORMATION("W201011C45 : 비슷한 모듈만 검색됨\n주어진 모듈의 이름, 개발자, 개정번호까지 일치하는 모듈은 없었습니다.\n개발자와 이름이 같은 것으로 보아, 동일한 모듈로 보이나, 개정번호가 다른 모듈은 찾았습니다.\n모듈 매니져는 이 모듈을 반환할 것입니다.\n찾으려는 식별자 :\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d\n대신 찾은 모듈의 개정번호 : %d", identifier.getName().toCharPointer(), identifier.getDeveloper().toCharPointer(), identifier.getRevision(), _packages[nearly_best_fit.n].getHeader().getRevision())
+				return _packages[nearly_best_fit.n];
 		}
 		else if (most_fit.n != NE_INDEX_ERROR)
 		{
-			KERNAL_WARNING(" : 호환성이 만족되는 모듈조차 없었기에, 가장 최신 Revision의 모듈을 반환합니다.\n\t반환할 모듈 정보 : %s.%s.%d", identifer.getName().toCharPointer(), identifer.getDeveloper().toCharPointer(), most_fit.rev);
-			return _moduleset[most_fit.n];
+			KERNAL_WARNING(" : 호환성이 만족되는 모듈조차 없었기에, 가장 최신 Revision의 모듈을 반환합니다.\n\t반환할 모듈 정보 : %s.%s.%d", identifier.getName().toCharPointer(), identifier.getDeveloper().toCharPointer(), most_fit.rev);
+			return _packages[most_fit.n];
 		}
 		//	차선책을 찾지 못했다면:	만약 차선책조차 찾지 못했다면 처음에 second_fit_index로 주어졌던
 		//							더미모듈이 내보내질 것이다.
 		{		
-			KERNAL_ERROR("E201011C44 : 일치하는 모듈 검색 실패\n주어진 모듈의 이름, 개발자와 일치하는 모듈이 없습니다. 모듈매니져는 더미모듈을 반환할 것입니다.\n찾으려는 식별자 :\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d", identifer.getName().toCharPointer(), identifer.getDeveloper().toCharPointer(), identifer.getRevision())
+			KERNAL_ERROR("E201011C44 : 일치하는 모듈 검색 실패\n주어진 모듈의 이름, 개발자와 일치하는 모듈이 없습니다. 모듈매니져는 더미모듈을 반환할 것입니다.\n찾으려는 식별자 :\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d", identifier.getName().toCharPointer(), identifier.getDeveloper().toCharPointer(), identifier.getRevision())
 				return *null_pointer;
 		}
 	}
@@ -177,9 +176,9 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-08-16	이태훈	작성
 	//	---------------------------------------------------------------------------------
-	const NEModuleManager::DLLHeaderList NE_DLL &NEModuleManager::getDllHeaderSet() const
+	const NEPackageManager::DLLHeaderList NE_DLL &NEPackageManager::getDllHeaderSet() const
 	{	
-		return _dllheaderset;
+		return _packages;
 	}
 
 
@@ -187,9 +186,9 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-08-16	이태훈	작성
 	//	---------------------------------------------------------------------------------
-	const NEModuleSet NE_DLL &NEModuleManager::getModuleSet() const
+	const NEModuleSet NE_DLL &NEPackageManager::getModuleSet() const
 	{	
-		return _moduleset;
+		return _packages;
 	}
 
 
@@ -201,7 +200,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	//	모듈 파일로부터 모듈을 가져온다
-	type_result NE_DLL NEModuleManager::execute()
+	type_result NE_DLL NEPackageManager::execute()
 	{		
 		return RESULT_SUCCESS;
 	}
@@ -211,19 +210,19 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	type_result NE_DLL NEModuleManager::isValid() const
+	type_result NE_DLL NEPackageManager::isValid() const
 	{						
 		type_result result = Super::isValid();
 		if(NEResult::hasError(result)) return result | NEMODULE_IS_NOT_VALID;
-		result = _dllheaderset.isValid();
+		result = _packages.isValid();
 		if(NEResult::hasError(result)) return result | DLL_HEADERSET_IS_NOT_VALID;
-		result = _moduleset.isValid();
+		result = _packages.isValid();
 		if(NEResult::hasError(result)) return result | MODULESET_IS_NOT_VALID;
 		
 		return RESULT_SUCCESS;
 	}
 
-	type_result NE_DLL NEModuleManager::initialize()
+	type_result NE_DLL NEPackageManager::initialize()
 	{
 		//	pre:		
 		//		초기화:
@@ -242,7 +241,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	void NE_DLL NEModuleManager::release()
+	void NE_DLL NEPackageManager::release()
 	{
 		//	멤버함수 초기화
 		Super::release();
@@ -258,7 +257,7 @@ namespace NE
 	//	메모	:
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	const NEExportable::ModuleHeader NE_DLL &NEModuleManager::getHeader() const
+	const NEExportable::ModuleHeader NE_DLL &NEPackageManager::getHeader() const
 	{
 		static NEExportable::ModuleHeader _header;
 
@@ -271,7 +270,7 @@ namespace NE
 			_header.getReleaseDate() = _T(_DATE);
 			_header.getVersion()  = _T(_VERSION);
 			_header.getComment() = _T(_COMMENT);
-			_header.setMaxErrorCodeCount(NEModuleManager::END_OF_ERROR_CODE - 1);
+			_header.setMaxErrorCodeCount(This::END_OF_ERROR_CODE - 1);
 		}
 
 		return _header;
@@ -282,7 +281,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-08-03	이태훈	작성
 	//	---------------------------------------------------------------------------------
-	LPCTSTR NE_DLL NEModuleManager::getErrorMessage(type_errorcode errorcode) const
+	LPCTSTR NE_DLL NEPackageManager::getErrorMessage(type_errorcode errorcode) const
 	{
 		switch(errorcode)
 		{
@@ -303,12 +302,12 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-08-08	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	const NEModuleManager& NEModuleManager::_assign(const NEModuleManager& source)
+	const NEPackageManager& NEPackageManager::_assign(const This& source)
 	{
 		if(this == &source) return *this;
 
-		_dllheaderset = source._dllheaderset;
-		_moduleset = source._moduleset;
+		_packages = source._packages;
+		_packages = source._packages;
 
 		return *this;
 	}
@@ -317,10 +316,10 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	void NEModuleManager::_release()
+	void NEPackageManager::_release()
 	{
-		_moduleset.create(1); // 자기자신을 담기 위해서 1로 설정한다.
-		_dllheaderset.release();
+		_packages.create(1); // 자기자신을 담기 위해서 1로 설정한다.
+		_packages.release();
 	}
 
 
@@ -331,7 +330,7 @@ namespace NE
 	//	메모	:	가져온 모듈은 의존성을 고려해서 재 정렬한다.
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	void NEModuleManager::_linkModule()
+	void NEPackageManager::_linkModule()
 	{
 		//	배경:	
 		//		의존성:	
@@ -351,10 +350,10 @@ namespace NE
 
 		//	main:
 		//		임시 버퍼 생성:
-		NEModuleList bucket; // 나중에 _moduleset로 값을 넘겨줄 리스트. DLL 엔트리 포인트로부터 여기에 모듈을 채우게 된다.			
+		NEModuleList bucket; // 나중에 _packages로 값을 넘겨줄 리스트. DLL 엔트리 포인트로부터 여기에 모듈을 채우게 된다.			
 		//		버퍼에 데이터 축적:
-		for(type_index n=0; n < _dllheaderset.getLength() ;n++)
-			bucket.push( _dllheaderset[n].getEntryPoint()() ); // entrypoint로부터 NETList가 넘어온다.
+		for(type_index n=0; n < _packages.getLength() ;n++)
+			bucket.push( _packages[n].getEntryPoint()() ); // entrypoint로부터 NETList가 넘어온다.
 		//		중복 제거 필터링:
 		_filterNestedName(bucket);
 		//		의존성 재정렬:
@@ -371,26 +370,26 @@ namespace NE
 	//	메모	:	push되는 순서대로 모듈의 scriptcode를 부과한다.
 	//	히스토리:	2011-07-07	이태훈	개발 완료	
 	//	---------------------------------------------------------------------------------
-	void NEModuleManager::_pushModuleSet(NEModuleList& buffer)
+	void NEPackageManager::_pushModuleSet(NEModuleList& buffer)
 	{	
 		//	pre:
 		if(buffer.getLength() <= 0) return;
 
 
 
-		//	main: buffer의 담긴 모듈을 최종적으로 _moduleset에 넣는다		
+		//	main: buffer의 담긴 모듈을 최종적으로 _packages에 넣는다		
 		//		모듈셋의 버퍼공간 생성:
 		//			왜 1을 더하는가:
 		//				모듈매니져인 자기 자신의 주소값을 넣기 위해서다.
 		//				이때 주의할 점은, 또하나의 인스턴스가 만들어지지 않고 주소값이 다이렉트
 		//				로 들어간다는 점이다.
-		_moduleset.create(buffer.getLength());
+		_packages.create(buffer.getLength());
 
 		//		buffer로부터의 복사:
 		for(NEModuleList::Iterator* iterator = buffer.getIterator(0); iterator != NE_NULL ;iterator = iterator->getNext())		
 		{
 			NEModule& target = iterator->getValue();
-			_moduleset.push(target);	//	내부에서 Module.id, _onArgumentFetched, _onFetchModule가 각각 호출 됨.
+			_packages.push(target);	//	내부에서 Module.id, _onArgumentFetched, _onFetchModule가 각각 호출 됨.
 
 			KERNAL_INFORMATION(" 모듈 추가됨\n모듈명: %s", target.getHeader().getName().toCharPointer());
 		}
@@ -404,7 +403,7 @@ namespace NE
 	//	메모	:
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	void NEModuleManager::_resorting(NEModuleList& source) // const가 아님에 주목하라
+	void NEPackageManager::_resorting(NEModuleList& source) // const가 아님에 주목하라
 	{		
 		//	main:
 		//		의존성 모듈 추출:	dependencies를 갖고 있는 모듈을 분리시킨다.
@@ -490,7 +489,7 @@ namespace NE
 	//	메모	:
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	type_index NEModuleManager::_searchModuleIndexWithDependencies(NEModule& module, NEModuleList& searching_target)
+	type_index NEPackageManager::_searchModuleIndexWithDependencies(NEModule& module, NEModuleList& searching_target)
 	{	//	배경:
 		//		의존성 정보:
 		//			NETString header::module_dependencies[]의 형태로 담겨져 있다.
@@ -546,7 +545,7 @@ namespace NE
 	//	메모	:
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	void NEModuleManager::_filterNestedName(NEModuleList& source)
+	void NEPackageManager::_filterNestedName(NEModuleList& source)
 	{
 		//	main:
 		for(type_index n=0; n < source.getLength() ;n++)
@@ -585,7 +584,7 @@ namespace NE
 	//	메모	:	NEFileSystem의 검색기능을 사용한다.
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	void NEModuleManager::_linkDLL()
+	void NEPackageManager::_linkDLL()
 	{			
 		//	pre:
 		_pushDLLPathToDLLHeaderSet();
@@ -623,7 +622,7 @@ namespace NE
 	//	메모	:
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	type_result NEModuleManager::_pushDLLHeader(NEModuleManager::DLLHeader& header)
+	type_result NEPackageManager::_pushDLLHeader(This::DLLHeader& header)
 	{	//	배경:
 		//		왜 push를 하고 참조자를 가져오는가:
 		//			push하는 과정에서 소멸자와 복사생성자가 호출되기 때문이다.
@@ -681,7 +680,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	
-	void NEModuleManager::_pushDLLPathToDLLHeaderSet()
+	void NEPackageManager::_pushDLLPathToDLLHeaderSet()
 	{
 		//	pre:
 		//		타겟팅:
@@ -720,22 +719,22 @@ namespace NE
 					continue;
 				}
 
-			NEModuleManager::DLLHeader header;
+			This::DLLHeader header;
 			header.getPath() = task.getFilePath();
-			_dllheaderset.push(header);
+			_packages.push(header);
 		}
 	}
 
 	/*
 		변경점이 존재한다면 true를 반환한다
 	*/
-	bool NEModuleManager::_linkDLLsUsingInputedPath()
+	bool NEPackageManager::_linkDLLsUsingInputedPath()
 	{
 		bool has_changed = false;
 
-		for(int n=0; n < _dllheaderset.getLength() ;n++)
+		for(int n=0; n < _packages.getLength() ;n++)
 		{
-			NEModuleManager::DLLHeader& header = _dllheaderset[n];
+			This::DLLHeader& header = _packages[n];
 
 			if( ! header.isLoaded())
 				if(_pushDLLHeader(header) == RESULT_SUCCESS)
@@ -747,11 +746,11 @@ namespace NE
 		return has_changed;
 	}
 
-	void NEModuleManager::_reportErrorsIfThereAreModulesNotFeched()
+	void NEPackageManager::_reportErrorsIfThereAreModulesNotFeched()
 	{
-		for(int n=0; n < _dllheaderset.getLength() ;)
+		for(int n=0; n < _packages.getLength() ;)
 		{
-			NEModuleManager::DLLHeader& header = _dllheaderset[n];
+			This::DLLHeader& header = _packages[n];
 
 			if( ! header.isLoaded())
 			{
@@ -760,7 +759,7 @@ namespace NE
 #else
 				KERNAL_ERROR("E201011C40 : DLL 동적 연결 실패\nDLL은 찾았으나 동적 연결에 실패했습니다.\n올바른 DLL 파일이 아니거나, 릴리즈 / 디버그 모드가 다를 경우 이 메세지가 발생할 수 있습니다.\n다시 확인 해보십시오.\nKernal 빌드 모드 : Release\n파일명 : %s", header.getPath().toCharPointer())
 #endif		
-				_dllheaderset.remove(n);
+				_packages.remove(n);
 			}
 			else
 				n++;

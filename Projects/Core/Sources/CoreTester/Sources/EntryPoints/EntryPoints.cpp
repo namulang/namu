@@ -172,7 +172,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -200,7 +200,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -259,7 +259,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -325,7 +325,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -388,7 +388,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -474,7 +474,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -577,7 +577,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -606,7 +606,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -641,7 +641,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -674,7 +674,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -716,7 +716,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -1284,7 +1284,7 @@ public:
 		NENodeManager& nm = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ncs = nm.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -1374,7 +1374,7 @@ public:
 		NENodeManager& nm = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ncs = nm.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -1477,7 +1477,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -1542,7 +1542,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -1613,7 +1613,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -2114,7 +2114,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -2209,7 +2209,7 @@ public:
 	{
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 
@@ -2616,7 +2616,7 @@ public:
 		Kernal& kernel = Kernal::getInstance();;
 		NENodeManager& manager = kernel.getNodeManager();
 		NEKeyManager& keyer = kernel.getKeyManager();
-		NEModuleManager& moduler = kernel.getModuleManager();
+		NEPackageManager& moduler = kernel.getModuleManager();
 		NEScriptManager& scripter = kernel.getScriptManager();
 		NEScriptEditor& ed = Editor::getInstance().getScriptEditor();
 
@@ -2739,7 +2739,7 @@ public:
 		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 		NERootNodeCodeSet& ns = manager.getRootNodes();
-		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModuleSet& moduleset = moduler.getModuleSet();
 		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();
@@ -2781,7 +2781,7 @@ public:
 //		NENodeManager& manager = Kernal::getInstance().getNodeManager();
 //		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();
 //		NERootNodeCodeSet& ns = manager.getRootNodes();
-//		NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+//		NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 //		const NEModuleSet& moduleset = moduler.getModuleSet();
 //		NEScriptManager& scripter = Kernal::getInstance().getScriptManager();
 //		NEScriptHeader& ss = (NEScriptHeader&) scripter.getScriptHeader();

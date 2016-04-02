@@ -224,7 +224,7 @@ namespace NE
 
 	NEBinaryFileSaver& ThisClass::_serializeAsScript(NEBinaryFileSaver& saver) const
 	{
-		const NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModule& m = moduler.getModuleSet()[_code];
 		if( ! &m)
 			return saver << false;
@@ -251,7 +251,7 @@ namespace NE
 
 
 		//	main:
-		const NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+		const NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		NEExportable::Identifier identifier;
 		loader >> identifier;
 		const NEModule& module = moduler.getModule(identifier);

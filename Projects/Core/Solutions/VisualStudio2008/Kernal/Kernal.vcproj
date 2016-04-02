@@ -1092,14 +1092,14 @@
 												</Filter>
 											</Filter>
 											<Filter
-												Name="NEModuleManager"
+												Name="NEPackageManager"
 												>
 												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleManager\NEModuleManager.cpp"
+													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackageManager\NEPackageManager.cpp"
 													>
 												</File>
 												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleManager\NEModuleManager.hpp"
+													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackageManager\NEPackageManager.hpp"
 													>
 												</File>
 												<Filter
@@ -1117,19 +1117,7 @@
 														Name="ErrorCode"
 														>
 														<File
-															RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleManager\innerclass\ErrorCode\ErrorCode.hpp"
-															>
-														</File>
-													</Filter>
-													<Filter
-														Name="DLLHeader"
-														>
-														<File
-															RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleManager\innerclass\DLLHeader\DLLHeader.cpp"
-															>
-														</File>
-														<File
-															RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleManager\innerclass\DLLHeader\DLLHeader.hpp"
+															RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackageManager\innerclass\ErrorCode\ErrorCode.hpp"
 															>
 														</File>
 													</Filter>
@@ -1861,6 +1849,14 @@
 											</File>
 										</Filter>
 									</Filter>
+									<Filter
+										Name="NEPackageSet"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackageSet\NEPackageSet.hpp"
+											>
+										</File>
+									</Filter>
 								</Filter>
 								<Filter
 									Name="NETList"
@@ -2006,6 +2002,14 @@
 										</File>
 										<File
 											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseList\NEClassBaseList.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEPackageList"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackageList\NEPackageList.hpp"
 											>
 										</File>
 									</Filter>

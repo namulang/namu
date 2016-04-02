@@ -41,6 +41,10 @@ namespace NE
 		NETString& getAuthor();
 		const type_int getInterfaceRevision() const;
 		type_result setInterfaceRevison(type_int new_revision);
+		///	@brief	this method returns true when argument matches with name and 
+		///			author. 
+		///			interface revision is not concerned target.
+		type_bool isNearlyEqualTo(const This& rhs) const;
 
 	public:
 		virtual void release();

@@ -166,7 +166,7 @@ namespace DX9Graphics
 	public:
 		static const NECodeSet& getModuleScriptCodes()
 		{
-			NEModuleManager& moduler = Kernal::getInstance().getModuleManager();
+			NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 			NECodeType type(NECodeType::MODULE_SCRIPT);
 			static NECodeSet codeset(type);
 			if (codeset.getLength() <= 0)
