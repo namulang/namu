@@ -2119,6 +2119,10 @@
 								Name="NEPackage"
 								>
 								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackage\NEPackage.cpp"
+									>
+								</File>
+								<File
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackage\NEPackage.hpp"
 									>
 								</File>
