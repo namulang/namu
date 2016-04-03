@@ -25,6 +25,7 @@ namespace NE
 		using NETClassBase<T>::getTraitClassStatically;
 		using NETClassBase<T>::getNameStatically;
 		using NETClassBase<T>::isRegisteredStatically;		
+		using NETClassBase<T>::getIdentifierStatically;
 
 	public:
 		virtual type_bool isInstantiable() const

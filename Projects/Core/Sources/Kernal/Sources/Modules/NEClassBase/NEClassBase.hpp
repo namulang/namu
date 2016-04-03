@@ -13,6 +13,7 @@
 //    include:
 #include "../NEUnit/NEUnit.hpp"
 #include "../../Modules/NETString/NETString.hpp"
+#include "../NEClassIdentifier/NEClassIdentifier.hpp"
 
 namespace NE
 {
@@ -27,7 +28,7 @@ namespace NE
 	public:
 		typedef NEClassBase This;
 		typedef NEUnit Super;
-		friend class NEClassManager;
+		friend class NEPackageManager;
 
 		//    Constructors:
 	public:
@@ -63,6 +64,7 @@ namespace NE
 	protected:
 		//    these method were used only for TypeManager friend class.
 		virtual type_result _setRegistered(type_bool new_is_registered) = 0;
+		virtual type_result _setIdentifier(const NEClassIdentifier& new_identifier) = 0;
 
 		//        General interfaces:
 	public:

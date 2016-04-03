@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../NEObject/NEObject.hpp"
-#include "../NETClass/NETClass.hpp"
 
 namespace NE
 {

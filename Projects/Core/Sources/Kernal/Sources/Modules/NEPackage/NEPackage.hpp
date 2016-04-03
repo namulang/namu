@@ -1,6 +1,7 @@
 ///	@author	kniz
 #pragma once
 
+#include "../NETClass/NETClass.hpp"
 #include "../NEIdentifier/NEIdentifier.hpp"
 #include "../NEClassBaseList/NEClassBaseList.hpp"
 

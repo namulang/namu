@@ -1442,6 +1442,18 @@
 										</File>
 									</Filter>
 								</Filter>
+								<Filter
+									Name="NETClassBaseCommon"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseCommon\NETClassBaseCommon.hpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseCommon\NETClassBaseCommon.inl"
+										>
+									</File>
+								</Filter>
 							</Filter>
 							<Filter
 								Name="NEType"

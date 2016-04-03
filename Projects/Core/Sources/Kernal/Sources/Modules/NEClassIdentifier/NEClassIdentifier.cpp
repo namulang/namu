@@ -1,3 +1,4 @@
+#include "../NETClass/NETClass.hpp"
 #include "NEClassIdentifier.hpp"
 
 namespace NE

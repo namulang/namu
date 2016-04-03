@@ -1,3 +1,4 @@
+#include "../NETClass/NETClass.hpp"
 #include "../NEIdentifier.hpp"
 #include '../NEPackage/NEPackage.hpp'
 #include "../Kernal/Kernal.hpp"
