@@ -173,4 +173,38 @@ namespace NE
 
 		return _inner;
 	}
+
+	//////////////////////////////////////////////////////////////////////////
+
+	type_bool NETClassBase<NEModule>::isMetaClassDefined() const
+	{
+		return IS_METACLASS_DEFINED;
+	}
+
+	type_bool NETClassBase<NEModule>::isInstantiable() const
+	{
+		return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
+	}
+
+	type_bool NETClassBase<NEModule>::isTemplate() const
+	{
+		return IS_TEMPLATE;
+	}
+
+	type_bool NETClassBase<NEModule>::isBuiltInClass() const
+	{
+		return IS_BUILT_IN_CLASS;
+	}
+
+	const NEClassBase& NETClassBase<NEModule>::getTraitClass() const
+	{
+		return getTraitClassStatically();
+	}
+
+	const NEClassBase& NETClassBase<NEModule>::getTraitClassStatically()
+	{
+		static NETClass<NEModule> _inner;
+
+		return _inner;
+	}
 }
