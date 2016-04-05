@@ -62,7 +62,7 @@ namespace NE
 		static const type_bool IS_METACLASS_DEFINED = false;
 	};	
 
-	//	Because NEUnit, NEObject is a superclass of NEClassBase, You can't define it with 
+	//	Because NEIdableObject, NEObject is a superclass of NEClassBase, You can't define it with 
 	//	NETClass class template. So, you should do it manually.
 	template <>
 	class NE_DLL NETClassBase<NEObject> : public NETClassBaseCommon<NEObject>
@@ -97,19 +97,19 @@ namespace NE
 	};
 
 	template <>
-	class NE_DLL NETClassBase<NEUnit> : public NETClassBaseCommon<NEUnit>
+	class NE_DLL NETClassBase<NEIdableObject> : public NETClassBaseCommon<NEIdableObject>
 	{
 	public:
 		//	Can't use macro such as NE_DECLARE_CLASS:
 		//		We'll specify METACLASS to NETUnknownMetaClass because of given 
 		//		parameterized type, NEUnknown.
 		//		So, we should declare all typedefs in manual.
-		typedef NETClassBase<NEUnit> This;
-		typedef NETClassBaseCommon<NEUnit> Super;
+		typedef NETClassBase<NEIdableObject> This;
+		typedef NETClassBaseCommon<NEIdableObject> Super;
 		//	type determind:
 		typedef NEUnknown Trait;
-		typedef NETSuperClassDeterminder<NEUnit>::Super SuperTrait;
-		typedef NETInterface<NEUnit> MetaClass;
+		typedef NETSuperClassDeterminder<NEIdableObject>::Super SuperTrait;
+		typedef NETInterface<NEIdableObject> MetaClass;
 
 	public:
 		virtual type_bool isMetaClassDefined() const;

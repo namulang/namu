@@ -2152,6 +2152,14 @@
 								</File>
 							</Filter>
 						</Filter>
+						<Filter
+							Name="NEIdableObject"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIdableObject\NEIdableObject.hpp"
+								>
+							</File>
+						</Filter>
 					</Filter>
 					<Filter
 						Name="NEUnknown"

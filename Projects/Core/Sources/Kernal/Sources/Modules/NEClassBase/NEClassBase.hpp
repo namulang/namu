@@ -11,7 +11,7 @@
 #pragma once
 
 //    include:
-#include "../NEUnit/NEUnit.hpp"
+#include "../NEIdableObject/NEIdableObject.hpp"
 #include "../../Modules/NETString/NETString.hpp"
 #include "../NEClassIdentifier/NEClassIdentifier.hpp"
 
@@ -22,12 +22,12 @@ namespace NE
 	class NE_DLL NETList;
 	typedef NETList<NEClassBase*, true> NEClassBaseList;
 
-	class NE_DLL NEClassBase : public NEUnit
+	class NE_DLL NEClassBase : public NEIdableObject
 	{
 		//    Declarations:
 	public:
 		typedef NEClassBase This;
-		typedef NEUnit Super;
+		typedef NEIdableObject Super;
 		friend class NEPackageManager;
 
 		//    Constructors:
@@ -65,6 +65,7 @@ namespace NE
 		//    these method were used only for TypeManager friend class.
 		virtual type_result _setRegistered(type_bool new_is_registered) = 0;
 		virtual type_result _setIdentifier(const NEClassIdentifier& new_identifier) = 0;
+		virtual type_result _setId(type_id new_id) = 0;
 
 		//        General interfaces:
 	public:

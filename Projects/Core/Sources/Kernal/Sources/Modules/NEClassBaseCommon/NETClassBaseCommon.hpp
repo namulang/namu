@@ -21,9 +21,11 @@ namespace NE
 		virtual const NEClassBaseList& getSuperClasses() const;
 		virtual const NEClassBaseList& getSubClasses() const;
 		virtual const NEClassIdentifier& getIdentifier() const;
+		virtual type_id getId() const;
 	protected:
 		virtual type_result _setRegistered(type_bool new_is_registered);
 		virtual type_result _setIdentifier(const NEClassIdentifier& new_identifier);
+		virtual type_result _setId(type_id new_id);
 
 	public:
 		static const type_bool& isRegisteredStatically();
@@ -32,6 +34,7 @@ namespace NE
 		static const NEClassIdentifier& getIdentifierStatically();
 		static const NEClassBase& getClassStatically();
 		static const NETString& getNameStatically();
+		static const type_id& getIdStatically();
 	};
 }
 

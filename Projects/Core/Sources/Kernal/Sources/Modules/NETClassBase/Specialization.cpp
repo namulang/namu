@@ -108,34 +108,34 @@ namespace NE
 
 	//////////////////////////////////////////////////////////////////////////
 
-	type_bool NETClassBase<NEUnit>::isMetaClassDefined() const
+	type_bool NETClassBase<NEIdableObject>::isMetaClassDefined() const
 	{
 		return IS_METACLASS_DEFINED;
 	}
 
-	type_bool NETClassBase<NEUnit>::isInstantiable() const
+	type_bool NETClassBase<NEIdableObject>::isInstantiable() const
 	{
 		return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
 	}
 
-	type_bool NETClassBase<NEUnit>::isTemplate() const
+	type_bool NETClassBase<NEIdableObject>::isTemplate() const
 	{
 		return IS_TEMPLATE;
 	}
 
-	type_bool NETClassBase<NEUnit>::isBuiltInClass() const
+	type_bool NETClassBase<NEIdableObject>::isBuiltInClass() const
 	{
 		return IS_BUILT_IN_CLASS;
 	}
 
-	const NEClassBase& NETClassBase<NEUnit>::getTraitClass() const
+	const NEClassBase& NETClassBase<NEIdableObject>::getTraitClass() const
 	{
 		return getTraitClassStatically();
 	}
 
-	const NEClassBase& NETClassBase<NEUnit>::getTraitClassStatically()
+	const NEClassBase& NETClassBase<NEIdableObject>::getTraitClassStatically()
 	{
-		static NETClass<NEUnit> _inner;
+		static NETClass<NEIdableObject> _inner;
 
 		return _inner;
 	}

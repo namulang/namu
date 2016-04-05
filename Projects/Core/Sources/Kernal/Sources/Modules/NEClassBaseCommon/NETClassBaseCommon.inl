@@ -99,4 +99,28 @@ namespace NE
 
 		return _inner;
 	}
+
+	template <typename T>
+	type_id NEClassBaseList& NETClassBaseCommon<T>::getId() const
+	{
+		return getIdStatically();
+	}
+
+	template <typename T>
+	const type_id& NETClassBaseCommon<T>::getIdStatically()
+	{
+		static type_id _inner;
+
+		return _inner;
+	}
+
+	template <typename T>
+	type_result NETClassBaseCommon<T>::_setId(type_id new_id)
+	{
+		type_id& casted = const_cast<type_id&>(getIdStatically());
+
+		casted = new_id;
+
+		return RESULT_SUCCESS;
+	}
 }
