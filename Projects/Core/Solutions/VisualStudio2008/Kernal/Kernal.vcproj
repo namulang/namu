@@ -1216,10 +1216,14 @@
 								</File>
 							</Filter>
 							<Filter
-								Name="NEHeaderBase"
+								Name="NETHeader"
 								>
 								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEHeaderBase\NEHeaderBase.hpp"
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETHeader\NETHeader.hpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETHeader\NETHeader.inl"
 									>
 								</File>
 							</Filter>
