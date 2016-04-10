@@ -36,17 +36,14 @@ namespace NE
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 
 	private:
+		This& _assign(const This& rhs);
+		void _release();
+
+	private:
 		NETString _version;
 		NETString _comment;
 		NEIntSet _compatibles;
 	};
-
-	template <typename T>
-	NE::NETHeader<T>::NETHeader()
-	{
-
-	}
-
 }
 
 #include "NETHeader.inl"
