@@ -335,6 +335,14 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="Overloader"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\Overloader\Overloader.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Includes"

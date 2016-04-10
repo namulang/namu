@@ -1226,6 +1226,22 @@
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETHeader\NETHeader.inl"
 									>
 								</File>
+								<Filter
+									Name="NEPackageHeader"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackageHeader\NEPackageHeader.hpp"
+										>
+									</File>
+								</Filter>
+								<Filter
+									Name="NEClassHeader"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassHeader\NEClassHeader.hpp"
+										>
+									</File>
+								</Filter>
 							</Filter>
 						</Filter>
 						<Filter
