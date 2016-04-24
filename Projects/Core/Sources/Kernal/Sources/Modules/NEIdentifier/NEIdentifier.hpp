@@ -12,18 +12,9 @@ namespace NE
 		NE_DECLARE_CLASS(NEIdentifier, NEObject)
 
 	public:
-		#include "innerclass/Bean.hpp"
-
-	public:
 		NEIdentifier();
-		NEIdentifier(const NETString& new_name, const NETString& new_author, type_int new_interface_revision);
+		NEIdentifier(const NETString& new_name, const NETString& new_author, type_count new_revision_count, type_count new_version_count);
 		NEIdentifier(const This& rhs);
-
-	protected:
-		//	this constructor only for not creating bean.
-		NEIdentifier(type_bool);
-		NEIdentifier(type_bool, const NETString& new_name, const NETString& new_author, type_int new_interface_revision);
-		NEIdentifier(type_bool, const NEPackage& package);
 	
 	public:
 		virtual ~NEIdentifier();
@@ -38,12 +29,17 @@ namespace NE
 		NETString& getName();
 		const NETString& getAuthor() const;
 		NETString& getAuthor();
-		const type_int getInterfaceRevision() const;
-		type_result setInterfaceRevison(type_int new_revision);
-		///	@brief	this method returns true when argument matches with name and 
-		///			author. 
-		///			interface revision is not concerned target.
-		type_bool isNearlyEqualTo(const This& rhs) const;
+		const type_int getRevisionCount() const;
+		type_result setRevisonCount(type_int new_revision);
+		const type_int getVersionCount() const;
+		type_result setVersionCount(type_int new_version);
+		///	@brief	this will detect that this.identifier instance is a kind of given one.
+		///	@remark	About Identifier, kind quality of Identifier is determined only with name and author.
+		///			so, actually this method returns true when argument matches with name and author. 
+		///			counts aren't concerned as a target.
+		type_bool isKindOf(const This& identifier) const;
+		type_bool isCompatibleTo(const This& identifier) const;
+		type_bool isEqualTo(const This& identifier) const;
 
 	public:
 		virtual void release();
@@ -51,16 +47,13 @@ namespace NE
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 		virtual type_result isValid() const;
 
-	public:
-		type_result proxy(NEPackage& target);
-		type_result proxy(const NETString& name, const NETString& author, type_int interface_revision);
-
 	private:
-		type_result _initializeBean();
 		This& _assign(const This& rhs);
 
 	private:
-		type_bool _is_bean;
-		BeanOrWrapper _bean_or_proxy;
+		NETString _name; 
+		NETString _author;
+		type_count _revision_count;
+		type_count _version_count;				
 	};
 }
