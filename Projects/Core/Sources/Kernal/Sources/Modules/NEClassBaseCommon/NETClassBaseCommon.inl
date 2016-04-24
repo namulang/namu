@@ -44,9 +44,9 @@ namespace NE
 	}
 
 	template <typename T>
-	type_result NETClassBaseCommon<T>::_setIdentifier(const NEClassIdentifier& new_identifier)
+	type_result NETClassBaseCommon<T>::_setIdentifier(const NEIdentifier& new_identifier)
 	{
-		NEClassIdentifier& casted = const_cast<NEClassIdentifier&>(getIdentifierStatically());
+		NEIdentifier& casted = const_cast<NEIdentifier&>(getIdentifierStatically());
 
 		casted = new_identifier;
 
@@ -54,15 +54,15 @@ namespace NE
 	}
 
 	template <typename T>
-	const NEClassIdentifier& NETClassBaseCommon<T>::getIdentifier() const
+	const NEIdentifier& NETClassBaseCommon<T>::getIdentifier() const
 	{
 		return getIdentifierStatically();
 	}
 
 	template <typename T>
-	const NEClassIdentifier& NETClassBaseCommon<T>::getIdentifierStatically()
+	const NEIdentifier& NETClassBaseCommon<T>::getIdentifierStatically()
 	{
-		static NEClassIdentifier _inner;
+		static NEIdentifier _inner;
 
 		return _inner;
 	}

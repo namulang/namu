@@ -2049,6 +2049,18 @@
 											</Filter>
 										</Filter>
 									</Filter>
+								</Filter>
+								<Filter
+									Name="NESwitchableUnit"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NESwitchableUnit\NESwitchableUnit.cpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NESwitchableUnit\NESwitchableUnit.hpp"
+										>
+									</File>
 									<Filter
 										Name="NEBinderBase"
 										>

@@ -20,18 +20,28 @@ namespace NE
 		virtual const NETString& getName() const;
 		virtual const NEClassBaseList& getSuperClasses() const;
 		virtual const NEClassBaseList& getSubClasses() const;
-		virtual const NEClassIdentifier& getIdentifier() const;
-		virtual type_id getId() const;
+
+		///	@brief	returns this ClassIdentifer.
+		///			As you can inspect codes, this returns the static variable.
+		///	@remark	ClassIdentifier's Name attribute doesn't mean ClassName only.
+		///			In fact, it consists of "PackageName(which contains this class)::ClassName". 
+		///			for instance,
+		///				* if NETClassBaseCommon<MyClass>::getName returns "class MyClass" as result of 'typeid(T)',
+		///				* and MyClass is distributed within 'MyPackage.dll/so',
+		///
+		///				NETClassBaseCommon<MyClass>::getIdentifier's Name would be, 
+		///					= "MyPackage" + "::" + getName();
+		///					= "MyPackage::class MyClass"
+		virtual const NEIdentifier& getIdentifier() const;
 	protected:
 		virtual type_result _setRegistered(type_bool new_is_registered);
-		virtual type_result _setIdentifier(const NEClassIdentifier& new_identifier);
-		virtual type_result _setId(type_id new_id);
+		virtual type_result _setIdentifier(const NEIdentifier& new_identifier);
 
 	public:
 		static const type_bool& isRegisteredStatically();
 		static const NEClassBaseList& getSuperClassesStatically();
 		static const NEClassBaseList& getSubClassesStatically();
-		static const NEClassIdentifier& getIdentifierStatically();
+		static const NEIdentifier& getIdentifierStatically();
 		static const NEClassBase& getClassStatically();
 		static const NETString& getNameStatically();
 		static const type_id& getIdStatically();
