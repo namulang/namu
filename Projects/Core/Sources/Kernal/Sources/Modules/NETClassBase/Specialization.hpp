@@ -31,7 +31,7 @@ namespace NE
 	public:
 		static const type_bool IS_ADT = true;
 		static const type_bool IS_TEMPLATE = false;
-		static const type_bool IS_BUILT_IN_CLASS = true;
+		static const type_bool IS_DERIVED_OF = true;
 		static const type_bool IS_METACLASS_DEFINED = false;
 	};
 	template <>
@@ -58,7 +58,7 @@ namespace NE
 	public:
 		static const type_bool IS_ADT = true;
 		static const type_bool IS_TEMPLATE = false;
-		static const type_bool IS_BUILT_IN_CLASS = true;
+		static const type_bool IS_DERIVED_OF = true;
 		static const type_bool IS_METACLASS_DEFINED = false;
 	};	
 
@@ -92,7 +92,7 @@ namespace NE
 	public:
 		static const type_bool IS_ADT = true;
 		static const type_bool IS_TEMPLATE = false;
-		static const type_bool IS_BUILT_IN_CLASS = true;
+		static const type_bool IS_DERIVED_OF = true;
 		static const type_bool IS_METACLASS_DEFINED = true;
 	};
 
@@ -124,7 +124,7 @@ namespace NE
 	public:
 		static const type_bool IS_ADT = true;
 		static const type_bool IS_TEMPLATE = false;
-		static const type_bool IS_BUILT_IN_CLASS = true;
+		static const type_bool IS_DERIVED_OF = true;
 		static const type_bool IS_METACLASS_DEFINED = true;
 	};
 
@@ -156,7 +156,7 @@ namespace NE
 	public:
 		static const type_bool IS_ADT = true;
 		static const type_bool IS_TEMPLATE = false;
-		static const type_bool IS_BUILT_IN_CLASS = true;
+		static const type_bool IS_DERIVED_OF = true;
 		static const type_bool IS_METACLASS_DEFINED = true;
 	};
 
@@ -188,7 +188,7 @@ namespace NE
 	public:
 		static const type_bool IS_ADT = true;
 		static const type_bool IS_TEMPLATE = false;
-		static const type_bool IS_BUILT_IN_CLASS = true;
+		static const type_bool IS_DERIVED_OF = true;
 		static const type_bool IS_METACLASS_DEFINED = true;
 	};
 }

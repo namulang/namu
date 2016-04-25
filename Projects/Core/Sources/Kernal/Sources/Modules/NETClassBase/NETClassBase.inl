@@ -15,7 +15,7 @@ namespace NE
 	template <typename T>
 	type_bool NETClassBase<T>::isBuiltInClass() const
 	{
-		return IS_BUILT_IN_CLASS;
+		return IS_DERIVED_OF;
 	}
 
 	template <typename T>

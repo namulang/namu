@@ -46,6 +46,9 @@ namespace NE
 		static const NETString& getNameStatically();
 		static const type_id& getIdStatically();
 	};
+
+	template <>
+	class NE_DLL NETClassBaseCommon<NEModule> : public 
 }
 
 #include "NETClassBaseCommon.inl"

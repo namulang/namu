@@ -2229,20 +2229,20 @@
 							</File>
 						</Filter>
 						<Filter
-							Name="NETBuiltInClassChecker"
+							Name="NETDerivedClassChecker"
 							>
 							<File
-								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETBuiltInClassChecker\NETBuiltInClassChecker.hpp"
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETDerivedClassChecker\NETDerivedClassChecker.hpp"
 								>
 							</File>
-						</Filter>
-						<Filter
-							Name="NETADTChecker"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETADTChecker\NETADTChecker.hpp"
+							<Filter
+								Name="NETADTChecker"
 								>
-							</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETADTChecker\NETADTChecker.hpp"
+									>
+								</File>
+							</Filter>
 						</Filter>
 						<Filter
 							Name="NETTraitDeterminder"

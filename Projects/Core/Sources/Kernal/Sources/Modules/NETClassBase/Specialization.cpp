@@ -23,7 +23,7 @@ namespace NE
 
 	type_bool NETClassBase<NEUnknown>::isBuiltInClass() const
 	{
-		return IS_BUILT_IN_CLASS;
+		return IS_DERIVED_OF;
 	}
 
 	const NEClassBase& NETClassBase<NEUnknown>::getTraitClass() const
@@ -57,7 +57,7 @@ namespace NE
 
 	type_bool NETClassBase<NEAdam>::isBuiltInClass() const
 	{
-		return IS_BUILT_IN_CLASS;
+		return IS_DERIVED_OF;
 	}
 
 	const NEClassBase& NETClassBase<NEAdam>::getTraitClass() const
@@ -91,7 +91,7 @@ namespace NE
 
 	type_bool NETClassBase<NEObject>::isBuiltInClass() const
 	{
-		return IS_BUILT_IN_CLASS;
+		return IS_DERIVED_OF;
 	}
 
 	const NEClassBase& NETClassBase<NEObject>::getTraitClass() const
@@ -125,7 +125,7 @@ namespace NE
 
 	type_bool NETClassBase<NEIdableObject>::isBuiltInClass() const
 	{
-		return IS_BUILT_IN_CLASS;
+		return IS_DERIVED_OF;
 	}
 
 	const NEClassBase& NETClassBase<NEIdableObject>::getTraitClass() const
@@ -159,7 +159,7 @@ namespace NE
 
 	type_bool NETClassBase<NEClassBase>::isBuiltInClass() const
 	{
-		return IS_BUILT_IN_CLASS;
+		return IS_DERIVED_OF;
 	}
 
 	const NEClassBase& NETClassBase<NEClassBase>::getTraitClass() const
@@ -193,7 +193,7 @@ namespace NE
 
 	type_bool NETClassBase<NEModule>::isBuiltInClass() const
 	{
-		return IS_BUILT_IN_CLASS;
+		return IS_DERIVED_OF;
 	}
 
 	const NEClassBase& NETClassBase<NEModule>::getTraitClass() const

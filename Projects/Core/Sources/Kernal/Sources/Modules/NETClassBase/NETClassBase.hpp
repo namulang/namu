@@ -12,7 +12,7 @@
 #include "../NETSuperClassDeterminder/NETSuperClassDeterminder.hpp"
 #include "../NETMetaClassDeterminder/NETMetaClassDeterminder.hpp"
 #include "../NETTraitDeterminder/NETTraitDeterminder.hpp"
-#include "../NETBuiltInClassChecker/NETBuiltInClassChecker.hpp"
+#include "../NETDerivedClassChecker/NETDerivedClassChecker.hpp"
 #include "../NEUnknown/NEUnknown.hpp"
 
 namespace NE
@@ -40,7 +40,7 @@ namespace NE
 
 	public:
 		static const type_bool IS_TEMPLATE = NETTemplateChecker<T>::IS_TEMPLATE;
-		static const type_bool IS_BUILT_IN_CLASS = NETBuiltInClassChecker<T>::IS_BUILT_IN_CLASS;
+		static const type_bool IS_BUILT_IN_CLASS = NETDerivedClassChecker<T, NEObject>::IS_DERIVED_OF;
 		static const type_bool IS_METACLASS_DEFINED = NETMetaClassChecker<T>::IS_METACLASS_DEFINED;
 	};
 }
