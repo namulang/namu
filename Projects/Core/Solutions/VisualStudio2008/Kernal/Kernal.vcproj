@@ -2235,14 +2235,6 @@
 								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETDerivedClassChecker\NETDerivedClassChecker.hpp"
 								>
 							</File>
-							<Filter
-								Name="NETADTChecker"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETADTChecker\NETADTChecker.hpp"
-									>
-								</File>
-							</Filter>
 						</Filter>
 						<Filter
 							Name="NETTraitDeterminder"
@@ -2265,6 +2257,14 @@
 							>
 							<File
 								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETMetaClassDeterminder\NETMetaClassDeterminder.hpp"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="NETADTChecker"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETADTChecker\NETADTChecker.hpp"
 								>
 							</File>
 						</Filter>
