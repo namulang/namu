@@ -30,6 +30,7 @@ namespace NE
 
 	public:
 		friend class Kernal;
+		friend class Editor;
 
 		//	내부클래스:
 	public:
@@ -52,16 +53,14 @@ namespace NE
 
 		//	접근자:
 	public:
-		const NEPackage& findPackage(const NEIdentifier& package_identifier) const;
+		const NEPackage& find(const NEIdentifier& package_identifier) const;
 		const NEPackageSet& getPackages() const;
-		
+
 		//	인터페이스:
 		//		상속:
 		//			NEExportable:
 	public:
 		virtual type_result initialize();
-		virtual const NEExportable::ModuleHeader& getHeader() const;
-		virtual LPCTSTR getErrorMessage(type_errorcode errorcode) const;
 		//			NEUnit:
 	private:
 		virtual type_result execute();
@@ -72,21 +71,21 @@ namespace NE
 
 		//	내부함수:
 	private:
+		type_result _initializeBuiltIns();
 		const This& _assign(const This& source);
 		void _release();
-		void _linkModule();
-		void _pushModuleSet(NEModuleList& buffer);
-		void _resorting(NEModuleList& source);
-		type_index _searchModuleIndexWithDependencies(NEModule& module, NEModuleList& searching_target);
-		void _filterNestedName(NEModuleList& source);
-		void _linkDLL();
-		void _pushDLLPathToDLLHeaderSet();
-		bool _linkDLLsUsingInputedPath();
-		type_result _pushDLLHeader(This::DLLHeader& header);
-		void _reportErrorsIfThereAreModulesNotFeched();
+		type_result _fetchPackages(NEPackageList& candidates);
+		type_result _enrollPackages(NEPackageList& candidates);
+		type_result _removeDuplicated(NEPackageList& candidates);		
+		type_result _linkPackageBinaries(NEPackageList& candidates);
+		type_result _listupPackageBinaries(NEPackageList& candidates);
+
+		type_result _bridgePackageInterface(NEPackage& to_be_fetched);
+		type_result _removePackagesFailedToBridge(NEPackageList& candidates);
+		type_result _ownClasses(NEPackage& package);
 
 		//	멤버변수:		
-	protected:		
+	private:		
 		NEPackageSet _packages;
 	};
 }
