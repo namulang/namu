@@ -1262,15 +1262,19 @@
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBase\NEClassBase.hpp"
 									>
 								</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBaseCommon\NETClassBaseCommon.hpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBaseCommon\NETClassBaseCommon.inl"
+									>
+								</File>
 								<Filter
 									Name="NETClassBaseCommon"
 									>
 									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseCommon\NETClassBaseCommon.hpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseCommon\NETClassBaseCommon.inl"
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBaseCommon\Specialization.hpp"
 										>
 									</File>
 									<Filter

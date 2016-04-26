@@ -15,6 +15,9 @@ namespace NE
 		typedef NEClassBase Super;
 
 	public:
+		friend class NEClassManager;
+
+	public:
 		virtual const NEClassBase& getClass() const;
 		virtual const type_bool& isRegistered() const;
 		virtual const NETString& getName() const;
