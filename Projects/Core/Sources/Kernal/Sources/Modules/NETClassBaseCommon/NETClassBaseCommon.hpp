@@ -15,9 +15,6 @@ namespace NE
 		typedef NEClassBase Super;
 
 	public:
-		friend class NEClassManager;
-
-	public:
 		virtual const NEClassBase& getClass() const;
 		virtual const type_bool& isRegistered() const;
 		virtual const NETString& getName() const;
@@ -38,7 +35,6 @@ namespace NE
 		virtual const NEIdentifier& getIdentifier() const;
 	protected:
 		virtual type_result _setRegistered(type_bool new_is_registered);
-		virtual type_result _setIdentifier(const NEIdentifier& new_identifier);
 
 	public:
 		static const type_bool& isRegisteredStatically();
@@ -49,9 +45,6 @@ namespace NE
 		static const NETString& getNameStatically();
 		static const type_id& getIdStatically();
 	};
-
-	template <>
-	class NE_DLL NETClassBaseCommon<NEModule> : public 
 }
 
 #include "NETClassBaseCommon.inl"

@@ -6,205 +6,328 @@
 
 namespace NE
 {
-	type_bool NETClassBase<NEUnknown>::isMetaClassDefined() const
+	type_bool NETClassBase<NEUnknown, false>::isMetaClassDefined() const
 	{
 		return IS_METACLASS_DEFINED;
 	}
 
-	type_bool NETClassBase<NEUnknown>::isInstantiable() const
+	type_bool NETClassBase<NEUnknown, false>::isInstantiable() const
 	{
 		return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
 	}
 
-	type_bool NETClassBase<NEUnknown>::isTemplate() const
+	type_bool NETClassBase<NEUnknown, false>::isTemplate() const
 	{
 		return IS_TEMPLATE;
 	}
 
-	type_bool NETClassBase<NEUnknown>::isBuiltInClass() const
+	type_bool NETClassBase<NEUnknown, false>::isBuiltInClass() const
 	{
-		return IS_DERIVED_OF;
+		return IS_BUILT_IN_CLASS;
 	}
 
-	const NEClassBase& NETClassBase<NEUnknown>::getTraitClass() const
+	const NEClassBase& NETClassBase<NEUnknown, false>::getTraitClass() const
 	{
 		return getTraitClassStatically();
 	}
 
-	const NEClassBase& NETClassBase<NEUnknown>::getTraitClassStatically()
+	const NEClassBase& NETClassBase<NEUnknown, false>::getTraitClassStatically()
 	{
-		static NETClass<NEUnknown> _inner;
+		static NETClass<NEUnknown, false> _inner;
 
 		return _inner;
+	}
+
+	const NEIdentifier& NETClassBase<NEUnknown, false>::getIdentifier() const
+	{
+		return getIdentifierStatically();
+	}
+
+	const NEIdentifier& NETClassBase<NEUnknown, false>::getIdentifierStatically()
+	{
+		static NEIdentifier _inner;
+
+		return _inner;
+	}
+
+	NEIdentifier& NETClassBase<NEUnknown, false>::_getIdentifier()
+	{
+		NEIdentifier& unlocked = const_cast<NEIdentifier&>(getIdentifierStatically());
+
+		return unlocked;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
 
-	type_bool NETClassBase<NEAdam>::isMetaClassDefined() const
+	type_bool NETClassBase<NEAdam, false>::isMetaClassDefined() const
 	{
 		return IS_METACLASS_DEFINED;
 	}
 
-	type_bool NETClassBase<NEAdam>::isInstantiable() const
+	type_bool NETClassBase<NEAdam, false>::isInstantiable() const
 	{
 		return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
 	}
 
-	type_bool NETClassBase<NEAdam>::isTemplate() const
+	type_bool NETClassBase<NEAdam, false>::isTemplate() const
 	{
 		return IS_TEMPLATE;
 	}
 
-	type_bool NETClassBase<NEAdam>::isBuiltInClass() const
+	type_bool NETClassBase<NEAdam, false>::isBuiltInClass() const
 	{
-		return IS_DERIVED_OF;
+		return IS_BUILT_IN_CLASS;
 	}
 
-	const NEClassBase& NETClassBase<NEAdam>::getTraitClass() const
+	const NEClassBase& NETClassBase<NEAdam, false>::getTraitClass() const
 	{
 		return getTraitClassStatically();
 	}
 
-	const NEClassBase& NETClassBase<NEAdam>::getTraitClassStatically()
+	const NEClassBase& NETClassBase<NEAdam, false>::getTraitClassStatically()
 	{
-		static NETClass<NEUnknown> _inner;
+		static NETClass<NEUnknown, false> _inner;
 
 		return _inner;
+	}
+
+	const NEIdentifier& NETClassBase<NEAdam, false>::getIdentifier() const
+	{
+		return getIdentifierStatically();
+	}
+
+	const NEIdentifier& NETClassBase<NEAdam, false>::getIdentifierStatically()
+	{
+		static NEIdentifier _inner;
+
+		return _inner;
+	}
+
+	NEIdentifier& NETClassBase<NEAdam, false>::_getIdentifier()
+	{
+		NEIdentifier& unlocked = const_cast<NEIdentifier&>(getIdentifierStatically());
+
+		return unlocked;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
 
-	type_bool NETClassBase<NEObject>::isMetaClassDefined() const
+	type_bool NETClassBase<NEObject, false>::isMetaClassDefined() const
 	{
 		return IS_METACLASS_DEFINED;
 	}
 
-	type_bool NETClassBase<NEObject>::isInstantiable() const
+	type_bool NETClassBase<NEObject, false>::isInstantiable() const
 	{
 		return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
 	}
 
-	type_bool NETClassBase<NEObject>::isTemplate() const
+	type_bool NETClassBase<NEObject, false>::isTemplate() const
 	{
 		return IS_TEMPLATE;
 	}
 
-	type_bool NETClassBase<NEObject>::isBuiltInClass() const
+	type_bool NETClassBase<NEObject, false>::isBuiltInClass() const
 	{
-		return IS_DERIVED_OF;
+		return IS_BUILT_IN_CLASS;
 	}
 
-	const NEClassBase& NETClassBase<NEObject>::getTraitClass() const
+	const NEClassBase& NETClassBase<NEObject, false>::getTraitClass() const
 	{
 		return getTraitClassStatically();
 	}
 
-	const NEClassBase& NETClassBase<NEObject>::getTraitClassStatically()
+	const NEClassBase& NETClassBase<NEObject, false>::getTraitClassStatically()
 	{
-		static NETClass<NEObject> _inner;
+		static NETClass<NEObject, false> _inner;
 
 		return _inner;
+	}
+
+	const NEIdentifier& NETClassBase<NEObject, false>::getIdentifier() const
+	{
+		return getIdentifierStatically();
+	}
+
+	const NEIdentifier& NETClassBase<NEObject, false>::getIdentifierStatically()
+	{
+		static NEIdentifier _inner;
+
+		return _inner;
+	}
+
+	NEIdentifier& NETClassBase<NEObject, false>::_getIdentifier()
+	{
+		NEIdentifier& unlocked = const_cast<NEIdentifier&>(getIdentifierStatically());
+
+		return unlocked;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
 
-	type_bool NETClassBase<NEIdableObject>::isMetaClassDefined() const
+	type_bool NETClassBase<NEIdableObject, false>::isMetaClassDefined() const
 	{
 		return IS_METACLASS_DEFINED;
 	}
 
-	type_bool NETClassBase<NEIdableObject>::isInstantiable() const
+	type_bool NETClassBase<NEIdableObject, false>::isInstantiable() const
 	{
 		return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
 	}
 
-	type_bool NETClassBase<NEIdableObject>::isTemplate() const
+	type_bool NETClassBase<NEIdableObject, false>::isTemplate() const
 	{
 		return IS_TEMPLATE;
 	}
 
-	type_bool NETClassBase<NEIdableObject>::isBuiltInClass() const
+	type_bool NETClassBase<NEIdableObject, false>::isBuiltInClass() const
 	{
-		return IS_DERIVED_OF;
+		return IS_BUILT_IN_CLASS;
 	}
 
-	const NEClassBase& NETClassBase<NEIdableObject>::getTraitClass() const
+	const NEClassBase& NETClassBase<NEIdableObject, false>::getTraitClass() const
 	{
 		return getTraitClassStatically();
 	}
 
-	const NEClassBase& NETClassBase<NEIdableObject>::getTraitClassStatically()
+	const NEClassBase& NETClassBase<NEIdableObject, false>::getTraitClassStatically()
 	{
-		static NETClass<NEIdableObject> _inner;
+		static NETClass<NEIdableObject, false> _inner;
 
 		return _inner;
+	}
+
+	const NEIdentifier& NETClassBase<NEIdableObject, false>::getIdentifier() const
+	{
+		return getIdentifierStatically();
+	}
+
+	const NEIdentifier& NETClassBase<NEIdableObject, false>::getIdentifierStatically()
+	{
+		static NEIdentifier _inner;
+
+		return _inner;
+	}
+
+	NEIdentifier& NETClassBase<NEIdableObject, false>::_getIdentifier()
+	{
+		NEIdentifier& unlocked = const_cast<NEIdentifier&>(getIdentifierStatically());
+
+		return unlocked;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
 
-	type_bool NETClassBase<NEClassBase>::isMetaClassDefined() const
+	type_bool NETClassBase<NEClassBase, false>::isMetaClassDefined() const
 	{
 		return IS_METACLASS_DEFINED;
 	}
 
-	type_bool NETClassBase<NEClassBase>::isInstantiable() const
+	type_bool NETClassBase<NEClassBase, false>::isInstantiable() const
 	{
 		return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
 	}
 
-	type_bool NETClassBase<NEClassBase>::isTemplate() const
+	type_bool NETClassBase<NEClassBase, false>::isTemplate() const
 	{
 		return IS_TEMPLATE;
 	}
 
-	type_bool NETClassBase<NEClassBase>::isBuiltInClass() const
+	type_bool NETClassBase<NEClassBase, false>::isBuiltInClass() const
 	{
-		return IS_DERIVED_OF;
+		return IS_BUILT_IN_CLASS;
 	}
 
-	const NEClassBase& NETClassBase<NEClassBase>::getTraitClass() const
+	const NEClassBase& NETClassBase<NEClassBase, false>::getTraitClass() const
 	{
 		return getTraitClassStatically();
 	}
 
-	const NEClassBase& NETClassBase<NEClassBase>::getTraitClassStatically()
+	const NEClassBase& NETClassBase<NEClassBase, false>::getTraitClassStatically()
 	{
-		static NETClass<NEClassBase> _inner;
+		static NETClass<NEClassBase, false> _inner;
 
 		return _inner;
+	}
+
+	const NEIdentifier& NETClassBase<NEClassBase, false>::getIdentifier() const
+	{
+		return getIdentifierStatically();
+	}
+
+	const NEIdentifier& NETClassBase<NEClassBase, false>::getIdentifierStatically()
+	{
+		static NEIdentifier _inner;
+
+		return _inner;
+	}
+
+	NEIdentifier& NETClassBase<NEClassBase, false>::_getIdentifier()
+	{
+		NEIdentifier& unlocked = const_cast<NEIdentifier&>(getIdentifierStatically());
+
+		return unlocked;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
 
-	type_bool NETClassBase<NEModule>::isMetaClassDefined() const
+	template <typename T>
+	type_bool NETClassBase<T, true>::isMetaClassDefined() const
 	{
 		return IS_METACLASS_DEFINED;
 	}
 
-	type_bool NETClassBase<NEModule>::isInstantiable() const
+	template <typename T>
+	type_bool NETClassBase<T, true>::isInstantiable() const
 	{
 		return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
 	}
 
-	type_bool NETClassBase<NEModule>::isTemplate() const
+	template <typename T>
+	type_bool NETClassBase<T, true>::isTemplate() const
 	{
 		return IS_TEMPLATE;
 	}
 
-	type_bool NETClassBase<NEModule>::isBuiltInClass() const
+	template <typename T>
+	type_bool NETClassBase<T, true>::isBuiltInClass() const
 	{
-		return IS_DERIVED_OF;
+		return IS_BUILT_IN_CLASS;
 	}
 
-	const NEClassBase& NETClassBase<NEModule>::getTraitClass() const
+	template <typename T>
+	const NEClassBase& NETClassBase<T, true>::getTraitClass() const
 	{
 		return getTraitClassStatically();
 	}
 
-	const NEClassBase& NETClassBase<NEModule>::getTraitClassStatically()
+	template <typename T>
+	const NEClassBase& NETClassBase<T, true>::getTraitClassStatically()
 	{
-		static NETClass<NEModule> _inner;
+		static NETClass<T, true> _inner;
 
 		return _inner;
+	}
+
+	template <typename T>
+	const NEHeader& NETClassBase<T, true>::getIdentifier() const
+	{
+		return getIdentifierStatically();
+	}
+
+	template <typename T>
+	const NEHeader& NETClassBase<T, true>::getIdentifierStatically()
+	{
+		static NEHeader _inner;
+
+		return _inner;
+	}
+
+	template <typename T>
+	NEHeader& NETClassBase<T, true>::_getIdentifier()
+	{
+		NEHeader& unlocked = const_cast<NEHeader&>(getIdentifierStatically());
+
+		return unlocked;
 	}
 }

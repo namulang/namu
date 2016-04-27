@@ -44,13 +44,11 @@ namespace NE
 	}
 
 	template <typename T>
-	type_result NETClassBaseCommon<T>::_setIdentifier(const NEIdentifier& new_identifier)
+	NEIdentifier& NETClassBaseCommon<T>::_getIdentifier()
 	{
 		NEIdentifier& casted = const_cast<NEIdentifier&>(getIdentifierStatically());
 
-		casted = new_identifier;
-
-		return RESULT_SUCCESS;
+		return casted;
 	}
 
 	template <typename T>
