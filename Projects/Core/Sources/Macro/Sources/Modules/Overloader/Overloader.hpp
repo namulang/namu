@@ -1,4 +1,4 @@
-///	@file	Overloader.hpp
+///	@file	NE_OVERLOADER.hpp
 ///	@brief	Make it possible to provide overloaded macro.
 ///	@remark	These are codes inspired from Boost library. added the PATCH for VS.
 #pragma once
@@ -19,6 +19,6 @@
 //		branch to macro that would be expanded by its argument count:
 #define _MACRO_OVERLOAD(macro_name, argcount)	macro_name##_##argcount
 #define MACRO_OVERLOAD(macro_name, argcount)	_MACRO_OVERLOAD(macro_name, argcount)
-#define OVERLOADER(macro_name)	\
+#define NE_OVERLOADER(macro_name)	\
 	#define	macro_name(...)		\
 		MACRO_OVERLOAD(macro_name, ARGCOUNT(__VA_ARGS__))##(__VA_ARGS__)
