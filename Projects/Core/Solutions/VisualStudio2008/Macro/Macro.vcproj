@@ -295,6 +295,46 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="ForEach"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\ForEach\ForEach.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ArgumentGetter"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\ArgumentGetter\ArgumentGetter.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Constants"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\Constants\Constants.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ArgumentCounter"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\ArgumentCounter\ArgumentCounter.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Helpers"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\Helpers\Helpers.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Includes"
