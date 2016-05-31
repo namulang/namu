@@ -287,6 +287,14 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="MacroOverloading"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\MacroOverloader\MacroOverloader.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Includes"
