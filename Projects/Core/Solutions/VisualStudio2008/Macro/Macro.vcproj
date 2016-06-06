@@ -288,18 +288,50 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="MacroOverloading"
+					Name="OverloaderMacro"
 					>
 					<File
-						RelativePath="..\..\..\Sources\Macro\Sources\Modules\MacroOverloader\MacroOverloader.hpp"
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\OverloaderMacro\OverloaderMacro.hpp"
 						>
 					</File>
 				</Filter>
 				<Filter
-					Name="ForEach"
+					Name="ConcateratorMacro"
 					>
 					<File
-						RelativePath="..\..\..\Sources\Macro\Sources\Modules\ForEach\ForEach.hpp"
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\ConcateratorMacro\ConcateratorMacro.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="StringizerMacro"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\StringizerMacro\StringizerMacro.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ArgumentCounterMacro"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\ArgumentCounterMacro\ArgumentCounterMacro.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ForEachMacro"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\ForEachMacro\ForEachMacro.hpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="VSExpHackMacro"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\VSExpHackMacro\VSExpHack.hpp"
 						>
 					</File>
 				</Filter>
@@ -308,38 +340,6 @@
 					>
 					<File
 						RelativePath="..\..\..\Sources\Macro\Sources\Modules\ArgumentGetter\ArgumentGetter.hpp"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Constants"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Macro\Sources\Modules\Constants\Constants.hpp"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="ArgumentCounter"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Macro\Sources\Modules\ArgumentCounter\ArgumentCounter.hpp"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Helpers"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Macro\Sources\Modules\Helpers\Helpers.hpp"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="Overloader"
-					>
-					<File
-						RelativePath="..\..\..\Sources\Macro\Sources\Modules\Overloader\Overloader.hpp"
 						>
 					</File>
 				</Filter>
