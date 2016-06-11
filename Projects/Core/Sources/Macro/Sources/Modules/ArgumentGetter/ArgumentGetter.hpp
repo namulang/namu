@@ -21,8 +21,9 @@
 //								  X_1    Y_1        X_2    Y_2         X_3    Y_3
 //					so, at example above, NE_MACRO_GET_VARG2_X_2 will be substitued
 //					to 'float'.
-//			
-//			Yeah, I know. implementation is looks somewhat stupid. 
+//
+//		argument getter defines:
+//			Yeah, I know. This is looks somewhat stupid. 
 //			if you have better idea, please let me know. I beg you.
 #define NE_MACRO_GET_VARG_1(_1, ...) _1
 #define NE_MACRO_GET_VARG_2(_1, _2, ...) _2
