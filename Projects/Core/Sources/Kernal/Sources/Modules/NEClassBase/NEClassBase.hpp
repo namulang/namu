@@ -82,6 +82,11 @@ namespace NE
 
 	protected:
 		type_result _alert(type_result result, const type_tchar* message) const;
+		//	instantiation function:
+		//		to reduce dependencies for NETClassBase, we hide concrete couplings
+		//		into implement file.
+		NEHeader& _createHeader() const;
+		NEClassBaseList& _createClassBaseList() const;
 
 	private:
 		type_result _registerSubClass(const NEClassBase& subclass);

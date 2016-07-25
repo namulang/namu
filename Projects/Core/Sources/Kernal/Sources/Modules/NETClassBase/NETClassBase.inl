@@ -1,40 +1,40 @@
+#pragma once
+
+#include "../../Includes/Includes.hpp"
+#include "../NEClassBase/NEClassBase.hpp"
+//	checkers:
+#include "../NETADTChecker/NETADTChecker.hpp"
+#include "../NETSuperClassDeterminder/NETSuperClassDeterminder.hpp"
+#include "../NETMetaClassDeterminder/NETMetaClassDeterminder.hpp"
+#include "../NETTraitDeterminder/NETTraitDeterminder.hpp"
+#include "../NEUnknown/NEUnknown.hpp"
+
 namespace NE
 {
 	template <typename T>
-	type_bool NETClassBase<T>::isMetaClassDefined() const
+	class NETClassBase : public NETClassBaseCommon<T>
 	{
-		return IS_METACLASS_DEFINED;
-	}
+	public:
+		typedef NETClassBase<T> This;
+		typedef NEClassBase Super;
+		//    type determind:
+		typedef typename NETMetaClassDeterminder<T>::MetaClass MetaClass;
+		typedef typename NETTraitDeterminder<T>::Trait Trait;
+		typedef typename NETSuperClassDeterminder<T>::Super SuperTrait;
 
-	template <typename T>
-	type_bool NETClassBase<T>::isTemplate() const
-	{
-		return IS_TEMPLATE;
-	}
+	public:
+		friend class NEClassManager;
 
-	template <typename T>
-	type_bool NETClassBase<T>::isBuiltInClass() const
-	{
-		return IS_DERIVED_OF;
-	}
-
-	template <typename T>
-	const type_bool& NETClassBase<T>::isRegistered() const
-	{
-		return isRegisteredStatically();
-	}
-
-	template <typename T>
-	const NEClassBase& NETClassBase<T>::getTraitClass() const
-	{
-		return getTraitClassStatically();
-	}
-
-	template <typename T>
-	const NEClassBase& NETClassBase<T>::getTraitClassStatically()
-	{
-		static NETClass<Trait> _inner;
-
-		return _inner;
-	}
+	public:
+		virtual type_bool isMetaClassDefined() const;
+		virtual type_bool isInstantiable() const;
+		virtual type_bool isTemplate() const;
+		virtual type_bool isBuiltInClass() const;
+		virtual const NEClassBase& getTraitClass() const;
+		///	@brief	returns the identifer for NETClass.
+		///			As you can inspect codes, this returns the static variable.
+		virtual const NEIdentifier& getIdentifier() const;
+	protected:
+		virtual NEIdentifier& _getIdentifier();
+	};
 }

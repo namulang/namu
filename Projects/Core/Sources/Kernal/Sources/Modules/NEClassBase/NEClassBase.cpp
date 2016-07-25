@@ -162,4 +162,14 @@ namespace NE
 	{
 		return RESULT_SUCCESS;
 	}
+
+	NEHeader& NEClassBase::_createHeader() const
+	{
+		return *(new NEHeader());
+	}
+
+	NEClassBaseList& NEClassBase::_createClassBaseList() const
+	{
+		return *(new NEClassBaseList());
+	}
 }
