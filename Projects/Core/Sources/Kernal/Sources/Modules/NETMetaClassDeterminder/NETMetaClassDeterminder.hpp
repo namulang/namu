@@ -9,14 +9,14 @@ namespace NE
 	class NETUnknownMetaClass;
 
 	template <typename T, type_bool IS_METACLASS_DEFINED = NETMetaClassChecker<T>::IS_METACLASS_DEFINED>
-	class NETMetaClassDeterminder : public NETypeChecker
+	class NETMetaClassDeterminder : public NETMetaClassChecker<T>
 	{
 	public:
 		typedef typename T::MetaClass MetaClass;
 	};
 	//        Specialization:
 	template <typename T>
-	class NETMetaClassDeterminder<T, false>
+	class NETMetaClassDeterminder<T, false> : public NETMetaClassChecker<T>
 	{
 	public:
 		typedef NETUnknownMetaClass<T> MetaClass;

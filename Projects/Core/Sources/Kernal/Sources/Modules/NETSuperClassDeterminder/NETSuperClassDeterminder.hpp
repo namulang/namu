@@ -6,13 +6,13 @@
 namespace NE
 {
 	template <typename T, type_bool IS_SUPERCLASS_DEFINED = NETSuperClassChecker<T>::IS_SUPERCLASS_DEFINED>
-	class NETSuperClassDeterminder : public NETypeChecker
+	class NETSuperClassDeterminder : public NETSuperClassChecker<T>
 	{
 	public:
 		typedef typename T::Super Super;
 	};
 	template <typename T>
-	class NETSuperClassDeterminder<T, false>
+	class NETSuperClassDeterminder<T, false> : public NETSuperClassChecker<T>
 	{
 	public:
 		typedef NEUnknown Super;

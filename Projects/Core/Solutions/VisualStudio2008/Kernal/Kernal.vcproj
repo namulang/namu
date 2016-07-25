@@ -2191,6 +2191,14 @@
 								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETSuperClassChecker\NETSuperClassChecker.hpp"
 								>
 							</File>
+							<Filter
+								Name="NETSuperClassDeterminder"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETSuperClassDeterminder\NETSuperClassDeterminder.hpp"
+									>
+								</File>
+							</Filter>
 						</Filter>
 						<Filter
 							Name="NETMetaClassChecker"
@@ -2199,6 +2207,14 @@
 								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETMetaClassChecker\NETMetaClassChecker.hpp"
 								>
 							</File>
+							<Filter
+								Name="NETMetaClassDeterminder"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETMetaClassDeterminder\NETMetaClassDeterminder.hpp"
+									>
+								</File>
+							</Filter>
 						</Filter>
 						<Filter
 							Name="NETDerivedClassChecker"
@@ -2209,34 +2225,18 @@
 							</File>
 						</Filter>
 						<Filter
-							Name="NETTraitDeterminder"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETTraitDeterminder\NETTraitDeterminder.hpp"
-								>
-							</File>
-						</Filter>
-						<Filter
-							Name="NETSuperClassDeterminder"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETSuperClassDeterminder\NETSuperClassDeterminder.hpp"
-								>
-							</File>
-						</Filter>
-						<Filter
-							Name="NETMetaClassDeterminder"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETMetaClassDeterminder\NETMetaClassDeterminder.hpp"
-								>
-							</File>
-						</Filter>
-						<Filter
 							Name="NETADTChecker"
 							>
 							<File
 								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETADTChecker\NETADTChecker.hpp"
+								>
+							</File>
+						</Filter>
+						<Filter
+							Name="NETTraitDeterminder"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETTraitDeterminder\NETTraitDeterminder.hpp"
 								>
 							</File>
 						</Filter>
