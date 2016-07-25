@@ -151,4 +151,11 @@ namespace NE
 		return	isCompatibleTo(rhs)					&&
 				_version_count == rhs._version_count;
 	}
+
+	const NEClassBase& NEIdentifier::getClassStatically()
+	{
+		static NETClass<This> metaclass;
+
+		return metaclass;
+	}
 }

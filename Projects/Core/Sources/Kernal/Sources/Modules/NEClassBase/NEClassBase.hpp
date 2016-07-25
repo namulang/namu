@@ -12,12 +12,12 @@
 
 //    include:
 #include "../NEIdableObject/NEIdableObject.hpp"
-#include "../../Modules/NETString/NETString.hpp"
-#include "../NEClassIdentifier/NEClassIdentifier.hpp"
+#include "../../Modules/NETString/NETString.hpp"	//	forward declaration
 
 namespace NE
 {
 	class NEClassBase;
+
 	template <typename T, type_bool pointerUseNewHeap>
 	class NE_DLL NETList;
 	typedef NETList<NEClassBase*, true> NEClassBaseList;
@@ -53,6 +53,7 @@ namespace NE
 		virtual const NEClassBaseList& getSubClasses() const = 0;
 		virtual const NETString& getName() const = 0;
 		virtual NEObject& instantiate() const = 0;
+		virtual const NEHeader& getHeader() const = 0;
 		//            Inherits:
 		//                NEObject:
 	public:
@@ -66,6 +67,7 @@ namespace NE
 		virtual type_result _setRegistered(type_bool new_is_registered) = 0;
 		virtual type_result _setIdentifier(const NEClassIdentifier& new_identifier) = 0;
 		virtual type_result _setId(type_id new_id) = 0;
+		virtual type_result _onInitialize(NEHeader& to_intiailize);
 
 		//        General interfaces:
 	public:

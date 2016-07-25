@@ -1192,18 +1192,6 @@
 								</Filter>
 							</Filter>
 							<Filter
-								Name="NEClassIdentifier"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassIdentifier\NEClassIdentifier.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassIdentifier\NEClassIdentifier.hpp"
-									>
-								</File>
-							</Filter>
-							<Filter
 								Name="NEPackage"
 								>
 								<File
@@ -1216,32 +1204,16 @@
 								</File>
 							</Filter>
 							<Filter
-								Name="NETHeader"
+								Name="NEHeader"
 								>
 								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETHeader\NETHeader.hpp"
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEHeader\NEHeader.cpp"
 									>
 								</File>
 								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETHeader\NETHeader.inl"
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEHeader\NEHeader.hpp"
 									>
 								</File>
-								<Filter
-									Name="NEPackageHeader"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackageHeader\NEPackageHeader.hpp"
-										>
-									</File>
-								</Filter>
-								<Filter
-									Name="NEClassHeader"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassHeader\NEClassHeader.hpp"
-										>
-									</File>
-								</Filter>
 							</Filter>
 						</Filter>
 						<Filter

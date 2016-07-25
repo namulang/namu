@@ -1,4 +1,5 @@
 #include "NEHeader.hpp"
+#include "../NETClass/NETClass.hpp"
 
 namespace NE
 {
@@ -124,5 +125,12 @@ namespace NE
 		_comment.release();
 		_version.release();
 		_release_date.release();
+	}
+
+	const NEClassBase& NEHeader::getClassStatically()
+	{
+		static NETClass<This> inner;
+
+		return inner;
 	}
 }

@@ -1,4 +1,5 @@
 #include "NEClassBase.hpp"
+#include "../NEHeader/NEHeader.hpp"
 #include "../NETClass/NETClass.hpp"
 #include "../NEClassBaseList/NEClassBaseList.hpp"
 #include "../Kernal/Kernal.hpp"
@@ -155,5 +156,10 @@ namespace NE
 		}
 
 		return log_type;
+	}
+
+	type_result NEClassBase::_onInitialize(NEHeader& to_initialize)
+	{
+		return RESULT_SUCCESS;
 	}
 }

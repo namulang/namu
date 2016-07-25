@@ -1,230 +1,76 @@
+//	---------------------------------------------------------------------------------
+//	클래스명:	NETReservedCollector
+//	설명	:	데이터를 관리하는 자료구조를 나타낸다.
+//	관계	:	기반클래스.	NETCollector
+//	특성	:	데이터를 관리하는 핵심적인 함수가 가상함수로 되어있기 때문에 쉽게 
+//				다형성이 가능하다.
+//	알고리즘:	
+//	사용방법:	기본 인터페이스
+//					1.	getSize()	:	데이터의 최종 크기
+//					2.	getSize()	:	데이터의 현재 길이
+//					3.	push()		:	데이터를 제일 뒤에 추가
+//					4.	pushFront()	:	데이터를 가장 앞에 추가
+//					5.	pop()		:	가장 뒤의 데이터를 하나 삭제
+//					6.	popFront()	:	맨 앞의 데이터를 하나 삭제
+//
+//				가상 함수
+//					1.	insert()	:	데이터를 임의의 인덱스에 위치에 삽입
+//					2.	remove()	:	임의의 인덱스에 위치하는 데이터를 삭제
+//					3.	find()		:	주어진 원소와 일치하는 원소를 Collector에서
+//										검색. (내부적으로 operator==를 실시한다)
+//					4.	getElement():	주어진 인덱스에 해당하는 원소에 접근한다.
+//					5.	setElement():	주어진 인덱스와 엘리먼트로 데이터를 대체한다.
+//										추가가 아니다.
+//	메모	:	
+//	히스토리:	2011-07-07	이태훈	개발 완료	
+//	---------------------------------------------------------------------------------
+#pragma once
+
 namespace NE
 {
 	template<typename OutsideType>
-	NETReservedCollector<OutsideType*>::NETReservedCollector()
-		: NETCollector() // 클래스의 경우에는 int에 경우의 생성자를 생성해야 할지도 모른다S
+	class NETReservedCollector<OutsideType*> : public NETCollector<OutsideType*>
 	{
-		_release();
-	}
+		//	생성자:
+	public:
+		NETReservedCollector();
+		NETReservedCollector(type_index size);
+		NETReservedCollector(const NETReservedCollector& source);
 
+		//	소멸자:
+	public:
+		virtual ~NETReservedCollector();	
 
+		//	연산자 중첩:
+	public:
+		const NETReservedCollector<OutsideType*>& operator=(const NETReservedCollector<OutsideType*>& source); 
+		bool operator==(const NETReservedCollector<OutsideType*>& source) const;
+		bool operator!=(const NETReservedCollector<OutsideType*>& source) const;
 
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>
-	NETReservedCollector<OutsideType*>::NETReservedCollector(type_index size)
-		: NETCollector() // 클래스의 경우에는 int에 경우의 생성자를 생성해야 할지도 모른다S
-	{
-		_release();
-		_size = size;
-	}
+		//	접근자:	변수가 존재한다면 복사생성자를 구현한다. 구현한 복사생성자는 파생클래스에서 호출됨
+	public:		
+		type_index getSize() const;
+		type_index getSizeLastIndex() const;		
 
+		//	인터페이스:
+		//		상속:		
+	public:
+		virtual type_result create(type_index new_size) = 0;
+		virtual type_result resize(type_index new_size) = 0;
 
+	public:
+		virtual void release(); 
+		virtual type_result isValid() const; 
+		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
+		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>
-	NETReservedCollector<OutsideType*>::~NETReservedCollector() 
-	{
-		_release();
-	}		
+		//	내부함수:
+	private: 
+		const NETReservedCollector<OutsideType*>& _assign(const NETReservedCollector<OutsideType*>& source);
+		void _release();
 
-
-
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>
-	NETReservedCollector<OutsideType*>::NETReservedCollector(const NETReservedCollector<OutsideType*>& source)
-		: NETCollector(source)
-	{
-		_assign(source);
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>
-	const NETReservedCollector<OutsideType*>  &NETReservedCollector<OutsideType*>::operator=(const NETReservedCollector<OutsideType*>& source) 
-	{	
-		NETCollector<OutsideType*>::operator=(source);
-
-		return _assign(source);
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>
-	bool NETReservedCollector<OutsideType*>::operator==(const NETReservedCollector<OutsideType*>& source) const 
-	{
-		if(this == &source) return true;
-		if(NETCollector<OutsideType*>::operator!=(source)) return false;
-
-		if(_size != source._size) return false;
-
-		return true;
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>
-	bool NETReservedCollector<OutsideType*>::operator!=(const NETReservedCollector<OutsideType*>& source) const
-	{
-		return !(operator==(source));
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>	
-	type_index	 NETReservedCollector<OutsideType*>::getSize() const 
-	{
-		return _size;
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>	
-	type_index	 NETReservedCollector<OutsideType*>::getSizeLastIndex() const 
-	{
-		return _size-1;
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>	
-	void  NETReservedCollector<OutsideType*>::release()   
-	{
-		NETCollector<OutsideType*>::release();
-
-		return _release();
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>	
-	type_result  NETReservedCollector<OutsideType*>::isValid() const 
-	{		
-		//	범위 체크:	템플릿클래스에는 Kernal헤더를 놓을 수 없으므로 매크로를
-		//				사용할 수 없다. (헤더가 꼬일지도 모른다)
-		type_result result = NETCollector<OutsideType*>::isValid();
-		if(NEResult::hasError(result)) return result;
-		if(_size < 0) return RESULT_TYPE_ERROR | RESULT_WRONG_BOUNDARY;
-		if(_size < getLength()) return RESULT_TYPE_ERROR | RESULT_WRONG_BOUNDARY;
-
-		return RESULT_SUCCESS;
-	}
-
-
-
-	//	---------------------------------------------------------------------------------	
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>
-	NEBinaryFileSaver &NETReservedCollector<OutsideType*>::serialize(NEBinaryFileSaver& saver) const
-	{
-		NETCollector<OutsideType*>::serialize(saver);
-
-		return saver << _size;
-	}
-
-
-
-	//	---------------------------------------------------------------------------------	
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>
-	NEBinaryFileLoader &NETReservedCollector<OutsideType*>::serialize(NEBinaryFileLoader& loader)
-	{
-		NETCollector<OutsideType*>::serialize(loader);
-
-		return loader >> _size;
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	//	assign은 현재 단계에서의 멤버변수의 할당만 담당한다.
-	//	거슬러올라가면서 함수를 호출하는 건 복사생성자와 operator=에서 사용한다.
-	//	멤버변수가 있다 -> assign 있음
-	//	인스턴스 생성가능 -> 복사생성자, operator=에서 assign 호출
-	template<typename OutsideType>
-	const NETReservedCollector<OutsideType*>& NETReservedCollector<OutsideType*>::_assign(const NETReservedCollector<OutsideType*>& source) // 이게 가장 상위 함수. 더이상 기반클래스함수를 호출하지 않는다
-	{			
-		if(this == &source) return *this;
-
-		_size = source._size;
-
-		return *this; 
-	}
-
-
-
-	//	---------------------------------------------------------------------------------
-	//	설명	:
-	//	동작조건:
-	//	메모	:
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
-	template<typename OutsideType>
-	void NETReservedCollector<OutsideType*>::_release()
-	{
-		_size = 0;
-	}
+		//	멤버변수:
+	protected:
+		type_index _size;
+	}; 
 }

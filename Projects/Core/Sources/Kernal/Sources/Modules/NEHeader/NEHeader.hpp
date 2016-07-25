@@ -4,10 +4,25 @@
 
 namespace NE
 {
+	template <typename T>
+	class NETConcreteClass;
+
+	class NEClassBase;
+
 	class NE_DLL NEHeader : public NEIdentifier
 	{
-		NE_DECLARE_CLASS(NEHeader, NEIdentifier)
+		//	declare rtti info manually:
+		//		to prevent reculsive templating.
+	public:
+		typedef NEHeader				This;
+		typedef NEIdentifier			Super;
+		typedef NETConcreteClass<This>	MetaClass;
 
+	public:
+		virtual const NEClassBase& getClass() const { return getClassStatically(); }
+		static const NEClassBase& getClassStatically();
+
+		//	constructors:
 	public:
 		NEHeader();
 		NEHeader(	const NETString& new_name, const NETString& new_author, type_count new_revision_count, type_count new_version_count, 
