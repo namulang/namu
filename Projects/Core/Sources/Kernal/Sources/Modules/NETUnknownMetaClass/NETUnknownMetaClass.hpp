@@ -1,43 +1,20 @@
-//	---------------------------------------------------------------------------------
-//	Name			:	NETUnknownMetaClass
-//	Comments		:	
-//	Releationships	:
-//	Charateristics	:	
-//	Usage			:	
-//	Memo			:	
-//	Author			:	2016-02-13	kniz	Creations
-//	---------------------------------------------------------------------------------
-#pragma once
-
+#include "NETUnknownMetaClass.inl"
 #include "../NETClassBase/NETClassBase.hpp"
 
 namespace NE
 {
 	template <typename T>
-	class NETUnknownMetaClass : public NETClassBase<T>
+	NEObject& NETUnknownMetaClass<T>::instantiate() const
 	{
-		//	Declarations:
-	public:
-		typedef NETUnknownMetaClass<T> This;
-		typedef NETClassBase<T> Super;
+		NEObject* nullptr = 0x00;
+		_alert(RESULT_TYPE_WARNING, _T("can't instantiate unknown class."));
 
-		//	Constructors:
-	public:
-		NETUnknownMetaClass();
-		NETUnknownMetaClass(const This& source);
+		return *nullptr;
+	}
 
-		//	Destructors:
-	public:
-		virtual ~NETUnknownMetaClass();
-
-		//	Inherited:
-		//		NEClassBase:
-	public:
-		virtual NEObject& instantiate() const;
-		//				NEObject:
-	public:
-		virtual NEObject& clone() const;
-	};
+	template <typename T>
+	NEObject& NETUnknownMetaClass<T>::clone() const
+	{
+		return *(new This(*this));
+	}
 }
-
-#include "NETUnknownMetaClass.inl"

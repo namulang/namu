@@ -1,24 +1,34 @@
+#pragma once
+
+#include "../NETClassBase/NETClassBase.inl"
+
 namespace NE
 {
 	template <typename T>
-	NEObject& NETConcreteClass<T>::instantiate() const
+	class NETConcreteClass : public NETClassBase<T>
 	{
-		if( ! isInstantiable())
-		{
-			_alert(RESULT_TYPE_INFORMATION, 
-				_T("This class is a kind of Object class, But can't instantiate."));
+		//	Declarations:
+	public:
+		typedef NETConcreteClass<T> This;
+		typedef NETClassBase<T> Super;
 
-			NEObject* nullptr = 0x00;
+		//	Constructors:
+	public:
+		NETConcreteClass();
+		NETConcreteClass(const NETConcreteClass& source);
 
-			return *nullptr;
-		}
+		//	Destructors:
+	public:
+		virtual ~NETConcreteClass();
 
-		return *(new T());
-	}
+		//	Interfaces:
+		//		Virtuals:
+		//			NEClassBase:
+	public:
+		virtual NEObject& instantiate() const;
+		//			NEObject:
+	public:
+		virtual NEObject& clone() const;
 
-	template <typename T>
-	NEObject& NETConcreteClass<T>::clone() const
-	{
-		return *(new This(*this));
-	}
+	};
 }

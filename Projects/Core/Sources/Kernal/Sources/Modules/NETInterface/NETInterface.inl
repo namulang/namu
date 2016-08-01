@@ -1,37 +1,40 @@
+//	---------------------------------------------------------------------------------
+//	Name			:	NETInterface
+//	Comments		:	
+//	Releationships	:
+//	Charateristics	:	
+//	Usage			:	
+//	Memo			:	
+//	Author			:	2016-02-13	kniz	Creations
+//	---------------------------------------------------------------------------------
+#pragma once
+
+#include "../NETClassBase/NETClassBase.inl"
+
 namespace NE
 {
 	template <typename T>
-	NETInterface<T>::~NETInterface()
+	class NETInterface : public NETClassBase<T>
 	{
+		//	Declarations:
+	public:
+		typedef NETInterface<T> This;
+		typedef NETClassBase<T> Super;
+		//	Constructors:
+	public:
+		NETInterface();
+		NETInterface(const NETInterface& source);
 
-	}
+		//	Destructors:
+	public:
+		virtual ~NETInterface();
 
-	template <typename T>
-	NETInterface<T>::NETInterface(const NETInterface& source)
-		: Super(source)
-	{
-
-	}
-
-	template <typename T>
-	NETInterface<T>::NETInterface()
-		: Super()
-	{
-
-	}
-
-	template <typename T>
-	NEObject& NETInterface<T>::clone() const
-	{
-		return *(new This(*this));
-	}
-
-	template <typename T>
-	NEObject& NETInterface<T>::instantiate() const
-	{
-		NEObject* nullptr = 0x00;
-		_alert(RESULT_TYPE_WARNING, _T("You can't instantiate interface class."));
-
-		return *nullptr;
-	}
+		//	Inherited:
+		//		NEClassBase:
+	public:
+		virtual NEObject& instantiate() const;
+		//				NEObject:
+	public:
+		virtual NEObject& clone() const;
+	};
 }

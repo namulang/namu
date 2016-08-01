@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../NENumericType/NENumericType.hpp"
-#include "../NETClass/define/ClassMacro.hpp"
 
 namespace NE
 {

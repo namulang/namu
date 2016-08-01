@@ -12,8 +12,7 @@ namespace NE
 		static yes _isSuperClassChecker(typename T::SuperClass*);
 		template <typename T>
 		static no _isSuperClassChecker(...);
-
-	public:
-		static const type_bool IS_SUPERCLASS_DEFINED = sizeof(_isSuperClassChecker<T>(0)) == sizeof(yes);
 	};
+
+
 }

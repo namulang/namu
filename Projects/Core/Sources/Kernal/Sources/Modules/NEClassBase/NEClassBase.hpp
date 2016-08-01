@@ -12,14 +12,29 @@
 
 //    include:
 #include "../NEIdableObject/NEIdableObject.hpp"
-#include "../../Modules/NETString/NETString.hpp"	//	forward declaration
+#include "../NETString/NETString.hpp"	//	forward declaration
+//		include NETList as declaration, not definition:
+//			if we include it as definition, we'll be falled into the deep of templating reculsion.
+//			it'll cause to NEClassBaseList that is also a kind of NEObject. of course it has TClass<T>
+//			too.
+//			so in order to prevent that, we should be include headers along with following sequence.
+//				*) "declaration of T" means "T.inl"
+//				*) "definition of T" means "T.hpp"
+//
+//				1. declaration of NEClassBase. (for declaring NETList)
+//				2. declaration of NETList
+//				3. typedef NETList<NEClassBase*> to NEClassBaseList
+//				4. declaration of TClass
+//				5. definition of NETList (there is no need to define NEClassBase, because it isn't 
+//					a class template)
+//				6. definition of TClass.
+//			this header files kept 1 to 4 contents among above ones.
+class NE::NEClassBase;
+
+#include "../NETList/NETList.inl"	// include inl, not hpp
 
 namespace NE
 {
-	class NEClassBase;
-
-	template <typename T, type_bool pointerUseNewHeap>
-	class NE_DLL NETList;
 	typedef NETList<NEClassBase*, true> NEClassBaseList;
 
 	class NE_DLL NEClassBase : public NEIdableObject

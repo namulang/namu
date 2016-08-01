@@ -4,12 +4,10 @@
 #include "../NETInterface/NETInterface.hpp"
 #include "../NETConcreteClass/NETConcreteClass.hpp"
 #include "../NETUnknownMetaClass/NETUnknownMetaClass.hpp"
+#include "../NETClass/define/ClassMacro.hpp"
 
 namespace NE
 {
-	class NE_DLL NEInterfaceClass {};	
-	class NE_DLL NEConcreteClass {};
-
 	template <typename T, typename MetaClass = NETMetaClassDeterminder<T>::MetaClass>
 	class NETClass : public MetaClass
 	{
@@ -19,31 +17,16 @@ namespace NE
 	public:
 		typedef typename NETClassBase<T>::MetaClass MetaClass;
 		typedef typename NETClassBase<T>::Trait Trait;
-		using NETClassBase<T>::IS_METACLASS_DEFINED;
-		using NETClassBase<T>::IS_TEMPLATE;
-		using NETClassBase<T>::IS_DERIVED_OF;
-		using NETClassBase<T>::getTraitClassStatically;
-		using NETClassBase<T>::getNameStatically;
-		using NETClassBase<T>::isRegisteredStatically;		
+		using NETClassBase<T>::isRegisteredStatically;	
+		using NETClassBase<T>::getSuperClassesStatically;
 		using NETClassBase<T>::getIdentifierStatically;
-
-	public:
-		virtual type_bool isInstantiable() const
-		{
-			return IS_ADT;    //    Can't know because World check whether it's by MetaClass.
-		}
-
-	public:
-		//	Why this static variable was defined into NETClass, while the others are 
-		//	NETClassBase?:
-		//		NETADTChecker<T> checks given type T is a kind of ADT or not by lett
-		//		ing compiler cast T::MetaClass to NETInterface<T> implicly at compil
-		//		e time.
-		//		But, unfortunatly, NETInterface<T> is a derived one of NETClassBase,
-		//		if NETClassBase has NETADTChecker<T> like as other checkers, this m
-		//		akes templating class reclusively. 
-		//
-		//			NETClassBase -> NETADTChecker -> NETInterface -> NETClassBase		
-		static const type_bool IS_ADT = NETADTChecker<T>::IS_ADT;
+		using NETClassBase<T>::getClassStatically;
+		using NETClassBase<T>::getNameStatically;
+		using NETClassBase<T>::getIdStatically;
+		using NETClassBase<T>::isMetaClassDefinedStatically;
+		using NETClassBase<T>::isInstantiableStatically;
+		using NETClassBase<T>::isTemplateStatically;
+		using NETClassBase<T>::isBuiltInClassStatically;
+		using NETClassBase<T>::getTraitClassStatically;
 	};
 }
