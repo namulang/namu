@@ -27,9 +27,9 @@ namespace NE
 	}
 
 	template <typename T>
-	const NEClassBaseList& NETClassBase<T>::getSubClasses() const
+	const NEClassBaseList& NETClassBase<T>::getChildrenClasses() const
 	{
-		return getSubClassesStatically();
+		return getChildrenClassesStatically();
 	}
 
 	template <typename T>
@@ -89,35 +89,17 @@ namespace NE
 	}
 
 	template <typename T>
-	NEIdentifier& NETClassBase<T>::_getIdentifier()
+	const NEIdentifier& NETClassBase<T>::getHeader() const
 	{
-		NEIdentifier& casted = const_cast<NEIdentifier&>(getIdentifierStatically());
-
-		return casted;
+		return getHeaderStatically();
 	}
 
 	template <typename T>
-	const NEIdentifier& NETClassBase<T>::getIdentifier() const
+	const NEIdentifier& NETClassBase<T>::getHeaderStatically()
 	{
-		return getIdentifierStatically();
-	}
-
-	template <typename T>
-	const NEIdentifier& NETClassBase<T>::getIdentifierStatically()
-	{
-		static NEIdentifier _inner;
+		static NEHeader _inner;
 
 		return _inner;
-	}
-
-	template <typename T>
-	type_result NETClassBase<T>::_setRegistered(type_bool new_is_registered)
-	{
-		type_bool& is_registered = const_cast<type_bool&>(isRegisteredStatically());
-
-		is_registered = new_is_registered;
-
-		return RESULT_SUCCESS;
 	}
 
 	template <typename T>
@@ -136,7 +118,7 @@ namespace NE
 		return _inner;
 	}
 	template <typename T>
-	const NEClassBaseList& NETClassBase<T>::getSubClassesStatically()
+	const NEClassBaseList& NETClassBase<T>::getChildrenClassesStatically()
 	{
 		static NEClassBaseList _inner;
 
@@ -158,17 +140,7 @@ namespace NE
 	}
 
 	template <typename T>
-	type_result NETClassBase<T>::_setId(type_id new_id)
-	{
-		type_id& casted = const_cast<type_id&>(getIdStatically());
-
-		casted = new_id;
-
-		return RESULT_SUCCESS;
-	}
-
-	template <typename T>
-	const NEClassBase& NE::NETClassBase<T>::getTraitClassStatically()
+	const NEClassBase& NETClassBase<T>::getTraitClassStatically()
 	{
 		static NETClass<Trait> _inner;
 
@@ -176,26 +148,34 @@ namespace NE
 	}
 
 	template <typename T>
-	type_bool NE::NETClassBase<T>::isBuiltInClassStatically()
+	type_bool NETClassBase<T>::isBuiltInClassStatically()
 	{
 		return NETDerivedClassChecker<T, NEObject>::IS_DERIVED_OF;
 	}
 
 	template <typename T>
-	type_bool NE::NETClassBase<T>::isTemplateStatically()
+	type_bool NETClassBase<T>::isTemplateStatically()
 	{
 		return NETTemplateChecker<T>::IS_TEMPLATE;
 	}
 
 	template <typename T>
-	type_bool NE::NETClassBase<T>::isInstantiableStatically()
+	type_bool NETClassBase<T>::isInstantiableStatically()
 	{
 		return NETADTChecker<T>::IS_ADT;
 	}
 
 	template <typename T>
-	type_bool NE::NETClassBase<T>::isMetaClassDefinedStatically()
+	type_bool NETClassBase<T>::isMetaClassDefinedStatically()
 	{
 		return NETMetaClassChecker<T>::IS_METACLASS_DEFINED;
+	}
+
+	template <typename T>
+	const NEPackage& NETClassBase<T>::getPackage() const
+	{
+		static NEPackage instance;
+
+		return instance;
 	}
 }

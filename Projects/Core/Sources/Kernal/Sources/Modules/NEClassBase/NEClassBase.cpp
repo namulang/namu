@@ -28,7 +28,7 @@ namespace NE
 	type_bool NE_DLL NEClassBase::isEqualTypeWith(const This& source) const
 	{
 		return	&source							&&
-				&getName() == &source.getName()	;
+			&getName() == &source.getName()	;
 	}
 
 	type_bool NE_DLL NEClassBase::isEqualTypeWith(const NEObject& source) const
@@ -56,51 +56,40 @@ namespace NE
 		return isSubClassOf(parent.getClass());
 	}
 
-	type_result NEClassBase::_registerSubClass(const NEClassBase& subclass)
+	type_result NEClassBase::_onEnrolledSuperClasses(const NEClassBase& new_super)
 	{
 		//	pre:
-		//		Never use the method of instance to check whether given subclass is a kind of Unknown.
-		//		If do so, definitely, you will get some damn happy feelings because of a infinite recursive call.
-		if(&subclass.getName() == &NETClass<NEObject>::getNameStatically())
-			return RESULT_SUCCESS;
-
-
-		//	main:
-		//		Acquire static instance:	you can use this now. Above recursive trap has been cleared :)
-		static NETClass<NEObject> root_class;
-		//		This statement makes a recursive call in order to register super type.
-		const NEClassBase& super = subclass.getSuper();
-		if(*this == super) 
-			return _registerSubClassAsMyChild(subclass);
-
-		NEClassBaseList& subs = _getSubClasses();
-		for(int n=0; n < subs.getLength() ;n++)
-			if(subs[n]._registerSubClass(subclass) == RESULT_SUCCESS)
-				return RESULT_SUCCESS;
+		//		targetting:
+		NEClassBaseList& supers = _getSuperClasses();
+		supers = new_super.getSuperClasses();
 
 
 		//	post:
-		return RESULT_COULDNOT_FIND_DATA;
-	}
-
-	type_result NEClassBase::_registerSubClassAsMyChild(const NEClassBase& subclass)
-	{
-		type_index pushed_index = _getSubClasses().push(subclass);
-		if(pushed_index == NE_INDEX_ERROR)
-			return RESULT_TYPE_WARNING;
+		supers.pushFront(new_super);
 
 		return RESULT_SUCCESS;
 	}
 
-	NEClassBaseList& NEClassBase::_getSubClasses()
+	type_result NEClassBase::_onEnrollChildClass(const NEClassBase& new_child)
+	{
+		return _getChildrenClasses().push(new_child);
+	}
+
+	NEClassBaseList& NEClassBase::_getChildrenClasses()
 	{
 		return const_cast<NEClassBaseList&>(getSubClasses());
+	}
+
+	NEClassBaseList& NEClassBase::_getSuperClasses()
+	{
+		return const_cast<NEClassBaseList&>(getSuperClases());
 	}
 
 	const This NE_DLL &NEClassBase::getSuper() const
 	{	
 		//	if there is no ancestors, this will return null-referenced "This&" type.
-		return getSuperes()[0];
+
+		return getSuperClasses()[0];
 	}
 
 	type_result NEClassBase::isValid() const
@@ -125,17 +114,6 @@ namespace NE
 		return loader;
 	}
 
-	type_result NEClassBase::enroll()
-	{
-		if(isRegistered()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-		Kernal& kernel = Kernal::getInstance();
-		if( ! &kernel) return RESULT_TYPE_ERROR;
-		NEClassManager& cm = kernel.getClassManager();
-		if( ! &cm) return RESULT_TYPE_ERROR;
-
-		return cm.enroll(*this);
-	}
-
 	type_result NEClassBase::_alert(type_result log_type, const type_tchar* message) const
 	{
 		//	pre:
@@ -143,10 +121,10 @@ namespace NE
 		Kernal& kernel = Kernal::getInstance();
 		if( ! &kernel) return RESULT_TYPE_ERROR;
 		NEDebugManager& debugger = kernel.getDebugManager();
-		
+
 		//	main:
 		type_int	bit_mask = RESULT_TYPE_ERROR | RESULT_TYPE_WARNING | RESULT_TYPE_INFORMATION;
-		
+
 		switch(log_type & bit_mask)
 		{
 		case RESULT_TYPE_ERROR:			RESULT_TYPE_ERROR(message);			break;
@@ -158,18 +136,36 @@ namespace NE
 		return log_type;
 	}
 
-	type_result NEClassBase::_onInitialize(NEHeader& to_initialize)
+	type_result NEClassBase::_onInitializeHeader(NEHeader& to_initialize)
+	{
+		return RESULT_SUCCESS;
+	}
+	type_result NEClassBase::_onInitializeMethods(NEMethodList& to_initialize)
 	{
 		return RESULT_SUCCESS;
 	}
 
-	NEHeader& NEClassBase::_createHeader() const
+	NEHeader& NEClassBase::_getHeader()
 	{
-		return *(new NEHeader());
+		return const_cast<NEHeader&>(getHeader());
 	}
 
-	NEClassBaseList& NEClassBase::_createClassBaseList() const
+	type_id& NEClassBase::_getId()
 	{
-		return *(new NEClassBaseList());
+		return const_cast<type_id&>(getId());
 	}
-}
+
+	type_result NEClassBase::_setPackage(const NEPackage& new_package)
+	{
+		NEPackage& package = const_cast<NEPackage&>(getPackage());
+
+		//	Don't add exception handlings which was not essential:
+		//		even if new_package was just same as package,
+		//		assigning job doens't get messed up because of exception handling
+		//		inside of it. see refer NEPackage::operator=.
+		//		these concepts¤Ñhiding its exceptions inside of who charges in¤Ñ
+		//		is a kind of design philosophy of World.
+		package = new_package;
+
+		return RESULT_SUCCESS;
+	}

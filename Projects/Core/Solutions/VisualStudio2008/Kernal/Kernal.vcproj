@@ -945,6 +945,14 @@
 											>
 										</File>
 									</Filter>
+									<Filter
+										Name="NETClassBaseSet"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseSet\NEClassBaseSet.hpp"
+											>
+										</File>
+									</Filter>
 								</Filter>
 								<Filter
 									Name="NETList"
@@ -1994,21 +2002,17 @@
 														</Filter>
 													</Filter>
 												</Filter>
+												<Filter
+													Name="NEClassManager"
+													>
+													<File
+														RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassManager\NEClassManager.hpp"
+														>
+													</File>
+												</Filter>
 											</Filter>
 										</Filter>
 									</Filter>
-								</Filter>
-								<Filter
-									Name="NESwitchableUnit"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NESwitchableUnit\NESwitchableUnit.cpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NESwitchableUnit\NESwitchableUnit.hpp"
-										>
-									</File>
 									<Filter
 										Name="NEBinderBase"
 										>

@@ -32,6 +32,8 @@
 class NE::NEClassBase;
 
 #include "../NETList/NETList.inl"	// include inl, not hpp
+#include "../NEHeader/NEHeader.hpp"
+#include "../NEPackage/NEPackage.hpp"
 
 namespace NE
 {
@@ -44,6 +46,7 @@ namespace NE
 		typedef NEClassBase This;
 		typedef NEIdableObject Super;
 		friend class NEPackageManager;
+		friend class NEClassManager;
 
 		//    Constructors:
 	public:
@@ -61,14 +64,16 @@ namespace NE
 		virtual type_bool isTemplate() const = 0;
 		virtual type_bool isMetaClassDefined() const = 0;
 		virtual type_bool isBuiltInClass() const = 0;
-		virtual const type_bool& isRegistered() const = 0;
+		virtual type_bool isRegistered() const = 0;
 		virtual const NEClassBase& getClass() const = 0;
 		virtual const This& getTraitClass() const = 0;
 		virtual const NEClassBaseList& getSuperClasses() const = 0;
-		virtual const NEClassBaseList& getSubClasses() const = 0;
+		virtual const NEClassBaseList& getChildrenClasses() const = 0;
 		virtual const NETString& getName() const = 0;
 		virtual NEObject& instantiate() const = 0;
 		virtual const NEHeader& getHeader() const = 0;
+		virtual const NEPackage& getPackage() const = 0;
+
 		//            Inherits:
 		//                NEObject:
 	public:
@@ -78,15 +83,14 @@ namespace NE
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 
 	protected:
-		//    these method were used only for TypeManager friend class.
-		virtual type_result _setRegistered(type_bool new_is_registered) = 0;
-		virtual type_result _setIdentifier(const NEClassIdentifier& new_identifier) = 0;
-		virtual type_result _setId(type_id new_id) = 0;
-		virtual type_result _onInitialize(NEHeader& to_intiailize);
+		//	these method were used only for ClassManager/PackageManager friend class.
+		//	by setting id >= 0, Class can be classified to be registered.
+		//	In fact, this Id was meant to index of buffer belonged to ClassManager.
+		virtual type_result _onInitializeHeader(NEHeader& to_intiailize);
+		virtual type_result _onInitializeMethods(NEMethodList& to_initialize);
 
 		//        General interfaces:
 	public:
-		type_result enroll();
 		type_bool isEqualTypeWith(const This& source) const;
 		type_bool isEqualTypeWith(const NEObject& source) const;
 		type_bool isSuperClassOf(const This& parent) const;
@@ -97,15 +101,12 @@ namespace NE
 
 	protected:
 		type_result _alert(type_result result, const type_tchar* message) const;
-		//	instantiation function:
-		//		to reduce dependencies for NETClassBase, we hide concrete couplings
-		//		into implement file.
-		NEHeader& _createHeader() const;
-		NEClassBaseList& _createClassBaseList() const;
-
-	private:
-		type_result _registerSubClass(const NEClassBase& subclass);
-		type_result _registerSubClassAsMyChild(const NEClassBase& subclass);
-		NEClassBaseList& _getSubClasses();
+		NEClassBaseList& _getChildrenClasses();
+		NEClassBaseList& _getSuperClasses();
+		NEHeader& _getHeader();
+		type_result _onEnrollSuperClasses(const NEClassBase& super);
+		type_result _onEnrollChildClass(const NEClassBase& child);
+		type_result _setPackage(const NEPackage& new_package);
+		type_id& _getId();
 	};
 }

@@ -2,21 +2,14 @@
 #pragma once
 
 #include "../NETClass/NETClass.hpp"
-#include "../NEIdentifier/NEIdentifier.hpp"
+#include "../NEHeader/NEHeader"
 #include "../NEClassBaseList/NEClassBaseList.hpp"
 
 namespace NE
 {
-	typedef NEClassBaseList (NE_FUNCTION_CALL *EntryPoint)(void);
-
-	class NE_DLL NEPackage : public NEPackageHeader
+	class NE_DLL NEPackage : public] NEHeader
 	{
-		//	Define typedefs for RTTI in manual:
-		//		because this class was designated to block calling 'clone()'
-		//		for some reason. so, we can't just use DECLARE_CLASS macro.
-		typedef NEPackage This;
-		typedef NEIdentifier Super;
-		typedef NETConcreteClass<This> MetaClass;
+		NE_DECLARE_CLASS(NEPackage, NEHeader)
 
 	public:
 		friend class NEPackageManager;
@@ -24,7 +17,7 @@ namespace NE
 	private:
 		NEPackage();
 		NEPackage(const This& rhs);
-		
+
 	public:
 		virtual ~NEPackage();
 
@@ -40,22 +33,23 @@ namespace NE
 		const HINSTANCE& getInstance() const;
 		EntryPoint& getEntryPoint();
 		const EntryPoint& getEntryPoint() const;
-		const NEClassBaseList& getComponents() const;
-		NEClassBaseList& getComponents();
-		bool isLoaded() const;
+		const NEClassBaseList& getClasses() const;
+		type_bool isLoaded() const;
 
 	public:
-		virtual const NEClassBase& getClass() const;
 		virtual void release();
 		virtual type_result isValid() const;
-	private:
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 		virtual NEObject& clone() const;
 
+	protected:
+		//	for PackageManager.
+		NEClassBaseList& _getClasses();
+
 	private:
 		This& _assign(const This& rhs);
-		void _release();		
+		void _release();
 
 	private:
 		NETString _path;
@@ -63,8 +57,5 @@ namespace NE
 		EntryPoint _entrypoint;
 		NEIntSet _compatible_revisions;
 		NEClassBaseList _components;
-
-	public:
-		static const NEClassBase& getClassStatically();
 	};
 }

@@ -54,10 +54,10 @@ namespace NE
 	bool NEPackage::operator==(const This& source) const
 	{
 		return	Super::operator==(source)			&&
-				_path == source._path				&&
-				_instance == source._instance		&&
-				_entrypoint == source._entrypoint	&&
-				_components == source._components	;
+			_path == source._path				&&
+			_instance == source._instance		&&
+			_entrypoint == source._entrypoint	&&
+			_components == source._components	;
 	}
 
 	NETString& NEPackage::getPath()
@@ -105,11 +105,6 @@ namespace NE
 		return _entrypoint != 0;
 	}
 
-	const NEClassBase& NEPackage::getClass() const
-	{
-		return getClassStatically();
-	}
-
 	void NEPackage::release()
 	{
 		Super::release();
@@ -143,12 +138,5 @@ namespace NE
 	NEObject& NEPackage::clone() const
 	{
 		return *(new This(*this));
-	}
-
-	const NEClassBase& NEPackage::getClassStatically()
-	{
-		static NETClass<NEPackage> _inner;
-
-		return _inner;
 	}
 }
