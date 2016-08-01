@@ -1235,91 +1235,67 @@
 									>
 								</File>
 								<Filter
-									Name="NETClassBaseCommon"
+									Name="NETClassBase"
 									>
 									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBaseCommon\NETClassBaseCommon.hpp"
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBase\NETClassBase.hpp"
 										>
 									</File>
 									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBaseCommon\NETClassBaseCommon.inl"
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBase\NETClassBase.inl"
 										>
 									</File>
 									<Filter
-										Name="NETClassBase"
+										Name="NETInterface"
 										>
 										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBase\NETClassBase.hpp"
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETInterface\NETInterface.hpp"
 											>
 										</File>
 										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBase\NETClassBase.inl"
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETInterface\NETInterface.inl"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NETConcreteClass"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETConcreteClass\NETConcreteClass.hpp"
 											>
 										</File>
 										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBase\Specialization.cpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBase\Specialization.hpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassBase\SpecializationNEClassBaseList.hpp"
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETConcreteClass\NETConcreteClass.inl"
 											>
 										</File>
 										<Filter
-											Name="NETInterface"
+											Name="NETClass"
 											>
 											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETInterface\NETInterface.hpp"
-												>
-											</File>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETInterface\NETInterface.inl"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NETConcreteClass"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETConcreteClass\NETConcreteClass.hpp"
-												>
-											</File>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETConcreteClass\NETConcreteClass.inl"
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.hpp"
 												>
 											</File>
 											<Filter
-												Name="NETClass"
+												Name="define"
 												>
 												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.hpp"
+													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\define\ClassMacro.hpp"
 													>
 												</File>
-												<Filter
-													Name="define"
-													>
-													<File
-														RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\define\ClassMacro.hpp"
-														>
-													</File>
-												</Filter>
 											</Filter>
 										</Filter>
-										<Filter
-											Name="NETUnknownMetaClass"
+									</Filter>
+									<Filter
+										Name="NETUnknownMetaClass"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETUnknownMetaClass\NETUnknownMetaClass.hpp"
 											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETUnknownMetaClass\NETUnknownMetaClass.hpp"
-												>
-											</File>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETUnknownMetaClass\NETUnknownMetaClass.inl"
-												>
-											</File>
-										</Filter>
+										</File>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETUnknownMetaClass\NETUnknownMetaClass.inl"
+											>
+										</File>
 									</Filter>
 								</Filter>
 							</Filter>
