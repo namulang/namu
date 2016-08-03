@@ -7,6 +7,20 @@
 
 namespace NE
 {
+	//	What is this:
+	//		When NETClass is templated with some parameter type T,
+	//		it's a problem to provide metaclass of NETClass. (of course, 
+	//		because NETClass is a kind of metaclass, giving metaclass of
+	//		metaclass is the problem mentioned above)
+	//		The reason which this going to be a problem is templating reculsively.
+	//		Just imagine NETClass<T> that is returning NETClass<NETClass<T> for
+	//		its metaclass.
+	//		so, this get crack the codes. to prevent this, we replace metaclass
+	//		to NETMetaClass. Dummy.
+	//		All NETClass<T> will return NETClass<NETMetaClass>() for getClass()
+	//		method.
+	class NE_DLL NETMetaClass {};
+
 	///	@class	NETClassBase
 	///	@brief	Implemented common method and data among specialized from NETClassBase
 	///			class.
