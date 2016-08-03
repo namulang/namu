@@ -79,23 +79,22 @@ namespace
 }
 
 
+	const NEPackage& NEPackageManager::find(const NETString& developer, NETString& name, int interface_revision) const
+	{
+		return find(NEIdentifier(developer, name, interface_revision));
+	}
 
-	//	---------------------------------------------------------------------------------
-	//	설명	:	주어진 모듈식별자로 모듈을 검색한다.
-	//	알고리즘:	최선책과 차선책에 대해서
-	//					:	최선책이란 모듈이름, 제작자와 개정횟수까지 일치하는 걸 말하며,
-	//						완벽하게 같은 모듈임을 입증하는 것을 말한다. 
-	//						검색 우선순위 1 순위다.
-	//						차선책은 검색 우선순위 2순위로, 최선책이 존재하지 않을때 결정
-	//						한다.
-	//						조건은 "모듈이름", "제작자"는 같은나 버전은 다른 경우를 말한다.
-	//						대개, 이때의 개정횟수은 "제시한 개정횟수보다 높은 버전"이며,
-	//						target의 호환성(compatibilities)에 source의 버전이 포함된 경우를
-	//						말한다.
-	//	동작조건:	
-	//	메모	:	식별자란, "이름", "개정번호", "제작자"를 말한다.
-	//	히스토리:	2011-07-07	이태훈	개발 완료
-	//	---------------------------------------------------------------------------------
+	type_int _judgePackageScore(const NEIdentifier& existing, const NEIdentifier& target) const
+	{		
+		if(	existing.getDeveloper() != target.getDeveloper()	||
+			existing.getName() != target.getName()				)	return 0;
+		if(existing.getInterfaceRevision() == target.getInterfaceRevision()) return 3;
+		if(existing.getCompatibles().find(target.getInterfaceRevision()))
+			return 2;
+
+		return 1;
+	}
+
 	const NEPackage NE_DLL &NEPackageManager::find(const NEIdentifier& identifier) const
 	{
 		//	pre:

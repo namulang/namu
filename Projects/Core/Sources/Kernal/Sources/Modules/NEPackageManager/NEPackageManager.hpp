@@ -26,15 +26,11 @@ namespace NE
 {
 	class NE_DLL NEPackageManager : public NEModule
 	{
-		NE_DECLARE_CLASS(NEPackageManager, NEModule)
+		NE_DECLARE_MODULE(NEPackageManager, NEModule)
 
 	public:
 		friend class Kernal;
 		friend class Editor;
-
-		//	내부클래스:
-	public:
-#include "innerclass/ErrorCode/ErrorCode.hpp"
 
 		//	생성자:
 	public:
@@ -53,6 +49,7 @@ namespace NE
 
 		//	접근자:
 	public:
+		const NEPackage& find(const NETString& developer, NETString& name, int interface_revision) const;
 		const NEPackage& find(const NEIdentifier& package_identifier) const;
 		const NEPackageSet& getPackages() const;
 
