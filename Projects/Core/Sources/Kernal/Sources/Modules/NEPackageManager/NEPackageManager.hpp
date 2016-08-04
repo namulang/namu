@@ -74,12 +74,12 @@ namespace NE
 		type_result _fetchPackages(NEPackageList& candidates);
 		type_result _enrollPackages(NEPackageList& candidates);
 		type_result _removeDuplicated(NEPackageList& candidates);		
-		type_result _linkPackageBinaries(NEPackageList& candidates);
-		type_result _listupPackageBinaries(NEPackageList& candidates);
-
-		type_result _bridgePackageInterface(NEPackage& to_be_fetched);
-		type_result _removePackagesFailedToBridge(NEPackageList& candidates);
+		type_result _linkPackages(NEPackageList& candidates);
+		type_result _listupCandidatesToLink(NEPackageList& candidates);
+		type_result _linkPackage(NEPackage& to_be_fetched);
+		type_result _removePackagesFailedToLink(NEPackageList& candidates);
 		type_result _ownClasses(NEPackage& package);
+		type_int _judgePackageScore(const NEIdentifier& existing, const NEIdentifier& target) const;
 
 		//	¸â¹öº¯¼ö:		
 	private:		

@@ -95,71 +95,52 @@ namespace
 		return 1;
 	}
 
-	const NEPackage NE_DLL &NEPackageManager::find(const NEIdentifier& identifier) const
+	const NEPackage NE_DLL &NEPackageManager::find(const NEIdentifier& target) const
 	{
 		//	pre:
-		NEPackage* null_pointer = NE_NULL;
-		//		stand by variables:
-		//			Basic identifier info:
-		type_int	MAX = 199999999,
-					//	if specified revision/version count was set to default(means that not designated),
-					//	we just get package with has the most highest value of that one.
-					rev = identifier.getRevisionCount() > 0 ? identifier.getRevisionCount() : MAX,
-					ver = identifier.getVersionCount() > 0 ? identifier.getVersionCount() : MAX;
-		//			Fit:
+		//		Fit:
 		struct Fit
 		{
-			type_index	n;
-			type_uint	revision_delta;	//	delta to user's specified one. the less the better.
-			type_uint	version_delta;
+			NEPackage* founded;
+			type_int score;
 		};
-		Fit to_return = {NE_INDEX_ERROR, MAX, MAX};
+		Fit to_return = {NE_NULL, 0};
 		
 
 		//	main:		
 		//		finding:
 		for(type_index n=0; n < _packages.getLength() ;n++)
 		{
-			const NEIdentifier& e = _packages[n];
-			if( ! identifier.isKindOf(e)) continue;
-			//	같은 종류의 모듈을 발견한 경우:
-			//		개정횟수마져 일치하면:	All right. These are fully compatible.
-			type_int	rev_delta = abs(e.getRevisionCount() - rev),
-						ver_delta = abs(e.getVersionCount() - ver);
-			if( ! rev_delta && ! ver_delta)
-				//	no need to find anymore.
-				return e;
+			const NEPackage& e = _packages[n];
+			type_int score = _judgePackageScore(e);
+			if(score < to_return.score) continue;
+			if(score == 3) return _packages[n];	//	just fit case.
 
-			if(rev_delta <= to_return.revision_delta)
+			//	if we met new challenger,
+			if(	score > to_return.score								||
+				e.getRevisionCount() > to_return.getRevisionCount()	)
 			{
-				//	compatibled:
-				if(ver_delta < to_return.version_delta)
-				{
-					to_return.n = n;
-					to_return.revision_delta = rev_delta;
-					to_return.version_delta = ver_delta;
-				}
+				to_return.founded = &e;
+				to_return.score = score;
 			}
 		}
 
 
-
 		//	post:	모든 탐색을 실시했으나 최선책을 찾지 못했다.
 		//			차선책으로 갱신된 인덱스가 가리키는 모듈을 내보낸다.
-		if(to_return.n == NE_INDEX_ERROR)
+		if( ! to_return.founded)
 		{
 			//	차선책을 찾지 못했다면:	만약 차선책조차 찾지 못했다면 처음에 second_fit_index로 주어졌던
 			//							더미모듈이 내보내질 것이다.		
 			KERNAL_ERROR("E201011C44 : 일치하는 모듈 검색 실패\n주어진 모듈의 이름, 개발자와 일치하는 모듈이 없습니다. 모듈매니져는 더미모듈을 반환할 것입니다.\n찾으려는 식별자 :\n\t이름 : %s\n\t개발자 : %s\n\tRevisionCount : %d\n\tVersionCount : %d", identifier.getName().toCharPointer(), identifier.getAuthor().toCharPointer(), identifier.getRevisionCount(), identifier.getVersionCount())
 		
+			NEPackage* null_pointer = NE_NULL;
 			return *null_pointer;
-		}
-		
+		}		
 		//		차선책을 찾았다면:		
-		const NEPackage& found = _packages[to_return.n];			
-		KERNEL_WARNING(" : We was supposed to provide NEPackage for your request, but couldn't find proper one. Instead of, we just prepare the alternative one for you. Its information is next following.\n\tName\t: %s\n\tAuthor\t: %s\n\tRevisionCount : %d\n\tVersionCount : %d\n\tPath\t: %s", found.getName().toCharPointer(), found.getAuthor().toCharPointer(), found.getRevisionCount(), found.getVersionCount(), found.getPath().toCharPointer());
+		KERNAL_WARNING(" : We was supposed to provide NEPackage for your request, but couldn't find proper one. Instead of, we just prepare the alternative one for you. Its information is next following.\n\tName\t: %s\n\tAuthor\t: %s\n\tRevisionCount : %d\n\tVersionCount : %d\n\tPath\t: %s", found.getName().toCharPointer(), found.getAuthor().toCharPointer(), found.getRevisionCount(), found.getVersionCount(), found.getPath().toCharPointer());
 		
-		return found;
+		return *to_return.founded;
 	}
 
 
@@ -229,13 +210,13 @@ namespace
 		//		모듈 Fetch:
 		NEPackageList candidates;
 
-		_fetchPackageBinaries(candidates);
+		_linkPackages(candidates);
 		_fetchPackages(candidates);
 		
 
 		//	post:
-		for(int n=0; n < _package.getLength() ;n++)
-			_ownClasses(_package[n]);
+		for(int n=0; n < _packages.getLength() ;n++)
+			_ownClasses(_packages[n]);
 
 		return RESULT_SUCCESS;
 	}
@@ -244,14 +225,19 @@ namespace
 	type_result NEPackageManager::_ownClasses(NEPackage& package)
 	{
 		NEClassManager& classer = Kernal::getInstance().getClassManager();
-		NEClassBaseSet& components = package.getComponents();
+		NEClassBaseSet& classes = package.getClasses();
 
-		for(int n=0; n < components.getLength() ;n++)
+		for(int n=0; n < classes.getLength() ;n++)
 		{
 			//	NEPackage instances have prior to exist more than classes which were imported from them.
 			//	So don't need to worry about assigning pointer of package directly in this code.
-			components[0].setPackage(package);
-			classer.enroll(package);
+			if(NEResult::hasError(classer.enroll(package)))
+			{
+				KERNAL_WARNING(": we've met errors while enrolling fetched class, %s.\n	\
+					Sorry, but we've to choose not to load this class.", package.getName());
+				continue;
+			}
+			classes[n].setPackage(package);
 		}
 
 		return RESULT_SUCCESS;
@@ -287,7 +273,7 @@ namespace
 	//	---------------------------------------------------------------------------------
 	void NEPackageManager::_release()
 	{
-		_package.release();		
+		_packages.release();		
 	}
 
 
@@ -321,7 +307,7 @@ namespace
 			package.getEntryPoint()(tray, package); // entrypoint로부터 NETList가 넘어
 			
 			//	TODO: make these far generic. likely "Array = List;"			
-			NEClassBaseSet& components = package.getComponents();
+			NEClassBaseSet& components = package.getClasses();
 			components.create(tray);
 			while(tray.getLength() > 0)
 				components.push(tray[0]);
@@ -410,7 +396,7 @@ namespace
 				//	balance index and iterator*:
 				//		for the later increasing stage of 'for' statement.
 				//		we've just removed element of which indicating of target_e iterator.
-				//		So because currently, target__index is designating new element's index.
+				//		So because currently, target_index is designating new element's index.
 				//		we should not to increase target_index + 1.	Now, when we reach to increase
 				//		statement of 'for', target_index will be compensated properly.
 				target_index--;	
@@ -429,15 +415,15 @@ namespace
 	//	메모	:	NEFileSystem의 검색기능을 사용한다.
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	type_result NEPackageManager::_linkPackageBinaries(NEPackageList& candidates)
+	type_result NEPackageManager::_linkPackages(NEPackageList& candidates)
 	{
 		//	main:
-		_listupPackageBinaries(candidates);
+		_listupCandidatesToLink(candidates);
 		//		루핑:	
-		bool has_changed = false;
+		type_bool has_changed = false;
 		do
 		{
-			has changed = false;
+			has_changed = false;
 			/*
 				_linkDLLsUsingInputedPath()는 변경점이 존재할시에만 true를 반환한다
 			*/
@@ -447,7 +433,7 @@ namespace
 				NEPackage& to_be_fetched = e->getValue();
 
 				if( ! to_be_fetched.isLoaded())
-					if(_bridgePackageInterface(to_be_fetched) == RESULT_SUCCESS)
+					if(_linkPackage(to_be_fetched) == RESULT_SUCCESS)
 						//	로드에 성공했다면:	변경점이 존재한것이 된다
 						has_changed = true;
 
@@ -457,7 +443,7 @@ namespace
 
 
 		//	post:
-		return _reportErrorsIfThereAreModulesNotFeched();
+		return _removePackagesFailedToLink();
 	}
 
 
@@ -468,7 +454,7 @@ namespace
 	//	메모	:
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	type_result NEPackageManager::_bridgePackageInterface(NEPackage& to_be_fetched)
+	type_result NEPackageManager::_linkPackage(NEPackage& to_be_fetched)
 	{	//	배경:
 		//		왜 push를 하고 참조자를 가져오는가:
 		//			push하는 과정에서 소멸자와 복사생성자가 호출되기 때문이다.
@@ -526,7 +512,7 @@ namespace
 		return RESULT_SUCCESS;
 	}
 	
-	type_result NEPackageManager::_listupPackageBinaries(NEPackageList& candidates)
+	type_result NEPackageManager::_listupCandidatesToExamine(NEPackageList& candidates)
 	{
 		//	pre:
 		//		타겟팅:
@@ -540,7 +526,7 @@ namespace
 		//		검색 준비:
 		NEFileSystem filesystem(path.toCharPointer(), true); //	테스트니까 일단 풀 경로를 지정한다. 릴리즈에서는 "Modules/*.dll" 만 하면 됨
 		//		루핑:
-		const NEHeader& header = getClassStatically().getIdentifier();
+		const NEHeader& header = getClassStatically().getHeader();
 		while(true)
 		{
 			filesystem.findFile();
@@ -573,7 +559,7 @@ namespace
 		return RESULT_SUCCESS;
 	}
 
-	type_result NEPackageManager::_removePackagesFailedToBridge(NEPackageList& candidates)
+	type_result NEPackageManager::_removePackagesFailedToLink(NEPackageList& candidates)
 	{
 		typedef NEPackageList::Iterator Iterator;
 

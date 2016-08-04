@@ -98,6 +98,7 @@ namespace NE
 		type_bool isSubClassOf(const This& parent) const;
 		type_bool isSubClassOf(const NEObject& parent) const;
 		const This& getSuperClass() const;
+		type_result setPackage(const NEPackage& new_package);
 
 	protected:
 		type_result _alert(type_result result, const type_tchar* message) const;
@@ -106,7 +107,6 @@ namespace NE
 		NEHeader& _getHeader();
 		type_result _onEnrollSuperClasses(const NEClassBase& super);
 		type_result _onEnrollChildClass(const NEClassBase& child);
-		type_result _setPackage(const NEPackage& new_package);
 		type_id& _getId();
 	};
 }

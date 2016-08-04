@@ -155,7 +155,7 @@ namespace NE
 		return const_cast<type_id&>(getId());
 	}
 
-	type_result NEClassBase::_setPackage(const NEPackage& new_package)
+	type_result NEClassBase::setPackage(const NEPackage& new_package)
 	{
 		NEPackage& package = const_cast<NEPackage&>(getPackage());
 
