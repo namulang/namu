@@ -170,15 +170,13 @@ namespace
 	}
 
 
-	type_result NEPackageManager::_initializeBuiltIns()
+	type_result NEPackageManager::_pushBuiltIns(NEPackageList& candidates)
 	{
-		if(_packages.getLength() > 0) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-
 		//	create Kernel Package manually:
-		NEPackage kernel_package;
-		kernel_package....;
+		//NEPackage kernel_package;
+		//kernel_package....;		
 
-		return RESULT_SUCCESS;
+		return RESULT_SUCCESS; //candidates.push(builtin);
 	}
 
 
@@ -200,45 +198,53 @@ namespace
 
 	type_result NE_DLL NEPackageManager::initialize()
 	{
-		//	pre:		
+		//	pre:
 		//		초기화:
 		_release(); // release()를 하면 안된다.
 
 
 		//	main:
-		_initializeBuiltIns();
-		//		모듈 Fetch:
 		NEPackageList candidates;
-
+		_pushBuiltIns(candidates);
+		//		모듈 Fetch:
 		_linkPackages(candidates);
 		_fetchPackages(candidates);
-		
-
-		//	post:
-		for(int n=0; n < _packages.getLength() ;n++)
-			_ownClasses(_packages[n]);
-
+	
 		return RESULT_SUCCESS;
 	}
 
 
-	type_result NEPackageManager::_ownClasses(NEPackage& package)
+	type_result NEPackageManager::_ownClasses(NEClassBaseList& candidates, NEPackage& package)
 	{
 		NEClassManager& classer = Kernal::getInstance().getClassManager();
-		NEClassBaseSet& classes = package.getClasses();
 
-		for(int n=0; n < classes.getLength() ;n++)
+		int n=0;
+		for(NEClassBaseList::Iterator* e=candidates.getIterator(0); e ;e=e->getNext(), n++)
 		{
-			//	NEPackage instances have prior to exist more than classes which were imported from them.
-			//	So don't need to worry about assigning pointer of package directly in this code.
-			if(NEResult::hasError(classer.enroll(package)))
+			NEClassBase& klass = e->getValue();
+			//	Package instance copying doesn't make the problem:
+			//		NEPackage instances have prior to exist more than classes which were imported from them.
+			//		So don't need to worry about assigning pointer of package directly in this code.
+			//	class enrolling call "Module.onFetched" callback:
+			if(NEResult::hasError(classer.enroll(klass)))
 			{
-				KERNAL_WARNING(": we've met errors while enrolling fetched class, %s.\n	\
-					Sorry, but we've to choose not to load this class.", package.getName());
+				NEHeader& header = klass.getHeader();
+				KERNAL_WARNING(": we've met errors while enrolling fetched class, %s.%s.%d\nSorry, but we've to choose not to load this class.", header.getDeveloper().toCharPointer(), header.getName().toCharPointer, header.getInterfaceRevision());
+				candidates.remove(n);
+				n--;
+				e=candidates.getIterator(n);
 				continue;
 			}
-			classes[n].setPackage(package);
 		}
+
+
+		//	post:
+		//		make it own:
+		NEClassBaseSet& classes = package.getClasses();
+		classes.create(candidates.getLength());
+
+		for(NEClassBaseList::Iterator* e=candidates.getIterator(0); e ;e=e->getNext())
+			classes.push(e->getValue());
 
 		return RESULT_SUCCESS;
 	}
@@ -299,24 +305,34 @@ namespace
 		//	main:
 		//		버퍼에 데이터 축적:
 		typedef NEPackageList::Iterator Iterator;
-		for(Iterator* e=candidates.getIterator(0); e ;e=e->getNext())
+		int n=0;
+		for(Iterator* e=candidates.getIterator(0), n=0; e ;e=e->getNext(), n++)
 		{
 			NEPackage& package = e->getValue();
-
+			//	release:
+			package.getClasses().release();
+			package.NEHeader::release();
+			//	enter at entrypoint:
 			NEClassBaseList tray;
-			package.getEntryPoint()(tray, package); // entrypoint로부터 NETList가 넘어
-			
-			//	TODO: make these far generic. likely "Array = List;"			
-			NEClassBaseSet& components = package.getClasses();
-			components.create(tray);
-			while(tray.getLength() > 0)
-				components.push(tray[0]);
+			if(NEResult::hasError(package.getEntryPoint()(package, tray)))
+			{
+				KERNAL_WARNING("error happen while loading %s module", package.getName().toCharPointer());
+			}
+			//	filtering:
+			if(_isFiltered(package, candidates))
+			{
+				candidates.remove(n);
+				n--;
+				e = candidates.getIterator(n);
+				continue;
+			}
+			//	make it own:
+			_ownClasses(tray, package);
 		}	
 		
 		
 		//	post:
-		_removeDuplicated(candidates);	
-		return _enrollPackages(candidates);
+		return _ownPackages(candidates);
 	}
 
 
@@ -327,19 +343,14 @@ namespace
 	//	메모	:	push되는 순서대로 모듈의 scriptcode를 부과한다.
 	//	히스토리:	2011-07-07	이태훈	개발 완료	
 	//	---------------------------------------------------------------------------------
-	type_result NEPackageManager::_enrollPackages(NEPackageList& candidates)
+	type_result NEPackageManager::_ownPackages(NEPackageList& candidates)
 	{	
 		//	pre:
 		if(	NEModuleList bucket.getLength() <= 0) return;
 
 
 
-		//	main: candidates의 담긴 모듈을 최종적으로 _packages에 넣는다		
-		//		모듈셋의 버퍼공간 생성:
-		//			왜 1을 더하는가:
-		//				모듈매니져인 자기 자신의 주소값을 넣기 위해서다.
-		//				이때 주의할 점은, 또하나의 인스턴스가 만들어지지 않고 주소값이 다이렉트
-		//				로 들어간다는 점이다.
+		//	main:
 		_packages.create(candidates.getLength());
 
 		//		candidates로부터의 복사:
@@ -347,7 +358,7 @@ namespace
 		for(Iterator* e=candidates.getIterator(0); e ;e=e->getNext())		
 		{
 			NEPackage& package = e->getValue();
-			_packages.push(package);	//	내부에서 Module.id, _onArgumentFetched, _onFetchModule가 각각 호출 됨.
+			_packages.push(package);
 
 			KERNAL_INFORMATION("'%s' package was added", package.getName().toCharPointer());
 		}
@@ -364,47 +375,25 @@ namespace
 	//	메모	:
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	type_result NEPackageManager::_removeDuplicated(NEPackageList& candidates)
+	type_bool NEPackageManager::_isDuplicated(const NEPackage& fetched, const NEPackageList& candidates) const
 	{
 		//	main:
 		typedef NEPackageList::Iterator Iterator;
-		int source_index = 0;
-		for(Iterator* source_e=candidates.getIterator(0)		; 
-			source_e									;
-			source_e=source_e->getNext(), source_index++)
+
+		int n=0;
+		for(Iterator* e=candidates.getIterator(0); e ;e=e->getNext(), n++)
 		{		
 			//	대상1 추출:
-			const NEIdentifier& source = source_e->getValue();
-
+			const NEIdentifier& source = e->getValue();
 			//	대상1과 비교:	대상1과 같은 모듈이 있는지 확인한다
-			//	also use index for iterating target:
-			//		we'll delete an element of list when we found it duplicated.
-			//		in order to do that, we can't use Iterator* only.
-			int target_index = 0;
-			for(Iterator* target_e=candidates.getIterator(source_index+1)	;
-				target_e											;
-				target_e=target_e->getNext(), target_index++		)
-			{
-				//	대상2 추출:
-				const NEIdentifier& target = target_e->getValue();
-				if(source != target) continue;
-				//	removal duplicated:
-				candidates.remove(target_index); 
-				
-				KERNAL_WARNING("W201011C41 : 동일한 모듈 복수 존재\n같은 식별자를 지닌 모듈이 2개 이상 존재합니다.\n모듈매니져는 나중에 식별한 모듈은 읽지 않을 것입니다.\n동일한 모듈의 식별자:\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d\n\tVersionCount : %d", target.getName().toCharPointer(), target.getAuthor().toCharPointer(), target.getRevisionCount(), target.getVersionCount())
-
-				//	balance index and iterator*:
-				//		for the later increasing stage of 'for' statement.
-				//		we've just removed element of which indicating of target_e iterator.
-				//		So because currently, target_index is designating new element's index.
-				//		we should not to increase target_index + 1.	Now, when we reach to increase
-				//		statement of 'for', target_index will be compensated properly.
-				target_index--;	
-				target_e = candidates.getIterator(target_index);	//	TODO: this consumes unnecessary O(n) searching job.
-			}
+			if(source != fetched) continue;
+			
+			//	removal duplicated:				
+			KERNAL_WARNING("W201011C41 : 동일한 모듈 복수 존재\n같은 식별자를 지닌 모듈이 2개 이상 존재합니다.\n모듈매니져는 나중에 식별한 모듈은 읽지 않을 것입니다.\n동일한 모듈의 식별자:\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d\n\tVersionCount : %d", target.getName().toCharPointer(), target.getAuthor().toCharPointer(), target.getRevisionCount(), target.getVersionCount())
+			return true;
 		}
 
-		return RESULT_SUCCESS;
+		return false;
 	}
 
 
@@ -580,5 +569,11 @@ namespace
 		}
 
 		return RESULT_SUCCESS;
+	}
+
+	type_bool NEPackageManager::_isFiltered(const NEPackage& fetched, const NEPackageList& candidates) const
+	{
+		//	when we have more requirements to filter, it'll be added at here.
+		return _isDuplicated(fetched, candidates);
 	}
 }

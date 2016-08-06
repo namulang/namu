@@ -68,12 +68,13 @@ namespace NE
 
 		//	내부함수:
 	private:
-		type_result _initializeBuiltIns();
+		type_result _pushBuiltIns(NEPackageList& candidates);
 		const This& _assign(const This& source);
 		void _release();
 		type_result _fetchPackages(NEPackageList& candidates);
-		type_result _enrollPackages(NEPackageList& candidates);
-		type_result _removeDuplicated(NEPackageList& candidates);		
+		type_result _ownPackages(NEPackageList& candidates);
+		type_bool _isFiltered(const NEPackage& fetched, const NEPackageList& candidates) const;
+		type_bool _isDuplicated(const NEPackage& fetched, const NEPackageList& candidates) const;
 		type_result _linkPackages(NEPackageList& candidates);
 		type_result _listupCandidatesToLink(NEPackageList& candidates);
 		type_result _linkPackage(NEPackage& to_be_fetched);
