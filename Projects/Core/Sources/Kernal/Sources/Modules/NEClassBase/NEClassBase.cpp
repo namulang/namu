@@ -56,7 +56,7 @@ namespace NE
 		return isSubClassOf(parent.getClass());
 	}
 
-	type_result NEClassBase::_onEnrolledSuperClasses(const NEClassBase& new_super)
+	type_result NEClassBase::_enrollSuperClasses(const NEClassBase& new_super)
 	{
 		//	pre:
 		//		targetting:
@@ -70,7 +70,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 
-	type_result NEClassBase::_onEnrollChildClass(const NEClassBase& new_child)
+	type_result NEClassBase::_enrollChildClass(const NEClassBase& new_child)
 	{
 		return _getChildrenClasses().push(new_child);
 	}

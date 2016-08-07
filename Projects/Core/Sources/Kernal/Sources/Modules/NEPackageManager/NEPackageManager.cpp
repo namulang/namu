@@ -41,6 +41,8 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	const NEPackageManager NE_DLL &NEPackageManager::operator=(const This& source)
 	{		
+		if(this == &source) return *this;
+
 		Super::operator=(source);
 
 		return _assign(source);
@@ -56,6 +58,7 @@ namespace NE
 		if(this == &source) return true;
 		if(Super::operator==(source) == false) return false;
 		if(_packages != source._packages) return false;
+		if(_classes != source._classes) return false;
 		
 		return true;
 	}
@@ -79,12 +82,27 @@ namespace
 }
 
 
-	const NEPackage& NEPackageManager::find(const NETString& developer, NETString& name, int interface_revision) const
+	const NEPackage& NEPackageManager::findPackage(const NETString& developer, NETString& name, type_int interface_revision) const
 	{
-		return find(NEIdentifier(developer, name, interface_revision));
+		return findPackage(NEIdentifier(developer, name, interface_revision));
 	}
 
-	type_int _judgePackageScore(const NEIdentifier& existing, const NEIdentifier& target) const
+	const NEClassBase& NEPackageManager::findClass(const NETString& developer, const NETString& name, type_int interface_revision) const
+	{
+		return findClass(NEIdentifier(developer, name, interface_revision));
+	}
+
+	const NEPackage& NEPackageManager::findPackage(const NEIdentifier& identifier) const
+	{
+		return static_cast<NEPackage&>(_findIdentifier(identifier, _packages));
+	}
+
+	const NEClassBase& NEPackageManager::findClass(const NEIdentifier& identifier) const
+	{
+		return static_cast<NEClassBase&>(_findIdentifier(identifier, _classes));
+	}
+
+	type_int _judgeIdentifierScore(const NEHeader& existing, const NEIdentifier& target) const
 	{		
 		if(	existing.getDeveloper() != target.getDeveloper()	||
 			existing.getName() != target.getName()				)	return 0;
@@ -95,13 +113,14 @@ namespace
 		return 1;
 	}
 
-	const NEPackage NE_DLL &NEPackageManager::find(const NEIdentifier& target) const
+	template <typename T, type_bool useHeap>
+	const NEIdentifier& NEPackageManager::_findIdentifier(const NEIdentifier& target, NETArray<T, useHeap>& collector) const
 	{
 		//	pre:
 		//		Fit:
 		struct Fit
 		{
-			NEPackage* founded;
+			NEIdentifier* founded;
 			type_int score;
 		};
 		Fit to_return = {NE_NULL, 0};
@@ -109,12 +128,12 @@ namespace
 
 		//	main:		
 		//		finding:
-		for(type_index n=0; n < _packages.getLength() ;n++)
+		for(type_index n=0; n < collector.getLength() ;n++)
 		{
-			const NEPackage& e = _packages[n];
-			type_int score = _judgePackageScore(e);
+			const NEHeader& e = collector[n];
+			type_int score = _judgeIdentifierScore(e, target);
 			if(score < to_return.score) continue;
-			if(score == 3) return _packages[n];	//	just fit case.
+			if(score == 3) return collector[n];	//	just fit case.
 
 			//	if we met new challenger,
 			if(	score > to_return.score								||
@@ -134,7 +153,7 @@ namespace
 			//							더미모듈이 내보내질 것이다.		
 			KERNAL_ERROR("E201011C44 : 일치하는 모듈 검색 실패\n주어진 모듈의 이름, 개발자와 일치하는 모듈이 없습니다. 모듈매니져는 더미모듈을 반환할 것입니다.\n찾으려는 식별자 :\n\t이름 : %s\n\t개발자 : %s\n\tRevisionCount : %d\n\tVersionCount : %d", identifier.getName().toCharPointer(), identifier.getAuthor().toCharPointer(), identifier.getRevisionCount(), identifier.getVersionCount())
 		
-			NEPackage* null_pointer = NE_NULL;
+			NEIdentifier* null_pointer = NE_NULL;
 			return *null_pointer;
 		}		
 		//		차선책을 찾았다면:		
@@ -213,11 +232,18 @@ namespace
 		return RESULT_SUCCESS;
 	}
 
+	const NEPackageSet& NEPackageManager::getPackages() const
+	{
+		return _packages;
+	}
+
+	const NEClassBaseSet& NEPackageManager::getClasses() const
+	{
+		return _classes;
+	}
 
 	type_result NEPackageManager::_ownClasses(NEClassBaseList& candidates, NEPackage& package)
 	{
-		NEClassManager& classer = Kernal::getInstance().getClassManager();
-
 		int n=0;
 		for(NEClassBaseList::Iterator* e=candidates.getIterator(0); e ;e=e->getNext(), n++)
 		{
@@ -226,7 +252,7 @@ namespace
 			//		NEPackage instances have prior to exist more than classes which were imported from them.
 			//		So don't need to worry about assigning pointer of package directly in this code.
 			//	class enrolling call "Module.onFetched" callback:
-			if(NEResult::hasError(classer.enroll(klass)))
+			if(NEResult::hasError(_enroll(klass)))
 			{
 				NEHeader& header = klass.getHeader();
 				KERNAL_WARNING(": we've met errors while enrolling fetched class, %s.%s.%d\nSorry, but we've to choose not to load this class.", header.getDeveloper().toCharPointer(), header.getName().toCharPointer, header.getInterfaceRevision());
@@ -269,6 +295,7 @@ namespace
 		if(this == &source) return *this;
 
 		_packages = source._packages;
+		_classes = source._classes;
 
 		return *this;
 	}
@@ -279,7 +306,8 @@ namespace
 	//	---------------------------------------------------------------------------------
 	void NEPackageManager::_release()
 	{
-		_packages.release();		
+		_packages.release();
+		_classes.release();
 	}
 
 
@@ -575,5 +603,58 @@ namespace
 	{
 		//	when we have more requirements to filter, it'll be added at here.
 		return _isDuplicated(fetched, candidates);
+	}
+
+	type_result NEClassManager::_enroll(const NEClassBase& new_class)
+	{
+		//	pre:
+		//		Acquire static instance:
+		static NETClass<NEAdam> root;
+		//		exception handlings:
+		if( ! &new_class) return KERNAL_WARNING("...");
+		if(new_class.isRegistered()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+
+
+		//	main:
+		//		enroll parent:
+		const NEClassBase& super = new_class.getSuperClass();
+		if( ! &super)
+			//	if new_class is a NEAdam class, its returend 'super' is a instance of Null.
+			return RESULT_SUCCESS;
+		//		hee- ha! lets do this reculsively.
+		_enroll(super);
+
+		//		enrolls:
+		//			supers: we can call this because Superclasses are all enrolled.
+		new_class._enrollSuperClasses(super);	//	in this handler, each super classes receive sub classes.
+
+
+		//	post:
+		super._enrollChildClass(new_class);
+		return _pushToManaged(new_class);
+	}
+
+	type_result NEPackageManager::_pushToManaged(const NEClassBase& new_class)
+	{
+		//	pre:
+		//		resize:
+		if(_classes.getLength() >= _classes.getSize())
+			_classes.resize(_classes.getSize() * 2);
+
+
+		//	main:
+		type_index n = _classes.push(new_class);
+		if (n == NE_INDEX_ERROR)
+			return KERNAL_ERROR("...")
+
+
+			//	post:
+			//		give _class id as pushed index:
+			//			there is no instance changing after inserted.
+			//			(except for whole initializing)
+			//			so, when new_class take new class id, it's ne
+			//			ver get changed.
+			new_class._getId() = n;
+		return RESULT_SUCCESS;
 	}
 }

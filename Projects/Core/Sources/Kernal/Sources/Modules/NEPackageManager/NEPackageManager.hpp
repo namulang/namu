@@ -49,9 +49,12 @@ namespace NE
 
 		//	접근자:
 	public:
-		const NEPackage& find(const NETString& developer, NETString& name, int interface_revision) const;
-		const NEPackage& find(const NEIdentifier& package_identifier) const;
+		const NEPackage& findPackage(const NETString& developer, NETString& name, type_int interface_revision) const;
+		const NEPackage& findPackage(const NEIdentifier& package_identifier) const;
 		const NEPackageSet& getPackages() const;
+		const NEClassBase& findClass(const NETString& developer, NETString& name, type_int interface_revision) const;
+		const NEClassBase& findClass(const NEIdentifier& identifier) const;
+		const NEClassBaseSet& getClasses() const;
 
 		//	인터페이스:
 		//		상속:
@@ -80,10 +83,15 @@ namespace NE
 		type_result _linkPackage(NEPackage& to_be_fetched);
 		type_result _removePackagesFailedToLink(NEPackageList& candidates);
 		type_result _ownClasses(NEPackage& package);
-		type_int _judgePackageScore(const NEIdentifier& existing, const NEIdentifier& target) const;
+		type_result _enroll(const NEClassBase& new_class);
+		type_result _pushToManaged(const NEClassBase& new_class);
+		type_int _judgeIdentifierScore(const NEHeader& existing, const NEIdentifier& target) const;
+		template <typename T, type_bool useHeap>
+		const NEIdentifier& _findIdentifier(const NEIdentifier& target, NETArray<T, useHeap, T>& collector) const;
 
 		//	멤버변수:		
 	private:		
 		NEPackageSet _packages;
+		NEClassBaseSet _classes;
 	};
 }

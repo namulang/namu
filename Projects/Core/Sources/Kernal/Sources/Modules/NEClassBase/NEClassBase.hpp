@@ -46,7 +46,6 @@ namespace NE
 		typedef NEClassBase This;
 		typedef NEIdableObject Super;
 		friend class NEPackageManager;
-		friend class NEClassManager;
 
 		//    Constructors:
 	public:
@@ -105,8 +104,8 @@ namespace NE
 		NEClassBaseList& _getChildrenClasses();
 		NEClassBaseList& _getSuperClasses();
 		NEHeader& _getHeader();
-		type_result _onEnrollSuperClasses(const NEClassBase& super);
-		type_result _onEnrollChildClass(const NEClassBase& child);
+		type_result _enrollSuperClasses(const NEClassBase& super);
+		type_result _enrollChildClass(const NEClassBase& child);
 		type_id& _getId();
 	};
 }

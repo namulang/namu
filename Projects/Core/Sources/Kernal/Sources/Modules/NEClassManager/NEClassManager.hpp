@@ -82,35 +82,7 @@ namespace NE
 
 		//		고유 인터페이스:
 	public:
-		type_result enroll(const NEClassBase& new_class)
-		{
-			//	pre:
-			//		Acquire static instance:
-			static NETClass<NEAdam> root;
-			//		exception handlings:
-			if( ! &new_class) return KERNEL_WARNING("...");
-			if(new_class.isRegistered()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-
-
-			//	main:
-			//		enroll parent:
-			const NEClassBase& super = new_class.getSuperClass();
-			if( ! &super)
-				//	if new_class is a NEAdam class, its returend 'super' is a instance of Null.
-				return RESULT_SUCCESS;
-			//		hee- ha! lets do this reculsively.
-			enroll(super);
-
-			//		enrolls:
-			//			supers: we can call this because Superclasses are all enrol
-			//			led.
-			new_class._onEnrolledSuperClasses(super);	//	in this handler, each super classes receive sub classes.
-
-
-			//	post:
-			super._onEnrollChildClass(new_class);
-			return _manage(new_class);
-		}
+		
 
 		//	내부함수:
 	private:
