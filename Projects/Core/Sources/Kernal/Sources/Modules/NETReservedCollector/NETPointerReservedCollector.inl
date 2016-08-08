@@ -31,6 +31,8 @@ namespace NE
 	template<typename OutsideType>
 	class NETReservedCollector<OutsideType*> : public NETCollector<OutsideType*>
 	{
+		NE_DECLARE_INTERFACE(NETReservedCollector<OutsideType*>, NETCollector<OutsideType*>)
+
 		//	»ý¼ºÀÚ:
 	public:
 		NETReservedCollector();

@@ -9,7 +9,7 @@ namespace NE
 
 	class NE_DLL NEBinderBase : public NESwitchableUnit
 	{
-		NE_DECLARE_CLASS(NEBinderBase, NESwitchableUnit)
+		NE_DECLARE_INTERFACE(NEBinderBase, NESwitchableUnit)
 		
 	public:
 		NEBinderBase();

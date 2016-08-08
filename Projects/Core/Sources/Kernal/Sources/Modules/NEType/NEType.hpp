@@ -6,6 +6,6 @@ namespace NE
 {
 	class NE_DLL NEType : public NEUnit
 	{
-
+		NE_DECLARE_INTERFACE(NEType, NEUnit)
 	};
 }

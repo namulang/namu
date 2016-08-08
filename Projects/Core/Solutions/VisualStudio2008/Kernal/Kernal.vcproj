@@ -502,22 +502,6 @@
 						</Filter>
 					</Filter>
 				</Filter>
-				<Filter
-					Name="Enums"
-					>
-					<Filter
-						Name="NEType"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Enums\NEType\NEType.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Enums\NEType\NEType.hpp"
-							>
-						</File>
-					</Filter>
-				</Filter>
 			</Filter>
 			<Filter
 				Name="EntryPoints"
@@ -1227,6 +1211,10 @@
 						<Filter
 							Name="NEIdableObject"
 							>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIdableObject\NEIdableObject.cpp"
+								>
+							</File>
 							<File
 								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIdableObject\NEIdableObject.hpp"
 								>
@@ -2003,12 +1991,16 @@
 													</Filter>
 												</Filter>
 												<Filter
-													Name="NEClassManager"
+													Name="define"
 													>
-													<File
-														RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassManager\NEClassManager.hpp"
+													<Filter
+														Name="ModuleMacro"
 														>
-													</File>
+														<File
+															RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModule\define\ModuleMacro.hpp"
+															>
+														</File>
+													</Filter>
 												</Filter>
 											</Filter>
 										</Filter>

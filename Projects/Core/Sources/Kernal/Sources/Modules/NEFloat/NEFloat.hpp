@@ -6,6 +6,6 @@ namespace NE
 {
 	class NE_DLL NEFloat : public NENumericType
 	{
-
+		NE_DECLARE_CLASS(NEFloat, NENumericType)
 	};
 }

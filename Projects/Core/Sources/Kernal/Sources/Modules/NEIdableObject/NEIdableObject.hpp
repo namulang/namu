@@ -9,6 +9,13 @@ namespace NE
 	public:
 		typedef NEIdableObject This;
 		typedef NEObject Super;
+		typedef NETInterface<This>	MetaClass;
+
+	public:
+		virtual const NEClassBase& getClass() const	{ return getClassStatically();	}
+
+	public:
+		static const NEClassBase& getClassStatically();
 
 	public:
 		virtual type_id getId() const = 0;

@@ -6,9 +6,8 @@ namespace NE
 {
 	class NE_DLL NETKeyBase : public NEKey
 	{
-	public:
-		typedef NETKeyBase ThisClass;
-		typedef NEKey SuperClass;
+		NE_DECLARE_INTERFACE(NETKeyBase, NEKey)
+
 	public:
 		NETKeyBase(const NETString& new_keyname);
 		NETKeyBase(const ThisClass& source);

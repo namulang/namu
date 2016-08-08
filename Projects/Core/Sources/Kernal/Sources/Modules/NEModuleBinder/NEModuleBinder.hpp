@@ -9,8 +9,7 @@ namespace NE
 
 	class NE_DLL NEModuleBinder : public NEBinderBase
 	{
-		typedef NEModuleBinder ThisClass;
-		typedef NEBinderBase SuperClass;
+		NE_DECLARE_CLASS(NEModuleBinder, NEBinderBase)
 
 		template <typename NodeSelector, NEType::Type type>
 		friend class NETModuleSelector;

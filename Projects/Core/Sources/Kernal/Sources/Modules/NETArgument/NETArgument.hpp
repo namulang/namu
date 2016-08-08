@@ -26,9 +26,7 @@ namespace NE
 	template <typename T>
 	class NETArgument : public NEArgumentBase
 	{
-	public:
-		typedef NETArgument ThisClass;
-		typedef NEArgumentBase SuperClass;
+		NE_DECLARE_CLASS(NETArgument<T>, NEArgumentBase)
 
 	public:	
 		NETArgument(NEArgumentBase::Purpose limitation = NEArgumentBase::UNDEFINED);

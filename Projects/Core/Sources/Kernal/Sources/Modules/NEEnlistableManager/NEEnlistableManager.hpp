@@ -10,7 +10,7 @@ namespace NE
 {
 	class NE_DLL NEEnlistableManager : public NEModule, public NEEnlistable
 	{
-		NE_DECLARE_INTERFACE(NEEnlistableManager, NEModule)
+		NE_DECLARE_MODULE(NEEnlistableManager, NEModule)
 		
 		typedef NEIndexedKeySet* NEIndexedKeySetPointer;
 

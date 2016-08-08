@@ -7,7 +7,7 @@ namespace NE
 {
 	class NE_DLL NEKeyManager : public NEModule
 	{
-		NE_DECLARE_CLASS(NEKeyManager, NEModule)
+		NE_DECLARE_MODULE(NEKeyManager, NEModule)
 
 	public:
 		bool operator==(const This& source) const;

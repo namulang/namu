@@ -27,13 +27,15 @@
 #pragma once
 
 //	include:
-#include "../NETCollector/NETCollector.hpp"
+#include "../NETCollector/NETCollector.inl"
 
 namespace NE
 {
 	template<typename OutsideType>
 	class NETReservedCollector : public NETCollector<OutsideType>
 	{
+		NE_DECLARE_INTERFACE(NETReservedCollector<OutsideType>, NETCollector<OutsideType>)
+
 		//	»ý¼ºÀÚ:
 	public:
 		NETReservedCollector();
