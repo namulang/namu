@@ -1184,18 +1184,6 @@
 								</Filter>
 							</Filter>
 							<Filter
-								Name="NEPackage"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackage\NEPackage.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackage\NEPackage.hpp"
-									>
-								</File>
-							</Filter>
-							<Filter
 								Name="NEHeader"
 								>
 								<File
@@ -1206,6 +1194,18 @@
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEHeader\NEHeader.hpp"
 									>
 								</File>
+								<Filter
+									Name="NEPackage"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackage\NEPackage.cpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackage\NEPackage.hpp"
+										>
+									</File>
+								</Filter>
 							</Filter>
 						</Filter>
 						<Filter
