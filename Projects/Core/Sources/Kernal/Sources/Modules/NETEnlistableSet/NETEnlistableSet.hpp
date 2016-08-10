@@ -12,9 +12,7 @@ namespace NE
 	template <typename T>
 	class NE_DLL NETEnlistableSet : public T, public NEOnEnlisted
 	{
-	public:
-		typedef NETEnlistableSet<T> ThisClass;
-		typedef T SuperClass;
+		NE_DECLARE_INTERFACE(NETEnlistableSet, T)
 
 	public:
 		NETEnlistableSet()
@@ -35,7 +33,7 @@ namespace NE
 		}
 
 	public:		
-		NETEnlistableSet(const ThisClass& source)
+		NETEnlistableSet(const This& source)
 			: T(source), _manager(&NEGlobalManagerOffer::getGlobalManager()), _is_enlisted(false)
 		{
 			//	getGlobalManagerOnCopyConstructor에 관하여:
@@ -43,7 +41,7 @@ namespace NE
 		}
 
 	public:
-		const ThisClass& operator=(const ThisClass& source)
+		const This& operator=(const This& source)
 		{
 			/*
 				_manager를 복사하지 않도록 하기 위해서 operator=를 정의한다.
@@ -74,13 +72,13 @@ namespace NE
 	public:
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
 		{
-			SuperClass::serialize(saver);
+			Super::serialize(saver);
 
 			return saver <<_is_enlisted;
 		}
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader)
 		{
-			SuperClass::serialize(loader);
+			Super::serialize(loader);
 
 			return loader >> _is_enlisted;
 		}
@@ -107,18 +105,16 @@ namespace NE
 	template <>
 	class NE_DLL NETEnlistableSet<NENamedUnit> : public NENamedUnit, public NEOnEnlisted
 	{
-	public:
-		typedef NETEnlistableSet<NENamedUnit> ThisClass;
-		typedef NENamedUnit SuperClass;
+		NE_DECLARE_INTERFACE(NETEnlistableSet<NENamedUnit>, NENamedUnit)
 
 	public:
 		NETEnlistableSet(const NECodeType& script_type, const NECodeType& name_type);
 		
 	public:
-		NETEnlistableSet(const ThisClass& source);
+		NETEnlistableSet(const This& source);
 
 	public:
-		const ThisClass& operator=(const ThisClass& source);
+		const This& operator=(const This& source);
 
 	public:
 		NEEnlistableManager& getManager();
