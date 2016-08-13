@@ -1073,10 +1073,6 @@
 										Name="NEClassBaseList"
 										>
 										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseList\NEClassBaseList.cpp"
-											>
-										</File>
-										<File
 											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseList\NEClassBaseList.hpp"
 											>
 										</File>
