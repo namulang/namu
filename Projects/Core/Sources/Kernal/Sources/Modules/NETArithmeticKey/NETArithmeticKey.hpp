@@ -21,8 +21,8 @@ namespace NE
 
 	public:
 		virtual type_result assign(const NEKey& source);
-		virtual bool isEqualTo(const NEKey& source) const;
-		virtual bool isLower(const NEKey& source) const;
+		virtual type_bool isEqualTo(const NEKey& source) const;
+		virtual type_bool isLower(const NEKey& source) const;
 		virtual type_result increase();
 		virtual type_result decrease();
 		virtual type_result add(NEKey& result, const NEKey& operand2) const;

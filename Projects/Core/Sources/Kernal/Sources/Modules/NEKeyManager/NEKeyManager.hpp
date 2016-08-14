@@ -10,8 +10,8 @@ namespace NE
 		NE_DECLARE_MODULE(NEKeyManager, NEModule)
 
 	public:
-		bool operator==(const This& source) const;
-		bool operator!=(const This& source) const;
+		type_bool operator==(const This& source) const;
+		type_bool operator!=(const This& source) const;
 
 	public:
 		//const NEKey& getKey(NEType::Type type) const;

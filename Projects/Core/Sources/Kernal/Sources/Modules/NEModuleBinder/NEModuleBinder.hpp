@@ -18,7 +18,7 @@ namespace NE
 		NEModuleBinder(const NEModule& module, NEType::Type manager_type);
 
 	public:
-		virtual bool isBinded() const;
+		virtual type_bool isBinded() const;
 
 	public:
 		NEModule& getBinded();

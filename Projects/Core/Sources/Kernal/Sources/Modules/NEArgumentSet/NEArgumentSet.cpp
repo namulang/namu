@@ -61,7 +61,7 @@ namespace NE
 		return loader;
 	}
 
-	bool NEArgumentSet::isBinded() const
+	type_bool NEArgumentSet::isBinded() const
 	{
 		for(int n=0; n < getLength() ;n++)
 			if( ! getElement(n).isBinded()) 

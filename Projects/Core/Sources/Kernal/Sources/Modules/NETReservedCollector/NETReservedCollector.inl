@@ -49,8 +49,8 @@ namespace NE
 		//	연산자 중첩:
 	public:
 		const NETReservedCollector<OutsideType>& operator=(const NETReservedCollector<OutsideType>& source); 
-		bool operator==(const NETReservedCollector<OutsideType>& source) const;
-		bool operator!=(const NETReservedCollector<OutsideType>& source) const;
+		type_bool operator==(const NETReservedCollector<OutsideType>& source) const;
+		type_bool operator!=(const NETReservedCollector<OutsideType>& source) const;
 
 		//	접근자:	변수가 존재한다면 복사생성자를 구현한다. 구현한 복사생성자는 파생클래스에서 호출됨
 	public:

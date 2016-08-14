@@ -22,7 +22,7 @@ namespace NE
 	}
 
 	template <typename T>
-	bool NETArithmeticKey<T>::isEqualTo(const NEKey& source) const
+	type_bool NETArithmeticKey<T>::isEqualTo(const NEKey& source) const
 	{
 		//	pre:
 		if (this == &source) return true;
@@ -93,7 +93,7 @@ namespace NE
 
 
 	template <typename T>
-	bool NETArithmeticKey<T>::isLower(const NEKey& source) const
+	type_bool NETArithmeticKey<T>::isLower(const NEKey& source) const
 	{
 		//	pre:
 		if (!&source) return false;

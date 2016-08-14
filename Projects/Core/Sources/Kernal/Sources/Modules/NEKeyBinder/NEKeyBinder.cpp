@@ -3,7 +3,7 @@
 
 namespace NE
 {
-	bool NEKeyBinder::isBinded() const
+	type_bool NEKeyBinder::isBinded() const
 	{
 		if(isBindedLocalKey()) return true;
 		const NEIndexedKeySet& keyset = _getKeySet();

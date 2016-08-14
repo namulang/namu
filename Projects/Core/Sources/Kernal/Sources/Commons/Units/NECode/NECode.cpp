@@ -69,12 +69,12 @@ namespace NE
 		return _code;
 	}
 
-	bool NECode::operator==(const type_code source) const
+	type_bool NECode::operator==(const type_code source) const
 	{
 		return getCode() == source;
 	}
 
-	bool NECode::operator!=(const type_code source) const
+	type_bool NECode::operator!=(const type_code source) const
 	{
 		return ! operator==(source);
 	}
@@ -99,27 +99,27 @@ namespace NE
 
 		return *this;
 	}
-	bool ThisClass::operator==(const ThisClass& source) const
+	type_bool ThisClass::operator==(const ThisClass& source) const
 	{
 		return	SuperClass::operator==(source) && _code == source._code;
 	}
-	bool ThisClass::operator!=(const ThisClass& source) const
+	type_bool ThisClass::operator!=(const ThisClass& source) const
 	{
 		return ! operator==(source);
 	}
-	bool ThisClass::operator<(const ThisClass& source) const
+	type_bool ThisClass::operator<(const ThisClass& source) const
 	{
 		return _code < source._code;
 	}
-	bool ThisClass::operator<=(const ThisClass& source) const
+	type_bool ThisClass::operator<=(const ThisClass& source) const
 	{
 		return _code <= source._code;
 	}
-	bool ThisClass::operator>(const ThisClass& source) const
+	type_bool ThisClass::operator>(const ThisClass& source) const
 	{
 		return _code > source._code;
 	}
-	bool ThisClass::operator>=(const ThisClass& source) const
+	type_bool ThisClass::operator>=(const ThisClass& source) const
 	{
 		return _code >= source._code;
 	}	
@@ -244,7 +244,7 @@ namespace NE
 	}
 	NEBinaryFileLoader& ThisClass::_serializeAsScript(NEBinaryFileLoader& loader)
 	{
-		bool is_module_info_saved = false;
+		type_bool is_module_info_saved = false;
 		loader >> is_module_info_saved;
 		if( ! is_module_info_saved)
 			return loader;

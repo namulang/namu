@@ -93,7 +93,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template<typename OutsideType>
-	bool NETReservedCollector<OutsideType>::operator==(const NETReservedCollector<OutsideType>& source) const 
+	type_bool NETReservedCollector<OutsideType>::operator==(const NETReservedCollector<OutsideType>& source) const 
 	{
 		if(this == &source) return true;
 		if(NETCollector<OutsideType>::operator!=(source)) return false;
@@ -112,7 +112,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template<typename OutsideType>
-	bool NETReservedCollector<OutsideType>::operator!=(const NETReservedCollector<OutsideType>& source) const
+	type_bool NETReservedCollector<OutsideType>::operator!=(const NETReservedCollector<OutsideType>& source) const
 	{
 		return !(operator==(source));
 	}

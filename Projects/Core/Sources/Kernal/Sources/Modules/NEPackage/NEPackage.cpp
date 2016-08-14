@@ -46,12 +46,12 @@ namespace NE
 		return _assign(source);
 	}
 
-	bool NEPackage::operator!=(const This& source) const
+	type_bool NEPackage::operator!=(const This& source) const
 	{
 		return ! operator==(source);
 	}
 
-	bool NEPackage::operator==(const This& source) const
+	type_bool NEPackage::operator==(const This& source) const
 	{
 		return	Super::operator==(source)			&&
 			_path == source._path				&&
@@ -100,7 +100,7 @@ namespace NE
 		return _components;
 	}
 
-	bool NEPackage::isLoaded() const
+	type_bool NEPackage::isLoaded() const
 	{
 		return _entrypoint != 0;
 	}

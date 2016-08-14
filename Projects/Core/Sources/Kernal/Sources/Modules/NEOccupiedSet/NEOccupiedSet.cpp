@@ -3,7 +3,7 @@
 
 namespace NE
 {
-	type_result NEOccupiedSet::setInBatches(bool is_occupied)
+	type_result NEOccupiedSet::setInBatches(type_bool is_occupied)
 	{
 		type_result result = RESULT_SUCCESS;
 		for(int n=0; n < getLength() ;n++)
@@ -12,7 +12,7 @@ namespace NE
 		return result;
 	}
 
-	type_index NEOccupiedSet::getNextVacantIndex(type_index initial_index, bool want_to_find_being_occupied) const
+	type_index NEOccupiedSet::getNextVacantIndex(type_index initial_index, type_bool want_to_find_being_occupied) const
 	{
 		//	pre:
 		if(	initial_index < 0					||
@@ -32,7 +32,7 @@ namespace NE
 		return NE_INDEX_ERROR;
 	}
 
-	type_index NEOccupiedSet::getPrevVacantIndex(type_index initial_index, bool want_to_find_being_occupied) const
+	type_index NEOccupiedSet::getPrevVacantIndex(type_index initial_index, type_bool want_to_find_being_occupied) const
 	{
 		//	pre:
 		if(	initial_index < 0					||

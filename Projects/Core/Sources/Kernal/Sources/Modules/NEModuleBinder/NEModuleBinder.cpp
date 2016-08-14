@@ -3,7 +3,7 @@
 
 namespace NE
 {
-	bool NEModuleBinder::isBinded() const
+	type_bool NEModuleBinder::isBinded() const
 	{
 		const NEIndexedModuleSet& moduleset = _getModuleSet();
 		if( ! &moduleset)	return false;
@@ -16,11 +16,6 @@ namespace NE
 	NEObject& NEModuleBinder::clone() const
 	{
 		return *(new NEModuleBinder(*this));
-	}
-
-	NEType::Type NEModuleBinder::getType() const
-	{
-		return NEType::NEMODULE_BINDER;
 	}
 
 	NEModule& NEModuleBinder::getBinded()

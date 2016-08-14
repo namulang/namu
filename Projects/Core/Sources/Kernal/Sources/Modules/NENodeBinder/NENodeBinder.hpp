@@ -17,7 +17,7 @@ namespace NE
 		NENodeBinder(const NENode& node, NEType::Type manager_type);
 
 	public:
-		virtual bool isBinded() const;
+		virtual type_bool isBinded() const;
 
 	public:
 		NENode& getBinded();

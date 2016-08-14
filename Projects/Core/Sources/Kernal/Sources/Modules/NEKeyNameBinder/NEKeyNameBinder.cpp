@@ -85,12 +85,12 @@ namespace NE
 		return _assign(rhs);
 	}
 
-	bool NEKeyNameBinder::operator==(const NEKeyNameBinder& rhs) const
+	type_bool NEKeyNameBinder::operator==(const NEKeyNameBinder& rhs) const
 	{
 		return Super::operator==(rhs) && _keyname == rhs._keyname;
 	}
 
-	bool NEKeyNameBinder::operator!=(const NEKeyNameBinder& rhs) const
+	type_bool NEKeyNameBinder::operator!=(const NEKeyNameBinder& rhs) const
 	{
 		return ! operator==(rhs);
 	}

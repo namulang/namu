@@ -11,7 +11,7 @@
 //							조건 1.	NEObject를 상속해야한다. 
 //									NEObject::clone()를 사용하기 때문이다.
 //							조건 2. 
-//				bool pointerUseNewInstance란?
+//				type_bool pointerUseNewInstance란?
 //					:	false일때 InsideType가 포인터일 경우, 포인터가 새로운 인스턴스를 가리키도록
 //						하지않고, shallowcopy만을 사용하겠다는 의미다.
 //						true일때는 NEPointerList.hpp를 참고하라.
@@ -52,8 +52,8 @@ namespace NE
 		//	연산자 중첩:
 	public:
 		const This& operator=(const This& source);
-		bool operator==(const This& source) const;
-		bool operator!=(const This& source) const;
+		type_bool operator==(const This& source) const;
+		type_bool operator!=(const This& source) const;
 		This operator+(const This& source) const;
 		const This& operator+=(const This& source);
 
@@ -90,8 +90,8 @@ namespace NE
 		type_index pushFront(const InsideType& source);
 		type_result push(const This& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
 		type_result pushFront(const This& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
-		bool isEqualSizeAndElement(const This& source) const;
-		bool isEqualElement(const This& source) const;		
+		type_bool isEqualSizeAndElement(const This& source) const;
+		type_bool isEqualElement(const This& source) const;		
 
 		//	내부함수:
 	private:

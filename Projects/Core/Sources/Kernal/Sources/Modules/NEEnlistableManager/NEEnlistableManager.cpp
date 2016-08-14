@@ -224,7 +224,7 @@ namespace NE
 
 	}
 
-	bool NEEnlistableManager::operator==(const This& source) const
+	type_bool NEEnlistableManager::operator==(const This& source) const
 	{
 		if(Super::operator!=(source)) return false;
 		if(	_keyset != source._keyset											||
@@ -239,7 +239,7 @@ namespace NE
 		return true;
 	}
 
-	bool NEEnlistableManager::operator!=(const This& source) const
+	type_bool NEEnlistableManager::operator!=(const This& source) const
 	{
 		return ! operator==(source);
 	}

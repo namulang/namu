@@ -140,7 +140,7 @@ namespace NE
 	}
 
 	template <>
-	bool NETStringKeyize<NEString, NEType::NESTRING_KEY>::isLower(const NEKey& source) const
+	type_bool NETStringKeyize<NEString, NEType::NESTRING_KEY>::isLower(const NEKey& source) const
 	{
 		//	pre:
 		if( ! &source) return false;
@@ -195,7 +195,7 @@ namespace NE
 	}
 
 	template <>
-	bool NETStringKeyize<NEWString, NEType::NEWSTRING_KEY>::isLower(const NEKey& source) const
+	type_bool NETStringKeyize<NEWString, NEType::NEWSTRING_KEY>::isLower(const NEKey& source) const
 	{
 		//	pre:
 		if( ! &source) return false;

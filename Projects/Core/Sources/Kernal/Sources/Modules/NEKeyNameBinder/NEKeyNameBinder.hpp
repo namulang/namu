@@ -20,8 +20,8 @@ namespace NE
 
 	public:
 		NEKeyNameBinder& operator=(const NEKeyNameBinder& rhs);
-		bool operator==(const NEKeyNameBinder& rhs) const;
-		bool operator!=(const NEKeyNameBinder& rhs) const;
+		type_bool operator==(const NEKeyNameBinder& rhs) const;
+		type_bool operator!=(const NEKeyNameBinder& rhs) const;
 
 	public:
 		virtual type_result bind();

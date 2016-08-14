@@ -36,11 +36,11 @@ namespace NE
 	{
 		return *_manager;
 	}
-	bool NETEnlistableSet<NENamedUnit>::isManaged() const
+	type_bool NETEnlistableSet<NENamedUnit>::isManaged() const
 	{
 		return _manager != NE_NULL;
 	}
-	bool NETEnlistableSet<NENamedUnit>::isEnlisted() const
+	type_bool NETEnlistableSet<NENamedUnit>::isEnlisted() const
 	{
 		return _is_enlisted;
 	}
@@ -62,7 +62,7 @@ namespace NE
 
 		return RESULT_SUCCESS;
 	}
-	type_result NETEnlistableSet<NENamedUnit>::_setEnlisted(bool enlisted)
+	type_result NETEnlistableSet<NENamedUnit>::_setEnlisted(type_bool enlisted)
 	{
 		_is_enlisted = enlisted;
 

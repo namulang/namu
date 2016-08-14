@@ -90,7 +90,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type>
-	bool  NETIndexedArray<Type*, true>::operator==(const This& source) const
+	type_bool  NETIndexedArray<Type*, true>::operator==(const This& source) const
 	{
 		if(this == &source) return true;
 		if(Super::operator==(source) == false) return false;
@@ -104,7 +104,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type>
-	bool  NETIndexedArray<Type*, true>::operator!=(const This& source) const
+	type_bool  NETIndexedArray<Type*, true>::operator!=(const This& source) const
 	{
 		return !(operator==(source));
 	}
@@ -439,7 +439,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료				
 	//	---------------------------------------------------------------------------------
 	template <typename Type>
-	bool  NETIndexedArray<Type*, true>::isEqualSizeAndElement(const This& source) const
+	type_bool  NETIndexedArray<Type*, true>::isEqualSizeAndElement(const This& source) const
 	{
 		//	pre:
 		if(_size != source._size) return false;
@@ -461,7 +461,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type>
-	bool  NETIndexedArray<Type*, true>::isEqualElement(const This& source) const
+	type_bool  NETIndexedArray<Type*, true>::isEqualElement(const This& source) const
 	{
 		//	pre:
 		if(getLengthLastIndex() != source.getLengthLastIndex()) return false;
@@ -676,7 +676,7 @@ namespace NE
 
 
 	template <typename Type>
-	type_index NETIndexedArray<Type*, true>::_searchIndex(bool by_decreasing, bool target_is_occupied) const
+	type_index NETIndexedArray<Type*, true>::_searchIndex(type_bool by_decreasing, type_bool target_is_occupied) const
 	{
 		if( ! by_decreasing)
 		{

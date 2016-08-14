@@ -21,14 +21,14 @@ namespace
 
 namespace NE
 {
-	bool NEArgumentBase::operator==(const NEArgumentBase& source) const
+	type_bool NEArgumentBase::operator==(const NEArgumentBase& source) const
 	{
 		return	Super::operator==(source)				&&
 			//_type_validation == source._type_validation	&&
 			_limitation == source._limitation			&&
 			_purpose == source._purpose					;				
 	}
-	bool NEArgumentBase::operator!=(const NEArgumentBase& source) const
+	type_bool NEArgumentBase::operator!=(const NEArgumentBase& source) const
 	{
 		return ! operator==(source);
 	}
@@ -36,7 +36,7 @@ namespace NE
 	{
 		return RESULT_SUCCESS;
 	}
-	bool NEArgumentBase::isNeedingBinding() const
+	type_bool NEArgumentBase::isNeedingBinding() const
 	{
 		return	getKeyName().getLength() > 0	&&
 			getKeyName()[0] != 0;
@@ -125,7 +125,7 @@ namespace NE
 		return Super::bind();
 	}
 
-	bool NEArgumentBase::isValidToBind(const NEObject& to_be_bind) const
+	type_bool NEArgumentBase::isValidToBind(const NEObject& to_be_bind) const
 	{
 		if( ! & to_be_bind) return false;
 

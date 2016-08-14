@@ -33,13 +33,13 @@ namespace NE
 		//	연산자 중첩:
 	public:
 		const NESwitchableUnit& operator=(const NESwitchableUnit& source);
-		bool operator==(const NESwitchableUnit& source) const;
-		bool operator!=(const NESwitchableUnit& source) const;
+		type_bool operator==(const NESwitchableUnit& source) const;
+		type_bool operator!=(const NESwitchableUnit& source) const;
 
 		//	접근자:
 	public:
-		bool isEnable() const;
-		void setEnable(bool enable);
+		type_bool isEnable() const;
+		void setEnable(type_bool enable);
 
 		//	인터페이스:
 		//		상속:
@@ -56,6 +56,6 @@ namespace NE
 
 		//	멤버변수:
 	private:
-		bool _enable;
+		type_bool _enable;
 	};
 }

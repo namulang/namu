@@ -60,11 +60,11 @@ namespace NE
 		{
 			return *_manager;
 		}
-		bool isManaged() const
+		type_bool isManaged() const
 		{
 			return _manager != NE_NULL;
 		}
-		bool isEnlisted() const
+		type_bool isEnlisted() const
 		{
 			return _is_enlisted;
 		}
@@ -90,7 +90,7 @@ namespace NE
 
 			return RESULT_SUCCESS;
 		}
-		type_result _setEnlisted(bool enlisted)
+		type_result _setEnlisted(type_bool enlisted)
 		{
 			_is_enlisted = enlisted;
 
@@ -99,7 +99,7 @@ namespace NE
 
 	protected:
 		NEEnlistableManager* _manager;
-		bool _is_enlisted;
+		type_bool _is_enlisted;
 	};	
 
 	template <>
@@ -119,8 +119,8 @@ namespace NE
 	public:
 		NEEnlistableManager& getManager();
 		const NEEnlistableManager& getManager() const;
-		bool isManaged() const;
-		bool isEnlisted() const;
+		type_bool isManaged() const;
+		type_bool isEnlisted() const;
 
 	public:
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
@@ -128,10 +128,10 @@ namespace NE
 
 	protected:
 		type_result _setManager(NEEnlistableManager& manager);
-		type_result _setEnlisted(bool enlisted);
+		type_result _setEnlisted(type_bool enlisted);
 
 	protected:
 		NEEnlistableManager* _manager;
-		bool _is_enlisted;
+		type_bool _is_enlisted;
 	};
 }

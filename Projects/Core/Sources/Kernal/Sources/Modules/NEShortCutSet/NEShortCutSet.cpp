@@ -37,14 +37,14 @@ namespace NE
 		return *this;
 	}
 
-	bool NE_DLL NEShortCutSet::operator==(const This& source) const
+	type_bool NE_DLL NEShortCutSet::operator==(const This& source) const
 	{
 		if(Super::operator!=(source)) return false;
 
 		return _type == source._type;
 	}
 
-	bool NE_DLL NEShortCutSet::operator!=(const This& source) const
+	type_bool NE_DLL NEShortCutSet::operator!=(const This& source) const
 	{
 		return ! operator==(source);
 	}

@@ -16,7 +16,7 @@ namespace NE
 		friend class NETKeySelector;
 
 	public:
-		virtual bool isBinded() const;
+		virtual type_bool isBinded() const;
 
 	public:
 		NEKey& getBinded();

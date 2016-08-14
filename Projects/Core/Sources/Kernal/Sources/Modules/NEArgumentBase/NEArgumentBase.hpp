@@ -51,12 +51,12 @@ namespace NE
 		~NEArgumentBase();
 
 	public:
-		bool operator==(const NEArgumentBase& source) const;
-		bool operator!=(const NEArgumentBase& source) const;
+		type_bool operator==(const NEArgumentBase& source) const;
+		type_bool operator!=(const NEArgumentBase& source) const;
 
 	public:
 		//NEType::Type getTypeToBeBinded() const;
-		bool isValidToBind(const NEObject& to_be_bind) const;
+		type_bool isValidToBind(const NEObject& to_be_bind) const;
 		const NEKey& getValueKey() const;
 		NEKey& getValueKey();
 		Purpose getPurpose() const { return _purpose; }
@@ -112,7 +112,7 @@ namespace NE
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 
 	public:
-		bool isNeedingBinding() const;
+		type_bool isNeedingBinding() const;
 
 	protected:
 		virtual type_result _onPrepareExecute();

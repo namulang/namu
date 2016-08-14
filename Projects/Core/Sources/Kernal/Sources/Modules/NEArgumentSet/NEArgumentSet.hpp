@@ -19,7 +19,7 @@ namespace NE
 		NEArgumentSet(const ThisClass& rhs);
 
 	public:
-		bool isBinded() const;
+		type_bool isBinded() const;
 		type_result bind();	
 
 	public:

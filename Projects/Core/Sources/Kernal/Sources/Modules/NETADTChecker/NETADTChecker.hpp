@@ -17,7 +17,7 @@ namespace NE
 		NE_DECLARE_INTERFACE(_This, NETypeChecker)
 
 	public:
-		static const bool IS_ADT = false;
+		static const type_bool IS_ADT = false;
 	};
 	//    specialization:
 	template <typename T>

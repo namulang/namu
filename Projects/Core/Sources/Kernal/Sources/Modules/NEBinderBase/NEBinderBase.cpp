@@ -30,7 +30,7 @@ namespace NE
 		return _assign(source);
 	}
 
-	bool NEBinderBase::operator==(const This& source) const
+	type_bool NEBinderBase::operator==(const This& source) const
 	{
 		if(Super::operator!=(source)) return false;
 		if(_real_index != source._real_index) return false;
@@ -40,12 +40,12 @@ namespace NE
 		return true;
 	}
 
-	bool NEBinderBase::operator!=(const This& source) const
+	type_bool NEBinderBase::operator!=(const This& source) const
 	{
 		return ! operator==(source);
 	}
 
-	bool NEBinderBase::isBinded() const
+	type_bool NEBinderBase::isBinded() const
 	{
 		if(	_real_index <= NE_INDEX_ERROR	||
 			_comparing_id <= NE_HAS_NO_ID	)

@@ -3,7 +3,7 @@
 
 namespace NE
 {
-	bool NENodeBinder::isBinded() const
+	type_bool NENodeBinder::isBinded() const
 	{
 		const NEIndexedNodeSet& nodeset = _getNodeSet();
 		if( ! &nodeset)	return false;

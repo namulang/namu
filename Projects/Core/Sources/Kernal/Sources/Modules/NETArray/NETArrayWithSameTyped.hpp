@@ -99,7 +99,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------	
 	template <typename InsideType>
-	bool  NETArray<InsideType, false>::operator==(const This& source) const
+	type_bool  NETArray<InsideType, false>::operator==(const This& source) const
 	{
 		if(this == &source) return true;
 		if(Super::operator==(source) == false) return false;
@@ -113,7 +113,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	bool  NETArray<InsideType, false>::operator!=(const This& source) const
+	type_bool  NETArray<InsideType, false>::operator!=(const This& source) const
 	{
 		return !(operator==(source));
 	}
@@ -412,7 +412,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	bool  NETArray<InsideType, false>::isEqualSizeAndElement(const This& source) const
+	type_bool  NETArray<InsideType, false>::isEqualSizeAndElement(const This& source) const
 	{
 		//	pre:
 		if(_size != source._size) return false;
@@ -431,7 +431,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	bool  NETArray<InsideType, false>::isEqualElement(const This& source) const
+	type_bool  NETArray<InsideType, false>::isEqualElement(const This& source) const
 	{
 		if(getLengthLastIndex() != source.getLengthLastIndex()) return false;
 

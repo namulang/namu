@@ -7,7 +7,7 @@
 //				이는, 2번째 템플릿인자인
 //	관계	:	기반클래스.			NETReservedCollector
 //				일반 템플릿 클래스.	Array<Type>
-//	특성	:	2번째 템플릿 인자인 bool pointerUseNewInstance가 true란?
+//	특성	:	2번째 템플릿 인자인 type_bool pointerUseNewInstance가 true란?
 //					:	포인터를 deepcopy한다는 것을 말한다.
 //						예를들어, NENode a; 의 주소인 &a를 놓고 pointerUseNewInstance
 //						가 true일때와 false일때의 동작의 차이를 살펴보자.
@@ -53,8 +53,8 @@ namespace NE
 	public:
 		const This& operator=(const This& source); 
 		This operator+(const This& source) const;
-		bool operator==(const This& source) const;
-		bool operator!=(const This& source) const;
+		type_bool operator==(const This& source) const;
+		type_bool operator!=(const This& source) const;
 		const This& operator+=(const This& source);
 
 		//	인터페이스:
@@ -94,15 +94,15 @@ namespace NE
 		type_index insert(type_index index, const Type& source);
 		type_result push(const This& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
 		type_result pushFront(const This& source); // pushArrayFront는 필요가 없음. source쪽에서 push를 호출하면 되니까
-		bool isEqualSizeAndElement(const This& source) const;
-		bool isEqualElement(const This& source) const;		
+		type_bool isEqualSizeAndElement(const This& source) const;
+		type_bool isEqualElement(const This& source) const;		
 
 		//	내부함수:
 	private:
 		const This& _assign(const This& source);
 		void _release();
 		type_result _returnHeapMemory(type_index index);
-		type_index _searchIndex(bool by_descreasing, bool target_is_occupied) const;
+		type_index _searchIndex(type_bool by_descreasing, type_bool target_is_occupied) const;
 
 		//	멤버변수:
 	protected:

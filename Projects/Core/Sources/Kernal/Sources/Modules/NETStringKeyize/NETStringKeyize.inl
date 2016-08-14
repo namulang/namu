@@ -12,7 +12,7 @@ namespace NE
 	}
 
 	template <typename T>
-	bool NETStringKeyize<T>::isEqualTo(const NEKey& source) const
+	type_bool NETStringKeyize<T>::isEqualTo(const NEKey& source) const
 	{
 		if(source.isSubClassOf(*this))
 		{
@@ -25,15 +25,15 @@ namespace NE
 	}
 
 	template <typename T>
-	bool NETStringKeyize<T>::isLower(const NEKey& source) const
+	type_bool NETStringKeyize<T>::isLower(const NEKey& source) const
 	{
 		return false;
 	}
 
 	template <>
-	bool NETStringKeyize<NEString>::isLower(const NEKey& source) const;
+	type_bool NETStringKeyize<NEString>::isLower(const NEKey& source) const;
 	template <>
-	bool NETStringKeyize<NEWString>::isLower(const NEKey& source) const;
+	type_bool NETStringKeyize<NEWString>::isLower(const NEKey& source) const;
 
 	template <typename T>
 	type_result NETStringKeyize<T>::assign(const NEKey& source)

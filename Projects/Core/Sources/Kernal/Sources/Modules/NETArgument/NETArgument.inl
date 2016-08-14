@@ -281,21 +281,21 @@ namespace NE
 		{
 			return _default_key.getValue();
 		}
-		bool isLocked() const
+		type_bool isLocked() const
 		{
 			return isWantingToLock() && ! _was_source_binded ;	//	원래 Source가 Lock이 아닌 상태였고, Argument는 Lock이 되길 원했다면
 		}
-		bool isWantingToLock() const
+		type_bool isWantingToLock() const
 		{
 			return _is_wanting_to_lock;
 		}		
-		type_result setWantingToLock(bool do_u_want_to_lock)
+		type_result setWantingToLock(type_bool do_u_want_to_lock)
 		{
 			_is_wanting_to_lock = do_u_want_to_lock;
 
 			return RESULT_SUCCESS;
 		}
-		bool wasSourceBindedAlready() const
+		type_bool wasSourceBindedAlready() const
 		{
 			return _was_source_binded;
 		}
@@ -382,8 +382,8 @@ namespace NE
 	private:
 		T _default_key;
 		mutable T _for_casting;
-		bool _was_source_binded;
-		bool _is_wanting_to_lock;
+		type_bool _was_source_binded;
+		type_bool _is_wanting_to_lock;
 	};
 
 	template <>

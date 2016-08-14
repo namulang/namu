@@ -40,13 +40,13 @@
 
 namespace NE
 {
-	bool NEKeyManager::operator==(const This& source) const
+	type_bool NEKeyManager::operator==(const This& source) const
 	{
 		if(this == &source) return true;
 
 		return NEModule::operator==(source);	
 	}
-	bool NEKeyManager::operator!=(const This& source) const
+	type_bool NEKeyManager::operator!=(const This& source) const
 	{
 		return ! operator==(source);
 	}

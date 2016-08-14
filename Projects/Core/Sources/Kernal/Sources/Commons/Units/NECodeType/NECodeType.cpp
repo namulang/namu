@@ -15,7 +15,7 @@ namespace NE
 			_is_type_fixed = true;
 	}
 
-	NE_DLL NECodeType::NECodeType(CodeType new_codetype, bool is_type_fixed)
+	NE_DLL NECodeType::NECodeType(CodeType new_codetype, type_bool is_type_fixed)
 		: SuperClass(), _codetype(new_codetype), _is_type_fixed(is_type_fixed)
 	{
 
@@ -34,13 +34,13 @@ namespace NE
 		return _assign(source);
 	}
 
-	bool NE_DLL NECodeType::operator==(const ThisClass& source) const
+	type_bool NE_DLL NECodeType::operator==(const ThisClass& source) const
 	{
 		return	_codetype == source._codetype;
 				//_is_type_fixed == source._is_type_fixed	;
 	}
 
-	bool NECodeType::operator==(const NECodeType::CodeType source) const
+	type_bool NECodeType::operator==(const NECodeType::CodeType source) const
 	{
 		return _codetype == source;
 	}
@@ -60,7 +60,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 
-	bool NE_DLL NECodeType::isTypeFixed() const
+	type_bool NE_DLL NECodeType::isTypeFixed() const
 	{
 		return _is_type_fixed;
 	}
@@ -100,59 +100,59 @@ namespace NE
 		return *this;
 	}
 
-	bool NE_DLL NECodeType::isAcceptableType(const NECodeType& source) const
+	type_bool NE_DLL NECodeType::isAcceptableType(const NECodeType& source) const
 	{
 		return  ! isTypeFixed()			||
 				! source.isTypeFixed()	||
 				operator==(source)		;
 	}
 
-	bool NECodeType::operator!=(const ThisClass& source) const
+	type_bool NECodeType::operator!=(const ThisClass& source) const
 	{
 		return ! operator==(source);
 	}
 
-	bool NECodeType::operator!=(const NECodeType::CodeType source) const
+	type_bool NECodeType::operator!=(const NECodeType::CodeType source) const
 	{
 		return ! operator==(source);
 	}
 
-	bool NECodeType::operator<(const NECodeType::CodeType source) const
+	type_bool NECodeType::operator<(const NECodeType::CodeType source) const
 	{
 		return _codetype < source;
 	}
 
-	bool NECodeType::operator<(const ThisClass& source) const
+	type_bool NECodeType::operator<(const ThisClass& source) const
 	{
 		return _codetype < source._codetype;
 	}
 
-	bool NECodeType::operator<=(const NECodeType::CodeType source) const
+	type_bool NECodeType::operator<=(const NECodeType::CodeType source) const
 	{
 		return _codetype <= source;
 	}
 
-	bool NECodeType::operator<=(const ThisClass& source) const
+	type_bool NECodeType::operator<=(const ThisClass& source) const
 	{
 		return _codetype <= source._codetype;
 	}
 
-	bool NECodeType::operator>(const NECodeType::CodeType source) const
+	type_bool NECodeType::operator>(const NECodeType::CodeType source) const
 	{
 		return _codetype > source;
 	}
 
-	bool NECodeType::operator>(const ThisClass& source) const
+	type_bool NECodeType::operator>(const ThisClass& source) const
 	{
 		return _codetype > source._codetype;
 	}
 
-	bool NECodeType::operator>=(const NECodeType::CodeType source) const
+	type_bool NECodeType::operator>=(const NECodeType::CodeType source) const
 	{
 		return _codetype >= source;
 	}
 
-	bool NECodeType::operator>=(const ThisClass& source) const
+	type_bool NECodeType::operator>=(const ThisClass& source) const
 	{
 		return _codetype >= source._codetype;
 	}

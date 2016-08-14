@@ -124,12 +124,12 @@ namespace NE
 		return _assign(source);
 	}
 
-	bool NEIdentifier::operator==(const This& source) const
+	type_bool NEIdentifier::operator==(const This& source) const
 	{
 		return	isEqualTo(source);
 	}
 
-	bool NEIdentifier::operator!=(const This& source) const
+	type_bool NEIdentifier::operator!=(const This& source) const
 	{
 		return ! isEqualTo(source);
 	}

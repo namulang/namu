@@ -21,8 +21,8 @@ namespace NE
 
 	public:
 		const This& operator=(const This& source);
-		bool operator==(const This& source) const;
-		bool operator!=(const This& source) const;
+		type_bool operator==(const This& source) const;
+		type_bool operator!=(const This& source) const;
 
 	public:
 		const NETString& getName() const;

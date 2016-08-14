@@ -51,7 +51,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	bool NE_DLL NESwitchableUnit::operator==(const NESwitchableUnit& source) const 
+	type_bool NE_DLL NESwitchableUnit::operator==(const NESwitchableUnit& source) const 
 	{
 		if(this == &source) return true;
 		if(_enable != source._enable) return false;
@@ -64,7 +64,7 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	bool NE_DLL NESwitchableUnit::operator!=(const NESwitchableUnit& source) const 
+	type_bool NE_DLL NESwitchableUnit::operator!=(const NESwitchableUnit& source) const 
 	{
 		return !(operator==(source));
 	}
@@ -74,14 +74,14 @@ namespace NE
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
-	bool NE_DLL NESwitchableUnit::isEnable() const
+	type_bool NE_DLL NESwitchableUnit::isEnable() const
 	{
 		return _enable;
 	}
 
 
 
-	void NE_DLL NESwitchableUnit::setEnable(bool enable)
+	void NE_DLL NESwitchableUnit::setEnable(type_bool enable)
 	{
 		_enable = enable;
 	}

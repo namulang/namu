@@ -20,8 +20,8 @@ namespace NE
 
 	public:
 		const This& operator=(const This& source);
-		bool operator==(const This& source) const;
-		bool operator!=(const This& source) const;
+		type_bool operator==(const This& source) const;
+		type_bool operator!=(const This& source) const;
 
 	public:
 		virtual type_result unbind();
@@ -33,7 +33,7 @@ namespace NE
 		const NEEnlistableManager& getManager() const;
 
 	public:
-		virtual bool isBinded() const;
+		virtual type_bool isBinded() const;
 
 	public:
 		virtual void release();

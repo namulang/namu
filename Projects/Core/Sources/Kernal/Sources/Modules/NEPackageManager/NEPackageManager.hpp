@@ -40,8 +40,8 @@ namespace NE
 		//	연산자 오버로딩:
 	public:
 		const This& operator=(const This& source);
-		bool operator==(const This& source) const;
-		bool operator!=(const This& source) const;
+		type_bool operator==(const This& source) const;
+		type_bool operator!=(const This& source) const;
 
 		//	소멸자:
 	public:
