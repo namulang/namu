@@ -10,10 +10,6 @@ namespace NE
 	class NE_DLL NEUnknown : public NEAdam
 	{
 	public:
-		typedef NEUnknown This;
-		typedef NEAdam Super;
-		typedef NETUnknownMetaClass<NEUnknown> MetaClass;
-
-		
+				
 	};
 }

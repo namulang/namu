@@ -538,6 +538,10 @@
 					Name="NEAdam"
 					>
 					<File
+						RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEAdam\NEAdam.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEAdam\NEAdam.hpp"
 						>
 					</File>
@@ -2140,6 +2144,10 @@
 					<Filter
 						Name="NETypeChecker"
 						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETypeChecker\NETypeChecker.cpp"
+							>
+						</File>
 						<File
 							RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETypeChecker\NETypeChecker.hpp"
 							>

@@ -13,9 +13,11 @@ namespace NE
 
 	class NE_DLL NENodeCodeSet : public NETEnlistableSet< NETArray<type_code, false, NENode> >, public NEExecutable
 	{
+		typedef NETArray<type_code, false, NENode> _Type;
+
+		NE_DECLARE_CLASS(NENodeCodeSet, NETEnlistableSet<_Type>)
+
 	public:
-		typedef NETEnlistableSet< NETArray<type_code, false, NENode> > SuperClass;
-		typedef NENodeCodeSet ThisClass;
 		typedef type_code InnerType;
 		typedef NENode OuterType;
 
@@ -52,7 +54,7 @@ namespace NE
 		virtual NEObject& clone() const;
 		virtual NEType::Type getType() const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
-		using SuperClass::serialize;
+		using Super::serialize;
 
 	protected:
 		virtual type_result _onEnlisted();

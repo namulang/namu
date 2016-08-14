@@ -6,8 +6,7 @@ namespace NE
 {	
 	class NE_DLL NEOccupiedSet : public NEBooleanSet
 	{
-		typedef NEOccupiedSet ThisClass;
-		typedef NEBooleanSet SuperClass;
+		NE_DECLARE_CLASS(NEOccupiedSet, NEBooleanSet)
 
 	public:
 		type_result setInBatches(bool is_occupied);
