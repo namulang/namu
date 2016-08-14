@@ -4,19 +4,19 @@
 namespace NE
 {
 	NEArgumentSet::NEArgumentSet(type_count size)
-		: SuperClass(size)
+		: Super(size)
 	{
 
 	}
 
-	NEArgumentSet::NEArgumentSet(const ThisClass& rhs)
-		: SuperClass(rhs)
+	NEArgumentSet::NEArgumentSet(const This& rhs)
+		: Super(rhs)
 	{
 
 	}
 
 	NEArgumentSet::NEArgumentSet()
-		: SuperClass()
+		: Super()
 	{
 
 	}

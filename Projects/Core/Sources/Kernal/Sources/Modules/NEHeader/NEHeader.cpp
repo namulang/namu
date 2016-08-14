@@ -3,6 +3,8 @@
 
 namespace NE
 {
+	NE_DEFINE_CLASS_ONLY(NEHeader)
+
 	NEHeader::NEHeader()
 		: Super()
 	{

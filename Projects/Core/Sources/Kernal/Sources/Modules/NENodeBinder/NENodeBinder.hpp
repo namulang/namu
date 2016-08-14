@@ -8,8 +8,7 @@ namespace NE
 
 	class NE_DLL NENodeBinder : public NEBinderBase
 	{
-		typedef NENodeBinder ThisClass;
-		typedef NEBinderBase SuperClass;
+		NE_DECLARE_CLASS(NENodeBinder, NEBinderBase)
 
 		friend class NENodeSelector;
 
@@ -19,10 +18,6 @@ namespace NE
 
 	public:
 		virtual bool isBinded() const;
-
-	public:
-		virtual NEObject& clone() const;
-		virtual NEType::Type getType() const;
 
 	public:
 		NENode& getBinded();

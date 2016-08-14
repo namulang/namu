@@ -7,6 +7,8 @@ namespace NE
 	template <typename T>
 	class NETTemplateChecker : public NETypeChecker
 	{
+		NE_DECLARE_INTERFACE(NETTemplateChecker<T>, NETypeChecker)
+
 	private:
 		template <template<typename> class Template, typename T>
 		static yes _isTemplate(Template<T>*);

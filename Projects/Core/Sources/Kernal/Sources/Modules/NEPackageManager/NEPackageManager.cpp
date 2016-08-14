@@ -613,19 +613,20 @@ namespace
 		//		exception handlings:
 		if( ! &new_class) return KERNAL_WARNING("...");
 		if(new_class.isRegistered()) return RESULT_SUCCESS | RESULT_ABORT_ACTION;
-
+		//		enroll specially in case of Adam to avoid procedure failing because of recusion:
+		//			if new_class is NEAdam class, at this point it wasn't enrolled ofcourse.
+		//			so we'll check its address of name which is returned from static method.
+		if(&new_class.getName() == &root.getName()) return _pushToManaged(new_class);	//	just push into buffers. it has no super class.
 
 		//	main:
-		//		enroll parent:
-		const NEClassBase& super = new_class.getSuperClass();
-		if( ! &super)
-			//	if new_class is a NEAdam class, its returend 'super' is a instance of Null.
-			return RESULT_SUCCESS;
-		//		hee- ha! lets do this reculsively.
+		//		enroll parent reculsively:
+		const NEClassBase& super = new_class.getSuperClass();		
+		//		hee- ha! lets do this reculsively. if given parameter 'new_class' is one of NEAdam,
+		//		we don't need to enroll its not existed super class.
 		_enroll(super);
 
 		//		enrolls:
-		//			supers: we can call this because Superclasses are all enrolled.
+		//			supers: we can call this because Super classes are all enrolled.
 		new_class._enrollSuperClasses(super);	//	in this handler, each super classes receive sub classes.
 
 
@@ -648,13 +649,12 @@ namespace
 			return KERNAL_ERROR("...")
 
 
-			//	post:
-			//		give _class id as pushed index:
-			//			there is no instance changing after inserted.
-			//			(except for whole initializing)
-			//			so, when new_class take new class id, it's ne
-			//			ver get changed.
-			new_class._getId() = n;
+		//	post:
+		//		give _class id as pushed index:
+		//			there is no instance changing after inserted. (except for 
+		//			whole initializing). so, when new_class take new class id, 
+		//			it's never get changed.
+		new_class._getId() = n;
 		return RESULT_SUCCESS;
 	}
 }

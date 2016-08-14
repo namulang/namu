@@ -18,11 +18,6 @@ namespace NE
 		return *(new NENodeBinder(*this));
 	}
 
-	NEType::Type NENodeBinder::getType() const
-	{
-		return NEType::NENODE_BINDER;
-	}
-
 	NENode& NENodeBinder::getBinded()
 	{
 		NENode* nullpointer = NE_NULL;

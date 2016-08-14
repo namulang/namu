@@ -27,13 +27,7 @@ namespace NE
 	template <typename T>
 	class NETClassBase : public NEClassBase
 	{
-	public:
-		typedef NETClassBase<T> This;
-		typedef NEClassBase Super;
-		//    type determind:
-		typedef typename NETMetaClassDeterminder<T>::MetaClass MetaClass;
-		typedef typename NETTraitDeterminder<T>::Trait Trait;
-		typedef typename NETSuperClassDeterminder<T>::Super SuperTrait;
+		NE_DECLARE_CLASS_ONLY(NETClassBase, NEClassBase)
 
 	public:
 		virtual const NEClassBase& getClass() const;
@@ -50,6 +44,9 @@ namespace NE
 		///			As you can inspect codes, this returns the static variable.
 		virtual const NEHeader& getHeader() const;
 		virtual const NEPackage& getPackage() const;
+
+	public:
+		virtual NEObject& clone() const;
 
 	public:
 		static const type_bool& isRegisteredStatically();

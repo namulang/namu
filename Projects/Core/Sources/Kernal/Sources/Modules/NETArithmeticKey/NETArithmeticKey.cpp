@@ -30,7 +30,7 @@ namespace NE
 		SuperClass::assign(source);
 
 		//	main:
-		type_result result = RESULT_SUCCESS;
+		/*type_result result = RESULT_SUCCESS;
 		switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
@@ -75,7 +75,7 @@ namespace NE
 		case NEType::NEWSTRING_KEY:
 			_value = (static_cast<const NEWStringKey&>(source)).getValue().toBoolean();
 			break;
-		}
+		}*/
 
 		return result;
 	}
@@ -89,7 +89,7 @@ namespace NE
 		SuperClass::assign(source);
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -213,7 +213,7 @@ namespace NE
 					return RESULT_TYPE_ERROR;
 			}
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}
@@ -227,7 +227,7 @@ namespace NE
 		SuperClass::assign(source);
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -279,7 +279,7 @@ namespace NE
 				_value = static_cast<type_byte>(extracted.toInt());
 			}
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}
@@ -294,7 +294,7 @@ namespace NE
 
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -346,7 +346,7 @@ namespace NE
 				_value = static_cast<type_ubyte>(extracted.toInt());
 			}
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}
@@ -361,7 +361,7 @@ namespace NE
 
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -484,7 +484,7 @@ namespace NE
 					return RESULT_TYPE_ERROR;
 			}
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}
@@ -499,7 +499,7 @@ namespace NE
 
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -546,7 +546,7 @@ namespace NE
 		case NEType::NEWSTRING_KEY:
 			_value = static_cast<type_short>((static_cast<const NEWStringKey&>(source)).getValue().toInt());
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}
@@ -561,7 +561,7 @@ namespace NE
 
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -611,7 +611,7 @@ namespace NE
 		case NEType::NEWSTRING_KEY:
 			_value = static_cast<type_ushort>((static_cast<const NEWStringKey&>(source)).getValue().toInt());
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}
@@ -626,7 +626,7 @@ namespace NE
 
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -676,7 +676,7 @@ namespace NE
 		case NEType::NEWSTRING_KEY:
 			_value = (static_cast<const NEWStringKey&>(source)).getValue().toInt();
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}
@@ -691,7 +691,7 @@ namespace NE
 
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -741,7 +741,7 @@ namespace NE
 		case NEType::NEWSTRING_KEY:
 			_value = (static_cast<const NEWStringKey&>(source)).getValue().toInt();
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}
@@ -756,7 +756,7 @@ namespace NE
 
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -806,7 +806,7 @@ namespace NE
 		case NEType::NEWSTRING_KEY:
 			_value = static_cast<type_float>((static_cast<const NEWStringKey&>(source)).getValue().toDouble());
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}
@@ -821,7 +821,7 @@ namespace NE
 
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -871,7 +871,7 @@ namespace NE
 		case NEType::NEWSTRING_KEY:
 			_value = (static_cast<const NEWStringKey&>(source)).getValue().toDouble();
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}
@@ -886,7 +886,7 @@ namespace NE
 
 
 		//	main:
-		switch (source.getType())
+		/*switch (source.getType())
 		{
 		case NEType::NEBOOLEAN_KEY:
 			_value = (static_cast<const NEBooleanKey&>(source)).getValue();
@@ -936,7 +936,7 @@ namespace NE
 		case NEType::NEWSTRING_KEY:
 			_value = (static_cast<const NEWStringKey&>(source)).getValue().toInt();
 			break;
-		}
+		}*/
 
 		return RESULT_SUCCESS;
 	}

@@ -246,22 +246,15 @@ namespace NE
 			KERNAL_ERROR(" : ");
 			return RESULT_TYPE_ERROR;
 		}
-		NEType::Type type = key.getType();
-
-		switch(type)
-		{
-		case NEType::NENODE_CODESET_KEY:
-			{
-				NENodeCodeSetKey& casted = static_cast<NENodeCodeSetKey&>(key);
-				NENodeCodeSet& node_codeset = casted.getValue();
-
-				return node_codeset._onEnlisted();
-			}
-			break;
-
-		default:
+		
+		if( ! key.isSubClassOf(NETClass<NENodeCodeSetKey>()))
 			return RESULT_SUCCESS;
-		}
+		
+
+		NENodeCodeSetKey& casted = static_cast<NENodeCodeSetKey&>(key);
+		NENodeCodeSet& node_codeset = casted.getValue();
+
+		return node_codeset._onEnlisted();
 	}
 
 	type_result NEKeyCodeSet::_onEnlisted()

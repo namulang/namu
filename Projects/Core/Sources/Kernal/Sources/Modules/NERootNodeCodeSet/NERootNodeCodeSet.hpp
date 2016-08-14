@@ -22,7 +22,6 @@ namespace NE
 
 	public:
 		virtual NEObject& clone() const;
-		virtual NEType::Type getType() const;
 
 	protected:
 		virtual type_result _onEnlisted(NENode& node);

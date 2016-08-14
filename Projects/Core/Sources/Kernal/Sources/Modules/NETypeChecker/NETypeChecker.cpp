@@ -3,10 +3,5 @@
 
 namespace NE
 {
-	NEClassBase& NETypeChecker::getClassStatically()
-	{
-		static NETClass<This> inner;
-
-		return inner;
-	}
+	NE_DEFINE_INTERFACE_ONLY(NETypeChecker)
 }

@@ -3,10 +3,5 @@
 
 namespace NE
 {
-	const NEClassBase& NEIdableObject::getClassStatically()
-	{
-		static NETClass<NEIdableObject> inner;
-
-		return inner;
-	}
+	NE_DEFINE_INTERFACE_ONLY(NEIdableObject)
 }

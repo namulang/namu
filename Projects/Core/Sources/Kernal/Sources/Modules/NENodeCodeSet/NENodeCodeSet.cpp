@@ -233,10 +233,6 @@ namespace NE
 	{
 		return *(new ThisClass(*this));
 	}
-	NEType::Type NENodeCodeSet::getType() const
-	{
-		return NEType::NENODE_CODESET;
-	}
 	NEIndexedNodeSet& NENodeCodeSet::_getNodeSet()
 	{
 		NEIndexedNodeSet* nullpointer = 0x00;
@@ -266,7 +262,7 @@ namespace NE
 		//		Å¸°ÙÆÃ:
 		type_result result = RESULT_SUCCESS;
 		NEEnlistableManager& manager = getManager();
-		if( ! &manager || manager.getType() != NEType::NENODE_MANAGER)
+		if( ! &manager/* || manager.getType() != NEType::NENODE_MANAGER*/)
 		{
 			KERNAL_ERROR(" : ");
 			return RESULT_TYPE_ERROR;

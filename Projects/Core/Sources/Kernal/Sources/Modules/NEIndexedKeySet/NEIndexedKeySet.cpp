@@ -135,9 +135,9 @@ namespace NE
 			if( ! &key)
 				continue;
 			//		헤더 추출
-			NEType::Type type = key.getType();
+			/*NEType::Type type = key.getType();*/
 			//		헤더 저장:	타입코드로, load시 어떤인스턴스를 생성해야하는가에 대한 정보를 남긴다
-			saver << type; 
+			/*saver << type; */
 			//		실제 데이터 저정:	NEModule::serialize()를 호출한다.
 			saver << key;
 		}
@@ -165,8 +165,8 @@ namespace NE
 			if( ! _occupiedset[n])
 				continue;
 
-			NEType::Type type = NEType::UNDEFINED;
-			loader >> type;
+			/*NEType::Type type = NEType::UNDEFINED;
+			loader >> type;*/
 
 			const NEKey& source_key = keyer.getKey(type);
 			if( ! &source_key)

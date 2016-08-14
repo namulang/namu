@@ -57,14 +57,6 @@ namespace NE
 
 		return buffer;
 	}
-	NEObject& NERootNodeCodeSet::clone() const
-	{
-		return *(new ThisClass(*this));
-	}
-	NEType::Type NERootNodeCodeSet::getType() const
-	{
-		return NEType::NEROOT_NODE_CODESET;
-	}
 
 	type_result NERootNodeCodeSet::_onEnlisted(NENode& node)
 	{

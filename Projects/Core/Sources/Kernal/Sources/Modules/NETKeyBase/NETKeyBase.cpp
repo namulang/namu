@@ -11,7 +11,7 @@ namespace NE
 		SuperClass::assign(source);
 
 		type_result result = RESULT_SUCCESS;
-		if(source.getType() == NEType::NEKEY_SELECTOR)
+		if(source.isSubClassOf(NETClass<NEKeySelector()))
 		{
 			NEKeySelector copied = static_cast<const NEKeySelector&>(source);
 

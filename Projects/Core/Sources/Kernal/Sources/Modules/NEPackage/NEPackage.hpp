@@ -7,7 +7,7 @@
 
 namespace NE
 {
-	class NE_DLL NEPackage : public] NEHeader
+	class NE_DLL NEPackage : public NEHeader
 	{
 		NE_DECLARE_CLASS(NEPackage, NEHeader)
 

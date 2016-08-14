@@ -13,10 +13,19 @@
 //		See include section of the NETClassBase.hpp file.
 namespace NE
 {
+	class NE_DLL NEClassBase;
+
 	template <typename T>
 	class NETInterface;
+
 	template <typename T>
 	class NETConcreteClass;
+
+	template <typename T>
+	class NETUnknownMetaClass;
+
+	template <typename T>
+	class NETClass;
 }
 
 //	Class Macros:

@@ -29,7 +29,6 @@
 //					a class template)
 //				6. definition of TClass.
 //			this header files kept 1 to 4 contents among above ones.
-class NE::NEClassBase;
 
 #include "../NETList/NETList.inl"	// include inl, not hpp
 #include "../NEHeader/NEHeader.hpp"
@@ -37,14 +36,18 @@ class NE::NEClassBase;
 
 namespace NE
 {
+	class NE_DLL NEClassBase;
+	class NE_DLL NEMethodList;
+	template <typename T, type_bool useHeap>
+	class NETList;
 	typedef NETList<NEClassBase*, true> NEClassBaseList;
 
 	class NE_DLL NEClassBase : public NEIdableObject
 	{
+		NE_DECLARE_INTERFACE(NEClassBase, NEIdableObject)
+
 		//    Declarations:
 	public:
-		typedef NEClassBase This;
-		typedef NEIdableObject Super;
 		friend class NEPackageManager;
 
 		//    Constructors:
@@ -64,7 +67,6 @@ namespace NE
 		virtual type_bool isMetaClassDefined() const = 0;
 		virtual type_bool isBuiltInClass() const = 0;
 		virtual type_bool isRegistered() const = 0;
-		virtual const NEClassBase& getClass() const = 0;
 		virtual const This& getTraitClass() const = 0;
 		virtual const NEClassBaseList& getSuperClasses() const = 0;
 		virtual const NEClassBaseList& getChildrenClasses() const = 0;

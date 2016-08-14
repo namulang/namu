@@ -64,7 +64,7 @@ namespace NE
 	const NEKey NE_DLL &NEKeyManager::getKey(const NEString& type_name) const
 	{
 		for(int n=0; n < _keyset.getLength() ;n++)
-			if(type_name == _keyset[n].getTypeName())
+			if(type_name == _keyset[n].getClass().getName())
 				return _keyset[n];
 
 		const NEKey* nullpointer = 0x00;

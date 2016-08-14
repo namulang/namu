@@ -10,9 +10,8 @@ namespace NE
 
 	class NE_DLL NEArgumentSet : public NETArray<NEArgumentBase*, false>
 	{
-	public:
-		typedef NEArgumentSet ThisClass;
-		typedef NETArray<NEArgumentBase*, false> SuperClass;
+		typedef NETArray<NEArgumentBase*, false> _Super;
+		NE_DECLARE_CLASS(NEArgumentSet, _Super)
 
 	public:
 		NEArgumentSet();

@@ -52,7 +52,6 @@ namespace NE
 	public:
 		virtual void release();
 		virtual NEObject& clone() const;
-		virtual NEType::Type getType() const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 		using Super::serialize;
 

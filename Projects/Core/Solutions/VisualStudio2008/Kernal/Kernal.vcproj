@@ -1172,18 +1172,6 @@
 								>
 							</File>
 							<Filter
-								Name="innerclass"
-								>
-								<Filter
-									Name="Bean"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIdentifier\innerclass\Bean.hpp"
-										>
-									</File>
-								</Filter>
-							</Filter>
-							<Filter
 								Name="NEHeader"
 								>
 								<File
@@ -2136,6 +2124,10 @@
 					<Filter
 						Name="NEUnknown"
 						>
+						<File
+							RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUnknown\NEUnknown.cpp"
+							>
+						</File>
 						<File
 							RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUnknown\NEUnknown.hpp"
 							>

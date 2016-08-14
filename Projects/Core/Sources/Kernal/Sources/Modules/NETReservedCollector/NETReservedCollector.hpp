@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../NETCollector/NETCollector.hpp"
 #include "NETReservedCollector.inl"
 #include "NETPointerReservedCollector.inl"

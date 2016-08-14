@@ -3,7 +3,7 @@ namespace NE
 {
 	template <typename T>
 	NETArgument<T>::NETArgument(NEArgumentBase::Purpose limitation) 
-		: SuperClass(T().getType(), limitation)
+		: SuperClass(/*T().getType(), */limitation)
 	{
 
 	}
@@ -12,12 +12,6 @@ namespace NE
 	NEObject& NETArgument<T>::clone() const
 	{
 		return *(new ThisClass(*this));
-	}
-
-	template <typename T>
-	NEType::Type NETArgument<T>::getType() const
-	{
-		return NEType::NETARGUMENT;
 	}
 
 	template <typename T>
@@ -128,7 +122,7 @@ namespace NE
 
 	public:
 		NETLimitedArgument()
-			: SuperClass(T().getType())
+			: SuperClass()
 		{
 
 		}

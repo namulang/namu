@@ -4,26 +4,12 @@
 
 namespace NE
 {
-	template <typename T>
-	class NETInterface;
-
-	class NEClassBase;
-
 	///	@class	Identifier
 	/// @brief	Identifier uses to identify package among one of world packages
 	///			fetched by @PackageManager.
 	class NE_DLL NEIdentifier : public NEObject
 	{
-		//	declare rtti info manually:
-		//		to prevent reculsive templating.
-	public:
-		typedef NEIdentifier		This;
-		typedef NEObject			Super;
-		typedef NETInterface<This>	MetaClass;
-
-	public:
-		virtual const NEClassBase& getClass() const { return getClassStatically(); }
-		static const NEClassBase& getClassStatically();
+		NE_DECLARE_CLASS_ONLY(NEIdentifier, NEObject)
 
 	public:
 		NEIdentifier();

@@ -21,10 +21,6 @@ namespace NE
 		virtual bool isBinded() const;
 
 	public:
-		virtual NEObject& clone() const;
-		virtual NEType::Type getType() const;
-
-	public:
 		NEModule& getBinded();
 		const NEModule& getBinded() const;
 		type_result bind(const NEModule& module, NEType::Type manager_type);

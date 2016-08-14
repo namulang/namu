@@ -4,10 +4,6 @@
 
 namespace NE
 {
-	class NEClassBase;
-	
-	template <typename T>
-	class NETClass;
 	//    the Adam class:
 	//        the most ancestor of whole classes which are exposed to the World framework.
 	//        with existance of Adam, the World can construct the unified hierarchy tree

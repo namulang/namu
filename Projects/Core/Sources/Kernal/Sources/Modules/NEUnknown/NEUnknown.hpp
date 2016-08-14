@@ -4,12 +4,7 @@
 
 namespace NE
 {
-	template <typename T>
-	class NETUnknownMetaClass;
-
-	class NE_DLL NEUnknown : public NEAdam
-	{
-	public:
-				
+	class NE_DLL NEUnknown : public NEAdam {
+		NE_NATIVE_DECLARE_ONLY(NEUnknown, NEAdam, NETUnknownMetaClass<This>)
 	};
 }

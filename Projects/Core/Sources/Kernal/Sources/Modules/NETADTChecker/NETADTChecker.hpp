@@ -10,15 +10,12 @@ namespace NE
 	//        Because checking ADT process can't be determined by built-in keywords of
 	//        native C++. So, we must implement it by requesting user to add the
 	//        supplicant hint about ADT from class author, the MetaClass typedef.
-	//
-	//        forward declaration:
-	
-	template <typename T>
-	class NETInterface;
-
-	template <typename T, bool IS_METACLASS_DEFINED = NETMetaClassChecker<T>::IS_METACLASS_DEFINED>
+	template <typename T, type_bool IS_METACLASS_DEFINED = NETMetaClassChecker<T>::IS_METACLASS_DEFINED>
 	class NETADTChecker : public NETypeChecker
 	{
+		typedef NETADTChecker<T, IS_METACLASS_DEFINED> _This;
+		NE_DECLARE_INTERFACE(_This, NETypeChecker)
+
 	public:
 		static const bool IS_ADT = false;
 	};
@@ -26,6 +23,8 @@ namespace NE
 	template <typename T>
 	class NETADTChecker<T, true> : public NETypeChecker
 	{
+		typedef NETADTChecker<T, true> _This;
+		NE_DECLARE_INTERFACE(_This, NETypeChecker)
 
 	private:
 		static yes _isADT(NETInterface<T>*);

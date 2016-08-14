@@ -5,6 +5,8 @@
 
 namespace NE
 {
+	NE_DEFINE_CLASS_ONLY(NEIdentifier)
+
 	NEIdentifier::NEIdentifier()
 		: Super()
 	{

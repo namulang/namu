@@ -22,10 +22,6 @@ namespace NE
 	{
 		NE_DECLARE_INTERFACE(NEExecutableUnit, NESwitchableUnit)
 
-	public:
-		typedef NESwitchableUnit SuperClass;
-		typedef NEExecutableUnit ThisClass;
-
 		//	»ý¼ºÀÚ:
 	public:
 		NEExecutableUnit();

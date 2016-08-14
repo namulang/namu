@@ -246,8 +246,8 @@ namespace NE
 			const NEModule& module = moduler.getModule(identifier);
 			//			만약 더미모듈이라면:
 		
-			if( ! &module							||
-				module.getType() == NEType::UNDEFINED)
+			if( ! &module							/*||*/
+/*				module.getType() == NEType::UNDEFINED*/)
 			{
 				//	더미 삽입:				
 				KERNAL_ERROR(" : 더미 모듈을 삽입해야하는데, 현재 설계로는 삽입이 쵸금 곤란함");
