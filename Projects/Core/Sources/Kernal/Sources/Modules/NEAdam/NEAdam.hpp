@@ -1,16 +1,22 @@
 #pragma once
 
+#include "../NETClass/define/ClassMacro.hpp"
+
 namespace NE
 {
+	class NEClassBase;
+	
+	template <typename T>
+	class NETClass;
 	//    the Adam class:
 	//        the most ancestor of whole classes which are exposed to the World framework.
 	//        with existance of Adam, the World can construct the unified hierarchy tree
-	//        on NEClassManager.
-	//        Adam have 2 children. NEObject and NEUnknown.
+	//        on NEPackageManager.
+	//        Adam have only 2 children. NEObject and NEUnknown.
 	//
 	//        NEObject:    
 	//            These're reachable descestors from World framework.
-	//            Can be instantiated(only if ConcreteClass), know that its Super-class
+	//            Can be instantiated(only if ConcreteClass), can know what its Super-class
 	//            is, whether it's class template and if so, what it's Trait class, and
 	//            so on. Users can fully access with World RTTI functions.
 	//            Generally, World will identify what is derived class from NEObject
@@ -30,11 +36,11 @@ namespace NE
 	//            if World framework think that given classtype isn't belonged to World
 	//            frameworks, make it classfied to be derived from Unknown.
 	//            In fact, all decestors of unknown aren't reachable by World RTTI.
-	//            it means, World doesn't guarranty that which is super class,
+	//            it means, World doesn't guarrantee that which is super class,
 	//            whether it's a sort of ADT of Unknowns.
 	//            Only limited RTTI will be supported.
 	//
-	//        To enroll hierarchy tree of ClassManager as World component:
+	//        To enroll hierarchy tree of PackageManager as World component:
 	//            If you want to add your class which isn't belonged to world framework,
 	//            there are 3 conditions.
 	//        
@@ -51,5 +57,5 @@ namespace NE
 	//                    typedef NETInterface<YourADTClass> MetaClass; // cond#2. if yours are a concrete class, please use NETConcreteClass instead of.
 	//                }
 	//            if your class doesn't satisfy with all 3 conditions, your one will be classfied to NEUnkown.
-	class NE_DLL NEAdam {};
+	class NE_DLL NEAdam {	NE_DECLARE_INTERFACE_ONLY(NEAdam, NEAdam)	};
 }

@@ -13,5 +13,7 @@ namespace NE
 		typedef NEUnknown This;
 		typedef NEAdam Super;
 		typedef NETUnknownMetaClass<NEUnknown> MetaClass;
+
+		
 	};
 }

@@ -31,7 +31,7 @@ namespace NE
 //			order to support RTTI. 
 //			by defining these, users can template metaclass with NETClass without consideration 
 //			that it's a ADT or concrete class.
-#define NE_NATIVE_DECLARE_CLASS(NAME, SUPER, METACLASS)		\
+#define NE_NATIVE_DECLARE_INLINEY(NAME, SUPER, METACLASS)	\
 	public:													\
 		typedef NAME			This;						\
 		typedef SUPER			Super;						\
@@ -52,15 +52,62 @@ namespace NE
 		}													\
 	private:
 
-#define NE_DECLARE_INTERFACE(NAME, SUPER)					\
-	NE_NATIVE_DECLARE_CLASS(NAME, SUPER, NETInterface)
-
-#define NE_DECLARE_CLASS(NAME, SUPER)						\
-	NE_NATIVE_DECLARE_CLASS(NAME, SUPER, NETConcreteClass)	\
-															\
-	public:													\
-		virtual NEObject& clone() const						\
-		{													\
-			return *(new This(*this));						\
-		}													\
+#define NE_NATIVE_DECLARE_ONLY(NAME, SUPER, METACLASS)	\
+	public:												\
+		typedef NAME			This;					\
+		typedef SUPER			Super;					\
+		typedef METACLASS<NAME>	MetaClass;				\
+														\
+	public:												\
+		virtual const NEClassBase& getClass() const;	\
+														\
+	public:												\
+		static const NEClassBase& getClassStatically()	\
 	private:
+
+#define NE_NATIVE_DEFINE_ONLY(NAME)						\
+	const NEClassBase& NAME::getClass() const			\
+	{													\
+		return getClassStatically();					\
+	}													\
+														\
+	const NEClassBase& NAME::getClassStatically()		\
+	{													\
+		static NETClass<This> inner;					\
+														\
+		return inner;									\
+	}
+
+#define NE_DECLARE_INTERFACE(NAME, SUPER)						\
+	NE_NATIVE_DECLARE_INLINEY(NAME, SUPER, NETInterface)
+
+#define NE_DECLARE_INTERFACE_ONLY(NAME, SUPER)					\
+	NE_NATIVE_DECLARE_ONLY(NAME, SUPER, NETInterface)
+
+#define NE_DECLARE_CLASS(NAME, SUPER)							\
+	NE_NATIVE_DECLARE_INLINEY(NAME, SUPER, NETConcreteClass)	\
+																\
+	public:														\
+		virtual NEObject& clone() const							\
+		{														\
+			return *(new This(*this));							\
+		}														\
+	private:
+
+#define NE_DECLARE_CLASS_ONLY(NAME, SUPER)						\
+	NE_NATIVE_DECLARE_ONLY(NAME, SUPER, NETConcreteClass)		\
+																\
+	public:														\
+		virtual NEObject& clone() const;						\
+	private:
+
+#define NE_DEFINE_INTERFACE_ONLY(NAME)	\
+	NE_NATIVE_DEFINE_ONLY(NAME)
+
+#define NE_DEFINE_CLASS_ONLY(NAME)		\
+	NE_NATIVE_DEFINE_ONLY(NAME)			\
+										\
+	NEObject& NAME::clone() const		\
+	{									\
+		return *(new This(*this));		\
+	}
