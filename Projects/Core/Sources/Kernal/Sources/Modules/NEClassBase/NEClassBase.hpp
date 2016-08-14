@@ -92,8 +92,8 @@ namespace NE
 
 		//        General interfaces:
 	public:
-		type_bool isEqualTypeWith(const This& source) const;
-		type_bool isEqualTypeWith(const NEObject& source) const;
+		type_bool isEqualClassTo(const This& source) const;
+		type_bool isEqualClassTo(const NEObject& source) const;
 		type_bool isSuperClassOf(const This& parent) const;
 		type_bool isSuperClassOf(const NEObject& parent) const;
 		type_bool isSubClassOf(const This& parent) const;

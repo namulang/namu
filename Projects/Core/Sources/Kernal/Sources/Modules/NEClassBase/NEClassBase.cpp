@@ -25,15 +25,15 @@ namespace NE
 
 	}
 
-	type_bool NE_DLL NEClassBase::isEqualTypeWith(const This& source) const
+	type_bool NE_DLL NEClassBase::isEqualClassTo(const This& source) const
 	{
 		return	&source							&&
 			&getName() == &source.getName()	;
 	}
 
-	type_bool NE_DLL NEClassBase::isEqualTypeWith(const NEObject& source) const
+	type_bool NE_DLL NEClassBase::isEqualClassTo(const NEObject& source) const
 	{
-		return isEqualTypeWith(source.getClass());
+		return isEqualClassTo(source.getClass());
 	}
 
 	type_bool NE_DLL NEClassBase::isSuperClassOf(const This& parent) const
