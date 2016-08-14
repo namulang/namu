@@ -41,7 +41,6 @@ namespace NE
 		virtual type_result isValid() const;
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
-		virtual NEObject& clone() const;
 
 	protected:
 		//	for PackageManager.

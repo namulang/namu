@@ -134,9 +134,4 @@ namespace NE
 
 		return RESULT_SUCCESS;
 	}
-
-	NEObject& NEPackage::clone() const
-	{
-		return *(new This(*this));
-	}
 }

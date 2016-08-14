@@ -13,11 +13,6 @@ namespace NE
 		return node.getId() == getComparingId();
 	}
 
-	NEObject& NEModuleBinder::clone() const
-	{
-		return *(new NEModuleBinder(*this));
-	}
-
 	NEModule& NEModuleBinder::getBinded()
 	{
 		NEModule* nullpointer = NE_NULL;

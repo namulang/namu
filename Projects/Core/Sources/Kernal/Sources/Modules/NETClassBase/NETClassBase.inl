@@ -46,9 +46,6 @@ namespace NE
 		virtual const NEPackage& getPackage() const;
 
 	public:
-		virtual NEObject& clone() const;
-
-	public:
 		static const type_bool& isRegisteredStatically();
 		static const NEClassBaseList& getSuperClassesStatically();
 		static const NEClassBaseList& getChildrenClassesStatically();

@@ -3,6 +3,8 @@
 
 namespace NE
 {
+	NE_DEFINE_CLASS_ONLY(NETInterface<T>)
+
 	template <typename T>
 	NETInterface<T>::~NETInterface()
 	{
@@ -10,7 +12,7 @@ namespace NE
 	}
 
 	template <typename T>
-	NETInterface<T>::NETInterface(const NETInterface& source)
+	NETInterface<T>::NETInterface(const This& source)
 		: Super(source)
 	{
 
@@ -21,12 +23,6 @@ namespace NE
 		: Super()
 	{
 
-	}
-
-	template <typename T>
-	NEObject& NETInterface<T>::clone() const
-	{
-		return *(new This(*this));
 	}
 
 	template <typename T>

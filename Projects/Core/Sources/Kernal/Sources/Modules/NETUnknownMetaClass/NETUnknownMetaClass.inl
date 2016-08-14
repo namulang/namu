@@ -16,10 +16,7 @@ namespace NE
 	template <typename T>
 	class NETUnknownMetaClass : public NETClassBase<T>
 	{
-		//	Declarations:
-	public:
-		typedef NETUnknownMetaClass<T> This;
-		typedef NETClassBase<T> Super;
+		NE_DECLARE_CLASS_ONLY(NETUnknownMetaClass<T>, NETClassBase<T>)
 
 		//	Constructors:
 	public:
@@ -34,8 +31,5 @@ namespace NE
 		//		NEClassBase:
 	public:
 		virtual NEObject& instantiate() const;
-		//				NEObject:
-	public:
-		virtual NEObject& clone() const;
 	};
 }

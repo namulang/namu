@@ -53,11 +53,6 @@ namespace NE
 
 	}
 
-	NEObject& NETArgument<NEKey>::clone() const
-	{
-		return *(new ThisClass(*this));
-	}
-
 	const NEKey& NETArgument<NEKey>::getDefaultKey() const
 	{
 		ThisClass* unconsted = const_cast<ThisClass*>(this);

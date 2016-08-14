@@ -16,14 +16,12 @@ namespace NE
 	template <typename T>
 	class NETInterface : public NETClassBase<T>
 	{
-		//	Declarations:
-	public:
-		typedef NETInterface<T> This;
-		typedef NETClassBase<T> Super;
+		NE_DECLARE_CLASS_ONLY(NETInterface<T>, NETClassBase<T>)
+
 		//	Constructors:
 	public:
 		NETInterface();
-		NETInterface(const NETInterface& source);
+		NETInterface(const This& source);
 
 		//	Destructors:
 	public:
@@ -33,8 +31,5 @@ namespace NE
 		//		NEClassBase:
 	public:
 		virtual NEObject& instantiate() const;
-		//				NEObject:
-	public:
-		virtual NEObject& clone() const;
 	};
 }

@@ -2,6 +2,8 @@
 #include "../NETClassBase/NETClassBase.hpp"
 namespace NE
 {
+	NE_DEFINE_CLASS_ONLY(NETConcreteClass<T>)
+
 	template <typename T>
 	NEObject& NETConcreteClass<T>::instantiate() const
 	{
@@ -16,11 +18,5 @@ namespace NE
 		}
 
 		return *(new T());
-	}
-
-	template <typename T>
-	NEObject& NETConcreteClass<T>::clone() const
-	{
-		return *(new This(*this));
 	}
 }

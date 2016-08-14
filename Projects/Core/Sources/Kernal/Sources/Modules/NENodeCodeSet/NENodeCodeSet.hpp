@@ -51,7 +51,6 @@ namespace NE
 
 	public:
 		virtual void release();
-		virtual NEObject& clone() const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
 		using Super::serialize;
 

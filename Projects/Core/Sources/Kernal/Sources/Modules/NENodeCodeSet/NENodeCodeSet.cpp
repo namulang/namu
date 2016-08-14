@@ -229,10 +229,6 @@ namespace NE
 
 		return NE_INDEX_ERROR;
 	}
-	NEObject& NENodeCodeSet::clone() const
-	{
-		return *(new ThisClass(*this));
-	}
 	NEIndexedNodeSet& NENodeCodeSet::_getNodeSet()
 	{
 		NEIndexedNodeSet* nullpointer = 0x00;

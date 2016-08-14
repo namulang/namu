@@ -9,12 +9,6 @@ namespace NE
 	}
 
 	template <typename T>
-	NEObject& NETArgument<T>::clone() const
-	{
-		return *(new ThisClass(*this));
-	}
-
-	template <typename T>
 	typename const T::Trait& NE::NETArgument<T>::getValue() const
 	{
 		const NEKey& binded = getBinded();
@@ -116,9 +110,7 @@ namespace NE
 	template <typename T>
 	class NE_DLL NETLimitedArgument : public NEArgumentBase
 	{
-	public:
-		typedef NETLimitedArgument ThisClass;
-		typedef NEArgumentBase SuperClass;
+		NE_DECLARE_CLASS(NETLimitedArgument<T>, NEArgumentBase)
 
 	public:
 		NETLimitedArgument()
@@ -165,10 +157,6 @@ namespace NE
 		virtual const NEKey& getDefaultKey() const
 		{
 			return _default_key;
-		}
-		virtual NEObject& clone() const
-		{
-			return *(new ThisClass(*this));
 		}
 		virtual void release()
 		{
@@ -234,9 +222,7 @@ namespace NE
 	template <typename T>
 	class NE_DLL NETSelectorArgument : public NEArgumentBase
 	{
-	public:
-		typedef NETSelectorArgument ThisClass;
-		typedef NEArgumentBase SuperClass;
+		NE_DECLARE_CLASS(NETSelectorArgument<T>, NEArgumentBase)
 
 	public:
 		NETSelectorArgument()
@@ -308,10 +294,6 @@ namespace NE
 		virtual const NEKey& getDefaultKey() const
 		{
 			return _default_key;
-		}
-		virtual NEObject& clone() const
-		{
-			return *(new ThisClass(*this));
 		}
 		virtual void release()
 		{
@@ -396,9 +378,9 @@ namespace NE
 	template <>
 	class NE_DLL NETArgument<NEKey> : public NEArgumentBase	
 	{	
-	public:	
-		typedef NETArgument ThisClass;	
-		typedef NEArgumentBase SuperClass;	
+		NE_DECLARE_CLASS(NETArgument<NEKey>, NEArgumentBase)
+
+	public:
 		typedef NEKey T;
 
 	public:
@@ -408,6 +390,5 @@ namespace NE
 	public:
 		virtual	NEKey& getDefaultKey();
 		virtual const NEKey& getDefaultKey() const;
-		virtual NEObject& clone() const;	
 	};
 }

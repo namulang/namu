@@ -3,6 +3,8 @@
 
 namespace NE
 {
+	NE_DEFINE_CLASS_ONLY(NETUnknownMetaClass<T>)
+
 	template <typename T>
 	NEObject& NETUnknownMetaClass<T>::instantiate() const
 	{
@@ -10,11 +12,5 @@ namespace NE
 		_alert(RESULT_TYPE_WARNING, _T("can't instantiate unknown class."));
 
 		return *nullptr;
-	}
-
-	template <typename T>
-	NEObject& NETUnknownMetaClass<T>::clone() const
-	{
-		return *(new This(*this));
 	}
 }

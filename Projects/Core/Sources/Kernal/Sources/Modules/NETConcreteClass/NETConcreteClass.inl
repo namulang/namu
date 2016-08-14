@@ -7,15 +7,12 @@ namespace NE
 	template <typename T>
 	class NETConcreteClass : public NETClassBase<T>
 	{
-		//	Declarations:
-	public:
-		typedef NETConcreteClass<T> This;
-		typedef NETClassBase<T> Super;
+		NE_DECLARE_CLASS_ONLY(NETConcreteClass<T>, NETClassBase<T>)
 
 		//	Constructors:
 	public:
 		NETConcreteClass();
-		NETConcreteClass(const NETConcreteClass& source);
+		NETConcreteClass(const This& source);
 
 		//	Destructors:
 	public:
@@ -26,9 +23,5 @@ namespace NE
 		//			NEClassBase:
 	public:
 		virtual NEObject& instantiate() const;
-		//			NEObject:
-	public:
-		virtual NEObject& clone() const;
-
 	};
 }

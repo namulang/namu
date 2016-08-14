@@ -20,9 +20,6 @@ namespace NE
 		const NERootNodeCodeSet& operator+=(const NERootNodeCodeSet& source);
 		NERootNodeCodeSet operator+(const NERootNodeCodeSet& source) const;
 
-	public:
-		virtual NEObject& clone() const;
-
 	protected:
 		virtual type_result _onEnlisted(NENode& node);
 	};
