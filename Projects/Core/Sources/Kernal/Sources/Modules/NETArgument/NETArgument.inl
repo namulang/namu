@@ -226,7 +226,7 @@ namespace NE
 
 	public:
 		NETSelectorArgument()
-			: SuperClass(T().getType())
+			: SuperClass(/*T().getType()*/)
 		{
 			_release();
 		}
