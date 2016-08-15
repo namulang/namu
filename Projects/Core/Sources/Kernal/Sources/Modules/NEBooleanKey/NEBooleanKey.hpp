@@ -18,8 +18,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETArithmeticKey<type_bool, NEType::NEBOOLEAN_KEY>;
-	typedef NETArithmeticKey<type_bool, NEType::NEBOOLEAN_KEY> NEBooleanKey;
+	class NE_DLL NETArithmeticKey<type_bool>;
+	typedef NETArithmeticKey<type_bool> NEBooleanKey;
 }
 
 #pragma warning(pop)

@@ -21,7 +21,7 @@
 namespace NE
 {
 	template <>
-	type_result NE_DLL NETStringKeyize<NEString, NEType::NESTRING_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETStringKeyize<NEString>::assign(const NEKey& source)
 	{
 		//	pre:
 		if( ! &source) return RESULT_TYPE_ERROR;
@@ -80,7 +80,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETStringKeyize<NEWString, NEType::NEWSTRING_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETStringKeyize<NEWString>::assign(const NEKey& source)
 	{
 		//	pre:
 		if( ! &source) return RESULT_TYPE_ERROR;
@@ -140,7 +140,7 @@ namespace NE
 	}
 
 	template <>
-	type_bool NETStringKeyize<NEString, NEType::NESTRING_KEY>::isLower(const NEKey& source) const
+	type_bool NETStringKeyize<NEString>::isLower(const NEKey& source) const
 	{
 		//	pre:
 		if( ! &source) return false;
@@ -195,7 +195,7 @@ namespace NE
 	}
 
 	template <>
-	type_bool NETStringKeyize<NEWString, NEType::NEWSTRING_KEY>::isLower(const NEKey& source) const
+	type_bool NETStringKeyize<NEWString>::isLower(const NEKey& source) const
 	{
 		//	pre:
 		if( ! &source) return false;

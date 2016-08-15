@@ -10,8 +10,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETArithmeticKey<NECode, NEType::NECODE_KEY>;
-	typedef NETArithmeticKey<NECode, NEType::NECODE_KEY> NECodeKey;
+	class NE_DLL NETArithmeticKey<NECode>;
+	typedef NETArithmeticKey<NECode> NECodeKey;
 }
 
 #pragma warning(pop)

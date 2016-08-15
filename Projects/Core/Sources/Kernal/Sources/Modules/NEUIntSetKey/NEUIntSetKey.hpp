@@ -19,8 +19,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETKey<NEUIntSet, NEType::NEUINT_SET_KEY>;
-	typedef NETKey<NEUIntSet, NEType::NEUINT_SET_KEY> NEUIntSetKey;
+	class NE_DLL NETKey<NEUIntSet>;
+	typedef NETKey<NEUIntSet> NEUIntSetKey;
 }
 
 #pragma warning(pop)

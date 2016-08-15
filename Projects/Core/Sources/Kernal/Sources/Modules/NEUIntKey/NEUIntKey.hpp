@@ -18,8 +18,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETArithmeticKey<type_uint, NEType::NEUINT_KEY>;
-	typedef NETArithmeticKey<type_uint, NEType::NEUINT_KEY> NEUIntKey;
+	class NE_DLL NETArithmeticKey<type_uint>;
+	typedef NETArithmeticKey<type_uint> NEUIntKey;
 }
 
 #pragma warning(pop)

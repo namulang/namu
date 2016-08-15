@@ -11,7 +11,7 @@ namespace NE
 	{
 		NE_DECLARE_CLASS(NEModuleBinder, NEBinderBase)
 
-		template <typename NodeSelector, NEType::Type type>
+		template <typename NodeSelector>
 		friend class NETModuleSelector;
 	public:
 		NEModuleBinder();

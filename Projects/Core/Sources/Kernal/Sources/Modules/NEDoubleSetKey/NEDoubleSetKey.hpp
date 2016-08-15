@@ -19,8 +19,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETKey<NEDoubleSet, NEType::NEDOUBLE_SET_KEY>;
-	typedef NETKey<NEDoubleSet, NEType::NEDOUBLE_SET_KEY> NEDoubleSetKey;
+	class NE_DLL NETKey<NEDoubleSet>;
+	typedef NETKey<NEDoubleSet> NEDoubleSetKey;
 }
 
 #pragma warning(pop)

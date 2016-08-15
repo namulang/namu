@@ -19,8 +19,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETKey<NEShortSet, NEType::NESHORT_SET_KEY>;
-	typedef NETKey<NEShortSet, NEType::NESHORT_SET_KEY> NEShortSetKey;
+	class NE_DLL NETKey<NEShortSet>;
+	typedef NETKey<NEShortSet> NEShortSetKey;
 }
 
 #pragma warning(pop)

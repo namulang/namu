@@ -19,8 +19,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETKey<NEInt64Set, NEType::NEINT64_SET_KEY>;
-	typedef NETKey<NEInt64Set, NEType::NEINT64_SET_KEY> NEInt64SetKey;
+	class NE_DLL NETKey<NEInt64Set>;
+	typedef NETKey<NEInt64Set> NEInt64SetKey;
 }
 
 #pragma warning(pop)

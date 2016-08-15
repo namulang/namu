@@ -18,8 +18,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETArithmeticKey<type_int64, NEType::NEINT64_KEY>;
-	typedef NETArithmeticKey<type_int64, NEType::NEINT64_KEY> NEInt64Key;
+	class NE_DLL NETArithmeticKey<type_int64>;
+	typedef NETArithmeticKey<type_int64> NEInt64Key;
 }
 
 #pragma warning(pop)

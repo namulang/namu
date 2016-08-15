@@ -19,8 +19,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETKey<NEBooleanSet, NEType::NEBOOLEAN_SET_KEY>;
-	typedef NETKey<NEBooleanSet, NEType::NEBOOLEAN_SET_KEY> NEBooleanSetKey;
+	class NE_DLL NETKey<NEBooleanSet>;
+	typedef NETKey<NEBooleanSet> NEBooleanSetKey;
 }
 
 #pragma warning(pop)

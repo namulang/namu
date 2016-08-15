@@ -21,7 +21,7 @@
 namespace NE
 {
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_bool, NEType::NEBOOLEAN_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_bool>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -80,7 +80,7 @@ namespace NE
 		return result;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_char, NEType::NECHAR_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_char>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -218,7 +218,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_byte, NEType::NEBYTE_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_byte>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -284,7 +284,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_ubyte, NEType::NEUBYTE_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_ubyte>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -351,7 +351,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_wchar, NEType::NEWCHAR_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_wchar>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -489,7 +489,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_short, NEType::NESHORT_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_short>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -551,7 +551,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_ushort, NEType::NEUSHORT_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_ushort>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -616,7 +616,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_int, NEType::NEINT_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_int>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -681,7 +681,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_uint, NEType::NEUINT_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_uint>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -746,7 +746,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_float, NEType::NEFLOAT_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_float>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -811,7 +811,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_double, NEType::NEDOUBLE_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_double>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -876,7 +876,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_int64, NEType::NEINT64_KEY>::assign(const NEKey& source)
+	type_result NE_DLL NETArithmeticKey<type_int64>::assign(const NEKey& source)
 	{
 		//	pre:
 		if (!&source) return RESULT_TYPE_ERROR;
@@ -943,7 +943,7 @@ namespace NE
 
 
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_bool, NEType::NEBOOLEAN_KEY>::increase()
+	type_result NE_DLL NETArithmeticKey<type_bool>::increase()
 	{
 		_value = !_value;
 
@@ -951,7 +951,7 @@ namespace NE
 	}
 
 	template <>
-	type_result NE_DLL NETArithmeticKey<type_bool, NEType::NEBOOLEAN_KEY>::decrease()
+	type_result NE_DLL NETArithmeticKey<type_bool>::decrease()
 	{
 		_value = !_value;
 
