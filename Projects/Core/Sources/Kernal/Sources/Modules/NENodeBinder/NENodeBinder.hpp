@@ -14,7 +14,7 @@ namespace NE
 
 	public:
 		NENodeBinder();
-		NENodeBinder(const NENode& node, NEType::Type manager_type);
+		NENodeBinder(const NENode& node/*, NEType::Type manager_type*/);
 
 	public:
 		virtual type_bool isBinded() const;
@@ -22,7 +22,7 @@ namespace NE
 	public:
 		NENode& getBinded();
 		const NENode& getBinded() const;
-		type_result bind(const NENode& node, NEType::Type manager_type);
+		type_result bind(const NENode& node/*, NEType::Type manager_type*/);
 
 	private:
 		NEIndexedNodeSet& _getNodeSet();

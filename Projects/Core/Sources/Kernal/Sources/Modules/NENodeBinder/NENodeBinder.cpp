@@ -51,17 +51,17 @@ namespace NE
 		return manager.getNodeSet();
 	}
 
-	type_result NENodeBinder::bind(const NENode& node, NEType::Type manager_type)
+	type_result NENodeBinder::bind(const NENode& node/*, NEType::Type manager_type*/)
 	{
-		using namespace NEType;
-		//	pre:
-		if( ! isValidHierachy(NEENLISTABLE_MANAGER, manager_type))
-		{
+		//using namespace NEType;
+		////	pre:
+		//if( ! isValidHierachy(NEENLISTABLE_MANAGER, manager_type))
+		//{
 
-			KERNAL_ERROR("주어진 Manager가 null 이거나 NEEnlistableManager가 아닙니다.");
-			goto ON_ERROR;
-		}
-		_manager_type = manager_type;
+		//	KERNAL_ERROR("주어진 Manager가 null 이거나 NEEnlistableManager가 아닙니다.");
+		//	goto ON_ERROR;
+		//}
+		//_manager_type = manager_type;
 
 		NEIndexedNodeSet& cont = _getNodeSet();
 		if( ! &cont)
@@ -98,10 +98,10 @@ ON_ERROR:
 	
 	}
 
-	NENodeBinder::NENodeBinder(const NENode& node, NEType::Type manager_type)
+	NENodeBinder::NENodeBinder(const NENode& node/*, NEType::Type manager_type*/)
 		: SuperClass()
 	{
-		bind(node, manager_type);
+		bind(node/*, manager_type*/);
 	}
 
 }

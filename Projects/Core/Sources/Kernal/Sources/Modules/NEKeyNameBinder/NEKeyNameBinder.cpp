@@ -16,7 +16,7 @@ namespace NE
 		//		속해있는 Node.KeySet에서 탐색:
 		for(int n=0; n < ks.getLength() ;n++)
 			if(ks[n].getName() == _keyname)
-				return Super::bind(ks[n], NEType::NENODE_MANAGER);
+				return Super::bind(ks[n]/*, NEType::NENODE_MANAGER*/);
 
 
 		//	post:
@@ -33,7 +33,7 @@ namespace NE
 			const NEKey& key = local_keys[n];
 			if (&key && key.getName().toLowerCase() == _keyname.toLowerCase())
 			{
-				type_result result = Super::bind(key, NEType::LOCALSTACK);
+				type_result result = Super::bind(key/*, NEType::LOCALSTACK*/);
 
 				if( ! NEResult::hasError(result))
 					_manager_type = NEType::LOCALSTACK;
@@ -42,7 +42,7 @@ namespace NE
 			}
 		}
 
-		_manager_type = NEType::NENODE_MANAGER;
+		/*_manager_type = NEType::NENODE_MANAGER;*/
 		return RESULT_TYPE_WARNING;
 	}
 

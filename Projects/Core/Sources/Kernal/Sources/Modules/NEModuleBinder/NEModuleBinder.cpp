@@ -53,17 +53,17 @@ namespace NE
 		return manager.getModuleSet();
 	}
 
-	type_result NEModuleBinder::bind(const NEModule& module, NEType::Type manager_type)
+	type_result NEModuleBinder::bind(const NEModule& module/*, NEType::Type manager_type*/)
 	{
-		using namespace NEType;
+		/*using namespace NEType;*/
 		//	pre:
-		if( ! isValidHierachy(NEENLISTABLE_MANAGER, manager_type))
+		/*if( ! isValidHierachy(NEENLISTABLE_MANAGER, manager_type))
 		{
 
 			KERNAL_ERROR("주어진 Manager가 null 이거나 NEEnlistableManager가 아닙니다.");
 			goto ON_ERROR;
 		}
-		_manager_type = manager_type;
+		_manager_type = manager_type;*/
 
 		NEIndexedModuleSet& cont = _getModuleSet();
 		if( ! &cont)
@@ -100,10 +100,10 @@ ON_ERROR:
 
 	}
 
-	NEModuleBinder::NEModuleBinder(const NEModule& module, NEType::Type manager_type)
+	NEModuleBinder::NEModuleBinder(const NEModule& module/*, NEType::Type manager_type*/)
 		: SuperClass()
 	{
-		bind(module, manager_type);
+		bind(module/*, manager_type*/);
 	}
 
 }

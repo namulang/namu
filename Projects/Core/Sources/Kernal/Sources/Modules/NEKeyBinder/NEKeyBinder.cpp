@@ -34,8 +34,8 @@ namespace NE
 
 	NEIndexedKeySet& NEKeyBinder::_getKeySet()
 	{
-		if(NEType::isValidHierachy(NEType::LOCALSTACK, _manager_type))
-			return Kernal::getInstance().getNodeManager().getLocalStack()._getLocalKeySet();
+		/*if(NEType::isValidHierachy(NEType::LOCALSTACK, _manager_type))
+			return Kernal::getInstance().getNodeManager().getLocalStack()._getLocalKeySet();*/
 		NEIndexedKeySet* nullpointer = NE_NULL;
 		NEEnlistableManager& manager = getManager();
 
@@ -47,8 +47,8 @@ namespace NE
 
 	const NEIndexedKeySet& NEKeyBinder::_getKeySet() const
 	{
-		if(NEType::isValidHierachy(NEType::LOCALSTACK, _manager_type))
-			return Kernal::getInstance().getNodeManager().getLocalStack().getLocalKeySet();
+		/*if(NEType::isValidHierachy(NEType::LOCALSTACK, _manager_type))
+			return Kernal::getInstance().getNodeManager().getLocalStack().getLocalKeySet();*/
 		const NEIndexedKeySet* nullpointer = NE_NULL;		
 		const NEEnlistableManager& manager = getManager();
 
@@ -64,7 +64,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 
-	type_result NEKeyBinder::bind(const NEKey& key, NEType::Type manager_type)
+	type_result NEKeyBinder::bind(const NEKey& key/*, NEType::Type manager_type*/)
 	{
 		using namespace NEType;
 		//	pre:

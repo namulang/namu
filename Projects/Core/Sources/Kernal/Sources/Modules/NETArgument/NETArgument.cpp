@@ -48,7 +48,7 @@ namespace NE
 	}
 
 	NETArgument<NEKey>::NETArgument()
-		: SuperClass(NEType::NEKEY)
+		: SuperClass(/*NEType::NEKEY*/)
 	{
 
 	}

@@ -15,7 +15,7 @@ namespace NE
 		friend class NETModuleSelector;
 	public:
 		NEModuleBinder();
-		NEModuleBinder(const NEModule& module, NEType::Type manager_type);
+		NEModuleBinder(const NEModule& module/*, NEType::Type manager_type*/);
 
 	public:
 		virtual type_bool isBinded() const;
@@ -23,7 +23,7 @@ namespace NE
 	public:
 		NEModule& getBinded();
 		const NEModule& getBinded() const;
-		type_result bind(const NEModule& module, NEType::Type manager_type);
+		type_result bind(const NEModule& module/*, NEType::Type manager_type*/);
 
 	private:
 		NEIndexedModuleSet& _getModuleSet();
