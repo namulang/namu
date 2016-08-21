@@ -8,6 +8,8 @@
 //	---------------------------------------------------------------------------------
 #pragma once
 
+#include "../../Includes/Includes.hpp"
+
 //	template class forward declaration:
 //		This macro can be included far earlier than derived class of NETClassBase below.
 //		See include section of the NETClassBase.hpp file.
@@ -73,7 +75,7 @@ namespace NE
 		virtual const NEClassBase& getClass() const;	\
 														\
 	public:												\
-		static const NEClassBase& getClassStatically()	\
+		static const NEClassBase& getClassStatically();	\
 	private:
 
 #define NE_NATIVE_DEFINE_ONLY(NAME)						\

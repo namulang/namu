@@ -7,8 +7,6 @@ namespace NE
 	template <typename T>
 	class NETMetaClassChecker : public NETypeChecker
 	{
-		NE_DECLARE_INTERFACE(NETMetaClassChecker<T>, NETypeChecker)
-
 	private:
 		template <typename T>
 		static yes _isMetaClassDefined(typename T::MetaClass*);

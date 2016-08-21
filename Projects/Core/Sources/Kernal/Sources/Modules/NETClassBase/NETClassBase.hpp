@@ -1,5 +1,6 @@
 #include "NETClassBase.inl"
 #include "NETClass.hpp"
+#include "../NEPackage/NEPackage.hpp"
 #include "../NETDerivedClassChecker/NETDerivedClassChecker.hpp"
 #include "../NETTemplateChecker/NETTemplateChecker.hpp"
 //	We must include ADTChecker after loaded TClass declarations and its 

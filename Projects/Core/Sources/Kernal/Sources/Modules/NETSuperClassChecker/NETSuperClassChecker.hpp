@@ -7,8 +7,6 @@ namespace NE
 	template <typename T>
 	class NETSuperClassChecker : public NETypeChecker
 	{
-		NE_DECLARE_INTERFACE(NETSuperClassChecker<T>, NETypeChecker)
-
 	private:
 		static yes _isSuperClassChecker(typename T::Super*);
 		static no _isSuperClassChecker(...);

@@ -2,7 +2,7 @@
 #pragma once
 
 #include "../NETClass/NETClass.hpp"
-#include "../NEHeader/NEHeader"
+#include "../NEHeader/NEHeader.hpp"
 #include "../NEClassBaseList/NEClassBaseList.hpp"
 
 namespace NE

@@ -30,7 +30,6 @@ namespace NE
 		NE_DECLARE_CLASS_ONLY(NETClassBase, NEClassBase)
 
 	public:
-		virtual const NEClassBase& getClass() const;
 		virtual const type_bool& isRegistered() const;
 		virtual const NETString& getName() const;
 		virtual const NEClassBaseList& getSuperClasses() const;
@@ -50,7 +49,6 @@ namespace NE
 		static const NEClassBaseList& getSuperClassesStatically();
 		static const NEClassBaseList& getChildrenClassesStatically();
 		static const NEHeader& getHeaderStatically();
-		static const NEClassBase& getClassStatically();
 		static const NETString& getNameStatically();
 		static const type_id& getIdStatically();
 		static type_bool isMetaClassDefinedStatically();

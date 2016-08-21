@@ -6,6 +6,8 @@
 
 namespace NE
 {
+	NE_DEFINE_INTERFACE_ONLY(NEClassBase)
+
 	typedef NEClassBase This;
 
 	NE_DLL NEClassBase::NEClassBase()

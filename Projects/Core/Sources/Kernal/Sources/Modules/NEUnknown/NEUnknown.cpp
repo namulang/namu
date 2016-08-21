@@ -1,4 +1,5 @@
 #include "NEUnknown.hpp"
+#include "../NETClass/NETClass.hpp"
 
 namespace NE
 {

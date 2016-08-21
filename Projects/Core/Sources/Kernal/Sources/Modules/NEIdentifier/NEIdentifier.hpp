@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../NEObject/NEObject.hpp"
+#include "../NEWString/NEWString.hpp"
+#include "../NEString/NEString.hpp"
 
 namespace NE
 {

@@ -31,20 +31,21 @@
 //			this header files kept 1 to 4 contents among above ones.
 
 #include "../NETList/NETList.inl"	// include inl, not hpp
-#include "../NEHeader/NEHeader.hpp"
-#include "../NEPackage/NEPackage.hpp"
 
 namespace NE
 {
+	class NE_DLL NEHeader;
 	class NE_DLL NEClassBase;
 	class NE_DLL NEMethodList;
+	class NE_DLL NEPackage;
 	template <typename T, type_bool useHeap>
 	class NETList;
+
 	typedef NETList<NEClassBase*, true> NEClassBaseList;
 
 	class NE_DLL NEClassBase : public NEIdableObject
 	{
-		NE_DECLARE_INTERFACE(NEClassBase, NEIdableObject)
+		NE_DECLARE_INTERFACE_ONLY(NEClassBase, NEIdableObject)
 
 		//    Declarations:
 	public:

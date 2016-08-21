@@ -9,10 +9,7 @@ namespace NE
 	{
 		//	declared as Interface 'cause it can be instantiated. 
 		//	not kind of NEObject.
-		NE_DECLARE_INTERFACE(NETypeChecker, NEAdam)
-
-	public:
-		static NEClassBase& getClassStatically();		
+		NE_DECLARE_INTERFACE_ONLY(NETypeChecker, NEAdam)
 
 	public:
 		typedef type_char no;

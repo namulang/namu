@@ -13,9 +13,6 @@ namespace NE
 	template <typename T, type_bool IS_METACLASS_DEFINED = NETMetaClassChecker<T>::IS_METACLASS_DEFINED>
 	class NETADTChecker : public NETypeChecker
 	{
-		typedef NETADTChecker<T, IS_METACLASS_DEFINED> _This;
-		NE_DECLARE_INTERFACE(_This, NETypeChecker)
-
 	public:
 		static const type_bool IS_ADT = false;
 	};
@@ -23,9 +20,6 @@ namespace NE
 	template <typename T>
 	class NETADTChecker<T, true> : public NETypeChecker
 	{
-		typedef NETADTChecker<T, true> _This;
-		NE_DECLARE_INTERFACE(_This, NETypeChecker)
-
 	private:
 		static yes _isADT(NETInterface<T>*);
 		static no _isADT(...);
