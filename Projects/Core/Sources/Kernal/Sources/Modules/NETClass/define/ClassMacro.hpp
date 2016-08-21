@@ -45,6 +45,7 @@ namespace NE
 		typedef NAME			This;						\
 		typedef SUPER			Super;						\
 		typedef METACLASS<NAME>	MetaClass;					\
+		typedef NETClass<This>	ThisClass;					\
 															\
 	public:													\
 		virtual const NEClassBase& getClass() const			\
@@ -66,6 +67,7 @@ namespace NE
 		typedef NAME			This;					\
 		typedef SUPER			Super;					\
 		typedef METACLASS<NAME>	MetaClass;				\
+		typedef NETClass<This>	ThisClass;				\
 														\
 	public:												\
 		virtual const NEClassBase& getClass() const;	\
