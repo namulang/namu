@@ -2148,7 +2148,7 @@
 								>
 								<Tool
 									Name="VCCLCompilerTool"
-									GeneratePreprocessedFile="0"
+									GeneratePreprocessedFile="1"
 								/>
 							</FileConfiguration>
 						</File>

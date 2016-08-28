@@ -343,6 +343,14 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="SinglizerMacro"
+					>
+					<File
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\Singlizer\Singlizer.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="Includes"
