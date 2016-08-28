@@ -9,7 +9,9 @@
 //	---------------------------------------------------------------------------------
 #pragma once
 
+#pragma message("NETInterface.inl - 1")
 #include "../NETClassBase/NETClassBase.inl"
+#pragma message("NETInterface.inl - 2")
 
 namespace NE
 {

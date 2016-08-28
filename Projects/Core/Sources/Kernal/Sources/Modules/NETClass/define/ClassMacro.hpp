@@ -6,6 +6,10 @@
 //	Memo			:	
 //	Author			:	2016-02-13	kniz
 //	---------------------------------------------------------------------------------
+#ifdef NE_NATIVE_DEFINE_TEMPLATE_PARAMETERS
+#	undef NE_NATIVE_DEFINE_TEMPLATE_PARAMETERS
+#endif
+
 #pragma once
 
 #include "../../Includes/Includes.hpp"
@@ -25,9 +29,6 @@ namespace NE
 
 	template <typename T>
 	class NETUnknownMetaClass;
-
-	template <typename T>
-	class NETClass;
 }
 
 //	Class Macros:
@@ -47,7 +48,6 @@ namespace NE
 		typedef NAME			This;						\
 		typedef SUPER			Super;						\
 		typedef METACLASS<NAME>	MetaClass;					\
-		typedef NETClass<This>	ThisClass;					\
 															\
 	public:													\
 		virtual const NEClassBase& getClass() const			\
@@ -69,7 +69,6 @@ namespace NE
 		typedef NAME			This;					\
 		typedef SUPER			Super;					\
 		typedef METACLASS<NAME>	MetaClass;				\
-		typedef NETClass<This>	ThisClass;				\
 														\
 	public:												\
 		virtual const NEClassBase& getClass() const;	\
@@ -78,12 +77,18 @@ namespace NE
 		static const NEClassBase& getClassStatically();	\
 	private:
 
-#define NE_NATIVE_DEFINE_ONLY(NAME)						\
+
+#define NE_NATIVE_DEFINE_ONLY_1(NAME)					\
+	NE_NATIVE_DEFINE_ONLY_2(NAME, NE_VOID)
+
+#define NE_NATIVE_DEFINE_ONLY_2(NAME, TYPE_PARAMETERS)	\
+	TYPE_PARAMETERS										\
 	const NEClassBase& NAME::getClass() const			\
 	{													\
 		return getClassStatically();					\
 	}													\
 														\
+	TYPE_PARAMETERS										\
 	const NEClassBase& NAME::getClassStatically()		\
 	{													\
 		static NETClass<This> inner;					\
@@ -91,11 +96,20 @@ namespace NE
 		return inner;									\
 	}
 
+#define NE_NATIVE_DEFINE_ONLY(...)	\
+	NE_MACRO_OVERLOADER(NE_NATIVE_DEFINE_ONLY, __VA_ARGS__)
+
+
+
 #define NE_DECLARE_INTERFACE(NAME, SUPER)						\
 	NE_NATIVE_DECLARE_INLINEY(NAME, SUPER, NETInterface)
 
+
+
 #define NE_DECLARE_INTERFACE_ONLY(NAME, SUPER)					\
 	NE_NATIVE_DECLARE_ONLY(NAME, SUPER, NETInterface)
+
+
 
 #define NE_DECLARE_CLASS(NAME, SUPER)							\
 	NE_NATIVE_DECLARE_INLINEY(NAME, SUPER, NETConcreteClass)	\
@@ -114,13 +128,28 @@ namespace NE
 		virtual NEObject& clone() const;						\
 	private:
 
-#define NE_DEFINE_INTERFACE_ONLY(NAME)	\
-	NE_NATIVE_DEFINE_ONLY(NAME)
 
-#define NE_DEFINE_CLASS_ONLY(NAME)		\
-	NE_NATIVE_DEFINE_ONLY(NAME)			\
-										\
-	NEObject& NAME::clone() const		\
-	{									\
-		return *(new This(*this));		\
+
+#define NE_DEFINE_INTERFACE_ONLY_1(NAME)					\
+	NE_DEFINE_INTERFACE_ONLY_2(NAME, NE_VOID)
+
+#define NE_DEFINE_INTERFACE_ONLY_2(NAME, TYPE_PARAMETERS)	\
+	NE_NATIVE_DEFINE_ONLY(NAME, TYPE_PARAMETERS)
+
+#define NE_DEFINE_INTERFACE_ONLY(...)						\
+	NE_MACRO_OVERLOADER(NE_DEFINE_INTERFACE_ONLY, __VA_ARGS__)
+
+
+
+#define NE_DEFINE_CLASS_ONLY_2(NAME, TYPE_PARAMETERS)		\
+	NE_NATIVE_DEFINE_ONLY(NAME, TYPE_PARAMETERS)			\
+															\
+	TYPE_PARAMETERS											\
+	NEObject& NAME::clone() const							\
+	{														\
+		return *(new This(*this));							\
 	}
+#define NE_DEFINE_CLASS_ONLY_1(NAME)						\
+	NE_DEFINE_CLASS_ONLY_2(NAME, NE_VOID)
+#define NE_DEFINE_CLASS_ONLY(...)							\
+	NE_MACRO_OVERLOADER(NE_DEFINE_CLASS_ONLY, __VA_ARGS__)

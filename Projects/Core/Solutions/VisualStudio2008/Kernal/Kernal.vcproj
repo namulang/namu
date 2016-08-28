@@ -1259,6 +1259,10 @@
 												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.hpp"
 												>
 											</File>
+											<File
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClass\NETClass.inl"
+												>
+											</File>
 											<Filter
 												Name="define"
 												>
@@ -1281,6 +1285,18 @@
 											>
 										</File>
 									</Filter>
+								</Filter>
+								<Filter
+									Name="NETClassMetaClass"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassMetaClass\NETClassMetaClass.cpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETClassMetaClass\NETClassMetaClass.hpp"
+										>
+									</File>
 								</Filter>
 							</Filter>
 							<Filter
@@ -2127,6 +2143,14 @@
 						<File
 							RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUnknown\NEUnknown.cpp"
 							>
+							<FileConfiguration
+								Name="Developer.Debug|Win32"
+								>
+								<Tool
+									Name="VCCLCompilerTool"
+									GeneratePreprocessedFile="0"
+								/>
+							</FileConfiguration>
 						</File>
 						<File
 							RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEUnknown\NEUnknown.hpp"

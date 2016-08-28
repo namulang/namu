@@ -1,6 +1,10 @@
 #pragma once
 
+#pragma message("NEAdam.hpp - 1")
 #include "../NETClass/define/ClassMacro.hpp"
+#pragma message("NEAdam.hpp - 2")
+#include "../../Includes/Includes.hpp"
+#pragma message("NEAdam.hpp - 3")
 
 namespace NE
 {
@@ -52,6 +56,10 @@ namespace NE
 	//                    typedef NEModule Super; // cond#1
 	//                    typedef NETInterface<YourADTClass> MetaClass; // cond#2. if yours are a concrete class, please use NETConcreteClass instead of.
 	//                }
-	//            if your class doesn't satisfy with all 3 conditions, your one will be classfied to NEUnkown.
-	class NE_DLL NEAdam {	NE_DECLARE_INTERFACE_ONLY(NEAdam, NEAdam)	};
+	//            if your class doesn't satisfy with all 3 conditions, your one will be classfied to NEUnkown.	
+	class NE_DLL NEAdam
+	{	
+		NE_DECLARE_INTERFACE_ONLY(NEAdam, NEAdam)
+	};
 }
+#pragma message("NEAdam.hpp - 4")

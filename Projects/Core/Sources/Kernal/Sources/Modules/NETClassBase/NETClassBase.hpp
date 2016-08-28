@@ -104,13 +104,13 @@ namespace NE
 		//		because NETClass is a kind of metaclass, giving metaclass of
 		//		metaclass is the problem mentioned above)
 		//		The reason which this going to be a problem is templating reculsively.
-		//		Just imagine NETClass<T> that is returning NETClass<NETClass<T> for
+		//		Just imagine NETClass<T> that is returning NETClassMetaClass as
 		//		its metaclass.
 		//		so, this get crack the codes. to prevent this, we replace metaclass
 		//		to NETMetaClass. Dummy.
-		//		All NETClass<T> will return NETClass<NETMetaClass>() for getClass()
+		//		All NETClass<T> will return NETClassMetaClass at getClass()
 		//		method.
-		static NETClass<NETMetaClass> inner;
+		static NETClassMetaClass inner;
 
 		return inner;
 	}
@@ -199,11 +199,11 @@ namespace NE
 	}
 
 	template <typename T>
-	const NEPackage& NETClassBase<T>::getPackage() const
+	const NEPackagePtr& NETClassBase<T>::_getPackage() const
 	{
-		static NEPackage instance;
+		static const NEPackage* _inner = NE_NULL;
 
-		return instance;
+		return _inner;
 	}
 
 	template <typename T>

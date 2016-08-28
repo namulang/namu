@@ -157,17 +157,17 @@ namespace NE
 		return const_cast<type_id&>(getId());
 	}
 
-	type_result NEClassBase::setPackage(const NEPackage& new_package)
+	type_result NEClassBase::_setPackage(const NEPackage& new_package)
 	{
-		NEPackage& package = const_cast<NEPackage&>(getPackage());
+		const NEPackagePtr& pointer = _getPackage();
 
-		//	Don't add exception handlings which was not essential:
-		//		even if new_package was just same as package,
-		//		assigning job doens't get messed up because of exception handling
-		//		inside of it. see refer NEPackage::operator=.
-		//		these concepts¤Ñhiding its exceptions inside of who charges in¤Ñ
-		//		is a kind of design philosophy of World.
-		package = new_package;
+		pointer = &new_package;
 
-		return RESULT_SUCCESS;
+		return 0;
 	}
+
+	const NEPackage& NEClassBase::getPackage() const
+	{
+		return *_getPackage();
+	}
+}

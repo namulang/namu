@@ -1,4 +1,5 @@
 #include "NETypeChecker.hpp"
+#include "../NEAdam/NEAdam.hpp"
 #include "../NETClass/NETClass.hpp"
 
 namespace NE

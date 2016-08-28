@@ -2,18 +2,11 @@
 
 #include "../NETCollector/NETCollector.hpp"
 #include "NETReservedCollector.inl"
-#include "NETPointerReservedCollector.inl"
 #include "NETPointerReservedCollector.hpp"
 
 namespace NE
 {
-	template <typename OutsideType>
-	const NEClassBase& NETReservedCollector<OutsideType>::getClassStatically()
-	{
-		static NETClass<This> inner;
-
-		return inner;
-	}
+	NE_DEFINE_INTERFACE_ONLY(NETReservedCollector<OutsideType>, template <typename OutsideType>)
 
 	template<typename OutsideType>
 	NETReservedCollector<OutsideType>::NETReservedCollector()

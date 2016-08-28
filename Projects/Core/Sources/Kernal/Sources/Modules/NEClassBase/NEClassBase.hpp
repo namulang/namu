@@ -11,8 +11,11 @@
 #pragma once
 
 //    include:
+#pragma message("NEClassBase.hpp - 1")
 #include "../NEIdableObject/NEIdableObject.hpp"
+#pragma message("NEClassBase.hpp - 2")
 #include "../NETString/NETString.hpp"	//	forward declaration
+#pragma message("NEClassBase.hpp - 3")
 //		include NETList as declaration, not definition:
 //			if we include it as definition, we'll be falled into the deep of templating reculsion.
 //			it'll cause to NEClassBaseList that is also a kind of NEObject. of course it has TClass<T>
@@ -31,17 +34,15 @@
 //			this header files kept 1 to 4 contents among above ones.
 
 #include "../NETList/NETList.inl"	// include inl, not hpp
-
+#pragma message("NEClassBase.hpp - 4")
 namespace NE
 {
 	class NE_DLL NEHeader;
-	class NE_DLL NEClassBase;
 	class NE_DLL NEMethodList;
 	class NE_DLL NEPackage;
-	template <typename T, type_bool useHeap>
-	class NETList;
 
 	typedef NETList<NEClassBase*, true> NEClassBaseList;
+	typedef NEPackage* NEPackagePtr;
 
 	class NE_DLL NEClassBase : public NEIdableObject
 	{
@@ -74,7 +75,6 @@ namespace NE
 		virtual const NETString& getName() const = 0;
 		virtual NEObject& instantiate() const = 0;
 		virtual const NEHeader& getHeader() const = 0;
-		virtual const NEPackage& getPackage() const = 0;
 
 		//            Inherits:
 		//                NEObject:
@@ -83,13 +83,6 @@ namespace NE
 		virtual void release();
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
-
-	protected:
-		//	these method were used only for ClassManager/PackageManager friend class.
-		//	by setting id >= 0, Class can be classified to be registered.
-		//	In fact, this Id was meant to index of buffer belonged to ClassManager.
-		virtual type_result _onInitializeHeader(NEHeader& to_intiailize);
-		virtual type_result _onInitializeMethods(NEMethodList& to_initialize);
 
 		//        General interfaces:
 	public:
@@ -100,7 +93,7 @@ namespace NE
 		type_bool isSubClassOf(const This& parent) const;
 		type_bool isSubClassOf(const NEObject& parent) const;
 		const This& getSuperClass() const;
-		type_result setPackage(const NEPackage& new_package);
+		const NEPackage& getPackage() const;
 
 	protected:
 		type_result _alert(type_result result, const type_tchar* message) const;
@@ -110,5 +103,16 @@ namespace NE
 		type_result _enrollSuperClasses(const NEClassBase& super);
 		type_result _enrollChildClass(const NEClassBase& child);
 		type_id& _getId();
+
+	private:
+		//	these method were used only for ClassManager/PackageManager friend class.
+		//	by setting id >= 0, Class can be classified to be registered.
+		//	In fact, this Id was meant to index of buffer belonged to ClassManager.
+		virtual type_result _onInitializeHeader(NEHeader& to_intiailize);
+		virtual type_result _onInitializeMethods(NEMethodList& to_initialize);
+		virtual const NEPackagePtr& _getPackage() const = 0;
+		type_result _setPackage(NEPackage& new_package);
 	};
 }
+
+#pragma message("NEClassBase.hpp - 5")

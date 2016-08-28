@@ -33,7 +33,7 @@ namespace NE
 	{	
 		typedef NETArray<InsideType, false, InsideType> _This;
 
-		NE_DECLARE_CLASS(_This, NETReservedCollector<InsideType>)
+		NE_DECLARE_CLASS_ONLY(_This, NETReservedCollector<InsideType>)
 			//	»ý¼ºÀÚ:
 	public:
 		NETArray();

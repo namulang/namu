@@ -1,13 +1,9 @@
+#pragma once
+
 namespace NE
 {
-	template <typename OutsideType>
-	const NEClassBase& NETReservedCollector<OutsideType*>::getClassStatically()
-	{
-		static NETClass<This> inner;
-
-		return inner;
-	}
-
+	NE_DEFINE_INTERFACE_ONLY(NETReservedCollector<OutsideType*>, template <typename OutsideType>)
+	
 	template<typename OutsideType>
 	NETReservedCollector<OutsideType*>::NETReservedCollector()
 		: NETCollector() // 클래스의 경우에는 int에 경우의 생성자를 생성해야 할지도 모른다S

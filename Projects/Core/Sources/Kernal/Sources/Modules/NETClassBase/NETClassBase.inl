@@ -1,26 +1,19 @@
 #pragma once
 
+#pragma message("NETClassBase.inl - 1")
 #include "../NETSuperClassDeterminder/NETSuperClassDeterminder.hpp"
+#pragma message("NETClassBase.inl - 2")
 #include "../NETMetaClassDeterminder/NETMetaClassDeterminder.hpp"
+#pragma message("NETClassBase.inl - 3")
 #include "../NETTraitDeterminder/NETTraitDeterminder.hpp"
+#pragma message("NETClassBase.inl - 4")
 #include "../NEClassBase/NEClassBase.hpp"
+#pragma message("NETClassBase.inl - 5")
+#include "../NETClassMetaClass/NETClassMetaClass.hpp"
+#pragma message("NETClassBase.inl - 6")
 
 namespace NE
 {
-	//	What is this:
-	//		When NETClass is templated with some parameter type T,
-	//		it's a problem to provide metaclass of NETClass. (of course, 
-	//		because NETClass is a kind of metaclass, giving metaclass of
-	//		metaclass is the problem mentioned above)
-	//		The reason which this going to be a problem is templating reculsively.
-	//		Just imagine NETClass<T> that is returning NETClass<NETClass<T> for
-	//		its metaclass.
-	//		so, this get crack the codes. to prevent this, we replace metaclass
-	//		to NETMetaClass. Dummy.
-	//		All NETClass<T> will return NETClass<NETMetaClass>() for getClass()
-	//		method.
-	class NE_DLL NETMetaClass {};
-
 	///	@class	NETClassBase
 	///	@brief	Implemented common method and data among specialized from NETClassBase
 	///			class.
@@ -42,7 +35,6 @@ namespace NE
 		///	@brief	returns this ClassIdentifer.
 		///			As you can inspect codes, this returns the static variable.
 		virtual const NEHeader& getHeader() const;
-		virtual const NEPackage& getPackage() const;
 
 	public:
 		static const type_bool& isRegisteredStatically();
@@ -56,5 +48,8 @@ namespace NE
 		static type_bool isTemplateStatically();
 		static type_bool isBuiltInClassStatically();
 		static const NEClassBase& getTraitClassStatically();
+
+	private:
+		virtual const NEPackage* _getPackage() const;
 	};
 }
