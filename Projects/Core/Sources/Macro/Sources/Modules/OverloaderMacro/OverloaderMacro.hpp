@@ -12,4 +12,4 @@
 //		branch to macro that would be expanded by its argument count:
 #define _OVERLOADER(macro_name, argcount)	NE_MACRO_CONCATERATOR(macro_name, argcount)
 #define NE_MACRO_OVERLOADER(macro_name, ...)	\
-	_OVERLOADER(macro_name, NE_MACRO_ARGCOUNT(__VA_ARGS__))(__VA_ARGS__)
+	_OVERLOADER(macro_name, NE_MACRO_CONCATERATOR(_, NE_MACRO_ARGCOUNT(__VA_ARGS__)))(__VA_ARGS__)
