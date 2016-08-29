@@ -344,10 +344,10 @@
 					</File>
 				</Filter>
 				<Filter
-					Name="SinglizerMacro"
+					Name="Funnel"
 					>
 					<File
-						RelativePath="..\..\..\Sources\Macro\Sources\Modules\Singlizer\Singlizer.hpp"
+						RelativePath="..\..\..\Sources\Macro\Sources\Modules\Funnel\Funnel.hpp"
 						>
 					</File>
 				</Filter>
