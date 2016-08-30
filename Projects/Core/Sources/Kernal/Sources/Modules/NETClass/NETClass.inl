@@ -16,15 +16,18 @@ namespace NE
 	template <typename T, typename MetaClass = NETMetaClassDeterminder<T>::MetaClass>
 	class NETClass : public MetaClass
 	{
+		//	NETClass doesn't need to declare MetaClass Macro (like NE_DEFINE_CLASS_ONLY...):
+		//		its class definitions are inherited from NETClassBase.
 	public:
 		friend class NEClassManager;
 
 	public:
 		typedef typename NETClassBase<T>::MetaClass MetaClass;
 		typedef typename NETClassBase<T>::Trait Trait;
+
 		using NETClassBase<T>::isRegisteredStatically;	
 		using NETClassBase<T>::getSuperClassesStatically;
-		using NETClassBase<T>::getIdentifierStatically;
+		using NETClassBase<T>::getHeaderStatically;
 		using NETClassBase<T>::getClassStatically;
 		using NETClassBase<T>::getNameStatically;
 		using NETClassBase<T>::getIdStatically;

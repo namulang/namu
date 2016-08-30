@@ -30,7 +30,7 @@ namespace NE
 		virtual type_bool isInstantiable() const;
 		virtual type_bool isTemplate() const;
 		virtual type_bool isMetaClassDefined() const;
-		virtual type_bool isRegistered() const;
+		virtual const type_bool& isRegistered() const;
 		virtual const NEClassBase& getTraitClass() const;
 		virtual const NEClassBaseList& getSuperClasses() const;
 		virtual const NEClassBaseList& getChildrenClasses() const;

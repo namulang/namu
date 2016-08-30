@@ -15,24 +15,18 @@
 
 namespace NE
 {
-	template <typename T>
-	const NEClassBase& NETClassBase<T>::getClass() const
-	{
-		return getClassStatically();
-	}
-
-	template <typename T>
-	const NEClassBase& NETClassBase<T>::getClassStatically()
-	{
-		static NETClass<This> inner;
-
-		return inner;
-	}
+	NE_DEFINE_CLASS_ONLY(NETClassBase<T>, template <typename T>)
 
 	template <typename T>
 	const NETString& NETClassBase<T>::getName() const
 	{
 		return getNameStatically();
+	}
+
+	template <typename T>
+	const type_bool& NETClassBase<T>::isRegistered() const
+	{
+		return isRegisteredStatically();
 	}
 
 	template <typename T>
@@ -204,11 +198,5 @@ namespace NE
 		static const NEPackage* _inner = NE_NULL;
 
 		return _inner;
-	}
-
-	template <typename T>
-	NEObject& NETClassBase<T>::clone() const
-	{
-		return *(new This(*this));
 	}
 }

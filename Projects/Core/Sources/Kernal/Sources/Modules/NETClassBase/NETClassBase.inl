@@ -23,6 +23,9 @@ namespace NE
 		NE_DECLARE_CLASS_ONLY(NETClassBase, NEClassBase)
 
 	public:
+		typedef typename NETTraitDeterminder<T>::Trait Trait;
+
+	public:
 		virtual const type_bool& isRegistered() const;
 		virtual const NETString& getName() const;
 		virtual const NEClassBaseList& getSuperClasses() const;
@@ -50,6 +53,6 @@ namespace NE
 		static const NEClassBase& getTraitClassStatically();
 
 	private:
-		virtual const NEPackage* _getPackage() const;
+		virtual const NEPackagePtr& _getPackage() const;
 	};
 }

@@ -15,6 +15,10 @@ namespace NE
 
 		return _inner;
 	}
+	NEObject& NETClassMetaClass:clone() const
+	{
+		return *(new This(this));
+	}
 
 	const NEPackagePtr& NETClassMetaClass::_getPackage() const
 	{
@@ -28,10 +32,6 @@ namespace NE
 		static type_bool _inner;
 
 		return _inner;
-	}
-	NEObject& NETClassMetaClass:clone() const
-	{
-		return *(new This(this));
 	}
 
 	type_bool NETClassMetaClass::isMetaClassDefinedStatically() { return false; }
@@ -84,7 +84,7 @@ namespace NE
 	type_bool NETClassMetaClass::isInstantiable() const	{ return isInstantiableStatically(); }
 	type_bool NETClassMetaClass::isTemplate() const { return isTemplateStatically(); }
 	type_bool NETClassMetaClass::isMetaClassDefined() const { return isMetaClassDefinedStatically(); }
-	type_bool NETClassMetaClass::isRegistered() const { return isRegisteredStatically(); }
+	const type_bool& NETClassMetaClass::isRegistered() const { return isRegisteredStatically(); }
 	const NEClassBase& NETClassMetaClass::getTraitClass() const { return *this; }
 	const NEClassBaseList& NETClassMetaClass::getSuperClasses() const { return getSuperClassesStatically(); }
 	const NEClassBaseList& NETClassMetaClass::getChildrenClasses() const { return getChildrenClassesStatically(); }
