@@ -9,6 +9,6 @@ namespace NE
 		NE_DECLARE_INTERFACE_ONLY(NEIdableObject, NEObject)
 
 	public:
-		virtual type_id getId() const = 0;
+		virtual const type_id& getId() const = 0;
 	};
 }

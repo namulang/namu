@@ -18,7 +18,8 @@ namespace NE
 	template <typename T>
 	class NETInterface : public NETClassBase<T>
 	{
-		NE_DECLARE_CLASS_ONLY(NETInterface<T>, NETClassBase<T>)
+		//	NETClass doesn't need to declare MetaClass Macro (like NE_DEFINE_CLASS_ONLY...):
+		//		its class definitions are inherited from NETClassBase.
 
 		//	Constructors:
 	public:

@@ -89,6 +89,7 @@ namespace NE
 	const NEClassBaseList& NETClassMetaClass::getSuperClasses() const { return getSuperClassesStatically(); }
 	const NEClassBaseList& NETClassMetaClass::getChildrenClasses() const { return getChildrenClassesStatically(); }
 	const NETString& NETClassMetaClass::getName() const	{ return getNameStatically(); }
+	const type_id& NETClassMetaClass::getId() const { return getIdStatically(); }
 	NEObject& NETClassMetaClass::instantiate() const
 	{
 		NEObject* nullptr = 0x00;

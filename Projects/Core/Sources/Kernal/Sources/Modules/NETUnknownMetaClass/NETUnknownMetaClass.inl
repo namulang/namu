@@ -16,7 +16,8 @@ namespace NE
 	template <typename T>
 	class NETUnknownMetaClass : public NETClassBase<T>
 	{
-		NE_DECLARE_CLASS_ONLY(NETUnknownMetaClass<T>, NETClassBase<T>)
+		//	NETClass doesn't need to declare MetaClass Macro (like NE_DEFINE_CLASS_ONLY...):
+		//		its class definitions are inherited from NETClassBase.
 
 		//	Constructors:
 	public:

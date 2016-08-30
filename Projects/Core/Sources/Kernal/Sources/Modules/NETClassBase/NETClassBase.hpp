@@ -1,3 +1,5 @@
+#pragma once
+
 #include "NETClassBase.inl"
 #include "NETClass.hpp"
 #include "../NEPackage/NEPackage.hpp"
@@ -15,7 +17,37 @@
 
 namespace NE
 {
-	NE_DEFINE_CLASS_ONLY(NETClassBase<T>, template <typename T>)
+	template <typename T>
+	const NEClassBase& NETClassBase<T>::getClassStatically()
+	{
+		//	What is this:
+		//		When NETClass is templated with some parameter type T,
+		//		it's a problem to provide metaclass of NETClass. (of course, 
+		//		because NETClass is a kind of metaclass, giving metaclass of
+		//		metaclass is the problem mentioned above)
+		//		The reason which this going to be a problem is templating reculsively.
+		//		Just imagine NETClass<T> that is returning NETClassMetaClass as
+		//		its metaclass.
+		//		so, this get crack the codes. to prevent this, we replace metaclass
+		//		to NETMetaClass. Dummy.
+		//		All NETClass<T> will return NETClassMetaClass at getClass()
+		//		method.
+		static NETClassMetaClass inner;
+
+		return inner;
+	}
+
+	template <typename T>
+	const NEClassBase& NETClassBase<T>::getClass() const
+	{
+		return getClassStatically();
+	}
+
+	template <typename T>
+	NEObject& NETClassBase<T>::clone() const
+	{
+		return *(new This(*this));
+	}
 
 	template <typename T>
 	const NETString& NETClassBase<T>::getName() const
@@ -39,12 +71,6 @@ namespace NE
 	const NEClassBaseList& NETClassBase<T>::getChildrenClasses() const
 	{
 		return getChildrenClassesStatically();
-	}
-
-	template <typename T>
-	const NEClassBase& NETClassBase<T>::getClass() const
-	{
-		return getClassStatically();
 	}
 
 	template <typename T>
@@ -90,33 +116,13 @@ namespace NE
 	}
 
 	template <typename T>
-	const NEClassBase& NETClassBase<T>::getClassStatically()
-	{
-		//	What is this:
-		//		When NETClass is templated with some parameter type T,
-		//		it's a problem to provide metaclass of NETClass. (of course, 
-		//		because NETClass is a kind of metaclass, giving metaclass of
-		//		metaclass is the problem mentioned above)
-		//		The reason which this going to be a problem is templating reculsively.
-		//		Just imagine NETClass<T> that is returning NETClassMetaClass as
-		//		its metaclass.
-		//		so, this get crack the codes. to prevent this, we replace metaclass
-		//		to NETMetaClass. Dummy.
-		//		All NETClass<T> will return NETClassMetaClass at getClass()
-		//		method.
-		static NETClassMetaClass inner;
-
-		return inner;
-	}
-
-	template <typename T>
-	const NEIdentifier& NETClassBase<T>::getHeader() const
+	const NEHeader& NETClassBase<T>::getHeader() const
 	{
 		return getHeaderStatically();
 	}
 
 	template <typename T>
-	const NEIdentifier& NETClassBase<T>::getHeaderStatically()
+	const NEHeader& NETClassBase<T>::getHeaderStatically()
 	{
 		static NEHeader _inner;
 
@@ -147,7 +153,7 @@ namespace NE
 	}
 
 	template <typename T>
-	type_id NEClassBaseList& NETClassBase<T>::getId() const
+	const type_id& NETClassBase<T>::getId() const
 	{
 		return getIdStatically();
 	}

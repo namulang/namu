@@ -38,6 +38,9 @@ namespace NE
 		virtual NEObject& instantiate() const;
 		virtual const NEHeader& getHeader() const;
 
+	public:
+		virtual const type_id& getId() const;
+
 		//		NEObject:
 	public:
 		virtual type_result isValid() const;

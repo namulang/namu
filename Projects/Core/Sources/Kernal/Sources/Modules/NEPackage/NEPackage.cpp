@@ -20,6 +20,7 @@ namespace NE
 		_instance = rhs._instance;
 		_entrypoint = rhs._entrypoint;
 		_components = rhs._components;
+		_id = rhs._id;
 
 		return *this;
 	}
@@ -30,6 +31,7 @@ namespace NE
 		_instance = 0;
 		_entrypoint = 0;
 		_components.release();
+		_id = NE_HAS_NO_ID;
 	}
 
 	NEPackage::~NEPackage()
@@ -37,7 +39,7 @@ namespace NE
 
 	}
 
-	const This& NEPackage::operator=(const This& source)
+	const NEPackage& NEPackage::operator=(const This& source)
 	{
 		if(this == &source) return *this;
 
@@ -57,7 +59,8 @@ namespace NE
 			_path == source._path				&&
 			_instance == source._instance		&&
 			_entrypoint == source._entrypoint	&&
-			_components == source._components	;
+			_components == source._components	&&
+			_id == source._id					;
 	}
 
 	NETString& NEPackage::getPath()
@@ -98,6 +101,18 @@ namespace NE
 	NEClassBaseList& NEPackage::getComponents()
 	{
 		return _components;
+	}
+
+	type_id NEPackage::getId() const
+	{
+		return _id;
+	}
+
+	type_result NEPackage::_setId(type_id new_id)
+	{
+		_id = new_id;
+
+		return RESULT_SUCCESS;
 	}
 
 	type_bool NEPackage::isLoaded() const

@@ -7,6 +7,8 @@
 
 namespace NE
 {
+	typedef type_result (*EntryPoint)(NEHeader&, NEClassBaseList&);
+
 	class NE_DLL NEPackage : public NEHeader
 	{
 		NE_DECLARE_CLASS(NEPackage, NEHeader)
@@ -37,6 +39,9 @@ namespace NE
 		type_bool isLoaded() const;
 
 	public:
+		virtual type_id getId() const;
+
+	public:
 		virtual void release();
 		virtual type_result isValid() const;
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
@@ -45,6 +50,7 @@ namespace NE
 	protected:
 		//	for PackageManager.
 		NEClassBaseList& _getClasses();
+		type_result _setId(type_id new_id);
 
 	private:
 		This& _assign(const This& rhs);
@@ -56,5 +62,6 @@ namespace NE
 		EntryPoint _entrypoint;
 		NEIntSet _compatible_revisions;
 		NEClassBaseList _components;
+		type_id _id;
 	};
 }

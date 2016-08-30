@@ -40,6 +40,9 @@ namespace NE
 		virtual const NEHeader& getHeader() const;
 
 	public:
+		virtual const type_id& getId() const;
+
+	public:
 		static const type_bool& isRegisteredStatically();
 		static const NEClassBaseList& getSuperClassesStatically();
 		static const NEClassBaseList& getChildrenClassesStatically();

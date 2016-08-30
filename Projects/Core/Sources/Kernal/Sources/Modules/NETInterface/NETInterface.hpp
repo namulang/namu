@@ -1,10 +1,12 @@
+#pragma once
+
 #include "NETInterface.inl"
 #include "../NETClassBase/NETClassBase.hpp"
 
 namespace NE
 {
-	NE_DEFINE_CLASS_ONLY(NETInterface<T>)
-
+	//	NETClass doesn't need to declare MetaClass Macro (like NE_DEFINE_CLASS_ONLY...):
+	//		its class definitions are inherited from NETClassBase.
 	template <typename T>
 	NETInterface<T>::~NETInterface()
 	{
