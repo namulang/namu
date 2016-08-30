@@ -4,7 +4,7 @@ namespace NE
 {
 #define _NAME	NETArray<InsideType*, true, InsideType*>
 
-	NE_DEFINE_CLASS_ONLY(_NAME, template <typename InsideType>)
+	NE_DEFINE_CLASS_ONLY_2(NE_MACRO_FUNNEL(_NAME), template <typename InsideType>)
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	const _NAME::operator=(const This& source) 
+	const _NAME& _NAME::operator=(const This& source) 
 	{
 		return _assign(source);
 	}
@@ -67,7 +67,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	_NAME::operator+(const This& source) const 
+	_NAME _NAME::operator+(const This& source) const 
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -121,7 +121,7 @@ namespace NE
 	//				2011-11-20	이태훈	버그 수정	source가 *this일 때 발생하게될 오류 대처 추가
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	const _NAME::operator+=(const This& source)
+	const _NAME& _NAME::operator+=(const This& source)
 	{
 		if(this == &source)
 		{
@@ -536,7 +536,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	const _NAME::_assign(const This& source)
+	const _NAME& _NAME::_assign(const This& source)
 	{	//	pre:
 		if(this == &source) return *this;
 

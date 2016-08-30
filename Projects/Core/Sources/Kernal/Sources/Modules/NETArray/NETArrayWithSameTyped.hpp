@@ -4,7 +4,7 @@ namespace NE
 {
 #define _NAME	NETArray<InsideType, false>
 
-	NE_DEFINE_CLASS_ONLY(_NAME, template <typename InsideType>)
+	NE_DEFINE_CLASS_ONLY_2(NE_MACRO_FUNNEL(_NAME), template <typename InsideType>)
 
 	//	---------------------------------------------------------------------------------
 	//	히스토리:	2011-07-07	이태훈	개발 완료
