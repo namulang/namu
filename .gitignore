@@ -29,3 +29,4 @@ Binaries/
 SDK/
 *.rsp
 sdk_copy_into_your_sdk_folder/
+*.i
