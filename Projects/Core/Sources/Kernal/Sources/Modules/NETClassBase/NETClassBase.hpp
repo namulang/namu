@@ -201,7 +201,7 @@ namespace NE
 	template <typename T>
 	const NEPackagePtr& NETClassBase<T>::_getPackage() const
 	{
-		static const NEPackage* _inner = NE_NULL;
+		static NEPackagePtr _inner = NE_NULL;
 
 		return _inner;
 	}

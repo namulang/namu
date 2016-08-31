@@ -27,6 +27,7 @@ namespace NE
 		//	Overrided:
 		//		NEClassBase:
 	public:
+		virtual type_bool isBuiltInClass() const;
 		virtual type_bool isInstantiable() const;
 		virtual type_bool isTemplate() const;
 		virtual type_bool isMetaClassDefined() const;

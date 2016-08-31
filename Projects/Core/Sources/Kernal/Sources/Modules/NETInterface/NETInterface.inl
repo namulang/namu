@@ -20,19 +20,5 @@ namespace NE
 	{
 		//	NETClass doesn't need to declare MetaClass Macro (like NE_DEFINE_CLASS_ONLY...):
 		//		its class definitions are inherited from NETClassBase.
-
-		//	Constructors:
-	public:
-		NETInterface();
-		NETInterface(const This& source);
-
-		//	Destructors:
-	public:
-		virtual ~NETInterface();
-
-		//	Inherited:
-		//		NEClassBase:
-	public:
-		virtual NEObject& instantiate() const;
 	};
 }

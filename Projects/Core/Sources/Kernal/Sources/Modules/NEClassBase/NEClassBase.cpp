@@ -10,55 +10,73 @@ namespace NE
 
 	typedef NEClassBase This;
 
-	NE_DLL NEClassBase::NEClassBase()
+	NE_DLL This::This()
 		: Super()
 	{
 
 	}
 
-	NE_DLL NEClassBase::NEClassBase(const NEClassBase& source)
+	NE_DLL This::This(const This& source)
 		: Super(source)
 	{
 
 	}
 
-	NE_DLL NEClassBase::~NEClassBase()
+	NE_DLL This::~This()
 	{
 
 	}
 
-	type_bool NE_DLL NEClassBase::isEqualClassTo(const This& source) const
+	type_bool This::operator==(const This& rhs) const
+	{
+		return isEqualClassTo(rhs);
+	}
+
+	type_bool This::operator!=(const This& rhs) const
+	{
+		return ! operator==(rhs);
+	}
+
+	This& This::operator=(const This& rhs)
+	{
+		//	nothing to assign. can't be assigned.
+
+		return *this;
+	}	
+
+
+	type_bool NE_DLL This::isEqualClassTo(const This& source) const
 	{
 		return	&source							&&
 			&getName() == &source.getName()	;
 	}
 
-	type_bool NE_DLL NEClassBase::isEqualClassTo(const NEObject& source) const
+	type_bool NE_DLL This::isEqualClassTo(const NEObject& source) const
 	{
 		return isEqualClassTo(source.getClass());
 	}
 
-	type_bool NE_DLL NEClassBase::isSuperClassOf(const This& parent) const
+	type_bool NE_DLL This::isSuperClassOf(const This& parent) const
 	{
 		return Kernal::getInstance().getClassManager().isHierarchy(*this, parent);
 	}
 
-	type_bool NE_DLL NEClassBase::isSuperClassOf(const NEObject& parent) const
+	type_bool NE_DLL This::isSuperClassOf(const NEObject& parent) const
 	{
 		return isSuperClassOf(parent.getClass());
 	}
 
-	type_bool NE_DLL NEClassBase::isSubClassOf(const This& parent) const
+	type_bool NE_DLL This::isSubClassOf(const This& parent) const
 	{
 		return Kernal::getInstance().getClassManager().isHierarchy(parent, *this);
 	}
 
-	type_bool NE_DLL NEClassBase::isSubClassOf(const NEObject& parent) const
+	type_bool NE_DLL This::isSubClassOf(const NEObject& parent) const
 	{
 		return isSubClassOf(parent.getClass());
 	}
 
-	type_result NEClassBase::_enrollSuperClasses(const NEClassBase& new_super)
+	type_result This::_enrollSuperClasses(const This& new_super)
 	{
 		//	pre:
 		//		targetting:
@@ -72,92 +90,78 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 
-	type_result NEClassBase::_enrollChildClass(const NEClassBase& new_child)
+	type_result This::_enrollChildClass(const This& new_child)
 	{
 		return _getChildrenClasses().push(new_child);
 	}
 
-	NEClassBaseList& NEClassBase::_getChildrenClasses()
+	NEClassBaseList& This::_getChildrenClasses()
 	{
 		return const_cast<NEClassBaseList&>(getSubClasses());
 	}
 
-	NEClassBaseList& NEClassBase::_getSuperClasses()
+	NEClassBaseList& This::_getSuperClasses()
 	{
 		return const_cast<NEClassBaseList&>(getSuperClases());
 	}
 
-	const This NE_DLL &NEClassBase::getSuper() const
+	NEObject& This::instantiate() const
+	{
+		NEObject* nullptr = 0x00;
+		KERNAL_WARNING("You can't instantiate interface class.");
+
+		return *nullptr;
+	}
+
+	const This NE_DLL &This::getSuper() const
 	{	
 		//	if there is no ancestors, this will return null-referenced "This&" type.
 
 		return getSuperClasses()[0];
 	}
 
-	type_result NEClassBase::isValid() const
+	type_result This::isValid() const
 	{
 		return RESULT_SUCCESS;
 	}
 
-	void NEClassBase::release()
+	void This::release()
 	{
 
 	}
 
-	NEBinaryFileSaver& NEClassBase::serialize(NEBinaryFileSaver& saver) const
+	NEBinaryFileSaver& This::serialize(NEBinaryFileSaver& saver) const
 	{
 		//	TODO:
 		return saver;
 	}
 
-	NEBinaryFileLoader& NEClassBase::serialize(NEBinaryFileLoader& loader)
+	NEBinaryFileLoader& This::serialize(NEBinaryFileLoader& loader)
 	{
 		//	TODO:
 		return loader;
 	}
 
-	type_result NEClassBase::_alert(type_result log_type, const type_tchar* message) const
-	{
-		//	pre:
-		//		targetting:
-		Kernal& kernel = Kernal::getInstance();
-		if( ! &kernel) return RESULT_TYPE_ERROR;
-		NEDebugManager& debugger = kernel.getDebugManager();
-
-		//	main:
-		type_int	bit_mask = RESULT_TYPE_ERROR | RESULT_TYPE_WARNING | RESULT_TYPE_INFORMATION;
-
-		switch(log_type & bit_mask)
-		{
-		case RESULT_TYPE_ERROR:			RESULT_TYPE_ERROR(message);			break;
-
-		case RESULT_TYPE_WARNING:		RESULT_TYPE_WARNING(message);		break;
-		case RESULT_TYPE_INFORMATION:	RESULT_TYPE_INFORMATION(message);	break;
-		}
-
-		return log_type;
-	}
-
-	type_result NEClassBase::_onInitializeHeader(NEHeader& to_initialize)
+	type_result This::_onInitializeHeader(NEHeader& to_initialize)
 	{
 		return RESULT_SUCCESS;
 	}
-	type_result NEClassBase::_onInitializeMethods(NEMethodList& to_initialize)
+	type_result This::_onInitializeMethods(NEMethodList& to_initialize)
 	{
 		return RESULT_SUCCESS;
 	}
 
-	NEHeader& NEClassBase::_getHeader()
+	NEHeader& This::_getHeader()
 	{
 		return const_cast<NEHeader&>(getHeader());
 	}
 
-	type_id& NEClassBase::_getId()
+	type_id& This::_getId()
 	{
 		return const_cast<type_id&>(getId());
 	}
 
-	type_result NEClassBase::_setPackage(const NEPackage& new_package)
+	type_result This::_setPackage(const NEPackage& new_package)
 	{
 		const NEPackagePtr& pointer = _getPackage();
 
@@ -166,7 +170,7 @@ namespace NE
 		return 0;
 	}
 
-	const NEPackage& NEClassBase::getPackage() const
+	const NEPackage& This::getPackage() const
 	{
 		return *_getPackage();
 	}

@@ -11,7 +11,7 @@ namespace NE
 
 	class NE_DLL NEPackage : public NEHeader
 	{
-		NE_DECLARE_CLASS(NEPackage, NEHeader)
+		NE_DECLARE_CLASS_ONLY(NEPackage, NEHeader)
 
 	public:
 		friend class NEPackageManager;

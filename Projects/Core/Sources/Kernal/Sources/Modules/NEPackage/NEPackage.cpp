@@ -2,6 +2,8 @@
 
 namespace NE
 {
+	NE_DEFINE_CLASS_ONLY(NEPackage)
+
 	NEPackage::NEPackage()
 		: Super(), _instance(0), _entrypoint(0)
 	{
