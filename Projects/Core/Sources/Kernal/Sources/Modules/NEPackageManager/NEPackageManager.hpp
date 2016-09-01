@@ -21,6 +21,8 @@
 #include "../NENode/NENode.hpp"
 #include "../NEModuleSet/NEModuleSet.hpp"
 #include "../NEPackageSet/NEPackageSet.hpp"
+#include "../NEClassBaseSet/NEClassBaseSet.hpp"
+#include "../NEPackageList/NEPackageList.hpp"
 
 namespace NE
 {
@@ -56,7 +58,7 @@ namespace NE
 		const NEClassBase& findClass(const NEIdentifier& identifier) const;
 		const NEClassBaseSet& getClasses() const;
 
-		//	인터페이스:git
+		//	인터페이스:
 		//		상속:
 		//			NEExportable:
 	public:

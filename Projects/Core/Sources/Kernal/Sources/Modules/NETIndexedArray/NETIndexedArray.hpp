@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NETReservedCollector.hpp"
+#include "../NETReservedCollector/NETReservedCollector.hpp"
 #include "NETIndexedArray.inl"
 #include "NETPointerIndexedArray.hpp"
 #include "NETPointerIndexedArrayUsingPolyMorphism.hpp"
