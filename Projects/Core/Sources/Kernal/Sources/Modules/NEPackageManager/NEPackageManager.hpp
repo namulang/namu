@@ -56,7 +56,7 @@ namespace NE
 		const NEClassBase& findClass(const NEIdentifier& identifier) const;
 		const NEClassBaseSet& getClasses() const;
 
-		//	인터페이스:
+		//	인터페이스:git
 		//		상속:
 		//			NEExportable:
 	public:
