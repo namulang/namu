@@ -34,42 +34,38 @@ namespace NE
 		NE_DECLARE_CLASS(NECode, NECodeType)
 
 	public:
-		typedef NECode ThisClass;
-		typedef NECodeType SuperClass;
-
-	public:
 		NECode();
 		NECode(const NEExportable::Identifier& identifier);
 		NECode(type_code new_code, const NECodeType& codetype = NECodeType());
-		NECode(const ThisClass& source);
+		NECode(const This& source);
 
 	public:
 		virtual ~NECode();
 
 	public:
-		ThisClass& operator=(const ThisClass& source);
+		This& operator=(const This& source);
 		NECode& operator++();
 		NECode operator++(int);
 		NECode& operator--();
 		NECode operator--(int);
-		type_bool operator==(const ThisClass& source) const;
+		type_bool operator==(const This& source) const;
 		type_bool operator==(const type_code source) const;
 		type_bool operator!=(const type_code source) const;
-		type_bool operator!=(const ThisClass& source) const;
-		type_bool operator<(const ThisClass& source) const;
-		type_bool operator<=(const ThisClass& source) const;
-		type_bool operator>(const ThisClass& source) const;
-		type_bool operator>=(const ThisClass& source) const;
-		ThisClass operator+(const ThisClass& source) const;
-		ThisClass operator-(const ThisClass& source) const;
-		ThisClass operator*(const ThisClass& source) const;
-		ThisClass operator/(const ThisClass& source) const;
-		ThisClass operator%(const ThisClass& source) const;
-		ThisClass& operator+=(const ThisClass& source);
-		ThisClass& operator-=(const ThisClass& source);
-		ThisClass& operator*=(const ThisClass& source);
-		ThisClass& operator/=(const ThisClass& source);		
-		ThisClass& operator%=(const ThisClass& source);
+		type_bool operator!=(const This& source) const;
+		type_bool operator<(const This& source) const;
+		type_bool operator<=(const This& source) const;
+		type_bool operator>(const This& source) const;
+		type_bool operator>=(const This& source) const;
+		This operator+(const This& source) const;
+		This operator-(const This& source) const;
+		This operator*(const This& source) const;
+		This operator/(const This& source) const;
+		This operator%(const This& source) const;
+		This& operator+=(const This& source);
+		This& operator-=(const This& source);
+		This& operator*=(const This& source);
+		This& operator/=(const This& source);		
+		This& operator%=(const This& source);
 		operator type_code();
 
 	public:
@@ -84,11 +80,11 @@ namespace NE
 		virtual type_result isValid() const;
 
 	private:
-		ThisClass& _assign(const ThisClass& source);
+		This& _assign(const This& source);
 		NEBinaryFileSaver& _serializeAsScript(NEBinaryFileSaver& saver) const;
 		NEBinaryFileLoader& _serializeAsScript(NEBinaryFileLoader& loader);
 		void _release();
-		ThisClass _createCode(const NECode& source, type_code new_code) const;
+		This _createCode(const NECode& source, type_code new_code) const;
 
 	private:
 		type_code _code;

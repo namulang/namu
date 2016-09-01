@@ -3,16 +3,16 @@
 namespace NE
 {
 	NEModuleSet::NEModuleSet()
-		: SuperClass() 
+		: Super() 
 	{
 	}
 	NEModuleSet::NEModuleSet(type_count size)
-		: SuperClass(size)
+		: Super(size)
 	{
 
 	}
 	NEModuleSet::NEModuleSet(const This& rhs)
-		: SuperClass(rhs)
+		: Super(rhs)
 	{
 
 	}
@@ -22,7 +22,7 @@ namespace NE
 	}
 	type_index NEModuleSet::insert(type_index index, const NEModule* const source)
 	{
-		type_index result_index = SuperClass::insert(index, source);
+		type_index result_index = Super::insert(index, source);
 		if(result_index == NE_INDEX_ERROR)
 			return result_index;
 
@@ -32,7 +32,7 @@ namespace NE
 	}
 	type_result NEModuleSet::setElement(type_index index, const NEModule* const source)
 	{
-		type_result result = SuperClass::setElement(index, source);
+		type_result result = Super::setElement(index, source);
 		if( ! NEResult::hasError(result))
 			_updateModule(index);
 

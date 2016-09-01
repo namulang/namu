@@ -95,13 +95,13 @@ ON_ERROR:
 	}
 
 	NEModuleBinder::NEModuleBinder()
-		: SuperClass()
+		: Super()
 	{
 
 	}
 
 	NEModuleBinder::NEModuleBinder(const NEModule& module/*, NEType::Type manager_type*/)
-		: SuperClass()
+		: Super()
 	{
 		bind(module/*, manager_type*/);
 	}

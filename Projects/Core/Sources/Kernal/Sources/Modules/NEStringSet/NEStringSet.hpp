@@ -7,11 +7,11 @@ namespace NE
 	class NE_DLL NETArray<NEString, false, NEString>;
 	class NE_DLL NEStringSet : public NETArray<NEString, false, NEString>
 	{
-	public:
-		typedef NEStringSet ThisClass;
-		typedef NETArray<NEString, false, NEString> SuperClass;
+		typedef NETArray<NEString, false, NEString> _Super;
+		NE_DECLARE_CLASS(NEStringSet, _Super)
 
-		NEStringSet() : SuperClass() {}
-		NEStringSet(type_count size) : SuperClass() {}
+	public:
+		NEStringSet() : Super() {}
+		NEStringSet(type_count size) : Super() {}
 	};
 }

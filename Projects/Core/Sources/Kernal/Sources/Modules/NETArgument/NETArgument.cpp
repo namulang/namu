@@ -41,21 +41,21 @@ namespace NE
 	template
 	class NE_DLL NETSelectorArgument<NEKeySelector>;
 
-	NETArgument<NEKey>::NETArgument(const ThisClass& rhs)
-		: SuperClass(rhs)
+	NETArgument<NEKey>::NETArgument(const This& rhs)
+		: Super(rhs)
 	{
 
 	}
 
 	NETArgument<NEKey>::NETArgument()
-		: SuperClass(/*NEType::NEKEY*/)
+		: Super(/*NEType::NEKEY*/)
 	{
 
 	}
 
 	const NEKey& NETArgument<NEKey>::getDefaultKey() const
 	{
-		ThisClass* unconsted = const_cast<ThisClass*>(this);
+		This* unconsted = const_cast<This*>(this);
 
 		return unconsted->getDefaultKey();
 	}

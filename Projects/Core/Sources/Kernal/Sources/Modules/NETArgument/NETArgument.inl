@@ -3,7 +3,7 @@ namespace NE
 {
 	template <typename T>
 	NETArgument<T>::NETArgument(NEArgumentBase::Purpose limitation) 
-		: SuperClass(/*T().getType(), */limitation)
+		: Super(/*T().getType(), */limitation)
 	{
 
 	}
@@ -77,7 +77,7 @@ namespace NE
 	template <typename T>
 	void NE::NETArgument<T>::release()
 	{
-		SuperClass::release();
+		Super::release();
 		_for_casting.release();
 		_default_key.release();
 	}
@@ -85,7 +85,7 @@ namespace NE
 	template <typename T>
 	type_result NE::NETArgument<T>::isValid() const
 	{
-		type_result result = SuperClass::isValid();
+		type_result result = Super::isValid();
 		if(NEResult::hasError(result)) return result;
 
 		return _default_key.isValid();
@@ -94,7 +94,7 @@ namespace NE
 	template <typename T>
 	NEBinaryFileSaver& NE::NETArgument<T>::serialize(NEBinaryFileSaver& saver) const
 	{
-		SuperClass::serialize(saver);
+		Super::serialize(saver);
 
 		return saver << _default_key;
 	}
@@ -102,7 +102,7 @@ namespace NE
 	template <typename T>
 	NEBinaryFileLoader& NE::NETArgument<T>::serialize(NEBinaryFileLoader& loader)
 	{
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 
 		return loader >> _default_key;
 	}
@@ -114,12 +114,12 @@ namespace NE
 
 	public:
 		NETLimitedArgument()
-			: SuperClass()
+			: Super()
 		{
 
 		}
-		NETLimitedArgument(const ThisClass& rhs)
-			: SuperClass(rhs), _default_key(rhs._default_key)
+		NETLimitedArgument(const This& rhs)
+			: Super(rhs), _default_key(rhs._default_key)
 		{
 
 		}
@@ -136,7 +136,7 @@ namespace NE
 		}
 		typename const T::Trait& getValue() const
 		{
-			ThisClass* unconsted = const_cast<ThisClass*>(this);
+			This* unconsted = const_cast<This*>(this);
 
 			return unconsted->getValue();
 		}
@@ -160,26 +160,26 @@ namespace NE
 		}
 		virtual void release()
 		{
-			SuperClass::release();
+			Super::release();
 
 			_default_key.release();
 		}
 		virtual type_result isValid() const
 		{
-			type_result result = SuperClass::isValid();
+			type_result result = Super::isValid();
 			if(NEResult::hasError(result)) return result;
 
 			return _default_key.isValid();
 		}
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader)
 		{
-			SuperClass::serialize(loader);
+			Super::serialize(loader);
 
 			return loader >> _default_key;
 		}
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
 		{
-			SuperClass::serialize(saver);
+			Super::serialize(saver);
 
 			return saver << _default_key;
 		}
@@ -226,12 +226,12 @@ namespace NE
 
 	public:
 		NETSelectorArgument()
-			: SuperClass(/*T().getType()*/)
+			: Super(/*T().getType()*/)
 		{
 			_release();
 		}
-		NETSelectorArgument(const ThisClass& rhs)
-			: SuperClass(rhs)			
+		NETSelectorArgument(const This& rhs)
+			: Super(rhs)			
 		{
 			_assign(rhs);
 		}
@@ -255,7 +255,7 @@ namespace NE
 		}
 		typename const T::Trait& getValue() const
 		{
-			ThisClass* unconsted = const_cast<ThisClass*>(this);
+			This* unconsted = const_cast<This*>(this);
 
 			return unconsted->getValue();
 		}
@@ -297,26 +297,26 @@ namespace NE
 		}
 		virtual void release()
 		{
-			SuperClass::release();
+			Super::release();
 
 			_release();
 		}
 		virtual type_result isValid() const
 		{
-			type_result result = SuperClass::isValid();
+			type_result result = Super::isValid();
 			if (NEResult::hasError(result)) return result;
 
 			return _default_key.isValid();
 		}
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader)
 		{
-			SuperClass::serialize(loader);
+			Super::serialize(loader);
 
 			return loader >> _default_key >> _is_wanting_to_lock >> _was_source_binded >> _for_casting;
 		}
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
 		{
-			SuperClass::serialize(saver);
+			Super::serialize(saver);
 
 			return saver << _default_key << _is_wanting_to_lock << _was_source_binded << _for_casting;
 		}
@@ -342,7 +342,7 @@ namespace NE
 
 			return RESULT_SUCCESS;
 		}
-		ThisClass& _assign(const ThisClass& source)
+		This& _assign(const This& source)
 		{
 			if(this == &source) return *this;
 
@@ -385,7 +385,7 @@ namespace NE
 
 	public:
 		NETArgument();
-		NETArgument(const ThisClass& rhs);
+		NETArgument(const This& rhs);
 
 	public:
 		virtual	NEKey& getDefaultKey();

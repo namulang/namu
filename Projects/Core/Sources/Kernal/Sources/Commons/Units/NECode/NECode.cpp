@@ -6,28 +6,28 @@ using namespace std;
 
 namespace NE
 {
-	typedef NECode ThisClass;
+	typedef NECode This;
 
 	NECode::NECode()
-		: SuperClass()
+		: Super()
 	{
 		_release();
 	}
 
 	NECode::NECode(const NEExportable::Identifier& identifier)
-		: SuperClass(NECodeType::MODULE_SCRIPT, true)
+		: Super(NECodeType::MODULE_SCRIPT, true)
 	{
 		setCode(identifier);
 	}
 
-	NECode::NECode(const ThisClass& source)
-		: SuperClass(source)
+	NECode::NECode(const This& source)
+		: Super(source)
 	{
 		_assign(source);
 	}
 
 	NECode::NECode(type_code new_code, const NECodeType& codetype /*= NECodeType()*/)
-		: SuperClass(codetype)
+		: Super(codetype)
 	{
 		setCode(new_code);
 	}
@@ -79,121 +79,121 @@ namespace NE
 		return ! operator==(source);
 	}
 
-	ThisClass::~ThisClass()
+	This::~This()
 	{
 
 	}
-	ThisClass& ThisClass::operator=(const ThisClass& source)
+	This& This::operator=(const This& source)
 	{
 		if(this == &source) return *this;
 		if( ! isAcceptableType(source))
 			return *this;	//	N / A ƒ…¿ÃΩ∫
 
-		SuperClass::operator=(source);
+		Super::operator=(source);
 
 		return _assign(source);
 	}
-	ThisClass& ThisClass::_assign(const ThisClass& source)
+	This& This::_assign(const This& source)
 	{
 		setCode(source.getCode());
 
 		return *this;
 	}
-	type_bool ThisClass::operator==(const ThisClass& source) const
+	type_bool This::operator==(const This& source) const
 	{
-		return	SuperClass::operator==(source) && _code == source._code;
+		return	Super::operator==(source) && _code == source._code;
 	}
-	type_bool ThisClass::operator!=(const ThisClass& source) const
+	type_bool This::operator!=(const This& source) const
 	{
 		return ! operator==(source);
 	}
-	type_bool ThisClass::operator<(const ThisClass& source) const
+	type_bool This::operator<(const This& source) const
 	{
 		return _code < source._code;
 	}
-	type_bool ThisClass::operator<=(const ThisClass& source) const
+	type_bool This::operator<=(const This& source) const
 	{
 		return _code <= source._code;
 	}
-	type_bool ThisClass::operator>(const ThisClass& source) const
+	type_bool This::operator>(const This& source) const
 	{
 		return _code > source._code;
 	}
-	type_bool ThisClass::operator>=(const ThisClass& source) const
+	type_bool This::operator>=(const This& source) const
 	{
 		return _code >= source._code;
 	}	
-	ThisClass ThisClass::_createCode(const ThisClass& source, type_code new_code) const
+	This This::_createCode(const This& source, type_code new_code) const
 	{
 		NECodeType type;
 		if (getCodeType() == source.getCodeType())
 			type = *this;
 
-		return ThisClass(new_code, NECodeType(type.getCodeType(), type.isTypeFixed()));
+		return This(new_code, NECodeType(type.getCodeType(), type.isTypeFixed()));
 	}
 
-	ThisClass ThisClass::operator+(const ThisClass& source) const
+	This This::operator+(const This& source) const
 	{
 		return _createCode(source, getCode() + source.getCode());
 	}
-	ThisClass ThisClass::operator-(const ThisClass& source) const
+	This This::operator-(const This& source) const
 	{
 		return _createCode(source, getCode() - source.getCode());
 	}
-	ThisClass ThisClass::operator*(const ThisClass& source) const
+	This This::operator*(const This& source) const
 	{
 		return _createCode(source, getCode() * source.getCode());
 	}
-	ThisClass ThisClass::operator/(const ThisClass& source) const
+	This This::operator/(const This& source) const
 	{
 		return _createCode(source, getCode() / source.getCode());
 	}
-	ThisClass ThisClass::operator%(const ThisClass& source) const
+	This This::operator%(const This& source) const
 	{
 		return _createCode(source, getCode() % source.getCode());
 	}
-	ThisClass& ThisClass::operator+=(const ThisClass& source)
+	This& This::operator+=(const This& source)
 	{
 		_code += source._code;
 
 		return *this;
 	}
-	ThisClass& ThisClass::operator-=(const ThisClass& source)
+	This& This::operator-=(const This& source)
 	{
 		_code -= source._code;
 
 		return *this;
 	}
-	ThisClass& ThisClass::operator*=(const ThisClass& source)
+	This& This::operator*=(const This& source)
 	{
 		_code *= source._code;
 
 		return *this;
 	}
-	ThisClass& ThisClass::operator/=(const ThisClass& source)
+	This& This::operator/=(const This& source)
 	{
 		_code /= source._code;
 
 		return *this;
 	}
-	ThisClass& ThisClass::operator%=(const ThisClass& source)
+	This& This::operator%=(const This& source)
 	{
 		_code %= source._code;
 
 		return *this;
 	}
-	type_code ThisClass::getCode() const
+	type_code This::getCode() const
 	{
 		return _code;
 	}
-	type_result ThisClass::setCode(type_code new_code)
+	type_result This::setCode(type_code new_code)
 	{		
 		_code = new_code;
 
 		return RESULT_SUCCESS;
 	}
 
-	type_result ThisClass::setCode(const NEExportable::Identifier& identifier)
+	type_result This::setCode(const NEExportable::Identifier& identifier)
 	{
 		const NEModule& fetched = Kernal::getInstance().getModuleManager().getModule(identifier);
 		if (!&fetched)
@@ -205,16 +205,16 @@ namespace NE
 		return setCode(fetched.getScriptCode());
 	}
 
-	void ThisClass::release()
+	void This::release()
 	{
-		SuperClass::release();
+		Super::release();
 
 		_code = NE_INDEX_ERROR;		
 	}
 
-	NEBinaryFileSaver& ThisClass::serialize(NEBinaryFileSaver& saver) const
+	NEBinaryFileSaver& This::serialize(NEBinaryFileSaver& saver) const
 	{
-		SuperClass::serialize(saver);
+		Super::serialize(saver);
 
 		if(getCodeType() == NECodeType::MODULE_SCRIPT)
 			return _serializeAsScript(saver);
@@ -222,7 +222,7 @@ namespace NE
 		return saver << _code;
 	}
 
-	NEBinaryFileSaver& ThisClass::_serializeAsScript(NEBinaryFileSaver& saver) const
+	NEBinaryFileSaver& This::_serializeAsScript(NEBinaryFileSaver& saver) const
 	{
 		const NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		const NEModule& m = moduler.getModuleSet()[_code];
@@ -233,16 +233,16 @@ namespace NE
 		return m.getHeader().NEExportable::Identifier::serialize(saver);
 	}
 
-	NEBinaryFileLoader& ThisClass::serialize(NEBinaryFileLoader& loader)
+	NEBinaryFileLoader& This::serialize(NEBinaryFileLoader& loader)
 	{
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 
 		if(getCodeType() == NECodeType::MODULE_SCRIPT)
 			return _serializeAsScript(loader);
 
 		return loader >> _code;
 	}
-	NEBinaryFileLoader& ThisClass::_serializeAsScript(NEBinaryFileLoader& loader)
+	NEBinaryFileLoader& This::_serializeAsScript(NEBinaryFileLoader& loader)
 	{
 		type_bool is_module_info_saved = false;
 		loader >> is_module_info_saved;
@@ -260,16 +260,16 @@ namespace NE
 		return loader;
 	}
 
-	type_result ThisClass::isValid() const
+	type_result This::isValid() const
 	{
-		type_result result = SuperClass::isValid();
+		type_result result = Super::isValid();
 		if(NEResult::hasError(result)) return result;
 		if(_code < 0) return RESULT_TYPE_WARNING;		
 
 		return RESULT_SUCCESS;
 	}
 
-	void ThisClass::_release()
+	void This::_release()
 	{
 		_code = NE_DEFAULT;
 	}

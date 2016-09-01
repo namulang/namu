@@ -8,11 +8,11 @@ namespace NE
 	class NE_DLL NETArray<NEWString, false, NEWString>;
 	class NE_DLL NEWStringSet : public NETArray<NEWString, false, NEWString> 
 	{
-	public:
-		typedef NEWStringSet ThisClass;
-		typedef NETArray<NEWString, false, NEWString> SuperClass;
+		typedef NETArray<NEWString, false, NEWString> _Super;
+		NE_DECLARE_CLASS(NEWStringSet, _Super)
 
-		NEWStringSet() : SuperClass() {}
-		NEWStringSet(type_count size) : SuperClass() {}
+	public:
+		NEWStringSet() : Super() {}
+		NEWStringSet(type_count size) : Super() {}
 	};
 }

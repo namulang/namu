@@ -5,7 +5,7 @@
 namespace NE
 {
 	NERootNodeCodeSet::NERootNodeCodeSet(NEEnlistableManager& manager)
-		: SuperClass()
+		: Super()
 	{
 		_manager = &manager;
 		//	enlist:
@@ -17,12 +17,12 @@ namespace NE
 		_is_enlisted = true;
 	}
 	NERootNodeCodeSet::NERootNodeCodeSet(type_index size)
-		: SuperClass(size)
+		: Super(size)
 	{
 		
 	}
 	NERootNodeCodeSet::NERootNodeCodeSet(const NERootNodeCodeSet& source)
-		: SuperClass(source)
+		: Super(source)
 	{
 		
 	}
@@ -50,7 +50,7 @@ namespace NE
 
 	NERootNodeCodeSet NERootNodeCodeSet::operator+(const NERootNodeCodeSet& source) const
 	{
-		ThisClass buffer(getSize() + source.getSize());
+		This buffer(getSize() + source.getSize());
 
 		buffer.push(*this);
 		buffer.push(source);
@@ -64,6 +64,6 @@ namespace NE
 		if( ! &node) return RESULT_TYPE_ERROR;
 
 		node._is_rootnode = true;
-		return SuperClass::_onEnlisted(node);
+		return Super::_onEnlisted(node);
 	}
 }

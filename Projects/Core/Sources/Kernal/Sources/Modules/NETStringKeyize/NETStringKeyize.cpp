@@ -28,7 +28,7 @@ namespace NE
 		if( this == &source) return RESULT_TYPE_ERROR;
 
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 		//	main:
 		/*switch(source.getType())
@@ -87,7 +87,7 @@ namespace NE
 		if( this == &source) return RESULT_TYPE_ERROR;
 
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 		//	main:
 		/*switch(source.getType())
@@ -149,7 +149,7 @@ namespace NE
 
 		//	main:
 		//		버퍼 정의:
-		ThisClass buffer;
+		This buffer;
 		//		버퍼에 할당:
 		type_result result = buffer.assign(source);
 		if(NEResult::hasError(result))
@@ -204,7 +204,7 @@ namespace NE
 
 		//	main:
 		//		버퍼 정의:
-		ThisClass buffer;
+		This buffer;
 		//		버퍼에 할당:
 		type_result result = buffer.assign(source);
 		if(NEResult::hasError(result))

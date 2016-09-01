@@ -3,7 +3,7 @@
 namespace NE
 {
 	typedef NENamedUnit T;
-	typedef NETEnlistableSet<NENamedUnit> ThisClass;
+	typedef NETEnlistableSet<NENamedUnit> This;
 
 	NETEnlistableSet<NENamedUnit>::NETEnlistableSet(const NECodeType& script_type, const NECodeType& name_type)
 		: T(script_type, name_type), _manager(&NEGlobalManagerOffer::getGlobalManager()), _is_enlisted(false)
@@ -11,14 +11,14 @@ namespace NE
 		//	getGlobalManagerOnCopyConstructor에 관하여:
 		//		NEIndexedModuleSet.cpp에 관련 주석을 참고하라
 	}
-	NETEnlistableSet<NENamedUnit>::NETEnlistableSet(const ThisClass& source)
+	NETEnlistableSet<NENamedUnit>::NETEnlistableSet(const This& source)
 		: T(source), _manager(&NEGlobalManagerOffer::getGlobalManager()), _is_enlisted(false)
 	{
 		//	getGlobalManagerOnCopyConstructor에 관하여:
 		//		NEIndexedModuleSet.cpp에 관련 주석을 참고하라
 	}
 
-	const ThisClass& NETEnlistableSet<NENamedUnit>::operator=(const ThisClass& source)
+	const This& NETEnlistableSet<NENamedUnit>::operator=(const This& source)
 	{
 		/*
 		_manager를 복사하지 않도록 하기 위해서 operator=를 정의한다.
@@ -46,13 +46,13 @@ namespace NE
 	}
 	NEBinaryFileSaver& NETEnlistableSet<NENamedUnit>::serialize(NEBinaryFileSaver& saver) const
 	{
-		SuperClass::serialize(saver);
+		Super::serialize(saver);
 
 		return saver << _is_enlisted;
 	}
 	NEBinaryFileLoader& NETEnlistableSet<NENamedUnit>::serialize(NEBinaryFileLoader& loader)
 	{
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 
 		return loader >> _is_enlisted;
 	}

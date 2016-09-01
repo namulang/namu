@@ -44,7 +44,7 @@ namespace NE
 
 	NEModuleCodeSet NEModuleCodeSet::operator+(const This& source) const
 	{
-		ThisClass buffer(getSize() + source.getSize());
+		This buffer(getSize() + source.getSize());
 
 		buffer.push(*this);
 		buffer.push(source);

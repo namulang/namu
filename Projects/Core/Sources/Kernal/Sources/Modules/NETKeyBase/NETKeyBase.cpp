@@ -8,7 +8,7 @@ namespace NE
 		if( ! &source) return RESULT_TYPE_ERROR;
 		if( this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 		type_result result = RESULT_SUCCESS;
 		if(source.isSubClassOf(NETClass<NEKeySelector()))
@@ -24,13 +24,13 @@ namespace NE
 	}
 
 	NETKeyBase::NETKeyBase(const NETString& new_keyname)
-		: SuperClass(new_keyname)
+		: Super(new_keyname)
 	{
 
 	}
 
-	NETKeyBase::NETKeyBase(const ThisClass& source)
-		: SuperClass(source)
+	NETKeyBase::NETKeyBase(const This& source)
+		: Super(source)
 	{
 
 	}

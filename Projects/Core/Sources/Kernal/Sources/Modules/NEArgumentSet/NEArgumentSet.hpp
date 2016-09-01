@@ -16,7 +16,7 @@ namespace NE
 	public:
 		NEArgumentSet();
 		NEArgumentSet(type_count size);
-		NEArgumentSet(const ThisClass& rhs);
+		NEArgumentSet(const This& rhs);
 
 	public:
 		type_bool isBinded() const;

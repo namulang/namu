@@ -10,7 +10,7 @@ namespace NE
 
 	public:
 		NETKeyBase(const NETString& new_keyname);
-		NETKeyBase(const ThisClass& source);
+		NETKeyBase(const This& source);
 
 	public:
 		virtual ~NETKeyBase();

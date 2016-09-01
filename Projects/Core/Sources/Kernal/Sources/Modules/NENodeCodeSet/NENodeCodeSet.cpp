@@ -5,18 +5,18 @@
 namespace NE
 {
 	NENodeCodeSet::NENodeCodeSet()
-		: SuperClass()
+		: Super()
 	{
 		
 	}
 
 	NENodeCodeSet::NENodeCodeSet(type_index size)
-		: SuperClass(size)
+		: Super(size)
 	{
 		
 	}
 	NENodeCodeSet::NENodeCodeSet(const NENodeCodeSet& source)
-		: SuperClass(source)
+		: Super(source)
 	{
 		_assign(source);	//	이제, NENodeCodeSet::insert가 내부적으로 호출된다.
 	}
@@ -45,7 +45,7 @@ namespace NE
 
 	NENodeCodeSet NENodeCodeSet::operator+(const NENodeCodeSet& source) const
 	{
-		ThisClass buffer(getSize() + source.getSize());
+		This buffer(getSize() + source.getSize());
 
 		buffer.push(*this);
 		buffer.push(source);
@@ -338,7 +338,7 @@ namespace NE
 
 	NEBinaryFileLoader& NENodeCodeSet::serialize(NEBinaryFileLoader& loader)
 	{
-		SuperClass::serialize(loader);
+		Super::serialize(loader);
 
 		if(isEnlisted())
 			_onEnlisted();
@@ -421,6 +421,6 @@ namespace NE
 		while(getLength())
 			pop();
 
-		SuperClass::release();
+		Super::release();
 	}
 }

@@ -93,13 +93,13 @@ ON_ERROR:
 	}
 
 	NENodeBinder::NENodeBinder()
-		: SuperClass()
+		: Super()
 	{
 	
 	}
 
 	NENodeBinder::NENodeBinder(const NENode& node/*, NEType::Type manager_type*/)
-		: SuperClass()
+		: Super()
 	{
 		bind(node/*, manager_type*/);
 	}

@@ -27,7 +27,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 		//	main:
 		/*type_result result = RESULT_SUCCESS;
@@ -86,7 +86,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 		//	main:
 		/*switch (source.getType())
@@ -224,7 +224,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 		//	main:
 		/*switch (source.getType())
@@ -290,7 +290,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 
 		//	main:
@@ -357,7 +357,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 
 		//	main:
@@ -495,7 +495,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 
 		//	main:
@@ -557,7 +557,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 
 		//	main:
@@ -622,7 +622,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 
 		//	main:
@@ -687,7 +687,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 
 		//	main:
@@ -752,7 +752,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 
 		//	main:
@@ -817,7 +817,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 
 		//	main:
@@ -882,7 +882,7 @@ namespace NE
 		if (!&source) return RESULT_TYPE_ERROR;
 		if (this == &source) return RESULT_TYPE_ERROR;
 
-		SuperClass::assign(source);
+		Super::assign(source);
 
 
 		//	main:
