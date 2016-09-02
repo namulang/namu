@@ -19,8 +19,8 @@
 namespace NE
 {
 	template
-	class NE_DLL NETKey<NEModuleCodeSet, NEType::NEMODULE_CODESET_KEY>;
-	typedef NETKey<NEModuleCodeSet, NEType::NEMODULE_CODESET_KEY> NEModuleCodeSetKey;
+	class NE_DLL NETKey<NEModuleCodeSet>;
+	typedef NETKey<NEModuleCodeSet> NEModuleCodeSetKey;
 }
 
 #pragma warning(pop)
