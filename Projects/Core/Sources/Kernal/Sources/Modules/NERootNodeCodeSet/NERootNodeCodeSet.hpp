@@ -6,7 +6,7 @@ namespace NE
 {
 	class NE_DLL NERootNodeCodeSet : public NENodeCodeSet
 	{
-		NE_DECLARE_CLASS(NERootNodeCodeSet, NENodeCodeSet)
+		NE_DECLARE_INTERFACE(NERootNodeCodeSet, NENodeCodeSet)
 
 	public:
 		NERootNodeCodeSet(NEEnlistableManager& manager);
