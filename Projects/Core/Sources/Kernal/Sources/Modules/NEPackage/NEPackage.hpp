@@ -1,9 +1,13 @@
 ///	@author	kniz
 #pragma once
 
+#pragma message("NEPackage.hpp - 1")
 #include "../NETClass/NETClass.hpp"
+#pragma message("NEPackage.hpp - 2")
 #include "../NEHeader/NEHeader.hpp"
+#pragma message("NEPackage.hpp - 3")
 #include "../NEClassBaseList/NEClassBaseList.hpp"
+#pragma message("NEPackage.hpp - 4")
 
 namespace NE
 {

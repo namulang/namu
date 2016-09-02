@@ -1,6 +1,10 @@
+#pragma message("NEModuleCodeSet.cpp - 1")
 #include "NEModuleCodeSet.hpp"
+#pragma message("NEModuleCodeSet.cpp - 2")
 #include "../Kernal/Kernal.hpp"
+#pragma message("NEModuleCodeSet.cpp - 3")
 #include "../NEIndexedModuleSet/NEIndexedModuleSet.hpp"
+#pragma message("NEModuleCodeSet.cpp - 4")
 
 namespace NE
 {

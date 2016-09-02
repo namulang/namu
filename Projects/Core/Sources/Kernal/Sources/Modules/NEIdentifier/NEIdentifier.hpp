@@ -1,8 +1,12 @@
 #pragma once
 
+#pragma message("NEIdentifier.hpp - 1")
 #include "../NEObject/NEObject.hpp"
+#pragma message("NEIdentifier.hpp - 2")
 #include "../NEWString/NEWString.hpp"
+#pragma message("NEIdentifier.hpp - 3")
 #include "../NEString/NEString.hpp"
+#pragma message("NEIdentifier.hpp - 4")
 
 namespace NE
 {

@@ -1,7 +1,10 @@
 #pragma once
 
+#pragma message("NETInterface.hpp - 1")
 #include "NETInterface.inl"
+#pragma message("NETInterface.hpp - 2")
 #include "../NETClassBase/NETClassBase.hpp"
+#pragma message("NETInterface.hpp - 3")
 
 namespace NE
 {

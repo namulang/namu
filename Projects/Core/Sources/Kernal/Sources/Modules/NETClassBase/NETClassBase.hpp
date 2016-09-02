@@ -1,19 +1,27 @@
 #pragma once
 
+#pragma message("NETClassBase.hpp - 1")
 #include "NETClassBase.inl"
+#pragma message("NETClassBase.hpp - 2")
 #include "NETClass.hpp"
-#include "../NEPackage/NEPackage.hpp"
+#pragma message("NETClassBase.hpp - 3")
+#pragma message("NETClassBase.hpp - 4")
 #include "../NETDerivedClassChecker/NETDerivedClassChecker.hpp"
+#pragma message("NETClassBase.hpp - 5")
 #include "../NETTemplateChecker/NETTemplateChecker.hpp"
+#pragma message("NETClassBase.hpp - 6")
 //	We must include ADTChecker after loaded TClass declarations and its 
 //	implementations(= TClass.hpp).
 //	Why do we have to keep this sequence:
 //		in order to use ADTChecker including TClass must be predeterminded first.
 //		because ADTChecker can checks whether T is kind of Interface Class by 
 //		applying SFINAE with TInterfaceClass(is part of TClass.hpp)
+#pragma message("NETClassBase.hpp - 7")
 #include "../NETADTChecker/NETADTChecker.hpp"
+#pragma message("NETClassBase.hpp - 8")
 //	Following one is just same as above.
 #include "../NETUnknownMetaClass/NETUnknownMetaClass.hpp"
+#pragma message("NETClassBase.hpp - 9")
 
 namespace NE
 {

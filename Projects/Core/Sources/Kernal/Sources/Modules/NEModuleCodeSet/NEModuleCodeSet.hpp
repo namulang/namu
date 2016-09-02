@@ -1,8 +1,12 @@
 #pragma once
 
+#pragma message("NEModuleCodeSet.hpp - 1")
 #include "../NETArray/NETArray.hpp"
+#pragma message("NEModuleCodeSet.hpp - 2")
 #include "../NETEnlistableSet/NETEnlistableSet.hpp"
+#pragma message("NEModuleCodeSet.hpp - 3")
 #include "../NEModule/NEModule.hpp"
+#pragma message("NEModuleCodeSet.hpp - 4")
 
 namespace NE
 {
