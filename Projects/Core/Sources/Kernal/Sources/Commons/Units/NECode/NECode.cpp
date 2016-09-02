@@ -14,7 +14,7 @@ namespace NE
 		_release();
 	}
 
-	NECode::NECode(const NEExportable::Identifier& identifier)
+	NECode::NECode(const NEIdentifier& identifier)
 		: Super(NECodeType::MODULE_SCRIPT, true)
 	{
 		setCode(identifier);
@@ -193,7 +193,7 @@ namespace NE
 		return RESULT_SUCCESS;
 	}
 
-	type_result This::setCode(const NEExportable::Identifier& identifier)
+	type_result This::setCode(const NEIdentifier& identifier)
 	{
 		const NEModule& fetched = Kernal::getInstance().getModuleManager().getModule(identifier);
 		if (!&fetched)
@@ -230,7 +230,7 @@ namespace NE
 			return saver << false;
 
 		saver << true;
-		return m.getHeader().NEExportable::Identifier::serialize(saver);
+		return m.getHeader().NEIdentifier::serialize(saver);
 	}
 
 	NEBinaryFileLoader& This::serialize(NEBinaryFileLoader& loader)
@@ -252,7 +252,7 @@ namespace NE
 
 		//	main:
 		const NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
-		NEExportable::Identifier identifier;
+		NEIdentifier identifier;
 		loader >> identifier;
 		const NEModule& module = moduler.getModule(identifier);
 		_code = &module ? module.getScriptCode() : -1;

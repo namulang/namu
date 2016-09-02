@@ -168,7 +168,7 @@ namespace NE
 			saver.setPosition(place_for_skip_address + sizeof(place_for_skip_address)); // 현재 모듈이 기록되는 위치 = 현재 위치 + 주소의 크기
 			//		모듈 기록:
 			//			모듈의 식별자 기록:	로드시, 이 식별자를 이용해서 모듈의 인스턴스를 가져올 것이다.
-			module.getHeader().NEExportable::Identifier::serialize(saver);
+			module.getHeader().NEIdentifier::serialize(saver);
 			
 			saver << module;
 			//		스킵주소 기록:	현재 파일포인터의 위치가 place_for_skip_address에 기록해야하는 주소다.
@@ -240,7 +240,7 @@ namespace NE
 			//								모듈이 존재하지 않는 상태.
 			//								따라서, 파일포인터를 스킵해야한다.
 			//			식별자 로드:
-			NEExportable::Identifier identifier;
+			NEIdentifier identifier;
 			loader >> identifier;
 			//			식별자로 인스턴스 fetch:	만약 더미모듈이 나오면, fetch에 실패 했다는 걸 말한다.
 			const NEModule& module = moduler.getModule(identifier);

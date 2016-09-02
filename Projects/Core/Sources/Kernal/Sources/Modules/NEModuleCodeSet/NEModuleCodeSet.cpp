@@ -246,7 +246,7 @@ namespace NE
 			//			디버그 출력:
 			if(NEResult::hasError(localstack.getRecentResultCode()) == true)
 			{
-				const NEExportable::Identifier& identifier = module.getHeader();
+				const NEIdentifier& identifier = module.getHeader();
 				type_result result_value = localstack.getRecentResultCode();
 				KERNAL_ERROR("E100031C4 : 모듈의 에러 발생\n모듈셋에서 실행한 모듈이 에러를 반환했습니다\n프레임 카운트 : %d\t모듈번호 : %d\n결과코드 : %d\t에러코드 : %d\n모듈 식별자:\n\t이름 : %s\n\t개발자 : %s\n\t개정번호 : %d", localstack.getFrameCount(), n, result_value, NEResult::getErrorCode(result_value), identifier.getName().toCharPointer(), identifier.getDeveloper().toCharPointer(), identifier.getRevision())
 			}

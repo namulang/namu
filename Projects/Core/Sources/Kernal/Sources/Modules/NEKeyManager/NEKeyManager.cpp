@@ -110,9 +110,9 @@ namespace NE
 
 		return RESULT_SUCCESS;
 	}
-	const NEExportable::ModuleHeader& NEKeyManager::getHeader() const
+	const NEHeader& NEKeyManager::getHeader() const
 	{
-		static NEExportable::ModuleHeader _header;
+		static NEHeader _header;
 
 		if(_header.isValid() != RESULT_SUCCESS)
 		{

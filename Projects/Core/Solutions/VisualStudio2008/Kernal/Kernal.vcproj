@@ -436,70 +436,6 @@
 							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEInitializable\NEInitializable.hpp"
 							>
 						</File>
-						<Filter
-							Name="NEExportable"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEExportable\NEExportable.cpp"
-								>
-							</File>
-							<File
-								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEExportable\NEExportable.hpp"
-								>
-							</File>
-							<Filter
-								Name="innerclass"
-								>
-								<Filter
-									Name="Identifier"
-									>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEExportable\innerclass\Identifier\Identifier.cpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEExportable\innerclass\Identifier\Identifier.hpp"
-										>
-									</File>
-									<Filter
-										Name="Header"
-										>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEExportable\innerclass\Header\Header.cpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEExportable\innerclass\Header\Header.hpp"
-											>
-										</File>
-										<Filter
-											Name="ModuleHeader"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEExportable\innerclass\ModuleHeader\ModuleHeader.cpp"
-												>
-											</File>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEExportable\innerclass\ModuleHeader\ModuleHeader.hpp"
-												>
-											</File>
-										</Filter>
-									</Filter>
-								</Filter>
-							</Filter>
-							<Filter
-								Name="NEScriptHeader"
-								>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEScriptHeader\NEScriptHeader.cpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEScriptHeader\NEScriptHeader.hpp"
-									>
-								</File>
-							</Filter>
-						</Filter>
 					</Filter>
 				</Filter>
 			</Filter>
@@ -2234,6 +2170,18 @@
 						</Filter>
 					</Filter>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="NEScriptHeader"
+				>
+				<File
+					RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEScriptHeader\NEScriptHeader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NEScriptHeader\NEScriptHeader.hpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>

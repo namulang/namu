@@ -25,7 +25,7 @@
 #pragma once
 
 #include "../NECodeType/NECodeType.hpp"
-#include "../../Interfaces/NEExportable/NEExportable.hpp"
+#include "../NEIdentifier/NEIdentifier.hpp"
 
 namespace NE
 {
@@ -35,7 +35,7 @@ namespace NE
 
 	public:
 		NECode();
-		NECode(const NEExportable::Identifier& identifier);
+		NECode(const NEIdentifier& identifier);
 		NECode(type_code new_code, const NECodeType& codetype = NECodeType());
 		NECode(const This& source);
 
@@ -71,7 +71,7 @@ namespace NE
 	public:
 		type_code getCode() const;
 		type_result setCode(type_code new_code);
-		type_result setCode(const NEExportable::Identifier& identifier);
+		type_result setCode(const NEIdentifier& identifier);
 
 	public:
 		virtual void release();

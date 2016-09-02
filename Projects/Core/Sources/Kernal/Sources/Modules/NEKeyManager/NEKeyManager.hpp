@@ -20,7 +20,7 @@ namespace NE
 
 	public:
 		virtual type_result initialize();
-		virtual const NEExportable::ModuleHeader& getHeader() const;
+		virtual const NEHeader& getHeader() const;
 		
 	private:
 		type_result execute();
