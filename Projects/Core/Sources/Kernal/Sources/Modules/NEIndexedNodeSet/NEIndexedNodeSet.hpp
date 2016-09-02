@@ -15,8 +15,9 @@ namespace NE
 	class NE_DLL NEIndexedNodeSet : public NETEnlistableSet< NETIndexedArray<NENode*, true> >
 	{
 		typedef NETEnlistableSet< NETIndexedArray<NENode*, true> > _Super;
-
-		NE_DECLARE_CLASS(NEIndexedNodeSet, _Super)
+		//	Why should this class be declared as Interface, not TConcreteClass?:
+		//		NEIndexedNodeSet has no constructor that doesn't need parameter.
+		NE_DECLARE_INTERFACE(NEIndexedNodeSet, _Super)
 
 	public:
 		NEIndexedNodeSet(NEEnlistableManager& manager);
