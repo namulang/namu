@@ -16,7 +16,7 @@ namespace NE
 	public:
 		friend class NEPackageManager;
 
-	private:
+	public:
 		NEPackage();
 		NEPackage(const This& rhs);
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../../Modules/NEStringSet/NEStringSet.hpp"
-#include "../../../Modules/NEWStringSet/NEWStringSet.hpp"
+#include "../NEStringSet/NEStringSet.hpp"
+#include "../NEWStringSet/NEWStringSet.hpp"
 
 namespace NE
 {	
