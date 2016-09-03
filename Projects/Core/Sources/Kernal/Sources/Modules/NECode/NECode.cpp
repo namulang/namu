@@ -1,5 +1,5 @@
 #include "NECode.hpp"
-#include "../../../Modules/Kernal/Kernal.hpp"
+#include "../Kernal/Kernal.hpp"
 #undef max
 #include <limits>
 using namespace std;
