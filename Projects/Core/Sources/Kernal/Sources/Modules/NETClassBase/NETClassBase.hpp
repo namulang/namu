@@ -5,6 +5,7 @@
 #pragma message("NETClassBase.hpp - 2")
 #include "NETClass.hpp"
 #pragma message("NETClassBase.hpp - 3")
+#include "../NEHeader/NEHeader.hpp"
 #pragma message("NETClassBase.hpp - 4")
 #include "../NETDerivedClassChecker/NETDerivedClassChecker.hpp"
 #pragma message("NETClassBase.hpp - 5")
