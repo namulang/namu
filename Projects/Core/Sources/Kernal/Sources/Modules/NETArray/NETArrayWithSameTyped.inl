@@ -70,7 +70,6 @@ namespace NE
 		virtual type_index push(const InsideType& source);
 		using NETCollector::push;
 		virtual type_index pop();
-		virtual type_index find(const InsideType& source) const;
 		//			NEObject:
 	public:
 		virtual type_result isValid() const; 

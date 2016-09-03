@@ -111,7 +111,7 @@ namespace NE
 			return RESULT_TYPE_WARNING;
 		}
 		NEShortCut& shortcut = getElement(code.getCode());
-		type_index index = shortcut.find(real_index);
+		type_index index = shortcut.match(real_index);
 		if(index != NE_INDEX_ERROR)
 		{
 			KERNAL_INFORMATION(" : 이미 enlist가 되었군요?\n주어진 숏컷에서 노드의 인덱스를 찾았습니다.\n\t인덱스: %d", index);
@@ -149,7 +149,7 @@ namespace NE
 			return RESULT_TYPE_ERROR;
 		}
 		NEShortCut& shortcut = getElement(code.getCode());
-		type_index index = shortcut.find(real_index);
+		type_index index = shortcut.match(real_index);
 		if(index <= NE_INDEX_ERROR)
 		{
 			KERNAL_ERROR(" : ");

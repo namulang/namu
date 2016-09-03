@@ -689,7 +689,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//     	---------------------------------------------------------------------------------
 	template <typename Type, type_bool pointerUseNewInstance>
-	type_index NETIndexedArray<Type, pointerUseNewInstance>::find(const Type& source) const
+	type_index NETIndexedArray<Type, pointerUseNewInstance>::match(const Type& source) const
 	{
 		//	pre:
 		//		관련멤버변수 검사:

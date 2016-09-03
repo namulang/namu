@@ -51,7 +51,7 @@ namespace NE
 
 	public:
 		using Super::push;
-		using Super::find;
+		using Super::match;
 		using Super::setElement;
 		//	»ý¼ºÀÚ:
 	public:
@@ -92,7 +92,7 @@ namespace NE
 		virtual type_result setElement(type_index index, const Type* const source);
 		virtual type_index push(const Type* const source);
 		virtual type_index pop();		
-		virtual type_index find(const Type* const source) const;
+		virtual type_index match(const Type* const source) const;
 		//			NEObject:
 	public:		
 		virtual type_result isValid() const;

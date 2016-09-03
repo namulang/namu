@@ -222,7 +222,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	type_index _NAME::find(const InsideType* const source) const
+	type_index _NAME::match(const InsideType* const source) const
 	{
 		//	pre:
 		//		파라메터 검사:
@@ -649,9 +649,9 @@ namespace NE
 	}
 
 	template <typename InsideType>
-	type_index _NAME::find(const InsideType& source) const
+	type_index _NAME::match(const InsideType& source) const
 	{
-		return find(&source);
+		return match(&source);
 	}
 
 	template <typename InsideType>

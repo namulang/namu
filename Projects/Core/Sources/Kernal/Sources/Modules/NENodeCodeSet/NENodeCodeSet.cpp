@@ -200,7 +200,7 @@ namespace NE
 		}
 		return nodeset.setElement(nodecode, source);
 	}
-	type_index NENodeCodeSet::find(const NENode& source) const
+	type_index NENodeCodeSet::match(const NENode& source) const
 	{
 		//	pre:
 		const NEIndexedNodeSet& nodeset = _getNodeSet();

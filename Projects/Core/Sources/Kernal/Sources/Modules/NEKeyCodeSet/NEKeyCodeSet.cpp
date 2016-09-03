@@ -189,7 +189,7 @@ namespace NE
 
 		return keyset.setElement(keycode, source);
 	}
-	type_index NEKeyCodeSet::find(const NEKey& source) const
+	type_index NEKeyCodeSet::match(const NEKey& source) const
 	{
 		//	pre:
 		const NEIndexedKeySet& keyset = _getKeySet();

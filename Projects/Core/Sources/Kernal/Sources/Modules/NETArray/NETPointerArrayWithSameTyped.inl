@@ -36,7 +36,7 @@ namespace NE
 		NE_DECLARE_CLASS_ONLY(_This, NETReservedCollector<InsideType*>)
 	public:
 		using Super::push;
-		using Super::find;
+		using Super::match;
 		using Super::setElement;
 
 		//	»ý¼ºÀÚ:
@@ -75,7 +75,7 @@ namespace NE
 		virtual type_index push(const InsideType* const source);
 		using NETCollector::push;
 		virtual type_index pop();
-		virtual type_index find(const InsideType* const source) const;
+		virtual type_index match(const InsideType* const source) const;
 		//			NEObject:
 	public:
 		virtual type_result isValid() const; 

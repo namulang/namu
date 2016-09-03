@@ -195,7 +195,7 @@ namespace NE
 
 	type_result This::setCode(const NEIdentifier& identifier)
 	{
-		const NEModule& fetched = Kernal::getInstance().getModuleManager().getModule(identifier);
+		const NEModule& fetched = Kernal::getInstance().getModuleManager().getClasses().match(identifier);
 		if (!&fetched)
 		{
 			KERNAL_ERROR("주어진 Identifier로 모듈을 가져오지 못했습니다.");
@@ -254,7 +254,7 @@ namespace NE
 		const NEPackageManager& moduler = Kernal::getInstance().getModuleManager();
 		NEIdentifier identifier;
 		loader >> identifier;
-		const NEModule& module = moduler.getModule(identifier);
+		const NEModule& module = moduler.getClasses().match(identifier);
 		_code = &module ? module.getScriptCode() : -1;
 
 		return loader;

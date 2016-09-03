@@ -93,7 +93,7 @@ namespace NE
 		virtual type_result setElement(type_index index, const Type& source);
 		virtual type_index push(const Type& source);
 		virtual type_index pop();		
-		virtual type_index find(const Type& source) const;
+		virtual type_index match(const Type& source) const;
 		//			NEObject:
 	public:
 		virtual type_result isValid() const;

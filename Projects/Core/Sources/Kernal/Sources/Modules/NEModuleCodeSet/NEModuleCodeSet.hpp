@@ -54,7 +54,7 @@ namespace NE
 		virtual NEModule& getElement(type_index index);
 		virtual const NEModule& getElement(type_index index) const;
 		virtual type_result setElement(type_index index, const NEModule& source);
-		virtual type_index find(const NEModule& source) const;
+		virtual type_index match(const NEModule& source) const;
 
 	public:
 		virtual void release();

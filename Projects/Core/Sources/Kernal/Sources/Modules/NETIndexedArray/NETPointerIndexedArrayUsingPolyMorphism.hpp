@@ -221,7 +221,7 @@ namespace NE
 	//	히스토리:	2013-01-10	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename Type>
-	type_index NETIndexedArray<Type*, true>::find(const Type* const source) const
+	type_index NETIndexedArray<Type*, true>::match(const Type* const source) const
 	{
 		//	pre:
 		//		파라메터 검사:

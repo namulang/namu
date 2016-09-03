@@ -182,7 +182,7 @@ namespace NE
 		}
 		return moduleset.setElement(modulecode, source);
 	}
-	type_index NEModuleCodeSet::find(const NEModule& source) const
+	type_index NEModuleCodeSet::match(const NEModule& source) const
 	{
 		//	pre:
 		const NEIndexedModuleSet& moduleset = _getModuleSet();

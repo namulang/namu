@@ -48,7 +48,7 @@ namespace NE
 		virtual NEKey& getElement(type_index index);
 		virtual const NEKey& getElement(type_index index) const;
 		virtual type_result setElement(type_index index, const NEKey& source);
-		virtual type_index find(const NEKey& source) const;
+		virtual type_index match(const NEKey& source) const;
 
 	public:
 		virtual void release();

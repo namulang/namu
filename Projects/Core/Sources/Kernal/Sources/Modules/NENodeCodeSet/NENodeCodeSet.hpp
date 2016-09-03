@@ -46,7 +46,7 @@ namespace NE
 		virtual NENode& getElement(type_index index);
 		virtual const NENode& getElement(type_index index) const;
 		virtual type_result setElement(type_index index, const NENode& source);
-		virtual type_index find(const NENode& source) const;
+		virtual type_index match(const NENode& source) const;
 		virtual type_result resize(type_index new_size);
 
 	public:

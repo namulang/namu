@@ -107,7 +107,7 @@ namespace
 		if(	existing.getDeveloper() != target.getDeveloper()	||
 			existing.getName() != target.getName()				)	return 0;
 		if(existing.getInterfaceRevision() == target.getInterfaceRevision()) return 3;
-		if(existing.getCompatibles().find(target.getInterfaceRevision()))
+		if(existing.getCompatibles().match(target.getInterfaceRevision()))
 			return 2;
 
 		return 1;

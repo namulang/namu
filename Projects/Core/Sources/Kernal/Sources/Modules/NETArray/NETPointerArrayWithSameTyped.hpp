@@ -379,7 +379,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	type_index _NAME::find(const InsideType* const source) const
+	type_index _NAME::match(const InsideType* const source) const
 	{
 		//	pre:
 		//		관련멤버변수 검사:
