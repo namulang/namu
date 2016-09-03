@@ -293,30 +293,6 @@
 							>
 						</File>
 					</Filter>
-					<Filter
-						Name="NECodeType"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECodeType\NECodeType.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECodeType\NECodeType.hpp"
-							>
-						</File>
-						<Filter
-							Name="NECode"
-							>
-							<File
-								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECode\NECode.cpp"
-								>
-							</File>
-							<File
-								RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Units\NECode\NECode.hpp"
-								>
-							</File>
-						</Filter>
-					</Filter>
 				</Filter>
 				<Filter
 					Name="Functions"
@@ -2082,6 +2058,30 @@
 										</Filter>
 									</Filter>
 								</Filter>
+							</Filter>
+						</Filter>
+						<Filter
+							Name="NECodeType"
+							>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NECodeType\NECodeType.cpp"
+								>
+							</File>
+							<File
+								RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NECodeType\NECodeType.hpp"
+								>
+							</File>
+							<Filter
+								Name="NECode"
+								>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NECode\NECode.cpp"
+									>
+								</File>
+								<File
+									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NECode\NECode.hpp"
+									>
+								</File>
 							</Filter>
 						</Filter>
 					</Filter>
