@@ -11,10 +11,6 @@ namespace NE
 
 		return *this;
 	}
-	NEIteratorBase& NEIteratorBase::operator++(int) 
-	{
-		return operator++();
-	}
 
 	const NEObject& NEIteratorBase::get() const
 	{
