@@ -2130,6 +2130,18 @@
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIteratorBase\NEIteratorBase.hpp"
 									>
 								</File>
+								<Filter
+									Name="NETIterator"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETIterator\NETIterator.hpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETIterator\NETIterator.inl"
+										>
+									</File>
+								</Filter>
 							</Filter>
 						</Filter>
 					</Filter>

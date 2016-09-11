@@ -10,12 +10,13 @@ namespace NE
 
 	public:
 		This& operator++();
+		This& operator+(type_count step_for_next);
 		//	doesn't support postfix overloading.
 
 	public:
 		const NEObject& get() const;
 		virtual NEObject& get() = 0;
 		virtual type_bool isEnd() const = 0;
-		virtual type_result next() = 0;
+		virtual type_result next(type_count step_for_next = 1) = 0;
 	};
 }

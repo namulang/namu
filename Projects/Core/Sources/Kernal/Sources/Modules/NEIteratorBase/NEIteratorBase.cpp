@@ -12,6 +12,13 @@ namespace NE
 		return *this;
 	}
 
+	NEIteratorBase& NEIteratorBase::operator+(type_count new_step)
+	{
+		next(new_step);
+
+		return *this;
+	}
+
 	const NEObject& NEIteratorBase::get() const
 	{
 		This* casted = const_cast<This*>(this);
