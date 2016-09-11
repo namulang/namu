@@ -16,7 +16,6 @@ namespace NE
 		const NEObject& get() const;
 		virtual NEObject& get() = 0;
 		virtual type_bool isEnd() const = 0;
-		virtual type_bool isStart() const = 0;
-		virtual NEIteratorBase& next() = 0;
+		virtual type_result next() = 0;
 	};
 }
