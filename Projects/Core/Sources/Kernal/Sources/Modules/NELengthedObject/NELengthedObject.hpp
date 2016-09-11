@@ -9,7 +9,7 @@ namespace NE
 		NE_DECLARE_INTERFACE_ONLY(NELengthedObject, NEObject)
 
 	public:
-		virtual type_index getLength() const;
+		virtual type_index getLength() const = 0;
 
 	public:
 		type_index getLengthLastIndex() const;
