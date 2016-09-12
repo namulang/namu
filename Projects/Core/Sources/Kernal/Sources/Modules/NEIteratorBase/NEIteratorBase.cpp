@@ -35,4 +35,18 @@ namespace NE
 	{
 		return next(1);
 	}
+
+	NEIteratorBase& NEIteratorBase::operator--()
+	{
+		back();
+
+		return *this;
+	}
+
+	NEIteratorBase& NEIteratorBase::operator-(type_count step_for_back)
+	{
+		back(step_for_back);
+
+		return *this;
+	}
 }

@@ -13,9 +13,21 @@ namespace NE
 	}
 
 	template <typename T>
+	NETIterator<T>& NETIterator<T>::operator++()
+	{
+		return static_cast<This&>(Super::operator--());
+	}
+
+	template <typename T>
 	NETIterator<T>& NETIterator<T>::operator+(type_count step_for_next)
 	{
 		return static_cast<This&>(Super::operator+(step_for_next));
+	}
+
+	template <typename T>
+	NETIterator<T>& NETIterator<T>::operator-(type_count step_for_back)
+	{
+		return static_cast<This&>(Super::operator-(step_for_back));
 	}
 
 	template <typename T>
@@ -53,9 +65,21 @@ namespace NE
 	}
 
 	template <typename T>
+	NETConstIterator<T>& NETConstIterator<T>::operator--()
+	{
+		return static_cast<This&>(Super::operator--());
+	}
+
+	template <typename T>
 	NETConstIterator<T>& NETConstIterator<T>::operator+(type_count step_for_next)
 	{
 		return static_cast<This&>(Super::operator+(step_for_next));
+	}
+
+	template <typename T>
+	NETConstIterator<T>& NETConstIterator<T>::operator-(type_count step_for_back)
+	{
+		return static_cast<This&>(Super::operator-(step_for_back));
 	}
 
 	template <typename T>
