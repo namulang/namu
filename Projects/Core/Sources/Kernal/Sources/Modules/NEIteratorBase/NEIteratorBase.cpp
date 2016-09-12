@@ -18,4 +18,16 @@ namespace NE
 
 		return *this;
 	}
+
+	type_bool NEIteratorBase::operator==(const This& rhs) const
+	{
+		if(this == &rhs) return true;
+
+		return &get() == &rhs.get();
+	}
+
+	type_bool NEIteratorBase::operator!=(const This& rhs) const
+	{
+		return ! operator==(rhs);
+	}
 }

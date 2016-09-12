@@ -9,9 +9,10 @@ namespace NE
 		NE_DECLARE_INTERFACE_ONLY(NEIteratorBase, NELengthedObject)
 
 	public:
-		This& operator++();
+		This& operator++();	//	doesn't support postfix overloading.
 		This& operator+(type_count step_for_next);
-		//	doesn't support postfix overloading.
+		type_bool operator==(const This& rhs) const;
+		type_bool operator!=(const This& rhs) const;
 
 	public:
 		const NEObject& get() const = 0;
