@@ -370,18 +370,6 @@
 						</File>
 					</Filter>
 					<Filter
-						Name="NESpecifiedInsertable"
-						>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NESpecifiedInsertable\NEPointerSpecifiedInsertable.hpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\..\Sources\Kernal\Sources\Commons\Interfaces\NESpecifiedInsertable\NESpecifiedInsertable.hpp"
-							>
-						</File>
-					</Filter>
-					<Filter
 						Name="NEExecutable"
 						>
 						<File
