@@ -30,4 +30,9 @@ namespace NE
 	{
 		return ! operator==(rhs);
 	}
+
+	type_result NEIteratorBase::next()
+	{
+		return next(1);
+	}
 }

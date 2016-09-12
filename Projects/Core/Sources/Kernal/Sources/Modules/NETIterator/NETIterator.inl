@@ -21,12 +21,32 @@ namespace NE
 		NE_DECLARE_INTERFACE_ONLY(NETIterator, NEIteratorBase)
 
 	public:
+		virtual const NEObject& get() const = 0;
+		virtual NEObject& get() = 0;
+
+	public:
 		//	Method hiding:
 		This& operator++();
 		This& operator+(type_count step_for_next);
 		T& operator*();
 		const T& operator*() const;
 		T& operator->();
+		const T& operator->() const;
+	};
+
+	template <typename T>
+	class NETConstIterator : public NEIteratorBase 
+	{
+		NE_DECLARE_INTERFACE_ONLY(NETConstIterator, NEIteratorBase)
+
+	public:
+		virtual const NEObject& get() const = 0;
+
+	public:
+		//	Method hiding:
+		This& operator++();
+		This& operator+(type_count step_for_next);
+		const T& operator*() const;
 		const T& operator->() const;
 	};
 }

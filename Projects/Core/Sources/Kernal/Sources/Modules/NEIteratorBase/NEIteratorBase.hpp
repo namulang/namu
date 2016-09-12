@@ -15,9 +15,10 @@ namespace NE
 		type_bool operator!=(const This& rhs) const;
 
 	public:
-		const NEObject& get() const = 0;
-		virtual NEObject& get() = 0;
 		virtual type_bool isEnd() const = 0;
-		virtual type_result next(type_count step_for_next = 1) = 0;
+		virtual type_result next(type_count step_for_next) = 0;
+
+	public:
+		type_result next();
 	};
 }
