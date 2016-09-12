@@ -21,6 +21,7 @@ namespace NE
 		NE_DECLARE_INTERFACE_ONLY(NETIterator, NEIteratorBase)
 
 	public:
+		//	Method hiding:
 		This& operator++();
 		This& operator+(type_count step_for_next);
 		T& operator*();
