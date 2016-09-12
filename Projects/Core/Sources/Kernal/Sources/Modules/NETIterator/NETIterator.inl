@@ -16,27 +16,6 @@ namespace NE
 	//
 	//			NETIterator<T>& operator++();
 	template <typename T>
-	class NETIterator : public NEIteratorBase 
-	{
-		NE_DECLARE_INTERFACE_ONLY(NETIterator, NEIteratorBase)
-
-	public:
-		virtual const T& get() const = 0;
-		virtual T& get() = 0;
-
-	public:
-		//	Method hiding:
-		This& operator++();
-		This& operator--();
-		This& operator+(type_count step_for_next);
-		This& operator-(type_count step_for_back);
-		T& operator*();
-		const T& operator*() const;
-		T& operator->();
-		const T& operator->() const;
-	};
-
-	template <typename T>
 	class NETConstIterator : public NEIteratorBase 
 	{
 		NE_DECLARE_INTERFACE_ONLY(NETConstIterator, NEIteratorBase)
@@ -48,9 +27,26 @@ namespace NE
 		//	Method hiding:
 		This& operator++();
 		This& operator--();
-		This& operator+(type_count step_for_next);
-		This& operator-(type_count step_for_back);
+		This operator+(type_count step_for_next);
+		This operator-(type_count step_for_back);
 		const T& operator*() const;
 		const T& operator->() const;
+	};
+	template <typename T>
+	class NETIterator : public NETConstIterator 
+	{
+		NE_DECLARE_INTERFACE_ONLY(NETIterator, NEIteratorBase)
+
+	public:
+		virtual T& get() = 0;
+
+	public:
+		//	Method hiding:
+		This& operator++();
+		This& operator--();
+		This operator+(type_count step_for_next);
+		This operator-(type_count step_for_back);
+		T& operator*();
+		T& operator->();
 	};
 }
