@@ -36,6 +36,12 @@ namespace NE
 		return next(1);
 	}
 
+	type_result NEIteratorBase::back()
+	{
+		return back(1);
+	}
+
+
 	NEIteratorBase& NEIteratorBase::operator--()
 	{
 		back();
@@ -46,6 +52,20 @@ namespace NE
 	NEIteratorBase& NEIteratorBase::operator-(type_count step_for_back)
 	{
 		back(step_for_back);
+
+		return *this;
+	}
+
+	NEIteratorBase& NEIteratorBase::operator+=(type_count step_for_next)
+	{
+		next(step_for_next);
+
+		return *this;
+	}
+
+	NEIteratorBase& NEIteratorBase::operator-=(type_count step_for_back)
+	{
+		back(step_for_back)
 
 		return *this;
 	}

@@ -11,10 +11,10 @@ namespace NE
 	public:
 		This& operator++();	//	doesn't support postfix overloading.
 		This& operator--();
-		This& operator+(type_count step_for_next);
-		This& operator-(type_count step_for_back);
 		type_bool operator==(const This& rhs) const;
 		type_bool operator!=(const This& rhs) const;
+		This& operator+=(type_count step_for_next);
+		This& operator-=(type_count step_for_next);
 
 	public:
 		virtual type_bool isEnd() const = 0;
@@ -23,5 +23,6 @@ namespace NE
 
 	public:
 		type_result next();
+		type_result back();
 	};
 }
