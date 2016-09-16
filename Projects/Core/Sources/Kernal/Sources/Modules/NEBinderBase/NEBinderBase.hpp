@@ -1,15 +1,12 @@
 #pragma once
 
-#include "../NESwitchableUnit/NESwitchableUnit.hpp"
-#include "../NETEnlistableSet/NETEnlistableSet.hpp"
+#include "../NEUnit/NEUnit.hpp"
 
 namespace NE
 {
-	class NEEnlistableManager;
-
-	class NE_DLL NEBinderBase : public NESwitchableUnit
+	class NE_DLL NEBinderBase : public NEUnit
 	{
-		NE_DECLARE_INTERFACE(NEBinderBase, NESwitchableUnit)
+		NE_DECLARE_INTERFACE(NEBinderBase, NEUnit)
 		
 	public:
 		NEBinderBase();
@@ -27,13 +24,10 @@ namespace NE
 		virtual type_result unbind();
 
 	public:
-		type_index getRealIndex() const;
-		type_id getComparingId() const;
-		NEEnlistableManager& getManager();
-		const NEEnlistableManager& getManager() const;
-
-	public:
-		virtual type_bool isBinded() const;
+		NEUnit& get();
+		const NEUnit& get() const;
+		type_id getBindedId() const;
+		type_bool isBinded() const;
 
 	public:
 		virtual void release();
@@ -41,13 +35,14 @@ namespace NE
 		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual type_result isValid() const;
 
+	protected:
+		type_result _bind(const NEUnit& target);
+
 	private:
 		const This& _assign(const This& source);
 		void _release();
 
 	protected:
-		type_index _real_index;
-		type_id _comparing_id;
-		//NEType::Type _manager_type;
+		type_id _binded_id;
 	};
 }
