@@ -1318,92 +1318,80 @@
 										</Filter>
 									</Filter>
 									<Filter
-										Name="NEBinderBase"
+										Name="NEKeyBinder"
 										>
 										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEBinderBase\NEBinderBase.cpp"
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyBinder\NEKeyBinder.cpp"
 											>
 										</File>
 										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEBinderBase\NEBinderBase.hpp"
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyBinder\NEKeyBinder.hpp"
 											>
 										</File>
 										<Filter
-											Name="NENodeBinder"
+											Name="NEKeyNameBinder"
 											>
 											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENodeBinder\NENodeBinder.cpp"
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyNameBinder\NEKeyNameBinder.cpp"
 												>
 											</File>
 											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENodeBinder\NENodeBinder.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NEModuleBinder"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleBinder\NEModuleBinder.cpp"
-												>
-											</File>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleBinder\NEModuleBinder.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NEKeyBinder"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyBinder\NEKeyBinder.cpp"
-												>
-											</File>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyBinder\NEKeyBinder.hpp"
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyNameBinder\NEKeyNameBinder.hpp"
 												>
 											</File>
 											<Filter
-												Name="NEKeyNameBinder"
+												Name="NEArgumentBase"
 												>
 												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyNameBinder\NEKeyNameBinder.cpp"
+													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentBase\NEArgumentBase.cpp"
 													>
 												</File>
 												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyNameBinder\NEKeyNameBinder.hpp"
+													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentBase\NEArgumentBase.hpp"
 													>
 												</File>
 												<Filter
-													Name="NEArgumentBase"
+													Name="NETArgument"
 													>
 													<File
-														RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentBase\NEArgumentBase.cpp"
+														RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArgument\NETArgument.cpp"
 														>
 													</File>
 													<File
-														RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentBase\NEArgumentBase.hpp"
+														RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArgument\NETArgument.hpp"
 														>
 													</File>
-													<Filter
-														Name="NETArgument"
+													<File
+														RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArgument\NETArgument.inl"
 														>
-														<File
-															RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArgument\NETArgument.cpp"
-															>
-														</File>
-														<File
-															RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArgument\NETArgument.hpp"
-															>
-														</File>
-														<File
-															RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArgument\NETArgument.inl"
-															>
-														</File>
-													</Filter>
+													</File>
 												</Filter>
 											</Filter>
 										</Filter>
+									</Filter>
+									<Filter
+										Name="NEModuleBinder"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleBinder\NEModuleBinder.cpp"
+											>
+										</File>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleBinder\NEModuleBinder.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NENodeBinder"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENodeBinder\NENodeBinder.cpp"
+											>
+										</File>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENodeBinder\NENodeBinder.hpp"
+											>
+										</File>
 									</Filter>
 								</Filter>
 								<Filter
@@ -1437,6 +1425,42 @@
 											>
 											<File
 												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEFloat\NEFloat.hpp"
+												>
+											</File>
+										</Filter>
+									</Filter>
+								</Filter>
+								<Filter
+									Name="NEBinderBase"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEBinderBase\NEBinderBase.cpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEBinderBase\NEBinderBase.hpp"
+										>
+									</File>
+									<Filter
+										Name="NETWeakBinder"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETWeakBinder\NETWeakBinder.hpp"
+											>
+										</File>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETWeakBinder\NETWeakBinder.inl"
+											>
+										</File>
+										<Filter
+											Name="NETBinder"
+											>
+											<File
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETBinder\NETBinder.hpp"
+												>
+											</File>
+											<File
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETBinder\NETBinder.inl"
 												>
 											</File>
 										</Filter>
@@ -1512,14 +1536,6 @@
 								</File>
 								<File
 									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETCollector\NETCollector.inl"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETCollector\NETPointerCollector.hpp"
-									>
-								</File>
-								<File
-									RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETCollector\NETPointerCollector.inl"
 									>
 								</File>
 								<Filter
@@ -1890,154 +1906,6 @@
 										</Filter>
 									</Filter>
 									<Filter
-										Name="NETList"
-										>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETList.hpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETList.inl"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETPointerList.hpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETPointerList.inl"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETPointerListWithPolyMorphism.hpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETPointerListWithPolyMorphism.inl"
-											>
-										</File>
-										<Filter
-											Name="NEWStringList"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEWStringList\NEWStringList.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NEArgumentList"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentList\NEArgumentList.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NEModuleDepthList"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleDepthList\NEModuleDepthList.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NEModuleList"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleList\NEModuleList.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NENodeList"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENodeList\NENodeList.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NEShortCut"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEShortCut\NEShortCut.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NEStringList"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEStringList\NEStringList.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NETStringList"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETStringList\NETStringList.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="innerclass"
-											>
-											<Filter
-												Name="Iterator"
-												>
-												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\Iterator\Iterator.hpp"
-													>
-												</File>
-												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\Iterator\Iterator.inl"
-													>
-												</File>
-											</Filter>
-											<Filter
-												Name="PointerIterator"
-												>
-												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIterator\PointerIterator.hpp"
-													>
-												</File>
-												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIterator\PointerIterator.inl"
-													>
-												</File>
-											</Filter>
-											<Filter
-												Name="PointerIteratorWithPolyMorphism"
-												>
-												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIteratorWithPolyMorphism\PointerIteratorWithPolyMorphism.hpp"
-													>
-												</File>
-												<File
-													RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIteratorWithPolyMorphism\PointerIteratorWithPolyMorphism.inl"
-													>
-												</File>
-											</Filter>
-										</Filter>
-										<Filter
-											Name="NEClassBaseList"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseList\NEClassBaseList.hpp"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="NEPackageList"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackageList\NEPackageList.hpp"
-												>
-											</File>
-										</Filter>
-									</Filter>
-									<Filter
 										Name="NEIndexedArray"
 										>
 										<Filter
@@ -2104,6 +1972,146 @@
 												</File>
 											</Filter>
 										</Filter>
+									</Filter>
+								</Filter>
+								<Filter
+									Name="NETList"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETList.hpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETList.inl"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETListWithBinder.hpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETListWithBinder.inl"
+										>
+									</File>
+									<Filter
+										Name="NEWStringList"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEWStringList\NEWStringList.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEArgumentList"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEArgumentList\NEArgumentList.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEModuleDepthList"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleDepthList\NEModuleDepthList.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEModuleList"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleList\NEModuleList.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NENodeList"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENodeList\NENodeList.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEShortCut"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEShortCut\NEShortCut.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEStringList"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEStringList\NEStringList.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NETStringList"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETStringList\NETStringList.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="innerclass"
+										>
+										<Filter
+											Name="Iterator"
+											>
+											<File
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\Iterator\Iterator.hpp"
+												>
+											</File>
+											<File
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\Iterator\Iterator.inl"
+												>
+											</File>
+										</Filter>
+										<Filter
+											Name="PointerIterator"
+											>
+											<File
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIterator\PointerIterator.hpp"
+												>
+											</File>
+											<File
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIterator\PointerIterator.inl"
+												>
+											</File>
+										</Filter>
+										<Filter
+											Name="PointerIteratorWithPolyMorphism"
+											>
+											<File
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIteratorWithPolyMorphism\PointerIteratorWithPolyMorphism.hpp"
+												>
+											</File>
+											<File
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIteratorWithPolyMorphism\PointerIteratorWithPolyMorphism.inl"
+												>
+											</File>
+										</Filter>
+									</Filter>
+									<Filter
+										Name="NEClassBaseList"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEClassBaseList\NEClassBaseList.hpp"
+											>
+										</File>
+									</Filter>
+									<Filter
+										Name="NEPackageList"
+										>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEPackageList\NEPackageList.hpp"
+											>
+										</File>
 									</Filter>
 								</Filter>
 							</Filter>

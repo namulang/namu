@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../NEIteratorBase/NEIteratorBase.hpp"
+#include "../NETBinder/NETBinder.hpp"
 
 namespace NE
 {
@@ -16,19 +17,19 @@ namespace NE
 	//
 	//			NETIterator<T>& operator++();
 	template <typename T>
-	class NETConstIterator : public NEIteratorBase 
+	class NETCIterator : public NEIteratorBase 
 	{
 		//	we're declaring this as Interface class even though this can be Class:
 		//		There is no default constructor, so this can't be instantiated by 
 		//		NE_DECLARE_CLASS macro.
-		NE_DECLARE_INTERFACE_ONLY(NETConstIterator, NEIteratorBase)
+		NE_DECLARE_INTERFACE_ONLY(NETCIterator, NEIteratorBase)
 
 	protected:
-		NETConstIterator();
+		NETCIterator();
 	public:
-		NETConstIterator(const NETConstIterator* proxy);	//	actually, we've to use NEBinder<This>& instead of this.
-		NETConstIterator(const This& rhs);
-		virtual ~NETConstIterator();
+		NETCIterator(const NEIteratorBase& proxy);	//	actually, we've to use NEBinder<This>& instead of this.
+		NETCIterator(const This& rhs);
+		virtual ~NETCIterator();
 
 	public:
 		virtual type_result next(type_count step_for_next);
@@ -57,16 +58,16 @@ namespace NE
 		void _release();
 		This& _assign(const This& rhs);
 
-	private:
+	protected:
 		//	Why does this class use proxy?:
 		//		This'll be used at NETCollector hierarchy. And in order to return
 		//		Iterator instance by value at NETCollector class, we've to use
 		//		proxy which contains how iterate instance cursor.
-		This* _proxy;	// TODO: this should be changed to NEBinder
+		NETBinder<NEIteratorBase> _proxy;	// TODO: this should be changed to NEBinder
 	};
 
 	template <typename T>
-	class NETIterator : public NETConstIterator 
+	class NETIterator : public NETCIterator 
 	{
 		NE_DECLARE_INTERFACE_ONLY(NETIterator, NEIteratorBase)
 

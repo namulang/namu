@@ -1,106 +1,98 @@
 #pragma once
 
-#include "NETConstIterator.inl"
+#include "NETCIterator.inl"
 
 namespace NE
 {
-	NE_DEFINE_INTERFACE_ONLY(NETConstIterator<T>, template <typename T>)
+	NE_DEFINE_INTERFACE_ONLY(NETCIterator<T>, template <typename T>)
 
 	template <typename T>
-	NETConstIterator<T>::NETConstIterator(const This* proxy)
-		: _proxy(NE_NULL)
+	NETCIterator<T>::NETCIterator(const NEIteratorBase& proxy)
+		: Super()
 	{
-
+		_proxy.bind(proxy);
 	}
 
 	template <typename T>
-	NETConstIterator<T>::NETConstIterator(const This* proxy)
-		: _proxy(&proxy.clone())
+	NETCIterator<T>::NETCIterator(const This& rhs)
+		: Super(rhs)
 	{
-
+		_assign(rhs);
 	}
 
 	template <typename T>
-	NETConstIterator<T>::NETConstIterator(const This& rhs)
-		: _proxy(NE_NULL)
-	{
-		_assign(proxy);
-	}
-
-	template <typename T>
-	NETConstIterator<T>::~NETConstIterator()
+	NETCIterator<T>::~NETCIterator()
 	{
 		_release();
 	}
 
 	template <typename T>
-	type_result NETConstIterator<T>::next(type_count step_for_next)
+	type_result NETCIterator<T>::next(type_count step_for_next)
 	{
-		if( ! _proxy)
+		if( ! _proxy.isBinded())
 			return RESULT_TYPE_WARNING;
 
 		return _proxy->next(step_for_next);
 	}
 
 	template <typename T>
-	type_result NETConstIterator<T>::back(type_count step_for_next)
+	type_result NETCIterator<T>::back(type_count step_for_next)
 	{
-		if( ! _proxy)
+		if( ! _proxy.isBinded())
 			return RESULT_TYPE_WARNING;
 
 		return _proxy->back(step_for_next);
 	}
 
 	template <typename T>
-	const T& NETConstIterator<T>::get() const
+	const T& NETCIterator<T>::get() const
 	{
 		T* nullpointer = NE_NULL;
-		if( ! _proxy		||
-			this == _proxy	)
+		if(	! _proxy.isBinded()		||
+			this == &_proxy.get()	)
 			return *nullpointer;
 
-		return _proxy->get();
+		return *_proxy;
 	}
 
 	template <typename T>
-	NEObject& NETConstIterator<T>::clone() const
+	NEObject& NETCIterator<T>::clone() const
 	{
 		return *(new This(*this));
 	}
 
 	template <typename T>
-	void NETConstIterator<T>::release()
+	void NETCIterator<T>::release()
 	{
 		_release();
 
-		if(_proxy)
-			_proxy->release();
+		_proxy.unbind();
 	}
 
 	template <typename T>
-	NEBinaryFileSaver& NETConstIterator<T>::serialize(NEBinaryFileSaver& saver) const
+	NEBinaryFileSaver& NETCIterator<T>::serialize(NEBinaryFileSaver& saver) const
 	{
 		//	TODO: if we don't use binder, we can't save it.
-		return saver;
+		return saver << _proxy;
 	}
 
 	template <typename T>
-	NEBinaryFileLoader& NETConstIterator<T>::serialize(NEBinaryFileLoader& loader)
+	NEBinaryFileLoader& NETCIterator<T>::serialize(NEBinaryFileLoader& loader)
 	{
 		//	same as above.
-		return loader;
+		return loader >> _proxy;
 	}
 
 	template <typename T>
-	type_result NETConstIterator<T>::isValid() const
+	type_result NETCIterator<T>::isValid() const
 	{
-		if( ! _proxy) return RESULT_TYPE_WARNING;
+		if( ! _proxy.isBinded()) return RESULT_TYPE_WARNING;
 
-		return _proxy->release();
+		return RESULT_SUCCESS;
 	}
 
 	template <typename T>
-	NETConstIterator<T>& NETConstIterator<T>::operator=(const This& rhs)
+	NETCIterator<T>& NETCIterator<T>::operator=(const This& rhs)
 	{
 		if(this == &rhs) return *this;
 
@@ -110,77 +102,71 @@ namespace NE
 	}
 
 	template <typename T>
-	type_bool NETConstIterator<T>::operator==(const This& rhs) const
+	type_bool NETCIterator<T>::operator==(const This& rhs) const
 	{
-		type_bool	has_proxy = _proxy != NE_NULL,
-					has_rhs_proxy = rhs._proxy != NE_NULL;
-		type_int	evaluation = has_proxy + has_rhs_proxy;
+		type_int evaluation = _proxy.isBinded() + rhs._proxy.isBinded();
 		if(evaluation < 2)
 			return evaluation == 0;
 
-		return _proxy->operator==(*rhs._proxy);
+		return _proxy == rhs._proxy;
 	}
 
 	template <typename T>
-	type_bool NETConstIterator<T>::operator!=(const This& rhs) const
+	type_bool NETCIterator<T>::operator!=(const This& rhs) const
 	{
 		return ! operator==(rhs);
 	}
 
 	template <typename T>
-	NETConstIterator<T>& NETConstIterator<T>::operator++()
+	NETCIterator<T>& NETCIterator<T>::operator++()
 	{
 		return static_cast<This&>(Super::operator++());
 	}
 
 	template <typename T>
-	NETConstIterator<T>& NETConstIterator<T>::operator--()
+	NETCIterator<T>& NETCIterator<T>::operator--()
 	{
 		return static_cast<This&>(Super::operator--());
 	}
 
 	template <typename T>
-	NETConstIterator<T> NETConstIterator<T>::operator+(type_count step_for_next)
+	NETCIterator<T> NETCIterator<T>::operator+(type_count step_for_next)
 	{
 		return static_cast<This&>(Super::operator+(step_for_next));
 	}
 
 	template <typename T>
-	NETConstIterator<T> NETConstIterator<T>::operator-(type_count step_for_back)
+	NETCIterator<T> NETCIterator<T>::operator-(type_count step_for_back)
 	{
 		return static_cast<This&>(Super::operator-(step_for_back));
 	}
 
 	template <typename T>
-	const T& NETConstIterator<T>::operator*() const
+	const T& NETCIterator<T>::operator*() const
 	{
 		return get();
 	}
 
 	template <typename T>
-	const T& NETConstIterator<T>::operator->() const
+	const T& NETCIterator<T>::operator->() const
 	{
 		return get();
 	}
 
 	template <typename T>
-	void NETConstIterator<T>::_release()
+	void NETCIterator<T>::_release()
 	{
-		if(_proxy)
-		{
+		if(_proxy.isBinded())
 			_proxy->release();
-			delete _proxy;
-		}
-		_proxy = NE_NULL;
+		_proxy.release();
 	}
 
 	template <typename T>
-	NETConstIterator<T>& NETConstIterator<T>::_assign(const This& rhs)
+	NETCIterator<T>& NETCIterator<T>::_assign(const This& rhs)
 	{
 		release();
 
-		if(rhs._proxy)
-			_proxy = &static_cast<This&>(rhs._proxy->clone());
+		_proxy = rhs._proxy;
 
 		return *this;
 	}
