@@ -4,39 +4,78 @@
 
 namespace NE
 {
-	template <typename T, type_bool>
-	type_result NETWeakBinder<T>::bind(const T& target)
+#define _TEMPLATE	template <typename T, type_bool>
+#define _NAME		NETWeakBinder<T, type_bool>
+
+	_TEMPLATE
+	_NAME::NETWeakBinder()
+		: Super()
 	{
+
+	}
+
+	_TEMPLATE
+	_NAME::NETWeakBinder(const T& target)
+		: Super()
+	{
+		This::bind(target);
+	}
+
+	_TEMPLATE
+	_NAME::NETWeakBinder(const This& rhs)
+		: Super(rhs)
+	{
+		This::bind(*rhs);
+	}
+
+	_TEMPLATE
+	_NAME::~NETWeakBinder()
+	{
+		unbind();
+	}
+
+	_TEMPLATE
+	type_result _NAME::bind(const T& target)
+	{
+		if( ! &target) return RESULT_TYPE_WARNING;
+		if(isBinded())
+		{
+			if( &get() == &target)
+				return RESULT_SUCCESS | RESULT_ABORT_ACTION;
+			unbind();
+		}
+
+
 		// TODO:
 		return RESULT_SUCCESS;
 	}
 
-	template <typename T>
-	T& NETWeakBinder<T>::operator->()
+	_TEMPLATE
+	T& _NAME::operator->()
 	{
 		return get();
 	}
 
-	template <typename T>
-	const T& NETWeakBinder<T>::operator->() const
+	_TEMPLATE
+	const T& _NAME::operator->() const
 	{
 		return get();
 	}
 
-	template <typename T>
-	T& NETWeakBinder<T>::operator*()
+	_TEMPLATE
+	T& _NAME::operator*()
 	{
 		return get();
 	}
 
-	template <typename T>
-	const T& NETWeakBinder<T>::operator*() const
+	_TEMPLATE
+	const T& _NAME::operator*() const
 	{
 		return get();
 	}
 
-	template <typename T>
-	T& NETWeakBinder<T>::get() 
+	_TEMPLATE
+	T& _NAME::get() 
 	{
 		NEUnit& binded = Super::get();
 		if( ! binded.isSubClassOf(T::getClassStatically()))
@@ -48,8 +87,8 @@ namespace NE
 		return static_cast<T&>(binded);
 	}
 
-	template <typename T>
-	const T& NETWeakBinder<T>::get() const
+	_TEMPLATE
+	const T& _NAME::get() const
 	{
 		const NEUnit& binded = Super::get();
 		if( ! binded.isSubClassOf(T::getClassStatically()))
@@ -60,4 +99,7 @@ namespace NE
 
 		return static_cast<const T&>(binded);
 	}
+
+#undef _NAME
+#undef _TEMPLATE
 }

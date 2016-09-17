@@ -8,7 +8,14 @@ namespace NE
 	template <typename T, type_bool IS_VALID_TYPE = NETDerivedClassChecker<T, NEUnit>>
 	class NETWeakBinder : public NEBinderBase
 	{
-		NE_DECLARE_CLASS(NETWeakBinder<T>, NEBinderBase)
+		typedef NETWeakBinder<T, IS_VALID_TYPE> _This;
+		NE_DECLARE_CLASS(_This, NEBinderBase)
+
+	public:
+		NETWeakBinder();
+		NETWeakBinder(const T& target);
+		NETWeakBinder(const This& rhs);
+		virtual ~NETWeakBinder();
 
 	public:
 		virtual type_result bind(const T& target);

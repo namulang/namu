@@ -27,7 +27,7 @@ namespace NE
 	protected:
 		NETCIterator();
 	public:
-		NETCIterator(const NEIteratorBase& proxy);	//	actually, we've to use NEBinder<This>& instead of this.
+		NETCIterator(const NEIteratorBase& origin);	//	actually, we've to use NEBinder<This>& instead of this.
 		NETCIterator(const This& rhs);
 		virtual ~NETCIterator();
 
@@ -74,7 +74,7 @@ namespace NE
 	protected:
 		NETIterator();
 	public:
-		NETIterator(const NETIterator* proxy);	//	actually, we've to use NEBinder<This>& instead of this.
+		NETIterator(const NEIteratorBase& origin);	//	actually, we've to use NEBinder<This>& instead of this.
 		NETIterator(const This& rhs);
 		virtual ~NETIterator();
 

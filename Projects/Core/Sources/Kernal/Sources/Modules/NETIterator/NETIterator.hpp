@@ -7,10 +7,10 @@ namespace NE
 	NE_DEFINE_INTERFACE_ONLY(NETCIterator<T>, template <typename T>)
 
 	template <typename T>
-	NETCIterator<T>::NETCIterator(const NEIteratorBase& proxy)
-		: Super()
+	NETCIterator<T>::NETCIterator(const NEIteratorBase& origin)
+		: Super(), _proxy(origin);
 	{
-		_proxy.bind(proxy);
+	
 	}
 
 	template <typename T>
@@ -64,9 +64,7 @@ namespace NE
 	template <typename T>
 	void NETCIterator<T>::release()
 	{
-		_release();
-
-		_proxy.unbind();
+		_proxy.release();	
 	}
 
 	template <typename T>
@@ -108,7 +106,7 @@ namespace NE
 		if(evaluation < 2)
 			return evaluation == 0;
 
-		return _proxy == rhs._proxy;
+		return &_proxy.get() == &rhs._proxy.get();
 	}
 
 	template <typename T>
@@ -154,14 +152,6 @@ namespace NE
 	}
 
 	template <typename T>
-	void NETCIterator<T>::_release()
-	{
-		if(_proxy.isBinded())
-			_proxy->release();
-		_proxy.release();
-	}
-
-	template <typename T>
 	NETCIterator<T>& NETCIterator<T>::_assign(const This& rhs)
 	{
 		release();
@@ -181,8 +171,8 @@ namespace NE
 	}
 
 	template <typename T>
-	NEIterator<T>::NEIterator(const This* proxy)
-		: Super(proxy)
+	NEIterator<T>::NEIterator(const NEIteratorBase& origin)
+		: Super(origin)
 	{
 
 	}
@@ -198,11 +188,11 @@ namespace NE
 	T& NETIterator<T>::get()
 	{
 		T* nullpointer = NE_NULL;
-		if( ! _proxy		||
-			this == _proxy	)
+		if( ! _proxy.isBinded()		||
+			this == &_proxy.get()	)
 			return *nullpointer;
 
-		return _proxy->get();
+		return *_proxy;
 	}
 
 	template <typename T>

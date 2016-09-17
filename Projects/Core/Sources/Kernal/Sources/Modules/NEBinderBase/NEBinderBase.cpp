@@ -14,7 +14,8 @@ namespace NE
 	NEBinderBase::NEBinderBase(const This& source)
 		: Super(source)
 	{
-		_assign(source);
+		//	No need to assign _binded_id variable:
+		//		subclass'll do that.
 	}
 
 	NEBinderBase::~NEBinderBase()
@@ -24,9 +25,13 @@ namespace NE
 
 	const NEBinderBase& NEBinderBase::operator=(const This& source)
 	{
+		if(this == &source) return *this;
+
 		Super::operator=(source);
 
-		return _assign(source);
+		bind(source.get());
+
+		return *this;
 	}
 
 	type_bool NEBinderBase::operator==(const This& source) const
@@ -52,7 +57,7 @@ namespace NE
 	{
 		Super::release();
 
-		_release();
+		unbind();
 	}
 
 	NEBinaryFileLoader& NEBinderBase::serialize(NEBinaryFileLoader& loader)
@@ -76,20 +81,6 @@ namespace NE
 		if(_binded_id <= NE_HAS_NO_ID) return RESULT_TYPE_ERROR;
 
 		return RESULT_SUCCESS;
-	}
-
-	const NEBinderBase& NEBinderBase::_assign(const This& source)
-	{
-		if(this == &source) return *this;
-
-		_binded_id = source._binded_id;
-
-		return *this;
-	}
-
-	void NEBinderBase::_release()
-	{
-		unbind();
 	}
 
 	type_id NEBinderBase::getBindedId() const

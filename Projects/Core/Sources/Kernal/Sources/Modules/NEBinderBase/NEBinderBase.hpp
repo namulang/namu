@@ -38,10 +38,6 @@ namespace NE
 	protected:
 		type_result _bind(const NEUnit& target);
 
-	private:
-		const This& _assign(const This& source);
-		void _release();
-
 	protected:
 		type_id _binded_id;
 	};
