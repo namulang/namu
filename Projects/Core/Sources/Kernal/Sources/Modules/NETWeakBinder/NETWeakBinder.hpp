@@ -38,6 +38,12 @@ namespace NE
 	type_result _NAME::bind(const T& target)
 	{
 		if( ! &target) return RESULT_TYPE_WARNING;
+		//	Unit's ID was never set to 0:
+		//		Unit's a instance which was managed by InstanceManager.
+		//		When it's handled by InstanceManager, InstanceManager impose valid 
+		//		id to it.
+		//		And to distinguish for validness ID number should not was set to 0. 
+		if( ! target.getId()) return RESULT_TYPE_WARNING;
 		if(isBinded())
 		{
 			if( &get() == &target)
@@ -49,6 +55,7 @@ namespace NE
 		// TODO:
 		return RESULT_SUCCESS;
 	}
+
 
 	_TEMPLATE
 	T& _NAME::operator->()

@@ -2114,6 +2114,18 @@
 										</File>
 									</Filter>
 								</Filter>
+								<Filter
+									Name="NETDeeper"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETDeeper\NETDeeper.hpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETDeeper\NETDeeper.inl"
+										>
+									</File>
+								</Filter>
 							</Filter>
 							<Filter
 								Name="NEIteratorBase"
