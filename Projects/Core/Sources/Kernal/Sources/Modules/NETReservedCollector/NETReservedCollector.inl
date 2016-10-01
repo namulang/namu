@@ -79,5 +79,3 @@ namespace NE
 		type_index _size;
 	}; 
 }
-
-#include "NETPointerReservedCollector.inl"

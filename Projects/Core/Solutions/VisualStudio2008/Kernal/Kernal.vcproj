@@ -1542,14 +1542,6 @@
 									Name="NETReservedCollector"
 									>
 									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETReservedCollector\NETPointerReservedCollector.hpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETReservedCollector\NETPointerReservedCollector.inl"
-										>
-									</File>
-									<File
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETReservedCollector\NETReservedCollector.hpp"
 										>
 									</File>
