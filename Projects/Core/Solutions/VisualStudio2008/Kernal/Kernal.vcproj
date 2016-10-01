@@ -1985,14 +1985,6 @@
 										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETList.inl"
 										>
 									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETListWithBinder.hpp"
-										>
-									</File>
-									<File
-										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\NETListWithBinder.inl"
-										>
-									</File>
 									<Filter
 										Name="NEWStringList"
 										>
@@ -2056,46 +2048,6 @@
 											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETStringList\NETStringList.hpp"
 											>
 										</File>
-									</Filter>
-									<Filter
-										Name="innerclass"
-										>
-										<Filter
-											Name="Iterator"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\Iterator\Iterator.hpp"
-												>
-											</File>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\Iterator\Iterator.inl"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="PointerIterator"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIterator\PointerIterator.hpp"
-												>
-											</File>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIterator\PointerIterator.inl"
-												>
-											</File>
-										</Filter>
-										<Filter
-											Name="PointerIteratorWithPolyMorphism"
-											>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIteratorWithPolyMorphism\PointerIteratorWithPolyMorphism.hpp"
-												>
-											</File>
-											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETList\innerclass\PointerIteratorWithPolyMorphism\PointerIteratorWithPolyMorphism.inl"
-												>
-											</File>
-										</Filter>
 									</Filter>
 									<Filter
 										Name="NEClassBaseList"
