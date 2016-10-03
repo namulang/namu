@@ -2082,6 +2082,18 @@
 										>
 									</File>
 								</Filter>
+								<Filter
+									Name="NETShallower"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETShallower\NETShallower.hpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETShallower\NETShallower.inl"
+										>
+									</File>
+								</Filter>
 							</Filter>
 							<Filter
 								Name="NEIteratorBase"
