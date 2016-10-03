@@ -10,11 +10,13 @@ namespace NE
 	{
 	public:
 		typedef NEUnknown Trait;
+		typedef NEUnknown Template;
 	};
-	template <typename X, template<typename> class Template>
+	template <typename X, template<typename> class _Template>
 	class NETTraitDeterminder<Template<X>> : public NETypeChecker
 	{
 	public:
 		typedef X Trait;
+		typedef _Template Template;
 	};
 }
