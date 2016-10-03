@@ -2,8 +2,8 @@
 
 namespace NE
 {
-#define _TEMPLATE   template <typename <typename> Template, typename T>
-#define _OWNERNAME  NETCollectorProxy<Collector<T>>
+#define _TEMPLATE   template <typename T, template <typename> class BinderType>
+#define _OWNERNAME  NETCollectorProxy<T, BinderType>
 #define _NAME       _OWNERNAME##::Iterator
 
 	NE_DEFINE_CLASS_ONLY_2(_NAME, NE_MACRO_FUNNEL(_TEMPLATE));
@@ -23,7 +23,7 @@ namespace NE
 	}
 
 	_TEMPLATE
-	const T& _NAME::get() const
+	const _OWNER::Trait& _NAME::get() const
 	{
 		This* unconsted = const_cast<This*>(this);
 
@@ -31,12 +31,12 @@ namespace NE
 	}
 
 	_TEMPLATE
-	T& _NAME::get() 
+	_OWNER::Trait& _NAME::get() 
 	{
 		//  TODO: code refactorying needs with NETNuller
 		//  with NETNuller:
 		//      return ***_proxied;
-		T* nullpointer = NE_NULL;
+		Trait* nullpointer = NE_NULL;
 		BeanIterator& bean_e = *_proxied;
 		if( ! &bean_e) return *nullpointer;
 
@@ -121,12 +121,12 @@ namespace NE
 	}
 
 	_TEMPLATE
-	const T& _NAME::get() const
+	const _OWNER::Trait& _NAME::get() const
 	{
 		//  TODO: code refactorying needs with NETNuller
 		//  with NETNuller:
 		//      return ***_proxied;
-		const T* nullpointer = NE_NULL;
+		const Trait* nullpointer = NE_NULL;
 		BeanCIterator& bean_e = *_proxied;
 		if( ! &bean_e) return *nullpointer;
 
@@ -218,7 +218,7 @@ namespace NE
 	}
 
 	_TEMPLATE
-	type_index _OWNERNAME::insert(const NETCIterator<T>& where, const T& source)
+	type_index _OWNERNAME::insert(const NETCIterator<T>& where, const Trait& source)
 	{
 		return _proxy.insert(where, NETBinder<T>(source));
 	}
@@ -236,13 +236,13 @@ namespace NE
 	}
 
 	_TEMPLATE
-	T& _OWNERNAME::getElement(type_index index)
+	_OWNER::Trait& _OWNERNAME::getElement(type_index index)
 	{
 		return *_proxy.getElement(index);
 	}
 
 	_TEMPLATE
-	const T& _OWNERNAME::getElement(type_index index) const
+	const _OWNER::Trait& _OWNERNAME::getElement(type_index index) const
 	{
 		return *_proxy.getElement(index);
 	}
