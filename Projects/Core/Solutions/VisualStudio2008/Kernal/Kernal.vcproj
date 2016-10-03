@@ -2070,6 +2070,18 @@
 										>
 									</File>
 								</Filter>
+								<Filter
+									Name="NETCollectorProxy"
+									>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETCollectorProxy\NETCollectorProxy.hpp"
+										>
+									</File>
+									<File
+										RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETCollectorProxy\NETCollectorProxy.inl"
+										>
+									</File>
+								</Filter>
 							</Filter>
 							<Filter
 								Name="NEIteratorBase"
