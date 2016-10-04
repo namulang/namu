@@ -17,6 +17,9 @@ namespace NE
 		This& operator-=(type_count step_for_next);
 
 	public:
+		///	@brief	checks that this iterator reaches to the end of iterating.
+		/// @return	returns true when iterator reaches to back of the first iterator,
+		///			or next of the last iterator¤Ñthe end iterator.
 		virtual type_bool isEnd() const = 0;
 		virtual type_result next(type_count step_for_next) = 0;
 		virtual type_result back(type_count step_for_back) = 0;
