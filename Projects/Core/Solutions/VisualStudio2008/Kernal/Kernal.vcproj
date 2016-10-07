@@ -1553,51 +1553,11 @@
 										Name="NETVector"
 										>
 										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETArrayWithSameTyped.hpp"
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETVector\NETVector.hpp"
 											>
 										</File>
 										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETArrayWithSameTyped.inl"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETPointerArray.hpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETPointerArray.inl"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETPointerArrayUsingPolyMorphism.hpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETPointerArrayUsingPolyMorphism.inl"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETPointerArrayUsingPolyMorphismWithSameTyped.hpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETPointerArrayUsingPolyMorphismWithSameTyped.inl"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETPointerArrayWithSameTyped.hpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETPointerArrayWithSameTyped.inl"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETVector.hpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETVector.inl"
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETVector\NETVector.inl"
 											>
 										</File>
 										<Filter
