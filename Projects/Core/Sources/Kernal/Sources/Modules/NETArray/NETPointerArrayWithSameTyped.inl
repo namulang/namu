@@ -1,5 +1,5 @@
 //	---------------------------------------------------------------------------------
-//	클래스명:	NETArray
+//	클래스명:	NETVector
 //	설명	:	Array의 형태로 데이터를 관리하는 클래스.
 //	관계	:	기반클래스.			NETReservedCollector
 //	특성	:	배열의 특성을 그대로 구현한다. 각 엘리먼트는 추가/삽입/삭제의
@@ -29,9 +29,9 @@
 namespace NE
 {
 	template <typename InsideType>
-	class NETArray<InsideType*, false, InsideType*> : public NETReservedCollector<InsideType*>, public NESpecifiedInsertable<InsideType*>
+	class NETVector<InsideType*, false, InsideType*> : public NETReservedCollector<InsideType*>, public NESpecifiedInsertable<InsideType*>
 	{
-		typedef NETArray<InsideType*, false, InsideType*> _This;
+		typedef NETVector<InsideType*, false, InsideType*> _This;
 
 		NE_DECLARE_CLASS_ONLY(_This, NETReservedCollector<InsideType*>)
 	public:
@@ -41,13 +41,13 @@ namespace NE
 
 		//	생성자:
 	public:
-		NETArray();
-		NETArray(type_count size);
-		NETArray(const This& source);
+		NETVector();
+		NETVector(type_count size);
+		NETVector(const This& source);
 
 		//	소멸자:
 	public:
-		virtual ~NETArray();
+		virtual ~NETVector();
 
 		//	연산자 중첩:
 	public:

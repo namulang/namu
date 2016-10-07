@@ -1,7 +1,7 @@
 #pragma once
 
 #pragma message("NEModuleCodeSet.hpp - 1")
-#include "../NETArray/NETArray.hpp"
+#include "../NETVector/NETVector.hpp"
 #pragma message("NEModuleCodeSet.hpp - 2")
 #include "../NETEnlistableSet/NETEnlistableSet.hpp"
 #pragma message("NEModuleCodeSet.hpp - 3")
@@ -11,13 +11,13 @@
 namespace NE
 {
 	template 
-	class NE_DLL NETArray<type_code, false, NEModule>;
+	class NE_DLL NETVector<type_code, false, NEModule>;
 	template 
-	class NE_DLL NETEnlistableSet< NETArray<type_code, false, NEModule> >;
+	class NE_DLL NETEnlistableSet< NETVector<type_code, false, NEModule> >;
 
-	class NE_DLL NEModuleCodeSet : public NETEnlistableSet<NETArray<type_code, false, NEModule> >, public NEExecutable
+	class NE_DLL NEModuleCodeSet : public NETEnlistableSet<NETVector<type_code, false, NEModule> >, public NEExecutable
 	{
-		typedef NETEnlistableSet<NETArray<type_code, false, NEModule>> _Super;
+		typedef NETEnlistableSet<NETVector<type_code, false, NEModule>> _Super;
 
 		NE_DECLARE_CLASS(NEModuleCodeSet, _Super)
 

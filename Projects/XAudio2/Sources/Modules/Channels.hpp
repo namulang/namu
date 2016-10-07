@@ -68,6 +68,6 @@ namespace XA2
 	};	
 
 	template
-	class NE_DLL NETArray<Channel, false>;
-	typedef NETArray<Channel, false> Channels;
+	class NE_DLL NETVector<Channel, false>;
+	typedef NETVector<Channel, false> Channels;
 }

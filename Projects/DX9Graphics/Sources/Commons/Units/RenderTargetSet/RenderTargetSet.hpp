@@ -10,12 +10,12 @@ namespace DX9Graphics
 	패턴을 사용하므로 기본생성자로는 생성할 수 없기 때문이다.
 	*/
 	template
-	class NE_DLL NETArray<RenderTarget*, true>;
+	class NE_DLL NETVector<RenderTarget*, true>;
 
-	class NE_DLL RenderTargetSet : public NETArray<RenderTarget*, true>
+	class NE_DLL RenderTargetSet : public NETVector<RenderTarget*, true>
 	{
 	public:
-		typedef NETArray<RenderTarget*, true> SuperClass;
+		typedef NETVector<RenderTarget*, true> SuperClass;
 		typedef RenderTargetSet ThisClass;
 		typedef RenderTarget Trait;
 

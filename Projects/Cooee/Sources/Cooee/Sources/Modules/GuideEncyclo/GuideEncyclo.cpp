@@ -33,7 +33,7 @@ void GuideEncyclo::GuideList::onUpdateData()
 {
 	ListGliph::onUpdateData();
 
-	NETArray<Guide>& guides = toOwner()->guides;
+	NETVector<Guide>& guides = toOwner()->guides;
 	items.create(guides.getLength());
 
 	for(int n=0; n < guides.getLength(); n++)

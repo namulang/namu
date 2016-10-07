@@ -2,7 +2,7 @@
 
 namespace NE
 {
-#define _NAME	NETArray<InsideType, false>
+#define _NAME	NETVector<InsideType, false>
 
 	NE_DEFINE_CLASS_ONLY_2(NE_MACRO_FUNNEL(_NAME), template <typename InsideType>)
 
@@ -10,7 +10,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	_NAME::NETArray()
+	_NAME::NETVector()
 		: Super(), _data(NE_NULL)
 	{
 		_release();
@@ -22,7 +22,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	_NAME::NETArray(type_count size)
+	_NAME::NETVector(type_count size)
 		: Super(size), _data(NE_NULL)
 	{
 		create(size);
@@ -34,7 +34,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	_NAME::NETArray(const This& source)
+	_NAME::NETVector(const This& source)
 		: Super(), _data(NE_NULL)
 	{
 		_assign(source);
@@ -46,7 +46,7 @@ namespace NE
 	//	히스토리:	2011-07-07	이태훈	개발 완료
 	//	---------------------------------------------------------------------------------
 	template <typename InsideType>
-	_NAME::~NETArray()
+	_NAME::~NETVector()
 	{
 		_release();
 	}

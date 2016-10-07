@@ -1,19 +1,19 @@
 #pragma once
 
 #include "../NETEnlistableSet/NETEnlistableSet.hpp"
-#include "../NETArray/NETArray.hpp"
+#include "../NETVector/NETVector.hpp"
 #include "../NENode/NENode.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NETArray<type_code, false, NENode>;
+	class NE_DLL NETVector<type_code, false, NENode>;
 	template
-	class NE_DLL NETEnlistableSet< NETArray<type_code, false, NENode> >;
+	class NE_DLL NETEnlistableSet< NETVector<type_code, false, NENode> >;
 
-	class NE_DLL NENodeCodeSet : public NETEnlistableSet< NETArray<type_code, false, NENode> >, public NEExecutable
+	class NE_DLL NENodeCodeSet : public NETEnlistableSet< NETVector<type_code, false, NENode> >, public NEExecutable
 	{
-		typedef NETArray<type_code, false, NENode> _Type;
+		typedef NETVector<type_code, false, NENode> _Type;
 
 		NE_DECLARE_CLASS(NENodeCodeSet, NETEnlistableSet<_Type>)
 

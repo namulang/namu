@@ -952,7 +952,7 @@ public:
 	ArrayAssigningTest() : TestCase("array assigning test.") {}
 	virtual bool onTest()
 	{
-		NETArray<int> arr, arr2;
+		NETVector<int> arr, arr2;
 		arr.create(3);
 		arr.push(1);
 		arr.push(2);
@@ -975,7 +975,7 @@ public:
 	virtual bool onTest()
 	{
 		int a=0, b=1, c=2, d=4;
-		NETArray<int*, false> arr, arr2, temp;
+		NETVector<int*, false> arr, arr2, temp;
 		arr.create(3);
 		arr.push(&a);
 		arr.push(&b);
@@ -1013,7 +1013,7 @@ public:
 
 		int datum;
 	};
-	class MyContainer : public NETArray<MyInt*, true> 
+	class MyContainer : public NETVector<MyInt*, true> 
 	{
 	public:
 	};
@@ -1985,7 +1985,7 @@ public:
 		ns.setUsingAndOperation(false);	//	OR 연산으로 처리.
 		ns.setCountLimit(2);
 
-		NETArray<NENode*> pointers(8);
+		NETVector<NENode*> pointers(8);
 		//	예상 되는 pointers의 내용:
 		//		[0]	=	n0		
 		//		[1]	=	n2
@@ -2755,7 +2755,7 @@ public:
 		if (ns.getLength() != 3)
 			return false;
 
-		NETArray<type_int> t;
+		NETVector<type_int> t;
 		if (t.getSize() != 0)
 			return false;
 		t.resize(5);		
@@ -3123,10 +3123,10 @@ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 }
 
 // 
-// class Mine : public NETArray<int, false, NEString>
+// class Mine : public NETVector<int, false, NEString>
 // {
 // public:
-// 	typedef NETArray<int, false, NEString> SuperClass;
+// 	typedef NETVector<int, false, NEString> SuperClass;
 // 	typedef int InnerType;
 // 	typedef NEString OuterType;
 // 	Mine() : SuperClass() {}

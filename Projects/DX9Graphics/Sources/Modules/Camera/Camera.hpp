@@ -12,7 +12,7 @@ namespace DX9Graphics
 	public:
 		typedef Particle SuperClass;
 		typedef Camera ThisClass;
-		typedef NETArray<ShaderProgram*, true> ShaderProgramSet;
+		typedef NETVector<ShaderProgram*, true> ShaderProgramSet;
 
 	public:
 		NETArgument<NENodeSelector>		arg_targets;		

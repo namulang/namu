@@ -89,7 +89,7 @@ namespace NE
 		type_result _pushToManaged(const NEClassBase& new_class);
 		type_int _judgeIdentifierScore(const NEHeader& existing, const NEIdentifier& target) const;
 		template <typename T, type_bool useHeap>
-		const NEIdentifier& _findIdentifier(const NEIdentifier& target, NETArray<T, useHeap, T>& collector) const;
+		const NEIdentifier& _findIdentifier(const NEIdentifier& target, NETVector<T, useHeap, T>& collector) const;
 
 		//	¸â¹öº¯¼ö:		
 	private:		

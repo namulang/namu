@@ -5,10 +5,10 @@
 namespace NE
 {
 	template
-	class NE_DLL NETArray<NEWString, false, NEWString>;
-	class NE_DLL NEWStringSet : public NETArray<NEWString, false, NEWString> 
+	class NE_DLL NETVector<NEWString, false, NEWString>;
+	class NE_DLL NEWStringSet : public NETVector<NEWString, false, NEWString> 
 	{
-		typedef NETArray<NEWString, false, NEWString> _Super;
+		typedef NETVector<NEWString, false, NEWString> _Super;
 		NE_DECLARE_CLASS(NEWStringSet, _Super)
 
 	public:

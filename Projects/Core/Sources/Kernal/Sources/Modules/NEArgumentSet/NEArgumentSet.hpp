@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../NETArray/NETArray.hpp"
+#include "../NETVector/NETVector.hpp"
 #include "../NEArgumentBase/NEArgumentBase.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NETArray<NEArgumentBase*, false>;
+	class NE_DLL NETVector<NEArgumentBase*, false>;
 
-	class NE_DLL NEArgumentSet : public NETArray<NEArgumentBase*, false>
+	class NE_DLL NEArgumentSet : public NETVector<NEArgumentBase*, false>
 	{
-		typedef NETArray<NEArgumentBase*, false> _Super;
+		typedef NETVector<NEArgumentBase*, false> _Super;
 		NE_DECLARE_CLASS(NEArgumentSet, _Super)
 
 	public:

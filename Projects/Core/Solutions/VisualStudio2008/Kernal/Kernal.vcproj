@@ -1550,16 +1550,8 @@
 										>
 									</File>
 									<Filter
-										Name="NETArray"
+										Name="NETVector"
 										>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETArray.hpp"
-											>
-										</File>
-										<File
-											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETArray.inl"
-											>
-										</File>
 										<File
 											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETArrayWithSameTyped.hpp"
 											>
@@ -1598,6 +1590,14 @@
 										</File>
 										<File
 											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETPointerArrayWithSameTyped.inl"
+											>
+										</File>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETVector.hpp"
+											>
+										</File>
+										<File
+											RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NETArray\NETVector.inl"
 											>
 										</File>
 										<Filter

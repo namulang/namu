@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../NETArray/NETArray.hpp"
+#include "../NETVector/NETVector.hpp"
 #include "../NETEnlistableSet/NETEnlistableSet.hpp"
 #include "../NETString/NETString.hpp"
 #include "../NEKey/NEKey.hpp"
@@ -9,13 +9,13 @@ namespace NE
 {
 	class NEIndexedKeySet;
 	template
-	class NE_DLL NETArray<type_code, false, NEKey>;
+	class NE_DLL NETVector<type_code, false, NEKey>;
 	template
-	class NE_DLL NETEnlistableSet< NETArray<type_code, false, NEKey> >;
+	class NE_DLL NETEnlistableSet< NETVector<type_code, false, NEKey> >;
 
-	class NE_DLL NEKeyCodeSet : public NETEnlistableSet< NETArray<type_code, false, NEKey> >
+	class NE_DLL NEKeyCodeSet : public NETEnlistableSet< NETVector<type_code, false, NEKey> >
 	{
-		typedef NETEnlistableSet<NETArray<type_code, false, NEKey>> _Super;
+		typedef NETEnlistableSet<NETVector<type_code, false, NEKey>> _Super;
 
 		NE_DECLARE_CLASS(NEKeyCodeSet, _Super)
 

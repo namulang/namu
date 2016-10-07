@@ -29,7 +29,7 @@ namespace LG
 
 	void WindowList::draw()
 	{
-		NETArray<Window*, false> stack(getLength());
+		NETVector<Window*, false> stack(getLength());
 		for(Iterator* itr=getIterator(0); itr ;itr=itr->getNext())
 			stack.push(&(itr->getValue()));
 

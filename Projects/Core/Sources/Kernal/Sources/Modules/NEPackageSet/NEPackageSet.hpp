@@ -1,11 +1,11 @@
 #pragma once
 
 #include "../NEPackage/NEPackage.hpp"
-#include "../NETArray/NETArray.hpp"
+#include "../NETVector/NETVector.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NETArray<NEPackage>;
-	typedef NETArray<NEPackage> NEPackageSet;
+	class NE_DLL NETVector<NEPackage>;
+	typedef NETVector<NEPackage> NEPackageSet;
 }

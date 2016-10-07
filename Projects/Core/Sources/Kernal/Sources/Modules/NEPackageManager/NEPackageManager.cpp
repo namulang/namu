@@ -114,7 +114,7 @@ namespace
 	}
 
 	template <typename T, type_bool useHeap>
-	const NEIdentifier& NEPackageManager::_findIdentifier(const NEIdentifier& target, NETArray<T, useHeap>& collector) const
+	const NEIdentifier& NEPackageManager::_findIdentifier(const NEIdentifier& target, NETVector<T, useHeap>& collector) const
 	{
 		//	pre:
 		//		Fit:

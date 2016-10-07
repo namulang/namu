@@ -111,5 +111,5 @@ public:
 	GuidePanel panel;
 	GuideList list;
 	ContentPanel content;
-	NETArray<Guide> guides;
+	NETVector<Guide> guides;
 };
