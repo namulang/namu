@@ -52,6 +52,28 @@ namespace NE
 		return get();
 	}
 
+	template <typename T>
+	type_bool NETCIterator<T>::operator<(const This& rhs) const
+	{
+		NETBinder<This> e(clone());
+		for(; ! e->isEnd() ;*e--)
+			if(*e == rhs)
+				return true;
+
+		return false;
+	}
+
+	template <typename T>
+	type_bool NETCIterator<T>::operator>(const This& rhs) const
+	{
+		NETBinder<This> e(clone());
+		for(; ! e->isEnd() ;*e++)
+			if(*e == rhs)
+				return true;
+
+		return false;
+	}
+
 	NE_DEFINE_INTERFACE_ONLY(NETIterator<T>, template <typename T>)
 	
 	template <typename T>

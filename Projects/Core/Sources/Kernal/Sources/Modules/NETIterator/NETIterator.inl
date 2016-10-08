@@ -26,7 +26,9 @@ namespace NE
 		virtual const T& get() const = 0;
 
 	public:
-		//	Method hiding:		
+		//	Method hiding:
+		virtual type_bool operator<(const This& rhs) const;
+		virtual type_bool operator>(const This& rhs) const;
 		This& operator++();
 		This& operator--();
 		This operator+(type_count step_for_next);
@@ -45,6 +47,8 @@ namespace NE
 
 	public:
 		//	Method hiding:
+		virtual type_bool operator<(const This& rhs) const;
+		virtual type_bool operator>(const This& rhs) const;
 		This& operator++();
 		This& operator--();
 		This operator+(type_count step_for_next);
