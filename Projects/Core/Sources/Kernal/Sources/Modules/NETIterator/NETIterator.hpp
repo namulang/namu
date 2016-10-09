@@ -67,7 +67,7 @@ namespace NE
 	type_bool NETCIterator<T>::operator>(const This& rhs) const
 	{
 		NETBinder<This> e(clone());
-		for(; ! e->isEnd() ;*e++)
+		for(; ! e->isEnd() ;*++e)
 			if(*e == rhs)
 				return true;
 
