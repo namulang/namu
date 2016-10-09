@@ -43,12 +43,11 @@
 //	include:
 #include "../NEOccupiedSet/NEOccupiedSet.hpp"
 #include "../NETReservedCollector/NETReservedCollector.inl"
-#include "../../Commons/Interfaces/NESpecifiedInsertable/NESpecifiedInsertable.hpp"
 
 namespace NE
 {
 	template <typename Type, type_bool pointerUseNewInstance = false>
-	class NETIndexedArray : public NETReservedCollector<Type>, public NESpecifiedInsertable<Type>
+	class NETIndexedArray : public NETReservedCollector<Type>
 	{	
 		typedef NETIndexedArray<Type, pointerUseNewInstance> _This;
 

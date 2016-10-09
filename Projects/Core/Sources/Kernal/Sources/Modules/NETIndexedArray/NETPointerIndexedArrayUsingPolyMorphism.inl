@@ -29,7 +29,7 @@
 namespace NE
 {
 	template <typename Type>
-	class NETIndexedArray<Type*, true> : public NETReservedCollector<Type*>, public NESpecifiedInsertable<Type*> // Type = NEKey
+	class NETIndexedArray<Type*, true> : public NETReservedCollector<Type*>
 	{
 		typedef NETIndexedArray<Type*, true> _This;
 

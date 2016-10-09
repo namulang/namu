@@ -43,7 +43,7 @@
 namespace NE
 {
 	template <typename Type>
-	class NETIndexedArray<Type*, false> : public NETReservedCollector<Type*>, public NESpecifiedInsertable<Type*>
+	class NETIndexedArray<Type*, false> : public NETReservedCollector<Type*>
 	{	
 		typedef NETIndexedArray<Type*, false> _This;
 
