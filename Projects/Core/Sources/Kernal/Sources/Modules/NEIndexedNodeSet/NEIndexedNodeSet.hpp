@@ -1,20 +1,20 @@
 #pragma once
 
-#include "../NETIndexedArray/NETIndexedArray.hpp"
+#include "../NETArray/NETArray.hpp"
 #include "../NETEnlistableSet/NETEnlistableSet.hpp"
 #include "../NENode/NENode.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NETIndexedArray<NENode*, true>;
+	class NE_DLL NETArray<NENode*, true>;
 
 	template 
-	class NE_DLL NETEnlistableSet< NETIndexedArray<NENode*, true> >;
+	class NE_DLL NETEnlistableSet< NETArray<NENode*, true> >;
 
-	class NE_DLL NEIndexedNodeSet : public NETEnlistableSet< NETIndexedArray<NENode*, true> >
+	class NE_DLL NEIndexedNodeSet : public NETEnlistableSet< NETArray<NENode*, true> >
 	{
-		typedef NETEnlistableSet< NETIndexedArray<NENode*, true> > _Super;
+		typedef NETEnlistableSet< NETArray<NENode*, true> > _Super;
 		//	Why should this class be declared as Interface, not TConcreteClass?:
 		//		NEIndexedNodeSet has no constructor that doesn't need parameter.
 		NE_DECLARE_INTERFACE(NEIndexedNodeSet, _Super)

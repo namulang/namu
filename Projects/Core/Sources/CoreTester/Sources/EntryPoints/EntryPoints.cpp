@@ -857,7 +857,7 @@ public:
 
 			int datum;
 		};
-		NETIndexedArray<MyInt*, true> arr;
+		NETArray<MyInt*, true> arr;
 		arr.create(5);
 		arr.push(MyInt(1));
 		arr.push(MyInt(2));
@@ -889,12 +889,12 @@ public:
 
 			int datum;
 		};
-		class MyContainer : public NETIndexedArray<MyInt*, true> 
+		class MyContainer : public NETArray<MyInt*, true> 
 		{
 		public:
 			virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const
 			{
-				NETIndexedArray<MyInt*, true>::serialize(saver);
+				NETArray<MyInt*, true>::serialize(saver);
 
 				for(int n=0; n < getSize(); n++)
 					if(getOccupiedSet()[n])
@@ -904,7 +904,7 @@ public:
 			}
 			virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader)
 			{
-				NETIndexedArray<MyInt*, true>::serialize(loader);
+				NETArray<MyInt*, true>::serialize(loader);
 
 				_length = 0;
 
@@ -1042,7 +1042,7 @@ public:
 	IndexedArrayAssigningTest() : TestCase("indexed array assigning test.") {}
 	virtual bool onTest()
 	{
-		NETIndexedArray<int> arr, arr2;
+		NETArray<int> arr, arr2;
 		arr.create(3);
 		arr.push(1);
 		arr.push(2);
@@ -1065,7 +1065,7 @@ public:
 	virtual bool onTest()
 	{
 		int a=0, b=1, c=2, d=4;
-		NETIndexedArray<int*,false> arr, arr2, temp;
+		NETArray<int*,false> arr, arr2, temp;
 		arr.create(3);
 		arr.push(&a);
 		arr.push(&b);
@@ -1099,7 +1099,7 @@ public:
 
 		int datum;
 	};
-	class MyContainer : public NETIndexedArray<MyInt*, true> 
+	class MyContainer : public NETArray<MyInt*, true> 
 	{
 	public:
 	};

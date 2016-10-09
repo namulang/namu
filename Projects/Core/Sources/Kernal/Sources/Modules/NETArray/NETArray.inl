@@ -1,5 +1,5 @@
 //	---------------------------------------------------------------------------------
-//	클래스명:	NETIndexedArray
+//	클래스명:	NETArray
 //	설명	:	Array의 형태로 데이터를 관리하는 클래스.
 //	관계	:	기반클래스.			NETReservedCollector
 //	특성	:	배열의 특성을 그대로 구현한다. 각 엘리먼트는 추가/삽입/삭제의
@@ -23,7 +23,7 @@
 //					4. pushFront(NETList&)
 /*
 				외향(Outside)과 내향(Inside) 타입이 서로 다른 Collector 생성 방법:
-					1. 타입이 다른 경우, NETIndexedArray은 추상클래스로서 선언된다.
+					1. 타입이 다른 경우, NETArray은 추상클래스로서 선언된다.
 					2. 다음의 함수들은 파생클래스에서 채워야한다.
 						1. 복사생성자
 						2. virtual release
@@ -36,32 +36,32 @@
 						8. virtual find
 */
 //	메모	:	
-//	히스토리:	2011-07-07	이태훈	개발 완료	
+//	히스토리:	2013-01-10	이태훈	개발 완료	
 //	---------------------------------------------------------------------------------
 #pragma once
 
+//	include:
+#include "../NEOccupiedSet/NEOccupiedSet.hpp"
+#include "../NETReservedCollector/NETReservedCollector.inl"
+
 namespace NE
 {
-	template <typename Type>
-	class NETIndexedArray<Type*, false> : public NETReservedCollector<Type*>
+	template <typename Type, type_bool pointerUseNewInstance = false>
+	class NETArray : public NETReservedCollector<Type>
 	{	
-		typedef NETIndexedArray<Type*, false> _This;
+		typedef NETArray<Type, pointerUseNewInstance> _This;
 
-		NE_DECLARE_CLASS(_This, NETReservedCollector<Type*>)		
+		NE_DECLARE_CLASS(_This, NETReservedCollector<Type>)
 
-	public:
-		using Super::push;
-		using Super::match;
-		using Super::setElement;
 		//	생성자:
 	public:
-		NETIndexedArray();
-		NETIndexedArray(type_count size);
-		NETIndexedArray(const This& source);
+		NETArray();
+		NETArray(type_count size);
+		NETArray(const This& source);
 
 		//	소멸자:
 	public:
-		virtual ~NETIndexedArray();
+		virtual ~NETArray();
 
 		//	연산자 중첩:
 	public:
@@ -79,7 +79,7 @@ namespace NE
 		//		상속:
 		//			NESpecifiedInsertable:
 	public:
-		virtual type_index insert(type_index index, const Type* const source);
+		virtual type_index insert(type_index index, const Type& source);
 		virtual type_index remove(type_index index);
 		//			NETReservedCollector:
 	public:
@@ -89,27 +89,25 @@ namespace NE
 	public:		
 		virtual Type& getElement(type_index index);
 		virtual const Type& getElement(type_index index) const;
-		virtual type_result setElement(type_index index, const Type* const source);
-		virtual type_index push(const Type* const source);
+		virtual type_result setElement(type_index index, const Type& source);
+		virtual type_index push(const Type& source);
 		virtual type_index pop();		
-		virtual type_index match(const Type* const source) const;
+		virtual type_index match(const Type& source) const;
 		//			NEObject:
-	public:		
+	public:
 		virtual type_result isValid() const;
 		virtual void release();
-		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		virtual NEBinaryFileLoader& serialize(NEBinaryFileLoader& loader);
+		virtual NEBinaryFileSaver& serialize(NEBinaryFileSaver& saver) const;
 		
 		//		고유 인터페이스:
 	public:
-		type_index pushFront(const Type* source);
+		type_index pushFront(const Type& source);
 		type_index popFront();
 		type_result push(const This& source);
 		type_result pushFront(const This& source);
 		type_bool isEqualSizeAndElement(const This& source) const;
 		type_bool isEqualElement(const This& source) const;
-		type_index insert(type_index index, const Type& source);
-		type_index pushFront(const Type& source);;
 
 	protected:
 		type_index _searchIndex(type_bool by_decreasing, type_bool target_is_occupied) const;
@@ -121,7 +119,10 @@ namespace NE
 
 		//	멤버변수:
 	protected:
-		Type**	_data;
+		Type*	_data;
 		NEOccupiedSet _occupiedset;
 	};
 }
+
+#include "NETPointerIndexedArray.inl"
+#include "NETPointerIndexedArrayUsingPolyMorphism.inl"
