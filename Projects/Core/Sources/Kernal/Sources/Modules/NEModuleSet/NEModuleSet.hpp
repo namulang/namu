@@ -2,15 +2,16 @@
 
 #include "../NEModule/NEModule.hpp"
 #include "../NETVector/NETVector.hpp"
+#include "../NETDeeper/NETDeeper.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NETVector<NEModule*, true, NEModule*>;
+	class NE_DLL NETDeeper<NETVector<NEModule>>;
 	
-	class NEModuleSet : public NETVector<NEModule*, true, NEModule*>
+	class NEModuleSet : public NETDeeper<NETVector<NEModule>>
 	{
-		typedef NETVector<NEModule*, true, NEModule*> _Super;
+		typedef NETDeeper<NETVector<NEModule>> _Super;
 
 		NE_DECLARE_CLASS(NEModuleSet, _Super)
 

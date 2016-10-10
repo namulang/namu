@@ -2,15 +2,17 @@
 
 #include "../NETVector/NETVector.hpp"
 #include "../NEArgumentBase/NEArgumentBase.hpp"
+#include "../NETShallower/NETShallower.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NETVector<NEArgumentBase*, false>;
+	class NE_DLL NETShallower<NETVector<NEArgumentBase>>;
 
-	class NE_DLL NEArgumentSet : public NETVector<NEArgumentBase*, false>
+	class NE_DLL NEArgumentSet : public NETShallower<NETVector<NEArgumentBase>>
 	{
-		typedef NETVector<NEArgumentBase*, false> _Super;
+		typedef NETShallower<NETVector<NEArgumentBase>> _Super;
+
 		NE_DECLARE_CLASS(NEArgumentSet, _Super)
 
 	public:

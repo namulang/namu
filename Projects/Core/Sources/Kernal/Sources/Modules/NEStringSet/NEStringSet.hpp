@@ -4,11 +4,10 @@
 namespace NE
 {
 	template
-	class NE_DLL NETVector<NEString, false, NEString>;
-	class NE_DLL NEStringSet : public NETVector<NEString, false, NEString>
+	class NE_DLL NETVector<NEString>;
+	class NE_DLL NEStringSet : public NETVector<NEString>
 	{
-		typedef NETVector<NEString, false, NEString> _Super;
-		NE_DECLARE_CLASS(NEStringSet, _Super)
+		NE_DECLARE_CLASS(NEStringSet, NETVector<NEString>)
 
 	public:
 		NEStringSet() : Super() {}

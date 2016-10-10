@@ -1,5 +1,5 @@
 #pragma once
 
-#include "NETDeeper.hpp"
+#include "NETDeeper.inl"
 #include "../NETCollectorProxy/NETCollectorProxy.hpp"
 #include "../NETBinder/NETBinder.hpp"
