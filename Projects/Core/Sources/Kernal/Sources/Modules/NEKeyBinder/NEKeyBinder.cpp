@@ -6,7 +6,7 @@ namespace NE
 	type_bool NEKeyBinder::isBinded() const
 	{
 		if(isBindedLocalKey()) return true;
-		const NEIndexedKeySet& keyset = _getKeySet();
+		const NEKeyArray& keyset = _getKeySet();
 		if( ! &keyset)	return false;
 		const NEKey& key = keyset[getRealIndex()];
 		if( ! &key) return false;
@@ -32,11 +32,11 @@ namespace NE
 		return _getKeySet()[getRealIndex()];
 	}
 
-	NEIndexedKeySet& NEKeyBinder::_getKeySet()
+	NEKeyArray& NEKeyBinder::_getKeySet()
 	{
 		/*if(NEType::isValidHierachy(NEType::LOCALSTACK, _manager_type))
 			return Kernal::getInstance().getNodeManager().getLocalStack()._getLocalKeySet();*/
-		NEIndexedKeySet* nullpointer = NE_NULL;
+		NEKeyArray* nullpointer = NE_NULL;
 		NEEnlistableManager& manager = getManager();
 
 		if( ! &manager)
@@ -45,11 +45,11 @@ namespace NE
 		return manager._getKeySet();
 	}
 
-	const NEIndexedKeySet& NEKeyBinder::_getKeySet() const
+	const NEKeyArray& NEKeyBinder::_getKeySet() const
 	{
 		/*if(NEType::isValidHierachy(NEType::LOCALSTACK, _manager_type))
 			return Kernal::getInstance().getNodeManager().getLocalStack().getLocalKeySet();*/
-		const NEIndexedKeySet* nullpointer = NE_NULL;		
+		const NEKeyArray* nullpointer = NE_NULL;		
 		const NEEnlistableManager& manager = getManager();
 
 		if (!&manager)			
@@ -75,10 +75,10 @@ namespace NE
 // 		}
 		//_manager_type = manager_type;
 
-		const NEIndexedKeySet& cont = _getKeySet();
+		const NEKeyArray& cont = _getKeySet();
 		if( ! &cont)
 		{
-			KERNAL_ERROR("NEIndexedKeySet을 가져올 수 없었습니다.");
+			KERNAL_ERROR("NEKeyArray을 가져올 수 없었습니다.");
 			goto ON_ERROR;
 		}
 		const NEOccupiedSet& ocp_tbl = cont.getOccupiedSet();

@@ -63,32 +63,32 @@ namespace NE
 		return result;
 	}
 
-	NEIndexedKeySet& NEEnlistableManager::_getKeySet()
+	NEKeyArray& NEEnlistableManager::_getKeySet()
 	{
 		return _keyset;
 	}
 
-	const NEIndexedKeySet& NEEnlistableManager::getKeySet() const
+	const NEKeyArray& NEEnlistableManager::getKeySet() const
 	{
 		return _keyset;
 	}
 
-	NEIndexedModuleSet& NEEnlistableManager::_getModuleSet()
+	NEModuleArray& NEEnlistableManager::_getModuleSet()
 	{
 		return _moduleset;
 	}
 
-	const NEIndexedModuleSet& NEEnlistableManager::getModuleSet() const
+	const NEModuleArray& NEEnlistableManager::getModuleSet() const
 	{
 		return _moduleset;
 	}
 
-	NEIndexedNodeSet& NEEnlistableManager::_getNodeSet()
+	NENodeArray& NEEnlistableManager::_getNodeSet()
 	{
 		return _nodeset;
 	}
 
-	const NEIndexedNodeSet& NEEnlistableManager::getNodeSet() const
+	const NENodeArray& NEEnlistableManager::getNodeSet() const
 	{
 		return _nodeset;
 	}
@@ -132,7 +132,7 @@ namespace NE
 
 	type_index NEEnlistableManager::_searchRealNodeIndex(NENode& target) const
 	{
-		const NEIndexedNodeSet& nodeset = getNodeSet();
+		const NENodeArray& nodeset = getNodeSet();
 
 		for(int n=0; n < nodeset.getSize() ;n++)
 		{

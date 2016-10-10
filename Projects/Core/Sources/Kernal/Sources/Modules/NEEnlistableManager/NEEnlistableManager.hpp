@@ -2,9 +2,9 @@
 
 #include "../NEModule/NEModule.hpp"
 #include "../NEShortCutSet/NEShortCutSet.hpp"
-#include "../NEIndexedNodeSet/NEIndexedNodeSet.hpp"
-#include "../NEIndexedModuleSet/NEIndexedModuleSet.hpp"
-#include "../NEIndexedKeySet/NEIndexedKeySet.hpp"
+#include "../NENodeArray/NENodeArray.hpp"
+#include "../NEModuleArray/NEModuleArray.hpp"
+#include "../NEKeyArray/NEKeyArray.hpp"
 
 namespace NE
 {
@@ -12,7 +12,7 @@ namespace NE
 	{
 		NE_DECLARE_MODULE(NEEnlistableManager, NEModule)
 		
-		typedef NEIndexedKeySet* NEIndexedKeySetPointer;
+		typedef NEKeyArray* NEKeyArrayPointer;
 
 	public:
 		friend class NENode;
@@ -41,9 +41,9 @@ namespace NE
 
 	public:
 		const NEShortCutSet& getShortCutSet(const NECodeType& type) const;
-		const NEIndexedKeySet& getKeySet() const;
-		const NEIndexedModuleSet& getModuleSet() const;
-		const NEIndexedNodeSet& getNodeSet() const;
+		const NEKeyArray& getKeySet() const;
+		const NEModuleArray& getModuleSet() const;
+		const NENodeArray& getNodeSet() const;
 
 	public:
 		virtual type_result initialize();
@@ -59,9 +59,9 @@ namespace NE
 	protected:	
 		//		Á¢±ÙÀÚ:
 		NEShortCutSet& _getShortCutSet(const NECodeType& type);
-		NEIndexedKeySet& _getKeySet();
-		NEIndexedModuleSet& _getModuleSet();
-		NEIndexedNodeSet& _getNodeSet();	
+		NEKeyArray& _getKeySet();
+		NEModuleArray& _getModuleSet();
+		NENodeArray& _getNodeSet();	
 
 	protected:
 		virtual type_result _onChangeCode(NENode& target, const NECodeSet& new_code);
@@ -80,12 +80,12 @@ namespace NE
 		const This& _assign(const This& source);
 
 	private:
-		NEIndexedKeySet _keyset;
+		NEKeyArray _keyset;
 		NEShortCutSet _priority_shortcutset;
 		NEShortCutSet _script_shortcutset;
 		NEShortCutSet _group_shortcutset;
 		NEShortCutSet _name_shortcutset;
-		NEIndexedNodeSet _nodeset;
-		NEIndexedModuleSet _moduleset;
+		NENodeArray _nodeset;
+		NEModuleArray _moduleset;
 	};
 }

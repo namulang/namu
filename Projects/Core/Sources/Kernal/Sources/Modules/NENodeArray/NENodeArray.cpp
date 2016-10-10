@@ -1,41 +1,41 @@
-#include "NEIndexedNodeSet.hpp"
+#include "NENodeArray.hpp"
 #include "../Kernal/Kernal.hpp"
 
 namespace NE
 {
-	type_id NEIndexedNodeSet::_last_generated_id = 0;
+	type_id NENodeArray::_last_generated_id = 0;
 
-	NEIndexedNodeSet::NEIndexedNodeSet(NEEnlistableManager& manager)
+	NENodeArray::NENodeArray(NEEnlistableManager& manager)
 		: Super(manager)
 	{
 
 	}
 
-	NEIndexedNodeSet::NEIndexedNodeSet(type_count size)
+	NENodeArray::NENodeArray(type_count size)
 		: Super(size)
 	{
 
 	}
 
-	NEIndexedNodeSet::NEIndexedNodeSet(const This& source)
+	NENodeArray::NENodeArray(const This& source)
 		: Super(source)
 	{
 
 	}
 
-	NEIndexedNodeSet::~NEIndexedNodeSet()
+	NENodeArray::~NENodeArray()
 	{
 
 	}
 
-	const NEIndexedNodeSet& NEIndexedNodeSet::operator+=(const This& source)
+	const NENodeArray& NENodeArray::operator+=(const This& source)
 	{
 		Super::operator+=(source);
 
 		return *this;
 	}
 
-	NEIndexedNodeSet NEIndexedNodeSet::operator+(const NEIndexedNodeSet& source) const
+	NENodeArray NENodeArray::operator+(const NENodeArray& source) const
 	{
 		This buffer(getSize() + source.getSize());
 
@@ -45,12 +45,12 @@ namespace NE
 		return buffer;
 	}
 
-	type_id NEIndexedNodeSet::peekLastGeneratedId() const
+	type_id NENodeArray::peekLastGeneratedId() const
 	{
 		return _last_generated_id;
 	}
 
-	type_id NEIndexedNodeSet::_generateId()
+	type_id NENodeArray::_generateId()
 	{
 		_last_generated_id++;
 		if(_last_generated_id <= 0)
@@ -59,7 +59,7 @@ namespace NE
 		return _last_generated_id;
 	}
 
-	type_index NEIndexedNodeSet::insert(type_index index, const NENode* const source)
+	type_index NENodeArray::insert(type_index index, const NENode* const source)
 	{
 		if( ! &source)
 		{
@@ -146,7 +146,7 @@ namespace NE
 		//					2. resize
 		//					3. setElement
 
-		//	생성자 핸들러:	보다 자세한 내용은 NEIndexedModuleSet.cpp 참조하라
+		//	생성자 핸들러:	보다 자세한 내용은 NEModuleArray.cpp 참조하라
 		//		전역 manager 셋:		
 		//			타겟팅:
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
@@ -204,7 +204,7 @@ namespace NE
 		return inputed_index;
 	}
 
-	type_result NEIndexedNodeSet::setElement(type_index index, const NENode* const source)
+	type_result NENodeArray::setElement(type_index index, const NENode* const source)
 	{
 		if( ! &source)
 		{
@@ -231,7 +231,7 @@ namespace NE
 		return result;
 	}
 
-	NEBinaryFileSaver& NEIndexedNodeSet::serialize(NEBinaryFileSaver& saver) const
+	NEBinaryFileSaver& NENodeArray::serialize(NEBinaryFileSaver& saver) const
 	{
 		Super::serialize(saver);
 		
@@ -246,7 +246,7 @@ namespace NE
 		return saver << _last_generated_id;
 	}
 
-	NEBinaryFileLoader& NEIndexedNodeSet::serialize(NEBinaryFileLoader& loader)
+	NEBinaryFileLoader& NENodeArray::serialize(NEBinaryFileLoader& loader)
 	{
 		//	pre:
 		//		상위 함수 호출:
@@ -285,7 +285,7 @@ namespace NE
 		return loader >> _last_generated_id;
 	}
 
-	type_result NEIndexedNodeSet::remove(type_index index)
+	type_result NENodeArray::remove(type_index index)
 	{
 		//	노드의 _unlist 호출:
 		NENode& node = getElement(index);
@@ -300,12 +300,12 @@ namespace NE
 		return result |= Super::remove(index);
 	}
 
-	type_result NEIndexedNodeSet::_onEnlisted()
+	type_result NENodeArray::_onEnlisted()
 	{
 		return RESULT_SUCCESS;
 	}
 
-	type_result NEIndexedNodeSet::resize(type_count new_size)
+	type_result NENodeArray::resize(type_count new_size)
 	{
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
 		NEGlobalManagerOffer::_setGlobalManager(getManager());

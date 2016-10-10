@@ -1869,38 +1869,38 @@
 											>
 										</File>
 										<Filter
-											Name="NEIndexedKeySet"
+											Name="NEKeyArray"
 											>
 											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIndexedKeySet\NEIndexedKeySet.cpp"
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyArray\NEKeyArray.cpp"
 												>
 											</File>
 											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIndexedKeySet\NEIndexedKeySet.hpp"
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEKeyArray\NEKeyArray.hpp"
 												>
 											</File>
 										</Filter>
 										<Filter
-											Name="NEIndexedModuleSet"
+											Name="NEModuleArray"
 											>
 											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIndexedModuleSet\NEIndexedModuleSet.cpp"
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleArray\NEModuleArray.cpp"
 												>
 											</File>
 											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIndexedModuleSet\NEIndexedModuleSet.hpp"
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEModuleArray\NEModuleArray.hpp"
 												>
 											</File>
 										</Filter>
 										<Filter
-											Name="NEIndexedNodeSet"
+											Name="NENodeArray"
 											>
 											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIndexedNodeSet\NEIndexedNodeSet.cpp"
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENodeArray\NENodeArray.cpp"
 												>
 											</File>
 											<File
-												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NEIndexedNodeSet\NEIndexedNodeSet.hpp"
+												RelativePath="..\..\..\Sources\Kernal\Sources\Modules\NENodeArray\NENodeArray.hpp"
 												>
 											</File>
 										</Filter>

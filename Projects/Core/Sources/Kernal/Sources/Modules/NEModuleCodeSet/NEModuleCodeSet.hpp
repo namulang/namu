@@ -28,7 +28,7 @@ namespace NE
 	public:
 		friend class NENode;
 		friend class NEKeyCodeSet;
-		//friend class NEIndexedNodeSet;
+		//friend class NENodeArray;
 
 	public:
 		NEModuleCodeSet();
@@ -60,8 +60,8 @@ namespace NE
 		virtual void release();
 
 	protected:
-		NEIndexedModuleSet& _getModuleSet();
-		const NEIndexedModuleSet& _getModuleSet() const;
+		NEModuleArray& _getModuleSet();
+		const NEModuleArray& _getModuleSet() const;
 		const This& _assign(const This& source);
 
 	private:

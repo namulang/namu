@@ -19,7 +19,7 @@ namespace NE
 			: T(), _manager(&NEGlobalManagerOffer::getGlobalManager()), _is_enlisted(false)
 		{
 			//	getGlobalManagerOnCopyConstructor에 관하여:
-			//		NEIndexedModuleSet.cpp에 관련 주석을 참고하라
+			//		NEModuleArray.cpp에 관련 주석을 참고하라
 		}
 		NETEnlistableSet(NEEnlistableManager& manager)
 			: T(), _manager(&manager), _is_enlisted(false)
@@ -37,7 +37,7 @@ namespace NE
 			: T(source), _manager(&NEGlobalManagerOffer::getGlobalManager()), _is_enlisted(false)
 		{
 			//	getGlobalManagerOnCopyConstructor에 관하여:
-			//		NEIndexedModuleSet.cpp에 관련 주석을 참고하라
+			//		NEModuleArray.cpp에 관련 주석을 참고하라
 		}
 
 	public:

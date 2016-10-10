@@ -1,6 +1,6 @@
 #include "NERootNodeCodeSet.hpp"
 #include "../Kernal/Kernal.hpp"
-#include "../NEIndexedNodeSet/NEIndexedNodeSet.hpp"
+#include "../NENodeArray/NENodeArray.hpp"
 
 namespace NE
 {

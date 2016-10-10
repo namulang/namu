@@ -13,20 +13,20 @@ namespace NE
 	template 
 	class NE_DLL NETEnlistableSet< NETDeeper<NETArray<NENode>> >;
 
-	class NE_DLL NEIndexedNodeSet : public NETEnlistableSet< NETDeeper<NETArray<NENode>> >
+	class NE_DLL NENodeArray : public NETEnlistableSet< NETDeeper<NETArray<NENode>> >
 	{
 		typedef NETEnlistableSet< NETDeeper<NETArray<NENode>> > _Super;
 		//	Why should this class be declared as Interface, not TConcreteClass?:
-		//		NEIndexedNodeSet has no constructor that doesn't need parameter.
-		NE_DECLARE_INTERFACE(NEIndexedNodeSet, _Super)
+		//		NENodeArray has no constructor that doesn't need parameter.
+		NE_DECLARE_INTERFACE(NENodeArray, _Super)
 
 	public:
-		NEIndexedNodeSet(NEEnlistableManager& manager);
-		NEIndexedNodeSet(type_count size);
-		NEIndexedNodeSet(const This& source);
+		NENodeArray(NEEnlistableManager& manager);
+		NENodeArray(type_count size);
+		NENodeArray(const This& source);
 
 	public:
-		virtual ~NEIndexedNodeSet();
+		virtual ~NENodeArray();
 	public:
 		const This& operator+=(const This& source);
 		This operator+(const This& source) const;		

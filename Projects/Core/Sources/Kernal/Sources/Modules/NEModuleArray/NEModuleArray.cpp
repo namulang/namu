@@ -1,42 +1,42 @@
-#include "NEIndexedModuleSet.hpp"
+#include "NEModuleArray.hpp"
 #include "../Kernal/Kernal.hpp"
 #include "../NENodeCodeSet/NENodeCodeSet.hpp"
 
 namespace NE
 {
-	type_id NEIndexedModuleSet::_last_generated_id = 0;
+	type_id NEModuleArray::_last_generated_id = 0;
 
-	NEIndexedModuleSet::NEIndexedModuleSet(NEEnlistableManager& manager)
+	NEModuleArray::NEModuleArray(NEEnlistableManager& manager)
 		: Super(manager)
 	{
 
 	}
 
-	NEIndexedModuleSet::NEIndexedModuleSet(type_count size)
+	NEModuleArray::NEModuleArray(type_count size)
 		: Super(size)
 	{
 
 	}
 
-	NEIndexedModuleSet::NEIndexedModuleSet(const This& source)
+	NEModuleArray::NEModuleArray(const This& source)
 		: Super(source)
 	{
 
 	}
 
-	NEIndexedModuleSet::~NEIndexedModuleSet()
+	NEModuleArray::~NEModuleArray()
 	{
 
 	}
 
-	const NEIndexedModuleSet& NEIndexedModuleSet::operator+=(const This& source)
+	const NEModuleArray& NEModuleArray::operator+=(const This& source)
 	{
 		Super::operator+=(source);
 
 		return *this;
 	}
 
-	NEIndexedModuleSet NEIndexedModuleSet::operator+(const This& source) const
+	NEModuleArray NEModuleArray::operator+(const This& source) const
 	{
 		This buffer(getSize() + source.getSize());
 
@@ -46,12 +46,12 @@ namespace NE
 		return buffer;
 	}
 
-	type_id NEIndexedModuleSet::peekLastGeneratedId() const
+	type_id NEModuleArray::peekLastGeneratedId() const
 	{
 		return _last_generated_id;
 	}
 
-	type_id NEIndexedModuleSet::_generateId()
+	type_id NEModuleArray::_generateId()
 	{
 		_last_generated_id++;
 		if(_last_generated_id <= 0)
@@ -60,7 +60,7 @@ namespace NE
 		return _last_generated_id;
 	}
 
-	type_index NEIndexedModuleSet::insert(type_index index, const NEModule* const source)
+	type_index NEModuleArray::insert(type_index index, const NEModule* const source)
 	{
 		if( ! source)
 		{
@@ -100,7 +100,7 @@ namespace NE
 		return inputed_index;
 	}
 
-	type_result NEIndexedModuleSet::setElement(type_index index, const NEModule* const source)
+	type_result NEModuleArray::setElement(type_index index, const NEModule* const source)
 	{
 		if( ! source)
 		{
@@ -143,7 +143,7 @@ namespace NE
 	//				2011-07-10	이태훈	추가
 	//					:	Case By Skip Load를 추가해서 모듈의 보다 독립적인 환경을 만들었다.
 	//	---------------------------------------------------------------------------------
-	NEBinaryFileSaver& NEIndexedModuleSet::serialize(NEBinaryFileSaver& saver) const
+	NEBinaryFileSaver& NEModuleArray::serialize(NEBinaryFileSaver& saver) const
 	{
 		Super::serialize(saver);
 
@@ -204,7 +204,7 @@ namespace NE
 	//				2011-07-10	이태훈	추가
 	//					:	Case By Skip Load를 추가해서 모듈의 보다 독립적인 환경을 만들었다.
 	//	---------------------------------------------------------------------------------
-	NEBinaryFileLoader& NEIndexedModuleSet::serialize(NEBinaryFileLoader& loader)
+	NEBinaryFileLoader& NEModuleArray::serialize(NEBinaryFileLoader& loader)
 	{
 		//	TEST: 아무런 조치를 취하지 않고도 insert, remove에 넣은 enlist, unlist로 
 		//			serialize 도중에 무사히 enlist, unlist가 동작되는지?
@@ -260,7 +260,7 @@ namespace NE
 				//				주어진 모듈 삽입: 
 				//					push에서 NEModule::clone을 호출
 				//					NEModule::NEModuleCodeSet이 복사되면서 push(NEModuleCodeSet&)을 호출
-				//					push(NEModuleCodeSet&)에서 NEIndexedKeySet으로부터 clone으로 키를 복제
+				//					push(NEModuleCodeSet&)에서 NEKeyArray으로부터 clone으로 키를 복제
 				NEEnlistableManager* nullpointer = NE_NULL;
 				insert(n, module);				
 				//				데이터 로드:
@@ -286,12 +286,12 @@ namespace NE
 		return loader >> _last_generated_id;
 	}
 
-	type_result NEIndexedModuleSet::_onEnlisted()
+	type_result NEModuleArray::_onEnlisted()
 	{
 		return RESULT_SUCCESS;
 	}
 
-	type_result NEIndexedModuleSet::resize(type_index new_size)
+	type_result NEModuleArray::resize(type_index new_size)
 	{
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
 		NEGlobalManagerOffer::_setGlobalManager(getManager());

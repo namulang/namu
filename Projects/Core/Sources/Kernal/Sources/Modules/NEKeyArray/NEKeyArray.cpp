@@ -1,41 +1,41 @@
-#include "NEIndexedKeySet.hpp"
+#include "NEKeyArray.hpp"
 #include "../Kernal/Kernal.hpp"
 
 namespace NE
 {
-	type_id NEIndexedKeySet::_last_generated_id = 0;
+	type_id NEKeyArray::_last_generated_id = 0;
 
-	NEIndexedKeySet::NEIndexedKeySet(NEEnlistableManager& manager)
+	NEKeyArray::NEKeyArray(NEEnlistableManager& manager)
 		: Super(manager)
 	{
 
 	}
 
-	NEIndexedKeySet::NEIndexedKeySet(type_count size)
+	NEKeyArray::NEKeyArray(type_count size)
 		: Super(size)
 	{
 
 	}
 
-	NEIndexedKeySet::NEIndexedKeySet(const This& source)
+	NEKeyArray::NEKeyArray(const This& source)
 		: Super(source)
 	{
 
 	}
 
-	NEIndexedKeySet::~NEIndexedKeySet()
+	NEKeyArray::~NEKeyArray()
 	{
 
 	}
 
-	const NEIndexedKeySet& NEIndexedKeySet::operator+=(const This& source)
+	const NEKeyArray& NEKeyArray::operator+=(const This& source)
 	{
 		Super::operator+=(source);
 
 		return *this;
 	}
 
-	NEIndexedKeySet NEIndexedKeySet::operator+(const This& source) const
+	NEKeyArray NEKeyArray::operator+(const This& source) const
 	{
 		This buffer(getSize() + source.getSize());
 
@@ -45,12 +45,12 @@ namespace NE
 		return buffer;
 	}
 
-	type_id NEIndexedKeySet::peekLastGeneratedId() const
+	type_id NEKeyArray::peekLastGeneratedId() const
 	{
 		return _last_generated_id;
 	}
 
-	type_id NEIndexedKeySet::_generateId()
+	type_id NEKeyArray::_generateId()
 	{
 		_last_generated_id++;
 		if(_last_generated_id <= 0)
@@ -59,7 +59,7 @@ namespace NE
 		return _last_generated_id;
 	}
 
-	type_index NEIndexedKeySet::insert(type_index index, const NEKey* const source)
+	type_index NEKeyArray::insert(type_index index, const NEKey* const source)
 	{
 		if( ! source)
 		{
@@ -94,7 +94,7 @@ namespace NE
 		return inputed_index;
 	}
 
-	type_result NEIndexedKeySet::setElement(type_index index, const NEKey* const source)
+	type_result NEKeyArray::setElement(type_index index, const NEKey* const source)
 	{
 		if( ! source)
 		{
@@ -121,7 +121,7 @@ namespace NE
 		return result;
 	}
 
-	NEBinaryFileSaver& NEIndexedKeySet::serialize(NEBinaryFileSaver& saver) const
+	NEBinaryFileSaver& NEKeyArray::serialize(NEBinaryFileSaver& saver) const
 	{
 		Super::serialize(saver);
 
@@ -145,7 +145,7 @@ namespace NE
 		return saver << _last_generated_id;
 	}
 
-	NEBinaryFileLoader& NEIndexedKeySet::serialize(NEBinaryFileLoader& loader)
+	NEBinaryFileLoader& NEKeyArray::serialize(NEBinaryFileLoader& loader)
 	{
 		NEKeyManager& keyer = Kernal::getInstance().getKeyManager();		
 		Super::serialize(loader);
@@ -200,12 +200,12 @@ namespace NE
 		return loader >> _last_generated_id;
 	}
 
-	type_result NEIndexedKeySet::_onEnlisted()
+	type_result NEKeyArray::_onEnlisted()
 	{
 		return RESULT_SUCCESS;
 	}
 
-	type_result NEIndexedKeySet::resize(type_index new_size)
+	type_result NEKeyArray::resize(type_index new_size)
 	{
 		NEEnlistableManager& push = NEGlobalManagerOffer::getGlobalManager();
 		NEGlobalManagerOffer::_setGlobalManager(getManager());

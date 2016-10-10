@@ -61,8 +61,8 @@ namespace NE
 		virtual type_result _onEnlisted(NENode& node);
 
 	protected:
-		NEIndexedNodeSet& _getNodeSet();
-		const NEIndexedNodeSet& _getNodeSet() const;
+		NENodeArray& _getNodeSet();
+		const NENodeArray& _getNodeSet() const;
 		const NENodeCodeSet& _assign(const NENodeCodeSet& source);
 	};
 }

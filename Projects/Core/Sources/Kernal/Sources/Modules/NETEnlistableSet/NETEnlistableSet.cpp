@@ -9,13 +9,13 @@ namespace NE
 		: T(script_type, name_type), _manager(&NEGlobalManagerOffer::getGlobalManager()), _is_enlisted(false)
 	{
 		//	getGlobalManagerOnCopyConstructor에 관하여:
-		//		NEIndexedModuleSet.cpp에 관련 주석을 참고하라
+		//		NEModuleArray.cpp에 관련 주석을 참고하라
 	}
 	NETEnlistableSet<NENamedUnit>::NETEnlistableSet(const This& source)
 		: T(source), _manager(&NEGlobalManagerOffer::getGlobalManager()), _is_enlisted(false)
 	{
 		//	getGlobalManagerOnCopyConstructor에 관하여:
-		//		NEIndexedModuleSet.cpp에 관련 주석을 참고하라
+		//		NEModuleArray.cpp에 관련 주석을 참고하라
 	}
 
 	const This& NETEnlistableSet<NENamedUnit>::operator=(const This& source)

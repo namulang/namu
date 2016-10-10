@@ -8,9 +8,9 @@ namespace NE
 
 	class NE_DLL NEGlobalManagerOffer
 	{
-		friend class NEIndexedNodeSet;
-		friend class NEIndexedModuleSet;
-		friend class NEIndexedKeySet;
+		friend class NENodeArray;
+		friend class NEModuleArray;
+		friend class NEKeyArray;
 
 	public:
 		static NEEnlistableManager& getGlobalManager();

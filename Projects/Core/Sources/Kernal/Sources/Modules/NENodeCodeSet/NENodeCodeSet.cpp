@@ -1,6 +1,6 @@
 #include "NENodeCodeSet.hpp"
 #include "../Kernal/Kernal.hpp"
-#include "../NEIndexedNodeSet/NEIndexedNodeSet.hpp"
+#include "../NENodeArray/NENodeArray.hpp"
 
 namespace NE
 {
@@ -59,7 +59,7 @@ namespace NE
 		
 		//	TEST: serialize가 없더라도 insert만으로도 올바르게 _enlist가 동작할 것이다.
 
-		NEIndexedNodeSet& nodeset = _getNodeSet();
+		NENodeArray& nodeset = _getNodeSet();
 		if(! &nodeset)
 		{
 			KERNAL_ERROR(" : ");
@@ -104,7 +104,7 @@ namespace NE
 			KERNAL_ERROR(" : 주어진 인덱스가 범위를 넘습니다.");
 			return NE_INDEX_ERROR;
 		}
-		NEIndexedNodeSet& nodeset = _getNodeSet();
+		NENodeArray& nodeset = _getNodeSet();
 		if(! &nodeset)
 		{
 			KERNAL_ERROR(" : ");
@@ -128,7 +128,7 @@ namespace NE
 	{
 		//	pre:
 		NENode* nullpointer = 0x00;
-		NEIndexedNodeSet& nodeset = _getNodeSet();
+		NENodeArray& nodeset = _getNodeSet();
 		if(! &nodeset)
 		{
 			KERNAL_ERROR(" : ");
@@ -155,7 +155,7 @@ namespace NE
 	{
 		//	pre:
 		NENode* nullpointer = 0x00;
-		const NEIndexedNodeSet& nodeset = _getNodeSet();
+		const NENodeArray& nodeset = _getNodeSet();
 		if(! &nodeset)
 		{
 			KERNAL_ERROR(" : ");
@@ -181,7 +181,7 @@ namespace NE
 	type_result NENodeCodeSet::setElement(type_index index, const NENode& source)
 	{
 		//	pre:
-		NEIndexedNodeSet& nodeset = _getNodeSet();
+		NENodeArray& nodeset = _getNodeSet();
 		if(! &nodeset)
 		{
 			KERNAL_ERROR(" : ");
@@ -203,7 +203,7 @@ namespace NE
 	type_index NENodeCodeSet::match(const NENode& source) const
 	{
 		//	pre:
-		const NEIndexedNodeSet& nodeset = _getNodeSet();
+		const NENodeArray& nodeset = _getNodeSet();
 		if(! &nodeset)
 		{
 			KERNAL_ERROR(" : ");
@@ -229,9 +229,9 @@ namespace NE
 
 		return NE_INDEX_ERROR;
 	}
-	NEIndexedNodeSet& NENodeCodeSet::_getNodeSet()
+	NENodeArray& NENodeCodeSet::_getNodeSet()
 	{
-		NEIndexedNodeSet* nullpointer = 0x00;
+		NENodeArray* nullpointer = 0x00;
 		if( ! isManaged())
 		{
 			KERNAL_ERROR(" : ")
@@ -239,9 +239,9 @@ namespace NE
 		}
 		return getManager()._getNodeSet();
 	}
-	const NEIndexedNodeSet& NENodeCodeSet::_getNodeSet() const
+	const NENodeArray& NENodeCodeSet::_getNodeSet() const
 	{
-		NEIndexedNodeSet* nullpointer = 0x00;
+		NENodeArray* nullpointer = 0x00;
 		if( ! isManaged())
 		{
 			KERNAL_ERROR(" : ")
@@ -363,7 +363,7 @@ namespace NE
 				NETVector<T, type_bool, Q>에서 정의한 resize 
 				다른 원리로 동작하기 때문이다. 해당 함수에서는 clone
 				함수를 사용해서 담아둘 인스턴스를 임시 버퍼에 담아두는
-				역할을 수행하고 있는데, 실질적으로 이 코드는 NEIndexedNodeSet
+				역할을 수행하고 있는데, 실질적으로 이 코드는 NENodeArray
 				에서 동작이 불가능한 코드이기 때문이다.
 				
 			왜 clone을 사용할 수 없는가:
@@ -377,9 +377,9 @@ namespace NE
 
 				따라서 size가 5 -> 10으로 변경되는 경우, 이전 알고리즘은
 					buffer.create()
-					buffer.push(src);	<---	5 * (type_code + NEIndexedNodeSet에서 NENode) 복사
+					buffer.push(src);	<---	5 * (type_code + NENodeArray에서 NENode) 복사
 					src.resize(10);
-					src.push(buffer)	<---	5 * (type_code + NEIndexedNodeSet에서 NENode) 복사
+					src.push(buffer)	<---	5 * (type_code + NENodeArray에서 NENode) 복사
 										+)		10 * (type_code + NENode) 비용 소모.
 				반면, 이 알고리즘은,
 					type_code buffer[5];

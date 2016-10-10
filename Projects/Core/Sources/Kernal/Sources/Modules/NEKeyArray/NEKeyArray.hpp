@@ -13,24 +13,24 @@ namespace NE
 	template
 	class NE_DLL NETEnlistableSet< NETDeeper<NETArray<NEKey>> >;
 
-	class NE_DLL NEIndexedKeySet : public NETEnlistableSet< NETDeeper<NETArray<NEKey>> >
+	class NE_DLL NEKeyArray : public NETEnlistableSet< NETDeeper<NETArray<NEKey>> >
 	{
 		typedef NETEnlistableSet< NETDeeper<NETArray<NEKey>> > _Super;
 		//	Why should this class be declared as Interface, not TConcreteClass?:
 		//		this has no constructor that doesn't need parameter.
-		NE_DECLARE_INTERFACE(NEIndexedKeySet, _Super)
+		NE_DECLARE_INTERFACE(NEKeyArray, _Super)
 
 	public:
-		NEIndexedKeySet(NEEnlistableManager& manager);
-		NEIndexedKeySet(type_count size);
-		NEIndexedKeySet(const This& source);
+		NEKeyArray(NEEnlistableManager& manager);
+		NEKeyArray(type_count size);
+		NEKeyArray(const This& source);
 
 	public:
-		virtual ~NEIndexedKeySet();
+		virtual ~NEKeyArray();
 
 	public:
-		const NEIndexedKeySet& operator+=(const This& source);
-		NEIndexedKeySet operator+(const This& source) const;
+		const NEKeyArray& operator+=(const This& source);
+		NEKeyArray operator+(const This& source) const;
 		
 	public:
 		using Super::insert;

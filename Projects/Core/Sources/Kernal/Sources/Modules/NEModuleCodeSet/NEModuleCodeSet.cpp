@@ -3,7 +3,7 @@
 #pragma message("NEModuleCodeSet.cpp - 2")
 #include "../Kernal/Kernal.hpp"
 #pragma message("NEModuleCodeSet.cpp - 3")
-#include "../NEIndexedModuleSet/NEIndexedModuleSet.hpp"
+#include "../NEModuleArray/NEModuleArray.hpp"
 #pragma message("NEModuleCodeSet.cpp - 4")
 
 namespace NE
@@ -59,7 +59,7 @@ namespace NE
 	type_index NEModuleCodeSet::insert(type_index index, const NEModule& source)
 	{
 		//	pre:
-		NEIndexedModuleSet& moduleset = _getModuleSet();
+		NEModuleArray& moduleset = _getModuleSet();
 		if(! &moduleset)
 		{
 			KERNAL_ERROR(" : ");
@@ -91,7 +91,7 @@ namespace NE
 	type_index NEModuleCodeSet::remove(type_index index)
 	{
 		//	pre:
-		NEIndexedModuleSet& moduleset = _getModuleSet();
+		NEModuleArray& moduleset = _getModuleSet();
 		if(! &moduleset)
 		{
 			KERNAL_ERROR(" : ");
@@ -115,7 +115,7 @@ namespace NE
 	{
 		//	pre:
 		NEModule* nullpointer = 0x00;
-		NEIndexedModuleSet& moduleset = _getModuleSet();
+		NEModuleArray& moduleset = _getModuleSet();
 		if(! &moduleset)
 		{
 			KERNAL_ERROR(" : ");
@@ -139,7 +139,7 @@ namespace NE
 	{
 		//	pre:
 		NEModule* nullpointer = 0x00;
-		const NEIndexedModuleSet& moduleset = _getModuleSet();
+		const NEModuleArray& moduleset = _getModuleSet();
 		if(! &moduleset)
 		{
 			KERNAL_ERROR(" : ");
@@ -162,7 +162,7 @@ namespace NE
 	type_result NEModuleCodeSet::setElement(type_index index, const NEModule& source)
 	{
 		//	pre:
-		NEIndexedModuleSet& moduleset = _getModuleSet();
+		NEModuleArray& moduleset = _getModuleSet();
 		if(! &moduleset)
 		{
 			KERNAL_ERROR(" : ");
@@ -185,7 +185,7 @@ namespace NE
 	type_index NEModuleCodeSet::match(const NEModule& source) const
 	{
 		//	pre:
-		const NEIndexedModuleSet& moduleset = _getModuleSet();
+		const NEModuleArray& moduleset = _getModuleSet();
 		if(! &moduleset)
 		{
 			KERNAL_ERROR(" : ");
@@ -283,7 +283,7 @@ namespace NE
 				NETVector<T, type_bool, Q>에서 정의한 resize 
 				다른 원리로 동작하기 때문이다. 해당 함수에서는 clone
 				함수를 사용해서 담아둘 인스턴스를 임시 버퍼에 담아두는
-				역할을 수행하고 있는데, 실질적으로 이 코드는 NEIndexedNodeSet
+				역할을 수행하고 있는데, 실질적으로 이 코드는 NENodeArray
 				에서 동작이 불가능한 코드이기 때문이다.
 				
 			왜 clone을 사용할 수 없는가:
@@ -297,9 +297,9 @@ namespace NE
 
 				따라서 size가 5 -> 10으로 변경되는 경우, 이전 알고리즘은
 					buffer.create()
-					buffer.push(src);	<---	5 * (type_code + NEIndexedNodeSet에서 NENode) 복사
+					buffer.push(src);	<---	5 * (type_code + NENodeArray에서 NENode) 복사
 					src.resize(10);
-					src.push(buffer)	<---	5 * (type_code + NEIndexedNodeSet에서 NENode) 복사
+					src.push(buffer)	<---	5 * (type_code + NENodeArray에서 NENode) 복사
 										+)		10 * (type_code + NENode) 비용 소모.
 				반면, 이 알고리즘은,
 					type_code buffer[5];
@@ -344,9 +344,9 @@ namespace NE
 		Super::release();
 	}
 
-	NEIndexedModuleSet& NEModuleCodeSet::_getModuleSet()
+	NEModuleArray& NEModuleCodeSet::_getModuleSet()
 	{
-		NEIndexedModuleSet* nullpointer = 0x00;
+		NEModuleArray* nullpointer = 0x00;
 		if( ! isManaged())
 		{
 			KERNAL_ERROR(" : ")
@@ -355,9 +355,9 @@ namespace NE
 		return getManager()._getModuleSet();
 	}
 
-	const NEIndexedModuleSet& NEModuleCodeSet::_getModuleSet() const
+	const NEModuleArray& NEModuleCodeSet::_getModuleSet() const
 	{
-		const NEIndexedModuleSet* nullpointer = 0x00;
+		const NEModuleArray* nullpointer = 0x00;
 		if( ! isManaged())
 		{
 			KERNAL_ERROR(" : ")

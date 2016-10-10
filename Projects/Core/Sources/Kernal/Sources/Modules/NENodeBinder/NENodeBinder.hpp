@@ -4,7 +4,7 @@
 
 namespace NE
 {
-	class NEIndexedNodeSet;
+	class NENodeArray;
 
 	class NE_DLL NENodeBinder : public NEBinderBase
 	{
@@ -25,7 +25,7 @@ namespace NE
 		type_result bind(const NENode& node/*, NEType::Type manager_type*/);
 
 	private:
-		NEIndexedNodeSet& _getNodeSet();
-		const NEIndexedNodeSet& _getNodeSet() const;
+		NENodeArray& _getNodeSet();
+		const NENodeArray& _getNodeSet() const;
 	};
 }

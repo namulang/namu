@@ -5,7 +5,7 @@ namespace NE
 {
 	type_bool NENodeBinder::isBinded() const
 	{
-		const NEIndexedNodeSet& nodeset = _getNodeSet();
+		const NENodeArray& nodeset = _getNodeSet();
 		if( ! &nodeset)	return false;
 		const NENode& node = nodeset[getRealIndex()];
 		if( ! &node) return false;
@@ -31,9 +31,9 @@ namespace NE
 		return _getNodeSet()[getRealIndex()];
 	}
 
-	NEIndexedNodeSet& NENodeBinder::_getNodeSet()
+	NENodeArray& NENodeBinder::_getNodeSet()
 	{
-		NEIndexedNodeSet* nullpointer = NE_NULL;
+		NENodeArray* nullpointer = NE_NULL;
 		NEEnlistableManager& manager = getManager();
 		if( ! &manager)
 			return *nullpointer;
@@ -41,9 +41,9 @@ namespace NE
 		return manager._getNodeSet();
 	}
 
-	const NEIndexedNodeSet& NENodeBinder::_getNodeSet() const
+	const NENodeArray& NENodeBinder::_getNodeSet() const
 	{
-		const NEIndexedNodeSet* nullpointer = NE_NULL;
+		const NENodeArray* nullpointer = NE_NULL;
 		const NEEnlistableManager& manager = getManager();
 		if( ! &manager)
 			return *nullpointer;
@@ -63,10 +63,10 @@ namespace NE
 		//}
 		//_manager_type = manager_type;
 
-		NEIndexedNodeSet& cont = _getNodeSet();
+		NENodeArray& cont = _getNodeSet();
 		if( ! &cont)
 		{
-			KERNAL_ERROR("NEIndexedNodeSet을 가져올 수 없었습니다.");
+			KERNAL_ERROR("NENodeArray을 가져올 수 없었습니다.");
 			goto ON_ERROR;
 		}
 		const NEOccupiedSet& ocp_tbl = cont.getOccupiedSet();

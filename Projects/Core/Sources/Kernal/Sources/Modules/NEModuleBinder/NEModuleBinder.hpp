@@ -4,7 +4,7 @@
 
 namespace NE
 {
-	class NEIndexedModuleSet;
+	class NEModuleArray;
 	class NEModule;
 
 	class NE_DLL NEModuleBinder : public NEBinderBase
@@ -26,7 +26,7 @@ namespace NE
 		type_result bind(const NEModule& module/*, NEType::Type manager_type*/);
 
 	private:
-		NEIndexedModuleSet& _getModuleSet();
-		const NEIndexedModuleSet& _getModuleSet() const;
+		NEModuleArray& _getModuleSet();
+		const NEModuleArray& _getModuleSet() const;
 	};
 }

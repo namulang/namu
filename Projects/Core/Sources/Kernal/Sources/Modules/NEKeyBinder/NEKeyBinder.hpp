@@ -4,7 +4,7 @@
 
 namespace NE
 {
-	class NEIndexedKeySet;
+	class NEKeyArray;
 	class NEKey;
 
 	class NE_DLL NEKeyBinder : public NEBinderBase
@@ -28,8 +28,8 @@ namespace NE
 		type_result _markToBindLocalKey();
 
 	private:
-		NEIndexedKeySet& _getKeySet();
-		const NEIndexedKeySet& _getKeySet() const;
+		NEKeyArray& _getKeySet();
+		const NEKeyArray& _getKeySet() const;
 		type_result _onEnlisted();
 	};
 }

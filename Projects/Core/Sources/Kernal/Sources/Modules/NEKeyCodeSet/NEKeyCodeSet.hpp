@@ -7,7 +7,7 @@
 
 namespace NE
 {
-	class NEIndexedKeySet;
+	class NEKeyArray;
 	template
 	class NE_DLL NETVector<type_code, false, NEKey>;
 	template
@@ -24,7 +24,7 @@ namespace NE
 		typedef NEKey OuterTrait;
 
 	public:
-		friend class NEIndexedModuleSet;
+		friend class NEModuleArray;
 		friend class NENode;
 
 	public:
@@ -58,8 +58,8 @@ namespace NE
 		type_result _onEnlisted(NEKey& key);
 
 	protected:
-		NEIndexedKeySet& _getKeySet();
-		const NEIndexedKeySet& _getKeySet() const;
+		NEKeyArray& _getKeySet();
+		const NEKeyArray& _getKeySet() const;
 		const This& _assign(const This& source);
 	};
 }
