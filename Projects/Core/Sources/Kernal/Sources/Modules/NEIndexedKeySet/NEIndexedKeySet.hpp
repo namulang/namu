@@ -2,19 +2,20 @@
 
 #include "../NETArray/NETArray.hpp"
 #include "../NETEnlistableSet/NETEnlistableSet.hpp"
+#include "../NETDeeper/NETDeeper.hpp"
 #include "../NEKey/NEKey.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NETArray<NEKey*, true>;
+	class NE_DLL NETDeeper<NETArray<NEKey>>;
 
 	template
-	class NE_DLL NETEnlistableSet< NETArray<NEKey*, true> >;
+	class NE_DLL NETEnlistableSet< NETDeeper<NETArray<NEKey>> >;
 
-	class NE_DLL NEIndexedKeySet : public NETEnlistableSet< NETArray<NEKey*, true> >
+	class NE_DLL NEIndexedKeySet : public NETEnlistableSet< NETDeeper<NETArray<NEKey>> >
 	{
-		typedef NETEnlistableSet< NETArray<NEKey*, true> > _Super;
+		typedef NETEnlistableSet< NETDeeper<NETArray<NEKey>> > _Super;
 		//	Why should this class be declared as Interface, not TConcreteClass?:
 		//		this has no constructor that doesn't need parameter.
 		NE_DECLARE_INTERFACE(NEIndexedKeySet, _Super)

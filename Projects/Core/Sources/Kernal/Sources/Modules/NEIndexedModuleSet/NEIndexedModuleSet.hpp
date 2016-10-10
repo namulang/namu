@@ -7,14 +7,14 @@
 namespace NE
 {
 	template
-	class NE_DLL NETArray<NEModule*, true>;
+	class NE_DLL NETDeeper<NETArray<NEModule>>;
 
 	template
-	class NE_DLL NETEnlistableSet< NETArray<NEModule*, true> >;
+	class NE_DLL NETEnlistableSet< NETDeeper<NETArray<NEModule>> >;
 
-	class NE_DLL NEIndexedModuleSet : public NETEnlistableSet< NETArray<NEModule*, true> >
+	class NE_DLL NEIndexedModuleSet : public NETEnlistableSet< NETDeeper<NETArray<NEModule>> >
 	{
-		typedef NETEnlistableSet< NETArray<NEModule*, true> > _Super;
+		typedef NETEnlistableSet< NETDeeper<NETArray<NEModule>> > _Super;
 		//	Why should this class be declared as Interface, not TConcreteClass?:
 		//		this has no constructor that doesn't need parameter.
 		NE_DECLARE_INTERFACE(NEIndexedModuleSet, _Super)

@@ -3,18 +3,19 @@
 #include "../NETArray/NETArray.hpp"
 #include "../NETEnlistableSet/NETEnlistableSet.hpp"
 #include "../NENode/NENode.hpp"
+#include "../NETDeeper/NETDeeper.hpp"
 
 namespace NE
 {
 	template
-	class NE_DLL NETArray<NENode*, true>;
+	class NE_DLL NETDeeper<NETArray<NENode>>;
 
 	template 
-	class NE_DLL NETEnlistableSet< NETArray<NENode*, true> >;
+	class NE_DLL NETEnlistableSet< NETDeeper<NETArray<NENode>> >;
 
-	class NE_DLL NEIndexedNodeSet : public NETEnlistableSet< NETArray<NENode*, true> >
+	class NE_DLL NEIndexedNodeSet : public NETEnlistableSet< NETDeeper<NETArray<NENode>> >
 	{
-		typedef NETEnlistableSet< NETArray<NENode*, true> > _Super;
+		typedef NETEnlistableSet< NETDeeper<NETArray<NENode>> > _Super;
 		//	Why should this class be declared as Interface, not TConcreteClass?:
 		//		NEIndexedNodeSet has no constructor that doesn't need parameter.
 		NE_DECLARE_INTERFACE(NEIndexedNodeSet, _Super)
