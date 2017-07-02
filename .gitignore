@@ -30,3 +30,9 @@ SDK/
 *.rsp
 sdk_copy_into_your_sdk_folder/
 *.i
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+*.sln
+*.vcproj
+*.vcxproj
