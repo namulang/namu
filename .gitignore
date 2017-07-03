@@ -16,7 +16,6 @@ BuildLog.htm
 Release/
 *.exp
 *.lib
-Applications/
 Prototypes/
 Binaries/
 *.log.dev.dbg
@@ -36,3 +35,4 @@ CMakeFiles/
 *.sln
 *.vcproj
 *.vcxproj
+outputs/
