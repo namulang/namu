@@ -36,3 +36,5 @@ CMakeFiles/
 *.vcproj
 *.vcxproj
 outputs/
+Makefile
+BuildInformation.hpp

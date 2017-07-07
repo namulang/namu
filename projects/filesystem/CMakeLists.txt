@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-message("\n\tbuilding ...")
+message("\n\tbuilding filesystem...")
 
 file(GLOB_RECURSE sources
     "*.hpp"
