@@ -12,7 +12,7 @@
 //
 //		Then, Use Funnel macro instead:
 //			My_2(NE_MACRO_FUNNEL(MyMap<T, U>), NE_MACRO_FUNNEL(template <typename T, typename U))
-#include "OverloaderMacro.hpp"
+#include "Overloader.hpp"
 
 #define NE_MACRO_FUNNEL_2(X, Y)	X, Y
 #define NE_MACRO_FUNNEL_3(X, Y, Z) NE_MACRO_FUNNEL_2(X, Y), Z
