@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-message("\n\tbuilding filesystem...")
+message("\n\tbuilding searcher...")
 
 file(GLOB_RECURSE sources
     "*.hpp"
@@ -16,4 +16,4 @@ foreach(e ${sources})
     message("\t\tembeding ${e}")
 endforeach(e)
 
-add_library(filesystem SHARED ${sources})
+add_library(searcher SHARED ${sources})

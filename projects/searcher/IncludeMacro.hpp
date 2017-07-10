@@ -7,8 +7,4 @@
 #pragma once
 
 //	include:
-#ifndef BUILD_TARGET_FILESYSTEM
-#   include "../macro/SetDLLIMPORT.hpp"
-#endif
 #include "../macro/Headers.hpp" // 내부에서 NE_DLL_PREV_STATUS 정의
-#include "../macro/SetDLLEXPORT.hpp"

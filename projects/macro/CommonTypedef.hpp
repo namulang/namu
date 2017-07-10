@@ -8,6 +8,7 @@
 #pragma once
 
 #include "Includes.hpp"
+#include "TChar.hpp"
 
 namespace NE
 {
@@ -15,11 +16,7 @@ namespace NE
 	typedef char					type_char;
 	typedef unsigned char			type_uchar;
 	typedef wchar_t					type_wchar;
-#ifdef _UNICODE
-	typedef type_wchar				type_tchar;
-#else
-	typedef type_char				type_tchar;
-#endif
+	typedef tchar					type_tchar;
 	typedef unsigned char			type_ubyte;
 	typedef short int				type_short;
 	typedef unsigned short int		type_ushort;
@@ -27,13 +24,13 @@ namespace NE
 	typedef unsigned int			type_uint;
 	typedef float					type_float;
 	typedef double					type_double;
-	typedef __int64					type_int64;
-	typedef unsigned __int64		type_uint64;
+	typedef long					type_long;
+	typedef unsigned long			type_ulong;
 	typedef bool					type_error;
 	typedef bool					type_success;
 	typedef bool					type_bool;
 	typedef int						type_index;
 	typedef type_int				type_code;
-	typedef type_uint64				type_id;
+	typedef type_ulong				type_id;
 	typedef int						type_count;
 }

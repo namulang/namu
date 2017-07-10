@@ -47,19 +47,22 @@ def _createMakefiles():
         return -1
 
 def _make():
-    print("making...")
+    make_option = " -j4 -s" # j4 -> 4 multithread.
+                            # s ->  don't print command.
+    print("making..." + make_option)
     if isWindow():
-        result = os.system("mingw32-make")
+        result = os.system("mingw32-make" + make_option)
         if result != 0:
             print("make has been failed. stop build.")
     else:
-        result = os.system("make")
+        result = os.system("make" + make_option)
         if result != 0:
             print("make has been failed. stop build.")
 
 def build():
     #_beautify()
     _createMakefiles()
+    print("")
     _make()
 
 def commit():
@@ -145,7 +148,8 @@ def _clean(directory):
             file_path = os.path.join(path, file)
             ext = os.path.splitext(file_path)[1]
             if  ext == ".sln" or ext == ".vcproj" or ext == ".vcxproj" or ext == ".cmake" or \
-                file == "CMakeCache.txt" or ext == ".stamp" or ext == ".depend" or file == "Makefile":
+                file == "CMakeCache.txt" or ext == ".stamp" or ext == ".depend" or file == "Makefile" or \
+                ext == ".exe" or ext == ".dll":
                 print("\t * " + file_path)
                 os.remove(file_path)
 
@@ -174,4 +178,6 @@ def main():
     print("")
 
 main()
+
+print(" - end -")
 pause = input()

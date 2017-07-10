@@ -70,5 +70,14 @@ if(SHOW_CMAKE_VARIABLES)
 endif(SHOW_CMAKE_VARIABLES)
 
 message("\ninitialize CMake variables...")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -fdiagnostics-color")
+set(CXX_DEFINITIONS "${DEFINITIONS} -DUNICODE")
+set(CMAKE_CXX_STANDARD 14)
+
+message("\tcompile options are ${CMAKE_CXX_FLAGS}")
+message("\tcommon definitions are ${CXX_DEFINITIONS}")
+message("\tc++ standard is {CMAKE_CXX_STANDARD}")
+add_definitions(${CXX_DEFINITIONS})
+
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../projects ${CMAKE_CURRENT_BINARY_DIR}/projects)
