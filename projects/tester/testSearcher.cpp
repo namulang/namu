@@ -8,7 +8,7 @@ int main()
 
     cout << "test1\n";
 
-    Folder root("C:\\", Folder::Option(false));
+    Folder root("C:\\", Folder::Option(true));
     while( ! root.next().isNull())
     {
         const File& e = root.peek();
