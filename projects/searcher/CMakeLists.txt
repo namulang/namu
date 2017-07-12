@@ -17,3 +17,4 @@ foreach(e ${sources})
 endforeach(e)
 
 add_library(searcher SHARED ${sources})
+set_target_properties(searcher PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")

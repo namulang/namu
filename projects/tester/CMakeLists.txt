@@ -19,8 +19,13 @@ endforeach(e)
 #find_library(libsearcher
     #NAME libsearcher
     #HINT "${CMAKE_BINARY_DIR}/build/projects/searcher")
-set(LIBRARIES "${CMAKE_BINARY_DIR}/projects/searcher/libsearcher.dll")
-message("\n\t\tlibraries are ${LIBRARIES}")
+set(dependencies "searcher")
+foreach(e ${dependencies})
+    set(libraries "${libraries} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/lib${e}.${WORLD_LIBRARY_EXTENSION}")
+    message("\t\tlinking ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/lib${e}.${WORLD_LIBRARY_EXTENSION}")
+endforeach(e)
+string(STRIP ${libraries} libraries) # remove trailing whitespace
 
 add_executable(tester ${sources})
-target_link_libraries(tester ${LIBRARIES})
+target_link_libraries(tester ${libraries})
+add_dependencies(tester ${dependencies})

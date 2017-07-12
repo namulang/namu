@@ -73,10 +73,16 @@ message("\ninitialize CMake variables...")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -fdiagnostics-color")
 set(CXX_DEFINITIONS "${DEFINITIONS} -DUNICODE")
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(WORLD_LIBRARY_EXTENSION "so")
 
 message("\tcompile options are ${CMAKE_CXX_FLAGS}")
 message("\tcommon definitions are ${CXX_DEFINITIONS}")
 message("\tc++ standard is {CMAKE_CXX_STANDARD}")
+message("\tbuilded outputs will be placed to ${RUNTIME_OUTPUT_DIRECTORY}")
+message("\tall libraries extension is ${WORLD_LIBRARY_EXTENSION}")
 add_definitions(${CXX_DEFINITIONS})
 
 
