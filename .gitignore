@@ -38,3 +38,7 @@ CMakeFiles/
 outputs/
 Makefile
 BuildInformation.hpp
+*.a
+*.so
+*.o
+.vscode/
