@@ -1,10 +1,15 @@
 #pragma once
 
-#include "Includes.hpp"
 #include <chrono>
+#include <string>
+#include <vector>
 
 namespace NE
 {	
+	#define NE_ASSERT_OR_RETURN(expression)	\
+		if(expression)						\
+			return #expression;
+
 	class TestCase
 	{
 	public:
@@ -12,10 +17,10 @@ namespace NE
 		virtual const char* getName() const = 0;
 
 	protected:
-		virtual bool _onTest() = 0;
+		virtual std::string _onTest() = 0;
 
 	private:
-		void _printResult(bool is_success, std::chrono::milliseconds process_time) const;
+		void _printResult(std::string result, std::chrono::milliseconds process_time) const;
 		std::chrono::milliseconds _getTime();
 
 	public:

@@ -1,5 +1,7 @@
 #include "TestCase.hpp"
+#include <independentor.hpp>
 #include <iomanip>
+#include <iostream>
 
 namespace NE
 {
@@ -10,20 +12,29 @@ namespace NE
     void CLASS::test()
     {
         milliseconds prev = _getTime();
-        bool result = _onTest();
+        string result = _onTest();
         _printResult(result, (_getTime() - prev));
     }
 
-    void CLASS::_printResult(bool is_success, milliseconds process_time) const
+    void CLASS::_printResult(string result, milliseconds process_time) const
     {        
-        PlatformAPI::ConsoleColor fore = is_success ? PlatformAPI::LIGHTGREEN : PlatformAPI::RED;
-        PlatformAPI::updateConsoleColor(fore, PlatformAPI::BLACK);
+        typedef PlatformAPI::ConsoleColor Color;
+        Color   fore = result == "" ? PlatformAPI::LIGHTGREEN : PlatformAPI::RED,
+                back = PlatformAPI::BLACK;
         
-        cout 	<< "[ " << setw(6) << setfill(' ') 
-                << process_time.count() << "ms ] ";
+        PlatformAPI::updateConsoleColor(PlatformAPI::YELLOW, back);
+        cout << "[";
         
+        PlatformAPI::updateConsoleColor(back, fore);
+        cout    << setw(6) << setfill(' ') << process_time.count() << "ms | " 
+                << setw(20) << setfill(' ') << getName();
+
+        PlatformAPI::updateConsoleColor(PlatformAPI::YELLOW, back);
+        cout << "] ";
+        
+        PlatformAPI::updateConsoleColor(PlatformAPI::CYAN, PlatformAPI::BLACK);
+        cout << result << "\n";
         PlatformAPI::updateConsoleColor(PlatformAPI::LIGHTGRAY, PlatformAPI::BLACK);
-        cout << getName() << "\n";
     }
 
     milliseconds CLASS::_getTime()
