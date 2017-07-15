@@ -16,10 +16,7 @@ foreach(e ${sources})
     message("\t\tembeding ${e}")
 endforeach(e)
 
-#find_library(libsearcher
-    #NAME libsearcher
-    #HINT "${CMAKE_BINARY_DIR}/build/projects/searcher")
-set(dependencies "searcher")
+set(dependencies "file-manipulator")
 foreach(e ${dependencies})
     set(libraries "${libraries} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/lib${e}.${WORLD_LIBRARY_EXTENSION}")
     message("\t\tlinking ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/lib${e}.${WORLD_LIBRARY_EXTENSION}")
