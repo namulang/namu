@@ -16,13 +16,11 @@ foreach(e ${sources})
     message("\t\tembeding ${e}")
 endforeach(e)
 
-set(dependencies "file-manipulator")
+set(dependencies file-manipulator)
 foreach(e ${dependencies})
-    set(libraries "${libraries} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/lib${e}.${WORLD_LIBRARY_EXTENSION}")
-    message("\t\tlinking ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/lib${e}.${WORLD_LIBRARY_EXTENSION}")
+    message("\t\tlinking ${e}")
 endforeach(e)
-string(STRIP ${libraries} libraries) # remove trailing whitespace
 
 add_executable(tester ${sources})
-target_link_libraries(tester ${libraries})
+target_link_libraries(tester ${dependencies})
 add_dependencies(tester ${dependencies})
