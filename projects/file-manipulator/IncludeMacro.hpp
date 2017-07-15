@@ -7,4 +7,4 @@
 #pragma once
 
 //	include:
-#include "../macro/Headers.hpp" // 내부에서 NE_DLL_PREV_STATUS 정의
+#include "../independentor/Headers.hpp" // 내부에서 NE_DLL_PREV_STATUS 정의
