@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IncludeMacro.hpp"
+#include "Includes.hpp"
 #include <string>
 
 namespace NE

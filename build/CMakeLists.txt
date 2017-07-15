@@ -83,13 +83,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(WORLD_LIBRARY_EXTENSION "so")
+get_filename_component(WORLD_DIRECTORY ${CMAKE_SOURCE_DIR} DIRECTORY)
+set(WORLD_DEFAULT_INCLUDE_DIRECTORY ${WORLD_DIRECTORY}/projects)
+include_directories(${WORLD_DEFAULT_INCLUDE_DIRECTORY})
 
 message("\tcompile options are ${CMAKE_CXX_FLAGS}")
 message("\tcommon definitions are ${CXX_DEFINITIONS}")
 message("\tc++ standard is {CMAKE_CXX_STANDARD}")
 message("\tbuilded outputs will be placed to ${RUNTIME_OUTPUT_DIRECTORY}")
 message("\tall libraries extension is ${WORLD_LIBRARY_EXTENSION}")
+message("\tworld project directory is ${WORLD_DIRECTORY}")
+message("\tdefault include directory is ${WORLD_DEFAULT_INCLUDE_DIRECTORY}")
 add_definitions(${CXX_DEFINITIONS})
-
-
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../projects ${CMAKE_CURRENT_BINARY_DIR}/projects)
