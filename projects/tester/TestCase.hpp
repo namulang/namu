@@ -6,7 +6,7 @@
 
 namespace NE
 {	
-	#define NE_ASSERT_OR_RETURN(expression)	\
+	#define NE_ASSERT_THEN_RETURN(expression)	\
 		if(expression)						\
 			return #expression;
 

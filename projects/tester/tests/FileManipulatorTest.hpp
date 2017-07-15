@@ -19,7 +19,7 @@ namespace NE
                 if(n++ > 10)
                     break;
             }
-            NE_ASSERT_OR_RETURN(n < 10)
+            NE_ASSERT_THEN_RETURN(n < 10)
             
             return "";
         }
