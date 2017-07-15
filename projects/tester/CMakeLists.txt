@@ -1,26 +1,26 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 message("\n\tbuilding tester...")
-
+#   defines:
+#       define sources:
 file(GLOB_RECURSE sources
-    "*.hpp"
-    "*.h"
     "*.c"
-    "*.inl"
     "*.cpp"
 )
-
-add_definitions(-DBUILD_TARGET_FILESYSTEM)
-
+#           logging sources:
 foreach(e ${sources})
     message("\t\tembeding ${e}")
 endforeach(e)
-
-set(dependencies file-manipulator)
+#       define predefinitions:
+add_definitions(-DBUILD_TARGET_TESTER)
+#       define libraries:
+set(dependencies independentor file-manipulator logger)
 foreach(e ${dependencies})
     message("\t\tlinking ${e}")
 endforeach(e)
 
+
+#   execute:
 add_executable(tester ${sources})
 target_link_libraries(tester ${dependencies})
 add_dependencies(tester ${dependencies})
