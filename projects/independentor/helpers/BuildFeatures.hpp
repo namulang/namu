@@ -32,7 +32,7 @@ namespace NE
         enum PlatformType
         {
             PLATFORM_TYPE_START = 0,
-            WINDOW,
+            WINDOW = PLATFORM_TYPE_START,
             PLATFORM_TYPE_END,
             LINUX = PLATFORM_TYPE_END
         };
@@ -45,7 +45,7 @@ namespace NE
         enum BuildType
         {
             BUILD_TYPE_START = 0,
-            DEBUG,
+            DEBUG = BUILD_TYPE_START,
             BUILD_TYPE_END,
             RELEASE = BUILD_TYPE_END
         };
