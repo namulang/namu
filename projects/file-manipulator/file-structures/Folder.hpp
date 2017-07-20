@@ -21,8 +21,8 @@ namespace NE
         };
 
     public:
-        Folder(const File* owner, const string& path, Option option = Option());
-        Folder(const string& path, Option option = Option());
+        Folder(const File* owner, const std::string& path, Option option = Option());
+        Folder(const std::string& path, Option option = Option());
         virtual ~Folder();
 
     public:

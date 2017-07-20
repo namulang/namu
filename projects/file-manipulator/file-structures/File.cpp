@@ -3,13 +3,13 @@
 
 namespace NE
 {
+    using namespace std;
     #define THIS File
 
     THIS::THIS(const File* owner, const string& name) : _owner(owner) { _setName(name); }
     THIS::~THIS() {}
 
     const string& THIS::getName() const { return _name; }
-    const string& THIS::getPath() const { return _path; }
 
     const string& THIS::getBaseDirectory() const
     {
@@ -21,11 +21,10 @@ namespace NE
 
     type_bool THIS::isFolder() const { return _isFolder(_getInfo(getPath())); }
     type_ubyte THIS::getSize() const { return _getInfo(getPath()).st_size; }
-    type_bool THIS::isNull() const { return ! this; }
 
     void THIS::release()
     {
-        // _path.clear();
+        // PathedObject::release(); --> _path should not be released.
         // _owner should not be released.
     }
 
@@ -45,9 +44,9 @@ namespace NE
     void THIS::_setName(const string& new_name)
     {
         _name = new_name;
-        _path = _owner ? _owner->getPath() + "/" + _name : _path = _name;
+        _setPath(_owner ? _owner->getPath() + "/" + _name : _name);
     }
 
     File& THIS::operator=(const File& rhs) { return *this; }
-    THIS::File(const File& rhs) : _owner(0), _path(rhs._path) {}
+    THIS::File(const File& rhs) : _owner(0){}
 }

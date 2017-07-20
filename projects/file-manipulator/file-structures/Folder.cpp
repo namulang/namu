@@ -2,6 +2,7 @@
 
 namespace NE
 {
+    using namespace std;
     #define THIS Folder
 
     Folder::Option::Option(type_bool is_reculsive) : _is_reculsive(is_reculsive) {}
