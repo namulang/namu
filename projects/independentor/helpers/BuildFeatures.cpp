@@ -38,7 +38,7 @@ namespace NE
         if(inner == PLATFORM_TYPE_START)
         {
             const string& name = getName();
-            const char* map[] = {"PLATFORM_TYPE_START", "Windows", "Linux", NE_NULL};
+            const char* map[] = {"Windows", "Linux", NE_NULL};
             int n=-1;
             while(map[++n])
                 if(name == map[n])
