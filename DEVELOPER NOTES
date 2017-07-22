@@ -13,8 +13,8 @@ World v.Seed for developer
 		Let's Build!:
 			Preparing:
 				to build World, following softwares will be needed.
-					python, git, cmake, clang-format
-					make(linux) or minGW g++ and make,
+					python, git, cmake, g++ and make,
+					* if you're trying on windows, then it's recommended to install minGW
 				install these softwares on their websites.
 
 			Just enter:
