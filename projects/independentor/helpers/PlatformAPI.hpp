@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BuildFeatures.hpp"
+#include <string>
 
 namespace NE
 {
@@ -17,5 +18,6 @@ namespace NE
             WHITE = CONSOLE_COLOR_END
         };
         static void updateConsoleColor(ConsoleColor fore, ConsoleColor back);
+        static std::string createCurrentTime(const std::string& strftime_format);
     };
 }
