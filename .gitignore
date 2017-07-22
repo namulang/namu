@@ -41,4 +41,5 @@ BuildInformation.hpp
 *.a
 *.so
 *.o
+FileManipulatorTest.txt
 .vscode/
