@@ -8,18 +8,25 @@ namespace NE
     Folder::Option::Option(type_bool is_reculsive) : _is_reculsive(is_reculsive) {}
     type_bool Folder::Option::isReculsive() const { return _is_reculsive; }
 
+    THIS::THIS(const std::string& new_path) : File(new_path), _iterator(0), _sub_file(0) {}
     THIS::THIS(const File* owner, const string& path, Option option) : File(owner, path), _iterator(0), _sub_file(0), _option(option) {}
     THIS::THIS(const string& path, Option option) : File(0, path), _iterator(0), _sub_file(0), _option(option) {}
     THIS::~THIS() { _release(); }
+
+    type_bool THIS::initialize()
+    {
+        if(isInitialized())
+            _release();
+        
+        _iterator = opendir(getPath().c_str());
+        return ! isInitialized();
+    }
+    type_bool THIS::isInitialized() const { return _iterator; }
+
     const THIS::Option& THIS::getOption() const { return _option; }
 
     const File& THIS::next()
     {
-        //  pre:
-        if( ! _iterator)
-            _iterator = opendir(getPath().c_str());
-
-
         //  main:
         //      prepare start_iterator just after returned before:
         //          if _sub_file is not a folder, we should not call its next():
@@ -41,10 +48,10 @@ namespace NE
 
     const File& THIS::peek() const { return _sub_file ? _sub_file->peek() : *this; }
 
-    void THIS::release()
+    type_bool THIS::release()
     {
         _release();
-        File::release();
+        return File::release();
     }
 
     const File* THIS::_prepare() const

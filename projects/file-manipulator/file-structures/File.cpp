@@ -1,15 +1,28 @@
-#include <sys/stat.h>
 #include "File.hpp"
+#include <sys/stat.h>
+#include <stdio.h>
 
 namespace NE
 {
     using namespace std;
     #define THIS File
 
+    THIS::THIS(const std::string& path) : PathedObject(path), _owner(0) {}
     THIS::THIS(const File* owner, const string& name) : _owner(owner) { _setName(name); }
     THIS::~THIS() {}
 
     const string& THIS::getName() const { return _name; }
+
+    type_bool THIS::remove()
+    {
+        type_bool result = ::remove(getPath().c_str());
+        if( ! result)
+            return release();
+
+        return result;
+    }
+    type_bool THIS::initialize() { return false; }
+    type_bool THIS::isInitialized() const { return true; }
 
     const string& THIS::getBaseDirectory() const
     {
@@ -22,10 +35,11 @@ namespace NE
     type_bool THIS::isFolder() const { return _isFolder(_getInfo(getPath())); }
     type_ubyte THIS::getSize() const { return _getInfo(getPath()).st_size; }
 
-    void THIS::release()
+    type_bool THIS::release()
     {
         // PathedObject::release(); --> _path should not be released.
         // _owner should not be released.
+        return false;
     }
 
     const File& THIS::peek() const { return *this; }

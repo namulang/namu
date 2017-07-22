@@ -21,15 +21,18 @@ namespace NE
         };
 
     public:
+        Folder(const std::string& path = "");
         Folder(const File* owner, const std::string& path, Option option = Option());
         Folder(const std::string& path, Option option = Option());
         virtual ~Folder();
 
     public:
+        virtual type_bool initialize();
+        virtual type_bool isInitialized() const;
         const Option& getOption() const;
         const File& next();
         const File& peek() const;
-        virtual void release();
+        virtual type_bool release();
 
     private:
         const File* _prepare() const;

@@ -10,11 +10,14 @@ namespace NE
     public:
         PathedObject();
         PathedObject(const std::string& path);
+        PathedObject(const PathedObject& rhs);
 
     public:
+        virtual type_bool initialize() = 0;
+        virtual type_bool isInitialized() const = 0;
         const std::string& getPath() const;
         type_bool isNull() const;
-        virtual void release();
+        virtual type_bool release();
 
     protected:
         type_bool _setPath(const std::string& new_path);
@@ -22,7 +25,6 @@ namespace NE
     private:
         /// @remark not allowed.
         PathedObject& operator=(const PathedObject& rhs);
-        PathedObject(const PathedObject& rhs);
 
     private:
         std::string _path;

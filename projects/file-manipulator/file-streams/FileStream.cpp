@@ -1,74 +1,41 @@
-#pragma once
-
-#include "../file-structures/PathedObject.hpp"
+#include "FileStream.hpp"
+#include <string.h>
 
 using namespace std;
 
 namespace NE
 {
-    class FileStream : public PathedObject
+    #define THIS FileStream
+
+    THIS::THIS() : _mode(MODE_TYPE_START), _fd(0) {}
+    THIS::THIS(const std::string& new_path) : PathedObject(new_path), _mode(MODE_TYPE_START), _fd(0)  {}
+    THIS::~THIS() { release(); }
+
+    type_bool THIS::setPath(const std::string& new_path) { return _setPath(new_path); }
+    type_bool THIS::setPath(const PathedObject& path)
+    { 
+        if(path.isNull()) return true; 
+        
+        return _setPath(path.getPath()); 
+    }
+    type_bool THIS::isInitialized() const { return _fd; }
+    type_bool THIS::release()
     {
-    public:
-        enum Mode
-        {
-            MODE_TYPE_START = 0,
-            READ_ONLY,
-            WRITABLE,
+        if(_fd)
+            fclose(_fd);
+        _fd = NE_NULL;
 
-            MODE_TYPE_END,
-            OVERWRITABLE = MODE_TYPE_END,
-        };
+        _mode = MODE_TYPE_START;
 
-    public:
-        type_bool setPath(const std::string& new_path) { return _setPath(new_path); }
-        type_bool setPath(const PathedObject& path) { 
-            if(path.isNull()) return true; 
-            
-            return _setPath(path.getPath()); 
-        }
-        type_bool isOpen() const { return _fd; }
-        virtual void release() {
-            if(_fd)
-                fclose(_fd);
-            _fd = NE_NULL;
-
-            _mode = MODE_TYPE_START;
-
-            PathedObject::release();
-        }
-        virtual void initialize() = 0;
-        type_bool setMode(Mode new_mode) {
-            if(isOpen()) return true;
-
-            _mode = new_mode;
-            return false;
-        }
-        Mode getMode() const { return _mode; }
-        type_count write(const void* chunks, type_count bytes) {
-            if( ! isOpen()) return 0;
-
-            return fwrite(chunks, 1, bytes, _fd);
-        }
-
-    private:
-        Mode _mode;
-        FILE* _fd;
-    };
-
-    class BinaryStream : public FileStream
+        return PathedObject::release();            
+    }
+    type_bool THIS::setMode(Mode new_mode)
     {
-    public:        
-        template <typename T>
-        type_count write(const T& datum) {
-            return write(&datum, sizeof(T));
-        }
-    };
+        if(isInitialized()) return true;
 
-    class AsciiStream : public FileStream
-    {
-    public:
-        template <typename T>
-        type_count write(const T& datum) { return write(to_string(datum)); }
-        type_count write(const std::string& datum) { return FileStream::write(datum.c_str(), sizeof(char) * datum.size()); }
-    };
+        _mode = new_mode;
+        return false;
+    }
+    THIS::Mode THIS::getMode() const { return _mode; }    
+    THIS::THIS(const PathedObject& object) {}
 }

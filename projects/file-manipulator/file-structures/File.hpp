@@ -9,17 +9,21 @@ namespace NE
         friend class Folder;
 
     public:
+        File(const std::string& path = "");
         File(const File* owner, const std::string& name);
         virtual ~File();
 
     public:
+        virtual type_bool initialize();
+        virtual type_bool isInitialized() const;
         const std::string& getBaseDirectory() const;
         type_bool isFolder() const;
         type_ubyte getSize() const;
         virtual const File& peek() const;
         virtual const File& next();
-        virtual void release();
+        virtual type_bool release();
         const std::string& getName() const;
+        type_bool remove();
 
     protected:
         static type_bool _isFolder(struct stat& info);
