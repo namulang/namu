@@ -9,17 +9,77 @@ namespace NE
     struct FileManipulatorTest : public TestCase {
         virtual const char* getName() const { return "FileManipulatorTest"; }
         virtual std::string _onTest() {
-            Folder root("C:\\", Folder::Option(true));
+            //  read-write test:
+            NE_ASSERT_THEN_RETURN( ! File().remove())
             
-            int n = 0;
-            while( ! root.next().isNull())
-            {
-                const File& e = root.peek();
-                std::cout << e.getPath() << "\n";
-                if(n++ > 10)
+            std::string current = ".";
+            std::string input_path = current + "/sample.txt";
+
+            AsciiStream as(input_path);
+            NE_ASSERT_THEN_RETURN(as.getPath() != input_path);
+            NE_ASSERT_THEN_RETURN(as.initialize())
+            NE_ASSERT_THEN_RETURN( ! as.isInitialized())
+
+            std::string reaad = as.readLine();
+            NE_ASSERT_THEN_RETURN(reaad == "")
+            NE_ASSERT_THEN_RETURN(as.release())
+
+            std::string output_filename = "FileManipulatorTest.txt";
+            std::string source = current + "/" + output_filename;
+            File output(source);
+            NE_ASSERT_THEN_RETURN(output.getPath() != source)
+            output.remove();
+
+            
+            //  searching test:
+            Folder build(current, Folder::Option(false));
+            NE_ASSERT_THEN_RETURN(build.isInitialized())
+            NE_ASSERT_THEN_RETURN(build.initialize())
+            NE_ASSERT_THEN_RETURN( ! build.isInitialized())
+            type_bool found = false;
+            while( ! build.next().isNull())
+                if(build.peek().getName() == output_filename)
+                {
+                    found = true;
                     break;
-            }
-            NE_ASSERT_THEN_RETURN(n < 10)
+                }
+            NE_ASSERT_THEN_RETURN(found)
+            NE_ASSERT_THEN_RETURN(build.release());
+
+
+            BinaryStream bs(source);
+            NE_ASSERT_THEN_RETURN(bs.getPath() != source)
+            NE_ASSERT_THEN_RETURN(! bs.initialize())
+            NE_ASSERT_THEN_RETURN(bs.isInitialized())
+            NE_ASSERT_THEN_RETURN(bs.setMode(FileStream::OVERWRITE_ONLY))
+            NE_ASSERT_THEN_RETURN(! bs.initialize())
+            NE_ASSERT_THEN_RETURN(bs.isInitialized())
+            NE_ASSERT_THEN_RETURN(bs.setMode(FileStream::WRITABLE))
+            NE_ASSERT_THEN_RETURN(bs.initialize())
+            NE_ASSERT_THEN_RETURN( ! bs.isInitialized())
+            NE_ASSERT_THEN_RETURN(bs.write(reaad) <= 0)
+            NE_ASSERT_THEN_RETURN(bs.release())
+
+            NE_ASSERT_THEN_RETURN(as.setPath(source))
+            NE_ASSERT_THEN_RETURN(as.getPath() != source)
+            NE_ASSERT_THEN_RETURN(as.initialize())
+            std::string reaaad = as.readLine();
+            NE_ASSERT_THEN_RETURN(reaaad != reaad)
+
+            
+            //  searching test:
+            found = false;
+            NE_ASSERT_THEN_RETURN( ! build.next().isNull())
+            NE_ASSERT_THEN_RETURN(build.initialize())
+            NE_ASSERT_THEN_RETURN( ! build.isInitialized())
+            while( ! build.next().isNull())
+                if(build.peek().getName() == output_filename)
+                {
+                    found = true;
+                    break;
+                }
+            NE_ASSERT_THEN_RETURN( ! found)
+
             
             return "";
         }
