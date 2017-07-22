@@ -16,7 +16,6 @@ BuildLog.htm
 Release/
 *.exp
 *.lib
-Applications/
 Prototypes/
 Binaries/
 *.log.dev.dbg
@@ -29,3 +28,18 @@ Binaries/
 SDK/
 *.rsp
 sdk_copy_into_your_sdk_folder/
+*.i
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+*.sln
+*.vcproj
+*.vcxproj
+outputs/
+Makefile
+BuildInformation.hpp
+*.a
+*.so
+*.o
+FileManipulatorTest.txt
+.vscode/
