@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <stdarg.h>
 
 namespace NE
 {
@@ -80,6 +81,16 @@ namespace NE
                 result |= e->dump(message);
             
             return result;
+        }
+        type_bool dumpFormat(const char* format, ...) {
+            va_list va;
+            va_start(va, format);
+            
+            char buffer[1024];
+            vsnprintf(buffer, 1024, format, va);
+            va_end(va);
+
+            return dump(buffer);
         }
         type_bool pushStream(Stream* new_stream) {
             if( ! new_stream) return true;
