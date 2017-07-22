@@ -22,6 +22,10 @@ namespace NE
 
             NE_ASSERT_THEN_RETURN(logger.dump("hello world"))
 
+            NE_DUMP("D", "hello!")
+            NE_WARN("world!")
+            NE_ERROR("this is not error. paradox?")
+
             return "";
         }
     };
