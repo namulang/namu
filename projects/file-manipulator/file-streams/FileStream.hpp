@@ -17,7 +17,10 @@ namespace NE
             OVERWRITE_ONLY,
 
             MODE_TYPE_END,
-            WRITABLE = MODE_TYPE_END,
+            /// @brief  In APPENDABLE mode, you can read/write contents of file freely chaning cursor position.
+            ///         And cursor position will be set to EndOfFile.
+            ///         if the file tried to open doesn't exists, we creates it for you.
+            APPENDABLE = MODE_TYPE_END,
         };
 
     public:
@@ -37,6 +40,7 @@ namespace NE
         type_bool setCursor(type_int new_position);
         type_bool setPath(const std::string& new_path);
         type_bool setPath(const PathedObject& path);
+        virtual type_bool initialize();
         virtual type_bool isInitialized() const;
         virtual type_bool release();
         type_bool setMode(Mode new_mode);

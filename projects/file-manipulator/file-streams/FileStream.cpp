@@ -66,6 +66,16 @@ namespace NE
         
         return _setPath(path.getPath()); 
     }
+    type_bool THIS::initialize()
+    {
+        if(getMode() != APPENDABLE) return false;
+
+        FILE* tmp = fopen(getPath().c_str(), "r");
+        if( ! tmp)
+            tmp = fopen(getPath().c_str(), "w");
+        fclose(tmp);
+        return false;
+    }
     type_bool THIS::isInitialized() const { return _fd; }
     type_bool THIS::release()
     {

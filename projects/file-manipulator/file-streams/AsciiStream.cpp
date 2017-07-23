@@ -10,17 +10,21 @@ namespace NE
 
     type_bool THIS::initialize() 
     {
+        if(FileStream::initialize()) return true;
+
         const char* mode = 0;
         switch(getMode())
         {
         case READ_ONLY:         mode = "r"; break;
-        case OVERWRITE_ONLY:    mode = "r+";break;
-        case WRITABLE:          mode = "w+";break;
+        case OVERWRITE_ONLY:    mode = "w+";break;
+        case APPENDABLE:        mode = "r+";break;
         default:
             return true;
         }
 
         _fd = fopen(getPath().c_str(), mode);
+        if(getMode() == APPENDABLE)
+            setCursor(getEndOfFile());
         
         return ! isInitialized();
     }
