@@ -16,7 +16,7 @@ namespace NE
         {
         case READ_ONLY:         mode = "rb";    break;
         case OVERWRITE_ONLY:    mode = "r+b";   break;
-        case WRITABLE:          mode = "a+b";   break;
+        case WRITABLE:          mode = "w+b";   break;
         default:
             return true;
         }

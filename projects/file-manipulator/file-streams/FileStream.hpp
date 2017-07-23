@@ -26,6 +26,15 @@ namespace NE
         virtual ~FileStream();
 
     public:
+        type_bool operator+=(type_int delta);
+        type_bool operator-=(type_int delta);
+        type_bool operator=(type_int new_position);
+        type_int getCursor() const;
+        type_int getEndOfFile() const;
+        /// @brief  Set cursor of file opening to given new_position.
+        /// @param  new_position    If this is negative, setCursor based on the END OF FILE.
+        ///                         In "positive" case, calculate based on the START OF FILE.
+        type_bool setCursor(type_int new_position);
         type_bool setPath(const std::string& new_path);
         type_bool setPath(const PathedObject& path);
         virtual type_bool isInitialized() const;

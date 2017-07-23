@@ -12,6 +12,8 @@ namespace NE
         virtual ~AsciiStream();
 
     public:
+        using FileStream::operator=;
+
         virtual type_bool initialize();
         
         using FileStream::write;

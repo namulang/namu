@@ -12,6 +12,8 @@ namespace NE
         virtual ~BinaryStream();
 
     public:
+        using FileStream::operator=;
+        
         virtual type_bool initialize();
 
         using FileStream::write;

@@ -11,6 +11,54 @@ namespace NE
     THIS::THIS(const std::string& new_path) : PathedObject(new_path), _mode(MODE_TYPE_START), _fd(0)  {}
     THIS::~THIS() { release(); }
 
+    type_bool THIS::operator+=(type_int delta)
+    {
+        if( ! isInitialized()) return 0;
+
+        return setCursor(getCursor() + delta);
+    }
+
+    type_bool THIS::operator-=(type_int delta)
+    {
+        if( ! isInitialized()) return 0;
+
+        return setCursor(getCursor() - delta);
+    }
+
+    type_bool THIS::operator=(type_int new_position) { return setCursor(new_position); }
+
+    type_int THIS::getCursor() const 
+    {
+        if( ! isInitialized()) return 0;
+
+        return ftell(_fd);
+    }
+
+    type_int THIS::getEndOfFile() const
+    {
+        if( ! isInitialized()) return 0;
+
+        type_int backup = getCursor();
+        
+        FILE* unconsted = const_cast<FILE*>(_fd);
+        if(fseek(unconsted, 0, SEEK_END))
+            return 0;
+
+        type_int to_return = getCursor();
+        fseek(unconsted, backup, SEEK_SET);
+
+        return to_return;
+    }
+    type_bool THIS::setCursor(type_int new_position)
+    {
+        if( ! isInitialized()) return true;
+        
+        type_int mode = new_position >= 0 ? SEEK_SET : SEEK_END;
+        if(fseek(_fd, new_position, mode))
+            return true;
+
+        return false;
+    }
     type_bool THIS::setPath(const std::string& new_path) { return _setPath(new_path); }
     type_bool THIS::setPath(const PathedObject& path)
     { 
