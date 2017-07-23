@@ -58,12 +58,19 @@ namespace NE
             NE_ASSERT_THEN_RETURN(bs.initialize())
             NE_ASSERT_THEN_RETURN( ! bs.isInitialized())
             NE_ASSERT_THEN_RETURN(bs.write(reaad) <= 0)
+            NE_ASSERT_THEN_RETURN(bs -= 1)
+            NE_ASSERT_THEN_RETURN(bs.write("?", 1) <= 0)
+            NE_ASSERT_THEN_RETURN(bs = 2)
+            NE_ASSERT_THEN_RETURN(bs.write("I'm ") <= 0)
+            NE_ASSERT_THEN_RETURN(bs.setCursor(bs.getEndOfFile()))
+            NE_ASSERT_THEN_RETURN(bs.write(std::string(" keep testing!")) <= 0)
             NE_ASSERT_THEN_RETURN(bs.release())
 
             NE_ASSERT_THEN_RETURN(as.setPath(source))
             NE_ASSERT_THEN_RETURN(as.getPath() != source)
             NE_ASSERT_THEN_RETURN(as.initialize())
-            std::string reaaad = as.readLine();
+            std::string reaaad = as.readLine();   
+            reaad = "HeI'm hello world? keep testing!";
             NE_ASSERT_THEN_RETURN(reaaad != reaad)
 
             
