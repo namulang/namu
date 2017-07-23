@@ -1,4 +1,6 @@
 #pragma once
 
-#include "logger/Logger.cpp"
+
 #include "logger/macro.hpp"
+#include "logger/streams.hpp"
+#include "logger/Logger.hpp"

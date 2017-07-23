@@ -14,7 +14,7 @@ endforeach(e)
 #       define predefinitions:
 add_definitions(-DBUILD_TARGET_LOGGER)
 #       define libraries:
-set(dependencies independentor)
+set(dependencies independentor file-manipulator)
 foreach(e ${dependencies})
     message("\t\tlinking ${e}")
 endforeach(e)
