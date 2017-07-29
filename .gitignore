@@ -43,3 +43,4 @@ BuildInformation.hpp
 *.o
 FileManipulatorTest.txt
 .vscode/
+generated/
