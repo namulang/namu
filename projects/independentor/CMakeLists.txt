@@ -16,6 +16,7 @@ endforeach(e)
 file(GLOB_RECURSE sources
     "*.c"
     "*.cpp"
+    "*.cc"
 )
 #           logging sources:
 foreach(e ${sources})

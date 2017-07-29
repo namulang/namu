@@ -1,11 +1,13 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 message("\n\tbuilding logger...")
+
 #   defines:
 #       define sources:
 file(GLOB_RECURSE sources
     "*.c"
     "*.cpp"
+    "*.cc"
 )
 #           logging sources:
 foreach(e ${sources})
