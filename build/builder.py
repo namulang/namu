@@ -149,12 +149,12 @@ def _clean(directory):
             ext = os.path.splitext(file_path)[1]
             if  ext == ".sln" or ext == ".vcproj" or ext == ".vcxproj" or ext == ".cmake" or \
                 file == "CMakeCache.txt" or ext == ".stamp" or ext == ".depend" or file == "Makefile" or \
-                ext == ".exe" or ext == ".dll":
+                ext == ".exe" or ext == ".dll" or ext == ".log" or ext == ".a" or ext == ".so":
                 print("\t * " + file_path)
                 os.remove(file_path)
 
         for dir in dirs:
-            if dir == "CMakeFiles" or dir == "tmp":
+            if dir == "CMakeFiles" or dir == "tmp" or dir == "generated":
                 abs_dir = os.path.join(path, dir)
                 print("\t * " + abs_dir)
                 shutil.rmtree(abs_dir)
