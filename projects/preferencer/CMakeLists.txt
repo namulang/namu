@@ -6,9 +6,9 @@ message("\n\tbuilding preferencer...")
 set(javacc "java")
 set(javacc_output "${CMAKE_CURRENT_SOURCE_DIR}/parser/generated")
 set(javacc_flags "-classpath ${CMAKE_BINARY_DIR}/javacc.jar javacc -OUTPUT_DIRECTORY:${javacc_output}")
-message("\t\tgenerating test.jjt")
+message("\t\tgenerating preferencer.jjt")
 exec_program(${javacc} 
-    ARGS ${javacc_flags} ${CMAKE_CURRENT_SOURCE_DIR}/parser/test.jjt
+    ARGS ${javacc_flags} ${CMAKE_CURRENT_SOURCE_DIR}/parser/preferencer.jjt
 )
 
 #   defines:
@@ -33,6 +33,7 @@ endforeach(e)
 
 
 #   execute:
-add_library(preferencer SHARED ${sources})
+add_executable(preferencer ${sources})
+#add_library(preferencer SHARED ${sources})
 target_link_libraries(preferencer ${dependencies})
-set_target_properties(preferencer PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
+#set_target_properties(preferencer PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")

@@ -1,5 +1,5 @@
 #pragma once
 
-#include "parser/generated/HelloParser.h"
-#include "parser/generated/HelloParserTokenManager.h"
+#include "parser/generated/PreferencerParser.h"
+#include "parser/generated/PreferencerParserTokenManager.h"
 #include "parser/generated/CharStream.h"
