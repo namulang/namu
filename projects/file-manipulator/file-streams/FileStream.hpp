@@ -47,6 +47,8 @@ namespace NE
         Mode getMode() const;
         virtual type_count write(const void* chunks, type_count bytes) = 0;
         virtual type_count read(void* target, type_count bytes) = 0;
+        std::string readWhole();
+        type_bool isEndOfFile() const;
 
     private:        
         FileStream(const PathedObject& object);

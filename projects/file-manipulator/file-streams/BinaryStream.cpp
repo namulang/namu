@@ -1,4 +1,5 @@
 #include "BinaryStream.hpp"
+#include "../file-structures.hpp"
 
 namespace NE
 {
@@ -6,6 +7,11 @@ namespace NE
 
     THIS::THIS() : FileStream() {}
     THIS::THIS(const std::string& new_path) : FileStream(new_path) {}
+    THIS::THIS(const File& file) : FileStream() 
+    {
+        if( ! file.isNull())
+            setPath(file.getPath());
+    }
     THIS::~THIS() { release(); }
 
 

@@ -70,6 +70,14 @@ namespace NE
             reaad = "HeI'm hello world? keep testing!";
             NE_ASSERT_THEN_RETURN(reaaad != reaad)
 
+            type_int eof_cursor = as.getEndOfFile();
+
+            std::string whole_context = as.readWhole();
+
+            NE_ASSERT_THEN_RETURN(whole_context != reaad)
+            NE_ASSERT_THEN_RETURN( ! as.isEndOfFile())
+            NE_ASSERT_THEN_RETURN(as.getCursor() != eof_cursor)
+
             
             //  searching test:
             found = false;

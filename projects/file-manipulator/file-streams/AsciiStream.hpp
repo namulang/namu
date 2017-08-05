@@ -4,11 +4,14 @@
 
 namespace NE
 {
+    class File;
+
     class AsciiStream : public FileStream
     {
     public:
         AsciiStream();
         AsciiStream(const std::string& new_path);
+        AsciiStream(const File& file);
         virtual ~AsciiStream();
 
     public:

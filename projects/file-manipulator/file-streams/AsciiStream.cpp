@@ -1,4 +1,5 @@
 #include "AsciiStream.hpp"
+#include "../file-structures.hpp"
 
 namespace NE
 {
@@ -6,6 +7,11 @@ namespace NE
 
     THIS::THIS() : FileStream() {}
     THIS::THIS(const string& new_path) : FileStream(new_path) {}
+    THIS::THIS(const File& file) : FileStream()
+    {
+        if( ! file.isNull())
+            setPath(file.getPath());
+    }
     THIS::~THIS() { release(); }
 
     type_bool THIS::initialize() 
@@ -94,7 +100,7 @@ namespace NE
             _readToBuffer();
 
         type_count max_size = _buffer.length() > bytes ? bytes : _buffer.length();
-        string to_return(_buffer, max_size);
+        string to_return(_buffer.c_str(), max_size);
         _buffer.erase(0, max_size);
         return to_return;
     }

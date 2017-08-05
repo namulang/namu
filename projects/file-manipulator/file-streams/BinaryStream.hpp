@@ -4,11 +4,14 @@
 
 namespace NE
 {
+    class File;
+    
     class BinaryStream : public FileStream
     {
     public:
         BinaryStream();
         BinaryStream(const std::string& new_path);
+        BinaryStream(const File& file);
         virtual ~BinaryStream();
 
     public:

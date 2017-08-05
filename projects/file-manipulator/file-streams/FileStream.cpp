@@ -96,4 +96,27 @@ namespace NE
     }
     THIS::Mode THIS::getMode() const { return _mode; }    
     THIS::THIS(const PathedObject& object) {}
+
+    std::string THIS::readWhole()
+    {
+        const type_int SIZE = 65535;
+        char buffer[SIZE] = {0, };
+
+        setCursor(0);
+        std::string contents;
+        while( ! isEndOfFile())
+        {
+            type_count count = read(buffer, SIZE);
+            contents.append(buffer, count);
+        }
+
+        return contents;
+    }
+    
+    type_bool THIS::isEndOfFile() const
+    {
+        if( ! _fd) return true;
+
+        return feof(_fd);
+    }
 }
