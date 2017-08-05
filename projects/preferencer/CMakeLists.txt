@@ -33,7 +33,6 @@ endforeach(e)
 
 
 #   execute:
-add_executable(preferencer ${sources})
-#add_library(preferencer SHARED ${sources})
+add_library(preferencer SHARED ${sources})
 target_link_libraries(preferencer ${dependencies})
-#set_target_properties(preferencer PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
+set_target_properties(preferencer PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
