@@ -11,20 +11,50 @@ namespace NE
         virtual std::string _onTest() {
             std::string script1 = 
                 "class preference1\n"
-                "   age = 22\n"
-                "   grade=3.5f\n"
-                "   name =\t\t\t\t \"kniz\"     ";
+                "   int age = 22\n"
+                "   float grade=3.5f\n";
 
             using namespace PR;
             Preferencer pr;
             NE_ASSERT_THEN_RETURN( ! pr.parse(script1))
-            ClassNode& preference1 = pr["preference1"];
-            NE_ASSERT_THEN_RETURN(Preference1.getKey() != "preference1")
-            MemberNode& member1 = preference1["grade"];
-            NE_ASSERT_THEN_RETURN(member1.getKey() != "grade")
-            type_float EPSILON = 0.0001f;
-            NE_ASSERT_THEN_RETURN(3.5f + EPSILON < member1.toFloat() || member1.toFloat() < 3.5f - EPSILON)
-            NE_ASSERT_THEN_RETURN(member1.toString() != "3.5f")
+            {
+                const ClassNode& preference1 = pr["preference1"];
+                NE_ASSERT_THEN_RETURN(preference1.isNull())
+                NE_ASSERT_THEN_RETURN(preference1.getKey() != "preference1")
+                const MemberNode& member1 = preference1["grade"];
+                NE_ASSERT_THEN_RETURN(member1.isNull());
+                NE_ASSERT_THEN_RETURN(member1.getKey() != "grade")
+                type_float EPSILON = 0.0001f;
+                NE_ASSERT_THEN_RETURN(3.5f + EPSILON < member1.toFloat() || member1.toFloat() < 3.5f - EPSILON)
+                NE_ASSERT_THEN_RETURN(member1.toString() != "3.5")
+                pr.release();
+                const ClassNode& preference_again = pr["preference1"];
+                NE_ASSERT_THEN_RETURN( ! preference_again.isNull())
+            }
+
+            {
+                NE_ASSERT_THEN_RETURN( ! pr.parse(File("resources/preferencer1.pref")))
+                const ClassNode& preference1 = pr["preference1"];
+                NE_ASSERT_THEN_RETURN(preference1.isNull())
+                NE_ASSERT_THEN_RETURN(preference1.getKey() != "preference1")
+                const MemberNode& member1 = preference1["grade"];
+                NE_ASSERT_THEN_RETURN(member1.isNull());
+                NE_ASSERT_THEN_RETURN(member1.getKey() != "grade")
+                type_float EPSILON = 0.0001f;
+                NE_ASSERT_THEN_RETURN(4.5f + EPSILON < member1.toFloat() || member1.toFloat() < 3.5f - EPSILON)
+                NE_ASSERT_THEN_RETURN(member1.toString() != "4.5")
+
+                const MemberNode& name = preference1["name"];
+                NE_ASSERT_THEN_RETURN(name.isNull());
+                NE_ASSERT_THEN_RETURN(name.toString() != "kniz")
+
+                const ClassNode& food = pr["food"];
+                NE_ASSERT_THEN_RETURN(food.isNull())
+                NE_ASSERT_THEN_RETURN(food.getKey() != "food")
+                const MemberNode& favorite = pr["food"]["favorite"];
+                NE_ASSERT_THEN_RETURN(favorite.isNull())
+                NE_ASSERT_THEN_RETURN(favorite.toString() != "donut")
+            }
             
             return "";
         }

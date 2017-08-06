@@ -13,7 +13,7 @@ namespace NE
             NE_ASSERT_THEN_RETURN( ! File().remove())
             
             std::string current = ".";
-            std::string input_path = current + "/sample.txt";
+            std::string input_path = current + "/resources/sample.txt";
 
             AsciiStream as(input_path);
             NE_ASSERT_THEN_RETURN(as.getPath() != input_path);
