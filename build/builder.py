@@ -16,9 +16,23 @@ def branch(command):
         return commit()
     elif command == "build":
         return build()
+    elif command == "run":
+        arg = None if len(sys.argv) < 3 else sys.argv[2]
+        return run(arg)
 
-    print(command + " is unknown.")
-    help()
+    print(command + " is unknown.")    
+
+def run(arg):
+    if arg is None:
+        print("build Node and run one of next followings...")
+        print("\t * tester")
+        return -1
+
+    if arg == "tester":
+        result = build()
+        if result:
+            return result
+        os.system("tester")
 
 # currently this application only supports window and linux.
 def isWindow():
@@ -43,7 +57,6 @@ def _createMakefiles():
 
     result = os.system("cmake . -G \"" + generator + "\"")
     if result != 0:
-        print("cmake has been failed. stop build.")
         return -1
 
 def _make():
@@ -53,17 +66,19 @@ def _make():
     if isWindow():
         result = os.system("mingw32-make" + make_option)
         if result != 0:
-            print("make has been failed. stop build.")
+            return -1
     else:
         result = os.system("make" + make_option)
         if result != 0:
-            print("make has been failed. stop build.")
+            return -1
 
 def build():
     #_beautify()
-    _createMakefiles()
+    if _createMakefiles(): 
+        return -1
     print("")
-    _make()
+    if _make():
+        return -1
 
 def commit():
     return 0
@@ -96,8 +111,9 @@ def help():
     print("command list:")
     print("\t * help")
     print("\t * history")
-    print("\t * clean\t\tclear all cache files of cmake outputs.")
+    print("\t * clean\tclear all cache files of cmake outputs.")
     print("\t * build")
+    print("\t * run\t\tbuild + run one of predefined programs.")
 
 def history():
     print("history:")
