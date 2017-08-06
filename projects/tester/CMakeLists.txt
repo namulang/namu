@@ -15,7 +15,7 @@ endforeach(e)
 add_definitions(-DBUILD_TARGET_TESTER)
 add_definitions(-DNE_TAG="tester")
 #       define libraries:
-set(dependencies independentor file-manipulator logger)
+set(dependencies independentor file-manipulator logger preferencer)
 foreach(e ${dependencies})
     message("\t\tlinking ${e}")
 endforeach(e)

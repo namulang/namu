@@ -39,7 +39,13 @@ options {
 }
 
 PARSER_BEGIN(PreferencerParser)
-
+void setPreferencer(NE::PR::Preferencer* preferencer) {
+    _preferencer = preferencer;
+}
+private:
+    PR::Preferencer* _preferencer;
+    std::string _class;
+public:
 PARSER_END(PreferencerParser)
 
 
@@ -68,10 +74,10 @@ SPECIAL_TOKEN:
 TOKEN:
 {   <BOOL_EXPR: "true" | "false" >
 |   <CHAR_EXPR: "\'" (<LETTER>)? "\'" >
-|   <STRING_EXPR: "\"" (<LETTER>)* "\"">
 |   <FLOAT_EXPR: (<NUMBER>)+ "." (<NUMBER>)+ >
 |   <INT_EXPR: (<NUMBER>)+ >
 |   <LETTER: (<ALPHABET> | <NUMBER> | <SYMBOL>) >
+|   <LETTERS: (<LETTER>)+ >
 |   <CLASS: "class">
 |   <ASSIGN: "=">
 |   <STRING: "string">
@@ -92,51 +98,50 @@ TOKEN:
 //////////////////////////////////////
 Token* char_expr() : {Token* expr;}
 {
-    expr = <CHAR_EXPR>
+    expr=<CHAR_EXPR>
     {
-        cout << "char_expr = " << expr->image << "\n";
         return expr;
     }
 }
 Token* int_expr() : {Token* expr;}
 {
-    (expr = <NUMBER> | expr = <INT_EXPR>)
+    (expr=<NUMBER> | expr=<INT_EXPR>)
     {
-        cout << "int_expr = " << expr->image << "\n";
         return expr;
     }
 }
 Token* string_expr() : {Token* expr;}
 {
-    expr = <STRING_EXPR>
+    "\"" expr=<LETTERS> "\""
     {
-        cout << "string_expr = " << expr->image << "\n";
         return expr;
     }
 }
 Token* bool_expr() : {Token* expr;}
 {
-    expr = <BOOL_EXPR>
+    expr=<BOOL_EXPR>
     {
-        cout << "bool_expr = " << expr->image << "\n";
         return expr;
     }
 }
 Token* float_expr() : {Token* expr;}
 {
-    expr = <FLOAT_EXPR>
+    expr=<FLOAT_EXPR>
     {
-        cout << "float_expr = " << expr->image << "\n";
         return expr;
     }
 }
 
 void statement() : {Token* key; Token* value;}
 {
-    key=<IDENTIFIER> <ASSIGN> (value=int_expr() | value=float_expr() | value=bool_expr() | value=string_expr() | value=char_expr())
+    (<INT> key=<IDENTIFIER> <ASSIGN> value=int_expr()      |
+    <FLOAT> key=<IDENTIFIER> <ASSIGN> value=float_expr()   |
+    <CHAR> key=<IDENTIFIER> <ASSIGN> value=char_expr()     |
+    <STRING> key=<IDENTIFIER> <ASSIGN> value=string_expr() |
+    <BOOL> key=<IDENTIFIER> <ASSIGN> value=bool_expr()     )
     {
         cout << "key = " << key->image << ", value = " << value->image << "\n";
-        return;
+        _preferencer->onAddMember(_class, key->image, value->image);
     }
 }
 
@@ -144,6 +149,7 @@ void statements() : {}
 {
     statement() (<EOL> statement())*
     {
+        _class = "";
         cout << "statements end\n";
     }
 }
@@ -152,8 +158,9 @@ void class_declaration() : {Token* klass;}
 {
     <CLASS> klass=<IDENTIFIER> <EOL>
     {
-        cout << "class_declaration = " << klass->image << "\n";
-        return;
+        _class = klass->image;
+        _preferencer->onAddClass(_class);
+        cout << "class_declaration = " << _class << "\n";
     }
 }
 
