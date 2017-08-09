@@ -72,13 +72,7 @@ SPECIAL_TOKEN:
 }
 
 TOKEN:
-{   <BOOL_EXPR: "true" | "false" >
-|   <CHAR_EXPR: "\'" (<LETTER>)? "\'" >
-|   <FLOAT_EXPR: (<NUMBER>)+ "." (<NUMBER>)+ >
-|   <INT_EXPR: (<NUMBER>)+ >
-|   <LETTER: (<ALPHABET> | <NUMBER> | <SYMBOL>) >
-|   <LETTERS: (<LETTER>)+ >
-|   <CLASS: "class">
+{   <CLASS: "class">
 |   <ASSIGN: "=">
 |   <STRING: "string">
 |   <INT: "int">
@@ -88,7 +82,16 @@ TOKEN:
 }
 
 TOKEN:
+{   <BOOL_EXPR: "true" | "false" >
+|   <CHAR_EXPR: "\'" (<LETTER>)? "\'" >
+|   <FLOAT_EXPR: (<NUMBER>)+ "." (<NUMBER>)+ >
+|   <INT_EXPR: (<NUMBER>)+ >
+|   <LETTER: (<ALPHABET> | <NUMBER> | <SYMBOL>) >
+}
+
+TOKEN:
 {   <IDENTIFIER: (<ALPHABET> | "_")+ (<NUMBER> | <ALPHABET> | "_")* >
+|   <LETTERS: (<LETTER>)+ >
 }
 
 
