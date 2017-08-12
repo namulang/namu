@@ -31,22 +31,18 @@
 options {
   OUTPUT_LANGUAGE = "c++";
   NAMESPACE = "NE";
-  //TOKEN_MANAGER_SUPER_CLASS = "TokenManagerSuper";
-  PARSER_INCLUDES = "../preferencer_include.hpp";
-  //PARSER_SUPER_CLASS = "Parser";
-  //TOKEN_EXTENDS = "Token";
-  //TOKEN_INCLUDES = "token_base.h";
+  PARSER_INCLUDES = "../parser_include.hpp";
 }
 
-PARSER_BEGIN(PreferencerParser)
-void setPreferencer(NE::PR::Preferencer* preferencer) {
+PARSER_BEGIN(PRParser)
+void setPreferencer(Preferencer* preferencer) {
     _preferencer = preferencer;
 }
 private:
-    PR::Preferencer* _preferencer;
+    Preferencer* _preferencer;
     std::string _class;
 public:
-PARSER_END(PreferencerParser)
+PARSER_END(PRParser)
 
 
 

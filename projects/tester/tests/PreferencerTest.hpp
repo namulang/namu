@@ -14,7 +14,6 @@ namespace NE
                 "   int age = 22\n"
                 "   float grade=3.5\n";
 
-            using namespace PR;
             Preferencer pr;
             NE_ASSERT_THEN_RETURN( ! pr.parse(script1))
             {
