@@ -44,6 +44,7 @@ Preparing: to build World, following softwares will be needed.
 	python over 3.x, git, cmake, g++ and make,
 
 if you're trying on windows, then it's recommended to install minGW install these softwares on your own.
+
 Then, just enter:
 		
 	python ./build/builder.py build
