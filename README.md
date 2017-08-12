@@ -26,8 +26,8 @@ it has following main features.
 		which you want anytime.
 >
 > * Easy to use: we hope who aren't a programmer could join us to make a program with
-		World. its IDE will be served as a classic GAME. pixel art, particle effects, retro
-		sound fx, RPGistic UI, Worldmap, quest and archivement.
+		World. its IDE will be served as a classic GAME. 
+		pixel art, particle effects, retro sound fx, RPGistic UI, Worldmap, quest and archivement.
 
 
 ### Development 
@@ -50,6 +50,7 @@ Then, just enter:
 	python ./build/builder.py build
 
 All script you need for doing something on World is just at builder.py.
+
 For more information, try "builder.py help"
 
 #### Let's make something with World!
