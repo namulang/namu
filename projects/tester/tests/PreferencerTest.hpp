@@ -12,7 +12,7 @@ namespace NE
             std::string script1 = 
                 "class preference1\n"
                 "   int age = 22\n"
-                "   float grade=3.5f\n";
+                "   float grade=3.5\n";
 
             using namespace PR;
             Preferencer pr;
@@ -48,12 +48,15 @@ namespace NE
                 NE_ASSERT_THEN_RETURN(name.isNull());
                 NE_ASSERT_THEN_RETURN(name.toString() != "kniz")
 
+                
+
                 const ClassNode& food = pr["food"];
                 NE_ASSERT_THEN_RETURN(food.isNull())
                 NE_ASSERT_THEN_RETURN(food.getKey() != "food")
                 const MemberNode& favorite = pr["food"]["favorite"];
                 NE_ASSERT_THEN_RETURN(favorite.isNull())
                 NE_ASSERT_THEN_RETURN(favorite.toString() != "donut")
+                NE_ASSERT_THEN_RETURN(pr["food"]["count"].toInt() != 22);
             }
             
             return "";
