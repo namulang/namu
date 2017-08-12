@@ -13,6 +13,7 @@ namespace NE
 
             NE_INFO("parser.configure_file()");
             parser.setPreferencer(this);
+            parser.setErrorHandler(new PreferencerErrorHandler());
             parser.configure_file();
             return true;
         }

@@ -60,10 +60,14 @@ SKIP:
 }
 
 TOKEN:
+{   <DOUBLE_QUOTATION: "\"">
+}
+
+TOKEN:
 {   <EOL: "\n" | "\r" | "\r\n"> // end of line
 |   <NUMBER: ["0" - "9"] >
 |   <ALPHABET: ["a"-"z","A"-"Z"] >
-|   <SYMBOL: ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "\"", "\\", "+", "|", "~", ";", "[", "]", "'", "/", ".", ",", "\0" ] >
+|   <SYMBOL: ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "\\", "+", "|", "~", ";", "[", "]", "'", "/", ".", ",", "\0" ] >
 }
 
 SPECIAL_TOKEN:
@@ -115,7 +119,7 @@ Token* int_expr() : {Token* expr;}
 }
 Token* string_expr() : {Token* expr;}
 {
-    "\"" expr=<LETTERS> "\""
+    <DOUBLE_QUOTATION> (expr=<LETTERS>|expr=<IDENTIFIER>) <DOUBLE_QUOTATION>
     {
         return expr;
     }
@@ -143,17 +147,21 @@ void statement() : {Token* key; Token* value;}
     <STRING> key=<IDENTIFIER> <ASSIGN> value=string_expr() |
     <BOOL> key=<IDENTIFIER> <ASSIGN> value=bool_expr()     )
     {
-        cout << "key = " << key->image << ", value = " << value->image << "\n";
+        if(hasError) return;
+        NE_INFO("found %s = %s", key->image.c_str(), value->image.c_str());
         _preferencer->onAddMember(_class, key->image, value->image);
     }
 }
 
 void statements() : {}
 {
-    statement() (<EOL> statement())*
+    statement() (
+        LOOKAHEAD(<EOL> statement()) <EOL> statement() | 
+        <EOL>
+    )*
     {
         _class = "";
-        cout << "statements end\n";
+        NE_INFO("...statements end")
     }
 }
 
@@ -161,9 +169,11 @@ void class_declaration() : {Token* klass;}
 {
     <CLASS> klass=<IDENTIFIER> <EOL>
     {
+        if(hasError) return;
+        
         _class = klass->image;
         _preferencer->onAddClass(_class);
-        cout << "class_declaration = " << _class << "\n";
+        NE_INFO("class_declaration = \"%s\"", _class.c_str())
     }
 }
 
@@ -182,8 +192,7 @@ void klass() : {}
 {
     class_declaration() (statements())*
     {
-        cout << "klass() end\n";
-        return;
+        NE_INFO("...class end")
     }
 }
 
@@ -191,7 +200,6 @@ void configure_file() : {}
 {
     (klass())*
     {
-        cout << "configure_file end\n";
-        return;
+        NE_INFO("...configure_file end")
     }
 }
