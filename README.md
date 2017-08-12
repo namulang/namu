@@ -13,7 +13,7 @@ it has following main features.
 		you're in debugging	at the same time.
 >
 > 
-> * touch instances: Basically, in order to make your function or class with World, 
+> * Touch the instances: Basically, in order to make your function or class with World, 
 		you should write somethings as a text. like other launguages.
 		But, because of lack of compling, you always are in a middle of runtime envrionment
 		whenever you codes your software. You can see which interactions are made of between
@@ -24,7 +24,7 @@ it has following main features.
 > * ModuleStore: Module is simply plug-in. mostly based on c++. you download modules
 		which you want anytime.
 >
-> * easier to use: we hope who aren't a programmer could join us to make a program with
+> * Easy to use: we hope who aren't a programmer could join us to make a program with
 		World. its IDE will be served as a classic GAME. pixel art, particle effects, retro
 		sound fx, RPGistic UI, Worldmap, quest and archivement.
 
@@ -37,15 +37,19 @@ it has following main features.
 
 ### How to Start
 #### Let's Build
+
 Preparing: to build World, following softwares will be needed.
-    python over 3.x, git, cmake, g++ and make,
+    		
+	python over 3.x, git, cmake, g++ and make,
 
 if you're trying on windows, then it's recommended to install minGW install these softwares on your own.
 Then, just enter:
+		
 	python ./build/builder.py build
 
 All script you need for doing something on World is just at builder.py.
 For more information, try "builder.py help"
 
 #### Let's make something with World!
-		Oh,... Ummmm. Not yet.
+	
+	Oh,... Ummmm. Not yet.
