@@ -3,7 +3,7 @@
 WORLD, <br/>The new programming language.
 =======================================
 
-	! Please be advised that World can't support below features now. we're work in progress.
+	! Please be advised that World can't support below features now. we're working in progress.
 
 ### What's this?
 World is a interpreter and visual IDE for new programming language, World language.
