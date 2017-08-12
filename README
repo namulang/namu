@@ -1,95 +1,53 @@
-WORLD
-=====
-The new programming language.
 
 
-What's this?
-============
+WORLD, <br/>The new programming language.
+=======================================
+
+
+###What's this?
 World is a interpreter and visual IDE for new programming language, World language.
-it has 3 main features.
-	1.	anchor-way development: You can get "so immediately" feedbacks whenever you codes.
+it has following main features.
+
+> * anchor-way development: You can get "so immediately" feedbacks whenever you codes.
 		there is no any a "compile" thing. if you're writing down your codes, means that 
 		you're in debugging	at the same time.
-		
-	2.	touch instances: Basically, in order to make your function or class with World, 
-		you should write somethings as a text. like other launguages.				
-		
+> <br/>
+> 
+> * touch instances: Basically, in order to make your function or class with World, 
+		you should write somethings as a text. like other launguages.
 		But, because of lack of compling, you always are in a middle of runtime envrionment
 		whenever you codes your software. You can see which interactions are made of between
 		classes and functions in visualized 3d graphics. 
 		Visualization can get strong points that make you focus the whole picture of your
 		software.
-
-	3.	ModuleStore: Module is simply plug-in. mostly based on c++. you download modules
+> <br/>
+> * ModuleStore: Module is simply plug-in. mostly based on c++. you download modules
 		which you want anytime.
-
-	4.	easier to use: we hope who aren't a programmer could join us to make a program with
+> <br/>
+> * easier to use: we hope who aren't a programmer could join us to make a program with
 		World. its IDE will be served as a classic GAME. pixel art, particle effects, retro
 		sound fx, RPGistic UI, Worldmap, quest and archivement.
 
 
-Develop Environments
-==================
-	* CMake + GDB + GCC + python(for some scripts) + java
-	* Windows + minGW only.
-	* fully made of C++.
+<br/>
+###Development 
+> * CMake + GDB + GCC + python(for some scripts) + java
+> * Windows + minGW only.
+> * fully made of C++.
 
+<br/>
 
-How to Start?
-=============
+###How to Start
+####Let's Build
+Preparing: to build World, following softwares will be needed.
+	> python over 3.x, git, cmake, g++ and make,
 
-	Let's Build
-	===========
+if you're trying on windows, then it's recommended to install minGW install these softwares on your own.
+Then, just enter:
+	> python ./build/builder.py build
 
-		Preparing: to build World, following softwares will be needed.
-			python, git, cmake, g++ and make,
-			* if you're trying on windows, then it's recommended to install minGW
-		install these softwares on your own.
+All script you need for doing something on World is just at builder.py.
+For more information, try "builder.py help"
 
-		Then, just enter:
-			python ./build/builder.py build
-
-		All script you need for doing something on World is just at builder.py.
-		for more information, try "builder.py help"
-
-	Let's make something with World!
-	==============================
-		Not yet...
-
-
-Release Notes
-====================
-Build# laid on top of this description was calculated by adding all Build#s  listed above.
-Basically External modules aren’t part of kernel. but it has been embeded in because of 
-managing. they will be splited out to independent project someday.
-ManagerPackages are part of kernel package, even though they are externel modules. because
-they have to be needed.
-
-	* Legend
-	Month-Day-Year vMajor.Minor.Fix#Build
-	UpdateName
-		+ 	Improved
-		++	Very Improved.
-		- 	Bug fix mostly.
-		--	Fatal bug was fixed.
-
-02-25 2016 v0.0.1a#9444		
-World Dust Update v0.1
-
-04-24 2015 v0.0.1a#8392		Not public.
-03-29 2015 v0.0.1a#7001		Not public.
-??-?? ???? v0.0.1a#????
-02-02 2014 v0.0.1a#4429		Not public.
-10-30 2013 v0.0.1a#4317
-	++ Graphics module was added.
-
-01-29 2013 v0.0.1a#4162		Not public.
-10-19 2012 v0.0.1a#3727		Not public.
-05-19 2012 v0.0.1a#3600		Not public.
-05-05 2012 v0.0.1a#3559		Not public.
-04-15 2012 v0.0.1a#3531		Not public.
-03-15 2012 v0.0.1a#3445		Not public.
-02-20 2012 v0.0.0a#3377		Not public.
-01-15 2012 v0.0.0a#3086		Not public.
-??-?? ???? v0.0.0a#????		
-10-03 2011 v0.0.1#2976		Not public.
+####Let's make something with World!
+		Oh,... Ummmm. Not yet.
