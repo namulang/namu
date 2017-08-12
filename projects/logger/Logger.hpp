@@ -25,12 +25,12 @@ namespace NE
         type_bool pushStream(Stream* new_stream);
         virtual type_bool initialize();
         virtual type_bool isInitialized() const;
-        virtual type_bool release();
         static Logger& getInstance();
 
     private:
         Logger();
         Logger(const Logger& rhs);
+        virtual type_bool release();
 
     private:
         std::vector<Stream*> _streams;

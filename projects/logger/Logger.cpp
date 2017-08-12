@@ -1,6 +1,7 @@
 #include "Logger.hpp"
 #include <iostream>
 #include <stdarg.h>
+#include "streams.hpp"
 
 namespace NE
 {
@@ -89,11 +90,12 @@ namespace NE
 
     type_bool THIS::initialize()
     {
-        type_bool result = false;
-        for(auto e : _streams)
-            result |= e->initialize();
+        static Stream* streams[] = {new ConsoleStream(), new FileLogStream("./logs"), 0};
+        Stream* e = 0;
+        for(int n=0; (e = streams[n]) ;n++)
+            pushStream(e);
 
-        return result;
+        return false;
     }
 
     type_bool THIS::isInitialized() const
@@ -118,8 +120,14 @@ namespace NE
 
     THIS& THIS::getInstance()
     {
-        static THIS inner;
-        return inner;
+        static THIS* inner = 0;
+        if(inner->isNull())
+        {
+            inner = new THIS();
+            inner->initialize();
+        }
+
+        return *inner;
     }
 
     THIS::THIS() : Stream() {}
