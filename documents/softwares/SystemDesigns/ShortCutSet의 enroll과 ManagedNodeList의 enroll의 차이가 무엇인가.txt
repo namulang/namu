@@ -1,4 +1,0 @@
-ShortCutSet의 _onUnenroll과 StandardManagedNodeList의 _onEnroll의 차이:
-ShortCutSet은 주어진 노드 자체만을 두고 _onEnroll을 수행한다.
-반면 ManagedNodeList는 주어진 노드 뿐만 아니라, 그 안의 서브노드셋
-까지도 깊이 탐색을 실시해서 추가한다는 점이 다르다.
