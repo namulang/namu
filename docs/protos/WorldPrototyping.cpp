@@ -18,15 +18,40 @@ namespace wrd
         virtual Result& release() = 0;
 		virtual Bind<Strong, Thing> clone() = 0;
 		//dump?
+		virtual TStrong<T> to(const Class& cls);
+		template <typename T>
+		TStrong<T> to() { return to(T::getStaticClass()); }
+		virtual const Result& assign(const Thing& rhs) {
+			This::operator=(rhs);
+			return Success;
+		}
+		virtual Bind<Thing> clone() const;
     };
 	class Instance : public Thing { // Instance 관리가 가능함.
 		//	w로 시작하는 작은 타입def는 primitive에 대한 typedef를 의미한다. 객체가 아니다.
 		wid getId() const;
 		wid _id;
+
+		virtual const Result& assign(const Thing& rhs) {
+			if(!rhs.isSubOf(*this)) return TypeExcept;
+
+			This::operator=(rhs);
+			return Success;
+		}
+		virtual Bind<Thing> clone() const;
 	};
+
+	/*	왜 operator=는 virtual이 될 수 없는가?
+	 *	다형성은 act하는 쪽에서 다양한 동작을 융통성있게 흡수하기 위한것이다.
+	 *  반대로 말하면 인자는 항상 동일하다. 그러나 operator=는 어떤가. act와 인자가 모두 그때그때 달라야한다.
+	 *  즉, virtual assign() 같은 걸 만들어서 operator=대신 하려고 한다면 항상 타입캐스팅이 필요로 하게 된다.
+	 */
+
 
 	//	Bind 컴포넌트:----------------------------------------
 	class Weak : public Instance {
+		Weak();
+		Weak(const This& rhs);
 		Node& get();
 		virtual Result& bind(const Node& trg);
 		wbool isBinded() const;
@@ -37,6 +62,17 @@ namespace wrd
 	//	Prefix T는 템플릿을 의미한다.
 	template <typename S, typename T>
 	class TBind : public S {
+		TBind();
+		TBind(const This& rhs);
+		TBind(const Weak& rhs) {
+			assign(rhs);	
+		}
+		const Result& assign(const Thing& rhs) {
+			if(Super::assign(rhs)) return AbortExcept;
+
+
+			return 
+		}
 		//	Weak::get이 virtual이 아니기때문에 여기서 메소드은폐가 된다. 그래서 중복에러가 나지 않는다.
 		T& get();
 	};
@@ -50,7 +86,14 @@ namespace wrd
 
 	//	Container컴포넌트:------------------------------------------
 	//		Container는 주의할것이, C++을 위한 것이 아니라 월드를 위한 Conatiner이라는 점이다. 그래서 기본타입이 무조건 Node이다.
+	//		Container는 Node만을 다루기 때문에 각 원소들은 heap에 있는 것이다.
 	class Iterator : public Object {
+		class Iteration : public Instance {
+			virtual const Result& move(wcount step) = 0;
+			virtual Node& get() = 0;
+			virtual wbool isEnd() const = 0;
+			TWeak<Container> 
+		};
 	};
 	class Container : public Object, public Containable {
 		virtual Result& insert(const Iterator& pos, const Node& trg) = 0;
@@ -59,7 +102,8 @@ namespace wrd
 		wcount getLength() const { return _length; }
 		Node& get(const Iterator& pos) { return _get(pos); }
 		virtual Iterator& getIterator() = 0;
-		const Iterator& getIterator() const;
+		Iterator getIterator() const;
+		virtual Iteration& _onCreateIteration() = 0;
 		Result& each(const Method& lambda);
 		template <typename T>
 		Result& each(T lambda);
@@ -78,7 +122,10 @@ namespace wrd
 		wcount _size;
 	};
 	class Array : public SolidContainer {
-		class ArrayIterator : public Iterator {
+		virtual TStrong<Iteration> _onCreateIteration() {
+			class ArrayIteration: public Iteration {
+			};
+			return TStrong<Iteration>(new ArrayIteration(*this));
 		};
 	};
 	class List : public Container {
@@ -256,10 +303,6 @@ namespace wrd
 		virtual const String& getName() const = 0;
 		virtual Result& setName(const String& newname) = 0;
     };
-
-
-	
-	class 
 
 
 
