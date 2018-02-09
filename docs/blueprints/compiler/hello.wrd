@@ -1,0 +1,7 @@
+a2 := 3 + 5 / 5  + 2 * 25
+a1 = a2 := a3
+a3 += int foo(3, a3 := 2)
+
+sum := 0
+for n in getArray(3)
+    sum += n
