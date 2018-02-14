@@ -1,4 +1,4 @@
-    class Weak : public Thing {
+    class WeakInstanceBind : public Thing {
         Weak();
         Weak(const This& rhs);
         operator wbool() const { return isBinded(); }
@@ -75,7 +75,7 @@
         Instance::ID _id;
 		wcount _serial;
     };
-    class Strong : public Weak {
+    class StrongInstanceBind : public WeakInstanceBind {
         virtual Result& bind(const Instance& trg) {
 			Result& res = Super::bind(trg);
 			if(res)
@@ -113,5 +113,7 @@
     template <typename T>
     //	c++11 부터 지원되는 문법
     using TWeak = TBind<Weak, T>;
+	using Weak = TBind<Weak, Node>;
     template <typename T>
     using TStrong = TBind<Strong, T>;
+	using Strong = TBind<Strong, Node>;
