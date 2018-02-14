@@ -19,139 +19,6 @@ namespace wrd
 		//dump?
 		virtual const Visitor& tour(Visitor& visitor) const = 0;
     };
-	
-
-
-	//	World에 Visible하기위해서는?
-	//		1. 일반적으로 Node 계층이여야 한다.
-	//		2. Scope에 들어가 있어야 한다. 어떤 클래스가 들어가야 하는지는 하드코딩으로 된다.
-
-
-	/////////////////////////////////////////////////////////////////////
-	//	----- Visitation 컴포넌트	-------------------------------------
-	/////////////////////////////////////////////////////////////////////
-	class Visitation : public Instance {
-		virtual const Class& getTrait() const = 0;
-		virtual wint getCompatiblityLevel(const Thing& th) = 0;
-		virtual Result& visit(const String& name, Thing& cobble) = 0;
-		virtual const Classes& getOwnerables() const = 0;
-	};
-	template <typename T, typename S>
-	class TVisitation : public S {
-		virtual Result& visit(const String& name, Thing& cobble) {
-			Super::visit(name, cobble);
-
-			return _onVisit(name, (T&) cobble);
-		}
-		virtual Result& _onVisit(const String& name, T& cobble) = 0;
-		//	the lower is the better.
-		virtual wint getCompatibilityLevel(const Thing& th) { 
-			if( ! th.isSubOf(T::getStaticClass())) return -1;	// means nothing with.
-			
-			return th.getSupers().getLength() - getSupers().getLength();
-		}
-		const Class& getTrait() const {
-			static TClass<T> cls;
-			return cls;
-		}
-	};
-	class DefaultVisitation : public Visitaion {
-		virtual wint getCompatibilityLevel(const Thing& th) { return LEVEL_MAX; }
-		virtual const Class& getTrait() const { return Thing::getStaticClass(); }
-	};
-
-		//	Visitation예제:
-		class CustomAsciiVisitation : public TVisitation<Node> {
-			virtual const Classes& getOwnerables() const {
-				static Classes clss = {TClass<AsciiCBVisitor>(), WriteBinaryCBVisitor::getStaticClass()};
-				return clss;
-			}
-			virtual _onVisit(const String& name, Node& cobble) {
-				// 1. fwrite(...);
-				// 2. printf("....", cobble);
-				// 3. Debugger::log(....)
-			}
-		};
-
-
-	template <typename T>
-	class TPrimitiveWrapper : public Thing {
-		// static_assert T is not Sub of Thing class.
-		TPrimitiveWrapper();
-		TPrimitiveWrapper(const T& datum) : _proxy(const_cast<T&>(datum)) {}
-
-		T& get();
-		const T& get() const;
-
-		T* _proxy;
-	}
-	//	CodeBlockInstanceVisitor : 코드블럭을 적절하게 구성하고 이를 Stream으로 보내어 물리적 데이터로 변환한다.
-	class Visitor : public Thing {
-		static const wint LEVEL_IRRELEVANT = -1;
-		static const wint LEVEL_IDLE = std::numeric_limits<int>::max();
-		static const wint LEVEL_MAX = LEVEL_IDLE - 1;
-		template <typename T>
-		This& visit(const String& name, const T& value) {
-			T& casted = const_cast<T&>(value);
-			getVisitor(T::getStaticClass())
-				.visit(name, TPrimitiveWrapper<T*>(&casted));
-			return *this;
-		}
-		template <>
-		This& visit(const String& name, const Thing& value) {
-			getVisitor(T::getStaticClass())
-				.visit(name, const_cast<Thing&>(value));
-			return *this;
-		}
-		Visitation& getVisitor(const Class& cls) {
-			wint lv = LEVEL_IDLE;
-			TWeak<Visitation> to_return;
-			for(auto e : _visits) {
-				wint e_lv = e->getCompatibilityLevel(cls);
-				if(e_lv < 0 || e_lv > lv) continue;
-				if( ! e_lv) return (*e)->get();
-
-				lv = e_lv;
-				to_return = *e;
-			}
-
-			//LOG
-			return *to_return;
-		}
-		virtual Result& initialize() {
-			if (_visits.length() > 0)
-				return AreadyDone;
-
-			_initialize();
-		}
-		Result& _initialize() {
-			for(auto e : TClass<Visitation>().getLeafs()) {
-				TStrong<Visitation> objed = e->instantiate<Visitation>();
-				const Classes& candidates = objed->getOwnerables();
-				for(auto visitor_cls : candidates)
-					if(isSubOf(visitor_cls)
-						//LOGLOG...
-						this->_visits.push_back(objed);
-			}
-
-			return Success;
-		}
-		static vector<TStrong<Visitation> > _visits;
-	};
-	/////////////////////////////////////////////////////////////////////
-	//	------------------------------------------------------
-	/////////////////////////////////////////////////////////////////////
-	
-
-
-
-
-
-
-
-
-
-
 
 	class Instance : public Thing { // Instance 관리가 가능함.
 		//	w로 시작하는 작은 타입def는 primitive에 대한 typedef를 의미한다. 객체가 아니다.
@@ -189,49 +56,6 @@ namespace wrd
 	 *  반대로 말하면 인자는 항상 동일하다. 그러나 operator=는 어떤가. act와 인자가 모두 그때그때 달라야한다.
 	 *  즉, virtual assign() 같은 걸 만들어서 operator=대신 하려고 한다면 항상 타입캐스팅이 필요로 하게 된다.
 	 */
-
-
-
-
-
-	/////////////////////////////////////////////////////////////////
-	//	Bind 컴포넌트:----------------------------------------
-	/////////////////////////////////////////////////////////////////
-	class Weak : public Instance {
-		Weak();
-		Weak(const This& rhs);
-		Node& get();
-		virtual Result& bind(const Node& trg);
-		wbool isBinded() const;
-	};
-	class Strong : public Weak {
-		virtual Result& bind(const Node& trg);
-	};
-	//	Prefix T는 템플릿을 의미한다.
-	template <typename S, typename T>
-	class TBind : public S {
-		TBind();
-		TBind(const This& rhs);
-		TBind(const Weak& rhs) {
-			assign(rhs);	
-		}
-		const Result& assign(const Thing& rhs) {
-			if(Super::assign(rhs)) return AbortExcept;
-
-
-			return 
-		}
-		//	Weak::get이 virtual이 아니기때문에 여기서 메소드은폐가 된다. 그래서 중복에러가 나지 않는다.
-		T& get();
-	};
-	//	편의용 템플릿. c++11의 alias declaration 를 사용한다.
-	template <typename T>
-	using TWeak = TBind<Weak, T>;
-	template <typename T>
-	using TStrong = TBind<Strong, T>;
-	/////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////
 
 
 
@@ -505,11 +329,6 @@ namespace wrd
 	};
 	class Arguments : public Members {
 	};
-	//	World에 visible 하지 않으며(Node가 아님), Instance 관리도 필요없다(Instance가 아님).
-	class Message : public Thing {
-		String _name;
-		Arguments _arguments;
-	};
 	//	Object를 바인딩하고 있으며 World에서는 Object와 분간이 가지 않는다. 즉, Reference의 T<클래스>는 없어야 한다. Object처럼 동작해야 한다.
 	//	TString의 delegation한다.
 	//	Bind와 Reference를 한데 묶을 수 없다(배열 같은 곳에) 하지만 World 코드 위에서 Bind를 사용하는 경우는 없을 것이다.
@@ -532,6 +351,7 @@ namespace wrd
     class Node : public Instance {
 		virtual String& getName() = 0;	
 		virtual Node& call(const Message& msg)
+		wbool isCallable(const Message& msg);
         virtual Container& getMembers() {
 			//	기본적으로 Class의 Member를 반환한다. 이렇게 하면 Node는 자신만의 변수를 갖지 못한다. 
 			return getClass().getMembers();
