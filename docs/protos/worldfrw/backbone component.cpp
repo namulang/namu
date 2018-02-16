@@ -12,6 +12,26 @@ class Thing {
 		const This* consted = const_cast<const This*>(this);
 		return consted->_onTour(visitor);
 	}
+	virtual wbool isSuper(const Class& it) const {
+		return getClass().isSuper(it);
+	}
+	wbool isSuper(const Thing& it) const {
+		return getClass().isSuper(it.getClass());
+	}
+	template <typename T>
+	wbool isSuper() const {
+		return getClass().isSuper(T::getStaticClass());
+	}
+	wbool isSub(const Thing& it) const {
+		return it.getClass().isSuper(getClass());
+	}
+	wbool isSub(const Class& it) const {
+		return it.isSuper(getClass());
+	}
+	template <typename T>
+	wbool isSub() const {
+		return T::getStaticClass().isSuper(getClass());
+	}
 }
 class Instance : Thing {
 	//	Instance는 World에서 인스턴스 관리를 대신해준다. 여기서부터 bind가 가능하다.

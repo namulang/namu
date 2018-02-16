@@ -1,5 +1,13 @@
 #include <type_traits> // over c++11
 
+typedef bool wbool;
+typedef int wint;
+typedef char wchar;
+typedef wchat_t wwchar;
+typedef float wfloat;
+typedef wint wcount;
+typedef wint windex;
+
 template <typename T>
 class Nuller {
 	T* ptr = 0;

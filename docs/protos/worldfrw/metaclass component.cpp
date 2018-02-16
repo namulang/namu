@@ -46,9 +46,6 @@ class Class : public Object { //	World에 visible해야 하기 때문이다.
 
 		return _setInitialized(true);
 	}
-	wbool isSuper(const Thing& it) const {
-		return isSuper(it.getClass());
-	}
 	virtual wbool isSuper(const Class& it) const {
 		//  checking class hierarchy algorithm:
 		//        Use the "Tier" of the class hierarchy info to check it.
@@ -68,17 +65,15 @@ class Class : public Object { //	World에 visible해야 하기 때문이다.
 
 		return getClass() == target;//  Remember. We're using Class as "Monostate".
 	}
-	wbool isSub(const Thing& it) const {
-		return isSub(it.getClass());
-	}
-	virtual wbool isSub(const Class& it) const {
-		return it.isSuper(*this);
-	}
 	Classes& _getSupers() {
 		return const_cast<Classes&>(getSupers());
 	}
 	Classes& _getSubs() {
 		return const_cast<Classes&>(getSubs());
+	}
+	const Classes& getLeafs() const {
+		static Classes inner;
+		
 	}
 };
 
