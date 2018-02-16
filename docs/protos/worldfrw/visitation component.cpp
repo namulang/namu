@@ -52,12 +52,21 @@ class TVisitation : public S {
         return _onVisit(casted);
     }
     virtual Result& visit(const Thing& trg) const {
+		//	pre:
+		//		exception:
+		const Visitor& owner = getVisitor();
+		if(owner.isNull())
+			return WrongBind.warn(".....");
+		//		supering:
         Result& res = Super::visit(trg);
         if(res)
             return res;
+
+		//	main:
         const T& casted = static_cast<const T&>(trg);
-        _onVisit(casted);
-        trg._tour(*this);
+		_onVisit(casted);
+		if(owner.isReculsive())
+			trg._tour(*this);
         return _onVisited(casted);
     }
     virtual Result& _onVisit(T& trg) const {
@@ -77,6 +86,13 @@ class TVisitation : public S {
 };
 
 class Visitor : public Thing {
+	Visitor(wbool is_reculsive = true) : Super(), _is_reculsive(is_reculsive) {}
+	//	is_reculsive를 false로 해두면, tour()가 호출되지 않는다.
+	wbool isReculsive() const { return _is_reculsive; }
+	Result& setReculsive(wbool newone) { 
+		_is_reculsive = newone;
+		return Success;
+	}
     virtual const Class& getVisitationBase() const = 0;
     const Visitation& getVisitation(const Class& cls) const {
         struct {
@@ -125,7 +141,16 @@ class Visitor : public Thing {
         return Success;
     }
     static vector<TStrong<Visitation> > _visits;
+	wbool _is_reculsive;
 }
+
+template <typename T>
+class TVisitor : public Visitor {
+//	편의 클래스
+	virtual const Class& getVisitationBase() const {
+		return T::getStaticClass();
+	}
+};
 
 //////////////////////////////////////////////////////
 // An example to use
