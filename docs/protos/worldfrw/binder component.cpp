@@ -23,9 +23,7 @@ class TWeak : public Thing {
 	}
 	operator wbool() const { return isBinded(); }
 	T& operator->() const { return get(); }
-	T& operator->() { return get(); }
 	T& operator*() const { return get(); }
-	T& operator*() { return get(); }
 	virtual Result& bind(T& newone) {
 		//	pre:
 		//		param-validation:
@@ -35,7 +33,7 @@ class TWeak : public Thing {
 		if(blk.isNull())
 			return InvalidParam; 
 
-		//	main:
+		//	main:ZZZZ
 		unbind();
 		_id = newone.getID();
 		_serial = blk.getSerial();
@@ -45,7 +43,7 @@ class TWeak : public Thing {
 		return bind(*newone);
 	}
 	const T& get() const { 
-		WRD_CHK_THISPTR(T)
+		WRD_IS_THIS(T)
 		const Instance& inst = World::get().getInstancer()[_id].getInstance();
 		//	정확한 인터페이스가 나오지 않았다.
 		if(inst.getSerial() != _serial) {
@@ -92,8 +90,8 @@ class TStrong : public TWeak<T> {
 
 	virtual Result& bind(T& it) {
 		Result& res = Super::bind(it);
-		if(res)
-			return res.dump("...");
+		if(res) return res.dump("...");
+		if( ! it.isHeap()) return InvalidParam.warn("it is local variable. couldn't bind it strongly.");
 
 		_getInstanceBlock()._increaseCount();
 		//	처음에 Instance가 Instancer에 생성되었을때는 strong==0 이며, 
@@ -104,14 +102,21 @@ class TStrong : public TWeak<T> {
 	}
 	virtual Result& unbind() {
 		InstanceBlock& blk = _getInstanceBlock();
-		if(blk.isExist())
-			blk._decreaseCount();
+		if(blk.isNull()) {
+			InvalidMember.warn("");
+			return Super::unbind();	
+		}
+		if(blk.isHeap()) blk._decreaseCount();
+
+EXIT:
 		return Super::unbind();	
 	}
 };
 using Weak = TWeak<Node>;
+using CWeak = TWeak<const Node>;
 //	c++11 부터 지원되는 문법
 using Strong = TStrong<Node>;
+using CStrong = TStrong<const Node>;
 
 ///////////////////////////////////////
 ///	Usage examples:
