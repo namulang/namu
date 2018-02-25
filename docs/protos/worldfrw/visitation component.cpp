@@ -2,7 +2,7 @@ class Visitation : public Instance {
 //  Visitor에 의해서 Bind 되어야 하기때문에 Instance 상속되어야 한다.
 //  사용자들은 Visitation을 그대로 사용해서는 안된다. 
 //  이는 tour, visited, onvisited를 적절한 시점에 cb해야 하는 동작이 TVisitation에 있기 때문이다. 
-    enum CompatibleLevel {
+    enum Proximity {
         LEVEL_DEFAULT = 0,
         LEVEL_MAX = std::numeric_limits<int>::max(),
         LEVEL_NOT_COMPATIBLE = -1;
@@ -11,10 +11,10 @@ class Visitation : public Instance {
     Visitation(const This& rhs) : Super(), _visitor(NULL) {}
     virtual const Class& getTrait() const = 0;
     //  대상이 되는 클래스다.
-    virtual CompatibleLevel getCompatibleLevel(const Thing& trg) const = 0;
+    virtual Proximity getProximity(const Thing& trg) const = 0;
     //  주어진 trg이 클래스와 얼마나 호환이 되는지를 나타낸다. 작을 수록 좋다. 이는 trg과 trait가 서로 상속관계에 놓여져 있는 경우 등에 사용된다. 즉, 부모클래스에서 visitation이 있는 경우 자식클래스의 개발자는 자신의 Visitation을 작성하지 않아도 얼추 돌아가게는 할 수 있다는 것이다. 호환이 전혀 안되는 경우는 음수가, 일치하는 경우는 0이 나온다.
     virtual Result& visit(Thing& trg) const {
-        if(getCompatibleLevel(trg) < 0) return InvalidParam;
+        if(getProximity(trg) < 0) return InvalidParam;
         return Success;
     }
     virtual Result& visit(const Thing& trg) const {
@@ -34,7 +34,7 @@ class Visitation : public Instance {
 // Visitation은 각 클래스 개발자들이 "이 클래스가 들어오면 이런식으로 순회하라" 라는 정보를 기록해 놓은 것이다.
 template <typename T, typename S = Visitation>
 class TVisitation : public S {
-    virtual CompatibleLevel getCompatibleLevel(const Thing& trg) const {
+    virtual Proximity getProximity(const Thing& trg) const {
         if( ! trg.isSubOf(T::getStaticClass())) return -1;
         return trg.getSupers().getLength() - getSupers().getLength();
     }
@@ -96,12 +96,12 @@ class Visitor : public Thing {
     virtual const Class& getVisitationBase() const = 0;
     const Visitation& getVisitation(const Class& cls) const {
         struct {
-            CompatibleLevel lv;
+            Proximity lv;
             TWeak<Visitation> found;
         } ret;
         ret.lv = LEVEL_MAX;
         for(auto e : _visits) {
-            CompatibleLevel lv = e->getCompatibilityLevel(cls);
+            Proximity lv = e->getProximity(cls);
             if(lv < 0 || lv > ret.lv) continue;
             if( ! lv) return (*e)->get();
             ret.lv = lv;
@@ -109,8 +109,6 @@ class Visitor : public Thing {
         }
         return *ret.found
     }
-    <typename T>
-    This& operator<<
     template <typename T>
     Result& visit(T& trg) const {
         //  const T&건, const T*건, T*건, TNativeTypeWrapper는 다 처리 가능한 클래스다.
