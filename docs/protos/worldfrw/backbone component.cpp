@@ -32,6 +32,15 @@ class Thing {
 	wbool isSub() const {
 		return T::getStaticClass().isSuper(getClass());
 	}
+	const Class& getClass();
+	virtual Refer to(const Class& cls) {
+		return Refer();
+	}
+	virtual const Refer
+	template <typename T>
+	TRefer<T> to() {
+		return Refer<T>(to(T::getStaticClass()));
+	}
 }
 class Instance : Thing {
 	//	Instance는 World에서 인스턴스 관리를 대신해준다. 여기서부터 bind가 가능하다.
@@ -42,16 +51,41 @@ class Instance : Thing {
 		//	해당 클래스 인스턴스 벡터의 몇번째인가.type과 index를 조합하면 어디서든 객체에 접근할 수 있다.
 		wint64 number;
 	} _id;
+
+	Instance() {
+		//	TODO: we need to optimize this. this ganna hotspot.
+		Nexus::get().getInstancer().stamp(*this);
+	}
+
 	virtual TStrong<?> clone() const;
 	ID getID() const { return _id; }
 	wcount getSerial() const { 
 		Nexus::get().getInstancer()[_id].getSerial();
 	}
 	const InstanceBlock& getBlock() const {
-		WRD_CHK_THISPTR(InstanceBlock)
+		WRD_IS_THIS(InstanceBlock)
 		return Nexus::get().getInstancer()[_id];
 	}
+	wbool isHeap() const {
+		MemoryMap& mmap = Nexus::get().getInstancer().getMemoryMap();
+		WRD_IS_NULL(mmap, false)
+
+		return 	mmap.getStartAddress() <= this 	&&
+				this << mmap.getEndAddress()	;
+	}
 }
+class ConstableInstance : public Instance {
+	This();
+	This(wbool is_const);
+	This(const This& rhs);
+
+	wbool isConst() const { return _is_const; }
+	Result& _setConst(wbool newone) {
+		_is_const = newone;
+		return Success;
+	}
+	wbool _is_const;
+};
 class Msg : public ? {
 	String _name;
 	String& getName() { return _name; }
@@ -71,5 +105,7 @@ class Msg : public ? {
 }
 class Node : public ? {
 	virtual Strong call(const Msg& msg) {
+	}
+	virtual CStrong call(const Msg& msg) const {
 	}
 }
