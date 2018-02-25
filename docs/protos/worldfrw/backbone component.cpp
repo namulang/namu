@@ -74,38 +74,28 @@ class Instance : Thing {
 				this << mmap.getEndAddress()	;
 	}
 }
-class ConstableInstance : public Instance {
-	This();
-	This(wbool is_const);
-	This(const This& rhs);
-
-	wbool isConst() const { return _is_const; }
-	Result& _setConst(wbool newone) {
-		_is_const = newone;
-		return Success;
-	}
-	wbool _is_const;
-};
-class Msg : public ? {
+class Msg : public Thing {
 	String _name;
 	String& getName() { return _name; }
 	const String& getName() const { return _name; }
+
 	Args _args;
 	Args& getArgs() { return _args; }
 	const Args& getArgs() const { return _args; }
-	static mutable TStrong<Object> _thisptr;
-	#Message는_name_thisptr_args를_모두_하나의_Array로_구성한다 
-	friend class Object;
-	// _thisptr 조작을 위해
-	const Object& getThis() const { return *_thisptr; }
-	Result& _setThis(const Object& newone) { _thisptr = newone; }
-	static mutable TString<Object> _me;
-	const Object& getMe() const { return *_me; }
-	Result& _setMe(const Object& newone) { _me = newone; }
+
+	static Object* _thisptr; // Message는_name_thisptr_args를_모두_하나의_Array로_구성한다 
+	friend class Object; // _thisptr 조작을 위해
+	static Object& getThis() { return *_thisptr; }
+	static Result& _setThis(Object& newone) { _thisptr = &newone; }
+
+	static Method* _me;
+	friend class Method;
+	static const Method& getMe() const { return *_me; }
+	static Result& _setMe(Method& newone) { _me = newone; }
 }
 class Node : public ? {
-	virtual Strong call(const Msg& msg) {
+	virtual Refer call(const Msg& msg) {
 	}
-	virtual CStrong call(const Msg& msg) const {
+	virtual Refer call(const Msg& msg) const {
 	}
 }
