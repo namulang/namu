@@ -22,8 +22,10 @@ class TWeak : public Thing {
 		return &get() != &rhs.get();
 	}
 	operator wbool() const { return isBinded(); }
-	T& operator->() const { return get(); }
-	T& operator*() const { return get(); }
+	const T* operator->() const { return &get(); }
+	T* operator->() { return &get(); }
+	const T* operator*() const { return &get(); }
+	T* operator*() { return &get(); }
 	virtual Result& bind(T& newone) {
 		//	pre:
 		//		param-validation:
@@ -121,6 +123,7 @@ using CStrong = TStrong<const Node>;
 ///////////////////////////////////////
 ///	Usage examples:
 ///////////////////////////////////////
+//		Normal usage:
 //	Weak weak = new Integer(5);
 //	{
 //		Strong str = weak;
@@ -128,3 +131,12 @@ using CStrong = TStrong<const Node>;
 //	}
 //	if(!weak)
 //		cout << "freed";
+//
+//		Const:
+//	TWeak<A> a(new B());
+//	TWeak<const A> ca = a;
+//	a->nonconstMethod(); // ok
+//	ca->nonconstMethod(); // compile err
+//	const TWeak<A> ca2 = ca;
+//	(*ca2).nonconstMethod(); // compile err
+
