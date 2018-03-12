@@ -36,12 +36,43 @@ class Thing {
 	virtual Refer to(const Class& cls) {
 		return Refer();
 	}
-	virtual const Refer
+	Refer to(const Class& cls) const {
+		This& unconsted = const_cast<T&>(*this);
+		wbool should_const = cls.isSuper(getClass());
+		return Refer(unconsted.to(cls), should_const);
+	}
 	template <typename T>
 	TRefer<T> to() {
 		return Refer<T>(to(T::getStaticClass()));
 	}
+	template <typename T>
+	TRefer<T> to() const {
+		return Refer<T>(to(T::getStaticClass()));
+	}
 }
+		//	Usage:
+		//		to:
+		A& a = ...;
+		Refer ra = a.to(TClass<AChild>());
+		ra.isConst(); // false
+		ra = a.to(TClass<const AChild>()); // TClass<const T> is compile err
+		ra = a.to(TClass<Integer>());
+		Integer casted = *ra.to<Integer>(); // T of to<T> should be a sort of Node.
+		//	At this moment, the returned value from ra.to<>() copied to casted variable,
+		//	and was deleted automatically.
+		TRefer<const AChild> cra = ra.to<const AChild>();
+		//	cra자체는 const가 아니다. World는 const Reference라는 게 없기 때문이다. ref가 가리키는게 const냐 아니냐만 존재한다.
+
+		cra->nonconstMethod(); // compile err. TRefer<const>는 operator->() const만 있다.
+		const TRefer<AChild> cra2 = cra;
+		cra2->nonconstMethod(); // compile err.
+		const A& ca = a;
+		Refer cra3 = ca.to(TClass<AChild>());
+		cra3.isConst(); // true
+		cra3.call(...); // 본래 이렇게 하는게 정상이다.
+
+
+
 class Instance : Thing {
 	//	Instance는 World에서 인스턴스 관리를 대신해준다. 여기서부터 bind가 가능하다.
 	union ID {
