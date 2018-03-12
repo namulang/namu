@@ -2,6 +2,13 @@ class Executable {
 	virtual Result& execute() const = 0;
 };
 
+//	Object는 Members를 가져야 하는데, 여러가지를 고려해야만 한다.
+//		1. Class에 속한것(Method + static variable)과 객체에 속한것을 구분해야 한다
+//			이는 빠른 Object생성과 메모리 효율을 위해 반드시 필요하다.
+//		2. private, public을 구분해야 하는가?
+//		3. static을 구분해야 하는가?
+//		4. const 와 nonconst를 구분해야 하는가?
+//	여기서
 class Object : public Node {
 	virtual Refer call(const Msg& msg) {
 		Object& old = msg.getThis();
@@ -16,9 +23,9 @@ class Object : public Node {
 };
 
 class Refer : public Node {
-	This();
-	This(const Class& cls, wbool is_const = false)
-	: Super(), _cls(cls), _is_const(is_const) {}
+	This(wbool want_const = false);
+	This(const Class& cls, wbool want_const = false)
+	: Super(), _cls(cls), _is_const(want_const) {}
 	This(const Class& cls, Object& it);
 	This(Object& it)
 	: Super(), _cls(it.getClass() {
@@ -27,7 +34,9 @@ class Refer : public Node {
 	This(const Class& cls, const Object& it);
 	This(const Object& it);
 	This(const Class& cls, const This& it);
-	This(const This& it);
+	This(const This& it, wbool does_want_const = false) {
+		wbool is_const = does_want_const || it.isConst();
+	}
 
 	operator==() const;
 	operator!=() const;
@@ -84,6 +93,20 @@ class Refer : public Node {
 	TStrong<Node> _bean;
 	const Class& _cls;
 };
+
+template <typename T, wbool IS_CONST = ConstChecker<T>::IS>
+class TRefer : public Refer {
+	This(wbool want_const = false) : Super(want_const || IS) {}
+	This(This& it, wbool want_const = false) : Super(it, want_const || IS) {}
+	This(const This& it) : Super(it) {}
+};
+//	Usage:
+//		Refer ref = ....; // const A였을때,
+//		TRefer<A> noncon = ref;
+//		nonconst.isBind() // = false
+//		TRefer<const A> con1 = ref;
+//		const TRefer<A> con2 = ref;
+//		ref.isBind() == ref2.isBind() // = false. con2는 nonconst로 바인딩이 1차 시도되고, 실패되므로.
 
 class Method : public Object, public Executable {
 	BlockStmt _blkstmt;
