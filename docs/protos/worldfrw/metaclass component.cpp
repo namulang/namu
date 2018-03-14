@@ -96,25 +96,14 @@ class InterfaceClass : public Class {
 
 template <typename T>
 class TClass : public TADTChecker<T>::TypeClass {
-	TClass() {
-		this->initialize();
-	}
-	virtual wbool isTemplate() const {
-		return TTemplateChecker<T>::IS;
-	}
-	virtual const String& getName() const {
-		return getStaticName();
-	}
-	virtual const Classes& getSupers() const {
-		return getStaticSupers();
-	}
-	virtual const Classes& getSubs() const {
-		return getStaticSubs();
-	}
+	TClass() { this->initialize(); }
+	virtual wbool isTemplate() const { return TTemplateChecker<T>::IS; }
+	virtual const String& getName() const { return getStaticName(); }
+	virtual const Classes& getSupers() const { return getStaticSupers(); }
+	virtual const Classes& getSubs() const { return getStaticSubs(); }
 	static wbool _is_initialized;
-	virtual wbool isInitialized() const {
-		return _is_initialized;
-	}
+	virtual wbool isInitialized() const { return _is_initialized; }
+	wbool isOccupiable() const { return getStaticOccupiable(); }
 	virtual Result& _setInitialized(wbool newone) {
 		_is_initialized = newone;
 		return Success;
@@ -136,6 +125,10 @@ class TClass : public TADTChecker<T>::TypeClass {
 	}
 	static const Classes& getStaticSubs() {
 		static Classes inner;
+		return inner;
+	}
+	static wbool isStaticOccupiable() {
+		static wbool inner = isSub(OccupiableObject::getStaticClass());
 		return inner;
 	}
 };

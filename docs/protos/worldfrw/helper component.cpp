@@ -9,7 +9,7 @@ typedef wint wcount;
 typedef wint windex;
 
 template <typename T>
-class Nuller {
+class TNuller {
 	T* ptr = 0;
 	T& ref = (T&) *ptr;
 };

@@ -49,6 +49,20 @@ class Thing {
 	TRefer<T> to() const {
 		return Refer<T>(to(T::getStaticClass()));
 	}
+
+	//	구체클래스로 자동 캐스트한다. dynamic_cast와 동급이다.
+	//	invisible이다.
+	template <typename T>
+	T& subcast() {
+		if(isSub(T::getStaticClass()))
+			return (T&) *this;
+		return TNuller<T>::ref;
+	}
+
+	//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
+	virtual Result& assign(const Thing& it) {
+		if(it.isNull()) return NullError;
+	}
 }
 		//	Usage:
 		//		to:
@@ -71,6 +85,8 @@ class Thing {
 		cra3.isConst(); // true
 		cra3.call(...); // 본래 이렇게 하는게 정상이다.
 
+		//	Refer.isConst()의 의미는 const T* 이다.
+		//	const Refer& ref 의 의미도 const T* 이나, 이것은 엄밀히 말하면 Managed 인스턴스를 한번더 const 로 래핑한것과 같다. 왜냐하면 본래 모든 Managed객체는 C++에서는 nonconst로 접근가능하기 때문이다. 따라서 이러한 용법은 native에서 const임을 한번더 못박은거라고 보면 된다.
 
 
 class Instance : Thing {
@@ -124,9 +140,11 @@ class Msg : public Thing {
 	static const Method& getMe() const { return *_me; }
 	static Result& _setMe(Method& newone) { _me = newone; }
 }
+
 class Node : public ? {
 	virtual Refer call(const Msg& msg) {
 	}
 	virtual Refer call(const Msg& msg) const {
 	}
+	virtual wbool isOccupiable() const { return false;/*default*/ }
 }

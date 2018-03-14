@@ -22,6 +22,13 @@ class Object : public Node {
 	}
 };
 
+//	OccupiableObject는 상속된다:
+//		상속이란 부모의 모든 특징을 다 물려받는 것이며, int의 자식클래스는 무엇이 되었건 간에 immutable이 될 수 밖에 없다.
+//	실질적인 Occupiable vs Sharable의 동작 차이는 Refer에서 발생한다.
+class OccupiableObject : public Object {
+	virtual wbool isOccupiable() const { return true; }
+};
+
 class Refer : public Node {
 	This(wbool want_const = false);
 	This(const Class& cls, wbool want_const = false)
@@ -51,7 +58,11 @@ class Refer : public Node {
 	virtual CStrong call(const Msg& msg) const { return _bean.call(msg); }
 	virtual Strong call(const Msg& msg) { return _bean.call(msg); }
 
+	Result& bind(Refer& it) {
+		return bind(it.get());
+	}
 	Result& bind(Object& it) {
+		//	NullCheckDelayed 철학에 의해서 WRD_IS_NULL(it)을 하지 않는다. 
 		const Class& cls = it.getClass();
 		WRD_IS_NULL(cls)
 		if( ! cls.isSub(_cls))
@@ -61,6 +72,9 @@ class Refer : public Node {
 		WRD_IS_ERR(_bean.bind(it))
 		_is_const = false;
 		return Success;
+	}
+	Result& bind(const Refer& it) const {
+		return bind(it.get());
 	}
 	Result& bind(const Object& it) const {
 		This& unconst = const_cast<This&>(*this);
@@ -92,6 +106,29 @@ class Refer : public Node {
 	wbool _is_const;
 	TStrong<Node> _bean;
 	const Class& _cls;
+
+	virtual Result& assign(const Thing& it) {
+		// Null체크는 Thing::assign()에서 한다.
+		WRD_IS_ERR(Super::assign(it))
+
+		//	Sharable, Occupiable:
+		//		여기서는 실질적인 sharing vs occupying의 동작차이를 만들어내는 곳이다.
+		//		Occupiable이라도 const 인 경우에는 인터프리터에 의해서 const Refer에 감싸서 scope나 멤버함수에 들어가게 된다.
+		//		또한 이문제는 it이 occupiable인지 sharable인지 구분할 필요가 없다. 오로지 this가 occupiable인지 아닌지만 중요하다.
+		if(_cls.isOccupiable()) // Occupiable은 상속이 된다.
+		{
+			//	이경우 const건 아니건 사실 중요하지 않다. 오직 중요한건 occupiable이면 실제 객체에게 assign을 떠 넘기면 된다는 사실이다.
+			Node& bean = get();
+			WRD_IS_NULL(bean)
+			return bean.assign(it);
+		}
+	
+		//	sharable 이라면 이렇게 간단히 끝난다.
+		Refer& refered = it.subcast<This>();
+		if(refered.isExist())
+			return bind(refered);
+		return bind(it.subcast<Object>()); // null이 들어가도 상관없다.
+	}
 };
 
 template <typename T, wbool IS_CONST = ConstChecker<T>::IS>
