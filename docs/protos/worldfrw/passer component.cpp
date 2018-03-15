@@ -131,11 +131,8 @@ class TRefer : public Refer {
 	This(const T& bean);
 	This(const This& it);
 
-	operator=(const This& it);
-	operator=(T& it);
-
-	Result& bind(T& it);
-	Result& bind(Refer& it);
+	//	Result& bind(T& it) 를 만들지 않는다. 왜냐하면 Object로 들어와도, 실제로는 T 일 수 있기 때문이다.
+	//	operator=도 같다.
 
 	T& get();
 	const T& get() const;
@@ -147,23 +144,37 @@ class TRefer<const T> : public Refer {
 	This(const T& bean);
 	This(const This& it);
 
-	operator=(const This& it); // method hiding
+	operator=(const This& it); // method hiding. TRefer<T>와 다르게 nonconst를 빼야 하므로 은닉한다.
 	operator=(const T& it);
 
-	Result& bind(const T& it); // method hiding
+	Result& bind(const T& it); // method hiding.
 	Result& bind(const Refer& it);
 
 	const T& get() const;
 };
 
 //	Usage:
-//		Refer ref = ....; // const A였을때,
-//		TRefer<A> noncon = ref;
-//		nonconst.isBind() // = false
-//		TRefer<const A> con1 = ref;
-//		const TRefer<A> con2 = ref;
-//		ref.isBind() == ref2.isBind() // = false. con2는 nonconst로 바인딩이 1차 시도되고, 실패되므로.
-//		con1.get()
+	Refer ref = ....; // const A였을때,
+	TRefer<A> noncon = ref;
+	nonconst.isBind() // = false
+	TRefer<const A> con1 = ref;
+	const TRefer<A> con2 = ref;
+	ref.isBind() == ref2.isBind() // = false. con2는 nonconst로 바인딩이 1차 시도되고, 실패되므로.
+	TRefer<const A> con3(A());
+	A a;
+	const A& ca = a;
+	con3.bind(a); // err.
+	con3.bind(ca);
+	noncon.bind(a);
+	con3 = noncon; // ok. but bind failed at runtime.
+	con3.isBind(); // false
+	A& out1 = con3.get(); // err. con3.get() returns type of const A&
+	const A& out2 = con3.get(); // ok, however...
+	out2.isNull(); // true
+	const TRefer<A> con4(A());
+	const A& out3 = con4.get(); // ok. con4 has get() nonconst method, but get() const method is only accessable.
+	con4 = con3 // ok
+	con4.isExist() // false
 
 class Method : public Object, public Executable {
 	BlockStmt _blkstmt;
