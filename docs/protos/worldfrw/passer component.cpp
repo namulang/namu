@@ -30,20 +30,10 @@ class OccupiableObject : public Object {
 };
 
 class Refer : public Node {
-	This(wbool want_const = false);
-	This(const Class& cls, wbool want_const = false)
-	: Super(), _cls(cls), _is_const(want_const) {}
-	This(const Class& cls, Object& it);
-	This(Object& it)
-	: Super(), _cls(it.getClass() {
-		bind(it);	
-	}
-	This(const Class& cls, const Object& it);
+	This(const Class& cls = Node::getStaticClass(), wbool want_const = false);
+	This(Object& it);
 	This(const Object& it);
-	This(const Class& cls, const This& it);
-	This(const This& it, wbool does_want_const = false) {
-		wbool is_const = does_want_const || it.isConst();
-	}
+	This(const This& it);
 
 	operator==() const;
 	operator!=() const;
@@ -73,10 +63,10 @@ class Refer : public Node {
 		_is_const = false;
 		return Success;
 	}
-	Result& bind(const Refer& it) const {
+	Result& bind(const Refer& it) {
 		return bind(it.get());
 	}
-	Result& bind(const Object& it) const {
+	Result& bind(const Object& it) {
 		This& unconst = const_cast<This&>(*this);
 		Result& res = unconst.bind(const_cast<Object&>(it));
 		WRD_IS_ERR(res)
@@ -118,7 +108,7 @@ class Refer : public Node {
 		if(_cls.isOccupiable()) // Occupiable은 상속이 된다.
 		{
 			//	이경우 const건 아니건 사실 중요하지 않다. 오직 중요한건 occupiable이면 실제 객체에게 assign을 떠 넘기면 된다는 사실이다.
-			Node& bean = get();
+			Node& bean = get(); // 만약 isConst() 일 경우, 여기서 NULL이 나오게 된다.
 			WRD_IS_NULL(bean)
 			return bean.assign(it);
 		}
@@ -131,12 +121,41 @@ class Refer : public Node {
 	}
 };
 
-template <typename T, wbool IS_CONST = ConstChecker<T>::IS>
+//	공통 코드는 모든 기능을,
+//	구체 코드는 공통 코드를 상속해놓고 일부 기능만 구체적으로 공개하고 공통코드는 Method hiding으로 숨긴다.
+//	CIterator, TWeak와 동일한 구조다.
+template <typename T>
 class TRefer : public Refer {
-	This(wbool want_const = false) : Super(want_const || IS) {}
-	This(This& it, wbool want_const = false) : Super(it, want_const || IS) {}
-	This(const This& it) : Super(it) {}
+	This() : Super(false) {}
+	This(T& bean);
+	This(const T& bean);
+	This(const This& it);
+
+	operator=(const This& it);
+	operator=(T& it);
+
+	Result& bind(T& it);
+	Result& bind(Refer& it);
+
+	T& get();
+	const T& get() const;
 };
+
+template <typename T>
+class TRefer<const T> : public Refer {
+	This() : Super(true) {}
+	This(const T& bean);
+	This(const This& it);
+
+	operator=(const This& it); // method hiding
+	operator=(const T& it);
+
+	Result& bind(const T& it); // method hiding
+	Result& bind(const Refer& it);
+
+	const T& get() const;
+};
+
 //	Usage:
 //		Refer ref = ....; // const A였을때,
 //		TRefer<A> noncon = ref;
@@ -144,6 +163,7 @@ class TRefer : public Refer {
 //		TRefer<const A> con1 = ref;
 //		const TRefer<A> con2 = ref;
 //		ref.isBind() == ref2.isBind() // = false. con2는 nonconst로 바인딩이 1차 시도되고, 실패되므로.
+//		con1.get()
 
 class Method : public Object, public Executable {
 	BlockStmt _blkstmt;
