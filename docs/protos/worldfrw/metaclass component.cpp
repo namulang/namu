@@ -6,14 +6,24 @@ class Class : public Object { //	World에 visible해야 하기 때문이다.
 		return &getName() != &rhs.getName();
 	}
 	virtual const Class& getClass() const {
+		WRD_IS_THIS(const Class)
 		return *this;
 	}
 	virtual Result& _setInitialized(wbool newone) = 0;
 	virtual wbool isTemplate() const = 0;
 	virtual wbool isAbstract() const = 0;
 	TStrong<Object> instantiate() const = 0;
+	Result& _injectMembersTo(Object& newone) {
+		Chain& members = newone._getMembers();
+		WRD_IS_NULL(members)
+
+		members.release();
+		members.chain(getMembers());
+		members.chain(
+	}
 	virtual const String& getName() const = 0;
 	const Class& getSuper() const {
+		WRD_IS_THIS(const Class)
 		return getSupers()[0];
 	}
 	virtual const Classes& getSupers() const = 0;
@@ -66,12 +76,15 @@ class Class : public Object { //	World에 visible해야 하기 때문이다.
 		return getClass() == target;//  Remember. We're using Class as "Monostate".
 	}
 	Classes& _getSupers() {
+		WRD_IS_THIS(Classes)
 		return const_cast<Classes&>(getSupers());
 	}
 	Classes& _getSubs() {
+		WRD_IS_THIS(Classes)
 		return const_cast<Classes&>(getSubs());
 	}
 	const Classes& getLeafs() const {
+		WRD_IS_THIS(const Classes)
 		static Classes inner;
 		
 	}
@@ -98,9 +111,18 @@ template <typename T>
 class TClass : public TADTChecker<T>::TypeClass {
 	TClass() { this->initialize(); }
 	virtual wbool isTemplate() const { return TTemplateChecker<T>::IS; }
-	virtual const String& getName() const { return getStaticName(); }
-	virtual const Classes& getSupers() const { return getStaticSupers(); }
-	virtual const Classes& getSubs() const { return getStaticSubs(); }
+	virtual const String& getName() const {
+		WRD_IS_THIS(const String)
+		return getStaticName();
+	}
+	virtual const Classes& getSupers() const {
+		WRD_IS_THIS(const Classes)
+		return getStaticSupers();
+	}
+	virtual const Classes& getSubs() const {
+		WRD_IS_THIS(const Classes)
+		return getStaticSubs();
+	}
 	static wbool _is_initialized;
 	virtual wbool isInitialized() const { return _is_initialized; }
 	wbool isOccupiable() const { return getStaticOccupiable(); }

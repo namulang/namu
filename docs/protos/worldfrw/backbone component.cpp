@@ -123,12 +123,24 @@ class Instance : Thing {
 }
 class Msg : public Thing {
 	String _name;
-	String& getName() { return _name; }
-	const String& getName() const { return _name; }
+	String& getName() {
+		WRD_IS_THIS(String)
+		return _name;
+	}
+	const String& getName() const {
+		WRD_IS_THIS(const String)
+		return _name;
+	}
 
 	Args _args;
-	Args& getArgs() { return _args; }
-	const Args& getArgs() const { return _args; }
+	Args& getArgs() {
+		WRD_IS_THIS(Args)
+		return _args;
+	}
+	const Args& getArgs() const {
+		WRD_IS_THIS(const Args)
+		return _args;
+	}
 
 	static Object* _thisptr; // Message는_name_thisptr_args를_모두_하나의_Array로_구성한다 
 	friend class Object; // _thisptr 조작을 위해
@@ -147,4 +159,8 @@ class Node : public ? {
 	virtual Refer call(const Msg& msg) const {
 	}
 	virtual wbool isOccupiable() const { return false;/*default*/ }
+	virtual const Container& getMembers() const = 0; // invisible
+	Container& _getMember() {
+		return const_cast<Container&>(getMember());
+	}
 }
