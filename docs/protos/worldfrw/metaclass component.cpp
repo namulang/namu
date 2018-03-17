@@ -13,14 +13,6 @@ class Class : public Object { //	World에 visible해야 하기 때문이다.
 	virtual wbool isTemplate() const = 0;
 	virtual wbool isAbstract() const = 0;
 	TStrong<Object> instantiate() const = 0;
-	Result& _injectMembersTo(Object& newone) {
-		Chain& members = newone._getMembers();
-		WRD_IS_NULL(members)
-
-		members.release();
-		members.chain(getMembers());
-		members.chain(
-	}
 	virtual const String& getName() const = 0;
 	const Class& getSuper() const {
 		WRD_IS_THIS(const Class)
@@ -90,16 +82,25 @@ class Class : public Object { //	World에 visible해야 하기 때문이다.
 	}
 };
 
-template <typename T>
-class ConcreteClass : public Class {
+//	class for Object class.
+class ObjectClass : public Class {
+	Array _variables; // for each object instance.
+	const Array& getVariables() {
+		WRD_IS_THIS(const Array)
+		return _variables;
+	}
+};
+
+template <typename T, typename S = Class>
+class TConcreteClass : public S {
 	virtual wbool isAbstract() const { return false; }
 	virtual TStrong<Object> instantiate() const {
 		return TStrong<Object>(new T());
 	}
 };
 
-template <typename T>
-class InterfaceClass : public Class {
+template <typename T, typename S = Class>
+class TInterfaceClass : public S {
 	virtual wbool isAbstract() const { return true; }
 	virtual TStrong<Object> instantiate() const {
 		NotDefined.warn("...");
@@ -107,8 +108,25 @@ class InterfaceClass : public Class {
 	}
 };
 
+template <typename T, wbool IS_ADT = TADTChecker<T>::IS, wbool IS_OBJECT = TSubChecker<T, Object>::IS>
+class TMetaClassTypeChooser {
+	typedef TConcreteClass<T> Super;
+};
 template <typename T>
-class TClass : public TADTChecker<T>::TypeClass {
+class TMetaClassTypeChooser<T, false, true> {
+	typedef TConcreteClass<T, ObjectClass> Super;
+};
+template <typename T>
+class TMetaClassTypeChooser<T, true, false> {
+	typedef TInterfaceClass<T> Super;
+};
+class <typename T>
+class TMetaClassTypeChooser<T, true, true> {
+	typedef TInterfaceClass<T, ObjectClass> Super;
+};
+
+template <typename T>
+class TClass : public TMetaClassTypeChooser<T>::Super {
 	TClass() { this->initialize(); }
 	virtual wbool isTemplate() const { return TTemplateChecker<T>::IS; }
 	virtual const String& getName() const {

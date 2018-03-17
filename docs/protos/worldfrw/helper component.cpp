@@ -64,7 +64,6 @@ class TADTChecker : public Checker {
 
 public:
 	static const wbool IS = sizeof(TADTChecker<T>::template foo<T>(0)) == sizeof(yes);
-	typedef typename std::conditional<IS_ADT, ConcreteClass<T>, InterfaceClass<T>>::type TypeClass;
 };
 
 template <typename T>
