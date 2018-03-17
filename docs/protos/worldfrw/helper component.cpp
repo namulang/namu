@@ -76,3 +76,17 @@ class TTemplateChecker : public Checker {
 public:
 	static const wbool IS = sizeof(_foo((T*)0)) == sizeof(yes);
 };
+
+template <typename T, typename Super> // is T is sub of Super
+class SubChecker : public Checker {
+public:
+	typedef short yes;
+	typedef char no;
+
+	static yes foo(Super*);
+	static no foo(...);
+	enum {
+		IS = sizeof(foo((T*) 0)) == sizeof(yes)
+	};
+};
+
