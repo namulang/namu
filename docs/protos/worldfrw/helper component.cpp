@@ -33,8 +33,9 @@ class TNuller {
 	WRD_IS_NULL_2(VALUE, NullPtr)
 #define WRD_IS_NULL ....
 
-#define WRD_IS_THIS(TYPE)	\
-	WRD_IS_NULL(*this, Nuller<Type>::ref)
+#define WRD_IS_THIS_1(TYPE)		WRD_IS_NULL(*this, Nuller<Type>::ref)
+#define WRD_IS_THIS_0()			WRD_IS_THIS_1(This)
+#define WRD_IS_THIS ....
 
 #define WRD_IS_CONST(RET)		WRD_IF(this->isConst(), ConstCancel, RET)
 
