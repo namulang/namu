@@ -163,4 +163,17 @@ class Node : public ? {
 	Container& _getMember() {
 		return const_cast<Container&>(getMember());
 	}
+	//	getMembers:
+	//		모든 Container의 index는 World와 Native모두 1부터 시작한다.
+	//		invisible하다.
+	Node& operator[](windex n) { return getMember(n); }
+	const Node& operator[](windex n) const { return getMember(n); }
+	Node& getMember(windex n) {
+		WRD_IS_THIS(Node)
+		return _getMembers()[n];
+	}
+	const Node& getMember(windex n) const {
+		WRD_IS_THIS(Node)
+		return getMembers()[n];
+	}
 }

@@ -10,6 +10,9 @@ class Executable {
 //		4. const 와 nonconst를 구분해야 하는가?
 //	여기서
 class Object : public Node {
+	Object() : Super() {
+	}
+
 	virtual Refer call(const Msg& msg) {
 		Object& old = msg.getThis();
 		msg._setThis(*this);
@@ -19,6 +22,44 @@ class Object : public Node {
 		msg._setThis(old);
 	}
 	virtual Refer call(const Msg& msg) const {
+	}
+
+	//	객체의 멤버변수:
+	//		Object Chain = Method.Member + Method.ObjectVariables.clone().
+	//		클래스이 member는 공유되어야 하며, Method의 Object용 member는 객체마다 따로 갖고 있어야 한다.
+	//		늦은 초기화:
+	//			배경:
+	//				_members는 native의 메소드들이나 Managed의 멤버변수를 모아두는, 실질적인 visible 의 한 축을 담당한다. (나머지 한 축은 scope)
+	//				문제는 native의 메소드를 visible하게 할때 일어나는데, Native환경에서 사용자가 Object를 상속한 임의의 클래스 A를 지역변수로 생성한 경우, 객체를 사용하기 전에 어딘가에서는 Native메소드들을 담고있는 메타클래스로부터 메소드목록을 객체가 fetching 해야한다.
+	//				하지만 이 경우 Object의 생성자에서는 최종 구체클래스 A가 뭔지 모르므로 할 수 없다. 반면 A는 사용자의 클래스이므로, A의 생성자에서도 할 수 없다. (사용자에게 limitation을 거는 꼴이다) 따라서, Member의 늦은 초기화로 이문제를 해결한다.
+	//
+	//			동작:
+	//				늦은 초기화는 "Members에 접근하려면 반드시 getMembers() con
+	//				st를 통해야 한다" 를 전제로 하고 있다.
+	//				A 생성자안에서 사용자가 사용하든, 밖에서 사용하든 Members를
+	//				처음 사용하려고 하는 그 순간, Member가 아직 초기화되지 않은
+	//				경우라면 초기화 로직을 먼저 시작한다.
+	//
+	//				이 방법의 가장 중요한 점은, 외부에서는 처음부터 Members가
+	//				채워져 있다고 생각하게 만드는 것이다. 이걸 배신하면 안된다.
+	//			Limitation:
+	//				생성자 안에서 getMembers()를 호출하면 안된다. 초기화는 1번만 일어난다. 여러번 하게도 할 수 있으나, 그렇게하면 기존의 ObjectVariables를 덮어써야 하므로 어짜피 로직은 망하게 된다.
+	Chain _members;
+	//	만약 아래의 함수가 visible이 된다면 어떻게 반환형 const가 전달되지?:
+	//		TNativeMethod가 반환형 T = const Container임을 알고있다.
+	//		TRefer<const Container> ret = (obj->*fptr)().to<const Container>();
+	//		return ret;
+	virtual const Container& getMembers() const {
+		WRD_IS_THIS(const Container)
+		if(_members.getLength() <= 0)
+			_initializeMembers();
+		return _members;
+	} // variable은 없다.
+	Result& _initializeMembers() {
+		_members.release();
+		_members.chain(getClass().getMembers());
+		_members.chain(variables);
+		return Success;
 	}
 };
 
