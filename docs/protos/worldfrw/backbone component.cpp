@@ -153,11 +153,10 @@ class Msg : public Thing {
 	static Result& _setMe(Method& newone) { _me = newone; }
 }
 
+namespace {
+}
+
 class Node : public ? {
-	virtual Refer call(const Msg& msg) {
-	}
-	virtual Refer call(const Msg& msg) const {
-	}
 	virtual wbool isOccupiable() const { return false;/*default*/ }
 	virtual const Container& getMembers() const = 0; // invisible
 	Container& _getMember() {
@@ -176,4 +175,24 @@ class Node : public ? {
 		WRD_IS_THIS(Node)
 		return getMembers()[n];
 	}
+	virtual Refer call(const Msg& msg) { return _call<This>(msg, getMembers()); }
+	virtual Refer call(const Msg& msg) const { return _call<const This>(msg, _getMembers()); }
+	template <typename T, typename S>
+	Refer _call(const Msg& msg, S& members);
 }
+	//	implement this only inside of cpp file
+	template <typaname T, typename S>
+	Refer Node::_call(const Msg& msg, S& members) {
+		WRD_IS_NULL(msg)
+		WRD_IS_NULL(members)
+
+		Refer ret;
+		members.template each<T>([&ret, &msg](T& e) {
+			if(e.isConst() != TConstChecker<T>::IS)
+				continue;
+			if(ret = e.call(msg))
+				return false; // stop eaching.
+			return true;
+		});
+		return ret;
+	}
