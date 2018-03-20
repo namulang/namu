@@ -175,6 +175,7 @@ class Node : public ? {
 		WRD_IS_THIS(Node)
 		return getMembers()[n];
 	}
+	virtual wbool isConsumable(const Msg& msg) const { return false; }
 	virtual Refer call(const Msg& msg) { return _call<This>(msg, getMembers()); }
 	virtual Refer call(const Msg& msg) const { return _call<const This>(msg, _getMembers()); }
 	template <typename T, typename S>
@@ -186,13 +187,22 @@ class Node : public ? {
 		WRD_IS_NULL(msg)
 		WRD_IS_NULL(members)
 
-		Refer ret;
-		members.template each<T>([&ret, &msg](T& e) {
+		T* found = NULL;
+		if(members.template each<T>([&found, &msg](T& e) {
 			if(e.isConst() != TConstChecker<T>::IS)
 				continue;
-			if(ret = e.call(msg))
-				return false; // stop eaching.
-			return true;
-		});
-		return ret;
+			if( ! e.isConsumable(msg))
+				return Success;
+			if(found)
+				return Duplicated.err(".."); // if ret isn't Success, it means that stop eaching.
+			
+			found = &e;
+			return Success; // means keep eaching.
+		}))
+		{
+			Duplicated.err(".....");
+			return Refer();
+		}
+
+		return found->call(msg);
 	}

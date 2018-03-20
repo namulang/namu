@@ -14,14 +14,31 @@ class Object : public Node {
 	}
 
 	virtual Refer call(const Msg& msg) {
-		Object& old = msg.getThis();
-		msg._setThis(*this);
+		_precall(msg);
 
-		...
+		Refer ret = Super::call(msg);
 
-		msg._setThis(old);
+		_postcall(msg);
+		return ret;
 	}
 	virtual Refer call(const Msg& msg) const {
+		_precall(msg);
+
+		Refer ret = Super::call(msg);
+
+		_postcall(msg);
+		return ret;
+	}
+	void _precall(const Msg& msg) const {
+		Object& old = msg.getThis();
+		msg._setThis(*this);
+	}
+	void _postcall(const Msg& msg) const {
+		msg._setThis(old);
+	}
+	virtual wbool isConsumable(const Msg& msg) const {
+		return	msg.getArgs().getLength() <= 0	&&
+				msg.getName() == getName();
 	}
 
 	//	객체의 멤버변수:
@@ -217,8 +234,29 @@ class TRefer<const T> : public Refer {
 	con4 = con3 // ok
 	con4.isExist() // false
 
+typedef TArray<Class> Classes;
+
 class Method : public Object, public Executable {
-	BlockStmt _blkstmt;
+	Classes _params;
+	const Classes& getParams() const { return _params; }
+	virtual Refer call(const Msg& msg) {
+	}
+	virtual Refer call(const Msg& msg) const {
+	}
+	virtual wbool isConsumable(const Msg& msg) const {
+		if(msg.getName() != getName())
+			return false;
+		if(msg.getArgs().getLength() != getParams().getLength()) 
+			return false;
+
+		Args& args = msg.getArgs();
+		const Classes& params = getParams();
+		for(int n=0; n < args.getLength(); n++)
+			if( ! args[n].to(params[n]).isBind())
+				return false;
+		return true;
+	}
+
 	virtual Result& execute() const {
 		Method& old = msg.getMe();
 		msg._setMe(*this);
@@ -227,6 +265,10 @@ class Method : public Object, public Executable {
 
 		msg._setMe(old);
 	}
+};
+
+class NativeMethod : public Method {
+	BlockStmt _block;
 };
 
 class BlockStmt : public Stmt {
