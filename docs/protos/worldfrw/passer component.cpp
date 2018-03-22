@@ -244,6 +244,8 @@ class Method : public Object, public Executable {
 		execute();
 	}
 	virtual Refer call(const Msg& msg) const {
+		if(isConst()) // const 방어.
+			return NotAllow.warn("...").returns<Refer>();
 		execute();
 	}
 	virtual wbool isConsumable(const Msg& msg) const {
