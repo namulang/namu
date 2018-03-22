@@ -18,17 +18,11 @@ class TNuller {
 //	접근자 아닌 경우에는 "속도문제" 로 인해 수행하지 않는다.
 //	또한 반환형이 객체에 대한 레퍼런스나 포인터가 아닌경우에도 정상적인 반환값과 겹칠 수있기 때문에 체크하지 않는다.
 
-#define WRD_IF_3(COND, RES, RET)\
-	if((COND)) {				\
-		RES.warn(#COND);		\
-		return RET;				\
-	}
-#define WRD_IF_2(COND, RET)		WRD_IF_3(COND, RET, RET)
-#define WRD_IF_1(COND)			WRD_IF_2(COND, Assertion)
-#define WRD_IF .....
-
 #define WRD_IS_NULL_2(VALUE, RET)	\
-	WRD_IF(VALUE.isNull(), NullPtr, RET)
+	if((VALUE.isNull())) {			\
+		RET.warn(#VALUE);			\
+		return RET;					\
+	}
 #define WRD_IS_NULL_1(VALUE)	\
 	WRD_IS_NULL_2(VALUE, NullPtr)
 #define WRD_IS_NULL ....
@@ -37,7 +31,11 @@ class TNuller {
 #define WRD_IS_THIS_0()			WRD_IS_THIS_1(This)
 #define WRD_IS_THIS ....
 
-#define WRD_IS_CONST(RET)		WRD_IF(this->isConst(), ConstCancel, RET)
+#define WRD_IS_CONST(RET)			\
+	if((this->isConst())) {			\
+		ConstCancel.warn(#RET);		\
+		return RET;					\
+	}
 
 #define WRD_IS_ERR(STMT)			\
 	{								\

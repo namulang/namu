@@ -141,7 +141,8 @@ class Refer : public Node {
 	}
 	Node& get() {
 		WRD_IS_THIS(Object)
-		WRD_IF(_is_const, InvalidCall, Nuller<Object>::ref)
+		if(_is_const)
+			return InvalidCall.warn("_is_const").returnNull<Object>();
 
 		return _bean.get();
 	}
@@ -240,23 +241,24 @@ class Method : public Object, public Executable {
 	Classes _params;
 	const Classes& getParams() const { return _params; }
 	virtual Refer call(const Msg& msg) {
+		execute();
 	}
 	virtual Refer call(const Msg& msg) const {
+		execute();
 	}
 	virtual wbool isConsumable(const Msg& msg) const {
-		if(msg.getName() != getName())
-			return false;
-		if(msg.getArgs().getLength() != getParams().getLength()) 
-			return false;
-
 		Args& args = msg.getArgs();
 		const Classes& params = getParams();
+		if(msg.getName() != getName())
+			return false;
+		if(args.getLength() != params.getLength()) 
+			return false;
+
 		for(int n=0; n < args.getLength(); n++)
 			if( ! args[n].to(params[n]).isBind())
 				return false;
 		return true;
 	}
-
 	virtual Result& execute() const {
 		Method& old = msg.getMe();
 		msg._setMe(*this);
