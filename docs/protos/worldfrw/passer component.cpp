@@ -98,10 +98,10 @@ class Refer : public Node {
 	operator=(const This& it);
 	operator=(Object& it);
 	operator=(const Object& it);
-	Object& operator->();
-	const Object& operator->() const;
-	Object& operator*();
-	const Object& operator*() const;
+	Node& operator->();
+	const Node& operator->() const;
+	Node& operator*();
+	const Node& operator*() const;
 
 	virtual CStrong call(const Msg& msg) const { return _bean.call(msg); }
 	virtual Strong call(const Msg& msg) { return _bean.call(msg); }
@@ -109,7 +109,7 @@ class Refer : public Node {
 	Result& bind(Refer& it) {
 		return bind(it.get());
 	}
-	Result& bind(Object& it) {
+	Result& bind(Node& it) {
 		//	NullCheckDelayed 철학에 의해서 WRD_IS_NULL(it)을 하지 않는다. 
 		const Class& cls = it.getClass();
 		WRD_IS_NULL(cls)
@@ -124,7 +124,7 @@ class Refer : public Node {
 	Result& bind(const Refer& it) {
 		return bind(it.get());
 	}
-	Result& bind(const Object& it) {
+	Result& bind(const Node& it) {
 		This& unconst = const_cast<This&>(*this);
 		Result& res = unconst.bind(const_cast<Object&>(it));
 		WRD_IS_ERR(res)
@@ -140,14 +140,14 @@ class Refer : public Node {
 		return Success;
 	}
 	Node& get() {
-		WRD_IS_THIS(Object)
+		WRD_IS_THIS(Node)
 		if(_is_const)
 			return InvalidCall.warn("_is_const").returnNull<Object>();
 
 		return _bean.get();
 	}
 	const Node& get() const {
-		WRD_IS_THIS(Object)
+		WRD_IS_THIS(const Node)
 		return _bean.get();
 	}
 
@@ -237,7 +237,7 @@ class TRefer<const T> : public Refer {
 
 typedef TArray<Class> Classes;
 
-class Method : public Node {
+class Method : public Source {
 	Classes _params;
 	static const String EXECUTE = "execute";
 	const Classes& getParams() const { 
@@ -325,7 +325,8 @@ class BlockStmt : public Stmt {
 	}
 };
 
-class Stmt : public Node, public Executable {};
+
+class Stmt : public Source, public Executable {};
 
 //	Expression은 invisible 하다.
 class Expr : public Stmt {

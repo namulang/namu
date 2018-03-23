@@ -1,4 +1,4 @@
-class Class : public Object { //	World에 visible해야 하기 때문이다.
+class Class : public Source { //	World에 visible해야 하기 때문이다.
 	wbool operator==(const This& rhs) const {
 		return &getName() == &rhs.getName();
 	}
