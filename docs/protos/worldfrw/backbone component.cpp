@@ -193,6 +193,7 @@ namespace {
 //			Method		|	항상 execute()			|	call() const로 온 경우는 X
 //			------------------------------------------------------------------------
 //				*) Method는 isConst()의 값에 의해서만 const객체냐 아니냐가 결정된다.
+//				*) Method가 const객체라는 뜻은, const 메소드라는 것이다.
 class Node : public ? {
 	virtual wbool isOccupiable() const { return false;/*default*/ }
 	virtual const Container& getMembers() const = 0; // invisible

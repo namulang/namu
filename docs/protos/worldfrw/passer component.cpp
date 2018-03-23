@@ -237,21 +237,56 @@ class TRefer<const T> : public Refer {
 
 typedef TArray<Class> Classes;
 
-class Method : public Object, public Executable {
+class Method : public Node {
 	Classes _params;
-	const Classes& getParams() const { return _params; }
+	static const String EXECUTE = "execute";
+	const Classes& getParams() const { 
+		WRD_IS_THIS(const Classes)
+		return _params;
+	}
 	virtual Refer call(const Msg& msg) {
-		execute();
+		Refer ret = Super::call(msg);
+		if(ret)
+			return ret;
+		return execute(msg);
 	}
 	virtual Refer call(const Msg& msg) const {
+		Refer ret = Super::call(msg);
+		if(ret)
+			return ret;
+		return execute(msg);
+	}
+	//	execute와 run은 다르다:
+	//		execute는 인자를 받지 않는다. 그래서 여기서는 run이라는 함수로 구분할 수 밖에 없었다.
+	Refer run(const Msg& msg) {
 		if(isConst()) // const 방어.
 			return NotAllow.warn("...").returns<Refer>();
-		execute();
+
+		const This* consted = this;
+		return consted->execute(msg);
 	}
+	Refer run(const Msg& msg) const {
+		if(msg.getName() != EXECUTE)
+			return InvalidArg.warn("").returns<Refer>();
+
+		Method& old = msg.getMe();
+		msg._setMe(*this);
+
+		This* unconst = const_cast<This*>(this);
+		Refer ret = unconst->_onExecute(msg);
+
+		msg._setMe(old);
+		return ret;
+	}
+	virtual Refer _onExecute(const Msg& msg) = 0;
 	virtual wbool isConsumable(const Msg& msg) const {
 		Args& args = msg.getArgs();
 		const Classes& params = getParams();
-		if(msg.getName() != getName())
+		//	case 1: when user try to let this consume msg as a class.
+		if(msg.getName() == getName())
+			return args.getLength() <= 0;
+		//	case 2: consume as a method.
+		if(msg.getName() != EXECUTE)
 			return false;
 		if(args.getLength() != params.getLength()) 
 			return false;
@@ -261,23 +296,26 @@ class Method : public Object, public Executable {
 				return false;
 		return true;
 	}
-	virtual Result& execute() const {
-		Method& old = msg.getMe();
-		msg._setMe(*this);
+};
 
-		...
-
-		msg._setMe(old);
+class ManagedMethod : public Method {
+	BlockStmt _block;
+	virtual Refer _onExecute(const Msg& msg) {
+		// TODO: do something with scope obj.
+		// TODO: and execute blckstmt.
 	}
 };
 
-class NativeMethod : public Method {
-	BlockStmt _block;
+template <typename....???>
+class TNativeMethod : public Method {
+	virtual Refer _onExecute(const Msg& msg) {
+		// TODO: macro와 연계해야 함.
+	}
 };
 
 class BlockStmt : public Stmt {
-	typedef vector<Stmt> Stmts;
-	Stmts _stmts; // Expr은 invisible하게 한다는 뜻이다.
+	typedef vector<Stmt> Stmts; // stmts은 invisible하게 한다는 뜻이다.
+	Stmts _stmts;
 	Stmts& getStmts();
 	const Stmts& getStmts() const;
 	virtual Result& execute() const {
@@ -287,7 +325,7 @@ class BlockStmt : public Stmt {
 	}
 };
 
-class Stmt : public Instance, public Executable {};
+class Stmt : public Node, public Executable {};
 
 //	Expression은 invisible 하다.
 class Expr : public Stmt {
