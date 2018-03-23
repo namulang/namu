@@ -10,8 +10,13 @@ typedef wint windex;
 
 template <typename T>
 class TNuller {
-	T* ptr = 0;
-	T& ref = (T&) *ptr;
+public:
+	static T null() { return T(); }
+};
+template <typename T>
+class TNuller<T&> {
+public:
+	static T& null() { T* null = 0; return *null; }
 };
 
 //	World는 객체 안에서 다른 객체에 접근하는 접근자함수들에 경우에는 DelayingNullCorruption으로 인해 객체가 Null이라고 해도 Null을 반환할뿐 프로그램이 죽지는 않는다.
