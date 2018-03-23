@@ -239,7 +239,7 @@ typedef TArray<Class> Classes;
 
 class Method : public Source {
 	Classes _params;
-	static const String EXECUTE = "execute";
+	static const String RUN = "run";
 	const Classes& getParams() const { 
 		WRD_IS_THIS(const Classes)
 		return _params;
@@ -266,7 +266,7 @@ class Method : public Source {
 		return consted->execute(msg);
 	}
 	Refer run(const Msg& msg) const {
-		if(msg.getName() != EXECUTE)
+		if(msg.getName() != RUN)
 			return InvalidArg.warn("").returns<Refer>();
 
 		Method& old = msg.getMe();
@@ -286,7 +286,7 @@ class Method : public Source {
 		if(msg.getName() == getName())
 			return args.getLength() <= 0;
 		//	case 2: consume as a method.
-		if(msg.getName() != EXECUTE)
+		if(msg.getName() != RUN)
 			return false;
 		if(args.getLength() != params.getLength()) 
 			return false;
