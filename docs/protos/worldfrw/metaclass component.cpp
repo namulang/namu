@@ -1,4 +1,7 @@
 class Class : public Source { //	World에 visible해야 하기 때문이다.
+	// TODO: classname
+	friend class Interpreter; // for putting parsed Method object into this.
+
 	wbool operator==(const This& rhs) const {
 		return &getName() == &rhs.getName();
 	}
@@ -78,13 +81,17 @@ class Class : public Source { //	World에 visible해야 하기 때문이다.
 	const Classes& getLeafs() const {
 		WRD_IS_THIS(const Classes)
 		static Classes inner;
-		
+		//	TODO:	
+	}
+	virtual Result& _initializeMembers() {
+		_members.release();
+		_members.
 	}
 };
 
 //	class for Object class.
 class ObjectClass : public Class {
-	Array _variables; // for each object instance.
+	Array _variables; // Managed variables for each "Object" instance.
 	const Array& getVariables() {
 		WRD_IS_THIS(const Array)
 		return _variables;

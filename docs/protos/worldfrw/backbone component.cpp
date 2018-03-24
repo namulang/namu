@@ -196,25 +196,27 @@ namespace {
 //				*) Method가 const객체라는 뜻은, const 메소드라는 것이다.
 class Node : public ? {
 	virtual wbool isOccupiable() const { return false;/*default*/ }
-	virtual const Container& getMembers() const = 0; // invisible
-	Container& _getMember() {
-		return const_cast<Container&>(getMember());
+	//	get(); 는 공개하지 않는다:
+	//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
+	virtual const Container& get() const = 0; // invisible
+	Container& _get() {
+		return const_cast<Container&>(get());
 	}
 	//	getMembers:
 	//		모든 Container의 index는 World와 Native모두 1부터 시작한다.
 	//		invisible하다.
-	Node& operator[](windex n) { return getMember(n); }
-	const Node& operator[](windex n) const { return getMember(n); }
-	Node& getMember(windex n) {
+	Node& operator[](windex n) { return get(n); }
+	const Node& operator[](windex n) const { return get(n); }
+	Node& get(windex n) {
 		WRD_IS_THIS(Node)
 		return _getMembers()[n];
 	}
-	const Node& getMember(windex n) const {
+	const Node& get(windex n) const {
 		WRD_IS_THIS(Node)
 		return getMembers()[n];
 	}
 	virtual wbool isConsumable(const Msg& msg) const { return false; }
-	virtual Refer call(const Msg& msg) { return _call<This>(msg, getMembers()); }
+	virtual Refer call(const Msg& msg) { return _call<This>(msg, get()); }
 	virtual Refer call(const Msg& msg) const { return _call<const This>(msg, _getMembers()); }
 	template <typename T, typename S>
 	Refer _call(const Msg& msg, S& members);
@@ -244,3 +246,31 @@ class Node : public ? {
 
 		return found->call(msg);
 	}
+
+
+class CompositNode : public Node {
+	friend class Object; // for _members
+	friend class Class;
+
+	//	_members can't be declared with protected accessor:
+	//		if we do that, module developers can use _members and remove or insert some Node at runtime.
+	TChain<const Container> _members; // of Node.
+	//	getMember(); 는 공개하지 않는다:
+	//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
+	virtual const Container& getMembers() const {
+		WRD_IS_THIS(const Container)
+		if(_members.getLength() <= 0)
+			_initializeMembers();
+		return *_members;
+	}
+	virtual Result& _initializeMembers() {
+		_members.release();
+
+		const Chain& chain = cls.getMembers().cast<Chain>();
+		WRD_IS_NULL(chain)
+		_members.chain(chain.getController()[0]); // first elem as a container owned by "chain"
+		if(_members.chain(getClass().getMembers()))
+			return OperationFail.warn("");
+		return Success;
+	}
+};

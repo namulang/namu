@@ -9,7 +9,7 @@ class Executable {
 //		3. static을 구분해야 하는가?
 //		4. const 와 nonconst를 구분해야 하는가?
 //	여기서
-class Object : public Node {
+class Object : public CompositNode {
 	Object() : Super() {
 	}
 
@@ -61,21 +61,14 @@ class Object : public Node {
 	//				채워져 있다고 생각하게 만드는 것이다. 이걸 배신하면 안된다.
 	//			Limitation:
 	//				생성자 안에서 getMembers()를 호출하면 안된다. 초기화는 1번만 일어난다. 여러번 하게도 할 수 있으나, 그렇게하면 기존의 ObjectVariables를 덮어써야 하므로 어짜피 로직은 망하게 된다.
-	Chain _members;
 	//	만약 아래의 함수가 visible이 된다면 어떻게 반환형 const가 전달되지?:
 	//		TNativeMethod가 반환형 T = const Container임을 알고있다.
 	//		TRefer<const Container> ret = (obj->*fptr)().to<const Container>();
 	//		return ret;
-	virtual const Container& getMembers() const {
-		WRD_IS_THIS(const Container)
-		if(_members.getLength() <= 0)
-			_initializeMembers();
-		return _members;
-	} // variable은 없다.
-	Result& _initializeMembers() {
-		_members.release();
-		_members.chain(getClass().getMembers());
-		_members.chain(variables);
+	virtual Result& _initializeMembers() {
+		WRD_IS_ERR(Super::_initializeMembers())
+	
+		_members.chain(getClass().getVariables().clone());
 		return Success;
 	}
 };
