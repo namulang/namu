@@ -71,6 +71,31 @@ class Object : public CompositNode {
 		_members.chain(getClass().getVariables().clone());
 		return Success;
 	}
+	Iterator _getSubContainerHead(windex n) {
+		Container& sub = getMembers().cast<Chain>().getController()[n];
+		WRD_IS_NULL(sub, Iterator())
+
+		return sub.getHead();
+	}
+	CIterator _getSubContainerHead(windex n) const {
+		const Container& sub = getMembers().cast<Chain>().getController()[n];
+		WRD_IS_NULL(sub, CIterator())
+
+		return sub.getHead();
+	}
+
+	Iterator getSharedHead() {
+		return _getSubContainerHead(0);
+	}
+	CIterator getSharedHead() const {
+		return _getSubContainerHead(0);
+	}
+	Iterator getVariablesHead() {
+		return _getSubContainerHead(1);
+	}
+	Iterator getVariablesHead() const {
+		return _getSubContainerHead(1);
+	}
 };
 
 //	OccupiableObject는 상속된다:
