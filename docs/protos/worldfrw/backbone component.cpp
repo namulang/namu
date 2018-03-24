@@ -268,8 +268,7 @@ class CompositNode : public Node {
 
 		const Chain& chain = cls.getMembers().cast<Chain>();
 		WRD_IS_NULL(chain)
-		_members.chain(chain.getController()[0]); // first elem as a container owned by "chain"
-		if(_members.chain(getClass().getMembers()))
+		if(_members.chain(chain.getController()[0])) // first elem as a container owned by "chain"
 			return OperationFail.warn("");
 		return Success;
 	}

@@ -1,6 +1,6 @@
 class Class : public Source { //	World에 visible해야 하기 때문이다.
 	// TODO: classname
-	friend class Interpreter; // for putting parsed Method object into this.
+	friend class Interpreter; // for interpreter class which can use _getMembers(). 
 
 	wbool operator==(const This& rhs) const {
 		return &getName() == &rhs.getName();
@@ -85,14 +85,19 @@ class Class : public Source { //	World에 visible해야 하기 때문이다.
 	}
 	virtual Result& _initializeMembers() {
 		_members.release();
-		_members.
+		_members.chain(new Array();
+	}
+	virtual const Array& getVariables() const {
+		WRD_IS_THIS(const Array)
+		static Array inner; // means that this class doesn't have any variables.
+		return inner;
 	}
 };
 
 //	class for Object class.
 class ObjectClass : public Class {
 	Array _variables; // Managed variables for each "Object" instance.
-	const Array& getVariables() {
+	const Array& getVariables() const {
 		WRD_IS_THIS(const Array)
 		return _variables;
 	}
