@@ -120,6 +120,10 @@ class Instance : Thing {
 		return 	mmap.getStartAddress() <= this 	&&
 				this << mmap.getEndAddress()	;
 	}
+	Strong toStrong() { return Strong(*this); }
+	CStrong toStrong() const { return CStrong(*this); }
+	Weak toWeak() { return Weak(*this); }
+	CWeak toWeak() const { return CWeak(*this); }
 }
 class Msg : public Thing {
 	String _name;
@@ -199,6 +203,7 @@ class Node : public ? {
 	//	get(); 는 공개하지 않는다:
 	//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
 	virtual const Container& getMembers() const = 0; // invisible
+
 	Container& _get() {
 		return const_cast<Container&>(get());
 	}
@@ -254,7 +259,7 @@ class CompositNode : public Node {
 
 	//	_members can't be declared with protected accessor:
 	//		if we do that, module developers can use _members and remove or insert some Node at runtime.
-	TChain<const Container> _members; // of Node.
+	Chain _members; // of Container.
 	//	getMember(); 는 공개하지 않는다:
 	//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
 	virtual const Container& getMembers() const {
