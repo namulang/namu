@@ -5,6 +5,15 @@ class Containable {
 	operator-
 	operator<<
 	operator>>
+	virtual Result& set(const Iterator& pos, const Node& it) = 0;
+	Result& set(windex n, const Node& it);
+
+	virtual Node& get(windex n) = 0;
+	const Node& get(windex n) const {
+		This& unconst = const_cast<This&>(this);
+		return unconst;
+	}
+
 	virtual Result& insert(const Iterator& pos, const Node& it) = 0;
 	Result& insert(windex n, const Node& it);
 	Result& insert(const Iterator& pos, const Iterator& its_start, const Iterator& its_end);
@@ -109,9 +118,18 @@ template <typename T, typename S>
 class TContainer : public S {
 	//	Native에서 편의를 위해 제공된다. 모든 메소드는 World invisible 하다.
 	TIterator<T> getTIterator(windex n) {
-		TIterator<T> ret;
-		ret._setIteration(_onTakeIteration(n));
-		return ret;
+		return TIterator<T>(_onCreateInteration(*this, n));
+	}
+	TCIterator<T> getTIterator(windex n) const {
+		return TCIterator<T>(_onCreateInteration(*this, n));
+	}
+	T& operator[](windex n);
+	T& getT(windex n) {
+		return static_cast<T&>(get(n));
+	}
+	const T& operator[](windex n) const;
+	const T& getT(windex n) const {
+		return static_cast<T&>(get(n));
 	}
 };
 
@@ -119,13 +137,9 @@ class TContainer : public S {
 class Iteration : public Container::Bean, public Iteratable {
 	Iteration(Container& owner);
 };
-template <typename O, wbool IS_CONST = ConstChecker<O>::IS>
+template <typename O>
 class TIteration : public Iteration {
 	O& getOwner() { return *_owner; } // Super::getOwner()는 virtual이 아니므로 이게 이 코드가 성립한다.
-	const O& getOwner() const { return *_owner; }
-};
-template <typename O>
-class TIteration<O, true> : public Iteration {
 	const O& getOwner() const { return *_owner; }
 };
 
@@ -175,7 +189,7 @@ class Iterator : public CIterator {
 		return bean.get();
 	}
 };
-template <typename T, wbool IS_CONST = ConstChecker<T>::IS>
+template <typename T>
 class TIterator : public Iterator {
 	T& operator*();
 	const T& operator*() const;
@@ -185,7 +199,7 @@ class TIterator : public Iterator {
 	const T& get() const { return static_cast<const T&>(Super::get()); }
 };
 template <typename T>
-class TIterator<T, true> : public Iterator {
+class TCIterator<T> : public CIterator {
 	const T& operator*() const;
 	const T* operator->() const;
 	const T& get() const { return static_cast<const T&>(Super::get()); }
@@ -210,6 +224,13 @@ class Chain : public Container {
 		#define DEFINE_BEAN(RET)				\
 			Containers& origin = _getOrigin();	\
 			WRD_IS_NULL(origin, RET)
+
+		virtual Result& set(const Iterator& pos, const Node& it) {
+			DEFINE_BEAN(nullerr)
+			return origin.set(pos, it);
+		}
+
+		virtual Node& get(windex n)
 			
 		virtual Result& insert(const Iterator& pos, const Node& it) {
 			DEFINE_BEAN(nullerr)
@@ -260,4 +281,12 @@ class Chain : public Container {
 	virtual TStrong<Control> _onCreateControl(Chain& owner) {
 		return new Control(owner);
 	}
+
+	virtual Node& get(windex n);
+	virtual Result& set(const Iterator& pos, const Node& it);
+	virtual Result& insert(const Iterator& pos, const Node& it);
+	virtual Result& remove(const Iterator& pos);
 }
+
+template <typename T>
+using TChain = TContainer<T, Chain>;
