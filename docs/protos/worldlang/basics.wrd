@@ -1,0 +1,3 @@
+class Bsdfwer0234
+	void print(int age, string foo)
+		Console.out("hello world") // 
