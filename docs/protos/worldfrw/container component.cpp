@@ -64,8 +64,10 @@ class Containable {
 	Iterator getTail();
 	CIterator getTail() const;
 
-	template <typename T>
-	Result& each(T lambda);
+	Result& each(function<Result&(Node&)> lambda);
+	Result& each(function<Result&(const Node&)> lambda) const;
+	Result& each(function<Result&(Iterator)> lambda);
+	Result& each(function<Result&(CIterator)> lambda) const;
 	Result& each(Method& lambda);
 
 	virtual const Class& getTrait() const = 0;
@@ -83,6 +85,7 @@ class Iteratable {
 	operator wbool() const;
 	virtual wbool isTail() const = 0;
 	virtual wbool isHead() const = 0;
+	virtual wcount toIndex() const = 0;
 };
 
 class Container : public Object, public Containable {
@@ -131,11 +134,20 @@ class TContainer : public S {
 	const T& getT(windex n) const {
 		return static_cast<T&>(get(n));
 	}
+	Result& each(function<Result&(T&)> lambda);
+	Result& each(function<Result&(const T&)> lambda) const;
+	Result& each(function<Result&(TIterator<T>)> lambda);
+	Result& each(function<Result&(TCIterator<T>)> lambda) const;
 };
 
 
 class Iteration : public Container::Bean, public Iteratable {
 	Iteration(Container& owner);
+
+	virtual windex toIndex() const {
+		windex n = -1;
+		getOwner().find([&windex](const Node& target)
+	}
 };
 template <typename O>
 class TIteration : public Iteration {
