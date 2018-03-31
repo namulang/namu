@@ -44,7 +44,7 @@ class Containable {
 	Result& deq();
 	
 	//	사용자가 Iteration을 상속할 수 있도록 하기 위한 메소드.
-	virtual TStrong<Iteration> _onCreateIteration(windex n) = 0;
+	virtual TStrong<Iteration> _onCreateIteration(Container& owner, windex n) = 0;
 
 	virtual wcount getSize() const = 0;
 
@@ -85,46 +85,19 @@ class Container : public Object, public Containable {
 		const Container& getOwner() const;
 	};
 
-	template <typename T>
-	class Proxy : public OccupiableObject {
-		friend class Container;
-
-		Proxy(T& bean);
-
-		TStrong<T> _bean;
-		T& _getBean() {
-			WRD_IS_THIS(T)
-			// ...
-		}
-		const T& _getBean() const {
-			WRD_IS_THIS(T)
-			// ...
-		}
-		Container& getOwner();
-		const Container& getOwner() const;
-		Result& _setIteration(Iteration& it) {
-			_iteration = it;
-			return Success;
-		}
-	};
-
 	Container() : Super(), _trait(Node::getStaticClass()) {}
 	Container(const Class& trait);
 
 	virtual Iterator getIterator(windex n) {
-		Iterator ret;
-		ret._setIteration(_onCreateInteration(n));
-		return ret;
+		return Iterator(_onCreateInteration(*this, n));
 	}
 	virtual CIterator getIterator(windex n) const {
-		CIterator ret;
-		ret._setIteration(_onCreateIteration(n));
-		return ret;
+		return CIterator(_onCreateIteration(*this, n));
 	}
 	virtual wcount getSize() const { return _size; }
 	Result& _setSize(wcount newone) { _size = newone; }
 	wcount _size;
-db
+
 	virtual const Class& getTrait() const {
 	//	삽입가능한 Class를 나타낸다.
 		return *_trait;
@@ -157,7 +130,21 @@ class TIteration<O, true> : public Iteration {
 };
 
 
-class CIterator : public Container::Proxy<Iteration>, public Iteratable {
+class CIterator : public OccupiableObject, public Iteratable {
+	CIterator(const Iteration& bean)
+
+	TStrong<Iteration> _bean;
+	Iteration& _getBean() {
+		WRD_IS_THIS(T)
+		return *_bean;
+	}
+	const T& _getBean() const {
+		WRD_IS_THIS(T)
+		return *_bean;
+	}
+
+	const Container& getOwner() const;
+
 	virtual Result& move(wcount step) {
 		Iteration& bean = getBean();
 		WRD_IS_NULL(bean)
@@ -179,6 +166,7 @@ class CIterator : public Container::Proxy<Iteration>, public Iteratable {
 class Iterator : public CIterator {
 	Node& operator*();
 	Node* operator->();
+	Container& getOwner();
 	Node& get() {
 		WRD_IS_CONST(Nuller<Node>::ref) 
 		Iteration& bean = getBean();
@@ -189,25 +177,21 @@ class Iterator : public CIterator {
 };
 template <typename T, wbool IS_CONST = ConstChecker<T>::IS>
 class TIterator : public Iterator {
+	T& operator*();
 	const T& operator*() const;
+	T* operator->();
 	const T* operator->() const;
 	T& get() { return static_cast<T&>(Super::get()); }
-	const T& get() { return static_cast<const T&>(Super::get()); }
-	Container& getOwner() {
-		WRD_IS_THIS(Container)
-		return _owner;
-	}
-	const Container& getOwner() const {
-		WRD_IS_THIS(const Container)
-		return _owner;
-	}
+	const T& get() const { return static_cast<const T&>(Super::get()); }
 };
 template <typename T>
 class TIterator<T, true> : public Iterator {
-	T& operator*();
-	T* operator->();
-	const T& get() { return static_cast<const T&>(Super::get()); }
+	const T& operator*() const;
+	const T* operator->() const;
+	const T& get() const { return static_cast<const T&>(Super::get()); }
 };
+
+
 
 class Chain : public Container {
 	//vector<TStrong<Container> > _containers;
@@ -215,32 +199,46 @@ class Chain : public Container {
 	Containers _conts;
 	friend class Control; // for _conts.
 
+	virtual TStrong<Iteration> _onCreateIteration(Container& owner, windex n) {
+		class ChainIteration : public TIteration<Chain> {
+			....
+		};
+		return new ChainIteration(owner);
+	}
+
 	class Control : public Container::Bean<Control>, public Containable {
-		#define DEFINE_BEAN						\
+		#define DEFINE_BEAN(RET)				\
 			Containers& origin = _getOrigin();	\
-			WRD_IS_NULL(origin)
+			WRD_IS_NULL(origin, RET)
 			
 		virtual Result& insert(const Iterator& pos, const Node& it) {
-			DEFINE_BEAN
+			DEFINE_BEAN(nullerr)
 			return origin.insert(pos, it);
 		}
 		virtual Result& remove(const Iterator& pos) {
-			DEFINE_BEAN
+			DEFINE_BEAN(nullerr)
 			return origin.remove(pos);
 		}
 		virtual TStrong<Iteration> _onCreateIteration(windex n) {
-			DEFINE_BEAN
+			DEFINE_BEAN(TStrong<Iteration>())
 			return origin._onCreateIteration(n);
 		}
+		virtual wcount getSize() const {
+			DEFINE_BEAN(0)
+			return origin.getSize();
+		}
 		virtual Iterator getIterator(windex n) {
-			DEFINE_BEAN
+			DEFINE_BEAN(Iterator)
 			return origin.getIterator(n);
 		}
 		virtual CIterator getIterator(windex n) const {
-			DEFINE_BEAN
+			DEFINE_BEAN(CIterator)
 			return origin.getIterator(n);
 		}
-
+		virtual const Class& getTrait() const {
+			DEFINE_BEAN(TNuller<Class>::ref)
+			return origin.getTrait();
+		}
 		Containers& _getOrigin() {
 			Chain& chain = getBean().cast<Chain>();
 			WRD_IS_NULL(chain, TNuller<Containers>::ref)
@@ -253,7 +251,11 @@ class Chain : public Container {
 		}
 	};
 	TStrong<Control> _control;
-	virtual Control& getControl() { return *_control; }
+	Control& getControl() {
+		if( ! _control)
+			_control = _onCreateControl(*this);
+		return *_control;
+	}
 	//	사용자가 Control를 상속하여 사용할 수 있도록 한다.
 	virtual TStrong<Control> _onCreateControl(Chain& owner) {
 		return new Control(owner);
