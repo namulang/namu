@@ -71,99 +71,44 @@ class Iteratable {
 	Result& next();
 	Result& prev();
 
-	virtual Node& get() = 0;
-	virtual const Node& get() = 0;
-	
 	operator wbool() const;
 	virtual wbool isTail() const = 0;
 	virtual wbool isHead() const = 0;
 };
 
-class Iteration : public ConstableInstance {
-	Container& getOwner() {
-		return _getOwner();
-	}
-	const Container& getOwner() const {
-		return _getOwner();
-	}
-	const Container& _getOwner() const {
-		This& unconst = const_cast<This&>(*this);
-		return unconst._getOwner();
-	}
-};
-template <typename O, wbool IS_CONST = ConstChecker<O>::IS>
-class TIteration : public Iteration {
-	TWeak<O> _owner;
-	virtual Container& _getOwner() { return *_owner; }
-	O& getOwner() { return *_owner; }
-	const O& getOwner() const { return *_owner; }
-};
-template <typename O>
-class TIteration<O, true> : public Iteration {
-	TWeak<O> _owner;
-	virtual Container& _getOwner() { return *_owner; }
-	const O& getOwner() const { return *_owner; }
-};
-class Iterator : public OccupiableObject {
-//	Object여야 World에서 다룰 수 있게 된다.
-	friend class Container;
-
-	Result& move(wcount step) {
-		WRD_IS_NULL(_iteration)
-
-		return _iteration.move(step);
-	}
-	const Node& get() const {
-		WRD_IS_THIS(const Node)
-		WRD_IS_NULL(_iteration, Nuller<const Node>::ref)
-
-		return _iteration.getNode();
-	}
-	Node& get() {
-		WRD_IS_THIS(Node)
-		WRD_IS_CONST(Nuller<Node>::ref) 
-		WRD_IS_NULL(_iteration, Nuller<Node>::ref)
-		
-		return _iteration.getNode();
-	}
-	Container& getOwner() {
-		WRD_IS_THIS(Container)
-		WRD_IS_CONST(Nuller<Container>::ref)
-
-		return _owner;
-	}
-	const Container& getOwner() const {
-		WRD_IS_THIS(const Container)
-		return _owner;
-	}
-	Result& _setIteration(Iteration& it) {
-		_iteration = it;
-		return Success;
-	}
-	TStrong<Iteration> _iteration;
-	TWeak<Container> _owner;
-};
-template <typename T, wbool IS_CONST = ConstChecker<T>::IS>
-class TIterator : public Iterator {
-	T& get() { return static_cast<T&>(Super::get()); }
-	const T& get() { return static_cast<const T&>(Super::get()); }
-	Container& getOwner() {
-		WRD_IS_THIS(Container)
-		return _owner;
-	}
-	const Container& getOwner() const {
-		WRD_IS_THIS(const Container)
-		return _owner;
-	}
-};
-template <typename T>
-class TIterator<T, true> : public Iterator {
-	const T& get() { return static_cast<const T&>(Super::get()); }
-};
-
 class Container : public Object, public Containable {
-	Container() : Super(), _trait(Node::getStaticClass()) {
-	}
+	class Bean : public Instance {
+		This(Container& owner);
+
+		TWeak<Container> _owner;
+		Container& getOwner();
+		const Container& getOwner() const;
+	};
+
+	template <typename T>
+	class Proxy : public OccupiableObject {
+		friend class Container;
+
+		Proxy(T& bean);
+
+		TStrong<T> _bean;
+		T& _getBean() {
+			WRD_IS_THIS(T)
+			// ...
+		}
+		const T& _getBean() const {
+			WRD_IS_THIS(T)
+			// ...
+		}
+		Container& getOwner();
+		const Container& getOwner() const;
+		Result& _setIteration(Iteration& it) {
+			_iteration = it;
+			return Success;
+		}
+	};
+
+	Container() : Super(), _trait(Node::getStaticClass()) {}
 	Container(const Class& trait);
 
 	virtual Iterator getIterator(windex n) {
@@ -189,10 +134,66 @@ db
 
 template <typename T, typename S>
 class TContainer : public S {
-//	Native에서 편의를 위해 제공된다. 모든 메소드는 World invisible 하다.
+	//	Native에서 편의를 위해 제공된다. 모든 메소드는 World invisible 하다.
 	TIterator<T> getTIterator(windex n) {
 		TIterator<T> ret;
 		ret._setIteration(_onTakeIteration(n));
 		return ret;
 	}
+};
+
+
+class Iteration : public Container::Bean, public Iteratable {
+	Iteration(Container& owner);
+};
+template <typename O, wbool IS_CONST = ConstChecker<O>::IS>
+class TIteration : public Iteration {
+	O& getOwner() { return *_owner; } // Super::getOwner()는 virtual이 아니므로 이게 이 코드가 성립한다.
+	const O& getOwner() const { return *_owner; }
+};
+template <typename O>
+class TIteration<O, true> : public Iteration {
+	const O& getOwner() const { return *_owner; }
+};
+
+
+class Iterator : public Container::Proxy<Iteration>, public Iteratable {
+	virtual Result& move(wcount step) {
+		Iteration& bean = getBean();
+		WRD_IS_NULL(bean)
+
+		return bean.move(step);
+	}
+	const Node& get() const {
+		Iteration& bean = getBean();
+		WRD_IS_NULL(bean, Nuller<const Node>::ref)
+
+		return bean.get();
+	}
+	Node& getNode() {
+		WRD_IS_CONST(Nuller<Node>::ref) 
+		Iteration& bean = getBean();
+		WRD_IS_NULL(bean, Nuller<Node>::ref)
+		
+		return bean.get();
+	}
+	virtual wbool isTail() const;
+	virtual wbool isHead() const;
+};
+template <typename T, wbool IS_CONST = ConstChecker<T>::IS>
+class TIterator : public Iterator {
+	T& get() { return static_cast<T&>(Super::get()); }
+	const T& get() { return static_cast<const T&>(Super::get()); }
+	Container& getOwner() {
+		WRD_IS_THIS(Container)
+		return _owner;
+	}
+	const Container& getOwner() const {
+		WRD_IS_THIS(const Container)
+		return _owner;
+	}
+};
+template <typename T>
+class TIterator<T, true> : public Iterator {
+	const T& get() { return static_cast<const T&>(Super::get()); }
 };
