@@ -53,7 +53,7 @@ class Containable {
 	Result& deq();
 	
 	//	사용자가 Iteration을 상속할 수 있도록 하기 위한 메소드.
-	virtual TStrong<Iteration> _onCreateIteration(Container& owner, windex n) = 0;
+	virtual TStrong<Iteration> _onCreateIteration(Container& origin, windex n) = 0;
 
 	virtual wcount getSize() const = 0;
 
@@ -66,8 +66,6 @@ class Containable {
 
 	Result& each(function<Result&(Node&)> lambda);
 	Result& each(function<Result&(const Node&)> lambda) const;
-	Result& each(function<Result&(Iterator)> lambda);
-	Result& each(function<Result&(CIterator)> lambda) const;
 	Result& each(Method& lambda);
 
 	virtual const Class& getTrait() const = 0;
@@ -89,14 +87,20 @@ class Iteratable {
 };
 
 class Container : public Object, public Containable {
-	class Bean : public Instance {
-		This(Container& owner);
+	class Proxy : public Instance {
+		This(Container& origin);
 
-		TWeak<Container> _owner;
-		Container& getOwner();
-		const Container& getOwner() const;
+		TWeak<Container> _origin;
+		Container& getOrigin();
+		const Container& getOrigin() const;
 	};
-
+	
+	template <typename T, typename S>
+	class TProxy : public S
+		T& getOrigin() { return static_cast<T&>(Super::getOrigin()); }
+		const T& getOrigin() const { return static_csat<T&>(Super::getOrigin()); }
+	};
+	
 	Container() : Super(), _trait(Node::getStaticClass()) {}
 	Container(const Class& trait);
 
@@ -136,43 +140,49 @@ class TContainer : public S {
 	}
 	Result& each(function<Result&(T&)> lambda);
 	Result& each(function<Result&(const T&)> lambda) const;
-	Result& each(function<Result&(TIterator<T>)> lambda);
-	Result& each(function<Result&(TCIterator<T>)> lambda) const;
 };
 
 
-class Iteration : public Container::Bean, public Iteratable {
-	Iteration(Container& owner);
+class Iteration : public Container::Proxy, public Iteratable {
+	Iteration(Container& origin);
 
+	//	get() 안에서 toIndex()를 쓰면 무한 루프를 돌게 된다.
 	virtual windex toIndex() const {
+		Container& origin = getOrigin();
+		WRD_IS_NULL(origin, -1);
+		
 		windex n = -1;
-		getOwner().find([&windex](const Node& target)
+		for(CIterator e=origin.getHead(); e; e++)
+		{
+			n++;
+			if(&(*e) == &get())
+				break;
+		}
+
+		return n;
 	}
 };
-template <typename O>
-class TIteration : public Iteration {
-	O& getOwner() { return *_owner; } // Super::getOwner()는 virtual이 아니므로 이게 이 코드가 성립한다.
-	const O& getOwner() const { return *_owner; }
-};
+template <typename T>
+using TIteration = TProxy<T, Iteration>
 
 
 class CIterator : public OccupiableObject, public Iteratable {
 	CIterator(const Iteration& bean)
 
 	TStrong<Iteration> _bean;
-	Iteration& _getBean() {
+	Iteration& _getProxy() {
 		WRD_IS_THIS(T)
 		return *_bean;
 	}
-	const T& _getBean() const {
+	const T& _getProxy() const {
 		WRD_IS_THIS(T)
 		return *_bean;
 	}
 
-	const Container& getOwner() const;
+	const Container& getOrigin() const;
 
 	virtual Result& move(wcount step) {
-		Iteration& bean = getBean();
+		Iteration& bean = getProxy();
 		WRD_IS_NULL(bean)
 
 		return bean.move(step);
@@ -181,7 +191,7 @@ class CIterator : public OccupiableObject, public Iteratable {
 	const Node& operator*() const;
 	const Node* operator->() const;
 	const Node& get() const {
-		Iteration& bean = getBean();
+		Iteration& bean = getProxy();
 		WRD_IS_NULL(bean, Nuller<const Node>::ref)
 
 		return bean.get();
@@ -192,10 +202,10 @@ class CIterator : public OccupiableObject, public Iteratable {
 class Iterator : public CIterator {
 	Node& operator*();
 	Node* operator->();
-	Container& getOwner();
+	Container& getOrigin();
 	Node& get() {
 		WRD_IS_CONST(Nuller<Node>::ref) 
-		Iteration& bean = getBean();
+		Iteration& bean = getProxy();
 		WRD_IS_NULL(bean, Nuller<Node>::ref)
 		
 		return bean.get();
@@ -225,16 +235,16 @@ class Chain : public Container {
 	Containers _conts;
 	friend class Control; // for _conts.
 
-	virtual TStrong<Iteration> _onCreateIteration(Container& owner, windex n) {
+	virtual TStrong<Iteration> _onCreateIteration(Container& origin, windex n) {
 		class ChainIteration : public TIteration<Chain> {
 			....
 		};
-		return new ChainIteration(owner);
+		return new ChainIteration(origin);
 	}
 
-	class Control : public Container::Bean<Control>, public Containable {
-		#define DEFINE_BEAN(RET)				\
-			Containers& origin = _getOrigin();	\
+	class Control : public Container::Proxy, public Containable {
+		#define DEFINE_BEAN(RET)					\
+			Chain& origin = getOriginContainers();	\
 			WRD_IS_NULL(origin, RET)
 
 		virtual Result& set(const Iterator& pos, const Node& it) {
@@ -272,17 +282,23 @@ class Chain : public Container {
 			DEFINE_BEAN(TNuller<Class>::ref)
 			return origin.getTrait();
 		}
-		Containers& _getOrigin() {
-			Chain& chain = getBean().cast<Chain>();
+		Containers& getOriginContainers() {
+			Chain& chain = getOrigin().cast<Chain>();
 			WRD_IS_NULL(chain, TNuller<Containers>::ref)
 
 			return chain._conts;
 		}
-		const Containers& _getOrigin() const {
+		const Containers& getOriginContainers() const {
 			This& unconst = const_cast<This&>(*this);
-			return unconst._getOrigin();
+			return unconst.getOriginContainers();
 		}
 	};
+
+	template <typename T>
+	using TControl = TProxy<T, Control>
+
+
+
 	TStrong<Control> _control;
 	Control& getControl() {
 		if( ! _control)
@@ -290,8 +306,8 @@ class Chain : public Container {
 		return *_control;
 	}
 	//	사용자가 Control를 상속하여 사용할 수 있도록 한다.
-	virtual TStrong<Control> _onCreateControl(Chain& owner) {
-		return new Control(owner);
+	virtual TStrong<Control> _onCreateControl(Chain& origin) {
+		return new Control(origin);
 	}
 
 	virtual Node& get(windex n);
