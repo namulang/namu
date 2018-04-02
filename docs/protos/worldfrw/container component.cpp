@@ -8,7 +8,9 @@ class Containable {
 	virtual Result& set(const Iterator& pos, const Node& it) = 0;
 	Result& set(windex n, const Node& it);
 
-	virtual Node& get(windex n) = 0;
+	//	메소드 은닉을 위하여 virtual 메소드를 private로 만들어 redirection 한다.
+	virtual Node& _get(windex n) = 0;
+	Node& get(windex n) { return _get(n); }
 	const Node& get(windex n) const {
 		This& unconst = const_cast<This&>(this);
 		return unconst;
@@ -57,8 +59,11 @@ class Containable {
 
 	virtual wcount getSize() const = 0;
 
-	virtual Iterator getIterator(windex n) = 0;
-	virtual CIterator getIterator(windex n) const = 0;
+	virtual Iterator _getIterator(windex n) = 0;
+	virtual CIterator _getIterator(windex n) const = 0;
+	Iterator getIterator(windex n) { return _getIterator(n); }
+	CIterator getIterator(windex n) const { return _getIterator(n); }
+
 	Iterator getHead();
 	CIterator getHead() const;
 	Iterator getTail();
@@ -124,18 +129,18 @@ class Container : public Object, public Containable {
 template <typename T, typename S>
 class TContainer : public S {
 	//	Native에서 편의를 위해 제공된다. 모든 메소드는 World invisible 하다.
-	TIterator<T> getTIterator(windex n) {
+	TIterator<T> getIterator(windex n) {
 		return TIterator<T>(_onCreateInteration(*this, n));
 	}
-	TCIterator<T> getTIterator(windex n) const {
+	TCIterator<T> getIterator(windex n) const {
 		return TCIterator<T>(_onCreateInteration(*this, n));
 	}
 	T& operator[](windex n);
-	T& getT(windex n) {
+	T& get(windex n) { // get()이 nonvirtual이기에 여기서 공변이 달라도 된다.
 		return static_cast<T&>(get(n));
 	}
 	const T& operator[](windex n) const;
-	const T& getT(windex n) const {
+	const T& get(windex n) const {
 		return static_cast<T&>(get(n));
 	}
 	Result& each(function<Result&(T&)> lambda);
