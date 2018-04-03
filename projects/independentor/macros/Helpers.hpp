@@ -14,3 +14,9 @@
 //			stringizer:
 #define __NE_MACRO_STRINGIZER(x)	#x
 #define NE_MACRO_STRINGIZER(x)	__NE_MACRO_STRINGIZER(x)
+
+#define NE_COMMA ,
+#define NE_VOID
+#define NE_SPACE NE_VOID NE_VOID
+#define NE_CONSUME_ARGS(...)
+#define NE_UNWRAP(...) __VA_ARGS__
