@@ -28,12 +28,26 @@ public:
 		RET.warn(#VALUE);			\
 		return RET;					\
 	}
-#define WRD_IS_NULL_1(VALUE)	\
+#define WRD_IS_NULL_1(VALUE)		\
 	WRD_IS_NULL_2(VALUE, NullPtr)
 #define WRD_IS_NULL ....
 
-#define WRD_IS_THIS_1(TYPE)		WRD_IS_NULL(*this, Nuller<Type>::ref)
-#define WRD_IS_THIS_0()			WRD_IS_THIS_1(This)
+//	multiple NULL check macro:
+//		if you need to check plenty arguments to be checked null
+//		and return value will be same, you can accomplish it conveniently
+//		with this macro.
+//
+//		usage:
+//			WRD_IS_NULL(arg1, -1)
+//			WRD_IS_NULL(arg2, -1)
+//			WRD_IS_NULL(arg3, -1)
+//				or
+//			WRD_ARE_NULL(-1, arg1, arg2, arg3)
+#define _ARE_NULL(VALUE, RET)		WRD_IS_NULL(VALUE, RET)
+#define WRD_ARE_NULL(RET, ...)		NE_EACH_EXPAND(_ARE_NULL, RET, __VA_ARGS__)
+
+#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL(*this, Nuller<Type>::ref)
+#define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
 #define WRD_IS_THIS ....
 
 #define WRD_IS_CONST(RET)			\
