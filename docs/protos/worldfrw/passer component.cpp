@@ -83,7 +83,6 @@ class Object : public CompositNode {
 
 		return sub.getHead();
 	}
-
 	Iterator getSharedHead() {
 		return _getSubContainerHead(0);
 	}
@@ -107,15 +106,17 @@ class OccupiableObject : public Object {
 
 class Refer : public Node {
 	This(const Class& cls = Node::getStaticClass(), wbool want_const = false);
-	This(Object& it);
-	This(const Object& it);
+	This(Node& it);
+	This(const Node& it);
 	This(const This& it);
+	This(This& it);
 
-	operator==() const;
-	operator!=() const;
-	operator=(const This& it);
-	operator=(Object& it);
-	operator=(const Object& it);
+	wbool operator==() const;
+	wbool operator!=() const;
+	This& operator=(const This& it);
+	This& operator=(This& it);
+	This& operator=(Node& it);
+	This& operator=(const Node& it);
 	Node& operator->();
 	const Node& operator->() const;
 	Node& operator*();
@@ -255,6 +256,11 @@ class TRefer<const T> : public Refer {
 
 typedef TArray<Class> Classes;
 
+//	Method는 Stmt가 될 수 없다:
+//		1. Stmt는 처음에 인풋이 들어가고 나서부터는 execute()라는 단순한 함수만으로도 동작이 되어야 한다.
+//		메소드는 인자를 그때그때받아야 하므로 적합하지 않다.
+//		2. Method가 Stmt라면 블록문 안에 Method가 있을 수도 있어야 한다. 말이 안되지.
+//		3. 모든 Method가 BlockStmt를 가지는 것은 아니다. 오직 ManagedMethod만 BlockStmt를 갖는다.
 class Method : public Source {
 	Classes _params;
 	static const String RUN = "run";
@@ -281,7 +287,7 @@ class Method : public Source {
 			return NotAllow.warn("...").returns<Refer>();
 
 		const This* consted = this;
-		return consted->execute(msg);
+		return consted->run(msg);
 	}
 	Refer run(const Msg& msg) const {
 		if(msg.getName() != RUN)
@@ -342,8 +348,20 @@ class BlockStmt : public Stmt {
 		return Success;
 	}
 };
+//	Interpreting에 의해서 나오게 되는 모든 산물들.
+class Source : public CompositNode {
+	struct SrcPos {
+		int col;
+		int row;
+	};
+	SrcPos _start;
+	SrcPos _end;
+	wcount _index; // index of owning me
+};
 
 
+//	요구조건:
+//		[] execute()시, owner가 없다면 실행해서는 안된다. (= 런타임에 간접적인 로직 변경 방지)t
 class Stmt : public Source, public Executable {};
 
 //	Expression은 invisible 하다.
