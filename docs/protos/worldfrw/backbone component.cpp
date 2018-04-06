@@ -220,37 +220,39 @@ class Node : public ? {
 		WRD_IS_THIS(Node)
 		return getMembers()[n];
 	}
-	virtual wbool isConsumable(const Msg& msg) const { return false; }
-	virtual Refer call(const Msg& msg) { return _call<This>(msg, get()); }
-	virtual Refer call(const Msg& msg) const { return _call<const This>(msg, _getMembers()); }
-	template <typename T, typename S>
-	Refer _call(const Msg& msg, S& members);
-}
-	//	implement this only inside of cpp file
-	template <typaname T, typename S>
-	Refer Node::_call(const Msg& msg, S& members) {
-		WRD_IS_NULL(msg)
-		WRD_IS_NULL(members)
+	Node& get(const String& name) {
+		return _get(false, [&name](Node& e) { return e.getName() == name; });
+	}
+	const Node& get(const String& name) const {
+		This& unconst = const_cast<This&>(*this);
+		return _get(true, [&name](Node& e) { return e.getName() == name; });
+	}
+	virtual Refer call(const Msg& msg) {
+		return _get(false, [&msg](Node& e) { return e.isConsumable(msg); });
+	}
+	virtual Refer call(const Msg& msg) const {
+		return _get(true, [&msg](Node& e) { return e.isConsumable(msg); });
+	}
+	Node& _get(wbool want_const, std::function<wbool(Node&)> tester) {
+		WRD_IS_THIS(Node)
+		WRD_ARE_NULL(TNuller<Node>::ref, msg, members)
 
-		T* found = NULL;
-		if(members.template each<T>([&found, &msg](T& e) {
-			if(e.isConst() != TConstChecker<T>::IS)
-				continue;
-			if( ! e.isConsumable(msg))
-				return Success;
+		Node* found = NULL;
+		if(_getMembers().each<T>([&found, want_const, tester](Node& e) {
+			if(e.isConst() != want_const) return Success;
+			if( ! tester(e)) return Success;
 			if(found)
 				return Duplicated.err(".."); // if ret isn't Success, it means that stop eaching.
 			
 			found = &e;
 			return Success; // means keep eaching.
 		}))
-		{
-			Duplicated.err(".....");
-			return Refer();
-		}
+			return Duplicated.err(".....").returns(TNuller<Node>::ref);
 
-		return found->call(msg);
+		return *found;
 	}
+	virtual wbool isConsumable(const Msg& msg) const { return false; }
+}
 
 
 class CompositNode : public Node {
