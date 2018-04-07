@@ -256,12 +256,16 @@ class TRefer<const T> : public Refer {
 
 typedef TArray<Class> Classes;
 
+typedef TArray<Method> Methods;
 //	Method는 Stmt가 될 수 없다:
 //		1. Stmt는 처음에 인풋이 들어가고 나서부터는 execute()라는 단순한 함수만으로도 동작이 되어야 한다.
 //		메소드는 인자를 그때그때받아야 하므로 적합하지 않다.
 //		2. Method가 Stmt라면 블록문 안에 Method가 있을 수도 있어야 한다. 말이 안되지.
 //		3. 모든 Method가 BlockStmt를 가지는 것은 아니다. 오직 ManagedMethod만 BlockStmt를 갖는다.
 class Method : public Source {
+	virtual Methods& getNestedMethods() { return TNuller<Methods>::ref; }
+	virtual const Methods& getNestedMethods() { return TNuller<const Methods>::ref; }
+
 	Classes _params;
 	static const String RUN = "run";
 	const Classes& getParams() const { 
@@ -323,6 +327,11 @@ class Method : public Source {
 };
 
 class ManagedMethod : public Method {
+	//	NestedMethods only can exists on method on Managed env:
+	Methods _nested_methods;
+	virtual Methods& getNestedMethods() { return _nested_methods; }
+	virtual const Methods& getNestedMethods() { return _nested_methods; }
+
 	BlockStmt _block;
 	virtual Refer _onExecute(const Msg& msg) {
 		// TODO: do something with scope obj.
