@@ -16,7 +16,9 @@ class Containable {
 		return unconst;
 	}
 
-	virtual Result& insert(const Iterator& pos, const Node& it) = 0;
+	virtual Result& insert(const Iterator& pos, Strong it) = 0;
+	Result& insert(const Iterator& pos, const Node& it);
+	Result& insert(windex n, Strong it);
 	Result& insert(windex n, const Node& it);
 	Result& insert(const Iterator& pos, const Iterator& its_start, const Iterator& its_end);
 	Result& insert(windex n, const Iterator& its_start, const Iterator& its_end);
@@ -29,6 +31,7 @@ class Containable {
 		return insert(getIterator(n), args...);
 	}
 	windex push(const Node& it);
+	windex push(Strong it);
 	windex push(const Iterator& its_start, const Iterator& its_end);
 	windex push(<<<iterator from stl>>>)
 	template <typename... Ts>
@@ -36,6 +39,7 @@ class Containable {
 		return insert(getTail(), args...);
 	}
 	Result& enq(const Node& it);
+	Result& enq(Strong it);
 	Result& enq(const Iterator& its_start, const Iterator& its_end);
 	Result& enq(<<<iterator from stl>>>);
 	template <typename... Ts>
@@ -259,7 +263,7 @@ class Chain : public Container {
 
 		virtual Node& get(windex n)
 			
-		virtual Result& insert(const Iterator& pos, const Node& it) {
+		virtual Result& insert(const Iterator& pos, Strong it) {
 			DEFINE_BEAN(nullerr)
 			return origin.insert(pos, it);
 		}
@@ -317,7 +321,7 @@ class Chain : public Container {
 
 	virtual Node& get(windex n);
 	virtual Result& set(const Iterator& pos, const Node& it);
-	virtual Result& insert(const Iterator& pos, const Node& it);
+	virtual Result& insert(const Iterator& pos, Strong it);
 	virtual Result& remove(const Iterator& pos);
 }
 
