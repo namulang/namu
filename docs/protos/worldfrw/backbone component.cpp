@@ -228,10 +228,33 @@ class Node : public ? {
 		return _get(true, [&name](Node& e) { return e.getName() == name; });
 	}
 	virtual Refer call(const Msg& msg) {
-		return _get(false, [&msg](Node& e) { return e.isConsumable(msg); });
+		Strong classs, locals;
+		_precall(classs, locals);
+
+		Refer ret(_get(false, [&msg](Node& e) { return e.isConsumable(msg); }));
+		
+		_postcall(classs, locals);
+		return ret;
+	}
+	void _precall(Strong& classs, Strong& locals) {
+		Chain::Control& con = scope.getControl();
+		classs = con[1]; // 1 means class space on scope.
+		locals = con[2]; // 2 means local space.
+		con.set(1, _getMembers());
+		con.set(2, *Array::create()); // every call() creates temporary local spaces.
+	}
+	void _postcall(Strong& classs, Strong& locals) {
+		Chain::Control& con = scope.getControl();
+		con.set(1, *classs);
+		con.set(2, *locals);
 	}
 	virtual Refer call(const Msg& msg) const {
-		return _get(true, [&msg](Node& e) { return e.isConsumable(msg); });
+		Strong classs, locals;
+		_precall(classs, locals);
+
+		Refer ret(_get(true, [&msg](Node& e) { return e.isConsumable(msg); })); // _get() returns const Node&. so Refer object, ret, is const Refer. its ref.isConst() will return true.
+		_postcall(classs, locals);
+		return ret;
 	}
 	Node& _get(wbool want_const, std::function<wbool(Node&)> tester) {
 		WRD_IS_THIS(Node)
