@@ -67,6 +67,13 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 	TStrong<Array>& getLocalSpace();
 	const TStrong<Array>& getLocalSpace() const;
 
+	Result& setThis(Object& new_this);
+	Node& getThis();
+	const Node& getThis() const;
+	Result& setMe(Method& new_me);
+	Method& getMe();
+	const Method& getMe() const;
+
 	virtual Result& initialize() {
 		release();
 		_locals = TClass<Array>::instantiate();
