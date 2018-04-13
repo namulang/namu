@@ -230,7 +230,7 @@ class Node : public ? {
 	virtual Refer call(const Msg& msg) {
 		Strong classs, locals;
 		_precall(classs, locals);
-
+		
 		Refer ret(_get(false, [&msg](Node& e) { return e.isConsumable(msg); }));
 		
 		_postcall(classs, locals);
@@ -242,6 +242,7 @@ class Node : public ? {
 		locals = con[2]; // 2 means local space.
 		con.set(1, _getMembers());
 		con.set(2, *Array::create()); // every call() creates temporary local spaces.
+		scope.setThis(*this);
 	}
 	void _postcall(Strong& classs, Strong& locals) {
 		Chain::Control& con = scope.getControl();

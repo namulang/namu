@@ -13,22 +13,6 @@ class Object : public CompositNode {
 	Object() : Super() {
 	}
 
-	virtual Refer call(const Msg& msg) {
-		_precall(msg);
-
-		Refer ret = Super::call(msg);
-
-		_postcall(msg);
-		return ret;
-	}
-	virtual Refer call(const Msg& msg) const {
-		_precall(msg);
-
-		Refer ret = Super::call(msg);
-
-		_postcall(msg);
-		return ret;
-	}
 	void _precall(const Msg& msg) const {
 		Object& old = msg.getThis();
 		msg._setThis(*this);
