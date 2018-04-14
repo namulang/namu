@@ -257,16 +257,16 @@ class Method : public Source {
 		return _params;
 	}
 	virtual Refer call(const Msg& msg) {
-		Refer ret = Super::call(msg);
-		if(ret)
-			return ret;
-		return execute(msg);
+		if(msg.getName() == RUN && msg.getArgs().getLength() == 0)
+			return run(msg);
+			
+		return Super::call(msg);
 	}
 	virtual Refer call(const Msg& msg) const {
-		Refer ret = Super::call(msg);
-		if(ret)
-			return ret;
-		return execute(msg);
+		if(msg.getName() == RUN && msg.getArgs().getLength() == 0)
+			return run(msg);
+			
+		return Super::call(msg);
 	}
 	//	execute와 run은 다르다:
 	//		execute는 인자를 받지 않는다. 그래서 여기서는 run이라는 함수로 구분할 수 밖에 없었다.
@@ -278,17 +278,32 @@ class Method : public Source {
 		return consted->run(msg);
 	}
 	Refer run(const Msg& msg) const {
-		if(msg.getName() != RUN)
+		if(	msg.getName() != RUN			||
+			msg.getArgs().getLength() > 0	)
 			return InvalidArg.warn("").returns<Refer>();
 
-		Method& old = msg.getMe();
-		msg._setMe(*this);
+		TStrong<Method> origin;
+		_prerun(origin);
 
 		This* unconst = const_cast<This*>(this);
 		Refer ret = unconst->_onExecute(msg);
 
-		msg._setMe(old);
+		_postrun(origin);
 		return ret;
+	}
+
+	virtual Result& _prerun(TStrong<Method>& origin) const
+	{
+		origin.bind(scope.getMe());
+		return scope.setMe(*this);
+	}
+
+	Result& _postrun(TStrong<Method>& origin) const
+	{
+		scope.setMe(*origin);
+		while(locals.getLength() > boundary)
+			locals.deq();
+		return Success;
 	}
 	virtual Refer _onExecute(const Msg& msg) = 0;
 	virtual wbool isConsumable(const Msg& msg) const {
@@ -310,11 +325,22 @@ class Method : public Source {
 	}
 };
 
+
+
 class ManagedMethod : public Method {
 	//	NestedMethods only can exists on method on Managed env:
 	Methods _nested_methods;
 	virtual Methods& getNestedMethods() { return _nested_methods; }
 	virtual const Methods& getNestedMethods() { return _nested_methods; }
+
+	virtual Result& _prerun(TStrong<Method> origin) const
+	{
+		Array& locals = *scope[2].getLocalSpace();
+		windex boundary = locals.getLength();
+		locals.push(getArgs();
+		locals.push(getNestedMethods());
+		return Super::_prerun(origin);
+	}
 
 	BlockStmt _block;
 	virtual Refer _onExecute(const Msg& msg) {
