@@ -7,7 +7,7 @@ class TWeak : public Thing {
 	TWeak(T* it);
 	TWeak(const This& rhs);
 	This& operator=(const This& rhs) {
-		bind(rhs.get());
+		bind(rhs);
 		//	Super::operator=()를 해서는 안된다.
 		return *this;
 	}
@@ -40,6 +40,9 @@ class TWeak : public Thing {
 		_id = newone.getID();
 		_serial = blk.getSerial();
 		return Success;
+	}
+	Result& bind(This& rhs) {
+		return bind(rhs.get());
 	}
 	Result& bind(T* newone) {
 		return bind(*newone);
