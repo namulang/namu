@@ -78,6 +78,12 @@ class Containable {
 	Result& each(Method& lambda);
 
 	virtual const Class& getTrait() const = 0;
+	
+	//	this method can't be defined at Containable interface class:
+	//		because this is interface class, it can't have metaclass.
+	//		if it can't have metaclass, binder can't distinguish given 
+	//		type parameter T is valid or not. so it can't be binded.
+	virtual TStrong<Containable> deepclone() const = 0;
 };
 
 class Iteratable {
@@ -128,6 +134,17 @@ class Container : public Object, public Containable {
 		return *_trait;
 	}
 	TWeak<const Class> _trait;
+
+	virtual TStrong<Container> deepclone() const {
+		TStrong<Container> ret = getClass().instantiate();
+		each([&ret](const Node& e) {
+			const Container& cont = e.cast<Container>();
+			Strong newone = cont.isExists() ? cont.deepclone() : e.clone
+			return ret.push(newone);
+		})
+
+		return ret;
+	}
 };
 
 template <typename T, typename S>
@@ -300,6 +317,10 @@ class Chain : public Container {
 		const Containers& getOriginContainers() const {
 			This& unconst = const_cast<This&>(*this);
 			return unconst.getOriginContainers();
+		}
+		virtual TStrong<Container> deepclone() const {
+			DEFINE_BEAN(TStrong<Container>)
+			return origin.deepclone();
 		}
 	};
 
