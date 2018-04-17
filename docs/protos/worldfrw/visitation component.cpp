@@ -1,4 +1,10 @@
-class Visitation : public Instance {
+class Visitable {
+    //  주어진 trg이 클래스와 얼마나 호환이 되는지를 나타낸다. 작을 수록 좋다. 이는 trg과 trait가 서로 상속관계에 놓여져 있는 경우 등에 사용된다. 즉, 부모클래스에서 visitation이 있는 경우 자식클래스의 개발자는 자신의 Visitation을 작성하지 않아도 얼추 돌아가게는 할 수 있다는 것이다. 호환이 전혀 안되는 경우는 음수가, 일치하는 경우는 0이 나온다.
+	virtual Result& visit(Thing& it) = 0;
+	virtual Result& visit(const Thing& it) const = 0;
+};
+
+class Visitation : public Instance, public Visitable {
 //  Visitor에 의해서 Bind 되어야 하기때문에 Instance 상속되어야 한다.
 //  사용자들은 Visitation을 그대로 사용해서는 안된다. 
 //  이는 tour, visited, onvisited를 적절한 시점에 cb해야 하는 동작이 TVisitation에 있기 때문이다. 
@@ -12,16 +18,8 @@ class Visitation : public Instance {
     virtual const Class& getTrait() const = 0;
     //  대상이 되는 클래스다.
     virtual Proximity getProximity(const Thing& trg) const = 0;
-    //  주어진 trg이 클래스와 얼마나 호환이 되는지를 나타낸다. 작을 수록 좋다. 이는 trg과 trait가 서로 상속관계에 놓여져 있는 경우 등에 사용된다. 즉, 부모클래스에서 visitation이 있는 경우 자식클래스의 개발자는 자신의 Visitation을 작성하지 않아도 얼추 돌아가게는 할 수 있다는 것이다. 호환이 전혀 안되는 경우는 음수가, 일치하는 경우는 0이 나온다.
-    virtual Result& visit(Thing& trg) const {
-        if(getProximity(trg) < 0) return InvalidParam;
-        return Success;
-    }
-    virtual Result& visit(const Thing& trg) const {
-        return visit(const_cast<Thing&>(trg));
-    }
-    virtual const Classes& getOwnerables() const = 0;
     //  이 Visitation을 initialize할수있는 Visitor들을 개발자가 정해줘야 한다.
+    virtual const Classes& getOwnerables() const = 0;
     friend class Visitor;
     //  _visitor를 위한 것이다.
     Visitor& getVisitor() const { *_visitor; }
@@ -85,7 +83,7 @@ class TVisitation : public S {
     }
 };
 
-class Visitor : public Thing {
+class Visitor : public Thing, public Visitable {
 	Visitor(wbool is_reculsive = true) : Super(), _is_reculsive(is_reculsive) {}
 	//	is_reculsive를 false로 해두면, tour()가 호출되지 않는다.
 	wbool isReculsive() const { return _is_reculsive; }
@@ -109,22 +107,28 @@ class Visitor : public Thing {
         }
         return *ret.found
     }
-    template <typename T>
-    Result& visit(T& trg) const {
-        //  const T&건, const T*건, T*건, TNativeTypeWrapper는 다 처리 가능한 클래스다.
-        TNativeTypeWrapper<T> wrapped(trg);
+	virtual Result& visit(Thing& it) {
         Visitation& v = getVisitation(T::getStaticClass());
         v._setVisitor(*this);
         return v.visit(wrapped);
-    }
+	}
+	//  const T&건, const T*건, T*건, TNativeTypeWrapper는 다 처리 가능한 클래스다.
     template <typename T>
-    This& visit(const T& trg) const {
-        const TNativeTypeWrapper<const T> wrapped(trg);
-        //  Wrapper를 const로 감싸는 이유는 Visitation의 const 함수로 빠지게 하기 위함이다.
+    Result& visit(T& trg) const {
+        TNativeTypeWrapper<T> wrapped(trg);
+		return visit(wrapped);
+    }
+	virtual Result& visit(const Thing& it) {
         Visitation& v = getVisitation(T::getStaticClass());
         v._setVisitor(*this);
         v.visit(wrapped);
-        return *this;
+        return v;
+	}
+	//  Wrapper를 const로 감싸는 이유는 Visitation의 const 함수로 빠지게 하기 위함이다.
+    template <typename T>
+    This& visit(const T& trg) const {
+        const TNativeTypeWrapper<const T> wrapped(trg);
+		return visit(wrapped);
     }
     virtual Result& initialize() {
         if (_visits.length() > 0)
