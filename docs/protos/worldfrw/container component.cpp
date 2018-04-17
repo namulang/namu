@@ -1,10 +1,4 @@
 class Containable {
-	Node& operator[](windex n);
-	const Node& operator[](windex n) const;
-	operator+
-	operator-
-	operator<<
-	operator>>
 	virtual Result& set(const Iterator& pos, const Node& it) = 0;
 	Result& set(windex n, const Node& it);
 
@@ -110,6 +104,13 @@ class Container : public Object, public Containable {
 		const Container& getOrigin() const;
 	};
 	
+	Node& operator[](windex n);
+	const Node& operator[](windex n) const;
+	operator+
+	operator-
+	operator<<
+	operator>>
+
 	template <typename T, typename S>
 	class TProxy : public S
 		T& getOrigin() { return static_cast<T&>(Super::getOrigin()); }
