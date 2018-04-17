@@ -85,6 +85,13 @@ class TVisitation : public S {
 
 class Visitor : public Thing, public Visitable {
 	Visitor(wbool is_reculsive = true) : Super(), _is_reculsive(is_reculsive) {}
+
+	This& operator<<(Thing& it) {
+		visit(it);
+		return *this;
+	}
+	const This& operator<<(const Thing& it);
+
 	//	is_reculsive를 false로 해두면, tour()가 호출되지 않는다.
 	wbool isReculsive() const { return _is_reculsive; }
 	Result& setReculsive(wbool newone) { 
@@ -126,7 +133,7 @@ class Visitor : public Thing, public Visitable {
 	}
 	//  Wrapper를 const로 감싸는 이유는 Visitation의 const 함수로 빠지게 하기 위함이다.
     template <typename T>
-    This& visit(const T& trg) const {
+    Result& visit(const T& trg) const {
         const TNativeTypeWrapper<const T> wrapped(trg);
 		return visit(wrapped);
     }
