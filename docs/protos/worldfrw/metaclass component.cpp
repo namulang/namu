@@ -155,7 +155,7 @@ class TClass : public TMetaClassTypeChooser<T>::Super {
 	}
 	static wbool _is_initialized;
 	virtual wbool isInitialized() const { return _is_initialized; }
-	virtual wbool isOccupiable() const { return getStaticOccupiable(); }
+	virtual wbool isOccupiable() const { return isStaticOccupiable(); }
 	virtual Result& _setInitialized(wbool newone) {
 		_is_initialized = newone;
 		return Success;
