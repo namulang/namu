@@ -95,15 +95,15 @@ class Class : public Source { //	World에 visible해야 하기 때문이다.
 };
 
 //	class for Object class.
-class ObjectClass : public Class {
+class ObjectedClass : public Class {
 	Array _variables; // Managed variables for each "Object" instance.
-	const Array& getVariables() const {
+	virtual const Array& getVariables() const {
 		WRD_IS_THIS(const Array)
 		return _variables;
 	}
 };
 
-template <typename T, typename S = Class>
+template <typename T, typename S>
 class TConcreteClass : public S {
 	virtual wbool isAbstract() const { return false; }
 	virtual TStrong<Object> instantiate() const {
@@ -111,7 +111,7 @@ class TConcreteClass : public S {
 	}
 };
 
-template <typename T, typename S = Class>
+template <typename T, typename S>
 class TInterfaceClass : public S {
 	virtual wbool isAbstract() const { return true; }
 	virtual TStrong<Object> instantiate() const {
@@ -126,7 +126,7 @@ class TMetaClassTypeChooser {
 };
 template <typename T>
 class TMetaClassTypeChooser<T, false, true> {
-	typedef TConcreteClass<T, ObjectClass> Super;
+	typedef TConcreteClass<T, ObjectedClass> Super;
 };
 template <typename T>
 class TMetaClassTypeChooser<T, true, false> {
@@ -134,7 +134,7 @@ class TMetaClassTypeChooser<T, true, false> {
 };
 class <typename T>
 class TMetaClassTypeChooser<T, true, true> {
-	typedef TInterfaceClass<T, ObjectClass> Super;
+	typedef TInterfaceClass<T, ObjectedClass> Super;
 };
 
 template <typename T>
@@ -183,4 +183,19 @@ class TClass : public TMetaClassTypeChooser<T>::Super {
 		static wbool inner = isSub(OccupiableObject::getStaticClass());
 		return inner;
 	}
+};
+
+class Classer : public Manager? {
+	typedef TArray<TStrong<Class> > Classes;
+	Classes _classes;
+	const Classes& getClasses() { // visible
+		WRD_IS_THIS(const Classes&)
+		return _classes;
+	}
+	//	if you want to access class elem with your index, use getClasses()
+	const Class& get(const String& name) { // visible, this is nearly find().
+		WRD_IS_THIS(const Class)
+		
+	}
+	operator
 };
