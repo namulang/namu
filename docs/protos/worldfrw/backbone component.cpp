@@ -236,6 +236,7 @@ class Node : public ? {
 		_postcall(classs, locals);
 		return ret;
 	}
+	virtual wbool isConst() const { return false; }
 	void _precall(Strong& classs, Strong& locals) {
 		Chain::Control& con = scope.getControl();
 		classs = con[1]; // 1 means class space on scope.
