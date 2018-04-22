@@ -199,7 +199,9 @@ namespace {
 //				*) Method는 isConst()의 값에 의해서만 const객체냐 아니냐가 결정된다.
 //				*) Method가 const객체라는 뜻은, const 메소드라는 것이다.
 class Node : public ? {
-	virtual wbool isOccupiable() const { return false;/*default*/ }
+	virtual wbool isOccupiable() const {
+		return getClass()::isOccupiable();
+	}
 	//	get(); 는 공개하지 않는다:
 	//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
 	virtual const Container& getMembers() const = 0; // invisible

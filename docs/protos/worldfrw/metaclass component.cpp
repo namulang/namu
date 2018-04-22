@@ -155,7 +155,7 @@ class TClass : public TMetaClassTypeChooser<T>::Super {
 	}
 	static wbool _is_initialized;
 	virtual wbool isInitialized() const { return _is_initialized; }
-	wbool isOccupiable() const { return getStaticOccupiable(); }
+	virtual wbool isOccupiable() const { return getStaticOccupiable(); }
 	virtual Result& _setInitialized(wbool newone) {
 		_is_initialized = newone;
 		return Success;
@@ -180,7 +180,7 @@ class TClass : public TMetaClassTypeChooser<T>::Super {
 		return inner;
 	}
 	static wbool isStaticOccupiable() {
-		static wbool inner = isSub(OccupiableObject::getStaticClass());
+		static wbool inner = isSub<OccupiableObject>();
 		return inner;
 	}
 };
