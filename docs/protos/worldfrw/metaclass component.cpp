@@ -84,8 +84,8 @@ class Class : public Source { //	World에 visible해야 하기 때문이다.
 		//	TODO:	
 	}
 	virtual Result& _initializeMembers() {
-		_members.release();
-		_members.chain(new Array();
+		_getMembers().release();
+		_getMembers().chain(new Array();
 	}
 	virtual const Array& getVariables() const {
 		WRD_IS_THIS(const Array)
@@ -107,7 +107,7 @@ class ObjectedClass : public Class {
 		if(Super::_initializeMembers())
 			return SuperFail.warn();
 
-		return getMembers().push(T::_onInitializeMembers());
+		return _getMembers().push(T::_onInitializeMembers());
 	}
 };
 

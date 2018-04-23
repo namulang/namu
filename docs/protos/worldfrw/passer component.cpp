@@ -52,7 +52,7 @@ class Object : public CompositNode {
 	virtual Result& _initializeMembers() {
 		WRD_IS_ERR(Super::_initializeMembers())
 	
-		_members.chain(getClass().getVariables().clone());
+		_getMembers().chain(getClass().getVariables().clone());
 		return Success;
 	}
 	Iterator _getSubContainerHead(windex n) {
@@ -85,7 +85,6 @@ class Object : public CompositNode {
 //		상속이란 부모의 모든 특징을 다 물려받는 것이며, int의 자식클래스는 무엇이 되었건 간에 immutable이 될 수 밖에 없다.
 //	실질적인 Occupiable vs Sharable의 동작 차이는 Refer에서 발생한다.
 class OccupiableObject : public Object {
-	virtual wbool isOccupiable() const { return true; }
 };
 
 class Refer : public Node {
@@ -154,7 +153,7 @@ class Refer : public Node {
 		return _bean.get();
 	}
 
-	wbool isConst() const { return _is_const; }
+	virtual wbool isConst() const { return _is_const; }
 	wbool _is_const;
 	TStrong<Node> _bean;
 	const Class& _cls;
@@ -298,7 +297,7 @@ class Method : public Source {
 		return scope.setMe(*this);
 	}
 
-	Result& _postrun(TStrong<Method>& origin) const
+	virtual Result& _postrun(TStrong<Method>& origin) const
 	{
 		scope.setMe(*origin);
 		while(locals.getLength() > boundary)
@@ -330,7 +329,6 @@ class Method : public Source {
 class ManagedMethod : public Method {
 	//	NestedMethods only can exists on method on Managed env:
 	Methods _nested_methods;
-	virtual Methods& getNestedMethods() { return _nested_methods; }
 	virtual const Methods& getNestedMethods() { return _nested_methods; }
 
 	virtual Result& _prerun(TStrong<Method> origin) const
@@ -346,6 +344,40 @@ class ManagedMethod : public Method {
 	virtual Refer _onExecute(const Msg& msg) {
 		// TODO: do something with scope obj.
 		// TODO: and execute blckstmt.
+	}
+};
+
+//	Lambda only exists at managed area:
+class LambdaMethod : public ManagedMethod {
+	//	captures:
+	//		The Captures are captured from the scope when a instance 
+	//		of this class born.
+ 	TStrong<Chain> _captured_classs;
+	Array _captured_locals;
+	const Chain& getCapturedClassSpace() const { return _captured_classs; }
+	const Array& getCapturedLocalSpace() const { return _captured_locals; }
+
+	TStrong<Chain> _classs;
+	TStrong<Array> _locals;
+	virtual Result& _prerun(TStrong<Method> origin) const
+	{
+		Chain::Control& con = scope.getControl();
+		_classs = con[1];
+		_locals = con[2];
+		con.set(1, _captured_classs);
+		con.set(2, _captured_locals);
+		
+		return Super::_prerun(origin);
+	}
+
+	virtual Result& _postrun(TStrong<Method>& origin) const
+	{
+		if(Super::_postrun(origin))
+			return superfail.err();
+
+		Chain::Control& con = scope.getControl();
+		con.set(1, _classs);
+		return con.set(2, _locals);
 	}
 };
 
