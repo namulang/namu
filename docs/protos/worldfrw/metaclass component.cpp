@@ -95,11 +95,19 @@ class Class : public Source { //	World에 visible해야 하기 때문이다.
 };
 
 //	class for Object class.
+template <typename T>
 class ObjectedClass : public Class {
 	Array _variables; // Managed variables for each "Object" instance.
 	virtual const Array& getVariables() const {
 		WRD_IS_THIS(const Array)
 		return _variables;
+	}
+
+	virtual Result& _initializeMembers() {
+		if(Super::_initializeMembers())
+			return SuperFail.warn();
+
+		return getMembers().push(T::_onInitializeMembers());
 	}
 };
 
@@ -126,7 +134,7 @@ class TMetaClassTypeChooser {
 };
 template <typename T>
 class TMetaClassTypeChooser<T, false, true> {
-	typedef TConcreteClass<T, ObjectedClass> Super;
+	typedef TConcreteClass<T, ObjectedClass<T> > Super;
 };
 template <typename T>
 class TMetaClassTypeChooser<T, true, false> {
@@ -134,7 +142,7 @@ class TMetaClassTypeChooser<T, true, false> {
 };
 class <typename T>
 class TMetaClassTypeChooser<T, true, true> {
-	typedef TInterfaceClass<T, ObjectedClass> Super;
+	typedef TInterfaceClass<T, ObjectedClass<T> > Super;
 };
 
 template <typename T>
