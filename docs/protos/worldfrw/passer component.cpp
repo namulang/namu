@@ -282,22 +282,24 @@ class Method : public Source {
 			return InvalidArg.warn("").returns<Refer>();
 
 		TStrong<Method> origin;
-		_prerun(origin);
+		windex boundary = 0;
+		_prerun(origin, boundary);
 
 		This* unconst = const_cast<This*>(this);
 		Refer ret = unconst->_onExecute(msg);
 
-		_postrun(origin);
+		_postrun(origin, boundary);
 		return ret;
 	}
 
-	virtual Result& _prerun(TStrong<Method>& origin) const
+	virtual Result& _prerun(TStrong<Method>& origin, int& boundary) const
 	{
+		boundary = locals.getLength();
 		origin.bind(scope.getMe());
 		return scope.setMe(*this);
 	}
 
-	virtual Result& _postrun(TStrong<Method>& origin) const
+	virtual Result& _postrun(TStrong<Method>& origin, int boundary) const
 	{
 		scope.setMe(*origin);
 		while(locals.getLength() > boundary)
@@ -331,13 +333,13 @@ class ManagedMethod : public Method {
 	Methods _nested_methods;
 	virtual const Methods& getNestedMethods() { return _nested_methods; }
 
-	virtual Result& _prerun(TStrong<Method> origin) const
+	virtual Result& _prerun(TStrong<Method> origin, windex& boundary) const
 	{
 		Array& locals = *scope[2].getLocalSpace();
 		windex boundary = locals.getLength();
 		locals.push(getArgs();
 		locals.push(getNestedMethods());
-		return Super::_prerun(origin);
+		return Super::_prerun(origin, boundary);
 	}
 
 	BlockStmt _block;
