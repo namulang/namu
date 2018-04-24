@@ -60,12 +60,12 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 	const Array& getGlobalSpace() const;
 
 	TStrong<Chain> _classs; // class space
-	TStrong<Chain>& getClassSpace();
-	const TStrong<Chain>& getClassSpace() const;
+	Chain& getClassSpace();
+	const Chain& getClassSpace() const;
 
 	TStrong<Array> _locals;
-	TStrong<Array>& getLocalSpace();
-	const TStrong<Array>& getLocalSpace() const;
+	Array& getLocalSpace();
+	const Array& getLocalSpace() const;
 
 	Result& setThis(Object& new_this);
 	Node& getThis();
