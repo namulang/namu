@@ -1,6 +1,9 @@
 class Executable {
 	virtual Result& execute() const = 0;
 };
+class Runnable {
+	virtual Result& run(const Msg& msg) const = 0;
+};
 
 //	Object는 Members를 가져야 하는데, 여러가지를 고려해야만 한다.
 //		1. Class에 속한것(Method + static variable)과 객체에 속한것을 구분해야 한다
@@ -189,6 +192,7 @@ template <typename T>
 class TRefer : public Refer {
 	This() : Super(false) {}
 	This(T& bean);
+
 	This(const T& bean);
 	This(const This& it);
 
@@ -237,6 +241,38 @@ class TRefer<const T> : public Refer {
 	con4 = con3 // ok
 	con4.isExist() // false
 
+class MethodDelegator : public TRefer<Method>, public Runnable {
+	TStrong<Object> _this;
+	Object& getThis() { return *this; }
+	const Object& getThis() const { return *this; }
+	virtual Result& run(const Msg& msg) {
+		if( ! isBind())
+			return NotBind.warn()
+
+		TStrong<Chain> classs;
+		_prerun(classs);
+		Result& res = get().run(msg);
+
+		_postrun(classs);
+		return res;
+	}
+	virtual Result& _prerun(TStrong<Chain>& classs) {
+		if( ! _this)
+			return Skip.info();
+
+		Chain::Control& con = scope.getControl();
+		classs = con.getClassSpace();
+		return con.set(1, _this->getMembers());
+	}
+	virtual Result& _postrun(TStrong<Chain>& classs) {
+		if( ! _this)
+			return Skip.info();
+
+		Chain::Control& con = scope.getControl();
+		return con.set(1, *classs);
+	}
+};
+
 typedef TArray<Class> Classes;
 
 typedef TArray<Method> Methods;
@@ -245,7 +281,7 @@ typedef TArray<Method> Methods;
 //		메소드는 인자를 그때그때받아야 하므로 적합하지 않다.
 //		2. Method가 Stmt라면 블록문 안에 Method가 있을 수도 있어야 한다. 말이 안되지.
 //		3. 모든 Method가 BlockStmt를 가지는 것은 아니다. 오직 ManagedMethod만 BlockStmt를 갖는다.
-class Method : public Source {
+class Method : public Source, public Runnable {
 	virtual Methods& getNestedMethods() { return TNuller<Methods>::ref; }
 	virtual const Methods& getNestedMethods() { return TNuller<const Methods>::ref; }
 
@@ -269,14 +305,14 @@ class Method : public Source {
 	}
 	//	execute와 run은 다르다:
 	//		execute는 인자를 받지 않는다. 그래서 여기서는 run이라는 함수로 구분할 수 밖에 없었다.
-	Refer run(const Msg& msg) {
+	virtual Refer run(const Msg& msg) {
 		if(isConst()) // const 방어.
 			return NotAllow.warn("...").returns<Refer>();
 
 		const This* consted = this;
 		return consted->run(msg);
 	}
-	Refer run(const Msg& msg) const {
+	virtual Refer run(const Msg& msg) const {
 		if(	msg.getName() != RUN			||
 			msg.getArgs().getLength() > 0	)
 			return InvalidArg.warn("").returns<Refer>();
