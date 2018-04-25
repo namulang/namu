@@ -388,34 +388,40 @@ class ManagedMethod : public Method {
 //	Lambda only exists at managed area:
 class LambdaMethod : public ManagedMethod {
 	//	captures:
-	//		The Captures are captured from the scope when a instance 
+	//		The Captures are captured from the localspace when a instance 
 	//		of this class born.
- 	TStrong<Chain> _captured_classs;
-	Array _captured_locals;
-	const Chain& getCapturedClassSpace() const { return _captured_classs; }
-	const Array& getCapturedLocalSpace() const { return _captured_locals; }
+	//
+	//	it doens't need to capture class space:
+	//		if we could call lambda method, it means that we are in one 
+	//		of two situation.	
+	//			1) call lambda method been refered by MethodDelegator.
+	//				MethodDelegator captured class space and switch it 
+	//				before call to what it captures.
+	//				so in this case, lambda doesn't need to capture class
+	//				space.
+	//
+	//			2) call lambda directly.
+	//				lambda's definition is only visible at the method which
+	//				contains it.
+	//				and if we are in a method, we have already class space 
+	//				which we should have.
+	//				so in this case, we don't need to capture class space 
+	//				either.
+	This();
+	This(const Array& captures);
 
-	TStrong<Chain> _classs;
-	TStrong<Array> _locals;
-	virtual Result& _prerun(TStrong<Method> origin) const
-	{
+	mutable Array _captures; // we should have perfect cloned array which contains each shallow copied instance from the original.
+	const Array& getCaptures() const { return _captures; }
+
+	virtual Result& run(const Msg& msg) const {
 		Chain::Control& con = scope.getControl();
-		_classs = con[1];
-		_locals = con[2];
-		con.set(1, _captured_classs);
-		con.set(2, _captured_locals);
-		
-		return Super::_prerun(origin);
-	}
+		TStrong<Array> locals = con[2];
+		con.set(2, _captures);
 
-	virtual Result& _postrun(TStrong<Method>& origin) const
-	{
-		if(Super::_postrun(origin))
-			return superfail.err();
+		Result& res = Super::run(msg);
 
-		Chain::Control& con = scope.getControl();
-		con.set(1, _classs);
-		return con.set(2, _locals);
+		con.set(2, *locals);
+		return res;
 	}
 };
 
