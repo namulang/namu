@@ -318,11 +318,14 @@ class Method : public Source, public Runnable {
 			return Refer();
 		}
 
-		return _run(msg);
-	}
-	virtual Refer _run(const Msg& msg) const {
 		Array& locals = scope.getControl().getLocalSpace();
 		windex boundary = locals.getLength();
+		Refer res = _run(msg);
+		while(locals.getLength() > boundary)
+			locals.deq();
+		return res;
+	}
+	virtual Refer _run(const Msg& msg) const {
 		TStrong<Method> origin(scope.getMe());
 		scope.setMe(*this);
 
@@ -330,8 +333,6 @@ class Method : public Source, public Runnable {
 		Refer ret = unconst->_onExecute(msg);
 
 		scope.setMe(*origin);
-		while(locals.getLength() > boundary)
-			locals.deq();
 		return ret;
 	}
 	wbool isRunnable(const Msg& msg) const {
@@ -366,13 +367,12 @@ class ManagedMethod : public Method {
 	Methods _nested_methods;
 	virtual const Methods& getNestedMethods() { return _nested_methods; }
 
-	virtual Result& _prerun(TStrong<Method> origin, windex& boundary) const
+	virtual Result& _run(const Msg& msg) const
 	{
 		Array& locals = *scope[2].getLocalSpace();
-		windex boundary = locals.getLength();
 		locals.push(getArgs();
 		locals.push(getNestedMethods());
-		return Super::_prerun(origin, boundary);
+		return Super::_run(msg);
 	}
 
 	BlockStmt _block;
