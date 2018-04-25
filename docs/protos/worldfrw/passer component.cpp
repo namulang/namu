@@ -23,6 +23,20 @@ class Object : public CompositNode {
 	void _postcall(const Msg& msg) const {
 		msg._setThis(old);
 	}
+	virtual Refer call(const Msg& msg) {
+		_precall(msg);
+		Refer ret = Super::call(msg);
+
+		_postcall(msg);
+		return ret;
+	}
+	virtual Refer call(const Msg& msg) const {
+		_precall(msg);
+		Refer ret = Super::call(msg);
+
+		_postcall(msg);
+		return ret;
+	}
 	virtual wbool isConsumable(const Msg& msg) const {
 		return	msg.getArgs().getLength() <= 0	&&
 				msg.getName() == getName();
