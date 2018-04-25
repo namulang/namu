@@ -312,36 +312,33 @@ class Method : public Source, public Runnable {
 		const This* consted = this;
 		return consted->run(msg);
 	}
-	virtual Refer run(const Msg& msg) const {
-		if(	msg.getName() != RUN			||
-			msg.getArgs().getLength() > 0	)
-			return InvalidArg.warn("").returns<Refer>();
+	virtual Refer run(const Msg& msg) {
+		if( ! isRunnable(msg)) {
+			WrongParam.warn()
+			return Refer();
+		}
 
-		TStrong<Method> origin;
-		windex boundary = 0;
-		_prerun(origin, boundary);
+		return _run(msg);
+	}
+	virtual Refer _run(const Msg& msg) const {
+		Array& locals = scope.getControl().getLocalSpace();
+		windex boundary = locals.getLength();
+		TStrong<Method> origin(scope.getMe());
+		scope.setMe(*this);
 
 		This* unconst = const_cast<This*>(this);
 		Refer ret = unconst->_onExecute(msg);
 
-		_postrun(origin, boundary);
-		return ret;
-	}
-
-	virtual Result& _prerun(TStrong<Method>& origin, int& boundary) const
-	{
-		boundary = locals.getLength();
-		origin.bind(scope.getMe());
-		return scope.setMe(*this);
-	}
-
-	virtual Result& _postrun(TStrong<Method>& origin, int boundary) const
-	{
 		scope.setMe(*origin);
 		while(locals.getLength() > boundary)
 			locals.deq();
-		return Success;
+		return ret;
 	}
+	wbool isRunnable(const Msg& msg) const {
+		return 	msg.getName() != RUN ||
+				msg.getArgs().getLength() > 0;
+	}
+
 	virtual Refer _onExecute(const Msg& msg) = 0;
 	virtual wbool isConsumable(const Msg& msg) const {
 		Args& args = msg.getArgs();
