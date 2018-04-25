@@ -320,12 +320,12 @@ class Method : public Source, public Runnable {
 
 		Array& locals = scope.getControl().getLocalSpace();
 		windex boundary = locals.getLength();
-		Refer res = _run(msg);
+		Refer res = _stackCall(msg);
 		while(locals.getLength() > boundary)
 			locals.deq();
 		return res;
 	}
-	virtual Refer _run(const Msg& msg) const {
+	virtual Refer _stackCall(const Msg& msg) const {
 		TStrong<Method> origin(scope.getMe());
 		scope.setMe(*this);
 
@@ -367,12 +367,12 @@ class ManagedMethod : public Method {
 	Methods _nested_methods;
 	virtual const Methods& getNestedMethods() { return _nested_methods; }
 
-	virtual Result& _run(const Msg& msg) const
+	virtual Result& _stackCall(const Msg& msg) const
 	{
 		Array& locals = *scope[2].getLocalSpace();
 		locals.push(getArgs();
 		locals.push(getNestedMethods());
-		return Super::_run(msg);
+		return Super::_stackCall(msg);
 	}
 
 	BlockStmt _block;
