@@ -256,34 +256,24 @@ class TRefer<const T> : public Refer {
 	con4.isExist() // false
 
 class MethodDelegator : public TRefer<Method>, public Runnable {
-	TStrong<Object> _this;
+	mutable TStrong<Object> _this;
 	Object& getThis() { return *this; }
 	const Object& getThis() const { return *this; }
-	virtual Result& run(const Msg& msg) {
+	virtual Result& run(const Msg& msg) const {
 		if( ! isBind())
 			return NotBind.warn()
 
-		TStrong<Chain> classs;
-		_prerun(classs);
+		if( ! _this)
+			return get().run(msg);
+
+		Chain::Control& con = scope.getControl();
+		TStrong<Chain> classs = con.getClassSpace();
+		con.set(1, _this->getMembers());
+
 		Result& res = get().run(msg);
 
-		_postrun(classs);
+		con.set(1, *classs);
 		return res;
-	}
-	virtual Result& _prerun(TStrong<Chain>& classs) {
-		if( ! _this)
-			return Skip.info();
-
-		Chain::Control& con = scope.getControl();
-		classs = con.getClassSpace();
-		return con.set(1, _this->getMembers());
-	}
-	virtual Result& _postrun(TStrong<Chain>& classs) {
-		if( ! _this)
-			return Skip.info();
-
-		Chain::Control& con = scope.getControl();
-		return con.set(1, *classs);
 	}
 };
 
