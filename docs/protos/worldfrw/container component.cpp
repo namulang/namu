@@ -1,6 +1,10 @@
+//	Container:
+//		All contianers in Worldlang are binders to Object, unlikely natvie C++ template container. (ex, vector<T>)
 class Containable {
-	virtual Result& set(const Iterator& pos, const Node& it) = 0;
-	Result& set(windex n, const Node& it);
+	virtual Result& set(const Iterator& pos, Node& to_bind) = 0;
+	Result& set(const Iterator& pos, const Node& to_clone);
+	Result& set(windex n, const Node& to_clone);
+	Result& set(windex n, Node& to_bind);
 
 	//	메소드 은닉을 위하여 virtual 메소드를 private로 만들어 redirection 한다.
 	virtual Node& _get(windex n) = 0;
@@ -10,10 +14,10 @@ class Containable {
 		return unconst;
 	}
 
-	virtual Result& insert(const Iterator& pos, Strong it) = 0;
-	Result& insert(const Iterator& pos, const Node& it);
-	Result& insert(windex n, Strong it);
-	Result& insert(windex n, const Node& it);
+	virtual Result& insert(const Iterator& pos, Node& to_bind) = 0;
+	Result& insert(const Iterator& pos, const Node& to_clone);
+	Result& insert(windex n, Node& to_bind);
+	Result& insert(windex n, const Node& to_clone);
 	Result& insert(const Iterator& pos, const Iterator& its_start, const Iterator& its_end);
 	Result& insert(windex n, const Iterator& its_start, const Iterator& its_end);
 	Result& insert(const Iterator& pos, <<<iterator from stl>>>);
@@ -24,16 +28,16 @@ class Containable {
 	Result& insert(windex n, Ts... args) {
 		return insert(getIterator(n), args...);
 	}
-	windex push(const Node& it);
-	windex push(Strong it);
+	windex push(Node& to_bind);
+	windex push(const Node& to_clone);
 	windex push(const Iterator& its_start, const Iterator& its_end);
 	windex push(<<<iterator from stl>>>)
 	template <typename... Ts>
 	windex push(Ts... args) {
 		return insert(getTail(), args...);
 	}
-	Result& enq(const Node& it);
-	Result& enq(Strong it);
+	Result& enq(Node& to_bind);
+	Result& enq(const Node& to_clone);
 	Result& enq(const Iterator& its_start, const Iterator& its_end);
 	Result& enq(<<<iterator from stl>>>);
 	template <typename... Ts>
