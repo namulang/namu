@@ -104,7 +104,19 @@ class Instance : Thing {
 		Nexus::get().getInstancer().stamp(*this);
 	}
 
-	virtual TStrong<?> clone() const;
+	//	why was virtual copyconstructor defined with private accessor?:
+	//		WorldFrx basically is based on class Node.
+	//		So, if all classes returns TStrong<Instance> as a returntype of clone()
+	//		user may needs to cast it to Node. inconvenient.
+	//		however, if we declared this as a private member-function and 
+	//		define clone() non-virtual function as public, we can return Node
+	//		as a return-type of clone if it's subclass of Node.
+	virtual TStrong<Instance> _clone() const {
+		return TStrong<Instance>(new This(*this));
+	}
+	TStrong<Instance> clone() const {
+		return _clone();
+	}
 	ID getID() const { return _id; }
 	wcount getSerial() const { 
 		Nexus::get().getInstancer()[_id].getSerial();
@@ -120,7 +132,11 @@ class Instance : Thing {
 		return 	mmap.getStartAddress() <= this 	&&
 				this << mmap.getEndAddress()	;
 	}
-	Strong toStrong() { return Strong(*this); }
+	Strong toStrong() { 
+		if (isHeap()
+			return Strong(*this);
+		return clone();
+	}
 	CStrong toStrong() const { return CStrong(*this); }
 	Weak toWeak() { return Weak(*this); }
 	CWeak toWeak() const { return CWeak(*this); }
@@ -199,6 +215,9 @@ namespace {
 //				*) Method는 isConst()의 값에 의해서만 const객체냐 아니냐가 결정된다.
 //				*) Method가 const객체라는 뜻은, const 메소드라는 것이다.
 class Node : public ? {
+	Strong clone() const {
+		return _clone();
+	}
 	virtual Result& _onInitializeMembers(Container& tray) { return Success; }
 	virtual wbool isOccupiable() const {
 		return getClass()::isOccupiable();
