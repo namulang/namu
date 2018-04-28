@@ -409,10 +409,19 @@ class LambdaMethod : public ManagedMethod {
 	//				so in this case, we don't need to capture class space 
 	//				either.
 	This();
-	This(const Array& captures);
 
 	mutable Array _captures; // we should have perfect cloned array which contains each shallow copied instance from the original.
 	const Array& getCaptures() const { return _captures; }
+
+	virtual Refer call(const Msg& msg) {
+		_captureLocals();
+		return Super::call(msg);
+	}
+
+	virtual Refer call(const Msg& msg) const {
+		_captureLocals();
+		return Super::call(msg);
+	}
 
 	virtual Result& run(const Msg& msg) const {
 		Chain::Control& con = scope.getControl();
@@ -423,6 +432,12 @@ class LambdaMethod : public ManagedMethod {
 
 		con.set(2, *locals);
 		return res;
+	}
+
+	//	capture current scope
+	Result& _captureLocals() {
+		_captures = scope.getLocalSpace();
+		return success;
 	}
 };
 
