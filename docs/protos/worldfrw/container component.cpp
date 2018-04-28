@@ -274,43 +274,43 @@ class Chain : public Container {
 	}
 
 	class Control : public Container::Proxy, public Containable {
-		#define DEFINE_BEAN(RET)					\
+		#define _DEFINE_BEAN(RET)					\
 			Chain& origin = getOriginContainers();	\
 			WRD_IS_NULL(origin, RET)
 
 		virtual Result& set(const Iterator& pos, const Node& it) {
-			DEFINE_BEAN(nullerr)
+			_DEFINE_BEAN(nullerr)
 			return origin.set(pos, it);
 		}
 
 		virtual Node& get(windex n)
 			
 		virtual Result& insert(const Iterator& pos, Strong it) {
-			DEFINE_BEAN(nullerr)
+			_DEFINE_BEAN(nullerr)
 			return origin.insert(pos, it);
 		}
 		virtual Result& remove(const Iterator& pos) {
-			DEFINE_BEAN(nullerr)
+			_DEFINE_BEAN(nullerr)
 			return origin.remove(pos);
 		}
 		virtual TStrong<Iteration> _onCreateIteration(windex n) {
-			DEFINE_BEAN(TStrong<Iteration>())
+			_DEFINE_BEAN(TStrong<Iteration>())
 			return origin._onCreateIteration(n);
 		}
 		virtual wcount getSize() const {
-			DEFINE_BEAN(0)
+			_DEFINE_BEAN(0)
 			return origin.getSize();
 		}
 		virtual Iterator getIterator(windex n) {
-			DEFINE_BEAN(Iterator)
+			_DEFINE_BEAN(Iterator)
 			return origin.getIterator(n);
 		}
 		virtual CIterator getIterator(windex n) const {
-			DEFINE_BEAN(CIterator)
+			_DEFINE_BEAN(CIterator)
 			return origin.getIterator(n);
 		}
 		virtual const Class& getTrait() const {
-			DEFINE_BEAN(TNuller<Class>::ref)
+			_DEFINE_BEAN(TNuller<Class>::ref)
 			return origin.getTrait();
 		}
 		Containers& getOriginContainers() {
@@ -324,9 +324,10 @@ class Chain : public Container {
 			return unconst.getOriginContainers();
 		}
 		virtual TStrong<Container> deepclone() const {
-			DEFINE_BEAN(TStrong<Container>)
+			_DEFINE_BEAN(TStrong<Container>)
 			return origin.deepclone();
 		}
+	#undef _DEFINE_BEAN
 	};
 
 	template <typename T>
