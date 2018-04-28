@@ -339,6 +339,10 @@ class Chain : public Container {
 			_control = _onCreateControl(*this);
 		return *_control;
 	}
+	const Control& getControl() const {
+		This* unconst = const_cast<This*>(this);
+		return unconst->getControl();
+	}
 	//	사용자가 Control를 상속하여 사용할 수 있도록 한다.
 	virtual TStrong<Control> _onCreateControl(Chain& origin) {
 		return new Control(origin);
