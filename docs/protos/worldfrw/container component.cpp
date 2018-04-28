@@ -264,7 +264,7 @@ class Chain : public Container {
 	//vector<TStrong<Container> > _containers;
 	typedef TArray<Container> Containers;
 	Containers _conts;
-	friend class Control; // for _conts.
+	friend class Control; // for _conts and Control class.
 
 	virtual TStrong<Iteration> _onCreateIteration(Container& origin, windex n) {
 		class ChainIteration : public TIteration<Chain> {
@@ -278,12 +278,15 @@ class Chain : public Container {
 			Chain& origin = getOriginContainers();	\
 			WRD_IS_NULL(origin, RET)
 
-		virtual Result& set(const Iterator& pos, const Node& it) {
+		virtual Result& set(const Iterator& pos, Node& it) {
 			_DEFINE_BEAN(nullerr)
 			return origin.set(pos, it);
 		}
 
-		virtual Node& get(windex n)
+		virtual Node& _get(windex n) {
+			_DEFINE_BEAN(nullerr)
+			return origin._get(n);
+		}
 			
 		virtual Result& insert(const Iterator& pos, Strong it) {
 			_DEFINE_BEAN(nullerr)
@@ -327,7 +330,7 @@ class Chain : public Container {
 			_DEFINE_BEAN(TStrong<Container>)
 			return origin.deepclone();
 		}
-	#undef _DEFINE_BEAN
+		#undef _DEFINE_BEAN
 	};
 
 	template <typename T>
