@@ -333,11 +333,6 @@ class Chain : public Container {
 		#undef _DEFINE_BEAN
 	};
 
-	template <typename T>
-	using TControl = TProxy<T, Control>
-
-
-
 	TStrong<Control> _control;
 	Control& getControl() {
 		if( ! _control)
