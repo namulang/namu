@@ -1,6 +1,30 @@
 //	Container:
 //		All contianers in Worldlang are binders to Object, unlikely natvie C++ template container. (ex, vector<T>)
 class Containable {
+	//	we can gives container local variable:
+	//		if we give local variable to container, Array().toStrong() 
+	//		func will return heap cloned instance.
+	//		if we give binded heap variable, Array().toStrong() func 
+	//		will return shallow copied Strong binder.
+	//
+	//		example:
+	//			Array arr, arr2;
+	//			arr.push(Integer(3));
+	//			arr2.push(Integer(3));
+	//			arr[0] = 5
+	//			Strong inted = Integer(5).toStrong();
+	//			// same as 'Strong inted(new Integer(5));'
+	//			Integer& int1 = *inted;
+	//			arr.push(int1);
+	//			arr2.push(int1);
+	//			arr[1] = 10;
+	//
+	//			for(int n=0; n < 2 ;n++)
+	//				cout << "arr[" << n << "] = " << arr[n] << ", arr[" << n << "] = " << arr2[n] << "\n";
+	//
+	//			output:
+	//				arr[0] = 5, arr2[0] = 3
+	//				arr[1] = 10, arr2[1] = 10
 	virtual Result& set(const Iterator& pos, Node& to_bind) = 0;
 	Result& set(const Iterator& pos, const Node& to_clone);
 	Result& set(windex n, const Node& to_clone);
