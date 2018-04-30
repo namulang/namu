@@ -15,6 +15,7 @@ class TWeak : public Thing {
 		bind(newone);
 		return *this;
 	}
+	This& operator=(T* newone);
 	wbool operator==(const This& rhs) const { 
 		return &get()  == &rhs.get();
 	}
