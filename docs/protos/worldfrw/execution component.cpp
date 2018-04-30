@@ -55,33 +55,44 @@ class InstanceBlock : public Thing {
 //				//	그러나 space 자체에 무언가를 추가하는 것은 권장된다.
 //				scope.enq(...); // FIFO로 항상 구성되어야 하므로 push가 아니라 enq를 해야한다.
 class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 된다. mappingtable에 등록하지 않는다.
-	Array _globals; // global space
-	Array& getGlobalSpace();
-	const Array& getGlobalSpace() const;
+	enum SpaceIndex {
+		SPACE_START = 0,
+		GLOBAL = SPACE_START,
+		CLASS,
+		LOCAL,
+		SPACE_END = LOCAL
+	};
+	class Spaces : public Chain::Control {
+		Array& getGlobals() { return get(GLOBAL);
+		const Array& getGlobals() const { return get(GLOBAL); }
+		Result& setGlobals(Array& newone) { return set(GLOBAL, newone); }
 
-	TStrong<Chain> _classs; // class space
-	Chain& getClassSpace();
-	const Chain& getClassSpace() const;
+		Chain& getClasss() { return get(CLASS); } // getClassSpace()
+		const Chain& getClasss() const { return get(CLASS); }
+		Result& setClasss(Chain& newone) { return set(CLASS, newone); }
 
-	TStrong<Array> _locals;
-	Array& getLocalSpace();
-	const Array& getLocalSpace() const;
+		Array& getLocals() { return get(LOCAL); }
+		const Array& getLocals() const { return get(LOCAL); }
+		Result& setLocals(Array& newone) { return set(LOCAL, newone); }
+	};
+	Spaces& getControl() { return Super::getControl().cast<Spaces>(); }
+	const Spaces& getControl() const { return Super::getControl().cast<Spaces>(); }
 
-	Result& setThis(Object& new_this);
+	Result& setThis(Object& newone);
 	Node& getThis();
 	const Node& getThis() const;
-	Result& setMe(Method& new_me);
+	Result& setMe(Method& newone);
 	Method& getMe();
 	const Method& getMe() const;
 
 	virtual Result& initialize() {
-		release();
-		_locals = TClass<Array>::instantiate();
+		if(Super::initialize()) // release().
+			return supererr.warn();
 
 		Chain::Control& con = getControl();
-		con.push(_globals);
-		con.push(*_classs);
-		con.push(*_locals);	//	elements는 절대 remove 되어서는 안된다. 
+		con.push(Array());
+		con.push(Chain());
+		con.push(Array());	//	elements는 절대 remove 되어서는 안된다. 
 							//	Scope의 모든 함수는 항상 원소3개가 있다고 가정한다.
 		return Success;
 	}

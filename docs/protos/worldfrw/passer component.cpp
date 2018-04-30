@@ -329,6 +329,7 @@ class Method : public Source, public Runnable {
 			locals.deq();
 		return res;
 	}
+	//	ready CallStack:
 	virtual Refer _stackCall(const Msg& msg) const {
 		TStrong<Method> origin(scope.getMe());
 		scope.setMe(*this);
