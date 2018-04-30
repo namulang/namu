@@ -32,10 +32,13 @@ class Containable {
 
 	//	메소드 은닉을 위하여 virtual 메소드를 private로 만들어 redirection 한다.
 	virtual Node& _get(windex n) = 0;
-	Node& get(windex n) { return _get(n); }
+	Node& get(windex n) {
+		WRD_IS_THIS(Node)
+		return _get(n);
+	}
 	const Node& get(windex n) const {
 		This& unconst = const_cast<This&>(this);
-		return unconst;
+		return unconst.get(n);
 	}
 
 	virtual Result& insert(const Iterator& pos, Node& to_bind) = 0;
