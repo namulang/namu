@@ -256,22 +256,46 @@ class TRefer<const T> : public Refer {
 	con4.isExist() // false
 
 class MethodDelegator : public TRefer<Method>, public Runnable {
+	//	captures:
+	//		The Captures are captured from the localspace and classspace 
+	//		when a instance of this class born.
 	mutable TStrong<Object> _this;
+	mutable Array _captures; // we should have perfect cloned array which contains each shallow copied instance from the original.
 	Object& getThis() { return *this; }
 	const Object& getThis() const { return *this; }
-	virtual Result& run(const Msg& msg) const {
-		if( ! isBind())
-			return NotBind.warn()
+	const Array& getCaptures() const {
+		WRD_IS_THIS(const Array)
+		return _captures;
+	}
 
-		if( ! _this)
-			return get().run(msg);
+	virtual Refer call(const Msg& msg) {
+		_captureLocals();
+		return Super::call(msg);
+	}
+
+	virtual Refer call(const Msg& msg) const {
+		_captureLocals();
+		return Super::call(msg);
+	}
+
+	//	capture current scope
+	Result& _captureLocals() {
+		_captures = scope.getControl().getLocals();
+		return success;
+	}
+	virtual Result& run(const Msg& msg) const {
+		if( ! isBind()) return notbind.warn()
+		if( ! _this) return get().run(msg);
 
 		Scope::Spaces& spaces = scope.getControl();
+		TStrong<Array> locals = spaces.getLocals();
 		TStrong<Chain> classs = spaces.getClasss();
-		con.setClasss(_this->getMembers());
+		spaces.setLocals(_captures);
+		sapces.setClasss(_this->getMembers());
 
 		Result& res = get().run(msg);
 
+		spaces.setLocals(*locals);
 		spaces.setClasss(*classs);
 		return res;
 	}
@@ -286,9 +310,6 @@ typedef TArray<Method> Methods;
 //		2. Method가 Stmt라면 블록문 안에 Method가 있을 수도 있어야 한다. 말이 안되지.
 //		3. 모든 Method가 BlockStmt를 가지는 것은 아니다. 오직 ManagedMethod만 BlockStmt를 갖는다.
 class Method : public Source, public Runnable {
-	virtual Methods& getNestedMethods() { return TNuller<Methods>::ref; }
-	virtual const Methods& getNestedMethods() { return TNuller<const Methods>::ref; }
-
 	Classes _params;
 	static const String RUN = "run";
 	const Classes& getParams() const { 
@@ -367,7 +388,7 @@ class Method : public Source, public Runnable {
 class ManagedMethod : public Method {
 	//	NestedMethods only can exists on method on Managed env:
 	Methods _nested_methods;
-	virtual const Methods& getNestedMethods() { return _nested_methods; }
+	const Methods& getNestedMethods() { return _nested_methods; }
 
 	virtual Result& _stackCall(const Msg& msg) const
 	{
@@ -384,64 +405,7 @@ class ManagedMethod : public Method {
 	}
 };
 
-//	Lambda only exists at managed area:
-class LambdaMethod : public ManagedMethod {
-	//	captures:
-	//		The Captures are captured from the localspace when a instance 
-	//		of this class born.
-	//
-	//	it doens't need to capture class space:
-	//		if we could call lambda method, it means that we are in one 
-	//		of two situation.	
-	//			1) call lambda method been refered by MethodDelegator.
-	//				MethodDelegator captured class space and switch it 
-	//				before call to what it captures.
-	//				so in this case, lambda doesn't need to capture class
-	//				space.
-	//
-	//			2) call lambda directly.
-	//				lambda's definition is only visible at the method which
-	//				contains it.
-	//				and if we are in a method, we have already class space 
-	//				which we should have.
-	//				so in this case, we don't need to capture class space 
-	//				either.
-	This();
-
-	mutable Array _captures; // we should have perfect cloned array which contains each shallow copied instance from the original.
-	const Array& getCaptures() const {
-		WRD_IS_THIS(const Array)
-		return _captures;
-	}
-
-	virtual Refer call(const Msg& msg) {
-		_captureLocals();
-		return Super::call(msg);
-	}
-
-	virtual Refer call(const Msg& msg) const {
-		_captureLocals();
-		return Super::call(msg);
-	}
-
-	virtual Result& run(const Msg& msg) const {
-		Scope::Spaces& spaces = scope.getControl();
-		TStrong<Array> locals = spaces.getLocals();
-		spaces.setLocals(_captures);
-
-		Result& res = Super::run(msg);
-
-		spaces.setLocals(*locals);
-		return res;
-	}
-
-	//	capture current scope
-	Result& _captureLocals() {
-		_captures = scope.getControl().getLocals();
-		return success;
-	}
-};
-
+//	Lambda method is just a ManagedMethod nested and assigned by MethodDelegator.
 template <typename....???>
 class TNativeMethod : public Method {
 	virtual Refer _onExecute(const Msg& msg) {
