@@ -57,9 +57,9 @@ class InstanceBlock : public Thing {
 class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 된다. mappingtable에 등록하지 않는다.
 	enum SpaceIndex {
 		SPACE_START = 0,
-		GLOBAL = SPACE_START,
+		LOCAL = SPACE_START,
 		CLASS,
-		LOCAL,
+		GLOBAL,
 		SPACE_END = LOCAL
 	};
 	class Spaces : public Chain::Control {
@@ -86,14 +86,14 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 	const Method& getMe() const;
 
 	virtual Result& initialize() {
-		if(Super::initialize()) // release().
+		if(Super::initialize()) // it will call release().
 			return supererr.warn();
 
 		Chain::Control& con = getControl();
-		con.push(Array());
-		con.push(Chain());
-		con.push(Array());	//	elements는 절대 remove 되어서는 안된다. 
-							//	Scope의 모든 함수는 항상 원소3개가 있다고 가정한다.
+		con.push(Array());	//	LocalSpace
+		con.push(Chain());	//	ClassSpace
+		con.push(Array());	//	GlobalSpace
+		// elements는 절대 remove 되어서는 안된다. Scope의 모든 함수는 항상 원소3개가 있다고 가정한다.
 		return Success;
 	}
 

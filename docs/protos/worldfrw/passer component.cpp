@@ -372,8 +372,8 @@ class ManagedMethod : public Method {
 	virtual Result& _stackCall(const Msg& msg) const
 	{
 		Array& locals = scope.getControl().getLocals();
-		locals.push(getArgs();
-		locals.push(getNestedMethods());
+		locals.enq(getArgs();
+		locals.enq(getNestedMethods());
 		return Super::_stackCall(msg);
 	}
 
@@ -426,12 +426,12 @@ class LambdaMethod : public ManagedMethod {
 
 	virtual Result& run(const Msg& msg) const {
 		Scope::Spaces& spaces = scope.getControl();
-		TStrong<Array> locals = spaces[2];
-		spaces.set(2, _captures);
+		TStrong<Array> locals = spaces.getLocals();
+		spaces.setLocals(_captures);
 
 		Result& res = Super::run(msg);
 
-		spaces.set(2, *locals);
+		spaces.setLocals(*locals);
 		return res;
 	}
 
