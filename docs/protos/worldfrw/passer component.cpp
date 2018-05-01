@@ -340,10 +340,7 @@ class Method : public Source, public Runnable {
 		scope.setMe(*origin);
 		return ret;
 	}
-	wbool isRunnable(const Msg& msg) const {
-		return 	msg.getName() != RUN ||
-				msg.getArgs().getLength() > 0;
-	}
+	wbool isRunnable(const Msg& msg) const { return msg.getName() == RUN; }
 
 	virtual Refer _onExecute(const Msg& msg) = 0;
 	virtual wbool isConsumable(const Msg& msg) const {
