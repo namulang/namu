@@ -266,13 +266,13 @@ class MethodDelegator : public TRefer<Method>, public Runnable {
 		if( ! _this)
 			return get().run(msg);
 
-		Chain::Control& con = scope.getControl();
-		TStrong<Chain> classs = con.getClassSpace();
-		con.set(1, _this->getMembers());
+		Scope::Spaces& spaces = scope.getControl();
+		TStrong<Chain> classs = spaces.getClasss();
+		con.setClasss(_this->getMembers());
 
 		Result& res = get().run(msg);
 
-		con.set(1, *classs);
+		spaces.setClasss(*classs);
 		return res;
 	}
 };
@@ -322,7 +322,7 @@ class Method : public Source, public Runnable {
 			return Refer();
 		}
 
-		Array& locals = scope.getControl().getLocalSpace();
+		Array& locals = scope.getControl().getLocals();
 		windex boundary = locals.getLength();
 		Refer res = _stackCall(msg);
 		while(locals.getLength() > boundary)
@@ -374,7 +374,7 @@ class ManagedMethod : public Method {
 
 	virtual Result& _stackCall(const Msg& msg) const
 	{
-		Array& locals = *scope[2].getLocalSpace();
+		Array& locals = scope.getControl().getLocals();
 		locals.push(getArgs();
 		locals.push(getNestedMethods());
 		return Super::_stackCall(msg);
@@ -412,7 +412,10 @@ class LambdaMethod : public ManagedMethod {
 	This();
 
 	mutable Array _captures; // we should have perfect cloned array which contains each shallow copied instance from the original.
-	const Array& getCaptures() const { return _captures; }
+	const Array& getCaptures() const {
+		WRD_IS_THIS(const Array)
+		return _captures;
+	}
 
 	virtual Refer call(const Msg& msg) {
 		_captureLocals();
@@ -425,19 +428,19 @@ class LambdaMethod : public ManagedMethod {
 	}
 
 	virtual Result& run(const Msg& msg) const {
-		Chain::Control& con = scope.getControl();
-		TStrong<Array> locals = con[2];
-		con.set(2, _captures);
+		Scope::Spaces& spaces = scope.getControl();
+		TStrong<Array> locals = spaces[2];
+		spaces.set(2, _captures);
 
 		Result& res = Super::run(msg);
 
-		con.set(2, *locals);
+		spaces.set(2, *locals);
 		return res;
 	}
 
 	//	capture current scope
 	Result& _captureLocals() {
-		_captures = scope.getLocalSpace();
+		_captures = scope.getControl().getLocals();
 		return success;
 	}
 };

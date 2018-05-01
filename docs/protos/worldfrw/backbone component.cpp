@@ -262,17 +262,17 @@ class Node : public ? {
 	}
 	virtual wbool isConst() const { return false; }
 	void _precall(Strong& classs, Strong& locals) {
-		Chain::Control& con = scope.getControl();
-		classs = con[1]; // 1 means class space on scope.
-		locals = con[2]; // 2 means local space.
-		con.set(1, _getMembers());
-		con.set(2, *Array::create()); // every call() creates temporary local spaces.
+		Scope::Spaces& spaces = scope.getControl();
+		classs = spaces.getClasss(); // 1 means class space on scope.
+		locals = spaces.getLocals(); // 2 means local space.
+		spaces.setClasss(_getMembers());
+		spaces.setLocals(Array()); // every call() creates temporary local spaces.
 		scope.setThis(*this);
 	}
 	void _postcall(Strong& classs, Strong& locals) {
-		Chain::Control& con = scope.getControl();
-		con.set(1, *classs);
-		con.set(2, *locals);
+		Scope::Spaces& spaces = scope.getControl();
+		spaces.setClasss(*classs);
+		spaces.setLocals(*locals);
 	}
 	virtual Refer call(const Msg& msg) const {
 		Strong classs, locals;
