@@ -260,7 +260,7 @@ class MethodDelegator : public TRefer<Method>, public Runnable {
 	//		The Captures are captured from the localspace and classspace 
 	//		when a instance of this class born.
 	mutable TStrong<Object> _this;
-	mutable Array _captures; // we should have perfect cloned array which contains each shallow copied instance from the original.
+	mutable TStrong<Array> _captures; // we should have perfect cloned array which contains each shallow copied instance from the original.
 	Object& getThis() { return *this; }
 	const Object& getThis() const { return *this; }
 	const Array& getCaptures() const {
@@ -268,21 +268,19 @@ class MethodDelegator : public TRefer<Method>, public Runnable {
 		return _captures;
 	}
 
-	virtual Refer call(const Msg& msg) {
-		_captureLocals();
+	virtual wbool isConsumable(const Msg& msg) {
+		wbool ret = Super::isConsumable(msg);
+		if(ret)
+			_captureLocals();
 		return Super::call(msg);
 	}
 
-	virtual Refer call(const Msg& msg) const {
-		_captureLocals();
-		return Super::call(msg);
-	}
-
-	//	capture current scope
 	Result& _captureLocals() {
-		_captures = scope.getControl().getLocals();
-		return success;
+		if(_captures.getLength() > 0)
+			return alreadydone;
+		return _captures.bind(scope.getControl().getLocals().deepclone()); // Containable --implicitCasting--> Array at inside of _captures.
 	}
+
 	virtual Result& run(const Msg& msg) const {
 		if( ! isBind()) return notbind.warn()
 		if( ! _this) return get().run(msg);
