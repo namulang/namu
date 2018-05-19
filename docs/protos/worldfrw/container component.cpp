@@ -251,6 +251,8 @@ class CIterator : public OccupiableObject, public Iteratable {
 
 	const Node& operator*() const;
 	const Node* operator->() const;
+	This& operator++();
+	This& operator--();
 	const Node& get() const {
 		Iteration& bean = getProxy();
 		WRD_IS_NULL(bean, Nuller<const Node>::ref)
