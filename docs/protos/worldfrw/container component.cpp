@@ -248,7 +248,16 @@ class CIterator : public OccupiableObject, public Iteratable {
 
 		return bean.move(step);
 	}
-
+	const Node& step() {
+		const Node& ret = get();
+		move(1);
+		return ret;
+	}
+	const Node& backstep() {
+		const Node& ret = get();
+		move(-1);
+		return ret;
+	}
 	const Node& operator*() const;
 	const Node* operator->() const;
 	This& operator++();
@@ -266,6 +275,8 @@ class Iterator : public CIterator {
 	Node& operator*();
 	Node* operator->();
 	Container& getOrigin();
+	Node& step() { return const_cast<Node&>(Super::step()); }
+	Node& backstep() { return const_cast<Node&>(Super::backstep()); }
 	Node& get() {
 		WRD_IS_CONST(Nuller<Node>::ref) 
 		Iteration& bean = getProxy();
