@@ -141,6 +141,9 @@ class Container : public Object, public Containable {
 	operator-
 	operator<<
 	operator>>
+	operator+=(const Node& it);
+	operator+=(Node& it);
+	operator-=(const Node& it);
 
 	template <typename T, typename S>
 	class TProxy : public S
