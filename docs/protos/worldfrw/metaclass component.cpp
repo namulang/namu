@@ -8,6 +8,12 @@ class Class : public Source { //	World에 visible해야 하기 때문이다.
 	wbool operator!=(const This& rhs) const {
 		return &getName() != &rhs.getName();
 	}
+	//	open getMembers() to public:
+	//		Because Class classes are provided as const object always.
+	using Super::getMembers;
+	Container& getMembers() {
+		return const_cast<Container&>(_getMembers());
+	}
 	virtual const Class& getClass() const {
 		WRD_IS_THIS(const Class)
 		return *this;
