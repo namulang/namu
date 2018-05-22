@@ -173,7 +173,7 @@ class Container : public Object, public Containable {
 	virtual TStrong<Container> deepclone() const {
 		TStrong<Container> ret = getClass().instantiate();
 		each([&ret](const Node& e) {
-			const Container& cont = e.cast<Container>();
+			const Container& cont = e.toSub<Container>();
 			Strong newone = cont.isExists() ? cont.deepclone() : e.clone
 			return ret.push(newone);
 		})
@@ -360,7 +360,7 @@ class Chain : public Container {
 			return origin.getTrait();
 		}
 		Containers& getOriginContainers() {
-			Chain& chain = getOrigin().cast<Chain>();
+			Chain& chain = getOrigin().toSub<Chain>();
 			WRD_IS_NULL(chain, TNuller<Containers>::ref)
 
 			return chain._conts;

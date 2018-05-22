@@ -73,13 +73,13 @@ class Object : public CompositNode {
 		return Success;
 	}
 	Iterator _getSubContainerHead(windex n) {
-		Container& sub = getMembers().cast<Chain>().getController()[n];
+		Container& sub = getMembers().toSub<Chain>().getController()[n];
 		WRD_IS_NULL(sub, Iterator())
 
 		return sub.getHead();
 	}
 	CIterator _getSubContainerHead(windex n) const {
-		const Container& sub = getMembers().cast<Chain>().getController()[n];
+		const Container& sub = getMembers().toSub<Chain>().getController()[n];
 		WRD_IS_NULL(sub, CIterator())
 
 		return sub.getHead();
@@ -172,7 +172,7 @@ class Refer : public Node {
 
 	virtual wbool isConst() const { return _is_const; }
 	wbool _is_const;
-	TStrong<Node> _bean;
+	Strong _bean;
 	const Class& _cls;
 
 	virtual Result& assign(const Thing& it) {
@@ -192,10 +192,10 @@ class Refer : public Node {
 		}
 	
 		//	sharable 이라면 이렇게 간단히 끝난다.
-		Refer& refered = it.subcast<This>();
+		Refer& refered = it.toSub<This>();
 		if(refered.isExist())
 			return bind(refered);
-		return bind(it.subcast<Object>()); // null이 들어가도 상관없다.
+		return bind(it.toSub<Object>()); // null이 들어가도 상관없다.
 	}
 };
 
@@ -403,12 +403,37 @@ class ManagedMethod : public Method {
 	}
 };
 
+
 //	Lambda method is just a ManagedMethod nested and assigned by MethodDelegator.
 template <typename....???>
 class TNativeMethod : public Method {
+	//	1. Mashalling 담당:
+	//		msg의 원소1을 World의 Object 중 하나로 마샬링해야 함. 그 타입을 알려줘야함.
+	//	2. Params를 파싱해서 저장해야함:
+};
+
+template <typename T, typename... Args>
+class TCtorWrapper : public TNativeMethod<T> {
 	virtual Refer _onExecute(const Msg& msg) {
-		// TODO: macro와 연계해야 함.
+		if(Super::_onExecute(msg))
+			return SuperFail.err();
+
+		CIterator e = msg.getArgs().getIterator();
+		return Refer(new T(mashall<Args>(e.step())...));
 	}
+};
+
+template <typename T, wbool IS_STATIC=???, typename... Args>
+class TMethodWrapper<T, false, Args...> : public TNativeMethod<T> {
+	virtual Refer _onExecute(const Msg& msg) {
+		// this를 가져와서 method에 대한 fptr을 호출해야 한다.
+		// fptr를 얻어와야 한다.
+	}
+};
+
+template <typename T, typename... Args>
+class TMethodWrapper<T, true, Args...> : public TNativeMethod<T> {
+	... // static 메소드는 this를 사용할 필요가 없다.
 };
 
 class BlockStmt : public Stmt {

@@ -13,3 +13,9 @@ class Result {
 		return value;
 	}
 };
+
+class Integer : ?? {
+	virtual Refer to(const Class& cls) {
+		//	TODO: 묵시적 캐스팅 구현.
+	}
+};
