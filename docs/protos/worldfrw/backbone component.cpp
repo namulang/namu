@@ -82,7 +82,7 @@ class Thing {
 	template <typename T>
 	T& toSub() {
 		if(isSub(T::getStaticClass()))
-			return (T&) *this;
+			return static_cast<const T&>(*this);
 		return TNuller<T>::ref;
 	}
 	Refer toSub(const Class& cls) {
@@ -94,7 +94,7 @@ class Thing {
 	template <typename T>
 	const T& toSub() const {
 		if(isSub(T::getStaticClass()))
-			return (const T&) *this;
+			return static_cast<const T&>(*this;
 		return TNuller<T>::ref;
 	}
 	Refer toSub(const Class& cls) const {
