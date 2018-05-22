@@ -143,6 +143,8 @@ class Refer : public Node {
 	Result& bind(const Refer& it) {
 		return bind(it.get());
 	}
+	wbool isBinded();
+	operator wbool();
 	Result& bind(const Node& it) {
 		This& unconst = const_cast<This&>(*this);
 		Result& res = unconst.bind(const_cast<Object&>(it));
