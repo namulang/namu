@@ -85,23 +85,23 @@ class Thing {
 			return static_cast<const T&>(*this);
 		return TNuller<T>::ref;
 	}
-	Refer toSub(const Class& cls) {
-		if(isSub(cls))
-			return Refer(*this);
-		return Refer();
-	}
-
 	template <typename T>
 	const T& toSub() const {
 		if(isSub(T::getStaticClass()))
 			return static_cast<const T&>(*this;
 		return TNuller<T>::ref;
 	}
-	Refer toSub(const Class& cls) const {
+	
+	virtual Refer toImplicitly(const Class& cls) {
 		if(isSub(cls))
 			return Refer(*this);
 		return Refer();
 	}
+	Refer toImplicitly(const Class& cls) const {
+		This& unconst = const_cast<This&>(*this);
+		return Refer((const Refer&) unconst.toImplicitly(cls)); // we code inliney because of prevention to releasing instance of returned variable from unconst.toImplicitly()
+	}
+
 	//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
 	virtual Result& assign(const Thing& it) {
 		if(it.isNull()) return NullError;

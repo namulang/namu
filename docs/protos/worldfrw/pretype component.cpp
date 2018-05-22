@@ -15,7 +15,9 @@ class Result {
 };
 
 class Integer : ?? {
-	virtual Refer to(const Class& cls) {
+	virtual Refer toImplicitly(const Class& cls) {
 		//	TODO: 묵시적 캐스팅 구현.
+		//	else
+		return Super::toImplicitly(cls);
 	}
 };
