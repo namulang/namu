@@ -91,6 +91,17 @@ class Thing {
 		return Refer();
 	}
 
+	template <typename T>
+	const T& toSub() const {
+		if(isSub(T::getStaticClass()))
+			return (const T&) *this;
+		return TNuller<T>::ref;
+	}
+	Refer toSub(const Class& cls) const {
+		if(isSub(cls))
+			return Refer(*this);
+		return Refer();
+	}
 	//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
 	virtual Result& assign(const Thing& it) {
 		if(it.isNull()) return NullError;
