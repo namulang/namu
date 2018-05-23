@@ -199,6 +199,14 @@ class Refer : public Node {
 			return bind(refered);
 		return bind(it.toSub<Object>()); // null이 들어가도 상관없다.
 	}
+
+	virtual Node& _toSub(const Class& cls) {
+		if( ! _bean ||
+			! _bean->isSub(cls))
+			return TNuller<Node>::ref;
+
+		return *_bean;
+	}
 };
 
 //	공통 코드는 모든 기능을,
@@ -412,6 +420,13 @@ class TNativeMethod : public Method {
 	//	1. Mashalling 담당:
 	//		msg의 원소1을 World의 Object 중 하나로 마샬링해야 함. 그 타입을 알려줘야함.
 	//	2. Params를 파싱해서 저장해야함:
+	template <typename T>
+	T& marshal(const Node&) const {
+
+	}
+	template <typename T>
+	const T& marshal(const Node& it) const {
+	}
 };
 
 template <typename T, typename... Args>
@@ -421,7 +436,7 @@ class TCtorWrapper : public TNativeMethod<T> {
 			return SuperFail.err();
 
 		CIterator e = msg.getArgs().getIterator();
-		return Refer(new T(mashall<Args>(e.step())...));
+		return Refer(new T(e.step().toImplicitly<Args>().toSub<Args>...)));
 	}
 };
 
