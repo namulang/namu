@@ -417,16 +417,7 @@ class ManagedMethod : public Method {
 //	Lambda method is just a ManagedMethod nested and assigned by MethodDelegator.
 template <typename....???>
 class TNativeMethod : public Method {
-	//	1. Mashalling 담당:
-	//		msg의 원소1을 World의 Object 중 하나로 마샬링해야 함. 그 타입을 알려줘야함.
 	//	2. Params를 파싱해서 저장해야함:
-	template <typename T>
-	T& marshal(const Node&) const {
-
-	}
-	template <typename T>
-	const T& marshal(const Node& it) const {
-	}
 };
 
 template <typename T, typename... Args>
