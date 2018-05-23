@@ -436,7 +436,7 @@ class TCtorWrapper : public TNativeMethod<T> {
 			return SuperFail.err();
 
 		CIterator e = msg.getArgs().getIterator();
-		return Refer(new T(e.step().toImplicitly<Args>().toSub<Args>...)));
+		return Refer(new T(e.step().toImplicitly<Args>()->toSub<Args>...)));
 	}
 };
 
