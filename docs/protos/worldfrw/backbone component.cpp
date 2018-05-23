@@ -81,15 +81,17 @@ class Thing {
 	//	invisible이다.
 	template <typename T>
 	T& toSub() {
-		if(isSub(T::getStaticClass()))
-			return static_cast<const T&>(*this);
-		return TNuller<T>::ref;
+		return _toSub(T::getStaticClass());
+	}
+	virtual Node& _toSub(const Class& cls) {
+		if(isSub(cls))
+			return *this;
+		return TNuller<Node>::ref;
 	}
 	template <typename T>
 	const T& toSub() const {
-		if(isSub(T::getStaticClass()))
-			return static_cast<const T&>(*this;
-		return TNuller<T>::ref;
+		This& unconst = const_cast<This&>(*this);
+		return unconst._toSub(T::getStaticClass());
 	}
 	
 	virtual Refer toImplicitly(const Class& cls) {
