@@ -57,3 +57,34 @@ class TBlackBox<T*> : public Object {
     T** _bean;
 }
 
+//	Lambda method is just a ManagedMethod nested and assigned by MethodDelegator.
+template <typename....???>
+class TNativeMethod : public Method {
+	//	2. Params를 파싱해서 저장해야함:
+};
+
+template <typename T, typename... Args>
+class TCtorWrapper : public TNativeMethod<T> {
+	virtual Refer _onExecute(const Msg& msg) {
+		if(Super::_onExecute(msg))
+			return SuperFail.err();
+
+		CIterator e = msg.getArgs().getIterator();
+		return Refer(new T(e.step().toImplicitly<Args>()->toSub<Args>...)));
+	}
+};
+
+template <typename T, wbool IS_STATIC=???, typename... Args>
+class TMethodWrapper<T, false, Args...> : public TNativeMethod<T> {
+	virtual Refer _onExecute(const Msg& msg) {
+		// this를 가져와서 method에 대한 fptr을 호출해야 한다.
+		// fptr를 얻어와야 한다.
+	}
+};
+
+template <typename T, typename... Args>
+class TMethodWrapper<T, true, Args...> : public TNativeMethod<T> {
+	... // static 메소드는 this를 사용할 필요가 없다.
+};
+
+
