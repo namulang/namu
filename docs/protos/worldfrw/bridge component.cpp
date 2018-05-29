@@ -65,12 +65,22 @@ class TNativeMethod : public Method {
 
 template <typename T, typename... Args>
 class TCtorWrapper : public TNativeMethod<T> {
+	template <size_t... n>
+	Object* _newWithUnpackingArgs(const Args& args, index_sequence<n...>) {
+		return new T((args[n].toImplicitly<Args>()->toSub<Args>())...);
+	}
+	Object* _new(const Args& args) {
+		return _newWithUnpackingArgs(args, index_sequence_for<Args...>{});
+	}
 	virtual Refer _onExecute(const Msg& msg) {
 		if(Super::_onExecute(msg))
 			return SuperFail.err();
 
 		CIterator e = msg.getArgs().getIterator();
-		return Refer(new T(e.step().toImplicitly<Args>()->toSub<Args>...)));
+		//	TODO: DEFECT1: e.step().toImplicitly<Args>()가 null Refer가 나올 수 있음.
+		//	이 경우, T 생성자에 Null Refer가 들어가게 되므로 사용자는 isNull()로 확인을 
+		//	해야만 하는 불상사게 생겨버렸다.
+		return Refer(;
 	}
 };
 
