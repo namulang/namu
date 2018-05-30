@@ -58,37 +58,44 @@ class TBlackBox<T*> : public Object {
 }
 
 //	Lambda method is just a ManagedMethod nested and assigned by MethodDelegator.
-template <typename....???>
-class TNativeMethod : public Method {
-	//	2. Params를 파싱해서 저장해야함:
-};
-
 template <typename T, typename... Args>
-class TCtorWrapper : public TNativeMethod<T> {
+class TNativeMethod : public Method {
+	virtual Refer _callNative(Args... args) = 0;
+
 	template <size_t... n>
-	Object* _newWithUnpackingArgs(const Args& args, index_sequence<n...>) {
-		return new T((args[n].toImplicitly<Args>()->toSub<Args>())...);
+	Object* _unpackAndCast(const Args& args, index_sequence<n...>) {
+		return _callNative((args[n].toImplicitly<Args>()->toSub<Args>())...);
 	}
-	Object* _new(const Args& args) {
-		return _newWithUnpackingArgs(args, index_sequence_for<Args...>{});
+	Object* _unpack(const Args& args) {
+		return _unpackAndCast(args, index_sequence_for<Args...>{});
 	}
+	
 	virtual Refer _onExecute(const Msg& msg) {
 		if(Super::_onExecute(msg))
 			return SuperFail.err();
 
-		CIterator e = msg.getArgs().getIterator();
-		//	TODO: DEFECT1: e.step().toImplicitly<Args>()가 null Refer가 나올 수 있음.
-		//	이 경우, T 생성자에 Null Refer가 들어가게 되므로 사용자는 isNull()로 확인을 
-		//	해야만 하는 불상사게 생겨버렸다.
-		return Refer(;
+		return _unpack(msg.getArgs());
 	}
 };
 
-template <typename T, wbool IS_STATIC=???, typename... Args>
-class TMethodWrapper<T, false, Args...> : public TNativeMethod<T> {
-	virtual Refer _onExecute(const Msg& msg) {
-		// this를 가져와서 method에 대한 fptr을 호출해야 한다.
-		// fptr를 얻어와야 한다.
+template <typename T, typename... Args>
+class TCtorWrapper : public TNativeMethod<T, Args...> {
+	virtual Refer _callNative(Args... args) {
+		return new T(args...);
+	}
+};
+
+template <typename Ret, typename T, typename... Args, wbool IS_STATIC=???>
+class TMethodWrapper<T, false, Args...> : public TNativeMethod<T, Args...> {
+	Ret (T::*_fptr)(Args...);
+
+	//	TODO: _fptr 초기화
+	//	TODO: args의 null 여부 체크를 NativeMethod에 넣어둘것.
+	//	TODO: static 메소드의 구현. (Method에 static여부가 있어야 할 것 같다.
+	//	TODO: CtorWrapper를 static 메소드 화.
+
+	virtual Refer _callNative(Args... args) {
+		return Refer( (_getThis().*_fptr)(args...) );
 	}
 };
 
