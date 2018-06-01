@@ -48,11 +48,11 @@ class TBlackbox : public Object {
 };
 template <typename T>
 class TBlackBox<T*> : public Object {
-//  void*도 호환된다.World개발자도 이걸 정의할순 없어도, 모듈로부터 받아서 가지고는 있어야 하기 때문에 Object로 삼는 것이다.
+	//  void*도 호환된다.World개발자도 이걸 정의할순 없어도, 모듈로부터 받아서 가지고는 있어야 하기 때문에 Object로 삼는 것이다.
     static_assert(T is not sub of Thing)
     A(T* origin) : _bean(&origin) {}
     T* get() { return *_bean; }
-    World는 포인터를 사용하지 않으나, 이것 어쩔 수 없다. 
+    //	World는 포인터를 사용하지 않으나, 이것 어쩔 수 없다. 
     const T* get() const { return *_bean; }
     T** _bean;
 }
@@ -61,6 +61,14 @@ class TBlackBox<T*> : public Object {
 template <typename T, typename... Args>
 class TNativeMethod : public Method {
 	virtual Refer _callNative(Args... args) = 0;
+
+	Result& _validateArgs(Args&... args) {
+        void* tray[] = {&args...};
+        for(int n=0; n < sizeof...(args) ;n++)
+            if( ! tray[n])
+                return InvalidData;
+        return Success;
+    }
 
 	template <size_t... n>
 	Object* _unpackAndCast(const Args& args, index_sequence<n...>) {
@@ -81,8 +89,10 @@ class TNativeMethod : public Method {
 template <typename T, typename... Args>
 class TCtorWrapper : public TNativeMethod<T, Args...> {
 	virtual Refer _callNative(Args... args) {
-		return new T(args...);
-	}
+        if(_validateArgs(args...))
+            return Refer();
+        return new T(args...);
+    }
 };
 
 template <typename Ret, typename T, typename... Args, wbool IS_STATIC=???>
@@ -94,8 +104,10 @@ class TMethodWrapper<T, false, Args...> : public TNativeMethod<T, Args...> {
 	//	TODO: static 메소드의 구현. (Method에 static여부가 있어야 할 것 같다.
 	//	TODO: CtorWrapper를 static 메소드 화.
 
-	virtual Refer _callNative(Args... args) {
-		return Refer( (_getThis().*_fptr)(args...) );
+	virtual Refer _callNative(Args... args) 
+		if(_validateArgs(args...))
+            return Refer();
+        return Refer( (_getThis().*_fptr)(args...) );>
 	}
 };
 
