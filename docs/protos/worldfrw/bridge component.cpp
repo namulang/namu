@@ -31,7 +31,7 @@ public:	\
 	WRD_##E
 
 #define WRD_CTOR(...)	\
-	mems += TCtorWrapper<This, __VA_ARGS__>();
+	mems += TNativeCtor<This, __VA_ARGS__>();
 #define WRD_API(RET, NAME, ARGS)	\
 	mems += TNativeMethoder<RET, This, WRD_UNWRAP ARGS>(&This::NAME);
 //	C++17이 적용되면 inline이 가능하므로 위처럼 memps를 만들지않고 static 클래스가 시작과 동시에 인스턴스를 만들어서 
@@ -87,7 +87,7 @@ class TNativeCaller: public Method {
 };
 
 template <typename T, typename... Args>
-class TCtorWrapper : public TNativeCaller<T, Args...> {
+class TNativeCtor: public TNativeCaller<T, Args...> {
 	virtual Refer _callNative(Args... args) {
         if(_validateArgs(args...))
             return Refer();
