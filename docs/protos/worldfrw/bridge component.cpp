@@ -59,7 +59,7 @@ class TBlackBox<T*> : public Object {
 
 //	Lambda method is just a ManagedMethod nested and assigned by MethodDelegator.
 template <typename T, typename... Args>
-class TNativeMethod : public Method {
+class TNativeCaller: public Method {
 	virtual Refer _callNative(Args... args) = 0;
 
 	Result& _validateArgs(Args&... args) {
@@ -74,7 +74,7 @@ class TNativeMethod : public Method {
 	Object* _unpackAndCast(const Args& args, index_sequence<n...>) {
 		return _callNative((args[n].toImplicitly<Args>()->toSub<Args>())...);
 	}
-	Object* _unpack(const Args& args) {
+	Object* _unpackAndCall(const Args& args) {
 		return _unpackAndCast(args, index_sequence_for<Args...>{});
 	}
 	
@@ -87,7 +87,7 @@ class TNativeMethod : public Method {
 };
 
 template <typename T, typename... Args>
-class TCtorWrapper : public TNativeMethod<T, Args...> {
+class TCtorWrapper : public TNativeCaller<T, Args...> {
 	virtual Refer _callNative(Args... args) {
         if(_validateArgs(args...))
             return Refer();
@@ -96,7 +96,7 @@ class TCtorWrapper : public TNativeMethod<T, Args...> {
 };
 
 template <typename Ret, typename T, typename... Args, wbool IS_STATIC=???>
-class TMethodWrapper<T, false, Args...> : public TNativeMethod<T, Args...> {
+class TMethodWrapper<T, false, Args...> : public TNativeCaller<T, Args...> {
 	typedef Ret (T::*Fptr)(Args...);
 	Fptr _fptr;
 
@@ -114,7 +114,19 @@ class TMethodWrapper<T, false, Args...> : public TNativeMethod<T, Args...> {
 
 template <typename T, typename... Args>
 class TMethodWrapper<T, true, Args...> : public TNativeMethod<T> {
-	... // static 메소드는 this를 사용할 필요가 없다.
+	typedef Ret (T::*Fptr)(Args...);
+	Fptr _fptr;
+
+	TMethodWrapper(Fptr fptr) : Super(), _fptr(fptr) {}
+
+	//	TODO: static 메소드의 구현. (Method에 static여부가 있어야 할 것 같다.
+	//	TODO: CtorWrapper를 static 메소드 화.
+
+	virtual Refer _callNative(Args... args) 
+		if(_validateArgs(args...))
+            return Refer();
+        return Refer( (_getThis().*_fptr)(args...) )
+	}
 };
 
 
