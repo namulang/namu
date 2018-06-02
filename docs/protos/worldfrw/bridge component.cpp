@@ -33,7 +33,7 @@ public:	\
 #define WRD_CTOR(...)	\
 	mems += TCtorWrapper<This, __VA_ARGS__>();
 #define WRD_API(RET, NAME, ARGS)	\
-	mems += TMethodWrapper<This, &This::Name, WRD_UNWRAP ARGS>();
+	mems += TMethodWrapper<RET, This, WRD_UNWRAP ARGS>(&This::NAME);
 //	C++17이 적용되면 inline이 가능하므로 위처럼 memps를 만들지않고 static 클래스가 시작과 동시에 인스턴스를 만들어서 
 //	지정한 Class 밑으로 들어가게 하면 된다.
 
@@ -97,17 +97,18 @@ class TCtorWrapper : public TNativeMethod<T, Args...> {
 
 template <typename Ret, typename T, typename... Args, wbool IS_STATIC=???>
 class TMethodWrapper<T, false, Args...> : public TNativeMethod<T, Args...> {
-	Ret (T::*_fptr)(Args...);
+	typedef Ret (T::*Fptr)(Args...);
+	Fptr _fptr;
 
-	//	TODO: _fptr 초기화
-	//	TODO: args의 null 여부 체크를 NativeMethod에 넣어둘것.
+	TMethodWrapper(Fptr fptr) : Super(), _fptr(fptr) {}
+
 	//	TODO: static 메소드의 구현. (Method에 static여부가 있어야 할 것 같다.
 	//	TODO: CtorWrapper를 static 메소드 화.
 
 	virtual Refer _callNative(Args... args) 
 		if(_validateArgs(args...))
             return Refer();
-        return Refer( (_getThis().*_fptr)(args...) );>
+        return Refer( (_getThis().*_fptr)(args...) )
 	}
 };
 
