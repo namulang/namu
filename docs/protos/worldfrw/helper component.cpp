@@ -106,3 +106,14 @@ public:
 	};
 };
 
+template <typename T>
+class StaticMethodChecker : public Checker {
+	typedef char no;
+	typedef short yes;
+
+	template <typename R, typename... Args>
+	static yes foo( R(*)(Args...) );
+	static no foo(...);
+public:
+	static const bool IS = sizeof(foo( (T) 0 )) == sizeof(yes);
+};
