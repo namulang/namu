@@ -95,25 +95,21 @@ public:
 
 template <typename T, typename Super> // is T is sub of Super
 class SubChecker : public Checker {
-public:
-	typedef short yes;
-	typedef char no;
+	static yes _foo(Super*);
+	static no _foo(...);
 
-	static yes foo(Super*);
-	static no foo(...);
+public:
 	enum {
-		IS = sizeof(foo((T*) 0)) == sizeof(yes)
+		IS = sizeof(_foo((T*) 0)) == sizeof(yes)
 	};
 };
 
 template <typename T>
 class StaticMethodChecker : public Checker {
-	typedef char no;
-	typedef short yes;
-
 	template <typename R, typename... Args>
-	static yes foo( R(*)(Args...) );
-	static no foo(...);
+	static yes _foo( R(*)(Args...) );
+	static no _foo(...);
+
 public:
-	static const bool IS = sizeof(foo( (T) 0 )) == sizeof(yes);
+	static const bool IS = sizeof(_foo( (T) 0 )) == sizeof(yes);
 };
