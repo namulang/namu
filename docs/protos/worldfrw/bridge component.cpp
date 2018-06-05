@@ -33,7 +33,7 @@ public:	\
 #define WRD_CTOR(...)	\
 	mems += TNativeCtor<This, __VA_ARGS__>();
 #define WRD_API(RET, NAME, ARGS)	\
-	mems += TNativeMethoder<RET, This, WRD_UNWRAP ARGS>(&This::NAME);
+	mems += TNativeMethoder<RET, This, StaticMethodChecker<decltype(&This::NAME)>::IS, WRD_UNWRAP ARGS>(&This::NAME);
 //	C++17이 적용되면 inline이 가능하므로 위처럼 memps를 만들지않고 static 클래스가 시작과 동시에 인스턴스를 만들어서 
 //	지정한 Class 밑으로 들어가게 하면 된다.
 
@@ -95,8 +95,8 @@ class TNativeCtor: public TNativeCaller<T, Args...> {
     }
 };
 
-template <typename Ret, typename T, typename... Args, wbool IS_STATIC=???>
-class TNativeMethoder<T, false, Args...> : public TNativeCaller<T, Args...> {
+template <typename Ret, typename T, wbool IS_STATIC, typename... Args>
+class TNativeMethoder : public TNativeCaller<T, Args...> {
 	typedef Ret (T::*Fptr)(Args...);
 	Fptr _fptr;
 
@@ -108,12 +108,12 @@ class TNativeMethoder<T, false, Args...> : public TNativeCaller<T, Args...> {
 	virtual Refer _callNative(Args... args) 
 		if(_validateArgs(args...))
             return Refer();
-        return Refer( (_getThis().*_fptr)(args...) )
+        return Refer( (_getThis().*_fptr)(args...) );
 	}
 };
 
-template <typename T, typename... Args>
-class TNativeMethoder<T, true, Args...> : public TNativeMethod<T> {
+template <typename Ret, typename T, typename... Args>
+class TNativeMethoder<Ret, T, true, Args...> : public TNativeMethod<T> {
 	typedef Ret (T::*Fptr)(Args...);
 	Fptr _fptr;
 
@@ -125,7 +125,7 @@ class TNativeMethoder<T, true, Args...> : public TNativeMethod<T> {
 	virtual Refer _callNative(Args... args) 
 		if(_validateArgs(args...))
             return Refer();
-        return Refer( (_getThis().*_fptr)(args...) )
+        return Refer( _fptr(args...) );
 	}
 };
 
