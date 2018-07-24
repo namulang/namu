@@ -429,7 +429,7 @@ class BlockStmt : public Stmt {
 //	왜냐하면 그냥 Node에서 상속받는 클래스들은 static으로 하위 노드들을 구성한다는 얘기이므로.
 //	부모클래스가 CompositNode여야 하는 이유는, 이게 없을 경우 Member가 없으므로 메소드 호출이 
 //	불가능하기 때문이다.
-class Code : public Node {
+class Code : public CompositNode {
 };
 
 

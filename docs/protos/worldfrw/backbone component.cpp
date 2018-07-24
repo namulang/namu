@@ -271,7 +271,7 @@ class Node : public ? {
 	//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
 	virtual const Container& getMembers() const = 0; // invisible
 	Container& _getMembers() {
-		return const_cast<Container&>(_getMembers());
+		return const_cast<Container&>(getMembers());
 	}
 	Container& _get() {
 		return const_cast<Container&>(get());
