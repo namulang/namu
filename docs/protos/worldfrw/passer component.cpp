@@ -12,7 +12,7 @@ class Runnable {
 //		3. static을 구분해야 하는가?
 //		4. const 와 nonconst를 구분해야 하는가?
 //	여기서
-class Object : public CompositNode {
+class Object : public Node : public Compositable {
 	Object() : Super() {
 	}
 
@@ -317,7 +317,7 @@ typedef TArray<Method> Methods;
 //		메소드는 인자를 그때그때받아야 하므로 적합하지 않다.
 //		2. Method가 Stmt라면 블록문 안에 Method가 있을 수도 있어야 한다. 말이 안되지.
 //		3. 모든 Method가 BlockStmt를 가지는 것은 아니다. 오직 ManagedMethod만 BlockStmt를 갖는다.
-class Method : public Code, public Runnable {
+class Method : public TCompositize<Code>, public Runnable {
 	Classes _params;
 	static const String RUN = "run";
 	const Classes& getParams() const { 
@@ -427,15 +427,25 @@ class BlockStmt : public Stmt {
 //	Interpreting에 의해서 나오게 되는 모든 산물들.
 //	Object가 아니다. 모든 Code 종류의 클래스들은 시스템에 1개만 존재해야 한다는 것이다.
 //	왜냐하면 그냥 Node에서 상속받는 클래스들은 static으로 하위 노드들을 구성한다는 얘기이므로.
-//	부모클래스가 CompositNode여야 하는 이유는, 이게 없을 경우 Member가 없으므로 메소드 호출이 
-//	불가능하기 때문이다.
-class Code : public CompositNode {
+//	그렇다고 TCompositize<Node>에서 상속받게 할 수도 없는데, 자식클래스가 될 Class와 Stmt는 static 혹은 TClass에서 
+//	redirection하면 된다. 오직 Stmt에서 상속받는 Method만이 독립적인 members가 필요하다.
+//	Method는 TCompositize<Node>를 활용하여 직접 멤머를 갖게된다.
+class Code : public Node {
+	Code(const Origin& origin);
+
+	const Origin& getOrigin() const { return _origin; }
+
+	const Origin& _origin;
 };
 
 
 //	요구조건:
-//		[] execute()시, owner가 없다면 실행해서는 안된다. (= 런타임에 간접적인 로직 변경 방지)t
-class Stmt : public Code, public Executable {};
+//		[] execute()시, owner가 없다면 실행해서는 안된다. (= 런타임에 간접적인 로직 변경 방지)
+class Stmt : public Code, public Executable {
+	virtual const Container& getMembers() {
+		return getClass().getMembers();
+	}
+};
 
 //	Expression은 invisible 하다.
 class Expr : public Stmt {

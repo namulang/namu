@@ -1,5 +1,5 @@
 //	Interpreting에 의해서 나오게 되는 모든 산물들.
-class Origin : public CompositNode { //	Origin은 또다른 Origin들을 composition으로 가질 수 있다.
+class Origin : public TCompositize<Node> { //	Origin은 또다른 Origin들을 composition으로 가질 수 있다.
 	class Pos : public Node { // Pos는 visible해야 한다. IDE에서도 사용해야 하니까.
 		Pos(wint row, wint col);
 
