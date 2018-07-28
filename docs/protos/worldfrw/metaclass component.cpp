@@ -8,12 +8,6 @@ class Class : public Code { //	World에 visible해야 하기 때문이다.
 	wbool operator!=(const This& rhs) const {
 		return &getName() != &rhs.getName();
 	}
-	//	open getMembers() to public:
-	//		Because Class classes are provided as const object always.
-	using Super::getMembers;
-	Container& getMembers() {
-		return const_cast<Container&>(_getMembers());
-	}
 	virtual const Class& getClass() const {
 		WRD_IS_THIS(const Class)
 		return *this;
@@ -90,8 +84,8 @@ class Class : public Code { //	World에 visible해야 하기 때문이다.
 		//	TODO:	
 	}
 	virtual Result& _initializeMembers() {
-		_getMembers().release();
-		_getMembers().chain(new Array();
+		_getMembers() = getSupers()[0].getMembers(); // getSupers()[0]은 바로 위의 부모클래스.
+		return Success;
 	}
 	virtual const Array& getVariables() const {
 		WRD_IS_THIS(const Array)
@@ -155,6 +149,7 @@ template <typename T>
 class TClass : public TMetaClassChooser<T>::Super {
 	TClass() { this->initialize(); }
 	virtual wbool isTemplate() const { return TTemplateChecker<T>::IS; }
+	virtual const Container& getMembers() const { return getStaticMembers(); }
 	virtual const String& getName() const {
 		WRD_IS_THIS(const String)
 		return getStaticName();
@@ -178,7 +173,7 @@ class TClass : public TMetaClassChooser<T>::Super {
 		if(Super::_initializeMembers())
 			return SuperFail.warn();
 
-		return T::_onInitializeMembers(_getMembers());
+		return T::_onInitializeMembers(_getMembers()); // getMethods from RealClass T.
 	}
 	static const String& getStaticName() {
 		static String inner;
@@ -189,6 +184,10 @@ class TClass : public TMetaClassChooser<T>::Super {
 			free(demangled);
 		}
 
+		return inner;
+	}
+	static const Container& getStaticMembers() {
+		static Array inner; // 퍼포먼스를 위해서 Chain을 쓰지 않는다.
 		return inner;
 	}
 	static const Classes& getStaticSupers() {
