@@ -12,7 +12,7 @@ class Runnable {
 //		3. static을 구분해야 하는가?
 //		4. const 와 nonconst를 구분해야 하는가?
 //	여기서
-class Object : public Node : public Compositable {
+class Object : public CompositNode {
 	Object() : Super() {
 	}
 
@@ -96,6 +96,7 @@ class Object : public Node : public Compositable {
 	Iterator getVariablesHead() const {
 		return _getSubContainerHead(1);
 	}
+	const Origin& getOrigin() const { return getClass().getOrigin(); }
 };
 
 //	OccupiableObject는 상속된다:
@@ -172,6 +173,7 @@ class Refer : public Node {
 		return _bean.get();
 	}
 
+	virtual const Origin& getOrigin() const { return _bean->getOrigin(); }
 	virtual wbool isConst() const { return _is_const; }
 	wbool _is_const;
 	Strong _bean;
@@ -317,7 +319,7 @@ typedef TArray<Method> Methods;
 //		메소드는 인자를 그때그때받아야 하므로 적합하지 않다.
 //		2. Method가 Stmt라면 블록문 안에 Method가 있을 수도 있어야 한다. 말이 안되지.
 //		3. 모든 Method가 BlockStmt를 가지는 것은 아니다. 오직 ManagedMethod만 BlockStmt를 갖는다.
-class Method : public TCompositize<Code>, public Runnable {
+class Method : public Object, public Runnable {
 	Classes _params;
 	static const String RUN = "run";
 	const Classes& getParams() const { 
@@ -393,7 +395,7 @@ class Method : public TCompositize<Code>, public Runnable {
 
 
 
-class ManagedMethod : public Method {
+class MgdMethod: public Method {
 	//	NestedMethods only can exists on method on Managed env:
 	Methods _nested_methods;
 	const Methods& getNestedMethods() { return _nested_methods; }
@@ -441,7 +443,7 @@ class Code : public Node {
 
 //	요구조건:
 //		[] execute()시, owner가 없다면 실행해서는 안된다. (= 런타임에 간접적인 로직 변경 방지)
-class Stmt : public Code, public Executable {
+class Stmt : public Object, public Executable {
 	virtual const Container& getMembers() {
 		return getClass().getMembers();
 	}

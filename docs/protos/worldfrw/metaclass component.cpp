@@ -92,6 +92,10 @@ class Class : public Code { //	World에 visible해야 하기 때문이다.
 		static Array inner; // means that this class doesn't have any variables.
 		return inner;
 	}
+	virtual const Origin& getOrigin() {
+		static Origin inner; // means there is no origin or we can't designate origin.
+		return inner;
+	}
 };
 
 //	class for Object class.
@@ -217,4 +221,8 @@ class Classer : public Manager? {
 		
 	}
 	operator
+};
+
+class MgdClass : public TConcreteClass<ObjectedClass> {
+	//	TODO: ??
 };

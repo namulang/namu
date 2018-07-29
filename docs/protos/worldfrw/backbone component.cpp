@@ -32,7 +32,7 @@ class Thing {
 	wbool isSub() const {
 		return T::getStaticClass().isSuper(getClass());
 	}
-	const Class& getClass();
+	const Class& getClass() = 0;
 	virtual Refer to(const Class& cls) {
 		return Refer();
 	}
@@ -221,49 +221,6 @@ class Msg : public Thing {
 namespace {
 }
 
-//	getMembers()를 Node에 두지 않고 이렇게 Memberable로 따로 빼는 이유:
-//		Code클래스가 앞으로 나올텐데, Code는 Node에서 상속을 받아야 하나, Code의 자식들은 TCompositize<Node>
-//		일수도 있고, 아닐 수도 있어야 한다. 이렇게 속성이 서로 교차함으로써 상속이 맞물리는 경우,
-//			1. 템플릿으로 극복	-> 이것도 방안이긴 하다.
-//			2. 속성 자체를 회피	-> 고려해봤지만 안된다. 둘다 필요하다.
-//			3. 중복 코딩		-> 하드 코딩은 피하고 싶다.
-//			4. 부모로 몰아넣음 -> 쓰지 않는 members에 대한 메모리 중복됨
-//			5. 다중상속 -> 속도가 느리게 된다. 다중상속된 이후의 모든 클래스들의 객체들
-//			(사실상 대부분의 객체다)은 함수콜이 일어날때마다 추가적은 vtable lookup이 필요로 하게 된다. 
-//			치명적이다. 게다가 문제가 생기면 디버깅이 힘들다.
-//			6. compostiion과 delegation으로 처리 -> 일반적인 해결방법이지만 코드가 더러워질것이다.
-//		등이 있을 수 있다. 다 고려해본 결과, 
-//		이때 이미 완성된 하나의 상속줄기에 특정 시점에서 특정 함수를 끼워넣고 싶은 것으로, virtual 상속
-//		을 써야 만한다. virtual을 쓰려면 부모 클래스가 있어야 하기 때문에 이렇게 따로 class로 뺀 것이다.
-//
-//	이 클래스는 최소한으로 가져가야만 한다:
-//		보통 World에서는 이러한 interface클래스에는 필요한 헬퍼를 뒀었지만,
-//		다중상속은 뭐가 어떻게 될지 아직은 파악이 안되므로 일단은 보수적으로 최소한의 함수만 가져가기로 한다.
-//		나중에 검증이 되면 다른 interface클래스처럼 헬퍼메소드를 넣자.
-template <typename T>
-class TCompositize : public T {
-	//	_members can't be declared with protected accessor:
-	//		if we do that, module developers can use _members and remove or insert some Node at runtime.
-	Chain _members; // of Container.
-	//	getMember(); 는 공개하지 않는다:
-	//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
-	virtual const Container& getMembers() const {
-		WRD_IS_THIS(const Container)
-		if(_members.getLength() <= 0)
-			_initializeMembers();
-		return *_members;
-	}
-	virtual Result& _initializeMembers() {
-		_members.release();
-
-		const Chain& chain = cls.getMembers().cast<Chain>();
-		WRD_IS_NULL(chain)
-		if(_members.chain(chain.getController()[0])) // first elem as a container owned by "chain"
-			return OperationFail.warn("");
-		return Success;
-	}
-};
-
 //	World에서 const 구현:
 //		개요:
 //			Managed에서 생성된 객체는 occupiable이라도 const로 정의되어있으면 Refer(isConst() = true)에 감싸여져서 scope나 owner Node에 등어간다.
@@ -349,6 +306,7 @@ class Node : public ?, virtual public Memberable {
 		return ret;
 	}
 	virtual wbool isConst() const { return false; }
+	virtual const Origin& getOrigin() const = 0;
 	void _precall(Strong& classs, Strong& locals) {
 		Scope::Spaces& spaces = scope.getControl();
 		classs = spaces.getClasss(); // 1 means class space on scope.
@@ -390,3 +348,27 @@ class Node : public ?, virtual public Memberable {
 	}
 	virtual wbool isConsumable(const Msg& msg) const { return false; }
 }
+
+class CompositNode : public Node {
+	//	_members can't be declared with protected accessor:
+	//		if we do that, module developers can use _members and remove or insert some Node at runtime.
+	Chain _members; // of Container.
+	//	getMember(); 는 공개하지 않는다:
+	//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
+	virtual const Container& getMembers() const {
+		WRD_IS_THIS(const Container)
+		if(_members.getLength() <= 0)
+			_initializeMembers();
+		return *_members;
+	}
+	virtual Result& _initializeMembers() {
+		_members.release();
+
+		const Chain& chain = cls.getMembers().cast<Chain>();
+		WRD_IS_NULL(chain)
+		if(_members.chain(chain.getController()[0])) // first elem as a container owned by "chain"
+			return OperationFail.warn("");
+		return Success;
+	}
+};
+
