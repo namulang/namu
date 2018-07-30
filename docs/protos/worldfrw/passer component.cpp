@@ -1,7 +1,6 @@
-class Executable {
-	virtual Result& execute() const = 0;
-};
 class Runnable {
+	static const String RUN = "run";
+	wbool isRunnable(const Msg& msg) const { return msg.getName() == RUN; }
 	virtual Result& run(const Msg& msg) const = 0;
 };
 
@@ -321,19 +320,18 @@ typedef TArray<Method> Methods;
 //		3. 모든 Method가 BlockStmt를 가지는 것은 아니다. 오직 ManagedMethod만 BlockStmt를 갖는다.
 class Method : public Object, public Runnable {
 	Classes _params;
-	static const String RUN = "run";
 	const Classes& getParams() const { 
 		WRD_IS_THIS(const Classes)
 		return _params;
 	}
 	virtual Refer call(const Msg& msg) {
-		if(msg.getName() == RUN && msg.getArgs().getLength() == 0)
+		if(isRunnable(msg))
 			return run(msg);
 			
 		return Super::call(msg);
 	}
 	virtual Refer call(const Msg& msg) const {
-		if(msg.getName() == RUN && msg.getArgs().getLength() == 0)
+		if(isRunnable(msg())
 			return run(msg);
 			
 		return Super::call(msg);
@@ -371,7 +369,6 @@ class Method : public Object, public Runnable {
 		scope.setMe(*origin);
 		return ret;
 	}
-	wbool isRunnable(const Msg& msg) const { return msg.getName() == RUN; }
 
 	virtual Refer _onExecute(const Msg& msg) = 0;
 	virtual wbool isConsumable(const Msg& msg) const {
@@ -417,7 +414,7 @@ class MgdMethod: public Method {
 
 class BlockStmt : public Stmt {
 	typedef vector<Stmt> Stmts; // stmts은 invisible하게 한다는 뜻이다.
-	Stmts _stmts;
+	tStmts _stmts;
 	Stmts& getStmts();
 	const Stmts& getStmts() const;
 	virtual Result& execute() const {
