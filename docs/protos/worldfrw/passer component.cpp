@@ -440,7 +440,8 @@ class Code : public Node {
 
 //	요구조건:
 //		[] execute()시, owner가 없다면 실행해서는 안된다. (= 런타임에 간접적인 로직 변경 방지)
-class Stmt : public Object, public Executable {
+class Stmt : public Object {
+	virtual const Result& execute() = 0;
 	virtual const Container& getMembers() {
 		return getClass().getMembers();
 	}
