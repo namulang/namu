@@ -364,13 +364,13 @@ class Method : public Object, public Runnable {
 		scope.setMe(*this);
 
 		This* unconst = const_cast<This*>(this);
-		Refer ret = unconst->_onExecute(msg);
+		Refer ret = unconst->_onRun(msg);
 
 		scope.setMe(*origin);
 		return ret;
 	}
 
-	virtual Refer _onExecute(const Msg& msg) = 0;
+	virtual Refer _onRun(const Msg& msg) = 0;
 	virtual wbool isConsumable(const Msg& msg) const {
 		Args& args = msg.getArgs();
 		const Classes& params = getParams();
@@ -406,7 +406,7 @@ class MgdMethod: public Method {
 	}
 
 	BlockStmt _block;
-	virtual Refer _onExecute(const Msg& msg) {
+	virtual Refer _onRun(const Msg& msg) {
 		// TODO: do something with scope obj.
 		// TODO: and execute blckstmt.
 	}

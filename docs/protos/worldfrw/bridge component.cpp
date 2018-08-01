@@ -78,8 +78,8 @@ class TNativeCaller: public Method {
 		return _unpackAndCast(args, index_sequence_for<Args...>{});
 	}
 	
-	virtual Refer _onExecute(const Msg& msg) {
-		if(Super::_onExecute(msg))
+	virtual Refer _onRun(const Msg& msg) {
+		if(Super::_onRun(msg))
 			return SuperFail.err();
 
 		return _unpack(msg.getArgs());
