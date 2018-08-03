@@ -224,5 +224,7 @@ class Classer : public Manager? {
 };
 
 class MgdClass : public TConcreteClass<ObjectedClass> {
+	TStrong<Origin> _origin;
+	virtual const Origin& getOrigin() const { return *_origin; }
 	//	TODO: ??
 };

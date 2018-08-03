@@ -306,7 +306,10 @@ class Node : public ? {
 		return ret;
 	}
 	virtual wbool isConst() const { return false; }
-	virtual const Origin& getOrigin() const = 0;
+	virtual const Origin& getOrigin() const {
+		static Origin inner;
+		return inner;
+	}
 	void _precall(Strong& classs, Strong& locals) {
 		Scope::Spaces& spaces = scope.getControl();
 		classs = spaces.getClasss(); // 1 means class space on scope.

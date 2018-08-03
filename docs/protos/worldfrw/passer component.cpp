@@ -95,7 +95,7 @@ class Object : public CompositNode {
 	Iterator getVariablesHead() const {
 		return _getSubContainerHead(1);
 	}
-	const Origin& getOrigin() const { return getClass().getOrigin(); }
+	virtual const Origin& getOrigin() const { return getClass().getOrigin(); }
 };
 
 //	OccupiableObject는 상속된다:
@@ -172,7 +172,12 @@ class Refer : public Node {
 		return _bean.get();
 	}
 
-	virtual const Origin& getOrigin() const { return _bean->getOrigin(); }
+	virtual const Origin& getOrigin() const {
+		if( ! _bean)
+			return Super::getOrigin();
+	
+		return _bean->getOrigin();
+	}
 	virtual wbool isConst() const { return _is_const; }
 	wbool _is_const;
 	Strong _bean;
@@ -396,6 +401,8 @@ class MgdMethod: public Method {
 	//	NestedMethods only can exists on method on Managed env:
 	Methods _nested_methods;
 	const Methods& getNestedMethods() { return _nested_methods; }
+	TStrong<Origin> _origin;
+	virtual const Origin& getOrigin() { return *_origin; }
 
 	virtual Result& _stackCall(const Msg& msg) const
 	{
@@ -423,24 +430,12 @@ class BlockStmt : public Stmt {
 		return Success;
 	}
 };
-//	Interpreting에 의해서 나오게 되는 모든 산물들.
-//	Object가 아니다. 모든 Code 종류의 클래스들은 시스템에 1개만 존재해야 한다는 것이다.
-//	왜냐하면 그냥 Node에서 상속받는 클래스들은 static으로 하위 노드들을 구성한다는 얘기이므로.
-//	그렇다고 TCompositize<Node>에서 상속받게 할 수도 없는데, 자식클래스가 될 Class와 Stmt는 static 혹은 TClass에서 
-//	redirection하면 된다. 오직 Stmt에서 상속받는 Method만이 독립적인 members가 필요하다.
-//	Method는 TCompositize<Node>를 활용하여 직접 멤머를 갖게된다.
-class Code : public Node {
-	Code(const Origin& origin);
-
-	const Origin& getOrigin() const { return _origin; }
-
-	const Origin& _origin;
-};
-
 
 //	요구조건:
 //		[] execute()시, owner가 없다면 실행해서는 안된다. (= 런타임에 간접적인 로직 변경 방지)
 class Stmt : public Object {
+	TStrong<Origin> _origin;
+	virtual const Origin& getOrigin() { return *_origin; }
 	virtual const Result& execute() = 0;
 	virtual const Container& getMembers() {
 		return getClass().getMembers();
