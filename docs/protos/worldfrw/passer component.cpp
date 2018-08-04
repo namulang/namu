@@ -98,6 +98,15 @@ class Object : public CompositNode {
 	virtual const Origin& getOrigin() const { return getClass().getOrigin(); }
 };
 
+class MgdObject : public Object {
+	//	TODO:
+	//		Object에서 상속한것. Object는 getClass()시 어떤 클래스가 나오는지는 code로 정적으로 박혀져있다. 
+	//		그래서 MgdObject는 getClass()시 변수_class에서 반환된다.
+    //		MgdClass는 MgdObject를 instaitate()하며, 이때 자신을 obj._class에 할당한다.
+	TWeak<const MgdClass> _class;
+	virtual const Class& getClass() const { return _class; }
+};
+
 //	OccupiableObject는 상속된다:
 //		상속이란 부모의 모든 특징을 다 물려받는 것이며, int의 자식클래스는 무엇이 되었건 간에 immutable이 될 수 밖에 없다.
 //	실질적인 Occupiable vs Sharable의 동작 차이는 Refer에서 발생한다.

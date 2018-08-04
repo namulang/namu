@@ -226,5 +226,14 @@ class Classer : public Manager? {
 class MgdClass : public TConcreteClass<ObjectedClass> {
 	TStrong<Origin> _origin;
 	virtual const Origin& getOrigin() const { return *_origin; }
-	//	TODO: ??
+	//	TODO:
+	//		World코드로 파싱된 클래스객체는 classmgr에 들어감. classmanager에 들어가 있는 모든 객체는 class로 인정됨.
+	//		MgdClass 각 객체들은 Origin을 들고있음.
+	//		Native건 Mgd건 Class들은 instantiate()를 하게 되면 members를 obj에 push. 이 과정에서 MgdClass는 MgdObject를 생성해야함. 이유는 MgdObject란 참고
+	virtual TStrong<Instance> instatiate() const {
+		//	TODO: MgdObject 생성
+		//	MgdObject에 *this를 넣음.
+		//	ObjectedClass의 동작은 실행되어야함.
+		return ?
+	}
 };
