@@ -15,7 +15,7 @@ class Class : public Code { //	World에 visible해야 하기 때문이다.
 	virtual Result& _setInitialized(wbool newone) = 0;
 	virtual wbool isTemplate() const = 0;
 	virtual wbool isAbstract() const = 0;
-	TStrong<Object> instantiate() const = 0;
+	TStrong<Instance> instantiate() const = 0;
 	virtual const String& getName() const = 0;
 	const Class& getSuper() const {
 		WRD_IS_THIS(const Class)
@@ -110,7 +110,7 @@ class ObjectedClass : public Class {
 template <typename T, typename S>
 class TConcreteClass : public S {
 	virtual wbool isAbstract() const { return false; }
-	virtual TStrong<Object> instantiate() const {
+	virtual TStrong<Instance> instantiate() const {
 		return TStrong<Object>(new T());
 	}
 };
@@ -118,7 +118,7 @@ class TConcreteClass : public S {
 template <typename T, typename S>
 class TInterfaceClass : public S {
 	virtual wbool isAbstract() const { return true; }
-	virtual TStrong<Object> instantiate() const {
+	virtual TStrong<Instance> instantiate() const {
 		NotDefined.warn("...");
 		return TStrong<Object>();
 	}
