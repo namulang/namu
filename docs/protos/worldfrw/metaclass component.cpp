@@ -109,7 +109,6 @@ class ObjectedClass : public Class {
 
 template <typename T, typename S>
 class TConcreteClass : public S {
-	virtual wbool isAbstract() const { return false; }
 	virtual TStrong<Instance> instantiate() const {
 		return TStrong<Object>(new T());
 	}
@@ -117,7 +116,6 @@ class TConcreteClass : public S {
 
 template <typename T, typename S>
 class TInterfaceClass : public S {
-	virtual wbool isAbstract() const { return true; }
 	virtual TStrong<Instance> instantiate() const {
 		NotDefined.warn("...");
 		return TStrong<Object>();
@@ -152,6 +150,7 @@ class TMetaClassChooser {
 template <typename T>
 class TClass : public TMetaClassChooser<T>::Super {
 	TClass() { this->initialize(); }
+	virtual wbool isADT() const { return TADTChecker<T>::IS; }
 	virtual wbool isTemplate() const { return TTemplateChecker<T>::IS; }
 	virtual const Container& getMembers() const { return getStaticMembers(); }
 	virtual const String& getName() const {
