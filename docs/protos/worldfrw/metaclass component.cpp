@@ -122,31 +122,6 @@ class TInterfaceClass : public S {
 	}
 };
 
-template <wbool IS_ADT>
-class TADTChooser {
-	template <typename T, typename S>
-	typedef class TConcreateClass Class;
-};
-template <>
-class TADTChooser<false> {
-	template <typename T, typename S>
-	typedef class TInterfaceClass Class;
-};
-
-template <wbool IS_OBJECTED>
-class TObjected {
-	typedef ObjectedClass Class;
-};
-template <>
-class TObjected<false> {
-	typedef Class Class;
-};
-
-template <typename T, wbool IS_ADT = TADTChecker<T>::IS, wbool IS_OBJECTED = TSubChecker<T, Object>::IS>
-class TMetaClassChooser {
-	typedef typename TADTChooser<IS_ADT>::Class<T, typename TObjected<IS_OBJECTED>::Class> Super;
-};
-
 template <typename T>
 class TClass : public TMetaClassChooser<T>::Super {
 	TClass() { this->initialize(); }
