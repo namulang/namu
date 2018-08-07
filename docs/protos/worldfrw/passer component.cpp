@@ -1,5 +1,5 @@
 class Runnable {
-	static const String RUN = "run";
+	static const String RUN = "@run"; // 앞에 @를 붙인 이유는 월드 코드상에서 이 함수를 명시적으로 호출 할 수 없게 하기 위해서다. 
 	wbool isRunnable(const Msg& msg) const { return msg.getName() == RUN; }
 	virtual Result& run(const Msg& msg) const = 0;
 };
@@ -359,29 +359,33 @@ class Method : public Object, public Runnable {
 		const This* consted = this;
 		return consted->run(msg);
 	}
-	virtual Refer run(const Msg& msg) {
+	virtual Refer run(const Msg& msg) const {
 		if( ! isRunnable(msg)) {
 			WrongParam.warn()
 			return Refer();
 		}
 
-		Array& locals = scope.getControl().getLocals();
 		windex boundary = locals.getLength();
-		Refer res = _stackCall(msg);
-		while(locals.getLength() > boundary)
-			locals.deq();
-		return res;
-	}
-	//	ready CallStack:
-	virtual Refer _stackCall(const Msg& msg) const {
-		TStrong<Method> origin(scope.getMe());
-		scope.setMe(*this);
+		TStrong<Method> origin;
+		_stack(scope, origin);
 
 		This* unconst = const_cast<This*>(this);
 		Refer ret = unconst->_onRun(msg);
 
-		scope.setMe(*origin);
+		_unstack(scope, boundary, origin);
 		return ret;
+	}
+	//	ready CallStack:
+	virtual Result& _stack(Scope& scope, TStrong<Method>& origin) const {
+		origin = scope.getMe();
+		return scope.setMe(*origin);
+	}
+
+	virtual Result& _unstack(Scope& origin, windex boundary, const TStrong<Method>& origin) const {
+		Array& locals = scope.getControl().getLocals();
+		while(locals.getLength() > boundary)
+			locals.deq();
+		return scope.setMe(*origin);
 	}
 
 	virtual Refer _onRun(const Msg& msg) = 0;
@@ -413,12 +417,14 @@ class MgdMethod: public Method {
 	TStrong<Origin> _origin;
 	virtual const Origin& getOrigin() { return *_origin; }
 
-	virtual Result& _stackCall(const Msg& msg) const
+	virtual Result& _stack(Scope& scope, TStrong<Method>& origin) const
 	{
+		if(Super::_stack(scope, origin))
+			return superfail.warn("");
+
 		Array& locals = scope.getControl().getLocals();
 		locals.enq(getArgs();
-		locals.enq(getNestedMethods());
-		return Super::_stackCall(msg);
+		return locals.enq(getNestedMethods());
 	}
 
 	BlockStmt _block;
