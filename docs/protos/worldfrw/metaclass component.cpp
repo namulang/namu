@@ -1,4 +1,4 @@
-class Class : public Code { //	World에 visible해야 하기 때문이다.
+class Class : public Node { //	World에 visible해야 하기 때문이다.
 	// TODO: classname
 	friend class Interpreter; // for interpreter class which can use _getMembers(). 
 
