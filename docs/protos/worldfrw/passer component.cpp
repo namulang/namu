@@ -430,7 +430,7 @@ class MgdMethod: public Method {
 	BlockStmt _block;
 	virtual Refer _onRun(const Msg& msg) {
 		// TODO: do something with scope obj.
-		// TODO: and execute blckstmt.
+		return _block.execute();
 	}
 };
 
