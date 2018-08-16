@@ -15,21 +15,21 @@ class Object : public CompositNode {
 	Object() : Super() {
 	}
 
-	void _precall(const Msg& msg) const {
+	void _precall(Msg& msg) const {
 		Object& old = msg.getThis();
 		msg._setThis(*this);
 	}
-	void _postcall(const Msg& msg) const {
+	void _postcall(Msg& msg) const {
 		msg._setThis(old);
 	}
-	virtual Refer call(const Msg& msg) {
+	virtual Refer call(Msg& msg) {
 		_precall(msg);
 		Refer ret = Super::call(msg);
 
 		_postcall(msg);
 		return ret;
 	}
-	virtual Refer call(const Msg& msg) const {
+	virtual Refer call(Msg& msg) const {
 		_precall(msg);
 		Refer ret = Super::call(msg);
 
@@ -131,8 +131,8 @@ class Refer : public Node {
 	Node& operator*();
 	const Node& operator*() const;
 
-	virtual CStrong call(const Msg& msg) const { return _bean.call(msg); }
-	virtual Strong call(const Msg& msg) { return _bean.call(msg); }
+	virtual Refer call(Msg& msg) const { return _bean.call(msg); }
+	virtual Refer call(Msg& msg) { return _bean.call(msg); }
 
 	Result& bind(Refer& it) {
 		return bind(it.get());
@@ -297,7 +297,7 @@ class MethodDelegator : public TRefer<Method>, public Runnable {
 		wbool ret = Super::isConsumable(msg);
 		if(ret)
 			_captureLocals();
-		return Super::call(msg);
+		return Super::call(msg); // TODO: msg is const instance.
 	}
 
 	Result& _captureLocals() {
@@ -338,13 +338,13 @@ class Method : public Object, public Runnable {
 		WRD_IS_THIS(const Classes)
 		return _params;
 	}
-	virtual Refer call(const Msg& msg) {
+	virtual Refer call(Msg& msg) {
 		if(isRunnable(msg))
 			return run(msg);
 			
 		return Super::call(msg);
 	}
-	virtual Refer call(const Msg& msg) const {
+	virtual Refer call(Msg& msg) const {
 		if(isRunnable(msg())
 			return run(msg);
 			

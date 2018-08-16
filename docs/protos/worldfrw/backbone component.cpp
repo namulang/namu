@@ -188,6 +188,10 @@ class Instance : Thing {
 }
 class Msg : public Thing {
 	String _name;
+	Msg();
+	Msg(const String& new_name);
+	Msg(......);
+
 	String& getName() {
 		WRD_IS_THIS(String)
 		return _name;
@@ -197,6 +201,7 @@ class Msg : public Thing {
 		return _name;
 	}
 
+	//	사용자가 World코드에서 함수의 인자로 const를 준경우는 Args의 임의의 원소1개가 Refer<const T>로 되어있을 것이다.
 	Args _args;
 	Args& getArgs() {
 		WRD_IS_THIS(Args)
@@ -296,7 +301,7 @@ class Node : public ? {
 		This& unconst = const_cast<This&>(*this);
 		return _get(true, [&name](Node& e) { return e.getName() == name; });
 	}
-	virtual Refer call(const Msg& msg) {
+	virtual Refer call(Msg& msg) {
 		Strong classs, locals;
 		_precall(classs, locals);
 		
@@ -323,7 +328,7 @@ class Node : public ? {
 		spaces.setClasss(*classs);
 		spaces.setLocals(*locals);
 	}
-	virtual Refer call(const Msg& msg) const {
+	virtual Refer call(Msg& msg) const {
 		Strong classs, locals;
 		_precall(classs, locals);
 
