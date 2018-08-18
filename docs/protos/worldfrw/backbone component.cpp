@@ -202,13 +202,13 @@ class Msg : public Thing {
 	}
 
 	//	사용자가 World코드에서 함수의 인자로 const를 준경우는 Args의 임의의 원소1개가 Refer<const T>로 되어있을 것이다.
-	Args _args;
-	Args& getArgs() {
+	Array _args;
+	Manipulatable& getArgs() {
 		WRD_IS_THIS(Args)
 		return _args;
 	}
-	const Args& getArgs() const {
-		WRD_IS_THIS(const Args)
+	const Manipulatable& getArgs() const {
+		WRD_IS_THIS(const Manipulatable)
 		return _args;
 	}
 
