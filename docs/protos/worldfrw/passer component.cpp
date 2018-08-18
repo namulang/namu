@@ -406,6 +406,9 @@ class Method : public Object, public Runnable {
 				return false;
 		return true;
 	}
+	//	오직 메소드만 Static여부를 반환한다:
+	// 		Variable의 static여부는 판단이 불가능하다. Managed는 가능한데, Native로 static MyObject my; 처럼 만든 variable은 불가능하기 때문이다.
+virtual bool isStatic() const { return false; }
 };
 
 
@@ -431,6 +434,9 @@ class MgdMethod: public Method {
 	virtual Refer _onRun(const Msg& msg) {
 		// TODO: do something with scope obj.
 		return _block.execute();
+	}
+	virtual bool isStatic() const {
+		// TODO:
 	}
 };
 

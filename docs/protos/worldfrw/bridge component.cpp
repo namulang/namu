@@ -127,6 +127,5 @@ class TNativeMethoder<Ret, T, true, Args...> : public TNativeMethod<T> {
             return Refer();
         return Refer( _fptr(args...) );
 	}
+	virtual bool isStatic() const { return true; }
 };
-
-
