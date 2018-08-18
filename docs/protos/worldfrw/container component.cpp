@@ -1,6 +1,50 @@
 //	Container:
 //		All contianers in Worldlang are binders to Object, unlikely natvie C++ template container. (ex, vector<T>)
-class Containable {
+class Manipulatable {
+	virtual Result& set(const Iterator& pos, Node& to_bind) = 0;
+	Result& set(const Iterator& pos, const Node& to_clone);
+	Result& set(windex n, const Node& to_clone);
+	Result& set(windex n, Node& to_bind);
+
+	//	메소드 은닉을 위하여 virtual 메소드를 private로 만들어 redirection 한다.
+	virtual Node& _get(windex n) = 0;
+	Node& get(windex n) {
+		WRD_IS_THIS(Node)
+		return _get(n);
+	}
+	const Node& get(windex n) const {
+		This& unconst = const_cast<This&>(this);
+		return unconst.get(n);
+	}
+
+	//	사용자가 Iteration을 상속할 수 있도록 하기 위한 메소드.
+	virtual TStrong<Iteration> _onCreateIteration(Container& origin, windex n) = 0;
+
+	virtual wcount getSize() const = 0;
+
+	virtual Iterator _getIterator(windex n) = 0;
+	virtual CIterator _getIterator(windex n) const = 0;
+	Iterator getIterator(windex n) { return _getIterator(n); }
+	CIterator getIterator(windex n) const { return _getIterator(n); }
+
+	Iterator getHead();
+	CIterator getHead() const;
+	Iterator getTail();
+	CIterator getTail() const;
+
+	Result& each(function<Result&(Node&)> lambda);
+	Result& each(function<Result&(const Node&)> lambda) const;
+	Result& each(Method& lambda);
+
+	virtual const Class& getTrait() const = 0;
+	
+	//	this method can't be defined at Containable interface class:
+	//		because this is interface class, it can't have metaclass.
+	//		if it can't have metaclass, binder can't distinguish given 
+	//		type parameter T is valid or not. so it can't be binded.
+	virtual TStrong<Containable> deepclone() const = 0;
+};
+class Containable : public Manipulatable {
 	//	we can gives container local variable:
 	//		if we give local variable to container, Array().toStrong() 
 	//		func will return heap cloned instance.
@@ -25,22 +69,6 @@ class Containable {
 	//			output:
 	//				arr[0] = 5, arr2[0] = 3
 	//				arr[1] = 10, arr2[1] = 10
-	virtual Result& set(const Iterator& pos, Node& to_bind) = 0;
-	Result& set(const Iterator& pos, const Node& to_clone);
-	Result& set(windex n, const Node& to_clone);
-	Result& set(windex n, Node& to_bind);
-
-	//	메소드 은닉을 위하여 virtual 메소드를 private로 만들어 redirection 한다.
-	virtual Node& _get(windex n) = 0;
-	Node& get(windex n) {
-		WRD_IS_THIS(Node)
-		return _get(n);
-	}
-	const Node& get(windex n) const {
-		This& unconst = const_cast<This&>(this);
-		return unconst.get(n);
-	}
-
 	virtual Result& insert(const Iterator& pos, Node& to_bind) = 0;
 	Result& insert(const Iterator& pos, const Node& to_clone);
 	Result& insert(windex n, Node& to_bind);
@@ -83,32 +111,6 @@ class Containable {
 	windex pop();
 	Result& deq();
 	
-	//	사용자가 Iteration을 상속할 수 있도록 하기 위한 메소드.
-	virtual TStrong<Iteration> _onCreateIteration(Container& origin, windex n) = 0;
-
-	virtual wcount getSize() const = 0;
-
-	virtual Iterator _getIterator(windex n) = 0;
-	virtual CIterator _getIterator(windex n) const = 0;
-	Iterator getIterator(windex n) { return _getIterator(n); }
-	CIterator getIterator(windex n) const { return _getIterator(n); }
-
-	Iterator getHead();
-	CIterator getHead() const;
-	Iterator getTail();
-	CIterator getTail() const;
-
-	Result& each(function<Result&(Node&)> lambda);
-	Result& each(function<Result&(const Node&)> lambda) const;
-	Result& each(Method& lambda);
-
-	virtual const Class& getTrait() const = 0;
-	
-	//	this method can't be defined at Containable interface class:
-	//		because this is interface class, it can't have metaclass.
-	//		if it can't have metaclass, binder can't distinguish given 
-	//		type parameter T is valid or not. so it can't be binded.
-	virtual TStrong<Containable> deepclone() const = 0;
 };
 
 class Iteratable {
