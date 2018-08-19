@@ -82,7 +82,7 @@ class TNativeCaller: public Method {
 		if(Super::_onRun(msg))
 			return SuperFail.err();
 
-		return _unpack(msg.getArgs());
+		return _unpackAndCall(msg.getArgs());
 	}
 };
 

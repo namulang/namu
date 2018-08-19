@@ -55,13 +55,12 @@ class InstanceBlock : public Thing {
 //				//	그러나 space 자체에 무언가를 추가하는 것은 권장된다.
 //				scope.enq(...); // FIFO로 항상 구성되어야 하므로 push가 아니라 enq를 해야한다.
 class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 된다. mappingtable에 등록하지 않는다.
-	enum SpaceIndex {
-		SPACE_START = 0,
-		LOCAL = SPACE_START,
-		CLASS,
-		GLOBAL,
-		SPACE_END = LOCAL
-	};
+	friend class Object;
+	friend class Method;
+
+	static const int LOCAL = 0;
+	static const int CLASS = 1;
+	static const int GLOBAL = 2;
 	class Spaces : public Chain::Control {
 		Array& getGlobals() { return get(GLOBAL);
 		const Array& getGlobals() const { return get(GLOBAL); }
@@ -78,13 +77,7 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 	Spaces& getControl() { return Super::getControl().toSub<Spaces>(); }
 	const Spaces& getControl() const { return Super::getControl().toSub<Spaces>(); }
 
-	Result& setThis(Object& newone);
-	Object& getThis();
-	const Object& getThis() const;
-	Result& setMe(Method& newone);
-	Method& getMe();
-	const Method& getMe() const;
-
+	virtual TStrong<Control> _onCreateControl(Chain& origin) { return new Spaces(origin); }
 	virtual Result& initialize() {
 		if(Super::initialize()) // it will call release().
 			return supererr.warn();
@@ -109,4 +102,20 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 	Node& operator[](windex n) { return get(n);
 	const Node& operator[](windex n) const { return get(n); }
 	virtual Result& release();
+
+	virtual Result& insert(....); // LocalSpace에만 insert가 되어야한다.
+	Result& replace(....); // 없을때는 insert. 있으면 set.
+	virtual Result& remove(......);
+
+	Result& stack(Object& thisptr) {
+		getControl().set(CLASS, thisptr.getMembers());
+		replace("this", thisptr);
+		// TODO: 나중에 unstackObject을 위해서 큐를 가지고 있어야 한다. 복원해줘야 함. this도.
+	}
+	Result& stack(Method& me) {
+		// TODO: unstackMethod() 했을때를 대비해서 어디 index까지 pop해야 하는지 알고 있어야 한다. me도 복원해야 함.
+		replace("me", me);
+	}
+	Result& unstack(Object& thisptr);
+	Result& unstack(Method& me);
 };

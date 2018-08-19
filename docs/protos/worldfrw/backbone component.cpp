@@ -294,47 +294,18 @@ class Node : public ? {
 		WRD_IS_THIS(Node)
 		return getMembers()[n];
 	}
+	virtual Refer call(Msg& msg) = 0;
+	virtual wbool isConst() const { return false; }
+	virtual const Origin& getOrigin() const {
+		static Origin inner;
+		return inner;
+	}
 	Node& get(const String& name) {
 		return _get(false, [&name](Node& e) { return e.getName() == name; });
 	}
 	const Node& get(const String& name) const {
 		This& unconst = const_cast<This&>(*this);
 		return _get(true, [&name](Node& e) { return e.getName() == name; });
-	}
-	virtual Refer call(Msg& msg) {
-		Strong classs, locals;
-		_precall(classs, locals);
-		
-		Refer ret(_get(false, [&msg](Node& e) { return e.isConsumable(msg); }));
-		
-		_postcall(classs, locals);
-		return ret;
-	}
-	virtual wbool isConst() const { return false; }
-	virtual const Origin& getOrigin() const {
-		static Origin inner;
-		return inner;
-	}
-	void _precall(Strong& classs, Strong& locals) {
-		Scope::Spaces& spaces = scope.getControl();
-		classs = spaces.getClasss(); // 1 means class space on scope.
-		locals = spaces.getLocals(); // 2 means local space.
-		spaces.setClasss(_getMembers());
-		spaces.setLocals(Array()); // every call() creates temporary local spaces.
-		scope.setThis(*this);
-	}
-	void _postcall(Strong& classs, Strong& locals) {
-		Scope::Spaces& spaces = scope.getControl();
-		spaces.setClasss(*classs);
-		spaces.setLocals(*locals);
-	}
-	virtual Refer call(Msg& msg) const {
-		Strong classs, locals;
-		_precall(classs, locals);
-
-		Refer ret(_get(true, [&msg](Node& e) { return e.isConsumable(msg); })); // _get() returns const Node&. so Refer object, ret, is const Refer. its ref.isConst() will return true.
-		_postcall(classs, locals);
-		return ret;
 	}
 	Node& _get(wbool want_const, std::function<wbool(Node&)> tester) {
 		WRD_IS_THIS(Node)

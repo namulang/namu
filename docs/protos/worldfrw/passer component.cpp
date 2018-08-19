@@ -1,6 +1,6 @@
 class Runnable {
 	static const String RUN = "@run"; // 앞에 @를 붙인 이유는 월드 코드상에서 이 함수를 명시적으로 호출 할 수 없게 하기 위해서다. 
-	wbool isRunnable(Msg& msg) const { return msg.getName() == RUN; }
+	wbool _isRunnable(Msg& msg) const { return msg.getName() == RUN; }
 	virtual Result& run(Msg& msg) const = 0;
 };
 
@@ -12,31 +12,11 @@ class Runnable {
 //		4. const 와 nonconst를 구분해야 하는가?
 //	여기서
 class Object : public CompositNode {
-	Object() : Super() {
-	}
-
-	void _stack(Scope& scope, TStrong<Object>& origin, Msg& msg) const {
-		origin = scope.getThis();
-		scope.setThis(msg.getArgs().getTail());
-	}
-	void _unstack(Scope& scope, TStrong<Object>& origin) const {
-		scope.setThis(*origin);
-	}
 	virtual Refer call(Msg& msg) {
-		Scope& scope = ... // TODO:
-		TStrong<Object> origin;
-		_stack(scope, origin, msg);
-		Refer ret = Super::call(msg);
-
-		_unstack(scope, origin);
-		return ret;
+		return Refer(get(msg.getArgs()[0].to<String>()));
 	}
 	virtual Refer call(Msg& msg) const {
-		_stack(msg);
-		Refer ret = Super::call(msg);
-
-		_unstack(msg);
-		return ret;
+		return Refer(get(msg.getArgs()[0].to<String>()));
 	}
 	virtual wbool isConsumable(const Msg& msg) const {
 		return	msg.getArgs().getLength() <= 0	&&
@@ -341,13 +321,13 @@ class Method : public Object, public Runnable {
 		return _params;
 	}
 	virtual Refer call(Msg& msg) {
-		if(isRunnable(msg))
+		if(_isRunnable(msg))
 			return run(msg);
 			
 		return Super::call(msg);
 	}
 	virtual Refer call(Msg& msg) const {
-		if(isRunnable(msg())
+		if(_isRunnable(msg())
 			return run(msg);
 			
 		return Super::call(msg);
@@ -362,35 +342,13 @@ class Method : public Object, public Runnable {
 		return consted->run(msg);
 	}
 	virtual Refer run(Msg& msg) const {
-		if( ! isRunnable(msg)) {
+		if( ! _isRunnable(msg)) {
 			WrongParam.warn()
 			return Refer();
 		}
-
-		windex boundary = locals.getLength();
-		TStrong<Method> origin;
-		_stack(scope, origin);
-
-		This* unconst = const_cast<This*>(this);
-		Refer ret = unconst->_onRun(msg);
-
-		_unstack(scope, boundary, origin);
-		return ret;
+		return _onRun(msg);
 	}
-	//	ready CallStack:
-	virtual Result& _stack(Scope& scope, TStrong<Method>& origin) const {
-		origin = scope.getMe();
-		return scope.setMe(*origin);
-	}
-
-	virtual Result& _unstack(Scope& scope, windex boundary, const TStrong<Method>& origin) const {
-		Array& locals = scope.getControl().getLocals();
-		while(locals.getLength() > boundary)
-			locals.deq();
-		return scope.setMe(*origin);
-	}
-
-	virtual Refer _onRun(Msg& msg) = 0;
+	virtual _onRun(Msg& msg) const = 0;
 	virtual wbool isConsumable(const Msg& msg) const {
 		Args& args = msg.getArgs();
 		const Classes& params = getParams();
@@ -410,7 +368,7 @@ class Method : public Object, public Runnable {
 	}
 	//	오직 메소드만 Static여부를 반환한다:
 	// 		Variable의 static여부는 판단이 불가능하다. Managed는 가능한데, Native로 static MyObject my; 처럼 만든 variable은 불가능하기 때문이다.
-virtual bool isStatic() const { return false; }
+	virtual bool isStatic() const { return false; }
 };
 
 
@@ -422,22 +380,19 @@ class MgdMethod: public Method {
 	TStrong<Origin> _origin;
 	virtual const Origin& getOrigin() { return *_origin; }
 
-	virtual Result& _stack(Scope& scope, TStrong<Method>& origin) const
-	{
-		if(Super::_stack(scope, origin))
-			return superfail.warn("");
-
-		Array& locals = scope.getControl().getLocals();
-		locals.enq(getArgs();
-		return locals.enq(getNestedMethods());
-	}
-
 	BlockStmt _block;
 	virtual Refer _onRun(Msg& msg) {
-		// TODO: do something with scope obj.
- 
-			
-		return _block.execute();
+		Scope& scope = ...;
+		scope.stack(*this);
+		if( ! isStatic())
+			scope.stack(msg.getTail());
+		
+		Refer ret = _block.execute();
+
+		if( ! isStatic())
+			scope.unstack(msg.getTail());
+		scope.unstack(*this);
+		return ret;
 	}
 	virtual bool isStatic() const {
 		// TODO:
