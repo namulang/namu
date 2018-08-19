@@ -79,8 +79,8 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 	const Spaces& getControl() const { return Super::getControl().toSub<Spaces>(); }
 
 	Result& setThis(Object& newone);
-	Node& getThis();
-	const Node& getThis() const;
+	Object& getThis();
+	const Object& getThis() const;
 	Result& setMe(Method& newone);
 	Method& getMe();
 	const Method& getMe() const;

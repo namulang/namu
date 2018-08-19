@@ -1,7 +1,7 @@
 class Runnable {
 	static const String RUN = "@run"; // 앞에 @를 붙인 이유는 월드 코드상에서 이 함수를 명시적으로 호출 할 수 없게 하기 위해서다. 
-	wbool isRunnable(const Msg& msg) const { return msg.getName() == RUN; }
-	virtual Result& run(const Msg& msg) const = 0;
+	wbool isRunnable(Msg& msg) const { return msg.getName() == RUN; }
+	virtual Result& run(Msg& msg) const = 0;
 };
 
 //	Object는 Members를 가져야 하는데, 여러가지를 고려해야만 한다.
@@ -15,25 +15,27 @@ class Object : public CompositNode {
 	Object() : Super() {
 	}
 
-	void _precall(Msg& msg) const {
-		Object& old = msg.getThis();
-		msg._setThis(*this);
+	void _stack(Scope& scope, TStrong<Object>& origin, Msg& msg) const {
+		origin = scope.getThis();
+		scope.setThis(msg.getArgs().getTail());
 	}
-	void _postcall(Msg& msg) const {
-		msg._setThis(old);
+	void _unstack(Scope& scope, TStrong<Object>& origin) const {
+		scope.setThis(*origin);
 	}
 	virtual Refer call(Msg& msg) {
-		_precall(msg);
+		Scope& scope = ... // TODO:
+		TStrong<Object> origin;
+		_stack(scope, origin, msg);
 		Refer ret = Super::call(msg);
 
-		_postcall(msg);
+		_unstack(scope, origin);
 		return ret;
 	}
 	virtual Refer call(Msg& msg) const {
-		_precall(msg);
+		_stack(msg);
 		Refer ret = Super::call(msg);
 
-		_postcall(msg);
+		_unstack(msg);
 		return ret;
 	}
 	virtual wbool isConsumable(const Msg& msg) const {
@@ -306,7 +308,7 @@ class MethodDelegator : public TRefer<Method>, public Runnable {
 		return _captures.bind(scope.getControl().getLocals().deepclone()); // Containable --implicitCasting--> Array at inside of _captures.
 	}
 
-	virtual Result& run(const Msg& msg) const {
+	virtual Result& run(Msg& msg) const {
 		if( ! isBind()) return notbind.warn()
 		if( ! _this) return get().run(msg);
 
@@ -352,14 +354,14 @@ class Method : public Object, public Runnable {
 	}
 	//	execute와 run은 다르다:
 	//		execute는 인자를 받지 않는다. 그래서 여기서는 run이라는 함수로 구분할 수 밖에 없었다.
-	virtual Refer run(const Msg& msg) {
+	virtual Refer run(Msg& msg) {
 		if(isConst()) // const 방어.
 			return NotAllow.warn("...").returns<Refer>();
 
 		const This* consted = this;
 		return consted->run(msg);
 	}
-	virtual Refer run(const Msg& msg) const {
+	virtual Refer run(Msg& msg) const {
 		if( ! isRunnable(msg)) {
 			WrongParam.warn()
 			return Refer();
@@ -381,14 +383,14 @@ class Method : public Object, public Runnable {
 		return scope.setMe(*origin);
 	}
 
-	virtual Result& _unstack(Scope& origin, windex boundary, const TStrong<Method>& origin) const {
+	virtual Result& _unstack(Scope& scope, windex boundary, const TStrong<Method>& origin) const {
 		Array& locals = scope.getControl().getLocals();
 		while(locals.getLength() > boundary)
 			locals.deq();
 		return scope.setMe(*origin);
 	}
 
-	virtual Refer _onRun(const Msg& msg) = 0;
+	virtual Refer _onRun(Msg& msg) = 0;
 	virtual wbool isConsumable(const Msg& msg) const {
 		Args& args = msg.getArgs();
 		const Classes& params = getParams();
@@ -431,8 +433,10 @@ class MgdMethod: public Method {
 	}
 
 	BlockStmt _block;
-	virtual Refer _onRun(const Msg& msg) {
+	virtual Refer _onRun(Msg& msg) {
 		// TODO: do something with scope obj.
+ 
+			
 		return _block.execute();
 	}
 	virtual bool isStatic() const {

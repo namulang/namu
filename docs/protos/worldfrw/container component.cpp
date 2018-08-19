@@ -16,21 +16,26 @@ class Manipulatable {
 		This& unconst = const_cast<This&>(this);
 		return unconst.get(n);
 	}
+	Node& getHead() { return get(0); }
+	const Node& getHead() const { return get(0); }
+	Node& getTail() { return get(getLength()-1); }
+	const Node& getTail() const { return get(getLength()-1); }
+	
 
 	//	사용자가 Iteration을 상속할 수 있도록 하기 위한 메소드.
 	virtual TStrong<Iteration> _onCreateIteration(Container& origin, windex n) = 0;
 
-	virtual wcount getSize() const = 0;
+	virtual wcount getLength() const = 0;
 
 	virtual Iterator _getIterator(windex n) = 0;
 	virtual CIterator _getIterator(windex n) const = 0;
 	Iterator getIterator(windex n) { return _getIterator(n); }
 	CIterator getIterator(windex n) const { return _getIterator(n); }
 
-	Iterator getHead();
-	CIterator getHead() const;
-	Iterator getTail();
-	CIterator getTail() const;
+	Iterator getStart();
+	CIterator getStart() const;
+	Iterator getEnd();
+	CIterator getEnd() const;
 
 	Result& each(function<Result&(Node&)> lambda);
 	Result& each(function<Result&(const Node&)> lambda) const;
@@ -162,7 +167,7 @@ class Container : public Object, public Containable {
 	virtual CIterator getIterator(windex n) const {
 		return CIterator(_onCreateIteration(*this, n));
 	}
-	virtual wcount getSize() const { return _size; }
+	virtual wcount getLength() const { return _size; }
 	Result& _setSize(wcount newone) { _size = newone; }
 	wcount _size;
 
@@ -345,9 +350,9 @@ class Chain : public Container {
 			_DEFINE_BEAN(TStrong<Iteration>())
 			return origin._onCreateIteration(n);
 		}
-		virtual wcount getSize() const {
+		virtual wcount getLength() const {
 			_DEFINE_BEAN(0)
-			return origin.getSize();
+			return origin.getLength();
 		}
 		virtual Iterator getIterator(windex n) {
 			_DEFINE_BEAN(Iterator)
