@@ -71,18 +71,18 @@ class TNativeCaller: public Method {
     }
 
 	template <size_t... n>
-	Object* _unpackAndCast(const Args& args, index_sequence<n...>) {
+	Object* _castEach(const Args& args, index_sequence<n...>) {
 		return _callNative((args[n].toImplicitly<Args>()->toSub<Args>())...);
 	}
-	Object* _unpackAndCall(const Args& args) {
-		return _unpackAndCast(args, index_sequence_for<Args...>{});
+	Object* _serialize(const Args& args) {
+		return _castEach(args, index_sequence_for<Args...>{});
 	}
 	
 	virtual Refer _onRun(const Msg& msg) {
 		if(Super::_onRun(msg))
 			return SuperFail.err();
 
-		return _unpackAndCall(msg.getArgs());
+		return _serialize(msg.getArgs());
 	}
 };
 
