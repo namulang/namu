@@ -78,7 +78,7 @@ class TNativeCaller: public Method {
 		return _castEach(args, index_sequence_for<Args...>{});
 	}
 	
-	virtual Refer _onRun(const Msg& msg) {
+	virtual Refer _onRun(Msg& msg) {
 		if(Super::_onRun(msg))
 			return SuperFail.err();
 
