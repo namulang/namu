@@ -58,11 +58,11 @@ class TBlackBox<T*> : public Object {
 }
 
 //	Lambda method is just a ManagedMethod nested and assigned by MethodDelegator.
-template <typename T, typename... Args>
+template <typename T, typename... ArgTypes>
 class TNativeCaller: public Method {
-	virtual Refer _callNative(Args... args) = 0;
+	virtual Refer _callNative(ArgTypes... args) = 0;
 
-	Result& _validateArgs(Args&... args) {
+	Result& _validateArgs(ArgTypes&... args) {
         void* tray[] = {&args...};
         for(int n=0; n < sizeof...(args) ;n++)
             if( ! tray[n])
@@ -72,12 +72,16 @@ class TNativeCaller: public Method {
 
 	template <size_t... n>
 	Object* _castEach(const Args& args, index_sequence<n...>) {
-		return _callNative((args[n].toImplicitly<Args>()->toSub<Args>())...);
+		return _callNative((args[n].toImplicitly<Args>()->toSub<ArgTypes>())...);
 	}
 	Object* _serialize(const Args& args) {
-		return _castEach(args, index_sequence_for<Args...>{});
+		return _castEach(args, index_sequence_for<ArgTypes...>{});
 	}
-	
+	Node& _getThis() {
+		if(isStatic())
+			return NULL;
+		return args[args.size()-1];
+	}
 	virtual Refer _onRun(Msg& msg) {
 		if(Super::_onRun(msg))
 			return SuperFail.err();
@@ -86,18 +90,18 @@ class TNativeCaller: public Method {
 	}
 };
 
-template <typename T, typename... Args>
-class TNativeCtor: public TNativeCaller<T, Args...> {
-	virtual Refer _callNative(Args... args) {
+template <typename T, typename... ArgTypes>
+class TNativeCtor: public TNativeCaller<T, ArgTypes...> {
+	virtual Refer _callNative(T* thisptr, ArgTypes... args) {
         if(_validateArgs(args...))
             return Refer();
         return new T(args...);
     }
 };
 
-template <typename Ret, typename T, wbool IS_STATIC, typename... Args>
-class TNativeMethoder : public TNativeCaller<T, Args...> {
-	typedef Ret (T::*Fptr)(Args...);
+template <typename Ret, typename T, wbool IS_STATIC, typename... ArgTypes>
+class TNativeMethoder : public TNativeCaller<T, ArgTypes...> {
+	typedef Ret (T::*Fptr)(ArgTypes...);
 	Fptr _fptr;
 
 	TNativeMethoder(Fptr fptr) : Super(), _fptr(fptr) {}
@@ -105,16 +109,27 @@ class TNativeMethoder : public TNativeCaller<T, Args...> {
 	//	TODO: static 메소드의 구현. (Method에 static여부가 있어야 할 것 같다.
 	//	TODO: CtorWrapper를 static 메소드 화.
 
-	virtual Refer _callNative(Args... args) 
+	virtual Refer _callNative(T* thisptr, ArgTypes... args) 
 		if(_validateArgs(args...))
             return Refer();
-        return Refer( (_getThis().*_fptr)(args...) );
+		if(isConst())
+		{
+			const T& thisptr = _getThis().toSub<const T>();
+			if(thisptr.isNull())
+				return Refer();
+			return Refer((thisptr.*_fptr)(args...) );
+		}
+
+		T& thisptr = _getThis().toSub<T>();
+		if(thisptr.isNull())
+			return Refer();
+        return Refer( (thisptr.*_fptr)(args...) );
 	}
 };
 
-template <typename Ret, typename T, typename... Args>
-class TNativeMethoder<Ret, T, true, Args...> : public TNativeMethod<T> {
-	typedef Ret (T::*Fptr)(Args...);
+template <typename Ret, typename T, typename... ArgTypes>
+class TNativeMethoder<Ret, T, true, ArgTypes...> : public TNativeMethod<T> {
+	typedef Ret (T::*Fptr)(ArgTypes...);
 	Fptr _fptr;
 
 	TNativeMethoder(Fptr fptr) : Super(), _fptr(fptr) {}
@@ -122,7 +137,7 @@ class TNativeMethoder<Ret, T, true, Args...> : public TNativeMethod<T> {
 	//	TODO: static 메소드의 구현. (Method에 static여부가 있어야 할 것 같다.
 	//	TODO: CtorWrapper를 static 메소드 화.
 
-	virtual Refer _callNative(Args... args) 
+	virtual Refer _callNative(ArgTypes... args) 
 		if(_validateArgs(args...))
             return Refer();
         return Refer( _fptr(args...) );

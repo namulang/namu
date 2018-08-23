@@ -197,6 +197,14 @@ class Refer : public Node {
 		return bind(it.toSub<Object>()); // null이 들어가도 상관없다.
 	}
 
+	//	TODO: const cast.
+	//		Refer는 알다시피 World의 const를 구현하는 핵심 클래스다.
+	//		Node& n = Refer(const T&..);
+	//		n.to<T>(); // REJECT. return Refer(Null)
+	//		T& cast = n.toSub<T>(); // REJECT. cast.isNull() == true.
+	//		const T& cast = n.toSub<const T>(); // OK.
+	//		Refer& cast1 = n.to<const T>(); // OK. cast1->isNull() != true
+	//	위의 코드가 가능하도록 해야 한다.
 	virtual Node& _toSub(const Class& cls) {
 		if( ! _bean ||
 			! _bean->isSub(cls))
@@ -358,7 +366,7 @@ class Method : public Object, public Runnable {
 		//	case 2: consume as a method.
 		if(msg.getName() != RUN)
 			return false;
-		if(args.getLength() != params.getLength()) 
+		if(args.getLength() != params.getLength())
 			return false;
 
 		for(int n=0; n < args.getLength(); n++)
