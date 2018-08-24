@@ -393,7 +393,10 @@ class MgdMethod: public Method {
 		Scope& scope = ...;
 		scope.stack(*this);
 		if( ! isStatic())
-			scope.stack(msg.getTail());
+		{
+			Refer<Object> thisptr(msg.getTail(), isConst());
+			scope.stack(thisptr);
+		}
 		
 		Refer ret = _block.execute();
 

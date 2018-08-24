@@ -12,8 +12,65 @@
 //			A();
 //			A(int a);
 //
-//			void print(int a, float b, char* c);
+//			void print(int a, float b, char* c)
+//			void foo();
+//			static int foo1();
+//			int foo1(char);
+//			void foo1(float) const;
+//			void foo1(float);
 //		};
+
+class FuncChecker {
+public:
+    enum FunctionType {
+        NONE = 0,
+        NON_MEMBER_FUNCTION = 1,
+        MEMBER_FUNCTION = 10,
+        CONST_MEMBER_FUNCTION = 100,
+    };
+
+    virtual int getTypeValue() const = 0;
+    bool isConst() const { return getTypeValue() & CONST_MEMBER_FUNCTION; }
+    bool isMember() const { return getTypeValue() & MEMBER_FUNCTION; }
+	bool isNonMember() const { return getTypeValue() & NON_MEMBER_FUNCTION; }
+    bool isExist() const { return getTypeValue(); }
+};
+//	FuncChecker creation macro:
+//		usage:
+//			WRD_CREATE_FUNC_CHECKER(printChecker, print)
+//			typedef printChecker<void, A, int, float, char*> printC;
+//			printC::isConst() == false
+//			printC::isMember() == true
+//			printC::isNonMember() == false
+//			printC::isExist() == true
+//
+//			WRD_CREATE_FUNC_CHECKER(foo1Checker, print)
+//			typedef foo1Checker<int, A> foo1Checker;
+//			foo1Checker::isConst() == false
+//			foo1Checker::isMember() == false
+//			foo1Checker::isNonMember() == true
+WRD_CREATE_FUNC_CHECKER(F1, foo)
+#define WRD_CREATE_FUNC_CHECKER(NAME, FUNC_NAME) \
+    template<typename R, typename V, typename ... Args>    \
+    class NAME : public FuncChecker\
+    {    \
+        R (V::*FPTR)(Args...);    \
+        R (V::*FCPTR)(Args...) const;    \
+        R (*FFPTR)(Args...);    \
+        template<typename C> static constexpr auto _foo1(int) -> decltype(FFPTR = &C::FUNC_NAME, int{}) { return FuncChecker::NON_MEMBER_FUNCTION; }    \
+        template<typename> static constexpr auto _foo1(...) { return NONE; }    \
+        template<typename C> static constexpr auto _foo2(int) -> decltype(FPTR = &C::FUNC_NAME, int{}) { return FuncChecker::MEMBER_FUNCTION; }    \
+        template<typename> static constexpr auto _foo2(...) { return NONE; }    \
+        template<typename C> static constexpr auto _foo3(int) -> decltype(FCPTR = &C::FUNC_NAME, int{}) { return FuncChecker::CONST_MEMBER_FUNCTION; }    \
+        template<typename> static constexpr auto _foo3(...) { return NONE; }\
+    \
+    public:    \
+        virtual int getTypeValue() const {    \
+            static constexpr int value = _foo1<V>(int{}) + _foo2<V>(int{}) + _foo3<V>(int{});    \
+            return value;    \
+        }\
+    };
+
 #define WRD_CLASS_1(THIS)	\
 	WRD_CLASS_3(THIS, Adam, ())
 #define WRD_CLASS_2(THIS, MEMBERS)	\
@@ -33,7 +90,7 @@ public:	\
 #define WRD_CTOR(...)	\
 	mems += TNativeCtor<This, __VA_ARGS__>();
 #define WRD_API(RET, NAME, ARGS)	\
-	mems += TNativeMethoder<RET, This, StaticMethodChecker<decltype(&This::NAME)>::IS, WRD_UNWRAP ARGS>(&This::NAME);
+	mems += TNativeMethoder<RET, This, WRD_UNWRAP ARGS>(&This::NAME);
 //	C++17이 적용되면 inline이 가능하므로 위처럼 memps를 만들지않고 static 클래스가 시작과 동시에 인스턴스를 만들어서 
 //	지정한 Class 밑으로 들어가게 하면 된다.
 
@@ -102,6 +159,7 @@ class TNativeCtor: public TNativeCaller<T, ArgTypes...> {
 template <typename Ret, typename T, wbool IS_STATIC, typename... ArgTypes>
 class TNativeMethoder : public TNativeCaller<T, ArgTypes...> {
 	typedef Ret (T::*Fptr)(ArgTypes...);
+	typedef T Class;
 	Fptr _fptr;
 
 	TNativeMethoder(Fptr fptr) : Super(), _fptr(fptr) {}
@@ -125,6 +183,9 @@ class TNativeMethoder : public TNativeCaller<T, ArgTypes...> {
 			return Refer();
         return Refer( (thisptr.*_fptr)(args...) );
 	}
+
+	virtual bool isStatic() const {
+		return StaticMethodChecker<decltype(&Class::NAME)>::IS
 };
 
 template <typename Ret, typename T, typename... ArgTypes>
