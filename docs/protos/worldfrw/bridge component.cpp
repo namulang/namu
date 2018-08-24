@@ -49,10 +49,11 @@ public:
 //			foo1Checker::isConst() == false
 //			foo1Checker::isMember() == false
 //			foo1Checker::isNonMember() == true
-WRD_CREATE_FUNC_CHECKER(F1, foo)
-#define WRD_CREATE_FUNC_CHECKER(NAME, FUNC_NAME) \
+#define WRD_CREATE_FUNC_CHECKER_FOR_CTOR(...) 
+#define _FUNC_CHECKER_NAME(NAME) NAME##Checker___
+#define WRD_CREATE_FUNC_CHECKER_FOR_API(NAME, FUNC_NAME) \
     template<typename R, typename V, typename ... Args>    \
-    class NAME : public FuncChecker\
+    class _FUNC_CHECKER_NAME(NAME) : public FuncChecker\
     {    \
         R (V::*FPTR)(Args...);    \
         R (V::*FCPTR)(Args...) const;    \
@@ -75,7 +76,13 @@ WRD_CREATE_FUNC_CHECKER(F1, foo)
 	WRD_CLASS_3(THIS, Adam, ())
 #define WRD_CLASS_2(THIS, MEMBERS)	\
 	WRD_CLASS_3(THIS, Adam, MEMBERS)
+
+#define _CLASS_TEMPLATE(E) WRD_CREATE_FUNC_CHECKER_FOR_##E
+#define _REFLECT(E)	WRD_##E
+
 #define WRD_CLASS_3(THIS, SUPER, MEMBERS)	\
+private:	\
+	WRD_EACH(_CLASS_TEMPLATE, MEMBERS)	\
 public:	\
 	typedef THIS This;	\
 	typedef SUPER Super;	\
@@ -84,13 +91,14 @@ public:	\
 		Container& mems = init.getMembers();	\
 		WRD_EACH(_REFLECT, MEMBERS)	\
 	}
-#define _REFLECT(E)	\
-	WRD_##E
 
 #define WRD_CTOR(...)	\
 	mems += TNativeCtor<This, __VA_ARGS__>();
 #define WRD_API(RET, NAME, ARGS)	\
-	mems += TNativeMethoder<RET, This, WRD_UNWRAP ARGS>(&This::NAME);
+	{	\
+		static NAME##Checker___<RET, This, WRD_UNWRAP ARGS> NAME##_checker___;	\
+		mems += TNativeMethoder<RET, This, WRD_UNWRAP ARGS>(NAME##_checker___, &This::NAME);	\
+	}
 //	C++17이 적용되면 inline이 가능하므로 위처럼 memps를 만들지않고 static 클래스가 시작과 동시에 인스턴스를 만들어서 
 //	지정한 Class 밑으로 들어가게 하면 된다.
 
@@ -154,15 +162,17 @@ class TNativeCtor: public TNativeCaller<T, ArgTypes...> {
             return Refer();
         return new T(args...);
     }
+	virtual bool isConst() const { return true; }
+	virtual bool isStatic() const { return true; }
 };
 
-template <typename Ret, typename T, wbool IS_STATIC, typename... ArgTypes>
+template <typename Ret, typename T, typename... ArgTypes>
 class TNativeMethoder : public TNativeCaller<T, ArgTypes...> {
 	typedef Ret (T::*Fptr)(ArgTypes...);
 	typedef T Class;
 	Fptr _fptr;
 
-	TNativeMethoder(Fptr fptr) : Super(), _fptr(fptr) {}
+	TNativeMethoder(const FuncChecker& checker, Fptr fptr) : Super(), _checker(checker), _fptr(fptr) {}
 
 	//	TODO: static 메소드의 구현. (Method에 static여부가 있어야 할 것 같다.
 	//	TODO: CtorWrapper를 static 메소드 화.
@@ -184,12 +194,13 @@ class TNativeMethoder : public TNativeCaller<T, ArgTypes...> {
         return Refer( (thisptr.*_fptr)(args...) );
 	}
 
-	virtual bool isStatic() const {
-		return StaticMethodChecker<decltype(&Class::NAME)>::IS
+	virtual bool isStatic() const {	return _checker.isNonMember(); }
+	virtual bool isConst() const { return _checker.isConst(); }
+	const FuncChecker& _checker;
 };
 
 template <typename Ret, typename T, typename... ArgTypes>
-class TNativeMethoder<Ret, T, true, ArgTypes...> : public TNativeMethod<T> {
+class TNativeMethoder<Ret, T, ArgTypes...> : public TNativeMethod<T> {
 	typedef Ret (T::*Fptr)(ArgTypes...);
 	Fptr _fptr;
 
