@@ -93,12 +93,29 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 	using Super::get;
 	Node& get(const String& name) {
 		WRD_IS_THIS(Node)
+		Node& res = ....;
+		return _filterConst(res);
 	}
-	const Node& get(const String& name);
+	Node& _filterConst(Node& it) {
+		if(_is_obj_const && ! it.isConst())
+			return nullreference<Node>();
+		return it;
+	}
+	const Node& get(const String& name) const {
+		This& cast = const_cast<This&>(*this);
+		return cast.get(n);
+	}
 	Node& operator[](const String& name) { return get(name); }
 	const Node& operator[](const String& name) { return get(name); }
-	Node& get(windex n);
-	const Node& get(windex n);
+	Node& get(windex n) {
+		WRD_IS_THIS(Node)
+		Node& res = ...;
+		return _filterConst(res);
+	}
+	const Node& get(windex n) const {
+		This& cast = const_cast<This&>(*this);
+		return cast.get(n);
+	}
 	Node& operator[](windex n) { return get(n);
 	const Node& operator[](windex n) const { return get(n); }
 	virtual Result& release();
@@ -111,11 +128,30 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 		getControl().set(CLASS, thisptr.getMembers());
 		replace("this", thisptr);
 		// TODO: 나중에 unstackObject을 위해서 큐를 가지고 있어야 한다. 복원해줘야 함. this도.
+		
+	}
+	Result& stack(const Object& thisptr) {
+		Result& res = stack(const_cast<Object&>(thisptr));
+		if(res)
+			return failsuper;
+		_is_obj_const = true;
+		return res;
 	}
 	Result& stack(Method& me) {
 		// TODO: unstackMethod() 했을때를 대비해서 어디 index까지 pop해야 하는지 알고 있어야 한다. me도 복원해야 함.
 		replace("me", me);
 	}
-	Result& unstack(Object& thisptr);
+	Result& unstack(Object&/*only used for distinguish method and object*/) {
+		// TODO: object queue를 pop해서 이전에 두고 있던 objectspace로 복귀해야 한다.
+		_obj.release();
+		_is_obj_const = false;
+	}
 	Result& unstack(Method& me);
+
+	Result& _release() {
+		return _unstack(nullreference<Object>());
+	}
+
+	TWeak<Object> _obj;
+	wbool _is_obj_const;
 };
