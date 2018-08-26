@@ -328,7 +328,7 @@ class Chain : public Container {
 			Chain& origin = getOriginContainers();	\
 			WRD_IS_NULL(origin, RET)
 
-		virtual Result& set(const Iterator& pos, Node& it) {
+		virtual Result& set(const Iterator& pos, const Node& it) {
 			_DEFINE_BEAN(nullerr)
 			return origin.set(pos, it);
 		}
@@ -338,7 +338,7 @@ class Chain : public Container {
 			return origin._get(n);
 		}
 			
-		virtual Result& insert(const Iterator& pos, Strong it) {
+		virtual Result& insert(const Iterator& pos, const Node& it) {
 			_DEFINE_BEAN(nullerr)
 			return origin.insert(pos, it);
 		}
