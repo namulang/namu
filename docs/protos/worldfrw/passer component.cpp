@@ -392,21 +392,35 @@ class MgdMethod: public Method {
 	virtual Refer _onRun(Msg& msg) {
 		Scope& scope = ...;
 		scope.stack(*this);
-		if( ! isStatic())
-		{
-			Refer<Object> thisptr(msg.getTail(), isConst());
-			scope.stack(thisptr);
-		}
+		_stack(scope, msg);
 		
 		Refer ret = _block.execute();
 
+		_unstack(scope, msg):
+		return ret;
+	}
+	Result& _stack(Scope& scope, Msg& msg) {
+		if( ! isStatic())
+			return noneedto;
+
+		if(isConst())
+			return _stackObjectSpace<const Object>(scope, msg);
+		return _stackObjectSpace<Object>(scope, msg);
+	}
+	template <typename T>
+	Result& _stackObjectSpace(scope& scope, Msg& msg) {
+		return scope.stack(Msg.getTail().cast<T>());
+	}
+	Result& _unstack(Scope& scope, Msg& msg) {
 		if( ! isStatic())
 			scope.unstack(msg.getTail());
 		scope.unstack(*this);
-		return ret;
 	}
 	virtual bool isStatic() const {
-		// TODO:
+		//	TODO: by compiler
+	}
+	virtual wbool isConst() const {
+		//	TODO: by compiler
 	}
 };
 
