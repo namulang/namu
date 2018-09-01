@@ -1,7 +1,6 @@
 class Runnable {
-	static const String RUN = "@run"; // 앞에 @를 붙인 이유는 월드 코드상에서 이 함수를 명시적으로 호출 할 수 없게 하기 위해서다. 
-	wbool _isRunnable(Msg& msg) const { return msg.getName() == RUN; }
-	virtual Result& run(Msg& msg) const = 0;
+	virtual Refer run(Msg& msg) const = 0;
+	virtual Refer run(Msg& msg) = 0;
 };
 
 //	Object는 Members를 가져야 하는데, 여러가지를 고려해야만 한다.
@@ -316,7 +315,7 @@ class Delegator : public TRefer<Method>, public Runnable {
 		return _captures.bind(scope.getControl().getLocals().deepclone()); // Containable --implicitCasting--> Array at inside of _captures.
 	}
 
-	virtual Result& run(Msg& msg) const {
+	virtual Refer run(Msg& msg) const {
 		if( ! isBind()) return notbind.warn()
 		if( ! _this) return get().run(msg);
 
@@ -326,7 +325,7 @@ class Delegator : public TRefer<Method>, public Runnable {
 		spaces.setLocals(_captures);
 		sapces.setClasss(_this->getMembers());
 
-		Result& res = get().run(msg);
+		Refer res = get().run(msg);
 
 		spaces.setLocals(*locals);
 		spaces.setClasss(*classs);
