@@ -18,8 +18,9 @@ class Object : public CompositNode {
 		return Refer(get(msg.getArgs()[0].to<String>()));
 	}
 	virtual wbool isConsumable(const Msg& msg) const {
-		return	msg.getArgs().getLength() <= 0	&&
-				msg.getName() == getName();
+		if( ! Super::isConsumable(msg))
+			return false;
+		return	msg.getArgs().getLength() <= 0;
 	}
 
 	//	객체의 멤버변수:
@@ -303,8 +304,7 @@ class Delegator : public TRefer<Method>, public Runnable {
 	}
 
 	virtual wbool isConsumable(const Msg& msg) {
-		wbool ret = Super::isConsumable(msg);
-		if(ret)
+		if(Super::isConsumable(msg))
 			_captureLocals();
 		return Super::call(msg); // TODO: msg is const instance.
 	}
@@ -325,11 +325,11 @@ class Delegator : public TRefer<Method>, public Runnable {
 		spaces.setLocals(_captures);
 		sapces.setClasss(_this->getMembers());
 
-		Refer res = get().run(msg);
+		Refer ret = get().run(msg);
 
 		spaces.setLocals(*locals);
 		spaces.setClasss(*classs);
-		return res;
+		return ret;
 	}
 };
 
@@ -343,6 +343,7 @@ typedef TArray<Method> Methods;
 //		3. 모든 Method가 BlockStmt를 가지는 것은 아니다. 오직 ManagedMethod만 BlockStmt를 갖는다.
 class Method : public Object, public Runnable {
 	Classes _params;
+	static const String RUN = "@run"; // @는 이것이 system internal한 함수라는 뜻이다. 월드코드에서는 앞에 @를 붙여서 함수를 정의할 수 없어야 한다.
 	const Classes& getParams() const { 
 		WRD_IS_THIS(const Classes)
 		return _params;
@@ -354,14 +355,14 @@ class Method : public Object, public Runnable {
 		return Super::call(msg);
 	}
 	virtual Refer call(Msg& msg) const {
-		if(_isRunnable(msg())
-			return run(msg);
+		if(msg.getName() == RUN) // 이 RUN의 이름은 오직 run()만을 위해서만 사용되므로 인자체크를 하지 않아도 된다.
+			return run(msg); // 이 run은 invisible하다.
 			
 		return Super::call(msg);
 	}
 	//	execute와 run은 다르다:
 	//		execute는 인자를 받지 않는다. 그래서 여기서는 run이라는 함수로 구분할 수 밖에 없었다.
-	virtual Refer run(Msg& msg) {
+	virtual Refer run(Msg& msg) const {
 		if(isConst()) // const 방어.
 			return NotAllow.warn("...").returns<Refer>();
 
@@ -377,17 +378,16 @@ class Method : public Object, public Runnable {
 	}
 	virtual _onRun(Msg& msg) const = 0;
 	virtual wbool isConsumable(const Msg& msg) const {
+		if(Super::isConsumable(msg)) //	case 1: user wants to treat this method as a object.
+			return true;
+
+		//	case 2: consume as a method.
 		Args& args = msg.getArgs();
 		const Classes& params = getParams();
-		//	case 1: when user try to let this consume msg as a class.
-		if(msg.getName() == getName())
-			return args.getLength() <= 0;
-		//	case 2: consume as a method.
 		if(msg.getName() != RUN)
 			return false;
 		if(args.getLength() != params.getLength())
 			return false;
-
 		for(int n=0; n < args.getLength(); n++)
 			if( ! args[n].to(params[n]).isBind())
 				return false;
