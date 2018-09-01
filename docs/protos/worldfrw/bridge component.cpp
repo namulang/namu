@@ -122,7 +122,7 @@ class TBlackBox<T*> : public Object {
     T** _bean;
 }
 
-//	Lambda method is just a ManagedMethod nested and assigned by MethodDelegator.
+//	Lambda method is just a ManagedMethod nested and assigned by Delegator.
 template <typename T, typename... ArgTypes>
 class TNativeCaller: public Method {
 	virtual Refer _callNative(ArgTypes... args) = 0;

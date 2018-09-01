@@ -290,7 +290,7 @@ class TRefer<const T> : public Refer {
 	con4 = con3 // ok
 	con4.isExist() // false
 
-class MethodDelegator : public TRefer<Method>, public Runnable {
+class Delegator : public TRefer<Method>, public Runnable {
 	//	captures:
 	//		The Captures are captured from the localspace and classspace 
 	//		when a instance of this class born.
