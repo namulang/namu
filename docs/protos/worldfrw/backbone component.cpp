@@ -38,9 +38,13 @@ class Thing {
 	}
 	Refer to(const Class& cls) const {
 		This& unconsted = const_cast<T&>(*this);
-		wbool should_const = cls.isSuper(getClass());
+		wbool should_const = cls.isSuper(getClass()); // upcasting일때만 const를 붙여야 한다.
 		return Refer(unconsted.to(cls), should_const);
 	}
+	//	to는 명시적캐스팅이다. 
+	//		사용자의 개입이 가능한 유일한 캐스팅의 1 종류이며, 
+	//		A타입에 대한 명시적캐스팅은 어떠한 타입이 나올지 제한되지 않는다.
+	//		A클래스.to()는 전혀다른 B객체가 나올 수도 있다.
 	template <typename T>
 	TRefer<T> to() {
 		return TRefer<T>(to(T::getStaticClass()));
@@ -57,14 +61,14 @@ class Thing {
 	//
 	//			2) 명시적캐스팅:	Refer Thing::to(Class&), Refer Thing::to<T>()
 	//			[visible] 명시적 캐스팅은 총 3가지로 이루어져있다.
-	//				1. 업캐스팅(Thing::toSub(Class&)를 사용한다)
+	//				1. 다운/업캐스팅(Thing::toSub(Class&)를 사용한다)
 	//				2. 묵시적 캐스팅 파이프
 	//				3. 생성자를 통한 캐스팅: cls가 가지고 있는 생성자를 통해서,
 	//				변환이 가능한지 확인하고, 가능하다면 이걸 이용한다.
 	//				속도가 매우 오래걸린다.
 	//
 	//			3) 묵시적캐스팅:	2번과 동일
-	//			[visible, but, automatically] 명시적 캐스팅은 속도를 많이 필요로 하기,
+	//			[invisible, automatically] 명시적 캐스팅은 속도를 많이 필요로 하기,
 	//			때문에 매 함수 호출시 인자마다 호출될 캐스팅으로는 적합하지 않다.
 	//			묵시적 캐스팅은 pretype에 대해서 빠르게 동작하는 캐스팅을 의미하며,
 	//			사용자가 캐스팅하는 주체가 pretype일 경우에 한해서 자동으로 묵시적
@@ -90,8 +94,11 @@ class Thing {
 	}
 	template <typename T>
 	const T& toSub() const {
-		This& unconst = const_cast<This&>(*this);
-		return unconst._toSub(T::getStaticClass());
+		return _toSub(T::getStaticClass());
+	}
+	virtual const Node& _toSub(const Class& cls) const {
+		This& cast = const_cast<This&>(*this);
+		return cast._toSub(cls);
 	}
 	
 	virtual Refer toImplicitly(const Class& cls) {

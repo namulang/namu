@@ -174,6 +174,18 @@ class Refer : public Node {
 	Strong _bean;
 	const Class& _cls;
 
+	virtual Refer to(const Class& cls) {
+		if( ! _bean)
+			return Super::to(cls);
+
+		//	다운캐스팅으로 _bean->to()가 동작한 경우에만 isConst()가 영향을 미치게 된다.
+		//	고찰 결과, _bean->to()가 전혀다른 타입(사용자가 정의한)으로 값복사되어 반환된 경우는
+		//	isConst()가 동작하지 않아야 한다.
+		if(cls.isSub(_cls))
+			return Super::to(cls);
+		return _bean->to(cls);
+	}
+
 	virtual Result& assign(const Thing& it) {
 		// Null체크는 Thing::assign()에서 한다.
 		WRD_IS_ERR(Super::assign(it))
@@ -206,8 +218,16 @@ class Refer : public Node {
 	//		Refer& cast1 = n.to<const T>(); // OK. cast1->isNull() != true
 	//	위의 코드가 가능하도록 해야 한다.
 	virtual Node& _toSub(const Class& cls) {
-		if( ! _bean ||
-			! _bean->isSub(cls))
+		if(isConst())
+			return TNuller<Node>::ref;
+
+		const This* cast = this;
+		Node& ret = const_cast<Node&>(cast->_toSub(cls));
+
+		return ret;
+	}
+	virtual const Node& _toSub(const Class& cls) const {
+		if( ! _bean || ! _bean->isSub(cls))
 			return TNuller<Node>::ref;
 
 		return *_bean;
