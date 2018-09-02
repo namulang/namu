@@ -116,9 +116,8 @@ class Refer : public Node {
 	virtual Refer call(Msg& msg) const { return _bean.call(msg); }
 	virtual Refer call(Msg& msg) { return _bean.call(msg); }
 
-	Result& bind(Refer& it) {
-		return bind(it.get());
-	}
+	Result& bind(Refer& it) { return bind(it.get()); }
+	Result& bind(const Refer& it) { return bind(it.get()); }
 	Result& bind(Node& it) {
 		//	NullCheckDelayed 철학에 의해서 WRD_IS_NULL(it)을 하지 않는다. 
 		const Class& cls = it.getClass();
@@ -131,17 +130,16 @@ class Refer : public Node {
 		_is_const = false;
 		return Success;
 	}
-	Result& bind(const Refer& it) {
-		return bind(it.get());
-	}
 	wbool isBinded();
 	operator wbool();
 	Result& bind(const Node& it) {
+		if( ! isConst())
+			return noneed;	// 이 Refer는 Refer<T>이다. 지금 하려는 것은 즉, A* a = (const A*) a1; 를 하려고 하는것과 같다.
+
 		This& unconst = const_cast<This&>(*this);
 		Result& res = unconst.bind(const_cast<Object&>(it));
 		WRD_IS_ERR(res)
 
-		_is_const = true;
 		return res;
 	}
 	Result& unbind() {
