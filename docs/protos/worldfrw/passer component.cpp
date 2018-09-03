@@ -1,6 +1,5 @@
 class Runnable {
 	virtual Refer run(Msg& msg) const = 0;
-	virtual Refer run(Msg& msg) = 0;
 };
 
 //	Object는 Members를 가져야 하는데, 여러가지를 고려해야만 한다.
@@ -346,14 +345,15 @@ class Method : public Object, public Runnable {
 		WRD_IS_THIS(const Classes)
 		return _params;
 	}
+	wbool _isForRun(const Msg& msg) const { return msg.getName() == RUN; }
 	virtual Refer call(Msg& msg) {
-		if(_isRunnable(msg))
+		if(_isForRun(msg))
 			return run(msg);
 			
 		return Super::call(msg);
 	}
 	virtual Refer call(Msg& msg) const {
-		if(msg.getName() == RUN) // 이 RUN의 이름은 오직 run()만을 위해서만 사용되므로 인자체크를 하지 않아도 된다.
+		if(_isForRun(msg))
 			return run(msg); // 이 run은 invisible하다.
 			
 		return Super::call(msg);
@@ -361,17 +361,9 @@ class Method : public Object, public Runnable {
 	//	execute와 run은 다르다:
 	//		execute는 인자를 받지 않는다. 그래서 여기서는 run이라는 함수로 구분할 수 밖에 없었다.
 	virtual Refer run(Msg& msg) const {
-		if(isConst()) // const 방어.
-			return NotAllow.warn("...").returns<Refer>();
+		if( ! _isForRun(msg))
+			return wrongparam.warn().returns<Refer>();
 
-		const This* consted = this;
-		return consted->run(msg);
-	}
-	virtual Refer run(Msg& msg) const {
-		if( ! _isRunnable(msg)) {
-			WrongParam.warn()
-			return Refer();
-		}
 		return _onRun(msg);
 	}
 	virtual _onRun(Msg& msg) const = 0;
@@ -382,8 +374,6 @@ class Method : public Object, public Runnable {
 		//	case 2: consume as a method.
 		Args& args = msg.getArgs();
 		const Classes& params = getParams();
-		if(msg.getName() != RUN)
-			return false;
 		if(args.getLength() != params.getLength())
 			return false;
 		for(int n=0; n < args.getLength(); n++)
