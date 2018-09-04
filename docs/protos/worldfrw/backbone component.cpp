@@ -304,6 +304,7 @@ class Node : public ? {
 		return getMembers()[n];
 	}
 	virtual Refer call(Msg& msg) = 0;
+	virtual Refer call(Msg& msg) const = 0;
 	virtual wbool isConst() const { return false; }
 	virtual const Origin& getOrigin() const {
 		static Origin inner;

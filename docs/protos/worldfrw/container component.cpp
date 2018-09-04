@@ -34,7 +34,9 @@ class Manipulatable {
 
 	Iterator getStart();
 	CIterator getStart() const;
-	Iterator getEnd();
+	Iterator getLast(); // Last Element
+	CIterator getLast() const;
+	Iterator getEnd(); // Last + 1. mostly this's just null.
 	CIterator getEnd() const;
 
 	Result& each(function<Result&(Node&)> lambda);

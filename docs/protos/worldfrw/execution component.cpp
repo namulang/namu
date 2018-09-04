@@ -158,39 +158,61 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 
 //	요구조건:
 //		[] execute()시, owner가 없다면 실행해서는 안된다. (= 런타임에 간접적인 로직 변경 방지)
-class Stmt : public Object {
+//	Expression은 invisible 하다.
+//	Static method call에 해당하는 것을 담당한다.
+class Expr : public Node {
 	TStrong<Origin> _origin;
 	virtual const Origin& getOrigin() { return *_origin; }
-	virtual const Result& execute() = 0;
 	virtual const Container& getMembers() {
 		return getClass().getMembers();
 	}
-};
 
-//	Expression은 invisible 하다.
-class Expr : public Stmt {
-	Msg _msg;
-	const Msg& getMsg() const;
+	Refer _caller; // expression or object 가 여기에 들어간다. isConst()여부를 따져야 하기 때문에 TStrong은 될 수 없다.
+	Refer& getCaller();
+	const Refer& getCaller() const;
+
+	mutable Msg _msg;
 	Msg& getMsg();
+	const Msg& getMsg() const;
 
-	TStrong _caller; // expression or object 가 여기에 들어간다.
-	Node& getCaller();
-	const Node& getCaller() const;
+	virtual Refer execute() { 
+		if( ! _caller)
+			return Refer();
 
-	virtual Result& execute() const; // const 상태에서도 excute가 가능하게 해야한다.
-	// Expression은 반환형이 될 수 없다는 것이다.
-	// visible할 필요가 없으므로 Refer로 하지 않는다.
-	mutable TStrong _returned; 
-	Node& getReturned() const;
+		// 이 함수는 nonconst이기 때문에 _caller로부터 나온 Node는 nonconst이며, nonconst call은, isConst() 여부에
+		// 따라서 적절한 값이 실행되게 된다.
+		return _caller->call(_msg); // 놀랍게도 이 1줄만으로도 모든게 끝난다.
+	}
+	virtual Refer execute() const { 
+		if( ! _caller)
+			return Refer();
+
+		return _caller->call(_msg); // execute() nonconst와는 코드를 합칠 수 없다. 여기의 _caller가 const냐 아니냐가 중요학 ㅣ때문이다.
+	}
+	virtual Refer call(Msg& msg) { return execute(); }
+	virtual Refer call(Msg& msg) const { return execute(); }
 
 	virtual Refer to(const Class& cls) const {
 		if(cls.isSub(Node::getStaticClass())) 
-		{
-			execute();
-			return Refer(cls, _returned);
-		}
+			return execute();
 
 		return Super::to(cls);
+	}
+};
+
+class ThisExpr : public Expr {
+	virtual Refer execute() {
+		_msg.push(_caller);
+		Refer ret = Super::execute();
+		_msg.pop();
+		return ret
+	}
+
+	virtual Refer execute() const {
+		_msg.push(_caller);
+		Refer ret = Super::execute();
+		_msg.pop();
+		return ret
 	}
 };
 
