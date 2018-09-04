@@ -155,3 +155,54 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 	TWeak<Object> _obj;
 	wbool _is_obj_const;
 };
+
+//	요구조건:
+//		[] execute()시, owner가 없다면 실행해서는 안된다. (= 런타임에 간접적인 로직 변경 방지)
+class Stmt : public Object {
+	TStrong<Origin> _origin;
+	virtual const Origin& getOrigin() { return *_origin; }
+	virtual const Result& execute() = 0;
+	virtual const Container& getMembers() {
+		return getClass().getMembers();
+	}
+};
+
+//	Expression은 invisible 하다.
+class Expr : public Stmt {
+	Msg _msg;
+	const Msg& getMsg() const;
+	Msg& getMsg();
+
+	TStrong _caller; // expression or object 가 여기에 들어간다.
+	Node& getCaller();
+	const Node& getCaller() const;
+
+	virtual Result& execute() const; // const 상태에서도 excute가 가능하게 해야한다.
+	// Expression은 반환형이 될 수 없다는 것이다.
+	// visible할 필요가 없으므로 Refer로 하지 않는다.
+	mutable TStrong _returned; 
+	Node& getReturned() const;
+
+	virtual Refer to(const Class& cls) const {
+		if(cls.isSub(Node::getStaticClass())) 
+		{
+			execute();
+			return Refer(cls, _returned);
+		}
+
+		return Super::to(cls);
+	}
+};
+
+class BlockStmt : public Stmt {
+	typedef vector<Stmt> Stmts; // stmts은 invisible하게 한다는 뜻이다.
+	tStmts _stmts;
+	Stmts& getStmts();
+	const Stmts& getStmts() const;
+	virtual Result& execute() const {
+		for(auto s in _stmts)
+			s.execute();
+		return Success;
+	}
+};
+
