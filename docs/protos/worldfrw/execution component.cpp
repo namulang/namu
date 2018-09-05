@@ -74,8 +74,8 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 		const Array& getLocals() const { return get(LOCAL); }
 		Result& setLocals(Array& newone) { return set(LOCAL, newone); }
 	};
-	Spaces& getControl() { return Super::getControl().toSub<Spaces>(); }
-	const Spaces& getControl() const { return Super::getControl().toSub<Spaces>(); }
+	Spaces& getControl() { return Super::getControl().down<Spaces>(); }
+	const Spaces& getControl() const { return Super::getControl().down<Spaces>(); }
 
 	virtual TStrong<Control> _onCreateControl(Chain& origin) { return new Spaces(origin); }
 	virtual Result& initialize() {

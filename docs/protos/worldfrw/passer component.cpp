@@ -53,13 +53,13 @@ class Object : public CompositNode {
 		return Success;
 	}
 	Iterator _getSubContainerHead(windex n) {
-		Container& sub = getMembers().toSub<Chain>().getController()[n];
+		Container& sub = getMembers().down<Chain>().getController()[n];
 		WRD_IS_NULL(sub, Iterator())
 
 		return sub.getHead();
 	}
 	CIterator _getSubContainerHead(windex n) const {
-		const Container& sub = getMembers().toSub<Chain>().getController()[n];
+		const Container& sub = getMembers().down<Chain>().getController()[n];
 		WRD_IS_NULL(sub, CIterator())
 
 		return sub.getHead();
@@ -200,30 +200,30 @@ class Refer : public Node {
 		}
 	
 		//	sharable 이라면 이렇게 간단히 끝난다.
-		Refer& refered = it.toSub<This>();
+		Refer& refered = it.down<This>();
 		if(refered.isExist())
 			return bind(refered);
-		return bind(it.toSub<Object>()); // null이 들어가도 상관없다.
+		return bind(it.down<Object>()); // null이 들어가도 상관없다.
 	}
 
 	//	TODO: const cast.
 	//		Refer는 알다시피 World의 const를 구현하는 핵심 클래스다.
 	//		Node& n = Refer(const T&..);
 	//		n.to<T>(); // REJECT. return Refer(Null)
-	//		T& cast = n.toSub<T>(); // REJECT. cast.isNull() == true.
-	//		const T& cast = n.toSub<const T>(); // OK.
+	//		T& cast = n.down<T>(); // REJECT. cast.isNull() == true.
+	//		const T& cast = n.down<const T>(); // OK.
 	//		Refer& cast1 = n.to<const T>(); // OK. cast1->isNull() != true
 	//	위의 코드가 가능하도록 해야 한다.
-	virtual Node& _toSub(const Class& cls) {
+	virtual Node& _down(const Class& cls) {
 		if(isConst())
 			return TNuller<Node>::ref;
 
 		const This* cast = this;
-		Node& ret = const_cast<Node&>(cast->_toSub(cls));
+		Node& ret = const_cast<Node&>(cast->_down(cls));
 
 		return ret;
 	}
-	virtual const Node& _toSub(const Class& cls) const {
+	virtual const Node& _down(const Class& cls) const {
 		if( ! _bean || ! _bean->isSub(cls))
 			return TNuller<Node>::ref;
 

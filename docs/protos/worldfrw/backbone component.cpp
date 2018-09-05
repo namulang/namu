@@ -56,12 +56,12 @@ class Thing {
 
 	//	Casting:
 	//		World의 캐스팅은 다음으로 구분된다.
-	//			1) native 다운캐스팅:	thing::toSub<T>() Refer, Thing::toSub(Class&)
+	//			1) native 다운캐스팅:	thing::down<T>() Refer, Thing::down(Class&)
 	//			[invisible]	native에서 편의를 위해 제공되는 함수다.
 	//
 	//			2) 명시적캐스팅:	Refer Thing::to(Class&), Refer Thing::to<T>()
 	//			[visible] 명시적 캐스팅은 총 3가지로 이루어져있다.
-	//				1. 다운/업캐스팅(Thing::toSub(Class&)를 사용한다)
+	//				1. 다운/업캐스팅(Thing::down(Class&)를 사용한다)
 	//				2. 묵시적 캐스팅 파이프
 	//				3. 생성자를 통한 캐스팅: cls가 가지고 있는 생성자를 통해서,
 	//				변환이 가능한지 확인하고, 가능하다면 이걸 이용한다.
@@ -84,21 +84,21 @@ class Thing {
 	//	구체클래스로 캐스트한다. dynamic_cast와 동급이다.
 	//	invisible이다.
 	template <typename T>
-	T& toSub() {
-		return _toSub(T::getStaticClass());
+	T& down() {
+		return _down(T::getStaticClass());
 	}
-	virtual Node& _toSub(const Class& cls) {
+	virtual Node& _down(const Class& cls) {
 		if(isSub(cls))
 			return *this;
 		return TNuller<Node>::ref;
 	}
 	template <typename T>
-	const T& toSub() const {
-		return _toSub(T::getStaticClass());
+	const T& down() const {
+		return _down(T::getStaticClass());
 	}
-	virtual const Node& _toSub(const Class& cls) const {
+	virtual const Node& _down(const Class& cls) const {
 		This& cast = const_cast<This&>(*this);
-		return cast._toSub(cls);
+		return cast._down(cls);
 	}
 	
 	virtual Refer toImplicitly(const Class& cls) {

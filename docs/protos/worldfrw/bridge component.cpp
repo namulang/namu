@@ -137,7 +137,7 @@ class TNativeCaller: public Method {
 
 	template <size_t... n>
 	Object* _castEach(const Args& args, index_sequence<n...>) {
-		return _callNative((args[n].toImplicitly<Args>()->toSub<ArgTypes>())...);
+		return _callNative((args[n].toImplicitly<Args>()->down<ArgTypes>())...);
 	}
 	Object* _serialize(const Args& args) {
 		return _castEach(args, index_sequence_for<ArgTypes...>{});
@@ -182,13 +182,13 @@ class TNativeMethoder : public TNativeCaller<T, ArgTypes...> {
             return Refer();
 		if(isConst())
 		{
-			const T& thisptr = _getThis().toSub<const T>();
+			const T& thisptr = _getThis().down<const T>();
 			if(thisptr.isNull())
 				return Refer();
 			return Refer((thisptr.*_fptr)(args...) );
 		}
 
-		T& thisptr = _getThis().toSub<T>();
+		T& thisptr = _getThis().down<T>();
 		if(thisptr.isNull())
 			return Refer();
         return Refer( (thisptr.*_fptr)(args...) );
