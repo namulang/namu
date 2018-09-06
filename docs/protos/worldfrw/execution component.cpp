@@ -205,14 +205,14 @@ class ThisExpr : public Expr {
 		_msg.push(_caller);
 		Refer ret = Super::execute();
 		_msg.pop();
-		return ret
+		return ret;
 	}
 
 	virtual Refer execute() const {
 		_msg.push(_caller);
 		Refer ret = Super::execute();
 		_msg.pop();
-		return ret
+		return ret;
 	}
 };
 
