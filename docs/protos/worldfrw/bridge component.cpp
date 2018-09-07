@@ -124,7 +124,7 @@ class TBlackBox<T*> : public Object {
 
 //	Lambda method is just a ManagedMethod nested and assigned by Delegator.
 template <typename T, typename... ArgTypes>
-class TNativeCaller: public Method {
+class TNativeCaller: public ConsumableMethod {
 	virtual Refer _callNative(ArgTypes... args) = 0;
 
 	Result& _validateArgs(ArgTypes&... args) {

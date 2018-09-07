@@ -287,7 +287,8 @@ class TRefer<const T> : public Refer {
 	con4 = con3 // ok
 	con4.isExist() // false
 
-class Delegator : public TRefer<Method>, public Runnable {
+class Delegator : public Method {
+	TRefer<Method> _origin;
 	//	captures:
 	//		The Captures are captured from the localspace and classspace 
 	//		when a instance of this class born.
@@ -299,13 +300,11 @@ class Delegator : public TRefer<Method>, public Runnable {
 		WRD_IS_THIS(const Array)
 		return _captures;
 	}
-
 	virtual wbool isConsumable(const Msg& msg) {
 		if(Super::isConsumable(msg))
 			_captureLocals();
 		return Super::call(msg); // TODO: msg is const instance.
 	}
-
 	Result& _captureLocals() {
 		if(_captures.getLength() > 0)
 			return alreadydone;
@@ -327,6 +326,11 @@ class Delegator : public TRefer<Method>, public Runnable {
 		spaces.setLocals(*locals);
 		spaces.setClasss(*classs);
 		return ret;
+	}
+	virtual bool isStatic() const {
+		if( ! _origin)
+			return false;
+		return _origin->isStatic();
 	}
 };
 
