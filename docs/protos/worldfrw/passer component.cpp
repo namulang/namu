@@ -287,8 +287,16 @@ class TRefer<const T> : public Refer {
 	con4 = con3 // ok
 	con4.isExist() // false
 
+//	Delegator는 쉽게말하면 C#의 delegate, 함수포인터와 같은 것이다. 람다 혹은 closure가 아니다.
 class Delegator : public Method {
-	TRefer<Method> _origin;
+	TRefer<Method> _origin; // const 여부를 가지고 있어야 하므로 Refer로 정의한다.
+	//	모든 Delegator는 별도의 Classes _params를 갖는다:
+	//		즉 런타임에 메소드가 Delegator(= 함수포인터)에 할당이 일어날 경우
+	//		이 할당연산이 valid한지를 검사하게 되며, 틀린경우에는 에러처리한다.
+	//
+	//		Classes는 TStrong의 집합체이다:
+	//			값복사가 아니기때문에 복사로 인한 부담은 좀 줄어들 것이다.
+
 	//	captures:
 	//		The Captures are captured from the localspace and classspace 
 	//		when a instance of this class born.
@@ -301,10 +309,30 @@ class Delegator : public Method {
 		return _captures;
 	}
 	virtual wbool isConsumable(const Msg& msg) {
-		if(Super::isConsumable(msg))
-			_captureLocals();
-		return Super::call(msg); // TODO: msg is const instance.
+		if( ! _origin)
+			return false;
+		return _origin->isConsumable(msg);
 	}
+	virtual bool isStatic() const {
+		if( ! _origin)
+			return false;
+		return _origin->isStatic();
+	}
+	virtual Refer call(Msg& msg) const {
+		if( ! _origin)
+			return Refer();
+		return _origin->call(msg);
+	}
+	virtual Refer call(Msg& msg) {
+		if( ! _origin)
+			return Refer();
+		return _origin->call(msg);
+	}
+};
+
+
+//	Closure는 쉽게 말해서 런타임에 scope를 캡쳐한 함수를 정의하도록 하는 것이다.
+class Closure : public MgdMathod {
 	Result& _captureLocals() {
 		if(_captures.getLength() > 0)
 			return alreadydone;
@@ -327,11 +355,6 @@ class Delegator : public Method {
 		spaces.setClasss(*classs);
 		return ret;
 	}
-	virtual bool isStatic() const {
-		if( ! _origin)
-			return false;
-		return _origin->isStatic();
-	}
 };
 
 typedef TArray<Class> Classes;
@@ -342,7 +365,7 @@ typedef TArray<Method> Methods;
 //		메소드는 인자를 그때그때받아야 하므로 적합하지 않다.
 //		2. Method가 Stmt라면 블록문 안에 Method가 있을 수도 있어야 한다. 말이 안되지.
 //		3. 모든 Method가 BlockStmt를 가지는 것은 아니다. 오직 ManagedMethod만 BlockStmt를 갖는다.
-class Method : public Object, public Runnable {
+class Method : public Object {
 	Classes _params;
 	static const String RUN = "@run"; // @는 이것이 system internal한 함수라는 뜻이다. 월드코드에서는 앞에 @를 붙여서 함수를 정의할 수 없어야 한다.
 	const Classes& getParams() const { 
@@ -350,6 +373,11 @@ class Method : public Object, public Runnable {
 		return _params;
 	}
 	wbool _isForRun(const Msg& msg) const { return msg.getName() == RUN; }
+	//	오직 메소드만 Static여부를 반환한다:
+	// 		Variable의 static여부는 판단이 불가능하다. Managed는 가능한데, Native로 static MyObject my; 처럼 만든 variable은 불가능하기 때문이다.
+	virtual bool isStatic() const { return false; }
+};
+class ConsumableMethod : public Method {
 	virtual Refer call(Msg& msg) {
 		if(_isForRun(msg))
 			return run(msg);
@@ -385,14 +413,11 @@ class Method : public Object, public Runnable {
 				return false;
 		return true;
 	}
-	//	오직 메소드만 Static여부를 반환한다:
-	// 		Variable의 static여부는 판단이 불가능하다. Managed는 가능한데, Native로 static MyObject my; 처럼 만든 variable은 불가능하기 때문이다.
-	virtual bool isStatic() const { return false; }
 };
 
 
 
-class MgdMethod: public Method {
+class MgdMethod: public ConsumableMethod {
 	//	NestedMethods only can exists on method on Managed env:
 	Methods _nested_methods;
 	const Methods& getNestedMethods() { return _nested_methods; }
