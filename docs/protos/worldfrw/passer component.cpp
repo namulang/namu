@@ -331,8 +331,8 @@ class Delegator : public Method {
 };
 
 
-//	Closure는 쉽게 말해서 런타임에 scope를 캡쳐한 함수를 정의하도록 하는 것이다.
-class Closure : public MgdMathod {
+//	중첩 메소드는 지역변수를 참조할 수 있다: 중첩메소드 자체는 Closure가 아니다.
+class NestedMethod : public MgdMethod {
 	Result& _captureLocals() {
 		if(_captures.getLength() > 0)
 			return alreadydone;
@@ -376,8 +376,6 @@ class Method : public Object {
 	//	오직 메소드만 Static여부를 반환한다:
 	// 		Variable의 static여부는 판단이 불가능하다. Managed는 가능한데, Native로 static MyObject my; 처럼 만든 variable은 불가능하기 때문이다.
 	virtual bool isStatic() const { return false; }
-};
-class ConsumableMethod : public Method {
 	virtual Refer call(Msg& msg) {
 		if(_isForRun(msg))
 			return run(msg);
@@ -413,11 +411,14 @@ class ConsumableMethod : public Method {
 				return false;
 		return true;
 	}
+	virtual Closure closure(Object& obj) {
+		//	일반 메소드는 오로지 ObjectSpace에 대한 종속성을 갖을뿐 LocalSpace는 관계가 없다.
+		//	LocalSpace들은 메소드 자체가 생성해버리기 때문이다. 
+		return Closure(obj, *this);
+	}
 };
 
-
-
-class MgdMethod: public ConsumableMethod {
+class MgdMethod: public Method {
 	//	NestedMethods only can exists on method on Managed env:
 	Methods _nested_methods;
 	const Methods& getNestedMethods() { return _nested_methods; }
