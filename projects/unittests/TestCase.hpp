@@ -15,17 +15,15 @@ namespace NE
 	public:
 		typedef std::vector<TestCase*> TestCases;
 
-		void test();
+		bool test();
 		virtual const char* getName() const = 0;
 
 	protected:
 		virtual std::string _onTest() = 0;
 
-	private:
-		void _printResult(std::string result, std::chrono::milliseconds process_time) const;
-		std::chrono::milliseconds _getTime();
-
 	public:
+		static void printResult(bool is_success, std::string name, std::string msg, std::chrono::milliseconds process_time);
+		static std::chrono::milliseconds getTime();
 		static TestCases& getTests();
 	};
 }

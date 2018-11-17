@@ -92,7 +92,6 @@ namespace NE
                 }
             WRD_TEST( ! found)
 
-            
             return "";
         }
     };
