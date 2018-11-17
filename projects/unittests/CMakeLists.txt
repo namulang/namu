@@ -13,7 +13,7 @@ foreach(e ${sources})
 endforeach(e)
 #       define predefinitions:
 add_definitions(-DBUILD_TARGET_TESTER)
-add_definitions(-DNE_TAG="unittests")
+add_definitions(-DWRD_TAG="unittests")
 #       define libraries:
 set(dependencies independentor file-manipulator logger preferencer)
 foreach(e ${dependencies})
