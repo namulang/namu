@@ -218,6 +218,4 @@ def main():
     print("")
 
 main()
-
 print(" - end -")
-pause = input()
