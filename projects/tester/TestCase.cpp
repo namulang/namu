@@ -42,8 +42,9 @@ namespace NE
         return duration_cast<milliseconds>(system_clock::now().time_since_epoch());
     }
 
-    vector<TestCase*>& CLASS::getTests() {
-        static vector<TestCase*> collections;
+	CLASS::TestCases& CLASS::getTests()
+	{
+        static TestCases collections;
         return collections;
     }
 }

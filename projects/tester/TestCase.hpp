@@ -6,13 +6,15 @@
 
 namespace NE
 {	
-	#define NE_ASSERT_THEN_RETURN(expression)	\
+	#define WRD_TEST(expression)	\
 		if(expression)						\
 			return #expression;
 
 	class TestCase
 	{
 	public:
+		typedef std::vector<TestCase*> TestCases;
+
 		void test();
 		virtual const char* getName() const = 0;
 
@@ -24,6 +26,6 @@ namespace NE
 		std::chrono::milliseconds _getTime();
 
 	public:
-		static std::vector<TestCase*>& getTests();
+		static TestCases& getTests();
 	};
 }
