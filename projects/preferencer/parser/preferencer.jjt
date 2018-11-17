@@ -144,7 +144,7 @@ void statement() : {Token* key; Token* value;}
     <BOOL> key=<IDENTIFIER> <ASSIGN> value=bool_expr()     )
     {
         if(hasError) return;
-        NE_INFO("found %s = %s", key->image.c_str(), value->image.c_str());
+        WRD_INFO("found %s = %s", key->image.c_str(), value->image.c_str());
         _preferencer->onAddMember(_class, key->image, value->image);
     }
 }
@@ -157,7 +157,7 @@ void statements() : {}
     )*
     {
         _class = "";
-        NE_INFO("...statements end")
+        WRD_INFO("...statements end")
     }
 }
 
@@ -169,7 +169,7 @@ void class_declaration() : {Token* klass;}
         
         _class = klass->image;
         _preferencer->onAddClass(_class);
-        NE_INFO("class_declaration = \"%s\"", _class.c_str())
+        WRD_INFO("class_declaration = \"%s\"", _class.c_str())
     }
 }
 
@@ -188,7 +188,7 @@ void klass() : {}
 {
     class_declaration() (statements())*
     {
-        NE_INFO("...class end")
+        WRD_INFO("...class end")
     }
 }
 
@@ -196,6 +196,6 @@ void configure_file() : {}
 {
     (klass())*
     {
-        NE_INFO("...configure_file end")
+        WRD_INFO("...configure_file end")
     }
 }

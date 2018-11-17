@@ -3,6 +3,7 @@
 #include <logger.hpp>
 #include <algorithm>
 #include <map>
+
 namespace NE
 {
     namespace
@@ -120,11 +121,11 @@ namespace NE
             //  pre:
             if(file.isNull())
             {
-                NE_WARN("file is null")
+                WRD_WARN("file is null")
                 return false;
             }
 
-            NE_INFO("parse(%s)", file.getPath().c_str());
+            WRD_INFO("parse(%s)", file.getPath().c_str());
             AsciiStream stream(file);
             stream.initialize();
             

@@ -16,9 +16,9 @@ namespace NE
             WRD_TEST( ! &logger["ConsoleStream"])
             WRD_TEST( ! &logger["FileLogStream"])
 
-            NE_DUMP("D", "hello!")
-            NE_WARN("world!")
-            NE_ERROR("this is not error. paradox?")
+            WRD_DUMP("D", "hello!")
+            WRD_WARN("world!")
+            WRD_ERROR("this is not error. paradox?")
 
             class MyStream : public Stream {
             public:
@@ -37,9 +37,9 @@ namespace NE
             WRD_TEST(logger.dump("hello world"))
             WRD_TEST(cs->msg != "hello world")
 
-            NE_DUMP("D", "hello!")
-            NE_WARN("world!")
-            NE_ERROR("this is not error. paradox?")
+            WRD_DUMP("D", "hello!")
+            WRD_WARN("world!")
+            WRD_ERROR("this is not error. paradox?")
 
 
             type_bool found = false;
@@ -52,9 +52,9 @@ namespace NE
             WRD_TEST(logger.dump("let's go on 2nd phase."));
 
             BuildFeatures::Date date;
-            NE_INFO("today is %d-%d %d. %s.", date.getMonth(), date.getDay(), date.getYear(), "Nice start!")
-            NE_WARN("Fatal error! Fatal error! this PC should be infected to a virus immediatly!!!")
-            NE_ERROR("***backstabbing*** It's a joke. Carm down, my master.")
+            WRD_INFO("today is %d-%d %d. %s.", date.getMonth(), date.getDay(), date.getYear(), "Nice start!")
+            WRD_WARN("Fatal error! Fatal error! this PC should be infected to a virus immediatly!!!")
+            WRD_ERROR("***backstabbing*** It's a joke. Carm down, my master.")
 
             //WRD_TEST(logger.release()) -> can't call.            
 

@@ -8,7 +8,7 @@ namespace NE
     
     void THIS::handleUnexpectedToken(int expectedKind, const JJString& expectedToken, Token *actual, PRParser *parser)
     {
-        NE_ERROR("#%d [%d:%d] Expecting %s but got %s. We judged it as <%s>", 
+        WRD_ERROR("#%d [%d:%d] Expecting %s but got %s. We judged it as <%s>", 
             ++error_count, actual->beginLine, actual->beginColumn, 
             addUnicodeEscapes(expectedToken).c_str(), addUnicodeEscapes(actual->image).c_str(),
             getKind(actual->kind)
@@ -16,13 +16,13 @@ namespace NE
     }
     void THIS::handleParseError(Token *last, Token *unexpected, const JJSimpleString& production, PRParser *parser)
     {
-        NE_ERROR("#%d [%d:%d] Encountered: %s while parsing: %s", 
+        WRD_ERROR("#%d [%d:%d] Encountered: %s while parsing: %s", 
             ++error_count, unexpected->beginLine, unexpected->beginColumn, addUnicodeEscapes(unexpected->image).c_str(), production.c_str()
         );
     }
     void THIS::handleOtherError(const JJString& message, PRParser *parser) 
     {
-        NE_ERROR("#%d Error: %s", message.c_str());
+        WRD_ERROR("#%d Error: %s", message.c_str());
     }
 
     const char* THIS::getKind(type_int kind) 
