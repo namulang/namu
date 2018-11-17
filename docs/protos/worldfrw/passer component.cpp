@@ -288,7 +288,12 @@ class TRefer<const T> : public Refer {
 	con4.isExist() // false
 
 //	Delegator는 쉽게말하면 C#의 delegate, 함수포인터와 같은 것이다. 람다 혹은 closure가 아니다.
-class Delegator : public Method {
+class Delegator : public Method { // StaticDelegator
+	//	_origin은 생성시에만 할당되며 이후, 외부에서 변경이 불가능해야 한다:
+	//		이걸 허용하면 Delegator는 범용 Delegator가 되며 컴파일타임에 에러를 검출 할 수 없게 된다.
+	//		컴파일 validation시에 변수들 객체를 직접 생성까지는 가야한다. Delegator도 생성까지는
+	//		이루어 져야만 한다.
+	Delegator(Method& me) : Super(me)/*_params가 복사된다*/, _origin(me) {}
 	TRefer<Method> _origin; // const 여부를 가지고 있어야 하므로 Refer로 정의한다.
 	//	모든 Delegator는 별도의 Classes _params를 갖는다:
 	//		즉 런타임에 메소드가 Delegator(= 함수포인터)에 할당이 일어날 경우
@@ -300,7 +305,6 @@ class Delegator : public Method {
 	//	captures:
 	//		The Captures are captured from the localspace and classspace 
 	//		when a instance of this class born.
-	mutable TStrong<Object> _this;
 	mutable TStrong<Array> _captures; // we should have perfect cloned array which contains each shallow copied instance from the original.
 	Object& getThis() { return *this; }
 	const Object& getThis() const { return *this; }
@@ -308,31 +312,23 @@ class Delegator : public Method {
 		WRD_IS_THIS(const Array)
 		return _captures;
 	}
-	virtual wbool isConsumable(const Msg& msg) {
-		if( ! _origin)
-			return false;
-		return _origin->isConsumable(msg);
-	}
-	virtual bool isStatic() const {
-		if( ! _origin)
-			return false;
-		return _origin->isStatic();
-	}
-	virtual Refer call(Msg& msg) const {
-		if( ! _origin)
-			return Refer();
-		return _origin->call(msg);
-	}
-	virtual Refer call(Msg& msg) {
-		if( ! _origin)
-			return Refer();
-		return _origin->call(msg);
-	}
+	virtual bool isStatic() const { return _origin ?  _origin->isStatic() : false; }
+	virtual wbool isConst() const { return _origin ?  _origin->isConst() : false; }
+	virtual Refer call(Msg& msg) const { return _origin ?  _origin->call(msg): Refer(); }
+	virtual Refer call(Msg& msg) { return _origin ?  _origin->call(msg): Refer(); }
+	virtual Refer run(Msg& msg) const { return _origin ?  _origin->run(msg): Refer(); }
+	virtual wbool isConsumable(const Msg& msg) const { return _origin ?  _origin->isConsumable(msg) : false; }
+	virtual TRefer<Delegator> closure(Object& obj) { return _origin ?  _origin->closure(obj): Closure(); }
+	virtual Refer _onRun(msg& msg) const { return Refer(); }
+};
+class InstanceDelegator : public Delegator {
+	mutable TStrong<Object> _this;
+	//	TODO: _this를 사용해서 메소드를 실행해야 한다.
 };
 
-
-//	중첩 메소드는 지역변수를 참조할 수 있다: 중첩메소드 자체는 Closure가 아니다.
-class NestedMethod : public MgdMethod {
+//	중첩 메소드는 Closure이다:
+//		지역변수를 참조할 수 있다
+class Closure: public MgdMethod {
 	Result& _captureLocals() {
 		if(_captures.getLength() > 0)
 			return alreadydone;
@@ -366,16 +362,8 @@ typedef TArray<Method> Methods;
 //		2. Method가 Stmt라면 블록문 안에 Method가 있을 수도 있어야 한다. 말이 안되지.
 //		3. 모든 Method가 BlockStmt를 가지는 것은 아니다. 오직 ManagedMethod만 BlockStmt를 갖는다.
 class Method : public Object {
-	Classes _params;
-	static const String RUN = "@run"; // @는 이것이 system internal한 함수라는 뜻이다. 월드코드에서는 앞에 @를 붙여서 함수를 정의할 수 없어야 한다.
-	const Classes& getParams() const { 
-		WRD_IS_THIS(const Classes)
-		return _params;
-	}
-	wbool _isForRun(const Msg& msg) const { return msg.getName() == RUN; }
-	//	오직 메소드만 Static여부를 반환한다:
-	// 		Variable의 static여부는 판단이 불가능하다. Managed는 가능한데, Native로 static MyObject my; 처럼 만든 variable은 불가능하기 때문이다.
-	virtual bool isStatic() const { return false; }
+	Method();
+	Method(const This& rhs) : Super(rhs), _params(rhs._params) {}
 	virtual Refer call(Msg& msg) {
 		if(_isForRun(msg))
 			return run(msg);
@@ -396,7 +384,7 @@ class Method : public Object {
 
 		return _onRun(msg);
 	}
-	virtual _onRun(Msg& msg) const = 0;
+	virtual Refer _onRun(Msg& msg) const = 0;
 	virtual wbool isConsumable(const Msg& msg) const {
 		if(Super::isConsumable(msg)) //	case 1: user wants to treat this method as a object.
 			return true;
@@ -411,10 +399,23 @@ class Method : public Object {
 				return false;
 		return true;
 	}
-	virtual Closure closure(Object& obj) {
+	TStrong<Classes> _params; // Mgd, NativeMethod는 여기에 new Classes를 할당할것이다.
+	static const String RUN = "@run"; // @는 이것이 system internal한 함수라는 뜻이다. 월드코드에서는 앞에 @를 붙여서 함수를 정의할 수 없어야 한다.
+	virtual const Classes& getParams() const { 
+		WRD_IS_THIS(const Classes)
+		return *_params;
+	}
+	virtual const Classes& getParams() const {
+		WRD_IS_THIS(const Classes)
+		return *_params;
+	}
+	//	오직 메소드만 Static여부를 반환한다:
+	// 		Variable의 static여부는 판단이 불가능하다. Managed는 가능한데, Native로 static MyObject my; 처럼 만든 variable은 불가능하기 때문이다.
+	virtual TRefer<Delegator> closure(Object& obj) {
 		//	일반 메소드는 오로지 ObjectSpace에 대한 종속성을 갖을뿐 LocalSpace는 관계가 없다.
 		//	LocalSpace들은 메소드 자체가 생성해버리기 때문이다. 
-		return Closure(obj, *this);
+		const Class& maker = isStatic() ? Delegator::getStaticClass() : InstanceDelegator::getStaticClass();
+		return maker.instantiate(obj);
 	}
 };
 

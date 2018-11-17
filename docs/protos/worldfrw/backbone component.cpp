@@ -338,6 +338,7 @@ class Node : public ? {
 	virtual wbool isConsumable(const Msg& msg) const {
 		return msg.getName() == getName();
 	}
+	virtual wbool isStatic() const { return false; }
 }
 
 class CompositNode : public Node {
