@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-message("\n\tbuilding tester...")
+message("\n\tbuilding unittests...")
 #   defines:
 #       define sources:
 file(GLOB_RECURSE sources
@@ -13,7 +13,7 @@ foreach(e ${sources})
 endforeach(e)
 #       define predefinitions:
 add_definitions(-DBUILD_TARGET_TESTER)
-add_definitions(-DNE_TAG="tester")
+add_definitions(-DNE_TAG="unittests")
 #       define libraries:
 set(dependencies independentor file-manipulator logger preferencer)
 foreach(e ${dependencies})
@@ -22,6 +22,6 @@ endforeach(e)
 
 
 #   execute:
-add_executable(tester ${sources})
-target_link_libraries(tester ${dependencies})
-add_dependencies(tester ${dependencies})
+add_executable(unittests ${sources})
+target_link_libraries(unittests ${dependencies})
+add_dependencies(unittests ${dependencies})

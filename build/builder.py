@@ -25,14 +25,14 @@ def branch(command):
 def run(arg):
     if arg is None:
         print("build Node and run one of next followings...")
-        print("\t * tester")
+        print("\t * unittests")
         return -1
 
-    if arg == "tester":
+    if arg == "unittests":
         result = build()
         if result:
             return result
-        os.system("tester")
+        os.system("unittests")
 
 # currently this application only supports window and linux.
 def isWindow():
@@ -66,11 +66,13 @@ def _make():
                             # s ->  don't print command.
     print("making " + make_option + "...", end=" ")
     if isWindow():
+        os.system("mingw32-make -v")
         result = os.system("mingw32-make " + make_option)
         if result != 0:
             print("failed")
             return -1
     else:
+        os.system("make -v")
         result = os.system("make " + make_option)
         if result != 0:
             print("failed")
@@ -88,7 +90,7 @@ def build():
 def _ut():
     print("")
     print("let's initiate unit tests...", end=" ")
-    res = os.system("tester.exe")
+    res = os.system("unittests.exe")
     if res == 0:
         print("ok")
     return res
@@ -117,8 +119,8 @@ def checkDependencies():
 
 def version():
     print("")
-    print("Builder. Support-utility for building World Version 1.0")
-    print("Copyrights (c) kniz, 2009-2017")
+    print("Builder. Support-utility for building World v1.1")
+    print("Copyrights (c) kniz, 2009-2018")
 
 def help():
     print("Usage: builder.py <command> <arg1> <arg2> ...")
@@ -132,6 +134,10 @@ def help():
 
 def history():
     print("history:")
+    print("\t1.1\t11-17-2017")
+    print("\t + runs unittests automatically after build is success.")
+    print("\t - it can't build it outside of build folder.")
+    print("")
     print("\t1.0\t07-10-2017")
     print("\t + merge 2 seperated utilities and recoded with python.")
     print("")
