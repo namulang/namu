@@ -10,32 +10,32 @@ namespace NE
         virtual const char* getName() const { return "FileManipulatorTest"; }
         virtual std::string _onTest() {
             //  read-write test:
-            NE_ASSERT_THEN_RETURN( ! File().remove())
+            WRD_TEST( ! File().remove())
             
             std::string current = ".";
             std::string input_path = current + "/resources/sample.txt";
 
             AsciiStream as(input_path);
-            NE_ASSERT_THEN_RETURN(as.getPath() != input_path);
-            NE_ASSERT_THEN_RETURN(as.initialize())
-            NE_ASSERT_THEN_RETURN( ! as.isInitialized())
+            WRD_TEST(as.getPath() != input_path);
+            WRD_TEST(as.initialize())
+            WRD_TEST( ! as.isInitialized())
 
             std::string reaad = as.readLine();
-            NE_ASSERT_THEN_RETURN(reaad == "")
-            NE_ASSERT_THEN_RETURN(as.release())
+            WRD_TEST(reaad == "")
+            WRD_TEST(as.release())
 
             std::string output_filename = "FileManipulatorTest.txt";
             std::string source = current + "/" + output_filename;
             File output(source);
-            NE_ASSERT_THEN_RETURN(output.getPath() != source)
+            WRD_TEST(output.getPath() != source)
             output.remove();
 
             
             //  searching test:
             Folder build(current, Folder::Option(false));
-            NE_ASSERT_THEN_RETURN(build.isInitialized())
-            NE_ASSERT_THEN_RETURN(build.initialize())
-            NE_ASSERT_THEN_RETURN( ! build.isInitialized())
+            WRD_TEST(build.isInitialized())
+            WRD_TEST(build.initialize())
+            WRD_TEST( ! build.isInitialized())
             type_bool found = false;
             while( ! build.next().isNull())
                 if(build.peek().getName() == output_filename)
@@ -43,54 +43,54 @@ namespace NE
                     found = true;
                     break;
                 }
-            NE_ASSERT_THEN_RETURN(found)
-            NE_ASSERT_THEN_RETURN(build.release());
+            WRD_TEST(found)
+            WRD_TEST(build.release());
 
 
             BinaryStream bs(source);
-            NE_ASSERT_THEN_RETURN(bs.getPath() != source)
-            NE_ASSERT_THEN_RETURN(! bs.initialize())
-            NE_ASSERT_THEN_RETURN(bs.isInitialized())
-            NE_ASSERT_THEN_RETURN(bs.setMode(FileStream::APPENDABLE))
-            NE_ASSERT_THEN_RETURN(bs.initialize())
-            NE_ASSERT_THEN_RETURN( ! bs.isInitialized())
-            NE_ASSERT_THEN_RETURN(bs.write(reaad) <= 0)
-            NE_ASSERT_THEN_RETURN(bs -= 1)
-            NE_ASSERT_THEN_RETURN(bs.write("?", 1) <= 0)
-            NE_ASSERT_THEN_RETURN(bs = 2)
-            NE_ASSERT_THEN_RETURN(bs.write("I'm ") <= 0)
-            NE_ASSERT_THEN_RETURN(bs.setCursor(bs.getEndOfFile()))
-            NE_ASSERT_THEN_RETURN(bs.write(std::string(" keep testing!")) <= 0)
-            NE_ASSERT_THEN_RETURN(bs.release())
+            WRD_TEST(bs.getPath() != source)
+            WRD_TEST(! bs.initialize())
+            WRD_TEST(bs.isInitialized())
+            WRD_TEST(bs.setMode(FileStream::APPENDABLE))
+            WRD_TEST(bs.initialize())
+            WRD_TEST( ! bs.isInitialized())
+            WRD_TEST(bs.write(reaad) <= 0)
+            WRD_TEST(bs -= 1)
+            WRD_TEST(bs.write("?", 1) <= 0)
+            WRD_TEST(bs = 2)
+            WRD_TEST(bs.write("I'm ") <= 0)
+            WRD_TEST(bs.setCursor(bs.getEndOfFile()))
+            WRD_TEST(bs.write(std::string(" keep testing!")) <= 0)
+            WRD_TEST(bs.release())
 
-            NE_ASSERT_THEN_RETURN(as.setPath(source))
-            NE_ASSERT_THEN_RETURN(as.getPath() != source)
-            NE_ASSERT_THEN_RETURN(as.initialize())
+            WRD_TEST(as.setPath(source))
+            WRD_TEST(as.getPath() != source)
+            WRD_TEST(as.initialize())
             std::string reaaad = as.readLine();   
             reaad = "HeI'm hello world? keep testing!";
-            NE_ASSERT_THEN_RETURN(reaaad != reaad)
+            WRD_TEST(reaaad != reaad)
 
             type_int eof_cursor = as.getEndOfFile();
 
             std::string whole_context = as.readWhole();
 
-            NE_ASSERT_THEN_RETURN(whole_context != reaad)
-            NE_ASSERT_THEN_RETURN( ! as.isEndOfFile())
-            NE_ASSERT_THEN_RETURN(as.getCursor() != eof_cursor)
+            WRD_TEST(whole_context != reaad)
+            WRD_TEST( ! as.isEndOfFile())
+            WRD_TEST(as.getCursor() != eof_cursor)
 
             
             //  searching test:
             found = false;
-            NE_ASSERT_THEN_RETURN( ! build.next().isNull())
-            NE_ASSERT_THEN_RETURN(build.initialize())
-            NE_ASSERT_THEN_RETURN( ! build.isInitialized())
+            WRD_TEST( ! build.next().isNull())
+            WRD_TEST(build.initialize())
+            WRD_TEST( ! build.isInitialized())
             while( ! build.next().isNull())
                 if(build.peek().getName() == output_filename)
                 {
                     found = true;
                     break;
                 }
-            NE_ASSERT_THEN_RETURN( ! found)
+            WRD_TEST( ! found)
 
             
             return "";

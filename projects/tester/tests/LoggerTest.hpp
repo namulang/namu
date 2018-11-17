@@ -11,10 +11,10 @@ namespace NE
         virtual std::string _onTest() {
             Logger& logger = Logger::getInstance();
             
-            NE_ASSERT_THEN_RETURN(logger.getName() != string("Logger"))
-            NE_ASSERT_THEN_RETURN(logger.getStreamCount() < 2)
-            NE_ASSERT_THEN_RETURN( ! &logger["ConsoleStream"])
-            NE_ASSERT_THEN_RETURN( ! &logger["FileLogStream"])
+            WRD_TEST(logger.getName() != string("Logger"))
+            WRD_TEST(logger.getStreamCount() < 2)
+            WRD_TEST( ! &logger["ConsoleStream"])
+            WRD_TEST( ! &logger["FileLogStream"])
 
             NE_DUMP("D", "hello!")
             NE_WARN("world!")
@@ -30,12 +30,12 @@ namespace NE
                 std::string msg;
             };
             MyStream* cs = new MyStream();
-            NE_ASSERT_THEN_RETURN(logger.pushStream(cs));
-            NE_ASSERT_THEN_RETURN(logger.getStreamCount() < 3)
-            NE_ASSERT_THEN_RETURN( ! &logger["MyStream"])
+            WRD_TEST(logger.pushStream(cs));
+            WRD_TEST(logger.getStreamCount() < 3)
+            WRD_TEST( ! &logger["MyStream"])
 
-            NE_ASSERT_THEN_RETURN(logger.dump("hello world"))
-            NE_ASSERT_THEN_RETURN(cs->msg != "hello world")
+            WRD_TEST(logger.dump("hello world"))
+            WRD_TEST(cs->msg != "hello world")
 
             NE_DUMP("D", "hello!")
             NE_WARN("world!")
@@ -48,15 +48,15 @@ namespace NE
                 if(build.peek().getName().find("logs"))
                     found = true;
 
-            NE_ASSERT_THEN_RETURN(found)
-            NE_ASSERT_THEN_RETURN(logger.dump("let's go on 2nd phase."));
+            WRD_TEST(found)
+            WRD_TEST(logger.dump("let's go on 2nd phase."));
 
             BuildFeatures::Date date;
             NE_INFO("today is %d-%d %d. %s.", date.getMonth(), date.getDay(), date.getYear(), "Nice start!")
             NE_WARN("Fatal error! Fatal error! this PC should be infected to a virus immediatly!!!")
             NE_ERROR("***backstabbing*** It's a joke. Carm down, my master.")
 
-            //NE_ASSERT_THEN_RETURN(logger.release()) -> can't call.            
+            //WRD_TEST(logger.release()) -> can't call.            
 
             return "";
         }
