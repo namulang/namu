@@ -52,39 +52,53 @@ def isWindow():
 #                 os.system("astyle --style=world " + file_path)
 
 def _createMakefiles():
+    print("")
     generator = "MinGW Makefiles" if isWindow() else "Unix Makefiles"
     print("generating makefiles as " + generator + "...")
 
-    result = os.system("cmake . -G \"" + generator + "\"")
-    if result != 0:
+    res = os.system("cmake -G \"" + generator + "\"")
+    if res != 0:
         return -1
 
 def _make():
-    make_option = " -j4 -s" # j4 -> 4 multithread.
+    print("")
+    make_option = "-j4 -s"  # j4 -> 4 multithread.
                             # s ->  don't print command.
-    print("making..." + make_option)
+    print("making " + make_option + "...", end=" ")
     if isWindow():
-        result = os.system("mingw32-make" + make_option)
+        result = os.system("mingw32-make " + make_option)
         if result != 0:
+            print("failed")
             return -1
     else:
-        result = os.system("make" + make_option)
+        result = os.system("make " + make_option)
         if result != 0:
+            print("failed")
             return -1
+    print("ok")
 
 def build():
     #_beautify()
     if _createMakefiles(): 
         return -1
-    print("")
     if _make():
         return -1
+    return _ut();
+
+def _ut():
+    print("")
+    print("let's initiate unit tests...", end=" ")
+    res = os.system("tester.exe")
+    if res == 0:
+        print("ok")
+    return res
 
 def commit():
     return 0
 
 def checkDependencies():
-    print("checking dependencies...")
+    print("")
+    print ("checking dependencies...", end=" ")
     simple_depencies = ["git", "cmake"]
 
     for e in simple_depencies:
@@ -99,6 +113,7 @@ def checkDependencies():
     elif not shutil.which("make"):
         print("\t > make for linux is NOT installed!")
         return -1
+    print("ok")
 
 def version():
     print("")
@@ -174,17 +189,20 @@ def _clean(directory):
                 abs_dir = os.path.join(path, dir)
                 print("\t * " + abs_dir)
                 shutil.rmtree(abs_dir)
-
 def main():
     version()
+    print(frame)
+    print("")
+    
+    cwd=os.path.dirname(os.path.realpath(sys.argv[0]))
+    os.chdir(cwd)
+    print("building directory is " + cwd)
+
     if checkDependencies():
         print("\n** This program needs following softwares to be fully functional.")
         print("\tgit, cmake, make or mingw32-make")
         print("please install them on your own. **\n")
         return
-
-    print(frame)
-    print("")
 
     if len(sys.argv) == 1:
         help()
