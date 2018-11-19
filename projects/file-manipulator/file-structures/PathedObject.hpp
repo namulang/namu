@@ -1,7 +1,6 @@
 #pragma once
 
-#include <independentor.hpp>
-#include <string>
+#include "../Includes.hpp"
 
 namespace NE
 {

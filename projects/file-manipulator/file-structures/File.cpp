@@ -1,6 +1,4 @@
 #include "File.hpp"
-#include <sys/stat.h>
-#include <stdio.h>
 
 namespace NE
 {
