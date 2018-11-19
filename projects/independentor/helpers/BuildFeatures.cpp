@@ -3,25 +3,25 @@
 namespace NE
 {
     using namespace std;
-    
+   
     #define THIS BuildFeatures
-    #define _STRING_METHOD(function, message)   \
+    #define _STRING_METHOD(function, message)  \
         const string& THIS::function            \
-        {                                       \
+        {                                      \
             static string inner = message;      \
-            return inner;                       \
+            return inner;                      \
         }
     #define _INTEGER_METHOD(function, value)    \
-        type_int THIS::function                 \
-        {                                       \
-            return value;                       \
+        type_int THIS::function                \
+        {                                      \
+            return value;                      \
         }
-    
-    _STRING_METHOD(Date::get(), NE_BUILD_DATE)    
+   
+    _STRING_METHOD(Date::get(), NE_BUILD_DATE)   
     _INTEGER_METHOD(Date::getYear(), NE_BUILD_DATE_YEAR)
     _INTEGER_METHOD(Date::getMonth(), NE_BUILD_DATE_MONTH)
     _INTEGER_METHOD(Date::getDay(), NE_BUILD_DATE_DAY)
-    
+   
     _STRING_METHOD(Time::get(), NE_BUILD_TIME)
     _INTEGER_METHOD(Time::getHour(), NE_BUILD_TIME_HOUR)
     _INTEGER_METHOD(Time::getMinute(), NE_BUILD_TIME_MINUTE)
@@ -45,12 +45,12 @@ namespace NE
                 {
                     inner = PlatformType(n);
                     break;
-                }      
+                }
         }
 
         return inner;
     }
-    _STRING_METHOD(Platform::getName(), NE_BUILD_PLATFORM)
+    _STRING_METHOD(Platform::getName(), NE_BUILD_PLATFORM_NAME)
     _STRING_METHOD(Platform::getVersion(), NE_BUILD_PLATFORM_VERSION)
 
     THIS::BuildType THIS::Building::get()
