@@ -28,17 +28,17 @@ namespace NE
     type_bool THIS::onAddMember(const std::string& class_name, const std::string& key, const std::string& value) {
         if(getClass(class_name).isNull())
         {
-            WRD_ERROR("class %s is not defined.", class_name);
+            WRD_ERROR("class %s is not defined.", class_name.c_str());
             return false;
         }
-        
-        ClassNode& klass = _classes[class_name];            
+       
+        ClassNode& klass = _classes[class_name];           
         if( ! klass.getMember(key).isNull())
         {
-            WRD_ERROR("memberdata %s is duplicated.", key);
+            WRD_ERROR("memberdata %s is duplicated.", key.c_str());
             return false;
         }
-        
+       
         klass._members[key] = MemberNode(key, value);
         return true;
     }
