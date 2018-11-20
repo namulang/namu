@@ -1,6 +1,5 @@
 #pragma once
 
-#include <dirent.h>
 #include "File.hpp"
 
 namespace NE

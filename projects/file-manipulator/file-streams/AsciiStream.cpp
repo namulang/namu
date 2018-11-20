@@ -4,6 +4,7 @@
 namespace NE
 {
     #define THIS AsciiStream
+	using namespace std;
 
     THIS::THIS() : FileStream() {}
     THIS::THIS(const string& new_path) : FileStream(new_path) {}

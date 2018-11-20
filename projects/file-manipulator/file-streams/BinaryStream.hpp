@@ -24,7 +24,7 @@ namespace NE
         type_count write(const T& datum) { return write(&datum, sizeof(T)); }
 
         type_count write(const char* str);
-        type_count write(const string& str);
+        type_count write(const std::string& str);
         virtual type_count write(const void* chunks, type_count bytes);
         virtual type_count read(void* target, type_count bytes);
 

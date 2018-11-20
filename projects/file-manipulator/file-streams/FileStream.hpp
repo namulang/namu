@@ -1,9 +1,6 @@
 #pragma once
 
 #include "../file-structures/PathedObject.hpp"
-#include <string.h>
-
-using namespace std;
 
 namespace NE
 {

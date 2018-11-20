@@ -1,5 +1,6 @@
 #include "BinaryStream.hpp"
 #include "../file-structures.hpp"
+#include <string.h>
 
 namespace NE
 {
@@ -37,7 +38,7 @@ namespace NE
     }
 
     type_count THIS::write(const char* str) { return write(str, sizeof(char) * strlen(str)); }
-    type_count THIS::write(const string& str) { return write(str.c_str()); }
+    type_count THIS::write(const std::string& str) { return write(str.c_str()); }
 
     type_count THIS::write(const void* chunks, type_count bytes)
     {
