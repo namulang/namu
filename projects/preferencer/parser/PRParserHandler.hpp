@@ -1,6 +1,6 @@
 #pragma once
 
-#include <independentor.hpp>
+#include "../commons.hpp"
 #include "generated/ErrorHandler.h"
 
 namespace NE
