@@ -1,8 +1,6 @@
 #pragma once
 
 #include "streams/Stream.hpp"
-#include <vector>
-#include <string>
 
 namespace NE
 {
