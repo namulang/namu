@@ -7,9 +7,6 @@
 //	---------------------------------------------------------------------------------
 #pragma once
 
-#include "../Includes.hpp"
-#include "TChar.hpp"
-
 namespace NE
 {
 	typedef char					type_byte;
