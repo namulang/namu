@@ -10,13 +10,13 @@
 //				define STRINGIZER with what looks like useless macro __STRINGIZER.
 #define _VS_EXP_HACK(...) __VA_ARGS__
 //			concatenate:
-#define NE_MACRO_CONCATENATE(x, y) x##y
+#define WRD_MACRO_CONCATENATE(x, y) x##y
 //			stringizer:
-#define __NE_MACRO_STRINGIZER(x)	#x
-#define NE_MACRO_STRINGIZER(x)	__NE_MACRO_STRINGIZER(x)
+#define __WRD_MACRO_STRINGIZER(x)	#x
+#define WRD_MACRO_STRINGIZER(x)	__WRD_MACRO_STRINGIZER(x)
 
-#define NE_COMMA ,
-#define NE_VOID
-#define NE_SPACE NE_VOID NE_VOID
-#define NE_CONSUME_ARGS(...)
-#define NE_UNWRAP(...) __VA_ARGS__
+#define WRD_COMMA ,
+#define WRD_VOID
+#define WRD_SPACE WRD_VOID WRD_VOID
+#define WRD_CONSUME_ARGS(...)
+#define WRD_UNWRAP(...) __VA_ARGS__

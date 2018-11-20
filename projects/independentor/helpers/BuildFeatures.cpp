@@ -17,20 +17,20 @@ namespace NE
             return value;                      \
         }
    
-    _STRING_METHOD(Date::get(), NE_BUILD_DATE)   
-    _INTEGER_METHOD(Date::getYear(), NE_BUILD_DATE_YEAR)
-    _INTEGER_METHOD(Date::getMonth(), NE_BUILD_DATE_MONTH)
-    _INTEGER_METHOD(Date::getDay(), NE_BUILD_DATE_DAY)
+    _STRING_METHOD(Date::get(), WRD_BUILD_DATE)   
+    _INTEGER_METHOD(Date::getYear(), WRD_BUILD_DATE_YEAR)
+    _INTEGER_METHOD(Date::getMonth(), WRD_BUILD_DATE_MONTH)
+    _INTEGER_METHOD(Date::getDay(), WRD_BUILD_DATE_DAY)
    
-    _STRING_METHOD(Time::get(), NE_BUILD_TIME)
-    _INTEGER_METHOD(Time::getHour(), NE_BUILD_TIME_HOUR)
-    _INTEGER_METHOD(Time::getMinute(), NE_BUILD_TIME_MINUTE)
-    _INTEGER_METHOD(Time::getSecond(), NE_BUILD_TIME_SECOND)
+    _STRING_METHOD(Time::get(), WRD_BUILD_TIME)
+    _INTEGER_METHOD(Time::getHour(), WRD_BUILD_TIME_HOUR)
+    _INTEGER_METHOD(Time::getMinute(), WRD_BUILD_TIME_MINUTE)
+    _INTEGER_METHOD(Time::getSecond(), WRD_BUILD_TIME_SECOND)
 
-    _STRING_METHOD(Version::get(), NE_BUILD_VERSION)
-    _INTEGER_METHOD(Version::getMajor(), NE_BUILD_VERSION_MAJOR)
-    _INTEGER_METHOD(Version::getMinor(), NE_BUILD_VERSION_MINOR)
-    _INTEGER_METHOD(Version::getFix(), NE_BUILD_VERSION_FIX)
+    _STRING_METHOD(Version::get(), WRD_BUILD_VERSION)
+    _INTEGER_METHOD(Version::getMajor(), WRD_BUILD_VERSION_MAJOR)
+    _INTEGER_METHOD(Version::getMinor(), WRD_BUILD_VERSION_MINOR)
+    _INTEGER_METHOD(Version::getFix(), WRD_BUILD_VERSION_FIX)
 
     THIS::PlatformType THIS::Platform::get()
     {
@@ -38,7 +38,7 @@ namespace NE
         if(inner == PLATFORM_TYPE_START)
         {
             const string& name = getName();
-            const char* map[] = {"Windows", "Linux", NE_NULL};
+            const char* map[] = {"Windows", "Linux", WRD_NULL};
             int n=-1;
             while(map[++n])
                 if(name == map[n])
@@ -50,8 +50,8 @@ namespace NE
 
         return inner;
     }
-    _STRING_METHOD(Platform::getName(), NE_BUILD_PLATFORM_NAME)
-    _STRING_METHOD(Platform::getVersion(), NE_BUILD_PLATFORM_VERSION)
+    _STRING_METHOD(Platform::getName(), WRD_BUILD_PLATFORM_NAME)
+    _STRING_METHOD(Platform::getVersion(), WRD_BUILD_PLATFORM_VERSION)
 
     THIS::BuildType THIS::Building::get()
     {
@@ -59,7 +59,7 @@ namespace NE
         if(inner == BUILD_TYPE_START)
         {
             const string& name = getName();
-            const char* map[] = {"BUILD_TYPE_START", "DEBUG", "RELEASE", NE_NULL};
+            const char* map[] = {"BUILD_TYPE_START", "DEBUG", "RELEASE", WRD_NULL};
             int n=-1;
             while(map[++n])
                 if(name == map[n])
@@ -71,5 +71,5 @@ namespace NE
 
         return inner;
     }
-    _STRING_METHOD(Building::getName(), NE_BUILD_TYPENAME)
+    _STRING_METHOD(Building::getName(), WRD_BUILD_TYPENAME)
 }

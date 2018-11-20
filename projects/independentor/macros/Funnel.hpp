@@ -11,10 +11,10 @@
 //					passed 4 arguments, not 2.
 //
 //		Then, Use Funnel macro instead:
-//			My_2(NE_MACRO_FUNNEL(MyMap<T, U>), NE_MACRO_FUNNEL(template <typename T, typename U))
+//			My_2(WRD_MACRO_FUNNEL(MyMap<T, U>), WRD_MACRO_FUNNEL(template <typename T, typename U))
 #include "Overloader.hpp"
 
-#define NE_MACRO_FUNNEL_2(X, Y)	X, Y
-#define NE_MACRO_FUNNEL_3(X, Y, Z) NE_MACRO_FUNNEL_2(X, Y), Z
-#define NE_MACRO_FUNNEL_4(X, Y, Z, A) NE_MACRO_FUNNEL_2(X, Y) , NE_MACRO_FUNNEL_2(Z, A)
-#define NE_MACRO_FUNNEL(...)	NE_MACRO_OVERLOADER(NE_MACRO_FUNNEL, __VA_ARGS__)
+#define WRD_MACRO_FUNNEL_2(X, Y)	X, Y
+#define WRD_MACRO_FUNNEL_3(X, Y, Z) WRD_MACRO_FUNNEL_2(X, Y), Z
+#define WRD_MACRO_FUNNEL_4(X, Y, Z, A) WRD_MACRO_FUNNEL_2(X, Y) , WRD_MACRO_FUNNEL_2(Z, A)
+#define WRD_MACRO_FUNNEL(...)	WRD_MACRO_OVERLOADER(WRD_MACRO_FUNNEL, __VA_ARGS__)

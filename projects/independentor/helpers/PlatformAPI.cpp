@@ -1,7 +1,7 @@
 #include "PlatformAPI.hpp"
-#if WRD_BUILD_PLATFORM == WRD_WINDOWS
+#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
 #  include <windows.h>
-#elif WRD_BUILD_PLATFORM == WRD_LINUX
+#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX
 #    include <unistd.h>
 #    include <vector>
 #    include <string>
@@ -51,9 +51,9 @@ namespace NE
 
     void CLASS::updateConsoleColor(ConsoleColor fore, ConsoleColor back)
     {
-#if WRD_BUILD_PLATFORM == WRD_WINDOWS
+#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back << 4 | fore);
-#elif WRD_BUILD_PLATFORM == WRD_LINUX
+#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX
         static bool is_terminal_supporting = _isAnsiColorTerminal();
         if( ! is_terminal_supporting) {
             // TODO: may need to print some error.

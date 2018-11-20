@@ -7,7 +7,7 @@
 #pragma once
 
 //    include:
-#include <independentor.hpp> // 내부에서 NE_DLL_PREV_STATUS 정의
+#include <independentor.hpp> // 내부에서 WRD_DLL_PREV_STATUS 정의
 #include <sys/stat.h>
 #include <string>
 #include <stdio.h>

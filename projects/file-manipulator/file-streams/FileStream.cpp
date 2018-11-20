@@ -81,7 +81,7 @@ namespace NE
     {
         if(_fd)
             fclose(_fd);
-        _fd = NE_NULL;
+        _fd = WRD_NULL;
 
         _mode = MODE_TYPE_START;
 

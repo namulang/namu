@@ -33,46 +33,46 @@
 #include "Helpers.hpp"
 #include "Evaluator.hpp"
 
-#define _NE_EACH_GET_END2() 0, NE_CONSUME_ARGS
-#define _NE_EACH_GET_END1(...) _NE_EACH_GET_END2
-#define _NE_EACH_GET_END(...) _NE_EACH_GET_END1
-#define _NE_EACH_NEXT0(test, next, ...) next NE_VOID
-#define _NE_EACH_NEXT1(test, next) _NE_EACH_NEXT0(test, next, 0)
-#define _NE_EACH_NEXT(test, next)  _NE_EACH_NEXT1(_NE_EACH_GET_END test, next)
+#define _WRD_EACH_GET_END2() 0, WRD_CONSUME_ARGS
+#define _WRD_EACH_GET_END1(...) _WRD_EACH_GET_END2
+#define _WRD_EACH_GET_END(...) _WRD_EACH_GET_END1
+#define _WRD_EACH_NEXT0(test, next, ...) next WRD_VOID
+#define _WRD_EACH_NEXT1(test, next) _WRD_EACH_NEXT0(test, next, 0)
+#define _WRD_EACH_NEXT(test, next)  _WRD_EACH_NEXT1(_WRD_EACH_GET_END test, next)
 
-#define _NE_EACH_LIST_NEXT1(test, next) _NE_EACH_NEXT0(test, NE_COMMA next, 0)
-#define _NE_EACH_LIST_NEXT(test, next)  _NE_EACH_LIST_NEXT1(_NE_EACH_GET_END test, next)
+#define _WRD_EACH_LIST_NEXT1(test, next) _WRD_EACH_NEXT0(test, WRD_COMMA next, 0)
+#define _WRD_EACH_LIST_NEXT(test, next)  _WRD_EACH_LIST_NEXT1(_WRD_EACH_GET_END test, next)
 
 //	Applies the function macro `f` to each of the remaining parameters.
-#define _NE_EACH0(f, x, peek, ...) f(x) _NE_EACH_NEXT(peek, _NE_EACH1)(f, peek, __VA_ARGS__)
-#define _NE_EACH1(f, x, peek, ...) f(x) _NE_EACH_NEXT(peek, _NE_EACH0)(f, peek, __VA_ARGS__)
-#define NE_EACH(f, ...) NE_EVAL(_NE_EACH1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+#define _WRD_EACH0(f, x, peek, ...) f(x) _WRD_EACH_NEXT(peek, _WRD_EACH1)(f, peek, __VA_ARGS__)
+#define _WRD_EACH1(f, x, peek, ...) f(x) _WRD_EACH_NEXT(peek, _WRD_EACH0)(f, peek, __VA_ARGS__)
+#define WRD_EACH(f, ...) WRD_EVAL(_WRD_EACH1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
 //	EACH macro for various parametered function:
 //		usage:
 //			#define X(x, y) cout << (x+y);
-//			NE_EACH_TUPLE(X, (1,2), (2,3)) // please be careful to wrap with a paranthesis each set of parameters.
+//			WRD_EACH_TUPLE(X, (1,2), (2,3)) // please be careful to wrap with a paranthesis each set of parameters.
 //
 //		output:
 //			37
-#define _NE_EACH_TUPLE0(f, x, peek, ...) f NE_UNWRAP(x) _NE_EACH_NEXT(peek, _NE_EACH_TUPLE1)(f, peek, __VA_ARGS__)
-#define _NE_EACH_TUPLE1(f, x, peek, ...) f NE_UNWRAP(x) _NE_EACH_NEXT(peek, _NE_EACH_TUPLE0)(f, peek, __VA_ARGS__)
-#define NE_EACH_TUPLE(f, ...) EVAL(_NE_EACH_TUPLE1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+#define _WRD_EACH_TUPLE0(f, x, peek, ...) f WRD_UNWRAP(x) _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE1)(f, peek, __VA_ARGS__)
+#define _WRD_EACH_TUPLE1(f, x, peek, ...) f WRD_UNWRAP(x) _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE0)(f, peek, __VA_ARGS__)
+#define WRD_EACH_TUPLE(f, ...) EVAL(_WRD_EACH_TUPLE1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
 //	EACH macro for expanding:
 //		usage:
 //			#define X(x, y) cout << (x+y);
 //			int b = 5;
-//			NE_EACH_EXPAND(b, 1,2,3) 
+//			WRD_EACH_EXPAND(b, 1,2,3) 
 //			//== cout << (b+1); cout << (b+2); cout << (b+3);
 //
 //		output:
 //			678
-#define _NE_EACH_EXPAND0(f, s, x, peek, ...) f(s, x) _NE_EACH_NEXT(peek, _NE_EACH_EXPAND1)(f, s, peek, __VA_ARGS__)
-#define _NE_EACH_EXPAND1(f, s, x, peek, ...) f(s, x) _NE_EACH_NEXT(peek, _NE_EACH_EXPAND0)(f, s, peek, __VA_ARGS__)
-#define NE_EACH_EXPAND(f, ...) NE_EVAL(_NE_EACH_EXPAND1(f, s, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+#define _WRD_EACH_EXPAND0(f, s, x, peek, ...) f(s, x) _WRD_EACH_NEXT(peek, _WRD_EACH_EXPAND1)(f, s, peek, __VA_ARGS__)
+#define _WRD_EACH_EXPAND1(f, s, x, peek, ...) f(s, x) _WRD_EACH_NEXT(peek, _WRD_EACH_EXPAND0)(f, s, peek, __VA_ARGS__)
+#define WRD_EACH_EXPAND(f, ...) WRD_EVAL(_WRD_EACH_EXPAND1(f, s, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
 //	Applies the function macro `f` to each of the remaining parameters and inserts commas between the results.
-#define _NE_EACH_LIST0(f, x, peek, ...) f(x) _NE_EACH_LIST_NEXT(peek, _NE_EACH_LIST1)(f, peek, __VA_ARGS__)
-#define _NE_EACH_LIST1(f, x, peek, ...) f(x) _NE_EACH_LIST_NEXT(peek, _NE_EACH_LIST0)(f, peek, __VA_ARGS__)
-#define NE_EACH_LIST(f, ...) NE_EVAL(_NE_EACH_LIST1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+#define _WRD_EACH_LIST0(f, x, peek, ...) f(x) _WRD_EACH_LIST_NEXT(peek, _WRD_EACH_LIST1)(f, peek, __VA_ARGS__)
+#define _WRD_EACH_LIST1(f, x, peek, ...) f(x) _WRD_EACH_LIST_NEXT(peek, _WRD_EACH_LIST0)(f, peek, __VA_ARGS__)
+#define WRD_EACH_LIST(f, ...) WRD_EVAL(_WRD_EACH_LIST1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
