@@ -1,6 +1,6 @@
 #include "Stream.hpp"
 
-namespace NE
+namespace WRD
 {
     #define THIS Stream
 

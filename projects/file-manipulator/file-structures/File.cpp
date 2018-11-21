@@ -1,6 +1,6 @@
 #include "File.hpp"
 
-namespace NE
+namespace WRD
 {
     using namespace std;
     #define THIS File

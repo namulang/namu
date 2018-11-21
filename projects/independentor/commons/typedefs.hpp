@@ -7,7 +7,7 @@
 //	---------------------------------------------------------------------------------
 #pragma once
 
-namespace NE
+namespace WRD
 {
 	typedef char					type_byte;
 	typedef char					type_char;

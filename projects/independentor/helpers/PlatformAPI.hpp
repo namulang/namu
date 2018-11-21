@@ -3,7 +3,7 @@
 #include "BuildFeatures.hpp"
 #include <string>
 
-namespace NE
+namespace WRD
 {
     class PlatformAPI
     {

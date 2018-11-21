@@ -10,7 +10,7 @@
 #endif
 #include <time.h>
 
-namespace NE
+namespace WRD
 {
     #define CLASS PlatformAPI
     using namespace std;

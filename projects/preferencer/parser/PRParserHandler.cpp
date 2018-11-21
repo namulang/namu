@@ -2,7 +2,7 @@
 #include "generated/PRParserConstants.h"
 #include <logger.hpp>
 
-namespace NE
+namespace WRD
 {
     #define THIS PRParserHandler
     

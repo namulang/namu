@@ -1,7 +1,7 @@
 #include "AsciiStream.hpp"
 #include "../file-structures.hpp"
 
-namespace NE
+namespace WRD
 {
     #define THIS AsciiStream
 	using namespace std;

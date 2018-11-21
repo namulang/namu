@@ -2,7 +2,7 @@
 
 #include "Stream.hpp"
 
-namespace NE
+namespace WRD
 {
     class ConsoleStream : public Stream
     {

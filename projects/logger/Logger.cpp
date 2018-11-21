@@ -3,7 +3,7 @@
 #include <stdarg.h>
 #include "streams.hpp"
 
-namespace NE
+namespace WRD
 {
     namespace
     {

@@ -2,7 +2,7 @@
 
 #include "File.hpp"
 
-namespace NE
+namespace WRD
 {
     class Folder : public File
     {

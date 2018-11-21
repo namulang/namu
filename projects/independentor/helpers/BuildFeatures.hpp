@@ -2,7 +2,7 @@
 
 #include "../macros.hpp"
 
-namespace NE
+namespace WRD
 {
     struct BuildFeatures
     {

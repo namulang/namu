@@ -2,7 +2,7 @@
 #include "../file-structures.hpp"
 #include <string.h>
 
-namespace NE
+namespace WRD
 {
     #define THIS BinaryStream
 

@@ -3,7 +3,7 @@
 #include "../commons.hpp"
 #include "generated/ErrorHandler.h"
 
-namespace NE
+namespace WRD
 {
     class PRParserHandler : public ErrorHandler
     {

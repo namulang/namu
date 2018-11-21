@@ -2,7 +2,7 @@
 
 #include "../commons.hpp"
 
-namespace NE
+namespace WRD
 {
     class Stream
     {

@@ -1,6 +1,6 @@
 #include "PathedObject.hpp"
 
-namespace NE
+namespace WRD
 {
     #define THIS PathedObject
 

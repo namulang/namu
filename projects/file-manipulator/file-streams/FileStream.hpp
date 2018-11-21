@@ -2,7 +2,7 @@
 
 #include "../file-structures/PathedObject.hpp"
 
-namespace NE
+namespace WRD
 {
     class FileStream : public PathedObject
     {

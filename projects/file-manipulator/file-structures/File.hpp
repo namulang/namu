@@ -2,7 +2,7 @@
 
 #include "PathedObject.hpp"
 
-namespace NE
+namespace WRD
 {
     class File : public PathedObject
     {

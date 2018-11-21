@@ -30,7 +30,7 @@
 
 options {
   OUTPUT_LANGUAGE = "c++";
-  NAMESPACE = "NE";
+  NAMESPACE = "WRD";
   PARSER_INCLUDES = "../parser_include.hpp";
 }
 

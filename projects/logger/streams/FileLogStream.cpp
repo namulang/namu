@@ -1,6 +1,6 @@
 #include "FileLogStream.hpp"
 
-namespace NE
+namespace WRD
 {
     #define THIS FileLogStream
     typedef std::string string;

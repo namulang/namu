@@ -1,6 +1,6 @@
 #include "Folder.hpp"
 
-namespace NE
+namespace WRD
 {
     using namespace std;
     #define THIS Folder

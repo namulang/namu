@@ -1,7 +1,7 @@
 #include "Preferencer.hpp"
 #include "parser.hpp"
 
-namespace NE
+namespace WRD
 {
     #define THIS Preferencer
     type_bool THIS::parse(const std::string& contents) {

@@ -3,7 +3,7 @@
 
 using namespace std;
 
-namespace NE
+namespace WRD
 {
     #define THIS FileStream
 
