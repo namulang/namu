@@ -1,10 +1,8 @@
 #pragma once
 
-#include <preferencer.hpp>
-#include "../TestCase.hpp"
 #include "../Initiator.hpp"
 
-namespace NE
+namespace WRD
 {
     struct PreferencerTest : public TestCase {
         virtual const char* getName() const { return "PreferencerTest"; }

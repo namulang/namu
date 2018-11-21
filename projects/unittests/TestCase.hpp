@@ -1,10 +1,8 @@
 #pragma once
 
-#include <chrono>
-#include <string>
-#include <vector>
+#include "commons.hpp"
 
-namespace NE
+namespace WRD
 {	
 	#define WRD_TEST(expression)	\
 		if(expression)						\

@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <iostream>
 
-namespace NE
+namespace WRD
 {
     #define CLASS TestCase
     using namespace std;

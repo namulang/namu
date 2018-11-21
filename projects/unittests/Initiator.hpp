@@ -1,9 +1,8 @@
 #pragma once
 
-#include <iostream>
 #include "TestCase.hpp"
 
-namespace NE
+namespace WRD
 {  
     #define INITIATE_CLASS(klass) Initiator<klass> __##klass;
     

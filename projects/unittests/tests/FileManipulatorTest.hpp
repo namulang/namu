@@ -1,10 +1,8 @@
 #pragma once
 
-#include <file-manipulator.hpp>
-#include "../TestCase.hpp"
 #include "../Initiator.hpp"
 
-namespace NE
+namespace WRD
 {
     struct FileManipulatorTest : public TestCase {
         virtual const char* getName() const { return "FileManipulatorTest"; }

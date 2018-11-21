@@ -1,17 +1,15 @@
 #pragma once
 
-#include <logger.hpp>
-#include "../TestCase.hpp"
 #include "../Initiator.hpp"
 
-namespace NE
+namespace WRD
 {
     struct LoggerTest : public TestCase {
         virtual const char* getName() const { return "LoggerTest"; }
         virtual std::string _onTest() {
             Logger& logger = Logger::getInstance();
             
-            WRD_TEST(logger.getName() != string("Logger"))
+            WRD_TEST(logger.getName() != std::string("Logger"))
             WRD_TEST(logger.getStreamCount() < 2)
             WRD_TEST( ! &logger["ConsoleStream"])
             WRD_TEST( ! &logger["FileLogStream"])

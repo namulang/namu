@@ -1,9 +1,8 @@
 #include "tests.hpp"
-#include <iostream>
 
 int main()
 {
-    using namespace NE;
+    using namespace WRD;
     using namespace std::chrono;
 
 	milliseconds start = TestCase::getTime();
@@ -12,7 +11,7 @@ int main()
     for(auto e : TestCase::getTests())
         res = res | e->test();
 
-	string msg = !res ?
+	std::string msg = !res ?
 		"SUCCESS" :
 		"FAILURE FOUND";
 	TestCase::printResult(res, "ALL TESTS", msg, TestCase::getTime()-start);
