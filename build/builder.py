@@ -32,7 +32,7 @@ def run(arg):
         result = build()
         if result:
             return result
-        os.system("unittests")
+        os.system("./unittests")
 
 # currently this application only supports window and linux.
 def isWindow():
