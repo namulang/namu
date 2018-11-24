@@ -18,5 +18,6 @@
 #pragma once
 
 //	include:
+#include "file-manipulator/commons.hpp"
 #include "file-manipulator/file-structures.hpp"
 #include "file-manipulator/file-streams.hpp"
