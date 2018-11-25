@@ -1,13 +1,14 @@
 #pragma once
 
 #include <iostream>
-#include "commons.hpp"
+#include "../commons.hpp"
 
 namespace WRD
 {
 	class Refer;
 	class Result;
 	class Class;
+	class Visitor;
 	template <typename T> class TRefer;
 
 	///	Thing은 World의 최상위 객체
@@ -84,5 +85,5 @@ namespace WRD
 		virtual Result& _tour(Visitor& visitor);
 		virtual Node& _cast(const Class& cls);
 		virtual const Node& _cast(const Class& cls) const;
-	}
+	};
 }

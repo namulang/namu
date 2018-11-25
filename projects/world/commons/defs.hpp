@@ -1,6 +1,6 @@
 #pragma once
 
-namespace WCP
+namespace WRD
 {
 	typedef int wid;
 	typedef int wint;
