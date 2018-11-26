@@ -11,16 +11,16 @@ namespace WRD
 
     const string& THIS::getName() const { return _name; }
 
-    type_bool THIS::remove()
+    wbool THIS::remove()
     {
-        type_bool result = ::remove(getPath().c_str());
+        wbool result = ::remove(getPath().c_str());
         if( ! result)
             return release();
 
         return result;
     }
-    type_bool THIS::initialize() { return false; }
-    type_bool THIS::isInitialized() const { return true; }
+    wbool THIS::initialize() { return false; }
+    wbool THIS::isInitialized() const { return true; }
 
     const string& THIS::getBaseDirectory() const
     {
@@ -30,10 +30,10 @@ namespace WRD
         return _owner->getPath();
     }
 
-    type_bool THIS::isFolder() const { return _isFolder(_getInfo(getPath())); }
-    type_ubyte THIS::getSize() const { return _getInfo(getPath()).st_size; }
+    wbool THIS::isFolder() const { return _isFolder(_getInfo(getPath())); }
+    wubyte THIS::getSize() const { return _getInfo(getPath()).st_size; }
 
-    type_bool THIS::release()
+    wbool THIS::release()
     {
         // PathedObject::release(); --> _path should not be released.
         // _owner should not be released.
@@ -43,7 +43,7 @@ namespace WRD
     const File& THIS::peek() const { return *this; }
     const File& THIS::next() { return *this; }
 
-    type_bool THIS::_isFolder(struct stat& info) { return info.st_mode & S_IFDIR; }
+    wbool THIS::_isFolder(struct stat& info) { return info.st_mode & S_IFDIR; }
 
     struct stat& THIS::_getInfo(const string& path)
     {

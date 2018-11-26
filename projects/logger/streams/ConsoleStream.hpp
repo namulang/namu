@@ -8,6 +8,6 @@ namespace WRD
     {
     public:
         virtual const char* getName() const;
-        virtual type_bool dump(const char* message);
+        virtual wbool dump(const char* message);
     };
 }

@@ -17,16 +17,16 @@ namespace WRD
     public:
         using FileStream::operator=;
         
-        virtual type_bool initialize();
+        virtual wbool initialize();
 
         using FileStream::write;
         template <typename T>
-        type_count write(const T& datum) { return write(&datum, sizeof(T)); }
+        wcnt write(const T& datum) { return write(&datum, sizeof(T)); }
 
-        type_count write(const char* str);
-        type_count write(const std::string& str);
-        virtual type_count write(const void* chunks, type_count bytes);
-        virtual type_count read(void* target, type_count bytes);
+        wcnt write(const char* str);
+        wcnt write(const std::string& str);
+        virtual wcnt write(const void* chunks, wcnt bytes);
+        virtual wcnt read(void* target, wcnt bytes);
 
         using FileStream::read;
         template <typename T>
@@ -37,7 +37,7 @@ namespace WRD
             return to_return;
         }
 
-        std::string read(type_count bytes);
+        std::string read(wcnt bytes);
 
     private:
         BinaryStream(const PathedObject& object);

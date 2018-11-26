@@ -49,13 +49,13 @@ class Object : public CompositNode {
 		_getMembers().chain(getClass().getVariables().clone());
 		return Success;
 	}
-	Iterator _getSubContainerHead(windex n) {
+	Iterator _getSubContainerHead(widx n) {
 		Container& sub = getMembers().down<Chain>().getController()[n];
 		WRD_IS_NULL(sub, Iterator())
 
 		return sub.getHead();
 	}
-	CIterator _getSubContainerHead(windex n) const {
+	CIterator _getSubContainerHead(widx n) const {
 		const Container& sub = getMembers().down<Chain>().getController()[n];
 		WRD_IS_NULL(sub, CIterator())
 

@@ -6,7 +6,7 @@ namespace WRD
     #define THIS ConsoleStream
     
     const char* THIS::getName() const { return "ConsoleStream"; }
-    type_bool THIS::dump(const char* message)
+    wbool THIS::dump(const char* message)
     {
         using std::cout;
         if(Stream::dump(message)) return true;

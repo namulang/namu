@@ -14,19 +14,19 @@ namespace WRD
         virtual ~File();
 
     public:
-        virtual type_bool initialize();
-        virtual type_bool isInitialized() const;
+        virtual wbool initialize();
+        virtual wbool isInitialized() const;
         const std::string& getBaseDirectory() const;
-        type_bool isFolder() const;
-        type_ubyte getSize() const;
+        wbool isFolder() const;
+        wubyte getSize() const;
         virtual const File& peek() const;
         virtual const File& next();
-        virtual type_bool release();
+        virtual wbool release();
         const std::string& getName() const;
-        type_bool remove();
+        wbool remove();
 
     protected:
-        static type_bool _isFolder(struct stat& info);
+        static wbool _isFolder(struct stat& info);
         static struct stat& _getInfo(const std::string& path);
         void _setName(const std::string& new_name);
 

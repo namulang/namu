@@ -18,12 +18,12 @@ namespace WRD
     typedef std::string string;
   
     const char* THIS::getName() const { return "Logger"; }
-    const Stream& THIS::operator[](type_index n) const { return getStream(n); }
-    Stream& THIS::operator[](type_index n) { return getStream(n); }
+    const Stream& THIS::operator[](widx n) const { return getStream(n); }
+    Stream& THIS::operator[](widx n) { return getStream(n); }
     const Stream& THIS::operator[](const char* message) const { return getStream(message); }
     Stream& THIS::operator[](const char* message) { return getStream(message); }
 
-    Stream& THIS::getStream(type_index n)
+    Stream& THIS::getStream(widx n)
     { 
         if(n < 0 || n >= getStreamCount())
             return nullreference<Stream>();
@@ -31,7 +31,7 @@ namespace WRD
         return *_streams[n]; 
     }
 
-    const Stream& THIS::getStream(type_index n) const
+    const Stream& THIS::getStream(widx n) const
     {
         THIS* unconsted = const_cast<THIS*>(this);
 
@@ -55,18 +55,18 @@ namespace WRD
         return const_cast<Stream&>(consted->getStream(message));
     }
 
-    type_count THIS::getStreamCount() const { return _streams.size(); }
+    wcnt THIS::getStreamCount() const { return _streams.size(); }
     
-    type_bool THIS::dump(const char* message)
+    wbool THIS::dump(const char* message)
     {
-        type_bool result = false;
+        wbool result = false;
         for(auto e : _streams)
             result |= e->dump(message);
         
         return result;
     }
 
-    type_bool THIS::dumpFormat(const char* format, ...)
+    wbool THIS::dumpFormat(const char* format, ...)
     {
         va_list va;
         va_start(va, format);
@@ -78,7 +78,7 @@ namespace WRD
         return dump(buffer);
     }
 
-    type_bool THIS::pushStream(Stream* new_stream)
+    wbool THIS::pushStream(Stream* new_stream)
     {
         if( ! new_stream) return true;
 
@@ -88,7 +88,7 @@ namespace WRD
         return false;
     }
 
-    type_bool THIS::initialize()
+    wbool THIS::initialize()
     {
         static Stream* streams[] = {new ConsoleStream(), new FileLogStream("./logs"), 0};
         Stream* e = 0;
@@ -98,7 +98,7 @@ namespace WRD
         return false;
     }
 
-    type_bool THIS::isInitialized() const
+    wbool THIS::isInitialized() const
     {
         for(auto e : _streams)
             if( ! e->isInitialized())
@@ -107,7 +107,7 @@ namespace WRD
         return true;
     }
     
-    type_bool THIS::release()
+    wbool THIS::release()
     {
         for(auto e : _streams)
         {

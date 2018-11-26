@@ -26,26 +26,26 @@ namespace WRD
         virtual ~FileStream();
 
     public:
-        type_bool operator+=(type_int delta);
-        type_bool operator-=(type_int delta);
-        type_bool operator=(type_int new_position);
-        type_int getCursor() const;
-        type_int getEndOfFile() const;
+        wbool operator+=(wint delta);
+        wbool operator-=(wint delta);
+        wbool operator=(wint new_position);
+        wint getCursor() const;
+        wint getEndOfFile() const;
         /// @brief  Set cursor of file opening to given new_position.
         /// @param  new_position    If this is negative, setCursor based on the END OF FILE.
         ///                         In "positive" case, calculate based on the START OF FILE.
-        type_bool setCursor(type_int new_position);
-        type_bool setPath(const std::string& new_path);
-        type_bool setPath(const PathedObject& path);
-        virtual type_bool initialize();
-        virtual type_bool isInitialized() const;
-        virtual type_bool release();
-        type_bool setMode(Mode new_mode);
+        wbool setCursor(wint new_position);
+        wbool setPath(const std::string& new_path);
+        wbool setPath(const PathedObject& path);
+        virtual wbool initialize();
+        virtual wbool isInitialized() const;
+        virtual wbool release();
+        wbool setMode(Mode new_mode);
         Mode getMode() const;
-        virtual type_count write(const void* chunks, type_count bytes) = 0;
-        virtual type_count read(void* target, type_count bytes) = 0;
+        virtual wcnt write(const void* chunks, wcnt bytes) = 0;
+        virtual wcnt read(void* target, wcnt bytes) = 0;
         std::string readWhole();
-        type_bool isEndOfFile() const;
+        wbool isEndOfFile() const;
 
     private:        
         FileStream(const PathedObject& object);

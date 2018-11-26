@@ -21,7 +21,7 @@ namespace WRD
             class MyStream : public Stream {
             public:
                 virtual const char* getName() const { return "MyStream"; }
-                virtual type_bool dump(const char* message) {
+                virtual wbool dump(const char* message) {
                     msg += message;
                     return false;
                 }
@@ -40,7 +40,7 @@ namespace WRD
             WRD_ERROR("this is not error. paradox?")
 
 
-            type_bool found = false;
+            wbool found = false;
             Folder build(".", Folder::Option(false));            
             while( found || ! build.next().isNull())
                 if(build.peek().getName().find("logs"))

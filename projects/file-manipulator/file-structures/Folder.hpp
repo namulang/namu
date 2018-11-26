@@ -10,13 +10,13 @@ namespace WRD
         class Option
         {
         public:
-            Option(type_bool is_reculsive = true);
+            Option(wbool is_reculsive = true);
 
         public:
-            type_bool isReculsive() const;
+            wbool isReculsive() const;
 
         private:
-            type_bool _is_reculsive;
+            wbool _is_reculsive;
         };
 
     public:
@@ -26,12 +26,12 @@ namespace WRD
         virtual ~Folder();
 
     public:
-        virtual type_bool initialize();
-        virtual type_bool isInitialized() const;
+        virtual wbool initialize();
+        virtual wbool isInitialized() const;
         const Option& getOption() const;
         const File& next();
         const File& peek() const;
-        virtual type_bool release();
+        virtual wbool release();
 
     private:
         const File* _prepare() const;
@@ -39,7 +39,7 @@ namespace WRD
         /// @remark not allowed.
         Folder(const Folder& rhs);
         Folder& operator=(const Folder& rhs);
-        type_bool _isFiltered(const File& target) const;
+        wbool _isFiltered(const File& target) const;
         File* _createSubFile(DIR* e);
         void _release();
 

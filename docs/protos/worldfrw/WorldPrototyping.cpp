@@ -4,7 +4,7 @@ namespace wrd
 	typedef int wid;
 	typedef int wint;
 	typedef bool wbool;
-	typedef int wcount;
+	typedef int wcnt;
 	class Result;
 	template <typename S, typename T> class Bind;
 	class Strong;
@@ -69,7 +69,7 @@ namespace wrd
 	//		Container는 Node만을 다루기 때문에 각 원소들은 heap에 있는 것이다.
 	class Iterator : public Object {
 		class Iteration : public Instance {
-			virtual const Result& move(wcount step) = 0;
+			virtual const Result& move(wcnt step) = 0;
 			virtual Node& get() = 0;
 			virtual wbool isEnd() const = 0;
 			TWeak<Container> 
@@ -77,24 +77,24 @@ namespace wrd
 	};
 	class Container : public Object, public Containable {
 		virtual Result& insert(const Iterator& pos, const Node& trg) = 0;
-		Result& insert(windex n, const Node& trg);
+		Result& insert(widx n, const Node& trg);
 		Result& insert(const Iterator& pos, const Iterator& rhs_start, const Iterator& rhs_end);
-		Result& insert(windex n, const Iterator& rhs_start, const Iterator& rhs_end);
+		Result& insert(widx n, const Iterator& rhs_start, const Iterator& rhs_end);
 		Result& insert(const Iterator& pos, iterator from stl)
-		Result& insert(windex n, iterator from stl...)
+		Result& insert(widx n, iterator from stl...)
 		template <typename... Ts>
 		Result& insert(const Iterator& pos, Ts... args) {
 		}
 		template <typename... Ts>
-		Result& insert(windex n, Ts... args) {
+		Result& insert(widx n, Ts... args) {
 			return insert(getIterator(n), args...);
 		}
 
-		windex push(const Node& trg); // returns push하고 난 뒤의 index
-		windex push(const Iterator& rhs_start, const Iterator& rhs_end);
-		windex push(iterator from stl)
+		widx push(const Node& trg); // returns push하고 난 뒤의 index
+		widx push(const Iterator& rhs_start, const Iterator& rhs_end);
+		widx push(iterator from stl)
 		template <typename... Ts>
-		windex push(Ts... args) {
+		widx push(Ts... args) {
 			return insert(getTail(), args...);
 		}
 
@@ -102,10 +102,10 @@ namespace wrd
 
 		virtual Node& _get(const Iterator& pos) = 0;
 
-		wcount getLength() const { return _length; }
+		wcnt getLength() const { return _length; }
 
-		virtual Node& get(windex n) { return getIterator(pos).get(); }
-		const Node& get(windex n) const;
+		virtual Node& get(widx n) { return getIterator(pos).get(); }
+		const Node& get(widx n) const;
 		virtual Iterator getIterator() = 0;
 		virtual CIterator getIterator() const = 0;
 		Iterator getTail();
@@ -121,14 +121,14 @@ namespace wrd
 		virtual Class& getTrait() { return TClass<Node>(); }
 
 	protected:
-		wcount _length;
+		wcnt _length;
 	};
 	class SolidContainer : public Container {
-		wcount getSize() const { return _size; }
-		virtual wcount resize(wcount newsize) = 0;
+		wcnt getSize() const { return _size; }
+		virtual wcnt resize(wcnt newsize) = 0;
 
 	protected:
-		wcount _size;
+		wcnt _size;
 	};
 	class Array : public SolidContainer {
 		Array();

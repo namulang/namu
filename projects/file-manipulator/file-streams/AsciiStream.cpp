@@ -15,7 +15,7 @@ namespace WRD
     }
     THIS::~THIS() { release(); }
 
-    type_bool THIS::initialize() 
+    wbool THIS::initialize() 
     {
         if(FileStream::initialize()) return true;
 
@@ -36,21 +36,21 @@ namespace WRD
         return ! isInitialized();
     }
     
-    type_count THIS::write(const string& datum) { return write(datum.c_str(), sizeof(char) * datum.size()); }
+    wcnt THIS::write(const string& datum) { return write(datum.c_str(), sizeof(char) * datum.size()); }
     
-    type_count THIS::write(const void* chunks, type_count bytes)
+    wcnt THIS::write(const void* chunks, wcnt bytes)
     {
         if( ! isInitialized()) return 0;
 
         return fwrite(chunks, 1, bytes, _fd);
     }
 
-    type_count THIS::read(void* target, type_count bytes)
+    wcnt THIS::read(void* target, wcnt bytes)
     {
         string buffer = _peelOffBuffer(bytes);
         
-        type_count count = 0;
-        type_count max = buffer.length() > bytes ? bytes : buffer.length();
+        wcnt count = 0;
+        wcnt max = buffer.length() > bytes ? bytes : buffer.length();
         char* t = (char*) target;
         for(; count < max ;count++)
             t[count] = buffer[count];
@@ -60,9 +60,9 @@ namespace WRD
 
     string THIS::readToken(const string& delimeter)
     {
-        type_bool matched_once = false;
-        type_count last = 0;
-        type_count to_be_cut = 0;
+        wbool matched_once = false;
+        wcnt last = 0;
+        wcnt to_be_cut = 0;
         while(1)
         {
             //  algorithm:
@@ -87,7 +87,7 @@ namespace WRD
 
     string THIS::readLine() { return readToken("\n"); }
 
-    type_bool THIS::release()
+    wbool THIS::release()
     {
         _buffer.clear();
         return FileStream::release();
@@ -95,24 +95,24 @@ namespace WRD
 
     THIS::THIS(const PathedObject& object) {}
     
-    string THIS::_peelOffBuffer(type_count bytes/*except for null*/)
+    string THIS::_peelOffBuffer(wcnt bytes/*except for null*/)
     {
         if(_buffer.length() < bytes)
             _readToBuffer();
 
-        type_count max_size = _buffer.length() > bytes ? bytes : _buffer.length();
+        wcnt max_size = _buffer.length() > bytes ? bytes : _buffer.length();
         string to_return(_buffer.c_str(), max_size);
         _buffer.erase(0, max_size);
         return to_return;
     }
     
-    type_count THIS::_readToBuffer(type_count bytes)
+    wcnt THIS::_readToBuffer(wcnt bytes)
     {
         if( ! isInitialized()) return 0;
 
         char* buffer = new char[bytes];
 
-        type_count n = fread(buffer, 1, bytes, _fd);
+        wcnt n = fread(buffer, 1, bytes, _fd);
         _buffer += string(buffer, n);
         
         delete [] buffer;

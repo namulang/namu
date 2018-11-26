@@ -5,8 +5,8 @@ typedef int wint;
 typedef char wchar;
 typedef wchat_t wwchar;
 typedef float wfloat;
-typedef wint wcount;
-typedef wint windex;
+typedef wint wcnt;
+typedef wint widx;
 
 template <typename T>
 class TNuller {

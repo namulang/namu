@@ -25,7 +25,7 @@ namespace WRD
         WRD_ERROR("#%d Error: %s", message.c_str());
     }
 
-    const char* THIS::getKind(type_int kind) 
+    const char* THIS::getKind(wint kind) 
     {
         switch(kind) {
             #define _CASE(TYPE) case TYPE: return #TYPE;

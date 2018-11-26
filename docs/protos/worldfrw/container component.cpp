@@ -3,16 +3,16 @@
 class Manipulatable {
 	virtual Result& set(const Iterator& pos, Node& to_bind) = 0;
 	Result& set(const Iterator& pos, const Node& to_clone);
-	Result& set(windex n, const Node& to_clone);
-	Result& set(windex n, Node& to_bind);
+	Result& set(widx n, const Node& to_clone);
+	Result& set(widx n, Node& to_bind);
 
 	//	메소드 은닉을 위하여 virtual 메소드를 private로 만들어 redirection 한다.
-	virtual Node& _get(windex n) = 0;
-	Node& get(windex n) {
+	virtual Node& _get(widx n) = 0;
+	Node& get(widx n) {
 		WRD_IS_THIS(Node)
 		return _get(n);
 	}
-	const Node& get(windex n) const {
+	const Node& get(widx n) const {
 		This& unconst = const_cast<This&>(this);
 		return unconst.get(n);
 	}
@@ -23,14 +23,14 @@ class Manipulatable {
 	
 
 	//	사용자가 Iteration을 상속할 수 있도록 하기 위한 메소드.
-	virtual TStrong<Iteration> _onCreateIteration(Container& origin, windex n) = 0;
+	virtual TStrong<Iteration> _onCreateIteration(Container& origin, widx n) = 0;
 
-	virtual wcount getLength() const = 0;
+	virtual wcnt getLength() const = 0;
 
-	virtual Iterator _getIterator(windex n) = 0;
-	virtual CIterator _getIterator(windex n) const = 0;
-	Iterator getIterator(windex n) { return _getIterator(n); }
-	CIterator getIterator(windex n) const { return _getIterator(n); }
+	virtual Iterator _getIterator(widx n) = 0;
+	virtual CIterator _getIterator(widx n) const = 0;
+	Iterator getIterator(widx n) { return _getIterator(n); }
+	CIterator getIterator(widx n) const { return _getIterator(n); }
 
 	Iterator getStart();
 	CIterator getStart() const;
@@ -78,24 +78,24 @@ class Containable : public Manipulatable {
 	//				arr[1] = 10, arr2[1] = 10
 	virtual Result& insert(const Iterator& pos, Node& to_bind) = 0;
 	Result& insert(const Iterator& pos, const Node& to_clone);
-	Result& insert(windex n, Node& to_bind);
-	Result& insert(windex n, const Node& to_clone);
+	Result& insert(widx n, Node& to_bind);
+	Result& insert(widx n, const Node& to_clone);
 	Result& insert(const Iterator& pos, const Iterator& its_start, const Iterator& its_end);
-	Result& insert(windex n, const Iterator& its_start, const Iterator& its_end);
+	Result& insert(widx n, const Iterator& its_start, const Iterator& its_end);
 	Result& insert(const Iterator& pos, <<<iterator from stl>>>);
-	Result& insert(windex n, <<<iterator from stl>>>);
+	Result& insert(widx n, <<<iterator from stl>>>);
 	template <typename... Ts>
 	Result& insert(const Iterator& pos, Ts... args);
 	template <typename... Ts>
-	Result& insert(windex n, Ts... args) {
+	Result& insert(widx n, Ts... args) {
 		return insert(getIterator(n), args...);
 	}
-	windex push(Node& to_bind);
-	windex push(const Node& to_clone);
-	windex push(const Iterator& its_start, const Iterator& its_end);
-	windex push(<<<iterator from stl>>>)
+	widx push(Node& to_bind);
+	widx push(const Node& to_clone);
+	widx push(const Iterator& its_start, const Iterator& its_end);
+	widx push(<<<iterator from stl>>>)
 	template <typename... Ts>
-	windex push(Ts... args) {
+	widx push(Ts... args) {
 		return insert(getTail(), args...);
 	}
 	Result& enq(Node& to_bind);
@@ -108,20 +108,20 @@ class Containable : public Manipulatable {
 	
 	virtual Result& remove(const Iterator& start, const Iterator& end) = 0;
 	Result& remove(const Node& it);
-	Result& remove(windex n);
+	Result& remove(widx n);
 	template <typename T>
 	Result& remove(const Iterator& pos, Ts... args) {
 	}
 	template <typename T>
-	Result& remove(windex n, Ts... args) {
+	Result& remove(widx n, Ts... args) {
 	}
-	windex pop();
+	widx pop();
 	Result& deq();
 	
 };
 
 class Iteratable {
-	virtual Result& move(wcount step) = 0;
+	virtual Result& move(wcnt step) = 0;
 	This& operator++(int);
 	This& operator++();
 	This& operator--(int);
@@ -132,7 +132,7 @@ class Iteratable {
 	operator wbool() const;
 	virtual wbool isTail() const = 0;
 	virtual wbool isHead() const = 0;
-	virtual wcount toIndex() const = 0;
+	virtual wcnt toIndex() const = 0;
 };
 
 class Container : public Object, public Containable {
@@ -144,8 +144,8 @@ class Container : public Object, public Containable {
 		const Container& getOrigin() const;
 	};
 	
-	Node& operator[](windex n);
-	const Node& operator[](windex n) const;
+	Node& operator[](widx n);
+	const Node& operator[](widx n) const;
 	operator+
 	operator-
 	operator<<
@@ -163,15 +163,15 @@ class Container : public Object, public Containable {
 	Container() : Super(), _trait(Node::getStaticClass()) {}
 	Container(const Class& trait);
 
-	virtual Iterator getIterator(windex n) {
+	virtual Iterator getIterator(widx n) {
 		return Iterator(_onCreateInteration(*this, n));
 	}
-	virtual CIterator getIterator(windex n) const {
+	virtual CIterator getIterator(widx n) const {
 		return CIterator(_onCreateIteration(*this, n));
 	}
-	virtual wcount getLength() const { return _size; }
-	Result& _setSize(wcount newone) { _size = newone; }
-	wcount _size;
+	virtual wcnt getLength() const { return _size; }
+	Result& _setSize(wcnt newone) { _size = newone; }
+	wcnt _size;
 
 	virtual const Class& getTrait() const {
 	//	삽입가능한 Class를 나타낸다.
@@ -194,18 +194,18 @@ class Container : public Object, public Containable {
 template <typename T, typename S>
 class TContainer : public S {
 	//	Native에서 편의를 위해 제공된다. 모든 메소드는 World invisible 하다.
-	TIterator<T> getIterator(windex n) {
+	TIterator<T> getIterator(widx n) {
 		return TIterator<T>(_onCreateInteration(*this, n));
 	}
-	TCIterator<T> getIterator(windex n) const {
+	TCIterator<T> getIterator(widx n) const {
 		return TCIterator<T>(_onCreateInteration(*this, n));
 	}
-	T& operator[](windex n);
-	T& get(windex n) { // get()이 nonvirtual이기에 여기서 공변이 달라도 된다.
+	T& operator[](widx n);
+	T& get(widx n) { // get()이 nonvirtual이기에 여기서 공변이 달라도 된다.
 		return static_cast<T&>(get(n));
 	}
-	const T& operator[](windex n) const;
-	const T& get(windex n) const {
+	const T& operator[](widx n) const;
+	const T& get(widx n) const {
 		return static_cast<T&>(get(n));
 	}
 	Result& each(function<Result&(T&)> lambda);
@@ -217,11 +217,11 @@ class Iteration : public Container::Proxy, public Iteratable {
 	Iteration(Container& origin);
 
 	//	get() 안에서 toIndex()를 쓰면 무한 루프를 돌게 된다.
-	virtual windex toIndex() const {
+	virtual widx toIndex() const {
 		Container& origin = getOrigin();
 		WRD_IS_NULL(origin, -1);
 		
-		windex n = -1;
+		widx n = -1;
 		for(CIterator e=origin.getHead(); e; e++)
 		{
 			n++;
@@ -251,7 +251,7 @@ class CIterator : public OccupiableObject, public Iteratable {
 
 	const Container& getOrigin() const;
 
-	virtual Result& move(wcount step) {
+	virtual Result& move(wcnt step) {
 		Iteration& bean = getProxy();
 		WRD_IS_NULL(bean)
 
@@ -318,7 +318,7 @@ class Chain : public Container {
 	Containers _conts;
 	friend class Control; // for _conts and Control class.
 
-	virtual TStrong<Iteration> _onCreateIteration(Container& origin, windex n) {
+	virtual TStrong<Iteration> _onCreateIteration(Container& origin, widx n) {
 		class ChainIteration : public TIteration<Chain> {
 			....
 		};
@@ -335,7 +335,7 @@ class Chain : public Container {
 			return origin.set(pos, it);
 		}
 
-		virtual Node& _get(windex n) {
+		virtual Node& _get(widx n) {
 			_DEFINE_BEAN(nullerr)
 			return origin._get(n);
 		}
@@ -348,19 +348,19 @@ class Chain : public Container {
 			_DEFINE_BEAN(nullerr)
 			return origin.remove(pos);
 		}
-		virtual TStrong<Iteration> _onCreateIteration(windex n) {
+		virtual TStrong<Iteration> _onCreateIteration(widx n) {
 			_DEFINE_BEAN(TStrong<Iteration>())
 			return origin._onCreateIteration(n);
 		}
-		virtual wcount getLength() const {
+		virtual wcnt getLength() const {
 			_DEFINE_BEAN(0)
 			return origin.getLength();
 		}
-		virtual Iterator getIterator(windex n) {
+		virtual Iterator getIterator(widx n) {
 			_DEFINE_BEAN(Iterator)
 			return origin.getIterator(n);
 		}
-		virtual CIterator getIterator(windex n) const {
+		virtual CIterator getIterator(widx n) const {
 			_DEFINE_BEAN(CIterator)
 			return origin.getIterator(n);
 		}
@@ -400,7 +400,7 @@ class Chain : public Container {
 		return new Control(origin);
 	}
 
-	virtual Node& get(windex n);
+	virtual Node& get(widx n);
 	virtual Result& set(const Iterator& pos, const Node& it);
 	virtual Result& insert(const Iterator& pos, Strong it);
 	virtual Result& remove(const Iterator& pos);

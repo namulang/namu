@@ -11,6 +11,6 @@ namespace WRD
         virtual void handleUnexpectedToken(int expectedKind, const JJString& expectedToken, Token *actual, PRParser *parser);
         virtual void handleParseError(Token *last, Token *unexpected, const JJSimpleString& production, PRParser *parser);
         virtual void handleOtherError(const JJString& message, PRParser *parser);
-        static const char* getKind(type_int kind);
+        static const char* getKind(wint kind);
     };
 }

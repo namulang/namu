@@ -26,9 +26,9 @@
 class Instance : Thing {
 	//	Instance는 World에서 인스턴스 관리를 대신해준다. 여기서부터 bind가 가능하다.
 	union ID {
-		windex type;
+		widx type;
 		//	클래스의 종류
-		windex index;
+		widx index;
 		//	해당 클래스 인스턴스 벡터의 몇번째인가.type과 index를 조합하면 어디서든 객체에 접근할 수 있다.
 		wint64 number;
 	} _id;
@@ -52,7 +52,7 @@ class Instance : Thing {
 		return _clone();
 	}
 	ID getID() const { return _id; }
-	wcount getSerial() const { 
+	wcnt getSerial() const { 
 		Nexus::get().getInstancer()[_id].getSerial();
 	}
 	const InstanceBlock& getBlock() const {
@@ -175,13 +175,13 @@ class Node : public ? {
 	//	getMembers:
 	//		모든 Container의 index는 World와 Native모두 1부터 시작한다.
 	//		invisible하다.
-	Node& operator[](windex n) { return get(n); }
-	const Node& operator[](windex n) const { return get(n); }
-	Node& get(windex n) {
+	Node& operator[](widx n) { return get(n); }
+	const Node& operator[](widx n) const { return get(n); }
+	Node& get(widx n) {
 		WRD_IS_THIS(Node)
 		return _getMembers()[n];
 	}
-	const Node& get(windex n) const {
+	const Node& get(widx n) const {
 		WRD_IS_THIS(Node)
 		return getMembers()[n];
 	}

@@ -21,7 +21,7 @@ namespace WRD
                 const MemberNode& member1 = preference1["grade"];
                 WRD_TEST(member1.isNull());
                 WRD_TEST(member1.getKey() != "grade")
-                type_float EPSILON = 0.0001f;
+                wfloat EPSILON = 0.0001f;
                 WRD_TEST(3.5f + EPSILON < member1.toFloat() || member1.toFloat() < 3.5f - EPSILON)
                 WRD_TEST(member1.toString() != "3.5")
                 pr.release();
@@ -37,7 +37,7 @@ namespace WRD
                 const MemberNode& member1 = preference1["grade"];
                 WRD_TEST(member1.isNull());
                 WRD_TEST(member1.getKey() != "grade")
-                type_float EPSILON = 0.0001f;
+                wfloat EPSILON = 0.0001f;
                 WRD_TEST(4.5f + EPSILON < member1.toFloat() || member1.toFloat() < 3.5f - EPSILON)
                 WRD_TEST(member1.toString() != "4.5")
 

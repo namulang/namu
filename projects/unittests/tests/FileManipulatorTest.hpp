@@ -34,7 +34,7 @@ namespace WRD
             WRD_TEST(build.isInitialized())
             WRD_TEST(build.initialize())
             WRD_TEST( ! build.isInitialized())
-            type_bool found = false;
+            wbool found = false;
             while( ! build.next().isNull())
                 if(build.peek().getName() == output_filename)
                 {
@@ -68,7 +68,7 @@ namespace WRD
             reaad = "HeI'm hello world? keep testing!";
             WRD_TEST(reaaad != reaad)
 
-            type_int eof_cursor = as.getEndOfFile();
+            wint eof_cursor = as.getEndOfFile();
 
             std::string whole_context = as.readWhole();
 

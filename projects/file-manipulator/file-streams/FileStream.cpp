@@ -11,62 +11,62 @@ namespace WRD
     THIS::THIS(const std::string& new_path) : PathedObject(new_path), _mode(MODE_TYPE_START), _fd(0)  {}
     THIS::~THIS() { release(); }
 
-    type_bool THIS::operator+=(type_int delta)
+    wbool THIS::operator+=(wint delta)
     {
         if( ! isInitialized()) return 0;
 
         return setCursor(getCursor() + delta);
     }
 
-    type_bool THIS::operator-=(type_int delta)
+    wbool THIS::operator-=(wint delta)
     {
         if( ! isInitialized()) return 0;
 
         return setCursor(getCursor() - delta);
     }
 
-    type_bool THIS::operator=(type_int new_position) { return setCursor(new_position); }
+    wbool THIS::operator=(wint new_position) { return setCursor(new_position); }
 
-    type_int THIS::getCursor() const 
+    wint THIS::getCursor() const 
     {
         if( ! isInitialized()) return 0;
 
         return ftell(_fd);
     }
 
-    type_int THIS::getEndOfFile() const
+    wint THIS::getEndOfFile() const
     {
         if( ! isInitialized()) return 0;
 
-        type_int backup = getCursor();
+        wint backup = getCursor();
         
         FILE* unconsted = const_cast<FILE*>(_fd);
         if(fseek(unconsted, 0, SEEK_END))
             return 0;
 
-        type_int to_return = getCursor();
+        wint to_return = getCursor();
         fseek(unconsted, backup, SEEK_SET);
 
         return to_return;
     }
-    type_bool THIS::setCursor(type_int new_position)
+    wbool THIS::setCursor(wint new_position)
     {
         if( ! isInitialized()) return true;
         
-        type_int mode = new_position >= 0 ? SEEK_SET : SEEK_END;
+        wint mode = new_position >= 0 ? SEEK_SET : SEEK_END;
         if(fseek(_fd, new_position, mode))
             return true;
 
         return false;
     }
-    type_bool THIS::setPath(const std::string& new_path) { return _setPath(new_path); }
-    type_bool THIS::setPath(const PathedObject& path)
+    wbool THIS::setPath(const std::string& new_path) { return _setPath(new_path); }
+    wbool THIS::setPath(const PathedObject& path)
     { 
         if(path.isNull()) return true; 
         
         return _setPath(path.getPath()); 
     }
-    type_bool THIS::initialize()
+    wbool THIS::initialize()
     {
         if(getMode() != APPENDABLE) return false;
 
@@ -76,8 +76,8 @@ namespace WRD
         fclose(tmp);
         return false;
     }
-    type_bool THIS::isInitialized() const { return _fd; }
-    type_bool THIS::release()
+    wbool THIS::isInitialized() const { return _fd; }
+    wbool THIS::release()
     {
         if(_fd)
             fclose(_fd);
@@ -87,7 +87,7 @@ namespace WRD
 
         return PathedObject::release();            
     }
-    type_bool THIS::setMode(Mode new_mode)
+    wbool THIS::setMode(Mode new_mode)
     {
         if(isInitialized()) return true;
 
@@ -99,21 +99,21 @@ namespace WRD
 
     std::string THIS::readWhole()
     {
-        const type_int SIZE = 65535;
+        const wint SIZE = 65535;
         char buffer[SIZE] = {0, };
 
         setCursor(0);
         std::string contents;
         while( ! isEndOfFile())
         {
-            type_count count = read(buffer, SIZE);
+            wcnt count = read(buffer, SIZE);
             contents.append(buffer, count);
         }
 
         return contents;
     }
     
-    type_bool THIS::isEndOfFile() const
+    wbool THIS::isEndOfFile() const
     {
         if( ! _fd) return true;
 

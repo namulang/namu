@@ -84,7 +84,7 @@ class TWeak : public Thing {
 		return World::get().getInstancer()[_id];
 	}
 	Instance::ID _id;
-	wcount _serial;
+	wcnt _serial;
 };
 
 template <typename T>

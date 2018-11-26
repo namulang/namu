@@ -16,7 +16,7 @@ namespace WRD
     THIS::~THIS() { release(); }
 
 
-    type_bool THIS::initialize()
+    wbool THIS::initialize()
     {
         if(FileStream::initialize()) return true;
 
@@ -37,28 +37,28 @@ namespace WRD
         return ! isInitialized();
     }
 
-    type_count THIS::write(const char* str) { return write(str, sizeof(char) * strlen(str)); }
-    type_count THIS::write(const std::string& str) { return write(str.c_str()); }
+    wcnt THIS::write(const char* str) { return write(str, sizeof(char) * strlen(str)); }
+    wcnt THIS::write(const std::string& str) { return write(str.c_str()); }
 
-    type_count THIS::write(const void* chunks, type_count bytes)
+    wcnt THIS::write(const void* chunks, wcnt bytes)
     {
         if( ! isInitialized()) return 0;
 
         return fwrite(chunks, 1, bytes, _fd);
     }
 
-    type_count THIS::read(void* target, type_count bytes)
+    wcnt THIS::read(void* target, wcnt bytes)
     {
         if( ! isInitialized()) return 0;
 
         return fread(target, 1, bytes, _fd);
     }
 
-    std::string THIS::read(type_count bytes)
+    std::string THIS::read(wcnt bytes)
     {
         char* buffer = new char[bytes];
 
-        type_count n = read(buffer, sizeof(char) * bytes);
+        wcnt n = read(buffer, sizeof(char) * bytes);
         std::string to_return(buffer, n);
 
         delete [] buffer;

@@ -12,14 +12,14 @@ namespace WRD
         PathedObject(const PathedObject& rhs);
 
     public:
-        virtual type_bool initialize() = 0;
-        virtual type_bool isInitialized() const = 0;
+        virtual wbool initialize() = 0;
+        virtual wbool isInitialized() const = 0;
         const std::string& getPath() const;
-        type_bool isNull() const;
-        virtual type_bool release();
+        wbool isNull() const;
+        virtual wbool release();
 
     protected:
-        type_bool _setPath(const std::string& new_path);
+        wbool _setPath(const std::string& new_path);
 
     private:
         /// @remark not allowed.

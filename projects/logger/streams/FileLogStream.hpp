@@ -11,11 +11,11 @@ namespace WRD
 
     public:
         virtual const char* getName() const;
-        virtual type_bool initialize();
-        type_bool setPath(const std::string& new_path);
+        virtual wbool initialize();
+        wbool setPath(const std::string& new_path);
         const std::string& getPath() const;
-        virtual type_bool dump(const char* message);
-        virtual type_bool release();
+        virtual wbool dump(const char* message);
+        virtual wbool release();
 
     private:
         AsciiStream _file;

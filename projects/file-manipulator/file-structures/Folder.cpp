@@ -5,15 +5,15 @@ namespace WRD
     using namespace std;
     #define THIS Folder
 
-    Folder::Option::Option(type_bool is_reculsive) : _is_reculsive(is_reculsive) {}
-    type_bool Folder::Option::isReculsive() const { return _is_reculsive; }
+    Folder::Option::Option(wbool is_reculsive) : _is_reculsive(is_reculsive) {}
+    wbool Folder::Option::isReculsive() const { return _is_reculsive; }
 
     THIS::THIS(const std::string& new_path) : File(new_path), _iterator(0), _sub_file(0) {}
     THIS::THIS(const File* owner, const string& path, Option option) : File(owner, path), _iterator(0), _sub_file(0), _option(option) {}
     THIS::THIS(const string& path, Option option) : File(0, path), _iterator(0), _sub_file(0), _option(option) {}
     THIS::~THIS() { _release(); }
 
-    type_bool THIS::initialize()
+    wbool THIS::initialize()
     {
         if(isInitialized())
             _release();
@@ -21,7 +21,7 @@ namespace WRD
         _iterator = opendir(getPath().c_str());
         return ! isInitialized();
     }
-    type_bool THIS::isInitialized() const { return _iterator; }
+    wbool THIS::isInitialized() const { return _iterator; }
 
     const THIS::Option& THIS::getOption() const { return _option; }
 
@@ -48,7 +48,7 @@ namespace WRD
 
     const File& THIS::peek() const { return _sub_file ? _sub_file->peek() : *this; }
 
-    type_bool THIS::release()
+    wbool THIS::release()
     {
         _release();
         return File::release();
@@ -66,7 +66,7 @@ namespace WRD
     THIS::Folder(const Folder& rhs) : File(rhs), _iterator(0) { }
     Folder& THIS::operator=(const Folder& rhs) { return *this; }
 
-    type_bool THIS::_isFiltered(const File& target) const
+    wbool THIS::_isFiltered(const File& target) const
     {
         if(target.isNull()) return _iterator != 0; // if next() called at least once and there is no target.
 

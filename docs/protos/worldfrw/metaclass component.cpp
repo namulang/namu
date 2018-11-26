@@ -59,7 +59,7 @@ class Class : public Node { //	World에 visible해야 하기 때문이다.
 		//        would must be the class of "this".
 		if(it.isNull()) return false;
 		const Classes& its_supers = it.getSupers();
-		wcount 	my_tier = getClass().getSupers().size(),
+		wcnt 	my_tier = getClass().getSupers().size(),
 				its_tier = its_supers.size();
 		if(my_tier > its_tier) return false;
 

@@ -14,7 +14,7 @@ namespace WRD
 
     const char* THIS::getName() const { return "FileLogStream"; }
     
-    type_bool THIS::initialize()
+    wbool THIS::initialize()
     {
         if(Stream::initialize()) return true;
 
@@ -24,17 +24,17 @@ namespace WRD
         return _file.setCursor(_file.getEndOfFile());
     }
     
-    type_bool THIS::setPath(const string& new_path) { return _file.setPath(new_path); }
+    wbool THIS::setPath(const string& new_path) { return _file.setPath(new_path); }
     const string& THIS::getPath() const { return _file.getPath(); }
     
-    type_bool THIS::dump(const char* message)
+    wbool THIS::dump(const char* message)
     {
         if(Stream::dump(message)) return true;
 
         return _file.write(std::string(message) + "\n") <= 0;
     }
 
-    type_bool THIS::release()
+    wbool THIS::release()
     {
         _file.release();
         return Stream::release();

@@ -4,7 +4,7 @@
 namespace WRD
 {
     #define THIS Preferencer
-    type_bool THIS::parse(const std::string& contents) {
+    wbool THIS::parse(const std::string& contents) {
         CharStream stream(contents, 1, 1);
         PRParserTokenManager token_manager(&stream);
         PRParser parser(&token_manager);
@@ -15,7 +15,7 @@ namespace WRD
         parser.configure_file();
         return true;
     }
-    type_bool THIS::onAddClass(const std::string& name) {
+    wbool THIS::onAddClass(const std::string& name) {
         if( ! getClass(name).isNull())
         {
             WRD_ERROR("%s is duplicated.", name.c_str());
@@ -25,7 +25,7 @@ namespace WRD
         _classes[name] = ClassNode(name);
         return true;
     }
-    type_bool THIS::onAddMember(const std::string& class_name, const std::string& key, const std::string& value) {
+    wbool THIS::onAddMember(const std::string& class_name, const std::string& key, const std::string& value) {
         if(getClass(class_name).isNull())
         {
             WRD_ERROR("class %s is not defined.", class_name.c_str());

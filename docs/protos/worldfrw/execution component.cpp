@@ -1,7 +1,7 @@
 class InstanceBlock : public Thing {
 	friend class Weak;
 	//	_strong을 위해서다.
-	wcount getCount() const { return _strong; }
+	wcnt getCount() const { return _strong; }
 	Result& _increaseCount() {
 		_strong++;
 		return Success;
@@ -12,7 +12,7 @@ class InstanceBlock : public Thing {
 		return Success;
 	}
 	//	Strong reference 카운트다.
-	wcount _strong;
+	wcnt _strong;
 	Instance& get();
 	const Instance& get() const;
 	Result& release();
@@ -107,17 +107,17 @@ class Scope : public Chain { // Scope는 visible할 수 있으나 invisible로 �
 	}
 	Node& operator[](const String& name) { return get(name); }
 	const Node& operator[](const String& name) { return get(name); }
-	Node& get(windex n) {
+	Node& get(widx n) {
 		WRD_IS_THIS(Node)
 		Node& res = ...;
 		return _filterConst(res);
 	}
-	const Node& get(windex n) const {
+	const Node& get(widx n) const {
 		This& cast = const_cast<This&>(*this);
 		return cast.get(n);
 	}
-	Node& operator[](windex n) { return get(n);
-	const Node& operator[](windex n) const { return get(n); }
+	Node& operator[](widx n) { return get(n);
+	const Node& operator[](widx n) const { return get(n); }
 	virtual Result& release();
 
 	virtual Result& insert(....); // LocalSpace에만 insert가 되어야한다.

@@ -12,7 +12,7 @@ namespace WRD
             return inner;                      \
         }
     #define _INTEGER_METHOD(function, value)    \
-        type_int THIS::function                \
+        wint THIS::function                \
         {                                      \
             return value;                      \
         }

@@ -17,23 +17,23 @@ namespace WRD
     public:
         using FileStream::operator=;
 
-        virtual type_bool initialize();
+        virtual wbool initialize();
         
         using FileStream::write;
         template <typename T>
-        type_count write(const T& datum) { return write(to_string(datum)); }
+        wcnt write(const T& datum) { return write(to_string(datum)); }
 
-        type_count write(const std::string& datum);
-        virtual type_count write(const void* chunks, type_count bytes);
-        virtual type_count read(void* target, type_count bytes);
+        wcnt write(const std::string& datum);
+        virtual wcnt write(const void* chunks, wcnt bytes);
+        virtual wcnt read(void* target, wcnt bytes);
         std::string readToken(const std::string& delimeter = " ");
         std::string readLine();
-        virtual type_bool release();
+        virtual wbool release();
 
     private:
         AsciiStream(const PathedObject& object);
-        std::string _peelOffBuffer(type_count bytes/*except for null*/);
-        type_count _readToBuffer(type_count bytes=1024);
+        std::string _peelOffBuffer(wcnt bytes/*except for null*/);
+        wcnt _readToBuffer(wcnt bytes=1024);
 
     private:
         std::string _buffer;

@@ -16,9 +16,9 @@ namespace WRD
     class Object
     {
     public:
-        virtual type_bool release() = 0;
+        virtual wbool release() = 0;
         virtual Object& clone() const = 0;
-        type_bool isNull() const { return ! this; }
+        wbool isNull() const { return ! this; }
     };
     class Node : public Object
     {
@@ -26,7 +26,7 @@ namespace WRD
         Node() {}
         Node(const std::string& key) : _key(key) {}
         const std::string& getKey() const { return _key; }
-        virtual type_bool release() { 
+        virtual wbool release() { 
             _key.clear(); 
             return true;
         }
@@ -41,14 +41,14 @@ namespace WRD
         MemberNode() : Node() {}
         MemberNode(const std::string& key, const std::string& value) : Node(key), _value(value) {}
         const std::string& getValue() const { return _value; }
-        virtual type_int toInt() const { return std::stoi(_value); }
-        virtual type_bool toBoolean() const {
+        virtual wint toInt() const { return std::stoi(_value); }
+        virtual wbool toBoolean() const {
             return _toLowercase(_value) == "true" || toInt();
         }
-        virtual type_float toFloat() const { return std::stof(_value, 0); }
-        virtual type_char toChar() const { return _value[0]; }
+        virtual wfloat toFloat() const { return std::stof(_value, 0); }
+        virtual wchar toChar() const { return _value[0]; }
         virtual std::string toString() const { return _value; }
-        virtual type_bool release() {
+        virtual wbool release() {
             _value.clear();
             return Node::release();
         }
@@ -76,7 +76,7 @@ namespace WRD
         ClassNode(const std::string& key) : Node(key) {}
 
     public:
-        type_bool push(const MemberNode& member) { 
+        wbool push(const MemberNode& member) { 
             _members[member.getKey()] = member;
             
             return true;
@@ -91,7 +91,7 @@ namespace WRD
 
             return e->second;
         }
-        virtual type_bool release() {
+        virtual wbool release() {
             _members.clear();
             
             return true;
@@ -114,8 +114,8 @@ namespace WRD
 
             return e->second;
         }
-        virtual type_bool parse(const std::string& contents);
-        virtual type_bool parse(const File& file) {
+        virtual wbool parse(const std::string& contents);
+        virtual wbool parse(const File& file) {
             //  pre:
             if(file.isNull())
             {
@@ -129,13 +129,13 @@ namespace WRD
             
             return parse(stream.readWhole());
         }
-        type_bool release() {
+        wbool release() {
             _classes.clear();
             return true;
         }
         virtual Object& clone() const { return *(new Preferencer(*this)); }
-        virtual type_bool onAddClass(const std::string& name);
-        virtual type_bool onAddMember(const std::string& class_name, const std::string& key, const std::string& value);
+        virtual wbool onAddClass(const std::string& name);
+        virtual wbool onAddMember(const std::string& class_name, const std::string& key, const std::string& value);
 
     private:
         typedef std::map<std::string, ClassNode> Classes;

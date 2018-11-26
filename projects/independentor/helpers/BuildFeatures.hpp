@@ -11,23 +11,23 @@ namespace WRD
         struct Date 
         {
             static const string& get();
-            static type_int getYear();
-            static type_int getMonth();
-            static type_int getDay();
+            static wint getYear();
+            static wint getMonth();
+            static wint getDay();
         };
         struct Time
         {
             static const string& get();
-            static type_int getHour();
-            static type_int getMinute();
-            static type_int getSecond();
+            static wint getHour();
+            static wint getMinute();
+            static wint getSecond();
         };
         struct Version
         {
             static const string& get();
-            static type_int getMajor();
-            static type_int getMinor();
-            static type_int getFix();
+            static wint getMajor();
+            static wint getMinor();
+            static wint getFix();
         };
         enum PlatformType
         {
