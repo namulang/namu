@@ -1,7 +1,6 @@
 #pragma once
 
 #include "BuildFeatures.hpp"
-#include <string>
 
 namespace WRD
 {

@@ -1,0 +1,54 @@
+#include "Instance.hpp"
+
+namespace WRD
+{
+#define THIS Instance
+	THIS::Instance()
+	{
+		//	TODO: we need to optimize this. this ganna hotspot.
+		Nexus::get().getInstancer().stamp(*this);
+	}
+
+	THIS::TStrong<Instance> _clone() const
+	{
+		return TStrong<Instance>(new This(*this));
+	}
+
+	TStrong<Instance> THIS::clone() const
+	{
+		return _clone();
+	}
+
+	ID THIS::getID() const { return _id; }
+
+	wcnt THIS::getSerial() const
+	{
+		Nexus::get().getInstancer()[_id].getSerial();
+	}
+
+	const InstanceBlock& THIS::getBlock() const
+	{
+		WRD_IS_THIS(InstanceBlock)
+		return Nexus::get().getInstancer()[_id];
+	}
+
+	wbool THIS::isHeap() const
+	{
+		MemoryMap& mmap = Nexus::get().getInstancer().getMemoryMap();
+		WRD_IS_NULL(mmap, false)
+
+		return 	mmap.getStartAddress() <= this 	&&
+				this << mmap.getEndAddress()	;
+	}
+
+	Strong THIS::toStrong()
+	{
+		if (isHeap()
+			return Strong(*this);
+		return clone();
+	}
+
+	CStrong THIS::toStrong() const { return CStrong(*this); }
+	Weak THIS::toWeak() { return Weak(*this); }
+	CWeak THIS::toWeak() const { return CWeak(*this); }
+}

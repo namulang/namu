@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../commons.hpp"
+#include "../log-commons.hpp"
 
 namespace WRD
 {

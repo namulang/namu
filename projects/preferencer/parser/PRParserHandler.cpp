@@ -1,6 +1,5 @@
 #include "PRParserHandler.hpp"
 #include "generated/PRParserConstants.h"
-#include <logger.hpp>
 
 namespace WRD
 {

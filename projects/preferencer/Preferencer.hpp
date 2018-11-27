@@ -1,6 +1,6 @@
 #pragma once
 
-#include "commons.hpp"
+#include "pref-commons.hpp"
 
 namespace WRD
 {
@@ -20,26 +20,26 @@ namespace WRD
         virtual Object& clone() const = 0;
         wbool isNull() const { return ! this; }
     };
-    class Node : public Object
+    class Type : public Object
     {
     public:
-        Node() {}
-        Node(const std::string& key) : _key(key) {}
+        Type() {}
+        Type(const std::string& key) : _key(key) {}
         const std::string& getKey() const { return _key; }
         virtual wbool release() { 
             _key.clear(); 
             return true;
         }
-        Object& clone() const { return *(new Node(*this)); }
+        Object& clone() const { return *(new Type(*this)); }
 
     private:
         std::string _key;
     };
-    class MemberNode : public Node
+    class MemberType : public Type
     {
     public:
-        MemberNode() : Node() {}
-        MemberNode(const std::string& key, const std::string& value) : Node(key), _value(value) {}
+        MemberType() : Type() {}
+        MemberType(const std::string& key, const std::string& value) : Type(key), _value(value) {}
         const std::string& getValue() const { return _value; }
         virtual wint toInt() const { return std::stoi(_value); }
         virtual wbool toBoolean() const {
@@ -50,9 +50,9 @@ namespace WRD
         virtual std::string toString() const { return _value; }
         virtual wbool release() {
             _value.clear();
-            return Node::release();
+            return Type::release();
         }
-        virtual Object& clone() const { return *(new MemberNode(*this)); }
+        virtual Object& clone() const { return *(new MemberType(*this)); }
 
     private:
         static std::string _toLowercase(const std::string& str) {
@@ -66,28 +66,28 @@ namespace WRD
         std::string _value;
     };
 
-    class ClassNode : public Node
+    class ClassType : public Type
     {
     public:
         friend class Preferencer;
 
     public:
-        ClassNode() {}
-        ClassNode(const std::string& key) : Node(key) {}
+        ClassType() {}
+        ClassType(const std::string& key) : Type(key) {}
 
     public:
-        wbool push(const MemberNode& member) { 
+        wbool push(const MemberType& member) { 
             _members[member.getKey()] = member;
             
             return true;
         }
-        const MemberNode& operator[](const std::string& key) const { return getMember(key); }
-        const MemberNode& getMember(const std::string& key) const {
+        const MemberType& operator[](const std::string& key) const { return getMember(key); }
+        const MemberType& getMember(const std::string& key) const {
             if(isNull())
-                return nullreference<MemberNode>();
+                return nullreference<MemberType>();
             Members::const_iterator e = _members.find(key);
             if(e == _members.end())
-                return nullreference<MemberNode>();
+                return nullreference<MemberType>();
 
             return e->second;
         }
@@ -96,21 +96,21 @@ namespace WRD
             
             return true;
         }
-        virtual Object& clone() const { return *(new ClassNode(*this)); }
+        virtual Object& clone() const { return *(new ClassType(*this)); }
 
     private:
-        typedef std::map<std::string, MemberNode> Members;
+        typedef std::map<std::string, MemberType> Members;
         Members _members;
     };
 
     class Preferencer : public Object
     {
     public:
-        const ClassNode& operator[](const std::string& key) const { return getClass(key); }
-        const ClassNode& getClass(const std::string& key) const {
+        const ClassType& operator[](const std::string& key) const { return getClass(key); }
+        const ClassType& getClass(const std::string& key) const {
             Classes::const_iterator e = _classes.find(key);
             if(e == _classes.end())
-                return nullreference<ClassNode>();
+                return nullreference<ClassType>();
 
             return e->second;
         }
@@ -138,7 +138,7 @@ namespace WRD
         virtual wbool onAddMember(const std::string& class_name, const std::string& key, const std::string& value);
 
     private:
-        typedef std::map<std::string, ClassNode> Classes;
+        typedef std::map<std::string, ClassType> Classes;
         Classes _classes;
     };
 }

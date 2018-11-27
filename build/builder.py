@@ -175,7 +175,8 @@ def history():
 
 def clean():
     print("Clearing next following files...")
-    _clean("..\\")
+    global cwd
+    _clean(cwd)
     print("was removed successfully.")
 
 def _clean(directory):
@@ -195,11 +196,13 @@ def _clean(directory):
                 abs_dir = os.path.join(path, dir)
                 print("\t * " + abs_dir)
                 shutil.rmtree(abs_dir)
+cwd = ""
 def main():
     version()
     print(frame)
     print("")
-    
+  
+    global cwd
     cwd=os.path.dirname(os.path.realpath(sys.argv[0]))
     os.chdir(cwd)
     print("building directory is " + cwd)

@@ -22,7 +22,7 @@ namespace WRD
             return false;
         }
 
-        _classes[name] = ClassNode(name);
+        _classes[name] = ClassType(name);
         return true;
     }
     wbool THIS::onAddMember(const std::string& class_name, const std::string& key, const std::string& value) {
@@ -32,14 +32,14 @@ namespace WRD
             return false;
         }
        
-        ClassNode& klass = _classes[class_name];           
+        ClassType& klass = _classes[class_name];           
         if( ! klass.getMember(key).isNull())
         {
             WRD_ERROR("memberdata %s is duplicated.", key.c_str());
             return false;
         }
        
-        klass._members[key] = MemberNode(key, value);
+        klass._members[key] = MemberType(key, value);
         return true;
     }
 }

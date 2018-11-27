@@ -1,7 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include "../commons.hpp"
+#include "../wrd-commons.hpp"
 
 namespace WRD
 {
@@ -9,6 +8,7 @@ namespace WRD
 	class Result;
 	class Class;
 	class Visitor;
+	class Node;
 	template <typename T> class TRefer;
 
 	///	Thing은 World의 최상위 객체
@@ -67,6 +67,7 @@ namespace WRD
 		//			묵시적 캐스팅은 각 pretype들이 to함수를 override해서 자신의 간이 캐스팅
 		//			테이블을 끼워놓음으로써 해결한다. 중간에 msg를 만들어 보낼 필요가 없으므로
 		//			속도가 더 빨라진다.
+		//			묵시적 캐스팅은 컴파일러의 함수 디덕션과 NativeBidging 2곳에서 사용된다.
 
 		//	구체클래스로 캐스트한다. dynamic_cast와 동급이다.
 		//	invisible이다.
@@ -74,8 +75,8 @@ namespace WRD
 		T& cast();
 		template <typename T>
 		const T& cast() const;
-		virtual Refer toImplicitly(const Class& cls);
-		Refer toImplicitly(const Class& cls) const;
+		virtual Refer implicit(const Class& cls);
+		Refer implicit(const Class& cls) const;
 		//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
 		virtual Result& assign(const Thing& it);
 

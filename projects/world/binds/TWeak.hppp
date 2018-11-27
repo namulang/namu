@@ -1,0 +1,105 @@
+#include "TWeak.inl"
+
+namespace WRD
+{
+#define THIS TWeak
+
+/* TODO:
+	THIS::TWeak()
+	{
+	}
+	THIS::TWeak(T& it)
+	{
+	}
+	THIS::TWeak(T* it)
+	{
+	}
+	THIS::TWeak(const This& rhs)
+	{
+	}
+*/
+	This& THIS::operator=(const This& rhs)
+	{
+		bind(rhs);
+		//	Super::operator=()를 해서는 안된다.
+		return *this;
+	}
+	This& THIS::operator=(T& newone)
+	{
+		bind(newone);
+		return *this;
+	}
+	This& THIS::operator=(T* newone)
+	{
+	}
+	wbool THIS::operator==(const This& rhs) const
+	{
+		return &get()  == &rhs.get();
+	}
+	wbool THIS::operator!=(const This& rhs) const {
+		return &get() != &rhs.get();
+	}
+	THIS::operator wbool() const { return isBinded(); }
+	const T* THIS::operator->() const { return &get(); }
+	T* THIS::operator->() { return &get(); }
+	const T* THIS::operator*() const { return &get(); }
+	T* THIS::operator*() { return &get(); }
+	virtual Result& THIS::bind(T& newone) {
+		//	pre:
+		//		param-validation:
+		if(newone.isNull())
+			return InvalidParam;
+		InstanceBlock& blk = const_cast<InstanceBlock&>(newone.getBlock());
+		if(blk.isNull())
+			return InvalidParam; 
+
+		//	main:ZZZZ
+		unbind();
+		_id = newone.getID();
+		_serial = blk.getSerial();
+		return Success;
+	}
+	Result& THIS::bind(This& rhs) {
+		return bind(rhs.get());
+	}
+	Result& THIS::bind(T* newone) {
+		return bind(*newone);
+	}
+	const T& THIS::get() const { 
+		WRD_IS_THIS(T)
+		const Instance& inst = World::get().getInstancer()[_id].getInstance();
+		//	정확한 인터페이스가 나오지 않았다.
+		if(inst.getSerial() != _serial) {
+			unbind();
+			WrongBind.warn("...");
+			return Nuller<Instance>::ref;
+		}
+
+		return inst;
+	}
+	T& get() {
+		return const_cast<T&>((const_cast<This*>(this))->get());
+	}
+	virtual Result& unbind() {
+		_id.serial = 0;
+		_serial = 0;
+		return Success;
+	}
+	wbool isBinded() const {
+		InstanceBlock& inst = _getInstanceBlock(); 
+		return inst.isExist() && inst.getSerial() == _serial;
+	}
+	virtual Result& release() {
+		unbind();
+		return Super::release();
+	}
+	virtual ResultSet isValid() const???
+	const InstanceBlock& _getInstanceBlock() const {
+		return World::get().getInstancer()[_id];
+	}
+	InstanceBlock& _getInstanceBlock() {
+		return World::get().getInstancer()[_id];
+	}
+	Instance::ID _id;
+	wcnt _serial;
+}
