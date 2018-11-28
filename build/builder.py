@@ -90,7 +90,7 @@ def build():
 def _ut():
     print("")
     print("let's initiate unit tests...", end=" ")
-    res = os.system("unittests.exe")
+    res = os.system("unittests")
     if res == 0:
         print("ok")
     return res
