@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../backbones/Instance.hpp"
+#include "../bases/Instance.hpp"
 
 namespace WRD
 {
