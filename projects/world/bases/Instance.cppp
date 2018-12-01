@@ -1,6 +1,6 @@
 #include "Instance.hpp"
 
-namespace WRD
+namespace wrd
 {
 #define THIS Instance
 	THIS::Instance()

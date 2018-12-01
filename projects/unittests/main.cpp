@@ -2,7 +2,7 @@
 
 int main()
 {
-    using namespace WRD;
+    using namespace wrd;
     using namespace std::chrono;
 
 	milliseconds start = TestCase::getTime();

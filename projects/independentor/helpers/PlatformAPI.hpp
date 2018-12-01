@@ -2,7 +2,7 @@
 
 #include "BuildFeatures.hpp"
 
-namespace WRD
+namespace wrd
 {
     class PlatformAPI
     {

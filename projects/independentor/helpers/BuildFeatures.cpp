@@ -1,6 +1,6 @@
 #include "BuildFeatures.hpp"
 
-namespace WRD
+namespace wrd
 {
     using namespace std;
    

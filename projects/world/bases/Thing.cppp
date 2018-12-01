@@ -1,6 +1,6 @@
 #include "Thing.hpp"
 
-namespace WRD
+namespace wrd
 {
 #define THIS Thing
 	Result& THIS::release() {}

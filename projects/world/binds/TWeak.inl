@@ -2,7 +2,7 @@
 
 #include "../bases/Instance.hpp"
 
-namespace WRD
+namespace wrd
 {
 	class InstanceBlock;
 	class Result;

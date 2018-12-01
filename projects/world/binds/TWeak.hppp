@@ -1,6 +1,6 @@
 #include "TWeak.inl"
 
-namespace WRD
+namespace wrd
 {
 #define THIS TWeak
 

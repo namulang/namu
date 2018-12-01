@@ -2,7 +2,7 @@
 
 #include "./TWeak.inl"
 
-namespace WRD
+namespace wrd
 {
 	class Node;
 

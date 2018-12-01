@@ -1,7 +1,7 @@
 #include "PRParserHandler.hpp"
 #include "generated/PRParserConstants.h"
 
-namespace WRD
+namespace wrd
 {
     #define THIS PRParserHandler
     

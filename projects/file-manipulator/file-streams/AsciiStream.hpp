@@ -2,7 +2,7 @@
 
 #include "FileStream.hpp"
 
-namespace WRD
+namespace wrd
 {
     class File;
 

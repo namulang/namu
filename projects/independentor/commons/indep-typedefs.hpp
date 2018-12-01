@@ -7,7 +7,7 @@
 //	---------------------------------------------------------------------------------
 #pragma once
 
-namespace WRD
+namespace wrd
 {
 	typedef int 				wint;
 	typedef unsigned int		wuint;

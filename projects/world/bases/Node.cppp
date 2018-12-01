@@ -1,6 +1,6 @@
 #include "Node.hpp"
 
-namespace WRD
+namespace wrd
 {
 #define THIS Node
 	const String& getName() const;

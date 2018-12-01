@@ -2,7 +2,7 @@
 
 #include "ut-commons.hpp"
 
-namespace WRD
+namespace wrd
 {	
 	#define WRD_TEST(expression)	\
 		if(expression)						\

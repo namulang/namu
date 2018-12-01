@@ -2,7 +2,7 @@
 
 #include "../wrd-commons.hpp"
 
-namespace WRD
+namespace wrd
 {
 	class Refer;
 	class Result;

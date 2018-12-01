@@ -1,6 +1,6 @@
 #include "world.hpp"
 
-namespace WRD
+namespace wrd 
 {
 	int main()
 	{

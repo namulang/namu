@@ -2,7 +2,7 @@
 
 #include "../binds/TStrong.inl"
 
-namespace WRD
+namespace wrd
 {
 	//	World에서 const 구현:
 	//		개요:

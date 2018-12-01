@@ -2,7 +2,7 @@
 
 #include "Thing.hpp"
 
-namespace WRD
+namespace wrd
 {
 	class InstanceBlock;
 	class Node;

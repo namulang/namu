@@ -1,6 +1,6 @@
 #include "./TWeak.hpp"
 
-namespace WRD
+namespace wrd
 {
 #define TEMPL	template <typename T>
 #define THIS	TStrong<T>

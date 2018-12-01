@@ -2,7 +2,7 @@
 
 #include "TestCase.hpp"
 
-namespace WRD
+namespace wrd
 {  
     #define INITIATE_CLASS(klass) Initiator<klass> __##klass;
     

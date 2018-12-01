@@ -2,7 +2,7 @@
 
 #include "Stream.hpp"
 
-namespace WRD
+namespace wrd
 {
     class FileLogStream : public Stream {
     public:

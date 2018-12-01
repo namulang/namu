@@ -2,7 +2,7 @@
 
 #include "../Initiator.hpp"
 
-namespace WRD
+namespace wrd
 {
     struct LoggerTest : public TestCase {
         virtual const char* getName() const { return "LoggerTest"; }

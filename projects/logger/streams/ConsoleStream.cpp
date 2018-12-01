@@ -1,7 +1,7 @@
 #include "ConsoleStream.hpp"
 #include <iostream>
 
-namespace WRD
+namespace wrd
 {
     #define THIS ConsoleStream
     

@@ -2,7 +2,7 @@
 
 #include "../log-commons.hpp"
 
-namespace WRD
+namespace wrd
 {
     class Stream
     {

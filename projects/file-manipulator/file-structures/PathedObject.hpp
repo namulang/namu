@@ -2,7 +2,7 @@
 
 #include "../fm-commons.hpp"
 
-namespace WRD
+namespace wrd
 {
     class PathedObject
     {

@@ -2,7 +2,7 @@
 
 #include "streams/Stream.hpp"
 
-namespace WRD
+namespace wrd
 {
     class Logger : public Stream
     {

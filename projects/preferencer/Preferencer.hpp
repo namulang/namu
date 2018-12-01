@@ -2,7 +2,7 @@
 
 #include "pref-commons.hpp"
 
-namespace WRD
+namespace wrd
 {
     namespace
     {
