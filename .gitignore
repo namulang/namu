@@ -45,3 +45,4 @@ BuildInformation.hpp
 FileManipulatorTest.txt
 .vscode/
 generated/
+build/unittests*
