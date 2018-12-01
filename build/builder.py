@@ -32,7 +32,8 @@ def run(arg):
         result = build()
         if result:
             return result
-        os.system("./unittests")
+        global cwd;
+        os.system(cwd + "/unittests")
 
 # currently this application only supports window and linux.
 def isWindow():
