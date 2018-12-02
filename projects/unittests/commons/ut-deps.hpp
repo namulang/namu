@@ -5,6 +5,12 @@
 #include <logger.hpp>
 #include <preferencer.hpp>
 
+using namespace wrd;
+using namespace wrd::pref;
+using namespace wrd::fm;
+using namespace wrd::log;
+using namespace wrd::indep;
+
 #include <string>
 #include <iostream>
 #include <chrono>
