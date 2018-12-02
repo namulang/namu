@@ -35,11 +35,11 @@ options {
 }
 
 PARSER_BEGIN(PRParser)
-void setPreferencer(Preferencer* preferencer) {
+void setPreferencer(pref::Preferencer* preferencer) {
     _preferencer = preferencer;
 }
 private:
-    Preferencer* _preferencer;
+	pref::Preferencer* _preferencer;
     std::string _class;
 public:
 PARSER_END(PRParser)
