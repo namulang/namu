@@ -6,6 +6,7 @@ namespace wrd
 	{
 		#define THIS FileLogStream
 		typedef std::string string;
+		using namespace fm;
 
 		THIS::THIS() : Stream() { _file.setMode(FileStream::APPENDABLE); }
 		THIS::THIS(const string& new_path) : Stream()

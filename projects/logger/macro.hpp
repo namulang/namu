@@ -5,8 +5,8 @@
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
 #define WRD_DUMP(level, msg, ...) {                                              \
-        Logger::getInstance().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " msg,   \
-            PlatformAPI::createCurrentTime("%b %d %Y  %X").c_str(), level,      \
+	wrd::log::Logger::getInstance().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " msg,   \
+            wrd::indep::PlatformAPI::createCurrentTime("%b %d %Y  %X").c_str(), level,      \
             __FILENAME__, __func__, __LINE__, ##__VA_ARGS__                     \
         );                                                                      \
     }

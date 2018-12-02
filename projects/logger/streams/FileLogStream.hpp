@@ -20,7 +20,7 @@ namespace wrd
 			virtual wbool release();
 
 		private:
-			AsciiStream _file;
+			fm::AsciiStream _file;
 		};
 	}
 }
