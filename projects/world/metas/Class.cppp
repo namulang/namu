@@ -1,0 +1,106 @@
+#include "Class.hpp"
+
+namespace wrd
+{
+#define THIS Class
+
+    wbool THIS::operator==(const This& rhs) const
+    {
+        return &getName() == &rhs.getName();
+    }
+    wbool THIS::operator!=(const This& rhs) const
+    {
+        return &getName() != &rhs.getName();
+    }
+    const Class& THIS::getClass() const
+    {
+        WRD_IS_THIS(const Class)
+        return *this;
+    }
+    const Class& THIS::getSuper() const
+    {
+        WRD_IS_THIS(const Class)
+        return getSupers()[0];
+    }
+    Result& THIS::initialize()
+    {
+        //    pre:
+        //        exception:
+        if(isInitialized())
+            return Cancel.info(..);
+        Super::initialize();
+
+        //    main:
+        //        Object class should not initialize explicitly:
+        //            or This makes recursive call.
+        //            Because if we make a instance of TClass<Object>, it triggers Class::initialize inside of it.
+        if(&getName() == &TClass<Thing>::getStaticName())
+            return _setInitialized(true);
+
+        //  main:
+        //        get Supers info from Super:
+        //                at this point TClass<Super> is instantiated, and "Super" also does all of this sequences.
+        Class& super = const_cast<Class&>(getSuper());
+        super.initialize();
+        //        constructing SuperClass:
+        ClassSet& my_supers = _getSupers();
+        my_supers = super._getSupers();
+        my_supers.push(&super);
+        //        notify to super:
+        super._getSubs().push(*this);
+
+        return _setInitialized(true);
+    }
+    wbool THIS::isSuper(const Class& it) const
+    {
+        //  checking class hierarchy algorithm:
+        //        Use the "Tier" of the class hierarchy info to check it.
+        //        "Tier" means that how this class are inherited far from the Root class, that is, Object.
+        //        So, if the "this" is a super of given object "it", its "tier"th super class
+        //        would must be the class of "this".
+        if(it.isNull()) return false;
+        const Classes& its_supers = it.getSupers();
+        wcnt    my_tier = getClass().getSupers().size(),
+                its_tier = its_supers.size();
+        if(my_tier > its_tier) return false;
+
+
+        //  main:
+        const ClassBase& target = its_tier == my_tier ? it :
+            static_cast<const Class&>(its_supers[my_tier]);
+
+        return getClass() == target;//  Remember. We're using Class as "Monostate".
+    }
+    Classes& THIS::_getSupers()
+    {
+        WRD_IS_THIS(Classes)
+        return const_cast<Classes&>(getSupers());
+    }
+    Classes& THIS::_getSubs()
+    {
+        WRD_IS_THIS(Classes)
+        return const_cast<Classes&>(getSubs());
+    }
+    const Classes& THIS::getLeafs() const
+    {
+        WRD_IS_THIS(const Classes)
+        static Classes inner;
+        //    TODO:   
+    }
+    Result& THIS::_initNodes()
+    {
+        _getMembers() = getSupers()[0].getMembers(); // getSupers()[0]은 바로 위의 부모클래스.
+        return Success;
+    }
+    const Array& THIS::getVariables() const
+    {
+        WRD_IS_THIS(const Array)
+        static Array inner; // means that this class doesn't have any variables.
+        return inner;
+    }
+    const Origin& THIS::getOrigin()
+    {
+        static Origin inner; // means there is no origin or we can't designate origin.
+        return inner;
+    }
+}
