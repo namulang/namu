@@ -1,0 +1,14 @@
+#pragma once
+
+#include "Array.hpp"
+
+namespace wrd
+{
+#define THIS ObjectClass
+
+    const Array& THIS::getVariables() const
+    {
+        WRD_IS_THIS(const Array)
+        return _variables;
+    }
+}
