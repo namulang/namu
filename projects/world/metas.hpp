@@ -1,4 +1,4 @@
 #pragma once
 
 #include "./metas/helpers.hpp"
-#include "./metas/Class.hpp"
+#include "./metas/TClass.inl" // TODO: .hpp"

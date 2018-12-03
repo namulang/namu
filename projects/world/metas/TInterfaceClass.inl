@@ -1,6 +1,6 @@
 #pragma once
 
-namespace WRD
+namespace wrd
 {
     class Instance;
     template <typename T> class TStrong;
