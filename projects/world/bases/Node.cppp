@@ -8,34 +8,34 @@ namespace wrd
 	Strong clone() const {
 		return _clone();
 	}
-	virtual Result& _onInitializeMembers(Container& tray) { return Success; }
-	virtual wbool isOccupiable() const {
-		return getClass()::isOccupiable();
+	virtual Result& _onInitNodes(Container& tray) { return Success; }
+	virtual wbool doesOccupy() const {
+		return getClass()::doesOccupy();
 	}
-	virtual const Container& getMembers() const = 0;
+	virtual const Container& getNodes() const = 0;
 	//	get(); 는 공개하지 않는다:
 	//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
-	Container& _getMembers() {
-		return const_cast<Container&>(getMembers());
+	Container& _getNodes() {
+		return const_cast<Container&>(getNodes());
 	}
 	Container& _get() {
 		return const_cast<Container&>(get());
 	}
-	//	getMembers:
+	//	getNodes:
 	//		모든 Container의 index는 World와 Native모두 1부터 시작한다.
 	//		invisible하다.
 	Node& operator[](widx n) { return get(n); }
 	const Node& operator[](widx n) const { return get(n); }
 	Node& get(widx n) {
 		WRD_IS_THIS(Node)
-		return _getMembers()[n];
+		return _getNodes()[n];
 	}
 	const Node& get(widx n) const {
 		WRD_IS_THIS(Node)
-		return getMembers()[n];
+		return getNodes()[n];
 	}
-	virtual Refer call(Msg& msg) = 0;
-	virtual Refer call(Msg& msg) const = 0;
+	virtual Refer use(Msg& msg) = 0;
+	virtual Refer use(Msg& msg) const = 0;
 	virtual wbool isConst() const { return false; }
 	virtual const Origin& getOrigin() const {
 		static Origin inner;
@@ -53,7 +53,7 @@ namespace wrd
 		WRD_ARE_NULL(TNuller<Node>::ref, msg, members)
 
 		Node* found = NULL;
-		if(_getMembers().each<T>([&found, want_const, tester](Node& e) {
+		if(_getNodes().each<T>([&found, want_const, tester](Node& e) {
 			if(e.isConst() != want_const) return Success;
 			if( ! tester(e)) return Success;
 			if(found)
@@ -66,7 +66,7 @@ namespace wrd
 
 		return *found;
 	}
-	virtual wbool isConsumable(const Msg& msg) const {
+	virtual wbool canUse(const Msg& msg) const {
 		return msg.getName() == getName();
 	}
 	virtual wbool isStatic() const { return false; }

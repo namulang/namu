@@ -50,11 +50,11 @@ namespace wrd
 	//
 	//			구체클래스	|	const객체일때			|	nonconst객체일때		
 	//			------------------------------------------------------------------------
-	//			Refer		|	object.call() const		|	object.call()
+	//			Refer		|	object.use() const		|	object.use()
 	//			------------------------------------------------------------------------
-	//			Object		|	sub_method.call() const	|	sub_method.call()
+	//			Object		|	sub_method.use() const	|	sub_method.use()
 	//			------------------------------------------------------------------------
-	//			Method		|	항상 execute()			|	call() const로 온 경우는 X
+	//			Method		|	항상 execute()			|	use() const로 온 경우는 X
 	//			------------------------------------------------------------------------
 	//				*) Method는 isConst()의 값에 의해서만 const객체냐 아니냐가 결정된다.
 	//				*) Method가 const객체라는 뜻은, const 메소드라는 것이다.
@@ -73,28 +73,28 @@ namespace wrd
 		const String& getName() const;
 		String& getName();
 		Strong clone() const; // _clone()은 매크로에 의해서 생성된다.
-		virtual wbool isOccupiable() const;
-		virtual const Container& getMembers() const = 0;
-		//	getMembers:
+		virtual wbool doesOccupy() const;
+		virtual const Container& getNodes() const = 0;
+		//	getNodes:
 		//		모든 Container의 index는 World와 Native모두 1부터 시작한다.
 		//		invisible하다.
 		Node& get(widx n);
 		const Node& get(widx n) const;
 		Node& get(const String& name);
 		const Node& get(const String& name) const;
-		virtual Refer call(Msg& msg) = 0;
-		virtual Refer call(Msg& msg) const = 0;
+		virtual Refer use(Msg& msg) = 0;
+		virtual Refer use(Msg& msg) const = 0;
 		virtual const Origin& getOrigin() const;
-		virtual wbool isConsumable(const Msg& msg) const;
+		virtual wbool canUse(const Msg& msg) const;
 		virtual wbool isStatic() const;
 		virtual wbool isConst() const;
 
 	private:
 		//	get(); 는 공개하지 않는다:
 		//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
-		Container& _getMembers();
+		Container& _getNodes();
 		Container& _get();
 		Node& _get(wbool want_const, std::function<wbool(Node&)> tester);
-		virtual Result& _onInitializeMembers(Container& tray);
+		virtual Result& _onInitNodes(Container& tray);
 	};
 }
