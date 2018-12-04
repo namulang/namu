@@ -1,0 +1,25 @@
+#include "Composit.hpp"
+
+namespace WRD
+{
+#define THIS Composit
+
+    const Container& THIS::getNodes() const
+    {
+        WRD_IS_THIS(const Container)
+        if(_nodes.getLength() <= 0)
+            _initializeMembers();
+        return *_nodes;
+    }
+
+    Result& THIS::_initNodes()
+    {
+        _nodes.release();
+
+        const Chain& chain = cls.getNodes().cast<Chain>();
+        WRD_IS_NULL(chain)
+        if(_nodes.chain(chain.getControl()[0])) // first elem as a container owned by "chain"
+            return OperationFail.warn("");
+        return Success;
+    }
+}
