@@ -42,6 +42,7 @@ namespace wrd
 		wbool isBinded() const;
 		virtual Result& release();
 		//TODO: replace this. put API on Thing. virtual ResultSet isValid() const;
+		virtual const Class& getClass() const;
 
 	private:
 		const InstanceBlock& _getInstanceBlock() const;

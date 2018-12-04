@@ -18,7 +18,7 @@ namespace wrd
 		template <typename T, typename S> friend class TVisitation; //	_tour를 위한 것이다.
 
 	public:
-		virtual const Class& getClass() = 0;
+		virtual const Class& getClass() const = 0;
 		virtual Result& release();
 		wbool isNull() const;
 		wbool isExist() const;
