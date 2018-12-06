@@ -1,4 +1,4 @@
 #pragma once
 
-#include "./commons/deps.hpp"
-#include "commons/defs.hpp"
+#include "./commons/wrd-deps.hpp"
+#include "./commons/wrd-defs.hpp"
