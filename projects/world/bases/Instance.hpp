@@ -4,7 +4,7 @@
 
 namespace wrd
 {
-	class InstanceBlock;
+	class InstBlk;
 	class Node;
 	template <typename T> class TWeak;
 	template <typename T> class TStrong;
@@ -39,7 +39,7 @@ namespace wrd
 		TStrong<Instance> clone() const;
 		ID getID() const;
 		wcnt getSerial() const;
-		const InstanceBlock& getBlock() const;
+		const InstBlk& getBlock() const;
 		wbool isHeap() const;
 		TStrong<Node> toStrong();
 		TStrong<const Node> toStrong() const;

@@ -19,7 +19,7 @@ namespace wrd
 			if(res) return res.dump("...");
 			if( ! it.isHeap()) return InvalidParam.warn("it is local variable. couldn't bind it strongly.");
 
-			_getInstanceBlock()._increaseCount();
+			_getInstBlk()._increaseCount();
 			//	처음에 Instance가 Instancer에 생성되었을때는 strong==0 이며, 
 			//	StrongBinder가 붙지 않는다면 그대로 계속 메모리상주하게 된다.
 			//	Strong이 Count.strong=0인 instance를 bind하는 순간, 이 instance는
@@ -27,7 +27,7 @@ namespace wrd
 			return res;
 		}
 		Result& unbind() {
-			InstanceBlock& blk = _getInstanceBlock();
+			InstBlk& blk = _getInstBlk();
 			if(blk.isNull()) {
 				InvalidMember.warn("");
 				return Super::unbind();	

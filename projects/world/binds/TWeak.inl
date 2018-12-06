@@ -4,7 +4,7 @@
 
 namespace wrd
 {
-	class InstanceBlock;
+	class InstBlk;
 	class Result;
 	class Node;
 
@@ -45,8 +45,8 @@ namespace wrd
 		virtual const Class& getClass() const;
 
 	private:
-		const InstanceBlock& _getInstanceBlock() const;
-		InstanceBlock& _getInstanceBlock();
+		const InstBlk& _getInstBlk() const;
+		InstBlk& _getInstBlk();
 
 	private:
 		Instance::ID _id;

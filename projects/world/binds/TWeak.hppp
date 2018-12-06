@@ -49,7 +49,7 @@ namespace wrd
 		//		param-validation:
 		if(newone.isNull())
 			return InvalidParam;
-		InstanceBlock& blk = const_cast<InstanceBlock&>(newone.getBlock());
+		InstBlk& blk = const_cast<InstBlk&>(newone.getBlock());
 		if(blk.isNull())
 			return InvalidParam; 
 
@@ -86,7 +86,7 @@ namespace wrd
 		return Success;
 	}
 	wbool isBinded() const {
-		InstanceBlock& inst = _getInstanceBlock(); 
+		InstBlk& inst = _getInstBlk(); 
 		return inst.isExist() && inst.getSerial() == _serial;
 	}
 	virtual Result& release() {
@@ -94,10 +94,10 @@ namespace wrd
 		return Super::release();
 	}
 	virtual ResultSet isValid() const???
-	const InstanceBlock& _getInstanceBlock() const {
+	const InstBlk& _getInstBlk() const {
 		return World::get().getInstancer()[_id];
 	}
-	InstanceBlock& _getInstanceBlock() {
+	InstBlk& _getInstBlk() {
 		return World::get().getInstancer()[_id];
 	}
 	Instance::ID _id;

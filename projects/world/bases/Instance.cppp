@@ -26,9 +26,9 @@ namespace wrd
 		Nexus::get().getInstancer()[_id].getSerial();
 	}
 
-	const InstanceBlock& THIS::getBlock() const
+	const InstBlk& THIS::getBlock() const
 	{
-		WRD_IS_THIS(InstanceBlock)
+		WRD_IS_THIS(InstBlk)
 		return Nexus::get().getInstancer()[_id];
 	}
 
