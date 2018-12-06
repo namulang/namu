@@ -1,0 +1,16 @@
+#include "Bindable.hpp"
+
+namespace wrd
+{
+#define THIS Bindable
+
+    THIS::operator wbool() const { return doesBind(); }
+
+    Result& THIS::bind(Instance* new1)
+    {
+        WRD_IS_NULL(new1)
+        return bind(*new1);
+    }
+
+#undef THIS
+}

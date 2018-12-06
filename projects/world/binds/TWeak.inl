@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../bases/Instance.hpp"
+#include "TBindable.inl"
 
 namespace wrd
 {
@@ -9,7 +9,7 @@ namespace wrd
 	class Node;
 
 	template <typename T>
-	class TWeak : public Thing
+	class TWeak : public TBindable<T>
 	{
 	public:
 		// TODO: static_assert(T is not sub of Instance)
@@ -26,23 +26,20 @@ namespace wrd
 		This& operator=(T* newone);
 		wbool operator==(const This& rhs) const;
 		wbool operator!=(const This& rhs) const;
-		operator wbool() const;
-		const T* operator->() const; 
-		T* operator->();
-		const T* operator*() const;
-		T* operator*();
 
-	public:
-		virtual Result& bind(T& newone);
+	public:	// TBindable:
+		virtual Result& bind(Instance& new1);
 		Result& bind(This& rhs);
-		Result& bind(T* newone);
 		virtual Result& unbind();
-		const T& get() const;
-		T& get();
-		wbool isBinded() const;
+		virtual wbool doesBind() const;
+
+	public:	// Thing:
 		virtual Result& release();
 		//TODO: replace this. put API on Thing. virtual ResultSet isValid() const;
 		virtual const Class& getClass() const;
+
+	protected:
+		virtual Instance& _get(); // TODO: impl this.
 
 	private:
 		const InstBlk& _getInstBlk() const;
