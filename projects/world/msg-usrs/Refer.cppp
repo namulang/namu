@@ -1,0 +1,128 @@
+#include "Refer.hpp"
+
+namespace wrd
+{
+#define THIS Refer
+
+	THIS::This(const Class& cls = Node::getStaticClass(), wbool want_const = false);
+	THIS::This(Node& it);
+	THIS::This(const Node& it);
+	THIS::This(const This& it);
+	THIS::This(This& it);
+
+	wbool THIS::operator==() const;
+	wbool THIS::operator!=() const;
+	This& THIS::operator=(const This& it);
+	This& THIS::operator=(This& it);
+	This& THIS::operator=(Node& it);
+	This& THIS::operator=(const Node& it);
+
+	Refer THIS::use(Msg& msg) const { return _bean.call(msg); }
+	Refer THIS::use(Msg& msg) { return _bean.call(msg); }
+
+	const Origin& THIS::getOrigin() const
+	{
+		if( ! _bean)
+			return Super::getOrigin();
+	
+		return _bean->getOrigin();
+	}
+
+	wbool THIS::isConst() const { return _is_const; }
+	Result& THIS::bind(Refer& it) { return bind(it.get()); }
+	Result& THIS::bind(const Refer& it) { return bind(it.get()); }
+
+	Result& THIS::bind(Instance& it)
+	{
+		//	NullCheckDelayed 철학에 의해서 WRD_IS_NULL(it)을 하지 않는다. 
+		const Class& cls = it.getClass();
+		WRD_IS_NULL(cls)
+		if( ! cls.isSub(_cls))
+			return TypeInvalid.warn("...");
+
+		unbind();
+		WRD_IS_ERR(_bean.bind(it))
+		_is_const = false;
+		return Success;
+	}
+	Result& THIS::bind(const Instance& it)
+	{
+		if( ! isConst())
+			return noneed;	// 이 Refer는 Refer<T>이다. 지금 하려는 것은 즉, A* a = (const A*) a1; 를 하려고 하는것과 같다.
+
+		This& unconst = const_cast<This&>(*this);
+		Result& res = unconst.bind(const_cast<Object&>(it));
+		WRD_IS_ERR(res)
+
+		return res;
+	}
+
+	wbool THIS::doesBind() const;
+
+	Result& THIS::unbind()
+	{
+		Result& res = _bean.unbind();
+		WRD_IS_ERR(res)
+
+		_is_const = false;
+		return Success;
+	}
+
+	Refer THIS::to(const Class& cls)
+	{
+		if( ! _bean)
+			return Super::to(cls);
+
+		//	다운캐스팅으로 _bean->to()가 동작한 경우에만 isConst()가 영향을 미치게 된다.
+		//	고찰 결과, _bean->to()가 전혀다른 타입(사용자가 정의한)으로 값복사되어 반환된 경우는
+		//	isConst()가 동작하지 않아야 한다.
+		if(cls.isSub(_cls))
+			return Super::to(cls);
+		return _bean->to(cls);
+	}
+
+	Result& THIS::assign(const Thing& it)
+	{
+		// Null체크는 Thing::assign()에서 한다.
+		WRD_IS_ERR(Super::assign(it))
+
+		//	Sharable, Occupiable:
+		//		여기서는 실질적인 sharing vs occupying의 동작차이를 만들어내는 곳이다.
+		//		Occupiable이라도 const 인 경우에는 인터프리터에 의해서 const Refer에 감싸서 scope나 멤버함수에 들어가게 된다.
+		//		또한 이문제는 it이 occupiable인지 sharable인지 구분할 필요가 없다. 오로지 this가 occupiable인지 아닌지만 중요하다.
+		if(_cls.doesOccupy()) // Occupiable은 상속이 된다.
+		{
+			//	이경우 const건 아니건 사실 중요하지 않다. 오직 중요한건 occupiable이면 실제 객체에게 assign을 떠 넘기면 된다는 사실이다.
+			Node& bean = get(); // 만약 isConst() 일 경우, 여기서 NULL이 나오게 된다.
+			WRD_IS_NULL(bean)
+			return bean.assign(it);
+		}
+	
+		//	sharable 이라면 이렇게 간단히 끝난다.
+		Refer& refered = it.down<This>();
+		if(refered.isExist())
+			return bind(refered);
+		return bind(it.cast<Object>()); // null이 들어가도 상관없다.
+	}
+
+	Node& THIS::_cast(const Class& cls)
+	{
+		if(isConst())
+			return TNuller<Node>::ref;
+
+		const This* cast = this;
+		Node& ret = const_cast<Node&>(cast->_cast(cls));
+
+		return ret;
+	}
+
+	const Node& THIS::_cast(const Class& cls) const
+	{
+		if( ! _bean || ! _bean->isSub(cls))
+			return TNuller<Node>::ref;
+
+		return *_bean;
+	}
+
+#undef THIS
+}
