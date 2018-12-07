@@ -93,8 +93,6 @@ namespace wrd
         typedef Class Is;
     };
 
-	TConcreteMeta<true>::template Is<int, float> foo();
-
     ///    TMetaSuper constructs final MetaClass against given type T regarding its hierarchy.
     //    normally it defines as, ... (baseclass depicted to high.
     //        - Class

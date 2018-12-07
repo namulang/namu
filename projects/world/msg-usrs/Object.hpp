@@ -21,8 +21,8 @@ namespace wrd
         /// this's a convinient methods.
         Container& getShared();
         const Container& getShared() const;
-        Container& getVariables();
-        const Container& getShared() const;
+        Container& getVars();
+        const Container& getVars() const;
 
     public:    //    Node:
         virtual Refer use(Msg& msg);

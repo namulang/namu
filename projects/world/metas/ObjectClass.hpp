@@ -9,7 +9,7 @@ namespace wrd
 	class ObjectClass : public Class
 	{
 	public:
-		virtual const Array& getVariables() const;
+		virtual const Array& getVars() const;
 
 	private:
 		TStrong<Array> _vars;

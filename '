@@ -1,0 +1,17 @@
+#pragma once
+
+#include "TConcreteClass.inl"
+#include "ObjectClass.hpp"
+
+namespace wrd
+{
+    class MgdClass : public TConcreteClass<ObjectClass>
+    {
+    public:
+        virtual const Origin& getOrigin() const;
+        virtual Strong instance() const;
+
+    private:
+        TStrong<Origin> _org;
+    };
+}
