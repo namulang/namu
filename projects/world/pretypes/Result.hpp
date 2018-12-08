@@ -15,7 +15,7 @@ namespace wrd
 
 		template <typename T>
 		T returns() {
-			return TNuller<T>::null();
+			return nulr<T>::null();
 		}
 		template <typename T>
 		T returns(T value) {

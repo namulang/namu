@@ -7,15 +7,6 @@ namespace wrd
 {
 	namespace log
 	{
-		namespace
-		{
-			template <typename T>
-			T& nullreference() {
-				T* nulled = 0;
-				return *nulled;
-			}
-		}
-
 		#define THIS Logger
 		typedef std::string string;
 	  
@@ -28,7 +19,7 @@ namespace wrd
 		Stream& THIS::getStream(widx n)
 		{ 
 			if(n < 0 || n >= getStreamCount())
-				return nullreference<Stream>();
+				return nulr<Stream>();
 
 			return *_streams[n]; 
 		}
@@ -47,7 +38,7 @@ namespace wrd
 				if(string(e->getName()) == message)
 					return *e;
 
-			return nullreference<Stream>();
+			return nulr<Stream>();
 		}
 
 		Stream& THIS::getStream(const char* message)

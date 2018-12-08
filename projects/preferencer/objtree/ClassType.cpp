@@ -20,10 +20,10 @@ namespace wrd
 		const MemberType& THIS::getMember(const std::string& key) const
 		{
 			if(isNull())
-				return nullref<MemberType>();
+				return nulr<MemberType>();
 			Members::const_iterator e = _members.find(key);
 			if(e == _members.end())
-				return nullref<MemberType>();
+				return nulr<MemberType>();
 
 			return e->second;
 		}

@@ -11,7 +11,7 @@ namespace wrd
 		{
 			Classes::const_iterator e = _classes.find(key);
 			if(e == _classes.end())
-				return nullref<ClassType>();
+				return nulr<ClassType>();
 
 			return e->second;
 		}
