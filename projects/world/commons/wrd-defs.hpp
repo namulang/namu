@@ -30,7 +30,7 @@
 
 #define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL(*this, Nuller<Type>::ref)
 #define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
-#define WRD_IS_THIS ....
+#define WRD_IS_THIS(...) WRD_MARCO_OVERLOADER(WRD_IS_THIS, __VA_ARGS__)
 
 #define WRD_IS_CONST(RET)			\
 	if((this->isConst())) {			\
@@ -44,6 +44,7 @@
 		if(res)						\
 			return res.err(#STMT);	\
 	}
+
 #define WRD_IS_WARN(STMT)			\
-	{....
+	/* TODO: impl this */
 
