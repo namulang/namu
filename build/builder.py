@@ -24,7 +24,7 @@ def branch(command):
 
 def run(arg):
     if arg is None:
-        print("build Node and run one of next followings...")
+        print("build world and run one of next followings...")
         print("\t * unittests")
         return -1
 
@@ -32,8 +32,7 @@ def run(arg):
         result = build()
         if result:
             return result
-        global cwd;
-        os.system(cwd + "/unittests")
+        return _ut()
 
 # currently this application only supports window and linux.
 def isWindow():
@@ -91,7 +90,8 @@ def build():
 def _ut():
     print("")
     print("let's initiate unit tests...", end=" ")
-    res = os.system("unittests")
+    global cwd
+    res = os.system(cwd + "/unittests")
     if res == 0:
         print("ok")
     return res
