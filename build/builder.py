@@ -60,6 +60,37 @@ def _createMakefiles():
     if res != 0:
         return -1
 
+# World uses BuildInfo at RELEASE.md
+# and builder.py drives to all world libraries and make it sync all build-info including 
+# doc releasing.
+ver_major = 0
+ver_minor = 0
+ver_patch = 0
+ver_name = ""
+ver_buildcnt = 0
+def _extractBuildInfo(): # from RELEASE.md at root directory.
+    global cwd, ver_major, ver_minor, ver_patch, ver_name, ver_buildcnt
+    path = cwd + "/../RELEASE.md"
+
+    fp = open(path, "r")
+    while True:
+        line = fp.readline()
+        if not line:
+            break
+        if line[:4] in "## v":
+            minor_head_n = line.find('.', 5) + 1
+            ver_major = int(line[4:minor_head_n-1])
+            ver_minor = line[minor_head_n: minor_head_n+1]
+            ver_name_n = line.find(' ', minor_head_n+1)+1
+            ver_patch = line[minor_head_n+1: ver_name_n]
+            if ver_patch in "":
+                ver_patch = 0
+            ver_name = line[ver_name_n: len(line)-6-1-1]
+            break
+
+    print(ver_name)
+    fp.close()
+
 def _make():
     print("")
     make_option = "-j4 -s"  # j4 -> 4 multithread.
@@ -119,8 +150,9 @@ def checkDependencies():
     print("ok")
 
 def version():
+    global ver_name, ver_major, ver_minor, ver_patch
     print("")
-    print("Builder. Support-utility for building World v1.1")
+    print("Builder. Support-utility for building World " + ver_name + " v" + str(ver_major) + "." + str(ver_minor) + str(ver_patch))
     print("Copyrights (c) kniz, 2009-2018")
 
 def help():
@@ -132,47 +164,6 @@ def help():
     print("\t * clean\tclear all cache files of cmake outputs.")
     print("\t * build")
     print("\t * run\t\tbuild + run one of predefined programs.")
-
-def history():
-    print("history:")
-    print("\t1.1\t11-17-2017")
-    print("\t + runs unittests automatically after build is success.")
-    print("\t - it can't build it outside of build folder.")
-    print("")
-    print("\t1.0\t07-10-2017")
-    print("\t + merge 2 seperated utilities and recoded with python.")
-    print("")
-    print("\t0.3")
-    print("\t - Now can choose whether make leave script files or not when build a sdk.")
-    print("")
-    print("\t0.2.5")
-    print("\t + this also package script examples.")
-    print("")
-    print("\t0.2.4")
-    print("\t - resolved that xcopy can't be called cause of environmental variable(= path)")
-    print("")
-    print("\t0.2.3\t04-15-2015")
-    print("\t + build sdk with some sound resources as contents of sounds.")
-    print("")
-    print("\t0.2.2\t08-14-2013")
-    print("\t - path problem has been resolved. now \"\" will be added at the edge of path.")
-    print("")
-    print("\t0.2.1")
-    print("\t - Fix to create sub directory which was named \"Scripts\" in Library Directory")
-    print("")
-    print("\t0.2")
-    print("\t + Manager package will be added to ./Modules directory.")
-    print("")
-    print("\t0.1")
-    print("\t + Now pdb files can be attachable with choose.")
-    print("\t + MDK Templates has been seperated from Includes")
-    print("\t - Bugs fix.")
-    print("")
-    print("\t0.0.2\t05-08-2013")
-    print("\t + function that package dependencies(what located on './Dependencies/Libraries') has benn added.")
-    print("")
-    print("\t0.0.1\t??-??-2013")
-    print("\t + Created.")
 
 def clean():
     print("Clearing next following files...")
@@ -198,13 +189,19 @@ def _clean(directory):
                 print("\t * " + abs_dir)
                 shutil.rmtree(abs_dir)
 cwd = ""
+
+def _init():
+    global cwd
+    cwd=os.path.dirname(os.path.realpath(sys.argv[0]))
+    _extractBuildInfo()
+
 def main():
+    _init()
+  
     version()
     print(frame)
     print("")
-  
-    global cwd
-    cwd=os.path.dirname(os.path.realpath(sys.argv[0]))
+
     os.chdir(cwd)
     print("building directory is " + cwd)
 
