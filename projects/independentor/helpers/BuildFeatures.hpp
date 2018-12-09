@@ -27,6 +27,8 @@ namespace wrd
 			struct Version
 			{
 				static const string& get();
+				static const string& getValue();
+				static const string& getName();
 				static wint getMajor();
 				static wint getMinor();
 				static wint getFix();
