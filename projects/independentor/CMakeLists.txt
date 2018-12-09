@@ -4,14 +4,14 @@ message("\tbuilding independentor...")
 message("\t\tconfigure_files...")
 #  expanding:
 set(configures
-    "macros/BuildInformation.hpp.in"
+	"macros/BuildInformation.hpp.in"
 )
 foreach(e ${configures})
     #  extract output filepath:
     string(FIND ${e} ".in" n REVERSE)
     string(SUBSTRING ${e} 0 ${n} output_path)
-    message("\t\texpanding ${output_path}")
-    configure_file(${e} ${output_path})
+	message("\t\texpanding ${CMAKE_CURRENT_SOURCE_DIR}/${output_path}")
+	configure_file(${e} ${CMAKE_CURRENT_SOURCE_DIR}/${output_path})
 endforeach(e)
 #  defines:
 #      define sources:

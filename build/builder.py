@@ -2,6 +2,7 @@ import os
 import sys
 import shutil
 import platform
+from operator import eq
 
 frame = "======================================================="
 
@@ -65,31 +66,80 @@ def _createMakefiles():
 # doc releasing.
 ver_major = 0
 ver_minor = 0
-ver_patch = 0
+ver_fix = 0
 ver_name = ""
 ver_buildcnt = 0
 def _extractBuildInfo(): # from RELEASE.md at root directory.
-    global cwd, ver_major, ver_minor, ver_patch, ver_name, ver_buildcnt
+    global cwd, ver_major, ver_minor, ver_fix, ver_name, ver_buildcnt
     path = cwd + "/../RELEASE.md"
 
     fp = open(path, "r")
     while True:
         line = fp.readline()
-        if not line:
-            break
+        if not line: break
         if line[:4] in "## v":
             minor_head_n = line.find('.', 5) + 1
             ver_major = int(line[4:minor_head_n-1])
-            ver_minor = line[minor_head_n: minor_head_n+1]
+            ver_minor = int(line[minor_head_n: minor_head_n+1])
             ver_name_n = line.find(' ', minor_head_n+1)+1
-            ver_patch = line[minor_head_n+1: ver_name_n]
-            if ver_patch in "":
-                ver_patch = 0
+            ver_fix_str = line[minor_head_n+1: ver_name_n]
+            if ver_fix_str in "" or ver_fix_str in " ":
+                ver_fix = 0
+            else:
+                ver_fix = int(ver_fix_str)
             ver_name = line[ver_name_n: len(line)-6-1-1]
             break
 
     print(ver_name)
     fp.close()
+updated = False
+def _updateLine(lines, n, trg, basestr):
+    global updated
+    idx = len(basestr)-1
+    value = int(lines[n][idx:len(lines[n])-2])
+    if value != trg:
+        lines[n] = basestr + str(trg) + ")\n"
+        print(lines[n])
+        updated = True
+
+def _updateLineString(lines, n, trg, basestr):
+    global updated
+    idx = len(basestr)-1
+    value = lines[n][idx:len(lines[n])-2]
+    if eq(value, trg):
+        lines[n] = basestr + str(trg) + ")\n"
+        print(lines[n])
+        updated = True
+
+def _injectBuildInfo():
+    global cwd, ver_major, ver_minor, ver_fix, ver_name, ver_buildcnt
+    path = cwd + "/CMakeLists.txt"
+
+    print("updating buildinfo on CMakeLists.txt...", end=" ")
+    global updated
+    updated = False;
+    fp = open(path, "r")
+    lines = fp.readlines()
+    for n in range(0, len(lines)):
+        line = lines[n]
+        if line[:17] in "set(VERSION_MAJOR":
+            _updateLine(lines, n, ver_major, "set(VERSION_MAJOR ")
+        elif line[:17] in "set(VERSION_MINOR":
+            _updateLine(lines, n, ver_minor, "set(VERSION_MINOR ")
+        elif line[:15] in "set(VERSION_FIX":
+            _updateLine(lines, n, ver_fix, "set(VERSION_FIX ")
+        elif line[:16] in "set(VERSION_NAME":
+            _updateLineString(lines, n, ver_name, "set(VERSION_NAME ");
+    fp.close()
+
+    if updated == False:
+        print("skip")
+        return
+
+    fp = open(path, "w")
+    fp.write("".join(lines)) 
+    fp.close()
+
 
 def _make():
     print("")
@@ -112,6 +162,7 @@ def _make():
 
 def build():
     #_beautify()
+    _injectBuildInfo()
     if _createMakefiles(): 
         return -1
     if _make():
@@ -150,9 +201,9 @@ def checkDependencies():
     print("ok")
 
 def version():
-    global ver_name, ver_major, ver_minor, ver_patch
+    global ver_name, ver_major, ver_minor, ver_fix
     print("")
-    print("Builder. Support-utility for building World " + ver_name + " v" + str(ver_major) + "." + str(ver_minor) + str(ver_patch))
+    print("Builder. Support-utility for building World " + ver_name + " v" + str(ver_major) + "." + str(ver_minor) + str(ver_fix))
     print("Copyrights (c) kniz, 2009-2018")
 
 def help():

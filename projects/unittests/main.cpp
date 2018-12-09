@@ -1,5 +1,11 @@
 #include "tests.hpp"
 
+void _header()
+{
+	using namespace std;
+	cout << "World Unittest
+}
+
 int main()
 {
     using namespace wrd;
