@@ -85,3 +85,14 @@
 		typedef THIS This;	\
 	private:
 #define WRD_INHERIT(...)	WRD_OVERLOAD(WRD_INHERIT, __VA_ARGS__)
+
+///	the macro for definining lazymethod which will be initialized when it's called.
+//	this's uses static variable inside of method.
+#define WRD_LAZY_METHOD_4(ReturnType, Name, isConst, initValue)	\
+	isConst ReturnType& Name() isConst {	\
+		static ReturnType inner(initValue);	\
+		return inner;	\
+	}
+#define WRD_LAZY_METHOD_3(ReturnType, Name, initValue)	\
+	WRD_LAZY_METHOD_4(ReturnType, Name, const, initValue)
+#define WRD_LAZY_METHOD(...)	WRD_OVERLOAD(WRD_LAZY_METHOD, __VA_ARGS__)
