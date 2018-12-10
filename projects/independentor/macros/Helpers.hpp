@@ -10,10 +10,10 @@
 //				define STRINGIZER with what looks like useless macro __STRINGIZER.
 #define _VS_EXP_HACK(...) __VA_ARGS__
 //			concatenate:
-#define WRD_MACRO_CONCATENATE(x, y) x##y
+#define WRD_CONCATENATE(x, y) x##y
 //			stringizer:
-#define __WRD_MACRO_STRINGIZER(x)	#x
-#define WRD_MACRO_STRINGIZER(x)	__WRD_MACRO_STRINGIZER(x)
+#define __WRD_STRINGIZER(x)	#x
+#define WRD_STRINGIZER(x)	__WRD_STRINGIZER(x)
 
 #define WRD_COMMA ,
 #define WRD_VOID

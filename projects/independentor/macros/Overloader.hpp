@@ -15,13 +15,13 @@
 //			//	define macro:
 //			#define MyMacro_1(x) (x)+5
 //			#define MyMacro_2(x, y) (x)+(y)
-//			#define MyMacro(...)	WRD_MACRO_OVERLOADER(MyMacro, __VA_ARGS__)
+//			#define MyMacro(...)	WRD_OVERLOADER(MyMacro, __VA_ARGS__)
 //
 //			//	using:
 //			cout << MyMacro(5) << ", " << MyMacro(3, 5) << "\n";
 //
 //		output:
 //			10, 8
-#define _OVERLOADER(macro_name, argcount)	WRD_MACRO_CONCATERATOR(macro_name, argcount)
-#define WRD_MACRO_OVERLOADER(macro_name, ...)	\
-	_OVERLOADER(macro_name, WRD_MACRO_CONCATERATOR(_, WRD_MACRO_ARGCOUNT(__VA_ARGS__)))(__VA_ARGS__)
+#define _OVERLOADER(macro_name, argcount)	WRD_CONCATERATOR(macro_name, argcount)
+#define WRD_OVERLOADER(macro_name, ...)	\
+	_OVERLOADER(macro_name, WRD_CONCATERATOR(_, WRD_ARGCOUNT(__VA_ARGS__)))(__VA_ARGS__)
