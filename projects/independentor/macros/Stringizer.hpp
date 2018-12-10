@@ -2,5 +2,5 @@
 
 #include "VSExpHack.hpp"
 
-#define _STRINGIZER(x)	#x
-#define WRD_STRINGIZER(x)	WRD_VS_EXP_HACK(_STRINGIZER(x))
+#define _TO_STR(x)	#x
+#define WRD_TO_STR(x)	WRD_VS_EXP_HACK(_TO_STR(x))

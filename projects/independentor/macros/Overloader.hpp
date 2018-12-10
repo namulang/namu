@@ -1,4 +1,4 @@
-///	@file	WRD_OVERLOADER.hpp
+///	@file	WRD_OVERLOAD.hpp
 ///	@brief	Make it possible to provide overloaded macro.
 ///	@remark	These are codes inspired from Boost library. added the PATCH for VS.
 #pragma once
@@ -15,13 +15,13 @@
 //			//	define macro:
 //			#define MyMacro_1(x) (x)+5
 //			#define MyMacro_2(x, y) (x)+(y)
-//			#define MyMacro(...)	WRD_OVERLOADER(MyMacro, __VA_ARGS__)
+//			#define MyMacro(...)	WRD_OVERLOAD(MyMacro, __VA_ARGS__)
 //
 //			//	using:
 //			cout << MyMacro(5) << ", " << MyMacro(3, 5) << "\n";
 //
 //		output:
 //			10, 8
-#define _OVERLOADER(macro_name, argcount)	WRD_CONCATERATOR(macro_name, argcount)
-#define WRD_OVERLOADER(macro_name, ...)	\
-	_OVERLOADER(macro_name, WRD_CONCATERATOR(_, WRD_ARGCOUNT(__VA_ARGS__)))(__VA_ARGS__)
+#define _OVERLOAD(macro_name, argcount)	WRD_CONCATE(macro_name, argcount)
+#define WRD_OVERLOAD(macro_name, ...)	\
+	_OVERLOAD(macro_name, WRD_CONCAT(_, WRD_ARGCNT(__VA_ARGS__)))(__VA_ARGS__)

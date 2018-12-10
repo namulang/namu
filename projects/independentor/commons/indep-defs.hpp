@@ -26,23 +26,23 @@
 #define WRD_OUT	// 보통 인자와 다르게 값이 변경되어서 나오는 변수다.
 
 //			general:
-#define WRD_DEFAULT_FALSE					false
-#define WRD_DEFAULT_TRUE						true
-#define WRD_DEFAULT							0
-#define WRD_ERROR_0							0
-#define WRD_ERROR_MINUS1						-1
-#define WRD_ERROR_1							1
-#define WRD_DUMMY							0
-#define WRD_SUCCESS							0
-#define WRD_NULL								0x00
-#define WRD_NO_NAME							0
-#define WRD_LOCALE							"korean"
-#define WRD_FALSE							0
-#define WRD_TRUE								1
-#define WRD_INDEX_ERROR						-1
-#define WRD_HAS_NO_SCRIPTCODE				-1
-#define WRD_HAS_NO_ID						0
-#define WRD_MACRO_MAXIMUM_OF_ARGUMENT_COUNT	32
+#define WRD_DEFAULT_FALSE		false
+#define WRD_DEFAULT_TRUE			true
+#define WRD_DEFAULT				0
+#define WRD_ERROR_0				0
+#define WRD_ERROR_MINUS1			-1
+#define WRD_ERROR_1				1
+#define WRD_DUMMY				0
+#define WRD_SUCCESS				0
+#define WRD_NULL					0x00
+#define WRD_NO_NAME				0
+#define WRD_LOCALE				"korean"
+#define WRD_FALSE				0
+#define WRD_TRUE					1
+#define WRD_INDEX_ERROR			-1
+#define WRD_HAS_NO_SCRIPTCODE	-1
+#define WRD_HAS_NO_ID			0
+#define WRD_MAX_ARGCNT			32
 #define WRD_VOID
 
 #ifdef UNICODE
@@ -71,3 +71,19 @@
     #define fgetts fgets
     #define fputts fputs
 #endif
+
+//	macros:
+#define WRD_UNCONST_THIS()			This* unconst = const_cast<This*>(this);
+
+#define WRD_INHERIT_2(THIS, SUPER)	\
+		WRD_INHERIT_1(THIS)	\
+	public:	\
+		typedef SUPER Super;	\
+	private:
+#define WRD_INHERIT_1(THIS)	\
+	public:	\
+		typedef THIS This;	\
+	private:
+#define WRD_INHERIT WRD_OVERLOAD(
+		
+
