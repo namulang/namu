@@ -9,7 +9,7 @@ namespace wrd
 			return #expression;
 
 	class TestCase
-	{
+	{	WRD_INHERIT(TestCase)
 	public:
 		typedef std::vector<TestCase*> TestCases;
 

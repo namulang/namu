@@ -7,7 +7,7 @@ namespace wrd
 	namespace indep
 	{
 		struct BuildFeatures
-		{
+		{	WRD_INHERIT(BuildFeatures)
 			typedef std::string string;
 
 			struct Date 

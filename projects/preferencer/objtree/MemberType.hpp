@@ -7,7 +7,7 @@ namespace wrd
 	namespace pref
 	{
 		class MemberType : public Type
-		{
+		{	WRD_INHERIT(MemberType, Type)
 		public:
 			MemberType();
 			MemberType(const std::string& key, const std::string& value);

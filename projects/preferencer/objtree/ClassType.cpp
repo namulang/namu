@@ -6,7 +6,7 @@ namespace wrd
 	{
 #define THIS ClassType
 		THIS::ClassType() {}
-		THIS::ClassType(const std::string& key) : Type(key) {}
+		THIS::ClassType(const std::string& key) : Super(key) {}
 
 		wbool THIS::push(const MemberType& member)
 		{
@@ -35,6 +35,6 @@ namespace wrd
 			return true;
 		}
 
-		Object& THIS::clone() const { return *(new ClassType(*this)); }
+		Object& THIS::clone() const { return *(new This(*this)); }
 	}
 }

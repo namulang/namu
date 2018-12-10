@@ -7,7 +7,7 @@ namespace wrd
 	namespace pref
 	{
 		class Preferencer : public Object
-		{
+		{	WRD_INHERIT(Preferencer, Object)
 		public:
 			const ClassType& operator[](const std::string& key) const;
 			const ClassType& getClass(const std::string& key) const;

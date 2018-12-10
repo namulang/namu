@@ -7,7 +7,7 @@ namespace wrd
 	namespace fm
 	{
 		class FileStream : public PathedObject
-		{
+		{	WRD_INHERIT(FileStream, PathedObject)
 		public:
 			enum Mode
 			{

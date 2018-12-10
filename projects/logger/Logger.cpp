@@ -108,7 +108,7 @@ namespace wrd
 				delete e;
 			}
 			_streams.clear();
-			return THIS::Stream::release();
+			return Super::release();
 		}
 
 		THIS& THIS::getInstance()
@@ -123,7 +123,7 @@ namespace wrd
 			return *inner;
 		}
 
-		THIS::THIS() : Stream() {}
-		THIS::THIS(const THIS& rhs) : Stream(rhs) {}
+		THIS::THIS() : Super() {}
+		THIS::THIS(const This& rhs) : Super(rhs) {}
 	}
 }

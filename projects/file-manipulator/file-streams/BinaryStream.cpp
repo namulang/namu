@@ -8,9 +8,9 @@ namespace wrd
 	{
 		#define THIS BinaryStream
 
-		THIS::THIS() : FileStream() {}
-		THIS::THIS(const std::string& new_path) : FileStream(new_path) {}
-		THIS::THIS(const File& file) : FileStream() 
+		THIS::THIS() : Super() {}
+		THIS::THIS(const std::string& new_path) : Super(new_path) {}
+		THIS::THIS(const File& file) : Super() 
 		{
 			if( ! file.isNull())
 				setPath(file.getPath());
@@ -20,7 +20,7 @@ namespace wrd
 
 		wbool THIS::initialize()
 		{
-			if(FileStream::initialize()) return true;
+			if(Super::initialize()) return true;
 
 			const char* mode = 0;
 			switch(getMode())

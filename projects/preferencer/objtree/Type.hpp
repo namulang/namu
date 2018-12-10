@@ -7,7 +7,7 @@ namespace wrd
 	namespace pref
 	{
 		class Type : public Object
-		{
+		{	WRD_INHERIT(Type, Object)
 		public:
 			Type();
 			Type(const std::string& key);

@@ -7,7 +7,7 @@ namespace wrd
 	namespace pref
 	{
 		class ClassType : public Type
-		{
+		{	WRD_INHERIT(ClassType, Type)
 		public:
 			friend class Preferencer;
 

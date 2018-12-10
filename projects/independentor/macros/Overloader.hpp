@@ -22,6 +22,6 @@
 //
 //		output:
 //			10, 8
-#define _OVERLOAD(macro_name, argcount)	WRD_CONCATE(macro_name, argcount)
+#define _OVERLOAD(macro_name, argcount)	WRD_CONCAT(macro_name, argcount)
 #define WRD_OVERLOAD(macro_name, ...)	\
 	_OVERLOAD(macro_name, WRD_CONCAT(_, WRD_ARGCNT(__VA_ARGS__)))(__VA_ARGS__)

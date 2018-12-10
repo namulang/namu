@@ -5,7 +5,7 @@ namespace wrd
 	namespace pref
 	{
 #define THIS MemberType
-		THIS::MemberType() : Type() {}
+		THIS::MemberType() : Super() {}
 		THIS::MemberType(const std::string& key, const std::string& value) : Type(key), _value(value) {}
 		const std::string& THIS::getValue() const { return _value; }
 		wint THIS::toInt() const { return std::stoi(_value); }
@@ -17,7 +17,7 @@ namespace wrd
 		wbool THIS::release()
 		{
 			_value.clear();
-			return Type::release();
+			return Super::release();
 		}
 
 		Object& THIS::clone() const { return *(new MemberType(*this)); }

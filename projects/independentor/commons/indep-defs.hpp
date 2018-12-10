@@ -84,6 +84,4 @@
 	public:	\
 		typedef THIS This;	\
 	private:
-#define WRD_INHERIT WRD_OVERLOAD(
-		
-
+#define WRD_INHERIT(...)	WRD_OVERLOAD(WRD_INHERIT, __VA_ARGS__)

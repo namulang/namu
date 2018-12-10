@@ -15,6 +15,6 @@ namespace wrd
 			return true;
 		}
 
-		Object& THIS::clone() const { return *(new THIS(*this)); }
+		Object& THIS::clone() const { return *(new This(*this)); }
 	}
 }

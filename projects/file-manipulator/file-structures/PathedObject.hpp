@@ -7,7 +7,7 @@ namespace wrd
 	namespace fm
 	{
 		class PathedObject
-		{
+		{	WRD_INHERIT(PathedObject)
 		public:
 			PathedObject();
 			PathedObject(const std::string& path);

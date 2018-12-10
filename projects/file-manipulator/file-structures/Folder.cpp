@@ -53,7 +53,7 @@ namespace wrd
 		wbool THIS::release()
 		{
 			_release();
-			return File::release();
+			return Super::release();
 		}
 
 		const File* THIS::_prepare() const

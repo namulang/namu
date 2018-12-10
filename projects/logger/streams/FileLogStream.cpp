@@ -8,7 +8,7 @@ namespace wrd
 		typedef std::string string;
 		using namespace fm;
 
-		THIS::THIS() : Stream() { _file.setMode(FileStream::APPENDABLE); }
+		THIS::THIS() : Super() { _file.setMode(FileStream::APPENDABLE); }
 		THIS::THIS(const string& new_path) : Stream()
 		{ 
 			_file.setMode(FileStream::APPENDABLE);
@@ -19,7 +19,7 @@ namespace wrd
 		
 		wbool THIS::initialize()
 		{
-			if(Stream::initialize()) return true;
+			if(Super::initialize()) return true;
 
 			if(_file.initialize())
 				return true;
@@ -32,7 +32,7 @@ namespace wrd
 		
 		wbool THIS::dump(const char* message)
 		{
-			if(Stream::dump(message)) return true;
+			if(Super::dump(message)) return true;
 
 			return _file.write(std::string(message) + "\n") <= 0;
 		}
@@ -40,7 +40,7 @@ namespace wrd
 		wbool THIS::release()
 		{
 			_file.release();
-			return Stream::release();
+			return Super::release();
 		}
 	}
 }

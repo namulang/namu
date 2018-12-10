@@ -7,7 +7,7 @@ namespace wrd
 	namespace log
 	{
 		class Stream
-		{
+		{	WRD_INHERIT(Stream)
 		public:
 			Stream();
 			virtual ~Stream();

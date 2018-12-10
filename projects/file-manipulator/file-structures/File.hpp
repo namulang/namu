@@ -7,7 +7,7 @@ namespace wrd
 	namespace fm
 	{
 		class File : public PathedObject
-		{
+		{	WRD_INHERIT(File, PathedObject)
 			friend class Folder;
 
 		public:

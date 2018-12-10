@@ -11,7 +11,7 @@ namespace wrd
 		wbool THIS::dump(const char* message)
 		{
 			using std::cout;
-			if(Stream::dump(message)) return true;
+			if(Super::dump(message)) return true;
 
 			cout << message << "\n";
 			return false;

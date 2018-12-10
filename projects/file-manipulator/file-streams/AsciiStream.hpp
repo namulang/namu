@@ -9,7 +9,7 @@ namespace wrd
 		class File;
 
 		class AsciiStream : public FileStream
-		{
+		{	WRD_INHERIT(AsciiStream, FileStream)
 		public:
 			AsciiStream();
 			AsciiStream(const std::string& new_path);

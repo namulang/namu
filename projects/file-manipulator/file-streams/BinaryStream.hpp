@@ -9,7 +9,7 @@ namespace wrd
 		class File;
 		
 		class BinaryStream : public FileStream
-		{
+		{	WRD_INHERIT(BinaryStream, FileStream)
 		public:
 			BinaryStream();
 			BinaryStream(const std::string& new_path);

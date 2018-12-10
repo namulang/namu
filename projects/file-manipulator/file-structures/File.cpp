@@ -7,7 +7,7 @@ namespace wrd
 		using namespace std;
 		#define THIS File
 
-		THIS::THIS(const std::string& path) : PathedObject(path), _owner(0) {}
+		THIS::THIS(const std::string& path) : Super(path), _owner(0) {}
 		THIS::THIS(const File* owner, const string& name) : _owner(owner) { _setName(name); }
 		THIS::~THIS() {}
 

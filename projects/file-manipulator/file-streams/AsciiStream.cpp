@@ -8,9 +8,9 @@ namespace wrd
 		#define THIS AsciiStream
 		using namespace std;
 
-		THIS::THIS() : FileStream() {}
-		THIS::THIS(const string& new_path) : FileStream(new_path) {}
-		THIS::THIS(const File& file) : FileStream()
+		THIS::THIS() : Super() {}
+		THIS::THIS(const string& new_path) : Super(new_path) {}
+		THIS::THIS(const File& file) : Super()
 		{
 			if( ! file.isNull())
 				setPath(file.getPath());
@@ -19,7 +19,7 @@ namespace wrd
 
 		wbool THIS::initialize() 
 		{
-			if(FileStream::initialize()) return true;
+			if(Super::initialize()) return true;
 
 			const char* mode = 0;
 			switch(getMode())
@@ -92,7 +92,7 @@ namespace wrd
 		wbool THIS::release()
 		{
 			_buffer.clear();
-			return FileStream::release();
+			return Super::release();
 		}
 
 		THIS::THIS(const PathedObject& object) {}

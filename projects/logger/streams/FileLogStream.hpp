@@ -6,7 +6,8 @@ namespace wrd
 {
 	namespace log
 	{
-		class FileLogStream : public Stream {
+		class FileLogStream : public Stream
+		{	WRD_INHERIT(FileLogStream, Stream)
 		public:
 			FileLogStream();
 			FileLogStream(const std::string& new_path);

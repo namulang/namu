@@ -7,7 +7,7 @@ namespace wrd
 	namespace indep
 	{
 		class PlatformAPI
-		{
+		{	WRD_INHERIT(PlatformAPI)
 		public:
 			enum ConsoleColor
 			{

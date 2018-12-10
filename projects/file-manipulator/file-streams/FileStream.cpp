@@ -10,7 +10,7 @@ namespace wrd
 		#define THIS FileStream
 
 		THIS::THIS() : _mode(MODE_TYPE_START), _fd(0) {}
-		THIS::THIS(const std::string& new_path) : PathedObject(new_path), _mode(MODE_TYPE_START), _fd(0)  {}
+		THIS::THIS(const std::string& new_path) : Super(new_path), _mode(MODE_TYPE_START), _fd(0)  {}
 		THIS::~THIS() { release(); }
 
 		wbool THIS::operator+=(wint delta)
@@ -62,7 +62,7 @@ namespace wrd
 			return false;
 		}
 		wbool THIS::setPath(const std::string& new_path) { return _setPath(new_path); }
-		wbool THIS::setPath(const PathedObject& path)
+		wbool THIS::setPath(const Super& path)
 		{ 
 			if(path.isNull()) return true; 
 			
@@ -87,7 +87,7 @@ namespace wrd
 
 			_mode = MODE_TYPE_START;
 
-			return PathedObject::release();            
+			return Super::release();            
 		}
 		wbool THIS::setMode(Mode new_mode)
 		{
@@ -97,7 +97,7 @@ namespace wrd
 			return false;
 		}
 		THIS::Mode THIS::getMode() const { return _mode; }    
-		THIS::THIS(const PathedObject& object) {}
+		THIS::THIS(const Super& object) {}
 
 		std::string THIS::readWhole()
 		{
