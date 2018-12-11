@@ -13,23 +13,23 @@ namespace wrd
 		public:
 			struct Date 
 			{
-				static const string& get();
+				static WRD_LAZY_METHOD(const string, get, WRD_BUILD_DATE)
 				static wint getYear();
 				static wint getMonth();
 				static wint getDay();
 			};
 			struct Time
 			{
-				static const string& get();
+				static WRD_LAZY_METHOD(const string, get, WRD_BUILD_TIME)
 				static wint getHour();
 				static wint getMinute();
 				static wint getSecond();
 			};
 			struct Version
 			{
-				static const string& get();
-				static const string& getValue();
-				static const string& getName();
+				static WRD_LAZY_METHOD(const string, get, WRD_BUILD_VERSION)
+				static WRD_LAZY_METHOD(const string, getValue, WRD_BUILD_VERSION_VALUE)
+				static WRD_LAZY_METHOD(const string, getName, WRD_BUILD_VERSION_NAME)
 				static wint getMajor();
 				static wint getMinor();
 				static wint getFix();
@@ -44,8 +44,8 @@ namespace wrd
 			struct Platform
 			{
 				static PlatformType get();
-				static const string& getName();
-				static const string& getVersion();
+				static WRD_LAZY_METHOD(const string, getName, WRD_BUILD_PLATFORM_NAME)
+				static WRD_LAZY_METHOD(const string, getVersion, WRD_BUILD_PLATFORM_VERSION)
 			};
 			enum BuildType
 			{
@@ -57,7 +57,7 @@ namespace wrd
 			struct Building
 			{
 				static BuildType get();
-				static const string& getName();
+				static WRD_LAZY_METHOD(const string, getName, WRD_BUILD_TYPENAME)
 			};
 		};
 	}

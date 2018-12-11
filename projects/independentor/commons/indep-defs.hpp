@@ -94,5 +94,5 @@
 		return inner;	\
 	}
 #define WRD_LAZY_METHOD_3(ReturnType, Name, initValue)	\
-	WRD_LAZY_METHOD_4(ReturnType, Name, const, initValue)
+	WRD_LAZY_METHOD_4(ReturnType, Name, WRD_SPACE, initValue)
 #define WRD_LAZY_METHOD(...)	WRD_OVERLOAD(WRD_LAZY_METHOD, __VA_ARGS__)
