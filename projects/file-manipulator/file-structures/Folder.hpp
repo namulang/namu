@@ -7,7 +7,7 @@ namespace wrd
 	namespace fm
 	{
 		class Folder : public File
-		{
+		{	WRD_INHERIT(Folder, File)
 		public:
 			class Option
 			{

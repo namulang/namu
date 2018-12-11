@@ -10,9 +10,9 @@ namespace wrd
 		Folder::Option::Option(wbool is_reculsive) : _is_reculsive(is_reculsive) {}
 		wbool Folder::Option::isReculsive() const { return _is_reculsive; }
 
-		THIS::THIS(const std::string& new_path) : File(new_path), _iterator(0), _sub_file(0) {}
-		THIS::THIS(const File* owner, const string& path, Option option) : File(owner, path), _iterator(0), _sub_file(0), _option(option) {}
-		THIS::THIS(const string& path, Option option) : File(0, path), _iterator(0), _sub_file(0), _option(option) {}
+		THIS::THIS(const std::string& new_path) : Super(new_path), _iterator(0), _sub_file(0) {}
+		THIS::THIS(const File* owner, const string& path, Option option) : Super(owner, path), _iterator(0), _sub_file(0), _option(option) {}
+		THIS::THIS(const string& path, Option option) : Super(0, path), _iterator(0), _sub_file(0), _option(option) {}
 		THIS::~THIS() { _release(); }
 
 		wbool THIS::initialize()
@@ -21,6 +21,8 @@ namespace wrd
 				_release();
 			
 			_iterator = opendir(getPath().c_str());
+			if( ! _iterator)
+				std::cout << strerror(errno) << "=opendir(" << getPath().c_str() << ")\n";
 			return ! isInitialized();
 		}
 		wbool THIS::isInitialized() const { return _iterator; }
