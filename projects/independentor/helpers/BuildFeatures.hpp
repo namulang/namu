@@ -6,10 +6,11 @@ namespace wrd
 {
 	namespace indep
 	{
-		struct BuildFeatures
+		class BuildFeatures
 		{	WRD_INHERIT(BuildFeatures)
 			typedef std::string string;
 
+		public:
 			struct Date 
 			{
 				static const string& get();
