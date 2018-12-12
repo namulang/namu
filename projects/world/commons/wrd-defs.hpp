@@ -12,7 +12,7 @@
 	}
 #define WRD_IS_NULL_1(VALUE)		\
 	WRD_IS_NULL_2(VALUE, NullPtr)
-#define WRD_IS_NULL(...) WRD_MACRO_OVERLOADER(WRD_IS_NULL, __VA_ARGS__)
+#define WRD_IS_NULL(...) WRD_OVERLOAD(WRD_IS_NULL, __VA_ARGS__)
 
 //	multiple NULL check macro:
 //		if you need to check plenty arguments to be checked null
@@ -30,7 +30,7 @@
 
 #define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL(*this, Nuller<Type>::ref)
 #define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
-#define WRD_IS_THIS(...) WRD_MARCO_OVERLOADER(WRD_IS_THIS, __VA_ARGS__)
+#define WRD_IS_THIS(...) WRD_MARCO_OVERLOAD(WRD_IS_THIS, __VA_ARGS__)
 
 #define WRD_IS_CONST(RET)			\
 	if((this->isConst())) {			\
@@ -48,3 +48,19 @@
 #define WRD_IS_WARN(STMT)			\
 	/* TODO: impl this */
 
+#define WRD_CLASS_2(THIS, SUPER)\
+		WRD_ADT_2(THIS, SUPER)	\
+		virtual TStrong<Instance> _clone() const {	\
+			return new This(*this);	\
+		}
+#define WRD_CLASS(...) WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
+
+#define WRD_ADT_2(THIS, SUPER)	\
+	WRD_INHERIT(THIS, SUPER)	\
+	public:	\
+		typedef TMetaSuper<This>::Is MetaClass;	\
+		virtual TStrong<This> clone() const {	\
+			return _clone();	\
+		}	\
+	private:
+#define WRD_ADT(...) WRD_OVERLOAD(WRD_ADT, __VA_ARGS__)

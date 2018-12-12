@@ -3,6 +3,7 @@
 namespace wrd
 {
 #define THIS Bindable
+	typedef THIS This; //TODO: remove this
 
     THIS::operator wbool() const { return doesBind(); }
 
@@ -11,6 +12,14 @@ namespace wrd
         WRD_IS_NULL(new1)
         return bind(*new1);
     }
+
+	const Instance& THIS::get() const
+	{
+		WRD_UNCONST_THIS()
+		return unconst->_get();
+	}
+
+	Instance& THIS::get() { return _get(); }
 
 #undef THIS
 }

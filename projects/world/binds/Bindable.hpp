@@ -16,5 +16,10 @@ namespace wrd
         Result& bind(Instance* new1);
         virtual Result& unbind() = 0;
         virtual wbool doesBind() const = 0;
+		const Instance& get() const;
+		Instance& get();
+
+	protected:
+		virtual Instance& _get() = 0;
     };
 }
