@@ -31,11 +31,11 @@ namespace wrd
 
 	public:	//	Bindable:
 		using TBindable<Node>::bind;
+		virtual Result& bind(Instance& it);
 		Result& bind(Refer& it);
 		Result& bind(const Refer& it);
-		virtual Result& bind(Instance& it);
 		Result& bind(const Instance& it);
-		virtual wbool doesBind() const;
+		virtual wbool isBind() const;
 		Result& unbind();
 
 	public:	//	Thing:

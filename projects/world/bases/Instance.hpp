@@ -1,26 +1,17 @@
 #pragma once
 
 #include "Thing.hpp"
+#include "Id.hpp"
+#include "../binds/TStrong.inl"
 
 namespace wrd
 {
-	class InstBlk;
+	class Block;
 	class Node;
-	template <typename T> class TWeak;
-	template <typename T> class TStrong;
 
 	class Instance : public Thing
 	{
-	public:
 		//	Instance는 World에서 인스턴스 관리를 대신해준다. 여기서부터 bind가 가능하다.
-		union ID
-		{
-			widx type;
-			//	클래스의 종류
-			widx index;
-			//	해당 클래스 인스턴스 벡터의 몇번째인가.type과 index를 조합하면 어디서든 객체에 접근할 수 있다.
-			wint64 number;
-		} _id;
 
 	public:
 		Instance();
@@ -37,7 +28,7 @@ namespace wrd
 		//		_clone() : it's a really what cloning happens. subclasses will
 		//		override it.
 		TStrong<Instance> clone() const;
-		ID getID() const;
+		ID getId() const;
 		wcnt getSerial() const;
 		const InstBlk& getBlock() const;
 		wbool isHeap() const;
@@ -48,5 +39,8 @@ namespace wrd
 
 	private:
 		virtual TStrong<Instance> _clone() const;
+
+	private:
+		Id _id;
 	};
 }

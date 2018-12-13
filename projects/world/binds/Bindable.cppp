@@ -5,7 +5,7 @@ namespace wrd
 #define THIS Bindable
 	typedef THIS This; //TODO: remove this
 
-    THIS::operator wbool() const { return doesBind(); }
+    THIS::operator wbool() const { return isBind(); }
 
     Result& THIS::bind(Instance* new1)
     {

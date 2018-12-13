@@ -57,7 +57,7 @@ namespace wrd
 		return res;
 	}
 
-	wbool THIS::doesBind() const;
+	wbool THIS::isBind() const;
 
 	Result& THIS::unbind()
 	{
@@ -90,7 +90,7 @@ namespace wrd
 		//		여기서는 실질적인 sharing vs occupying의 동작차이를 만들어내는 곳이다.
 		//		Occupiable이라도 const 인 경우에는 인터프리터에 의해서 const Refer에 감싸서 scope나 멤버함수에 들어가게 된다.
 		//		또한 이문제는 it이 occupiable인지 sharable인지 구분할 필요가 없다. 오로지 this가 occupiable인지 아닌지만 중요하다.
-		if(_cls.doesOccupy()) // Occupiable은 상속이 된다.
+		if(_cls.isOccupy()) // Occupiable은 상속이 된다.
 		{
 			//	이경우 const건 아니건 사실 중요하지 않다. 오직 중요한건 occupiable이면 실제 객체에게 assign을 떠 넘기면 된다는 사실이다.
 			Node& bean = get(); // 만약 isConst() 일 경우, 여기서 NULL이 나오게 된다.

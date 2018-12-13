@@ -9,8 +9,8 @@ namespace wrd
 		return _clone();
 	}
 	virtual Result& _onInitNodes(Container& tray) { return Success; }
-	virtual wbool doesOccupy() const {
-		return getClass()::doesOccupy();
+	virtual wbool isOccupy() const {
+		return getClass()::isOccupy();
 	}
 	virtual const Container& getNodes() const = 0;
 	//	get(); 는 공개하지 않는다:

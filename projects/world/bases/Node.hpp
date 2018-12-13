@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../binds/TStrong.inl"
+#include "Stae.hpp"
 
 namespace wrd
 {
@@ -63,7 +64,7 @@ namespace wrd
 	class Msg;
 	class Origin;
 
-	class Node : public Instance
+	class Node : public State 
 	{
 	public:
 		Node& operator[](widx n);
@@ -73,7 +74,7 @@ namespace wrd
 		const String& getName() const;
 		String& getName();
 		Strong clone() const; // _clone()은 매크로에 의해서 생성된다.
-		virtual wbool doesOccupy() const;
+		virtual wbool isOccupy() const;
 		virtual const Container& getNodes() const = 0;
 		//	getNodes:
 		//		모든 Container의 index는 World와 Native모두 1부터 시작한다.
