@@ -30,7 +30,14 @@
 
 #define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL(*this, Nuller<Type>::ref)
 #define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
-#define WRD_IS_THIS(...) WRD_MARCO_OVERLOAD(WRD_IS_THIS, __VA_ARGS__)
+#define WRD_IS_THIS(...) 			WRD_OVERLOAD(WRD_IS_THIS, __VA_ARGS__)
+
+#define WRD_IS_SUPER_1(call)        \
+    if(Super:: call ) return SuperFail;
+#define WRD_IS_SUPER_2(res, call)  \
+    Result& res = Super:: call ;    \
+    if(res) return SuperFail;
+#define WRD_IS_SUPER(...)          WRD_OVERLOAD(WRD_IS_SUPER, __VA_ARGS__)
 
 #define WRD_IS_CONST(RET)			\
 	if((this->isConst())) {			\
@@ -38,15 +45,37 @@
 		return RET;					\
 	}
 
-#define WRD_IS_ERR(STMT)			\
-	{								\
-		Result& res = (STMT);		\
-		if(res)						\
-			return res.err(#STMT);	\
-	}
+#define WRD_ASSERT_4(expr, ret, dump, msg)  \
+    if( (expr) )                            \
+        return ret.dump(msg);
+#define WRD_ASSERT_3(expr, ret, msg)		WRD_ASSERT_4(expr, ret, warn, msg)
+#define WRD_ASSERT_2(expr, ret)				WRD_ASSERT_4(expr, ret, warn, "")
+#define WRD_ASSERT_1(expr)                  WRD_ASSERT_4(expr, Invalid, warn, "")
+#define WRD_ASSERT(...)                    	WRD_OVERLOAD(WRD_ASSERT, __VA_ARGS__)
 
-#define WRD_IS_WARN(STMT)			\
-	/* TODO: impl this */
+#define WRD_IS_RES_5(expr, ret, chk, dump, msg) \
+    {                                          	\
+        const Result& res = expr;              	\
+        WRD_ASSERT(res.chk, ret, dump, msg)    	\
+   }
+#define WRD_IS_RES_4(expr, chk, dump, msg)  WRD_IS_RES_5(expr, res, chk, dump, msg)
+#define WRD_IS_RES_3(expr, chk, msg)        WRD_IS_RES_5(expr, res, chk, warn, msg)
+#define WRD_IS_RES_2(expr, chk)            	WRD_IS_RES_5(expr, res, chk, warn, #expr)
+#define WRD_IS_RES(...)                    	WRD_OVERLOAD(WRD_IS_RES, __VA_ARGS__)
+
+#define WRD_IS_WARN_3(expr, ret, msg)      	WRD_IS_RES(expr, ret, isWarn(), warn, msg)
+#define WRD_IS_WARN_2(expr, ret)            WRD_IS_RES(expr, ret, isWarn(), warn, #expr)
+#define WRD_IS_WARN_1(expr)                	WRD_IS_RES(expr, isWarn())
+#define WRD_IS_WARN(...)                    WRD_OVERLOAD(WRD_IS_WARN, __VA_ARGS__)
+
+#define WRD_IS_ERR_3(expr, ret, msg)        WRD_IS_RES(expr, ret, isErr(), err, msg)
+#define WRD_IS_ERR_2(expr, ret)            	WRD_IS_RES(expr, ret, isErr(), err, #expr)
+#define WRD_IS_ERR_1(expr)                  WRD_IS_RES(expr, isErr())
+#define WRD_IS_ERR(...)                    	WRD_OVERLOAD(WRD_IS_ERR, __VA_ARGS__)
+#define WRD_IS_GOOD_3(expr, ret, msg)      	WRD_IS_RES(expr, ret, isGood(), info, msg)
+#define WRD_IS_GOOD_2(expr, ret)            WRD_IS_RES(expr, ret, isGood(), info, #expr)	
+#define WRD_IS_GOOD_1(expr)              	WRD_IS_RES(expr, isGood())
+#define WRD_IS_GOOD(...)                    WRD_OVERLOAD(WRD_IS_GOOD, __VA_ARGS__)
 
 #define WRD_CLASS_2(THIS, SUPER)\
 		WRD_ADT_2(THIS, SUPER)	\
@@ -64,3 +93,15 @@
 		}	\
 	private:
 #define WRD_ADT(...) WRD_OVERLOAD(WRD_ADT, __VA_ARGS__)
+
+#define WRD_CLASS_2(THIS, SUPER)	\
+    WRD_INHERIT(THIS, SUPER)	\
+    public:	\
+        virtual WRD_LAZY_METHOD(Class&, getClass, const, TClass<This>, WRD_VOID)	\
+        TStrong<This> clone() const { return _clone(); }	\
+    \
+	protected:	\
+        virtual TStrong<Instance> _clone() const { return Cloner<T>::redirect(*this); } \
+   	\
+    private:
+#define WRD_CLASS(...)	WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)

@@ -88,11 +88,13 @@
 
 ///	the macro for definining lazymethod which will be initialized when it's called.
 //	this's uses static variable inside of method.
-#define WRD_LAZY_METHOD_4(ReturnType, Name, isConst, initValue)	\
+#define WRD_LAZY_METHOD_5(ReturnType, Name, isConst, StaticType, initValue) \
 	isConst ReturnType& Name() isConst {	\
-		static ReturnType inner(initValue);	\
+		static STaticType inner(initValue);	\
 		return inner;	\
 	}
-#define WRD_LAZY_METHOD_3(ReturnType, Name, initValue)	\
-	WRD_LAZY_METHOD_4(ReturnType, Name, WRD_SPACE, initValue)
+#define WRD_LAZY_METHOD_4(StaticType, Name, isConst, initValue) \
+    WRD_LAZY_METHOD_5(StaticType&, Name, isConst, StaticType, initValue)
+#define WRD_LAZY_METHOD_3(StaticType, Name, initValue)  \
+    WRD_LAZY_METHOD_5(StaticType&, Name, WRD_SPACE, StaticType, initValue)
 #define WRD_LAZY_METHOD(...)	WRD_OVERLOAD(WRD_LAZY_METHOD, __VA_ARGS__)
