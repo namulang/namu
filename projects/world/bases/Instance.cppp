@@ -19,16 +19,16 @@ namespace wrd
 		return _clone();
 	}
 
-	ID THIS::getID() const { return _id; }
+	Id THIS::getId() const { return _id; }
 
 	wcnt THIS::getSerial() const
 	{
 		Nexus::get().getInstancer()[_id].getSerial();
 	}
 
-	const InstBlk& THIS::getBlock() const
+	const Block& THIS::getBlock() const
 	{
-		WRD_IS_THIS(InstBlk)
+		WRD_IS_THIS(Block)
 		return Nexus::get().getInstancer()[_id];
 	}
 
