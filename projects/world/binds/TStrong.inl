@@ -13,7 +13,7 @@ namespace wrd
 		TStrong();
 		TStrong(T& it);
 		TStrong(T* it);
-		TStrong(TWeak<T>& it);
+		TStrong(Bindable& it);
 
 	public:
 		virtual Result& bind(T& it);

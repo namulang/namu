@@ -1,24 +1,25 @@
 #pragma once
 
 #include "TBindable.inl"
+#include "../bases/Trace.hpp"
 
 namespace wrd
 {
-	class InstBlk;
+	class Block;
 	class Result;
 	class Node;
 
 	template <typename T>
-	class TWeak : public TBindable<T>
+	class TWeak : public Trace, public TBindable<T>
 	{
-	public:
-		// TODO: static_assert(T is not sub of Instance)
 		// TODO: remove below line
 		typedef TWeak<T> This;
+
+	public:
 		TWeak();
 		TWeak(T& it);
 		TWeak(T* it);
-		TWeak(const This& rhs);
+		TWeak(Bindable& rhs);
 
 	public:
 		This& operator=(const This& rhs);
@@ -29,26 +30,19 @@ namespace wrd
 
 	public:	// TBindable:
 		virtual Result& bind(Instance& new1);
-		Result& bind(This& rhs);
+		Result& bind(Bindable& rhs);
 		virtual Result& unbind();
-		virtual wbool doesBind() const;
+		virtual wbool isBind() const;
 
 	public:	// Thing:
-		virtual Result& release();
 		//TODO: replace this. put API on Thing. virtual ResultSet isValid() const;
 		virtual const Class& getClass() const;
+		virtual Result& release();
 
 	protected:
 		virtual Instance& _get(); // TODO: impl this.
-
-	private:
-		const InstBlk& _getInstBlk() const;
-		InstBlk& _getInstBlk();
-
-	private:
-		Instance::ID _id;
-		wcnt _serial;
 	};
+
 	//	c++11 부터 지원되는 문법
 	using Weak = TStrong<Node>;
 	using CWeak = TStrong<const Node>;
