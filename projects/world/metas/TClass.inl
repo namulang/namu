@@ -14,7 +14,7 @@ namespace wrd
 
     template <typename T>
     class TClass : public TMetaSuper<T>::Is
-    {
+    {	WRD_CLASS(TClass<T>, TMetaSuper<T>::Is)
     public:
         TClass();
 
@@ -24,22 +24,25 @@ namespace wrd
         virtual const Str& getName() const;
         virtual const Classes& getSupers() const;
         virtual const Classes& getSubs() const;
+		//	Node:
+        virtual const Container& getNodes() const;
+		//	State:
+        virtual wbool isOccupy() const;
+		virtual wbool isInit() const;
+		//	Thing:
+		virtual const Class& getSuper() const;
 
-    public: // Node:
-        virtual const Container& getMembers() const;
-        virtual wbool isInit() const;
-        virtual wbool isOccupiable() const;
-        virtual Result& _setInit(wbool newone);
-        virtual Result& _initNodes();
+	protected:
+		//	Composit:
+		virtual Result& _initNodes();
 
     public:
-        static const Str& getStaticName();
-        static const Container& getStaticNodes();
-        static const Classes& getStaticSupers();
-        static const Classes& getStaticSubs();
-        static wbool isStaticOccupiable();
-
-    private:
-        static wbool _is_init;
+		static wbool isADTStatic();
+		static wbool isTemplateStatic();
+        static const Str& getNameStatic();
+        static const Container& getNodesStatic();
+        static const Classes& getSupersStatic();
+        static const Classes& getSubsStatic();
+        static wbool isOccupyStatic();
     };
 }

@@ -8,7 +8,7 @@ namespace wrd
 
 	template <typename T>
 	class TStrong : public TWeak<T>
-	{
+	{	WRD_INHERIT(TStrong, TWeak)
 	public:
 		TStrong();
 		TStrong(T& it);

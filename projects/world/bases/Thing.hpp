@@ -13,12 +13,13 @@ namespace wrd
 
 	///	Thing은 World의 최상위 객체
 	class Thing
-	{
+	{	WRD_INHERIT(Thing)
 	public:
 		template <typename T, typename S> friend class TVisitation; //	_tour를 위한 것이다.
 
 	public:
 		virtual const Class& getClass() const = 0;
+		virtual const Class& getSuper() const;
 		virtual Result& release();
 		wbool isNull() const;
 		wbool isExist() const;

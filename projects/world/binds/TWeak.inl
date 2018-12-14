@@ -11,10 +11,7 @@ namespace wrd
 
 	template <typename T>
 	class TWeak : public Trace, public TBindable<T>
-	{
-		// TODO: remove below line
-		typedef TWeak<T> This;
-
+	{	WRD_INHERIT(TWeak, Trace)
 	public:
 		TWeak();
 		TWeak(T& it);

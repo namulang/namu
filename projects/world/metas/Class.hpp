@@ -10,7 +10,7 @@ namespace wrd
     class Origin;
     class Array;
     class Class : public Node
-    { //    World에 visible해야 하기 때문이다.
+    {	WRD_CLASS(Class, Node) // World에 visible해야 하기 때문이다.
         // TODO: classname
         /* remove this*/ typedef Class This;
         friend class Interpreter; // for interpreter class which can use _getNodes().
@@ -20,21 +20,28 @@ namespace wrd
         wbool operator!=(const This& rhs) const;
 
     public:
+		//	Class:
         virtual wbool isTemplate() const = 0;
         virtual wbool isADT() const = 0;
-        virtual TStrong<Instance> instance() const = 0;
+        virtual const Classes& getSubs() const = 0;
         virtual const String& getName() const = 0;
         virtual const Classes& getSupers() const = 0;
-        const Class& getSuper() const;
-        virtual const Classes& getSubs() const = 0;
+		const Classes& getLeafs() const;
+		//	Node:
+		//	means there is no origin or we can't designate origin.
+		virtual WRD_LAZY_METHOD(Origin, getOrigin, const, WRD_VOID)
+		//	State:
+		virtual Result& init();
+		virtual wbool isInit() const;
+		//	Instance:
+        virtual TStrong<Instance> instance() const = 0;
+		//	Thing:
+        virtual const Class& getSuper() const;
         virtual const Class& getClass() const;
         virtual wbool isSuper(const Class& it) const;
-        virtual Result& init();
-        const Classes& getLeafs() const;
-        virtual const Origin& getOrigin();
 
     protected:
+		//	Composit:
         virtual Result& _initNodes();
-        virtual Result& _setInit(wbool new1) = 0;
     };
 }

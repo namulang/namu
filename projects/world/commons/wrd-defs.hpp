@@ -77,11 +77,19 @@
 #define WRD_IS_GOOD_1(expr)              	WRD_IS_RES(expr, isGood())
 #define WRD_IS_GOOD(...)                    WRD_OVERLOAD(WRD_IS_GOOD, __VA_ARGS__)
 
-#define WRD_CLASS_2(THIS, SUPER)\
-		WRD_ADT_2(THIS, SUPER)	\
-		virtual TStrong<Instance> _clone() const {	\
+#define _CLASS_BASE					\
+    public:							\
+        virtual WRD_LAZY_METHOD(Class&, getClass, const, TClass<This>, WRD_VOID) \
+        TStrong<This> clone() const { return _clone(); } \
+		virtual TStrong<Instance> _clone() const { \
 			return new This(*this);	\
 		}
+#define WRD_CLASS_2(THIS, SUPER)  	\
+    WRD_INHERIT(THIS, SUPER)      	\
+    _CLASS_BASE
+#define WRD_CLASS_1(THIS)			\
+    WRD_INHERIT(THIS)				\
+    _CLASS_BASE
 #define WRD_CLASS(...) WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
 
 #define WRD_ADT_2(THIS, SUPER)	\

@@ -14,7 +14,7 @@ namespace wrd
     //    여기서는
     class Container;
     class Object : public Composit
-    {
+    {	WRD_CLASS(Object, Composit)
     public:    // Object:
         ///    shared means what was shared between all of object instance.
         ///    they're all of from Class, mostly Methods.

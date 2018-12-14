@@ -6,7 +6,7 @@
 namespace wrd
 {
 	class Refer : public Node, public TBindable<Node>
-	{
+	{	WRD_CLASS(Refer, Node)
 	public:
 		//TODO: uncomment this. Refer(const Class& cls = Node::getStaticClass(), wbool want_const = false);
 		Refer(Node& it);

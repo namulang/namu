@@ -11,7 +11,7 @@
 namespace wrd
 {
     class World : public Manager
-    {
+    {	WRD_CLASS(World, Manager)
         typedef World This;
 
     private:

@@ -6,7 +6,7 @@
 namespace wrd
 {
     class Trace : public Thing
-    {
+    {	WRD_INHERIT(Trace, Thing)
     public:
         Trace();
         Trace(Id id, wcnt serial);

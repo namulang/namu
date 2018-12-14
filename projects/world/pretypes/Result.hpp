@@ -5,7 +5,7 @@
 namespace wrd
 {
 	class Result : public Object
-	{
+	{	WRD_CLASS(Result, Object)
 		//	TODO: fill this.
 	public:
 		/*wint warn(.....);

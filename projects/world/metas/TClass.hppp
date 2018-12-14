@@ -9,7 +9,7 @@ namespace WRD
         TClass() { this->init(); }
         virtual wbool isADT() const { return TADTChecker<T>::IS; }
         virtual wbool isTemplate() const { return TTemplateChecker<T>::IS; }
-        virtual const Container& getMembers() const { return getStaticMembers(); }
+        virtual const Container& getNodes() const { return getStaticMembers(); }
         virtual const String& getName() const {
             WRD_IS_THIS(const String)
             return getStaticName();
@@ -22,9 +22,9 @@ namespace WRD
             WRD_IS_THIS(const Classes)
             return getStaticSubs();
         }
-        static wbool _is_initd;
-        virtual wbool isInitialized() const { return _is_initd; }
-        virtual wbool isOccupiable() const { return isStaticOccupiable(); }
+        virtual wbool isOccupy() const { return isStaticOccupiable(); 
+        virtual wbool isOccupy() const { return isStaticOccupiable(); }
+        virtual const Class& getSuper() const { return T::Super::getClassStatic(); }
         virtual Result& _setInit(wbool newone) {
             _is_initd = newone;
             return Success;
@@ -33,7 +33,7 @@ namespace WRD
             if(Super::_initMembers())
                 return SuperFail.warn();
 
-            return T::_onInitializeMembers(_getMembers()); // getMethods from RealClass T.
+            return T::_onInitializeMembers(_getNodes()); // getMethods from RealClass T.
         }
         static const String& getStaticName() {
             static String inner;

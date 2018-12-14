@@ -65,7 +65,7 @@ namespace wrd
 	class Origin;
 
 	class Node : public State 
-	{
+	{	WRD_CLASS(Node, State)
 	public:
 		Node& operator[](widx n);
 		const Node& operator[](widx n) const;

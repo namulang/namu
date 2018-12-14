@@ -10,7 +10,7 @@ namespace wrd
 	class Node;
 
 	class Instance : public Thing
-	{
+	{	WRD_CLASS(Instance, Thing)
 		//	Instance는 World에서 인스턴스 관리를 대신해준다. 여기서부터 bind가 가능하다.
 
 	public:
