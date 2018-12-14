@@ -105,4 +105,19 @@ namespace wrd
 	public:
 		typedef typename TConcreteMeta<is_adt>::template Is<T, typename TBaseMeta<is_mgd>::Is> Is;
 	};
+
+    template <typename T, wbool is_adt = TIfADT<T>::is>
+    class Cloner {
+    public:
+        static TStrong<Instance> redirect(const T& origin) {
+            return new T(origin);
+        }
+    };
+    template <typename T>
+    class Cloner<T, true>
+    public:
+        static TStrong<Instance> redirect(const T& origin) {
+            return TStrong<Instance>();
+        }
+    };
 }
