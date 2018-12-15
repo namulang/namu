@@ -91,25 +91,3 @@
     WRD_INHERIT(THIS)				\
     _CLASS_BASE
 #define WRD_CLASS(...) WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
-
-#define WRD_ADT_2(THIS, SUPER)	\
-	WRD_INHERIT(THIS, SUPER)	\
-	public:	\
-		typedef TMetaSuper<This>::Is MetaClass;	\
-		virtual TStrong<This> clone() const {	\
-			return _clone();	\
-		}	\
-	private:
-#define WRD_ADT(...) WRD_OVERLOAD(WRD_ADT, __VA_ARGS__)
-
-#define WRD_CLASS_2(THIS, SUPER)	\
-    WRD_INHERIT(THIS, SUPER)	\
-    public:	\
-        virtual WRD_LAZY_METHOD(Class&, getClass, const, TClass<This>, WRD_VOID)	\
-        TStrong<This> clone() const { return _clone(); }	\
-    \
-	protected:	\
-        virtual TStrong<Instance> _clone() const { return Cloner<T>::redirect(*this); } \
-   	\
-    private:
-#define WRD_CLASS(...)	WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
