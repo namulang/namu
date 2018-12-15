@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UId.hpp"
++#include "../bases/Id.hpp"
 
 namespace wrd
 {
@@ -12,5 +12,8 @@ namespace wrd
         Result& ignore();
         Result& link();
         Result& unlink();
+
+      protected:
+              virtual Instance& _get();
     };
 }

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../binds/TBindable.inl"
 #include "../bases/Node.hpp"
+#include "../binds/Bindable.hpp"
 
 namespace wrd
 {
-	class Refer : public Node, public TBindable<Node>
+    class Refer : public Node, public Bindable, public Gettable
 	{	WRD_CLASS(Refer, Node)
 	public:
 		//TODO: uncomment this. Refer(const Class& cls = Node::getStaticClass(), wbool want_const = false);

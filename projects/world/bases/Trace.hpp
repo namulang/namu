@@ -5,7 +5,7 @@
 
 namespace wrd
 {
-    class Trace : public Thing
+    class Trace : public Thing, public Gettable
     {	WRD_INHERIT(Trace, Thing)
     public:
         Trace();
@@ -15,8 +15,6 @@ namespace wrd
         Id getId() const;
         wcnt getSerial() const;
         const Block& getBlock() const;
-        Instance& get();
-        const Instance& get() const;
 
     public: //  Thing:
         virtual Result& release();
@@ -25,7 +23,6 @@ namespace wrd
         Result& _setId(Id new1);
         Result& _setSerial(wcnt new1);
         Block& _getBlock();
-        virtual Instance& _get() = 0;
 
     private:
         Id _id;

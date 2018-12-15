@@ -73,7 +73,7 @@
 #endif
 
 //	macros:
-#define WRD_UNCONST_THIS()			This* unconst = const_cast<This*>(this);
+#define WRD_UNCONST_THIS()	This* unconst = const_cast<This*>(this);
 
 #define WRD_INHERIT_2(THIS, SUPER)	\
 		WRD_INHERIT_1(THIS)	\

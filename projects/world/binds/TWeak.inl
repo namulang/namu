@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TBindable.inl"
+#include "TBindable.hpp"
 #include "../bases/Trace.hpp"
 
 namespace wrd
@@ -10,7 +10,7 @@ namespace wrd
 	class Node;
 
 	template <typename T>
-	class TWeak : public Trace, public TBindable<T>
+	class TWeak : public TGettable<T, Trace>, public TBindable<T>
 	{	WRD_INHERIT(TWeak, Trace)
 	public:
 		TWeak();

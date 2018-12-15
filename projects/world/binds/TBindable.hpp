@@ -4,16 +4,13 @@
 
 namespace wrd
 {
-#define THIS TBindable<T>
-#define TEMPLATE template <typename T>
-
-    TEMPLATE const T* THIS::operator->() const { return &get(); }
-    TEMPLATE T* THIS::operator->() const { return &get(); }
-    TEMPLATE const T* THIS::operator*() const { return &get(); }
-    TEMPLATE T* THIS::operator*() { return &get(); }
-    TEMPLATE T& THIS::get() { return _get().cast<T>(); }
-    TEMPLATE const T& THIS::get() const { return _get().cast<const T>(); }
-
-#undef THIS
-#undef TEMPLATE
+    template <typename T, typename S>
+    class TBindable : public S
+    {  WRD_CLASS(TBindable, S)
+    public:
+        const T* operator->() const { return &get(); }
+        T* operator->() { return &get(); }
+        const T* operator*() const { return &get(); }
+        T* operator*() { return &get(); }
+    };
 }

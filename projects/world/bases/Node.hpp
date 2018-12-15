@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../binds/TStrong.inl"
-#include "Stae.hpp"
+#include "State.hpp"
 
 namespace wrd
 {
