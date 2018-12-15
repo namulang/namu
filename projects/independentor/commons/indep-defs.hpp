@@ -90,11 +90,11 @@
 //	this's uses static variable inside of method.
 #define WRD_LAZY_METHOD_5(ReturnType, Name, isConst, StaticType, initValue) \
 	isConst ReturnType& Name() isConst {	\
-		static STaticType inner(initValue);	\
+		static StaticType inner(initValue);	\
 		return inner;	\
 	}
 #define WRD_LAZY_METHOD_4(StaticType, Name, isConst, initValue) \
-    WRD_LAZY_METHOD_5(StaticType&, Name, isConst, StaticType, initValue)
+    WRD_LAZY_METHOD_5(StaticType, Name, isConst, StaticType, initValue)
 #define WRD_LAZY_METHOD_3(StaticType, Name, initValue)  \
-    WRD_LAZY_METHOD_5(StaticType&, Name, WRD_SPACE, StaticType, initValue)
+    WRD_LAZY_METHOD_5(StaticType, Name, WRD_SPACE, StaticType, initValue)
 #define WRD_LAZY_METHOD(...)	WRD_OVERLOAD(WRD_LAZY_METHOD, __VA_ARGS__)
