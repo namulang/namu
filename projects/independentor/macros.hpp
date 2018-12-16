@@ -9,3 +9,4 @@
 #include "macros/ForEach.hpp"
 #include "macros/Helpers.hpp"
 #include "macros/Funnel.hpp"
+#include "macros/Stringizer.hpp"
