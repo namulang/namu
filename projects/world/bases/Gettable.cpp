@@ -7,7 +7,7 @@ namespace wrd
 
       const Instance& THIS::get() const
       {
-              WRD_UNCONST_THIS()
+              WRD_UNCONST()
               return unconst->_get();
       }
 

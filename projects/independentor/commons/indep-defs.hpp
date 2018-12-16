@@ -73,18 +73,20 @@
 #endif
 
 //	macros:
-#define WRD_UNCONST_THIS()	This* unconst = const_cast<This*>(this);
+#define WRD_UNCONST()		WRD_UNCONST(unconst)
+#define WRD_UNCONST(value)	This* value = const_cast<This*>(this);
+#define WRD_UNCONST(...)	WRD_OVERLOAD(WRD_UNCONST, __VA_ARGS__)
 
-#define WRD_INHERIT_2(THIS, SUPER)	\
-		WRD_INHERIT_1(THIS)	\
-	public:	\
-		typedef SUPER Super;	\
+#define WRD_INHERIT_2(THIS, SUPER) 	\
+		WRD_INHERIT_1(THIS)			\
+	public:							\
+		typedef SUPER Super;		\
 	private:
-#define WRD_INHERIT_1(THIS)	\
-	public:	\
-		typedef THIS This;	\
+#define WRD_INHERIT_1(THIS)			\
+	public:							\
+		typedef THIS This;			\
 	private:
-#define WRD_INHERIT(...)	WRD_OVERLOAD(WRD_INHERIT, __VA_ARGS__)
+#define WRD_INHERIT(...)			WRD_OVERLOAD(WRD_INHERIT, __VA_ARGS__)
 
 ///	the macro for definining lazymethod which will be initialized when it's called.
 //	this's uses static variable inside of method.
