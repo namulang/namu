@@ -79,15 +79,15 @@
 
 #define _CLASS_BASE					\
     public:							\
-        virtual WRD_LAZY_METHOD(Class&, getClass, const, TClass<This>, WRD_VOID) \
+        virtual WRD_LAZY_METHOD_5(Class&, getClass, const, TClass<This>, WRD_VOID) \
         TStrong<This> clone() const { return _clone(); } \
 		virtual TStrong<Instance> _clone() const { \
 			return new This(*this);	\
 		}
 #define WRD_CLASS_2(THIS, SUPER)  	\
-    WRD_INHERIT(THIS, SUPER)      	\
+    WRD_INHERIT_2(THIS, SUPER)     	\
     _CLASS_BASE
 #define WRD_CLASS_1(THIS)			\
-    WRD_INHERIT(THIS)				\
+    WRD_INHERIT_1(THIS)				\
     _CLASS_BASE
 #define WRD_CLASS(...) WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
