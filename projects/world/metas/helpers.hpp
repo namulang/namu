@@ -107,17 +107,23 @@ namespace wrd
 	};
 
     template <typename T, wbool is_adt = TIfADT<T>::is>
-    class Cloner {
+    class TCloner {
     public:
-        static TStrong<Instance> redirect(const T& origin) {
+        static TStrong<Instance> clone(const T& origin) {
             return new T(origin);
         }
+		static TStrong<Instance> instance() {
+			return new T();
+		}
     };
     template <typename T>
-    class Cloner<T, true>
+    class TCloner<T, true>
     public:
-        static TStrong<Instance> redirect(const T& origin) {
+        static TStrong<Instance> clone(const T& origin) {
             return TStrong<Instance>();
         }
+		static TStrong<Instance> instance() {
+			return TStrong<Instance>();
+		}
     };
 }
