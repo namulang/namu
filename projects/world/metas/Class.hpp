@@ -9,6 +9,7 @@ namespace wrd
     class Classes; // Container of Class
     class Origin;
     class Array;
+	class Class;
     class Class : public Node
     {	WRD_CLASS(Class, Node) // World에 visible해야 하기 때문이다.
         // TODO: classname
@@ -29,7 +30,7 @@ namespace wrd
 		const Classes& getLeafs() const;
 		//	Node:
 		//	means there is no origin or we can't designate origin.
-		virtual WRD_LAZY_METHOD(Origin, getOrigin, const, WRD_VOID)
+		virtual WRD_LAZY_METHOD(const Origin, getOrigin, const)
 		//	State:
 		virtual Result& init();
 		virtual wbool isInit() const;
