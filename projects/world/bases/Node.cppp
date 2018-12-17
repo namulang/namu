@@ -45,7 +45,7 @@ namespace wrd
 		return _get(false, [&name](Node& e) { return e.getName() == name; });
 	}
 	const Node& get(const String& name) const {
-		This& unconst = const_cast<This&>(*this);
+		WRD_UNCONST()
 		return _get(true, [&name](Node& e) { return e.getName() == name; });
 	}
 	Node& _get(wbool want_const, std::function<wbool(Node&)> tester) {

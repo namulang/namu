@@ -50,7 +50,7 @@ namespace wrd
 		if( ! isConst())
 			return noneed;	// 이 Refer는 Refer<T>이다. 지금 하려는 것은 즉, A* a = (const A*) a1; 를 하려고 하는것과 같다.
 
-		This& unconst = const_cast<This&>(*this);
+		WRD_UNCONST()
 		Result& res = unconst.bind(const_cast<Object&>(it));
 		WRD_IS_ERR(res)
 

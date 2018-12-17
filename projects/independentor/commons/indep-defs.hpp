@@ -73,12 +73,9 @@
 #endif
 
 //	macros:
-#define WRD_UNCONST()		WRD_UNCONST(unconst)
-#define WRD_UNCONST(value)	This* value = const_cast<This*>(this);
-#define WRD_UNCONST(...)	WRD_OVERLOAD(WRD_UNCONST, __VA_ARGS__)
-
-#define WRD_CONST_METHOD_3(ret, name, ...)	\
-	ret name(
+#define WRD_UNCONST_0()			WRD_UNCONST_1(unconst)
+#define WRD_UNCONST_1(value)	This* value = const_cast<This*>(this);
+#define WRD_UNCONST(...)		WRD_OVERLOAD(WRD_UNCONST, __VA_ARGS__)
 
 #define WRD_INHERIT_2(THIS, SUPER) 	\
 		WRD_INHERIT_1(THIS)			\

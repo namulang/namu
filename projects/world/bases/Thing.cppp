@@ -22,9 +22,9 @@ namespace wrd
 	Refer THIS::to(const Class& cls) { return Refer(); }
 	Refer THIS::to(const Class& cls) const
 	{
-		This& unconsted = const_cast<T&>(*this);
+		WRD_UNCONST()
 		wbool should_const = cls.isSuper(getClass()); // upcasting일때만 const를 붙여야 한다.
-		return Refer(unconsted.to(cls), should_const);
+		return Refer(unconst.to(cls), should_const);
 	}
 	template <typename T>
 	TRefer<T> THIS::to() { return TRefer<T>(to(T::getStaticClass())); }
@@ -71,7 +71,7 @@ namespace wrd
 	}
 	Refer THIS::implicit(const Class& cls) const
 	{
-		This& unconst = const_cast<This&>(*this);
+		WRD_UNCONST()
 		return Refer((const Refer&) unconst.implicit(cls));
 		// we code inliney because of prevention to releasing instance of returned variable from unconst.implicit()
 	}
