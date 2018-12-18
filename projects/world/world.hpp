@@ -1,17 +1,24 @@
 #pragma once
 
+#pragma message "1"
 #include "./wrd-commons.hpp"
-#include "./bases.hpp"
-#include "./memory.hpp"
+#pragma message "4"
 #include "./binds.hpp"
+#pragma message "5"
 #include "./metas.hpp"
+#pragma message "2"
+#include "./bases.hpp"
+#pragma message "3"
+#include "./memory.hpp"
+#pragma message "6"
 #include "./msg-usrs.hpp"
+#pragma message "7"
 #include "./pretypes.hpp"
 
 namespace wrd
 {
     class World : public Manager
-    {	WRD_CLASS(World, Manager)
+    {	//TODO: WRD_CLASS(World, Manager)
         typedef World This;
 
     private:

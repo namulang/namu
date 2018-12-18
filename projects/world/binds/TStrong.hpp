@@ -1,3 +1,4 @@
+#include "./TStrong.inl"
 #include "./TWeak.hpp"
 
 namespace wrd
@@ -37,4 +38,7 @@ namespace wrd
     //  c++11 부터 지원되는 문법
     using Strong = TStrong<Node>;
     using CStrong = TStrong<const Node>;
+
+#undef TEMPL
+#undef THIS
 }

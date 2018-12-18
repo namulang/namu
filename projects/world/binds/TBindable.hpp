@@ -1,21 +1,18 @@
 #pragma once
 
-#include "../wrd-commons.hpp"
+#include "TBindable.inl"
 
 namespace wrd
 {
-	class Class;
-	class Instance;
-	template <typename T> class TStrong;
-	template <typename T> class TClass;
+#define TEMPL template <typename T>
+#define THIS TBindable<T>
 
-    template <typename T, typename S>
-    class TBindable : public S
-    {  WRD_CLASS(TBindable, S)
-    public:
-        const T* operator->() const { return &get(); }
-        T* operator->() { return &get(); }
-        const T* operator*() const { return &get(); }
-        T* operator*() { return &get(); }
-    };
+	WRD_CLASS_DEFINE(THIS)
+	TEMPL const T* THIS::operator->() const { return &get(); }
+	TEMPL T* THIS::operator->() { return &get(); }
+	TEMPL const T* THIS::operator*() const { return &get(); }
+	TEMPL T* THIS::operator*() { return &get(); }
+
+#undef TEMPL
+#undef THIS
 }

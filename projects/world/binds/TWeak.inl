@@ -1,7 +1,10 @@
 #pragma once
 
-#include "TBindable.hpp"
+#pragma message "4-2-1-1"
+#include "TBindable.inl"
+#pragma message "4-2-1-2"
 #include "../bases/Trace.hpp"
+#pragma message "4-2-1-3"
 
 namespace wrd
 {

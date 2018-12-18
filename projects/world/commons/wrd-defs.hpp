@@ -81,9 +81,11 @@
     public:							\
         virtual WRD_LAZY_METHOD_4(Class, getClass, const, TClass<This>) \
         TStrong<This> clone() const { return _clone(); } \
+	protected:	\
 		virtual TStrong<Instance> _clone() const { \
-			return new This(*this);	\
-		}
+			return TCloner<T>::clone(*this);	\
+		}	\
+	private:
 #define WRD_CLASS_2(THIS, SUPER)  	\
     WRD_INHERIT_2(THIS, SUPER)     	\
     _CLASS_BASE
@@ -91,3 +93,21 @@
     WRD_INHERIT_1(THIS)				\
     _CLASS_BASE
 #define WRD_CLASS(...) WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
+
+/// This macros, DECLARE, DEFINE, will be used for which can't dependent to TClass and TStrong and Instance.
+///	mostly, base classes for them will be correspond to and will be used for internal usage only.
+#define WRD_CLASS_DECLARE(THIS, SUPER)	\
+	WRD_INHERIT_2(THIS, SUPER)	\
+	public:	\
+		virtual Class& getClass() const;	\
+		TStrong<This> clone() const { return _clone(); }	\
+	protected:	\
+		virtual TStrong<Instance> _clone() const;	\
+	private:
+	
+///	this macro should be placed at implement file which include header file using DECLARE macro.
+#define WRD_CLASS_DEFINE(THIS)	\
+	WRD_LAZY_METHOD_4(Class, THIS::getClass, const, TClass<THIS>)	\
+	TStrong<Instance> THIS::_clone() const {	\
+		return TCloner<T>::clone(*this);	\
+	}

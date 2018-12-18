@@ -54,56 +54,25 @@ namespace wrd
         static const bool is = sizeof(_foo( (T) 0 )) == sizeof(yes);
     };
 
-	template <typename T, typename S>
-	class TConcreteClass;
-
-    template <wbool is>
-    class TConcreteMeta
-    {
-    public:
-        template <typename T, typename S>
-		using Is = TConcreteClass<T, S>;
-    };
-
-	template <typename T, typename S>
-	class TInterfaceClass;
-
-    template <>
-    class TConcreteMeta<false>
-    {
-    public:
-        template <typename T, typename S>
-        using Is = TInterfaceClass<T, S>;
-    };
-
     /// whether given type T is sub class of T.
     ///    if it's a Object, its metaclass should have "Variable", a composition of pointing object's variables.
     class ObjectClass;
-
-	template <wbool is>
-    class TBaseMeta {
-	public:
-        typedef ObjectClass Is;
-    };
-
-	class Class;
-    template <>
-    class TBaseMeta<false> {
-	public:
-        typedef Class Is;
-    };
 
     ///    TMetaSuper constructs final MetaClass against given type T regarding its hierarchy.
     //    normally it defines as, ... (baseclass depicted to high.
     //        - Class
     //        - [ObjectClass] only if T is sub class of Object.
-    //        - [TConcreteClass || TInterfaceClass] determined whether type T is ADT or not.
     //        - TClass<T>
 	class Object;
-    template <typename T, wbool is_adt = TIfADT<T>::is, wbool is_mgd = TIfSub<T, Object>::is>
+    template <typename T, wbool is_mgd = TIfSub<T, Object>::is>
     class TMetaSuper {
 	public:
-		typedef typename TConcreteMeta<is_adt>::template Is<T, typename TBaseMeta<is_mgd>::Is> Is;
+		typedef ObjectClass Is;
+	};
+	template <typename T>
+	class TMetaSuper<false> {
+	public:
+		typedef Class Is;
 	};
 
     template <typename T, wbool is_adt = TIfADT<T>::is>

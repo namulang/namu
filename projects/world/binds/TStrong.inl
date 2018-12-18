@@ -1,6 +1,8 @@
 #pragma once
 
+#pragma message "4-2-1"
 #include "./TWeak.inl"
+#pragma message "4-2-2"
 
 namespace wrd
 {

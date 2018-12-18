@@ -5,6 +5,8 @@
 namespace wrd
 {
     class Result;
+	class Instance;
+
     class Bindable
     {
     public:
