@@ -1,8 +1,6 @@
 #pragma once
 
 #include "helpers.hpp"
-#include "TConcreteClass.inl"
-#include "TInterfaceClass.inl"
 #include "ObjectClass.hpp"
 
 namespace wrd 
@@ -24,6 +22,7 @@ namespace wrd
         virtual const Str& getName() const;
         virtual const Classes& getSupers() const;
         virtual const Classes& getSubs() const;
+        virtual TStrong<Instance> instance() const;
 		//	Node:
         virtual const Container& getNodes() const;
 		//	State:

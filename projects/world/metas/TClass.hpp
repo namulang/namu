@@ -22,6 +22,7 @@ namespace WRD
             WRD_IS_THIS(const Classes)
             return getStaticSubs();
         }
+		TStrong<Instance> instance() const { return TCloner<T>::instance(); }
         virtual wbool isOccupy() const { return isStaticOccupiable(); 
         virtual wbool isOccupy() const { return isStaticOccupiable(); }
         virtual const Class& getSuper() const { return T::Super::getClassStatic(); }

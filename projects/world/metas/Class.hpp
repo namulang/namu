@@ -4,14 +4,13 @@
 
 namespace wrd
 {
-    template <typename T>
-    class TStrong;
+    template <typename T> class TStrong;
     class Classes; // Container of Class
     class Origin;
     class Array;
-	class Class;
+
     class Class : public Node
-    {	WRD_CLASS(Class, Node) // World에 visible해야 하기 때문이다.
+    {	WRD_CLASS_DECLARE(Class, Node) // World에 visible해야 하기 때문이다.
         // TODO: classname
         /* remove this*/ typedef Class This;
         friend class Interpreter; // for interpreter class which can use _getNodes().
@@ -27,6 +26,7 @@ namespace wrd
         virtual const Classes& getSubs() const = 0;
         virtual const String& getName() const = 0;
         virtual const Classes& getSupers() const = 0;
+        virtual TStrong<Instance> instance() const = 0;
 		const Classes& getLeafs() const;
 		//	Node:
 		//	means there is no origin or we can't designate origin.
@@ -34,8 +34,6 @@ namespace wrd
 		//	State:
 		virtual Result& init();
 		virtual wbool isInit() const;
-		//	Instance:
-        virtual TStrong<Instance> instance() const = 0;
 		//	Thing:
         virtual const Class& getSuper() const;
         virtual const Class& getClass() const;
