@@ -1,6 +1,5 @@
 #pragma once
 
-#pragma message "4-2-1"
 #include "./TWeak.inl"
 #pragma message "4-2-2"
 
@@ -10,7 +9,7 @@ namespace wrd
 
 	template <typename T>
 	class TStrong : public TWeak<T>
-	{	WRD_INHERIT(TStrong, TWeak)
+	{	WRD_INHERIT(TStrong, TWeak<T>)
 	public:
 		TStrong();
 		TStrong(T& it);

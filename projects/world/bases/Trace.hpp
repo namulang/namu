@@ -1,10 +1,13 @@
 #pragma once
 
 #include "Thing.hpp"
+#include "Gettable.hpp"
 #include "Id.hpp"
 
 namespace wrd
 {
+	class Block;
+
     class Trace : public Thing, public Gettable
     {	WRD_INHERIT(Trace, Thing)
     public:

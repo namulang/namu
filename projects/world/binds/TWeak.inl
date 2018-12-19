@@ -5,6 +5,8 @@
 #pragma message "4-2-1-2"
 #include "../bases/Trace.hpp"
 #pragma message "4-2-1-3"
+#include "../bases/TGettable.inl"
+#pragma message "4-2-1-4"
 
 namespace wrd
 {

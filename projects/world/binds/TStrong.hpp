@@ -1,5 +1,10 @@
+#pragma once
+
+#pragma message "4-2-1"
 #include "./TStrong.inl"
+#pragma message "4-2-2"
 #include "./TWeak.hpp"
+#pragma message "4-2-3"
 
 namespace wrd
 {

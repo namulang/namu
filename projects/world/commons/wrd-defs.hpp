@@ -106,8 +106,10 @@
 	private:
 	
 ///	this macro should be placed at implement file which include header file using DECLARE macro.
-#define WRD_CLASS_DEFINE(THIS)	\
-	WRD_LAZY_METHOD_4(Class, THIS::getClass, const, TClass<THIS>)	\
-	TStrong<Instance> THIS::_clone() const {	\
+#define WRD_CLASS_DEFINE_1(THIS)		WRD_CLASS_DEFINE_2(WRD_VOID, THIS)
+#define WRD_CLASS_DEFINE_2(TEMPL, THIS)	\
+	TEMPL WRD_LAZY_METHOD_4(Class, THIS::getClass, const, TClass<THIS>)	\
+	TEMPL TStrong<Instance> THIS::_clone() const {	\
 		return TCloner<T>::clone(*this);	\
 	}
+#define WRD_CLASS_DEFINE(...)			WRD_OVERLOAD(WRD_CLASS_DEFINE, __VA_ARGS__)
