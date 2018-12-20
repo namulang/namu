@@ -4,17 +4,18 @@
 //		This macro mostly used to put in arguments to macro behind macro.
 //
 //		Why does we need this?:
-//			#define My_2(X, Y) .......
+//			#define My_2(X, y) .......
 //
 //			But, if you put class template as macro argument, expanding macro gets messed up.
 //				My_2(template<int, float>, template<A, B>) // in fact, preprocessor thought we 
 //					passed 4 arguments, not 2.
 //
 //		Then, Use Funnel macro instead:
-//			My_2(WRD_FUNNEL(MyMap<T, U>), WRD_FUNNEL(template <typename T, typename U))
+//			My_2(WRD_PAIR(MyMap<T, U>), WRD_PAIR(template <typename T, typename U))
 #include "Overload.hpp"
 
-#define WRD_FUNNEL_2(X, Y)	X, Y
-#define WRD_FUNNEL_3(X, Y, Z) WRD_FUNNEL_2(X, Y), Z
-#define WRD_FUNNEL_4(X, Y, Z, A) WRD_FUNNEL_2(X, Y) , WRD_FUNNEL_2(Z, A)
-#define WRD_FUNNEL(...)	WRD_OVERLOAD(WRD_FUNNEL, __VA_ARGS__)
+#define WRD_PAIR_1(x)			WRD_UNWRAP(x)
+#define WRD_PAIR_2(x, y)		x WRD_COMMA() y
+#define WRD_PAIR_3(x, y, z) 	WRD_PAIR_2(x, y), z
+#define WRD_PAIR_4(x, y, z, a) 	WRD_PAIR_2(x, y) , WRD_PAIR_2(z, a)
+#define WRD_PAIR(...)			WRD_OVERLOAD(WRD_PAIR, __VA_ARGS__)
