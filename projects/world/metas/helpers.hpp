@@ -70,7 +70,7 @@ namespace wrd
 		typedef ObjectClass Is;
 	};
 	template <typename T>
-	class TMetaSuper<false> {
+	class TMetaSuper<T, false> {
 	public:
 		typedef Class Is;
 	};
@@ -86,7 +86,7 @@ namespace wrd
 		}
     };
     template <typename T>
-    class TCloner<T, true>
+    class TCloner<T, true> {
     public:
         static TStrong<Instance> clone(const T& origin) {
             return TStrong<Instance>();
