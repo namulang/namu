@@ -12,7 +12,7 @@
 //
 //		Then, Use Funnel macro instead:
 //			My_2(WRD_FUNNEL(MyMap<T, U>), WRD_FUNNEL(template <typename T, typename U))
-#include "Overloader.hpp"
+#include "Overload.hpp"
 
 #define WRD_FUNNEL_2(X, Y)	X, Y
 #define WRD_FUNNEL_3(X, Y, Z) WRD_FUNNEL_2(X, Y), Z
