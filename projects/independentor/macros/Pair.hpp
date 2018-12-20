@@ -12,9 +12,10 @@
 //
 //		Then, Use Funnel macro instead:
 //			My_2(WRD_PAIR(MyMap<T, U>), WRD_PAIR(template <typename T, typename U))
+#include "Helpers.hpp"
 #include "Overload.hpp"
 
-#define WRD_PAIR_1(x)			WRD_UNWRAP(x)
+#define WRD_PAIR_1(x)			x
 #define WRD_PAIR_2(x, y)		x WRD_COMMA() y
 #define WRD_PAIR_3(x, y, z) 	WRD_PAIR_2(x, y), z
 #define WRD_PAIR_4(x, y, z, a) 	WRD_PAIR_2(x, y) , WRD_PAIR_2(z, a)

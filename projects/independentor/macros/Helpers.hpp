@@ -15,4 +15,4 @@
 //	why delaying comma expressoin?:
 //		it can causes delimiter issue on expanding macros for template parameters.
 #define _COMMA() ,
-#define WRD_COMMA(x) WRD_DELAY(_COMMA)()
+#define WRD_COMMA() WRD_DELAY(_COMMA)()

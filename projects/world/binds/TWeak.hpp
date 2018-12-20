@@ -3,12 +3,10 @@
 #pragma message "4-2-2-1"
 #include "TWeak.inl"
 #pragma message "4-2-2-2"
-#include "TBindable.hpp"
-#pragma message "4-2-2-3"
 #include "../bases/TGettable.hpp"
-#pragma message "4-2-2-4"
+#pragma message "4-2-2-3"
 #include "../world.hpp"
-#pragma message "4-2-2-5"
+#pragma message "4-2-2-4"
 
 namespace wrd
 {

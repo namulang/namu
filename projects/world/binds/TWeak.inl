@@ -1,12 +1,10 @@
 #pragma once
 
 #pragma message "4-2-1-1"
-#include "TBindable.inl"
-#pragma message "4-2-1-2"
 #include "../bases/Trace.hpp"
-#pragma message "4-2-1-3"
+#pragma message "4-2-1-2"
 #include "../bases/TGettable.inl"
-#pragma message "4-2-1-4"
+#pragma message "4-2-1-3"
 
 namespace wrd
 {
@@ -15,8 +13,8 @@ namespace wrd
 	class Node;
 
 	template <typename T>
-	class TWeak : public TGettable<T, Trace>, public TBindable<T>
-	{	WRD_INHERIT(TWeak, Trace)
+	class TWeak : public TGettable<T, Trace>
+	{	WRD_INHERIT_2(TWeak, TGettable<T WRD_COMMA() Trace>)
 	public:
 		TWeak();
 		TWeak(T& it);

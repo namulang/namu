@@ -1,15 +1,16 @@
 #pragma once
 
 #include "Thing.hpp"
-#include "Gettable.hpp"
+#include "TGettable.inl"
+#include "../binds/Bindable.hpp"
 #include "Id.hpp"
 
 namespace wrd
 {
 	class Block;
 
-    class Trace : public Thing, public Gettable
-    {	WRD_INHERIT(Trace, Thing)
+    class Trace : public TGettable<Instance, Thing>, public Bindable 
+    {	WRD_INHERIT_2(Trace, TGettable<Instance WRD_COMMA() Thing>)
     public:
         Trace();
         Trace(Id id, wcnt serial);
