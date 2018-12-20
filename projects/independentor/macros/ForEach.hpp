@@ -36,7 +36,7 @@
 #define _WRD_EACH_GET_END2() 0, WRD_CONSUME_ARGS
 #define _WRD_EACH_GET_END1(...) _WRD_EACH_GET_END2
 #define _WRD_EACH_GET_END(...) _WRD_EACH_GET_END1
-#define _WRD_EACH_NEXT0(test, next, ...) next WRD_VOID
+#define _WRD_EACH_NEXT0(test, next, ...) next WRD_VOID()
 #define _WRD_EACH_NEXT1(test, next) _WRD_EACH_NEXT0(test, next, 0)
 #define _WRD_EACH_NEXT(test, next)  _WRD_EACH_NEXT1(_WRD_EACH_GET_END test, next)
 

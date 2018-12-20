@@ -106,7 +106,7 @@
 	private:
 
 ///    this macro should be placed at implement file which include header file using DECLARE macro.
-#define WRD_CLASS_DEFINE_1(THIS)        WRD_CLASS_DEFINE_2(WRD_VOID, THIS)
+#define WRD_CLASS_DEFINE_1(THIS)        WRD_CLASS_DEFINE_2(WRD_VOID(), THIS)
 #define WRD_CLASS_DEFINE_2(TEMPL, THIS)    \
     TEMPL const Class& THIS::getClass() const {    \
         static TClass<This> inner;    \
