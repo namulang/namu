@@ -28,7 +28,7 @@
 #define _ARE_NULL(VALUE, RET)		WRD_IS_NULL(VALUE, RET)
 #define WRD_ARE_NULL(RET, ...)		NE_EACH_EXPAND(_ARE_NULL, RET, __VA_ARGS__)
 
-#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL(*this, Nuller<Type>::ref)
+#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL(*this, nulr<Type>)
 #define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
 #define WRD_IS_THIS(...) 			WRD_OVERLOAD(WRD_IS_THIS, __VA_ARGS__)
 
@@ -86,34 +86,34 @@
 			return TCloner<T>::clone(*this);	\
 		}	\
 	private:
-#define WRD_CLASS_2(THIS, SUPER)  			\
-    WRD_EVAL(WRD_INHERIT(WRD_PAIR(THIS), WRD_PAIR(SUPER)))    \
+#define WRD_CLASS_2(THIS, SUPER)\
+    WRD_INHERIT_2(THIS, SUPER) 	\
     _CLASS_BASE
-#define WRD_CLASS_1(THIS)					\
-    WRD_INHERIT_1(WRD_PAIR(THIS))			\
+#define WRD_CLASS_1(THIS)		\
+    WRD_INHERIT_1(THIS)			\
     _CLASS_BASE
-#define WRD_CLASS(...) WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
+#define WRD_CLASS(...) 			WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
 
 /// This macros, DECLARE, DEFINE, will be used for which can't dependent to TClass and TStrong and Instance.
 ///	mostly, base classes for them will be correspond to and will be used for internal usage only.
 #define WRD_CLASS_DECLARE_2(THIS, SUPER)		\
-	WRD_INHERIT_2(WRD_PAIR(THIS), SUPER)	\
-	public:	\
+	WRD_INHERIT_2(THIS, SUPER)					\
+	public:										\
 		virtual const Class& getClass() const;	\
-		TStrong<This> clone() const { return _clone(); }	\
-	protected:	\
-		virtual TStrong<Instance> _clone() const;	\
+		TStrong<This> clone() const;			\
+	protected:									\
+		virtual TStrong<Instance> _clone() const;\
 	private:
 #define WRD_CLASS_DECLARE(...) WRD_OVERLOAD(WRD_CLASS_DECLARE, __VA_ARGS__)
 
 ///    this macro should be placed at implement file which include header file using DECLARE macro.
-#define WRD_CLASS_DEFINE_1(THIS)        WRD_CLASS_DEFINE_2(WRD_VOID(), WRD_PAIR(THIS))
-#define WRD_CLASS_DEFINE_2(TEMPL, THIS)    \
-    TEMPL const Class& WRD_EVAL(THIS)::getClass() const {    \
-        static TClass<This> inner;    \
-        return inner;    \
-    }    \
-    TEMPL TStrong<Instance> WRD_EVAL(THIS)::_clone() const {    \
-        return TCloner<T>::clone(*this);    \
-    }
-#define WRD_CLASS_DEFINE(...)            WRD_OVERLOAD(WRD_CLASS_DEFINE, __VA_ARGS__)
+#define WRD_CLASS_DEFINE_1(THIS)        			WRD_CLASS_DEFINE_2(WRD_VOID(), THIS)
+#define WRD_CLASS_DEFINE_2(TEMPL, THIS)				\
+    TEMPL const Class& THIS::getClass() const {		\
+        static TClass<This> inner;    				\
+        return inner;    							\
+    }    											\
+    TEMPL TStrong<Instance> THIS::_clone() const {	\
+        return TCloner<T>::clone(*this);    		\
+	}
+#define WRD_CLASS_DEFINE(...)            			WRD_OVERLOAD(WRD_CLASS_DEFINE, __VA_ARGS__)

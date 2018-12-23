@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TGettable.inl"
+#include "../metas/TClass.inl"
 
 namespace wrd
 {
@@ -8,12 +9,12 @@ namespace wrd
 #define THIS TGettable<T WRD_COMMA() S>
 
     WRD_CLASS_DEFINE_2(TEMPL, TGettable<T WRD_COMMA() S>)
-    TEMPL const T* WRD_EVAL(THIS)::operator->() const { return &get(); }
-    TEMPL T* WRD_EVAL(THIS)::operator->() { return &get(); }
-    TEMPL const T* WRD_EVAL(THIS):operator*() const { return &get(); }
-    TEMPL T* WRD_EVAL(THIS)::operator*() { return &get(); }
-	TEMPL T& WRD_EVAL(THIS)::get() { return _get().cast<T>(); }
-	TEMPL const T& WRD_EVAL(THIS)::get() const { return _get().cast<const T>(); }
+    TEMPL const T* WRD_UNWRAP(THIS)::operator->() const { return &get(); }
+    TEMPL T* WRD_UNWRAP(THIS)::operator->() { return &get(); }
+    TEMPL const T* WRD_UNWRAP(THIS):operator*() const { return &get(); }
+    TEMPL T* WRD_UNWRAP(THIS)::operator*() { return &get(); }
+	TEMPL T& WRD_UNWRAP(THIS)::get() { return _get().cast<T>(); }
+	TEMPL const T& WRD_UNWRAP(THIS)::get() const { return _get().cast<const T>(); }
 
 #undef TEMPL
 #undef THIS

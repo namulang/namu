@@ -16,7 +16,7 @@
 #include "Overload.hpp"
 
 #define WRD_PAIR_1(x)			x
-#define WRD_PAIR_2(x, y)		x WRD_COMMA() y
+#define WRD_PAIR_2(x, y)		x, y
 #define WRD_PAIR_3(x, y, z) 	WRD_PAIR_2(x, y), z
 #define WRD_PAIR_4(x, y, z, a) 	WRD_PAIR_2(x, y) , WRD_PAIR_2(z, a)
 #define WRD_PAIR(...)			WRD_OVERLOAD(WRD_PAIR, __VA_ARGS__)
