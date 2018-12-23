@@ -1,67 +1,66 @@
 #pragma once
 
 #include "TClass.inl"
+#include "helpers.hpp"
 
-namespace WRD
+namespace wrd
 {
-    template <typename T>
-    class TClass : public TMetaSupers<T>::Is {
-        TClass() { this->init(); }
-        virtual wbool isADT() const { return TADTChecker<T>::IS; }
-        virtual wbool isTemplate() const { return TTemplateChecker<T>::IS; }
-        virtual const Container& getNodes() const { return getStaticMembers(); }
-        virtual const String& getName() const {
-            WRD_IS_THIS(const String)
-            return getStaticName();
-        }
-        virtual const Classes& getSupers() const {
-            WRD_IS_THIS(const Classes)
-            return getStaticSupers();
-        }
-        virtual const Classes& getSubs() const {
-            WRD_IS_THIS(const Classes)
-            return getStaticSubs();
-        }
-		TStrong<Instance> instance() const { return TCloner<T>::instance(); }
-        virtual wbool isOccupy() const { return isStaticOccupiable(); 
-        virtual wbool isOccupy() const { return isStaticOccupiable(); }
-        virtual const Class& getSuper() const { return T::Super::getClassStatic(); }
-        virtual Result& _setInit(wbool newone) {
-            _is_initd = newone;
-            return Success;
-        }
-        virtual Result& _initMembers() {
-            if(Super::_initMembers())
-                return SuperFail.warn();
+	#define TEMPL template <typename T>
+	#define THIS TClass<T>
 
-            return T::_onInitializeMembers(_getNodes()); // getMethods from RealClass T.
-        }
-        static const String& getStaticName() {
-            static String inner;
-            if(inner.getLength() <= 0) {
-                int status = 0;
-                wchar* demangled = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
-                inner = demangled;
-                free(demangled);
-            }
+	TEMPL THIS::Tclass() { this->init(); }
+	TEMPL wbool THIS::isADT() const { return TIfADT<T>::is; }
+	TEMPL wbool THIS::isTemplate() const { return TIfTemplate<T>::is; }
+	TEMPL const Container& THIS::getNodes() const { return this->getStaticMembers(); }
 
-            return inner;
+#define _REDIRECT(return, func)			\
+	TEMPL return THIS::get ## func() const	\
+	{										\
+		WRD_IS_THIS_1(const String)			\
+		return getStatic ## func();			\
+	}
+
+	_REDIRECT(const Str&, Name)
+	_REDIRECT(const Classes&, Supers)
+	_REDIRECT(const Classes&, Subs)
+#undef _REDIRECT
+
+	TEMPL static WRD_LAZY_METHOD(const Container, THIS::getStaticMembers, WRD_VOID(), Array)
+	TEMPL static WRD_LAZY_METHOD(const Classes, THIS::getStaticSupers)
+	TEMPL static WRD_LAZY_METHOD(const Classes, THIS::getStaticSubs)
+	TEMPL static WRD_LAZY_METHOD(wboo, THIS::isStaticOccupy, WRD_VOID(), wboo, isSub<Object/*TODO: OccupiableObject*/>())
+    TEMPL TStrong<Instance> THIS::instance() const { return TCloner<T>::instance(); }
+    TEMPL wbool THIS::isOccupy() const { return isStaticOccupy(); }
+    TEMPL const Class& THIS::getSuper() const { return T::Super::getClassStatic(); }
+
+    TEMPL Result& THIS::_setInit(wbool newone)
+    {
+    	this->_is_initd = newone;
+        return Success;
+    }
+
+    TEMPL Result& THIS::_initMembers()
+    {
+        /*TODO: uncomment this if(Super::_initMembers())
+                return SuperFail.warn();*/
+
+        return T::_onInitializeMembers(_getNodes()); // getMethods from RealClass T.
+    }
+
+    TEMPL static const String& THIS::getStaticName()
+    {
+        static String inner;
+        if(inner.getLength() <= 0)
+        {
+            int status = 0;
+            wchar* demangled = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
+            inner = demangled;
+            free(demangled);
         }
-        static const Container& getStaticMembers() {
-            static Array inner; // 퍼포먼스를 위해서 Chain을 쓰지 않는다.
-            return inner;
-        }
-        static const Classes& getStaticSupers() {
-            static Classes inner;
-            return inner;
-        }
-        static const Classes& getStaticSubs() {
-            static Classes inner;
-            return inner;
-        }
-        static wbool isStaticOccupiable() {
-            static wbool inner = isSub<OccupiableObject>();
-            return inner;
-        }
-    };
+
+        return inner;
+    }
+
+#undef TEMPL
+#undef THIS
 }
