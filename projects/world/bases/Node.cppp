@@ -3,8 +3,8 @@
 namespace wrd
 {
 #define THIS Node
-	const String& getName() const;
-	String& getName();
+	const Str& getName() const;
+	Str& getName();
 	Strong clone() const {
 		return _clone();
 	}
@@ -41,10 +41,10 @@ namespace wrd
 		static Origin inner;
 		return inner;
 	}
-	Node& get(const String& name) {
+	Node& get(const Str& name) {
 		return _get(false, [&name](Node& e) { return e.getName() == name; });
 	}
-	const Node& get(const String& name) const {
+	const Node& get(const Str& name) const {
 		WRD_UNCONST()
 		return _get(true, [&name](Node& e) { return e.getName() == name; });
 	}

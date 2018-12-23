@@ -59,7 +59,7 @@ namespace wrd
 	//			------------------------------------------------------------------------
 	//				*) Method는 isConst()의 값에 의해서만 const객체냐 아니냐가 결정된다.
 	//				*) Method가 const객체라는 뜻은, const 메소드라는 것이다.
-	class String;
+	class Str;
 	class Container;
 	class Msg;
 	class Origin;
@@ -71,8 +71,8 @@ namespace wrd
 		const Node& operator[](widx n) const;
 
 	public:
-		const String& getName() const;
-		String& getName();
+		const Str& getName() const;
+		Str& getName();
 		Strong clone() const; // _clone()은 매크로에 의해서 생성된다.
 		virtual wbool isOccupy() const;
 		virtual const Container& getNodes() const = 0;
@@ -81,8 +81,8 @@ namespace wrd
 		//		invisible하다.
 		Node& get(widx n);
 		const Node& get(widx n) const;
-		Node& get(const String& name);
-		const Node& get(const String& name) const;
+		Node& get(const Str& name);
+		const Node& get(const Str& name) const;
 		virtual Refer use(Msg& msg) = 0;
 		virtual Refer use(Msg& msg) const = 0;
 		virtual const Origin& getOrigin() const;

@@ -16,7 +16,7 @@ namespace wrd
 #define _REDIRECT(return, func)			\
 	TEMPL return THIS::get ## func() const	\
 	{										\
-		WRD_IS_THIS_1(const String)			\
+		WRD_IS_THIS_1(const Str)			\
 		return getStatic ## func();			\
 	}
 
@@ -47,9 +47,9 @@ namespace wrd
         return T::_onInitializeMembers(_getNodes()); // getMethods from RealClass T.
     }
 
-    TEMPL static const String& THIS::getStaticName()
+    TEMPL static const Str& THIS::getStaticName()
     {
-        static String inner;
+        static Str inner;
         if(inner.getLength() <= 0)
         {
             int status = 0;

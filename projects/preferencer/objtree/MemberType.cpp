@@ -12,7 +12,7 @@ namespace wrd
 		wbool THIS::toBoolean() const { return _toLowercase(_value) == "true" || toInt(); }
 		wfloat THIS::toFloat() const { return std::stof(_value, 0); }
 		wchar THIS::toChar() const { return _value[0]; }
-		std::string THIS::toString() const { return _value; }
+		std::string THIS::toStr() const { return _value; }
 
 		wbool THIS::release()
 		{

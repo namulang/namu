@@ -19,7 +19,7 @@ WRD_TESTCASE(PreferencerTest, (
 		WRD_TEST(member1.getKey() != "grade")
 		wfloat EPSILON = 0.0001f;
 		WRD_TEST(3.5f + EPSILON < member1.toFloat() || member1.toFloat() < 3.5f - EPSILON)
-		WRD_TEST(member1.toString() != "3.5")
+		WRD_TEST(member1.toStr() != "3.5")
 		pr.release();
 		const ClassType& preference_again = pr["preference1"];
 		WRD_TEST( ! preference_again.isNull())
@@ -35,18 +35,18 @@ WRD_TESTCASE(PreferencerTest, (
 		WRD_TEST(member1.getKey() != "grade")
 		wfloat EPSILON = 0.0001f;
 		WRD_TEST(4.5f + EPSILON < member1.toFloat() || member1.toFloat() < 3.5f - EPSILON)
-		WRD_TEST(member1.toString() != "4.5")
+		WRD_TEST(member1.toStr() != "4.5")
 
 		const MemberType& name = preference1["name"];
 		WRD_TEST(name.isNull());
-		WRD_TEST(name.toString() != "kniz")
+		WRD_TEST(name.toStr() != "kniz")
 
 		const ClassType& food = pr["food"];
 		WRD_TEST(food.isNull())
 		WRD_TEST(food.getKey() != "food")
 		const MemberType& favorite = pr["food"]["favorite"];
 		WRD_TEST(favorite.isNull())
-		WRD_TEST(favorite.toString() != "donut")
+		WRD_TEST(favorite.toStr() != "donut")
 		WRD_TEST(pr["food"]["count"].toInt() != 22);
 	}
 	

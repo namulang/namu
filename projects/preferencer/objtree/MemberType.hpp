@@ -18,7 +18,7 @@ namespace wrd
 			virtual wbool toBoolean() const;
 			virtual wfloat toFloat() const;
 			virtual wchar toChar() const;
-			virtual std::string toString() const;
+			virtual std::string toStr() const;
 			virtual wbool release();
 			virtual Object& clone() const;
 
