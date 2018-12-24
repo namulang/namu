@@ -7,7 +7,7 @@
 namespace wrd
 {
     class Refer : public TGettable<Instance, Node>, public Bindable
-	{	WRD_CLASS_2(Refer, TGettable<Instance WRD_COMMA() Node>)
+	{	WRD_CLASS_DECLARE(Refer, TGettable<Instance WRD_COMMA() Node>)
 	public:
 		//TODO: uncomment this. Refer(const Class& cls = Node::getStaticClass(), wbool want_const = false);
 		Refer(Node& it);
@@ -31,7 +31,7 @@ namespace wrd
 		virtual const Container& getNodes() const;
 
 	public:	//	Bindable:
-		using TBindable<Node>::bind;
+		using Bindable::bind;
 		virtual Result& bind(Instance& it);
 		Result& bind(Refer& it);
 		Result& bind(const Refer& it);
@@ -42,7 +42,6 @@ namespace wrd
 	public:	//	Thing:
 		virtual Refer to(const Class& cls);
 		virtual Result& assign(const Thing& it);
-		virtual const Class& getClass() const;
 
 	protected:
 		virtual Instance& _get();

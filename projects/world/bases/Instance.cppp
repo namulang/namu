@@ -3,20 +3,12 @@
 namespace wrd
 {
 #define THIS Instance
+	WRD_CLASS_DECLARE(Instance)
+
 	THIS::Instance()
 	{
 		//	TODO: we need to optimize this. this ganna hotspot.
 		Nexus::get().getInstancer().stamp(*this);
-	}
-
-	THIS::TStrong<Instance> _clone() const
-	{
-		return TStrong<Instance>(new This(*this));
-	}
-
-	TStrong<Instance> THIS::clone() const
-	{
-		return _clone();
 	}
 
 	Id THIS::getId() const { return _id; }

@@ -5,6 +5,7 @@
 namespace wrd
 {
 #define THIS ObjectClass
+	WRD_CLASS_DEFINE(THIS)
 
     const Array& THIS::getVars() const
     {

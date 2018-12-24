@@ -1,6 +1,5 @@
 #pragma once
 
-#pragma message "4-2-2-1"
 #include "TWeak.inl"
 #pragma message "4-2-2-2"
 #include "../bases/TGettable.hpp"
@@ -10,33 +9,37 @@
 
 namespace wrd
 {
-#define THIS TWeak<T>
 #define TEMPL template <typename T>
+#define THIS TWeak<T>
+
+	WRD_CLASS_DEFINE(TEMPL, THIS)
 
     TEMPL THIS::TWeak() { }
     TEMPL THIS::TWeak(T& it) { bind(it); }
     TEMPL THIS::TWeak(T* it) { bind(it); }
     TEMPL THIS::TWeak(Bindable& rhs) { bind(rhs); }
 
-    TEMPL This& THIS::operator=(const This& rhs)
+    TEMPL THIS& THIS::operator=(const This& rhs)
     {
         bind(rhs);
         //  Super::operator=()를 해서는 안된다.
         return *this;
-    TEMPL This& THIS::operator=(T& new1)
+	}
+
+    TEMPL THIS& THIS::operator=(T& new1)
     {
         bind(new1);
         return *this;
     }
 
-    TEMPL This& THIS::operator=(T* new1)
+    TEMPL THIS& THIS::operator=(T* new1)
     {
         bind(new1);
         return *this;
     }
 
-    TEMPL wbool THIS::operator==(const This& rhs) const { return &get()  == &rhs.get(); }
-    TEMPL wbool THIS::operator!=(const This& rhs) const { return &get() != &rhs.get(); }
+    TEMPL wbool THIS::operator==(const This& rhs) const { return &this->get()  == &rhs.get(); }
+    TEMPL wbool THIS::operator!=(const This& rhs) const { return &this->get() != &rhs.get(); }
     TEMPL THIS::operator wbool() const { return isBind(); }
     TEMPL const T* THIS::operator->() const { return &get(); }
     TEMPL T* THIS::operator->() { return &get(); }

@@ -12,7 +12,7 @@ namespace wrd
 
     template <typename T>
     class TClass : public TMetaSuper<T>::Is
-    {	WRD_CLASS(TClass<T>, TMetaSuper<T>::Is)
+    {	WRD_CLASS(TClass<T>, typename TMetaSuper<T>::Is)
     public:
         TClass();
 
@@ -42,6 +42,6 @@ namespace wrd
         static const Container& getNodesStatic();
         static const Classes& getSupersStatic();
         static const Classes& getSubsStatic();
-        static wbool isOccupyStatic();
+        static wbool isStaticOccupy();
     };
 }

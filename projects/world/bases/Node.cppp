@@ -3,6 +3,8 @@
 namespace wrd
 {
 #define THIS Node
+	WRD_CLASS_DEFINE(Node)
+
 	const Str& getName() const;
 	Str& getName();
 	Strong clone() const {

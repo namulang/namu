@@ -3,7 +3,7 @@
 namespace wrd
 {
 #define THIS Class
-	WRD_DEFINE_CLASS(THIS)
+	WRD_CLASS_DEFINE(THIS)
 
     wbool THIS::operator==(const This& rhs) const { return &getName() == &rhs.getName(); }
     wbool THIS::operator!=(const This& rhs) const { return &getName() != &rhs.getName(); }

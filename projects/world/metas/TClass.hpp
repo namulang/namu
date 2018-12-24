@@ -2,6 +2,7 @@
 
 #include "TClass.inl"
 #include "helpers.hpp"
+#include "../pretypes/Str.hpp"
 
 namespace wrd
 {
@@ -13,10 +14,12 @@ namespace wrd
 	TEMPL wbool THIS::isTemplate() const { return TIfTemplate<T>::is; }
 	TEMPL const Container& THIS::getNodes() const { return this->getStaticMembers(); }
 
+/*		TODO: add this on _REDIRECT. 
+ *		WRD_IS_THIS_1(const Str)			\
+ */
 #define _REDIRECT(return, func)			\
 	TEMPL return THIS::get ## func() const	\
 	{										\
-		WRD_IS_THIS_1(const Str)			\
 		return getStatic ## func();			\
 	}
 

@@ -3,6 +3,19 @@
 namespace WRD
 {
 #define THIS Composit
+	WRD_CLASS_DEFINE(Composit)
+
+	Result& THIS::init()
+	{
+		WRD_IS_SUPER(init())
+		return _initNodes();
+	}
+
+	Result& THIS::release()
+	{
+		_nodes.release();
+		return Super::release();
+	}
 
     const Container& THIS::getNodes() const
     {

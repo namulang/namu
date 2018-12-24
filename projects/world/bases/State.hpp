@@ -5,25 +5,16 @@
 namespace wrd
 {
     class State : public Instance
-    {	WRD_CLASS(State, Instance)
+    {	WRD_CLASS_DECLARE(State, Instance)
     public:
-        virtual wbool isInit() { return _is_init; }
-        virtual Result& init()
-        {
-            WRD_ASSERT(isInit(), Abort)
-            return _setInit(true);
-        }
-        virtual Result& release()
-        {
-            _setInit(false);
-            return Super::release();
-        }
+        virtual wbool isInit();
+        virtual Result& init();
+        virtual Result& release();
 
     protected:
-        Result& _setInit(wbool new1)
-        {
-            _is_init = new1;
-            return Success;
-        }
+        Result& _setInit(wbool new1);
+	
+	private:
+		wbool _is_init;
     };
 }

@@ -28,7 +28,7 @@
 #define _ARE_NULL(VALUE, RET)		WRD_IS_NULL(VALUE, RET)
 #define WRD_ARE_NULL(RET, ...)		NE_EACH_EXPAND(_ARE_NULL, RET, __VA_ARGS__)
 
-#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL_3(*this, nulr<Type>, NullPtr)
+#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL_3(*this, nulr<TYPE>, NullPtr)
 #define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
 #define WRD_IS_THIS(...) 			WRD_OVERLOAD(WRD_IS_THIS, __VA_ARGS__)
 

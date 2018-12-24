@@ -1,16 +1,20 @@
 #pragma once
 
+#pragma message "Instance-1"
 #include "Thing.hpp"
 #include "Id.hpp"
-#include "../binds/TStrong.inl"
+
+#pragma message "Instance-2"
 
 namespace wrd
 {
 	class Block;
 	class Node;
+	template <typename T> class TStrong;
+	template <typename T> class TWeak;
 
 	class Instance : public Thing
-	{	WRD_CLASS(Instance, Thing)
+	{	WRD_CLASS_DECLARE(Instance, Thing)
 		//	Instance는 World에서 인스턴스 관리를 대신해준다. 여기서부터 bind가 가능하다.
 
 	public:
@@ -27,18 +31,20 @@ namespace wrd
 		//		clone()  : a wrapper for providing easy-to-use return type.
 		//		_clone() : it's a really what cloning happens. subclasses will
 		//		override it.
-		TStrong<Instance> clone() const;
-		ID getId() const;
+		Id getId() const;
 		wcnt getSerial() const;
-		const InstBlk& getBlock() const;
+		const Block& getBlock() const;
 		wbool isHeap() const;
 		TStrong<Node> toStrong();
 		TStrong<const Node> toStrong() const;
 		TWeak<Node> toWeak();
 		TWeak<const Node> toWeak() const;
+		//	Thing:
+		virtual Result& release();
 
-	private:
-		virtual TStrong<Instance> _clone() const;
+	protected:
+		Block& _getBlock();
+		Result& _setId(Id new1);
 
 	private:
 		Id _id;

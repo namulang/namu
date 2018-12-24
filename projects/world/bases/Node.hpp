@@ -65,7 +65,7 @@ namespace wrd
 	class Origin;
 
 	class Node : public State 
-	{	WRD_CLASS(Node, State)
+	{	WRD_CLASS_DECLARE(Node, State)
 	public:
 		Node& operator[](widx n);
 		const Node& operator[](widx n) const;
@@ -73,7 +73,6 @@ namespace wrd
 	public:
 		const Str& getName() const;
 		Str& getName();
-		Strong clone() const; // _clone()은 매크로에 의해서 생성된다.
 		virtual wbool isOccupy() const;
 		virtual const Container& getNodes() const = 0;
 		//	getNodes:

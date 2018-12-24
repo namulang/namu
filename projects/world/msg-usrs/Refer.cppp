@@ -3,6 +3,7 @@
 namespace wrd
 {
 #define THIS Refer
+	WRD_CLASS_DEFINE(THIS)
 
 	THIS::This(const Class& cls = Node::getStaticClass(), wbool want_const = false);
 	THIS::This(Node& it);

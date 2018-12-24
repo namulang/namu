@@ -1,10 +1,8 @@
 #pragma once
 
-#pragma message "4-2-1-1"
 #include "../bases/Trace.hpp"
-#pragma message "4-2-1-2"
+#include "Bindable.hpp"
 #include "../bases/TGettable.inl"
-#pragma message "4-2-1-3"
 
 namespace wrd
 {
@@ -13,8 +11,8 @@ namespace wrd
 	class Node;
 
 	template <typename T>
-	class TWeak : public TGettable<T, Trace>
-	{	WRD_INHERIT_2(TWeak, TGettable<T WRD_COMMA() Trace>)
+	class TWeak : public TGettable<T, Trace>, public Bindable
+	{	WRD_CLASS_DECLARE_2(TWeak, TGettable<T WRD_COMMA() Trace>)
 	public:
 		TWeak();
 		TWeak(T& it);
@@ -36,7 +34,6 @@ namespace wrd
 
 	public:	// Thing:
 		//TODO: replace this. put API on Thing. virtual ResultSet isValid() const;
-		virtual const Class& getClass() const;
 		virtual Result& release();
 
 	protected:

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TGettable.inl"
+#include "../bases/Instance.hpp"
 #include "../metas/TClass.inl"
 
 namespace wrd
@@ -11,10 +12,15 @@ namespace wrd
     WRD_CLASS_DEFINE_2(TEMPL, TGettable<T WRD_COMMA() S>)
     TEMPL const T* WRD_UNWRAP(THIS)::operator->() const { return &get(); }
     TEMPL T* WRD_UNWRAP(THIS)::operator->() { return &get(); }
-    TEMPL const T* WRD_UNWRAP(THIS):operator*() const { return &get(); }
+    TEMPL const T* WRD_UNWRAP(THIS)::operator*() const { return &get(); }
     TEMPL T* WRD_UNWRAP(THIS)::operator*() { return &get(); }
-	TEMPL T& WRD_UNWRAP(THIS)::get() { return _get().cast<T>(); }
-	TEMPL const T& WRD_UNWRAP(THIS)::get() const { return _get().cast<const T>(); }
+	TEMPL T& WRD_UNWRAP(THIS)::get() { return this->_get().template cast<T>(); }
+
+	TEMPL const T& WRD_UNWRAP(THIS)::get() const
+	{
+		WRD_UNCONST_2(THIS, unconst)
+		return unconst->_get().template cast<const T>(); 
+	}
 
 #undef TEMPL
 #undef THIS
@@ -24,10 +30,15 @@ namespace wrd
 
     TEMPL const T* THIS::operator->() const { return &get(); }
     TEMPL T* THIS::operator->() { return &get(); }
-    TEMPL const T* THIS:operator*() const { return &get(); }
+    TEMPL const T* THIS::operator*() const { return &get(); }
     TEMPL T* THIS::operator*() { return &get(); }
-	TEMPL T& THIS::get() { return _get().cast<T>(); }
-	TEMPL const T& THIS::get() const { return _get().cast<const T>(); }
+	TEMPL T& THIS::get() { return _get().template cast<T>(); }
+
+	TEMPL const T& THIS::get() const
+	{
+		WRD_UNCONST_2(THIS, unconst)
+		return unconst->_get().template cast<const T>();
+	}
 
 #undef TEMPL
 #undef THIS

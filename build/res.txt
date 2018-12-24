@@ -1,19 +1,19 @@
-# 1 "../projects/world/world.cpp"
+# 1 "..\\projects\\world\\world.cpp"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "../projects/world/world.cpp"
-# 1 "../projects/world/world.hpp" 1
+# 1 "..\\projects\\world\\world.cpp"
+# 1 "..\\projects\\world\\world.hpp" 1
        
 
         
-# 3 "../projects/world/world.hpp"
+# 3 "..\\projects\\world\\world.hpp"
 #pragma message "1"
-# 3 "../projects/world/world.hpp"
+# 3 "..\\projects\\world\\world.hpp"
 
-# 1 "../projects/world/./wrd-commons.hpp" 1
+# 1 "..\\projects\\world\\./wrd-commons.hpp" 1
        
 
-# 1 "../projects/world/././commons/wrd-deps.hpp" 1
+# 1 "..\\projects\\world\\././commons/wrd-deps.hpp" 1
        
 
 # 1 "../projects/independentor.hpp" 1
@@ -24276,14 +24276,14 @@ namespace wrd
   public:
    struct Date
    {
-    static const string& get() { static string inner = "21-12 2018"; return inner; }
+    static const string& get() { static string inner = "24-12 2018"; return inner; }
     static wint getYear();
     static wint getMonth();
     static wint getDay();
    };
    struct Time
    {
-    static const string& get() { static string inner = "22:58:22"; return inner; }
+    static const string& get() { static string inner = "19:45:13"; return inner; }
     static wint getHour();
     static wint getMinute();
     static wint getSecond();
@@ -24368,7 +24368,7 @@ namespace wrd
 }
 # 6 "../projects/independentor/helpers.hpp" 2
 # 17 "../projects/independentor.hpp" 2
-# 4 "../projects/world/././commons/wrd-deps.hpp" 2
+# 4 "..\\projects\\world\\././commons/wrd-deps.hpp" 2
 # 1 "../projects/file-manipulator.hpp" 1
 # 18 "../projects/file-manipulator.hpp"
        
@@ -25023,7 +25023,7 @@ namespace wrd
 }
 # 5 "../projects/file-manipulator/file-streams.hpp" 2
 # 23 "../projects/file-manipulator.hpp" 2
-# 5 "../projects/world/././commons/wrd-deps.hpp" 2
+# 5 "..\\projects\\world\\././commons/wrd-deps.hpp" 2
 # 1 "../projects/logger.hpp" 1
        
 
@@ -28773,7 +28773,7 @@ namespace wrd
 }
 # 5 "../projects/logger/streams.hpp" 2
 # 5 "../projects/logger.hpp" 2
-# 6 "../projects/world/././commons/wrd-deps.hpp" 2
+# 6 "..\\projects\\world\\././commons/wrd-deps.hpp" 2
 # 1 "../projects/preferencer.hpp" 1
 # 12 "../projects/preferencer.hpp"
        
@@ -41487,7 +41487,7 @@ namespace wrd
    virtual wbool toBoolean() const;
    virtual wfloat toFloat() const;
    virtual wchar toChar() const;
-   virtual std::string toString() const;
+   virtual std::string toStr() const;
    virtual wbool release();
    virtual Object& clone() const;
 
@@ -41554,7 +41554,7 @@ namespace wrd
  }
 }
 # 16 "../projects/preferencer.hpp" 2
-# 7 "../projects/world/././commons/wrd-deps.hpp" 2
+# 7 "..\\projects\\world\\././commons/wrd-deps.hpp" 2
 
 # 1 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\c++\\functional" 1 3
 # 46 "c:\\mingw\\lib\\gcc\\mingw32\\6.3.0\\include\\c++\\functional" 3
@@ -43648,31 +43648,31 @@ template<typename _Res, typename _Class, typename... _ArgTypes> struct _Mem_fn_t
 
 
 }
-# 9 "../projects/world/././commons/wrd-deps.hpp" 2
-# 4 "../projects/world/./wrd-commons.hpp" 2
-# 1 "../projects/world/././commons/wrd-defs.hpp" 1
+# 9 "..\\projects\\world\\././commons/wrd-deps.hpp" 2
+# 4 "..\\projects\\world\\./wrd-commons.hpp" 2
+# 1 "..\\projects\\world\\././commons/wrd-defs.hpp" 1
        
-# 5 "../projects/world/./wrd-commons.hpp" 2
-# 1 "../projects/world/././commons/wrd-const.hpp" 1
+# 5 "..\\projects\\world\\./wrd-commons.hpp" 2
+# 1 "..\\projects\\world\\././commons/wrd-const.hpp" 1
        
 
 
-# 3 "../projects/world/././commons/wrd-const.hpp"
+# 3 "..\\projects\\world\\././commons/wrd-const.hpp"
 namespace wrd
 {
  constexpr int wrongidx = -1;
 }
-# 6 "../projects/world/./wrd-commons.hpp" 2
-# 5 "../projects/world/world.hpp" 2
+# 6 "..\\projects\\world\\./wrd-commons.hpp" 2
+# 5 "..\\projects\\world\\world.hpp" 2
         
-# 5 "../projects/world/world.hpp"
+# 5 "..\\projects\\world\\world.hpp"
 #pragma message "4"
-# 5 "../projects/world/world.hpp"
+# 5 "..\\projects\\world\\world.hpp"
 
-# 1 "../projects/world/./binds.hpp" 1
+# 1 "..\\projects\\world\\./binds.hpp" 1
        
 
-# 1 "../projects/world/././binds/Bindable.hpp" 1
+# 1 "..\\projects\\world\\././binds/Bindable.hpp" 1
        
 
 
@@ -43696,33 +43696,36 @@ namespace wrd
         virtual wbool isBind() const = 0;
     };
 }
-# 4 "../projects/world/./binds.hpp" 2
+# 4 "..\\projects\\world\\./binds.hpp" 2
         
-# 4 "../projects/world/./binds.hpp"
+# 4 "..\\projects\\world\\./binds.hpp"
 #pragma message "4-2"
-# 4 "../projects/world/./binds.hpp"
+# 4 "..\\projects\\world\\./binds.hpp"
 
-# 1 "../projects/world/././binds/TStrong.hpp" 1
+# 1 "..\\projects\\world\\././binds/TStrong.hpp" 1
        
 
         
-# 3 "../projects/world/././binds/TStrong.hpp"
+# 3 "..\\projects\\world\\././binds/TStrong.hpp"
 #pragma message "4-2-1"
-# 3 "../projects/world/././binds/TStrong.hpp"
+# 3 "..\\projects\\world\\././binds/TStrong.hpp"
 
-# 1 "../projects/world/././binds/./TStrong.inl" 1
+# 1 "..\\projects\\world\\././binds/./TStrong.inl" 1
        
 
-# 1 "../projects/world/././binds/././TWeak.inl" 1
+# 1 "..\\projects\\world\\././binds/././TWeak.inl" 1
        
-
-        
-# 3 "../projects/world/././binds/././TWeak.inl"
-#pragma message "4-2-1-1"
-# 3 "../projects/world/././binds/././TWeak.inl"
 
 # 1 "c:\\projects\\world\\projects\\world\\bases\\trace.hpp" 1
        
+
+# 1 "c:\\projects\\world\\projects\\world\\bases\\Instance.hpp" 1
+       
+
+        
+# 3 "c:\\projects\\world\\projects\\world\\bases\\Instance.hpp"
+#pragma message "Instance-1"
+# 3 "c:\\projects\\world\\projects\\world\\bases\\Instance.hpp"
 
 # 1 "c:\\projects\\world\\projects\\world\\bases\\Thing.hpp" 1
        
@@ -43787,47 +43790,7 @@ namespace wrd
   virtual const Node& _cast(const Class& cls) const;
  };
 }
-# 4 "c:\\projects\\world\\projects\\world\\bases\\trace.hpp" 2
-# 1 "c:\\projects\\world\\projects\\world\\bases\\TGettable.inl" 1
-       
-
-
-
-namespace wrd
-{
- template <typename T> class TStrong;
- class Instance;
- class Class;
-
-    template <typename T, typename S = void>
-    class TGettable : public S
-    { public: typedef TGettable<T , S> This; private: public: typedef S Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const; private:
-    public:
-        const T* operator->() const;
-        T* operator->();
-        const T* operator*() const;
-        T* operator*();
-
- public:
-        T& get();
-        const T& get() const;
-    };
- template <typename T>
- class TGettable<T, void>
- {
- public:
-        const T* operator->() const;
-        T* operator->();
-        const T* operator*() const;
-        T* operator*();
-
- public:
-        T& get();
-        const T& get() const;
- };
-}
-# 5 "c:\\projects\\world\\projects\\world\\bases\\trace.hpp" 2
-
+# 5 "c:\\projects\\world\\projects\\world\\bases\\Instance.hpp" 2
 # 1 "c:\\projects\\world\\projects\\world\\bases\\Id.hpp" 1
        
 
@@ -43842,47 +43805,119 @@ namespace wrd
         wint64 num;
     };
 }
-# 7 "c:\\projects\\world\\projects\\world\\bases\\trace.hpp" 2
+# 6 "c:\\projects\\world\\projects\\world\\bases\\Instance.hpp" 2
+
+        
+# 7 "c:\\projects\\world\\projects\\world\\bases\\Instance.hpp"
+#pragma message "Instance-2"
+# 7 "c:\\projects\\world\\projects\\world\\bases\\Instance.hpp"
+
+
+namespace wrd
+{
+ class Block;
+ class Node;
+ template <typename T> class TStrong;
+ template <typename T> class TWeak;
+
+ class Instance : public Thing
+ { public: typedef Instance This; private: public: typedef Thing Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
+
+
+ public:
+  Instance();
+# 34 "c:\\projects\\world\\projects\\world\\bases\\Instance.hpp"
+  Id getId() const;
+  wcnt getSerial() const;
+  const Block& getBlock() const;
+  wbool isHeap() const;
+  TStrong<Node> toStrong();
+  TStrong<const Node> toStrong() const;
+  TWeak<Node> toWeak();
+  TWeak<const Node> toWeak() const;
+
+  virtual Result& release();
+
+ protected:
+  Block& _getBlock();
+  Result& _setId(Id new1);
+
+ private:
+  Id _id;
+ };
+}
+# 4 "c:\\projects\\world\\projects\\world\\bases\\trace.hpp" 2
+# 1 "c:\\projects\\world\\projects\\world\\bases\\TGettable.inl" 1
+       
+
+
+
+namespace wrd
+{
+ template <typename T> class TStrong;
+ class Instance;
+ class Class;
+
+    template <typename T, typename S = void>
+    class TGettable : public S
+    { public: typedef TGettable<T , S> This; private: public: typedef S Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
+    public:
+        const T* operator->() const;
+        T* operator->();
+        const T* operator*() const;
+        T* operator*();
+
+ public:
+        T& get();
+        const T& get() const;
+
+ protected:
+  virtual Instance& _get() = 0;
+    };
+ template <typename T>
+ class TGettable<T, void>
+ {
+ public:
+        const T* operator->() const;
+        T* operator->();
+        const T* operator*() const;
+        T* operator*();
+
+ public:
+        T& get();
+        const T& get() const;
+
+ protected:
+  virtual Instance& _get() = 0;
+ };
+}
+# 5 "c:\\projects\\world\\projects\\world\\bases\\trace.hpp" 2
+
 
 namespace wrd
 {
  class Block;
 
-    class Trace : public TGettable<Instance, Thing>, public Bindable
-    { public: typedef Trace This; private: public: typedef TGettable<Instance , Thing> Super; private:
+    class Trace : public TGettable<Instance, Instance>, public Bindable
+    { public: typedef Trace This; private: public: typedef TGettable<Instance , Instance> Super; private:
     public:
         Trace();
         Trace(Id id, wcnt serial);
 
     public:
-        Id getId() const;
         wcnt getSerial() const;
-        const Block& getBlock() const;
 
     public:
         virtual Result& release();
 
     protected:
-        Result& _setId(Id new1);
         Result& _setSerial(wcnt new1);
-        Block& _getBlock();
 
     private:
-        Id _id;
         wcnt _serial;
     };
 }
-# 5 "../projects/world/././binds/././TWeak.inl" 2
-        
-# 5 "../projects/world/././binds/././TWeak.inl"
-#pragma message "4-2-1-2"
-# 5 "../projects/world/././binds/././TWeak.inl"
-
-
-        
-# 7 "../projects/world/././binds/././TWeak.inl"
-#pragma message "4-2-1-3"
-# 7 "../projects/world/././binds/././TWeak.inl"
+# 4 "..\\projects\\world\\././binds/././TWeak.inl" 2
 
 
 namespace wrd
@@ -43893,7 +43928,7 @@ namespace wrd
 
  template <typename T>
  class TWeak : public TGettable<T, Trace>
- { public: typedef TWeak This; private: public: typedef TGettable<T , Trace> Super; private:
+ { public: typedef TWeak This; private: public: typedef TGettable<T , Trace> Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
  public:
   TWeak();
   TWeak(T& it);
@@ -43915,7 +43950,6 @@ namespace wrd
 
  public:
 
-  virtual const Class& getClass() const;
   virtual Result& release();
 
  protected:
@@ -43926,12 +43960,7 @@ namespace wrd
  using Weak = TStrong<Node>;
  using CWeak = TStrong<const Node>;
 }
-# 4 "../projects/world/././binds/./TStrong.inl" 2
-        
-# 4 "../projects/world/././binds/./TStrong.inl"
-#pragma message "4-2-2"
-# 4 "../projects/world/././binds/./TStrong.inl"
-
+# 4 "..\\projects\\world\\././binds/./TStrong.inl" 2
 
 namespace wrd
 {
@@ -43939,7 +43968,7 @@ namespace wrd
 
  template <typename T>
  class TStrong : public TWeak<T>
- { public: typedef TStrong This; private: public: typedef TWeak<T> Super; private:
+ { public: typedef TStrong This; private: public: typedef TWeak<T> Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
  public:
   TStrong();
   TStrong(T& it);
@@ -43954,225 +43983,30 @@ namespace wrd
  using Strong = TStrong<Node>;
  using CStrong = TStrong<const Node>;
 }
-# 5 "../projects/world/././binds/TStrong.hpp" 2
+# 5 "..\\projects\\world\\././binds/TStrong.hpp" 2
         
-# 5 "../projects/world/././binds/TStrong.hpp"
+# 5 "..\\projects\\world\\././binds/TStrong.hpp"
 #pragma message "4-2-2"
-# 5 "../projects/world/././binds/TStrong.hpp"
+# 5 "..\\projects\\world\\././binds/TStrong.hpp"
 
-# 1 "../projects/world/././binds/./TWeak.hpp" 1
+# 1 "..\\projects\\world\\././binds/./TWeak.hpp" 1
        
 
-        
-# 3 "../projects/world/././binds/./TWeak.hpp"
-#pragma message "4-2-2-1"
-# 3 "../projects/world/././binds/./TWeak.hpp"
-
 
         
-# 5 "../projects/world/././binds/./TWeak.hpp"
+# 4 "..\\projects\\world\\././binds/./TWeak.hpp"
 #pragma message "4-2-2-2"
-# 5 "../projects/world/././binds/./TWeak.hpp"
+# 4 "..\\projects\\world\\././binds/./TWeak.hpp"
 
-# 1 "../projects/world/././binds/./../bases/TGettable.hpp" 1
+# 1 "..\\projects\\world\\././binds/./../bases/TGettable.hpp" 1
        
 
 
 
-namespace wrd
-{
-
-
-
-    template <typename T, typename S> const Class& TGettable<T , S>::getClass() const { static TClass<This> inner; return inner; } template <typename T, typename S> TStrong<Instance> TGettable<T , S>::_clone() const { return TCloner<T>::clone(*this); }
-    template <typename T, typename S> const T* TGettable<T , S>::operator->() const { return &get(); }
-    template <typename T, typename S> T* TGettable<T , S>::operator->() { return &get(); }
-    template <typename T, typename S> const T* TGettable<T , S>:operator*() const { return &get(); }
-    template <typename T, typename S> T* TGettable<T , S>::operator*() { return &get(); }
- template <typename T, typename S> T& TGettable<T , S>::get() { return _get().cast<T>(); }
- template <typename T, typename S> const T& TGettable<T , S>::get() const { return _get().cast<const T>(); }
-
-
-
-
-
-
-
-    template <typename T> const T* TGettable<T, void>::operator->() const { return &get(); }
-    template <typename T> T* TGettable<T, void>::operator->() { return &get(); }
-    template <typename T> const T* TGettable<T, void>:operator*() const { return &get(); }
-    template <typename T> T* TGettable<T, void>::operator*() { return &get(); }
- template <typename T> T& TGettable<T, void>::get() { return _get().cast<T>(); }
- template <typename T> const T& TGettable<T, void>::get() const { return _get().cast<const T>(); }
-
-
-
-}
-# 7 "../projects/world/././binds/./TWeak.hpp" 2
-        
-# 7 "../projects/world/././binds/./TWeak.hpp"
-#pragma message "4-2-2-3"
-# 7 "../projects/world/././binds/./TWeak.hpp"
-
-
-        
-# 9 "../projects/world/././binds/./TWeak.hpp"
-#pragma message "4-2-2-4"
-# 9 "../projects/world/././binds/./TWeak.hpp"
-
-
-namespace wrd
-{
-
-
-
-    template <typename T> TWeak<T>::TWeak() { }
-    template <typename T> TWeak<T>::TWeak(T& it) { bind(it); }
-    template <typename T> TWeak<T>::TWeak(T* it) { bind(it); }
-    template <typename T> TWeak<T>::TWeak(Bindable& rhs) { bind(rhs); }
-
-    template <typename T> This& TWeak<T>::operator=(const This& rhs)
-    {
-        bind(rhs);
-
-        return *this;
-    template <typename T> This& TWeak<T>::operator=(T& new1)
-    {
-        bind(new1);
-        return *this;
-    }
-
-    template <typename T> This& TWeak<T>::operator=(T* new1)
-    {
-        bind(new1);
-        return *this;
-    }
-
-    template <typename T> wbool TWeak<T>::operator==(const This& rhs) const { return &get() == &rhs.get(); }
-    template <typename T> wbool TWeak<T>::operator!=(const This& rhs) const { return &get() != &rhs.get(); }
-    template <typename T> TWeak<T>::operator wbool() const { return isBind(); }
-    template <typename T> const T* TWeak<T>::operator->() const { return &get(); }
-    template <typename T> T* TWeak<T>::operator->() { return &get(); }
-    template <typename T> const T* TWeak<T>::operator*() const { return &get(); }
-    template <typename T> T* TWeak<T>::operator*() { return &get(); }
-
-    template <typename T> Result& TWeak<T>::bind(T& new1)
-    {
-
-
-        Block& blk = const_cast<Block&>(new1.getBlock());
-        if((blk.isNull())) { NullPtr.warn("blk"); return NullPtr; }
-
-
-        unbind();
-        _setId(new1.getID);
-        _setSerial(blk.getSerial());
-        return blk.look();
-    }
-
-    template <typename T> Result& TWeak<T>::bind(Bindable& rhs) { return bind(rhs.get()); }
-    template <typename T> Result& TWeak<T>::bind(T* new1)
-    {
-        if((new1.isNull())) { NullPtr.warn("new1"); return NullPtr; };
-        return bind(*new1);
-    }
-
-    template <typename T> const T& TWeak<T>::get() const
-    {
-        WRD_OVERLOAD(WRD_IS_NULL, *this, Nuller<Type>::ref)
-        const Instance& inst = World::get().getInstancer()[_id].getInstance();
-
-        if(inst.getSerial() != getSerial()) {
-            unbind();
-            WrongBind.warn("...");
-            return Nuller<Instance>::ref;
-        }
-
-        return inst;
-    }
-
-    template <typename T> T& TWeak<T>::get() { return const_cast<T&>((const_cast<This*>(this))->get()); }
-    template <typename T> Result& TWeak<T>::unbind() { return release(); }
-
-    template <typename T> wbool TWeak<T>::isBind() const
-    {
-        const Block& block = getBlock();
-        return block.isExist() && block.getSerial() == _serial;
-    }
-
-    template <typename T> Result& TWeak<T>::release()
-    {
-        if(isBind())
-            _getBlock().ignore();
-        return Super::release();
-    }
-
-
-    template <typename T> const Block& TWeak<T>::getBlock() const { return World::get().getInstancer()[_id]; }
-    template <typename T> Block& TWeak<T>::_getBlock() { return World::get().getInstancer()[_id]; }
-
-
-
-}
-# 7 "../projects/world/././binds/TStrong.hpp" 2
-        
-# 7 "../projects/world/././binds/TStrong.hpp"
-#pragma message "4-2-3"
-# 7 "../projects/world/././binds/TStrong.hpp"
-
-
-namespace wrd
-{
-
-
-    template <typename T> TStrong<T>::TStrong() {}
-    template <typename T> TStrong<T>::TStrong(T& it) : Super() { bind(it); }
-    template <typename T> TStrong<T>::TStrong(T* it) : Super() { bind(it); }
-    template <typename T> TStrong<T>::TStrong(Bindable& rhs) : Super() { bind(rhs); }
-
-    template <typename T>
-    Result& TStrong<T>::bind(T& it) {
-            Result& res = Super::bind(it);
-            if(res) return res.dump("...");
-            if( ! it.isHeap()) return InvalidParam.warn("it is local variable. couldn't bind it strongly.");
-
-            _getInstBlk()._increaseCount();
-
-
-
-
-            return res;
-        }
-        Result& unbind() {
-            InstBlk& blk = _getInstBlk();
-            if(blk.isNull()) {
-                InvalidMember.warn("");
-                return Super::unbind();
-            }
-            if(blk.isHeap()) blk._decreaseCount();
-
-    EXIT:
-            return Super::unbind();
-        }
-    };
-
-    using Strong = TStrong<Node>;
-    using CStrong = TStrong<const Node>;
-
-
-
-}
-# 6 "../projects/world/./binds.hpp" 2
-# 7 "../projects/world/world.hpp" 2
-        
-# 7 "../projects/world/world.hpp"
-#pragma message "5"
-# 7 "../projects/world/world.hpp"
-
-# 1 "../projects/world/./metas.hpp" 1
+# 1 "c:\\projects\\world\\projects\\world\\metas\\tclass.inl" 1
        
 
-# 1 "../projects/world/././metas/helpers.hpp" 1
+# 1 "c:\\projects\\world\\projects\\world\\metas\\helpers.hpp" 1
        
 
 namespace wrd
@@ -44245,7 +44079,7 @@ namespace wrd
   typedef ObjectClass Is;
  };
  template <typename T>
- class TMetaSuper<false> {
+ class TMetaSuper<T, false> {
  public:
   typedef Class Is;
  };
@@ -44261,7 +44095,7 @@ namespace wrd
   }
     };
     template <typename T>
-    class TCloner<T, true>
+    class TCloner<T, true> {
     public:
         static TStrong<Instance> clone(const T& origin) {
             return TStrong<Instance>();
@@ -44271,110 +44105,70 @@ namespace wrd
   }
     };
 }
-# 4 "../projects/world/./metas.hpp" 2
-# 1 "../projects/world/././metas/TClass.hpp" 1
+# 4 "c:\\projects\\world\\projects\\world\\metas\\tclass.inl" 2
+# 1 "c:\\projects\\world\\projects\\world\\metas\\ObjectClass.hpp" 1
        
 
-# 1 "../projects/world/././metas/TClass.inl" 1
+# 1 "c:\\projects\\world\\projects\\world\\compiler\\origin.hpp" 1
        
-
-
-# 1 "../projects/world/././metas/ObjectClass.hpp" 1
-       
-
-# 1 "../projects/world/././metas/Class.hpp" 1
-       
-
-# 1 "../projects/world/././metas/../bases/Node.hpp" 1
-       
-
-
-# 1 "../projects/world/././metas/../bases/State.hpp" 1
-       
-
-# 1 "../projects/world/././metas/../bases/Instance.hpp" 1
-       
-
-
-
-
 
 namespace wrd
 {
- class Block;
- class Node;
+ template <typename T> class TClass;
 
- class Instance : public Thing
- { WRD_OVERLOAD(WRD_INHERIT, WRD_OVERLOAD(WRD_PAIR, Instance), WRD_OVERLOAD(WRD_PAIR, Thing)) public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
-
-
+ class Origin : public Thing
+ { public: typedef Origin This; private: public: typedef Thing Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
  public:
-  Instance();
-# 30 "../projects/world/././metas/../bases/Instance.hpp"
-  TStrong<Instance> clone() const;
-  ID getId() const;
-  wcnt getSerial() const;
-  const InstBlk& getBlock() const;
-  wbool isHeap() const;
-  TStrong<Node> toStrong();
-  TStrong<const Node> toStrong() const;
-  TWeak<Node> toWeak();
-  TWeak<const Node> toWeak() const;
-
- private:
-  virtual TStrong<Instance> _clone() const;
-
- private:
-  Id _id;
  };
 }
-# 4 "../projects/world/././metas/../bases/State.hpp" 2
+# 4 "c:\\projects\\world\\projects\\world\\metas\\ObjectClass.hpp" 2
+# 1 "c:\\projects\\world\\projects\\world\\metas\\Class.hpp" 1
+       
+
+# 1 "c:\\projects\\world\\projects\\world\\bases\\node.hpp" 1
+       
+
+
+# 1 "c:\\projects\\world\\projects\\world\\bases\\State.hpp" 1
+       
+
+
 
 namespace wrd
 {
     class State : public Instance
-    { WRD_OVERLOAD(WRD_INHERIT, WRD_OVERLOAD(WRD_PAIR, State), WRD_OVERLOAD(WRD_PAIR, Instance)) public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
+    { public: typedef State This; private: public: typedef Instance Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
     public:
-        virtual wbool isInit() { return _is_init; }
-        virtual Result& init()
-        {
-            if( (isInit()) ) return Abort.warn("");
-            return _setInit(true);
-        }
-        virtual Result& release()
-        {
-            _setInit(false);
-            return Super::release();
-        }
+        virtual wbool isInit();
+        virtual Result& init();
+        virtual Result& release();
 
     protected:
-        Result& _setInit(wbool new1)
-        {
-            _is_init = new1;
-            return Success;
-        }
+        Result& _setInit(wbool new1);
+
+ private:
+  wbool _is_init;
     };
 }
-# 5 "../projects/world/././metas/../bases/Node.hpp" 2
+# 5 "c:\\projects\\world\\projects\\world\\bases\\node.hpp" 2
 
 namespace wrd
 {
-# 62 "../projects/world/././metas/../bases/Node.hpp"
- class String;
+# 62 "c:\\projects\\world\\projects\\world\\bases\\node.hpp"
+ class Str;
  class Container;
  class Msg;
  class Origin;
 
  class Node : public State
- { WRD_OVERLOAD(WRD_INHERIT, WRD_OVERLOAD(WRD_PAIR, Node), WRD_OVERLOAD(WRD_PAIR, State)) public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
+ { public: typedef Node This; private: public: typedef State Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
  public:
   Node& operator[](widx n);
   const Node& operator[](widx n) const;
 
  public:
-  const String& getName() const;
-  String& getName();
-  Strong clone() const;
+  const Str& getName() const;
+  Str& getName();
   virtual wbool isOccupy() const;
   virtual const Container& getNodes() const = 0;
 
@@ -44382,8 +44176,8 @@ namespace wrd
 
   Node& get(widx n);
   const Node& get(widx n) const;
-  Node& get(const String& name);
-  const Node& get(const String& name) const;
+  Node& get(const Str& name);
+  const Node& get(const Str& name) const;
   virtual Refer use(Msg& msg) = 0;
   virtual Refer use(Msg& msg) const = 0;
   virtual const Origin& getOrigin() const;
@@ -44400,7 +44194,7 @@ namespace wrd
   virtual Result& _onInitNodes(Container& tray);
  };
 }
-# 4 "../projects/world/././metas/Class.hpp" 2
+# 4 "c:\\projects\\world\\projects\\world\\metas\\Class.hpp" 2
 
 namespace wrd
 {
@@ -44410,9 +44204,7 @@ namespace wrd
     class Array;
 
     class Class : public Node
-    { public: typedef WRD_OVERLOAD(WRD_PAIR, Class) This; private: public: typedef Node Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const; private:
-
-                         typedef Class This;
+    { public: typedef Class This; private: public: typedef Node Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
         friend class Interpreter;
 
     public:
@@ -44424,19 +44216,18 @@ namespace wrd
         virtual wbool isTemplate() const = 0;
         virtual wbool isADT() const = 0;
         virtual const Classes& getSubs() const = 0;
-        virtual const String& getName() const = 0;
+        virtual const Str& getName() const = 0;
         virtual const Classes& getSupers() const = 0;
         virtual TStrong<Instance> instance() const = 0;
   const Classes& getLeafs() const;
 
 
-  virtual const const Origin& getOrigin() const { static const Origin inner ; return inner; }
+  virtual const Origin& getOrigin() const { static Origin inner ; return inner; }
 
   virtual Result& init();
   virtual wbool isInit() const;
 
         virtual const Class& getSuper() const;
-        virtual const Class& getClass() const;
         virtual wbool isSuper(const Class& it) const;
 
     protected:
@@ -44444,14 +44235,14 @@ namespace wrd
         virtual Result& _initNodes();
     };
 }
-# 4 "../projects/world/././metas/ObjectClass.hpp" 2
+# 5 "c:\\projects\\world\\projects\\world\\metas\\ObjectClass.hpp" 2
 
 namespace wrd
 {
  class Array;
  template <typename T> class TStrong;
  class ObjectClass : public Class
- { WRD_OVERLOAD(WRD_INHERIT, WRD_OVERLOAD(WRD_PAIR, ObjectClass), WRD_OVERLOAD(WRD_PAIR, Class)) public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
+ { public: typedef ObjectClass This; private: public: typedef Class Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
  public:
   virtual const Array& getVars() const;
 
@@ -44459,7 +44250,7 @@ namespace wrd
   TStrong<Array> _vars;
  };
 }
-# 5 "../projects/world/././metas/TClass.inl" 2
+# 5 "c:\\projects\\world\\projects\\world\\metas\\tclass.inl" 2
 
 namespace wrd
 {
@@ -44470,7 +44261,7 @@ namespace wrd
 
     template <typename T>
     class TClass : public TMetaSuper<T>::Is
-    { WRD_OVERLOAD(WRD_INHERIT, WRD_OVERLOAD(WRD_PAIR, TClass<T>), WRD_OVERLOAD(WRD_PAIR, TMetaSuper<T>::Is)) public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
+    { public: typedef TClass<T> This; private: public: typedef typename TMetaSuper<T>::Is Super; private: public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
     public:
         TClass();
 
@@ -44500,76 +44291,419 @@ namespace wrd
         static const Container& getNodesStatic();
         static const Classes& getSupersStatic();
         static const Classes& getSubsStatic();
-        static wbool isOccupyStatic();
+        static wbool isStaticOccupy();
     };
 }
-# 4 "../projects/world/././metas/TClass.hpp" 2
+# 6 "..\\projects\\world\\././binds/./../bases/TGettable.hpp" 2
 
-namespace WRD
+namespace wrd
 {
-    template <typename T>
-    class TClass : public TMetaSupers<T>::Is {
-        TClass() { this->init(); }
-        virtual wbool isADT() const { return TADTChecker<T>::IS; }
-        virtual wbool isTemplate() const { return TTemplateChecker<T>::IS; }
-        virtual const Container& getNodes() const { return getStaticMembers(); }
-        virtual const String& getName() const {
-            WRD_OVERLOAD(WRD_IS_NULL, *this, Nuller<Type>::ref)
-            return getStaticName();
-        }
-        virtual const Classes& getSupers() const {
-            WRD_OVERLOAD(WRD_IS_NULL, *this, Nuller<Type>::ref)
-            return getStaticSupers();
-        }
-        virtual const Classes& getSubs() const {
-            WRD_OVERLOAD(WRD_IS_NULL, *this, Nuller<Type>::ref)
-            return getStaticSubs();
-        }
-  TStrong<Instance> instance() const { return TCloner<T>::instance(); }
-        virtual wbool isOccupy() const { return isStaticOccupiable();
-        virtual wbool isOccupy() const { return isStaticOccupiable(); }
-        virtual const Class& getSuper() const { return T::Super::getClassStatic(); }
-        virtual Result& _setInit(wbool newone) {
-            _is_initd = newone;
-            return Success;
-        }
-        virtual Result& _initMembers() {
-            if(Super::_initMembers())
-                return SuperFail.warn();
 
-            return T::_onInitializeMembers(_getNodes());
+
+
+    template <typename T, typename S> const Class& TGettable<T , S>::getClass() const { static TClass<This> inner; return inner; } template <typename T, typename S> TStrong<Instance> TGettable<T , S>::_clone() const { return TCloner<T>::clone(*this); }
+    template <typename T, typename S> const T* TGettable<T , S>::operator->() const { return &get(); }
+    template <typename T, typename S> T* TGettable<T , S>::operator->() { return &get(); }
+    template <typename T, typename S> const T* TGettable<T , S>::operator*() const { return &get(); }
+    template <typename T, typename S> T* TGettable<T , S>::operator*() { return &get(); }
+ template <typename T, typename S> T& TGettable<T , S>::get() { return this->_get().template cast<T>(); }
+
+ template <typename T, typename S> const T& TGettable<T , S>::get() const
+ {
+  TGettable<T , S>* unconst = const_cast<TGettable<T , S>*>(this);
+  return unconst->_get().template cast<const T>();
+ }
+
+
+
+
+
+
+
+    template <typename T> const T* TGettable<T, void>::operator->() const { return &get(); }
+    template <typename T> T* TGettable<T, void>::operator->() { return &get(); }
+    template <typename T> const T* TGettable<T, void>::operator*() const { return &get(); }
+    template <typename T> T* TGettable<T, void>::operator*() { return &get(); }
+ template <typename T> T& TGettable<T, void>::get() { return _get().template cast<T>(); }
+
+ template <typename T> const T& TGettable<T, void>::get() const
+ {
+  TGettable<T, void>* unconst = const_cast<TGettable<T, void>*>(this);
+  return unconst->_get().template cast<const T>();
+ }
+
+
+
+}
+# 6 "..\\projects\\world\\././binds/./TWeak.hpp" 2
+        
+# 6 "..\\projects\\world\\././binds/./TWeak.hpp"
+#pragma message "4-2-2-3"
+# 6 "..\\projects\\world\\././binds/./TWeak.hpp"
+
+
+        
+# 8 "..\\projects\\world\\././binds/./TWeak.hpp"
+#pragma message "4-2-2-4"
+# 8 "..\\projects\\world\\././binds/./TWeak.hpp"
+
+
+namespace wrd
+{
+
+
+
+ template <typename T> const Class& TWeak<T>::getClass() const { static TClass<This> inner; return inner; } template <typename T> TStrong<Instance> TWeak<T>::_clone() const { return TCloner<T>::clone(*this); }
+
+    template <typename T> TWeak<T>::TWeak() { }
+    template <typename T> TWeak<T>::TWeak(T& it) { bind(it); }
+    template <typename T> TWeak<T>::TWeak(T* it) { bind(it); }
+    template <typename T> TWeak<T>::TWeak(Bindable& rhs) { bind(rhs); }
+
+    template <typename T> TWeak<T>& TWeak<T>::operator=(const This& rhs)
+    {
+        bind(rhs);
+
+        return *this;
+    template <typename T> TWeak<T>& TWeak<T>::operator=(T& new1)
+    {
+        bind(new1);
+        return *this;
+    }
+
+    template <typename T> TWeak<T>& TWeak<T>::operator=(T* new1)
+    {
+        bind(new1);
+        return *this;
+    }
+
+    template <typename T> wbool TWeak<T>::operator==(const This& rhs) const { return &get() == &rhs.get(); }
+    template <typename T> wbool TWeak<T>::operator!=(const This& rhs) const { return &get() != &rhs.get(); }
+    template <typename T> TWeak<T>::operator wbool() const { return isBind(); }
+    template <typename T> const T* TWeak<T>::operator->() const { return &get(); }
+    template <typename T> T* TWeak<T>::operator->() { return &get(); }
+    template <typename T> const T* TWeak<T>::operator*() const { return &get(); }
+    template <typename T> T* TWeak<T>::operator*() { return &get(); }
+
+    template <typename T> Result& TWeak<T>::bind(T& new1)
+    {
+
+
+        Block& blk = const_cast<Block&>(new1.getBlock());
+        if((blk.isNull())) { NullPtr.warn("blk"); return NullPtr; }
+
+
+        unbind();
+        _setId(new1.getID);
+        _setSerial(blk.getSerial());
+        return blk.look();
+    }
+
+    template <typename T> Result& TWeak<T>::bind(Bindable& rhs) { return bind(rhs.get()); }
+    template <typename T> Result& TWeak<T>::bind(T* new1)
+    {
+        if((new1.isNull())) { NullPtr.warn("new1"); return NullPtr; };
+        return bind(*new1);
+    }
+
+    template <typename T> const T& TWeak<T>::get() const
+    {
+        if((*this.isNull())) { NullPtr.warn("*this"); return nulr<T>; }
+        const Instance& inst = World::get().getInstancer()[_id].getInstance();
+
+        if(inst.getSerial() != getSerial()) {
+            unbind();
+            WrongBind.warn("...");
+            return Nuller<Instance>::ref;
         }
-        static const String& getStaticName() {
-            static String inner;
-            if(inner.getLength() <= 0) {
-                int status = 0;
-                wchar* demangled = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
-                inner = demangled;
-                free(demangled);
+
+        return inst;
+    }
+
+    template <typename T> T& TWeak<T>::get() { return const_cast<T&>((const_cast<This*>(this))->get()); }
+    template <typename T> Result& TWeak<T>::unbind() { return release(); }
+
+    template <typename T> wbool TWeak<T>::isBind() const
+    {
+        const Block& block = getBlock();
+        return block.isExist() && block.getSerial() == _serial;
+    }
+
+    template <typename T> Result& TWeak<T>::release()
+    {
+        if(isBind())
+            _getBlock().ignore();
+        return Super::release();
+    }
+
+
+    template <typename T> const Block& TWeak<T>::getBlock() const { return World::get().getInstancer()[_id]; }
+    template <typename T> Block& TWeak<T>::_getBlock() { return World::get().getInstancer()[_id]; }
+
+
+
+}
+# 7 "..\\projects\\world\\././binds/TStrong.hpp" 2
+        
+# 7 "..\\projects\\world\\././binds/TStrong.hpp"
+#pragma message "4-2-3"
+# 7 "..\\projects\\world\\././binds/TStrong.hpp"
+
+
+namespace wrd
+{
+
+
+
+ template <typename T> const Class& TStrong<T>::getClass() const { static TClass<This> inner; return inner; } template <typename T> TStrong<Instance> TStrong<T>::_clone() const { return TCloner<T>::clone(*this); }
+
+    template <typename T> TStrong<T>::TStrong() {}
+    template <typename T> TStrong<T>::TStrong(T& it) : Super() { bind(it); }
+    template <typename T> TStrong<T>::TStrong(T* it) : Super() { bind(it); }
+    template <typename T> TStrong<T>::TStrong(Bindable& rhs) : Super() { bind(rhs); }
+
+    template <typename T> Result& TStrong<T>::bind(T& it)
+ {
+            Result& res = Super::bind(it);
+            if(res) return res.dump("...");
+            if( ! it.isHeap()) return InvalidParam.warn("it is local variable. couldn't bind it strongly.");
+
+            _getBlock()._increaseCount();
+
+
+
+
+            return res;
+        }
+        Result& unbind() {
+            Block& blk = _getBlock();
+            if(blk.isNull()) {
+                InvalidMember.warn("");
+                return Super::unbind();
             }
+            if(blk.isHeap()) blk._decreaseCount();
 
-            return inner;
-        }
-        static const Container& getStaticMembers() {
-            static Array inner;
-            return inner;
-        }
-        static const Classes& getStaticSupers() {
-            static Classes inner;
-            return inner;
-        }
-        static const Classes& getStaticSubs() {
-            static Classes inner;
-            return inner;
-        }
-        static wbool isStaticOccupiable() {
-            static wbool inner = isSub<OccupiableObject>();
-            return inner;
+    EXIT:
+            return Super::unbind();
         }
     };
+
+    using Strong = TStrong<Node>;
+    using CStrong = TStrong<const Node>;
+
+
+
 }
-# 5 "../projects/world/./metas.hpp" 2
-# 1 "../projects/world/././metas/MgdClass.hpp" 1
+# 6 "..\\projects\\world\\./binds.hpp" 2
+# 7 "..\\projects\\world\\world.hpp" 2
+        
+# 7 "..\\projects\\world\\world.hpp"
+#pragma message "5"
+# 7 "..\\projects\\world\\world.hpp"
+
+# 1 "..\\projects\\world\\./metas.hpp" 1
+       
+
+
+# 1 "..\\projects\\world\\././metas/TClass.hpp" 1
+       
+
+
+
+# 1 "..\\projects\\world\\././metas/../pretypes/Str.hpp" 1
+       
+
+# 1 "c:\\projects\\world\\projects\\world\\msg-usrs\\object.hpp" 1
+       
+
+# 1 "c:\\projects\\world\\projects\\world\\bases\\composit.hpp" 1
+       
+
+
+
+
+namespace wrd
+{
+ class Chain;
+    class Composit : public Node
+    { public: typedef Composit This; private: public: typedef Node Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
+    public:
+
+
+        virtual const Container& getNodes() const;
+
+        virtual Result& init();
+
+        virtual Result& release();
+
+    private:
+        virtual Result& _initNodes();
+
+    private:
+
+
+        TStrong<Chain> _nodes;
+    };
+}
+# 4 "c:\\projects\\world\\projects\\world\\msg-usrs\\object.hpp" 2
+# 1 "c:\\projects\\world\\projects\\world\\msg-usrs\\Refer.hpp" 1
+       
+
+
+
+
+
+namespace wrd
+{
+    class Refer : public TGettable<Instance, Node>, public Bindable
+ { WRD_CLASS_DECLARE_3(Refer, TGettable<Instance , Node>)
+ public:
+
+  Refer(Node& it);
+  Refer(const Node& it);
+  Refer(const Refer& it);
+  Refer(Refer& it);
+
+ public:
+  wbool operator==(const Refer& rhs) const;
+  wbool operator!=(const Refer& rhs) const;
+  Refer& operator=(const Refer& it);
+  Refer& operator=(Refer& it);
+  Refer& operator=(Node& it);
+  Refer& operator=(const Node& it);
+
+ public:
+  virtual Refer use(Msg& msg) const;
+  virtual Refer use(Msg& msg);
+  virtual const Origin& getOrigin() const;
+  virtual wbool isConst() const;
+  virtual const Container& getNodes() const;
+
+ public:
+  using Bindable::bind;
+  virtual Result& bind(Instance& it);
+  Result& bind(Refer& it);
+  Result& bind(const Refer& it);
+  Result& bind(const Instance& it);
+  virtual wbool isBind() const;
+  Result& unbind();
+
+ public:
+  virtual Refer to(const Class& cls);
+  virtual Result& assign(const Thing& it);
+
+ protected:
+  virtual Instance& _get();
+# 56 "c:\\projects\\world\\projects\\world\\msg-usrs\\Refer.hpp"
+  virtual Node& _cast(const Class& cls);
+  virtual const Node& _cast(const Class& cls) const;
+
+ private:
+  wbool _is_const;
+  Strong _bean;
+  const Class& _cls;
+ };
+}
+# 5 "c:\\projects\\world\\projects\\world\\msg-usrs\\object.hpp" 2
+
+namespace wrd
+{
+
+
+
+
+
+
+
+    class Container;
+    class Object : public Composit
+    { public: typedef Object This; private: public: typedef Composit Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
+    public:
+
+
+
+        Container& getShared();
+        const Container& getShared() const;
+        Container& getVars();
+        const Container& getVars() const;
+
+    public:
+        virtual Refer use(Msg& msg);
+        virtual Refer use(Msg& msg) const;
+        virtual wbool canUse(const Msg& msg) const;
+        virtual const Origin& getOrigin() const;
+# 55 "c:\\projects\\world\\projects\\world\\msg-usrs\\object.hpp"
+    private:
+        virtual Result& _initNodes();
+    };
+}
+# 4 "..\\projects\\world\\././metas/../pretypes/Str.hpp" 2
+
+namespace wrd
+{
+ class Str : public Object
+ { public: typedef Str This; private: public: typedef Object Super; private: public: virtual const Class& getClass() const; TStrong<This> clone() const; protected: virtual TStrong<Instance> _clone() const; private:
+ public:
+ };
+}
+# 6 "..\\projects\\world\\././metas/TClass.hpp" 2
+
+namespace wrd
+{
+
+
+
+ template <typename T> TClass<T>::Tclass() { this->init(); }
+ template <typename T> wbool TClass<T>::isADT() const { return TIfADT<T>::is; }
+ template <typename T> wbool TClass<T>::isTemplate() const { return TIfTemplate<T>::is; }
+ template <typename T> const Container& TClass<T>::getNodes() const { return this->getStaticMembers(); }
+# 26 "..\\projects\\world\\././metas/TClass.hpp"
+ template <typename T> const Str& TClass<T>::getName() const { const Str& getStaticName(); }
+ template <typename T> const Classes& TClass<T>::getSupers() const { const Classes& getStaticSupers(); }
+ template <typename T> const Classes& TClass<T>::getSubs() const { const Classes& getStaticSubs(); }
+
+
+ template <typename T> static const Container& TClass<T>::getStaticMembers() { static Array inner ; return inner; }
+ template <typename T> static const Classes& TClass<T>::getStaticSupers() { static const Classes inner ; return inner; }
+ template <typename T> static const Classes& TClass<T>::getStaticSubs() { static const Classes inner ; return inner; }
+ template <typename T> static wboo& TClass<T>::isStaticOccupy() { static wboo inner = isSub<Object >(); return inner; }
+    template <typename T> TStrong<Instance> TClass<T>::instance() const { return TCloner<T>::instance(); }
+    template <typename T> wbool TClass<T>::isOccupy() const { return isStaticOccupy(); }
+    template <typename T> const Class& TClass<T>::getSuper() const { return T::Super::getClassStatic(); }
+
+    template <typename T> Result& TClass<T>::_setInit(wbool newone)
+    {
+     this->_is_initd = newone;
+        return Success;
+    }
+
+    template <typename T> Result& TClass<T>::_initMembers()
+    {
+
+
+
+        return T::_onInitializeMembers(_getNodes());
+    }
+
+    template <typename T> static const Str& TClass<T>::getStaticName()
+    {
+        static Str inner;
+        if(inner.getLength() <= 0)
+        {
+            int status = 0;
+            wchar* demangled = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
+            inner = demangled;
+            free(demangled);
+        }
+
+        return inner;
+    }
+
+
+
+}
+# 5 "..\\projects\\world\\./metas.hpp" 2
+# 1 "..\\projects\\world\\././metas/MgdClass.hpp" 1
        
 
 
@@ -44596,63 +44730,25 @@ namespace wrd
   Chain _nodes;
     };
 }
-# 6 "../projects/world/./metas.hpp" 2
-# 9 "../projects/world/world.hpp" 2
+# 6 "..\\projects\\world\\./metas.hpp" 2
+# 9 "..\\projects\\world\\world.hpp" 2
         
-# 9 "../projects/world/world.hpp"
+# 9 "..\\projects\\world\\world.hpp"
 #pragma message "2"
-# 9 "../projects/world/world.hpp"
+# 9 "..\\projects\\world\\world.hpp"
 
-# 1 "../projects/world/./bases.hpp" 1
+# 1 "..\\projects\\world\\./bases.hpp" 1
        
-
-# 1 "../projects/world/././bases/Composit.hpp" 1
-       
-
-
-
-
-namespace wrd
-{
- class Chain;
-    class Composit : public Node
-    { WRD_OVERLOAD(WRD_INHERIT, WRD_OVERLOAD(WRD_PAIR, Composit), WRD_OVERLOAD(WRD_PAIR, Node)) public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
-    public:
-
-
-        virtual const Container& getNodes() const;
-
-        virtual Result& init()
-        {
-            if(Super:: init() ) return SuperFail;
-            return _initNodes();
-        }
-
-        virtual Result& release()
-        {
-            _nodes.release();
-            return Super::release();
-        }
-    private:
-        virtual Result& _initNodes();
-
-    private:
-
-
-        TStrong<Chain> _nodes;
-    };
-}
-# 4 "../projects/world/./bases.hpp" 2
-# 11 "../projects/world/world.hpp" 2
+# 11 "..\\projects\\world\\world.hpp" 2
         
-# 11 "../projects/world/world.hpp"
+# 11 "..\\projects\\world\\world.hpp"
 #pragma message "3"
-# 11 "../projects/world/world.hpp"
+# 11 "..\\projects\\world\\world.hpp"
 
-# 1 "../projects/world/./memory.hpp" 1
+# 1 "..\\projects\\world\\./memory.hpp" 1
        
 
-# 1 "../projects/world/././memory/Block.hpp" 1
+# 1 "..\\projects\\world\\././memory/Block.hpp" 1
        
 
 
@@ -44672,115 +44768,19 @@ namespace wrd
               virtual Instance& _get();
     };
 }
-# 4 "../projects/world/./memory.hpp" 2
-# 13 "../projects/world/world.hpp" 2
+# 4 "..\\projects\\world\\./memory.hpp" 2
+# 13 "..\\projects\\world\\world.hpp" 2
         
-# 13 "../projects/world/world.hpp"
+# 13 "..\\projects\\world\\world.hpp"
 #pragma message "6"
-# 13 "../projects/world/world.hpp"
+# 13 "..\\projects\\world\\world.hpp"
 
-# 1 "../projects/world/./msg-usrs.hpp" 1
-       
-
-# 1 "../projects/world/././msg-usrs/Refer.hpp" 1
+# 1 "..\\projects\\world\\./msg-usrs.hpp" 1
        
 
 
 
-
-
-namespace wrd
-{
-    class Refer : public TGettable<Instance, Node>, public Bindable
- { WRD_INHERIT_3(Refer, TGettable<Instance , Node>) public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
- public:
-
-  Refer(Node& it);
-  Refer(const Node& it);
-  Refer(const Refer& it);
-  Refer(Refer& it);
-
- public:
-  wbool operator==(const Refer& rhs) const;
-  wbool operator!=(const Refer& rhs) const;
-  Refer& operator=(const Refer& it);
-  Refer& operator=(Refer& it);
-  Refer& operator=(Node& it);
-  Refer& operator=(const Node& it);
-
- public:
-  virtual Refer use(Msg& msg) const;
-  virtual Refer use(Msg& msg);
-  virtual const Origin& getOrigin() const;
-  virtual wbool isConst() const;
-  virtual const Container& getNodes() const;
-
- public:
-  using TBindable<Node>::bind;
-  virtual Result& bind(Instance& it);
-  Result& bind(Refer& it);
-  Result& bind(const Refer& it);
-  Result& bind(const Instance& it);
-  virtual wbool isBind() const;
-  Result& unbind();
-
- public:
-  virtual Refer to(const Class& cls);
-  virtual Result& assign(const Thing& it);
-  virtual const Class& getClass() const;
-
- protected:
-  virtual Instance& _get();
-# 57 "../projects/world/././msg-usrs/Refer.hpp"
-  virtual Node& _cast(const Class& cls);
-  virtual const Node& _cast(const Class& cls) const;
-
- private:
-  wbool _is_const;
-  Strong _bean;
-  const Class& _cls;
- };
-}
-# 4 "../projects/world/./msg-usrs.hpp" 2
-# 1 "../projects/world/././msg-usrs/Object.hpp" 1
-       
-
-
-
-
-namespace wrd
-{
-
-
-
-
-
-
-
-    class Container;
-    class Object : public Composit
-    { WRD_OVERLOAD(WRD_INHERIT, WRD_OVERLOAD(WRD_PAIR, Object), WRD_OVERLOAD(WRD_PAIR, Composit)) public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
-    public:
-
-
-
-        Container& getShared();
-        const Container& getShared() const;
-        Container& getVars();
-        const Container& getVars() const;
-
-    public:
-        virtual Refer use(Msg& msg);
-        virtual Refer use(Msg& msg) const;
-        virtual wbool canUse(const Msg& msg) const;
-        virtual const Origin& getOrigin() const;
-# 55 "../projects/world/././msg-usrs/Object.hpp"
-    private:
-        virtual Result& _initNodes();
-    };
-}
-# 5 "../projects/world/./msg-usrs.hpp" 2
-# 1 "../projects/world/././msg-usrs/Manager.hpp" 1
+# 1 "..\\projects\\world\\././msg-usrs/Manager.hpp" 1
        
 
 
@@ -44791,17 +44791,17 @@ namespace wrd
     {
     };
 }
-# 6 "../projects/world/./msg-usrs.hpp" 2
-# 15 "../projects/world/world.hpp" 2
+# 6 "..\\projects\\world\\./msg-usrs.hpp" 2
+# 15 "..\\projects\\world\\world.hpp" 2
         
-# 15 "../projects/world/world.hpp"
+# 15 "..\\projects\\world\\world.hpp"
 #pragma message "7"
-# 15 "../projects/world/world.hpp"
+# 15 "..\\projects\\world\\world.hpp"
 
-# 1 "../projects/world/./pretypes.hpp" 1
+# 1 "..\\projects\\world\\./pretypes.hpp" 1
        
 
-# 1 "../projects/world/././pretypes/Result.hpp" 1
+# 1 "..\\projects\\world\\././pretypes/Result.hpp" 1
        
 
 
@@ -44809,14 +44809,18 @@ namespace wrd
 namespace wrd
 {
  class Result : public Object
- { WRD_OVERLOAD(WRD_INHERIT, WRD_OVERLOAD(WRD_PAIR, Result), WRD_OVERLOAD(WRD_PAIR, Object)) public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
+ { public: typedef Result This; private: public: typedef Object Super; private: public: virtual const Class& getClass() const { static TClass<This> inner ; return inner; } TStrong<This> clone() const { return _clone(); } protected: virtual TStrong<Instance> _clone() const { return TCloner<T>::clone(*this); } private:
 
  public:
-# 24 "../projects/world/././pretypes/Result.hpp"
+  operator wbool() { return isErr(); }
+  wbool isErr() const;
+  wbool isWarn() const;
+  wbool isInfo() const;
+# 28 "..\\projects\\world\\././pretypes/Result.hpp"
  };
 }
-# 4 "../projects/world/./pretypes.hpp" 2
-# 17 "../projects/world/world.hpp" 2
+# 4 "..\\projects\\world\\./pretypes.hpp" 2
+# 17 "..\\projects\\world\\world.hpp" 2
 
 namespace wrd
 {
@@ -44837,7 +44841,7 @@ namespace wrd
         }
     };
 }
-# 2 "../projects/world/world.cpp" 2
+# 2 "..\\projects\\world\\world.cpp" 2
 
 namespace wrd
 {

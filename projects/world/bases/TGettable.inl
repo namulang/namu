@@ -20,6 +20,9 @@ namespace wrd
 	public:
         T& get();
         const T& get() const;
+
+	protected:
+		virtual Instance& _get() = 0;
     };
 	template <typename T>
 	class TGettable<T, void>
@@ -33,5 +36,8 @@ namespace wrd
 	public:
         T& get();
         const T& get() const;
+
+	protected:
+		virtual Instance& _get() = 0;
 	};
 }
