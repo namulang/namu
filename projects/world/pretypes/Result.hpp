@@ -8,6 +8,10 @@ namespace wrd
 	{	WRD_CLASS(Result, Object)
 		//	TODO: fill this.
 	public:
+		operator wbool() { return isErr(); }
+		wbool isErr() const;
+		wbool isWarn() const;
+		wbool isInfo() const;
 		/*wint warn(.....);
 		wint err(....);
 		wint info(....);
