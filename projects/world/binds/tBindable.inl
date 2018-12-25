@@ -4,7 +4,7 @@
 
 namespace wrd
 {
-    class Result;
+    class Res;
 	class Instance;
 
 	template <typename S=void>
@@ -14,13 +14,12 @@ namespace wrd
         operator wbool() const;
 
     public:
-        virtual Result& bind(Instance& new1) = 0;
-		template <typename V>
-		Result& bind(TBindable<V>& rhs);
+        virtual Res& bind(Instance& new1) = 0;
+		template <typename V> Res& bind(TBindable<V>& rhs) { return bind(rhs.get()); }
         /// mostly, unbind is replacable to release() comletely.
         /// but some class(e.g. Refer) treat differently between unbind() and release().
-        Result& bind(Instance* new1);
-        virtual Result& unbind() = 0;
+        Res& bind(Instance* new1);
+        virtual Res& unbind() = 0;
         virtual wbool isBind() const = 0;
     };
 }

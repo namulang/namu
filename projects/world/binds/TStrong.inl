@@ -19,8 +19,8 @@ namespace wrd
 		// 구체에 넣을려고 하면 이번 TWeak 처럼 된다.
 
 	public:
-		virtual Result& bind(T& it);
-		virtual Result& unbind();
+		virtual Res& bind(T& it);
+		virtual Res& unbind();
 	};
 	//	c++11 부터 지원되는 문법
 	using Strong = TStrong<Node>;

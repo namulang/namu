@@ -17,10 +17,10 @@ namespace wrd
         wcnt getSerial() const;
 
     public: //  Thing:
-        virtual Result& release();
+        virtual Res& release();
 
     protected:
-        Result& _setSerial(wcnt new1);
+        Res& _setSerial(wcnt new1);
 
     private:
         wcnt _serial;

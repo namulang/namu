@@ -10,7 +10,7 @@ namespace wrd
 	Strong clone() const {
 		return _clone();
 	}
-	virtual Result& _onInitNodes(Container& tray) { return Success; }
+	virtual Res& _onInitNodes(Container& tray) { return wasgood; }
 	virtual wbool isOccupy() const {
 		return getClass()::isOccupy();
 	}
@@ -56,15 +56,15 @@ namespace wrd
 
 		Node* found = NULL;
 		if(_getNodes().each<T>([&found, want_const, tester](Node& e) {
-			if(e.isConst() != want_const) return Success;
-			if( ! tester(e)) return Success;
+			if(e.isConst() != want_const) return wasgood;
+			if( ! tester(e)) return wasgood;
 			if(found)
 				return Duplicated.err(".."); // if ret isn't Success, it means that stop eaching.
 			
 			found = &e;
-			return Success; // means keep eaching.
+			return wasgood; // means keep eaching.
 		}))
-			return Duplicated.err(".....").returns(TNuller<Node>::ref);
+			return wasdup.err(".....").returns(TNuller<Node>::ref);
 
 		return *found;
 	}

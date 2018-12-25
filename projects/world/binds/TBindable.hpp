@@ -1,5 +1,6 @@
 #include "TBindable.inl"
 #include "../metas/TClass.hpp"
+#include "../pretypes/Reses.hpp"
 
 namespace wrd
 {
@@ -8,13 +9,11 @@ namespace wrd
 
 	WRD_CLASS_DEFINE(TEMPL, THIS)
 
-    THIS::operator wbool() const { return isBind(); }
-    TEMPL Result& THIS::bind(This& rhs) { return bind(rhs._get()); }
-	template <typename V> Result& THIS::bind(TBindable<V>& rhs) { return bind(rhs.get()); }
+    TEMPL THIS::operator wbool() const { return isBind(); }
 
-    Result& THIS::bind(Instance* new1)
+    TEMPL Res& THIS::bind(Instance* new1)
     {
-        WRD_IS_NULL(new1)
+        WRD_IS_NULL(*new1)
         return bind(*new1);
     }
 

@@ -6,12 +6,12 @@
 //	접근자 아닌 경우에는 "속도문제" 로 인해 수행하지 않는다.
 //	또한 반환형이 객체에 대한 레퍼런스나 포인터가 아닌경우에도 정상적인 반환값과 겹칠 수있기 때문에 체크하지 않는다.
 #define WRD_IS_NULL_3(VALUE, RET, RES)	\
-	if((VALUE.isNull())) {				\
+	if((VALUE).isNull()) {				\
 		RES.warn(#VALUE);				\
 		return RET;						\
 	}
 #define WRD_IS_NULL_2(VALUE, RET)	WRD_IS_NULL_3(VALUE, RET, RET)
-#define WRD_IS_NULL_1(VALUE)		WRD_IS_NULL_2(VALUE, NullPtr)
+#define WRD_IS_NULL_1(VALUE)		WRD_IS_NULL_2(VALUE, wasnull)
 #define WRD_IS_NULL(...) 			WRD_OVERLOAD(WRD_IS_NULL, __VA_ARGS__)
 
 //	multiple NULL check macro:
@@ -28,20 +28,20 @@
 #define _ARE_NULL(VALUE, RET)		WRD_IS_NULL(VALUE, RET)
 #define WRD_ARE_NULL(RET, ...)		NE_EACH_EXPAND(_ARE_NULL, RET, __VA_ARGS__)
 
-#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL_3(*this, nulr<TYPE>, NullPtr)
+#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL_3(*this, nulr<TYPE>, wasnull)
 #define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
 #define WRD_IS_THIS(...) 			WRD_OVERLOAD(WRD_IS_THIS, __VA_ARGS__)
 
 #define WRD_IS_SUPER_1(call)        \
-    if(Super:: call ) return SuperFail;
-#define WRD_IS_SUPER_2(res, call)  \
-    Result& res = Super:: call ;    \
-    if(res) return SuperFail;
+    if(Super:: call ) return superfail;
+#define WRD_IS_SUPER_2(res, call)	\
+    Res& res = Super:: call ;    \
+    if(res) return superfail;
 #define WRD_IS_SUPER(...)          WRD_OVERLOAD(WRD_IS_SUPER, __VA_ARGS__)
 
 #define WRD_IS_CONST(RET)			\
 	if((this->isConst())) {			\
-		ConstCancel.warn(#RET);		\
+		wascancel.warn(#RET);		\
 		return RET;					\
 	}
 
@@ -50,12 +50,12 @@
         return ret.dump(msg);
 #define WRD_ASSERT_3(expr, ret, msg)		WRD_ASSERT_4(expr, ret, warn, msg)
 #define WRD_ASSERT_2(expr, ret)				WRD_ASSERT_4(expr, ret, warn, "")
-#define WRD_ASSERT_1(expr)                  WRD_ASSERT_4(expr, Invalid, warn, "")
+#define WRD_ASSERT_1(expr)                  WRD_ASSERT_4(expr, waswrongop, warn, "")
 #define WRD_ASSERT(...)                    	WRD_OVERLOAD(WRD_ASSERT, __VA_ARGS__)
 
 #define WRD_IS_RES_5(expr, ret, chk, dump, msg) \
     {                                          	\
-        const Result& res = expr;              	\
+        const Res& res = expr;              	\
         WRD_ASSERT(res.chk, ret, dump, msg)    	\
    }
 #define WRD_IS_RES_4(expr, chk, dump, msg)  WRD_IS_RES_5(expr, res, chk, dump, msg)
@@ -114,6 +114,6 @@
         return inner;    							\
     }    											\
     TEMPL TStrong<Instance> THIS::_clone() const {	\
-        return TCloner<T>::clone(*this);    		\
+        return TCloner<THIS>::clone(*this);    		\
 	}
 #define WRD_CLASS_DEFINE(...)            			WRD_OVERLOAD(WRD_CLASS_DEFINE, __VA_ARGS__)

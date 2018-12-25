@@ -7,7 +7,7 @@
 namespace wrd
 {
 	class Block;
-	class Result;
+	class Res;
 	class Node;
 
 	//	Hierarchy:
@@ -30,13 +30,13 @@ namespace wrd
 
 	public:	// TBindable:
 		using Super::bind;
-		virtual Result& bind(Instance& new1);
-		virtual Result& unbind();
+		virtual Res& bind(Instance& new1);
+		virtual Res& unbind();
 		virtual wbool isBind() const;
 
 	public:	// Thing:
-		//TODO: replace this. put API on Thing. virtual ResultSet isValid() const;
-		virtual Result& release();
+		//TODO: replace this. put API on Thing. virtual ResSet isValid() const;
+		virtual Res& release();
 
 	protected:
 		virtual Instance& _get(); // TODO: impl this.

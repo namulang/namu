@@ -45,7 +45,7 @@ namespace wrd
     TEMPL const T* THIS::operator*() const { return &get(); }
     TEMPL T* THIS::operator*() { return &get(); }
 
-    TEMPL Result& THIS::bind(T& new1)
+    TEMPL Res& THIS::bind(T& new1)
     {
         //  pre:
         //      param-validation:
@@ -59,7 +59,7 @@ namespace wrd
         return blk.look();
     }
 
-    TEMPL Result& THIS::bind(T* new1)
+    TEMPL Res& THIS::bind(T* new1)
     {
         WRD_IS_NULL(new1);
         return bind(*new1);
@@ -72,7 +72,7 @@ namespace wrd
         //  정확한 인터페이스가 나오지 않았다.
         if(inst.getSerial() != getSerial()) {
             unbind();
-            WrongBind.warn("...");
+            wasbindfail.warn("...");
             return Nuller<Instance>::ref;
         }
 
@@ -80,7 +80,7 @@ namespace wrd
     }
 
     TEMPL T& THIS::get() { return const_cast<T&>((const_cast<This*>(this))->get()); }
-    TEMPL Result& THIS::unbind() { return release(); }
+    TEMPL Res& THIS::unbind() { return release(); }
 
     TEMPL wbool THIS::isBind() const
     {
@@ -88,14 +88,14 @@ namespace wrd
         return block.isExist() && block.getSerial() == _serial;
     }
 
-    TEMPL Result& THIS::release()
+    TEMPL Res& THIS::release()
     {
         if(isBind())
             _getBlock().ignore();
         return Super::release();
     }
 
-    //TODO: TEMPL ResultSet isValid() const;
+    //TODO: TEMPL ResSet isValid() const;
     TEMPL const Block& THIS::getBlock() const { return World::get().getInstancer()[_id]; }
     TEMPL Block& THIS::_getBlock() { return World::get().getInstancer()[_id]; }
 

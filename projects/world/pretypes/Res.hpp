@@ -4,8 +4,8 @@
 
 namespace wrd
 {
-	class Result : public Object
-	{	WRD_CLASS(Result, Object)
+	class Res : public Object
+	{	WRD_CLASS(Res, Object)
 		//	TODO: fill this.
 	public:
 		operator wbool() { return isErr(); }

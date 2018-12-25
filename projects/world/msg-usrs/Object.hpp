@@ -53,6 +53,6 @@ namespace wrd
         //        return ret;
 
     private:    // Node:
-        virtual Result& _initNodes();
+        virtual Res& _initNodes();
     };
 }

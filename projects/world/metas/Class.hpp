@@ -30,7 +30,7 @@ namespace wrd
 		//	means there is no origin or we can't designate origin.
 		virtual WRD_LAZY_METHOD(Origin, getOrigin, const)
 		//	State:
-		virtual Result& init();
+		virtual Res& init();
 		virtual wbool isInit() const;
 		//	Thing:
         virtual const Class& getSuper() const;
@@ -38,6 +38,6 @@ namespace wrd
 
     protected:
 		//	Composit:
-        virtual Result& _initNodes();
+        virtual Res& _initNodes();
     };
 }

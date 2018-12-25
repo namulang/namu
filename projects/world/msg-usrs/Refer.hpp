@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../bases/Node.hpp"
-#include "../binds/TBindable.hpp"
+#include "../binds/TBindable.inl"
 
 namespace wrd
 {
@@ -31,14 +31,14 @@ namespace wrd
 
 	public:	//	TBindable:
 		using Super::bind;
-		virtual Result& bind(Instance& it);
-		Result& bind(const Instance& it);
+		virtual Res& bind(Instance& it);
+		Res& bind(const Instance& it);
 		virtual wbool isBind() const;
-		virtual Result& unbind();
+		virtual Res& unbind();
 
 	public:	//	Thing:
 		virtual Refer to(const Class& cls);
-		virtual Result& assign(const Thing& it);
+		virtual Res& assign(const Thing& it);
 
 	protected: //Gettable:
 		virtual Instance& _get();

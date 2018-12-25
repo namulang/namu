@@ -95,6 +95,6 @@ namespace wrd
 		Container& _getNodes();
 		Container& _get();
 		Node& _get(wbool want_const, std::function<wbool(Node&)> tester);
-		virtual Result& _onInitNodes(Container& tray);
+		virtual Res& _onInitNodes(Container& tray);
 	};
 }

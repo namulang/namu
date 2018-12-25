@@ -40,11 +40,11 @@ namespace wrd
 		TWeak<Node> toWeak();
 		TWeak<const Node> toWeak() const;
 		//	Thing:
-		virtual Result& release();
+		virtual Res& release();
 
 	protected:
 		Block& _getBlock();
-		Result& _setId(Id new1);
+		Res& _setId(Id new1);
 
 	private:
 		Id _id;

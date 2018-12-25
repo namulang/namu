@@ -6,7 +6,7 @@
 namespace wrd 
 {
     class Str;
-    class Result;
+    class Res;
     class Container;
     class Classes;
 
@@ -33,7 +33,7 @@ namespace wrd
 
 	protected:
 		//	Composit:
-		virtual Result& _initNodes();
+		virtual Res& _initNodes();
 
     public:
 		static wbool isADTStatic();

@@ -21,7 +21,7 @@ namespace wrd
         return *this;
     }
 
-    Result& THIS::init()
+    Res& THIS::init()
     {
         //    pre:
         //        exception:
@@ -32,7 +32,7 @@ namespace wrd
         //            or This makes recursive call.
         //            Because if we make a instance of TClass<Object>, it triggers Class::initialize inside of it.
         if(&getName() == &TClass<Thing>::getStaticName())
-            return good;
+            return wasgood;
 
         //  main:
         //        get Supers info from Super:
@@ -45,9 +45,9 @@ namespace wrd
         my_supers.push(&super);
         //        notify to super:
         if(super._getSubs().push(*this) != wrongidx)
-            return cancel;
+            return wascancel;
 
-        return good;
+        return wasgood;
     }
     wbool THIS::isSuper(const Class& it) const
     {
@@ -79,10 +79,10 @@ namespace wrd
         WRD_IS_THIS(Classes)
         return const_cast<Classes&>(getSubs());
     }
-    Result& THIS::_initNodes()
+    Res& THIS::_initNodes()
     {
         _getNodes() = getSupers()[0].getNodes(); // getSupers()[0]은 바로 위의 부모클래스.
-        return good;
+        return wasgood;
     }
     wbool THIS::isSuper(const Class& it) const
     {
@@ -114,10 +114,10 @@ namespace wrd
         WRD_IS_THIS(Classes)
         return const_cast<Classes&>(getSubs());
     }
-    Result& THIS::_initNodes()
+    Res& THIS::_initNodes()
     {
         _getNodes() = getSupers()[0].getNodes(); // getSupers()[0]은 바로 위의 부모클래스.
-        return good;
+        return wasgood;
     }
     const Array& THIS::getVariables() const
     {

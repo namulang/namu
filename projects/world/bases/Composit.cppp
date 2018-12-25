@@ -5,13 +5,13 @@ namespace WRD
 #define THIS Composit
 	WRD_CLASS_DEFINE(Composit)
 
-	Result& THIS::init()
+	Res& THIS::init()
 	{
 		WRD_IS_SUPER(init())
 		return _initNodes();
 	}
 
-	Result& THIS::release()
+	Res& THIS::release()
 	{
 		_nodes.release();
 		return Super::release();
@@ -25,14 +25,14 @@ namespace WRD
         return *_nodes;
     }
 
-    Result& THIS::_initNodes()
+    Res& THIS::_initNodes()
     {
         _nodes.release();
 
         const Chain& chain = cls.getNodes().cast<Chain>();
         WRD_IS_NULL(chain)
         if(_nodes.chain(chain.getControl()[0])) // first elem as a container owned by "chain"
-            return OperationFail.warn("");
-        return Success;
+            return wasfuncfail.warn("");
+        return wasgood;
     }
 }

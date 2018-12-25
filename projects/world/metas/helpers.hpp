@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../binds/TStrong.inl"
+
 namespace wrd
 {
     class MetaIf

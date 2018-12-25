@@ -5,7 +5,7 @@
 namespace wrd
 {
 	class Refer;
-	class Result;
+	class Res;
 	class Class;
 	class Visitor;
 	class Node;
@@ -20,7 +20,7 @@ namespace wrd
 	public:
 		virtual const Class& getClass() const = 0;
 		virtual const Class& getSuper() const;
-		virtual Result& release();
+		virtual Res& release();
 		wbool isNull() const;
 		wbool isExist() const;
 		virtual wbool isSuper(const Class& it) const;
@@ -79,12 +79,12 @@ namespace wrd
 		virtual Refer implicit(const Class& cls);
 		Refer implicit(const Class& cls) const;
 		//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
-		virtual Result& assign(const Thing& it);
+		virtual Res& assign(const Thing& it);
 
 	protected:
 		//	Visitor에 의해서 하위 구성요소(ownee)들을 어떻게 순회시킬지를 정한다.
-		virtual Result& _tour(Visitor& visitor) const;
-		virtual Result& _tour(Visitor& visitor);
+		virtual Res& _tour(Visitor& visitor) const;
+		virtual Res& _tour(Visitor& visitor);
 		virtual Node& _cast(const Class& cls);
 		virtual const Node& _cast(const Class& cls) const;
 	};

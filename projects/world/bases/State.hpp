@@ -8,11 +8,11 @@ namespace wrd
     {	WRD_CLASS_DECLARE(State, Instance)
     public:
         virtual wbool isInit();
-        virtual Result& init();
-        virtual Result& release();
+        virtual Res& init();
+        virtual Res& release();
 
     protected:
-        Result& _setInit(wbool new1);
+        Res& _setInit(wbool new1);
 	
 	private:
 		wbool _is_init;

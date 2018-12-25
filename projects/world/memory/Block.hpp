@@ -8,10 +8,10 @@ namespace wrd
     {	WRD_CLASS_DECLARE(Block, Trace)
     public: // Block:
         /// increase refcnt.
-        Result& look();
-        Result& ignore();
-        Result& link();
-        Result& unlink();
+        Res& look();
+        Res& ignore();
+        Res& link();
+        Res& unlink();
 
       protected:
               virtual Instance& _get();

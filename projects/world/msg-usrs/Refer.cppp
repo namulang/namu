@@ -31,26 +31,26 @@ namespace wrd
 
 	wbool THIS::isConst() const { return _is_const; }
 
-	Result& THIS::bind(Instance& it)
+	Res& THIS::bind(Instance& it)
 	{
 		//	NullCheckDelayed 철학에 의해서 WRD_IS_NULL(it)을 하지 않는다. 
 		const Class& cls = it.getClass();
 		WRD_IS_NULL(cls)
 		if( ! cls.isSub(_cls))
-			return TypeInvalid.warn("...");
+			return waswrongtype.warn("...");
 
 		unbind();
 		WRD_IS_ERR(_bean.bind(it))
 		_is_const = false;
-		return Success;
+		return wasgood;
 	}
-	Result& THIS::bind(const Instance& it)
+	Res& THIS::bind(const Instance& it)
 	{
 		if( ! isConst())
-			return noneed;	// 이 Refer는 Refer<T>이다. 지금 하려는 것은 즉, A* a = (const A*) a1; 를 하려고 하는것과 같다.
+			return wasntneed;	// 이 Refer는 Refer<T>이다. 지금 하려는 것은 즉, A* a = (const A*) a1; 를 하려고 하는것과 같다.
 
 		WRD_UNCONST()
-		Result& res = unconst.bind(const_cast<Object&>(it));
+		Res& res = unconst.bind(const_cast<Object&>(it));
 		WRD_IS_ERR(res)
 
 		return res;
@@ -58,13 +58,13 @@ namespace wrd
 
 	wbool THIS::isBind() const;
 
-	Result& THIS::unbind()
+	Res& THIS::unbind()
 	{
-		Result& res = _bean.unbind();
+		Res& res = _bean.unbind();
 		WRD_IS_ERR(res)
 
 		_is_const = false;
-		return Success;
+		return wasgood;
 	}
 
 	Refer THIS::to(const Class& cls)
@@ -80,7 +80,7 @@ namespace wrd
 		return _bean->to(cls);
 	}
 
-	Result& THIS::assign(const Thing& it)
+	Res& THIS::assign(const Thing& it)
 	{
 		// Null체크는 Thing::assign()에서 한다.
 		WRD_IS_ERR(Super::assign(it))

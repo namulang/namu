@@ -9,7 +9,7 @@ namespace wrd
 	#define TEMPL template <typename T>
 	#define THIS TClass<T>
 
-	TEMPL THIS::Tclass() { this->init(); }
+	TEMPL THIS::TClass() { this->init(); }
 	TEMPL wbool THIS::isADT() const { return TIfADT<T>::is; }
 	TEMPL wbool THIS::isTemplate() const { return TIfTemplate<T>::is; }
 	TEMPL const Container& THIS::getNodes() const { return this->getStaticMembers(); }
@@ -36,13 +36,13 @@ namespace wrd
     TEMPL wbool THIS::isOccupy() const { return isStaticOccupy(); }
     TEMPL const Class& THIS::getSuper() const { return T::Super::getClassStatic(); }
 
-    TEMPL Result& THIS::_setInit(wbool newone)
+    TEMPL Res& THIS::_setInit(wbool newone)
     {
     	this->_is_initd = newone;
-        return Success;
+        return wasgood;
     }
 
-    TEMPL Result& THIS::_initMembers()
+    TEMPL Res& THIS::_initMembers()
     {
         /*TODO: uncomment this if(Super::_initMembers())
                 return SuperFail.warn();*/
