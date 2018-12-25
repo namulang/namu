@@ -79,7 +79,7 @@
 
 #define _CLASS_BASE					\
     public:							\
-        virtual WRD_LAZY_METHOD_4(Class, getClass, const, TClass<This>) \
+        virtual WRD_LAZY_METHOD_4(Class&, getClass, const, TClass<This>) \
         TStrong<This> clone() const { return _clone(); } \
 	protected:	\
 		virtual TStrong<Instance> _clone() const { \
