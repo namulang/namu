@@ -1,5 +1,5 @@
 #pragma once
 
-#include "./binds/Bindable.hpp"
+#include "./binds/TBindable.hpp"
 #pragma message "4-2"
 #include "./binds/TStrong.hpp"

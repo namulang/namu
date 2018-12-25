@@ -5,7 +5,7 @@
 namespace wrd
 {
     class Block : public Trace
-    {	WRD_INHERIT(Block, Trace)
+    {	WRD_CLASS_DECLARE(Block, Trace)
     public: // Block:
         /// increase refcnt.
         Result& look();

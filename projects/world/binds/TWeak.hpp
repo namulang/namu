@@ -17,7 +17,6 @@ namespace wrd
     TEMPL THIS::TWeak() { }
     TEMPL THIS::TWeak(T& it) { bind(it); }
     TEMPL THIS::TWeak(T* it) { bind(it); }
-    TEMPL THIS::TWeak(Bindable& rhs) { bind(rhs); }
 
     TEMPL THIS& THIS::operator=(const This& rhs)
     {
@@ -60,7 +59,6 @@ namespace wrd
         return blk.look();
     }
 
-    TEMPL Result& THIS::bind(Bindable& rhs) { return bind(rhs.get()); }
     TEMPL Result& THIS::bind(T* new1)
     {
         WRD_IS_NULL(new1);

@@ -3,7 +3,7 @@
 namespace wrd
 {
 #define THIS Instance
-	WRD_CLASS_DECLARE(Instance)
+	WRD_CLASS_DEFINE(Instance)
 
 	THIS::Instance()
 	{

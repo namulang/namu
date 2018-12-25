@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../bases/Trace.hpp"
-#include "Bindable.hpp"
+#include "TBindable.inl"
 #include "../bases/TGettable.inl"
 
 namespace wrd
@@ -10,14 +10,16 @@ namespace wrd
 	class Result;
 	class Node;
 
+	//	Hierarchy:
+	//		Instance <- TGettable<Instance> <- TBindable <- Trace <- TGettable<T> <-
+	//		TWeak<T>
 	template <typename T>
-	class TWeak : public TGettable<T, Trace>, public Bindable
+	class TWeak : public TGettable<T, Trace>
 	{	WRD_CLASS_DECLARE_2(TWeak, TGettable<T WRD_COMMA() Trace>)
 	public:
 		TWeak();
 		TWeak(T& it);
 		TWeak(T* it);
-		TWeak(Bindable& rhs);
 
 	public:
 		This& operator=(const This& rhs);
@@ -27,8 +29,8 @@ namespace wrd
 		wbool operator!=(const This& rhs) const;
 
 	public:	// TBindable:
+		using Super::bind;
 		virtual Result& bind(Instance& new1);
-		Result& bind(Bindable& rhs);
 		virtual Result& unbind();
 		virtual wbool isBind() const;
 

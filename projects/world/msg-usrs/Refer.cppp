@@ -30,8 +30,6 @@ namespace wrd
 	}
 
 	wbool THIS::isConst() const { return _is_const; }
-	Result& THIS::bind(Refer& it) { return bind(it.get()); }
-	Result& THIS::bind(const Refer& it) { return bind(it.get()); }
 
 	Result& THIS::bind(Instance& it)
 	{
@@ -124,6 +122,8 @@ namespace wrd
 
 		return *_bean;
 	}
+
+	//	TODO: impl _get()
 
 #undef THIS
 }
