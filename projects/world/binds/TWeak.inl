@@ -20,6 +20,7 @@ namespace wrd
 		TWeak();
 		TWeak(T& it);
 		TWeak(T* it);
+		template <typename V> TWeak(const TBindable<V>& rhs) : Super() { bind(rhs.get()); }
 
 	public:
 		This& operator=(const This& rhs);
@@ -30,7 +31,7 @@ namespace wrd
 
 	public:	// TBindable:
 		using Super::bind;
-		virtual Res& bind(Instance& new1);
+		virtual Res& bind(const Instance& new1);
 		virtual Res& unbind();
 		virtual wbool isBind() const;
 

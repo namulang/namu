@@ -13,6 +13,8 @@ namespace wrd
 		Refer(const Node& it);
 		Refer(const Refer& it);
 		Refer(Refer& it);
+		template <typename V> Refer(const TBindable<V>& rhs) : Super() { bind(rhs.get()); }
+		template <typename V> Refer(TBindable<V>& rhs) : Super() { bind(rhs.get()); }
 
 	public:
 		wbool operator==(const Refer& rhs) const;
@@ -31,8 +33,8 @@ namespace wrd
 
 	public:	//	TBindable:
 		using Super::bind;
-		virtual Res& bind(Instance& it);
-		Res& bind(const Instance& it);
+		virtual Res& bind(const Instance& it);
+		Res& bind(Instance& it);
 		virtual wbool isBind() const;
 		virtual Res& unbind();
 

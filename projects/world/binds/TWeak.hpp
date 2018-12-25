@@ -15,8 +15,8 @@ namespace wrd
 	WRD_CLASS_DEFINE(TEMPL, THIS)
 
     TEMPL THIS::TWeak() { }
-    TEMPL THIS::TWeak(T& it) { bind(it); }
-    TEMPL THIS::TWeak(T* it) { bind(it); }
+    TEMPL THIS::TWeak(const T& it) { bind(it); }
+    TEMPL THIS::TWeak(const T* it) { bind(it); }
 
     TEMPL THIS& THIS::operator=(const This& rhs)
     {
@@ -25,13 +25,13 @@ namespace wrd
         return *this;
 	}
 
-    TEMPL THIS& THIS::operator=(T& new1)
+    TEMPL THIS& THIS::operator=(const T& new1)
     {
         bind(new1);
         return *this;
     }
 
-    TEMPL THIS& THIS::operator=(T* new1)
+    TEMPL THIS& THIS::operator=(const T* new1)
     {
         bind(new1);
         return *this;
@@ -45,7 +45,7 @@ namespace wrd
     TEMPL const T* THIS::operator*() const { return &get(); }
     TEMPL T* THIS::operator*() { return &get(); }
 
-    TEMPL Res& THIS::bind(T& new1)
+    TEMPL Res& THIS::bind(const T& new1)
     {
         //  pre:
         //      param-validation:
@@ -59,7 +59,7 @@ namespace wrd
         return blk.look();
     }
 
-    TEMPL Res& THIS::bind(T* new1)
+    TEMPL Res& THIS::bind(const T* new1)
     {
         WRD_IS_NULL(new1);
         return bind(*new1);
@@ -73,13 +73,18 @@ namespace wrd
         if(inst.getSerial() != getSerial()) {
             unbind();
             wasbindfail.warn("...");
-            return Nuller<Instance>::ref;
+            // TODO: uncomment return Nuller<Instance>::ref;
         }
 
         return inst;
     }
 
-    TEMPL T& THIS::get() { return const_cast<T&>((const_cast<This*>(this))->get()); }
+    TEMPL T& THIS::get()
+	{
+		WRD_UNCONST()
+		return const_cast<T&>(unconst->get());
+	}
+
     TEMPL Res& THIS::unbind() { return release(); }
 
     TEMPL wbool THIS::isBind() const

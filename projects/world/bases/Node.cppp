@@ -36,7 +36,9 @@ namespace wrd
 		WRD_IS_THIS(Node)
 		return getNodes()[n];
 	}
-	virtual Refer use(Msg& msg) = 0;
+	virtual Refer use(Msg& msg) {
+		// TODO: Nodes들을 검색해서 msg를 canUse인지 체크할것.
+	}
 	virtual Refer use(Msg& msg) const = 0;
 	virtual wbool isConst() const { return false; }
 	virtual const Origin& getOrigin() const {

@@ -53,17 +53,16 @@ namespace wrd
 	TEMPL WRD_LAZY_METHOD(const Container&, THIS::getNodesStatic, WRD_VOID(), Array)
 	TEMPL WRD_LAZY_METHOD(const Classes, THIS::getSupersStatic)
 	TEMPL WRD_LAZY_METHOD(const Classes, THIS::getSubsStatic)
-	TEMPL WRD_LAZY_METHOD(wbool, THIS::isOccupyStatic, WRD_VOID(), wbool, isSub<Object/*TODO: OccupiableObject*/>())
+	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::isOccupyStatic, WRD_VOID(), wbool, TIfSub<T WRD_COMMA() Object/*TODO: OccupiableObject*/>::is)
 	TEMPL WRD_LAZY_METHOD(wbool, THIS::isADTStatic, WRD_VOID(), wbool, TIfADT<T>::is)
 	TEMPL WRD_LAZY_METHOD(wbool, THIS::isTemplateStatic, WRD_VOID(), wbool, TIfTemplate<T>::is)
-    TEMPL const Class& THIS::getSuper() const { return T::Super::getClassStatic(); }
 
-    TEMPL Res& THIS::_initMembers()
+    TEMPL Res& THIS::_initNodes()
     {
         /*TODO: uncomment this if(Super::_initMembers())
                 return SuperFail.warn();*/
 
-        return T::_onInitializeMembers(_getNodes()); // getMethods from RealClass T.
+        return T::_onInitializeMembers(this->_getNodes()); // getMethods from RealClass T.
     }
 
 #undef TEMPL

@@ -82,8 +82,8 @@ namespace wrd
 		const Node& get(widx n) const;
 		Node& get(const Str& name);
 		const Node& get(const Str& name) const;
-		virtual Refer use(Msg& msg) = 0;
-		virtual Refer use(Msg& msg) const = 0;
+		virtual Refer use(Msg& msg);
+		virtual Refer use(Msg& msg) const;
 		virtual const Origin& getOrigin() const;
 		virtual wbool canUse(const Msg& msg) const;
 		virtual wbool isStatic() const;

@@ -11,7 +11,7 @@ namespace wrd
 
     TEMPL THIS::operator wbool() const { return isBind(); }
 
-    TEMPL Res& THIS::bind(Instance* new1)
+    TEMPL Res& THIS::bind(const Instance* new1)
     {
         WRD_IS_NULL(*new1)
         return bind(*new1);

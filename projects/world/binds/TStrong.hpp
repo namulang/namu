@@ -14,11 +14,10 @@ namespace wrd
 	WRD_CLASS_DEFINE(TEMPL, THIS)
 
     TEMPL THIS::TStrong() {}
-    TEMPL THIS::TStrong(T& it) : Super() { bind(it); }
-    TEMPL THIS::TStrong(T* it) : Super() { bind(it); }
-    TEMPL THIS::TStrong(Bindable& rhs) : Super() { bind(rhs); }
+    TEMPL THIS::TStrong(const T& it) : Super() { bind(it); }
+    TEMPL THIS::TStrong(const T* it) : Super() { bind(it); }
 
-    TEMPL Res& THIS::bind(T& it)
+    TEMPL Res& THIS::bind(const T& it)
 	{
             Res& res = Super::bind(it);
             if(res) return res.dump("...");
@@ -33,13 +32,10 @@ namespace wrd
         }
         Res& unbind() {
             Block& blk = _getBlock();
-            if(blk.isNull()) {
-                waswrongmember.warn("");
-                return Super::unbind();
-            }
-            if(blk.isHeap()) blk._decreaseCount();
+			WRD_IS_NULL(blk, Super::unbind(), waswrongmember)
+            if(blk.isHeap())
+				blk._decreaseCount();
 
-    EXIT:
             return Super::unbind();
         }
     };

@@ -14,11 +14,11 @@ namespace wrd
         operator wbool() const;
 
     public:
-        virtual Res& bind(Instance& new1) = 0;
-		template <typename V> Res& bind(TBindable<V>& rhs) { return bind(rhs.get()); }
+        virtual Res& bind(const Instance& new1) = 0;
+		template <typename V> Res& bind(const TBindable<V>& rhs) { return bind(rhs.get()); }
         /// mostly, unbind is replacable to release() comletely.
         /// but some class(e.g. Refer) treat differently between unbind() and release().
-        Res& bind(Instance* new1);
+        Res& bind(const Instance* new1);
         virtual Res& unbind() = 0;
         virtual wbool isBind() const = 0;
     };

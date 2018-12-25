@@ -12,7 +12,7 @@ namespace wrd
 
     template <typename T>
     class TClass : public TMetaSuper<T>::Is
-    {	WRD_CLASS(TClass<T>, typename TMetaSuper<T>::Is)
+    {	WRD_CLASS_DECLARE(TClass<T>, typename TMetaSuper<T>::Is)
     public:
         TClass();
 
@@ -36,12 +36,12 @@ namespace wrd
 		virtual Res& _initNodes();
 
     public:
-		static wbool isADTStatic();
-		static wbool isTemplateStatic();
         static const Str& getNameStatic();
         static const Container& getNodesStatic();
         static const Classes& getSupersStatic();
         static const Classes& getSubsStatic();
-        static wbool isStaticOccupy();
+        static wbool isOccupyStatic();
+		static wbool isADTStatic();
+		static wbool isTemplateStatic();
     };
 }
