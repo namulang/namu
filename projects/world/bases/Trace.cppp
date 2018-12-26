@@ -1,0 +1,21 @@
+#include "Trace.hpp"
+#include "../world.hpp"
+
+namespace wrd
+{
+#define THIS Trace
+	WRD_CLASS_DEFINE(Trace)
+
+	const Block& THIS::getBlock() const
+	{
+		WRD_UNCONST()
+		return unconst->_getBlock();
+	}
+	Block& THIS::_getBlock()
+	{
+		WRD_IS_THIS(Block)
+		return const_cast<Block&>(World::get().getInstancer()[_id]);
+	}
+
+#undef THIS
+}

@@ -1,10 +1,9 @@
 #pragma once
 
 #include "TWeak.inl"
-#pragma message "4-2-2-2"
 #include "../bases/TGettable.hpp"
-#pragma message "4-2-2-3"
 #include "../world.hpp"
+#include "../memory/Block.hpp"
 #pragma message "4-2-2-4"
 
 namespace wrd
@@ -39,13 +38,8 @@ namespace wrd
 
     TEMPL wbool THIS::operator==(const This& rhs) const { return &this->get()  == &rhs.get(); }
     TEMPL wbool THIS::operator!=(const This& rhs) const { return &this->get() != &rhs.get(); }
-    TEMPL THIS::operator wbool() const { return isBind(); }
-    TEMPL const T* THIS::operator->() const { return &get(); }
-    TEMPL T* THIS::operator->() { return &get(); }
-    TEMPL const T* THIS::operator*() const { return &get(); }
-    TEMPL T* THIS::operator*() { return &get(); }
 
-    TEMPL Res& THIS::bind(const T& new1)
+    TEMPL Res& THIS::bind(const Instance& new1)
     {
         //  pre:
         //      param-validation:
@@ -54,36 +48,25 @@ namespace wrd
 
         //  main:
         unbind();
-        _setId(new1.getID);
-        _setSerial(blk.getSerial());
+        this->_setId(new1.getId);
+        this->_setSerial(blk.getSerial());
         return blk.look();
     }
 
-    TEMPL Res& THIS::bind(const T* new1)
-    {
-        WRD_IS_NULL(new1);
-        return bind(*new1);
-    }
-
-    TEMPL const T& THIS::get() const
+    TEMPL Instance& THIS::_get()
     {
         WRD_IS_THIS(T)
-        const Instance& inst = World::get().getInstancer()[_id].getInstance();
+        Instance& ins = _getBlock().get();
+		WRD_IS_NULL(ins)
         //  정확한 인터페이스가 나오지 않았다.
-        if(inst.getSerial() != getSerial()) {
+        if(ins.getSerial() != this->getSerial()) {
             unbind();
             wasbindfail.warn("...");
             // TODO: uncomment return Nuller<Instance>::ref;
         }
 
-        return inst;
+        return ins;
     }
-
-    TEMPL T& THIS::get()
-	{
-		WRD_UNCONST()
-		return const_cast<T&>(unconst->get());
-	}
 
     TEMPL Res& THIS::unbind() { return release(); }
 

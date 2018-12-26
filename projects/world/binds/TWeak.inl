@@ -18,14 +18,14 @@ namespace wrd
 	{	WRD_CLASS_DECLARE_2(TWeak, TGettable<T WRD_COMMA() Trace>)
 	public:
 		TWeak();
-		TWeak(T& it);
-		TWeak(T* it);
+		TWeak(const T& it);
+		TWeak(const T* it);
 		template <typename V> TWeak(const TBindable<V>& rhs) : Super() { bind(rhs.get()); }
 
 	public:
 		This& operator=(const This& rhs);
-		This& operator=(T& newone);
-		This& operator=(T* newone);
+		This& operator=(const T& newone);
+		This& operator=(const T* newone);
 		wbool operator==(const This& rhs) const;
 		wbool operator!=(const This& rhs) const;
 

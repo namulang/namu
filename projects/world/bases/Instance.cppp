@@ -18,12 +18,6 @@ namespace wrd
 		Nexus::get().getInstancer()[_id].getSerial();
 	}
 
-	const Block& THIS::getBlock() const
-	{
-		WRD_IS_THIS(Block)
-		return Nexus::get().getInstancer()[_id];
-	}
-
 	wbool THIS::isHeap() const
 	{
 		MemoryMap& mmap = Nexus::get().getInstancer().getMemoryMap();

@@ -1,6 +1,5 @@
 #pragma once
 
-#pragma message "Instance-1"
 #include "Thing.hpp"
 #include "Id.hpp"
 
@@ -33,7 +32,6 @@ namespace wrd
 		//		override it.
 		Id getId() const;
 		wcnt getSerial() const;
-		const Block& getBlock() const;
 		wbool isHeap() const;
 		TStrong<Node> toStrong();
 		TStrong<const Node> toStrong() const;
@@ -42,8 +40,6 @@ namespace wrd
 		//	Thing:
 		virtual Res& release();
 
-	protected:
-		Block& _getBlock();
 		Res& _setId(Id new1);
 
 	private:

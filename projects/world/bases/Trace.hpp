@@ -15,12 +15,14 @@ namespace wrd
 
     public: //  Trace:
         wcnt getSerial() const;
+		const Block& getBlock() const;
 
     public: //  Thing:
         virtual Res& release();
 
-    protected:
+	protected://Trace:
         Res& _setSerial(wcnt new1);
+		Block& _getBlock();
 
     private:
         wcnt _serial;

@@ -13,7 +13,8 @@ namespace wrd
         Res& link();
         Res& unlink();
 
-      protected:
-              virtual Instance& _get();
+	protected:
+		//	TGettable:
+		virtual Instance& _get();
     };
 }
