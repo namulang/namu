@@ -4,7 +4,6 @@
 #include "../bases/TGettable.hpp"
 #include "../world.hpp"
 #include "../memory/Block.hpp"
-#pragma message "4-2-2-4"
 
 namespace wrd
 {
@@ -14,25 +13,25 @@ namespace wrd
 	WRD_CLASS_DEFINE(TEMPL, THIS)
 
     TEMPL THIS::TWeak() { }
-    TEMPL THIS::TWeak(const T& it) { bind(it); }
-    TEMPL THIS::TWeak(const T* it) { bind(it); }
+    TEMPL THIS::TWeak(const T& it) { this->bind(it); }
+    TEMPL THIS::TWeak(const T* it) { this->bind(it); }
 
     TEMPL THIS& THIS::operator=(const This& rhs)
     {
-        bind(rhs);
+        this->bind(rhs);
         //  Super::operator=()를 해서는 안된다.
         return *this;
 	}
 
     TEMPL THIS& THIS::operator=(const T& new1)
     {
-        bind(new1);
+        this->bind(new1);
         return *this;
     }
 
     TEMPL THIS& THIS::operator=(const T* new1)
     {
-        bind(new1);
+        this->bind(new1);
         return *this;
     }
 
@@ -48,7 +47,7 @@ namespace wrd
 
         //  main:
         unbind();
-        this->_setId(new1.getId);
+        this->_setId(new1.getId());
         this->_setSerial(blk.getSerial());
         return blk.look();
     }
@@ -56,7 +55,7 @@ namespace wrd
     TEMPL Instance& THIS::_get()
     {
         WRD_IS_THIS(T)
-        Instance& ins = _getBlock().get();
+        Instance& ins = this->_getBlock().get();
 		WRD_IS_NULL(ins)
         //  정확한 인터페이스가 나오지 않았다.
         if(ins.getSerial() != this->getSerial()) {
@@ -72,21 +71,19 @@ namespace wrd
 
     TEMPL wbool THIS::isBind() const
     {
-        const Block& block = getBlock();
-        return block.isExist() && block.getSerial() == _serial;
+        const Block& block = this->getBlock();
+        return 	block.isExist() &&
+				block.getSerial() == this->getSerial();
     }
 
     TEMPL Res& THIS::release()
     {
         if(isBind())
-            _getBlock().ignore();
+            this->_getBlock().ignore();
         return Super::release();
     }
 
     //TODO: TEMPL ResSet isValid() const;
-    TEMPL const Block& THIS::getBlock() const { return World::get().getInstancer()[_id]; }
-    TEMPL Block& THIS::_getBlock() { return World::get().getInstancer()[_id]; }
-
 #undef TEMPL
 #undef THIS
 }

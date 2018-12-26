@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../bases/Node.hpp"
+#include "../bases/Composit.hpp"
 
 namespace wrd
 {
@@ -9,8 +9,8 @@ namespace wrd
     class Origin;
     class Array;
 
-    class Class : public Node
-    {	WRD_CLASS_DECLARE(Class, Node) // World에 visible해야 하기 때문이다.
+    class Class : public Composit
+    {	WRD_CLASS_DECLARE(Class, Composit) // World에 visible해야 하기 때문이다.
         friend class Interpreter; // for interpreter class which can use _getNodes().
 
     public:

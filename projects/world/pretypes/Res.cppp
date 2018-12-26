@@ -1,0 +1,12 @@
+#pragma once
+
+#include "Res.hpp"
+
+namespace wrd
+{
+#define THIS Res
+
+	WRD_CLASS_DEFINE(THIS)
+
+#undef THIS
+}

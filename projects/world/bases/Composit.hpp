@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Node.hpp"
-#include "../binds.hpp"
+#include "../binds/TStrong.inl"
 
 namespace wrd
 {
 	class Chain;
+
     class Composit : public Node
     {	WRD_CLASS_DECLARE(Composit, Node)
     public: //    Node:

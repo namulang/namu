@@ -10,8 +10,8 @@ namespace wrd
         /// increase refcnt.
         Res& look();
         Res& ignore();
-        Res& link();
-        Res& unlink();
+        Res& link(); // TODO: check isHeap()
+        Res& unlink(); // TODO: apply only if isHEAP() == true.
 
 	protected:
 		//	TGettable:

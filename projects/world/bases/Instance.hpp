@@ -3,8 +3,6 @@
 #include "Thing.hpp"
 #include "Id.hpp"
 
-#pragma message "Instance-2"
-
 namespace wrd
 {
 	class Block;
@@ -37,9 +35,12 @@ namespace wrd
 		TStrong<const Node> toStrong() const;
 		TWeak<Node> toWeak();
 		TWeak<const Node> toWeak() const;
+		const Block& getBlock() const;
 		//	Thing:
 		virtual Res& release();
 
+	protected:
+		Block& _getBlock();
 		Res& _setId(Id new1);
 
 	private:

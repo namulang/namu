@@ -1,8 +1,15 @@
 #pragma once
 
+#pragma message "TClass.hpp1"
 #include "TClass.inl"
+#pragma message "TClass.hpp2"
 #include "helpers.hpp"
+#pragma message "TClass.hpp3"
 #include "../pretypes/Str.hpp"
+#pragma message "TClass.hpp4"
+#include "../containers/Chain.hpp"
+#include "Classes.hpp"
+#pragma message "TClass.hpp5"
 
 namespace wrd
 {
@@ -34,6 +41,14 @@ namespace wrd
 
     TEMPL TStrong<Instance> THIS::instance() const { return TCloner<T>::instance(); }
 
+    TEMPL Res& THIS::_initNodes()
+    {
+        /*TODO: uncomment this if(Super::_initMembers())
+                return SuperFail.warn();*/
+
+        return nulr<Res>();//TODO: uncomment this. T::_onInitNodes(this->_getNodes()); // getMethods from RealClass T.
+    }
+
     TEMPL const Str& THIS::getNameStatic()
     {
         static Str inner;
@@ -50,20 +65,13 @@ namespace wrd
         return inner;
     }
 
+	TEMPL WRD_LAZY_METHOD(const Class&, THIS::getSuperStatic, WRD_VOID(), TClass<Super>)
 	TEMPL WRD_LAZY_METHOD(const Container&, THIS::getNodesStatic, WRD_VOID(), Array)
-	TEMPL WRD_LAZY_METHOD(const Classes, THIS::getSupersStatic)
-	TEMPL WRD_LAZY_METHOD(const Classes, THIS::getSubsStatic)
+	TEMPL WRD_LAZY_METHOD(const Classes&, THIS::getSupersStatic, WRD_VOID(), Classes)
+	TEMPL WRD_LAZY_METHOD(const Classes&, THIS::getSubsStatic, WRD_VOID(), Classes)
 	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::isOccupyStatic, WRD_VOID(), wbool, TIfSub<T WRD_COMMA() Object/*TODO: OccupiableObject*/>::is)
 	TEMPL WRD_LAZY_METHOD(wbool, THIS::isADTStatic, WRD_VOID(), wbool, TIfADT<T>::is)
 	TEMPL WRD_LAZY_METHOD(wbool, THIS::isTemplateStatic, WRD_VOID(), wbool, TIfTemplate<T>::is)
-
-    TEMPL Res& THIS::_initNodes()
-    {
-        /*TODO: uncomment this if(Super::_initMembers())
-                return SuperFail.warn();*/
-
-        return T::_onInitializeMembers(this->_getNodes()); // getMethods from RealClass T.
-    }
 
 #undef TEMPL
 #undef THIS

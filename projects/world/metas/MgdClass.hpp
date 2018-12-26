@@ -21,6 +21,6 @@ namespace wrd
 
     private:
         TStrong<Origin> _org;
-		Chain _nodes;
+		TStrong<Chain> _nodes;
     };
 }

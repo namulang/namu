@@ -1,19 +1,13 @@
 #pragma once
 
-#pragma message "1"
 #include "./wrd-commons.hpp"
-#pragma message "4"
-#include "./binds.hpp"
-#pragma message "5"
-#include "./metas.hpp"
-#pragma message "2"
 #include "./bases.hpp"
-#pragma message "3"
 #include "./memory.hpp"
-#pragma message "6"
 #include "./msg-usrs.hpp"
-#pragma message "7"
+#include "./metas.hpp"
+#include "./binds.hpp"
 #include "./pretypes.hpp"
+#include "./containers.hpp"
 
 namespace wrd
 {

@@ -5,15 +5,6 @@
 //	World는 객체 안에서 다른 객체에 접근하는 접근자함수들에 경우에는 DelayingNullCorruption으로 인해 객체가 Null이라고 해도 Null을 반환할뿐 프로그램이 죽지는 않는다.
 //	접근자 아닌 경우에는 "속도문제" 로 인해 수행하지 않는다.
 //	또한 반환형이 객체에 대한 레퍼런스나 포인터가 아닌경우에도 정상적인 반환값과 겹칠 수있기 때문에 체크하지 않는다.
-#define WRD_IS_NULL_3(VALUE, RET, RES)	\
-	if((VALUE).isNull()) {				\
-		RES.warn(#VALUE);				\
-		return RET;						\
-	}
-#define WRD_IS_NULL_2(VALUE, RET)	WRD_IS_NULL_3(VALUE, RET, RET)
-#define WRD_IS_NULL_1(VALUE)		WRD_IS_NULL_2(VALUE, wasnull)
-#define WRD_IS_NULL(...) 			WRD_OVERLOAD(WRD_IS_NULL, __VA_ARGS__)
-
 //	multiple NULL check macro:
 //		if you need to check plenty arguments to be checked null
 //		and return value will be same, you can accomplish it conveniently
@@ -25,24 +16,32 @@
 //			WRD_IS_NULL(arg3, -1)
 //				or
 //			WRD_ARE_NULL(-1, arg1, arg2, arg3)
+#define WRD_IS_NULL_3(VALUE, RET, RES)	\
+	if((VALUE).isNull()) {				\
+		RES.warn(#VALUE);				\
+		return RET;						\
+	}
+#define WRD_IS_NULL_2(VALUE, RET)	WRD_IS_NULL_3(VALUE, RET, RET)
+#define WRD_IS_NULL_1(VALUE)		WRD_IS_NULL_2(VALUE, wasnull)
+#define WRD_IS_NULL(...) 			WRD_OVERLOAD(WRD_IS_NULL, __VA_ARGS__)
+
 #define _ARE_NULL(VALUE, RET)		WRD_IS_NULL(VALUE, RET)
 #define WRD_ARE_NULL(RET, ...)		NE_EACH_EXPAND(_ARE_NULL, RET, __VA_ARGS__)
 
-#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL_3(*this, nulr<TYPE>, wasnull)
+#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL_3(*this, nulr<TYPE>(), wasnull)
 #define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
 #define WRD_IS_THIS(...) 			WRD_OVERLOAD(WRD_IS_THIS, __VA_ARGS__)
 
-#define WRD_IS_SUPER_1(call)        \
-    if(Super:: call ) return superfail;
+#define WRD_IS_SUPER_1(call)        if(Super:: call ) return superfail;
 #define WRD_IS_SUPER_2(res, call)	\
-    Res& res = Super:: call ;    \
+    Res& res = Super:: call ;    	\
     if(res) return superfail;
-#define WRD_IS_SUPER(...)          WRD_OVERLOAD(WRD_IS_SUPER, __VA_ARGS__)
+#define WRD_IS_SUPER(...)			WRD_OVERLOAD(WRD_IS_SUPER, __VA_ARGS__)
 
-#define WRD_IS_CONST(RET)			\
-	if((this->isConst())) {			\
-		wascancel.warn(#RET);		\
-		return RET;					\
+#define WRD_IS_CONST(RET)		\
+	if((this->isConst())) {		\
+		wascancel.warn(#RET);	\
+		return RET;				\
 	}
 
 #define WRD_ASSERT_4(expr, ret, dump, msg)  \
@@ -83,7 +82,7 @@
         TStrong<This> clone() const { return TStrong<This>(_clone()); }	\
 	protected:															\
 		virtual TStrong<Instance> _clone() const { 						\
-			return TCloner<T>::clone(*this);							\
+			return TCloner<This>::clone(*this);							\
 		}																\
 	private:
 #define WRD_CLASS_2(THIS, SUPER)\

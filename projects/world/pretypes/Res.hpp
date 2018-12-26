@@ -5,18 +5,19 @@
 namespace wrd
 {
 	class Res : public Object
-	{	WRD_CLASS(Res, Object)
+	{	WRD_CLASS_DECLARE(Res, Object)
 		//	TODO: fill this.
 	public:
 		operator wbool() { return isErr(); }
 		wbool isErr() const;
 		wbool isWarn() const;
 		wbool isInfo() const;
-		/*wint warn(.....);
-		wint err(....);
-		wint info(....);
-		wint dbg(..);
-
+		//	TODO: imple these funcs.
+		Res& warn(...);
+		Res& err(...);
+		Res& info(...);
+		Res& dbg(...);
+		/*
 		template <typename T>
 		T returns() {
 			return nulr<T>::null();

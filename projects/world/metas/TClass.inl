@@ -40,6 +40,7 @@ namespace wrd
         static const Container& getNodesStatic();
         static const Classes& getSupersStatic();
         static const Classes& getSubsStatic();
+		static const Class& getSuperStatic();
         static wbool isOccupyStatic();
 		static wbool isADTStatic();
 		static wbool isTemplateStatic();
