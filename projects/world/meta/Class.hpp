@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../bases/Composit.hpp"
+#include "../base/Composit.hpp"
 
 namespace wrd
 {

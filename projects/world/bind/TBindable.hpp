@@ -1,5 +1,5 @@
 #include "TBindable.inl"
-#include "../metas/TClass.hpp"
+#include "../meta/TClass.hpp"
 #include "../pretypes/Reses.hpp"
 
 namespace wrd

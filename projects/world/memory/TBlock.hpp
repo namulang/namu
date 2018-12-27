@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Block.hpp"
-#include "../bases/TGettable.hpp"
+#include "../base/TGettable.hpp"
 
 namespace wrd
 {

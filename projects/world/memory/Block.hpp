@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../bases/Id.hpp"
+#include "../base/Id.hpp"
 
 namespace wrd
 {

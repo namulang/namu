@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../containers/TArray.hpp"
+#include "../container/TArray.hpp"
 #include "Class.hpp"
 
 namespace wrd

@@ -1,13 +1,13 @@
 #pragma once
 
 #include "./wrd-commons.hpp"
-#include "./bases.hpp"
+#include "./base.hpp"
 #include "./memory.hpp"
-#include "./msg-usrs.hpp"
-#include "./metas.hpp"
-#include "./binds.hpp"
+#include "./msg-usr.hpp"
+#include "./meta.hpp"
+#include "./bind.hpp"
 #include "./pretypes.hpp"
-#include "./containers.hpp"
+#include "./container.hpp"
 
 namespace wrd
 {

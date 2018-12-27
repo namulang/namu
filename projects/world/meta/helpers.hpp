@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../binds/TStrong.inl"
+#include "../bind/TStrong.inl"
 
 namespace wrd
 {

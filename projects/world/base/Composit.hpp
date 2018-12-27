@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Node.hpp"
-#include "../binds/TStrong.inl"
+#include "../bind/TStrong.inl"
 
 namespace wrd
 {

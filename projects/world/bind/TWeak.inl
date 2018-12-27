@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../bases/Trace.hpp"
+#include "../base/Trace.hpp"
 #include "TBindable.inl"
-#include "../bases/TGettable.inl"
+#include "../base/TGettable.inl"
 
 namespace wrd
 {

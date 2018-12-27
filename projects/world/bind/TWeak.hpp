@@ -1,7 +1,7 @@
 #pragma once
 
 #include "TWeak.inl"
-#include "../bases/TGettable.hpp"
+#include "../base/TGettable.hpp"
 #include "../world.hpp"
 #include "../memory/Block.hpp"
 

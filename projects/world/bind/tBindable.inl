@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../bases/TGettable.inl"
+#include "../base/TGettable.inl"
 
 namespace wrd
 {

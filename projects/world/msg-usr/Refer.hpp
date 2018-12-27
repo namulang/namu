@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../bases/Node.hpp"
-#include "../binds/TBindable.inl"
+#include "../base/Node.hpp"
+#include "../bind/TBindable.inl"
 
 namespace wrd
 {

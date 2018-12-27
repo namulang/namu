@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../msg-usrs/Object.hpp"
+#include "../msg-usr/Object.hpp"
 
 namespace wrd
 {

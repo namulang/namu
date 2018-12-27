@@ -1,8 +1,8 @@
 #pragma once
 
 #include "TGettable.inl"
-#include "../bases/Instance.hpp"
-#include "../metas/TClass.inl"
+#include "../base/Instance.hpp"
+#include "../meta/TClass.inl"
 
 namespace wrd
 {

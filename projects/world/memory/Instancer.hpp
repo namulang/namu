@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../bases/Manager.hpp"
+#include "../base/Manager.hpp"
 
 namespace wrd
 {
