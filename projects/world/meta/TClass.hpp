@@ -1,15 +1,10 @@
 #pragma once
 
-#pragma message "TClass.hpp1"
 #include "TClass.inl"
-#pragma message "TClass.hpp2"
 #include "helpers.hpp"
-#pragma message "TClass.hpp3"
 #include "../pretypes/Str.hpp"
-#pragma message "TClass.hpp4"
 #include "../container/Chain.hpp"
 #include "Classes.hpp"
-#pragma message "TClass.hpp5"
 
 namespace wrd
 {
