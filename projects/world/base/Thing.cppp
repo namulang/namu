@@ -89,7 +89,7 @@ namespace wrd
 	{
 		if(isSub(cls))
 			return *this;
-		return TNuller<Node>::ref;
+		return nulr<Node>();
 	}
 	const Node& THIS::_cast(const Class& cls) const
 	{

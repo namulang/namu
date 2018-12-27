@@ -54,7 +54,7 @@ namespace wrd
 	}
 	Node& _get(wbool want_const, std::function<wbool(Node&)> tester) {
 		WRD_IS_THIS(Node)
-		WRD_ARE_NULL(TNuller<Node>::ref, msg, members)
+		WRD_ARE_NULL(nulr<Node>(), msg, members)
 
 		Node* found = NULL;
 		if(_getNodes().each<T>([&found, want_const, tester](Node& e) {
@@ -66,7 +66,7 @@ namespace wrd
 			found = &e;
 			return wasgood; // means keep eaching.
 		}))
-			return wasdup.err(".....").returns(TNuller<Node>::ref);
+			return wasdup.err(".....").returns(nulr<Node>());
 
 		return *found;
 	}

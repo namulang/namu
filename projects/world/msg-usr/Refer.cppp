@@ -107,7 +107,7 @@ namespace wrd
 	Node& THIS::_cast(const Class& cls)
 	{
 		if(isConst())
-			return TNuller<Node>::ref;
+			return nulr<Node>();
 
 		const This* cast = this;
 		Node& ret = const_cast<Node&>(cast->_cast(cls));
@@ -118,7 +118,7 @@ namespace wrd
 	const Node& THIS::_cast(const Class& cls) const
 	{
 		if( ! _bean || ! _bean->isSub(cls))
-			return TNuller<Node>::ref;
+			return nulr<Node>();
 
 		return *_bean;
 	}

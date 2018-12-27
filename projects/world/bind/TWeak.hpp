@@ -61,7 +61,7 @@ namespace wrd
         if(ins.getSerial() != this->getSerial()) {
             unbind();
             wasbindfail.warn("...");
-            // TODO: uncomment return Nuller<Instance>::ref;
+            // TODO: uncomment return nulr<Instance>();
         }
 
         return ins;
