@@ -16,7 +16,7 @@
 //			WRD_IS_NULL(arg3, -1)
 //				or
 //			WRD_ARE_NULL(-1, arg1, arg2, arg3)
-#define WRD_IS_NULL_3(VALUE, RET, RES)	\
+#define WRD_IS_NULL_3(VALUE, RES, RET)	\
 	if((VALUE).isNull()) {				\
 		RES.warn(#VALUE);				\
 		return RET;						\
@@ -28,7 +28,7 @@
 #define _ARE_NULL(VALUE, RET)		WRD_IS_NULL(VALUE, RET)
 #define WRD_ARE_NULL(RET, ...)		NE_EACH_EXPAND(_ARE_NULL, RET, __VA_ARGS__)
 
-#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL_3(*this, nulr<TYPE>(), wasnull)
+#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL_3(*this, wasnull, nulr<TYPE>())
 #define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
 #define WRD_IS_THIS(...) 			WRD_OVERLOAD(WRD_IS_THIS, __VA_ARGS__)
 
