@@ -19,7 +19,7 @@ namespace wrd
 	TEMPL const T& WRD_UNWRAP(THIS)::get() const
 	{
 		WRD_UNCONST_2(THIS, unconst)
-		return unconst->_get().template cast<const T>(); 
+		return unconst._get().template cast<const T>(); 
 	}
 
 #undef TEMPL
@@ -37,7 +37,7 @@ namespace wrd
 	TEMPL const T& THIS::get() const
 	{
 		WRD_UNCONST_2(THIS, unconst)
-		return unconst->_get().template cast<const T>();
+		return unconst._get().template cast<const T>();
 	}
 
 #undef TEMPL

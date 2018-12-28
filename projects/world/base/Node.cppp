@@ -50,7 +50,7 @@ namespace wrd
 	}
 	const Node& get(const Str& name) const {
 		WRD_UNCONST()
-		return _get(true, [&name](Node& e) { return e.getName() == name; });
+		return unconst._get(true, [&name](Node& e) { return e.getName() == name; });
 	}
 	Node& _get(wbool want_const, std::function<wbool(Node&)> tester) {
 		WRD_IS_THIS(Node)

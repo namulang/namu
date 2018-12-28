@@ -27,7 +27,7 @@ namespace wrd
 		const Stream& THIS::getStream(widx n) const
 		{
 			WRD_UNCONST()
-			return unconst->getStream(n);
+			return unconst.getStream(n);
 		}
 
 		const Stream& THIS::getStream(const char* c_message) const

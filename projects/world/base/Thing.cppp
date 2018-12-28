@@ -8,13 +8,10 @@ namespace wrd
 	wbool THIS::isExist() const { return this; }
 	wbool THIS::isSuper(const Class& it) const { return getClass().isSuper(it); }
 	wbool THIS::isSuper(const Thing& it) const { return getClass().isSuper(it.getClass()); }
-	template <typename T>
-	wbool THIS::isSuper() const { return getClass().isSuper(T::getStaticClass()); }
-
+	template <typename T> wbool THIS::isSuper() const { return getClass().isSuper(T::getStaticClass()); }
 	wbool THIS::isSub(const Thing& it) const { return it.getClass().isSuper(getClass()); }
 	wbool THIS::isSub(const Class& it) const { return it.isSuper(getClass()); }
-	template <typename T>
-	wbool THIS::isSub() const { return T::getStaticClass().isSuper(getClass()); }
+	template <typename T> wbool THIS::isSub() const { return T::getStaticClass().isSuper(getClass()); }
 	//	to는 명시적캐스팅이다. 
 	//		사용자의 개입이 가능한 유일한 캐스팅의 1 종류이며, 
 	//		A타입에 대한 명시적캐스팅은 어떠한 타입이 나올지 제한되지 않는다.
@@ -26,10 +23,8 @@ namespace wrd
 		wbool should_const = cls.isSuper(getClass()); // upcasting일때만 const를 붙여야 한다.
 		return Refer(unconst.to(cls), should_const);
 	}
-	template <typename T>
-	TRefer<T> THIS::to() { return TRefer<T>(to(T::getStaticClass())); }
-	template <typename T>
-	TRefer<T> THIS::to() const { return TRefer<T>(to(T::getStaticClass())); }
+	template <typename T> TRefer<T> THIS::to() { return TRefer<T>(to(T::getStaticClass())); }
+	template <typename T> TRefer<T> THIS::to() const { return TRefer<T>(to(T::getStaticClass())); }
 	//	Casting:
 	//		World의 캐스팅은 다음으로 구분된다.
 	//			1) native 다운캐스팅:	thing::down<T>() Refer, Thing::down(Class&)
@@ -59,10 +54,8 @@ namespace wrd
 
 	//	구체클래스로 캐스트한다. dynamic_cast와 동급이다.
 	//	invisible이다.
-	template <typename T>
-	T& THIS::cast() { return _down(T::getStaticClass()); }
-	template <typename T>
-	const T& THIS::cast() const { return _cast(T::getStaticClass()); }
+	template <typename T> T& THIS::cast() { return _down(T::getStaticClass()); }
+	template <typename T> const T& THIS::cast() const { return _cast(T::getStaticClass()); }
 	Refer THIS::implicit(const Class& cls)
 	{
 		if(isSub(cls))

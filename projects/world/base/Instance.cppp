@@ -42,7 +42,7 @@ namespace wrd
 	const Block& THIS::getBlock() const
 	{
 		WRD_UNCONST()
-		return unconst->_getBlock();
+		return unconst._getBlock();
 	}
 	Block& THIS::_getBlock()
 	{
