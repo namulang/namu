@@ -10,38 +10,35 @@ namespace wrd
 	class Visitor;
 	class Node;
 	template <typename T> class TRefer;
+	template <typename T> class TStrong;
+	class Instance;
 
 	///	Thing은 World의 최상위 객체
 	class Thing
-	{	WRD_INHERIT(Thing)
+	{	WRD_CLASS_DECL(Thing)
 	public:
 		template <typename T, typename S> friend class TVisitation; //	_tour를 위한 것이다.
 
 	public:
-		virtual const Class& getClass() const = 0;
 		virtual const Class& getSuper() const;
-		virtual Res& release();
+		virtual Res& release() = 0;
 		wbool isNull() const;
 		wbool isExist() const;
 		virtual wbool isSuper(const Class& it) const;
 		wbool isSuper(const Thing& it) const;
 		template <typename T>
 		wbool isSuper() const;
-
 		wbool isSub(const Thing& it) const;
 		wbool isSub(const Class& it) const;
-		template <typename T>
-		wbool isSub() const;
+		template <typename T> wbool isSub() const;
 		//	to는 명시적캐스팅이다. 
 		//		사용자의 개입이 가능한 유일한 캐스팅의 1 종류이며, 
 		//		A타입에 대한 명시적캐스팅은 어떠한 타입이 나올지 제한되지 않는다.
 		//		A클래스.to()는 전혀다른 B객체가 나올 수도 있다.
 		virtual Refer to(const Class& cls);
 		Refer to(const Class& cls) const;
-		template <typename T>
-		TRefer<T> to();
-		template <typename T>
-		TRefer<T> to() const;
+		template <typename T> TRefer<T> to();
+		template <typename T> TRefer<T> to() const;
 		//	Casting:
 		//		World의 캐스팅은 다음으로 구분된다.
 		//			1) native 다운캐스팅:	thing::down<T>() Refer, Thing::down(Class&)
@@ -72,10 +69,8 @@ namespace wrd
 
 		//	구체클래스로 캐스트한다. dynamic_cast와 동급이다.
 		//	invisible이다.
-		template <typename T>
-		T& cast();
-		template <typename T>
-		const T& cast() const;
+		template <typename T> T& cast();
+		template <typename T> const T& cast() const;
 		virtual Refer implicit(const Class& cls);
 		Refer implicit(const Class& cls) const;
 		//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.

@@ -9,6 +9,7 @@ namespace wrd
 	{	WRD_CLASS_DECL(Refer, TBindable<Node>)
 	public:
 		//TODO: uncomment this. Refer(const Class& cls = Node::getStaticClass(), wbool want_const = false);
+		Refer(const Class& cls = Node::getClassStatic(), wbool is_const = false);
 		Refer(Node& it);
 		Refer(const Node& it);
 		Refer(const This& it);

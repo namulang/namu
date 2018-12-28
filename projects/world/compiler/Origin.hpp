@@ -5,7 +5,8 @@ namespace wrd
 	template <typename T> class TClass;
 
 	class Origin : public Thing // ?
-	{      WRD_CLASS_DECL(Origin, Thing)
-	public:
+	{	WRD_CLASS_DECL(Origin, Thing)
+	public:	//Thing:
+		virtual Res& release();
 	};
 }

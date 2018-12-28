@@ -1,9 +1,13 @@
 #include "Thing.hpp"
+#include "../bind.hpp"
+#include "../msg-usr/Refer.hpp"
 
 namespace wrd
 {
 #define THIS Thing
-	Res& THIS::release() {}
+
+	WRD_CLASS_DEF(Thing)
+
 	wbool THIS::isNull() const { return !this; }
 	wbool THIS::isExist() const { return this; }
 	wbool THIS::isSuper(const Class& it) const { return getClass().isSuper(it); }
