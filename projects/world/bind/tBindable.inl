@@ -9,7 +9,7 @@ namespace wrd
 
 	template <typename S=void>
     class TBindable : public TGettable<Instance, S>
-    {	WRD_CLASS_DECLARE_2(TBindable<S>, TGettable<Instance WRD_COMMA() S>)
+    {	WRD_CLASS_DECL_2(TBindable<S>, TGettable<Instance WRD_COMMA() S>)
     public:
         operator wbool() const;
 

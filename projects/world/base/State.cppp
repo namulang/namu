@@ -3,7 +3,7 @@
 namespace wrd
 {
 #define THIS State
-	WRD_CLASS_DEFINE(THIS)
+	WRD_CLASS_DEF(THIS)
 
         virtual wbool isInit() { return _is_init; }
         virtual Res& init();

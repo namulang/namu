@@ -5,7 +5,7 @@
 namespace wrd
 {
 	class Str : public Object
-	{	WRD_CLASS_DECLARE(Str, Object)
+	{	WRD_CLASS_DECL(Str, Object)
 	public:
 	};
 }

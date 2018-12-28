@@ -9,7 +9,7 @@ namespace wrd
 #define TEMPL template <typename T, typename S>
 #define THIS TGettable<T WRD_COMMA() S>
 
-    WRD_CLASS_DEFINE_2(TEMPL, TGettable<T WRD_COMMA() S>)
+    WRD_CLASS_DEF_2(TEMPL, TGettable<T WRD_COMMA() S>)
     TEMPL const T* WRD_UNWRAP(THIS)::operator->() const { return &get(); }
     TEMPL T* WRD_UNWRAP(THIS)::operator->() { return &get(); }
     TEMPL const T* WRD_UNWRAP(THIS)::operator*() const { return &get(); }

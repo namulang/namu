@@ -5,7 +5,7 @@
 namespace wrd
 {
     class State : public Instance
-    {	WRD_CLASS_DECLARE(State, Instance)
+    {	WRD_CLASS_DECL(State, Instance)
     public:
         virtual wbool isInit();
         virtual Res& init();

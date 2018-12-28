@@ -8,7 +8,7 @@ namespace wrd
 #define TEMPL	template <typename T>
 #define THIS	TStrong<T>
 	
-	WRD_CLASS_DEFINE(TEMPL, THIS)
+	WRD_CLASS_DEF(TEMPL, THIS)
 
     TEMPL THIS::TStrong() {}
     TEMPL THIS::TStrong(const T& it) : Super() { bind(it); }

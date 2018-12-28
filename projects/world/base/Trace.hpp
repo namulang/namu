@@ -8,7 +8,7 @@ namespace wrd
 	class Block;
 
     class Trace : public TBindable<Instance>
-    {	WRD_CLASS_DECLARE(Trace, TBindable<Instance>)
+    {	WRD_CLASS_DECL(Trace, TBindable<Instance>)
     public:
         Trace();
         Trace(Id id, wcnt serial);

@@ -3,7 +3,7 @@
 namespace wrd
 {
 #define THIS Trace
-	WRD_CLASS_DEFINE(Trace)
+	WRD_CLASS_DEF(Trace)
 
 #undef THIS
 }

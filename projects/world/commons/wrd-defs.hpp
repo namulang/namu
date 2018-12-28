@@ -95,7 +95,7 @@
 
 /// This macros, DECLARE, DEFINE, will be used for which can't dependent to TClass and TStrong and Instance.
 ///	mostly, base classes for them will be correspond to and will be used for internal usage only.
-#define WRD_CLASS_DECLARE_2(THIS, SUPER)		\
+#define WRD_CLASS_DECL_2(THIS, SUPER)		\
 	WRD_INHERIT_2(THIS, SUPER)					\
 	public:										\
 		virtual const Class& getClass() const;	\
@@ -103,11 +103,11 @@
 	protected:									\
 		virtual TStrong<Instance> _clone() const;\
 	private:
-#define WRD_CLASS_DECLARE(...) WRD_OVERLOAD(WRD_CLASS_DECLARE, __VA_ARGS__)
+#define WRD_CLASS_DECL(...) WRD_OVERLOAD(WRD_CLASS_DECL, __VA_ARGS__)
 
 ///    this macro should be placed at implement file which include header file using DECLARE macro.
-#define WRD_CLASS_DEFINE_1(THIS)        			WRD_CLASS_DEFINE_2(WRD_VOID(), THIS)
-#define WRD_CLASS_DEFINE_2(TEMPL, THIS)				\
+#define WRD_CLASS_DEF_1(THIS)        			WRD_CLASS_DEF_2(WRD_VOID(), THIS)
+#define WRD_CLASS_DEF_2(TEMPL, THIS)				\
     TEMPL const Class& THIS::getClass() const {		\
         static TClass<This> inner;    				\
         return inner;    							\
@@ -115,4 +115,4 @@
     TEMPL TStrong<Instance> THIS::_clone() const {	\
         return TCloner<THIS>::clone(*this);    		\
 	}
-#define WRD_CLASS_DEFINE(...)            			WRD_OVERLOAD(WRD_CLASS_DEFINE, __VA_ARGS__)
+#define WRD_CLASS_DEF(...)            			WRD_OVERLOAD(WRD_CLASS_DEF, __VA_ARGS__)

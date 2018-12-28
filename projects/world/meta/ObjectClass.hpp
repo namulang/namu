@@ -8,7 +8,7 @@ namespace wrd
 	class Array;
 	template <typename T> class TStrong;
 	class ObjectClass : public Class
-	{	WRD_CLASS_DECLARE(ObjectClass, Class)
+	{	WRD_CLASS_DECL(ObjectClass, Class)
 	public:
 		virtual const Array& getVars() const;
 

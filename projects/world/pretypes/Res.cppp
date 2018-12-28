@@ -6,7 +6,7 @@ namespace wrd
 {
 #define THIS Res
 
-	WRD_CLASS_DEFINE(THIS)
+	WRD_CLASS_DEF(THIS)
 
 #undef THIS
 }

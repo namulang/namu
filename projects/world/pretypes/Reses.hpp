@@ -6,7 +6,7 @@ namespace wrd
 {
 #define _DECL(classname)								\
 	class _result_ ## classname : public Res			\
-	{	WRD_CLASS_DECLARE(_result_ ## classname, Res)	\
+	{	WRD_CLASS_DECL(_result_ ## classname, Res)	\
 	public:												\
 	} classname;
 

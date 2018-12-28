@@ -5,7 +5,7 @@
 namespace wrd
 {
 	class Array : public Container
-	{	WRD_CLASS_DECLARE(Array, Container)
+	{	WRD_CLASS_DECL(Array, Container)
 	public:
 	};
 }

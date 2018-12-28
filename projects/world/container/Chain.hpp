@@ -5,7 +5,7 @@
 namespace wrd
 {
 	class Chain : public Container
-	{	WRD_CLASS_DECLARE(Chain, Container)
+	{	WRD_CLASS_DECL(Chain, Container)
 	public:
 	};
 }

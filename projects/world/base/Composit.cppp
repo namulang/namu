@@ -3,7 +3,7 @@
 namespace WRD
 {
 #define THIS Composit
-	WRD_CLASS_DEFINE(Composit)
+	WRD_CLASS_DEF(Composit)
 
 	Res& THIS::init()
 	{

@@ -7,7 +7,7 @@ namespace wrd
 #define TEMPL template <typename S>
 #define THIS TBindable<S>
 
-	WRD_CLASS_DEFINE(TEMPL, THIS)
+	WRD_CLASS_DEF(TEMPL, THIS)
 
     TEMPL THIS::operator wbool() const { return isBind(); }
 

@@ -8,7 +8,7 @@ namespace wrd
 
 	template <typename T>
 	class TStrong : public TWeak<T>
-	{	WRD_CLASS_DECLARE(TStrong, TWeak<T>)
+	{	WRD_CLASS_DECL(TStrong, TWeak<T>)
 	public:
 		TStrong();
 		TStrong(const T& it);

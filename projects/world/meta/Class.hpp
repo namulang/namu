@@ -10,7 +10,7 @@ namespace wrd
     class Array;
 
     class Class : public Composit
-    {	WRD_CLASS_DECLARE(Class, Composit) // World에 visible해야 하기 때문이다.
+    {	WRD_CLASS_DECL(Class, Composit) // World에 visible해야 하기 때문이다.
         friend class Interpreter; // for interpreter class which can use _getNodes().
 
     public:

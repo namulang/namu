@@ -6,7 +6,7 @@ namespace wrd
 {
 	template <typename T>
 	class TChain : public Chain
-	{	WRD_CLASS_DECLARE(TChain<T>, Chain)
+	{	WRD_CLASS_DECL(TChain<T>, Chain)
 	public:
 	};
 }

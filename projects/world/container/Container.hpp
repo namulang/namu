@@ -5,7 +5,7 @@
 namespace wrd
 {
 	class Container : public Object
-	{	WRD_CLASS_DECLARE(Container, Object)
+	{	WRD_CLASS_DECL(Container, Object)
 	public:
 	};
 }

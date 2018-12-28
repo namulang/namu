@@ -5,7 +5,7 @@
 namespace wrd
 {
 	class Res : public Object
-	{	WRD_CLASS_DECLARE(Res, Object)
+	{	WRD_CLASS_DECL(Res, Object)
 		//	TODO: fill this.
 	public:
 		operator wbool() { return isErr(); }

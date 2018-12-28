@@ -15,7 +15,7 @@ namespace wrd
 	//		TWeak<T>
 	template <typename T>
 	class TWeak : public TGettable<T, Trace>
-	{	WRD_CLASS_DECLARE_2(TWeak, TGettable<T WRD_COMMA() Trace>)
+	{	WRD_CLASS_DECL_2(TWeak, TGettable<T WRD_COMMA() Trace>)
 	public:
 		TWeak();
 		TWeak(const T& it);

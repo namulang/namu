@@ -3,7 +3,7 @@
 namespace wrd
 {
 #define THIS Node
-	WRD_CLASS_DEFINE(Node)
+	WRD_CLASS_DEF(Node)
 
 	const Str& getName() const;
 	Str& getName();

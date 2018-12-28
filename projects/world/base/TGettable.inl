@@ -10,7 +10,7 @@ namespace wrd
 
     template <typename T, typename S = void>
     class TGettable : public S
-    {  WRD_CLASS_DECLARE_2(TGettable<T WRD_COMMA() S>, S)
+    {  WRD_CLASS_DECL_2(TGettable<T WRD_COMMA() S>, S)
     public:
         const T* operator->() const;
         T* operator->();

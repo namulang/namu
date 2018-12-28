@@ -10,7 +10,7 @@ namespace wrd
 #define TEMPL template <typename T>
 #define THIS TWeak<T>
 
-	WRD_CLASS_DEFINE(TEMPL, THIS)
+	WRD_CLASS_DEF(TEMPL, THIS)
 
     TEMPL THIS::TWeak() { }
     TEMPL THIS::TWeak(const T& it) { this->bind(it); }

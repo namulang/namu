@@ -12,7 +12,7 @@ namespace wrd
 
     template <typename T>
     class TClass : public TMetaSuper<T>::Is
-    {	WRD_CLASS_DECLARE(TClass<T>, typename TMetaSuper<T>::Is)
+    {	WRD_CLASS_DECL(TClass<T>, typename TMetaSuper<T>::Is)
     public:
         TClass();
 

@@ -8,7 +8,7 @@ namespace wrd
 	class Chain;
 
     class Composit : public Node
-    {	WRD_CLASS_DECLARE(Composit, Node)
+    {	WRD_CLASS_DECL(Composit, Node)
     public: //    Node:
         //        getNodes(); 는 공개하지 않는다:
         //        사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
