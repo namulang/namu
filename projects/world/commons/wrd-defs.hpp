@@ -76,7 +76,7 @@
 #define WRD_IS_GOOD_1(expr)              	WRD_IS_RES(expr, isGood())
 #define WRD_IS_GOOD(...)                    WRD_OVERLOAD(WRD_IS_GOOD, __VA_ARGS__)
 
-#define _CLASS_BASE														\
+#define _CLASS_BASE()													\
     public:																\
         virtual WRD_LAZY_METHOD_4(Class&, getClass, const, TClass<This>)\
         TStrong<This> clone() const { return TStrong<This>(_clone()); }	\
@@ -87,22 +87,27 @@
 	private:
 #define WRD_CLASS_2(THIS, SUPER)\
     WRD_INHERIT_2(THIS, SUPER) 	\
-    _CLASS_BASE
+    _CLASS_BASE()
 #define WRD_CLASS_1(THIS)		\
     WRD_INHERIT_1(THIS)			\
-    _CLASS_BASE
+    _CLASS_BASE()
 #define WRD_CLASS(...) 			WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
 
 /// This macros, DECLARE, DEFINE, will be used for which can't dependent to TClass and TStrong and Instance.
 ///	mostly, base classes for them will be correspond to and will be used for internal usage only.
-#define WRD_CLASS_DECL_2(THIS, SUPER)		\
-	WRD_INHERIT_2(THIS, SUPER)					\
+#define _CLASS_DECL_BASE()						\
 	public:										\
 		virtual const Class& getClass() const;	\
 		TStrong<This> clone() const;			\
 	protected:									\
 		virtual TStrong<Instance> _clone() const;\
 	private:
+#define WRD_CLASS_DECL_2(THIS, SUPER)		\
+	WRD_INHERIT_2(THIS, SUPER)				\
+	_CLASS_DECL_BASE()
+#define WRD_CLASS_DECL_1(THIS)	\
+	WRD_INHERIT_1(THIS)			\
+	_CLASS_DECL_BASE()
 #define WRD_CLASS_DECL(...) WRD_OVERLOAD(WRD_CLASS_DECL, __VA_ARGS__)
 
 ///    this macro should be placed at implement file which include header file using DECLARE macro.
