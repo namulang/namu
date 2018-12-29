@@ -38,7 +38,7 @@ namespace wrd
 
     TEMPL Res& THIS::_initNodes()
     {
-        /*TODO: uncomment this if(Super::_initMembers())
+        /*TODO: uncomment this if(Super::_initNodes())
                 return SuperFail.warn();*/
 
         return nulr<Res>();//TODO: uncomment this. T::_onInitNodes(this->_getNodes()); // getMethods from RealClass T.

@@ -21,7 +21,7 @@ namespace WRD
     {
         WRD_IS_THIS(const Container)
         if(_nodes.getLength() <= 0)
-            _initializeMembers();
+            _initNodes();
         return *_nodes;
     }
 
