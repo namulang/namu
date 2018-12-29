@@ -12,6 +12,11 @@ namespace wrd
     {	WRD_CLASS_DECL_2(TBindable<S>, TGettable<Instance WRD_COMMA() S>)
     public:
         operator wbool() const;
+		This& operator=(const Instance& newone);
+		This& operator=(const Instance* newone);
+		template <typename V> wbool operator==(const TBindable<V>& rhs) const { return &this->get() == &rhs.get(); }
+		template <typename V> wbool operator!=(const TBindable<V>& rhs) const { return ! operator==(rhs); }
+		wbool operator!=(const This& rhs) const;
 
     public:
         virtual Res& bind(const Instance& new1) = 0;

@@ -11,18 +11,22 @@ namespace wrd
 		//TODO: uncomment this. Refer(const Class& cls = Node::getStaticClass(), wbool want_const = false);
 		Refer(Node& it);
 		Refer(const Node& it);
-		Refer(const Refer& it);
-		Refer(Refer& it);
+		Refer(const This& it);
+		Refer(This& it);
 		template <typename V> Refer(const TBindable<V>& rhs) : Super() { bind(rhs.get()); }
 		template <typename V> Refer(TBindable<V>& rhs) : Super() { bind(rhs.get()); }
 
 	public:
-		wbool operator==(const Refer& rhs) const;
-		wbool operator!=(const Refer& rhs) const;
-		Refer& operator=(const Refer& it);
-		Refer& operator=(Refer& it);
-		Refer& operator=(Node& it);
-		Refer& operator=(const Node& it);
+		using Super::operator=;
+		template <typename V> This& operator=(const TBindable<V>& rhs) {
+			this->bind(rhs);
+			return *this;
+		}
+		template <typename V> This& operator=(TBindable<V>& rhs) {
+			this->bind(rhs);
+			return *this;
+		}
+		This& operator=(const Instance& it);
 
 	public:	//	Node:
 		virtual Refer use(Msg& msg) const; 

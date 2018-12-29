@@ -18,6 +18,12 @@ namespace wrd
 		// TWeak에는 넣을 수 없다. TStrong이 있으니. 그렇다고 빼기에는 좀 불편할 것 같고.
 		// Refer는 어떻게 하나? 너무 추상클래스에 넣으면 동작이 불가능하고 (virtual이므로)
 		// 구체에 넣을려고 하면 이번 TWeak 처럼 된다.
+	public:
+		using Super::operator=;
+		template <typename V> This& operator=(const TBindable<V>& rhs) {
+			this->bind(rhs);
+			return *this;
+		}
 
 	public:
 		using Super::bind;

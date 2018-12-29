@@ -23,11 +23,11 @@ namespace wrd
 		template <typename V> TWeak(const TBindable<V>& rhs) : Super() { bind(rhs.get()); }
 
 	public:
-		This& operator=(const This& rhs);
-		This& operator=(const T& newone);
-		This& operator=(const T* newone);
-		wbool operator==(const This& rhs) const;
-		wbool operator!=(const This& rhs) const;
+		using Super::operator=;
+		template <typename V> This& operator=(const TBindable<V>& rhs) {
+			this->bind(rhs);
+			return *this;
+		}
 
 	public:	// TBindable:
 		using Super::bind;

@@ -15,7 +15,6 @@ namespace wrd
 	wbool THIS::operator!=() const;
 	This& THIS::operator=(const This& it);
 	This& THIS::operator=(This& it);
-	This& THIS::operator=(Node& it);
 	This& THIS::operator=(const Node& it);
 
 	Refer THIS::use(Msg& msg) const { return _bean.call(msg); }

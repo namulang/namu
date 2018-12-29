@@ -16,28 +16,6 @@ namespace wrd
     TEMPL THIS::TWeak(const T& it) { this->bind(it); }
     TEMPL THIS::TWeak(const T* it) { this->bind(it); }
 
-    TEMPL THIS& THIS::operator=(const This& rhs)
-    {
-        this->bind(rhs);
-        //  Super::operator=()를 해서는 안된다.
-        return *this;
-	}
-
-    TEMPL THIS& THIS::operator=(const T& new1)
-    {
-        this->bind(new1);
-        return *this;
-    }
-
-    TEMPL THIS& THIS::operator=(const T* new1)
-    {
-        this->bind(new1);
-        return *this;
-    }
-
-    TEMPL wbool THIS::operator==(const This& rhs) const { return &this->get()  == &rhs.get(); }
-    TEMPL wbool THIS::operator!=(const This& rhs) const { return &this->get() != &rhs.get(); }
-
     TEMPL Res& THIS::bind(const Instance& new1)
     {
         //  pre:
