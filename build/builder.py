@@ -140,6 +140,29 @@ def _injectBuildInfo():
     fp.write("".join(lines)) 
     fp.close()
 
+def _incBuildCnt():
+    global cwd
+    path = cwd + "/CMakeLists.txt"
+
+    print("Increase Build count...", end=" ")
+    fp = open(path, "r")
+    lines = fp.readlines()
+    buildcnt = 0
+    for n in range(0, len(lines)):
+        line = lines[n]
+        if line[:15] in "set(BUILD_COUNT":
+            print("line[21] = " + line[16:len(line)-2])
+            buildcnt = int(line[16:len(line)-2])
+            print("buildcnt=" + str(buildcnt+1))
+            lines[n] = "set(BUILD_COUNT " + str(buildcnt+1) + ")\n"
+            print("new lines[n]=" + lines[n])
+            break
+    fp.close()
+
+    fp = open(path, "w")
+    fp.write("".join(lines))
+    fp.close()
+    print("ok")
 
 def _make():
     print("")
@@ -167,7 +190,9 @@ def build():
         return -1
     if _make():
         return -1
-    return _ut();
+    if _ut():
+        return -1
+    _incBuildCnt()
 
 def _ut():
     print("")
