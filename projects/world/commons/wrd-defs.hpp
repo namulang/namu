@@ -1,6 +1,7 @@
 #pragma once
 
 #include "wrd-deps.hpp"
+#include "_TGet.hpp"
 
 //	World는 객체 안에서 다른 객체에 접근하는 접근자함수들에 경우에는 DelayingNullCorruption으로 인해 객체가 Null이라고 해도 Null을 반환할뿐 프로그램이 죽지는 않는다.
 //	접근자 아닌 경우에는 "속도문제" 로 인해 수행하지 않는다.
@@ -121,3 +122,9 @@
         return TCloner<THIS>::clone(*this);    		\
 	}
 #define WRD_CLASS_DEF(...)            			WRD_OVERLOAD(WRD_CLASS_DEF, __VA_ARGS__)
+
+#define WRD_GET_2(expr, ret)									\
+	_TGet<decltype(expr)>::get(expr);							\
+	WRD_IS_NULL_1(_TGet<decltype(expr)>::_store(), wasnull, ret)
+#define WRD_GET_1(expr)	WRD_GET_2(expr, wasnull)
+#define WRD_GET(...)	WRD_OVERLOAD(WRD_GET, __VA_ARGS__)
