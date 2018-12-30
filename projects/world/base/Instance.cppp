@@ -50,4 +50,16 @@ namespace wrd
 		return const_cast<Block&>(World::get().getInstancer()[_id]);
 	}
 
+	Refer THIS::implicit(const Class& cls)
+	{
+		if(isSub(cls))
+			return Refer(*this);
+		return Refer();
+	}
+	Refer THIS::implicit(const Class& cls) const
+	{
+		WRD_UNCONST()
+		return Refer((const Refer&) unconst.implicit(cls));
+		// we code inliney because of prevention to releasing instance of returned variable from unconst.implicit()
+	}
 }

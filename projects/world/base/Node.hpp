@@ -70,7 +70,7 @@ namespace wrd
 		Node& operator[](widx n);
 		const Node& operator[](widx n) const;
 
-	public:
+	public://Node:
 		const Str& getName() const;
 		Str& getName();
 		virtual wbool isOccupy() const;
@@ -88,6 +88,8 @@ namespace wrd
 		virtual wbool canUse(const Msg& msg) const;
 		virtual wbool isStatic() const;
 		virtual wbool isConst() const;
+		virtual Refer implicit(const Class& cls);
+		Refer implicit(const Class& cls) const;
 
 	private:
 		//	get(); 는 공개하지 않는다:

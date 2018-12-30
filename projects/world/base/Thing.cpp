@@ -60,18 +60,6 @@ namespace wrd
 	//	invisible이다.
 	template <typename T> T& THIS::cast() { return _down(T::getStaticClass()); }
 	template <typename T> const T& THIS::cast() const { return _cast(T::getStaticClass()); }
-	Refer THIS::implicit(const Class& cls)
-	{
-		if(isSub(cls))
-			return Refer(*this);
-		return Refer();
-	}
-	Refer THIS::implicit(const Class& cls) const
-	{
-		WRD_UNCONST()
-		return Refer((const Refer&) unconst.implicit(cls));
-		// we code inliney because of prevention to releasing instance of returned variable from unconst.implicit()
-	}
 	//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
 	Res& THIS::assign(const Thing& it) { if(it.isNull()) return wasnull; }
 
@@ -80,7 +68,7 @@ namespace wrd
 	Res& THIS::_tour(Visitor& visitor)
 	{
 		const This* consted = const_cast<const This*>(this);
-		return consted->_onTour(visitor);
+		return consted->_tour(visitor);
 	}
 	Node& THIS::_cast(const Class& cls)
 	{

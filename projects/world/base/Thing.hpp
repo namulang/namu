@@ -71,8 +71,6 @@ namespace wrd
 		//	invisible이다.
 		template <typename T> T& cast();
 		template <typename T> const T& cast() const;
-		virtual Refer implicit(const Class& cls);
-		Refer implicit(const Class& cls) const;
 		//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
 		virtual Res& assign(const Thing& it);
 

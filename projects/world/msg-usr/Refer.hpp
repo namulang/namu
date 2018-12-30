@@ -10,10 +10,10 @@ namespace wrd
 	public:
 		//TODO: uncomment this. Refer(const Class& cls = Node::getStaticClass(), wbool want_const = false);
 		Refer(const Class& cls = Node::getClassStatic(), wbool is_const = false);
-		Refer(Node& it);
-		Refer(const Node& it);
-		Refer(const This& it);
-		Refer(This& it);
+		Refer(Node& it, wbool is_const = false);
+		Refer(const Node& it, wbool is_const = true);
+		Refer(const This& it, wbool is_const = true);
+		Refer(This& it, wbool is_const = false);
 		template <typename V> Refer(const TBindable<V>& rhs) : Super() { bind(rhs.get()); }
 		template <typename V> Refer(TBindable<V>& rhs) : Super() { bind(rhs.get()); }
 
