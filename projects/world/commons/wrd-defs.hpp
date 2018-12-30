@@ -77,14 +77,15 @@
 #define WRD_IS_GOOD_1(expr)              	WRD_IS_RES(expr, isGood())
 #define WRD_IS_GOOD(...)                    WRD_OVERLOAD(WRD_IS_GOOD, __VA_ARGS__)
 
-#define _CLASS_BASE()													\
-    public:																\
-        virtual WRD_LAZY_METHOD_4(Class&, getClass, const, TClass<This>)\
-        TStrong<This> clone() const { return TStrong<This>(_clone()); }	\
-	protected:															\
-		virtual TStrong<Instance> _clone() const { 						\
-			return TCloner<This>::clone(*this);							\
-		}																\
+#define _CLASS_BASE()																		\
+    public:																					\
+        virtual const Class& getClass() const { return getClassStatic(); }					\
+        TStrong<This> clone() const { return TStrong<This>(_clone()); }						\
+        static WRD_LAZY_METHOD_4(const Class&, getClassStatic, WRD_VOID(), TClass<This>)	\
+	protected:																				\
+		virtual TStrong<Instance> _clone() const { 											\
+			return TCloner<This>::clone(*this);												\
+		}																					\
 	private:
 #define WRD_CLASS_2(THIS, SUPER)\
     WRD_INHERIT_2(THIS, SUPER) 	\
@@ -100,6 +101,7 @@
 	public:										\
 		virtual const Class& getClass() const;	\
 		TStrong<This> clone() const;			\
+		static const Class& getClassStatic();	\
 	protected:									\
 		virtual TStrong<Instance> _clone() const;\
 	private:
@@ -115,11 +117,14 @@
 #define WRD_CLASS_DEF_1(THIS)        			WRD_CLASS_DEF_2(WRD_VOID(), THIS)
 #define WRD_CLASS_DEF_2(TEMPL, THIS)				\
     TEMPL const Class& THIS::getClass() const {		\
-        static TClass<This> inner;    				\
-        return inner;    							\
+		return this->THIS::getClassStatic();		\
     }    											\
     TEMPL TStrong<Instance> THIS::_clone() const {	\
         return TCloner<THIS>::clone(*this);    		\
+	}												\
+	TEMPL const Class& THIS::getClassStatic() {		\
+        static TClass<This> inner;    				\
+        return inner;    							\
 	}
 #define WRD_CLASS_DEF(...)            			WRD_OVERLOAD(WRD_CLASS_DEF, __VA_ARGS__)
 
