@@ -49,7 +49,7 @@ namespace wrd
 			return wasntneed;	// 이 Refer는 Refer<T>이다. 지금 하려는 것은 즉, A* a = (const A*) a1; 를 하려고 하는것과 같다.
 
 		WRD_UNCONST()
-		Res& res = unconst.bind(const_cast<Object&>(it));
+		Res& res = unconst.bind(const_down<Object&>(it));
 		WRD_IS_ERR(res)
 
 		return res;
@@ -100,27 +100,10 @@ namespace wrd
 		Refer& refered = it.down<This>();
 		if(refered.isExist())
 			return bind(refered);
-		return bind(it.cast<Object>()); // null이 들어가도 상관없다.
+		return bind(it.down<Object>()); // null이 들어가도 상관없다.
 	}
 
-	Node& THIS::_cast(const Class& cls)
-	{
-		if(isConst())
-			return nulr<Node>();
-
-		const This* cast = this;
-		Node& ret = const_cast<Node&>(cast->_cast(cls));
-
-		return ret;
-	}
-
-	const Node& THIS::_cast(const Class& cls) const
-	{
-		if( ! _bean || ! _bean->isSub(cls))
-			return nulr<Node>();
-
-		return *_bean;
-	}
+	const Thing& THIS::_down(const Class& cls) const { return _bean ? _bean->_down(cls) : nulr<Thing>(); }
 
 	//	TODO: impl _get()
 

@@ -58,8 +58,19 @@ namespace wrd
 
 	//	구체클래스로 캐스트한다. dynamic_cast와 동급이다.
 	//	invisible이다.
-	template <typename T> T& THIS::cast() { return _down(T::getStaticClass()); }
-	template <typename T> const T& THIS::cast() const { return _cast(T::getStaticClass()); }
+	template <typename T> T& THIS::down() { return (T&) _down(T::getClassStatic()); }
+	template <typename T> const T& THIS::down() const { return (T&) _down(T::getClassStatic()); }
+	Thing& THIS::_down(const Class& cls)
+	{
+		if(isSub(cls))
+			return *this;
+		return nulr<Thing>();
+	}
+	const Thing& THIS::_down(const Class& cls) const
+	{
+		WRD_UNCONST()
+		return unconst._down(cls);
+	}
 	//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
 	Res& THIS::assign(const Thing& it) { if(it.isNull()) return wasnull; }
 
@@ -69,16 +80,5 @@ namespace wrd
 	{
 		const This* consted = const_cast<const This*>(this);
 		return consted->_tour(visitor);
-	}
-	Node& THIS::_cast(const Class& cls)
-	{
-		if(isSub(cls))
-			return *this;
-		return nulr<Node>();
-	}
-	const Node& THIS::_cast(const Class& cls) const
-	{
-		This& cast = const_cast<This&>(*this);
-		return cast._cast(cls);
 	}
 }

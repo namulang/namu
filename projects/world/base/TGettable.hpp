@@ -14,12 +14,12 @@ namespace wrd
     TEMPL T* WRD_UNWRAP(THIS)::operator->() { return &get(); }
     TEMPL const T* WRD_UNWRAP(THIS)::operator*() const { return &get(); }
     TEMPL T* WRD_UNWRAP(THIS)::operator*() { return &get(); }
-	TEMPL T& WRD_UNWRAP(THIS)::get() { return this->_get().template cast<T>(); }
+	TEMPL T& WRD_UNWRAP(THIS)::get() { return this->_get().template down<T>(); }
 
 	TEMPL const T& WRD_UNWRAP(THIS)::get() const
 	{
 		WRD_UNCONST_2(THIS, unconst)
-		return unconst._get().template cast<const T>(); 
+		return unconst._get().template down<const T>(); 
 	}
 
 #undef TEMPL
@@ -32,12 +32,12 @@ namespace wrd
     TEMPL T* THIS::operator->() { return &get(); }
     TEMPL const T* THIS::operator*() const { return &get(); }
     TEMPL T* THIS::operator*() { return &get(); }
-	TEMPL T& THIS::get() { return _get().template cast<T>(); }
+	TEMPL T& THIS::get() { return _get().template down<T>(); }
 
 	TEMPL const T& THIS::get() const
 	{
 		WRD_UNCONST_2(THIS, unconst)
-		return unconst._get().template cast<const T>();
+		return unconst._get().template down<const T>();
 	}
 
 #undef TEMPL

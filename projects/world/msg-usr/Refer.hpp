@@ -57,8 +57,7 @@ namespace wrd
 		//		const T& cast = n.down<const T>(); // OK.
 		//		Refer& cast1 = n.to<const T>(); // OK. cast1->isNull() != true
 		//	위의 코드가 가능하도록 해야 한다.
-		virtual Node& _cast(const Class& cls);
-		virtual const Node& _cast(const Class& cls) const;
+		virtual Thing& _down(const Class& cls);
 
 	private:
 		wbool _is_const;

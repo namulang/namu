@@ -29,7 +29,7 @@ namespace WRD
     {
         _nodes.release();
 
-        const Chain& chain = cls.getNodes().cast<Chain>();
+        const Chain& chain = cls.getNodes().down<Chain>();
         WRD_IS_NULL(chain)
         if(_nodes.chain(chain.getControl()[0])) // first elem as a container owned by "chain"
             return wasfuncfail.warn("");

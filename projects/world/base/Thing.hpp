@@ -16,6 +16,7 @@ namespace wrd
 	///	Thing은 World의 최상위 객체
 	class Thing
 	{	WRD_CLASS_DECL(Thing)
+		friend class Refer; // for _down.
 	public:
 		template <typename T, typename S> friend class TVisitation; //	_tour를 위한 것이다.
 
@@ -69,8 +70,10 @@ namespace wrd
 
 		//	구체클래스로 캐스트한다. dynamic_cast와 동급이다.
 		//	invisible이다.
-		template <typename T> T& cast();
-		template <typename T> const T& cast() const;
+		template <typename T> T& down();
+		template <typename T> const T& down() const;
+		virtual Thing& _down(const Class& cls);
+		const Thing& _down(const Class& cls) const;
 		//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
 		virtual Res& assign(const Thing& it);
 
@@ -78,7 +81,5 @@ namespace wrd
 		//	Visitor에 의해서 하위 구성요소(ownee)들을 어떻게 순회시킬지를 정한다.
 		virtual Res& _tour(Visitor& visitor) const;
 		virtual Res& _tour(Visitor& visitor);
-		virtual Node& _cast(const Class& cls);
-		virtual const Node& _cast(const Class& cls) const;
 	};
 }
