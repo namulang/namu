@@ -128,8 +128,9 @@
 	}
 #define WRD_CLASS_DEF(...)            			WRD_OVERLOAD(WRD_CLASS_DEF, __VA_ARGS__)
 
-#define WRD_GET_2(expr, ret)									\
+#define WRD_GET_3(expr, res, ret)								\
 	_TGet<decltype(expr)>::get(expr);							\
-	WRD_IS_NULL_1(_TGet<decltype(expr)>::_store(), wasnull, ret)
-#define WRD_GET_1(expr)	WRD_GET_2(expr, wasnull)
-#define WRD_GET(...)	WRD_OVERLOAD(WRD_GET, __VA_ARGS__)
+	WRD_IS_NULL_1(_TGet<decltype(expr)>::_store(), res, ret)
+#define WRD_GET_2(expr, ret)	WRD_GET_3(expr, wasnull, ret)
+#define WRD_GET_1(expr)			WRD_GET_2(expr, wasnull)
+#define WRD_GET(...)			WRD_OVERLOAD(WRD_GET, __VA_ARGS__)
