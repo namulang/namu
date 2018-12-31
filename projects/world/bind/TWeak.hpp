@@ -20,8 +20,7 @@ namespace wrd
     {
         //  pre:
         //      param-validation:
-        Block& blk = const_cast<Block&>(new1.getBlock());
-        WRD_IS_NULL(blk)
+        Block& blk = WRD_GET(const_cast<Block&>(new1.getBlock()));
 
         //  main:
         unbind();
@@ -33,8 +32,7 @@ namespace wrd
     TEMPL Instance& THIS::_get()
     {
         WRD_IS_THIS(T)
-        Instance& ins = this->_getBlock().get();
-		WRD_IS_NULL(ins)
+        Instance& ins = WRD_GET(this->_getBlock().get());
         //  정확한 인터페이스가 나오지 않았다.
         if(ins.getSerial() != this->getSerial()) {
             unbind();

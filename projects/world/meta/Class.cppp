@@ -91,7 +91,7 @@ namespace wrd
         //        "Tier" means that how this class are inherited far from the Root class, that is, Object.
         //        So, if the "this" is a super of given object "it", its "tier"th super class
         //        would must be the class of "this".
-        if(it.isNull()) return false;
+		WRD_IS_NULL(it, false)
         const Classes& its = it.getSupers();
         wcnt    my_tier = getClass().getSupers().size(),
                 its_tier = its_supers.size();

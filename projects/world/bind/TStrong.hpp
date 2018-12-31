@@ -31,8 +31,7 @@ namespace wrd
 
 	TEMPL Res& THIS::unbind()
 	{
-		Block& blk = this->_getBlock();
-		WRD_IS_NULL(blk, waswrongmember, Super::unbind())
+		Block& blk = WRD_GET(this->_getBlock(), waswrongmember, Super::unbind());
 		blk.unlink();
 
 		return Super::unbind();

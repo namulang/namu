@@ -33,8 +33,7 @@ namespace wrd
 	Res& THIS::bind(Instance& it)
 	{
 		//	NullCheckDelayed 철학에 의해서 WRD_IS_NULL(it)을 하지 않는다. 
-		const Class& cls = it.getClass();
-		WRD_IS_NULL(cls)
+		const Class& cls = WRD_GET(it.getClass());
 		if( ! cls.isSub(_cls))
 			return waswrongtype.warn("...");
 
@@ -91,8 +90,7 @@ namespace wrd
 		if(_cls.isOccupy()) // Occupiable은 상속이 된다.
 		{
 			//	이경우 const건 아니건 사실 중요하지 않다. 오직 중요한건 occupiable이면 실제 객체에게 assign을 떠 넘기면 된다는 사실이다.
-			Node& bean = get(); // 만약 isConst() 일 경우, 여기서 NULL이 나오게 된다.
-			WRD_IS_NULL(bean)
+			Node& bean = WRD_GET(get()); // 만약 isConst() 일 경우, 여기서 NULL이 나오게 된다.
 			return bean.assign(it);
 		}
 	

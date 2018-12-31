@@ -21,8 +21,7 @@ namespace wrd
 
 	wbool THIS::isHeap() const
 	{
-		MemoryMap& mmap = Nexus::get().getInstancer().getMemoryMap();
-		WRD_IS_NULL(mmap, false)
+		MemoryMap& mmap = WRD_GET(World::get().getInstancer().getMemoryMap(), false)
 
 		return 	mmap.getStartAddress() <= this 	&&
 				this << mmap.getEndAddress()	;
