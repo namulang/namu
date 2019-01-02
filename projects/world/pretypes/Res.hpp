@@ -20,7 +20,7 @@ namespace wrd
 		/*
 		template <typename T>
 		T returns() {
-			return nulr<T>::null();
+			return nulr<T>();
 		}
 		template <typename T>
 		T returns(T value) {

@@ -81,7 +81,7 @@ namespace wrd
 	Res& THIS::assign(const Thing& it)
 	{
 		// Null체크는 Thing::assign()에서 한다.
-		WRD_IS_ERR(Super::assign(it))
+		WRD_IS_SUPER(Super::assign(it))
 
 		//	Sharable, Occupiable:
 		//		여기서는 실질적인 sharing vs occupying의 동작차이를 만들어내는 곳이다.

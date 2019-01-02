@@ -33,11 +33,12 @@
 #define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
 #define WRD_IS_THIS(...) 			WRD_OVERLOAD(WRD_IS_THIS, __VA_ARGS__)
 
-#define WRD_IS_SUPER_1(call)        if(Super:: call ) return superfail;
-#define WRD_IS_SUPER_2(res, call)	\
-    Res& res = Super:: call ;    	\
-    if(res) return superfail;
-#define WRD_IS_SUPER(...)			WRD_OVERLOAD(WRD_IS_SUPER, __VA_ARGS__)
+#define WRD_IS_SUPER_1(call)        		if(Super:: call ) return wassuperfail.warn("");
+#define WRD_IS_SUPER_2(res, call)			WRD_IS_SUPER_3(res, call, "")
+#define WRD_IS_SUPER_3(res, call, msg)		\
+    Res& res = Super:: call ;    			\
+    if(res) return wassuperfail.warn(#msg);
+#define WRD_IS_SUPER(...)					WRD_OVERLOAD(WRD_IS_SUPER, __VA_ARGS__)
 
 #define WRD_IS_CONST(RET)		\
 	if((this->isConst())) {		\

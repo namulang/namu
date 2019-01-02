@@ -16,9 +16,7 @@ namespace wrd
 
     TEMPL Res& THIS::bind(const T& it)
 	{
-		Res& res = Super::bind(it);
-		if(res)
-			return res.warn("...");
+		WRD_IS_SUPER(bind(it));
 		if( ! it.isHeap())
 			return waswrongargs.warn("it is local variable. couldn't bind it strongly.");
 
