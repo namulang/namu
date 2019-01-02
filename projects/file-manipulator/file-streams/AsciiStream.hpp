@@ -19,7 +19,7 @@ namespace wrd
 		public:
 			using FileStream::operator=;
 
-			virtual wbool initialize();
+			virtual wbool init();
 			
 			using FileStream::write;
 			template <typename T>

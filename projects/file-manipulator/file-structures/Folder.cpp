@@ -15,17 +15,17 @@ namespace wrd
 		THIS::THIS(const string& path, Option option) : Super(0, path), _iterator(0), _sub_file(0), _option(option) {}
 		THIS::~THIS() { _release(); }
 
-		wbool THIS::initialize()
+		wbool THIS::init()
 		{
-			if(isInitialized())
+			if(isInit())
 				_release();
 			
 			_iterator = opendir(getPath().c_str());
 			if( ! _iterator)
 				std::cout << strerror(errno) << "=opendir(" << getPath().c_str() << ")\n";
-			return ! isInitialized();
+			return ! isInit();
 		}
-		wbool THIS::isInitialized() const { return _iterator; }
+		wbool THIS::isInit() const { return _iterator; }
 
 		const THIS::Option& THIS::getOption() const { return _option; }
 

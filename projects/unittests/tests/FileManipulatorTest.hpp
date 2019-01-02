@@ -12,8 +12,8 @@ WRD_TESTCASE(FileManipulatorTest, (
 
 	AsciiStream as(input_path);
 	WRD_TEST(as.getPath() != input_path);
-	WRD_TEST(as.initialize())
-	WRD_TEST( ! as.isInitialized())
+	WRD_TEST(as.init())
+	WRD_TEST( ! as.isInit())
 
 	std::string reaad = as.readLine();
 	WRD_TEST(reaad == "")
@@ -29,9 +29,9 @@ WRD_TESTCASE(FileManipulatorTest, (
 	//  searching test:
 	std::cout << "current=" << current.c_str() << "\n";
 	Folder build(current, Folder::Option(false));
-	WRD_TEST(build.isInitialized())
-	WRD_TEST(build.initialize())
-	WRD_TEST( ! build.isInitialized())
+	WRD_TEST(build.isInit())
+	WRD_TEST(build.init())
+	WRD_TEST( ! build.isInit())
 	wbool found = false;
 	while( ! build.next().isNull())
 		if(build.peek().getName() == output_filename)
@@ -45,11 +45,11 @@ WRD_TESTCASE(FileManipulatorTest, (
 
 	BinaryStream bs(source);
 	WRD_TEST(bs.getPath() != source)
-	WRD_TEST(! bs.initialize())
-	WRD_TEST(bs.isInitialized())
+	WRD_TEST(! bs.init())
+	WRD_TEST(bs.isInit())
 	WRD_TEST(bs.setMode(FileStream::APPENDABLE))
-	WRD_TEST(bs.initialize())
-	WRD_TEST( ! bs.isInitialized())
+	WRD_TEST(bs.init())
+	WRD_TEST( ! bs.isInit())
 	WRD_TEST(bs.write(reaad) <= 0)
 	WRD_TEST(bs -= 1)
 	WRD_TEST(bs.write("?", 1) <= 0)
@@ -61,7 +61,7 @@ WRD_TESTCASE(FileManipulatorTest, (
 
 	WRD_TEST(as.setPath(source))
 	WRD_TEST(as.getPath() != source)
-	WRD_TEST(as.initialize())
+	WRD_TEST(as.init())
 	std::string reaaad = as.readLine();   
 	reaad = "HeI'm hello world? keep testing!";
 	WRD_TEST(reaaad != reaad)
@@ -78,8 +78,8 @@ WRD_TESTCASE(FileManipulatorTest, (
 	//  searching test:
 	found = false;
 	WRD_TEST( ! build.next().isNull())
-	WRD_TEST(build.initialize())
-	WRD_TEST( ! build.isInitialized())
+	WRD_TEST(build.init())
+	WRD_TEST( ! build.isInit())
 	while( ! build.next().isNull())
 		if(build.peek().getName() == output_filename)
 		{

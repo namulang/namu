@@ -21,8 +21,8 @@ namespace wrd
 
 			return result;
 		}
-		wbool THIS::initialize() { return false; }
-		wbool THIS::isInitialized() const { return true; }
+		wbool THIS::init() { return false; }
+		wbool THIS::isInit() const { return true; }
 
 		const string& THIS::getBaseDirectory() const
 		{

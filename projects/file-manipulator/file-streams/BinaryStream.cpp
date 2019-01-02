@@ -18,9 +18,9 @@ namespace wrd
 		THIS::~THIS() { release(); }
 
 
-		wbool THIS::initialize()
+		wbool THIS::init()
 		{
-			if(Super::initialize()) return true;
+			if(Super::init()) return true;
 
 			const char* mode = 0;
 			switch(getMode())
@@ -36,7 +36,7 @@ namespace wrd
 			if(getMode() == APPENDABLE)
 				setCursor(getEndOfFile());
 
-			return ! isInitialized();
+			return ! isInit();
 		}
 
 		wcnt THIS::write(const char* str) { return write(str, sizeof(char) * strlen(str)); }
@@ -44,14 +44,14 @@ namespace wrd
 
 		wcnt THIS::write(const void* chunks, wcnt bytes)
 		{
-			if( ! isInitialized()) return 0;
+			if( ! isInit()) return 0;
 
 			return fwrite(chunks, 1, bytes, _fd);
 		}
 
 		wcnt THIS::read(void* target, wcnt bytes)
 		{
-			if( ! isInitialized()) return 0;
+			if( ! isInit()) return 0;
 
 			return fread(target, 1, bytes, _fd);
 		}

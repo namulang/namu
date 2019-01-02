@@ -14,7 +14,7 @@ namespace wrd
 
 		public:
 			virtual const char* getName() const;
-			virtual wbool initialize();
+			virtual wbool init();
 			wbool setPath(const std::string& new_path);
 			const std::string& getPath() const;
 			virtual wbool dump(const char* message);

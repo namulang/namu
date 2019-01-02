@@ -18,8 +18,8 @@ namespace wrd
 			wbool isEnable() const;
 			void setEnable(wbool is_enable);
 			virtual const char* getName() const = 0;
-			virtual wbool initialize();
-			virtual wbool isInitialized() const;
+			virtual wbool init();
+			virtual wbool isInit() const;
 			virtual wbool release();
 
 		private:

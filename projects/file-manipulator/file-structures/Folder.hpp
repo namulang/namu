@@ -28,8 +28,8 @@ namespace wrd
 			virtual ~Folder();
 
 		public:
-			virtual wbool initialize();
-			virtual wbool isInitialized() const;
+			virtual wbool init();
+			virtual wbool isInit() const;
 			const Option& getOption() const;
 			const File& next();
 			const File& peek() const;

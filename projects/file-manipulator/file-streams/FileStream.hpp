@@ -39,8 +39,8 @@ namespace wrd
 			wbool setCursor(wint new_position);
 			wbool setPath(const std::string& new_path);
 			wbool setPath(const PathedObject& path);
-			virtual wbool initialize();
-			virtual wbool isInitialized() const;
+			virtual wbool init();
+			virtual wbool isInit() const;
 			virtual wbool release();
 			wbool setMode(Mode new_mode);
 			Mode getMode() const;

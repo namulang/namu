@@ -23,8 +23,8 @@ namespace wrd
 			virtual wbool dump(const char* message);
 			wbool dumpFormat(const char* format, ...);
 			wbool pushStream(Stream* new_stream);
-			virtual wbool initialize();
-			virtual wbool isInitialized() const;
+			virtual wbool init();
+			virtual wbool isInit() const;
 			static Logger& getInstance();
 
 		private:

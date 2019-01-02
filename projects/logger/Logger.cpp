@@ -75,12 +75,12 @@ namespace wrd
 			if( ! new_stream) return true;
 
 			_streams.push_back(new_stream);
-			if(isInitialized())
-				return new_stream->initialize();
+			if(isInit())
+				return new_stream->init();
 			return false;
 		}
 
-		wbool THIS::initialize()
+		wbool THIS::init()
 		{
 			static Stream* streams[] = {new ConsoleStream(), new FileLogStream("./logs"), 0};
 			Stream* e = 0;
@@ -90,10 +90,10 @@ namespace wrd
 			return false;
 		}
 
-		wbool THIS::isInitialized() const
+		wbool THIS::isInit() const
 		{
 			for(auto e : _streams)
-				if( ! e->isInitialized())
+				if( ! e->isInit())
 					return false;
 
 			return true;
@@ -116,7 +116,7 @@ namespace wrd
 			if(inner->isNull())
 			{
 				inner = new THIS();
-				inner->initialize();
+				inner->init();
 			}
 
 			return *inner;

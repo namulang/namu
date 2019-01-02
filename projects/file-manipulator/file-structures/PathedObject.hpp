@@ -14,8 +14,8 @@ namespace wrd
 			PathedObject(const PathedObject& rhs);
 
 		public:
-			virtual wbool initialize() = 0;
-			virtual wbool isInitialized() const = 0;
+			virtual wbool init() = 0;
+			virtual wbool isInit() const = 0;
 			const std::string& getPath() const;
 			wbool isNull() const;
 			virtual wbool release();

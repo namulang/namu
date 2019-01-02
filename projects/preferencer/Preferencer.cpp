@@ -27,7 +27,7 @@ namespace wrd
 
 			WRD_INFO("parse(%s)", file.getPath().c_str());
 			fm::AsciiStream stream(file);
-			stream.initialize();
+			stream.init();
 			
 			return parse(stream.readWhole());
 		}

@@ -15,14 +15,14 @@ namespace wrd
 
 		wbool THIS::operator+=(wint delta)
 		{
-			if( ! isInitialized()) return 0;
+			if( ! isInit()) return 0;
 
 			return setCursor(getCursor() + delta);
 		}
 
 		wbool THIS::operator-=(wint delta)
 		{
-			if( ! isInitialized()) return 0;
+			if( ! isInit()) return 0;
 
 			return setCursor(getCursor() - delta);
 		}
@@ -31,14 +31,14 @@ namespace wrd
 
 		wint THIS::getCursor() const 
 		{
-			if( ! isInitialized()) return 0;
+			if( ! isInit()) return 0;
 
 			return ftell(_fd);
 		}
 
 		wint THIS::getEndOfFile() const
 		{
-			if( ! isInitialized()) return 0;
+			if( ! isInit()) return 0;
 
 			wint backup = getCursor();
 			
@@ -53,7 +53,7 @@ namespace wrd
 		}
 		wbool THIS::setCursor(wint new_position)
 		{
-			if( ! isInitialized()) return true;
+			if( ! isInit()) return true;
 			
 			wint mode = new_position >= 0 ? SEEK_SET : SEEK_END;
 			if(fseek(_fd, new_position, mode))
@@ -68,7 +68,7 @@ namespace wrd
 			
 			return _setPath(path.getPath()); 
 		}
-		wbool THIS::initialize()
+		wbool THIS::init()
 		{
 			if(getMode() != APPENDABLE) return false;
 
@@ -78,7 +78,7 @@ namespace wrd
 			fclose(tmp);
 			return false;
 		}
-		wbool THIS::isInitialized() const { return _fd; }
+		wbool THIS::isInit() const { return _fd; }
 		wbool THIS::release()
 		{
 			if(_fd)
@@ -91,7 +91,7 @@ namespace wrd
 		}
 		wbool THIS::setMode(Mode new_mode)
 		{
-			if(isInitialized()) return true;
+			if(isInit()) return true;
 
 			_mode = new_mode;
 			return false;

@@ -12,7 +12,7 @@ class Class : public Node { //	World에 visible해야 하기 때문이다.
 		WRD_IS_THIS(const Class)
 		return *this;
 	}
-	virtual Result& _setInitialized(wbool newone) = 0;
+	virtual Result& _setInit(wbool newone) = 0;
 	virtual wbool isTemplate() const = 0;
 	virtual wbool isAbstract() const = 0;
 	TStrong<Instance> instantiate() const = 0;
@@ -26,7 +26,7 @@ class Class : public Node { //	World에 visible해야 하기 때문이다.
 	virtual Result& initialize() {
 		//	pre:
 		//		exception:
-		if(isInitialized())
+		if(isInit())
 			return Cancel.info(..);
 		Super::initialize();
 
@@ -35,7 +35,7 @@ class Class : public Node { //	World에 visible해야 하기 때문이다.
 		//			or This makes recursive call.
 		//			Because if we make a instance of TClass<Object>, it triggers Class::initialize inside of it.
 		if(&getName() == &TClass<Thing>::getStaticName())
-			return _setInitialized(true);
+			return _setInit(true);
 
 		//  main:
 		//        get Supers info from Super:
@@ -49,7 +49,7 @@ class Class : public Node { //	World에 visible해야 하기 때문이다.
 		//        notify to super:
 		super._getSubs().push(*this);
 
-		return _setInitialized(true);
+		return _setInit(true);
 	}
 	virtual wbool isSuper(const Class& it) const {
 		//  checking class hierarchy algorithm:
@@ -141,9 +141,9 @@ class TClass : public TMetaClassChooser<T>::Super {
 		return getStaticSubs();
 	}
 	static wbool _is_initialized;
-	virtual wbool isInitialized() const { return _is_initialized; }
+	virtual wbool isInit() const { return _is_initialized; }
 	virtual wbool isOccupiable() const { return isStaticOccupiable(); }
-	virtual Result& _setInitialized(wbool newone) {
+	virtual Result& _setInit(wbool newone) {
 		_is_initialized = newone;
 		return Success;
 	}

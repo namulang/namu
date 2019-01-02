@@ -16,8 +16,8 @@ namespace wrd
 			virtual ~File();
 
 		public:
-			virtual wbool initialize();
-			virtual wbool isInitialized() const;
+			virtual wbool init();
+			virtual wbool isInit() const;
 			const std::string& getBaseDirectory() const;
 			wbool isFolder() const;
 			wubyte getSize() const;

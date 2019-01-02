@@ -17,11 +17,11 @@ namespace wrd
 
 		const char* THIS::getName() const { return "FileLogStream"; }
 		
-		wbool THIS::initialize()
+		wbool THIS::init()
 		{
-			if(Super::initialize()) return true;
+			if(Super::init()) return true;
 
-			if(_file.initialize())
+			if(_file.init())
 				return true;
 
 			return _file.setCursor(_file.getEndOfFile());

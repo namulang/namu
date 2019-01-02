@@ -30,7 +30,7 @@ namespace wrd
         //    main:
         //        Object class should not initialize explicitly:
         //            or This makes recursive call.
-        //            Because if we make a instance of TClass<Object>, it triggers Class::initialize inside of it.
+        //            Because if we make a instance of TClass<Object>, it triggers Class::init inside of it.
         if(&getName() == &TClass<Thing>::getStaticName())
             return wasgood;
 
