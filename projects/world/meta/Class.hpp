@@ -29,6 +29,7 @@ namespace wrd
 		//	Node:
 		//	means there is no origin or we can't designate origin.
 		virtual WRD_LAZY_METHOD(Origin, getOrigin, const)
+		virtual const Array& getVars() const; // class can't include Array. we can use WRD_LAZY_METHOD here.
 		//	State:
 		virtual Res& init();
 		virtual wbool isInit() const;

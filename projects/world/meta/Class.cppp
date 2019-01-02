@@ -119,10 +119,9 @@ namespace wrd
         _getNodes() = getSupers()[0].getNodes(); // getSupers()[0]은 바로 위의 부모클래스.
         return wasgood;
     }
-    const Array& THIS::getVariables() const
-    {
-        WRD_IS_THIS(const Array)
-        static Array inner; // means that this class isn't have any variables.
-        return inner;
-    }
+	const Array& THIS::getVars() const
+	{
+		static Array inner; // returning static Array. meaning is there is Vars on default.
+		return inner;
+	}
 }

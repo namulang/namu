@@ -2,6 +2,7 @@
 
 #include "../bind/TStrong.inl"
 #include "State.hpp"
+#include "../compiler/Origin.hpp"
 
 namespace wrd
 {
@@ -84,7 +85,7 @@ namespace wrd
 		const Node& get(const Str& name) const;
 		virtual Refer use(Msg& msg);
 		virtual Refer use(Msg& msg) const;
-		virtual const Origin& getOrigin() const;
+		virtual WRD_LAZY_METHOD(Origin, getOrigin, const);
 		virtual wbool canUse(const Msg& msg) const;
 		virtual wbool isStatic() const;
 		virtual wbool isConst() const;

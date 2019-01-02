@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../base/Thing.hpp"
+
 namespace wrd
 {
 	template <typename T> class TClass;
