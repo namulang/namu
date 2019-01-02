@@ -28,6 +28,12 @@ namespace wrd
 		//		clone()  : a wrapper for providing easy-to-use return type.
 		//		_clone() : it's a really what cloning happens. subclasses will
 		//		override it.
+
+	public:
+		wbool operator==(const This& rhs);
+		wbool operator!=(const This& rhs);
+
+	public://Instance:
 		Id getId() const;
 		wcnt getSerial() const;
 		wbool isHeap() const;

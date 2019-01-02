@@ -11,6 +11,10 @@ namespace wrd
 	class MgdObject;
     class MgdClass : public ObjectClass
     {	WRD_INHERIT(MgdClass, ObjectClass)
+	public:
+		wbool operator==(const This& rhs);
+		wbool operator!=(const This& rhs);
+
 	public:	//	Class:
         virtual const Origin& getOrigin() const;
         virtual TStrong<Instance> instance() const;

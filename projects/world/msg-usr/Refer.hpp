@@ -18,6 +18,8 @@ namespace wrd
 		template <typename V> Refer(TBindable<V>& rhs) : Super() { bind(rhs.get()); }
 
 	public:
+		wbool operator==(const This& rhs);
+		wbool operator!=(const This& rhs);
 		using Super::operator=;
 		template <typename V> This& operator=(const TBindable<V>& rhs) {
 			this->bind(rhs);

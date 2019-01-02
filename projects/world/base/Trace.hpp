@@ -13,10 +13,13 @@ namespace wrd
         Trace();
         Trace(Id id, wcnt serial);
 
+	public:
+		wbool operator==(const This& rhs);
+		wbool operator!=(const This& rhs);
+
     public: //  Trace:
         wcnt getSerial() const;
-
-    public: //  Thing:
+		//  Thing:
         virtual Res& release();
 
 	protected://Trace:

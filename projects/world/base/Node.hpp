@@ -70,6 +70,8 @@ namespace wrd
 	public:
 		Node& operator[](widx n);
 		const Node& operator[](widx n) const;
+		wbool operator==(const This& rhs);
+		wbool operator!=(const This& rhs);
 
 	public://Node:
 		const Str& getName() const;
