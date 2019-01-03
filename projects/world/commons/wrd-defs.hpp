@@ -47,7 +47,7 @@
 	}
 
 #define WRD_ASSERT_4(expr, ret, dump, msg)  \
-    if( (expr) )                            \
+    if( !(expr) )                            \
         return ret.dump(msg);
 #define WRD_ASSERT_3(expr, ret, msg)		WRD_ASSERT_4(expr, ret, warn, msg)
 #define WRD_ASSERT_2(expr, ret)				WRD_ASSERT_4(expr, ret, warn, "")
@@ -57,7 +57,7 @@
 #define WRD_IS_RES_5(expr, ret, chk, dump, msg) \
     {                                          	\
         const Res& res = expr;              	\
-        WRD_ASSERT(res.chk, ret, dump, msg)    	\
+        WRD_ASSERT(!(res.chk), ret, dump, msg)    	\
    }
 #define WRD_IS_RES_4(expr, chk, dump, msg)  WRD_IS_RES_5(expr, res, chk, dump, msg)
 #define WRD_IS_RES_3(expr, chk, msg)        WRD_IS_RES_5(expr, res, chk, warn, msg)

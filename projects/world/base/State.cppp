@@ -8,7 +8,7 @@ namespace wrd
         virtual wbool isInit() { return _is_init; }
         virtual Res& init();
         {
-            WRD_ASSERT(isInit(), Abort)
+            WRD_IS_WARN(isInit(), wascancel)
             return _setInit(true);
         }
         virtual Res& release()

@@ -4,8 +4,8 @@
 
 namespace wrd
 {	
-	#define WRD_TEST(expression)	\
-		if(expression)						\
+	#define WRD_TEST(expression)\
+		if( ! (expression))		\
 			return #expression;
 
 	class TestCase
