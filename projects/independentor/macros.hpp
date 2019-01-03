@@ -11,3 +11,4 @@
 #include "macros/Inherit.hpp"
 #include "macros/Stringizer.hpp"
 #include "macros/LazyMethod.hpp"
+#include "macros/Initiator.hpp"

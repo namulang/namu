@@ -97,7 +97,7 @@
 #define WRD_CLASS(...) 			WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
 
 /// This macros, DECLARE, DEFINE, will be used for which can't dependent to TClass and TStrong and Instance.
-///	mostly, base classes for them will be correspond to and will be used for internal usage only.
+///	mostly, those are for base classes of them which correspond to will be used for internal usage only.
 #define _CLASS_DECL_BASE()						\
 	public:										\
 		virtual const Class& getClass() const;	\
