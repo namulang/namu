@@ -126,8 +126,21 @@
 	TEMPL const Class& THIS::getClassStatic() {		\
         static TClass<This> inner;    				\
         return inner;    							\
-	}
+	}												\
+	TEMPL WRD_CLASS_INIT(THIS)
 #define WRD_CLASS_DEF(...)            			WRD_OVERLOAD(WRD_CLASS_DEF, __VA_ARGS__)
+
+///	WRD_CLASS_INIT makes that given type T is accessible to ClassManager.
+///	if user didn't use WRD_CLASS_DEF against one of their classes, should 
+///	put this macro at end of where WRD_CLASS used already.
+///	
+///	@remark	because retriving and stacking info of World::Class is a little
+///	bit of smart, it reculsivly keeps doing it to all super classes.
+///	so, may putting this macro on most derived class is enough to.
+///	
+///	if you use this onto template TYPE, add template parameters as prefix.
+///		e.g) template <typename T> WRD_CLASS_INIT(MyTemplate<T>)
+#define WRD_CLASS_INIT(TYPE)			WRD_INITIATOR(TYPE::getClassStatic();)
 
 #define WRD_GET_3(expr, res, ret)								\
 	_TGet<decltype(expr)>::set(expr);							\

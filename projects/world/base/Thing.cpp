@@ -72,7 +72,12 @@ namespace wrd
 		return unconst._down(cls);
 	}
 	//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
-	Res& THIS::assign(const Thing& it) { if(it.isNull()) return wasnull; }
+	Res& THIS::assign(const Thing& it)
+	{
+		WRD_IS_NULL(it)
+		//	TODO:
+		return wasgood;
+	}
 	//	Visitor에 의해서 하위 구성요소(ownee)들을 어떻게 순회시킬지를 정한다.
 	Res& THIS::_tour(Visitor& visitor) const { return wasgood; }
 	Res& THIS::_tour(Visitor& visitor)
