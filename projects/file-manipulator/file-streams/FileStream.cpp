@@ -13,21 +13,26 @@ namespace wrd
 		THIS::THIS(const std::string& new_path) : Super(new_path), _mode(MODE_TYPE_START), _fd(0)  {}
 		THIS::~THIS() { release(); }
 
-		wbool THIS::operator+=(wint delta)
+		THIS& THIS::operator+=(wint delta)
 		{
-			if( ! isInit()) return 0;
-
-			return setCursor(getCursor() + delta);
+			if(isInit())
+				setCursor(getCursor() + delta);
+			return *this;
 		}
 
-		wbool THIS::operator-=(wint delta)
+		THIS& THIS::operator-=(wint delta)
 		{
-			if( ! isInit()) return 0;
-
-			return setCursor(getCursor() - delta);
+			if(isInit()) 
+				setCursor(getCursor() - delta);
+			return *this;
 		}
 
-		wbool THIS::operator=(wint new_position) { return setCursor(new_position); }
+		THIS& THIS::operator=(wint new_position)
+		{
+			if(isInit()) 
+				setCursor(new_position);
+			return *this;
+		}
 
 		wint THIS::getCursor() const 
 		{

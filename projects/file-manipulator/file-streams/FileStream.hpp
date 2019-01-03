@@ -28,9 +28,9 @@ namespace wrd
 			virtual ~FileStream();
 
 		public:
-			wbool operator+=(wint delta);
-			wbool operator-=(wint delta);
-			wbool operator=(wint new_position);
+			This& operator+=(wint delta);
+			This& operator-=(wint delta);
+			This& operator=(wint new_position);
 			wint getCursor() const;
 			wint getEndOfFile() const;
 			/// @brief  Set cursor of file opening to given new_position.
