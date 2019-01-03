@@ -1,34 +1,56 @@
-#include "Refer.hpp"
+#include "Bind.hpp"
 
 namespace wrd
 {
-#define THIS Refer
+#define THIS Bind
 	WRD_CLASS_DEF(THIS)
 
-	THIS::This(const Class& cls = Node::getStaticClass(), wbool want_const = false);
-	THIS::This(Node& it);
-	THIS::This(const Node& it);
-	THIS::This(const This& it);
-	THIS::This(This& it);
+	const Instance* THIS::operator->() const { return &get(); }
+	Instance* THIS::operator->() { return &get(); }
+	const Instance* THIS::operator*() const { return &get(); }
+	Instance* THIS::operator*() { return &get(); }
+	wbool THIS::operator==(const This& rhs) const { return &get() == &rhs.get(); }
+	wbool THIS::operator!=() const { return !operator==(rhs); }
 
-	wbool THIS::operator==() const;
-	wbool THIS::operator!=() const;
-	This& THIS::operator=(const This& it);
-	This& THIS::operator=(This& it);
-	This& THIS::operator=(const Node& it);
+	This& THIS::operator=(This& rhs)
+	{
+		WRD_ASSIGN_GUARD()
 
-	Refer THIS::use(Msg& msg) const { return _bean.call(msg); }
-	Refer THIS::use(Msg& msg) { return _bean.call(msg); }
+		bind(rhs.get());
+		return *this;
+	}
+
+	This& THIS::operator=(const This& rhs)
+	{
+		WRD_ASSIGN_GUARD()
+		
+		bind(rhs.get());
+		return *this;
+	}
+
+    THIS::operator wbool() const { return isBind(); }
+	Res& THIS::bind(const Instance& it) { return _bind(it); }
+	Res& THIS::bind(Instance& it) { return _bind(it); }
+	wbool THIS::isBind() const { return _its_id.num == WRD_INDEX_ERROR; }
+
+
+	TStrong<Node> THIS::use(Msg& msg) const
+	{
+		const Node& got = WRD_GET(get<Node>());
+		return got.call(msg);
+	}
+
+	TStrong<Node> THIS::use(Msg& msg)
+	{
+		const Node& got = WRD_GET(get<Node>());
+		return got.call(msg);
+	}
 
 	const Origin& THIS::getOrigin() const
 	{
-		if( ! _bean)
-			return Super::getOrigin();
-	
-		return _bean->getOrigin();
+		const Node& got = WRD_GET(get<Node>(), Super::getOrigin());
+		return got->getOrigin();
 	}
-
-	wbool THIS::isConst() const { return _is_const; }
 
 	Res& THIS::bind(Instance& it)
 	{
@@ -45,7 +67,7 @@ namespace wrd
 	Res& THIS::bind(const Instance& it)
 	{
 		if( ! isConst())
-			return wasntneed;	// 이 Refer는 Refer<T>이다. 지금 하려는 것은 즉, A* a = (const A*) a1; 를 하려고 하는것과 같다.
+			return wasntneed;	// 이 Bind는 Bind<T>이다. 지금 하려는 것은 즉, A* a = (const A*) a1; 를 하려고 하는것과 같다.
 
 		WRD_UNCONST()
 		Res& res = unconst.bind(const_down<Object&>(it));
@@ -65,7 +87,7 @@ namespace wrd
 		return wasgood;
 	}
 
-	Refer THIS::to(const Class& cls)
+	Bind THIS::to(const Class& cls)
 	{
 		if( ! _bean)
 			return Super::to(cls);
@@ -85,7 +107,7 @@ namespace wrd
 
 		//	Sharable, Occupiable:
 		//		여기서는 실질적인 sharing vs occupying의 동작차이를 만들어내는 곳이다.
-		//		Occupiable이라도 const 인 경우에는 인터프리터에 의해서 const Refer에 감싸서 scope나 멤버함수에 들어가게 된다.
+		//		Occupiable이라도 const 인 경우에는 인터프리터에 의해서 const Bind에 감싸서 scope나 멤버함수에 들어가게 된다.
 		//		또한 이문제는 it이 occupiable인지 sharable인지 구분할 필요가 없다. 오로지 this가 occupiable인지 아닌지만 중요하다.
 		if(_cls.isOccupy()) // Occupiable은 상속이 된다.
 		{
@@ -95,7 +117,7 @@ namespace wrd
 		}
 	
 		//	sharable 이라면 이렇게 간단히 끝난다.
-		Refer& refered = it.down<This>();
+		Bind& refered = it.down<This>();
 		if(refered.isExist())
 			return bind(refered);
 		return bind(it.down<Object>()); // null이 들어가도 상관없다.

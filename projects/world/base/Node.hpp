@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../bind/TStrong.inl"
 #include "State.hpp"
 #include "../compiler/Origin.hpp"
 

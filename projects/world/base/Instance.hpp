@@ -36,7 +36,7 @@ namespace wrd
 	public://Instance:
 		Id getId() const;
 		wcnt getSerial() const;
-		wbool isHeap() const;
+		virtual wbool isHeap() const;
 		TStrong<Node> toStrong();
 		TStrong<const Node> toStrong() const;
 		TWeak<Node> toWeak();

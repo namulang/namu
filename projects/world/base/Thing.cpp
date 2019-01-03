@@ -62,6 +62,8 @@ namespace wrd
 	template <typename T> const T& THIS::down() const { return (T&) _down(T::getClassStatic()); }
 	Thing& THIS::_down(const Class& cls)
 	{
+		WRD_IS_THIS(Thing)
+
 		if(isSub(cls))
 			return *this;
 		return nulr<Thing>();

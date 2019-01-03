@@ -74,4 +74,17 @@ namespace wrd
 		return msg.getName() == getName();
 	}
 	virtual wbool isStatic() const { return false; }
+
+	Refer THIS::implicit(const Class& cls)
+	{
+		if(isSub(cls))
+			return Refer(*this);
+		return Refer();
+	}
+	Refer THIS::implicit(const Class& cls) const
+	{
+		WRD_UNCONST()
+		return Refer((const Refer&) unconst.implicit(cls));
+		// we code inliney because of prevention to releasing instance of returned variable from unconst.implicit()
+	}
 }

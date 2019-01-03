@@ -10,7 +10,7 @@ namespace wrd
 	//	예), MgdObject에 대한 Proxy.
 	class MgdObject;
     class MgdClass : public ObjectClass
-    {	WRD_INHERIT(MgdClass, ObjectClass)
+    {	WRD_CLASS(MgdClass, ObjectClass)
 	public:
 		wbool operator==(const This& rhs);
 		wbool operator!=(const This& rhs);
@@ -20,11 +20,11 @@ namespace wrd
         virtual TStrong<Instance> instance() const;
 		//	Node:
 		virtual const Container& getNodes() const;
-		//	Thing:
-		virtual TStrong<Instance> clone() const;
 
     private:
         TStrong<Origin> _org;
 		TStrong<Chain> _nodes;
     };
+
+	WRD_CLASS_INIT(MgdClass)
 }

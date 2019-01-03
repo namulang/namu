@@ -1,7 +1,6 @@
 #pragma once
 
 #include "TWeak.inl"
-#include "../base/TGettable.hpp"
 #include "../world.hpp"
 #include "../memory/Block.hpp"
 
@@ -13,8 +12,22 @@ namespace wrd
 	WRD_CLASS_DEF(TEMPL, THIS)
 
     TEMPL THIS::TWeak() { }
-    TEMPL THIS::TWeak(const T& it) { this->bind(it); }
-    TEMPL THIS::TWeak(const T* it) { this->bind(it); }
+    TEMPL THIS::TWeak(T& it) { this->bind(it); }
+    TEMPL THIS::TWeak(T* it) { this->bind(it); }
+    TEMPL THIS::TWeak(Bind& it) { this->bind(it); }
+    TEMPL THIS::TWeak(Bind* it) { this->bind(it); }
+    TEMPL const T* operator->() const { return &get(); }
+    TEMPL const T* operator*() const { return &get(); }
+    TEMPL T* operator->() { return &get(); }
+    TEMPL T* operator*() { return &get(); }
+
+	TEMPL This& operator=(This& rhs)
+	{
+		if(this == &rhs) return *this;
+
+		bind(rhs);
+		return *this;
+	}
 
     TEMPL Res& THIS::bind(const Instance& new1)
     {
@@ -26,13 +39,13 @@ namespace wrd
         unbind();
         this->_setId(new1.getId());
         this->_setSerial(blk.getSerial());
-        return blk.look();
+        return blk._onWeak(1);
     }
 
     TEMPL Instance& THIS::_get()
     {
         WRD_IS_THIS(T)
-        Instance& ins = WRD_GET(this->_getBlock().get());
+        Instance& ins = WRD_GET(this->_getBlock(_its_id).get());
         //  정확한 인터페이스가 나오지 않았다.
         if(ins.getSerial() != this->getSerial()) {
             unbind();
@@ -58,6 +71,12 @@ namespace wrd
             this->_getBlock().ignore();
         return Super::release();
     }
+
+	TEMPL Block& THIS::_getItsBlock()
+	{
+		WRD_IS_THIS(Block)
+		return 
+	}
 
     //TODO: TEMPL ResSet isValid() const;
 #undef TEMPL

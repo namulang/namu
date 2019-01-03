@@ -1,9 +1,0 @@
-#include "Trace.hpp"
-
-namespace wrd
-{
-#define THIS Trace
-	WRD_CLASS_DEF(Trace)
-
-#undef THIS
-}
