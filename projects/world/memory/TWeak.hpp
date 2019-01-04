@@ -14,22 +14,47 @@ namespace wrd
     TEMPL THIS::TWeak() { }
     TEMPL THIS::TWeak(T& it) { this->bind(it); }
     TEMPL THIS::TWeak(T* it) { this->bind(it); }
-    TEMPL THIS::TWeak(Bind& it) { this->bind(it); }
-    TEMPL THIS::TWeak(Bind* it) { this->bind(it); }
+    TEMPL THIS::TWeak(This& it) { this->bind(it); }
+    TEMPL THIS::TWeak(This* it) { this->bind(it); }
     TEMPL const T* operator->() const { return &get(); }
     TEMPL const T* operator*() const { return &get(); }
     TEMPL T* operator->() { return &get(); }
     TEMPL T* operator*() { return &get(); }
 
-	TEMPL This& operator=(This& rhs)
+	TEMPL This& operator=(const This& rhs)
 	{
-		if(this == &rhs) return *this;
+		WRD_ASSIGN_GUARD()
 
-		bind(rhs);
+		this->bind(rhs);
 		return *this;
 	}
 
-    TEMPL Res& THIS::bind(const Instance& new1)
+	TEMPL Res& THIS::bind(T& new1) { return bind(new1); }
+	
+	TEMPL Res& THIS::unbind()
+	{
+	    Block& blk = WRD_GET(this->_getBlock(this->getItsId()));
+	    blk._onWeak(-1);
+	    return Super::unbind();
+	}
+	
+	TEMPL const Class& THIS::getBindable() const { return T::getClassStatic(); }
+	
+	TEMPL T& THIS::get()
+	{
+	    Instance& got = WRD_GET(_get(), nulr<T>());
+	    return got.cast<T>();
+	}
+	
+	TEMPL const T& THIS::get() const
+	{
+	    WRD_UNCONST()
+	    return unconst.get();
+	}
+	
+	TEMPL wbool THIS::isConst() const { return false; }
+	
+	TEMPL Res& THIS::_bind(const Instance& it)
     {
         //  pre:
         //      param-validation:
@@ -42,43 +67,74 @@ namespace wrd
         return blk._onWeak(1);
     }
 
-    TEMPL Instance& THIS::_get()
-    {
-        WRD_IS_THIS(T)
-        Instance& ins = WRD_GET(this->_getBlock(_its_id).get());
-        //  정확한 인터페이스가 나오지 않았다.
-        if(ins.getSerial() != this->getSerial()) {
-            unbind();
-            wasbindfail.warn("...");
-            // TODO: uncomment return nulr<Instance>();
-        }
+#undef THIS
+#define THIS TWeak<const T>
 
-        return ins;
-    }
+	WRD_CLASS_DEF(TEMPL, THIS)
 
-    TEMPL Res& THIS::unbind() { return release(); }
+	TEMPL THIS::TWeak() { }
+	TEMPL THIS::TWeak(T& it) { this->bind(it); }
+	TEMPL THIS::TWeak(T* it) { this->bind(it); }
+	TEMPL THIS::TWeak(This& it) { this->bind(it); }
+	TEMPL THIS::TWeak(This* it) { this->bind(it); }
+	TEMPL THIS::TWeak(const T& it) { this->bind(it); }
+	TEMPL THIS::TWeak(const T* it) { this->bind(it); }
+	TEMPL THIS::TWeak(const This& it) { this->bind(it); }
+	TEMPL THIS::TWeak(const This* it) { this->bind(it); }
+	TEMPL const T* operator->() const { return &get(); }
+	TEMPL const T* operator*() const { return &get(); }
 
-    TEMPL wbool THIS::isBind() const
-    {
-        const Block& block = this->getBlock();
-        return 	block.isExist() &&
-				block.getSerial() == this->getSerial();
-    }
-
-    TEMPL Res& THIS::release()
-    {
-        if(isBind())
-            this->_getBlock().ignore();
-        return Super::release();
-    }
-
-	TEMPL Block& THIS::_getItsBlock()
+	TEMPL This& operator=(This& rhs)
 	{
-		WRD_IS_THIS(Block)
-		return 
+	    WRD_ASSIGN_GUARD()
+	
+	    bind(rhs);
+	    return *this;
 	}
 
-    //TODO: TEMPL ResSet isValid() const;
-#undef TEMPL
+	TEMPL This& operator=(const This& rhs)
+	{
+		WRD_ASSIGN_GUARD()
+
+		bind(rhs);
+		return *this;
+	}
+
+	TEMPL Res& THIS::bind(T& new1) { return bind(new1); }
+	TEMPL Res& THIS::bind(const T& new1) { return bind(new1); }
+	
+	TEMPL Res& THIS::unbind()
+	{
+	    Block& blk = WRD_GET(this->_getBlock(this->getItsId()));
+	    blk._onWeak(-1);
+	    return Super::unbind();
+	}
+	
+	TEMPL const Class& THIS::getBindable() const { return T::getClassStatic(); }
+	
+	TEMPL const T& THIS::get() const
+	{
+	    WRD_UNCONST()
+	    const Instance& got = WRD_GET(unconst._get(), nulr<T>());
+	    return got.cast<T>();
+	}
+	
+	TEMPL wbool THIS::isConst() const { return false; }
+	
+	TEMPL Res& THIS::_bind(const Instance& it)
+	{
+	    //  pre:
+	    //      param-validation:
+	    Block& blk = WRD_GET(const_cast<Block&>(new1.getBlock()));
+	
+	    //  main:
+	    unbind();
+	    this->_setId(new1.getId());
+	    this->_setSerial(blk.getSerial());
+	    return blk._onWeak(1);
+	}
+
 #undef THIS
+#undef TEMPL
+
 }

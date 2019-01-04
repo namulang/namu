@@ -4,19 +4,16 @@
 
 namespace wrd
 {
-	class Refer;
-	class Res;
 	class Class;
 	class Visitor;
-	class Node;
-	template <typename T> class TRefer;
-	template <typename T> class TStrong;
 	class Instance;
+	class Res;
+	class Node;
 
 	///	Thing은 World의 최상위 객체
 	class Thing
 	{	WRD_CLASS_DECL(Thing)
-		friend class Refer; // for _down.
+		template <typename T, typename S> friend class TStrong; // for _down
 	public:
 		template <typename T, typename S> friend class TVisitation; //	_tour를 위한 것이다.
 
@@ -36,16 +33,16 @@ namespace wrd
 		//		사용자의 개입이 가능한 유일한 캐스팅의 1 종류이며, 
 		//		A타입에 대한 명시적캐스팅은 어떠한 타입이 나올지 제한되지 않는다.
 		//		A클래스.to()는 전혀다른 B객체가 나올 수도 있다.
-		virtual Refer to(const Class& cls);
-		Refer to(const Class& cls) const;
-		template <typename T> TRefer<T> to();
-		template <typename T> TRefer<T> to() const;
+		virtual TStrong<Node> to(const Class& cls);
+		TStrong<Node> to(const Class& cls) const;
+		template <typename T> TStrong<Node> to();
+		template <typename T> TStrong<Node> to() const;
 		//	Casting:
 		//		World의 캐스팅은 다음으로 구분된다.
-		//			1) native 다운캐스팅:	thing::down<T>() Refer, Thing::down(Class&)
+		//			1) native 다운캐스팅:	thing::down<T>(), Thing::down(Class&)
 		//			[invisible]	native에서 편의를 위해 제공되는 함수다.
 		//
-		//			2) 명시적캐스팅:	Refer Thing::to(Class&), Refer Thing::to<T>()
+		//			2) 명시적캐스팅:	Thing::to(Class&), Thing::to<T>()
 		//			[visible] 명시적 캐스팅은 총 3가지로 이루어져있다.
 		//				1. 다운/업캐스팅(Thing::down(Class&)를 사용한다)
 		//				2. 묵시적 캐스팅 파이프
@@ -70,8 +67,8 @@ namespace wrd
 
 		//	구체클래스로 캐스트한다. dynamic_cast와 동급이다.
 		//	invisible이다.
-		template <typename T> T& down();
-		template <typename T> const T& down() const;
+		template <typename T> T& down() { return (T&) _down(T::getClassStatic()); }
+		template <typename T> const T& down() const { return (T&) _down(T::getClassStatic()); }
 		virtual Thing& _down(const Class& cls);
 		const Thing& _down(const Class& cls) const;
 		//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.

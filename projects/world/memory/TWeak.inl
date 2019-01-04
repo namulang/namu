@@ -4,8 +4,6 @@
 
 namespace wrd
 {
-	class Block;
-
 	template <typename T>
 	class TWeak : public Bind 
 	{	WRD_CLASS_DECL(TWeak, Bind)
@@ -22,7 +20,7 @@ namespace wrd
         const T* operator*() const;
         T* operator->();
         T* operator*();
-		This& operator=(This& rhs);
+		This& operator=(const This& rhs);
 
 	public:	// Bind:
 		Res& bind(T& new1);
@@ -32,7 +30,7 @@ namespace wrd
 		T& get();
 		const T& get() const;
 		//	Node:
-		wbool isConst() const;
+		virtual wbool isConst() const;
 
 	protected://Bind:
 		virtual Res& _bind(const Instance& it);
@@ -59,14 +57,14 @@ namespace wrd
 		This& operator=(const This& rhs);
 
 	public:	// Bind:
-		Res& bind(const T& new1);
 		Res& bind(T& new1);
+		Res& bind(const T& new1);
 		virtual Res& unbind();
 		virtual const Class& getBindable() const;
 		using Super::get;
 		const T& get() const;
 		//	Node:
-		wbool isConst() const;
+		virtual wbool isConst() const;
 
 	protected://Bind:
 		virtual Res& _bind(const Instance& it);

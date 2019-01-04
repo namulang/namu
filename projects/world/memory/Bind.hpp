@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../base/Node.hpp"
+#include "Bindable.hpp"
 
 namespace wrd
 {
@@ -41,33 +41,25 @@ namespace wrd
 	///				becuase it was declared to class template, user need to bind or get binded using type T.
 	///				of course these are based on class Bind, user can use loose-check API case by case.
 	///
-    class Bind : public Node 
+    class Bind : public Node, public Bindable
 	{	WRD_CLASS_DECL(Bind, Node)
 	public:
-        const Instance* operator->() const;
-        Instance* operator->();
-        const Instance* operator*() const;
-        Instance* operator*();
+		Bind();
+
+	public:
 		wbool operator==(const This& rhs);
 		wbool operator!=(const This& rhs);
 		This& operator=(This& rhs);
 		This& operator=(const This& rhs);
-        operator wbool() const;
 
 	public://	Bind:
-		Res& bind(const Instance& it);
-		Res& bind(Instance& it);
 		virtual wbool isBind() const;
         /// mostly, unbind is replacable to release() comletely.
         /// but some class(e.g. Refer) treat differently between unbind() and release().
-		virtual Res& unbind();
-		template <typename T> T& get() { return _get().cast<T>(); }
-		template <typename T> const T& get() const {
-			WRD_UNCONST()
-			return unconst._get().cast<T>();
-		}
 		virtual const Class& getBindable() const = 0;
-
+		virtual Res& unbind();
+		wcnt getItsSerial() const;
+		Id getItsId() const;
 		//		Node:
 		virtual TStrong<Node> use(Msg& msg) const; 
 		virtual TStrong<Node> use(Msg& msg); 
@@ -93,5 +85,6 @@ namespace wrd
 
 	private:
 		Id _its_id; // id for binded one
+		wcnt _serial;
 	};
 }

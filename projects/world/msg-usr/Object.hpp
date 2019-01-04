@@ -49,7 +49,7 @@ namespace wrd
         //                생성자 안에서 getNodes()를 호출하면 안된다. 초기화는 1번만 일어난다. 여러번 하게도 할 수 있으나, 그렇게하면 기존의 ObjectVariables를 덮어써야 하므로 어짜피 로직은 망하게 된다.
         //    만약 아래의 함수가 visible이 된다면 어떻게 반환형 const가 전달되지?:
         //        TNativeMethod가 반환형 T = const Container임을 알고있다.
-        //        TRefer<const Container> ret = (obj->*fptr)().to<const Container>();
+        //        TStrong<const Container> ret = (obj->*fptr)().to<const Container>();
         //        return ret;
 
     private:    // Node:

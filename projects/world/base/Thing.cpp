@@ -1,6 +1,5 @@
 #include "Thing.hpp"
 #include "../bind.hpp"
-#include "../msg-usr/Refer.hpp"
 
 namespace wrd
 {
@@ -20,21 +19,21 @@ namespace wrd
 	//		사용자의 개입이 가능한 유일한 캐스팅의 1 종류이며, 
 	//		A타입에 대한 명시적캐스팅은 어떠한 타입이 나올지 제한되지 않는다.
 	//		A클래스.to()는 전혀다른 B객체가 나올 수도 있다.
-	Refer THIS::to(const Class& cls) { return Refer(); }
-	Refer THIS::to(const Class& cls) const
+	TStrong<Node> THIS::to(const Class& cls) { return TStrong<Node>(); }
+	TStrong<Node> THIS::to(const Class& cls) const
 	{
 		WRD_UNCONST()
 		wbool should_const = cls.isSuper(getClass()); // upcasting일때만 const를 붙여야 한다.
-		return Refer(unconst.to(cls), should_const);
+		return TStrong<Node>(unconst.to(cls), should_const);
 	}
-	template <typename T> TRefer<T> THIS::to() { return TRefer<T>(to(T::getStaticClass())); }
-	template <typename T> TRefer<T> THIS::to() const { return TRefer<T>(to(T::getStaticClass())); }
+	template <typename T> TStrong<T> THIS::to() { return TStrong<T>(); }
+	template <typename T> TStrong<T> THIS::to() const { return TStrong<T>(); }
 	//	Casting:
 	//		World의 캐스팅은 다음으로 구분된다.
-	//			1) native 다운캐스팅:	thing::down<T>() Refer, Thing::down(Class&)
+	//			1) native 다운캐스팅:	thing::down<T>(), Thing::down(Class&)
 	//			[invisible]	native에서 편의를 위해 제공되는 함수다.
 	//
-	//			2) 명시적캐스팅:	Refer Thing::to(Class&), Refer Thing::to<T>()
+	//			2) 명시적캐스팅:	Thing::to(Class&), Thing::to<T>()
 	//			[visible] 명시적 캐스팅은 총 3가지로 이루어져있다.
 	//				1. 다운/업캐스팅(Thing::down(Class&)를 사용한다)
 	//				2. 묵시적 캐스팅 파이프
@@ -58,8 +57,6 @@ namespace wrd
 
 	//	구체클래스로 캐스트한다. dynamic_cast와 동급이다.
 	//	invisible이다.
-	template <typename T> T& THIS::down() { return (T&) _down(T::getClassStatic()); }
-	template <typename T> const T& THIS::down() const { return (T&) _down(T::getClassStatic()); }
 	Thing& THIS::_down(const Class& cls)
 	{
 		WRD_IS_THIS(Thing)

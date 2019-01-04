@@ -20,7 +20,8 @@ namespace wrd
 	public:
 		virtual Res& unbind();
 
-	protected://Bind:
+	protected:
+		//Bind:
 		virtual Res& _bind(const Instance& it);
 	};
 	template <typename T>
@@ -33,7 +34,9 @@ namespace wrd
 		TStrong(const T& it);
 		TStrong(const T* it);
 		TStrong(This& rhs);
+		TStrong(This* rhs);
 		TStrong(const This& rhs);
+		TStrong(const This* rhs);
 
 	public:
 		This& operator=(This& rhs);
@@ -42,7 +45,8 @@ namespace wrd
 	public:
 		virtual Res& unbind();
 
-	protected://Bind:
+	protected:
+		//Bind:
 		virtual Res& _bind(const Instance& it);
 	};
 	//	c++11 부터 지원되는 문법

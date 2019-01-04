@@ -46,7 +46,7 @@ namespace wrd
 		virtual Res& release();
 
 	protected:
-		Block& _getBlock();
+		static Block& _getBlock(Id id);
 		Res& _setId(Id new1);
 
 	private:

@@ -5,10 +5,7 @@ namespace wrd
 #define THIS Bind
 	WRD_CLASS_DEF(THIS)
 
-	const Instance* THIS::operator->() const { return &get(); }
-	Instance* THIS::operator->() { return &get(); }
-	const Instance* THIS::operator*() const { return &get(); }
-	Instance* THIS::operator*() { return &get(); }
+	THIS::THIS() : _serial(WRD_DEFAULT) {}
 	wbool THIS::operator==(const This& rhs) const { return &get() == &rhs.get(); }
 	wbool THIS::operator!=() const { return !operator==(rhs); }
 
@@ -28,11 +25,17 @@ namespace wrd
 		return *this;
 	}
 
-    THIS::operator wbool() const { return isBind(); }
-	Res& THIS::bind(const Instance& it) { return _bind(it); }
-	Res& THIS::bind(Instance& it) { return _bind(it); }
-	wbool THIS::isBind() const { return _its_id.num == WRD_INDEX_ERROR; }
+	wbool THIS::isBind() const { return _getBlock(_its_id).isExist(); }
 
+	Res& THIS::unbind()
+	{
+		_serial = WRD_DEFAULT;
+		_its_id.num = WRD_INDEX_ERROR;
+		return wasgood;
+	}
+
+	wcnt THIS::getItsSerial()) const { return _serial; }
+	Id THIS::getItsId() const { return _its_id; }
 
 	TStrong<Node> THIS::use(Msg& msg) const
 	{
@@ -52,39 +55,10 @@ namespace wrd
 		return got->getOrigin();
 	}
 
-	Res& THIS::bind(Instance& it)
+	const Container& THIS::getNodes()
 	{
-		//	NullCheckDelayed 철학에 의해서 WRD_IS_NULL(it)을 하지 않는다. 
-		const Class& cls = WRD_GET(it.getClass());
-		if( ! cls.isSub(_cls))
-			return waswrongtype.warn("...");
-
-		unbind();
-		WRD_IS_ERR(_bean.bind(it))
-		_is_const = false;
-		return wasgood;
-	}
-	Res& THIS::bind(const Instance& it)
-	{
-		if( ! isConst())
-			return wasntneed;	// 이 Bind는 Bind<T>이다. 지금 하려는 것은 즉, A* a = (const A*) a1; 를 하려고 하는것과 같다.
-
-		WRD_UNCONST()
-		Res& res = unconst.bind(const_down<Object&>(it));
-		WRD_IS_ERR(res)
-
-		return res;
-	}
-
-	wbool THIS::isBind() const;
-
-	Res& THIS::unbind()
-	{
-		Res& res = _bean.unbind();
-		WRD_IS_ERR(res)
-
-		_is_const = false;
-		return wasgood;
+		const Node& got = WRD_GET(get<Node>(), Super::getNodes());
+		return got->getNodes();
 	}
 
 	Bind THIS::to(const Class& cls)
@@ -123,9 +97,34 @@ namespace wrd
 		return bind(it.down<Object>()); // null이 들어가도 상관없다.
 	}
 
+	Res& THIS::_bind(Instance& it)
+	{
+	    //    NullCheckDelayed ì² íì ìí´ì WRD_IS_NULL(it)ì íì§ ìëë¤.
+	    const Class& cls = WRD_GET(it.getClass());
+	    if( ! cls.isSub(_cls))
+	        return waswrongtype.warn("...");
+	
+	    unbind();
+	    WRD_IS_ERR(_bean.bind(it))
+	    _is_const = false;
+	    return wasgood;
+	}
+	
+	TEMPL Instance& THIS::_get()
+	{
+	    WRD_IS_THIS(THIS)
+	    Instance& ins = WRD_GET(this->_getBlock(_its_id).get());
+	    if(ins.getSerial() != this->getSerial()) {
+	        unbind();
+	        wasbindfail.warn("...");
+	        // TODO: uncomment return nulr<Instance>();
+	    }
+	
+	//    TODO: impl _get()
+	    return ins;
+	}
+	
 	const Thing& THIS::_down(const Class& cls) const { return _bean ? _bean->_down(cls) : nulr<Thing>(); }
-
-	//	TODO: impl _get()
 
 #undef THIS
 }
