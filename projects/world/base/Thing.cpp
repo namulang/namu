@@ -19,15 +19,12 @@ namespace wrd
 	//		사용자의 개입이 가능한 유일한 캐스팅의 1 종류이며, 
 	//		A타입에 대한 명시적캐스팅은 어떠한 타입이 나올지 제한되지 않는다.
 	//		A클래스.to()는 전혀다른 B객체가 나올 수도 있다.
-	TStrong<Node> THIS::to(const Class& cls) { return TStrong<Node>(); }
-	TStrong<Node> THIS::to(const Class& cls) const
+	Strong THIS::to(const Class& cls) { return Strong(); }
+	Strong THIS::to(const Class& cls) const
 	{
 		WRD_UNCONST()
-		wbool should_const = cls.isSuper(getClass()); // upcasting일때만 const를 붙여야 한다.
-		return TStrong<Node>(unconst.to(cls), should_const);
+		return CStrong(unconst.to(cls));
 	}
-	template <typename T> TStrong<T> THIS::to() { return TStrong<T>(); }
-	template <typename T> TStrong<T> THIS::to() const { return TStrong<T>(); }
 	//	Casting:
 	//		World의 캐스팅은 다음으로 구분된다.
 	//			1) native 다운캐스팅:	thing::down<T>(), Thing::down(Class&)

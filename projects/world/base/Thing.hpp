@@ -9,6 +9,12 @@ namespace wrd
 	class Instance;
 	class Res;
 	class Node;
+	template <typename T> class TStrong;
+	typedef TStrong<Node> Strong;
+	typedef TStrong<const Node> CStrong;
+	template <typename T> class TWeak;
+	typedef TWeak<Node> Weak;
+	typedef TWeak<const Node> CWeak;
 
 	///	Thing은 World의 최상위 객체
 	class Thing
@@ -33,10 +39,10 @@ namespace wrd
 		//		사용자의 개입이 가능한 유일한 캐스팅의 1 종류이며, 
 		//		A타입에 대한 명시적캐스팅은 어떠한 타입이 나올지 제한되지 않는다.
 		//		A클래스.to()는 전혀다른 B객체가 나올 수도 있다.
-		virtual TStrong<Node> to(const Class& cls);
-		TStrong<Node> to(const Class& cls) const;
-		template <typename T> TStrong<Node> to();
-		template <typename T> TStrong<Node> to() const;
+		virtual Strong to(const Class& cls);
+		Strong to(const Class& cls) const;
+		template <typename T> Strong to() { return to(T::getClassStatic()); }
+		template <typename T> Strong to() const { return to(T::getClassStatic()); }
 		//	Casting:
 		//		World의 캐스팅은 다음으로 구분된다.
 		//			1) native 다운캐스팅:	thing::down<T>(), Thing::down(Class&)
