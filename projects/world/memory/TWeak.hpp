@@ -1,8 +1,8 @@
 #pragma once
 
 #include "TWeak.inl"
-#include "../world.hpp"
 #include "../memory/Block.hpp"
+#include "../meta/helpers.hpp"
 
 namespace wrd
 {
@@ -16,12 +16,12 @@ namespace wrd
     TEMPL THIS::TWeak(T* it) { this->bind(it); }
     TEMPL THIS::TWeak(This& it) { this->bind(it); }
     TEMPL THIS::TWeak(This* it) { this->bind(it); }
-    TEMPL const T* operator->() const { return &get(); }
-    TEMPL const T* operator*() const { return &get(); }
-    TEMPL T* operator->() { return &get(); }
-    TEMPL T* operator*() { return &get(); }
+	TEMPL const T* THIS::operator->() const { return &get(); }
+	TEMPL const T* THIS::operator*() const { return &get(); }
+	TEMPL T* THIS::operator->() { return &get(); }
+	TEMPL T* THIS::operator*() { return &get(); }
 
-	TEMPL This& operator=(const This& rhs)
+	TEMPL This& THIS::operator=(const This& rhs)
 	{
 		WRD_ASSIGN_GUARD()
 
@@ -81,10 +81,10 @@ namespace wrd
 	TEMPL THIS::TWeak(const T* it) { this->bind(it); }
 	TEMPL THIS::TWeak(const This& it) { this->bind(it); }
 	TEMPL THIS::TWeak(const This* it) { this->bind(it); }
-	TEMPL const T* operator->() const { return &get(); }
-	TEMPL const T* operator*() const { return &get(); }
+	TEMPL const T* THIS::operator->() const { return &get(); }
+	TEMPL const T* THIS::operator*() const { return &get(); }
 
-	TEMPL This& operator=(This& rhs)
+	TEMPL This& THIS::operator=(This& rhs)
 	{
 	    WRD_ASSIGN_GUARD()
 	
@@ -92,7 +92,7 @@ namespace wrd
 	    return *this;
 	}
 
-	TEMPL This& operator=(const This& rhs)
+	TEMPL This& THIS::operator=(const This& rhs)
 	{
 		WRD_ASSIGN_GUARD()
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../base/Composit.hpp"
-#include "Refer.hpp"
 
 namespace wrd
 {
@@ -12,7 +11,6 @@ namespace wrd
     //        3. static을 구분해야 하는가?
     //        4. const 와 nonconst를 구분해야 하는가?
     //    여기서는
-    class Container;
     class Object : public Composit
     {	WRD_CLASS_DECL(Object, Composit)
     public:    // Object:
@@ -25,8 +23,8 @@ namespace wrd
         const Container& getVars() const;
 
     public:    //    Node:
-        virtual Refer use(Msg& msg);
-        virtual Refer use(Msg& msg) const;
+        virtual Strong use(Msg& msg);
+        virtual CStrong use(Msg& msg) const;
         virtual wbool canUse(const Msg& msg) const;
         virtual const Origin& getOrigin() const;
 

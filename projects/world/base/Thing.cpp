@@ -1,5 +1,5 @@
 #include "Thing.hpp"
-#include "../bind.hpp"
+#include "../memory/TStrong.hpp"
 
 namespace wrd
 {

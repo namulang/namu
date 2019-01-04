@@ -49,7 +49,7 @@ namespace wrd
 		//Bind:
 		virtual Res& _bind(const Instance& it);
 	};
-	//	c++11 부터 지원되는 문법
-	using Strong = TStrong<Node>;
-	using CStrong = TStrong<const Node>;
+
+	typedef TStrong<Node> Strong;
+	typedef TStrong<const Node> CStrong;
 }

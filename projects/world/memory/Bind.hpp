@@ -67,7 +67,8 @@ namespace wrd
 		virtual const Container& getNodes() const;
 
 	public:	//	Thing:
-		virtual Bind to(const Class& cls);
+		using Super::to;
+		virtual Strong to(const Class& cls);
 		virtual Res& assign(const Thing& it);
 
 	protected://Bind:

@@ -11,12 +11,13 @@ namespace wrd
 #define THIS Instance
 	WRD_CLASS_DEF(Instance)
 
-	THIS::Instance()
+	THIS::THIS()
 	{
 		//	TODO: we need to optimize this. this ganna hotspot.
-		getMgr().stamp(*this);
+		getMgr().bind(*this);
 	}
 
+	THIS::~THIS() { getMgr().unbind(*this); }
 	Id THIS::getId() const { return _id; }
 	wcnt THIS::getSerial() const { getBlock().getSerial(); }
 
@@ -42,12 +43,15 @@ namespace wrd
 		WRD_UNCONST()
 		return unconst._getBlock(_id);
 	}
+
 	Block& THIS::_getBlock() { return _getBlock(_id); }
+
 	Block& THIS::_getBlock(Id id)
 	{
 		WRD_IS_THIS(Block)
 		return const_cast<Block&>(getMgr()[id]);
 	}
+
 	Res& THIS::_setId(Id new1)
 	{
 		_id = new1;

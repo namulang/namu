@@ -26,7 +26,7 @@ namespace wrd
 		Res& bind(T& new1);
 		virtual Res& unbind();
 		virtual const Class& getBindable() const;
-		using Super::get;
+		using Bindable::get;
 		T& get();
 		const T& get() const;
 		//	Node:
@@ -61,7 +61,7 @@ namespace wrd
 		Res& bind(const T& new1);
 		virtual Res& unbind();
 		virtual const Class& getBindable() const;
-		using Super::get;
+		using Bindable::get;
 		const T& get() const;
 		//	Node:
 		virtual wbool isConst() const;

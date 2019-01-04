@@ -5,7 +5,6 @@
 #include "./memory.hpp"
 #include "./msg-usr.hpp"
 #include "./meta.hpp"
-#include "./bind.hpp"
 #include "./pretypes.hpp"
 #include "./container.hpp"
 

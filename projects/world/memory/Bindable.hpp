@@ -24,7 +24,9 @@ namespace wrd
 		Instance& get();
 		const Instance& get() const;
 		template <typename T> T& get() {
-			Instance& got = WRD_GET(_get(), nulr<T>())
+			Instance& got = _get(); 
+			if(got.isNull())
+				return nulr<T>
 			return got.down<T>();
 		}
 		template <typename T> const T& get() const {

@@ -20,6 +20,7 @@ namespace wrd
 
 	public:
 		Instance();
+		virtual ~Instance();
 		//	why was virtual copyconstructor defined with private accessor?:
 		//		WorldFrx basically is based on class Node.
 		//		So, if all classes returns TStrong<Instance> as a returntype of clone()
