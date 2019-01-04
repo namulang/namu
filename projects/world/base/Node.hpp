@@ -8,32 +8,32 @@ namespace wrd
 	//	World에서 const 구현:
 	//		개요:
 	//			Managed에서 생성된 객체는 occupiable이라도 const로 정의되어있으면
-	//			Refer(isConst() = true)에 감싸여져서 scope나 owner Node에 등어간다.
-	//			Refer는 c++에서는 nonconst 라도, isConst() = true라면 get(); 에서는
+	//			Strong(isConst() = true)에 감싸여져서 scope나 owner Node에 등어간다.
+	//			Strong는 c++에서는 nonconst 라도, isConst() = true라면 get(); 에서는
 	//			nullref가 나오게 된다. get() const; 에서는 정상적으로 Reference가
 	//			나온다. 
 	//
-	//		CRefer, Refer 2개의 클래스로 나누지 않는 이유는:
-	//			1. CRefer, Refer로 나누는 것은 사실 중요하지 않다. 왜냐하면 World는
+	//		CStrong, Strong 2개의 클래스로 나누지 않는 이유는:
+	//			1. CStrong, Strong로 나누는 것은 사실 중요하지 않다. 왜냐하면 World는
 	//			Node를 기준으로 "구체 클래스가 뭔지 몰라도 되게 한다" 라는 설계
 	//			철학을 기반으로 했기 때문이다. Node 만 안 시점에 native 개발자는
-	//			이것이 CRefer인지 Refer인지 관련없이 동일하게 작업을 수행할 수 
+	//			이것이 CStrong인지 Strong인지 관련없이 동일하게 작업을 수행할 수 
 	//			있어야 하고, 이는 공통적인 인터페이스(to())가 있어야 한다는 걸
 	//			시사한다.
 	//
-	//			2. 개발자는 Node와 Refer를 구분하고 싶은 경우가 있다. 이때 CRefer가
+	//			2. 개발자는 Node와 Strong를 구분하고 싶은 경우가 있다. 이때 CStrong가
 	//			있다면 RTTI가 최소 2번은 들어가야 한다.
 	//				Node& origin = ...;
-	//				Refer& is_refer = origin.to<CRefer>();
+	//				Strong& is_refer = origin.to<CStrong>();
 	//				if(is_refer.isNull()) {
-	//					CRefer& is_crefer = origin.to<CRefer>();
+	//					CStrong& is_crefer = origin.to<CStrong>();
 	//					...
 	//				} else {
 	//					...
 	//				}
 	//			그리고 물론 이 방법은 마음에 들지 않을 것이다.
 	//
-	//			Refer가 isConst()가 false라고 하더라도 C++적으로 const라면 isConst
+	//			Strong가 isConst()가 false라고 하더라도 C++적으로 const라면 isConst
 	//			()와 동일하게 동작한다. 이는 C++에서 ptr에 대한 const라고 보면
 	//			되며, isConst()는 ptr가 가리키는 인스턴스에 대한 const라고 보면
 	//			이해가 빠를 것이다.
@@ -51,7 +51,7 @@ namespace wrd
 	//
 	//			구체클래스	|	const객체일때			|	nonconst객체일때		
 	//			------------------------------------------------------------------------
-	//			Refer		|	object.use() const		|	object.use()
+	//			Strong		|	object.use() const		|	object.use()
 	//			------------------------------------------------------------------------
 	//			Object		|	sub_method.use() const	|	sub_method.use()
 	//			------------------------------------------------------------------------
@@ -84,14 +84,14 @@ namespace wrd
 		const Node& get(widx n) const;
 		Node& get(const Str& name);
 		const Node& get(const Str& name) const;
-		virtual Refer use(Msg& msg);
-		virtual Refer use(Msg& msg) const;
+		virtual Strong use(Msg& msg);
+		virtual CStrong use(Msg& msg) const;
 		virtual WRD_LAZY_METHOD(Origin, getOrigin, const);
 		virtual wbool canUse(const Msg& msg) const;
 		virtual wbool isStatic() const;
 		virtual wbool isConst() const;
-		virtual Refer implicit(const Class& cls);
-		Refer implicit(const Class& cls) const;
+		virtual Strong implicit(const Class& cls);
+		CStrong implicit(const Class& cls) const;
 
 	private:
 		//	get(); 는 공개하지 않는다:

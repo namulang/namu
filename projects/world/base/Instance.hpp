@@ -8,7 +8,11 @@ namespace wrd
 	class Block;
 	class Node;
 	template <typename T> class TStrong;
-	template <typename T> class TWeak;
+	typedef TStrong<Node> Strong;
+	typedef TStrong<const Node> CStrong;
+    template <typename T> class TWeak;
+	typedef TWeak<Node> Weak;
+	typedef TWeak<const Node> CWeak;
 
 	class Instance : public Thing
 	{	WRD_CLASS_DECL(Instance, Thing)
@@ -37,10 +41,10 @@ namespace wrd
 		Id getId() const;
 		wcnt getSerial() const;
 		virtual wbool isHeap() const;
-		TStrong<Node> toStrong();
-		TStrong<const Node> toStrong() const;
-		TWeak<Node> toWeak();
-		TWeak<const Node> toWeak() const;
+		Strong toStrong();
+		CStrong toStrong() const;
+		Weak toWeak();
+		CWeak toWeak() const;
 		const Block& getBlock() const;
 		//	Thing:
 		virtual Res& release();

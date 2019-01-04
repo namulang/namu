@@ -36,10 +36,10 @@ namespace wrd
 		WRD_IS_THIS(Node)
 		return getNodes()[n];
 	}
-	virtual Refer use(Msg& msg) {
+	virtual Strong use(Msg& msg) {
 		// TODO: Nodes들을 검색해서 msg를 canUse인지 체크할것.
 	}
-	virtual Refer use(Msg& msg) const = 0;
+	virtual CStrong use(Msg& msg) const = 0;
 	virtual wbool isConst() const { return false; }
 	virtual const Origin& getOrigin() const {
 		static Origin inner;
@@ -75,16 +75,16 @@ namespace wrd
 	}
 	virtual wbool isStatic() const { return false; }
 
-	Refer THIS::implicit(const Class& cls)
+	Strong THIS::implicit(const Class& cls)
 	{
 		if(isSub(cls))
-			return Refer(*this);
-		return Refer();
+			return Strong(*this);
+		return Strong();
 	}
-	Refer THIS::implicit(const Class& cls) const
+	CStrong THIS::implicit(const Class& cls) const
 	{
 		WRD_UNCONST()
-		return Refer((const Refer&) unconst.implicit(cls));
+		return CStrong((const CStrong&) unconst.implicit(cls));
 		// we code inliney because of prevention to releasing instance of returned variable from unconst.implicit()
 	}
 }
