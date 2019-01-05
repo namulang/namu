@@ -12,7 +12,8 @@ namespace wrd
 	//			static<optional> Initiator <name>([]() { <your codes> });
 	struct Initiator
 	{
-		Initiator(auto func) { func(); }
+		template <typename T>
+		Initiator(T func) { func(); }
 	};
 }
 
