@@ -151,11 +151,8 @@ def _incBuildCnt():
     for n in range(0, len(lines)):
         line = lines[n]
         if line[:15] in "set(BUILD_COUNT":
-            print("line[21] = " + line[16:len(line)-2])
             buildcnt = int(line[16:len(line)-2])
-            print("buildcnt=" + str(buildcnt+1))
             lines[n] = "set(BUILD_COUNT " + str(buildcnt+1) + ")\n"
-            print("new lines[n]=" + lines[n])
             break
     fp.close()
 
