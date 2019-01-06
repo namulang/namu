@@ -18,7 +18,7 @@
 				}												\
 			};													\
 			WRD_INITIATOR(										\
-				TestCase::getTests().push_back(new T());		\
+				TestCase::getTests().push_back(new name());		\
 			)													\
 		}														\
 	}

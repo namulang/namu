@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Initiator.hpp"
+#include "../TestCase.hpp"
 
 WRD_TESTCASE(LoggerTest, (
 	Logger& logger = Logger::getInstance();

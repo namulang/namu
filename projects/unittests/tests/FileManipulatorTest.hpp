@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../Initiator.hpp"
-#include <iostream>
+#include "../TestCase.hpp"
 
 WRD_TESTCASE(FileManipulatorTest, (
 	//  read-write test:
