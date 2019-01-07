@@ -16,8 +16,9 @@ namespace wrd
 		//	Bindable:
 		virtual Res& unbind();
 		virtual wbool isBind() const;
-		using Super::bind;
-		virtual Res& bind(const Instance& new1);
+		virtual const Class& getBindable() const;
+		using Bindable::canBind;
+		virtual wbool canBind(const Class& cls) const;
 		//	Instance:
 		virtual wbool isHeap() const;
 
@@ -29,6 +30,6 @@ namespace wrd
 		virtual Res& _bind(const Instance& new1);
 
 	private:
-		wcnt _serial;
+		wcnt _serial:21;
     };
 }

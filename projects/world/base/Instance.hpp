@@ -1,18 +1,11 @@
 #pragma once
 
-#include "Thing.hpp"
+#include "Thing.inl"
 #include "Id.hpp"
 
 namespace wrd
 {
 	class Block;
-	class Node;
-	template <typename T> class TStrong;
-	typedef TStrong<Node> Strong;
-	typedef TStrong<const Node> CStrong;
-    template <typename T> class TWeak;
-	typedef TWeak<Node> Weak;
-	typedef TWeak<const Node> CWeak;
 
 	class Instance : public Thing
 	{	WRD_CLASS_DECL(Instance, Thing)
@@ -40,11 +33,10 @@ namespace wrd
 
 	public://Instance:
 		Id getId() const;
-		wcnt getSerial() const;
 		virtual wbool isHeap() const;
-		Strong toStrong();
+		virtual Strong toStrong() = 0;
 		CStrong toStrong() const;
-		Weak toWeak();
+		virtual Weak toWeak() = 0;
 		CWeak toWeak() const;
 		const Block& getBlock() const;
 		//	Thing:

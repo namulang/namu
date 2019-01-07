@@ -81,12 +81,10 @@
 #define _CLASS_BASE()																		\
     public:																					\
         virtual const Class& getClass() const { return getClassStatic(); }					\
-        TStrong<This> clone() const { return TStrong<This>(_clone()); }						\
+        TStrong<This> clone() const { return TStrong<This>(_clone().down<This>()); }		\
         static WRD_LAZY_METHOD_4(const Class&, getClassStatic, WRD_VOID(), TClass<This>)	\
 	protected:																				\
-		virtual TStrong<Instance> _clone() const { 											\
-			return TCloner<This>::clone(*this);												\
-		}																					\
+		virtual TStrong<Instance> _clone() const { return TCloner<This>::clone(*this); }	\
 	private:
 #define WRD_CLASS_2(THIS, SUPER)\
     WRD_INHERIT_2(THIS, SUPER) 	\
@@ -127,7 +125,8 @@
         static TClass<This> inner;    				\
         return inner;    							\
 	}												\
-	TEMPL WRD_CLASS_INIT(THIS)
+	
+	//TODO: TEMPL WRD_CLASS_INIT(THIS)
 #define WRD_CLASS_DEF(...)            			WRD_OVERLOAD(WRD_CLASS_DEF, __VA_ARGS__)
 
 ///	WRD_CLASS_INIT makes that given type T is accessible to ClassManager.
@@ -140,7 +139,7 @@
 ///	
 ///	if you use this onto template TYPE, add template parameters as prefix.
 ///		e.g) template <typename T> WRD_CLASS_INIT(MyTemplate<T>)
-#define WRD_CLASS_INIT(TYPE)			WRD_INITIATOR(TYPE::getClassStatic();)
+#define WRD_CLASS_INIT(TYPE)			//TODO: WRD_INITIATOR(TYPE::getClassStatic();)
 
 #define WRD_GET_3(expr, res, ret)								\
 	_TGet<decltype(expr)>::set(expr);							\

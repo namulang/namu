@@ -72,7 +72,8 @@ namespace wrd
 		wbool operator==(const This& rhs);
 		wbool operator!=(const This& rhs);
 
-	public://Node:
+	public:
+		//	Node:
 		const Str& getName() const;
 		Str& getName();
 		virtual wbool isOccupy() const;
@@ -92,6 +93,9 @@ namespace wrd
 		virtual wbool isConst() const;
 		virtual Strong implicit(const Class& cls);
 		CStrong implicit(const Class& cls) const;
+		//	Instance:
+		virtual Strong toStrong();
+		virtual Weak toWeak();
 
 	private:
 		//	get(); 는 공개하지 않는다:

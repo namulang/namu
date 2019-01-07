@@ -5,23 +5,22 @@ namespace wrd
 #define THIS Bind
 	WRD_CLASS_DEF(THIS)
 
-	THIS::THIS() : _serial(WRD_DEFAULT) {}
-	wbool THIS::operator==(const This& rhs) const { return &get() == &rhs.get(); }
-	wbool THIS::operator!=() const { return !operator==(rhs); }
-
-	This& THIS::operator=(This& rhs)
+	THIS& THIS::operator=(const This& rhs)
 	{
 		WRD_ASSIGN_GUARD()
 
-		bind(rhs.get());
+		_assign(rhs);
 		return *this;
 	}
+
+	wbool THIS::operator==(const This& rhs) const { return &get() == &rhs.get(); }
+	wbool THIS::operator!=(const This& rhs) const { return ! operator==(rhs); }
 
 	This& THIS::operator=(const This& rhs)
 	{
 		WRD_ASSIGN_GUARD()
 		
-		bind(rhs.get());
+		_assign(rhs);
 		return *this;
 	}
 
@@ -29,21 +28,20 @@ namespace wrd
 
 	Res& THIS::unbind()
 	{
-		_serial = WRD_DEFAULT;
 		_its_id.num = WRD_INDEX_ERROR;
 		return wasgood;
 	}
 
-	wcnt THIS::getItsSerial()) const { return _serial; }
 	Id THIS::getItsId() const { return _its_id; }
+	wbool THIS::canBind(const Class& cls) const { return getClass().isSub(cls); }
 
-	TStrong<Node> THIS::use(Msg& msg) const
+	CStrong THIS::use(Msg& msg) const
 	{
 		const Node& got = WRD_GET(get<Node>());
 		return got.call(msg);
 	}
 
-	TStrong<Node> THIS::use(Msg& msg)
+	Strong THIS::use(Msg& msg)
 	{
 		const Node& got = WRD_GET(get<Node>());
 		return got.call(msg);
@@ -77,7 +75,7 @@ namespace wrd
 	Res& THIS::assign(const Thing& it)
 	{
 		// Null체크는 Thing::assign()에서 한다.
-		WRD_IS_SUPER(Super::assign(it))
+		WRD_IS_SUPER(assign(it))
 
 		//	Sharable, Occupiable:
 		//		여기서는 실질적인 sharing vs occupying의 동작차이를 만들어내는 곳이다.
@@ -97,22 +95,17 @@ namespace wrd
 		return bind(it.down<Object>()); // null이 들어가도 상관없다.
 	}
 
-	Res& THIS::_bind(Instance& it)
+	Res& THIS::_bind(const Instance& it)
 	{
-	    //    NullCheckDelayed ì² íì ìí´ì WRD_IS_NULL(it)ì íì§ ìëë¤.
-	    const Class& cls = WRD_GET(it.getClass());
-	    if( ! cls.isSub(_cls))
-	        return waswrongtype.warn("...");
+		WRD_ASSERT(canBind(it), waswrongtype);
 	
 	    unbind();
-	    WRD_IS_ERR(_bean.bind(it))
-	    _is_const = false;
+		_its_id = it.getId();
 	    return wasgood;
 	}
 	
 	TEMPL Instance& THIS::_get()
 	{
-	    WRD_IS_THIS(THIS)
 	    Instance& ins = WRD_GET(this->_getBlock(_its_id).get());
 	    if(ins.getSerial() != this->getSerial()) {
 	        unbind();
@@ -125,6 +118,18 @@ namespace wrd
 	}
 	
 	const Thing& THIS::_down(const Class& cls) const { return _bean ? _bean->_down(cls) : nulr<Thing>(); }
+
+	Res& THIS::_assign(const This& rhs)
+	{
+	    WRD_ASSIGN_GUARD(rhs, wasnull)
+	    //    Only not available combination between this and rhs is,
+	    //    when this is nonconst but rhs is const.
+	    //    because when we accept this case, in consequence, rhs's binded one will loose their constness.
+	    if( ! isConst() && rhs.isConst())
+	        return waswrongargs; // the only case can't accept.
+	
+	    return _bind(rhs.get());
+	}
 
 #undef THIS
 }

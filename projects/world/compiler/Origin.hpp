@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../base/Thing.hpp"
+#include "../base/Thing.inl"
 
 namespace wrd
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../base/Thing.hpp"
+#include "../base/Instance.hpp"
 
 namespace wrd
 {
@@ -12,13 +12,15 @@ namespace wrd
 	public:
         const Instance* operator->() const;
         Instance* operator->();
-        const Instance* operator*() const;
-        Instance* operator*();
+        const Instance& operator*() const;
+        Instance& operator*();
         operator wbool() const;
 	
 	public:
 		Res& bind(const Instance& it);
-		Res& bind(Instance& it);
+		virtual const Class& getBindable() const = 0;
+		wbool canBind(const Instance& it);
+		virtual wbool canBind(const Class& it) const = 0;
 		virtual Res& unbind() = 0;
 		virtual wbool isBind() const = 0;
 		Instance& get();
@@ -26,7 +28,7 @@ namespace wrd
 		template <typename T> T& get() {
 			Instance& got = _get(); 
 			if(got.isNull())
-				return nulr<T>
+				return nulr<T>();
 			return got.down<T>();
 		}
 		template <typename T> const T& get() const {

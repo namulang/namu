@@ -87,4 +87,7 @@ namespace wrd
 		return CStrong((const CStrong&) unconst.implicit(cls));
 		// we code inliney because of prevention to releasing instance of returned variable from unconst.implicit()
 	}
+
+	Strong THIS::toStrong() { return *this; }
+	Weak THIS::toWeak() { return *this; }
 }

@@ -1,15 +1,15 @@
 #include "Instance.hpp"
 #include "../world.hpp"
 
-namespace
-{
-	Instancer& getMgr() { return World::get().getInstancer(); }
-}
-
 namespace wrd
 {
 #define THIS Instance
 	WRD_CLASS_DEF(Instance)
+
+	namespace
+	{
+		Instancer& getMgr() { return World::get().getInstancer(); }
+	}
 
 	THIS::THIS()
 	{
@@ -19,7 +19,6 @@ namespace wrd
 
 	THIS::~THIS() { getMgr().unbind(*this); }
 	Id THIS::getId() const { return _id; }
-	wcnt THIS::getSerial() const { getBlock().getSerial(); }
 
 	wbool THIS::isHeap() const
 	{
@@ -27,30 +26,20 @@ namespace wrd
 		return blk.isHeap();
 	}
 
-	Strong THIS::toStrong()
-	{
-		if (isHeap()
-			return Strong(*this);
-		return clone();
-	}
-
-	CStrong THIS::toStrong() const { return CStrong(*this); }
-	Weak THIS::toWeak() { return Weak(*this); }
-	CWeak THIS::toWeak() const { return CWeak(*this); }
-
-	const Block& THIS::getBlock() const
+	CStrong THIS::toStrong() const
 	{
 		WRD_UNCONST()
-		return unconst._getBlock(_id);
+		return unconst.toStrong();
 	}
 
-	Block& THIS::_getBlock() { return _getBlock(_id); }
-
-	Block& THIS::_getBlock(Id id)
+	CWeak THIS::toWeak() const
 	{
-		WRD_IS_THIS(Block)
-		return const_cast<Block&>(getMgr()[id]);
+		WRD_UNCONST()
+		return unconst.toWeak();
 	}
+
+	const Block& THIS::getBlock() const { return _getBlock(_id); }
+	Block& THIS::_getBlock(Id id) { return const_cast<Block&>(getMgr()[id]); }
 
 	Res& THIS::_setId(Id new1)
 	{

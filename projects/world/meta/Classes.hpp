@@ -6,7 +6,7 @@
 namespace wrd
 {
 	class Classes : public TArray<Class>
-	{	WRD_CLASS(Classes, TArray<Class>)
+	{	WRD_CLASS_DECL(Classes, TArray<Class>)
 	public:
 	};
 }

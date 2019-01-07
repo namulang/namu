@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ObjectClass.hpp"
+#include "../memory/TStrong.hpp"
 
 namespace wrd
 {

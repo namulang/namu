@@ -11,11 +11,10 @@ namespace wrd
 		TStrong();
 		TStrong(T& it);
 		TStrong(T* it);
-		TStrong(This& rhs);
-		TStrong(This* rhs);
+		TStrong(const This& rhs);
 
 	public:
-		This& operator=(This& rhs);
+		This& operator=(const This& rhs);
 
 	public:
 		virtual Res& unbind();
@@ -33,14 +32,12 @@ namespace wrd
 		TStrong(T* it);
 		TStrong(const T& it);
 		TStrong(const T* it);
-		TStrong(This& rhs);
-		TStrong(This* rhs);
 		TStrong(const This& rhs);
-		TStrong(const This* rhs);
+		TStrong(const TStrong<T>& rhs);
 
 	public:
-		This& operator=(This& rhs);
 		This& operator=(const This& rhs);
+		This& operator=(const TStrong<T>& rhs);
 
 	public:
 		virtual Res& unbind();

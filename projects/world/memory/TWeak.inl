@@ -12,14 +12,13 @@ namespace wrd
 		TWeak();
 		TWeak(T& it);
 		TWeak(T* it);
-		TWeak(This& it);
-		TWeak(This* it);
+		TWeak(const This& rhs);
 
 	public:
         const T* operator->() const;
-        const T* operator*() const;
+        const T& operator*() const;
         T* operator->();
-        T* operator*();
+        T& operator*();
 		This& operator=(const This& rhs);
 
 	public:	// Bind:
@@ -43,18 +42,16 @@ namespace wrd
 		TWeak();
 		TWeak(T& it);
 		TWeak(T* it);
-		TWeak(This& it);
-		TWeak(This* it);
 		TWeak(const T& it);
 		TWeak(const T* it);
-		TWeak(const This& it);
-		TWeak(const This* it);
+		TWeak(const This& rhs);
+		TWeak(const TWeak<T>& rhs);
 
 	public:
         const T* operator->() const;
-        const T* operator*() const;
-		This& operator=(This& rhs);
+        const T& operator*() const;
 		This& operator=(const This& rhs);
+		This& operator=(const TWeak<T>& rhs);
 
 	public:	// Bind:
 		Res& bind(T& new1);
@@ -70,7 +67,6 @@ namespace wrd
 		virtual Res& _bind(const Instance& it);
 	};
 
-	//	c++11 부터 지원되는 문법
-	using Weak = TWeak<Node>;
-	using CWeak = TWeak<const Node>;
+	typedef TWeak<Node> Weak;
+	typedef TWeak<const Node> CWeak;
 }

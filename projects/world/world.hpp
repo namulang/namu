@@ -11,19 +11,18 @@
 namespace wrd
 {
     class World : public Manager
-    {	//TODO: WRD_CLASS(World, Manager)
-        typedef World This;
-
-    private:
+    {	WRD_CLASS(World, Manager)
+	public: // TODO: block to private:
         World();
 
-    public:
-        virtual ~World();
+	public:
+		Instancer& getInstancer();
+		const Instancer& getInstancer() const;
+
+	private:
+		Instancer _instancer;
 
     public:
-        static This& get() {
-            static This inner;
-            return inner;
-        }
+        static WRD_LAZY_METHOD(This, get)
     };
 }

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../base/Manager.hpp"
-#include "../bind/TBindable.hpp"
+#include "../msg-usr/Manager.hpp"
+#include "TStrong.hpp"
 
 namespace wrd
 {
@@ -9,17 +9,15 @@ namespace wrd
 	{	WRD_CLASS(Instancer, Manager)
 	public:
 		const Block& operator[](Id id) const;
-		const Block& operator[](widx cls, widx idx) const;
 
 	public:
 		//	Instancer:
 		const Block& get(Id id) const;
-		Block& get(Id id) const;
-		template <typename T> T& get() { return get().cast<T>(); }
+		template <typename T> const T& get(Id id) { return get(id).down<const T>(); }
 		virtual Res& bind(Instance& new1);
 		virtual Res& unbind(Instance& old);
 
 	private:
-		Blocks _blocks;
+		// TODO: Blocks _blocks;
 	};
 }

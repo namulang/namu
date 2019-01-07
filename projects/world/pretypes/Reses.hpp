@@ -4,17 +4,17 @@
 
 namespace wrd
 {
-#define _DECL(classname)								\
+#define _CLASS(classname)								\
 	class _result_ ## classname : public Res			\
 	{	WRD_CLASS_DECL(_result_ ## classname, Res)	\
 	public:												\
-	} classname;
+	};
+#define _DECL(cls)				\
+	_CLASS(cls)					\
+	extern _result_ ## cls cls;
 
-	WRD_EACH(_DECL,
-		wasnull, wassuperfail, wasconst, wascancel, waswrongargs, wasfuncfail, wasgood, wasdup,
-		wasbindfail, wasntneed, waswrongtype, waswrongdata, wasfileio, waswrongmember, waswrongop
-	)
-
+	#include "Reses.in"
 
 #undef _DECL
+#undef _CLASS
 }

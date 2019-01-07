@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../base/Node.hpp"
 #include "Bindable.hpp"
 
 namespace wrd
@@ -44,25 +45,21 @@ namespace wrd
     class Bind : public Node, public Bindable
 	{	WRD_CLASS_DECL(Bind, Node)
 	public:
-		Bind();
-
-	public:
 		wbool operator==(const This& rhs);
 		wbool operator!=(const This& rhs);
-		This& operator=(This& rhs);
 		This& operator=(const This& rhs);
 
 	public://	Bind:
 		virtual wbool isBind() const;
         /// mostly, unbind is replacable to release() comletely.
         /// but some class(e.g. Refer) treat differently between unbind() and release().
-		virtual const Class& getBindable() const = 0;
 		virtual Res& unbind();
-		wcnt getItsSerial() const;
 		Id getItsId() const;
+		using Bindable::canBind;
+		virtual wbool canBind(const Class& cls) const;
 		//		Node:
-		virtual TStrong<Node> use(Msg& msg) const; 
-		virtual TStrong<Node> use(Msg& msg); 
+		virtual CStrong use(Msg& msg) const; 
+		virtual Strong use(Msg& msg); 
 		virtual const Origin& getOrigin() const; 
 		virtual const Container& getNodes() const;
 
@@ -83,9 +80,9 @@ namespace wrd
 		//		Bind& cast1 = n.to<const T>(); // OK. cast1->isNull() != true
 		//	위의 코드가 가능하도록 해야 한다.
 		virtual Thing& _down(const Class& cls);
+		Res& _assign(const This& rhs);
 
 	private:
 		Id _its_id; // id for binded one
-		wcnt _serial;
 	};
 }

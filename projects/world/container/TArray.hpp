@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TArray.inl"
+#include "../meta/TClass.hpp"
 
 namespace wrd
 {

@@ -1,4 +1,5 @@
 #include "Thing.hpp"
+#include "../meta.hpp"
 #include "../memory/TStrong.hpp"
 
 namespace wrd
@@ -20,10 +21,10 @@ namespace wrd
 	//		A타입에 대한 명시적캐스팅은 어떠한 타입이 나올지 제한되지 않는다.
 	//		A클래스.to()는 전혀다른 B객체가 나올 수도 있다.
 	Strong THIS::to(const Class& cls) { return Strong(); }
-	Strong THIS::to(const Class& cls) const
+	CStrong THIS::to(const Class& cls) const
 	{
 		WRD_UNCONST()
-		return CStrong(unconst.to(cls));
+		return unconst.to(cls);
 	}
 	//	Casting:
 	//		World의 캐스팅은 다음으로 구분된다.
