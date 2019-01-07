@@ -1,9 +1,12 @@
 #include "Composit.hpp"
+#include "../meta.hpp"
+#include "../pretypes.hpp"
+#include "../container/Chain.hpp"
 
-namespace WRD
+namespace wrd
 {
 #define THIS Composit
-	WRD_CLASS_DEF(Composit)
+	WRD_CLASS_DEF(THIS)
 
 	Res& THIS::init()
 	{
@@ -19,19 +22,21 @@ namespace WRD
 
     const Container& THIS::getNodes() const
     {
-        WRD_IS_THIS(const Container)
-        if(_nodes.getLength() <= 0)
-            _initNodes();
+		//	TODO: 
+        //if(_nodes.getLength() <= 0)
+        //   _initNodes();
         return *_nodes;
     }
 
     Res& THIS::_initNodes()
     {
+		/* TODO:
         _nodes.release();
 
         const Chain& chain = WRD_GET(cls.getNodes().down<Chain>());
         if(_nodes.chain(chain.getControl()[0])) // first elem as a container owned by "chain"
             return wasfuncfail.warn("");
+		*/
         return wasgood;
     }
 }
