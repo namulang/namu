@@ -7,7 +7,7 @@ namespace wrd
 
 	WRD_CLASS_DEF(THIS)
 	
-	THIS::operator wbool() { return isErr(); }
+	THIS::operator wbool() const { return isErr(); }
 	//	TODO: all below funcs.
 	wbool THIS::isErr() const { return false; }
 	wbool THIS::isWarn() const { return false; }

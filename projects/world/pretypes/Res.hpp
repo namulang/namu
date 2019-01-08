@@ -8,7 +8,7 @@ namespace wrd
 	{	WRD_CLASS_DECL(Res, Object)
 		//	TODO: fill this.
 	public:
-		operator wbool();
+		operator wbool() const;
 		wbool isErr() const;
 		wbool isWarn() const;
 		wbool isInfo() const;
