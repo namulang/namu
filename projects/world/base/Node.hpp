@@ -74,20 +74,20 @@ namespace wrd
 
 	public:
 		//	Node:
-		const Str& getName() const;
-		Str& getName();
+		//TODO?: ???? 왜 name을 내보내지?? 오타인가? const Str& getName() const;
+		//Str& getName();
 		virtual wbool isOccupy() const;
 		virtual const Container& getNodes() const = 0;
 		//	getNodes:
 		//		모든 Container의 index는 World와 Native모두 1부터 시작한다.
 		//		invisible하다.
-		Node& get(widx n);
-		const Node& get(widx n) const;
-		Node& get(const Str& name);
-		const Node& get(const Str& name) const;
+		Node& getNode(widx n);
+		const Node& getNode(widx n) const;
+		Node& getNode(const Str& name);
+		const Node& getNode(const Str& name) const;
 		virtual Strong use(Msg& msg);
 		virtual CStrong use(Msg& msg) const;
-		virtual WRD_LAZY_METHOD(Origin, getOrigin, const);
+		virtual WRD_LAZY_METHOD(Origin&, getOrigin, const, Origin&, nulr<Origin>());
 		virtual wbool canUse(const Msg& msg) const;
 		virtual wbool isStatic() const;
 		virtual wbool isConst() const;
