@@ -1,13 +1,11 @@
 #pragma once
 
-#include "../base/Thing.inl"
+#include "../base/Instance.hpp"
 
 namespace wrd
 {
-	template <typename T> class TClass;
-
-	class Origin : public Thing // ?
-	{	WRD_CLASS_DECL(Origin, Thing)
+	class Origin : public Instance
+	{	WRD_CLASS_DECL(Origin, Instance)
 	public:	//Thing:
 		virtual Res& release();
 	};

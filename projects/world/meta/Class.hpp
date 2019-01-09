@@ -4,13 +4,16 @@
 
 namespace wrd
 {
-    template <typename T> class TStrong;
     class Classes; // Container of Class
-    class Origin;
     class Array;
 
     class Class : public Composit
-    {	WRD_CLASS_DECL(Class, Composit) // World에 visible해야 하기 때문이다.
+    {	//	we can't put WRD_CLASS_DEF here:
+		//		it'll generates TClass<TClass<TClass<....> infinitely.
+		WRD_INHERIT(Class, Composit) // World에 visible해야 하기 때문이다.
+	public:
+		virtual const Class& getClass() const;
+		TStrong<This> clone() const;
         friend class Interpreter; // for interpreter class which can use _getNodes().
 
     public:
@@ -26,9 +29,6 @@ namespace wrd
         virtual const Classes& getSupers() const = 0;
         virtual TStrong<Instance> instance() const = 0;
 		const Classes& getLeafs() const;
-		//	Node:
-		//	means there is no origin or we can't designate origin.
-		virtual WRD_LAZY_METHOD(Origin, getOrigin, const)
 		virtual const Array& getVars() const; // class can't include Array. we can use WRD_LAZY_METHOD here.
 		//	State:
 		virtual Res& init();

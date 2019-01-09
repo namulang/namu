@@ -1,5 +1,4 @@
 #include "Thing.hpp"
-#include "../meta.hpp"
 #include "../memory/TStrong.hpp"
 
 namespace wrd

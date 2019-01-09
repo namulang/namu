@@ -1,4 +1,5 @@
 #include "Origin.hpp"
+#include "../base/Thing.hpp"
 #include "../meta.hpp"
 
 namespace wrd

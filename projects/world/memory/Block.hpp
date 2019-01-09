@@ -30,6 +30,6 @@ namespace wrd
 		virtual Res& _bind(const Instance& new1);
 
 	private:
-		wcnt _serial:21;
+		Instance* _pt;
     };
 }

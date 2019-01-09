@@ -1,22 +1,16 @@
 #include "Bind.hpp"
+#include "TStrong.hpp"
+#include "../pretypes/Reses.hpp"
 
 namespace wrd
 {
 #define THIS Bind
 	WRD_CLASS_DEF(THIS)
 
-	THIS& THIS::operator=(const This& rhs)
-	{
-		WRD_ASSIGN_GUARD()
-
-		_assign(rhs);
-		return *this;
-	}
-
 	wbool THIS::operator==(const This& rhs) const { return &get() == &rhs.get(); }
 	wbool THIS::operator!=(const This& rhs) const { return ! operator==(rhs); }
 
-	This& THIS::operator=(const This& rhs)
+	THIS& THIS::operator=(const This& rhs)
 	{
 		WRD_ASSIGN_GUARD()
 		
@@ -38,29 +32,30 @@ namespace wrd
 	CStrong THIS::use(Msg& msg) const
 	{
 		const Node& got = WRD_GET(get<Node>());
-		return got.call(msg);
+		return got.use(msg);
 	}
 
 	Strong THIS::use(Msg& msg)
 	{
-		const Node& got = WRD_GET(get<Node>());
-		return got.call(msg);
+		Node& got = WRD_GET(get<Node>());
+		return got.use(msg);
 	}
 
 	const Origin& THIS::getOrigin() const
 	{
 		const Node& got = WRD_GET(get<Node>(), Super::getOrigin());
-		return got->getOrigin();
+		return got.getOrigin();
 	}
 
-	const Container& THIS::getNodes()
+	const Container& THIS::getNodes() const
 	{
 		const Node& got = WRD_GET(get<Node>(), Super::getNodes());
-		return got->getNodes();
+		return got.getNodes();
 	}
 
-	Bind THIS::to(const Class& cls)
+	Strong THIS::to(const Class& cls)
 	{
+		/* TODO:
 		if( ! _bean)
 			return Super::to(cls);
 
@@ -70,10 +65,13 @@ namespace wrd
 		if(cls.isSub(_cls))
 			return Super::to(cls);
 		return _bean->to(cls);
+		*/
+		return Strong();
 	}
 
 	Res& THIS::assign(const Thing& it)
 	{
+		/* TODO:
 		// Null체크는 Thing::assign()에서 한다.
 		WRD_IS_SUPER(assign(it))
 
@@ -92,7 +90,8 @@ namespace wrd
 		Bind& refered = it.down<This>();
 		if(refered.isExist())
 			return bind(refered);
-		return bind(it.down<Object>()); // null이 들어가도 상관없다.
+		return bind(it.down<Object>()); // null이 들어가도 상관없다. */
+		return wasgood;
 	}
 
 	Res& THIS::_bind(const Instance& it)
@@ -104,10 +103,10 @@ namespace wrd
 	    return wasgood;
 	}
 	
-	TEMPL Instance& THIS::_get()
+	Instance& THIS::_get()
 	{
 	    Instance& ins = WRD_GET(this->_getBlock(_its_id).get());
-	    if(ins.getSerial() != this->getSerial()) {
+	    if(ins.getId().sep.serial != this->_its_id.sep.serial) {
 	        unbind();
 	        wasbindfail.warn("...");
 	        // TODO: uncomment return nulr<Instance>();
@@ -117,7 +116,11 @@ namespace wrd
 	    return ins;
 	}
 	
-	const Thing& THIS::_down(const Class& cls) const { return _bean ? _bean->_down(cls) : nulr<Thing>(); }
+	Thing& THIS::_down(const Class& cls)
+	{
+		Thing& got = get();
+		return got.isExist() ? got._down(cls) : nulr<Thing>();
+	}
 
 	Res& THIS::_assign(const This& rhs)
 	{

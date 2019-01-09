@@ -1,25 +1,32 @@
 #include "Class.hpp"
+#include "Classes.hpp"
+#include "../memory/TStrong.hpp"
+#include "../base/Thing.hpp"
 
 namespace wrd
 {
 #define THIS Class
-	WRD_CLASS_DEF(THIS)
-
+	//	we can't put WRD_CLASS_DEF here. it'll generates TClass<TClass<TClass<....> infinitely.
+	const Class& THIS::getClass() const { return *this; }
+	TStrong<THIS> THIS::clone() const { return TStrong<This>(_clone().down<This>()); }
+	TStrong<Instance> THIS::_clone() const { return TCloner<This>::clone(); }
     wbool THIS::operator==(const This& rhs) const { return &getName() == &rhs.getName(); }
     wbool THIS::operator!=(const This& rhs) const { return &getName() != &rhs.getName(); }
 
     const Classes& THIS::getLeafs() const
     {
-        WRD_IS_THIS(const Classes)
         static Classes inner;
         //    TODO:
+		return inner;
     }
 
-    const Class& THIS::getClass() const
-    {
-        WRD_IS_THIS(const Class)
-        return *this;
-    }
+	const Array& THIS::getVars() const
+	{
+		static Array inner;
+		return inner;
+	}
+
+    const Class& THIS::getClass() const { return *this; }
 
     Res& THIS::init()
     {
@@ -49,6 +56,7 @@ namespace wrd
 
         return wasgood;
     }
+
     wbool THIS::isSuper(const Class& it) const
     {
         //  checking class hierarchy algorithm:
@@ -69,21 +77,16 @@ namespace wrd
 
         return getClass() == target;//  Remember. We're using Class as "Monostate".
     }
-    Classes& THIS::_getSupers()
-    {
-        WRD_IS_THIS(Classes)
-        return const_cast<Classes&>(getSupers());
-    }
-    Classes& THIS::_getSubs()
-    {
-        WRD_IS_THIS(Classes)
-        return const_cast<Classes&>(getSubs());
-    }
+
+    Classes& THIS::_getSupers() { return const_cast<Classes&>(getSupers()); }
+    Classes& THIS::_getSubs() { return const_cast<Classes&>(getSubs()); }
+
     Res& THIS::_initNodes()
     {
         _getNodes() = getSupers()[0].getNodes(); // getSupers()[0]은 바로 위의 부모클래스.
         return wasgood;
     }
+
     wbool THIS::isSuper(const Class& it) const
     {
         //  checking class hierarchy algorithm:
@@ -104,24 +107,13 @@ namespace wrd
 
         return getClass() == target;//  Remember. We're using Class as "Monostate".
     }
-    Classes& THIS::_getSupers()
-    {
-        WRD_IS_THIS(Classes)
-        return const_cast<Classes&>(getSupers());
-    }
-    Classes& THIS::_getSubs()
-    {
-        WRD_IS_THIS(Classes)
-        return const_cast<Classes&>(getSubs());
-    }
+
+    Classes& THIS::_getSupers() { return const_cast<Classes&>(getSupers()); }
+    Classes& THIS::_getSubs() { return const_cast<Classes&>(getSubs()); }
+
     Res& THIS::_initNodes()
     {
         _getNodes() = getSupers()[0].getNodes(); // getSupers()[0]은 바로 위의 부모클래스.
         return wasgood;
-    }
-	const Array& THIS::getVars() const
-	{
-		static Array inner; // returning static Array. meaning is there is Vars on default.
-		return inner;
 	}
 }

@@ -64,18 +64,18 @@
 #define WRD_IS_RES_2(expr, chk)            	WRD_IS_RES_5(expr, res, chk, warn, #expr)
 #define WRD_IS_RES(...)                    	WRD_OVERLOAD(WRD_IS_RES, __VA_ARGS__)
 
-#define WRD_IS_WARN_3(expr, ret, msg)      	WRD_IS_RES(expr, ret, isWarn(), warn, msg)
-#define WRD_IS_WARN_2(expr, ret)            WRD_IS_RES(expr, ret, isWarn(), warn, #expr)
-#define WRD_IS_WARN_1(expr)                	WRD_IS_RES(expr, isWarn())
+#define WRD_IS_WARN_3(expr, ret, msg)      	WRD_IS_RES_5(expr, ret, isWarn(), warn, msg)
+#define WRD_IS_WARN_2(expr, ret)            WRD_IS_RES_5(expr, ret, isWarn(), warn, #expr)
+#define WRD_IS_WARN_1(expr)                	WRD_IS_RES_2(expr, isWarn())
 #define WRD_IS_WARN(...)                    WRD_OVERLOAD(WRD_IS_WARN, __VA_ARGS__)
 
-#define WRD_IS_ERR_3(expr, ret, msg)        WRD_IS_RES(expr, ret, isErr(), err, msg)
-#define WRD_IS_ERR_2(expr, ret)            	WRD_IS_RES(expr, ret, isErr(), err, #expr)
-#define WRD_IS_ERR_1(expr)                  WRD_IS_RES(expr, isErr())
+#define WRD_IS_ERR_3(expr, ret, msg)        WRD_IS_RES_5(expr, ret, isErr(), err, msg)
+#define WRD_IS_ERR_2(expr, ret)            	WRD_IS_RES_5(expr, ret, isErr(), err, #expr)
+#define WRD_IS_ERR_1(expr)                  WRD_IS_RES_2(expr, isErr())
 #define WRD_IS_ERR(...)                    	WRD_OVERLOAD(WRD_IS_ERR, __VA_ARGS__)
-#define WRD_IS_GOOD_3(expr, ret, msg)      	WRD_IS_RES(expr, ret, isGood(), info, msg)
-#define WRD_IS_GOOD_2(expr, ret)            WRD_IS_RES(expr, ret, isGood(), info, #expr)	
-#define WRD_IS_GOOD_1(expr)              	WRD_IS_RES(expr, isGood())
+#define WRD_IS_GOOD_3(expr, ret, msg)      	WRD_IS_RES_5(expr, ret, isGood(), info, msg)
+#define WRD_IS_GOOD_2(expr, ret)            WRD_IS_RES_5(expr, ret, isGood(), info, #expr)	
+#define WRD_IS_GOOD_1(expr)              	WRD_IS_RES_2(expr, isGood())
 #define WRD_IS_GOOD(...)                    WRD_OVERLOAD(WRD_IS_GOOD, __VA_ARGS__)
 
 #define _CLASS_BASE()																		\

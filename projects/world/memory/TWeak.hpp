@@ -4,6 +4,7 @@
 #include "../memory/Block.hpp"
 #include "../meta/helpers.hpp"
 #include "../pretypes/Reses.hpp"
+#include "../meta/TClass.hpp"
 
 namespace wrd
 {

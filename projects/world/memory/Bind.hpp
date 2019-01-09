@@ -45,8 +45,8 @@ namespace wrd
     class Bind : public Node, public Bindable
 	{	WRD_CLASS_DECL(Bind, Node)
 	public:
-		wbool operator==(const This& rhs);
-		wbool operator!=(const This& rhs);
+		wbool operator==(const This& rhs) const;
+		wbool operator!=(const This& rhs) const;
 		This& operator=(const This& rhs);
 
 	public://	Bind:
