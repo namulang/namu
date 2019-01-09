@@ -97,7 +97,7 @@ namespace wrd
 		virtual Strong toStrong();
 		virtual Weak toWeak();
 
-	private:
+	protected:
 		//	get(); 는 공개하지 않는다:
 		//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.
 		Container& _getNodes();

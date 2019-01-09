@@ -38,7 +38,12 @@ namespace wrd
         virtual wbool isSuper(const Class& it) const;
 
     protected:
+		//	Class:
+		Classes& _getSupers();
+		Classes& _getSubs();
 		//	Composit:
         virtual Res& _initNodes();
+		//	Thing:
+		virtual TStrong<Instance> _clone() const;
     };
 }

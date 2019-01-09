@@ -1,4 +1,5 @@
 #include "Str.hpp"
+#include "../meta.hpp"
 
 namespace wrd
 {
