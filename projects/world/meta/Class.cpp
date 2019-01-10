@@ -25,6 +25,8 @@ namespace wrd
 		return inner;
 	}
 
+	wbool THIS::isInit() const { /*TODO: */ return false; }
+
     Res& THIS::init()
     {
 		/* TODO: impl Array

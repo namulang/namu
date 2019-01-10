@@ -10,8 +10,8 @@ namespace wrd
 	class ObjectClass : public Class
 	{	WRD_CLASS_DECL(ObjectClass, Class)
 	public:
-		wbool operator==(const This& rhs);
-		wbool operator!=(const This& rhs);
+		wbool operator==(const This& rhs) const;
+		wbool operator!=(const This& rhs) const;
 
 	public:
 		virtual const Array& getVars() const;

@@ -27,7 +27,6 @@ namespace wrd
         virtual const Container& getNodes() const;
 		//	State:
         virtual wbool isOccupy() const;
-		virtual wbool isInit() const;
 		//	Thing:
 		virtual const Class& getSuper() const;
 

@@ -57,8 +57,10 @@ BUILD_TYPE_END	.\projects\independentor\helpers\BuildFeatures.hpp	/^				BUILD_TY
 BUILD_TYPE_START	.\projects\independentor\helpers\BuildFeatures.hpp	/^				BUILD_TYPE_START = 0,$/;"	e	enum:wrd::indep::BuildFeatures::BuildType
 BeginToken	.\projects\preferencer\parser\generated\CharStream.h	/^  virtual inline JJChar BeginToken() {$/;"	f	class:wrd::CharStream
 BinaryStream	.\projects\file-manipulator\file-streams\BinaryStream.hpp	/^		class BinaryStream : public FileStream$/;"	c	namespace:wrd::fm
+Bind	.\projects\world\memory\Bind.hpp	/^    class Bind : public Node, public Bindable$/;"	c	namespace:wrd
+Bindable	.\projects\world\memory\Bindable.hpp	/^	class Bindable$/;"	c	namespace:wrd
 Block	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class Block : public Statement {$/;"	c	namespace:wrd	file:
-Block	.\projects\world\memory\Block.hpp	/^    class Block : public Trace$/;"	c	namespace:wrd
+Block	.\projects\world\memory\Block.hpp	/^    class Block : public Instance, public Bindable$/;"	c	namespace:wrd
 BlockStmt	.\docs\protos\worldfrw\execution component.cpp	/^class BlockStmt : public Stmt {$/;"	c	class:Scope::Spaces	file:
 BuildFeatures	.\projects\independentor\helpers\BuildFeatures.hpp	/^		class BuildFeatures$/;"	c	namespace:wrd::indep
 BuildType	.\projects\independentor\helpers\BuildFeatures.hpp	/^			enum BuildType$/;"	g	class:wrd::indep::BuildFeatures
@@ -399,9 +401,11 @@ IS	.\docs\protos\worldfrw\helper component.cpp	/^		IS = sizeof(_foo((T*) 0)) == 
 IS	.\docs\protos\worldfrw\helper component.cpp	/^	static const bool IS = sizeof(_foo( (T) 0 )) == sizeof(yes);$/;"	m	class:StaticMethodChecker	file:
 IS	.\docs\protos\worldfrw\helper component.cpp	/^	static const wbool IS = sizeof(TADTChecker<T>::template foo<T>(0)) == sizeof(yes);$/;"	m	class:TADTChecker	file:
 IS	.\docs\protos\worldfrw\helper component.cpp	/^	static const wbool IS = sizeof(_foo((T*)0)) == sizeof(yes);$/;"	m	class:TTemplateChecker	file:
+Id	.\projects\world\base\Id.hpp	/^		Id(widx itscls, widx itsidx, wcnt itsserial) : sep {itscls, itsidx, itsserial} {}$/;"	f	union:wrd::Id
+Id	.\projects\world\base\Id.hpp	/^		Id(wint64 it = WRD_INDEX_ERROR) : num(it) {}$/;"	f	union:wrd::Id
 Id	.\projects\world\base\Id.hpp	/^    union Id$/;"	u	namespace:wrd
-Initiator	.\projects\unittests\Initiator.hpp	/^        Initiator() { TestCase::getTests().push_back(new T()); }$/;"	f	struct:wrd::Initiator
-Initiator	.\projects\unittests\Initiator.hpp	/^    struct Initiator {$/;"	s	namespace:wrd
+Initiator	.\projects\independentor\macros\Initiator.hpp	/^		Initiator(T func) { func(); }$/;"	f	struct:wrd::Initiator
+Initiator	.\projects\independentor\macros\Initiator.hpp	/^	struct Initiator$/;"	s	namespace:wrd
 Instance	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class Instance : public Thing { \/\/ Instance 관리가 가능함.$/;"	c	namespace:wrd	file:
 Instance	.\docs\protos\worldfrw\backbone component.cpp	/^	Instance() {$/;"	f	class:Instance	file:
 Instance	.\docs\protos\worldfrw\backbone component.cpp	/^class Instance : Thing {$/;"	c	file:
@@ -410,7 +414,7 @@ InstanceBlock	.\docs\protos\worldfrw\execution component.cpp	/^class InstanceBlo
 InstanceBlock	.\docs\protos\worldfrw\instancemanaging component.cpp	/^class InstanceBlock : public Instance {$/;"	c	file:
 InstanceDelegator	.\docs\protos\worldfrw\passer component.cpp	/^class InstanceDelegator : public Delegator {$/;"	c	file:
 InstanceManager	.\docs\protos\worldfrw\instancemanaging component.cpp	/^class InstanceManager : public ? {$/;"	c	file:
-Instancer	.\projects\world\memory\Instancer.hpp	/^      class Instancer : public Manager$/;"	c	namespace:wrd
+Instancer	.\projects\world\memory\Instancer.hpp	/^	class Instancer : public Manager$/;"	c	namespace:wrd
 Integer	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class Integer : public Number {$/;"	c	namespace:wrd	file:
 Integer	.\docs\protos\worldfrw\pretype component.cpp	/^class Integer : ?? {$/;"	c	file:
 Intendation	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class Intendation : public Statement {$/;"	c	namespace:wrd	file:
@@ -477,6 +481,7 @@ MgdMethod	.\docs\protos\worldfrw\passer component.cpp	/^class MgdMethod: public 
 MgdObject	.\docs\protos\worldfrw\passer component.cpp	/^class MgdObject : public Object {$/;"	c	file:
 Mode	.\projects\file-manipulator\file-streams\FileStream.hpp	/^			enum Mode$/;"	g	class:wrd::fm::FileStream
 Msg	.\docs\protos\worldfrw\backbone component.cpp	/^class Msg : public Thing {$/;"	c	file:
+Msg	.\projects\world\base\Msg.hpp	/^	class Msg : public Thing$/;"	c	namespace:wrd
 MyAsciiLoadVisitation	.\docs\protos\worldfrw\visitation component.cpp	/^    friend class MyAsciiLoadVisitation : public TVisitation<MyClass, LoaderVisitation> {$/;"	c	class:MyClass	file:
 MyClass	.\docs\protos\worldfrw\visitation component.cpp	/^class MyClass : public Object {$/;"	c	file:
 MyFirstWorldModule	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class MyFirstWorldModule : public Object {$/;"	c	file:
@@ -501,7 +506,7 @@ OccupiableObject	.\docs\protos\worldfrw\passer component.cpp	/^class OccupiableO
 Option	.\projects\file-manipulator\file-structures\Folder.cpp	/^		Folder::Option::Option(wbool is_reculsive) : _is_reculsive(is_reculsive) {}$/;"	f	class:wrd::fm::Folder::Option
 Option	.\projects\file-manipulator\file-structures\Folder.hpp	/^			class Option$/;"	c	class:wrd::fm::Folder
 Origin	.\docs\protos\worldfrw\interpreting component.cpp	/^class Origin : public Object { \/\/	Origin은 또다른 Origin들을 composition으로 가질 수 있다.$/;"	c	file:
-Origin	.\projects\world\compiler\Origin.hpp	/^	class Origin : public Thing \/\/ ?$/;"	c	namespace:wrd
+Origin	.\projects\world\compiler\Origin.hpp	/^	class Origin : public Instance$/;"	c	namespace:wrd
 PLATFORM_ID	.\build\CMakeFiles\3.10.2\CompilerIdCXX\CMakeCXXCompilerId.cpp	298;"	d	file:
 PLATFORM_ID	.\build\CMakeFiles\3.10.2\CompilerIdCXX\CMakeCXXCompilerId.cpp	301;"	d	file:
 PLATFORM_ID	.\build\CMakeFiles\3.10.2\CompilerIdCXX\CMakeCXXCompilerId.cpp	304;"	d	file:
@@ -598,9 +603,6 @@ ReInit	.\projects\preferencer\parser\generated\PRParserTokenManager.cc	/^  void 
 ReInitRounds	.\projects\preferencer\parser\generated\PRParserTokenManager.cc	/^  void PRParserTokenManager::ReInitRounds() {$/;"	f	class:wrd::PRParserTokenManager
 ReaderStream	.\projects\preferencer\parser\generated\JavaCC.h	/^class ReaderStream {$/;"	c
 Refer	.\docs\protos\worldfrw\passer component.cpp	/^class Refer : public Node {$/;"	c	file:
-Refer	.\projects\world\msg-usr\Refer.hpp	/^		template <typename V> Refer(TBindable<V>& rhs) : Super() { bind(rhs.get()); }$/;"	f	class:wrd::Refer
-Refer	.\projects\world\msg-usr\Refer.hpp	/^		template <typename V> Refer(const TBindable<V>& rhs) : Super() { bind(rhs.get()); }$/;"	f	class:wrd::Refer
-Refer	.\projects\world\msg-usr\Refer.hpp	/^    class Refer : public TBindable<Node>$/;"	c	namespace:wrd
 Reference	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		Reference(const Class& cls) : Super(cls) {}$/;"	f	class:wrd::Reference	file:
 Reference	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class Reference : public NamedVariable {$/;"	c	namespace:wrd	file:
 Res	.\projects\world\pretypes\Res.hpp	/^	class Res : public Object$/;"	c	namespace:wrd
@@ -635,6 +637,7 @@ SYMBOL	.\projects\preferencer\parser\generated\PRParserConstants.h	/^const  int 
 Saver	.\docs\protos\worldfrw\visitation component.cpp	/^class Saver : public Visitor {$/;"	c	file:
 SaverVisitation	.\docs\protos\worldfrw\visitation component.cpp	/^    class SaverVisitation : public Visitation {};$/;"	c	class:Saver	file:
 Scope	.\docs\protos\worldfrw\execution component.cpp	/^class Scope : public Chain { \/\/ Scope는 visible할 수 있으나 invisible로 된다. mappingtable에 등록하지 않는다.$/;"	c	file:
+SeperatedId	.\projects\world\base\Id.hpp	/^		struct SeperatedId$/;"	s	union:wrd::Id
 SolidContainer	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class SolidContainer : public Container {$/;"	c	namespace:wrd	file:
 Spaces	.\docs\protos\worldfrw\execution component.cpp	/^	class Spaces : public Chain::Control {$/;"	c	class:Scope	file:
 State	.\projects\world\base\State.hpp	/^    class State : public Instance$/;"	c	namespace:wrd
@@ -666,20 +669,14 @@ TCloner	.\projects\world\meta\helpers.hpp	/^    class TCloner<T, true> {$/;"	c	n
 TConcreteClass	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class TConcreteClass : public Type {$/;"	c	namespace:wrd	file:
 TConcreteClass	.\docs\protos\worldfrw\metaclass component.cpp	/^class TConcreteClass : public S {$/;"	c	file:
 TContainer	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class TContainer : public S {$/;"	c	namespace:wrd	file:
-TEMPL	.\projects\world\base\TGettable.hpp	25;"	d
-TEMPL	.\projects\world\base\TGettable.hpp	28;"	d
-TEMPL	.\projects\world\base\TGettable.hpp	43;"	d
-TEMPL	.\projects\world\base\TGettable.hpp	9;"	d
-TEMPL	.\projects\world\bind\TBindable.hpp	33;"	d
-TEMPL	.\projects\world\bind\TBindable.hpp	7;"	d
-TEMPL	.\projects\world\bind\TStrong.hpp	38;"	d
-TEMPL	.\projects\world\bind\TStrong.hpp	8;"	d
-TEMPL	.\projects\world\bind\TWeak.hpp	10;"	d
-TEMPL	.\projects\world\bind\TWeak.hpp	63;"	d
-TEMPL	.\projects\world\container\TArray.hpp	12;"	d
-TEMPL	.\projects\world\container\TArray.hpp	8;"	d
+TEMPL	.\projects\world\container\TArray.hpp	13;"	d
+TEMPL	.\projects\world\container\TArray.hpp	9;"	d
 TEMPL	.\projects\world\container\TChain.hpp	12;"	d
 TEMPL	.\projects\world\container\TChain.hpp	8;"	d
+TEMPL	.\projects\world\memory\TStrong.hpp	87;"	d
+TEMPL	.\projects\world\memory\TStrong.hpp	8;"	d
+TEMPL	.\projects\world\memory\TWeak.hpp	11;"	d
+TEMPL	.\projects\world\memory\TWeak.hpp	129;"	d
 TEMPL	.\projects\world\meta\TClass.hpp	11;"	d
 TEMPL	.\projects\world\meta\TClass.hpp	71;"	d
 THIS	.\projects\file-manipulator\file-streams\AsciiStream.cpp	/^		THIS::THIS() : Super() {}$/;"	f	class:wrd::fm::THIS
@@ -723,23 +720,45 @@ THIS	.\projects\preferencer\objtree\MemberType.cpp	7;"	d	file:
 THIS	.\projects\preferencer\objtree\Object.cpp	7;"	d	file:
 THIS	.\projects\preferencer\objtree\Type.cpp	7;"	d	file:
 THIS	.\projects\preferencer\parser\PRParserHandler.cpp	6;"	d	file:
-THIS	.\projects\world\base\TGettable.hpp	10;"	d
-THIS	.\projects\world\base\TGettable.hpp	26;"	d
-THIS	.\projects\world\base\TGettable.hpp	29;"	d
-THIS	.\projects\world\base\TGettable.hpp	44;"	d
-THIS	.\projects\world\base\Thing.cpp	7;"	d	file:
-THIS	.\projects\world\bind\TBindable.hpp	32;"	d
-THIS	.\projects\world\bind\TBindable.hpp	8;"	d
-THIS	.\projects\world\bind\TStrong.hpp	39;"	d
-THIS	.\projects\world\bind\TStrong.hpp	9;"	d
-THIS	.\projects\world\bind\TWeak.hpp	11;"	d
-THIS	.\projects\world\bind\TWeak.hpp	64;"	d
-THIS	.\projects\world\container\TArray.hpp	13;"	d
-THIS	.\projects\world\container\TArray.hpp	7;"	d
+THIS	.\projects\world\base\Composit.cpp	8;"	d	file:
+THIS	.\projects\world\base\Instance.cpp	/^	THIS::THIS()$/;"	f	class:wrd::THIS
+THIS	.\projects\world\base\Instance.cpp	6;"	d	file:
+THIS	.\projects\world\base\Msg.cpp	6;"	d	file:
+THIS	.\projects\world\base\Node.cpp	7;"	d	file:
+THIS	.\projects\world\base\State.cpp	7;"	d	file:
+THIS	.\projects\world\base\Thing.cpp	6;"	d	file:
+THIS	.\projects\world\base\Thing.hpp	11;"	d
+THIS	.\projects\world\base\Thing.hpp	8;"	d
+THIS	.\projects\world\compiler\Origin.cpp	7;"	d	file:
+THIS	.\projects\world\container\TArray.hpp	14;"	d
+THIS	.\projects\world\container\TArray.hpp	8;"	d
 THIS	.\projects\world\container\TChain.hpp	13;"	d
 THIS	.\projects\world\container\TChain.hpp	7;"	d
+THIS	.\projects\world\memory\Bind.cpp	137;"	d	file:
+THIS	.\projects\world\memory\Bind.cpp	7;"	d	file:
+THIS	.\projects\world\memory\Bindable.cpp	23;"	d	file:
+THIS	.\projects\world\memory\Bindable.cpp	6;"	d	file:
+THIS	.\projects\world\memory\Block.cpp	6;"	d	file:
+THIS	.\projects\world\memory\Instancer.cpp	27;"	d	file:
+THIS	.\projects\world\memory\Instancer.cpp	5;"	d	file:
+THIS	.\projects\world\memory\TStrong.hpp	45;"	d
+THIS	.\projects\world\memory\TStrong.hpp	46;"	d
+THIS	.\projects\world\memory\TStrong.hpp	88;"	d
+THIS	.\projects\world\memory\TStrong.hpp	9;"	d
+THIS	.\projects\world\memory\TWeak.hpp	128;"	d
+THIS	.\projects\world\memory\TWeak.hpp	12;"	d
+THIS	.\projects\world\memory\TWeak.hpp	68;"	d
+THIS	.\projects\world\memory\TWeak.hpp	69;"	d
+THIS	.\projects\world\meta\Class.cpp	8;"	d	file:
 THIS	.\projects\world\meta\TClass.hpp	12;"	d
 THIS	.\projects\world\meta\TClass.hpp	72;"	d
+THIS	.\projects\world\msg-usr\Object.cpp	6;"	d	file:
+THIS	.\projects\world\pretypes\Res.cpp	21;"	d	file:
+THIS	.\projects\world\pretypes\Res.cpp	6;"	d	file:
+THIS	.\projects\world\pretypes\Str.cpp	6;"	d	file:
+THIS	.\projects\world\world.cpp	/^	THIS::THIS() {}$/;"	f	class:wrd::THIS
+THIS	.\projects\world\world.cpp	5;"	d	file:
+THIS	.\projects\world\world.cpp	9;"	d	file:
 TIfADT	.\projects\world\meta\helpers.hpp	/^    class TIfADT : public MetaIf$/;"	c	namespace:wrd
 TIfStaticMethod	.\projects\world\meta\helpers.hpp	/^    class TIfStaticMethod : public MetaIf$/;"	c	namespace:wrd
 TIfSub	.\projects\world\meta\helpers.hpp	/^    class TIfSub : public MetaIf$/;"	c	namespace:wrd
@@ -760,27 +779,40 @@ TObjected	.\docs\protos\worldfrw\helper component.cpp	/^class TObjected<false> {
 TProxy	.\docs\protos\worldfrw\container component.cpp	/^	class TProxy : public S$/;"	c	class:Container	file:
 TRefer	.\docs\protos\worldfrw\passer component.cpp	/^class TRefer : public Refer {$/;"	c	file:
 TRefer	.\docs\protos\worldfrw\passer component.cpp	/^class TRefer<const T> : public Refer {$/;"	c	file:
-TRefer	.\projects\world\msg-usr\TRefer.hpp	/^	class TRefer : public TGettable<T, Refer>$/;"	c	namespace:wrd
 TReference	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		TReference() : Reference(TClass<T>()) {}$/;"	f	class:wrd::TReference	file:
 TReference	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class TReference : public Reference {$/;"	c	namespace:wrd	file:
 TStrong	.\docs\protos\worldfrw\binder component.cpp	/^class TStrong : public TWeak<T> {$/;"	c	file:
-TStrong	.\projects\world\bind\TStrong.hpp	/^    TEMPL THIS::TStrong() {}$/;"	f	class:wrd::THIS
-TStrong	.\projects\world\bind\TStrong.hpp	/^    TEMPL THIS::TStrong(const T& it) : Super() { bind(it); }$/;"	f	class:wrd::THIS
-TStrong	.\projects\world\bind\TStrong.hpp	/^    TEMPL THIS::TStrong(const T* it) : Super() { bind(it); }$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^	TEMPL THIS::TStrong() {}$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^	TEMPL THIS::TStrong(T& it) : Super() { this->bind(it); }$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^	TEMPL THIS::TStrong(T* it) : Super() { this->bind(*it); }$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^	TEMPL THIS::TStrong(const T& it) : Super() { this->bind(it); }$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^	TEMPL THIS::TStrong(const T* it) : Super() { this->bind(*it); }$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^	TEMPL THIS::TStrong(const TStrong<T>& rhs) : Super() { this->_assign(rhs); }$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^	TEMPL THIS::TStrong(const This& rhs) : Super() { this->_assign(rhs); }$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^    TEMPL THIS::TStrong() {}$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^    TEMPL THIS::TStrong(T& it) : Super() { this->bind(it); }$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^    TEMPL THIS::TStrong(T* it) : Super() { this->bind(*it); }$/;"	f	class:wrd::THIS
+TStrong	.\projects\world\memory\TStrong.hpp	/^    TEMPL THIS::TStrong(const This& rhs) : Super() { this->assign(rhs); }$/;"	f	class:wrd::THIS
 TTemplateChecker	.\docs\protos\worldfrw\helper component.cpp	/^class TTemplateChecker : public Checker {$/;"	c	file:
 TVisitation	.\docs\protos\worldfrw\visitation component.cpp	/^class TVisitation : public S {$/;"	c	file:
 TVisitor	.\docs\protos\worldfrw\visitation component.cpp	/^class TVisitor : public Visitor {$/;"	c	file:
 TWeak	.\docs\protos\worldfrw\binder component.cpp	/^class TWeak : public Thing {$/;"	c	file:
-TWeak	.\projects\world\bind\TWeak.hpp	/^    TEMPL THIS::TWeak() { }$/;"	f	class:wrd::THIS
-TWeak	.\projects\world\bind\TWeak.hpp	/^    TEMPL THIS::TWeak(const T& it) { this->bind(it); }$/;"	f	class:wrd::THIS
-TWeak	.\projects\world\bind\TWeak.hpp	/^    TEMPL THIS::TWeak(const T* it) { this->bind(it); }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^	TEMPL THIS::TWeak() { }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^	TEMPL THIS::TWeak(T& it) { this->bind(it); }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^	TEMPL THIS::TWeak(T* it) { this->bind(*it); }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^	TEMPL THIS::TWeak(const T& it) { this->bind(it); }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^	TEMPL THIS::TWeak(const T* it) { this->bind(*it); }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^	TEMPL THIS::TWeak(const TWeak<T>& rhs) { this->_assign(rhs); }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^	TEMPL THIS::TWeak(const This& rhs) { this->_assign(rhs); }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^    TEMPL THIS::TWeak() { }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^    TEMPL THIS::TWeak(T& it) { this->bind(it); }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^    TEMPL THIS::TWeak(T* it) { this->bind(*it); }$/;"	f	class:wrd::THIS
+TWeak	.\projects\world\memory\TWeak.hpp	/^    TEMPL THIS::TWeak(const This& rhs) { this->_assign(rhs); }$/;"	f	class:wrd::THIS
 TestCase	.\projects\unittests\TestCase.hpp	/^	class TestCase$/;"	c	namespace:wrd
 TestCases	.\projects\unittests\TestCase.hpp	/^		typedef std::vector<TestCase*> TestCases;$/;"	t	class:wrd::TestCase
 Thing	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class Thing {$/;"	c	namespace:wrd	file:
-Thing	.\projects\world\base\Thing.hpp	/^	class Thing$/;"	c	namespace:wrd
 This	.\docs\protos\worldfrw\passer component.cpp	/^	This() : Super(false) {}$/;"	f	class:TRefer	file:
 This	.\docs\protos\worldfrw\passer component.cpp	/^	This() : Super(true) {}$/;"	f	class:TRefer	file:
-This	.\projects\world\world.hpp	/^        typedef World This;$/;"	t	class:wrd::World
 ThisExpr	.\docs\protos\worldfrw\execution component.cpp	/^class ThisExpr : public Expr {$/;"	c	class:Scope::Spaces	file:
 Time	.\projects\independentor\helpers\BuildFeatures.hpp	/^			struct Time$/;"	s	class:wrd::indep::BuildFeatures
 Token	.\projects\preferencer\parser\generated\Token.cc	/^  Token::Token() :$/;"	f	class:wrd::Token
@@ -793,7 +825,6 @@ TokenMgrError	.\projects\preferencer\parser\generated\TokenMgrError.cc	/^  Token
 TokenMgrError	.\projects\preferencer\parser\generated\TokenMgrError.cc	/^  TokenMgrError::TokenMgrError(bool EOFSeen, int lexState, int errorLine, int errorColumn, const JJString& errorAfter, JJChar curChar, int reason) {$/;"	f	class:wrd::TokenMgrError
 TokenMgrError	.\projects\preferencer\parser\generated\TokenMgrError.cc	/^  TokenMgrError::TokenMgrError(const JJString& message, int reason) {$/;"	f	class:wrd::TokenMgrError
 TokenMgrError	.\projects\preferencer\parser\generated\TokenMgrError.h	/^class TokenMgrError {$/;"	c	namespace:wrd
-Trace	.\projects\world\base\Trace.hpp	/^    class Trace : public TBindable<Instance>$/;"	c	namespace:wrd
 Type	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	class Type : public Object {$/;"	c	namespace:wrd	file:
 Type	.\projects\preferencer\objtree\Type.cpp	/^		THIS::Type() {}$/;"	f	class:wrd::pref::THIS
 Type	.\projects\preferencer\objtree\Type.cpp	/^		THIS::Type(const std::string& key) : _key(key) {}$/;"	f	class:wrd::pref::THIS
@@ -820,6 +851,10 @@ WRD_ASSERT_1	.\projects\world\commons\wrd-defs.hpp	54;"	d
 WRD_ASSERT_2	.\projects\world\commons\wrd-defs.hpp	53;"	d
 WRD_ASSERT_3	.\projects\world\commons\wrd-defs.hpp	52;"	d
 WRD_ASSERT_4	.\projects\world\commons\wrd-defs.hpp	49;"	d
+WRD_ASSIGN_GUARD	.\projects\independentor\macros\AssignGuard.hpp	8;"	d
+WRD_ASSIGN_GUARD_0	.\projects\independentor\macros\AssignGuard.hpp	5;"	d
+WRD_ASSIGN_GUARD_1	.\projects\independentor\macros\AssignGuard.hpp	6;"	d
+WRD_ASSIGN_GUARD_2	.\projects\independentor\macros\AssignGuard.hpp	7;"	d
 WRD_BUILD_COUNT	.\projects\independentor\macros\BuildInformation.hpp	22;"	d
 WRD_BUILD_DATE	.\build\projects\independentor\macros\BuildInformation.hpp	12;"	d
 WRD_BUILD_DATE	.\projects\independentor\macros\BuildInformation.hpp	12;"	d
@@ -863,18 +898,19 @@ WRD_BUILD_VERSION_NAME	.\projects\independentor\macros\BuildInformation.hpp	20;"
 WRD_BUILD_VERSION_PATCH	.\build\projects\independentor\macros\BuildInformation.hpp	19;"	d
 WRD_BUILD_VERSION_VALUE	.\build\projects\independentor\macros\BuildInformation.hpp	21;"	d
 WRD_BUILD_VERSION_VALUE	.\projects\independentor\macros\BuildInformation.hpp	21;"	d
-WRD_CLASS	.\projects\world\commons\wrd-defs.hpp	97;"	d
+WRD_CLASS	.\projects\world\commons\wrd-defs.hpp	95;"	d
 WRD_CLASS_1	.\docs\protos\worldfrw\bridge component.cpp	75;"	d	file:
-WRD_CLASS_1	.\projects\world\commons\wrd-defs.hpp	94;"	d
+WRD_CLASS_1	.\projects\world\commons\wrd-defs.hpp	92;"	d
 WRD_CLASS_2	.\docs\protos\worldfrw\bridge component.cpp	77;"	d	file:
-WRD_CLASS_2	.\projects\world\commons\wrd-defs.hpp	91;"	d
+WRD_CLASS_2	.\projects\world\commons\wrd-defs.hpp	89;"	d
 WRD_CLASS_3	.\docs\protos\worldfrw\bridge component.cpp	83;"	d	file:
-WRD_CLASS_DECL	.\projects\world\commons\wrd-defs.hpp	115;"	d
-WRD_CLASS_DECL_1	.\projects\world\commons\wrd-defs.hpp	112;"	d
-WRD_CLASS_DECL_2	.\projects\world\commons\wrd-defs.hpp	109;"	d
+WRD_CLASS_DECL	.\projects\world\commons\wrd-defs.hpp	113;"	d
+WRD_CLASS_DECL_1	.\projects\world\commons\wrd-defs.hpp	110;"	d
+WRD_CLASS_DECL_2	.\projects\world\commons\wrd-defs.hpp	107;"	d
 WRD_CLASS_DEF	.\projects\world\commons\wrd-defs.hpp	130;"	d
-WRD_CLASS_DEF_1	.\projects\world\commons\wrd-defs.hpp	118;"	d
-WRD_CLASS_DEF_2	.\projects\world\commons\wrd-defs.hpp	119;"	d
+WRD_CLASS_DEF_1	.\projects\world\commons\wrd-defs.hpp	116;"	d
+WRD_CLASS_DEF_2	.\projects\world\commons\wrd-defs.hpp	117;"	d
+WRD_CLASS_INIT	.\projects\world\commons\wrd-defs.hpp	142;"	d
 WRD_COMMA	.\projects\independentor\macros\Helpers.hpp	19;"	d
 WRD_CONCAT	.\projects\independentor\macros\Concaterator.hpp	4;"	d
 WRD_CONSUME_ARGS	.\projects\independentor\macros\Helpers.hpp	6;"	d
@@ -903,10 +939,10 @@ WRD_ERROR_MINUS1	.\projects\independentor\commons\indep-defs.hpp	33;"	d
 WRD_EVAL	.\projects\independentor\macros\Evaluator.hpp	35;"	d
 WRD_FALSE	.\projects\independentor\commons\indep-defs.hpp	40;"	d
 WRD_FUNCTION_CALL	.\projects\independentor\commons\indep-defs.hpp	12;"	d
-WRD_GET	.\projects\world\commons\wrd-defs.hpp	137;"	d
-WRD_GET_1	.\projects\world\commons\wrd-defs.hpp	136;"	d
-WRD_GET_2	.\projects\world\commons\wrd-defs.hpp	135;"	d
-WRD_GET_3	.\projects\world\commons\wrd-defs.hpp	132;"	d
+WRD_GET	.\projects\world\commons\wrd-defs.hpp	149;"	d
+WRD_GET_1	.\projects\world\commons\wrd-defs.hpp	148;"	d
+WRD_GET_2	.\projects\world\commons\wrd-defs.hpp	147;"	d
+WRD_GET_3	.\projects\world\commons\wrd-defs.hpp	144;"	d
 WRD_GET_VARG2_X_1	.\projects\independentor\macros\ArgumentGetter.hpp	61;"	d
 WRD_GET_VARG2_X_10	.\projects\independentor\macros\ArgumentGetter.hpp	70;"	d
 WRD_GET_VARG2_X_11	.\projects\independentor\macros\ArgumentGetter.hpp	71;"	d
@@ -980,6 +1016,7 @@ WRD_INHERIT	.\projects\independentor\macros\Inherit.hpp	14;"	d
 WRD_INHERIT_1	.\projects\independentor\macros\Inherit.hpp	10;"	d
 WRD_INHERIT_2	.\projects\independentor\macros\Inherit.hpp	5;"	d
 WRD_INITIATE_CLASS	.\projects\unittests\commons\ut-defs.hpp	3;"	d
+WRD_INITIATOR	.\projects\independentor\macros\Initiator.hpp	3;"	d
 WRD_IS_CONST	.\docs\protos\worldfrw\helper component.cpp	53;"	d	file:
 WRD_IS_CONST	.\projects\world\commons\wrd-defs.hpp	43;"	d
 WRD_IS_ERR	.\docs\protos\worldfrw\helper component.cpp	59;"	d	file:
@@ -1063,12 +1100,6 @@ WRD_UNCONST_0	.\projects\independentor\macros\Helpers.hpp	9;"	d
 WRD_UNCONST_1	.\projects\independentor\macros\Helpers.hpp	10;"	d
 WRD_UNCONST_2	.\projects\independentor\macros\Helpers.hpp	11;"	d
 WRD_UNWRAP	.\projects\independentor\macros\Helpers.hpp	7;"	d
-WRD_UNWRAP	.\projects\world\base\TGettable.hpp	/^	TEMPL T& WRD_UNWRAP(THIS)::get() { return this->_get().template down<T>(); }$/;"	f	namespace:wrd
-WRD_UNWRAP	.\projects\world\base\TGettable.hpp	/^	TEMPL const T& WRD_UNWRAP(THIS)::get() const$/;"	f	namespace:wrd
-WRD_UNWRAP	.\projects\world\base\TGettable.hpp	/^    TEMPL T* WRD_UNWRAP(THIS)::operator*() { return &get(); }$/;"	f	namespace:wrd
-WRD_UNWRAP	.\projects\world\base\TGettable.hpp	/^    TEMPL T* WRD_UNWRAP(THIS)::operator->() { return &get(); }$/;"	f	namespace:wrd
-WRD_UNWRAP	.\projects\world\base\TGettable.hpp	/^    TEMPL const T* WRD_UNWRAP(THIS)::operator*() const { return &get(); }$/;"	f	namespace:wrd
-WRD_UNWRAP	.\projects\world\base\TGettable.hpp	/^    TEMPL const T* WRD_UNWRAP(THIS)::operator->() const { return &get(); }$/;"	f	namespace:wrd
 WRD_VOID	.\projects\independentor\macros\Helpers.hpp	4;"	d
 WRD_WARN	.\projects\logger\macro.hpp	15;"	d
 World	.\projects\world\world.hpp	/^    class World : public Manager$/;"	c	namespace:wrd
@@ -1080,13 +1111,17 @@ _ARGCNT	.\projects\independentor\macros\ArgumentCounter.hpp	4;"	d
 _ARGCNT2	.\projects\independentor\macros\ArgumentCounter.hpp	6;"	d
 _CASE	.\projects\preferencer\parser\PRParserHandler.cpp	30;"	d	file:
 _CASE	.\projects\preferencer\parser\PRParserHandler.cpp	39;"	d	file:
+_CLASS	.\projects\world\pretypes\reses.hpp	19;"	d
+_CLASS	.\projects\world\pretypes\reses.hpp	7;"	d
 _CLASS_BASE	.\projects\world\commons\wrd-defs.hpp	81;"	d
-_CLASS_DECL_BASE	.\projects\world\commons\wrd-defs.hpp	101;"	d
+_CLASS_DECL_BASE	.\projects\world\commons\wrd-defs.hpp	99;"	d
 _CLASS_TEMPLATE	.\docs\protos\worldfrw\bridge component.cpp	80;"	d	file:
 _COMMA	.\projects\independentor\macros\Helpers.hpp	18;"	d
 _CONCAT	.\projects\independentor\macros\Concaterator.hpp	3;"	d
-_DECL	.\projects\world\pretypes\reses.hpp	19;"	d
-_DECL	.\projects\world\pretypes\reses.hpp	7;"	d
+_DECL	.\projects\world\pretypes\Reses.cpp	5;"	d	file:
+_DECL	.\projects\world\pretypes\Reses.cpp	9;"	d	file:
+_DECL	.\projects\world\pretypes\reses.hpp	12;"	d
+_DECL	.\projects\world\pretypes\reses.hpp	18;"	d
 _EOF	.\projects\preferencer\parser\generated\PRParserConstants.h	/^const  int _EOF = 0;$/;"	m	namespace:wrd
 _FUNC_CHECKER_NAME	.\docs\protos\worldfrw\bridge component.cpp	53;"	d	file:
 _INTEGER_METHOD	.\projects\independentor\helpers\BuildFeatures.cpp	10;"	d	file:
@@ -1123,13 +1158,16 @@ __FILENAME__	.\projects\logger\macro.hpp	5;"	d
 _age	.\docs\protos\worldfrw\visitation component.cpp	/^    int _age;$/;"	m	class:MyClass	file:
 _ageptr	.\docs\protos\worldfrw\visitation component.cpp	/^    int* _ageptr;$/;"	m	class:MyClass	file:
 _args	.\docs\protos\worldfrw\backbone component.cpp	/^	Array _args;$/;"	m	class:Msg	file:
+_assign	.\projects\world\memory\Bind.cpp	/^	Res& THIS::_assign(const This& rhs)$/;"	f	class:wrd::THIS
 _bean	.\docs\protos\worldfrw\bridge component.cpp	/^    T* _bean;$/;"	m	class:TBlackbox	file:
 _bean	.\docs\protos\worldfrw\bridge component.cpp	/^    T** _bean;$/;"	m	class:TBlackBox	file:
 _bean	.\docs\protos\worldfrw\passer component.cpp	/^	Strong _bean;$/;"	m	class:Refer	file:
-_bean	.\projects\world\msg-usr\Refer.hpp	/^		Strong _bean;$/;"	m	class:wrd::Refer
+_bind	.\projects\world\memory\Bind.cpp	/^	Res& THIS::_bind(const Instance& it)$/;"	f	class:wrd::THIS
+_bind	.\projects\world\memory\Block.cpp	/^	Res& THIS::_bind(const Instance& new1)$/;"	f	class:wrd::THIS
+_bind	.\projects\world\memory\TStrong.hpp	/^	TEMPL Res& THIS::_bind(const Instance& it)$/;"	f	class:wrd::THIS
+_bind	.\projects\world\memory\TWeak.hpp	/^	TEMPL Res& THIS::_bind(const Instance& it)$/;"	f	class:wrd::THIS
 _block	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		Block _block;$/;"	m	class:wrd::WorldMethod	file:
 _block	.\docs\protos\worldfrw\passer component.cpp	/^	BlockStmt _block;$/;"	m	class:MgdMethod	file:
-_blocks	.\projects\world\memory\Instancer.hpp	/^		  Blocks _blocks;$/;"	m	class:wrd::Instancer
 _buffer	.\projects\file-manipulator\file-streams\AsciiStream.hpp	/^			std::string _buffer;$/;"	m	class:wrd::fm::AsciiStream
 _callNative	.\docs\protos\worldfrw\bridge component.cpp	/^	virtual Refer _callNative(T* thisptr, ArgTypes... args) {$/;"	f	class:TNativeCtor	file:
 _caller	.\docs\protos\worldfrw\execution component.cpp	/^	Refer _caller; \/\/ expression or object 가 여기에 들어간다. isConst()여부를 따져야 하기 때문에 TStrong은 될 수 없다.$/;"	m	class:Scope::Spaces::Expr	file:
@@ -1142,10 +1180,10 @@ _classes	.\docs\protos\worldfrw\metaclass component.cpp	/^	Classes _classes;$/;"
 _classes	.\projects\preferencer\Preferencer.hpp	/^			Classes _classes;$/;"	m	class:wrd::pref::Preferencer
 _clean	.\build\builder.py	/^def _clean(directory):$/;"	f
 _clone	.\docs\protos\worldfrw\backbone component.cpp	/^	virtual TStrong<Instance> _clone() const {$/;"	f	class:Instance	file:
+_clone	.\projects\world\meta\Class.cpp	/^	TStrong<Instance> THIS::_clone() const { return TCloner<This>::clone(*this); }$/;"	f	class:wrd::THIS
 _clone	.\projects\world\meta\TClass.hpp	/^	TEMPL TStrong<Instance> THIS::_clone() const { return TCloner<THIS>::clone(*this); }$/;"	f	class:wrd::THIS
 _cls	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		Class _cls;$/;"	m	class:wrd::Object	file:
 _cls	.\docs\protos\worldfrw\passer component.cpp	/^	const Class& _cls;$/;"	m	class:Refer	file:
-_cls	.\projects\world\msg-usr\Refer.hpp	/^		const Class& _cls;$/;"	m	class:wrd::Refer
 _col	.\docs\protos\worldfrw\interpreting component.cpp	/^		wint _col;$/;"	m	class:Origin::Pos	file:
 _createMakefiles	.\build\builder.py	/^def _createMakefiles():$/;"	f
 _createSubFile	.\projects\file-manipulator\file-structures\Folder.cpp	/^		File* THIS::_createSubFile(DIR* e)$/;"	f	class:wrd::fm::THIS
@@ -1155,6 +1193,7 @@ _down	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Node& _down(const C
 _down	.\docs\protos\worldfrw\passer component.cpp	/^	virtual const Node& _down(const Class& cls) const {$/;"	f	class:Refer	file:
 _down	.\projects\world\base\Thing.cpp	/^	Thing& THIS::_down(const Class& cls)$/;"	f	class:wrd::THIS
 _down	.\projects\world\base\Thing.cpp	/^	const Thing& THIS::_down(const Class& cls) const$/;"	f	class:wrd::THIS
+_down	.\projects\world\memory\Bind.cpp	/^	Thing& THIS::_down(const Class& cls)$/;"	f	class:wrd::THIS
 _end	.\docs\protos\worldfrw\interpreting component.cpp	/^	Pos _end;$/;"	m	class:Origin	file:
 _extractBuildInfo	.\build\builder.py	/^def _extractBuildInfo(): # from RELEASE.md at root directory.$/;"	f
 _fd	.\projects\file-manipulator\file-streams\FileStream.hpp	/^			FILE* _fd;$/;"	m	class:wrd::fm::FileStream
@@ -1163,15 +1202,21 @@ _filterConst	.\docs\protos\worldfrw\execution component.cpp	/^	Node& _filterCons
 _fptr	.\docs\protos\worldfrw\bridge component.cpp	/^	Fptr _fptr;$/;"	m	class:TNativeMethoder	file:
 _get	.\docs\protos\worldfrw\backbone component.cpp	/^	Container& _get() {$/;"	f	class:Node	file:
 _get	.\docs\protos\worldfrw\backbone component.cpp	/^	Node& _get(wbool want_const, std::function<wbool(Node&)> tester) {$/;"	f	class:Node	file:
-_get	.\projects\world\bind\TWeak.hpp	/^    TEMPL Instance& THIS::_get()$/;"	f	class:wrd::THIS
+_get	.\projects\world\base\Node.cpp	/^	Node& THIS::_get(wbool want_const, std::function<wbool(Node&)> tester)$/;"	f	class:wrd::THIS
+_get	.\projects\world\memory\Bind.cpp	/^	Instance& THIS::_get()$/;"	f	class:wrd::THIS
+_get	.\projects\world\memory\Block.cpp	/^	Instance& THIS::_get() { return *_pt; }$/;"	f	class:wrd::THIS
+_getBlock	.\projects\world\base\Instance.cpp	/^	Block& THIS::_getBlock(Id id) { return const_cast<Block&>(getMgr()[id]); }$/;"	f	class:wrd::THIS
 _getInfo	.\projects\file-manipulator\file-structures\File.cpp	/^		struct stat& THIS::_getInfo(const string& path)$/;"	f	class:wrd::fm::THIS
 _getInstanceBlock	.\docs\protos\worldfrw\binder component.cpp	/^	InstanceBlock& _getInstanceBlock() {$/;"	f	class:TWeak	file:
 _getInstanceBlock	.\docs\protos\worldfrw\binder component.cpp	/^	const InstanceBlock& _getInstanceBlock() const {$/;"	f	class:TWeak	file:
 _getMembers	.\docs\protos\worldfrw\backbone component.cpp	/^	Container& _getMembers() {$/;"	f	class:Node	file:
+_getNodes	.\projects\world\base\Node.cpp	/^	Container& THIS::_getNodes() { return const_cast<Container&>(getNodes()); }$/;"	f	class:wrd::THIS
 _getSubContainerHead	.\docs\protos\worldfrw\passer component.cpp	/^	CIterator _getSubContainerHead(widx n) const {$/;"	f	class:Object	file:
 _getSubContainerHead	.\docs\protos\worldfrw\passer component.cpp	/^	Iterator _getSubContainerHead(widx n) {$/;"	f	class:Object	file:
 _getSubs	.\docs\protos\worldfrw\metaclass component.cpp	/^	Classes& _getSubs() {$/;"	f	class:Class	file:
+_getSubs	.\projects\world\meta\Class.cpp	/^    Classes& THIS::_getSubs() { return const_cast<Classes&>(getSubs()); }$/;"	f	class:wrd::THIS
 _getSupers	.\docs\protos\worldfrw\metaclass component.cpp	/^	Classes& _getSupers() {$/;"	f	class:Class	file:
+_getSupers	.\projects\world\meta\Class.cpp	/^    Classes& THIS::_getSupers() { return const_cast<Classes&>(getSupers()); }$/;"	f	class:wrd::THIS
 _getThis	.\docs\protos\worldfrw\bridge component.cpp	/^	Node& _getThis() {$/;"	f	class:TNativeCaller	file:
 _header	.\projects\unittests\main.cpp	/^void _header()$/;"	f
 _id	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		wid _id;$/;"	m	class:wrd::Instance	file:
@@ -1182,24 +1227,28 @@ _incBuildCnt	.\build\builder.py	/^def _incBuildCnt():$/;"	f
 _increaseCount	.\docs\protos\worldfrw\execution component.cpp	/^	Result& _increaseCount() {$/;"	f	class:InstanceBlock	file:
 _inflated	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		static String _inflated;	$/;"	m	class:wrd::Result	file:
 _init	.\build\builder.py	/^def _init():$/;"	f
+_initNodes	.\projects\world\base\Composit.cpp	/^    Res& THIS::_initNodes()$/;"	f	class:wrd::THIS
+_initNodes	.\projects\world\meta\Class.cpp	/^    Res& THIS::_initNodes()$/;"	f	class:wrd::THIS
 _initNodes	.\projects\world\meta\TClass.hpp	/^    TEMPL Res& THIS::_initNodes()$/;"	f	class:wrd::THIS
+_initNodes	.\projects\world\msg-usr\Object.cpp	/^	Res& THIS::_initNodes()$/;"	f	class:wrd::THIS
 _initialize	.\docs\protos\worldfrw\visitation component.cpp	/^    Result& _initialize() {$/;"	f	class:Visitor	file:
 _initializeMembers	.\docs\protos\worldfrw\backbone component.cpp	/^	virtual Result& _initializeMembers() {$/;"	f	class:CompositNode	file:
 _initializeMembers	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual Result& _initializeMembers() {$/;"	f	class:Class	file:
 _initializeMembers	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual Result& _initializeMembers() {$/;"	f	class:TClass	file:
 _initializeMembers	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Result& _initializeMembers() {$/;"	f	class:Object	file:
 _injectBuildInfo	.\build\builder.py	/^def _injectBuildInfo():$/;"	f
+_instancer	.\projects\world\world.hpp	/^		Instancer _instancer;$/;"	m	class:wrd::World
 _isAnsiColorTerminal	.\projects\independentor\helpers\PlatformAPI.cpp	/^			bool _isAnsiColorTerminal()$/;"	f	namespace:wrd::indep::__anon3
 _isFiltered	.\projects\file-manipulator\file-structures\Folder.cpp	/^		wbool THIS::_isFiltered(const File& target) const$/;"	f	class:wrd::fm::THIS
 _isFolder	.\projects\file-manipulator\file-structures\File.cpp	/^		wbool THIS::_isFolder(struct stat& info) { return info.st_mode & S_IFDIR; }$/;"	f	class:wrd::fm::THIS
 _is_const	.\docs\protos\worldfrw\passer component.cpp	/^	wbool _is_const;$/;"	m	class:Refer	file:
-_is_const	.\projects\world\msg-usr\Refer.hpp	/^		wbool _is_const;$/;"	m	class:wrd::Refer
 _is_enable	.\projects\logger\streams\Stream.hpp	/^			wbool _is_enable;$/;"	m	class:wrd::log::Stream
 _is_init	.\projects\world\base\State.hpp	/^		wbool _is_init;$/;"	m	class:wrd::State
 _is_initialized	.\docs\protos\worldfrw\metaclass component.cpp	/^	static wbool _is_initialized;$/;"	m	class:TClass	file:
 _is_reculsive	.\docs\protos\worldfrw\visitation component.cpp	/^	wbool _is_reculsive;$/;"	m	class:Visitor	file:
 _is_reculsive	.\projects\file-manipulator\file-structures\Folder.hpp	/^				wbool _is_reculsive;$/;"	m	class:wrd::fm::Folder::Option
 _iterator	.\projects\file-manipulator\file-structures\Folder.hpp	/^			DIR* _iterator;$/;"	m	class:wrd::fm::Folder
+_its_id	.\projects\world\memory\Bind.hpp	/^		Id _its_id; \/\/ id for binded one$/;"	m	class:wrd::Bind
 _key	.\projects\preferencer\objtree\MemberType.hpp	/^			std::string _key;$/;"	m	class:wrd::pref::MemberType
 _key	.\projects\preferencer\objtree\Type.hpp	/^			std::string _key;$/;"	m	class:wrd::pref::Type
 _length	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		wcnt _length;$/;"	m	class:wrd::Container	file:
@@ -1223,15 +1272,18 @@ _nodes	.\projects\world\meta\MgdClass.hpp	/^		TStrong<Chain> _nodes;$/;"	m	class
 _obj	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		TStrong<Object> _obj;$/;"	m	class:wrd::Reference	file:
 _onCreateControl	.\docs\protos\worldfrw\execution component.cpp	/^	virtual TStrong<Control> _onCreateControl(Chain& origin) { return new Spaces(origin); }$/;"	f	class:Scope::Spaces	file:
 _onCreateIteration	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		virtual TStrong<Iteration> _onCreateIteration() {$/;"	f	class:wrd::Array	file:
+_onInitNodes	.\projects\world\base\Node.cpp	/^	Res& THIS::_onInitNodes(Container& tray) { return wasgood; }$/;"	f	class:wrd::THIS
 _onInitializeMembers	.\docs\protos\worldfrw\backbone component.cpp	/^	virtual Result& _onInitializeMembers(Container& tray) { return Success; }$/;"	f	class:Node	file:
 _onRun	.\docs\protos\worldfrw\bridge component.cpp	/^	virtual Refer _onRun(Msg& msg) {$/;"	f	class:TNativeCaller	file:
 _onRun	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Refer _onRun(Msg& msg) {$/;"	f	class:MgdMethod	file:
+_onStrong	.\projects\world\memory\Block.cpp	/^	Res& THIS::_onStrong(wcnt vote)$/;"	f	class:wrd::THIS
 _onVisit	.\docs\protos\worldfrw\visitation component.cpp	/^        virtual Result& _onVisit(MyClass& trg) const {$/;"	f	class:MyClass::MyAsciiLoadVisitation	file:
 _onVisit	.\docs\protos\worldfrw\visitation component.cpp	/^    virtual Result& _onVisit(T& trg) const {$/;"	f	class:TVisitation	file:
 _onVisit	.\docs\protos\worldfrw\visitation component.cpp	/^    virtual Result& _onVisit(const T& trg) const {$/;"	f	class:TVisitation	file:
 _onVisited	.\docs\protos\worldfrw\visitation component.cpp	/^        virtual Result& _onVisited(MyClass& trg) const {$/;"	f	class:MyClass::MyAsciiLoadVisitation	file:
 _onVisited	.\docs\protos\worldfrw\visitation component.cpp	/^    virtual Result& _onVisited(T& trg) const {$/;"	f	class:TVisitation	file:
 _onVisited	.\docs\protos\worldfrw\visitation component.cpp	/^    virtual Result& _onVisited(const T& trg) const {$/;"	f	class:TVisitation	file:
+_onWeak	.\projects\world\memory\Block.cpp	/^	Res& THIS::_onWeak(wcnt vote)$/;"	f	class:wrd::THIS
 _option	.\projects\file-manipulator\file-structures\Folder.hpp	/^			Option _option;$/;"	m	class:wrd::fm::Folder
 _org	.\projects\world\meta\MgdClass.hpp	/^        TStrong<Origin> _org;$/;"	m	class:wrd::MgdClass
 _origin	.\docs\protos\worldfrw\container component.cpp	/^		TWeak<Container> _origin;$/;"	m	class:Container::Proxy	file:
@@ -1246,14 +1298,16 @@ _peelOffBuffer	.\projects\file-manipulator\file-streams\AsciiStream.cpp	/^		stri
 _preferencer	.\projects\preferencer\parser\generated\PRParser.h	/^        pref::Preferencer* _preferencer;$/;"	m	class:wrd::PRParser
 _prepare	.\projects\file-manipulator\file-structures\Folder.cpp	/^		const File* THIS::_prepare() const$/;"	f	class:wrd::fm::THIS
 _printColorCharacter	.\projects\independentor\helpers\PlatformAPI.cpp	/^			void _printColorCharacter(CLASS::ConsoleColor fore, CLASS::ConsoleColor back)$/;"	f	namespace:wrd::indep::__anon3
+_pt	.\projects\world\memory\Block.hpp	/^		Instance* _pt;$/;"	m	class:wrd::Block
 _readToBuffer	.\projects\file-manipulator\file-streams\AsciiStream.cpp	/^		wcnt THIS::_readToBuffer(wcnt bytes)$/;"	f	class:wrd::fm::THIS
 _release	.\projects\file-manipulator\file-structures\Folder.cpp	/^		void THIS::_release()$/;"	f	class:wrd::fm::THIS
 _row	.\docs\protos\worldfrw\interpreting component.cpp	/^		wint _row;$/;"	m	class:Origin::Pos	file:
 _saver	.\docs\protos\worldfrw\visitation component.cpp	/^    BinaryFileStream _saver;$/;"	m	class:Saver	file:
 _serial	.\docs\protos\worldfrw\binder component.cpp	/^	wcnt _serial;$/;"	m	class:TWeak	file:
-_serial	.\projects\world\base\Trace.hpp	/^        wcnt _serial;$/;"	m	class:wrd::Trace
 _serialize	.\docs\protos\worldfrw\bridge component.cpp	/^	Object* _serialize(const Args& args) {$/;"	f	class:TNativeCaller	file:
+_setId	.\projects\world\base\Instance.cpp	/^	Res& THIS::_setId(Id new1)$/;"	f	class:wrd::THIS
 _setInit	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual Result& _setInit(wbool newone) {$/;"	f	class:TClass	file:
+_setInit	.\projects\world\base\State.cpp	/^	Res& THIS::_setInit(wbool new1)$/;"	f	class:wrd::THIS
 _setMe	.\docs\protos\worldfrw\backbone component.cpp	/^	static Result& _setMe(Method& newone) { _me = newone; }$/;"	f	class:Msg	file:
 _setName	.\projects\file-manipulator\file-structures\File.cpp	/^		void THIS::_setName(const string& new_name)$/;"	f	class:wrd::fm::THIS
 _setPath	.\projects\file-manipulator\file-structures\PathedObject.cpp	/^		wbool THIS::_setPath(const string& new_path) { _path = new_path; return false; }$/;"	f	class:wrd::fm::THIS
@@ -1304,7 +1358,8 @@ arg	.\projects\preferencer\parser\generated\PRParser.h	/^    int        arg;$/;"
 assign	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		virtual Result& assign(const Thing& rhs) {$/;"	f	class:wrd::Instance	file:
 assign	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		virtual const Result& assign(const Thing& rhs) {$/;"	f	class:wrd::Instance	file:
 assign	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Result& assign(const Thing& it) {$/;"	f	class:Refer	file:
-assign	.\projects\world\base\Thing.cpp	/^	Res& THIS::assign(const Thing& it) { if(it.isNull()) return wasnull; }$/;"	f	class:wrd::THIS
+assign	.\projects\world\base\Thing.cpp	/^	Res& THIS::assign(const Thing& it)$/;"	f	class:wrd::THIS
+assign	.\projects\world\memory\Bind.cpp	/^	Res& THIS::assign(const Thing& it)$/;"	f	class:wrd::THIS
 available	.\projects\preferencer\parser\generated\CharStream.h	/^  int                available;$/;"	m	class:wrd::CharStream
 b:current_syntax	.\docs\syntaxes\wrd.vim	/^let b:current_syntax = "wrd"$/;"	v
 backup	.\projects\preferencer\parser\generated\CharStream.h	/^  virtual inline void backup(int amount) {$/;"	f	class:wrd::CharStream
@@ -1318,9 +1373,10 @@ bind	.\docs\protos\worldfrw\passer component.cpp	/^	Result& bind(Node& it) {$/;"
 bind	.\docs\protos\worldfrw\passer component.cpp	/^	Result& bind(Refer& it) { return bind(it.get()); }$/;"	f	class:Refer	file:
 bind	.\docs\protos\worldfrw\passer component.cpp	/^	Result& bind(const Node& it) {$/;"	f	class:Refer	file:
 bind	.\docs\protos\worldfrw\passer component.cpp	/^	Result& bind(const Refer& it) { return bind(it.get()); }$/;"	f	class:Refer	file:
-bind	.\projects\world\bind\TBindable.hpp	/^    TEMPL Res& THIS::bind(const Instance* new1)$/;"	f	class:wrd::THIS
-bind	.\projects\world\bind\TStrong.hpp	/^    TEMPL Res& THIS::bind(const T& it)$/;"	f	class:wrd::THIS
-bind	.\projects\world\bind\TWeak.hpp	/^    TEMPL Res& THIS::bind(const Instance& new1)$/;"	f	class:wrd::THIS
+bind	.\projects\world\memory\Bindable.cpp	/^	Res& THIS::bind(const Instance& it) { return _bind(it); }$/;"	f	class:wrd::THIS
+bind	.\projects\world\memory\Instancer.cpp	/^	Res& THIS::bind(Instance& new1)$/;"	f	class:wrd::THIS
+bind	.\projects\world\memory\TWeak.hpp	/^	TEMPL Res& THIS::bind(T& new1) { return this->bind(new1); }$/;"	f	class:wrd::THIS
+bind	.\projects\world\memory\TWeak.hpp	/^	TEMPL Res& THIS::bind(const T& new1) { return this->bind(new1); }$/;"	f	class:wrd::THIS
 bool_expr	.\projects\preferencer\parser\generated\PRParser.cc	/^Token     * PRParser::bool_expr() {Token* expr;$/;"	f	class:wrd::PRParser
 branch	.\build\builder.py	/^def branch(command):$/;"	f
 bufcolumn	.\projects\preferencer\parser\generated\CharStream.h	/^  int*               bufcolumn;$/;"	m	class:wrd::CharStream
@@ -1339,6 +1395,11 @@ call	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Refer call(Msg& msg)
 call	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Refer call(Msg& msg) { return _bean.call(msg); }$/;"	f	class:Refer	file:
 call	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Refer call(Msg& msg) {$/;"	f	class:Method	file:
 call	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Refer call(Msg& msg) {$/;"	f	class:Object	file:
+canBind	.\projects\world\memory\Bind.cpp	/^	wbool THIS::canBind(const Class& cls) const { return getClass().isSub(cls); }$/;"	f	class:wrd::THIS
+canBind	.\projects\world\memory\Bindable.cpp	/^	wbool THIS::canBind(const Instance& it) { return canBind(it.getClass()); }$/;"	f	class:wrd::THIS
+canBind	.\projects\world\memory\Block.cpp	/^	wbool THIS::canBind(const Class& cls) const { return cls.isSub(getBindable()); }$/;"	f	class:wrd::THIS
+canUse	.\projects\world\base\Node.cpp	/^	wbool THIS::canUse(const Msg& msg) const { \/*TODO: return msg.getName() == getName(); *\/ return false;}$/;"	f	class:wrd::THIS
+canUse	.\projects\world\msg-usr\Object.cpp	/^	wbool THIS::canUse(const Msg& msg) const$/;"	f	class:wrd::THIS
 casted	.\docs\protos\worldfrw\backbone component.cpp	/^		Integer casted = *ra.to<Integer>(); \/\/ T of to<T> should be a sort of Node.$/;"	v
 char_expr	.\projects\preferencer\parser\generated\PRParser.cc	/^Token     * PRParser::char_expr() {Token* expr;$/;"	f	class:wrd::PRParser
 checkDependencies	.\build\builder.py	/^def checkDependencies():$/;"	f
@@ -1352,9 +1413,10 @@ clone	.\projects\preferencer\Preferencer.cpp	/^		Object& THIS::clone() const { r
 clone	.\projects\preferencer\objtree\ClassType.cpp	/^		Object& THIS::clone() const { return *(new This(*this)); }$/;"	f	class:wrd::pref::THIS
 clone	.\projects\preferencer\objtree\MemberType.cpp	/^		Object& THIS::clone() const { return *(new MemberType(*this)); }$/;"	f	class:wrd::pref::THIS
 clone	.\projects\preferencer\objtree\Type.cpp	/^		Object& THIS::clone() const { return *(new This(*this)); }$/;"	f	class:wrd::pref::THIS
+clone	.\projects\world\meta\Class.cpp	/^	TStrong<THIS> THIS::clone() const { return TStrong<This>(_clone().down<This>()); }$/;"	f	class:wrd::THIS
 clone	.\projects\world\meta\helpers.hpp	/^        static TStrong<Instance> clone(const T& origin) {$/;"	f	class:wrd::TCloner
 closure	.\docs\protos\worldfrw\passer component.cpp	/^	virtual TRefer<Delegator> closure(Object& obj) {$/;"	f	class:Method	file:
-cls	.\projects\world\base\Id.hpp	/^        widx cls; \/\/    클래스의 종류$/;"	m	union:wrd::Id
+cls	.\projects\world\base\Id.hpp	/^		    widx cls:21;$/;"	m	struct:wrd::Id::SeperatedId
 column	.\projects\preferencer\parser\generated\CharStream.h	/^  int                column;$/;"	m	class:wrd::CharStream
 commit	.\build\builder.py	/^def commit():$/;"	f
 con1	.\docs\protos\worldfrw\passer component.cpp	/^	TRefer<const A> con1 = ref;$/;"	v
@@ -1371,13 +1433,12 @@ cur_	.\projects\preferencer\parser\generated\CharStream.cc	/^  size_t cur_;$/;"	
 currentToken	.\projects\preferencer\parser\generated\ParseException.cc	/^  Token currentToken;$/;"	m	namespace:wrd	file:
 currentToken	.\projects\preferencer\parser\generated\ParseException.h	/^  Token currentToken;$/;"	m	class:wrd::ParseException
 cwd	.\build\builder.py	/^cwd = ""$/;"	v
+dbg	.\projects\world\pretypes\Res.cpp	/^	Res& THIS::dbg(...) { return wasgood; };$/;"	f	class:wrd::THIS
 debugStream	.\projects\preferencer\parser\generated\PRParserTokenManager.h	/^  FILE *debugStream;$/;"	m	class:wrd::PRParserTokenManager
 deepclone	.\docs\protos\worldfrw\container component.cpp	/^	virtual TStrong<Container> deepclone() const {$/;"	f
 defaultLexState	.\projects\preferencer\parser\generated\PRParserTokenManager.cc	/^const int defaultLexState = 0;$/;"	m	namespace:wrd	file:
 deleteStream	.\projects\preferencer\parser\generated\CharStream.h	/^  bool               deleteStream;$/;"	m	class:wrd::CharStream
 disable_tracing	.\projects\preferencer\parser\generated\PRParser.cc	/^  void PRParser::disable_tracing()  {$/;"	f	class:wrd::PRParser
-down	.\projects\world\base\Thing.cpp	/^	template <typename T> T& THIS::down() { return (T&) _down(T::getClassStatic()); }$/;"	f	class:wrd::THIS
-down	.\projects\world\base\Thing.cpp	/^	template <typename T> const T& THIS::down() const { return (T&) _down(T::getClassStatic()); }$/;"	f	class:wrd::THIS
 dump	.\projects\logger\Logger.cpp	/^		wbool THIS::dump(const char* message)$/;"	f	class:wrd::log::THIS
 dump	.\projects\logger\streams\ConsoleStream.cpp	/^		wbool THIS::dump(const char* message)$/;"	f	class:wrd::log::THIS
 dump	.\projects\logger\streams\FileLogStream.cpp	/^		wbool THIS::dump(const char* message)$/;"	f	class:wrd::log::THIS
@@ -1393,6 +1454,7 @@ enq	.\docs\protos\worldfrw\container component.cpp	/^	Result& enq(Ts... args) {$
 eol	.\projects\preferencer\parser\generated\ParseException.cc	129;"	d	file:
 eol	.\projects\preferencer\parser\generated\ParseException.h	84;"	d
 eq	.\build\builder.py	/^from operator import eq$/;"	i
+err	.\projects\world\pretypes\Res.cpp	/^	Res& THIS::err(...) { return wasgood; }$/;"	f	class:wrd::THIS
 errorCode	.\projects\preferencer\parser\generated\TokenMgrError.h	/^  int errorCode;$/;"	m	class:wrd::TokenMgrError
 errorHandler	.\projects\preferencer\parser\generated\PRParser.h	/^  ErrorHandler *errorHandler = nullptr;$/;"	m	class:wrd::PRParser
 errorHandler	.\projects\preferencer\parser\generated\PRParserTokenManager.h	/^  TokenManagerErrorHandler* errorHandler = nullptr;$/;"	m	class:wrd::PRParserTokenManager
@@ -1450,22 +1512,31 @@ get	.\docs\protos\worldfrw\passer component.cpp	/^	Node& get() {$/;"	f	class:Ref
 get	.\docs\protos\worldfrw\passer component.cpp	/^	const Node& get() const {$/;"	f	class:Refer	file:
 get	.\projects\independentor\helpers\BuildFeatures.cpp	/^		THIS::BuildType THIS::Building::get()$/;"	f	class:wrd::indep::THIS::Building
 get	.\projects\independentor\helpers\BuildFeatures.cpp	/^		THIS::PlatformType THIS::Platform::get()$/;"	f	class:wrd::indep::THIS::Platform
-get	.\projects\world\base\TGettable.hpp	/^	TEMPL T& THIS::get() { return _get().template down<T>(); }$/;"	f	class:wrd::THIS
-get	.\projects\world\base\TGettable.hpp	/^	TEMPL const T& THIS::get() const$/;"	f	class:wrd::THIS
 get	.\projects\world\commons\_TGet.hpp	/^		static T& get() { return **store(); }$/;"	f	class:wrd::_TGet
 get	.\projects\world\commons\_TGet.hpp	/^	   static T* get() { return *store(); }$/;"	f	class:wrd::_TGet
-get	.\projects\world\world.hpp	/^        static This& get() {$/;"	f	class:wrd::World
+get	.\projects\world\memory\Bindable.cpp	/^	Instance& THIS::get() { return _get(); }$/;"	f	class:wrd::THIS
+get	.\projects\world\memory\Bindable.cpp	/^	const Instance& THIS::get() const$/;"	f	class:wrd::THIS
+get	.\projects\world\memory\Bindable.hpp	/^		template <typename T> T& get() {$/;"	f	class:wrd::Bindable
+get	.\projects\world\memory\Bindable.hpp	/^		template <typename T> const T& get() const {$/;"	f	class:wrd::Bindable
+get	.\projects\world\memory\Instancer.cpp	/^	const Block& THIS::get(Id id) const$/;"	f	class:wrd::THIS
+get	.\projects\world\memory\Instancer.hpp	/^		template <typename T> const T& get(Id id) { return get(id).down<const T>(); }$/;"	f	class:wrd::Instancer
+get	.\projects\world\memory\TWeak.hpp	/^	TEMPL T& THIS::get()$/;"	f	class:wrd::THIS
+get	.\projects\world\memory\TWeak.hpp	/^	TEMPL const T& THIS::get() const$/;"	f	class:wrd::THIS
 getArgs	.\docs\protos\worldfrw\backbone component.cpp	/^	Manipulatable& getArgs() {$/;"	f	class:Msg	file:
 getArgs	.\docs\protos\worldfrw\backbone component.cpp	/^	const Manipulatable& getArgs() const {$/;"	f	class:Msg	file:
 getBaseDirectory	.\projects\file-manipulator\file-structures\File.cpp	/^		const string& THIS::getBaseDirectory() const$/;"	f	class:wrd::fm::THIS
 getBeginColumn	.\projects\preferencer\parser\generated\CharStream.h	/^  virtual int getBeginColumn()   { return getBufcolumn(tokenBegin); }$/;"	f	class:wrd::CharStream
 getBeginLine	.\projects\preferencer\parser\generated\CharStream.h	/^  virtual int getBeginLine()     { return getBufline(tokenBegin); }$/;"	f	class:wrd::CharStream
+getBindable	.\projects\world\memory\Block.cpp	/^	const Class& THIS::getBindable() const$/;"	f	class:wrd::THIS
+getBindable	.\projects\world\memory\TWeak.hpp	/^	TEMPL const Class& THIS::getBindable() const { return T::getClassStatic(); }$/;"	f	class:wrd::THIS
 getBlock	.\docs\protos\worldfrw\backbone component.cpp	/^	const InstanceBlock& getBlock() const {$/;"	f	class:Instance	file:
+getBlock	.\projects\world\base\Instance.cpp	/^	const Block& THIS::getBlock() const { return _getBlock(_id); }$/;"	f	class:wrd::THIS
 getBufcolumn	.\projects\preferencer\parser\generated\CharStream.h	/^  int getBufcolumn(int pos) {$/;"	f	class:wrd::CharStream
 getBufline	.\projects\preferencer\parser\generated\CharStream.h	/^  int getBufline(int pos) {$/;"	f	class:wrd::CharStream
 getClass	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual const Class& getClass() const {$/;"	f	class:Class	file:
 getClass	.\docs\protos\worldfrw\passer component.cpp	/^	virtual const Class& getClass() const { return _class; }$/;"	f	class:MgdObject	file:
 getClass	.\projects\preferencer\Preferencer.cpp	/^		const ClassType& THIS::getClass(const std::string& key) const$/;"	f	class:wrd::pref::THIS
+getClass	.\projects\world\meta\Class.cpp	/^	const Class& THIS::getClass() const { return *this; }$/;"	f	class:wrd::THIS
 getClass	.\projects\world\meta\TClass.hpp	/^	TEMPL const Class& THIS::getClass() const { return *this; }$/;"	f	class:wrd::THIS
 getClasses	.\docs\protos\worldfrw\metaclass component.cpp	/^	const Classes& getClasses() { \/\/ visible$/;"	f	class:Classer	file:
 getCol	.\docs\protos\worldfrw\interpreting component.cpp	/^		wint getCol() const { return _col; }$/;"	f	class:Origin::Pos	file:
@@ -1483,14 +1554,19 @@ getGlobals	.\docs\protos\worldfrw\execution component.cpp	/^		Array& getGlobals(
 getHead	.\docs\protos\worldfrw\container component.cpp	/^	Node& getHead() { return get(0); }$/;"	f	class:Manipulatable	file:
 getHead	.\docs\protos\worldfrw\container component.cpp	/^	const Node& getHead() const { return get(0); }$/;"	f	class:Manipulatable	file:
 getID	.\docs\protos\worldfrw\backbone component.cpp	/^	ID getID() const { return _id; }$/;"	f	class:Instance	file:
+getId	.\projects\world\base\Instance.cpp	/^	Id THIS::getId() const { return _id; }$/;"	f	class:wrd::THIS
 getInstance	.\projects\logger\Logger.cpp	/^		THIS& THIS::getInstance()$/;"	f	class:wrd::log::THIS
+getInstancer	.\projects\world\world.cpp	/^	Instancer& THIS::getInstancer() { return _instancer; }$/;"	f	class:wrd::THIS
+getInstancer	.\projects\world\world.cpp	/^	const Instancer& THIS::getInstancer() const { return _instancer; }$/;"	f	class:wrd::THIS
 getIterator	.\docs\protos\worldfrw\container component.cpp	/^	CIterator getIterator(widx n) const { return _getIterator(n); }$/;"	f	class:Manipulatable	file:
 getIterator	.\docs\protos\worldfrw\container component.cpp	/^	Iterator getIterator(widx n) { return _getIterator(n); }$/;"	f	class:Manipulatable	file:
 getIterator	.\docs\protos\worldfrw\container component.cpp	/^	virtual CIterator getIterator(widx n) const {$/;"	f
 getIterator	.\docs\protos\worldfrw\container component.cpp	/^	virtual Iterator getIterator(widx n) {$/;"	f
+getItsId	.\projects\world\memory\Bind.cpp	/^	Id THIS::getItsId() const { return _its_id; }$/;"	f	class:wrd::THIS
 getKey	.\projects\preferencer\objtree\Type.cpp	/^		const std::string& THIS::getKey() const { return _key; }$/;"	f	class:wrd::pref::THIS
 getKind	.\projects\preferencer\parser\PRParserHandler.cpp	/^    const char* THIS::getKind(wint kind) $/;"	f	class:wrd::THIS
 getLeafs	.\docs\protos\worldfrw\metaclass component.cpp	/^	const Classes& getLeafs() const {$/;"	f	class:Class	file:
+getLeafs	.\projects\world\meta\Class.cpp	/^    const Classes& THIS::getLeafs() const$/;"	f	class:wrd::THIS
 getLength	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		wcnt getLength() const { return _length; }$/;"	f	class:wrd::Container	file:
 getLength	.\docs\protos\worldfrw\container component.cpp	/^	virtual wcnt getLength() const { return _size; }$/;"	f
 getLine	.\projects\preferencer\parser\generated\CharStream.h	/^  virtual int getLine()          { return getBufline(bufpos); }$/;"	f	class:wrd::CharStream
@@ -1504,6 +1580,7 @@ getMembers	.\docs\protos\worldfrw\execution component.cpp	/^	virtual const Conta
 getMembers	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual const Container& getMembers() const { return getStaticMembers(); }$/;"	f	class:TClass	file:
 getMessage	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		const String& getMessage() const {$/;"	f	class:wrd::Result	file:
 getMessage	.\projects\preferencer\parser\generated\TokenMgrError.cc	/^  JJString TokenMgrError::getMessage() {$/;"	f	class:wrd::TokenMgrError
+getMgr	.\projects\world\base\Instance.cpp	/^		Instancer& getMgr() { return World::get().getInstancer(); }$/;"	f	namespace:wrd::__anon5
 getMode	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		THIS::Mode THIS::getMode() const { return _mode; }    $/;"	f	class:wrd::fm::THIS
 getName	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		virtual const String& getName() const { return _name; }$/;"	f	class:wrd::Class	file:
 getName	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		virtual const String& getName() const {$/;"	f	class:wrd::Primitive	file:
@@ -1519,6 +1596,12 @@ getNameStatic	.\projects\world\meta\TClass.hpp	/^    TEMPL const Str& THIS::getN
 getNestedMethods	.\docs\protos\worldfrw\passer component.cpp	/^	const Methods& getNestedMethods() { return _nested_methods; }$/;"	f	class:MgdMethod	file:
 getNextToken	.\projects\preferencer\parser\generated\PRParser.cc	/^Token * PRParser::getNextToken(){$/;"	f	class:wrd::PRParser
 getNextToken	.\projects\preferencer\parser\generated\PRParserTokenManager.cc	/^Token * PRParserTokenManager::getNextToken(){$/;"	f	class:wrd::PRParserTokenManager
+getNode	.\projects\world\base\Node.cpp	/^	Node& THIS::getNode(const Str& name) { \/*TODO: return _get(false, [&name](Node& e) { return e.getName() == name; });*\/ return nulr<Node>(); }$/;"	f	class:wrd::THIS
+getNode	.\projects\world\base\Node.cpp	/^	Node& THIS::getNode(widx n) { return _getNodes()[n]; }$/;"	f	class:wrd::THIS
+getNode	.\projects\world\base\Node.cpp	/^	const Node& THIS::getNode(const Str& name) const$/;"	f	class:wrd::THIS
+getNode	.\projects\world\base\Node.cpp	/^	const Node& THIS::getNode(widx n) const { return getNodes()[n]; }$/;"	f	class:wrd::THIS
+getNodes	.\projects\world\base\Composit.cpp	/^    const Container& THIS::getNodes() const$/;"	f	class:wrd::THIS
+getNodes	.\projects\world\memory\Bind.cpp	/^	const Container& THIS::getNodes() const$/;"	f	class:wrd::THIS
 getOption	.\projects\file-manipulator\file-structures\Folder.cpp	/^		const THIS::Option& THIS::getOption() const { return _option; }$/;"	f	class:wrd::fm::THIS
 getOrigin	.\docs\protos\worldfrw\backbone component.cpp	/^	virtual const Origin& getOrigin() const {$/;"	f	class:Node	file:
 getOrigin	.\docs\protos\worldfrw\container component.cpp	/^		const T& getOrigin() const { return static_csat<T&>(Super::getOrigin()); }$/;"	f	class:Container	file:
@@ -1528,6 +1611,8 @@ getOrigin	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual const Origin
 getOrigin	.\docs\protos\worldfrw\passer component.cpp	/^	virtual const Origin& getOrigin() const { return getClass().getOrigin(); }$/;"	f	class:Object	file:
 getOrigin	.\docs\protos\worldfrw\passer component.cpp	/^	virtual const Origin& getOrigin() const {$/;"	f	class:Refer	file:
 getOrigin	.\docs\protos\worldfrw\passer component.cpp	/^	virtual const Origin& getOrigin() { return *_origin; }$/;"	f	class:MgdMethod	file:
+getOrigin	.\projects\world\memory\Bind.cpp	/^	const Origin& THIS::getOrigin() const$/;"	f	class:wrd::THIS
+getOrigin	.\projects\world\msg-usr\Object.cpp	/^	const Origin& THIS::getOrigin() const$/;"	f	class:wrd::THIS
 getOwner	.\docs\protos\worldfrw\interpreting component.cpp	/^	Origin& getOwner() { return _owner; }$/;"	f	class:Origin	file:
 getOwner	.\docs\protos\worldfrw\interpreting component.cpp	/^	const Origin& getOwner() const { return _owner; }$/;"	f	class:Origin	file:
 getParams	.\docs\protos\worldfrw\passer component.cpp	/^	virtual const Classes& getParams() const { $/;"	f	class:Method	file:
@@ -1538,6 +1623,9 @@ getProximity	.\docs\protos\worldfrw\visitation component.cpp	/^    virtual Proxi
 getRow	.\docs\protos\worldfrw\interpreting component.cpp	/^		wint getRow() const { return _row; }$/;"	f	class:Origin::Pos	file:
 getSaveStream	.\docs\protos\worldfrw\visitation component.cpp	/^    BinaryFileStream& getSaveStream() { return _saver; }$/;"	f	class:Saver	file:
 getSerial	.\docs\protos\worldfrw\backbone component.cpp	/^	wcnt getSerial() const { $/;"	f	class:Instance	file:
+getSerial	.\projects\world\memory\Block.cpp	/^	wbool THIS::getSerial() { return _pt ? _pt->sep.serial : WRD_INDEX_ERROR; }$/;"	f	class:wrd::THIS
+getShared	.\projects\world\msg-usr\Object.cpp	/^	Container& THIS::getShared() {	\/* TODO: return *\/ return nulr<Container>(); }$/;"	f	class:wrd::THIS
+getShared	.\projects\world\msg-usr\Object.cpp	/^	const Container& THIS::getShared() const { \/* TODO: *\/ return nulr<const Container>(); }$/;"	f	class:wrd::THIS
 getSharedHead	.\docs\protos\worldfrw\passer component.cpp	/^	CIterator getSharedHead() const {$/;"	f	class:Object	file:
 getSharedHead	.\docs\protos\worldfrw\passer component.cpp	/^	Iterator getSharedHead() {$/;"	f	class:Object	file:
 getShares	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		const Members& getShares() const { return _shares; }$/;"	f	class:wrd::Class	file:
@@ -1554,6 +1642,7 @@ getStream	.\projects\logger\Logger.cpp	/^		const Stream& THIS::getStream(widx n)
 getStreamCount	.\projects\logger\Logger.cpp	/^		wcnt THIS::getStreamCount() const { return _streams.size(); }$/;"	f	class:wrd::log::THIS
 getSubs	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual const Classes& getSubs() const {$/;"	f	class:TClass	file:
 getSuper	.\docs\protos\worldfrw\metaclass component.cpp	/^	const Class& getSuper() const {$/;"	f	class:Class	file:
+getSuper	.\projects\world\base\Thing.cpp	/^	const Class& THIS::getSuper() const { return getClass().getSuper(); }$/;"	f	class:wrd::THIS
 getSupers	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual const Classes& getSupers() const {$/;"	f	class:TClass	file:
 getTabSize	.\projects\preferencer\parser\generated\CharStream.h	/^   int  getTabSize(int i) { return tabSize; }$/;"	f	class:wrd::CharStream
 getTail	.\docs\protos\worldfrw\container component.cpp	/^	Node& getTail() { return get(getLength()-1); }$/;"	f	class:Manipulatable	file:
@@ -1574,6 +1663,9 @@ getVariables	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual const Arr
 getVariables	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual const Array& getVariables() const {$/;"	f	class:ObjectedClass	file:
 getVariablesHead	.\docs\protos\worldfrw\passer component.cpp	/^	Iterator getVariablesHead() const {$/;"	f	class:Object	file:
 getVariablesHead	.\docs\protos\worldfrw\passer component.cpp	/^	Iterator getVariablesHead() {$/;"	f	class:Object	file:
+getVars	.\projects\world\meta\Class.cpp	/^	const Array& THIS::getVars() const$/;"	f	class:wrd::THIS
+getVars	.\projects\world\msg-usr\Object.cpp	/^	Container& THIS::getVars() {	\/* TODO: return *\/ return nulr<Container>(); }$/;"	f	class:wrd::THIS
+getVars	.\projects\world\msg-usr\Object.cpp	/^	const Container& THIS::getVars() const { \/* TODO: *\/ return nulr<const Container>(); }$/;"	f	class:wrd::THIS
 getVisitation	.\docs\protos\worldfrw\visitation component.cpp	/^    const Visitation& getVisitation(const Class& cls) const {$/;"	f	class:Visitor	file:
 getVisitationBase	.\docs\protos\worldfrw\visitation component.cpp	/^	virtual const Class& getVisitationBase() const {$/;"	f	class:TVisitor	file:
 getVisitationBase	.\docs\protos\worldfrw\visitation component.cpp	/^    virtual const Class& getVisitationBase() const {$/;"	f	class:Saver	file:
@@ -1588,9 +1680,11 @@ hasError	.\projects\preferencer\parser\generated\PRParser.h	/^  bool          ha
 head	.\projects\preferencer\parser\generated\PRParser.h	/^  Token *head; $/;"	m	class:wrd::PRParser
 help	.\build\builder.py	/^def help():$/;"	f
 hexChar	.\projects\preferencer\parser\generated\TokenMgrError.cc	/^char hexChar(int i) {$/;"	f	namespace:wrd
-idx	.\projects\world\base\Id.hpp	/^        widx idx; \/\/    해당 클래스 인스턴스 벡터의 몇번째인가.type과 index를 조합하면 어디서든 객체에 접근할 수 있다.$/;"	m	union:wrd::Id
+idx	.\projects\world\base\Id.hpp	/^		    widx idx:21;$/;"	m	struct:wrd::Id::SeperatedId
 image	.\projects\preferencer\parser\generated\PRParserTokenManager.h	/^  JJString                  image;$/;"	m	class:wrd::PRParserTokenManager
 image	.\projects\preferencer\parser\generated\Token.h	/^  JJString image;$/;"	m	class:wrd::Token
+implicit	.\projects\world\base\Node.cpp	/^	CStrong THIS::implicit(const Class& cls) const$/;"	f	class:wrd::THIS
+implicit	.\projects\world\base\Node.cpp	/^	Strong THIS::implicit(const Class& cls)$/;"	f	class:wrd::THIS
 inBuf	.\projects\preferencer\parser\generated\CharStream.h	/^  int                inBuf;$/;"	m	class:wrd::CharStream
 indent	.\projects\preferencer\parser\generated\PRParser.h	/^  int  indent;	\/\/ trace indentation$/;"	m	class:wrd::PRParser
 indep	.\projects\independentor\helpers\BuildFeatures.cpp	/^	namespace indep$/;"	n	namespace:wrd	file:
@@ -1598,6 +1692,7 @@ indep	.\projects\independentor\helpers\BuildFeatures.hpp	/^	namespace indep$/;"	
 indep	.\projects\independentor\helpers\PlatformAPI.cpp	/^	namespace indep$/;"	n	namespace:wrd	file:
 indep	.\projects\independentor\helpers\PlatformAPI.hpp	/^	namespace indep$/;"	n	namespace:wrd
 index	.\docs\protos\worldfrw\backbone component.cpp	/^		widx index;$/;"	m	union:Instance::ID	file:
+info	.\projects\world\pretypes\Res.cpp	/^	Res& THIS::info(...) { return wasgood; };$/;"	f	class:wrd::THIS
 info_arch	.\build\CMakeFiles\3.10.2\CompilerIdCXX\CMakeCXXCompilerId.cpp	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v
 info_arch	.\build\CMakeFiles\3.10.2\CompilerIdC\CMakeCCompilerId.c	/^char const* info_arch = "INFO" ":" "arch[" ARCHITECTURE_ID "]";$/;"	v
 info_compiler	.\build\CMakeFiles\3.10.2\CompilerIdCXX\CMakeCXXCompilerId.cpp	/^char const* info_compiler = "INFO" ":" "compiler[" COMPILER_ID "]";$/;"	v
@@ -1624,6 +1719,9 @@ init	.\projects\file-manipulator\file-structures\Folder.cpp	/^		wbool THIS::init
 init	.\projects\logger\Logger.cpp	/^		wbool THIS::init()$/;"	f	class:wrd::log::THIS
 init	.\projects\logger\streams\FileLogStream.cpp	/^		wbool THIS::init()$/;"	f	class:wrd::log::THIS
 init	.\projects\logger\streams\Stream.cpp	/^		wbool THIS::init()$/;"	f	class:wrd::log::THIS
+init	.\projects\world\base\Composit.cpp	/^	Res& THIS::init()$/;"	f	class:wrd::THIS
+init	.\projects\world\base\State.cpp	/^	Res& THIS::init()$/;"	f	class:wrd::THIS
+init	.\projects\world\meta\Class.cpp	/^    Res& THIS::init()$/;"	f	class:wrd::THIS
 initialise	.\projects\preferencer\parser\generated\ParseException.cc	/^  JJString ParseException::initialise(Token currentToken,$/;"	f	class:wrd::ParseException
 initialize	.\docs\protos\worldfrw\execution component.cpp	/^	virtual Result& initialize() {$/;"	f	class:Scope::Spaces	file:
 initialize	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual Result& initialize() {$/;"	f	class:Class	file:
@@ -1643,12 +1741,13 @@ instantiate	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual TStrong<In
 instatiate	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual TStrong<Instance> instatiate() const {$/;"	f	class:MgdClass	file:
 int1	.\docs\protos\WorldLangSyntax.cpp	/^            Integer int1, int2(1) \/\/ int1과 int2, bytes1 모두 레퍼런스다. 그러나 레퍼런스 어떤 객체(immutable인가, 아닌가)에 대한 레퍼런스인가에 따라 동작이 달라진다.$/;"	v
 int_expr	.\projects\preferencer\parser\generated\PRParser.cc	/^Token     * PRParser::int_expr() {Token* expr;$/;"	f	class:wrd::PRParser
-is	.\projects\world\meta\helpers.hpp	/^            is = sizeof(_foo((T*) 0)) == sizeof(yes)$/;"	e	enum:wrd::TIfSub::__anon5
+is	.\projects\world\meta\helpers.hpp	/^            is = sizeof(_foo((T*) 0)) == sizeof(yes)$/;"	e	enum:wrd::TIfSub::__anon6
 is	.\projects\world\meta\helpers.hpp	/^        static const bool is = sizeof(_foo( (T) 0 )) == sizeof(yes);$/;"	m	class:wrd::TIfStaticMethod
 is	.\projects\world\meta\helpers.hpp	/^        static const wbool is = sizeof(TIfADT<T>::template _foo<T>(0)) == sizeof(yes);$/;"	m	class:wrd::TIfADT
 is	.\projects\world\meta\helpers.hpp	/^        static const wbool is = sizeof(_foo((T*)0)) == sizeof(yes);$/;"	m	class:wrd::TIfTemplate
 isADT	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual wbool isADT() const { return TADTChecker<T>::IS; }$/;"	f	class:TClass	file:
-isBind	.\projects\world\bind\TWeak.hpp	/^    TEMPL wbool THIS::isBind() const$/;"	f	class:wrd::THIS
+isBind	.\projects\world\memory\Bind.cpp	/^	wbool THIS::isBind() const { return _getBlock(_its_id).isExist(); }$/;"	f	class:wrd::THIS
+isBind	.\projects\world\memory\Block.cpp	/^	wbool THIS::isBind() const { return _pt; }$/;"	f	class:wrd::THIS
 isBinded	.\docs\protos\worldfrw\binder component.cpp	/^	wbool isBinded() const {$/;"	f	class:TWeak	file:
 isConst	.\docs\protos\worldfrw\backbone component.cpp	/^	virtual wbool isConst() const { return false; }$/;"	f	class:Node	file:
 isConst	.\docs\protos\worldfrw\bridge component.cpp	/^	virtual bool isConst() const { return _checker.isConst(); }$/;"	f
@@ -1656,21 +1755,28 @@ isConst	.\docs\protos\worldfrw\bridge component.cpp	/^	virtual bool isConst() co
 isConst	.\docs\protos\worldfrw\bridge component.cpp	/^    bool isConst() const { return getTypeValue() & CONST_MEMBER_FUNCTION; }$/;"	f	class:FuncChecker
 isConst	.\docs\protos\worldfrw\passer component.cpp	/^	virtual wbool isConst() const { return _is_const; }$/;"	f	class:Refer	file:
 isConst	.\docs\protos\worldfrw\passer component.cpp	/^	virtual wbool isConst() const {$/;"	f	class:MgdMethod	file:
+isConst	.\projects\world\base\Node.cpp	/^	wbool THIS::isConst() const { return false; }$/;"	f	class:wrd::THIS
+isConst	.\projects\world\memory\TWeak.hpp	/^	TEMPL wbool THIS::isConst() const { return false; }$/;"	f	class:wrd::THIS
 isConsumable	.\docs\protos\worldfrw\backbone component.cpp	/^	virtual wbool isConsumable(const Msg& msg) const {$/;"	f	class:Node	file:
 isConsumable	.\docs\protos\worldfrw\passer component.cpp	/^	virtual wbool isConsumable(const Msg& msg) const {$/;"	f	class:Method	file:
 isConsumable	.\docs\protos\worldfrw\passer component.cpp	/^	virtual wbool isConsumable(const Msg& msg) const {$/;"	f	class:Object	file:
 isEnable	.\projects\logger\streams\Stream.cpp	/^		wbool THIS::isEnable() const { return _is_enable; }$/;"	f	class:wrd::log::THIS
 isEndOfFile	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		wbool THIS::isEndOfFile() const$/;"	f	class:wrd::fm::THIS
+isErr	.\projects\world\pretypes\Res.cpp	/^	wbool THIS::isErr() const { return false; }$/;"	f	class:wrd::THIS
 isExist	.\docs\protos\worldfrw\bridge component.cpp	/^    bool isExist() const { return getTypeValue(); }$/;"	f	class:FuncChecker
 isExist	.\projects\world\base\Thing.cpp	/^	wbool THIS::isExist() const { return this; }$/;"	f	class:wrd::THIS
 isFolder	.\projects\file-manipulator\file-structures\File.cpp	/^		wbool THIS::isFolder() const { return _isFolder(_getInfo(getPath())); }$/;"	f	class:wrd::fm::THIS
 isHeap	.\docs\protos\worldfrw\backbone component.cpp	/^	wbool isHeap() const {$/;"	f	class:Instance	file:
+isHeap	.\projects\world\base\Instance.cpp	/^	wbool THIS::isHeap() const$/;"	f	class:wrd::THIS
+isHeap	.\projects\world\memory\Block.cpp	/^	wbool THIS::isHeap() const { \/*TODO: *\/ return false; }$/;"	f	class:wrd::THIS
+isInfo	.\projects\world\pretypes\Res.cpp	/^	wbool THIS::isInfo() const { return false; };$/;"	f	class:wrd::THIS
 isInit	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual wbool isInit() const { return _is_initialized; }$/;"	f	class:TClass	file:
 isInit	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		wbool THIS::isInit() const { return _fd; }$/;"	f	class:wrd::fm::THIS
 isInit	.\projects\file-manipulator\file-structures\File.cpp	/^		wbool THIS::isInit() const { return true; }$/;"	f	class:wrd::fm::THIS
 isInit	.\projects\file-manipulator\file-structures\Folder.cpp	/^		wbool THIS::isInit() const { return _iterator; }$/;"	f	class:wrd::fm::THIS
 isInit	.\projects\logger\Logger.cpp	/^		wbool THIS::isInit() const$/;"	f	class:wrd::log::THIS
 isInit	.\projects\logger\streams\Stream.cpp	/^		wbool THIS::isInit() const { return _is_enable; }$/;"	f	class:wrd::log::THIS
+isInit	.\projects\world\base\State.cpp	/^	wbool THIS::isInit() { return _is_init; }$/;"	f	class:wrd::THIS
 isMember	.\docs\protos\worldfrw\bridge component.cpp	/^    bool isMember() const { return getTypeValue() & MEMBER_FUNCTION; }$/;"	f	class:FuncChecker
 isNonMember	.\docs\protos\worldfrw\bridge component.cpp	/^	bool isNonMember() const { return getTypeValue() & NON_MEMBER_FUNCTION; }$/;"	f	class:FuncChecker
 isNull	.\projects\file-manipulator\file-structures\PathedObject.cpp	/^		wbool THIS::isNull() const { return ! this; }$/;"	f	class:wrd::fm::THIS
@@ -1679,12 +1785,14 @@ isNull	.\projects\preferencer\objtree\Object.cpp	/^		wbool THIS::isNull() const 
 isNull	.\projects\world\base\Thing.cpp	/^	wbool THIS::isNull() const { return !this; }$/;"	f	class:wrd::THIS
 isOccupiable	.\docs\protos\worldfrw\backbone component.cpp	/^	virtual wbool isOccupiable() const {$/;"	f	class:Node	file:
 isOccupiable	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual wbool isOccupiable() const { return isStaticOccupiable(); }$/;"	f	class:TClass	file:
+isOccupy	.\projects\world\base\Node.cpp	/^	wbool THIS::isOccupy() const { return getClass().isOccupy(); }$/;"	f	class:wrd::THIS
 isReculsive	.\docs\protos\worldfrw\visitation component.cpp	/^	wbool isReculsive() const { return _is_reculsive; }$/;"	f	class:Visitor	file:
 isReculsive	.\projects\file-manipulator\file-structures\Folder.cpp	/^		wbool Folder::Option::isReculsive() const { return _is_reculsive; }$/;"	f	class:wrd::fm::Folder::Option
 isStatic	.\docs\protos\worldfrw\backbone component.cpp	/^	virtual wbool isStatic() const { return false; }$/;"	f	class:Node	file:
 isStatic	.\docs\protos\worldfrw\bridge component.cpp	/^	virtual bool isStatic() const {	return _checker.isNonMember(); }$/;"	f
 isStatic	.\docs\protos\worldfrw\bridge component.cpp	/^	virtual bool isStatic() const { return true; }$/;"	f	class:TNativeCtor	file:
 isStatic	.\docs\protos\worldfrw\passer component.cpp	/^	virtual bool isStatic() const {$/;"	f	class:MgdMethod	file:
+isStatic	.\projects\world\base\Node.cpp	/^	wbool THIS::isStatic() const { return false; }$/;"	f	class:wrd::THIS
 isStaticOccupiable	.\docs\protos\worldfrw\metaclass component.cpp	/^	static wbool isStaticOccupiable() {$/;"	f	class:TClass	file:
 isSub	.\projects\world\base\Thing.cpp	/^	template <typename T> wbool THIS::isSub() const { return T::getStaticClass().isSuper(getClass()); }$/;"	f	class:wrd::THIS
 isSub	.\projects\world\base\Thing.cpp	/^	wbool THIS::isSub(const Class& it) const { return it.isSuper(getClass()); }$/;"	f	class:wrd::THIS
@@ -1693,7 +1801,9 @@ isSuper	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual wbool isSuper(
 isSuper	.\projects\world\base\Thing.cpp	/^	template <typename T> wbool THIS::isSuper() const { return getClass().isSuper(T::getStaticClass()); }$/;"	f	class:wrd::THIS
 isSuper	.\projects\world\base\Thing.cpp	/^	wbool THIS::isSuper(const Class& it) const { return getClass().isSuper(it); }$/;"	f	class:wrd::THIS
 isSuper	.\projects\world\base\Thing.cpp	/^	wbool THIS::isSuper(const Thing& it) const { return getClass().isSuper(it.getClass()); }$/;"	f	class:wrd::THIS
+isSuper	.\projects\world\meta\Class.cpp	/^    wbool THIS::isSuper(const Class& it) const$/;"	f	class:wrd::THIS
 isTemplate	.\docs\protos\worldfrw\metaclass component.cpp	/^	virtual wbool isTemplate() const { return TTemplateChecker<T>::IS; }$/;"	f	class:TClass	file:
+isWarn	.\projects\world\pretypes\Res.cpp	/^	wbool THIS::isWarn() const { return false; }$/;"	f	class:wrd::THIS
 isWindow	.\build\builder.py	/^def isWindow():$/;"	f
 jjAddStates	.\projects\preferencer\parser\generated\PRParserTokenManager.h	48;"	d
 jjCheckNAdd	.\projects\preferencer\parser\generated\PRParserTokenManager.h	40;"	d
@@ -1827,38 +1937,47 @@ null	.\docs\protos\worldfrw\helper component.cpp	/^	static T null() { return T()
 null	.\docs\protos\worldfrw\helper component.cpp	/^	static T& null() { T* null = 0; return *null; }$/;"	f	class:TNuller
 null	.\projects\preferencer\parser\generated\JavaCC.h	42;"	d
 nulr	.\projects\independentor\helpers\Nulr.hpp	/^	T& nulr()$/;"	f	namespace:wrd
-num	.\projects\world\base\Id.hpp	/^        wint64 num;$/;"	m	union:wrd::Id
+num	.\projects\world\base\Id.hpp	/^		wint64 num;$/;"	m	union:wrd::Id
 number	.\docs\protos\worldfrw\backbone component.cpp	/^		wint64 number;$/;"	m	union:Instance::ID	file:
 onAddClass	.\projects\preferencer\Preferencer.cpp	/^		wbool THIS::onAddClass(const std::string& name)$/;"	f	class:wrd::pref::THIS
 onAddMember	.\projects\preferencer\Preferencer.cpp	/^		wbool THIS::onAddMember(const std::string& class_name, const std::string& key, const std::string& value)$/;"	f	class:wrd::pref::THIS
 operator !=	.\docs\protos\worldfrw\binder component.cpp	/^	wbool operator!=(const This& rhs) const {$/;"	f	class:TWeak	file:
 operator !=	.\docs\protos\worldfrw\metaclass component.cpp	/^	wbool operator!=(const This& rhs) const {$/;"	f	class:Class	file:
+operator !=	.\projects\world\base\Node.cpp	/^	wbool THIS::operator!=(const This& rhs) { return ! operator==(rhs); }$/;"	f	class:wrd::THIS
+operator !=	.\projects\world\memory\Bind.cpp	/^	wbool THIS::operator!=(const This& rhs) const { return ! operator==(rhs); }$/;"	f	class:wrd::THIS
+operator !=	.\projects\world\meta\Class.cpp	/^    wbool THIS::operator!=(const This& rhs) const { return &getName() != &rhs.getName(); }$/;"	f	class:wrd::THIS
 operator ()	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		This& operator()() { dump(); return *this; }$/;"	f	class:wrd::Result	file:
 operator *	.\docs\protos\worldfrw\binder component.cpp	/^	T* operator*() { return &get(); }$/;"	f	class:TWeak	file:
 operator *	.\docs\protos\worldfrw\binder component.cpp	/^	const T* operator*() const { return &get(); }$/;"	f	class:TWeak	file:
-operator *	.\projects\world\base\TGettable.hpp	/^    TEMPL T* THIS::operator*() { return &get(); }$/;"	f	class:wrd::THIS
-operator *	.\projects\world\base\TGettable.hpp	/^    TEMPL const T* THIS::operator*() const { return &get(); }$/;"	f	class:wrd::THIS
-operator +=	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		wbool THIS::operator+=(wint delta)$/;"	f	class:wrd::fm::THIS
-operator -=	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		wbool THIS::operator-=(wint delta)$/;"	f	class:wrd::fm::THIS
+operator *	.\projects\world\memory\Bindable.cpp	/^	Instance& THIS::operator*() { return get(); }$/;"	f	class:wrd::THIS
+operator *	.\projects\world\memory\Bindable.cpp	/^	const Instance& THIS::operator*() const { return get(); }$/;"	f	class:wrd::THIS
+operator *	.\projects\world\memory\TWeak.hpp	/^	TEMPL T& THIS::operator*() { return this->get(); }$/;"	f	class:wrd::THIS
+operator *	.\projects\world\memory\TWeak.hpp	/^	TEMPL const T& THIS::operator*() const { return this->get(); }$/;"	f	class:wrd::THIS
+operator +=	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		THIS& THIS::operator+=(wint delta)$/;"	f	class:wrd::fm::THIS
+operator -=	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		THIS& THIS::operator-=(wint delta)$/;"	f	class:wrd::fm::THIS
 operator ->	.\docs\protos\worldfrw\binder component.cpp	/^	T* operator->() { return &get(); }$/;"	f	class:TWeak	file:
 operator ->	.\docs\protos\worldfrw\binder component.cpp	/^	const T* operator->() const { return &get(); }$/;"	f	class:TWeak	file:
-operator ->	.\projects\world\base\TGettable.hpp	/^    TEMPL T* THIS::operator->() { return &get(); }$/;"	f	class:wrd::THIS
-operator ->	.\projects\world\base\TGettable.hpp	/^    TEMPL const T* THIS::operator->() const { return &get(); }$/;"	f	class:wrd::THIS
+operator ->	.\projects\world\memory\Bindable.cpp	/^	Instance* THIS::operator->() { return &get(); }$/;"	f	class:wrd::THIS
+operator ->	.\projects\world\memory\Bindable.cpp	/^	const Instance* THIS::operator->() const { return &get(); }$/;"	f	class:wrd::THIS
+operator ->	.\projects\world\memory\TWeak.hpp	/^	TEMPL T* THIS::operator->() { return &this->get(); }$/;"	f	class:wrd::THIS
+operator ->	.\projects\world\memory\TWeak.hpp	/^	TEMPL const T* THIS::operator->() const { return &this->get(); }$/;"	f	class:wrd::THIS
 operator <<	.\docs\protos\worldfrw\visitation component.cpp	/^	This& operator<<(Thing& it) {$/;"	f	class:Visitor	file:
 operator =	.\docs\protos\worldfrw\binder component.cpp	/^	This& operator=(T& newone) {$/;"	f	class:TWeak	file:
 operator =	.\docs\protos\worldfrw\binder component.cpp	/^	This& operator=(const This& rhs) {$/;"	f	class:TWeak	file:
-operator =	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		wbool THIS::operator=(wint new_position) { return setCursor(new_position); }$/;"	f	class:wrd::fm::THIS
+operator =	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		THIS& THIS::operator=(wint new_position)$/;"	f	class:wrd::fm::THIS
 operator =	.\projects\file-manipulator\file-structures\File.cpp	/^		File& THIS::operator=(const File& rhs) { return *this; }$/;"	f	class:wrd::fm::THIS
 operator =	.\projects\file-manipulator\file-structures\Folder.cpp	/^		Folder& THIS::operator=(const Folder& rhs) { return *this; }$/;"	f	class:wrd::fm::THIS
 operator =	.\projects\file-manipulator\file-structures\PathedObject.cpp	/^		THIS& THIS::operator=(const This& rhs) { return *this; }    $/;"	f	class:wrd::fm::THIS
-operator =	.\projects\world\bind\TBindable.hpp	/^    TEMPL THIS& THIS::operator=(const Instance& new1)$/;"	f	class:wrd::THIS
-operator =	.\projects\world\bind\TBindable.hpp	/^    TEMPL THIS& THIS::operator=(const Instance* new1)$/;"	f	class:wrd::THIS
-operator =	.\projects\world\msg-usr\Refer.hpp	/^		template <typename V> This& operator=(TBindable<V>& rhs) {$/;"	f	class:wrd::Refer
-operator =	.\projects\world\msg-usr\Refer.hpp	/^		template <typename V> This& operator=(const TBindable<V>& rhs) {$/;"	f	class:wrd::Refer
-operator =	.\projects\world\msg-usr\TRefer.hpp	/^		template <typename V> This& operator=(TBindable<V>& rhs) {$/;"	f	class:wrd::TRefer
-operator =	.\projects\world\msg-usr\TRefer.hpp	/^		template <typename V> This& operator=(const TBindable<V>& rhs) {$/;"	f	class:wrd::TRefer
+operator =	.\projects\world\memory\Bind.cpp	/^	THIS& THIS::operator=(const This& rhs)$/;"	f	class:wrd::THIS
+operator =	.\projects\world\memory\TStrong.hpp	/^	TEMPL THIS& THIS::operator=(const TStrong<T>& rhs)$/;"	f	class:wrd::THIS
+operator =	.\projects\world\memory\TStrong.hpp	/^	TEMPL THIS& THIS::operator=(const This& rhs)$/;"	f	class:wrd::THIS
+operator =	.\projects\world\memory\TWeak.hpp	/^	TEMPL THIS& THIS::operator=(const TWeak<T>& rhs)$/;"	f	class:wrd::THIS
+operator =	.\projects\world\memory\TWeak.hpp	/^	TEMPL THIS& THIS::operator=(const This& rhs)$/;"	f	class:wrd::THIS
 operator ==	.\docs\protos\worldfrw\binder component.cpp	/^	wbool operator==(const This& rhs) const { $/;"	f	class:TWeak	file:
 operator ==	.\docs\protos\worldfrw\metaclass component.cpp	/^	wbool operator==(const This& rhs) const {$/;"	f	class:Class	file:
+operator ==	.\projects\world\base\Node.cpp	/^	wbool THIS::operator==(const This& rhs) { \/*TODO:*\/ return false; }$/;"	f	class:wrd::THIS
+operator ==	.\projects\world\memory\Bind.cpp	/^	wbool THIS::operator==(const This& rhs) const { return &get() == &rhs.get(); }$/;"	f	class:wrd::THIS
+operator ==	.\projects\world\meta\Class.cpp	/^    wbool THIS::operator==(const This& rhs) const { return &getName() == &rhs.getName(); }$/;"	f	class:wrd::THIS
 operator []	.\docs\protos\worldfrw\backbone component.cpp	/^	Node& operator[](widx n) { return get(n); }$/;"	f	class:Node	file:
 operator []	.\docs\protos\worldfrw\backbone component.cpp	/^	const Node& operator[](widx n) const { return get(n); }$/;"	f	class:Node	file:
 operator []	.\docs\protos\worldfrw\execution component.cpp	/^	Node& operator[](const String& name) { return get(name); }$/;"	f	class:Scope::Spaces	file:
@@ -1870,9 +1989,12 @@ operator []	.\projects\logger\Logger.cpp	/^		const Stream& THIS::operator[](cons
 operator []	.\projects\logger\Logger.cpp	/^		const Stream& THIS::operator[](widx n) const { return getStream(n); }$/;"	f	class:wrd::log::THIS
 operator []	.\projects\preferencer\Preferencer.cpp	/^		const ClassType& THIS::operator[](const std::string& key) const { return getClass(key); }$/;"	f	class:wrd::pref::THIS
 operator []	.\projects\preferencer\objtree\ClassType.cpp	/^		const MemberType& THIS::operator[](const std::string& key) const { return getMember(key); }$/;"	f	class:wrd::pref::THIS
+operator []	.\projects\world\base\Node.cpp	/^	Node& THIS::operator[](widx n) { return getNode(n); }$/;"	f	class:wrd::THIS
+operator []	.\projects\world\base\Node.cpp	/^	const Node& THIS::operator[](widx n) const { return getNode(n); }$/;"	f	class:wrd::THIS
+operator []	.\projects\world\memory\Instancer.cpp	/^	const Block& THIS::operator[](Id id) const { return get(id); }$/;"	f	class:wrd::THIS
 operator wbool	.\docs\protos\worldfrw\binder component.cpp	/^	operator wbool() const { return isBinded(); }$/;"	f	class:TWeak	file:
-operator wbool	.\projects\world\bind\TBindable.hpp	/^    TEMPL THIS::operator wbool() const { return isBind(); }$/;"	f	class:wrd::THIS
-operator wbool	.\projects\world\pretypes\Res.hpp	/^		operator wbool() { return isErr(); }$/;"	f	class:wrd::Res
+operator wbool	.\projects\world\memory\Bindable.cpp	/^	THIS::operator wbool() const { return isBind(); }$/;"	f	class:wrd::THIS
+operator wbool	.\projects\world\pretypes\Res.cpp	/^	THIS::operator wbool() const { return isErr(); }$/;"	f	class:wrd::THIS
 os	.\build\builder.py	/^import os$/;"	i
 os	.\build\take_files_out.py	/^import os$/;"	i
 out1	.\docs\protos\worldfrw\passer component.cpp	/^	A& out1 = con3.get(); \/\/ err. con3.get() returns type of const A&$/;"	v
@@ -1931,7 +2053,9 @@ release	.\projects\preferencer\Preferencer.cpp	/^		wbool THIS::release()$/;"	f	c
 release	.\projects\preferencer\objtree\ClassType.cpp	/^		wbool THIS::release()$/;"	f	class:wrd::pref::THIS
 release	.\projects\preferencer\objtree\MemberType.cpp	/^		wbool THIS::release()$/;"	f	class:wrd::pref::THIS
 release	.\projects\preferencer\objtree\Type.cpp	/^		wbool THIS::release()$/;"	f	class:wrd::pref::THIS
-release	.\projects\world\bind\TWeak.hpp	/^    TEMPL Res& THIS::release()$/;"	f	class:wrd::THIS
+release	.\projects\world\base\Composit.cpp	/^	Res& THIS::release()$/;"	f	class:wrd::THIS
+release	.\projects\world\base\State.cpp	/^	Res& THIS::release()$/;"	f	class:wrd::THIS
+release	.\projects\world\compiler\Origin.cpp	/^	Res& THIS::release()$/;"	f	class:wrd::THIS
 remove	.\docs\protos\worldfrw\container component.cpp	/^	Result& remove(const Iterator& pos, Ts... args) {$/;"	f	class:Containable	file:
 remove	.\docs\protos\worldfrw\container component.cpp	/^	Result& remove(widx n, Ts... args) {$/;"	f	class:Containable	file:
 remove	.\projects\file-manipulator\file-structures\File.cpp	/^		wbool THIS::remove()$/;"	f	class:wrd::fm::THIS
@@ -1940,6 +2064,8 @@ returns	.\docs\protos\worldfrw\pretype component.cpp	/^	T returns(T value) {$/;"
 run	.\build\builder.py	/^def run(arg):$/;"	f
 run	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Refer run(Msg& msg) const {$/;"	f	class:Closure	file:
 run	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Refer run(Msg& msg) const {$/;"	f	class:Method	file:
+sep	.\projects\world\base\Id.hpp	/^		} sep;$/;"	m	union:wrd::Id	typeref:struct:wrd::Id::SeperatedId
+serial	.\projects\world\base\Id.hpp	/^			wcnt serial:21;$/;"	m	struct:wrd::Id::SeperatedId
 set	.\projects\world\commons\_TGet.hpp	/^		static T& set(T& expr) { return *store() = &expr, get(); }$/;"	f	class:wrd::_TGet
 set	.\projects\world\commons\_TGet.hpp	/^	   static T* set(T* trg) { return *store() = trg; }$/;"	f	class:wrd::_TGet
 setCursor	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		wbool THIS::setCursor(wint new_position)$/;"	f	class:wrd::fm::THIS
@@ -1954,6 +2080,7 @@ setPath	.\projects\file-manipulator\file-streams\FileStream.cpp	/^		wbool THIS::
 setPath	.\projects\logger\streams\FileLogStream.cpp	/^		wbool THIS::setPath(const string& new_path) { return _file.setPath(new_path); }$/;"	f	class:wrd::log::THIS
 setPreferencer	.\projects\preferencer\parser\generated\PRParser.h	/^void setPreferencer(pref::Preferencer* preferencer) {$/;"	f	class:wrd::PRParser
 setReculsive	.\docs\protos\worldfrw\visitation component.cpp	/^	Result& setReculsive(wbool newone) { $/;"	f	class:Visitor	file:
+setSerial	.\projects\world\memory\Block.cpp	/^	Res& THIS::setSerial(wcnt new1)$/;"	f	class:wrd::THIS
 setTabSize	.\projects\preferencer\parser\generated\CharStream.h	/^   void setTabSize(int i) { tabSize = i; }$/;"	f	class:wrd::CharStream
 setTrackLineColumn	.\projects\preferencer\parser\generated\CharStream.h	/^  virtual void setTrackLineColumn(bool val) { trackLineColumn = val; }$/;"	f	class:wrd::CharStream
 shutil	.\build\builder.py	/^import shutil$/;"	i
@@ -1994,10 +2121,11 @@ tmain	.\projects\independentor\commons\indep-defs.hpp	49;"	d
 to	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		TStrong<T> to() { return to(TClass<T>()); }$/;"	f	class:wrd::Instance	file:
 to	.\docs\protos\worldfrw\execution component.cpp	/^	virtual Refer to(const Class& cls) const {$/;"	f	class:Scope::Spaces::Expr	file:
 to	.\docs\protos\worldfrw\passer component.cpp	/^	virtual Refer to(const Class& cls) {$/;"	f	class:Refer	file:
-to	.\projects\world\base\Thing.cpp	/^	Refer THIS::to(const Class& cls) const$/;"	f	class:wrd::THIS
-to	.\projects\world\base\Thing.cpp	/^	Refer THIS::to(const Class& cls) { return Refer(); }$/;"	f	class:wrd::THIS
-to	.\projects\world\base\Thing.cpp	/^	template <typename T> TRefer<T> THIS::to() const { return TRefer<T>(to(T::getStaticClass())); }$/;"	f	class:wrd::THIS
-to	.\projects\world\base\Thing.cpp	/^	template <typename T> TRefer<T> THIS::to() { return TRefer<T>(to(T::getStaticClass())); }$/;"	f	class:wrd::THIS
+to	.\projects\world\base\Thing.cpp	/^	CStrong THIS::to(const Class& cls) const$/;"	f	class:wrd::THIS
+to	.\projects\world\base\Thing.cpp	/^	Strong THIS::to(const Class& cls) { return Strong(); }$/;"	f	class:wrd::THIS
+to	.\projects\world\base\Thing.hpp	/^	template <typename T> CStrong THIS::to() const { return to(T::getClassStatic()); }$/;"	f	class:wrd::THIS
+to	.\projects\world\base\Thing.hpp	/^	template <typename T> Strong THIS::to() { return to(T::getClassStatic()); }$/;"	f	class:wrd::THIS
+to	.\projects\world\memory\Bind.cpp	/^	Strong THIS::to(const Class& cls)$/;"	f	class:wrd::THIS
 toBoolean	.\projects\preferencer\objtree\MemberType.cpp	/^		wbool THIS::toBoolean() const { return _toLowercase(_value) == "true" || toInt(); }$/;"	f	class:wrd::pref::THIS
 toChar	.\projects\preferencer\objtree\MemberType.cpp	/^		wchar THIS::toChar() const { return _value[0]; }$/;"	f	class:wrd::pref::THIS
 toFloat	.\projects\preferencer\objtree\MemberType.cpp	/^		wfloat THIS::toFloat() const { return std::stof(_value, 0); }$/;"	f	class:wrd::pref::THIS
@@ -2007,8 +2135,12 @@ toStr	.\projects\preferencer\objtree\MemberType.cpp	/^		std::string THIS::toStr(
 toString	.\projects\preferencer\parser\generated\Token.cc	/^  const JJString& Token::toString()$/;"	f	class:wrd::Token
 toStrong	.\docs\protos\worldfrw\backbone component.cpp	/^	CStrong toStrong() const { return CStrong(*this); }$/;"	f	class:Instance	file:
 toStrong	.\docs\protos\worldfrw\backbone component.cpp	/^	Strong toStrong() { $/;"	f	class:Instance	file:
+toStrong	.\projects\world\base\Instance.cpp	/^	CStrong THIS::toStrong() const$/;"	f	class:wrd::THIS
+toStrong	.\projects\world\base\Node.cpp	/^	Strong THIS::toStrong() { return *this; }$/;"	f	class:wrd::THIS
 toWeak	.\docs\protos\worldfrw\backbone component.cpp	/^	CWeak toWeak() const { return CWeak(*this); }$/;"	f	class:Instance	file:
 toWeak	.\docs\protos\worldfrw\backbone component.cpp	/^	Weak toWeak() { return Weak(*this); }$/;"	f	class:Instance	file:
+toWeak	.\projects\world\base\Instance.cpp	/^	CWeak THIS::toWeak() const$/;"	f	class:wrd::THIS
+toWeak	.\projects\world\base\Node.cpp	/^	Weak THIS::toWeak() { return *this; }$/;"	f	class:wrd::THIS
 token	.\projects\preferencer\parser\generated\PRParser.h	/^  Token        *token = nullptr;$/;"	m	class:wrd::PRParser
 tokenBegin	.\projects\preferencer\parser\generated\CharStream.h	/^  int                tokenBegin;$/;"	m	class:wrd::CharStream
 tokenImage	.\projects\preferencer\parser\generated\PRParserConstants.h	/^  static const JJChar* const tokenImage[] = {$/;"	m	namespace:wrd
@@ -2050,10 +2182,19 @@ type	.\docs\protos\worldfrw\backbone component.cpp	/^		widx type;$/;"	m	union:In
 unbind	.\docs\protos\worldfrw\binder component.cpp	/^	virtual Result& unbind() {$/;"	f	class:TStrong	file:
 unbind	.\docs\protos\worldfrw\binder component.cpp	/^	virtual Result& unbind() {$/;"	f	class:TWeak	file:
 unbind	.\docs\protos\worldfrw\passer component.cpp	/^	Result& unbind() {$/;"	f	class:Refer	file:
-unbind	.\projects\world\bind\TStrong.hpp	/^	TEMPL Res& THIS::unbind()$/;"	f	class:wrd::THIS
-unbind	.\projects\world\bind\TWeak.hpp	/^    TEMPL Res& THIS::unbind() { return release(); }$/;"	f	class:wrd::THIS
+unbind	.\projects\world\memory\Bind.cpp	/^	Res& THIS::unbind()$/;"	f	class:wrd::THIS
+unbind	.\projects\world\memory\Block.cpp	/^	Res& THIS::unbind()$/;"	f	class:wrd::THIS
+unbind	.\projects\world\memory\Instancer.cpp	/^	Res& THIS::unbind(Instance& old)$/;"	f	class:wrd::THIS
+unbind	.\projects\world\memory\TStrong.hpp	/^	TEMPL Res& THIS::unbind()$/;"	f	class:wrd::THIS
+unbind	.\projects\world\memory\TWeak.hpp	/^	TEMPL Res& THIS::unbind()$/;"	f	class:wrd::THIS
 updateConsoleColor	.\projects\independentor\helpers\PlatformAPI.cpp	/^		void CLASS::updateConsoleColor(ConsoleColor fore, ConsoleColor back)$/;"	f	class:wrd::indep::CLASS
 updated	.\build\builder.py	/^updated = False$/;"	v
+use	.\projects\world\base\Node.cpp	/^	CStrong THIS::use(Msg& msg) const$/;"	f	class:wrd::THIS
+use	.\projects\world\base\Node.cpp	/^	Strong THIS::use(Msg& msg)$/;"	f	class:wrd::THIS
+use	.\projects\world\memory\Bind.cpp	/^	CStrong THIS::use(Msg& msg) const$/;"	f	class:wrd::THIS
+use	.\projects\world\memory\Bind.cpp	/^	Strong THIS::use(Msg& msg)$/;"	f	class:wrd::THIS
+use	.\projects\world\msg-usr\Object.cpp	/^	CStrong THIS::use(Msg& msg) const$/;"	f	class:wrd::THIS
+use	.\projects\world\msg-usr\Object.cpp	/^	Strong THIS::use(Msg& msg)$/;"	f	class:wrd::THIS
 ver_buildcnt	.\build\builder.py	/^ver_buildcnt = 0$/;"	v
 ver_fix	.\build\builder.py	/^ver_fix = 0$/;"	v
 ver_major	.\build\builder.py	/^ver_major = 0$/;"	v
@@ -2068,6 +2209,7 @@ visit	.\docs\protos\worldfrw\visitation component.cpp	/^    virtual Result& visi
 visit	.\docs\protos\worldfrw\visitation component.cpp	/^    virtual Result& visit(const Thing& trg) const {$/;"	f	class:TVisitation	file:
 visitor	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^		virtual InstanceVisitor& visitor(InstanceVisitor& visitor) const {$/;"	f	class:wrd::Result	file:
 volatile	.\build\CMakeFiles\3.10.2\CompilerIdC\CMakeCCompilerId.c	11;"	d	file:
+warn	.\projects\world\pretypes\Res.cpp	/^	Res& THIS::warn(...) { return wasgood; }$/;"	f	class:wrd::THIS
 wbool	.\docs\protos\worldfrw\WorldPrototyping.cpp	/^	typedef bool wbool;$/;"	t	namespace:wrd	file:
 wbool	.\docs\protos\worldfrw\helper component.cpp	/^typedef bool wbool;$/;"	t	file:
 wbool	.\projects\independentor\commons\indep-typedefs.hpp	/^	typedef bool 				wbool;$/;"	t	namespace:wrd
@@ -2108,6 +2250,7 @@ wrd	.\projects\independentor\helpers\BuildFeatures.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\independentor\helpers\Nulr.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\independentor\helpers\PlatformAPI.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\independentor\helpers\PlatformAPI.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\independentor\macros\Initiator.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\logger\Logger.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\logger\Logger.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\logger\streams\ConsoleStream.cpp	/^namespace wrd$/;"	n	file:
@@ -2144,47 +2287,63 @@ wrd	.\projects\preferencer\parser\generated\Token.h	/^namespace wrd {$/;"	n
 wrd	.\projects\preferencer\parser\generated\TokenManager.h	/^namespace wrd {$/;"	n
 wrd	.\projects\preferencer\parser\generated\TokenMgrError.cc	/^namespace wrd {$/;"	n	file:
 wrd	.\projects\preferencer\parser\generated\TokenMgrError.h	/^namespace wrd {$/;"	n
-wrd	.\projects\unittests\Initiator.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\unittests\TestCase.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\unittests\TestCase.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\base\Composit.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\base\Composit.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\base\Id.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\base\Instance.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\base\Instance.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\base\Msg.cpp	/^namespace wrd$/;"	n	file:
+wrd	.\projects\world\base\Msg.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\base\Node.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\base\Node.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\base\State.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\base\State.hpp	/^namespace wrd$/;"	n
-wrd	.\projects\world\base\TGettable.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\base\Thing.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\base\Thing.hpp	/^namespace wrd$/;"	n
-wrd	.\projects\world\base\Trace.hpp	/^namespace wrd$/;"	n
-wrd	.\projects\world\bind\TBindable.hpp	/^namespace wrd$/;"	n
-wrd	.\projects\world\bind\TStrong.hpp	/^namespace wrd$/;"	n
-wrd	.\projects\world\bind\TWeak.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\commons\_TGet.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\commons\wrd-const.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\commons\wrd-const.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\compiler\Origin.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\compiler\Origin.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\container\Array.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\container\Array.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\container\Chain.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\container\Chain.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\container\Container.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\container\TArray.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\container\TChain.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\memory\Bind.cpp	/^namespace wrd$/;"	n	file:
+wrd	.\projects\world\memory\Bind.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\memory\Bindable.cpp	/^namespace wrd$/;"	n	file:
+wrd	.\projects\world\memory\Bindable.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\memory\Block.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\memory\Block.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\memory\Instancer.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\memory\Instancer.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\memory\TBlock.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\memory\TStrong.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\memory\TWeak.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\meta\Class.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\meta\Class.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\meta\Classes.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\meta\Classes.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\meta\MgdClass.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\meta\ObjectClass.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\meta\TClass.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\meta\helpers.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\msg-usr\Manager.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\msg-usr\Object.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\msg-usr\Object.hpp	/^namespace wrd$/;"	n
-wrd	.\projects\world\msg-usr\Refer.hpp	/^namespace wrd$/;"	n
-wrd	.\projects\world\msg-usr\TRefer.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\pretypes\Res.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\pretypes\Res.hpp	/^namespace wrd$/;"	n
+wrd	.\projects\world\pretypes\Reses.cpp	/^namespace wrd$/;"	n	file:
+wrd	.\projects\world\pretypes\Str.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\pretypes\Str.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\pretypes\reses.hpp	/^namespace wrd$/;"	n
 wrd	.\projects\world\world.cpp	/^namespace wrd $/;"	n	file:
+wrd	.\projects\world\world.cpp	/^namespace wrd$/;"	n	file:
 wrd	.\projects\world\world.hpp	/^namespace wrd$/;"	n
 write	.\projects\file-manipulator\file-streams\AsciiStream.cpp	/^		wcnt THIS::write(const string& datum) { return write(datum.c_str(), sizeof(char) * datum.size()); }$/;"	f	class:wrd::fm::THIS
 write	.\projects\file-manipulator\file-streams\AsciiStream.cpp	/^		wcnt THIS::write(const void* chunks, wcnt bytes)$/;"	f	class:wrd::fm::THIS
@@ -2220,6 +2379,7 @@ yes	.\projects\world\meta\helpers.hpp	/^        typedef short yes;$/;"	t	class:w
 ~THIS	.\projects\file-manipulator\file-structures\File.cpp	/^		THIS::~THIS() {}$/;"	f	class:wrd::fm::THIS
 ~THIS	.\projects\file-manipulator\file-structures\Folder.cpp	/^		THIS::~THIS() { _release(); }$/;"	f	class:wrd::fm::THIS
 ~THIS	.\projects\logger\streams\Stream.cpp	/^		THIS::~THIS() {}$/;"	f	class:wrd::log::THIS
+~THIS	.\projects\world\base\Instance.cpp	/^	THIS::~THIS() { getMgr().unbind(*this); }$/;"	f	class:wrd::THIS
 ~Token	.\projects\preferencer\parser\generated\Token.cc	/^  Token::~Token() {$/;"	f	class:wrd::Token
 ~TokenManager	.\projects\preferencer\parser\generated\TokenManager.h	/^  virtual       ~TokenManager() { }$/;"	f	class:wrd::TokenManager
 ~TokenManagerErrorHandler	.\projects\preferencer\parser\generated\ErrorHandler.h	/^      virtual ~TokenManagerErrorHandler() {}$/;"	f	class:wrd::TokenManagerErrorHandler

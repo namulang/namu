@@ -27,8 +27,7 @@ namespace wrd
 		wbool isExist() const;
 		virtual wbool isSuper(const Class& it) const;
 		wbool isSuper(const Thing& it) const;
-		template <typename T>
-		wbool isSuper() const;
+		template <typename T> wbool isSuper() const;
 		wbool isSub(const Thing& it) const;
 		wbool isSub(const Class& it) const;
 		template <typename T> wbool isSub() const;
