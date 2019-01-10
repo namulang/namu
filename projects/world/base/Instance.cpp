@@ -6,18 +6,15 @@ namespace wrd
 #define THIS Instance
 	WRD_CLASS_DEF(Instance)
 
-	namespace
-	{
+	namespace {
 		Instancer& getMgr() { return World::get().getInstancer(); }
 	}
 
-	THIS::THIS()
-	{
-		//	TODO: we need to optimize this. this ganna hotspot.
-		getMgr().bind(*this);
-	}
-
+	THIS::THIS() { _bind(false); }
 	THIS::~THIS() { getMgr().unbind(*this); }
+
+	void* THIS::operator new(size_t size) { return _bind(true).getHeap(); }
+
 	Id THIS::getId() const { return _id; }
 
 	wbool THIS::isHeap() const
@@ -45,5 +42,11 @@ namespace wrd
 	{
 		_id = new1;
 		return wasgood;
+	}
+
+	Block& THIS::_bind(wbool from_heap)
+	{	//	TODO: we need to optimize this. this gonna hotsopt.
+		WRD_ASSERT(_id.num != WRD_INDEX_ERROR)
+		return getMgr().bind(*this, is_heap)
 	}
 }
