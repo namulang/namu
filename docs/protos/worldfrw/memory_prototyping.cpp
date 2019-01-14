@@ -266,7 +266,7 @@ private:
 
 class Chunks : public Allocator {
 public:
-	Chunks(wcnt blkbyte = 0) : Allocator(blkbyte) {}
+	Chunks(wcnt blkbyte = 0) : Allocator(blkbyte), _s(0) {}
 	virtual ~Chunks() { _release(); }
 
 public:
@@ -301,15 +301,18 @@ public:
 	}
 
 	widx _findCapable() {
-		for(int n=0; n < _chunks.size() ;n++) {		
-			const Chunk& e = *_chunks[n];
+		int end = _s;
+		for(; _s != end ;_s++) {		
+			if(_s > _chunks.size())
+				_s = 0;
+			const Chunk& e = *_chunks[_s];
 			if ( ! &e || e.isFull()) continue;
 			//LOG("found e=" << &e)
-			return n;
+			return _s;
 		}
 
 		resize(getLen() + 1);
-		return _chunks.size()-1;
+		return _s;
 	}
 
 	virtual wbool has(const Instance& it) const {
@@ -319,8 +322,13 @@ public:
 
 	virtual Res& resize(wcnt new1) {
 		LOG("resize new1=" << new1)
+		_s = _chunks.size();
+		if(_s > new1)
+			_s = new1-1;
+		if(_s < 0)
+			_s = 0;
 		while(_chunks.size() < new1)
-		_chunks.push_back(new Chunk(getBlkSize()));
+			_chunks.push_back(new Chunk(getBlkSize()));
 		return wasgood;
 	}
 
@@ -328,6 +336,7 @@ public:
 		for(Chunk* e : _chunks)
 			e->release();
 		_chunks.clear();
+		_s = 0;
 		return wasgood;
 	}
 
@@ -344,6 +353,7 @@ public:
 
 private:
 	vector<Chunk*> _chunks;
+	int _s;
 };
 
 class Pool : public MemoryHaver {
@@ -633,7 +643,7 @@ void performance_test(int n)
 	}
 	for(int i=0; i < n ;i++)
 		delete parr[i];
-	cout << ((float) clock() - start) / CLOCKS_PER_SEC << " ms. a=" << a << "\n";
+	cout << ((float) clock() - start) / CLOCKS_PER_SEC*1000 << " ms. a=" << a << "\n";
 
 	cout << n << " th pool: ";
 	A* arr[100000] = {0, };
@@ -644,7 +654,7 @@ void performance_test(int n)
 	}
 	for(int i=0; i < n ;i++)
 		delete arr[i];
-	cout << ((float) clock() - start) / CLOCKS_PER_SEC << " ms. a=" << a << "\n";
+	cout << ((float) clock() - start) / CLOCKS_PER_SEC *1000 << " ms. a=" << a << "\n";
 }
 
 int main()
@@ -709,8 +719,6 @@ int main()
 	performance_test(1000);
 	performance_test(10000);
 	performance_test(100000);
-	performance_test(1000000);
-	performance_test(10000000);
 
 	return 0;
 }
