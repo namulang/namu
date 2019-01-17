@@ -1,4 +1,4 @@
 WRD_EACH(_DECL,
 	wasnull, wassuperfail, wasconst, wascancel, waswrongargs, wasfuncfail, wasgood, wasdup,
-	wasbindfail, wasntneed, waswrongtype, waswrongdata, wasfileio, waswrongmember, waswrongop
+	wasbindfail, wasntneed, waswrongtype, waswrongdata, wasfileio, waswrongmember, waswrongop, wasoob
 )
