@@ -6,6 +6,9 @@ namespace wrd
 #define THIS Block
 	WRD_CLASS_DEF(THIS)
 
+	THIS::THIS() : Super() {}
+	THIS::THIS(Id id) : Super(id) {}
+
 	Res& THIS::setSerial(wcnt new1)
 	{
 		if( ! _pt)
@@ -16,9 +19,18 @@ namespace wrd
 
 	wcnt THIS::getSerial() const { return _pt ? _pt->getId().sep.serial : WRD_INDEX_ERROR; }
 
+	const Chunk& THIS::getChunk() const
+	{
+		if( ! _wrd)
+			return nulr<Chunk>();
+
+		return Instance::_getMgr().getPool()[*_pt][*_pt];
+	}
+
 	Res& THIS::unbind()
 	{
-		//	TODO:
+		WRD_IS_SUPER(unbind())
+		_weak = _strong = 0;
 		return wasgood;
 	}
 
@@ -31,7 +43,14 @@ namespace wrd
 	}
 
 	wbool THIS::canBind(const Class& cls) const { return cls.isSub(getBindable()); }
-	wbool THIS::isHeap() const { /*TODO: */ return false; }
+
+	wbool THIS::isHeap() const
+	{
+		const Chunk& chk = WRD_GET(getChunk(), false);
+		return chk.has(*_pt);
+	}
+
+	Res& THIS::release() { return unbind(); }
 
 	Res& THIS::_onWeak(wcnt vote)
 	{
@@ -47,9 +66,12 @@ namespace wrd
 
 	Instance& THIS::_get() { return *_pt; }
 
-	Res& THIS::_bind(const Instance& new1)
+	Res& THIS::_bind(const Instance& it)
 	{
-		//	TODO:
+		unbind();
+
+		_pt = (Instance*) &it;
+		_pt->_id = getId();
 		return wasgood;
 	}
  }

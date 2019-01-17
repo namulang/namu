@@ -2,6 +2,7 @@
 
 #include "../base/Instance.hpp"
 #include "Bindable.hpp"
+#include "Chunk.hpp"
 
 namespace wrd
 {
@@ -10,9 +11,13 @@ namespace wrd
 		template <typename T> friend class TWeak;
 		template <typename T> friend class TStrong;
     public:
-		//	Block:
+		Block();
+		Block(Id id);
+
+	public:
 		Res& setSerial(wcnt new1);
 		wcnt getSerial() const;
+		const Chunk& getChunk() const;
 		//	Bindable:
 		virtual Res& unbind();
 		virtual wbool isBind() const;
@@ -21,15 +26,20 @@ namespace wrd
 		virtual wbool canBind(const Class& cls) const;
 		//	Instance:
 		virtual wbool isHeap() const;
+		//	Thing:
+		virtual Res& release();
 
 	protected:
 		//	Block:
-        Res& _onWeak(wcnt vote);
-        Res& _onStrong(wcnt vote); // TODO: check isHeap(), apply only if isHEAP() == true.
 		virtual Instance& _get();
 		virtual Res& _bind(const Instance& new1);
 
 	private:
+        Res& _onWeak(wcnt vote);
+        Res& _onStrong(wcnt vote); // TODO: check isHeap(), apply only if isHEAP() == true.
+
+	private:
 		Instance* _pt;
+		wcnt _weak, _strong;
     };
 }
