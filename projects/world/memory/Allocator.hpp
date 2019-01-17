@@ -7,15 +7,18 @@ namespace wrd
 	class Allocator : public MemoryHaver
 	{	WRD_CLASS_DECL(Allocator, MemoryHaver)
 	public:
-		Allocator(wcnt blkbyte = 1) : _blkbyte(blkbyte) {}
+		Allocator(wcnt blkbyte = 1);
 
 	public:
+		//	Allocator:
 		virtual void* new1() = 0;
 		virtual Res& del(void* used, wcnt sz) = 0;
 		virtual Res& resize(wcnt new1) = 0;
-		wcnt getBlkSize() const { return _blkbyte; }
+		wcnt getBlkSize() const;
+		//	Thing:
+		virtual Res& release();
 
 	private:
-		wcnt _blkbyte;
+		wcnt _blksize;
 	};
 }
