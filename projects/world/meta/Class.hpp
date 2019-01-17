@@ -30,6 +30,7 @@ namespace wrd
         virtual TStrong<Instance> instance() const = 0;
 		const Classes& getLeafs() const;
 		virtual const Array& getVars() const; // class can't include Array. we can use WRD_LAZY_METHOD here.
+		virtual wcnt getSize() const = 0;
 		//	State:
 		virtual Res& init();
 		virtual wbool isInit() const;

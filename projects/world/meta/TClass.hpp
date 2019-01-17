@@ -35,6 +35,7 @@ namespace wrd
 #undef _REDIRECT
 
     TEMPL TStrong<Instance> THIS::instance() const { return TCloner<T>::instance(); }
+	TEMPL wcnt THIS::getSize() const { return sizeof(T); }
 
     TEMPL Res& THIS::_initNodes()
     {

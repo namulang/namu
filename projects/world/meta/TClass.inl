@@ -23,6 +23,7 @@ namespace wrd
         virtual const Classes& getSupers() const;
         virtual const Classes& getSubs() const;
         virtual TStrong<Instance> instance() const;
+		virtual wcnt getSize() const;
 		//	Node:
         virtual const Container& getNodes() const;
 		//	State:
