@@ -31,8 +31,8 @@ namespace wrd
 		wuchar* _getEOB();
 		Res& _index(widx start);
 		wcnt _getRealBlkSize() const;
-		virtual void* _allocHeap(wcnt new_size);
-		virtual Res& _freeHeap(wuchar** heap);
+		void* _allocHeap(wcnt new_size);
+		Res& _freeHeap(wuchar** heap);
 		Res& _release();
 
 	private:
