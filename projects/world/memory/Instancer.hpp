@@ -1,23 +1,28 @@
 #pragma once
 
 #include "../msg-usr/Manager.hpp"
+#include "Pool.hpp"
+#include "Akashic.hpp"
 #include "TStrong.hpp"
 
 namespace wrd
 {
 	class Instancer : public Manager
-	{	WRD_CLASS(Instancer, Manager)
-	public:
-		const Block& operator[](Id id) const;
-
+	{	WRD_CLASS_DECL(Instancer, Manager)
+		friend class Instance;
 	public:
 		//	Instancer:
-		const Block& get(Id id) const;
-		template <typename T> const T& get(Id id) { return get(id).down<const T>(); }
-		virtual Res& bind(Instance& new1);
-		virtual Res& unbind(Instance& old);
+		Res& bind(Instance& new1);
+		Res& unbind(Instance& old);
+		const Pool& getPool() const { return _pool; }
+		const Akashic& getAkashic() const { return _akashic; }
 
 	private:
-		// TODO: Blocks _blocks;
+		void* _new1(size_t sz);
+		void _del(void* pt, wcnt sz) {
+
+	private:
+		Pool _pool;
+		Akashic _akashic;
 	};
 }
