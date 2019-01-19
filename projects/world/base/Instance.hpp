@@ -6,6 +6,7 @@
 namespace wrd
 {
 	class Block;
+	class Instancer;
 
 	class Instance : public Thing
 	{	WRD_CLASS_DECL(Instance, Thing)
@@ -14,6 +15,7 @@ namespace wrd
 
 	public:
 		Instance();
+		Instance(Id id);
 		virtual ~Instance();
 		//	why was virtual copyconstructor defined with private accessor?:
 		//		WorldFrx basically is based on class Node.
@@ -29,8 +31,10 @@ namespace wrd
 		//		override it.
 
 	public:
-		wbool operator==(const This& rhs);
-		wbool operator!=(const This& rhs);
+		wbool operator==(const This& rhs) const;
+		wbool operator!=(const This& rhs) const;
+		void* operator new(size_t size);
+		void operator delete(void* pt, size_t sz);
 
 	public://Instance:
 		Id getId() const;
@@ -44,10 +48,17 @@ namespace wrd
 		virtual Res& release();
 
 	protected:
-		static Block& _getBlock(Id id);
 		Res& _setId(Id new1);
 
 	private:
 		Id _id;
+
+	protected:
+		static Block& _getBlock(Id id);
+		static Instancer& _getMgr();
+
+	private:
+		static Id _from_dtor;
+		static widx _chk_n_from_alloc;
 	};
 }
