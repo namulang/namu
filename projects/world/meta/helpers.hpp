@@ -77,24 +77,24 @@ namespace wrd
 		typedef Class Is;
 	};
 
-    template <typename T, wbool is_adt = TIfADT<T>::is>
+    template <typename T, wbool is_adt = TIfADT<T>::is, wbool is_an_instance = TIfSub<T, Instance>::is>
     class TCloner {
-    public:
-        static TStrong<Instance> clone(const T& origin) {
-            return new T(origin);
-        }
-		static TStrong<Instance> instance() {
-			return new T();
-		}
-    };
-    template <typename T>
-    class TCloner<T, true> {
     public:
         static TStrong<Instance> clone(const T& origin) {
             return TStrong<Instance>();
         }
 		static TStrong<Instance> instance() {
 			return TStrong<Instance>();
+		}
+    };
+    template <typename T>
+    class TCloner<T, false, true> {
+    public:
+        static TStrong<Instance> clone(const T& origin) {
+            return new T(origin);
+        }
+		static TStrong<Instance> instance() {
+			return new T();
 		}
     };
 }
