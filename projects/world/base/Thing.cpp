@@ -8,8 +8,8 @@ namespace wrd
 	WRD_CLASS_DEF(Thing)
 
 	const Class& THIS::getSuper() const { return getClass().getSuper(); }
-	wbool THIS::isNull() const { return !this; }
-	wbool THIS::isExist() const { return this; }
+	wbool THIS::isNull() const { const void* chk = this; return !chk; }
+	wbool THIS::isExist() const { const void* chk = this; return chk; }
 	wbool THIS::isSuper(const Class& it) const { return getClass().isSuper(it); }
 	wbool THIS::isSuper(const Thing& it) const { return getClass().isSuper(it.getClass()); }
 	template <typename T> wbool THIS::isSuper() const { return getClass().isSuper(T::getStaticClass()); }
