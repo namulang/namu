@@ -7,7 +7,7 @@ namespace wrd
 	class Allocator : public MemoryHaver
 	{	WRD_CLASS_DECL(Allocator, MemoryHaver)
 	public:
-		Allocator(wcnt blkbyte = 1);
+		Allocator(wcnt blksize = 1);
 
 	public:
 		//	Allocator:

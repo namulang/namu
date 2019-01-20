@@ -49,7 +49,7 @@ namespace wrd
 
 	const Container& THIS::getNodes() const
 	{
-		const Node& got = WRD_GET(get<Node>(), Super::getNodes());
+		const Node& got = WRD_GET(get<Node>(), nulr<Container>());
 		return got.getNodes();
 	}
 

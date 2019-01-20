@@ -43,6 +43,13 @@ namespace wrd
 	}
 
 	const Block& THIS::getBlock() const { return _getBlock(_id); }
+
+	Res& THIS::release()
+	{
+		_id.num = WRD_INDEX_ERROR;
+		return wasgood;
+	}
+
 	Block& THIS::_getBlock(Id id) { return const_cast<Block&>(_getMgr().getAkashic()[id].blk); }
 
 	Res& THIS::_setId(Id new1)
@@ -51,5 +58,5 @@ namespace wrd
 		return wasgood;
 	}
 
-	Instancer& _getMgr() { return World::get().getInstancer(); }
+	Instancer& THIS::_getMgr() { return World::get().getInstancer(); }
 }

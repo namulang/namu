@@ -35,7 +35,7 @@ namespace wrd
 		virtual Res& init();
 		virtual wbool isInit() const;
 		//	Thing:
-        virtual const Class& getSuper() const;
+        virtual const Class& getSuper() const = 0;
         virtual wbool isSuper(const Class& it) const;
 
     protected:
