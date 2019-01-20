@@ -49,8 +49,8 @@ namespace wrd
 		{		
 			if(_s > _chunks.size()) _s = 0;
 
-			const Chunk& e = *_chunks[_s];
-			if ( ! &e || e.isFull()) continue;
+			const Chunk& e = *(_chunks[_s]);
+			if(e.isNull() || e.isFull()) continue;
 			return _s;
 		}
 

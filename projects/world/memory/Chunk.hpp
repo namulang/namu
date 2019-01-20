@@ -36,9 +36,9 @@ namespace wrd
 		Res& _release();
 
 	private:
-		wuchar* _heap;
-		wcnt _sz, _len;
 		widx _head;
+		wcnt _len, _sz;
+		wuchar* _heap;
 		wbool _is_fixed;
 	};
 }

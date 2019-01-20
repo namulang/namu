@@ -1,5 +1,5 @@
-#pragma once
-
+#include "ObjectClass.hpp"
+#include "../meta.hpp"
 #include "../container/Array.hpp"
 
 namespace wrd
@@ -17,6 +17,6 @@ namespace wrd
     const Array& THIS::getVars() const
     {
         WRD_IS_THIS(const Array)
-        return _vars;
+        return *_vars;
     }
 }

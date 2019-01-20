@@ -42,9 +42,9 @@ namespace wrd
 
 	Res& THIS::resize(wcnt new_size)
 	{
-		if (new_size < INIT_SZ) new_size = INIT_SZ;
-		if (_is_fixed && new_size > INIT_SZ) new_size = INIT_SZ;
-		if (new_size == _sz) return wasoob;
+		if(new_size < INIT_SZ) new_size = INIT_SZ;
+		if(_is_fixed && new_size > INIT_SZ) new_size = INIT_SZ;
+		if(new_size == _sz) return wasoob;
 	
 		wuchar* new1 = (wuchar*) _allocHeap(new_size);
 		memcpy(new1, _heap, _sz*_getRealBlkSize());
@@ -74,7 +74,7 @@ namespace wrd
 
 	void* THIS::_get(widx n)
 	{
-		if (n < 0 || n >= _sz)
+		if(n < 0 || n >= _sz)
 			return NULL;
 		return _heap + n * _getRealBlkSize();
 	}

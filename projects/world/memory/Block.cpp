@@ -1,5 +1,7 @@
 #include "Block.hpp"
 #include "../meta.hpp"
+#include "TStrong.hpp"
+#include "Instancer.hpp"
 
 namespace wrd
 {
@@ -21,7 +23,7 @@ namespace wrd
 
 	const Chunk& THIS::getChunk() const
 	{
-		if( ! _wrd)
+		if( ! _pt)
 			return nulr<Chunk>();
 
 		return Instance::_getMgr().getPool()[*_pt][*_pt];
@@ -29,7 +31,7 @@ namespace wrd
 
 	Res& THIS::unbind()
 	{
-		WRD_IS_SUPER(unbind())
+		_pt = 0;
 		_weak = _strong = 0;
 		return wasgood;
 	}
@@ -50,6 +52,8 @@ namespace wrd
 		return chk.has(*_pt);
 	}
 
+	Strong THIS::toStrong() { return Strong((Node*)_pt); }
+	Weak THIS::toWeak() { return Weak((Node*)_pt); }
 	Res& THIS::release() { return unbind(); }
 
 	Res& THIS::_onWeak(wcnt vote)

@@ -26,6 +26,8 @@ namespace wrd
 		virtual wbool canBind(const Class& cls) const;
 		//	Instance:
 		virtual wbool isHeap() const;
+		virtual Strong toStrong();
+		virtual Weak toWeak();
 		//	Thing:
 		virtual Res& release();
 

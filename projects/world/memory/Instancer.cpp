@@ -9,13 +9,13 @@ namespace wrd
 
 	Res& THIS::bind(Instance& new1)
 	{
-		Unit& new1 = *(Unit*) _akashic.new1();
-		return new1.blk.bind(it);
+		Unit& un = *(Unit*) _akashic.new1();
+		return un.blk.bind(new1);
 	}
 
 	Res& THIS::unbind(Instance& old)
 	{
-		Unit& un = _akashic[it.getId()];
+		Unit& un = _akashic[old.getId()];
 		return _akashic.del(&un, sizeof(Unit));
 	}
 

@@ -19,8 +19,8 @@ namespace wrd
 
 	void* THIS::new1()
 	{
-			Unit* res = (Unit*)Chunk::new1();
-		if (!res)
+		Unit* res = (Unit*)Chunk::new1();
+		if( ! res)
 			return res;
 
 		::new (&res->blk) Block(_genId(res));
@@ -37,7 +37,7 @@ namespace wrd
 
 	widx THIS::_getIdx(void* it) const
 	{
-		if (!has(*(Instance*)it)) // "has" func will treat it as void*, too.
+		if( ! has(*(Instance*)it)) // "has" func will treat it as void*, too.
 			return -1;
 
 		widx ret = ((wuchar*)it - getHeap()) / getBlkSize();

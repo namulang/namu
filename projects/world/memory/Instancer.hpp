@@ -14,12 +14,12 @@ namespace wrd
 		//	Instancer:
 		Res& bind(Instance& new1);
 		Res& unbind(Instance& old);
-		const Pool& getPool() const { return _pool; }
-		const Akashic& getAkashic() const { return _akashic; }
+		const Pool& getPool() const;
+		const Akashic& getAkashic() const;
 
 	private:
 		void* _new1(size_t sz);
-		void _del(void* pt, wcnt sz) {
+		void _del(void* pt, wcnt sz);
 
 	private:
 		Pool _pool;

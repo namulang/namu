@@ -17,9 +17,9 @@ namespace wrd
 		_from_dtor = _id;
 	}
 
-	wbool THIS::operator==(const This& rhs) const { return _id == rhs._id; }
+	wbool THIS::operator==(const This& rhs) const { return _id.num == rhs._id.num; }
 	wbool THIS::operator!=(const This& rhs) const { return ! operator==(rhs); }
-	void* THIS::operator new(size_t size) { return _getMgr()._new1(sz); }
+	void* THIS::operator new(size_t sz) { return _getMgr()._new1(sz); }
 	void THIS::operator delete(void* pt, size_t sz) { _getMgr()._del(pt, sz); }
 
 	Id THIS::getId() const { return _id; }
@@ -49,12 +49,6 @@ namespace wrd
 	{
 		_id = new1;
 		return wasgood;
-	}
-
-	Block& THIS::_bind(wbool from_heap)
-	{	//	TODO: we need to optimize this. this gonna hotsopt.
-		WRD_ASSERT(_id.num != WRD_INDEX_ERROR)
-		return _getMgr().bind(*this, is_heap)
 	}
 
 	Instancer& _getMgr() { return World::get().getInstancer(); }

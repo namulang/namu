@@ -28,8 +28,7 @@ namespace wrd
 
 	Res& THIS::release()
 	{
-			int n = 0;
-		for (Chunks* e : _chunkset)
+		for(Chunks* e : _chunkset)
 		{
 			if (!e) continue;
 			e->release();
@@ -42,12 +41,12 @@ namespace wrd
 
 	void* THIS::_get(widx n)
 	{
-		if (0 > n) return NULL;
+		if(0 > n) return NULL;
 
-		while ((int)_chunkset.size() - 1 < n)
+		while((int)_chunkset.size() - 1 < n)
 			_chunkset.push_back(NULL);
 
-		if (!_chunkset[n])
+		if(!_chunkset[n])
 			_chunkset[n] = new Chunks(n);
 
 		return _chunkset[n];

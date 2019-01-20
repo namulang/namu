@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Chunks.hpp"
+#include "../meta.hpp"
 
 namespace wrd
 {

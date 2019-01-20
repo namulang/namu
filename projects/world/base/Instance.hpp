@@ -11,6 +11,8 @@ namespace wrd
 	class Instance : public Thing
 	{	WRD_CLASS_DECL(Instance, Thing)
 		friend class Block;
+		friend class Akashic; // for _chk_n_from_alloc
+		friend class Chunks; // _chk_n_from_alloc
 		//	Instance는 World에서 인스턴스 관리를 대신해준다. 여기서부터 bind가 가능하다.
 
 	public:
@@ -33,7 +35,7 @@ namespace wrd
 	public:
 		wbool operator==(const This& rhs) const;
 		wbool operator!=(const This& rhs) const;
-		void* operator new(size_t size);
+		void* operator new(size_t sz);
 		void operator delete(void* pt, size_t sz);
 
 	public://Instance:
