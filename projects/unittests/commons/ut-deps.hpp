@@ -4,6 +4,7 @@
 #include <file-manipulator.hpp>
 #include <logger.hpp>
 #include <preferencer.hpp>
+#include <world.hpp>
 
 using namespace wrd;
 using namespace wrd::pref;
