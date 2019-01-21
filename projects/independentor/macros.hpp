@@ -13,3 +13,4 @@
 #include "macros/LazyMethod.hpp"
 #include "macros/Initiator.hpp"
 #include "macros/AssignGuard.hpp"
+#include "macros/TypeTrait.hpp"
