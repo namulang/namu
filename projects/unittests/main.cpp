@@ -15,11 +15,9 @@ int main()
 
 	bool res = false;
     for(auto e : TestCase::getTests())
-        res = res | e->test();
+		res = res | e->test();
 
-	std::string msg = !res ?
-		"SUCCESS" :
-		"FAILURE FOUND";
+	std::string msg = !res ?  "SUCCESS" : "FAILURE FOUND";
 	TestCase::printResult(res, "ALL TESTS", msg, TestCase::getTime()-start);
     system("pause");
 	return res;

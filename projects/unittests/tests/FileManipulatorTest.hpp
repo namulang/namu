@@ -4,7 +4,7 @@
 
 WRD_TESTCASE(FileManipulatorTest, (
 	//  read-write test:
-	WRD_TEST( ! File().remove())
+	WRD_TEST(File().remove())
 	
 	std::string current = ".";
 	std::string input_path = current + "/resources/sample.txt";
@@ -22,7 +22,7 @@ WRD_TESTCASE(FileManipulatorTest, (
 	std::string source = current + "/" + output_filename;
 	File output(source);
 	WRD_TEST(output.getPath() == source)
-	output.remove();
+	WRD_TEST( ! output.remove());
 
 	
 	//  searching test:
@@ -50,9 +50,9 @@ WRD_TESTCASE(FileManipulatorTest, (
 	WRD_TEST( ! bs.init())
 	WRD_TEST(bs.isInit())
 	WRD_TEST(bs.write(reaad) > 0)
-	bs -= 1
+	bs -= 1;
 	WRD_TEST(bs.write("?", 1) > 0)
-	bs = 2
+	bs = 2;
 	WRD_TEST(bs.write("I'm ") > 0)
 	WRD_TEST( ! bs.setCursor(bs.getEndOfFile()))
 	WRD_TEST(bs.write(std::string(" keep testing!")) > 0)

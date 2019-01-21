@@ -25,7 +25,7 @@ WRD_TESTCASE(LoggerTest, (
 	};
 	MyStream* cs = new MyStream();
 	WRD_TEST( ! logger.pushStream(cs));
-	WRD_TEST( ! logger.getStreamCount() < 3)
+	WRD_TEST(logger.getStreamCount() >= 3)
 	WRD_TEST(&logger["MyStream"])
 
 	WRD_TEST( ! logger.dump("hello world"))
