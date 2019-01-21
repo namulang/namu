@@ -141,9 +141,11 @@
 ///		e.g) template <typename T> WRD_CLASS_INIT(MyTemplate<T>)
 #define WRD_CLASS_INIT(TYPE)			//TODO: WRD_INITIATOR(TYPE::getClassStatic();)
 
-#define WRD_GET_3(expr, res, ret)								\
-	_TGet<decltype(expr)>::set(expr);							\
-	WRD_IS_NULL_3(_TGet<decltype(expr)>::get(), res, ret)
-#define WRD_GET_2(expr, ret)	WRD_GET_3(expr, wasnull, ret)
-#define WRD_GET_1(expr)			WRD_GET_2(expr, wasnull)
+#define _PUT(exp) _TGet<TypeTrait<decltype(exp)>::Org>::set(exp)
+#define _GET(exp) _TGet<TypeTrait<decltype(exp)>::Org>::get()
+#define _NULR(exp) nulr<TypeTrait<decltype(exp)>::Org>()
+#define WRD_GET_1(e1) _PUT(e1)
+#define WRD_GET_2(e1, e2) WRD_GET_1(e1).isNull() ? _NULR(e1.e2) : _PUT(e1.e2)
+#define WRD_GET_3(e1, e2, e3) _PUT(e1).isNull() ? _NULR(e1.e2.e3) : (_PUT(e1.e2).isNull() ? _NULR(e1.e2.e3) : _PUT(e1.e2.e3))
+#define WRD_GET_4(e1, e2, e3, e4) _PUT(e1).isNull() ? _NULR(e1.e2.e3.e4) : (_PUT(e1.e2).isNull() ? _NULR(e1.e2.e3.e4) : (_PUT(e1.e2.e3).isNull() ? _NULR(e1.e2.e3.e4) : _PUT(e1.e2.e3.e4)))
 #define WRD_GET(...)			WRD_OVERLOAD(WRD_GET, __VA_ARGS__)
