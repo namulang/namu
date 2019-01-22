@@ -77,7 +77,7 @@ namespace wrd
 
         return getClass() == target;//  Remember. We're using Class as "Monostate".
 		*/
-		return false;
+		return true;
     }
 
     Classes& THIS::_getSupers() { return const_cast<Classes&>(getSupers()); }

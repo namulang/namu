@@ -12,12 +12,12 @@ namespace wrd
 	///				1) can distringuish what given abstract type actually was and reject or accept it regarding that.
 	///				2) free instance completely. using RAII.
 	///				3) can notice that binding Instance was replaced or freed without unexpected exception.
-	///				in conlusion, it prevent halting process or give a change to let developer be advised.
+	///			in conlusion, it prevent halting process or give a chance to let developer be advised.
 	///
 	///		TypeCheking:
 	///			This was most valuable requirement when I design component of bind.
 	///			in fact, Bind was suggested to replace sort of exisiting smart-ptr concept things, such as weakptr.
-	///			because weakptr was planned to replace and enhanced existing pointer of c/c++, they were very strict to
+	///			because weakptr was planned to replace and enhance existing pointer of c/c++, they were very strict to
 	///			check type and whether template param T was const or not.
 	///			this characteristic was pretty worked good in most environment but not on usage of World frx.
 	///
@@ -39,7 +39,7 @@ namespace wrd
 	///
 	///			class TWeak, class TStrong:
 	///				these represent Binder on strict-checking layer.
-	///				becuase it was declared to class template, user need to bind or get binded using type T.
+	///				because it was declared to class template, user need to bind or get binded using type T.
 	///				of course these are based on class Bind, user can use loose-check API case by case.
 	///
     class Bind : public Node, public Bindable

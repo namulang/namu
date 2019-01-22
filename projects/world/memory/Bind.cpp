@@ -27,7 +27,7 @@ namespace wrd
 	}
 
 	Id THIS::getItsId() const { return _its_id; }
-	wbool THIS::canBind(const Class& cls) const { return getClass().isSub(cls); }
+	wbool THIS::canBind(const Class& cls) const { return getBindable().isSuper(cls); }
 
 	CStrong THIS::use(Msg& msg) const
 	{
@@ -109,10 +109,9 @@ namespace wrd
 	    if(ins.getId().sep.serial != this->_its_id.sep.serial) {
 	        unbind();
 	        wasbindfail.warn("...");
-	        // TODO: uncomment return nulr<Instance>();
+	        return nulr<Instance>();
 	    }
 	
-	//    TODO: impl _get()
 	    return ins;
 	}
 	
