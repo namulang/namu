@@ -2,8 +2,7 @@
 #include "../meta.hpp"
 #include "TStrong.hpp"
 #include "Instancer.hpp"
-
-namespace wrd
+jmghngnvnamespace wrd
 {
 #define THIS Block
 	WRD_CLASS_DEF(THIS)
@@ -48,7 +47,9 @@ namespace wrd
 
 	wbool THIS::isHeap() const
 	{
-		const Chunk& chk = WRD_GET(getChunk(), false);
+		const Chunk& chk = getChunk();
+		WRD_IS_NULL(chk, wasnull, false)
+
 		return chk.has(*_pt);
 	}
 

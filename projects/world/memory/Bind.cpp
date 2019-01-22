@@ -31,27 +31,26 @@ namespace wrd
 
 	CStrong THIS::use(Msg& msg) const
 	{
-		const Node& got = WRD_GET(get<Node>());
+		const Node& got = get<Node>();
+		WRD_IS_NULL(got, wasnull, CStrong())
 		return got.use(msg);
 	}
 
 	Strong THIS::use(Msg& msg)
 	{
-		Node& got = WRD_GET(get<Node>());
+		Node& got = get<Node>();
+		WRD_IS_NULL(got, wasnull, Strong())
 		return got.use(msg);
 	}
 
 	const Origin& THIS::getOrigin() const
 	{
-		const Node& got = WRD_GET(get<Node>(), Super::getOrigin());
+		const Node& got = get<Node>();
+		WRD_IS_NULL(got, wasnull, Super::getOrigin())
 		return got.getOrigin();
 	}
 
-	const Container& THIS::getNodes() const
-	{
-		const Node& got = WRD_GET(get<Node>(), nulr<Container>());
-		return got.getNodes();
-	}
+	const Container& THIS::getNodes() const { return WRD_GET(get<Node>(), getNodes()); }
 
 	Strong THIS::to(const Class& cls)
 	{
@@ -105,7 +104,8 @@ namespace wrd
 	
 	Instance& THIS::_get()
 	{
-	    Instance& ins = WRD_GET(this->_getBlock(_its_id).get());
+	    Instance& ins = WRD_GET(this->_getBlock(_its_id), get());
+		WRD_IS_NULL(ins, wasnull, ins)
 	    if(ins.getId().sep.serial != this->_its_id.sep.serial) {
 	        unbind();
 	        wasbindfail.warn("...");
@@ -116,11 +116,7 @@ namespace wrd
 	    return ins;
 	}
 	
-	Thing& THIS::_down(const Class& cls)
-	{
-		Thing& got = get();
-		return got.isExist() ? got._down(cls) : nulr<Thing>();
-	}
+	Thing& THIS::_down(const Class& cls) { return WRD_GET(get(), _down(cls)); }
 
 	Res& THIS::_assign(const This& rhs)
 	{

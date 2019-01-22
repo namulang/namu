@@ -23,7 +23,8 @@ namespace wrd
 	
 	TEMPL Res& THIS::unbind()
 	{
-	    Block& blk = WRD_GET(this->_getBlock(this->getItsId()), waswrongmember, Super::unbind());
+	    Block& blk = this->_getBlock(this->getItsId());
+		WRD_IS_NULL(blk, waswrongmember, Super::unbind())
 	    blk._onStrong(-1);
 	
 	    return Super::unbind();
@@ -69,7 +70,8 @@ namespace wrd
 	
 	TEMPL Res& THIS::unbind()
 	{
-	     Block& blk = WRD_GET(this->_getBlock(this->getItsId()), waswrongmember, Super::unbind());
+	     Block& blk = this->_getBlock(this->getItsId());
+		 WRD_IS_NULL(blk, waswrongmember, Super::unbind())
 	     blk._onStrong(-1);
 	
 	    return Super::unbind();

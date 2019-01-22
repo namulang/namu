@@ -32,7 +32,8 @@ namespace wrd
 	
 	TEMPL Res& THIS::unbind()
 	{
-	    Block& blk = WRD_GET(this->_getBlock(this->getItsId()));
+	    Block& blk = this->_getBlock(this->getItsId());
+		WRD_IS_NULL(blk)
 	    blk._onWeak(-1);
 	    return Super::unbind();
 	}
@@ -41,7 +42,8 @@ namespace wrd
 	
 	TEMPL T& THIS::get()
 	{
-	    Instance& got = WRD_GET(_get(), nulr<T>());
+	    Instance& got = _get();
+		WRD_IS_NULL(got, wasnull, nulr<T>())
 	    return got.down<T>();
 	}
 	
@@ -57,7 +59,8 @@ namespace wrd
     {
         //  pre:
         //      param-validation:
-        Block& blk = WRD_GET(const_cast<Block&>(it.getBlock()));
+        Block& blk = const_cast<Block&>(it.getBlock());
+		WRD_IS_NULL(blk)
 
         //  main:
         unbind();
@@ -101,7 +104,8 @@ namespace wrd
 	
 	TEMPL Res& THIS::unbind()
 	{
-	    Block& blk = WRD_GET(this->_getBlock(this->getItsId()));
+	    Block& blk = this->_getBlock(this->getItsId());
+		WRD_IS_NULL(blk)
 	    blk._onWeak(-1);
 	    return this->Super::unbind();
 	}
@@ -111,7 +115,8 @@ namespace wrd
 	TEMPL const T& THIS::get() const
 	{
 	    WRD_UNCONST()
-	    const Instance& got = WRD_GET(unconst._get(), nulr<T>());
+	    const Instance& got = unconst._get();
+		WRD_IS_NULL(got, nulr<T>())
 	    return got.down<T>();
 	}
 	
@@ -121,7 +126,8 @@ namespace wrd
 	{
 		WRD_IS_SUPER(_bind(it))
 
-		Block& blk = WRD_GET(const_cast<Block&>(it.getBlock()));
+		Block& blk = const_cast<Block&>(it.getBlock());
+		WRD_IS_NULL(blk)
 	    return blk._onWeak(1);
 	}
 

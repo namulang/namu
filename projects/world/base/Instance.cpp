@@ -26,7 +26,9 @@ namespace wrd
 
 	wbool THIS::isHeap() const
 	{
-		const Block& blk = WRD_GET(getBlock(), false)
+		const Block& blk = getBlock();
+		WRD_IS_NULL(blk, wasnull, false)
+
 		return blk.isHeap();
 	}
 
@@ -50,7 +52,7 @@ namespace wrd
 		return wasgood;
 	}
 
-	Block& THIS::_getBlock(Id id) { return const_cast<Block&>(_getMgr().getAkashic()[id].blk); }
+	Block& THIS::_getBlock(Id id) { return WRD_GET((Block&) _getMgr().getAkashic()[id], blk); }
 
 	Res& THIS::_setId(Id new1)
 	{

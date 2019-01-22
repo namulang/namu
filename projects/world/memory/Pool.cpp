@@ -19,7 +19,9 @@ namespace wrd
 
 	wbool THIS::has(const Instance& it) const
 	{
-		const Chunks& got = WRD_GET(get(it.getClass().getSize()), false)
+		const Chunks& got = get(it.getClass().getSize());
+		WRD_IS_NULL(got, wasnull, false)
+
 		return got.has(it);
 	}
 

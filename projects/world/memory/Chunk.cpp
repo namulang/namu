@@ -102,11 +102,7 @@ namespace wrd
 		return sz < 4 ? 4 : sz;
 	}
 
-	void* THIS::_allocHeap(wcnt new_size)
-	{
-		void* ret = malloc(new_size * _getRealBlkSize());
-		return ret;
-	}
+	void* THIS::_allocHeap(wcnt new_size) { return malloc(new_size * _getRealBlkSize()); }
 
 	Res& THIS::_freeHeap(wuchar** heap)
 	{
