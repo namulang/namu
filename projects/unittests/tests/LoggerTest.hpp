@@ -45,11 +45,8 @@ WRD_TESTCASE(LoggerTest, (
 	WRD_TEST( ! found)
 	WRD_TEST( ! logger.dump("let's go on 2nd phase."));
 
-	BuildFeatures::Date date;
-	WRD_INFO("today is %d-%d %d. %s.", date.getMonth(), date.getDay(), date.getYear(), "Nice start!")
 	WRD_WARN("Fatal error! Fatal error! this PC should be infected to a virus immediatly!!!")
 	WRD_ERROR("***backstabbing*** It's a joke. Carm down, my master.")
-
 	//WRD_TEST(logger.release()) -> can't call.            
 
 	return "";

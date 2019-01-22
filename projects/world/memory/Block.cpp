@@ -2,7 +2,7 @@
 #include "../meta.hpp"
 #include "TStrong.hpp"
 #include "Instancer.hpp"
-jmghngnvnamespace wrd
+namespace wrd
 {
 #define THIS Block
 	WRD_CLASS_DEF(THIS)

@@ -26,7 +26,6 @@ WRD_TESTCASE(FileManipulatorTest, (
 
 	
 	//  searching test:
-	std::cout << "current=" << current.c_str() << "\n";
 	Folder build(current, Folder::Option(false));
 	WRD_TEST( ! build.isInit())
 	WRD_TEST( ! build.init())
