@@ -9,7 +9,7 @@ namespace wrd
 	Id THIS::_from_dtor;
 	widx THIS::_chk_n_from_alloc = WRD_INDEX_ERROR;
 
-	THIS::THIS() { _getMgr().bind(*this); } 
+	THIS::THIS() {} 
 	THIS::THIS(Id id) : _id(id) {} // no binding required.
 	THIS::~THIS()
 	{
@@ -22,7 +22,12 @@ namespace wrd
 	void* THIS::operator new(size_t sz) { return _getMgr()._new1(sz); }
 	void THIS::operator delete(void* pt, size_t sz) { _getMgr()._del(pt, sz); }
 
-	Id THIS::getId() const { return _id; }
+	Id THIS::getId() const
+	{
+		if(_id == WRD_INDEX_ERROR)
+			_getMgr().bind(*this);
+		return _id;
+	}
 
 	wbool THIS::isHeap() const
 	{
@@ -44,7 +49,7 @@ namespace wrd
 		return unconst.toWeak();
 	}
 
-	const Block& THIS::getBlock() const { return _getBlock(_id); }
+	const Block& THIS::getBlock() const { return _getBlock(getId()); }
 
 	Res& THIS::release()
 	{

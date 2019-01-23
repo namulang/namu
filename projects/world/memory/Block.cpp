@@ -14,6 +14,7 @@ namespace wrd
 	{
 		if( ! _pt)
 			return wasnull;
+
 		_pt->_id.sep.serial = new1;
 		return wasgood;
 	}
