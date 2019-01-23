@@ -4,3 +4,4 @@
 #include "tests/FileManipulatorTest.hpp"
 #include "tests/LoggerTest.hpp"
 #include "tests/PreferencerTest.hpp"
+#include "tests/ChunkTest.hpp"
