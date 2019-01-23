@@ -24,6 +24,8 @@ namespace wrd
 
 	TEMPL THIS& THIS::operator=(const This& rhs)
 	{
+		WRD_ASSIGN_GUARD()
+
 		Super::operator=(rhs);
 		return *this;
 	}
@@ -57,15 +59,11 @@ namespace wrd
 	
 	TEMPL Res& THIS::_bind(const Instance& it)
     {
-        //  pre:
-        //      param-validation:
-        Block& blk = const_cast<Block&>(it.getBlock());
-		WRD_IS_NULL(blk)
+		WRD_IS_SUPER(_bind(it))
 
-        //  main:
-        unbind();
-        this->_setId(it.getId());
-        return blk._onWeak(1);
+		Block& blk = const_cast<Block&>(it.getBlock());
+		WRD_IS_NULL(blk)
+	    return blk._onWeak(1);
     }
 
 #undef THIS
