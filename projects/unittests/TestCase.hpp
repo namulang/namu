@@ -4,7 +4,7 @@
 
 namespace wrd
 {	
-	#define WRD_TEST(expression)\
+	#define T(expression)\
 		if( ! (expression))		\
 			return #expression;
 

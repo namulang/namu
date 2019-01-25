@@ -5,10 +5,10 @@
 WRD_TESTCASE(LoggerTest, (
 	Logger& logger = Logger::getInstance();
 	
-	WRD_TEST(logger.getName() == std::string("Logger"))
-	WRD_TEST(logger.getStreamCount() >= 2)
-	WRD_TEST(&logger["ConsoleStream"])
-	WRD_TEST(&logger["FileLogStream"])
+	T(logger.getName() == std::string("Logger"))
+	T(logger.getStreamCount() >= 2)
+	T(&logger["ConsoleStream"])
+	T(&logger["FileLogStream"])
 
 	WRD_DUMP("D", "hello!")
 	WRD_WARN("world!")
@@ -24,12 +24,12 @@ WRD_TESTCASE(LoggerTest, (
 		std::string msg;
 	};
 	MyStream* cs = new MyStream();
-	WRD_TEST( ! logger.pushStream(cs));
-	WRD_TEST(logger.getStreamCount() >= 3)
-	WRD_TEST(&logger["MyStream"])
+	T( ! logger.pushStream(cs));
+	T(logger.getStreamCount() >= 3)
+	T(&logger["MyStream"])
 
-	WRD_TEST( ! logger.dump("hello world"))
-	WRD_TEST(cs->msg == "hello world")
+	T( ! logger.dump("hello world"))
+	T(cs->msg == "hello world")
 
 	WRD_DUMP("D", "hello!")
 	WRD_WARN("world!")
@@ -42,12 +42,12 @@ WRD_TESTCASE(LoggerTest, (
 		if(build.peek().getName().find("logs"))
 			found = true;
 
-	WRD_TEST( ! found)
-	WRD_TEST( ! logger.dump("let's go on 2nd phase."));
+	T( ! found)
+	T( ! logger.dump("let's go on 2nd phase."));
 
 	WRD_WARN("Fatal error! Fatal error! this PC should be infected to a virus immediatly!!!")
 	WRD_ERROR("***backstabbing*** It's a joke. Carm down, my master.")
-	//WRD_TEST(logger.release()) -> can't call.            
+	//T(logger.release()) -> can't call.            
 
 	return "";
 ))
