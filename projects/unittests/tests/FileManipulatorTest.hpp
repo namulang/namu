@@ -22,7 +22,7 @@ WRD_TESTCASE(FileManipulatorTest, (
 	std::string source = current + "/" + output_filename;
 	File output(source);
 	T(output.getPath() == source)
-	T( ! output.remove());
+	T(output.remove());
 
 	
 	//  searching test:
