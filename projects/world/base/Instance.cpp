@@ -24,8 +24,8 @@ namespace wrd
 
 	Id THIS::getId() const
 	{
-		if(_id == WRD_INDEX_ERROR)
-			_getMgr().bind(*this);
+		if(_id.num == WRD_INDEX_ERROR)
+			_getMgr().bind((This&)*this);
 		return _id;
 	}
 
