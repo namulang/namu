@@ -15,7 +15,7 @@ endforeach(e)
 add_definitions(-DBUILD_TARGET_TESTER)
 add_definitions(-DWRD_TAG="unittests")
 #       define libraries:
-set(dependencies independentor file-manipulator logger preferencer)
+set(dependencies independentor file-manipulator logger preferencer world)
 foreach(e ${dependencies})
     message("\t\tlinking ${e}")
 endforeach(e)
