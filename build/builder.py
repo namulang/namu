@@ -57,7 +57,7 @@ def _createMakefiles():
     generator = "MinGW Makefiles" if isWindow() else "Unix Makefiles"
     print("generating makefiles as " + generator + "...")
 
-    res = os.system("cmake -G \"" + generator + "\"")
+    res = os.system("cmake . -G \"" + generator + "\"")
     if res != 0:
         return -1
 
@@ -274,7 +274,6 @@ def main():
     version()
     print(frame)
     print("")
-
     os.chdir(cwd)
     print("building directory is " + cwd)
 
