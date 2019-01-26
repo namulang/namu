@@ -23,6 +23,7 @@ namespace wrd
 		virtual wbool has(const Instance& it) const;
 		const wuchar* getEOB() const;
 		const wuchar* getHeap() const;
+		wbool isFixed() const;
 
 	protected:
 		virtual void* _get(widx n);

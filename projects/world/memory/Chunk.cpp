@@ -71,6 +71,7 @@ namespace wrd
 	}
 
 	const wuchar* THIS::getHeap() const { return _heap; }
+	wbool THIS::isFixed() const { return _is_fixed; }
 
 	void* THIS::_get(widx n)
 	{
