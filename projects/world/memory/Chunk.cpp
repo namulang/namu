@@ -61,7 +61,7 @@ namespace wrd
 	wbool THIS::has(const Instance& it) const
 	{
 		void* pt = (void*)&it;
-		return _heap <= pt && pt <= getEOB();
+		return _heap && _heap <= pt && pt <= getEOB();
 	}
 
 	const wuchar* THIS::getEOB() const
