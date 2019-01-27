@@ -2,8 +2,6 @@
 
 #include "Logger.hpp"
 
-#define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
-
 #define WRD_DUMP(level, msg, ...) {                                              \
 	wrd::log::Logger::getInstance().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " msg,   \
             wrd::indep::PlatformAPI::createCurrentTime("%b %d %Y  %X").c_str(), level,      \
