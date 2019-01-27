@@ -9,7 +9,7 @@
 #include "macros/Helpers.hpp"
 #include "macros/Pair.hpp"
 #include "macros/Inherit.hpp"
-#include "macros/Stringizer.hpp"
+#include "macros/ToStr.hpp"
 #include "macros/LazyMethod.hpp"
 #include "macros/Initiator.hpp"
 #include "macros/AssignGuard.hpp"
