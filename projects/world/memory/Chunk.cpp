@@ -80,7 +80,14 @@ namespace wrd
 		return _heap + n * _getRealBlkSize();
 	}
 
-	wuchar* THIS::_getEOB() { return (wuchar*)_get(_sz - 1) + _getRealBlkSize() - 1; }
+	wuchar* THIS::_getEOB()
+	{
+		wuchar* org = (wuchar*) _get(_sz - 1);
+		if( ! org)
+			return NULL;
+
+		return org + _getRealBlkSize() - 1;
+	}
 
 	Res& THIS::_index(widx start)
 	{
