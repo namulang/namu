@@ -6,7 +6,7 @@ namespace wrd
 {	
 	#define T(expression)\
 		if( ! (expression))		\
-			return "at line #" WRD_TO_STR(__LINE__) " fail to chk \"" #expression "\"";
+			return "(#" WRD_TO_STR(__LINE__) ") " #expression;
 
 	class TestCase
 	{	WRD_INHERIT(TestCase)
