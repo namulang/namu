@@ -9,7 +9,7 @@ namespace wrd
 
 	THIS::THIS(wcnt blksize, wbool is_fixed)
 		: Allocator(blksize), _head(0), _len(0), _sz(0), _heap(0), _is_fixed(is_fixed) {}
-	THIS::~THIS() { _release(); }
+	THIS::~THIS() { THIS::release(); }
 	wcnt THIS::getLen() const { return _len; }
 	wcnt THIS::getSize() const { return _sz; }
 
@@ -36,8 +36,8 @@ namespace wrd
 
 	Res& THIS::release()
 	{
-		_release();
-		return Super::release();
+		_len = _sz = 0;
+		return _freeHeap(&_heap);
 	}
 
 	Res& THIS::resize(wcnt new_size)
@@ -75,7 +75,7 @@ namespace wrd
 
 	void* THIS::_get(widx n)
 	{
-		if(n < 0 || n >= _sz)
+		if(n < 0 || n >= _len)
 			return NULL;
 		return _heap + n * _getRealBlkSize();
 	}
@@ -120,11 +120,5 @@ namespace wrd
 			*heap = NULL;
 		}
 		return wasgood;
-	}
-
-	Res& THIS::_release()
-	{
-		_len = _sz = 0;
-		return _freeHeap(&_heap);
 	}
 }

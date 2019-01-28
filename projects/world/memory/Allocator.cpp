@@ -9,10 +9,4 @@ namespace wrd
 
 	THIS::THIS(wcnt blksize) : _blksize(blksize) {}
 	wcnt THIS::getBlkSize() const { return _blksize; }	
-
-	Res& THIS::release()
-	{
-		_blksize = 1;
-		return wasgood;
-	}
 }

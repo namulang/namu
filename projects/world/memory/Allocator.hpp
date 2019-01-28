@@ -15,8 +15,6 @@ namespace wrd
 		virtual Res& del(void* used, wcnt sz) = 0;
 		virtual Res& resize(wcnt new1) = 0;
 		wcnt getBlkSize() const;
-		//	Thing:
-		virtual Res& release();
 
 	private:
 		wcnt _blksize;
