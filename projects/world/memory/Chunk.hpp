@@ -26,6 +26,8 @@ namespace wrd
 		wbool isFixed() const;
 
 	protected:
+		/// @return	returns regarding current size, not length.
+		///			can return garbage if size is bigger than n.
 		virtual void* _get(widx n);
 
 	private:

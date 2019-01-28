@@ -36,7 +36,7 @@ namespace wrd
 	private:
 		widx _findCapable();
 		Res& _release();
-		void* _get(widx n);
+		virtual void* _get(widx n);
 
 	private:
 		std::vector<Chunk*> _chunks;

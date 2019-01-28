@@ -75,7 +75,7 @@ namespace wrd
 
 	void* THIS::_get(widx n)
 	{
-		if(n < 0 || n >= _len)
+		if(n < 0 || n >= _sz)
 			return NULL;
 		return _heap + n * _getRealBlkSize();
 	}
