@@ -12,7 +12,7 @@ namespace wrd
 	{
 		// this guards cant exist at Chunk::_get().
 		// we should put here.
-		if(n <= 0 || n >= getLen())
+		if(n < 0 || n >= getLen())
 			return NULL;
 		return _get(n);
 	}
