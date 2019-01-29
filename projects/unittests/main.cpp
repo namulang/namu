@@ -1,4 +1,4 @@
-#include "tests.hpp"
+#include "TestCase.hpp"
 
 void _header()
 {
