@@ -1,7 +1,7 @@
 #pragma once
 
 #define WRD_INITIATE_CLASS(klass) Initiator<klass> __##klass;
-#define WRD_TESTCASE(name, method)								\
+#define WRD_TEST_START(name)									\
 	namespace wrd												\
 	{															\
 		namespace ut											\
@@ -12,13 +12,15 @@
 				virtual WRD_LAZY_METHOD(std::string&, getName,	\
 					const, std::string, #name)					\
 			protected:											\
-				virtual std::string _onTest()					\
-				{												\
-					WRD_UNWRAP method							\
-				}												\
+				virtual std::string _onTest();					\
 			};													\
-			WRD_INITIATOR(										\
+			std::string name::_onTest() 						\
+			{
+
+#define WRD_TEST_END(name)										\
+			}													\
+			WRD_INITIATOR(name, (								\
 				TestCase::getTests().push_back(new name());		\
-			)													\
+			))													\
 		}														\
 	}
