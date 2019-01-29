@@ -80,9 +80,13 @@ WRD_TEST_START(FileManipulatorTest)
 		if(build.peek().getName() == output_filename)
 		{
 			found = true;
+
 			break;
 		}
 	T(found)
+	T(output.remove()); // fail because it still opened.
+	T( ! as.release());
+	T( ! File("./" + output_filename).remove());
 
 	return "";
 WRD_TEST_END(FileManipulatorTest)
