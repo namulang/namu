@@ -55,9 +55,9 @@
 //
 //		output:
 //			37
-#define _WRD_EACH_TUPLE0(f, x, peek, ...) f WRD_UNWRAP(x) _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE1)(f, peek, __VA_ARGS__)
-#define _WRD_EACH_TUPLE1(f, x, peek, ...) f WRD_UNWRAP(x) _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE0)(f, peek, __VA_ARGS__)
-#define WRD_EACH_TUPLE(f, ...) EVAL(_WRD_EACH_TUPLE1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+#define _WRD_EACH_TUPLE0(f, x, peek, ...) f x _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE1)(f, peek, __VA_ARGS__)
+#define _WRD_EACH_TUPLE1(f, x, peek, ...) f x _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE0)(f, peek, __VA_ARGS__)
+#define WRD_EACH_TUPLE(f, ...) WRD_EVAL(_WRD_EACH_TUPLE1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
 //	EACH macro for expanding:
 //		usage:
