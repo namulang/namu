@@ -2,7 +2,7 @@
 
 WRD_TEST_START(ChunkTest)
 	//	Basic test:
-	Chunk chk(4, true);
+	Chunk chk(4, false);
 	//		MemoryHaver:
 	T(chk.getLen() == 0)
 	T(chk.getSize() == 0)
@@ -35,10 +35,10 @@ WRD_TEST_START(ChunkTest)
 		std::vector<void*> ptrs;
 	};
 	Heap heap;
-	T(chk.isFixed())
+	T( ! chk.isFixed())
 	heap.new1(chk, 1);
 	T(chk.getLen() == 1)
-	T(chk.getSize() >= 1)
+	T(chk.getSize() == Chunk::INIT_SZ)
 	T(chk[0])
 	T(chk[0] == heap.ptrs[0])
 	T( ! chk[-1])
@@ -54,19 +54,21 @@ WRD_TEST_START(ChunkTest)
 
 	heap.del(chk);
 	T(chk.getLen() == 0)
-	T(chk.getSize() >= 2)
+	T(chk.getSize() >= Chunk::INIT_SZ)
 	T( ! chk[0])
 	T(chk.getHeap())
 	T(  chk.getBlkSize() == 4)
 
-	T(chk.release())
+	T( ! chk.release())
 	T(chk.getSize() == 0)
 	T( ! chk.getHeap())
 	T(   chk.getBlkSize() == 4)
-	T(chk.isFixed())
+	T( ! chk.isFixed())
 
 	T( ! chk.resize(5))
-	T(chk.getSize() == 5)
+	T(chk.getSize() == Chunk::INIT_SZ)
+	T( ! chk.resize(Chunk::INIT_SZ+5))
+	T(chk.getSize() == Chunk::INIT_SZ+5)
 	T(chk.getLen() == 0)
 	T(chk[4] == chk[0])
 	T(chk[0] == chk[-1])
