@@ -8,7 +8,7 @@ namespace wrd
 	WRD_CLASS_DEF(THIS)
 
 	THIS::THIS(wcnt blksize, wbool is_fixed)
-		: Allocator(blksize), _head(0), _len(0), _sz(0), _heap(0), _is_fixed(is_fixed) {}
+		: Allocator(blksize), _head(-1), _len(0), _sz(0), _heap(0), _is_fixed(is_fixed) {}
 	THIS::~THIS() { THIS::release(); }
 	wcnt THIS::getLen() const { return _len; }
 	wcnt THIS::getSize() const { return _sz; }
@@ -37,6 +37,7 @@ namespace wrd
 	Res& THIS::release()
 	{
 		_len = _sz = 0;
+		_head = -1;
 		return _freeHeap(&_heap);
 	}
 
@@ -46,16 +47,11 @@ namespace wrd
 		if(_is_fixed && new_size > INIT_SZ) new_size = INIT_SZ;
 		if(new_size == _sz) return wasoob;
 	
-		wuchar* new1 = (wuchar*) _allocHeap(new_size);
-		memcpy(new1, _heap, _sz*_getRealBlkSize());
-
-		int prev_len = _len,
-			prev_size = _sz;
 		release();
-		_len = prev_len;
-		_heap = new1;
+		_heap = (wuchar*) _allocHeap(new_size);
 		_sz = new_size;
-		return _index(prev_size);
+
+		return _index();
 	}
 
 	wbool THIS::has(const Instance& it) const
@@ -89,18 +85,13 @@ namespace wrd
 		return org + _getRealBlkSize() - 1;
 	}
 
-	Res& THIS::_index(widx start)
+	Res& THIS::_index()
 	{
-		wuchar*	eob = _getEOB(),
-			*	e = (wuchar*)_get(start);
-		_head = start;
-		widx* put = NULL;
-		do {
-			put = (widx*)e;
-			*put = ++start;
-		} while ((e += _getRealBlkSize()) < eob);
+		for(wcnt n=0; n < _sz ;n++)
+			*(widx*)_get(n) = n+1;
 
-		*put = -1;
+		_get(getSize()-1);
+		_head = 0;
 		return wasgood;
 	}
 
