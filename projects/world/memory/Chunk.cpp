@@ -20,6 +20,9 @@ namespace wrd
 			return NULL;
 
 		widx* ret = (widx*)_get(_head);
+		if( ! ret)
+			return NULL;
+
 		_head = *ret;
 		_len++;
 		return ret;
@@ -27,6 +30,7 @@ namespace wrd
 
 	Res& THIS::del(void* used, wcnt)
 	{
+		if( ! used) return NULL;
 		*(widx*)used = _head;
 
 		_head = ((wuchar*)used - _heap) / _getRealBlkSize();
@@ -44,7 +48,7 @@ namespace wrd
 	Res& THIS::resize(wcnt new_size)
 	{
 		if(new_size < INIT_SZ) new_size = INIT_SZ;
-		if(_is_fixed && new_size > INIT_SZ) new_size = INIT_SZ;
+		if(_is_fixed) new_size = INIT_SZ;
 		if(new_size == _sz) return wasoob;
 	
 		release();
@@ -73,7 +77,7 @@ namespace wrd
 	{
 		if(n < 0 || n >= _sz)
 			return NULL;
-		return _heap + n * _getRealBlkSize();
+		return _heap + n*_getRealBlkSize();
 	}
 
 	wuchar* THIS::_getEOB()
