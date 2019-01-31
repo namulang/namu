@@ -3,7 +3,7 @@
 
 namespace wrd
 {
-#define _DECL(cls) 					\
+#define _DECL(base, cls) 			\
 	WRD_CLASS_DEF(_result_ ## cls)	\
 	_result_ ## cls cls;
 

@@ -1,4 +1,7 @@
-WRD_EACH(_DECL,
-	wasnull, wassuperfail, wasconst, wascancel, waswrongargs, wasfuncfail, wasgood, wasdup,
-	wasbindfail, wasntneed, waswrongtype, waswrongdata, wasfileio, waswrongmember, waswrongop, wasoob
+WRD_EACH_TUPLE(_DECL,
+	(Info, wasgood),	(Info, wascancel),
+	(Err, wasnull),		(Err, wassuperfail), 	(Err, wasconst), 	
+	(Err, waswrongargs),(Err, wasfuncfail), 	(Err, wasdup),
+	(Err, wasbindfail), (Err, wasntneed), 		(Err, waswrongtype),(Err, waswrongdata),
+	(Err, wasfileio), 	(Err, waswrongmember),	(Err, waswrongop),	(Err, wasoob)
 )

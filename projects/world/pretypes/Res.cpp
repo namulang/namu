@@ -9,9 +9,7 @@ namespace wrd
 	
 	THIS::operator wbool() const { return isErr(); }
 	//	TODO: all below funcs.
-	wbool THIS::isErr() const { return false; }
-	wbool THIS::isWarn() const { return false; }
-	wbool THIS::isInfo() const { return false; };
+	wbool THIS::isErr() const { return ! isGood(); }
 	//	TODO: imple these funcs.
 	Res& THIS::warn(...) { return wasgood; }
 	Res& THIS::err(...) { return wasgood; }

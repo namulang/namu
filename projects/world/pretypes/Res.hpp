@@ -9,9 +9,8 @@ namespace wrd
 		//	TODO: fill this.
 	public:
 		operator wbool() const;
+		virtual wbool isGood() const = 0;
 		wbool isErr() const;
-		wbool isWarn() const;
-		wbool isInfo() const;
 		//	TODO: imple these funcs.
 		Res& warn(...);
 		Res& err(...);

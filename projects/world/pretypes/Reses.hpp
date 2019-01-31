@@ -1,16 +1,17 @@
 #pragma once
 
-#include "Res.hpp"
+#include "Info.hpp"
+#include "Err.hpp"
 
 namespace wrd
 {
-#define _CLASS(classname)								\
-	class _result_ ## classname : public Res			\
-	{	WRD_CLASS_DECL(_result_ ## classname, Res)		\
+#define _CLASS(base, classname)							\
+	class _result_ ## classname : public base 			\
+	{	WRD_CLASS_DECL(_result_ ## classname, base)		\
 	public:												\
 	};
-#define _DECL(cls) 				\
-	_CLASS(cls)					\
+#define _DECL(base, cls) 		\
+	_CLASS(base, cls)			\
 	extern _result_ ## cls cls;
 
 	#include "Reses.in"
