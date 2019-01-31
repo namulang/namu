@@ -4,8 +4,8 @@
 
 namespace wrd
 {
-	class Err : public Result
-	{	WRD_CLASS_DECL(Err, Result)
+	class Err : public Res
+	{	WRD_CLASS_DECL(Err, Res)
 	public:
 		virtual wbool isGood() const { return false; }
 	};
