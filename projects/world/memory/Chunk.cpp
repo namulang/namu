@@ -30,7 +30,7 @@ namespace wrd
 
 	Res& THIS::del(void* used, wcnt)
 	{
-		if( ! used) return NULL;
+		if( ! used) return wasnull;
 		*(widx*)used = _head;
 
 		_head = ((wuchar*)used - _heap) / _getRealBlkSize();
