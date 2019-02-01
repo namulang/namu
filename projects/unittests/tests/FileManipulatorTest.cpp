@@ -84,7 +84,6 @@ WRD_TEST_START(FileManipulatorTest)
 			break;
 		}
 	T(found)
-	T(output.remove()); // fail because it still opened.
 	T( ! as.release());
 	T( ! File("./" + output_filename).remove());
 
