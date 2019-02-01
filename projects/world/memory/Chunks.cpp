@@ -41,15 +41,17 @@ namespace wrd
 
 	widx THIS::_findCapable()
 	{
-		int end = _s;
-		for(; _s != end ;_s++)
-		{		
-			if(_s > _chunks.size()) _s = 0;
+		wcnt sz = _chunks.size();
+		widx end = _s;
 
-			const Chunk& e = *(_chunks[_s]);
-			if(e.isNull() || e.isFull()) continue;
-			return _s;
-		}
+		do
+		{
+			const Chunk& e = get(_s);
+			if(e.isExist() && e.isCapable())
+				return _s;
+			_s++;
+			if(_s >= sz) _s = 0;
+		} while(_s != end);
 
 		resize(getLen() + 1);
 		return _s;
