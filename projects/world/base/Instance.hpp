@@ -11,8 +11,8 @@ namespace wrd
 	class Instance : public Thing
 	{	WRD_CLASS_DECL(Instance, Thing)
 		friend class Block;
-		friend class Akashic; // for _chk_n_from_alloc
-		friend class Chunks; // _chk_n_from_alloc
+		friend class Akashic; // for Vault. 
+		friend class Chunks; // for Vault. 
 		//	Instance는 World에서 인스턴스 관리를 대신해준다. 여기서부터 bind가 가능하다.
 
 	public:
@@ -46,8 +46,6 @@ namespace wrd
 		virtual Weak toWeak() = 0;
 		CWeak toWeak() const;
 		const Block& getBlock() const;
-		//	Thing:
-		virtual Res& release();
 
 	protected:
 		Res& _setId(Id new1);
@@ -60,7 +58,19 @@ namespace wrd
 		static Instancer& _getMgr();
 
 	private:
-		static Id _from_dtor;
-		static widx _chk_n_from_alloc;
+		class Vault : public Thing
+		{	WRD_CLASS_DECL(Vault, Thing)
+		public:
+			//	Vault:
+			Res& set(void* rcver, widx chk_n);
+			widx get(void* rcver);
+			//	Thing:
+			virtual Res& release();
+
+		private:
+			void* _rcver;
+			widx _chk_n;
+		};
+		static Vault _vault;
 	};
 }

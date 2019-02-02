@@ -15,11 +15,7 @@ namespace wrd
 		return _setInit(true);
 	}
 
-	Res& THIS::release()
-	{
-		_setInit(false);
-		return Super::release();
-	}
+	Res& THIS::release() { return _setInit(false); }
 
 	Res& THIS::_setInit(wbool new1)
 	{

@@ -33,11 +33,19 @@ namespace wrd
 	void* THIS::new1()
 	{
 		widx n = _findCapable();
-		Instance::_chk_n_from_alloc = n;
-		return _chunks[n]->new1();
+		void* ret = _chunks[n]->new1();
+		Instance::_vault.set(ret, n);
+		return ret;
 	}
 
-	Res& THIS::del(void* pt, wcnt sz) { return _chunks[Instance::_from_dtor.s.chk_n]->del(pt, sz); }
+	Res& THIS::del(void* pt, wcnt sz)
+	{
+		//	in fact, cast wasn't be deallocated yet:
+		//		if we guarrantee that destructor didn't change its _id value,
+		//		_id will keep its value till now.
+		widx chk_n = ((Instance*) pt)->_id.s.chk_n;
+		return _chunks[chk_n]->del(pt, sz);
+	}
 
 	widx THIS::_findCapable()
 	{

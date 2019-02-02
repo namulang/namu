@@ -6,16 +6,9 @@ namespace wrd
 #define THIS Instance
 	WRD_CLASS_DEF(Instance)
 
-	Id THIS::_from_dtor;
-	widx THIS::_chk_n_from_alloc = WRD_INDEX_ERROR;
-
-	THIS::THIS() : _id(WRD_INDEX_ERROR, _chk_n_from_alloc, WRD_DUMMY) { _chk_n_from_alloc = WRD_INDEX_ERROR; /* used up. */ }
+	THIS::THIS() { _id.s.chk_n = _vault.get(this); }
 	THIS::THIS(Id id) : _id(id) {} // no binding required.
-	THIS::~THIS()
-	{
-		_getMgr().unbind(*this);
-		_from_dtor = _id;
-	}
+	THIS::~THIS() { _getMgr().unbind(*this); }
 
 	wbool THIS::operator==(const This& rhs) const { return _id.num == rhs._id.num; }
 	wbool THIS::operator!=(const This& rhs) const { return ! operator==(rhs); }
@@ -51,12 +44,8 @@ namespace wrd
 
 	const Block& THIS::getBlock() const { return _getBlock(getId()); }
 
-	Res& THIS::release()
-	{
-		_id.s.blk_n = _id.s.chk_n = WRD_INDEX_ERROR;
-		_id.s.serial = WRD_DUMMY;
-		return wasgood;
-	}
+	// release() have not to reset Id. it's regarding to instance info.
+	// as long as instance keep alive, that info need to be stuck to instance.
 
 	Block& THIS::_getBlock(Id id) { return WRD_GET((Block&) _getMgr().getAkashic()[id], blk); }
 
@@ -67,4 +56,32 @@ namespace wrd
 	}
 
 	Instancer& THIS::_getMgr() { return World::get().getInstancer(); }
+
+#undef THIS
+#define THIS Instance::Vault
+	THIS Instance::_vault;
+
+	WRD_CLASS_DEF(THIS)
+
+	Res& THIS::set(void* rcver, widx chk_n)
+	{
+		_rcver = rcver;
+		_chk_n = chk_n;
+		return wasgood;
+	}
+
+	widx THIS::get(void* rcver)
+	{
+		widx ret = _chk_n;
+		set(NULL, WRD_INDEX_ERROR);
+		if(rcver != _rcver)
+		{
+			WRD_WARN("rcver(%x) != _rcver(%x)", rcver, _rcver);
+			return _chk_n;
+		}
+
+		return ret;
+	}
+
+	Res& THIS::release() { return set(NULL, WRD_INDEX_ERROR); }
 }

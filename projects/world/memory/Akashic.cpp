@@ -30,9 +30,10 @@ namespace wrd
 	Id THIS::_genId(void* pt) const
 	{
 		static wcnt serial = 0;
-		widx chk_n = Instance::_chk_n_from_alloc;
-		Instance::_chk_n_from_alloc = -1;
-		return Id(_getIdx(pt), chk_n, ++serial);
+		// Akashic concern about bkl_n at Id. on the other hand, Chunk is chk_n.
+		// eventually, if Instance was born from heap, first it take chk_n from chunk when it borns.
+		// and take blk_n from Akashic when user try to access its Block instance.
+		return Id(_getIdx(pt), WRD_INDEX_ERROR, ++serial);
 	}
 
 	widx THIS::_getIdx(void* it) const
