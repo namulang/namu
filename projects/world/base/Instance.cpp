@@ -24,7 +24,7 @@ namespace wrd
 
 	Id THIS::getId() const
 	{
-		if(_id.num == WRD_INDEX_ERROR)
+		if(_id.sep.blk_n == WRD_INDEX_ERROR)
 			_getMgr().bind((This&)*this);
 		return _id;
 	}
@@ -53,7 +53,8 @@ namespace wrd
 
 	Res& THIS::release()
 	{
-		_id.num = WRD_INDEX_ERROR;
+		_id.sep.blk_n = _id.sep.chk_n = WRD_INDEX_ERROR;
+		_id.sep.serial = WRD_DUMMY;
 		return wasgood;
 	}
 
