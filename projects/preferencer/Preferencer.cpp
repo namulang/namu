@@ -25,7 +25,7 @@ namespace wrd
 				return false;
 			}
 
-			WRD_INFO("parse(%s)", file.getPath().c_str());
+			//WRD_INFO("parse(%s)", file.getPath().c_str());
 			fm::AsciiStream stream(file);
 			stream.init();
 			
@@ -46,7 +46,7 @@ namespace wrd
 			PRParserTokenManager token_manager(&stream);
 			PRParser parser(&token_manager);
 
-			WRD_INFO("parser.configure_file()");
+			//WRD_INFO("parser.configure_file()");
 			parser.setPreferencer(this);
 			parser.setErrorHandler(new PRParserHandler());
 			parser.configure_file();
