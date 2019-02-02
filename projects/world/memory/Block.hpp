@@ -39,6 +39,8 @@ namespace wrd
 	private:
         Res& _onWeak(wcnt vote);
         Res& _onStrong(wcnt vote); // TODO: check isHeap(), apply only if isHEAP() == true.
+		Res& _completeId(Instance& it);
+		Res& _sync(Id new1);
 
 	private:
 		Instance* _pt;

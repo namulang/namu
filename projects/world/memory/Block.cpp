@@ -15,8 +15,9 @@ namespace wrd
 		if( ! _pt)
 			return wasnull;
 
-		_pt->_id.sep.serial = new1;
-		return wasgood;
+		Id got = getId();
+		got.sep.serial = new1;
+		return _sync(got);
 	}
 
 	wcnt THIS::getSerial() const { return _pt ? _pt->getId().sep.serial : WRD_INDEX_ERROR; }
@@ -78,6 +79,22 @@ namespace wrd
 
 		_pt = (Instance*) &it;
 		_pt->_id = getId();
-		return wasgood;
+		return _completeId(*_pt);
+	}
+
+	Res& THIS::_completeId(Instance& it)
+	{
+		//	complete mine:
+		Id mine = getId();
+		mine.sep.chk_n = it._id.sep.chk_n;
+		//	propagate it:
+		return _sync(mine);
+	}
+
+	Res& THIS::_sync(Id new1)
+	{
+		if(_pt)
+			_pt->_setId(new1);
+		return _setId(new1);
 	}
  }

@@ -9,7 +9,7 @@ namespace wrd
 	Id THIS::_from_dtor;
 	widx THIS::_chk_n_from_alloc = WRD_INDEX_ERROR;
 
-	THIS::THIS() {} 
+	THIS::THIS() : _id(WRD_INDEX_ERROR, _chk_n_from_alloc, WRD_DUMMY) { _chk_n_from_alloc = WRD_INDEX_ERROR; /* used up. */ }
 	THIS::THIS(Id id) : _id(id) {} // no binding required.
 	THIS::~THIS()
 	{
