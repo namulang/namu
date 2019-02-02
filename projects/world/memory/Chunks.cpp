@@ -17,7 +17,7 @@ namespace wrd
 	const Chunk& THIS::operator[](const Instance& inst) const { return get(inst); }
 
 	Chunk& THIS::get(widx n) { return *(Chunk*)_get(n); }
-	Chunk& THIS::get(const Instance& it) { return *(Chunk*)_get(it.getId().sep.chk_n); }
+	Chunk& THIS::get(const Instance& it) { return *(Chunk*)_get(it.getId().s.chk_n); }
 	const Chunk& THIS::get(const Instance& it) const { return ((Chunks*)this)->get(it); }
 	const Chunk& THIS::get(widx n) const { return ((Chunks*)this)->get(n); }
 
@@ -37,7 +37,7 @@ namespace wrd
 		return _chunks[n]->new1();
 	}
 
-	Res& THIS::del(void* pt, wcnt sz) { return _chunks[Instance::_from_dtor.sep.chk_n]->del(pt, sz); }
+	Res& THIS::del(void* pt, wcnt sz) { return _chunks[Instance::_from_dtor.s.chk_n]->del(pt, sz); }
 
 	widx THIS::_findCapable()
 	{
@@ -57,7 +57,7 @@ namespace wrd
 		return _s;
 	}
 
-	wbool THIS::has(const Instance& it) const { return _chunks[it.getId().sep.chk_n]->has(it); }
+	wbool THIS::has(const Instance& it) const { return _chunks[it.getId().s.chk_n]->has(it); }
 
 	Res& THIS::resize(wcnt new1)
 	{

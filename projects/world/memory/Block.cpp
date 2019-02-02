@@ -16,11 +16,11 @@ namespace wrd
 			return wasnull;
 
 		Id got = getId();
-		got.sep.serial = new1;
+		got.s.serial = new1;
 		return _sync(got);
 	}
 
-	wcnt THIS::getSerial() const { return _pt ? _pt->getId().sep.serial : WRD_INDEX_ERROR; }
+	wcnt THIS::getSerial() const { return _pt ? _pt->getId().s.serial : WRD_INDEX_ERROR; }
 
 	const Chunk& THIS::getChunk() const
 	{
@@ -86,7 +86,7 @@ namespace wrd
 	{
 		//	complete mine:
 		Id mine = getId();
-		mine.sep.chk_n = it._id.sep.chk_n;
+		mine.s.chk_n = it._id.s.chk_n;
 		//	propagate it:
 		return _sync(mine);
 	}

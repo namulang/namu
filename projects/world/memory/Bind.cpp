@@ -106,7 +106,7 @@ namespace wrd
 	{
 	    Instance& ins = WRD_GET(this->_getBlock(_its_id), get());
 		WRD_IS_NULL(ins, wasnull, ins)
-	    if(ins.getId().sep.serial != this->_its_id.sep.serial) {
+	    if(ins.getId().s.serial != this->_its_id.s.serial) {
 	        unbind();
 	        wasbindfail.warn("...");
 	        return nulr<Instance>();

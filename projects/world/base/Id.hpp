@@ -11,7 +11,7 @@ namespace wrd
 			wint blk_n:21;
 			wint chk_n:22;
 			wuint serial:21;
-		} sep;
+		} s;
 		wint64 num;
 		
 		Id(wint64 it);

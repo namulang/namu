@@ -10,9 +10,9 @@ namespace wrd
 	THIS::THIS() : Chunk(sizeof(Unit), false) {}
 
 	Unit& THIS::operator[](widx n) { return get(n); }
-	Unit& THIS::operator[](Id id) { return get(id.sep.blk_n); }
+	Unit& THIS::operator[](Id id) { return get(id.s.blk_n); }
 	const Unit& THIS::operator[](widx n) const { return get(n); }
-	const Unit& THIS::operator[](Id id) const { return get(id.sep.blk_n); }
+	const Unit& THIS::operator[](Id id) const { return get(id.s.blk_n); }
 
 	Unit& THIS::get(widx n) { return *(Unit*)_get(n); }
 	const Unit& THIS::get(widx n) const { return ((Akashic*)this)->get(n); }
