@@ -8,13 +8,13 @@ namespace wrd
     {
 		struct SeperatedId
 		{
-			wuint blk_n:21;
-			wuint chk_n:22;
+			wint blk_n:21;
+			wint chk_n:22;
 			wuint serial:21;
 		} sep;
 		wint64 num;
 		
-		Id(wint64 it = WRD_INDEX_ERROR);
-		Id(wuint new_blk_n, wuint new_chk_n, wuint new_serial);
+		Id(wint64 it);
+		Id(wint new_blk_n = WRD_INDEX_ERROR, wint new_chk_n = WRD_INDEX_ERROR, wuint new_serial = WRD_DUMMY);
     };
 }
