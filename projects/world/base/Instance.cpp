@@ -72,12 +72,16 @@ namespace wrd
 
 	widx THIS::get(void* rcver)
 	{
+		//	pre:
+		if( ! _rcver) return WRD_INDEX_ERROR;
+
+		//	main:
 		widx ret = _chk_n;
 		set(NULL, WRD_INDEX_ERROR);
 		if(rcver != _rcver)
 		{
 			WRD_WARN("rcver(%x) != _rcver(%x)", rcver, _rcver);
-			return _chk_n;
+			return WRD_INDEX_ERROR;
 		}
 
 		return ret;
