@@ -47,6 +47,8 @@ namespace wrd
 
 	wbool THIS::canBind(const Class& cls) const { return cls.isSub(getBindable()); }
 
+	Id THIS::getId() const { return _id; }
+
 	wbool THIS::isHeap() const
 	{
 		const Chunk& chk = getChunk();

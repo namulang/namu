@@ -39,7 +39,7 @@ namespace wrd
 		void operator delete(void* pt, size_t sz);
 
 	public://Instance:
-		Id getId() const;
+		virtual Id getId() const;
 		virtual wbool isHeap() const;
 		virtual Strong toStrong() = 0;
 		CStrong toStrong() const;

@@ -25,6 +25,7 @@ namespace wrd
 		using Bindable::canBind;
 		virtual wbool canBind(const Class& cls) const;
 		//	Instance:
+		virtual Id getId() const;
 		virtual wbool isHeap() const;
 		virtual Strong toStrong();
 		virtual Weak toWeak();
