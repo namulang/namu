@@ -80,7 +80,6 @@ namespace wrd
 		unbind();
 
 		_pt = (Instance*) &it;
-		_pt->_id = getId();
 		return _completeId(*_pt);
 	}
 
