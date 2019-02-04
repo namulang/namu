@@ -7,6 +7,7 @@ namespace wrd
 
 	WRD_CLASS_DEF(Thing)
 
+	THIS::~THIS() {}
 	const Class& THIS::getSuper() const { return getClass().getSuper(); }
 	wbool THIS::isNull() const { const void* chk = this; return !chk; }
 	wbool THIS::isExist() const { const void* chk = this; return chk; }

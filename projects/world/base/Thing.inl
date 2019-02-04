@@ -21,6 +21,9 @@ namespace wrd
 	{	WRD_CLASS_DECL(Thing)
 		template <typename T, typename S> friend class TVisitation; //	_tour를 위한 것이다.
 	public:
+		virtual ~Thing();
+
+	public:
 		virtual const Class& getSuper() const;
 		virtual Res& release() = 0;
 		wbool isNull() const;
