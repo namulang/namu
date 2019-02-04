@@ -77,13 +77,13 @@ namespace wrd
 
 		//	main:
 		widx ret = _chk_n;
-		set(NULL, WRD_INDEX_ERROR);
 		if(rcver != _rcver)
 		{
 			WRD_WARN("rcver(%x) != _rcver(%x)", rcver, _rcver);
-			return WRD_INDEX_ERROR;
+			ret = WRD_INDEX_ERROR;
 		}
 
+		set(NULL, WRD_INDEX_ERROR);
 		return ret;
 	}
 
