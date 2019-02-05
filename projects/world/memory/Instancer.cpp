@@ -15,6 +15,7 @@ namespace wrd
 
 	Res& THIS::unbind(Instance& old)
 	{
+		if( ! _hasInstanceBlock(old)) return wascancel; // optimization.
 		Unit& un = _akashic[old.getId()];
 		return _akashic.del(&un, sizeof(Unit));
 	}
@@ -23,6 +24,8 @@ namespace wrd
 	void THIS::_del(void* pt, wcnt sz) { _pool[sz].del(pt, sz); }
 	const Pool& THIS::getPool() const { return _pool; }
 	const Akashic& THIS::getAkashic() const { return _akashic; } 
+	wbool THIS::_hasInstanceBlock(const Instance& it) const { return it._id.s.blk_n != WRD_INDEX_ERROR; }
+
 
 #undef THIS
 }

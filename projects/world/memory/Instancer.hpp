@@ -20,6 +20,7 @@ namespace wrd
 	private:
 		void* _new1(size_t sz);
 		void _del(void* pt, wcnt sz);
+		wbool _hasInstanceBlock(const Instance& it) const;
 
 	private:
 		Pool _pool;
