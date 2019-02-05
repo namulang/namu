@@ -38,13 +38,12 @@ namespace wrd
 		virtual Res& _bind(const Instance& new1);
 
 	private:
-        Res& _onWeak(wcnt vote);
-        Res& _onStrong(wcnt vote); // TODO: check isHeap(), apply only if isHEAP() == true.
+        Res& _onStrong(wcnt vote);
 		Res& _completeId(Instance& it);
 		Res& _sync(Id new1);
 
 	private:
 		Instance* _pt;
-		wcnt _weak, _strong;
+		wcnt _strong;
     };
 }

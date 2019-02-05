@@ -7,8 +7,8 @@ namespace wrd
 #define THIS Block
 	WRD_CLASS_DEF(THIS)
 
-	THIS::THIS() : Super() {}
-	THIS::THIS(Id id) : Super(id) {}
+	THIS::THIS() : Super(), _pt(NULL), _strong(0) {}
+	THIS::THIS(Id id) : Super(id), _pt(NULL), _strong(0) {}
 
 	Res& THIS::setSerial(wcnt new1)
 	{
@@ -32,8 +32,10 @@ namespace wrd
 
 	Res& THIS::unbind()
 	{
-		_pt = 0;
-		_weak = _strong = 0;
+		if(_pt && isHeap())
+			delete _pt;
+		_pt = NULL;
+		_strong = 0;
 		return wasgood;
 	}
 
@@ -46,7 +48,6 @@ namespace wrd
 	}
 
 	wbool THIS::canBind(const Class& cls) const { return cls.isSub(getBindable()); }
-
 	Id THIS::getId() const { return _id; }
 
 	wbool THIS::isHeap() const
@@ -61,15 +62,14 @@ namespace wrd
 	Weak THIS::toWeak() { return Weak((Node*)_pt); }
 	Res& THIS::release() { return unbind(); }
 
-	Res& THIS::_onWeak(wcnt vote)
-	{
-		//	TODO:
-		return wasgood;
-	}
-	
 	Res& THIS::_onStrong(wcnt vote)
 	{
-		//	TODO:
+		if( ! isHeap()) return wascancel;
+		WRD_ASSERT(vote, waswrongargs)
+
+		_strong += vote;
+		if(_strong <= 0)
+			unbind();
 		return wasgood;
 	}
 
