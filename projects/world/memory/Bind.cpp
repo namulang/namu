@@ -98,6 +98,17 @@ namespace wrd
 		WRD_ASSERT(canBind(it), waswrongtype);
 	
 	    unbind();
+		//	regardless of result from _onStrong binder can bind:
+		//		there are two reasons:
+		//			because Block has equal lifecycle to what it bind, if there is
+		//			a request by user to refer a bind for binding freed instance,
+		//			user has responsibilty to treat wrongly.
+		//			so, we should not consider such cases. 
+		//
+		//		and:
+		//			no matter how block reacts, anyway it won't refuse binder's
+		//			refering. for instance, the scenario for binding non-heap allocated
+		//			instance.
 		_its_id = it.getId();
 	    return wasgood;
 	}
