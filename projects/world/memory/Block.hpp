@@ -18,6 +18,7 @@ namespace wrd
 		Res& setSerial(wcnt new1);
 		wcnt getSerial() const;
 		const Chunk& getChunk() const;
+		wcnt getStrongCnt() const;
 		//	Bindable:
 		virtual Res& unbind();
 		virtual wbool isBind() const;

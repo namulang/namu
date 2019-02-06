@@ -30,6 +30,8 @@ namespace wrd
 		return Instance::_getMgr().getPool()[*_pt][*_pt];
 	}
 
+	wcnt THIS::getStrongCnt() const { return _strong; }
+
 	Res& THIS::unbind()
 	{
 		if(_pt && isHeap())
