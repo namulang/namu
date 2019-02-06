@@ -52,6 +52,12 @@ namespace wrd
 
 	const Container& THIS::getNodes() const { return WRD_GET(get<Node>(), getNodes()); }
 
+	Res& THIS::release()
+	{
+		unbind();
+		return Super::release();
+	}
+
 	Strong THIS::to(const Class& cls)
 	{
 		/* TODO:

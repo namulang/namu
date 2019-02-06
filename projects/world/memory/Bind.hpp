@@ -62,6 +62,8 @@ namespace wrd
 		virtual Strong use(Msg& msg); 
 		virtual const Origin& getOrigin() const; 
 		virtual const Container& getNodes() const;
+		//		Thing:
+		virtual Res& release();
 
 	public:	//	Thing:
 		using Super::to;
