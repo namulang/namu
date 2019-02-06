@@ -5,6 +5,8 @@
 namespace wrd
 {
 #define THIS Pool
+	WRD_CLASS_DEF(THIS)
+
 	THIS::Pool() {}
 	THIS::~Pool() { release(); }
 

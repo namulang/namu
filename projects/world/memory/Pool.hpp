@@ -6,7 +6,7 @@
 namespace wrd
 {
 	class Pool : public MemoryHaver
-	{	WRD_CLASS(Pool, MemoryHaver)
+	{	WRD_CLASS_DECL(Pool, MemoryHaver)
 	public:
 		Pool();
 		virtual ~Pool();
