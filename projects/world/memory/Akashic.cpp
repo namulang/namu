@@ -10,12 +10,28 @@ namespace wrd
 	THIS::THIS() : Chunk(sizeof(Unit), false) {}
 
 	Unit& THIS::operator[](widx n) { return get(n); }
-	Unit& THIS::operator[](Id id) { return get(id.s.blk_n); }
+	Unit& THIS::operator[](Id id) { return get(id); }
 	const Unit& THIS::operator[](widx n) const { return get(n); }
-	const Unit& THIS::operator[](Id id) const { return get(id.s.blk_n); }
+	const Unit& THIS::operator[](Id id) const { return get(id); }
 
 	Unit& THIS::get(widx n) { return *(Unit*)_get(n); }
 	const Unit& THIS::get(widx n) const { return ((Akashic*)this)->get(n); }
+
+	Unit& THIS::get(Id id)
+	{
+		Unit& got = get(id.s.blk_n);
+		if( ! &got ||
+			got.blk.getId().num != id.num)
+			return nulr<Unit>();
+
+		return got;
+	}
+
+	const Unit& THIS::get(Id id) const
+	{
+		WRD_UNCONST()
+		return unconst.get(id);
+	}
 
 	void* THIS::new1()
 	{

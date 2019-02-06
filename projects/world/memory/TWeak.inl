@@ -23,16 +23,12 @@ namespace wrd
 
 	public:	// Bind:
 		Res& bind(T& new1);
-		virtual Res& unbind();
 		virtual const Class& getBindable() const;
 		using Bindable::get;
 		T& get();
 		const T& get() const;
 		//	Node:
 		virtual wbool isConst() const;
-
-	protected://Bind:
-		virtual Res& _bind(const Instance& it);
 	};
 	template <typename T>
 	class TWeak<const T> : public Bind 
@@ -56,15 +52,11 @@ namespace wrd
 	public:	// Bind:
 		Res& bind(T& new1);
 		Res& bind(const T& new1);
-		virtual Res& unbind();
 		virtual const Class& getBindable() const;
 		using Bindable::get;
 		const T& get() const;
 		//	Node:
 		virtual wbool isConst() const;
-
-	protected://Bind:
-		virtual Res& _bind(const Instance& it);
 	};
 
 	typedef TWeak<Node> Weak;

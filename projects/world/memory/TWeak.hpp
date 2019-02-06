@@ -31,15 +31,6 @@ namespace wrd
 	}
 
 	TEMPL Res& THIS::bind(T& new1) { return this->bind(new1); }
-	
-	TEMPL Res& THIS::unbind()
-	{
-	    Block& blk = this->_getBlock(this->getItsId());
-		WRD_IS_NULL(blk)
-	    blk._onWeak(-1);
-	    return Super::unbind();
-	}
-	
 	TEMPL const Class& THIS::getBindable() const { return T::getClassStatic(); }
 	
 	TEMPL T& THIS::get()
@@ -57,15 +48,6 @@ namespace wrd
 	
 	TEMPL wbool THIS::isConst() const { return false; }
 	
-	TEMPL Res& THIS::_bind(const Instance& it)
-    {
-		WRD_IS_SUPER(_bind(it))
-
-		Block& blk = const_cast<Block&>(it.getBlock());
-		WRD_IS_NULL(blk)
-	    return blk._onWeak(1);
-    }
-
 #undef THIS
 #define THIS TWeak<const T>
 
@@ -99,17 +81,8 @@ namespace wrd
 
 	TEMPL Res& THIS::bind(T& new1) { return this->bind(new1); }
 	TEMPL Res& THIS::bind(const T& new1) { return this->bind(new1); }
-	
-	TEMPL Res& THIS::unbind()
-	{
-	    Block& blk = this->_getBlock(this->getItsId());
-		WRD_IS_NULL(blk)
-	    blk._onWeak(-1);
-	    return this->Super::unbind();
-	}
-	
 	TEMPL const Class& THIS::getBindable() const { return T::getClassStatic(); }
-	
+
 	TEMPL const T& THIS::get() const
 	{
 	    WRD_UNCONST()
@@ -119,15 +92,6 @@ namespace wrd
 	}
 	
 	TEMPL wbool THIS::isConst() const { return false; }
-	
-	TEMPL Res& THIS::_bind(const Instance& it)
-	{
-		WRD_IS_SUPER(_bind(it))
-
-		Block& blk = const_cast<Block&>(it.getBlock());
-		WRD_IS_NULL(blk)
-	    return blk._onWeak(1);
-	}
 
 #undef THIS
 #undef TEMPL

@@ -23,7 +23,9 @@ namespace wrd
 		//	Chunk:
 		virtual void* new1();
 		Unit& get(widx n);
+		Unit& get(Id id);
 		const Unit& get(widx n) const;
+		const Unit& get(Id id) const;
 
 	protected:
 		//	Chunk:

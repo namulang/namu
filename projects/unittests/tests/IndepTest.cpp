@@ -5,7 +5,7 @@ WRD_TEST_START(IndepTest)
 
 	BuildFeatures::Date date;
 	WRD_INFO("today is %d-%d %d. %s", date.getMonth(), date.getDay(), date.getYear(),
-		BuildFeatures::Time::get().c_str())
+	BuildFeatures::Time::get().c_str())
 	WRD_INFO("Version is %s", BuildFeatures::Version::get().c_str())
 	BuildFeatures::Platform plat;
 	WRD_INFO("Platform is %d, %s, %s", plat.get(), plat.getName().c_str(), plat.getVersion().c_str())
