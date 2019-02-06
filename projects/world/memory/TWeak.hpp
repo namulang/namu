@@ -30,7 +30,7 @@ namespace wrd
 		return *this;
 	}
 
-	TEMPL Res& THIS::bind(T& new1) { return this->bind(new1); }
+	TEMPL Res& THIS::bind(T& new1) { return this->_bind(new1); }
 	TEMPL const Class& THIS::getBindable() const { return T::getClassStatic(); }
 	
 	TEMPL T& THIS::get()
@@ -79,8 +79,8 @@ namespace wrd
 		return *this;
 	}
 
-	TEMPL Res& THIS::bind(T& new1) { return this->bind(new1); }
-	TEMPL Res& THIS::bind(const T& new1) { return this->bind(new1); }
+	TEMPL Res& THIS::bind(T& new1) { return this->_bind(new1); }
+	TEMPL Res& THIS::bind(const T& new1) { return this->_bind(new1); }
 	TEMPL const Class& THIS::getBindable() const { return T::getClassStatic(); }
 
 	TEMPL const T& THIS::get() const
