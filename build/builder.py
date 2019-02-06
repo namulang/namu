@@ -206,7 +206,7 @@ def commit():
 def checkDependencies():
     print("")
     print ("checking dependencies...", end=" ")
-    simple_depencies = ["git", "cmake"]
+    simple_depencies = ["git", "cmake", "java"]
 
     for e in simple_depencies:
         if not shutil.which(e):
