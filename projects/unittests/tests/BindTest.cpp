@@ -14,9 +14,9 @@ WRD_TEST_START(BindTest)
 	class B : public Object
 	{	WRD_CLASS(B, Object)
 	public:
-		B() { cout << (void*) this << " get()=" << ++get() << "\n"; }
-		B(const B&) { cout << (void*) this << "get()=" << ++get() << "\n"; }
-		virtual ~B() { cout << (void*) this << "get()=" << --get() << "\n" ; }
+		B() { ++get(); }
+		B(const B&) { ++get(); }
+		virtual ~B() { --get(); }
 		float grade;
 
 		static wcnt& get() { static wcnt n = 0; return n; }
