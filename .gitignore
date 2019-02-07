@@ -21,6 +21,7 @@ Binaries/
 *.log.dev.dbg
 *.log.dev
 *.log
+logs
 *.exe
 !AfterBuild.exe
 !Applications/SDKBuilder/sdkbuilder.bat
@@ -43,3 +44,5 @@ BuildInformation.hpp
 *.o
 FileManipulatorTest.txt
 .vscode/
+generated/
+build/unittests*

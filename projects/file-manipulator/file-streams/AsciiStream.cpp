@@ -1,110 +1,124 @@
 #include "AsciiStream.hpp"
+#include "../file-structures.hpp"
 
-namespace NE
+namespace wrd
 {
-    #define THIS AsciiStream
+	namespace fm
+	{
+		#define THIS AsciiStream
+		using namespace std;
 
-    THIS::THIS() : FileStream() {}
-    THIS::THIS(const string& new_path) : FileStream(new_path) {}
-    THIS::~THIS() { release(); }
+		THIS::THIS() : Super() {}
+		THIS::THIS(const string& new_path) : Super(new_path) {}
+		THIS::THIS(const File& file) : Super()
+		{
+			if( ! file.isNull())
+				setPath(file.getPath());
+		}
+		THIS::~THIS() { release(); }
 
-    type_bool THIS::initialize() 
-    {
-        const char* mode = 0;
-        switch(getMode())
-        {
-        case READ_ONLY:         mode = "r"; break;
-        case OVERWRITE_ONLY:    mode = "r+";break;
-        case WRITABLE:          mode = "a+";break;
-        default:
-            return true;
-        }
+		wbool THIS::init() 
+		{
+			if(Super::init()) return true;
 
-        _fd = fopen(getPath().c_str(), mode);
-        
-        return ! isInitialized();
-    }
-    
-    type_count THIS::write(const string& datum) { return write(datum.c_str(), sizeof(char) * datum.size()); }
-    
-    type_count THIS::write(const void* chunks, type_count bytes)
-    {
-        if( ! isInitialized()) return 0;
+			const char* mode = 0;
+			switch(getMode())
+			{
+			case READ_ONLY:         mode = "r"; break;
+			case OVERWRITE_ONLY:    mode = "w+";break;
+			case APPENDABLE:        mode = "r+";break;
+			default:
+				return true;
+			}
 
-        return fwrite(chunks, 1, bytes, _fd);
-    }
+			_fd = fopen(getPath().c_str(), mode);
+			if(getMode() == APPENDABLE)
+				setCursor(getEndOfFile());
+			
+			return ! isInit();
+		}
+		
+		wcnt THIS::write(const string& datum) { return write(datum.c_str(), sizeof(char) * datum.size()); }
+		
+		wcnt THIS::write(const void* chunks, wcnt bytes)
+		{
+			if( ! isInit()) return 0;
 
-    type_count THIS::read(void* target, type_count bytes)
-    {
-        string buffer = _peelOffBuffer(bytes);
-        
-        type_count count = 0;
-        type_count max = buffer.length() > bytes ? bytes : buffer.length();
-        char* t = (char*) target;
-        for(; count < max ;count++)
-            t[count] = buffer[count];
+			return fwrite(chunks, 1, bytes, _fd);
+		}
 
-        return max;
-    }
+		wcnt THIS::read(void* target, wcnt bytes)
+		{
+			string buffer = _peelOffBuffer(bytes);
+			
+			wcnt count = 0;
+			wcnt max = buffer.length() > bytes ? bytes : buffer.length();
+			char* t = (char*) target;
+			for(; count < max ;count++)
+				t[count] = buffer[count];
 
-    string THIS::readToken(const string& delimeter)
-    {
-        type_bool matched_once = false;
-        type_count last = 0;
-        type_count to_be_cut = 0;
-        while(1)
-        {
-            //  algorithm:
-            //      it finds the index when extracting character, which means "e", is judged as one of delimiter.
-            //      But, if the next character of "e" is also one of delimiter, we should forward until it's not.
-            if(_buffer.length() <= to_be_cut)
-                if(_readToBuffer() <= 0)
-                    break;
-            char e = _buffer[to_be_cut++];
-            if(delimeter.find(e) != string::npos)
-                matched_once = true; // okay. we've met one of a delimiter.
-            else if(matched_once)
-                break;                    
-            else
-                last = to_be_cut; // our users shouldn't receive a string with a delimiter.
-        }
-        string to_return(_buffer.c_str(), last);
-        _buffer.erase(0, to_be_cut); // last + delimiters.
+			return max;
+		}
 
-        return to_return;
-    }
+		string THIS::readToken(const string& delimeter)
+		{
+			wbool matched_once = false;
+			wcnt last = 0;
+			wcnt to_be_cut = 0;
+			while(1)
+			{
+				//  algorithm:
+				//      it finds the index when extracting character, which means "e", is judged as one of delimiter.
+				//      But, if the next character of "e" is also one of delimiter, we should forward until it's not.
+				if(_buffer.length() <= to_be_cut)
+					if(_readToBuffer() <= 0)
+						break;
+				char e = _buffer[to_be_cut++];
+				if(delimeter.find(e) != string::npos)
+					matched_once = true; // okay. we've met one of a delimiter.
+				else if(matched_once)
+					break;                    
+				else
+					last = to_be_cut; // our users shouldn't receive a string with a delimiter.
+			}
+			string to_return(_buffer.c_str(), last);
+			_buffer.erase(0, to_be_cut); // last + delimiters.
 
-    string THIS::readLine() { return readToken("\n"); }
+			return to_return;
+		}
 
-    type_bool THIS::release()
-    {
-        _buffer.clear();
-        return FileStream::release();
-    }
+		string THIS::readLine() { return readToken("\n"); }
 
-    THIS::THIS(const PathedObject& object) {}
-    
-    string THIS::_peelOffBuffer(type_count bytes/*except for null*/)
-    {
-        if(_buffer.length() < bytes)
-            _readToBuffer();
+		wbool THIS::release()
+		{
+			_buffer.clear();
+			return Super::release();
+		}
 
-        type_count max_size = _buffer.length() > bytes ? bytes : _buffer.length();
-        string to_return(_buffer, max_size);
-        _buffer.erase(0, max_size);
-        return to_return;
-    }
-    
-    type_count THIS::_readToBuffer(type_count bytes)
-    {
-        if( ! isInitialized()) return 0;
+		THIS::THIS(const PathedObject& object) {}
+		
+		string THIS::_peelOffBuffer(wcnt bytes/*except for null*/)
+		{
+			if(_buffer.length() < bytes)
+				_readToBuffer();
 
-        char* buffer = new char[bytes];
+			wcnt max_size = _buffer.length() > bytes ? bytes : _buffer.length();
+			string to_return(_buffer.c_str(), max_size);
+			_buffer.erase(0, max_size);
+			return to_return;
+		}
+		
+		wcnt THIS::_readToBuffer(wcnt bytes)
+		{
+			if( ! isInit()) return 0;
 
-        type_count n = fread(buffer, 1, bytes, _fd);
-        _buffer += string(buffer, n);
-        
-        delete [] buffer;
-        return n;
-    }
+			char* buffer = new char[bytes];
+
+			wcnt n = fread(buffer, 1, bytes, _fd);
+			_buffer += string(buffer, n);
+			
+			delete [] buffer;
+			return n;
+		}
+	}
 }

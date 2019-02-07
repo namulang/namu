@@ -1,59 +1,73 @@
 #include "BinaryStream.hpp"
+#include "../file-structures.hpp"
+#include <string.h>
 
-namespace NE
+namespace wrd
 {
-    #define THIS BinaryStream
+	namespace fm
+	{
+		#define THIS BinaryStream
 
-    THIS::THIS() : FileStream() {}
-    THIS::THIS(const std::string& new_path) : FileStream(new_path) {}
-    THIS::~THIS() { release(); }
+		THIS::THIS() : Super() {}
+		THIS::THIS(const std::string& new_path) : Super(new_path) {}
+		THIS::THIS(const File& file) : Super() 
+		{
+			if( ! file.isNull())
+				setPath(file.getPath());
+		}
+		THIS::~THIS() { release(); }
 
 
-    type_bool THIS::initialize()
-    {
-        const char* mode = 0;
-        switch(getMode())
-        {
-        case READ_ONLY:         mode = "rb";    break;
-        case OVERWRITE_ONLY:    mode = "r+b";   break;
-        case WRITABLE:          mode = "a+b";   break;
-        default:
-            return true;
-        }
-        
-        _fd = fopen(getPath().c_str(), mode);
+		wbool THIS::init()
+		{
+			if(Super::init()) return true;
 
-        return ! isInitialized();
-    }
+			const char* mode = 0;
+			switch(getMode())
+			{
+			case READ_ONLY:         mode = "rb";    break;
+			case OVERWRITE_ONLY:    mode = "w+b";   break;
+			case APPENDABLE:        mode = "r+b";   break;
+			default:
+				return true;
+			}
+			
+			_fd = fopen(getPath().c_str(), mode);
+			if(getMode() == APPENDABLE)
+				setCursor(getEndOfFile());
 
-    type_count THIS::write(const char* str) { return write(str, sizeof(char) * strlen(str)); }
-    type_count THIS::write(const string& str) { return write(str.c_str()); }
+			return ! isInit();
+		}
 
-    type_count THIS::write(const void* chunks, type_count bytes)
-    {
-        if( ! isInitialized()) return 0;
+		wcnt THIS::write(const char* str) { return write(str, sizeof(char) * strlen(str)); }
+		wcnt THIS::write(const std::string& str) { return write(str.c_str()); }
 
-        return fwrite(chunks, 1, bytes, _fd);
-    }
+		wcnt THIS::write(const void* chunks, wcnt bytes)
+		{
+			if( ! isInit()) return 0;
 
-    type_count THIS::read(void* target, type_count bytes)
-    {
-        if( ! isInitialized()) return 0;
+			return fwrite(chunks, 1, bytes, _fd);
+		}
 
-        return fread(target, 1, bytes, _fd);
-    }
+		wcnt THIS::read(void* target, wcnt bytes)
+		{
+			if( ! isInit()) return 0;
 
-    std::string THIS::read(type_count bytes)
-    {
-        char* buffer = new char[bytes];
+			return fread(target, 1, bytes, _fd);
+		}
 
-        type_count n = read(buffer, sizeof(char) * bytes);
-        std::string to_return(buffer, n);
+		std::string THIS::read(wcnt bytes)
+		{
+			char* buffer = new char[bytes];
 
-        delete [] buffer;
+			wcnt n = read(buffer, sizeof(char) * bytes);
+			std::string to_return(buffer, n);
 
-        return to_return;
-    }
+			delete [] buffer;
 
-    THIS::THIS(const PathedObject& object) {}
+			return to_return;
+		}
+
+		THIS::THIS(const PathedObject& object) {}
+	}
 }

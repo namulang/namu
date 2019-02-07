@@ -1,0 +1,201 @@
+// Copyright 2017 kniz for preferencer.jjt
+
+/* Copyright (c) 2006, Sun Microsystems, Inc.
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ *     * Redistributions of source code must retain the above copyright notice,
+ *       this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Sun Microsystems, Inc. nor the names of its
+ *       contributors may be used to endorse or promote products derived from
+ *       this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+options {
+  OUTPUT_LANGUAGE = "c++";
+  NAMESPACE = "wrd";
+  PARSER_INCLUDES = "../parser_include.hpp";
+}
+
+PARSER_BEGIN(PRParser)
+void setPreferencer(pref::Preferencer* preferencer) {
+    _preferencer = preferencer;
+}
+private:
+	pref::Preferencer* _preferencer;
+    std::string _class;
+public:
+PARSER_END(PRParser)
+
+
+
+
+//////////////////////////////////////
+//  syntax:                         //
+//////////////////////////////////////
+SKIP:
+{
+    " "
+}
+
+TOKEN:
+{   <DOUBLE_QUOTATION: "\"">
+}
+
+TOKEN:
+{   <EOL: "\n" | "\r" | "\r\n"> // end of line
+|   <NUMBER: ["0" - "9"] >
+|   <ALPHABET: ["a"-"z","A"-"Z"] >
+|   <SYMBOL: ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "\\", "+", "|", "~", ";", "[", "]", "'", "/", ".", ",", "\0" ] >
+}
+
+SPECIAL_TOKEN:
+{
+    <TAB: "\t">
+}
+
+TOKEN:
+{   <CLASS: "class">
+|   <ASSIGN: "=">
+|   <STRING: "string">
+|   <INT: "int">
+|   <BOOL: "bool">
+|   <FLOAT: "float">
+|   <CHAR: "char">
+}
+
+TOKEN:
+{   <BOOL_EXPR: "true" | "false" >
+|   <CHAR_EXPR: "\'" (<LETTER>)? "\'" >
+|   <FLOAT_EXPR: (<NUMBER>)+ "." (<NUMBER>)+ >
+|   <INT_EXPR: (<NUMBER>)+ >
+|   <LETTER: (<ALPHABET> | <NUMBER> | <SYMBOL>) >
+}
+
+TOKEN:
+{   <IDENTIFIER: (<ALPHABET> | "_")+ (<NUMBER> | <ALPHABET> | "_")* >
+|   <LETTERS: (<LETTER>)+ >
+}
+
+
+
+//////////////////////////////////////
+//  sementic:                       //
+//////////////////////////////////////
+Token* char_expr() : {Token* expr;}
+{
+    expr=<CHAR_EXPR>
+    {
+        return expr;
+    }
+}
+Token* int_expr() : {Token* expr;}
+{
+    (expr=<NUMBER> | expr=<INT_EXPR>)
+    {
+        return expr;
+    }
+}
+Token* string_expr() : {Token* expr;}
+{
+    <DOUBLE_QUOTATION> (expr=<LETTERS>|expr=<IDENTIFIER>) <DOUBLE_QUOTATION>
+    {
+        return expr;
+    }
+}
+Token* bool_expr() : {Token* expr;}
+{
+    expr=<BOOL_EXPR>
+    {
+        return expr;
+    }
+}
+Token* float_expr() : {Token* expr;}
+{
+    expr=<FLOAT_EXPR>
+    {
+        return expr;
+    }
+}
+
+void statement() : {Token* key; Token* value;}
+{
+    (<INT> key=<IDENTIFIER> <ASSIGN> value=int_expr()      |
+    <FLOAT> key=<IDENTIFIER> <ASSIGN> value=float_expr()   |
+    <CHAR> key=<IDENTIFIER> <ASSIGN> value=char_expr()     |
+    <STRING> key=<IDENTIFIER> <ASSIGN> value=string_expr() |
+    <BOOL> key=<IDENTIFIER> <ASSIGN> value=bool_expr()     )
+    {
+        if(hasError) return;
+        //WRD_INFO("found %s = %s", key->image.c_str(), value->image.c_str());
+        _preferencer->onAddMember(_class, key->image, value->image);
+    }
+}
+
+void statements() : {}
+{
+    statement() (
+        LOOKAHEAD(<EOL> statement()) <EOL> statement() | 
+        <EOL>
+    )*
+    {
+        _class = "";
+        //WRD_INFO("...statements end")
+    }
+}
+
+void class_declaration() : {Token* klass;}
+{
+    <CLASS> klass=<IDENTIFIER> <EOL>
+    {
+        if(hasError) return;
+        
+        _class = klass->image;
+        _preferencer->onAddClass(_class);
+        //WRD_INFO("class_declaration = \"%s\"", _class.c_str())
+    }
+}
+
+/*
+int indentation() : {int formal_level=0;}
+{
+    (formal_level=indentation())?
+    {
+        cout << "formal_level is " << formal_level << "\n";
+        return formal_level+1;
+    }
+}
+*/
+
+void klass() : {}
+{
+    class_declaration() (statements())*
+    {
+        //WRD_INFO("...class end")
+    }
+}
+
+void configure_file() : {}
+{
+    (klass())*
+    {
+        //WRD_INFO("...configure_file end")
+    }
+}

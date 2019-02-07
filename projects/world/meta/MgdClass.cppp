@@ -1,0 +1,15 @@
+#include "MgdClass.inl"
+
+namespace wrd
+{
+#define THIS MgdClass<T>
+#define TEMPLATE template <typename T>
+
+    TEMPLATE const Origin& THIS::getOrigin() const { return *_org; }
+    TEMPLATE Strong THIS::instance() const
+    {
+        //    TODO:
+    }
+
+#undef THIS
+#undef TEMPLATE

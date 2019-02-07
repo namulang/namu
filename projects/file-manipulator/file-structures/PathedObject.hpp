@@ -1,32 +1,34 @@
 #pragma once
 
-#include <independentor.hpp>
-#include <string>
+#include "../fm-commons.hpp"
 
-namespace NE
+namespace wrd
 {
-    class PathedObject
-    {
-    public:
-        PathedObject();
-        PathedObject(const std::string& path);
-        PathedObject(const PathedObject& rhs);
+	namespace fm
+	{
+		class PathedObject
+		{	WRD_INHERIT(PathedObject)
+		public:
+			PathedObject();
+			PathedObject(const std::string& path);
+			PathedObject(const PathedObject& rhs);
 
-    public:
-        virtual type_bool initialize() = 0;
-        virtual type_bool isInitialized() const = 0;
-        const std::string& getPath() const;
-        type_bool isNull() const;
-        virtual type_bool release();
+		public:
+			virtual wbool init() = 0;
+			virtual wbool isInit() const = 0;
+			const std::string& getPath() const;
+			wbool isNull() const;
+			virtual wbool release();
 
-    protected:
-        type_bool _setPath(const std::string& new_path);
+		protected:
+			wbool _setPath(const std::string& new_path);
 
-    private:
-        /// @remark not allowed.
-        PathedObject& operator=(const PathedObject& rhs);
+		private:
+			/// @remark not allowed.
+			PathedObject& operator=(const PathedObject& rhs);
 
-    private:
-        std::string _path;
-    };
+		private:
+			std::string _path;
+		};
+	}
 }

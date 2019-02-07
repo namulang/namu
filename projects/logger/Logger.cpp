@@ -1,109 +1,128 @@
-#include "Includes.hpp"
-#include <vector>
-#include <string>
+#include "Logger.hpp"
 #include <iostream>
+#include <stdarg.h>
+#include "streams.hpp"
 
-namespace NE
+namespace wrd
 {
-    using namespace std;
-    class Stream {
-    public:
-        Stream() : _is_enable(true) {}
+	namespace log
+	{
+		#define THIS Logger
+		typedef std::string string;
+	  
+		const char* THIS::getName() const { return "Logger"; }
+		const Stream& THIS::operator[](widx n) const { return getStream(n); }
+		Stream& THIS::operator[](widx n) { return getStream(n); }
+		const Stream& THIS::operator[](const char* message) const { return getStream(message); }
+		Stream& THIS::operator[](const char* message) { return getStream(message); }
 
-        /// @return true means an error.
-        virtual type_bool dump(const char* message) { return ! _is_enable; }
-        type_bool isEnable() const { return _is_enable; }
-        void setEnable(type_bool is_enable) { _is_enable = is_enable; }
-        virtual const char* getName() const = 0;
-        virtual type_bool initialize() { return false; }
+		Stream& THIS::getStream(widx n)
+		{ 
+			if(n < 0 || n >= getStreamCount())
+				return nulr<Stream>();
 
-    private:
-        type_bool _is_enable;
-    };
-    class ConsoleStream : public Stream {
-    public:
-        virtual const char* getName() const { return "ConsoleStream"; }
-        virtual type_bool dump(const char* message) {
-            if(Stream::dump(message)) return true;
+			return *_streams[n]; 
+		}
 
-            std::cout << message << "\n";
-            return false;
-        }
-    };
+		const Stream& THIS::getStream(widx n) const
+		{
+			WRD_UNCONST()
+			return unconst.getStream(n);
+		}
 
-    namespace
-    {
-        template <typename T>
-        T& nullreference() {
-            T* nulled = 0;
-            return *nulled;
-        }
-    }
+		const Stream& THIS::getStream(const char* c_message) const
+		{ 
+			string message = c_message;
+			for(auto e : _streams)
+				if(string(e->getName()) == message)
+					return *e;
 
-    class Logger : public Stream
-    {
-    public:
-        virtual const char* getName() const { return "Logger"; }
-        const Stream& operator[](type_index n) const { return getStream(n); }
-        Stream& operator[](type_index n) { return getStream(n); }
-        const Stream& operator[](const char* message) const { return getStream(message); }
-        Stream& operator[](const char* message) { return getStream(message); }
+			return nulr<Stream>();
+		}
 
-        Stream& getStream(type_index n) { 
-            if(n < 0 || n >= getStreamCount())
-                return nullreference<Stream>();
+		Stream& THIS::getStream(const char* message)
+		{
+			const THIS* consted = this;
 
-            return *_streams[n]; 
-        }
-        const Stream& getStream(type_index n) const {
-            Logger* unconsted = const_cast<Logger*>(this);
+			return const_cast<Stream&>(consted->getStream(message));
+		}
 
-            return unconsted->getStream(n);
-        }
-        const Stream& getStream(const char* c_message) const { 
-            string message = c_message;
-            for(auto e : _streams)
-                if(string(e->getName()) == message)
-                    return *e;
+		wcnt THIS::getStreamCount() const { return _streams.size(); }
+		
+		wbool THIS::dump(const char* message)
+		{
+			wbool result = false;
+			for(auto e : _streams)
+				result |= e->dump(message);
+			
+			return result;
+		}
 
-            return nullreference<Stream>();
-        }
-        Stream& getStream(const char* message) {
-            const Logger* consted = this;
+		wbool THIS::dumpFormat(const char* format, ...)
+		{
+			va_list va;
+			va_start(va, format);
+			
+			char buffer[1024];
+			vsnprintf(buffer, 1024, format, va);
+			va_end(va);
 
-            return const_cast<Stream&>(consted->getStream(message));
-        }
-        type_count getStreamCount() const { return _streams.size(); }
-        virtual type_bool dump(const char* message) {
-            type_bool result = false;
-            for(auto e : _streams)
-                result |= e->dump(message);
-            
-            return result;
-        }
-        type_bool pushStream(Stream* new_stream) {
-            if( ! new_stream) return true;
+			return dump(buffer);
+		}
 
-            _streams.push_back(new_stream);
-            return false;
-        }
-        virtual type_bool initialize() {
-            type_bool result = false;
-            for(auto e : _streams)
-                result |= e->initialize();
+		wbool THIS::pushStream(Stream* new_stream)
+		{
+			if( ! new_stream) return true;
 
-            return result;
-        }
-        static Logger& getInstance() {
-            static Logger inner;
-            return inner;
-        }
+			_streams.push_back(new_stream);
+			if(isInit())
+				return new_stream->init();
+			return false;
+		}
 
-    private:
-        Logger() : Stream() {}
-        Logger(const Logger& rhs) : Stream(rhs) {}        
+		wbool THIS::init()
+		{
+			static Stream* streams[] = {new ConsoleStream(), new FileLogStream("./logs"), 0};
+			Stream* e = 0;
+			for(int n=0; (e = streams[n]) ;n++)
+				pushStream(e);
 
-    private:
-        std::vector<Stream*> _streams;
-    };
+			return false;
+		}
+
+		wbool THIS::isInit() const
+		{
+			for(auto e : _streams)
+				if( ! e->isInit())
+					return false;
+
+			return true;
+		}
+		
+		wbool THIS::release()
+		{
+			for(auto e : _streams)
+			{
+				e->release();
+				delete e;
+			}
+			_streams.clear();
+			return Super::release();
+		}
+
+		THIS& THIS::getInstance()
+		{
+			static THIS* inner = 0;
+			if(inner->isNull())
+			{
+				inner = new THIS();
+				inner->init();
+			}
+
+			return *inner;
+		}
+
+		THIS::THIS() : Super() {}
+		THIS::THIS(const This& rhs) : Super(rhs) {}
+	}
 }

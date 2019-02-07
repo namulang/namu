@@ -1,6 +1,4 @@
 #pragma once
 
-#include "VSExpHack.hpp"
-
-#define _CONCATERATOR(x, y)	x##y
-#define NE_MACRO_CONCATERATOR(x, y)	NE_VS_EXP_HACK(_CONCATERATOR(x, y))
+#define _CONCAT(x, y)	x##y
+#define WRD_CONCAT(x, y)	_CONCAT(x, y)

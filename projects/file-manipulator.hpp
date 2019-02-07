@@ -4,7 +4,7 @@
 //	관계	:	기반 패키지.	Macro
 //				외부 포함.		<windows.h>
 //								<tchar_t.h>
-//	특성	:	파일 시스템을 다루는 부분은 WINAPI를, C String 다루는 부분은 CRT를 사용
+//	특성	:	파일 시스템을 다루는 부분은 WINAPI를, C Str 다루는 부분은 CRT를 사용
 //				한다.
 //	클래스	:	NEFileSystem(with Status, TaskUnit)
 //	메모	:

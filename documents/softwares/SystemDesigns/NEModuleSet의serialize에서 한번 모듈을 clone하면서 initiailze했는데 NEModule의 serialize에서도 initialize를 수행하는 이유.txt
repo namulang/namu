@@ -1,2 +1,0 @@
-		//	왜 NEModuleSet에서 복사한 인스턴스를 다시 initialize()해서 중복 실행하는가:
-		//		NEModule만 따로 serialize()를 하는 경우가 있을 수도 있기 때문이다.

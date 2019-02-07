@@ -4,9 +4,10 @@ project(World)
 #defines:
 set(SHOW_CMAKE_VARIABLES 1)
 set(VERSION_MAJOR 0)
-set(VERSION_MINOR 0)
-set(VERSION_FIX 1)
-set(UPDATE_NAME "Seed")
+set(VERSION_MINOR 2)
+set(VERSION_FIX 0)
+set(BUILD_COUNT 10)
+set(VERSION_NAME "Seed")
 set(VERSION_VALUE "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_FIX}")
 set(VERSION "${PROJECT_NAME} ${UPDATE_NAME} v${VERSION_VALUE}")
 #   build-date:
@@ -76,8 +77,8 @@ if(SHOW_CMAKE_VARIABLES)
 endif(SHOW_CMAKE_VARIABLES)
 
 message("\ninitialize CMake variables...")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -fdiagnostics-color")  #default options.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-sign-compare")  #compiler options.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -fdiagnostics-color=always")  #default options.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-sign-compare -Wno-address -Wno-unused-local-typedefs -Wno-nonnull-compare")  #compiler options.
 set(CXX_DEFINITIONS "${DEFINITIONS} -DUNICODE")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

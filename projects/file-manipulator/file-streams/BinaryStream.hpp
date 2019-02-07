@@ -2,40 +2,48 @@
 
 #include "FileStream.hpp"
 
-namespace NE
+namespace wrd
 {
-    class BinaryStream : public FileStream
-    {
-    public:
-        BinaryStream();
-        BinaryStream(const std::string& new_path);
-        virtual ~BinaryStream();
+	namespace fm
+	{
+		class File;
+		
+		class BinaryStream : public FileStream
+		{	WRD_INHERIT(BinaryStream, FileStream)
+		public:
+			BinaryStream();
+			BinaryStream(const std::string& new_path);
+			BinaryStream(const File& file);
+			virtual ~BinaryStream();
 
-    public:
-        virtual type_bool initialize();
+		public:
+			using FileStream::operator=;
+			
+			virtual wbool init();
 
-        using FileStream::write;
-        template <typename T>
-        type_count write(const T& datum) { return write(&datum, sizeof(T)); }
+			using FileStream::write;
+			template <typename T>
+			wcnt write(const T& datum) { return write(&datum, sizeof(T)); }
 
-        type_count write(const char* str);
-        type_count write(const string& str);
-        virtual type_count write(const void* chunks, type_count bytes);
-        virtual type_count read(void* target, type_count bytes);
+			wcnt write(const char* str);
+			wcnt write(const std::string& str);
+			virtual wcnt write(const void* chunks, wcnt bytes);
+			virtual wcnt read(void* target, wcnt bytes);
 
-        using FileStream::read;
-        template <typename T>
-        T read()
-        {
-            T to_return;
-            read(&to_return, sizeof(T));
-            return to_return;
-        }
+			using FileStream::read;
+			template <typename T>
+			T read()
+			{
+				T to_return;
+				read(&to_return, sizeof(T));
+				return to_return;
+			}
 
-        std::string read(type_count bytes);
+			std::string read(wcnt bytes);
 
-    private:
-        BinaryStream(const PathedObject& object);
+		private:
+			BinaryStream(const PathedObject& object);
 
-    };
+		};
+	}
 }

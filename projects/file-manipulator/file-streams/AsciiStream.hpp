@@ -2,35 +2,43 @@
 
 #include "FileStream.hpp"
 
-namespace NE
+namespace wrd
 {
-    class AsciiStream : public FileStream
-    {
-    public:
-        AsciiStream();
-        AsciiStream(const std::string& new_path);
-        virtual ~AsciiStream();
+	namespace fm
+	{
+		class File;
 
-    public:
-        virtual type_bool initialize();
-        
-        using FileStream::write;
-        template <typename T>
-        type_count write(const T& datum) { return write(to_string(datum)); }
+		class AsciiStream : public FileStream
+		{	WRD_INHERIT(AsciiStream, FileStream)
+		public:
+			AsciiStream();
+			AsciiStream(const std::string& new_path);
+			AsciiStream(const File& file);
+			virtual ~AsciiStream();
 
-        type_count write(const std::string& datum);
-        virtual type_count write(const void* chunks, type_count bytes);
-        virtual type_count read(void* target, type_count bytes);
-        std::string readToken(const std::string& delimeter = " ");
-        std::string readLine();
-        virtual type_bool release();
+		public:
+			using FileStream::operator=;
 
-    private:
-        AsciiStream(const PathedObject& object);
-        std::string _peelOffBuffer(type_count bytes/*except for null*/);
-        type_count _readToBuffer(type_count bytes=1024);
+			virtual wbool init();
+			
+			using FileStream::write;
+			template <typename T>
+			wcnt write(const T& datum) { return write(to_string(datum)); }
 
-    private:
-        std::string _buffer;
-    };
+			wcnt write(const std::string& datum);
+			virtual wcnt write(const void* chunks, wcnt bytes);
+			virtual wcnt read(void* target, wcnt bytes);
+			std::string readToken(const std::string& delimeter = " ");
+			std::string readLine();
+			virtual wbool release();
+
+		private:
+			AsciiStream(const PathedObject& object);
+			std::string _peelOffBuffer(wcnt bytes/*except for null*/);
+			wcnt _readToBuffer(wcnt bytes=1024);
+
+		private:
+			std::string _buffer;
+		};
+	}
 }

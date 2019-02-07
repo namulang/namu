@@ -1,187 +1,78 @@
+/*
+ * Copyright (C) 2012 William Swanson
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use, copy,
+ * modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+ * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * Except as contained in this notice, the names of the authors or
+ * their institutions shall not be used in advertising or otherwise to
+ * promote the sale, use or other dealings in this Software without
+ * prior written authorization from the authors.
+ */
+
+//	modification: kniz
+
 #pragma once
 
-#include "Overloader.hpp"
+#include "Helpers.hpp"
+#include "Evaluator.hpp"
 
-//		for-each:
-//			litererly, it's for-each of macro version.
-//			there are 2 for-each by how you treat your arguments.
-//				- FOR_EACH:	extract single argument at each time from varidics.
-//				- FOR_EACH2: extract 2 args.
-//
-//			usage:
-//				// define macro:
-//				#define MyEach(x) cout << x << "\n";
-//
-//				// using:
-//				NE_MACRO_FOR_EACH(MyEach, 1, 2, 3, 4, "hello world")
-//
-//				will be expanded to:
-//					cout << 1 << "\n";
-//					cout << 2 << "\n";
-//					cout << 3 << "\n";
-//					cout << 4 << "\n";
-//					cout << "hello world" << "\n";
-//
-//				so, output should be:
-//					1
-//					2
-//					3
-//					4
-//					hello world
-#define NE_MACRO_FOR_EACH(...)	NE_MACRO_OVERLOADER(NE_MACRO_FOR_EACH, __VA_ARGS__)
-#define NE_MACRO_FOR_EACH_2(METHOD, _1)	\
-	METHOD(_1)
-#define NE_MACRO_FOR_EACH_3(METHOD, _1, _2)	\
-	NE_MACRO_FOR_EACH_2(METHOD, _1)			\
-	METHOD(_2)
-#define NE_MACRO_FOR_EACH_4(METHOD, _1, _2, _3)	\
-	NE_MACRO_FOR_EACH_3(METHOD, _1, _2)			\
-	METHOD(_3)
-#define NE_MACRO_FOR_EACH_5(METHOD, _1, _2, _3, _4)	\
-	NE_MACRO_FOR_EACH_4(METHOD, _1, _2, _3)			\
-	METHOD(_4)
-#define NE_MACRO_FOR_EACH_6(METHOD, _1, _2, _3, _4, _5)	\
-	NE_MACRO_FOR_EACH_5(METHOD, _1, _2, _3, _4)			\
-	METHOD(_5)
-#define NE_MACRO_FOR_EACH_7(METHOD, _1, _2, _3, _4, _5, _6)	\
-	NE_MACRO_FOR_EACH_6(METHOD, _1, _2, _3, _4, _5)			\
-	METHOD(_6)
-#define NE_MACRO_FOR_EACH_8(METHOD, _1, _2, _3, _4, _5, _6, _7)	\
-	NE_MACRO_FOR_EACH_7(METHOD, _1, _2, _3, _4, _5, _6)			\
-	METHOD(_7)
-#define NE_MACRO_FOR_EACH_9(METHOD, _1, _2, _3, _4, _5, _6, _7, _8)	\
-	NE_MACRO_FOR_EACH_8(METHOD, _1, _2, _3, _4, _5, _6, _7)			\
-	METHOD(_8)
-#define NE_MACRO_FOR_EACH_10(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9)	\
-	NE_MACRO_FOR_EACH_9(METHOD, _1, _2, _3, _4, _5, _6, _7, _8)			\
-	METHOD(_9)
-#define NE_MACRO_FOR_EACH_11(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10)	\
-	NE_MACRO_FOR_EACH_10(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9)			\
-	METHOD(_10)
-#define NE_MACRO_FOR_EACH_12(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11)	\
-	NE_MACRO_FOR_EACH_11(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10)			\
-	METHOD(_11)
-#define NE_MACRO_FOR_EACH_13(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12)	\
-	NE_MACRO_FOR_EACH_12(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11)			\
-	METHOD(_12)
-#define NE_MACRO_FOR_EACH_14(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13)	\
-	NE_MACRO_FOR_EACH_13(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12)			\
-	METHOD(_13)
-#define NE_MACRO_FOR_EACH_15(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14)	\
-	NE_MACRO_FOR_EACH_14(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13)			\
-	METHOD(_14)
-#define NE_MACRO_FOR_EACH_16(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15)	\
-	NE_MACRO_FOR_EACH_15(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14)			\
-	METHOD(_15)
-#define NE_MACRO_FOR_EACH_17(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16)	\
-	NE_MACRO_FOR_EACH_16(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15)			\
-	METHOD(_16)
-#define NE_MACRO_FOR_EACH_18(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17)	\
-	NE_MACRO_FOR_EACH_17(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16)			\
-	METHOD(_17)
-#define NE_MACRO_FOR_EACH_19(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18)	\
-	NE_MACRO_FOR_EACH_18(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17)			\
-	METHOD(_18)
-#define NE_MACRO_FOR_EACH_20(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19)	\
-	NE_MACRO_FOR_EACH_19(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18)				\
-	METHOD(_19)
-#define NE_MACRO_FOR_EACH_21(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20)	\
-	NE_MACRO_FOR_EACH_20(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19)				\
-	METHOD(_20)
-#define NE_MACRO_FOR_EACH_22(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21)	\
-	NE_MACRO_FOR_EACH_21(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20)			\
-	METHOD(_21)
-#define NE_MACRO_FOR_EACH_23(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22)	\
-	NE_MACRO_FOR_EACH_22(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21)			\
-	METHOD(_22)
-#define NE_MACRO_FOR_EACH_24(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23)	\
-	NE_MACRO_FOR_EACH_23(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22)				\
-	METHOD(_23)
-#define NE_MACRO_FOR_EACH_25(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24)	\
-	NE_MACRO_FOR_EACH_24(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23)				\
-	METHOD(_24)
-#define NE_MACRO_FOR_EACH_26(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25)	\
-	NE_MACRO_FOR_EACH_25(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24)			\
-	METHOD(_25)
-#define NE_MACRO_FOR_EACH_27(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26)	\
-	NE_MACRO_FOR_EACH_26(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25)			\
-	METHOD(_26)
-#define NE_MACRO_FOR_EACH_28(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27)	\
-	NE_MACRO_FOR_EACH_27(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26)			\
-	METHOD(_27)
-#define NE_MACRO_FOR_EACH_29(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28)	\
-	NE_MACRO_FOR_EACH_28(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27)			\
-	METHOD(_28)
-#define NE_MACRO_FOR_EACH_30(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29)	\
-	NE_MACRO_FOR_EACH_29(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28)			\
-	METHOD(_29)
-#define NE_MACRO_FOR_EACH_31(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30)	\
-	NE_MACRO_FOR_EACH_30(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29)			\
-	METHOD(_30)
-#define NE_MACRO_FOR_EACH_32(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30, _31)	\
-	NE_MACRO_FOR_EACH_31(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30)				\
-	METHOD(_31)
+#define _WRD_EACH_GET_END2() 0, WRD_CONSUME_ARGS
+#define _WRD_EACH_GET_END1(...) _WRD_EACH_GET_END2
+#define _WRD_EACH_GET_END(...) _WRD_EACH_GET_END1
+#define _WRD_EACH_NEXT0(test, next, ...) next WRD_VOID()
+#define _WRD_EACH_NEXT1(test, next) _WRD_EACH_NEXT0(test, next, 0)
+#define _WRD_EACH_NEXT(test, next)  _WRD_EACH_NEXT1(_WRD_EACH_GET_END test, next)
 
-//		FOR_EACH2:
-//			just same as FOR_EACH except that this extract 2 arguments at
-//			each time.
+#define _WRD_EACH_LIST_NEXT1(test, next) _WRD_EACH_NEXT0(test, WRD_COMMA next, 0)
+#define _WRD_EACH_LIST_NEXT(test, next)  _WRD_EACH_LIST_NEXT1(_WRD_EACH_GET_END test, next)
+
+//	Applies the function macro `f` to each of the remaining parameters.
+#define _WRD_EACH0(f, x, peek, ...) f(x) _WRD_EACH_NEXT(peek, _WRD_EACH1)(f, peek, __VA_ARGS__)
+#define _WRD_EACH1(f, x, peek, ...) f(x) _WRD_EACH_NEXT(peek, _WRD_EACH0)(f, peek, __VA_ARGS__)
+#define WRD_EACH(f, ...) WRD_EVAL(_WRD_EACH1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+
+//	EACH macro for various parametered function:
+//		usage:
+//			#define X(x, y) cout << (x+y);
+//			WRD_EACH_TUPLE(X, (1,2), (2,3)) // please be careful to wrap with a paranthesis each set of parameters.
 //
-//			usage:
-//				// define macro:
-//				#define MyEach(x, y) cout << (x)+(y) << "\n";
+//		output:
+//			37
+#define _WRD_EACH_TUPLE0(f, x, peek, ...) f x _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE1)(f, peek, __VA_ARGS__)
+#define _WRD_EACH_TUPLE1(f, x, peek, ...) f x _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE0)(f, peek, __VA_ARGS__)
+#define WRD_EACH_TUPLE(f, ...) WRD_EVAL(_WRD_EACH_TUPLE1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+
+//	EACH macro for expanding:
+//		usage:
+//			#define X(x, y) cout << (x+y);
+//			int b = 5;
+//			WRD_EACH_EXPAND(X, b, 1,2,3) 
+//			//== cout << (b+1); cout << (b+2); cout << (b+3);
 //
-//				// using:
-//				NE_MACRO_FOR_EACH2(MyEach, 1, 2, 3, 4)
-//
-//				will be expanded to:
-//					cout << (1)+(2) << "\n";
-//					cout << (3)+(4) << "\n";
-//
-//				so, output should be:
-//					3
-//					7
-#define NE_MACRO_FOR_EACH2(...)	NE_MACRO_OVERLOADER(NE_MACRO_FOR_EACH2, __VA_ARGS__)
-#define NE_MACRO_FOR_EACH2_3(METHOD, _1, _2)	\
-	METHOD(_1, _2)
-#define NE_MACRO_FOR_EACH2_5(METHOD, _1, _2, _3, _4)	\
-	NE_MACRO_FOR_EACH2_3(METHOD, _1, _2)				\
-	METHOD(_3, _4)
-#define NE_MACRO_FOR_EACH2_7(METHOD, _1, _2, _3, _4, _5, _6)	\
-	NE_MACRO_FOR_EACH2_5(METHOD, _1, _2, _3, _4)				\
-	METHOD(_5, _6)
-#define NE_MACRO_FOR_EACH2_9(METHOD, _1, _2, _3, _4, _5, _6, _7, _8)	\
-	NE_MACRO_FOR_EACH2_7(METHOD, _1, _2, _3, _4, _5, _6)				\
-	METHOD(_7, _8)
-#define NE_MACRO_FOR_EACH2_11(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10)	\
-	NE_MACRO_FOR_EACH2_9(METHOD, _1, _2, _3, _4, _5, _6, _7, _8)					\
-	METHOD(_9, _10)
-#define NE_MACRO_FOR_EACH2_13(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12)	\
-	NE_MACRO_FOR_EACH2_11(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10)				\
-	METHOD(_11, _12)
-#define NE_MACRO_FOR_EACH2_15(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14)	\
-	NE_MACRO_FOR_EACH2_13(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12)					\
-	METHOD(_13, _14)
-#define NE_MACRO_FOR_EACH2_17(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16)	\
-	NE_MACRO_FOR_EACH2_15(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14)				\
-	METHOD(_15, _16)
-#define NE_MACRO_FOR_EACH2_19(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18)	\
-	NE_MACRO_FOR_EACH2_17(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16)					\
-	METHOD(_17, _18)
-#define NE_MACRO_FOR_EACH2_21(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20)	\
-	NE_MACRO_FOR_EACH2_19(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18)				\
-	METHOD(_19, _20)
-#define NE_MACRO_FOR_EACH2_23(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22)	\
-	NE_MACRO_FOR_EACH2_21(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20)					\
-	METHOD(_21, _22)
-#define NE_MACRO_FOR_EACH2_25(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24)	\
-	NE_MACRO_FOR_EACH2_23(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22)				\
-	METHOD(_23, _24)
-#define NE_MACRO_FOR_EACH2_27(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26)	\
-	NE_MACRO_FOR_EACH2_25(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24)					\
-	METHOD(_25, _26)
-#define NE_MACRO_FOR_EACH2_29(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28)	\
-	NE_MACRO_FOR_EACH2_27(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26)				\
-	METHOD(_27, _28)
-#define NE_MACRO_FOR_EACH2_31(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28, _29, _30)	\
-	NE_MACRO_FOR_EACH2_29(METHOD, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17, _18, _19, _20, _21, _22, _23, _24, _25, _26, _27, _28)					\
-	METHOD(_29, _30)
+//		output:
+//			678
+#define _WRD_EACH_EXPAND0(f, s, x, peek, ...) f(s, x) _WRD_EACH_NEXT(peek, _WRD_EACH_EXPAND1)(f, s, peek, __VA_ARGS__)
+#define _WRD_EACH_EXPAND1(f, s, x, peek, ...) f(s, x) _WRD_EACH_NEXT(peek, _WRD_EACH_EXPAND0)(f, s, peek, __VA_ARGS__)
+#define WRD_EACH_EXPAND(f, ...) WRD_EVAL(_WRD_EACH_EXPAND1(f, s, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+
+//	Applies the function macro `f` to each of the remaining parameters and inserts commas between the results.
+#define _WRD_EACH_LIST0(f, x, peek, ...) f(x) _WRD_EACH_LIST_NEXT(peek, _WRD_EACH_LIST1)(f, peek, __VA_ARGS__)
+#define _WRD_EACH_LIST1(f, x, peek, ...) f(x) _WRD_EACH_LIST_NEXT(peek, _WRD_EACH_LIST0)(f, peek, __VA_ARGS__)
+#define WRD_EACH_LIST(f, ...) WRD_EVAL(_WRD_EACH_LIST1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
