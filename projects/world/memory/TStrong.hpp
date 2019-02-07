@@ -14,6 +14,7 @@ namespace wrd
     TEMPL THIS::TStrong(T& it) : Super() { this->bind(it); }
     TEMPL THIS::TStrong(T* it) : Super() { this->bind(*it); }
     TEMPL THIS::TStrong(const This& rhs) : Super() { this->assign(rhs); }
+	TEMPL THIS::~TStrong() { unbind(); }
 
 	TEMPL THIS& THIS::operator=(const This& rhs)
 	{
@@ -55,6 +56,7 @@ namespace wrd
 	TEMPL THIS::TStrong(const T* it) : Super() { this->bind(*it); }
 	TEMPL THIS::TStrong(const This& rhs) : Super() { this->_assign(rhs); }
 	TEMPL THIS::TStrong(const TStrong<T>& rhs) : Super() { this->_assign(rhs); }
+	TEMPL THIS::~TStrong() { unbind(); }
 	
 	TEMPL THIS& THIS::operator=(const This& rhs)
 	{

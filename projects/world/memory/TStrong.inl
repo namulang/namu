@@ -12,6 +12,7 @@ namespace wrd
 		TStrong(T& it);
 		TStrong(T* it);
 		TStrong(const This& rhs);
+		virtual ~TStrong();
 
 	public:
 		This& operator=(const This& rhs);
@@ -34,6 +35,7 @@ namespace wrd
 		TStrong(const T* it);
 		TStrong(const This& rhs);
 		TStrong(const TStrong<T>& rhs);
+		virtual ~TStrong();
 
 	public:
 		This& operator=(const This& rhs);
