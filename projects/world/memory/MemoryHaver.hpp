@@ -14,10 +14,6 @@ namespace wrd
 	public:
 		void* get(widx n);
 		const void* get(widx n) const;
-		virtual wcnt getLen() const = 0;
-		virtual wcnt getSize() const = 0;
-		wbool isFull() const;
-		wbool isCapable() const;
 		virtual wbool has(const Instance& it) const = 0;
 
 	protected:
