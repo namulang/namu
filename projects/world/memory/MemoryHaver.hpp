@@ -1,10 +1,11 @@
 #pragma once
 
 #include "../base/Thing.inl"
+#include "../containers/Lengthable.hpp"
 
 namespace wrd
 {
-	class MemoryHaver : public Thing
+	class MemoryHaver : public Thing, public Lengthable
 	{	WRD_CLASS_DECL(MemoryHaver, Thing)
 	public:
 		void* operator[](widx n);

@@ -2,7 +2,7 @@
 
 #include "Thing.inl"
 #include "../pretypes/Str.hpp"
-#include "../container/Array.hpp"
+#include "../containers/Array.hpp"
 
 namespace wrd
 {
