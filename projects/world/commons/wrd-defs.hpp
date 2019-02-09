@@ -131,7 +131,7 @@
 		/*TODO: impl:*/								\
 		return wasgood;								\
 	}												\
-	TEMPL WRD_CLASS_INIT(__COUNTER__)
+	TEMPL WRD_CLASS_INIT(THIS)
 #define WRD_CLASS_DEF(...)            			WRD_OVERLOAD(WRD_CLASS_DEF, __VA_ARGS__)
 
 ///	WRD_CLASS_INIT makes that given type T is accessible to ClassManager.
@@ -144,7 +144,7 @@
 ///	
 ///	if you use this onto template TYPE, add template parameters as prefix.
 ///		e.g) template <typename T> WRD_CLASS_INIT(MyTemplate<T>)
-#define WRD_CLASS_INIT(TYPE)	WRD_INITIATOR(TYPE, (std::cout << "good";)) /*TYPE::getClassStatic();*/
+#define WRD_CLASS_INIT(TYPE)	WRD_INITIATOR(__COUNTER__, (TYPE::getClassStatic();))
 
 #define _PUT(exp) _TGet<TypeTrait<decltype(exp)>::Org>::set(exp)
 #define _GET(exp) _TGet<TypeTrait<decltype(exp)>::Org>::get()
