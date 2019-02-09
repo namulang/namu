@@ -13,6 +13,10 @@ namespace wrd
 			return *this;
 		}
 		const char* toCStr() const { return _str.c_str(); }
+		//	TODO: reuse not to redifine below func.
+		//	Lengthable:
+		virtual wcnt getSize() const { return _str.size(); } 
+		virtual wcnt getLen() const { return _str.size(); } 
 
 		std::string _str;
 	};
