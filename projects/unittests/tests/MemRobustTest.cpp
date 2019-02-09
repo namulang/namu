@@ -57,7 +57,7 @@ public:
 			}
 			for(int i=0; i < n ;i++)
 				delete parr[i];
-			WRD_WARN("%d times new/delete : %d ms elapsed. crc=%d", n, ((float) clock() - start) / CLOCKS_PER_SEC*1000, crc);
+			WRD_WARN("%d times new/delete : %f ms elapsed. crc=%d", n, ((float) clock() - start) / CLOCKS_PER_SEC*1000.0f, crc);
 
 			crc = 0;
 			A* arr[100000] = {0, };
@@ -68,7 +68,7 @@ public:
 			}
 			for(int i=0; i < n ;i++)
 				delete arr[i];
-			WRD_WARN("%d times mempool    : %d ms elapsed. crc=%d", n, ((float) clock() - start) / CLOCKS_PER_SEC*1000, crc);
+			WRD_WARN("%d times mempool    : %f ms elapsed. crc=%d", n, ((float) clock() - start) / CLOCKS_PER_SEC*1000.0f, crc);
 		}
 	};
 
