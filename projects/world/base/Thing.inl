@@ -19,7 +19,7 @@ namespace wrd
 
 	///	Thing은 World의 최상위 객체
 	class Thing
-	{	WRD_CLASS_DECL(Thing)
+	{	WRD_CLASS_DECL(Thing, Thing)
 		template <typename T, typename S> friend class TVisitation; //	_tour를 위한 것이다.
 	public:
 		virtual ~Thing();
