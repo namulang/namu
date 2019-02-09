@@ -11,7 +11,7 @@ namespace wrd
 		wbool operator!=(const This& rhs);
 
     public:
-        virtual wbool isInit();
+        virtual wbool isInit() const;
         virtual Res& init();
         virtual Res& release();
 
