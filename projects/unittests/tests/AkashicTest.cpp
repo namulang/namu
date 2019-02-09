@@ -16,7 +16,7 @@ WRD_TEST_START(AkashicTest)
     A a;
 	const Block& blk = a.getBlock();
 	T(blk.isExist())
-	T(blk.getSerial())
+	T(blk.getId().s.serial)
 	const Chunk& chk = blk.getChunk();
 	T( ! chk.isExist())
 
@@ -26,7 +26,7 @@ WRD_TEST_START(AkashicTest)
 		A* new1 = new A();
 		const Block& blk = new1->getBlock();
 		T(blk.isExist())
-		T(blk.getSerial() > 0)
+		T(blk.getId().s.serial > 0)
 		T(blk.isBind())
 		//TODO: T(blk.getBindable() == TClass<Instance>())
 		//TOOD: T(blk.canBind(TClass<Instance>()))

@@ -30,8 +30,9 @@ WRD_TEST_START(BindTest)
 		const Block& blk = b1->getBlock();
 		T(blk.isExist())
 		T(blk.isHeap())
-		T(blk.getSerial() > 0)
-		T(blk.getId().s.blk_n >= 0)
+		Id id = blk.getId();
+		T(id.s.serial > 0)
+		T(id.s.blk_n >= 0)
 		//TODO: Strong b2 = blk.toStrong();
 		//TODO: T(b2->isNull())
 		//TODO: TStrong<A> b3 = blk.toStrong();

@@ -10,18 +10,6 @@ namespace wrd
 	THIS::THIS() : Super(), _pt(NULL), _strong(0) {}
 	THIS::THIS(Id id) : Super(id), _pt(NULL), _strong(0) {}
 
-	Res& THIS::setSerial(wcnt new1)
-	{
-		if( ! _pt)
-			return wasnull;
-
-		Id got = getId();
-		got.s.serial = new1;
-		return _sync(got);
-	}
-
-	wcnt THIS::getSerial() const { return _pt ? _pt->getId().s.serial : WRD_INDEX_ERROR; }
-
 	const Chunk& THIS::getChunk() const
 	{
 		if( ! _pt)
