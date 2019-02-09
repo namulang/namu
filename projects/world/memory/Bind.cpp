@@ -18,7 +18,7 @@ namespace wrd
 		return *this;
 	}
 
-	wbool THIS::isBind() const { return _getBlock(_its_id).isExist(); }
+	wbool THIS::isBind() const { return _its_id.s.blk_n != WRD_INDEX_ERROR; }
 
 	Res& THIS::unbind()
 	{
