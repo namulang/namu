@@ -1,7 +1,7 @@
 #pragma once
 
 #define WRD_INITIATOR(name, ...)									\
-	Initiator WRD_CONCAT(__initi__ ## name ##_, __COUNTER__) ([]() {\
+	static Initiator WRD_CONCAT(__initi__ ## name ##_, __COUNTER__) ([]() {\
 		WRD_UNWRAP __VA_ARGS__										\
 	});
 
