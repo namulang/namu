@@ -77,6 +77,4 @@ namespace wrd
 		*/
 		return nulr<Node>();
 	}
-
-	Res& THIS::_onInitNodes(Container& tray) { return wasgood; }
 }

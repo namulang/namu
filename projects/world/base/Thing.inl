@@ -4,11 +4,12 @@
 
 namespace wrd
 {
+	class Res;
+	class Node;
 	class Class;
 	class Visitor;
 	class Instance;
-	class Res;
-	class Node;
+	class Container;
 	template <typename T> class TStrong;
 	typedef TStrong<Node> Strong;
 	typedef TStrong<const Node> CStrong;

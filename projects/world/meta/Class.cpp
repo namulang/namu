@@ -14,8 +14,8 @@ namespace wrd
 
     const Classes& THIS::getLeafs() const
     {
-        static Classes inner;
-        //    TODO:
+		//TODO: change to range based for loop.
+		static Classes inner;
 		return inner;
     }
 
@@ -25,21 +25,21 @@ namespace wrd
 		return inner;
 	}
 
-	wbool THIS::isInit() const { /*TODO: */ return false; }
+	wbool THIS::isInit() const
+	{
+        return	&getName() == &TClass<Thing>::getNameStatic() ||
+				getSuper().isExist();
+	}
 
     Res& THIS::init()
     {
-		/* TODO: impl Array
         //    pre:
-        //        exception:
-        WRD_IS_SUPER(init())
-
-        //    main:
         //        Object class should not initialize explicitly:
         //            or This makes recursive call.
         //            Because if we make a instance of TClass<Object>, it triggers Class::init inside of it.
-        if(&getName() == &TClass<Thing>::getNameStatic())
-            return wasgood;
+        if(isInit()) return wascancel;
+		std::cout << "class " << getName().toCStr() << "init().\n";
+        //    main:
 
         //  main:
         //        get Supers info from Super:
@@ -53,12 +53,12 @@ namespace wrd
         //        notify to super:
         if(super._getSubs().push(*this) != wrongidx)
             return wascancel;
-		*/
+
         return wasgood;
     }
 
     wbool THIS::isSuper(const Class& it) const
-    {	/* TODO: impl Array
+    {
         //  checking class hierarchy algorithm:
         //        Use the "Tier" of the class hierarchy info to check it.
         //        "Tier" means that how this class are inherited far from the Root class, that is, Object.
@@ -66,18 +66,16 @@ namespace wrd
         //        would must be the class of "this".
         if(it.isNull()) return false;
         const Classes& its = it.getSupers();
-        wcnt    my_tier = getClass().getSupers().size(),
-                its_tier = its_supers.size();
+        wcnt    my_tier = getClass().getSupers().getLen(),
+                its_tier = its.getLen();
         if(my_tier > its_tier) return false;
 
 
         //  main:
-        const ClassBase& target = its_tier == my_tier ? it :
+        const Class& target = its_tier == my_tier ? it :
             static_cast<const Class&>(its[my_tier]);
 
         return getClass() == target;//  Remember. We're using Class as "Monostate".
-		*/
-		return true;
     }
 
     Classes& THIS::_getSupers() { return const_cast<Classes&>(getSupers()); }
@@ -85,7 +83,7 @@ namespace wrd
 
     Res& THIS::_initNodes()
     {
-        _getNodes() = getSupers()[0].getNodes(); // getSupers()[0]은 바로 위의 부모클래스.
+        _getNodes() = getSupers()[0].getNodes(); // getSupers()[0] is parent class.
         return wasgood;
 	}
 	

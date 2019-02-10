@@ -2,6 +2,7 @@
 
 #include "TClass.inl"
 #include "helpers.hpp"
+#include "../pretypes/Reses.hpp"
 #include "../pretypes/Str.hpp"
 #include "../containers/Chain.hpp"
 #include "Classes.hpp"
@@ -15,9 +16,6 @@ namespace wrd
 	TEMPL TStrong<Instance> THIS::_clone() const { return TCloner<THIS>::clone(*this); }
 	TEMPL THIS::TClass() { this->init(); }
 
-/*		TODO: add this on _REDIRECT. 
- *		WRD_IS_THIS_1(const Str)			\
- */
 #define _REDIRECT(retype, func)			\
 	TEMPL retype THIS::func() const	\
 	{										\
@@ -39,24 +37,23 @@ namespace wrd
 
     TEMPL Res& THIS::_initNodes()
     {
-        /*TODO: uncomment this if(Super::_initNodes())
-                return SuperFail.warn();*/
+        if(Super::_initNodes())
+			return wassuperfail.warn();
 
-        return nulr<Res>();//TODO: uncomment this. T::_onInitNodes(this->_getNodes()); // getMethods from RealClass T.
+        return T::onInitNodes(this->_getNodes()); // getMethods from RealClass T.
     }
 
     TEMPL const Str& THIS::getNameStatic()
     {
         static Str inner;
-		/*TODO: uncomment these:
-        if(inner.getLength() <= 0)
+
+		if(inner.getLen() <= 0)
         {
             int status = 0;
             wchar* demangled = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
             inner = demangled;
             free(demangled);
         }
-		*/
 
         return inner;
     }

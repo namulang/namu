@@ -83,6 +83,7 @@
         virtual const Class& getClass() const { return getClassStatic(); }					\
         TStrong<This> clone() const { return TStrong<This>(_clone().down<This>()); }		\
         static WRD_LAZY_METHOD_4(const Class&, getClassStatic, WRD_VOID(), TClass<This>)	\
+		static Res& onInitNodes(Container& tray) { return /*TODO: impl */wasgood; }	\
 	protected:																				\
 		virtual TStrong<Instance> _clone() const { return TCloner<This>::clone(*this); }	\
 	private:
@@ -96,16 +97,17 @@
 
 /// This macros, DECLARE, DEFINE, will be used for which can't dependent to TClass and TStrong and Instance.
 ///	mostly, those are for base classes of them which correspond to will be used for internal usage only.
-#define _CLASS_DECL_BASE()						\
-	public:										\
-		virtual const Class& getClass() const;	\
-		TStrong<This> clone() const;			\
-		static const Class& getClassStatic();	\
-	protected:									\
-		virtual TStrong<Instance> _clone() const;\
+#define _CLASS_DECL_BASE()							\
+	public:											\
+		virtual const Class& getClass() const;		\
+		TStrong<This> clone() const;				\
+		static const Class& getClassStatic();		\
+		static Res& onInitNodes(Container& tray);	\
+	protected:										\
+		virtual TStrong<Instance> _clone() const;	\
 	private:
-#define WRD_CLASS_DECL_2(THIS, SUPER)		\
-	WRD_INHERIT_2(THIS, SUPER)				\
+#define WRD_CLASS_DECL_2(THIS, SUPER)	\
+	WRD_INHERIT_2(THIS, SUPER)			\
 	_CLASS_DECL_BASE()
 #define WRD_CLASS_DECL_1(THIS)	\
 	WRD_INHERIT_1(THIS)			\
@@ -124,6 +126,10 @@
 	TEMPL const Class& THIS::getClassStatic() {		\
         static TClass<This> inner;    				\
         return inner;    							\
+	}												\
+	TEMPL Res& THIS::onInitNodes(Container& tray) {	\
+		/*TODO: impl:*/								\
+		return wasgood;								\
 	}												\
 	TEMPL WRD_CLASS_INIT(__COUNTER__)
 #define WRD_CLASS_DEF(...)            			WRD_OVERLOAD(WRD_CLASS_DEF, __VA_ARGS__)

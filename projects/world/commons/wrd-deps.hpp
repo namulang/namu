@@ -5,4 +5,5 @@
 #include <logger.hpp>
 #include <preferencer.hpp>
 
+#include <cxxabi.h>
 #include <functional>
