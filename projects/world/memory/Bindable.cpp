@@ -11,7 +11,13 @@ namespace wrd
 	Instance& THIS::operator*() { return get(); }
 	THIS::operator wbool() const { return isBind(); }
 	Res& THIS::bind(const Instance& it) { return _bind(it); }
-	wbool THIS::canBind(const Instance& it) { return canBind(it.getClass()); }
+
+	wbool THIS::canBind(const Instance& it)
+	{
+		WRD_IS_NULL(it, false)
+		return canBind(it.getClass());
+	}
+
 	Instance& THIS::get() { return _get(); }
 
 	const Instance& THIS::get() const
