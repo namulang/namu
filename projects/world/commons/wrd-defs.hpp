@@ -22,7 +22,7 @@
 		RES.warn(#VALUE);				\
 		return RET;						\
 	}
-#define WRD_IS_NULL_2(VALUE, RET)	WRD_IS_NULL_3(VALUE, RET, RET)
+#define WRD_IS_NULL_2(VALUE, RET)	WRD_IS_NULL_3(VALUE, wasnull, RET)
 #define WRD_IS_NULL_1(VALUE)		WRD_IS_NULL_2(VALUE, wasnull)
 #define WRD_IS_NULL(...) 			WRD_OVERLOAD(WRD_IS_NULL, __VA_ARGS__)
 
@@ -35,9 +35,11 @@
 
 #define WRD_IS_SUPER_1(call)        		if(Super:: call ) return wassuperfail.warn("");
 #define WRD_IS_SUPER_2(res, call)			WRD_IS_SUPER_3(res, call, "")
-#define WRD_IS_SUPER_3(res, call, msg)		\
-    Res& res = Super:: call ;    			\
-    if(res) return wassuperfail.warn(#msg);
+#define WRD_IS_SUPER_3(res, call, msg)			\
+	{											\
+		Res& res = Super:: call ;    			\
+	    if(res) return wassuperfail.warn(#msg);	\
+	}
 #define WRD_IS_SUPER(...)					WRD_OVERLOAD(WRD_IS_SUPER, __VA_ARGS__)
 
 #define WRD_IS_CONST(RET)		\
