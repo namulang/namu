@@ -33,7 +33,6 @@ namespace wrd
 		virtual wcnt getSize() const = 0;
 		//	State:
 		virtual Res& init();
-		virtual wbool isInit() const;
 		//	Thing:
         virtual const Class& getSuper() const = 0;
         virtual wbool isSuper(const Class& it) const;

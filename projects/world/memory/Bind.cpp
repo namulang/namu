@@ -1,6 +1,7 @@
 #include "Bind.hpp"
 #include "TStrong.hpp"
 #include "../pretypes/Reses.hpp"
+#include "../meta/Classer.hpp"
 
 namespace wrd
 {

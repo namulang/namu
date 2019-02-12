@@ -25,23 +25,18 @@ namespace wrd
 		return inner;
 	}
 
-	wbool THIS::isInit() const
-	{
-        return	&getName() == &TClass<Thing>::getNameStatic() ||
-				getSuper().isExist();
-	}
-
     Res& THIS::init()
     {
         //    pre:
         //        Object class should not initialize explicitly:
         //            or This makes recursive call.
         //            Because if we make a instance of TClass<Object>, it triggers Class::init inside of it.
+		if( ! Classer::_isPreloaded())
+			return Classer::_preload(*this);
         if(isInit()) return wascancel;
-		std::cout << "class " << getName().toCStr() << "init().\n";
-        //    main:
 
         //  main:
+		WRD_INFO("%s class init.", getName().toCStr());
         //        get Supers info from Super:
         //                at this point TClass<Super> is instantiated, and "Super" also is all of this sequences.
         Class& super = const_cast<Class&>(getSuper());

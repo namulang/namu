@@ -16,13 +16,19 @@ namespace wrd
         World();
 
 	public:
+		//	World:
 		Instancer& getInstancer();
 		const Instancer& getInstancer() const;
+		Classer& getClasser();
+		const Classer& getClasser() const;
+		//	State:
+		virtual Res& init();
 
 	private:
 		Instancer _instancer;
+		Classer _classer;
 
     public:
-        static WRD_LAZY_METHOD(This, get)
+        static World& get();
     };
 }

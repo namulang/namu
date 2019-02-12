@@ -16,7 +16,8 @@ namespace wrd
     public:
         TClass();
 
-    public:    // Class:
+    public:
+		// Class:
         virtual wbool isADT() const;
         virtual wbool isTemplate() const;
         virtual const Str& getName() const;
@@ -28,6 +29,8 @@ namespace wrd
         virtual const Container& getNodes() const;
 		//	State:
         virtual wbool isOccupy() const;
+		virtual wbool isInit() const;
+		virtual Res& init();
 		//	Thing:
 		virtual const Class& getSuper() const;
 
@@ -44,5 +47,9 @@ namespace wrd
         static wbool isOccupyStatic();
 		static wbool isADTStatic();
 		static wbool isTemplateStatic();
+		static wbool isInitStatic();
+
+	private:
+		static wbool __is_init;
     };
 }
