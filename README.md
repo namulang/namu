@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/kniz/World.svg?branch=master)](https://travis-ci.org/kniz/World)
 
 WORLD, <br/>The new programming language.
 =======================================
