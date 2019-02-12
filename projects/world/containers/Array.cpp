@@ -22,7 +22,7 @@ namespace wrd
 		return n;
 	}
 
-	widx THIS::push(Strong new1) { return insert(getLen()-1, new1); }
+	widx THIS::push(Strong new1) { return insert(getLen(), new1); }
 
 	widx THIS::push(const Container& rhs)
 	{
