@@ -18,6 +18,15 @@ namespace wrd
 		return *this;
 	}
 
+	Res& THIS::bind(Instance& new1)
+	{
+		// type checking before binding only is required to Bind class.
+		// Derived classes from this doesn't need it. because its type is specified.
+		// prevent wrong type providing by compiler.
+		WRD_ASSERT(canBind(new1), waswrongtype);
+		return _bind(new1);	
+	}
+
 	wbool THIS::isBind() const { return _its_id.s.blk_n != WRD_INDEX_ERROR; }
 
 	Res& THIS::unbind()
@@ -101,8 +110,6 @@ namespace wrd
 
 	Res& THIS::_bind(const Instance& it)
 	{
-		WRD_ASSERT(canBind(it), waswrongtype);
-	
 	    unbind();
 		//	regardless of result from _onStrong binder can bind:
 		//		there are two reasons:

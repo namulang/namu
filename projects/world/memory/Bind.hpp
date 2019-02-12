@@ -50,6 +50,7 @@ namespace wrd
 		This& operator=(const This& rhs);
 
 	public://	Bind:
+		Res& bind(Instance& new1);
 		virtual wbool isBind() const;
         /// mostly, unbind is replacable to release() comletely.
         /// but some class(e.g. Refer) treat differently between unbind() and release().
