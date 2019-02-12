@@ -7,6 +7,7 @@ namespace wrd
 #define THIS State
 	WRD_CLASS_DEF(THIS)
 
+	THIS::THIS() { THIS::release(); }
 	wbool THIS::isInit() const { return _is_init; }
 
 	Res& THIS::init()
