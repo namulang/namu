@@ -14,6 +14,14 @@ namespace wrd
 
 	TEMPL wbool THIS::__is_init = false;
 	TEMPL const Class& THIS::getClass() const { return *this; }
+	TEMPL TStrong<THIS> THIS::clone() const { return TStrong<This>((This&)*this); }
+
+	TEMPL const Class& THIS::getClassStatic()
+	{
+		static This inner;
+		return inner;
+	}
+
 	TEMPL TStrong<Instance> THIS::_clone() const { return TCloner<THIS>::clone(*this); }
 	TEMPL THIS::TClass() { this->init(); }
 
