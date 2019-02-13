@@ -1,5 +1,5 @@
 ![](https://img.shields.io/github/release-pre/kniz/worldlang.svg?label=latest%20release&style=flat)
-![](https://img.shields.io/github/release-date-pre/kniz/worldlang.svg?label=at&style=flat)
+![](https://img.shields.io/github/release-date-pre/kniz/worldlang.svg?label=on&style=flat)
 [![Build Status](https://travis-ci.org/kniz/worldlang.svg?branch=master)](https://travis-ci.org/kniz/World)
 ![](https://img.shields.io/github/languages/code-size/kniz/worldlang.svg?style=flat)
 ![](https://img.shields.io/github/downloads/kniz/worldlang/total.svg?style=flat)
