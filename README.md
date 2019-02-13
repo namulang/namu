@@ -1,7 +1,7 @@
-![](https://img.shields.io/github/release-pre/kniz/world.svg?label=latest%20release&style=flat)
-![](https://img.shields.io/github/release-date-pre/kniz/world.svg?label=at&style=flat)
-[![Build Status](https://travis-ci.org/kniz/World.svg?branch=master)](https://travis-ci.org/kniz/World)
-![](https://img.shields.io/github/downloads/kniz/world/total.svg?style=flat)
+![](https://img.shields.io/github/release-pre/kniz/worldlang.svg?label=latest%20release&style=flat)
+![](https://img.shields.io/github/release-date-pre/kniz/worldlang.svg?label=at&style=flat)
+[![Build Status](https://travis-ci.org/kniz/worldlang.svg?branch=master)](https://travis-ci.org/kniz/World)
+![](https://img.shields.io/github/downloads/kniz/worldlang/total.svg?style=flat)
 
 WORLD, <br/>The new programming language.
 =======================================
