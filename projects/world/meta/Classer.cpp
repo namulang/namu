@@ -6,9 +6,12 @@ namespace wrd
 #define THIS Classer
 	WRD_CLASS_DEF(THIS)
 
+	wbool THIS::_is_preloaded = false;
 	Res& THIS::init()
 	{
 		if(isInit()) return wascancel;
+
+		Super::init();
 		_isPreloaded() = true;
 		for(Class* e : _getPreloads())
 			e->init();
