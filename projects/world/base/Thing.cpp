@@ -11,12 +11,8 @@ namespace wrd
 	const Class& THIS::getSuper() const { return getClass().getSuper(); }
 	wbool THIS::isNull() const { const void* chk = this; return !chk; }
 	wbool THIS::isExist() const { const void* chk = this; return chk; }
-	wbool THIS::isSuper(const Class& it) const { return getClass().isSuper(it); }
-	wbool THIS::isSuper(const Thing& it) const { return getClass().isSuper(it.getClass()); }
-	template <typename T> wbool THIS::isSuper() const { return getClass().isSuper(T::getStaticClass()); }
-	wbool THIS::isSub(const Thing& it) const { return it.getClass().isSuper(getClass()); }
-	wbool THIS::isSub(const Class& it) const { return it.isSuper(getClass()); }
-	template <typename T> wbool THIS::isSub() const { return T::getStaticClass().isSuper(getClass()); }
+	wbool THIS::isSuper(const Thing& it) const { return getClass().isSuperCls(it.getClass()); }
+	wbool THIS::isSub(const Thing& it) const { return it.getClass().isSuperCls(getClass()); }
 	//	to는 명시적캐스팅이다. 
 	//		사용자의 개입이 가능한 유일한 캐스팅의 1 종류이며, 
 	//		A타입에 대한 명시적캐스팅은 어떠한 타입이 나올지 제한되지 않는다.
@@ -54,21 +50,19 @@ namespace wrd
 	//			테이블을 끼워놓음으로써 해결한다. 중간에 msg를 만들어 보낼 필요가 없으므로
 	//			속도가 더 빨라진다.
 
-	//	구체클래스로 캐스트한다. dynamic_cast와 동급이다.
-	//	invisible이다.
 	Thing& THIS::_down(const Class& cls)
 	{
-		WRD_IS_THIS(Thing)
-
-		if(isSub(cls))
+		if(getClass().isSubCls(cls))
 			return *this;
 		return nulr<Thing>();
 	}
+
 	const Thing& THIS::_down(const Class& cls) const
 	{
 		WRD_UNCONST()
 		return unconst._down(cls);
 	}
+
 	//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
 	Res& THIS::assign(const Thing& it)
 	{

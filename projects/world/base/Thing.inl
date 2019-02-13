@@ -1,14 +1,17 @@
 #pragma once
 
-#include "../wrd-commons.hpp"
+#include "../meta/MetaBean.hpp"
 
 namespace wrd
 {
+	class Res;
+	class Str;
+	class Node;
 	class Class;
+	class Classes;
 	class Visitor;
 	class Instance;
-	class Res;
-	class Node;
+	class Container;
 	template <typename T> class TStrong;
 	typedef TStrong<Node> Strong;
 	typedef TStrong<const Node> CStrong;
@@ -18,8 +21,9 @@ namespace wrd
 
 	///	Thing은 World의 최상위 객체
 	class Thing
-	{	WRD_CLASS_DECL(Thing)
+	{	WRD_CLASS_DECL(Thing, Thing)
 		template <typename T, typename S> friend class TVisitation; //	_tour를 위한 것이다.
+		friend class Bind; // for _down
 	public:
 		virtual ~Thing();
 
@@ -28,11 +32,9 @@ namespace wrd
 		virtual Res& release() = 0;
 		wbool isNull() const;
 		wbool isExist() const;
-		virtual wbool isSuper(const Class& it) const;
 		wbool isSuper(const Thing& it) const;
 		template <typename T> wbool isSuper() const;
 		wbool isSub(const Thing& it) const;
-		wbool isSub(const Class& it) const;
 		template <typename T> wbool isSub() const;
 		//	to는 명시적캐스팅이다. 
 		//		사용자의 개입이 가능한 유일한 캐스팅의 1 종류이며, 
@@ -72,10 +74,8 @@ namespace wrd
 
 		//	구체클래스로 캐스트한다. dynamic_cast와 동급이다.
 		//	invisible이다.
-		template <typename T> T& down() { return (T&) _down(T::getClassStatic()); }
-		template <typename T> const T& down() const { return (T&) _down(T::getClassStatic()); }
-		virtual Thing& _down(const Class& cls);
-		const Thing& _down(const Class& cls) const;
+		template <typename T> T& down();
+		template <typename T> const T& down() const;
 		//	가상할당자이다. 할당연산자는 virtual이 안되기 때문에 제대로 할당을 하고 싶다면 항상 구체타입을 알고 있어야만 한다.
 		virtual Res& assign(const Thing& it);
 
@@ -83,5 +83,7 @@ namespace wrd
 		//	Visitor에 의해서 하위 구성요소(ownee)들을 어떻게 순회시킬지를 정한다.
 		virtual Res& _tour(Visitor& visitor) const;
 		virtual Res& _tour(Visitor& visitor);
+		virtual Thing& _down(const Class& cls);
+		const Thing& _down(const Class& cls) const;
 	};
 }

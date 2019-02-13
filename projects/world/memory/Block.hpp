@@ -15,8 +15,6 @@ namespace wrd
 		Block(Id id);
 
 	public:
-		Res& setSerial(wcnt new1);
-		wcnt getSerial() const;
 		const Chunk& getChunk() const;
 		wcnt getStrongCnt() const;
 		//	Bindable:

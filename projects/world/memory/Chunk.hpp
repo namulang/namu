@@ -22,7 +22,7 @@ namespace wrd
 		/// @remark	@ref Chunk can resize its data. but can't persist whole memory allocated before,
 		///			it's a kind of memory flashing and can't give a way for accessing it.
 		///			at outside, ptr for them should be daggled.
-		virtual Res& resize(wcnt new_size);
+		virtual Res& resize(wcnt new_sz);
 		virtual wbool has(const Instance& it) const;
 		const wuchar* getEOB() const;
 		const wuchar* getHeap() const;
@@ -35,9 +35,9 @@ namespace wrd
 
 	private:
 		wuchar* _getEOB();
-		Res& _index();
+		Res& _index(widx start);
 		wcnt _getRealBlkSize() const;
-		void* _allocHeap(wcnt new_size);
+		void* _allocHeap(wcnt new_sz);
 		Res& _freeHeap(wuchar** heap);
 		Res& _release();
 

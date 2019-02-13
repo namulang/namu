@@ -1,0 +1,28 @@
+# World TravisCI
+
+#   deps:
+before_install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq default-jre
+  - sudo apt-get install -qq python3
+  - sudo apt-get install -qq g++-7
+  - sudo apt-get install -qq gcc-7
+ 
+#   attrs:
+sudo: required
+dist: trusty
+language: cpp
+compiler: g++
+os: linux
+  
+#install:
+#  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
+#  - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
+
+# Build steps
+script:
+  - export CC=gcc-7
+  - export CXX=g++-7
+
+  - python3 build/builder.py build

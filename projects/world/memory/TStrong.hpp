@@ -13,7 +13,7 @@ namespace wrd
     TEMPL THIS::TStrong() {}
     TEMPL THIS::TStrong(T& it) : Super() { this->bind(it); }
     TEMPL THIS::TStrong(T* it) : Super() { this->bind(*it); }
-    TEMPL THIS::TStrong(const This& rhs) : Super() { this->assign(rhs); }
+    TEMPL THIS::TStrong(const This& rhs) : Super() { this->_assign(rhs); }
 	TEMPL THIS::~TStrong() { unbind(); }
 
 	TEMPL THIS& THIS::operator=(const This& rhs)
@@ -24,9 +24,10 @@ namespace wrd
 	
 	TEMPL Res& THIS::unbind()
 	{
-	    Block& blk = this->_getBlock(this->getItsId());
+		if( ! this->isBind()) return wascancel;
+		Block& blk = this->_getBlock(this->getItsId());
 		WRD_IS_NULL(blk, waswrongmember, Super::unbind())
-	    blk._onStrong(-1);
+		blk._onStrong(-1);
 	
 	    return Super::unbind();
 	}
@@ -72,9 +73,10 @@ namespace wrd
 	
 	TEMPL Res& THIS::unbind()
 	{
-	     Block& blk = this->_getBlock(this->getItsId());
-		 WRD_IS_NULL(blk, waswrongmember, Super::unbind())
-	     blk._onStrong(-1);
+		if( ! this->isBind()) return wascancel;
+		Block& blk = this->_getBlock(this->getItsId());
+		WRD_IS_NULL(blk, waswrongmember, Super::unbind())
+		blk._onStrong(-1);
 	
 	    return Super::unbind();
 	}

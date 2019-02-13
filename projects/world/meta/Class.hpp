@@ -7,17 +7,24 @@ namespace wrd
     class Classes; // Container of Class
     class Array;
 
+	///	@remark	Class returning TClass<Class> as result of getClass()
+	///			because this func always returns metaclass no matter of what This type is,
+	///			users need to care about getting meta of metaclass on calling getClass().
+	///			for example,
+	///				Thing& thing1 = ...; // let's assume that got from outside.
+	///				Object obj;
+	///
+	///				wbool compare = obj.isSub(thing1.getClass()); // user intend to get class of Thing.
+	///				// however, value 'compare' will definitely be false if
+	///				// thing was actually a retrived one by calling Thing.getClass() before.
+	///
+	///				// because Class::getClass() will return TClass<TClass<T> >,
+	///				// that stmt will be translated that checks object vs TClass<T>.
     class Class : public Composit
-    {	//	we can't put WRD_CLASS_DEF here:
-		//		it'll generates TClass<TClass<TClass<....> infinitely.
-		WRD_INHERIT(Class, Composit) // World에 visible해야 하기 때문이다.
-	public:
-		virtual const Class& getClass() const;
-		TStrong<This> clone() const;
+    {	WRD_CLASS_DECL(Class, Composit)
         friend class Interpreter; // for interpreter class which can use _getNodes().
-
     public:
-        wbool operator==(const This& rhs) const;
+        virtual wbool operator==(const This& rhs) const;
         wbool operator!=(const This& rhs) const;
 
     public:
@@ -33,10 +40,12 @@ namespace wrd
 		virtual wcnt getSize() const = 0;
 		//	State:
 		virtual Res& init();
-		virtual wbool isInit() const;
 		//	Thing:
         virtual const Class& getSuper() const = 0;
-        virtual wbool isSuper(const Class& it) const;
+        wbool isSuperCls(const Class& it) const;
+		template <typename T> wbool isSuperCls() const { return isSuperCls(T::getClassStatic()); }
+		wbool isSubCls(const Class& it) const { return it.isSuperCls(*this); }
+		template <typename T> wbool isSubCls() const { return T::getClassStatic().isSuperCls(*this); }
 
     protected:
 		//	Class:
@@ -44,7 +53,5 @@ namespace wrd
 		Classes& _getSubs();
 		//	Composit:
         virtual Res& _initNodes();
-		//	Thing:
-		virtual TStrong<Instance> _clone() const;
     };
 }

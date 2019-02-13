@@ -10,18 +10,6 @@ namespace wrd
 	THIS::THIS() : Super(), _pt(NULL), _strong(0) {}
 	THIS::THIS(Id id) : Super(id), _pt(NULL), _strong(0) {}
 
-	Res& THIS::setSerial(wcnt new1)
-	{
-		if( ! _pt)
-			return wasnull;
-
-		Id got = getId();
-		got.s.serial = new1;
-		return _sync(got);
-	}
-
-	wcnt THIS::getSerial() const { return _pt ? _pt->getId().s.serial : WRD_INDEX_ERROR; }
-
 	const Chunk& THIS::getChunk() const
 	{
 		if( ! _pt)
@@ -42,24 +30,11 @@ namespace wrd
 	}
 
 	wbool THIS::isBind() const { return _pt; }
-
-	const Class& THIS::getBindable() const
-	{
-		static TClass<Instance> inner;
-		return inner;
-	}
-
+	const Class& THIS::getBindable() const { return Instance::getClassStatic(); }
 	wbool THIS::canBind(const Class& cls) const { return cls.isSub(getBindable()); }
 	Id THIS::getId() const { return _id; }
 
-	wbool THIS::isHeap() const
-	{
-		const Chunk& chk = getChunk();
-		WRD_IS_NULL(chk, wasnull, false)
-
-		return chk.has(*_pt);
-	}
-
+	wbool THIS::isHeap() const { return _id.s.chk_n != WRD_INDEX_ERROR; }
 	Strong THIS::toStrong() { return Strong((Node*)_pt); }
 	Weak THIS::toWeak() { return Weak((Node*)_pt); }
 	Res& THIS::release() { return unbind(); }

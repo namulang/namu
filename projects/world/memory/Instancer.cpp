@@ -16,6 +16,7 @@ namespace wrd
 	Res& THIS::unbind(Instance& old)
 	{
 		if( ! _hasInstanceBlock(old)) return wascancel; // optimization.
+
 		Unit& un = _akashic[old.getId()];
 		return _akashic.del(&un, sizeof(Unit));
 	}

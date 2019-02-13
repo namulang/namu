@@ -16,14 +16,8 @@ namespace wrd
 		Res& err(...);
 		Res& info(...);
 		Res& dbg(...);
-		/*
-		template <typename T>
-		T returns() {
-			return nulr<T>();
-		}
-		template <typename T>
-		T returns(T value) {
-			return value;
-		}*/
+
+		template <typename T> T returns() { return nulr<T>(); }
+		template <typename T> T returns(T value) { return value; }
 	};
 }

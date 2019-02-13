@@ -6,16 +6,28 @@
 namespace wrd
 {
 #define THIS Class
+	
+	_WRD_CLASS_DEF_BEAN(THIS)
+
 	//	we can't put WRD_CLASS_DEF here. it'll generates TClass<TClass<TClass<....> infinitely.
-	const Class& THIS::getClass() const { return *this; }
+	const Class& THIS::getClass() const { return This::getClassStatic(); }
 	TStrong<THIS> THIS::clone() const { return TStrong<This>(_clone().down<This>()); }
+	WRD_LAZY_METHOD(const Class&, THIS::getClassStatic, WRD_VOID(), TClass<This>)
+
+	Res& THIS::onInitNodes(Container& tray)
+	{
+		//	TODO:
+		return wasgood;
+	}
+
+	TStrong<Instance> THIS::_clone() const { return TCloner<This>::clone(*this); }
     wbool THIS::operator==(const This& rhs) const { return &getName() == &rhs.getName(); }
-    wbool THIS::operator!=(const This& rhs) const { return &getName() != &rhs.getName(); }
+    wbool THIS::operator!=(const This& rhs) const { return ! operator==(rhs); }
 
     const Classes& THIS::getLeafs() const
     {
-        static Classes inner;
-        //    TODO:
+		//TODO: change to range based for loop.
+		static Classes inner;
 		return inner;
     }
 
@@ -25,23 +37,24 @@ namespace wrd
 		return inner;
 	}
 
-	wbool THIS::isInit() const { /*TODO: */ return false; }
-
     Res& THIS::init()
     {
-		/* TODO: impl Array
-        //    pre:
-        //        exception:
-        WRD_IS_SUPER(init())
-
-        //    main:
-        //        Object class should not initialize explicitly:
-        //            or This makes recursive call.
-        //            Because if we make a instance of TClass<Object>, it triggers Class::init inside of it.
-        if(&getName() == &TClass<Thing>::getNameStatic())
-            return wasgood;
+        //	pre:
+		//		Caution for not refering metaclass and binding inside of this:
+		//			while this func is called, a structuring for metaclass doesn't finished.
+		//			so if you call funcs using metaclass (in)directly, that calling makes
+		//			crash or infinite loop.
+		//			please you make sure not to use those APIs.
+		//
+		//		Object class should not initialize explicitly:
+        //      	or This makes recursive call.
+        //			Because if we make a instance of TClass<Object>, it triggers Class::init inside of it.
+		if( ! Classer::_isPreloaded())
+			return Classer::_preload(*this), wasntinit;
+        if(isInit()) return wascancel;
 
         //  main:
+		_setInit(true);
         //        get Supers info from Super:
         //                at this point TClass<Super> is instantiated, and "Super" also is all of this sequences.
         Class& super = const_cast<Class&>(getSuper());
@@ -49,35 +62,33 @@ namespace wrd
         //        constructing SuperClass:
         Classes& my_supers = _getSupers();
         my_supers = super._getSupers();
-        my_supers.push(&super);
+        my_supers.push(super);
         //        notify to super:
-        if(super._getSubs().push(*this) != wrongidx)
+        if(super._getSubs().push(*this) == wrongidx)
             return wascancel;
-		*/
+
         return wasgood;
     }
 
-    wbool THIS::isSuper(const Class& it) const
-    {	/* TODO: impl Array
+    wbool THIS::isSuperCls(const Class& it) const
+    {
         //  checking class hierarchy algorithm:
         //        Use the "Tier" of the class hierarchy info to check it.
         //        "Tier" means that how this class are inherited far from the Root class, that is, Object.
         //        So, if the "this" is a super of given object "it", its "tier"th super class
         //        would must be the class of "this".
         if(it.isNull()) return false;
-        const Classes& its = it.getSupers();
-        wcnt    my_tier = getClass().getSupers().size(),
-                its_tier = its_supers.size();
+        Classes& its = (Classes&) it.getSupers();
+        wcnt    my_tier = getSupers().getLen(),
+                its_tier = its.getLen();
         if(my_tier > its_tier) return false;
 
 
         //  main:
-        const ClassBase& target = its_tier == my_tier ? it :
-            static_cast<const Class&>(its[my_tier]);
+        const Class& target = its_tier == my_tier ? it :
+            (const Class&) its._arr[my_tier]._get();
 
-        return getClass() == target;//  Remember. We're using Class as "Monostate".
-		*/
-		return true;
+        return *this == target;	// operator== is virtual func. 
     }
 
     Classes& THIS::_getSupers() { return const_cast<Classes&>(getSupers()); }
@@ -85,9 +96,7 @@ namespace wrd
 
     Res& THIS::_initNodes()
     {
-        _getNodes() = getSupers()[0].getNodes(); // getSupers()[0]은 바로 위의 부모클래스.
+        _getNodes() = getSupers()[0].getNodes(); // getSupers()[0] is parent class.
         return wasgood;
 	}
-	
-	TStrong<Instance> THIS::_clone() const { return TCloner<This>::clone(*this); }
 }

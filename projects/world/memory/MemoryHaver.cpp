@@ -17,6 +17,4 @@ namespace wrd
 		return _get(n);
 	}
 	const void* THIS::get(widx n) const { return ((MemoryHaver*)this)->get(n); }
-	wbool THIS::isFull() const { return getLen() >= getSize(); }
-	wbool THIS::isCapable() const { return getLen() < getSize(); }
 }

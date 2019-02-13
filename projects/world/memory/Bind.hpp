@@ -44,12 +44,14 @@ namespace wrd
 	///
     class Bind : public Node, public Bindable
 	{	WRD_CLASS_DECL(Bind, Node)
+		friend class Class; // for _get()
 	public:
 		wbool operator==(const This& rhs) const;
 		wbool operator!=(const This& rhs) const;
 		This& operator=(const This& rhs);
 
 	public://	Bind:
+		Res& bind(Instance& new1);
 		virtual wbool isBind() const;
         /// mostly, unbind is replacable to release() comletely.
         /// but some class(e.g. Refer) treat differently between unbind() and release().

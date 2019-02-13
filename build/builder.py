@@ -21,7 +21,8 @@ def branch(command):
         arg = None if len(sys.argv) < 3 else sys.argv[2]
         return run(arg)
 
-    print(command + " is unknown.")    
+    print(command + " is unknown.")
+    return -1
 
 def run(arg):
     if arg is None:
@@ -286,9 +287,11 @@ def main():
     if len(sys.argv) == 1:
         help()
     else:
-        branch(sys.argv[1])
+        return branch(sys.argv[1])
 
     print("")
+    return 0
 
-main()
-print(" - end -")
+ret = main()
+print(" - ends with " + str(ret) + " exit code.")
+exit(ret)

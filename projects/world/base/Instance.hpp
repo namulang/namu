@@ -17,6 +17,21 @@ namespace wrd
 		//	Instance는 World에서 인스턴스 관리를 대신해준다. 여기서부터 bind가 가능하다.
 
 	public:
+		class Vault : public Thing
+		{	WRD_CLASS_DECL(Vault, Thing)
+		public:
+			//	Vault:
+			Res& set(void* rcver, widx chk_n);
+			widx get(void* rcver);
+			//	Thing:
+			virtual Res& release();
+
+		private:
+			void* _rcver;
+			widx _chk_n;
+		};
+
+	public:
 		Instance();
 		Instance(Id id);
 		virtual ~Instance();
@@ -59,19 +74,6 @@ namespace wrd
 		static Instancer& _getMgr();
 
 	private:
-		class Vault : public Thing
-		{	WRD_CLASS_DECL(Vault, Thing)
-		public:
-			//	Vault:
-			Res& set(void* rcver, widx chk_n);
-			widx get(void* rcver);
-			//	Thing:
-			virtual Res& release();
-
-		private:
-			void* _rcver;
-			widx _chk_n;
-		};
 		static Vault _vault;
 	};
 }

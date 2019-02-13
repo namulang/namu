@@ -1,6 +1,7 @@
 #include "ObjectClass.hpp"
 #include "../meta.hpp"
-#include "../container/Array.hpp"
+#include "../containers/Array.hpp"
+#include "../base/Thing.hpp"
 
 namespace wrd
 {

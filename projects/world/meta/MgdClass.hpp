@@ -2,6 +2,7 @@
 
 #include "ObjectClass.hpp"
 #include "../memory/TStrong.hpp"
+#include "Classer.hpp"
 
 namespace wrd
 {

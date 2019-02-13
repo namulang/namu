@@ -2,6 +2,7 @@
 
 #include "TArray.inl"
 #include "../meta/TClass.hpp"
+#include "../meta/Classer.hpp"
 
 namespace wrd
 {

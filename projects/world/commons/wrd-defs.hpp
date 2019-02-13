@@ -22,7 +22,7 @@
 		RES.warn(#VALUE);				\
 		return RET;						\
 	}
-#define WRD_IS_NULL_2(VALUE, RET)	WRD_IS_NULL_3(VALUE, RET, RET)
+#define WRD_IS_NULL_2(VALUE, RET)	WRD_IS_NULL_3(VALUE, wasnull, RET)
 #define WRD_IS_NULL_1(VALUE)		WRD_IS_NULL_2(VALUE, wasnull)
 #define WRD_IS_NULL(...) 			WRD_OVERLOAD(WRD_IS_NULL, __VA_ARGS__)
 
@@ -35,9 +35,11 @@
 
 #define WRD_IS_SUPER_1(call)        		if(Super:: call ) return wassuperfail.warn("");
 #define WRD_IS_SUPER_2(res, call)			WRD_IS_SUPER_3(res, call, "")
-#define WRD_IS_SUPER_3(res, call, msg)		\
-    Res& res = Super:: call ;    			\
-    if(res) return wassuperfail.warn(#msg);
+#define WRD_IS_SUPER_3(res, call, msg)			\
+	{											\
+		Res& res = Super:: call ;    			\
+	    if(res) return wassuperfail.warn(#msg);	\
+	}
 #define WRD_IS_SUPER(...)					WRD_OVERLOAD(WRD_IS_SUPER, __VA_ARGS__)
 
 #define WRD_IS_CONST(RET)		\
@@ -83,6 +85,7 @@
         virtual const Class& getClass() const { return getClassStatic(); }					\
         TStrong<This> clone() const { return TStrong<This>(_clone().down<This>()); }		\
         static WRD_LAZY_METHOD_4(const Class&, getClassStatic, WRD_VOID(), TClass<This>)	\
+		static Res& onInitNodes(Container& tray) { return /*TODO: impl */wasgood; }	\
 	protected:																				\
 		virtual TStrong<Instance> _clone() const { return TCloner<This>::clone(*this); }	\
 	private:
@@ -96,16 +99,33 @@
 
 /// This macros, DECLARE, DEFINE, will be used for which can't dependent to TClass and TStrong and Instance.
 ///	mostly, those are for base classes of them which correspond to will be used for internal usage only.
-#define _CLASS_DECL_BASE()						\
-	public:										\
-		virtual const Class& getClass() const;	\
-		TStrong<This> clone() const;			\
-		static const Class& getClassStatic();	\
-	protected:									\
-		virtual TStrong<Instance> _clone() const;\
+///
+///	please refer class @ref MetaBean if want to know why I defined nestedclass at this macro.
+#define _CLASS_DECL_BASE()								\
+	private:											\
+		template <typename> friend class TClass;		\
+		class __wrd_meta_class_bean : public MetaBean {	\
+			template <typename> friend class TClass;	\
+			static const Str& getNameStatic();			\
+			static const Container& getNodesStatic();	\
+			static const Classes& getSupersStatic();	\
+			static const Classes& getSubsStatic();		\
+			static const Class& getSuperStatic();		\
+			static wbool isOccupyStatic();				\
+			static wbool isADTStatic();					\
+			static wbool isTemplateStatic();			\
+			static const wbool& isInitStatic();			\
+		};												\
+	public:												\
+		virtual const Class& getClass() const;			\
+		TStrong<This> clone() const;					\
+		static const Class& getClassStatic();			\
+		static Res& onInitNodes(Container& tray);		\
+	protected:											\
+		virtual TStrong<Instance> _clone() const;		\
 	private:
-#define WRD_CLASS_DECL_2(THIS, SUPER)		\
-	WRD_INHERIT_2(THIS, SUPER)				\
+#define WRD_CLASS_DECL_2(THIS, SUPER)	\
+	WRD_INHERIT_2(THIS, SUPER)			\
 	_CLASS_DECL_BASE()
 #define WRD_CLASS_DECL_1(THIS)	\
 	WRD_INHERIT_1(THIS)			\
@@ -113,7 +133,28 @@
 #define WRD_CLASS_DECL(...) WRD_OVERLOAD(WRD_CLASS_DECL, __VA_ARGS__)
 
 ///    this macro should be placed at implement file which include header file using DECLARE macro.
-#define WRD_CLASS_DEF_1(THIS)        			WRD_CLASS_DEF_2(WRD_VOID(), THIS)
+#define _WRD_CLASS_DEF_BEAN_1(THIS)	_WRD_CLASS_DEF_BEAN_2(WRD_VOID(), THIS)
+#define _WRD_CLASS_DEF_BEAN_2(TEMPL, THIS)																								\
+    TEMPL const Str& THIS::__wrd_meta_class_bean::getNameStatic()																		\
+    {																																	\
+        static Str inner = MetaBean::_getDemangledName(typeid(THIS).name());															\
+		return inner;																													\
+    }																																	\
+	TEMPL WRD_LAZY_METHOD_4(const Class&, THIS::__wrd_meta_class_bean::getSuperStatic, WRD_VOID(), TClass<typename THIS::Super>)		\
+	TEMPL WRD_LAZY_METHOD_4(const Container&, THIS::__wrd_meta_class_bean::getNodesStatic, WRD_VOID(), Array)							\
+	TEMPL WRD_LAZY_METHOD_4(const Classes&, THIS::__wrd_meta_class_bean::getSupersStatic, WRD_VOID(), Classes)							\
+	TEMPL WRD_LAZY_METHOD_4(const Classes&, THIS::__wrd_meta_class_bean::getSubsStatic, WRD_VOID(), Classes)							\
+	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isOccupyStatic, WRD_VOID(), wbool, TIfSub<THIS WRD_COMMA() Object>::is)	\
+	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isADTStatic, WRD_VOID(), wbool, TIfADT< THIS >::is)						\
+	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isTemplateStatic, WRD_VOID(), wbool, TIfTemplate< THIS >::is)			\
+	TEMPL const wbool& THIS::__wrd_meta_class_bean::isInitStatic()																				\
+	{																																	\
+		static wbool inner = &getNameStatic() == &TClass<Thing>::getNameStatic();														\
+		return inner;																													\
+	}
+#define _WRD_CLASS_DEF_BEAN(...)	WRD_OVERLOAD(_WRD_CLASS_DEF_BEAN, __VA_ARGS__)
+
+#define WRD_CLASS_DEF_1(THIS)        				WRD_CLASS_DEF_2(WRD_VOID(), THIS)
 #define WRD_CLASS_DEF_2(TEMPL, THIS)				\
     TEMPL const Class& THIS::getClass() const {		\
 		return this->THIS::getClassStatic();		\
@@ -125,8 +166,13 @@
         static TClass<This> inner;    				\
         return inner;    							\
 	}												\
-	
-	//TODO: TEMPL WRD_CLASS_INIT(THIS)
+	TEMPL Res& THIS::onInitNodes(Container& tray) {	\
+		/*TODO: impl:*/								\
+		return wasgood;								\
+	}												\
+	_WRD_CLASS_DEF_BEAN_2(TEMPL, THIS)				\
+	TEMPL WRD_CLASS_INIT(THIS)
+
 #define WRD_CLASS_DEF(...)            			WRD_OVERLOAD(WRD_CLASS_DEF, __VA_ARGS__)
 
 ///	WRD_CLASS_INIT makes that given type T is accessible to ClassManager.
@@ -139,7 +185,7 @@
 ///	
 ///	if you use this onto template TYPE, add template parameters as prefix.
 ///		e.g) template <typename T> WRD_CLASS_INIT(MyTemplate<T>)
-#define WRD_CLASS_INIT(TYPE)			//TODO: WRD_INITIATOR(TYPE::getClassStatic();)
+#define WRD_CLASS_INIT(TYPE)	WRD_INITIATOR(__COUNTER__, (TYPE::getClassStatic();))	\
 
 #define _PUT(exp) _TGet<TypeTrait<decltype(exp)>::Org>::set(exp)
 #define _GET(exp) _TGet<TypeTrait<decltype(exp)>::Org>::get()

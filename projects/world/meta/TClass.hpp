@@ -2,8 +2,9 @@
 
 #include "TClass.inl"
 #include "helpers.hpp"
+#include "../pretypes/Reses.hpp"
 #include "../pretypes/Str.hpp"
-#include "../container/Chain.hpp"
+#include "../containers/Chain.hpp"
 #include "Classes.hpp"
 
 namespace wrd
@@ -11,13 +12,18 @@ namespace wrd
 	#define TEMPL template <typename T>
 	#define THIS TClass<T>
 
-	TEMPL const Class& THIS::getClass() const { return *this; }
+	TEMPL const Class& THIS::getClass() const { return Super::getClass(); }
+	TEMPL TStrong<THIS> THIS::clone() const { return TStrong<This>((This&)*this); }
+
+	TEMPL const Class& THIS::getClassStatic()
+	{
+		static This inner;
+		return inner;
+	}
+
 	TEMPL TStrong<Instance> THIS::_clone() const { return TCloner<THIS>::clone(*this); }
 	TEMPL THIS::TClass() { this->init(); }
 
-/*		TODO: add this on _REDIRECT. 
- *		WRD_IS_THIS_1(const Str)			\
- */
 #define _REDIRECT(retype, func)			\
 	TEMPL retype THIS::func() const	\
 	{										\
@@ -32,6 +38,7 @@ namespace wrd
 	_REDIRECT(const Container&, getNodes)
 	_REDIRECT(wbool, isOccupy)
 	_REDIRECT(const Class&, getSuper)
+	_REDIRECT(const wbool&, isInit)
 #undef _REDIRECT
 
     TEMPL TStrong<Instance> THIS::instance() const { return TCloner<T>::instance(); }
@@ -39,35 +46,25 @@ namespace wrd
 
     TEMPL Res& THIS::_initNodes()
     {
-        /*TODO: uncomment this if(Super::_initNodes())
-                return SuperFail.warn();*/
+        if(Super::_initNodes())
+			return wassuperfail.warn();
 
-        return nulr<Res>();//TODO: uncomment this. T::_onInitNodes(this->_getNodes()); // getMethods from RealClass T.
+		return T::onInitNodes(this->_getNodes()); // getMethods from RealClass T.
     }
 
-    TEMPL const Str& THIS::getNameStatic()
-    {
-        static Str inner;
-		/*TODO: uncomment these:
-        if(inner.getLength() <= 0)
-        {
-            int status = 0;
-            wchar* demangled = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
-            inner = demangled;
-            free(demangled);
-        }
-		*/
+#define _REDIRECT(retype, func)	TEMPL retype THIS::func() { return T::__wrd_meta_class_bean::func(); }
 
-        return inner;
-    }
+	_REDIRECT(const Str&, getNameStatic)
+	_REDIRECT(const Class&, getSuperStatic)
+	_REDIRECT(const Container&, getNodesStatic)
+	_REDIRECT(const Classes&, getSupersStatic)
+	_REDIRECT(const Classes&, getSubsStatic)
+	_REDIRECT(wbool, isOccupyStatic)
+	_REDIRECT(wbool, isADTStatic)
+	_REDIRECT(wbool, isTemplateStatic)
+	_REDIRECT(const wbool&, isInitStatic)
 
-	TEMPL WRD_LAZY_METHOD(const Class&, THIS::getSuperStatic, WRD_VOID(), TClass<Super>)
-	TEMPL WRD_LAZY_METHOD(const Container&, THIS::getNodesStatic, WRD_VOID(), Array)
-	TEMPL WRD_LAZY_METHOD(const Classes&, THIS::getSupersStatic, WRD_VOID(), Classes)
-	TEMPL WRD_LAZY_METHOD(const Classes&, THIS::getSubsStatic, WRD_VOID(), Classes)
-	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::isOccupyStatic, WRD_VOID(), wbool, TIfSub<T WRD_COMMA() Object/*TODO: OccupiableObject*/>::is)
-	TEMPL WRD_LAZY_METHOD(wbool, THIS::isADTStatic, WRD_VOID(), wbool, TIfADT<T>::is)
-	TEMPL WRD_LAZY_METHOD(wbool, THIS::isTemplateStatic, WRD_VOID(), wbool, TIfTemplate<T>::is)
+#undef _REDIRECT
 
 #undef TEMPL
 #undef THIS
