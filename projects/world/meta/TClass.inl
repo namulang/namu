@@ -10,6 +10,9 @@ namespace wrd
     class Container;
     class Classes;
 
+	///	@remark	TClass returns TClass<Class> as its meta class.
+	///			however, this makes impossible to get specific TClass instance
+	///			at a binder.
     template <typename T>
     class TClass : public TMetaSuper<T>::Is
     {	WRD_CLASS_DECL(TClass<T>, typename TMetaSuper<T>::Is)

@@ -13,12 +13,12 @@ namespace wrd
 	#define THIS TClass<T>
 
 	TEMPL wbool THIS::__is_init = false;
-	TEMPL const Class& THIS::getClass() const { return *this; }
+	TEMPL const Class& THIS::getClass() const { return Class::getClass(); }
 	TEMPL TStrong<THIS> THIS::clone() const { return TStrong<This>((This&)*this); }
 
 	TEMPL const Class& THIS::getClassStatic()
 	{
-		static This inner;
+		static TClass<Class> inner;
 		return inner;
 	}
 
@@ -44,7 +44,9 @@ namespace wrd
 
 	TEMPL Res& THIS::init()
 	{
-		Super::init();
+		if(&Super::init() == &wasntinit) // compare address because that res could be not init when this runs.
+			return wasntinit;
+
 		__is_init = true;
 		return wasgood;
 	}
