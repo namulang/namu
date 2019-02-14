@@ -16,13 +16,13 @@ namespace wrd
 		return unconst._get(n);
 	}
 
-	widx THIS::insert(widx n, Strong new1)
+	widx THIS::insert(widx n, const Node& new1)
 	{
-		_arr.insert(_arr.begin()+n, new1);
+		_arr.insert(_arr.begin()+n, Strong((Node&)new1));
 		return n;
 	}
 
-	widx THIS::push(Strong new1) { return insert(getLen(), new1); }
+	widx THIS::push(const Node& new1) { return insert(getLen(), new1); }
 
 	widx THIS::push(const Container& rhs)
 	{

@@ -14,8 +14,8 @@ namespace wrd
 		//	Container:
 		Node& get(widx n); 
 		const Node& get(widx n) const; 
-		virtual widx insert(widx n, Strong new1); 
-		widx push(Strong new1); 
+		virtual widx insert(widx n, const Node& new1); 
+		widx push(const Node& new1); 
 		widx push(const Container& rhs); 
 		//	Lengthable:
 		virtual wcnt getSize() const; 
@@ -24,7 +24,7 @@ namespace wrd
 	protected:
 		virtual Node& _get(widx n); 
 
-	private:
+	/*TODO:*/public:
 		std::vector<Strong> _arr;
 	};
 }
