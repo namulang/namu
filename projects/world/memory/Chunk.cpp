@@ -8,7 +8,7 @@ namespace wrd
 	WRD_CLASS_DEF(THIS)
 
 	THIS::THIS(wcnt blksize, wbool is_fixed)
-		: Allocator(blksize), _head(-1), _len(0), _sz(0), _heap(0), _is_fixed(is_fixed) {}
+		: Allocator(blksize), _head(0), _len(0), _sz(0), _heap(0), _is_fixed(is_fixed) {}
 	THIS::~THIS() { THIS::release(); }
 	wcnt THIS::getLen() const { return _len; }
 	wcnt THIS::getSize() const { return _sz; }
@@ -47,15 +47,19 @@ namespace wrd
 
 	Res& THIS::resize(wcnt new_size)
 	{
+		WRD_INFO("resize(%d) {", new_size);
 		if(new_size < INIT_SZ) new_size = INIT_SZ;
 		if(_is_fixed) new_size = INIT_SZ;
 		if(new_size == _sz) return wasoob;
-	
-		release();
-		_heap = (wuchar*) _allocHeap(new_size);
+		WRD_INFO("}", new_size);
+
+		wuchar* new1 = (wuchar*) _allocHeap(new_size);
+		memcpy(new1, _heap, _sz*_getRealBlkSize());
+		_freeHeap(&_heap);
+		_heap = new1;
 		_sz = new_size;
 
-		return _index();
+		return _index(_len);
 	}
 
 	wbool THIS::has(const Instance& it) const
@@ -89,13 +93,11 @@ namespace wrd
 		return org + _getRealBlkSize() - 1;
 	}
 
-	Res& THIS::_index()
+	Res& THIS::_index(widx start)
 	{
-		for(wcnt n=0; n < _sz ;n++)
+		for(wcnt n=start; n < _sz ;n++)
 			*(widx*)_get(n) = n+1;
 
-		_get(getSize()-1);
-		_head = 0;
 		return wasgood;
 	}
 
