@@ -8,7 +8,7 @@ namespace wrd
 	WRD_CLASS_DEF(THIS)
 
 	THIS::THIS(wcnt blksize, wbool is_fixed)
-		: Allocator(blksize), _head(0), _len(0), _sz(0), _heap(0), _is_fixed(is_fixed) {}
+		: Allocator(blksize), _heap(0), _is_fixed(is_fixed) { THIS::release(); }
 	THIS::~THIS() { THIS::release(); }
 	wcnt THIS::getLen() const { return _len; }
 	wcnt THIS::getSize() const { return _sz; }
@@ -41,30 +41,33 @@ namespace wrd
 	Res& THIS::release()
 	{
 		_len = _sz = 0;
-		_head = -1;
+		_head = 0;
 		return _freeHeap(&_heap);
 	}
 
-	Res& THIS::resize(wcnt new_size)
+	Res& THIS::resize(wcnt new_sz)
 	{
-		WRD_INFO("resize(%d) {", new_size);
-		if(new_size < INIT_SZ) new_size = INIT_SZ;
-		if(_is_fixed) new_size = INIT_SZ;
-		if(new_size == _sz) return wasoob;
-		WRD_INFO("}", new_size);
+		//	pre:
+		if(new_sz < INIT_SZ) new_sz = INIT_SZ;
+		if(_is_fixed) new_sz = INIT_SZ;
+		if(new_sz == _sz) return wasoob;
 
-		wuchar* new1 = (wuchar*) _allocHeap(new_size);
-		memcpy(new1, _heap, _sz*_getRealBlkSize());
+		//	main:
+		wuchar* new1 = (wuchar*) _allocHeap(new_sz);
+		// considered if user resize far smaller rather than what it had.
+		wcnt min = _sz < new_sz ? _sz : new_sz;
+		memcpy(new1, _heap, min*_getRealBlkSize());
+
+		//	post:
 		_freeHeap(&_heap);
 		_heap = new1;
-		_sz = new_size;
-
+		_sz = new_sz;
 		return _index(_len);
 	}
 
 	wbool THIS::has(const Instance& it) const
 	{
-		void* pt = (void*)&it;
+		void* pt = (void*) &it;
 		return _heap && _heap <= pt && pt <= getEOB();
 	}
 
@@ -107,7 +110,7 @@ namespace wrd
 		return sz < 4 ? 4 : sz;
 	}
 
-	void* THIS::_allocHeap(wcnt new_size) { return malloc(new_size * _getRealBlkSize()); }
+	void* THIS::_allocHeap(wcnt new_sz) { return malloc(new_sz * _getRealBlkSize()); }
 
 	Res& THIS::_freeHeap(wuchar** heap)
 	{
