@@ -8,16 +8,10 @@ namespace wrd
     class Array;
 
     class Class : public Composit
-    {	//	we can't put WRD_CLASS_DEF here:
-		//		it'll generates TClass<TClass<TClass<....> infinitely.
-		WRD_INHERIT(Class, Composit) // World에 visible해야 하기 때문이다.
-	public:
-		virtual const Class& getClass() const;
-		TStrong<This> clone() const;
+    {	WRD_CLASS_DECL(Class, Composit)
         friend class Interpreter; // for interpreter class which can use _getNodes().
-
     public:
-        wbool operator==(const This& rhs) const;
+        virtual wbool operator==(const This& rhs) const;
         wbool operator!=(const This& rhs) const;
 
     public:
@@ -43,7 +37,5 @@ namespace wrd
 		Classes& _getSubs();
 		//	Composit:
         virtual Res& _initNodes();
-		//	Thing:
-		virtual TStrong<Instance> _clone() const;
     };
 }
