@@ -23,19 +23,26 @@ WRD_TEST_START(ChunkTest)
 	//		Chunk:
 	class Heap {
 	public:
-		void new1(Chunk& chk, wcnt cnt) {
+		wbool new1(Chunk& chk, wcnt cnt) {
 			for(int n=0; n < cnt ; n++)
-				ptrs.push_back(chk.new1());
+			{
+				void* ptr = chk.new1();
+				ptrs.push_back(ptr);
+				if(!ptr)
+					return false;
+			}
+			return true;
 		}
-		void release(Chunk& chk) {
-			chk.release();
+		wbool release(Chunk& chk) {
+			if(chk.release()) return false;
 			ptrs.clear();
+			return true;
 		}
 		std::vector<void*> ptrs;
 	};
 	Heap heap;
 	T( ! chk.isFixed())
-	heap.new1(chk, 1);
+	T(heap.new1(chk, 1))
 	T(chk.getLen() == 1)
 	T(chk.getSize() == Chunk::INIT_SZ)
 	T(chk[0])
@@ -44,14 +51,14 @@ WRD_TEST_START(ChunkTest)
 	T(chk.getEOB())
 	T(chk.getHeap())
 
-	heap.new1(chk, 1);
+	T(heap.new1(chk, 1))
 	T(chk.getLen() == 2)
 	T(chk.getSize() >= chk.getLen())
 	T(chk[1])
 	T(chk.has(*(Instance*)chk[1]))
 	T( chk.getBlkSize() == 4)
 
-	heap.release(chk);
+	T(heap.release(chk))
 	T(chk.getLen() == 0)
 	T(chk.getSize() == 0)
 	T( ! chk[0])
@@ -77,24 +84,29 @@ WRD_TEST_START(ChunkTest)
 	T( ! chk.isFull())
 	T(chk.isCapable())
 
-	heap.new1(chk, 10);
-	heap.release(chk);
+	T(heap.new1(chk, 10))
+	T(heap.release(chk))
 	T( ! chk.getLen())
 
-	heap.new1(chk, 100);
-	heap.release(chk);
+	T(heap.new1(chk, 100))
+	T( ! chk.resize(105))
+	T(chk.getLen() == 100)
+	T(chk.getSize() > 100)
+	T(chk[0])
+	T(chk[100] == NULL)
+	T(heap.release(chk))
 	T( ! chk.getLen())
 
-	heap.new1(chk, 1000);
-	heap.release(chk);
+	T(heap.new1(chk, 1000))
+	T(heap.release(chk))
 	T( ! chk.getLen())
 
-	heap.new1(chk, 10000);
-	heap.release(chk);
+	T(heap.new1(chk, 10000))
+	T(heap.release(chk))
 	T( ! chk.getLen())
 
-	heap.new1(chk, 100000);
-	heap.release(chk);
+	T(heap.new1(chk, 100000))
+	T(heap.release(chk))
 	T( ! chk.getLen())
 
 	//	fixed chunk:
@@ -116,7 +128,7 @@ WRD_TEST_START(ChunkTest)
 	T( ! fixed.getHeap())
 
 	T(fixed.isFixed())
-	heap.new1(fixed, 1);
+	T(heap.new1(fixed, 1))
 	T(fixed.getLen() == 1)
 	T(fixed.getSize() >= 1)
 	T(fixed[0])
@@ -125,14 +137,14 @@ WRD_TEST_START(ChunkTest)
 	T(fixed.getEOB())
 	T(fixed.getHeap())
 
-	heap.new1(fixed, 1);
+	T(heap.new1(fixed, 1))
 	T(fixed.getLen() == 2)
 	T(fixed.getSize() >= fixed.getLen())
 	T(fixed[1])
 	T(fixed.has(*(Instance*)fixed[1]))
 	T(fixed.getBlkSize() == 100)
 
-	heap.release(fixed);
+	T(heap.release(fixed))
 	T(fixed.getLen() == 0)
 	T(fixed.getSize() == 0)
 	T( ! fixed[0])
@@ -145,24 +157,30 @@ WRD_TEST_START(ChunkTest)
 	T(fixed.getBlkSize() == 100)
 	T(fixed.isFixed())
 
-	heap.new1(fixed, 10);
-	heap.release(fixed);
-	T( ! fixed.getLen())
+	T(heap.new1(fixed, 10))
+	T(fixed.getLen() == 10)
+	T(heap.release(fixed))
+	T(fixed.getLen() == 0)
 
-	heap.new1(fixed, 100);
-	heap.release(fixed);
-	T( ! fixed.getLen())
+	T( ! heap.new1(fixed, 100))
+	T(fixed.getLen() == 20)
+	T(heap.release(fixed))
+	T(fixed.getLen() == 0)
 
-	heap.new1(fixed, 1000);
-	heap.release(fixed);
-	T( ! fixed.getLen())
+	T( ! heap.new1(fixed, 1000))
+	T(fixed.getLen() == 20)
+	T(heap.release(fixed))
+	T(fixed.getLen() == 0)
 
-	heap.new1(fixed, 10000);
-	heap.release(fixed);
-	T( ! fixed.getLen())
+	T( ! heap.new1(fixed, 10000))
+	T(fixed.getLen() == 20)
+	T(heap.release(fixed))
+	T(fixed.getLen() == 0)
 
-	heap.new1(fixed, 100000);
-	heap.release(fixed);
-	T( ! fixed.getLen())
+	T( ! heap.new1(fixed, 100000))
+	T(fixed.getLen() == 20)
+	T(heap.release(fixed))
+	T(fixed.getLen() == 0)
+
 	return "";
 WRD_TEST_END(ChunkTest)
