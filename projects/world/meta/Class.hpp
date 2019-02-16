@@ -29,7 +29,10 @@ namespace wrd
 		virtual Res& init();
 		//	Thing:
         virtual const Class& getSuper() const = 0;
-        virtual wbool isSuper(const Class& it) const;
+        wbool isSuperCls(const Class& it) const;
+		template <typename T> wbool isSuperCls() const { return isSuperCls(T::getClassStatic()); }
+		wbool isSubCls(const Class& it) const { return it.isSuperCls(*this); }
+		template <typename T> wbool isSubCls() const { return T::getClassStatic().isSuperCls(*this); }
 
     protected:
 		//	Class:

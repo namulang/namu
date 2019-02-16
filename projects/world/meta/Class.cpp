@@ -24,7 +24,7 @@ namespace wrd
 	///
 	///			so basically, when you want to get Class of Class of Class,that is Meta of Meta class, you should wrap given type T with TClass class template.
 	///			e.g) TClass<Class>
-	const Class& THIS::getClass() const { return *this; }
+	const Class& THIS::getClass() const { return This::getClassStatic(); }
 	TStrong<THIS> THIS::clone() const { return TStrong<This>(_clone().down<This>()); }
 	WRD_LAZY_METHOD(const Class&, THIS::getClassStatic, WRD_VOID(), TClass<This>)
 
@@ -83,7 +83,7 @@ namespace wrd
         return wasgood;
     }
 
-    wbool THIS::isSuper(const Class& it) const
+    wbool THIS::isSuperCls(const Class& it) const
     {
         //  checking class hierarchy algorithm:
         //        Use the "Tier" of the class hierarchy info to check it.
