@@ -28,5 +28,21 @@ WRD_TEST_START(ClassTest)
 		//TODO: cls.getLeafs().isExist())
 		// TODO: checks TClass<Instance> is one of subs using has() or check() API on Container.
 	}
+
+	//	super & sub:
+	{
+		TClass<Thing> thg;
+		const Classes& subs = thg.getSubs();
+		T(subs.isExist())
+		T(subs.getLen() > 0)
+		for(int n=0; n < subs.getLen() ;n++)
+		{
+			const Node& e = subs[n];
+			T(e.isExist())
+			const Class& c = e.down<Class>();
+			T(c.isExist())
+			T(e.getSuper() == thg)
+		}
+	}
 	return "";
 WRD_TEST_END(ClassTest)
