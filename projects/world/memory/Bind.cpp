@@ -2,6 +2,7 @@
 #include "TStrong.hpp"
 #include "../pretypes/Reses.hpp"
 #include "../meta/Classer.hpp"
+#include "../base/Thing.hpp"
 
 namespace wrd
 {

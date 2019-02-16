@@ -1,5 +1,6 @@
 #include "Array.hpp"
 #include "../meta.hpp"
+#include "../base/Thing.hpp"
 
 namespace wrd
 {
