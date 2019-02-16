@@ -65,7 +65,7 @@ namespace wrd
         //        So, if the "this" is a super of given object "it", its "tier"th super class
         //        would must be the class of "this".
         if(it.isNull()) return false;
-        const Classes& its = it.getSupers();
+        Classes& its = (Classes&) it.getSupers();
         wcnt    my_tier = getSupers().getLen(),
                 its_tier = its.getLen();
         if(my_tier > its_tier) return false;
@@ -73,7 +73,7 @@ namespace wrd
 
         //  main:
         const Class& target = its_tier == my_tier ? it :
-            static_cast<const Class&>(its[my_tier]);
+            (const Class&) its._arr[my_tier]._get();
 
         return *this == target;	// operator== is virtual func. 
     }

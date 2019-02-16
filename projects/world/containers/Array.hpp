@@ -6,6 +6,7 @@ namespace wrd
 {
 	class Array : public Container
 	{	WRD_CLASS_DECL(Array, Container)
+		friend class Class; // for _arr
 	public:
 		Node& operator[](widx n); 
 		const Node& operator[](widx n) const; 
@@ -24,7 +25,7 @@ namespace wrd
 	protected:
 		virtual Node& _get(widx n); 
 
-	/*TODO:*/public:
+	private:
 		std::vector<Strong> _arr;
 	};
 }

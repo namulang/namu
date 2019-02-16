@@ -71,7 +71,6 @@ namespace wrd
 		//	complete mine:
 		Id mine = getId();
 		mine.s.chk_n = it._id.s.chk_n;
-		WRD_INFO("%x.bind(%d %d)", &it, mine.s.blk_n, mine.s.serial);
 		//	propagate it:
 		return _sync(mine);
 	}
