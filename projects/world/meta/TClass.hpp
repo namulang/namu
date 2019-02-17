@@ -13,12 +13,12 @@ namespace wrd
 	#define THIS TClass<T>
 
 	TEMPL wbool THIS::__is_init = false;
-	TEMPL const Class& THIS::getClass() const { return Class::getClass(); }
+	TEMPL const Class& THIS::getClass() const { return *this; }
 	TEMPL TStrong<THIS> THIS::clone() const { return TStrong<This>((This&)*this); }
 
 	TEMPL const Class& THIS::getClassStatic()
 	{
-		static TClass<Class> inner;
+		static This inner;
 		return inner;
 	}
 
