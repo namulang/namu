@@ -38,7 +38,7 @@ namespace wrd
 	}
 
 	Id THIS::getItsId() const { return _its_id; }
-	wbool THIS::canBind(const Class& cls) const { return getBindable().isSuper(cls); }
+	wbool THIS::canBind(const Class& cls) const { return getBindable().isSuperCls(cls); }
 
 	CStrong THIS::use(Msg& msg) const
 	{
