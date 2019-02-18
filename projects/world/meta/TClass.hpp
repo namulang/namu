@@ -62,28 +62,19 @@ namespace wrd
 		return T::onInitNodes(this->_getNodes()); // getMethods from RealClass T.
     }
 
-    TEMPL const Str& THIS::getNameStatic()
-    {
-        static Str inner;
-		if(inner.getLen() <= 0)
-        {
-            int status = 0;
-            wchar* demangled = abi::__cxa_demangle(typeid(T).name(), 0, 0, &status);
-            inner = demangled;
-            free(demangled);
-        }
+#define _REDIRECT(retype, func)	TEMPL retype THIS::func() { return T::__wrd_meta_class_bean::func(); }
 
-        return inner;
-    }
+	_REDIRECT(const Str&, getNameStatic)
+	_REDIRECT(const Class&, getSuperStatic)
+	_REDIRECT(const Container&, getNodesStatic)
+	_REDIRECT(const Classes&, getSupersStatic)
+	_REDIRECT(const Classes&, getSubsStatic)
+	_REDIRECT(wbool, isOccupyStatic)
+	_REDIRECT(wbool, isADTStatic)
+	_REDIRECT(wbool, isTemplateStatic)
+	_REDIRECT(wbool, isInitStatic)
 
-	TEMPL WRD_LAZY_METHOD(const Class&, THIS::getSuperStatic, WRD_VOID(), TClass<typename T::Super>)
-	TEMPL WRD_LAZY_METHOD(const Container&, THIS::getNodesStatic, WRD_VOID(), Array)
-	TEMPL WRD_LAZY_METHOD(const Classes&, THIS::getSupersStatic, WRD_VOID(), Classes)
-	TEMPL WRD_LAZY_METHOD(const Classes&, THIS::getSubsStatic, WRD_VOID(), Classes)
-	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::isOccupyStatic, WRD_VOID(), wbool, TIfSub<T WRD_COMMA() Object/*TODO: OccupiableObject*/>::is)
-	TEMPL WRD_LAZY_METHOD(wbool, THIS::isADTStatic, WRD_VOID(), wbool, TIfADT<T>::is)
-	TEMPL WRD_LAZY_METHOD(wbool, THIS::isTemplateStatic, WRD_VOID(), wbool, TIfTemplate<T>::is)
-	TEMPL wbool THIS::isInitStatic() { return __is_init || &getNameStatic() == &TClass<Thing>::getNameStatic(); }
+#undef _REDIRECT
 
 #undef TEMPL
 #undef THIS

@@ -7,6 +7,19 @@ namespace wrd
     class Classes; // Container of Class
     class Array;
 
+	///	@remark	Class returning TClass<Class> as result of getClass()
+	///			because this func always returns metaclass no matter of what This type is,
+	///			users need to care about getting meta of metaclass on calling getClass().
+	///			for example,
+	///				Thing& thing1 = ...; // let's assume that got from outside.
+	///				Object obj;
+	///
+	///				wbool compare = obj.isSub(thing1.getClass()); // user intend to get class of Thing.
+	///				// however, value 'compare' will definitely be false if
+	///				// thing was actually a retrived one by calling Thing.getClass() before.
+	///
+	///				// because Class::getClass() will return TClass<TClass<T> >,
+	///				// that stmt will be translated that checks object vs TClass<T>.
     class Class : public Composit
     {	WRD_CLASS_DECL(Class, Composit)
         friend class Interpreter; // for interpreter class which can use _getNodes().
