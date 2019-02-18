@@ -1,5 +1,0 @@
-NEPanelA가 존재하고, NEPanelB가 존재할때, NEPanelB : public NEPanelA라고 하자.
-이렇게 하면 NEPanelB는 자연스럽게 NEPAnelA의 기능과 컴포넌트들을 포함하게 되고, 코더는
-재활용할 수 있게 되므로 좋을 수 있다.
-하지만 현재 노드(1.0.0)에서는 이를 지원하지 않는다.
-이를 지원하려면 컴포넌트의 쉬운 접근을 제공할 수 있어야한다.----> 왜 component에는 name이 존재하는가.txt 참조

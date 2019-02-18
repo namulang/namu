@@ -1,7 +1,0 @@
-CInput에 InputPreset을, 멤버함수로 한다.
-
-노드를 만들어서, 이 InputPreset에 접근하는 노드를 만든다. 당연히, 이 노드는 InputPreset에 의존적이 된다.
-이 노드는 public인 InputPreset을 바로 접근한다. 
-예) CInput->samplepreset->_ok.getStatus == BUTTON_UP
-
-if samplepreset에 해당하는 노드는 한개만 존재한다.

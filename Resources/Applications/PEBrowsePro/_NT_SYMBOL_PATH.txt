@@ -1,1 +1,0 @@
-srv*C:\Symbols*http://msdl.microsoft.com/download/symbols

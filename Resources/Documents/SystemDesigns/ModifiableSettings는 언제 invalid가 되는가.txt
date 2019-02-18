@@ -1,1 +1,0 @@
-NETString.isValid 외에도, length가 1이상일여야만 valid가 된다.
