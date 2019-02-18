@@ -30,13 +30,7 @@ namespace wrd
 	}
 
 	wbool THIS::isBind() const { return _pt; }
-
-	const Class& THIS::getBindable() const
-	{
-		static TClass<Instance> inner;
-		return inner;
-	}
-
+	const Class& THIS::getBindable() const { return Instance::getClassStatic(); }
 	wbool THIS::canBind(const Class& cls) const { return cls.isSub(getBindable()); }
 	Id THIS::getId() const { return _id; }
 
