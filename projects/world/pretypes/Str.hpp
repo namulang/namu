@@ -8,7 +8,11 @@ namespace wrd
 	class Str : public TArray<wchar>
 	{	WRD_CLASS_DECL(Str, TArray<wchar>)
 	public:
-		Str& operator=(const char* org) {
+		Str() {}
+		Str(const wchar* org) : _str(org) {}
+
+	public:
+		Str& operator=(const wchar* org) {
 			_str = org;
 			return *this;
 		}
