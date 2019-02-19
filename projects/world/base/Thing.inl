@@ -1,12 +1,14 @@
 #pragma once
 
-#include "../wrd-commons.hpp"
+#include "../meta/MetaBean.hpp"
 
 namespace wrd
 {
 	class Res;
+	class Str;
 	class Node;
 	class Class;
+	class Classes;
 	class Visitor;
 	class Instance;
 	class Container;

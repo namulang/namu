@@ -6,24 +6,10 @@
 namespace wrd
 {
 #define THIS Class
-	//	we can't put WRD_CLASS_DEF here. it'll generates TClass<TClass<TClass<....> infinitely.
 	
-	///	@remark	Class returning result of getClass() with itself.
-	///			if this func always returns metaclass no matter of what This type is,
-	///			users need to care about getting meta of metaclass on calling getClass().
-	///			for example,
-	///				Thing& thing1 = ...; // let's assume that got from outside.
-	///				Object obj;
-	///
-	///				wbool compare = obj.isSub(thing1.getClass()); // user intend to get class of Thing.
-	///				// however, value 'compare' will definitely be false if
-	///				// thing was actually a retrived one by calling Thing.getClass() before.
-	///
-	///				// because Class::getClass() will return TClass<TClass<T> >,
-	///				// that stmt will be translated that checks object vs TClass<T>.
-	///
-	///			so basically, when you want to get Class of Class of Class,that is Meta of Meta class, you should wrap given type T with TClass class template.
-	///			e.g) TClass<Class>
+	_WRD_CLASS_DEF_BEAN(THIS)
+
+	//	we can't put WRD_CLASS_DEF here. it'll generates TClass<TClass<TClass<....> infinitely.
 	const Class& THIS::getClass() const { return This::getClassStatic(); }
 	TStrong<THIS> THIS::clone() const { return TStrong<This>(_clone().down<This>()); }
 	WRD_LAZY_METHOD(const Class&, THIS::getClassStatic, WRD_VOID(), TClass<This>)

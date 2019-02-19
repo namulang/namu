@@ -19,6 +19,7 @@ WRD_TEST_START(ClassTest)
 
 		TClass<Instance> ins;
 		T(ins.isSub(cls))
+		T(ins.isSubCls(cls))
 		T(ins.getSuper().isExist())
 		T(ins.getSuper() == cls)
 		TStrong<TClass<Instance> > cloned = ins.clone();

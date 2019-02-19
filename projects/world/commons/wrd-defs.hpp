@@ -99,14 +99,31 @@
 
 /// This macros, DECLARE, DEFINE, will be used for which can't dependent to TClass and TStrong and Instance.
 ///	mostly, those are for base classes of them which correspond to will be used for internal usage only.
-#define _CLASS_DECL_BASE()							\
-	public:											\
-		virtual const Class& getClass() const;		\
-		TStrong<This> clone() const;				\
-		static const Class& getClassStatic();		\
-		static Res& onInitNodes(Container& tray);	\
-	protected:										\
-		virtual TStrong<Instance> _clone() const;	\
+///
+///	please refer class @ref MetaBean if want to know why I defined nestedclass at this macro.
+#define _CLASS_DECL_BASE()								\
+	private:											\
+		template <typename> friend class TClass;		\
+		class __wrd_meta_class_bean : public MetaBean {	\
+			template <typename> friend class TClass;	\
+			static const Str& getNameStatic();			\
+			static const Container& getNodesStatic();	\
+			static const Classes& getSupersStatic();	\
+			static const Classes& getSubsStatic();		\
+			static const Class& getSuperStatic();		\
+			static wbool isOccupyStatic();				\
+			static wbool isADTStatic();					\
+			static wbool isTemplateStatic();			\
+			static wbool isInitStatic();				\
+			static wbool __is_init;						\
+		};												\
+	public:												\
+		virtual const Class& getClass() const;			\
+		TStrong<This> clone() const;					\
+		static const Class& getClassStatic();			\
+		static Res& onInitNodes(Container& tray);		\
+	protected:											\
+		virtual TStrong<Instance> _clone() const;		\
 	private:
 #define WRD_CLASS_DECL_2(THIS, SUPER)	\
 	WRD_INHERIT_2(THIS, SUPER)			\
@@ -117,7 +134,25 @@
 #define WRD_CLASS_DECL(...) WRD_OVERLOAD(WRD_CLASS_DECL, __VA_ARGS__)
 
 ///    this macro should be placed at implement file which include header file using DECLARE macro.
-#define WRD_CLASS_DEF_1(THIS)        			WRD_CLASS_DEF_2(WRD_VOID(), THIS)
+#define _WRD_CLASS_DEF_BEAN_1(THIS)	_WRD_CLASS_DEF_BEAN_2(WRD_VOID(), THIS)
+#define _WRD_CLASS_DEF_BEAN_2(TEMPL, THIS)																								\
+    TEMPL const Str& THIS::__wrd_meta_class_bean::getNameStatic()																		\
+    {																																	\
+        static Str inner = MetaBean::_getDemangledName(typeid(THIS).name());															\
+		return inner;																													\
+    }																																	\
+	TEMPL WRD_LAZY_METHOD_4(const Class&, THIS::__wrd_meta_class_bean::getSuperStatic, WRD_VOID(), TClass<typename THIS::Super>)		\
+	TEMPL WRD_LAZY_METHOD_4(const Container&, THIS::__wrd_meta_class_bean::getNodesStatic, WRD_VOID(), Array)							\
+	TEMPL WRD_LAZY_METHOD_4(const Classes&, THIS::__wrd_meta_class_bean::getSupersStatic, WRD_VOID(), Classes)							\
+	TEMPL WRD_LAZY_METHOD_4(const Classes&, THIS::__wrd_meta_class_bean::getSubsStatic, WRD_VOID(), Classes)							\
+	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isOccupyStatic, WRD_VOID(), wbool, TIfSub<THIS WRD_COMMA() Object>::is)	\
+	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isADTStatic, WRD_VOID(), wbool, TIfADT< THIS >::is)						\
+	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isTemplateStatic, WRD_VOID(), wbool, TIfTemplate< THIS >::is)			\
+	TEMPL wbool THIS::__wrd_meta_class_bean::isInitStatic() { return __is_init || &getNameStatic() == &TClass<Thing>::getNameStatic(); }\
+	TEMPL wbool THIS::__wrd_meta_class_bean::__is_init;
+#define _WRD_CLASS_DEF_BEAN(...)	WRD_OVERLOAD(_WRD_CLASS_DEF_BEAN, __VA_ARGS__)
+
+#define WRD_CLASS_DEF_1(THIS)        				WRD_CLASS_DEF_2(WRD_VOID(), THIS)
 #define WRD_CLASS_DEF_2(TEMPL, THIS)				\
     TEMPL const Class& THIS::getClass() const {		\
 		return this->THIS::getClassStatic();		\
@@ -133,7 +168,9 @@
 		/*TODO: impl:*/								\
 		return wasgood;								\
 	}												\
+	_WRD_CLASS_DEF_BEAN_2(TEMPL, THIS)				\
 	TEMPL WRD_CLASS_INIT(THIS)
+
 #define WRD_CLASS_DEF(...)            			WRD_OVERLOAD(WRD_CLASS_DEF, __VA_ARGS__)
 
 ///	WRD_CLASS_INIT makes that given type T is accessible to ClassManager.
@@ -146,7 +183,7 @@
 ///	
 ///	if you use this onto template TYPE, add template parameters as prefix.
 ///		e.g) template <typename T> WRD_CLASS_INIT(MyTemplate<T>)
-#define WRD_CLASS_INIT(TYPE)	WRD_INITIATOR(__COUNTER__, (TYPE::getClassStatic();))
+#define WRD_CLASS_INIT(TYPE)	WRD_INITIATOR(__COUNTER__, (TYPE::getClassStatic();))	\
 
 #define _PUT(exp) _TGet<TypeTrait<decltype(exp)>::Org>::set(exp)
 #define _GET(exp) _TGet<TypeTrait<decltype(exp)>::Org>::get()
