@@ -251,6 +251,7 @@ def build():
     if _ut():
         return -1
     _incBuildCnt()
+    return 0
 
 def _ut():
     print("")
@@ -356,4 +357,4 @@ def main():
 
 ret = main()
 print(" - ends with " + str(ret) + " exit code.")
-exit(ret)
+sys.exit(ret)
