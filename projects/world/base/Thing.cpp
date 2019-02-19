@@ -52,7 +52,7 @@ namespace wrd
 
 	Thing& THIS::_down(const Class& cls)
 	{
-		if(getClass().isSub(cls))
+		if(getClass().isSubCls(cls))
 			return *this;
 		return nulr<Thing>();
 	}
