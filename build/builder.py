@@ -48,7 +48,7 @@ def doc():
     if res != 0:
         print("fail to clone gh-pages repo.")
         _cleanIntermediates()
-        return res
+        return -1
     print("done.")
     os.system("git rm -rf " + cwd + "/html")
 
@@ -58,7 +58,7 @@ def doc():
     if res != 0:
         print("fail to run m.css doxy parser.")
         _cleanIntermediates()
-        return res
+        return -1
     print("done.")
 
     # pushing on gh-pages:
@@ -73,12 +73,12 @@ def doc():
         print("fail to commit on gh-pages.")
         print("it seems that nothing changed.")
         _cleanIntermediates()
-        return res
+        return -1
     res = os.system("git push origin gh-pages")
     if res != 0:
         print("fail to push on gh-pages")
         _cleanIntermediates()
-        return res
+        return -1
     os.chdir(cwd)
 
     _cleanIntermediates()
