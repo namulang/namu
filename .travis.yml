@@ -13,7 +13,7 @@ before_install:
 - sudo apt-get install -qq doxygen graphviz
 - sudo apt-get install -qq python3.7 python3-pip
 - sudo python3.7 -m pip install jinja2 Pygments
-- sudo alias python3='$(which python3.7)'
+- alias python3='$(which python3.7)'
 
 sudo: required
 dist: xenial
