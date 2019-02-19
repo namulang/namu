@@ -8,6 +8,8 @@ before_install:
 - sudo apt-get install -qq default-jre
 - sudo apt-get install -qq g++-7 gcc-7
 - sudo apt-get install -qq doxygen graphviz
+- python3 --version
+- sudo apt-get install python3
 sudo: required
 dist: trusty
 language: cpp
@@ -15,7 +17,7 @@ compiler: g++
 os: linux
 python: "3.6"
 script:
-python3 --version
+- python3 --version
 - export CC=gcc-7
 - export CXX=g++-7
 - python3 build/builder.py build
