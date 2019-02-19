@@ -1,21 +1,26 @@
 before_install:
+  # decrypt rsa key:
 - openssl aes-256-cbc -K $encrypted_9d345fbe8fd6_key -iv $encrypted_9d345fbe8fd6_iv
   -in build/travis_ci_rsa.enc -out build/travis_ci_rsa -d
 - chmod 0600 build/travis_ci_rsa
 - cp build/travis_ci_rsa ~/.ssh/id_rsa
+  # install deps:
 - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+- sudo add-apt-repository ppa:deadsnakes/ppa -y
 - sudo apt-get update -qq
 - sudo apt-get install -qq default-jre
 - sudo apt-get install -qq g++-7 gcc-7
 - sudo apt-get install -qq doxygen graphviz
+- sudo apt-get install -qq python3.7
+- sudo python3.7 -m pip install jinja2 Pygments
+- sudo alias python3='$(which python3.7)'
 - python3 --version
-- sudo apt-get install python3
+
 sudo: required
 dist: xenial
 language: cpp
 compiler: g++
 os: linux
-python: "3.6"
 script:
 - python3 --version
 - export CC=gcc-7
