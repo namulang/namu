@@ -6,17 +6,16 @@ before_install:
 - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 - sudo apt-get update -qq
 - sudo apt-get install -qq default-jre
-- sudo apt-get install -qq python3
-- sudo apt-get install -qq g++-7
-- sudo apt-get install -qq gcc-7
-- sudo apt-get install -qq doxygen
-- sudo apt-get install -qq graphviz
+- sudo apt-get install -qq g++-7 gcc-7
+- sudo apt-get install -qq doxygen graphviz
 sudo: required
 dist: trusty
 language: cpp
 compiler: g++
 os: linux
+python: "3.6"
 script:
+python3 --version
 - export CC=gcc-7
 - export CXX=g++-7
 - python3 build/builder.py build
