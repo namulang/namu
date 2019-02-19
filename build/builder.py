@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import os
 import sys
 import shutil
@@ -29,7 +31,6 @@ def branch(command):
 
 def _cleanIntermediates():
     print("removing intermediate outputs...", end=" ")
-    os.system("rm -rf " + cwd + "/m.css")
     os.system("rm -rf " + cwd + "/xml")
     os.system("rm -rf " + cwd + "/*.tmp")
     print("done.")
@@ -37,13 +38,13 @@ def _cleanIntermediates():
 def doc():
     # Idea from Travis Gockel.
     global cwd
-    
+
     _cleanIntermediates()
     os.system("rm -rf " + cwd + "/html")
 
     # standby gh-pages repo:
     print("cloning gh-pages branch...", end=" ")
-    res = os.system("git clone -b gh-pages https://github.com/kniz/worldlang --single-branch " + cwd + "/html")
+    res = os.system("git clone -b gh-pages --depth 5 https://github.com/kniz/worldlang --single-branch " + cwd + "/html")
     if res != 0:
         print("fail to clone gh-pages repo.")
         _cleanIntermediates()
@@ -51,18 +52,9 @@ def doc():
     print("done.")
     os.system("git rm -rf " + cwd + "/html")
 
-    # clone m.css:
-    print("cloning m.css repo...", end=" ")
-    res = os.system("git clone https://github.com/mosra/m.css " + cwd + "/m.css")
-    if res != 0:
-        print("fail to clone m.css repo.")
-        _cleanIntermediates()
-        return res
-    print("done.")
-
     # build doxygen + m.css:
     print("generating docs using doxygen...", end=" ")
-    res = os.system("python ./m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
+    res = os.system("python3 " + cwd + "/m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
     if res != 0:
         print("fail to run m.css doxy parser.")
         _cleanIntermediates()
@@ -88,7 +80,7 @@ def doc():
         _cleanIntermediates()
         return res
     os.chdir(cwd)
-    
+
     _cleanIntermediates()
     return 0
 
