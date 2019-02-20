@@ -42,7 +42,7 @@ def _cleanIntermediates():
 
 def doc():
     # Idea from Travis Gockel.
-    global cwd
+    global cwd, python3
 
     _cleanIntermediates()
     os.system("rm -rf " + cwd + "/html")
@@ -59,7 +59,7 @@ def doc():
 
     # build doxygen + m.css:
     print("generating docs using doxygen...", end=" ")
-    res = os.system("python3 " + cwd + "/m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
+    res = os.system(python3 + " " + cwd + "/m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
     if res != 0:
         print("fail to run m.css doxy parser.")
         _cleanIntermediates()
@@ -273,6 +273,7 @@ def _extractPythonVersion(verstr):
     return float(verstr[7:10])
 
 def checkDependencies():
+    global python3
     print("")
     print ("checking dependencies...", end=" ")
     simple_depencies = ["git", "cmake", "java"]
@@ -296,7 +297,7 @@ def checkDependencies():
     print("done")
 
 def version():
-    global ver_name, ver_major, ver_minor, ver_fix, cwd
+    global ver_name, ver_major, ver_minor, ver_fix, cwd, python3
     print("Builder. Support-utility for building World " + ver_name + " v" + str(ver_major) + "." + str(ver_minor) + str(ver_fix))
     print("Copyrights (c) kniz, 2009-2018")
     print(frame)
