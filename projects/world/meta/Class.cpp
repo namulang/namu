@@ -54,6 +54,7 @@ namespace wrd
         if(isInit()) return wascancel;
 
         //  main:
+		_setInit(true);
         //        get Supers info from Super:
         //                at this point TClass<Super> is instantiated, and "Super" also is all of this sequences.
         Class& super = const_cast<Class&>(getSuper());

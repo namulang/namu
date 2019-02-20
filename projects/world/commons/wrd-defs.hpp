@@ -114,8 +114,7 @@
 			static wbool isOccupyStatic();				\
 			static wbool isADTStatic();					\
 			static wbool isTemplateStatic();			\
-			static wbool isInitStatic();				\
-			static wbool __is_init;						\
+			static const wbool& isInitStatic();			\
 		};												\
 	public:												\
 		virtual const Class& getClass() const;			\
@@ -148,8 +147,11 @@
 	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isOccupyStatic, WRD_VOID(), wbool, TIfSub<THIS WRD_COMMA() Object>::is)	\
 	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isADTStatic, WRD_VOID(), wbool, TIfADT< THIS >::is)						\
 	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isTemplateStatic, WRD_VOID(), wbool, TIfTemplate< THIS >::is)			\
-	TEMPL wbool THIS::__wrd_meta_class_bean::isInitStatic() { return __is_init || &getNameStatic() == &TClass<Thing>::getNameStatic(); }\
-	TEMPL wbool THIS::__wrd_meta_class_bean::__is_init;
+	TEMPL const wbool& THIS::__wrd_meta_class_bean::isInitStatic()																				\
+	{																																	\
+		static wbool inner = &getNameStatic() == &TClass<Thing>::getNameStatic();														\
+		return inner;																													\
+	}
 #define _WRD_CLASS_DEF_BEAN(...)	WRD_OVERLOAD(_WRD_CLASS_DEF_BEAN, __VA_ARGS__)
 
 #define WRD_CLASS_DEF_1(THIS)        				WRD_CLASS_DEF_2(WRD_VOID(), THIS)

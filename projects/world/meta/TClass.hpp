@@ -12,7 +12,6 @@ namespace wrd
 	#define TEMPL template <typename T>
 	#define THIS TClass<T>
 
-	TEMPL wbool THIS::__is_init = false;
 	TEMPL const Class& THIS::getClass() const { return Super::getClass(); }
 	TEMPL TStrong<THIS> THIS::clone() const { return TStrong<This>((This&)*this); }
 
@@ -39,17 +38,8 @@ namespace wrd
 	_REDIRECT(const Container&, getNodes)
 	_REDIRECT(wbool, isOccupy)
 	_REDIRECT(const Class&, getSuper)
-	_REDIRECT(wbool, isInit)
+	_REDIRECT(const wbool&, isInit)
 #undef _REDIRECT
-
-	TEMPL Res& THIS::init()
-	{
-		if(&Super::init() == &wasntinit) // compare address because that res could be not init when this runs.
-			return wasntinit;
-
-		__is_init = true;
-		return wasgood;
-	}
 
     TEMPL TStrong<Instance> THIS::instance() const { return TCloner<T>::instance(); }
 	TEMPL wcnt THIS::getSize() const { return sizeof(T); }
@@ -72,7 +62,7 @@ namespace wrd
 	_REDIRECT(wbool, isOccupyStatic)
 	_REDIRECT(wbool, isADTStatic)
 	_REDIRECT(wbool, isTemplateStatic)
-	_REDIRECT(wbool, isInitStatic)
+	_REDIRECT(const wbool&, isInitStatic)
 
 #undef _REDIRECT
 
