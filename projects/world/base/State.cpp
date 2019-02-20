@@ -8,7 +8,7 @@ namespace wrd
 	WRD_CLASS_DEF(THIS)
 
 	THIS::THIS() { THIS::release(); }
-	wbool THIS::isInit() const { return _is_init; }
+	const wbool& THIS::isInit() const { return _is_init; }
 
 	Res& THIS::init()
 	{
@@ -20,7 +20,7 @@ namespace wrd
 
 	Res& THIS::_setInit(wbool new1)
 	{
-		_is_init = new1;
+		(wbool&) isInit() = new1;
 		return wasgood;
 	}
 }
