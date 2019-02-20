@@ -53,7 +53,7 @@ public:
 			int crc = 0;
 			for(int i=0; i < n ;i++) {
 				parr[i] = new PB();
-				crc += (int) parr[i];
+				crc += *(int*) parr[i];
 			}
 			for(int i=0; i < n ;i++)
 				delete parr[i];
@@ -64,7 +64,7 @@ public:
 			start = clock();
 			for(int i=0; i < n ;i++) {
 				arr[i] = new B();
-				crc += (int) arr[i];
+				crc += *(int*) arr[i];
 			}
 			for(int i=0; i < n ;i++)
 				delete arr[i];
