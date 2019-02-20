@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::Bind class | world-doc</title>
+  <title>wrd::PRParserTokenManager class | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,7 +44,7 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span>Bind <span class="m-thin">class</span>
+          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span>PRParserTokenManager <span class="m-thin">class</span>
         </h1>
         <div class="m-block m-default">
           <h3>Contents</h3>
@@ -52,28 +52,88 @@
             <li>
               Reference
               <ul>
+                <li><a href="#base-classes">Base classes</a></li>
+                <li><a href="#typeless-methods">Constructors, destructors, conversion operators</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<p><a href="classwrd_1_1_bind.html" class="m-dox">Bind</a>: Overview: can guarrantee that specific instance freed completely and track of them. this has 3 features. 1) can distringuish what given abstract type actually was and reject or accept it regarding that. 2) free instance completely. using RAII. 3) can notice that binding <a href="classwrd_1_1_instance.html" class="m-dox">Instance</a> was replaced or freed without unexpected exception. in conlusion, it prevent halting process or give a chance to let developer be advised.</p><p>TypeCheking: This was most valuable requirement when I design component of bind. in fact, <a href="classwrd_1_1_bind.html" class="m-dox">Bind</a> was suggested to replace sort of exisiting smart-ptr concept things, such as weakptr. because weakptr was planned to replace and enhance existing pointer of c/c++, they were very strict to check type and whether template param T was const or not. this characteristic was pretty worked good in most environment but not on usage of <a href="classwrd_1_1_world.html" class="m-dox">World</a> frx.</p><p>Why was it not proper to use as before?: <a href="classwrd_1_1_world.html" class="m-dox">World</a> is based on class <a href="classwrd_1_1_node.html" class="m-dox">Node</a> and make user not need to know what really was. all actions (including calling some func on <a href="classwrd_1_1_world.html" class="m-dox">World</a> env) can be replacable to sending msg using &quot;use()&quot;. To say the least, what <a href="classwrd_1_1_world.html" class="m-dox">World</a> doing is loose-check. so, strict type-checking of existing smart pointers doesn&#x27;t matched to what Worldfrx willing to do.</p><p>Design: <a href="classwrd_1_1_bind.html" class="m-dox">Bind</a> components are mostly constructed to 3 classes and they form 2 layers vertically. class <a href="classwrd_1_1_bind.html" class="m-dox">Bind</a>: represents Binder on loose-checking layer. user can try any type to bind or get from the binded. compiler won&#x27;t complain about. but because of loose-checking, if it&#x27;s not proper request, binder will warn you at runtime as result. constness of binding instance was persisted. (for ex, if user try to get non-const instance from consted Binder, s/he will get nulled reference.) user needs to checks that returned value was nullref on using loose-checking API.</p><p>class <a href="classwrd_1_1_t_weak.html" class="m-dox">TWeak</a>, class <a href="classwrd_1_1_t_strong.html" class="m-dox">TStrong</a>: these represent Binder on strict-checking layer. because it was declared to class template, user need to bind or get binded using type T. of course these are based on class <a href="classwrd_1_1_bind.html" class="m-dox">Bind</a>, user can use loose-check API case by case.</p>
+<p><a href="classwrd_1_1_token.html" class="m-dox">Token</a> <a href="classwrd_1_1_manager.html" class="m-dox">Manager</a>.</p>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
+          <dl class="m-dox">
+            <dt>
+              class <a href="classwrd_1_1_token_manager.html" class="m-dox">TokenManager</a>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section id="typeless-methods">
+          <h2><a href="#typeless-methods">Constructors, destructors, conversion operators</a></h2>
+          <dl class="m-dox">
+            <dt>
+              <span class="m-dox-wrap-bumper"><a href="#aa3ade941f65a9d32137a65d218e1c17c" class="m-dox">PRParserTokenManager</a>(</span><span class="m-dox-wrap">JAVACC_CHARSTREAM* stream,
+              int lexState = 0)</span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
         <section id="pub-methods">
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-dox">
             <dt>
-              <span class="m-dox-wrap-bumper">auto <a href="#aa8b50fe7dddb81cc2479e5005be09391" class="m-dox">unbind</a>(</span><span class="m-dox-wrap">) -&gt; <a href="classwrd_1_1_res.html" class="m-dox">Res</a>&amp; <span class="m-label m-flat m-warning">virtual</span></span>
+              <span class="m-dox-wrap-bumper">auto <a href="#ab3c4f7905982193b0f6c7f74ad2db047" class="m-dox">jjFillToken</a>(</span><span class="m-dox-wrap">) -&gt; <a href="classwrd_1_1_token.html" class="m-dox">Token</a>*</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-dox-wrap-bumper">auto <a href="#a1dde625657787beb446a31a134fd1af7" class="m-dox">getNextToken</a>(</span><span class="m-dox-wrap">) -&gt; <a href="classwrd_1_1_token.html" class="m-dox">Token</a>* <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-dox-wrap-bumper">void <a href="#a6c3f7cb02712627bb629ab7401ce2cd3" class="m-dox">ReInit</a>(</span><span class="m-dox-wrap">JAVACC_CHARSTREAM* stream,
+              int lexState = 0)</span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-dox-wrap-bumper">void <a href="#a8ca68b252e0dd8d0227a427f5efa2f72" class="m-dox">SwitchTo</a>(</span><span class="m-dox-wrap">int lexState)</span>
             </dt>
             <dd></dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-dox-details" id="aa8b50fe7dddb81cc2479e5005be09391"><div>
+          <section class="m-dox-details" id="aa3ade941f65a9d32137a65d218e1c17c"><div>
             <h3>
-              <span class="m-dox-wrap-bumper"><a href="classwrd_1_1_res.html" class="m-dox">Res</a>&amp; wrd::<wbr />Bind::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#aa8b50fe7dddb81cc2479e5005be09391" class="m-dox-self">unbind</a>(</span><span class="m-dox-wrap">) <span class="m-label m-warning">virtual</span></span></span>
+              <span class="m-dox-wrap-bumper"> wrd::<wbr />PRParserTokenManager::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#aa3ade941f65a9d32137a65d218e1c17c" class="m-dox-self">PRParserTokenManager</a>(</span><span class="m-dox-wrap">JAVACC_CHARSTREAM* stream,
+              int lexState = 0)</span></span>
             </h3>
-<p>mostly, unbind is replacable to release() comletely. but some class(e.g. Refer) treat differently between <a href="classwrd_1_1_bind.html#aa8b50fe7dddb81cc2479e5005be09391" class="m-dox">unbind()</a> and release().</p>
+<p>Constructor.</p>
+          </div></section>
+          <section class="m-dox-details" id="ab3c4f7905982193b0f6c7f74ad2db047"><div>
+            <h3>
+              <span class="m-dox-wrap-bumper"><a href="classwrd_1_1_token.html" class="m-dox">Token</a>* wrd::<wbr />PRParserTokenManager::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#ab3c4f7905982193b0f6c7f74ad2db047" class="m-dox-self">jjFillToken</a>(</span><span class="m-dox-wrap">)</span></span>
+            </h3>
+<p><a href="classwrd_1_1_token.html" class="m-dox">Token</a> literal values.</p>
+          </div></section>
+          <section class="m-dox-details" id="a1dde625657787beb446a31a134fd1af7"><div>
+            <h3>
+              <span class="m-dox-wrap-bumper"><a href="classwrd_1_1_token.html" class="m-dox">Token</a>* wrd::<wbr />PRParserTokenManager::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#a1dde625657787beb446a31a134fd1af7" class="m-dox-self">getNextToken</a>(</span><span class="m-dox-wrap">) <span class="m-label m-warning">virtual</span></span></span>
+            </h3>
+<p>Get the next <a href="classwrd_1_1_token.html" class="m-dox">Token</a>.</p>
+          </div></section>
+          <section class="m-dox-details" id="a6c3f7cb02712627bb629ab7401ce2cd3"><div>
+            <h3>
+              <span class="m-dox-wrap-bumper">void wrd::<wbr />PRParserTokenManager::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#a6c3f7cb02712627bb629ab7401ce2cd3" class="m-dox-self">ReInit</a>(</span><span class="m-dox-wrap">JAVACC_CHARSTREAM* stream,
+              int lexState = 0)</span></span>
+            </h3>
+<p>Reinitialise parser.</p>
+          </div></section>
+          <section class="m-dox-details" id="a8ca68b252e0dd8d0227a427f5efa2f72"><div>
+            <h3>
+              <span class="m-dox-wrap-bumper">void wrd::<wbr />PRParserTokenManager::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#a8ca68b252e0dd8d0227a427f5efa2f72" class="m-dox-self">SwitchTo</a>(</span><span class="m-dox-wrap">int lexState)</span></span>
+            </h3>
+<p>Switch to specified lex state.</p>
           </div></section>
         </section>
       </div>
