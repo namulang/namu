@@ -9,6 +9,11 @@ from operator import eq
 
 frame = "======================================================="
 
+def cmdstr(cmd):
+    return str(subprocess.check_output(cmd, shell=True))[2:-3]
+
+python3 = cmdstr("which python3")
+
 def branch(command):
     if command == "help":
         return help()
@@ -62,7 +67,7 @@ def doc():
     print("done.")
 
     # pushing on gh-pages:
-    origin = str(subprocess.check_output("git rev-parse --verify HEAD", shell=True))[2:9]
+    origin = cmdstr("git rev-parse --verify HEAD")
     print("origin=" + str(origin))
     os.chdir(cwd + "/html")
     os.system("git add .")
@@ -151,7 +156,6 @@ def _extractBuildInfo(): # from RELEASE.md at root directory.
             ver_name = line[ver_name_n: len(line)-6-1-1]
             break
 
-    print(ver_name)
     fp.close()
 updated = False
 def _updateLine(lines, n, trg, basestr):
@@ -265,6 +269,9 @@ def _ut():
 def commit():
     return 0
 
+def _extractPythonVersion(verstr):
+    return float(verstr[7:10])
+
 def checkDependencies():
     print("")
     print ("checking dependencies...", end=" ")
@@ -272,23 +279,30 @@ def checkDependencies():
 
     for e in simple_depencies:
         if not shutil.which(e):
-            print("\t > " + e + " is NOT installed!")
+            print("[!] " + e + " is NOT installed!")
             return -1
 
     if isWindow():
         if not shutil.which("mingw32-make"):
-            print("\t > mingw32-make on Windows is NOT installed!")
+            print("[!] mingw32-make on Windows is NOT installed!")
             return -1
     elif not shutil.which("make"):
-        print("\t > make for linux is NOT installed!")
+        print("[!] make for linux is NOT installed!")
+        return -1
+
+    if _extractPythonVersion(cmdstr(python3 + " --version")) < 3.6:
+        print("[!] requires python over v3.6")
         return -1
     print("done")
 
 def version():
-    global ver_name, ver_major, ver_minor, ver_fix
-    print("")
+    global ver_name, ver_major, ver_minor, ver_fix, cwd
     print("Builder. Support-utility for building World " + ver_name + " v" + str(ver_major) + "." + str(ver_minor) + str(ver_fix))
     print("Copyrights (c) kniz, 2009-2018")
+    print(frame)
+    print("")
+    print("* use python version at " + python3 + " and its version is " + cmdstr(python3 + " --version"))
+    print("* building directory is " + cwd)
 
 def help():
     print("Usage: builder.py <command> <arg1> <arg2> ...")
@@ -327,25 +341,25 @@ def _clean(directory):
                 shutil.rmtree(abs_dir)
 cwd = ""
 
+def _extractEnv():
+    global python3
+    if "PYTHON" in os.environ:
+        python3 = os.environ["PYTHON"]
+
 def _init():
     global cwd
     cwd=os.path.dirname(os.path.realpath(sys.argv[0]))
     _extractBuildInfo()
+    _extractEnv()
 
 def main():
     _init()
-  
     version()
-    print(frame)
-    print("")
-    os.chdir(cwd)
-    print("building directory is " + cwd)
 
+    os.chdir(cwd)
     if checkDependencies():
-        print("\n** This program needs following softwares to be fully functional.")
-        print("\tgit, cmake, make or mingw32-make")
-        print("please install them on your own. **\n")
-        return
+        print("\n[!] This program needs following softwares to be fully functional.")
+        return -1
 
     if len(sys.argv) == 1:
         help()
@@ -356,5 +370,6 @@ def main():
     return 0
 
 ret = main()
-print(" - ends with " + str(ret) + " exit code.")
+if ret != 0:
+    print("[!] ends with " + str(ret) + " exit code.")
 sys.exit(ret)
