@@ -11,7 +11,7 @@ before_install:
 - sudo apt-get install -qq default-jre
 - sudo apt-get install -qq g++-7 gcc-7
 - sudo apt-get install -qq doxygen graphviz
-- sudo apt-get install -qq python3.7 python3-pip
+- sudo apt-get install -qq python3 python3-pip
 - sudo python3.7 -m pip install jinja2 Pygments
 
 sudo: required
