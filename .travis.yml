@@ -20,7 +20,6 @@ language: cpp
 compiler: g++
 os: linux
 script:
-- python3 --version
 - export CC=gcc-7 CXX=g++-7 PYTHON=$(which python3.7)
-- python3 build/builder.py build
-- python3 build/builder.py doc
+- $PYTHON build/builder.py build
+- $PYTHON build/builder.py doc
