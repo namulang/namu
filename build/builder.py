@@ -49,7 +49,7 @@ def doc():
 
     # standby gh-pages repo:
     print("cloning gh-pages branch...", end=" ")
-    res = os.system("git clone -b gh-pages --depth 5 git@github.com:kniz/worldlang.gi.gitt --single-branch " + cwd + "/html")
+    res = os.system("git clone -b gh-pages --depth 5 git@github.com:kniz/worldlang.git --single-branch " + cwd + "/html")
     if res != 0:
         print("fail to clone gh-pages repo.")
         _cleanIntermediates()
