@@ -6,22 +6,21 @@ before_install:
 - cp build/travis_ci_rsa ~/.ssh/id_rsa
   # install deps:
 - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+- sudo add-apt-repository ppa:deadsnakes/ppa -y
 - sudo apt-get update -qq
 - sudo apt-get install -qq default-jre
 - sudo apt-get install -qq g++-7 gcc-7
 - sudo apt-get install -qq doxygen graphviz
-- sudo apt-get install -qq python3 python3-pip
-- sudo pip install jinja2 Pygments
+- sudo apt-get install -qq python3.7 python3-pip
+- sudo python3.7 -m pip install jinja2 Pygments
 
 sudo: required
 dist: xenial
-python: 3.7
 language: cpp
 compiler: g++
 os: linux
 script:
 - python3 --version
-- export CC=gcc-7
-- export CXX=g++-7
+- export CC=gcc-7 CXX=g++-7 PYTHON=$(which python3.7)
 - python3 build/builder.py build
 - python3 build/builder.py doc
