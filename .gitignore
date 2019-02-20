@@ -48,4 +48,5 @@ generated/
 build/unittests*
 build/html/
 build/xml/
+build/*.tmp
 tags
