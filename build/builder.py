@@ -2,6 +2,7 @@ import os
 import sys
 import shutil
 import platform
+import subprocess
 from operator import eq
 
 frame = "======================================================="
@@ -34,6 +35,7 @@ def _cleanIntermediates():
     print("done.")
 
 def doc():
+    # Idea from Travis Gockel.
     global cwd
     
     _cleanIntermediates()
@@ -44,6 +46,7 @@ def doc():
     res = os.system("git clone -b gh-pages https://github.com/kniz/worldlang --single-branch " + cwd + "/html")
     if res != 0:
         print("fail to clone gh-pages repo.")
+        _cleanIntermediates()
         return res
     print("done.")
     os.system("git rm -rf " + cwd + "/html")
@@ -53,6 +56,7 @@ def doc():
     res = os.system("git clone https://github.com/mosra/m.css " + cwd + "/m.css")
     if res != 0:
         print("fail to clone m.css repo.")
+        _cleanIntermediates()
         return res
     print("done.")
 
@@ -61,17 +65,27 @@ def doc():
     res = os.system("python ./m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
     if res != 0:
         print("fail to run m.css doxy parser.")
+        _cleanIntermediates()
         return res
     print("done.")
 
     # pushing on gh-pages:
+    origin = str(subprocess.check_output("git rev-parse --verify HEAD", shell=True))[2:9]
+    print("origin=" + str(origin))
     os.chdir(cwd + "/html")
     os.system("git add .")
     os.system("git config user.name \"autodocbot\"")
     os.system("git config user.email \"knizofficial@gmail.com\"")
-    res = os.system("git commit -m \"The our poor little Autobot generated docs for us, clitter-clatter.\"")
+    res = os.system("git commit -m \"The our poor little Autobot \(❍ᴥ❍ʋ)/ generated docs for " + origin + ", clitter-clatter.\"")
     if res != 0:
-        print("fail to commit on gh-pages")
+        print("fail to commit on gh-pages.")
+        print("it seems that nothing changed.")
+        _cleanIntermediates()
+        return res
+    res = os.system("git push origin gh-pages")
+    if res != 0:
+        print("fail to push on gh-pages")
+        _cleanIntermediates()
         return res
     os.chdir(cwd)
     
