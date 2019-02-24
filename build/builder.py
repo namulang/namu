@@ -20,9 +20,63 @@ def branch(command):
     elif command == "run":
         arg = None if len(sys.argv) < 3 else sys.argv[2]
         return run(arg)
+    elif command == "doc":
+        return doc()
 
     print(command + " is unknown.")
     return -1
+
+def _cleanIntermediates():
+    print("removing intermediate outputs...", end=" ")
+    os.system("rm -rf " + cwd + "/m.css")
+    os.system("rm -rf " + cwd + "/xml")
+    os.system("rm -rf " + cwd + "/*.tmp")
+    print("done.")
+
+def doc():
+    global cwd
+    
+    _cleanIntermediates()
+    os.system("rm -rf " + cwd + "/html")
+
+    # standby gh-pages repo:
+    print("cloning gh-pages branch...", end=" ")
+    res = os.system("git clone -b gh-pages https://github.com/kniz/worldlang --single-branch " + cwd + "/html")
+    if res != 0:
+        print("fail to clone gh-pages repo.")
+        return res
+    print("done.")
+    os.system("git rm -rf " + cwd + "/html")
+
+    # clone m.css:
+    print("cloning m.css repo...", end=" ")
+    res = os.system("git clone https://github.com/mosra/m.css " + cwd + "/m.css")
+    if res != 0:
+        print("fail to clone m.css repo.")
+        return res
+    print("done.")
+
+    # build doxygen + m.css:
+    print("generating docs using doxygen...", end=" ")
+    res = os.system("python ./m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
+    if res != 0:
+        print("fail to run m.css doxy parser.")
+        return res
+    print("done.")
+
+    # pushing on gh-pages:
+    os.chdir(cwd + "/html")
+    os.system("git add .")
+    os.system("git config user.name \"autodocbot\"")
+    os.system("git config user.email \"knizofficial@gmail.com\"")
+    res = os.system("git commit -m \"The our poor little Autobot generated docs for us, clitter-clatter.\"")
+    if res != 0:
+        print("fail to commit on gh-pages")
+        return res
+    os.chdir(cwd)
+    
+    _cleanIntermediates()
+    return 0
 
 def run(arg):
     if arg is None:
@@ -160,7 +214,7 @@ def _incBuildCnt():
     fp = open(path, "w")
     fp.write("".join(lines))
     fp.close()
-    print("ok")
+    print("done")
 
 def _make():
     print("")
@@ -179,7 +233,7 @@ def _make():
         if result != 0:
             print("failed")
             return -1
-    print("ok")
+    print("done")
 
 def build():
     #_beautify()
@@ -198,7 +252,7 @@ def _ut():
     global cwd
     res = os.system(cwd + "/unittests")
     if res == 0:
-        print("ok")
+        print("done")
     return res
 
 def commit():
@@ -221,7 +275,7 @@ def checkDependencies():
     elif not shutil.which("make"):
         print("\t > make for linux is NOT installed!")
         return -1
-    print("ok")
+    print("done")
 
 def version():
     global ver_name, ver_major, ver_minor, ver_fix
@@ -243,6 +297,8 @@ def clean():
     print("Clearing next following files...")
     global cwd
     _clean(cwd)
+    _cleanIntermediates()
+    os.system("rm -rf " + cwd + "/html")
     print("was removed successfully.")
 
 def _clean(directory):

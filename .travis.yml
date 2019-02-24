@@ -1,28 +1,30 @@
-# World TravisCI
-
-#   deps:
 before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq default-jre
-  - sudo apt-get install -qq python3
-  - sudo apt-get install -qq g++-7
-  - sudo apt-get install -qq gcc-7
- 
-#   attrs:
+  # decrypt key:
+- openssl aes-256-cbc -K $encrypted_caa9910ca73e_key -iv $encrypted_caa9910ca73e_iv
+  -in build/travisci_rsa.enc -out build/travisci_rsa -d
+- chmod 0600 build/travisci_rsa
+- cp build/travisci_rsa ~/.ssh/id_rsa
+
+  # install deps:
+- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+- sudo apt-get update -qq
+- sudo apt-get install -qq default-jre
+- sudo apt-get install -qq python3
+- sudo apt-get install -qq g++-7
+- sudo apt-get install -qq gcc-7
+- sudo apt-get install doxygen
+- sudo apt-get install doxygen-doc
+- sudo apt-get install doxygen-latex
+- sudo apt-get install doxygen-gui
+- sudo apt-get install doxygen-graphviz
+
 sudo: required
 dist: trusty
 language: cpp
 compiler: g++
 os: linux
-  
-#install:
-#  - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
-#  - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
-
-# Build steps
 script:
-  - export CC=gcc-7
-  - export CXX=g++-7
-
-  - python3 build/builder.py build
+- export CC=gcc-7
+- export CXX=g++-7
+- python3 build/builder.py build
+- python3 build/builder.py doc
