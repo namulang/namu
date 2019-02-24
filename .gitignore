@@ -46,4 +46,6 @@ FileManipulatorTest.txt
 .vscode/
 generated/
 build/unittests*
+build/html/
+build/xml/
 tags
