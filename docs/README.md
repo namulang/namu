@@ -90,6 +90,17 @@ offside-rule
 
 ##### 항상 시작은 Hello world 로부터.
 
+```cpp
+import Console // import로 모듈을 가져옴
+
+/*모든 프로그램은 진입점을 위한 app을 정의 필요*/
+class app
+    void main() //int main(), void main(str[] args), int #main(str[] args)도 ok.
+        Console.out("hello world\n") // python처럼 off-side rule (= indentation으로 블록문)
+
+// 결과: hello world
+```
+
 
 
 ##### 변수정의와 연산자
