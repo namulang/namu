@@ -103,11 +103,64 @@ class app
 
 
 
-##### 변수정의와 연산자
+##### 변수정의와 기본 연산자
+
+기본 제공 타입은 기본자료형(primitive data type)과 선정의 타입 (pretype) 2종류로 나뉘어집니다.
+
+기본 자료형은 총 6 종류이며, pretype은 밑에서 얘기하겠습니다.
+
+| 타입명 | 종류         | 표현 범위 | 크기  | 기본값 | casting 우선순위(낮은쪽 -> 높은쪽) |
+| ------ | ------------ | --------- | ----- | ------ | ---------------------------------- |
+| int    | 정수         | signed    | 32bit | 0      | 3                                  |
+| float  | 실수         | signed    | 32bit | 0.0    | 4                                  |
+| str    | 문자열       | .         | .     | ""     | 5                                  |
+| bool   | true / false | .         | .     | false  | 1                                  |
+| char   | 정수         | unsigned  | 8bit  | 0      | 2                                  |
+| byte   | 정수         | signed    | 8bit  | 0      | 2                                  |
+
+```cpp
+class app    
+    void   main(   ) // whitespace 무시
+        int age=0 // 지역변수 age와 member변수와 이름 중복 허용        
+        ++age++ *= 2 // age == 4
+    	// 연산자 우선순위 존재함.
+    	// 다음 연산자 지원 : += -= /= %= <= < > >= = == != --
+
+        int pow = age^2 // => age*age == 16
+        Console.out("hello world!"[0:4] + "boy aged " + pow) // ':'은 범위 연산자.
+    	// 범위 연산자: x:y 로 표현하며 [x, y)의 범위를 가짐.
+        // int + str시, implicit 캐스팅 우선순위(3vs5)에 따라, int->str casting
+
+// 결과: hellboy aged 16
+```
 
 
 
 ##### 키워드
+
+```cpp
+class app
+    void main()
+        int age = 21
+        //    keyword는 메소드와 달리 사용시 () 를 쓰지 않는다.
+        int sum = 0
+        if age > 20
+               age < 20? // ? == if
+                Console.out("can't reach here")
+            
+            int sum = 0 // 허용된 중복 정의
+            for int n in {1:5} // {1:5} 는 1부터 5까지의 집합.
+                sum += n
+                
+            Console.out("sum=" + sum)
+        else
+            sum = 0
+        Console.out("sum=" + sum)
+/* 결과:
+sum=15
+sum=0
+*/
+```
 
 
 
