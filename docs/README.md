@@ -145,20 +145,21 @@ class app
         //    keyword는 메소드와 달리 사용시 () 를 쓰지 않는다.
         int sum = 0
         if age > 20
-               age < 20? // ? == if
-                Console.out("can't reach here")
+			age > 20 & age < 20? // ? == if
+				Console.out("can't reach here")
             
             int sum = 0 // 허용된 중복 정의
-            for int n in {1:5} // {1:5} 는 1부터 5까지의 집합.
+            for int n in 1:5 // 1부터 5까지
                 sum += n
                 
             Console.out("sum=" + sum)
-        else
+        else if age == 20
             sum = 0
-        Console.out("sum=" + sum)
+        if age > 21 | sum // | 는 or연산. sum이 0이 아니면 true로 판단
+        	Console.out("sum=" + sum)
 /* 결과:
 sum=15
-sum=0
+sum=15
 */
 ```
 
