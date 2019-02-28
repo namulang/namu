@@ -167,6 +167,27 @@ sum=15
 
 ##### 접근자와 메소드
 
+```cpp
+class app
+    // prefix _는 private를 의미. 정의와 동시에 초기화도 ok.
+    // 접근시에는 _grade가 아니라 grade
+    float _grade = 3.5
+    // 3.5처럼 . 포함된 리터럴상수는 float으로 간주.
+    int age // 접근자(accessor)는 public. 초기화 표현식이 없을 경우, 각 타입들의 기본값이 assign.
+    void   main(   ) // whitespace 무시
+        app.double(grade) // static 메소드 double 호출.
+        Console.out("age=" + age + ", grade=" + double(grade)) // scope(app) 생략 가능
+    
+    // prefix #은 static 메소드를 의미.
+    // 함수간 선언 순서에 종속되지 않음. _double() 호출보다 정의가 나중에 나와도 ok.
+    int #double(float val) // 인자리스트에 #, _ prefix는 붙일 수 없음.
+        float #mul = 0
+        mul++        
+        return val*mul // 리터럴 상수 int -> float -> int로 implicit 캐스팅
+
+// 결과: age=0, grade=10.5
+```
+
 
 
 ##### 객체와 라이프 사이클
