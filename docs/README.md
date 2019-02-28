@@ -91,12 +91,22 @@ offside-rule
 ##### 항상 시작은 Hello world 로부터.
 
 ```cpp
-import Console // import로 모듈을 가져옴
+import console // import로 모듈을 가져옴
 
 /*모든 프로그램은 진입점을 위한 app을 정의 필요*/
-class app
-    void main() //int main(), void main(str[] args), int #main(str[] args)도 ok.
-        Console.out("hello world\n") // python처럼 off-side rule (= indentation으로 블록문)
+class app { // 블록문(Block stmt)는 중괄호 사용
+    //	블록문시 여는-중괄호는 stmt의 뒤에 넣음
+    /*	잘못된 예)
+    		class app
+    		{   
+   	*/
+
+    // 블록문 안의 코드들은 반드시 들여쓰기(indent) 필요함
+    int main() { // 진입점
+        return console.out("hello world\n")
+    }
+} 	// Indent가 중요하기 때문에 한줄에 여러개의 }}를 붙일 수 없음
+	// 잘못된 예) }}
 
 // 결과: hello world
 ```
@@ -119,47 +129,60 @@ class app
 | byte   | 정수         | signed    | 8bit  | 0      | 2                                  |
 
 ```cpp
-class app    
-    void   main(   ) // whitespace 무시
-        int age=0 // 지역변수 age와 member변수와 이름 중복 허용        
+import console
+
+class app {
+    void   main   (   ){  // whitespace 무시
+        int age=0 // 지역변수 age와 member변수와 이름 중복 허용
         ++age++ *= 2 // age == 4
-    	// 연산자 우선순위 존재함.
-    	// 다음 연산자 지원 : += -= /= %= <= < > >= = == != --
+        // 연산자 우선순위 존재함.
+        // 다음 연산자 지원 : += -= /= %= <= < > >= = == != --
 
         int pow = age^2 // => age*age == 16
-        Console.out("hello world!"[0:4] + "boy aged " + pow) // ':'은 범위 연산자.
-    	// 범위 연산자: x:y 로 표현하며 [x, y)의 범위를 가짐.
+        console.out("hello world!"[0:4] + "boy aged " + pow) // ':'은 범위 연산자.
+        // 범위 연산자: x:y 로 표현하며 [x, y)의 범위를 가짐.
         // int + str시, implicit 캐스팅 우선순위(3vs5)에 따라, int->str casting
-
+    }
+}
 // 결과: hellboy aged 16
 ```
 
 
 
-##### 키워드
+##### 키워드와 논리연산자
 
 ```cpp
-class app
-    void main()
+class app {
+    int main() {
         int age = 21
         //    keyword는 메소드와 달리 사용시 () 를 쓰지 않는다.
         int sum = 0
-        if age > 20
-			age > 20 & age < 20? // ? == if
-				Console.out("can't reach here")
+        if age > 20 { // 원칙은 블록문시에는 항상 {, }를 사용하나,
+            if age > 20 & age < 20 // 함수 내의 블록문은 {, } 생략을 권장.
+                Console.out("can't reach here")
             
             int sum = 0 // 허용된 중복 정의
             for int n in 1:5 // 1부터 5까지
                 sum += n
                 
             Console.out("sum=" + sum)
-        else if age == 20
+        } else if age == 20 // } 뒤에 다음 stmt 가능.
             sum = 0
-        if age > 21 | sum // | 는 or연산. sum이 0이 아니면 true로 판단
-        	Console.out("sum=" + sum)
+        if ! (age == 21) | sum // |는 or연산. sum이 0이 아니면 true로 판단
+            Console.out("sum=" + sum)
+        elif ! sum // == else if
+            Console.out("can't reach here")
+            return -1 // 함수 종료. 반환
+
+        int bit = 2
+        Console.out(bit || 4) // ||, &&, ~~ 비트 연산자
+        return 0
+	}
+}
 /* 결과:
 sum=15
 sum=15
+6
 */
 ```
 
@@ -168,30 +191,29 @@ sum=15
 ##### 접근자와 메소드
 
 ```cpp
-class app
+class app {
     // prefix _는 private를 의미. 정의와 동시에 초기화도 ok.
     // 접근시에는 _grade가 아니라 grade
     float _grade = 3.5
     // 3.5처럼 . 포함된 리터럴상수는 float으로 간주.
     int age // 접근자(accessor)는 public. 초기화 표현식이 없을 경우, 각 타입들의 기본값이 assign.
-    void   main(   ) // whitespace 무시
+    void main() { // whitespace 무시
         app.double(grade) // static 메소드 double 호출.
         Console.out("age=" + age + ", grade=" + double(grade)) // scope(app) 생략 가능
+    }
     
     // prefix #은 static 메소드를 의미.
     // 함수간 선언 순서에 종속되지 않음. _double() 호출보다 정의가 나중에 나와도 ok.
-    int #double(float val) // 인자리스트에 #, _ prefix는 붙일 수 없음.
+    int #double(float val) { // 인자리스트에 #, _ prefix는 붙일 수 없음.
         float #mul = 0
-        mul++        
+        mul++
         return val*mul // 리터럴 상수 int -> float -> int로 implicit 캐스팅
-
+    }
+}
 // 결과: age=0, grade=10.5
 ```
 
-
-
 ##### 객체와 라이프 사이클
-
 
 
 ##### 상수와 캐스팅
