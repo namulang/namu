@@ -10,9 +10,16 @@ from operator import eq
 frame = "======================================================="
 
 def cmdstr(cmd):
-    ret = str(subprocess.check_output(cmd, shell=True))[2:-3]
-    if platform.system() == "Windows":
-        ret = "c:/" + ret[3:]
+    try:
+        ret = str(subprocess.check_output(cmd, shell=True))
+        if platform.system() == "Windows":
+            ret = "\"" + ret[2:-5] + "\""
+        else:
+            ret = ret[2:-3]
+    except:
+        print("[!] error on running " + cmd)
+        ret = ""
+        return ret
 
     print("cmdstr=" + ret)
     return ret
@@ -276,7 +283,7 @@ def commit():
     return 0
 
 def _extractPythonVersion(verstr):
-    return float(verstr[7:10])
+    return float(verstr[8:11])
 
 def checkDependencies():
     global python3
@@ -348,26 +355,28 @@ def _clean(directory):
                 shutil.rmtree(abs_dir)
 cwd = ""
 
+def _where(name):
+    cmd = ""
+    if platform.system() == "Linux":
+        cmd = "which"
+    elif platform.system() == "Windows":
+        cmd = "where"
+    else:
+        print("[!] " + platform.system() + " unsupported.")
+        return ""
+
+    return cmdstr(cmd + " " + name)
+
 def _extractEnv():
     global python3
     if "PYTHON" in os.environ:
         python3 = os.environ["PYTHON"]
     else:
-        cmd = ""
-        if platform.system() == "Linux":
-            cmd = "which"
-        elif platform.system() == "Windows":
-            cmd = "where"
-        else:
-            print("[!] " + platform.system() + " unsupported.")
-            return -1
-
-        no_python3 = os.system(cmd + " python3")
-        print("no_python3=" + str(no_python3))
-        python3 = cmdstr("which python")
-        #python3 = cmdstr(cmd + " python") if no_python3 else cmdstr(cmd + " python3")
+        python3 = _where("python3")
+        if python3 == "":
+            python3 = _where("python")
         print("python3=" + python3)
-        return 0
+        return python3 == ""
 
 def _init():
     global cwd
