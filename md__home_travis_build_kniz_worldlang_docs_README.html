@@ -106,13 +106,19 @@
         <span class="c1">// ||, &amp;&amp;, ~~ 비트 연산자</span>
         <span class="k">return</span> <span class="mi">0</span>
     <span class="p">}</span>
+    <span class="c1">// import console // 에러.</span>
 <span class="p">}</span>
+
+<span class="n">import</span> <span class="n">console</span> <span class="c1">// 외부 scope 이면, 어느 위치에든 선언 가능.</span>
+
 
 <span class="cm">/* 결과:</span>
 <span class="cm">sum=10</span>
 <span class="cm">sum=10</span>
 <span class="cm">6</span>
-<span class="cm">*/</span></pre><h6>접근자와 메소드</h6><pre class="m-code"><span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+<span class="cm">*/</span></pre><h6>접근자와 메소드</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="c1">// prefix _는 private를 의미. 정의와 동시에 초기화도 ok.</span>
     <span class="c1">// 접근시에는 _grade가 아니라 grade</span>
     <span class="kt">float</span> <span class="n">_grade</span> <span class="o">=</span> <span class="mf">3.5</span>
@@ -131,7 +137,89 @@
         <span class="k">return</span> <span class="n">val</span><span class="o">*</span><span class="n">mul</span> <span class="c1">// 리터럴 상수 int -&gt; float -&gt; int로 implicit 캐스팅</span>
     <span class="p">}</span>
 <span class="p">}</span>
-<span class="c1">// 결과: age=0, grade=10.5</span></pre><h6>객체와 라이프 사이클</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="c1">// 결과: age=0, grade=10.5</span></pre><h6>Containers</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">tuple</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//  튜플: (&lt;표현식expr&gt;, ...)</span>
+        <span class="c1">//  튜플은 각각의 타입으로 정의된 값들을 묶어놓은 특이한 컨테이너.</span>
+        <span class="c1">//  사용자는 이 컨테이너 자체를 접근 불가능하며, worldlang 인터프리터만 접근 가능.</span>
+        <span class="c1">//  이를 이용해 다른 객체에 값을 편하게 전달해주는 용도.</span>
+        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;apple&quot;</span><span class="p">)</span> <span class="c1">// 각 원소의 타입이 모두 다름.</span>
+        <span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span> <span class="c1">// innerclass.</span>
+            <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+            <span class="kt">float</span> <span class="n">grade</span> <span class="o">=</span> <span class="mf">2.5</span>
+            <span class="kt">void</span> <span class="n">print</span><span class="p">()</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">Person</span> <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Donald&quot;</span><span class="p">)</span>            <span class="p">;</span><span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">()</span> <span class="c1">// &quot;Donald&quot;</span>
+        <span class="c1">// ;은 다음 stmt를 이어서 서술 가능.</span>
+
+        <span class="n">p</span><span class="p">()</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span> <span class="n">age</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">str</span> <span class="n">msg</span><span class="o">=</span><span class="s">&quot;Jung-un&quot;</span><span class="p">)</span>
+        <span class="c1">// 변수 정의 또한 표현식이므로 튜플내에서 사용 가능.</span>
+        <span class="c1">// 정의된 변수는 해당 scope 내에서 유효. (사용된곳이 블록문 안쪽이면,</span>
+        <span class="c1">// 해당 블록문이 종료까지 유효.)</span>
+        <span class="c1">// 튜플과 할당연산의 경우, 객체의 소유한 멤버와 순서대로 할당.</span>
+        <span class="c1">//  p.a = (int) age</span>
+        <span class="c1">//  p.name = msg</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">()</span> <span class="c1">// &quot;Jung-un&quot;</span>
+
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;Denis Trillo&quot;</span>  <span class="c1">// 튜플age, msg는 현 scope내에 접근.</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">()</span> <span class="c1">// &quot;Jung-un&quot;</span>
+        <span class="c1">// p.name과 msg는 별도의 인스턴스.</span>
+    <span class="p">}</span>
+    <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="n">str</span><span class="cm">/*변수명 생략*/</span><span class="p">)</span> <span class="n">map</span><span class="p">(</span><span class="kt">int</span> <span class="n">age</span><span class="p">,</span> <span class="n">str</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 사실, 이것도 튜플이며, 함수호출도 튜플이다.</span>
+        <span class="c1">//  맵: &lt;타입&gt;[&lt;타입&gt;]</span>
+        <span class="kt">int</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="n">dict</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;apple&quot;</span><span class="p">)]</span> <span class="c1">// 리스트를 통해 초기화 된다.</span>
+        <span class="n">dict</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;apple&quot;</span><span class="p">)</span> <span class="c1">// 런타임 에러</span>
+        <span class="n">dict</span><span class="p">[</span><span class="s">&quot;apple&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="n">dict</span><span class="p">[</span><span class="s">&quot;banana&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="n">str</span> <span class="n">name</span><span class="p">)</span> <span class="n">in</span> <span class="n">dict</span> <span class="c1">// dict의 원소들인 튜플을 (x, name)으로 된 튜플로 복사</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;x, name=&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">dict</span><span class="p">[</span><span class="s">&quot;apple&quot;</span><span class="p">],</span> <span class="s">&quot;apple&quot;</span><span class="p">)</span> <span class="c1">// 복수개의 값을 튜플로 반환</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">array</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 배열: &lt;타입&gt;[&lt;크기&gt;]</span>
+        <span class="c1">// 문법을 보면 알겠지만, 배열은 사실 맵의 특수한 종류 중 하나. (&quot;[]&quot; 안 int가 생략된 맵)</span>
+        <span class="kt">int</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="n">arr</span>
+        <span class="k">for</span> <span class="kt">int</span> <span class="n">n</span> <span class="n">in</span> <span class="o">~</span><span class="mi">3</span> <span class="c1">// ~3은 0에서 2까지</span>
+            <span class="n">arr</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span>  <span class="c1">// c.f) arr[2] = 2</span>
+        <span class="n">arr</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="c1">// 런타임 에러</span>
+
+        <span class="k">for</span> <span class="kt">int</span> <span class="n">n</span> <span class="n">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="c1">// [x, y, z, ...] 은 배열의 상수 표현식</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+        <span class="n">arr</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">arr</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span> <span class="c1">// true</span>
+
+        <span class="kt">int</span><span class="p">[]</span> <span class="n">arr2</span> <span class="o">=</span> <span class="n">arr</span> <span class="c1">// 크기 생략 가능</span>
+        <span class="n">arr2</span> <span class="o">!=</span> <span class="n">arr</span> <span class="c1">// true</span>
+        <span class="n">arr2</span><span class="p">.</span><span class="n">isSame</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="c1">// true</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">tuple</span><span class="p">()</span>
+        <span class="k">if</span> <span class="mi">1</span>
+            <span class="p">(</span><span class="n">str</span> <span class="n">x</span><span class="p">,</span> <span class="n">str</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">map</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Jae-in&quot;</span><span class="p">)</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;x=&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s">&quot;, y=&quot;</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="c1">// &quot;x=4, y=apple&quot;</span>
+        <span class="c1">// console.out(&quot;x= &quot; + x + &quot;, y=&quot; + y) // 에러</span>
+        <span class="n">array</span><span class="p">()</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* 결과:</span>
+<span class="cm">    Donald</span>
+<span class="cm">    Jung-un</span>
+<span class="cm">    Jung-un</span>
+<span class="cm">    x, name=4, apple</span>
+<span class="cm">    x, name=5, banana</span>
+<span class="cm">    x=4, y=apple</span>
+<span class="cm">    0</span>
+<span class="cm">    1</span>
+<span class="cm">    2</span>
+<span class="cm">*/</span></pre><h6>Pretype: void &amp; null</h6><h6>객체와 라이프 사이클</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">Plant</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">_age</span> <span class="o">=</span> <span class="mi">5</span>
@@ -172,7 +260,7 @@
 <span class="cm">    p.age is 20</span>
 <span class="cm">    end of program</span>
 <span class="cm">    herb destructor</span>
-<span class="cm">*/</span></pre><h6>상수와 캐스팅</h6><h6>mutable</h6><h6>node</h6><h6>Pretype: Containers</h6><h6>Pretype: void &amp; null</h6><h6>인터페이스 계승</h6><h6>인터페이스 확장</h6><h6>메타</h6><h6>클로저</h6><h6>res와 익셉션</h6><h6>statement 는 expression</h6><h6>Blockstmt 는 클로저</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
+<span class="cm">*/</span></pre><h6>인터페이스 상속</h6><pre class="m-code"></pre><h6>상수와 캐스팅</h6><pre class="m-code"></pre><h6>mutable</h6><h6>node</h6><h6>인터페이스 확장</h6><h6>메타</h6><h6>클로저</h6><h6>res와 익셉션</h6><h6>statement 는 expression</h6><h6>Blockstmt 는 클로저</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
       </div>
     </div>
   </div>
