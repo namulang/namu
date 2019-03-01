@@ -131,7 +131,48 @@
         <span class="k">return</span> <span class="n">val</span><span class="o">*</span><span class="n">mul</span> <span class="c1">// 리터럴 상수 int -&gt; float -&gt; int로 implicit 캐스팅</span>
     <span class="p">}</span>
 <span class="p">}</span>
-<span class="c1">// 결과: age=0, grade=10.5</span></pre><h6>객체와 라이프 사이클</h6><h6>상수와 캐스팅</h6><h6>mutable</h6><h6>node</h6><h6>Pretype: Containers</h6><h6>Pretype: void &amp; null</h6><h6>인터페이스 계승</h6><h6>인터페이스 확장</h6><h6>메타</h6><h6>클로저</h6><h6>res와 익셉션</h6><h6>statement 는 expression</h6><h6>Blockstmt 는 클로저</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
+<span class="c1">// 결과: age=0, grade=10.5</span></pre><h6>객체와 라이프 사이클</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">Plant</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">_age</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">Plant</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;constructor. age=&quot;</span> <span class="o">+</span> <span class="n">age</span><span class="p">)</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="p">}</span>
+    <span class="o">~</span><span class="n">Plant</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; destructor&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;herb&quot;</span>
+    <span class="kt">int</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">name</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Plant</span> <span class="n">p</span><span class="p">()</span> <span class="c1">// Plant 객체 정의</span>
+
+        <span class="k">if</span> <span class="mi">1</span>
+            <span class="n">Plant</span> <span class="n">p1</span><span class="p">()</span> <span class="c1">// Plant 객체 정의</span>
+            <span class="n">p1</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="c1">// &quot;herb&quot; == &quot;herb&quot;</span>
+
+            <span class="n">Plant</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span>
+            <span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;chikery&quot;</span>
+            <span class="n">p1</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="c1">// &quot;chikery&quot; == &quot;chikery&quot;</span>
+
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.age is &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;end of program&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/*  결과:</span>
+<span class="cm">    constructor. age=5</span>
+<span class="cm">    constructor. age=5</span>
+<span class="cm">    chickery destructor</span>
+<span class="cm">    p.age is 20</span>
+<span class="cm">    end of program</span>
+<span class="cm">    herb destructor</span>
+<span class="cm">*/</span></pre><h6>상수와 캐스팅</h6><h6>mutable</h6><h6>node</h6><h6>Pretype: Containers</h6><h6>Pretype: void &amp; null</h6><h6>인터페이스 계승</h6><h6>인터페이스 확장</h6><h6>메타</h6><h6>클로저</h6><h6>res와 익셉션</h6><h6>statement 는 expression</h6><h6>Blockstmt 는 클로저</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
       </div>
     </div>
   </div>
