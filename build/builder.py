@@ -38,6 +38,8 @@ def _cleanIntermediates():
     print("removing intermediate outputs...", end=" ")
     os.system("rm -rf " + cwd + "/xml")
     os.system("rm -rf " + cwd + "/*.tmp")
+    os.system("git config --unset user.name") # remove local config only
+    os.system("git config --unset user.email")
     print("done.")
 
 def doc():
@@ -71,7 +73,7 @@ def doc():
     print("origin=" + str(origin))
     os.chdir(cwd + "/html")
     os.system("git add .")
-    os.system("git config user.name \"autodocbot\"")
+    os.system("git config user.name \"autodocbot\"") # put on local config.
     os.system("git config user.email \"knizofficial@gmail.com\"")
     res = os.system("git commit -m \"The our poor little Autobot \(❍ᴥ❍ʋ)/ generated docs for " + origin + ", clitter-clatter.\"")
     if res != 0:
