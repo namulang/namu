@@ -220,6 +220,53 @@ class app {
 
 ##### 객체와 라이프 사이클
 
+```cpp
+import console
+
+class Plant {
+	int _age = 5
+	Plant() {
+        console.out("constructor. age=" + age)
+		age = 20
+    }
+    ~Plant() {
+    	console.out(name + " destructor")
+    }
+    str name = "herb"
+    int getName() {
+    	return name
+    }
+}
+
+class app {
+	void main() {
+		Plant p() // Plant 객체 정의
+
+		if 1
+			Plant p1() // Plant 객체 정의
+			p1.getName() == p.name // "herb" == "herb"
+		
+			Plant p2 = p1
+			p2.name = "chikery"
+			p1.getName() == p.name // "chikery" == "chikery"
+			
+		console.out("p.age is " + p.age)
+		console.out("end of program")
+	}
+}
+
+/*	결과:
+	constructor. age=5
+	constructor. age=5
+	chickery destructor
+	p.age is 20
+	end of program
+	herb destructor
+*/
+```
+
+
+
 
 ##### 상수와 캐스팅
 
