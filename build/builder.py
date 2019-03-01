@@ -10,10 +10,14 @@ from operator import eq
 frame = "======================================================="
 
 def cmdstr(cmd):
-    return str(subprocess.check_output(cmd, shell=True))[2:-3]
+    ret = str(subprocess.check_output(cmd, shell=True))[2:-3]
+    if platform.system() == "Windows":
+        ret = "c:/" + ret[3:]
 
-python3 = cmdstr("which python3")
+    print("cmdstr=" + ret)
+    return ret
 
+python3 = ""
 def branch(command):
     if command == "help":
         return help()
@@ -348,15 +352,32 @@ def _extractEnv():
     global python3
     if "PYTHON" in os.environ:
         python3 = os.environ["PYTHON"]
+    else:
+        cmd = ""
+        if platform.system() == "Linux":
+            cmd = "which"
+        elif platform.system() == "Windows":
+            cmd = "where"
+        else:
+            print("[!] " + platform.system() + " unsupported.")
+            return -1
+
+        no_python3 = os.system(cmd + " python3")
+        print("no_python3=" + str(no_python3))
+        python3 = cmdstr("which python")
+        #python3 = cmdstr(cmd + " python") if no_python3 else cmdstr(cmd + " python3")
+        print("python3=" + python3)
+        return 0
 
 def _init():
     global cwd
     cwd=os.path.dirname(os.path.realpath(sys.argv[0]))
     _extractBuildInfo()
-    _extractEnv()
+    return _extractEnv()
 
 def main():
-    _init()
+    if _init():
+        return -1
     version()
 
     os.chdir(cwd)
