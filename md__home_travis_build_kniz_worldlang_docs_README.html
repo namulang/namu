@@ -198,13 +198,12 @@
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;constructor. age=&quot;</span> <span class="o">+</span> <span class="n">age</span><span class="p">)</span>
         <span class="n">age</span> <span class="o">=</span> <span class="mi">20</span>
     <span class="p">}</span>
-    <span class="o">~</span><span class="n">Plant</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; destructor&quot;</span><span class="p">)</span>
-    <span class="p">}</span>
+    <span class="c1">// 인라인 지정자inline-specifier: &lt;keyword has blockstmt&gt;: stmt</span>
+    <span class="c1">//  &quot;:&quot; 는 inline 지정자(specifier)로써,</span>
+    <span class="c1">//  뒤에 stmt 1개를 블록문 없이 사용 가능.</span>
+    <span class="o">~</span><span class="n">Plant</span><span class="p">()</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; destructor&quot;</span><span class="p">)</span>
     <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;herb&quot;</span>
-    <span class="kt">int</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">name</span>
-    <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">getName</span><span class="p">()</span><span class="o">:</span> <span class="k">return</span> <span class="n">name</span>
 <span class="p">}</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
@@ -218,8 +217,7 @@
             <span class="n">Plant</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span>
             <span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;chikery&quot;</span>
             <span class="n">p1</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="c1">// &quot;chikery&quot; == &quot;chikery&quot;</span>
-
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.age is &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>
+        <span class="k">else</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;no&quot;</span><span class="p">)</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.age is &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span> <span class="c1">// 권장 안하나, 허용한다.</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;end of program&quot;</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -249,24 +247,71 @@
 <span class="p">}</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
-    <span class="kt">void</span> <span class="n">proxied</span><span class="p">(</span><span class="n">Person</span> <span class="n">p</span><span class="p">,</span> <span class="n">str</span> <span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">grade</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">proxied</span><span class="p">(</span><span class="n">Person</span> <span class="n">p</span><span class="p">,</span> <span class="n">str</span> <span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">grade</span><span class="p">,</span> <span class="kt">float</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">str</span><span class="p">]</span> <span class="n">list</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">p</span><span class="p">.</span><span class="n">setGrade</span><span class="p">(</span><span class="n">age</span><span class="o">*</span><span class="n">grade</span><span class="p">)</span>       <span class="c1">// Sharable     외부의 Person객체에도 영향을 미친다</span>
         <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Sissel from Norway&quot;</span> <span class="c1">// Occupiable</span>
         <span class="n">grade</span> <span class="o">*=</span> <span class="mi">2</span>                  <span class="c1">// Occupiable</span>
+        <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">Person</span> <span class="n">p</span><span class="p">()</span>
         <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;unknown&quot;</span>
         <span class="kt">float</span> <span class="n">grade</span> <span class="o">=</span> <span class="mf">3.0</span>
-        <span class="n">proxied</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">grade</span><span class="p">)</span>
+        <span class="kt">float</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">str</span><span class="p">]</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s">&quot;vector_x&quot;</span><span class="p">),</span>
+                              <span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s">&quot;vector_y&quot;</span><span class="p">)]</span>
+        <span class="n">proxied</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">grade</span><span class="p">,</span> <span class="n">list</span><span class="p">)</span>
         <span class="c1">// ... 3개 구문 뒤에 붙이면 구문을 자를 수 있다.</span>
         <span class="c1">// ... 뒤에 공백whitespace이 오면 안된다.</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.getGrade()=&quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">getGrade</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;, name=&quot;</span> <span class="p">...</span>
  <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="o">~</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;, grade=&quot;</span> <span class="o">+</span> <span class="n">grade</span><span class="p">)</span> <span class="c1">// name은 occupiable과 관계없이 const 아니므로 변경 가능.</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;vector_x:&quot;</span> <span class="o">+</span> <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> 
+    <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="c1">// 0.1, 0.1, 0.1</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c1">// 결과: p.getGrade()=15, name=known, grade=3.000000</span></pre><h6>node &amp; var</h6><h6>Containers</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="c1">// 결과:</span>
+<span class="c1">//  p.getGrade()=15, name=known, grade=3.000000</span>
+<span class="c1">//  0.1, 0.1, 0.1</span></pre><h6>node &amp; var &amp; void</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">foo</span><span class="p">(</span><span class="o">?</span> <span class="n">unknown</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// node:</span>
+        <span class="c1">//  ? 는 node 라는 타입으로 동적바인딩DynamicTyping or DuckTyping 된다.</span>
+        <span class="n">unknown</span> <span class="o">+=</span> <span class="s">&quot;world!&quot;</span> <span class="c1">// node 타입이 포함된 구문은 binding validation이 되지 않는다.</span>
+                            <span class="c1">// 런타임에 에러가 판별된다.</span>
+
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">unknown</span><span class="p">)</span> <span class="c1">// 결과가 return 된다.</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// var: 타입유추TypeInference로 컴파일타임에 타입을 결정해준다.</span>
+        <span class="c1">//  python, c++11 표준의 auto와 동일하다.</span>
+        <span class="n">var</span> <span class="n">ret1</span> <span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span> <span class="c1">// var == int</span>
+        <span class="n">foo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1">// int -&gt; str 묵시적형변환이 될 수 없다. 컴파일은 되나, 런타임 에러가 된다.</span>
+
+        <span class="kt">bool</span> <span class="n">success</span> <span class="o">=</span> <span class="nb">false</span>
+        <span class="n">var</span> <span class="n">ret</span> <span class="o">=</span> <span class="k">if</span> <span class="nl">success</span><span class="p">:</span> <span class="mi">35</span> <span class="k">else</span><span class="o">:</span> <span class="s">&quot;wow&quot;</span> <span class="c1">// 결과에 따라 success나 35 혹은 &quot;wow&quot; 중 하나가 반환된다.</span>
+        <span class="c1">// int ret = if success: 35 else: &quot;wow&quot; // 컴파일 에러.</span>
+                                                <span class="c1">// 묵시적 str -&gt; int를 요구하는 부분이 있다.</span>
+
+        <span class="c1">// ret의 타입은 ?(node)다.</span>
+        <span class="c1">// 35와 &quot;wow&quot;를 모두 포함할 수 있는 타입은 node 뿐이다.</span>
+        <span class="n">ret1</span> <span class="o">=</span> <span class="n">ret</span>  <span class="c1">// ret는 node 이므로 validation은 무시된다.</span>
+                    <span class="c1">// success가 false일 경우, int = str 이 되므로 런타임에러가 된다.</span>
+
+        <span class="c1">// void:</span>
+        <span class="c1">//  1. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.</span>
+        <span class="c1">//      e.g) return ret1 // 명시적 void 반환은 에러이다.</span>
+        <span class="c1">//  2. 명시적으로 void로 변수를 정의할 수 없다.</span>
+        <span class="c1">//      e.g) void abc // 컴파일 에러.</span>
+        <span class="c1">//  3. void는 어떠한 할당연산을 수행해도 void이다.</span>
+        <span class="c1">//      e.g) ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* 결과:</span>
+<span class="cm">    helloworld</span>
+<span class="cm">    &lt;런타임 에러로 프로그램 종료&gt;</span>
+<span class="cm">*/</span></pre><h6>Containers</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="kt">void</span> <span class="n">tuple</span><span class="p">()</span> <span class="p">{</span>
@@ -401,7 +446,37 @@
 <span class="cm">    diff: sequence[0]=10, start=3</span>
 <span class="cm">    0</span>
 <span class="cm">    banana</span>
-<span class="cm">*/</span></pre><h6>인터페이스 상속</h6><pre class="m-code"></pre><h6>상수와 캐스팅</h6><pre class="m-code"></pre><h6>인터페이스 확장</h6><h6>메타</h6><h6>클로저</h6><h6>res와 익셉션</h6><h6>Blockstmt 는 클로저</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
+<span class="cm">*/</span></pre><h6>인터페이스 상속</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="c1">// 중첩클래스(nested class)</span>
+    <span class="k">class</span> <span class="nc">Plant</span> <span class="p">{</span>
+        <span class="n">str</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="s">&quot;Plant&quot;</span>
+        <span class="p">}</span>
+        <span class="kt">int</span> <span class="n">_age</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="kt">int</span> <span class="n">getAge</span><span class="p">()</span><span class="o">:</span> <span class="k">return</span> <span class="n">_age</span>
+    <span class="p">}</span>
+    <span class="c1">// 상속inheritance:   class &lt;파생클래스&gt; -&gt; &lt;기반클래스&gt;    </span>
+    <span class="c1">//  기반 클래스baseclass의 인터페이스를 물려받는다.</span>
+    <span class="c1">//  -&gt;는 상속UML Generalization 기호에서 착안했다.</span>
+    <span class="c1">//  함수 명세signature가 같은 경우 overriding으로 판단한다. (= Java)</span>
+    <span class="c1">//  함수명과 인자리스트(즉, header) 까지만 일치할 경우, 메소드 은닉hiding 된다.</span>
+    <span class="k">class</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="n">Plant</span> <span class="p">{</span>   
+        <span class="n">str</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// overriding</span>
+            <span class="k">return</span> <span class="s">&quot;Leaf&quot;</span>
+        <span class="p">}</span>
+        <span class="kt">float</span> <span class="n">getAge</span><span class="p">()</span><span class="o">:</span> <span class="k">return</span> <span class="mf">3.5</span> <span class="c1">// 반환형이 다르므로 은닉이다.</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Plant</span> <span class="n">p</span><span class="p">()</span>
+        <span class="k">if</span> <span class="mi">1</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Leaf</span><span class="p">()</span>
+        <span class="n">console</span><span class="p">.(</span><span class="s">&quot;name=&quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;, age=&quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">getAge</span><span class="p">())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 결과: name=Leaf, age=1</span></pre><h6>상수와 캐스팅</h6><pre class="m-code"></pre><h6>인터페이스 확장</h6><h6>메타</h6><h6>클로저</h6><h6>res와 익셉션</h6><h6>Blockstmt 는 클로저</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
       </div>
     </div>
   </div>
