@@ -217,6 +217,17 @@
             <span class="n">Plant</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span>
             <span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;chikery&quot;</span>
             <span class="n">p1</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="c1">// &quot;chikery&quot; == &quot;chikery&quot;</span>
+
+            <span class="c1">// p1이 소멸된다.            </span>
+            <span class="c1">// GC(a.k.a GarbageCollection):</span>
+            <span class="c1">//  모든 객체(int, str의 primitive 변수 포함해서)는 refcount 기반의 제한적인 GC에</span>
+            <span class="c1">//  의해 해제된다.</span>
+            <span class="c1">//  제한적인 이유:</span>
+            <span class="c1">//      1. 다음의 java 코드는 worldlang으로 구현할 수 없다.</span>
+            <span class="c1">//          in java)    new Daemon(); // ref 없이 생존하게 된다.</span>
+            <span class="c1">//      2. GC 구현시 한번쯤은 들어볼, 유명한 원형-참조circular reference 문제.</span>
+            <span class="c1">//          (현재 limitation. 해결방안 생각중)</span>
+
         <span class="k">else</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;no&quot;</span><span class="p">)</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.age is &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span> <span class="c1">// 권장 안하나, 허용한다.</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;end of program&quot;</span><span class="p">)</span>
     <span class="p">}</span>
