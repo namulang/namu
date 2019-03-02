@@ -74,8 +74,10 @@
         <span class="c1">// 다음 연산자 지원 : += -= /= %= &lt;= &lt; &gt; &gt;= = == != --</span>
 
         <span class="kt">int</span> <span class="n">pow</span> <span class="o">=</span> <span class="n">age</span><span class="o">^</span><span class="mi">2</span> <span class="c1">// =&gt; age*age == 16</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;hello world!&quot;</span><span class="p">[</span><span class="mi">0</span><span class="o">~</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;boy aged &quot;</span> <span class="o">+</span> <span class="n">pow</span><span class="p">)</span> <span class="c1">// &#39;:&#39;은 범위 연산자.</span>
-        <span class="c1">// 범위 연산자: x:y 로 표현하며 [x, y)의 범위를 가짐.</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;hello world!&quot;</span><span class="p">[</span><span class="o">-</span><span class="mi">9999999</span><span class="o">~</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;boy aged &quot;</span> <span class="o">+</span> <span class="n">pow</span><span class="p">)</span>
+        <span class="c1">// Sequence: x~y 로 표현하며 [x, y)의 범위를 가짐.</span>
+        <span class="c1">// str[-9999]는 0으로 예외처리.</span>
+        <span class="c1">// str[99999999]는 str의 length-1로 예외처리.</span>
         <span class="c1">// int + str시, implicit 캐스팅 우선순위(3vs5)에 따라, int-&gt;str casting</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -116,6 +118,57 @@
 <span class="cm">sum=10</span>
 <span class="cm">sum=10</span>
 <span class="cm">6</span>
+<span class="cm">*/</span></pre><h6>statement 는 expression</h6><pre class="m-code"><span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="c1">// 구문statement와 표현식expression:</span>
+    <span class="c1">// 프로그래밍 언어에서 구문이란 코드의 각 라인을 말하며,</span>
+    <span class="c1">// 표현식은 특정한 값을 반환할 수 있는 식별자가 조합된 식을 뜻한다.</span>
+    <span class="c1">//  e.g in c++) foo(3);             // 표현식이므로, 동시에 구문이다.</span>
+    <span class="c1">//              void func(int age); // 구문이다.</span>
+    <span class="c1">//              class A;            // 구문이다.</span>
+    <span class="c1">//</span>
+    <span class="c1">// world는 문법을 간결하게 하기 위해 모든 구문은 표현식으로 정의한다.</span>
+    <span class="c1">// 이를 위해 2가지 규칙이 있다.</span>
+    <span class="c1">//  1. 모든 블록문을 갖을 수 있는 키워드는 블록문의 마지막 라인을 밖으로 반환한다.</span>
+    <span class="c1">//  2. 모든 타입 선언은, 동시에 정의이며, 정의된 식별자는 해당 범위scope내에서 유효하다.</span>
+    <span class="kt">int</span> <span class="n">foo</span><span class="p">(</span><span class="kt">int</span> <span class="n">age</span><span class="p">)</span> <span class="p">{</span>
+        <span class="mi">5</span> <span class="c1">// #1 규칙. return이 없어도 ok.</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">boo</span><span class="p">(</span><span class="k">class</span> <span class="nc">declared</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">success</span><span class="p">,</span> <span class="kt">int</span> <span class="n">age</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// class도 int와 같은 타입의 한 종류.</span>
+        <span class="c1">// ... class의 인터페이스는 차후 설명</span>
+
+        <span class="c1">// bool -&gt; str시 &quot;true&quot; | &quot;false&quot;</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">success</span> <span class="o">+</span> <span class="s">&quot;, age=&quot;</span> <span class="o">+</span> <span class="n">age</span><span class="p">)</span> <span class="c1">// true, age=20</span>
+
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1">// age=5</span>
+        <span class="kt">bool</span> <span class="n">success</span> <span class="o">=</span> <span class="k">if</span> <span class="n">age</span> <span class="c1">// always true.</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;at if blockstmt&quot;</span><span class="p">)</span>
+            <span class="nb">true</span>
+        <span class="k">else</span>
+            <span class="nb">false</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;success=&quot;</span> <span class="o">+</span> <span class="n">success</span><span class="p">)</span>
+        <span class="n">foo</span><span class="p">(</span><span class="k">class</span> <span class="nc">inner</span> <span class="p">{</span>   <span class="c1">// #2 규칙. 클래스의 정의. 클래스 자체를 foo함수로 넘긴다.</span>
+                            <span class="c1">// worldlang은 클래스또한 하나의 타입으로 다룬다. (추후 서술)</span>
+            <span class="kt">void</span> <span class="n">print</span><span class="p">()</span> <span class="p">{</span>
+                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;app.main.inner.print&quot;</span><span class="p">)</span>
+            <span class="p">}</span>                
+        <span class="p">},</span> <span class="k">if</span> <span class="n">success</span> <span class="c1">// if의 블록문 2개중 하나의 마지막 라인이 foo함수로 넘겨진다</span>
+            <span class="kt">bool</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+        <span class="k">else</span>
+            <span class="kt">bool</span> <span class="n">ok</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span> <span class="c1">// #2 규칙.</span>
+        <span class="p">,</span> <span class="kt">int</span> <span class="n">local_age</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+        <span class="c1">// local_age와 inner는 main 함수 내에서 사용 가능하다.</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">local_age</span><span class="p">)</span> <span class="c1">// 20</span>
+        <span class="c1">// console.out(ok) // 에러. ok는 이미 else 블록문이 끝남과 동시에 소멸되었다.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* 결과:</span>
+<span class="cm">    at if blockstmt</span>
+<span class="cm">    success=true    </span>
+<span class="cm">    true, age=20</span>
+<span class="cm">    20</span>
 <span class="cm">*/</span></pre><h6>접근자와 메소드</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
@@ -137,13 +190,95 @@
         <span class="k">return</span> <span class="n">val</span><span class="o">*</span><span class="n">mul</span> <span class="c1">// 리터럴 상수 int -&gt; float -&gt; int로 implicit 캐스팅</span>
     <span class="p">}</span>
 <span class="p">}</span>
-<span class="c1">// 결과: age=0, grade=10.5</span></pre><h6>Containers</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="c1">// 결과: age=0, grade=10.5</span></pre><h6>객체와 라이프 사이클</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">Plant</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">_age</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">Plant</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;constructor. age=&quot;</span> <span class="o">+</span> <span class="n">age</span><span class="p">)</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="p">}</span>
+    <span class="o">~</span><span class="n">Plant</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; destructor&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;herb&quot;</span>
+    <span class="kt">int</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">name</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Plant</span> <span class="n">p</span><span class="p">()</span> <span class="c1">// Plant 객체 정의</span>
+
+        <span class="k">if</span> <span class="mi">1</span>
+            <span class="n">Plant</span> <span class="n">p1</span><span class="p">()</span> <span class="c1">// Plant 객체 정의</span>
+            <span class="n">p1</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="c1">// &quot;herb&quot; == &quot;herb&quot;</span>
+
+            <span class="n">Plant</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span>
+            <span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;chikery&quot;</span>
+            <span class="n">p1</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="c1">// &quot;chikery&quot; == &quot;chikery&quot;</span>
+
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.age is &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;end of program&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/*  결과:</span>
+<span class="cm">    constructor. age=5</span>
+<span class="cm">    constructor. age=5</span>
+<span class="cm">    chickery destructor</span>
+<span class="cm">    p.age is 20</span>
+<span class="cm">    end of program</span>
+<span class="cm">    herb destructor</span>
+<span class="cm">*/</span></pre><h6>null &amp; void</h6><pre class="m-code"></pre><h6>sharable &amp; occupiable</h6><table class="m-table"><thead><tr><th>타입명</th><th>Occupiable / Sharable</th></tr></thead><tbody><tr><td>int, str, bool, char, float, byte, res, void</td><td>O</td></tr><tr><td>int[], str[int]</td><td>S</td></tr><tr><td>()</td><td>O</td></tr><tr><td>class</td><td>S</td></tr><tr><td>사용자 Class</td><td>S</td></tr></tbody></table><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="c1">//  Sharable &amp; Occupiable:</span>
+<span class="c1">//      sharable과 occupiable은 할당연산시 원본인가, reference를 할당하는가만 다르다.</span>
+<span class="c1">//          sharable:   (by reference)  말그대로 할당된 변수들 끼리 같은 원본을 참조한다.</span>
+<span class="c1">//          occupiable: (by value)      각각의 변수들은 독립적인 원본을 따로 소유한다.</span>
+<span class="c1">//</span>
+<span class="c1">//      *) immutable &amp; mutable과는 다르다. occupiable이라고 해도, 데이터를 변경할 수 있다.</span>
+
+<span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span> <span class="c1">// 사용자가 정의한 class는 모두 sharable.</span>
+    <span class="kt">int</span> <span class="n">_age</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="kt">int</span> <span class="n">getAge</span><span class="p">()</span><span class="o">:</span> <span class="n">age</span>
+    <span class="kt">float</span> <span class="n">_grade</span> <span class="o">=</span> <span class="mf">3.5</span>
+    <span class="kt">float</span> <span class="n">getGrade</span><span class="p">()</span><span class="o">:</span> <span class="n">grade</span>
+    <span class="kt">void</span> <span class="n">setGrade</span><span class="p">(</span><span class="kt">float</span> <span class="k">new</span><span class="p">)</span><span class="o">:</span> <span class="n">grade</span> <span class="o">=</span> <span class="k">new</span> <span class="c1">// implicit 할당인 void = float 은 무시된다.</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">proxied</span><span class="p">(</span><span class="n">Person</span> <span class="n">p</span><span class="p">,</span> <span class="n">str</span> <span class="n">name</span><span class="p">,</span> <span class="kt">float</span> <span class="n">grade</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">setGrade</span><span class="p">(</span><span class="n">age</span><span class="o">*</span><span class="n">grade</span><span class="p">)</span>       <span class="c1">// Sharable     외부의 Person객체에도 영향을 미친다</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Sissel from Norway&quot;</span> <span class="c1">// Occupiable</span>
+        <span class="n">grade</span> <span class="o">*=</span> <span class="mi">2</span>                  <span class="c1">// Occupiable</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Person</span> <span class="n">p</span><span class="p">()</span>
+        <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;unknown&quot;</span>
+        <span class="kt">float</span> <span class="n">grade</span> <span class="o">=</span> <span class="mf">3.0</span>
+        <span class="n">proxied</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">grade</span><span class="p">)</span>
+        <span class="c1">// ... 3개 구문 뒤에 붙이면 구문을 자를 수 있다.</span>
+        <span class="c1">// ... 뒤에 공백whitespace이 오면 안된다.</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.getGrade()=&quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">getGrade</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;, name=&quot;</span> <span class="p">...</span>
+ <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="o">~</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;, grade=&quot;</span> <span class="o">+</span> <span class="n">grade</span><span class="p">)</span> <span class="c1">// name은 occupiable과 관계없이 const 아니므로 변경 가능.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 결과: p.getGrade()=15, name=known, grade=3.000000</span></pre><h6>node &amp; var</h6><h6>Containers</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="kt">void</span> <span class="n">tuple</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">//  튜플: (&lt;표현식expr&gt;, ...)</span>
         <span class="c1">//  튜플은 각각의 타입으로 정의된 값들을 묶어놓은 특이한 컨테이너.</span>
-        <span class="c1">//  사용자는 이 컨테이너 자체를 접근 불가능하며, worldlang 인터프리터만 접근 가능.</span>
+        <span class="c1">//  사용자는 이 컨테이너 자체를 접근하여, iterate 불가능하며, 오직 worldlang</span>
+        <span class="c1">//  인터프리터만 컨테이너 자체를 다룰 수 있다. (즉, worldlang 개발자는 튜플타입 변수를</span>
+        <span class="c1">//  만들 수 없다)</span>
+        <span class="c1">//  단, worldlang개발자는 &quot;statement 는 expression #2 규칙&quot; 에 의해,</span>
+        <span class="c1">//  튜플에 들어갈 원소에 이름을 붙여서 이를 직접 다룰 수 있다.</span>
+        <span class="c1">//  (튜플에 들어간 각 원소는 sharable 속성을 무시된다.)</span>
+        <span class="c1">//</span>
         <span class="c1">//  이를 이용해 다른 객체에 값을 편하게 전달해주는 용도.</span>
         <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&quot;apple&quot;</span><span class="p">)</span> <span class="c1">// 각 원소의 타입이 모두 다름.</span>
         <span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span> <span class="c1">// innerclass.</span>
@@ -198,14 +333,57 @@
         <span class="n">arr2</span> <span class="o">!=</span> <span class="n">arr</span> <span class="c1">// true</span>
         <span class="n">arr2</span><span class="p">.</span><span class="n">isSame</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="c1">// true</span>
     <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">sequence</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 시퀸스: &lt;정수&gt; ~ &lt;정수&gt;</span>
+        <span class="c1">// 범위를 나타내기 위한 컨테이너. 튜플과 동일하게 사용자는 이 컨테이너 자체를 접근하여,</span>
+        <span class="c1">// iterate 불가능하며, 오직 worldlang 인터프리터만 컨테이너 자체를 다룰 수 있다.</span>
+        <span class="c1">// ~ 기준으로 한쪽이 없는 경우, 극대(int의 양의 최대값)와 극소(int의 음의 최소값)를</span>
+        <span class="c1">// 나타낸다.</span>
+        <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="kt">int</span> <span class="n">n</span> <span class="n">in</span> <span class="mi">1</span><span class="o">~</span><span class="mi">3</span>
+            <span class="n">sum</span> <span class="o">+=</span> <span class="n">n</span>
+
+        <span class="n">str</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;hello world&quot;</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">sum</span> <span class="o">+</span> <span class="n">msg</span><span class="p">[</span><span class="mi">5</span><span class="o">~</span><span class="p">])</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">conversion</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// 본래 다룰 수 없는 튜플과 시퀸스 컨테이너를 다음과 같이 변환하면 다룰 수 있음.</span>
+        <span class="c1">//  튜플은 임의의 타입으로 정의된 변수의 집합:</span>
+        <span class="o">?</span><span class="p">[]</span> <span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&quot;banana&quot;</span><span class="p">)</span>
+
+        <span class="c1">//  시퀸스는 시작과 끝, int 2개로 변환 가능.</span>
+        <span class="kt">int</span><span class="p">[]</span> <span class="n">sequence</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">end</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span><span class="o">~</span><span class="mi">7</span>
+        <span class="n">sequence</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">if</span> <span class="n">sequence</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">start</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;diff: sequence[0]=&quot;</span> <span class="o">+</span> <span class="n">sequence</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;, start=&quot;</span> <span class="o">+</span> <span class="n">start</span><span class="p">)</span>
+            <span class="c1">// &quot;diff: sequence[0]=10, start=3&quot;</span>
+        <span class="n">str</span><span class="p">[]</span> <span class="n">seq1</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;wow&quot;</span><span class="p">,</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="mi">1234</span><span class="p">)</span> <span class="c1">// 배열은 튜플을 받아들임.</span>
+        <span class="c1">//int[] seq2 = (1234, &quot;1234&quot;) // 컴파일에러. str -&gt; int는 implicit 캐스팅이 되지 않음.</span>
+        <span class="kt">int</span><span class="p">[]</span> <span class="n">seq2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="s">&quot;1234&quot;</span><span class="p">)</span> <span class="c1">// ok.</span>
+        <span class="o">?</span><span class="p">[]</span> <span class="n">tup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1234</span><span class="p">,</span> <span class="s">&quot;1234&quot;</span><span class="p">)</span> <span class="c1">// ok</span>
+        <span class="kt">int</span><span class="p">[]</span> <span class="n">seq3</span> <span class="o">=</span> <span class="n">tup</span> <span class="c1">// 컴파일 ok, 그러나 런타임 에러</span>
+
+        <span class="n">str</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">str</span> <span class="n">e</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="n">in</span> <span class="n">seq1</span> <span class="c1">// 튜플과 배열은 사실 맵이며, 맵은 (값 1개)와 (값1개, 키1개) 에 대한 for-in을 지원한다.</span>
+            <span class="n">msg</span> <span class="o">+=</span> <span class="n">e</span> <span class="o">+</span> <span class="n">seq2</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="c1">// if n &gt;= seq2.len: n = seq2.len-1</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;seq1=&quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="p">)</span> <span class="c1">// &quot;wow1234 hello1234 12341234&quot;</span>
+
+        <span class="c1">//  단, node로 취급하기 때문에 에러 사전 탐지 불가.</span>
+        <span class="c1">//  (자세한 내용은 추후 서술한 node 항목 참조.)</span>
+        <span class="k">for</span> <span class="o">?</span> <span class="n">e</span> <span class="n">in</span> <span class="n">tup</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>  <span class="c1">// &quot;0&quot;</span>
+                            <span class="c1">// &quot;banana&quot;</span>
+    <span class="p">}</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">tuple</span><span class="p">()</span>
         <span class="k">if</span> <span class="mi">1</span>
             <span class="p">(</span><span class="n">str</span> <span class="n">x</span><span class="p">,</span> <span class="n">str</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">map</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Jae-in&quot;</span><span class="p">)</span>
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;x=&quot;</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="s">&quot;, y=&quot;</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span> <span class="c1">// &quot;x=4, y=apple&quot;</span>
+
         <span class="c1">// console.out(&quot;x= &quot; + x + &quot;, y=&quot; + y) // 에러</span>
         <span class="n">array</span><span class="p">()</span>
-
+        <span class="n">sequence</span><span class="p">()</span>
+        <span class="n">conversion</span><span class="p">()</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
@@ -219,48 +397,11 @@
 <span class="cm">    0</span>
 <span class="cm">    1</span>
 <span class="cm">    2</span>
-<span class="cm">*/</span></pre><h6>Pretype: void &amp; null</h6><h6>객체와 라이프 사이클</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
-
-<span class="k">class</span> <span class="nc">Plant</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">_age</span> <span class="o">=</span> <span class="mi">5</span>
-    <span class="n">Plant</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;constructor. age=&quot;</span> <span class="o">+</span> <span class="n">age</span><span class="p">)</span>
-        <span class="n">age</span> <span class="o">=</span> <span class="mi">20</span>
-    <span class="p">}</span>
-    <span class="o">~</span><span class="n">Plant</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; destructor&quot;</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;herb&quot;</span>
-    <span class="kt">int</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">name</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
-    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Plant</span> <span class="n">p</span><span class="p">()</span> <span class="c1">// Plant 객체 정의</span>
-
-        <span class="k">if</span> <span class="mi">1</span>
-            <span class="n">Plant</span> <span class="n">p1</span><span class="p">()</span> <span class="c1">// Plant 객체 정의</span>
-            <span class="n">p1</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="c1">// &quot;herb&quot; == &quot;herb&quot;</span>
-
-            <span class="n">Plant</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span>
-            <span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;chikery&quot;</span>
-            <span class="n">p1</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="c1">// &quot;chikery&quot; == &quot;chikery&quot;</span>
-
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.age is &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;end of program&quot;</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="cm">/*  결과:</span>
-<span class="cm">    constructor. age=5</span>
-<span class="cm">    constructor. age=5</span>
-<span class="cm">    chickery destructor</span>
-<span class="cm">    p.age is 20</span>
-<span class="cm">    end of program</span>
-<span class="cm">    herb destructor</span>
-<span class="cm">*/</span></pre><h6>인터페이스 상속</h6><pre class="m-code"></pre><h6>상수와 캐스팅</h6><pre class="m-code"></pre><h6>mutable</h6><h6>node</h6><h6>인터페이스 확장</h6><h6>메타</h6><h6>클로저</h6><h6>res와 익셉션</h6><h6>statement 는 expression</h6><h6>Blockstmt 는 클로저</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
+<span class="cm">    3 world</span>
+<span class="cm">    diff: sequence[0]=10, start=3</span>
+<span class="cm">    0</span>
+<span class="cm">    banana</span>
+<span class="cm">*/</span></pre><h6>인터페이스 상속</h6><pre class="m-code"></pre><h6>상수와 캐스팅</h6><pre class="m-code"></pre><h6>인터페이스 확장</h6><h6>메타</h6><h6>클로저</h6><h6>res와 익셉션</h6><h6>Blockstmt 는 클로저</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
       </div>
     </div>
   </div>
