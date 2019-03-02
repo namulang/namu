@@ -13,7 +13,7 @@ def cmdstr(cmd):
     try:
         ret = str(subprocess.check_output(cmd, shell=True))
         if platform.system() == "Windows":
-            ret = "\"" + ret[2:-5] + "\""
+            ret = ret[2:-5]
         else:
             ret = ret[2:-3]
     except:
@@ -283,7 +283,7 @@ def commit():
     return 0
 
 def _extractPythonVersion(verstr):
-    return float(verstr[8:11])
+    return float(verstr[7:10])
 
 def checkDependencies():
     global python3
@@ -357,15 +357,19 @@ cwd = ""
 
 def _where(name):
     cmd = ""
+    prefix = ""
     if platform.system() == "Linux":
         cmd = "which"
     elif platform.system() == "Windows":
         cmd = "where"
+        prefix = "\""
     else:
         print("[!] " + platform.system() + " unsupported.")
         return ""
 
-    return cmdstr(cmd + " " + name)
+    ret = prefix + cmdstr(cmd + " " + name) + prefix
+    print(ret)
+    return ret
 
 def _extractEnv():
     global python3
@@ -373,7 +377,7 @@ def _extractEnv():
         python3 = os.environ["PYTHON"]
     else:
         python3 = _where("python3")
-        if python3 == "":
+        if python3 == "" or "\"\"":
             python3 = _where("python")
         print("python3=" + python3)
         return python3 == ""
