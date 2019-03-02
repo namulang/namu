@@ -180,7 +180,11 @@ class app {
         // ||, &&, ~~ 비트 연산자
         return 0
 	}
+    // import console // 에러.
 }
+
+import console // 외부 scope 이면, 어느 위치에든 선언 가능.
+
 
 /* 결과:
 sum=10
@@ -194,6 +198,8 @@ sum=10
 ##### 접근자와 메소드
 
 ```cpp
+import console
+
 class app {
     // prefix _는 private를 의미. 정의와 동시에 초기화도 ok.
     // 접근시에는 _grade가 아니라 grade
@@ -215,6 +221,18 @@ class app {
 }
 // 결과: age=0, grade=10.5
 ```
+
+
+
+##### Containers
+
+```cpp
+import console
+```
+
+
+
+##### Pretype: void & null
 
 
 
@@ -267,8 +285,20 @@ class app {
 
 
 
+##### 인터페이스 상속
+
+```cpp
+
+```
+
+
+
 
 ##### 상수와 캐스팅
+
+```
+
+```
 
 
 
@@ -280,15 +310,9 @@ class app {
 
 
 
-##### Pretype: Containers
+##### 
 
 
-
-##### Pretype: void & null
-
-
-
-##### 인터페이스 계승
 
 
 
