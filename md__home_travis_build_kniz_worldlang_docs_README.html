@@ -204,6 +204,7 @@
     <span class="o">~</span><span class="n">Plant</span><span class="p">()</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; destructor&quot;</span><span class="p">)</span>
     <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;herb&quot;</span>
     <span class="kt">int</span> <span class="n">getName</span><span class="p">()</span><span class="o">:</span> <span class="k">return</span> <span class="n">name</span>
+    <span class="kt">void</span> <span class="err">#</span><span class="n">test</span><span class="p">(</span><span class="n">Plant</span> <span class="n">p</span><span class="p">,</span> <span class="n">str</span> <span class="n">new_name</span><span class="p">)</span><span class="o">:</span> <span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">new_name</span>
 <span class="p">}</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
@@ -224,11 +225,14 @@
             <span class="c1">//  의해 해제된다.</span>
             <span class="c1">//  제한적인 이유:</span>
             <span class="c1">//      1. 다음의 java 코드는 worldlang으로 구현할 수 없다.</span>
-            <span class="c1">//          in java)    new Daemon(); // ref 없이 생존하게 된다.</span>
-            <span class="c1">//      2. GC 구현시 한번쯤은 들어볼, 유명한 원형-참조circular reference 문제.</span>
+            <span class="c1">//          in java)    new Daemon(); // 자바는 ref 없이 생존할 수 있다.</span>
+            <span class="c1">//      2. GC의 한번쯤은 들어봤을, 유명한 원형-참조circular reference 문제.</span>
             <span class="c1">//          (현재 limitation. 해결방안 생각중)</span>
 
-        <span class="k">else</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;no&quot;</span><span class="p">)</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.age is &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span> <span class="c1">// 권장 안하나, 허용한다.</span>
+        <span class="k">else</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;no&quot;</span><span class="p">)</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.age is &quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">age</span><span class="p">)</span>
+        <span class="c1">// 인라인 지정자 뒤에 바로 다음 구문을 붙여쓰고 있다. 유효한 문법이다. 권장 안하나, 허용한다.</span>
+
+        <span class="n">Plant</span><span class="p">.</span><span class="n">test</span><span class="p">(</span><span class="n">Plant</span><span class="p">(),</span> <span class="n">str</span><span class="p">(</span><span class="s">&quot;5.5&quot;</span><span class="p">))</span> <span class="c1">// 이름-없는-객체nameless object 를 생성가능하다.</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;end of program&quot;</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -238,6 +242,8 @@
 <span class="cm">    constructor. age=5</span>
 <span class="cm">    chickery destructor</span>
 <span class="cm">    p.age is 20</span>
+<span class="cm">    constructor. age=5</span>
+<span class="cm">    5.5 destructor</span>
 <span class="cm">    end of program</span>
 <span class="cm">    herb destructor</span>
 <span class="cm">*/</span></pre><h6>null &amp; void</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
@@ -246,15 +252,18 @@
     <span class="kt">int</span> <span class="n">_age</span>
     <span class="kt">void</span> <span class="n">returning_void</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// void:</span>
-        <span class="c1">//  1. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.</span>
-        <span class="c1">//      e.g) return ret1 // 명시적 void 반환은 에러이다.</span>
-        <span class="c1">//  2. 명시적으로 void로 변수를 정의할 수 없다.</span>
-        <span class="c1">//      e.g) void abc // 컴파일 에러.</span>
-        <span class="c1">//  3. void로 정의된 값은 모든 종류의 값을 받아들이고, 동시에 무시한다.</span>
+        <span class="c1">//  1. void로 정의된 값은 모든 종류의 값을 받아들이고, 동시에 무시한다.</span>
         <span class="c1">//      e.g) ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.</span>
+        <span class="c1">//  2. 단, 사용을 명확히 하게 위해 명시적으로 void로 변수 정의하면 에러로 판단한다.</span>
+        <span class="c1">//      e.g) void abc // 컴파일 에러.</span>
+        <span class="c1">//  3. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.</span>
+        <span class="c1">//      e.g)    int foo(): 3 가 있을때,</span>
+        <span class="c1">//              void main() {</span>
+        <span class="c1">//                  // return foo() // 명시적 int를 void로 반환하면 에러다.</span>
+        <span class="c1">//                  foo() // 결과적으로 void에 int를 반환하지만, 유효한 문법으로 처리.</span>
 
         <span class="c1">// 묵시적 void 반환:</span>
-        <span class="n">_age</span> <span class="o">=</span> <span class="mi">35</span> <span class="c1">// void ret = _age = 35와 같다.</span>
+        <span class="n">_age</span> <span class="o">=</span> <span class="mi">35</span> <span class="c1">// 이 코드는 void ret = _age = 35와 같다.</span>
     <span class="p">}</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">returning_void</span><span class="p">()</span>
@@ -268,13 +277,14 @@
         <span class="p">}</span>   
         <span class="c1">// null: 선정의 객체</span>
         <span class="c1">// 변수에 값이 존재하지 않는 경우 null로 정의할 수 있다. 다음의 규칙을 따른다.</span>
-        <span class="c1">//  1. null은 모든 타입의 객체에 값으로 대입될 수 있다.</span>
+        <span class="c1">//  1. null은 primitive 타입을 제외한 모든 타입의 객체에 할당될 수 있다.</span>
         <span class="c1">//  2. primitive 타입의 경우에는 null은 각 타입의 기본값으로 변환되어 할당된다.</span>
-        <span class="c1">//  3. 명시적으로 할당한 경우 컴파일 경고로 판단한다.</span>
+        <span class="c1">//  3. 2번의 경우, 명시적으로 할당한 경우 컴파일 경고로 판단한다.</span>
         <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span> <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span> <span class="n">Person</span> <span class="n">p</span> <span class="o">=</span> <span class="n">null</span> <span class="c1">// age, name은 경고</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;age=&quot;</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="s">&quot;, name=&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span> <span class="c1">// age=0, name=</span>
         <span class="c1">//  4. null이 할당된 객체는, 메소드가 수행 안되고 바로 null을 반환한다.</span>
         <span class="c1">//  5. null로 할당된 객체를 사용한 경우, exception으로 catch할 수 있다. (추후 서술)</span>
+
         <span class="n">str</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">say</span><span class="p">()</span> <span class="c1">// ret == null</span>
         <span class="c1">// int ret1 = p.say() // 반환형이 다르므로 컴파일 에러.</span>
         <span class="n">wow</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
@@ -326,15 +336,17 @@
         <span class="n">proxied</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">grade</span><span class="p">,</span> <span class="n">list</span><span class="p">)</span>
         <span class="c1">// ... 3개 구문 뒤에 붙이면 구문을 자를 수 있다.</span>
         <span class="c1">// ... 뒤에 공백whitespace이 오면 안된다.</span>
+        <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;I&quot;</span><span class="p">;</span> <span class="n">name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;m&quot;</span> <span class="c1">// name은 occupiable과 관계없이 const 아니므로 변경 가능.</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p.getGrade()=&quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">getGrade</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;, name=&quot;</span> <span class="p">...</span>
- <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="o">~</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;, grade=&quot;</span> <span class="o">+</span> <span class="n">grade</span><span class="p">)</span> <span class="c1">// name은 occupiable과 관계없이 const 아니므로 변경 가능.</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;vector_x:&quot;</span> <span class="o">+</span> <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> 
+            <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot;, grade=&quot;</span> <span class="o">+</span> <span class="n">grade</span><span class="p">)</span> 
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;vector_x:&quot;</span> <span class="o">+</span> <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="p">...</span>
+        <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">...</span>
     <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="c1">// 0.1, 0.1, 0.1</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="c1">// 결과:</span>
-<span class="c1">//  p.getGrade()=15, name=known, grade=3.000000</span>
+<span class="c1">//  p.getGrade()=15, name=Imknown, grade=3.000000</span>
 <span class="c1">//  0.1, 0.1, 0.1</span></pre><h6>node &amp; var &amp; void</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
