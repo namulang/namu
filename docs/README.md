@@ -228,6 +228,88 @@ class app {
 
 ```cpp
 import console
+
+class app {
+    void tuple() {
+        //	튜플: (<표현식expr>, ...)
+        //	튜플은 각각의 타입으로 정의된 값들을 묶어놓은 특이한 컨테이너.
+        //	사용자는 이 컨테이너 자체를 접근 불가능하며, worldlang 인터프리터만 접근 가능.
+        //	이를 이용해 다른 객체에 값을 편하게 전달해주는 용도.
+        (3, "apple") // 각 원소의 타입이 모두 다름.
+        class Person { // innerclass.
+        	int a = 0
+        	str name = ""
+        	float grade = 2.5
+            void print(): console.out(name)
+        }
+        Person p = (1, "Donald")			;p.print() // "Donald"
+        // ;은 다음 stmt를 이어서 서술 가능.
+        
+        p() = (float age=3.0, str msg="Jung-un")
+        // 변수 정의 또한 표현식이므로 튜플내에서 사용 가능.
+        // 정의된 변수는 해당 scope 내에서 유효. (사용된곳이 블록문 안쪽이면,
+        // 해당 블록문이 종료까지 유효.)
+        // 튜플과 할당연산의 경우, 객체의 소유한 멤버와 순서대로 할당.
+		// 	p.a = (int) age
+		//	p.name = msg
+        p.print() // "Jung-un"
+        
+        msg = "Denis Trillo"  // 튜플age, msg는 현 scope내에 접근.
+        p.print() // "Jung-un"
+        // p.name과 msg는 별도의 인스턴스.
+    }
+    (int, str/*변수명 생략*/) map(int age, str name) { // 사실, 이것도 튜플이며, 함수호출도 튜플이다.
+    	//	맵: <타입>[<타입>]
+        int[str] dict = [(3, "apple")] // 리스트를 통해 초기화 된다.
+        dict.push(3, "apple") // 런타임 에러
+        dict["apple"] = 4
+        dict["banana"] = 5
+        
+        for (int x, str name) in dict // dict의 원소들인 튜플을 (x, name)으로 된 튜플로 복사
+        	console.out("x, name=" + x + ", " + name)
+        	
+       	return (dict["apple"], "apple") // 복수개의 값을 튜플로 반환
+    }
+    void array() {
+		// 배열: <타입>[<크기>]
+        // 문법을 보면 알겠지만, 배열은 사실 맵의 특수한 종류 중 하나. ("[]" 안 int가 생략된 맵)
+		int[3] arr
+		for int n in ~3 // ~3은 0에서 2까지
+			arr[n] = n	// c.f) arr[2] = 2
+		arr[3] // 런타임 에러
+		
+		for int n in [0, 1, 2] // [x, y, z, ...] 은 배열의 상수 표현식
+			console.out(n)
+		
+        arr.push(5)
+        arr[3] == 5 // true
+        
+        int[] arr2 = arr // 크기 생략 가능
+        arr2 != arr // true
+        arr2.isSame(arr) // true
+	}
+	void main() {
+		tuple()
+		if 1
+			(str x, str y) = map(1, "Jae-in")
+			console.out("x=" + x + ", y=" + y) // "x=4, y=apple"
+		// console.out("x= " + x + ", y=" + y) // 에러
+		array()
+		
+	}
+}
+
+/* 결과:
+	Donald
+	Jung-un
+	Jung-un
+	x, name=4, apple
+	x, name=5, banana
+	x=4, y=apple
+	0
+	1
+	2
+*/
 ```
 
 
