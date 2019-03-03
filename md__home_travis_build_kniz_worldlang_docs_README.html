@@ -240,7 +240,58 @@
 <span class="cm">    p.age is 20</span>
 <span class="cm">    end of program</span>
 <span class="cm">    herb destructor</span>
-<span class="cm">*/</span></pre><h6>null &amp; void</h6><pre class="m-code"></pre><h6>sharable &amp; occupiable</h6><table class="m-table"><thead><tr><th>타입명</th><th>Occupiable / Sharable</th></tr></thead><tbody><tr><td>int, str, bool, char, float, byte, res, void</td><td>O</td></tr><tr><td>int[], str[int]</td><td>S</td></tr><tr><td>()</td><td>O</td></tr><tr><td>class</td><td>S</td></tr><tr><td>사용자 Class</td><td>S</td></tr></tbody></table><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="cm">*/</span></pre><h6>null &amp; void</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">_age</span>
+    <span class="kt">void</span> <span class="n">returning_void</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// void:</span>
+        <span class="c1">//  1. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.</span>
+        <span class="c1">//      e.g) return ret1 // 명시적 void 반환은 에러이다.</span>
+        <span class="c1">//  2. 명시적으로 void로 변수를 정의할 수 없다.</span>
+        <span class="c1">//      e.g) void abc // 컴파일 에러.</span>
+        <span class="c1">//  3. void로 정의된 값은 모든 종류의 값을 받아들이고, 동시에 무시한다.</span>
+        <span class="c1">//      e.g) ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.</span>
+
+        <span class="c1">// 묵시적 void 반환:</span>
+        <span class="n">_age</span> <span class="o">=</span> <span class="mi">35</span> <span class="c1">// void ret = _age = 35와 같다.</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">returning_void</span><span class="p">()</span>
+
+        <span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">age</span>
+            <span class="n">str</span> <span class="n">name</span>
+            <span class="n">str</span> <span class="n">say</span><span class="p">()</span> <span class="p">{</span>
+                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;actually we don&#39;t those stmts in that block of </span><span class="se">\&quot;</span><span class="s">if</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>   
+        <span class="c1">// null: 선정의 객체</span>
+        <span class="c1">// 변수에 값이 존재하지 않는 경우 null로 정의할 수 있다. 다음의 규칙을 따른다.</span>
+        <span class="c1">//  1. null은 모든 타입의 객체에 값으로 대입될 수 있다.</span>
+        <span class="c1">//      (단, primitive 타입의 경우에는 null은 각 타입의 기본값으로 변환되어 할당된다.)</span>
+        <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span> <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="n">null</span><span class="p">;</span> <span class="n">Person</span> <span class="n">p</span> <span class="o">=</span> <span class="n">null</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;age=&quot;</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="s">&quot;, name=&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span> <span class="c1">// age=0, name=</span>
+        <span class="c1">//  2. null이 할당된 객체는 정상적으로 함수호출이 될 수 있으나, 바로 null을 반환한다.</span>
+        <span class="n">str</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">say</span><span class="p">()</span> <span class="c1">// ret == null</span>
+        <span class="c1">// int ret1 = p.say() // 반환형이 다르므로 컴파일 에러.</span>
+        <span class="n">wow</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">wow_short</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">wow</span><span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">())</span>
+        <span class="n">wow_short</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">wow</span><span class="p">(</span><span class="n">Person</span> <span class="n">p</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="n">null</span>            
+            <span class="k">return</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">say</span><span class="p">()[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">wow_short</span><span class="p">(</span><span class="n">Person</span> <span class="n">p</span><span class="p">)</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">say</span><span class="p">())</span>
+<span class="p">}</span>
+
+<span class="c1">// 결과:</span>
+<span class="c1">//  age=0, name=</span>
+<span class="c1">//  u</span>
+<span class="c1">//  actually we don&#39;t those stmts in that block of &quot;if&quot;</span></pre><h6>sharable &amp; occupiable</h6><table class="m-table"><thead><tr><th>타입명</th><th>Occupiable / Sharable</th></tr></thead><tbody><tr><td>int, str, bool, char, float, byte, res, void</td><td>O</td></tr><tr><td>int[], str[int]</td><td>S</td></tr><tr><td>()</td><td>O</td></tr><tr><td>class</td><td>S</td></tr><tr><td>사용자 Class</td><td>S</td></tr></tbody></table><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="c1">//  Sharable &amp; Occupiable:</span>
 <span class="c1">//      sharable과 occupiable은 할당연산시 원본인가, reference를 할당하는가만 다르다.</span>
@@ -308,14 +359,6 @@
         <span class="c1">// 35와 &quot;wow&quot;를 모두 포함할 수 있는 타입은 node 뿐이다.</span>
         <span class="n">ret1</span> <span class="o">=</span> <span class="n">ret</span>  <span class="c1">// ret는 node 이므로 validation은 무시된다.</span>
                     <span class="c1">// success가 false일 경우, int = str 이 되므로 런타임에러가 된다.</span>
-
-        <span class="c1">// void:</span>
-        <span class="c1">//  1. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.</span>
-        <span class="c1">//      e.g) return ret1 // 명시적 void 반환은 에러이다.</span>
-        <span class="c1">//  2. 명시적으로 void로 변수를 정의할 수 없다.</span>
-        <span class="c1">//      e.g) void abc // 컴파일 에러.</span>
-        <span class="c1">//  3. void는 어떠한 할당연산을 수행해도 void이다.</span>
-        <span class="c1">//      e.g) ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
