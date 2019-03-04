@@ -195,6 +195,65 @@ sum=10
 
 
 
+##### statement 는 expression
+
+```cpp
+class app {
+    // 구문statement와 표현식expression:
+    // 프로그래밍 언어에서 구문이란 코드의 각 라인을 말하며,
+    // 표현식은 특정한 값을 반환할 수 있는 식별자가 조합된 식을 뜻한다.
+    //	e.g in c++)	foo(3); 			// 표현식이므로, 동시에 구문이다.
+    //				void func(int age); // 구문이다.
+    //				class A;			// 구문이다.
+    //
+    // world는 문법을 간결하게 하기 위해 모든 구문은 표현식으로 정의한다.
+    // 이를 위해 2가지 규칙이 있다.
+    //	1. 모든 블록문을 갖을 수 있는 키워드는 블록문의 마지막 라인을 밖으로 반환한다.
+    //	2. 모든 타입 선언은, 동시에 정의이며, 정의된 식별자는 해당 범위scope내에서 유효하다.
+    int foo(int age) {
+        5 // #1 규칙. return이 없어도 ok.
+    }
+    void boo(class declared, bool success, int age) { // class도 int와 같은 타입의 한 종류.
+    	// ... class의 인터페이스는 차후 설명
+        
+        // bool -> str시 "true" | "false"
+        console.out(success + ", age=" + age) // true, age=20
+        
+    }
+    void main() {
+        int age = foo(0) // age=5
+        bool success = if age // always true.
+            console.out("at if blockstmt")
+            true
+        else
+            false
+        console.out("success=" + success)
+        foo(class inner { 	// #2 규칙. 클래스의 정의. 클래스 자체를 foo함수로 넘긴다.
+            				// worldlang은 클래스또한 하나의 타입으로 다룬다. (추후 서술)
+            void print() {
+             	console.out("app.main.inner.print")
+            }                
+        }, if success // if의 블록문 2개중 하나의 마지막 라인이 foo함수로 넘겨진다
+           	bool(true)
+        else
+        	bool ok(false) // #2 규칙.
+        , int local_age = 20)
+		// local_age와 inner는 main 함수 내에서 사용 가능하다.
+        console.out(local_age) // 20
+        // console.out(ok) // 에러. ok는 이미 else 블록문이 끝남과 동시에 소멸되었다.
+    }
+}
+
+/* 결과:
+	at if blockstmt
+	success=true	
+	true, age=20
+	20
+*/
+```
+
+
+
 ##### 접근자와 메소드
 
 ```cpp
@@ -233,7 +292,9 @@ class app {
     void tuple() {
         //	튜플: (<표현식expr>, ...)
         //	튜플은 각각의 타입으로 정의된 값들을 묶어놓은 특이한 컨테이너.
-        //	사용자는 이 컨테이너 자체를 접근 불가능하며, worldlang 인터프리터만 접근 가능.
+        //	사용자는 이 컨테이너 자체를 접근하여, iterate 불가능하며, 오직 worldlang
+        //	인터프리터만 컨테이너 자체를 다룰 수 있다. (즉, worldlang 개발자는 튜플 변수를
+        //	만들 수 없다)
         //	이를 이용해 다른 객체에 값을 편하게 전달해주는 용도.
         (3, "apple") // 각 원소의 타입이 모두 다름.
         class Person { // innerclass.
@@ -411,10 +472,6 @@ class app {
 
 
 ##### res와 익셉션
-
-
-
-##### statement 는 expression
 
 
 
