@@ -342,8 +342,51 @@ class app {
 
 ##### sharable & occupiable
 
-```cpp
+| 타입명                                       | Occupiable / Sharable |
+| -------------------------------------------- | --------------------- |
+| int, str, bool, char, float, byte, res, void | O                     |
+| int[], str[int]                              | S                     |
+| ()                                           | O                     |
+| class                                        | S                     |
+| 사용자 Class                                 | S                     |
 
+```cpp
+import console
+
+//	Sharable & Occupiable:
+//		sharable과 occupiable은 할당연산시 원본인가, reference를 할당하는가만 다르다.
+//			sharable:	(by reference) 	말그대로 할당된 변수들 끼리 같은 원본을 참조한다.
+//			occupiable:	(by value)		각각의 변수들은 독립적인 원본을 따로 소유한다.
+//
+//		*) immutable & mutable과는 다르다. occupiable이라고 해도, 데이터를 변경할 수 있다.
+
+class Person { // 사용자가 정의한 class는 모두 sharable.
+    int _age = 5
+    int getAge(): age
+    float _grade = 3.5
+    float getGrade(): grade
+    void setGrade(float new): grade = new // implicit 할당인 void = float 은 무시된다.
+}
+
+class app {
+    void proxied(Person p, str name, float grade) {
+        p.setGrade(age*grade) 		// Sharable 	외부의 Person객체에도 영향을 미친다
+        name = "Sissel from Norway"	// Occupiable
+        grade *= 2					// Occupiable
+    }
+    void main() {
+        Person p()
+        str name = "unknown"
+        float grade = 3.0
+    	proxied(p, age, grade)
+    	// ... 3개 구문 뒤에 붙이면 구문을 자를 수 있다.
+    	// ... 뒤에 공백whitespace이 오면 안된다.
+		console.out("p.getGrade()=" + p.getGrade() + ", name=" ...
+ + name[2~] + ", grade=" + grade) // name은 occupiable과 관계없이 const 아니므로 변경 가능.
+    }
+}
+
+// 결과: p.getGrade()=15, name=known, grade=3.000000
 ```
 
 
