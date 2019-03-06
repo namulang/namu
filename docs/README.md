@@ -140,8 +140,10 @@ class app {
         // 다음 연산자 지원 : += -= /= %= <= < > >= = == != --
 
         int pow = age^2 // => age*age == 16
-        console.out("hello world!"[0~4] + "boy aged " + pow) // ':'은 범위 연산자.
-        // 범위 연산자: x:y 로 표현하며 [x, y)의 범위를 가짐.
+        console.out("hello world!"[-9999999~4] + "boy aged " + pow)
+        // Sequence: x~y 로 표현하며 [x, y)의 범위를 가짐.
+        // str[-9999]는 0으로 예외처리.
+        // str[99999999]는 str의 length-1로 예외처리.
         // int + str시, implicit 캐스팅 우선순위(3vs5)에 따라, int->str casting
     }
 }
@@ -391,6 +393,10 @@ class app {
 
 
 
+##### node & var
+
+
+
 ##### Containers
 
 ```cpp
@@ -461,14 +467,57 @@ class app {
         arr2 != arr // true
         arr2.isSame(arr) // true
 	}
+    void sequence() {
+    	// 시퀸스: <정수> ~ <정수>
+    	// 범위를 나타내기 위한 컨테이너. 튜플과 동일하게 사용자는 이 컨테이너 자체를 접근하여,
+        // iterate 불가능하며, 오직 worldlang 인터프리터만 컨테이너 자체를 다룰 수 있다.
+        // ~ 기준으로 한쪽이 없는 경우, 극대(int의 양의 최대값)와 극소(int의 음의 최소값)를
+        // 나타낸다.
+        int sum = 0
+        for int n in 1~3
+        	sum += n
+        	
+       	str msg = "hello world"
+       	console.out(sum + msg[5~])
+    }
+    void conversion() {
+    	// 본래 다룰 수 없는 튜플과 시퀸스 컨테이너를 다음과 같이 변환하면 다룰 수 있음.
+    	//	튜플은 임의의 타입으로 정의된 변수의 집합:
+    	?[] tup = (0, "banana")
+    	
+    	//	시퀸스는 시작과 끝, int 2개로 변환 가능.
+    	int[] sequence = (int start, int end) = 3~7
+    	sequence[0] = 10
+    	if sequence[0] != start
+    		console.out("diff: sequence[0]=" + sequence[0] + ", start=" + start)
+    		// "diff: sequence[0]=10, start=3"
+    	str[] seq1 = ("wow", "hello", 1234) // 배열은 튜플을 받아들임.
+    	//int[] seq2 = (1234, "1234") // 컴파일에러. str -> int는 implicit 캐스팅이 되지 않음.
+    	int[] seq2 = (1234, (int) "1234") // ok.
+    	?[] tup = (1234, "1234") // ok
+    	int[] seq3 = tup // 컴파일 ok, 그러나 런타임 에러
+    	
+    	str msg = ""
+    	for (str e, int n) in seq1 // 튜플과 배열은 사실 맵이며, 맵은 (값 1개)와 (값1개, 키1개) 에 대한 for-in을 지원한다.
+    		msg += e + seq2[n] // if n >= seq2.len: n = seq2.len-1
+    	console.out("seq1=" + msg) // "wow1234 hello1234 12341234"
+
+		//	단, node로 취급하기 때문에 에러 사전 탐지 불가.
+		//	(자세한 내용은 추후 서술한 node 항목 참조.)
+    	for ? e in tup
+    		console.out(e) 	// "0"
+    						// "banana"
+    }
 	void main() {
 		tuple()
 		if 1
 			(str x, str y) = map(1, "Jae-in")
 			console.out("x=" + x + ", y=" + y) // "x=4, y=apple"
+			
 		// console.out("x= " + x + ", y=" + y) // 에러
 		array()
-		
+		sequence()
+		conversion()
 	}
 }
 
@@ -482,6 +531,10 @@ class app {
 	0
 	1
 	2
+	3 world
+	diff: sequence[0]=10, start=3
+	0
+	banana
 */
 ```
 
@@ -501,10 +554,6 @@ class app {
 ```
 
 ```
-
-
-
-##### node & var
 
 
 
