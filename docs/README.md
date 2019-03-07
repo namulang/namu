@@ -371,24 +371,31 @@ class Person { // 사용자가 정의한 class는 모두 sharable.
 }
 
 class app {
-    void proxied(Person p, str name, float grade) {
+    void proxied(Person p, str name, float grade, float[3][str] list) {
         p.setGrade(age*grade) 		// Sharable 	외부의 Person객체에도 영향을 미친다
         name = "Sissel from Norway"	// Occupiable
         grade *= 2					// Occupiable
+        list["vector_x"] = (0.1, 0.1, 0.1)
     }
     void main() {
         Person p()
         str name = "unknown"
         float grade = 3.0
-    	proxied(p, age, grade)
+        float[3][str] list = [([0.1, 0.0, 0.0], "vector_x"),
+        					  ([0.0, 0.1, 0.0], "vector_y")]
+		proxied(p, age, grade, list)
     	// ... 3개 구문 뒤에 붙이면 구문을 자를 수 있다.
     	// ... 뒤에 공백whitespace이 오면 안된다.
 		console.out("p.getGrade()=" + p.getGrade() + ", name=" ...
  + name[2~] + ", grade=" + grade) // name은 occupiable과 관계없이 const 아니므로 변경 가능.
+ 		console.out("vector_x:" + list["vector_x"][0] + ", " + list["vector_x"][1] + 
+	list["vector_x"][2]) // 0.1, 0.1, 0.1
     }
 }
 
-// 결과: p.getGrade()=15, name=known, grade=3.000000
+// 결과:
+//	p.getGrade()=15, name=known, grade=3.000000
+//	0.1, 0.1, 0.1
 ```
 
 
