@@ -296,13 +296,12 @@ class Plant {
         console.out("constructor. age=" + age)
 		age = 20
     }
-    ~Plant() {
-    	console.out(name + " destructor")
-    }
+    // 인라인 지정자inline-specifier:	<keyword has blockstmt>: stmt
+    // 	":" 는 inline 지정자(specifier)로써,
+    //	뒤에 stmt 1개를 블록문 없이 사용 가능.
+    ~Plant(): console.out(name + " destructor")
     str name = "herb"
-    int getName() {
-    	return name
-    }
+    int getName(): return name
 }
 
 class app {
@@ -316,8 +315,7 @@ class app {
 			Plant p2 = p1
 			p2.name = "chikery"
 			p1.getName() == p.name // "chikery" == "chikery"
-			
-		console.out("p.age is " + p.age)
+		else: console.out("no") console.out("p.age is " + p.age) // 권장 안하나, 허용한다.
 		console.out("end of program")
 	}
 }
@@ -603,8 +601,7 @@ class app {
             return "Plant"
         }
         int _age = 1
-        int getAge(): return _age   // ":" 는 inline 지정자(specifier)로써,
-                                    // 뒤에 stmt 1개를 블록문 없이 사용 가능
+        int getAge(): return _age
     }
     // 상속inheritance:	class <파생클래스> -> <기반클래스>    
     //	기반 클래스baseclass의 인터페이스를 물려받는다.
