@@ -400,7 +400,51 @@ class app {
 
 
 
-##### node & var
+##### node & var & void
+
+```cpp
+import console
+
+class app {
+	int foo(? unknown) {
+		// node:
+		//	? 는 node 라는 타입으로 동적바인딩DynamicTyping or DuckTyping 된다.
+		unknown += "world!"	// node 타입이 포함된 구문은 binding validation이 되지 않는다.
+							// 런타임에 에러가 판별된다.
+
+		console.out(unknown) // 결과가 return 된다.
+	}
+	void main() {
+		// var: 타입유추TypeInference로 컴파일타임에 타입을 결정해준다.
+		//	python, c++11 표준의 auto와 동일하다.
+		var ret1 = foo("hello") // var == int
+		foo(3) // int -> str 묵시적형변환이 될 수 없다. 컴파일은 되나, 런타임 에러가 된다.
+		
+		bool success = false
+		var ret = if success: 35 else: "wow" // 결과에 따라 success나 35 혹은 "wow" 중 하나가 반환된다.
+		// int ret = if success: 35 else: "wow" // 컴파일 에러.
+												// 묵시적 str -> int를 요구하는 부분이 있다.
+		
+		// ret의 타입은 ?(node)다.
+		// 35와 "wow"를 모두 포함할 수 있는 타입은 node 뿐이다.
+		ret1 = ret 	// ret는 node 이므로 validation은 무시된다.
+					// success가 false일 경우, int = str 이 되므로 런타임에러가 된다.
+
+		// void:
+		//	1. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.
+        // 		e.g) return ret1 // 명시적 void 반환은 에러이다.
+		//	2. 명시적으로 void로 변수를 정의할 수 없다.
+		//		e.g) void abc // 컴파일 에러.
+		//	3. void는 어떠한 할당연산을 수행해도 void이다.
+		//		e.g) ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.
+	}
+}
+
+/* 결과:
+	helloworld
+	<런타임 에러로 프로그램 종료>
+*/
+```
 
 
 
