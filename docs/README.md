@@ -594,7 +594,38 @@ class app {
 ##### 인터페이스 상속
 
 ```cpp
+import console
 
+class app {
+    // 중첩클래스(nested class)
+    class Plant {
+        str getName() {
+            return "Plant"
+        }
+        int _age = 1
+        int getAge(): return _age   // ":" 는 inline 지정자(specifier)로써,
+                                    // 뒤에 stmt 1개를 블록문 없이 사용 가능
+    }
+    // 상속inheritance:	class <파생클래스> -> <기반클래스>    
+    //	기반 클래스baseclass의 인터페이스를 물려받는다.
+    //	->는 상속UML Generalization 기호에서 착안했다.
+    //	함수 명세signature가 같은 경우 overriding으로 판단한다. (= Java)
+    //	함수명과 인자리스트(즉, header) 까지만 일치할 경우, 메소드 은닉hiding 된다.
+    class Leaf -> Plant {   
+        str getName() { // overriding
+            return "Leaf"
+        }
+        float getAge(): return 3.5 // 반환형이 다르므로 은닉이다.
+    }
+    void main() {
+        Plant p()
+        if 1
+            p = Leaf()
+       	console.("name=" + p.getName() + ", age=" + p.getAge())
+    }
+}
+
+// 결과: name=Leaf, age=1
 ```
 
 
