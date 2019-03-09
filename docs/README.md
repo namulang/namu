@@ -315,6 +315,17 @@ class app {
 			Plant p2 = p1
 			p2.name = "chikery"
 			p1.getName() == p.name // "chikery" == "chikery"
+			
+			// p1이 소멸된다.			
+			// GC(a.k.a GarbageCollection):
+			//	모든 객체(int, str의 primitive 변수 포함해서)는 refcount 기반의 제한적인 GC에
+			//	의해 해제된다.
+			//	제한적인 이유:
+			//		1. 다음의 java 코드는 worldlang으로 구현할 수 없다.
+			//			in java)	new Daemon(); // ref 없이 생존하게 된다.
+			//		2. GC 구현시 한번쯤은 들어볼, 유명한 원형-참조circular reference 문제.
+			//			(현재 limitation. 해결방안 생각중)
+
 		else: console.out("no") console.out("p.age is " + p.age) // 권장 안하나, 허용한다.
 		console.out("end of program")
 	}
