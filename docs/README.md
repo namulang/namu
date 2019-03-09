@@ -125,7 +125,7 @@ class app { // 블록문(Block stmt)는 중괄호 사용
 | float  | 실수         | signed    | 32bit | 0.0    | 4                                  |
 | str    | 문자열       | .         | .     | ""     | 5                                  |
 | bool   | true / false | .         | .     | false  | 1                                  |
-| char   | 정수         | unsigned  | 8bit  | 0      | 2                                  |
+| char   | 정수         | unsigned  | 16bit | 0      | 2                                  |
 | byte   | 정수         | signed    | 8bit  | 0      | 2                                  |
 
 ```cpp
@@ -140,7 +140,7 @@ class app {
         // 다음 연산자 지원 : += -= /= %= <= < > >= = == != --
 
         int pow = age^2 // => age*age == 16
-        console.out("hello world!"[-9999999~4] + "boy aged " + pow)
+        console.out("hello world!"[-9999999~4] + "boy aged " + pow) // str은 UTF-16 인코딩
         // Sequence: x~y 로 표현하며 [x, y)의 범위를 가짐.
         // str[-9999]는 0으로 예외처리.
         // str[99999999]는 str의 length-1로 예외처리.
@@ -474,7 +474,7 @@ class app {
 
 
 
-##### node & var & void
+##### node & var
 
 ```cpp
 import console
@@ -665,11 +665,9 @@ import console
 class app {
     // 중첩클래스(nested class)
     class Plant {
-        str getName() {
-            return "Plant"
-        }
+        str getName(): "Plant"
         int _age = 1
-        int getAge(): return _age
+        int getAge(): _age
     }
     // 상속inheritance:	class <파생클래스> -> <기반클래스>    
     //	기반 클래스baseclass의 인터페이스를 물려받는다.
@@ -677,10 +675,8 @@ class app {
     //	함수 명세signature가 같은 경우 overriding으로 판단한다. (= Java)
     //	함수명과 인자리스트(즉, header) 까지만 일치할 경우, 메소드 은닉hiding 된다.
     class Leaf -> Plant {   
-        str getName() { // overriding
-            return "Leaf"
-        }
-        float getAge(): return 3.5 // 반환형이 다르므로 은닉이다.
+        str getName(): "Leaf" // overriding
+        float getAge(): 3.5 // 반환형이 다르므로 은닉이다.
     }
     void main() {
         Plant p()
