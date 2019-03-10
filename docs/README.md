@@ -375,10 +375,12 @@ class app {
         // null: 선정의 객체
         // 변수에 값이 존재하지 않는 경우 null로 정의할 수 있다. 다음의 규칙을 따른다.
         //	1. null은 모든 타입의 객체에 값으로 대입될 수 있다.
-        //		(단, primitive 타입의 경우에는 null은 각 타입의 기본값으로 변환되어 할당된다.)
-        int age = null; str name = null; Person p = null
+        //	2. primitive 타입의 경우에는 null은 각 타입의 기본값으로 변환되어 할당된다.
+        //	3. 명시적으로 할당한 경우 컴파일 경고로 판단한다.
+        int age = null; str name = null; Person p = null // age, name은 경고
         console.out("age=" + age + ", name=" + name) // age=0, name=
-        //	2. null이 할당된 객체는 정상적으로 함수호출이 될 수 있으나, 바로 null을 반환한다.
+        //	4. null이 할당된 객체는, 메소드가 수행 안되고 바로 null을 반환한다.
+        //	5. null로 할당된 객체를 사용한 경우, exception으로 catch할 수 있다. (추후 서술)
         str ret = p.say() // ret == null
         // int ret1 = p.say() // 반환형이 다르므로 컴파일 에러.
         wow(p)
