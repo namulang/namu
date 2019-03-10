@@ -358,15 +358,18 @@ class app {
     int _age
     void returning_void() {
         // void:
-		//	1. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.
-        // 		e.g) return ret1 // 명시적 void 반환은 에러이다.
-		//	2. 명시적으로 void로 변수를 정의할 수 없다.
-		//		e.g) void abc // 컴파일 에러.
-		//	3. void로 정의된 값은 모든 종류의 값을 받아들이고, 동시에 무시한다.
+		//	1. void로 정의된 값은 모든 종류의 값을 받아들이고, 동시에 무시한다.
 		//		e.g) ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.
-        
+		//	2. 단, 사용을 명확히 하게 위해 명시적으로 void로 변수 정의하면 에러로 판단한다.
+		//		e.g) void abc // 컴파일 에러.
+		//	3. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.
+		//		e.g) 	int foo(): 3 가 있을때,
+        // 				void main() {
+        //					// return foo() // 명시적 int를 void로 반환하면 에러다.
+        //					foo() // 결과적으로 void에 int를 반환하지만, 유효한 문법으로 처리.
+
         // 묵시적 void 반환:
-		_age = 35 // void ret = _age = 35와 같다.
+		_age = 35 // 이 코드는 void ret = _age = 35와 같다.
     }
     void main() {
         returning_void()
@@ -380,13 +383,14 @@ class app {
         }	
         // null: 선정의 객체
         // 변수에 값이 존재하지 않는 경우 null로 정의할 수 있다. 다음의 규칙을 따른다.
-        //	1. null은 모든 타입의 객체에 값으로 대입될 수 있다.
+        //	1. null은 primitive 타입을 제외한 모든 타입의 객체에 할당될 수 있다.
         //	2. primitive 타입의 경우에는 null은 각 타입의 기본값으로 변환되어 할당된다.
-        //	3. 명시적으로 할당한 경우 컴파일 경고로 판단한다.
+        //	3. 2번의 경우, 명시적으로 할당한 경우 컴파일 경고로 판단한다.
         int age = null; str name = null; Person p = null // age, name은 경고
         console.out("age=" + age + ", name=" + name) // age=0, name=
         //	4. null이 할당된 객체는, 메소드가 수행 안되고 바로 null을 반환한다.
         //	5. null로 할당된 객체를 사용한 경우, exception으로 catch할 수 있다. (추후 서술)
+
         str ret = p.say() // ret == null
         // int ret1 = p.say() // 반환형이 다르므로 컴파일 에러.
         wow(p)
@@ -454,15 +458,17 @@ class app {
 		proxied(p, age, grade, list)
     	// ... 3개 구문 뒤에 붙이면 구문을 자를 수 있다.
     	// ... 뒤에 공백whitespace이 오면 안된다.
+    	name[0]="I"; name[1]="m" // name은 occupiable과 관계없이 const 아니므로 변경 가능.
 		console.out("p.getGrade()=" + p.getGrade() + ", name=" ...
- + name[2~] + ", grade=" + grade) // name은 occupiable과 관계없이 const 아니므로 변경 가능.
- 		console.out("vector_x:" + list["vector_x"][0] + ", " + list["vector_x"][1] + 
+			+ name + ", grade=" + grade) 
+ 		console.out("vector_x:" + list["vector_x"][0] + ", " + ...
+ 		list["vector_x"][1] + ...
 	list["vector_x"][2]) // 0.1, 0.1, 0.1
     }
 }
 
 // 결과:
-//	p.getGrade()=15, name=known, grade=3.000000
+//	p.getGrade()=15, name=Imknown, grade=3.000000
 //	0.1, 0.1, 0.1
 ```
 
