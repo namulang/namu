@@ -302,6 +302,7 @@ class Plant {
     ~Plant(): console.out(name + " destructor")
     str name = "herb"
     int getName(): return name
+    void #test(Plant p, str new_name): p.name = new_name
 }
 
 class app {
@@ -322,11 +323,14 @@ class app {
 			//	의해 해제된다.
 			//	제한적인 이유:
 			//		1. 다음의 java 코드는 worldlang으로 구현할 수 없다.
-			//			in java)	new Daemon(); // ref 없이 생존하게 된다.
-			//		2. GC 구현시 한번쯤은 들어볼, 유명한 원형-참조circular reference 문제.
+			//			in java)	new Daemon(); // 자바는 ref 없이 생존할 수 있다.
+			//		2. GC의 한번쯤은 들어봤을, 유명한 원형-참조circular reference 문제.
 			//			(현재 limitation. 해결방안 생각중)
 
-		else: console.out("no") console.out("p.age is " + p.age) // 권장 안하나, 허용한다.
+		else: console.out("no") console.out("p.age is " + p.age)
+		// 인라인 지정자 뒤에 바로 다음 구문을 붙여쓰고 있다. 유효한 문법이다. 권장 안하나, 허용한다.
+
+		Plant.test(Plant(), str("5.5")) // 이름-없는-객체nameless object 를 생성가능하다.
 		console.out("end of program")
 	}
 }
@@ -336,6 +340,8 @@ class app {
 	constructor. age=5
 	chickery destructor
 	p.age is 20
+	constructor. age=5
+	5.5 destructor
 	end of program
 	herb destructor
 */
