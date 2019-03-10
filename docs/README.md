@@ -346,7 +346,58 @@ class app {
 ##### null & void
 
 ```cpp
+import console
 
+class app {
+    int _age
+    void returning_void() {
+        // void:
+		//	1. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.
+        // 		e.g) return ret1 // 명시적 void 반환은 에러이다.
+		//	2. 명시적으로 void로 변수를 정의할 수 없다.
+		//		e.g) void abc // 컴파일 에러.
+		//	3. void로 정의된 값은 모든 종류의 값을 받아들이고, 동시에 무시한다.
+		//		e.g) ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.
+        
+        // 묵시적 void 반환:
+		_age = 35 // void ret = _age = 35와 같다.
+    }
+    void main() {
+        returning_void()
+    
+        class Person {
+			int age
+            str name
+            str say() {
+            	console.out("actually we don't those stmts in that block of \"if\"")
+            }
+        }	
+        // null: 선정의 객체
+        // 변수에 값이 존재하지 않는 경우 null로 정의할 수 있다. 다음의 규칙을 따른다.
+        //	1. null은 모든 타입의 객체에 값으로 대입될 수 있다.
+        //		(단, primitive 타입의 경우에는 null은 각 타입의 기본값으로 변환되어 할당된다.)
+        int age = null; str name = null; Person p = null
+        console.out("age=" + age + ", name=" + name) // age=0, name=
+        //	2. null이 할당된 객체는 정상적으로 함수호출이 될 수 있으나, 바로 null을 반환한다.
+        str ret = p.say() // ret == null
+        // int ret1 = p.say() // 반환형이 다르므로 컴파일 에러.
+        wow(p)
+        wow_short(p)
+        wow(p = Person())
+        wow_short(p)
+    }
+    void wow(Person p)
+    	if p == null    		
+    		return
+    	console.out(p.say()[3])
+    }
+    void wow_short(Person p): console.out(p.say())
+}
+
+// 결과:
+//	age=0, name=
+//	u
+//	actually we don't those stmts in that block of "if"
 ```
 
 
@@ -438,14 +489,6 @@ class app {
 		// 35와 "wow"를 모두 포함할 수 있는 타입은 node 뿐이다.
 		ret1 = ret 	// ret는 node 이므로 validation은 무시된다.
 					// success가 false일 경우, int = str 이 되므로 런타임에러가 된다.
-
-		// void:
-		//	1. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.
-        // 		e.g) return ret1 // 명시적 void 반환은 에러이다.
-		//	2. 명시적으로 void로 변수를 정의할 수 없다.
-		//		e.g) void abc // 컴파일 에러.
-		//	3. void는 어떠한 할당연산을 수행해도 void이다.
-		//		e.g) ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.
 	}
 }
 
