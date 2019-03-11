@@ -698,6 +698,96 @@ class app {
 
 
 
+
+##### 상수와 캐스팅
+
+```cpp
+import console
+
+class Animal {
+    // 상수: # <타입>
+    // prefix 중 하나로, #로 표현한다. (# 기호가 딱딱함과 고정됨을 연상시키기 때문이다.)
+    //	1. 타입 앞에만 붙을 수 있다. (다시말하면, Refer 항상 교체될 수 있으며, 이를 문법적으로
+    //	   방지해주지 않는다.)
+    //  2. prefix를 같이 표기하는 경우, 순서를 지켜야 한다. $#_ 순으로 표기한다.
+    //  3. void에 #을 붙일 수 없다.
+    str #getName(): "unknown" // const 메소드.
+    #int _age = 1
+    int getAge(): _age
+   
+    #int $#_foo() {} // "static const private method returning const int."
+    // void #$_foo1() {} // 컴파일에러: Rule#2 위반
+    void foo1() {}
+    // void setAge(int new): age = new // 컴파일에러: age는 const 이다.
+    void #walk(): console.out(age + "yo " + getName() + " walked.") // getName()이 const메소드가 아니었다면 에러였다.
+}
+class Beaver -> Animal {
+    #str #getName(): "Beaver"
+    void #walk() {
+        super.walk() // super는 기반클래스(Animal)로 캐스팅된 this를 의미한다.
+                    // "Animal super = this" 가 이미 선언된 것과 같다.
+        console.out("Beaver's finding a seashell.")
+    }
+}
+
+class app {
+    int main() {
+        #Animal[] anims1 // an array to constant Animal.
+        Animal#[] anims2 // an constant array to Animal.
+
+        // anims1[0].setAge(5) // non-const 메소드에 접근한다. 컴파일 에러.
+        // Beaver beav = anims1[0] // 컴파일에러. 묵시적 형변환에 downcasting은 포함 되지 않는다.
+        // Beaver beav = (Beaver) anims1[0] // 컴파일 에러. const -> non-const로 형변환 안된다.
+        #Beaver beav = (#Beaver) anims1[0]
+        #Animal anim = anims2 // non-const -> const 로는 묵시적 변환된다.
+        // beav.setAge(5) // beav 는 const 다.
+        beav.walk()
+       
+        #Animal#[#str] map = [(beav, "beav")] // a constant map holding const Animal as value distinguising with const string.
+        // map["anims2"] = Animal() // 컴파일에러. map은 const 이다.
+        #Animal[#str] map2
+        map2["anims1"] = Animal() // Rule#1: Value는 const타입이나, refer는 const가 아니다.
+        // map2["anims1"].foo() // #Animal로 non-const 메소드를 호출했다.
+        console.out(map["anims1"].walk())
+    }
+}
+/* 결과:
+1yo Beaver walked
+Beaver's finding a seashell.
+1yo Beaver walked
+Beaver's finding a seashell.
+*/
+```
+
+
+
+##### 클로저
+
+```cpp
+- 블록문의 구체적인 룰 소개
+  class와 그 직통 멤버(외부 메소드outer method, 멤버변수)는 반드시 중괄호 사용한다는걸 비교해서 재확인
+  그 멤버 안쪽은 중괄호 무시 권장
+```
+
+
+
+##### 인터페이스 확장
+
+```cpp
+
+```
+
+
+
+##### 노테이션
+
+```cpp
+- @는 syntactic sugar.
+- 일일이 외워야 한다. 알면 편하다. 몰라도 된다.
+```
+
+
+
 ##### 프로퍼티
 
 ```cpp
@@ -706,24 +796,7 @@ class app {
 
 
 
-
-##### 상수와 캐스팅
-
-```
-
-```
-
-
-
-##### 인터페이스 확장
-
-
-
 ##### 메타
-
-
-
-##### 클로저
 
 
 
