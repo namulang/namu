@@ -216,10 +216,11 @@
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Plant</span> <span class="n">p</span><span class="p">()</span> <span class="c1">// Plant 객체 정의</span>
+        <span class="n">Plant</span> <span class="n">p</span> <span class="c1">// Plant 객체 정의</span>
+        <span class="n">Plant</span> <span class="n">p_null</span> <span class="o">=</span> <span class="n">null</span> <span class="c1">// 객체 정의되지 않음.</span>
 
         <span class="k">if</span> <span class="mi">1</span>
-            <span class="n">Plant</span> <span class="n">p1</span><span class="p">()</span> <span class="c1">// Plant 객체 정의</span>
+            <span class="n">Plant</span> <span class="n">p1</span> <span class="c1">// Plant 객체 정의</span>
             <span class="n">p1</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">==</span> <span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="c1">// &quot;herb&quot; == &quot;herb&quot;</span>
 
             <span class="n">Plant</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span>
@@ -335,7 +336,7 @@
         <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Person</span> <span class="n">p</span><span class="p">()</span>
+        <span class="n">Person</span> <span class="n">p</span>
         <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;unknown&quot;</span>
         <span class="kt">float</span> <span class="n">grade</span> <span class="o">=</span> <span class="mf">3.0</span>
         <span class="kt">float</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">str</span><span class="p">]</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="s">&quot;vector_x&quot;</span><span class="p">),</span>
@@ -406,11 +407,17 @@
             <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
             <span class="kt">float</span> <span class="n">grade</span> <span class="o">=</span> <span class="mf">2.5</span>
             <span class="kt">void</span> <span class="n">print</span><span class="p">()</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="kt">void</span> <span class="n">assign</span><span class="p">((</span><span class="kt">float</span> <span class="n">new_grade</span><span class="p">,</span> <span class="n">str</span> <span class="n">new_msg</span><span class="p">),</span> <span class="kt">int</span> <span class="n">new_a</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">grade</span> <span class="o">=</span> <span class="n">new_grade</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="n">new_msg</span>
+                <span class="n">a</span> <span class="o">=</span> <span class="n">new_a</span>
+            <span class="p">}</span>
         <span class="p">}</span>
         <span class="n">Person</span> <span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Donald&quot;</span><span class="p">)</span>            <span class="p">;</span><span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">()</span> <span class="c1">// &quot;Donald&quot;</span>
         <span class="c1">// ;은 다음 stmt를 이어서 서술 가능.</span>
 
-        <span class="n">p</span><span class="p">()</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span> <span class="n">age</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">str</span> <span class="n">msg</span><span class="o">=</span><span class="s">&quot;Jung-un&quot;</span><span class="p">)</span>
+        <span class="n">str</span> <span class="o">=</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;Jung-un&quot;</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">assign</span><span class="p">((</span><span class="kt">float</span> <span class="n">age</span><span class="o">=</span><span class="mf">3.0</span><span class="cm">/*인자와 파라메터의 이름은 달라도 된다.*/</span><span class="p">,</span> <span class="n">msg</span><span class="p">),</span> <span class="mi">24</span><span class="p">)</span>
         <span class="c1">// 변수 정의 또한 표현식이므로 튜플내에서 사용 가능.</span>
         <span class="c1">// 정의된 변수는 해당 scope 내에서 유효. (사용된곳이 블록문 안쪽이면,</span>
         <span class="c1">// 해당 블록문이 종료까지 유효.)</span>
@@ -540,7 +547,7 @@
         <span class="kt">float</span> <span class="n">getAge</span><span class="p">()</span><span class="o">:</span> <span class="mf">3.5</span> <span class="c1">// 반환형이 다르므로 은닉이다.</span>
     <span class="p">}</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Plant</span> <span class="n">p</span><span class="p">()</span>
+        <span class="n">Plant</span> <span class="n">p</span>
         <span class="k">if</span> <span class="mi">1</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">Leaf</span><span class="p">()</span>
         <span class="n">console</span><span class="p">.(</span><span class="s">&quot;name=&quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;, age=&quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">getAge</span><span class="p">())</span>
@@ -676,24 +683,46 @@
 <span class="cm">    Beaver&#39;s finding a seashell.</span>
 <span class="cm">    1yo Beaver walked</span>
 <span class="cm">    Beaver&#39;s finding a seashell.</span>
-<span class="cm">*/</span></pre><h6>인터페이스 확장</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="cm">*/</span></pre><h6>타입 확장</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
-<span class="c1">// 인터페이스 확장:</span>
-<span class="c1">// worldlang은 이미 정의된 인터페이스를 확장할 수 있다.</span>
-<span class="c1">// 이 모든 과정은 반드시 컴파일 타임에 확정되야 하며, 총 3가지 방법이 있다.</span>
-<span class="c1">// 1. 상속 (이전 섹션 참조)</span>
+<span class="c1">// 타입 확장:</span>
+<span class="c1">// worldlang은 이미 정의된 타입의 인터페이스를 확장(추가)할 수 있다.</span>
+<span class="c1">// 이 모든 과정은 반드시 컴파일 타임에 확정되야 하며, 다음의 규칙을 따른다.</span>
+<span class="c1">//  1. 총 3가지 방법이 있다. 상속(이전 섹션 참조), 타입확장문법, 인스턴스 확장문법</span>
+<span class="c1">//  2. 확장문법은 크게 동일하며, 단, 아주 약간의 변화가 있다.</span>
+<span class="c1">//      &lt;타입&gt; {</span>
+<span class="c1">//          멤버(메소드, 변수) 정의</span>
+<span class="c1">//      }</span>
+<span class="c1">//      (즉, 이제껏 클래스 정의와, 메소드 안에서 변수 정의 모두 타입 확장문법이다.)</span>
+<span class="c1">//</span>
+<span class="c1">//  2.  클래스 확장class-extension: +&lt;클래스&gt;</span>
+<span class="c1">//      미리 정의되어있는 클래스에 새로운 인터페이스를 주입한다.</span>
+<span class="c1">//      다음의 규칙을 따른다.</span>
+<span class="c1">//          a. 주입한 인터페이스 안에서 private 멤버에 접근할 수 없다.</span>
+<span class="c1">//              (캡슐화encapsulation를 깰 수 없기 때문이다.)</span>
+<span class="c1">//          b. 은닉되지 않는다. (동일한 타입내 변경이다. 은닉이 아닌 중복 정의.)</span>
+<span class="c1">//          c. 편의를 위해, 예외적으로 overriding 허용된다.</span>
+<span class="c1">//          d. 메소드 또한 클래스이다.</span>
+<span class="c1">//</span>
+<span class="c1">//  3.  메소드 또한 타입이다. 따라서 메소드 또한 메소드를 확장할 수 있는데,</span>
+<span class="c1">//      이를 클로져라고 한다. (추후 서술)</span>
+<span class="k">class</span> <span class="err">+</span><span class="nc">str</span> <span class="p">{</span>
+    <span class="n">str</span><span class="p">(</span><span class="err">#</span><span class="n">MyClass</span> <span class="n">my</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;str(#MyClass)&quot;</span><span class="p">)</span>
+        <span class="n">str</span><span class="p">(</span><span class="n">my</span><span class="p">.</span><span class="n">name1</span><span class="p">)</span> <span class="c1">// 생성자에서 생성자를 호출.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
 <span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span>
+    <span class="c1">// 4. 인스턴스-확장Instance extension: &lt;멤버변수 정의&gt; { &lt;멤버 정의&gt; }</span>
+    <span class="c1">// 지정한 1개의 객체의 타입을 확장한 후, 즉시 정의한다.</span>
+    <span class="c1">// 확장된 타입은 재사용할 수 없다.</span>
     <span class="n">str</span> <span class="n">name</span> <span class="p">{</span> <span class="c1">// 멤버변수 name 정의</span>
-        <span class="c1">// 2. 인스턴트-확장Instant extension</span>
-        <span class="c1">// 미리 정의된 타입의 인터페이스를 확장한 후, 즉시 객체를 정의한다.</span>
-        <span class="c1">// *) 확장된 타입은 재사용할 수 없다.</span>
         <span class="n">res</span> <span class="n">set</span><span class="p">(</span><span class="err">#</span><span class="n">str</span> <span class="k">new</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// overriding</span>
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;name will be changed to &quot;</span> <span class="o">+</span> <span class="k">new</span><span class="p">)</span>
             <span class="n">name</span> <span class="o">=</span> <span class="k">new</span> <span class="c1">// 에러. 컴파일은 가능하나, 무한 재귀 호출 된다.</span>
             <span class="k">return</span> <span class="n">ok</span>
         <span class="p">}</span>
-
-
     <span class="p">}</span>
 
     <span class="c1">// 위의 str name {} 과 동일하다.</span>
@@ -708,20 +737,6 @@
     <span class="kt">void</span> <span class="n">print</span><span class="p">()</span><span class="o">:</span> <span class="n">name1</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span><span class="p">;</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span> <span class="p">(</span><span class="s">&quot;void print() : &quot;</span> <span class="o">+</span> <span class="n">name1</span><span class="p">)</span>
     <span class="kt">int</span> <span class="n">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;int print(int)&quot;</span><span class="p">)</span>
     <span class="c1">//  name과 name1은 같은 set 메소드를 지니고 있으나, 이 둘은 별개의 메소드다.</span>
-<span class="p">}</span>
-
-<span class="c1">// 2. 인터페이스 주입 Prefix injection-prefix, i3: +&lt;클래스&gt;</span>
-<span class="c1">// 미리 정의되어있는 타입에 새로운 인터페이스를 주입한다.</span>
-<span class="c1">// 다음의 규칙을 따른다.</span>
-<span class="c1">//  1. 주입한 인터페이스 안에서 private 멤버에 접근할 수 없다.</span>
-<span class="c1">//     (캡슐화encapsulation를 깰 수 없기 때문이다.)</span>
-<span class="c1">//  2. 은닉되지 않는다. (동일한 타입내 변경이다. 은닉이 아닌 중복 정의.)</span>
-<span class="c1">//  3. 편의를 위해, 예외적으로 overriding 허용된다.</span>
-<span class="k">class</span> <span class="err">+</span><span class="nc">str</span> <span class="p">{</span>
-    <span class="n">str</span><span class="p">(</span><span class="err">#</span><span class="n">MyClass</span> <span class="n">my</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;str(#MyClass)&quot;</span><span class="p">)</span>
-        <span class="n">str</span><span class="p">(</span><span class="n">my</span><span class="p">.</span><span class="n">name1</span><span class="p">)</span> <span class="c1">// 생성자에서 생성자를 호출.</span>
-    <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="k">class</span> <span class="err">+</span><span class="nc">MyClass</span> <span class="p">{</span>
@@ -746,7 +761,7 @@
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">MyClass</span> <span class="n">me</span><span class="p">()</span>
+        <span class="n">MyClass</span> <span class="n">me</span>
         <span class="n">me</span><span class="p">.</span><span class="n">print</span><span class="p">()</span>
         <span class="n">me</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="mf">3.5</span><span class="p">)</span>
     <span class="p">}</span>
@@ -764,16 +779,18 @@
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="n">str</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// 클로져closure: &lt;메소드 안에서 메소드를 정의한다.&gt;</span>
+        <span class="c1">// 메소드를 확장한 것을 클로져라고 한다.</span>
         <span class="c1">// 클로져는 관련 요소factor들이 캡처capture를 통해 내부로 함축한다. </span>
-        <span class="c1">// 결과,인스턴스 메소드의 한 종류이나, 사용시에는 static 메소드처럼</span>
+        <span class="c1">// 인스턴스 메소드의 한 종류이나, 사용시에는 static 메소드처럼</span>
         <span class="c1">// 사용하게 되며, 일종의 외부로 늘어진 인터페이스로 만드는 것이 목표이다.</span>
         <span class="c1">//</span>
-        <span class="c1">// 결과, 클로져는 다음의 특성을 갖는다.</span>
+        <span class="c1">// 클로져는 다음의 특성을 갖는다.</span>
         <span class="c1">//  1. 자신을 포함하는 메소드outer-method와 지역변수local-scope를 공유한다.</span>
         <span class="c1">//  2. 중괄호 사용을 권장하지 않는다.</span>
         <span class="c1">//      앞서 서술했듯, 블록문에는 중괄호 사용이 원칙이다.</span>
         <span class="c1">//      하지만, 클래스와 그 멤버들direct members에게만 중괄호가 필수이며,</span>
         <span class="c1">//      그 이외의 경우인 메소드 안쪽에서는 편의를 위해 사용이 권장되지 않는다.</span>
+        <span class="c1">//      메소드 안쪽에서는 편의를 위해 사용하지 않을 것를 권장한다.</span>
         <span class="c1">//  3.  인터프리터는 해당 클로져의 구문을 파악하여 어떤 식별자를 캡처capture</span>
         <span class="c1">//      해야하는지 자동으로 파악한다.</span>
         <span class="c1">//  4.  클로져에 의해 캡쳐된 식별자는 클로져의 라이프 사이클과 동기화 된다.</span>
@@ -820,25 +837,43 @@
 <span class="cm">/*  결과:</span>
 <span class="cm">    answer to life the universe and everything is 42</span>
 <span class="cm">    sum is 42</span>
-<span class="cm">*/</span></pre><h6>res와 익셉션</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="cm">*/</span></pre><h6>예외처리</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 <span class="n">import</span> <span class="n">file</span>
 
 <span class="k">class</span> <span class="nc">Opener</span> <span class="p">{</span>
-    <span class="n">file</span> <span class="n">f</span>
+    <span class="n">file</span> <span class="n">f</span> <span class="o">=</span> <span class="n">null</span>
     <span class="n">str</span> <span class="n">path</span> <span class="p">{</span>
         <span class="n">res</span> <span class="o">=&gt;</span> <span class="err">@</span><span class="n">set</span> <span class="p">{</span>
-            <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="c1">// 예외처리try-catch: try &lt;코드&gt; catch(인자리스트) &lt;코드&gt;</span>
+            <span class="c1">// 다음의 규칙을 따른다.</span>
+            <span class="c1">//  1.  예외exception을 throw &lt;변수&gt; 를 하게 되면,</span>
+            <span class="c1">//      해당 함수의 호출자에게로 돌아간다propagate.</span>
+            <span class="c1">//      (1depth stack unwinding.)</span>
+            <span class="c1">//  2.  익셉션이 발생하면, 자동으로 throw 처리된다.           </span>
+            <span class="c1">//  3.  예외가 발생하면, 발생한 인스턴스가 소유한 적절한 catch 멤버가</span>
+            <span class="c1">//      호출된다.</span>
+            <span class="c1">//  4.  3에서도 찾지 못하면 자동으로 throw 처리된다.</span>
+            <span class="c1">//  5.  catch에서 예외가 발생하면 throw 처리된다.</span>
+            <span class="c1">//  6.  최종적으로 처리되지않은unhandled예외가 main()을 벗어나면 프로세스를</span>
+            <span class="c1">//      중단한다.</span>
+            <span class="c1">//  7.  catch에서 throw를 하지 않으면 예외처리를 처리consume했다고 판단한다.</span>
 
-            <span class="k">try</span>
-                <span class="c1">// 예외처리try-catch:</span>
-                <span class="n">f</span> <span class="o">=</span> <span class="n">file</span><span class="p">()</span>
-                <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span>
-                <span class="c1">// 여기까지 try 범위에 포함</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 항상 fileexception이 발생한다.</span>
+
+            <span class="c1">// Rule#1에 의해서 f.open()에서 발생한 익셉션은, 익셉션을 발생시킨 인스턴스인</span>
+            <span class="c1">// path.@set() 함수가 소유한 catch() 함수 중 적절한 인자를 소유한,</span>
+            <span class="c1">// catch(fileexcept)로 넘겨진다.</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">fileexcept</span> <span class="n">e</span><span class="p">)</span>
+                 <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;fail to open &quot;</span> <span class="o">+</span> <span class="n">res</span><span class="p">)</span>
+                 <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 반드시 다시 예외가 발생한다.</span>
+                 <span class="c1">// Rule#5에 의해 throw 처리된다.</span>
+
             <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span>
-                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;fail to open &quot;</span> <span class="o">+</span> <span class="n">res</span><span class="p">)</span>
-                <span class="k">throw</span> <span class="n">e</span>
+                 <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here.&quot;</span><span class="p">)</span>
 
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;path is &quot;</span> <span class="o">+</span> <span class="k">new</span><span class="p">)</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 여기서 발생한 예외도 위의 catch(fileexcept)로 간다.</span>
             <span class="k">return</span> <span class="n">res</span>
         <span class="p">}</span>
 
@@ -852,27 +887,31 @@
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="n">res</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">Opener</span> <span class="n">o</span>
+        <span class="c1">// {, }는 블록문을 의미한다.</span>
+        <span class="c1">// 사실, 블록문은 동시의 별도의 이름없는 클로져, 즉 메소드이다.</span>
+        <span class="p">{</span>
+            <span class="n">o</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;/usr/bin/bash&quot;</span> <span class="c1">// 안쪽에서 최종적으로 permexcept가 발생한다.</span>
 
-        <span class="k">try</span>
-            <span class="n">o</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;/usr/bin/bash&quot;</span>
-        <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;oh dear.&quot;</span><span class="p">)</span>
-            <span class="k">throw</span> <span class="n">permexcept</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span> <span class="c1">// 이 블록문(클로져)에서 발생한 예외는 모두 여기서 catch된다.</span>
+                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;oh dear.&quot;</span><span class="p">)</span>
+                <span class="k">throw</span> <span class="n">e</span>
+        <span class="p">}</span>        
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kt">void</span> <span class="n">finally</span><span class="p">()</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-        <span class="k">try</span>
-            <span class="n">foo</span><span class="p">()</span>
-        <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here.&quot;</span><span class="p">)</span>
-        <span class="k">catch</span><span class="p">(</span><span class="n">permexcept</span> <span class="n">e</span><span class="p">)</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;sense of an ending.&quot;</span><span class="p">)</span>
+        <span class="n">foo</span><span class="p">()</span>
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="cm">/* 결과:</span>
+<span class="cm">    fail to open /usr/bin/bash</span>
 <span class="cm">    oh dear.</span>
-<span class="cm">    sense of an ending.</span>
-<span class="cm">*/</span></pre><h6>메타</h6><h6>Blockstmt 는 클로저</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
+<span class="cm">    &lt;예외로 인한 프로그램 종료&gt;</span>
+<span class="cm">*/</span></pre><p>##### Blockstmt 는 클로저</p><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre><h6>메타</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
       </div>
     </div>
   </div>
