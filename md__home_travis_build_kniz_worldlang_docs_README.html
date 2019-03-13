@@ -890,7 +890,7 @@
         <span class="c1">// {, }는 블록문을 의미한다.</span>
         <span class="c1">// 사실, 블록문은 동시의 별도의 이름없는 클로져, 즉 메소드이다.</span>
         <span class="p">{</span>
-            <span class="n">o</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;/usr/bin/bash&quot;</span> <span class="c1">// 안쪽에서 최종적으로 permexcept가 발생한다.</span>
+            <span class="n">o</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;/usr/bin/bash&quot;</span> <span class="c1">// 안쪽에서 최종적으로 fileexcept가 발생한다.</span>
 
             <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span> <span class="c1">// 이 블록문(클로져)에서 발생한 예외는 모두 여기서 catch된다.</span>
                 <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;oh dear.&quot;</span><span class="p">)</span>
@@ -898,20 +898,89 @@
         <span class="p">}</span>        
     <span class="p">}</span>
 
-    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">foo</span><span class="p">()</span>
-    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span><span class="o">:</span> <span class="n">foo</span><span class="p">()</span>
 <span class="p">}</span>
 <span class="cm">/* 결과:</span>
 <span class="cm">    fail to open /usr/bin/bash</span>
 <span class="cm">    oh dear.</span>
 <span class="cm">    &lt;예외로 인한 프로그램 종료&gt;</span>
-<span class="cm">*/</span></pre><p>##### Blockstmt 는 클로저</p><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="cm">*/</span></pre><p>##### 휴대용 블록문portable Blockstmt</p><pre class="m-code"><span class="k">class</span> <span class="nc">Proxy</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">execute</span><span class="p">({}</span> <span class="n">codes</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;let&#39;s execute a block.&quot;</span><span class="p">)</span>
+        <span class="n">codes</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
-    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 일반적인 클로져 문법</span>
+    <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">closure</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// 클로져에서 캡처할 지역변수. 라이프 사이클이 동기화 된다.</span>
+        <span class="k">return</span> <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// 단순한 지역변수</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;a=&quot;</span> <span class="o">+</span> <span class="o">++</span><span class="n">a</span> <span class="o">+</span> <span class="s">&quot;, b=&quot;</span> <span class="o">+</span> <span class="o">++</span><span class="n">b</span><span class="p">)</span> <span class="c1">// a는 증가되는 반면 b는 값 유지.</span>
+        <span class="p">}</span>
     <span class="p">}</span>
-<span class="p">}</span></pre><h6>메타</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
+    <span class="kt">void</span> <span class="n">closure_with_delegator</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)[]</span> <span class="n">cl</span> <span class="o">=</span> <span class="p">[</span><span class="n">closure</span><span class="p">(),</span> <span class="n">closure</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="n">e</span> <span class="n">in</span> <span class="n">cl</span>
+            <span class="n">e</span><span class="p">()</span>
+        <span class="n">cl</span><span class="p">[</span><span class="mi">0</span><span class="p">]()</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">print</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;and can access method of object who has been declared to this block.&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="p">{}[]</span> <span class="n">boo_with_block</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1">// 휴대용 블록문portable blockstmt: {}</span>
+        <span class="c1">// 코드의 묶음을 객체처럼 전달 할 수 있다. 다음의 규칙을 따른다.</span>
+        <span class="c1">//  1.  {}로 표현하며 뒤에 변수명은 선택optional에 맡긴다.</span>
+        <span class="c1">//  2.  묵시적 코드블럭과 다르게 반드시 괄호가 필요하다.</span>
+        <span class="c1">//      e.g) if a == 5</span>
+        <span class="c1">//              console.out(&quot;괄호가 필요없다&quot;)</span>
+        <span class="c1">//  3.  블록문이 종료하면서 아무런 값도 반환하지 않는다.</span>
+        <span class="p">()</span> <span class="c1">// 정의하고 동시에 실행한다.</span>
+        <span class="n">Proxy</span><span class="p">().</span><span class="n">execute</span><span class="p">({}</span> <span class="n">portable_codes</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">// 정의와 동시에 파라메터로 넣고 있다.</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;you can access local variable. a=&quot;</span> <span class="o">+</span> <span class="n">a</span><span class="p">)</span>
+            <span class="n">print</span><span class="p">()</span>
+        <span class="p">})</span>
+
+        <span class="n">a</span><span class="o">=</span><span class="mi">100</span>
+
+        <span class="c1">//  4.  사실은, void(void)의 syntatic-sugar에 불과하다.</span>
+        <span class="c1">//      따라서 서로 호환된다.</span>
+        <span class="p">{}[]</span> <span class="n">cl</span> <span class="o">=</span> <span class="p">[</span><span class="n">portable_codes</span><span class="p">,</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;a=&quot;</span> <span class="o">+</span> <span class="o">++</span><span class="n">a</span> <span class="o">+</span> <span class="s">&quot;, b=&quot;</span> <span class="o">+</span> <span class="o">++</span><span class="n">b</span><span class="p">)</span>
+        <span class="p">},</span> <span class="p">{}</span> <span class="n">codes_nothing_have</span><span class="p">,</span> <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 이름없는 클로져. {} 와 동일하다.</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;nameless code block.&quot;</span><span class="p">)</span>
+        <span class="p">},</span> <span class="n">closure</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="n">cl</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">closure_with_delegator</span><span class="p">()</span>
+        <span class="p">{}[]</span> <span class="n">cl</span> <span class="o">=</span> <span class="n">boo_with_block</span><span class="p">()</span>
+
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">- cl:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">e</span> <span class="n">in</span> <span class="n">cl</span>
+            <span class="n">e</span><span class="p">()</span>
+    <span class="p">}</span>
+
+<span class="cm">/*결과:</span>
+<span class="cm">    a=1, b=1</span>
+<span class="cm">    a=1, b=1</span>
+<span class="cm">    a=2, b=1</span>
+<span class="cm">    let&#39;s execute a block.</span>
+<span class="cm">    you can access local variable. a=0</span>
+<span class="cm">    and can access method of object who has been declared to this block.</span>
+
+<span class="cm">    - cl:</span>
+<span class="cm">    let&#39;s execute a block.</span>
+<span class="cm">    you can access local variable. a=100</span>
+<span class="cm">    and can access method of object who has been declared to this block.</span>
+<span class="cm">    a=101, b=1</span>
+<span class="cm">    nameless code block.</span>
+<span class="cm">    a=1, b=1</span>
+<span class="cm">*/</span></pre><h6>메타</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
       </div>
     </div>
   </div>
