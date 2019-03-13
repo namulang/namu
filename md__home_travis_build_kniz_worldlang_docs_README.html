@@ -837,74 +837,7 @@
 <span class="cm">/*  결과:</span>
 <span class="cm">    answer to life the universe and everything is 42</span>
 <span class="cm">    sum is 42</span>
-<span class="cm">*/</span></pre><h6>예외처리</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
-<span class="n">import</span> <span class="n">file</span>
-
-<span class="k">class</span> <span class="nc">Opener</span> <span class="p">{</span>
-    <span class="n">file</span> <span class="n">f</span> <span class="o">=</span> <span class="n">null</span>
-    <span class="n">str</span> <span class="n">path</span> <span class="p">{</span>
-        <span class="n">res</span> <span class="o">=&gt;</span> <span class="err">@</span><span class="n">set</span> <span class="p">{</span>
-            <span class="c1">// 예외처리try-catch: try &lt;코드&gt; catch(인자리스트) &lt;코드&gt;</span>
-            <span class="c1">// 다음의 규칙을 따른다.</span>
-            <span class="c1">//  1.  예외exception을 throw &lt;변수&gt; 를 하게 되면,</span>
-            <span class="c1">//      해당 함수의 호출자에게로 돌아간다propagate.</span>
-            <span class="c1">//      (1depth stack unwinding.)</span>
-            <span class="c1">//  2.  익셉션이 발생하면, 자동으로 throw 처리된다.           </span>
-            <span class="c1">//  3.  예외가 발생하면, 발생한 인스턴스가 소유한 적절한 catch 멤버가</span>
-            <span class="c1">//      호출된다.</span>
-            <span class="c1">//  4.  3에서도 찾지 못하면 자동으로 throw 처리된다.</span>
-            <span class="c1">//  5.  catch에서 예외가 발생하면 throw 처리된다.</span>
-            <span class="c1">//  6.  최종적으로 처리되지않은unhandled예외가 main()을 벗어나면 프로세스를</span>
-            <span class="c1">//      중단한다.</span>
-            <span class="c1">//  7.  catch에서 throw를 하지 않으면 예외처리를 처리consume했다고 판단한다.</span>
-
-            <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 항상 fileexception이 발생한다.</span>
-
-            <span class="c1">// Rule#1에 의해서 f.open()에서 발생한 익셉션은, 익셉션을 발생시킨 인스턴스인</span>
-            <span class="c1">// path.@set() 함수가 소유한 catch() 함수 중 적절한 인자를 소유한,</span>
-            <span class="c1">// catch(fileexcept)로 넘겨진다.</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">fileexcept</span> <span class="n">e</span><span class="p">)</span>
-                 <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;fail to open &quot;</span> <span class="o">+</span> <span class="n">res</span><span class="p">)</span>
-                 <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 반드시 다시 예외가 발생한다.</span>
-                 <span class="c1">// Rule#5에 의해 throw 처리된다.</span>
-
-            <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span>
-                 <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here.&quot;</span><span class="p">)</span>
-
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;path is &quot;</span> <span class="o">+</span> <span class="k">new</span><span class="p">)</span>
-            <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 여기서 발생한 예외도 위의 catch(fileexcept)로 간다.</span>
-            <span class="k">return</span> <span class="n">res</span>
-        <span class="p">}</span>
-
-        <span class="n">res</span> <span class="o">=&gt;</span> <span class="err">@</span><span class="n">get</span> <span class="p">{</span>
-            <span class="n">consol</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;getting path(&quot;</span> <span class="n">res</span> <span class="o">+</span> <span class="s">&quot;) from some Opener object.&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">res</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
-    <span class="n">res</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">Opener</span> <span class="n">o</span>
-        <span class="c1">// {, }는 블록문을 의미한다.</span>
-        <span class="c1">// 사실, 블록문은 동시의 별도의 이름없는 클로져, 즉 메소드이다.</span>
-        <span class="p">{</span>
-            <span class="n">o</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;/usr/bin/bash&quot;</span> <span class="c1">// 안쪽에서 최종적으로 fileexcept가 발생한다.</span>
-
-            <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span> <span class="c1">// 이 블록문(클로져)에서 발생한 예외는 모두 여기서 catch된다.</span>
-                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;oh dear.&quot;</span><span class="p">)</span>
-                <span class="k">throw</span> <span class="n">e</span>
-        <span class="p">}</span>        
-    <span class="p">}</span>
-
-    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span><span class="o">:</span> <span class="n">foo</span><span class="p">()</span>
-<span class="p">}</span>
-<span class="cm">/* 결과:</span>
-<span class="cm">    fail to open /usr/bin/bash</span>
-<span class="cm">    oh dear.</span>
-<span class="cm">    &lt;예외로 인한 프로그램 종료&gt;</span>
-<span class="cm">*/</span></pre><p>##### 휴대용 블록문portable Blockstmt</p><pre class="m-code"><span class="k">class</span> <span class="nc">Proxy</span> <span class="p">{</span>
+<span class="cm">*/</span></pre><h6>휴대용 블록문portable Blockstmt</h6><pre class="m-code"><span class="k">class</span> <span class="nc">Proxy</span> <span class="p">{</span>
     <span class="kt">void</span> <span class="n">execute</span><span class="p">({}</span> <span class="n">codes</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;let&#39;s execute a block.&quot;</span><span class="p">)</span>
         <span class="n">codes</span><span class="p">()</span>
@@ -960,9 +893,19 @@
         <span class="n">closure_with_delegator</span><span class="p">()</span>
         <span class="p">{}[]</span> <span class="n">cl</span> <span class="o">=</span> <span class="n">boo_with_block</span><span class="p">()</span>
 
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">- cl:&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">e</span> <span class="n">in</span> <span class="n">cl</span>
-            <span class="n">e</span><span class="p">()</span>
+        <span class="c1">// 이는 블록문을 정의한 것이다. </span>
+        <span class="c1">// 따라서 수행되지 않는다.</span>
+        <span class="p">{</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;you can&#39;t see this statement.&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="c1">// try: try &lt;void(void) 메소드 정의&gt;</span>
+        <span class="c1">// try 뒤에 나오는 블록문의 정의를 바로 실행한다.</span>
+        <span class="c1">// 사실, { &lt;stmts&gt; }() 와 동일하다.</span>
+        <span class="k">try</span> <span class="p">{}</span> <span class="n">codes</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">- cl:&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">e</span> <span class="n">in</span> <span class="n">cl</span>
+                <span class="n">e</span><span class="p">()</span>
+        <span class="p">}</span>        
     <span class="p">}</span>
 
 <span class="cm">/*결과:</span>
@@ -980,6 +923,81 @@
 <span class="cm">    a=101, b=1</span>
 <span class="cm">    nameless code block.</span>
 <span class="cm">    a=1, b=1</span>
+<span class="cm">*/</span></pre><h6>예외처리</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="n">import</span> <span class="n">file</span>
+
+<span class="k">class</span> <span class="nc">Opener</span> <span class="p">{</span>
+    <span class="n">file</span> <span class="n">f</span> <span class="o">=</span> <span class="n">null</span>
+    <span class="n">str</span> <span class="n">path</span> <span class="p">{</span>
+        <span class="n">ret</span> <span class="o">=&gt;</span> <span class="err">@</span><span class="n">set</span> <span class="p">{</span>
+            <span class="c1">// 예외처리try-catch: try &lt;코드&gt; catch(인자리스트) &lt;코드&gt;</span>
+            <span class="c1">// 다음의 규칙을 따른다.</span>
+            <span class="c1">//  1.  예외exception을 throw &lt;변수&gt; 를 하게 되면,</span>
+            <span class="c1">//      해당 함수의 호출자에게로 돌아간다propagate.</span>
+            <span class="c1">//      (1depth stack unwinding.)</span>
+            <span class="c1">//  2.  익셉션이 발생하면, 자동으로 throw 처리된다.           </span>
+            <span class="c1">//  3.  예외가 발생하면, 발생한 인스턴스가 소유한 적절한 catch 멤버가</span>
+            <span class="c1">//      호출된다.</span>
+            <span class="c1">//  4.  3에서도 찾지 못하면 자동으로 throw 처리된다.</span>
+            <span class="c1">//  5.  catch는 외부메소드가 아니라 호출자에게 return 한다.</span>
+            <span class="c1">//      (즉, catch에서 throw되면 호출자의 catch가 호출되므로</span>
+            <span class="c1">//      무한 재귀는 일어나지 않는다.)</span>
+            <span class="c1">//  6.  최종적으로 처리되지않은unhandled예외가 main()을 벗어나면</span>
+            <span class="c1">//      프로세스를 중단한다.</span>
+            <span class="c1">//  7.  catch에서 throw를 하지 않으면 예외처리를 처리consume했다고</span>
+            <span class="c1">//      판단한다.</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 항상 fileexception이 발생한다.</span>
+
+            <span class="c1">// Rule#1에 의해서 f.open()에서 발생한 익셉션은, 익셉션을 발생시킨 인스턴스인</span>
+            <span class="c1">// path.@set() 함수가 소유한 catch() 함수 중 적절한 인자를 소유한,</span>
+            <span class="c1">// catch(fileexcept)로 넘겨진다.</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">fileexcept</span> <span class="n">e</span><span class="p">)</span>
+                 <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;fail to open &quot;</span> <span class="o">+</span> <span class="n">ret</span><span class="p">)</span>
+                 <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 반드시 다시 예외가 발생한다.</span>
+                 <span class="c1">// Rule#5에 의해 str.@set()을 호출한 foo()의 블록문으로 throw 된다.</span>
+
+            <span class="c1">// 눈치챘겠지만, 사실 catch 또한 클로져에 불과하다.</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span>
+                 <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here.&quot;</span><span class="p">)</span>
+                 <span class="k">return</span> <span class="n">ret</span> <span class="c1">// catch의 반환형은 외부메소드의 반환형(res ret)여야 한다.</span>
+                 <span class="c1">// 여기서 return 되면 str.@set()에서 return 되게 된다.</span>
+
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;path is &quot;</span> <span class="o">+</span> <span class="k">new</span><span class="p">)</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 여기서 발생한 예외도 위의 catch(fileexcept)로 간다.</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="p">}</span>
+
+        <span class="n">ret</span> <span class="o">=&gt;</span> <span class="err">@</span><span class="n">get</span> <span class="p">{</span>
+            <span class="n">consol</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;getting path(&quot;</span> <span class="n">res</span> <span class="o">+</span> <span class="s">&quot;) from some Opener object.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="n">res</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Opener</span> <span class="n">o</span>
+        <span class="c1">// {, }는 휴대용 블록문Portable Blockstmt.</span>
+        <span class="k">try</span> <span class="p">{</span> <span class="c1">// 블록문의 정의와 동시에 </span>
+            <span class="n">o</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;/usr/bin/bash&quot;</span> <span class="c1">// 안쪽에서 최종적으로 fileexcept가 발생한다.</span>
+
+            <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span> <span class="c1">// 이 블록문(클로져)에서 나온 예외는 여기서 catch된다.</span>
+                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;oh dear.&quot;</span><span class="p">)</span>
+                <span class="c1">// console.out()의 반환형 int가 블록문의 반환형(void)로</span>
+                <span class="c1">// 반환되면서 블록문이 종료된다.</span>
+
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here.&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can you see this?&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span><span class="o">:</span><span class="n">foo</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="cm">/* 결과:</span>
+<span class="cm">    fail to open /usr/bin/bash</span>
+<span class="cm">    oh dear.</span>
+<span class="cm">    can you see this?</span>
 <span class="cm">*/</span></pre><h6>메타</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
       </div>
     </div>
