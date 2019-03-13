@@ -12,7 +12,7 @@
 
 무엇보다 제가 시간을 많이 가져가면 안될것 같네요. 간단한 아이디어 소개와 문법들을 15분에 소개하고 있으며, 이에 대한 설문이 약 3분 진행됩니다. 모든 설문은 무기명으로 진행되며 답에 시간이 오래걸리는 주관식은 최대한 배제하였습니다.
 
-
+##### 
 
 그럼 먼저 이 언어의 특징부터 소개하고나서, 문법을 알려드릴께요.
 
@@ -761,20 +761,98 @@ Beaver's finding a seashell.
 
 
 
-##### 클로저
-
-```cpp
-- 블록문의 구체적인 룰 소개
-  class와 그 직통 멤버(외부 메소드outer method, 멤버변수)는 반드시 중괄호 사용한다는걸 비교해서 재확인
-  그 멤버 안쪽은 중괄호 무시 권장
-```
-
-
-
 ##### 인터페이스 확장
 
 ```cpp
+import console
 
+// 인터페이스 확장:
+// worldlang은 이미 정의된 인터페이스를 확장할 수 있다.
+// 이 모든 과정은 반드시 컴파일 타임에 확정되야 하며, 총 3가지 방법이 있다.
+// 1. 상속 (이전 섹션 참조)
+class MyClass {
+	str name { // 멤버변수 name 정의
+		// 2. 인스턴트-확장Instant extension
+		// 미리 정의된 타입의 인터페이스를 확장한 후, 즉시 객체를 정의한다.
+		// *) 확장된 타입은 재사용할 수 없다.
+        res set(#str new) { // overriding
+        	console.out("name was changed to " + new)
+        	name = new // 무한 재귀 호출 된다.
+        	return ok
+        }
+	}
+	/* 다음과 거의 동일하다.
+    	class __nameless_str -> str {
+    		// 일반적인 상속과 달리 생성자도 계승된다.
+            res set(str new) {
+                console.out("name was changed to " + new)
+                name = new
+                return ok
+            }
+        }
+        __nameless_str name
+	*/
+
+	//	다음처럼 줄일 수 있다.
+    str name1 { 
+    	// 재지정Redirection지정자: (=>) <함수 명세signature> (=>)
+    	// overrided 메소드의 실행 순서를 쉽게 표현할 수 있다.
+    	// 다음의 규칙을 따른다.
+    	//	1. overriding 메소드에만 사용한다.
+    	//	2. =>는 "기반 클래스의 오버라이딩된 메소드로 이행"을 의미한다.
+        //	   ( "me.super(인자리스트)" 와 같다.)
+		//	3. => 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.
+		// 		e.g) => 이 함수명 뒤에 붙는 경우: 먼저 실행후, 부모로 이행
+		//						" 앞		"	   : 이행후, 실행.
+    	@set=>: console.out(name + " was changed to " + new)
+    }
+    
+    void print(): name1 = "hello"; console.out ("void print() : " + name1)
+    int print(int a): console.out("int print(int)")
+    //	name과 name1은 같은 set 메소드를 지니고 있으나, 이 둘은 별개의 메소드다.
+}
+
+// 2. 인터페이스 주입 Prefix injection-prefix, i3: +<클래스>
+// 미리 정의되어있는 타입에 새로운 인터페이스를 주입한다.
+// 다음의 규칙을 따른다.
+//	1. 주입한 인터페이스 안에서 private 멤버에 접근할 수 없다.
+//	   (캡슐화encapsulation를 깰 수 없기 때문이다.)
+//	2. 은닉되지 않는다. (동일한 타입내 변경이다. 은닉이 아닌 중복 정의.)
+//	3. overriding되지 않는다.
+class +str {
+	str(#MyClass my) {
+		console.out("str(#MyClass)")
+		str(my.name1) // 생성자에서 생성자를 호출.
+	}
+}
+
+class +MyClass {
+	// int name1 // 컴파일에러 Rule#2: 중복 정의
+	// float print(): console.out("float print()") // 컴파일에러 Rule#2: void print().
+	// void print()와 float print()를 피호출자callee는 구분 할 수 없다.	
+	float print(float a): console.out("name=" + str(this) + (str) this)
+}
+
+class MyClass2 -> MyClass {
+	=>float print(float a): console.out("MyClass.print(float) has been extended.")
+}
+
+class app {
+	void main() {
+		MyClass me()
+		me.print()
+		me.print(3.5)
+	}
+}
+
+/* 결과:
+	was changed to hello
+	void print() : hello
+	str(#MyClass)
+	str(#MyClass)
+	name=hellohello
+	MyClass.print(float) has been extended.
+*/
 ```
 
 
@@ -784,6 +862,16 @@ Beaver's finding a seashell.
 ```cpp
 - @는 syntactic sugar.
 - 일일이 외워야 한다. 알면 편하다. 몰라도 된다.
+```
+
+
+
+##### 클로저
+
+```cpp
+- 블록문의 구체적인 룰 소개
+  class와 그 직통 멤버(외부 메소드outer method, 멤버변수)는 반드시 중괄호 사용한다는걸 비교해서 재확인
+  그 멤버 안쪽은 중괄호 무시 권장
 ```
 
 
