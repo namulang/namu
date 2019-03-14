@@ -780,6 +780,10 @@ class MyClass {
         	name = new // 무한 재귀 호출 된다.
         	return ok
         }
+        
+        // notation: @<예약어keyword>
+        // 편의를 위해 추가된 항목들로, 컴파일시 해당하는 구문으로 변환됩니다syntatic-sugar.
+        // 위의 res set(#str new) 는, @set과 동일합니다.
 	}
 	/* 다음과 거의 동일하다.
     	class __nameless_str -> str {
