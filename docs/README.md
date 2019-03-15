@@ -799,16 +799,18 @@ class MyClass {
 
 	//	다음처럼 줄일 수 있다.
     str name1 { 
-    	// 재지정Redirection지정자: (=>) <함수 명세signature> (=>)
+    	// 재지정Redirection지정자: (+) <함수 명세signature> (+)
     	// overrided 메소드의 실행 순서를 쉽게 표현할 수 있다.
     	// 다음의 규칙을 따른다.
     	//	1. overriding 메소드에만 사용한다.
-    	//	2. =>는 "기반 클래스의 오버라이딩된 메소드로 이행"을 의미한다.
+    	//	2. + 는 "기반 클래스의 오버라이딩된 메소드로 이행"을 의미한다.
         //	   ( "me.super(인자리스트)" 와 같다.)
-		//	3. => 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.
-		// 		e.g) => 이 함수명 뒤에 붙는 경우: 먼저 실행후, 부모로 이행
-		//						" 앞		"	   : 이행후, 실행.
-    	@set=>: console.out(name + " was changed to " + new)
+		//	3. + 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.
+		//		( "+" 반대편에 super's 가 붙는다고 생각하면 이해가 편하다.)
+		// 		e.g) + 이 함수명 뒤에 붙는 경우: 이행후, 실행.
+		//						" 앞		"	   : 실행후, 이행.
+    	+@set: console.out(name + " was changed to " + new)
+    	// 이 구문이 실행 된 후, str.set()이 실행된다.
     }
     
     void print(): name1 = "hello"; console.out ("void print() : " + name1)
@@ -838,7 +840,7 @@ class +MyClass {
 }
 
 class MyClass2 -> MyClass {
-	=>float print(float a): console.out("MyClass.print(float) has been extended.")
+	+float print(float a): console.out("MyClass.print(float) has been extended.")
 }
 
 class app {
@@ -857,15 +859,6 @@ class app {
 	name=hellohello
 	MyClass.print(float) has been extended.
 */
-```
-
-
-
-##### 노테이션
-
-```cpp
-- @는 syntactic sugar.
-- 일일이 외워야 한다. 알면 편하다. 몰라도 된다.
 ```
 
 
