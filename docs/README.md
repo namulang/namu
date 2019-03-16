@@ -866,17 +866,66 @@ class app {
 ##### 클로저
 
 ```cpp
-- 블록문의 구체적인 룰 소개
-  class와 그 직통 멤버(외부 메소드outer method, 멤버변수)는 반드시 중괄호 사용한다는걸 비교해서 재확인
-  그 멤버 안쪽은 중괄호 무시 권장
-```
+import console
 
+class app {
+	str(void) foo() {
+		// 클로져closure: 메소드 안에서 메소드를 정의한다.
+		// 클로져는 관련 요소factor들이 캡처capture를 통해 함축한다. 결과,인스턴스
+		// 메소드의 한 종류이나, 사용시에는 static 메소드처럼 사용하게 되어,
+		// 일종의 외부로 늘어진 인터페이스가 된다.
+		// 클로져는 다음의 특성을 갖는다.
+		//	1. 자신을 포함하는 메소드outer-method와 지역변수local-scope를 공유한다.
+		//	2. 중괄호 사용을 권장하지 않는다.
+		//		앞서 서술했듯, 블록문에는 중괄호 사용이 원칙이다.
+		//		하지만, 클래스와 그 멤버들direct members에게만 중괄호가 필수이며,
+		//		그 이외의 경우인 메소드 안쪽에서는 편의를 위해 사용이 권장되지 않는다.
+		//	3. 	인터프리터는 해당 클로져의 구문을 파악하여 어떤 식별자를 캡처capture
+        //		해야하는지 자동으로 파악한다.
+		//	4.	클로져에 의해 캡쳐된 식별자는 클로져의 라이프 사이클과 동기화 된다.
+		//		(즉, 지역변수일지라도 소멸되지 않는다)
+		int sum = 0
+		int add(int a, int b) // 클로져.
+			sum = a + b // 클로져는 지역변수를 공유한다.
+	
+		// 함수 위임자delegator: <반환형>(<타입리스트>)
+		// 메소드 또한 객체1st-class-citizen이며, 이에 대한 refer로 다룰 수 있다.
+		//	1. 	refer와 메소드간 타입은 정확하게 일치해야 한다.
+		//		묵시적형변환과 관계없다. 단, 반환된 값은 물론 묵시적 형변환이
+		//		적용될 수 있다.
+		//			e.g)	int foo(int) {}
+		//					bool(int) fdelegator = foo // 컴파일 에러.
+		//					int(int) fdel1 = foo
+		//					bool res = fdel1(35) // ok.
+		int(int, int) getClosure(): add
+		
+		int(int, int) fdelegate // 메소드에 대한 refer
+		fdelegate = getClosure()
+		// float(int, int) fptr1 = getClosure() // 컴파일 에러.
+		// int(int, float) fptr2 = getClosure() // 컴파일 에러.
+		if fdelegate(3, 5) == getClosure()(3,5)
+        	class MyClass { // 중첩클래스.
+        		int count = 0;
+            	str(void) print(int(int, int) fdel) {
+                	str to_return() // 클로져를 반환하고 있다.
+                		"answer to life the universe and everything is " + fdel(26, 16)
+            	}
+        	}
+        	return MyClass().print(fdelegate)
 
+        // else가 없으므로 명시적/묵시적인 return은 발생하지 않으며,
+        // 반환형 str(void)의 기본값인 null이 유지된다.
+	}
 
-##### 프로퍼티
+    void main() {
+		str(void) fptr = foo()
+		fptr()
+        console.out("sum is " + sum)
+    }
+}
+/*	결과:
 
-```cpp
-
+*/
 ```
 
 
