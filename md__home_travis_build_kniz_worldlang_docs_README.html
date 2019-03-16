@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>worldlang 개요 &amp; 설문 | world-doc</title>
+  <title>zworldlang 개요 &amp; 설문 | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,7 +44,7 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          worldlang 개요 &amp; 설문
+          zworldlang 개요 &amp; 설문
         </h1>
 <h3>서론</h3><p>먼저 수고를 들여 이 문서를 열람해 주신것에 감사의 말씀 올립니다.</p><p>저는 변두리에서 *world*라는 프로그래밍 언어를 만들고 있는데, 이에 대한 피드팩을 받고 싶어서 이 문서를 만들었습니다.</p><h3>진행 순서</h3><p>무엇보다 제가 시간을 많이 가져가면 안될것 같네요. 간단한 아이디어 소개와 문법들을 15분에 소개하고 있으며, 이에 대한 설문이 약 3분 진행됩니다. 모든 설문은 무기명으로 진행되며 답에 시간이 오래걸리는 주관식은 최대한 배제하였습니다.</p><p>그럼 먼저 이 언어의 특징부터 소개하고나서, 문법을 알려드릴께요.</p><h3>철학</h3><h4>빠른 개발이 되려면 더 빨리 실패해야 한다.</h4><h6>Context based REPL</h6><h6>항상 디버깅 상태에서 개발</h6><h4>인터프리터도 한명의 개발자.</h4><h6>인터프리터는 프로그램의 구조를 온전히 런타임으로 이해한다.</h6><h6>인터프리터가 개발에 참여한다.</h6><h4>텍스트를 입력하는 것만이 코딩은 아니다</h4><h6>UI를 통한 코딩</h6><h6>doc 문서 자동 생성</h6><h3>syntax</h3><h4>before start</h4><h4>특징</h4><h6>간단한게 최고다.</h6><h6>어려운 개념은 감춘다</h6><p>당연히, 포인터,</p><h6>코드라인 줄이기.</h6><p>offside-rule</p><h6>등장요소를 재사용하자.</h6><h6>강한 피드백</h6><h6>Validation.</h6><p>(= Typescript, Java, C#)</p><h6>Strong typed.</h6><h6>모든것은 객체다.</h6><h6>예외를 혐오하자</h6><h6>일관성을 갖자</h6><p>이곳에서 되면 여기서도 이렇게 하면 될까? 싶으면 되야 한다.</p><h4>spec</h4><h6>항상 시작은 Hello world 로부터.</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span> <span class="c1">// import로 모듈을 가져옴</span>
 
@@ -197,7 +197,75 @@
         <span class="k">return</span> <span class="n">val</span><span class="o">*</span><span class="n">mul</span> <span class="c1">// 리터럴 상수 int -&gt; float -&gt; int로 implicit 캐스팅</span>
     <span class="p">}</span>
 <span class="p">}</span>
-<span class="c1">// 결과: age=0, grade=10.5</span></pre><h6>객체와 라이프 사이클</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="c1">// 결과: age=0, grade=10.5</span></pre><h6>res &amp; src</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="n">res</span> <span class="n">boo</span><span class="p">(</span><span class="n">res</span> <span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">res</span> <span class="n">ret</span> <span class="c1">// 기본값은 rok다.</span>
+        <span class="c1">// res = res + result // res는 사칙연산이 허용되지 않는다.</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret=&quot;</span> <span class="o">+</span> <span class="n">ret</span> <span class="o">+</span> <span class="s">&quot;, code=&quot;</span> <span class="o">+</span> <span class="n">ret</span><span class="p">.</span><span class="n">code</span><span class="p">)</span> <span class="c1">// res=rok, code=0</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="p">}</span>
+    <span class="n">res</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">res</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">boo</span><span class="p">(</span><span class="n">rsuper</span><span class="p">(</span><span class="n">rwarn</span><span class="p">))</span> <span class="c1">// 새로운 rsuper객체를 생성한다.</span>
+        <span class="n">src</span> <span class="n">s</span> <span class="o">=</span> <span class="n">ret</span><span class="p">.</span><span class="n">src</span> <span class="c1">// src 타입은 해당 심볼이 어느 출처에서 왔는지 알려준다.</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">method</span><span class="p">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;#&quot;</span> <span class="o">+</span> <span class="n">s</span><span class="p">.</span><span class="n">line</span> <span class="o">+</span> <span class="s">&quot; at &quot;</span> <span class="o">+</span> <span class="n">s</span><span class="p">.</span><span class="n">file</span><span class="p">.</span><span class="n">name</span><span class="p">)</span> <span class="c1">// app.foo()#12 at res.wrd</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">res</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="o">==</span> <span class="n">rsuper</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret == rsuper&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span><span class="p">.</span><span class="n">isSub</span><span class="p">(</span><span class="n">rwarn</span><span class="p">)</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret.isSub(rwarn)&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span><span class="p">.</span><span class="n">isWarn</span><span class="p">()</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret.isWarn()&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span><span class="p">.</span><span class="n">isNormal</span><span class="p">()</span> <span class="c1">// ==&gt; (! ret.isWarn() &amp; ! ret.isErr())</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret.isNormal()&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="cm">/* 결과:</span>
+<span class="cm">    ret == rsuper</span>
+<span class="cm">    ret.isSub(rwarn)</span>
+<span class="cm">    ret.isWarn()</span>
+<span class="cm">    ret.isNormal()</span>
+<span class="cm">*/</span></pre><h6>블록문Blockstmt</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="c1">// 블록문Blockstmt: { &lt;stmts&gt; }</span>
+    <span class="c1">// 실행가능한 구문의 집합이다. {, } 기호와 indent로 표현한다.</span>
+    <span class="c1">// 다음의 규칙을 따른다. </span>
+    <span class="c1">//  1.  블록문에서 정의한 식별자(메소드, 변수, ...)는 해당 블록문에서 유효하다.</span>
+    <span class="c1">//      (블록문을 사용하면 변수의 라이프 사이클을 제어할 수 있다.)</span>
+    <span class="c1">//  2.  블록문은 독자적인 프로그램 흐름에 대한 제어권을 갖지 못한다.</span>
+    <span class="c1">//      메소드만 가질 수 있다.</span>
+    <span class="c1">//  3.  문법적으로 블록문을 변수에 할당하거나 소유할 수 없다.</span>
+    <span class="c1">//      (클로져를 대신 사용하라)</span>
+    <span class="c1">//  4.  키워드(if, for, ...)에 의해 블록문을 사용할 경우를 묵시적 블록문이라 한다.</span>
+    <span class="c1">//  5.  클래스와 그 멤버(메소드, 변수)들에 한해서만 블록문 기호{,}의 사용을 강제</span>
+    <span class="c1">//      한다. 이외의 {, } 기호는 생략 가능하며, 이를 권장한다.</span>
+    <span class="kt">void</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 메소드도 블록문을 기본적으로 가지고 있다.</span>
+        <span class="p">{</span> <span class="c1">// 명시적 블록문 정의</span>
+            <span class="kt">int</span> <span class="n">local</span> <span class="o">=</span> <span class="mi">5</span>
+            <span class="n">updateAge</span><span class="p">(</span><span class="n">local</span><span class="p">)</span> <span class="c1">// Rule#2</span>
+
+            <span class="kt">int</span> <span class="n">updateAge</span><span class="p">(</span><span class="kt">int</span> <span class="n">new_age</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kt">int</span> <span class="err">#</span><span class="n">age</span> <span class="o">=</span> <span class="mi">20</span>
+                <span class="k">return</span> <span class="n">age</span> <span class="c1">// Rule#2</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// updateAge(20) // Rule#3: 접근 할 수 없다. 블록문에서 벗어났기 때문이다.</span>
+        <span class="p">{</span>        
+            <span class="k">return</span> <span class="c1">// Rule#1: {, } 을 가지고 있는 foo() 메소드에서 벗어난다.</span>
+        <span class="p">}</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here.&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">foo</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// 결과: &lt;없음&gt;</span></pre><h6>객체와 라이프 사이클</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">Plant</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">_age</span> <span class="o">=</span> <span class="mi">5</span>
@@ -554,7 +622,7 @@
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c1">// 결과: name=Leaf, age=1</span></pre><p>메소드 재정의 재지정</p><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="c1">// 결과: name=Leaf, age=1</span></pre><h6>메소드 재정의 재지정</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;print(int a)&quot;</span><span class="p">);</span> <span class="k">return</span> <span class="mi">0</span>
@@ -837,92 +905,6 @@
 <span class="cm">/*  결과:</span>
 <span class="cm">    answer to life the universe and everything is 42</span>
 <span class="cm">    sum is 42</span>
-<span class="cm">*/</span></pre><h6>휴대용 블록문portable Blockstmt</h6><pre class="m-code"><span class="k">class</span> <span class="nc">Proxy</span> <span class="p">{</span>
-    <span class="kt">void</span> <span class="n">execute</span><span class="p">({}</span> <span class="n">codes</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;let&#39;s execute a block.&quot;</span><span class="p">)</span>
-        <span class="n">codes</span><span class="p">()</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
-    <span class="c1">// 일반적인 클로져 문법</span>
-    <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">closure</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// 클로져에서 캡처할 지역변수. 라이프 사이클이 동기화 된다.</span>
-        <span class="k">return</span> <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
-            <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// 단순한 지역변수</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;a=&quot;</span> <span class="o">+</span> <span class="o">++</span><span class="n">a</span> <span class="o">+</span> <span class="s">&quot;, b=&quot;</span> <span class="o">+</span> <span class="o">++</span><span class="n">b</span><span class="p">)</span> <span class="c1">// a는 증가되는 반면 b는 값 유지.</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="kt">void</span> <span class="n">closure_with_delegator</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)[]</span> <span class="n">cl</span> <span class="o">=</span> <span class="p">[</span><span class="n">closure</span><span class="p">(),</span> <span class="n">closure</span><span class="p">()]</span>
-        <span class="k">for</span> <span class="n">var</span> <span class="n">e</span> <span class="n">in</span> <span class="n">cl</span>
-            <span class="n">e</span><span class="p">()</span>
-        <span class="n">cl</span><span class="p">[</span><span class="mi">0</span><span class="p">]()</span>
-    <span class="p">}</span>
-    <span class="kt">void</span> <span class="n">print</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;and can access method of object who has been declared to this block.&quot;</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="p">{}[]</span> <span class="n">boo_with_block</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="c1">// 휴대용 블록문portable blockstmt: {}</span>
-        <span class="c1">// 코드의 묶음을 객체처럼 전달 할 수 있다. 다음의 규칙을 따른다.</span>
-        <span class="c1">//  1.  {}로 표현하며 뒤에 변수명은 선택optional에 맡긴다.</span>
-        <span class="c1">//  2.  묵시적 코드블럭과 다르게 반드시 괄호가 필요하다.</span>
-        <span class="c1">//      e.g) if a == 5</span>
-        <span class="c1">//              console.out(&quot;괄호가 필요없다&quot;)</span>
-        <span class="c1">//  3.  블록문이 종료하면서 아무런 값도 반환하지 않는다.</span>
-        <span class="p">()</span> <span class="c1">// 정의하고 동시에 실행한다.</span>
-        <span class="n">Proxy</span><span class="p">().</span><span class="n">execute</span><span class="p">({}</span> <span class="n">portable_codes</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">// 정의와 동시에 파라메터로 넣고 있다.</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;you can access local variable. a=&quot;</span> <span class="o">+</span> <span class="n">a</span><span class="p">)</span>
-            <span class="n">print</span><span class="p">()</span>
-        <span class="p">})</span>
-
-        <span class="n">a</span><span class="o">=</span><span class="mi">100</span>
-
-        <span class="c1">//  4.  사실은, void(void)의 syntatic-sugar에 불과하다.</span>
-        <span class="c1">//      따라서 서로 호환된다.</span>
-        <span class="p">{}[]</span> <span class="n">cl</span> <span class="o">=</span> <span class="p">[</span><span class="n">portable_codes</span><span class="p">,</span> <span class="p">{</span>
-            <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;a=&quot;</span> <span class="o">+</span> <span class="o">++</span><span class="n">a</span> <span class="o">+</span> <span class="s">&quot;, b=&quot;</span> <span class="o">+</span> <span class="o">++</span><span class="n">b</span><span class="p">)</span>
-        <span class="p">},</span> <span class="p">{}</span> <span class="n">codes_nothing_have</span><span class="p">,</span> <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 이름없는 클로져. {} 와 동일하다.</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;nameless code block.&quot;</span><span class="p">)</span>
-        <span class="p">},</span> <span class="n">closure</span><span class="p">()]</span>
-        <span class="k">return</span> <span class="n">cl</span>
-    <span class="p">}</span>
-    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">closure_with_delegator</span><span class="p">()</span>
-        <span class="p">{}[]</span> <span class="n">cl</span> <span class="o">=</span> <span class="n">boo_with_block</span><span class="p">()</span>
-
-        <span class="c1">// 이는 블록문을 정의한 것이다. </span>
-        <span class="c1">// 따라서 수행되지 않는다.</span>
-        <span class="p">{</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;you can&#39;t see this statement.&quot;</span><span class="p">)</span>
-        <span class="p">}</span>
-        <span class="c1">// try: try &lt;void(void) 메소드 정의&gt;</span>
-        <span class="c1">// try 뒤에 나오는 블록문의 정의를 바로 실행한다.</span>
-        <span class="c1">// 사실, { &lt;stmts&gt; }() 와 동일하다.</span>
-        <span class="k">try</span> <span class="p">{}</span> <span class="n">codes</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">- cl:&quot;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="kt">void</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">e</span> <span class="n">in</span> <span class="n">cl</span>
-                <span class="n">e</span><span class="p">()</span>
-        <span class="p">}</span>        
-    <span class="p">}</span>
-
-<span class="cm">/*결과:</span>
-<span class="cm">    a=1, b=1</span>
-<span class="cm">    a=1, b=1</span>
-<span class="cm">    a=2, b=1</span>
-<span class="cm">    let&#39;s execute a block.</span>
-<span class="cm">    you can access local variable. a=0</span>
-<span class="cm">    and can access method of object who has been declared to this block.</span>
-
-<span class="cm">    - cl:</span>
-<span class="cm">    let&#39;s execute a block.</span>
-<span class="cm">    you can access local variable. a=100</span>
-<span class="cm">    and can access method of object who has been declared to this block.</span>
-<span class="cm">    a=101, b=1</span>
-<span class="cm">    nameless code block.</span>
-<span class="cm">    a=1, b=1</span>
 <span class="cm">*/</span></pre><h6>예외처리</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 <span class="n">import</span> <span class="n">file</span>
 
@@ -932,39 +914,38 @@
         <span class="n">ret</span> <span class="o">=&gt;</span> <span class="err">@</span><span class="n">set</span> <span class="p">{</span>
             <span class="c1">// 예외처리try-catch: try &lt;코드&gt; catch(인자리스트) &lt;코드&gt;</span>
             <span class="c1">// 다음의 규칙을 따른다.</span>
-            <span class="c1">//  1.  예외exception을 throw &lt;변수&gt; 를 하게 되면,</span>
+            <span class="c1">//  1.  예외가 발생하면, 자동으로 throw 처리된다.</span>
+            <span class="c1">//  2.  예외exception을 throw &lt;변수&gt; 를 하게 되면,</span>
             <span class="c1">//      해당 함수의 호출자에게로 돌아간다propagate.</span>
             <span class="c1">//      (1depth stack unwinding.)</span>
-            <span class="c1">//  2.  익셉션이 발생하면, 자동으로 throw 처리된다.           </span>
-            <span class="c1">//  3.  예외가 발생하면, 발생한 인스턴스가 소유한 적절한 catch 멤버가</span>
-            <span class="c1">//      호출된다.</span>
-            <span class="c1">//  4.  3에서도 찾지 못하면 자동으로 throw 처리된다.</span>
-            <span class="c1">//  5.  catch는 외부메소드가 아니라 호출자에게 return 한다.</span>
-            <span class="c1">//      (즉, catch에서 throw되면 호출자의 catch가 호출되므로</span>
-            <span class="c1">//      무한 재귀는 일어나지 않는다.)</span>
-            <span class="c1">//  6.  최종적으로 처리되지않은unhandled예외가 main()을 벗어나면</span>
+            <span class="c1">//  3.  처리되지 않은 예외를 받은 호출자(메소드 또는 블록문)는 먼저</span>
+            <span class="c1">//      자신을 콜스택에서 제거하고, 자신이 소유한 적절한 catch 멤버를</span>
+            <span class="c1">//      찾아 호출한다.</span>
+            <span class="c1">//      (catch에서 다시 예외가 발생하면 호출자의 콜스택은 이미</span>
+            <span class="c1">//      제거되었으므로 무한 재귀는 일어나지 않는다.)</span>
+            <span class="c1">//  4.  3에서도 찾지 못하면 자동으로 다시 throw 처리된다.</span>
+            <span class="c1">//  5.  최종적으로 처리되지않은 예외가 main()을 벗어나면</span>
             <span class="c1">//      프로세스를 중단한다.</span>
-            <span class="c1">//  7.  catch에서 throw를 하지 않으면 예외처리를 처리consume했다고</span>
+            <span class="c1">//  6.  catch에서 throw를 하지 않으면 예외처리를 처리consume했다고</span>
             <span class="c1">//      판단한다.</span>
             <span class="n">f</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 항상 fileexception이 발생한다.</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// Rule#1, 2: 내부에서 fileexception이 발생한다.</span>
 
-            <span class="c1">// Rule#1에 의해서 f.open()에서 발생한 익셉션은, 익셉션을 발생시킨 인스턴스인</span>
-            <span class="c1">// path.@set() 함수가 소유한 catch() 함수 중 적절한 인자를 소유한,</span>
-            <span class="c1">// catch(fileexcept)로 넘겨진다.</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">fileexcept</span> <span class="n">e</span><span class="p">)</span>
+            <span class="c1">// Rule#3에 의해서 f.open()에서 발생한 익셉션은, path.@set() 메소드가</span>
+            <span class="c1">// 소유한 catch() 함수 중 가장 적절한 인자를 가진 catch(fileexcept)로</span>
+            <span class="c1">// 넘겨진다.</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">file</span><span class="o">&lt;</span><span class="n">err</span><span class="o">&gt;</span> <span class="n">e</span><span class="p">)</span>
                  <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;fail to open &quot;</span> <span class="o">+</span> <span class="n">ret</span><span class="p">)</span>
-                 <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 반드시 다시 예외가 발생한다.</span>
-                 <span class="c1">// Rule#5에 의해 str.@set()을 호출한 foo()의 블록문으로 throw 된다.</span>
+                 <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 다시 fileexcept가 발생한다.</span>
+                 <span class="c1">// Rule#1, 2에 의해 str.@set()을 호출한 foo()의 블록문으로 throw.</span>
 
-            <span class="c1">// 눈치챘겠지만, 사실 catch 또한 클로져에 불과하다.</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span> <span class="c1">// 눈치챘겠지만, 사실 catch 또한 클로져에 불과하다.</span>
                  <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here.&quot;</span><span class="p">)</span>
                  <span class="k">return</span> <span class="n">ret</span> <span class="c1">// catch의 반환형은 외부메소드의 반환형(res ret)여야 한다.</span>
-                 <span class="c1">// 여기서 return 되면 str.@set()에서 return 되게 된다.</span>
+                 <span class="c1">// Rule#3: 여기서 return 되면 str.@set()에서 return 되게 된다.</span>
 
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;path is &quot;</span> <span class="o">+</span> <span class="k">new</span><span class="p">)</span>
-            <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 여기서 발생한 예외도 위의 catch(fileexcept)로 간다.</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// Rule#3: 여기 예외도 catch(fileexcept)로 간다.</span>
             <span class="k">return</span> <span class="n">ret</span>
         <span class="p">}</span>
 
@@ -978,14 +959,12 @@
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="n">res</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">Opener</span> <span class="n">o</span>
-        <span class="c1">// {, }는 휴대용 블록문Portable Blockstmt.</span>
-        <span class="k">try</span> <span class="p">{</span> <span class="c1">// 블록문의 정의와 동시에 </span>
-            <span class="n">o</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;/usr/bin/bash&quot;</span> <span class="c1">// 안쪽에서 최종적으로 fileexcept가 발생한다.</span>
+        <span class="p">{</span> <span class="c1">// 블록문의 명시적인 정의</span>
+            <span class="n">o</span><span class="p">.</span><span class="n">path</span> <span class="o">=</span> <span class="s">&quot;/usr/bin/bash&quot;</span> <span class="c1">// 최종적으로 fileexcept가 발생한다.</span>
 
-            <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span> <span class="c1">// 이 블록문(클로져)에서 나온 예외는 여기서 catch된다.</span>
-                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;oh dear.&quot;</span><span class="p">)</span>
-                <span class="c1">// console.out()의 반환형 int가 블록문의 반환형(void)로</span>
-                <span class="c1">// 반환되면서 블록문이 종료된다.</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">except</span> <span class="n">e</span><span class="p">)</span> <span class="c1">// 이 블록문에서 나온 예외는 여기서 catch된다.</span>
+                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;oh dear.&quot;</span><span class="p">)</span>             
+                <span class="c1">// 블록문이 종료된다.</span>
 
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here.&quot;</span><span class="p">)</span>
         <span class="p">}</span>
@@ -998,7 +977,7 @@
 <span class="cm">    fail to open /usr/bin/bash</span>
 <span class="cm">    oh dear.</span>
 <span class="cm">    can you see this?</span>
-<span class="cm">*/</span></pre><h6>메타</h6><h6>try-catch는 클로저로 동작한다</h6><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
+<span class="cm">*/</span></pre><h6>메타</h6><pre class="m-code"></pre><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
       </div>
     </div>
   </div>
