@@ -279,10 +279,10 @@ class app {
         Console.out("age=" + age + ", grade=" + double(grade)) // scope(app) 생략 가능
     }
     
-    // prefix #은 static 메소드를 의미.
+    // prefix $은 static 메소드를 의미.
     // 함수간 선언 순서에 종속되지 않음. _double() 호출보다 정의가 나중에 나와도 ok.
-    int #double(float val) { // 인자리스트에 #, _ prefix는 붙일 수 없음.
-        float #mul = 0
+    int $double(float val) { // 인자리스트에 $, _ prefix는 붙일 수 없음.
+        float $mul = 0
         mul++
         return val*mul // 리터럴 상수 int -> float -> int로 implicit 캐스팅
     }
@@ -309,7 +309,7 @@ class Plant {
     ~Plant(): console.out(name + " destructor")
     str name = "herb"
     int getName(): return name
-    void #test(Plant p, str new_name): p.name = new_name
+    void $test(Plant p, str new_name): p.name = new_name
 }
 
 class app {
@@ -870,11 +870,12 @@ import console
 
 class app {
 	str(void) foo() {
-		// 클로져closure: 메소드 안에서 메소드를 정의한다.
-		// 클로져는 관련 요소factor들이 캡처capture를 통해 함축한다. 결과,인스턴스
-		// 메소드의 한 종류이나, 사용시에는 static 메소드처럼 사용하게 되어,
-		// 일종의 외부로 늘어진 인터페이스가 된다.
-		// 클로져는 다음의 특성을 갖는다.
+		// 클로져closure: <메소드 안에서 메소드를 정의한다.>
+		// 클로져는 관련 요소factor들이 캡처capture를 통해 내부로 함축한다. 
+		// 결과,인스턴스 메소드의 한 종류이나, 사용시에는 static 메소드처럼
+		// 사용하게 되며, 일종의 외부로 늘어진 인터페이스로 만드는 것이 목표이다.
+		//
+		// 결과, 클로져는 다음의 특성을 갖는다.
 		//	1. 자신을 포함하는 메소드outer-method와 지역변수local-scope를 공유한다.
 		//	2. 중괄호 사용을 권장하지 않는다.
 		//		앞서 서술했듯, 블록문에는 중괄호 사용이 원칙이다.
@@ -924,7 +925,8 @@ class app {
     }
 }
 /*	결과:
-
+answer to life the universe and everything is 42
+sum is 42
 */
 ```
 
