@@ -698,6 +698,85 @@ class app {
 
 
 
+메소드 재정의 재지정
+
+```cpp
+import console
+
+class Person {
+	int print(int a): console.out("print(int a)"); return 0
+	float print1(): console.out("print1()"); 2.5
+	(int age, float grade) print2(): console.out("print2()"); return (24, 3.5)
+}
+class Student -> Person {
+	int print(int a) {
+		int ret = me.super(a) // me.super(a)는 Person.print(a)와 같다. (추후 서술)
+		console.out("Student.print(int a)")
+		return ret
+	}
+	
+    // 재정의 재지정Redirection지정자: (반환값 이름=>) <함수 명세signature> (=>)
+    // 메소드 재정의overriding의 실행 순서를 쉽게 표현할 수 있다.
+    // 메소드 재정의는 원본 메소드supermethod가 있던 자리에 다른 메소드로 
+    // 덮어쓰는 것으로서, 재정의 한 메소드에서 원본 메소드를 호출 하게 되면 
+    // 코드를 "추가" 하는 구현이 된다.
+    // 이때 재지정 연산자는 원본 메소드를 시작하기전, 시작 한 후 2 곳에 걸쳐서
+   	// 지정할 수 있다.
+    
+    // 다음의 규칙을 따른다.
+    //	1. overriding 메소드에만 사용한다.
+    //	2. => 는 "기반 클래스의 오버라이딩된 메소드로 이행"을 의미한다.
+    //	   ( "me.super(인자리스트)" 와 같다.)
+	//	3. => 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.
+	//		( "+" 반대편에 super's 가 붙는다고 생각하면 이해가 편하다.)
+	// 		e.g) + 이 함수명 뒤에 붙는 경우: 이행후, 실행.
+	//						" 앞		"	   : 실행후, 이행.
+
+	// 이를 활용하면, 다음처럼 줄일 수 있다.
+    ret => float print1() {	// 재지정이 앞에 있으므로, 부모메소드가 먼저 호출된다.
+    	console.out("Student.print1(), ret=" + ret)
+    	return ret
+    }
+    
+	// 재지정이 뒤에 있는 경우, 메소드가 끝나면 주어진 인자리스트로
+	// 그대로 부모메소드를 호출하고, 그 결과를 반환한다.
+	(int age, float grade) print2() =>: console.out("Student.print2()")
+
+    /* 이 코드는 다음과 동일하다.
+    	(int age, float grade) print2() {
+    		console.out("Student.print2()")
+    		return print2()
+    	}
+    */
+    }
+}
+
+class app {
+	void main() {
+		Student s()
+		console.out("print()=" + s.print(1))
+		console.out("print1()=" + s.print1())
+		(int a, float g) = s.print2()
+		console.out("print2()=" + a + ", " + g)
+	}
+}
+/* 결과:
+	print(int a)
+	Student.print(int a)
+	print()=0
+	print1()
+	Student.print1(), ret=2.5
+	print1()=2.5
+	Student.print2()
+	print2()
+	print2()=24, 3.5
+*/
+```
+
+
+
+
+
 
 ##### 상수와 캐스팅
 
@@ -796,22 +875,6 @@ class MyClass {
         }
         __nameless_str name
 	*/
-
-	//	다음처럼 줄일 수 있다.
-    str name1 { 
-    	// 재지정Redirection지정자: (+) <함수 명세signature> (+)
-    	// overrided 메소드의 실행 순서를 쉽게 표현할 수 있다.
-    	// 다음의 규칙을 따른다.
-    	//	1. overriding 메소드에만 사용한다.
-    	//	2. + 는 "기반 클래스의 오버라이딩된 메소드로 이행"을 의미한다.
-        //	   ( "me.super(인자리스트)" 와 같다.)
-		//	3. + 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.
-		//		( "+" 반대편에 super's 가 붙는다고 생각하면 이해가 편하다.)
-		// 		e.g) + 이 함수명 뒤에 붙는 경우: 이행후, 실행.
-		//						" 앞		"	   : 실행후, 이행.
-    	+@set: console.out(name + " was changed to " + new)
-    	// 이 구문이 실행 된 후, str.set()이 실행된다.
-    }
     
     void print(): name1 = "hello"; console.out ("void print() : " + name1)
     int print(int a): console.out("int print(int)")
@@ -824,7 +887,7 @@ class MyClass {
 //	1. 주입한 인터페이스 안에서 private 멤버에 접근할 수 없다.
 //	   (캡슐화encapsulation를 깰 수 없기 때문이다.)
 //	2. 은닉되지 않는다. (동일한 타입내 변경이다. 은닉이 아닌 중복 정의.)
-//	3. overriding되지 않는다.
+//	3. 편의를 위해, 예외적으로 overriding 허용된다.
 class +str {
 	str(#MyClass my) {
 		console.out("str(#MyClass)")
@@ -840,7 +903,12 @@ class +MyClass {
 }
 
 class MyClass2 -> MyClass {
-	+float print(float a): console.out("MyClass.print(float) has been extended.")
+	(age, grade)=> float print(float a): console.out("MyClass.print(float) has been extended."); return res
+    float print(float a) {
+    	(int age, float grade) = me.super(a)
+    	console.out("MyClass.print(float) has been extended.")
+    	return (age, grade)
+    }
 }
 
 class app {
@@ -930,13 +998,17 @@ sum is 42
 */
 ```
 
+##### 
+
+##### res와 익셉션
+
+```cpp
+
+```
+
 
 
 ##### 메타
-
-
-
-##### res와 익셉션
 
 
 
