@@ -741,13 +741,19 @@ class Student -> Person {
 	// 재지정이 뒤에 있는 경우, 메소드가 끝나면 주어진 인자리스트로
 	// 그대로 부모메소드를 호출하고, 그 결과를 반환한다.
 	(int age, float grade) print2() =>: console.out("Student.print2()")
-
     /* 이 코드는 다음과 동일하다.
     	(int age, float grade) print2() {
     		console.out("Student.print2()")
     		return print2()
     	}
-    */
+    	
+       그리고, 다음과 같이 해도 된다.
+    	(int, float) print2() => {
+    		if true
+    			return (0, 0.0)
+    			
+    		// 여기에 도달하면, 부모메소드의 반환값이 나간다.
+    	}
     }
 }
 
@@ -772,8 +778,6 @@ class app {
 	print2()=24, 3.5
 */
 ```
-
-
 
 
 
@@ -855,26 +859,22 @@ class MyClass {
 		// 미리 정의된 타입의 인터페이스를 확장한 후, 즉시 객체를 정의한다.
 		// *) 확장된 타입은 재사용할 수 없다.
         res set(#str new) { // overriding
-        	console.out("name was changed to " + new)
-        	name = new // 무한 재귀 호출 된다.
+        	console.out("name will be changed to " + new)
+        	name = new // 에러. 컴파일은 가능하나, 무한 재귀 호출 된다.
         	return ok
         }
         
-        // notation: @<예약어keyword>
-        // 편의를 위해 추가된 항목들로, 컴파일시 해당하는 구문으로 변환됩니다syntatic-sugar.
-        // 위의 res set(#str new) 는, @set과 동일합니다.
+     
 	}
-	/* 다음과 거의 동일하다.
-    	class __nameless_str -> str {
-    		// 일반적인 상속과 달리 생성자도 계승된다.
-            res set(str new) {
-                console.out("name was changed to " + new)
-                name = new
-                return ok
-            }
-        }
-        __nameless_str name
-	*/
+	
+	// 위의 str name {} 과 동일하다.
+    str name1 {    
+    	// notation: @<예약어keyword>
+		// 편의를 위해 추가된 항목들로, 컴파일시 해당하는 구문으로
+    	// 변환된다. (syntatic-sugar)
+    	// 위의 res set(#str new)과 동일하다.
+    	@set=>: console.out("name will be changed to " + new)
+    }
     
     void print(): name1 = "hello"; console.out ("void print() : " + name1)
     int print(int a): console.out("int print(int)")
@@ -903,12 +903,16 @@ class +MyClass {
 }
 
 class MyClass2 -> MyClass {
-	(age, grade)=> float print(float a): console.out("MyClass.print(float) has been extended."); return res
+	(age, grade)=> (int, float) print(float a) {
+		console.out("MyClass.print(float) has been extended.")
+		return (age, grade)
+	}
+	/* 다음과 동일하다
     float print(float a) {
     	(int age, float grade) = me.super(a)
     	console.out("MyClass.print(float) has been extended.")
     	return (age, grade)
-    }
+    }*/
 }
 
 class app {
@@ -920,7 +924,7 @@ class app {
 }
 
 /* 결과:
-	was changed to hello
+	will be changed to hello
 	void print() : hello
 	str(#MyClass)
 	str(#MyClass)
