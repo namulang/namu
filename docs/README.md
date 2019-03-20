@@ -1021,7 +1021,7 @@ class app {
 
 
 
-##### res와 익셉션
+##### 예외처리
 
 ```cpp
 import console
@@ -1031,17 +1031,36 @@ class Opener {
 	file f = null
 	str path {
 		res => @set {
-			try
-				// 예외처리try-catch:
-				f = file()
-				f.close()
-				f.open(new, "rw")
-				// 여기까지 try 범위에 포함
+			// 예외처리try-catch: try <코드> catch(인자리스트) <코드>
+			// 다음의 규칙을 따른다.
+			//	1.	예외exception을 throw <변수> 를 하게 되면,
+			//		해당 함수의 호출자에게로 돌아간다propagate.
+			//		(1depth stack unwinding.)
+			//	2.	익셉션이 발생하면, 자동으로 throw 처리된다.           
+			//	3.	예외가 발생하면, 발생한 인스턴스가 소유한 적절한 catch 멤버가
+			//		호출된다.
+			//	4.	3에서도 찾지 못하면 자동으로 throw 처리된다.
+			//	5.	catch에서 예외가 발생하면 throw 처리된다.
+			//	6.	최종적으로 처리되지않은unhandled예외가 main()을 벗어나면 프로세스를
+			//		중단한다.
+			//	7.	catch에서 throw를 하지 않으면 예외처리를 처리consume했다고 판단한다.
+
+			f.close()
+			f.open(new, "rw") // 항상 fileexception이 발생한다.
+
+			// Rule#1에 의해서 f.open()에서 발생한 익셉션은, 익셉션을 발생시킨 인스턴스인
+			// path.@set() 함수가 소유한 catch() 함수 중 적절한 인자를 소유한,
+			// catch(fileexcept)로 넘겨진다.
+			catch(fileexcept e)
+			     console.out("fail to open " + res)
+			     f.open(new, "rw") // 반드시 다시 예외가 발생한다.
+			     // Rule#5에 의해 throw 처리된다.
+
 			catch(except e)
-				console.out("fail to open " + res)
-				throw e
+			     console.out("can't reach here.")
 			
 			console.out("path is " + new)
+			f.open(new, "rw") // 여기서 발생한 예외도 위의 catch(fileexcept)로 간다.
 			return res
 		}
 
@@ -1055,26 +1074,25 @@ class Opener {
 class app {
     res foo() {
         Opener o
-        
-        try
-        	o.path = "/usr/bin/bash"
-        catch(except e)
-        	console.out("oh dear.")
-        	throw permexcept
+		// {, }는 블록문을 의미한다.
+		// 사실, 블록문은 동시의 별도의 이름없는 클로져, 즉 메소드이다.
+		{
+			o.path = "/usr/bin/bash" // 안쪽에서 최종적으로 permexcept가 발생한다.
+
+			catch(except e) // 이 블록문(클로져)에서 발생한 예외는 모두 여기서 catch된다.
+				console.out("oh dear.")
+				throw e
+		}        
     }
 
     void main() {
-    	void finally()
-    		console.out("")
-    	try
-        	foo()
-        catch(except e): console.out("can't reach here.")
-        catch(permexcept e): console.out("sense of an ending.")
+		foo()
     }
 }
 /* 결과:
+	fail to open /usr/bin/bash
 	oh dear.
-	sense of an ending.
+	<예외로 인한 프로그램 종료>
 */
 ```
 
