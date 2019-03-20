@@ -835,10 +835,10 @@ class app {
     }
 }
 /* 결과:
-1yo Beaver walked
-Beaver's finding a seashell.
-1yo Beaver walked
-Beaver's finding a seashell.
+	1yo Beaver walked
+	Beaver's finding a seashell.
+	1yo Beaver walked
+	Beaver's finding a seashell.
 */
 ```
 
@@ -997,17 +997,69 @@ class app {
     }
 }
 /*	결과:
-answer to life the universe and everything is 42
-sum is 42
+	answer to life the universe and everything is 42
+	sum is 42
 */
 ```
 
-##### 
+
 
 ##### res와 익셉션
 
 ```cpp
+import console
+import file
 
+class Opener {
+	file f
+	str path {
+		res => @set {
+			f.close()
+			
+			try
+				// 예외처리try-catch:
+				f = file()
+				f.open(new, "rw")
+				// 여기까지 try 범위에 포함
+			catch(except e)
+				console.out("fail to open " + res)
+				throw e
+			
+			console.out("path is " + new)
+			return res
+		}
+
+		res => @get {
+			consol.out("getting path(" res + ") from some Opener object.")
+			return res
+		}
+	}
+}
+
+class app {
+    res foo() {
+        Opener o
+        
+        try
+        	o.path = "/usr/bin/bash"
+        catch(except e)
+        	console.out("oh dear.")
+        	throw permexcept
+    }
+
+    void main() {
+    	void finally()
+    		console.out("")
+    	try
+        	foo()
+        catch(except e): console.out("can't reach here.")
+        catch(permexcept e): console.out("sense of an ending.")
+    }
+}
+/* 결과:
+	oh dear.
+	sense of an ending.
+*/
 ```
 
 
