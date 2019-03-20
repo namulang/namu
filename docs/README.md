@@ -314,10 +314,11 @@ class Plant {
 
 class app {
 	void main() {
-		Plant p() // Plant 객체 정의
+		Plant p // Plant 객체 정의
+		Plant p_null = null // 객체 정의되지 않음.
 
 		if 1
-			Plant p1() // Plant 객체 정의
+			Plant p1 // Plant 객체 정의
 			p1.getName() == p.name // "herb" == "herb"
 		
 			Plant p2 = p1
@@ -457,7 +458,7 @@ class app {
         list["vector_x"] = (0.1, 0.1, 0.1)
     }
     void main() {
-        Person p()
+      	Person p
         str name = "unknown"
         float grade = 3.0
         float[3][str] list = [([0.1, 0.0, 0.0], "vector_x"),
@@ -544,11 +545,17 @@ class app {
         	str name = ""
         	float grade = 2.5
             void print(): console.out(name)
+            void assign((float new_grade, str new_msg), int new_a) {
+            	grade = new_grade
+            	msg = new_msg
+            	a = new_a
+            }
         }
         Person p = (1, "Donald")			;p.print() // "Donald"
         // ;은 다음 stmt를 이어서 서술 가능.
         
-        p() = (float age=3.0, str msg="Jung-un")
+        str = msg = "Jung-un"
+        p.assign((float age=3.0/*인자와 파라메터의 이름은 달라도 된다.*/, msg), 24)
         // 변수 정의 또한 표현식이므로 튜플내에서 사용 가능.
         // 정의된 변수는 해당 scope 내에서 유효. (사용된곳이 블록문 안쪽이면,
         // 해당 블록문이 종료까지 유효.)
@@ -686,7 +693,7 @@ class app {
         float getAge(): 3.5 // 반환형이 다르므로 은닉이다.
     }
     void main() {
-        Plant p()
+        Plant p
         if 1
             p = Leaf()
        	console.("name=" + p.getName() + ", age=" + p.getAge())
@@ -917,7 +924,7 @@ class MyClass2 -> MyClass {
 
 class app {
 	void main() {
-		MyClass me()
+		MyClass me
 		me.print()
 		me.print(3.5)
 	}
@@ -1011,14 +1018,13 @@ import console
 import file
 
 class Opener {
-	file f
+	file f = null
 	str path {
 		res => @set {
-			f.close()
-			
 			try
 				// 예외처리try-catch:
 				f = file()
+				f.close()
 				f.open(new, "rw")
 				// 여기까지 try 범위에 포함
 			catch(except e)
