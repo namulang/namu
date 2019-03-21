@@ -1021,81 +1021,8 @@ class app {
 
 
 
-##### 예외처리
-
-```cpp
-import console
-import file
-
-class Opener {
-	file f = null
-	str path {
-		res => @set {
-			// 예외처리try-catch: try <코드> catch(인자리스트) <코드>
-			// 다음의 규칙을 따른다.
-			//	1.	예외exception을 throw <변수> 를 하게 되면,
-			//		해당 함수의 호출자에게로 돌아간다propagate.
-			//		(1depth stack unwinding.)
-			//	2.	익셉션이 발생하면, 자동으로 throw 처리된다.           
-			//	3.	예외가 발생하면, 발생한 인스턴스가 소유한 적절한 catch 멤버가
-			//		호출된다.
-			//	4.	3에서도 찾지 못하면 자동으로 throw 처리된다.
-			//	5.	catch에서 예외가 발생하면 throw 처리된다.
-			//	6.	최종적으로 처리되지않은unhandled예외가 main()을 벗어나면 프로세스를
-			//		중단한다.
-			//	7.	catch에서 throw를 하지 않으면 예외처리를 처리consume했다고 판단한다.
-
-			f.close()
-			f.open(new, "rw") // 항상 fileexception이 발생한다.
-
-			// Rule#1에 의해서 f.open()에서 발생한 익셉션은, 익셉션을 발생시킨 인스턴스인
-			// path.@set() 함수가 소유한 catch() 함수 중 적절한 인자를 소유한,
-			// catch(fileexcept)로 넘겨진다.
-			catch(fileexcept e)
-			     console.out("fail to open " + res)
-			     f.open(new, "rw") // 반드시 다시 예외가 발생한다.
-			     // Rule#5에 의해 throw 처리된다.
-
-			catch(except e)
-			     console.out("can't reach here.")
-			
-			console.out("path is " + new)
-			f.open(new, "rw") // 여기서 발생한 예외도 위의 catch(fileexcept)로 간다.
-			return res
-		}
-
-		res => @get {
-			consol.out("getting path(" res + ") from some Opener object.")
-			return res
-		}
-	}
-}
-
-class app {
-    res foo() {
-        Opener o
-		// {, }는 블록문을 의미한다.
-		// 사실, 블록문은 동시의 별도의 이름없는 클로져, 즉 메소드이다.
-		{
-			o.path = "/usr/bin/bash" // 안쪽에서 최종적으로 fileexcept가 발생한다.
-
-			catch(except e) // 이 블록문(클로져)에서 발생한 예외는 모두 여기서 catch된다.
-				console.out("oh dear.")
-				throw e
-		}        
-    }
-
-    void main(): foo()
-}
-/* 결과:
-	fail to open /usr/bin/bash
-	oh dear.
-	<예외로 인한 프로그램 종료>
-*/
-```
-
-
 ##### 휴대용 블록문portable Blockstmt
+
 ```cpp
 class Proxy {
     void execute({} codes) {
@@ -1153,9 +1080,19 @@ class app {
 		closure_with_delegator()
 		{}[] cl = boo_with_block()
 
-		console.out("\n- cl:")
-		for void(void) e in cl
-			e()
+        // 이는 블록문을 정의한 것이다. 
+        // 따라서 수행되지 않는다.
+        {
+            console.out("you can't see this statement.")
+        }
+        // try: try <void(void) 메소드 정의>
+        // try 뒤에 나오는 블록문의 정의를 바로 실행한다.
+        // 사실, { <stmts> }() 와 동일하다.
+        try {} codes = {
+            console.out("\n- cl:")
+			for void(void) e in cl
+				e()
+        }        
 	}
 
 /*결과:
@@ -1173,6 +1110,89 @@ class app {
     a=101, b=1
     nameless code block.
     a=1, b=1
+*/
+```
+
+
+
+##### 예외처리
+
+```cpp
+import console
+import file
+
+class Opener {
+	file f = null
+	str path {
+		ret => @set {
+			// 예외처리try-catch: try <코드> catch(인자리스트) <코드>
+			// 다음의 규칙을 따른다.
+			//	1.	예외exception을 throw <변수> 를 하게 되면,
+			//		해당 함수의 호출자에게로 돌아간다propagate.
+			//		(1depth stack unwinding.)
+			//	2.	익셉션이 발생하면, 자동으로 throw 처리된다.           
+			//	3.	예외가 발생하면, 발생한 인스턴스가 소유한 적절한 catch 멤버가
+			//		호출된다.
+			//	4.	3에서도 찾지 못하면 자동으로 throw 처리된다.
+			//	5.	catch는 외부메소드가 아니라 호출자에게 return 한다.
+			//		(즉, catch에서 throw되면 호출자의 catch가 호출되므로
+			//		무한 재귀는 일어나지 않는다.)
+			//	6.	최종적으로 처리되지않은unhandled예외가 main()을 벗어나면
+			//		프로세스를 중단한다.
+			//	7.	catch에서 throw를 하지 않으면 예외처리를 처리consume했다고
+			//		판단한다.
+			f.close()
+			f.open(new, "rw") // 항상 fileexception이 발생한다.
+
+			// Rule#1에 의해서 f.open()에서 발생한 익셉션은, 익셉션을 발생시킨 인스턴스인
+			// path.@set() 함수가 소유한 catch() 함수 중 적절한 인자를 소유한,
+			// catch(fileexcept)로 넘겨진다.
+			catch(fileexcept e)
+			     console.out("fail to open " + ret)
+			     f.open(new, "rw") // 반드시 다시 예외가 발생한다.
+			     // Rule#5에 의해 str.@set()을 호출한 foo()의 블록문으로 throw 된다.
+
+			// 눈치챘겠지만, 사실 catch 또한 클로져에 불과하다.
+			catch(except e)
+			     console.out("can't reach here.")
+			     return ret // catch의 반환형은 외부메소드의 반환형(res ret)여야 한다.
+			     // 여기서 return 되면 str.@set()에서 return 되게 된다.
+			
+			console.out("path is " + new)
+			f.open(new, "rw") // 여기서 발생한 예외도 위의 catch(fileexcept)로 간다.
+			return ret
+		}
+
+		ret => @get {
+			consol.out("getting path(" res + ") from some Opener object.")
+			return ret
+		}
+	}
+}
+
+class app {
+    res foo() {
+        Opener o
+		// {, }는 휴대용 블록문Portable Blockstmt.
+		try { // 블록문의 정의와 동시에 
+			o.path = "/usr/bin/bash" // 안쪽에서 최종적으로 fileexcept가 발생한다.
+
+			catch(except e) // 이 블록문(클로져)에서 나온 예외는 여기서 catch된다.
+				console.out("oh dear.")
+				// console.out()의 반환형 int가 블록문의 반환형(void)로
+				// 반환되면서 블록문이 종료된다.
+
+			console.out("can't reach here.")
+		}
+    	console.out("can you see this?")
+    }
+
+    void main():foo()
+}
+/* 결과:
+	fail to open /usr/bin/bash
+	oh dear.
+	can you see this?
 */
 ```
 
