@@ -1,4 +1,4 @@
-# worldlang 개요 & 설문
+# zworldlang 개요 & 설문
 
 ## 서론
 
@@ -288,6 +288,49 @@ class app {
     }
 }
 // 결과: age=0, grade=10.5
+```
+
+
+
+##### 블록문Blockstmt
+
+```cpp
+import console
+
+class app {
+	// 블록문Blockstmt: { <stmts> }
+	// 실행가능한 구문의 집합이다. {, } 기호와 indent로 표현한다.
+	// 다음의 규칙을 따른다.	
+	//	1.	블록문에서 정의한 식별자(메소드, 변수, ...)는 해당 블록문에서 유효하다.
+	//		(블록문을 사용하면 변수의 라이프 사이클을 제어할 수 있다.)
+	//	2.	블록문은 독자적인 프로그램 흐름에 대한 제어권을 갖지 못한다.
+	//		메소드만 가질 수 있다.
+	//	3.	문법적으로 블록문을 변수에 할당하거나 소유할 수 없다.
+	//		(클로져를 대신 사용하라)
+	//	4.	키워드(if, for, ...)에 의해 블록문을 사용할 경우를 묵시적 블록문이라 한다.
+	//	5.	클래스와 그 멤버(메소드, 변수)들에 한해서만 블록문 기호{,}의 사용을 강제
+	//		한다. 이외의 {, } 기호는 생략 가능하며, 이를 권장한다.
+	void foo() { // 메소드도 블록문을 기본적으로 가지고 있다.
+		{ // 명시적 블록문 정의
+        	int local = 5
+        	updateAge(local) // Rule#2
+        	
+        	int updateAge(int new_age) {
+    			int #age = 20
+	    		return age // Rule#2
+	    	}
+        }
+        // updateAge(20) // Rule#3: 접근 할 수 없다. 블록문에서 벗어났기 때문이다.
+        {        
+	    	return // Rule#1: {, } 을 가지고 있는 foo() 메소드에서 벗어난다.
+        }
+        console.out("can't reach here.")
+	}
+	void main() {
+    	foo()
+	}
+}
+// 결과: <없음>
 ```
 
 
@@ -1021,100 +1064,6 @@ class app {
 
 
 
-##### 휴대용 블록문portable Blockstmt
-
-```cpp
-class Proxy {
-    void execute({} codes) {
-        console.out("let's execute a block.")
-        codes()
-    }
-}
-
-class app {
-	// 일반적인 클로져 문법
-	void(void) closure() {
-		int a = 0 // 클로져에서 캡처할 지역변수. 라이프 사이클이 동기화 된다.
-		return void(void) {
-			int b = 0 // 단순한 지역변수
-			console.out("a=" + ++a + ", b=" + ++b) // a는 증가되는 반면 b는 값 유지.
-		}
-	}
-	void closure_with_delegator() {
-		void(void)[] cl = [closure(), closure()]
-		for var e in cl
-			e()
-		cl[0]()
-	}
-	void print() {
-	    console.out("and can access method of object who has been declared to this block.")
-	}
-	{}[] boo_with_block() {
-		int a = 0
-		// 휴대용 블록문portable blockstmt: {}
-		// 코드의 묶음을 객체처럼 전달 할 수 있다. 다음의 규칙을 따른다.
-		//	1.	{}로 표현하며 뒤에 변수명은 선택optional에 맡긴다.
-		//	2.	묵시적 코드블럭과 다르게 반드시 괄호가 필요하다.
-		//		e.g) if a == 5
-		//				console.out("괄호가 필요없다")
-		//	3.	블록문이 종료하면서 아무런 값도 반환하지 않는다.
-		() // 정의하고 동시에 실행한다.
-		Proxy().execute({} portable_codes = { // 정의와 동시에 파라메터로 넣고 있다.
-			console.out("you can access local variable. a=" + a)
-			print()
-		})
-
-		a=100
-
-		//	4.	사실은, void(void)의 syntatic-sugar에 불과하다.
-		//		따라서 서로 호환된다.
-		{}[] cl = [portable_codes, {
-			int b = 0
-			console.out("a=" + ++a + ", b=" + ++b)
-		}, {} codes_nothing_have, void(void) { // 이름없는 클로져. {} 와 동일하다.
-			console.out("nameless code block.")
-		}, closure()]
-		return cl
-	}
-	void main() {
-		closure_with_delegator()
-		{}[] cl = boo_with_block()
-
-        // 이는 블록문을 정의한 것이다. 
-        // 따라서 수행되지 않는다.
-        {
-            console.out("you can't see this statement.")
-        }
-        // try: try <void(void) 메소드 정의>
-        // try 뒤에 나오는 블록문의 정의를 바로 실행한다.
-        // 사실, { <stmts> }() 와 동일하다.
-        try {} codes = {
-            console.out("\n- cl:")
-			for void(void) e in cl
-				e()
-        }        
-	}
-
-/*결과:
-    a=1, b=1
-    a=1, b=1
-    a=2, b=1
-    let's execute a block.
-    you can access local variable. a=0
-    and can access method of object who has been declared to this block.
-
-    - cl:
-    let's execute a block.
-    you can access local variable. a=100
-    and can access method of object who has been declared to this block.
-    a=101, b=1
-    nameless code block.
-    a=1, b=1
-*/
-```
-
-
-
 ##### 예외처리
 
 ```cpp
@@ -1149,7 +1098,7 @@ class Opener {
 			// catch(fileexcept)로 넘겨진다.
 			catch(fileexcept e)
 			     console.out("fail to open " + ret)
-			     f.open(new, "rw") // 반드시 다시 예외가 발생한다.
+			     f.open(new, "rw") // 반드시 다시 fileexcept가 발생한다.
 			     // Rule#5에 의해 str.@set()을 호출한 foo()의 블록문으로 throw 된다.
 
 			// 눈치챘겠지만, 사실 catch 또한 클로져에 불과하다.
