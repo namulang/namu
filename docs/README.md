@@ -1077,7 +1077,7 @@ class app {
 		// {, }는 블록문을 의미한다.
 		// 사실, 블록문은 동시의 별도의 이름없는 클로져, 즉 메소드이다.
 		{
-			o.path = "/usr/bin/bash" // 안쪽에서 최종적으로 permexcept가 발생한다.
+			o.path = "/usr/bin/bash" // 안쪽에서 최종적으로 fileexcept가 발생한다.
 
 			catch(except e) // 이 블록문(클로져)에서 발생한 예외는 모두 여기서 catch된다.
 				console.out("oh dear.")
@@ -1085,9 +1085,7 @@ class app {
 		}        
     }
 
-    void main() {
-		foo()
-    }
+    void main(): foo()
 }
 /* 결과:
 	fail to open /usr/bin/bash
@@ -1097,14 +1095,85 @@ class app {
 ```
 
 
-##### Blockstmt 는 클로저
+##### 휴대용 블록문portable Blockstmt
 ```cpp
-import console
+class Proxy {
+    void execute({} codes) {
+        console.out("let's execute a block.")
+        codes()
+    }
+}
 
 class app {
-	void main() {
+	// 일반적인 클로져 문법
+	void(void) closure() {
+		int a = 0 // 클로져에서 캡처할 지역변수. 라이프 사이클이 동기화 된다.
+		return void(void) {
+			int b = 0 // 단순한 지역변수
+			console.out("a=" + ++a + ", b=" + ++b) // a는 증가되는 반면 b는 값 유지.
+		}
 	}
-}
+	void closure_with_delegator() {
+		void(void)[] cl = [closure(), closure()]
+		for var e in cl
+			e()
+		cl[0]()
+	}
+	void print() {
+	    console.out("and can access method of object who has been declared to this block.")
+	}
+	{}[] boo_with_block() {
+		int a = 0
+		// 휴대용 블록문portable blockstmt: {}
+		// 코드의 묶음을 객체처럼 전달 할 수 있다. 다음의 규칙을 따른다.
+		//	1.	{}로 표현하며 뒤에 변수명은 선택optional에 맡긴다.
+		//	2.	묵시적 코드블럭과 다르게 반드시 괄호가 필요하다.
+		//		e.g) if a == 5
+		//				console.out("괄호가 필요없다")
+		//	3.	블록문이 종료하면서 아무런 값도 반환하지 않는다.
+		() // 정의하고 동시에 실행한다.
+		Proxy().execute({} portable_codes = { // 정의와 동시에 파라메터로 넣고 있다.
+			console.out("you can access local variable. a=" + a)
+			print()
+		})
+
+		a=100
+
+		//	4.	사실은, void(void)의 syntatic-sugar에 불과하다.
+		//		따라서 서로 호환된다.
+		{}[] cl = [portable_codes, {
+			int b = 0
+			console.out("a=" + ++a + ", b=" + ++b)
+		}, {} codes_nothing_have, void(void) { // 이름없는 클로져. {} 와 동일하다.
+			console.out("nameless code block.")
+		}, closure()]
+		return cl
+	}
+	void main() {
+		closure_with_delegator()
+		{}[] cl = boo_with_block()
+
+		console.out("\n- cl:")
+		for void(void) e in cl
+			e()
+	}
+
+/*결과:
+    a=1, b=1
+    a=1, b=1
+    a=2, b=1
+    let's execute a block.
+    you can access local variable. a=0
+    and can access method of object who has been declared to this block.
+
+    - cl:
+    let's execute a block.
+    you can access local variable. a=100
+    and can access method of object who has been declared to this block.
+    a=101, b=1
+    nameless code block.
+    a=1, b=1
+*/
 ```
 
 
