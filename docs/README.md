@@ -292,6 +292,47 @@ class app {
 
 
 
+##### res & src
+
+```cpp
+import console
+
+class app {
+	res boo(res result) {
+		res ret // 기본값은 rok다.
+		// res = res + result // res는 사칙연산이 허용되지 않는다.
+		ret = result
+		console.out("ret=" + ret + ", code=" + ret.code) // res=rok, code=0
+		return ret
+	}
+	res foo() {
+		res ret = boo(rsuper(rwarn)) // 새로운 rsuper객체를 생성한다.
+		src s = ret.src // src 타입은 해당 심볼이 어느 출처에서 왔는지 알려준다.
+		console.out(s.method.name + "#" + s.line + " at " + s.file.name) // app.foo()#12 at res.wrd
+		return ret
+	}
+	void main() {
+		res ret = foo()
+		if ret == rsuper
+			console.out("ret == rsuper")
+		if ret.isSub(rwarn)
+			console.out("ret.isSub(rwarn)")
+		if ret.isWarn()
+			console.out("ret.isWarn()")
+		if ret.isNormal() // ==> (! ret.isWarn() & ! ret.isErr())
+			console.out("ret.isNormal()")
+	}
+}
+/* 결과:
+	ret == rsuper
+	ret.isSub(rwarn)
+	ret.isWarn()
+	ret.isNormal()
+*/
+```
+
+
+
 ##### 블록문Blockstmt
 
 ```cpp
@@ -1096,7 +1137,7 @@ class Opener {
 			// Rule#3에 의해서 f.open()에서 발생한 익셉션은, path.@set() 메소드가
 			// 소유한 catch() 함수 중 가장 적절한 인자를 가진 catch(fileexcept)로
 			// 넘겨진다.
-			catch(fileexcept e)
+			catch(file<err> e)
 			     console.out("fail to open " + ret)
 			     f.open(new, "rw") // 다시 fileexcept가 발생한다.
 			     // Rule#1, 2에 의해 str.@set()을 호출한 foo()의 블록문으로 throw.
@@ -1142,13 +1183,11 @@ class app {
 */
 ```
 
-
 ##### 메타
 
+```cpp
 
-
-
-##### try-catch는 클로저로 동작한다
+```
 
 
 
