@@ -1186,7 +1186,49 @@ class app {
 ##### 메타
 
 ```cpp
+import console
 
+class Person {
+	void say(): console.out(" - I don't know my name.")
+}
+class Chales : Person {
+	void say(): console.out(" - My name is Chales Lee.")
+}
+class Park : Person {
+	void say(): console.out(" - My name is Hoon Park.")
+}
+
+class app {
+	class main() {
+    	class[] cls = [Person, Chales, Park] // 사실 class 또한 입에 불과하다.
+		for class e in cls
+			console.out("\n" + e.name + " has " + e.subs.len  " children.")
+			for var child in e.subs
+				console.out("\n - " + child.name)
+				console.out(" - " + e.size + " bytes. nd is sub of " + e.name + " ? -> " + ...
+				child.isSub(e))
+
+			// 객체 정의: e.instance() | e()
+			// 모두 node타입의("?") 객체를 반환한다.
+			? instance = e.instance()
+			Person p = instance // 이것과 위. 2줄은 컴파일 될 수 없다.
+			p.say() // 위의 3줄은 e().say()와 같다.
+      }
+}
+/* 결과:
+Person has 2 children.
+
+ - Chales
+ - 24 bytes. and is sub of Person ? -> true
+ - My name is Chales Lee.
+
+ - Park
+ - 24 bytes. and is sub of Person ? -> true
+ - My name is Hoon Park.
+
+Chales has 0 children.
+Park has 0 children.
+*/
 ```
 
 
