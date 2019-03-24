@@ -117,16 +117,17 @@ class app { // 블록문(Block stmt)는 중괄호 사용
 
 기본 제공 타입은 기본자료형(primitive data type)과 선정의 타입 (pretype) 2종류로 나뉘어집니다.
 
-기본 자료형은 총 6 종류이며, pretype은 밑에서 얘기하겠습니다.
+기본 자료형은 총 7 종류이며, pretype은 밑에서 얘기하겠습니다.
 
 | 타입명 | 종류         | 표현 범위 | 크기  | 기본값 | casting 우선순위(낮은쪽 -> 높은쪽) |
 | ------ | ------------ | --------- | ----- | ------ | ---------------------------------- |
-| int    | 정수         | signed    | 32bit | 0      | 3                                  |
-| float  | 실수         | signed    | 32bit | 0.0    | 4                                  |
-| str    | 문자열       | .         | .     | ""     | 5                                  |
-| bool   | true / false | .         | .     | false  | 1                                  |
-| char   | 정수         | unsigned  | 16bit | 0      | 2                                  |
-| byte   | 정수         | signed    | 8bit  | 0      | 2                                  |
+| int    | 정수         | signed    | 32bit | 0      | 4                                  |
+| float  | 실수         | signed    | 32bit | 0.0    | 5                                  |
+| str    | 문자열       | .         | .     | ""     | 6                                  |
+| bool   | true / false | .         | .     | false  | 2                                  |
+| char   | 정수         | unsigned  | 16bit | 0      | 3                                  |
+| byte   | 정수         | signed    | 8bit  | 0      | 3                                  |
+| res    | 결과         | .         | .     | rok    | 1                                  |
 
 ```cpp
 import console
@@ -299,6 +300,47 @@ import console
 
 class app {
 	res boo(res result) {
+		// 결과타입res:
+		// 메소드의 결과를 표현한다. 동작의 성공 여부, 결과의 메시지, 결과의 카테고리
+		// (warn, info, err), src 값들을 확인 할 수 있다. res는 ADT이며 동시에
+		// occupiable 타입이다.
+		//
+		// result pretypes:
+		// res로부터 상속받은 다양한 결과타입들이 pretypes로써 정의되어 있다. prefix "r"
+		// 을 사용하며, 다음은 그 목록이다.
+		//    1. rok:        성공적으로 이상없이 수행됨. res의 기본값이다.
+		//    2. rfile:    파일 관련 에러
+		//    3. rperm:    권한 관련 에러
+		//    4. rsuper:    기반 클래스에서 발생한 에러로 더 이상 현 메소드에서 진행이 불가
+		//                하다.
+		//    ...추가예정...
+		
+		// 어떻게 res는 ADT이며 occupiable이며, 기본값이 ADT가 되는가?:
+		// 앞서 설명한 듯 occupiable의 동작은 매우 심플하다.
+		//    1.    월드의 모든 변수는 기본적으로 refer에 의해서 감싸져wrapping 있다.
+		//    2.    refer는 할당연산 요청이 왔을때 대상(wrapping하는)이 occupiable 타입일
+		//        경우, 그 대상에 복제생성자를cloning 수행한다.
+		//    3.    반대의 경우에는 단순히 대상을 교체한다.
+		//    4.    구체타입이며 occupiable일 경우에는 최적화에 따라 refer가 없도록 코드블럭
+		//        을 구현한다.
+		es ret // 기본값은 rok다.
+		
+		// 위의 구문은 최종적으로 ret라는 refer가 rok라는 타입의 객체를 가리키게 되는데,
+		// 중간과정을 해석하면 다음의 흐름으로 진행된다.
+		//    1.    ret의 기본값은 rok이므로 res ret = rok로 인터프리터는 평가evaluate한다.
+		//    2.    rok는 선정의타입pretype이며, occupiable이므로 occupiable에서 괄호 없이
+		//        타입만 명시할 경우, 기본생성자를 호출하는것과 같아, res ret = rok()
+		//        로 된다.
+		//        e.g)    int a // int는 occupiable. int a()와 같으므로 int 생성자가
+		//                      // 호출되며, 결과 a = 0.
+		//                MyClass b // MyClass는 sharable. b = null이다.
+		//    3.    rok()로 생성된 임시객체는 refer인 ret 변수에 할당이 된다.
+		//        refer ret는 타입인 res가 occupiable 이므로 주어진 객체의 복제 생성을
+		//        시도한다. 결과, res ret = rok().clone()과 같아진다.
+		//    4.    위는 최적화를 거치지 않았을때, 기본 규칙에 의해서 동작되는 순수 로직
+		//        흐름이며, 실제로는 중복되어 불필요한 객체 생성을 하지 않도록
+		//        의미분석기가 최적화된다.
+		
 		res ret // 기본값은 rok다.
 		// res = res + result // res는 사칙연산이 허용되지 않는다.
 		ret = result
@@ -306,28 +348,38 @@ class app {
 		return ret
 	}
 	res foo() {
-		res ret = boo(rsuper(rwarn)) // 새로운 rsuper객체를 생성한다.
-		src s = ret.src // src 타입은 해당 심볼이 어느 출처에서 왔는지 알려준다.
+		res ret = boo(rsuper(rwarn)) // Warning으로 새로운 rsuper객체를 생성한다.
+		// 출처src:
+		// 주어진 심볼(변수, 메소드, 클래스)이 어느 원전(code)에서 기원하였는지를
+		// 기록한다. 파서가 구문문석을 하면서 그 정보를 채워넣으며 sharable 타입으로,
+		// 모든 객체가 가지게 된다.
+		src s = ret.src
 		console.out(s.method.name + "#" + s.line + " at " + s.file.name) // app.foo()#12 at res.wrd
 		return ret
 	}
 	void main() {
 		res ret = foo()
-		if ret == rsuper
+		if ret == rsuper() // 기존 규칙대로라면 이게 맞는 비교문이나,
+			console.out("ret == rsuper()")
+		if ret == rsuper // 편의를 위해, ret는 클래스인 rsuper도 체크할 수 있다.
 			console.out("ret == rsuper")
-		if ret.isSub(rwarn)
-			console.out("ret.isSub(rwarn)")
+		if ret.isSub(rsuper) // 위의 "== rsuper"는 이것과 같다.
+			console.out("ret.isSub(rsuper)")
 		if ret.isWarn()
 			console.out("ret.isWarn()")
 		if ret.isNormal() // ==> (! ret.isWarn() & ! ret.isErr())
 			console.out("ret.isNormal()")
+		if ret // ! ret.isNormal()과 같다.
+			console.out("ret")
 	}
 }
 /* 결과:
+	ret == rsuper()
 	ret == rsuper
-	ret.isSub(rwarn)
+	ret.isSub(rsuper)
 	ret.isWarn()
 	ret.isNormal()
+	ret
 */
 ```
 
@@ -508,13 +560,14 @@ class app {
 
 ##### sharable & occupiable
 
-| 타입명                                       | Occupiable / Sharable |
-| -------------------------------------------- | --------------------- |
-| int, str, bool, char, float, byte, res, void | O                     |
-| int[], str[int]                              | S                     |
-| ()                                           | O                     |
-| class                                        | S                     |
-| 사용자 Class                                 | S                     |
+| 타입명                                                       | Occupiable / Sharable |
+| ------------------------------------------------------------ | --------------------- |
+| primitive types:<br />int, str, bool, char, float, byte, res, void | O               |
+| pretypes:<br />rok, rfile, rperm, ...                        | O                     |
+| 배열(int[]), 맵(int[str])                                    | S                     |
+| 튜플()                                                       | O                     |
+| class                                                        | S                     |
+| 사용자 class의 객체                                          | S                     |
 
 ```cpp
 import console
