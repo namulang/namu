@@ -63,7 +63,7 @@
 <span class="p">}</span>   <span class="c1">// Indent가 중요하기 때문에 한줄에 여러개의 }를 붙일 수 없음</span>
     <span class="c1">// 잘못된 예) }}</span>
 
-<span class="c1">// 결과: hello world</span></pre><h6>변수정의와 기본 연산자</h6><p>기본 제공 타입은 기본자료형(primitive data type)과 선정의 타입 (pretype) 2종류로 나뉘어집니다.</p><p>기본 자료형은 총 6 종류이며, pretype은 밑에서 얘기하겠습니다.</p><table class="m-table"><thead><tr><th>타입명</th><th>종류</th><th>표현 범위</th><th>크기</th><th>기본값</th><th>casting 우선순위(낮은쪽 -&gt; 높은쪽)</th></tr></thead><tbody><tr><td>int</td><td>정수</td><td>signed</td><td>32bit</td><td>0</td><td>3</td></tr><tr><td>float</td><td>실수</td><td>signed</td><td>32bit</td><td>0.0</td><td>4</td></tr><tr><td>str</td><td>문자열</td><td>.</td><td>.</td><td>&quot;&quot;</td><td>5</td></tr><tr><td>bool</td><td>true / false</td><td>.</td><td>.</td><td>false</td><td>1</td></tr><tr><td>char</td><td>정수</td><td>unsigned</td><td>16bit</td><td>0</td><td>2</td></tr><tr><td>byte</td><td>정수</td><td>signed</td><td>8bit</td><td>0</td><td>2</td></tr></tbody></table><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="c1">// 결과: hello world</span></pre><h6>변수정의와 기본 연산자</h6><p>기본 제공 타입은 기본자료형(primitive data type)과 선정의 타입 (pretype) 2종류로 나뉘어집니다.</p><p>기본 자료형은 총 7 종류이며, pretype은 밑에서 얘기하겠습니다.</p><table class="m-table"><thead><tr><th>타입명</th><th>종류</th><th>표현 범위</th><th>크기</th><th>기본값</th><th>casting 우선순위(낮은쪽 -&gt; 높은쪽)</th></tr></thead><tbody><tr><td>int</td><td>정수</td><td>signed</td><td>32bit</td><td>0</td><td>4</td></tr><tr><td>float</td><td>실수</td><td>signed</td><td>32bit</td><td>0.0</td><td>5</td></tr><tr><td>str</td><td>문자열</td><td>.</td><td>.</td><td>&quot;&quot;</td><td>6</td></tr><tr><td>bool</td><td>true / false</td><td>.</td><td>.</td><td>false</td><td>2</td></tr><tr><td>char</td><td>정수</td><td>unsigned</td><td>16bit</td><td>0</td><td>3</td></tr><tr><td>byte</td><td>정수</td><td>signed</td><td>8bit</td><td>0</td><td>3</td></tr><tr><td>res</td><td>결과</td><td>.</td><td>.</td><td>rok</td><td>1</td></tr></tbody></table><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">0</span>
@@ -201,6 +201,47 @@
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="n">res</span> <span class="n">boo</span><span class="p">(</span><span class="n">res</span> <span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 결과타입res:</span>
+        <span class="c1">// 메소드의 결과를 표현한다. 동작의 성공 여부, 결과의 메시지, 결과의 카테고리</span>
+        <span class="c1">// (warn, info, err), src 값들을 확인 할 수 있다. res는 ADT이며 동시에</span>
+        <span class="c1">// occupiable 타입이다.</span>
+        <span class="c1">//</span>
+        <span class="c1">// result pretypes:</span>
+        <span class="c1">// res로부터 상속받은 다양한 결과타입들이 pretypes로써 정의되어 있다. prefix &quot;r&quot;</span>
+        <span class="c1">// 을 사용하며, 다음은 그 목록이다.</span>
+        <span class="c1">//    1. rok:        성공적으로 이상없이 수행됨. res의 기본값이다.</span>
+        <span class="c1">//    2. rfile:    파일 관련 에러</span>
+        <span class="c1">//    3. rperm:    권한 관련 에러</span>
+        <span class="c1">//    4. rsuper:    기반 클래스에서 발생한 에러로 더 이상 현 메소드에서 진행이 불가</span>
+        <span class="c1">//                하다.</span>
+        <span class="c1">//    ...추가예정...</span>
+
+        <span class="c1">// 어떻게 res는 ADT이며 occupiable이며, 기본값이 ADT가 되는가?:</span>
+        <span class="c1">// 앞서 설명한 듯 occupiable의 동작은 매우 심플하다.</span>
+        <span class="c1">//    1.    월드의 모든 변수는 기본적으로 refer에 의해서 감싸져wrapping 있다.</span>
+        <span class="c1">//    2.    refer는 할당연산 요청이 왔을때 대상(wrapping하는)이 occupiable 타입일</span>
+        <span class="c1">//        경우, 그 대상에 복제생성자를cloning 수행한다.</span>
+        <span class="c1">//    3.    반대의 경우에는 단순히 대상을 교체한다.</span>
+        <span class="c1">//    4.    구체타입이며 occupiable일 경우에는 최적화에 따라 refer가 없도록 코드블럭</span>
+        <span class="c1">//        을 구현한다.</span>
+        <span class="n">es</span> <span class="n">ret</span> <span class="c1">// 기본값은 rok다.</span>
+
+        <span class="c1">// 위의 구문은 최종적으로 ret라는 refer가 rok라는 타입의 객체를 가리키게 되는데,</span>
+        <span class="c1">// 중간과정을 해석하면 다음의 흐름으로 진행된다.</span>
+        <span class="c1">//    1.    ret의 기본값은 rok이므로 res ret = rok로 인터프리터는 평가evaluate한다.</span>
+        <span class="c1">//    2.    rok는 선정의타입pretype이며, occupiable이므로 occupiable에서 괄호 없이</span>
+        <span class="c1">//        타입만 명시할 경우, 기본생성자를 호출하는것과 같아, res ret = rok()</span>
+        <span class="c1">//        로 된다.</span>
+        <span class="c1">//        e.g)    int a // int는 occupiable. int a()와 같으므로 int 생성자가</span>
+        <span class="c1">//                      // 호출되며, 결과 a = 0.</span>
+        <span class="c1">//                MyClass b // MyClass는 sharable. b = null이다.</span>
+        <span class="c1">//    3.    rok()로 생성된 임시객체는 refer인 ret 변수에 할당이 된다.</span>
+        <span class="c1">//        refer ret는 타입인 res가 occupiable 이므로 주어진 객체의 복제 생성을</span>
+        <span class="c1">//        시도한다. 결과, res ret = rok().clone()과 같아진다.</span>
+        <span class="c1">//    4.    위는 최적화를 거치지 않았을때, 기본 규칙에 의해서 동작되는 순수 로직</span>
+        <span class="c1">//        흐름이며, 실제로는 중복되어 불필요한 객체 생성을 하지 않도록</span>
+        <span class="c1">//        의미분석기가 최적화된다.</span>
+
         <span class="n">res</span> <span class="n">ret</span> <span class="c1">// 기본값은 rok다.</span>
         <span class="c1">// res = res + result // res는 사칙연산이 허용되지 않는다.</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">result</span>
@@ -208,28 +249,38 @@
         <span class="k">return</span> <span class="n">ret</span>
     <span class="p">}</span>
     <span class="n">res</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">res</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">boo</span><span class="p">(</span><span class="n">rsuper</span><span class="p">(</span><span class="n">rwarn</span><span class="p">))</span> <span class="c1">// 새로운 rsuper객체를 생성한다.</span>
-        <span class="n">src</span> <span class="n">s</span> <span class="o">=</span> <span class="n">ret</span><span class="p">.</span><span class="n">src</span> <span class="c1">// src 타입은 해당 심볼이 어느 출처에서 왔는지 알려준다.</span>
+        <span class="n">res</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">boo</span><span class="p">(</span><span class="n">rsuper</span><span class="p">(</span><span class="n">rwarn</span><span class="p">))</span> <span class="c1">// Warning으로 새로운 rsuper객체를 생성한다.</span>
+        <span class="c1">// 출처src:</span>
+        <span class="c1">// 주어진 심볼(변수, 메소드, 클래스)이 어느 원전(code)에서 기원하였는지를</span>
+        <span class="c1">// 기록한다. 파서가 구문문석을 하면서 그 정보를 채워넣으며 sharable 타입으로,</span>
+        <span class="c1">// 모든 객체가 가지게 된다.</span>
+        <span class="n">src</span> <span class="n">s</span> <span class="o">=</span> <span class="n">ret</span><span class="p">.</span><span class="n">src</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">method</span><span class="p">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;#&quot;</span> <span class="o">+</span> <span class="n">s</span><span class="p">.</span><span class="n">line</span> <span class="o">+</span> <span class="s">&quot; at &quot;</span> <span class="o">+</span> <span class="n">s</span><span class="p">.</span><span class="n">file</span><span class="p">.</span><span class="n">name</span><span class="p">)</span> <span class="c1">// app.foo()#12 at res.wrd</span>
         <span class="k">return</span> <span class="n">ret</span>
     <span class="p">}</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">res</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">ret</span> <span class="o">==</span> <span class="n">rsuper</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="o">==</span> <span class="n">rsuper</span><span class="p">()</span> <span class="c1">// 기존 규칙대로라면 이게 맞는 비교문이나,</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret == rsuper()&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="o">==</span> <span class="n">rsuper</span> <span class="c1">// 편의를 위해, ret는 클래스인 rsuper도 체크할 수 있다.</span>
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret == rsuper&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ret</span><span class="p">.</span><span class="n">isSub</span><span class="p">(</span><span class="n">rwarn</span><span class="p">)</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret.isSub(rwarn)&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span><span class="p">.</span><span class="n">isSub</span><span class="p">(</span><span class="n">rsuper</span><span class="p">)</span> <span class="c1">// 위의 &quot;== rsuper&quot;는 이것과 같다.</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret.isSub(rsuper)&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ret</span><span class="p">.</span><span class="n">isWarn</span><span class="p">()</span>
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret.isWarn()&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ret</span><span class="p">.</span><span class="n">isNormal</span><span class="p">()</span> <span class="c1">// ==&gt; (! ret.isWarn() &amp; ! ret.isErr())</span>
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret.isNormal()&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span> <span class="c1">// ! ret.isNormal()과 같다.</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret&quot;</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="cm">/* 결과:</span>
+<span class="cm">    ret == rsuper()</span>
 <span class="cm">    ret == rsuper</span>
-<span class="cm">    ret.isSub(rwarn)</span>
+<span class="cm">    ret.isSub(rsuper)</span>
 <span class="cm">    ret.isWarn()</span>
 <span class="cm">    ret.isNormal()</span>
+<span class="cm">    ret</span>
 <span class="cm">*/</span></pre><h6>블록문Blockstmt</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
@@ -379,7 +430,7 @@
 <span class="c1">// 결과:</span>
 <span class="c1">//  age=0, name=</span>
 <span class="c1">//  u</span>
-<span class="c1">//  actually we don&#39;t those stmts in that block of &quot;if&quot;</span></pre><h6>sharable &amp; occupiable</h6><table class="m-table"><thead><tr><th>타입명</th><th>Occupiable / Sharable</th></tr></thead><tbody><tr><td>int, str, bool, char, float, byte, res, void</td><td>O</td></tr><tr><td>int[], str[int]</td><td>S</td></tr><tr><td>()</td><td>O</td></tr><tr><td>class</td><td>S</td></tr><tr><td>사용자 Class</td><td>S</td></tr></tbody></table><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="c1">//  actually we don&#39;t those stmts in that block of &quot;if&quot;</span></pre><h6>sharable &amp; occupiable</h6><table class="m-table"><thead><tr><th>타입명</th><th>Occupiable / Sharable</th></tr></thead><tbody><tr><td>primitive types:<br />int, str, bool, char, float, byte, res, void</td><td>O</td></tr><tr><td>pretypes:<br />rok, rfile, rperm, ...</td><td>O</td></tr><tr><td>배열(int[]), 맵(int[str])</td><td>S</td></tr><tr><td>튜플()</td><td>O</td></tr><tr><td>class</td><td>S</td></tr><tr><td>사용자 class의 객체</td><td>S</td></tr></tbody></table><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="c1">//  Sharable &amp; Occupiable:</span>
 <span class="c1">//      sharable과 occupiable은 할당연산시 원본인가, reference를 할당하는가만 다르다.</span>
@@ -631,7 +682,7 @@
 <span class="p">}</span>
 <span class="k">class</span> <span class="nc">Student</span> <span class="o">-&gt;</span> <span class="n">Person</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">me</span><span class="p">.</span><span class="n">super</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1">// me.super(a)는 Person.print(a)와 같다. (추후 서술)</span>
+        <span class="kt">int</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">me</span><span class="p">.</span><span class="n">Super</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1">// me.Super(a)는 Person.print(a)와 같다. (추후 서술)</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;Student.print(int a)&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span>
     <span class="p">}</span>
@@ -647,7 +698,7 @@
     <span class="c1">// 다음의 규칙을 따른다.</span>
     <span class="c1">//  1. overriding 메소드에만 사용한다.</span>
     <span class="c1">//  2. =&gt; 는 &quot;기반 클래스의 오버라이딩된 메소드로 이행&quot;을 의미한다.</span>
-    <span class="c1">//     ( &quot;me.super(인자리스트)&quot; 와 같다.)</span>
+    <span class="c1">//     ( &quot;me.Super(인자리스트)&quot; 와 같다.)</span>
     <span class="c1">//  3. =&gt; 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.</span>
     <span class="c1">//      ( &quot;+&quot; 반대편에 super&#39;s 가 붙는다고 생각하면 이해가 편하다.)</span>
     <span class="c1">//      e.g) + 이 함수명 뒤에 붙는 경우: 이행후, 실행.</span>
@@ -697,7 +748,40 @@
 <span class="cm">    Student.print2()</span>
 <span class="cm">    print2()</span>
 <span class="cm">    print2()=24, 3.5</span>
-<span class="cm">*/</span></pre><h6>상수와 캐스팅</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="cm">*/</span></pre><h6>연산자 메소드</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">class</span> <span class="nc">Number</span> <span class="o">-&gt;</span> <span class="n">object</span> <span class="p">{</span> <span class="c1">// 모든 클래스는 object에서 나온다.</span>
+            <span class="c1">// 타입 별칭aka: &lt;원본타입&gt; aka &lt;별칭타입&gt;</span>
+            <span class="c1">// 블록문 규칙에 의해 정의된 scope 내에서만 유효하다.</span>
+            <span class="kt">int</span> <span class="n">aka</span> <span class="n">MyInt</span> <span class="c1">// MyInt 는 int와 동일하다.</span>
+            <span class="n">MyInt</span> <span class="n">num</span>
+            <span class="c1">// 모든 클래스는, 정의가 없어도 다음의 별칭을 갖고 시작한다.</span>
+            <span class="c1">// Number aka This</span>
+            <span class="c1">// object aka Super</span>
+
+            <span class="c1">// 연산자 메소드: &lt;반환형&gt; &lt;op연산자기호&gt;&lt;미리 정의된 인자리스트&gt; { }</span>
+            <span class="c1">// 할당연산자 오버로딩</span>
+            <span class="n">Number</span><span class="cm">/*반환형은 변경될 수 있다*/</span> <span class="n">op</span><span class="o">=</span><span class="p">(</span><span class="err">#</span><span class="n">This</span> <span class="n">rhs</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;Number will be assigned to.&quot;</span><span class="p">)</span>
+            <span class="p">}</span>
+
+            <span class="n">Number</span> <span class="n">op</span><span class="o">+</span><span class="p">(</span><span class="err">#</span><span class="n">This</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">Number</span> <span class="n">ret</span><span class="p">()</span>
+                <span class="n">ret</span><span class="p">.</span><span class="n">num</span> <span class="o">+=</span> <span class="n">rhs</span><span class="p">.</span><span class="n">num</span>
+                <span class="k">return</span> <span class="n">num</span>
+            <span class="p">}</span>
+
+            <span class="c1">// op+=, op-, op&lt; 등 다수..</span>
+
+            <span class="n">This</span> <span class="n">get</span><span class="p">()</span><span class="o">:</span> <span class="k">this</span>
+            <span class="cp">#This #get(): this</span>
+            <span class="n">res</span> <span class="n">set</span><span class="p">(</span><span class="n">This</span><span class="p">)</span>
+        <span class="p">}</span> <span class="n">number</span><span class="p">()</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="n">Number</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre><h6>상수와 캐스팅</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">Animal</span> <span class="p">{</span>
     <span class="c1">// 상수: # &lt;타입&gt;</span>
@@ -719,8 +803,8 @@
 <span class="k">class</span> <span class="nc">Beaver</span> <span class="o">-&gt;</span> <span class="n">Animal</span> <span class="p">{</span>
     <span class="cp">#str #getName(): &quot;Beaver&quot;</span>
     <span class="kt">void</span> <span class="err">#</span><span class="n">walk</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">super</span><span class="p">.</span><span class="n">walk</span><span class="p">()</span> <span class="c1">// super는 기반클래스(Animal)로 캐스팅된 this를 의미한다.</span>
-                    <span class="c1">// &quot;Animal super = this&quot; 가 이미 선언된 것과 같다.</span>
+        <span class="n">Super</span><span class="p">.</span><span class="n">walk</span><span class="p">()</span> <span class="c1">// Super는 기반클래스(Animal)로 캐스팅된 this를 의미한다.</span>
+                    <span class="c1">// &quot;Animal Super = this&quot; 가 이미 선언된 것과 같다.</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;Beaver&#39;s finding a seashell.&quot;</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -821,7 +905,7 @@
     <span class="p">}</span>
     <span class="cm">/* 다음과 동일하다</span>
 <span class="cm">    float print(float a) {</span>
-<span class="cm">        (int age, float grade) = me.super(a)</span>
+<span class="cm">        (int age, float grade) = me.Super(a)</span>
 <span class="cm">        console.out(&quot;MyClass.print(float) has been extended.&quot;)</span>
 <span class="cm">        return (age, grade)</span>
 <span class="cm">    }*/</span>
@@ -977,7 +1061,49 @@
 <span class="cm">    fail to open /usr/bin/bash</span>
 <span class="cm">    oh dear.</span>
 <span class="cm">    can you see this?</span>
-<span class="cm">*/</span></pre><h6>메타</h6><pre class="m-code"></pre><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
+<span class="cm">*/</span></pre><h6>메타</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">say</span><span class="p">()</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot; - I don&#39;t know my name.&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">class</span> <span class="nc">Chales</span> <span class="o">:</span> <span class="n">Person</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">say</span><span class="p">()</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot; - My name is Chales Lee.&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">class</span> <span class="nc">Park</span> <span class="o">:</span> <span class="n">Person</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">say</span><span class="p">()</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot; - My name is Hoon Park.&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="k">class</span> <span class="nc">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">class</span><span class="p">[]</span> <span class="n">cls</span> <span class="o">=</span> <span class="p">[</span><span class="n">Person</span><span class="p">,</span> <span class="n">Chales</span><span class="p">,</span> <span class="n">Park</span><span class="p">]</span> <span class="c1">// 사실 class 또한 입에 불과하다.</span>
+        <span class="k">for</span> <span class="k">class</span> <span class="nc">e</span> <span class="n">in</span> <span class="n">cls</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; has &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">.</span><span class="n">subs</span><span class="p">.</span><span class="n">len</span>  <span class="s">&quot; children.&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">var</span> <span class="n">child</span> <span class="n">in</span> <span class="n">e</span><span class="p">.</span><span class="n">subs</span>
+                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s"> - &quot;</span> <span class="o">+</span> <span class="n">child</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot; - &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">.</span><span class="n">size</span> <span class="o">+</span> <span class="s">&quot; bytes. nd is sub of &quot;</span> <span class="o">+</span> <span class="n">e</span><span class="p">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot; ? -&gt; &quot;</span> <span class="o">+</span> <span class="p">...</span>
+                <span class="n">child</span><span class="p">.</span><span class="n">isSub</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+
+            <span class="c1">// 객체 정의: e.instance() | e()</span>
+            <span class="c1">// 모두 node타입의(&quot;?&quot;) 객체를 반환한다.</span>
+            <span class="o">?</span> <span class="n">instance</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="n">instance</span><span class="p">()</span>
+            <span class="n">Person</span> <span class="n">p</span> <span class="o">=</span> <span class="n">instance</span> <span class="c1">// 이것과 위. 2줄은 컴파일 될 수 없다.</span>
+            <span class="n">p</span><span class="p">.</span><span class="n">say</span><span class="p">()</span> <span class="c1">// 위의 3줄은 e().say()와 같다.</span>
+      <span class="p">}</span>
+<span class="p">}</span>
+<span class="cm">/* 결과:</span>
+<span class="cm">Person has 2 children.</span>
+
+<span class="cm"> - Chales</span>
+<span class="cm"> - 24 bytes. and is sub of Person ? -&gt; true</span>
+<span class="cm"> - My name is Chales Lee.</span>
+
+<span class="cm"> - Park</span>
+<span class="cm"> - 24 bytes. and is sub of Person ? -&gt; true</span>
+<span class="cm"> - My name is Hoon Park.</span>
+
+<span class="cm">Chales has 0 children.</span>
+<span class="cm">Park has 0 children.</span>
+<span class="cm">*/</span></pre><h3>설문</h3><p>이쪽에서 짧게 진행해주시면 됩니다.</p><h3>끝</h3><p>하고싶은 말이 더 많이 있지만 worldlang에 대한 주요 내용에 대한 소개는 여기까지만 해야할 것 같네요.</p><p>이 프로젝트에 관심있으시면 github(url) 한번 둘러보세요.</p><p>시간 내주셔서 다시한번 감사드립니다.</p>
       </div>
     </div>
   </div>
