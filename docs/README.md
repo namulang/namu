@@ -854,7 +854,7 @@ class Person {
 }
 class Student -> Person {
 	int print(int a) {
-		int ret = me.super(a) // me.super(a)는 Person.print(a)와 같다. (추후 서술)
+		int ret = me.Super(a) // me.Super(a)는 Person.print(a)와 같다. (추후 서술)
 		console.out("Student.print(int a)")
 		return ret
 	}
@@ -870,7 +870,7 @@ class Student -> Person {
     // 다음의 규칙을 따른다.
     //	1. overriding 메소드에만 사용한다.
     //	2. => 는 "기반 클래스의 오버라이딩된 메소드로 이행"을 의미한다.
-    //	   ( "me.super(인자리스트)" 와 같다.)
+    //	   ( "me.Super(인자리스트)" 와 같다.)
 	//	3. => 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.
 	//		( "+" 반대편에 super's 가 붙는다고 생각하면 이해가 편하다.)
 	// 		e.g) + 이 함수명 뒤에 붙는 경우: 이행후, 실행.
@@ -925,6 +925,45 @@ class app {
 
 
 
+##### 연산자 메소드
+
+```cpp
+import console
+
+class app {
+	void main() {
+		class Number -> object { // 모든 클래스는 object에서 나온다.
+			// 타입 별칭aka: <원본타입> aka <별칭타입>
+			// 블록문 규칙에 의해 정의된 scope 내에서만 유효하다.
+			int aka MyInt // MyInt 는 int와 동일하다.
+			MyInt num
+			// 모든 클래스는, 정의가 없어도 다음의 별칭을 갖고 시작한다.
+			// Number aka This
+			// object aka Super
+			
+			// 연산자 메소드: <반환형> <op연산자기호><미리 정의된 인자리스트> { }
+			// 할당연산자 오버로딩
+            Number/*반환형은 변경될 수 있다*/ op=(#This rhs) => {
+            	console.out("Number will be assigned to.")
+            }
+            
+            Number op+(#This rhs) {
+            	Number ret()
+            	ret.num += rhs.num
+            	return num
+            }
+            
+            // op+=, op-, op< 등 다수..
+
+			This get(): this
+			#This #get(): this
+			res set(This)
+		} number()
+		number = Number()
+	}
+}
+```
+
 
 ##### 상수와 캐스팅
 
@@ -951,8 +990,8 @@ class Animal {
 class Beaver -> Animal {
     #str #getName(): "Beaver"
     void #walk() {
-        super.walk() // super는 기반클래스(Animal)로 캐스팅된 this를 의미한다.
-                    // "Animal super = this" 가 이미 선언된 것과 같다.
+        Super.walk() // Super는 기반클래스(Animal)로 캐스팅된 this를 의미한다.
+                    // "Animal Super = this" 가 이미 선언된 것과 같다.
         console.out("Beaver's finding a seashell.")
     }
 }
@@ -1061,7 +1100,7 @@ class MyClass2 -> MyClass {
 	}
 	/* 다음과 동일하다
     float print(float a) {
-    	(int age, float grade) = me.super(a)
+    	(int age, float grade) = me.Super(a)
     	console.out("MyClass.print(float) has been extended.")
     	return (age, grade)
     }*/
