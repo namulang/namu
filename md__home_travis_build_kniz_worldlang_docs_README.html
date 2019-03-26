@@ -179,7 +179,7 @@
 <span class="cm">*/</span></pre><h6>접근자와 메소드</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
-    <span class="c1">// prefix _는 private를 의미. 정의와 동시에 초기화도 ok.</span>
+    <span class="c1">// prefix _는 protected를 의미. 정의와 동시에 초기화도 ok.</span>
     <span class="c1">// 접근시에는 _grade가 아니라 grade</span>
     <span class="kt">float</span> <span class="n">_grade</span> <span class="o">=</span> <span class="mf">3.5</span>
     <span class="c1">// 3.5처럼 . 포함된 리터럴상수는 float으로 간주.</span>
@@ -689,7 +689,7 @@
 
     <span class="c1">// 재정의 재지정Redirection지정자: (반환값 이름=&gt;) &lt;함수 명세signature&gt; (=&gt;)</span>
     <span class="c1">// 메소드 재정의overriding의 실행 순서를 쉽게 표현할 수 있다.</span>
-    <span class="c1">// 메소드 재정의는 원본 메소드supermethod가 있던 자리에 다른 메소드로 </span>
+    <span class="c1">// 메소드 재정의는 원본 메소드Supermethod가 있던 자리에 다른 메소드로 </span>
     <span class="c1">// 덮어쓰는 것으로서, 재정의 한 메소드에서 원본 메소드를 호출 하게 되면 </span>
     <span class="c1">// 코드를 &quot;추가&quot; 하는 구현이 된다.</span>
     <span class="c1">// 이때 재지정 연산자는 원본 메소드를 시작하기전, 시작 한 후 2 곳에 걸쳐서</span>
@@ -700,7 +700,7 @@
     <span class="c1">//  2. =&gt; 는 &quot;기반 클래스의 오버라이딩된 메소드로 이행&quot;을 의미한다.</span>
     <span class="c1">//     ( &quot;me.Super(인자리스트)&quot; 와 같다.)</span>
     <span class="c1">//  3. =&gt; 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.</span>
-    <span class="c1">//      ( &quot;+&quot; 반대편에 super&#39;s 가 붙는다고 생각하면 이해가 편하다.)</span>
+    <span class="c1">//      ( &quot;+&quot; 반대편에 Super&#39;s 가 붙는다고 생각하면 이해가 편하다.)</span>
     <span class="c1">//      e.g) + 이 함수명 뒤에 붙는 경우: 이행후, 실행.</span>
     <span class="c1">//                      &quot; 앞     &quot;      : 실행후, 이행.</span>
 
@@ -757,9 +757,15 @@
             <span class="c1">// 블록문 규칙에 의해 정의된 scope 내에서만 유효하다.</span>
             <span class="kt">int</span> <span class="n">aka</span> <span class="n">MyInt</span> <span class="c1">// MyInt 는 int와 동일하다.</span>
             <span class="n">MyInt</span> <span class="n">num</span>
-            <span class="c1">// 모든 클래스는, 정의가 없어도 다음의 별칭을 갖고 시작한다.</span>
+
+            <span class="c1">// 기본 별칭 타입:</span>
+            <span class="c1">// 모든 클래스는, 별도의 정의가 없어도 다음의 별칭을 갖고 시작한다.</span>
             <span class="c1">// Number aka This</span>
             <span class="c1">// object aka Super</span>
+            <span class="c1">// 모든 메소드는 다음의 별칭을 갖고 시작한다.</span>
+            <span class="c1">// 재정의된 메소드의 경우, &lt;부모클래스의 메소드&gt; aka super</span>
+            <span class="c1">// &lt;현재 실행중인 해당 메소드&gt; aka me</span>
+            <span class="c1">// &lt;현재 실행중인 메소드를 소유한 객체&gt; aka this</span>
 
             <span class="c1">// 연산자 메소드: &lt;반환형&gt; &lt;op연산자기호&gt;&lt;미리 정의된 인자리스트&gt; { }</span>
             <span class="c1">// 할당연산자 오버로딩</span>
@@ -794,7 +800,7 @@
     <span class="cp">#int _age = 1</span>
     <span class="kt">int</span> <span class="n">getAge</span><span class="p">()</span><span class="o">:</span> <span class="n">_age</span>
 
-    <span class="cp">#int $#_foo() {} </span><span class="c1">// &quot;static const private method returning const int.&quot;</span>
+    <span class="cp">#int $#_foo() {} </span><span class="c1">// &quot;static const protected method returning const int.&quot;</span>
     <span class="c1">// void #$_foo1() {} // 컴파일에러: Rule#2 위반</span>
     <span class="kt">void</span> <span class="n">foo1</span><span class="p">()</span> <span class="p">{}</span>
     <span class="c1">// void setAge(int new): age = new // 컴파일에러: age는 const 이다.</span>
@@ -850,7 +856,7 @@
 <span class="c1">//  2.  클래스 확장class-extension: +&lt;클래스&gt;</span>
 <span class="c1">//      미리 정의되어있는 클래스에 새로운 인터페이스를 주입한다.</span>
 <span class="c1">//      다음의 규칙을 따른다.</span>
-<span class="c1">//          a. 주입한 인터페이스 안에서 private 멤버에 접근할 수 없다.</span>
+<span class="c1">//          a. 주입한 인터페이스 안에서 protected 멤버에 접근할 수 없다.</span>
 <span class="c1">//              (캡슐화encapsulation를 깰 수 없기 때문이다.)</span>
 <span class="c1">//          b. 은닉되지 않는다. (동일한 타입내 변경이다. 은닉이 아닌 중복 정의.)</span>
 <span class="c1">//          c. 편의를 위해, 예외적으로 overriding 허용된다.</span>
@@ -926,6 +932,68 @@
 <span class="cm">    str(#MyClass)</span>
 <span class="cm">    name=hellohello</span>
 <span class="cm">    MyClass.print(float) has been extended.</span>
+<span class="cm">*/</span></pre><h6>프로퍼티</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">print</span><span class="p">()</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;Person.print()&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
+    <span class="n">Person</span> <span class="n">p1</span><span class="p">()</span>
+    <span class="c1">// 프로퍼티property: 타입 프로퍼티명 { get &lt;블록문&gt; set &lt;블록문&gt; }</span>
+    <span class="c1">// 인스턴스 인터페이스 확장 문법을 사용해서 get, set 메소드를 확장하면,</span>
+    <span class="c1">// 변수를 정의하는 대신, 변수처럼 동작하는 메소드 2개를 지닌 객체인 프로퍼티를</span>
+    <span class="c1">// 만든다. 다음의 규칙을 따른다.</span>
+    <span class="c1">//  1.  프로퍼티는 sharable 타입이다.</span>
+    <span class="c1">//      refer로 감싸지지 않은 채 raw인 채로 멤버에 추가되기 때문에 직접 get, set을</span>
+    <span class="c1">//      다룬다. 이 프로퍼티에 op=이 호출되면 set이 수행된다.</span>
+    <span class="c1">//  2.  &lt;Type&gt; get(), &lt;#Type&gt; #get(), res set(#Type new) 3개의 메소드중 선택</span>
+    <span class="c1">//      에서 오버라이딩 하면 프로퍼티로 인식한다. (set의 인자는 반드시 const</span>
+    <span class="c1">//      이다.)</span>
+    <span class="c1">//  3.  예외적으로 프로퍼티 선언과 인터페이스의 확장을 같이 할 수 없다.</span>
+    <span class="c1">//      e.g)    class app {</span>
+    <span class="c1">//                  str _name</span>
+    <span class="c1">//                  str name {</span>
+    <span class="c1">//                      void print(): console.out(&quot;extended&quot;)</span>
+    <span class="c1">//                      str get(): _name</span>
+    <span class="c1">//                  }</span>
+    <span class="c1">//              } // 컴파일 에러: name은 print 인터페이스 확장과</span>
+    <span class="c1">//                // 프로퍼티선언이 같이 됨</span>
+    <span class="c1">//</span>
+    <span class="c1">//          왜 같이 할 수 없는가:</span>
+    <span class="c1">//          말이 안되기 때문이다. 인터페이스 확장된 타입을 정의한 곳과, 그</span>
+    <span class="c1">//          인터페이스를 가지고 있어야할 객체를 반환하는 부분이 서로 독립적이다.</span>
+    <span class="c1">//          객체를 반환하는 곳은 어떤 인터페이스가 확장되었는지 100% 알게 만드는</span>
+    <span class="c1">//          방법이 없다. (인터프리터에 인공지능이라도 없는 한..)</span>
+    <span class="c1">//  </span>
+    <span class="c1">//  4.  프로퍼티에서 상속받은 proZZ 중첩클래스를 정의하는 것이기에, 안에서</span>
+    <span class="c1">//      정의된 get, set 메소드에서는 해당 프로퍼티를 소유한 클래스 scope를 갖는다.</span>
+    <span class="c1">//  5.  &lt;Type&gt; get(), res set(#Type new)은 get, #get, set 으로 단축할 수 있다.</span>
+    <span class="c1">//      set의 파라메터는 #This 타입에 new라는 변수명을 사용한다.</span>
+    <span class="c1">//  6.  기본적으로 const get()은 get()의 반환값을 반환하도록 정의된다.</span>
+    <span class="c1">//      즉, get()만 정의한 경우, const get() 따로 정의할 필요가 없다.</span>
+    <span class="c1">//      또한 const get()만 정의한 경우는, get은 기본적으로 정의되기 때문에</span>
+    <span class="c1">//      const get 만 가지게 된다. 따라서 외부에서는 항상 const get만 받게 된다.</span>
+
+    <span class="n">Person</span> <span class="n">p2</span> <span class="p">{</span>
+        <span class="cp">#get {</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p2.get()&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">p1</span>
+        <span class="p">}</span>
+        <span class="n">res</span> <span class="n">set</span><span class="p">(</span><span class="err">#</span><span class="n">Person</span> <span class="k">new</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// set {  과 동일하다.</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;p2.set()&quot;</span><span class="p">)</span>
+            <span class="n">p1</span> <span class="o">=</span> <span class="k">new</span><span class="p">;</span>
+            <span class="k">return</span> <span class="nf">rok</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">//Person p3 = p2 // 컴파일 에러. p2은 항상 const Person으로만 나간다.</span>
+        <span class="n">p2</span> <span class="o">=</span> <span class="n">p1</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/*결과:</span>
+<span class="cm">    p2.set()</span>
 <span class="cm">*/</span></pre><h6>클로저</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
