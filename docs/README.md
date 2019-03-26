@@ -1126,6 +1126,76 @@ class app {
 
 
 
+##### 프로퍼티
+
+```cpp
+import console
+
+class Person {
+	void print(): console.out("Person.print()")
+}
+
+class app {
+	Person p1()
+	// 프로퍼티property: 타입 프로퍼티명 { get <블록문> set <블록문> }
+	// 인스턴스 인터페이스 확장 문법을 사용해서 get, set 메소드를 확장하면,
+	// 변수를 정의하는 대신, 변수처럼 동작하는 메소드 2개를 지닌 객체인 프로퍼티를
+	// 만든다. 다음의 규칙을 따른다.
+	//	1.	프로퍼티는 sharable 타입이다.
+	//		refer로 감싸지지 않은 채 raw인 채로 멤버에 추가되기 때문에 직접 get, set을
+	//		다룬다. 이 프로퍼티에 op=이 호출되면 set이 수행된다.
+	//	2.	<Type> get(), <#Type> #get(), res set(#Type new) 3개의 메소드중 선택
+	//		에서 오버라이딩 하면 프로퍼티로 인식한다. (set의 인자는 반드시 const
+	//		이다.)
+	//	3.	예외적으로 프로퍼티 선언과 인터페이스의 확장을 같이 할 수 없다.
+	//		e.g)	class app {
+	//	            	str _name
+	//					str name {
+	//						void print(): console.out("extended")
+	//						str get(): _name
+	//					}
+	//				} // 컴파일 에러: name은 print 인터페이스 확장과
+	//				  // 프로퍼티선언이 같이 됨
+	//
+	//			왜 같이 할 수 없는가:
+	//			말이 안되기 때문이다. 인터페이스 확장된 타입을 정의한 곳과, 그
+	//			인터페이스를 가지고 있어야할 객체를 반환하는 부분이 서로 독립적이다.
+    //			객체를 반환하는 곳은 어떤 인터페이스가 확장되었는지 100% 알게 만드는
+    //			방법이 없다. (인터프리터에 인공지능이라도 없는 한..)
+	//	
+	//	4.	프로퍼티에서 상속받은 private 중첩클래스를 정의하는 것이기에, 안에서
+	//		정의된 get, set 메소드에서는 해당 프로퍼티를 소유한 클래스 scope를 갖는다.
+	//	5.	<Type> get(), res set(#Type new)은 get, #get, set 으로 단축할 수 있다.
+	//		set의 파라메터는 #This 타입에 new라는 변수명을 사용한다.
+	//	6.	기본적으로 const get()은 get()의 반환값을 반환하도록 정의된다.
+	//		즉, get()만 정의한 경우, const get() 따로 정의할 필요가 없다.
+	//		또한 const get()만 정의한 경우는, get은 기본적으로 정의되기 때문에
+	//		const get 만 가지게 된다. 따라서 외부에서는 항상 const get만 받게 된다.
+
+	Person p2 {
+		#get {
+			console.out("p2.get()")
+			return p1
+		}
+		res set(#Person new) { // set {  과 동일하다.
+			console.out("p2.set()")
+			p1 = new;
+			return rok()
+		}
+	}
+	void main() {
+		//Person p3 = p2 // 컴파일 에러. p2은 항상 const Person으로만 나간다.
+		p2 = p1
+	}
+}
+
+/*결과:
+    p2.set()
+*/
+```
+
+## 
+
 ##### 클로저
 
 ```cpp
@@ -1275,6 +1345,8 @@ class app {
 */
 ```
 
+
+
 ##### 메타
 
 ```cpp
@@ -1322,7 +1394,6 @@ Chales has 0 children.
 Park has 0 children.
 */
 ```
-
 
 
 ## 설문
