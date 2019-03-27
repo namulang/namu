@@ -281,12 +281,14 @@
 <span class="cm">    ret.isWarn()</span>
 <span class="cm">    ret.isNormal()</span>
 <span class="cm">    ret</span>
-<span class="cm">*/</span></pre><h6>블록문Blockstmt</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="cm">*/</span></pre><h6>확장가능한 블록문extentible Block statement</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
-    <span class="c1">// 블록문Blockstmt: { &lt;stmts&gt; }</span>
-    <span class="c1">// 실행가능한 구문의 집합이다. {, } 기호와 indent로 표현한다.</span>
-    <span class="c1">// 다음의 규칙을 따른다. </span>
+    <span class="c1">// 확장 가능한 블록문Blockstmt: { &lt;Opt:확장될 식별자&gt; &lt;stmts&gt; }</span>
+    <span class="c1">// 실행가능한 구문의 명시적 집합으로, { } 기호와 indent로 표현한다.</span>
+    <span class="c1">// 주어진 식별자를 확장할 수 있는데, 확장하게 되면 해당 식별자의 모든 멤버를</span>
+    <span class="c1">// 객체와 접근연산자(&quot;.&quot;dot) 없이 호출이 가능하게 된다.</span>
+    <span class="c1">// 다음의 규칙을 따른다.</span>
     <span class="c1">//  1.  블록문에서 정의한 식별자(메소드, 변수, ...)는 해당 블록문에서 유효하다.</span>
     <span class="c1">//      (블록문을 사용하면 변수의 라이프 사이클을 제어할 수 있다.)</span>
     <span class="c1">//  2.  블록문은 독자적인 프로그램 흐름에 대한 제어권을 갖지 못한다.</span>
@@ -296,6 +298,14 @@
     <span class="c1">//  4.  키워드(if, for, ...)에 의해 블록문을 사용할 경우를 묵시적 블록문이라 한다.</span>
     <span class="c1">//  5.  클래스와 그 멤버(메소드, 변수)들에 한해서만 블록문 기호{,}의 사용을 강제</span>
     <span class="c1">//      한다. 이외의 {, } 기호는 생략 가능하며, 이를 권장한다.</span>
+    <span class="c1">//  6.  확장 식별자를 열린 중괄호 뒤에 붙이게 되면 해당 블록문 안쪽에서는 그 식별자의</span>
+    <span class="c1">//      소유한 멤버가 확장된다.</span>
+    <span class="c1">//  7.  이렇게 확장된 인터페이스들은 this보다는 상위의, 지역변수보다는 하위의</span>
+    <span class="c1">//      우선순위를 갖는다. 이름 중복 허용 규칙에 의해 동일한 이름이 scope내에 복수</span>
+    <span class="c1">//      존재하는 경우 우선순위가 가장 높은 개체가 선택된다.</span>
+    <span class="c1">//  8.  블록문을 통한 인터페이스 확장은 중첩될 수 없다. 즉, 최대 this를 포함해서</span>
+    <span class="c1">//      2개까지 이다.</span>
+    <span class="c1">//  9.  식별자를 명시는 생략 가능하다. 이 경우, 별다른 확장을 수행하지 않는다.</span>
     <span class="kt">void</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 메소드도 블록문을 기본적으로 가지고 있다.</span>
         <span class="p">{</span> <span class="c1">// 명시적 블록문 정의</span>
             <span class="kt">int</span> <span class="n">local</span> <span class="o">=</span> <span class="mi">5</span>
@@ -312,11 +322,41 @@
         <span class="p">}</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here.&quot;</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Person</span> <span class="n">p</span><span class="p">()</span>
+    <span class="kt">void</span> <span class="n">eat</span><span class="p">()</span> <span class="p">{</span> <span class="n">console</span> <span class="c1">// console은 클래스나, 이 또한 식별자이므로 유효한 코드다.</span>
+        <span class="n">out</span><span class="p">(</span><span class="s">&quot;app.eat()&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span> <span class="n">p</span> <span class="c1">// p에 대해 인터페이스가 확장된다.</span>
         <span class="n">foo</span><span class="p">()</span>
+        <span class="n">print</span><span class="p">()</span> <span class="c1">// p.print()와 동일하다.</span>
+        <span class="n">eat</span><span class="p">()</span> <span class="c1">// Person.eat은 this.eat()보다 우선된다.</span>
+        <span class="kt">void</span> <span class="n">fly</span><span class="p">()</span> <span class="p">{</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;am I a bird?&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">fly</span><span class="p">()</span> <span class="c1">// local에 등록된 fly()는 클래스scope를 가진 Person.fly()보다 우선된다.</span>
+        <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chales&quot;</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
-<span class="c1">// 결과: &lt;없음&gt;</span></pre><h6>객체와 라이프 사이클</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+
+<span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">print</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;my name is unknown.&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">eat</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;I&#39;m eating.&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">fly</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;I&#39;m not a bird.&quot;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Michel&quot;</span>
+<span class="p">}</span>
+<span class="cm">/* 결과:</span>
+<span class="cm">    my name is uknown.</span>
+<span class="cm">    I&#39;m eating.</span>
+<span class="cm">    am I a bird?</span>
+<span class="cm">    Chales</span>
+<span class="cm">*/</span></pre><h6>객체와 라이프 사이클</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">Plant</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">_age</span> <span class="o">=</span> <span class="mi">5</span>
