@@ -270,7 +270,7 @@ class app {
 import console
 
 class app {
-    // prefix _는 private를 의미. 정의와 동시에 초기화도 ok.
+    // prefix _는 protected를 의미. 정의와 동시에 초기화도 ok.
     // 접근시에는 _grade가 아니라 grade
     float _grade = 3.5
     // 3.5처럼 . 포함된 리터럴상수는 float으로 간주.
@@ -981,7 +981,7 @@ class Animal {
     #int _age = 1
     int getAge(): _age
    
-    #int $#_foo() {} // "static const private method returning const int."
+    #int $#_foo() {} // "static const protected method returning const int."
     // void #$_foo1() {} // 컴파일에러: Rule#2 위반
     void foo1() {}
     // void setAge(int new): age = new // 컴파일에러: age는 const 이다.
@@ -1045,7 +1045,7 @@ import console
 //	2.	클래스 확장class-extension: +<클래스>
 //		미리 정의되어있는 클래스에 새로운 인터페이스를 주입한다.
 //		다음의 규칙을 따른다.
-//			a. 주입한 인터페이스 안에서 private 멤버에 접근할 수 없다.
+//			a. 주입한 인터페이스 안에서 protected 멤버에 접근할 수 없다.
 //				(캡슐화encapsulation를 깰 수 없기 때문이다.)
 //			b. 은닉되지 않는다. (동일한 타입내 변경이다. 은닉이 아닌 중복 정의.)
 //			c. 편의를 위해, 예외적으로 overriding 허용된다.
@@ -1163,7 +1163,7 @@ class app {
     //			객체를 반환하는 곳은 어떤 인터페이스가 확장되었는지 100% 알게 만드는
     //			방법이 없다. (인터프리터에 인공지능이라도 없는 한..)
 	//	
-	//	4.	프로퍼티에서 상속받은 private 중첩클래스를 정의하는 것이기에, 안에서
+	//	4.	프로퍼티에서 상속받은 proZZ 중첩클래스를 정의하는 것이기에, 안에서
 	//		정의된 get, set 메소드에서는 해당 프로퍼티를 소유한 클래스 scope를 갖는다.
 	//	5.	<Type> get(), res set(#Type new)은 get, #get, set 으로 단축할 수 있다.
 	//		set의 파라메터는 #This 타입에 new라는 변수명을 사용한다.
