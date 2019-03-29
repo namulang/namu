@@ -385,15 +385,17 @@ class app {
 
 
 
-##### 블록문Blockstmt
+##### 확장가능한 블록문extentible Block statement
 
 ```cpp
 import console
 
 class app {
-	// 블록문Blockstmt: { <stmts> }
-	// 실행가능한 구문의 집합이다. {, } 기호와 indent로 표현한다.
-	// 다음의 규칙을 따른다.	
+	// 확장 가능한 블록문Blockstmt: { <Opt:확장될 식별자> <stmts> }
+	// 실행가능한 구문의 명시적 집합으로, { } 기호와 indent로 표현한다.
+	// 주어진 식별자를 확장할 수 있는데, 확장하게 되면 해당 식별자의 모든 멤버를
+	// 객체와 접근연산자("."dot) 없이 호출이 가능하게 된다.
+	// 다음의 규칙을 따른다.
 	//	1.	블록문에서 정의한 식별자(메소드, 변수, ...)는 해당 블록문에서 유효하다.
 	//		(블록문을 사용하면 변수의 라이프 사이클을 제어할 수 있다.)
 	//	2.	블록문은 독자적인 프로그램 흐름에 대한 제어권을 갖지 못한다.
@@ -403,6 +405,14 @@ class app {
 	//	4.	키워드(if, for, ...)에 의해 블록문을 사용할 경우를 묵시적 블록문이라 한다.
 	//	5.	클래스와 그 멤버(메소드, 변수)들에 한해서만 블록문 기호{,}의 사용을 강제
 	//		한다. 이외의 {, } 기호는 생략 가능하며, 이를 권장한다.
+	//	6.	확장 식별자를 열린 중괄호 뒤에 붙이게 되면 해당 블록문 안쪽에서는 그 식별자의
+	//	    소유한 멤버가 확장된다.
+	//	7.	이렇게 확장된 인터페이스들은 this보다는 상위의, 지역변수보다는 하위의
+	//		우선순위를 갖는다. 이름 중복 허용 규칙에 의해 동일한 이름이 scope내에 복수
+	//		존재하는 경우 우선순위가 가장 높은 개체가 선택된다.
+	//	8.	블록문을 통한 인터페이스 확장은 중첩될 수 없다. 즉, 최대 this를 포함해서
+	//		2개까지 이다.
+	//	9.	식별자를 명시는 생략 가능하다. 이 경우, 별다른 확장을 수행하지 않는다.
 	void foo() { // 메소드도 블록문을 기본적으로 가지고 있다.
 		{ // 명시적 블록문 정의
         	int local = 5
@@ -419,11 +429,41 @@ class app {
         }
         console.out("can't reach here.")
 	}
-	void main() {
-    	foo()
+	Person p()
+	void eat() { console // console은 클래스나, 이 또한 식별자이므로 유효한 코드다.
+		out("app.eat()")
+	}
+	void main() { p // p에 대해 인터페이스가 확장된다.
+		foo()
+		print() // p.print()와 동일하다.
+		eat() // Person.eat은 this.eat()보다 우선된다.
+		void fly() {
+			console.out("am I a bird?")
+		}
+		fly() // local에 등록된 fly()는 클래스scope를 가진 Person.fly()보다 우선된다.
+		str name = "Chales"
+		console.out(p.name)
 	}
 }
-// 결과: <없음>
+
+class Person {
+	void print() {
+		console.out("my name is unknown.")
+	}
+	void eat() {
+		console.out("I'm eating.")
+	}
+	void fly() {
+		console.out("I'm not a bird.")
+	}
+	str name = "Michel"
+}
+/* 결과:
+	my name is uknown.
+	I'm eating.
+	am I a bird?
+	Chales
+*/
 ```
 
 
