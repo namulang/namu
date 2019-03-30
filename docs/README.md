@@ -1130,7 +1130,27 @@ class MyClass {
     void print(): name1 = "hello"; console.out ("void print() : " + name1)
     int print(int a): console.out("int print(int)")
     //	name과 name1은 같은 set 메소드를 지니고 있으나, 이 둘은 별개의 메소드다.
+
+	class A { // 여태까지의 class 정의도 사실은 확장문법이다.
+		void $print() {
+			console.out("MyClass.A.print()") // A는 이제 print()를 갖게되었다.
+			// 위의 str name1 케이스와 다를께 없다.
+		}
+	}
+	class B {
+		// 프로퍼티로 반환되는 class는 정의가 global space에 등록되지 않는다.
+		// 런타임에 어떤 타입인지 파악이 되기 때문이다.
+		@get: return A
+	}
+	class $C {
+		@get: return A
+	}
 }
+
+MyClass.A a() // 전역객체 a
+// MyClass.B b() // 에러. b의 타입은 MyClass.B가 아니라 class이다.
+// MyClass.C c() // 역시 에러.
+class[] classes = [MyClass().B, MyClass.C, MyClass.A]
 
 class +MyClass {
 	// int name1 // 컴파일에러 Rule#2: 중복 정의
