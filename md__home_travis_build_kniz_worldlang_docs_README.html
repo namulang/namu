@@ -95,23 +95,23 @@
 
         <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">20</span> <span class="p">{</span> <span class="c1">// 원칙은 블록문시에도 항상 {, }를 사용하나,            </span>
             <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">20</span> <span class="o">&amp;</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="c1">// 함수 내의 블록문은 {, } 생략을 권장.</span>
-                <span class="n">Console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here&quot;</span><span class="p">)</span>
+                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here&quot;</span><span class="p">)</span>
 
             <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// 허용된 중복 정의</span>
             <span class="k">for</span> <span class="kt">int</span> <span class="n">n</span> <span class="n">in</span> <span class="mi">1</span><span class="o">~</span><span class="mi">5</span> <span class="c1">// ~는 1부터 5까지를 의미함. [1, 5)</span>
                 <span class="n">sum</span> <span class="o">+=</span> <span class="n">n</span>
 
-            <span class="n">Console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;sum=&quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="p">)</span> <span class="c1">// &quot;sum=10&quot;</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;sum=&quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="p">)</span> <span class="c1">// &quot;sum=10&quot;</span>
         <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">age</span> <span class="o">==</span> <span class="mi">20</span> <span class="c1">// } 뒤에 다음 stmt 가능.</span>
             <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="o">!</span> <span class="p">(</span><span class="n">age</span> <span class="o">==</span> <span class="mi">21</span><span class="p">)</span> <span class="o">|</span> <span class="n">sum</span> <span class="c1">// |는 or연산. sum이 0이 아니면 true로 판단</span>
-            <span class="n">Console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;sum=&quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="p">)</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;sum=&quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="p">)</span>
         <span class="n">elif</span> <span class="o">!</span> <span class="n">sum</span> <span class="c1">// == else if</span>
-            <span class="n">Console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here&quot;</span><span class="p">)</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="c1">// 함수 종료. 반환</span>
 
         <span class="kt">int</span> <span class="n">bit</span> <span class="o">=</span> <span class="mi">2</span>            
-        <span class="n">Console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">bit</span> <span class="o">||</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">// &quot;6&quot;</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">bit</span> <span class="o">||</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">// &quot;6&quot;</span>
         <span class="c1">// ||, &amp;&amp;, ~~ 비트 연산자</span>
         <span class="k">return</span> <span class="mi">0</span>
     <span class="p">}</span>
@@ -186,7 +186,7 @@
     <span class="kt">int</span> <span class="n">age</span> <span class="c1">// 접근자(accessor)는 public. 초기화 표현식이 없을 경우, 각 타입들의 기본값이 assign.</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">app</span><span class="p">.</span><span class="kt">double</span><span class="p">(</span><span class="n">grade</span><span class="p">)</span> <span class="c1">// static 메소드 double 호출.</span>
-        <span class="n">Console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;age=&quot;</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="s">&quot;, grade=&quot;</span> <span class="o">+</span> <span class="kt">double</span><span class="p">(</span><span class="n">grade</span><span class="p">))</span> <span class="c1">// scope(app) 생략 가능</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;age=&quot;</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="s">&quot;, grade=&quot;</span> <span class="o">+</span> <span class="kt">double</span><span class="p">(</span><span class="n">grade</span><span class="p">))</span> <span class="c1">// scope(app) 생략 가능</span>
     <span class="p">}</span>
 
     <span class="c1">// prefix $은 static 메소드를 의미.</span>
@@ -326,6 +326,34 @@
     <span class="kt">void</span> <span class="n">eat</span><span class="p">()</span> <span class="p">{</span> <span class="n">console</span> <span class="c1">// console은 클래스나, 이 또한 식별자이므로 유효한 코드다.</span>
         <span class="n">out</span><span class="p">(</span><span class="s">&quot;app.eat()&quot;</span><span class="p">)</span>
     <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">getSome</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">5</span> <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">doSwitch</span><span class="p">(</span><span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="o">+</span><span class="n">val</span> <span class="p">{</span>
+        <span class="c1">// 다중분기문is: &lt;확장된블록문&gt;</span>
+        <span class="c1">//                  is &lt;식별자와 동일한 타입의 값&gt;</span>
+        <span class="c1">//                      &lt;블록문&gt;</span>
+        <span class="c1">// switch에 대응하는 문법으로, 다음의 규칙을 따른다.</span>
+        <span class="c1">//  1.  주어진 식별자에 대해, 값이 일치하는 경우 속한 블록문을 수행한다.</span>
+        <span class="c1">//      만약 다른 비교연산자를 사용해야 하는 경우, if-else를 사용해야 한다.</span>
+        <span class="c1">//      (is는 사실 if val == 3 elif val == doSwitch() .. 와 동일하다.)</span>
+        <span class="c1">//  2.  is의 값은 반드시 확장된 변수와 동일한 타입의 값으로 평가evalutate</span>
+        <span class="c1">//      될수 있어야 한다.</span>
+        <span class="c1">//  3.  else는 그 이외의 경우 수행된다.</span>
+        <span class="n">is</span> <span class="mi">3</span> <span class="c1">// val의 값이 3이면</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;we got 3.&quot;</span><span class="p">)</span>
+        <span class="n">is</span> <span class="n">getSome</span><span class="p">()</span> <span class="c1">// 함수 호출도 가능하다.</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;doSwitch&quot;</span><span class="p">)</span>
+        <span class="k">else</span>
+            <span class="o">+</span><span class="p">(</span><span class="n">str</span> <span class="n">getString</span><span class="p">()</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="s">&quot;hello&quot;</span>
+            <span class="p">}())</span> <span class="p">{</span> <span class="c1">// 클로져를 정의하였고, 그 반환값을 블록문에 확장했다.</span>
+                <span class="n">is</span> <span class="s">&quot;he&quot;</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t&quot;</span><span class="p">)</span>
+                <span class="n">is</span> <span class="s">&quot;lo&quot;</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;execute&quot;</span><span class="p">)</span>
+                <span class="n">is</span> <span class="s">&quot;hello&quot;</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;correct.&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;this line.&quot;</span><span class="p">)</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
+
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span> <span class="n">p</span> <span class="c1">// p에 대해 인터페이스가 확장된다.</span>
         <span class="n">foo</span><span class="p">()</span>
         <span class="n">print</span><span class="p">()</span> <span class="c1">// p.print()와 동일하다.</span>
@@ -336,6 +364,8 @@
         <span class="n">fly</span><span class="p">()</span> <span class="c1">// local에 등록된 fly()는 클래스scope를 가진 Person.fly()보다 우선된다.</span>
         <span class="n">str</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chales&quot;</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">doSwitch</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
@@ -356,6 +386,7 @@
 <span class="cm">    I&#39;m eating.</span>
 <span class="cm">    am I a bird?</span>
 <span class="cm">    Chales</span>
+<span class="cm">    correct.</span>
 <span class="cm">*/</span></pre><h6>객체와 라이프 사이클</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">Plant</span> <span class="p">{</span>
