@@ -214,7 +214,7 @@ class app {
     // 표현식은 특정한 값을 반환할 수 있는 식별자가 조합된 식을 뜻한다.
     //	e.g in c++)	foo(3); 			// 표현식이므로, 동시에 구문이다.
     //				void func(int age); // 구문이다.
-    //				class A;			// 구문이다.
+    //				type A;	 			// 구문이다.
     //
     // world는 문법을 간결하게 하기 위해 모든 구문은 표현식으로 정의한다.
     // 이를 위해 2가지 규칙이 있다.
@@ -223,9 +223,9 @@ class app {
     int foo(int age) {
         5 // #1 규칙. return이 없어도 ok.
     }
-    void boo(class declared, bool success, int age) { // class도 int와 같은 타입의 한 종류.
-    	// ... class의 인터페이스는 차후 설명
-        
+	void boo(type declared, bool success, int age) { // type도 int와 같은 타입의 한 종류.
+		// ... type의 인터페이스는 차후 설명
+
         // bool -> str시 "true" | "false"
         console.out(success + ", age=" + age) // true, age=20
         
@@ -606,7 +606,7 @@ class app {
 | pretypes:<br />rok, rfile, rperm, ...                        | O                     |
 | 배열(int[]), 맵(int[str])                                    | S                     |
 | 튜플()                                                       | O                     |
-| class                                                        | S                     |
+| type                                                         | S                     |
 | 사용자 class의 객체                                          | S                     |
 
 ```cpp
@@ -1150,7 +1150,11 @@ class MyClass {
 MyClass.A a() // 전역객체 a
 // MyClass.B b() // 에러. b의 타입은 MyClass.B가 아니라 class이다.
 // MyClass.C c() // 역시 에러.
-class[] classes = [MyClass().B, MyClass.C, MyClass.A]
+
+// type변수:
+// type은 class들을 담을 수 있는 메타클래스 타입이다.
+// class는 타입을 정의하는 키워드로써, 타입이 아니다.
+type[] types = [MyClass().B, MyClass.C, MyClass.A]
 
 class +MyClass {
 	// int name1 // 컴파일에러 Rule#2: 중복 정의
@@ -1430,8 +1434,8 @@ class Park : Person {
 
 class app {
 	class main() {
-    	class[] cls = [Person, Chales, Park] // 사실 class 또한 입에 불과하다.
-		for class e in cls
+		type[] cls = [Person, Chales, Park] // 사실 class 또한 입에 불과하다.
+		for type e in cls
 			console.out("\n" + e.name + " has " + e.subs.len  " children.")
 			for var child in e.subs
 				console.out("\n - " + child.name)
