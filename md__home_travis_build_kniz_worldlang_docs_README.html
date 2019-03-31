@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>zworldlang 개요 &amp; 설문 | world-doc</title>
+  <title>worldlang 개요 &amp; 설문 | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,7 +44,7 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          zworldlang 개요 &amp; 설문
+          worldlang 개요 &amp; 설문
         </h1>
 <h3>서론</h3><p>먼저 수고를 들여 이 문서를 열람해 주신것에 감사의 말씀 올립니다.</p><p>저는 변두리에서 *world*라는 프로그래밍 언어를 만들고 있는데, 이에 대한 피드팩을 받고 싶어서 이 문서를 만들었습니다.</p><h3>진행 순서</h3><p>무엇보다 제가 시간을 많이 가져가면 안될것 같네요. 간단한 아이디어 소개와 문법들을 15분에 소개하고 있으며, 이에 대한 설문이 약 3분 진행됩니다. 모든 설문은 무기명으로 진행되며 답에 시간이 오래걸리는 주관식은 최대한 배제하였습니다.</p><p>그럼 먼저 이 언어의 특징부터 소개하고나서, 문법을 알려드릴께요.</p><h3>철학</h3><h4>빠른 개발이 되려면 더 빨리 실패해야 한다.</h4><h6>Context based REPL</h6><h6>항상 디버깅 상태에서 개발</h6><h4>인터프리터도 한명의 개발자.</h4><h6>인터프리터는 프로그램의 구조를 온전히 런타임으로 이해한다.</h6><h6>인터프리터가 개발에 참여한다.</h6><h4>텍스트를 입력하는 것만이 코딩은 아니다</h4><h6>UI를 통한 코딩</h6><h6>doc 문서 자동 생성</h6><h3>syntax</h3><h4>before start</h4><h4>특징</h4><h6>간단한게 최고다.</h6><h6>어려운 개념은 감춘다</h6><p>당연히, 포인터,</p><h6>코드라인 줄이기.</h6><p>offside-rule</p><h6>등장요소를 재사용하자.</h6><h6>강한 피드백</h6><h6>Validation.</h6><p>(= Typescript, Java, C#)</p><h6>Strong typed.</h6><h6>모든것은 객체다.</h6><h6>예외를 혐오하자</h6><h6>일관성을 갖자</h6><p>이곳에서 되면 여기서도 이렇게 하면 될까? 싶으면 되야 한다.</p><h4>spec</h4><h6>항상 시작은 Hello world 로부터.</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span> <span class="c1">// import로 모듈을 가져옴</span>
 
@@ -87,11 +87,31 @@
         <span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">21</span>
         <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="c1">// 블록문 생략:</span>
-        <span class="c1">// 블록문은 구문의 집합이며, 중괄호로{} 표현한다.</span>
-        <span class="c1">// 원칙적으로는 항상 중괄호를 사용해야하나, 편의를 위해서 멤버(변수와 메소드)내에서</span>
-        <span class="c1">// 중첩적으로 정의된 블록문에 한해서는 중괄호를 생략할 수 있으며, 이를 권장한다</span>
-        <span class="c1">// (반대로 말하면, 클래스와 외부 메소드, 외부 멤버변수의 정의에는 반드시,</span>
-        <span class="c1">// 중괄호가 들어가야 한다.)</span>
+        <span class="c1">// 블록문은 구문의 집합이며, 중괄호와{} 들여쓰기Indentation로 표현한다.</span>
+        <span class="c1">// 여기서 중요한 것은 들여쓰기이며, 중괄호는 모호한 케이스를 없애기 위해</span>
+        <span class="c1">// 표현하는 것이다.</span>
+        <span class="c1">// 모든 중괄호는 생략될 수 있으며, 들여쓰기만 제대로 되어있으면 문제는 없다.</span>
+        <span class="c1">// 다만 몇몇 케이스에서는 중괄호 생략이 문제가 될 수 있다는 걸 알아야 한다.</span>
+        <span class="c1">//</span>
+        <span class="c1">// 중괄호 생략시 문제케이스 #1:</span>
+        <span class="c1">// world의 핵심 특징은 모든 구문stmt을 표현식expression으로 대체한 것에 있다.</span>
+        <span class="c1">// 이는 정의와 사용을 동시에 할 수 있게 하는데, 중괄호가 없을 경우 모호한</span>
+        <span class="c1">// 상황이 필연적으로 발생한다.</span>
+        <span class="c1">// e.g. void print()</span>
+        <span class="c1">//          console.out(&quot;hello&quot;)</span>
+        <span class="c1">//      () // 이것은 print()인가 아니면 빈 Tuple인가?</span>
+        <span class="c1">//      중괄호를 넣으면 직관적으로 변한다.</span>
+        <span class="c1">//      void print() {</span>
+        <span class="c1">//          console.out(&quot;hello&quot;)</span>
+        <span class="c1">//      } // 이 뒤에 ()를 붙이면 클로저의 호출이 된다.</span>
+        <span class="c1">//      () // 빈 tuple이다.</span>
+        <span class="c1">//  </span>
+        <span class="c1">// 권장 스타일:</span>
+        <span class="c1">// 앞서 언급한 모호한 케이스는 없애고, 편의성을 절충한 안으로 다음의 규칙을</span>
+        <span class="c1">// 따른다.</span>
+        <span class="c1">//  1. 메소드의 블록문에서는 중괄호를 생략한다.</span>
+        <span class="c1">//  2. 그 이외에는 중괄호를 모두 표현한다.</span>
+        <span class="c1">// 이후 모든 예제는 위의 스타일로 작성한 것이다.</span>
 
         <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">20</span> <span class="p">{</span> <span class="c1">// 원칙은 블록문시에도 항상 {, }를 사용하나,            </span>
             <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">20</span> <span class="o">&amp;</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="c1">// 함수 내의 블록문은 {, } 생략을 권장.</span>
@@ -129,7 +149,7 @@
     <span class="c1">// 구문statement와 표현식expression:</span>
     <span class="c1">// 프로그래밍 언어에서 구문이란 코드의 각 라인을 말하며,</span>
     <span class="c1">// 표현식은 특정한 값을 반환할 수 있는 식별자가 조합된 식을 뜻한다.</span>
-    <span class="c1">//  e.g in c++) foo(3);             // 표현식이므로, 동시에 구문이다.</span>
+    <span class="c1">//  e.g.in c++) foo(3);             // 표현식이므로, 동시에 구문이다.</span>
     <span class="c1">//              void func(int age); // 구문이다.</span>
     <span class="c1">//              type A;             // 구문이다.</span>
     <span class="c1">//</span>
@@ -219,28 +239,29 @@
         <span class="c1">// 어떻게 res는 ADT이며 occupiable이며, 기본값이 ADT가 되는가?:</span>
         <span class="c1">// 앞서 설명한 듯 occupiable의 동작은 매우 심플하다.</span>
         <span class="c1">//    1.    월드의 모든 변수는 기본적으로 refer에 의해서 감싸져wrapping 있다.</span>
-        <span class="c1">//    2.    refer는 할당연산 요청이 왔을때 대상(wrapping하는)이 occupiable 타입일</span>
-        <span class="c1">//        경우, 그 대상에 복제생성자를cloning 수행한다.</span>
+        <span class="c1">//    2.    refer는 할당연산 요청이 왔을때 대상(wrapping하는)이 occupiable</span>
+        <span class="c1">//          타입일 경우, 그 대상에 복제생성자를cloning 수행한다.</span>
         <span class="c1">//    3.    반대의 경우에는 단순히 대상을 교체한다.</span>
-        <span class="c1">//    4.    구체타입이며 occupiable일 경우에는 최적화에 따라 refer가 없도록 코드블럭</span>
-        <span class="c1">//        을 구현한다.</span>
+        <span class="c1">//    4.    구체타입이며 occupiable일 경우에는 최적화에 따라 refer가 없도록</span>
+        <span class="c1">//          코드블럭을 구현한다.</span>
         <span class="n">es</span> <span class="n">ret</span> <span class="c1">// 기본값은 rok다.</span>
 
         <span class="c1">// 위의 구문은 최종적으로 ret라는 refer가 rok라는 타입의 객체를 가리키게 되는데,</span>
         <span class="c1">// 중간과정을 해석하면 다음의 흐름으로 진행된다.</span>
-        <span class="c1">//    1.    ret의 기본값은 rok이므로 res ret = rok로 인터프리터는 평가evaluate한다.</span>
-        <span class="c1">//    2.    rok는 선정의타입pretype이며, occupiable이므로 occupiable에서 괄호 없이</span>
-        <span class="c1">//        타입만 명시할 경우, 기본생성자를 호출하는것과 같아, res ret = rok()</span>
-        <span class="c1">//        로 된다.</span>
-        <span class="c1">//        e.g)    int a // int는 occupiable. int a()와 같으므로 int 생성자가</span>
-        <span class="c1">//                      // 호출되며, 결과 a = 0.</span>
-        <span class="c1">//                MyClass b // MyClass는 sharable. b = null이다.</span>
+        <span class="c1">//    1.    ret의 기본값은 rok이므로 res ret = rok로 인터프리터는</span>
+        <span class="c1">//          평가evaluate한다.</span>
+        <span class="c1">//    2.    rok는 선정의타입pretype이며, occupiable이므로 occupiable에서</span>
+        <span class="c1">//          괄호 없이 타입만 명시할 경우, 기본생성자를 호출하는것과 같아,</span>
+        <span class="c1">//          res ret = rok()로 된다.</span>
+        <span class="c1">//          e.g.    int a // int는 occupiable. int a()와 같으므로 int 생성자가</span>
+        <span class="c1">//                  // 호출되며, 결과 a = 0.</span>
+        <span class="c1">//                  MyClass b // MyClass는 sharable. b = null이다.</span>
         <span class="c1">//    3.    rok()로 생성된 임시객체는 refer인 ret 변수에 할당이 된다.</span>
-        <span class="c1">//        refer ret는 타입인 res가 occupiable 이므로 주어진 객체의 복제 생성을</span>
-        <span class="c1">//        시도한다. 결과, res ret = rok().clone()과 같아진다.</span>
-        <span class="c1">//    4.    위는 최적화를 거치지 않았을때, 기본 규칙에 의해서 동작되는 순수 로직</span>
-        <span class="c1">//        흐름이며, 실제로는 중복되어 불필요한 객체 생성을 하지 않도록</span>
-        <span class="c1">//        의미분석기가 최적화된다.</span>
+        <span class="c1">//          refer ret는 타입인 res가 occupiable 이므로 주어진 객체의 복제</span>
+        <span class="c1">//          생성을 시도한다. 결과, res ret = rok().clone()과 같아진다.</span>
+        <span class="c1">//    4.    위는 최적화를 거치지 않았을때, 기본 규칙에 의해서 동작되는 순수</span>
+        <span class="c1">//          로직 흐름이며, 실제로는 중복되어 불필요한 객체 생성을 하지 않도록</span>
+        <span class="c1">//          의미분석기가 최적화된다.</span>
 
         <span class="n">res</span> <span class="n">ret</span> <span class="c1">// 기본값은 rok다.</span>
         <span class="c1">// res = res + result // res는 사칙연산이 허용되지 않는다.</span>
@@ -284,7 +305,7 @@
 <span class="cm">*/</span></pre><h6>확장가능한 블록문extentible Block statement</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
-    <span class="c1">// 확장 가능한 블록문Blockstmt: { &lt;Opt:확장될 식별자&gt; &lt;stmts&gt; }</span>
+    <span class="c1">// 확장 가능한 블록문Blockstmt: +&lt;Opt:확장될 식별자&gt; { &lt;stmts&gt; }</span>
     <span class="c1">// 실행가능한 구문의 명시적 집합으로, { } 기호와 indent로 표현한다.</span>
     <span class="c1">// 주어진 식별자를 확장할 수 있는데, 확장하게 되면 해당 식별자의 모든 멤버를</span>
     <span class="c1">// 객체와 접근연산자(&quot;.&quot;dot) 없이 호출이 가능하게 된다.</span>
@@ -298,14 +319,15 @@
     <span class="c1">//  4.  키워드(if, for, ...)에 의해 블록문을 사용할 경우를 묵시적 블록문이라 한다.</span>
     <span class="c1">//  5.  클래스와 그 멤버(메소드, 변수)들에 한해서만 블록문 기호{,}의 사용을 강제</span>
     <span class="c1">//      한다. 이외의 {, } 기호는 생략 가능하며, 이를 권장한다.</span>
-    <span class="c1">//  6.  확장 식별자를 열린 중괄호 뒤에 붙이게 되면 해당 블록문 안쪽에서는 그 식별자의</span>
-    <span class="c1">//      소유한 멤버가 확장된다.</span>
+    <span class="c1">//  6.  확장 식별자를 열린 중괄호 앞에 +prefix를 붙이게 되면 해당 블록문</span>
+    <span class="c1">//      안쪽에서는 그 식별자의 소유한 멤버들이 확장된다.</span>
     <span class="c1">//  7.  이렇게 확장된 인터페이스들은 this보다는 상위의, 지역변수보다는 하위의</span>
     <span class="c1">//      우선순위를 갖는다. 이름 중복 허용 규칙에 의해 동일한 이름이 scope내에 복수</span>
     <span class="c1">//      존재하는 경우 우선순위가 가장 높은 개체가 선택된다.</span>
     <span class="c1">//  8.  블록문을 통한 인터페이스 확장은 중첩될 수 없다. 즉, 최대 this를 포함해서</span>
     <span class="c1">//      2개까지 이다.</span>
-    <span class="c1">//  9.  식별자를 명시는 생략 가능하다. 이 경우, 별다른 확장을 수행하지 않는다.</span>
+    <span class="c1">//  9.  식별자는 생략 가능하다. 이 경우, 별다른 확장을 수행하지 않는다.</span>
+    <span class="c1">//  10. 확장된 식별자는 블록문에서 it 이라는 별칭을 갖는다.</span>
     <span class="kt">void</span> <span class="n">foo</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 메소드도 블록문을 기본적으로 가지고 있다.</span>
         <span class="p">{</span> <span class="c1">// 명시적 블록문 정의</span>
             <span class="kt">int</span> <span class="n">local</span> <span class="o">=</span> <span class="mi">5</span>
@@ -322,8 +344,8 @@
         <span class="p">}</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here.&quot;</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="n">Person</span> <span class="n">p</span><span class="p">()</span>
-    <span class="kt">void</span> <span class="n">eat</span><span class="p">()</span> <span class="p">{</span> <span class="n">console</span> <span class="c1">// console은 클래스나, 이 또한 식별자이므로 유효한 코드다.</span>
+    <span class="n">Person</span> <span class="n">p</span> <span class="c1">// 객체 생성</span>
+    <span class="kt">void</span> <span class="n">eat</span><span class="p">()</span> <span class="o">+</span><span class="n">console</span> <span class="p">{</span> <span class="c1">// console은 클래스지만, 이 또한 식별자이므로 유효한 코드다.</span>
         <span class="n">out</span><span class="p">(</span><span class="s">&quot;app.eat()&quot;</span><span class="p">)</span>
     <span class="p">}</span>
 
@@ -344,17 +366,25 @@
         <span class="n">is</span> <span class="n">getSome</span><span class="p">()</span> <span class="c1">// 함수 호출도 가능하다.</span>
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;doSwitch&quot;</span><span class="p">)</span>
         <span class="k">else</span>
-            <span class="o">+</span><span class="p">(</span><span class="n">str</span> <span class="n">getString</span><span class="p">()</span> <span class="p">{</span>
-                <span class="k">return</span> <span class="s">&quot;hello&quot;</span>
-            <span class="p">}())</span> <span class="p">{</span> <span class="c1">// 클로져를 정의하였고, 그 반환값을 블록문에 확장했다.</span>
+
+            <span class="o">+</span><span class="p">(</span><span class="n">str</span> <span class="n">getString</span><span class="p">(</span><span class="err">#</span><span class="n">str</span> <span class="n">msg</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 클로저의 정의와 호출을 괄호로 묶을 수 있다.</span>
+                                        <span class="c1">// 정의도 표현식이기에 문제없다.</span>
+                <span class="k">return</span> <span class="s">&quot;hello &quot;</span> <span class="o">+</span> <span class="n">msg</span>
+            <span class="p">}</span> <span class="p">(</span><span class="s">&quot;world&quot;</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// 클로져를 정의와 동시에 호출하고, 그 반환값을 블록문에</span>
+                            <span class="c1">// 확장했다.</span>
+            <span class="c1">// 다음은 완전히 다른 표현이다:</span>
+            <span class="c1">// +(str getString(#str msg) {</span>
+            <span class="c1">//      return &quot;hello &quot; + msg</span>
+            <span class="c1">// } // 클로저 정의</span>
+            <span class="c1">// (&quot;world&quot;) // Tuple 정의</span>
                 <span class="n">is</span> <span class="s">&quot;he&quot;</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t&quot;</span><span class="p">)</span>
                 <span class="n">is</span> <span class="s">&quot;lo&quot;</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;execute&quot;</span><span class="p">)</span>
-                <span class="n">is</span> <span class="s">&quot;hello&quot;</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;correct.&quot;</span><span class="p">)</span>
+                <span class="n">is</span> <span class="s">&quot;hello world&quot;</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;correct.&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;this line.&quot;</span><span class="p">)</span>
             <span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span> <span class="n">p</span> <span class="c1">// p에 대해 인터페이스가 확장된다.</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="o">+</span><span class="n">p</span> <span class="p">{</span> <span class="c1">// 객체 p에 대해 인터페이스가 확장된다.</span>
         <span class="n">foo</span><span class="p">()</span>
         <span class="n">print</span><span class="p">()</span> <span class="c1">// p.print()와 동일하다.</span>
         <span class="n">eat</span><span class="p">()</span> <span class="c1">// Person.eat은 this.eat()보다 우선된다.</span>
@@ -454,11 +484,11 @@
     <span class="kt">void</span> <span class="n">returning_void</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// void:</span>
         <span class="c1">//  1. void로 정의된 값은 모든 종류의 값을 받아들이고, 동시에 무시한다.</span>
-        <span class="c1">//      e.g) ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.</span>
+        <span class="c1">//      e.g. ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.</span>
         <span class="c1">//  2. 단, 사용을 명확히 하게 위해 명시적으로 void로 변수 정의하면 에러로 판단한다.</span>
-        <span class="c1">//      e.g) void abc // 컴파일 에러.</span>
+        <span class="c1">//      e.g. void abc // 컴파일 에러.</span>
         <span class="c1">//  3. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.</span>
-        <span class="c1">//      e.g)    int foo(): 3 가 있을때,</span>
+        <span class="c1">//      e.g.    int foo(): 3 가 있을때,</span>
         <span class="c1">//              void main() {</span>
         <span class="c1">//                  // return foo() // 명시적 int를 void로 반환하면 에러다.</span>
         <span class="c1">//                  foo() // 결과적으로 void에 int를 반환하지만, 유효한 문법으로 처리.</span>
@@ -542,7 +572,7 @@
             <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot;, grade=&quot;</span> <span class="o">+</span> <span class="n">grade</span><span class="p">)</span> 
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;vector_x:&quot;</span> <span class="o">+</span> <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;, &quot;</span> <span class="o">+</span> <span class="p">...</span>
         <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">...</span>
-    <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="c1">// 0.1, 0.1, 0.1</span>
+        <span class="n">list</span><span class="p">[</span><span class="s">&quot;vector_x&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="c1">// 0.1, 0.1, 0.1</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
@@ -726,8 +756,12 @@
 <span class="k">class</span> <span class="nc">app</span> <span class="p">{</span>
     <span class="c1">// 중첩클래스(nested class)</span>
     <span class="k">class</span> <span class="nc">Plant</span> <span class="p">{</span>
-        <span class="n">str</span> <span class="n">getName</span><span class="p">()</span><span class="o">:</span> <span class="s">&quot;Plant&quot;</span>
-        <span class="kt">int</span> <span class="n">_age</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">Plant</span><span class="p">()</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;default ctor&quot;</span><span class="p">)</span>
+        <span class="n">Plant</span><span class="p">(</span><span class="err">#</span><span class="n">str</span> <span class="k">new</span><span class="p">)</span><span class="o">:</span> <span class="n">_name</span> <span class="o">=</span> <span class="k">new</span>
+
+        <span class="n">str</span> <span class="n">_name</span> <span class="o">=</span> <span class="s">&quot;Plant&quot;</span>
+        <span class="n">str</span> <span class="n">getName</span><span class="p">()</span><span class="o">:</span> <span class="n">_name</span>
+        <span class="c1">// int _age = 1 // Leaf에도 _age가 있기 때문에 Leaf에 중복정의에러 발생한다.</span>
         <span class="kt">int</span> <span class="n">getAge</span><span class="p">()</span><span class="o">:</span> <span class="n">_age</span>
     <span class="p">}</span>
     <span class="c1">// 상속inheritance:   class &lt;파생클래스&gt; -&gt; &lt;기반클래스&gt;    </span>
@@ -735,19 +769,34 @@
     <span class="c1">//  -&gt;는 상속UML Generalization 기호에서 착안했다.</span>
     <span class="c1">//  함수 명세signature가 같은 경우 overriding으로 판단한다. (= Java)</span>
     <span class="c1">//  함수명과 인자리스트(즉, header) 까지만 일치할 경우, 메소드 은닉hiding 된다.</span>
-    <span class="k">class</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="n">Plant</span> <span class="p">{</span>   
+    <span class="k">class</span> <span class="nc">Leaf</span> <span class="o">-&gt;</span> <span class="n">Plant</span> <span class="p">{</span>
+        <span class="c1">// 생성자constructor:</span>
+        <span class="c1">// 객체가 생성될때 호출되는 메소드다. 다음의 규칙을 따른다.</span>
+        <span class="c1">//  1. 생성자가 1개도 서술하지 않은 경우 인터프리터는 기본생성자를 만든다.</span>
+        <span class="c1">//  2. inline 초기화가 끝난 뒤, 생성자가 호출된다.</span>
+        <span class="c1">//  3. 부모클래스의 생성자를 명시적으로 호출할 수 있다.</span>
+        <span class="c1">//  4. 부모클래스의 생성자를 명시하지 않으면 부모의 기본생성자가 호출된다.</span>
+        <span class="c1">//  5. 부모생성자 호출 구문은 반드시 생성자 메소드 처음에 나와야 한다.</span>
+
+        <span class="n">Leaf</span><span class="p">()</span> <span class="p">{}</span> <span class="c1">// 별다른 서술이 없어도 인터프리터는 부모클래스Super의 기본생성자를</span>
+                  <span class="c1">// 호출한다.</span>
+        <span class="n">Leaf</span><span class="p">(</span><span class="kt">int</span> <span class="k">new</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 생성자에는 재정의 재지정을 넣을 수 없다. 순서는 정해져있다.</span>
+            <span class="n">Super</span><span class="p">(</span><span class="s">&quot;SuperLeaf&quot;</span><span class="p">)</span> <span class="c1">// 맨 앞에 와야 한다.</span>
+            <span class="n">age</span> <span class="o">=</span> <span class="k">new</span> <span class="c1">//</span>
+        <span class="p">}</span>
         <span class="n">str</span> <span class="n">getName</span><span class="p">()</span><span class="o">:</span> <span class="s">&quot;Leaf&quot;</span> <span class="c1">// overriding</span>
-        <span class="kt">float</span> <span class="n">getAge</span><span class="p">()</span><span class="o">:</span> <span class="mf">3.5</span> <span class="c1">// 반환형이 다르므로 은닉이다.</span>
+        <span class="kt">int</span> <span class="n">_age</span> <span class="o">=</span> <span class="mf">3.5</span>
+        <span class="kt">float</span> <span class="n">getAge</span><span class="p">()</span><span class="o">:</span> <span class="n">age</span> <span class="c1">// 반환형이 다르므로 은닉이다.</span>
     <span class="p">}</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">Plant</span> <span class="n">p</span>
         <span class="k">if</span> <span class="mi">1</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">Leaf</span><span class="p">()</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Leaf</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
         <span class="n">console</span><span class="p">.(</span><span class="s">&quot;name=&quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot;, age=&quot;</span> <span class="o">+</span> <span class="n">p</span><span class="p">.</span><span class="n">getAge</span><span class="p">())</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="c1">// 결과: name=Leaf, age=1</span></pre><h6>메소드 재정의 재지정</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="c1">// 결과: name=Leaf, age=3</span></pre><h6>메소드 재정의 재지정</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
 <span class="k">class</span> <span class="nc">Person</span> <span class="p">{</span>
     <span class="kt">int</span> <span class="n">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;print(int a)&quot;</span><span class="p">);</span> <span class="k">return</span> <span class="mi">0</span>
@@ -775,7 +824,7 @@
     <span class="c1">//     ( &quot;me.Super(인자리스트)&quot; 와 같다.)</span>
     <span class="c1">//  3. =&gt; 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.</span>
     <span class="c1">//      ( &quot;+&quot; 반대편에 Super&#39;s 가 붙는다고 생각하면 이해가 편하다.)</span>
-    <span class="c1">//      e.g) + 이 함수명 뒤에 붙는 경우: 이행후, 실행.</span>
+    <span class="c1">//      e.g. + 이 함수명 뒤에 붙는 경우: 이행후, 실행.</span>
     <span class="c1">//                      &quot; 앞     &quot;      : 실행후, 이행.</span>
 
     <span class="c1">// 이를 활용하면, 다음처럼 줄일 수 있다.</span>
@@ -932,9 +981,8 @@
 <span class="c1">//      다음의 규칙을 따른다.</span>
 <span class="c1">//          a. 주입한 인터페이스 안에서 protected 멤버에 접근할 수 없다.</span>
 <span class="c1">//              (캡슐화encapsulation를 깰 수 없기 때문이다.)</span>
-<span class="c1">//          b. 은닉되지 않는다. (동일한 타입내 변경이다. 은닉이 아닌 중복 정의.)</span>
-<span class="c1">//          c. 편의를 위해, 예외적으로 overriding 허용된다.</span>
-<span class="c1">//          d. 메소드 또한 클래스이다.</span>
+<span class="c1">//          b. 은닉되지 않는다.</span>
+<span class="c1">//          c. overriding 되지 않는다.</span>
 <span class="c1">//</span>
 <span class="c1">//  3.  메소드 또한 타입이다. 따라서 메소드 또한 메소드를 확장할 수 있는데,</span>
 <span class="c1">//      이를 클로져라고 한다. (추후 서술)</span>
@@ -1046,7 +1094,7 @@
     <span class="c1">//      에서 오버라이딩 하면 프로퍼티로 인식한다. (set의 인자는 반드시 const</span>
     <span class="c1">//      이다.)</span>
     <span class="c1">//  3.  예외적으로 프로퍼티 선언과 인터페이스의 확장을 같이 할 수 없다.</span>
-    <span class="c1">//      e.g)    class app {</span>
+    <span class="c1">//      e.g.    class app {</span>
     <span class="c1">//                  str _name</span>
     <span class="c1">//                  str name {</span>
     <span class="c1">//                      void print(): console.out(&quot;extended&quot;)</span>
@@ -1061,7 +1109,7 @@
     <span class="c1">//          객체를 반환하는 곳은 어떤 인터페이스가 확장되었는지 100% 알게 만드는</span>
     <span class="c1">//          방법이 없다. (인터프리터에 인공지능이라도 없는 한..)</span>
     <span class="c1">//  </span>
-    <span class="c1">//  4.  프로퍼티에서 상속받은 proZZ 중첩클래스를 정의하는 것이기에, 안에서</span>
+    <span class="c1">//  4.  프로퍼티에서 상속받은 중첩클래스를 정의하는 것이기에, 안에서</span>
     <span class="c1">//      정의된 get, set 메소드에서는 해당 프로퍼티를 소유한 클래스 scope를 갖는다.</span>
     <span class="c1">//  5.  &lt;Type&gt; get(), res set(#Type new)은 get, #get, set 으로 단축할 수 있다.</span>
     <span class="c1">//      set의 파라메터는 #This 타입에 new라는 변수명을 사용한다.</span>
@@ -1112,30 +1160,38 @@
         <span class="c1">//  4.  클로져에 의해 캡쳐된 식별자는 클로져의 라이프 사이클과 동기화 된다.</span>
         <span class="c1">//      (즉, 지역변수일지라도 소멸되지 않는다)</span>
         <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="kt">int</span> <span class="n">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="c1">// 클로져.</span>
+        <span class="kt">int</span> <span class="n">add</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 클로져.</span>
             <span class="n">sum</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="c1">// 클로져는 지역변수를 공유한다.</span>
+        <span class="p">}</span>
 
         <span class="c1">// 함수 위임자delegator: &lt;반환형&gt;(&lt;타입리스트&gt;)</span>
         <span class="c1">// 메소드 또한 객체1st-class-citizen이며, 이에 대한 refer로 다룰 수 있다.</span>
         <span class="c1">//  1.  refer와 메소드간 타입은 정확하게 일치해야 한다.</span>
         <span class="c1">//      묵시적형변환과 관계없다. 단, 반환된 값은 물론 묵시적 형변환이</span>
         <span class="c1">//      적용될 수 있다.</span>
-        <span class="c1">//          e.g)    int foo(int) {}</span>
+        <span class="c1">//          e.g.    int foo(int) {}</span>
         <span class="c1">//                  bool(int) fdelegator = foo // 컴파일 에러.</span>
         <span class="c1">//                  int(int) fdel1 = foo</span>
         <span class="c1">//                  bool res = fdel1(35) // ok.</span>
+        <span class="c1">//  2.  복수의 메소드를 가리킬 수 있으며, +=, -= 연산자를 사용한다.</span>
+        <span class="c1">//  3.  위임자를 호출시, 가리키는 모든 메소드가 호출된다</span>
+        <span class="c1">//  4.  메소드를 -= 제거할때, 클로저에 내포된 객체도 동일해야 제거된다.</span>
+        <span class="c1">//  5.  배열로써, 소유한 메소드를 순회할 수 있다.</span>
         <span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="n">getClosure</span><span class="p">()</span><span class="o">:</span> <span class="n">add</span>
 
-        <span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="n">fdelegate</span> <span class="c1">// 메소드에 대한 refer</span>
-        <span class="n">fdelegate</span> <span class="o">=</span> <span class="n">getClosure</span><span class="p">()</span>
+        <span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="n">fdelegate</span> <span class="o">=</span> <span class="kt">int</span> <span class="n">dummy</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 메소드에 대한 refer</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;a=&quot;</span> <span class="o">+</span> <span class="n">a</span> <span class="o">+</span> <span class="s">&quot;, b=&quot;</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">fdelegate</span> <span class="o">+=</span> <span class="n">getClosure</span><span class="p">()</span>
         <span class="c1">// float(int, int) fptr1 = getClosure() // 컴파일 에러.</span>
         <span class="c1">// int(int, float) fptr2 = getClosure() // 컴파일 에러.</span>
         <span class="k">if</span> <span class="n">fdelegate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="n">getClosure</span><span class="p">()(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
             <span class="k">class</span> <span class="nc">MyClass</span> <span class="p">{</span> <span class="c1">// 중첩클래스.</span>
                 <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
                 <span class="n">str</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="n">print</span><span class="p">(</span><span class="kt">int</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="n">fdel</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">str</span> <span class="n">to_return</span><span class="p">()</span> <span class="c1">// 클로져를 반환하고 있다.</span>
+                    <span class="n">str</span> <span class="n">to_return</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// 클로져를 반환하고 있다.</span>
                         <span class="s">&quot;answer to life the universe and everything is &quot;</span> <span class="o">+</span> <span class="n">fdel</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+                    <span class="p">}</span>
                 <span class="p">}</span>
             <span class="p">}</span>
             <span class="k">return</span> <span class="n">MyClass</span><span class="p">().</span><span class="n">print</span><span class="p">(</span><span class="n">fdelegate</span><span class="p">)</span>
@@ -1151,6 +1207,7 @@
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="cm">/*  결과:</span>
+<span class="cm">    a=3, b=5</span>
 <span class="cm">    answer to life the universe and everything is 42</span>
 <span class="cm">    sum is 42</span>
 <span class="cm">*/</span></pre><h6>예외처리</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
@@ -1182,7 +1239,7 @@
             <span class="c1">// Rule#3에 의해서 f.open()에서 발생한 익셉션은, path.@set() 메소드가</span>
             <span class="c1">// 소유한 catch() 함수 중 가장 적절한 인자를 가진 catch(fileexcept)로</span>
             <span class="c1">// 넘겨진다.</span>
-            <span class="k">catch</span><span class="p">(</span><span class="n">file</span><span class="o">&lt;</span><span class="n">err</span><span class="o">&gt;</span> <span class="n">e</span><span class="p">)</span>
+            <span class="k">catch</span><span class="p">(</span><span class="n">rfile</span> <span class="n">e</span><span class="p">)</span>
                  <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;fail to open &quot;</span> <span class="o">+</span> <span class="n">ret</span><span class="p">)</span>
                  <span class="n">f</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="k">new</span><span class="p">,</span> <span class="s">&quot;rw&quot;</span><span class="p">)</span> <span class="c1">// 다시 fileexcept가 발생한다.</span>
                  <span class="c1">// Rule#1, 2에 의해 str.@set()을 호출한 foo()의 블록문으로 throw.</span>
