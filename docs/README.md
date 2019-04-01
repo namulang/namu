@@ -221,7 +221,7 @@ class app {
     //	1. 모든 블록문을 갖을 수 있는 키워드는 블록문의 마지막 라인을 밖으로 반환한다.
     //	2. 모든 타입 선언은, 동시에 정의이며, 정의된 식별자는 해당 범위scope내에서 유효하다.
     int foo(int age) {
-        5 // #1 규칙. return이 없어도 ok.
+        5 // #1 규칙. return이 없어도 o 	k.
     }
 	void boo(type declared, bool success, int age) { // type도 int와 같은 타입의 한 종류.
 		// ... type의 인터페이스는 차후 설명
@@ -1138,22 +1138,19 @@ class MyClass {
 		}
 	}
 	class B {
-		// 프로퍼티로 반환되는 class는 정의가 global space에 등록되지 않는다.
-		// 런타임에 어떤 타입인지 파악이 되기 때문이다.
-		@get: return A
+		// @get: return A // "class" 는 타입을 정의하는 키워드이지, 타입 그자체가 아니다.
+		// 따라서 프로퍼티가 될 수 없다.
 	}
-	class $C {
+	// type변수:
+	// type은 class들을 담을 수 있는 메타클래스 타입이다. 고로, 프로퍼티가 될 수 있다.
+	type $C {
 		@get: return A
 	}
 }
 
 MyClass.A a() // 전역객체 a
-// MyClass.B b() // 에러. b의 타입은 MyClass.B가 아니라 class이다.
-// MyClass.C c() // 역시 에러.
-
-// type변수:
-// type은 class들을 담을 수 있는 메타클래스 타입이다.
-// class는 타입을 정의하는 키워드로써, 타입이 아니다.
+MyClass.B b()
+// MyClass.C c() // 컴파일에러: MyClass.C는 변수다.
 type[] types = [MyClass().B, MyClass.C, MyClass.A]
 
 class +MyClass {
