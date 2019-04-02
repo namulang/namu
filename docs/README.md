@@ -479,6 +479,9 @@ class Plant {
         console.out("constructor. age=" + age)
 		age = 20
     }
+	Plant(#str msg) {
+		console.out("Plant(#str)")
+	}
     // 인라인 지정자inline-specifier:	<keyword has blockstmt>: stmt
     // 	":" 는 inline 지정자(specifier)로써,
     //	뒤에 stmt 1개를 블록문 없이 사용 가능.
@@ -490,11 +493,11 @@ class Plant {
 
 class app {
 	void main() {
-		Plant p // Plant 객체 정의
+		Plant p // 기본생성자로 Plant 객체 정의
 		Plant p_null = null // 객체 정의되지 않음.
 
 		if 1
-			Plant p1 // Plant 객체 정의
+			Plant p1("Where is my santa?") // Plant(#str) 생성자로 객체 정의
 			p1.getName() == p.name // "herb" == "herb"
 		
 			Plant p2 = p1
@@ -1004,7 +1007,7 @@ class app {
 			This get(): this
 			#This #get(): this
 			res set(This)
-		} number()
+		} number
 		number = Number()
 	}
 }
@@ -1148,9 +1151,9 @@ class MyClass {
 	}
 }
 
-MyClass.A a() // 전역객체 a
-MyClass.B b()
-// MyClass.C c() // 컴파일에러: MyClass.C는 변수다.
+MyClass.A a // 전역객체 a
+MyClass.B b
+// MyClass.C c // 컴파일에러: MyClass.C는 변수다.
 type[] types = [MyClass().B, MyClass.C, MyClass.A]
 
 class +MyClass {
@@ -1203,7 +1206,7 @@ class Person {
 }
 
 class app {
-	Person p1()
+	Person p1
 	// 프로퍼티property: 타입 프로퍼티명 { get <블록문> set <블록문> }
 	// 인스턴스 인터페이스 확장 문법을 사용해서 get, set 메소드를 확장하면,
 	// 변수를 정의하는 대신, 변수처럼 동작하는 메소드 2개를 지닌 객체인 프로퍼티를
@@ -1247,7 +1250,8 @@ class app {
 		res set(#Person new) { // set {  과 동일하다.
 			console.out("p2.set()")
 			p1 = new;
-			return rok()
+			return rok() // rok는 타입이므로, return rok는 rok의 객체를 생성하는 것이 아닌, 
+						 // ok라는 타입을 반환한다는 뜻이된다.
 		}
 	}
 	void main() {
@@ -1439,7 +1443,7 @@ class app {
 				console.out(" - " + e.size + " bytes. nd is sub of " + e.name + " ? -> " + ...
 				child.isSub(e))
 
-			// 객체 정의: e.instance() | e()
+			// 객체 정의: e.instance() | e() | e.new()
 			// 모두 node타입의("?") 객체를 반환한다.
 			? instance = e.instance()
 			Person p = instance // 이것과 위. 2줄은 컴파일 될 수 없다.
