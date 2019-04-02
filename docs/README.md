@@ -170,23 +170,23 @@ class app {
 
         if age > 20 { // 원칙은 블록문시에도 항상 {, }를 사용하나,            
             if age > 20 & age < 20 // 함수 내의 블록문은 {, } 생략을 권장.
-                Console.out("can't reach here")
+                console.out("can't reach here")
             
             int sum = 0 // 허용된 중복 정의
             for int n in 1~5 // ~는 1부터 5까지를 의미함. [1, 5)
                 sum += n
                 
-            Console.out("sum=" + sum) // "sum=10"
+            console.out("sum=" + sum) // "sum=10"
         } else if age == 20 // } 뒤에 다음 stmt 가능.
             sum = 0
         if ! (age == 21) | sum // |는 or연산. sum이 0이 아니면 true로 판단
-            Console.out("sum=" + sum)
+            console.out("sum=" + sum)
         elif ! sum // == else if
-            Console.out("can't reach here")
+            console.out("can't reach here")
             return -1 // 함수 종료. 반환
 
         int bit = 2            
-        Console.out(bit || 4) // "6"
+        console.out(bit || 4) // "6"
         // ||, &&, ~~ 비트 연산자
         return 0
 	}
@@ -277,7 +277,7 @@ class app {
     int age // 접근자(accessor)는 public. 초기화 표현식이 없을 경우, 각 타입들의 기본값이 assign.
     void main() {
         app.double(grade) // static 메소드 double 호출.
-        Console.out("age=" + age + ", grade=" + double(grade)) // scope(app) 생략 가능
+        console.out("age=" + age + ", grade=" + double(grade)) // scope(app) 생략 가능
     }
     
     // prefix $은 static 메소드를 의미.
