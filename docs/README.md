@@ -433,6 +433,34 @@ class app {
 	void eat() { console // console은 클래스나, 이 또한 식별자이므로 유효한 코드다.
 		out("app.eat()")
 	}
+
+    int getSome() { return 5 }
+    void doSwitch(int val) +val {
+        // 다중분기문is: <확장된블록문>
+        //					is <식별자와 동일한 타입의 값>
+        //						<블록문>
+        // switch에 대응하는 문법으로, 다음의 규칙을 따른다.
+        //	1.	주어진 식별자에 대해, 값이 일치하는 경우 속한 블록문을 수행한다.
+        //		만약 다른 비교연산자를 사용해야 하는 경우, if-else를 사용해야 한다.
+        //		(is는 사실 if val == 3 elif val == doSwitch() .. 와 동일하다.)
+        //	2.	is의 값은 반드시 확장된 변수와 동일한 타입의 값으로 평가evalutate
+        //		될수 있어야 한다.
+        //	3.	else는 그 이외의 경우 수행된다.
+        is 3 // val의 값이 3이면
+            console.out("we got 3.")
+		is getSome() // 함수 호출도 가능하다.
+			console.out("doSwitch")
+		else
+            +(str getString() {
+            	return "hello"
+            }()) { // 클로져를 정의하였고, 그 반환값을 블록문에 확장했다.
+				is "he": console.out("can't")
+				is "lo": console.out("execute")
+                is "hello": console.out("correct.")
+				else: console.out("this line.")
+        	}
+    }
+
 	void main() { p // p에 대해 인터페이스가 확장된다.
 		foo()
 		print() // p.print()와 동일하다.
@@ -443,6 +471,8 @@ class app {
 		fly() // local에 등록된 fly()는 클래스scope를 가진 Person.fly()보다 우선된다.
 		str name = "Chales"
 		console.out(p.name)
+
+		doSwitch(4)
 	}
 }
 
@@ -463,6 +493,7 @@ class Person {
 	I'm eating.
 	am I a bird?
 	Chales
+	correct.
 */
 ```
 
