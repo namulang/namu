@@ -1,4 +1,4 @@
-# zworldlang 개요 & 설문
+# worldlang 개요 & 설문
 
 ## 서론
 
@@ -338,28 +338,29 @@ class app {
 		// 어떻게 res는 ADT이며 occupiable이며, 기본값이 ADT가 되는가?:
 		// 앞서 설명한 듯 occupiable의 동작은 매우 심플하다.
 		//    1.    월드의 모든 변수는 기본적으로 refer에 의해서 감싸져wrapping 있다.
-		//    2.    refer는 할당연산 요청이 왔을때 대상(wrapping하는)이 occupiable 타입일
-		//        경우, 그 대상에 복제생성자를cloning 수행한다.
+		//    2.    refer는 할당연산 요청이 왔을때 대상(wrapping하는)이 occupiable
+		//			타입일 경우, 그 대상에 복제생성자를cloning 수행한다.
 		//    3.    반대의 경우에는 단순히 대상을 교체한다.
-		//    4.    구체타입이며 occupiable일 경우에는 최적화에 따라 refer가 없도록 코드블럭
-		//        을 구현한다.
+		//    4.    구체타입이며 occupiable일 경우에는 최적화에 따라 refer가 없도록
+		//			코드블럭을 구현한다.
 		es ret // 기본값은 rok다.
 		
 		// 위의 구문은 최종적으로 ret라는 refer가 rok라는 타입의 객체를 가리키게 되는데,
 		// 중간과정을 해석하면 다음의 흐름으로 진행된다.
-		//    1.    ret의 기본값은 rok이므로 res ret = rok로 인터프리터는 평가evaluate한다.
-		//    2.    rok는 선정의타입pretype이며, occupiable이므로 occupiable에서 괄호 없이
-		//        타입만 명시할 경우, 기본생성자를 호출하는것과 같아, res ret = rok()
-		//        로 된다.
-		//        e.g)    int a // int는 occupiable. int a()와 같으므로 int 생성자가
-		//                      // 호출되며, 결과 a = 0.
-		//                MyClass b // MyClass는 sharable. b = null이다.
+		//    1.    ret의 기본값은 rok이므로 res ret = rok로 인터프리터는
+		//			평가evaluate한다.
+		//    2.    rok는 선정의타입pretype이며, occupiable이므로 occupiable에서
+		//			괄호 없이 타입만 명시할 경우, 기본생성자를 호출하는것과 같아,
+		//			res ret = rok()로 된다.
+		//			e.g)	int a // int는 occupiable. int a()와 같으므로 int 생성자가
+		//					// 호출되며, 결과 a = 0.
+		//					MyClass b // MyClass는 sharable. b = null이다.
 		//    3.    rok()로 생성된 임시객체는 refer인 ret 변수에 할당이 된다.
-		//        refer ret는 타입인 res가 occupiable 이므로 주어진 객체의 복제 생성을
-		//        시도한다. 결과, res ret = rok().clone()과 같아진다.
-		//    4.    위는 최적화를 거치지 않았을때, 기본 규칙에 의해서 동작되는 순수 로직
-		//        흐름이며, 실제로는 중복되어 불필요한 객체 생성을 하지 않도록
-		//        의미분석기가 최적화된다.
+		//			refer ret는 타입인 res가 occupiable 이므로 주어진 객체의 복제
+		//			생성을 시도한다. 결과, res ret = rok().clone()과 같아진다.
+		//    4.    위는 최적화를 거치지 않았을때, 기본 규칙에 의해서 동작되는 순수
+		//			로직 흐름이며, 실제로는 중복되어 불필요한 객체 생성을 하지 않도록
+		//			의미분석기가 최적화된다.
 		
 		res ret // 기본값은 rok다.
 		// res = res + result // res는 사칙연산이 허용되지 않는다.
@@ -1155,9 +1156,8 @@ import console
 //		다음의 규칙을 따른다.
 //			a. 주입한 인터페이스 안에서 protected 멤버에 접근할 수 없다.
 //				(캡슐화encapsulation를 깰 수 없기 때문이다.)
-//			b. 은닉되지 않는다. (동일한 타입내 변경이다. 은닉이 아닌 중복 정의.)
-//			c. 편의를 위해, 예외적으로 overriding 허용된다.
-//			d. 메소드 또한 클래스이다.
+//			b. 은닉되지 않는다.
+//			c. overriding 되지 않는다.
 //
 //	3.	메소드 또한 타입이다. 따라서 메소드 또한 메소드를 확장할 수 있는데,
 //		이를 클로져라고 한다. (추후 서술)
