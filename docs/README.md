@@ -474,7 +474,8 @@ class app {
 			console.out("doSwitch")
 		else
 			
-            +(str getString(#str msg) {
+            +(str getString(#str msg) { // 클로저의 정의와 호출을 괄호로 묶을 수 있다.
+            							// 정의도 표현식이기에 문제없다.
             	return "hello " + msg
             } ("world")) {	// 클로져를 정의와 동시에 호출하고, 그 반환값을 블록문에
              				// 확장했다.
