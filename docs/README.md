@@ -919,8 +919,12 @@ import console
 class app {
     // 중첩클래스(nested class)
     class Plant {
-        str getName(): "Plant"
-        int _age = 1
+    	Plant(): console.out("default ctor")
+    	Plant(#str new): _name = new
+
+    	str _name = "Plant"
+        str getName(): _name
+        // int _age = 1 // Leaf에도 _age가 있기 때문에 Leaf에 중복정의에러 발생한다.
         int getAge(): _age
     }
     // 상속inheritance:	class <파생클래스> -> <기반클래스>    
@@ -928,19 +932,34 @@ class app {
     //	->는 상속UML Generalization 기호에서 착안했다.
     //	함수 명세signature가 같은 경우 overriding으로 판단한다. (= Java)
     //	함수명과 인자리스트(즉, header) 까지만 일치할 경우, 메소드 은닉hiding 된다.
-    class Leaf -> Plant {   
+    class Leaf -> Plant {
+    	// 생성자constructor:
+    	// 객체가 생성될때 호출되는 메소드다. 다음의 규칙을 따른다.
+    	//	1. 생성자가 1개도 서술하지 않은 경우 인터프리터는 기본생성자를 만든다.
+    	//	2. inline 초기화가 끝난 뒤, 생성자가 호출된다.
+    	//	3. 부모클래스의 생성자를 명시적으로 호출할 수 있다.
+    	//	4. 부모클래스의 생성자를 명시하지 않으면 부모의 기본생성자가 호출된다.
+    	//	5. 부모생성자 호출 구문은 반드시 생성자 메소드 처음에 나와야 한다.
+
+    	Leaf() {} // 별다른 서술이 없어도 인터프리터는 부모클래스Super의 기본생성자를
+    			  // 호출한다.
+		Leaf(int new) { // 생성자에는 재정의 재지정을 넣을 수 없다. 순서는 정해져있다.
+			Super("SuperLeaf") // 맨 앞에 와야 한다.
+			age = new //
+		}
         str getName(): "Leaf" // overriding
-        float getAge(): 3.5 // 반환형이 다르므로 은닉이다.
+        int _age = 3.5
+        float getAge(): age // 반환형이 다르므로 은닉이다.
     }
     void main() {
         Plant p
         if 1
-            p = Leaf()
+            p = Leaf(3)
        	console.("name=" + p.getName() + ", age=" + p.getAge())
     }
 }
 
-// 결과: name=Leaf, age=1
+// 결과: name=Leaf, age=3
 ```
 
 
@@ -1292,7 +1311,7 @@ class app {
     //			객체를 반환하는 곳은 어떤 인터페이스가 확장되었는지 100% 알게 만드는
     //			방법이 없다. (인터프리터에 인공지능이라도 없는 한..)
 	//	
-	//	4.	프로퍼티에서 상속받은 proZZ 중첩클래스를 정의하는 것이기에, 안에서
+	//	4.	프로퍼티에서 상속받은 중첩클래스를 정의하는 것이기에, 안에서
 	//		정의된 get, set 메소드에서는 해당 프로퍼티를 소유한 클래스 scope를 갖는다.
 	//	5.	<Type> get(), res set(#Type new)은 get, #get, set 으로 단축할 수 있다.
 	//		set의 파라메터는 #This 타입에 new라는 변수명을 사용한다.
