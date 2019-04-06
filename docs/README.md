@@ -162,11 +162,31 @@ class app {
         int age = 21
         int sum = 0
         // 블록문 생략:
-        // 블록문은 구문의 집합이며, 중괄호로{} 표현한다.
-        // 원칙적으로는 항상 중괄호를 사용해야하나, 편의를 위해서 멤버(변수와 메소드)내에서
-        // 중첩적으로 정의된 블록문에 한해서는 중괄호를 생략할 수 있으며, 이를 권장한다
-        // (반대로 말하면, 클래스와 외부 메소드, 외부 멤버변수의 정의에는 반드시,
-        // 중괄호가 들어가야 한다.)
+        // 블록문은 구문의 집합이며, 중괄호와{} 들여쓰기Indentation로 표현한다.
+        // 여기서 중요한 것은 들여쓰기이며, 중괄호는 모호한 케이스를 없애기 위해
+		// 표현하는 것이다.
+		// 모든 중괄호는 생략될 수 있으며, 들여쓰기만 제대로 되어있으면 문제는 없다.
+		// 다만 몇몇 케이스에서는 중괄호 생략이 문제가 될 수 있다는 걸 알아야 한다.
+		//
+		// 중괄호 생략시 문제케이스 #1:
+		// world의 핵심 특징은 모든 구문stmt을 표현식expression으로 대체한 것에 있다.
+		// 이는 정의와 사용을 동시에 할 수 있게 하는데, 중괄호가 없을 경우 모호한
+		// 상황이 필연적으로 발생한다.
+		// e.g.	void print()
+		// 			console.out("hello")
+		//		() // 이것은 print()인가 아니면 빈 Tuple인가?
+		// 		중괄호를 넣으면 직관적으로 변한다.
+		// 		void print() {
+		//			console.out("hello")
+		// 		} // 이 뒤에 ()를 붙이면 클로저의 호출이 된다.
+		// 		() // 빈 tuple이다.
+		//  
+		// 권장 스타일:
+		// 앞서 언급한 모호한 케이스는 없애고, 편의성을 절충한 안으로 다음의 규칙을
+		// 따른다.
+		// 	1. 메소드의 블록문에서는 중괄호를 생략한다.
+		//	2. 그 이외에는 중괄호를 모두 표현한다.
+		// 이후 모든 예제는 위의 스타일로 작성한 것이다.
 
         if age > 20 { // 원칙은 블록문시에도 항상 {, }를 사용하나,            
             if age > 20 & age < 20 // 함수 내의 블록문은 {, } 생략을 권장.
@@ -452,12 +472,19 @@ class app {
 		is getSome() // 함수 호출도 가능하다.
 			console.out("doSwitch")
 		else
-            +(str getString() {
-            	return "hello"
-            }()) { // 클로져를 정의하였고, 그 반환값을 블록문에 확장했다.
+			
+            +(str getString(#str msg) {
+            	return "hello " + msg
+            } ("world")) {	// 클로져를 정의와 동시에 호출하고, 그 반환값을 블록문에
+             				// 확장했다.
+            // 다음은 완전히 다른 표현이다:
+			// +(str getString(#str msg) {
+			//		return "hello " + msg
+			// } // 클로저 정의
+			// ("world") // Tuple 정의
 				is "he": console.out("can't")
 				is "lo": console.out("execute")
-                is "hello": console.out("correct.")
+                is "hello world": console.out("correct.")
 				else: console.out("this line.")
         	}
     }
@@ -683,7 +710,7 @@ class app {
 			+ name + ", grade=" + grade) 
  		console.out("vector_x:" + list["vector_x"][0] + ", " + ...
  		list["vector_x"][1] + ...
-	list["vector_x"][2]) // 0.1, 0.1, 0.1
+		list["vector_x"][2]) // 0.1, 0.1, 0.1
     }
 }
 
@@ -1346,8 +1373,9 @@ class app {
         	class MyClass { // 중첩클래스.
         		int count = 0;
             	str(void) print(int(int, int) fdel) {
-                	str to_return() // 클로져를 반환하고 있다.
+                	str to_return() { // 클로져를 반환하고 있다.
                 		"answer to life the universe and everything is " + fdel(26, 16)
+					}
             	}
         	}
         	return MyClass().print(fdelegate)
@@ -1402,7 +1430,7 @@ class Opener {
 			// Rule#3에 의해서 f.open()에서 발생한 익셉션은, path.@set() 메소드가
 			// 소유한 catch() 함수 중 가장 적절한 인자를 가진 catch(fileexcept)로
 			// 넘겨진다.
-			catch(file<err> e)
+			catch(rfile e)
 			     console.out("fail to open " + ret)
 			     f.open(new, "rw") // 다시 fileexcept가 발생한다.
 			     // Rule#1, 2에 의해 str.@set()을 호출한 foo()의 블록문으로 throw.
