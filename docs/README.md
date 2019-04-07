@@ -232,7 +232,7 @@ class app {
     // 구문statement와 표현식expression:
     // 프로그래밍 언어에서 구문이란 코드의 각 라인을 말하며,
     // 표현식은 특정한 값을 반환할 수 있는 식별자가 조합된 식을 뜻한다.
-    //	e.g in c++)	foo(3); 			// 표현식이므로, 동시에 구문이다.
+    //	e.g.in c++)	foo(3); 			// 표현식이므로, 동시에 구문이다.
     //				void func(int age); // 구문이다.
     //				type A;	 			// 구문이다.
     //
@@ -352,7 +352,7 @@ class app {
 		//    2.    rok는 선정의타입pretype이며, occupiable이므로 occupiable에서
 		//			괄호 없이 타입만 명시할 경우, 기본생성자를 호출하는것과 같아,
 		//			res ret = rok()로 된다.
-		//			e.g)	int a // int는 occupiable. int a()와 같으므로 int 생성자가
+		//			e.g.	int a // int는 occupiable. int a()와 같으므로 int 생성자가
 		//					// 호출되며, 결과 a = 0.
 		//					MyClass b // MyClass는 sharable. b = null이다.
 		//    3.    rok()로 생성된 임시객체는 refer인 ret 변수에 할당이 된다.
@@ -607,11 +607,11 @@ class app {
     void returning_void() {
         // void:
 		//	1. void로 정의된 값은 모든 종류의 값을 받아들이고, 동시에 무시한다.
-		//		e.g) ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.
+		//		e.g. ret1은 void로 반환값에 할당이 시도되나, 반환값에 변화는 없다.
 		//	2. 단, 사용을 명확히 하게 위해 명시적으로 void로 변수 정의하면 에러로 판단한다.
-		//		e.g) void abc // 컴파일 에러.
+		//		e.g. void abc // 컴파일 에러.
 		//	3. void로 선언된 값에 대한 묵시적인 할당연산만 예외적으로 허용한다.
-		//		e.g) 	int foo(): 3 가 있을때,
+		//		e.g. 	int foo(): 3 가 있을때,
         // 				void main() {
         //					// return foo() // 명시적 int를 void로 반환하면 에러다.
         //					foo() // 결과적으로 void에 int를 반환하지만, 유효한 문법으로 처리.
@@ -996,7 +996,7 @@ class Student -> Person {
     //	   ( "me.Super(인자리스트)" 와 같다.)
 	//	3. => 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.
 	//		( "+" 반대편에 Super's 가 붙는다고 생각하면 이해가 편하다.)
-	// 		e.g) + 이 함수명 뒤에 붙는 경우: 이행후, 실행.
+	// 		e.g. + 이 함수명 뒤에 붙는 경우: 이행후, 실행.
 	//						" 앞		"	   : 실행후, 이행.
 
 	// 이를 활용하면, 다음처럼 줄일 수 있다.
@@ -1297,7 +1297,7 @@ class app {
 	//		에서 오버라이딩 하면 프로퍼티로 인식한다. (set의 인자는 반드시 const
 	//		이다.)
 	//	3.	예외적으로 프로퍼티 선언과 인터페이스의 확장을 같이 할 수 없다.
-	//		e.g)	class app {
+	//		e.g.	class app {
 	//	            	str _name
 	//					str name {
 	//						void print(): console.out("extended")
@@ -1371,22 +1371,29 @@ class app {
 		//	4.	클로져에 의해 캡쳐된 식별자는 클로져의 라이프 사이클과 동기화 된다.
 		//		(즉, 지역변수일지라도 소멸되지 않는다)
 		int sum = 0
-		int add(int a, int b) // 클로져.
+		int add(int a, int b) { // 클로져.
 			sum = a + b // 클로져는 지역변수를 공유한다.
-	
+		}
+
 		// 함수 위임자delegator: <반환형>(<타입리스트>)
 		// 메소드 또한 객체1st-class-citizen이며, 이에 대한 refer로 다룰 수 있다.
 		//	1. 	refer와 메소드간 타입은 정확하게 일치해야 한다.
 		//		묵시적형변환과 관계없다. 단, 반환된 값은 물론 묵시적 형변환이
 		//		적용될 수 있다.
-		//			e.g)	int foo(int) {}
+		//			e.g.	int foo(int) {}
 		//					bool(int) fdelegator = foo // 컴파일 에러.
 		//					int(int) fdel1 = foo
 		//					bool res = fdel1(35) // ok.
+		//	2.	복수의 메소드를 가리킬 수 있으며, +=, -= 연산자를 사용한다.
+		//	3.	위임자를 호출시, 가리키는 모든 메소드가 호출된다
+		//	4.	메소드를 -= 제거할때, 클로저에 내포된 객체도 동일해야 제거된다.
+		//	5.	배열로써, 소유한 메소드를 순회할 수 있다.
 		int(int, int) getClosure(): add
 		
-		int(int, int) fdelegate // 메소드에 대한 refer
-		fdelegate = getClosure()
+		int(int, int) fdelegate = int dummy(int a, int b) { // 메소드에 대한 refer
+			console.out("a=" + a + ", b=" + b)
+		}
+		fdelegate += getClosure()
 		// float(int, int) fptr1 = getClosure() // 컴파일 에러.
 		// int(int, float) fptr2 = getClosure() // 컴파일 에러.
 		if fdelegate(3, 5) == getClosure()(3,5)
@@ -1411,6 +1418,7 @@ class app {
     }
 }
 /*	결과:
+	a=3, b=5
 	answer to life the universe and everything is 42
 	sum is 42
 */
