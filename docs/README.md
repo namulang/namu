@@ -201,7 +201,7 @@ class app {
             sum = 0
         if ! (age == 21) | sum // |는 or연산. sum이 0이 아니면 true로 판단
             console.out("sum=" + sum)
-        elif ! sum // == else if
+        elif ! sum // elif == else if
             console.out("can't reach here")
             return -1 // 함수 종료. 반환
 
@@ -241,12 +241,12 @@ class app {
     //	1. 모든 블록문을 갖을 수 있는 키워드는 블록문의 마지막 라인을 밖으로 반환한다.
     //	2. 모든 타입 선언은, 동시에 정의이며, 정의된 식별자는 해당 범위scope내에서 유효하다.
     int foo(int age) {
-        5 // #1 규칙. return이 없어도 o 	k.
+        5 // #1 규칙. return이 없어도 ok.
     }
 	void boo(type declared, bool success, int age) { // type도 int와 같은 타입의 한 종류.
 		// ... type의 인터페이스는 차후 설명
 
-        // bool -> str시 "true" | "false"
+        // bool -> str시 "true" 또는 "false"
         console.out(success + ", age=" + age) // true, age=20
         
     }
@@ -297,12 +297,13 @@ class app {
     // 3.5처럼 . 포함된 리터럴상수는 float으로 간주.
     int age // 접근자(accessor)는 public. 초기화 표현식이 없을 경우, 각 타입들의 기본값이 assign.
     void main() {
-        app.double(grade) // static 메소드 double 호출.
-        console.out("age=" + age + ", grade=" + double(grade)) // app의 범위scope에 있으므로, 'app' 생략 가능
+        app.double(grade) // static 메소드인 double을 호출.
+        console.out("age=" + age + ", grade=" + double(grade)) // app의 범위scope에 있으므로, 본래 app.double() 해야 하나, 'app'을 생략 가능
     }
     
     // prefix $은 static 메소드를 의미.
-    // 함수간 선언 순서에 종속되지 않음. _double() 호출보다 정의가 나중에 나와도 ok.
+    // 함수간 선언 순서에 종속되지 않음. app.double() 호출보다 정의가 나중에
+    // 나와도 ok.
     int $double(float val) { // 인자리스트에 $, _ prefix는 붙일 수 없음.
         int $mul = 0
         mul++
@@ -479,16 +480,21 @@ class app {
 				return "hello " + msg
 			} ("world")) {	// 클로져를 정의와 동시에 호출하고, 그 반환값을 블록문에
 			 				// 확장했다.
-			/*	다음은 완전히 다른 표현이다:
-			+(str getString(#str msg) {
-				return "hello " + msg
-			} {
-			("world") // Tuple 정의
+
+			/* 위와 다음의 코드는 비슷해보여도 완전히 다른 표현이다:
+				+(str getString(#str msg) {
+					return "hello " + msg
+				}) {
+				("world")
+
+				getString이라는 클로져를 확장하고, "world" 라는 문자열1개를 갖는
+				Tuple을 1개 만들었다.
+			*/
 				is "he": console.out("can't")
 				is "lo": console.out("execute")
 				is "hello world": console.out("correct.")
 				else: console.out("this line.")
-			}*/
+			}
     }
 
 	void main() +p { // 객체 p에 대해 인터페이스가 확장된다.
@@ -839,7 +845,7 @@ class app {
 		// ;은 다음 stmt를 이어서 한 줄에 서술 가능.
 		
 		str = msg = "Jung-un"
-		p.assign(3.0/, msg), 24) // 인자msg와 파라메터new_msg는 이름이 달라도 된다.
+		p.assign((3.0/2, msg), 24) // 인자msg와 파라메터new_msg는 이름이 달라도 된다.
 
 		// 변수 정의 또한 표현식이므로 튜플내에서 사용 가능. 정의된 변수는 해당 scope
 		// 내에서 유효. (사용된곳이 블록문 안쪽이면, 해당 블록문이 종료까지 유효.)
@@ -850,7 +856,7 @@ class app {
 		p.print() // "Jung-un"
 		// p.name과 msg는 별도의 인스턴스.
     }
-    (int, str/*변수명 생략*/) map(int age, str name) {
+    (int, str/*변수명 생략가능*/) map(int age, str name) {
 		// 사실, 인자리스트(int age, str name)도 튜플이며, 함수호출도 튜플이다.
 
     	//	맵: <타입>[<타입>]
@@ -1416,7 +1422,7 @@ class app {
 */
 ```
 
-## 
+
 
 ##### 클로저
 
