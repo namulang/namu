@@ -396,6 +396,8 @@ class app {
 	}
 }
 /* 결과:
+	ret=rok, code=0
+	app.foo()#12 at res.wrd
 	ret == rsuper()
 	ret == rsuper
 	ret.isSub(rsuper)
