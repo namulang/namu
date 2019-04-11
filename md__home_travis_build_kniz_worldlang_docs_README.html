@@ -126,7 +126,7 @@
             <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="o">!</span> <span class="p">(</span><span class="n">age</span> <span class="o">==</span> <span class="mi">21</span><span class="p">)</span> <span class="o">|</span> <span class="n">sum</span> <span class="c1">// |는 or연산. sum이 0이 아니면 true로 판단</span>
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;sum=&quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="p">)</span>
-        <span class="n">elif</span> <span class="o">!</span> <span class="n">sum</span> <span class="c1">// == else if</span>
+        <span class="n">elif</span> <span class="o">!</span> <span class="n">sum</span> <span class="c1">// elif == else if</span>
             <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="c1">// 함수 종료. 반환</span>
 
@@ -158,12 +158,12 @@
     <span class="c1">//  1. 모든 블록문을 갖을 수 있는 키워드는 블록문의 마지막 라인을 밖으로 반환한다.</span>
     <span class="c1">//  2. 모든 타입 선언은, 동시에 정의이며, 정의된 식별자는 해당 범위scope내에서 유효하다.</span>
     <span class="kt">int</span> <span class="n">foo</span><span class="p">(</span><span class="kt">int</span> <span class="n">age</span><span class="p">)</span> <span class="p">{</span>
-        <span class="mi">5</span> <span class="c1">// #1 규칙. return이 없어도 o   k.</span>
+        <span class="mi">5</span> <span class="c1">// #1 규칙. return이 없어도 ok.</span>
     <span class="p">}</span>
     <span class="kt">void</span> <span class="n">boo</span><span class="p">(</span><span class="n">type</span> <span class="n">declared</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">success</span><span class="p">,</span> <span class="kt">int</span> <span class="n">age</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// type도 int와 같은 타입의 한 종류.</span>
         <span class="c1">// ... type의 인터페이스는 차후 설명</span>
 
-        <span class="c1">// bool -&gt; str시 &quot;true&quot; | &quot;false&quot;</span>
+        <span class="c1">// bool -&gt; str시 &quot;true&quot; 또는 &quot;false&quot;</span>
         <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">success</span> <span class="o">+</span> <span class="s">&quot;, age=&quot;</span> <span class="o">+</span> <span class="n">age</span><span class="p">)</span> <span class="c1">// true, age=20</span>
 
     <span class="p">}</span>
@@ -206,12 +206,13 @@
     <span class="c1">// 3.5처럼 . 포함된 리터럴상수는 float으로 간주.</span>
     <span class="kt">int</span> <span class="n">age</span> <span class="c1">// 접근자(accessor)는 public. 초기화 표현식이 없을 경우, 각 타입들의 기본값이 assign.</span>
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">app</span><span class="p">.</span><span class="kt">double</span><span class="p">(</span><span class="n">grade</span><span class="p">)</span> <span class="c1">// static 메소드 double 호출.</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;age=&quot;</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="s">&quot;, grade=&quot;</span> <span class="o">+</span> <span class="kt">double</span><span class="p">(</span><span class="n">grade</span><span class="p">))</span> <span class="c1">// app의 범위scope에 있으므로, &#39;app&#39; 생략 가능</span>
+        <span class="n">app</span><span class="p">.</span><span class="kt">double</span><span class="p">(</span><span class="n">grade</span><span class="p">)</span> <span class="c1">// static 메소드인 double을 호출.</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;age=&quot;</span> <span class="o">+</span> <span class="n">age</span> <span class="o">+</span> <span class="s">&quot;, grade=&quot;</span> <span class="o">+</span> <span class="kt">double</span><span class="p">(</span><span class="n">grade</span><span class="p">))</span> <span class="c1">// app의 범위scope에 있으므로, 본래 app.double() 해야 하나, &#39;app&#39;을 생략 가능</span>
     <span class="p">}</span>
 
     <span class="c1">// prefix $은 static 메소드를 의미.</span>
-    <span class="c1">// 함수간 선언 순서에 종속되지 않음. _double() 호출보다 정의가 나중에 나와도 ok.</span>
+    <span class="c1">// 함수간 선언 순서에 종속되지 않음. app.double() 호출보다 정의가 나중에</span>
+    <span class="c1">// 나와도 ok.</span>
     <span class="kt">int</span> <span class="err">$</span><span class="kt">double</span><span class="p">(</span><span class="kt">float</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// 인자리스트에 $, _ prefix는 붙일 수 없음.</span>
         <span class="kt">int</span> <span class="err">$</span><span class="n">mul</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">mul</span><span class="o">++</span>
@@ -296,6 +297,8 @@
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="cm">/* 결과:</span>
+<span class="cm">    ret=rok, code=0</span>
+<span class="cm">    app.foo()#12 at res.wrd</span>
 <span class="cm">    ret == rsuper()</span>
 <span class="cm">    ret == rsuper</span>
 <span class="cm">    ret.isSub(rsuper)</span>
@@ -372,16 +375,21 @@
                 <span class="k">return</span> <span class="s">&quot;hello &quot;</span> <span class="o">+</span> <span class="n">msg</span>
             <span class="p">}</span> <span class="p">(</span><span class="s">&quot;world&quot;</span><span class="p">))</span> <span class="p">{</span>  <span class="c1">// 클로져를 정의와 동시에 호출하고, 그 반환값을 블록문에</span>
                             <span class="c1">// 확장했다.</span>
-            <span class="cm">/*  다음은 완전히 다른 표현이다:</span>
-<span class="cm">            +(str getString(#str msg) {</span>
-<span class="cm">                return &quot;hello &quot; + msg</span>
-<span class="cm">            } {</span>
-<span class="cm">            (&quot;world&quot;) // Tuple 정의</span>
-<span class="cm">                is &quot;he&quot;: console.out(&quot;can&#39;t&quot;)</span>
-<span class="cm">                is &quot;lo&quot;: console.out(&quot;execute&quot;)</span>
-<span class="cm">                is &quot;hello world&quot;: console.out(&quot;correct.&quot;)</span>
-<span class="cm">                else: console.out(&quot;this line.&quot;)</span>
-<span class="cm">            }*/</span>
+
+            <span class="cm">/* 위와 다음의 코드는 비슷해보여도 완전히 다른 표현이다:</span>
+<span class="cm">                +(str getString(#str msg) {</span>
+<span class="cm">                    return &quot;hello &quot; + msg</span>
+<span class="cm">                }) {</span>
+<span class="cm">                (&quot;world&quot;)</span>
+
+<span class="cm">                getString이라는 클로져를 확장하고, &quot;world&quot; 라는 문자열1개를 갖는</span>
+<span class="cm">                Tuple을 1개 만들었다.</span>
+<span class="cm">            */</span>
+                <span class="n">is</span> <span class="s">&quot;he&quot;</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t&quot;</span><span class="p">)</span>
+                <span class="n">is</span> <span class="s">&quot;lo&quot;</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;execute&quot;</span><span class="p">)</span>
+                <span class="n">is</span> <span class="s">&quot;hello world&quot;</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;correct.&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;this line.&quot;</span><span class="p">)</span>
+            <span class="p">}</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="o">+</span><span class="n">p</span> <span class="p">{</span> <span class="c1">// 객체 p에 대해 인터페이스가 확장된다.</span>
@@ -649,7 +657,7 @@
         <span class="c1">// ;은 다음 stmt를 이어서 한 줄에 서술 가능.</span>
 
         <span class="n">str</span> <span class="o">=</span> <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;Jung-un&quot;</span>
-        <span class="n">p</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="mf">3.0</span><span class="o">/</span><span class="p">,</span> <span class="n">msg</span><span class="p">),</span> <span class="mi">24</span><span class="p">)</span> <span class="c1">// 인자msg와 파라메터new_msg는 이름이 달라도 된다.</span>
+        <span class="n">p</span><span class="p">.</span><span class="n">assign</span><span class="p">((</span><span class="mf">3.0</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">msg</span><span class="p">),</span> <span class="mi">24</span><span class="p">)</span> <span class="c1">// 인자msg와 파라메터new_msg는 이름이 달라도 된다.</span>
 
         <span class="c1">// 변수 정의 또한 표현식이므로 튜플내에서 사용 가능. 정의된 변수는 해당 scope</span>
         <span class="c1">// 내에서 유효. (사용된곳이 블록문 안쪽이면, 해당 블록문이 종료까지 유효.)</span>
@@ -660,7 +668,7 @@
         <span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">()</span> <span class="c1">// &quot;Jung-un&quot;</span>
         <span class="c1">// p.name과 msg는 별도의 인스턴스.</span>
     <span class="p">}</span>
-    <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="n">str</span><span class="cm">/*변수명 생략*/</span><span class="p">)</span> <span class="n">map</span><span class="p">(</span><span class="kt">int</span> <span class="n">age</span><span class="p">,</span> <span class="n">str</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="n">str</span><span class="cm">/*변수명 생략가능*/</span><span class="p">)</span> <span class="n">map</span><span class="p">(</span><span class="kt">int</span> <span class="n">age</span><span class="p">,</span> <span class="n">str</span> <span class="n">name</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// 사실, 인자리스트(int age, str name)도 튜플이며, 함수호출도 튜플이다.</span>
 
         <span class="c1">//  맵: &lt;타입&gt;[&lt;타입&gt;]</span>
