@@ -93,20 +93,9 @@ offside-rule
 ```cpp
 import console // import로 모듈을 가져옴
 
-/*모든 프로그램은 진입점을 위한 app을 정의 필요*/
-class app { // 블록문(Block stmt)는 중괄호 사용
-    //	블록문시 여는-중괄호는 stmt의 뒤에 넣음
-    /*	잘못된 예)
-    		class app
-    		{   
-   	*/
-
-    // 블록문 안의 코드들은 반드시 들여쓰기(indent) 필요함
-    int main() { // 진입점
-        return console.out("hello world\n")
-    }
-} 	// Indent가 중요하기 때문에 한줄에 여러개의 }를 붙일 수 없음
-	// 잘못된 예) }}
+/*모든 프로그램은 진입점을 위한 app이라는 객체 정의가 필요*/
+app
+	int main(): console.out("hello world\n")
 
 // 결과: hello world
 ```
@@ -132,9 +121,9 @@ class app { // 블록문(Block stmt)는 중괄호 사용
 ```cpp
 import console
 
-class app {
-	int age = 0
-    void   main   (   ){  // whitespace 무시
+app // 객체 app
+	int age = 0 // app의 변수, age.
+    void   main   (   )  // whitespace 무시
         int age=0 // 지역변수 age와 member변수와 이름 중복 허용
         ++age++ *= 2 // age == 4
         // 연산자 우선순위 존재함.
@@ -146,10 +135,56 @@ class app {
         // str[-9999]는 0으로 예외처리.
         // str[99999999]는 str의 length-1로 예외처리.
         // int + str시, implicit 캐스팅 우선순위(3vs5)에 따라, int->str casting
-    }
-}
+
 
 // 결과: hellboy aged 16
+```
+
+
+
+##### 객체의 기본
+
+```cpp
+import console
+
+// 객체 확장 문법:
+// <Opt:원본객체> <인터페이스 복사될 객체>
+// 		<Opt:객체의 확장 인터페이스>
+//		<Opt:객체의 확장 인터페이스2>
+
+A // 객체 A를 정의한다. 원본객체는 생략되었다. 고로, 이 객체는 무scratch에서 출발한다.
+	void print() // 객체 A는 print() 라는 메소드를 갖게 되었다.
+    	c.out("hello world. I'm " + age + " years old.") // print의 구현
+   	int age = 0
+
+A B // 객체 B를 정의한다. A의 인터페이스를 물려받는다.
+	void say() // 거기에 say() 메소드를 확장했다.
+    	c.out("and you?")
+
+app
+	void main()
+    	A a1 // A 객체로부터 인터페이스를 모두 물려받는다.    
+    	B b1
+    	b1.age = 5
+
+    	c.out("a1' age is " + a1.age) // a1's age is 0
+    	c.out(b1.age) // 5
+
+		A.age = 20
+    	A C // 메소드 안에서 새로운 객체를 만들 수 있듯,
+    		// 새로운 객체를 만들면서 인터페이스 확장도 당연히 가능하다.
+    		void wow()
+    			say()
+				print()
+    	C.wow()
+    	// 단 C는 지역객체이므로 메소드 밖과 시그내쳐signature에서는 사용할 수 없다.
+
+/* 결과:
+	a1's age is 0
+	5
+	hello world. I'm 20 years old.
+	and you?
+*/
 ```
 
 
@@ -157,8 +192,8 @@ class app {
 ##### 키워드와 논리연산자
 
 ```cpp
-class app {
-    int main() {
+app
+    int main()
         int age = 21
         int sum = 0
         // 블록문 생략:
@@ -181,15 +216,10 @@ class app {
 		// 		} // 이 뒤에 ()를 붙이면 클로저의 호출이 된다.
 		// 		() // 빈 tuple이다.
 		//  
-		// 권장 스타일:
-		// 앞서 언급한 모호한 케이스는 없애고, 편의성을 절충한 안으로 다음의 규칙을
-		// 따른다.
-		// 	1. 메소드의 블록문에서는 중괄호를 생략한다.
-		//	2. 그 이외에는 중괄호를 모두 표현한다.
-		// 이후 모든 예제는 위의 스타일로 작성한 것이다.
+		// 중괄호는 가급적 표현하지 않는 것을 권장한다.
 
-        if age > 20 { // 원칙은 블록문시에도 항상 {, }를 사용하나,            
-            if age > 20 & age < 20 // 함수 내의 블록문은 {, } 생략을 권장.
+        if age > 20 { // 블록문시 {, }를 사용가능 하지만,
+            if age > 20 & age < 20 // 되도록 생략을 권장.
                 console.out("can't reach here")
             
             int sum = 0 // 허용된 중복 정의
@@ -209,9 +239,7 @@ class app {
         console.out(bit || 4) // "6"
         // ||, &&, ~~ 비트 연산자
         return 0
-	}
-    // import console // 에러.
-}
+
 
 import console // 외부 scope 이면, 어느 위치에든 선언 가능.
 
@@ -228,7 +256,7 @@ sum=10
 ##### statement 는 expression
 
 ```cpp
-class app {
+app
     // 구문statement와 표현식expression:
     // 프로그래밍 언어에서 구문이란 코드의 각 라인을 말하며,
     // 표현식은 특정한 값을 반환할 수 있는 식별자가 조합된 식을 뜻한다.
@@ -240,17 +268,15 @@ class app {
     // 이를 위해 2가지 규칙이 있다.
     //	1. 모든 블록문을 갖을 수 있는 키워드는 블록문의 마지막 라인을 밖으로 반환한다.
     //	2. 모든 타입 선언은, 동시에 정의이며, 정의된 식별자는 해당 범위scope내에서 유효하다.
-    int foo(int age) {
+    int foo(int age)
         5 // #1 규칙. return이 없어도 ok.
-    }
-	void boo(type declared, bool success, int age) { // type도 int와 같은 타입의 한 종류.
+	void boo(type declared, bool success, int age) // type도 int와 같은 타입의 한 종류.
 		// ... type의 인터페이스는 차후 설명
 
         // bool -> str시 "true" 또는 "false"
         console.out(success + ", age=" + age) // true, age=20
-        
-    }
-    void main() {
+
+    void main()
         int age = foo(0) // age=5
         bool success = if age // always true.
             console.out("at if blockstmt")
@@ -258,12 +284,12 @@ class app {
         else
             false
         console.out("success=" + success)
-        boo(class inner { 	// #2 규칙. 클래스의 정의. 클래스 자체를 boo함수로 넘긴다.
-            				// worldlang은 클래스또한 하나의 타입으로 다룬다. (추후 서술)
-            void print() {
+
+        boo(class inner	// #2 규칙. 클래스의 정의. 클래스 자체를 boo함수로 넘긴다.
+            			// worldlang은 클래스또한 하나의 타입으로 다룬다. (추후 서술)
+            void print()
              	console.out("app.main.inner.print")
-            }                
-        }, if success // if의 블록문 2개중 하나의 마지막 라인이 boo함수로 넘겨진다
+        , if success // if의 블록문 2개중 하나의 마지막 라인이 boo함수로 넘겨진다
            	bool(true)
         else
         	bool ok(false) // #2 규칙.
@@ -272,8 +298,7 @@ class app {
 		// local_age와 inner는 main 함수 내에서 사용 가능하다.
         console.out(local_age) // 20
         // console.out(ok) // 에러. ok는 이미 else 블록문이 끝남과 동시에 소멸되었다.
-    }
-}
+
 
 /* 결과:
 	at if blockstmt
@@ -290,26 +315,25 @@ class app {
 ```cpp
 import console
 
-class app {
+app
     // prefix _는 protected를 의미. 정의와 동시에 초기화도 ok.
     // 접근시에는 _grade가 아니라 grade
     float _grade = 3.5
     // 3.5처럼 . 포함된 리터럴상수는 float으로 간주.
     int age // 접근자(accessor)는 public. 초기화 표현식이 없을 경우, 각 타입들의 기본값이 assign.
-    void main() {
+    void main()
         app.double(grade) // static 메소드인 double을 호출.
         console.out("age=" + age + ", grade=" + double(grade)) // app의 범위scope에 있으므로, 본래 app.double() 해야 하나, 'app'을 생략 가능
-    }
     
     // prefix $은 static 메소드를 의미.
     // 함수간 선언 순서에 종속되지 않음. app.double() 호출보다 정의가 나중에
     // 나와도 ok.
-    int $double(float val) { // 인자리스트에 $, _ prefix는 붙일 수 없음.
+    int $double(float val) // 인자리스트에 $, _ prefix는 붙일 수 없음.
         int $mul = 0
         mul++
-		return val*mul // int mul -> float mul -> (int) val*mul 로 implicit 캐스팅    
-    }
-}
+		return val*mul // int mul -> float mul -> (int) val*mul 로 implicit 캐스팅
+
+
 // 결과: age=0, grade=7
 ```
 
@@ -320,8 +344,8 @@ class app {
 ```cpp
 import console
 
-class app {
-	res boo(res result) {
+app
+	res boo(res result)
 		// 결과타입res:
 		// 메소드의 결과를 표현한다. 동작의 성공 여부, 결과의 메시지, 결과의 카테고리
 		// (warn, info, err), src 값들을 확인 할 수 있다. res는 ADT이며 동시에
@@ -368,8 +392,8 @@ class app {
 		ret = result
 		console.out("ret=" + ret + ", code=" + ret.code) // res=rok, code=0
 		return ret
-	}
-	res foo() {
+
+	res foo()
 		res ret = boo(rsuper(rwarn)) // Warning으로 새로운 rsuper객체를 생성한다.
 		// 출처src:
 		// 주어진 심볼(변수, 메소드, 클래스)이 어느 원전(code)에서 기원하였는지를
@@ -378,8 +402,8 @@ class app {
 		src s = ret.src
 		console.out(s.method.name + "#" + s.line + " at " + s.file.name) // app.foo()#12 at res.wrd
 		return ret
-	}
-	void main() {
+
+	void main()
 		res ret = foo()
 		if ret == rsuper() // 기존 규칙대로라면 이게 맞는 비교문이나,
 			console.out("ret == rsuper()")
@@ -393,8 +417,7 @@ class app {
 			console.out("ret.isNormal()")
 		if ret // ! ret.isNormal()과 같다.
 			console.out("ret")
-	}
-}
+
 /* 결과:
 	ret=rok, code=0
 	app.foo()#12 at res.wrd
@@ -414,11 +437,9 @@ class app {
 ```cpp
 import console
 
-class app {
-	// 확장 가능한 블록문Blockstmt: <Opt:+확장될 식별자> { <stmts> }
-	// 특수문자 +는 확장을 의미한다.
-	//
-	// 실행가능한 구문의 명시적 집합으로, { } 기호와 indent로 표현한다.
+app
+	// 확장 가능한 블록문Blockstmt: with <Opt:확장될 식별자> <stmts>
+	// 실행가능한 구문의 명시적 집합으로, with 키워드와 들여쓰기indent로 표현한다.
 	// 주어진 식별자를 현 범주scope로 확장할 수 있다. 해당 식별자의 모든 멤버를 객체와
 	// 접근연산자("."dot) 없이 호출이 가능하게 된다.
 	// 다음의 규칙을 따른다.
@@ -429,9 +450,9 @@ class app {
 	//		자체를 벗어나게 된다. 이는, 블록문이 독자적인 흐름을 갖지 못하기 때문
 	//	3.	문법적으로 블록문을 변수에 할당하거나 소유할 수 없다.
 	//		(클로져를 대신 사용하라)
-	//	4.	키워드(if, for, ...)에 의해 블록문을 사용할 경우를 묵시적 블록문이라 한다.   
-	//	5.	확장 식별자를 열린 중괄호 앞에 +prefix를 붙이게 되면 해당 블록문
-	//		안쪽에서는 그 식별자의 소유한 멤버들이 확장된다.
+	//	4.	키워드(if, for, ...)에 의해 블록문을 사용할 경우를 묵시적 블록문이라 한다. 
+	//	5.	with 키워드 뒤에 식별자를 붙이게 되면 해당 블록문 안쪽에서 그 식별자의
+	//		소유한 멤버들이 확장된다.
 	//	6.	이렇게 확장된 인터페이스들은 this보다는 상위의, 지역변수보다는 하위의
 	//		우선순위를 갖는다. 이름 중복 허용 규칙에 의해 동일한 이름이 scope내에 복수
 	//		존재하는 경우 우선순위가 가장 높은 개체가 선택된다.
@@ -439,29 +460,29 @@ class app {
 	//		2개까지 이다.
 	//	8.	식별자는 생략 가능하다. 이 경우, 별다른 확장을 수행하지 않는다.
 	//	9.	확장된 식별자는 블록문에서 it 이라는 별칭을 갖는다.
-	void foo() { // 메소드도 블록문을 기본적으로 가지고 있다.
-		{ // 명시적 블록문 정의
+	void foo() // 메소드도 블록문을 기본적으로 가지고 있다.
+
+		with // Rule#8
         	int local = 5
         	updateAge(local) // Rule#2
         	
-        	int updateAge(int new_age) { // 클로저의 정의
+        	int updateAge(int new_age) // 클로저의 정의
     			int #age = 20
 	    		return age // Rule#2: return시 updateAge메소드만 종료된다.
-	    	}
-        }
-        // updateAge(20) // Rule#3: 접근 할 수 없다. 블록문에서 벗어났기 때문이다.
-        {        
-	    	return // Rule#1: {, } 을 가지고 있는 foo() 메소드에서 벗어난다.
-        }
-        console.out("can't reach here.")
-	}
-	Person p // 객체 생성
-	void eat() +console { // console은 클래스지만, 이 또한 식별자이므로 유효한 코드다.
-		out("app.eat()") // console.out("app.eat()") 과 동일하다.
-	}
 
-    int getSome() { return 5 }
-    void doSwitch(int val) +val {
+        // updateAge(20) // Rule#3: 접근 할 수 없다. 블록문에서 벗어났기 때문이다.
+        with
+	    	return // Rule#1: {, } 을 가지고 있는 foo() 메소드에서 벗어난다.
+        console.out("can't reach here.")
+
+	Person p // 객체 생성
+	void eat() with console // 메소드도 블록문을 가지고 있는 것이다.
+		// console은 클래스지만, 이 또한 식별자이므로 유효한 코드다.
+
+		out("app.eat()") // console.out("app.eat()") 과 동일하다.
+
+    int getSome(): return 5
+    void doSwitch(int val) with val
         // 다중분기문is: <확장된블록문>
         //					is <식별자와 동일한 타입의 값>
         //						<블록문>
@@ -477,55 +498,46 @@ class app {
 		is getSome() // else if it == getSome() // 함수 호출도 가능하다.
 			console.out("doSwitch")
 		else
-			+(str getString(#str msg) { // 클로저의 정의와 호출을 괄호로 묶을 수 있다.
-										// 정의도 표현식이기에 문제없다.
-				return "hello " + msg
-			} ("world")) {	// 클로져를 정의와 동시에 호출하고, 그 반환값을 블록문에
-			 				// 확장했다.
+			with str getString(#str msg) {	// 클로저의 정의와 호출을 괄호로 묶을
+                  							// 수 있다.
+				return "hello " + msg		// 정의도 표현식이기에 문제없다.
+    		} ("world")	// 클로져를 정의와 동시에 호출하고, 그 반환값을 블록문에
+			 			// 확장했다.
 
-			/* 위와 다음의 코드는 비슷해보여도 완전히 다른 표현이다:
-				+(str getString(#str msg) {
-					return "hello " + msg
-				}) {
-				("world")
-
-				getString이라는 클로져를 확장하고, "world" 라는 문자열1개를 갖는
-				Tuple을 1개 만들었다.
+			/* 클로저 뒤에 중괄호는 생략하면 위의 코드와 완전히 다른 표현이된다:
+				with str getString(#str msg)
+					return "hello " + msg // 클로져를 자체를 확장한다.
+					// 블록문이 끝났다.
+				("world") // 문자열 1개를 가진 튜플을 정의했다.
 			*/
 				is "he": console.out("can't")
 				is "lo": console.out("execute")
 				is "hello world": console.out("correct.")
 				else: console.out("this line.")
-			}
-    }
 
-	void main() +p { // 객체 p에 대해 인터페이스가 확장된다.
+	void main() with p // 객체 p에 대해 인터페이스가 확장된다.
 		foo()
 		print() // p.print()와 동일하다.
 		eat() // Person.eat은 this.eat()보다 우선된다.
-		void fly() {
+		void fly()
 			console.out("am I a bird?")
-		}
+
 		fly() // local에 등록된 fly()는 클래스scope를 가진 Person.fly()보다 우선된다.
 		str name = "Chales"
 		console.out(p.name)
 
 		doSwitch(4)
-	}
-}
 
-class Person {
-	void print() {
+
+Person
+	void print()
 		console.out("my name is unknown.")
-	}
-	void eat() {
+	void eat()
 		console.out("I'm eating.")
-	}
-	void fly() {
+	void fly()
 		console.out("I'm not a bird.")
-	}
 	str name = "Michel"
-}
+
 /* 결과:
 	my name is unknown.
 	I'm eating.
@@ -575,15 +587,14 @@ class Person {
 ```cpp
 import console
 
-class Plant {
+Plant
 	int _age = 5
-	Plant() {
+	Plant()
         console.out("constructor. age=" + age)
 		age = 20
-    }
-	Plant(#str msg) {
+	Plant(#str msg)
 		console.out("Plant(#str)")
-	}
+
     // 인라인 지정자inline-specifier:	<keyword has blockstmt>: stmt
     // 	":" 는 inline 지정자(specifier)로써,
     //	뒤에 stmt 1개를 블록문 없이 사용 가능.
@@ -591,10 +602,9 @@ class Plant {
     str name = "herb"
     int getName(): return name
     void $test(Plant p, str new_name): p.name = new_name
-}
 
-class app {
-	void main() {
+class app
+	void main()
 		Plant p // 기본생성자로 Plant 객체 정의
 		Plant p_null = null // 객체 정의되지 않음.
 
@@ -621,8 +631,6 @@ class app {
 
 		Plant.test(Plant(), str("5.5")) // 이름-없는-객체nameless object 를 생성가능하다.
 		console.out("end of program")
-	}
-}
 
 /*	결과:
 	constructor. age=5
