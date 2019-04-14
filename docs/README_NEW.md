@@ -1475,7 +1475,7 @@ import file
 Opener
 	file f = null
 	str path
-		ret => @set
+		ret => set
 			// 예외처리try-catch: try <코드> catch(인자리스트) <코드>
 			// 다음의 규칙을 따른다.
 			//	1.	예외가 발생하면, 자동으로 throw 처리된다.
@@ -1495,24 +1495,24 @@ Opener
 			f.close()
 			f.open(new, "rw") // Rule#1, 2: 내부에서 fileexception이 발생한다.
 
-			// Rule#3에 의해서 f.open()에서 발생한 익셉션은, path.@set() 메소드가
+			// Rule#3에 의해서 f.open()에서 발생한 익셉션은, path.set() 메소드가
 			// 소유한 catch() 함수 중 가장 적절한 인자를 가진 catch(fileexcept)로
 			// 넘겨진다.
 			catch(rfile e)
 			     console.out("fail to open " + ret)
 			     f.open(new, "rw") // 다시 fileexcept가 발생한다.
-			     // Rule#1, 2에 의해 str.@set()을 호출한 foo()의 블록문으로 throw.
+			     // Rule#1, 2에 의해 str.set()을 호출한 foo()의 블록문으로 throw.
 
 			catch(except e) // 눈치챘겠지만, 사실 catch 또한 클로져에 불과하다.
 			     console.out("can't reach here.")
 			     return ret // catch의 반환형은 외부메소드의 반환형(res ret)여야 한다.
-			     // Rule#3: 여기서 return 되면 str.@set()에서 return 되게 된다.
+			     // Rule#3: 여기서 return 되면 str.set()에서 return 되게 된다.
 			
 			console.out("path is " + new)
 			f.open(new, "rw") // Rule#3: 여기 예외도 catch(fileexcept)로 간다.
 			return ret
 
-		ret => @get
+		ret => get
 			consol.out("getting path(" res + ") from some Opener object.")
 			return ret
 
