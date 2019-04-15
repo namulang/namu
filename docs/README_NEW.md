@@ -163,7 +163,7 @@ A B // 객체 B를 정의한다. A의 인터페이스를 물려받는다.
 
 app
 	void main()
-    	A a1 // A 객체로부터 인터페이스를 모두 물려받는다.    
+    	A a1 // a1은 A 객체로부터 인터페이스를 모두 물려받는다.    
     	B b1
     	b1.age = 5
 
@@ -177,7 +177,9 @@ app
     			say()
 				print()
     	C.wow()
-    	// 단 C는 지역객체이므로 메소드 밖과 시그내쳐signature에서는 사용할 수 없다.
+    
+    //C foo() {} // 컴파일에러: C는 지역객체이므로 메소드 밖과 시그내쳐signature에서는 사용할 수 없다.
+    void foo() {}
 
 /* 결과:
 	a1's age is 0
@@ -219,7 +221,7 @@ app
 		// 중괄호는 가급적 표현하지 않는 것을 권장한다.
 
         if age > 20 { // 블록문시 {, }를 사용가능 하지만,
-            if age > 20 & age < 20 // 되도록 생략을 권장.
+            if age > 20 & age < 20 // 생략을 권장.
                 console.out("can't reach here")
             
             int sum = 0 // 허용된 중복 정의
@@ -227,7 +229,7 @@ app
                 sum += n
                 
             console.out("sum=" + sum) // "sum=10"
-        } else if age == 20 // } 뒤에 다음 stmt 가능.
+        } else if age == 20 // 블록문 뒤에 다음 stmt 가능.
             sum = 0
         if ! (age == 21) | sum // |는 or연산. sum이 0이 아니면 true로 판단
             console.out("sum=" + sum)
@@ -510,8 +512,10 @@ app
 					// 블록문이 끝났다.
 				("world") // 문자열 1개를 가진 튜플을 정의했다.
 			*/
-				is "he": console.out("can't")
-				is "lo": console.out("execute")
+				is "he"
+				is "lo" // "he" 이거나 "lo" 이면,
+                    console.out("can't")
+                    console.out("execute")
 				is "hello world": console.out("correct.")
 				else: console.out("this line.")
 
@@ -675,7 +679,7 @@ app
         Person
 			int age
             str name
-            str say() {
+            str say()
             	console.out("actually we don't those stmts in that block of \"if\"")
 				return null
 
@@ -877,13 +881,13 @@ app
 		for int n in ~3 // ~3은 0에서 2까지
 			arr[n] = n	// c.f) arr[2] = 2
 		arr[3] // 런타임 에러
-		
+
 		for int n in [0, 1, 2] // [x, y, z, ...] 은 배열의 상수 표현식
 			console.out(n)
-		
+
         arr.push(5)
         arr[3] == 5 // true
-        
+
         int[] arr2 = arr // 크기 생략 가능
         arr2 != arr // true
         arr2.isSame(arr) // true
@@ -963,7 +967,7 @@ app
 		if 1
 			(str x, str y) = map(1, "Jae-in")
 			console.out("x=" + x + ", y=" + y) // "x=4, y=apple"
-			
+
 		// console.out("x= " + x + ", y=" + y) // 에러
 		array()
 		sequence()
@@ -1519,16 +1523,15 @@ Opener
 
 app
     res foo()
-        Opener o
-		{ // 블록문의 명시적인 정의
-			o.path = "/usr/bin/bash" // 최종적으로 fileexcept가 발생한다.
+		with Opener()
+			it.path = "/usr/bin/bash" // 최종적으로 fileexcept가 발생한다.
 
 			catch(except e) // 이 블록문에서 나온 예외는 여기서 catch된다.
 				console.out("oh dear.")				
 				// 블록문이 종료된다.
 
 			console.out("can't reach here.")
-		}
+
     	console.out("can you see this?")
     void main():foo()
 
