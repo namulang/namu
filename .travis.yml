@@ -23,3 +23,4 @@ script:
 - export CC=gcc-7 CXX=g++-7 PYTHON=$(which python3.7)
 - $PYTHON build/builder.py build
 - $PYTHON build/builder.py doc
+- $PYTHON build/builder.py pubdoc

@@ -41,6 +41,8 @@ def branch(command):
         return run(arg)
     elif command == "doc":
         return doc()
+    elif command == "pubdoc":
+        return publish_doc()
 
     print(command + " is unknown.")
     return -1
@@ -79,6 +81,7 @@ def doc():
         return -1
     print("done.")
 
+def publish_doc():
     # pushing on gh-pages:
     origin = cmdstr("git rev-parse --verify HEAD")
     print("origin=" + str(origin))
