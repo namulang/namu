@@ -50,3 +50,5 @@ build/html/
 build/xml/
 build/*.tmp
 tags
+docs/html/
+docs/xml/
