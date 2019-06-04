@@ -94,7 +94,7 @@ offside-rule
 import console // import로 모듈을 가져옴
 
 /*모든 프로그램은 진입점을 위한 app이라는 객체 정의가 필요*/
-app
+def app
 	int main(): console.out("hello world\n")
 
 // 결과: hello world
@@ -121,15 +121,15 @@ app
 ```cpp
 import console
 
-app // 객체 app
-	int age = 0 // app의 변수, age.
+def app // 객체 app
+	age = 0 // app의 변수, age.
     void   main   (   )  // whitespace 무시
-        int age=0 // 지역변수 age와 member변수와 이름 중복 허용
+        age=0 // 지역변수 age와 member변수와 이름 중복 허용
         ++age++ *= 2 // age == 4
         // 연산자 우선순위 존재함.
         // 다음 연산자 지원 : += -= /= %= <= < > >= = == != --
 
-        int pow = age^2 // => age*age == 16
+        pow = age^2 // => age*age == 16
         console.out("hello world!"[-9999999~4] + "boy aged " + pow) // str은 UTF-16 인코딩
         // Sequence: x~y 로 표현하며 [x, y)의 범위를 가짐.
         // str[-9999]는 0으로 예외처리.
@@ -145,39 +145,47 @@ app // 객체 app
 ##### 객체의 기본
 
 ```cpp
-import console
+import console aka c // typedef
 
 // 객체 확장 문법:
 // <Opt:원본객체> <인터페이스 복사될 객체>
 // 		<Opt:객체의 확장 인터페이스>
 //		<Opt:객체의 확장 인터페이스2>
 
-A // 객체 A를 정의한다. 원본객체는 생략되었다. 고로, 이 객체는 무scratch에서 출발한다.
+def A // 객체 A를 정의한다. 원본객체는 생략되었다. 고로, 이 객체는 무scratch에서 출발한다.
 	void print() // 객체 A는 print() 라는 메소드를 갖게 되었다.
     	c.out("hello world. I'm " + age + " years old.") // print의 구현
    	int age = 0
 
-A B // 객체 B를 정의한다. A의 인터페이스를 물려받는다.
+def B = A // 객체 B를 정의한다. A의 인터페이스를 물려받는다.
 	void say() // 거기에 say() 메소드를 확장했다.
     	c.out("and you?")
 
-app
+def app
 	void main()
-    	A a1 // A 객체로부터 인터페이스를 모두 물려받는다.    
-    	B b1
+    	a1 = A() // a1은 A 객체로부터 인터페이스를 모두 물려받는다.    
+    	b1 = B()
     	b1.age = 5
 
     	c.out("a1' age is " + a1.age) // a1's age is 0
     	c.out(b1.age) // 5
 
 		A.age = 20
-    	A C // 메소드 안에서 새로운 객체를 만들 수 있듯,
+    	def C = A
+    		// 메소드 안에서 새로운 객체를 만들 수 있듯,
     		// 새로운 객체를 만들면서 인터페이스 확장도 당연히 가능하다.
+    		// "C = A"는 프로그램 시작시 수행된다.
+    		// A.age = 20보다 빠르므로 C.age 는 0 이다.
     		void wow()
     			say()
 				print()
     	C.wow()
-    	// 단 C는 지역객체이므로 메소드 밖과 시그내쳐signature에서는 사용할 수 없다.
+    	a2 = A() // a2.age는 20, A.age도 20 이다.
+    	c1 = C() // c1.age는 0, C.age도 0이다.
+    	
+    
+    //C foo() {} // 컴파일에러: C는 지역객체이므로 메소드 밖과 시그내쳐signature에서는 사용할 수 없다.
+    void foo() {}
 
 /* 결과:
 	a1's age is 0
@@ -192,10 +200,10 @@ app
 ##### 키워드와 논리연산자
 
 ```cpp
-app
+def app
     int main()
-        int age = 21
-        int sum = 0
+        age = 21
+        sum = 0
         // 블록문 생략:
         // 블록문은 구문의 집합이며, 중괄호와{} 들여쓰기Indentation로 표현한다.
         // 여기서 중요한 것은 들여쓰기이며, 중괄호는 모호한 케이스를 없애기 위해
@@ -219,15 +227,15 @@ app
 		// 중괄호는 가급적 표현하지 않는 것을 권장한다.
 
         if age > 20 { // 블록문시 {, }를 사용가능 하지만,
-            if age > 20 & age < 20 // 되도록 생략을 권장.
+            if age > 20 & age < 20 // 생략을 권장.
                 console.out("can't reach here")
             
-            int sum = 0 // 허용된 중복 정의
-            for int n in 1~5 // ~는 1부터 5까지를 의미함. [1, 5)
+            sum = 0 // 허용된 중복 정의
+            for n in 1~5 // ~는 1부터 5까지를 의미함. [1, 5)
                 sum += n
                 
             console.out("sum=" + sum) // "sum=10"
-        } else if age == 20 // } 뒤에 다음 stmt 가능.
+        } else if age == 20 // 블록문 뒤에 다음 stmt 가능.
             sum = 0
         if ! (age == 21) | sum // |는 or연산. sum이 0이 아니면 true로 판단
             console.out("sum=" + sum)
@@ -235,7 +243,7 @@ app
             console.out("can't reach here")
             return -1 // 함수 종료. 반환
 
-        int bit = 2            
+        bit = 2
         console.out(bit || 4) // "6"
         // ||, &&, ~~ 비트 연산자
         return 0
@@ -256,7 +264,7 @@ sum=10
 ##### statement 는 expression
 
 ```cpp
-app
+def app
     // 구문statement와 표현식expression:
     // 프로그래밍 언어에서 구문이란 코드의 각 라인을 말하며,
     // 표현식은 특정한 값을 반환할 수 있는 식별자가 조합된 식을 뜻한다.
@@ -277,23 +285,23 @@ app
         console.out(success + ", age=" + age) // true, age=20
 
     void main()
-        int age = foo(0) // age=5
-        bool success = if age // always true.
+        age = foo(0) // age=5
+        success = if age // always true.
             console.out("at if blockstmt")
             true
         else
             false
         console.out("success=" + success)
 
-        boo(class inner	// #2 규칙. 클래스의 정의. 클래스 자체를 boo함수로 넘긴다.
-            			// worldlang은 클래스또한 하나의 타입으로 다룬다. (추후 서술)
+        boo(inner	// #2 규칙. 클래스의 정의. 클래스 자체를 boo함수로 넘긴다.
+            		// worldlang은 클래스또한 하나의 타입으로 다룬다. (추후 서술)
             void print()
              	console.out("app.main.inner.print")
         , if success // if의 블록문 2개중 하나의 마지막 라인이 boo함수로 넘겨진다
            	bool(true)
         else
         	bool ok(false) // #2 규칙.
-        , int local_age = 20)
+        , local_age = 20)
 
 		// local_age와 inner는 main 함수 내에서 사용 가능하다.
         console.out(local_age) // 20
@@ -318,9 +326,9 @@ import console
 app
     // prefix _는 protected를 의미. 정의와 동시에 초기화도 ok.
     // 접근시에는 _grade가 아니라 grade
-    float _grade = 3.5
+    _grade = 3.5
     // 3.5처럼 . 포함된 리터럴상수는 float으로 간주.
-    int age // 접근자(accessor)는 public. 초기화 표현식이 없을 경우, 각 타입들의 기본값이 assign.
+    age // 접근자(accessor)는 public. 초기화 표현식이 없을 경우, 각 타입들의 기본값이 assign.
     void main()
         app.double(grade) // static 메소드인 double을 호출.
         console.out("age=" + age + ", grade=" + double(grade)) // app의 범위scope에 있으므로, 본래 app.double() 해야 하나, 'app'을 생략 가능
@@ -329,7 +337,7 @@ app
     // 함수간 선언 순서에 종속되지 않음. app.double() 호출보다 정의가 나중에
     // 나와도 ok.
     int $double(float val) // 인자리스트에 $, _ prefix는 붙일 수 없음.
-        int $mul = 0
+        $mul = 0
         mul++
 		return val*mul // int mul -> float mul -> (int) val*mul 로 implicit 캐스팅
 
@@ -369,42 +377,23 @@ app
 		//    3.    반대의 경우에는 단순히 대상을 교체한다.
 		//    4.    구체타입이며 occupiable일 경우에는 최적화에 따라 refer가 없도록
 		//			코드블럭을 구현한다.
-		res ret // 기본값은 rok다.
-		
-		// 위의 구문은 최종적으로 ret라는 refer가 rok라는 타입의 객체를 가리키게 되는데,
-		// 중간과정을 해석하면 다음의 흐름으로 진행된다.
-		//    1.	ret의 기본값은 rok() 다.
-		//    2.	rok는 선정의타입pretype이며, 괄호 없이 타입만 명시할 경우,
-		//			기본생성자를 호출하는것과 같기에, res ret = rok()로 된다.
-		//			e.g.	int a // int a()와 같아, 기본생성자가 호출되며, 결과 a = 0.
-		//					MyClass b // MyClass()와 같다.
-		//					MyADT c = null // ADT일 경우 뒤에 = null을 붙이지 않으면
-		//								   // 에러가 된다.
-		//    3.	rok()로 생성된 임시객체는 refer인 ret 변수에 할당이 된다.
-		//			refer ret는 타입인 res가 occupiable 이므로 주어진 객체의 복제
-		//			생성을 시도한다. 결과, res ret = rok().clone()과 같아진다.
-		//    4.	위는 최적화를 거치지 않았을때, 기본 규칙에 의해서 동작되는 순수
-		//			로직 흐름이며, 실제로는 중복되어 불필요한 객체 생성을 하지 않도록
-		//			의미분석기가 최적화 한다.
-		
-		res ret // 기본값은 rok()다.
-		// res = res + result // res는 사칙연산이 허용되지 않는다.
-		ret = result
+
+		ret = rok
 		console.out("ret=" + ret + ", code=" + ret.code) // res=rok, code=0
 		return ret
 
 	res foo()
-		res ret = boo(rsuper(rwarn)) // Warning으로 새로운 rsuper객체를 생성한다.
+		ret = boo(rsuper(rwarn)) // Warning으로 새로운 rsuper객체를 생성한다.
 		// 출처src:
 		// 주어진 심볼(변수, 메소드, 클래스)이 어느 원전(code)에서 기원하였는지를
 		// 기록한다. 파서가 구문문석을 하면서 그 src객체의 정보를 채워넣으며
 		// 모든 객체는 sharable 타입인 src의 객체를 공유하게 된다.
-		src s = ret.src
+		s = ret.src
 		console.out(s.method.name + "#" + s.line + " at " + s.file.name) // app.foo()#12 at res.wrd
 		return ret
 
 	void main()
-		res ret = foo()
+		ret = foo()
 		if ret == rsuper() // 기존 규칙대로라면 이게 맞는 비교문이나,
 			console.out("ret == rsuper()")
 		if ret == rsuper // 편의를 위해, ret는 클래스인 rsuper도 체크할 수 있다.
@@ -437,7 +426,7 @@ app
 ```cpp
 import console
 
-app
+def app
 	// 확장 가능한 블록문Blockstmt: with <Opt:확장될 식별자> <stmts>
 	// 실행가능한 구문의 명시적 집합으로, with 키워드와 들여쓰기indent로 표현한다.
 	// 주어진 식별자를 현 범주scope로 확장할 수 있다. 해당 식별자의 모든 멤버를 객체와
@@ -463,11 +452,11 @@ app
 	void foo() // 메소드도 블록문을 기본적으로 가지고 있다.
 
 		with // Rule#8
-        	int local = 5
+        	local = 5
         	updateAge(local) // Rule#2
         	
         	int updateAge(int new_age) // 클로저의 정의
-    			int #age = 20
+    			#age = 20
 	    		return age // Rule#2: return시 updateAge메소드만 종료된다.
 
         // updateAge(20) // Rule#3: 접근 할 수 없다. 블록문에서 벗어났기 때문이다.
@@ -475,33 +464,31 @@ app
 	    	return // Rule#1: {, } 을 가지고 있는 foo() 메소드에서 벗어난다.
         console.out("can't reach here.")
 
-	Person p // 객체 생성
-	void eat() with console // 메소드도 블록문을 가지고 있는 것이다.
-		// console은 클래스지만, 이 또한 식별자이므로 유효한 코드다.
-
+	p = Person null // p에 Person으로 캐스팅된 null이 할당된다.
+	void eat(): with console // console은 클래스지만, 이 또한 식별자이므로 유효한 코드다.
 		out("app.eat()") // console.out("app.eat()") 과 동일하다.
 
     int getSome(): return 5
-    void doSwitch(int val) with val
+    void doSwitch(int val): with val
         // 다중분기문is: <확장된블록문>
         //					is <식별자와 동일한 타입의 값>
         //						<블록문>
         // switch에 대응하는 문법으로, 다음의 규칙을 따른다.
-        //	1.	주어진 식별자에 대해, 값이 일치하는 경우 속한 블록문을 수행한다.
+        //  1.  with 안에서만 사용 가능하다.
+        //	2.	주어진 식별자에 대해, 값이 일치하는 경우 속한 블록문을 수행한다.
         //		만약 다른 비교연산자를 사용해야 하는 경우, if-else를 사용해야 한다.
         //		(is는 사실 if it == 3 elif it == doSwitch() .. 와 동일하다.)
-        //	2.	is의 값은 반드시 확장된 변수와 동일한 타입의 값으로 평가evalutate
+        //	3.	is의 값은 반드시 확장된 변수와 동일한 타입의 값으로 평가evalutate
         //		될수 있어야 한다.
-        //	3.	else는 그 이외의 경우 수행된다.
+        //	4.	else는 그 이외의 경우 수행된다.
         is 3 // if it == 3
             console.out("we got 3.")
 		is getSome() // else if it == getSome() // 함수 호출도 가능하다.
 			console.out("doSwitch")
 		else
-			with str getString(#str msg) {	// 클로저의 정의와 호출을 괄호로 묶을
-                  							// 수 있다.
-				return "hello " + msg		// 정의도 표현식이기에 문제없다.
-    		} ("world")	// 클로져를 정의와 동시에 호출하고, 그 반환값을 블록문에
+			with str getString(#str msg)	// 클로저도 표현식이기에 문제없다.
+            	return "hello " + msg
+    		("world")	// 클로져를 정의와 동시에 호출하고, 그 반환값을 블록문에
 			 			// 확장했다.
 
 			/* 클로저 뒤에 중괄호는 생략하면 위의 코드와 완전히 다른 표현이된다:
@@ -510,8 +497,10 @@ app
 					// 블록문이 끝났다.
 				("world") // 문자열 1개를 가진 튜플을 정의했다.
 			*/
-				is "he": console.out("can't")
-				is "lo": console.out("execute")
+				is "he"
+				is "lo" // "he" 이거나 "lo" 이면,
+                    console.out("can't")
+                    console.out("execute")
 				is "hello world": console.out("correct.")
 				else: console.out("this line.")
 
@@ -603,7 +592,7 @@ Plant
     int getName(): return name
     void $test(Plant p, str new_name): p.name = new_name
 
-class app
+app
 	void main()
 		Plant p // 기본생성자로 Plant 객체 정의
 		Plant p_null = null // 객체 정의되지 않음.
@@ -651,9 +640,9 @@ class app
 ```cpp
 import console
 
-class app {
+app
     int _age
-    void returning_void() {
+    void returning_void()
         // void:
 		//	1. void로 정의된 값은 모든 종류의 값을 받아들이고, 동시에 무시한다.
 		//	2. 단, 사용을 명확히 하게 위해 명시적으로 void로 변수 정의하면 에러로 판단한다.
@@ -666,20 +655,18 @@ class app {
 
         // 묵시적 void 반환:
 		_age = 35 // 이 코드는 void ret = _age = 35와 같다.
-    }
-    void main() {
+
+    void main()
         returning_void()
 
 		// 중첩클래스nested class: 메소드안의 클래스 정의
 		// 해당 메소드 안에서만 사용이 가능하다. 이는 블록문 규칙#1에 의한 것이다.
-        class Person {
+        Person
 			int age
             str name
-            str say() {
+            str say()
             	console.out("actually we don't those stmts in that block of \"if\"")
 				return null
-            }
-        }	
 
         // null: 선정의 객체
         // 변수에 값이 존재하지 않는 경우 null로 정의할 수 있다. 다음의 규칙을 따른다.
@@ -699,15 +686,13 @@ class app {
         wow_short(p)
         wow(p = Person())
         wow_short(p)
-    }
+
     void wow(Person p)
     	if p == null    		
     		return
     	console.out(p.say()[3]) // null[3]은 null이다.
 
-    }
     void wow_short(Person p): console.out(p.say())
-}
 
 // 결과:
 //	age=0, name=
@@ -739,22 +724,21 @@ import console
 //		*) immutable & mutable과는 다르다. occupiable이라고 해도, 데이터를 변경할 수
 //		있다.
 
-class Person { // 사용자가 정의한 class는 모두 sharable.
+Person // 사용자가 정의한 class는 모두 sharable.
     int _age = 5
     int getAge(): age
     float _grade = 3.5
     float getGrade(): grade
     void setGrade(float new): grade = new // implicit 할당인 void = float 은 무시된다.
-}
 
-class app {
-    void proxied(Person p, str name, float grade, float[3][str] list) {
+app
+    void proxied(Person p, str name, float grade, float[3][str] list)
         p.setGrade(age*grade) 		// Sharable 	외부의 Person객체에도 영향을 미친다
         name = "Sissel from Norway"	// Occupiable
         grade *= 2					// Occupiable
         list["vector_x"] = (0.1, 0.1, 0.1)
-    }
-    void main() {
+
+    void main()
       	Person p
         str name = "unknown"
         float grade = 3.0
@@ -769,8 +753,6 @@ class app {
  		console.out("vector_x:" + list["vector_x"][0] + ", " + ...
  		list["vector_x"][1] + ...
 		list["vector_x"][2]) // 0.1, 0.1, 0.1
-    }
-}
 
 // 결과:
 //	p.getGrade()=15, name=Imknown, grade=3.000000
@@ -784,16 +766,16 @@ class app {
 ```cpp
 import console
 
-class app {
-	int foo(? unknown) {
+app
+	int foo(? unknown)
 		// node:
 		//	? 는 node 라는 타입으로 동적바인딩DynamicTyping or DuckTyping 된다.
 		unknown += "world!"	// node 타입이 포함된 구문은 binding validation이 되지
 							// 않는다. 런타임에 에러가 판별된다.
 
 		console.out(unknown) // 결과가 return 된다.
-	}
-	void main() {
+
+	void main()
 		// var: 타입유추TypeInference로 컴파일타임에 타입을 결정해준다.
 		//	python, c++11 표준의 auto와 동일하다.
 		var ret1 = foo("hello") // var == int
@@ -809,8 +791,6 @@ class app {
 		// 35와 "wow"를 모두 포함할 수 있는 타입은 node 뿐이다.
 		ret1 = ret 	// ret는 node 이므로 validation은 무시된다.
 					// success가 false일 경우, int = str 이 되므로 런타임에러가 된다.
-	}
-}
 
 /* 결과:
 	helloworld
@@ -825,8 +805,8 @@ class app {
 ```cpp
 import console
 
-class app {
-    void tuple() {
+app
+    void tuple()
 		//	튜플: (<표현식expr>, ...)
 		//	튜플은 각각의 타입으로 정의된 값들을 묶어놓은 특이한 컨테이너.
 		//	사용자는 이 컨테이너 자체를 접근하여, iterate 불가능하며, 오직 worldlang
@@ -838,19 +818,18 @@ class app {
 		//	이를 이용해 다른 객체에 값을 편하게 전달해주는 용도.
 
 		(3, "apple") // 각 원소의 타입이 모두 다름.
-		class Person { // 중첩클래스.
+		Person // 중첩클래스.
 			int a = 0
 			str name = ""
 			float grade = 2.5
 
 			void print(): console.out(name)
 
-			void assign((float new_grade, str new_msg), int new_a) {
+			void assign((float new_grade, str new_msg), int new_a)
 				grade = new_grade
 		    	msg = new_msg
 				a = new_a
-			}
-		}
+
 		Person p; p.name = "Donald"; p.print()
 		// ;은 다음 stmt를 이어서 한 줄에 서술 가능.
 		
@@ -865,8 +844,8 @@ class app {
 		msg = "Denis Trillo"  // msg는 현 scope내에 접근.
 		p.print() // "Jung-un"
 		// p.name과 msg는 별도의 인스턴스.
-    }
-    (int, str/*변수명 생략가능*/) map(int age, str name) {
+
+    (int, str/*변수명 생략가능*/) map(int age, str name)
 		// 사실, 인자리스트(int age, str name)도 튜플이며, 함수호출도 튜플이다.
 
     	//	맵: <타입>[<타입>]
@@ -879,26 +858,26 @@ class app {
         	console.out("x, name=" + x + ", " + name)
         	
        	return (dict["apple"], "apple") // 복수개의 값을 튜플로 반환
-    }
-    void array() {
+
+    void array()
 		// 배열: <타입>[<Opt:크기>]
         // 문법을 보면 알겠지만, 배열은 사실 맵의 특수한 종류 중 하나. ("[]" 안 int가 생략된 맵)
 		int[3] arr
 		for int n in ~3 // ~3은 0에서 2까지
 			arr[n] = n	// c.f) arr[2] = 2
 		arr[3] // 런타임 에러
-		
+
 		for int n in [0, 1, 2] // [x, y, z, ...] 은 배열의 상수 표현식
 			console.out(n)
-		
+
         arr.push(5)
         arr[3] == 5 // true
-        
+
         int[] arr2 = arr // 크기 생략 가능
         arr2 != arr // true
         arr2.isSame(arr) // true
-	}
-    void sequence() {
+
+    void sequence()
     	// 시퀸스: <정수> ~ <정수>
     	// 범위를 나타내기 위한 컨테이너. 튜플과 동일하게 사용자는 이 컨테이너 자체를
 		// 접근하여, iterate 불가능하며, 오직 worldlang 인터프리터만 컨테이너 자체를
@@ -911,8 +890,8 @@ class app {
         	
        	str msg = "hello world"
        	console.out(sum + msg[5~]) // 5~는 5 이상을 뜻함
-    }
-    void conversion() {
+
+    void conversion()
     	// 본래 다룰 수 없는 튜플과 시퀸스 컨테이너를 다음과 같이 변환하면 다룰 수 있음.
     	//	튜플은 임의의 타입으로 정의된 변수의 집합:
     	?[] tup = (0, "banana")
@@ -943,11 +922,9 @@ class app {
 		//
 		// 어떻게 str객체는 int로 명시적 타입캐스팅을 지원하는가:
 		// 형변환을 지원하고 싶으면 지원하고 싶은 타입에 생성자를 확장해놓으면 된다.
-		// e.g.	class +int {
-		//			int(#str val) {
+		// e.g.	+int
+		//			int(#str val)
 		//				...val을 int로 변환...
-		//			}
-		//		}
 		//		str name = ".."
 		//		(int) name // 인터프리터는 int(#str) 생성자를 토대로 형변환을 시도한다.
 		//
@@ -969,19 +946,17 @@ class app {
     	for ? e in tup
     		console.out(e) 	// "0"
     						// "banana"
-    }
-	void main() {
+ 
+	void main()
 		tuple()
 		if 1
 			(str x, str y) = map(1, "Jae-in")
 			console.out("x=" + x + ", y=" + y) // "x=4, y=apple"
-			
+
 		// console.out("x= " + x + ", y=" + y) // 에러
 		array()
 		sequence()
 		conversion()
-	}
-}
 
 /* 결과:
 	Donald
@@ -1007,9 +982,9 @@ class app {
 ```cpp
 import console
 
-class app {
+app
     // 중첩클래스(nested class)
-    class Plant {
+    Plant
     	Plant(): console.out("default ctor")
     	Plant(#str new): _name = new
 
@@ -1017,13 +992,11 @@ class app {
         str getName(): _name
         // int _age = 1 // Leaf에도 _age가 있기 때문에 Leaf에 중복정의에러 발생한다.
         int getAge(): _age
-    }
-    // 상속inheritance:	class <파생클래스> -> <기반클래스>    
-	// 기반 클래스baseclass의 인터페이스를 물려받는다. "->"는 상속UML Generalization
-	// 기호에서 착안했다.
+
+	// 메소드 재정의Overriding:
 	//  * 함수 명세signature가 같은 경우 overriding으로 판단한다. (= Java)
 	//  * 함수명과 인자리스트(즉, header) 까지만 일치할 경우, 메소드 은닉hiding 된다.
-    class Leaf -> Plant {
+    Plant Leaf
 		// 생성자constructor: <타입명> ()
 		// 객체가 생성될때 호출되는 메소드다. 다음의 규칙을 따른다.
 		//	1. 생성자가 1개도 서술하지 않은 경우 인터프리터는 기본생성자를 만든다.
@@ -1034,21 +1007,19 @@ class app {
 
     	Leaf() {} // 별다른 서술이 없어도 인터프리터는 부모클래스Super의 기본생성자를
     			  // 호출한다.
-		Leaf(int new) { // 생성자에는 재정의 재지정을 넣을 수 없다. 순서는 정해져있다.
+		Leaf(int new) // 생성자에는 재정의 재지정을 넣을 수 없다. 순서는 정해져있다.
 			Super("SuperLeaf") // 맨 앞에 와야 한다.
 			age = new //
-		}
+
         str getName(): "Leaf" // overriding
         int _age = 3.5
         float getAge(): age // 반환형이 다르므로 은닉이다.
-    }
-    void main() {
+
+    void main()
         Plant p
         if 1
             p = Leaf(3)
        	console.("name=" + p.getName() + ", age=" + p.getAge())
-    }
-}
 
 // 결과: name=Leaf, age=3
 ```
@@ -1060,18 +1031,17 @@ class app {
 ```cpp
 import console
 
-class Person {
+Person
 	int print(int a): console.out("print(int a)"); return 0
 	float print1(): console.out("print1()"); 2.5
 	(int age, float grade) print2(): console.out("print2()"); return (24, 3.5)
-}
-class Student -> Person {
-	int print(int a) {
+
+Person Student
+	int print(int a)
 		int ret = me.Super(a) // me.Super(a)는 Person.print(a)와 같다. (추후 서술)
 		console.out("Student.print(int a)")
 		return ret
-	}
-	
+
     // 재정의 재지정Redirection지정자: (반환값 이름=>) <함수 명세signature> (=>)
     // 메소드 재정의overriding의 실행 순서를 쉽게 표현할 수 있다.
     // 메소드 재정의는 원본 메소드Supermethod가 있던 자리에 다른 메소드로 
@@ -1090,39 +1060,35 @@ class Student -> Person {
 	//                        " 앞        "      : 부모꺼 실행후, 내꺼 실행.
 
 	// 이를 활용하면, 다음처럼 줄일 수 있다.
-    ret => float print1() {	// 재지정이 앞에 있으므로, 부모메소드가 먼저 호출된다.
+    ret => float print1()	// 재지정이 앞에 있으므로, 부모메소드가 먼저 호출된다.
     	console.out("Student.print1(), ret=" + ret)
     	return ret
-    }
     
 	// 재지정이 뒤에 있는 경우, 메소드가 끝나면 주어진 인자리스트로
 	// 그대로 부모메소드를 호출하고, 그 결과를 반환한다.
 	(int age, float grade) print2() =>: console.out("Student.print2()")
     /* 이 코드는 다음과 동일하다.
-    	(int age, float grade) print2() {
+    	(int age, float grade) print2()
     		console.out("Student.print2()")
     		return print2()
-    	}
     	
        그리고, 다음과 같이 해도 된다.
-    	(int, float) print2() => {
+    	(int, float) print2() =>
     		if true
     			return (0, 0.0)
     			
     		// 여기에 도달하면, 부모메소드의 반환값이 나간다.
-    	}
-    }*/
-}
+    */
 
-class app {
-	void main() {
+
+app
+	void main()
 		Student s()
 		console.out("print()=" + s.print(1))
 		console.out("print1()=" + s.print1())
 		(int a, float g) = s.print2()
 		console.out("print2()=" + a + ", " + g)
-	}
-}
+
 /* 결과:
 	print(int a)
 	Student.print(int a)
@@ -1143,9 +1109,9 @@ class app {
 ```cpp
 import console
 
-class app {
-	void main() {
-		class Number -> object { // 모든 클래스는 명시가 없어도 object로부터 나온다.
+app
+	void main()
+		obj Number // 모든 클래스는 명시가 없어도 obj로부터 나온다.
 			// 타입 별칭aka: <원본타입> aka <별칭타입>
 			// 블록문 규칙에 의해 정의된 scope 내에서만 유효하다.
 			int aka MyInt // MyInt 는 int와 동일하다.
@@ -1162,25 +1128,21 @@ class app {
 			
 			// 연산자 메소드: <반환형> op<연산자기호><미리 정의된 인자리스트> { }
 			// 할당연산자 오버로딩
-            Number/*반환형은 변경될 수 있다*/ op=(#This rhs) => {
+            Number/*반환형은 변경될 수 있다*/ op=(#This rhs) =>
             	console.out("Number will be assigned to.")
-            }
-            
-            Number op+(#This rhs) {
+
+            Number op+(#This rhs)
             	Number ret()
             	ret.num += rhs.num
             	return num
-            }
-            
+
             // op+=, op-, op< 등 다수..
 
 			This get(): this
 			#This #get(): this
 			res set(This)
-		} number
-		number = Number()
-	}
-}
+
+		Number.num = 5
 ```
 
 
@@ -1189,7 +1151,7 @@ class app {
 ```cpp
 import console
 
-class Animal {
+Animal
     // 상수: # <타입>
     // prefix 중 하나로, #로 표현한다. (# 기호가 딱딱함과 고정됨을 연상시키기 때문이다.)
 	//	1.	타입 앞에만 붙을 수 있다.
@@ -1205,18 +1167,16 @@ class Animal {
     void foo1() {}
     // void setAge(int new): age = new // 컴파일에러: age는 const 이다.
     void #walk(): console.out(age + "yo " + getName() + " walked.") // getName()이 const메소드가 아니었다면 에러였다.
-}
-class Beaver -> Animal {
+
+Animal Beaver
     #str #getName(): "Beaver"
-    void #walk() {
+    void #walk()
         Super.walk() // Super는 기반클래스(Animal)로 캐스팅된 this를 의미한다.
                     // "Animal Super = this" 가 이미 선언된 것과 같다.
         console.out("Beaver's finding a seashell.")
-    }
-}
 
-class app {
-    int main() {
+app
+    int main()
         #Animal[] anims1 // an array to constant Animal.
         Animal#[] anims2 // an constant array to Animal.
 
@@ -1234,8 +1194,7 @@ class app {
         map2["anims1"] = Animal() // Rule#1: Value는 const타입이나, refer는 const가 아니다.
         // map2["anims1"].foo() // #Animal로 non-const 메소드를 호출했다.
         console.out(map["anims1"].walk())
-    }
-}
+
 /* 결과:
 	1yo Beaver walked
 	Beaver's finding a seashell.
@@ -1271,80 +1230,70 @@ import console
 //
 //	3.	메소드 또한 타입이다. 따라서 메소드 또한 메소드를 확장할 수 있는데,
 //		이를 클로져라고 한다. (추후 서술)
-class +str {
-	str(#MyClass my) { // 생성자
++str
+	str(#MyClass my) // 생성자
 		console.out("str(#MyClass)")
-	}
-}
 
-class MyClass {
+MyClass
 	// 4. 인스턴스-확장Instance extension: <멤버변수 정의> { <멤버 정의> }
 	// 지정한 1개의 객체의 타입을 확장한 후, 즉시 정의한다.
 	// 확장된 타입은 재사용할 수 없다.
-	str name { // 멤버변수 name 정의
+	str name // 멤버변수 name 정의
         res set(#str new) { // overriding
         	console.out("name will be changed to " + new)
         	name = new // 에러. 컴파일은 가능하나, 무한 재귀 호출 된다.
         	return ok
-        }
-	}
-	
+
 	// 위의 str name {} 과 동일하다.
-	str name1 {    
+	str name1    
     	// 위의 res set(#str new)=>과 동일하다.
     	set=>: console.out("name will be changed to " + new)
-    }
-    
+
     void print(): name1 = "hello"; console.out ("void print() : " + name1)
     int print(int a): console.out("int print(int)")
     //	name과 name1은 같은 set 메소드를 지니고 있으나, 이 둘은 별개의 메소드다.
 
-	class A { // 여태까지의 class 정의도 사실은 확장문법이다.
-		void $print() {
+	A // 여태까지의 class 정의도 사실은 확장문법이다.
+		void $print()
 			console.out("MyClass.A.print()") // A는 이제 print()를 갖게되었다.
 			// 위의 str name1 케이스와 다를께 없다.
-		}
-	}
+
 
 	// type변수:
 	// type은 class들을 담을 수 있는 메타클래스 타입이다.
-	type $C {
+	type $C
 		get: return A
-	}
-}
+
 
 MyClass.A a // 전역객체 a
 MyClass.B b
 // MyClass.C c // 컴파일에러: MyClass.C는 변수다.
 type[] types = [MyClass().B, MyClass.C, MyClass.A]
 
-class +MyClass {
++MyClass
 	// int name1 // 컴파일에러 Rule#2: 중복 정의
 	// float print(): console.out("float print()") // 컴파일에러 Rule#2: void print().
 	// void print()와 float print()를 피호출자callee는 구분 할 수 없다.	
 	float print(float a): console.out("name=" + str(this) + (str) this)
-}
 
-class MyClass2 -> MyClass {
-	(age, grade)=> (int, float) print(float a) {
+
+MyClass MyClass2
+	(age, grade)=> (int, float) print(float a)
 		console.out("MyClass.print(float) has been extended.")
 		return (age, grade)
-	}
+
 	/* 다음과 동일하다
-    (int, float) print(float a) {
+    (int, float) print(float a)
     	(int age, float grade) = me.Super(a)
     	console.out("MyClass.print(float) has been extended.")
     	return (age, grade)
-    }*/
-}
+    */
 
-class app {
-	void main() {
+app
+	void main()
 		MyClass me
 		me.print()
 		me.print(3.5)
-	}
-}
 
 /* 결과:
 	will be changed to hello
@@ -1363,13 +1312,13 @@ class app {
 ```cpp
 import console
 
-class Person {
+Person
 	void print(): console.out("Person.print()")
-}
 
-class app {
+
+app
 	Person p1
-	// 프로퍼티property: 타입 프로퍼티명 { get <블록문> set <블록문> }
+	// 프로퍼티property: 타입 프로퍼티명 get <블록문> set <블록문>
 	// 인스턴스 인터페이스 확장 문법을 사용해서 get, set 메소드를 확장하면,
 	// 변수를 정의하는 대신, 변수처럼 동작하는 메소드 2개를 지닌 객체인 프로퍼티를
 	// 만든다. 다음의 규칙을 따른다.
@@ -1380,14 +1329,13 @@ class app {
 	//		에서 오버라이딩 하면 프로퍼티로 인식한다. (set의 인자는 반드시 const
 	//		이다.)
 	//	3.	예외적으로 프로퍼티 선언과 인터페이스의 확장을 같이 할 수 없다.
-	//		e.g.	class app {
+	//		e.g.	app
 	//	            	str _name
-	//					str name {
+	//					str name
 	//						void print(): console.out("extended")
 	//						str get(): _name
-	//					}
-	//				} // 컴파일 에러: name은 print 인터페이스 확장과
-	//				  // 프로퍼티선언이 같이 됨
+	//				// 컴파일 에러: name은 print 인터페이스 확장과
+	//				// 프로퍼티선언이 같이 됨
 	//
 	//			왜 같이 할 수 없는가:
 	//			말이 안되기 때문이다. 인터페이스 확장된 타입을 정의한 곳과, 그
@@ -1404,28 +1352,24 @@ class app {
 	//		또한 const get()만 정의한 경우는, get은 기본적으로 정의되기 때문에
 	//		const get 만 가지게 된다. 따라서 외부에서는 항상 const get만 받게 된다.
 
-	Person p2 {
-		#get {
+	Person p2
+		#get
 			console.out("p2.get()")
 			return p1
-		}
-		res set(#Person new) { // set {  과 동일하다.
+
+		res set(#Person new) // set {  과 동일하다.
 			console.out("p2.set()")
 			p1 = new;
 			return rok() // rok는 타입이므로, return rok는 rok의 객체를 생성하는 것이
 		 				 // 아닌, ok라는 타입을 반환한다는 뜻이된다.
-		}
-	}
-	void main() {
+
+	void main()
 		//Person p3 = p2 // 컴파일 에러. p2은 항상 const Person으로만 나간다.
 		p2 = p1
-	}
 
-	class B {
+	B
 	    // get: return A // "class" 는 타입을 정의하는 키워드이지, 타입 그자체가 아니다.
 	    // 따라서 프로퍼티가 될 수 없다.
-	}
-}
 
 /*결과:
     p2.set()
@@ -1439,8 +1383,8 @@ class app {
 ```cpp
 import console
 
-class app {
-	str(void) foo() {
+app
+	str(void) foo()
 		// 클로져closure: <메소드 안에서 메소드를 정의한다.>
 		// 메소드를 확장한 것을 클로져라고 한다.
 		// 클로져는 관련 요소factor들이 캡처capture를 통해 내부로 함축한다. 
@@ -1459,9 +1403,9 @@ class app {
 		//	4.	클로져에 의해 캡쳐된 식별자는 클로져의 라이프 사이클과 동기화 된다.
 		//		(즉, 지역변수일지라도 소멸되지 않는다)
 		int sum = 0
-		int add(int a, int b) { // 클로져.
+		int add(int a, int b) // 클로져.
 			sum = a + b // 클로져는 지역변수를 공유한다.
-		}
+
 
 		// 함수 위임자delegator: <반환형>(<타입리스트>)
 		// 메소드 또한 객체1st-class-citizen이며, 이에 대한 refer로 다룰 수 있다.
@@ -1478,33 +1422,30 @@ class app {
 		//	5.	배열로써, 소유한 메소드를 순회할 수 있다.
 		int(int, int) getClosure(): add
 		
-		int(int, int) fdelegate = int dummy(int a, int b) { // 메소드에 대한 refer
+		int(int, int) fdelegate = int dummy(int a, int b) // 메소드에 대한 refer
 			console.out("a=" + a + ", b=" + b)
-		}
+
 		fdelegate += getClosure()
 		// float(int, int) fptr1 = getClosure() // 컴파일 에러.
 		// int(int, float) fptr2 = getClosure() // 컴파일 에러.
 		if fdelegate(3, 5) == getClosure()(3,5)
-        	class MyClass { // 중첩클래스.
+        	MyClass // 중첩클래스.
         		int count = 0;
-            	str(void) print(int(int, int) fdel) {
-                	str to_return() { // 클로져를 반환하고 있다.
+            	str(void) print(int(int, int) fdel)
+                	str to_return() // 클로져를 반환하고 있다.
                 		"answer to life the universe and everything is " + fdel(26, 16)
-					}
-            	}
-        	}
+
         	return MyClass().print(fdelegate)
 
         // else가 없으므로 명시적/묵시적인 return은 발생하지 않으며,
         // 반환형 str(void)의 기본값인 null이 유지된다.
-	}
 
-    void main() {
+
+    void main()
 		str(void) fptr = foo()
 		fptr()
         console.out("sum is " + sum)
-    }
-}
+
 /*	결과:
 	a=3, b=5
 	answer to life the universe and everything is 42
@@ -1520,10 +1461,10 @@ class app {
 import console
 import file
 
-class Opener {
+Opener
 	file f = null
-	str path {
-		ret => @set {
+	str path
+		ret => set
 			// 예외처리try-catch: try <코드> catch(인자리스트) <코드>
 			// 다음의 규칙을 따른다.
 			//	1.	예외가 발생하면, 자동으로 throw 처리된다.
@@ -1543,48 +1484,42 @@ class Opener {
 			f.close()
 			f.open(new, "rw") // Rule#1, 2: 내부에서 fileexception이 발생한다.
 
-			// Rule#3에 의해서 f.open()에서 발생한 익셉션은, path.@set() 메소드가
+			// Rule#3에 의해서 f.open()에서 발생한 익셉션은, path.set() 메소드가
 			// 소유한 catch() 함수 중 가장 적절한 인자를 가진 catch(fileexcept)로
 			// 넘겨진다.
 			catch(rfile e)
 			     console.out("fail to open " + ret)
 			     f.open(new, "rw") // 다시 fileexcept가 발생한다.
-			     // Rule#1, 2에 의해 str.@set()을 호출한 foo()의 블록문으로 throw.
+			     // Rule#1, 2에 의해 str.set()을 호출한 foo()의 블록문으로 throw.
 
 			catch(except e) // 눈치챘겠지만, 사실 catch 또한 클로져에 불과하다.
 			     console.out("can't reach here.")
 			     return ret // catch의 반환형은 외부메소드의 반환형(res ret)여야 한다.
-			     // Rule#3: 여기서 return 되면 str.@set()에서 return 되게 된다.
+			     // Rule#3: 여기서 return 되면 str.set()에서 return 되게 된다.
 			
 			console.out("path is " + new)
 			f.open(new, "rw") // Rule#3: 여기 예외도 catch(fileexcept)로 간다.
 			return ret
-		}
 
-		ret => @get {
+		ret => get
 			consol.out("getting path(" res + ") from some Opener object.")
 			return ret
-		}
-	}
-}
 
-class app {
-    res foo() {
-        Opener o
-		{ // 블록문의 명시적인 정의
-			o.path = "/usr/bin/bash" // 최종적으로 fileexcept가 발생한다.
+
+app
+    res foo()
+		with Opener()
+			it.path = "/usr/bin/bash" // 최종적으로 fileexcept가 발생한다.
 
 			catch(except e) // 이 블록문에서 나온 예외는 여기서 catch된다.
 				console.out("oh dear.")				
 				// 블록문이 종료된다.
 
 			console.out("can't reach here.")
-		}
-    	console.out("can you see this?")
-    }
 
+    	console.out("can you see this?")
     void main():foo()
-}
+
 /* 결과:
 	fail to open /usr/bin/bash
 	oh dear.
@@ -1599,18 +1534,18 @@ class app {
 ```cpp
 import console
 
-class Person {
+Person
 	void say(): console.out(" - I don't know my name.")
-}
-class Chales : Person {
-	void say(): console.out(" - My name is Chales Lee.")
-}
-class Park : Person {
-	void say(): console.out(" - My name is Hoon Park.")
-}
 
-class app {
-	class main() {
+Person Chales 
+	void say(): console.out(" - My name is Chales Lee.")
+
+Person Park
+	void say(): console.out(" - My name is Hoon Park.")
+
+
+app
+	main()
 		type[] cls = [Person, Chales, Park] // 사실 class 또한 타입에 불과하다.
 		for type e in cls
 			console.out("\n" + e.name + " has " + e.subs.len  " children.")
@@ -1624,8 +1559,8 @@ class app {
 			? instance = e.instance()
 			Person p = instance // 이것과 위. 2줄은 컴파일 될 수 없다.
 			p.say() // 위의 3줄은 e().say()와 같다.
-      }
-}
+
+
 /* 결과:
 Person has 2 children.
 
