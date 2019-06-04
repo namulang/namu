@@ -1,0 +1,38 @@
+import console aka c
+
+app,
+	read()
+		Error[] errors
+		insideResult = false
+
+		if !mXmlReader
+			c.out("You must open() the file")
+			return errors
+
+		for !mXmlReader.atEnd() with mXmlReader
+			switch(readNext())
+				is QXmlStreamReader.StartElement
+					if name() == ResultElementName
+						insideResults = true
+
+					if insideResults && name() == ErrorElementName
+						Error item readError(it)
+						erros.push(item)
+				is QXmlStreamReader.EndElement
+					if name == ResultElementName
+						insideResults = false
+
+				is QXmlStreamReader.NoToken
+				is QXmlStreamReader.Invalid
+				is QXmlStreamReader.StartDocument
+				is QXmlStreamReader.EndDocument
+				is QXmlStreamReader.Characters
+				is QXmlStreamReader.Comment
+				is QXmlStreamReader.DTD
+				is QXmlStreamReader.EntityReference
+				is QXmlStreamReader.Processing
+					c.out("do nothing")	
+		return errors
+
+	main(str[] args)
+		read()
