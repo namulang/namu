@@ -470,33 +470,28 @@ def app
 				else: console.out("this line.")
                     
     		/* 	2.4 절에 의해 메소드의 정의는 expr이다.
-    			위 사항을 이용하여 개발자가 메소드를 정의하자 마자 그 메소드를 호출
-    			하기로 하였다 가정하자.
+    			위 사항을 이용하여 개발자가
     		
     		예) func1 = str getString(#str msg)
     				return "hello " + msg
     			ret = func1(" world")
     			
-    			위는 올바른 문법이다. 그러나 다음과 같이 정의한 객체에 바로 접근하는
-                것은, 문법적으로 불가능하다.
+    			그러나 정의한 객체에 바로 접근하는 것은, 문법적으로 불가능하다.
     			
     		예)	str getString(#str msg)
     				return "hello" + msg
     			("world")
+    			// 1번줄과 2번줄이 method 객체와 문법적으로 동일하므로 문법 상 3번
+    			// 줄은 getString메소드와 관련이 없는 구문이 되버렸다.
+    			// 위의 예제는 실상 다음과 같이 컴파일러가 받아들인다.    			
     			
-    			1번줄과 2번줄이 method 객체와 문법적으로 동일하므로 문법 상 3번 줄은
-                getString메소드와 관련이 없는 구문이 되버렸다.     			
-    			
-    			따라서, 개발자의 의도는 
-    			
-                	<getString로 정의된 객체>("world")
-                
+    			개발자의 의도는 
+    				<getString로 정의된 객체>("world")
     			처럼 사용하려는 것이었으나, 구문은 개행에 의해 구분되기 때문에
     			개행 자체를 정의 문법에 말미에 포함시킬 수 없다. 결과 정의문법에
-    			종속되는 문법은 개행의 여부 관계없이 명세가 불가능하다는 것을 알 수
-    			있다.
+    			종속되는 문법은 개행의 여부 관계없이 명세가 불가능하다.
 
-    			덧붙여, 위 규칙에 의해 컴파일러는 다음과 같이 인식하였다.
+    			위 규칙에 의해 컴파일러는 다음과 같이 인식하였다.
     				
     				<getString로 정의된 객체>
     				("world")
@@ -579,8 +574,8 @@ def Person
 ```cpp
 import console
 
-Plant
-	int _age = 5
+def Plant
+	_age = 5
 	Plant()
         console.out("constructor. age=" + age)
 		age = 20
@@ -591,20 +586,20 @@ Plant
     // 	":" 는 inline 지정자(specifier)로써,
     //	뒤에 stmt 1개를 블록문 없이 사용 가능.
     ~Plant(): console.out(name + " destructor")
-    str name = "herb"
+    name = "herb"
     int getName(): return name
     void $test(Plant p, str new_name): p.name = new_name
 
-app
+def app
 	void main()
-		Plant p // 기본생성자로 Plant 객체 정의
-		Plant p_null = null // 객체 정의되지 않음.
+		p = Plant() // 기본생성자로 Plant 객체 정의
+		p_null = Plant null // Plant로 캐스팅된 null
 
 		if 1
-			Plant p1("Where is my santa?") // Plant(#str) 생성자로 객체 정의
+			p1 = Plant("Where is my santa?") // Plant(#str) 생성자로 객체 정의
 			p1.getName() == p.name // "herb" == "herb"
 		
-			Plant p2 = p1
+			p2 = p1
 			p2.name = "chikery"
 			p1.getName() == p.name // "chikery" == "chikery"
 			
@@ -638,13 +633,13 @@ app
 
 
 
-##### null & void
+##### 2.8 null & void
 
 ```cpp
 import console
 
-app
-    int _age
+def app
+    _age = 0
     void returning_void()
         // void:
 		//	1. void로 정의된 값은 모든 종류의 값을 받아들이고, 동시에 무시한다.
@@ -664,9 +659,9 @@ app
 
 		// 중첩클래스nested class: 메소드안의 클래스 정의
 		// 해당 메소드 안에서만 사용이 가능하다. 이는 블록문 규칙#1에 의한 것이다.
-        Person
-			int age
-            str name
+        def Person
+			age = 0
+            name = ""
             str say()
             	console.out("actually we don't those stmts in that block of \"if\"")
 				return null
@@ -676,16 +671,16 @@ app
         //	1. null은 primitive 타입을 제외한 모든 타입의 객체에 할당될 수 있다.
         //	2. primitive 타입의 경우에는 null은 각 타입의 기본값으로 변환되어 할당된다.
         //	3. 2번의 경우, 명시적으로 할당한 경우 컴파일 경고로 판단한다.
-        int age = null; str name = null; Person p = null // age, name은 경고
+        age = int null: name = str null: p = Person null // age, name은 경고
         console.out("age=" + age + ", name=" + name) // age=0, name=
         //	4. null이 할당된 객체는, 메소드가 수행 안되고 바로 null을 반환한다.
         //	5. null로 할당된 객체를 사용한 경우, exception으로 catch할 수 있다. (추후 서술)
 
-        str ret = p.say() // ret == null
+        p = Person()
+        ret = p.say() // ret == null
         // int ret1 = p.say() // 반환형이 다르므로 컴파일 에러.
 
-		Person p = null
-        wow(p)
+		wow(p)
         wow_short(p)
         wow(p = Person())
         wow_short(p)
@@ -705,7 +700,7 @@ app
 
 
 
-##### sharable & occupiable
+##### 2.9 sharable & occupiable
 
 | 타입명                                                       | Occupiable / Sharable |
 | ------------------------------------------------------------ | --------------------- |
@@ -727,14 +722,14 @@ import console
 //		*) immutable & mutable과는 다르다. occupiable이라고 해도, 데이터를 변경할 수
 //		있다.
 
-Person // 사용자가 정의한 class는 모두 sharable.
-    int _age = 5
+def Person // 사용자가 정의한 class는 모두 sharable.
+    _age = 5
     int getAge(): age
-    float _grade = 3.5
+    _grade = 3.5
     float getGrade(): grade
     void setGrade(float new): grade = new // implicit 할당인 void = float 은 무시된다.
 
-app
+def app
     void proxied(Person p, str name, float grade, float[3][str] list)
         p.setGrade(age*grade) 		// Sharable 	외부의 Person객체에도 영향을 미친다
         name = "Sissel from Norway"	// Occupiable
@@ -742,15 +737,19 @@ app
         list["vector_x"] = (0.1, 0.1, 0.1)
 
     void main()
-      	Person p
-        str name = "unknown"
-        float grade = 3.0
-        float[3][str] list = [([0.1, 0.0, 0.0], "vector_x"),
-        					  ([0.0, 0.1, 0.0], "vector_y")]
+      	p = Person()
+        name = "unknown"
+        grade = 3.0
+        list = [ [0.1, 0.0, 0.0] : "vector_x",
+      		[0.0, 0.1, 0.0] : "vector_y" ]
+    	// 명시적 타입 정의:
+    	list2 = float[][str] [ [0.1, 0.0, 0.0] : "vector_x",
+                             			[0.0, 0.1, 0.0]:"vector_y"] //, 뒤에는 indent 무시 가능
+    
 		proxied(p, age, grade, list)
     	// ... 3개 구문 뒤에 붙이면 구문을 자를 수 있다.
     	// ... 뒤에 공백whitespace이 오면 안된다.
-    	name[0]="I"; name[1]="m" // name은 occupiable과 관계없이 const 아니므로 변경 가능.
+    	name[0]="I": name[1]="m" // name은 occupiable과 관계없이 const 아니므로 변경 가능.
 		console.out("p.getGrade()=" + p.getGrade() + ", name=" ...
 			+ name + ", grade=" + grade) 
  		console.out("vector_x:" + list["vector_x"][0] + ", " + ...
@@ -764,12 +763,12 @@ app
 
 
 
-##### node & var
+##### 2.10 node & var
 
 ```cpp
 import console
 
-app
+def app
 	int foo(? unknown)
 		// node:
 		//	? 는 node 라는 타입으로 동적바인딩DynamicTyping or DuckTyping 된다.
@@ -779,15 +778,9 @@ app
 		console.out(unknown) // 결과가 return 된다.
 
 	void main()
-		// var: 타입유추TypeInference로 컴파일타임에 타입을 결정해준다.
-		//	python, c++11 표준의 auto와 동일하다.
-		var ret1 = foo("hello") // var == int
-		foo(3) // str -> int 묵시적형변환이 될 수 없다. (unknown += "world")
-			   // 컴파일은 되나, 런타임 에러가 된다.
-
-		bool success = false
-		var ret = if success: 35; else: "wow" // 결과에 따라 success나 35 혹은 "wow" 중 하나가 반환된다.
-		// int ret = if success: 35; else: "wow" 는 컴파일 에러.
+		success = false
+		ret = if success: 35; else: "wow" // 결과에 따라 success나 35 혹은 "wow" 중 하나가 반환된다.
+		// ret = int if success: 35; else: "wow" 는 컴파일 에러.
 		// 잘못된 묵시적 형번환 str -> int를 요구하기 때문이다.
 
 		// ret의 타입은 ?(node)다.
@@ -803,12 +796,12 @@ app
 
 
 
-##### Containers
+##### 2.11 Containers
 
 ```cpp
 import console
 
-app
+def app
     void tuple()
 		//	튜플: (<표현식expr>, ...)
 		//	튜플은 각각의 타입으로 정의된 값들을 묶어놓은 특이한 컨테이너.
@@ -821,10 +814,10 @@ app
 		//	이를 이용해 다른 객체에 값을 편하게 전달해주는 용도.
 
 		(3, "apple") // 각 원소의 타입이 모두 다름.
-		Person // 중첩클래스.
-			int a = 0
-			str name = ""
-			float grade = 2.5
+		def Person // 중첩클래스.
+			a = 0
+			name = ""
+			grade = 2.5
 
 			void print(): console.out(name)
 
@@ -833,7 +826,7 @@ app
 		    	msg = new_msg
 				a = new_a
 
-		Person p; p.name = "Donald"; p.print()
+		p = Person(): p.name = "Donald": p.print()
 		// ;은 다음 stmt를 이어서 한 줄에 서술 가능.
 		
 		str = msg = "Jung-un"
@@ -852,7 +845,7 @@ app
 		// 사실, 인자리스트(int age, str name)도 튜플이며, 함수호출도 튜플이다.
 
     	//	맵: <타입>[<타입>]
-        int[str] dict = [(3, "apple")] // 리스트를 통해 초기화 된다.
+        dict = [(3, "apple")] // 리스트를 통해 초기화 된다.
         dict.push(3, "apple") // 런타임 에러
         dict["apple"] = 4
         dict["banana"] = 5
@@ -863,55 +856,52 @@ app
        	return (dict["apple"], "apple") // 복수개의 값을 튜플로 반환
 
     void array()
-		// 배열: <타입>[<Opt:크기>]
+		// 배열: <타입>[]
         // 문법을 보면 알겠지만, 배열은 사실 맵의 특수한 종류 중 하나. ("[]" 안 int가 생략된 맵)
-		int[3] arr
-		for int n in ~3 // ~3은 0에서 2까지
+		arr = []
+		for int n in ..3 // ..3은 0에서 2까지
 			arr[n] = n	// c.f) arr[2] = 2
 		arr[3] // 런타임 에러
 
-		for int n in [0, 1, 2] // [x, y, z, ...] 은 배열의 상수 표현식
+		for n in [0, 1, 2] // [x, y, z, ...] 은 배열의 상수 표현식
 			console.out(n)
 
         arr.push(5)
         arr[3] == 5 // true
 
-        int[] arr2 = arr // 크기 생략 가능
+        arr2 = arr
         arr2 != arr // true
         arr2.isSame(arr) // true
 
     void sequence()
-    	// 시퀸스: <정수> ~ <정수>
+    	// 시퀸스: <정수> .. <정수>
     	// 범위를 나타내기 위한 컨테이너. 튜플과 동일하게 사용자는 이 컨테이너 자체를
 		// 접근하여, iterate 불가능하며, 오직 worldlang 인터프리터만 컨테이너 자체를
 		// 다룰 수 있다.
-        // ~ 기준으로 한쪽이 없는 경우, 극대(int의 양의 최대값)와 극소(int의 음의 최소값)
+        // .. 기준으로 한쪽이 없는 경우, 극대(int의 양의 최대값)와 극소(int의 음의 최소값)
 		// 를 나타낸다.
-        int sum = 0
-        for int n in 1~3 // 1~3은 [1, 3)
+        sum = 0
+        for n in 1..3 // 1..3은 [1, 3)
         	sum += n
         	
-       	str msg = "hello world"
-       	console.out(sum + msg[5~]) // 5~는 5 이상을 뜻함
+       	msg = "hello world"
+       	console.out(sum + msg[5..]) // 5 이상을 뜻함
 
     void conversion()
     	// 본래 다룰 수 없는 튜플과 시퀸스 컨테이너를 다음과 같이 변환하면 다룰 수 있음.
     	//	튜플은 임의의 타입으로 정의된 변수의 집합:
-    	?[] tup = (0, "banana")
+        tup = ?[] (0, "banana")
+    	// tup = (0, "banana") 는 컴파일에러
     	
     	//	시퀸스는 시작과 끝, int 2개로 변환 가능.
-    	int[] sequence = (int start, int end) = 3~7
+    	(int start, int end) = 3..7
+        sequence = int[] (start, end)
     	sequence[0] = 10
     	if sequence[0] != start
     		console.out("diff: sequence[0]=" + sequence[0] + ", start=" + start)
     		// "diff: sequence[0]=10, start=3"
-    	str[] seq1 = ("wow", "hello", 1234) // 배열은 튜플을 받아들임.
+    	seq1 = str[] ("wow", "hello", 1234) // 배열은 튜플을 받아들임.
     	//int[] seq2 = (1234, "1234") // 컴파일에러. str -> int는 implicit 캐스팅이 되지 않음.
-		str[] seq1 = ("wow", "hello", 1234)
-		// 배열은 튜플을 받아들임.
-		// 1234int -> "1234"str
-		//int[] seq2 = (1234, "1234") // 컴파일에러. str -> int는 implicit 캐스팅이
-									  // 되지 않음.
 
 		// 명시적 타입 캐스팅explicit typecast: (<타입>) 식별자
 		// 명시적으로 다른 타입으로 형변환 시도하는 문법이다. 다음의 규칙을 따른다.
@@ -936,19 +926,20 @@ app
 		// 따른다.
 		//	1. 파생클래스를 부모 클래스로 형변환
 		//	2. primitive 변수들 간의 형변환(e.g. float -> int)
-    	int[] seq2 = (1234, (int) "1234") // ok.
-    	?[] tup = (1234, "1234") // ok
-    	int[] seq3 = tup // 컴파일 ok, 그러나 런타임 에러
+    	seq2 = int[] (1234, int "1234") // ok.
+    	tup = ?[] (1234, "1234") // ok
+    	seq3 = int[] tup // 컴파일 ok, 그러나 런타임 에러
     	
-    	str msg = ""
-    	for (str e, int n) in seq1 // 튜플과 배열은 사실 맵이며, 맵은 (값 1개)와 (값1개, 키1개) 에 대한 for-in을 지원한다.
-    		msg += e + seq2[n] // if n >= seq2.len: n = seq2.len-1
-    	console.out("seq1=" + msg) // "wow1234 hello1234 12341234"
+    	msg = ""
+        map1 = ["banana": 1, "apple": 2]
+    	for (str e, int n) in map1 // 튜플과 배열은 사실 맵이며, 맵은 (값 1개)와 (값1개, 키1개) 에 대한 for-in을 지원한다.
+    		msg += "$e + ${seq2[n]}" // if n >= seq2.len throw exception.
+    	console.out("seq1=" + msg) // "seq1=banana1234 apple1234"
 
 		//	단, node로 취급하기 때문에 에러 사전 탐지 불가.
-    	for ? e in tup
-    		console.out(e) 	// "0"
-    						// "banana"
+    	for e in tup // e = ?
+    		console.out(e) 	// "1234"
+    						// "1234"
  
 	void main()
 		tuple()
@@ -980,26 +971,26 @@ app
 
 
 
-##### 인터페이스 상속
+##### 2.12 인터페이스 상속
 
 ```cpp
 import console
 
-app
+def app
     // 중첩클래스(nested class)
-    Plant
+    def Plant
     	Plant(): console.out("default ctor")
     	Plant(#str new): _name = new
 
-    	str _name = "Plant"
+    	_name = "Plant"
         str getName(): _name
-        // int _age = 1 // Leaf에도 _age가 있기 때문에 Leaf에 중복정의에러 발생한다.
+        // _age = 1 // Leaf에도 _age가 있기 때문에 Leaf에 중복정의에러 발생한다.
         int getAge(): _age
 
 	// 메소드 재정의Overriding:
 	//  * 함수 명세signature가 같은 경우 overriding으로 판단한다. (= Java)
 	//  * 함수명과 인자리스트(즉, header) 까지만 일치할 경우, 메소드 은닉hiding 된다.
-    Plant Leaf
+    def Plant Leaf
 		// 생성자constructor: <타입명> ()
 		// 객체가 생성될때 호출되는 메소드다. 다음의 규칙을 따른다.
 		//	1. 생성자가 1개도 서술하지 않은 경우 인터프리터는 기본생성자를 만든다.
@@ -1015,11 +1006,11 @@ app
 			age = new //
 
         str getName(): "Leaf" // overriding
-        int _age = 3.5
+        _age = 3.5
         float getAge(): age // 반환형이 다르므로 은닉이다.
 
     void main()
-        Plant p
+        p = Plant()
         if 1
             p = Leaf(3)
        	console.("name=" + p.getName() + ", age=" + p.getAge())
@@ -1029,19 +1020,19 @@ app
 
 
 
-##### 메소드 재정의 재지정
+##### 2.13 메소드 재정의 재지정
 
 ```cpp
 import console
 
-Person
+def Person
 	int print(int a): console.out("print(int a)"); return 0
 	float print1(): console.out("print1()"); 2.5
 	(int age, float grade) print2(): console.out("print2()"); return (24, 3.5)
 
-Person Student
+def Person Student
 	int print(int a)
-		int ret = me.Super(a) // me.Super(a)는 Person.print(a)와 같다. (추후 서술)
+		ret = me.Super(a) // me.Super(a)는 Person.print(a)와 같다. (추후 서술)
 		console.out("Student.print(int a)")
 		return ret
 
@@ -1084,9 +1075,9 @@ Person Student
     */
 
 
-app
+def app
 	void main()
-		Student s()
+		s = Student()
 		console.out("print()=" + s.print(1))
 		console.out("print1()=" + s.print1())
 		(int a, float g) = s.print2()
