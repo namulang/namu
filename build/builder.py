@@ -21,7 +21,7 @@ def cmdstr(cmd):
         ret = ""
         return ret
 
-    print("cmdstr=" + ret)
+    print(ret + "= call(" + cmd + ")")
     return ret
 
 python3 = ""
@@ -286,6 +286,9 @@ def commit():
     return 0
 
 def _extractPythonVersion(verstr):
+    if not verstr:
+        print("couldn't get version of python.")
+        return 0.0
     return float(verstr[7:10])
 
 def checkDependencies():
