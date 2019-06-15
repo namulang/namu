@@ -370,6 +370,7 @@ def _where(name):
         print("[!] " + platform.system() + " unsupported.")
         return ""
 
+    print("cmd=" + cmd + ", name=" + name)
     ret = prefix + cmdstr(cmd + " " + name) + prefix
     print(ret)
     return ret
@@ -380,7 +381,9 @@ def _extractEnv():
         python3 = os.environ["PYTHON"]
     else:
         python3 = _where("python3")
-        if python3 == "" or "\"\"":
+        print("python3=" + python3)
+        if not python3:
+            print("no!")
             python3 = _where("python")
         print("python3=" + python3)
         return python3 == ""
