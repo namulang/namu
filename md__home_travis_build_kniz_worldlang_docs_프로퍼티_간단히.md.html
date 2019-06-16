@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>프로퍼티 간단히 | world-doc</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">world-doc</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-dox-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path d="m6 0c-3.3144 0-6 2.6856-6 6 0 3.3144 2.6856 6 6 6 1.4858 0 2.8463-0.54083 3.8945-1.4355-0.0164 0.33797 0.14734 0.75854 0.5 1.1504l3.2227 3.7891c0.55185 0.6139 1.4517 0.66544 2.002 0.11524 0.55022-0.55022 0.49866-1.4501-0.11524-2.002l-3.7891-3.2246c-0.39184-0.35266-0.81242-0.51469-1.1504-0.5 0.89472-1.0482 1.4355-2.4088 1.4355-3.8945 0-3.3128-2.6856-5.998-6-5.998zm0 1.5625a4.4375 4.4375 0 0 1 4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375-4.4375 4.4375 4.4375 0 0 1 4.4375-4.4375z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-dox-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <path d="m6 0c-3.3144 0-6 2.6856-6 6 0 3.3144 2.6856 6 6 6 1.4858 0 2.8463-0.54083 3.8945-1.4355-0.0164 0.33797 0.14734 0.75854 0.5 1.1504l3.2227 3.7891c0.55185 0.6139 1.4517 0.66544 2.002 0.11524 0.55022-0.55022 0.49866-1.4501-0.11524-2.002l-3.7891-3.2246c-0.39184-0.35266-0.81242-0.51469-1.1504-0.5 0.89472-1.0482 1.4355-2.4088 1.4355-3.8945 0-3.3128-2.6856-5.998-6-5.998zm0 1.5625a4.4375 4.4375 0 0 1 4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375-4.4375 4.4375 4.4375 0 0 1 4.4375-4.4375z"/>
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          프로퍼티 간단히
+        </h1>
+<pre class="m-code"><span class="n">key</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s">&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="o">:</span> <span class="n">get</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="o">:</span> <span class="n">get</span></pre><h2>문제점</h2><h4>프로퍼티에서 활성화/비활성화/일부만 private/리다이렉션 하는 법</h4><h6>동기</h6><ul><li>이걸 세밀하게 할 수 있어야 진짜로 setter/getter를 대체할 수 있게 된다.</li><li>또한 정의가 번거롭지 않으며 편해야 한다.</li><li>논리가 중언부언하지 않고 예외가 많지 않고 깔끔하며 편해야 한다.</li><li>때로는 기능을 생략하거나 합치는 것이 답이 될 수 있다.</li></ul><h4>구체화</h4><table class="m-table"><thead><tr><th>#</th><th>변수명</th><th>분류</th><th>문법</th></tr></thead><tbody><tr><td>1</td><td>wav_path</td><td>- public 완전 open</td><td>프로퍼티 아님</td></tr><tr><td>2</td><td>_sound, _name, _pos_x, _pos_y</td><td>- 일부만 open<br />- 위의 여부 관계없이 get,set에서 특정 동작</td><td>프로퍼티 아님</td></tr><tr><td>3</td><td>getLabel()</td><td>- 일부만 open</td><td>프로퍼티</td></tr></tbody></table><pre class="m-code"><span class="k">class</span> <span class="nc">KeySound</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="n">play</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">wav_path</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">;</span>
+
+        <span class="n">Mixer</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">wav_path</span><span class="p">);</span>
+        <span class="n">Mixer</span><span class="o">::</span><span class="n">play</span><span class="p">();</span>
+        <span class="n">Mixer</span><span class="o">::</span><span class="n">close</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">string</span> <span class="n">wav_path</span><span class="p">;</span> <span class="c1">//</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Key</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Key</span><span class="p">()</span> <span class="p">{}</span>
+    <span class="n">Key</span><span class="p">(</span><span class="kt">int</span> <span class="n">new_pos_x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">new_pos_y</span><span class="p">)</span> <span class="o">:</span> <span class="n">_pos_x</span><span class="p">(</span><span class="n">new_pos_x</span><span class="p">),</span> <span class="n">_pos_y</span><span class="p">(</span><span class="n">new_pos_y</span><span class="p">)</span> <span class="p">{}</span>
+
+    <span class="kt">int</span> <span class="n">getPosX</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_pos_x</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">getPosY</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_pos_y</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">char</span> <span class="n">getLabel</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_name</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">}</span>
+    <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">getName</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_name</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">setName</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">new_name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_name</span> <span class="o">=</span> <span class="n">new_name</span><span class="p">;</span>
+        <span class="n">_updatePos</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">const</span> <span class="n">KeySound</span><span class="o">&amp;</span> <span class="n">getSoundSource</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_sound</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="n">_updatePos</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">switch</span><span class="p">(</span><span class="n">_name</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="p">{</span>
+            <span class="k">case</span> <span class="sc">&#39;a&#39;</span><span class="o">:</span> <span class="n">_pos_x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="n">_pos_y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="sc">&#39;s&#39;</span><span class="o">:</span> <span class="n">_pos_x</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span> <span class="n">_pos_y</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+                <span class="p">.</span>
+                <span class="p">.</span>
+        <span class="p">}</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="k">protected</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="n">_setSoundSource</span><span class="p">(</span><span class="k">const</span> <span class="n">KeySound</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_sound</span> <span class="o">=</span> <span class="n">rhs</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">KeySound</span> <span class="n">_sound</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">_name</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_pos_x</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">_pos_y</span><span class="p">;</span>
+<span class="p">};</span></pre><h6>기능을 쪼개면,</h6><ul><li>변수가 있는가, 프로퍼티 인가</li><li>getter/setter중 일부만 open 되었는가?<ul><li>open된 것은 구현이 포함되어 있는가? 아니면 단순히 접근자를 표현하기 위해서만 정의되었는가</li></ul></li></ul><h4>일단 만들어볼까?</h4><pre class="m-code"><span class="n">KeySound</span>
+    <span class="n">play</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">wav_path</span> <span class="o">==</span> <span class="s">&quot;&quot;</span>
+            <span class="k">return</span>
+
+        <span class="n">Mixer</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">wav_path</span><span class="p">)</span>
+        <span class="n">Mixer</span><span class="p">.</span><span class="n">play</span><span class="p">()</span>
+        <span class="n">Mixer</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">wav_path</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+<span class="n">Key</span>
+    <span class="n">Key</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="o">:</span> <span class="n">nothing</span>
+    <span class="n">Key</span><span class="p">(</span><span class="kt">int</span> <span class="n">new_pos</span><span class="p">)</span></pre><h4>위의 건에서 찾은 의문</h4><h6>[v] 메소드 정의시 타입을 안넣으면 안될까? </h6><pre class="m-code"><span class="n">app</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></pre><ul><li>아무리 쉬운 코드라도, 타입유추할 껀덕지가 없다면 동작하지 못한다.</li><li>게다가 오버로딩이 동작하지 못한다.</li></ul><h6>[v] 타입 정의 문법을 바꾸면?</h6><pre class="m-code"><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="mi">1</span><span class="o">:</span> <span class="n">YoungHee</span> <span class="n">Cheolsoo</span>
+<span class="p">[</span> <span class="p">]</span><span class="mi">2</span><span class="o">:</span> <span class="n">CheolSoo</span> <span class="o">=</span> <span class="n">YoungHee</span></pre><ul><li>좀 더 시험해볼까</li></ul><pre class="m-code"><span class="n">age</span> <span class="o">=</span> <span class="mi">25</span>
+    <span class="n">print</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;hello, I&#39;m ${this} aged&quot;</span><span class="p">)</span>
+<span class="n">he</span> <span class="o">=</span> <span class="n">age</span>
+<span class="n">he</span><span class="p">.</span><span class="n">print</span><span class="p">()</span>
+<span class="c1">// he = 26 // he는 int가 아니다. occupiable =가 될 수도 없다.</span>
+<span class="n">he</span><span class="p">.</span><span class="n">print</span><span class="p">()</span>
+
+<span class="n">Person</span> <span class="c1">// #Person이 되면 name을 수정하지 못하게 한다는 뜻이다.</span>
+    <span class="n">say</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+    <span class="n">_name</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">Chelsoo1</span> <span class="o">=</span> <span class="n">Person</span> <span class="c1">// Chelsoo1은 Person을 가리키는 refer다.</span>
+<span class="n">Chelsoo</span> <span class="o">=</span> <span class="n">Person</span> <span class="c1">// Chelsoo는 Person으로부터 상속받은 새로운 타입객체다.</span>
+    <span class="n">Chelsoo</span><span class="p">()</span><span class="o">:</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chelsoo&quot;</span>    
+    <span class="o">=&gt;</span> <span class="n">say</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;and my name is ${name}&quot;</span><span class="p">)</span>
+
+<span class="n">Chelsoo2</span> <span class="o">=</span> <span class="n">Chelsoo</span><span class="p">()</span> <span class="c1">// Chelsoo2는 Chelsoo로부터 복제된 객체다.</span>
+<span class="n">Chelsoo3</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span> <span class="c1">// 이것은 Person에 정의된 모든</span>
+    <span class="n">say</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span></pre><ul><li>인터페이스의 추가가 없다면, 그것은 기존 객체에 대한 복제와 완전 동일한것이다.</li><li>하지만 할당은 꼭 복제처럼 일어나지는 않는다.</li><li>a = b 를 없앨 수는 없다. 이것은 너무 친숙한 문법이니까. 고로 a b 를 a = b 로 대체할 수 없는가부터 생각해봐야 한다.</li><li>1번과 2번은 완전히 동일한 기능인가?<ul><li>occupiable일 경우 동일하다.</li><li><p>sharable일 경우, 1번은 refer의 정의를 뜻하나, 2번은 refer 할당을 뜻한다.</p><p>```cpp Person p p = getSomeone()</p><p>Person p p = Person()</p><p>Person p() ```</p></li></ul></li><li>a = b로 Person p를 표현할 수 있을까?</li></ul><pre class="m-code"><span class="n">Person</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;unknown&quot;</span>
+    <span class="n">print</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;name=${name}&quot;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span>
+<span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+<span class="n">p</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Chales&quot;</span>
+<span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">()</span></pre><ul><li>위의 시나리오는 가능하다.</li><li>a = b 일때, b가 sharable이라면 a는 refer의 정의가 된다.</li><li>b()는 b의 터미널메소드(&quot;()&quot;)를 호출하고 이는 객체의 생성으로 이어진다.</li></ul><pre class="m-code"><span class="mi">1</span><span class="o">:</span> <span class="n">age</span> <span class="o">=</span> <span class="kt">int</span>    <span class="c1">// int는 occupiable이므로 age는 int 객체로부터 복제.</span>
+                <span class="c1">// age = int()와 같다.</span>
+<span class="mi">2</span><span class="o">:</span> <span class="n">grade</span> <span class="o">=</span> <span class="mf">3.5</span>    <span class="c1">// 3.5는 #float이 복제된 것이다.</span></pre><ul><li>타입은 항상 복제가 상속을 대체한다. 즉 const를 물려받지 않는다.</li><li>문법에 따라 확장으로 표시할 수도 있다.</li></ul><pre class="m-code"><span class="cp">#Person</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;unknown&quot;</span>    
+<span class="n">cp</span> <span class="o">=</span> <span class="n">Person</span> <span class="c1">// cp는 const다. 원본을 가리킨다.</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span> <span class="c1">// p는 const로부터 복제된 nonconst 객체를 가리킨다.</span>
+
+<span class="cp">#Chelsoo = Person </span><span class="c1">// Chelsoo Person으로 하면 에러가 된다.</span>
+    <span class="n">say</span><span class="p">()</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;name=${name}&quot;</span><span class="p">)</span>
+<span class="n">cc</span> <span class="o">=</span> <span class="n">Chelsoo</span> <span class="c1">// const</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Chelsoo</span><span class="p">()</span> <span class="c1">// nonconst</span>
+
+<span class="n">YoungHee</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span>
+    <span class="n">say</span><span class="p">()</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;I&#39;m ${name}&quot;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">YoungHee</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">YoungHee</span><span class="p">()</span></pre><h6>문제#5 static 키워드를 없앨 수 있을까?</h6><pre class="m-code"></pre><h6>[v] 문제#2 const 여부를 변수에 표현하지 않으면 너무 가독성이 떨어진다 </h6><ul><li>일반적인 타입 정보는 그게 정확히 무엇인지는 중요하지 않고 사용자가 쓰려고 하는 API를 이 타입이 가지고 있을 것이 라는 것만 중요하다. 그래서 타입을 표기할 필요가 없다.</li><li>그러나 const 여부는 사용자가 파악하고 있어야 한다.</li><li><p>그러므로 const는 사용자가 정의하도록 유도하는게 맞지 않느냐?</p><p>```cpp [ ]1: #p = getPerson() [v]2: p = getPerson() p.getName() p.setName(&quot;new&quot;) // compile error. ```</p></li></ul><h6>[v] 문제#3 const의 표기법</h6><pre class="m-code"><span class="p">[</span> <span class="p">]</span><span class="mi">1</span><span class="o">:</span> <span class="err">#</span><span class="n">age</span> <span class="o">=</span> <span class="err">#</span><span class="kt">int</span> <span class="c1">// int는 nonconst였으나, const화 시켰음.</span>
+      <span class="cp">#age = int</span>
+      <span class="n">age</span> <span class="o">=</span> <span class="kt">int</span>
+<span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="mi">2</span><span class="o">:</span> <span class="n">age</span> <span class="o">=</span> <span class="kt">int</span> <span class="c1">// age는 int의 const 속성을 따라간다.</span>
+      <span class="n">age</span> <span class="o">=</span> <span class="err">#</span><span class="kt">int</span> <span class="c1">// age는 int의 속성이 어떻든 const 화 된다.</span></pre><ul><li>2는 int에 의해서 const가 결정된다. 묵시적으로. 사용자는 알아서 캐치하자.</li><li><p>1는 int는 nonconst이나 그걸 const 붙일 수 있다.</p><p>```cpp p = Person() // p는 nonconst p1 = p // p1은 refer p1.name = &quot;don&#x27;t change&quot; // 변경이 가능. p2 = #p // p에 const를 부여한 것이다. p2.name = &quot;compile error&quot; // 에러. ```</p></li></ul><h6>[v] 문제#4</h6><pre class="m-code"><span class="cp">#Person</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;unknown&quot;</span>
+    <span class="n">print</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;name=${name}&quot;</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Person</span> <span class="c1">// p는 const Person의 refer다.</span>
+<span class="c1">// p.print() 안된다.</span>
+<span class="n">p1</span> <span class="o">=</span> <span class="n">Person</span><span class="p">()</span> <span class="c1">// 된다. Person()은 nonconst Person이다.</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">p1</span> <span class="c1">// 안된다. p 는 const Person이므로.</span></pre><ul><li>일반적인 const 예제를 만들어보면서 위의 문제를 해결해보자</li><li><p>보통 언어들의 const 경우,</p><p>```cpp const Person&amp; p = ... // p.setName() // Person&amp; p1 = p Person&amp; p1 = ... p = p1 void cfoo(const Person* p); void foo(Person* p); cfoo(&amp;p) cfoo(&amp;p1) //foo(&amp;p) foo(&amp;p1)</p></li></ul><pre>#Person p = ....
+// p.setName()
+// Person p1 = p
+Person p1 = ...
+p = p1
+void cfoo(#Person p)
+void foo(Person p)
+cfoo(p)
+cfoo(p1)
+//foo(p)
+foo(p1)
+```
+* 따라서 const의 동작 자체는 별반 다르지 않다.
+* const는 const -&gt; nonconst로 이행하는 것만 막는다.
+* 한번 const가 되면 계속 const가 된다.
+* 따라서 const는 이 타입은 절대 변하지 않는다는 걸 보장해준다는 것이다.
+</pre><ul><li><p>여기서 정의한 월드 문법의 경우,</p><p>```cpp p = ... // ...은 const Person임을 암시한다고 하자. p1 = ... // nonconst이다. // p = p1 에러 p = p1 cfoo(p = #Person) foo(p = Person)</p><p>cfoo(p) cfoo(p1) foo(p) foo(p1) ```</p></li></ul><h4>[v] 문제#4 sharable과 const</h4><pre class="m-code"><span class="cp">#Person</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">Chelsoo</span> <span class="o">=</span> <span class="n">Person</span></pre><ul><li>[x] Chelsoo는 const인가? &ndash;&gt; 네.</li></ul><pre class="m-code"><span class="n">age</span> <span class="o">=</span> <span class="err">#</span><span class="kt">int</span>
+<span class="n">age1</span> <span class="o">=</span> <span class="n">age</span> <span class="c1">// age1은 occupiable이므로 const가 아니게 된다.</span>
+
+<span class="n">he</span> <span class="o">=</span> <span class="err">#</span><span class="n">Person</span><span class="p">()</span>
+<span class="n">him</span> <span class="o">=</span> <span class="n">he</span> <span class="c1">// him은 sharable이므로 const가 된다.</span></pre><ul><li>sharable이면 const가 유지된다.</li><li>occupiable이면 const는 무시된다.</li></ul><h6>[ ] 평가 전략</h6><ul><li>가장 중요한 문법이다.</li></ul><pre class="m-code"></pre><h6>[ ] 메소드 정의 문법</h6><pre class="m-code"><span class="p">[</span> <span class="p">]</span><span class="mi">1</span><span class="o">:</span>   <span class="n">func</span> <span class="n">print</span><span class="p">()</span>
+        <span class="n">func</span> <span class="n">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">str</span><span class="p">[]</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="mi">2</span><span class="o">:</span>    <span class="n">print</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+        <span class="n">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">str</span><span class="p">[]</span> <span class="n">argv</span><span class="p">)</span>
+<span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="mi">3</span><span class="o">:</span>    <span class="n">print</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+        <span class="n">print</span><span class="p">(</span><span class="kt">int</span><span class="p">(</span><span class="n">argc</span><span class="p">),</span> <span class="n">str</span><span class="p">[](</span><span class="n">argv</span><span class="p">))</span>
+<span class="p">[</span> <span class="p">]</span><span class="mi">4</span><span class="o">:</span>    <span class="n">print</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+        <span class="n">print</span><span class="p">(</span><span class="n">argc</span> <span class="o">=</span> <span class="kt">int</span><span class="p">,</span> <span class="n">argv</span> <span class="o">=</span> <span class="n">str</span><span class="p">[])</span>
+<span class="p">[</span> <span class="p">]</span><span class="mi">5</span><span class="o">:</span>   <span class="n">print</span><span class="p">()</span> <span class="c1">// 반환형이 없으므로 함소호출과 구분이 안감.</span>
+        <span class="n">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">str</span><span class="p">[]</span> <span class="n">argv</span><span class="p">)</span></pre><ul><li>2는,<ul><li>타자수가 적음</li><li>그러나 void일때만 따로 적어야 하는 예외처리를 기억해야함</li><li>파싱시 조금 까다로울 수 있음</li></ul></li><li>1은,<ul><li>항상 func를 앞에 붙이므로 외울것은 적음 -&gt; 그러나 클래스정의도 안붙이는데 왜 함수만 앞에 붙이냐고 할 수 있음. 결국 똑 같음.</li><li><p>타자수가 많음.</p><p>```cpp def person func hello(str msg) c.out(&quot;hello ${msg}&quot;) return</p><p>func proxy(void(msg) foo, str msg) foo(str)</p><p>func closure() proxy(hello, &quot;world&quot;)</p><p>def app func main(str[] args) person.closure() return rok</p></li></ul></li></ul><pre>person
+    hello(str msg)
+        c.out(&quot;hello ${msg}&quot;)
+        return
+
+    proxy(void(msg) foo, str msg)
+        foo(msg)
+
+    closure()
+        proxy(hello, &quot;world&quot;)
+        proxy(?(str msg)
+            c.out(&quot;my lambda!&quot;)
+        , &quot;world&quot;)
+
+app
+    main(str[] args)
+        person.closure()
+        return rok
+
+
+위에것들을 섞어볼까?
+
+person
+    func hello(str msg)
+        c.out(&quot;hello ${msg&quot;)
+        return
+
+    func proxy(void(msg) foo, str msg)
+        foo(msg)
+
+    func closure()
+        proxy(hello, &quot;world&quot;)
+        proxy(func(str msg)
+            c.out(&quot;my lambda!&quot;)
+        , &quot;world&quot;)
+
+app
+    func main(str[] args)
+        person.closure()
+        return rok
+```
+</pre><ul><li>4는,<ul><li>+일관된 타입정의 문법 2안을 따른다.</li><li>-타자수가 가장 많다.</li></ul></li></ul><h6>[v] const 변수를 만드는 법?</h6><pre class="m-code"><span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="mi">1</span><span class="o">:</span> <span class="err">#</span><span class="n">age</span> <span class="o">=</span> <span class="mi">25</span> <span class="c1">// 숫자는 자동 const.</span></pre><ul><li>const 된 변수로부터 복제 될때는 const가 되어야 한다.</li></ul><pre class="m-code"><span class="c1">// c++</span>
+<span class="k">const</span> <span class="n">Person</span><span class="o">&amp;</span> <span class="n">getOneOfPerson</span><span class="p">(</span><span class="kt">int</span> <span class="n">val</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Person</span><span class="o">*</span> <span class="n">arr</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span><span class="k">new</span> <span class="n">Chelsoo</span><span class="p">(),</span> <span class="k">new</span> <span class="n">Marry</span><span class="p">(),</span> <span class="p">...};</span>
+    <span class="k">return</span> <span class="o">*</span><span class="n">arr</span><span class="p">[</span><span class="n">val</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">const</span> <span class="n">Person</span><span class="o">&amp;</span> <span class="n">p</span> <span class="o">=</span> <span class="n">getOneOfPerson</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="c1">// world</span>
+<span class="cp">#getOneOfPerson(int val)</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="n">Chelsoo</span><span class="p">(),</span> <span class="n">Marry</span><span class="p">(),</span> <span class="p">...]</span>
+    <span class="k">return</span> <span class="n">arr</span><span class="p">[</span><span class="n">val</span><span class="p">]</span>
+<span class="cp">#p = getOneOfPerson(2)</span></pre><h6>[ ] 구현이 없는 함수를 어떻게 정의할까?</h6><ul><li>구현이 없는 블록문 같은 경우도 있을 수 있을 것이다.<ul><li>if a == 5</li><li>else<ul><li>....</li></ul></li></ul></li><li>1안</li></ul><pre class="m-code"><span class="n">print</span><span class="p">()</span> <span class="c1">// --&gt; 이미 함수 호출 처럼 보이기 시작하지 않은가?</span>
+
+<span class="n">app</span><span class="p">,</span>
+    <span class="n">main</span><span class="p">()</span>
+        <span class="n">print</span><span class="p">()</span> <span class="c1">// --&gt; 자, 이 print는 print()라는 함수의 호출인가</span>
+                <span class="c1">// 아니면 print() 라는 클로져를 정의한 것일까?</span></pre><ul><li>2안<ul><li>파이썬 방식</li></ul></li></ul><pre class="m-code"><span class="n">print</span><span class="p">()</span> <span class="n">none</span>
+
+<span class="n">app</span><span class="p">,</span>
+    <span class="n">foo</span><span class="p">(</span><span class="kt">int</span><span class="p">(</span><span class="n">str</span><span class="p">)</span> <span class="n">func</span><span class="p">,</span> <span class="n">str</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="n">main</span><span class="p">()</span></pre><ul><li>3안 - 메소드입니다 라는 특문을 넣는다.</li></ul><pre class="m-code"><span class="n">app</span><span class="p">,</span>
+    <span class="n">foo</span><span class="p">(</span><span class="kt">int</span><span class="p">(</span><span class="n">str</span><span class="p">)</span> <span class="n">func</span><span class="p">,</span> <span class="n">str</span> <span class="n">msg</span><span class="p">)</span> <span class="o">-&gt;</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret=${ret}&quot;</span><span class="p">)</span>
+
+    <span class="n">main</span><span class="p">()</span>        
+        <span class="n">foo</span><span class="p">(</span><span class="o">?</span><span class="p">(</span><span class="n">str</span> <span class="n">msg</span><span class="p">)</span><span class="o">:</span> <span class="n">msg</span><span class="p">.</span><span class="n">len</span><span class="p">,</span><span class="s">&quot;hello&quot;</span><span class="p">)</span></pre><h6>[ ] 클래스 뒤에 콤마는 모호하지 않을까?</h6><pre class="m-code"><span class="n">app</span><span class="p">,</span> <span class="c1">// 아무런 구현이 없는 app이다. 그러나 이건 마치 변수의 정의처럼 보인다.</span></pre><h6>[v] 람다는 어떻게 정의할까?</h6><pre class="m-code"><span class="p">[</span> <span class="p">]</span><span class="mi">1</span><span class="o">:</span> <span class="o">*</span><span class="p">(</span><span class="n">str</span> <span class="n">msg</span><span class="p">)</span><span class="o">:</span> <span class="p">...</span>
+<span class="p">[</span><span class="n">v</span><span class="p">]</span><span class="mi">2</span><span class="o">:</span> <span class="o">?</span><span class="p">(</span><span class="n">str</span> <span class="n">msg</span><span class="p">)</span><span class="o">:</span> <span class="p">...</span>
+<span class="p">[</span> <span class="p">]</span><span class="mi">3</span><span class="o">:</span> <span class="n">f</span><span class="p">(</span><span class="n">str</span> <span class="n">msg</span><span class="p">)</span><span class="o">:</span> <span class="p">...</span> <span class="c1">// 단, 개발자는 f라는 메소드를 만들 수 없다.</span>
+<span class="p">[</span> <span class="p">]</span><span class="mi">4</span><span class="o">:</span> <span class="err">반환형</span><span class="p">(</span><span class="n">str</span> <span class="n">msg</span><span class="p">)</span><span class="o">:</span> <span class="p">...</span></pre><h6>[ ] 스트링 매크로가 좀 불편할까?</h6><pre class="m-code"><span class="p">[</span> <span class="p">]</span><span class="mi">1</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret=&quot;</span> <span class="o">+</span> <span class="n">ret</span> <span class="o">+</span> <span class="s">&quot;, hello world&quot;</span><span class="p">)</span>
+<span class="p">[</span> <span class="p">]</span><span class="mi">2</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret=${ret}, hello world&quot;</span><span class="p">)</span>
+<span class="p">[</span> <span class="p">]</span><span class="mi">3</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret=$ret$, hello world&quot;</span><span class="p">)</span>
+<span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="mi">4</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;ret=$1, hello world&quot;</span><span class="p">,</span> <span class="n">ret</span><span class="p">)</span></pre><h6>[v] 여러개의 변수를 동시에 정의 가능 </h6><pre class="m-code"><span class="p">[</span><span class="o">?</span><span class="p">]</span><span class="mi">1</span><span class="o">:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="p">[</span><span class="o">?</span><span class="p">]</span><span class="mi">2</span><span class="o">:</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">print</span><span class="p">()</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;I&#39;m a&quot;</span><span class="p">)</span>
+<span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">print</span><span class="p">()</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;I&#39;m b&quot;</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">a</span><span class="p">.</span><span class="n">print</span><span class="p">()</span>
+<span class="n">b</span><span class="p">.</span><span class="n">print</span><span class="p">()</span></pre>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-dox-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-dox-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-dox-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search.js"></script>
+<script src="searchdata.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.11 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
