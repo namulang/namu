@@ -942,7 +942,7 @@
 
         <span class="n">Number</span><span class="p">.</span><span class="n">num</span> <span class="o">=</span> <span class="mi">5</span></pre><h6>2.15 상수와 캐스팅</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
-<span class="n">Animal</span>
+<span class="n">def</span> <span class="n">Animal</span>
     <span class="c1">// 상수: # &lt;타입&gt;</span>
     <span class="c1">// prefix 중 하나로, #로 표현한다. (# 기호가 딱딱함과 고정됨을 연상시키기 때문이다.)</span>
     <span class="c1">//  1.  타입 앞에만 붙을 수 있다.</span>
@@ -959,7 +959,7 @@
     <span class="c1">// void setAge(int new): age = new // 컴파일에러: age는 const 이다.</span>
     <span class="kt">void</span> <span class="err">#</span><span class="n">walk</span><span class="p">()</span><span class="o">:</span> <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">age</span> <span class="o">+</span> <span class="s">&quot;yo &quot;</span> <span class="o">+</span> <span class="n">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot; walked.&quot;</span><span class="p">)</span> <span class="c1">// getName()이 const메소드가 아니었다면 에러였다.</span>
 
-<span class="n">Animal</span> <span class="n">Beaver</span>
+<span class="n">def</span> <span class="n">Animal</span> <span class="n">Beaver</span>
     <span class="cp">#str #getName(): &quot;Beaver&quot;</span>
     <span class="kt">void</span> <span class="err">#</span><span class="n">walk</span><span class="p">()</span>
         <span class="n">Super</span><span class="p">.</span><span class="n">walk</span><span class="p">()</span> <span class="c1">// Super는 기반클래스(Animal)로 캐스팅된 this를 의미한다.</span>
