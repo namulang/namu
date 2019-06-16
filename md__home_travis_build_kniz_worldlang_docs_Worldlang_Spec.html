@@ -413,7 +413,7 @@
 <span class="cm">            */</span>
 
 
-    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="n">with</span> <span class="n">p</span> <span class="c1">// 객체 p에 대해 인터페이스가 확장된다.</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span><span class="o">:</span> <span class="n">with</span> <span class="n">p</span> <span class="c1">// 객체 p에 대해 인터페이스가 확장된다.</span>
         <span class="n">foo</span><span class="p">()</span>
         <span class="n">print</span><span class="p">()</span> <span class="c1">// p.print()와 동일하다.</span>
         <span class="n">eat</span><span class="p">()</span> <span class="c1">// Person.eat은 this.eat()보다 우선된다.</span>
@@ -905,11 +905,11 @@
 <span class="cm">    Student.print2()</span>
 <span class="cm">    print2()</span>
 <span class="cm">    print2()=24, 3.5</span>
-<span class="cm">*/</span></pre><h6>연산자 메소드</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
+<span class="cm">*/</span></pre><h6>2.14 연산자 메소드</h6><pre class="m-code"><span class="n">import</span> <span class="n">console</span>
 
-<span class="n">app</span>
+<span class="n">def</span> <span class="n">app</span>
     <span class="kt">void</span> <span class="nf">main</span><span class="p">()</span>
-        <span class="n">obj</span> <span class="n">Number</span> <span class="c1">// 모든 클래스는 명시가 없어도 obj로부터 나온다.</span>
+        <span class="n">def</span> <span class="n">Number</span>
             <span class="c1">// 타입 별칭aka: &lt;원본타입&gt; aka &lt;별칭타입&gt;</span>
             <span class="c1">// 블록문 규칙에 의해 정의된 scope 내에서만 유효하다.</span>
             <span class="kt">int</span> <span class="n">aka</span> <span class="n">MyInt</span> <span class="c1">// MyInt 는 int와 동일하다.</span>
