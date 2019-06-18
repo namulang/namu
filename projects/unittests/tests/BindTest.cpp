@@ -1,4 +1,4 @@
-#include "../TestCase.hpp"
+#include "../TestManager.hpp"
 #include <iostream>
 using namespace std;
 

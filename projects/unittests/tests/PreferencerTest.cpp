@@ -1,4 +1,4 @@
-#include "../TestCase.hpp"
+#include "../TestManager.hpp"
 
 WRD_TEST_START(PreferencerTest)
 	std::string script1 = 
