@@ -58,7 +58,7 @@ time_t run1(int& crc, int n)
 	}
 	for(int i=0; i < n ;i++)
 		delete parr[i];
-	return start;
+	return clock() - start;
 }
 
 time_t run2(int& crc, int n)
@@ -72,7 +72,7 @@ time_t run2(int& crc, int n)
 	}
 	for(int i=0; i < n ;i++)
 		delete arr[i];
-	return start;
+	return clock() - start;
 }
 
 
@@ -82,13 +82,14 @@ WRD_TEST_START(MemRobustTest)
 	int crc = 0;
 
 #define SPRINT(n) \
-	WRD_WARN("%d times new/delete : %f ms elapsed. crc=%d", n, ((float) clock() - run1(crc, (n))) / CLOCKS_PER_SEC*1000.0f, crc); \
-	WRD_WARN("%d times mempool    : %f ms elapsed. crc=%d", n, ((float) clock() - run2(crc, (n))) / CLOCKS_PER_SEC*1000.0f, crc);
+	WRD_WARN("%d times new/delete : %f ms elapsed. crc=%d", n, ((float) run1(crc, (n))) / CLOCKS_PER_SEC*1000.0f, crc); \
+	WRD_WARN("%d times mempool    : %f ms elapsed. crc=%d", n, ((float) run2(crc, (n))) / CLOCKS_PER_SEC*1000.0f, crc);
 
 	SPRINT(10)
 	SPRINT(100);
 	SPRINT(1000);
 	SPRINT(10000);
 	SPRINT(50000);
+	SPRINT(100000);
 	return "";
 WRD_TEST_END(MemRobustTest)
