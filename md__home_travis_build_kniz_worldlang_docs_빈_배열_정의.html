@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>원소가 비어있는 배열 정의하기? | world-doc</title>
+  <title>[v] 원소가 비어있는 배열 정의하기? | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,7 +44,7 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          원소가 비어있는 배열 정의하기?
+          [v] 원소가 비어있는 배열 정의하기?
         </h1>
 <pre class="m-code"><span class="n">def</span> <span class="n">keyBase</span>
     <span class="n">str</span> <span class="n">_name</span>
@@ -68,9 +68,7 @@
 <span class="mi">2</span><span class="o">:</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">keyBase</span><span class="p">[]</span></pre><h4>3안 Generic 문법을 사용한다.</h4><pre class="m-code"><span class="n">keys</span> <span class="o">=</span> <span class="n">array</span><span class="o">&lt;</span><span class="n">keyBase</span><span class="o">&gt;</span><span class="p">()</span>
 <span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span></pre><h4>4안 독자적인, 더 편리한 generic 문법을 만든다.</h4><pre class="m-code"><span class="mi">1</span><span class="o">:</span> <span class="n">myProxy</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">float</span><span class="o">&gt;</span> <span class="n">mp</span> <span class="c1">// 기존 방식</span></pre><h4>5안 기존 Generic 문법을 사용하되, []도 사용한다.</h4><pre class="m-code"><span class="mi">1</span><span class="o">:</span> <span class="n">keys</span> <span class="o">=</span> <span class="p">[]</span><span class="o">&lt;</span><span class="n">keyBase</span><span class="o">&gt;</span>
 <span class="mi">2</span><span class="o">:</span> <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">keyBase</span><span class="o">&gt;</span><span class="p">]</span>
-<span class="n">keys</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">returnKey</span><span class="p">)</span></pre><h2>specifier 문제</h2><pre class="m-code"><span class="n">a1</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="cp">#a2 = 2</span>
-<span class="n">a3</span> <span class="o">=</span> <span class="err">#</span><span class="mi">3</span></pre><h4>Q1. a3 = # 3 처럼 표현해도 되야 함?</h4><h4>Q2. a3 = # a2 처럼 해도 되야 함?</h4><h4>Q3. a4 = _ $ # a3 처럼 해도 되야 함?</h4><h4>Q4. #가 rhs에 붙는다고? 그럼 $는? a4 = $33 로 해야 하나?</h4><h4>Q5. # 3과 float 3 과 구분이 가능한가?</h4><h4>Q6. getInt() 4 도 사용이 가능한가?</h4>
+<span class="n">keys</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">returnKey</span><span class="p">)</span></pre>
       </div>
     </div>
   </div>
