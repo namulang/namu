@@ -46,16 +46,16 @@
         <h1>
           [..] 프로퍼티를 쉽게 표기하는 방법
         </h1>
-<p>## [] 1안 새로운 특문 추가</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
+<p>## [] 1안 새로운 특문 &lt; &gt; 추가</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
     <span class="o">&lt;</span><span class="n">age</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1">// set 만 가능</span>
     <span class="o">&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;kkk&quot;</span></pre><ul><li>헷갈린다. 부등호처럼 보인다.</li></ul><p>## [] 2안 get set 표기</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
     <span class="n">age</span> <span class="o">=</span> <span class="mi">3</span>
         <span class="n">_get</span><span class="o">=&gt;</span> <span class="c1">// get은 되는데, 외부에서는 호출 불가란 뜻.</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;kkk&quot;</span>
-        <span class="n">_set</span><span class="o">=&gt;</span></pre><p>## [] 3안 1안의 개선</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
+        <span class="n">_set</span><span class="o">=&gt;</span></pre><ul><li>const 로 표기한 경우는 readonly인 걸로 간주하고 set은 없는걸로 한다.</li></ul><p>## [] 3안 1안의 개선</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
     <span class="o">&lt;&lt;</span><span class="n">age</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1">//</span>
     <span class="o">&gt;&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;kkk&quot;</span>
-    <span class="kt">void</span> <span class="n">say</span><span class="p">()</span></pre><ul><li>좀더 알아보기는 쉬운데, 이렇게 하면 const 표시할때 항상 &lt;&lt;로 해야 한다.</li></ul>
+    <span class="kt">void</span> <span class="n">say</span><span class="p">()</span></pre><ul><li>좀더 알아보기는 쉬운데, 이렇게 하면 const 표시할때 항상 &lt;&lt;로 해야 한다.</li></ul><h3>4안 &quot;#&quot; 는 const.</h3>
       </div>
     </div>
   </div>
