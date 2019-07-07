@@ -46,7 +46,32 @@
         <h1>
           TClass Origin 새로 설계
         </h1>
-<p>Typ</p>
+<h3>요구사항</h3><ul><li>Origin 객체라는 것이 나왔고 사실 이것이 Type을 대신하고 있다.</li><li>이제 기존 TClass가 Type을 대신하고 있었으므로 이걸 해결해보자.</li></ul><h4>1안 TClass를 제거하자.</h4><pre class="m-code"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">TRTTI</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">bool</span> <span class="n">isADT</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">isPtr</span><span class="p">()</span>
+    <span class="p">..</span>
+    <span class="p">..</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Node</span> <span class="p">{</span>
+    <span class="k">virtual</span> <span class="n">TArray</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">getSons</span><span class="p">();</span>
+    <span class="kt">bool</span> <span class="nf">isSub</span><span class="p">(</span><span class="k">const</span> <span class="n">Node</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 1. tier 비교</span>
+        <span class="c1">// 2. 동 tier가 같은 클래스인지 비교</span>
+    <span class="p">}</span>
+    <span class="kt">bool</span> <span class="nf">isSuper</span><span class="p">(</span><span class="k">const</span> <span class="n">Node</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">class</span> <span class="nc">Origin</span> <span class="p">{</span>
+    <span class="n">TStrong</span><span class="o">&lt;</span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">_supers</span><span class="p">;</span> <span class="c1">// Origin이 복제되어도 shallow copy.</span>
+    <span class="n">TStrong</span><span class="o">&lt;</span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">_subs</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="n">TArray</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">getSupers</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_supers</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">virtual</span> <span class="n">TArray</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">getSubs</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_subs</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+<span class="c1">// Origin은 3군데에서 불러진다.</span>
+<span class="c1">//  1. C++ 빌트인 클래스의 경우, macro WRD_MACRO에 의해.</span>
+<span class="c1">//  2. .</span></pre>
       </div>
     </div>
   </div>
