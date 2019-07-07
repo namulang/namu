@@ -46,7 +46,7 @@
         <h1>
           [v] TClass Origin 새로 설계
         </h1>
-<h3>[v] 요구사항</h3><ul><li>Origin 객체라는 것이 나왔고 사실 이것이 Type을 대신하고 있다.</li><li>이제 기존 TClass가 Type을 대신하고 있었으므로 이걸 해결해보자.</li></ul><p>### [v] 1안 TClass를 제거하자.</p><pre class="m-code"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
+<h3>[v] 요구사항</h3><ul><li>Origin 객체라는 것이 나왔고 사실 이것이 Type을 대신하고 있다.</li><li>이제 기존 TClass가 Type을 대신하고 있었으므로 이걸 해결해보자.</li></ul><h4>[v] 1안 TClass를 제거하자.</h4><ul><li>cast(), isSub(), getSubs() 모두 Thing에서 호출이 가능해야 한다.</li><li>TClass는 사라지고 Object가 계층 구조를 보관한다.</li><li>Origin객체란 OriginMgr에 보관된 Object를 말하는 것이다.</li><li>Origin객체는 OriginMgr[&quot;name&quot;]으로 쉽게 접근 가능하다.</li><li>Thing, Instance 들은 Object보다 상위인데도 cast, isSub가 가능해야 하므로 이를 위한 DummyOriginObject를 생성한다.<ul><li>Dummy는 복제 될 수 없다.</li><li>WrappedMethod는 초기화가 된 이후에, this를 호출시 바인딩한다.</li><li>DummyOBject는 OriginMgr가 시작하자마자 만들어 둔다.<ul><li>tRtti로 Object보다 상위의 모든 클래스들을 알아내서 만들어낸다.</li><li>모든 월드 native 클래스들은 Super라는 typedef가 있어야 한다.</li></ul></li></ul></li></ul><pre class="m-code"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
 <span class="k">class</span> <span class="nc">tRtti</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="kt">bool</span> <span class="n">isADT</span><span class="p">()</span> <span class="p">{</span>
@@ -54,6 +54,7 @@
     <span class="p">..</span>
     <span class="p">..</span>
     <span class="n">origin</span><span class="o">*</span> <span class="n">_org</span><span class="p">;</span>
+    <span class="n">tRtti</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">::</span><span class="n">Super</span><span class="o">&gt;</span> <span class="n">_getSuper</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">tRtti</span><span class="o">&lt;</span><span class="n">T</span><span class="o">::</span><span class="n">Super</span><span class="o">&gt;</span><span class="p">();</span> <span class="p">}</span>
     <span class="n">oigin</span><span class="o">&amp;</span> <span class="n">getOrigin</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">_org</span><span class="p">;</span> <span class="p">}</span>
     <span class="n">res</span><span class="o">&amp;</span> <span class="n">init</span><span class="p">()</span> <span class="p">{</span>
         <span class="n">originMgr</span><span class="o">&amp;</span> <span class="n">mgr</span> <span class="o">=</span> <span class="n">Core</span><span class="o">::</span><span class="n">get</span><span class="p">().</span><span class="n">getOriginMgr</span><span class="p">();</span>
@@ -108,11 +109,11 @@
     <span class="p">}</span>
     <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">isInit</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
     <span class="k">virtual</span> <span class="n">TArray</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">getSons</span><span class="p">();</span>
-    <span class="kt">bool</span> <span class="nf">isSub</span><span class="p">(</span><span class="k">const</span> <span class="n">Node</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">bool</span> <span class="nf">isSub</span><span class="p">(</span><span class="k">const</span> <span class="n">Thing</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// 1. tier 비교</span>
         <span class="c1">// 2. 동 tier가 같은 클래스인지 비교</span>
     <span class="p">}</span>
-    <span class="kt">bool</span> <span class="nf">isSuper</span><span class="p">(</span><span class="k">const</span> <span class="n">Node</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="nf">isSuper</span><span class="p">(</span><span class="k">const</span> <span class="n">Thing</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">// 사용법:</span>
