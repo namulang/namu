@@ -72,7 +72,8 @@
 
     <span class="k">virtual</span> <span class="n">TArray</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">getSupers</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_supers</span><span class="p">;</span> <span class="p">}</span>
     <span class="k">virtual</span> <span class="n">TArray</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">getSubs</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_subs</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">const</span> <span class="n">object</span><span class="o">&amp;</span> <span class="n">getSuper</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Core</span><span class="o">::</span><span class="n">get</span><span class="p">().</span><span class="n">getOrginMgr</span><span class="p">().</span><span class="n">get</span><span class="p">(</span><span class="n">TRtti</span><span class="o">&lt;</span><span class="n">Super</span><span class="o">&gt;::</span><span class="n">getName</span><span class="p">());</span> <span class="p">}</span>
+    <span class="k">const</span> <span class="n">object</span><span class="o">&amp;</span> <span class="n">getSuper</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">getSupers</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span> <span class="p">}</span>
+    <span class="k">const</span> <span class="n">object</span><span class="o">&amp;</span> <span class="n">getOrigin</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">Core</span><span class="o">::</span><span class="n">get</span><span class="p">().</span><span class="n">get</span><span class="p">....;</span> <span class="p">}</span>
     <span class="kt">bool</span> <span class="n">isInit</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_isInit</span><span class="p">;</span> <span class="p">}</span>
     <span class="n">res</span><span class="o">&amp;</span> <span class="n">init</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span><span class="p">(</span><span class="n">isInit</span><span class="p">())</span> <span class="k">return</span> <span class="n">rOk</span><span class="p">;</span>
@@ -98,9 +99,13 @@
         <span class="k">for</span><span class="p">(</span><span class="n">object</span><span class="o">&amp;</span> <span class="nl">o</span> <span class="p">:</span> <span class="n">objs</span><span class="p">)</span>
             <span class="n">o</span><span class="p">.</span><span class="n">init</span><span class="p">();</span>
     <span class="p">}</span>
+    <span class="k">static</span> <span class="kt">void</span> <span class="n">_addBuiltIns</span><span class="p">(</span>
 <span class="p">};</span>
 
 <span class="k">class</span> <span class="nc">node</span> <span class="p">{</span>
+    <span class="c1">// Object보다 상위클래스들은 WRD_BASE_CLASS를 쓴다. 그러면 자동으로 static 타임에 DummyOriginObject를 만들어 OriginMgr::_addBuiltIn(DummyObject()); 를 넣어둔다.</span>
+    <span class="n">WRD_BASE_CLASS</span><span class="p">(</span>
+
     <span class="k">virtual</span> <span class="n">res</span><span class="o">&amp;</span> <span class="n">init</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">if</span><span class="p">(</span><span class="n">isInit</span><span class="p">())</span> <span class="k">return</span> <span class="n">rAbort</span><span class="p">;</span>
 
@@ -119,6 +124,8 @@
     <span class="p">}</span>
     <span class="kt">bool</span> <span class="nf">isSuper</span><span class="p">(</span><span class="k">const</span> <span class="n">Thing</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">);</span>
 <span class="p">}</span>
+
+
 
 <span class="c1">// 사용법:</span>
 <span class="n">tRtti</span><span class="o">&lt;</span><span class="n">MyCppObj</span><span class="o">&gt;::</span><span class="n">getOrigin</span><span class="p">().</span><span class="n">getName</span><span class="p">()....</span> <span class="c1">// 1</span>
