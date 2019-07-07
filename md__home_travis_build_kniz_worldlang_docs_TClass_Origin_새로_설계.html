@@ -47,12 +47,18 @@
           TClass Origin 새로 설계
         </h1>
 <h3>요구사항</h3><ul><li>Origin 객체라는 것이 나왔고 사실 이것이 Type을 대신하고 있다.</li><li>이제 기존 TClass가 Type을 대신하고 있었으므로 이걸 해결해보자.</li></ul><p>### 1안 TClass를 제거하자.</p><pre class="m-code"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">T</span><span class="o">&gt;</span>
-<span class="k">class</span> <span class="nc">TRTTI</span> <span class="p">{</span>
+<span class="k">class</span> <span class="nc">tRtti</span> <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
     <span class="kt">bool</span> <span class="n">isADT</span><span class="p">()</span> <span class="p">{</span>
     <span class="kt">bool</span> <span class="n">isPtr</span><span class="p">()</span>
     <span class="p">..</span>
     <span class="p">..</span>
+    <span class="n">origin</span><span class="o">*</span> <span class="n">_org</span><span class="p">;</span>
+    <span class="n">oigin</span><span class="o">&amp;</span> <span class="n">getOrigin</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">_org</span><span class="p">;</span> <span class="p">}</span>
+    <span class="n">res</span><span class="o">&amp;</span> <span class="n">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">originMgr</span><span class="o">&amp;</span> <span class="n">mgr</span> <span class="o">=</span> <span class="n">Core</span><span class="o">::</span><span class="n">get</span><span class="p">().</span><span class="n">getOriginMgr</span><span class="p">();</span>
+        <span class="n">_org</span> <span class="o">=</span> <span class="n">mgr</span><span class="p">[</span><span class="n">getName</span><span class="p">()];</span>
+    <span class="p">}</span>
 <span class="p">};</span>
 
 <span class="k">class</span> <span class="nc">Node</span> <span class="p">{</span>
@@ -75,6 +81,7 @@
         <span class="k">if</span><span class="p">(</span><span class="n">sup</span><span class="p">.</span><span class="n">init</span><span class="p">())</span> <span class="k">return</span> <span class="n">rAbort</span><span class="p">;</span>
         <span class="n">sup</span><span class="p">.</span><span class="n">getSubs</span><span class="p">().</span><span class="n">add</span><span class="p">(</span><span class="o">*</span><span class="k">this</span><span class="p">);</span>
         <span class="n">getSupers</span><span class="p">().</span><span class="n">add</span><span class="p">(</span><span class="n">sup</span><span class="p">);</span>
+        <span class="n">tRtti</span><span class="o">::</span><span class="n">init</span><span class="p">();</span>
         <span class="k">return</span> <span class="n">rOk</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">};</span>
