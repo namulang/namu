@@ -46,7 +46,23 @@
         <h1>
           [..]_getMember_컴파일최적화 [
         </h1>
-<blockquote><p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p></blockquote>
+<blockquote><p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p></blockquote><h3>요구사항</h3><ul><li>native wrapper에 의해 공개된 origin객체를 mgd에서 상속받았을 경우 native에서 그 origin 객체를 받아 메소드를 호출했을때 overriding된 mgd의 메소드가 불려질 수 있어야 한다.</li><li>wrapper을 할때 가능하면 메소드의 body를 매크로안에 집어넣지 않도록 하고 싶다.</li></ul><pre class="m-code"><span class="k">class</span> <span class="nc">myClass</span> <span class="o">:</span> <span class="k">public</span> <span class="n">obj</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">WRD_CLASS</span><span class="p">(</span><span class="n">myClass</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span>
+        <span class="n">FUNC</span><span class="p">(</span><span class="n">foo</span><span class="p">),</span>
+        <span class="n">FUNC</span><span class="p">(</span><span class="n">boo</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">foo</span><span class="p">();</span>
+    <span class="kt">void</span> <span class="nf">boo</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">foo</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">def</span> <span class="nl">myObj</span> <span class="p">:</span><span class="o">=</span> <span class="n">myClass</span>
+    <span class="o">=&gt;</span><span class="kt">void</span> <span class="n">foo</span><span class="p">()</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;wow!&quot;</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">myObj</span><span class="p">()</span>
+<span class="n">m</span><span class="p">.</span><span class="n">boo</span><span class="p">()</span></pre><p>#</p>
       </div>
     </div>
   </div>
