@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>[..]_getMember_컴파일최적화 [ | world-doc</title>
+  <title>[..]_getMember_컴파일최적화 getMember의 컴파일 최적화 | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,40 +44,9 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          [..]_getMember_컴파일최적화 [
+          [..]_getMember_컴파일최적화 getMember의 컴파일 최적화
         </h1>
-<blockquote><p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p></blockquote><h3>요구사항</h3><ul><li>native wrapper에 의해 공개된 origin객체를 mgd에서 상속받았을 경우 native에서 그 origin 객체를 받아 메소드를 호출했을때 overriding된 mgd의 메소드가 불려질 수 있어야 한다.</li><li>wrapper을 할때 가능하면 메소드의 body를 매크로안에 집어넣지 않도록 하고 싶다.</li></ul><pre class="m-code"><span class="k">class</span> <span class="nc">myClass</span> <span class="o">:</span> <span class="k">public</span> <span class="n">obj</span> <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-    <span class="n">WRD_CLASS</span><span class="p">(</span><span class="n">myClass</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span>
-        <span class="n">FUNC</span><span class="p">(</span><span class="n">foo</span><span class="p">),</span>
-        <span class="n">FUNC</span><span class="p">(</span><span class="n">boo</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">foo</span><span class="p">();</span>
-    <span class="kt">void</span> <span class="nf">boo</span><span class="p">()</span> <span class="p">{</span>
-        <span class="n">foo</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">};</span>
-
-<span class="n">def</span> <span class="nl">myObj</span> <span class="p">:</span><span class="o">=</span> <span class="n">myClass</span>
-    <span class="o">=&gt;</span><span class="kt">void</span> <span class="n">foo</span><span class="p">()</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;wow!&quot;</span><span class="p">)</span>
-
-<span class="n">m</span> <span class="o">=</span> <span class="n">myObj</span><span class="p">()</span>
-<span class="n">m</span><span class="p">.</span><span class="n">boo</span><span class="p">()</span></pre><h3>[x] 1안 매크로안에 body를.</h3><p>## [x] 2안 이름을 2개.</p><pre class="m-code"><span class="k">class</span> <span class="nc">myClass</span> <span class="o">:</span> <span class="n">publc</span> <span class="n">obj</span> <span class="p">{</span>
-<span class="k">public</span><span class="o">:</span>
-    <span class="n">WRD_CLASS</span><span class="p">(</span><span class="n">myClass</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span>
-        <span class="n">FUNC</span><span class="p">(</span><span class="n">boo</span><span class="p">)</span>
-        <span class="n">OVERRIDE</span><span class="p">(</span><span class="n">_foo</span><span class="p">,</span> <span class="n">foo</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="kt">void</span> <span class="n">boo</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">_foo</span><span class="p">();</span></pre><h3>[v] 3안 이름에 매크로를</h3><ul><li>native 개발자는 virtual 이라고 하더라도 overridable을 지원할지 안할지 결정할 수 있다. (권장은 안함)</li><li></li></ul><pre class="m-code"><span class="k">class</span> <span class="nc">myClass</span> <span class="o">:</span> <span class="k">public</span> <span class="n">obj</span> <span class="p">{</span>
-    <span class="n">WRD_CLASS</span><span class="p">(</span><span class="n">myClass</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span>
-        <span class="n">FUNC</span><span class="p">(</span><span class="n">boo</span><span class="p">)</span>
-        <span class="n">OVERRIDE</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span> <span class="c1">// FUNC매크로는 static타임에 함수 WRD_OVERRIDABLE(foo)가 존재할 경우 오버라이딩으로 판정.</span>
-    <span class="p">)</span>
-
-<span class="k">public</span><span class="o">:</span>
-    <span class="kt">void</span> <span class="n">boo</span><span class="p">();</span>
-    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">WRD_OVERRIDABLE</span><span class="p">(</span><span class="n">foo</span><span class="p">);</span></pre><h4>[x] Q1. WRD_CLASS안에서도 FUNC와 OVERRIDE를 구분해서 적어야하나? 그냥 FUNC로만 적도록 우리가 해줄 순 없을까?</h4><ul><li>overriding을 할것인지는, 사용자가 WRD_OVERRIDABLE을 이름에 붙였다는걸 보고 판단이 가능하다.</li><li>그런데 그 판단은 SFINAE를 통해서만 된다.</li><li>SFINAE는 전처리 이후의 컴파일 타임이다. 즉 이시 점에서는 이미 매크로는 expanding이 되었다.</li><li>따라서, 판단은 가능하지만 판단할 시점에서 메소드를 추가하는건 도저히 불가능하다.</li></ul><h4>[v] 다른 언어는 어떻게?</h4><ul><li>부스트 파이선의 경우 virtual 메소드를 지정했으면 개발자가 wraper 클래스를 만들것을 강제한다.<ul><li>이것보단 낫지.</li></ul></li></ul>
+<h3>요구사항</h3><p>바인딩시 name을 scope에서 일일이 뒤지면 시간이 오래걸린다. 최적화가 끝나면 상수로 scope에 접근이 가능해야 한다.</p><ul><li>즉, 언제 실행했던 그 멤버는 항상 같은 인덱스에 있어야 한다.</li><li>scope의 구성은 &quot;this중복문제&quot; 문서에 정한 구성을 따른다.<ul><li>locals : local scope의 배열</li><li>objects : object scope의 배열<ul><li>대개, 새로운 object가 call되면, object는 이전의 object scope을hidden 처리시킨다.</li><li>그러나 이 object가 자신이 inner일 경우는 outer를 그대로 유지시킨다.</li><li>모든 inner 객체는 outer를 변수로 가지고 있다.</li><li>모든 object는 sub를 변수로 가지고 있다.</li></ul></li><li>globals</li><li>예를들면, 다음처럼 구성된다.<ul><li>locals<ul><li>local[1] : visible</li><li>local[0] : visible</li></ul></li><li>objects<ul><li>object[3] : visible // inner<ul><li>부모클래스의 모든 멤버를 포함해서</li></ul></li><li>object[2] : visible // outer<ul><li>부모클래스의 모든 멤버를 포함해서</li></ul></li><li>------------&mdash; hidden - marker ------------&mdash;</li><li>object[1] : hidden</li><li>object[0] : hidden</li></ul></li><li>globals</li></ul></li></ul></li></ul><h3>고찰</h3><ul><li>새로 추가한게 pushBack이 되면 매번 index가 바뀌게 된다. (앞에 재귀를 많이 돌리면 index가 커짐) 따라서 pushFront가 기본이 되어야 한다. local scope은 대개 이걸로 대체가 가능하다.</li><li>object scope은 언제 실행하던 항상 index구성이 똑 같아야 한다.<ul><li>object의 멤버가 일종의 call을 하려고 하면 (get/set/생성자 모두 포함) 자신을 소유한 owner인 object의 scope 추가를 명령한다.</li><li>object는 scope가 추가 cb이 왔을때 자신의 owner가 있다면 그 owner에 대해 scope추가를 먼저 cb한다.</li><li>지역변수는 owner가 없다.</li><li>method, 변수도 object다.</li></ul></li></ul><blockquote><p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p></blockquote>
       </div>
     </div>
   </div>
