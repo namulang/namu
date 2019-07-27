@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>[v] get의 구현 | world-doc</title>
+  <title>컴파일러는 onGet의 반환형을 타입에러를 감지할 수 있는가 | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,21 +44,10 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          [v] get의 구현
+          컴파일러는 onGet의 반환형을 타입에러를 감지할 수 있는가
         </h1>
-<h3>개념 정의</h3><ul><li>get은 this를 획득 한 후, 객체에 접근하기 전에 호출하는 cb의 일종이다.<ul><li>예) say(void) // 메소드의 접근</li><li>시, get은 메소드의 this를 내보내는 것이지 메소드의 호출이 아니다.</li></ul></li><li>반환된 결과를 this에 재주입한다.</li><li>기본구현은 this를 그대로 반환하는 것이며, 별도의 정의가 없으면 이렇게 되어있는것처럼 동작한다.<ul><li>실제로 메소드를 만들어주지는 않는다. 최적화때문에.</li></ul></li><li>당연히 overriding 되지 않는다. 되어서도 안된다. 반환형은 항상 This 이기 때문이다.</li><li>overriding이 서로 다르기 때문에 ADT만 손에 쥘 수 있는 FRX에서는 c++로 호출이 거의 불가능하다. 자연스럽게 run()을 사용하게 된다.<ul><li>run(Msg(&quot;onGet&quot;)); 을 하면 onGet()이기만 하면 되는 메소드를 찾아 실행한다.</li></ul></li><li>예)</li></ul><pre class="m-code"><span class="n">a</span> <span class="c1">// scope[&quot;a&quot;]</span>
-<span class="cm">/* def a</span>
-<span class="cm">    a onGet(): this</span>
-<span class="cm">*/</span></pre><ul><li>scope에서 객체 a에 접근한 뒤, 이 객체 a를 반환한다. a를 반환하는 부분이 get이다.</li></ul><p>예)</p><pre class="m-code"><span class="n">a</span><span class="p">.</span><span class="n">age</span> <span class="c1">// e.g. in c++, a.getMembers(&quot;age&quot;)</span>
-<span class="cm">/* def age = int</span>
-<span class="cm">    int onGet(): this</span>
-<span class="cm">*/</span></pre><ul><li>객체를 통해 sub객체에 접근하는것 또한, 그 sub객체 중에 &quot;age&quot; 라는 이름을 붙은 것들을 찾아, 그것에게 onGet()을 호출하는 것이다.</li></ul><p>예)</p><pre class="m-code"><span class="n">a</span><span class="p">.</span><span class="n">age</span><span class="p">.</span><span class="n">foo</span> <span class="c1">// foo는 메소드.</span>
-<span class="cm">/* def foo = Method</span>
-<span class="cm">    Method onGet(): this;</span>
-<span class="cm">    float op()()</span>
-<span class="cm">        // 이게 함수 호출</span>
-<span class="cm">        return ...</span>
-<span class="cm">*/</span></pre><h3>알고리즘</h3><ul><li>외부에서 Node::get(n)이 호출되면, 일단 객체를 찾아, 꺼내기 전에 해당 객체에 대해 Refer onGet()을 호출한다.</li><li>Mgd에서도 get(n)을 사용하고 native도 get(n)을 쓸 것이므로 양 쪽 환경에서 동일한 결과가 나오는걸 보장할 수 있다.</li><li>Refer onGet()<ul><li>해당 객체가 onGet()를 호출하는게 아니라는게 포인트다. 외부에서 그 객체에 접근할때 onGet()을 하는거다.</li><li>메소드든, 변수든 객체를 찾으려면 항상 Node::get(n)을 사용한다.<ul><li>scope또한 Node이므로 역시 이에 해당한다.</li><li>Node::get(str name)도 내부에서는 Node::get(n)으로 redirect 시킨다.</li><li>refer::onGet()은 _proxy-&gt;onGet()으로 redirection 되므로 역시 이에 해당한다.</li></ul></li><li>Refer로 반환한다.</li></ul></li><li>Node::get(n)은 받은 refer를 반환한다.</li></ul><h5>최적화</h5><ul><li>일반적으로 함수 호출하려면 객체에 접근해야 되고, 객체의 접근 또한 함수의 호출이 되었으므로 함수 1개분의 호출이 더 늘어난 셈이된다. 속도가 걱정된다면 다음의 안을 생각해볼 수 있다.</li><li>본질적으로는 어떻게 하면 onGet()의 load를 줄일 수 있을지 생각해 보는 것이다.</li><li>최적화는 반드시 모든 개발이 끝난뒤에 소극적으로 적용해나가야 한다. 구조를 해치는 최적화는 안된다. 속도보다는 빠른 생산성과 편의성!</li><li>1안 onGet() 무시<ul><li>객체가 onGet()을 정의하지 않았다면 onGet()을 호출하지 않는다.</li></ul></li><li>2안 FRX에서 호출하는 __frx_get(n) 을 만들고 반환형을 Node&amp;로 한다.</li><li>3안 onGet()안에서 Refer를 local scope에 등록하고 그것에 대한 node&amp; onGet()를 반환한다. Node는 적절한 시점에 local scope을 free할 것이고 그때 같이 해제된다.</li></ul>
+<p>isConsumerable을 static 컴파일 용으로 사용할 생각이라면 그 함수는 null객체인지 여부를 따져서는 안됨. 그리고, 이렇게 될때, refer.isConsumerable()은 _bean.isConsumerable()로 redirect하고, Wrapper는 membervariable인 refer.isConsumerable()로 redirect하면 됨.</p><pre class="m-code"><span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="n">b</span>
+    <span class="nl">get</span><span class="p">:</span></pre><p>이런 문법(overriding만 가능한)은 없음. 지원 안할꺼임.</p><ul><li>그리고 null된 프로퍼티에 별도의 다른 메소드를 넣는 경우 warning 처리.</li><li>왜냐하면 onGet의반환형이 이 프로퍼티가 아니므로 메소드 호출은 영영 불가능.</li></ul>
       </div>
     </div>
   </div>

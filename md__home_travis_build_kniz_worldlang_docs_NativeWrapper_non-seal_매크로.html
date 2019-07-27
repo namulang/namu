@@ -71,8 +71,8 @@
     <span class="kt">void</span> <span class="n">boo</span><span class="p">();</span>
     <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">_foo</span><span class="p">();</span></pre><h3>[v] 3안 이름에 매크로를</h3><ul><li>native 개발자는 virtual 이라고 하더라도 overridable을 지원할지 안할지 결정할 수 있다. (권장은 안함)</li><li></li></ul><pre class="m-code"><span class="k">class</span> <span class="nc">myClass</span> <span class="o">:</span> <span class="k">public</span> <span class="n">obj</span> <span class="p">{</span>
     <span class="n">WRD_CLASS</span><span class="p">(</span><span class="n">myClass</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span>
-        <span class="n">FUNC</span><span class="p">(</span><span class="n">boo</span><span class="p">)</span>
-        <span class="n">OVERRIDE</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span> <span class="c1">// FUNC매크로는 static타임에 함수 WRD_OVERRIDABLE(foo)가 존재할 경우 오버라이딩으로 판정.</span>
+        <span class="n">SEAL</span><span class="p">(</span><span class="n">boo</span><span class="p">)</span>
+        <span class="n">FUNC</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span> <span class="c1">// FUNC매크로는 static타임에 함수 WRD_OVERRIDABLE(foo)가 존재할 경우 오버라이딩으로 판정.</span>
     <span class="p">)</span>
 
 <span class="k">public</span><span class="o">:</span>
