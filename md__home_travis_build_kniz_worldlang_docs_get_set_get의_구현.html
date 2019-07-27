@@ -46,7 +46,14 @@
         <h1>
           [v] get의 구현
         </h1>
-<h3>개념 정의</h3><ul><li>get은 this를 획득 한 후, 객체에 접근하기 전에 호출하는 cb의 일종이다.<ul><li>예) say(void) // 메소드의 접근</li><li>시, get은 메소드의 this를 내보내는 것이지 메소드의 호출이 아니다.</li></ul></li><li>반환된 결과를 this에 재주입한다.</li><li>기본구현은 this를 그대로 반환하는 것이며, 별도의 정의가 없으면 이렇게 되어있는것처럼 동작한다.<ul><li>실제로 메소드를 만들어주지는 않는다. 최적화때문에.</li></ul></li><li>당연히 overriding 되지 않는다. 되어서도 안된다. 반환형은 항상 This 이기 때문이다.</li><li>overriding이 서로 다르기 때문에 ADT만 손에 쥘 수 있는 FRX에서는 c++로 호출이 거의 불가능하다. 자연스럽게 run()을 사용하게 된다.<ul><li>run(Msg(&quot;onGet&quot;)); 을 하면 onGet()이기만 하면 되는 메소드를 찾아 실행한다.</li></ul></li><li>예)</li></ul><pre class="m-code"><span class="n">a</span> <span class="c1">// scope[&quot;a&quot;]</span>
+<h3>개념 정의</h3><ul><li>get은 run()을 호출했을때, 안쪽에서 msg를 순회하기전에 불려지는 cb이다.</p><pre class="m-code"><span class="n">Node</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">Msg</span> <span class="n">msg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">caller</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="n">Refer</span><span class="o">&lt;</span><span class="n">This</span><span class="o">&gt;</span> <span class="n">r</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">get이</span> <span class="err">있다면</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">_run</span><span class="p">(</span><span class="n">onGet</span><span class="p">());</span> <span class="c1">// onGet을 호출한다고 또 run을 타면 안된다.</span>
+        <span class="n">caller</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">get</span><span class="p">();</span>
+    <span class="n">caller</span><span class="p">.</span><span class="n">_run</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+<span class="p">}</span></pre><ul><li>예) say(void) // 메소드의 접근</li><li>시, get은 메소드의 this를 내보내는 것이지 메소드의 호출이 아니다.</li></ul></li><li>반환된 결과를 this에 재주입한다.</li><li>기본구현은 this를 그대로 반환하는 것이며, 별도의 정의가 없으면 이렇게 되어있는것처럼 동작한다.<ul><li>실제로 메소드를 만들어주지는 않는다. 최적화때문에.</li></ul></li><li>당연히 overriding 되지 않는다. 되어서도 안된다. 반환형은 항상 This 이기 때문이다.</li><li>overriding이 서로 다르기 때문에 ADT만 손에 쥘 수 있는 FRX에서는 c++로 호출이 거의 불가능하다. 자연스럽게 run()을 사용하게 된다.<ul><li>run(Msg(&quot;onGet&quot;)); 을 하면 onGet()이기만 하면 되는 메소드를 찾아 실행한다.</li></ul></li><li>예)</li></ul><pre class="m-code"><span class="n">a</span> <span class="c1">// scope[&quot;a&quot;]</span>
 <span class="cm">/* def a</span>
 <span class="cm">    a onGet(): this</span>
 <span class="cm">*/</span></pre><ul><li>scope에서 객체 a에 접근한 뒤, 이 객체 a를 반환한다. a를 반환하는 부분이 get이다.</li></ul><p>예)</p><pre class="m-code"><span class="n">a</span><span class="p">.</span><span class="n">age</span> <span class="c1">// e.g. in c++, a.getMembers(&quot;age&quot;)</span>
