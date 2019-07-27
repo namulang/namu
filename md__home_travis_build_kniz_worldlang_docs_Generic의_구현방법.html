@@ -46,8 +46,16 @@
         <h1>
           Generic의 구현방법
         </h1>
-<ul><li>파라메터화된 타입도 결국은 멤버변수의 일종이라고 치환하면된다.</li><li><pre class="m-code"><span class="n">def</span> <span class="n">A</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span>
-    <span class="n">T</span> <span class="n">t</span></pre></li></ul>
+<ul><li>파라메터화된 타입도 결국은 멤버변수의 일종이라고 치환하면된다.</li><li><p>Stmt는 타입이 들어갈 자리에 scope를 사용해서 scope[&quot;T&quot;]로 바꿔놓기 만 하면 된다.</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="c1">// A[&quot;T&quot;] 는 obj(&quot;T&quot;) 라는 member.</span>
+    <span class="kt">void</span> <span class="n">foo</span><span class="p">()</span>
+        <span class="nl">t1</span> <span class="p">:</span><span class="o">=</span> <span class="mi">3</span> <span class="c1">// AddLocalMember(scope, AssignExpr(CloneExpr(&quot;t1&quot;, scope[&quot;Int&quot;]), CloneExpr(scope[&quot;Int&quot;], {3}))</span>
+        <span class="nl">t2</span> <span class="p">:</span><span class="o">=</span> <span class="n">T</span><span class="p">()</span> <span class="c1">// AddLocalMember(scope, AssignExpr(CloneExpr(&quot;t2&quot;, scope[&quot;T&quot;]), CloneExpr(scope[&quot;T&quot;], {생성자인자}))</span>
+
+        <span class="nl">T</span> <span class="p">:</span><span class="o">=</span> <span class="mi">33</span>  <span class="c1">// 컴파일에러.</span>
+                <span class="c1">// parameterizedType은 이름 경쟁에서 우선순위를 가져야 한다.</span>
+
+    <span class="nl">t1</span> <span class="p">:</span><span class="o">=</span> <span class="mi">3</span>
+    <span class="nl">t2</span> <span class="p">:</span><span class="o">=</span> <span class="n">T</span><span class="p">()</span></pre></li></ul>
       </div>
     </div>
   </div>
