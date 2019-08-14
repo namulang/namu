@@ -42,6 +42,9 @@
 ## 개념
 
 ### Prototyping 기반
+
+
+
 ### Origin 객체
 ### 정적 타입
 ### C-REPL
@@ -318,6 +321,76 @@
 
 
 
+#### static
+
+##### 1
+
+- World에서 static 함수는 앞에 share 키워드를 붙이면 된다. 일반인에게는 더 친숙할것이라 본다.
+
+- 예제
+
+  - class A
+    - int age;
+    - share int static_age;
+    - int print(int a)
+      - ...
+    - share int static_print(int a)
+      - int age
+      - share int static_age = 5
+      - ...
+  - A a
+  - A.static_age == a.static_age
+  - A.static_print(2)
+  - a.static_print(2)
+  - a.print(5)
+
+- 구현방법?
+
+- 고찰내용
+
+  - static 함수는 필요하다. --> random() 같은, 함수만 제공하고 싶은 경우가 있다. 
+
+  - 일반 method와 구분이 되어야 한다. --> 기능적으로는 method처럼 써놓고 안에서 this를 사용하지 않는다면 문제될 것은 없지만 외부 사용자들이 보았을때 객체를 생성해서 method로 호출해야 하는지, 객체 없이 바로 호출 할 수 없는지 분간이 가야 하기 때문이다.
+
+  - 1안 글자를 덧 붙인다.
+
+    - 1-1안 static을 그대로 사용한다.
+      - class MyModule
+        - static int random()
+          - return ... ...;
+    - 1-2안 share를 사용한다.
+      - class MyModule
+        - share int random()
+          - return .....;
+        - share int age
+        - int obj_age;
+        - //int age --> 같은 클래스에 2개를 정의할 수 없다.
+        - share int add(int new)
+          - share int prev = 0
+          - return prev += age + new
+        - //share int add(int new) --> share를 적으면 에러다. 안에 객체의 변수에 접근하니까.
+        - int add(int new)
+          - return obj_age += new
+
+  - 2안 글자를 덧붙이지 않고, 기호나 형태의 변형을 통해서 static이라는 걸알 수 있게 한다.
+
+    - 2-1안 
+
+  - 1안
+
+    - 1 = static
+    - 2 = keep (매 함수호출시마다 이 값을 공유하므로)
+      - share를 쓰자는 안도 있었지만 static 멤버변수도 어떻게 보면 "공유" 자원으로 볼 수 있기 때문에 share와 혼동이 있을 수 있다.
+
+  - *x 2안 키워드를 앞에 두는 방식이 아니라 클래스명을 두는 식으로 한다.*
+
+    너무 선언문이 길어진다. 
+
+    - 1 = int MyClass.static_value = 5
+    - 2 = int Me.static_value;
+      - 반대의견1 - 이 변수는 method에 속한 것이 아니라 블록문에 속해 있어야 한다. 그리고 블록문을 식별자로 지정할 수 있는 방법은 없다.
+      - 찬성의견1 - c++도 static 변수는 메소드에 속하게 한다. 굳이 블록문에 한정할 필요가 있는가?
+
 
 
 
@@ -527,6 +600,301 @@
 
 
 ### scope확장
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 구현과 디자인
+
+### backbone
+
+#### prefix는 NE_ 대신 WRD를 사용한다.
+
+
+
+#### Msg
+
+##### Msg클래스는 WRD_CLASS를 써야한다.
+
+- Thing에서 상속받은 구체클래스다.
+- instantiate()는 반환형이 Instance부터 가능하다. 
+- **[v] 1안 값으로 반환하는 경우에도 전방선언은 유효하다.**
+  \#include <iostream> using namespace std;  // A.hpp class B; class A { public:     B foo(); };  // A.cpp class B { public:     int age; };  B A::foo() {     return B(); }  int main() {     A a;     a.foo();     return 0; }  // compile ok. 
+
+
+
+##### Msg의_마지막_위치에_Thisptr를_넣어야_한다?
+
+- 결론
+  - 2안 thisptr은 배열에 넣지 않는다. 모든 Msg는 별도의 TStrong<Object> thisptr라는 멤버변수를 갖게 된다.
+- 고찰내용
+  - Msg Args의 첫번째 위치에 넣는 방법도 생각해볼 수 있겠지만 그래서는 안된다. 이유는 이렇다.
+    - \1. thisptr는 도중에 변경된다. 런타임에서만 확정된다. 
+    - \2. 아무 생각없이 thisptr를 msg에 넣게 되면 msg가 resize가 일어나면서 매번 퍼포먼스 로스가 발생한다.
+    - \3. 그러므로 thisptr를 msg에 넣어야하는 주체인 Expr인 Msg를 만들면서 미리 thisptr를 넣기 위한 여분의 공간을 1개 끝에 더 만들어서 넣는다. 그리고 Expr은 이 부분을 실행시킨다.
+  - 고찰을 통한 요구사항 추출
+    - \1. args와 thisptr가 하나의 배열에 같이 담겨져 있어야 한다. 다시말하면 thisptr또한 arg로써 다뤄줘야 한다.
+    - \2. static메소드에 thisptr가 포함된 msg가 들어가도 동작이 가능해야 한다. 즉, static 메소드는 args와 thisptr가 서로 구분이 가야한다. thisptr는 args의 일부로써 취급받지만 때로는 평범한 arg와는 선을 그어야 한다.
+    - \3. 런타임에 thisptr가 추가되거나 set 될 수 있다. 이때 resize가 발생하지 않도록 해야 한다.
+    - \4. 사용자는 Msg를 Object.run()에게 던질경우, 이 결과가 InstanceMethod에게 도달할 것인지,  static메소드에게 갈것인지 몰라도 되야 한다. 따라서 Msg는 런타임에 thistpr가 추가될 수 있게 된다.
+  - [x] 1안 thisptr도 배열에 넣는다. 
+    - thisptr 조차 하나로 arg로 판단하므로 static메소드는 thisptr가 없으면 에러를 내뱉는다. 
+    - 마찬가지로 InstanceMethod도 thisptr가 없으면 에러가 된다
+    - 사용자는 Object.run(Msg)를 보낼때 미리 이 Msg는 thisptr를 필요로 하는지 아닌지를 알고 있어야 한다. 안 그러면 resize가 발생한다.
+      - Msg는 기본적으로 항상 thisptr을 위한 size+1를 만들어놓는 다면?
+        - 되기야 하겠지. 하지만 근본적으로 배열에 하나로 담았을때의 merit이 없다는 걸 알게되었다. 2안 참조. 그리고 resize+1 하는 것보다 차라리 그럴바에야 물리적으로는 다른 멤버변수로 나뉘어져 있어도 가상적인 배열에서는 하나로 묶여져있게끔 하는 것도 방법이 될 수 있다.
+    - [x] 1안 thisptr을 배열의 앞에 넣는다.
+      - 만약 thisptr가 앞에 있게 된다면 이 msg가 static 메소드에 도달한 경우 에러가 발생하게 된다. 무슨 말이냐면 굳이 앞에 넣을 거라면 내가 msg를 보낼 메소드가 static인지 아닌지를 매번확인해야 한다는게 된다.
+        - [v] 반론: 그 말은, 보낼 메소드가 static인지 아닌지 상관없이 일단 thisptr 넣고 보겠다는 이야기로 들린다. 그러나 생각해보자. 만약 static 메소드에 thisptr를 넣어서 보내게 된다면 static 메소드는 이걸 thisptr가 아니라 추가된 인자로써 받아들일 것이다. 결과적으로 함수 호출이 실패된다. 왜냐하면 static메소드 입장에서는 자기가 알지 못하는 인자가 뒤에 하나더 붙어있는 것이기 때문이다.
+        - 이 말은 managed에서의 메소드 호출은 항상 이 함수가 static인지 , 어떠한 인자를 가지고 있는지를 if-else,로 판단해야 한다는 것이다. 사용자가 항상 이렇게 판단해서 올바른 msg를 구성해서 보내야지만 메소드가 호출된다.
+        - 또한 일반 메소드들은 별다른 언급및 코드가 없어도 인자리스트 맨 앞에 thisptr가 들어가있게 만들어야 한다.
+        - [x] Object.run(Msg)를 하는 경우에는, 알아서 thisptr를 넣도록 했었다. 만약 thisptr를 args[n]으로 바꾼다면 native 환경에서 Object.run()을 하는 경우에는 사용자는 static인지 아닌지 구분을 할 필요가 없게 된다.
+          - [v] 그러나 이 편의방법을 사용하는 경우, 어쨌거나 args.resize()가 일어날 가능성이 있다. 이걸 막기 위해서는 처음부터 Object.run()을 호출하기 전에 사용자는 static인지를 확인 한 뒤, static이 아닐 경우에는 resize(args.size() + 1)을 해야만 하는 것이다.
+  - **[v] 2안 thisptr는 배열에 넣지 않는다.**
+    - 모든 메시지는 thisptr을 소유한다. 특별취급한다. args에 들어가지 않는다. 모든 Msg는 thisptr 만큼 메모리가 늘어난다.
+    - 이 방법을 택한 근본적인 이유는 thisptr를 배열에 넣게 됨으로써 가지는 merit이 없기 때문이다. 
+      - thisptr가 배열에 들어가게끔 하는 이유는 뻔하다. 인자의 하나로써 일반적인 로직 하나로 해결하겠다는 것. 
+      - 주된 사용처는 Method에서 인자리스트가 제대로 들어있는지 to<T>()를 통해서 validation을 하는 곳일 것이다. 
+      - 하지만 thisptr가 워낙에 특이한변수이다보니 이곳에서조차, thisptr일 경우에는 thisptr->func(args)처럼 특수한 처리를 해줘야만 한다. 
+      - Thisptr != Object& 이다. args 배열은 Object&라는 관점에서만 바라보기 때문에, thisptr로써 주어진 object&인지, 인자로써 주어진 object& 인지 구분이 쉽지 않고, 대부분의 상황에서 이 구분을 필요로 했다. 다시말하면 그 일반적인 로직의 다양성이 적다는 것이다. (기껏 하나의 배열로 합쳐봤자 쓸데가 없다는 얘기)
+      - 되려 분리시켰을때의 편의성이나 static/instance메소드를 특정하지 않고도 메소드를 보낼 수 있는 점등 장점이 더 많다.
+
+
+
+##### Msg의인자는Method에const로넘어가면안된다
+
+- \#복사연산_시나리오 를 참고.
+  - 요약하면 Refer는 생성시에 const 여부가 결정되며, const 타입의 일부이므로 한번 const Refer이면 계속 const Refer여야 한다.
+- 일반적으로 생각했을때는 msg의 내용이 변하면 안된다고 볼것이다. 그러나 msg가 처리되는 시나리오와 method로 넘어가는 과정, refer클래스와 const 정책을 모두 고려하면 const로 가면안되고, 각 인자가 const Refer인지 아닌지를 정하게끔 해야 한다.
+- 먼저 const 정책문서를 보면 알겠지만 Refer는 2가지 형태의 const를 갖는다. 하나는 native에서만 들어나는 const고, 하나는 managed,nateve모두 들어나는 const인, isConst()다. 둘중 하나라도 const가 되어있다면 get() const를 호출했을때만 유의미한 값이 나온다. const를 결정하는 것은 사실상 Refer클래스가 담당하는 것이며, 원본은 const가 아니라도 Refer는 그것을 const 취급할 수 있다. Refer는 const여부는 생성자에서 정해지며, 소멸될때까지 const는 계속 유지된다. 따라서 const라는 건 궁극적으로는 const ptr라고 불러야 한다.
+  - class A 
+  - class B : A
+  - Refer<A> a = new B()
+  - const Refer<B> b // b는 C++적인 const만 적용되어있다. b.isConst()는 false다.
+  - const Refer<A>& a1 = a; // ok
+  - b = a1; // err. b는 c++ const객체이므로 assign이 안된다.
+  - Refer<B> b1 = (const B*) new B();
+  - b1.isConst() // true
+  - b1 = a1; // B가 sharable인가 occupiable인가 따라 다르다. 
+- occupiable sharable 문서를 또 보면 알겠지만 isOccupiable은 metaclass에 저장되어있고, pretype을 제외하면 사용자 클래스는 모두 sharable이다. occupiable이냐 sharable이냐의 동작상 차이는 오직 Refer클래스에 복사생성 및 operator=()에만 존재한다. sharable이면 Refer객체인 rhs를 그대로 복사하며(isConst()여부도) occupiable이면 deepcopy를 시전한다. 그것뿐이다.
+- msg의 args는 Node에 대한 배열이다. 이 Node에는 다른 expr이 들어갈 수도있고 Integer가 그대로 박혀있을 수도 있다. 후자를 프로그래밍 언어에서는 리터럴상수라고 한다. **리터럴상수로 된 경우는 얼마나 메소드를 수행하던 그 인자값이 항상 동일해야한다.**
+- 메소드는 주어진 인자를 최종적으로 cast()함수를 사용한다. cast의 반환값은 refer로, 바로 반환이 가능한 케이스(업캐스팅, 다운캐스팅)은 Refer객체를 바로 만들어보내고, 그게 아닐 경우는 생성자를 호출하여 객체를 복사한다.
+- 이 문제가 생각하기 까다로운 이유는 2가지 상태값을 갖는 4가지 팩터들을 각각 모두 고려해야하기 때문에 총 16가지 케이스가 나오기 때문이다. 4가지 팩터는 앞서 설명한 1. const인가 2. occupible인가 3. 메소드안에서 write를 하는가 4. 인자가 리터럴상수인가
+- 먼저, 본격적으로 시나리오들을 검토하기 전에 요구사항들을 추려보겠다.
+  - \1. 모든 케이스에서 가능한가 아닌가를 따지는 것이 아니다. 어떤 케이스는 연산이 불가능해야한다. (예, 인자를 const로 줬는데 메소드는 write를 하는 케이스) 이 경우, 불가능하다는 것이 사용자에게 고지(컴파일에러등)될 수 있으면 문제는없다.
+  - \2. 다른 프로그램과 비교했을때 예상범위 내의 결과가 나와야 한다.
+
+
+
+##### Message는_name_thisptr_args를_모두_하나의_Array로_구성한다
+
+- Message안에 mutable로 들어간다.
+- \#Method는_ThisPtr이_꼭_필요하다_어떻게_얻을_수_있을까  참고
+- 모든 Object는 call()안에서 expr.thisptr이 비어있다면 자신의 것으로 채워넣고, call()이 끝나기 직전에 다시 비워놓아야 한다.
+- me는 항상 자신으로 갱신 한다.
+- 고찰내용
+  - 핀포인트 물음
+    - Method는 Object에게 소유한 것인가? Class에게 소유한 것인가?
+    - Object 소유가 아니라면 과연 Method가 thisptr를 반환할 당위성이 있는가?
+    - Object 안에 멤버변수인 Object는 과연 Object의 소유인가?
+  - 고찰을 통한 팩트 도출
+    - \1. thisptr가 필요한 순간은 Object에서 Method로 call을 redirection 하는 순간일 뿐이다. 왜냐하면 Method는 Object에 속한것이 아니며, call()은 인자리스트가 fix되어있기 때문에 Method에게 Object자신의 thisptr를 전해줘야만 하기 때문이다.
+    - \2. Method의 thisptr는 실행중인 상태에서만 조회가 가능하다. 당연히 왜냐하면 Method는 모든 객체의 것이니까.
+    - \3. 콜스택에 함수가 들어가있는 모든 함수는 자신의 thisptr를 알려줄 수 있어야 한다.
+      - 예) A함수 실행 -> 안에서, B객체의 C함수를 호출한 상황일때, C함수 안에서 A함수의 getObject()를 했을때 
+  - v 1안 모든 Message 객체는 .thisptr라는 멤버변수를 두고 거기에 담아둔다. 
+    - 반대의견
+      - Message는 Expression이 하나씩 소유하고 있음을 생각해보면 답이 나온다. Expression은 Method가 가지고 있으며 Method는 시스템에 1개다. Expression도 한개다. 고로 그 안의 Message도 한개다. 그런데 thisptr는 클래스는 같아도 여러개의 객체가 나오므로 Message에 넣어질 thisptr는 여러개가 된다. 따라서 모든 Message마다 thisptr를 갖고 있는 것은 낭비일 것이다.
+      - 만약 World에서 Object가 아닌 Method.getName()을 한다고 해보자. 이 알고리즘이 제대로 될것인가?
+        - Method도 Object이다. 따라서 Expr이 처음 call로 전달되기 직전에 만나는 Object가 자신의 thisptr를 채워넣으면 된다.
+
+시나리오
+
+- 작성
+  - IDE에서 사용자가 메소드를 작성한다. 컴파일되고 Wrd는 이 메소드가 static인지 아닌지, 인자는 뭐가 필요한지 알게된다. IDE에게 그것을 고지하고 IDE는 인식한 뒤, 사용자에게 그것을 고지한다. 사용자가 잘못된 인자를 Method에 넣거나, 일반메소드를 static메소드처럼 사용한 경우, IDE는 그것을 컴파일러에게 넘기고, 컴파일러는 CREPL로 이걸 처리하면서 에러를 뿜어낸다. 사용자는 에러를 보고 올바르게 고친다. 사용자가 제대로 작성한 메소드호출 코드를 작성하면 Wrd는 메소드를 호출하기 위한 msg를 생성할때 이 Method가 static이 아니라는 사실을 알게된 순간 첫번째 element를 this를 위해 추가로 size+1하여 생성하고 앞에서부터 인자를 채워넣는다. (this는 맨 뒤에 위치하게 된다) 
+- 실행
+  - Managed
+    - Wrd는 Object에 먼저가서 사용자가 어떤 member를 가져가길 원하는지 질의해서 찾아낸다. 그리고 methodcallstmt는 msg 인자 맨 뒤에 caller(= this)를 넣고 Method.call(msg)을 수행한다. 수행이 끝나도 msg 맨 뒤의 thisptr는 그대로 유지한다.
+  - Native
+    - 사용자는 들고있는 Method가 isStatic()으로 확인 한 후, Msg를 생성하여 인자를 채워넣고 Method에 대한 Object를 맨 뒤에 넣은 뒤, call(msg)를 호출하거나
+    - call(thisptr, msg) 버전을 호출한다.
+
+- 고찰내용
+  - Msg는 const가 되어서는 안된다. --> #Msg의인자는Method에const로넘어가면안된다
+  - 따라서 모든 msg 마다 추가적은 thisptr를 담아야한다는 메모리감소만 감수한다면 이렇게 할 수 있다. 장단점을 비교해보자.
+  - 장점
+    - this도 msg의 한 인자로써 일반적으로 취급할 수 있다는 점
+    - this를 method에 주입하는 방법이 밖으로 들어났으므로 native에서도 Method에다가 호출이 가능하다는 점
+  - 그럴 필요가 있는가?
+    - Msg가 전달될때 첫번째 인자는 thisptr이 되어야 할까?
+  - 1안 Message : public Array {
+    - [0] : thisptr
+    - [1] : name
+    - [2] : arg[0]
+    - [3] : arg[1]....
+    - 그러나 이렇게 하면 getArguments() 같은 걸 만들 수 없다. 고로 Chain이 되어야 하며, 추가적인 비용으로 될 것이다.
+  - 2안 그대로 유지한다.
+    - class Message
+      - string name
+      - TStrong<Node> thisptr
+      - Array args
+  - 실패한다. 애초에 msg에 thisptr가 들어갈 수 없다.
+    - v Msg는 외부에서 주어지는 것이다. 그러니 call(const Msg&) 로 들어갈 가능성이 있다?
+      - 모듈안에서 인자의 값이 수정되어야하는 경우는 어떠한가?? 예를들면
+        - class MyModule : public Object {
+          - Integer& foo(Integer& origin) {
+            - origin++;
+            - return origin;
+          - }
+        - }
+        - class Wrapper : public Func {
+          - void execute() {
+            - thisptr->fptr(args[0].to<Integer>()); // args[0]에는 Expr이 들어있을것이고, 그것은 scope["origin"] 을 수행할 것이다.
+          - }
+        - }
+      - 따라서, 모듈안에서 인자가 수정되는 경우에도 msg자체가 변경되는 것은 아니다. 따라서 call(const Msg&)는 정당한 설계라고 봐야 할것이다. 따라서 msg안에는 thisptr가 들어가서는 안된다.
+  - 단점
+    - 메모리 사용량 증가
+
+##### 메시지를 받을 수 있는 모든 것은 World에 visible 하다.
+
+- 모든 것은 객체다. 하지만 World에서 더 중요한 것은 Message다.
+
+- Message란 함수호출을 위한 의지를 의미한다. 
+
+- 객체는 함수와 자기의 변수를 가지고 있다.
+
+- Object는 객체다. 고로 함수가 존재하고 메타클래 Class<Object>는 각 함수에 대한 Function을 가지고 있으므로 이걸 통해서 호출이 가능하다. 
+
+- 하지만 Object 자체는 메시지를 받을 수 없다. 
+
+- 이말은, World 개발자는 Object의 함수를 간접적으로 사용하는 것은 가능할지라도(Class<Object>().call("")을 통해서..) Object를 직접 Reference로 가리키던가 Node화 시키는 것은 불가능하다는 것이다.
+
+- 클래스, 함수도 Message를 받을 수 있다. 그러므로 World개발자가 조작할 수 있다.
+
+  - class A
+
+    - void foo(int b)
+
+  - A.foo.getName()
+
+  - A a
+
+  - a.foo(3) // a.foo.call("foo", [int(3)]) 의 축약버전이다.
+
+    
+
+##### 하위 Node로의 매시지 전파
+
+- World로 call("foo", {Integer(5)}) 가 들어왔을때, 이걸 해독하여 foo(int)를 호출할 수 있도록 해주는것이다.
+
+- Node::call(string name, args[])
+
+  - for m in members
+    - if m.getName() == foo
+      - m에게 나머지 messgage를 맡긴다.
+      - 만약 message가 foo.getName() 일 경우에는 m의 getName()이 호출되는 것이다.
+
+- 월드 코드 "foo[0].getManager().getName()" 가 있을 경우, 어떤식으로 진행되는가?
+
+  - 파서가 코드블럭을 만들어내면 끝나는 작업이다.
+  - foo, [0], getManager (), getName () 이렇게 끊는다. 
+  - Statment[]를 생성한다.
+    - Statement6
+      - Statement5
+        - Statement4
+          - Statement3
+            - Statement2
+              - Statement1
+                - this
+                - "foo"
+              - "[]"
+              - {0}
+            - "getManager"
+          - "()"
+        - "getName"
+      - "()"
+  - 위의 statement가 실행한다" --> 안되면 에러, 되면 반환형이 손에 쥐어질 것이다.
+
+- 메소드 또한 Class의 일종으로, Method를 가질 수 있다. 따라서 World코드 마지막에는 Method.call() 대신 Method.execute()를 하지 않으면 무한 재귀를 돌게 된다.
+
+- 인터프리터는 파싱한게 함수호출임을 알 수 있으며, 마지막에는 반드시 Method.execute(msg)로 끝날 수 있도록 코드블럭, 즉 Expression을 구성해야한다.
+
+- 고찰내용
+
+  - call("()") 로 체크한다는 것인데, 이게 redirect하는 native함수는 무엇인가? 만약 그게 만약 execute()라면 World코드로 call("execute")를 한경우는 어떻게 되는가
+
+    - World에서 작성한 함수는 C++에서 호출하려면 "World"의 방법대로 호출해야 한다.
+      - 즉 call("execute")를 하면 ExecuteFunction()이 실행된다는 것이다.
+    - 논리적으로 불가능하지 않다. 다만 Native개발자는 "()"와 매칭되는게 execute라는 사실을 인지하고 있어야 한다.
+
+  - 재귀가 발생한다
+
+    - Method는 객체가 되어야 한다. 이게 나중에는 함수포인터 내지는 콜백으로 기능하게 될 것이기 때문이다. Reference(Method) 같은게 반드시 있어야 한다.
+
+    - 하지만 그렇게 되면 문제가 되는데 Method에도 함수가 존재하게 될 것이고, execute()는 메소드를 실행시킬 함수가 될 것이다. 그렇게되면 메소드를 실행하는 순간 Method->executeMethod->executeMethod->...가 반복되게 된다.
+
+      - 1안 종말메소드 를 만든다.
+
+        - 종말메소드는 객체가 아니다. 주어진 인자를 무조건 사용해서 동작1개를 수행한다.
+        - 이들은 일반적인 method와 다르게 주어진 msg를 판독하는 기능이 존재하지 않는다.
+        - 문제점
+          - 이후 TClass<T> 매크로로부터 생성되는 모든 메소드들은 자신 안에 Member로 또하나의 종말메소드들을 다 갖게 되버린다.
+          - 그리고 함수가 실행되는 절차도 길어지게 된다.
+
+      - 2안 위와 같은 문제를 야기시키는게 execute 뿐이라면, 해당 코드만 특화시킨다.
+
+      - v 3안 재사용된 종말메소드
+
+        - Method 클래스에 execute를 종말메소드로 만든다. 종말메소드는 일반적인 메소드 클래스와 달리 어떠한 자식Node도 없다.
+
+        - execute종말메소드는 call()시, msg를 판독하지 않고, 바로 execute(Args&)를 부른다.
+
+        - Native함수가 실행되는 최소시작점은 execute(Args&) or execute() 다.
+
+        - 매크로로 expand된 클래스들은 execute(Args&)를 override해서 주어진 인자들을 풀어서 최종 메소드로 redirect 하는 코드를 만든다. --> _onExecute(Integer&, String&)
+
+        - 장점
+
+          - 종말메소드는 구현파일 안쪽에 감출 수 있다.
+
+          - 기존 로직 수정이 거의 없고 예외처리가 존재하지 않는다.
+
+            
+
+##### Msg의인자는Method에const로넘어가면안된다
+
+- \#복사연산_시나리오 참고
+- \1. Native(Wrd Frx)에서는 const Refer나 Refer<const T>나 동일하다.
+- \2. nonconst -> const 는 ok이지만 const -> nonconst는 안된다.
+- 고로, const msg&로 넘어오게 되면 msg의 모든 인자에 대해 to<T> const()만 써야 하며, const Refer로만 받을 수 있다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
