@@ -410,8 +410,194 @@
 
 
 
-
 ### 컨테이너
+
+#### 기본
+
+[][v] Container 기본
+
+- 요구사항
+  - Range Based For 를 지원해야 한다.
+  - Container는 Object이다.
+  - Object만 담을 수 있어야 하는가? Array<int> 같은 건 바로 안되나? --> 안된다.
+  - type T 특화는 어떻게 이루어지는가? --> 기존 to<T>, to() 조합해서 써라.
+    - Weak<Node> get()을 하면 사용자가 귀찮아진다.
+    - 귀찮지만 어쩔 수 없다. 여러 타입이 한 Array에 안에 들어가려면 감수해야 한다. 대신 이걸 cast하는 방법에 대해서 논의해보자.
+    - v 1안 기존의 to<T>() or to(Class&) 를 조합해서 쓰라고 한다.
+      - arr[3].to(Classizer<int>())    ||    arr[3].to<int>();
+    - x 2안 to용 get을 만들어준다
+      - arr.getT<int>(3);
+  - 
+  - 구체클래스에 대한 Container를 지정한 경우는 Weak, Bind에서 자유로워져야 하나? 아니면 모두 Bind에 묶인채로 쓰라고 해야 하나? --> 모두 Bind에 들어간다.Statement는 
+- 논리의 정리
+  - Container의 목적은 월드에서 사용하기 위한 목적이다. 이게 가장 중요한 점이다. 물론 World는 Native와 양쪽이 통해있으므로 이것도 고려해야 한다.
+  - Array<int>는 안된다. 월드 목적이므로 Node이상부터 가능하다.
+  - Element의 타입은 어디까지 허용되나
+    - v 1안 Container의 원소는 무조건 Bind<Node>다. 자바스타일.
+      - 월드에서 사용할 수있어야 한다. 파서가 코드블럭을 만들때를 생각해보자. 1번은 쉽게 가능할 것이다. Array객체를 만들기만 하면 된다.
+        - 물론 Native에서는 사용자가 만든 Array로부터 타입T특화를 사용하는 방법이 난감할 것이다.
+      - 2번이라면 인터프리터는 모든종류의 사용가능한 조합을 들고 있어야 한다? --> 그렇지 않다. 월드는 배열에 타입이 없다. 자바스타일이다. 따라서 Array<Bind<Node>> 만 사용한다는 것이다.
+      - 만약 Native에서 Array<Integer> 같은게 있다고 하자. 월드는 이걸 인식할 수 있는가? 
+        - 인식할 수 있다.
+        - 하지만 이걸 사용할 수 없는게 Array에는 Integer외에도 다른 것도 공존할 수 있어야 하기 때문이다. 따라서 Array는 Bind<Node>가 맞다.
+        - get(n).to(int) or arr[3].to<int>() 처럼 가야 한다. 
+    - x 2안 사용자 정의에 따라서 native에서는 Array<Integer> 같은 것도 사용할 수 있게 하자
+  - get()의 반환형은 Bind<Node>가 아니라 Node&가 된다. 왜냐면 항상 Element가 Bind<Node>이므로. 조금 편해졌을 것이다. 
+- class Iteratable {
+  - virtual const Result& move(int step) = 0; // step can be negative
+  - virtual Node& get() = 0;
+  - virtual bool isEnd() const = 0;
+- }
+- class Iteration : public Thing { // iteration is invisible
+  - Iteration() {}
+  - Iteration(Container& owner) : _cont(owner) {}
+  - Container& getContainer() { return *_cont; }
+  - Weak<Container> _cont;
+- }
+- class Iterator : public Object { // Iterator is visible
+  - virtual const Result& move(int step) {
+    - return _way->move(1);
+  - }
+  - This& next() {
+    - move(1);
+    - return *this;
+  - }
+  - This& operator++(int n) { return next(); }
+  - This operator++() {
+    - This to_return(*this);
+    - next();
+    - return to_return;
+  - }
+  - This& prev() {
+    - move(-1);
+    - return *this;
+  - }
+  - This& operator--(int n) { return prev(); }
+  - This operator--() {
+    - This to_return(*this);
+    - prev();
+    - return to_return;
+  - }
+  - bool operator==(const This& rhs);
+  - bool isEnd() const {
+    - if(_way->isNull()) return true;
+    - return _way->isEnd();
+  - }
+  - bool operator bool() {
+  - }
+  - Node& operator->() { 
+    - if(_way->isNull()) return nulled<Node>();
+    - return _way->get();
+  - }
+  - Bind<Iteration> _way;
+- }
+- class Containable {
+  - virtual const Result& insert(Iterator e, const Node& newone) = 0;
+  - virtual Node& get() = 0;
+  - ..
+- }
+- class Container : public Object, public Containable {
+  - int _length;
+  - template <typename E, typename Lambda>
+  - const Result& each(Lambda onEach) {
+    - for(Iterator e=getStart(); e ; e++)
+      - E& casted = e->to<E>();
+      - if(casted.isNull()) continue;
+      - if(onEach(casted) == ConsumedSuccessful)
+        - return ConsumedSuccessful;
+    - return Success;
+  - }
+  - virtual Iterator getIterator(int n);
+  - Iterator getStart() { return getIterator(0); }
+  - Iterator getEnd() { return getIterator(_length); }
+  - int getLength() { return _length; }
+  - int getLastIndex() { return _length - 1; }
+  - Node& operator[](int n) { return get(n); }
+  - virtual Node& get(int n) = 0;
+  - const Result& set(int n, const Node& rhs) { return set(getIterator(n), rhs); }
+  - virtual const Result& set(Iterator e, const Node& rhs);
+  - const Result& insert(int n, const Node& rhs) { return insert(getIterator(n), rhs); }
+  - const Result& insert(int n, const This& rhs) { return insert(getIterator(n), rhs); }
+  - 
+  - virtual const Result& insert(Iterator e, const Node& rhs);
+  - const Result& push(const Node& rhs) { return insert(_length-1); }
+  - const Result& enq(const Node& rhs) { return insert(0, rhs); }
+  - const Result& pop() { return remove(length-1); }
+  - const Result& deq() { return remove(0); }
+  - const Result& remove(int n) { return remove(getIterator(n)); }
+  - const Result& remove(Iterator e);
+- }
+- class List : public Container {
+  - **friend** class ListIteration : public Iteration {
+    - ListIteration(List& owner) : Super(owner) {}
+    - virtual const Result& move(int step) {
+      - if( ! e) return NullPointerException;
+      - List& list = getContainer().to<List>();
+      - if(list.isNull()) return NullPointerException;
+      - Datum* head = list._head;
+      - if( ! head) return NullPointerException;
+      - while(step) {
+        - if(step-- > 0)
+          - if( ! e) return AbortActionWarning;
+          - e = e->next;
+        - } else {
+          - if(e == head) return AbortActionWarning;
+          - e = e->prev;
+        - }
+      - }
+      - return Success;
+    - }
+    - virtual bool isEnd() const = 0;
+    - Datum* e;
+  - }
+  - struct Datum {
+    - Datum* prev;
+    - Datum* next;
+    - Bind<Node> value;
+  - }
+- }
+- 검색
+  - wbool has(const T&) const;
+  - windex find(const T&) const;
+  - windex find([](const T& elem) {...});
+
+
+
+#### deepclone() 이 있어야한다
+
+- Container는 사실상 Array<TStrong<T>> 이기 때문에 그냥 clone() 하게 되면 같은 T를 공유하는 shallow copy가 된다.
+
+
+
+##### Cell과 Array는 차이가 없다.
+
+- Array는 Cell에서 remove, insert를 빼고, setElement로 대체한것이다. 와... 이걸 5년동안 눈치를 못채다니..
+
+
+
+
+
+
+
+
+
+#### 시퀸스
+
+##### Sequence 기본
+
+- 기호 {} 를 사용한다.
+- Sequence = {2*n+1 | 3...10}
+- {n|3...10} == {3...10}
+- {1...5} == {5}
+
+
+
+
+
+
+
+
+
 #### 배열
 ##### 1
 -   int[] a = {0, 1, 2} // Array는 length만 있다. size는 눈에 보이지 않음.
@@ -419,6 +605,107 @@
 -   _//void(int)[4] a = {}_
 
 
+
+
+
+#### Chain
+
+##### 기본
+
+- 배열1과 배열2가 있을때 이 둘을 chain해서 배열1의 원소와  배열2의 원소를 모두 가진것처럼 보이는 배열을 만들수 있어야 한다. 
+  - 예) Chain a, b
+  - a.chainFront(b)
+  - b.push(5)
+  - a.getLength() == 1 // O
+  - a[0] == 5 // O
+  - a.push(25)
+  - a.getLength() == b.getLength() // X
+  - a[0] = 27
+  - b[0] == 27 // O
+  - a.liberate(b)
+  - a[0] // 25
+- List건, vector건 모든 컨테이너에 적용되야 한다.
+- chain에 push, pop을 하게 되면 적절한 실제 배열에 해당 명령이 내려가야 한다.
+- Mutliple Container를 묶을 수 있어야 하며, Chain을 실질적으로는 Vector< Bind<Container> >로 봐야한다.
+- 고찰 내용
+  - 추가 아이디어
+    - \1. incarnate() 함수를 사용하면 chain은 유지되지만 원소가 복제된다. 그렇게 되면 탐색시 O(n)의재귀 함수call을 하지 않아도 되게 된다?
+      - origin의 원소가 변경되면 어떻게 되는가?
+      - 그럴바에야 List l = chain1; 을 사용하게 해라. 이 기능은 필요가 없다.
+
+- 요구사항
+  - Container종류 상관없이 동작해야 한다.
+  - 임의의 타입 T로 나올 수 있어야 한다
+  - 속도가 가능한 빨라야 한다.
+  - Container를 특정 ContainerChain 사이에 insert할 수 있어야 한다.
+  - Controller를 상속해서 기능 추가가 가능해야 한다.
+- 1안 Binder<Container>의 Array이다.
+  - class Chain : public Array {
+    - class Controller : public Containable { // World에 invisible해야 한다.
+      - Controller() {}
+      - Controller(Chain& rhs) : _owner(rhs) {} 
+      - virtual const Result& insert(Iterator e, const Node& newone) { 
+        - if( ! _owner) return NullPointerException;
+        - return owner->Container::insert(e, newone); }
+      - }
+      - virtual Container& get(int n) { 
+        - if( ! _owner) return NullPointerException;
+        - return _owner->Super::get(n); 
+      - }
+      - //each는 get을 사용할 것이므로 추가 구현없이 정상적으로 Container를 each하게 된다.
+      - Weak<Chain> _owner;
+      - Translated translate(int index) {
+        - Translated to_return;
+        - int sum = 0;
+        - Super::each([&to_return, &sum, index](const Element& e) {
+          - int before = sum;
+          - sum += e->getLength();
+          - if(sum > index) {
+            - to_return.index = index - before - 1;
+            - to_return.cont = e;
+            - return ConsumedSuccessful;
+          - }
+          - return KeepSearching;
+        - });
+        - return to_return;
+      - }
+    - }
+    - Controller _controller;
+    - Controller getController() { return _controller; } // World에 invisible해야 한다.
+    - class _Iteratoration : pubilc Iteration {
+      - ...
+    - }
+    - struct Translated {
+      - int index;
+      - Bind<Container> cont;
+      - bool isEmpty() { 
+        - return cont.isNull() || index < 0 || index >= cont->getLength();
+      - }
+      - Node& get() {
+        - if(isEmpty()) return nulled<Node>();
+        - return cont->get(index);
+      - }
+    - };
+    - virtual Node& get(int n) {
+      - return _translate(n).get();
+    - }
+    - virtual int getLength() {
+      - int len = 0;
+      - getController().each<Container>([&len](const Container& e) {
+        - len += e.getLength();
+        - return Success;
+      - });
+      - return len;
+    - }
+    - virtual const Result& set(int n, const Weak<Node>& rhs) 
+    - virtual const Result& insert(int n, const Weak<Node>& rhs) {
+      - Translated bean = _translate(n);
+      - if(bean.isEmpty()) return NullPointerException;
+      - return bean.cont->insert(bean.n);
+    - }
+    - Weak<Node> operator[](int index);
+    - // each() 는 get()를 사용하므로 따로 조작할 필요없음
+  - }
 
 
 
