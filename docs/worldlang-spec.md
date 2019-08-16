@@ -41,6 +41,63 @@
 
 ## 개념
 
+### Expression과 Statement
+
+#### Statment와_Expression은_구분해야_할까
+
+- v 시나리오 고찰
+  - 일단 문제는 없어보인다. 하지만 시나리오를 많이 생각해봐야 한다.
+  - 시나리오1 함수호출
+    - int abc_func()
+    - 일때, abc_func()의 반환값인 int를 반환
+  - 시나리오2 변수 정의
+    - 반환값은 정의된 변수.
+    - 예) foo(int a, int b = 5) // a는 블록문의 lifecycle을 가지므로 
+    - a += 5 // 여기서도 유효함
+  - 시나리오3 블록문
+    - 반환값은 블록문의 마지막 expr
+      - 이말은 return이 필요 없다는 것이기도 하다.
+    - 예1
+      - int b = if(a==5)
+        - foo(a)
+      - else
+        - foo(5)
+    - 예2
+      - class A
+        - void foo()
+          - 5 // return 5와 동일함.
+  - 괜찮은 것 같다. 굳이 stmt를 두는 것보다 제약도 적어지고.
+  - 적용하자.
+- World에서 Statement라는건 없다. 굳이 구분해서 코드에 제약을 둘 필요가 없다. 모든 코드라인은 Expression이다.
+  - 1 이말은, 변수 정의또한 인자로써 들어갈 수 있다.
+  - 2 함수 정의 또한 인자로써 들어갈 수 있다. -> #인라인_람다 , #world_inline_메소드메소드 참고
+  - 3 클래스 정의 또한 변수 인자로써 들어갈 수 있다.
+- 가 된다.
+- 아무튼, 1과 2까지는 동의하므로 일단 stmt라는 건 없애버리자. 굳이 stmt와 expr를 구분해서 어렵게 만들 필요가 없다. 처음보는 사용자가 "이게 된다면, 이것되 되나?" 싶다면 젤다처럼 되야 한다.
+- Expr은 쉽게 말하면 함수 호출이다. 함수 자체와는 다르다. 함수호출이란 Msg와 함수를 묶어주는 것을 의미한다. 모든 코드라인의 근간이 되는 셈이다. Method는 실행시 필요한 인자가 외부에서 제공되어지지만, Expr은 프로그램이 컴파일됨과 동시에 필요한 인자가 박혀있다. 필요한것은 그것들을 수행하고 난 결과값을 외부에서 받을 수 있도록만 하면 된다.
+- Expr의 종류는 이렇다.
+  - this가 필요한 경우와 필요하지 않은 경우
+  - 특정 함수를 정확히 아는 경우와, 또다른 expr에게 물어보면 아는 경우
+  - 결국은 caller.call(msg[this가 있을수도 있음]); 의 꼴이 되어야 한다.
+- this를 넣어주는건 사용자의 책임이므로 Expr이 넣어줘야 한다. 
+  - ThisExpr과 StaticExpr 2개가 있다고 하자.
+  - ThisExpr은 caller를 뽑아내서 msg 맨 뒤에 set을 해줘야만 한다. caller가 필요하다는 말씀.
+- Expr에 call()을 하면 execute()를 하고 난 결과값에 call을 하게 된다. proxy처럼. 이말은 최소 Node로부터는 상속을 받아야 한다.
+- Expr은 Object로부터 상속받지는 않는다. 때문에 Node의 일종이긴 하지만 Expr은 invisible하게 된다. (정확히 말하면 metaclass로부터 함수들을 물려받지 못하게 된다)
+
+#### Expression 블록을 어떻게 최적화 할 수 있을까?
+
+- [][v] 최적화가 완료되면 get(n) 으로 될 수 없다. call(n)을 만들어야 한다. 왜냐하면 get(n)은 scope를 구성하지 않기 때문이다.
+- call(n) // same as call(msg("name of variable"))
+  - _precall()
+  - refer r = get(n)
+  - _postcall()
+  - return r
+- 최적화 시나리오
+  - scope["myfoo"].call("age"); --->  scope["myfoo"].call(5)
+
+
+
 ### Prototyping 기반
 
 
@@ -722,7 +779,575 @@
 ### Scope
 라이프 사이클, GC
 
+#### 
 
+#### scope는 Node다.
+
+- chain이 되어야 했기 때문에 결과적으로는 invisible한 Node가 되었다.
+- get(n) get(string) 함수를 물려받을 것이다.
+- call() 함수를 채워야 한다.
+- v Node는 getMembers()를 채워야 한다. Chain은 어떻게 getMembers()를 채울까?
+  - x 1안 return *this;
+  - x 2안 Chain
+  - v 3안 당연히 TClass<Chain>의 메소드들이 들어갈 것이다. 뭐가 문제인가. 배열원소를 접근하고 싶다면 Msg("get", {int=index})를 쓰라고 해라.
+
+#### Scope의 초안
+
+- 3개의 space로 이루어진다. GlobalSpace, ClassSpace, LocalSpace.
+  - ClassSpace로 한 이유는 Object가 아닌 것도 ClassSpace에 멤버를 넣어야 하는 때가 있기 때문이다.
+- class Scope : Chain
+  - Array<Node> _globals;
+  - Chain::Control& getControl()
+- class Node
+  - virtual call()
+    - Chain::Control& con = Scope.getControl()
+    - TStrong<Chain> classsp = con[1];
+    - TStrong<Array> localsp = con[2];
+    - con.set(1, _getMembers())
+    - con.set(2, *Array::create());
+    - // member를 찾아서 메시지 전달..
+    - con.set(1, *classsp)
+    - con.set(2, *localsp);
+- class Object
+  - // virtual call() --> Node와 동일. 이게 기본 컨셉이다.
+- class Method
+  - private windex _post(int n)
+  - virtual call() // Method의 call은 기본컨셉(Node의 call)과 다르다.
+    - if([msg.name](http://msg.name/)() == "execute") // 종말메소드인 execute는 이렇게 수동으로 처리해야 한다.
+      - return execute(msg)
+    - return Super::call() // Method가 msg를 bypass 하는 경우에는 어떠한 member도 scope에 추가하지 않는다. Method의 멤버가 추가되지 않으므로 재귀함수를 돈다고 가정했을때에 중복으로 scope에 등록되는 케이스는 발생하지 않는다. 요때는 기본컨셉(Method를 Node로써 다룸)으로 진행된다. ObjectSpace가 다빠지게 된다. 
+  - execute(msg)
+    - Control& con = Scope.getControl();
+    - int n = Scope.getLength()
+    - Scope.enq("me", *this); // me.getMembers()는 넣어서는 안된다. 어디까지나 this,즉 object의 것만 넣어야 한다. 그리고 원소는 반드시 [0] 부터 넣어야 최적화가 가능하다.
+    - con.enq(getNestedMethods())
+    - con.enq(getArguments())
+    - _onExecute() // TODO: 여기는 bridge에 영역.
+    - while(Scope.getLength() >= n) // TODO: 최적화
+      - Scope.pop()
+- 고찰 내용
+  - 1안
+    - 구성
+      - Scope : Chain
+        - public static const int GLOBAL = 0, LOCAL=2, OBJECT=1;
+        - Array<Node> _globals;
+        - Array<Chain> _objects;
+        - Array<Node> _locals;
+        - _sync()
+          - getControl()[1].set(_objects[0]);
+    - class ScopeControl : Chain::Control 로 제공.
+      - insert, remove 는 ObjectSpace 자체를 제어한다.
+        - insert(OBJECT, ...) 시 Chain 객체를 매번 생성하고, remove시에 Chain을 제거한다.
+      - Chain& getLocal/Object/GlobalSpace() 제공한다.
+      - getObjectSpace().getControl().push(members)는 ObjectSpace(정확히는 _objects[0])에 Space내의 것을 제어한다.
+  - 2안
+    - class Scope : Chain
+      - class ScopeControl : public Control
+    - Node::_precall(n)
+      - n = Scope.getControl().push(getMembers())
+    - Node::_postcall(n)
+      - while(getLength() > n)
+        - getControl().pop()
+    - Method::_precall(n)
+      - Super::_precall()
+      - getControl() += NestedMethodMembers())
+      - getControl() += getArguments()
+    - //Method::_postcall(n)
+    - Object::_precall(n)
+  - 3안
+    - class Scope : Containable
+      - Array<Node> _globals;
+      - TStrong<Chain> bean;
+      - insert() / remove()
+        - return bean.insert() / remove()
+      - Chain::Control& getControl()
+        - return bean.getControl()
+      - Chain createObjectSpace()
+        - Chain ret;
+
+##### 지역변수-중복-되는-경우-scope는-어떻게-구현해야-하는가, 가능하면 블록문이 끝난 경우, 기존 심볼을 같은 인덱스에 위치하는 방법은?
+
+- 변수와 메소드의 중복정의는 허용하지 않는다.
+
+- 사용자가 헷갈릴 수 있다.
+
+- 고찰 내용
+
+  - @문제정의
+
+    - class A
+      - void(void) foo(int b)
+        - int a = 5
+        - Console.out(a) // -- 1
+        - if(b > 5)
+          - int a = 7
+          - Console.out(a) // -- 2
+        - else
+          - int a = 10
+          - Console.out(a) // -- 2
+        - Console.out(a) // -- 3
+
+  - 1과 2와 3의 인덱스가 같았으면 좋겠다. 어짜피 if 블록문 안쪽에서는 1번 a를 참조할 수 없으니, 자연스럽게 동작도 가능하며, 최적화시에 같은 인덱스를 넣으면 되니 더 편할 것이다.
+
+  - 1안 각 변수가 복원 시킨다
+
+  - 2안 블록문이 복원 시킨다
+
+  - 3안 스코프가 복원 시킨다
+
+    - 외부에서 스코프에 로컬 변수를 넣고자 하는 경우 2가지 방법밖에 없다.
+
+      - \1. 인덱스를 지정해서 잠시 덮어쓰는 방법.
+
+        insert(3, ....) 
+
+        - 이 경우, 기존에 3번 인덱스에 있던걸 기억해 두고 있어야 한다.
+
+      - \2. 그냥 맨앞에 추가 하는 방법
+
+        pushHead(...) 
+
+        - 이 경우, 그냥 원소를 넣으면 그만.
+
+    - 이후, 블록문에서 "이 인덱스 이전으로 생성된 것들을 모두 pop!" 이라고 한다.
+
+
+
+##### scope symbol 반환 알고리즘 초안
+
+- Statement의 심볼 접근은 숨겨진 전역객체인 Scope를 통해서 해결한다. 
+- Scope는 3가지로 구분해서 심볼을 관리하며 Stack 구조를 가지고 있다.
+  - GlobalSpace : 전역 공간이다. Scope가 소유한다.
+  - ObjectSpace : 현재 메소드를 소유하는 객체의 멤버들이 들어있다.(메소드 + 멤버변수) 그때그때마다 객체의 member를 chain 시켜놓는다.
+  - LocalSpace : 현재 수행중인 메소드, 블록문에서 지정한 지역변수들이 여기에 임시로 들어가게 된다. Scope가 소유한다. int border가 있으며, 이것은 [x, length-1] 까지 이 함수에서 접근가능한 심볼의 범위를 나타내는 int 값 x를 담고 있다. 메소드가 이것을 placeBorder(int newborder)로 지정하고, Statement는 getVisibleElement()로 이 지정된 범위에서만 심볼을 찾아서 사용한다. 
+  - 컴파일러가 최적화되면 getElement(index)를 바로 사용한다.
+- 알고리즘은 다음과 같다.
+  - Scope {
+    - Members global;
+    - Members local;
+    - Chain<Array<Node>> members;
+    - Scope() {
+      - members.chain(global);
+      - members.chain(local);
+    - }
+  - } Scope가 생성되면서 기본 built-in 전역변수, 프로그램 전역변수들이 global에 push 된다.
+  - Statement가 실행되면, 최종적으로 Method가 msg를 받는다. Method.call("()")이 되면 이를 "execute()"로 번역된다. 메소드는 setArgument로 받은 인자리스트를 넣어두고, Method.execute()가 호출한다.
+  - Method.execute()이 불려지면 현재 Scope.ObjectSpace 주소가 thisptr가 일치하는지 본다. 아닐 경우에만 Scope.ObjectSpace의 현재 주소를 보관하고, thisptr의 member를 대신 넣어둔다. getBorder()로 현재 값을 확인하고 placeBorder(length-1)을 지정한다. 그리고 블록문.execute()를 부른다.
+  - class Method : public BlockStatement 로 되어있다. 블록문은 Statement들을 갖고 있으며, call(), execute()가 가능한 것을 말한다.
+  - 블록문.execute()이 되면 Scope의 LocalSpace의 length를 기억하고 statements.execute()한다.
+  - 그리고 Statement들은, 지역변수를 정의할때 Scope의 localSpace에 직접 push하도록 코드를 작성한다.
+  - 블록문은 Statements들이 모두 끝나면 앞서 기억해둔 LocalSpace.length까지 pop을 시켜준다.
+  - Method.execute()는 블록문.execute()가 끝나면 placeBorder(이전에 기억하던 lenght)로 되돌리고 보관하고 있던 ObjectSpace 주소로 원복시킨다.
+  - Closure는 execute시에 placeBorder()를 하지 않는 BlockStatement다.
+    - class BlockStatement : public Statement
+    - class Closure : public BlockStatement
+    - class Method : public Closure
+  - 파서는 코드블럭을 생성할때, 메소드 안에 메소드는 closure로 인식해서 코드블럭을 만든다.
+  - 같은 클래스 메소드A에서 메소드B를 호출하는 경우는? --> OK
+  - 클래스A::메소드A에서 클래스B::메소드A를 호출하는 경우는? --> OK
+  - 메소드의 메소드를 실행시키는 closure의 경우는 어떻게 되는가? --> OK
+- 고찰 내용
+  - World코드의 이 식별자가 무슨 심볼과 매치되어야 하는가. 무슨 심볼에게 이 함수호출을 보내야 하는가를 정하기 위해서는 지역변수목록, 전역변수 목록, 클래스멤버 목록을 다 알 고 있어야 한다. 이와 같은 작업을 수행해주는 (= SymbolTable) 걸 Scope라 한다. 어떻게 설계할지를 논의해보자.
+  - 힌트
+    - \1. IDE 편집모드에서는 scope 객체가 필요하다. 최적화가 된 build 된 실행모드에서는 scope가 필요없다.
+    - \2. 되도록이면 World는 편집모드인지 실행모드인지 알 필요가 없었으면 좋겠다.
+    - \3. 퍼포먼스는 중요하다. 매 getMember() 마다 Scope객체를 만드는건 너무 시간이 오래 걸린다.
+    - \4. 소스코드의 변경은, 즉 Scope 객체의 변경을 의미한다. 편집모드에서는 Scope는 매번 변경되게 될 것이다.
+  - 1안 compile, validate, execution 시에 scope를 만들어가면서 파싱한다.
+    - Scope는 실행시에 "a" 란 식별자에 접근하려는 코드가 있을때 실제로 이 변수를 반환하는 객체다. 이는 compile 과정에서 코드블럭에 "어떠한 객체에게 이 메시지를 전달해야 하는가"를 따지는데 사용된다. 
+    - Scope는 3종류가 있다. 
+      - \1. GlobalSpace라는 객체. 프로그램 시작전에 전역변수가 여기에 담긴다.
+      - \2. LocalSpace라는 객체. Method에서 생성된 지역변수 + 전달받은 thisptr + Arguments 들이 여기에 생성되어 놓여진다. Class는 LocalSpace의 borderline을 그어놓고, 그 이후에 추가되는 것들만 검색되게 한다. Class 파싱이 끝나기 직전에는 LocalSpace의 borderline을 취소한다.
+      - \3. Object Space. Object의 members 들. 객체 생성과 동시에 만들어진다.
+    - 프로그램 실행과 동시에 GlobalSpace값을 추가된다.
+    - 그리고 이는 메소드를 파싱하면서 지역변수 목록을 메소드에 추가하게 되는데, 이때 LocalSpace에도 추가한다. 
+      - 지역변수 목록은 메소드의 멤버가 될 수 없다. 그렇게 되면 메소드 외부에서 지역변수에 접근할 수 있도록 되어버릴 것이다.
+    - 단, LocalSpace는 구현이 좀 독특하다.
+      - Class는 msg가 넘어오면 LocalSpace의 구성물을 잠시 꽁쳐두고 비워놓는다. (LocalSpace는 구성물을 꽁처두는데 최적화되어 퍼포먼스 loss가 발생해서는 안된다. swap(Stack&) 이런거 만들어 놓으면 될것이다.)
+      - Method가 msg를 받으면 LocalSpace의 index를 기억한다. to()로 생성해낸 인자리스트를 LocalSpace에 박아넣고, Statements를 돌린다. 이 과정에서 지역변수를 만드는 Statment는 당연히 LocalSpace에 인스턴스를 넣어놓는 코드가 될것이다.
+      - Method가 종료되면 아까 기억했던 index까지 LocalSpace를 pop한다. LocalSpace는 Stack의 특성을 띄면 될것이다.
+    - 만약 Nested Method가 실행된 경우는?
+      - class MyClass
+        - int a
+        - void foo(int b)
+          - int c
+          - void boo(int d)
+            - int e
+          - boo(c)
+      - MyClass cls
+      - cls.foo()
+      - 먼저 cls.foo가 먼저 실행된다. MyClass::call()이 수행되면 LocalSpace의 구성물을 지역변수로 swap시키고 비워놓는다.
+      - 다음foo()가 수행된다. 현재 LocalSpace의 length를 확인한다. == 0
+      - 그리고 인자리스트를 to()로 생성하여 LocalSpace에 쑤셔넣는다. 모든 메소드의 인자1은 반드시 thisptr, 즉 cls 변수가 들어있다.
+      - 다음 boo(c)가 수행된다. boo는 Method인 foo 안에 있는 것이다. 이는 코드블럭으로는
+        - msg {
+          - name = boo
+          - args = {cls, c}
+        - } 와 동일하다.
+      - 인터프리터는 코드의 boo가 Nested Method, 즉 foo함수의 boo임을 알 수 있다. 그러므로 msg를 수신하는 주체를 foo Method로 설정한다.
+        - 여기서 Method는 클래스다. 단, 값을 가질 수 는 없다. 왜냐하면 Method는 World에서 Unique 속성을 갖기 때문이다. (static이라면 이론적으로는 가질 수 있을 것이다)
+      - boo::call(msg)가 수행된다. LocalSpace length를 확인한다. == 2
+        - boo()함수의 수행한다.
+      - boo()가 끝나면 아까 기록했던 length가 되도록 pop한다. [현재 length 3이므로 pop() 1번 하게 됨]
+      - foo()가 끝난다. 아까 length가 되도록 pop한다. [pop() 2번해서 length 0이 됨]
+      - MyClass1::call()이 끝난다. MyClass1은 아까 지역변수로 swap해둔 LocalSpace를 교체한다. 
+    - 고찰내용
+      - 파서는 World코드로 지역변수의 정의를 보면 Function.stack에다가 지역변수 명세를 추가한다. 지역변수의 순서는 상관이 없다. 
+      - scope는 multiple chain이다. 맨 위부터 Stack공간(Function의) -> 클래스(thisptr)의 all member 공간 ->전역변수 공간 으로 3개가 chain된다.
+        - 메소드 안에서 다른 객체의 메소드를 호출한 경우는, 이것만으로는 해결되지 않는다.
+          - class MyClass
+            - void foo()
+              - do-something...
+          - class MyClass1
+            - MyClass cls
+            - void boo()
+              - cls.foo()
+          - result main()
+            - MyClass1 c1
+            - c1.boo()
+          - 위의 알고리즘대로라면, 이렇게 된다.
+            - \1. MyClass1, MyClass Class 객체가 각각 만들어지고, method, 변수 정보가 각각 member에 들어가게 된다.
+              - ClassManager[1]에 있을, MyClass1을 예를들어보면
+                - methods[0] = boo()가 들어있으며
+                - variables[0] = Object(MyClass()) 가 들어있다.
+                - members는 methods, variables를 link해서 members[1] == variables[0]과 같다.
+            - \2. 프로그램이 실행되기 전에 전역객체가 만들어지고 Scope.전역공간에 등록된다. 이 코드에서는 비어있다. result main() 메소드가 생성되면서 
+            - \3. 이 코드에서는 언급되지 않았지만 main메소드가 객체가 생성되면서 메소드마다 가지고 있는 stack공간[0]에 지역변수 c1이 Object(MyClas1)으로 생성된다.
+            - \4. main이 실행된다. 메소드의 stack공간이 Scope.지역공간에 push 된다. 결과, Scope는 클래스공간은 null이므로 전역공간 + main지역공간으로 이루어지게 된다. 따라서 Scope[0] = "c1"만 들고있는 1개 짜리 공간일 것이다.
+            - \5. MyClass c1를 하게되면 ClassManager["MyClass1"].instantiate()가 되고, 이는 Object(MyClass1)를 만들면서 members가 MyClass1.methods를 link시키고, variables = MyClass1.variables에서 깊은복사하고, members는 variables를 link시킨다. 그러면 새로 만들어진 c1객체는 methods는 클래스의 것을 사용하되, variables는 클래스에서 복제된 자신만의 것을 갖는 상태로 출발하게 된다.
+            - \5. c1.boo 가 수행된다. 이는 객체, c1으로 일단 메시지가 가는 것이다. c1은 Object, 객체. Object는 자신에게 msg가 왔을 경우, 클래스공간을 release하고 자신의 members를 link시킨다. (이미 자신이 등록되어있으면 무시된다). 결과 Scope는 [0] = c1, [1~n] = c1의 members로 이루어진 상태가 된다. 그리고 Scope에서 boo Method를 찾아서 반환한다.
+            - \6. 반환된 boo의 "()"가 수행된다. 이는 Method::call(args)와 같은 것이다. Method는 msg가 왔을 경우, 
+            - 문제점
+              - 객체에 msg가 가지 않은 상태에서 함수에게만 msg가 가게 된다면 클래스공간이 업데이트 되지 않은 상태에서 지역공간에만 메소드stack공간이 추가될 것이다. 이게 가능한가?
+              - 지역변수는 미리 만들어둔다? 그러면 초기화되지 않았는데 참조해버리는 경우는 어떻게 되나?
+                - Stack공간::getElement()
+        - Chain::find(T& needle) // 각각 탐색 함수호출을 내린다.
+          - for e in _subs
+            - if found = e.find(needle)
+              - return found
+      - Function은 execute("")가 되면 자신의 stack을 복제하여 scope의 stack 공간에 넣는다. (chain의 각 원소는 Bind<T>로 되어있다). 그리고 함수를 실행한다. 
+      - 파서가 만들어놓은 코드 블럭이 담긴 Function의 실행부는, 함수 호출의 집합으로 이루어져있다. 함수호출은 3가지 값이 필요한데, 인자, 함수, thisptr 이다. 함수는 시스템에 유일하게 1개이므로 그냥 바인들로 문제없고 인자, thisptr은 그때그때 함수호출마다 "어느 객체가 thisptr인 함수호출인가" 에 의해서 변경되게 된다.
+      - 이런 상황에서 퍼포먼스 최적화를 위해 최적화된 Bind을 정의한다. 이 Bind는 기존 Bind<T>의 일종이다. 처음 실행하면 cache값을 확인해서 -1 처럼 되어있다면 scope객체에 접근해서 주어진 이름으로 심볼을 찾아서 가지고 온다. 찾으려던 심볼이 확인되면 cache의 값을 scope의 인덱스로 업데이트하고 Bind는 심볼을 반환한다. 다음 접근요청이 들어오면 scope[cache]로 바로 심볼을 가져오고, 검증이 실패되었을때만 scope["foo"]처럼 심볼을 재 탐색해서 cache를 업데이트한다.
+        - 결론적으로 scope["foo"] 와 같은 로드가 많이 걸리는 탐색작업을 "최초 1번"으로 제한 할 수 있다.
+        - 게다가 IDE에서 런타임에 코드가 수정되어도 자동으로 동기화가 이루어진다.
+  - 2안 compile, validate에만 scope가 필요하며, 이때 각 함수 안에서 재귀적으로 생성한다.
+    - 먼저, "어떠한 객체에 이 메시지를 전달해야 하는가" 라는 것은 코드에만 dependent하다. 다시말해서 코드가 fix되면 이 정보를 갱신할 필요가 없다. build가 완료되면 optimized된 바이너리코드가 나오고 이 상태에서는 더 이상 편집이 불가능하다는 것이므로 optimization을 할때 "어떠한 객체에 이 메시지를 전달해야 하는가"도 같이 최적화 시키면 실행시에는 이 값을, scope를, 업데이트할 필요가 없게 된다.
+    - 하지만 validate시에 이 부분을 정해버리면 편집상 문제가 생긴다. 왜냐하면 이 작업은 부피가 좀 큰 작업이고 소스코드가 한창 변경중인 상황에서 매수정시마다 scope를 생성하여 조회하여 매칭을 시켜봤자 좀 있다 다시 수정될 가능성이 있기 때문이다. 실행할지도 모를 모든 코드에 대해서 이러한 작업을 수행하는 것은 부담스럽다. 따라서 실행속도가 늦어지더라도  IDE모드에서는 optimization을 하지 않고 실행시점에서 늦게 scope를 하나 두고 매칭을 지속적으로 시켜가는게 좋다.
+      - 그 얘기는 WorldInterpreter는 이것이 실행모드인지 편집모드인지 알 고있어야 한다는 것 처럼 보이는데?
+        - 1안 IDE모드에서는 scope를 사용해서 매칭하는 함수를 넣고, optimization에서는 이 함수 대신 직접 target 을 가리키는 걸로 대체함으로써 최적화 시킨다.
+          - 이 말은 Node::getMember(const String& name) 이거 안쪽에서 Scope를 통해서 찾아내야 한다는 걸 의미한다.
+          - 포인트는 1. 실행모드에서는 scope는 불필요한 데이터이다. 2. 재귀적으로 구성시켜야 한다. 3. 인스턴스별로 그 값이 달라야 한다.
+          -  어떻게 구현할까?
+            - 1안 lazy-초기화를 사용한다.
+              - 각 인스턴스는 요청을 받을때 member에다가 동적으로 값을 scope 쑤셔넣는다. scope의 기반이 되는 것은 owner로부터 받는다. 이 말은 owner(클래스, 혹은 메소드) 가 누구인지 알 고있어야 한다는 것이다. 
+              - owner에 대한 정의와 컨셉이 필요하다.
+              - Scope Node::createScope() {
+                - Scope scope = getOwner().createScope();
+                - scope.chain(getMembers());
+                - return scope;
+              - }
+              - 매번 Scope값이 생성,채워져서 들어간다. 엄청난 퍼포먼스 loss가 예상되는데.
+  - 3안 1안의 최적화 및 개선안
+    - 실행모드시에도 scope를 채우거나 빼내어가면서 실행을 한다. 모든 Statement들을 이 scope로부터 심볼에 접근하는 걸 대 원칙으로 한다. 
+      - IDE 모드(즉, 코드를 text를 input으로 보내어 compile, validate가 일어나는 과정) 에서는 코드의 변경이 많기때문에 getMember(String& name) 을 사용할 것이며, 이 함수는 scope에서 string 비교로 심볼을 찾는다.
+      - 실행모드에서는 Interpreter가 getMember(String& name)을 getMember(int index)로 최적화시킨다. **따라서 Scope는 매 실행시마다 항상 동일한 인덱스가 나오도록 해야한다.**
+      - Scope는 3개의 space로 이루어져있다.
+        - \1. LocalSpace
+      - 메소드에서 같은 클래스의 다른 메소드를 부르는 경우, 만약 "지역변수는 LocalSpace에 선언될때마다 들어간다" 라는 것이면 
+        - \1. 매번 객체생성해야한다.
+        - \2. LocalSpace에 push, pop을 해야 한다. 매 메소드마다. 이건 꽤나 큰 loss일 수 있다.
+      - 만약 메소드가 LocalSpace를 각각 들고 있고, 여기에 지역변수들이 이미 들어있다면 어떨까? push, pop은 인스턴스를 빼고 넣는게 아니라 단순히 이 원소를 사용한다 사용하지 않는다는 표시만 하는 거라면.
+      - 지역변수는 블록문이 있다면 중간에 소멸되기도 해야 한다.
+
+
+
+#### Scope에서 멤버 중복제거
+
+- 재귀메소드를 호출한다고 하자. 그러면 Method::getMembers()가 계속해서 쌓일 것이다. 어떻게 해결할까?
+- 쌓이지 않는다. 
+- x 1안 me로 접근 한 경우에만 Method::getMembers()가 쌓인다. 
+  - Method에는 이 Object에 대한 것 + 메소드 인자 + "me" 변수 만을 채워놓는다.
+  - 메소드가 재귀호출되면 me 변수는 중복되어서 local에 들어갈 수 있다. scope는 [0]부터 탐색해서 중복무시하고 가장 먼저 매칭되는 것만 반환한다.
+  - "만약 한 Space에서 2가지 이상의 식별자가 발견되면 모호성의 오류가 발생된다." 이거 때문에 me도 중복되어서는 안된다. "this" 도 마찬가지다.
+- 2안 this, me만 특별 취급한다. 
+  - Object는, 자신이 등록되면 this, me를 scope에 setThis(), setMe()로 얻어놓는다.
+  - Scope는 저 함수가 불려지면, 
+    - if(it.isExists())
+      - if(_this.isBinded()
+        - _this.bind(it)
+      - else
+        - _this.bind(it)
+        - _this_n = locals.push(_this)
+    - else
+      - _this.release();
+      - locals.pop(_this_n); 을 한다.
+  - Node::call()은
+    - origin = Scope.getThis();
+    - Scope.setThis(*this);
+    - ...
+    - Scope.setThis(origin)을 한다.
+- 1-2안 1안으로가되, me, this에 대해서만 모호성의 오류를 내지 않는다.
+- **고찰을 통해 알아낸 팩트**
+  - \1. me의 위치는 고정되있지 않다. me가 추가되고 지역변수가 추가되고나서 nested method가 불려진 상황이라면 me는 scope에 맨 위라고 보장할 수 없다.
+  - \2. 설계상 me는 반드시 scope 안에 있어야 한다. 별도의 변수로 제공되는 예외취급되어서는 안된다.
+  - \3. Method::call()과 NestedMethod::call()에서의 scope 제어 코드가 다르다.
+  - \4. LocalSpace도 ObjectSpace처럼 bind, release가 가능해야 한다.
+    - class Method // == NestedMethod
+      - call()
+        - if msg == execute
+          - execute()
+        - else
+          - return 
+      - execute()
+        - n = scope[2].getLength()
+        - scope[2].push(args)
+        - scope[2].push(getNestedMethods())
+        - scope.updateMe(this)
+        - onExecute() // --> Object.call() or Method.call()
+        - while(scope[2].getLength() > n)
+          - scope[2].pop()
+    - class ??Method : Method
+      - call()
+        - TStrong<Space> origin = scope[2];
+        - scope[2].set(**new Space()**);
+        - Super::call()
+        - scope[2].set(origin);
+    - class StaticMethod : Method
+      - virtual onExecute()
+        - // msg에서 this를 가져오지 않는다.
+
+#### 중첩메소드 지원과 그때의 scope의 컨셉
+
+- 중첩메소드는 잠깐 scope에 등록되고 사라지는, Object의 메소드중 하나이다. Method에 속한 Method가 아니다.
+
+- scope에 보이고 빼는 건 자신이 정의된 소유자Method가 담당한다.
+
+  
+
+#### Scope는 Reversed-Stack, 클래스멤버는 Stack으로 구성해야 한다.
+
+- Scope는 새로운 심볼이 [0]에 들어가는 Stack이어야 하며,
+- 클래스멤버는 새로운 멤버가 뒤에[n] 들어가는 Stack으로 들어가야 한다.
+- 고찰내용
+  - Scope는 인덱스가 해당 함수 내에서만 블록적으로 확정적이다. 그렇기에 그 블록을 인덱스 맨 앞으로 위치시킨다면 항상 확정적인 상태를 만들 수 있다.
+  - 반면 클래스의 멤버는 그 클래스, 그 클래스가 상속받은 부모클래스들까지 모두 확정적이다. 그러므로 뒤에 위치시키는 것도 가능하다.
+
+
+
+#### 인터페이스 공개 - 외부에서 scope객체를 얼마나 접근가능해야 할까?
+
+- native, managed 포함하여, scope의 존재자체를 몰라야 하며, 간접적으로 이를 조작해서도 안된다.(예, c++에서 변수 정의하는 Stmt를 지역변수로 임의로 하나 만들어서 바로 실행)
+- 고찰내용
+  - v 변수를 멋대로 추가하거나 제거해서는 안된다? --> Validation실패는 허용되지 않는다. 안된다.
+    - Stmt는 execute()가 되면 변수를 추가할 수 있다. 제거는 메소드에 의해서 처리된다. 설사 여기서 scope를 막아놓는다 하더라도 변수를 정의하는 Stmt를 하나 만들어서 execute()를 때려버리면 scope에 들어가게 된다.
+    - 제거만 못하게 막아놓는다 하더라도 scope는 [0]부터 가장 먼저 매칭된 것을 보내주므로 (모호성의 오류가 없다. 그건 클래스에서만 있지) 사실상 로직을 바꾸는 결과가 된다. 만약 이걸 하는 경우 validation한 결과와 정말 실행한 결과가 불일치 하게 된다.
+
+
+
+
+
+
+
+#### Scope의 실행모드(바이너리 직접 실행)과 IDE편집 모드시의 차이점
+
+- 가장 중요한 것은 월드 자체는 현재 바이너리 실행모드인지 알아서는 안된다는 것이다. 똑같이 Statement를 실행할 뿐이지만 최적화Statement에서는 get(name)를 사용하지 않음으로써 속도가 개선될 뿐이다.
+- 따라서 실행모드와 IDE모드라는 것은 엄연히 존재하지 않는며, 구분하지 않는다. 여기서는 편의상 임시로 사용하는 용어다.
+- scope는 양쪽 모드에서 항상 구축이 되어야 한다. 그래야 지역변수가 참조가 될 수 있다. 
+- 단, 바이너리 최적화가 이루어지면 scope.get("변수이름") --> scope.get(n)으로 탐색속도가 올라가는 것 뿐이다.
+- 고찰내용
+  - 가장 중요한 것은 월드 자체는 현재 바이너리 실행모드인지 알아서는 안된다는 것이다. 똑같이 Statement를 실행할 뿐이지만 최적화Statement에서는 scope를 사용하지 않음으로써 scope 구현이 빠지게 되어야 한다.
+  - 1안 - scope에 reg, unreg도 눈에 보이지 않는 statement로 대체한다?
+  - 2안 - scope객체는 "실행모드"임을 catch해서, 이때는 reg, unreg를 비운다.
+  - v 3안 - scope는 실행모드에서도 필요한것이다?
+    - 왜냐하면 지역변수가 어디에 있게 되는가? 바로 scope이지 않는가. scope가 유일하게 지역변수가 visible한 장소이기 때문이다. 실행모드에서 최적화되는 것은 scope.getMember("string") --> scope[n]으로 되는 부분인 것이다.
+
+
+
+
+
+#### Scope에_const_member만_넣어야_한다.
+
+- validation이 실제로 scope가 어떻게 구성되어있는가로 판단하기 때문에  Method가 OBjectSpace를 update할때 Object가 const면, const 멤버만 ObjectSpace에 넣어야만 한다.
+- *1안 chain을 잘 구성해서 const 멤버만 모아둔 chain을 또 만든다. 그리고 이걸 바로 반환한다.*
+- v 2안 const member를 따로 구성하면 로스가 너무 심하다. 그래서 멤버는 그냥 다 들어가고, 실행직전에, 혹은 stmt나 어딘가에서 이걸 위한 exception handling을 끼워넣는다.
+  - scope는 어짜피 Object에 종속적으로 될 수 밖에 없다. 따라서 scope에 object를 stack할때 const로 stack했는가 nonconst로 stack했는가를 기억했다가, 외부에서 objectspace에 접근할때 member가 nonconst라면 에러를 내뿜도록 하면 어떨까?
+  - Node::isConst()를 사용하면 된다.
+  - scope는 stack(const Object&) stack(Object) 2개를 만든다. 그리고 TWeak<Object>와 TWeak<const Object> 2개를 둔다. 이렇게 2개를 두는 이유는 const 또한 타입의 일종이기 때문에 C++에서는 하나의 타입 A를 둬서 const, nonconst 겸용으로 바인더를 쓰게끔 할 수가 없기 때문이다.
+  - stack안에서는 const Object이면 TWeak<const OBject>를 bind()하고, TWeak<Object>.release() 하는식으로 한다.
+  - 이후, 외부에서 scope[""] 나 scope.get("name")으로 멤버를 접근하려고 하는 경우에, 외부에서 주입된 Object가 const인지 nonconst인지를 알수 있으므로, 이를 고려해서 접근하도록 만들 수 있다.
+- *3안 const를 위한 별도의 배열을 object 마다 하나씩 만든다. 메모리는 증가하지만 object space 삽입시 로스는 없다.*
+
+
+
+
+
+
+
+#### Scope의 LocalSpace 알고리즘 최적화
+
+- IDE 모드일 경우
+
+  - getMember(const String& name)으로 Scope객체에서 심볼을 찾는다. 따라서 Scope의 LocalSpace에 지역변수가 들어만 가있으면 된다.
+  - 지역변수 생성시 LocalSpace에 변수를 push하며, 함수가 끝나면 Method는 LocalSpace를 release() 해버리면 된다. (자기껏만)
+  - 블록문이 끝나면 LocalSpace의 해당 element만 release된다. 
+  - LocalSpace는 Array<Bind<Object>>가 된다. (Reference나 Object가 올 수 있다.
+
+- 실행모드일 경우
+
+  - 컴파일러는 코드를 완전히 분석, 실행하여 이 시점에서 생기는 지역변수가 몇번 index의 LocalSpace에 들어가는지 파악해야 한다. 
+  - 그렇게 되면, 
+    - 지역변수를 생성하는 Statement는, push가 아니라 setElement를 쓰도록 해서 탐색 속도를 낮추고 메모리 점유를 줄일 수 있다.
+    - 심볼 접근시 문자열 비교가 아니라 getElement(index)로 하면 더 빨라진다.
+  - 그 이외의 블록문이 끝나면 LocalSpace에서 remove하는 것, 함수가 끝나면 Method는 LocalSpace를 release() 해버리는 것(자기껏만)은 동일하다.
+
+- 고찰내용
+
+  - 메소드에서 같은 클래스의 다른 메소드를 부르는 경우, 만약 "지역변수는 LocalSpace에 선언될때마다 들어간다" 라는 것이면 
+    - \1. 매번 객체생성해야한다.
+    - \2. LocalSpace에 push, pop을 해야 한다. 매 메소드마다. 이건 꽤나 큰 loss일 수 있다.
+  - 만약 메소드가 LocalSpace를 각각 들고 있고, 여기에 지역변수들이 이미 들어있다면 어떨까? push, pop은 인스턴스를 빼고 넣는게 아니라 단순히 이 원소를 사용한다 사용하지 않는다는 표시만 하는 거라면.
+  - 지역변수는 블록문이 있다면 중간에 소멸되기도 해야 한다.
+    - 최적화가 되었을때 인덱스는 항상 유지가 되어야 한다. getMember(index)로 접근할 것이기 때문이다. scope에서 배열은 고정되어야 하며, 원소들은 삭제가 일어나서는 안된다. 
+    - LocalSpace[n].release(); 를 하도록 한다.
+    - 블록문이라는 클래스를 만듬으로써 해결한다.
+  - x 1안 Array로 member를 구성해둔다. 그리고 리사이클한다
+    - 지역변수의 소멸/생성보다 확실히 미리 잡아둔 뒤에 init하는 편이 빠르긴 하다.
+    - init을 하면 안되는, 반드시 생성자를 거처야만 하는 케이스가 있을까?
+      - C++이 아니라는 점을 되새겨 보자. init이 수행되는 타겟은  결국 Object다.
+      - 개발자가 Object에서 상속받은걸 모듈로 만들기 때문에 생성자를 그대로 사용하면 안될 것이다. 생성자는 1번만 호출 되는 것이며, 생성자를 대신할 월드만의 API인 onConstruct()  인걸 overloading해서 사용해야 한다.
+      - 사용자가 만들어놓은 모듈안에 있는 Object를 onConstruct()된다고 하자. 무엇이 발생해야 하는가?
+        - Object의 모든 멤버변수들이 초기화되고, 사용자의 생성자함수가 불러져야 한다. 문제는 모든 멤버변수를 월드는 모른다. 사용자는 생성자 대신 이걸 써야 한다.
+        - 레퍼런스 초기화가 안된다. 이건 limitation으로 걸 수 있다.
+        - 복사생성자는?
+          - 1안 그것도 만든다.
+          - 2안 대체가 불가능한지 검토 한다.
+        - 직접해보면서 검증하자.
+          - class MyModule : public Object {
+          - private:
+            - String* msg;
+            - DirectX9Device* device;
+          - public:
+            - const Result& construct() {
+              - msg = 0;
+              - device = 0;
+            - }
+          - }
+        - 1안 construct()를 만든다.
+        - x 2안 release()로 대체가 불가능한가?
+          - release는 원래 있는 걸 재사용하는 것이다. construct라는 메소드를 만들지 않아도 된다.
+          - 명시적으로 생성자를 호출할 수는 없다. 근데, 이게 진짜 단점은 아닐 것이다. 원래 그런것이다.
+          - msg = 0 같은 케이스는 release에서 대체가 불가능하지....않나?
+            - 어짜피 생성자에서 msg = 0으로 된다.
+          - 복사생성자는 어떻게 되지?
+            - int a = b;
+              - Object::assign(obj);
+            - MyChildModule b;
+            - MyModule a = b;
+              - Reference::assign(ref);
+                - return binder->assign(ref);
+          - 예제
+            - class MyModule : public Object {
+              - MyModule() : msg(0), device(0) {}
+            - public:
+              - const Result& release() {
+                - if (msg)
+                  - delete msg;
+                - msg = 0;
+                - if (device)
+                  - device->ReleaseDevice(0, 0, 0, 0)
+                - device = 0;
+              - }
+            - }
+          - --> 고찰을 통해서 지역변수 리사이클은 폐지되었다. 이는, 사용자가 C++ 클래스나 메소드 안에서 지역변수를 만들때는 "생성자 이벤트"를 월드에서 호출할 방법이 없다. 사용자가 클래스를 정의할때 생성자에 "내가 최종 구체클래스라면, 생성자이벤트를 호출하라" 라는 걸 만들 수 밖에 없다. 
+          - --> 혹은 사용자는 소멸자 코드를 "진짜 ~소멸자()"와 "release() 함수 안에서 state를 통해서 소멸자여부를 판단해서 수행하는 것"  2개로 나누는 방법도 있으나, 이것도 사용성이 번거롭기는 마찬가지다.
+    - Container
+    - Cell : Container
+    - TCell<Node> : Cell
+      - getElement에서는 캐스팅 하지 않음. insert, remove에서만 실시함.
+  - v 2안 Array로 멤버를 구성한다. 리사이클은 하지 않는다.
+    - IDE모드냐 최적화모드냐에 따라서 동작이 변한다. 
+    - IDE 모드일 경우
+      - getMember(const String& name)으로 Scope객체에서 심볼을 찾는다. 따라서 Scope의 LocalSpace에 지역변수가 들어만 가있으면 된다.
+      - 지역변수 생성시 LocalSpace에 변수를 push하며, 함수가 끝나면 Method는 LocalSpace를 release() 해버리면 된다. (자기껏만)
+      - 블록문이 끝나면 LocalSpace의 해당 element만 release된다. 
+      - LocalSpace는 Array<Bind<Object>>가 된다. (Reference나 Object가 올 수 있다.
+    - 실행모드일 경우
+      - 컴파일러는 코드를 완전히 분석, 실행하여 이 시점에서 생기는 지역변수가 몇번 index의 LocalSpace에 들어가는지 파악해야 한다. 
+      - 그렇게 되면, 
+        - 지역변수를 생성하는 Statement는, push가 아니라 setElement를 쓰도록 해서 탐색 속도를 낮추고 메모리 점유를 줄일 수 있다.
+        - 심볼 접근시 문자열 비교가 아니라 getElement(index)로 하면 더 빨라진다.
+      - 그 이외의 블록문이 끝나면 LocalSpace에서 remove하는 것, 함수가 끝나면 Method는 LocalSpace를 release() 해버리는 것(자기껏만)은 동일하다.
+
+- LocalSpace는 어떻게 관리되는가?
+
+  블록문 으로 해결한다. 
+
+  - 1안 Scope에서 Unique로 관리. 이경우 메소드는 Scope를 사용하는 관계가 된다.
+    - 1안 메소드는 시작전에 esp를 저장하듯이 pop을 해야 하는 index를 알고 있어야 한다.
+    - 2안 Cell로 구성한다.
+      - LocalSpace를 Cell<Bind<Node>>로  구성한다.
+      - 블록문이 끝나면 setElement(index, NULL)로 만든다. Cell이라도 sort는 일어나지 않는다.
+      - Method가 끝나면 Method는 처음 시작시 알아둔 LocalSpace의 length로 복원한다.
+  - 2안 매 메소드호출에서 
+
+- 더 최적화할 수 있다.
+
+  - Statemenet의 심볼이 LocalSpace인지, 어느 객체의 것인지 정해놓으면 더 빨라질 수 있다.
+  - LocalSpace::pop()은 심볼을 진짜 삭제하는 것이 아니라 
+
+
+
+
+
+#### scope에서의 식별자 검색과 모호성의 오류의 기준
+
+- 인터프리터는 파싱하면서 식별자를 Scope에게 질의한다. 
+- Scope는 LocalSpace, ObjectSpace(me, this), GlobalSpace 3개의 영역을 갖고 있고, 각 영역에 식별자와 매칭되는 객체를 찾을때까지만 탐색한다.
+- 만약 LocalSpace에 객체를 찾지못하면 ObjectSpace에 질의하고, ObjectSpace에서도 찾지못하면 GlobalSpace에서 질의한다.
+- 만약 한 Space에서 2가지 이상의 식별자가 발견되더라도 블록문 안에 있는 경우에는 예외적으로 허용되기때문에 존재할수 있다.
+- 따라서 블록문기준으로 중복을 체크하던가 아니면 validation에서 이걸 처리해야 한다.
+- 시나리오
+  - class MyClass
+    - int a
+    - int b = 1
+    - void foo(int aa)
+      - int b = 2
+      - void foo(int a1)
+      - foo(b)
+        - // b는 LocalSpace에 있으므로 ObjectSpace의 a는 탐색하지 않는다. 값은 2이다.
+        - // 그러나, this.foo(aa) 도 매칭되지만 me.foo(aa)도 매칭된다. 같은 ObjectSpace이므로 모호성의 오류가 발생된다.
+        - void _koo()
+          - do-somthing...
+        - void _goo()
+          - _koo() // 에러. _koo는 me._koo()가 될텐데, me는 _goo이며 아무런 nested method를 갖고 있지 않다. _koo()는 foo()가 갖고 있다.
+  - MyClass cls
+  - cls.foo()
+- 1안 space별로 별도로 가져간다. 
+  - GlobalSpace  & ClassSpace : isConsumable(msg) 가 2개 이상 있으면 안됨
+  - LocalSpace : 있어도 됨. 맨 앞에거 기준으로 찾음.
+  - Scope의 space는 container로 구성되어있으며 global과 classspace는 각각 container가 다르다(array vs chain) 따라서 이 둘을 합칠 수는 없으므로 별도의 class space라는 걸 만들지는 않는다. scope.validate()를 하거나 별도의 경로로 scope가 감지하도록 한다.
+
+
+
+
+
+
+
+
+
+#### Scope_중_지역변수와_함수명의_충돌문제 
+
+- 지역변수는 a.foo 처럼 접근하는 것이며 함수는 a.foo(void)로 접근하는 것이다. 표기가 다르므로 충돌이 일어나지 않는다. --> #객체의_함수_접근이_이름만_가지고는_불가능하다_왜냐하면_오버로딩을_지원하기_때문이다 참조.
+
+- 단, 앞으로 Deduction을 지원하는 경우에는 함수명만 가지고 사용할수 있어야한다. 만약 이걸 지원한다면 애로사항이 생길수 있다.
+
+- 고찰 내용
+
+  - c++에서는 지역변수와 함수명이 같을 경우 어떻게 할까. 사용법이 다르기 때문에 코드상에 모호해지는 케이스는 없다.
+
+  - 반면 변수명과 클래스명은 모호해질 수있기에 이것은 100% 에러일 것이다. 또한, 반면 변수명끼리는 겹처도 무시를 해주지 않는가. 대표적으로 블록문안에서의 중첩된 변수명의 경우. 어떤때는 중복이라며 에러를 내보내야 하고, 어떤때는 중복이라도 그냥 가야한다. 이 컨셉을 정해야 한다.
+
+    
 
 
 
@@ -873,7 +1498,35 @@
 
 ### 클로저
 
+### 중첩메소드를 람다로 발전 시킬 수 있는가?
 
+- 생각해보니, 이는 특별한 기능이 아니었다. 그냥 반쪽자리 람다에 불과하다.
+- **이는 "지역 변수는 메소드가 미리 생성해놓고 있어야 할까 아니면 그때그때 생성해야 할까"를 해결하기 위한 것이다.**
+- x 1안 변수 정보없이 공유한다
+  - class A
+    - foo()
+      - void _nested()
+        - cout << age // 이 age가 실제로 무슨타입인지 전혀 알 수 없다.
+      - _nested() // 빌드에러
+      - {
+        - int age = 5
+        - _nested() 
+      - }
+      - {
+        - float age = 3.5
+        - _nested() // 타입 확정이 무너진다. 
+      - }
+- 2안 이제 람다 문법과 설계가 정해졌다
+  - class A
+    - void print(int age)
+      - void print(int newage) // err
+      - void _print(int newage)
+        - set(newage)
+        - Console.out("age = " + _age)
+      - void set(int age)
+        - _age = age
+      - int _age = 0
+      - return print(int) // err
 
 
 
@@ -1164,25 +1817,6 @@
 - \1. Native(Wrd Frx)에서는 const Refer나 Refer<const T>나 동일하다.
 - \2. nonconst -> const 는 ok이지만 const -> nonconst는 안된다.
 - 고로, const msg&로 넘어오게 되면 msg의 모든 인자에 대해 to<T> const()만 써야 하며, const Refer로만 받을 수 있다.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
