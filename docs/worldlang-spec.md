@@ -115,8 +115,458 @@
 
 
 
+
+
+
+
+
+
 ### 메소드
 * 정의, 호출, 캐스팅을 사용하고 있는 점
+
+#### Method 는 클래스다.
+
+- Object는 독립적인 ObjectSpace 유지하는 인스턴스적인 개체를 의미한다. 이것은 Class를 하나 모방 하고있으며, 그 클래스로부터 메소드 내역을 pointing하고 객체내역을 cloning 함으로써 고유값을 갖는다.
+- Method는 하나의 종말메소드를 가질 수 있는 LocalSpace에서 동작되는 Static Unique 클래스이다. 
+  - 값을 가질 수 없으나, 메소드는 가질 수 있다. 
+  - **동작시 LocalSpace에서 관리된다. --> #Method는_ThisPtr이_꼭_필요하다_어떻게_얻을_수_있을까 참고**
+- Nested Things
+  - 클래스가 Nested 된 경우, 이 클래스는 owner클래스에 대한 어떠한 정보도 갖고 있지 않다.
+    - FAQ. 자동으로 NestedClass는 OwnerClass의 this를 갖도록 하면 더 편하지 않을까?
+      - NestedClass가 OwnerClass와 1:1로 사용되리란 법이 없다. 극단적인 예를들면 OwnerClass는 1000개가 instance가 나왔을때 random확률로 1개의 NestedClass가 나오는 상황도 있을 수 있다. 또는 OwnerClass는 instance 나오지 않았는데 NestedClass만 나오는 상황도 있을 수 있다.
+  - 외부에서도 NestedClass의 객체를 만들 수 있다. _ prefix가 안붙어있다면 말이지.
+- Exception 핸들링또한 Nested Method를 통해서 돌아간다. 그 함수안에서 발생된 Exception은 그 메소드의 _except() 로 넘겨지게 된다.
+- Method는 World의 Class가 될 수 없다. (단, 객체의 일종이긴 한것이다. World의 클래스는 TClass<T>로 생성되어야 한다). 왜냐하면 멤버변수를 가질 수 없고 (멤버변수를 갖기 위해서는 별도의 getVariableMembers변수가 필요하다) 객체를 만들 수 없기 때문이다.
+- 그러나 Method와 Class는 같은 계통의 부모클래스인 Node를 갖는다. 왜냐하면 Membre로 Method를 가질 수 있다는 공통점이 있기 때문이다.
+- 고찰내용
+  - Nested Method에서 확장된 아이디어인데, 이게 생각보다 괜찮다.
+  - 먼저 다음의 아이디어에서 출발한다.
+    - World에서 보여지는 Method는 사실 Class다. Method는 다만 변수를 가질 수 없으며,  Method를 선언됨과 동시에 자신을 소유한 클래스에게 등록되며, 함수가 호출될때 인자1로 클래스의 thisptr를 가지고 있으며, call(args)라고 하는 실질적으로 명령을 수행할 수 있는 창구가 디폴트로 있다는 점이다.
+    - 따라서 설계상, class Method : public Class 가 된다.
+    - Method는 클래스이므로 virtual void onIn(), onOut() 이런걸 재 사용하게끔 할 수 있다.
+  - Nested Method
+    - Method도 클래스이므로 Method에서 메소드를 정의할 수 있다. thisptr는 최초 object가 call을 받은시점에서 삽입되어있으므로 Nested Method 안에서도 thisptr은 그대로 유지 및 참조가 가능하다.
+    - 다형성을 사용하면 여러가지 이벤트 핸들링이나 exception처리를 메소드에서 할 수 있다.
+    - 중첩메소드는 Owner메소드의 지역변수를 참조할 수 있다. --> Scope알고리즘 참조
+    - 중첩메소드에서 다른 중첩메소드를 호출 할 수 있는가? --> 네.
+      - 룰을 정한다.
+      - class MyClass
+        - void foo()
+          - int a = 0, c
+          - console.out("foo")
+          - void _boo()
+            - int a = 1, b = 0
+            - console.out("boo")
+            - void _koo()
+              - int a = 2
+              - // 여기서 c를 접근할 수 있는가? --> 네.
+              - // 접근할 수 있다면 여기서 a의 값은 얼마가 되는가? --> 2. LocalSpace에서 top부터 검색하니까.
+              - // 그렇다면 여기서 d에 접근 할 수 있는가? --> 모른다. 이 함수가 언제 수행될지는 돌려봐야 아니까.
+              - console.out("koo")
+              - void _hoo()
+                - console.out("hoo")
+          - void _goo()
+            - console.out.("goo")
+            - // 여기서 boo를 호출 가능한가? --> 가능하다. 함수내의 모든 식별자는 me._goo()처럼 me에서 찾게 된다. (= 실제로 me에게 call을 하는게 아니라 scope에 이미 그렇게 들어있는 것이다) me에 없을 경우, 자연스럽게 this에서도 찾게 되며, 만약 this와 me에 둘다 있는 경우는 me로 인식되게 된다.
+            - 이는 함수 내의 블록문이 중첩된 경우, 블록문 밖과 안에 같은 변수명의 변수가 있는 경우 묻지않고 가장 안쪽 블록문의 변수로 인식하는 컨셉과 동일한 것이다.
+          - int d = 25
+    - 중첩메소드는 public private 제한은 없다. 따라서 다음의 코드도 맞는 코드다.
+      - class MyClass
+        - int foo()
+          - int add(int a)
+            - return a + a;
+          - int a = add(5)
+          - return a
+        - int boo()
+          - **int another_integer = foo.add(5)** // ok.
+          - return a
+      - MyClass.foo(void).add(5) --> #nonstatic메소드를_static처럼_사용한_경우는_어떻게_되는가  참고
+    - 중첩메소드는 execute()를 가지고 있는 클래스이다. 당연히 execute() 내에 자신의 private 메소드들을 호출 할 수 있다.
+    - Exception 문제를 해결가능.
+      - class MyClass
+        - int transfer(char[] packet)
+          - void _init(char[] packet)
+            - packet  = new char[255]
+            - void _except(MemoryException e)
+              - e.printStack()
+              - ERR("ERROR!")
+              - packet = new char[255] // try again
+              - void _except(MemoryException e)
+                - ERR("failed again. quit.")
+            - packet
+    - 중복되는 함수를 작게 빨리 만들고 scope를 제한시킴으로써 가독성 높임, 여기서만 사용하는 세부로직을 명시적으로 나눔
+    - 잘생각해보자. Method는 객체처럼 동작한다. Method도 Method를 가지고 있다면, 이것은 마치 진짜 객체가 아닌가? Nested Method와 Nested Class의 차이가 무엇인가?
+      - class MyClass
+
+
+
+#### Method의 생성과 초기화
+
+- Method는 생성과 동시에 초기화가 일어난다. 그러나 메소드의 생성은 lazy하게 이루어지기 때문에 무한 재귀에 빠지지 않게 된다. (반면 클래스의 초기화는 처음에 일괄적으로 진행된다)
+- Method의 멤버구성은 초기화는 자신의 소유자의 getMembers()가 호출되는 순간 이루어진다.
+  - 초기화가 이루어지는 일반적인 흐름은 이렇다 > Object::getMembers() > getClass().getMembers() > TClass<...>::getMembers() > T::onInitializeMethod() > return Method<MyC++Method>()     --> TClass<...>::getMembers()가 초기화 된것이다.
+
+
+
+#### 어떻게_하면_이_메소드를_호출할_수_있는지_아닌지를_알_수있을까
+
+- 바로 call을 해버리면 곤란하다. 왜냐하면 interpreter는 validation에서 모호성 오류를 검증하기위해 이 msg를 받을 수있는 곳이 1곳인가를 반드시 짚고 넘어가야 하기 때문이다. 따라서 기존의 컨셉인 "일단 call해서 안되면 return error 하라"는 통하지 않는다. 잘못하면 2번 각기 다른 곳에서 동작이 될 수 있다. 
+- x 1안 flag를 사용해서 "1번 이미 동작했다로 알린다. --> 1번째는 이미 실행이 되게 된다.
+- v 2안 isCallable()을 만들고, casting을 매번 수행한다.
+- x 3안 casting없이 알아내는 방법
+  - 코드가 복잡해지고, 사용자가 작성하는 로직이 어려울 것이다.
+
+
+
+#### Unique성을_구현하는_방법
+
+- \#Method가_만약_Type의_일종이_아니라면  과 관련이 있다.
+-  Type과 같이 상속을 통해서 Unique를 표현하는것이 아니라 인스턴스가 누구에게 속해 있느냐로 Unique를 결정한다.
+- 시스템에 1개만 존재한다는 것은 다음 2가지 조건을 만족해야한다.
+  - \1. scope 밑바닥에 추가되어야 한다. 왜냐하면 scope를 통한 접근이, 이것들을 접근할 수있는 유일한 방법이기 때문이다.
+  - \2. 런타임 도중 사용자의 의한 이것들의 복제 및 인스턴스 생성을 막아야한다. 이는 C++과 World 양쪽에서 모두 방어가 되어야 한다.
+- Unique성을 갖는 대부분의 것들은 Class와 그 밑에 있는 것들이다. 이것들은 C++ 코드 자체에 생성자가 private로 막혀있으며 오직 몇 friend 클래스에서만 마음대로 추가 및 생성이 가능하게 되어있다. 
+- World코드에 의해서 Node의 인스턴스 가 생성되는 과정은 항상 Class객체로부터 Object를 생성해 내는 것이다. 그리고 Class.getClass()를 하면 Class 자체가 나오며, Class는 ADT이기 때문에 instantiate()는 null을 반환한다.
+- 주의 - 전역변수는 Unique 성이 아니다. 
+  - \1. 이것은 일단 class가 아니며(이를테면 Class, Method 모두 클래스다) 그말은 복수의 객체가 나올 수 있다는 것이다.
+  - \2. 같은 타입으로 복제가 될 수있다.
+- 고찰내용
+  - Unique성이란?
+    - 시스템에 1개만 나올 수있다는 것을 시스템에서 보장해주는 것이다.
+    - 정확히 말하면 World에 의해서 생성은 가능하지만 사용자는 이걸 생성할 수 없고, 사용은 가능해. 라고 말해주는 것과 같다.
+  - 고찰을 통해 얻은 팩트
+    - **1. class는 const여야 한다.**
+    - **2. overriding때문에, call의 반환값은 확정되야 한다. 즉, 1번에 의해서 class로부터는 const인 call()만 호출가능해진다.**
+    - **3. 멤버변수가 static인 것은 sharaable이나 occupiable과는 관계가 없다.**
+  - 어떻게 구현하는가?
+    - C++적으로 모듈개발자가 Unique속성을 가진 것들을 생성이 불가능하게 할 수 있다면 World개발자는 당연히 못하게 된다. 그러므로 C++적으로 생각한 뒤에, 아귀를 맞춰나가자.
+    - 1안 const
+      - unique를 갖는 것들은 Class, Function, 클래스안의 멤버변수 들일 것이다.
+        - 착각하면 안된다. 전역변수, static변수는 해당되지 않는다. 이들을 Type이 아니니까. 모든 변수는 중복정의가 되지 않는다.
+      - Function, 멤버변수는 모두 Class에서 나오는 것으로 결과적으로 우리는 ClassManager에서 반환되는 것들을 const로만 반환하면 된다는 것을 알수 있다.
+      - static변수는?
+        - Unique성은 Type클래스가 아니라 const로 반환되는 ClassManager를 통해서 구현되어야 한다. 그러나 static은 Class 안에 속해 있으면서 언제든 그 갑이 외부로부터 변경될 수 있어야 만 한다.
+        - 생각을 해보자. World개발자가 static변수를 참조하려고 한다면 scope를 통해서 Class에 접근하고, 그 안에 있는 static변수를 접근할것이다.
+          - stmt {
+            - .thisptr = stmt {
+              - .thisptr = scope
+              - .name = "getMember"
+              - .args = {"MyClass"}
+              - }
+            - .name = "getMember"
+            - .args = {"my_static_variable"}
+            - }
+          - call()은 2종류가 있다. 
+            - const TStrong<Node>& call(...) const;
+            - TStrong<Node>& call(.....);
+            - 물론 const버전을 쓰면 static 변수를 접근 할 수 없지만, 최초 scope에 접근할때는 nonconst call()를 쓰게 될 것이다. scope는 const가 아니니까. 따라서 이후로 호출되는 모든 것들도 사실은 const가 아니게 된다.
+            - 고로 악의적인 목적을 가진 모듈개발자는 런타임에 class의 구성을 마음껏 변경할 수 있게 된다.
+      - Method는 정말 const라고 생각하는가? method가 execute되면 Method가 가지고있는 멤버변수를 건드리지 않을까? 이를테면 반환값을 저장하는 멤버변수 같은거.
+        - 그렇다고 해서, 클래스는 변경되선 안된다. 그러니 클래스가 const인거는 맞다.
+        - 1안 mutable?
+    - 2안 class => const. class.members => const reference. objects => nonconst.
+      - 클래스는 const로만 제공된다. 클래스의 멤버들도 모두 const다.
+      - 그러나 클래스 멤버들이 가리키고 있는 실체(object. 즉, Method, static변수)는 nonconst다.  nonconst를 const reference가 가리키고 있는 상황이지.
+      - --> 안된다. 결정적으로 이문제는 sharable과 occupiable과는 관계없다. sharable이 static일 수도, occupiable이 static일 수도 있다.
+    - 3안 call안에서 어떤건 const로, 어떤건 nonconst로 반환할 수 있을까?
+      - 안된다. overriding을 하려면 타입이 확정되야 하니까.
+    - 4안 static 변수는 class가 아니라 Object에 있게 한다면? 그리고 메소드안의 반환값은 mutable.
+      - 네. 모든 문제를 해결할 수 있을것이다. static이 좀 낭비지만.
+      - c++에서 클래스의 static변수에 접근한다면?
+        - 그럼 진짜 static변수에 접근하는 것이다. 이 문제와 관련 없지.
+          - 
+      - static변수가 여러개가 될때마다 모든 객체들은 여러개를 들고 있어야 한다. 메모리 낭비.
+    - v 5안 보안 문제는 나중으로 미루고 일단은 classmanager는 class를 그냥 공개해버린다.
+    - \#static변수는_어떻게_구현하는가  로 해결하였다.
+
+
+
+#### Method는_ThisPtr이_꼭_필요하다_어떻게_얻을_수_있을까.
+
+- class Message {
+  - mutable TStrong<Object> _origin;
+- }
+- class Object {
+  - call(const Message& msg) {
+    - bool is_updated = false;
+    - if(msg._origin == null) 
+      - msg.getOrigin() = *this
+      - is_updated = true
+    - .... call to members ....
+    - if(is_updated)
+      - msg.getOrigin() = null
+  - }
+- }
+- Message msg(......)
+- Object obj.call(msg) // mutable이니까 인자가 const Message& 라도 괜찮다.
+- obj2.call(msg) // 같은 메시지를 다른 객체에 던져도 잘 동작한다.
+- Method m = .....
+- m.call(msg) // 안에서 msg.origin = null이므로 에러를 탐지할 수 있다.
+- Method static = .....
+- static.call(msg) // 안에서 msg.origin을 안쓸것이므로 잘 동작할것이다.
+- 고찰내용
+  - 고찰을 통해 알아낸 팩트
+    - **1. Object에서 Method로 전파될때 Method는 엄밀하게 말해서 Object들에서 공유하고 있는 것이므로 thisptr를 알아야할 필요가 있다. 일단 Method가 진짜 모듈개발자가 정의한 c++함수를 호출하고 난 뒤에는 고 안에서는 thisptr가 필요없다. 오직 Object->Method 로 call되는 구간에서만 thisptr가 필요하다.**
+    - **2. 해당 메소드가 실행중일때만 메소드에 넘겨진 thisptr가 누구인지 알 수있어야 한다. 고로 thisptr자체는 method가 소유하고 있어서는 안되며 이사실을 외부에 알려서도(접근자메소드로 만들어도)안된다.**
+    - \3. 방법은 크게 2종류로, 하나는 call을 하면서 같이 thisptr를 넘기는 방법이며, 2번째는 call이외의 다른 경로(전역객체든, 접근자든)로 thisptr를 따로 전달하게 하는 방법이다.
+    - \4. call(const msg&) 에 건내지는 msg는 어떠한 상황에서도 수정되어서는 안된다.  --> #Message는_name_thisptr_args를_모두_하나의_Array로_구성한다? 참고. 따라서 thisptr 자체는 msg에 들어있어서는 안된다.
+    - \5. Native에서 Method 객체를 가지고 있다가 Object 개입없이 바로 호출이 가능해야 한다. 즉, 외부에 thisptr를 주입함으로써 호출할 수 있어야 한다.
+      - 예) void A::foo(Method& m) {
+        - m.call(thisptr, msg)
+      - }
+  - *x 1안 모든 Node는 Owner를 갖고 있다고 하며, Method는 부모를 갖고 있으므로 이것은 Object이거나 또 다른 Method일 것이다. 이걸 활용하자.*
+    - Method의 Owner는 thisptr가 아니라 Class다.
+    - 가장 설계상으로 합리적인 안이지만 동시에 ptr를 set하는 것은 메모리 및 퍼포먼스 이슈가 있기 마련이다. 다른 용도로도 활용한 용도가 무진장 많다면 이걸 할 수 있을것이다.
+  - *2안 Stack&Scope를 사용한다.*
+    - 그러나 이경우, Stack을 사용하지 않는 Method는 누구의 Object인가는 알수 없다. 
+      - Limitaion으로 두는 수밖에 없다.
+    - Object는 어짜피 ObjectSpace 구성을 위해서 자신을 Scope에 등록을 해야한다. 따라서 고때 같이 scope가 object를 가지고 있으면 될 것이다. 
+    - API명은 scope::getRunningObject() 정도로 하면 될까? 이건 좀 더 생각해보자.
+  - *3안 그래서 나온게 Message안에 argument로 ThisPtr를 넣자는 것이다.*
+    - --> #Message는_name_thisptr_args를_모두_하나의_Array로_구성한다  참조
+  - *4안 msg안에 .thisptr로 따로 빼놓자.*
+  - *5안 call의 인자를 하나 더 받게 해서 거기다 넘기자.*
+    - static 함수같은 경우에는 thisptr를 사용하지 않는다.
+  - *x 6안 Method에 추가적으로 set을 하게 한다.*
+    - Arguments는 이런식으로 전달하게 하고 있다?
+      - 그건 별도의 함수이다. DynamicBindingExpr을 통해서 들어오는 call(Message&)는 name이 "execute" 일때 execute()로 빠지도록 하고 있다. 즉 제대로 Message로부터 받도록 되어있는 것이지 추가적으로 set을 할 필요는 없다.
+  - *x 7안 Message는 static으로 thisptr를 담게 한다.*
+    - scope와 다를건 없다. 다만 그 위치가 message로 옮겨지게 한다는 것.
+  - *x 8안 Message origin 알고리즘 --> 이 방법은 Native에서 메소드를 호출할 방법이 없게 만든다.*
+    - class Message {
+      - mutable TStrong<Object> _origin;
+    - }
+    - class Object {
+      - call(const Message& msg) {
+        - bool is_updated = false;
+        - if(msg._origin == null) 
+          - msg.getOrigin() = *this
+          - is_updated = true
+        - .... call to members ....
+        - if(is_updated)
+          - msg.getOrigin() = null
+      - }
+    - }
+    - Message msg(......)
+    - Object obj.call(msg) // mutable이니까 인자가 const Message& 라도 괜찮다.
+    - obj2.call(msg) // 같은 메시지를 다른 객체에 던져도 잘 동작한다.
+    - Method m = .....
+    - m.call(msg) // 안에서 msg.origin = null이므로 에러를 탐지할 수 있다.
+    - Method static = .....
+
+
+
+#### 타입 포함된 함수ptr를 어떻게 world frx에서 구현할 수 있을까?
+
+- 이미 Expr & stmt는 target이 Node이기만 하면 validation을 한다. 그러므로 함수ptr라 하더라도 Node것처럼 validation을 돌리면 된다.
+- 고찰내용
+  - v validate를 먼저 해결해야 한다.
+    - validate는 friend로 선언된, classManager안에 있는 별도의 visitation에 의해서 수행된다. 
+    - call()에서 사용된 _precall, _prerun을 visitation 안에도 동일하게 사용한다.
+  - world의 함수포인터인데이 이 함수포인터는 이러한 인자타입들을 가지고 있다는 걸 어떻게 컴파일러에게 알려줄수 있을까? 어떻게 컴파일에러가 나도록 할 수 있을까?
+  - ptr가 아니라 일반 함수가 컴파일에러가 나는 과정을 먼저 clearify하자. 함수호출은 stmt(expr)이 담당한다. 고로 exprValidation.visit()함수가 수행되면 
+    - \1. expr이 들고있는 args 자체에 문제가 있는지 확인함.
+    - \2. 현재 구성된 scope에서 호출할 method를 찾아서, 그것에게 args를 set하는 식의 scope를 제어하는 Expr._precall()을 여기서 호출함.
+    - \3. visitor는 Expr가 들고있는 Strong target을 재귀적으로 탐색한다. 하지만 그렇다고 해서 target이 가리키는 원본까지 visitation을 하는 것은 아니다. 이러한 차이를 항상 염두해 두고 expr같은 TVisitation들은 어디까지 직접 재귀적은 visit을 해야하는지를 생각해야 한다.
+  - 결국은 Expr이다. Expr.target = methodptr가 들어있을 것이다. 즉, 기본적으로 함수ptr에 대한 validation 기능이 있는 것이다. 이는 Expr입장에서 target이 base가 Node로 보고 있기 때문이다. Node기반으로 validation을 하기 때문에 target이 methodptr인지 아닌지 상관없이 동일하게 validate가 가능하다.
+
+
+
+
+
+#### 메소드ptr 정의하는 Stmt 클래스를 구현하라
+
+- 월드 : 메소드 delegator를 생성할때 this를 넣어줬는가 아닌가를 "컴파일타임"에 판단하여 적절한 MethodDelegationExpression을 생성한다. this를 넣어준 경우는 CreateMethodDelegationExpression의 target이 그 this로 채워질 것이다.
+  - class MethodDelegation
+    - target = scope["a"] **// <-- Stmt가 이값을 이렇게 채우면 된다.**
+    - Weak<Method> to = ...
+- class A
+  - void print(int a)
+    - ...
+  - void go(int b)
+    - ...
+  - static void no(int c)
+    - ...
+- A a
+- void(int)[3] fptrs = {a.print(int), a.go(int), [a.no](http://a.no/)(int)}
+- fptrs[1] = null
+- for void(int) e in fptrs
+  - e(3) // a.go와 a.no만 호출됨
+
+
+
+#### 메소드 식별문법
+
+- 메소드는 오버로딩이 가능하기 때문에 이름만으로는 애매모호하다. 따라서, 인자타입리스트((type1, type2) 처럼 변수명 없이 타입만 써있는것)도 같이 명시해줘야 한다.
+- 이게 정석이나, 일부의 경우 method deduction을 해달라는 요구사항이 있었다.
+- 시나리오
+  - class A
+    - void print()
+    - void print(int age)
+    - void print(string msg, float grade)
+  - A.print(void) // 이건 함수에 접근하는 것.
+  - A.print() // 이건 함수를 호출하는 것
+  - A.print(string, float).getName()
+- 시나리오2-인자가 복잡해지면 읽기 어려워지는데
+  - class A 
+    - int print(int a)
+      - ..
+    - int(int) print(float b) // 여기서 print(int b)로 하면 중복정의가 된다.
+      - return print(int)
+  - int(int)(int) fptr = A.print(float)
+
+
+
+
+
+#### Method가_만약_Type의_일종이_아니라면, Type이라는 클래스가 필요없다면, execute()를 virtual로 상속받게 할 수 있다. 
+
+* Contextual_REPL_based_development  가 먼저 해결되어야 한다.
+* Type은 자신을 Generating한 SourceCode가 누구인지 적어놓는 역할이다. 아마 이는 C-REPL때문에 생긴것이다.
+
+- 1안 필요없다. Type은 Unique성을 부여하기 위해서 넣은 클래스일 것이다. Type 클래스를 없애기 위해서는 Unique성이란 무엇인지, 이걸 부여하기 위해서 어떻게 할 것인지를 정해야 한다.
+- 2안 내 소스코드가 어디인지, 어디서부터인지는 기록할 필요가 있지 않은가?
+
+
+
+
+
+
+
+#### 월드코드에서의 함수식별을 어떻게 할 것인가? a.print() 와 a.print(void).execute
+
+- 월드코드에서 a.print()는, 인터프리터가 a.print(void).execute 로 인자추론하여 정적바인딩으로 함수 확정후, 코드블럭이 만들어질 것이다. 즉, syntatic sugar다.
+- Node.getMember()은 인터프리터가 바인딩을 할때 주로 사용하게 될 함수다. getMember(index)와 getMember(string), getMember(msg) **3종류**가 있어야 한다.
+  - getMember(string) {
+    - return getMember(Msg(string)); // 이 Msg는 args가 없다.
+  - }
+- Object::isConsumable은 name만, Method::isConsumable()은 ((name == name(paramlist) && noArgs) || msg를 consume 가능할때)) 통과시킨다.
+- 이때 일부 pretype은 name을 소문자로 해야한다. 
+  - 예) String은 C++에서 봤을때 그런거고, world에서는 string이다.
+- name(paramlist)은 Method._name이며, Method::initialize()나 lazy로 한번 define된다.
+- 고찰내용
+  - 함수 식별문제 때문이다. World코드에 a.print(void).getName() 과 a.print() 2개가 있다고 해보자. 이때 인터프리터는 저 2가지 케이스에 대해서 어떠한 코드블럭을 만들어야 할까?
+    - x 1안 2가지의 output이 다르게 한다.
+      - 이 경우 Node는 subnode에게 isConsumable(msg)를 물어볼때, subnode가 MEthod 라면 "print(void)" or ("print" && args[0] == void) 로 따져줘야 한다. 즉 isConsumable의 true 요건이 2개가 되는 것이다.
+      - **이건 동적바인딩을 하겠다는 것이다. 어떤 print함수가 될지 이름만 줄테니, 함수바인딩은 실행할때 하겠다는 것이지.**
+    - v 2안 2가지의 output이 같다. 
+      - 이경우 a.print()는 인터프리터가 실제로 어떠한 함수인지를 인자추론을 통해서 판단한 뒤, a.print(void).execute 로 변경한다. 즉, **syntatic sugar**가 되는 것이다.
+      - 따라서 이경우, 인터프리터가 함수를 판단한 뒤 코드블럭을 만들면서 확정해버린다. C-REPL 문제와 관련이 있게 된다.
+      - C-REPL의 초기안은 코드 수정이 나면, 수정난 것에 영향을 받는 모든 코드를 전수조사 및 역추적해서 그 부분들을 다시 바인딩 및 검증을 돌리는 방법이었으나 이게 시간이 너무 걸리는건 뻔한 이야기다.
+      - [3/28] 그래도 그렇게 해야 한다. 동적바인딩을 해버리면 에러를 탐지할 방법이 없기 때문이다.
+
+
+
+
+
+#### 메소드 타입리스트 deduction
+
+- 시나리오
+  - class A
+    - void print(int)
+      - ...
+    - void print(float)
+  - A a
+  - void(int) f1 = a.print(int) // 이게 정석이나,
+  - void(int) f1 = a.print // 어짜피 a.print(float)이 여기에 오면 에러가 되기 때문에 이건 해당사항이 되지 않는다.
+- 구현방법은?
+  - v 1안 정보가 부족한 경우, 필요한 인자를 끼워넣어 여러가지 candidates를 만든다. 그리고 에러로 판정되는 것은 삭제를 해버린다. == SFINAE. 
+    - 최종 컴파일 결과가 에러로 판정된다면, 미리부터 candidates라고 사용자에게 알릴필요가 없다는 것이다. 
+    - candidates에서 제끼는 게 이 안의 구현사항이 아니다. 처음부터 부족한 정보를 제공한 경우에도 정보를 보간하여 candidates를 만들어내는 것이 요구사항이다.
+    - 즉, 함수명만 제공된 경우, 해당 클래스의 같은 함수명을 가지고 있는 모든 member가 candidates가 된다. validator는 이중에 어떠한 것들이 최종적으로 에러가 아닌지를 판단해서 candidates가 1개가 되면 그걸 채택한다.
+    - 대충 맞을 것 같긴하다. validation에 상세한 알고리즘을 구현해보자.
+  - x 2안 파싱 rule을 추가하여 정보가 부족한 경우에 자동으로 딱 1개의 정보를 채워넣는 일종의 syntactic sugar로 동작한다.
+    - void(int) f1 = a.print를 한 경우, 자동으로 a.print(int)로 채워넣는 파싱rule을(혹은 파싱전 사전작업) 추가한다는 것이다.
+    - v 하지만 이와 같은 경우, 앞뒤 타입으로 유추가 가능하면 사용할 수 있으나 다음과 같은 상황은 해당되지 않는다.
+    - class A
+      - void print(float)
+    - A a
+    - string c = A.print.getName() // 요 stmt만 놓고 보면 print를 특정하는 정보가 일체 없다. A는 print가 함수1개만 있다는 걸 컴파일러가 알아야 보간가능한 상황이다.
+
+
+
+
+
+#### 람다를_지원할것이기_때문에_fptr같은게_있어야_한다_어떻게_함수ptr를_정의하도록_할까. 중요한 점은, 가능하면 타입체킹이 가능하도록 해야 한다는 것이다.
+
+- [v] 런타임시 함수ptr 생성
+
+  - Method를 가리키는 함수ptr에 해당하는 타입을 만들어야 한다. 
+
+- [v] 함수ptr의 정의
+
+  string(int, float) funcptr = A.foo(int, float) typedef string(int, float) FuncPtr FuncPtr funcptr2 = funcptr 로 한다. 
+
+  - *x 1안 Node형태로 사용하게 한다.*
+    - class A
+      - int foo(int a , float b)
+        - return a + b
+    - method foo1 = A.foo
+    - Console.out("foo = " + foo(3, 3.5f))
+    - foo1("wow")
+    - **이럴바에야, method 대신 node를 쓰라고 하면 된다. node는 어떠한 call도 런타임에 바인딩을 판단하는 타입이다. 어떠한 것도 코딩할 수 있다.**
+    - 그리고 node도 제공하지만 이것 정말 어쩔 수 없을때 사용하는 거고 그 외에는 타입을 체킹할 수 있는 수단을 제공하고 싶다.
+  - *x 2안 method라는 독특한 정의법을 만든다.*
+    - 시나리오 
+      - class A
+        - string foo(int a, int b)
+      - method foo1 = A.foo
+      - foo1(2, "msg") // compile err
+    - 안된다. 
+    - 이유1. validation에서는 실행은 하지 않는다. 따라서 foo1 자체는 scope에 있지만 foo1의 값인 foo메소드는 없는 것이다. 따라서 foo1이 어떠한 메소드와 binding이 되어있는지 알 수 없다.
+    - 이유2. method의 타입은 초기화시에 어떠한 함수와 binding되었는가에 의해서 결정된다. c++의 auto와 같다. 따라서 
+      - method foo1 = null
+      - foo1 = A.boo
+      - or
+      - method[] foos
+      - foos[rand()] = A.boo
+    - 여기서 A.boo가 들어갈 수 있는지 없는지 컴파일타임에 정할 수 없다.  돌려봐야 아는 것이다. 이문법은 사실 node와 거의 동일하다.
+  - 시나리오
+    - class A
+      - string foo(int a, float b)
+        - ..
+    - string foo(int a, float b) = A.foo *// [x] 굳이 필요도 없는 변수명을 적을 이유가 없다.*
+    - Console.out("foo = " + foo(3, 3.5))
+    - foo(2, "msg") // compile err
+    - string foo(int, float) = A.foo *// [x] 3안 --> 이경우, 같은 타입의 변수를 여러개 지정하지 못한다.*
+    - string(int,float) foo1 = A.foo // 4안
+      - string(int,float) foo1, foo2 = A.foo
+      - string(int, float)[] foos
+      - foos[0] = A.foo
+      - foos[1] = A.boo
+      - for e in foos
+        - e(3, 3.5)
+    - ref string foo_type(int, float)
+    - foo_type foo1, foo2  *// [x] 5안 C#, boo, cobra 스타일 -> 3안 + typedef 한것과 동일하다*
+      - string function(int, float)  = A.foo *// D 스타일*
+      - def (int, float) *// boo*
+  - v 4안으로 한다.
+    - .NET 계열언어에서는 5안을 많이 사용한다. 
+    - js, python같은 애들은 애초에 동적타입이므로 이문제에서 벗어난다. 
+    - 자바는 interface 클래스를 만들고, 이를 이름없는 객체를 생성하여 에둘러 해결한다. 그러나, 이 방법은 사용자가 정의할 cb을 받아들이는 데 적합할 뿐, 이미 존재하는 다른 클래스의 메소드를 그대로 참조는 불가능하다.
+    - 결과 4안을 하기로 했다. 여기서 typedef를 사용하면 5안과 차이가 없다는 점이 핵심이다. 
+    - 메소드 정의와 ptr정의를 동일하게 가져가는 것도 좋지만, 이렇게 해버리면 한번에 복수개의 변수를 만들 수 없으며, 타입명 중간에 변수명이 들어가게되므로 통일성도 깨진다.
+
+
+
+
+
+#### "지금 이 메소드는 이 객체에 속한 것이다" 라는걸 expr이 끝나도 알 수 있는 방법은?
+
+- 시나리오
+  - class A
+    - void print(int)
+  - A a
+  - void(int) fp = a.print
+  - a.print 가 끝나고 나면 Method가 MethodDelegator에 들어가게 될 것이다. 이 MethodDelegator객체는 인자인 Method의 Object가 누구인지 생성자에서 알 수 있으면 편할 것이다.
+
+
+
+
+
+
+
+
 
 
 
@@ -407,6 +857,224 @@
 
 
 
+#### 멤버변수 컨셉
+
+- v 멤버변수는 Object에 속한것이냐 아니냐 기준으로 배열을 2개 만든다.
+
+  - Object와 Method는 본격적으로 멤버변수를 다룬다. 멤버변수를 어떻게 구성할것인가는 생각외로 상당히 복잡한 문제가 되는데, 왜냐하면 const여부, static여부, private/public 여부, variable여부 등등 여러가지 요인들이 한번에 얽혀있기 때문이다.
+    - [확정] 1. class - object 멤버를 구분해야 한다.
+      - class에 속한것(메소드 + static variable)은 모든 object가 공유하는 것이므로 이것들은 모든 object가 생성될때마다 추가할 필요가 없어야 한다. 따라서 최소한 이둘은 반드시 구분할 필요가 있다.
+    - \2. static 메소드 구현방법
+      - 구현 알고리즘에 따라서 static 메소드는 일반 메소드와 별도로 구분할 필요가 있는가?
+    - \3. public/private 
+      - 얼핏 생각하면 외부에서 call()을 하는 경우에는 public 메소드만 호출가능해야 한다. 고로 private 메소드가 담길것과 public 메소드가 담길것이 구분이 되어야 하지 않겠냐는 것이다.
+    - \4. const
+      - 객체가 const화 되어있일때와 nonconst일때와 같은 메소드명으로 호출한다고 하더라도 다른 메소드가 호출되어야 한다. 즉 "caller의 const 또한 msg의 일부" 인 셈이다. 따라서 public/private와 마찬가지로 구분될 필요가 있다.
+  - 그러나 문제는 저 4가지를 모두 채택할 경우, 멤버변수는 총 2^4 = 16개의 별도의 container에 담겨지게 된다는 것이다. 따라서 최적화를 고려해야만 하는 상황이다.
+  - v 1안 굳이 구별할 필요가 없는 상황을 만든다.
+    - const, public/private는 Object내부에서 걸러서 에러를 반환하도록 한다. 별도의 배열을 두지 않는다.  두는 이유는 "탐색시 빠르라고" 인데, 어짜피 최적화 과정이 들어가면 탐색 없이 함수를 특정할 수 있도록 해야 한다.
+      - vtable 대신 Object.getMembers()[n] O(1)로 접근하게 된다.
+  - x 2안 구별해야 하지만, 눈속임으로 구별하는 것처럼 만든다.
+  - x 3안 16개의 container가 되더라도 속도가 낮춰지지 않게 하면 된다. 생성/실행시 퍼포먼스가 떨어지지 않는 방향으로 접근한다.
+    - 갯수가 많아졌을때의 부담은 
+      - \1. 바로 탐색이 느리다는것과
+      - \2. 객체 생성시 부담이 생길 수 있다는 것이다.
+
+- v 구성 및 객체생성
+
+  - 시나리오
+    - \1. 각 Class들은 부모의 메소드들을 copy한다. 이는 chain deep depth로 인한 퍼포먼스를 줄이기 위함이다.
+    - \2. Object의 Members는 lazy하게 동작한다. 이때 Object는 getClass().getMembers()를 chain으로 가져와서 초기화한다.
+    - \3. 각 Class는 프로세스 시작과 동시에 ClassTree 구축을 위해서 인스턴스가 자동발생한다. Class생성자에서 자동으로 initialize()를 실시한다. 단, Class::initialize() 안에서도 members를 구성하지는 않는다. lazy하게 간다.
+    - \4. 만약 Class::getMembers()가 불려진 경우, getSuperClass().getMembers() 목록을 가져와 일단 clone한다. ClassTree 구축은 이미 끝났기 때문에 getSuperClass() 이때 한다고 해도 인스턴스만 생성한다. 그러나 이후에 호출되는 Members()는 SuperClass의 4번이 다시 반복되게 만든다.
+    - \5. 그 후, T::onInitializeMethods()로 wrapping된 메소드 목록을 가져와서 append한다.
+    - \6. T::onInitializeMethods() 안에서 Method객체가 생성된다. Method는 클래스가 아니므로 3번 과정이 반복되지 않는다. 결과적으로 T::onInitializeMethods는 TClass<T>::getMembers()가 불려지는 최초 1번만 cb된다.
+  - 예외 시나리오
+    - class Method {
+      - const String& getName();
+      - Method[] onInitializeMethods() {
+        - v  getName()에 대한 Method를 만들어서 넘길 수 있는가? --> 넘기는 건 가능하다.
+          - Method::getMembers() -> TClass<Method>::getMembers() -> Method::onInitializeMethods() -> Method newone(...) -> Method::Method(...)
+          - 결론 : Method가 생성된 것이지, Member가 구성된게 아니기 때문에 재귀에 빠지지는 않을 것이다. 그리고 이 루프가 시작된 발발지점도 생성자에 의해서가 아니라 getMember()에 인한 것이다. 무한 재귀는 성립되지 않는다.
+        - Method.get("getName(void)").get("getName(void)").get("getName(void)").get("getName(void)").get("getName(void)").get("getName(void)") 할시, getMember()는 여러번 구축되는가? 메모리 낭비가 되지는 않는가?
+          - 하나씩 추려서 치환해가보자.
+          - == TMethod<getName>().get("getName(void)").get("......");
+          - TMethod<getName>은 Method의 일종이다.  그래서 get()은 getMember()를 호출하고, SuperClass인 Method::getMember()를 호출한다. Method::getMember()는 Class<Method>::getMember()를 호출하며, Class::getMember()는 이미 한번 초기화가 된 경우에는 저장된 멤버를 바로 리턴한다.
+          - 즉, TMethod<getName>()에 담겨있는 TMethod<getName>()은 TClass<Method>::getMember()에 담겨있던 것을 TClass<TMethod<getName>>이 복제한 놈이다. 메모리 낭비가 아니다. 이는 TClass<T>에 T() 객체 한개가 들어있는 걸 생각하면 된다. 무한 루프 및 무한 재귀는 돌지 않는다.
+      - }
+    - };
+    - Method.get("getName(void)").get("getName(void)") 시, 문제가 발생하는가?
+      - == TNativeMethod<getName>().get("getName(void)")
+  - class Object
+    - friend class Class;
+    - Chain _members;
+    - virtual Container& getMembers()
+      - return _members;
+  - Class는 Array Memebers를 갖고 Array ObjectVariables를 갖는다. ObjectVariables는 Members를 chain 한다.
+  - virtual Container Node::getMembers(); // invisible
+  - TRefer<T> TClass::instantiate()
+    - T& newed = *(new T());
+    - _chainMembers(newd);
+    - return TRefer<T>(newed);
+  - class Class
+    - void _chainMembers(Object& obj)
+      - Chain& tweak = obj._members;
+      - tweak.chain(getMembers());
+      - tweak.chain(getObjectVariables().clone());
+  - 파싱시에는 variable, function은 super의 것을 chain을 유지한다.
+
+- 필요시 member라고 해서 variable과 function과 chain을 유지한 것을 값으로 생성해서 반환해준다. 값으로 내보내도 chain을 묶는것 뿐이므로 퍼포먼스 로스는 적다.
+
+- 하나의 객체는 private variable, public variable 2종류를 갖는다.
+
+- 클래스.instantiate()를 하게 되면 메타클래스의 variable을 복제해서 넣는다. 그리고 생성자를 호출한다. 객체의 variable은 chain되지 않은것을 복제했으므로 chain이 아니다.
+
+- 객체가 함수를 사용할때는 chain되지 않은 함수의 것을 바로 사용하므로 역시 탐색시 로스는 없다.
+
+  
+
+#### 무엇인 member의 기준이 되는가? --> 메시지 스택이 전파될 수 있는가.
+
+- 메시지 스택이 전파될 수 있는가? 그걸 허용하는가?
+- class A
+  - class B
+    - void print()
+      - a = 5;
+- A.B.print 이걸 보자. 여기에는 3가지 메시지가 들어있다. {"A"}, {"B"}, {"print"} 그리고 각각은 stack으로 뒤에것은 앞에것에 영향을 받는다.
+- 이것은 메시지가 전파되는 구조가 아니다. 각 메시지는 독립적으로 소비되지만, 메시지 스택은 공유되기 때문에 앞의 메시지는 뒤에 메시지에 영향을 끼치는 구조다. 
+- 만약 Statement가 멤버라면 월드코드에서 누구나가 "a=5" 라는 statement에 접근할 수 있어야 한다.
+- 위의 기준대로 각 개념들이 member인지 아닌지 따져보면,
+- Statement : 아니다.
+- **Method의 인자 : 맞다. method의 첫번째 인자가 무슨 타입인지 rtti로 알아내고 싶을때가 있기 때문이다.**
+- **Method의 반환값 : 맞다.**
+- **Method의 Method : 맞다.**
+- **Method의 멤버변수 : 맞다.**
+
+
+
+#### Object의_멤버변수_초기화_문제
+
+- 문제정의 : Object가 Managed에서 생성될때는 TClass<T>::instantiate() 안해서 new T()로 객체를 만들고, 만든 T*->getMembers()로 Chain을 가져와서 chain(메소드.getMembers())하고, 메소드의 ObjectVariables()를 clone한걸 chain시키게 하는 동작을 함으로써 객체의 members 초기화가 완료된다. 이 과정은 쉽게 말해서 Native함수들을 Managed에 visible할 수있는 준비를 만드는 것이다. 그러나 Native에서 객체를 만드는 경우는 어떤가? Object 클래스는 부모클래스이기 때문에 이 생성자 안에서는 도대체 사용자 클래스인 자식클래스가 무엇인지 알 방법이 없다. 자식클래스의 생성자에는, 자식클래스가 사용자의 클래스이기 때문에 함부로 생성자의 코드를 작성할 수 없다. 방법은?
+- v 1안 Lazy 초기화를 수행한다.
+  - "Members에 접근은 반드시 getMembers()로만 수행해야 한다" 는 조건이 완벽하다면, 이 함수가 불려졌을때 Members가 비어있을 경우 메타클래스로부터 members를 가져와서 초기화한다.
+
+
+
+#### 멤버변수 기초
+
+- 고찰내용
+
+  - 어떠한 변수를 생성해야한다는 정보를 누가 들고 있어야 하나?
+
+    - \1. 생성자코드에 추가되도록 한다.
+
+      - 아마도 자바에서 사용하는 방법일 것이다.하지만...
+
+    - v 2. 클래스 자체가 변수도 들고있고, 클래스를 clone한다.
+
+      - 클래스는 변수가 무엇인지 알아둘 필요가 있긴 하다. World에서 변수 접근, 변수에 할당은 모두 "메시지"로 취급한다. 함수나 변수나 구분은 할 필요가 없는 것이다.
+
+      - 클래스가 함수를 담을 수 있다면, 구조상 변수도 담을 수 있는 잠재성이 있다.
+
+      - 그럼, 그걸 어떻게 하는가?
+
+        - v 1안
+          - 클래스는 Node[] members; 를 갖게 한다. 그리고 여기에 Function이나 멤버변수가 들어가면 된다.
+          - 이 Node가 일반 클래스인가, 아니면 데이터타입의 클래스(int, float, double, string ...) 인가를 구분짓는 것은 setter와 getter 메시지를 처리 할 수 있는가 아닌가다.
+          - 클래스를 instantiate()를 하게 되면 T()를 생성하고 MetaClass가 가진 members중 Node[]만 복사해서 insert 시켜 주면 된다.
+          - 임의 Node  a에게 메시지가 온 경우,  #메시지_전파_알고리즘 에 따라 scope의 관점에서 올라가면 된다.
+            - 만약 객체소유의 관점에서 올라가면 멤버변수가 메시지_전파_알고리즘 에 반응해버린다. 
+          - 문제점
+            - 함수인 Member만 모아서 접근하는 건 쉬움. 이미 있으니까. 하지만 멤버변수인 Member들만 모아서 접근하는 방법은? for문을 도는 방법밖에 없다고 말하지는 말아줘.
+              - 이러한 ContainerForContainer를 Chain이라고 이름을 붙였다. 이걸 통해서 해결한다.
+              - 구체적인 설계는?
+                - 1안 - 최대한 쪼갠다.
+                  - 하나의 클래스는 private variable, private function, public function, public variable 4종류를 가직 있다.
+                  - 파싱시에는 variable, function은 super의 것을 chain을 유지한다.
+                  - 파싱이 끝나면 incarnate()를 통해서 원소를 복제하고 chain을 푼다. 이후로는 메타정보 injection이 불가능하다는 얘기다.
+                  - 필요시 member라고 해서 variable과 function과 chain을 유지한 것을 값으로 생성해서 반환해준다. 값으로 내보내도 chain을 묶는것 뿐이므로 퍼포먼스 로스는 적다.
+                  - 하나의 객체는 private variable, public variable 2종류를 갖는다.
+                  - 클래스.instantiate()를 하게 되면 메타클래스의 variable을 복제해서 넣는다. 그리고 생성자를 호출한다.
+
+      - 2안
+
+        - 준비
+
+          - 메타클래스는 Member를 2개 가지고 있음.  1개는 변수만 들어있는 Member이자 다른 1개를 super로 가리키는 것, 또 1개는 함수만 들어있는 Member. Member에는 함수와 멤버변수가 들어갈 수 있음.
+          - 클래스 파싱될때 모든 함수를 먼저 함수Member에 넣음.
+          - 그리고 멤버변수Member super를 함수Member로 지정함. 
+          - 파싱된 멤버변수를 멤버변수Member에 넣음. 이제 멤버변수Member는 모든 멤버변수를 가지고 있음.
+
+        - 결과
+
+          - 메시지전파는 함수Member만 접근하면 됨. 문제없음.
+          - 새로운 Node생성시, 멤버변수Member를 복제하여 새로운Node에 집어 넣으면 됨. 해당 Node는 독립적인 멤버변수를 가지고 있으며, 게다가 함수Member는 기존처럼 super로 가지고 있기에 메모리에 포함되지 않음.
+
+        - 문제점
+
+          
+
+#### static변수는_어떻게_구현하는가
+
+- Generating단계에서 class 객체를 추가하면서 members에는 static변수와 method만 담는다.
+- WorldObject생성시 붙여지는 멤버변수는 별도의 const Members& getMemberVariables() const에 담겨지며 이것의 nonconst 버전은 friend 클래스들에게만 공개된다.
+- ClassManager에 의해서 제공되는 class는 nonconst로 제공된다.
+- 고찰내용
+  - v 1안 일반 멤버변수는 class의 멤버가 아니다.
+    - Class의 일반 변수는 world에 visible 해서는 안된다. 함수와 static 변수만 visible 해야한다. 
+    - Generating단계에서 파싱을 하면서 class 객체를 추가하는데 이때 Class.member에는 Method와 static 변수가 nonconst로 접근할 수 있다. 멤버변수는 별도의 내부 members에 담겨지며, 이것들은 별도의 const Members& getMemberVariables() const 와 같이 접근해야 하며, nonconst로 접근할 수 있는 것은 일부 friend로 선언된 클래스들 뿐이다.
+    - 대박이네.. 어제하루종일 고민한건데... 이렇게 간단히 풀리다니.
+    - v 문제없어 보이긴하는데..시나리오로 검증해보자. 
+      - C++ 관점에서
+        - classManager로 nonconst인 Class를 얻을 수 있다.
+        - class는 member인 method와 static 변수를 있는 그대로 제공한다.
+        - 객체시 추가될 멤버변수는 const Members getMemberVariables()로 얻어온다.
+      - world의 관점에서
+        - member인 method와 static변수는 당연히 getMember()로 얻어 올 수 있다.
+        - 원한다면 getMemberVariables()도 visible하게 할 수 있을 것이다.
+
+
+
+#### 객체의 Member initializing 알고리즘
+
+- Node는 member를 가지고 있다.
+- 각 함수는 자신이 private 여부를 가지고 있다.
+- ObjectType Class는 variable member와 function member, 그리고 Chain<T> member 3개를 가지고 있다. 이중 앞의 2개를 member가 chain하고 있다. function이 앞에, variable이 뒤에 속해있다.
+- variable에 바로 push를 해도 알아서 잘 들어간다.
+  - Container는 Attacher처럼 어떠한 타입에 대해서도 일단은 호출이 가능하고 AttachableType() 체크를 통해서 받아들일지 아닐지를 결정한다. 따라서 chain인 member도 일단은 push가 가능하다. push 할 원소를 앞의 chained 컨테이너와 뒤의 컨테이너에 각각 물어봐서 넣을 수 있다고 판단되면 그곳에 넣는다.
+- 각 variable, function은 부모의 variable, function에 대한 chain이 아니다. 상속시, 부모의 함수를 push 하고 자신의 것을 넣는다.
+  - 중복으로 인한 메모리를 낭비하는 이유는, 이게 퍼포먼스가 빠르기 때문이다.
+- 객체를 생성하는 방법은 variable만 복제하는 것이다. 복제된 variable은 원본 function을 chain한 상태가 된다.
+- 고찰내용
+  - 클래스 문제점
+    - factor가 많다. 
+      - private-public 이냐
+      - 멤버냐 function이냐
+      - member
+      - private-variable
+      - public-variable
+      - private-function
+      - public-function
+      - private-member
+      - public-member
+      - 하나의 컨테이너로부터 다양한 컨테이너를 뽑아내는 방법은?
+      - 필수인 것들만 뽑아보자.
+        - all-variable : 객체 생성을 위해서
+        - all-function
+        - all-member : 일괄 적용을 위해
+        - public이냐 private이냐는 건 파서가 직접 판단해서 런타임 에러를 올려보내도록 한다.
+        -  function이냐 variable이냐 를 구분하지 않을 방법은?
+          - 이는 빠른 객체 생성을 위해서 필요했다. 객체 생성시에 variable을 복사해야 하기 때문이다.
+          - Node는 member만 가지고 있고,
+          - 클래스 & 객체는 변수member + 함수member 로 이루어져 있다. 이 2개는 member와 동기화 되는 거고.
+        - member가 chain이며 function이 앞에 들어가 있는 상황에서  member.push(variable)를 하게 되면 어떻게 되는가?
+          - 각 container는 어떠한 타입을 받을 수 있다는 정보가 있어야 한다. 기존 World는 이게 없었기 때문에 Container<T>는 있어도 ContainerBase 같은 건 있을 수 없었던 것이다. ContainerBase는 push(Node&)가 있어야 하며, 어떠한 타입에 대해서 연산이 가능한지를 알려주는 getPushableType() 같은 게 있어야 한다. 마치 Attacher 처럼.
+  - 전역변수인지 아닌지는, 해당 object가 어느 scope에 속하는가에 따라서 정해질 뿐이다.
+  - 상위 scope에서 객체를 접근할 경우 재귀적으로 접근이 동작하지 않는다.
+  - 재귀적으로 할 경우 중복된 메시지수신이 존재했을때 순서에 의해서 수신자가 반응하게 되므로 예상치 못한 결과가 나오게 된다. 송신자는 접근시, 접근할 객체를 찾을 타겟을 정확하게 지정해야 한다.
+
+
+
 
 
 
@@ -414,7 +1082,6 @@
 
 ### 기본 타입
 #### this, me
-##### 1
 -   모든 코드는 함수 안에서만 실행된다. 함수는 항상 객체 안에만 있다. 따라서 모든 함수에는 this와 me 라는 기본 포인터가 2개 제공된다.
     -   this 는 C++의 this이다.
     -   me는 현재 Method를 지칭한다. 이는 Nested Method에서 사용될 수 있다.
@@ -435,6 +1102,221 @@
 
 
 
+### Shareable
+
+#### Shareable의 기본
+
+- **고찰과정**
+
+  - 변수를 생성하기 전에 그 클래스가 nonconst immutable이라면 파서는 객체를 바로 생성하고 이걸 owner나 scope에 등록한다.
+
+  - 그 이외에는 파서는 새로운 객체를 가리키는 Reference를 만들고이걸 owner나 scope에 등록한다.
+
+  - v World 내 구현
+
+    - Occupiable은 상속되는가?
+
+      상속된다. 상속이란 부모의 특성이 모두 물려받는 걸 의미하기 때문이다. 
+
+      - 한번 "이 클래스는 immutable" 이야! 라고 선언하게 되면 이 클래스로부터 나오게된 모든 객체는 다 immutable이야 한다. 하지만 이를 클래스의 "상속"에 적용할 수 있는 문제인가?
+        - 조합을 생각해보자. 
+          - P는 부모, C는 자식
+          - OK : P=mutable C=mutable
+          - P=immutable C=mutable
+          - X: P=mutable C=immutable
+            - 이건 말이 안된다. 
+            - 만약 이게 말이 되게 하려면 그냥 mutable이 아니라 immutable이 가능하나 mutable이 되지 않는 것이라고 해야 하나?
+          - X: P=immutable C=immutable
+            - C가 엄청나게 크기가 무거워진 게 될 수도 있다. 이것은 아니다.
+        - 단순히 생각해보자.
+          - Integer는 부모가 Type일 것이다.
+          - Type은 immutable인가?
+        - 용도적으로 생각해보자.
+          - immutable의 용도는 값복사가 항상 일어나야 하는 객체가 필요하기 때문이다.
+          - int a = b 라고 했을때 b와 별도의 a라는 값이 주어져야 하기 때문이다.
+          - 왜 이런것인가? 이 질문이 아마 이 문제를 해결할 수 있는 가장 근본적인 물음이다. 이걸 답해야 한다. 왜이런것인가? 왜 이렇게 해야 하나?
+            - 용도에 따른것이다. int, float은 다른 값을 참조하는 것보다 복사하는데 더 자주 사용된다.
+            - 이것들은 작고, 가볍다. 단순하다. 그렇기에 원본의 값을 변경해야할 필요가 없다. 동기화를 필요로 하지 않는다. 어느 구조나 책임을 담당할 만한 부피가 아닌 것이다. 그저 작은 부품. 작은 부품에 지나지 않는 것들이다.
+            - 자료형이라고 하는, "동작의 책임" 도 없으며, "다른 인스턴스를 관리" 하는 책임도 주어지지 않는 그저 자료형의 하나인것들이다.
+            - 반례를 들어 반론한다
+              - Object를 들어보자. 이것은 내부 멤버변수가 없다. 이것도 immutable인가?
+                - ADT다. 객체 생성이 아예 안된다.
+              - class Stream {
+                - int fd;
+                - initializeFileDescriptier();
+              - };
+                - 작은 사이즈를 지녔다. 하지만 책임이 존재한다. 함부로 복사가 일어나서는 안된다. 물론 그 사실은 개발자만 알 수 있다.
+              - String은 데이터가 대개 크다. 하지만 자료형중 하나다. immutable인가?
+                - 애매하다.
+                - string a = "hello"
+                - string b = a
+                - a = "ok"
+                - 이때의 b는무슨 값을 가지고 있을거라고 보는가?
+                  - "hello"인가, "ok"인가.
+              - IntegerArray {
+              - } immutable인가?
+                - 아니오. 매번 복사가 일어날 수 없다. 복사되는 매체인 원소는 공유되어야할 가능성이 있다.
+      - 상속문제 --> occupiable은 상속으로 해결된다.
+        - 현재는 occupiable을 개발자에 재량에 맞기자. 이다.
+        - x 상속반대의견
+          - 하지만 다음의 시나리오가 존재할 가능성이 없다면 추가적인 기능을 제공할 여지가 있다. 한번 재고는 해봐야 한다.
+            - 자식이 occupiable이다. 부모는 occupiable 되는 경우가 있는가?
+            - 자식이 sharable이다. 부모는 occupiable이 되는 경우가 있는가?
+          - occupiable은 상속이 되어서는 안된다. 상속 금지! 왜? C#은 그렇게 하더라. int가 상속이 되어야 하는 이유가 무엇인가?
+        - v 상속 찬성 의견 
+          - int를 상속해서 sharable처럼 사용하고 싶은 경우는 무엇인가? 그렇게 하고 싶다면 int를 포함시켜버리면 되는 것이다.  **상속이란느 것은 부모의 속성을 전적으로 물려받는 것을 의미한다. 고로 int가 가지고 있던 occupiable 속성도 그대로 자식에게 물려지게 되는것이 당연한것이다.**
+
+    - 어떻게 구현하지?
+
+    - x 1안 Reference가 sharable 자체다
+
+      - const 이슈 때문에 occupiable도 reference로 감싸여질 수 있다.
+
+    - 2안 Class안에 이 정보가 들어있으며 Reference가 이걸 보고 동작을 판단한다.
+
+      - **만약 Object = Target의 연산이 수행되어야 한다면, Target이 occupiable이건 sharable이건 어쨌든 할당연산(occupiable처럼 동작)이 일어나야 한다. native 관점에서는 애초에 share할수 있는 ptr가 없으니 당연한 것이다. 따라서 이 문제는 this가 reference일때만 발생하는 것이다.**
+
+      - 고로 reference 안에서 이 객체가 occupiable인지를 판단해서, occupiable이면 get().operator=()로 redirection하는 코드가 적절하다고 볼 수 있다.
+
+      - Reference는 TString<Object> 이므로, Object class 안에 isOccupiable()를 넣어두고, 이 정보는 TClass로부터 가져오게 하면 될 것이다.
+
+      - OccupiableObject는 overriding으로 return true; 를 바로 반환한다.
+
+      - isOccupiable()은 Node에만 속한 것이다.
+
+      - isOccupiable()은 TClass도 갖고 있는다. 만약 TClass<T>의 T가 Node의 일종이 아니라면 항상 false가 나온다. default가 false란 얘기다.
+
+      - isADT와 isOccupiable은 서로 다른 개념이다.
+
+      - v Method는 occupiable인가?
+
+        아니오. 대개는 sharable이라고 보면 된다. 그래서 isOccupiable()의 default는 false다 
+
+        - Method* a, *b;
+        - a = b; 가 될때 어떻게 되어야 한다고 보는가?
+        - 당연히 sharable일 것이다.
+
+  - v World코드 -> World 코드블럭 시나리오
+
+    - 파서는 sharable이거나 const의 경우는 reference 감싸줘야 한다.
+
+  - Native개발자의 경우
+
+    - out
+
+
+
+
+
+#### 멤버변수는_occupiable_멤버함수는_sharable_로_할_수_있을까?
+
+- 그런 특성을 가지고 있는 것은 사실이다. 그러나 occupiable, sharable 로직을 객체 복제(메소드, 멤버변수의 복제)에 재사용하는 것은 안된다. 왜냐하면 occupiable, sharable 로직이 발동되려면 opearator=가 일단 호출이 되어야 하기 때문이다.
+- 현재의 chain을 통한 자연스러운 컨셉(메소드는 공유, 멤버변수들은 operator=를 호출함으로써 occupiable, sharable 로직을 발동시키는 것)이 더 메모리나 퍼포먼스 적에서 이득이다. 
+- 고찰내용
+  - Method는 클래스에 소유한 것으로, 모든 Object들은 이 메소드를 공유하는 것이다. 반면 멤버변수는 객체마다 나오기 때문에 occupiable 특성을 가지고 있다. 
+  - \#occupiable과_sharable 에서는 occupiable과 sharable이란 개념을 World에서 어떻게 구현할것인지를 정하고 있다. 이 구현물을 가지고 그대로 멤버변수와 멤버함수의 동작으로 재사용 가능할까?
+    - 안된다.
+    - occupiable과 sharable의 진정한 의미는 개체의 복사인 operator=가 일어났을때의 디폴트 컨셉이 무엇이냐는 것이지, 공유할 수 없다, 복제되어야 한다 같은 것이 아니다. 이를테면 객체D가 클래스로부터 생성이 되었다고 하자. 자, 그러면 sharable객체C는 클래스안에 들어가있는 객체C로부터 복제된 것이어야할까? 아니면 공유되어야 하는 것일까?
+      - 복제가 되어야한다. 공유가 된다는 것은 단순히 static 변수를 의미할 뿐이다.
+    - 그러면 객체D로부터 복제되어서 객체E가 나왔다고 가정해보자. E안에 있는 객체C는 객체D 안의 객체E 로부터의 복제품인가? 아니면 공유물인가?
+      - 이거는 공유물이다. 
+    - 즉, 객체의 복제가 일어났을때 복제인가 공유인가를 결정짓는 것은 sharable, occupiable이다. 왜냐하면 복제가 일어나면 멤버변수 객체에 한해서 operaort=가 일어나게 되니까. 
+    - 이것은 객체가 생성되었을때 가지고 있어야 하는것과 클래스로부터 공유해야하는것과는 조금 다르다. 메소드는 처음부터 operator=과정을 거치지 않는다. Chain안에 포함되어있고 Chain이 복제될때 sallowcopy가 디폴트이므로.
+    - 따라서 occupiable, sharaable 로직을 재사용하겠다는 것은 메소드들도 일단 operator=를 거치게 하겠다는 것이며 Chain을 사용하지 않겠다는 의미이기도 하다.
+    - **고로, 재사용해봤자. 지금보다 더 로직이 복잡해지거나 메모리 낭비가 심해지게 될것이다.**
+
+
+
+
+
+#### 객체를 생성하여 반환하는 native함수를 wrapping할때 사용자의 sharable, occupiable 부담을 덜어줄 수 있는 방법은?
+
+- char* gen_xml_parsed(char* buf, char* path);
+- 위 함수를 wrap하기 위해 사용자가 짜는 함수다.
+- class XMLParser : Object
+  - static void onInflacture(List<Method>& tray)
+    - DECL(String parse(String path))
+  - Reference parse(String& node) // BEST OK
+    - char buf[65535] = {0, };
+    - gen_xml_parsed(buf, [node.to](http://node.to/)<char*>());
+    - return Reference<String>(new String(buf));
+- 문제점
+  - 사용자는 String이 sharable이기에 반환형이 Reference 라는 걸 반드시 알고 있어야 한다.
+    - String& parse(const String& path) --> OK
+      - return new String(buf);
+    - 이렇게 대체할 수도 있지만 이 역시 sharable이라는 걸 알고, new를 써야 한다는 걸 알아야 한다.
+- **답 : 문제 정의자체가 잘못되었다.** 
+  - 반환형이 Reference던 String이던, String& 이던 상관없다. 어짜피 TNativeMethod는 반환한 값으로부터 Refer returned = cb(..)->to<String>()를 할것이기 때문이다.
+  - 따라서 sharable인지 occupiable인지는 상관안해도 된다.
+
+
+
+
+
+#### Refer
+
+##### 복사연산을 어떻게 할가?
+
+- \#occupiable_and_sharable 와 #Refer는_const를_정보를_가지고_있다. 로 인해서 이 문제는 상당히 어렵다.
+- 요약
+  - C++ 
+    - Refer::Refer(const Node& rhs) // Node가 Refer일때는 Refer::Refer(rhs)를 실행한다.
+    - Refer::Refer(const Refer& rhs);
+    - Refer::Refer(bool isConst = false);
+    - Refer::operator=(const Node& rhs); 
+    - Refer::operator=(const Refer& rhs);
+    - Refer::bind(const Node& rhs)
+    - 를 가지고 있다. 즉, 타입이 설사 다르더라도 일단 시도는 하게된다.
+    - 이는 WrdFrx은 기준 타입이 Node로, 구체타입이 뭔지 모르더라도 일단 동작하게끔 설계되었기 때문이다.
+  - Refer와 Bind의 차이는 크게 2가지다.
+    - \1. Refer는 const여부를 담고있으며 생성자에서 결정된다. 
+    - \2. const A와 A는 다른타입이다. 따라서 한번 const Refer라면 죽을때까지 그 Refer는 const A만 물을 수 있다. 
+  - World에서 const는 타입의 일부분이다. 고로, const Refer는 죽을때까지 const Refer이다. 그러나 const Refer<A>는 native에서, non const Refer를 const Refer로써 사용하고 있는 상태다. const를 벗기면 nonconst가 된다. 당연히.
+  - nonconst는 const가 될 수 있다. 반대는 안된다. (이건 C++과도 동일하다)
+- 검증
+  - class A
+  - class B : A,
+  - 1
+    - A a = B b // cmpl ok exe ok
+    - Refer<A> a = Refer<B> b // compile ok, but exe ok.  
+  - 2
+    - B b = A a //comp err
+    - Refer<B> b = Refer<A> a // compile ok, exe err
+  - 3
+    - A a = const A // cmpl err
+    - Refer<A> a = Refer<const A> // cmpl ok, exe err
+  - 4
+    - const A a = A a // cmpl ok, exe ok
+    - Refer<const A> a = Refer<A>; // cmpl ok, exe ok
+  - 5
+    - const A a = B b // cmpl ok exe ok
+    - Refer<const A> a = Refer<B>; // cmpl ok, exe ok
+  - 6
+    - const Refer<A>는 World코드에는 존재하지 않는다.
+    - const Refer<A> a = Refer<B> // cmpl err. const Refer<A>&이므로 operator=, bind() 전부 안되는게 정상이다.
+  - 7
+    - const Refer<B>는 World코드에는 존재하지 않는다.
+    - Refer<A> a = const Refer<B> // cmpl ok, exe err
+      Refer<A> a = Refer<const B>와 같다.
+
+##### Method::run() const일때 ret인 Refer는 const REfer인가? 아닌가? 아니면 메소드는 신경쓸 상관없나?
+
+- 신경쓸 필요가 없다. C++로 예를보면 아주 명료해진다.
+  - class A {
+    - B& getBFromSomeWhere() const { // case#1
+    - ​     return B::getInstance();
+    - }
+    - A& operator=(const A& rhs); // case#2
+  - };
+- 아마도 이 질문을 한 의도는 case#2만 생각하고 한 것이다. 이 경우에도 Method는 신경쓸 필요가 없는데 반환형이 A&로 되어있다고 하더라도 거기에 담기는게 *this만 아니라면 아무런 문제될게 없기 때문이다.
+- 그리고 *this를 담기지 못하도록 에러를 내뱉는 건 Method클래스에서 내뱉는게 아니라 파서가 해야 한다. const 메소드에서 this는 const A*가 되기 때문에 return (A*) this; 과 같은게 되버리며 A*에 const A*인 this를 넣으려고 했으므로 컴파일 단계에서 에러를 내뱉어야 한다. 
+- 만약 컴파일단계에서 잡아내지 못하면 런타임시에 저 코드는 결국 null이 나가게 될것이다. nonconst Refer에 const를 넣으려 했기 때문이다.
+  - 참고 -> #Refer는_const_T_캐스트가_되어야만_한다.
+
+
+
+
+
 ### 지정자
 #,$,@,_
 
@@ -442,7 +1324,7 @@
 
 #### static
 
-##### 1
+##### static의 기본
 
 - World에서 static 함수는 앞에 share 키워드를 붙이면 된다. 일반인에게는 더 친숙할것이라 본다.
 
@@ -514,9 +1396,257 @@
 
 
 
-### 상수화 (const...뺄까?)
-* 왜?
-	* 코드가 너무 복잡해짐. 이 언어는 가볍게 배우고 빨리 실습해보고.. 이랬음 좋겠다.
+### 상수화 
+
+#### const의 기본
+
+- Java, python은 const를 지원하지 않는다. const가 없어도 사실 사용상에 문제가 없다. 실수를 줄여주기 위한 측면이나 동시에 귀찮은 존재가 되기도 한다.
+
+  - java 같은 경우는 99, 05년도에 기능추가를 위한 논의가 있었으나
+    - \1. 이미 넣기엔 너무 늦음
+    - \2. 하위호환성
+    - \3. c++ 처럼 모든 메소드 뒤에 const 붙어야 하니 불편하고 메소드가 더러워짐.
+  - 으로 넣지 않게 되었다.
+
+- World는 const를 지원한다.
+
+  - default(= const 를 명시하지 않을때)가 auto를 의미한다. 이는 컴파일러가 판단하여 const인가 nonconst인가를 판단하는 걸 말한다.
+    - 어짜피 validation을 위해서 이 메소드가 const인가 nonconst인가는 판단을 해야 하는 문제다.
+  - nonconst 나 const를 뒤에 적으면 "사용자가 명시적으로 이 함수는 무엇이다" 라고 말한게 된다.
+
+- side effect
+
+  - 일반적인 언어라면 default를 auto로 하지 않을것인데, 왜냐하면 사용자가 "이 함수가 const인가?"를 알 수 있는 유일한 방법이 compile 이기 때문일 것이다.
+  - 이것은 컴파일러와 사용자가 같은 대상물로 대화하는 것이 아니라, 사용자는 "코드"로 얘기하며 컴파일러는 "에러로그"로 답신하는 구조를 띄고 있기 때문이다.
+  - 반면 월드는 코드가 핵심이 아니며, 코드가 프로그램이라고 생각하지 않는다. 코드는 어디까지나 대화의 한 수단일 뿐이며 프로그램을 만들기 위해 개발자가 편리하게 얘기할 수 있는 수단이다. IDE의 코드창은 개발자만의 대화공간이 아니며 개발자와 컴파일러가 함께 도와주고 서포트 해주고 채워나가며 프로그램을 만드는 공간이다.
+
+- 문법
+
+  - const MyType a = ... 에서 const는 a가 가리키는 객체가 const 라는 뜻이다. 
+    - World는 ptr기반이지만, ptr const는 할 수없는 pointer만 존재한다고 생각하면 된다.
+  - nonconst 인 reference는 const reference로부터 할당을 받을 수 없다.
+    - const MyType a = ...
+    - MyType b =  a **// compile 에러**
+  - const를 그대로 사용한다. nonconst를 사용한다.
+    - v 1안 const를 그대로 사용한다.
+      - class A
+        - void print(const int age, string msg) const
+          - Console.out(msg + [age.to](http://age.to/)(string))
+      - 그러나 nonconst를 명시할때는 어떻게 하는가? "nonconst"는 너무 길지 않나? 
+        - 자주 쓰는 것도 아니고. 가끔 쓰는데다가, 영어권에서도 nonconst는 자주 사용하기도 하고. 이걸로 가자.
+    - x 2안 ro와 rw를 사용한다.
+      - class A
+        - void print(ro int age, string msg) ro
+          - Console.out(msg + [age.to](http://age.to/)(string))
+      - 짧긴 하나, 되려 눈에 잘 들어오지는 않는다.
+      - readonly로 보이는게 아니라 "로" 라고 보인다.
+
+- Managed 개발자를 위한 World 구현
+
+  - \1. 인터프리팅시
+    - 컴파일러가 메소드를 파싱할때 이 메소드가 최종적으로 (non)const 여부를 결정한다. 
+    - validation이 method.isConst() != 사용자가const로 명시 이면 에러를 내보낸다.
+  - \3. World 코딩시
+    - intelisense에 const 여부가 반영되며, const여부의 경우는 텍스트창에 메소드명의 색이 nonconst일때와 다르다.
+  - \2. 실행시
+    - **"일단은 호출은 ok, 호출안쪽에서 에러 체크"** 로 판단한다.
+    - const를 위한 별도의 member는 가지고 있지 않는다.
+    - native 메소드를 fptr로 갖는 Method는 매크로에 의해서 생성된다. 매크로는 자신이 물은 native 메소드가 const메소드인지를 탐지해야 한다.
+    - const일 경우에는 Method.isConst() = true로 만든다. 그러나 c++ Method객체 자체는 절대 const가 되지 않는다.
+    - Method에서 fptr를 호출할때 const를 메소드를 call()시, 고려해야 하는 조건은 크게 2가지다.
+      - \1. const thisptr를 얻어와야한다.
+        - --> const Object& caller = msg.getOrigin().get(); **// origin은 nonconst Binder다.**
+      - \2. 반환값이 const 인경우, 최종적으로 Refer(isConst() = true)에 wrapping에서 넘겨줘야 한다.
+        - --> return (caller.*_fptr)(msg.getArgs()[0], ....).to<const T>(); **// 반환값은 동일하게 Refer다. 다만 const가 앞에 붙었으므로 Refer.isConst()를 true가 될 것이다**
+        - **// 모듈개발자는 반환형으로 T\* 같은 걸 넣으면 위의 코드는 빌드되지 못한다. --> 이건 TNativeMethod 같은 거 만들어서 T\*에 대해 클래스 템플릿 특화 시키면 될것이다**
+    - 모든 World 동작은 call()로 이루어진다. 따라서 isConst()인데, call()가 불려진 경우에는 isConst() const가 대신 실행되어야 한다. 
+    - Node는 bool isConst() const; 를 갖는다. Method, Object, Refer는 모두 isConst를 다루는 클래스들이다.
+    - Method도 const를 여부를 가지고 있어야 한다. 이는 validation을 위한 것이다. c++의 Method객체는 const가 되든 말든 동작에는 아무런 영향을 주지 못한다.
+    - 모듈개발자의 클래스의 멤버변수는 World에서는 visible하게 할 수 없기 때문에 모듈개발자에게 const는 메소드 일때만주의하면 된다.
+    - Q. Thing::to(const Class& cls); 에는 사용자가 const Refer를 받고 싶어하는지의 여부가 포함되어있지 않다?
+      - 1안 Thing이 const냐 아니냐에 따라서 Refer(isConst() = true)로 나갈건데, 이걸로는 부족한가?
+        - 사용 시나리오로 생각해보자.
+        - v Native에서 nonconst에서 const Refer로 만들때
+          - 이건 const Object& casted = this; this->to(cls) 하면된다.
+        - Managed에서 만든 const 객체에서 const Refer로 만들때
+          - Managed
+
+- v Managed 개발자가 Native모듈의 const를 어떻게 다루는가?
+
+  - v 멤버변수를 다루는 경우 --> 당장은 모듈개발자는 메소드만 visible하게 할 수 있다.
+  - v 메소드로 나오는 경우는
+    -  TNativeMethod<const T> 나, Mashalling<const T> 특화를 통해서 해결할 것이다. 
+    - World의 const 가 있건 없건 타입 자체는 항상 Refer가
+
+- Native모듈개발자가 Managed의 const를 어떻게 다루는가?
+
+  - const Refer& 로 Native에서 작성하는 것은 쉽게말하면 Managed객체를 한번도 const로 래핑하는 것과 동일한 것이다. native적으로 이것은 const로만 사용할 것임을 확정하는 것이다. 따라서 Managed객체가 실제로 const인가 nonconst인가 관계없이 항상 const로만 동작하게 된다.
+
+  - 왜냐하면 Managed의 모든 객체들은 그 객체들이 nonconst이건 const이건 관계없이 항상 c++에서는 nonconst로 동작하기 때문이다.
+
+  - 따라서 native에서는 const여도, World에서는 nonconst로 되는 경우도 있다.
+
+  - 반대로 World에서는 const여도, Native에서는 nonconst로 사용하게 되는 경우도 있다. 
+
+    occupiable도 const인 경우에는 refer로 감싸야만 한다. 
+
+    - 예를들면 Object.isConst() == true인 경우, native에서는 이Object가 occupiable인 경우 nonconst로 가져올 수 있다, Refer가 없으므로.
+
+    - 이때 Object의 native nonconst 메소드를 막 호출해주면 되게된다.
+
+    - 실수는 막아야 한다. 어떻게하면 native에서도 world에서 정의한 const 객체에 const native객체로 접근하게 유도할 수 있을까?
+
+    - v 1안 Occupiable도 Refer에 감싼다.
+
+      - Refer는 퍼포먼스를 요구하며, occupiable, sharable 컨셉 변경이 필요하다.
+      - isConst 면 get()시 null 나오며, get() const는 값이 제대로 나와야 한다. 
+      - 따라서 마찬가지로 Refer::assign()에서 get()이 Null이면 바로 종료 하는 예외처리가 필요하다.
+
+    - 2안 World의 객체를 native가 사용하려면 어짜피 타입캐스팅을 해야만 한다. 타입캐스팅to()는 refer를 반환하니까 이걸로 대체 가능하다.
+
+      dynamic_cast를 사용자가 사용해서는 안된다. 
+
+      - 시나리오
+
+        - Node& one = ...;
+        - Node& mem1 = one.getMember(3) // == one[3]
+        - mem1.call(Msg("print")); // call로 보내면 안에서 const 예외처리를 해줄 수 있다.
+        - MyObject& mine = [mem1.to](http://mem1.to/)<MyObject>();
+        - if(mine.isNull())
+          - return InvalidType.err("mine is const");
+
+      - 그래. 그렇다. 만약 이 방법이외에 처음부터 구체타입(예, MyObject) 형태로 접근이 가능하다면 사용이 불가능하다. 이런 예는 없을까?
+
+        있다. dynamaic_cast를 사용한 경우다. 아마도 limitation으로 남겨야 할 것이다. 
+
+        - dynamic_cast나 c cast를 사용한다면?
+          - MyObject origin(is_const = true);
+          - Node& one = origin;
+          - MyObject& my = dynamic_cast<MyObject&>(one); // ok
+          - my.print();
+          - // 원래는 밑에처럼...
+          - TRefer<MyObject> get = [one.to](http://one.to/)<MyObject>();
+          - if(get.isNull())
+            - return;
+          - TRefer<const MyObject> cget = [one.to](http://one.to/)<const MyObject>();
+          - if(cget.isExist()) {
+            - cget->print(); // err. print() is nonconst
+            - const MyObject& out = *cget;
+            - out.print(); // err. print() is nonconst
+          - }
+        - x 만약 Integer*를 들고 있는 native클래스가 런타임에 적당한 객체를 ptr에 집어넣는다면?
+          - class MyObject {
+            - Integer* age; // 멤버변수는 visible하게 할 수 없다.
+            - Integer& getAge() { return *age; }
+          - }
+          - --> 런타임에 ptr를 멤버변수에 집어넣으려면 멤버변수를 알 고 있는 native가 해야 한다. native에서 Integer 타입을 dynamic_cast나 C cast를 하지 않는다면 to밖에 없다.
+
+  - v 어떤 객체A의 멤버변수나, scope안에 있는 경우
+
+    - native가 멤버변수를 꺼내려면 반드시 1번은 to를 써야한다.
+
+  - 이미 native 가 자신의 모듈에 멤버변수를 추가하였다면 멤버변수는 일단 invisible하며 월드가 멤버변수릉 땡겨올려면 메소드의 반환형을 사용해야 하며 TNativeMethod는 Refer로 이걸 감싸서 넘겨준다.
+
+  - 다시말하면 Native에서 만든 모든 occupiable은 사실상 refer로 쌓어있게 된다.
+
+- 고찰내용
+
+  - 1안 Refer와 Object 모두 isConst를 갖게 한다.
+    - isConst는 Node에 속해 있어야 한다. 왜냐하면 우리는 Node 기준으로 작업을 하니까. 그렇지 않으면 동적캐스팅을 계속 써야 한다.
+    - 왜 Object도 isConst가 있어야 하는가?
+      - 그렇지 않으면 occupiable도 Refer를 둬야 하기 때문이다.
+    - Object가 const일때 어떻게 되는가?
+      - 모든것은 call()로 이루어진다. 따라서 call() 안에서 isConst()이면 call() const로 redirection 하면된다. 그러면 call() const는 isConst()가 true인 Refer를 반환할 것이다.
+    - Method도 const 여부가 필요하다.
+      - 단 Method 자체가 const 가 될 필요는 없다. (사실 상관은 없다. 어짜피 method에서 할 수 있는게 뭐가 있다고. 대부분은 그냥 fptr로 redirection하는게 전부잖아) 여기서 알수있다는 것은 Validation에 사용하기 위한 부분 뿐이다.
+    - Native에서 const로 만든 객체가 있다. 이건 어떻게 Managed에서 const로 노출되게 할 것인가
+      - const T& 가 반환형인 경우에는 METHOD 매크로가 TRefer<const T>(fptr의 반환값) 을 담아서 이걸 반환할것이다.
+      - World에서는 모듈개발자가 클래스의 멤버변수를 visible하게 할 수 없다. 따라서 const 인 멤버변수를 어떻게 visible하게 할 것인가는 고려하지 않아도 된다.
+
+- [v][v] const로 인해서 클래스 분할문제와 Native visible 문제
+  - 포인터를 대신 하는 클래스들은, const 여부를 고려해야되기 때문에 같은 역할을 수행하는 2가지 버전(const 버전과 nonconst버전)으로 쪼개져야 하는 경우가 많다. 이때 World에서도 const버전과 nonconst버전을 2개다 제공해야하는가에 대해서 헷갈리기 시작한다. 
+    - CIterator, Iterator, TWeak, TStrong, Refer, CRefer 등..
+  - 결론 : visible 하게 되는 것은 World에서는 별도의 클래스로 구분 하지 않는다. --> #CRefer는_존재하지_않는다 참고
+  - 왜냐하면 Node 클래스의 의의는 구체클래스가 뭔지 몰라도 사용할 수 있다! 라는 것이다. 그외의 클래스 계층을 타는 것들은 native에서만 유요한 것이며 Managed의 const와 native의 const가 불일치 되어 일어나는 문제가 없다. 그래서 이것들은 기존대로 계속 진행하면 된다.
+- [v][v] Method의 const
+  - native동작
+    - Method도 const여부가 있다. 인터프리터는 월드코드를 읽고나서 validation을 통해 이 함수가 const인지 nonconst인지 검증하기 위해 자체적으로 판단해야 한다. --> #인터프리터는_어떻게_이_함수가_const인지_판단하는가
+    - **따라서, Method는 isConst()인지 아닌지를 스위치로 onoff할 수 있으며, 이 값을 바꾸기만 하면 thisptr로 Object가 C++에서 const가 붙어서 나오는지 아닌지를 결정하게 만들어야 한다.**
+      - Method는 _is_const 멤버변수를 갖는다. CREPL이 적용되면 인스턴스는 동일하되, 변경만 일어나는 경우도 있을 수 있기 때문에 CMethod 식으로 별도의 클래스를 만드는 건 적절치 않다.
+      - Method가 isConst() == true일 경우, thisptr가 const Object& 로만 나와야 한다는 걸 의미한다.
+  - world동작
+    - 메소드의 const는 c++처럼 뒤에 적으면 된다. nonconst로 확정하고 싶으면 variable을 적으면 된다.
+      - class My
+        - void print(const int a, int b)
+        - void print(const int a, int b) variable
+        - void getAge() const
+    - variable은 변수 앞에 붙여야 하나, 기본적으로 생략가능하다.
+      - variable My mine = ...
+      - My mine = ...
+  - 1안
+    - thisptr를 최종적으로 사용하는 곳은 어디일까
+      - ManagedMethod -> scope.stack(msg.getTail()); // 여기에서 thisptr을 꺼내서 objctspace 갱신
+      - NativeCaller에서 msg.args 로부터 implicit 캐스팅을 하려는 시점 --> 
+    - if(Method::isConst())
+      - 
+- [][v] Method auto const 컨셉
+  - 함수 뒤에 const나 variable을 적지 않으면 auto가 적용된다. auto는 컴파일러가 이 함수가 무엇인지 알아서 판단해서 적어주게 된다.
+  - c++에서의 const는 컴파일시에 제어장치다. 즉 사용자가 컴파일 하기 전에 이함수가 const라는 걸 알고있어야 효과가 발휘된다. 그래서 c++에서는 auto const라는 걸 만들기에 적합하지 않다.
+  - 그러나 World는 CREPL 기반이므로 빌드라는 것이 없고 "코드의 변경 == 소프트웨어의 변경" 이다. 즉각적으로 소프트웨어가 재구성되어야 하므로 사용자가 편집한 이 함수가 const인지 아닌지를 인터프리터는 ide에게  전달하고 ide는 이걸 intelisense 같은걸로 색으로 표시하여 개발자에게 보여줄 것이다.
+    - 이게 가능한 이유는 "월드lang은 visual programming language로써, 그래픽 요소를 나타내줄 수 있는 프로그램(=툴)과 한 몸이다" 라는 방향성을 갖고 있기 때문이다.
+  - 구현은 매우 단순하다. validation에서 어짜피 인터프리터는 함수가 정말 월드코드대로 const인지를 체크해야한다.(에러체크를 위해) 그 체크 결과를 그대로 Method.isConst()에 set 해버리면 된다.
+
+
+
+
+
+#### CRefer는_존재하지_않는다
+
+- CRefer가 존재하는 이유는 isConst()인 Refer는 Native사용자가 get() const 를 해야 한다는 걸 빌드타임에 강제하기 위함이다. 따라서 Refer와 다르게 CRefer는 get() const 만 갖고 있게 된다.
+- 하지만 문제는 Native개발자가 접하는 클래스는 Refer가 아니라 Node다. 따라서 이 시점에서 구체클래스를 가져오는 방법은 to를 사용하는 것이며 설사 Node가 isConst()라고 하더라도 C++의 const는 아니기 때문에 to<T>() 함수가 호출 가능하고 반환값은 null을 가리키는 Refer가 된다. 즉 CRefer(혹은 const Refer)를 만들어봤자 결국 사용자는 to<T>()를 하고, 반환값이 null이 아닌지를 확인 한 후, null이면 to<T>() const를 다시 호출해야 하는 식으로 가야 한다는 것이다.
+- 어짜피 CRefer로 구체클래스를 뽑아내지 않으면 빌트타임에 const 여부를 강제할 수 없다. 따라서 그럴바에야 차라리 CRefer와 Refer를 통합시켜서 클래스 1개라도 더 줄이는게 좋은 선택이라고 판단된다.
+
+#### Refer는_const를_정보를_가지고_있다.
+
+#### Refer는_const_T_캐스트가_되어야만_한다.
+
+- 요구사항
+
+  - //    TODO: const cast.
+  - //        Refer는 알다시피 World의 const를 구현하는 핵심 클래스다.
+  - //        Node& n = Refer(const T&..);
+  - //        [n.to](http://n.to/)<T>(); // REJECT. return Refer(Null)
+  - //        T& cast = n.toSub<T>(); // REJECT. cast.isNull() == true.
+  - //        const T& cast = n.toSub<const T>(); // OK.
+  - //        Refer& cast1 = [n.to](http://n.to/)<const T>(); // OK. cast1->isNull() != true
+  - //    위의 코드가 가능하도록 해야 한다.
+  - Refer<const T>().cast<T>()가 나오면 거절해야 한다.
+    - 예) Refer<const Object>().cast<Object>()시 null된 Object가 나와야 함.
+    - 예) 그러나 Refer<Object>().cast<const Object>()는 정상적으로 나와야 함.
+
+- 참고 -> #명시적캐스트에서_다운캐스팅으로_반환된경우만_isConst함수가_영향력을_발휘한다. , #명시적캐스팅
+
+- \1. Refer::to()에서 다운캐스팅이 되서 나올것 같으면 isConst 확인해서 null로 가도록함
+
+- \2. Refer::toSub()에서 isConst() true면 null로 나감.
+
+  
+
+
+
+#### Node는 isConst()를 가지고있다. Method는 isConst() == true면 method에서 사용하는 thisptr가 const Object가 되어야 한다.
+
+- Stmt는 msg를 구성할때 World코드상 const로 되어있다면 msg 맨 뒤에 Refer<const Object>()로 넣어두고, nonconst라면 msg 맨 뒤를 Refer<Object>로 넣어둔다. (Msg의 맨 뒤는 실행시마다 변경되는것이다)
+- Method는 isStatic()이 false일 때만 msg 맨 뒤에서 OBject를 꺼내야 하는데, isConst()가 true면 cast<const Object>()를 한다. 만약 Stmt는 Msg 맨 뒤에 Refer<const Object>()로 넣어뒀는데 Method는 refer.cast<Object>()를 하게 되면 NullRefer가 나오게 된다. 이것은 Refer<const T>의 동작이다. --> #Refer_const_T_캐스트가_되어야만_한다
+- Method는 가져온 object를 scope에 넣는다. stack(*Refer<Object>);
+- 이후는 #Scope에_const_member만_넣어야_한다  를 따라간다.
+- 참고로 Native환경에서 Method를 실행하고 싶은 경우에는 call(msg)혹은 run(msg)에 들어갈 Msg 맨 뒤에 Refer<Object>()로 thisptr를 직접 채워넣어야만 한다. 이런 시나리오가 많지 않을것으로 여겨지기 때문에 run(thisptr, msg) 같은 걸 만들어 주진 않을 계획이다.
+
+
+
+#### const...뺄까?
+
+* 코드가 너무 복잡해짐. 이 언어는 가볍게 배우고 빨리 실습해보고.. 이랬음 좋겠다.
 
 
 
