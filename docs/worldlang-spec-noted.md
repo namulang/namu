@@ -75,7 +75,421 @@
 
 
 
+#### 캐스팅
 
+##### Casting의 기본
+
+- Casting은 3가지를 요구사항이 있다.
+
+  - \1. 월드의 형변환은 1가지 문법으로 100% 대체가 가능한데, to() 함수다. to 함수는 다음과 같은 순서로 우선순위를 갖는다.
+    - \1. 사용자가 정의한 캐스팅코드
+    - \2. 거기에 없으면 클래스 계층상 구체클래스타입을 원하는 경우(= RTTI)
+    - \3. 거기에 없으면 주체자(= This)의 생성자를 통한 호환
+    - \4. 거기에도 없으면 실패. 끝.
+  - 1번을 제외한 2-3번은 모두 WorldFrx 안에 탑재되어있어야 한다.
+  - \2. 월드Frx의 실체는 Native에 있기에 형변환을 실질적으로 수행하는 코드는 Native여야 한다. 따라서 Node를 binding하는 Refer가 반환형이기 때문에, Node에 정의된 virtual Refer to(Class&) 함수가 실질적인 형변환을 수행한다. 
+  - \3. Native환경에서는 타입이 구체적으로 나와야 편하기 때문에 TRefer<T> to<T>()를 제공한다.
+
+- 추가적으로 지역변수에다가 to를 사용한 경우에는 #로컬바인딩 을 가능하게 함으로써 해결되었다.
+
+- 고찰내용
+
+  - 요구사항
+
+    - **1. 월드에서는 형변환을 지원하는 1가지의 유일하진 않지만 강력한 방법을 통해 다른 사람이 이것만 사용하도록 하고 싶다.**
+      - c++에서는 형변환은 여러 방법이 있다.
+        - Integer.parseString()
+        - (T)
+        - atoi(int)
+        - stringbuffer << int
+        - String(int)
+      - World에서는 한가지 문법으로 사용자가 사용하도록 했으면 좋겠다.
+    - \2. 또한 월드Frx의 실체는 Native에 있기 때문에 형변환을 위한 함수가 있다면 모두 Native에서 먼저 사용가능한 상태가 되어야 한다. 이는 반환형을 깊이 생각해야 할 것이다.
+    - \3. Managed와 달리 Native는 타입이 구체적이어야 사용이 편하다. 형변환 결과가 구체타입으로 바로 나올 수있는 방법을 마련해야 한다.
+
+  - x 1안 형변환은 대상자의 생성자와 자신의 생성자 중에서 호환되는 걸 선택하는 것이다. extend로 이를 해결한다.
+
+    extend는 위험하다. private를 사용해야 하는 경우도 있으므로 friend를 필요로 한다. 
+
+    - int 와 string 관계에서 int->string은 string(int)가, string->int는 int(string)이 대신할 수 있지 않겠냐는 것이다.
+      - 그러나 int가 먼저 생긴 클래스이므로 int(string)은 extend로 들어가야 한다. 이는 상대방의 private를 다 알고있어야만 하므로 extend는 피하고 싶다.
+
+  - v 2안 형변환은 대상자의 **생성자**와 **to()** 중에서 호환되는 걸 선택하는 것이다.
+
+    - int->string은 string(int)가, string->int는 [string.to](http://string.to/)(int)가 대신하도록 한다면?
+      - 생성자는 visible하게 할 수있을 것으로 보인다
+      - to함수가 native에 노출되어야 한다. 따라서 (T)보다는 to자체를 managed에서도 사용하게 한는게 좋을 것이다.
+      - 먼저 to()를 시도하고 나서, 안되면 대상자 생성자로 처리하는 편이 좋을 것이다. 대상자 생성자를 바인딩하는 알고리즘은 주어진 타입cls에 대한 근접치 정도(== getProximity)로 판단해야 할 것이다.
+      - 문제
+        - \#로컬바인딩 문제를 해결해야만 한다. --> 해결함.
+        - 반환형을 뭐로 할것인가?
+          - Refer로 해야 한다. 그래야 Object가 나올수는 없다. *this가 나올수도 있어야 하기 때문이다.
+          - Refer는 Class를 들고 있는다. 
+          - 구체클래스 타입으로 to를 한 경우에는 반환할 Refer에서 Class만 구체클래스의 것으로만 바꿔줘서 넘겨주면 된다.
+          - Native의 편의를 위해서는 TRefer를 사용하면 된다.
+
+
+
+##### to함수의 signature.
+
+- to함수는 World에 visible해야 하므로 반환형은 Bind가 될 수없다. Refer다. Refer는 Strong을 기본으로 하고 있다. 
+- Strong로 나간걸 Weak로 받을 수 있다. 따라서 to함수로 Strong인채로 나가야만 한다. (weak로만 나가면 to함수 안에서 새로 객체를 생성해서 내보낼 수가 없게 된다는 얘기다. 선택권은 호출자(caller)에게 줘야하므로 Strong으로만 내보내야 한다)
+
+
+
+##### C 타입 캐스팅을 어떻게 지원할까?
+
+- C++ native 타입들 (주로, ptr이 선언된)들에 대한 casting은 어떻게 되야 할까?  이게 필요한 이유는 mashalling을 지원하기 위해서다.
+- NativeWrapperMetaClass를 만든다. 그 안에서는 ctor을 하나 만들어서 자동으로 넣어둔다. 그리고 이걸 가지고 casting (WorldObject -> C++NativeType)으로 가면 된다.
+- 예) 
+  - (this->*_fptr)(msg[0].to<TClass<my_char_struct*>(), msg[1].to<Type2>());
+
+
+
+##### 명시적캐스팅
+
+- 요약 : 명시적 캐스팅 = #묵시적캐스팅(=다운캐스팅 + pretype캐스팅) + 사용자 커스텀 캐스팅
+- to()로 호출한다.  반환값은 Refer이며, to<T>()도 지원한다. 
+- to<const T>()를 적으면 Refer<const T>가 반환되며, 그것의 isConst()는 true가 된다.
+- 임의의 클래스 A. const A& a = ...; 일때 [a.to](http://a.to/)(참고 -> #명시적캐스트에서_다운캐스팅으로_반환된경우만_isConst함수가_영향력을_발휘한다. 
+
+
+
+
+
+
+
+##### Worldlang-개발자가-to에다가-캐스팅을-추가하려면 어떻게 해야 할까?
+
+- 고찰을 통해 알아낸 방법
+
+  - 이와 비슷한 케이스들이 많이 있을 수 있다는 걸 알아냈다.
+    - class A
+      - A operator+(C c)
+      - A operator+(B b)
+    - class B : A
+      - B operator+(C c)
+      - B oeprator+(D d)
+    - A& a = new B()
+    - B b;
+    - a + b // c++은 에러. 메소드 hided.
+  - 비슷해 보이지만 좀 다른게, +는 모든 타입마다 지원하는 게 아니다. 그러므로 c++처럼 +를 사용하고 싶다면 구체타입으로 캐스팅 하라! 라고 가이드를 주면 된다.
+  - 하지만 캐스팅 함수는 아니다.
+
+- 고찰을 통한 요구사항 도출
+
+  - \1. 사용자 관점에서 편해야 한다. managed와 native 모두 동일한 경험을 제공해야 한다.
+    - 배열은 잊어버려라. Native 이든 Managed 배열을 만들게 해서는 안되며, Native 한쪽만 배열을 만들도록 해서도 안된다.
+  - \2. 먼저 Native 관점에서 생각해야 한다.
+    - 1번에 나온 것으로, 경험이 동일해야 하기 때문에 더 제약이 많은 Native 관점에서 먼저 생각해야한다.
+  - \3. 멀티메소드는 사용할 수 없다. 다운캐스팅도 안된다.
+    - 모두 컴파일에러를 잡을 수 없기 때문이다.
+  - \4. 가능하다면 사용자는 일반 함수를 작성하는 것처럼 만들면 알아서 캐스팅 함수에서 redirection되도록 해야한다.
+  - \5. 최적화가 가능해야 한다. 속도가 빨라야 한다.
+
+- x 1안 worldlang은 to를 오버라이드하도록 한다
+  사용자의 경험상, 올바르지 않다. if-else가 반복되게된다. 
+
+- x 2안 멀티메소드를 지원한다.
+
+  폐기 
+
+  - 멀티메소드란 추상타입에 담긴 구체타입으로 자동 다운캐스팅을 지원하여, 그쪽으로 디스패치되도록 하는 것이다.
+    - 예) class A
+      - void #print(Node n)
+        - Console.out(n)
+      - void #print(String n)
+        - Console.out("msg = " + n)
+    - node msg = string("hello world")
+    - A.print(msg) // "msg = hello world"
+  - C++은 디자인 불가능의 이유로, 멀티메소드를 거절했다.
+    - Straight from the horse's mouth:
+      - "I rejected multi-methods with regret, because I liked the idea, but couldn't find an acceptable form under which to accept it."
+    - Bjarne Stroustrup, The Design and Evolution of C++ (p297)
+    - And later:
+      - "Multi-methods is one of the interesting what-ifs of C++. Could I have designed and implemented them well enough at the time? [...] What other work might have been left undone to provide the time to design and implement multi-methods?"
+    - (p298f)
+    - In general, whenever you feel the urge to know why some particular C++ feature was implemented, or was not implemented, or was implemented the way it is now, and if that feature pre-dates the standardization, you want to read D&E.
+  - 멀티메소드가 만약 된다면, 
+    - \1. native개발자는 to를 오버로딩해서 사용한다. worldlang 개발자도 to를 오버라이딩한다. (반환형 Refer가 노출된다는 문제가 있는데, 이건 일단 패스)
+    - \2. WorldFrx는 오버로딩된 to함수들을 클래스에 담아둘것이다. 
+    - \3. worldlang 개발자가 to()를 호출하면 멀티메소드에 의해서 저 to함수중 하나로 자동으로 매치된다. 
+    - \4. native개발자가 기존 to함수인 to(Class&)를 호출하면 3번으로 redirection 되게 한다.
+    - 즉, 캐스팅에 대해서 따로 클래스를 만들 필요도, 배열로 관리할 필요도 없으며, 멀티메소드라는 좋은 아이디어도 함께 얻게 된다.
+  - v 고찰로 알아낸 팩트
+    - v 멀티메소드는 단점이 매우 많다
+      - v 인자가 가지게될 가능성이 커지므로 당연히 모호성 오류가 증가한다.
+      - v 동적에 타입의 결정되기 때문에 vtable을 적용할 수 없고 따라서 최적화가 불가능하다.
+      - v 캐스팅 문제는 멀티메소드와 관련이 없다. 오히려 주어진 타입A가 hiding하고 있을 메소드까지 어떻게 dispatch하냐는 문제다. 
+
+- v 다른 언어는 사용자의 캐스팅을 어떻게 끼워넣을까?
+
+  - 동적바인딩언어는 제끼자.
+  - C#
+    - class A {
+      - static A explicit A(int a) {
+        - A ret = new A();
+        - a.setValue(a);
+        - return ret;
+      - }
+    - }
+  - *x 커피스크립트*
+  - *boo (C#과 비슷) C# 계열이니까..*
+  - *자바 (캐스팅 자체가 없다)*
+
+- *[x] 1안 사용자가 캐스팅을 추가하는 방법*
+
+  - 객체에 대한 배열을 사용한다. 직접 to를 오버라이드 하지 않게 한다. 사용자는 자신이 지원할 타입1에 대해서 캐스팅 클래스를 정의해야만 한다.
+  - to를 직접 override하는 것 대비, 
+    - 장점
+      - isTo() 함수를 작성할 수 있으며 기존대비 빠르다.
+      - override시 사용자가 해야할 명시적캐스팅을 대신해줄 것이다.
+      - to함수가 override되지 않고 하나의 함수안에서 for-loop으로 모든것이 될것이다.
+      - else-if 구조 타파
+    - 단점
+      - 클래스를 매번 만들어야 한다. 귀찮다.
+        - 람다로 대체는 불가능하다. 월드는 이 람다가 무슨 타입을 인자로 받는지까지는 알 수가 없기 때문이다.
+  - 캐스팅 가능한 목록은 모든 객체가 공유해야 하므로 이것은 당연히 클래스가 소유하고 있어야 한다. 클래스가 초기화될때 사용자가 집어넣은 캐스팅 가능 배열을 메타클래스가 가져와야 한다.
+
+- *[x] 2안 to를 오버라이드*
+
+  - C++의 operator type()캐스팅은 모호성의 오류를 너무 많이 야기한다. 
+  - 그렇다고 사용을 안할 수는 없다. World는 managed <-> native의 간극을 wrapping으로 메꾸고 있고 wrapping의 핵심은 캐스팅이기 때문에 native환경에서 managed 데이터를 가져오기 위해서는 캐스팅이 필수이다.
+  - 따라서 World는 custom타입에 대한 이를 지원은 하지만, 되도록이면 사용하지 않는 방향으로 간다.
+  - 캐스팅은 to() 함수이다. 2종류가 있다.
+    - virtual Reference<Node> Node::to(const Class&) const
+      - 핵심함수다. Node는 Object 될 수있고 c++만의 타입일 경우에는 Classizer<HWND> 식으로 넣으면 된다.
+    - 월드코드에 캐스팅 코드를 추가하고 싶다면 역시 to를 override하면 된다.
+      - class MyModule (from Object가 생략되어 있다)
+        - Node to(Class type)
+          - [super.to](http://super.to/)(type) // 이렇게 해야 Object::to()가 실행된다)
+          - if (type == Int)
+            - return Int(getAge())
+    - native에서 to를 override할 수도 있다.
+      - class MyModule : public Object {
+        - virtual Reference to(const Class& rhs) const {
+          - if(rhs.isSubOf<HWND>())
+          - //== if(rhs.isSubOf<Classizier<HWND>>())
+          - //== if(rhs.isSubOf(Classizier<HWND>()))
+
+
+
+
+
+
+
+
+
+##### 묵시적형변환, 묵시적바인딩, 명시적형변환문법, 연산자 오버로딩에 관한 총체적인 컨셉
+
+- 명시적 형변환은 to(타입) 으로 해결한다. native, managed 모두 to(Class&)을 define함으로써 형변환 지원을 추가 할 수있다. 그러나 되도록이면 권장하지는 않는데 모호성 오류를 야기시키기 때문이다.
+- 참고 -> #명시적캐스팅
+- 연산자 오버로딩에서 기존타입 + 커스텀타입의 형태를 지원하는 것은 까다로운 문제며, World는 클래스 확장기능으로 이를 해결한다. extend 키워드를 써야한다. 
+  - extend 키워드를 사용하는 이유는 World에게 "원본이 이거다. 원본을 먼저 파싱해서 읽어라"라는 힌트를 주기 위해서이다.
+  - 원본이 바이너리로 최적화된 상태라면 함수의 순서에 크게 영향을 받는다. 클래스의 메소드가 확장되었을때 기존 메소드가 정상적으로 호출되기 위해서는 확장된 메소드가 뒤에 붙어야 한다.
+- extend시 이미 기존 메소드가 존재하는 경우에는 에러가 발생한다.
+- extend된 함수에서도 private 멤버를 접근할 수 있다. 이것은 C++의 "원천금지는 하지 않는다. 오직 실수하지 않게끔 한다"는 철학이 옳다고 판단했기 때문이다. 
+- 묵시적 바인딩에서 묵시적 형변환이 일어난다. (다른곳에서도 묵시적 형변환은 일어난다) 묵시적바인딩시 to함수(이건 명시적 캐스팅이다)가 아니라 묵시적캐스팅함수(미정이나, 아마도 toImplicit가 될것이다)에 의해서 캐스팅이 가능한가 아닌가로 판단하게 된다. 
+  - --> 이것은 to함수가 어떤 캐스팅을 지원하는가를 World가 알고 있어야 한다.
+    World가 임의의타입 T가 어떠한 캐스팅을 지원하는지 알려면? 참고 
+- 고찰내용
+  - 팩트1. 타입 A가 B로 캐스팅이 가능한가의 여부는 각 클래스의 개발자가 define해놓아야 한다.
+  - 팩트2. 역(reversed)함수가 필요로 해지는 것들이 1개 이상 존재한다.
+    - [A.to](http://a.to/)(B)와 더불어 [B.to](http://b.to/)(A)도 있어야 하며, A.operator+(B)와 B.operator+(A)도 마찬가지다. 
+  - 팩트3. 그러나 타입A가 외부에서 가져온 모듈일 경우 타입A는 타입B를 알지못한다. 이 경우 해결할 방법은 
+    - 1안 타입B에 타입A를 받을 수있는 역함수, B.operator+(A)와 B.operator_reversed(A)를 만드는 방법 - python방식.
+      - 단점1. reversed된 함수를 사용자가 추가로 알고 있어야 하며
+      - 단점2. World는 A.operator+()를 먼저 try하고 없으면 B.reversed_operator+(A)를 try하는 형태로 가야하기 때문에 약간의 퍼포먼스 loss가 있다.
+    - v 2안 타입A의 operator+, to() 함수를 타입B와 함께 define해서 타입A 코드에 inject 하는 방법 - 비슷한게 C#에 있긴 하다.
+    - 3안 아예 그냥 캐스팅, operator+지원하지 않는 방법 - java 방식
+      - 단점1. 일부 상황에서 불편한게 사실이다.
+    - 4안 클래스에 속하지 않는 일반 함수를 define해서 friend로 해결하는 방법 - c++방식
+      - 단점1. 순수 객체지향언어에서는 클래스에 속하지 않는 일반함수라는게 없다.
+  - 4가지 있다. World는 2안을 따라간다. extend 키워드를 추가함으로써 해결한다.
+  - extend from 기능 (이름은 수정할 필요 있다)
+    - 이미 존재하는 클래스A에 메소드, 멤버변수를 추가하는, 클래스의 내용물을 add 하는 기능이다.
+    - import kukullza.print
+    - class COut extend from kukullza.print
+
+
+
+##### 중요!!! --> 헷갈리기  쉬운 묵시적형변환과 연산자 우선순위 주체 <-- !!!중요
+
+- 연산자 우선순위는 파서제네레이터에 의해서 결정된다.
+- 묵시적형변환은 코드블럭이 생성되는 시점에서 몇번째 동적디스패칭을 해야 하는지 결정하면서 같이 정해진다.
+- 동적디스패치는 호출해야할 함수의 프로토타입은 알고있는 상태에서 누구의 함수를 호출해야하는지가 정해진다.
+- 시나리오 검증
+  - class A
+    - int foo(int)
+    - float foo(float)
+    - int foo(string)
+  - class B
+    - int foo(int) // 만약 foo(int)는 동일하나, 뒤에 반환형이 int가 아니라면 컴파일 에러가 난다.
+  - foo(3) + foo(3) * (foo(2.5) - hoo("gogo")) / foo(2)
+  - 가 있을때...
+  - 파서제네레이터가 일한다. 연산자 우선순위를 바탕으로 해서 foo(2.5) - hoo("gogo") 가 먼저 파싱되고, foo(2.5)를 통해 미완성 코드블럭을 계속해서 생성한다. 정의된 함수자체는 올바르게 등록되어 들어간다. 미완성인 것은 오직 statement인 코드블럭뿐이다.
+  - 다음은 syntaxer가 일한다. syntaxer는 생성된 코드블럭들을 linking + validation을 수행한다. foo("gogo")를 보고, 
+
+
+
+
+
+##### 타입변환
+
+- dynamic_class를 더 좋은 퍼포먼스와 활용성을 커스터마이즈 하는 것이 목표다.
+- 클래스A -> 클래스B되기 위해서는 클래스A 안에 인자로 클래스가 들어오면 이걸 어떠한 형태로 내보내겠다는 코드를 적어놓는다.
+- 클래스B는 클래스A의 계층 중 하나가 될 수 도 있고, 전혀다른 클래스가 될 수도 있어야 한다. 
+- x to() 결과 캐스팅이 된 StrongBind가 임시변수로 넘겨지며 caller는 이를 Weak 혹은 StrongBind로 선택할 수 있다.
+  - x 왜 그런가? 왜 weak로 내보내야하지?
+  - x 만약 weak로도 내보내야 한다면, Refer는 weak와 Strong 양쪽 다 안되나?
+- 설계
+  - class Instance {
+    - Bind<T> to() const {
+      - return Bind<T>(_onTo(TClass<T>()));
+    - }
+    - virtual Bind<Instance> _onTo(const Class& klass) {
+      - return Bind<Instance>();
+    - }
+  - };
+- 고찰 내용
+  - 하나의 타입이 다른 타입으로 변환하려면 변화시키려는 주체가 지원해줘야 한다.
+    - 예) Integer가 Float이 되려면 [Integer.to](http://integer.to/)<Float>()을 해야하고 Integer._onTo(Class&) 안에서 Float일때 어떻게 Float()을 생성해서 내보내는지 코드로 되어있어야 한다.
+  - to로 변환할 수 있는 것은 Object를 상속 클래스에 한 한다.
+  - to의 결과가 참조자가 되는 경우도 있는 반면, 새로운 객체가 나오는 경우도 있어야 한다.
+    - View& someview = component[0].cast<View>()->getValue();
+    - Integer age = component[0].cast<Integer>()->getValue();
+    - TBind는 getValue() 할때 T&가 나온다. TBind<View>(*this)
+  - 설계해보라
+    - class Object {
+      - template <typename T>
+      - TBind<T> to() const {
+        - TBind<Object> obj = _onTo(TClass<T>());
+        - if obj // == isBinded()
+          - return TBind<T>(obj);
+        - return TBind<T>();
+      - }
+      - virtual TBind<Object> _onTo(const Class& klass) { return TBind<Object>(); }
+    - };
+  - to<T>() 는 필요할 지 모른다. to(Class&)는 필요하는가?
+    - 필요 없다.
+    - 다만 _onTo(Class&) 이런건 필요하겠다.
+  - 문제점
+    -  참조자로 나올 수도 있고 값으로 나올 수도 있다고 했다. 그런데 그 둘의 타입이 같아야 하므로 결국은 TBind<>로 나오게된다. 이것은 참조자로 나올때 참조카운트가 1개 증가되는 문제를 낳는다.
+    - 참조자로 나올 때는 TWeak<>로, 값으로 나올때는 TBind<>로 나오되, 타입은 같게 만들되, 사용자가 사용할때는 확실하게 각각 동작되도록 하는 방법은?
+      - 1안
+        - TWeak가 범용적이므로 to()반환형은 TWeak다. 
+        - 남은 문제는 Float을 내보내는 경우는 밖에서 참조카운트 관리를 해줘야 한다는 점이다.
+        - 반환형이 참조자라면 원본을 유지한채로 밖으로 꺼낼 수 있다. 
+        - 반환형이 TWeak&가 된다는 것이지.
+      - [v] 2안
+        - TBind<int> foo();
+        - TWeakBind<int> ret = foo(); 
+          - foo의 반환형은 TBinder. 하지만 임시변수이기 때문에 이 한줄이 사라지면 소멸된다. 즉 사용하는 쪽에서 임시변수를 TBind로 받을 것인지, TWeak로 받을 것인지를 선택할 수 있다. 
+          - foo()안에서 기존 인스턴스를 캐스팅만 달리해서 넘긴 경우라면, Weak로 받아도 아무런 문제없다.
+          - 게다가 표준에 의하면 값으로 넘긴걸(rvalue) 레퍼런스로 받을 수 없다. (MSVC는 허용함. 그러므로 얘는 쓰지 말자) 그러므로 홀이 아니다.
+      - [x] 3안
+        - 전혀다른 인스턴스로 변환되는 건 없도록 한다.
+        - Integer -> Float은 그럼 어떻게 할것인가.
+
+
+
+
+
+##### 명시적캐스트에서_다운캐스팅으로_반환된경우만_isConst함수가_영향력을_발휘한다.
+
+- 참고 -> #명시적캐스팅
+
+
+
+
+
+##### 묵시적캐스팅 
+
+- 배경
+  - 함수 디덕션 과정 (참고로 함수디덕션은 단순히 함수호출을 의미하는게 아니다. World는 모든 것이 msg의 송수신, 즉, 함수로 보기 때문에 생성자 생성과 연산자, if 같은 keyword까지 포함한 모든 것을 의미한다)에서 주어진 인자로 이 함수를 호출 할 수 있는 지를 판단하기 위해 타입의 교량역할을 하는 것이다.
+  - 사용자가 함수 호출 인자로 명시적으로 캐스팅 하지 않아도 자동으로 되는 것을 말한다.
+  - 함수 디덕션에서는 묵시적캐스팅을 적용한 결과, 호출이 가능할 것인지, 가능하다면 얼마나 우선순위가 되는지를 종합적으로 판단해서 가장 적합한 best fit을 찾아서 그걸로 링킹을 시도하게 된다.
+- 묵시적캐스팅의 내용
+  - \1. pretype들간의 명시적 캐스팅
+    pretype 들 간 이다. 한쪽이 pretype인 경우는 해당하지 않는다. 
+  - \2. 업캐스팅
+  - [미정] 3. 다운캐스팅
+    지원하게 되면 멀티메소드를 지원하게 되는 것이다. 
+- 왜 pretype들간의 명시적 캐스팅만 지원하는가? 다른 타입은?
+  - pretype들은 프로그램 내에서 가장 빈번하게 사용될 타입이다. 따라서 이들을 가지고 함수를 호출하는 경우도 많다. 매번 이러한 경우마다 사용자보고 명시적으로 함수캐스팅을 하라고 하는 것은 사용성이 너무 떨어진다.
+  - C++의 경험을 보았을때 커스텀타입들에 대해 업캐스팅 정도만 묵시적으로 동작해도 사용에 크게 무리는 없었다.
+  - 명시적 캐스팅을 모두 묵시적으로 동작하게 해버리면, 모호성의 오류가 너무 많아진다.
+- 묵시적캐스팅을 위한 API가 필요한가?
+  - 묵시적 캐스팅을 사용하게 될 알려진 장소는 현재 컴파일러(함수 디덕션을 하는 곳), Bidge component 2곳이다. 
+  - 설계의 관점에서 책임을 놓고 보면 캐스팅을 전담하는 것은 타입이므로 타입에서 API로 캐스팅을 두는 것이 많다. 
+  - 단, 이러면 API가 늘어나는 것이며 이 API를 사용자가 오버라이딩해서 함수 디덕션에 자신의 타입을 묵시적캐스팅되도록 추가할 수 있게 된다.
+- Thing에 그대로 묵시적 캐스팅을 두기로 했다. (invisible)
+
+
+
+##### 기본 타입간의 #묵시적-캐스팅-정책
+
+- 요구사항
+  - \#worldlang-개발자가-to에다가-캐스팅을-추가하려면 에 따르면, 명시적 캐스팅은 생성자에 의해서 자동으로 추가된다.
+  - 묵시적 캐스팅은 pretype 들에 대해서만 world가 미리 정의한 캐스팅이다. 즉, 사용자가 추가한 명시적 캐스팅들은 함수 디덕션에 반영되지 않는다.
+  - \1. 이 우선순위가 어떻게 정해질 것인가
+  - \2. 이 우선순위를 정하는 코드를 어떻게 어느 클래스가 소요하도록 할것인가가 중요해진다.
+
+
+
+
+
+
+
+##### 최소화된 묵시적 형변환
+
+- 애매모호한것보다 번거로운게 낫고, 버거로운것보단 심플한게 낫다.
+- built-in 타입들에 대해서 최소한의 묵시적형변환을 지원해준다. 그 이외에는 직접 개발자가 캐스팅을 코드에 명시해야 한다.
+- 사용자가 작성한 타입을 부득이 다른 타입으로 변환한다는 것은 World가 적절한 타입으로 변경해준다는 걸 의미한다. 여기서 "적절함" 이란 일종의 AI를 의미한다. AI를 넣을 수 없다면 그걸 대신 할 수 있는 대중의 합의점에 해당하는 데이터가 필요로 해진다.
+- 형변환 테이블에는 비슷한 그룹군이 담겨있다. 우선순위는 존재하지 않는다.
+  - 원칙
+    - 작은것은 큰것으로 흘러가는 것이 원칙이다. 그러나 사용성을 위하여 몇가지 예외를 둔다. (int -> float, char -> int, int -> string)
+    - 예외적으로 숫자 그룹군끼리는 서로 호환된다. 
+    - 대부분의 built 타입은 string으로 변환될 수 있다.
+  - int --> float, char, bool
+  - float --> int, bool
+  - char --> float, int, bool
+  - bool --> int, string
+  - result --> string, bool
+
+
+
+
+
+##### 함수와 참조자와 캐스팅 문제
+
+- 시나리오
+  - class A
+    - void print(string a)
+      - a += "msg = "
+      - Console.out(a)
+  - A a
+  - string msg = "hello world"
+  - a.print(msg) // msg = "msg = hello world"
+  - a.print(35)
+  - 문제는, 사용자는 void print(string)의 parameter a가 내부에서 set 되는 함수이니까 정확하게 string 타입으로 인자를 주지 않으면 제대로 값이 할당되지 않겠다..... 라는 걸 알기가 힘들다는 것이다. c++의 경우라면 a&나 *a로 적혀있을테니 쉽게 예상해볼 수 있다. 어떻게 할까?
+- 구버전
+  - Int를 받는 모듈이 있을때, int가 아닌 타입을 인자로 넣었다면 "컴파일에러가 나올수도 있고 나오지 않을 수도 있다". 이는 최소화된 묵시적 형변환 룰에 의해서 예외적으로 인정받는 경우를 제외하고는 명시적으로 사용자가 어떠한 타입으로 변환하겠다는 것을 명시하는 것을 권장한다.
+  - 고찰내용
+    - World dust 버전에서 가장 큰 문제였다. 상황을 설명해보지.
+    - class MyModule : public Module
+      - NETArgument<NEIntKey> age;
+      - virtual type_result _onExecute() {
+        - int& aage = age.getValue();
+        - aage += 3
+      - }
+    - 보다시피 단순한 예제다. 하지만 만약 MyModule에게 넘겨졌던 인자가 String일때는 어떻게 되는가?
+    - read를 위해서 string -> int로 하는 건 매우 단순하다.
+    - 하지만 write는?
+      - World는 모든 것이 메시지 위주로 돌아간다. 사용자가 작성한 코드도 결국은 메시지로 번역된다.
+      - 따라서 aage += 3을 World 문법으로 작성하면 이는 결국은 
+        - aage.call("set", aage.call("add", aage, int(3));
+      - 같이 번역되기 때문에 문제는 없을 것이다.
 
 
 
@@ -568,6 +982,83 @@
 
 
 
+#### 함수_바인딩_퍼포먼스_알고리즘_최적화
+
+- World의 모든 Statement는 사실 Expression이다. --> #Statment와_Expression은_구분해야_할까 
+- Expression은 execute()가 가능하고, 반환값을 얻을 수 있다. 전달할 Msg와 전달받을 Target을 가지고 있다.
+  - Expression설계상, execute()를 해야만 반환값을 얻을 수 있는 것은 아니다.
+- Expr은 Expression 컴포넌트의 기반클래스이며, 이 밑으로 RawExpr, AccessExpr, ExecuteExpr, DynBindExpr 4종류가 있다.
+  - RawExpr은 Generation단계에서 링킹을 위해서 정보를 잠시 담아둘 용도로 사용되는것이며(미확정)
+  - DynBindExpr은 다이나믹바인딩 특성을 갖게 하는 Expression이다. 이는 C-REPL 기반에서 런타임시, 매 호출마다 묵시적형변환과 오버로딩을 고려한, 동적바인딩을 통해서 적당한 심볼로 바인딩을 한다. 당연히 시간이 많이 소요된다.
+  - AccessExpr, ExecuteExpr은 DynBindExpr의 시간이 많이 소요되는 것을 최적화하기 위해서 추가되는 것으로 Optimization 단계에서 Optimizer(명칭 미확정)가 DynBindExpr들을 분석해서 적절하게 변환해준다. 
+    - 현재로써는 AccessExpr(= getMember(index)), ExecuteExpr(= call("execute")) 2가지로 모든 DynBindExpr이 대체가능할것으로 보인다.
+  - 차후 더 최적화 과정이 이루어지면 더 다양한 Expr이 나오게 될 것으로 보인다.
+- 고찰내용
+  - 요구사항
+    - \1. Linking이 끝나고 코드블럭이 나오면, 함수호출statement에서 어떠한 함수를 호출해야 하는지 바로 접근이 가능하게 해야한다. 오버로딩을 고려하기 시작하면 매번 call에 던질때마다 Object는 msg 파악해서 묵시적형변환 고려하고 적당한 함수로 redirection하는 과정을 거칠 수 밖에 없는 것이다.
+    - \2. 2가지 기능은 모두 필요하다. 직접접근도 돼야 하지만 파서를 위해서 오버로딩+묵시적형변환 을 고려하는 로직도 같이 있어야 한다.
+  - **고찰로 얻어낸 팩트**
+    - \1. **기존 설계에서는 "모든것은 call" 이라고 하였으나, call에는 "이 msg를 받을 수 있는 것은 누구인가" 라는 것을 찾아야하는 의무가 있다. 따라서 "call안에 msg를 받을 수 있는 것은 누구인지 찾지 않게 한다" 라는 걸 넣기가 어렵다.**
+    - \2. "msg 받을 수 있는건 누구인가" 를 찾는 과정은, 오버로딩과 묵시적 형변환을 필요로 하며 많은 시간이 소요된다.
+    - \3. C-REPL를 사용한다면 getMember(35) 처럼 인덱스 기반으로 만들기는 쉽지 않다. 왜냐하면 런타임과 빌드가 mix된 상태가 계속 이어지므로 member가 추가되거나 삭제될 수 있다.
+    - \4. 따라서 C-REPL을 위해서라면 언제든지 멤버접근방법이 2가지가 제공되어야 한다. 하나는 msg(곧, string)을 통해서, 하나는 인덱스를 통해서.
+  - 1안 **Access, Executor** 라는 걸 만든다. 이건, execute시 call을 사용않고 직접 멤버에 direct로 접근한다.
+    - World는 설계상으로는 Statement와 Expression를 구분하지 않는다 --> #Statment와_Expression은_구분해야_할까  참조. 모든것은 Expression 인것이다.
+    - getMember(Msg)는 동적바인딩을 수행하는 함수이며, call(MSG)를 호출한 경우에는 getMember()를 타게 된다. 이것은 코드블럭이 막 완성된 상태, C-REPL일때는 이걸로 코드블럭이 call(MSG)를 사용하도록 완성되어있으므로, 이걸 사용하게 된다. 이때는 모든 코드블럭이 DynamicBindingStatement 같은 걸로만 구성되어있으며, 해당 클래스는 execute()시에 call(MSG)를 통해서 심볼을 접근, 메소드를 수행하도록 되어있다.
+    - Optimization단계에서는 일률적이던 DynamicBindingStatement를 분석해서 Accessor나 ExecutorStatement로 구분해서 객체를 변경한다.
+    - Accessor는 execute()되면 target.call(MSG)가 아니라 return target.getMember(index) 로 바로 접근하는 것이므로, call("getMember", {...}) 일때와 달리 동적바인딩이 없다. call()로 하는 경우는 총 2번의 동적바인딩을 타야만 한다.
+      - 1번은 call로 인하여, 2번째는 call을 통해서 호출된 getMember(Msg&) 안에서 주어진 args를 대상으로 수행된다.
+    - executor는 target.execute(Msg&)를 수행하도록 한다. Method는 기본적으로 상속받은 virtual execute()가 있으며, 오버로딩한 execute(Msg&)는 내부적으로 
+      - setArgs(msg.getArgs())
+      - execute()
+    - 를 할 뿐인 편의함수다.
+    - 이 역시 call()를 거치지 않으므로 동적바인딩이 1번 생략된다.
+    - 코드
+      - class Node {
+        - getMember(int index, wlevel& level = wlevel())
+        - virtual Node& getMember(const Message& msg, wlevel& lv = wlevel()) // msg를 받을 수 있는 Member를 반환한다. level은 얼마나 근접한지를 나타낸다. 0은 일치, 높을 수록 불일치.
+          - wlevel&를 인자로 넣는 거 말고 더 좋은 방법은 없을까?
+          - struct Unit {
+            - TStrong<Node> trg
+            - wlevel lv;
+          - } unit;
+          - [unit.lv](http://unit.lv/) = 99999999;
+          - for(m in members)
+            - wlevel trg_lv = 0
+            - Node& trg = m.getMember(msg, trg_lv)
+            - if( ! trg_lv)
+              - return trg;
+            - if(trg_lv < [unit.lv](http://unit.lv/))
+              - unit.trg.bind(trg)
+              - [unit.lv](http://unit.lv/) = trg_lv
+          - return unit.trg.get()
+      - }
+      - class Func : Node {
+        - virtual Node& getMember(const Message& msg, Result& res = Result())
+          - // **묵시적 형변환**도 고려해서 msg를 받을 수 있는 경우,
+          - return *this;
+      - }
+    - 시나리오
+      - a.foo.boo(void).getName().toInteger() 라는 world코드가 있다고 가정하자.
+      - Generting단계에서는 파서가 저것들을 끊어주면 단순히 Statement 정보만 갖고 있는 candidate로 만들어준다.
+        - StatementCandidate {
+          - trg = StatementCandidate {
+            - trg = StatementCandidate {
+              - trg = StatementCandidate {
+                - trg = StatementCandidate {
+                  - trg = StatementCandidate {
+                    - trg = scope
+                    - msg = {.name = a, .args={}}
+                  - }, msg = {.name = "foo", .args={}}
+                - }, msg = {.name = "boo(void)", .args={}}
+              - }, msg = {
+            - }, msg = {.name="getName", .args={}}
+          - }, msg = {.name="()", .args={}}
+
+
+
+
+
 
 
 ### Expression
@@ -848,6 +1339,79 @@
 
 
 
+#### 객체의_함수_접근이_이름만_가지고는_불가능하다_왜냐하면_오버로딩을_지원하기_때문이다
+
+- 오버로딩 지원된다는 것은 함수식별이 "함수명 + 인자리스트"로 조합될때만 가능하다는 얘기가 된다.
+
+- 따라서 world에서 함수를 식별하기 위해서는 "함수명(타입리스트)" 를 명시하면 된다.
+
+  - 예) class A 
+    - void foo()
+    - int foo(int)
+    - int foo = 5
+  - A.foo(int).getName() // "foo"
+  - A a
+  - a.foo(void).getSignature() // "void foo(void)"
+  - a.foo.getName() // compile 에러다.
+  - a.foo.getClass().getName() // "int"
+  - a.foo(int).getClass().getName() // "func"
+
+- 고찰 내용
+
+  - class A
+
+    - void foo()
+    - void foo(int)
+
+  - a.foo.getName() // 이때의 foo는 어느 foo인가.
+
+  - 그러면 사용자가 어떻게 2개 중 하나를 지정하도록 할 수 있을까?
+
+    - 1안 인자리스트도 같이 써준다.
+
+      - a.foo(int).getName()
+
+      - 이건, foo(int)를 호출하고 나서 반환값을 getName() 한거로 오독될 여지가 있을까? foo(int)와 foo(int())와 foo(3)은 다르게 보일것이긴 하다.
+
+      - a.foo().getName() 은 마치 foo()라는 함수호출 처럼 보이지 않는가.
+
+        - a.foo(void).getName()로 사용하도록 유도한다.
+
+      - a.foo(abc).getName() 이라는게 있다고 하자. 이때 abc는 Type일 수도, 변수일수도 있다. 문제는 없는가?
+
+        --> 별도로 컨셉을 논의. 컨셉만 정해지면 문제는 없다. 
+
+        - generating 단계에서 메소드의 내역이 확정된다. 
+        - linking단계에서는 메소드의 내부가 scope를 update 해나가면서 확정해간다. 런타임환경과 동일하게 구성해야 제대로 binding여부를 탐지할 수 있기 때문에 scope를 같이 update하는 것이다.
+        - scope의 우선순위는 
+          - 타입, 전역
+          - 객체의 멤버(메소드 + 변수)
+          - Nested 밖의 지역변수
+          - 현재 실행중인 지역변수
+        - 순으로 접근이 이루어진다.
+        - 식별자 중복시 어떻게 해야하는가는 별도로 생각해야할 문제이니 여기서는 패스하자.
+        - 중요한것은 scope객체에 질의하면 "abc"가 무엇인지 명확히 알 수 있다는 것이며, 미리 정의된 컨셉에 의해서 무시하거나 계속 가거나를 선택해서 코드블럭을 적절하게 생성이 가능할것이다.
+
+    - x 2안 저러한 것을 expression이라고 정의하자. 그리고 expression은 통째로 isCallable을 때리면 된다.
+
+      - <variable> => prebuilt keyword가 아닌 것들
+        숫자로 시작 ok 언더바, ?, #, $,@, %, & 사용가능 
+      - <function> => <symbol>\( [<args>]* \)
+      - <msg> => (<symbol> | <function>)
+      - <msgs> => <msg>[.<msg>]*
+      - <expr> => (<msgs> | <msgs> <oper> <msgs> | <msgs> <oper> )
+      - <stmt> => (<expr> | <returns> | <fors>)
+        statement란 keyword등을 사용해서 나오는 "값을 반환하지 않는" 것들 
+      - **아니, 사람이 보더라도 저 foo가 foo() 인지 foo(int)인지 알 방법이 없다니까?**
+
+
+
+
+
+
+
+
+
 
 ###  객체의 정의
 * 직접 정의 & 복제
@@ -1075,7 +1639,128 @@
 
 
 
+#### Scope, 객체와 메소드 간의 메시지 전달 체계
 
+- 상당히 까다로운 문제였다.
+- \#Message는_name_thisptr_args를_모두_하나의_Array로_구성한다
+- **thisptr은 Object와 관련이 없다.**
+- **Method.call(msg)에서 Method가 static Method가 아니라면 msg 마지막에 thisptr를 넣어둬야한다.**
+- CallStmt나 Method를 굳이 Native환경에서 쓰고 싶다는 변태적인 개발자는 직접 msg를 생성할때 args를 size+1한 뒤에 끝에다가 this로 사용할 object를 넣어둬야 한다. Method::run(msg)에다가 Method::run(thisptr, msg)로 하자는 의견도 있었다. 그러나 Method에는 StaticMethod도 나올 수 있으며 이 경우 thisptr는 완전히 필요없는 인자가 된다. Method라는 클래스에는 Static메소드도 포함된 상태이기 때문에 특정 자식클래스에서만 사용한는걸 공통클래스로 끌어올리는데는 조금 석연찮다.
+- **Msg는 모두다 인자로써만 취급하기에 자신의 마지막 arg가 thisptr인지 아닌지는 알 도리가 없다. 메소드가 마지막 인자를 thisptr로써 취급하는 것 뿐이다.**
+- **Scope.stack(Object&)는 ObjectSpace를 등록하며, scope의 localspace의 "this" 라는 변수를 만들어(이미 있다는 덮어써서) 주어진 object로 assign한다.**
+- **Object는 call할때 scope에 대해서 아무런 동작을 하지 않는다. 그저 자신의 member들만 뒤진다.**
+- **NativeMethod 역시 scope에 대해서 아무런 동작을 할 필요가 없다.**
+- **StaticMethod는 Object관련된 scope 조작이 없다. LocalSpace만 add한다.**
+- 왜냐하면 Method::stack을 보면 다른 모든것들은 scope에서 나오고 있기 때문이다. 
+- 이 둘을 모두 scope에서 출발하도록, Method&origin도 그렇게 만들면 _stack의 args를 scope만 받도록 만들 수 있다. 
+- 그렇게 되면 object와 method 모두 같은 함수인 _stack을 두도록 할 수 있다.
+- 왜 msg에 뒀을까? 이유가 있을 것이다. --> #Message는_thisptr를_어떻게_다뤄야_할까
+- **일반 nonstatic ManagedMethod는 외부로부터 this에 사용할 Object가 msg 뒤에 담겨있다는 걸 안다. nonstatic ManagedMethod는 this로 사용할 object를 꺼내서 scope.objectSpace.push() 한다. 함수가 끝나면 objectspace.pop()을 한다.**
+- ManagedMethod가 자신이 static인지 아닌지 아는 방법은 isStatic()을 사용하면 된다.
+
+
+
+
+
+
+
+#### 함수 디덕션. 코드를 보고 어떻게 무슨 오버로딩된 메소드인지 파악하는 가.
+
+- 요구사항
+  - 함수디덕션의 핵심은, expr에 담긴 argument들을, expr에서 호출하려고 하는 함수명세를 통해 도출된 함수후보군 중에서 가장 비슷한 함수의 parameter로 명시적 캐스팅을 묵시적으로시켜서 호출이 허용되도록 만드는 것이다.
+  - 모든 명시적캐스팅들은 주어진 상황에 따라 묵시적으로 캐스팅이 될 수 없다. 오직 pretype 들에 대해서만 world가 미리 정의한 묵시적 캐스팅만 해당한다.
+  - 여기서 핵심은 함수후보군을 찾아내는 것과, 그 후보군 중에서 가장 적합한 것 1개를 도출해 내는 과정과, 그 프로세스를 어느 클래스에서 가지고 있어야 하는 것 3가지다.
+  - 가장 먼저 #묵시적_캐스팅-정책 이선결되어야 한다.
+- 고찰결과 각 인자는 implicit casting(업캐스팅과 prebuilt 타입간의 제한된 casting)만 고려해서 가장 bestfit을 찾아내면 된다.
+- 속도가 매우 중요하다. 캐스팅은 상당히 많이 사용되기 때문이다.
+- .cast<T>는 묵시적캐스팅이다. 
+  - world에서는 invisible하다. 
+  - 빠르다.
+  - 함수 deduction시 사용된다.
+  - 다라서 Method 안에서 사용되는 캐스팅은 to()가 아니라 cast<T>다.
+  - 묵시적 캐스팅은 업캐스팅과 기본제공타입의 명시적캐스팅이 있다. 
+  - 기본타입의 명시적 캐스팅은 매우 빠르게 제공되어야 하므로 override를 사용해서 제공된다. (즉, 이 기본타입들은 생성자를 통해서 캐스팅을 공개하지않아도 된다는 것이다. 이 방법은 오래걸리니까).
+
+
+
+
+
+
+
+
+
+##### deduction 함수 바인딩
+
+- c++처럼, 함수의 signature와 정확히 일치 되지 않더라도 유도리있게 파서가 "이 심볼이지??ㅋㅋ" 하면서 매칭해주는 알고리즘이다.
+- 고찰로 알아낸, 이 문제의 가장 포인트는, 
+  - 묵시적 형변환으로 함수를 바인딩하는 것은 "**사용자의 의도와 실제가 달랐을 경우, 유도리있게 비슷한 걸 정해준다**"는 컨셉임을 잊지 말하야 한다. 이는 "형변환이 가능하다"와는 다른 얘기인것이다.
+    - 예를들면 [float.to](http://float.to/)(string)은 가능하다. 하지만 그렇다고해서 foo(string) 함수에 사용자가 foo(3.5)로 호출하는 것이 용납되는 것은 아닌 것이다. 명시적으로 캐스팅을 해야하지. 이를테면,
+      - foo(string)
+      - foo(int)
+      - foo(3.5)는 어디로 가야 하나? --> 정답은 foo(int)로 가야한다. 둘다 형변환은 가능하지만 묵시적변환은 int -> string은 동작하지 않아야 하는 것이다.
+    - 하지만 foo(float) 함수를 foo(5)로 하는 건, 유도리 있게 해줄만 하다고 여겨지게 된다.
+- 묵시적 형변환은 "계열" 을 기반으로 판단된다.
+  - Numeric계열(int, char, float, bool)
+  - 문자열계열(string)
+  - custom계열(클래스 계층구조로 판정)
+  - 계열이 다르면 묵시적 형변환은 일어나지 않는다.
+- 알고리즘은 다음과 같다.
+  - 파서는 foo(int, float)라는 코드를 봤을때 적절한 call 코드블럭으로 파싱해야한다.
+  - 함수명 foo를 갖고 있는 현 scope의 모든 함수목록을 가져온다.
+    - foo(char, string), foo(bool, result), foo(result, float), foo(int, float, string), foo(float, int)
+  - 가져오는 도중 정확히 일치되면 그걸로 끝낸다. --> END
+  - 차선책을 찾기 위해 본격적인 묵시적형변환을 통한 함수바인딩 로직에 들어간다.
+    - 가져온 후보군 들을 탐색하면서,
+      - 메소드들에게 parameter를 넘겨주고 실행가능한지 evaluate()하라고 한다.
+      - int now = 메소드::evaluate(int current_most_low_evaluated_value) {
+        - 인자 다르면 return -1
+        - int sum = 0;
+        - for 모든 Arguments {
+          - sum += evaluated = Argument.evaluate(param[n]) {
+            - String/Numeric::evaluate() {
+              - if 같은 계열 아니면, return -1
+              - return 0;
+            - }
+            - 기타 모든 계열(==custom::evaluate() {
+              - if ! param.getClass().isSubOf(getClass()) return -1
+              - return param.getSuperClasses().level - getSuperClasses().level;
+            - }
+          - }
+          - if evaluated < 0, 탈락.
+          - if sum > current_most_low_evaluated_value, 탈락. 더 볼것도 없다.
+        - }
+        - return sum;
+      - }
+      - if now < 0, 후보군에서 제거
+      - if !now, 이 놈입니다. 잡아가세요.
+    - if 남은_후보군.getLength() >= 2, 모호성의 오류
+    - if ! 남은_후보군.getLength(), 함수가 없습니다. 에러.
+    - return 남은_후보군[0];
+- 위와 같이 하게 되면, 다음과 같은 상황에서도 모호성의 오류가 나온다.
+  - void print(int, char, float) {} // 1
+  - void print(float, float, int) {} // 2
+  - print(3.5f, 3.5f, 3.5f);
+- 얼핏보면 float이 일치된 갯수가 2번이 더 많으니까, 2번째 print로 가야하지 않냐고 생각할지도 모른다.
+- 고찰 내용
+  - World 함수 안에
+    - foo()
+    - foo(char)
+    - foo(string)
+  - 3개가 있을때 내가 foo(20440) 을 한 경우, 어떤 함수가 호출되어야 할지를 정하라는 것이다.
+  - 1안 범용의 룰을 만들고 모든 타입에 대해서 적용시킨다.
+    - 1안 아무런 호출도 하지 않아야 할까?
+      - 그럼 foo(int)
+        - foo(string)
+        - foo(char)
+        - 이 상황에서 foo(36452.5) 는 어떤가? 이래도 아무런 호출을 하지 않아야 맞는가?
+        - 아니면 foo((int) 36542.3) 나, foo((int) grade) 를 앞에 붙여줘야 맞는가?
+      - 다른 예는 어때?
+        - foo(Parent)
+        - foo(Child)
+        - 에서 foo(GrandChild) 는 어떤가?
+    - 2안 하니면 숫자와 가까우니까 char?
+    - 3안 아니면 경우의 수가 가장 크니까 string?
+  - 2안 축소화된 매우 알기쉬운 범용룰 1개를 만들고, 일부 타입에 대해서만 특수룰을 적용시킨다.
 
 
 
@@ -1391,6 +2076,84 @@
     - 2 = int Me.static_value;
       - 반대의견1 - 이 변수는 method에 속한 것이 아니라 블록문에 속해 있어야 한다. 그리고 블록문을 식별자로 지정할 수 있는 방법은 없다.
       - 찬성의견1 - c++도 static 변수는 메소드에 속하게 한다. 굳이 블록문에 한정할 필요가 있는가?
+
+
+
+
+
+
+
+##### static정보를_어떻게_공개할것인가
+
+- [v] 구현
+
+  - [v] Method에만 isStatic 만들기
+  - [v] c++ sfinae로 static 메소드인지 판단이 가능한가?
+  - [v] 월드 method 정의 매크로로 자연스럽게 static func인지 판단이 가능하게 할 수 있을까? 다른 매크로를 또 만들게 하고 싶지 않다.
+
+- 고찰내용
+
+  - *1안*
+
+    - Node
+      - CompositNode
+
+  - *2안 isStatic() const 함수는 this가 scope의 globalspace에 속해있는가, 혹은 메소드의 변수로써 박혀있는가 등으로 판단한다.*
+
+    - 실행중이 아닌 Object라면 isStatic()여부를 알수 없다.
+
+  - *3안 method에 대해서만 static 여부를 알린다. 즉, isStatic()을 묶지 말고 각 필요한 클래스 별로 별도로 가져간다.*
+
+  - *5안 현 설계에 Node에 static을 둔다.*
+
+    - 멤버변수의 static : 객체가 없어도 호출이 가능한 것.
+
+      - *x ==> 객체에 속한 것이 아니라 class에 속한것*
+      - **v ==> 실행 및 접근과정에서 this가 필요하지 않는 것.**
+        - 이 점을 생각하고, Node에 isStatic() const를 두도록 한다.
+
+    - 객체의 static : scope가 제한된 전역변수
+
+    - static이란 msg로 call을 할때 msg안에 this가 필요한가 필요하지 않은가 이다. Node default로 true를 반환하도록 하자.
+
+    - v Node에 static을 둘수 없다.
+
+      답이 없다. 
+
+      - c++ 적으로 알아낼 수 있는 방법이 없다.
+
+      - 왜냐하면 native 사용자가 자신이 만든 클래스의 메소드 안에 static MyObject로 둔 경우, 이 객체는 절대로 isStatic()에서 true를 반환하도록 할 수 없다.
+
+      - 이는 c++에서는 변수가 static인지 아닌지를 판정하는 것이 불가능하기 때문이다.
+
+      - (static 함수는, visiblity를 위해서 함수명, 반환값, 인자리스트를 모두 알고있으므로 sfinae를 사용하면 static메소드인지 아닌지를 알 수 있다)
+
+      - 따라서 모든 케이스에 대해서 static 여부를 반환하도록 할 수 없으며, 그렇게 오인할 수 있는 API를 만들어서는 안된다.
+
+      - x 1안 만약 사용자가 Native에서 생성한 객체를 월드에 공개하고 싶을때는 추가적인 API를 사용해야만 한다고 제약을 건다면?
+
+        너무 불편하다. 걍 제공하지 말자. 
+
+        - 이 제약(메소드)안에서 static 여부도 같이 검사해서 값을 할당해주면 된다.
+        - 그러나 이 static 문제만을 위해서 이렇게 제약을 거는 건 좀 그렇다. 혹시 다른 경우에도 이러한 제약이 필요한가? 생각해보자
+          - static을 제외한다면 사용자가 멋대로 native에서 만든 객체를 world에게 반환값으로 넘겨줘도 문제는 안되는가?
+
+  - [v] 6안 static의 의미를 세분화해서 그 중 100% 보장 가능한 것만 Node에 API를 둔다.
+
+    - C++에서는 static이 여러의미로 쓰이는데
+      - \1. 클래스 멤버에 대한 static : 이것은 이 멤버의 접근시 this가 필요없다는 의미이다.
+        - 예) 클래스 static 멤버변수, static 멤버함수, static변수
+        - 이 정보는 실행도중에 필요할 수 있다. this를 넣어야할지 아닐지는 programmatically하게 결정해야 할 수있기 때문이다.
+      - \2. 함수 혹은 파일 translation unit안의 static 변수 : 이것은 이 변수가 여기서만 노출되는 전역함수라는 뜻이다.
+        - 그러나 이 정보는 실행도중 참조할 이유가 아무것도 없다. 이정 보는 IDE에서만 사용하는 것이다. IDE에서만 노출되는 정보로 만들면 된다.
+    - 위의 2가지 의미를 static 하나의 키워드로 묶는것은 다소 문제가 있어보인다. 월드에서 다음과 같이 지정하면 어떨까?
+    - 1안 - method에 대해서만 static을 공개한다. 변수가 static인 것은 실행에 아무런 도움이 안되기 때문이다.
+      - 정확히 말하면 이 메소드는 this필요로 한다 아니다를 판단하는 정보만 공개한다. 이는 실행할때 최적화에 도움이 된다. 필요하다.
+      - Method에 isStatic() const를 추가한다.
+      - [x] 변수가 static이건 말건 실행에는 중요하지 않다. 이런건 파싱할때 추가정보로써 IDE에서 참조가능한 형태로 전달한다.
+        - 틀렸다. 멤버변수는 static인지 여부도 중요하다. native에서 만든 변수는 visible이 되지 않는다. 그러니 이건 패스. 하지만 월드코드상으로 만든 static 변수는 어떻게 되는가 말이다.
+
+
 
 
 
@@ -2690,7 +3453,7 @@
 
 ### 클로저
 
-### 중첩메소드를 람다로 발전 시킬 수 있는가?
+#### 중첩메소드를 람다로 발전 시킬 수 있는가?
 
 - 생각해보니, 이는 특별한 기능이 아니었다. 그냥 반쪽자리 람다에 불과하다.
 - **이는 "지역 변수는 메소드가 미리 생성해놓고 있어야 할까 아니면 그때그때 생성해야 할까"를 해결하기 위한 것이다.**
@@ -2719,6 +3482,567 @@
         - _age = age
       - int _age = 0
       - return print(int) // err
+
+
+
+
+
+#### 중첩 메소드 개념 기본
+
+- 중첩메소드에 대해
+
+  - 중첩메소드는 메소드에 소속되지 않는다. 단지 scope 적으로 잠깐 visible하고 마는 것이다. 이는 함수 내에서 reuse를 높이고, 함수내에서만 사용되는 함수, 그 밖에서는 몰라도 되는 함수로 구분지으므로써, readailbity를 높이고자 하는 것이다.
+  - 코드상으로는 Method가 별도의 배열로 갖고 있으며 Method가 scope에 members를 등록하고 나서 이 중첩메소드들을 그 위에 얻고, 지역변수를 얻는다.
+  - 따라서 호출 우선순위는 ObjectSpace 보다 위이며, LocalSpace보다는 아래다.
+  - 외부 개발자(Native포함)나 외부 클래스, 모듈에서는 절대 중첩메소드를 접근이 불가능하다.
+
+- Method는 LocalSpace에서 관리되므로 Ownee Method에서 owner 메소드에서 선언된 지역변수를 참조 할 수 있다. == closure 
+
+- 고찰내용
+
+  - MyFoo f1
+
+  - f1.print()
+
+    - // Msg(Msg(Msg(scope, "get", "f1"), "get", "print(void)")), "execute", {})
+
+  - f1.print(void).getName()
+
+    - // Msg(Msg(Msg(scope, "get", "f1"), "get", "print(void)")), "getName", {}) 일때...
+
+  - v getName()도 메소드다. 그렇다면 getMethod.getMethod.getMethod.getMethod.... 도 가능한거 아니냐.
+
+    무한 루프 없음. 증명됨. 
+
+    - World는 메시지 기반.
+    - 메소드는 msg를 직접 처리할 수 있는 무언가이다. Object는 target으로 이용되거나 msg를 전달할뿐 자기가 msg를 처리하지는 못한다.
+    - Object.getMembers()를 하면 class.getMembers()를 가져와서 이걸 chain하여 자기 변수들을 추가(class.getVariables().clone()) 한다.
+    - Class.getMember()가 처음 불려지면 T::onInitializeMethods()를 불러서 초기화한다.
+    - 위의 상황에서 생각해보면 쉽게 답이 나온다.
+      - class MyFoo : Object
+        - void print();
+      - MyFoo my; // 이시점에서는 아무런 초기화도 일어나지 않음.
+        - my.getMember() 호출 --> getMember가 처음 호출이니 getClass().getMembers()를 불러서 chain시도 --> TClass<MyFoo>().getMembers()가 처음 불러진 경우 MyFoo::onInitializeMethods() 호출 --> MyFoo::onInitializeMethods()는 Super::onInitializeMethods() += Method<print>() 를 append해서 반환함. --> TClass<MyFoo>는 독자적인 Method<print>() 객체를 갖게 됨 --> MyFoo 객체는 TClass<MyFoo>의 멤버를 chain함. 즉 MyFoo가 갖고있는 Method<print>는 TClass<MyFoo>의 것임. TClass<MyFoo>가 갖고 있는 Method::getName() Method객체도 TClass<MyFoo>만의 것임.
+      - my.getName(void).getName(void) 를 한 경우
+        - my.getName(void)는 사실상 TClass<MyFoo>가 독자적으로 갖고있는 Method(getName)를 반환함. --> .getName(void)를 하면 이 Method(getName)은 처음으로 getMembers()가 불러졌으므로 TClass<Method>::getMembers()를 호출함 --> 결과적으로 TClass<Method>에 독자적인 Method<getName>()객체가 들어가게 됨. 
+      - 여기서 이 반환값에 다시 .getName(void)가 호출한다면? 
+        - TClass<Method>::getMembers()에 들어있는 Method<getName>은 getMembers가 호출된 적이 없으므로 TClass<Method>::getMembers()를 호출 함 --> 결과 자기자신이 들어있는 Members를 chain함.
+        - 도식화하면 이런거임
+        - Method::getMembers() --> TClass<Method>::getMembers()
+        - TClass<Method>::getMembers() "HAS" Method()
+      - **결론: slave가 생성하면서(하고나서) owner의 ptr를 갖는 것은 흔히 있는 것이다. 재귀적 무한루프는 발생하지 않는다.**
+    - 실용적으로 접근하기
+      - 재귀적 참조 문제
+        - 설명
+          - class Foo
+            - void print()
+              - ..
+          - Foo f
+          - f.print(void).getName().getName().getName()..... 이게 되면 안된다?
+        - 구현이 가능한가?
+          - 호출의 관점 --> ok
+            - f.print(void).getName()은 Method::getName()인 "print(void)"가 나온다. 이는 정확히 말하면 f.print(void).getName(void).execute 인 셈이다.
+          - 초기화의 관점
+            - class FooObject : Object
+              - FooObject()
+                - Super()
+            - class Object
+              - Object()
+                - 
+            - class TClass<Foo>
+              - TClass<Foo>()
+                - Super()
+            - class Class
+              - Class()
+                - initialize();
+              - initialize()
+                - _methods = Super::getClass().getMethods();
+                - _methods += onInitializeMethods()
+            - }
+            - class Method : Source
+              - onInitializeMethods(arr)
+                - Super::onInitializeMethod(arr)
+                - arr += Method(getName) // Class<Method>는 Method(getName)를 가짐.
+              - const String& getName()
+            - class Foo inherit Object
+              - onInitializeMethods(arr)
+                - Super(arr);
+
+  - v WorldLang에서 중첩메소드를 어떻게 구현할까?
+
+    - foo()
+      - v getName() --> 자, 이거는 foo.getName()이냐, Me.getName()이냐?
+        - x 1안 this다가 기준이 되어야 한다.
+          - 일반적인 메소드에서도 생략의 기준은 this이지, method자체가 아니다. 일례로 메소드 안에서 getClass()를 하면 Object의 클래스가 나와야지 메소드의 클래스가 나와서는 안된다는 것이다. 마찬가지로 중첩메소드에서도 기준은 this이기 때문에 중첩메소드를 호출하려면 앞에 me를 붙여야 한다.
+          - 예)
+            - class My
+              - void foo()
+                - string _get()
+                  - return "hello world"
+                - result _print(string msg)
+                  - return Console.println(msg)
+                - me._print(me._get())
+                - _print(me._get())
+              - void _print(string msg)
+                - return Console.println("msg = " + msg)
+        - v 2안 중첩메소드도 me. 없이 바로 호출되게 한다.
+          - 예)
+            - class My
+              - void foo()
+                - string _get()
+                  - return "hello world"
+                - result _print(string msg)
+                  - return Console.println(msg)
+                - _print(_get())
+                - this._print(_get())
+                - getName()
+                - me.getName()
+              - void _print(string msg)
+                - return Console.println("msg = " + msg);
+          - **이 관점은, 중첩메소드는 Method에 속한 것이 아니라 scope의 관점에서 일시적으로 Object에 추가되었다가 빠지는 것**. 라고 보는 것이다. 즉 중첩메소드는 Method의 멤버가 아니다. 단지 Method는 별도의 중첩메소드용 배열을 들고 있다가 자신이 scope에 등록될때 이 배열을 localspace에 얻는것에 불과하다. 따라서 이 메소드에 들어온 순간에만 중첩메소드들이 visible해진다. 
+          - 각 중첩메소드들의 소속은 어디까지나 Object이다. 따라서 저 중첩메소드들만 LocalSpace 영역에 살짝 올라간다.
+          - 충돌을 방지하기 위해서 중첩메소드는 private다. 즉 앞에 _를 붙이게 된다. 그러면 getName() 을 중복 정의해서 충돌되지는 않을 것이다. 이는 사용자가 public 메소드를 메소드 안에 정의하게 하는 것을 의례 사용하지 못하도록 막으려는 것이다. 중첩메소드는 어디까지나 "요 함수 내에서만 작게 쓰이고 싶어" 를 위해서 나온것이지, 외부 함수까지 메소드 안에 쓰게 되면 foo.print.getAge() 처럼, 메소드의 의의가 사라지게 된다.
+          - 그리고 이는 C++의 중첩클래스와 완전히 궤를 같이한다. scope의 문제로 만드는 것이다. scope를 제외하면 외부에서 이 함수를 접근할 방법이 없으며, 순간적으로 사용되고 그 외에는 사라진것 처럼 보인다. 작은 scope 내에서 반복 작업을 reuse하는 용도로만 사용되며, 메소드 안에 속한 메소드가 되지 않게 한다.
+      - v Native 개발자가 중첩메소드를 다루는 시나리오는?
+        - C++에서는 중첩메소드를 사용할 수 없으므로, Managed에서 만든 중첩메소드를 Native에서 다루는 시나리오만 검토하면 된다.
+        - 요지는, 중첩메소드는 NodeTree에 안보인다는 것이다. 따라서 엄밀히 말하면 Native 개발자는 중첩메소드에 접근할 수 없다.
+      - v Native에서 call을 사용한 경우라면 어떨까?
+        - 이 경우도, Managed 개발자가 작성한 로직에서만 중첩메소드가 사용되므로 폐쇠적으로 완전하다. 외부자(= Native 개발자)가 간섭할 수 없다. (Method 객체를 얻어서 뭔짓을 하면 되긴 할것이다)
+    - string getName()
+
+
+
+#### Delegator와 closure는 다른 것이다. 
+
+- Delegator는 메소드들을 가리키는 것. closure는 지역변수를 내포할 수 있는 메소드. 2개는 별개의 클래스가 되어야 한다.
+
+
+
+#### Delegator의 기본
+
+- Delegator는 Method의 일종이며, 동시에 Method의 proxy이다.
+
+- Delegator는 sharable이며, 사용자는 주로, Refer<Delegator>의 형태로 사용하게 된다. (Proxy의 Proxy)
+
+- 고찰내용
+
+  - Delegator는 단순히 method를 가리키는 것. static과 instance 2종류가 있다. capture된 delegator는 캡쳐 기능이 탑재된 delegator. 역시 static과 instance 2종류가 있다.
+
+  - [v] 문제 2 - World 문법적으로 각 Delegator는 static여부, 인자가 동일하지 않으면 서로 할당이 이루어져서는 안된다.
+
+    - 예)
+      - void(void) a
+      - void(int) b
+      - void A.(int) c
+      - a = b = c // 모두 컴파일 에러가 나야 한다. 
+    - 다시말하면 인자타입과 static여부 자체가 하나의 타입으로 다뤄줘야한다. 어떻게 할까?
+    - Delegator& a;
+    - Delegator& b = a; // 이거 되야 하나 안되야 하나?
+    - StaticDelegator a1;
+    - StaticDelegator b1 = a1; // 이건 되야 하나 안되야 하나?
+      - **당연히 안되야 정상이다. a1이 어떤 메소드를 가리키는 뭔지알고 교체하는가? 이건 마치 이런거다.**
+    - [v] 1안 StaticDelegator::operator=(rhs)에서 rhs와 자신의 getParams()가 동일하며 static여부가 일치한 경우에만 _origin을 교체한다. closure여부는 고려하지 않는다.
+      - operator=(rhs)는 assign(it)으로 결국 간다. assign(it)은 Refer<Delegator>::assign(it)이 호출되게 되어있다.
+    - [x] 2안 Delegator들은 모두 operator=()를 막는다. 필요하면 c++개발자보고 clone()을 사용하라고 하라.
+    - [x] 3안 그냥 풀어준다. C++ 대로 설계한다.
+
+  - [] 문제3 되는건 컴파일시에 world문법상에서는 delegator들의 연산을 막아야 한다는 점이다.
+
+    - void(void) a
+    - void(void) b = obj.print
+    - void A.(void) c
+    - c = b 에러
+    - a = c 에러
+    - a = b ok
+    - 이걸 컴파일타임에 할 수 있어야 한다. 즉 월드문법에서 중요시 생각하고 있는 건 타입리스트 + staitc여부 2개이다. closure는 고려하지 않는다는 걸 알 수 있다. 사용자의 입장에서 생각하고 있는 것이다.
+    - [] 어떻게 할까?
+      - [x] 1안 wygiwys로 간다. 
+        - [] static딜리게이터는 어느때건 closure화될 수 있으며 반대도 가능하다. 이말은 static딜리게이터는 closure 화되는 코드를 담고 있거나, 이걸 외부에서 주입할 수 있다는 것이다. 이대로 c++코드도 따라간다.
+          - 이건 어떻게 할까? 중요한건 코드가 아니라 멤버변수다.
+          - 캡처를 하려면 다량의 멤버변수를 요구하게 된다. Object Refer 1개와 캡쳐한 로컬스페이스 Array 1개. 막대한 비용이 든다. 이걸 매 static delegator마다 탑재하게 하자고?
+        - 월드 코드에서 사용자가 딜리게이터에 closure냐 static딜리게이터냐를 결정하는 건 rhs에서 object의 유무로 판단된다.
+          - class A
+            - void print()
+          - A a
+          - void(void) fptr1 = A.print (그냥 static delegator)
+          - void(void) fptr2 = a.print (클로져)
+      - [v] 2안 Delegator::assign() 재정의
+        - 같은 타입일뿐만 아니라 getParams()가 완전히 동일해야만 할당이 이루어지도록 한다.
+        - 월드 컴파일러는 
+
+  - [x] 1안 Delegator > InstanceDelegator > Closure 순으로 상속
+
+    - Delegator
+      - // Method에 대한 Refer
+      - InstanceDelegator
+        - // thisptr를 method에서 추출해서
+        - Closure
+
+  - [] 2안 Delegator Slice 패턴
+
+    유일하게 구현 가능한 안이지만, 너무 구현이 더럽다. 다른 방법은 없을까? 
+
+    - class Delegator : public TRefer<Method>, public Methodable
+      - Delegator(Params&, bool is_static, Pattern& new_pattern)
+      - Delegator(const Method& method) : _params(method._params), _is_static(method._is_static), _patt(InstancePattern) {}
+      - Delegator(This& rhs) : _is_static(rhs._is_static), _params(rhs.params), _patt(rhs._patt) {}
+      - TStrong<Params> _params; *// 월드컴파일러(=WC)는 Method의 것을 복제시킬것인지, 아니면 새로운 Params를 넣어줄 것인지 정할 수 있음. 생성자에서 주입되며, 주입되면 2번다시 변경안됨.*
+      - virtual const Params& getParams() { return *_params; } *// WC는 변경할 수 있음.*
+      - virtual Refer to(const Class& cls) {
+        - if cls.isSubOf(Method) 
+          - return *this;
+        - return Super::to(cls);
+      - }
+      - virtual assign(Thing& it) {
+        - Method& casted = [it.to](http://it.to/)<Method>().get();
+        - if(casted.isNull() || casted.getParams() != getParams() || isStatic() != it.isStatic())
+          - return FAIL
+        - if(Super::assign(it))
+          - return FAIL
+        - if(it.isSubOf(This))
+          - Delegator& casted = it
+          - _patt = casted._patt;
+      - }
+      - TStrong<Pattern> _patt;
+      - bool _is_static;
+      - virtual run(Msg& msg)
+        - return _patt(this, msg);
+      - virtual isStatic() { return _is_static; } *// Node::isStatic() { return false; }*
+      - *// isStatic이 true이면 InstanceDelegator라는 뜻이 된다.*
+      - virtual bind(Node& method) {
+        - Method& casted = node.cast<Method>();
+        - if casted.isNull() || isStatic() != casted.isStatic() || getParams() != casted.getParams()
+          - return FAIL
+        - if(Super::bind(method))
+          - return FAIL
+        - *// 메소드를 바인딩한다는 것은 closure가 아니게 되는 것이다.*
+      - }
+      - virtual Delegator capture(Scope& scope) *// from Methodable*
+        - return *this;
+      - class Pattern
+        - ...
+      - class StaticPattern
+      - class InstancePattern
+      - class ClosurePattern
+    - }
+
+  - [x] 3안 Delegator와 Refer<Delegator> 패턴
+
+    Refer<Delegator>도 params를 들고있어야 하므로 Params는 총 3개가 된다. 실패. 
+
+    - class Binder
+      - bool isBindable(const Node& obj) = 0;
+    - class Refer
+      - virtual bool isBindable(const Node& obj) {
+        - return obj.isSub(_cls);
+      - }
+      - virtual assign(Thing& it) {
+        - if( ! isBindable(it))
+          - return FAIL
+        - ...기존코드...
+      - }
+    - class Delegator : public Method
+      - *// Params에 Thisptr를 넣고 is_static을 false로 가져가면 InstanceDelegator가 나오게 된다.*
+      - Delegator(Params&, bool is_static)
+      - Delegator(const Method& method) : _params(method._params), _is_static(method._is_static) {}
+      - Delegator(This& rhs) : _is_static(rhs._is_static), _params(rhs.params), _patt(rhs._patt) {}
+      - TStrong<Params> _params; *// 월드컴파일러(=WC)는 Method의 것을 복제시킬것인지, 아니면 새로운 Params를 넣어줄 것인지 정할 수 있음. 생성자에서 주입되며, 주입되면 2번다시 변경안됨.*
+      - virtual const Params& getParams() { return *_params; } *// WC는 변경할 수 있음.*
+      - TRefer<Method> _method;
+      - *// delegator.assign(another_delegator)만 지원한다.*
+      - *// delegator.assign(method)를 하고 싶다면 bind를 사용하라. assign은 같은 obj에 한해서만 지원이 되니까.*
+      - *// isStatic이 true이면 InstanceDelegator라는 뜻이 된다.*
+      - bool _is_static;
+      - virtual isStatic() { return _is_static; } *// Node::isStatic() { return false; }*
+      - virtual bool isConsumable(msg) {
+        - if(_method.isBinded())
+          - return _method->.isConsumable(msg);
+        - return false;
+      - }
+      - virtual Refer run(Msg& msg)
+        - if( ! isBinded())
+          - return Refer();
+        - return get().run(msg);
+      - virtual isBindable(Node& it) const {
+        - if( ! Super::isBindable(it))
+          - return false;
+        - const This& casted = (const This&) it;
+        - return casted.isExist() && it.getParams() == getParams() && isStatic() == it.isStatic();
+      - }
+    - class Closure : public Delegator {
+      - Chain _captures;
+      - virtual Refer run(Msg& msg) {
+        - if ! isBinded()
+          - return Refer;
+        - swap captures
+        - Refer ret = get().run(msg);
+        - swap origins
+      - }
+    - }
+
+
+
+##### Delegator의 capture 컨셉
+
+- TEST
+  - class A
+    - void foo()
+      - int a=3  // a가 주석처리되면 err
+      - void _b()
+        - _a() // ok
+      - void _a()
+        - print(a)
+      - if a==5
+        - int a = 11
+        - _b() // 3이 찍힌다.
+- Closure는 정의와 동시에 지역변수와 메소드를 바인딩한다.
+  - 정의된 이후, 내부에서 참조하는 변수/메소드와 동명의 다른 식별자가 등장한 경우에도, closure는 정의된 시점의 바인딩을 따라간다.
+- 고찰내용
+  - [v] Closure는 지역변수 참조가 가능한 중첩메소드.
+    - *[x] 만약 #지역변수-중복-되는-경우-scope는-어떻게-구현해야-하는가 이걸 동일한 인덱스가 나오도록 해결할수 있다면 closure는 캡쳐가 필요없게 된다. 왠냐하면 closure가 소지한 STMT들이 항상 언제 호출되건 동일한 scope[index]의 지역변수를 참조해버리면 되기 때문이다.*
+      - [v] 반론 - 멤버변수 vs 지역변수로 총돌되는 경우는 여전히 안될 것 같다. 이런 상황을 봐라.
+        - class A 
+          - int a = 3
+          - void foo()
+            - Console.out(a) *// 1*
+            - int a = 5
+            - Console.out(a) *// 2*
+        - 1과 2는 당연히 결과가 다르며, 1의 a의 scope[인덱스]와 2의 a의 인덱스는 설사 *#지역변수-중복-되는-경우-scope는-어떻게-구현해야-하는가* 이걸 해결한다 해도, 풀리지 않는다.
+    - [v] 지역변수 중복 문제
+      - 문제정의 : closure는 함수. 함수내에서는 여러개의 변수를 둘 수 있다. scope당 1개. closure가 변수 a를 바인딩하는 경우, 이 a는 뒤에 여러개가 나올 수 있다. 이때 어떻게 world는 동작해야 하는가?
+      - [v] 1안 closure 정의 == closure의 바인딩. 즉, 처음 정의시 등장한 a만 그대로 쭉 사용하게 된다.
+    - [v] 함수는 뒤에 나온걸 미리 사용할 수 있다. 그러나 변수는 그렇지 못한데?
+      - 예)
+        - class A
+          - void foo()
+            - int a  // a가 주석처리되면 err
+            - void _b()
+              - _a() // ok
+            - void _a()
+              - print(a)
+      - [v] 왜 a가 주석처리되면 err인가. _a는 뒤에 나와도 괜찮은데?
+        - 변수는 함수내에서 사용된다. 함수는 절차적으로 수행된다. 따라서 변수의 정의는 "시간"이 중요해지기 때문이다. 시간에 의존되기 때문에 변수를 바인딩하려면 그 변수가 미리 나와야 한다. 이건 당연한 것으로 다음 예제를 보면된다. world만의 특징이 아니다.
+          - class A
+            - void foo()
+              - print(str1) // err. str1이 존재하지 않는다.
+              - str str1 = "hello" // str1의 값은 함수내의 "시간"에 의존된다.
+              - boo() // boo함수는 유일하기 때문에 boo는 호출이 된다.
+            - void boo()
+            - 
+
+
+
+
+
+#### 메소드는_어떻게_캡쳐가_이루어지는가_캡쳐_문법
+
+- 문제 정의 
+  - \#람다메소드 에 의하면 결국은 closure가 지원이 되려면 일반메소드가 thisptr등을 모조리 싸안고 내적화 되어야 하며, 그것을 trigger하는 방법이 필요하다.  크게 3가지 방법으로 나뉘어진다.
+    - \1. API화 시키며, 사용자에게 이 것을 강제하는 경우
+      - 예) class A 
+        - void foo(int a, bool b)
+      - A a
+      - void(int, bool) closure1 = a.foo.capture(a)
+    - \2. API로는 만들지만, 특정 상황이라면 syntactic sugar처럼도 동작하게 한다.
+      - 예) class A
+        - void foo(int a, bool b)
+      - A a
+      - void(int, bool) closure1 = a.foo // 실제 코드블럭은 a.foo.capture(a)로 변형한다.
+      -  // 문제는 어떻게 이렇게 만들것인가? 와 모든 시나리오를 찾아낼 수 있는가? 
+- [v] 1안 외부 API로 두고, syntactic sugar로는  제공한다.
+  - \#closure_syntactic_sugar
+  - Method는 Object에 속한것이 아니다. Class에 속한 것이며 Object들은 Method들을 간접적으로 공유해야 한다. 이거는 fix된 사실이다.
+  - 그런데 특정시점에서만 Method를 Object에 속한 것처럼 사용하고 싶다는 것이다. 여기까지는 좋다.
+  - 문제는 특정시점이 순간이 아니라 경우에따라서는 늘어지게도 될 수 있어야 한다.
+    - 예) Method fp = a.foo
+    - ....do something...
+    - fp.capture() *// Method.to<Delegator>()가 가능하려면 결과적으로 이렇게 인자를 받지 않는 capture를 정의할 수 있어야 한다.*
+    - 예2) Method fp = .....;
+    - ....do something at c++....
+    - fp.capture();
+  - 따라서 이거는 말이 되지 않는다. 순간적으로 Object에 속한것은 그나마 이해할 수 있어도 간격이 늘어나서도 Object에 속한 것이 유지가 되어야 한다면 Method*를 가지고 있는 수 밖에 없다. 그렇다고 늘어난 간격에서의 capture()는 허용되지 않고 오직 .으로 받고 나서 순간적으로만 capture()사용이 허용된다면 이것도 사용상에 문제가 있게 된다. 사용자는 capture()를 할때마다 매번 이걸 기억하고 있어야 한다. 또한 눈에 보이지 않는 의존성(시간에 대한)이 존재하게 되며 눈치채기 힘들다.
+  - 대책
+    - capture(Object&) 가 되어야 한다. 그리고 call(Msg) Msg에는 반드시 Thisptr가 들어가야만 한다. 다만 매번 월드코드에서 이렇게 작성하면 귀찮기 때문에 syntactic sugar를 추가한다. 그렇게 되면 월드코드로 부터 생성된 Expr 내부에서 위의 귀찮은 This를 넣는 작업이나 capture()안에다가 this object를 넣는 작업들을 대신하게 될 것이다.
+    - Native 사용자들의 경우 Object에서 Method를 꺼내서 그 Object를 넣은 Msg를 만들어서 다시 Method에 떤지는 일련의 과정들이 매우 귀찮을 것이므로 이를 위한 편의함수 run(Msg&)를 Object에 넣어둔다. 코드는 이렇게 될 것이다.
+      - Result& Object::run(Msg& msg) {
+        - Method& m = getElement(msg).cast<Method>();
+        - if(m.isNull())
+          - return nulled;
+        - msg[0] = *this; // Msg의 0번째 요소에 thisptr를 담는다. #Msg의_0번째_위치에_Thisptr를_넣는다 참고
+        - m.run(msg)
+      - }
+- *[x] 2안 문법의 일반화를 유지하기 위해 어떻게든 Method.to<Delegator>()를 가능하게 한다.*
+  - Method::to<StaticDelegator>()가 가능하도록 하겠다는 것이다.
+    - object.call(getElement)를 한 경우, object는 
+    - void(int, bool) = a.foo 
+  - 개념적으로 접근하자. 
+    - 메소드는 Object의 것이 아니다. 다만 일시적인 상황에서만 Object가 누구인지 연관성을 가질 수 있다. 그리고 그 경우는 앞에 . 을 찍히는 경우이다.
+      - 예1) a.foo --> 이 경우 foo는 a가 누구인지 일시적으로 알게 된다.
+      - 예2) a.foo(5) --> foo와 a는 서로 관련이 없으나 이 경우에만 foo는 자신을 호출한 객체가 a 임을 알 수 있어야 한다.
+      - 예3) void(int) fp = a.foo
+      - fp(5) --> 객체정보가 없으므로 호출 될 수 없다. "." 이 메소드에 붙어서 효력을 볼려면 연속적으로 .이 찍힌 상황에서 메소드에게 최종 액션이 취해져야만 한다.
+    - .은 이러한 의미를 갖고 있는데 반해, 현재 . 을 구현하는 방법은 msg 뒤에 thisptr를 붙이는 방법으로 오직 예2만 만족을 시키는 상황이라는 게 문제의 핵심이다. 다시 말하면 예1도 만족시킬 수 있는 . 을 구현하는 새로운 알고리즘을 만들어버리면 이문제를 해결 할 수 있다.
+  - *[x] 1안 .이란 object.call()과 정확하게 시점이 일치한다. 이 시점에서 scope에다가 object를 등록해버린다.*
+    - 문제는 이경우 scope에 등록된 object를 언제 해제시켜주느냐가 관건이된다. 시나리오를 여럿 생각해봐서 문제는 없는지 생각을 해봐야 한다.
+    - 시나리오 검증
+      - *[x] 문1*
+        - 문제정의
+          - [0] void A.(int) fp = a.foo
+          - [1] fp(55)
+          - [2] a.foo(55)
+        - *[x] 1안*
+          - 위의 코드를 AST로 풀면,
+            - CallExpr { this <= Cstr로 생성된 객체.
+              - .caller= defineDelegatorExpr --> 요때 MethodCstr 그러나 this는 갱신되지 않음.
+                - .caller= "",
+                - .msg={ "cstr"
+                  - args="void", "int"
+                - }
+              - }
+              - .msg={ "operator="
+                - .args= CallExpr { --> this <= a object.
+                  - .caller= callExpr {  --> this=null(scope가 this를 제거)
+                    - .caller="scope"
+                    - .msg={ "getElement"
+                      - .args="a"
+                    - }
+                  - }
+
+
+
+#### Delegator와_Method의_관계
+
+- \#월드문법 참고
+- *[x] 1안 Delegator도 메소드의 일종으로 한다.*
+  - 메소드란 -> 어떠한 방법으로든 주어진 인자를 통해서 아웃풋을 내뱉는 액션, 즉 execute를 가지고 있는 Object.  Delegator도 메소드의 일종이다. proxy로 하고는 있다만 메소드이긴 하다. 
+  - *[x] Native FRX에서 Method <- Delegator(or ConsumableMethod) 순으로 상속구조가 잡히는 것처럼 월드코드로부터 파싱된 MgdMethod나 Delegator나 모두 메소드의 일종이며, World코드 상에서 void(int) a를 Method b인 b에 할당하는 게 올바른 코드가 되는 걸 설명할 수 있게 된다.*
+    - --> Delegator는 메소드가 아니다. Refer가 Object가 아니듯이 말이다. Delegator는 Method와 동일한 인터페이스를 갖고는 있지만 Method 특유의 고유성(stmt를 가지고 있는 등)을 지니지 못하며 흉내만 낸다.
+- *[x] 2안 Object가 run()가지게 되었으므로 Delegator를 Object 밑에 둔다.*
+  - Object
+    - Method
+    - Delegator
+      - StaticDelegator
+      - MethodDelegator
+  - [x] Delegator는 Object 인가? Delegator클래스만의 고유한 메소드가 있는가?
+- *[x] 2-1안 Object가 run()가지게 되었으므로 Delegator를 Object 밑에 둔다.*
+  - Object
+    - virtual Result& run(Msg& msg);
+    - Method
+      - MethodImpl(가칭?)
+        - NativeWrapper
+        - MgdMethod
+      - Delegator
+        - StaticMethodDelegator --> 더 좋은 이름은 없을까? 너무 길다
+        - MethodDelegator 
+- [v] 3안 Delegator를 TRefer<Method>로 만든다.
+  - 이는 Delegator의 요구사항인, "정의는 호환되지 않게, 사용은 호환되게"를 반영한 것이다.
+  - Node
+    - Refer
+      - TRefer<Method>
+        - Delegator (ADT) : public Methodable
+          - vector<TWeak<Class> > _types; // [0] = ret, [1] = object, [2] = params...
+    - Object
+      - Method
+        - Closure
+          - LocalSpace
+          - Bind<Object>
+  - TEST [Native]
+    - Delegator d = Method(..).capture(); // staticcatpure를 시도한다.
+    - if( ! d) *// == d.isBind()*
+      - return NotBind; // method는 nonstatic
+    - d->run(args); *// Delegator::run() --> Method::run()으로 간다.*
+    - *// d->run(args)에서 d는 nonstatic인지 static인지 중요하진 않다. 사용에 obj를 필요로 하지 않는다.*
+    - *// d는 static이건, nonstatic이건 꼭 필요한 만큼의 데이터를 가지고 있다.*
+    - d.getParams() *// d의 params는 d 의 생성자로 넣어진다. Bind로 원본을 가리킬 뿐이다. 용량이 절약하고 있다.*
+    - d.bind(AnotherMethod); *// 만약 AnotherMethod.getParams()가 d의 getParams()와 다를 경우 에러가 된다.*
+    - d->runs(args) *// d가 만약 InstanceMethod일때는 args에 반드시 thisptr가 들어가있어야 한다. 사용자는 이것을 바로 알기가 어려운데...? -->* #모든-것을-요청할-수-있다-그러나-동작을-보장하진-못한다. 참고
+    - d.bind(new Closure()); // Delegator는 static인지 nonstatic인지 closure인지 신경쓰지 않는다.
+    - d.bind(A::getClass().getMethods()[1]); *// err. 실행은 되나, thisptr가 처음에 지정한 클래스가 아니므로 reject 된다.*
+
+
+
+
+
+
+
+
+
+#### 람다메소드 (즉, Closure)
+
+- [v] 전역변수는 어디서나 접근 가능하므로 별다른 조치를 하지 않아도 closure에서 접근이 가능하다.
+- [v] 멤버변수는 ObjectSpace는 그 자체가 shallowcpy되므로 이 역시 똑 같다.
+- [][v] 컴파일러는 어떤 외부 변수들을 closure가 참고하는지 알아내서 생성할 closure객체에 주입해야 한다.
+  - 어떻게 알아내는가?
+  - 1안 C++처럼 직접 사용자가 코드로 명시
+  - [v] 2안 알아서 적당히 유추 -> scope 참조 알고리즘
+    - scope 참조 알고리즘은 이름 중복이 된 경우 가장 최근에 정의된 걸 따라 가는 것이다. 이름 중복은 scope가 다를때만 허용된다. 같은 scope라면 이름이 중복되어서는 안된다. scope는 블록문을 기준으로 나뉘어진다.
+    - 또 이 목록(참조할 외부변수 목록)은 컴파일시만 사용하는 것이다. 왜냐하면 컴파일이 완료되면 expr은 직접 vector<int>로 참조할 scope[n]을 다 들고있을 것이기 때문이다. 이 목록을 Closure가 또 들고 있을 필요는 없다. closure는 localspace 목록(정확히 말하면 closure가 가지고 있는 코드(=expr)에서 참조하는 외부변수에 대한 목록)만 가지고 있으면 된다.
+      - 정리하면, "참조할목록" 은 컴파일에만 사용하므로 제외
+      - "참조한 목록"은 현재 바인딩을 의미하므로 실행시 꼭 필요하므로 포함.
+- [][v] capture시 로컬변수 바인딩 문제
+  - class A
+    - void foo()
+      - void _boo() *// closure*
+        - print(a)
+      - int a = 3
+      - _boo()
+      - a = 5
+      - _boo()
+      - if 1
+        - int a = 15
+        - _boo()
+      - _boo()
+  - 1 // C/++       -> 3 5 15 5
+  - 2 // Python/JS -> 3 5 15 15
+  - 2안으로 따라간다. 1안은 너무 WorldFrx 코드가 지저분해진다. 
+  - 변수, 함수의 중복정의는 일체 허용하지 않는다. 고로, block scope라는 건 없다. BlockStatement는 scope를 갖는데, 이는 지역변수가 아니라 static이나 closure를 위한 것이다.
+  - 정의부는 실행부보다 먼저 나와야 한다.
+  - delegator가 capture()로부터 생성되는 시점에 capture이루어진다.
+  - 링킹 최적화후
+  - closure 및 delegator 정의부:
+    - 해당 closure의 코드를 컴파일하면서(링킹이 아님) 사용하는 외부지역변수(member변수가 아니다)의 목록(localspace) 에 넣는다.
+    - 그리고 해당 expr에 localspace[n==방금insert된 index] 을 참조하도록 바꿔준다. 
+    - 만약 컴파일 전이라면 localspace["변수명"]
+  - 실행부: 
+    - 해당 closure가 들고있는 "capture 희망목록"에 접근할 수 있어야 한다.
+    - 그 목록에 현재의 scope에 있는 것들을 줄 수 있는 지 확인한다. 안되면 링킹에러다.
+    - 정의부에서 추려낸 지역변수 목록들만 capture 뜨는 명령어 ( Method.capture(1,5, 10) )를 사용해서 delegator를 만들도록 stmt를 정의한다. 
+    - 컴파일최적화 전이라면 Method.capture("변수명1", "변수명2", ...)
+- [x][x] *closure 원격 native 생성 문제*
+  - *[x] Native환경에서 원격지에 있는 closure() 해서 그걸 원격지의 객체 중 하나의 Refer에 할당한 경우, 이때 생성된 closure는 실제 동작과는 다르게 된다. 어떻게 하면 좋을까?*
+    - 이해가 안간다. 뭐가 문제인가?
+- [][v] closure의 생성자의 인자리스트에 scope를 명시해야 하는가?
+  - closure는 생성되는 순간 scope를 반드시 참조해야 한다. 생성자에 인자로 두면 명시적으로 이걸 드러낼 수 있다. 다만 귀찮아질 것이다.
+  - [v] 1안 네
+    - 로컬 스페이스는 scope에 속한 것이며 각 object마다 고유의 것이 아니다. 
+    - 종속관계는 가능한한 드러내는 게 좋다.
+- TEST Driven Development
+  - TEST#1
+    - class A
+      - void(void) foo(int b)
+        - void _boo()
+          - Console.out(a)
+        - int a = 5
+        - _boo() *// "5" 출력*
+        - if(b > 5)
+          - int a = 7
+          - return _boo *// Closure->Delegator 시에 capture 발생*
+        - else
+          - int a = 10
+          - return _boo
+    - A a
+    - a.foo(6)() *// "7" 출력*
+    - void(void)(int) fptr = a.foo *// InstanceMethod->StaticDelegator이므로 capture발생.*
+    - fptr(3)() *// "10" 출력*
+    - void(void)A.(int) foptr = a.foo *// InstanceMethod -> InstanceDelegator*
+    - a.foptr(10)() *// "7" 출력*
+  - TEST#2
+    - class A
+      - void(void) foo(int b)
+        - *//void _boo()*
+          - *//Console.out(a) --> 이 시점에는 아직 a가 정의되지 않았으므로 에러.*
+
+
 
 
 
