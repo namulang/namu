@@ -4142,6 +4142,642 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+### Language Binding
+
+* Language Binding이란 서로 다른 언어를 묶어주는 것으로,
+* 여기서는 C++ 코드를 worldlang에서 인식하게 하는 것을 목표로 한다.
+* C++ 문법으로 worldlang bridge framework 라는 API에서 제공하는 매크로와 클래스들을 사용하면, 해당 C++ 클래스를 worldlang 문법으로도 사용이 가능하도록 하는 것이다.
+
+
+
+
+
+#### 기본타입에 대해서는 mashalling이 지원되어야 한다.
+
+- wbool Node::isConst() const 를 보니까 그런 생각이 드네.
+
+
+
+#### World개발자/모듈개발자가 함수내에서 사용가능한 predefined
+
+- this : 이 인스턴스
+- me : 이 클래스
+- super : 부모클래스
+
+
+
+
+
+#### 묵시적형변환으로 인해 임시객체가 생성되므로 메소드 내부에서 set 된 값이 할당되지 않는다.
+
+- 예) 
+  - NativeMethod void foo(Integer& mul); 이라는게 있다고 하자. 이는 mul을 2배로 하는 것이다.
+  - 만약 mul에 Float을 넣게되면 [Float.to](http://float.to/)<Integer>()가 되고, 이 때 나온 Integer는 전혀다른 객체다. 그러므로 Integer가 foo() 내부에서 2배가 되더라도 외부의 Float은 2배가 되지 않는다.
+  - c++은 이런경우 "int변수를 넣거나, mul을 const 로 선언해라" 라는 에러를 내보낸다.
+- 결론 : 묵시적은 다운캐스팅과 World의 pretype에 한해서만 동작하는 경우 2종류가 있다. 뒤의 pretype은 명시적 캐스팅으로 동작하는 것으로, 이는 새로운 객체가 탄생하는 것이다. 새로운 객체는 당연히 return후에도 호출자 함수내의 코드에 영향을 줘선 안된다. pretype은 대부분 occupiable이기에 더욱 그렇다. 
+  - str은 occupiable이다. 밑에 예제를 보자.
+  - class A
+    - void foo()
+    - void setname(str name)
+      - _name = name
+      - name="wow" *// _name은 wow가 아니여야 한다. 그게 맞는거다.*
+  - *// 사용자가 명시적으로 sharable 클래스를 한 경우*
+  - extend B
+    - B(A a)
+      -  ....
+  - class A
+    - void foo(B b)
+      - b.setage(5)
+  - B b(3)
+  - A a
+  - a.foo(B(a)) *// 자, 누가봐도 여기에 생긴 B는 임시적으로 생긴 객체구나, foo()가 끝나도 여기있는 B에는 영향을 주지 못하겠구나... 라는 걸 알 수 있다.*
+  - B b1(a)
+  - a.foo(b1) *// 이렇게 하면 foo는 여기있는 b1에 영향을 준걸 호출자가 확인할 수 있다.*
+  - b1.getage() *// 이렇게.*
+
+
+
+#### IDE에서 실행하지 않는 STMT에 있는 지역변수을 어떻게 인식하게 하는가?
+
+- 메소드 같은 경우는 파싱하면서 class에 실질적으로 추가가 되므로 이를 IDE도 인식할 수 있다.
+
+- 그러나 지역변수는 실행하지 않는 이상 메모리 점거가 되지 않은 상황이므로 IDE에서는 이러한 지역변수를 만들려고 한다는 것은 string값으로 변수명을 알 수 있어도, 이후 등장하는 변수명이 어떠한 타입의 지역변수인지는 직관적으로 알 수 없다.
+
+  - 예) // world code
+  - class A
+    - void print(int b)
+      - int a = 5
+      - print(a)
+  - 위의 코드가 STMT로 만들어지면,
+    - CallStmt("print", {args[0] = "a"})
+  - 이런식이 되어있을 것이다. 여기서 IDE는 "a"라는 args[0]의 값만 보고도 아, 이게 int형 타입의 지역변수라는 걸 알 수 있어야 syntax highlight를 하던 뭘 하던 할 수 있을게 아니냐는 것이다.
+
+- 1안 Stmt의 종류는 대개 할당연산, 초기화stmt 등등 정해져있다. 하나씩 IDE에서 처리를 하면된다.
+
+- 2안 C-REPL을 지원하면 어짜피 수정한 라인들의 dependents들의 validation을 해야 한다. 이과정에서 정보가 나올것이다. 그걸 축적시켜가면 되지 않을까?
+
+  - 2-1안 그 심볼정보를 "IDE에서만 정보 노출시키기"로, Source 객체에 삽입시킨다.
+
+    
+
+#### WORLDLANG에서 C++의 operator+는 +()로 표현하도록 한다.
+
+- 월드코드로 작성한 +() 함수를 만드는 건 해결했다. 문제는 Module개발자가 operator+()로 c++의 포맷으로 만들 걸 World에서도 visible하게 내보낼 수 있는가?
+
+- operator+도 그냥 함수니까. C++에서 이거에 대한 fptr를 만들수 있다면 가능할것 같은데.  --> 테스트 해보니, 일반 함수처럼 fptr를 만들 수 있다. 문제없다.
+
+- c++은 앞에 operator+를 붙인다. world에서는 +()로 할 수 있을까?
+
+  - 파싱 문제가 있을 수 있다.
+
+    - 아마 function 문법은 가운데 +()형태로 오는 경우도 있다 라고 정의하면 될것같다. 하지만 직접 해보지 않으면 모르겠네.
+
+  - 모듈개발자가 operator+로 정의하면 이게 world는  +로 인식이 되어야한다. 
+
+    - 즉 매크로 안에 "operator+"로  입력한 경우에는 world에서 +()로 바꿔넣어야 한다. 하드코딩하면 될것이다.
+
+      
+
+#### 사용자가_vector를_모듈의_메소드의_인자로_사용하고_싶을_경우는?
+
+- [v] vector를 wrap 하는 Object를 상속해서 만든다
+
+
+
+#### 생성자도 C++에서 fptr가 안된다. 어떻게 할까
+
+- 시나리오
+  - class A : public Object {
+  - public:
+    - A()
+    - A(int a)
+    - void print(my_char_struct* s);
+  - };
+  - class NativeMethod__print {
+    - static void(A::*_fptr)() = A::print;
+    - virtual run(msg) {
+      - A* this = scope.getThis();
+      - (this->*_fptr)(msg[0].to<TClass<my_char_struct*>(), msg[1].to<Type2>());
+    - }
+  - }
+  - class NativeMethod__A {
+    - virtual run(msg) {
+      - Refer ref(new A());
+    - }
+  - };
+- 1안 매크로로 함수명 제공 + 함수명을 strcompare to 클래스명 + is_constructor<Args...>
+  - 클래스명을 어떻게 함수 정의 매크로에게 전달할 것인가?
+  - [v] 함수 정의 매크로는 어떻게 일반함수건 생성자이건 동작되도록 할까? 이 매크로를 어떻게 짜면 될까?
+    - [v] 1안 그냥 2개 하자
+      - [v] 그것이, 이 함수가 생성자인지를 판단하지 않아도 되고, 여러모로 편하다.
+
+
+
+
+
+#### World코드로 사용자가 native C++함수를 override하면 어떻게 되는가?
+
+- C++코드 ---사용되어짐--> World는 지원하지만, 반대는 지원하지 않는다. 그럴 경우도 적고. 따라서 C++에서는 World코드로 생성된 클래스는 invisible하다.
+- C++에서 World 함수를 호출하고 싶다면 파서가 파싱하면서 CustomClass 인스턴스의 내용물을 채우는 것이다. C++에서는 call("") 함수를 사용해서 함수를 호출하면 된다.
+- 시나리오
+  - World의 to함수와 native의 Bind<Node> to(Class&)의 경우
+    - World코드의 to함수를 떠올려보자. 
+      - int a = 5
+      - [a.to](http://a.to/)(string) + "world" // --> 5world가 된다.
+    - 이때의 to 함수의 정의는 World에서 어떻게 될까?
+      - node to(class)
+      - node는 mutable인 unknown타입이므로 실제 타입은 Reference(node)다.
+      - class는 type의 클래스를 상속받은 class클래스이고, 이건 mutable이므로 Reference(class) 다.
+    - 모듈개발자는 어떻게 작성하나?
+      - // 실제 함수
+      - class Me {
+        - DECLARE_FUNCTION(Node&, Node, to, Class, Class&)
+        - Node& to(Class& rhs) {
+          - ....
+        - }
+      - };
+    - 어떻게 expand 되나?
+      - to함수에 대한 RTTI Function 클래스 정의의 예시.
+      - class __Node_to_Class_Function : public Function {
+        - typedef Node& (This/*== class Me*/::*FunctionPtr)(Class&);
+        - FunctionPtr _fptr;
+        - This() {
+          - // Node는 mutable이므로...
+          - members.push(Reference(TClass<Node>())); // 반환형 정의
+          - members.push(....); // thisptr 정의
+          - members.push(Reference(TClass<Class>())); // 인자1 정의
+          - // members는 반환형, thisptr다 정의되어있음
+          - // args는 members의 대한 origin 배열로, 인자 + thisptr로 정의되어 있음.
+          - _fptr = This/*== class Me*/::to
+        - }
+        - call(Member[] outs) {
+          - // Reference는 Bind이므로 값이 보관된다.
+          - if args.length != outs.length
+            - return error
+          - ((Reference&) args[0]/*static cast는 비용이 없다*/) = outs[0].to<THISPTR 타입>(); // to<T>()의 반환형은 Bind<T>()
+          - // Reference는 Bind<Node>를 받을 수 있다. 따라서 T는 Node여야 한다.
+          - // to()는 Bind로 나오고 이게 곧바로 Reference안의 Bind<Node>로 들어가므로 문제는 발생하지 않는다.
+          - ((Reference&) args[1]) = outs[1].to<Class>();
+          - if one of args[n] is null
+            - return
+          - return execute() // 모듈개발자는 members[0]에 반환값을 쑤셔넣는다. Node 타입으로 넣어놓았을 것이다. 반환형은 Reference. 즉, Bind<Node>와 동일하다.
+          - // 이제 caller는 getResult()로 members[0]을 꺼내면 된다.
+          - Q. Bind는 Node의 일종인가?
+            - 아니다. (World의) Msg를 받을 수 없기 때문이다. World는 포인터를 전면에 내새울 수 없다.
+          - Q. Bind는 World에 visible 한가?
+            - 아니다.
+          - Q. 그렇다면 모듈개발자는 반환형으로 Node 대신 Bind를 쓸 수 있는가?
+            - 엄밀히 말하면 Reference(TClass<Bind>)가 된다. 예외처리를 하지 않으면 C++컴파일에러가 발생하지는 않는다.
+        - }
+      - }
+- 고찰 내용
+  - 예를들어보자.
+    - class Node 
+      - virtual bool execute()
+    - World코드에서
+      - class MyClass
+        - bool execute()
+      - 파서는 "bool execute()"를 보고 CustomFunction의 데이터를 채워서 메타클래스에 삽입한다
+      - class CustomFunction
+        - Member[] arguments
+          - [0]은 반환값
+          - [1]은 thisptr
+        - fptr* 없고, 대신 Statement[] codes
+      - CustomFunction({Boolean(), TClass<MyClass>()}, {......})
+    - 이제 World에서 만들어진 CustomClass는 CustomFunction 원소를 하나 가지고 있게 된다.
+    - 이 클래스는 C++에서는 알려져 있지 않다. 굳이 호출하려면 C++에서 World의 문법을 흉내내어 접근하는 수밖에 없다.
+    - 그리고 이는 문제가 되지 않는다. (C++ --사용되어짐--> World은 가능해도 World ---> C++은 요구사항이 없기 때문이다.
+
+
+
+#### 모듈식별
+
+- id와 module명은 구분을 위해서 필수요소이다.  모듈을 만들때 DLL/SO파일에 헤더에 2가지 값을 입력해야 한다.
+  - sigin이란 과정을 통해서 id/pw를 입력하면 key를 홈페이지나 툴에서 발급한다. 공개키로 이 key는 누구나 손쉽게 "validate"를 할수 있다.
+  - World코드 라이브러리는 어떻게 되는가?
+    - World코드 라이브리를 export(배포) 하는 과정도 모듈을 만들어 배포하는 과정과 동일해야 한다. 월드의 대 원칙중 하나는 "Native건 Managed건 사용자 입장에서는 차이가 없어야 한다" 이기때문이다. 따라서 World코드로 작성된 Library(클래스의 집합)은 단순히 Array<Class> 가 아니라, 헤더가 존재할 것이며 여기에 배포자, 날짜, 등등의 Native모듈을 배포하는 것과 동일한 데이터가 들어가게 될 것이다.
+- 1안 - id.module명.클래스명
+  - kukkulza3.console.ConsoleOut
+- v 2안 - id.module명.패키지명.클래스명
+  - [kukkulza3.my](http://kukkulza3.my/)_module1.ConsoleOut --> OK.
+  - [kukkulza3.my](http://kukkulza3.my/)_module2.ConsoleOut --> OK.
+  - [kukkulza3.my](http://kukkulza3.my/)_module1.consoles.ConsoleIn --> OK.
+- 모듈식별자가 중복을 걱정하지 않아도 된다.
+  - id는 World홈페이지에 유일하게 1개만 존재한다. 이걸 보장한다.
+  - 같은 개발자가 동일한 모듈명을 배포할 수 없다.
+  - 하나의 모듈은 하나의 프로젝트다. 당연히 여러개의 클래스가 있을 수 없다. C컴파일러가 이걸 보장한다.
+  - 모듈식별자는 개발자가 각 클래스를 배포할때 정의한다. 정의하지 않을 경우에는 WorldFrk가 클래스이름을 가져와서 이걸 바탕을 만들어준다.
+    - 만약 namespace가 다를 뿐, 클래스명이 같다면 어떻게 되는가?
+      - demangle API (abi::__cxa_demangle()) 을 사용하면 NameSpace까지 다 찍혀서 나온다. 하지만 GCC API이므로 다른 컴파일러로는 실행이 안되겠지.
+      - 함수 nested class 같은경우는 함수명(인자리스트)::클래스명 으로 찍히게 된다.
+      - 클래스 nested class는 클래스명::클래스 로 찍히게 된다.
+    - (~~~) 포함하여 ::를 .으로 고친다. (~~~)를 포함하는 이유는 당연히 함수가 오버로딩 될 수 있으니까.
+  - 알다시피 인터프리터는 2pass로 돌아간다. 일단 컴파일과정으로 모든 코드를 읽어들이고 클래스로 등록한다. 그리고 validate과정을 거치면서 함수호출이 정당한가를 따진다. 이때 모듈식별자로 모듈을 접근할 수 있는가도 따지게 된다.
+  - 원칙적으로는 코딩시 모듈식별자를 전부 기입하여야 한다.
+    - class MySubClass : kukkulza3.console_module.interface.ConsoleOut
+  - 이게 매우 성가시므로 줄여서 표현하는 방법을 제시한다. 이게 import다. 사용자는 어떤걸 줄여서 표현할 것인지를 앞에 명시할 것이기 때문에 모호성의 오류는 코드 생성시에 탐지 할 수 있다. 런타임 도중 모듈이 추가됨으로써 다른 모듈로 접근되는 사태는 발생하지 않는 다는 것이다. (이 특징이 매우 중요하다)
+
+
+
+#### Managed vs Native 네이밍 충돌 이슈 해결해야 함
+
+- 네이밍 충돌은 가급적 사용자에게 책임을 떠넘기는 형태로 가기로 한다.  사용자는 Object 기본클래스에 어떠한 메소드가 있는지 사전에 알 고있어야 하며, 그것을 함부로 overriding할 수 없다는 사실도 알고 있어야 한다.
+- 고찰내용
+  - 문제 : WorldFRX 의 메소드들은 기본적으로 World에 visible하게 된다. 이렇다보니 WorldFRX에서 World개발자가 사용할만한 함수를 먼저 사용해버리는 상황이 생길 수 있다. (이를테면 getName()) 이럴경우 World개발자가 함수 호출할 때, World코드의 getName()이 아니라 Node::getName()이 대신 호출되게 될 것이다. 이문제를 해결하려면?
+    - 1안 prefix붙인다.
+      - @ 안으로 파고드는 모양이니까, internal이라는 뜻에서 프레임웤 함수들은 @getName 으로 적으라고 한다.
+    - 2안 구체클래스의 것이 오버라이딩되게 한다.
+    - v 3안 Java처럼 그냥 쓰라고 한다.
+      - java.Object도 기본 함수들이 있고, 사용자도 잘 쓰고 있다.
+        - toString()
+        - equals()
+        - clone()
+        - finalize()
+        - getClass()
+        - hashCode()
+        - notify()
+        - wait()
+      - World는
+        - getClass()
+        - getID()
+        - getSerialID()
+        - release()
+        - clone()
+
+
+
+#### Array, Set, List 을 Native 바인딩과 연결하는 방법은?
+
+- Wrapper를 개발자가 만들어야 한다. 값으로 반환 및 const T*는 자동화해서 한다고해도, T*는 native 개발자가 어떻게 사용할지 도저히 알 수 없기 때문에 결국은 개발자가 중간에서 마샬링을 해줘야한다. 고로 Wrapper개발자는 World visible한 타입으로 함수paramter를 선언하고, 그 함수 안에서 native 함수의 native 타입으로 데이터를 refine 하는 작업을 해줘야 한다.
+  - char* gen_xml_parsed(char* buf, char* path);
+  - class XMLParser : Object
+    - static void onInflacture(List<Method>& tray)
+      - DECL(String parse(String path)
+    - Reference parse(String& node) // BEST OK
+      - **char buf[65535] = {0, };**
+      - **gen_xml_parsed(buf, node.to<char\*>());**
+      - **return Reference<String>(new String(buf));**
+    - //String parse(String path) --> OK
+    - //Reference parse(Node& path) --> OK
+    - //String& parse(const String& path) --> OK
+      - return new String(buf);
+- 고찰내용
+  - 다른 건 괜찮은데 capi가 int[] 를 사용하는 경우가 문제다. 사용하는 쪽에서 const를 사용하는 거라면 괜찮은데 값을 쓸려고 한다면 배열의 크기가 어떻게 되는지 외부와 내부가 서로 입을 맞춰야 하기 때문이다. 왜냐하면 케이스에 따라서는 World는 Native가 원하는 int[]를 만들어 낼 수 없다.
+
+
+
+#### Native C++ 함수와 World 함수간의 바인딩 
+
+- 사용자는 C++ class를 만들면서 메소드중 World에 노출시키고싶은 함수에 대해 World매크로를 사용하여 메타정보를 생성하게 한다.
+  - 예) "foo", "int"
+- Function 메타클래스는 주어진 인자타입을 T로 삼는 TClass를 만들어 Member[]에 넣어둔다. 이게 인자의 타입이 된다. 동시에 origin 함수에 대한 pointer와 각 인자를 어떠한 C 타입으로 바꿔야 하는지도 알고 있다.
+- Function의 타입으로 포인터는 존재하지 않는다. 일체 나올 수 없다. 포인터를 인자나 반환값으로 사용한 함수를 World로 노출시키고 싶다면 직접 래퍼를 작성해야 한다.
+  - 이는, 어떠한 시나리오나, 경우의 수를 타고가도, 설령 완벽하게 월드가 포인터나 구조체도 자동으로 변환하도록 만들어도 결국 래퍼를 개발자가 작성해야 한다는 걸 고찰로 알았기 때문이다.
+- 인자가 Member에 담겨서 Function에 넘겨오면 Function은 [Argument.to](http://argument.to/)()를 해서 자신이 들고있는 Member(== parameter)에 할당연산을 수행한다.
+  - 할당연산은 Node 공통 연산이다. 그러므로 타입을 몰라도 가능하다.
+  - 이 과정에서 고스트 인스턴스는 발생할 수 없다.
+- call()은 들어온 msg와 msg의 인자로 실행할 진짜 함수의 분기를 결정하는 역할을 수행한다.
+- execute()는 members에서 값을 꺼내서 실행을 한다. 매크로가 expand되면 사용자의 코드는 execute() 사이에 들어가게 된다.
+- 마샬링을 하는 진짜 주체는 사람일 수 밖에 없다.
+- 고찰내용
+  - 이번엔 함수에 인자가 전달되는 과정을 놓고 문제를 기안한다.
+  - class MyClass : public Node {
+  - public:
+    - void foo(int a) {
+      - cout << a;
+    - }
+  - }
+  - foo()함수는 World를 통해 호출할 수도, c++를 통해 호출할 수도 있다.
+  - 문제는 여기에서 묵시적 캐스팅을 어떻게 해결할 것인가가 관건이다.
+  - c++로 호출하는 경우에는 개발자와 C++ 컴파일러에게 맡기면 된다.
+  - World에서가 문제다
+    - World로 call("foo", {Integer(5)}) 가 들어왔을때, 이걸 해독하여 foo(int)를 호출할 수 있도록 해주는것이다.
+    - Node::call(string name, args[])
+      - for m in members
+        - if m.getName() == foo
+          - m에게 나머지 messgage를 맡긴다.
+            - 만약 message가 foo.getName() 일 경우에는 m의 getName()이 호출되는 것이다.
+            - 우리는 여기에서 message가 일종의 stack의 형태로 존재해야 한다는 걸 유추할 수 있다. 새로운 문제점으로 등록해서 고찰해봐야 하겠지.
+            - 그 상세는 나중에 따로 다뤄보고 일단 여기에서는 동작한다고 가정하자.
+          - m.call("", {Integer(5)})
+    - m::call(string name, {Integer(5)})
+      - m은 Function이므로 name이 "" 인경우 1개 밖에 없다. 자기자신을 execute() 한다.
+      - if name == ""
+        - m이 Binding하고 있는 function A는 int 인자1개를 받는 다는 것을 알고있어야한다.
+          - Function이 가지고 있다. 사용자의 매크로를 통해서 메타정보를 받는다.
+        - my_func(arg[0].to(int)
+          - foo(int) 와 foo(int&)를 어떻게 구분하는가?
+            - World에서는 참조자를 아무데다 막 붙일 수 없다. 그 클래스가 sharable인가 아닌가로 이미 결정되어진다. int는 항상 occupiable이다. int&라는 건 존재하지 않는다.
+            - swap 문제를 참고해보라.
+  - C++로 작성한 함수는 World에서 호출이 가능해야 하고, 반대로도 가능해야 한다.
+  - 이 문제의 포인트는 3가지다.
+    - 어떻게 하는가?
+      - 경우의 수는 4가지다.
+        - \1. C++ 함수를 C++에서 호출함
+        - \2. C++ 함수를 World에서 호출함
+        - \3. World 함수를 World에서 호출함
+        - \4. World 함수를 C++에서 호출함
+        - 이 중에서1, 3은 자연스러우므로 제외한다.
+      - World함수를 C++에서 호출하는 방법은 비교적 자연스럽다. C++은 World를 포함하고 있으므로 개발자가 잘 만들면 불가능하지는 않기 때문이다. 어짜피 World는 메시지를 기반으로 하기 때문에 call()함수의 인자를 잘 주기만 하면 될것이다.
+      - 따라서 이후로는 C++함수를 World에서 호출하는 방법을 중심으로 생각하고, 마지막에 검증하는 형태로 고찰한다.
+        - 이 방법의 포인트는
+          - 캐스팅은 새로운 Node의 생성을 의미하는 것이다. src가 sharable이라면 Reference만 생성이, ocuppiable이라면 Node 자체가 생성될 것이다.
+          - sharable은 묵시적 형변환이 제한적으로 동작된다. occupiable은 타 타입간의 형변환이 적용될 수 있다. 왜냐하면 occupiable 타입은 함수의 parameter와 argument가 서로 다른 인스턴스 이기 때문이다.
+            - C++의 경우
+              - foo(int a);
+              - boo(int& a);
+              - foo(3.5f); // ok
+              - boo(3.5f); // no. 
+            - World에서는 int, float은 sharable이 될 방법이 존재하지 않는다. 
+              - class WorldClass
+                - result foo(int)
+              - WorldClass().foo(3.6f) 는 이론상으로는 "변환이 될 가능성"이 있다. 자세한건 형변환 우선순위를 참고하자.
+          - 위의 내용을 만족하면서 가급적이면 예외적으로 동작하지 않게 만들어야 한다.
+        - 1안
+
+
+
+#### 매크로 간편화
+
+- 사용자는 헤더파일만 혹은 헤더파일과 구현파일에 WRD_DECL 매크로에 메소드 정보를 기입해야 World에 visible하게 된다.
+- 메소드 정보 기입시 규칙은
+  - \1. 반환형과 함수명, 함수명과 인자리스트 사이에 , 를 삽입해야한다.
+  - \2. 인자명은 기입하지 않는다.
+- 고찰 내용
+  - DECL이 선언되야할 장소는?
+    - 1안 - DECL 안에 wrapping을 수행하도록 한다?
+    - 2안 - DECL과 method를 따로 내보내고 method안에서 필요시 wrapping하게 한다.
+      - 조건1. DECL선언해야 한다. 
+      - 조건2. 함수를 DECL에서 선언한것과 동일하게 적어야 한다.
+        - 이때 반환형 T가 Sharable인지 occupiable인지는 구분하지 않아도 일단 돌아는 간다. 퍼포먼스는 문제가 있겠지만.
+      - 예제
+        - char* gen_xml_parsed(char* buf, char* path);
+        - class XMLParser : Object
+          - static void onInflacture(List<Method>& tray)
+            - DECL(String **parse(String path)**)
+          - String parse(String& path)
+            - char buf[256];
+            - gen_xml_parsed(buf, [path.to](http://path.to/)<char*>());
+            - return String(buf);
+            - 따라서 
+          - --> type T=String은 sharable이나, 값으로 넘어왔다. 
+          - World는 다음과 같이 expand 한다.
+          - \#if T==VALUE
+            - T _result;
+            - \#if RETURN_T==BY_VALUE
+              - _result = (me.*_fptr)( *(args[0].to<String>()) );
+            - \#if RETURN_T==BY_REF
+              - 상동
+          - \#else
+            - Reference _result;
+            - \#if RETURN_T==BY_VALUE
+              - _result = (me.*_fptr)( *(args[0].to<String>()) ).clone();
+            - \#if RETURN_T==BY_REF
+              - _result = (me.*_fptr)( *(args[0].to<String>()) );
+    - v 3안 - 어짜피 모든 클래스들은 W_DECLARE_CLASS가 있어야 한다. 여기에 같이 적으라고 한다면?
+      - 이게 일단 가장 베스트 같다.
+      - char* gen_xml_parsed(char* buf, char* path);
+      - class XMLParserModule : Object
+        - W_DECL_CLASS(XMLParserModule, Object, (
+          - String parse(String Path)
+        - ))
+          - **FOR_EACH 매크로를 통해서 구현한다.**
+        - Reference parse(const String& path) {
+          - Reference ret = String::make();
+          - ... do something ...
+          - return ret;
+        - }
+  - Module의 Thisptr를 선언할 수 있는 방법은?
+    - 3안으로 한다면 이것도 해결 가능하다.
+  - 위의 코드가 있을때 DECLARE_FUNCTION(Node&, Node, to, Class, Class&) 이거 더 간단하게 하는 방법은?
+    - 1안 - 매크로로 문자열 split을 하고, 이렇게 나온 문자열로 Class&를 가져오도록 할순 없을까?
+      - 문제는 char* 을 타입으로 매칭시키는 부분이다. type_info::name()은 기본 mangling이 되어서 나오며, 컴파일러마다 다르며, "int *" 인지, "int*" 인지 다를 수 있기 때문이다.
+        - 이론적으로 이러한 파싱 알고리즘을 짜는 것이 불가능한 것은 아니다.
+        - 이 방법은 fptr를 지정할 수 없다.
+    - x 2안 - const char*가 아니라 매크로 상태로 split을 할 수 있을까?
+      - 문제를 작게 나눠서 해결해보자.
+      - X(int a) --> int, a로 나눌 수 있어야 한다.
+        - 불가능하다.
+    - v 3안 - 사용자에게 , 로 구분하도록 한다.
+      - 어쩔 수 없다. 3시간 고찰 한 결과가 이거다.
+
+
+
+#### Native로 작성한 것과 World코드로 작성한 것은 World 입장에서는 아무런 차이가 없다.
+
+- 개발자 작성한 C++ 코드를 World에서 호출하도록 하는 것은 다른 언어에서도 당연히 되는 것이다. 여기서 말하고자 하는 핵심은 그게 아니라,
+- C++ Native작성된 대부분의 World FRWK의 함수들을 그대로 World에서도 사용이 가능하다는 얘기다. World FRWK개발자는 거의 0에 가까운 비용으로 이걸 가능하게 한다.
+- 어느 함수는 공개되어서는 안되는 경우도 존재한다. FRWK 개발자는 이걸 선택할 수 있다.
+
+
+
+
+
+#### World에 visible하다는 뜻은 무엇인가
+
+- \1. Node 계층에 있어야 한다.
+- \2. Scope에 등록이 되어야 한다. 
+
+
+
+
+
+#### Statement, Call, Method의 연계
+
+- 문제 : Statement --> Call --> Method ---> returnValue to Call --> ReturnValue  to Statement 까지 의 일련의 과정들을 잘 설계해야 한다.
+- Statement
+  - Arguments params // [0]은 target이다.
+  - virtual execute()
+    - Method.call(params)
+- Method
+  - virtual Node& getReturn() = 0
+  - virtual Node& call(Messages& msg)
+    - if(msg.getMessage() == "()")
+      - return call(msg.getArgugments())
+  - virtual Node& call(Arguments&) = 0;
+- MyMethod
+  - Integer _return; // or **Reference(MyClass) _return;**
+  - virtual Node& getReturn() { return _return; }
+  - virtual Node& execute(Arguments& args) {
+    - setArguments(args);
+    - execute();
+    - return getReturn();
+  - }
+  - virtual Result& setArguments(args);
+    - Bind<Integer> age = args[0].to<Integer>();
+  - virtual Result& execute() {
+    - Bind<MyClass> me = args[0]to<Integer>();
+      - // 내부에서 call()을 거쳐서 Node&가 나옴. to()는 이걸 Bind로 묵어서 내보냄. 왜냐하면 값이 나올지, 참조자가 나올지 to는 알지 못하니까. 여기서도 bind로 받음. 이 Node&는 곧 사라질 수 있음.
+    - return _return = (me->*_ftpr)(*age); // 컴파일러 접근제한자 무시함
+      - // _return의 타입은 T가 값이면 T, 참조자이면 Reference(T)
+      - // Bind::operator=(Reference&) 지원해줘야 함. 사실 같은것.
+  - }
+  - _fptr = &MyClass::myAdd;
+- MyClass
+  - Integer myAdd(Integer& add)
+    - // myAdd(Integer add)도 ok. 그러나 값이 2번 복사됨.
+    - this->age += add;
+    - return age; // age가 1번 복사되고, 할당연산이 추가적으로 일어남. 총 2번.
+- MyMethod2
+  - Reference _return(View); // View는 Node의 일종.
+  - virtual Node& getReturn() { return _return; }
+  - virtual Node& call(Arguments& args) {
+    - Bind<View> front = args[1].to<View>();
+    - Bind<View> back = args[2].to<View>();
+    - Bind<Integer> frame_count = args[3].to<Integer>();
+    - Bind<MyClass2> me = args[0]to<MyClass2>();
+    - return _return.bind( (me->*_ftpr)(*front, *back, *frame_count) );
+    - // 참조자로 넘어온다는 것은 전역이거나, HEAP이거나 둘 중 하나로 간주한다. 지역변수를 참조자로 넘기는 짓을 World에서 탐지해서 경고해야할 만한 가치는 없다. 기본적인 개발자의 소양이 없는 거지.
+  - }
+  - _fptr = &MyClass2::myAdd;
+- MyClass2
+  - View& myAdd(View& a, View& b, Integer& add)
+    - if(a.getFrame() < add)
+      - return a;
+    - return b;
+- 고찰 내용
+  - 동작 가능한가가 중요하지 않다. 좋은 설계를 찾는 것이 중요하다.
+    - 중복된 코드가 없어야 하며, 
+    - 직관적이고,
+    - 여러 관점에서 사용할 수 있어야 하고,
+    - 속도가 합리적이야 한다.
+    - 상속 트리를 잘 구성해야 한다.
+  - v 1안 
+    - Statement
+      - Arguments params // [0]은 target이다.
+      - virtual execute()
+        - Method.call(params)
+    - Method
+      - virtual Node& getReturn() = 0
+      - virtual Node& call(Messages& msg)
+
+
+
+#### MDK로 모듈을 만들때 사용자는 반드시 Object에서 상속을 받아야 한다.
+
+- 다음 2가지의 케이스도 되지 않냐고 착각할 지 모른다.
+  - x 1. DEFINE 매크로를 사용하여 일반 클래스를 open시키기
+    - 절대 안된다. 왜냐하면 이 일반 클래스가 무엇인지 월드는 전혀 알 수 없기때문에 이 일반클래스 안의 METHOD를 호출할 방법이 없게 된다. 객체를 만들어야 THISPTR가 나오기 때문이다.
+    - 게다가 설령된다고 하더라도 C++ 함수 안에서 이 함수에 직접 호출한 것과 World가 이 일반 클래스와 매칭되는 객체라고 여기고 들고있는 Object와 연동이 안된다. 오로지 Object를 통해서 TClass로 들어간 경우에만 연동이 되는 것이다.
+  - x 2. InterfaceClass/ConcreteClass 에서 상속을 받아서 직접 클래스정보를 기술하기
+    - class Integer : public ConcreteClass {
+      - virtual Bind<Node> call(Message& msg) {
+        - if ([msg.name](http://msg.name/) == "get")
+          - msg[0].get()
+        - else if([msg.name](http://msg.name/) == "set")
+          - msg[0].set(msg[1])
+      - }
+      - int get() { return _v; }
+      - void set(int new_v) { _v = new_v; }
+      - int _v;
+    - }
+    - 나도 위처럼 하면 되는거 아닌가 착각하는 바람에 이미 풀었던 문제를 30분동안 다시 생각했다.
+    - 결론적으로 class는 "객체"가 아니기 때문에 안되는 것이다. Integer는 클래스의 정보를 나타내는 Class class로부터 상속을 받았기 때문에 원칙적으로 시스템에 1개만 존재해야 되는 개념을 갖게 된다.
+    - 그리고 위의 코드에서 결정적인 잘못은 저 call안의 [msg.name](http://msg.name/) 비교 로직은 실제 구현은 저렇게 되면 안되고 배열같은 걸 써서 loop을 돌아야 할것이라는 것이다. 그러면 그 배열은 객체마다 존재해서는 안된다. 내가 C++ 모듈안에서 Integer 객체를 만들게 되면 그 배열을 매번 만드는 꼴이 된다. 물론 이것만 static을 써서 해결은 가능하지만, 그런 상황에 쓰라고 만든게 TClass 시리즈인데, 이걸 안쓰고 Class안에서 다시 static 배열을 쓴다? 이미 정상적인 설계가 아니라는 걸 감잡을 수 있다.
+    - 게다가 Integer는 Class이기에 Type의 일종이지, Object의 일종이 아니게 된다. 아무리 member는 Node로 따지기 때문에 들어갈 수 있다고해도 월드코드로 생성된건 Object인데, c++로 만든건 Type에서 상속받은게 들어가면, 공통점이 없게 되고 관리나, 로직 수행에 있어서 특화처리가 나오게 될게 뻔하다. 월드는, 주어진 객체가 C++에서 코드로 만들어졌건, World의 소스코드로 만들어졌건, 구분할 필요가 없어야 하는게 이 설계의 핵심 포인트 중 하나다.
+  - \3. 따라서 결론적으로 가능한 시나리오는 Object에서 상속을 받게 하는 것이다.
+    - class Integer : pubilc Object {
+      - DEFINE(Integer, Object, (
+        - (int, get),
+        - (void set(int)) //int는 MashallType<T>에 의해서 Integer로 변환된다.
+      - ))
+      - int _v;
+      - int get() const { return _v; }
+      - void set(int new_v) { _v = new_v; }
+    - }
+    - // in c++
+    - Integer a;
+    - a.set(3); // 을 한 경우 direct로 set()가 불린다.
+    - // in world
+    - class My
+      - void main()
+        - int a /* 코드블럭으로 다음과 같이 생성된다.
+          - Object {
+            - .class = Class<Integer>()
+          - } */
+        - a = 3 /* a.set(3)과 동일하며, 코드블럭으로,
+          - Statement {
+            - msg = {Object "a", "set", Integer(3)}
+          - }
+          - 가 들어있다. Statement::execute()가 되면 Object "a".call({"set", Object "a", Integer(3)}) 을 하게 되고,
+          - Object "a"는 멤버변수 "set"이라는게 없으므로 class인 Class<Integer>::call({"set", Object "a", Integer(3)})을 호출한다.
+          - Class<Integer>는 "set" Method에게 msg를 넘기고, "set" 메소드는 Object "a"를 Integer*의 thisptr로 casting하고, Integer(3)은 int(3)으로 바꾸어 Integer*->set(3)으로 호출하게 된다.
+          - */ 보다 정확히 말하면 중간에 "()"가 execute()로 바뀌는 과정이 필요하나 생략한다.
+
+
+
+#### 모듈개발자가 모듈Method 내에서 Static 변수를 visible하게 하는 방법
+
+- 로컬 바인딩의 지원으로 객체생성은 곧 binding 가능을 의미하게 되었다.
+- 구버전
+  - static int a = 5; // World에 보여지지 않는다. World에 넘길 수 없다.
+  - static Integer a = 5; // 역시 World에 보여지지 않는다. HEAP이 아니기 때문이다.
+  - static Reference a = Integer::make(); // HEAP에 있으므로 a를 넘길 수 있다.
+
+
+
+#### 모듈개발자가 클래스의 static 멤버변수를 visible하게 할 수 있는가?
+
+- 현재로써는 멤버변수를 visible하게 할 순 없다. method만 가능하다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 구현과 디자인
 
 ### backbone
