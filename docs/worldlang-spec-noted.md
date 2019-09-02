@@ -61,7 +61,41 @@
 
 ### 변수
 
-상수/변수의 의미 / 캐스팅
+상수/변수의 의미
+
+#### 식별자-정의시-파이썬처럼-타입을-적지않으면 auto로 인식되게 할 수 있을까?*
+
+- int a = 5를, a = 5로 바꿀 수 있을까?
+- [v] 시나리오 검토
+  - *[x] 시나리오1 - 함수 정의 : 함수는 이름이 가운데 오고, 클로저와 혼란이 있을 수 있기에 함수명은 원래 생략이 안된다.*
+  - [v]시나리오2 - delegator 정의시
+    - foo = void(void)
+      - ...
+- [v] 해결안
+  - 핵심은 컴파일러가 모호성 오류를 내보낼 수 있다는 것이다. 이게 식별자 정의인지, 단순히 할당연산인지 구분이 안가니까.
+  - *[x] 1안 식별자가 scope에서 처음 등장하면...?*
+    - 만약 이름 중복된 식별자를 정의한다면, 이게 할당연산인지 아닌지 구분이 안간다.
+    - 예) class A
+      - age = 5
+      - void foo()
+        - age = 23 // 실제로 하고 싶었던 거는 age라는 지역변수를 만들어서 23으로 초기화 하는 거였다....
+  - *[v] 2안 1안을 적용하고, 이름 중복은 허용하지 않는다고 한다면.*
+  - *[x] 3안 파이썬처럼 전역변수 참조시에 특수한 prefix를 붙이게 한다* -> 최악이라고 본다.
+    - 파이썬의 예) 
+      - my_value = 4 *// 전역*
+      - def increase_my_value(step=1):
+        - global my_value *// 전역변수를 참조한다는 뜻이다. global이 없으면 지역변수 정의가 된다.*
+        - my_value += step
+      - print(my_value)
+      - *# 4*
+
+
+
+
+
+
+
+
 
 
 
@@ -1055,7 +1089,14 @@
             - }, msg = {.name="getName", .args={}}
           - }, msg = {.name="()", .args={}}
 
+#### 메소드가 1개만 있는 경우에는 인자리스트 생략 가능
 
+- class A
+  - void foo(int, char)
+    - ...
+- A a
+- void(int, char) closure = A.foo(int, char).closure(a) *// FM*
+- auto closure1 = a.foo *// ok. foo가 A 안에 1개만 있을때는 syntactic sugar로 ok 처리.*
 
 
 
@@ -2513,7 +2554,7 @@
 
 
 
-
+#### res main() 과 res main(str[] args) 를 모두 지원하자
 
 
 
@@ -3925,6 +3966,41 @@
             - void boo()
             - 
 
+#### MethodDelegation
+
+- 생성
+  - void A.foo(int) f1 = A.foo // ok
+  - *//void(int) f2 = A.foo*
+  - void(int) f2 = a.foo
+  - Method f3 = A.foo // ok
+  - void(int) f4 = a.foo1
+  - *//void A.(int) f5 = a.foo1*
+  - *//void(int) f3.capture(a) // f3은 타입정보를 다 잃어버린 상태이므로 capture를 사용할 수 없다.*
+  - [] void(int) f22 = a.foo.capture(a) 가능해야 하나?
+    - [] 가능하다고 한다면, capture는 당연히 void(int)를 반환해야만 한다. 모든 메소드의 공통 메소드로 빼게 되면 Delegator라는 객체를 반환형으로 할 수 밖에 없다. 어디선가는 타입 검사를 해야만 한다.
+      - Delegator에도 내가 받을 수 있는 타입이 명시되어있다. 가지고 있다. 고로 런타임에는 판별할 수 있다.
+      - 컴파일타임에 a.foo가 무슨 메소드인지 알고 있으며 여기서 반환한 capture는 native상에서는 Delegator로 나오지만 이 Delegator가 가지고 있을 타입이 무엇일지는 유추할 수 있다. 
+- 대입
+  - f3 = f2
+  - f3 = f1
+  - *//f2 = f1*
+  - *//f1 = f2*
+- 호출
+  - *// f1(3) err*
+  - a.f1(3) // ok
+  - f1.getName() // ok
+  - f2(3) // ok
+  - f2.getName() // ok
+  - *// a.f2(3) err*
+  - *// f3(3) err*
+  - *//f3.call(3)  call은 invisible해야 한다. 재귀호출이 되버린다.*
+  - f3.getName() // ok
+  - node n = f3 // ok
+  - n(3) // ok, but runtime err
+  - a.n(3) // ok. and runtime success.
+
+
+
 
 
 
@@ -4173,7 +4249,19 @@
 
 ### 예외처리
 
+#### try-catch 같은 것은 반드시 있어야 한다. 좀 더 혁신적인 방법이나 혁신적인 표기법은 없을까?
 
+- 1안 pythonstyle + 클래스 catch
+  - class A
+    - My _bean
+    - result print()
+      - try
+        - int age = _bean.get()
+      - catch(nullexcp e)
+        - ret failed
+      - ret success
+    - catch(nullexcp e)
+      - throw e;
 
 
 
@@ -5185,6 +5273,112 @@
 - C-REPL은 재빌드라는 게 없다. 굳이 한다고 해도 문제될 것은 없다. RawSTatement와 Class 를 비우고 들어가면 된니까. 다만, 코드블럭을 비울때 어떤걸 비울지 어떻게 결정할 수 있을까.
   - 모든 built-in도 하나의 class로써 일반화되서 들어가있다. 
   - v 1안 RawStatement 기준으로 날린다. 파서가 RawStatement를 날리면서 이거로부터 생성된 Thing들을 다 delete시키면 되는거 아닌가.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### IDE와 연동
+
+#### Interpreter가 IDE에게 에러를 고지 하는 방법
+
+- v 1안 각 Thing에서 validate()를 수행한다.
+  - 파서는 코드블럭을 생성되면 member로써 filename, col, line을 넣어둔다.
+  - 빌드과정에서는 저 데이터는 빠진다.
+  - IDE는 text를 input으로 interpreter에게 넣어줄때, IDE가 compile, validate를 모두 하게 된다. interpreter가 자동으로 해주지 않는다. 이는, build된 바이너리도 IDE가 원한다면 validate를 할 수 있도록 해주기 위함이다.
+  - validate()의 반환은 List<Exception> 다.
+    - Exception에는 메시지와 함께 어느 Thing에서 에러가 났는지 bind되어있음. Thing은 파서가 생성시 col, line, 파일이름을 member로써 끼워둠.
+  - 만약 C-REPL을 적용되었을때도, 이러한 프로세스가 사용 가능한가?
+    - col, line의 숫자가 변경되어야 한다. 이것을 어떻게 연동할 것인가?
+    - 아래에 나와있는 RawStatement를 사용하면 된다. 
+    - 단, line계산은 그때그때 해주는 수 밖에 없다. 하지만 에러라인은 그렇게 많지 않고. 한 파일안에 라인수는 많아봤자. 10000줄 정도다. 100라인정도가 에러났을경우, 10000*100이 되니까. n^2이긴 하나 이 무식한 방법이 당장 못써먹을 정도는 아니다.
+- x 2안 Parser::validate()  Visitor패턴
+  - 에러 번호와 col은 파서가 알고 있으므로 알려주는데 무리가 없으며, 이 정보는 편집시에만 제공되므로 메모리 퍼포먼스도 만족한다. 
+  - standalone에서는 텍스트가 검증되었다고 판단한다. 여기에서는 변수에 특문이 있다는 식의 것은 검증하지 않을 것이다. standalone은 컴파일이 모두 끝난 상황에서 돌아간다는 걸 가정으로 한다.
+  - 즉, 개발 과정은 진화된 대화식 개발방법으로 된다. 기존 인터프리터의 대화형 도구(한줄 한줄 읽는 형태가 아니라 "텍스트 에디터" 자체가 대화식 개발방법으라고 가정한다. 이는 인터프리터와 "문맥"을 함께 대화할 수 있는 수단이 된다. 
+  - validate과정은 논리에러를 찾아낸다. 컴파일에러는 실행자체가 100% 불가능한 경우(정확히는 코드블럭이 생성 불가능한 경우), 논리에러는 실행을 할 수 있을 것이나, 심볼을 못찾는 등으로 인하여 런타임에 실행이 100% fail될 경우다. 런타임오류는 인터프리터가 판단할 수 없는, 사용자에 의도와 어긋나는 동작을 수행하는 오류들을 말한다.
+  - text를 input하게 되면, 인터프리터는 compile --> validate 과정을 거친다. compile과정은 validate한걸, 한번 더 최적화시켜서 구조를 바꾼뒤 바이너리파일로 저장하고 여기까지의 과정을 빌드라고 한다.
+  - 바이너리파일을 input하게 되면 인터프리터는 execution만 거치며, 이것이 standalone으로 동작할때의 구성이다. compile이 완료된 바이너리는 검증이 끝났다는 걸 기본으로 하며, 이진으로 작성되어 난독화시키고, 최적화가 들어가며(예를들면 심볼을 탐색할때 getMember(string) 대신 getMember(index)를 사용) 코드블럭을 바로 생성하여 실행만 수행한다.
+  - 따라서 일반적인 IDE를 통해서 개발될때는 input으로 텍스트를 주게 되며, compile, validate로 논리에러와 컴파일에러를 noti 하게 된다.
+
+
+
+#### IDE에서 선택한 코드가 코드블럭을 선택하도록 하는 방법은?
+
+- C-REPL이라면 인터프리터가 아마도 텍스트도 들고 있어야 한다. 그때 텍스트를 통짜로 구성하는 것이 아니라 RawStatement 라는 클래스를 만들어서, 요게 텍스트 1줄을 가리키도록 한다. 
+- RawStatement {
+  - string one_line_code;
+  - public int getLineNumber() const;
+  - Bind<RawFile> owner;
+  - List<Weak<Thing>> generated_by_me;
+- }
+- Thing은 파서로 생성된 경우, 파서가 member로 
+  - Weak<RawStatement> owner, 
+  - int column;
+- 2가지를 만들어 놓는다.
+
+
+
+
+
+#### 어떻게 IDE와 인터프리터가 통신하는가. 위의 모든 것들을 구현하기 위해서.
+
+- C-REPL일때는 대화형 인터페이스라는 점을 들어서, parser.InsertStatment("~~~~~") 같은 API를 사용하도록 한다. --> C-REPL은 아직 도입되지 않았으니까 다루지 말자.
+- 풀빌드 시스템에서는 
+  - \1. 시스템을 초기상태(built-in 클래스만 들어있으며, Object도 없는 상황)로 되돌리는 API
+    - 사용자는 클래스는 날리되 Object는 남겨야하는 상황이 있을 수 있는가? --> 
+      - 아니 없다. 따라서 클래스를 날리면 인터프리터는 Object도 다 날려줘야 한다. 마찬가지로 코드는 날리면서 클래스는 놔두는 것도 없다. 코드 == 클래스 == 코드블럭이므로 이들은 정확하게 항상 싱크가 맞아야한다. 
+    - v 1안 RawStatement를 날리면 저것들 다 날아가게?
+      - 외부에서 인터프리터와의 소통은 텍스트로 수행한다. 바이너리 클래스로 삽입하는 것은 사실상 소통의 흐름을 단절시키고 폐쇄된 공간에서 빠르게 작업을 수행하는 것과 같다. 편집이 허용되지 않으므로. 따라서 클래스의 편집은 텍스트로만 허용이 되어야 한다. 사용자가 직접 인터프리터의 클래스의 내용을 쥐잡듯이 휘저어 대면 안된다. 마찬가지로 ClassBase의 member들은 const로써 공개가되어야 한다. 값을 확인하고, 데이터를 보고, 흐름이 어떻게 흘러가는지는 언제든지 IDE가 지켜볼 수 있지만 이미 파싱되어서 생성된 Class정보를 IDE가 직접 쑤셔대면 안된다.
+      - 따라서, 유일한 의사소통 통로인 RawStatement를 IDE가 삭제요청을 하면 나머지 관련된 것들이 싸그리 날아가는 방식은 합리적이라고 볼 수 있다.
+  - \2. compile API(== parse)
+    - getParser().parse(filepath)를 여러번 호출하기만 하면 되는 것인가? 
+    - 이미 로드되었는지는 어떻게 알지? 
+    - 파일이 변경되었을때는 같은 path가 오더라도 다시 로드를 수행하는게 맞다. 이건 어떻게 체크하지?
+      - 1안 RawSTatement를 저장하는 "RawFile" 같은게 있어서 얘는 자신이 성공적으로 로드한 파일의 날짜를 기록해놓는다. 이걸로 대조해서 다를경우에는 RawFile을 날리고(== RawStatement도 날아가고 ==> 관련 Class도 날아가고 => 관련 Object도 다 날아가고) 다시 넣게 한다.
+      - 2안 IDE가 알아서 해야지. 중복되지 않게. IDE가 알아서 interpreter의 클래스 정보도 해제해주고.
+  - \3. validate API
+  - \4. compile API
+  - \5. execute API
+- 빌드만 놓고 봤을때 5가지만 만족되면 될것이다.
+
+
+
+
+
+#### SharedMemory의 IDE 연동
+
+- IDE는 유니티가 아니라 cocos2d로 간다. C#은 marshalling을 비롯해서 무리가 있다.
+- cocos2d는 ide, module 양쪽 모두 창모드 경우에는 문제가 없었다. 하지만 module 전체화면시에는 DirectXDevice를 만들지 못한다. 이것은 아마 시스템제약일 가능성이 크다.
+- 장기적으로는 shared memory 같은 걸 사용해서 메모리 공유하는 방향으로 가야 할 것이다. 일단은 창모드만 ㅏ나올 수있다고 공지하는 방향으로 가도록 하자.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
