@@ -525,6 +525,85 @@
         - aage.call("set", aage.call("add", aage, int(3));
       - 같이 번역되기 때문에 문제는 없을 것이다.
 
+#### [v] 캐스팅
+
+##### [v] Q1. org 객체가 아니더라도 캐스팅 자리에 올 수 있는가?
+
+```java
+def myInt = 3
+       void say()
+    
+1: int i1 = int 3.5 // ok
+2: int i2 = 3 3.5 // 이상하지만 ok.
+3: int i3 = i1 i2 // ok.
+```
+
+- 파서 구현으로는 문제 없다. 검증 완료.
+
+##### [v] Q2. 2번이 가능하다는 것은, 3도 int라는 타입으로 친다는 것이다. 다음의 코드가 가능하다고 보는가?
+
+```java
+int i2 = 3 3.5
+1: 3 i3 = 5
+2: i2 i4 = 6
+```
+
+###### A1. 캐스팅의 정의
+
+- 캐스팅은 타입이 바뀌는 것이다. 값이 바뀌는 것이 아니다.
+- 타입은 껍데기이다. refer가 기대하는 모양새이다. 기대하는 인터페이스의 집합체이다. 이런 API를 호출할 수 있다고 예측하는 도구이다.
+- 만약 진정으로 사용자의 사용성에 있어서 org객체와 복사객체를 구분하지 않고자 한다면 (그리고 그럴려고 문법도 lower-case camel로 통일했지?) 허용해줘야 한다.
+
+##### [v] Q3. 2번을 허용했을 경우, 과연 파싱이 가능한 것인가가 문제로 남는다.
+
+- 간이로 GLR 파서 만들어서 검증 완료. 괜찮다.
+
+##### [v] Q4. 배열을 두는 경우가 남아있다. --> 별도 항목으로 해결중.
+
+
+
+##### [v] Q5.  3개가 연속되면 무슨뜻인가?
+
+```java
+tup2 = keyBase:2 returnKey:float null
+```
+
+- tup2 = ((tup<keyBase, int>) (returnKey:float) null) 과 동일하다
+
+##### [v] Q6. 가독성면에서 안 좋다?
+
+```java
+1: objMy.foo([335 22.5, age 333.43], returnKey myKey)
+2: objMy.foo([(int) 22.5, (int) 333.43], (returnKey) myKey)
+3: objMy.foo([(335) 22.5, (age) 333.43], (returnKey) myKey)
+4: objMy.foo([int 22.5, int 333.43], returnKey myKey)
+```
+
+- 더 더 많은 실제 코드가 필요하다. 이 작은 2줄로는 판별이 좀 어렵다.
+- 의외로 캐스팅이 코드상에 많이 필요 없다. 잘 안쓰네 다들.
+- syntax highlighting을 더 주면, 좀 더 구분이 쉬울 수 있다.
+- **가독성을 위해 float,int,char를 상수로 표현하면, warning으로 간주하자.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### 블록문
@@ -1805,6 +1884,301 @@
 
 
 
+#### TClass Origin 새로 설계
+##### [v] 요구사항
+* Origin 객체라는 것이 나왔고 사실 이것이 Type을 대신하고 있다.
+* 이제 기존 TClass가 Type을 대신하고 있었으므로 이걸 해결해보자.
+
+##### [v] 1안 TClass를 제거하자.
+
+
+```cpp
+template <typename T>
+class tRtti {
+public:
+  bool isADT() {
+  bool isPtr()
+  ..
+  ..
+  origin* _org;
+  tRtti<typename T::Super> _getSuper() { return tRtti<T::Super>(); }
+  oigin& getOrigin() { return *_org; }
+  res& init() {
+    originMgr& mgr = Core::get().getOriginMgr();
+    _org = mgr[getName()];
+  }
+};
+
+class object : public node { // object는 originMgr에 있으면 origin객체인 것이다.
+  TStrong<TArray<Object> > _supers; // Origin이 복제되어도 shallow copy.
+  TStrong<TArray<Object> > _subs;
+  bool* _isInit;
+  
+  object() { _isInit = new bool(); }
+  object(const object& rhs) { _isInit = rhs._isInit; }
+
+  virtual TArray<Object> getSupers() { return _supers; }
+  virtual TArray<Object> getSubs() { return _subs; }
+  const object& getSuper() { return getSupers()[0]; }
+  const object& getOrigin() { return Core::get().get....; }
+  bool isInit() { return _isInit; }
+  res& init() {
+    if(isInit()) return rOk;
+    Origin& sup = getSuper(); // init을 돌리기전에 모든 Origin객체들은 일단 add 되어있다.
+    if(sup.init()) return rAbort;
+    sup.getSubs().add(*this);
+    getSupers().add(sup);
+    return tRtti::init();
+  }
+};
+
+class originMgr {
+  operator[](const string& name);
+  originMgr() {
+    objs.add(_builtIns);
+  }
+  res& add(const object& origin?) {
+    if(origin == 중복) return rAbort;
+    return objs.push_back(origin);
+  }
+
+  res& init() {
+    for(object& o : objs)
+      o.init();
+  }
+  static tArray<Object> _builtIns;
+};
+
+class node {
+  // Object보다 상위클래스들은 WRD_BASE_CLASS를 쓴다. 그러면 자동으로 static 타임에 DummyOriginObject를 만들어 OriginMgr::_builtIns.add(DummyObject()); 를 넣어둔다.
+  WRD_BASE_CLASS(
+  
+  virtual res& init() {
+    if(isInit()) return rAbort;
+
+    
+    return rOk;
+  }
+  static res _onInitMethods(tArray<Method>& tray) {
+    Object._onInitMethods(tray);
+    Instance._onInitMethods(tray); // Unit, Instance 의 것들이 담겨진다. visible 하게됨.
+    // 보통은 자기껏만 담도록 macro가 expand 된다.   
+  }
+  virtual bool isInit() { return true; }
+  virtual TArray<Object> getSons();
+  bool isSub(const Thing& rhs) {
+    // 1. tier 비교
+    // 2. 동 tier가 같은 클래스인지 비교
+  }
+  bool isSuper(const Thing& rhs);
+}
+
+
+
+// 사용법:
+tRtti<MyCppObj>::getOrigin().getName().... // 1
+Core::get().getOriginMgr()["MyCppObj"].getName() // 2
+```
+
+* Origin은 3군데에서 불러진다.
+* C++ 빌트인 클래스의 경우, macro WRD_MACRO에 의해.
+  * .item(모듈파일) 에 의해
+  * .wrd 파일에 의해
+
+* Origin을 불려지면 OriginMgr에 담겨진다.
+* 1,2는 먼저 수행되며 수행후 init()이 된다.
+  * 2를 보면 알겠지만 native 클래스는 Mgr클래스로부터 상속을 받을 수 없기때문에 가능하다.
+
+* TClass는 tRtti가 되며 단순히,
+  * 메타프로그래밍 + Origin객체에 쉽게 접근가능
+* 만 지원하게된다. mgr에서는 필요가 없다.
+
+
+* cast(), isSub(), getSubs() 모두 Thing에서 호출이 가능해야 한다.
+* TClass는 사라지고 Object가 계층 구조를 보관한다.
+* Origin객체란 OriginMgr에 보관된 Object를 말하는 것이다.
+* Origin객체는 OriginMgr["name"]으로 쉽게 접근 가능하다.
+* Thing, Instance 들은 Object보다 상위인데도 cast, isSub가 가능해야 하므로 이를 위한 DummyOriginObject를 생성한다.
+  * Dummy는 복제 될 수 없다.
+  * WrappedMethod는 초기화가 된 이후에, this를 호출시 바인딩한다.
+  * DummyOBject는 OriginMgr가 시작하자마자 만들어 둔다.
+    * tRtti로 Object보다 상위의 모든 클래스들을 알아내서 만들어낸다.
+    * 모든 월드 native 클래스들은 Super라는 typedef가 있어야 한다.
+    * tRtti _getSuper()는 오직 OriginMgr에만 열려있다. 다른 사람들은 Thing::getSuper()를 쓰자.
+
+##### [v] Q1. Instance에 있는 getId()도 visible 할 수 있는가?
+* 예전 설계에서는 TClass가 Type을 담당했기 때문에 Node 보다 구체클래스들도 TClass에 메소드를 넣을 수 있었다.
+  * Tclass는 이러한 메소드들을 담아두는 역할을 수행했기 때문에 Node::getMembers()를 갖지 못해도 일단 메소드를 보관해  놓았다.
+  * Object가 나올때는 이러한 TClass()의 메소드를 shallow copy했기 때문에 문제가 발생하지 않았다.
+* 이제 새로운 설계에서는 TClass는 사라지고 Origin 객체가 이걸 대신한다. 
+  * 메소드들은 WRD 매크로를 쓰면 일부 매소드들에서만 참조할 수 있는, wrap한 메소드 배열을 returning 하는 static 메소드를 private로 하나씩 박아넣고 있다.
+  * getMembers() 를 가지고 있는 Node는 초기화시에 Node::onInitWrappers()를 부를때 모든 supers를 다 부른다.
+  * 보통은 origin객체 초기화시에 부모origin의 members를 복제해 넣고, onInitWrappers()를 호출해서 wrapped된 메소드 배열을 가져와 getMembers에 넣는다.
+
+##### [v] Q2. Thing, Instance에도 여전이 cast, isObject를 쓸 수 있는가?
+* TClass가 Object로 이관되면서 계층 구조는 Object에서부터 가지게 된다.
+* Thing, Instance는 Object가 아니기 때문에 여기에 계층 구조를 직접 넣을 수없다.
+* origin객체에 접근할때 항상 originMgr["이름"] 으로 접근한다. 문자열인, 이름이 중요하다.
+* Thing, Instance에 대해 더미Object를 생성해서 시작하자마자 originMgr가 생성해둔다.
+  * 생성해야할 더미Object는 각 Thing, Instance들이 별도 정의된 매크로에 의해 expand되어, originMgr::_getBuiltIns()에 append해둔다.
+  * 일단 Object가 주입만 되면, 런타임시에는 더미Object이건 정상 Object이건 구분없이 돌아갈 수 있다.
+* Thing::isSub()가 불려지면 originMgr["Thing"]을 찾아내서 사용할 것이다.
+
+##### [v] Q3. 최적화 방안
+* 객체가 lost 를 식별하면 자동으로 originMgr에서 업데이트 하는 tWeak를 모든 thing들이 share 하면된다.
+
+
+
+#### origin 객체는 생성자 호출이 불가능할때가 있다
+
+기본생성자가 없으므로 시스템에서 origin객체를 하나 만들어놓고 시작이 불가능한데?
+
+
+객체의 생성
+1. 생성자를 통하기전에 def 를 통해서 객체는 초기화된 상태로 생성된다. 
+2. 초기화 수식이 동작한다.
+3. def A =  B() 가 동작한다.
+----여기까지 프로그램 시작전 ----
+4. 사용자에 의해 생성자가 호출된다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Null
+
+#### [v] null을 없앨 수 있을까?
+
+##### [v] 요구사항
+
+* 함수의 동작이 에러인지 아닌지는 알 수 있어야 한다.
+* 에러일 경우에, null check를 일일이 하는 걸 없애고 싶다.
+
+##### [v] 고찰
+
+* null을 두는 이유는, 객체를 반환하는 메소드에서 객체를 반환할 수 없기 때문이다. 이것은 throw를 하는 이유와 어느정도 일맥상통한다.
+* 만약 메소드가 복수의 값을 반환하거나, 반환한 값이 유효한지 여부를 별도로 체크할 수 있다면 문제가 해결될 수 있다.
+* 그러나 위처럼 해결한다고 하더라도 여전히 반환된 값의 유효여부는 체크를 해야 한다. null체크와 다를게 없는 것이다. 반환된 값을 사용하기전에 사전 체크.
+* 따라서 정말 이문제를 해결하기 위해서는, "과연 반환된 값을 사용하기전에 사전체크하는 과정을 없앨 순 없는가?" 를 먼저 생각해봐야 한다.
+
+##### [x] 1안 null 키워드 자체를 없애버린다.
+
+* null은 2가지 의미가 있다.
+  * 귀찮아서 초기화를 안함.
+  * wrapper는 있는데, 당장 객체는 없음.
+* 객체가 없는 이유는 객체를 생성 혹은 가져오는게 실패했기 때문이다.
+* 가장 큰 문제는, 추상클래스를 작성하는 개발자는 자신의 것을 어떻게 구체클래스로써 내보낼 수 있느냐는 점이다.
+
+```cpp
+// 추상클래스라는 걸 없애버린다.
+def ADT
+  void say() // void say() {} 와 같음.
+  int say() // 없으면 return <각 타입의 기본값>
+  unit say() // return unit()
+  
+def core
+  core $get()
+      if rand() % 2
+      return core! // error인 core객체.
+        core()
+            
+  __build = build()
+    build getBuild()
+    return _build
+
+env := Core.get().getBuild().getEnv()
+if env.isError return;
+sum := env.getLength()
+res := env.calculate()
+```
+
+
+
+##### [x] 2안 getter인 경우 null exception은 무시한다.
+
+* getter인지 여부는 get이 맨 앞에 있는지로 구분한다.
+  * camel을 모두 써야 한다.
+  * gettisburg 이런건 인식안된다. 
+  * isEnable 도 getEnable로 적어야 한다.
+  * getter안에 추가적인 비지니스 로직 관련된 동작이 있으면 실패한다.
+
+```cpp
+env := Core.get().getBuild().getEnv()
+sum := env.getLength()
+res := env.calculate()
+```
+
+
+
+##### [x] 3안 ?. 지원해준다.
+
+```cpp
+env := Core.get()?.getBuild()?.getEnv()
+if env == null: return
+sum := env.getLength()
+res := env.calculate()
+```
+
+
+
+##### [x] 4안 일괄적인 null exception 무시 문법을 제공한다.
+
+```cpp
+1: env := ?{ Core.get().getBuild().getEnv() }
+```
+
+
+
+##### [v] 5안 property getter에서는 null이 무시된다.
+
+* 이 아이디어는 wreckpattern에 기초하고 있다.
+
+  * wreck pattern처럼 구성했을때 객체를 연이어서 접근해야 하므로 null체크도 연이어 등장한다.
+
+  * "값의 사전체크와 null체크를 없애는 건 불가능하다." 를 전제로 한다.
+
+    따라서 pyramid of doom 모양이 나오게 된다.
+
+  * getter의 경우느는 null이 무시가 가능하다. 그러나 메소드만 봐서는 컴파일러는 그것이 getter용도인지 getter처럼 보이는 일반 메소드인지는 구분이 불가능하다.
+
+    ```cpp
+    a := getVal().calculate() // calculate는 연산결과를 가지고 있는 변수 calculate를 반환하는 getter였다면?
+    b := getVal().getSurface() // getSurface()는 안에서 새로운 Surface객체를 생성해서 반환할 지도 모른다.
+    ```
+
+* 100% getter에만 null무시를 허용해야 한다는 것은 아니다. 그래야만 하는 요구사항이 있는것도 아니다. 그러나 모든 메소드에 대해서 null을 무시할 수 있도록 해주는 것은 정적타입 답지 않다. 문제는 메소드만 가지고 판단할 경우, 그것이 getter용도로 사용될지 여부는 전적으로 알 수 없다는 점이다.
+
+* 따라서 판단근거로써 프로퍼티의 get()을 이용한다.
+
+  * 메소드와 달리 변수에 접근하는 것은 100% getter다.
+
+* 다만 getter안에 별도의 복잡한 로직이 있을 수는 있을 것이다.
+
+* worldlang개발자는 getter를 직접 만들지 말고 프로퍼티를 주로 사용해야 한다.
+
+##### 결과
+
+* 문법의 추가가 없다. (?.)
+* getter에서만 null이 무시되므로 의도와 거의 높은 확률로 부합한다.
+* 더 편리하다.
+* 프로퍼티 사용으로 유도할 수 있다.
+
+
+
+
+
+
+
+
+
 
 
 ### 객체의 생명주기
@@ -2273,6 +2647,54 @@
       - Method에 isStatic() const를 추가한다.
       - [x] 변수가 static이건 말건 실행에는 중요하지 않다. 이런건 파싱할때 추가정보로써 IDE에서 참조가능한 형태로 전달한다.
         - 틀렸다. 멤버변수는 static인지 여부도 중요하다. native에서 만든 변수는 visible이 되지 않는다. 그러니 이건 패스. 하지만 월드코드상으로 만든 static 변수는 어떻게 되는가 말이다.
+
+
+
+#### [v] specifier 문제
+
+##### [v]1안
+* 타입 변수의 모양새이다.
+	* 타입에는 어떠한 expr도 올 수 있다.
+* specifier는 보통 변수 정의시 변수명 앞에 붙인다.
+ ```java
+	_$#inner = 3
+ ```
+
+* const는 객체가 정의가 끝난 이후에도 붙일 수 있다.
+```java
+	inner = #getAge() // inner는 nonconst. 
+```
+
+* 타입과 달리 specifier는 유추가 되지 않는다. const도 변수 정의시 직접 정의해야 한다.
+	* 이는, occupiable일때, const를 넣을지 안 넣을지 변수정의시 선택이 가능하기 때문이다.
+```java
+	inner := 3 // O
+	#inner2 := getAge() // O
+	inner2 = 5 // X
+	myObj := getMyObj() // X
+	#myObj := getMyObj() // O
+	myobj.setInt(3) // X
+```
+
+##### [v] Q1. a3 = # 3 처럼 표현해도 되야 함? 
+##### [v] Q2. a3 = # a2 처럼 해도 되야 함?
+##### [x] Q3. a4 = _ $    #     a3 처럼 해도 되야 함?
+##### [x] Q4. #가 rhs에 붙는다고? 그럼  $는?    a4 = $33 로 해야 하나?
+
+##### [v] Q5. # 3과  float 3 과 구분이 가능한가?
+##### [v] Q6. getInt() 4 도 사용이 가능한가?
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2751,6 +3173,151 @@
 -   int[] a = {0, 1, 2} // Array는 length만 있다. size는 눈에 보이지 않음.
 -   a[2] = 5
 -   _//void(int)[4] a = {}_
+
+
+
+##### [v] 원소가 비어있는 배열 정의하기?
+
+```java
+def keyBase
+    str _name
+    wav _src
+    void stroke()
+
+def returnKey = keyBase
+    void stroke(): c.out("\n")
+        
+def keyChar = keyBase
+    void stroke(): c.out(name)
+```
+
+###### [x] 1안 캐스팅을 이용한다
+
+```java
+keys = [returnKey(), keyChar(), keyChar()]
+keys2 = [keyBase null] // 배열에 null은 무시됨. 어짜피 배열에 잘못된 n으로 get해도 null.
+keys3 = [#keyBase null]
+#keys4 = [keyBase null] // #의 위치
+
+map1 = [returnKey:0, keyChar:1, keyChar():2]
+map2 = [returnKey:int null]
+
+tup1 = returnKey:2
+tup2 = keyBase:2 null // keyBase는 org 맞음. 2는 int가 org. 그러므로 keyBase:int null
+```
+
+###### [v] 6안 {,} 를 추가한다.
+
+```java
+def myObj
+    int[] foo(str[float] m)
+
+arr = {0, 1, 2}
+arr2 = int[]() //= {0, 1, 2} 뒤에 붙일 순 있음.
+maps = int[][str]()
+maps2 = {{0, 1, 2}:"arr1", {3, 4, 5} : "arr2"}
+arr3 = int[]? // int[] 타입인데, null이 들어간 상태다.
+// arr3 = int[] null 과 같다.
+arr[3] // 런타임 에러다.
+```
+
+###### [v] Q3. 배열도 함수signature에 표현이 가능한가?
+
+```java
+arr1 = [int null]
+
+1: int[] foo()
+2: [int null] foo()
+3: arr<int> foo()
+[v] 4: int[] foo()
+   arr = {0, 1, 2}
+   arr2 = int[]() //= {0, 1, 2} 뒤에 붙일 순 있음.
+   maps = int[][str]()
+   maps2 = {{0, 1, 2}:"arr1", {3, 4, 5} : "arr2"}
+5: []<int> foo()
+```
+
+* 요구사항
+  * type을 def 하는 문법을 추가로 만들면 사용자는 분명 타입유추 문법 보다는 그쪽을 선호할 것이다. (관성처럼) 그러므로 가능하면 타입유추 문법으로 표현 할 수 있어야 한다.
+  * 간결해야 한다.
+  * 새로운 문법을 만들기 보단 있는 문법을 차용하는게 좋다.
+* 방향성
+  * 2번
+    * 있는 문법을 재활용한것이다. 그러나 간결하지 않고, 과연 동작이 가능한건지 검토도 필요하다.
+      * Q. 동작이 가능한가? 파싱에 문제는 없는가?
+        * 저것은 expr이 배열 안에 있는 거라고 볼 수도 있다.
+        * 그 경우, 반환형에 expr이 담겨 있는 것이다.
+  * 배열을 위한 새로운 문법을 만든다.
+    * [int null] 방식은 아무래도 에둘러서 표현한것에 가깝다.
+    * 보다 직접적으로 간결하게 표현할 수 있는 방법이 없을까?
+  * 제네릭에 대한 새로운 문법을 만든다.
+
+###### [v] Q4. 제네릭을 지원하지 않는데 어떻게 동작하지? --> 별도의 문서로.
+
+* [v] 1안 generic을 지원한다. --> 별도의 문서로.
+
+* [x] 2안 generic을 지원하지 않고도 구현이 가능한지 알아본다.
+
+  * 가장 먼저 클래스의 문제다.
+
+    * T가 없는 일반 메소드가 있다고 하자. 이 메소드는 어느 org객체에 속해 있어야 한다. generic이 없으므로 org객체는 variation이 생기지 않는다.
+      * 예) Array.set(int n, int new1)은 Array org에 담겨있어야 한다.
+    * 메소드를 담는 방법은 다음과 같다.
+      1. Array 안에 lazy하게 모든 생긴 set()을 다 담아둔다.
+      2. Array는 T에 대한 변수를 가지고 있고, 이는 각 객체들이 지니고 있다. 즉 객체마다 T가 변한다.
+      3. 매번 새로운 Array를 생성한다.
+    * 여기서 2,3번은 generic을 구현한거나 다름없다. 그리고 1번은 전혀 다른 객체에서 서로 다른 객체의 set()을 사용할 수 있다는 부작용이 있다.
+
+  * **결론**:
+
+    * [] 구문은 사실 generic의 <>를 간략하게 표현한 것이다.
+    * **따라서 generic을 구현하지 않고서는 container를 일체 구현할 수 없다. 증명됨.**
+
+    
+
+###### [x] 2안 바깥에 캐스팅을 이용한다.
+
+```java
+1: keys = keyBase[] []
+2: keys = keyBase[]
+```
+
+###### [x] 3안 Generic 문법을 사용한다.
+
+```java
+keys = array<keyBase>()
+keys[0] = 1
+```
+
+###### [x] 4안 독자적인, 더 편리한 generic 문법을 만든다.
+
+```java
+1: myProxy<int, float> mp // 기존 방식
+```
+
+###### [x] 5안 기존 Generic 문법을 사용하되, []도 사용한다.
+
+```java
+1: keys = []<keyBase>
+2: keys = [<keyBase>]
+keys.push(returnKey)
+```
+
+
+
+​    
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3559,12 +4126,126 @@
 
 
 
+#### 타입 확장문법
+
+```cpp
+def A  
+ void foo()  
+ _name = ""  
+
+//...  
+//...  
+
+//def +A := 5 : X 객체 초기화 구문은 확장시 적을 수 없다.  
+def +A // "+". 상속 정보는 따로 적을 수 없다.  
+ //void foo() X. overriding이 아니라, 재정의다.  
+ str getName(): _name // O : protected 변수도, 확장후, 제어할 수 있다.
+```
+
+-   클래스 확장문법은 이제, protected도 public도 다 제어할 수 있다.
+
+
+
+
+
+
 
 
 
 
 
 ### 제네릭
+
+#### 제네릭의 기본
+
+##### [x] 1안 파라메터화된 타입도 결국은 멤버변수의 일종이라고 치환하면된다.
+* Stmt는 타입이 들어갈 자리에 scope를 사용해서 scope["T"]로 바꿔놓기 만 하면 된다.
+```cpp
+def A<T> // A["T"] 는 obj("T") 라는 member.
+	void foo()
+		t1 := 3 // AddLocalMember(scope, AssignExpr(CloneExpr("t1", scope["Int"]), CloneExpr(scope["Int"], {3}))
+		t2 := T() // AddLocalMember(scope, AssignExpr(CloneExpr("t2", scope["T"]), CloneExpr(scope["T"], {생성자인자}))
+
+		T := 33  // 컴파일에러.
+	    		// parameterizedType은 이름 경쟁에서 우선순위를 가져야 한다.
+```
+
+* 실패. 객체를 미리 생성해둬야 하는 이런 작업에는 취약하다.
+
+```cpp
+def A<T>
+	t1 := 3
+	t2 := T()
+```
+
+##### [v] 2안 바인딩할때, 별도의 클래스들을 뽑아낸다.
+* 지금까지 지식 remind
+	* 컴파일은 syntax parsing이 되었느냐를 의미한다. 
+	* Binding은 각 객체에게 질의하고, 객체는 binding 여부를 반환한다.
+	* optimizing은 binding을 다시 수행하면서, scope["a"]를 scope[2] 료 교체하	거나하는 행위이다.
+
+* 컴파일 타임에 syntax 검증만 해서, 미완성 origin객체인 A<T>를 만들어낸다.
+* class 미완성객체  는,
+	* origin객체로 동일하게 취급되어서는 안된다. 그러나 구조상 Obj와 굉장히 흡사하기 때문에 Obj의 일종이 되어야 할것이다.
+	* 미완성객체는 C++ 멤버변수로 ParameterizedTypelist를 들고있으며 이를 VISIBLE한다.
+	* 미완성객체는 컴파일시 각 구문과 멤버변수에서 T가 사용한 곳마다 구멍을 뚫어놓는다.
+		* 이 구멍은, Obj가 들어가야할 곳에 ParameterizedObj라는 객체를 생성해둔다.
+		* ParameterizedObj는 사용자가 원했던 <T>가 0번째 인자이므로, "0" 이라는 int값만 기록해둔다.
+	* binding을 하기 위한 API를 제공해야 한다. 
+		* binding API보다는 하위 클래스여야 한다.
+
+	* Obj create(파라메터라이즈드 타입리스트) API를 제공한다. 
+		* 미완성객체는 자기자신을 복제하고, 복제품의 ParameterizedTypeList에 주입된 인자를 할당한다.
+
+* 컴파일러는 worldlang syntax를 통해 A<int>를 보면, scope["A"].create("int")로 A<int>를 만들어낸다.
+
+* 나중에 A<int>는 다른객체들과 동시에 binding이 실시된다.
+* binding이 실시되었을때 보통은,
+	* 멤버변수에서는 주어진 초기화구문의 바인딩과
+	* 메소드 내의 바인딩을 실시하지만,
+* 미완성객체.binding API는,
+	* 그것을 하면서 ParameterizedObj*가 있던 자리를 그 index n을 멤버변수인 ParameterizedTypeList에 있는걸로 교체한다.
+
+* 바인딩도 끝나고, C-REPL도 아니라면, 이제 미완성객체는 메모리만 차지한다. 버려진다.
+
+
+##### [v] Q. Array는 Native에서 나온다. 하지만 generic이 되어야 한다.
+* 미완성객체 라는 클래스는 Object 밑에서 나온다.
+
+##### [x] 1안 Array는 Node의 일종으로 한다.
+
+##### [v] 2안 Container 전부를 미완성객체에서 상속받도록 한다.
+* 그 말은 C++ template로 만들걸 그대로 미완성객체로 만들 방법이 있어야 한다. 매크로로 지원을 해줘야 한다.
+
+##### 알고리즘
+
+* 프로그램 시작전에 C++ native들은 다 Wrapper로 읽혀져서 scope에 등록된다. 이 wrapper들은 추가로 컴파일&링킹 하지 않는다.  c++이 해줬기 때문이다.
+* 컴파일러는 월드 코드를 읽어서 객체의 모양새만 만들어 놓는다. 만약 월드코드에서 Array를 사용했다면 "Array"라고 하는 미완성객체를 복제해서 멤버로 넣거나, 복제하는 statement를 만든다.
+* Method 내에서만 정의된 Origin객체는 Method의 member로 등록된다. 그리고 method가 실행될때 scope와 OriginManager에 이들이 자동으로 등록된다.
+	* 그러므로 Array<int> 와 같이 월드코드를 짠 경우 Array<int>라고 하는 origin객체가 OriginManager에 있는지 확인한다. OriginManager는 cache처럼 동작하며, 없을 경우 새로운 객체가 등록된다. 그리고 Pointer를 Method에 멤버로 넣는다.
+	* 이후 다른 메소드에서 다시 Array<int>가 등록된 경우, OriginManager에 먼저 질의하고 있으면 pointer만 준다.
+* 그러나 지역변수의 경우는 실제 정의가 되는 순간에 등록된다.
+* 컴파일이 끝나면 Linker라는 별도의 객체에서 링킹을 시도한다.
+* 링커는 Node::getMembers()를 visitor 패턴으로 탐색&scope 갱신을 하면서,
+	* 먼저 OriginManager들을 bind 시도한다. 이들은 대다수가 global scope에 들어 있다.
+	* 링킹되지 않은 미완성객체는
+		* 미완성객체에 주어진 T를 scope에 넣고 링킹을 시작해서 멤버들의 코드의 T 부분을 채워넣는다.
+		* 객체의 멤버 "T" 는 리플렉션용으로 그대로 놔두고, 이 객체는 더 이상 미완성이 아니라는 걸 표시해준다.
+	* 메소드라면 메소드 내의 statement를 검증하고
+	* Statement라면 현재 scope에서 주어진 member를 찾을 수 있는지 검사하고
+	* 
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5278,7 +5959,91 @@
 
 
 
+#### Validation & C-REPL
 
+##### 요구사항
+
+* 오직 Shared memory로만 IPC를 수행한다.
+  * 이유 : 가장 빠르다. 상시 debugging 상태이므로 예상컨데 수많은 객체들이  sync되어야 한다. 가뜩이나 빌드로 인해서 실시간성이 중요해지는 마당에 bytes 기반은 느릴 수 밖에 없다.
+  * 하나의 reader와 하나의 writer 구조다. ide에서는 참조만 할뿐 데이터의 수정은 존재하지 않는다. read만 하는데 객체를 복제하는건 좋은 방향은 아니다.
+  * 다만 문제가 생기면 디버깅이 심각한 수준으로 어렵다고 한다.
+* 소스 파일의 저장도 interpreter가 role을 가져간다.
+  * 소스코드 sync와 nodes sync 2가지가 있다. 이 중에서 소스코드 sync는 shell command로 한다.
+    * 실제 파일을 기반으로 sync로 사용할 수도 있으나, 이렇게 하면 실수로 IDE에서 텍스트를 Ctrl+A, DEL 한 순간 저장이 되어버릴 것이다.
+    * 이걸 막으려면 IDE에서 임시파일을 만들어서 이걸로 빌드로 돌리도록 하는 꼼수를 해야 하는데, 차라리 role을 interpreter가 가져가는게 나을 것 같다.
+    * 게다가 사용자는 interpreter만 가지고도 코드 작성이 가능해야 한다. 컴파일러가 아니다. REPL이 있으니까, 작성/저장도 가능해야 한다.
+
+##### Usecases
+
+###### Actors
+
+* core[corelib] : dll. world의 모든 기능이 포함된 핵심파일
+  * indep : sharedmem API를 wrapping한다, Sharemem wrapper class(세마포어 포함) 
+  * world : sharedmemory에 싱글톤을 만드는 API와 Heap에 만드는 API 2종류가 있어야 한다. sharedmemory에 만드는 경우, nodes structure를  생성하는 코드는 모두 shared memory에 만들어져야 한다.
+* worldlang[interpreter] : core를 바탕으로 작성된 shell 기반 프로그램. socket, sharememory, pipe, commandline등이 input.
+  * start process
+    * 컴파일러가 아니라 REPL기반이다. REPL은 한번 프로그램이 시작되면 계속 실행되는 모드다. 파일을 지정한 경우, 파일을 1회 실행후 자동 종료한다.
+    * 모드(REPL이냐 파일 실행이냐)에 따라 싱글톤을 shared에 생성해야 할지, local 생성해야 할지를 결정한다. option으로도 받는다.
+  * edit codes
+  * compile
+  * linking
+  * show errors/warnings
+  * show src files
+  * show current src file
+  * save src file
+* simple ide : interpreter를 back-end로 둔 front-end. commandline, sharemem를 사용해서 interpreter와 ipc.
+  * createProcess API로 process invisible로 만들고, Pipe를 달아두면 cin, cout을 넣고 받을 수 있음.
+    * 출처 : https://stackoverflow.com/questions/8576035/open-cmd-and-read-and-write-into-it
+  * 가장 빨리 이 IDE를 구현하는데에만 초점이 맞춰져 있음. 뭐로 만들지는 미정.
+    * 오픈소스 짜집기 허용
+    * 다른 툴이나 엔진 채용 가능
+    * 무료 리소스 적용 가능
+    * 빨리 만들자 무조건 빨리.
+  * 꼭 필요한 편의기능만 탑재.
+    * 네트워크 연동 기능 필수.
+    * 편집기 기본 기능
+    * 게임 UI적인 이펙트 필수
+  * 언젠가는 버려질 프로그램.
+  * 이 언어의, 프로그램의 방향성과 가능성을 보기 위한 프로그램.
+* yggdrasil ide : 진정한 최종 목표.
+  * worldlang으로 제작
+  * world 모듈을 붙일 수 있음.
+  * 3D를 포함한 시각적 요소 지원.
+* worldlang user : worldlang 개발자.
+* cpp user : cpp 개발자.
+
+###### Tasks
+
+* Start process
+  * worldlang user ==프로그램시작==> ide ==shellcmd : start=proc with sharedmem option==> interpreter==linking==>corelib
+  * ide==linking==>corelib
+  * interpreter==>indep을 이용해서 sharemem 생성
+  * interpreter==world==> sharemem에 싱글톤 생성
+  * ide==>indep을 이용해서 sharemem 접속 ==실패시==> retry
+* Compile
+  * ide
+    * worldlang user ==타이핑으로 코드수정==> ide ==shellcommand로 source-code sync==> interpreter ==C-REPL==> 컴파일 ==결과반환==> ide
+  * interpreter
+    * 사용자 ==shell command: edit==> interpreter ==> save  ==> file && compile ==에러시, 결과shell로 반환==> user
+* Link
+  * in ide
+    - 타이핑이 완료후, 일정 시간이 흘렀으며, 컴파일 오류도 없을 경우,
+      ide ==shellcommand:linking current codes==> interpreter ==> 링킹 ==결과를 shellcommand로 반환==> ide [결과 success일 경우, interpreter ==sharemem==> nodes structure 갱신, ide==visualization==> sharemem]
+  * in interpreter
+    - 사용자 ==shell command: linking==> interpreter ==> linking ==에러시, 결과 shell로 반환==> user [성공시, interpreter 내부 데이터는 갱신되나 별도의 출력은 없음]
+* Error resulting
+  * 개요
+    * 에러 정보는 compile 1개 분의 대한 내용이 Interpreter.Erros 같은 별도의 장소에 쌓인다.
+      * ide <==pipe==> interpreter
+      * error msg를 string을 pipe로 전달하는 방식은, ide가 파싱해야 하므로 적합하지 않다.
+    * shared mem option으로 interpreter가 동작하면 cerr로 메시지 보내지 않는다.
+      * 사용자가 interpreter를 직접 조작하는 경우는 -silent 옵션이 켜져서 cerr로 메시지가 나가지 않게 된다.
+    * 1개의 에러는 다음처럼 구성됨
+      * 에러 종류(코드나 객체)
+      * 에러 메시지
+      * 발생시킨 코드
+      * Params
+  * 방법
 
 
 
