@@ -39,6 +39,91 @@
 ## 특징
 ### 프로토타이핑 기반
 
+* origin 객체의 생성은 프로그램 시작시 끝난다.
+* 생성자가 호출되면 origin객체를 현재의 복제한 뒤, 생성자 함수는 생성된 멤버변수의 조작만 하는 일종의 이벤트 + 객체복제의 신호 로써 취급한다.
+  * 기반 클래스인 Object의 생성자에서는 객체를 가상 복제하는 코드가 들어있게 된다.
+* origin 객체는 기본적으로 런타임에 수정이 가능하다.
+
+### 타입 유추 기반
+
+3. **객체 정의 구현 알고리즘**
+
+   1. 컴파일을 시작한다.
+
+   2. scope에서 origin 객체를 찾아, 없으면 ManagedObject를 생성해 scope에 넣는다.
+
+   3. Origin 객체로부터 상속 구조를 만들어낸다. 그리고 메소드 / 멤버변수를 복제&추가한다.(Mouse1 -> Part)
+
+        1. Unique한 멤버변수들은 origin에 바로 담고, sharing 할 것들은 origin이 binder로 가리키는 shared에 담는다.
+
+        ```cpp
+        uniques = parent.uniques.clone()
+        if C-REPL    
+            shared = new Chain()
+            shared->chain(*parent.shared)
+        else // optimization
+            shared = new Array()
+            *shared = parent.shared->clone()
+        ```
+
+        2. 초기화 수식은 실행하지 않는다. 각 멤버변수들은 default 상태로 구성된다. 멤버변수는 절대로 삭제되거나, 여기서 추가되지 않는다. 이를 OriginShell이라 하자.
+
+   4. origin shell을 바탕으로 컴파일 validation을 진행한다.
+
+   5. 프로그램 시작 도중, static변수 초기화처럼 origin객체들을 모두 생성한다.
+
+   6. 각 origin 객체 마다
+
+      1. scope에서 찾아, 초기화가 되었는지 state 질의해, 안되어있으면 init 한다.
+
+         1. **origin_shell.assign(expr) 한다.**
+
+            1. **반환한 객체가 null이면 에러.**
+
+               **origin_shell 기준으로 assign이므로 expr의 객체가 origin 객체 scope을 초과한 멤버변수/메소드가 있다면 자연스럽게 무시된다.**
+
+         2. 멤버변수의 초기화식을 수행한다.
+
+         3. origin객체의 완성. 확정짓는다.
+
+      2. 있으면 scope에서 바로 반환한다. 초기화 중이건 상관하지 않는다.
+
+   7. 사용자가 생성자를 호출하면, origin객체를 가상 복제한다.
+
+   8. 가상 복제한 객체에 생성자를 수행한다.
+
+   9. 생성자 체인 내부에서는 이미 생성된 멤버변수들에 대해 조작만 가한다.
+
+``` cpp
+def Part
+    Part(str newname=""/*default*/): name = new_name
+
+    _name = "unknown"
+    void say(): null
+    #year = foo(lambda, complex_msg) // year is const
+
+def Body = Part
+    void say(): c.out("Body")
+
+def Button = Part("button") // prototyped from Part has text "button" of its name.
+def Mouse = Part("mouse")
+    Mouse(): super("overwrite this")
+    Mouse(int a) // do nothing
+
+def app
+    void main()
+        c.out(Mouse().name) // "overwrite this"
+        c.out(Mouse(1).name) // "mouse"
+
+    parts = [Part null]
+    tuple = Part:str null
+    maps = [Part:str null]
+```
+
+
+
+
+
 ### 간결한 문법
 
 ### 정적 타입
@@ -525,9 +610,9 @@
         - aage.call("set", aage.call("add", aage, int(3));
       - 같이 번역되기 때문에 문제는 없을 것이다.
 
-#### [v] 캐스팅
+##### [v] 캐스팅
 
-##### [v] Q1. org 객체가 아니더라도 캐스팅 자리에 올 수 있는가?
+###### [v] Q1. org 객체가 아니더라도 캐스팅 자리에 올 수 있는가?
 
 ```java
 def myInt = 3
@@ -540,7 +625,7 @@ def myInt = 3
 
 - 파서 구현으로는 문제 없다. 검증 완료.
 
-##### [v] Q2. 2번이 가능하다는 것은, 3도 int라는 타입으로 친다는 것이다. 다음의 코드가 가능하다고 보는가?
+###### [v] Q2. 2번이 가능하다는 것은, 3도 int라는 타입으로 친다는 것이다. 다음의 코드가 가능하다고 보는가?
 
 ```java
 int i2 = 3 3.5
@@ -554,15 +639,15 @@ int i2 = 3 3.5
 - 타입은 껍데기이다. refer가 기대하는 모양새이다. 기대하는 인터페이스의 집합체이다. 이런 API를 호출할 수 있다고 예측하는 도구이다.
 - 만약 진정으로 사용자의 사용성에 있어서 org객체와 복사객체를 구분하지 않고자 한다면 (그리고 그럴려고 문법도 lower-case camel로 통일했지?) 허용해줘야 한다.
 
-##### [v] Q3. 2번을 허용했을 경우, 과연 파싱이 가능한 것인가가 문제로 남는다.
+###### [v] Q3. 2번을 허용했을 경우, 과연 파싱이 가능한 것인가가 문제로 남는다.
 
 - 간이로 GLR 파서 만들어서 검증 완료. 괜찮다.
 
-##### [v] Q4. 배열을 두는 경우가 남아있다. --> 별도 항목으로 해결중.
+###### [v] Q4. 배열을 두는 경우가 남아있다. --> 별도 항목으로 해결중.
 
 
 
-##### [v] Q5.  3개가 연속되면 무슨뜻인가?
+###### [v] Q5.  3개가 연속되면 무슨뜻인가?
 
 ```java
 tup2 = keyBase:2 returnKey:float null
@@ -570,7 +655,7 @@ tup2 = keyBase:2 returnKey:float null
 
 - tup2 = ((tup<keyBase, int>) (returnKey:float) null) 과 동일하다
 
-##### [v] Q6. 가독성면에서 안 좋다?
+###### [v] Q6. 가독성면에서 안 좋다?
 
 ```java
 1: objMy.foo([335 22.5, age 333.43], returnKey myKey)
@@ -584,7 +669,12 @@ tup2 = keyBase:2 returnKey:float null
 - syntax highlighting을 더 주면, 좀 더 구분이 쉬울 수 있다.
 - **가독성을 위해 float,int,char를 상수로 표현하면, warning으로 간주하자.**
 
+##### 캐스팅의 문법
 
+```cpp
+part = Part Mouse.parts[1]
+activity = Activity (Service system.get_service("Reckon")).get_activity()
+```
 
 
 
@@ -635,9 +725,35 @@ tup2 = keyBase:2 returnKey:float null
 
 ### 흐름 제어
 
+#### for-in
 
+for문은 var가 true를 의미하면 루프를 지속한다. null은 0을 의미하며 0은 false를 의미한다.
 
+```cpp
+for <var>
+for true
+for is_success
 
+for null
+for false
+
+a = Obj()    
+for a
+    a = null
+```
+
+for in은 별도의 문법이다.
+<var>의 getiterator()를 호출하여 가져온 뒤, 자동으로 next를 호출한다.
+
+```cpp
+for <a> in <b>
+    if b has not getiterator() then error.
+    if a is null then break
+```
+
+##### 구현
+
+일반 키워드들은 별도의 global 메소드로 존재한다. 거기에 넣어버리면 된다.
 
 
 
@@ -2043,6 +2159,34 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 
 
 
+#### 중첩된 객체의 문법
+
+```cpp
+def Part
+    __name = "unknown"
+    def name
+        get: _name
+        // can't call set()
+def Part2
+    def Nested // nested obj.
+        void say()
+            c.out("name=$name") // can access scope of owner object.
+
+    def name = "unknown" // nested obj. prototyped from str
+        get=>: path = directoy + val // str.val
+        _set=> // can't modify value of "name" at outside.
+
+    directory = "/home/me/"
+    path = directory + name
+
+// Part2().Nested는 Part2.Nested의 복제.
+// 이걸 막으려면,
+def Part3
+    def $Nested // usually declare nested origin obj as static.
+        void say(): c.out("...")
+// Now, all copies of Part3 shares same Nested obj. no instance bloating.
+```
+
 
 
 
@@ -2183,6 +2327,30 @@ res := env.calculate()
 
 ### 객체의 생명주기
 
+#### Deep and Shallow
+
+```cpp
+mouse1 = Mouse()
+mouse2 = Mouse(mouse1)
+mouse3 = mouse2(mouse1)
+mouse2 == mouse3 // false
+mouse2.equal?(mouse3) // true
+mouse2 = mouse3 // shallow
+mouse2.assign(mouse3)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 #### 객체의 라이프사이클
 
 - worldlang은 지역변수와 HEAP변수의 차이가 없다. 지역변수를 함수 밖으로 꺼내버리면 그것은 함수가 끝나도 죽지 않는다. 이는 메소드delgator에 object가 캡쳐된 상황도 마찬가지다.
@@ -2245,9 +2413,23 @@ res := env.calculate()
 
 
 
-
 ### 기본 타입
-#### result 타입 설계
+
+#### 스트링 매크로
+
+```cpp
+age = 33
+name = "Chales"
+c.out("he's $name and $age years old.")
+c.out("he's ${name} and ${age}years old.")
+c.out("it's \$1,000 dollors.")
+```
+
+
+
+
+
+#### res 타입 설계
 
 - \1. 에러를 복수개 report할 수있어야 하고, 외부에서 result를 받으면 함수 안쪽에서 반환한 모든 report를 모두 확인할 수 잇어야 한다.
 - \2. result에 추가적인 정보를 담을 수 있어야 하며
@@ -2686,7 +2868,11 @@ res := env.calculate()
 
 
 
+#### _$# prefix는 키보드 우측에서 좌측으로 입력한다!
 
+- 외우기 쉽다.
+- 순서가 정해져 있으므로 독해도 올라갈 것이다.
+- 일관성이 있으면 모양도 이쁘다.
 
 
 
@@ -3133,7 +3319,7 @@ res := env.calculate()
 
 
 
-#### deepclone() 이 있어야한다
+##### deepclone() 이 있어야한다
 
 - Container는 사실상 Array<TStrong<T>> 이기 때문에 그냥 clone() 하게 되면 같은 T를 공유하는 shallow copy가 된다.
 
@@ -3142,6 +3328,104 @@ res := env.calculate()
 ##### Cell과 Array는 차이가 없다.
 
 - Array는 Cell에서 remove, insert를 빼고, setElement로 대체한것이다. 와... 이걸 5년동안 눈치를 못채다니..
+
+
+
+##### bool container.at()
+
+```cpp
+1: if 2..5.at(3)
+2: arr.at("wrd")
+3: msg.at('c')
+```
+
+임의의 값이 특정 변수가 가리키는 범위 내에 있는지를 알려주는 공통 메소드다.
+
+###### 구현
+
+1. 각 Origin 객체 개발자는 c++ 클래스에 물론 1개의 at을 작성
+
+   class MyClass : public Object {
+
+       bool at(int trg);
+
+   };
+
+2. 메소드가 NativeWrapper에 의해서 감싸지고 world는 at의 존재를 알 수 있음.
+
+3. Node에 at의 일반 함수를 정의
+
+   class Node {
+
+       bool at(const Node& trg) {
+    
+           const Bool& ret = call(Msg("at", {trg})).get<Bool>();
+    
+           return &ret ? ret.get() : false;
+    
+       }
+
+   };
+
+4. 이제 c++ 개발자도 Node.at을 사용 가능
+
+5. 월드 개발자는 자신의 org객체에 at을 작성
+
+   def MyType MyOrg
+
+       s1 = 2..3
+    
+       bool at(int n): n at s1
+
+6. 월드는 해당소스를 파싱해서 ManagedObject("MyOrg") 를 생성하고 at이라는 메소드를 추가함.
+
+7. 개발자는 at을 사용함
+
+   ret = MyOrg().at(3)
+
+8. 그러나 다음과 같이 사용은 불가능함
+
+   arr = [MyType(), MyOrg()]
+
+   for e in arr
+
+       e.at(3) // 에러.
+
+9. 그렇다고 Node.at을 wrapping 시켜버리면 문법적으로 에러 탐지가 불가능함.
+
+###### 문법으로 할 경우
+
+1. <a> at <b> 문법으로 파싱된다.
+2. at이라는 keyword 로 판별되면, keyword 용 global 메소드 목록에 있는 "at"에 인자를 넘기도록 AST를 구성한다.
+3. 런타임에 at keyword가 실행되면 인자인
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3159,6 +3443,67 @@ res := env.calculate()
 - Sequence = {2*n+1 | 3...10}
 - {n|3...10} == {3...10}
 - {1...5} == {5}
+
+##### 새로운 Sequence 문법
+
+
+
+/*    #Animal:#str [] 캐스팅:
+                핵심:
+                Q. map은 정말로 배열을 대체할 수 있는가.
+                Q. 배열이 map으로 캐스팅이 될 수 있는가.
+                    문법적으로는 같게 할 수 있다.
+                    그러나 최적화를 생각해보면 배열은 index를 기준으로 데이터가 밀집해
+                    있어야 한다. 그래야 인덱싱이 빠르다. 맵은 데이터가 산발적으로 흩어질 수
+                    밖에 없다. 둘은 별도로 가져가는게 좋을 것이다.
+                    
+
+                    1안 { : } 사용
+                        a = {"name": 1, "aaa": 2}
+                        seq1 = seq(1..2, n->2*n)
+                            //    def seq
+                            //        seq(seq org, ?(int) l)
+                            //        getn(int n)                            
+                            //            if seq.at()
+                            //                l
+                        seq1.start, seq1.end
+                        for n = seq1.in()
+                            c.out("$n, ")
+                        2, 4
+
+
+​                
+                흐름:
+                1. 우측부터rightmost 파싱된다.
+                2. [] 는 node:node 타입이다.
+        */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4239,6 +4584,23 @@ def A<T>
 
 
 
+#### 템플릿
+
+Q. 정적 타입은 반드시 템플릿을 지원해야 한다?
+
+Q. Container를 템플릿이 없이 구현이 가능한가?
+
+##### 1안 - 왕도
+
+```cpp
+def MyType<T>
+    age = T null
+    T get()
+        return age
+```
+
+
+
 
 
 
@@ -4906,6 +5268,49 @@ def A<T>
 
 
 
+#### 클로져의 문법
+
+```cpp
+def app
+    void print(str(int) func, int type)
+        c.out("msg=$func(type)")
+    void main()
+        str foo(int code)
+            with type
+                is 1: "hello"
+                default: "world"
+        print(foo, 1)
+        // or
+        print(str foo(int code)
+            with type
+                is 1: "hello"
+                  default: "world"
+        , 1)
+```
+
+
+
+#### 람다의 문법
+
+```cpp
+def app
+    void print(str(int) func, int type)
+        c.out("msg=$func(type)")
+    void main()
+        // 1
+        print(type /*, arg1, arg2*/ ->
+            with type
+                is 1: "hello"
+                default: "world"
+        , 1)
+        // or
+        print(type -> with type: is 1: "hello": default: "world", 1)
+```
+
+
+
+
+
 
 
 
@@ -4943,16 +5348,6 @@ def A<T>
       - ret success
     - catch(nullexcp e)
       - throw e;
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -6044,6 +6439,109 @@ def A<T>
       * 발생시킨 코드
       * Params
   * 방법
+
+
+
+#### C-REPL 설계 초안
+
+- 핵심
+
+  - origin객체 명세가 바뀌면, 복제 객체들은 어떻게든 쓸모가 없어진다. 어떠한 방법으로도 기존 복제 객체들을 그 값의 유용성을 유지한 채로 새로운 명세의 객체로 보완할 수 없다.
+    - 무슨말인고 하니,
+      - def Person
+        - age = 20
+      - p1 = Person()
+      - 일때,
+        - age = 19
+      - 로 바뀌었다고 하자. 그럼 단순히,
+        1. Person을 다시 검증, 생성해서 orign을 교체한다.
+        2. Person origin로부터 생성되었던 p1의 값을 새로운 Person의 객체로 교체한다.
+      - 면 될 것 같을 것이다. 그러나 이건 잘 못된건데,
+        - p1 = Person()
+        - p1.age = p1.age + 30 // 49
+      - 위와 같을때 Person의 age의 초기값이 20으로 바뀌었다. 가장 올바른 값은 p1.age가 20으로 초기화된 상태에서 수식을 다시 돌린 p1.age == 50이 답이다. 그러나 이를 유추할 수 있다면 이미 현세대 언어가 아니다. 불가능하다.
+    - 따라서, 애초에 100%가 불가능 하므로 이걸 limitation으로 앉고 간다. 일체 지원하지 않는 쪽으로 한다.
+    - origin객체에 변경이 일어나면 관련 복제 객체들은 모두 제거하거나, 그냥 놔둔다.
+      - [디폴트] 항상 제거 옵션을 선택하면, 최신 코드/명세가 적용된 객체만 HEAP에 있게 된다. 안심할 수 있다.
+      - 옵션을 끄면,
+        - 임의의 값이 할당되었다고 가정하고 테스트를 해볼 수 있다. 그러나 실제로는 가능성이 없는 값일 수 있다.
+        - 코드상 존재하지도 않는 객체를 놓고 씨름할 수 있다.
+    - 객체의 생성은 전적으로 사용자를 통해서 이뤄줘야 한다. 생성자에 복잡한 파라메터가 들어가야 할때가 있기 때문이다.
+  - 메소드 안쪽이 변경된 경우는 구현만 교체하므로 복제 객체는 사라지지 않는다.
+
+- 알고리즘
+
+  - SMART방식
+
+    - 사용자가 수정한 code line을 text로 인터프리터에게 알려준다.
+
+    - 인터프리터는 코드 자체를 대조해서 어느 라인이 변경했는지 diff 한다.
+
+    - 컴파일단계
+
+      - 인터프리터는 해당 변경점에 영향을 받는 최소한의 객체범위를 탐지한다.
+        - 예)  1: def Part
+          - 2: age = foo(20, 30, // 30이 20으로 변경한경우
+          - 3:     getText())
+      - 2, 3번 라인이 객체 생성 가능한 최소한의 코드 범위다.
+        - 예) stmt 1줄, origin 명이나 상속구조를 수정했다면 그거 자체.
+      - 인터프리터가 파싱 후, 객체(메소드/origin객체/멤버변수) 생성한다.
+
+    - 링킹단계
+
+      - 사전에 외부에 영향을 갖는 "인터페이스 객체"(= origin객체의 메소드와 멤버변수, 전역변수)와 "origin 객체" 간의 관계를 매핑해두고 있다.
+      - 그 매핑테이블로 해당 객체와 연관이 있는 모든 객체에 문제가 없는지 validation을 돌린다.
+        - 사전에, 연관 정보를 다 기록해둬야 한다.
+        - 이 정보는 C-REPL 시에만 필요하다.
+      - 이상이 없다면 origin 트리에 병합한다.
+
+    - 정합성 단계
+
+      - C-REPL시 origin객체는 또한 복제객체들을 모두 알고있다.
+
+      - 수집해둔 변경된 인터페이스 객체들 목록을 순회하면서 각 원소별로 매핑테이블의 관련 origin객체들의 모든 복제객체들을 싸그리 제거한다.
+
+        1. 검증1: 다음 같은 시나리오는 문제가 되지 않는다
+
+        ```cpp
+        1: def Part
+        2: def Part Body
+        3: def Part Mouse
+        4:       body = Body()
+        5: // 에서 Body가 BBody로 이름 변경된 경우
+        ```
+
+        이 경우, 바뀐건 2번 라인이지만, 4번 라인에 body = BBody()로 바꾸지 않을 경우 링킹단계에서 실패하게 된다.
+
+        사용자가 4번 라인을 바꾸게 되면 멤버변수 body가 바뀐것이므로 2번 라인과 4번 라인은 서로 병렬적으로 돌게 된다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
