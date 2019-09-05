@@ -176,9 +176,138 @@ def app
 
 
 
+#### [v] 이름 중복을 허용할 것인가?
+
+* 변수명과 메소드명은, 같은 scope가 아니라면 이름이 중복되는 걸 허용할 것인가?
+
+* 현재 상황에서는 다음과 같은 문제가 있다.
+
+* ```java
+  def A
+      void say()
+          foo = B()
+          foo.act()
+      
+  def B = A
+      void act()
+      
+  // 이때 전역변수 foo = A()를 넣게 되면, foo.act()는 에러가 된다.
+  ```
+
+  * 물론 효율적인 빌드를 돌리는게 어렵다는 문제도 있다.
+  * 그러나 가장 큰 문제는 분명히 사용자가 올바른 의도를 가지고 올바르게 작성한 구문이, 자칫 다른 의미로 오해석 될 가능성이 있다는 것이다.
+  * 위에서는 에러가 나오니 그나마 낫다. 만약 에러가 나오지 않고 잘못된 의도대로 프로그램이 돌아갔다면 더 심각한 상황이 된다.
+
+##### 고찰
+
+* 가장 큰 문제는 이미 작성된 문법이 오해석 될 여지가 있다는 부분으로, 이는 A = B가 정의와 동시에 할당으로도 해석될 수 있기 때문이다.
+* 월드는 타입이 엄연히 존재하는 정적타입 언어이기 때문에 이 둘의 구분이 반드시 필요하다.
+* 앞뒤 문맥이나 코드가 위치한 부분으로부터 둘을 구분하려는 시도는 복잡도를 만들 수 있다.
+* 이름 중복을 허용하지 않으면 위의 오해석 문제를 해결 할 수 있다. 그러나 개발자는 모든 곳에서 이름을 적을 때 항상 겹치지 않도록 주의해야만 한다.
+
+##### [x] 1안 이름 중복을 허용하지 말자.
+
+```java
+def A
+    void say()
+say = 5 // A.say 와 say 이므로 괜찮을 것 같지만, say() 메소드 안쪽에서 say라고 이름을 호출 할 수 있으므로 이것또한 에러다.
+```
+
+```java
+def A
+    void say()
+    void foo()
+        say = foo // 지역변수 say를 만들려고 했겠지만 실제로는 메소드 say에 대한 할당으로 판단되기 때문에 에러로 간주한다.
+```
+
+* 메소드의 경우 할당이 될 수 없다고 한다. 할당되는 자리에 메소드가 온 경우에는 메소드 이외의 다른 변수를 찾는다.
+  * 보다 정확히 하면 메소드는 const. 그러니 const에 대해 할당이 오면 const 이외의 다른 이름을 찾는다.
+* 전역변수는 반드시 앞을 대문자로 한다.
+
+###### [x] Q1. 이렇게 해도 여전히 오해석 문제는 나오게 된다. --> 해결못함ㅋㅋ
+
+```java
+def A
+    void say()
+    def _Inner // 중첩클래스는 반드시 private 이다.
+    
+    Myball = 33 // static == class scope에 있는 전역변수. 전역이므로 앞을 대문자로.
+        void say()
+            a = Inner()
+    void foo()
+    
+// def Myball을 하는 순간 Myball = 33은 Myball이란 static 변수를 정의하는 것에서, 전역변수 Myball에 대한 할당으로 의미가 변한다. 그리고 물론 def Myball이 int였을 경우, 어떠한 에러도 나오지 않게 된다.
+```
+
+##
+
+##### [v] 2안 작은 문법을 추가한다.
+
+###### [v] Q1. def A 대신 A 라고 표현 해야하나?
+
+###### [x] 1안 := obj
+
+```java
+A
+    void say()
+    _Inner
+    
+    Myball := 33 // class scope 전역 변수의 정의.
+        void get(): val
+// def Myball 하는 순간, 에러를 표시할 수 있다.
+
+A
+    age := 22
+
+A := obj
+    age := 22
+```
+
+##### [v] 2안 def도 추가
+
+```java
+def A // def는 뒤에 새로운 interface가 나온다는 뜻.
+    age := 22 // 그냥 := 이면 변수의 정의
+
+    void say()
+        age = 33 // =는 변수의 할당.
+```
+
+##### [v] Q2. 이름 중복은?
+
+* 이름 중복을 허용해도 문제는 생기지 않는다.
+* 일단은 다른 언어들도 지원하는 것처럼 우리도 지원하는 쪽으로 가닥을 잡고, 안하고 싶다면 안되는 이유와 그 장점을 찾아야 한다.
+
+##### 다른 언어는?
+* C, Swift, C#, python : 허용
+* Java : 고의적으로 불허
+* JS : 어쩔 수 없이 불허
+
+##### [x] 1안 지원하지 않는다
+* 허용하지 않아도 충분히 언어로써 기능은 수행할 수 있음. (다른 언어를 보라. 선례가 있다.)
+* 중요한 것은 개발자가 이게 무슨 scope의 변수인지 확실히 인지 할 수있거나, 인지할 수 있는 실패의 경험을 최대한 빨리 줄 수 있냐는 것이다. 설사 코드가 돌아가더라도, 개발자가 그것이 실수였음을 인지 하지 못하게끔 되어있다면 문제가 있는 것이다.
+* 또한 허용할 경우, 다른 scope의 변수를 참조할 수 있는 방안또한 마련을 해줘야 한다.
 
 
+##### [v] 2안 지원해야 한다.
+```java
+def A
+	def B := A
+		void say()
+		void foo()
+			say() // A.B.say()와 A.say()가 충돌하고 있다.
+			
+	void say()
+```
+1. 위와 같은 예제는 충분히 나올 수 있는 예제이건만, 이름 충돌을 지원하지 않으면 위는 invalid 하게 된다. 반드시 지원해야 한다.
+2. 이름 충돌의 보편적인 해결법은 local scope을 우선하는 것이다. local scope이란 즉, 해당 메소드가 정의된 클래스를 우선하는 것으로, 해당 클래스를 작성중일 개발자가 그러한 클래스나 메소드가 있다는걸 가장 잘 알고있다. 그러니, 대부분의 의도또한 local scope에 있는걸 사용하려는 것일 것이다.
 
+###### [v] Q1. 그럼 전역변수를 참조할 수 있는 문법은?
+###### [x] 1안 그런거 없다. 
+
+###### [x] 2안 :abc
+###### [v] 3안 .abc
+문법으로 검증해보니 되긴 하더라.
 
 
 
@@ -723,6 +852,24 @@ activity = Activity (Service system.get_service("Reckon")).get_activity()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### 흐름 제어
 
 #### for-in
@@ -754,6 +901,96 @@ for <a> in <b>
 ##### 구현
 
 일반 키워드들은 별도의 global 메소드로 존재한다. 거기에 넣어버리면 된다.
+
+
+
+#### [v] switch 대체
+##### 현재 구현
+* is 는 with 안에서 사용한다.
+* is 는 (else) if it == 와 같다.
+
+```cpp
+with name
+	is "wow": return rOk
+	is "no"
+		name = "err found!"
+		return rFalse
+	is 5: return
+	is > 7: return
+```
+
+###### 단점
+* 조건이 2개 이상인 경우 표현 불가.
+* break가 없음.
+* break를 빼고 싶다면 range에 매칭될때의 조건을 넣을 수 있어야 한다.
+
+
+##### [x] 1안
+```cpp
+with name
+	case "wow": ..
+	//if it == "wow": ...
+	
+	is in {"wow", "abc"}
+	//elif it in {"wow", "abc"}
+```
+
+##### [v] 2안
+```cpp
+with name
+	is "wow": return rOk
+	is in {"abc", "cbd"}: return rOk
+	is 5 // 5일때는 아무것도 안함.
+	is < 7 & is > 5
+		return rOk
+	else
+		....
+	if it == "wow" // if 문도 나올 수 있음.
+	is++
+	is + 5
+	is == 5
+	is != 3
+	is.foo()
+	is == "wow"
+```
+###### 기능
+* is 는 with된 식별자를 기준으로 함.
+* else 문은 없어도 됨.
+* is는 본질적으로 else if 와 같음. if문도 같이 나올 수 있음.
+* 2가지 패턴중 하나가 매치됨
+	* 패턴1: is <식별자:상수, 변수>
+		* 이 경우 (else) if is == <식별자> 로 판정함
+	* 패턴2: <맨 앞에 is가 들어간 expr>
+		* 패턴1을 제외한 모든 expr의 경우는 is를 (else) if it 으로 치환한다.
+* bison은 <expr>을 파싱하기 전에, 바로 stmt를 생성하지 않고 부모에게 미룰 수 있어야 한다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2197,6 +2434,421 @@ def Part3
 
 
 
+
+
+
+
+
+
+#### [v] this가 겹치는 순간
+
+##### 문제
+
+```cpp
+def myObj
+  _age = 30
+
+def child := myObj
+  def age = int?
+      $set: // myObj.age를 가리키도록 하고 싶다면?
+        // 참고로 현재 this는 age인 상태.
+```
+
+##### [x] 1안 각 클래스는 static으로 private this 라는 변수를 가지고 있다.
+
+```cpp
+def myObj
+  $this := This?
+
+def child := myObj
+  $this := This?
+  def age := int?
+        $set: child.this          
+```
+
+##### [v] Q2 super.this를 사용한다면?
+
+```cpp
+def myObj
+  age := 5
+
+def child := myObj
+  $this := This?
+    def age := int?
+        void say()
+      // myObj.age를 사용하고 싶다면.
+```
+
+```cpp
+1: myObj.this.age
+2: myObj.age
+3: this.myObj.age
+4: this.myObj::age
+```
+
+##### [x] 2안 A.this를 한 경우, A에 대한 this property가 동작한다면
+
+##### [x] 3안 namespace를 사용한다면?
+* members는 member로 등록될때 Name이외에도 namespace 항목이 또 있음.
+* getmembers에서 name만 입력하면 구체 --> 기본 순으로 같은 name인걸 찾음
+* namespace까지 정확하게 입력하면 탐색시 namespace도 고려해서 찾음.
+```cpp
+def myns
+
+  def A
+    void foo()
+    void boo()
+      foo()
+      this.foo()
+      .myns.A.foo()
+      myns.A.foo()
+      A.foo()
+```
+
+###### namespace 문법
+* def로 재활용하자. 굳이 뭘 또 키워드를 만드냐.
+* 클래스 확장 문법을 지원해줘야 namespace가 제기능을 한다. (그래야 다른 소스파일에서도 그 namespace안에다가 멤버 넣지)
+
+###### [v] Q3 this와 name이 다를때의 문제
+
+```cpp
+def parent
+  void foo()
+def child := parent
+  void foo()
+  void exec()
+      // parent의 foo()를 호출하고 싶다면?
+```
+
+###### 고찰
+
+* parent.foo() 와 this.foo()는 어떻게 다른가?
+  * .은 객체 안에 있는 객체에 접근하는 것이다.
+  * this.parent.foo()를 한 경우, parent.foo가 하나의 메소드명이 아니라 parent라는 객체 안에 있는 foo를 찾는걸 의미하게 된다.
+
+##### [x] 3-1안 각 식별자는 namespace가 존재한다. 그러나 키워드는 없다.
+
+* namespace가 존재하나 worldlang에서 namespace를 명시적으로 줄 순 없다. 객체의 def를 통해 간접적으로 정의된다.
+
+```cpp
+def wrd
+  $name = "wrd"
+    def device // 풀네임: wrd::device
+      name := str? // wrd::device::name
+        get: wrd::name
+      def part := device
+        void foo(): throw ERROR
+        device = ""
+            name = ""
+            void boo()
+              
+            
+        str foo()
+      c.out(this.part.wrd::device::foo())
+            c.out(this.part.device::foo())
+      return name // this.name
+  
+```
+
+```cpp
+// namespace를 이름에 넣자는 생각:
+1:  parent::foo()
+    this.parent::foo()
+1-1:parent's foo()
+    this.parent's foo()
+2:  parent.this.foo()
+3:  parent#foo()
+    this.parent#foo()
+4:  parent-foo()
+    this.parent-foo()
+5:  parent_foo()
+    this.parent_foo()
+6:  parentFoo()
+    this.parentFoo()
+7:  parent`foo()
+    this.parent`foo()
+```
+
+
+
+##### [x] 3-2안 특정 타입화된 this
+
+```cpp
+def parent
+  void foo()
+def child
+  void foo()
+    void exec()
+      parent.foo()
+      child.foo()
+      foo()
+      this.foo()
+      
+      this$parent.foo()
+    
+      c.out(this.part$device.foo())
+      c.out(part%device.foo())
+```
+
+
+
+###### [x] Q2. 여기서 한발 나아가 타입 수렴이라는 키워드를 만들면?
+
+```cpp
+def dev
+  dev()
+    dev(str new): name = new
+  name := ""
+        =>set: len = name.len
+  len = 0
+    void say(): c.out("name=$name")
+  
+def bicycle := dev
+  _parts = { def handle := dev
+    handle(): super("handle")
+  , def wheel := dev
+    wheel(): super("wheel")
+  }
+  =>void say()
+        for e in parts: e.say()
+  
+b = bicycle
+b.say()
+            
+d = dev bicycle
+d.say()
+            
+f = dev%bicycle
+f.say()
+            
+f1 = 
+```
+
+* 많이 생각해봤는데, 쓸데가 없다. 예상치 못한 동작이 나간다.
+
+##### [x] 4안 this안에 base클래스와 owner클래스가 들어있다면?
+
+```cpp
+def base
+  name := "base.name"
+def marine := base
+  name := "marine.name"
+    
+  def gun := base
+    name := "gun.name"
+
+        void foo()
+            base.name // base origin객체의 name
+            name // gun객체의 이름
+            this.name // gun 객체의 이름
+            this.base.name // gun객체의 base의 name
+            marine.name // marine origin객체의 이름.
+            marine.base.name // marine origin객체의 상속받은 base의 name.
+            this.marine.name // 이 this 객체와 연관된 marine객체의 name.
+            this.marine.base.name // 이 this객체와 연관된 marine객체의 부모클래스중 하나인 base의 이름.
+            
+            m = marine() // .marine()
+            m = this.marine() // this와 연관된 marine객체의 복제
+            m = .marine() // .marine()
+            
+            b = base()
+```
+
+###### [x] 4-1안 항상 classscope이 우선한다면?
+
+```cpp
+def base
+  name := ""
+def marine := base
+  name := ""
+
+    def gun := base // marine의 base 로부터 assign
+    def gun2 := .base // 밖의 base 로부터 assign
+        name = ""
+        void foo()
+          base.name // gun2가 상속한 base객체의 name.
+          name // gun2의 name
+          this.name // gun2의 이름
+          marine.name // this와 연관된 marine객체의 이름.
+          marine.base.name // this와 연관된 marine객체의 name
+          this.marine.name // this와 연관된 marine객체의 name
+          this.marine.base.name // 이 this객체와 연관된 marine객체의 부모클래스중 하나인 base의 이름.
+          m = marine()
+          m = .marine()
+```
+
+
+
+##### [v] 5안 owner, sub의 사용
+```cpp
+def base
+	name := ""
+def marine := base
+	name := ""
+	age = 0
+	def gun := base
+		void foo()
+			super.name // gun의 부모 base의 name
+			name // gun의 name
+			this.name // gun의 name
+			marine.name // origin객체 marine의 name
+			this.marine.name // 에러
+			outer.name // this를 가지고 있는 marine의 name
+			age // ⇒ outer.name
+			outer.super.name // this를 가지고 있는 marine의 부모클래스 base의 name
+			a = outer()
+			a1 = outer().super()
+```
+###### 알고리즘
+* scope은 다음의 규칙을 따른다.
+	* locals : local scope의 배열
+	* objects : object scope의 배열
+		* 대개, 새로운 object가 call되면, object는 이전의 object scope을hidden 처리시킨다.
+		* 그러나 이 object가 자신이 inner일 경우는 outer를 그대로 유지시킨다.
+		* 모든 inner 객체는 outer를 변수로 가지고 있다. 
+		* 모든 object는 sub를 변수로 가지고 있다.
+	* globals
+	
+* 예를들면, 다음처럼 구성된다.
+	* locals
+		* local[1] : visible
+		* local[0] : visible
+	* objects
+		* object[3] : visible // inner
+			* 부모클래스의 모든 멤버를 포함해서
+		* object[2] : visible // outer
+			* 부모클래스의 모든 멤버를 포함해서
+		* --------------- hidden - marker ---------------
+		* object[1] : hidden
+		* object[0] : hidden
+	* globals
+
+###### 분석
+
+* 단점
+	* inner가 길어지면, outer.outer.super.super 가 된다.
+		* 반론 : 다른 언어들은 대부분 이런 기능조차 지원하지 않는다.
+		* 정 길다면 다른언어들처럼 별도의 reference를 생성자에서 받도록 직접 짜라.
+	* 명시적으로 클래스명을 딱 지정하지 못한다.
+* 장점
+	* 새로운 문법이나 특문의 추가가 없다.
+	* 직관적이다. 외울필요가 없다.
+
+
+
+
+###### [v] Q1 namspace도 확장을 쓸것이고, 이것도 결국 중첩클래스이다. public 문제 어떻게 되나?
+
+<br/>
+
+
+
+### [v] 중첩객체
+
+* protected건 public이건 모든 inner 객체는 owner를 가지고 있다.
+* 또한 모든 중첩 객체는 복제가 가능하다.
+```cpp
+def plant
+	name = ""
+
+def bowl := plant
+	plants = plant[]()
+	void print()
+		for p in plants
+			c.out("$p.name, ")
+	def carrot := plant
+		print() // outer.print()
+
+b = bowl()
+c = b.carrot;
+c1 = c1()
+// c1.print()의 결과는 c.print()의 결과와 같음
+```
+
+#### [v] Q1 protected 중첩객체인 경우,  owner.this도 접근 가능? --> 네.
+
+#### [v] Q2 그러나 property는 그럼?
+```cpp
+def myObj
+  _name = ""
+  def nested := str?
+    get: _name // nested는 _name을 접근 중.
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### [v] def 문법
+
+##### def는 새로운 origin객체를 정의한다는 것이다.
+* 새로운 인터페이스의 추가를 의미한다.
+
+###### def가 없이 메소드의 정의를 할 수 있다.
+* def가 없다면 메소드의 추가가 아닌 재 정의를 의미한다.
+```cpp
+def A
+	_in := ""
+	name := str // name은 str의 refer이다.
+		get: in // get() 되면 this 대신 in을 내보낸다.
+	name1 := str? // name1은 str refer이며 null이 들어가있다.
+	age := int? // int null --> int 0
+```
+
+##### def는 객체의 정의임을 잊지말자.
+```cpp
+def A
+	def nested
+
+A.nested
+a = A()
+a.nested // A.nested로부터 op=이 된것이다. nested는 sharable이므로 shallow cpy된 상태이다.
+
+A.nested()
+```
+* nested는 A에 static에 등록되어 있는것과 동시에 A안에 정의되어 있는 객체이다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Null
 
 #### [v] null을 없앨 수 있을까?
@@ -2325,6 +2977,16 @@ res := env.calculate()
 
 
 
+
+
+
+
+
+
+
+
+
+
 ### 객체의 생명주기
 
 #### Deep and Shallow
@@ -2435,6 +3097,52 @@ c.out("it's \$1,000 dollors.")
 - \2. result에 추가적인 정보를 담을 수 있어야 하며
 - \3. 이것을 호출하는데 비용이 절감되어야 한다.
 - \4. managed와 native모두 공통의 API를 사용하도록 해야 한다.
+
+
+
+
+
+
+
+
+
+### [v] 이름없는 메소드와 객체
+```cpp
+def abc
+	name = ""
+	void foo()
+		return str boo()
+			return name
+	void foo1()
+		// Q1. 이름없는 boo를 내보내려면?
+	
+	abc koo()
+		// Q2. abc를 상속해서 foo()를 오버라이딩한 객체를 내보내려면?
+```
+
+#### 1안 ?로 대체.
+```cpp
+void foo1()
+	return str ?()
+		return name
+
+abc koo()
+	return ? := abc
+		void foo()=>
+			c.out("wow!")
+```
+#### 제약사항
+* ?는 이미 int?에 쓰이고 있다. 때문에 int?와 int ? 는 구분이 되어져야 하며 개발자는 반드시 타입뒤에 ?를 붙여야 한다.
+* ?는 정의에서만 사용된다. 그외의 코드에서 나오면 안된다.
+```cpp
+void ?(int a)
+	dosomething...
+?(3) // 에러.
+```
+
+
+
+
 
 
 
@@ -4603,6 +5311,119 @@ def MyType<T>
 
 
 
+#### [v] Generic의 구현
+
+##### [v] Q. 클래스를 먼저 어떻게 다룰것인가?
+
+##### [x] 1안 T가 다르면 새로 클래스를 생성한다.(c++방식)
+
+
+
+##### [v] 2안 Generic 타입 T에 종속적인 경우,
+
+* 다른 타입T로 된 클래스들도 같은 Generic에서 나왔다면 같은 클래스를 재활용한다.
+* 일단 중요한 포인트는, 문법적으로 본다면 T가 다르다면 다른 클래스라는 점이다. overriding을 위해서라도 T가 다른데 같은 부모로 엮을 수는 없다. 여기서는 클래스를 재활용이 과연 구현적으로 가능한 것인가를 논의하고자 한다. 즉 generic의 구현이다.
+
+##### [v] 2-1안 T를 별도로 갖고 있는다.
+
+```cpp
+:1
+class genericManagedObject : public managedObject
+{
+private:
+    orginList _orgs;
+};
+```
+
+* 순서
+
+  1. Parser는 generic 메소드를 컴파일 할때, Generic<T>로 이름을 넣어서 저장해둔다.
+     1. class Generic : public Object
+  2. Generic에서 각 stmt는 scope["T"] 식으로 참조하도록 한다.
+  3. generic 클래스는 컴파일만 해두고 링킹은 하지 않는다.
+  4. 해당 클래스를 사용할 경우(예, Generic<int>) originList에 nt를 1개 name이 "T"인 int로 넣어 복제한다.
+  5. Generic<T>는 T가 없는 비어있는 클래스로, 컴파일이 끝나면 버린다.
+  6. Generic<int>는 Generic<T>와 아무런 관계가 없다.
+  7. scope에서 해당 Generic<int>를 찾는다. 없다면 검증된 적 없는 것이다.
+  8. scope에 Generic<int>를 먼저 넣는다. 이는 무한 validation을 막기 위한 것이다.
+  9. 그후 그 객체에 대해서 linking 에러를 validation 한다.
+  10. stmt에도 넣는다.
+  11. 빌드 성공.
+  12. Optimization으로 코드를 더 간략하게 만든다.
+  13. 런타임시 genericManagedObject는 class scope를 주입할 시점에 orgs의 값을 같이 넣는다.
+
+ 
+
+* 결과
+
+  * class scope에 주입된 T는 항상 같은 index에 위치하게 되고, stmt에서는 scope을 통해서만 T에 접근이 가능하므로 역시 문제가 없다.
+
+  * world는 객체와 타입의 구분이 없으므로 역시 문제가 없다.
+
+  * 런타임에도 T에 항상 접근을 해야 한다.
+
+    
+
+* 엣지 케이스 도출
+
+  * [v] (배열)은 어떻게 되는가?
+    * worldlang
+      * 배열은 C++로 된다. 그리고 template은 world로 open 되지 않는다.
+      * class Array : Generic
+        * virtual const Object& getTrait() { return getTraits()[0]; }
+      * 컴파일러는 해당 TypeTraits 배열을 채워놓기만 하면 된다.
+    * cpp
+      * class TArray : Array
+        * virtual const Object& getTrait() { return static T inner; }
+
+##### [x] Q2. Native template을 generic으로 public 지원 할 필요가 있는가?
+
+* native Template를 사용해서 생성된 템플릿 클래스를 일반 클래스로써 public으로 지원하면된다.
+
+##### [x] Q3. 2번이 맞다면, 그 방법은?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5944,6 +6765,97 @@ def app
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+### [..] annotation
+* 프로그램 실행에는 영향을 주지 않는다.
+* 객체에 대한 metadata 이다.
+* 메타 프로그래밍이 아니다. 이는 프로그램 읽는 걸 어렵게 한다고 본다.
+	
+#### [v] Q1. 어떻게 annotation을 구현할까?
+* 요구사항
+	* 상속이 되면 안된다.
+	* 값을 바꿀 수 없어야 한다.
+* 다른 언어들은 ?
+	* ts, python 들은 decorator라고 해서 메타프로그래밍이 포함된 annotation.
+	* c#, java는 단순 annotation
+	* c, go는 없음.
+#### [x] 1안 member의 일종으로 생각한다.
+* 상속이 되면 안되기 때문에 단순한 기존 문법대로 member로 하면 안된다.
+* 이 경우, 상속이 안되게 하는 문법이나 방식을 추가해야 한다.
+
+#### [x] 2안 초기화 식은 덮어쓰기가 가능하다면?
+```java
+def Parent
+	void foo(): ...
+	age = 55
+
+def Child = Parent()
+	void foo(): ...
+	age = 200; // 이 부분
+```
+##### [x] Q1. Child.age는 과연 어떻게 받아들여야 하는가?
+###### [x] 1안 허용하지 않는다
+
+###### [x] 2안 덮어쓰기로 허용한다. 단, 객체는 중복되지 않는다. 객체의 overriding.
+
+* 단, 다음의 조건을 갖는다.
+	1. 타입은 같아야 한다.
+	2. 부모가 const 였다면 자식은 새로 할당할 수 없다.
+	3. 부모가 private 이라면 자식은 역시 새로 할당할 수 없다.
+
+###### [x] 3안 객체가 중복으로 존재한다. 그리고 child.age가 우선된다. 객체의 overriding.
+```java
+Child a()
+a.age
+a.Parent.age
+```
+#### [v] 3안 annotation은 static으로 선언된 것이다.
+```java
+@Child @Worker @NoOverride
+def My
+	...
+
+class object {
+private:
+	sharedMembers.add(Tup("annotation",
+		{"Child", "Worker", "NoOverride"}
+	));
+};
+```
+
+* Object.clone()시 sharedMembers는 shallow cpy, 기타 members를 deepcpy 된다.
+* 파서는 annotations을 항상 sharedMembers로 넣는다. 
+	* annotations를 명시하지 않을 경우, Method는 default로 빈 배열을 반환한다.
+* static은 원래 상속되지 않으며, 자식 클래스에서 부모클래스와 같은 이름의 변수를 만드는 것이 가능하다.
+
+#### [x] Q2. C-REPL 방법은?
+* C-REPL에서 수정이 발생하면 그 이외에도 빌드를 전파해야 한다.
+	* 메소드 내라면 메소드까지만.
+	* 메소드 명세라면, 접근자를 구분한 뒤, 그 명세를 사용하는 모든 것을.
+	* 이 과정에서 중복 빌드가 되지 않도록 mark도 필요c하며, 실행할때는 이 정보들은 필요가 없다.
+* 어렵다.
+
+#### 결론
+* Annotation이란 프로그램 로직에 영향을 주지 않는 것으로 한다. 
+* 컴파일러와 무관계한 것으로 한다.
+* 추가적인 정보일 뿐이다. 
+* 이는 대부분 document 작성을 위해서 사용될 것이다.
+
+#### [..] Q3. annotation 의 상세한 구현 방법은?
+* 파서가 static const 멤버인, 모든 Object가 가지고 있는 annotations 객체의 구성물을, 파서가  객체에 채워넣는 식으로 하자. (메소드 포함) 
+* 상세한 내용은 나중에 다시.
 
 
 
