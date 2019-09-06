@@ -2843,6 +2843,612 @@ A.nested()
 
 
 
+### 프로퍼티
+
+#### [v] 프로퍼티를 쉽게 표기하는 방법
+
+##### [x] 1안 새로운 특문 < > 추가
+```java
+def A
+	<age = 3 // set 만 가능
+	>name = "kkk"
+```
+* 헷갈린다. 부등호처럼 보인다.
+
+##### [v] 2안 get set 표기
+```java
+def A
+	age = 3
+		_get=> // get은 되는데, 외부에서는 호출 불가란 뜻.
+	name = "kkk"
+		_set=>
+```
+* const 로 표기한 경우는 readonly인 걸로 간주하고 set은  없는걸로 한다.
+
+##### [x] 3안 1안의 개선
+```java
+def A
+	<<age = 3 //
+	>>name = "kkk"
+	void say()
+```
+* 좀더 알아보기는 쉬운데, 이렇게 하면 const 표시할때 항상 <<로 해야 한다.
+
+##### [x] 4안 "#" 는 const. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### [v] 프로퍼티 가독성 문제
+
+##### 예제
+
+```java
+def Lock
+  get: true
+```
+1. 개발자도 get을 보고 직접 타입을 유추해야 한다.
+  2. 어떻게하면 더 쉽게 쓰고, 더 새로운 문법 추가 없이, 개발자를 위한 가독성을 높일 수 있을까?
+2. 개발자는 사실 Lock이라는 객체를 만들고 싶었던 것이다. 그런데 오해석되었다.
+
+##### 요구사항
+
+1. 객체가 존재하는데, get,set만 오버라이딩 한 상황을 표현할 수있어야 한다.
+2. 객체가 없는데 redirection만 한 것을 표현 할 수 있어야 한다.
+   1. 이때 get/set의 반환값은 그 객체다.
+   2. 컴파일이 가능해야한다.
+   3. redirection만 하는 경우는 메소드를 추가할 수 없다.
+   4. 이 객체는 별도의 메모리를 차지하면 안된다.
+3. 새로운 문법을 추가하는 건 피하고 싶다.
+
+##### 예제
+
+```cpp
+def A
+1:  _in := 0
+    def age
+      get: in // X: get의 반환형은 age이지, int가 아니다.
+      set: in = new
+           
+def A
+  def age := 0 // X: 별도의 메모리를 차지하고 있다.
+        get=>:
+    set=>:
+```
+
+
+
+
+
+##### [x] 1안 - 타입을 명시해야만 프로퍼티를 쓸 수 있다.
+다음의 규칙을 정한다.
+* 프로퍼티처럼 쓰려면 set/ get을 overriding 하는 것이다. 둘중 하나만 override하면 흔히아는 프로퍼티처럼 동작하게 한다.
+* 새로운 메소드를 추가할 수 없다.
+* wrap을 할 타입을 상속하듯이 반드시 명시한다.
+* get / set의 반환형은 그 wrap한(상속한) 타입이 된다.
+```java
+def B
+  def A
+    void say()
+    age = 22
+
+  def a := A
+    get: A()
+    _set
+  
+  def age := A.age
+    get: A.age
+    set: A.age = new1
+```
+###### 평가
+* def를 기반으로 하기 때문에 정의가 된다. 정의는 1개만 나오는 전역 scope에 속한다. 고로 모든 객체B마다 하나의 age가 나오진 않는다.
+* def를 쓰면 다른 메소드를 쓸 수 없다는 사실을 눈치채기 어렵다.
+
+
+##### [x] 2안
+```java
+def My
+  _inner_age = 23
+  prop age := inner_age
+    get=>: c.out("get age!")
+    set=>: c.out("set at super!")
+
+  prop age2 := int()
+
+  get: // 이 get과 prop.get은 반환형이 다르다.
+```
+* prop이란 키워드를 추가한다. prop은,
+  * +get, set만 추가하도록 유도할 수 있다.
+  * +메소드의 정의(def)임과 동시에 반드시 하나의 prop객체가 모든 객체에 할당된다.
+    * ":=" 연산자를 bind로 해석한다.
+  * +이미 존재하는 객체에 대한 wrapper도 될 수 있을 뿐더러, 새로 생성된 객체의 wrapper도 될 수 있다.
+  * +문법이 간결함과 동시에, 가독성도 좋다.
+
+  * -새로운 키워드가 추가된다. 
+  * -이걸 def로 해결하려면, 객체의 def와 객체의 정의를 같이 하는 문법을 먼저 고안해보자.
+    * 근데 쉽지 않을껄.
+    * prop의 대체하기 위한 조건들
+      1. 객체의 def와 동시에 객체는 반드시 클래스 멤버로 존재해야 한다.
+      2. 이 prop이 어떤 변수를 대상으로 하는지가 직관적으로 보여져야 한다.
+      3. bind가 별도로 필요하다.
+      4. 1줄로 깔끔하게 나와야 한다.
+      5. 본래 get의 반환형은 This다. 그러나 wrapper는 그게 달라야 한다.
+
+##### Q1. get의 반환형은 본래 자기 자신이어야 하는데?
+###### [v] 1안 FRX 적으로 강제로 그렇게 만든다. 다른 개발자는 이렇게 할 수 없다.
+
+* 고찰을 통해, 오직 prop 만 그렇게 사용할 수 있다.
+
+###### [x] 2안 개발자도 이렇게 가능한 문법을 지원해준다. 그리고 그걸 재사용한다.
+
+##### [x] Q2. 다른 개발자들도 get의 반환형을 자기마음대로 하는게 옳은가?
+* 당연히 안된다.  독해가 너무 어렵다.
+* 어떤 타입이 나오는지가 사실 그 객체의 무엇인지를 결정한다.
+  * 그 객체가 A라는 타입이라는 걸 아는 존재가 아무도 없다면, 그것은 A라는 타입이 아니다.
+  * 당연히 A타입이라고 쓰는 순간 컴파일 에러가 쭉 나온다.
+
+##### [x] Q3. 그럼 부모클래스로 get의 반환형으로 하는건 옳은가?
+역시 안된다. 일반적으로 def A := B 만 봐서는 당연히 "A라는 타입이구나" 생각할 것이고 A라는 타입 안에 새로운 메소드를 사용하는 순간 에러가 난다.
+그리고 부모의 부모 클래스를 get으로 하는 순간 더 심각해진다.
+정 이걸 하고 싶다면 get의 반환형을 부모클래스로 한 경우에는 overrideing만 가능! 이라는 조건을 달아야 한다. 근데 그게 prop이라는키워드란 말이다.
+
+##### [x] 3안 wrap클래스를 만든다.
+```java
+def My
+  _inner_age = 23
+  age := wrap<int>(inner_age)
+    get=>: c.out("get age!")
+    set=>: c.out("set at super!")
+
+  age2 := wrap<int>(int())
+```
+
+* 여기서 만약 wrap<int>를 타입 유추로 할 수 있다면
+```java
+def My
+  _inner_age = 23
+  age := wrap(inner_age)
+    get=>: c.out("get age!")
+    set=>: c.out("set at super!")
+  age2 := wrap(int())
+```
+
+###### 평가
+
+* 2안의 모든 장점을 가지면서도 새로운 키워드 추가도 없다. 그리고 정의만 봐도 무슨 데이터로부터 의존하는 건지 확 들어온다.
+* 이겁니다. 여러분 이거예요.
+
+
+##### [] Q4 set의 인자를 오버라이딩하지 않고 hiding 하면?
+wrap<T>는 기본적으로 이렇게 해야 하는데?
+
+###### 제약조건
+* 오버라이딩은 반환형은 포함되지 않는다.
+* get()은 call()에서 1회 호출된다. 따라서 보통은 재귀되지 않는다.
+* Mgd 어떤 클래스도 get, set을 오버라이딩 할 수 있다. 이것만 해두면 된다.
+* Native 클래스를 get, set이 되도록 직접 wrapper를 만들고 싶다면 call(), onGet, onSet 외에도 cast도 오버라이딩 해야 한다.
+  * 그러니 잘모르면 하지 말라. 있는 wrap 써라.
+* Mgd에서 wrap을 쓰면 의존 관계가 잘 들어나며, 원하는 동작이 기본으로 이루어지며, Native에서도 호환된다.
+
+
+
+###### 알고리즘
+```cpp
+// 만약 Refer가 visible 할수만 있다면 매우 깔끔하게 끝날것이다. Wrap하고 Refer는 하는게 똑같다.  2222
+class Wrap : public Refer
+{
+public:
+  virtual Node& onGet() {
+    return _origin.get();
+  }
+  virtual Res& onSet(const Node& rhs) {
+    return _origin->operator=(rhs);
+  }
+  virtual Refer onCast(const Class& cls) {
+    return _origin->cast(cls);
+  }
+  virtual Refer call(const Msg& msg) {
+    return _origin->call(msg);
+  }
+
+private:
+  refer _origin;
+};
+```
+2. 
+##### Mgd에서 get/set을 오버라이딩 한 경우,
+
+* get은 오버라이딩 할 수 있으며 모든 것은 개발자의 책임이다.
+* wrap을 world객체로 짜는 경우
+  * def wrap<T>
+    * T get(): inner
+    * res set(T new1):  
+    * T _inner
+* 구현 자체의 동작은 매우 단순하다. Refer wrap::onGet() 안에서 target인 객체를 대신 반환하면 되며
+* onGet의 반환형을 T로 명시하면 된다.
+* 그리고 call()이 호출되면 onGet().call()로 redirection 한다.
+* call을 통하지 않는 native 메소드들은 모두 찾아내서 rediection 하도록 잘 짠다.
+* 문제는 컴파일러
+  * 일반적인 컴파일 알고리즘은 먼저 이렇다.
+    * 메소드는 input type과 메소드 type을 들고있다.
+    * canConsume()이 호출되면 주어진 argument를 각각 input type으로 casting 한다.
+    * Object.cast(ㅔ)는 먼저 onGet()을 호출한 뒤에, 이걸 cast 한다. 
+      * onGet() 결과가 this와 다를 경우는 재귀적으로 onGet을 또 불러준다.
+    * 모든 걸 성공적으로 cast 했다면 이 호출에 문제는 없는 것이다.
+    * 필요시 바깥으로 반환형을 내보낸다.
+  * Node::getMember()는 내부에서 객체를 가져와 onGet을 재귀적으로 호출한다.
+  * a.foo() 인, wrap a 객체가 있을 경우,
+    * scope["a"]["foo"].call("run"); 으로 해석된다.
+    * scope도 Node의 일종이므로 getMember()를 타게 된다.
+  
+##### [x] 4안 refer를 공개한다면?
+##### [v] Q5. Origin과 TClass를 통합해야 한다. --> 새로운 문서
+
+###### 제약조건
+```cpp
+class refer : public node {
+  TStrong<obj> _org;
+  virtual const obj& getType() = 0;
+};
+template <typename T = obj> // 기본적으로 ? 타입이다.
+class tRefer : public refer {
+  virtual const obj& getType() { tRtti<T>::getOrigin(); }
+};
+```
+* refer는 refer를 wrap할 수없다. refer가 가지고 있는 obj를 wrap하는것이다.
+* refer는 onGet, onSet, cast 외에는 모두 MGD에서 호출 할 수 없다.
+* type이 존재한다.
+* 대상이 존재한다.
+* Refer는 Object가 아니지만 visible해야 한다.
+
+##### [v] Q6. Instance에 있는 getId()도 visible 할 수 있는가? --> 별도의 항목
+
+##### [x] Q7. Object가 아니어도 refer를 visible 하게 할 수 있는가? --> 별도의 문서를 통해서 refer를 명시적으로 visible하게 하지 않고도 해결 할 수 있었다.
+
+
+##### [x] 5안 def의 의미를 변경하자
+
+* def는 인터페이스의 추가를 의미한다.
+* def가 없어도, 인터페이스는 유지하되 구현의 변경은 가능하다.
+
+```cpp
+def device // 새로운 타입의 선언
+  name = "?"
+    void say()
+      c.out("name=$name")
+
+// 임시객체 정의 문법:
+device1 := device() // def가 없음. 따라서 origin객체로써 사용은 불가능함.
+            // overriding만 가능.
+    get: // overriding이므로 get의 반환형은 device임.
+    =>void say() // 컴파일러에게 이 객체에 나온 모든 심볼들을 overriding임을 명시.
+      c.out("let's call device.say()")
+
+def app
+  void says(device[] devs)
+        d = device1 device() // device1의 origin은 device임.
+        // d = device device()로 해석됨.
+      for d in devs // for에서는 타입유추로 인해 iterator는 타입이 필요없음.
+        d.say()
+    
+def A
+  age := int?
+    get=>: c.out("get=$this")
+```
+
+```cpp
+def A
+  age := 0 // 컴파일러는 0이 사용되지 않는다면 제거하는 최적화를 수행한다.
+      get=>: c.out("val=$val")
+  dev := device?
+        get: $inner = device() // get의 반환형은 device
+    _set
+  void _calculate(int seed)
+  def unknown // 이건 새로운 origin객체 uknown으로 인식된다.
+    set(int new): calculate(new)
+a = A()
+a.unknown = 5
+```
+
+* get은 객체가 null이어도 호출이 가능하다는 걸 잊지말라.
+
+##### [v] 6안 ?? 문법을 새로 추가한다.
+
+​	prop이나 int?? 이나 아무튼 새로운 문법이 필요하다.
+
+​	그리고 Refer 클래스에서 의해서 wrapping 되도록 한다.
+
+​	refer는 별도의 메소드를 가질 순 없지만 onset, onget에 대해서 처리를 할 수 있다.
+
+
+
+
+
+
+
+#### [..] null 된 프로퍼티의 구현방법
+##### 요구사항
+```cpp
+def A
+	name := str?
+		get: class.getName()
+		_set
+```
+* A["name"] == Refer(str* null) 인 상태이다.
+* 그리고 get은 this가 null이어도 호출이 가능하다고 우린 이야기 했었다. (get/set만 예외)
+* get에서는 owner도 존재하며 this도 사용이 가능하다. 단 this를 사용하는 순간 높은 확률로 죽는다.
+* set은 operator=() 이며, get은 C++의 onGet() 이다.
+* 따라서 null.operator=() 와 nullptr.onGet()을 해야하는 상황이다. 이게 가능한 것인가?
+* 혹시 안된다면 프로퍼티 문법을 구현할 다른 방법은 없을까?
+
+##### [x] 1안 get, static의 규칙을 바꾼다.
+다음의 5가지 규칙을 새로 만든다. 이것을 조합하면 된다.
+
+* static 메소드는 this가 없는 것이다. static 메소드를 호출하면 항상 origin의 메소드가 호출된다. (즉, 엄밀한 의미에서 this는 origin이다. 그러나 FRX에서 this를 scope에 안 넣는다.)
+
+* occupiable은 non static set이 있을 경우에만 해당한다.
+	* 반대로 얘기하면 static set이 있으면 기존 클래스의 특징을 유지한다는 것이다.
+	* 의미를 생각해보면 명확한 것이다. static은 this가 없으므로 occupiable을 결정하는데 영향을 줘선 안된다.
+
+* static 객체란 항상 origin객체에 속해있다.
+
+* inner origin객체의 모든 member는 sharable이건 occupiable이건 static이건 관계없이 항상 owner가 존재한다.
+	* static 객체는 origin객체가 항상 owner다.
+	* non static객체는 복제될때 owner가 새로 할당된다.
+
+* get의 반환형, set의 인자형은 자동으로 고정된다. 개발자는 그것이 static, const여부만을 수정할 수 있다.
+
+###### 종합하면 이렇게 된다.
+```cpp
+def myObj
+	_name = ""
+	name := str?
+		$get: _name
+		$set: _name = new
+```
+* name은 str? 에 대해 def가 아니므로 overriding 상태가 아니다. 그러므로 get의 반환형과 set의 인자는 모두 str 이다.
+* get과 set은 모두 static이다. 따라서 refer인 name에는 null이 들어가 있어도 문제없이 get()이 불려진다.
+###### [x] $get은 static여부와 관계없이 inner객체이므로 어쨌건 owner는 존재한다.  refer는 null을 들고 있지만 refer 자체는 myObj에 있으므로 refer의 owner는 myObj.... 일까? 
+```cpp
+def myObj2
+	void foo()
+	void $boo()
+
+def myObj
+	o1 := myObj2?
+	_m := myObj2()
+	o2 := myObj2?
+		$get: m
+	void foo()
+		o1.foo() // 에러
+		o1.boo() // 에러 : o1은 null이므로 null.get()이 불가능
+		o2.foo()
+		o2.boo()
+
+m := myObj()
+
+o3 := m.o2
+o4 := myObj.o2
+o4.boo() // o4는 this가 null이나 o4.owner가 주입된 상태에서 o4.get()이 호출.
+
+
+o3.boo() // o3는 this가 없다.
+o3 = myObj.o2()
+o3.boo()
+// scope["o3"]가 성공 -> refer("this") this담긴 refer 받음.
+// 이 refer.get()을 호출
+// refer는 origin객체가 $get()이므로, 바로 origin객체인 o2.$get()을 호출한다.
+//		이때 owner는 과연 무엇인가?
+//			refer는 새로 생성된 myObj가 owner.
+//			this도 
+```
+* 안되는 이유1
+	* static 메소드는 정적이므로, 컴파일러는 어떠한 객체의 메소드인지 확정된다는 것이다. 	origin객체지. 언제나 그 객체가, 유일한 그 객체가 불려지게 된다.
+	* 따라서 $get()할때 불려질 객체인 o2는, 아무리 o2 객체가 사방에 널려있다고 해도 처음 등록된 origin객체인 o2 그거 하나뿐이다.
+	* 따라서 owner도 언제든, 어느때든 항상 유일한 1개 뿐이다.
+* 안되는 이유2
+	* def를 넣지 않는 경우 interface가 고정인, origin객체가 아닌 객체가 생성되는 것이다.
+	* 따라서 static 메소드를 넣을 수가 없다. static은 알다시피 origin객체 자체에 들어가는것이지, 상속이 불가능하니까.
+
+
+##### [x] 2안 아예 get은 static이 기준으로 한다면?
+* 1안으로 생각을 해봤는데, 결국 컨셉이 너무 더럽다. 예상이 어렵다. 더 규칙을 단순하게 할 필요가 있다.
+
+* 그래서 get을 static으로 하면 어떨까? 애초에 get이 non static여야만 가능한 케이스가 있을까?
+
+* static 메소드가 owner를 가질 수있다는 얘기가 된다. 다음과 같이검증결과 말이 안된다.
+
+  ```cpp
+  def test
+  	name := ""
+  	def in
+  		void $koo(): c.out("name=$name")
+          
+  def app
+  	void main()
+  		test.in.koo() // name=
+          test.name = "wow"
+          test.in.koo() // name=wow
+          new := test()
+          test.in = new.in
+          new.name = "new"
+          
+          test.in.koo() // name=wow
+          new.in.koo() // name=new
+  
+          // 봐라. 예측이 안된다. this가 2개있는것처럼 보인다.
+          
+  ```
+
+###### 고찰
+
+* 분명히 무언가 객체는 존재해야 한다.
+  * 그 객체의 this는 owner를 가지고 있다.
+  * 객체가 다른걸로 교체되면 owner도 교체가 된다. 그래야 예측이 쉽다.
+* 그 무언가는 Refer가 아니다.
+  * Refer는 메소드를 가질 수 없다.
+* static 메소드는 this도 없으며 따라서 owner도 없다.
+  * owner는 this에 있다.
+* static 메소드는 객체가 null일지라도 호출이 가능하다.
+* 한줄만 보고도, 이 프로퍼티는 어떤 타입을 내보내리라는 걸 알 수 있어야 한다.
+* non-null인 프로퍼티와 문법의 차이가 적어야 한다.
+* get의 반환형과 set의 인자형은 개발자가 마음대로 지정할 수 없다.
+
+* 따라서 반드시 무언가의 별도의 객체나 문법이 필요함을 알 수 있다.
+
+
+
+##### [..] 3안 - 문법의 추가 없이 해결
+
+```cpp
+def test
+	name = ""
+1:	def in := wrap<str>
+2:	in := str?? // str null이 아니다.
+		// str??은,
+		//	1. refer와 비슷한 역할을 하지만 객체다.
+		//	2. 객체이므로 this는 물론 owner도 있다.
+		//	3. set과 get의 반환형이 T로 고정되어있는 특수한 객체다.
+		//	4. 외부에서 봤을때는 마치 T처럼 사용한다.
+		//	5. str?은 str null이다.
+    __age := 5
+    def age := int??
+        get: _age
+        set: _age = new
+        void say()
+			...
+	
+	myObj = dxHandle[]?
+            
+t := test()
+a = t.age + 5
+    
+```
+
+* 제일 깔끔하다.
+* 애매하지도 않다.
+
+###### [..] 구현방법
+* 다음의 조건을 만족하는 FRX c++ 클래스를 만들면 된다.
+	* occupiable이어야 한다.
+	* Object의 일종이다.
+	* set/get의 인자/반환형이 worldlang에서 개발자가 지정한  타입이다.
+	* getMember(n) 안에서 call(Msg("onGet")) 을 호출한다.
+	* Native에서 프로퍼티로 내보내는 방법은 --> 별도 문서 참조
+
+
+
+#### [..] 프로퍼티를 native에서 wrapper하는 방법
+##### 요구사항
+* worldlang은 getter/setter를 프로퍼티로 대체하고자 한다. 따라서 native에서도 대부분의 getter를 프로퍼티로 대체할 수 있도록 해야 하므로 이를 반드시 지원해줘야 한다.
+* 다음의 샘플 코드를 떠올려보자.
+```cpp
+class myDX : public obj {
+	WRD_CLASS(myDX, obj,
+		OVERRIDE(foo)
+		FUNC(getName)
+		FUNC(setName) // 이 둘을 합칠 수 있는 방법은?
+public:
+	virtual void WRD_OVERRIDE(foo) (myDX* dx, int screen_n);
+	str getName();
+	void setName(str new1);
+
+private:
+	str _name;
+};
+```
+
+* PROP의 set/get/은 overriding 을 염두해 두 수 있어야 한다.
+	* native 개발자는 overriding을 표시하기 위해 FUNC, OVERRIDE 매크로를 그대로 쓸 수 있었으면 좋겠다.
+
+##### 이상적인 코드
+```cpp
+class myDX : public obj {
+	WRD_CLASS(myDX, obj,
+		PROP(name, FUNC(getName), OVERRIDE(setName))
+	)
+public:
+	str getName();
+	virtual void WRD_OVERRIDE(setName) (str new1);
+
+private:
+	str _name;
+};
+
+def DX := myDX
+	name := str?
+		=>set: c.out("DX!")
+c.out("$DX.name")
+DX.name = "kkk"
+```
+
+
+##### [..] 1안
+* PROP은 별도의 WRD_CLASS가 되어야 한다.
+```cpp
+class myDX : public obj {
+	WRD_CLASS(myDX, obj,
+		PROP(name, FUNC(getName), OVERRIDE(setName))
+	)
+	class nameProp : public prop<str> {
+		WRD_CLASS(nameProp, prop<str>,
+			GET, _SET)
+		virtual ref<str> onGet() {
+			return ref<str>(getOwner().cast<myDX>()._name);
+		}
+	};
+public:
+	str getName();
+	virtual void WRD_OVERRIDE(setName) (str new1);
+
+private:
+	str _name;
+};
+
+def DX := myDX
+	name := str?
+		=>set: c.out("DX!")
+c.out("$DX.name")
+DX.name = "kkk"
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
