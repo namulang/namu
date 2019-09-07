@@ -1532,6 +1532,54 @@ with name
 
 
 
+#### [v] hiding의 구현
+
+##### [v] 1안 - C#을 따라가자
+
+* 먼저 내 클래스에 동명 함수들을 탐색하면서 랭크를 매긴다. --> 탐색방법은 별도의 문서로.
+
+* 오버로딩된 메소드 중에 도저히 매칭된게 없다면 이제 부모클래스에서 찾는다.
+
+  
+
+##### 검증
+
+```cpp
+def parent
+  void say(int)
+    void say(float)
+    void say(char)
+    void say(str)
+
+def child = parent
+  void say(str)
+    void say(int)
+
+child.say("wow!") // child꺼
+child.say(3.5) // parent꺼 (float -> int 는 묵시적 변환에서 제외되어있음)
+child.say('5') // child.say(int) 꺼.
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Expression
@@ -3443,6 +3491,708 @@ DX.name = "kkk"
 
 
 
+### Getter & Setter
+
+#### 컴파일러는 onGet의 반환형을 감지해서 컴파일에러를 어떻게 내는가.
+
+isConsumerable을 static컴파일 용으로 사용할 생각이라면
+그 함수는 null객체인지 여부를 따져서는 안됨.
+그리고, 이렇게 될때, refer.isConsumerable()은 _bean.isConsumerable()로 redirect하고, Wrapper는 membervariable인 refer.isConsumerable()로 redirect하면 됨.
+
+```cpp
+a := b
+	get: 
+```
+이런 문법(overriding만 가능한)은 없음. 지원 안할꺼임.
+
+* 그리고 null된 프로퍼티에 별도의 다른 메소드를 넣는 경우 warning 처리.
+* 왜냐하면 onGet의반환형이 이 프로퍼티가 아니므로 메소드 호출은 영영 불가능.
+
+##### 이제 onGet은 Refer에만 있는 것이다. 물론 컴파일 체크도 가능할 것이다.
+
+
+
+
+
+
+
+#### [v] get의 구현
+
+##### 개념 정의
+
+* get은 run()을 호출했을때, 안쪽에서 msg를 순회하기전에 불려지는 cb이다.
+```cpp
+Node::run(Msg msg) {
+	caller = this;
+	Refer<This> r;
+	if( get이 있다면)
+		r = _run(onGet()); // onGet을 호출한다고 또 run을 타면 안된다.
+		caller = r.get();
+	caller._run(msg);
+}
+```
+
+
+  * 예) say(void) // 메소드의 접근
+  * 시, get은 메소드의 this를 내보내는 것이지 메소드의 호출이 아니다.
+* 반환된 결과를 this에 재주입한다.
+* 기본구현은 this를 그대로 반환하는 것이며, 별도의 정의가 없으면 이렇게 되어있는것처럼 동작한다.
+	
+	* 실제로 메소드를 만들어주지는 않는다. 최적화때문에.
+* 당연히 overriding 되지 않는다.  되어서도 안된다. 반환형은 항상 This 이기 때문이다.
+* overriding이 서로 다르기 때문에 ADT만 손에 쥘 수 있는 FRX에서는 c++로 호출이 거의 불가능하다. 자연스럽게 run()을 사용하게 된다.
+	
+* run(Msg("onGet")); 을 하면 onGet()이기만 하면 되는 메소드를 찾아 실행한다.
+	
+* 예)
+
+  ```java
+  a // scope["a"]
+  /* def a
+      a onGet(): this
+  */
+  ```
+
+  * scope에서 객체 a에 접근한 뒤, 이 객체 a를 반환한다. a를 반환하는 부분이 get이다.
+
+  예)
+
+  ```java
+  a.age // e.g. in c++, a.getMembers("age")
+  /* def age = int
+      int onGet(): this
+  */
+  ```
+
+  * 객체를 통해 sub객체에 접근하는것 또한, 그 sub객체 중에 "age" 라는 이름을 붙은 것들을 찾아, 그것에게 onGet()을 호출하는 것이다.
+
+  
+
+  예)
+
+  ```java
+  a.age.foo // foo는 메소드.
+  /* def foo = Method
+      Method onGet(): this;
+      float op()()
+          // 이게 함수 호출
+          return ...
+  */
+  ```
+
+##### 알고리즘
+
+* 외부에서 Node::get(n)이 호출되면, 일단 객체를 찾아, 꺼내기 전에 해당 객체에 대해 Refer onGet()을 호출한다.
+* Mgd에서도 get(n)을 사용하고 native도 get(n)을 쓸 것이므로 양 쪽 환경에서 동일한 결과가 나오는걸 보장할 수 있다.
+* Refer onGet()
+  * 해당 객체가 onGet()를 호출하는게 아니라는게 포인트다. 외부에서 그 객체에 접근할때 onGet()을 하는거다.
+  * 메소드든, 변수든 객체를 찾으려면 항상 Node::get(n)을 사용한다.
+    * scope또한 Node이므로 역시 이에 해당한다.
+    * Node::get(str name)도 내부에서는 Node::get(n)으로 redirect 시킨다.
+    * refer::onGet()은 _proxy->onGet()으로 redirection 되므로 역시 이에 해당한다.
+  * Refer로 반환한다.
+* Node::get(n)은 받은 refer를 반환한다.
+
+##### 최적화
+
+* 일반적으로 함수 호출하려면 객체에 접근해야 되고, 객체의 접근 또한 함수의 호출이 되었으므로 함수 1개분의 호출이 더 늘어난 셈이된다. 속도가 걱정된다면 다음의 안을 생각해볼 수 있다.
+* 본질적으로는 어떻게 하면 onGet()의 load를 줄일 수 있을지 생각해 보는 것이다.
+* 최적화는 반드시 모든 개발이 끝난뒤에 소극적으로 적용해나가야 한다. 구조를 해치는 최적화는 안된다. 속도보다는 빠른 생산성과 편의성!
+* 1안 onGet() 무시
+  * 객체가 onGet()을 정의하지 않았다면 onGet()을 호출하지 않는다.
+* 2안 FRX에서 호출하는 __frx_get(n) 을 만들고 반환형을 Node&로 한다.
+* 3안 onGet()안에서 Refer를 local scope에 등록하고 그것에 대한 node& onGet()를 반환한다. Node는 적절한 시점에 local scope을 free할 것이고 그때 같이 해제된다.
+
+
+##### 다시 만들어보자
+##### 1안 get-set은 프로퍼티만의 것
+* 대부분 언어가 이렇게 함.
+* get-set을 다시 정의하는 것은 프로퍼티 용도로 사용하려는 케이스만 존재.
+* 그러나 getset문법을 다른 객체에 사용할 수 없다는 제약이 있음. 사용자는 이 문법이 오직 프로퍼티만을 위한 것이라는걸 알아야 함.
+* 구현은?
+	* class ReferBase
+		* Type
+		* class Refer
+		* class PropBase
+			* class MgdProp
+			* class PropWrapper
+				* WRD_PROP(....)
+* null이 아닌 프로퍼티를 만들 수 있는가?
+	* 아니오. 불가능하다.
+	* 그러나 null이 아닌 프로퍼티를 만들려는 이유가 무엇인가?
+	* 그것은 멤버변수를 일종의 interface화 시켜서 멤버변수를 getter 없이 바로 public으로 공개하고자 하는 것이다.그러한 문화를 만들고자 하는 것이다.
+	* world는 멤버변수도 overriding을 지원한다. 단 반환형이 동일해야 하므로 멤버변수를 다른 멤버변수로 overriding 하는 것은 의미가 없다.
+	* 대신에 멤버변수를 프로퍼티로 만드는 것은 가능하다.
+	* 그러므로 단순 getter(의미도 없이 바로 return 멤버변수 하는 애들)를 만들지 말고 바로 public으로 반환하라.
+
+
+
+####  [..] Native와 onGet
+
+##### 정의
+* Get도 똑같이 SEAL로 나가면 된다.
+* 단, Get의 경우 반환형이 항상 This여야 한다. 이걸 체크하는 기능이 매크로에 있어야 한다.
+
+##### Native에서의 실행
+* MgdObj를 가져오려면 반드시 getMember(n)을 통해야 하므로 문제가 없다.
+* 문제는 getMember(n)가 아니라 별도의 과정으로 객체를 획득한 경우.
+```cpp
+class myObj : public obj {
+	WRD_CLASS(myObj, obj, GET(___GET___fuckyou_its_myname))
+	This ___GET___fuckyou_its_myname() {
+		....
+	}
+}
+
+class kk : public obj {
+public:
+	WRD_CLASS(kk, obj,
+		FUNC(foo)
+	)
+
+	myObj* foo();
+	myObj value;
+}
+
+void koo(kk& k) {
+	kk.foo();
+}
+```
+
+##### 1안 안되게 한다.
+* get은 run()을 했을때만 적용이 된다.
+* native에서 WRD_OVERRIDABLE이 안된 일반 메소드를 호출할 경우는 onGet이 불려지지 않는다.
+
+##### 2안 get은 이제 refer에만 존재하는 메소드이다.
+* 이 경우 "get의 구현" 문서를 보면 알겠지만 PropWrapper의 onGet, onSet 2개의 메소드를 c++ 코드로 overriding 하는 매크로를 만들기만 하면 된다.
+* Native에서 Node로 주어진경우 Refer수 있으니 반드시 to()로 가져와야 하는 제약이 이미 있다.
+* 프로퍼티는 Refer의 일종이므로 이 제약 1가지만 가지고도 Native에서 그대로 사용가능해졌다.
+* get을 범용적으로 했을때는 모든 Object, Node, 에 대해서 반드시 to()를 써야 했으므로 큰 차이가 있는 것이다.
+
+
+
+#### [v] set의 구현
+##### 요구사항
+* set은 op=와 동일하다. 다만 get은 기존 operator에 없는 메소드이므로 이름의 쌍을 맞추기 위해 set으로 하였다.
+* 객체 입장에서 봤을때는 일종의 cb이다.
+* sharable을 구현하기 위해 다음처럼 우리는 하고 있다.
+  * 모든 객체는 일단 한 번은 refer에 의해 씌워져 있을것. refer에 씌워져있지 않다면 sharable을 구현할 수 없다.
+  * refer만 가지고 소통 할 것
+  * refer는 pointer인 _bean만 교체함으로써 sharable을 구현 할 것.
+* 그러나 문제는 set이 놓여진 곳은 refer가 아니라 대상 클래스 이며, refer의 존재는 코드 상에 나타나지 않는다는 점이다.
+
+##### 알고리즘
+
+###### 사전 준비
+
+* MyObject::operator=(const MyObject& rhs)는 set(#MyObject) 로 visible 된다.
+  * MyObject::operator=()는 Super::operator=()를 호출하도록 해야한다. 이건 개발자의 책임.
+* Node::operator=()는 set(#Node)로 visible 된다.
+* Object와 그 자식클래스들은::operator=()에서 occupiable을 전제로 구현한다.
+* Refer::operator=()에서는 그런데, bind만 수행한다.
+* bool Node::isOccupiable()은, Object보다 자식클래스에서 set을 정의 했다면 true를 반환한다.
+
+```cpp
+class myObj : public obj {
+  WRD_CLASS(myObj, obj,
+    FUNC(operator=) // 이걸 visible하게 하므로 myObj는 occupiable이다.
+  )
+    This& rhs operator=(const This& rhs) {
+    if(&rhs == this) return *this;
+        Super::operator=(rhs);
+        
+        _grade = rhs._grade;
+        return *this;
+    }
+  float _grade;
+};
+```
+
+###### 실행
+
+```cpp
+o1 = myObj()
+def child := myObj
+  //This set(This new)
+  set=>: name = new.name // 이건 없어도 자동으로 해준다. set이 있으므로 occupiable이다.
+  name := "child"
+
+c1 := child()
+c2 := child()
+c1 = c2
+
+def my
+  name := "wow"
+m1 := my()
+m2 := my()
+m1 = m2
+```
+
+* 컴파일러는 객체 정의시, origin.isOccupiable()을 질의한다.
+  * true이면 바로 scope에 넣고
+  * false이면 Refer에 씌워서 넣는다.
+* 모든 객체는 occupiable/sharable 관계없이 operator=()가 호출되면 객체가 할당연산에 들어간다.
+  * sharable의 경우, 다음 중 하나다.
+    * Mgd객체였고, set은 재지정되지 않았다.  ==> 이 경우 기본 set이 대신 사용된다. 이것은 C++ operator=()와 동작이 똑 같을 것이다.
+    * Native객체였고, operator=()을 만들지 않았다. ==> 역시 위와 같은 케이스이다. c++의 operator=()를 대신 사용한다.
+    * Native객체였고, operator=()을 만들었으나 visible하게 하지 않았다. ==> operator=()는 system에 의해서 호출될 수 있다. 그러나 Mgd에서 개발자에 의해서 명시적으로 호출되진 않을 것이다. 이 경우는 복사생성자가 호출될 것이다.
+* Mgd 에서 "a = b" 구문은 항상 a.set(b)로 치환된다.
+  * set은 overriding, overloading, hiding이 모두 적용된다.
+* Native에서 "a = b" 구문은 a::operator=(b)를 역시 호출하게 된다.
+  * c++은 operator=()에 대해 overloading, hiding만 허용한다.
+* set()을 파생클래스에서 overriding할 수 있게 조치가 필요하다.
+  * 기본적으로 최적화를 위해서 worldfrx의 메소드들은 seal 처리 된다.
+    * worldlang spec에 seal이란 기능은 없다.
+    * seal visible 매크로와 일반 visible 매크로 2종류가 존재하며 visible매크로만 3rd에 공개된다.
+  * 3rd개발자가 operator=를 visible 한 경우에는 worldlang 메소드 이름을 set으로 해야하며 overriding 가능하도록 해줘야 한다. 그렇게하면 native에서 operator=()를 하는 경우, run(Msg("set", {args}))를 대신 호출하도록 한다.
+* 한가지 한계점은 멀티메소드가 안된다는 점이다.
+  * mgd/C++에서 operator=()를 할 경우, 파생클래스의 operator=() 가 호출되는게 아니다. 따라서 온전히 객체가 할당되지는 않는다.
+  * 따라서 c++에서 mgd 객체를 받아와 operator=()를 호출 하는 경우 mgd의 set()이 불리지 않게 된다.
+  * mgd에서 객체 parent를 가져와 op=()를 하는 경우 
+
+##### Q1 [v] 오버라이딩을 지원하는가?
+
+```cpp
+def parent
+  age = 3
+  res set(parent rhs)
+      age = rhs.age
+
+def child = parent
+  name = ""
+    ret=>res set(parent rhs)
+      c.out("NO WAY!")
+      ret
+  
+  ret=> res set(child rhs)
+      c.out("GOOD WAY!")
+      name = rhs.name
+      return ret
+      
+p1 = parent(), p2 = parent()
+pc1 = parent child()
+c1 = child pc1, c2 = child()
+    
+p1 = p2 // show nothing
+p1 = c1 // show nothing
+pc1 = p1 // NO WAY!
+p1 = pc1 // show nothing
+pc1 = c1 // NO WAY!
+c1 = pc1 // NO WAY!
+c1 = p1 // NO WAY!
+c2 = c2 // GOOD WAY!
+```
+
+
+
+##### Q2 [v] 하이딩을 지원해야 하는가? --> 별도의 항목으로
+
+* hiding을 지원하지 않으면??
+
+* 지원하지 않으면 구체클래스 일 수록 많은 set등을 가지게 된다.
+
+* 해결 하는 방법 1안은 상속시 멤버들을 private로 받을지, public으로 덮을지 결정하는 특문을 추가한다.
+
+* 해결 방법 2안은 속이 빈 메소드를 정의한다. 프로그램 동작시에는 2개의 메소드가 있지만 최적화를 하면 1개로 통합 가능하다.
+
+* [v] 해결 방법 3안 --> 별도 문서 참조
+
+  ```cpp
+  def parent
+    age = 0
+    void say(int)
+  def child = parent
+    void _say(int)=>
+    void say(float)
+    
+  p = parent()
+  c = child()
+  ```
+
+  
+
+##### Q3 [v] 지원해야 한다면 sharable과의 동작은 어떻게 되는가?
+
+밑에 서술한 대로 set이 없어야 sharable로 인식한다.
+
+
+
+##### [v] 1안 set이 있다는 것은 occupiable을 의미한다.
+###### Refer의 동작
+* 기존대로 모든 객체는 refer에 의해 감싸져 있다.
+* refer는 대상이 되는 type을 object로 들고 있으며 _ptr이 type의 자식 클래스임을 world 컴파일타임에 보장한다.
+* refer.set()이 호출되면 refer는 type에서 "set"을 찾는다.
+  * set이 없을 경우, refer의 기본동작을 대신 수행한다. sharable 이다. ptr = rhs.ptr만 하면 된다.
+  * set(type) 이 있을 경우, set에 ptr를 넘기고 반환된 refer를 리턴한다.
+* occupiable 객체일 경우 컴파일러 혹은 FRX에서 소유한 모든 멤버를 그대로 복사하는 set() 만들어준다.
+  * set()이 있으므로 컴파일러는 occupiable로 판단한다.
+
+###### 사용자 클래스
+* worldlang에서 set 이라고만 적으면 set(This rhs)와 같은 것이다. 안에서 자유롭게 연산을 하건 메소드를 호출하건 해서 This 객체를 넘기기만 하면된다.
+
+##### [v] Q4. native의 경우는 어떻게 set을 정의할까?
+
+* set 은 c++의 operator=()와 같다.
+* c++개발자는 operator=를 visible하게 할지 선택한다. visible하게 하면 occupiable로 동작한다.
+  * 만약 base는 occupiable이었는데 derive는 operator=를 빼지 않으면 base::operator=()만 호출 될 것이다. 이는 Mgd도 동일하다.
+* operator=는 visible하게 하든 안하든 항상 부모클래스::operator=를 호출하도록 해야 할 것 이다. world에서 부모클래스::set도 호출해주지는 않는다.
+* visible하게 하지 않아도 operator=는 당연히 존재한다. C++컴파일러가 채워주니까. 다만 이 경우 native에서만 사용된다. Mgd에서는 사용되지 않을 것이나, FRX는 사용할 수 있다는 얘기다.
+* operator=로 한 visible이 있을 경우 bridge 컴포넌트는 set()이름으로 변경할 수 있어야 한다.
+
+##### [v] Q5. 변수가 정의되지 않은 프로퍼티는 어떻게 만들 수 있을까?
+
+* 먼저 객체에 멤버변수 정의 하는 방법을 다시 짚고 가자.
+
+  ```cpp
+  def myObj
+  def A
+    age = null // age에는 0이 대신 들어간다.
+    myObj = null // A["myObj"]는 refer이며, refer의 값이 null인 상태이다.
+  ```
+
+* sharable obj 여부는 origin 객체가 갖고 있고, origin객체는 여부를 질의당하면 자신에게 set()이 존재하는가(set은 상속되지 않음)를 놓고 반환한다.
+
+* origin객체에 새로운 멤버변수가 추가될때 파서는, 해당 변수가 sharable이면 refer를 대신 넣어두는 식이다.
+
+* refer는 set(Node) 를 가지고 있다. 어떤 타입이 오건 타겟이 set이 있다면 그리로 redirection을 시도한다.
+
+  * isConsume()시에도 이걸 탐지할 수 있다. 에러로 내보낼 수 있다.
+
+* 따라서 sharable에 한해, 우리는 변수가 정의되지 않은 프로퍼티를 만들 수 있다.
+
+  ```cpp
+  def myObj
+  def #A
+    age = null
+      __myObj = myObj()
+      def my = myObj null
+        set(myObj rhs): _myObj = rhs // 이 set은 my 라는 origin객체에 있는것.
+                       // A["my"]에는 my라는 origin객체가 아니라 
+                       // Refer(OriginObj("my"))가 들어있다.
+      def age1 = int
+        =>set(int rhs): c.out("newval = $rhs")
+  
+  A.my = A.my()
+  A.age1 = 5
+  ```
+
+##### [v] Q6. def my = myObj null: set(my)가 맞지 않나?
+
+* 맞는데 set은 개발자가 타입을 마음대로 지정할 수 있음.
+* set이 하나라도 있으면 occupiable로 지정됨.
+* 컴파일러는 refer로 들어온 객체가 set으로 들어갈 수 있는지를 판단가능하므로 에러를 내보낼 수 있음.
+
+
+
+##### [v] Q7. set은 상속이 되는가? --> 된다. 그러나 컴파일러가 occupialbe 객체는 set을 만들어준다. 반환형은 마음 껏 해도 된다.
+
+##### [x] Q8. occupiable인게 sharable이 될 수 있는가?
+
+##### [x]  Q9. sharable인게 occupiable이 될 수 있는가?
+
+##### [v] Q10. occupiable이었다가 sharable이었다가 다시 occupiable이 되도 되는가?
+
+* 당연히 안되어야 정상이다. occupiable, sharable은 속성이다. 그리고 속성은 상속이 된다. 부모가 occupiable이면 자식도 다 occupiable이다.
+
+* occupiable은 set의 존재의 유무에 의해 판정된다.
+
+* 따라서 부모에 set이 있다면 자식은,
+
+  1. 자식도 부모의 set을 사용한다.
+  2. 자식은 고유의 set을 사용한다. 컴파일러가 채워넣어주기도 한다. 이경우 부모의 set이 대신 호출되지는 않는다.
+
+##### [v] Q11. sharable로 하고 싶고, 논리적으로 문제가 없어도 occupiable이 되버리는 한계점이 존재한다.
+```cpp
+def SharingObj
+	name := ""
+	age := 3
+	..
+	..
+def child := SharingObj
+	set=>: c.out("just print something!")
+```
+* 개발자는 sharable의 op=을 그대로 가져가고, 대신 전혀 관계없는 로직(printf)만 추가적으로 수행하고 싶었을 뿐이지만 컴파일러는 이를 occupiable로 받아들인다.
+* 결과 막대한 members 할당연산이 수행되어진다.
+* 컴파일러 최적화를 통해서 멤버변수, nonconst 메소드를 호출하지 않는다면 sharable을 유지하도록 할 수 도 있을것이다.
+* 일단은 known issue로 안고 가자.
+
+
+* 고찰
+
+  ```cpp
+  def parent
+    age = 0
+      name = ""
+    set(parent rhs)
+        age = rhs.age
+        name = rhs.name
+  def child = parent
+    //1: set()이 없을 경우
+      /*2: ret => set(child rhs)
+        c.out("wow!")
+        return ret*/
+  
+  p1 := parent(), p2 := parent()
+  c1 := child(), c2 := child()
+  
+  p1 = p2
+  p1 = c1
+  c1 = p1
+  c1 = c2
+      
+  ```
+
+* 결론
+
+  * 어느쪽이든 이론적으로 망하는 케이스는 없다. 1번은 개발자에게 전적으로 책임을 넘기는 것이며 2번의 경우는 편의를 위한 기능을 추가하는 것이다.
+
+  * 2번으로 가는게 맞을 것이다. 당장 필요한 기능은 아니므로 나중에 지원을 해주면 될것이다.
+
+  * overriding시 공변타입은 조건이 아니다.
+
+  * => overriding 재지정 연산자에 대한 문법 구체화
+
+    * 반드시 인자가 일치하는 부모가 아니더라도 넘길 수있어야 한다.
+
+    ```cpp
+    def child := parent
+      ret => res set(child rhs)
+        c.out("wow")
+          return ret
+    ```
+
+    는 다음과 같다.
+
+    ```cpp
+    def child = parent
+      res set(child rhs)
+        super(rhs) // parent.set(parent) 가 호출된다. 인자리스트가 다르다는 점이 point!
+          c.out("wow")
+          return ret
+    ```
+
+    
+
+
+
+##### [v] Q11. null refer의 set() 호출 문제
+
+```cpp
+def myObj
+  def isEnable := bool null
+    get: super.getState("enabled")
+    _set
+```
+
+* bool은 occupiable이므로 set이 이미 있다. 
+* 그러나 bool의 refer인 isEnable은 _ptr이 null이므로 bool.set()을 여기서 호출해도 크래시가 날것이다.
+
+###### 요구사항
+
+1. nested일경우, owner.this를 가지고 있어야 한다.
+2. occupiable일지라도 refer가 물수 있어야 하며, 실체가 없어야 한다.
+   1. 이때 이 refer에 대해 op=가 되면 어떻게 되는가?
+
+- Q1 a := bool null을 한 경우, a는 어떻게 동작해야 하는가?
+  - occupiable이므로 a는 null -> false가 할당된다.
+
+###### [x] 1안 static으로 하게 유도한다.
+
+```cpp
+def myObj
+  def isEnable = bool null
+      $set: super.getState("enabled")
+  def getComplexObj := ComplexObj null
+        $get: $inner := ComplexObj()
+```
+
+
+
+###### [x] 2안 :=와 =를 차이를 둔다.
+
+```cpp
+def #myObj
+  _age := 30
+  void say(): c.out("age=$age")
+
+def #child := myObj
+child.say() // 30
+    
+def #child2 := myObj
+```
+
+
+
+###### [x] 3안 null을 의미하는 특문을 이용한다.
+
+* 타입? 을 사용한다?
+* 규칙에 의하면 a := int null 를 했을지라도 a는 occupiable로써 false가 들어가야 한다.
+
+###### [v] 4안 최적화에서 제거한다.
+
+* 어짜피 컴파일러 최적화는 받드시 필요하다.
+* 컴파일러가 보고 이 경우에는 무시하도록 한다.
+
+```cpp
+def #myObj
+  _age := 30
+    void say(): c.out("age=$age")
+
+def child := myObj
+  def age := int? // int? == int null
+    set: myObj.this.age
+        arr = int[][str]?
+    name = str?
+```
+
+
+
+##### [v] Q12 get의 반환형은 super여야 한다? --> def 문법을 재해석해서 해결
+
+```cpp
+def A
+  str _getClassName()
+  def name := str?
+        get: _getClassName() // 반환형은 name? str?
+        _set=>
+
+def A := Obj?
+  def $instance := A?
+      get: $A() // get의 반환형은 A
+        _set=>
+    void $say(A a)
+            c.out("a.name=$a.name")
+  name = "A"
+A.instance
+
+def B := A
+  get: $B() // get의 반환형은 B.
+B
+```
+
+* 본래 get의 반환형은 위와 같은 경우 name이 된다.
+
+
+
+##### [x] This로 나가면 안 될까?
+
+* C.F. _set=> 부분도 컴파일러가 최적화해서 Super.set을 private로 접근자만 바꾸도록 해주면 더 좋겠다.
+* Super로 나간다고 해도 문제는 된다. null로 나가는 경우가 그러하다.
+
+```cpp
+def A
+    def name := str?
+1:    get: class.getName() // 에러. getName()은 str이지만, get의 반환형은 name이다.
+2:    get: name(class.getName()) // 개발자 의도가 1,2중 어느건지 모른다.
+3:    str get(): class.getName()
+```
+
+###### 1안 전부다 써라
+
+```cpp
+def A
+  def n1 := str
+1:    get: return "wow" // X: get은 기본적으로 This다.
+2:    get=>: c.out("wow")
+      void say()
+A.n1.say()
+3:    str get: return "wow"
+      void say() // WARN: we can't access this method.
+```
+
+
+
+###### [x] 2안 새로운 문법을 만든다.
+
+```cpp
+def A
+  def n1 := str // n1은 str에서 상속받은 것.
+    get=>: c.out("val=$val")
+
+  def n2 = int // n2는 refer인데 get/set만 다른것.
+1:    get=> // X =>를 붙일 수 없다.
+2:    get: 5 // O. get의 반환형은 int.
+    set: rOk
+    
+  def n3 := str?
+        get=>: "wow"// X. get의 반환형은 str이다.
+
+  def n4 := str? // n4는 str에서 상속받은 null이 할당되어 있다?
+        void say() // --> 새로운 문서로
+A4.n4.say()
+```
+
+
+
+###### [x] 3안 그냥 새로운 키워드
+
+```cpp
+def A
+  def n1 := int
+    get=>: c.out("val=$val")
+  prop n2 := int
+    get=>: 5
+```
+
+
+
+
+
+###### 검증
+
+```cpp
+def A
+  age := 22
+  set(A rhs)
+    age = rhs.age
+```
+
+```cpp
+def A
+  _in := 22
+  def age = int
+    set(int rhs)
+      in = rhs.in
+```
+
+```cpp
+def A
+  _in := 22
+  def age = wrap(int)
+    set(wrap rhs)
+      in = rhs.ptr
+```
+
+```cpp
+def myObj
+  def age := int
+    // =>는 기본적으로 자동으로 부모에서 넘어온걸 다시 return 까지 해줌.
+    =>set: c.out("new age = $new")
+    // =>는 이미 super()와 파이프라인이 연결된 상태에서 개발자가 코드를 끼워넣는다..
+        // 라고 이해하면 편하다.
+        get=>: c.out("get: age=$age") // 이렇게 하면 get의 반환은 age인가 int인가
+            
+  def isEnable := bool null
+    get: super.getState("enabled")
+    _set // bool은 occupiable이므로 set이 이미 있다. 
+    // occupiable인 bool에 null이 들어갔으므로 isEnable = false 가 된다.
+            
+  def complexObj := complex? // complex null과 같다.
+        set: // complexObj는 null이 들어가 있다. set 안에서 complexObj.this를 사용하는 순간 런타임 에러가 날것이다. 물론 런타임 도중에 myObj.complexObj = complex()로 문제를 해결할 수 있다.
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4672,11 +5422,11 @@ void ?(int a)
    class Node {
 
        bool at(const Node& trg) {
-    
+        
            const Bool& ret = call(Msg("at", {trg})).get<Bool>();
-    
+        
            return &ret ? ret.get() : false;
-    
+        
        }
 
    };
@@ -4688,7 +5438,7 @@ void ?(int a)
    def MyType MyOrg
 
        s1 = 2..3
-    
+        
        bool at(int n): n at s1
 
 6. 월드는 해당소스를 파싱해서 ManagedObject("MyOrg") 를 생성하고 at이라는 메소드를 추가함.
@@ -4787,10 +5537,10 @@ void ?(int a)
 
 
 ​                
-                흐름:
-                1. 우측부터rightmost 파싱된다.
-                2. [] 는 node:node 타입이다.
-        */
+​                흐름:
+​                1. 우측부터rightmost 파싱된다.
+​                2. [] 는 node:node 타입이다.
+​        */
 
 
 
