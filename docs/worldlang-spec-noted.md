@@ -239,8 +239,6 @@ def A
 // def Myball을 하는 순간 Myball = 33은 Myball이란 static 변수를 정의하는 것에서, 전역변수 Myball에 대한 할당으로 의미가 변한다. 그리고 물론 def Myball이 int였을 경우, 어떠한 에러도 나오지 않게 된다.
 ```
 
-##
-
 ##### [v] 2안 작은 문법을 추가한다.
 
 ###### [v] Q1. def A 대신 A 라고 표현 해야하나?
@@ -311,9 +309,18 @@ def A
 
 
 
+#### Node
+
+* 가장 기반이 되는 클래스.
+* Node이면 member를 가질 수 있다.
+	* member는 메소드 혹은 변수다.
+* accessor 를 구현한다.
+* hierarchy를 구현한다.
+* this를 점거하지 않는다.
 
 
-### 
+
+
 
 ### 연산자
 
@@ -2896,7 +2903,44 @@ def marine := base
 
 ###### [v] Q1 namspace도 확장을 쓸것이고, 이것도 결국 중첩클래스이다. public 문제 어떻게 되나?
 
-<br/>
+
+
+
+
+#### 객체의 구현 : Obj
+
+ def Obj := Occupying
+	* this를 점거한다.
+	* origin객체가 될 수 있다.
+	* sharedmember가 존재한다.
+		* sharedmember멤버를 런타임에 추가할 수 있다.
+		* sharedmember에 일반 변수가 들어 있으면 static이다.
+			* 그 변수가 refer로 감싸져있으면 sharable.
+			* 아니면 occupiable.
+	* shared member와 별도로 occupiying member가 배열로 존재한다.
+		* 외부에는 getMembers()는 sharedmember와 occupying member의 chain구조다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3707,6 +3751,43 @@ DX.name = "kkk"
 
 
 
+
+
+
+
+
+
+
+
+
+#### 프로퍼티의 구현
+
+def Property := Obj
+
+- Refer를 가지고 있다.
+  - worldlang으로 onGet, onSet을 추가할 수 있다.
+
+- class tprop<T> : public prop
+  - 템플릿으로 자동으로 T onGet(), onSet(T)가 추가되며 WRD_CLASS 매크로로 이 2개가 NativeWrapper로 등록된다.
+
+```cpp
+class myObj : public obj {
+	WRD_CLASS(myObj, obj, 
+		PROP(ver)
+	)
+
+	class ver : public tprop<Int> {
+		WRD_CLASS(ver, tprop<Int>, FUNC(onGet))
+		Refer<Int> onGet() {
+			//myObj& own = getOwner().cast<myObj>();
+			//return getLengthh();
+			return getVer();
+		}
+	};
+	int getLength();
+	static int getVer();
+}
+```
 
 
 
@@ -5054,6 +5135,8 @@ void ?(int a)
 
 
 
+#### OccupiyingNode?
+
 
 
 #### Refer
@@ -5115,6 +5198,24 @@ void ?(int a)
 - 그리고 *this를 담기지 못하도록 에러를 내뱉는 건 Method클래스에서 내뱉는게 아니라 파서가 해야 한다. const 메소드에서 this는 const A*가 되기 때문에 return (A*) this; 과 같은게 되버리며 A*에 const A*인 this를 넣으려고 했으므로 컴파일 단계에서 에러를 내뱉어야 한다. 
 - 만약 컴파일단계에서 잡아내지 못하면 런타임시에 저 코드는 결국 null이 나가게 될것이다. nonconst Refer에 const를 넣으려 했기 때문이다.
   - 참고 -> #Refer는_const_T_캐스트가_되어야만_한다.
+
+
+
+##### Refer의 구현
+
+* def Refer := Node
+	* onGet, onSet에 대한 추가 구현이 없다.
+	* this를 점거하지 않는다. 대신 다른 객체를 this로 내보낸다. 
+		* 결과적으로 모든 msg를 delegate하게 된다.
+	* getMembers()는 shared member만 사용한다.
+
+
+
+
+
+
+
+
 
 
 
@@ -7170,17 +7271,6 @@ private:
 
 
 ### 오버라이딩 재지정 연산자
-
-
-
-
-
-
-### 프로퍼티
-
-
-
-
 
 
 
