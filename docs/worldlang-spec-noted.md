@@ -1562,7 +1562,116 @@ child.say('5') // child.say(int) 꺼.
 
 
 
+#### [v] 사용자가 Native에서 virtual 된 메소드들을 override를 할 수 있을까?
 
+##### [x] 1안 - 지금 처럼 Native요소가 world로 바로 open 되게 한다.
+
+- worldlang에서 개발자가 만든 메소드가 native에서 이미 정의된 걸 override해야 하는 것들이 있다. 이런걸 구현할 수 있을까?
+
+- Q1 worldlang에서 상속은 어떻게 구현되지?
+
+  - Chain 혹은 배열의 복제로 구현된다.
+
+- Q2 worldlang overriding은 frx에서 어떻게 구현되지?
+
+  - 복제가 이루어진 후, members에 동일한 name으로 메소드 객체를 끼워넣는다.
+
+ 
+
+- [v] 예를들면 우리가 c++로 void str::toLower()를 만들었고, 이걸 override하려고 한다면.
+
+  - c++로 만든 메소드이므로 역시 worldlang으로 open되어 NativeWrapper객체로 만들어진다.
+
+  - 만들어진 Method는 TClass<str>에 소속된다.
+
+  - worldlang은 이를 바탕으로 str origin객체를 생성해놓고 이 Method를 넣어둔다.
+
+  - 컴파일러는 이제 worldlang으로 짠
+
+    - def myStr = str
+      - void toLower()
+
+  - 을 보고 myStr origin객체를 str로부터 먼저 복제한 뒤, 생성한 toLower() 메소드를 myStr member에 추가한다.
+
+  - 결론은 **Native메소드도 결국은 Wrapper로감싸져서 Method 객체로 나오므로 worldlang은 둘을 구분하지 않아도 된다**
+
+    
+
+- [..] 예를들면 생성자
+
+  ```java
+  class MyClass {
+  public: MyClass(int age);
+  private: int _age;
+  };
+ 
+  def portedMy = MyClass
+      portedMy(): super(27)
+  ```
+
+  - 보다 근본적인 문제로, MyClass와 portedMy 객체는 서로 다른 객체이다. 비록 Method는 wrap되어서 portedMy도 들고있다곤 해도, 멤버변수는 그렇지 않다.
+
+  - private 멤버변수는 메소드에 의해서만 변경되므로 메소드가 구현이 가능한 이상 대개는 문제가 되지 않을 것 같지만, 실제로는 인스턴스가 서로 다르기때문에 문제가 발생한다.
+
+    - ```java
+      class Array {
+      public: void convert();
+      private: vector<Node*> elems;
+      };
+      
+      def myArray = Array
+      arr2 = myArray()
+      arr2.convert()
+      // myArray는 복제가 되었지만 Array는 복제가 되지 않았다면 당연히 문제가 된다.
+      ```
+
+  - 이걸 해결하려면 궁극적으로는 MyClass객체를 portedMy가 들고있어야 하며 객체가 복제될때 새로 나오게 해야 한다.
+
+
+
+- [..] 예를들면 op=
+
+
+
+##### [x] 2안 - 다른 언어처럼 Array를 비롯한 것들은 pretype으로 뺀다
+
+* 개발자는 기본적으로 worldlang 안에 있는 클래스만 가지고 사용한다.
+* 그러나 c++로 만든 것들을 import 할 수도 있어야 할 것이다. 언젠가는.
+
+###### [v] Q1. c++로 만든 모듈을 import하려면 이 역시 native객체를 들고 있어야 하는가?
+
+* 이 문제가 해결되지 않으면 2안을 하는 이유가 없다.
+
+
+
+##### [v] 3안 - Object 객체에 주입한다.
+
+```java
+class MyClass : public Object {
+public: void foo() { _age++; }
+private: int _age;
+};
+
+def MyMy = MyClass
+    foo()=>:
+```
+
+1. MyClass는 MyClass.dll 파일에 빌드되어 담긴다.
+2. world frx는 MyClass.dll을 읽어들이고, MyClass를 인식한다. (TClass)
+3. MyClass 객체를 Object* 로 생성해서 origin객체로 명명하고 저장한다.
+4. 이 과정에서 MyClass::members는 메소드 foo()를 wrapping한 NativeWrapper가 추가되어있다.
+5. .wrd 파일을 읽는다.
+6. MyMy define을 파싱한다.
+7. MyClass의 origin인 MyClass를 scope에서 찾는다. origin객체이므로 젤 밑바닥에 존재한다.
+8. 가져온 origin객체로부터 clone 한다. 이 객체는 물론 MyClass::_age를 가지고 있다.
+9. clone한 객체를 MyMy라고 명명하고, stmt를 계속 파싱해간다.
+10. method foo()를 발견하고, Method 객체를 생성해 "foo"로 명명하고 MyMy::members에 추가한다.
+
+* 결과
+  * c++ Object를 clone해서 members에 주입을 하므로 인스턴스는 항상 1개가 유지된다.
+  * 오직 "public c++ 멤버변수는 visible 될 수 없음" 이라는 limitation만 존재하게 된다.
+  * TClass<T>는 origin객체와 관련이 없다. 이것은 C++ reflection만 수행되며 worldlang과는 무관계하도록 역할이 축소된다. 나머지 객체생성과 관련된 부분은 origin 객체로 대체된다.
+  * Class와 Object란 개념이 Object로 통일되었고, 모든 OBject는 scope를 통해서 접근이 가능하기 때문에 yacc를 짜는데도 매우 쉽게되었다.
 
 
 
@@ -2887,6 +2996,126 @@ A.nested()
 
 
 
+### 객체의 내부 구조
+
+#### [v] 최적화를 위한 scope의 인덱스 상수화
+##### 요구사항
+바인딩시 name을 scope에서 일일이 뒤지면 시간이 오래걸린다. 최적화가 끝나면 상수로 scope에 접근이 가능해야 한다.
+
+* 즉, 언제 실행했던 그 멤버는 항상 같은 인덱스에 있어야 한다.
+* scope의 구성은 "this중복문제" 문서에 정한 구성을 따른다.	
+	* locals : local scope의 배열
+	* objects : object scope의 배열
+		* 대개, 새로운 object가 call되면, object는 이전의 object scope을hidden 처리시킨다.
+		* 그러나 이 object가 자신이 inner일 경우는 outer를 그대로 유지시킨다.
+		* 모든 inner 객체는 outer를 변수로 가지고 있다. 
+		* 모든 object는 sub를 변수로 가지고 있다.
+	* globals
+	* 예를들면, 다음처럼 구성된다.
+		* locals
+			* local[1] : visible
+			* local[0] : visible
+		* objects
+			* object[3] : visible // inner
+				* 부모클래스의 모든 멤버를 포함해서
+			* object[2] : visible // outer
+				* 부모클래스의 모든 멤버를 포함해서
+			* --------------- hidden - marker ---------------
+			* object[1] : hidden
+			* object[0] : hidden
+		* globals
+		
+##### 고찰
+* scope가 추가된다는것은 풀네임을 생략한다는 것이다. with 문과 똑같다.
+* 새로 추가한게 pushBack이 되면 매번 index가 바뀌게 된다. (앞에 재귀를 많이 돌리면 index가 커짐) 따라서 pushFront가 기본이 되어야 한다. local scope은 대개 이걸로 대체가 가능하다.
+* object scope은 언제 실행하던 항상 index구성이 똑 같아야 한다.
+	* object의 멤버가 일종의 call을 하려고 하면 (get/set/생성자 모두 포함) 자신을 소유한 owner인 object의 scope 추가를 명령한다.
+	* object는 scope가 추가 cb이 왔을때 자신의 owner가 있다면 그 owner에 대해 scope추가를 먼저 cb한다.
+	* 지역변수는 owner가 없다.
+	* method, 변수도 object다.
+	* method는 this가 될 수 없다. 그러나 method안의 method는 outer인 method를 접근할 방법은 알 고있어야 한다.
+* with에 의해서 확장된 경우는 해당 식별자만 scope 추가하면된다.
+	```cpp
+	def P
+		void foo()
+	def C := P
+		void boo()
+		def inner
+			void say()
+	with C.inner
+		say() // O
+		boo() // X C.inner.owner.boo()
+		foo() // X C.inner.owner.foo() or C.inner.owner.super.foo()
+		// owner, super는 scope에 자동 추가 되지 않는다.
+	```
+* 멤버변수가 접근되었을때도 scope는 추가되지 않는다.
+* 오직 메소드가 호출 되었을때만  owner가 없을때까지 재귀적으로 추가된다.
+* 최적화는 나중에 생각하자.
+
+##### 검증
+```cpp
+def A
+	void do()
+		foo()
+	void foo()
+def B := A
+	=>void do()
+		c.out("B")
+		inner.do()
+	def inner := A
+		void foo()
+		
+def C := B
+	void boo()
+		foo()
+
+c = C()
+C.boo()
+/*
+	C.get()
+		[Method]C.get은 object이므로 this인 C를 load시도
+			[Object]C는 outer가 없으므로, 자기의 members만 object scope에 load.
+		[Method]C.get은 자신을 load 완료.
+			(Method는 자신의 static, 인자리스트, class 등을 load한다)
+		[Method]C.get은 함수가 끝나면 자신을 unload.
+		[Method]c.get은 this에 unload시도
+			[Object]C는 outer가 없으므로 자신을 바로 unload.
+	.boo
+		C.getMember("boo")
+		boo.get() 호출
+	boo.get()
+		[Method] boo.get()은 this인 boo를 scope에 로드시도
+			[Method] boo는 this인 c.boo()를 load 시도.
+				[Object] c는 outer가 없으므로 자신을 load
+			[Method] boo는 자신을 load
+		[Method] boo.get()은 자신을 load.
+		Method boo.onLoad()는 this인 boo
+	boo()
+		
+*/
+c.boo()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -4183,7 +4412,152 @@ def myObj
 
 
 
+#### [v] frx에서 worldlang cb을 호출하려면
+```cpp
+// My.cart
+class My : public Object{
+public: virtual void foo();
+};
 
+// MyMy.box
+def MyMy = My
+    void foo()
+
+My a = MyMy
+a.foo()
+```
+
+##### [v] Q1. a.foo()가 되면 worldfrx는 어떻게 MyMy.foo()를 호출하나?
+
+* native 객체 생성 호환성 문서를 통하면 MyMy는 My::foo()와 MyMy::foo() 모두를 갖는 1개의 객체로 나오게 된다.
+* worldfrx은 a.foo()를 보면 이를 scope["a"].get("foo").run(msg) 로 치환하므로 동작한다.
+
+##### [v] Q2 위의 케이스는 wrd stmt를 통해서 동작하기에 문제가 없다. native에서 동작하는 경우는?
+
+```cpp
+Object& obj = scope.get("a");
+class Node {
+    public:
+    Node& get(string name) {
+        Node& sub = iterate_do_something(name);
+        return sub._onGet();
+    }
+    virtual Node& _onGet() { return *this; }
+};
+
+def MyNode = Node
+    onGet(): $MyNode
+```
+
+* 어떻게 하면 C++의 _onGet()의 호출이 worldlang의 onGet()이 불려지도록 될 수 있는가?
+
+
+##### [x] Q3.  이런 메소드의 목록이 무한정 있다면 이 방법은 반드시 실패한다. 어떤 메소드들이 있을 것인가?
+
+* 포인트는 caller코드가 frw에 있느냐 이다.
+
+  * e.g. Node::getName() 이 있을 경우, 이를 override 해도, 항상 worldlang에 의해서만 호출된다면 문제는 되지 않는다.
+
+* 모든 기본 클래스에서 기본적으로 메소드들이 해당되는 건 아니다.
+
+##### [v]Q4. 가장 문제되는 건 native 메소드에서 worldlang이 구체클래스를 던지는 case이다.
+```java
+struct MyClass : public Object {
+	int getAge() { return 55; }
+};
+class Foo : public Object {
+	void letsgo(MyClass& my) {
+		my.getAge();
+	}
+};
+
+def MyClass = MyCpp
+	int getAge()=>: print("hello age!")
+Foo.letsgo(MyClass) // hello age!가 나와야 하지만, 실제로는 나오지 않는다.
+```
+* 위 시나리오의 문제 원인 서술
+	* letsgo()는 Wrapper에서 의해서 Method화 되어서 Foo라는 Object의 shared member에 들어가게 된다.
+	* parser는 "Foo.letsgo(MyClass)" 라는 문법을 보고, 
+		* scope["Foo"][letsgo].run( Msg("()", scope["MyClass"]) );
+	* 처럼 stmt를 구성하며, 이 실행에 의해서 letsgo wrapper에 MyClass라는 Object가 인자로 넘어간다.
+	* letsgo wrapper::run()은 Msg에서 받은 Object를 들고 cast<MyClass>를 시도하며 이는 TClass<T>에 의해서 타입이 판단된다.
+		* Tclass<T>는 MyClass&를 Refer로 감싸서 반환하고
+	* letsgo wrapper는 받은 Refer에서 MyClass를 꺼내려고 시도한다. 성공하면 그걸 c++의 letsgo()로 넘긴다.
+	* c++ letsgo() 에서는 MyClass& 를 받는다. 그리고 이것에 대해 getAge()를 호출한다. 
+	* 그럼 짜잔! C++::getAge()가 호출될뿐, **worldlang의 getAge()가 호출되진 않는다.**
+
+###### [x] 1안 .run()을 사용한다.
+
+```java
+class Node {
+    public:
+    Node& get(string name) {
+        Node& sub = iterate_do_something(name);
+        return sub.call(Msg("onGet"));
+    }
+};
+```
+
+* 반대로 말하면, 이런 메소드들을 미리 찾아내서, 그것들에 한해서 FRW 코드에 박아넣어야 한다는 것이다.
+
+
+###### [v] 2안 어떻게든 C++에서 일반 메소드를 호출했는데 world 메소드가 호출되도록 한다. --> 별도의 항목으로
+
+##### [v] Q5. 알고리즘3 -->  별도의 항목으로
+
+
+##### [x] 3안 항상 call()을 생활하 한다.
+
+##### [x] 4안 다른 언어들 처럼, C 함수 위주로 다시 설계한다.
+
+* c, c++ 개발자들은 wrd_get_method() 이런 API를 통해서 메소드를 얻어와서 호출하거나 해야 한다.
+* 클래스는 내보내거나 받기가 쉽지 않다. 그냥 객체로써 주고 받고 된다.
+
+##### [x] 5안 매크로를 사용해서 항상 wrapper로 감싼다
+* 근데 이럴 경우, 개발자들은 wrapper로 감쌀지 안감쌀지 선택할 수 있어야 한다. 
+* 그리고 그 여부가 worldlang에 공개가 되어야 하므로 worldlang 개발자도 선택할 수 있어야 한다.
+
+##### [x] 5-1안 annotation으로 해결한다. --> 별도의 항목
+
+##### [x] 6안 Native만 wrap여부를 선택할 수 있다.
+* 퍼포먼스적인 측면에서만 "seal" 기능을 추가한다.  Native개발자는 wrap할 메소드를 seal할 건지 정할 수 있다.
+* seal 되면 그 여부를 Method는 가질 수 있다. 
+* 그래서 IDE를 통해서 고지도 가능하다.
+* worldlang에서는 이 seal을 둘 수 없다. 
+* 컴파일러는 seal 된 메소드를 overriding 여부를 검사하며, 이때 에러를 고지한다.
+* seal은 worldlang에 의해서 만들어질 수없으므로 C-REPL과는 관계없게 된다. 이것에 대한 증분빌드를 할 필요는 없다.
+
+##### [v] 7안 worldfrx만 항상 seal.
+* 퍼포먼스적인 측면에서만 "seal" 기능을 추가한다.  worldfrx는 seal로 wrap하는것과, nonseal로 wrap하는 매크로 2종류를 준비한다.
+* seal이라는 개념은 worldlang(컴파일러포함) 존재하지 않는다. 
+* worldlang 개발자에게 worldfrx의 메소드를 override하지 말것을 고지한다. (일부 메소드 제외)
+* native 개발자에게는 항상 nonseal 버전만 공개한다.
+
+###### 결과
+* 구현이 간단하다.
+* 모든 개발자에게 1가지 사실 (worldfrx를 wrap하지 말라는 예외)만 고지하면 모든게 해결된다.
+
+##### [v] Q6. 왜 worldlang에서는 불가능한가?
+1. 문법이 더러워지기 때문이다.
+	* 먼저 추가적인 특문을 할당해버리면 특문이 너무 많게 된다.
+		```java
+		def A
+			void _$#@foo() // private, const, static, seal
+		```
+	* 그렇다고 seal만 글자로 하는 것도 이상하다.
+		```java
+		def A
+			seal void _$#foo();
+			// seal private static void foo() const;
+		```
+	
+	```
+	
+	```
+2. 오직 이 이유때문에 seal 이라는 키워드를 추가하는게, 문법을 추가하는게  마음에 들지 않는다.
+	* 명백히 seal은 효용도가 떨어진다. 
+	* 가능하면 문법을 줄이고 간편하게 하고 싶다. worldlang의 철학은 20% coverage를 위해서 80% 더러움이 필요하다면,
+	* 그 20%를 버리는것이다.
 
 
 
@@ -4325,7 +4699,10 @@ res := env.calculate()
 
 
 
+#### [..] 사용자의 cpp 코드에서는 null을 사용자가 직접하지 않도록 가능한 해야 한다.
 
+cpp 코드에 의해서 멋대로 crash가 나서는 안된다.
+FRX이 막아줘야 한다.
 
 
 
@@ -8115,6 +8492,252 @@ def app
 #### 모듈개발자가 클래스의 static 멤버변수를 visible하게 할 수 있는가?
 
 - 현재로써는 멤버변수를 visible하게 할 순 없다. method만 가능하다.
+
+
+
+#### [v] Native wrapper 개선
+
+* 알고리즘 1에서 2로 개선해보자.
+
+##### [x] 알고리즘1
+```cpp
+#define DEF_METHOD(RET, NAME, ARGS, STMT) \
+  public: RET NAME ARGS { \
+    Method& m = get(Msg(#NAME, {/*ARGS의 인자들(객체)을 Wrap해서 Object화 시킴*/}); \
+    Refer r = m.run(ARGS);  \
+    return r.cast<RET>(); \
+  } \
+  private: RET __real__#NAME() { STMT } \
+  void onGetMethods(tray) { \
+    tray.add(TNativeWrapper<__real__#NAME>());  \
+  }
+
+class My : public object {
+  DEF_METHOD(void, sayMsg, (str, msg), (
+    cout << msg.toStr() << "\n";
+  ))
+};
+```
+
+##### [x] 알고리즘2
+```cpp
+// Boost코드를 참고함.
+class My : public obj {
+  void sayMsg(str msg) {
+    cout << msg.toStr() << "\n";
+  }
+  DEF(
+    TClass<My>::init()
+      .func(My::sayMsg)
+  )
+};
+```
+
+##### [v] 3안
+* 제약조건
+* 3rd개발자는 모든 메소드는 overridable, visible하게 해야 한다.
+* worldfrx는 일부 메소드를 제외하고는 override 불가능하다.
+* 함수명만 가지고도 반환형, 인자, 소속된 클래스명 모두 알 수 있다. 이걸로 NativeWrapper를 편하게 구성하자.
+```cpp
+#include <iostream>
+#include "./projects/independentor.hpp"
+using namespace std;
+
+class Catcher {
+public:
+    template <typename R, typename... As>
+    static void wrap(R (*f)(As...)) {
+        cout << "catched!\n";
+        // TODO: NativeWrapper 객체 만들어서 반환하기
+    }
+    template <typename R, typename T, typename... As>
+    static void wrap(R (T::*f)(As...)) {
+        cout << "catched T::*f\n";
+		// TODO: NativeWrapper 객체 만들어서 반환하기
+    }
+
+};
+
+#define __DEF_ADD_PREFIX(S) __WRD_DEF_##S
+#define __WRD_DEF_FUNC(N) /*TODO: N이름의 함수를 정의한다. C++에서도 사용가능하게.*/
+#define __WRD_USE_SEAL(N)
+
+#define __USE_ADD_PREFIX(S) __WRD_USE_##S
+#define __WRD_USE_SEAL(N) __WRD_USE_FUNC(N)
+#define __WRD_USE_FUNC(N) Catcher::wrap(&This::WRD_VISIBLE(N));
+
+#define WRD_DEF(T, S, ...)  \
+public: \
+    typedef T This; \
+    typedef S Super; \
+private: \
+	WRD_EACH(__DEF_ADD_PREFIX, __VA_ARGS__) \
+    static void onInit() { \
+        WRD_EACH(__USE_ADD_PREFIX, __VA_ARGS__) \
+    }
+
+#define WRD_OVERRIDABLE(N) __wrd_public_##N
+
+class Object {};
+class My : public Object {
+    WRD_DEF(My, Object,
+        FUNC(sayAge)
+        SEAL(foo) // worldfrx에서만 사용하는 비밀매크로.
+    )
+
+public:
+    void WRD_OVERRIDABLE(sayAge) (int age) {
+        cout << "age=" << age << "\n";
+    }
+};
+
+void foo(int, float, char*) {
+    cout << "foo\n";
+}
+
+class A {
+public:
+    int foo(float a, const A& a2, A* b) {
+        cout << "A::foo\n";
+    }
+    static void say() {
+        cout << "A::say()\n";
+    }
+};
+
+int main()
+{
+    Catcher::wrap(foo);
+    Catcher::wrap(&A::foo);
+    Catcher::wrap(&A::say);
+    return 0;
+}
+```
+
+
+
+#### [v] non seal 매크로
+##### 요구사항
+* native wrapper에 의해 공개된 origin객체를 mgd에서 상속받았을 경우 native에서 그 origin 객체를 받아 메소드를 호출했을때 overriding된 mgd의 메소드가 불려질 수 있어야 한다.
+* wrapper을 할때 가능하면 메소드의 body를 매크로안에 집어넣지 않도록 하고 싶다.
+
+```cpp
+class myClass : public obj {
+public:
+	WRD_CLASS(myClass, obj,
+		FUNC(foo),
+		FUNC(boo)
+	)
+	virtual void foo();
+	void boo() {
+		foo();
+	}
+};
+
+def myObj := myClass
+	=>void foo(): c.out("wow!")
+
+m = myObj()
+m.boo()
+```
+
+##### [x] 1안 매크로안에 body를.
+
+##### [x] 2안 이름을 2개.
+```cpp
+class myClass : publc obj {
+public:
+	WRD_CLASS(myClass, obj,
+		FUNC(boo)
+		OVERRIDE(_foo, foo)
+	)
+	void boo();
+	virtual void _foo();
+```
+
+##### [v] 3안 이름에 매크로를
+* native 개발자는 virtual 이라고 하더라도 overridable을 지원할지 안할지 결정할 수 있다. (권장은 안함)
+* 
+
+```cpp
+class myClass : public obj {
+	WRD_CLASS(myClass, obj,
+		SEAL(boo)
+		FUNC(foo) // FUNC매크로는 static타임에 함수 WRD_OVERRIDABLE(foo)가 존재할 경우 오버라이딩으로 판정.
+	)
+
+public:
+	void boo();
+	virtual void WRD_OVERRIDABLE(foo);
+```
+
+###### [x] Q1. WRD_CLASS안에서도 FUNC와 OVERRIDE를 구분해서 적어야하나? 그냥 FUNC로만 적도록 우리가 해줄 순 없을까?
+* overriding을 할것인지는, 사용자가 WRD_OVERRIDABLE을 이름에 붙였다는걸 보고 판단이 가능하다.
+* 그런데 그 판단은 SFINAE를 통해서만 된다.
+* SFINAE는 전처리 이후의 컴파일 타임이다. 즉 이시 점에서는 이미 매크로는 expanding이 되었다. 
+* 따라서, 판단은 가능하지만 판단할 시점에서 메소드를 추가하는건 도저히 불가능하다.
+
+##### [v] 다른 언어는 어떻게?
+* 부스트 파이선의 경우 virtual 메소드를 지정했으면 개발자가 wraper 클래스를 만들것을 강제한다. 
+	* 이것보단 낫지.
+
+
+
+
+
+#### pointer를 wrapping 하는 방법은?
+
+* sharable은 그냥 보통이 pointer다. 
+* occupiable은 pointer를 둔게 해줄 수 없다. 이런경우 별도의 wrapping 하는 C 함수를 따로 만들어서 처리행 ㅑ한다.
+```cpp
+TNativeWrapper<wrapper_c>();
+
+class myStuct : public obj {
+	WRD_CLASS(myStruct, obj, FUNC(set))
+	public void set(int new1) { _val = new1; }
+	int _val;
+}
+//void wrapper_c(int* to_inc) {
+
+//1:
+void wrapper_c(myStruct& to_inc) {
+	to_inc.set(1+to_inc.get());
+}
+arg := myStruct()
+wrapper_c(arg)
+
+
+//2:  나중에 우린 1번을 위한 Box<Int> 이런걸 만들어줄 수있을 것이다.
+void wrapper_c(IntBox& to_inc) {
+	to_inc++;
+}
+arg := IntBox()
+wrapper_c(arg)
+
+//3: 배열
+void wrapper_c(Array<Int>& to_inc) {
+	to_inc[0]++;
+}
+
+arg := [5]
+wrapper_c(arg)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
