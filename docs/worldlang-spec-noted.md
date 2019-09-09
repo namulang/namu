@@ -2998,8 +2998,548 @@ def myObj
 
 
 
-
 #### [v] def 문법
+
+##### def의 시행착오
+
+###### 아이디어
+
+```cpp
+tutorial sayer::
+    void say(str[] words) // 반환형 명시
+        for w in words
+            c.out("$w ")
+            
+    str[] create_lists(int len, str base) // 함수 정의시에만 타입 모두 적기
+        ret = [""] // 안쪽에서는 절대 명시 안함.
+            // Q.
+            ret = [sayer] // ret는 sayer가 들어있는 tutorial의 배열이 되게 하고 싶다면?
+                // 1: ret = [(tutorial) sayer]
+                // 2: tutorial[] ret = [sayer]
+        for l in len
+            ret.push("$base$l")
+        return ret
+
+app::
+    void main() with org
+        str[] proxy(str[](int, str) func, int len, str base)
+            func(len, base)
+        list = proxy(create_lists, 3, "hello")
+        say(list)
+            
+    event onConsoleOut
+        if sfsdfsdf
+        if sdfsdf
+       then
+```
+
+
+
+###### 2안
+
+```cpp
+def tutorial
+    name
+        get: class.name
+        _set
+
+    func void execute(void(str[]) func, str[] params)
+    
+def tutorial HelloWorldTutor
+    func void execute(void(str[]) func, str[] params)
+        func(params)
+            
+def app
+    func void main()
+        // 1
+        func void foo1(str[] params)
+            for p in params
+                c.out("$p ")
+        HelloWorldTutor.execute(foo1, ["hello", "world"])
+                
+        // 2
+        HelloWorldTutor.execute(func(params): for p in params: c.out("$p "), ["hello", "world"])
+
+        // 3
+        _tutor()
+                
+    void _tutor()
+        HelloWorldTutor.execute(func(params)
+            for p in params
+                c.out("$p ")
+        , ["hello", "world"])
+          
+    age = 3
+    event MyEvent()
+           age != 3
+    then
+        _tutor()
+    
+```
+
+
+
+```cpp
+def Part
+def Part Button
+def Button PlainButton
+def Button QuickButton
+def Part Wheel
+def Wheel AccurateWheel
+def Part Body
+def Ergobody Body
+    
+def Part Mouse
+    Mouse(Button newleft, newright, newwheel, newbody)
+        left = newleft
+        right = newright
+        wheel = newwheel
+        body = newbody
+    left = Button
+    right = Button
+    wheel = Wheel
+    body = Body
+
+def Builder
+    Body buildBody()
+    Wheel buildWheel()
+    Button buildLeftButton()
+    Button buildRightButton()
+    
+def Builder BusinessMouseBuilder
+    Body buildBody(): PlainBody()
+    Wheel buildWheel(): PlayinWheel()
+    Button buildLeftButton(): PlainLeftButton()
+    Button buildRightButton(): PlainRightButton()
+ 
+def Builder GamingMouseBuilder
+    Body buildBody(): ErgoBody()
+    Wheel buildWheel(): AccruateWheel()
+    Button buildLeftButton(): QuickLeftButton()
+    Button buildRightButton(): QuickRightButton()
+    
+def director
+    Mouse build(Builder builder) with builder:
+        Mouse(buildLeftButton(), buildRightButton(), buildWheel(), buildBody())
+            
+def app
+    void main() with director
+        Mouse    m1 = build(BusinessMouseBuilder),
+                m2 = build(GaminMouseBuilder
+            
+```
+
+
+
+###### 3안
+
+```cpp
+obj #MyType
+    age = 20
+    name = "Taehun"
+    say(): c.out("I'm $name and $age years old.")
+
++app
+    void main()        
+    void say(obj = MyType)
+        obj.say()
+```
+
+
+
+###### 4안
+
+* 아이디어
+
+반환형을 적는 이유는, 구체타입과 선언타입이 다르게 되는 경우, 이를 쉽게 반환하도록 하기 위함. 그래서 함수 내에서는 타입유추로만 작동하게끔 하자는 것이었으나, 멤버변수 정의시에도 타입선언은 필요하다.
+
+```cpp
+class Part
+class Body : Part
+class Button : Part
+
+parts = [Body()]
+parts.add(Button()) // 이게 안되게 된다.
+
+// 1
+Part parts[] = [Body()]
+
+// 2
+parts = Part[Body()]
+
+// [x] 3 []는 타입이 항상 obj로 고정이다.
+
+class A
+    age = 20 // 이런건 쉽게 예측 가능하다
+    part = Button() // 이건 좀 어렵다. part는 실제로는 button 니까.
+    
+    A()
+        part = Body() // 실패한다.
+    
+    // part는 Part 타입은 다 넣을 수 있다. 그리고 초기화는 Button()로 된다.
+    // 이걸 잘 표현 가능한 문법은?
+    // 1
+    Part part = Button()
+    // 2
+    part = Button():Part
+    // 3
+    part = Part, Button()
+    // 4
+    part = Part
+    part = Button() // 2줄로 쓰게 한다.
+    // 5
+    part = (Part) Button()
+    // 5'
+    // 5번의 아이디어를 확장한다. 즉, 문법을 단순화한다.
+    //    1. 타입 정의는 항상 '='를 사용한다.
+    //    2. 단, 초기화시에 실체타입과 겉 타입을 별도로 정의하도록 한다.
+    //    3. 그리고 그 문법은 캐스팅을 차용함으로써 문법의 갯수도 줄인다.
+    //    4. 단 기존 캐스팅 문법은 괄호를 사용하므로, 더 줄여야 한다.
+    part = Button() as Part
+    activity = get_service().get_concrete_activity() as Activity
+    //    장점:
+    //        1. as 이므로 () 보다 타이핑이 단순하다.
+    //        2. 생각의 흐름상, 캐스팅은 나중에 떠오르게 된다. 그러므로 뒤에 위치하는게 편리.
+    //        3. as 이므로 읽는데도 무리가 없다.
+    //    오. 괜찮은데.
+    
+    // 함수에도 적용해보자.
+    say(msg as str, func as void(str): func(msg)
+    getPart(msg as str)
+        with msg
+            case "Button": lbutton as Part
+            case "Body": body as Part
+            default: null as Part
+       // 좀 지저분한데.
+       // 다른 버전으로도 만들어보자.
+       
+       void say(str msg, void(str) func): func(msg)
+    Part getPart(str msg)
+        with msg
+            case "Button": lbutton
+            case "Body": body
+            default: null
+        // 어중간하다.
+        //    <타입> <변수>
+        //    <변수> as <타입> 2종류의 문법이 존재하게 되었다.
+        
+       // @을 써본다면?
+       //  <타입>@<변수>
+    //    <변수>@<타입> 어느걸로?
+   int @ arr
+   arr @ int // v
+   say(msg@str, func @ void(str))@void: func(msg)
+   getPart(msg@str) @ Part
+        with msg
+            case "Button": lbutton
+            case "Body": body
+            default: null
+        // 특문이 너무 많으니 되려 거슬린다.
+        
+
+    // 반대로 캐스팅 문법을 <타입> <변수> 로 고쳐본다면?
+    void say(str msg, void(str) func): func(msg)
+    Part getPart(str msg)
+        with msg
+            case "Button": lbutton
+            case "Body": body
+            default: null        
+        //part = Button() as Part
+        //activity = get_service().get_concrete_activity() as Activity
+        part = Part Button()
+        activity = Activity get_service().get_concrete_activity()
+        activity =
+            Activity(Service get_service(str it.getName())).get_concrete_activity())
+            // 캐스팅 보다  "." 연산자가 우선순위가 높아야 한다.
+        activity =
+            (Activity (Service get_service(str it.getName())).get_concrete_activity()).do_something_on_activity()
+    
+        #MyClass
+            age = 123
+            grade = float
+        
+        // [x] float_val = MyClass.grade 123 // grade의 origin은 float. 123은 float화 된다.
+        // 캐스팅 문법에서 lhs는 origin객체일때만 가능하다.
+        // 로컬 변수도 올 수 있다. 그러나 ? 와 같이 node 타입이 오면 에러로 취급한다.
+        // ?의 경우는 그냥 할당하면 된다. 캐스팅 할 필요가 없는것이다.
+        
+        valid = MyClass 123 // MyClass의 origin은 MyClass. 123은 MyClass 시도하나, MyClass(int)가 존재하지 않으며, 클래스 계층 관계도 아니므로 실패한다.
+        
+    Part // origin객체는 반드시 첫글자를 대문자로 한다.
+        name = "unknown"
+    Part #Body // 아무것도 없는 경우, 이 origin객체에 추가점이 없다는 것이다.
+    Part Mouse
+        _body = Body null // Body타입의 null이란 뜻.
+        void init()
+            body = Body()    
+    Mouse.init()
+    
+    
+        // 모든 객체는 origin객체로 삼을 수 있는가?:
+        // origin객체로 할지 안할지 결정하는 이유는, 이게 타입 유추의 기반이 되기 때문이다.
+        Part get_part(str name): with name
+            is "body": Body()
+            is "dynamic"
+                ret = get_part("body") // get_part는 Part의 일종을 반환한다. ret는 Part에서 멤버변수/메소드의 추가가 없다. 따라서 ret는 Part가 origin이다.
+                
+                age = 23 // 마찬가지로 age는 origin이 int이다. 값만 바뀌었지 인터페이스는 int와 동일하기에.                
+                int age // 캐스팅 문법이다.
+                // Origin이냐 아니냐의 판단은, 인터페이스의 추가 있느냐로
+                // 결정되지는 않는다.                                
+                Part Mouse // 자, 이것은 origin인가 아닌가.
+                Mouse GamingMouse
+                    void do_something()
+                // GamingMouse는 분명히 만들어질 수 있어야 한다. 상속을 하려면
+                // Mouse또한 origin이어야 한다.
+                // 고로, 인터페이스의 추가가 되었느냐만 가지고 origin 판단을 할 수 없다.
+                // 왜냐하면 origin은 기본적으로 static이며, global scope이기 때문.
+                // 지역변수는 static이 아니기에, origin이 될 수 없다.
+                // 따라서 사용자에 의한 "이것은 Origin 입니다" 라는 선언에 의해서만
+                // origin은 생성되어야 한다.
+                // 그런데...
+
+                // [?] 캐스팅 문법과 origin 정의 문법이 겹친다:
+                int sss // sss를 int로 캐스팅 문법과 차이가 없다.
+                    void print()
+                        int this // this를 int로 캐스팅한 것이다.
+                // 보다시피 첫줄의 문법이 겹친다.
+                // 따라서 문법을 충분히 구별이 가는 걸로 만들어야 확실히 origin을
+                // 구별 해낼 수 있게 된다.
+                
+                    // [x] 1 - 키워드를 추가한다.
+                    def Part Body
+                    def Body : Part
+                    def Body(Part)
+                    
+                    Body from Part
+                    
+                    // [ ] 2 특문을 사용한다.
+                    //Body -> Part
+                    //Part -> Body
+                    //-> Part Body
+                    
+                        // 부모 클래스가 없는 경우는?:
+                        //    1 - 항상 obj를 표기한다.
+                        obj -> Body
+                        //    [v] 2 - 역시 def로
+                        def Body
+                        def Part Body
+                        //    3
+                        [x] -> Body
+                            
+                            -> Part
+                            Part -> Body
+                            Part -> Button
+                            Part -> Mouse
+                                _parts = [Part null]
+                                body: get: parts[0]
+                                lbt: get: parts[1]
+                                rbt: get: parts[2]
+                                void init()
+                                    parts = [Body(), Button(), Button()]
+                            
+                                    
+                            def Part
+                            def Part #Body
+                            def Part #Button
+                            def Part #Mouse
+                                _parts = [Part null]
+                                body: get: parts[0]
+                                lbt: get: parts[1]
+                                rbt: get: parts[2]
+                                void init()
+                                    parts = [Body(), Button(), Button()]
+                            
+                            mouse1 = Mouse()
+                            mouse1.init()
+                            mouse2 = mouse1() // 뭐가 되는건가?
+                            mouse2 = mouse1(mouse1)
+                                // [?] 생성자는 복제 객체에서 자동으로 정의된다?:
+                                def Mouse
+                                    age = 0
+                                    Mouse()
+                                    Mouse(int age): this.age = age
+                                    Mouse(#Mouse rhs): age = rhs.age
+                                mouse1 = Mouse(3)
+                                // mouse1 의 복제를 만들고 싶다면?
+                                //     1
+                                mouse2 = mouse1.clone()
+                                mouse2 = mouse1() // == Mouse()
+                                mouse3 = mouse1(mouse2) // == Mouse(mouse2)
+                                func = mouse1.Mouse(void)
+                                
+                                func() // 메소드는 복제가 불가능함. true?
+                                // 객체는 기본적으로 op()는 생성자로 동작함.
+                                // 복제된 객체도 origin과 동일한 인터페이스를 가지므로
+                                // 생성자도 동일함.
+                                // 메소드는 op()를 메소드 호출로 덮어씀.
+
+                        //    4 - org
+                        org Body
+                        org Part Body
+                    
+    
+    parts = [Part Body(), Part null] // parts는 Part타입의 배열
+    maps = [Part Body():"body", null] // maps는 "Part:str"의 맵.
+    maps1 = [Part:str null]
+    
+        // 간단 초기화 문법:
+        // [x] 1
+        //maps = [Part:str...]
+        // [v] 2
+        maps = [Part:str null] // <타입> : <타입> 또한 일종의 타입으로 치환된다.
+            // 해석 순서:
+            // 1. <타입1> <타입2> 문법은 캐스팅 문법.
+            // 2. 타입1은 로컬변수도 올 수 있다. 이때는 origin객체를 추출한다.
+            // 3. Part의 origin 객체는 Part, str도 str.
+            // 4. Part:str이 최종 tuple의 origin객체임을 알아냈다.
+            // 5. null을 Part:str의 origin객체를 가진 변수라고 지정한다.
+            // 6. 자연스럽게 maps 또한 Part:str만 올 수 있는 map이라고 유추된다.
+            body = Part Body()
+            maps = [body:"body"] // 이 또한 Part:str로 유추된다.
+                        
+    // 음. 일관성이 있다.
+    // 다만 실제 구현시에는 가독성을 위해서 색으로 마킹이 필요하다.
+    // 문제는, 이게 과연 모호성 오류가 없을 것인가.
+    
+    // 객체의 복제
+    part -> #body
+    part -> #mouse
+        _body = body null
+    app
+        void main()
+            mouse1 = mouse() // 생성자로 복제한다.
+            mouse2 = ?
+                // mouse1을 복제하고 싶다면?
+                // 1 다른 언어 방식
+                    mouse2 = mouse1.clone()
+                    mouse2 = new mouse1
+                    mouse2
+                // 2 문법을 통일한다.
+                    mouse2 = mouse1()
+                    // 이게 가능한 것인가?
+                    // mouse1은 mouse의 복제된 객체. 인터페이스가 동일하다는 것이다.
+                    // 아.. 그렇다면 복제된 객체의 생성자는 자신의 복사객체가 나가야
+                    // 한다는 것이다.
+                    // mouse1() == mouse1(mouse1)
+                    // origin객체도 그렇게 동작하고 있으며, 다른 언어에서 봤을때
+                    // 지역변수에 생성자를 호출한다고 해도, 그 origin 객체가 나온다고
+                    // 보기 힘드...니까?
+    
+    
+    get_part()
+    GetPart()
+    getPart()
+    get-part()
+    get`part()
+    abc.get part()
+    
+```
+
+
+
+###### [x] 중요! 타입 정의시에 " = " 를 사용할 수 있다?
+
+왜냐하면 메소드도 결국은 반환형이 정적이니까.
+
+```cpp
+age = 23 // age는 origin 객체가 int이며 그 값이 23이다.
+myobj = Mouse() // org: Mouse  Mouse로부터 복제됨.
+
+def GamingMouse = Mouse
+def GamingMouse = foo(lambda)
+    
+def app
+    void main()
+        age = foo(lambda, msg)
+    age2 = foo(lambda, msg)
+
+```
+
+age2는 동적이다. org는 정적요소이다. 그러나 값은 동적요소이다.
+GamingMouse는 정적이다. 값이라는게 없다. 오로지 객체의 정의. 정적요소 밖에 없다.
+
+
+
+###### 연습
+
+```cpp
+def #KeySound
+    void play()
+        if wav_path == "": return
+            
+        with Mixer
+            open(wav_path)
+            play()
+            close()
+
+    str wav_path
+
+def #Key
+    Key()
+    Key(int new_pos_x, int new_pos_y)
+        _pos_x = new_pos_x
+        _pos_y = new_pos_y
+    
+    pos_x = 0: _set=>
+    pos_y = 0: _set=>
+    get_label: get: name[0]
+    name = str null: =>set: update_pos()
+    sound = KeySound null: _set=>
+    void _update_pos()
+        with _name[0]
+            is 'a':    pos_x = 10: pos_y = 10
+            is 's':    pos_x = 15: pos_y = 10
+                .
+                .
+                
+
+### 람다 샘플 만들어보기
+
+​```cpp
+def app
+    void print(str(int) func, int type)
+        c.out("msg=$func(type)")
+    void main()
+        // [v] 1
+        print(type ->
+            with type
+                is 1: "hello"
+                default: "world"
+        , 1)
+        // [v] 2
+        print(type -> with type: is 1: "hello": default: "world", 1)
+        // [v] 3
+        str foo(int code)
+            with type
+                is 1: "hello"
+                default: "world"
+        print(foo, 1)
+        // [v] 4
+        print(str foo(int code)
+            with type
+                is 1: "hello"
+                  default: "world"
+        , 1)
+        // 1-2
+        print(str(int type)
+            with type
+                is 1: "hello"
+                  default: "world"
+        , 1)
+                    
+    
+```
+
+```cpp
+key,
+    name=""
+    x = 0: get
+    y = 0: get
+
+```
+
+
 
 ##### def는 새로운 origin객체를 정의한다는 것이다.
 * 새로운 인터페이스의 추가를 의미한다.
@@ -3197,7 +3737,220 @@ def A
 
 ##### [x] 4안 "#" 는 const. 
 
+##### 프로퍼티에서 활성화/비활성화/일부만 private/리다이렉션 하는 법
 
+###### 동기
+
+* 이걸 세밀하게 할 수 있어야 진짜로 setter/getter를 대체할 수 있게 된다.
+* 또한 정의가 번거롭지 않으며 편해야 한다.
+* 논리가 중언부언하지 않고 예외가 많지 않고 깔끔하며 편해야 한다.
+* 때로는 기능을 생략하거나 합치는 것이 답이 될 수 있다.
+
+###### 구체화
+
+|  #   | 변수명                        | 분류                                                         | 문법          |
+| :--: | :---------------------------- | :----------------------------------------------------------- | ------------- |
+|  1   | wav_path                      | - public 완전 open                                           | 프로퍼티 아님 |
+|  2   | _sound, _name, _pos_x, _pos_y | - 일부만 open <br />- 위의 여부 관계없이 get,set에서 특정 동작 | 프로퍼티 아님 |
+|  3   | getLabel()                    | - 일부만 open                                                | 프로퍼티      |
+
+
+
+```cpp
+class KeySound {
+public:
+    void play() {
+        if(wav_path == "")
+            return;
+
+        Mixer::open(wav_path);
+        Mixer::play();
+        Mixer::close();
+    }
+
+    string wav_path; //
+};
+
+class Key
+{
+public:
+    Key() {}
+    Key(int new_pos_x, int new_pos_y) : _pos_x(new_pos_x), _pos_y(new_pos_y) {}
+
+    int getPosX() const { return _pos_x; }
+    int getPosY() const { return _pos_y; }
+    char getLabel() const { return _name[0]; }
+    const string& getName() const { return _name; }
+    void setName(const char* new_name) {
+        _name = new_name;
+        _updatePos();
+    }
+    const KeySound& getSoundSource() const { return _sound; }
+    
+private:
+    void _updatePos() {
+        switch(_name[0])
+        {
+            case 'a': _pos_x = 10; _pos_y = 10; break;
+            case 's': _pos_x = 15; _pos_y = 10; break;
+                .
+                .
+        }
+        return;
+    }
+protected:
+    void _setSoundSource(const KeySound& rhs) {
+        _sound = rhs;
+    }
+    
+private:
+    KeySound _sound;
+    string _name;
+    int _pos_x;
+    int _pos_y;
+};
+```
+
+###### 기능을 쪼개면,
+
+* 변수가 있는가, 프로퍼티 인가
+* getter/setter중 일부만 open 되었는가?
+  * open된 것은 구현이 포함되어 있는가? 아니면 단순히 접근자를 표현하기 위해서만 정의되었는가
+
+###### 일단 만들어볼까?
+
+```cpp
+KeySound,
+    play(void)
+        if wav_path == ""
+            return;
+        
+        Mixer.open(wav_path)
+        Mixer.play()
+        Mixer.close()
+         
+    wav_path = ""
+            
+Key,
+    Key(void): nothing
+    Key(int new_pos
+    
+```
+
+###### 위의 건에서 찾은 의문
+
+###### [v] 메소드 정의시 타입을 안넣으면 안될까? --> 응 안됨.
+
+```cpp
+app
+    print(msg)
+        c.out(msg)
+```
+
+* 아무리 쉬운 코드라도, 타입유추할 껀덕지가 없다면 동작하지 못한다.
+* 게다가 오버로딩이 동작하지 못한다.
+
+###### [ ] 타입 정의 문법을 바꾸면?
+
+```cpp
+[ ]1: YoungHee Cheolsoo
+[ ]2: CheolSoo = YoungHee
+```
+
+- 좀 더 시험해볼까
+
+  ```cpp
+  age = 25
+      print(void)
+          c.out("hello, I'm ${this} aged")
+  he = age
+  he.print()
+  // he = 26 // he는 int가 아니다. occupiable =가 될 수도 없다.
+  he.print()
+      
+  Person // #Person이 되면 name을 수정하지 못하게 한다는 뜻이다.
+      say(void)
+          c.out("hello")
+      _name = ""
+  Chelsoo1 = Person // Chelsoo1은 Person을 가리키는 refer다.
+  Chelsoo = Person // Chelsoo는 Person으로부터 상속받은 새로운 타입객체다.
+      Chelsoo(): name = "Chelsoo"    
+      => say(void)
+          c.out("and my name is ${name}")
+ 
+  Chelsoo2 = Chelsoo() // Chelsoo2는 Chelsoo로부터 복제된 객체다.
+  Chelsoo3 = Person() // 이것은 Person에 정의된 모든
+      say(void)
+  ```
+
+- 인터페이스의 추가가 없다면, 그것은 기존 객체에 대한 복제와 완전 동일한것이다.
+
+- 하지만 할당은 꼭 복제처럼 일어나지는 않는다.
+
+- a = b 를 없앨 수는 없다. 이것은 너무 친숙한 문법이니까. 고로 a b 를 a = b 로 대체할 수 없는가부터 생각해봐야 한다.
+
+- 1번과 2번은 완전히 동일한 기능인가?
+
+  - occupiable일 경우 동일하다.
+
+  - sharable일 경우, 1번은 refer의 정의를 뜻하나, 2번은 refer 할당을 뜻한다.
+
+    ```cpp
+    Person p
+    p = getSomeone()
+        
+    Person p
+    p = Person()
+        
+    Person p()
+    ```
+
+- a = b로 Person p를 표현할 수 있을까?
+
+  ```cpp
+  Person
+      name = "unknown"
+      print(void)
+          c.out("name=${name}")
+  p = Person
+  p.print()
+  p = Person()
+  p.name = "Chales"
+  p.print()
+  ```
+
+  - 위의 시나리오는 가능하다.
+  - a = b 일때, b가 sharable이라면 a는 refer의 정의가 된다.
+  - b()는 b의 터미널메소드("()")를 호출하고 이는 객체의 생성으로 이어진다.
+
+  ```cpp
+  1: age = int    // int는 occupiable이므로 age는 int 객체로부터 복제.
+                  // age = int()와 같다.
+  2: grade = 3.5    // 3.5는 #float이 복제된 것이다.
+  ```
+
+- 타입은 항상 복제가 상속을 대체한다. 즉 const를 물려받지 않는다.
+
+- 문법에 따라 확장으로 표시할 수도 있다.
+
+  ```cpp
+  #Person
+      name = "unknown"    
+  cp = Person // cp는 const다. 원본을 가리킨다.
+  p = Person() // p는 const로부터 복제된 nonconst 객체를 가리킨다.
+ 
+  #Chelsoo = Person // Chelsoo Person으로 하면 에러가 된다.
+      say()
+          c.out("name=${name}")
+  cc = Chelsoo // const
+  c = Chelsoo() // nonconst
+ 
+  YoungHee = Person()
+      say()
+          c.out("I'm ${name}")
+  y = YoungHee
+  yy = YoungHee()
+  ```
 
 
 
