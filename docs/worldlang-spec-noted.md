@@ -1682,6 +1682,30 @@ def MyMy = MyClass
 
 
 
+#### 메소드 정의 문법을 생각해보자.
+
+```cpp
+[ ]1:    func print()
+        func print(int argc, str[] argv)
+[ ]2:    print(void)
+        print(int argc, str[] argv)
+[x]3:    print(void)
+        print(int(argc), str[](argv))
+[ ]4:    print(void)
+        print(argc = int, argv = str[])
+```
+
+* 2는,
+  * 타자수가 적음
+  * 그러나 void일때만 따로 적어야 하는 예외처리를 기억해야함
+  * 파싱시 조금 까다로울 수 있음
+* 1은,
+  * 항상 func를 앞에 붙이므로 외울것은 적음 -> 그러나 클래스정의도 안붙이는데 왜 함수만 앞에 붙이냐고 할 수 있음. 결국 똑 같음.
+  * 타자수가 많음.
+* 4는,
+  * +일관된 타입정의 문법 2안을 따른다.
+  * -타자수가 가장 많다.
+
 
 
 
@@ -6434,6 +6458,211 @@ void ?(int a)
 #### const...뺄까?
 
 * 코드가 너무 복잡해짐. 이 언어는 가볍게 배우고 빨리 실습해보고.. 이랬음 좋겠다.
+
+
+
+#### [v] 문제#2 const 여부를 변수에 표현하지 않으면 너무 가독성이 떨어진다
+
+  * 일반적인 타입 정보는 그게 정확히 무엇인지는 중요하지 않고 사용자가 쓰려고 하는 API를 이 타입이 가지고 있을 것이 라는 것만 중요하다. 그래서 타입을 표기할 필요가 없다.
+
+  * 그러나 const 여부는 사용자가 파악하고 있어야 한다.
+
+  * 그러므로 const는 사용자가 정의하도록 유도하는게 맞지 않느냐?
+
+    ```cpp
+    [ ]1: #p = getPerson()
+    [v]2: p = getPerson()
+    p.getName()
+    p.setName("new") // compile error.
+    ```
+
+#### [v] 문제#3 const의 표기법
+
+  ```cpp
+  [v]1: age = #int
+  [v]2: age = int
+  ```
+
+  - 2는 int에 의해서 const가 결정된다. 묵시적으로. 사용자는 알아서 캐치하자.
+
+  - 1는 int는 nonconst이나 그걸 const 붙일 수 있다.
+
+    ```cpp
+    p = Person() // p는 nonconst
+    p1 = p // p1은 refer
+    p1.name = "don't change" // 변경이 가능.
+    p2 = #p // p에 const를 부여한 것이다.
+    p2.name = "compile error" // 에러.
+    ```
+
+
+
+  #### [ ] 문제#4
+
+  ```cpp
+  #Person
+      name = "unknown"
+      print(void)
+          c.out("name=${name}")
+  p = Person // p는 const Person의 refer다.
+  // p.print() 안된다.
+  p1 = Person() // 된다. Person()은 nonconst Person이다.
+  p = p1 // 안된다. p 는 const Person이므로.
+  ```
+
+  * 일반적인 const 예제를 만들어보면서 위의 문제를 해결해보자
+
+  * 보통 언어들의 const 경우,
+
+    ```cpp
+    const Person& p = ...
+    // p.setName()
+    // Person& p1 = p
+    Person& p1 = ...
+    p = p1
+    void cfoo(const Person* p);
+    void foo(Person* p);
+    cfoo(&p)
+    cfoo(&p1)
+    //foo(&p)
+    foo(&p1)
+    
+    
+    #Person p = ....
+    // p.setName()
+    // Person p1 = p
+    Person p1 = ...
+    p = p1
+    void cfoo(#Person p)
+    void foo(Person p)
+    cfoo(p)
+    cfoo(p1)
+    //foo(p)
+    foo(p1)
+    ```
+    * 따라서 const의 동작 자체는 별반 다르지 않다.
+    * const는 const -> nonconst로 이행하는 것만 막는다.
+    * 한번 const가 되면 계속 const가 된다.
+    * 따라서 const는 이 타입은 절대 변하지 않는다는 걸 보장해준다는 것이다.
+
+  * 여기서 정의한 월드 문법의 경우,
+
+    ```cpp
+    p = ... // ...은 const Person임을 암시한다고 하자.
+    p1 = ... // nonconst이다.
+    // p = p1 에러
+    p = p1
+    cfoo(p = #Person)
+    foo(p = Person)
+    
+    cfoo(p)
+    cfoo(p1)
+    foo(p)
+    foo(p1)
+    ```
+
+  #### [v] 문제#4 sharable과 const
+
+  ```cpp
+  #Person
+      name = ""
+  Chelsoo = Person
+  ```
+
+  * [x] Chelsoo는 const인가? --> 네.
+
+  ```cpp
+  age = #int
+  age1 = age // age1은 occupiable이므로 const가 아니게 된다.
+ 
+  he = #Person()
+  him = he // him은 sharable이므로 const가 된다.
+  ```
+
+  - sharable이면 const가 유지된다.
+  - occupiable이면 const는 무시된다.
+
+
+
+#### [v] const 변수를 만드는 법?
+
+```cpp
+[v]1: #age = 25 // 숫자는 자동 const.
+```
+
+* const 된 변수로부터 복제 될때는 const가 되어야 한다.
+
+  ```cpp
+  // c++
+  const Person& getOneOfPerson(int val) {
+      Person* arr[] = {new Chelsoo(), new Marry(), ...};
+      return *arr[val];
+  }
+ 
+  const Person& p = getOneOfPerson(2);
+ 
+  // world
+  #getOneOfPerson(int val)
+      arr = [Chelsoo(), Marry(), ...]
+      return arr[val]
+  #p = getOneOfPerson(2)
+  ```
+
+#### 구현이 없는 함수를 어떻게 정의할까?
+
+* 구현이 없는 블록문 같은 경우도 있을 수 있을 것이다.
+  * if a == 5
+  * else
+    * ....
+
+* 1안
+
+  ```cpp
+  print() // --> 이미 함수 호출 처럼 보이기 시작하지 않은가?
+      
+  app,
+      main()
+          print() // --> 자, 이 print는 print()라는 함수의 호출인가
+                  // 아니면 print() 라는 클로져를 정의한 것일까?
+  ```
+
+* 2안
+
+  * 파이썬 방식
+
+  ```cpp
+  print() none
+ 
+  app,
+      foo(int(str) func, str msg)
+          func(msg)
+          
+      main()
+  ```
+
+* 3안 - 메소드입니다 라는 특문을 넣는다.
+
+  ```cpp
+  app,
+      foo(int(str) func, str msg) ->
+          ret = func(msg)
+          c.out("ret=${ret}")
+          
+      main()        
+          foo(?(str msg): msg.len,"hello")
+  ```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
