@@ -320,6 +320,39 @@ def A
 
 
 
+#### 여러개의 변수를 동시에 정의 가능?
+
+```cpp
+[?]1: a = 1, b = 2
+    
+[?]2:
+arr = [a = 1
+    print()
+        c.out("I'm a")
+,b = 2
+    print()
+        c.out("I'm b")
+]
+a.print()
+b.print()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### 연산자
@@ -4567,6 +4600,642 @@ class myObj : public obj {
 ```
 
 
+
+
+
+### [v] 프로토타입 기반에서 생성자가 의미가 있는가
+
+```cpp
+def Part
+    _name = ""
+    name
+        get: _name
+        set: _name = new
+
+    Part()
+    Part(str newname): name = newname
+        
+```
+
+* 프로토타입은 복제를 통해서 객체가 생성된다.
+
+* 자바스크립트를 공부하고 났더니 해결이 되었다.
+
+  * 자바스크립트는 순수 프로토타입 기반 언어다.
+
+  * 그래서 동적으로 메소드 추가/삭제가 가능하다.
+
+  * 객체의 생성은 함수를 통해 이루어지고 함수 정의할때 "생성자"속성을 부여하면 해당 함수가 prototype이라는 프로퍼티를 추가로 갖게 된다.
+
+  * prototype 프로퍼티는 프로토타입 객체로써 동작하며,
+
+  * 생성자가 수행되면 프로토타입을 link로 건 새로운 객체가 생성되고 해당 생성자 함수를 통과하면서 새로 프로퍼티가 추가되거나 삭제된다.
+
+  * 알고리즘을 짜면 이렇다.
+
+    ```javascript
+    var My = function() {
+        this.age = 20
+    }
+    My.prototype.name = "My"
+    ```
+
+    ```cpp
+    class Proto {
+    public:
+        Proto() { name = "My"; }
+    
+        string name;
+    };
+    
+    class My {
+    public:
+        My(Proto* org) { age = 20; proto = org; }
+        int age;
+        Proto* proto
+    };
+    
+    My* My() {
+        static Proto inner;
+        return My(&inner);
+    }
+    ```
+
+    1. 컴파일시, 프로토 객체(= 부모객체)로 부터 상속을 받은 뒤, 고유의 멤버변수/메소드를 추가한 origin 객체를 정의한다.
+
+    2. 생성자가 호출되면, 일단 origin객체를 복제한다.
+
+    3. 그 뒤에, origin객체에 대고 생성자를 호출한다.
+
+    4. 생성자내에서는 이미 생성된 멤버변수에 대해서만 조작/assign만 하게 된다.
+
+       
+
+  **즉 포인트는, 객체의 생성은 이미 프로그램이 런 하기전에 끝나있다. 생성자는 객체를 생성하는 역할이 아니라, 멤버변수를 조작하기 위한 이벤트의 일종이다.**
+
+고로 생성자는 의미가 있다 !
+
+
+
+### 프로퍼티의 구현의 초안
+
+요구사항을 뽑아보자.
+
+1. public, private를 표현 할 수 있어야 한다.
+2. 그저 또다른 객체의 define과 동일하다.
+3. Q. Origin 객체라고 볼 수 있는가?
+4. 타입 유추에 기반한 문법을 사용해야 한다.
+5. 문법이 괴기스럽지 않아야 한다.
+6. 가능하면 새로운 키워드나 특문의 추가는 없어야 한다.
+7. 모호성의 오류는 없어야 한다.
+8. 끼워넣기 다형성이 동작할 수 있어야 한다.
+9. 동작상 추가가 없는 경우, 기존 get,set을 명시하지 않아도 물려받았다는 걸 표현할 수 있어야 한다.
+
+#### 본질을 찾아보자.
+
+프로퍼티란,
+
+* 변수 행세를 하는 것.
+
+* 변수란 get, set 2가지 메소드를 제공하며 내부에 데이터를 소유하는 객체.
+
+* 모든 origin 객체는 기본적으로 get, set 메소드를 가지고 있다.
+
+* 이 get, set은 직접적으로 호출되지 않으며 컴파일러/월드 시스템에 의해서 간접적으로 호출되는것이다.
+
+  ```cpp
+  def Part Mouse
+      // 자동으로 아래의 2메소드를 만들어준다.
+      Mouse get(): this
+      res set(Mouse new)
+          if Mouse.sharable?
+              this.refer = new
+          else
+              this = Mouse(new)
+ 
+  m1 = Mouse() // Mouse.get() called
+  m2 = m1 // m2.set(m1) called
+  ```
+
+* 핵심은 멤버객체란 데이터를 get 혹은 set 으로 제공해주는 객체다.
+* 변수 + 프로퍼티 = 멤버객체
+* 프로퍼티의 핵심은 get/set 다형성, nested class를 이용해서 다른 데이터를 가공/route해서 제공하는 데 있다.
+* 어떤 것이든지, get혹은 set을 제공하면 멤버객체다.
+* 프로퍼티는 get/set을 overriding하는 것일뿐, 덮어써도 되고, add를 해도 된다.
+
+##### 1안
+
+```cpp
+def Part #Mouse
+    age = 20
+    def int age1
+        get: age
+        set: age = new: c.out("age=$age")
+// get에 의해서 타입유추가 일어난다.
+// 캐스팅 문법과 동일하게 def 뒤는 origin 객체가 추출&치환 된다.
+    // 이걸 풀어주면 헷갈릴 수 있다는 걸 이미 우리는 다뤘다.
+    int getAge(): 20
+        def getAge() age1 // age.val은 20일 거라고 착각한다는 것이다.
+            void say(): val // 실제로는 0이다. 타입만 가져왔지, 값을 가져오진 않았다.
+
+// 인터페이스의 변경이다. 고로 새로운 origin 객체를 정의하는 문법을 따라야 한다.
+// 정말 origin인가?
+
+mouse1 = Mouse()
+//props = [mouse1.age1, Mouse.age1()] // #Mouse.age1으로 유추됨
+//props = [mouse1.age1(), Mouse.age1()] // Mouse가 #이면 Mouse.age1()도 # 다.
+props = [mouse1.age1(), Mouse().age1()]
+props.each(e->$n=0: e=++n)
+    // Mouse() 객체는 소멸되지 않는다. props가 age1을 물고 있고, age1은 Mouse()를 물고
+    // 있다.
+    // 결과:
+    //    age=1
+    //    age=2
+
+// 프로퍼티는 소유클래스에 강하게 결합되어있다. 따라서 소유클래스의 객체가 반드시 필요하다.
+```
+
+이렇게 프록시처럼 실체가 따른곳에 있고 그걸 routing만 하는 경우라면 쉽게 될 수 있다.
+
+문제는, 프로퍼티 자체가 변수를 소유하고 있는 경우는 어떨까?
+
+```cpp
+def Part #Mouse
+    def age = 20
+        set=>: c.out("age=$age")
+```
+
+* 이런 요상한 문법이 된다.
+* age는 변수이므로 동적요소와 정적요소를 모두 갖는다. 정적 요소는 타입유추로 메꿔진다.
+* 하지만 동시에 문법에 추가가 존재하기 때문에 origin 객체가 된다.
+* 그러니 origin 정의임을 암시하는 def가 앞에 붙는다.
+
+생각을 좀 해보자.
+
+* 변수의 정의는 쉽게말하면 복제이다.
+* 복제일때만 타입유추를 쓰도록 했었다.
+
+
+
+[x] 아예, def 문법을 뜯어고치면?
+
+```cpp
+def Mouse = Part // Part의 복제된 상태에서 출발한다.
+    def age = 20 // 20은 origin객체가 int. 이걸 복제한 상태에서 출발한다.
+        set=>: c.out("new value=$new")
+
+    def body = Body("for gaming")
+        set=>: c.out("new's name is $new.name")
+
+def Mouse = Part("mouse") // Mouse는 Part에 mouse 넣어진 생성자로 만들어진 객체에서 출발.
+    // Mouse() 이경우 생성자를 만들 수 없다.
+    //      super()
+    //      c.out("constructor")
+            
+Part getPart(str msg): with msg
+    is "mouse": Mouse()
+    is "body": Body()
+    default: null
+
+def Mouse = getPart("mouse")
+    // Mouse는 Part 기반으로 origin 객체가 생성됨.
+    // 근데, 이거 봐라. 이거 무한 재귀잖아.
+
+mouse1 = Mouse() // Mouse객체가 생성될때 getPart("mouse")가 실행됨.
+```
+
+타입 정의는 정적요소. 근데 거기에 동적요소를 끼워넣는다는게 헷갈리기 쉽고 설명하기 어렵고 예측하기 힘듬. 좋은 아이디어가 아니다.
+
+굳이 하려고 한다면, 객체를 생성해서 값을 넣는 경우는 "생성자를 정의 할 수 없다" 는 규칙을 끼워넣으면 괜찮다.
+
+```c#
+def Part
+def Mouse = Part
+    Mouse(): c.out("생성자")
+
+// 이건,
+
+def Mouse
+    =>Mouse()
+        c.out("생성자")
+        
+
+    
+    
+    
+Part getPart(str type): with type
+    is "mouse": Part("mouse")
+    default: null
+
+def Mouse1 = getPart("mouse")
+    age = 20
+    Mouse1(int newage)        
+        c.out("생성자")
+        age = newage
+
+    Mouse1()
+        c.out("생성자")
+
+arr = [Mouse1(), Mouse1(33)]
+ 
+// 이것은,
+def Part
+    Part()
+    Part()
+
+def Part Mouse1
+    Mouse1(Part super)
+        Super()
+        
+    def age = 20
+        // age(): c.out("생성자")
+        // Q. int도 생성자가 있어야 하는가?
+    def body = Body get_part("body")
+```
+
+##### 알고리즘1
+
+1. 컴파일을 시작한다.
+
+2. Origin 객체로부터 상속 구조를 만들어낸다. 그리고 메소드 / 멤버변수를 추가한다.(Mouse1 -> Part) 초기화 수식은 실행하지 않는다. 각 멤버변수들은 default 상태로 구성된다. 멤버변수는 절대로 삭제되거나, 여기서 추가되지 않는다. 이를 OriginShell이라 하자.
+
+3. origin shell을 바탕으로 컴파일 validation을 진행한다.
+
+4. 프로그램 시작 도중, static변수 초기화처럼 origin객체들을 모두 생성한다.
+
+5. 각 origin 객체 마다
+
+   1. scope에서 찾는다.
+
+      1. 없으면 초기화에 들어간다. origin shell을 생성하고 scope에 넣는다.
+
+      2. **origin_shell.assign(expr) 한다.**
+
+         1. **반환한 객체가 null이면 에러.**
+
+            **origin_shell 기준으로 assign이므로 expr의 객체가 origin 객체 이상의 멤버변수/메소드가 있다면 자연스럽게 무시된다.**
+
+      3. 멤버변수의 초기화식을 수행한다.
+
+      4. origin객체의 완성. 확정짓는다.
+
+   2. 있으면 scope에서 바로 반환한다. 초기화 중이건 상관하지 않는다.
+
+6. 사용자가 생성자를 호출하면, origin객체를 가상 복제한다.
+
+7. 가상 복제한 객체에 생성자를 수행한다.
+
+8. 생성자 체인 내부에서는 이미 생성된 멤버변수들에 대해 조작만 가한다.
+
+prop을 제거함으로써, **딱 1개의 step만 더 생기 도록 만들었다.**
+
+음.. 일단 될것 같은데. 문제는
+
+* [x] prop을 사용한 경우와 알고리즘을 비교해보자. 어느쪽이 얼마나 복잡한가?
+
+* [x] Q. 더 최적화 요소는 없는가? 상속구조는 버림?  --> 최적화 했다. 이제 버리지 않는다.
+
+* [x] C-REPL시 어떻게 되는가?
+
+  * [ x ] 가장 이상적인 시나리오는 SMART하게 동작하도록 하는 것이다.
+
+    * 만약 메소드 내부를 고쳤다면 ->
+      * 가장 쉽다. 메소드 내부의 컴파일 수행한다. 생성된 메소드 객체를 기존과 교체한다.
+    * 클래스 내부 인터페이스가 변경되었다면 ->
+      * 변경된 인터페이스 부분들을 수집한다.
+      * 해당 부분들만 컴파일 한다.
+      * 링킹 validation을 돌린다.
+      * 최종 완료된 객체들을 origin에 교체한다.
+      * 그리고 쉽게 생각하면 관련된 모든 인스턴스들(origin의 복제 객체 뿐만 아니라 수정된 인터페이스를 사용하는 모든 인스턴스들)를 교체 한다.
+
+  * [v] **절충안 : 속도도 같이 고려한다.**
+
+    * 핵심
+
+      * origin객체 명세가 바뀌면, 복제 객체들은 어떻게든 쓸모가 없어진다. 어떠한 방법으로도 기존 복제 객체들을 그 값의 유용성을 유지한 채로 새로운 명세의 객체로 보완할 수 없다.
+        * 무슨말인고 하니,
+          * def Person
+            * age = 20
+          * p1 = Person()
+          * 일때,
+            * age = 19
+          * 로 바뀌었다고 하자. 그럼 단순히,
+            1. Person을 다시 검증, 생성해서 orign을 교체한다.
+            2. Person origin로부터 생성되었던 p1의 값을 새로운 Person의 객체로 교체한다.
+          * 면 될 것 같을 것이다. 그러나 이건 잘 못된건데,
+            * p1 = Person()
+            * p1.age = p1.age + 30 // 49
+          * 위와 같을때 Person의 age의 초기값이 20으로 바뀌었다. 가장 올바른 값은 p1.age가 20으로 초기화된 상태에서 수식을 다시 돌린 p1.age == 50이 답이다. 그러나 이를 유추할 수 있다면 이미 현세대 언어가 아니다. 불가능하다.
+        * 따라서, 애초에 100%가 불가능 하므로 이걸 limitation으로 앉고 간다. 일체 지원하지 않는 쪽으로 한다.
+        * origin객체에 변경이 일어나면 관련 복제 객체들은 모두 제거하거나, 그냥 놔둔다.
+          * [디폴트] 항상 제거 옵션을 선택하면, 최신 코드/명세가 적용된 객체만 HEAP에 있게 된다. 안심할 수 있다.
+          * 옵션을 끄면,
+            * 임의의 값이 할당되었다고 가정하고 테스트를 해볼 수 있다. 그러나 실제로는 가능성이 없는 값일 수 있다.
+            * 코드상 존재하지도 않는 객체를 놓고 씨름할 수 있다.
+        * 객체의 생성은 전적으로 사용자를 통해서 이뤄줘야 한다. 생성자에 복잡한 파라메터가 들어가야 할때가 있기 때문이다.
+      * 메소드 안쪽이 변경된 경우는 구현만 교체하므로 복제 객체는 사라지지 않는다.
+
+    * 알고리즘
+
+      * SMART방식
+
+        * 사용자가 수정한 code line을 text로 인터프리터에게 알려준다.
+
+        * 인터프리터는 코드 자체를 대조해서 어느 라인이 변경했는지 diff 한다.
+
+        * 컴파일단계
+
+          * 인터프리터는 해당 변경점에 영향을 받는 최소한의 객체범위를 탐지한다.
+            * 예)  1: def Part
+              * 2: age = foo(20, 30, // 30이 20으로 변경한경우
+              * 3:     getText())
+
+          * 2, 3번 라인이 객체 생성 가능한 최소한의 코드 범위다.
+            * 예) stmt 1줄, origin 명이나 상속구조를 수정했다면 그거 자체.
+          * 인터프리터가 파싱 후, 객체(메소드/origin객체/멤버변수) 생성한다.
+
+        * 링킹단계
+
+          * 사전에 외부에 영향을 갖는 "인터페이스 객체"(= origin객체의 메소드와 멤버변수, 전역변수)와 "origin 객체" 간의 관계를 매핑해두고 있다.
+          * 그 매핑테이블로 해당 객체와 연관이 있는 모든 객체에 문제가 없는지 validation을 돌린다.
+            * 사전에, 연관 정보를 다 기록해둬야 한다.
+            * 이 정보는 C-REPL 시에만 필요하다.
+          * 이상이 없다면 origin 트리에 병합한다.
+
+        * 정합성 단계
+
+          * C-REPL시 origin객체는 또한 복제객체들을 모두 알고있다.
+
+          * 수집해둔 변경된 인터페이스 객체들 목록을 순회하면서 각 원소별로 매핑테이블의 관련 origin객체들의 모든 복제객체들을 싸그리 제거한다.
+
+            1. 검증1: 다음 같은 시나리오는 문제가 되지 않는다
+
+            ```cpp
+            1: def Part
+            2: def Part Body
+            3: def Part Mouse
+            4:       body = Body()
+            5: // 에서 Body가 BBody로 이름 변경된 경우
+            ```
+
+            이 경우, 바뀐건 2번 라인이지만, 4번 라인에 body = BBody()로 바꾸지 않을 경우 링킹단계에서 실패하게 된다.
+
+            사용자가 4번 라인을 바꾸게 되면 멤버변수 body가 바뀐것이므로 2번 라인과 4번 라인은 서로 병렬적으로 돌게 된다.
+
+    
+
+    * prop 대비, 더 하는 건 없다. 왜냐하면 추가된 부분은 origin 객체를 런타임에 초기화 할때 일어나는 것이지 빌드시 일어나는게 아니니까.
+
+* [x] expr 수행시에 무한 재귀를 비롯해서 예상치 못한 에러는 없는가?
+
+  ```cpp
+  def #Part
+      Part()
+      Part(str name)
+      def name = ""
+          get=>: c.out("name=$name")
+          _set=>:
+ 
+  def #Mouse = app.getPart("mouse")
+ 
+  def app
+      Part getPart(str name): with name
+          is "mouse": Mouse()
+  ```
+
+  * 다음의 규칙을 추가한다.
+    * scope에 origin 객체가 없으면 바로 생성후 scope에 추가한 뒤에 초기화에 들어간다.
+    * **이후, scope에 origin 객체가 있으면 초기화중이건 되어있건 신경쓰지 않고 초기화가 되어있다고 간주하고 반환한다.**
+
+  * 그럼 다음과 같은 문제는?
+
+    ```cpp
+    def #Part
+        Part()
+        Part(str name)
+        def name = ""
+            get=>: c.out("name=$name")
+            _set=>:
+    
+    def #Mouse = app.getPart("body")
+        name = "mouse"
+    def #Body = app.getPart("mouse")
+        name = "body"
+    
+    def app
+        Part getPart(str name): with name
+            is "mouse": Mouse()
+            is "body": Body()
+    ```
+
+    * 흐름
+
+      1. 컴파일: Part, Mouse, Body, app이 각각 origin shell이 만들어진다.
+      2. 링킹: 코드 validation을 통과하고 origin shell을 keep 한다.
+      3. 런타임 진입
+         1. Part origin 객체를 완성한다.
+         2. Mouse origin 객체에 접근하지만 아직 생성되지 않았다.
+         3. expr(app.getPart("body")) 수행한다.
+         4. Body에 접근하지만 아직 생성되지 않았다.
+         5. app.getPart("mouse")를 수행한다.
+         6. Mouse는 생성은 되었다. 초기화중이다. 그럼 origin shell이 나간다.
+         7. Body.name = Mouse.name = "" 가 들어간다.
+         8. Body의 초기화 수식이 돌아가서 Body.name = "body"가 된다.
+         9. Mouse.name = "body"가 된다.
+         10. 초기화 수식이 돌면서 Mouse.name = "mouse"로 된다.
+
+    * 결론
+
+      * 상속 관계를 원형으로 만들면 expr 수행시 각 멤버에게 null 값이 들어가게 된다.
+
+      * 이렇게 하는게 잘못이다. 코드를 잘 짜야 한다.
+
+        
+
+* [x] 실행 순서를 보장 못하는 것이다. 늦은 초기화 인데, 일반적인 언어의 static과는 동작이 다르다. 문제는 없을까? -> static과 동일하다. origin객체는 static과 다를게 없다.
+
+ 
+
+* [x] 메소드도 복제시키면 안된다. 최적화 하자.
+
+  ##### 아이디어1 - origin 객체는 shared를 갖고 있는다.
+
+* origin 객체 구성 알고리즘
+
+  1. 컴파일이 시작된다.
+
+  2. origin으로 삼을 ManagedObject를 하나 만들어 scope에 넣는다.
+
+     1. 부모Origin 객체를 찾아, assign 한다.
+
+        ```cpp
+        uniques = parent.uniques.clone()
+        if C-REPL    
+            shared = new Chain()
+            shared->chain(*parent.shared)
+        else // optimization
+            shared = new Array()
+            *shared = parent.shared->clone()
+        ```
+
+     2. Unique한 멤버변수들은 origin에 바로 담고, sharing 할 것들은 origin이 binder로 가리키는 shared에 담는다.
+
+  3. origin shell이 완성되었다.
+
+  4. 프로그램이 시작된다.
+
+  5. origin 객체를 scope에서 찾는다. state가 "초기화 완료" 가 아니라면 초기화를 수행한다. 초기화가 완료된다.
+
+  6. 사용자에 의해 origin 객체가 복제되면, 복제객체도 Unique와 shared를 분리해서 가지고 있게 된다.
+
+* [x] 중첩클래스와 프로퍼티가 구분이 안간다.
+
+  * 중첩클래스는 1개만 존재하며 공유하는 것.
+  * 프로퍼티는 모든 객체가 갖는 것.
+  * 근데 문법이 같다.
+
+  ```cpp
+  // U: 객체마다 1개씩
+  // S: 모든 객체가 1개를 공유
+  def Person
+      age = 20 // U
+ 
+      def $Sayable // S
+          void say()
+              c.out("age=$age")
+      sayable = Sayable() // U
+ 
+      def $name // S
+          get: org.name
+          _set:
+ 
+      def grade = 3.5 // U
+          get=>: c.out("grade=$grade")
+ 
+  (p1, p2) = [Person(), Person()]
+  p1.age = 1: p1.sayable.say(): p1.name
+  p2.age = 2: p2.sayable.say(): p2.name
+  ```
+
+  #####     [x] 아이디어1 - expr에서 객체를 생성하나, 객체를 route 하냐의 차이로 결정한다.
+
+  ```cpp
+  def Person
+  def Student = Person
+  def Teacher = Person()
+  ```
+
+  ##### [v] 아이디어2 - $를 쓴다.
+
+  * $를 원래 써왔고. 이럴때 쓰라고 만들어 둔게 맞다.
+
+  * 정리
+
+    * def 객체를 정의함으로써 *생성*하는 것이다.
+
+    * 중첩된 def도 마찬가지로 origin 객체는 실제로 독립적인 객체를 소유한 것으로 origin객체가 복제되면 중첩된 origin 객체들도 복제가 되는게 맞다.
+
+      ```cpp
+      def A
+          def B
+          b = B()
+          b1 = B null
+          // B나, b나, b1이나 모두 *객체* 다.
+      a = A() // a.B는 A.B로부터 복제된 객체다.
+      ```
+
+    * 메소드는 별다른 명시가 없어도 static으로 간주한다.
+
+    * global scope에 있는 def 의 경우 $를 붙이지 않아도 된다. def에 $를 붙이는 경우는 중첩클래스일때 뿐이다.
+
+* [x] get/set이 정의된 origin객체가 있을때도 정상동작 하는가?
+
+* [x] 생성자에서 다른 생성자를 호출하는게 가능한가? -> expr은 생성자가 호출되기전 origin이 초기화될때 수행된다. 생성자는 복제 객체가 만들어질때.
+
+* [x] expr이 일반 sharable 일 경우와, occupiable일경우 모두 문제 없는가? -> 네
+
+  ```cpp
+  def A = getAge("35")
+      int $#getAge(str val): int val // 명시적 캐스팅일때만 int화
+  a1 = A
+  ```
+
+* [x] 프로토타입 기반 언어라고 할 수 있는가? -> 순수는 무리지만 그렇다고 클래스도 아님.
+
+##### 알고리즘2
+
+1. origin 객체를 뽑아내서 상속구조를 만든다.
+2. 컴파일 완료
+3. 객체를 생성하면 정적타입 기반으로 객체를 만든다.
+
+##### 알고리즘3
+
+1. 컴파일시, origin객체를 뽑아내서 간이 상속 구조를 만든다. 따라서 어떤 메소드, 멤버변수들이 있을 것인지 예측 가능하다.
+2. 1번에 생긴 심볼테이블을 들고 에러 검사를 실시한다.
+3. 런타임시, origin객체를 런타임에 생성한다.
+4. expr를 수행해서 나온 객체를 super() 대신으로 한다. 만약 예측한 상속 구조보다 더 많은 메소드가 있을 경우, 잘라낸다.
+5. 이제, 이 origin 객체에 추가된 인터페이스를 여기에 추가해서 origin객체를 확정한다.
+6. 이후 origin객체에 대한 복제가 일어나므로 위의 expr 수행은 1번만 수행되게 된다.
+
+##### 알고리즘4
+
+1. 컴파일시, origin 객체를 뽑아내서 expr은 컴파일타임에 수행할 수 있다는 전제로 수행해서 origin객체를 완성한다.
+
+##### [v] 알고리즘5 - 일단은 가장 유력하다.
+
+1. 새로운 문법을 만든다.
+
+   1. prop <변수명> = <expr>
+      1. get
+      2. set
+
+2. def 문법에서는 set, get을 사용할 수 없다.
+
+   ```cpp
+   def Part
+       prop name = "unknown"
+           get=>: c.out("getting $name")
+           _set=>
+   
+       prop orgname
+           // get=>: 에러 =>를 쓸 수 없다.
+           get
+               cls = this.class
+               return cls.name
+           //get: class.name
+           _set
+   
+       void init()
+           name = "init"
+   
+   with Part()
+       name = "abc" // 에러
+       init()
+       c.out(name)
+   ```
+
+* 왜 이게 젤 나은가?
+  * def 에서는 get/set이 필요가 거의 없다. 있으면 좋긴 하다.
+  * def 는 정적요소를 위한 것으로 동적 요소인 expr를 끼워 넣으면 구현이 더럽게 될 수 밖에 없다. (아니면 신기한 아이디어가 있던가)
+
+
+
+### [x] 프로퍼티에서 readonly를 const 로 대체 가능한가?
+
+```cpp
+def Part
+    prop name = "unknown"
+        get=>: c.out("getting $name")
+        _set=>
+
+    prop #name = "unknown"
+        get=>: c.out("getting $name")
+```
+
+다르다.
+
+* 1번은 남은 못 씀. 나는 씀.
+* 2번은 나도 못 씀.
 
 
 
