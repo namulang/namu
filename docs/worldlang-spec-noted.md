@@ -1,3 +1,4 @@
+
 # Worldlang Specification Noted
 
 ## 수정내역
@@ -41,7 +42,7 @@
 
 * origin 객체의 생성은 프로그램 시작시 끝난다.
 * 생성자가 호출되면 origin객체를 현재의 복제한 뒤, 생성자 함수는 생성된 멤버변수의 조작만 하는 일종의 이벤트 + 객체복제의 신호 로써 취급한다.
-  * 기반 클래스인 Object의 생성자에서는 객체를 가상 복제하는 코드가 들어있게 된다.
+  * 기반 클래스인 Object의 생성자에서:는 객체를 가상 복제하는 코드가 들어있게 된다.
 * origin 객체는 기본적으로 런타임에 수정이 가능하다.
 
 ### 타입 유추 기반
@@ -58,7 +59,7 @@
 
         ```cpp
         uniques = parent.uniques.clone()
-        if C-REPL    
+        if C-REPL
             shared = new Chain()
             shared->chain(*parent.shared)
         else // optimization
@@ -142,11 +143,61 @@ def app
 
 ### Hello World
 
+```cpp
+import console // import로 모듈을 가져옴
+
+/*모든 프로그램은 진입점을 위한 app이라는 객체 정의가 필요*/
+def app
+	int main(): console.out("hello world!\n")
+
+// 결과: hello world
+```
+
 
 
 ### 변수
 
-상수/변수의 의미
+기본 제공 타입은 기본자료형(primitive data type)과 선정의 타입 (pretype) 2종류로 나뉘어집니다.
+
+기본 자료형은 총 7 종류이며, pretype은 밑에서 얘기하겠습니다.
+
+| 타입명 | 종류         | 표현 범위 | 크기  | 기본값 | casting 우선순위(낮은쪽 -> 높은쪽) |
+| ------ | ------------ | --------- | ----- | ------ | ---------------------------------- |
+| int    | 정수         | signed    | 32bit | 0      | 4                                  |
+| float  | 실수         | signed    | 32bit | 0.0    | 5                                  |
+| str    | 문자열       | .         | .     | ""     | 6                                  |
+| bool   | true / false | .         | .     | false  | 2                                  |
+| char   | 정수         | unsigned  | 16bit | 0      | 3                                  |
+| byte   | 정수         | signed    | 8bit  | 0      | 3                                  |
+| res    | 결과         | .         | .     | rok    | 1                                  |
+
+```cpp
+import console
+
+def app // 객체 app
+	age = 0 // app의 변수, age.
+    void   main   (   )  // whitespace 무시
+        age=0 // 지역변수 age와 member변수와 이름 중복 허용
+        ++age++ *= 2 // age == 4
+        // 연산자 우선순위 존재함.
+        // 다음 연산자 지원 : += -= /= %= <= < > >= = == != --
+
+        pow = age^2 // => age*age == 16
+        console.out("hello world!"[-9999999~4] + "boy aged " + pow) // str은 UTF-16 인코딩
+        // Sequence: x~y 로 표현하며 [x, y)의 범위를 가짐.
+        // str[-9999]는 0으로 예외처리.
+        // str[99999999]는 str의 length-1로 예외처리.
+        // int + str시, implicit 캐스팅 우선순위(3vs5)에 따라, int->str casting
+
+
+// 결과: hellboy aged 16
+```
+
+
+
+
+
+
 
 #### 식별자-정의시-파이썬처럼-타입을-적지않으면 auto로 인식되게 할 수 있을까?*
 
@@ -166,7 +217,7 @@ def app
         - age = 23 // 실제로 하고 싶었던 거는 age라는 지역변수를 만들어서 23으로 초기화 하는 거였다....
   - *[v] 2안 1안을 적용하고, 이름 중복은 허용하지 않는다고 한다면.*
   - *[x] 3안 파이썬처럼 전역변수 참조시에 특수한 prefix를 붙이게 한다* -> 최악이라고 본다.
-    - 파이썬의 예) 
+    - 파이썬의 예)
       - my_value = 4 *// 전역*
       - def increase_my_value(step=1):
         - global my_value *// 전역변수를 참조한다는 뜻이다. global이 없으면 지역변수 정의가 된다.*
@@ -187,10 +238,10 @@ def app
       void say()
           foo = B()
           foo.act()
-      
+
   def B = A
       void act()
-      
+
   // 이때 전역변수 foo = A()를 넣게 되면, foo.act()는 에러가 된다.
   ```
 
@@ -230,12 +281,12 @@ def A
 def A
     void say()
     def _Inner // 중첩클래스는 반드시 private 이다.
-    
+
     Myball = 33 // static == class scope에 있는 전역변수. 전역이므로 앞을 대문자로.
         void say()
             a = Inner()
     void foo()
-    
+
 // def Myball을 하는 순간 Myball = 33은 Myball이란 static 변수를 정의하는 것에서, 전역변수 Myball에 대한 할당으로 의미가 변한다. 그리고 물론 def Myball이 int였을 경우, 어떠한 에러도 나오지 않게 된다.
 ```
 
@@ -249,7 +300,7 @@ def A
 A
     void say()
     _Inner
-    
+
     Myball := 33 // class scope 전역 변수의 정의.
         void get(): val
 // def Myball 하는 순간, 에러를 표시할 수 있다.
@@ -294,14 +345,14 @@ def A
 		void say()
 		void foo()
 			say() // A.B.say()와 A.say()가 충돌하고 있다.
-			
+
 	void say()
 ```
 1. 위와 같은 예제는 충분히 나올 수 있는 예제이건만, 이름 충돌을 지원하지 않으면 위는 invalid 하게 된다. 반드시 지원해야 한다.
 2. 이름 충돌의 보편적인 해결법은 local scope을 우선하는 것이다. local scope이란 즉, 해당 메소드가 정의된 클래스를 우선하는 것으로, 해당 클래스를 작성중일 개발자가 그러한 클래스나 메소드가 있다는걸 가장 잘 알고있다. 그러니, 대부분의 의도또한 local scope에 있는걸 사용하려는 것일 것이다.
 
 ###### [v] Q1. 그럼 전역변수를 참조할 수 있는 문법은?
-###### [x] 1안 그런거 없다. 
+###### [x] 1안 그런거 없다.
 
 ###### [x] 2안 :abc
 ###### [v] 3안 .abc
@@ -324,7 +375,7 @@ def A
 
 ```cpp
 [?]1: a = 1, b = 2
-    
+
 [?]2:
 arr = [a = 1
     print()
@@ -357,10 +408,100 @@ b.print()
 
 ### 연산자
 
-우선순위
+```cpp
+def app
+    int main()
+        age = 21
+        sum = 0
+        // 블록문 생략:
+        // 블록문은 구문의 집합이며, 중괄호와{} 들여쓰기Indentation로 표현한다.
+        // 여기서 중요한 것은 들여쓰기이며, 중괄호는 모호한 케이스를 없애기 위해
+		// 표현하는 것이다.
+		// 모든 중괄호는 생략될 수 있으며, 들여쓰기만 제대로 되어있으면 문제는 없다.
+		// 다만 몇몇 케이스에서는 중괄호 생략이 문제가 될 수 있다는 걸 알아야 한다.
+		//
+		// 중괄호 생략시 문제케이스 #1:
+		// world의 핵심 특징은 모든 구문stmt을 표현식expression으로 대체한 것에 있다.
+		// 이는 정의와 사용을 동시에 할 수 있게 하는데, 중괄호가 없을 경우 모호한
+		// 상황이 필연적으로 발생한다.
+		// e.g.	void print()
+		// 			console.out("hello")
+		//		() // 이것은 print()인가 아니면 빈 Tuple인가?
+		// 		중괄호를 넣으면 직관적으로 변한다.
+		// 		void print() {
+		//			console.out("hello")
+		// 		} // 이 뒤에 ()를 붙이면 클로저의 호출이 된다.
+		// 		() // 빈 tuple이다.
+		//
+		// 중괄호는 가급적 표현하지 않는 것을 권장한다.
+
+        if age > 20 { // 블록문시 {, }를 사용가능 하지만,
+            if age > 20 & age < 20 // 생략을 권장.
+                console.out("can't reach here")
+
+            sum = 0 // 허용된 중복 정의
+            for n in 1~5 // ~는 1부터 5까지를 의미함. [1, 5)
+                sum += n
+
+            console.out("sum=" + sum) // "sum=10"
+        } else if age == 20 // 블록문 뒤에 다음 stmt 가능.
+            sum = 0
+        if ! (age == 21) | sum // |는 or연산. sum이 0이 아니면 true로 판단
+            console.out("sum=" + sum)
+        elif ! sum // elif == else if
+            console.out("can't reach here")
+            return -1 // 함수 종료. 반환
+
+        bit = 2
+        console.out(bit || 4) // "6"
+        // ||, &&, ~~ 비트 연산자
+        return 0
 
 
+import console // 외부 scope 이면, 어느 위치에든 선언 가능.
 
+
+/* 결과:
+sum=10
+sum=10
+6
+*/
+```
+
+
+#### 연산자 우선순위
+
+위에 있을 수록, 우선된다. 크게 5가지로 다음과 같이 분류하며, 단항 -> 이항 순으로 나온다. 동일한 우선순위라면 왼쪽에서 오른쪽으로 평가된다.
+
+1. 접근
+2. 단항
+3. 이항 산술
+4. 비트연산
+5. 비교
+
+| 연산자operator                          | 설명                                            | 예제                    |
+| --------------------------------------- | ------------------------------------------------| ----------------------- |
+| ()                                      | 괄호                                            | (void func(int val) {}) |
+| ( <인자리스트> )                        | 함수호출                                        | func(35)                |
+| []                                      | 원소접근                                        | arr[5]                  |
+| ++, --, **                              | 후위 단항unary postfix                          | a++                     |
+| ++, --, **                              | 전위 단항                                       | **a // a*a              |
+| _                                       | 보호 속성 단항protected                         | str _val {}             |
+| $, #                                    | 상수 / 정적 속성 단항                           | #str $#_val {}          |
+| +                                       | 확장 속성 단항                                  | #str +#$_val {}         |
+| -                                       | 음수 단항<br />양수 단항unary plus 연산자는 없다 | a = -a                 |
+| !                                       | 부정logical not                                  | !++a                   |
+| ~~                                      | 비트연산 부정                                    | ~~a                    |
+| *, /, %, ^                              | 이항 곱, 나눗셈, 나머지 연산                    | a % b                   |
+| +, -                                    | 이항 덧셈, 뺄셈                                  | a - b                  |
+| <<, >>                                  | 비트 SHIFT 연산                                  | a << 3                 |
+| &&                                      | 비트 AND 연산                                    | a && 0x01              |
+| %%                                      | 비트 XOR 연산                                    | a %% 0x01              |
+| \|\|                                    | 비트 OR 연산                                    | 0x02 \|\| 0x01          |
+| ~                                       | 범위 연산                                        | 0 ~ b                  |
+| <=, <, >, >=, ==, !=                    | 비교 연산                                        | a > b                  |
+| &, \|                                   | 논리 연산                                        | if a & b               |
+| =, *=, /=, %=, +=, -=, &&=, \|\|=, ^^=, | 할당 연산                                        | a &&= 0x02             |
 
 
 #### 캐스팅
@@ -375,7 +516,7 @@ b.print()
     - \3. 거기에 없으면 주체자(= This)의 생성자를 통한 호환
     - \4. 거기에도 없으면 실패. 끝.
   - 1번을 제외한 2-3번은 모두 WorldFrx 안에 탑재되어있어야 한다.
-  - \2. 월드Frx의 실체는 Native에 있기에 형변환을 실질적으로 수행하는 코드는 Native여야 한다. 따라서 Node를 binding하는 Refer가 반환형이기 때문에, Node에 정의된 virtual Refer to(Class&) 함수가 실질적인 형변환을 수행한다. 
+  - \2. 월드Frx의 실체는 Native에 있기에 형변환을 실질적으로 수행하는 코드는 Native여야 한다. 따라서 Node를 binding하는 Refer가 반환형이기 때문에, Node에 정의된 virtual Refer to(Class&) 함수가 실질적인 형변환을 수행한다.
   - \3. Native환경에서는 타입이 구체적으로 나와야 편하기 때문에 TRefer<T> to<T>()를 제공한다.
 
 - 추가적으로 지역변수에다가 to를 사용한 경우에는 #로컬바인딩 을 가능하게 함으로써 해결되었다.
@@ -397,7 +538,7 @@ b.print()
 
   - x 1안 형변환은 대상자의 생성자와 자신의 생성자 중에서 호환되는 걸 선택하는 것이다. extend로 이를 해결한다.
 
-    extend는 위험하다. private를 사용해야 하는 경우도 있으므로 friend를 필요로 한다. 
+    extend는 위험하다. private를 사용해야 하는 경우도 있으므로 friend를 필요로 한다.
 
     - int 와 string 관계에서 int->string은 string(int)가, string->int는 int(string)이 대신할 수 있지 않겠냐는 것이다.
       - 그러나 int가 먼저 생긴 클래스이므로 int(string)은 extend로 들어가야 한다. 이는 상대방의 private를 다 알고있어야만 하므로 extend는 피하고 싶다.
@@ -412,7 +553,7 @@ b.print()
         - \#로컬바인딩 문제를 해결해야만 한다. --> 해결함.
         - 반환형을 뭐로 할것인가?
           - Refer로 해야 한다. 그래야 Object가 나올수는 없다. *this가 나올수도 있어야 하기 때문이다.
-          - Refer는 Class를 들고 있는다. 
+          - Refer는 Class를 들고 있는다.
           - 구체클래스 타입으로 to를 한 경우에는 반환할 Refer에서 Class만 구체클래스의 것으로만 바꿔줘서 넘겨주면 된다.
           - Native의 편의를 위해서는 TRefer를 사용하면 된다.
 
@@ -420,7 +561,7 @@ b.print()
 
 ##### to함수의 signature.
 
-- to함수는 World에 visible해야 하므로 반환형은 Bind가 될 수없다. Refer다. Refer는 Strong을 기본으로 하고 있다. 
+- to함수는 World에 visible해야 하므로 반환형은 Bind가 될 수없다. Refer다. Refer는 Strong을 기본으로 하고 있다.
 - Strong로 나간걸 Weak로 받을 수 있다. 따라서 to함수로 Strong인채로 나가야만 한다. (weak로만 나가면 to함수 안에서 새로 객체를 생성해서 내보낼 수가 없게 된다는 얘기다. 선택권은 호출자(caller)에게 줘야하므로 Strong으로만 내보내야 한다)
 
 
@@ -429,7 +570,7 @@ b.print()
 
 - C++ native 타입들 (주로, ptr이 선언된)들에 대한 casting은 어떻게 되야 할까?  이게 필요한 이유는 mashalling을 지원하기 위해서다.
 - NativeWrapperMetaClass를 만든다. 그 안에서는 ctor을 하나 만들어서 자동으로 넣어둔다. 그리고 이걸 가지고 casting (WorldObject -> C++NativeType)으로 가면 된다.
-- 예) 
+- 예)
   - (this->*_fptr)(msg[0].to<TClass<my_char_struct*>(), msg[1].to<Type2>());
 
 
@@ -437,9 +578,9 @@ b.print()
 ##### 명시적캐스팅
 
 - 요약 : 명시적 캐스팅 = #묵시적캐스팅(=다운캐스팅 + pretype캐스팅) + 사용자 커스텀 캐스팅
-- to()로 호출한다.  반환값은 Refer이며, to<T>()도 지원한다. 
+- to()로 호출한다.  반환값은 Refer이며, to<T>()도 지원한다.
 - to<const T>()를 적으면 Refer<const T>가 반환되며, 그것의 isConst()는 true가 된다.
-- 임의의 클래스 A. const A& a = ...; 일때 [a.to](http://a.to/)(참고 -> #명시적캐스트에서_다운캐스팅으로_반환된경우만_isConst함수가_영향력을_발휘한다. 
+- 임의의 클래스 A. const A& a = ...; 일때 [a.to](http://a.to/)(참고 -> #명시적캐스트에서_다운캐스팅으로_반환된경우만_isConst함수가_영향력을_발휘한다.
 
 
 
@@ -476,11 +617,11 @@ b.print()
   - \5. 최적화가 가능해야 한다. 속도가 빨라야 한다.
 
 - x 1안 worldlang은 to를 오버라이드하도록 한다
-  사용자의 경험상, 올바르지 않다. if-else가 반복되게된다. 
+  사용자의 경험상, 올바르지 않다. if-else가 반복되게된다.
 
 - x 2안 멀티메소드를 지원한다.
 
-  폐기 
+  폐기
 
   - 멀티메소드란 추상타입에 담긴 구체타입으로 자동 다운캐스팅을 지원하여, 그쪽으로 디스패치되도록 하는 것이다.
     - 예) class A
@@ -498,17 +639,17 @@ b.print()
       - "Multi-methods is one of the interesting what-ifs of C++. Could I have designed and implemented them well enough at the time? [...] What other work might have been left undone to provide the time to design and implement multi-methods?"
     - (p298f)
     - In general, whenever you feel the urge to know why some particular C++ feature was implemented, or was not implemented, or was implemented the way it is now, and if that feature pre-dates the standardization, you want to read D&E.
-  - 멀티메소드가 만약 된다면, 
+  - 멀티메소드가 만약 된다면,
     - \1. native개발자는 to를 오버로딩해서 사용한다. worldlang 개발자도 to를 오버라이딩한다. (반환형 Refer가 노출된다는 문제가 있는데, 이건 일단 패스)
-    - \2. WorldFrx는 오버로딩된 to함수들을 클래스에 담아둘것이다. 
-    - \3. worldlang 개발자가 to()를 호출하면 멀티메소드에 의해서 저 to함수중 하나로 자동으로 매치된다. 
+    - \2. WorldFrx는 오버로딩된 to함수들을 클래스에 담아둘것이다.
+    - \3. worldlang 개발자가 to()를 호출하면 멀티메소드에 의해서 저 to함수중 하나로 자동으로 매치된다.
     - \4. native개발자가 기존 to함수인 to(Class&)를 호출하면 3번으로 redirection 되게 한다.
     - 즉, 캐스팅에 대해서 따로 클래스를 만들 필요도, 배열로 관리할 필요도 없으며, 멀티메소드라는 좋은 아이디어도 함께 얻게 된다.
   - v 고찰로 알아낸 팩트
     - v 멀티메소드는 단점이 매우 많다
       - v 인자가 가지게될 가능성이 커지므로 당연히 모호성 오류가 증가한다.
       - v 동적에 타입의 결정되기 때문에 vtable을 적용할 수 없고 따라서 최적화가 불가능하다.
-      - v 캐스팅 문제는 멀티메소드와 관련이 없다. 오히려 주어진 타입A가 hiding하고 있을 메소드까지 어떻게 dispatch하냐는 문제다. 
+      - v 캐스팅 문제는 멀티메소드와 관련이 없다. 오히려 주어진 타입A가 hiding하고 있을 메소드까지 어떻게 dispatch하냐는 문제다.
 
 - v 다른 언어는 사용자의 캐스팅을 어떻게 끼워넣을까?
 
@@ -528,7 +669,7 @@ b.print()
 - *[x] 1안 사용자가 캐스팅을 추가하는 방법*
 
   - 객체에 대한 배열을 사용한다. 직접 to를 오버라이드 하지 않게 한다. 사용자는 자신이 지원할 타입1에 대해서 캐스팅 클래스를 정의해야만 한다.
-  - to를 직접 override하는 것 대비, 
+  - to를 직접 override하는 것 대비,
     - 장점
       - isTo() 함수를 작성할 수 있으며 기존대비 빠르다.
       - override시 사용자가 해야할 명시적캐스팅을 대신해줄 것이다.
@@ -541,7 +682,7 @@ b.print()
 
 - *[x] 2안 to를 오버라이드*
 
-  - C++의 operator type()캐스팅은 모호성의 오류를 너무 많이 야기한다. 
+  - C++의 operator type()캐스팅은 모호성의 오류를 너무 많이 야기한다.
   - 그렇다고 사용을 안할 수는 없다. World는 managed <-> native의 간극을 wrapping으로 메꾸고 있고 wrapping의 핵심은 캐스팅이기 때문에 native환경에서 managed 데이터를 가져오기 위해서는 캐스팅이 필수이다.
   - 따라서 World는 custom타입에 대한 이를 지원은 하지만, 되도록이면 사용하지 않는 방향으로 간다.
   - 캐스팅은 to() 함수이다. 2종류가 있다.
@@ -572,19 +713,19 @@ b.print()
 
 - 명시적 형변환은 to(타입) 으로 해결한다. native, managed 모두 to(Class&)을 define함으로써 형변환 지원을 추가 할 수있다. 그러나 되도록이면 권장하지는 않는데 모호성 오류를 야기시키기 때문이다.
 - 참고 -> #명시적캐스팅
-- 연산자 오버로딩에서 기존타입 + 커스텀타입의 형태를 지원하는 것은 까다로운 문제며, World는 클래스 확장기능으로 이를 해결한다. extend 키워드를 써야한다. 
+- 연산자 오버로딩에서 기존타입 + 커스텀타입의 형태를 지원하는 것은 까다로운 문제며, World는 클래스 확장기능으로 이를 해결한다. extend 키워드를 써야한다.
   - extend 키워드를 사용하는 이유는 World에게 "원본이 이거다. 원본을 먼저 파싱해서 읽어라"라는 힌트를 주기 위해서이다.
   - 원본이 바이너리로 최적화된 상태라면 함수의 순서에 크게 영향을 받는다. 클래스의 메소드가 확장되었을때 기존 메소드가 정상적으로 호출되기 위해서는 확장된 메소드가 뒤에 붙어야 한다.
 - extend시 이미 기존 메소드가 존재하는 경우에는 에러가 발생한다.
-- extend된 함수에서도 private 멤버를 접근할 수 있다. 이것은 C++의 "원천금지는 하지 않는다. 오직 실수하지 않게끔 한다"는 철학이 옳다고 판단했기 때문이다. 
-- 묵시적 바인딩에서 묵시적 형변환이 일어난다. (다른곳에서도 묵시적 형변환은 일어난다) 묵시적바인딩시 to함수(이건 명시적 캐스팅이다)가 아니라 묵시적캐스팅함수(미정이나, 아마도 toImplicit가 될것이다)에 의해서 캐스팅이 가능한가 아닌가로 판단하게 된다. 
+- extend된 함수에서도 private 멤버를 접근할 수 있다. 이것은 C++의 "원천금지는 하지 않는다. 오직 실수하지 않게끔 한다"는 철학이 옳다고 판단했기 때문이다.
+- 묵시적 바인딩에서 묵시적 형변환이 일어난다. (다른곳에서도 묵시적 형변환은 일어난다) 묵시적바인딩시 to함수(이건 명시적 캐스팅이다)가 아니라 묵시적캐스팅함수(미정이나, 아마도 toImplicit가 될것이다)에 의해서 캐스팅이 가능한가 아닌가로 판단하게 된다.
   - --> 이것은 to함수가 어떤 캐스팅을 지원하는가를 World가 알고 있어야 한다.
-    World가 임의의타입 T가 어떠한 캐스팅을 지원하는지 알려면? 참고 
+    World가 임의의타입 T가 어떠한 캐스팅을 지원하는지 알려면? 참고
 - 고찰내용
   - 팩트1. 타입 A가 B로 캐스팅이 가능한가의 여부는 각 클래스의 개발자가 define해놓아야 한다.
   - 팩트2. 역(reversed)함수가 필요로 해지는 것들이 1개 이상 존재한다.
-    - [A.to](http://a.to/)(B)와 더불어 [B.to](http://b.to/)(A)도 있어야 하며, A.operator+(B)와 B.operator+(A)도 마찬가지다. 
-  - 팩트3. 그러나 타입A가 외부에서 가져온 모듈일 경우 타입A는 타입B를 알지못한다. 이 경우 해결할 방법은 
+    - [A.to](http://a.to/)(B)와 더불어 [B.to](http://b.to/)(A)도 있어야 하며, A.operator+(B)와 B.operator+(A)도 마찬가지다.
+  - 팩트3. 그러나 타입A가 외부에서 가져온 모듈일 경우 타입A는 타입B를 알지못한다. 이 경우 해결할 방법은
     - 1안 타입B에 타입A를 받을 수있는 역함수, B.operator+(A)와 B.operator_reversed(A)를 만드는 방법 - python방식.
       - 단점1. reversed된 함수를 사용자가 추가로 알고 있어야 하며
       - 단점2. World는 A.operator+()를 먼저 try하고 없으면 B.reversed_operator+(A)를 try하는 형태로 가야하기 때문에 약간의 퍼포먼스 loss가 있다.
@@ -616,7 +757,7 @@ b.print()
   - foo(3) + foo(3) * (foo(2.5) - hoo("gogo")) / foo(2)
   - 가 있을때...
   - 파서제네레이터가 일한다. 연산자 우선순위를 바탕으로 해서 foo(2.5) - hoo("gogo") 가 먼저 파싱되고, foo(2.5)를 통해 미완성 코드블럭을 계속해서 생성한다. 정의된 함수자체는 올바르게 등록되어 들어간다. 미완성인 것은 오직 statement인 코드블럭뿐이다.
-  - 다음은 syntaxer가 일한다. syntaxer는 생성된 코드블럭들을 linking + validation을 수행한다. foo("gogo")를 보고, 
+  - 다음은 syntaxer가 일한다. syntaxer는 생성된 코드블럭들을 linking + validation을 수행한다. foo("gogo")를 보고,
 
 
 
@@ -626,7 +767,7 @@ b.print()
 
 - dynamic_class를 더 좋은 퍼포먼스와 활용성을 커스터마이즈 하는 것이 목표다.
 - 클래스A -> 클래스B되기 위해서는 클래스A 안에 인자로 클래스가 들어오면 이걸 어떠한 형태로 내보내겠다는 코드를 적어놓는다.
-- 클래스B는 클래스A의 계층 중 하나가 될 수 도 있고, 전혀다른 클래스가 될 수도 있어야 한다. 
+- 클래스B는 클래스A의 계층 중 하나가 될 수 도 있고, 전혀다른 클래스가 될 수도 있어야 한다.
 - x to() 결과 캐스팅이 된 StrongBind가 임시변수로 넘겨지며 caller는 이를 Weak 혹은 StrongBind로 선택할 수 있다.
   - x 왜 그런가? 왜 weak로 내보내야하지?
   - x 만약 weak로도 내보내야 한다면, Refer는 weak와 Strong 양쪽 다 안되나?
@@ -665,14 +806,14 @@ b.print()
     -  참조자로 나올 수도 있고 값으로 나올 수도 있다고 했다. 그런데 그 둘의 타입이 같아야 하므로 결국은 TBind<>로 나오게된다. 이것은 참조자로 나올때 참조카운트가 1개 증가되는 문제를 낳는다.
     - 참조자로 나올 때는 TWeak<>로, 값으로 나올때는 TBind<>로 나오되, 타입은 같게 만들되, 사용자가 사용할때는 확실하게 각각 동작되도록 하는 방법은?
       - 1안
-        - TWeak가 범용적이므로 to()반환형은 TWeak다. 
+        - TWeak가 범용적이므로 to()반환형은 TWeak다.
         - 남은 문제는 Float을 내보내는 경우는 밖에서 참조카운트 관리를 해줘야 한다는 점이다.
-        - 반환형이 참조자라면 원본을 유지한채로 밖으로 꺼낼 수 있다. 
+        - 반환형이 참조자라면 원본을 유지한채로 밖으로 꺼낼 수 있다.
         - 반환형이 TWeak&가 된다는 것이지.
       - [v] 2안
         - TBind<int> foo();
-        - TWeakBind<int> ret = foo(); 
-          - foo의 반환형은 TBinder. 하지만 임시변수이기 때문에 이 한줄이 사라지면 소멸된다. 즉 사용하는 쪽에서 임시변수를 TBind로 받을 것인지, TWeak로 받을 것인지를 선택할 수 있다. 
+        - TWeakBind<int> ret = foo();
+          - foo의 반환형은 TBinder. 하지만 임시변수이기 때문에 이 한줄이 사라지면 소멸된다. 즉 사용하는 쪽에서 임시변수를 TBind로 받을 것인지, TWeak로 받을 것인지를 선택할 수 있다.
           - foo()안에서 기존 인스턴스를 캐스팅만 달리해서 넘긴 경우라면, Weak로 받아도 아무런 문제없다.
           - 게다가 표준에 의하면 값으로 넘긴걸(rvalue) 레퍼런스로 받을 수 없다. (MSVC는 허용함. 그러므로 얘는 쓰지 말자) 그러므로 홀이 아니다.
       - [x] 3안
@@ -691,7 +832,7 @@ b.print()
 
 
 
-##### 묵시적캐스팅 
+##### 묵시적캐스팅
 
 - 배경
   - 함수 디덕션 과정 (참고로 함수디덕션은 단순히 함수호출을 의미하는게 아니다. World는 모든 것이 msg의 송수신, 즉, 함수로 보기 때문에 생성자 생성과 연산자, if 같은 keyword까지 포함한 모든 것을 의미한다)에서 주어진 인자로 이 함수를 호출 할 수 있는 지를 판단하기 위해 타입의 교량역할을 하는 것이다.
@@ -699,17 +840,17 @@ b.print()
   - 함수 디덕션에서는 묵시적캐스팅을 적용한 결과, 호출이 가능할 것인지, 가능하다면 얼마나 우선순위가 되는지를 종합적으로 판단해서 가장 적합한 best fit을 찾아서 그걸로 링킹을 시도하게 된다.
 - 묵시적캐스팅의 내용
   - \1. pretype들간의 명시적 캐스팅
-    pretype 들 간 이다. 한쪽이 pretype인 경우는 해당하지 않는다. 
+    pretype 들 간 이다. 한쪽이 pretype인 경우는 해당하지 않는다.
   - \2. 업캐스팅
   - [미정] 3. 다운캐스팅
-    지원하게 되면 멀티메소드를 지원하게 되는 것이다. 
+    지원하게 되면 멀티메소드를 지원하게 되는 것이다.
 - 왜 pretype들간의 명시적 캐스팅만 지원하는가? 다른 타입은?
   - pretype들은 프로그램 내에서 가장 빈번하게 사용될 타입이다. 따라서 이들을 가지고 함수를 호출하는 경우도 많다. 매번 이러한 경우마다 사용자보고 명시적으로 함수캐스팅을 하라고 하는 것은 사용성이 너무 떨어진다.
   - C++의 경험을 보았을때 커스텀타입들에 대해 업캐스팅 정도만 묵시적으로 동작해도 사용에 크게 무리는 없었다.
   - 명시적 캐스팅을 모두 묵시적으로 동작하게 해버리면, 모호성의 오류가 너무 많아진다.
 - 묵시적캐스팅을 위한 API가 필요한가?
-  - 묵시적 캐스팅을 사용하게 될 알려진 장소는 현재 컴파일러(함수 디덕션을 하는 곳), Bidge component 2곳이다. 
-  - 설계의 관점에서 책임을 놓고 보면 캐스팅을 전담하는 것은 타입이므로 타입에서 API로 캐스팅을 두는 것이 많다. 
+  - 묵시적 캐스팅을 사용하게 될 알려진 장소는 현재 컴파일러(함수 디덕션을 하는 곳), Bidge component 2곳이다.
+  - 설계의 관점에서 책임을 놓고 보면 캐스팅을 전담하는 것은 타입이므로 타입에서 API로 캐스팅을 두는 것이 많다.
   - 단, 이러면 API가 늘어나는 것이며 이 API를 사용자가 오버라이딩해서 함수 디덕션에 자신의 타입을 묵시적캐스팅되도록 추가할 수 있게 된다.
 - Thing에 그대로 묵시적 캐스팅을 두기로 했다. (invisible)
 
@@ -737,7 +878,7 @@ b.print()
 - 형변환 테이블에는 비슷한 그룹군이 담겨있다. 우선순위는 존재하지 않는다.
   - 원칙
     - 작은것은 큰것으로 흘러가는 것이 원칙이다. 그러나 사용성을 위하여 몇가지 예외를 둔다. (int -> float, char -> int, int -> string)
-    - 예외적으로 숫자 그룹군끼리는 서로 호환된다. 
+    - 예외적으로 숫자 그룹군끼리는 서로 호환된다.
     - 대부분의 built 타입은 string으로 변환될 수 있다.
   - int --> float, char, bool
   - float --> int, bool
@@ -775,7 +916,7 @@ b.print()
     - read를 위해서 string -> int로 하는 건 매우 단순하다.
     - 하지만 write는?
       - World는 모든 것이 메시지 위주로 돌아간다. 사용자가 작성한 코드도 결국은 메시지로 번역된다.
-      - 따라서 aage += 3을 World 문법으로 작성하면 이는 결국은 
+      - 따라서 aage += 3을 World 문법으로 작성하면 이는 결국은
         - aage.call("set", aage.call("add", aage, int(3));
       - 같이 번역되기 때문에 문제는 없을 것이다.
 
@@ -786,7 +927,7 @@ b.print()
 ```java
 def myInt = 3
        void say()
-    
+
 1: int i1 = int 3.5 // ok
 2: int i2 = 3 3.5 // 이상하지만 ok.
 3: int i3 = i1 i2 // ok.
@@ -873,17 +1014,17 @@ activity = Activity (Service system.get_service("Reckon")).get_activity()
 - 블록문은 execute()를 받으면 Scope의 index를 기억하고 가지고 있는 Statement들을 execute한다.
   - Statement들은 지역변수를 Stack인 LocalSpace에 push하게 된다.
 - execute(Statements)가 끝나면 블록문은 기억했던 index까지 LocalSpace[n]을 release()하고 LocalSpace._setIndex(index)를 한다.
-- 고찰내용 
+- 고찰내용
   - 블록문이 끝나면 블록문 안에 정의된 지역변수들은 LocalSpace[n].release()로 사라져야 한다.
   - 1안 LocalSpace는 placeBorder() reclaimBorder() 2가지 함수가 있다. reclaimBorder를 하면 가장 최근에 placeBorder()를 한 시점까지pop이 된다
-  - v 2안 블록문이라는 클래스를 만든다. 
+  - v 2안 블록문이라는 클래스를 만든다.
     - 함수는 블록문의 일종이라고 하면 설명이 된다. 게다가 블록문 자체를 객체로 보내거나, 클로저나, 람다같은 거 구현할때도 지역변수 관리는 자동으로 되게 만들 수 있다.
-    - 블록문은 시작 시점에서 Scope의 index를 기억하고, 끝나는 시점에 여기까지 release()를 호출하고 _setLength(index)를 해버린다. 
+    - 블록문은 시작 시점에서 Scope의 index를 기억하고, 끝나는 시점에 여기까지 release()를 호출하고 _setLength(index)를 해버린다.
       - 매번 pop을 하면 지역변수 인스턴스가 해제되지 않으며 속도 문제도 있다.
     - 이 사실에서, Scope는 전역공간이 낮은 인덱스, 지역변수가 높은 인덱스를 가지게 되는 Stack임을 알 수 있다.
-      - 증명 : 왜냐하면 먼저 생긴 지역변수가 나중에 생긴 지역변수보다 먼저 죽는 경우는 생기지 않는다. 
+      - 증명 : 왜냐하면 먼저 생긴 지역변수가 나중에 생긴 지역변수보다 먼저 죽는 경우는 생기지 않는다.
 
-####  블록문과 static 
+####  블록문과 static
 
 - 블록문 안의 static 변수들은 블록문의 것이다. LocalSpace에 index를 기억하고 나서 자신이 소유한 static 변수들을 추가한다.
 - 이는 메소드가 실행전에 자신의 인자리스트와 자신의 메소드들을 미리 push해놓는것과 동일하다.
@@ -924,7 +1065,7 @@ for is_success
 for null
 for false
 
-a = Obj()    
+a = Obj()
 for a
     a = null
 ```
@@ -970,7 +1111,7 @@ with name
 with name
 	case "wow": ..
 	//if it == "wow": ...
-	
+
 	is in {"wow", "abc"}
 	//elif it in {"wow", "abc"}
 ```
@@ -1047,8 +1188,8 @@ with name
 #### Method 는 클래스다.
 
 - Object는 독립적인 ObjectSpace 유지하는 인스턴스적인 개체를 의미한다. 이것은 Class를 하나 모방 하고있으며, 그 클래스로부터 메소드 내역을 pointing하고 객체내역을 cloning 함으로써 고유값을 갖는다.
-- Method는 하나의 종말메소드를 가질 수 있는 LocalSpace에서 동작되는 Static Unique 클래스이다. 
-  - 값을 가질 수 없으나, 메소드는 가질 수 있다. 
+- Method는 하나의 종말메소드를 가질 수 있는 LocalSpace에서 동작되는 Static Unique 클래스이다.
+  - 값을 가질 수 없으나, 메소드는 가질 수 있다.
   - **동작시 LocalSpace에서 관리된다. --> #Method는_ThisPtr이_꼭_필요하다_어떻게_얻을_수_있을까 참고**
 - Nested Things
   - 클래스가 Nested 된 경우, 이 클래스는 owner클래스에 대한 어떠한 정보도 갖고 있지 않다.
@@ -1130,7 +1271,7 @@ with name
 
 #### 어떻게_하면_이_메소드를_호출할_수_있는지_아닌지를_알_수있을까
 
-- 바로 call을 해버리면 곤란하다. 왜냐하면 interpreter는 validation에서 모호성 오류를 검증하기위해 이 msg를 받을 수있는 곳이 1곳인가를 반드시 짚고 넘어가야 하기 때문이다. 따라서 기존의 컨셉인 "일단 call해서 안되면 return error 하라"는 통하지 않는다. 잘못하면 2번 각기 다른 곳에서 동작이 될 수 있다. 
+- 바로 call을 해버리면 곤란하다. 왜냐하면 interpreter는 validation에서 모호성 오류를 검증하기위해 이 msg를 받을 수있는 곳이 1곳인가를 반드시 짚고 넘어가야 하기 때문이다. 따라서 기존의 컨셉인 "일단 call해서 안되면 return error 하라"는 통하지 않는다. 잘못하면 2번 각기 다른 곳에서 동작이 될 수 있다.
 - x 1안 flag를 사용해서 "1번 이미 동작했다로 알린다. --> 1번째는 이미 실행이 되게 된다.
 - v 2안 isCallable()을 만들고, casting을 매번 수행한다.
 - x 3안 casting없이 알아내는 방법
@@ -1145,9 +1286,9 @@ with name
 - 시스템에 1개만 존재한다는 것은 다음 2가지 조건을 만족해야한다.
   - \1. scope 밑바닥에 추가되어야 한다. 왜냐하면 scope를 통한 접근이, 이것들을 접근할 수있는 유일한 방법이기 때문이다.
   - \2. 런타임 도중 사용자의 의한 이것들의 복제 및 인스턴스 생성을 막아야한다. 이는 C++과 World 양쪽에서 모두 방어가 되어야 한다.
-- Unique성을 갖는 대부분의 것들은 Class와 그 밑에 있는 것들이다. 이것들은 C++ 코드 자체에 생성자가 private로 막혀있으며 오직 몇 friend 클래스에서만 마음대로 추가 및 생성이 가능하게 되어있다. 
+- Unique성을 갖는 대부분의 것들은 Class와 그 밑에 있는 것들이다. 이것들은 C++ 코드 자체에 생성자가 private로 막혀있으며 오직 몇 friend 클래스에서만 마음대로 추가 및 생성이 가능하게 되어있다.
 - World코드에 의해서 Node의 인스턴스 가 생성되는 과정은 항상 Class객체로부터 Object를 생성해 내는 것이다. 그리고 Class.getClass()를 하면 Class 자체가 나오며, Class는 ADT이기 때문에 instantiate()는 null을 반환한다.
-- 주의 - 전역변수는 Unique 성이 아니다. 
+- 주의 - 전역변수는 Unique 성이 아니다.
   - \1. 이것은 일단 class가 아니며(이를테면 Class, Method 모두 클래스다) 그말은 복수의 객체가 나올 수 있다는 것이다.
   - \2. 같은 타입으로 복제가 될 수있다.
 - 고찰내용
@@ -1176,7 +1317,7 @@ with name
             - .name = "getMember"
             - .args = {"my_static_variable"}
             - }
-          - call()은 2종류가 있다. 
+          - call()은 2종류가 있다.
             - const TStrong<Node>& call(...) const;
             - TStrong<Node>& call(.....);
             - 물론 const버전을 쓰면 static 변수를 접근 할 수 없지만, 최초 scope에 접근할때는 nonconst call()를 쓰게 될 것이다. scope는 const가 아니니까. 따라서 이후로 호출되는 모든 것들도 사실은 const가 아니게 된다.
@@ -1194,7 +1335,7 @@ with name
       - 네. 모든 문제를 해결할 수 있을것이다. static이 좀 낭비지만.
       - c++에서 클래스의 static변수에 접근한다면?
         - 그럼 진짜 static변수에 접근하는 것이다. 이 문제와 관련 없지.
-          - 
+          -
       - static변수가 여러개가 될때마다 모든 객체들은 여러개를 들고 있어야 한다. 메모리 낭비.
     - v 5안 보안 문제는 나중으로 미루고 일단은 classmanager는 class를 그냥 공개해버린다.
     - \#static변수는_어떻게_구현하는가  로 해결하였다.
@@ -1209,7 +1350,7 @@ with name
 - class Object {
   - call(const Message& msg) {
     - bool is_updated = false;
-    - if(msg._origin == null) 
+    - if(msg._origin == null)
       - msg.getOrigin() = *this
       - is_updated = true
     - .... call to members ....
@@ -1238,9 +1379,9 @@ with name
     - Method의 Owner는 thisptr가 아니라 Class다.
     - 가장 설계상으로 합리적인 안이지만 동시에 ptr를 set하는 것은 메모리 및 퍼포먼스 이슈가 있기 마련이다. 다른 용도로도 활용한 용도가 무진장 많다면 이걸 할 수 있을것이다.
   - *2안 Stack&Scope를 사용한다.*
-    - 그러나 이경우, Stack을 사용하지 않는 Method는 누구의 Object인가는 알수 없다. 
+    - 그러나 이경우, Stack을 사용하지 않는 Method는 누구의 Object인가는 알수 없다.
       - Limitaion으로 두는 수밖에 없다.
-    - Object는 어짜피 ObjectSpace 구성을 위해서 자신을 Scope에 등록을 해야한다. 따라서 고때 같이 scope가 object를 가지고 있으면 될 것이다. 
+    - Object는 어짜피 ObjectSpace 구성을 위해서 자신을 Scope에 등록을 해야한다. 따라서 고때 같이 scope가 object를 가지고 있으면 될 것이다.
     - API명은 scope::getRunningObject() 정도로 하면 될까? 이건 좀 더 생각해보자.
   - *3안 그래서 나온게 Message안에 argument로 ThisPtr를 넣자는 것이다.*
     - --> #Message는_name_thisptr_args를_모두_하나의_Array로_구성한다  참조
@@ -1259,7 +1400,7 @@ with name
     - class Object {
       - call(const Message& msg) {
         - bool is_updated = false;
-        - if(msg._origin == null) 
+        - if(msg._origin == null)
           - msg.getOrigin() = *this
           - is_updated = true
         - .... call to members ....
@@ -1281,10 +1422,10 @@ with name
 - 이미 Expr & stmt는 target이 Node이기만 하면 validation을 한다. 그러므로 함수ptr라 하더라도 Node것처럼 validation을 돌리면 된다.
 - 고찰내용
   - v validate를 먼저 해결해야 한다.
-    - validate는 friend로 선언된, classManager안에 있는 별도의 visitation에 의해서 수행된다. 
+    - validate는 friend로 선언된, classManager안에 있는 별도의 visitation에 의해서 수행된다.
     - call()에서 사용된 _precall, _prerun을 visitation 안에도 동일하게 사용한다.
   - world의 함수포인터인데이 이 함수포인터는 이러한 인자타입들을 가지고 있다는 걸 어떻게 컴파일러에게 알려줄수 있을까? 어떻게 컴파일에러가 나도록 할 수 있을까?
-  - ptr가 아니라 일반 함수가 컴파일에러가 나는 과정을 먼저 clearify하자. 함수호출은 stmt(expr)이 담당한다. 고로 exprValidation.visit()함수가 수행되면 
+  - ptr가 아니라 일반 함수가 컴파일에러가 나는 과정을 먼저 clearify하자. 함수호출은 stmt(expr)이 담당한다. 고로 exprValidation.visit()함수가 수행되면
     - \1. expr이 들고있는 args 자체에 문제가 있는지 확인함.
     - \2. 현재 구성된 scope에서 호출할 method를 찾아서, 그것에게 args를 set하는 식의 scope를 제어하는 Expr._precall()을 여기서 호출함.
     - \3. visitor는 Expr가 들고있는 Strong target을 재귀적으로 탐색한다. 하지만 그렇다고 해서 target이 가리키는 원본까지 visitation을 하는 것은 아니다. 이러한 차이를 항상 염두해 두고 expr같은 TVisitation들은 어디까지 직접 재귀적은 visit을 해야하는지를 생각해야 한다.
@@ -1328,7 +1469,7 @@ with name
   - A.print() // 이건 함수를 호출하는 것
   - A.print(string, float).getName()
 - 시나리오2-인자가 복잡해지면 읽기 어려워지는데
-  - class A 
+  - class A
     - int print(int a)
       - ..
     - int(int) print(float b) // 여기서 print(int b)로 하면 중복정의가 된다.
@@ -1339,7 +1480,7 @@ with name
 
 
 
-#### Method가_만약_Type의_일종이_아니라면, Type이라는 클래스가 필요없다면, execute()를 virtual로 상속받게 할 수 있다. 
+#### Method가_만약_Type의_일종이_아니라면, Type이라는 클래스가 필요없다면, execute()를 virtual로 상속받게 할 수 있다.
 
 * Contextual_REPL_based_development  가 먼저 해결되어야 한다.
 * Type은 자신을 Generating한 SourceCode가 누구인지 적어놓는 역할이다. 아마 이는 C-REPL때문에 생긴것이다.
@@ -1361,7 +1502,7 @@ with name
     - return getMember(Msg(string)); // 이 Msg는 args가 없다.
   - }
 - Object::isConsumable은 name만, Method::isConsumable()은 ((name == name(paramlist) && noArgs) || msg를 consume 가능할때)) 통과시킨다.
-- 이때 일부 pretype은 name을 소문자로 해야한다. 
+- 이때 일부 pretype은 name을 소문자로 해야한다.
   - 예) String은 C++에서 봤을때 그런거고, world에서는 string이다.
 - name(paramlist)은 Method._name이며, Method::initialize()나 lazy로 한번 define된다.
 - 고찰내용
@@ -1369,7 +1510,7 @@ with name
     - x 1안 2가지의 output이 다르게 한다.
       - 이 경우 Node는 subnode에게 isConsumable(msg)를 물어볼때, subnode가 MEthod 라면 "print(void)" or ("print" && args[0] == void) 로 따져줘야 한다. 즉 isConsumable의 true 요건이 2개가 되는 것이다.
       - **이건 동적바인딩을 하겠다는 것이다. 어떤 print함수가 될지 이름만 줄테니, 함수바인딩은 실행할때 하겠다는 것이지.**
-    - v 2안 2가지의 output이 같다. 
+    - v 2안 2가지의 output이 같다.
       - 이경우 a.print()는 인터프리터가 실제로 어떠한 함수인지를 인자추론을 통해서 판단한 뒤, a.print(void).execute 로 변경한다. 즉, **syntatic sugar**가 되는 것이다.
       - 따라서 이경우, 인터프리터가 함수를 판단한 뒤 코드블럭을 만들면서 확정해버린다. C-REPL 문제와 관련이 있게 된다.
       - C-REPL의 초기안은 코드 수정이 나면, 수정난 것에 영향을 받는 모든 코드를 전수조사 및 역추적해서 그 부분들을 다시 바인딩 및 검증을 돌리는 방법이었으나 이게 시간이 너무 걸리는건 뻔한 이야기다.
@@ -1390,8 +1531,8 @@ with name
   - void(int) f1 = a.print(int) // 이게 정석이나,
   - void(int) f1 = a.print // 어짜피 a.print(float)이 여기에 오면 에러가 되기 때문에 이건 해당사항이 되지 않는다.
 - 구현방법은?
-  - v 1안 정보가 부족한 경우, 필요한 인자를 끼워넣어 여러가지 candidates를 만든다. 그리고 에러로 판정되는 것은 삭제를 해버린다. == SFINAE. 
-    - 최종 컴파일 결과가 에러로 판정된다면, 미리부터 candidates라고 사용자에게 알릴필요가 없다는 것이다. 
+  - v 1안 정보가 부족한 경우, 필요한 인자를 끼워넣어 여러가지 candidates를 만든다. 그리고 에러로 판정되는 것은 삭제를 해버린다. == SFINAE.
+    - 최종 컴파일 결과가 에러로 판정된다면, 미리부터 candidates라고 사용자에게 알릴필요가 없다는 것이다.
     - candidates에서 제끼는 게 이 안의 구현사항이 아니다. 처음부터 부족한 정보를 제공한 경우에도 정보를 보간하여 candidates를 만들어내는 것이 요구사항이다.
     - 즉, 함수명만 제공된 경우, 해당 클래스의 같은 함수명을 가지고 있는 모든 member가 candidates가 된다. validator는 이중에 어떠한 것들이 최종적으로 에러가 아닌지를 판단해서 candidates가 1개가 되면 그걸 채택한다.
     - 대충 맞을 것 같긴하다. validation에 상세한 알고리즘을 구현해보자.
@@ -1411,11 +1552,11 @@ with name
 
 - [v] 런타임시 함수ptr 생성
 
-  - Method를 가리키는 함수ptr에 해당하는 타입을 만들어야 한다. 
+  - Method를 가리키는 함수ptr에 해당하는 타입을 만들어야 한다.
 
 - [v] 함수ptr의 정의
 
-  string(int, float) funcptr = A.foo(int, float) typedef string(int, float) FuncPtr FuncPtr funcptr2 = funcptr 로 한다. 
+  string(int, float) funcptr = A.foo(int, float) typedef string(int, float) FuncPtr FuncPtr funcptr2 = funcptr 로 한다.
 
   - *x 1안 Node형태로 사용하게 한다.*
     - class A
@@ -1427,14 +1568,14 @@ with name
     - **이럴바에야, method 대신 node를 쓰라고 하면 된다. node는 어떠한 call도 런타임에 바인딩을 판단하는 타입이다. 어떠한 것도 코딩할 수 있다.**
     - 그리고 node도 제공하지만 이것 정말 어쩔 수 없을때 사용하는 거고 그 외에는 타입을 체킹할 수 있는 수단을 제공하고 싶다.
   - *x 2안 method라는 독특한 정의법을 만든다.*
-    - 시나리오 
+    - 시나리오
       - class A
         - string foo(int a, int b)
       - method foo1 = A.foo
       - foo1(2, "msg") // compile err
-    - 안된다. 
+    - 안된다.
     - 이유1. validation에서는 실행은 하지 않는다. 따라서 foo1 자체는 scope에 있지만 foo1의 값인 foo메소드는 없는 것이다. 따라서 foo1이 어떠한 메소드와 binding이 되어있는지 알 수 없다.
-    - 이유2. method의 타입은 초기화시에 어떠한 함수와 binding되었는가에 의해서 결정된다. c++의 auto와 같다. 따라서 
+    - 이유2. method의 타입은 초기화시에 어떠한 함수와 binding되었는가에 의해서 결정된다. c++의 auto와 같다. 따라서
       - method foo1 = null
       - foo1 = A.boo
       - or
@@ -1461,10 +1602,10 @@ with name
       - string function(int, float)  = A.foo *// D 스타일*
       - def (int, float) *// boo*
   - v 4안으로 한다.
-    - .NET 계열언어에서는 5안을 많이 사용한다. 
-    - js, python같은 애들은 애초에 동적타입이므로 이문제에서 벗어난다. 
+    - .NET 계열언어에서는 5안을 많이 사용한다.
+    - js, python같은 애들은 애초에 동적타입이므로 이문제에서 벗어난다.
     - 자바는 interface 클래스를 만들고, 이를 이름없는 객체를 생성하여 에둘러 해결한다. 그러나, 이 방법은 사용자가 정의할 cb을 받아들이는 데 적합할 뿐, 이미 존재하는 다른 클래스의 메소드를 그대로 참조는 불가능하다.
-    - 결과 4안을 하기로 했다. 여기서 typedef를 사용하면 5안과 차이가 없다는 점이 핵심이다. 
+    - 결과 4안을 하기로 했다. 여기서 typedef를 사용하면 5안과 차이가 없다는 점이 핵심이다.
     - 메소드 정의와 ptr정의를 동일하게 가져가는 것도 좋지만, 이렇게 해버리면 한번에 복수개의 변수를 만들 수 없으며, 타입명 중간에 변수명이 들어가게되므로 통일성도 깨진다.
 
 
@@ -1490,13 +1631,13 @@ with name
 
 #### 함수_바인딩_퍼포먼스_알고리즘_최적화
 
-- World의 모든 Statement는 사실 Expression이다. --> #Statment와_Expression은_구분해야_할까 
+- World의 모든 Statement는 사실 Expression이다. --> #Statment와_Expression은_구분해야_할까
 - Expression은 execute()가 가능하고, 반환값을 얻을 수 있다. 전달할 Msg와 전달받을 Target을 가지고 있다.
   - Expression설계상, execute()를 해야만 반환값을 얻을 수 있는 것은 아니다.
 - Expr은 Expression 컴포넌트의 기반클래스이며, 이 밑으로 RawExpr, AccessExpr, ExecuteExpr, DynBindExpr 4종류가 있다.
   - RawExpr은 Generation단계에서 링킹을 위해서 정보를 잠시 담아둘 용도로 사용되는것이며(미확정)
   - DynBindExpr은 다이나믹바인딩 특성을 갖게 하는 Expression이다. 이는 C-REPL 기반에서 런타임시, 매 호출마다 묵시적형변환과 오버로딩을 고려한, 동적바인딩을 통해서 적당한 심볼로 바인딩을 한다. 당연히 시간이 많이 소요된다.
-  - AccessExpr, ExecuteExpr은 DynBindExpr의 시간이 많이 소요되는 것을 최적화하기 위해서 추가되는 것으로 Optimization 단계에서 Optimizer(명칭 미확정)가 DynBindExpr들을 분석해서 적절하게 변환해준다. 
+  - AccessExpr, ExecuteExpr은 DynBindExpr의 시간이 많이 소요되는 것을 최적화하기 위해서 추가되는 것으로 Optimization 단계에서 Optimizer(명칭 미확정)가 DynBindExpr들을 분석해서 적절하게 변환해준다.
     - 현재로써는 AccessExpr(= getMember(index)), ExecuteExpr(= call("execute")) 2가지로 모든 DynBindExpr이 대체가능할것으로 보인다.
   - 차후 더 최적화 과정이 이루어지면 더 다양한 Expr이 나오게 될 것으로 보인다.
 - 고찰내용
@@ -1514,7 +1655,7 @@ with name
     - Optimization단계에서는 일률적이던 DynamicBindingStatement를 분석해서 Accessor나 ExecutorStatement로 구분해서 객체를 변경한다.
     - Accessor는 execute()되면 target.call(MSG)가 아니라 return target.getMember(index) 로 바로 접근하는 것이므로, call("getMember", {...}) 일때와 달리 동적바인딩이 없다. call()로 하는 경우는 총 2번의 동적바인딩을 타야만 한다.
       - 1번은 call로 인하여, 2번째는 call을 통해서 호출된 getMember(Msg&) 안에서 주어진 args를 대상으로 수행된다.
-    - executor는 target.execute(Msg&)를 수행하도록 한다. Method는 기본적으로 상속받은 virtual execute()가 있으며, 오버로딩한 execute(Msg&)는 내부적으로 
+    - executor는 target.execute(Msg&)를 수행하도록 한다. Method는 기본적으로 상속받은 virtual execute()가 있으며, 오버로딩한 execute(Msg&)는 내부적으로
       - setArgs(msg.getArgs())
       - execute()
     - 를 할 뿐인 편의함수다.
@@ -1580,7 +1721,7 @@ with name
 
 * 오버로딩된 메소드 중에 도저히 매칭된게 없다면 이제 부모클래스에서 찾는다.
 
-  
+
 
 ##### 검증
 
@@ -1616,7 +1757,7 @@ child.say('5') // child.say(int) 꺼.
 
   - 복제가 이루어진 후, members에 동일한 name으로 메소드 객체를 끼워넣는다.
 
- 
+
 
 - [v] 예를들면 우리가 c++로 void str::toLower()를 만들었고, 이걸 override하려고 한다면.
 
@@ -1635,7 +1776,7 @@ child.say('5') // child.say(int) 꺼.
 
   - 결론은 **Native메소드도 결국은 Wrapper로감싸져서 Method 객체로 나오므로 worldlang은 둘을 구분하지 않아도 된다**
 
-    
+
 
 - [..] 예를들면 생성자
 
@@ -1644,7 +1785,7 @@ child.say('5') // child.say(int) 꺼.
   public: MyClass(int age);
   private: int _age;
   };
- 
+
   def portedMy = MyClass
       portedMy(): super(27)
   ```
@@ -1658,7 +1799,7 @@ child.say('5') // child.say(int) 꺼.
       public: void convert();
       private: vector<Node*> elems;
       };
-      
+
       def myArray = Array
       arr2 = myArray()
       arr2.convert()
@@ -1757,6 +1898,60 @@ def MyMy = MyClass
 
 ### Expression
 
+```cpp
+def app
+    // 구문statement와 표현식expression:
+    // 프로그래밍 언어에서 구문이란 코드의 각 라인을 말하며,
+    // 표현식은 특정한 값을 반환할 수 있는 식별자가 조합된 식을 뜻한다.
+    //	e.g.in c++)	foo(3); 			// 표현식이므로, 동시에 구문이다.
+    //				void func(int age); // 구문이다.
+    //				type A;	 			// 구문이다.
+    //
+    // world는 문법을 간결하게 하기 위해 모든 구문은 표현식으로 정의한다.
+    // 이를 위해 2가지 규칙이 있다.
+    //	1. 모든 블록문을 갖을 수 있는 키워드는 블록문의 마지막 라인을 밖으로 반환한다.
+    //	2. 모든 타입 선언은, 동시에 정의이며, 정의된 식별자는 해당 범위scope내에서 유효하다.
+    int foo(int age)
+        5 // #1 규칙. return이 없어도 ok.
+	void boo(type declared, bool success, int age) // type도 int와 같은 타입의 한 종류.
+		// ... type의 인터페이스는 차후 설명
+
+        // bool -> str시 "true" 또는 "false"
+        console.out(success + ", age=" + age) // true, age=20
+
+    void main()
+        age = foo(0) // age=5
+        success = if age // always true.
+            console.out("at if blockstmt")
+            true
+        else
+            false
+        console.out("success=" + success)
+
+        boo(inner	// #2 규칙. 클래스의 정의. 클래스 자체를 boo함수로 넘긴다.
+            		// worldlang은 클래스또한 하나의 타입으로 다룬다. (추후 서술)
+            void print()
+             	console.out("app.main.inner.print")
+        , if success // if의 블록문 2개중 하나의 마지막 라인이 boo함수로 넘겨진다
+           	bool(true)
+        else
+        	bool ok(false) // #2 규칙.
+        , local_age = 20)
+
+		// local_age와 inner는 main 함수 내에서 사용 가능하다.
+        console.out(local_age) // 20
+        // console.out(ok) // 에러. ok는 이미 else 블록문이 끝남과 동시에 소멸되었다.
+
+
+/* 결과:
+	at if blockstmt
+	success=true
+	true, age=20
+	20
+*/
+```
+
+
 #### Statement는 Visible 하지 않는다.
 
 #### Statment와_Expression은_구분해야_할까
@@ -1769,14 +1964,14 @@ def MyMy = MyClass
     - Expression은 Value의 복합적인 형태를 말한다. 결국은 값으로 치환되어야 한다. 반면, Statement는 말그대로 실행가능한 1줄을 의미하는 것으로, Expression은 아니나, Statement에 속하는 것은 대표적으로는 if, for, while등이 있다.
   - 고찰을 통한 팩트 정리
     - \1. Expression은 값이 나와야 한다. Statement는 Expression을 포함한 모든 코드 1줄을 의미한다. 값으로 나오지 않아도 된다.
-    - \2. 방향은 2가지로, 
-      - "구분한다"를 선택하면 다른 언어처럼 가는것이다. 설계를 바꿀 필요가 있을 것이다. 
+    - \2. 방향은 2가지로,
+      - "구분한다"를 선택하면 다른 언어처럼 가는것이다. 설계를 바꿀 필요가 있을 것이다.
       - "구분하지 않는다"를 선택하면 "모든 Statement는 값을 반환한다." 를 만족시켜야 할것이다. 이말은 "Void가 인자로써 어떻게 예외처리 할 수 있는가"에 답하는 게 된다.
   - x 1안 모든것은 함수라고 본다면, 둘은 구분할 필요가 없을 것이다.
     - 위의 규칙으로 본다면 a == 5는 expression이다. 하지만 C++에서는 a==5 만 달랑있어도  컴파일은 가능하다. a++는 무엇인가?
       -  --> Expression이다. 왜냐하면 값이 있기 때문이다. Expression은 그자체로 Statement가 될 수 있다. 여기서 논의해야 하는 것은 Expression이 아닌 Statement가 어떻게 Expression으로 다루어질 수 있는가다. 그럴러면 Void 타입을 어떻게 인자로써 함수에 넣을 수 있는가가 되는 것이고.
   - x 2안 논리적으로는 Statement, Expression은 구분되지만, 설계상으로는 구분하지 않는다.
-    - 모든것은 걍 Expression == 함수호출. Void가 인자로 나온 경우는 에러를 발생시킨다. 
+    - 모든것은 걍 Expression == 함수호출. Void가 인자로 나온 경우는 에러를 발생시킨다.
     - 결과적으로는 지금의 설계와 동일하다. 이름도 동일하게 Statement로 하자.
     - --> 그러나 이런 논리라면 Method 혹은 Block문 또한 Expression이 되버리고 만다.
     - 블록문을 함수의 인자로 넣을 수가 있는가? 안되지.
@@ -1788,7 +1983,7 @@ def MyMy = MyClass
     - 일때, abc_func()의 반환값인 int를 반환
   - 시나리오2 변수 정의
     - 반환값은 정의된 변수.
-    - 예) foo(int a, int b = 5) // a는 블록문의 lifecycle을 가지므로 
+    - 예) foo(int a, int b = 5) // a는 블록문의 lifecycle을 가지므로
     - a += 5 // 여기서도 유효함
   - 시나리오3 블록문
     - 반환값은 블록문의 마지막 expr
@@ -1815,7 +2010,7 @@ def MyMy = MyClass
   - this가 필요한 경우와 필요하지 않은 경우
   - 특정 함수를 정확히 아는 경우와, 또다른 expr에게 물어보면 아는 경우
   - 결국은 caller.call(msg[this가 있을수도 있음]); 의 꼴이 되어야 한다.
-- this를 넣어주는건 사용자의 책임이므로 Expr이 넣어줘야 한다. 
+- this를 넣어주는건 사용자의 책임이므로 Expr이 넣어줘야 한다.
   - ThisExpr과 StaticExpr 2개가 있다고 하자.
   - ThisExpr은 caller를 뽑아내서 msg 맨 뒤에 set을 해줘야만 한다. caller가 필요하다는 말씀.
 - Expr에 call()을 하면 execute()를 하고 난 결과값에 call을 하게 된다. proxy처럼. 이말은 최소 Node로부터는 상속을 받아야 한다.
@@ -1850,11 +2045,11 @@ def MyMy = MyClass
             -   class MyModule을 개발자가 만든다고 가정하자. MyModule개발자는 int -> MyModule, MyModule->int를 모두 지원해주고 싶다. 이때 int -> MyModule 은 쉽게 이루어진다. 왜냐하면 MyModule에서 int값을 받아서 적절하게 생성해주면 되니까. 하지만 반대의 경우는 문제가된다. 왜냐하면 int는 MyModule보다 먼저 나온 것이기 때문이다. 고로 이러한 역의존성을 해결할 필요가 있다.
             -   int는 이미 나온 클래스이기 때문에 여기에 MyModule을 받아들이는 코드를 추가할 수 없다는 게 문제가 되는것이다.
             -   크게 3가지 방법이 있다.
-                -   방법1. C++, C#에서 사용하는 방법으로, 외부의 제 3의 일반함수를 만든다.  
+                -   방법1. C++, C#에서 사용하는 방법으로, 외부의 제 3의 일반함수를 만든다.
                     --> 그러나 World는 순수객체지향언어라 일반함수라는 게 없다.
                 -   방법2. python에서 사용하는 방법으로 reverse 버전을 만든다.
                     -   operator+의 경우 reversed_operator+() 같은 것을 월드가 호출하도록 한다.
-                -   방법3. 클래스 확장을 사용한다.  
+                -   방법3. 클래스 확장을 사용한다.
                     --> world만의 방법
             -   월드는 클래스 확장하는 방법을 채택했다. 클래스 확장을 전면 지원한다.
             -   클래스 확장은 class ~~~ extend <package>
@@ -2021,7 +2216,7 @@ def MyMy = MyClass
                     -   / --> error
                         -   H --> string
                         -   I --> char
-            
+
         -   v 2안 --> 파서제네레이터가 판단해준다. 우리는 알거 없다.
 -   월드 코드에서 연산자 우선순위 조정
     -   a + b * c 인 경우, b*c가 먼저 되어야 한다.
@@ -2039,7 +2234,7 @@ def MyMy = MyClass
 
 - 따라서 world에서 함수를 식별하기 위해서는 "함수명(타입리스트)" 를 명시하면 된다.
 
-  - 예) class A 
+  - 예) class A
     - void foo()
     - int foo(int)
     - int foo = 5
@@ -2073,11 +2268,11 @@ def MyMy = MyClass
 
       - a.foo(abc).getName() 이라는게 있다고 하자. 이때 abc는 Type일 수도, 변수일수도 있다. 문제는 없는가?
 
-        --> 별도로 컨셉을 논의. 컨셉만 정해지면 문제는 없다. 
+        --> 별도로 컨셉을 논의. 컨셉만 정해지면 문제는 없다.
 
-        - generating 단계에서 메소드의 내역이 확정된다. 
+        - generating 단계에서 메소드의 내역이 확정된다.
         - linking단계에서는 메소드의 내부가 scope를 update 해나가면서 확정해간다. 런타임환경과 동일하게 구성해야 제대로 binding여부를 탐지할 수 있기 때문에 scope를 같이 update하는 것이다.
-        - scope의 우선순위는 
+        - scope의 우선순위는
           - 타입, 전역
           - 객체의 멤버(메소드 + 변수)
           - Nested 밖의 지역변수
@@ -2089,13 +2284,13 @@ def MyMy = MyClass
     - x 2안 저러한 것을 expression이라고 정의하자. 그리고 expression은 통째로 isCallable을 때리면 된다.
 
       - <variable> => prebuilt keyword가 아닌 것들
-        숫자로 시작 ok 언더바, ?, #, $,@, %, & 사용가능 
+        숫자로 시작 ok 언더바, ?, #, $,@, %, & 사용가능
       - <function> => <symbol>\( [<args>]* \)
       - <msg> => (<symbol> | <function>)
       - <msgs> => <msg>[.<msg>]*
       - <expr> => (<msgs> | <msgs> <oper> <msgs> | <msgs> <oper> )
       - <stmt> => (<expr> | <returns> | <fors>)
-        statement란 keyword등을 사용해서 나오는 "값을 반환하지 않는" 것들 
+        statement란 keyword등을 사용해서 나오는 "값을 반환하지 않는" 것들
       - **아니, 사람이 보더라도 저 foo가 foo() 인지 foo(int)인지 알 방법이 없다니까?**
 
 
@@ -2114,6 +2309,57 @@ def MyMy = MyClass
 * Origin 객체
 
 
+```cpp
+import console aka c // typedef
+
+// 객체 확장 문법:
+// <Opt:원본객체> <인터페이스 복사될 객체>
+// 		<Opt:객체의 확장 인터페이스>
+//		<Opt:객체의 확장 인터페이스2>
+
+def A // 객체 A를 정의한다. 원본객체는 생략되었다. 고로, 이 객체는 무scratch에서 출발한다.
+	void print() // 객체 A는 print() 라는 메소드를 갖게 되었다.
+    	c.out("hello world. I'm " + age + " years old.") // print의 구현
+   	int age = 0
+
+def B = A // 객체 B를 정의한다. A의 인터페이스를 물려받는다.
+	void say() // 거기에 say() 메소드를 확장했다.
+    	c.out("and you?")
+
+def app
+	void main()
+    	a1 = A() // a1은 A 객체로부터 인터페이스를 모두 물려받는다.
+    	b1 = B()
+    	b1.age = 5
+
+    	c.out("a1' age is " + a1.age) // a1's age is 0
+    	c.out(b1.age) // 5
+
+		A.age = 20
+    	def C = A
+    		// 메소드 안에서 새로운 객체를 만들 수 있듯,
+    		// 새로운 객체를 만들면서 인터페이스 확장도 당연히 가능하다.
+    		// "C = A"는 프로그램 시작시 수행된다.
+    		// A.age = 20보다 빠르므로 C.age 는 0 이다.
+    		void wow()
+    			say()
+				print()
+    	C.wow()
+    	a2 = A() // a2.age는 20, A.age도 20 이다.
+    	c1 = C() // c1.age는 0, C.age도 0이다.
+
+
+    //C foo() {} // 컴파일에러: C는 지역객체이므로 메소드 밖과 시그내쳐signature에서는 사용할 수 없다.
+    void foo() {}
+
+/* 결과:
+	a1's age is 0
+	5
+	hello world. I'm 20 years old.
+	and you?
+*/
+```
+
 
 #### 멤버변수 컨셉
 
@@ -2124,7 +2370,7 @@ def MyMy = MyClass
       - class에 속한것(메소드 + static variable)은 모든 object가 공유하는 것이므로 이것들은 모든 object가 생성될때마다 추가할 필요가 없어야 한다. 따라서 최소한 이둘은 반드시 구분할 필요가 있다.
     - \2. static 메소드 구현방법
       - 구현 알고리즘에 따라서 static 메소드는 일반 메소드와 별도로 구분할 필요가 있는가?
-    - \3. public/private 
+    - \3. public/private
       - 얼핏 생각하면 외부에서 call()을 하는 경우에는 public 메소드만 호출가능해야 한다. 고로 private 메소드가 담길것과 public 메소드가 담길것이 구분이 되어야 하지 않겠냐는 것이다.
     - \4. const
       - 객체가 const화 되어있일때와 nonconst일때와 같은 메소드명으로 호출한다고 하더라도 다른 메소드가 호출되어야 한다. 즉 "caller의 const 또한 msg의 일부" 인 셈이다. 따라서 public/private와 마찬가지로 구분될 필요가 있다.
@@ -2134,7 +2380,7 @@ def MyMy = MyClass
       - vtable 대신 Object.getMembers()[n] O(1)로 접근하게 된다.
   - x 2안 구별해야 하지만, 눈속임으로 구별하는 것처럼 만든다.
   - x 3안 16개의 container가 되더라도 속도가 낮춰지지 않게 하면 된다. 생성/실행시 퍼포먼스가 떨어지지 않는 방향으로 접근한다.
-    - 갯수가 많아졌을때의 부담은 
+    - 갯수가 많아졌을때의 부담은
       - \1. 바로 탐색이 느리다는것과
       - \2. 객체 생성시 부담이 생길 수 있다는 것이다.
 
@@ -2189,7 +2435,7 @@ def MyMy = MyClass
 
 - 객체가 함수를 사용할때는 chain되지 않은 함수의 것을 바로 사용하므로 역시 탐색시 로스는 없다.
 
-  
+
 
 #### 무엇인 member의 기준이 되는가? --> 메시지 스택이 전파될 수 있는가.
 
@@ -2199,7 +2445,7 @@ def MyMy = MyClass
     - void print()
       - a = 5;
 - A.B.print 이걸 보자. 여기에는 3가지 메시지가 들어있다. {"A"}, {"B"}, {"print"} 그리고 각각은 stack으로 뒤에것은 앞에것에 영향을 받는다.
-- 이것은 메시지가 전파되는 구조가 아니다. 각 메시지는 독립적으로 소비되지만, 메시지 스택은 공유되기 때문에 앞의 메시지는 뒤에 메시지에 영향을 끼치는 구조다. 
+- 이것은 메시지가 전파되는 구조가 아니다. 각 메시지는 독립적으로 소비되지만, 메시지 스택은 공유되기 때문에 앞의 메시지는 뒤에 메시지에 영향을 끼치는 구조다.
 - 만약 Statement가 멤버라면 월드코드에서 누구나가 "a=5" 라는 statement에 접근할 수 있어야 한다.
 - 위의 기준대로 각 개념들이 member인지 아닌지 따져보면,
 - Statement : 아니다.
@@ -2241,7 +2487,7 @@ def MyMy = MyClass
           - 이 Node가 일반 클래스인가, 아니면 데이터타입의 클래스(int, float, double, string ...) 인가를 구분짓는 것은 setter와 getter 메시지를 처리 할 수 있는가 아닌가다.
           - 클래스를 instantiate()를 하게 되면 T()를 생성하고 MetaClass가 가진 members중 Node[]만 복사해서 insert 시켜 주면 된다.
           - 임의 Node  a에게 메시지가 온 경우,  #메시지_전파_알고리즘 에 따라 scope의 관점에서 올라가면 된다.
-            - 만약 객체소유의 관점에서 올라가면 멤버변수가 메시지_전파_알고리즘 에 반응해버린다. 
+            - 만약 객체소유의 관점에서 올라가면 멤버변수가 메시지_전파_알고리즘 에 반응해버린다.
           - 문제점
             - 함수인 Member만 모아서 접근하는 건 쉬움. 이미 있으니까. 하지만 멤버변수인 Member들만 모아서 접근하는 방법은? for문을 도는 방법밖에 없다고 말하지는 말아줘.
               - 이러한 ContainerForContainer를 Chain이라고 이름을 붙였다. 이걸 통해서 해결한다.
@@ -2260,7 +2506,7 @@ def MyMy = MyClass
 
           - 메타클래스는 Member를 2개 가지고 있음.  1개는 변수만 들어있는 Member이자 다른 1개를 super로 가리키는 것, 또 1개는 함수만 들어있는 Member. Member에는 함수와 멤버변수가 들어갈 수 있음.
           - 클래스 파싱될때 모든 함수를 먼저 함수Member에 넣음.
-          - 그리고 멤버변수Member super를 함수Member로 지정함. 
+          - 그리고 멤버변수Member super를 함수Member로 지정함.
           - 파싱된 멤버변수를 멤버변수Member에 넣음. 이제 멤버변수Member는 모든 멤버변수를 가지고 있음.
 
         - 결과
@@ -2270,7 +2516,7 @@ def MyMy = MyClass
 
         - 문제점
 
-          
+
 
 #### static변수는_어떻게_구현하는가
 
@@ -2279,10 +2525,10 @@ def MyMy = MyClass
 - ClassManager에 의해서 제공되는 class는 nonconst로 제공된다.
 - 고찰내용
   - v 1안 일반 멤버변수는 class의 멤버가 아니다.
-    - Class의 일반 변수는 world에 visible 해서는 안된다. 함수와 static 변수만 visible 해야한다. 
+    - Class의 일반 변수는 world에 visible 해서는 안된다. 함수와 static 변수만 visible 해야한다.
     - Generating단계에서 파싱을 하면서 class 객체를 추가하는데 이때 Class.member에는 Method와 static 변수가 nonconst로 접근할 수 있다. 멤버변수는 별도의 내부 members에 담겨지며, 이것들은 별도의 const Members& getMemberVariables() const 와 같이 접근해야 하며, nonconst로 접근할 수 있는 것은 일부 friend로 선언된 클래스들 뿐이다.
     - 대박이네.. 어제하루종일 고민한건데... 이렇게 간단히 풀리다니.
-    - v 문제없어 보이긴하는데..시나리오로 검증해보자. 
+    - v 문제없어 보이긴하는데..시나리오로 검증해보자.
       - C++ 관점에서
         - classManager로 nonconst인 Class를 얻을 수 있다.
         - class는 member인 method와 static 변수를 있는 그대로 제공한다.
@@ -2305,7 +2551,7 @@ def MyMy = MyClass
 - 객체를 생성하는 방법은 variable만 복제하는 것이다. 복제된 variable은 원본 function을 chain한 상태가 된다.
 - 고찰내용
   - 클래스 문제점
-    - factor가 많다. 
+    - factor가 많다.
       - private-public 이냐
       - 멤버냐 function이냐
       - member
@@ -2345,8 +2591,8 @@ def MyMy = MyClass
 - **Object는 call할때 scope에 대해서 아무런 동작을 하지 않는다. 그저 자신의 member들만 뒤진다.**
 - **NativeMethod 역시 scope에 대해서 아무런 동작을 할 필요가 없다.**
 - **StaticMethod는 Object관련된 scope 조작이 없다. LocalSpace만 add한다.**
-- 왜냐하면 Method::stack을 보면 다른 모든것들은 scope에서 나오고 있기 때문이다. 
-- 이 둘을 모두 scope에서 출발하도록, Method&origin도 그렇게 만들면 _stack의 args를 scope만 받도록 만들 수 있다. 
+- 왜냐하면 Method::stack을 보면 다른 모든것들은 scope에서 나오고 있기 때문이다.
+- 이 둘을 모두 scope에서 출발하도록, Method&origin도 그렇게 만들면 _stack의 args를 scope만 받도록 만들 수 있다.
 - 그렇게 되면 object와 method 모두 같은 함수인 _stack을 두도록 할 수 있다.
 - 왜 msg에 뒀을까? 이유가 있을 것이다. --> #Message는_thisptr를_어떻게_다뤄야_할까
 - **일반 nonstatic ManagedMethod는 외부로부터 this에 사용할 Object가 msg 뒤에 담겨있다는 걸 안다. nonstatic ManagedMethod는 this로 사용할 object를 꺼내서 scope.objectSpace.push() 한다. 함수가 끝나면 objectspace.pop()을 한다.**
@@ -2367,12 +2613,12 @@ def MyMy = MyClass
   - 가장 먼저 #묵시적_캐스팅-정책 이선결되어야 한다.
 - 고찰결과 각 인자는 implicit casting(업캐스팅과 prebuilt 타입간의 제한된 casting)만 고려해서 가장 bestfit을 찾아내면 된다.
 - 속도가 매우 중요하다. 캐스팅은 상당히 많이 사용되기 때문이다.
-- .cast<T>는 묵시적캐스팅이다. 
-  - world에서는 invisible하다. 
+- .cast<T>는 묵시적캐스팅이다.
+  - world에서는 invisible하다.
   - 빠르다.
   - 함수 deduction시 사용된다.
   - 다라서 Method 안에서 사용되는 캐스팅은 to()가 아니라 cast<T>다.
-  - 묵시적 캐스팅은 업캐스팅과 기본제공타입의 명시적캐스팅이 있다. 
+  - 묵시적 캐스팅은 업캐스팅과 기본제공타입의 명시적캐스팅이 있다.
   - 기본타입의 명시적 캐스팅은 매우 빠르게 제공되어야 하므로 override를 사용해서 제공된다. (즉, 이 기본타입들은 생성자를 통해서 캐스팅을 공개하지않아도 된다는 것이다. 이 방법은 오래걸리니까).
 
 
@@ -2386,7 +2632,7 @@ def MyMy = MyClass
 ##### deduction 함수 바인딩
 
 - c++처럼, 함수의 signature와 정확히 일치 되지 않더라도 유도리있게 파서가 "이 심볼이지??ㅋㅋ" 하면서 매칭해주는 알고리즘이다.
-- 고찰로 알아낸, 이 문제의 가장 포인트는, 
+- 고찰로 알아낸, 이 문제의 가장 포인트는,
   - 묵시적 형변환으로 함수를 바인딩하는 것은 "**사용자의 의도와 실제가 달랐을 경우, 유도리있게 비슷한 걸 정해준다**"는 컨셉임을 잊지 말하야 한다. 이는 "형변환이 가능하다"와는 다른 얘기인것이다.
     - 예를들면 [float.to](http://float.to/)(string)은 가능하다. 하지만 그렇다고해서 foo(string) 함수에 사용자가 foo(3.5)로 호출하는 것이 용납되는 것은 아닌 것이다. 명시적으로 캐스팅을 해야하지. 이를테면,
       - foo(string)
@@ -2487,7 +2733,7 @@ class object : public node { // object는 originMgr에 있으면 origin객체인
   TStrong<TArray<Object> > _supers; // Origin이 복제되어도 shallow copy.
   TStrong<TArray<Object> > _subs;
   bool* _isInit;
-  
+
   object() { _isInit = new bool(); }
   object(const object& rhs) { _isInit = rhs._isInit; }
 
@@ -2526,17 +2772,17 @@ class originMgr {
 class node {
   // Object보다 상위클래스들은 WRD_BASE_CLASS를 쓴다. 그러면 자동으로 static 타임에 DummyOriginObject를 만들어 OriginMgr::_builtIns.add(DummyObject()); 를 넣어둔다.
   WRD_BASE_CLASS(
-  
+
   virtual res& init() {
     if(isInit()) return rAbort;
 
-    
+
     return rOk;
   }
   static res _onInitMethods(tArray<Method>& tray) {
     Object._onInitMethods(tray);
     Instance._onInitMethods(tray); // Unit, Instance 의 것들이 담겨진다. visible 하게됨.
-    // 보통은 자기껏만 담도록 macro가 expand 된다.   
+    // 보통은 자기껏만 담도록 macro가 expand 된다.
   }
   virtual bool isInit() { return true; }
   virtual TArray<Object> getSons();
@@ -2584,7 +2830,7 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 * 예전 설계에서는 TClass가 Type을 담당했기 때문에 Node 보다 구체클래스들도 TClass에 메소드를 넣을 수 있었다.
   * Tclass는 이러한 메소드들을 담아두는 역할을 수행했기 때문에 Node::getMembers()를 갖지 못해도 일단 메소드를 보관해  놓았다.
   * Object가 나올때는 이러한 TClass()의 메소드를 shallow copy했기 때문에 문제가 발생하지 않았다.
-* 이제 새로운 설계에서는 TClass는 사라지고 Origin 객체가 이걸 대신한다. 
+* 이제 새로운 설계에서는 TClass는 사라지고 Origin 객체가 이걸 대신한다.
   * 메소드들은 WRD 매크로를 쓰면 일부 매소드들에서만 참조할 수 있는, wrap한 메소드 배열을 returning 하는 static 메소드를 private로 하나씩 박아넣고 있다.
   * getMembers() 를 가지고 있는 Node는 초기화시에 Node::onInitWrappers()를 부를때 모든 supers를 다 부른다.
   * 보통은 origin객체 초기화시에 부모origin의 members를 복제해 넣고, onInitWrappers()를 호출해서 wrapped된 메소드 배열을 가져와 getMembers에 넣는다.
@@ -2609,7 +2855,7 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 
 
 객체의 생성
-1. 생성자를 통하기전에 def 를 통해서 객체는 초기화된 상태로 생성된다. 
+1. 생성자를 통하기전에 def 를 통해서 객체는 초기화된 상태로 생성된다.
 2. 초기화 수식이 동작한다.
 3. def A =  B() 가 동작한다.
 ----여기까지 프로그램 시작전 ----
@@ -2684,7 +2930,7 @@ def myObj
 def child := myObj
   $this := This?
   def age := int?
-        $set: child.this          
+        $set: child.this
 ```
 
 ##### [v] Q2 super.this를 사용한다면?
@@ -2762,13 +3008,13 @@ def wrd
         device = ""
             name = ""
             void boo()
-              
-            
+
+
         str foo()
       c.out(this.part.wrd::device::foo())
             c.out(this.part.device::foo())
       return name // this.name
-  
+
 ```
 
 ```cpp
@@ -2804,9 +3050,9 @@ def child
       child.foo()
       foo()
       this.foo()
-      
+
       this$parent.foo()
-    
+
       c.out(this.part$device.foo())
       c.out(part%device.foo())
 ```
@@ -2823,7 +3069,7 @@ def dev
         =>set: len = name.len
   len = 0
     void say(): c.out("name=$name")
-  
+
 def bicycle := dev
   _parts = { def handle := dev
     handle(): super("handle")
@@ -2832,17 +3078,17 @@ def bicycle := dev
   }
   =>void say()
         for e in parts: e.say()
-  
+
 b = bicycle
 b.say()
-            
+
 d = dev bicycle
 d.say()
-            
+
 f = dev%bicycle
 f.say()
-            
-f1 = 
+
+f1 =
 ```
 
 * 많이 생각해봤는데, 쓸데가 없다. 예상치 못한 동작이 나간다.
@@ -2854,7 +3100,7 @@ def base
   name := "base.name"
 def marine := base
   name := "marine.name"
-    
+
   def gun := base
     name := "gun.name"
 
@@ -2867,11 +3113,11 @@ def marine := base
             marine.base.name // marine origin객체의 상속받은 base의 name.
             this.marine.name // 이 this 객체와 연관된 marine객체의 name.
             this.marine.base.name // 이 this객체와 연관된 marine객체의 부모클래스중 하나인 base의 이름.
-            
+
             m = marine() // .marine()
             m = this.marine() // this와 연관된 marine객체의 복제
             m = .marine() // .marine()
-            
+
             b = base()
 ```
 
@@ -2926,10 +3172,10 @@ def marine := base
 	* objects : object scope의 배열
 		* 대개, 새로운 object가 call되면, object는 이전의 object scope을hidden 처리시킨다.
 		* 그러나 이 object가 자신이 inner일 경우는 outer를 그대로 유지시킨다.
-		* 모든 inner 객체는 outer를 변수로 가지고 있다. 
+		* 모든 inner 객체는 outer를 변수로 가지고 있다.
 		* 모든 object는 sub를 변수로 가지고 있다.
 	* globals
-	
+
 * 예를들면, 다음처럼 구성된다.
 	* locals
 		* local[1] : visible
@@ -3066,7 +3312,7 @@ tutorial sayer::
     void say(str[] words) // 반환형 명시
         for w in words
             c.out("$w ")
-            
+
     str[] create_lists(int len, str base) // 함수 정의시에만 타입 모두 적기
         ret = [""] // 안쪽에서는 절대 명시 안함.
             // Q.
@@ -3083,7 +3329,7 @@ app::
             func(len, base)
         list = proxy(create_lists, 3, "hello")
         say(list)
-            
+
     event onConsoleOut
         if sfsdfsdf
         if sdfsdf
@@ -3101,11 +3347,11 @@ def tutorial
         _set
 
     func void execute(void(str[]) func, str[] params)
-    
+
 def tutorial HelloWorldTutor
     func void execute(void(str[]) func, str[] params)
         func(params)
-            
+
 def app
     func void main()
         // 1
@@ -3113,25 +3359,25 @@ def app
             for p in params
                 c.out("$p ")
         HelloWorldTutor.execute(foo1, ["hello", "world"])
-                
+
         // 2
         HelloWorldTutor.execute(func(params): for p in params: c.out("$p "), ["hello", "world"])
 
         // 3
         _tutor()
-                
+
     void _tutor()
         HelloWorldTutor.execute(func(params)
             for p in params
                 c.out("$p ")
         , ["hello", "world"])
-          
+
     age = 3
     event MyEvent()
            age != 3
     then
         _tutor()
-    
+
 ```
 
 
@@ -3145,7 +3391,7 @@ def Part Wheel
 def Wheel AccurateWheel
 def Part Body
 def Ergobody Body
-    
+
 def Part Mouse
     Mouse(Button newleft, newright, newwheel, newbody)
         left = newleft
@@ -3162,28 +3408,28 @@ def Builder
     Wheel buildWheel()
     Button buildLeftButton()
     Button buildRightButton()
-    
+
 def Builder BusinessMouseBuilder
     Body buildBody(): PlainBody()
     Wheel buildWheel(): PlayinWheel()
     Button buildLeftButton(): PlainLeftButton()
     Button buildRightButton(): PlainRightButton()
- 
+
 def Builder GamingMouseBuilder
     Body buildBody(): ErgoBody()
     Wheel buildWheel(): AccruateWheel()
     Button buildLeftButton(): QuickLeftButton()
     Button buildRightButton(): QuickRightButton()
-    
+
 def director
     Mouse build(Builder builder) with builder:
         Mouse(buildLeftButton(), buildRightButton(), buildWheel(), buildBody())
-            
+
 def app
     void main() with director
         Mouse    m1 = build(BusinessMouseBuilder),
                 m2 = build(GaminMouseBuilder
-            
+
 ```
 
 
@@ -3197,7 +3443,7 @@ obj #MyType
     say(): c.out("I'm $name and $age years old.")
 
 +app
-    void main()        
+    void main()
     void say(obj = MyType)
         obj.say()
 ```
@@ -3229,10 +3475,10 @@ parts = Part[Body()]
 class A
     age = 20 // 이런건 쉽게 예측 가능하다
     part = Button() // 이건 좀 어렵다. part는 실제로는 button 니까.
-    
+
     A()
         part = Body() // 실패한다.
-    
+
     // part는 Part 타입은 다 넣을 수 있다. 그리고 초기화는 Button()로 된다.
     // 이걸 잘 표현 가능한 문법은?
     // 1
@@ -3259,7 +3505,7 @@ class A
     //        2. 생각의 흐름상, 캐스팅은 나중에 떠오르게 된다. 그러므로 뒤에 위치하는게 편리.
     //        3. as 이므로 읽는데도 무리가 없다.
     //    오. 괜찮은데.
-    
+
     // 함수에도 적용해보자.
     say(msg as str, func as void(str): func(msg)
     getPart(msg as str)
@@ -3269,7 +3515,7 @@ class A
             default: null as Part
        // 좀 지저분한데.
        // 다른 버전으로도 만들어보자.
-       
+
        void say(str msg, void(str) func): func(msg)
     Part getPart(str msg)
         with msg
@@ -3279,7 +3525,7 @@ class A
         // 어중간하다.
         //    <타입> <변수>
         //    <변수> as <타입> 2종류의 문법이 존재하게 되었다.
-        
+
        // @을 써본다면?
        //  <타입>@<변수>
     //    <변수>@<타입> 어느걸로?
@@ -3292,7 +3538,7 @@ class A
             case "Body": body
             default: null
         // 특문이 너무 많으니 되려 거슬린다.
-        
+
 
     // 반대로 캐스팅 문법을 <타입> <변수> 로 고쳐본다면?
     void say(str msg, void(str) func): func(msg)
@@ -3300,7 +3546,7 @@ class A
         with msg
             case "Button": lbutton
             case "Body": body
-            default: null        
+            default: null
         //part = Button() as Part
         //activity = get_service().get_concrete_activity() as Activity
         part = Part Button()
@@ -3310,39 +3556,39 @@ class A
             // 캐스팅 보다  "." 연산자가 우선순위가 높아야 한다.
         activity =
             (Activity (Service get_service(str it.getName())).get_concrete_activity()).do_something_on_activity()
-    
+
         #MyClass
             age = 123
             grade = float
-        
+
         // [x] float_val = MyClass.grade 123 // grade의 origin은 float. 123은 float화 된다.
         // 캐스팅 문법에서 lhs는 origin객체일때만 가능하다.
         // 로컬 변수도 올 수 있다. 그러나 ? 와 같이 node 타입이 오면 에러로 취급한다.
         // ?의 경우는 그냥 할당하면 된다. 캐스팅 할 필요가 없는것이다.
-        
+
         valid = MyClass 123 // MyClass의 origin은 MyClass. 123은 MyClass 시도하나, MyClass(int)가 존재하지 않으며, 클래스 계층 관계도 아니므로 실패한다.
-        
+
     Part // origin객체는 반드시 첫글자를 대문자로 한다.
         name = "unknown"
     Part #Body // 아무것도 없는 경우, 이 origin객체에 추가점이 없다는 것이다.
     Part Mouse
         _body = Body null // Body타입의 null이란 뜻.
         void init()
-            body = Body()    
+            body = Body()
     Mouse.init()
-    
-    
+
+
         // 모든 객체는 origin객체로 삼을 수 있는가?:
         // origin객체로 할지 안할지 결정하는 이유는, 이게 타입 유추의 기반이 되기 때문이다.
         Part get_part(str name): with name
             is "body": Body()
             is "dynamic"
                 ret = get_part("body") // get_part는 Part의 일종을 반환한다. ret는 Part에서 멤버변수/메소드의 추가가 없다. 따라서 ret는 Part가 origin이다.
-                
-                age = 23 // 마찬가지로 age는 origin이 int이다. 값만 바뀌었지 인터페이스는 int와 동일하기에.                
+
+                age = 23 // 마찬가지로 age는 origin이 int이다. 값만 바뀌었지 인터페이스는 int와 동일하기에.
                 int age // 캐스팅 문법이다.
                 // Origin이냐 아니냐의 판단은, 인터페이스의 추가 있느냐로
-                // 결정되지는 않는다.                                
+                // 결정되지는 않는다.
                 Part Mouse // 자, 이것은 origin인가 아닌가.
                 Mouse GamingMouse
                     void do_something()
@@ -3362,19 +3608,19 @@ class A
                 // 보다시피 첫줄의 문법이 겹친다.
                 // 따라서 문법을 충분히 구별이 가는 걸로 만들어야 확실히 origin을
                 // 구별 해낼 수 있게 된다.
-                
+
                     // [x] 1 - 키워드를 추가한다.
                     def Part Body
                     def Body : Part
                     def Body(Part)
-                    
+
                     Body from Part
-                    
+
                     // [ ] 2 특문을 사용한다.
                     //Body -> Part
                     //Part -> Body
                     //-> Part Body
-                    
+
                         // 부모 클래스가 없는 경우는?:
                         //    1 - 항상 obj를 표기한다.
                         obj -> Body
@@ -3383,7 +3629,7 @@ class A
                         def Part Body
                         //    3
                         [x] -> Body
-                            
+
                             -> Part
                             Part -> Body
                             Part -> Button
@@ -3394,8 +3640,8 @@ class A
                                 rbt: get: parts[2]
                                 void init()
                                     parts = [Body(), Button(), Button()]
-                            
-                                    
+
+
                             def Part
                             def Part #Body
                             def Part #Button
@@ -3406,7 +3652,7 @@ class A
                                 rbt: get: parts[2]
                                 void init()
                                     parts = [Body(), Button(), Button()]
-                            
+
                             mouse1 = Mouse()
                             mouse1.init()
                             mouse2 = mouse1() // 뭐가 되는건가?
@@ -3424,7 +3670,7 @@ class A
                                 mouse2 = mouse1() // == Mouse()
                                 mouse3 = mouse1(mouse2) // == Mouse(mouse2)
                                 func = mouse1.Mouse(void)
-                                
+
                                 func() // 메소드는 복제가 불가능함. true?
                                 // 객체는 기본적으로 op()는 생성자로 동작함.
                                 // 복제된 객체도 origin과 동일한 인터페이스를 가지므로
@@ -3434,12 +3680,12 @@ class A
                         //    4 - org
                         org Body
                         org Part Body
-                    
-    
+
+
     parts = [Part Body(), Part null] // parts는 Part타입의 배열
     maps = [Part Body():"body", null] // maps는 "Part:str"의 맵.
     maps1 = [Part:str null]
-    
+
         // 간단 초기화 문법:
         // [x] 1
         //maps = [Part:str...]
@@ -3454,11 +3700,11 @@ class A
             // 6. 자연스럽게 maps 또한 Part:str만 올 수 있는 map이라고 유추된다.
             body = Part Body()
             maps = [body:"body"] // 이 또한 Part:str로 유추된다.
-                        
+
     // 음. 일관성이 있다.
     // 다만 실제 구현시에는 가독성을 위해서 색으로 마킹이 필요하다.
     // 문제는, 이게 과연 모호성 오류가 없을 것인가.
-    
+
     // 객체의 복제
     part -> #body
     part -> #mouse
@@ -3482,15 +3728,15 @@ class A
                     // origin객체도 그렇게 동작하고 있으며, 다른 언어에서 봤을때
                     // 지역변수에 생성자를 호출한다고 해도, 그 origin 객체가 나온다고
                     // 보기 힘드...니까?
-    
-    
+
+
     get_part()
     GetPart()
     getPart()
     get-part()
     get`part()
     abc.get part()
-    
+
 ```
 
 
@@ -3505,7 +3751,7 @@ myobj = Mouse() // org: Mouse  Mouse로부터 복제됨.
 
 def GamingMouse = Mouse
 def GamingMouse = foo(lambda)
-    
+
 def app
     void main()
         age = foo(lambda, msg)
@@ -3524,7 +3770,7 @@ GamingMouse는 정적이다. 값이라는게 없다. 오로지 객체의 정의.
 def #KeySound
     void play()
         if wav_path == "": return
-            
+
         with Mixer
             open(wav_path)
             play()
@@ -3537,7 +3783,7 @@ def #Key
     Key(int new_pos_x, int new_pos_y)
         _pos_x = new_pos_x
         _pos_y = new_pos_y
-    
+
     pos_x = 0: _set=>
     pos_y = 0: _set=>
     get_label: get: name[0]
@@ -3549,7 +3795,7 @@ def #Key
             is 's':    pos_x = 15: pos_y = 10
                 .
                 .
-                
+
 
 ### 람다 샘플 만들어보기
 
@@ -3584,8 +3830,8 @@ def app
                 is 1: "hello"
                   default: "world"
         , 1)
-                    
-    
+
+
 ```
 
 ```cpp
@@ -3644,12 +3890,12 @@ A.nested()
 바인딩시 name을 scope에서 일일이 뒤지면 시간이 오래걸린다. 최적화가 끝나면 상수로 scope에 접근이 가능해야 한다.
 
 * 즉, 언제 실행했던 그 멤버는 항상 같은 인덱스에 있어야 한다.
-* scope의 구성은 "this중복문제" 문서에 정한 구성을 따른다.	
+* scope의 구성은 "this중복문제" 문서에 정한 구성을 따른다.
 	* locals : local scope의 배열
 	* objects : object scope의 배열
 		* 대개, 새로운 object가 call되면, object는 이전의 object scope을hidden 처리시킨다.
 		* 그러나 이 object가 자신이 inner일 경우는 outer를 그대로 유지시킨다.
-		* 모든 inner 객체는 outer를 변수로 가지고 있다. 
+		* 모든 inner 객체는 outer를 변수로 가지고 있다.
 		* 모든 object는 sub를 변수로 가지고 있다.
 	* globals
 	* 예를들면, 다음처럼 구성된다.
@@ -3665,7 +3911,7 @@ A.nested()
 			* object[1] : hidden
 			* object[0] : hidden
 		* globals
-		
+
 ##### 고찰
 * scope가 추가된다는것은 풀네임을 생략한다는 것이다. with 문과 똑같다.
 * 새로 추가한게 pushBack이 되면 매번 index가 바뀌게 된다. (앞에 재귀를 많이 돌리면 index가 커짐) 따라서 pushFront가 기본이 되어야 한다. local scope은 대개 이걸로 대체가 가능하다.
@@ -3705,7 +3951,7 @@ def B := A
 		inner.do()
 	def inner := A
 		void foo()
-		
+
 def C := B
 	void boo()
 		foo()
@@ -3732,7 +3978,7 @@ C.boo()
 		[Method] boo.get()은 자신을 load.
 		Method boo.onLoad()는 this인 boo
 	boo()
-		
+
 */
 c.boo()
 ```
@@ -3763,6 +4009,73 @@ c.boo()
 
 ### 프로퍼티
 
+```cpp
+import console
+
+Person
+	void print(): console.out("Person.print()")
+
+
+app
+	Person p1
+	// 프로퍼티property: 타입 프로퍼티명 get <블록문> set <블록문>
+	// 인스턴스 인터페이스 확장 문법을 사용해서 get, set 메소드를 확장하면,
+	// 변수를 정의하는 대신, 변수처럼 동작하는 메소드 2개를 지닌 객체인 프로퍼티를
+	// 만든다. 다음의 규칙을 따른다.
+	//	1.	프로퍼티는 sharable 타입이다.
+	//		refer로 감싸지지 않은 채 raw인 채로 멤버에 추가되기 때문에 직접 get, set을
+	//		다룬다. 이 프로퍼티에 op=이 호출되면 set이 수행된다.
+	//	2.	<Type> get(), <#Type> #get(), res set(#Type new) 3개의 메소드중 선택
+	//		에서 오버라이딩 하면 프로퍼티로 인식한다. (set의 인자는 반드시 const
+	//		이다.)
+	//	3.	예외적으로 프로퍼티 선언과 인터페이스의 확장을 같이 할 수 없다.
+	//		e.g.	app
+	//	            	str _name
+	//					str name
+	//						void print(): console.out("extended")
+	//						str get(): _name
+	//				// 컴파일 에러: name은 print 인터페이스 확장과
+	//				// 프로퍼티선언이 같이 됨
+	//
+	//			왜 같이 할 수 없는가:
+	//			말이 안되기 때문이다. 인터페이스 확장된 타입을 정의한 곳과, 그
+	//			인터페이스를 가지고 있어야할 객체를 반환하는 부분이 서로 독립적이다.
+    //			객체를 반환하는 곳은 어떤 인터페이스가 확장되었는지 100% 알게 만드는
+    //			방법이 없다. (인터프리터에 인공지능이라도 없는 한..)
+	//
+	//	4.	프로퍼티에서 상속받은 중첩클래스를 정의하는 것이기에, 안에서
+	//		정의된 get, set 메소드에서는 해당 프로퍼티를 소유한 클래스 scope를 갖는다.
+	//	5.	<Type> get(), res set(#Type new)은 get, #get, set 으로 단축할 수 있다.
+	//		set의 파라메터는 #This 타입에 new라는 변수명을 사용한다.
+	//	6.	기본적으로 const get()은 get()의 반환값을 반환하도록 정의된다.
+	//		즉, get()만 정의한 경우, const get() 따로 정의할 필요가 없다.
+	//		또한 const get()만 정의한 경우는, get은 기본적으로 정의되기 때문에
+	//		const get 만 가지게 된다. 따라서 외부에서는 항상 const get만 받게 된다.
+
+	Person p2
+		#get
+			console.out("p2.get()")
+			return p1
+
+		res set(#Person new) // set {  과 동일하다.
+			console.out("p2.set()")
+			p1 = new;
+			return rok() // rok는 타입이므로, return rok는 rok의 객체를 생성하는 것이
+		 				 // 아닌, ok라는 타입을 반환한다는 뜻이된다.
+
+	void main()
+		//Person p3 = p2 // 컴파일 에러. p2은 항상 const Person으로만 나간다.
+		p2 = p1
+
+	B
+	    // get: return A // "class" 는 타입을 정의하는 키워드이지, 타입 그자체가 아니다.
+	    // 따라서 프로퍼티가 될 수 없다.
+
+/*결과:
+    p2.set()
+*/
+```
+
 #### [v] 프로퍼티를 쉽게 표기하는 방법
 
 ##### [x] 1안 새로운 특문 < > 추가
@@ -3792,7 +4105,7 @@ def A
 ```
 * 좀더 알아보기는 쉬운데, 이렇게 하면 const 표시할때 항상 <<로 해야 한다.
 
-##### [x] 4안 "#" 는 const. 
+##### [x] 4안 "#" 는 const.
 
 ##### 프로퍼티에서 활성화/비활성화/일부만 private/리다이렉션 하는 법
 
@@ -3843,7 +4156,7 @@ public:
         _updatePos();
     }
     const KeySound& getSoundSource() const { return _sound; }
-    
+
 private:
     void _updatePos() {
         switch(_name[0])
@@ -3859,7 +4172,7 @@ protected:
     void _setSoundSource(const KeySound& rhs) {
         _sound = rhs;
     }
-    
+
 private:
     KeySound _sound;
     string _name;
@@ -3881,17 +4194,17 @@ KeySound,
     play(void)
         if wav_path == ""
             return;
-        
+
         Mixer.open(wav_path)
         Mixer.play()
         Mixer.close()
-         
+
     wav_path = ""
-            
+
 Key,
     Key(void): nothing
     Key(int new_pos
-    
+
 ```
 
 ###### 위의 건에서 찾은 의문
@@ -3924,17 +4237,17 @@ app
   he.print()
   // he = 26 // he는 int가 아니다. occupiable =가 될 수도 없다.
   he.print()
-      
+
   Person // #Person이 되면 name을 수정하지 못하게 한다는 뜻이다.
       say(void)
           c.out("hello")
       _name = ""
   Chelsoo1 = Person // Chelsoo1은 Person을 가리키는 refer다.
   Chelsoo = Person // Chelsoo는 Person으로부터 상속받은 새로운 타입객체다.
-      Chelsoo(): name = "Chelsoo"    
+      Chelsoo(): name = "Chelsoo"
       => say(void)
           c.out("and my name is ${name}")
- 
+
   Chelsoo2 = Chelsoo() // Chelsoo2는 Chelsoo로부터 복제된 객체다.
   Chelsoo3 = Person() // 이것은 Person에 정의된 모든
       say(void)
@@ -3955,10 +4268,10 @@ app
     ```cpp
     Person p
     p = getSomeone()
-        
+
     Person p
     p = Person()
-        
+
     Person p()
     ```
 
@@ -3992,16 +4305,16 @@ app
 
   ```cpp
   #Person
-      name = "unknown"    
+      name = "unknown"
   cp = Person // cp는 const다. 원본을 가리킨다.
   p = Person() // p는 const로부터 복제된 nonconst 객체를 가리킨다.
- 
+
   #Chelsoo = Person // Chelsoo Person으로 하면 에러가 된다.
       say()
           c.out("name=${name}")
   cc = Chelsoo // const
   c = Chelsoo() // nonconst
- 
+
   YoungHee = Person()
       say()
           c.out("I'm ${name}")
@@ -4053,7 +4366,7 @@ def A
     def age
       get: in // X: get의 반환형은 age이지, int가 아니다.
       set: in = new
-           
+
 def A
   def age := 0 // X: 별도의 메모리를 차지하고 있다.
         get=>:
@@ -4079,7 +4392,7 @@ def B
   def a := A
     get: A()
     _set
-  
+
   def age := A.age
     get: A.age
     set: A.age = new1
@@ -4108,7 +4421,7 @@ def My
   * +이미 존재하는 객체에 대한 wrapper도 될 수 있을 뿐더러, 새로 생성된 객체의 wrapper도 될 수 있다.
   * +문법이 간결함과 동시에, 가독성도 좋다.
 
-  * -새로운 키워드가 추가된다. 
+  * -새로운 키워드가 추가된다.
   * -이걸 def로 해결하려면, 객체의 def와 객체의 정의를 같이 하는 문법을 먼저 고안해보자.
     * 근데 쉽지 않을껄.
     * prop의 대체하기 위한 조건들
@@ -4199,14 +4512,14 @@ private:
   refer _origin;
 };
 ```
-2. 
+2.
 ##### Mgd에서 get/set을 오버라이딩 한 경우,
 
 * get은 오버라이딩 할 수 있으며 모든 것은 개발자의 책임이다.
 * wrap을 world객체로 짜는 경우
   * def wrap<T>
     * T get(): inner
-    * res set(T new1):  
+    * res set(T new1):
     * T _inner
 * 구현 자체의 동작은 매우 단순하다. Refer wrap::onGet() 안에서 target인 객체를 대신 반환하면 되며
 * onGet의 반환형을 T로 명시하면 된다.
@@ -4216,7 +4529,7 @@ private:
   * 일반적인 컴파일 알고리즘은 먼저 이렇다.
     * 메소드는 input type과 메소드 type을 들고있다.
     * canConsume()이 호출되면 주어진 argument를 각각 input type으로 casting 한다.
-    * Object.cast(ㅔ)는 먼저 onGet()을 호출한 뒤에, 이걸 cast 한다. 
+    * Object.cast(ㅔ)는 먼저 onGet()을 호출한 뒤에, 이걸 cast 한다.
       * onGet() 결과가 this와 다를 경우는 재귀적으로 onGet을 또 불러준다.
     * 모든 걸 성공적으로 cast 했다면 이 호출에 문제는 없는 것이다.
     * 필요시 바깥으로 반환형을 내보낸다.
@@ -4224,7 +4537,7 @@ private:
   * a.foo() 인, wrap a 객체가 있을 경우,
     * scope["a"]["foo"].call("run"); 으로 해석된다.
     * scope도 Node의 일종이므로 getMember()를 타게 된다.
-  
+
 ##### [x] 4안 refer를 공개한다면?
 ##### [v] Q5. Origin과 TClass를 통합해야 한다. --> 새로운 문서
 
@@ -4274,7 +4587,7 @@ def app
         // d = device device()로 해석됨.
       for d in devs // for에서는 타입유추로 인해 iterator는 타입이 필요없음.
         d.say()
-    
+
 def A
   age := int?
     get=>: c.out("get=$this")
@@ -4352,7 +4665,7 @@ def myObj
 ```
 * name은 str? 에 대해 def가 아니므로 overriding 상태가 아니다. 그러므로 get의 반환형과 set의 인자는 모두 str 이다.
 * get과 set은 모두 static이다. 따라서 refer인 name에는 null이 들어가 있어도 문제없이 get()이 불려진다.
-###### [x] $get은 static여부와 관계없이 inner객체이므로 어쨌건 owner는 존재한다.  refer는 null을 들고 있지만 refer 자체는 myObj에 있으므로 refer의 owner는 myObj.... 일까? 
+###### [x] $get은 static여부와 관계없이 inner객체이므로 어쨌건 owner는 존재한다.  refer는 null을 들고 있지만 refer 자체는 myObj에 있으므로 refer의 owner는 myObj.... 일까?
 ```cpp
 def myObj2
 	void foo()
@@ -4384,7 +4697,7 @@ o3.boo()
 // refer는 origin객체가 $get()이므로, 바로 origin객체인 o2.$get()을 호출한다.
 //		이때 owner는 과연 무엇인가?
 //			refer는 새로 생성된 myObj가 owner.
-//			this도 
+//			this도
 ```
 * 안되는 이유1
 	* static 메소드는 정적이므로, 컴파일러는 어떠한 객체의 메소드인지 확정된다는 것이다. 	origin객체지. 언제나 그 객체가, 유일한 그 객체가 불려지게 된다.
@@ -4407,7 +4720,7 @@ o3.boo()
   	name := ""
   	def in
   		void $koo(): c.out("name=$name")
-          
+
   def app
   	void main()
   		test.in.koo() // name=
@@ -4416,12 +4729,12 @@ o3.boo()
           new := test()
           test.in = new.in
           new.name = "new"
-          
+
           test.in.koo() // name=wow
           new.in.koo() // name=new
-  
+
           // 봐라. 예측이 안된다. this가 2개있는것처럼 보인다.
-          
+
   ```
 
 ###### 고찰
@@ -4461,12 +4774,12 @@ def test
         set: _age = new
         void say()
 			...
-	
+
 	myObj = dxHandle[]?
-            
+
 t := test()
 a = t.age + 5
-    
+
 ```
 
 * 제일 깔끔하다.
@@ -4582,7 +4895,7 @@ def Property := Obj
 
 ```cpp
 class myObj : public obj {
-	WRD_CLASS(myObj, obj, 
+	WRD_CLASS(myObj, obj,
 		PROP(ver)
 	)
 
@@ -4614,7 +4927,7 @@ def Part
 
     Part()
     Part(str newname): name = newname
-        
+
 ```
 
 * 프로토타입은 복제를 통해서 객체가 생성된다.
@@ -4644,17 +4957,17 @@ def Part
     class Proto {
     public:
         Proto() { name = "My"; }
-    
+
         string name;
     };
-    
+
     class My {
     public:
         My(Proto* org) { age = 20; proto = org; }
         int age;
         Proto* proto
     };
-    
+
     My* My() {
         static Proto inner;
         return My(&inner);
@@ -4669,7 +4982,7 @@ def Part
 
     4. 생성자내에서는 이미 생성된 멤버변수에 대해서만 조작/assign만 하게 된다.
 
-       
+
 
   **즉 포인트는, 객체의 생성은 이미 프로그램이 런 하기전에 끝나있다. 생성자는 객체를 생성하는 역할이 아니라, 멤버변수를 조작하기 위한 이벤트의 일종이다.**
 
@@ -4712,7 +5025,7 @@ def Part
               this.refer = new
           else
               this = Mouse(new)
- 
+
   m1 = Mouse() // Mouse.get() called
   m2 = m1 // m2.set(m1) called
   ```
@@ -4791,7 +5104,7 @@ def Mouse = Part("mouse") // Mouse는 Part에 mouse 넣어진 생성자로 만�
     // Mouse() 이경우 생성자를 만들 수 없다.
     //      super()
     //      c.out("constructor")
-            
+
 Part getPart(str msg): with msg
     is "mouse": Mouse()
     is "body": Body()
@@ -4818,18 +5131,18 @@ def Mouse = Part
 def Mouse
     =>Mouse()
         c.out("생성자")
-        
 
-    
-    
-    
+
+
+
+
 Part getPart(str type): with type
     is "mouse": Part("mouse")
     default: null
 
 def Mouse1 = getPart("mouse")
     age = 20
-    Mouse1(int newage)        
+    Mouse1(int newage)
         c.out("생성자")
         age = newage
 
@@ -4837,7 +5150,7 @@ def Mouse1 = getPart("mouse")
         c.out("생성자")
 
 arr = [Mouse1(), Mouse1(33)]
- 
+
 // 이것은,
 def Part
     Part()
@@ -4846,7 +5159,7 @@ def Part
 def Part Mouse1
     Mouse1(Part super)
         Super()
-        
+
     def age = 20
         // age(): c.out("생성자")
         // Q. int도 생성자가 있어야 하는가?
@@ -4982,7 +5295,7 @@ prop을 제거함으로써, **딱 1개의 step만 더 생기 도록 만들었다
 
             사용자가 4번 라인을 바꾸게 되면 멤버변수 body가 바뀐것이므로 2번 라인과 4번 라인은 서로 병렬적으로 돌게 된다.
 
-    
+
 
     * prop 대비, 더 하는 건 없다. 왜냐하면 추가된 부분은 origin 객체를 런타임에 초기화 할때 일어나는 것이지 빌드시 일어나는게 아니니까.
 
@@ -4995,9 +5308,9 @@ prop을 제거함으로써, **딱 1개의 step만 더 생기 도록 만들었다
       def name = ""
           get=>: c.out("name=$name")
           _set=>:
- 
+
   def #Mouse = app.getPart("mouse")
- 
+
   def app
       Part getPart(str name): with name
           is "mouse": Mouse()
@@ -5016,12 +5329,12 @@ prop을 제거함으로써, **딱 1개의 step만 더 생기 도록 만들었다
         def name = ""
             get=>: c.out("name=$name")
             _set=>:
-    
+
     def #Mouse = app.getPart("body")
         name = "mouse"
     def #Body = app.getPart("mouse")
         name = "body"
-    
+
     def app
         Part getPart(str name): with name
             is "mouse": Mouse()
@@ -5050,11 +5363,11 @@ prop을 제거함으로써, **딱 1개의 step만 더 생기 도록 만들었다
 
       * 이렇게 하는게 잘못이다. 코드를 잘 짜야 한다.
 
-        
+
 
 * [x] 실행 순서를 보장 못하는 것이다. 늦은 초기화 인데, 일반적인 언어의 static과는 동작이 다르다. 문제는 없을까? -> static과 동일하다. origin객체는 static과 다를게 없다.
 
- 
+
 
 * [x] 메소드도 복제시키면 안된다. 최적화 하자.
 
@@ -5070,7 +5383,7 @@ prop을 제거함으로써, **딱 1개의 step만 더 생기 도록 만들었다
 
         ```cpp
         uniques = parent.uniques.clone()
-        if C-REPL    
+        if C-REPL
             shared = new Chain()
             shared->chain(*parent.shared)
         else // optimization
@@ -5099,19 +5412,19 @@ prop을 제거함으로써, **딱 1개의 step만 더 생기 도록 만들었다
   // S: 모든 객체가 1개를 공유
   def Person
       age = 20 // U
- 
+
       def $Sayable // S
           void say()
               c.out("age=$age")
       sayable = Sayable() // U
- 
+
       def $name // S
           get: org.name
           _set:
- 
+
       def grade = 3.5 // U
           get=>: c.out("grade=$grade")
- 
+
   (p1, p2) = [Person(), Person()]
   p1.age = 1: p1.sayable.say(): p1.name
   p2.age = 2: p2.sayable.say(): p2.name
@@ -5196,7 +5509,7 @@ prop을 제거함으로써, **딱 1개의 step만 더 생기 도록 만들었다
        prop name = "unknown"
            get=>: c.out("getting $name")
            _set=>
-   
+
        prop orgname
            // get=>: 에러 =>를 쓸 수 없다.
            get
@@ -5204,10 +5517,10 @@ prop을 제거함으로써, **딱 1개의 step만 더 생기 도록 만들었다
                return cls.name
            //get: class.name
            _set
-   
+
        void init()
            name = "init"
-   
+
    with Part()
        name = "abc" // 에러
        init()
@@ -5257,7 +5570,7 @@ isConsumerable을 static컴파일 용으로 사용할 생각이라면
 
 ```cpp
 a := b
-	get: 
+	get:
 ```
 이런 문법(overriding만 가능한)은 없음. 지원 안할꺼임.
 
@@ -5293,13 +5606,13 @@ Node::run(Msg msg) {
   * 시, get은 메소드의 this를 내보내는 것이지 메소드의 호출이 아니다.
 * 반환된 결과를 this에 재주입한다.
 * 기본구현은 this를 그대로 반환하는 것이며, 별도의 정의가 없으면 이렇게 되어있는것처럼 동작한다.
-	
+
 	* 실제로 메소드를 만들어주지는 않는다. 최적화때문에.
 * 당연히 overriding 되지 않는다.  되어서도 안된다. 반환형은 항상 This 이기 때문이다.
 * overriding이 서로 다르기 때문에 ADT만 손에 쥘 수 있는 FRX에서는 c++로 호출이 거의 불가능하다. 자연스럽게 run()을 사용하게 된다.
-	
+
 * run(Msg("onGet")); 을 하면 onGet()이기만 하면 되는 메소드를 찾아 실행한다.
-	
+
 * 예)
 
   ```java
@@ -5322,7 +5635,7 @@ Node::run(Msg msg) {
 
   * 객체를 통해 sub객체에 접근하는것 또한, 그 sub객체 중에 "age" 라는 이름을 붙은 것들을 찾아, 그것에게 onGet()을 호출하는 것이다.
 
-  
+
 
   예)
 
@@ -5456,7 +5769,7 @@ class myObj : public obj {
     This& rhs operator=(const This& rhs) {
     if(&rhs == this) return *this;
         Super::operator=(rhs);
-        
+
         _grade = rhs._grade;
         return *this;
     }
@@ -5504,7 +5817,7 @@ m1 = m2
 * 한가지 한계점은 멀티메소드가 안된다는 점이다.
   * mgd/C++에서 operator=()를 할 경우, 파생클래스의 operator=() 가 호출되는게 아니다. 따라서 온전히 객체가 할당되지는 않는다.
   * 따라서 c++에서 mgd 객체를 받아와 operator=()를 호출 하는 경우 mgd의 set()이 불리지 않게 된다.
-  * mgd에서 객체 parent를 가져와 op=()를 하는 경우 
+  * mgd에서 객체 parent를 가져와 op=()를 하는 경우
 
 ##### Q1 [v] 오버라이딩을 지원하는가?
 
@@ -5519,16 +5832,16 @@ def child = parent
     ret=>res set(parent rhs)
       c.out("NO WAY!")
       ret
-  
+
   ret=> res set(child rhs)
       c.out("GOOD WAY!")
       name = rhs.name
       return ret
-      
+
 p1 = parent(), p2 = parent()
 pc1 = parent child()
 c1 = child pc1, c2 = child()
-    
+
 p1 = p2 // show nothing
 p1 = c1 // show nothing
 pc1 = p1 // NO WAY!
@@ -5560,12 +5873,12 @@ c2 = c2 // GOOD WAY!
   def child = parent
     void _say(int)=>
     void say(float)
-    
+
   p = parent()
   c = child()
   ```
 
-  
+
 
 ##### Q3 [v] 지원해야 한다면 sharable과의 동작은 어떻게 되는가?
 
@@ -5623,11 +5936,11 @@ c2 = c2 // GOOD WAY!
       __myObj = myObj()
       def my = myObj null
         set(myObj rhs): _myObj = rhs // 이 set은 my 라는 origin객체에 있는것.
-                       // A["my"]에는 my라는 origin객체가 아니라 
+                       // A["my"]에는 my라는 origin객체가 아니라
                        // Refer(OriginObj("my"))가 들어있다.
       def age1 = int
         =>set(int rhs): c.out("newval = $rhs")
-  
+
   A.my = A.my()
   A.age1 = 5
   ```
@@ -5687,15 +6000,15 @@ def child := SharingObj
       /*2: ret => set(child rhs)
         c.out("wow!")
         return ret*/
-  
+
   p1 := parent(), p2 := parent()
   c1 := child(), c2 := child()
-  
+
   p1 = p2
   p1 = c1
   c1 = p1
   c1 = c2
-      
+
   ```
 
 * 결론
@@ -5727,7 +6040,7 @@ def child := SharingObj
           return ret
     ```
 
-    
+
 
 
 
@@ -5740,7 +6053,7 @@ def myObj
     _set
 ```
 
-* bool은 occupiable이므로 set이 이미 있다. 
+* bool은 occupiable이므로 set이 이미 있다.
 * 그러나 bool의 refer인 isEnable은 _ptr이 null이므로 bool.set()을 여기서 호출해도 크래시가 날것이다.
 
 ###### 요구사항
@@ -5773,7 +6086,7 @@ def #myObj
 
 def #child := myObj
 child.say() // 30
-    
+
 def #child2 := myObj
 ```
 
@@ -5869,7 +6182,7 @@ def A
 1:    get=> // X =>를 붙일 수 없다.
 2:    get: 5 // O. get의 반환형은 int.
     set: rOk
-    
+
   def n3 := str?
         get=>: "wow"// X. get의 반환형은 str이다.
 
@@ -5927,12 +6240,12 @@ def myObj
     // =>는 이미 super()와 파이프라인이 연결된 상태에서 개발자가 코드를 끼워넣는다..
         // 라고 이해하면 편하다.
         get=>: c.out("get: age=$age") // 이렇게 하면 get의 반환은 age인가 int인가
-            
+
   def isEnable := bool null
     get: super.getState("enabled")
-    _set // bool은 occupiable이므로 set이 이미 있다. 
+    _set // bool은 occupiable이므로 set이 이미 있다.
     // occupiable인 bool에 null이 들어갔으므로 isEnable = false 가 된다.
-            
+
   def complexObj := complex? // complex null과 같다.
         set: // complexObj는 null이 들어가 있다. set 안에서 complexObj.this를 사용하는 순간 런타임 에러가 날것이다. 물론 런타임 도중에 myObj.complexObj = complex()로 문제를 해결할 수 있다.
 ```
@@ -6004,13 +6317,13 @@ Foo.letsgo(MyClass) // hello age!가 나와야 하지만, 실제로는 나오지
 ```
 * 위 시나리오의 문제 원인 서술
 	* letsgo()는 Wrapper에서 의해서 Method화 되어서 Foo라는 Object의 shared member에 들어가게 된다.
-	* parser는 "Foo.letsgo(MyClass)" 라는 문법을 보고, 
+	* parser는 "Foo.letsgo(MyClass)" 라는 문법을 보고,
 		* scope["Foo"][letsgo].run( Msg("()", scope["MyClass"]) );
 	* 처럼 stmt를 구성하며, 이 실행에 의해서 letsgo wrapper에 MyClass라는 Object가 인자로 넘어간다.
 	* letsgo wrapper::run()은 Msg에서 받은 Object를 들고 cast<MyClass>를 시도하며 이는 TClass<T>에 의해서 타입이 판단된다.
 		* Tclass<T>는 MyClass&를 Refer로 감싸서 반환하고
 	* letsgo wrapper는 받은 Refer에서 MyClass를 꺼내려고 시도한다. 성공하면 그걸 c++의 letsgo()로 넘긴다.
-	* c++ letsgo() 에서는 MyClass& 를 받는다. 그리고 이것에 대해 getAge()를 호출한다. 
+	* c++ letsgo() 에서는 MyClass& 를 받는다. 그리고 이것에 대해 getAge()를 호출한다.
 	* 그럼 짜잔! C++::getAge()가 호출될뿐, **worldlang의 getAge()가 호출되진 않는다.**
 
 ###### [x] 1안 .run()을 사용한다.
@@ -6041,22 +6354,22 @@ class Node {
 * 클래스는 내보내거나 받기가 쉽지 않다. 그냥 객체로써 주고 받고 된다.
 
 ##### [x] 5안 매크로를 사용해서 항상 wrapper로 감싼다
-* 근데 이럴 경우, 개발자들은 wrapper로 감쌀지 안감쌀지 선택할 수 있어야 한다. 
+* 근데 이럴 경우, 개발자들은 wrapper로 감쌀지 안감쌀지 선택할 수 있어야 한다.
 * 그리고 그 여부가 worldlang에 공개가 되어야 하므로 worldlang 개발자도 선택할 수 있어야 한다.
 
 ##### [x] 5-1안 annotation으로 해결한다. --> 별도의 항목
 
 ##### [x] 6안 Native만 wrap여부를 선택할 수 있다.
 * 퍼포먼스적인 측면에서만 "seal" 기능을 추가한다.  Native개발자는 wrap할 메소드를 seal할 건지 정할 수 있다.
-* seal 되면 그 여부를 Method는 가질 수 있다. 
+* seal 되면 그 여부를 Method는 가질 수 있다.
 * 그래서 IDE를 통해서 고지도 가능하다.
-* worldlang에서는 이 seal을 둘 수 없다. 
+* worldlang에서는 이 seal을 둘 수 없다.
 * 컴파일러는 seal 된 메소드를 overriding 여부를 검사하며, 이때 에러를 고지한다.
 * seal은 worldlang에 의해서 만들어질 수없으므로 C-REPL과는 관계없게 된다. 이것에 대한 증분빌드를 할 필요는 없다.
 
 ##### [v] 7안 worldfrx만 항상 seal.
 * 퍼포먼스적인 측면에서만 "seal" 기능을 추가한다.  worldfrx는 seal로 wrap하는것과, nonseal로 wrap하는 매크로 2종류를 준비한다.
-* seal이라는 개념은 worldlang(컴파일러포함) 존재하지 않는다. 
+* seal이라는 개념은 worldlang(컴파일러포함) 존재하지 않는다.
 * worldlang 개발자에게 worldfrx의 메소드를 override하지 말것을 고지한다. (일부 메소드 제외)
 * native 개발자에게는 항상 nonseal 버전만 공개한다.
 
@@ -6077,12 +6390,12 @@ class Node {
 			seal void _$#foo();
 			// seal private static void foo() const;
 		```
-	
+
 	```
-	
+
 	```
 2. 오직 이 이유때문에 seal 이라는 키워드를 추가하는게, 문법을 추가하는게  마음에 들지 않는다.
-	* 명백히 seal은 효용도가 떨어진다. 
+	* 명백히 seal은 효용도가 떨어진다.
 	* 가능하면 문법을 줄이고 간편하게 하고 싶다. worldlang의 철학은 20% coverage를 위해서 80% 더러움이 필요하다면,
 	* 그 20%를 버리는것이다.
 
@@ -6136,13 +6449,13 @@ def ADT
   void say() // void say() {} 와 같음.
   int say() // 없으면 return <각 타입의 기본값>
   unit say() // return unit()
-  
+
 def core
   core $get()
       if rand() % 2
       return core! // error인 core객체.
         core()
-            
+
   __build = build()
     build getBuild()
     return _build
@@ -6159,7 +6472,7 @@ res := env.calculate()
 
 * getter인지 여부는 get이 맨 앞에 있는지로 구분한다.
   * camel을 모두 써야 한다.
-  * gettisburg 이런건 인식안된다. 
+  * gettisburg 이런건 인식안된다.
   * isEnable 도 getEnable로 적어야 한다.
   * getter안에 추가적인 비지니스 로직 관련된 동작이 있으면 실패한다.
 
@@ -6291,6 +6604,65 @@ mouse2.assign(mouse3)
   - 있더라도 지금 예상은 불가능하다.
 
 
+import console
+
+def Plant
+	_age = 5
+	Plant()
+        console.out("constructor. age=" + age)
+		age = 20
+	Plant(#str msg)
+		console.out("Plant(#str)")
+
+    // 인라인 지정자inline-specifier:	<keyword has blockstmt>: stmt
+    // 	":" 는 inline 지정자(specifier)로써,
+    //	뒤에 stmt 1개를 블록문 없이 사용 가능.
+    ~Plant(): console.out(name + " destructor")
+    name = "herb"
+    int getName(): return name
+    void $test(Plant p, str new_name): p.name = new_name
+
+def app
+	void main()
+		p = Plant() // 기본생성자로 Plant 객체 정의
+		p_null = Plant null // Plant로 캐스팅된 null
+
+		if 1
+			p1 = Plant("Where is my santa?") // Plant(#str) 생성자로 객체 정의
+			p1.getName() == p.name // "herb" == "herb"
+
+			p2 = p1
+			p2.name = "chikery"
+			p1.getName() == p.name // "chikery" == "chikery"
+
+			// p1이 소멸된다.
+			// GC(a.k.a GarbageCollection):
+			//	모든 객체(int, str의 primitive 변수 포함해서)는 refcount 기반의 제한적인
+			//	GC에 의해 해제된다.
+			//	제한적인 이유:
+			//		1. 다음의 java 코드는 worldlang으로 구현할 수 없다.
+			//			in java)	new Daemon(); // 자바는 ref 없이 생존할 수 있다.
+			//		2. GC의 한번쯤은 들어봤을, 유명한 원형-참조circular reference 문제.
+			//			(현재 limitation. 해결방안 생각중)
+
+		else: console.out("no") console.out("p.age is " + p.age)
+		// 인라인 지정자 뒤에 바로 다음 구문을 붙여쓰고 있다. 유효한 문법이다. 권장 안하나, 허용한다.
+
+		Plant.test(Plant(), str("5.5")) // 이름-없는-객체nameless object 를 생성가능하다.
+		console.out("end of program")
+
+/*	결과:
+	constructor. age=5
+	constructor. age=5
+	chickery destructor
+	p.age is 20
+	constructor. age=5
+	5.5 destructor
+	end of program
+	herb destructor
+*/
+```
+
 
 
 
@@ -6358,8 +6730,107 @@ c.out("it's \$1,000 dollors.")
 - \3. 이것을 호출하는데 비용이 절감되어야 한다.
 - \4. managed와 native모두 공통의 API를 사용하도록 해야 한다.
 
+```cpp
+import console
+
+app
+	res boo(res result)
+		// 결과타입res:
+		// 메소드의 결과를 표현한다. 동작의 성공 여부, 결과의 메시지, 결과의 카테고리
+		// (warn, info, err), src 값들을 확인 할 수 있다. res는 ADT이며 동시에
+		// occupiable 타입이다.
+		//
+		// result pretypes:
+		// res로부터 상속받은 다양한 결과타입들이 pretypes로써 정의되어 있다. prefix "r"
+		// 을 사용하며, 다음은 그 목록이다.
+		//    1. rok:    성공적으로 이상없이 수행됨. res의 기본값이다.
+		//    2. rfile:    파일 관련 에러
+		//    3. rperm: 권한 관련 에러
+		//    4. rsuper:기반 클래스에서 발생한 에러로 더 이상 현 메소드에서 진행이 불가
+		//                하다.
+		//    ...추가예정...
+
+		// 어떻게 res는 ADT이며 occupiable이며, 기본값이 ADT가 되는가?:
+		// 앞서 설명한 듯 occupiable의 동작은 매우 심플하다.
+		//    1.    월드의 모든 변수는 기본적으로 refer에 의해서 감싸져wrapping 있다.
+		//    2.    refer는 할당연산 요청이 왔을때 대상(wrapping하는)이 occupiable
+		//			타입일 경우, 그 대상에 복제생성자를cloning 수행한다.
+		//    3.    반대의 경우에는 단순히 대상을 교체한다.
+		//    4.    구체타입이며 occupiable일 경우에는 최적화에 따라 refer가 없도록
+		//			코드블럭을 구현한다.
+
+		ret = rok
+		console.out("ret=" + ret + ", code=" + ret.code) // res=rok, code=0
+		return ret
+
+	res foo()
+		ret = boo(rsuper(rwarn)) // Warning으로 새로운 rsuper객체를 생성한다.
+		// 출처src:
+		// 주어진 심볼(변수, 메소드, 클래스)이 어느 원전(code)에서 기원하였는지를
+		// 기록한다. 파서가 구문문석을 하면서 그 src객체의 정보를 채워넣으며
+		// 모든 객체는 sharable 타입인 src의 객체를 공유하게 된다.
+		s = ret.src
+		console.out(s.method.name + "#" + s.line + " at " + s.file.name) // app.foo()#12 at res.wrd
+		return ret
+
+	void main()
+		ret = foo()
+		if ret == rsuper() // 기존 규칙대로라면 이게 맞는 비교문이나,
+			console.out("ret == rsuper()")
+		if ret == rsuper // 편의를 위해, ret는 클래스인 rsuper도 체크할 수 있다.
+			console.out("ret == rsuper")
+		if ret.isSub(rsuper) // 위의 "== rsuper"는 이것과 같다.
+			console.out("ret.isSub(rsuper)")
+		if ret.isWarn()
+			console.out("ret.isWarn()")
+		if ret.isNormal() // ==> (! ret.isWarn() & ! ret.isErr())
+			console.out("ret.isNormal()")
+		if ret // ! ret.isNormal()과 같다.
+			console.out("ret")
+
+/* 결과:
+	ret=rok, code=0
+	app.foo()#12 at res.wrd
+	ret == rsuper()
+	ret == rsuper
+	ret.isSub(rsuper)
+	ret.isWarn()
+	ret.isNormal()
+	ret
+*/
+```
 
 
+#### var
+* ?(var) 는 ducktyping
+
+```cpp
+import console
+
+def app
+	int foo(? unknown)
+		// node:
+		//	? 는 node 라는 타입으로 동적바인딩DynamicTyping or DuckTyping 된다.
+		unknown += "world!"	// node 타입이 포함된 구문은 binding validation이 되지
+							// 않는다. 런타임에 에러가 판별된다.
+
+		console.out(unknown) // 결과가 return 된다.
+
+	void main()
+		success = false
+		ret = if success: 35; else: "wow" // 결과에 따라 success나 35 혹은 "wow" 중 하나가 반환된다.
+		// ret = int if success: 35; else: "wow" 는 컴파일 에러.
+		// 잘못된 묵시적 형번환 str -> int를 요구하기 때문이다.
+
+		// ret의 타입은 ?(node)다.
+		// 35와 "wow"를 모두 포함할 수 있는 타입은 node 뿐이다.
+		ret1 = ret 	// ret는 node 이므로 validation은 무시된다.
+					// success가 false일 경우, int = str 이 되므로 런타임에러가 된다.
+
+/* 결과:
+	helloworld
+	<런타임 에러로 프로그램 종료>
+*/
 
 
 
@@ -6375,7 +6846,7 @@ def abc
 			return name
 	void foo1()
 		// Q1. 이름없는 boo를 내보내려면?
-	
+
 	abc koo()
 		// Q2. abc를 상속해서 foo()를 오버라이딩한 객체를 내보내려면?
 ```
@@ -6427,12 +6898,209 @@ void ?(int a)
             -   // me.getName() 라고 해도 된다.
 
 
+#### with 문
+
+```cpp
+import console
+
+def app
+	// 확장 가능한 블록문Blockstmt: with <Opt:확장될 식별자> <stmts>
+	// 실행가능한 구문의 명시적 집합으로, with 키워드와 들여쓰기indent로 표현한다.
+	// 주어진 식별자를 현 범주scope로 확장할 수 있다. 해당 식별자의 모든 멤버를 객체와
+	// 접근연산자("."dot) 없이 호출이 가능하게 된다.
+	// 다음의 규칙을 따른다.
+	//	1.	블록문에서 정의한 식별자(메소드, 변수, ...)는 해당 블록문에서 유효하다.
+	//		(블록문을 사용하면 변수의 라이프 사이클을 제어할 수 있다.)
+	//	2.	블록문은 독자적인 프로그램 흐름에 대한 제어권을 갖지 못한다.
+	//		메소드와 달리, 블록문 내에서 return을 하게 되면 블록문 뿐만 아니라 메소드
+	//		자체를 벗어나게 된다. 이는, 블록문이 독자적인 흐름을 갖지 못하기 때문
+	//	3.	문법적으로 블록문을 변수에 할당하거나 소유할 수 없다.
+	//		(클로져를 대신 사용하라)
+	//	4.	키워드(if, for, ...)에 의해 블록문을 사용할 경우를 묵시적 블록문이라 한다.
+	//	5.	with 키워드 뒤에 식별자를 붙이게 되면 해당 블록문 안쪽에서 그 식별자의
+	//		소유한 멤버들이 확장된다.
+	//	6.	이렇게 확장된 인터페이스들은 this보다는 상위의, 지역변수보다는 하위의
+	//		우선순위를 갖는다. 이름 중복 허용 규칙에 의해 동일한 이름이 scope내에 복수
+	//		존재하는 경우 우선순위가 가장 높은 개체가 선택된다.
+	//	7.	블록문을 통한 인터페이스 확장은 중첩될 수 없다. 즉, 최대 this를 포함해서
+	//		2개까지 이다.
+	//	8.	식별자는 생략 가능하다. 이 경우, 별다른 확장을 수행하지 않는다.
+	//	9.	확장된 식별자는 블록문에서 it 이라는 별칭을 갖는다.
+	void foo() // 메소드도 블록문을 기본적으로 가지고 있다.
+
+		with // Rule#8
+        	local = 5
+        	updateAge(local) // Rule#2
+
+        	int updateAge(int new_age) // 클로저의 정의
+    			#age = 20
+	    		return age // Rule#2: return시 updateAge메소드만 종료된다.
+
+        // updateAge(20) // Rule#3: 접근 할 수 없다. 블록문에서 벗어났기 때문이다.
+        with
+	    	return // Rule#1: {, } 을 가지고 있는 foo() 메소드에서 벗어난다.
+        console.out("can't reach here.")
+
+	p = Person null // p에 Person으로 캐스팅된 null이 할당된다.
+	void eat(): with console // console은 클래스지만, 이 또한 식별자이므로 유효한 코드다.
+		out("app.eat()") // console.out("app.eat()") 과 동일하다.
+
+    int getSome(): return 5
+    void doSwitch(int val): with val
+        // 다중분기문is: <확장된블록문>
+        //					is <식별자와 동일한 타입의 값>
+        //						<블록문>
+        // switch에 대응하는 문법으로, 다음의 규칙을 따른다.
+        //  1.  with 안에서만 사용 가능하다.
+        //	2.	주어진 식별자에 대해, 값이 일치하는 경우 속한 블록문을 수행한다.
+        //		만약 다른 비교연산자를 사용해야 하는 경우, if-else를 사용해야 한다.
+        //		(is는 사실 if it == 3 elif it == doSwitch() .. 와 동일하다.)
+        //	3.	is의 값은 반드시 확장된 변수와 동일한 타입의 값으로 평가evalutate
+        //		될수 있어야 한다.
+        //	4.	else는 그 이외의 경우 수행된다.
+        is 3 // if it == 3
+            console.out("we got 3.")
+		is getSome() // else if it == getSome() // 함수 호출도 가능하다.
+			console.out("doSwitch")
+		else
+			with str getString(#str msg)	// 클로저도 표현식이기에 문제없다.
+            	return "hello " + msg
+				is "he"
+				is "lo" // "he" 이거나 "lo" 이면,
+                    console.out("can't")
+                    console.out("execute")
+				is "hello world": console.out("correct.")
+				else: console.out("this line.")
+
+    		/* 	2.4 절에 의해 메소드의 정의는 expr이다.
+    			위 사항을 이용하여 개발자가
+
+    		예) func1 = str getString(#str msg)
+    				return "hello " + msg
+    			ret = func1(" world")
+
+    			그러나 정의한 객체에 바로 접근하는 것은, 문법적으로 불가능하다.
+
+    		예)	str getString(#str msg)
+    				return "hello" + msg
+    			("world")
+    			// 1번줄과 2번줄이 method 객체와 문법적으로 동일하므로 문법 상 3번
+    			// 줄은 getString메소드와 관련이 없는 구문이 되버렸다.
+    			// 위의 예제는 실상 다음과 같이 컴파일러가 받아들인다.
+
+    			개발자의 의도는
+    				<getString로 정의된 객체>("world")
+    			처럼 사용하려는 것이었으나, 구문은 개행에 의해 구분되기 때문에
+    			개행 자체를 정의 문법에 말미에 포함시킬 수 없다. 결과 정의문법에
+    			종속되는 문법은 개행의 여부 관계없이 명세가 불가능하다.
+
+    			위 규칙에 의해 컴파일러는 다음과 같이 인식하였다.
+
+    				<getString로 정의된 객체>
+    				("world")
+
+    			만약, 개행 자체를 정의 문법에 말미에 포함시킨 경우, 위의 사례시
+    			Tuple 혹은 메소드 호출로 인한 모호성 오류ambigious error를 낼 수
+    			밖에 없다.
+    		*/
+
+
+	void main() with p // 객체 p에 대해 인터페이스가 확장된다.
+		foo()
+		print() // p.print()와 동일하다.
+		eat() // Person.eat은 this.eat()보다 우선된다.
+		void fly()
+			console.out("am I a bird?")
+
+		fly() // local에 등록된 fly()는 클래스scope를 가진 Person.fly()보다 우선된다.
+		name = "Chales"
+		console.out(p.name)
+
+		doSwitch(4)
+
+
+def Person
+	void print()
+		console.out("my name is unknown.")
+	void eat()
+		console.out("I'm eating.")
+	void fly()
+		console.out("I'm not a bird.")
+	name = "Michel"
+
+/* 결과:
+	my name is unknown.
+	I'm eating.
+	am I a bird?
+	Chales
+	correct.  */
+```
+
 
 
 
 
 
 ### Shareable
+
+| 타입명                                                       | Occupiable / Sharable |
+| ------------------------------------------------------------ | --------------------- |
+| primitive types:<br />int, str, bool, char, float, byte, res, void | O               |
+| pretypes:<br />rok, rfile, rperm, ...                        | O                     |
+| 배열(int[]), 맵(int[str])                                    | S                     |
+| 튜플()                                                       | O                     |
+| type                                                         | S                     |
+| 사용자 class의 객체                                          | S                     |
+
+```cpp
+import console
+
+//	Sharable & Occupiable:
+//		sharable과 occupiable은 할당연산시 원본인가, reference를 할당하는가만 다르다.
+//			sharable:	(by reference) 	말그대로 할당된 변수들 끼리 같은 원본을 참조한다.
+//			occupiable:	(by value)		각각의 변수들은 독립적인 원본을 따로 소유한다.
+//
+//		*) immutable & mutable과는 다르다. occupiable이라고 해도, 데이터를 변경할 수
+//		있다.
+
+def Person // 사용자가 정의한 class는 모두 sharable.
+    _age = 5
+    int getAge(): age
+    _grade = 3.5
+    float getGrade(): grade
+    void setGrade(float new): grade = new // implicit 할당인 void = float 은 무시된다.
+
+def app
+    void proxied(Person p, str name, float grade, float[3][str] list)
+        p.setGrade(age*grade) 		// Sharable 	외부의 Person객체에도 영향을 미친다
+        name = "Sissel from Norway"	// Occupiable
+        grade *= 2					// Occupiable
+        list["vector_x"] = (0.1, 0.1, 0.1)
+
+    void main()
+      	p = Person()
+        name = "unknown"
+        grade = 3.0
+        list = [ [0.1, 0.0, 0.0] : "vector_x",
+      		[0.0, 0.1, 0.0] : "vector_y" ]
+    	// 명시적 타입 정의:
+    	list2 = float[][str] [ [0.1, 0.0, 0.0] : "vector_x",
+                             			[0.0, 0.1, 0.0]:"vector_y"] //, 뒤에는 indent 무시 가능
+
+		proxied(p, age, grade, list)
+    	// ... 3개 구문 뒤에 붙이면 구문을 자를 수 있다.
+    	// ... 뒤에 공백whitespace이 오면 안된다.
+    	name[0]="I": name[1]="m" // name은 occupiable과 관계없이 const 아니므로 변경 가능.
+		console.out("p.getGrade()=" + p.getGrade() + ", name=" ...
+			+ name + ", grade=" + grade)
+ 		console.out("vector_x:" + list["vector_x"][0] + ", " + ...
+ 		list["vector_x"][1] + ...
+		list["vector_x"][2]) // 0.1, 0.1, 0.1
+
+// 결과:
+//	p.getGrade()=15, name=Imknown, grade=3.000000
+//	0.1, 0.1, 0.1
+```
 
 #### Shareable의 기본
 
@@ -6446,15 +7114,15 @@ void ?(int a)
 
     - Occupiable은 상속되는가?
 
-      상속된다. 상속이란 부모의 특성이 모두 물려받는 걸 의미하기 때문이다. 
+      상속된다. 상속이란 부모의 특성이 모두 물려받는 걸 의미하기 때문이다.
 
       - 한번 "이 클래스는 immutable" 이야! 라고 선언하게 되면 이 클래스로부터 나오게된 모든 객체는 다 immutable이야 한다. 하지만 이를 클래스의 "상속"에 적용할 수 있는 문제인가?
-        - 조합을 생각해보자. 
+        - 조합을 생각해보자.
           - P는 부모, C는 자식
           - OK : P=mutable C=mutable
           - P=immutable C=mutable
           - X: P=mutable C=immutable
-            - 이건 말이 안된다. 
+            - 이건 말이 안된다.
             - 만약 이게 말이 되게 하려면 그냥 mutable이 아니라 immutable이 가능하나 mutable이 되지 않는 것이라고 해야 하나?
           - X: P=immutable C=immutable
             - C가 엄청나게 크기가 무거워진 게 될 수도 있다. 이것은 아니다.
@@ -6493,7 +7161,7 @@ void ?(int a)
             - 자식이 occupiable이다. 부모는 occupiable 되는 경우가 있는가?
             - 자식이 sharable이다. 부모는 occupiable이 되는 경우가 있는가?
           - occupiable은 상속이 되어서는 안된다. 상속 금지! 왜? C#은 그렇게 하더라. int가 상속이 되어야 하는 이유가 무엇인가?
-        - v 상속 찬성 의견 
+        - v 상속 찬성 의견
           - int를 상속해서 sharable처럼 사용하고 싶은 경우는 무엇인가? 그렇게 하고 싶다면 int를 포함시켜버리면 되는 것이다.  **상속이란느 것은 부모의 속성을 전적으로 물려받는 것을 의미한다. 고로 int가 가지고 있던 occupiable 속성도 그대로 자식에게 물려지게 되는것이 당연한것이다.**
 
     - 어떻게 구현하지?
@@ -6520,7 +7188,7 @@ void ?(int a)
 
       - v Method는 occupiable인가?
 
-        아니오. 대개는 sharable이라고 보면 된다. 그래서 isOccupiable()의 default는 false다 
+        아니오. 대개는 sharable이라고 보면 된다. 그래서 isOccupiable()의 default는 false다
 
         - Method* a, *b;
         - a = b; 가 될때 어떻게 되어야 한다고 보는가?
@@ -6541,16 +7209,16 @@ void ?(int a)
 #### 멤버변수는_occupiable_멤버함수는_sharable_로_할_수_있을까?
 
 - 그런 특성을 가지고 있는 것은 사실이다. 그러나 occupiable, sharable 로직을 객체 복제(메소드, 멤버변수의 복제)에 재사용하는 것은 안된다. 왜냐하면 occupiable, sharable 로직이 발동되려면 opearator=가 일단 호출이 되어야 하기 때문이다.
-- 현재의 chain을 통한 자연스러운 컨셉(메소드는 공유, 멤버변수들은 operator=를 호출함으로써 occupiable, sharable 로직을 발동시키는 것)이 더 메모리나 퍼포먼스 적에서 이득이다. 
+- 현재의 chain을 통한 자연스러운 컨셉(메소드는 공유, 멤버변수들은 operator=를 호출함으로써 occupiable, sharable 로직을 발동시키는 것)이 더 메모리나 퍼포먼스 적에서 이득이다.
 - 고찰내용
-  - Method는 클래스에 소유한 것으로, 모든 Object들은 이 메소드를 공유하는 것이다. 반면 멤버변수는 객체마다 나오기 때문에 occupiable 특성을 가지고 있다. 
+  - Method는 클래스에 소유한 것으로, 모든 Object들은 이 메소드를 공유하는 것이다. 반면 멤버변수는 객체마다 나오기 때문에 occupiable 특성을 가지고 있다.
   - \#occupiable과_sharable 에서는 occupiable과 sharable이란 개념을 World에서 어떻게 구현할것인지를 정하고 있다. 이 구현물을 가지고 그대로 멤버변수와 멤버함수의 동작으로 재사용 가능할까?
     - 안된다.
     - occupiable과 sharable의 진정한 의미는 개체의 복사인 operator=가 일어났을때의 디폴트 컨셉이 무엇이냐는 것이지, 공유할 수 없다, 복제되어야 한다 같은 것이 아니다. 이를테면 객체D가 클래스로부터 생성이 되었다고 하자. 자, 그러면 sharable객체C는 클래스안에 들어가있는 객체C로부터 복제된 것이어야할까? 아니면 공유되어야 하는 것일까?
       - 복제가 되어야한다. 공유가 된다는 것은 단순히 static 변수를 의미할 뿐이다.
     - 그러면 객체D로부터 복제되어서 객체E가 나왔다고 가정해보자. E안에 있는 객체C는 객체D 안의 객체E 로부터의 복제품인가? 아니면 공유물인가?
-      - 이거는 공유물이다. 
-    - 즉, 객체의 복제가 일어났을때 복제인가 공유인가를 결정짓는 것은 sharable, occupiable이다. 왜냐하면 복제가 일어나면 멤버변수 객체에 한해서 operaort=가 일어나게 되니까. 
+      - 이거는 공유물이다.
+    - 즉, 객체의 복제가 일어났을때 복제인가 공유인가를 결정짓는 것은 sharable, occupiable이다. 왜냐하면 복제가 일어나면 멤버변수 객체에 한해서 operaort=가 일어나게 되니까.
     - 이것은 객체가 생성되었을때 가지고 있어야 하는것과 클래스로부터 공유해야하는것과는 조금 다르다. 메소드는 처음부터 operator=과정을 거치지 않는다. Chain안에 포함되어있고 Chain이 복제될때 sallowcopy가 디폴트이므로.
     - 따라서 occupiable, sharaable 로직을 재사용하겠다는 것은 메소드들도 일단 operator=를 거치게 하겠다는 것이며 Chain을 사용하지 않겠다는 의미이기도 하다.
     - **고로, 재사용해봤자. 지금보다 더 로직이 복잡해지거나 메모리 낭비가 심해지게 될것이다.**
@@ -6575,7 +7243,7 @@ void ?(int a)
     - String& parse(const String& path) --> OK
       - return new String(buf);
     - 이렇게 대체할 수도 있지만 이 역시 sharable이라는 걸 알고, new를 써야 한다는 걸 알아야 한다.
-- **답 : 문제 정의자체가 잘못되었다.** 
+- **답 : 문제 정의자체가 잘못되었다.**
   - 반환형이 Reference던 String이던, String& 이던 상관없다. 어짜피 TNativeMethod는 반환한 값으로부터 Refer returned = cb(..)->to<String>()를 할것이기 때문이다.
   - 따라서 sharable인지 occupiable인지는 상관안해도 된다.
 
@@ -6591,18 +7259,18 @@ void ?(int a)
 
 - \#occupiable_and_sharable 와 #Refer는_const를_정보를_가지고_있다. 로 인해서 이 문제는 상당히 어렵다.
 - 요약
-  - C++ 
+  - C++
     - Refer::Refer(const Node& rhs) // Node가 Refer일때는 Refer::Refer(rhs)를 실행한다.
     - Refer::Refer(const Refer& rhs);
     - Refer::Refer(bool isConst = false);
-    - Refer::operator=(const Node& rhs); 
+    - Refer::operator=(const Node& rhs);
     - Refer::operator=(const Refer& rhs);
     - Refer::bind(const Node& rhs)
     - 를 가지고 있다. 즉, 타입이 설사 다르더라도 일단 시도는 하게된다.
     - 이는 WrdFrx은 기준 타입이 Node로, 구체타입이 뭔지 모르더라도 일단 동작하게끔 설계되었기 때문이다.
   - Refer와 Bind의 차이는 크게 2가지다.
-    - \1. Refer는 const여부를 담고있으며 생성자에서 결정된다. 
-    - \2. const A와 A는 다른타입이다. 따라서 한번 const Refer라면 죽을때까지 그 Refer는 const A만 물을 수 있다. 
+    - \1. Refer는 const여부를 담고있으며 생성자에서 결정된다.
+    - \2. const A와 A는 다른타입이다. 따라서 한번 const Refer라면 죽을때까지 그 Refer는 const A만 물을 수 있다.
   - World에서 const는 타입의 일부분이다. 고로, const Refer는 죽을때까지 const Refer이다. 그러나 const Refer<A>는 native에서, non const Refer를 const Refer로써 사용하고 있는 상태다. const를 벗기면 nonconst가 된다. 당연히.
   - nonconst는 const가 될 수 있다. 반대는 안된다. (이건 C++과도 동일하다)
 - 검증
@@ -6610,7 +7278,7 @@ void ?(int a)
   - class B : A,
   - 1
     - A a = B b // cmpl ok exe ok
-    - Refer<A> a = Refer<B> b // compile ok, but exe ok.  
+    - Refer<A> a = Refer<B> b // compile ok, but exe ok.
   - 2
     - B b = A a //comp err
     - Refer<B> b = Refer<A> a // compile ok, exe err
@@ -6641,7 +7309,7 @@ void ?(int a)
     - A& operator=(const A& rhs); // case#2
   - };
 - 아마도 이 질문을 한 의도는 case#2만 생각하고 한 것이다. 이 경우에도 Method는 신경쓸 필요가 없는데 반환형이 A&로 되어있다고 하더라도 거기에 담기는게 *this만 아니라면 아무런 문제될게 없기 때문이다.
-- 그리고 *this를 담기지 못하도록 에러를 내뱉는 건 Method클래스에서 내뱉는게 아니라 파서가 해야 한다. const 메소드에서 this는 const A*가 되기 때문에 return (A*) this; 과 같은게 되버리며 A*에 const A*인 this를 넣으려고 했으므로 컴파일 단계에서 에러를 내뱉어야 한다. 
+- 그리고 *this를 담기지 못하도록 에러를 내뱉는 건 Method클래스에서 내뱉는게 아니라 파서가 해야 한다. const 메소드에서 this는 const A*가 되기 때문에 return (A*) this; 과 같은게 되버리며 A*에 const A*인 this를 넣으려고 했으므로 컴파일 단계에서 에러를 내뱉어야 한다.
 - 만약 컴파일단계에서 잡아내지 못하면 런타임시에 저 코드는 결국 null이 나가게 될것이다. nonconst Refer에 const를 넣으려 했기 때문이다.
   - 참고 -> #Refer는_const_T_캐스트가_되어야만_한다.
 
@@ -6651,7 +7319,7 @@ void ?(int a)
 
 * def Refer := Node
 	* onGet, onSet에 대한 추가 구현이 없다.
-	* this를 점거하지 않는다. 대신 다른 객체를 this로 내보낸다. 
+	* this를 점거하지 않는다. 대신 다른 객체를 this로 내보낸다.
 		* 결과적으로 모든 msg를 delegate하게 된다.
 	* getMembers()는 shared member만 사용한다.
 
@@ -6668,6 +7336,30 @@ void ?(int a)
 
 
 ### 지정자
+```cpp
+import console
+
+app
+    // prefix _는 protected를 의미. 정의와 동시에 초기화도 ok.
+    // 접근시에는 _grade가 아니라 grade
+    _grade = 3.5
+    // 3.5처럼 . 포함된 리터럴상수는 float으로 간주.
+    age // 접근자(accessor)는 public. 초기화 표현식이 없을 경우, 각 타입들의 기본값이 assign.
+    void main()
+        app.double(grade) // static 메소드인 double을 호출.
+        console.out("age=" + age + ", grade=" + double(grade)) // app의 범위scope에 있으므로, 본래 app.double() 해야 하나, 'app'을 생략 가능
+
+    // prefix $은 static 메소드를 의미.
+    // 함수간 선언 순서에 종속되지 않음. app.double() 호출보다 정의가 나중에
+    // 나와도 ok.
+    int $double(float val) // 인자리스트에 $, _ prefix는 붙일 수 없음.
+        $mul = 0
+        mul++
+		return val*mul // int mul -> float mul -> (int) val*mul 로 implicit 캐스팅
+
+
+// 결과: age=0, grade=7
+```
 #,$,@,_
 
 
@@ -6699,7 +7391,7 @@ void ?(int a)
 
 - 고찰내용
 
-  - static 함수는 필요하다. --> random() 같은, 함수만 제공하고 싶은 경우가 있다. 
+  - static 함수는 필요하다. --> random() 같은, 함수만 제공하고 싶은 경우가 있다.
 
   - 일반 method와 구분이 되어야 한다. --> 기능적으로는 method처럼 써놓고 안에서 this를 사용하지 않는다면 문제될 것은 없지만 외부 사용자들이 보았을때 객체를 생성해서 method로 호출해야 하는지, 객체 없이 바로 호출 할 수 없는지 분간이 가야 하기 때문이다.
 
@@ -6725,7 +7417,7 @@ void ?(int a)
 
   - 2안 글자를 덧붙이지 않고, 기호나 형태의 변형을 통해서 static이라는 걸알 수 있게 한다.
 
-    - 2-1안 
+    - 2-1안
 
   - 1안
 
@@ -6735,7 +7427,7 @@ void ?(int a)
 
   - *x 2안 키워드를 앞에 두는 방식이 아니라 클래스명을 두는 식으로 한다.*
 
-    너무 선언문이 길어진다. 
+    너무 선언문이 길어진다.
 
     - 1 = int MyClass.static_value = 5
     - 2 = int Me.static_value;
@@ -6783,7 +7475,7 @@ void ?(int a)
 
     - v Node에 static을 둘수 없다.
 
-      답이 없다. 
+      답이 없다.
 
       - c++ 적으로 알아낼 수 있는 방법이 없다.
 
@@ -6797,7 +7489,7 @@ void ?(int a)
 
       - x 1안 만약 사용자가 Native에서 생성한 객체를 월드에 공개하고 싶을때는 추가적인 API를 사용해야만 한다고 제약을 건다면?
 
-        너무 불편하다. 걍 제공하지 말자. 
+        너무 불편하다. 걍 제공하지 말자.
 
         - 이 제약(메소드)안에서 static 여부도 같이 검사해서 값을 할당해주면 된다.
         - 그러나 이 static 문제만을 위해서 이렇게 제약을 거는 건 좀 그렇다. 혹시 다른 경우에도 이러한 제약이 필요한가? 생각해보자
@@ -6832,7 +7524,7 @@ void ?(int a)
 
 * const는 객체가 정의가 끝난 이후에도 붙일 수 있다.
 ```java
-	inner = #getAge() // inner는 nonconst. 
+	inner = #getAge() // inner는 nonconst.
 ```
 
 * 타입과 달리 specifier는 유추가 되지 않는다. const도 변수 정의시 직접 정의해야 한다.
@@ -6846,7 +7538,7 @@ void ?(int a)
 	myobj.setInt(3) // X
 ```
 
-##### [v] Q1. a3 = # 3 처럼 표현해도 되야 함? 
+##### [v] Q1. a3 = # 3 처럼 표현해도 되야 함?
 ##### [v] Q2. a3 = # a2 처럼 해도 되야 함?
 ##### [x] Q3. a4 = _ $    #     a3 처럼 해도 되야 함?
 ##### [x] Q4. #가 rhs에 붙는다고? 그럼  $는?    a4 = $33 로 해야 하나?
@@ -6876,7 +7568,62 @@ void ?(int a)
 
 
 
-### 상수화 
+### 상수화
+
+```cpp
+import console
+
+Animal
+    // 상수: # <타입>
+    // prefix 중 하나로, #로 표현한다. (# 기호가 딱딱함과 고정됨을 연상시키기 때문이다.)
+	//	1.	타입 앞에만 붙을 수 있다.
+	//		다시말하면, Refer 항상 교체될 수 있으며, 이를 문법적으로 방지해주지 않는다.
+	//  2.	prefix를 같이 표기하는 경우, 순서를 지켜야 한다. $#_ 순으로 표기한다.
+	//  3.	void에 #을 붙일 수 없다.
+    str #getName(): "unknown" // const 메소드.
+    #int _age = 1
+    int getAge(): _age
+
+    #int $#_foo() {} // "static const protected method returning const int."
+    // void #$_foo1() {} // 컴파일에러: Rule#2 위반
+    void foo1() {}
+    // void setAge(int new): age = new // 컴파일에러: age는 const 이다.
+    void #walk(): console.out(age + "yo " + getName() + " walked.") // getName()이 const메소드가 아니었다면 에러였다.
+
+Animal Beaver
+    #str #getName(): "Beaver"
+    void #walk()
+        Super.walk() // Super는 기반클래스(Animal)로 캐스팅된 this를 의미한다.
+                    // "Animal Super = this" 가 이미 선언된 것과 같다.
+        console.out("Beaver's finding a seashell.")
+
+app
+    int main()
+        #Animal[] anims1 // an array to constant Animal.
+        Animal#[] anims2 // an constant array to Animal.
+
+        // anims1[0].setAge(5) // non-const 메소드에 접근한다. 컴파일 에러.
+        // Beaver beav = anims1[0] // 컴파일에러. 묵시적 형변환에 downcasting은 포함 되지 않는다.
+        // Beaver beav = (Beaver) anims1[0] // 컴파일 에러. const -> non-const로 형변환 안된다.
+        #Beaver beav = (#Beaver) anims1[0]
+        #Animal anim = anims2 // non-const -> const 로는 묵시적 변환된다.
+        // beav.setAge(5) // beav 는 const 다.
+        beav.walk()
+
+        #Animal#[#str] map = [(beav, "beav")] // a constant map holding const Animal as value distinguising with const string.
+        // map["anims2"] = Animal() // 컴파일에러. map은 const 이다.
+        #Animal[#str] map2
+        map2["anims1"] = Animal() // Rule#1: Value는 const타입이나, refer는 const가 아니다.
+        // map2["anims1"].foo() // #Animal로 non-const 메소드를 호출했다.
+        console.out(map["anims1"].walk())
+
+/* 결과:
+	1yo Beaver walked
+	Beaver's finding a seashell.
+	1yo Beaver walked
+	Beaver's finding a seashell.
+*/
+```
 
 #### const의 기본
 
@@ -6902,7 +7649,7 @@ void ?(int a)
 
 - 문법
 
-  - const MyType a = ... 에서 const는 a가 가리키는 객체가 const 라는 뜻이다. 
+  - const MyType a = ... 에서 const는 a가 가리키는 객체가 const 라는 뜻이다.
     - World는 ptr기반이지만, ptr const는 할 수없는 pointer만 존재한다고 생각하면 된다.
   - nonconst 인 reference는 const reference로부터 할당을 받을 수 없다.
     - const MyType a = ...
@@ -6912,7 +7659,7 @@ void ?(int a)
       - class A
         - void print(const int age, string msg) const
           - Console.out(msg + [age.to](http://age.to/)(string))
-      - 그러나 nonconst를 명시할때는 어떻게 하는가? "nonconst"는 너무 길지 않나? 
+      - 그러나 nonconst를 명시할때는 어떻게 하는가? "nonconst"는 너무 길지 않나?
         - 자주 쓰는 것도 아니고. 가끔 쓰는데다가, 영어권에서도 nonconst는 자주 사용하기도 하고. 이걸로 가자.
     - x 2안 ro와 rw를 사용한다.
       - class A
@@ -6924,7 +7671,7 @@ void ?(int a)
 - Managed 개발자를 위한 World 구현
 
   - \1. 인터프리팅시
-    - 컴파일러가 메소드를 파싱할때 이 메소드가 최종적으로 (non)const 여부를 결정한다. 
+    - 컴파일러가 메소드를 파싱할때 이 메소드가 최종적으로 (non)const 여부를 결정한다.
     - validation이 method.isConst() != 사용자가const로 명시 이면 에러를 내보낸다.
   - \3. World 코딩시
     - intelisense에 const 여부가 반영되며, const여부의 경우는 텍스트창에 메소드명의 색이 nonconst일때와 다르다.
@@ -6939,7 +7686,7 @@ void ?(int a)
       - \2. 반환값이 const 인경우, 최종적으로 Refer(isConst() = true)에 wrapping에서 넘겨줘야 한다.
         - --> return (caller.*_fptr)(msg.getArgs()[0], ....).to<const T>(); **// 반환값은 동일하게 Refer다. 다만 const가 앞에 붙었으므로 Refer.isConst()를 true가 될 것이다**
         - **// 모듈개발자는 반환형으로 T\* 같은 걸 넣으면 위의 코드는 빌드되지 못한다. --> 이건 TNativeMethod 같은 거 만들어서 T\*에 대해 클래스 템플릿 특화 시키면 될것이다**
-    - 모든 World 동작은 call()로 이루어진다. 따라서 isConst()인데, call()가 불려진 경우에는 isConst() const가 대신 실행되어야 한다. 
+    - 모든 World 동작은 call()로 이루어진다. 따라서 isConst()인데, call()가 불려진 경우에는 isConst() const가 대신 실행되어야 한다.
     - Node는 bool isConst() const; 를 갖는다. Method, Object, Refer는 모두 isConst를 다루는 클래스들이다.
     - Method도 const를 여부를 가지고 있어야 한다. 이는 validation을 위한 것이다. c++의 Method객체는 const가 되든 말든 동작에는 아무런 영향을 주지 못한다.
     - 모듈개발자의 클래스의 멤버변수는 World에서는 visible하게 할 수 없기 때문에 모듈개발자에게 const는 메소드 일때만주의하면 된다.
@@ -6955,7 +7702,7 @@ void ?(int a)
 
   - v 멤버변수를 다루는 경우 --> 당장은 모듈개발자는 메소드만 visible하게 할 수 있다.
   - v 메소드로 나오는 경우는
-    -  TNativeMethod<const T> 나, Mashalling<const T> 특화를 통해서 해결할 것이다. 
+    -  TNativeMethod<const T> 나, Mashalling<const T> 특화를 통해서 해결할 것이다.
     - World의 const 가 있건 없건 타입 자체는 항상 Refer가
 
 - Native모듈개발자가 Managed의 const를 어떻게 다루는가?
@@ -6966,9 +7713,9 @@ void ?(int a)
 
   - 따라서 native에서는 const여도, World에서는 nonconst로 되는 경우도 있다.
 
-  - 반대로 World에서는 const여도, Native에서는 nonconst로 사용하게 되는 경우도 있다. 
+  - 반대로 World에서는 const여도, Native에서는 nonconst로 사용하게 되는 경우도 있다.
 
-    occupiable도 const인 경우에는 refer로 감싸야만 한다. 
+    occupiable도 const인 경우에는 refer로 감싸야만 한다.
 
     - 예를들면 Object.isConst() == true인 경우, native에서는 이Object가 occupiable인 경우 nonconst로 가져올 수 있다, Refer가 없으므로.
 
@@ -6979,12 +7726,12 @@ void ?(int a)
     - v 1안 Occupiable도 Refer에 감싼다.
 
       - Refer는 퍼포먼스를 요구하며, occupiable, sharable 컨셉 변경이 필요하다.
-      - isConst 면 get()시 null 나오며, get() const는 값이 제대로 나와야 한다. 
+      - isConst 면 get()시 null 나오며, get() const는 값이 제대로 나와야 한다.
       - 따라서 마찬가지로 Refer::assign()에서 get()이 Null이면 바로 종료 하는 예외처리가 필요하다.
 
     - 2안 World의 객체를 native가 사용하려면 어짜피 타입캐스팅을 해야만 한다. 타입캐스팅to()는 refer를 반환하니까 이걸로 대체 가능하다.
 
-      dynamic_cast를 사용자가 사용해서는 안된다. 
+      dynamic_cast를 사용자가 사용해서는 안된다.
 
       - 시나리오
 
@@ -6997,7 +7744,7 @@ void ?(int a)
 
       - 그래. 그렇다. 만약 이 방법이외에 처음부터 구체타입(예, MyObject) 형태로 접근이 가능하다면 사용이 불가능하다. 이런 예는 없을까?
 
-        있다. dynamaic_cast를 사용한 경우다. 아마도 limitation으로 남겨야 할 것이다. 
+        있다. dynamaic_cast를 사용한 경우다. 아마도 limitation으로 남겨야 할 것이다.
 
         - dynamic_cast나 c cast를 사용한다면?
           - MyObject origin(is_const = true);
@@ -7044,7 +7791,7 @@ void ?(int a)
       - World에서는 모듈개발자가 클래스의 멤버변수를 visible하게 할 수 없다. 따라서 const 인 멤버변수를 어떻게 visible하게 할 것인가는 고려하지 않아도 된다.
 
 - [v][v] const로 인해서 클래스 분할문제와 Native visible 문제
-  - 포인터를 대신 하는 클래스들은, const 여부를 고려해야되기 때문에 같은 역할을 수행하는 2가지 버전(const 버전과 nonconst버전)으로 쪼개져야 하는 경우가 많다. 이때 World에서도 const버전과 nonconst버전을 2개다 제공해야하는가에 대해서 헷갈리기 시작한다. 
+  - 포인터를 대신 하는 클래스들은, const 여부를 고려해야되기 때문에 같은 역할을 수행하는 2가지 버전(const 버전과 nonconst버전)으로 쪼개져야 하는 경우가 많다. 이때 World에서도 const버전과 nonconst버전을 2개다 제공해야하는가에 대해서 헷갈리기 시작한다.
     - CIterator, Iterator, TWeak, TStrong, Refer, CRefer 등..
   - 결론 : visible 하게 되는 것은 World에서는 별도의 클래스로 구분 하지 않는다. --> #CRefer는_존재하지_않는다 참고
   - 왜냐하면 Node 클래스의 의의는 구체클래스가 뭔지 몰라도 사용할 수 있다! 라는 것이다. 그외의 클래스 계층을 타는 것들은 native에서만 유요한 것이며 Managed의 const와 native의 const가 불일치 되어 일어나는 문제가 없다. 그래서 이것들은 기존대로 계속 진행하면 된다.
@@ -7066,9 +7813,9 @@ void ?(int a)
   - 1안
     - thisptr를 최종적으로 사용하는 곳은 어디일까
       - ManagedMethod -> scope.stack(msg.getTail()); // 여기에서 thisptr을 꺼내서 objctspace 갱신
-      - NativeCaller에서 msg.args 로부터 implicit 캐스팅을 하려는 시점 --> 
+      - NativeCaller에서 msg.args 로부터 implicit 캐스팅을 하려는 시점 -->
     - if(Method::isConst())
-      - 
+      -
 - [][v] Method auto const 컨셉
   - 함수 뒤에 const나 variable을 적지 않으면 auto가 적용된다. auto는 컴파일러가 이 함수가 무엇인지 알아서 판단해서 적어주게 된다.
   - c++에서의 const는 컴파일시에 제어장치다. 즉 사용자가 컴파일 하기 전에 이함수가 const라는 걸 알고있어야 효과가 발휘된다. 그래서 c++에서는 auto const라는 걸 만들기에 적합하지 않다.
@@ -7110,7 +7857,7 @@ void ?(int a)
 
 - \2. Refer::toSub()에서 isConst() true면 null로 나감.
 
-  
+
 
 
 
@@ -7195,8 +7942,8 @@ void ?(int a)
     cfoo(&p1)
     //foo(&p)
     foo(&p1)
-    
-    
+
+
     #Person p = ....
     // p.setName()
     // Person p1 = p
@@ -7223,7 +7970,7 @@ void ?(int a)
     p = p1
     cfoo(p = #Person)
     foo(p = Person)
-    
+
     cfoo(p)
     cfoo(p1)
     foo(p)
@@ -7243,7 +7990,7 @@ void ?(int a)
   ```cpp
   age = #int
   age1 = age // age1은 occupiable이므로 const가 아니게 된다.
- 
+
   he = #Person()
   him = he // him은 sharable이므로 const가 된다.
   ```
@@ -7267,9 +8014,9 @@ void ?(int a)
       Person* arr[] = {new Chelsoo(), new Marry(), ...};
       return *arr[val];
   }
- 
+
   const Person& p = getOneOfPerson(2);
- 
+
   // world
   #getOneOfPerson(int val)
       arr = [Chelsoo(), Marry(), ...]
@@ -7288,7 +8035,7 @@ void ?(int a)
 
   ```cpp
   print() // --> 이미 함수 호출 처럼 보이기 시작하지 않은가?
-      
+
   app,
       main()
           print() // --> 자, 이 print는 print()라는 함수의 호출인가
@@ -7301,11 +8048,11 @@ void ?(int a)
 
   ```cpp
   print() none
- 
+
   app,
       foo(int(str) func, str msg)
           func(msg)
-          
+
       main()
   ```
 
@@ -7316,8 +8063,8 @@ void ?(int a)
       foo(int(str) func, str msg) ->
           ret = func(msg)
           c.out("ret=${ret}")
-          
-      main()        
+
+      main()
           foo(?(str msg): msg.len,"hello")
   ```
 
@@ -7361,6 +8108,178 @@ void ?(int a)
 
 ### 컨테이너
 
+```cpp
+import console
+
+def app
+    void tuple()
+		//	튜플: (<표현식expr>, ...)
+		//	튜플은 각각의 타입으로 정의된 값들을 묶어놓은 특이한 컨테이너.
+		//	사용자는 이 컨테이너 자체를 접근하여, iterate 불가능하며, 오직 worldlang
+		//	인터프리터만 컨테이너 자체를 다룰 수 있다. (즉, worldlang 개발자는 튜플타입 변수를
+		//	만들 수 없다)
+		//	단, worldlang개발자는 "statement 는 expression #2 규칙" 에 의해,
+		//	튜플에 들어갈 원소에 이름을 붙여서 이를 직접 다룰 수 있다.
+		//	(튜플에 들어간 각 원소는 sharable 속성을 무시된다.)
+		//	이를 이용해 다른 객체에 값을 편하게 전달해주는 용도.
+
+		(3, "apple") // 각 원소의 타입이 모두 다름.
+		def Person // 중첩클래스.
+			a = 0
+			name = ""
+			grade = 2.5
+
+			void print(): console.out(name)
+
+			void assign((float new_grade, str new_msg), int new_a)
+				grade = new_grade
+		    	msg = new_msg
+				a = new_a
+
+		p = Person(): p.name = "Donald": p.print()
+		// ;은 다음 stmt를 이어서 한 줄에 서술 가능.
+
+		str = msg = "Jung-un"
+		p.assign((3.0/2, msg), 24) // 인자msg와 파라메터new_msg는 이름이 달라도 된다.
+
+		// 변수 정의 또한 표현식이므로 튜플내에서 사용 가능. 정의된 변수는 해당 scope
+		// 내에서 유효. (사용된곳이 블록문 안쪽이면, 해당 블록문이 종료까지 유효.)
+		// 튜플과 할당연산의 경우, 객체의 소유한 멤버와 순서대로 할당.
+		p.print() // "Jung-un"
+
+		msg = "Denis Trillo"  // msg는 현 scope내에 접근.
+		p.print() // "Jung-un"
+		// p.name과 msg는 별도의 인스턴스.
+
+    (int, str/*변수명 생략가능*/) map(int age, str name)
+		// 사실, 인자리스트(int age, str name)도 튜플이며, 함수호출도 튜플이다.
+
+    	//	맵: <타입>[<타입>]
+        dict = [(3, "apple")] // 리스트를 통해 초기화 된다.
+        dict.push(3, "apple") // 런타임 에러
+        dict["apple"] = 4
+        dict["banana"] = 5
+
+        for (int x, str name) in dict // dict의 원소들인 튜플을 (x, name)으로 된 튜플로 복사
+        	console.out("x, name=" + x + ", " + name)
+
+       	return (dict["apple"], "apple") // 복수개의 값을 튜플로 반환
+
+    void array()
+		// 배열: <타입>[]
+        // 문법을 보면 알겠지만, 배열은 사실 맵의 특수한 종류 중 하나. ("[]" 안 int가 생략된 맵)
+		arr = []
+		for int n in ..3 // ..3은 0에서 2까지
+			arr[n] = n	// c.f) arr[2] = 2
+		arr[3] // 런타임 에러
+
+		for n in [0, 1, 2] // [x, y, z, ...] 은 배열의 상수 표현식
+			console.out(n)
+
+        arr.push(5)
+        arr[3] == 5 // true
+
+        arr2 = arr
+        arr2 != arr // true
+        arr2.isSame(arr) // true
+
+    void sequence()
+    	// 시퀸스: <정수> .. <정수>
+    	// 범위를 나타내기 위한 컨테이너. 튜플과 동일하게 사용자는 이 컨테이너 자체를
+		// 접근하여, iterate 불가능하며, 오직 worldlang 인터프리터만 컨테이너 자체를
+		// 다룰 수 있다.
+        // .. 기준으로 한쪽이 없는 경우, 극대(int의 양의 최대값)와 극소(int의 음의 최소값)
+		// 를 나타낸다.
+        sum = 0
+        for n in 1..3 // 1..3은 [1, 3)
+        	sum += n
+
+       	msg = "hello world"
+       	console.out(sum + msg[5..]) // 5 이상을 뜻함
+
+    void conversion()
+    	// 본래 다룰 수 없는 튜플과 시퀸스 컨테이너를 다음과 같이 변환하면 다룰 수 있음.
+    	//	튜플은 임의의 타입으로 정의된 변수의 집합:
+        tup = ?[] (0, "banana")
+    	// tup = (0, "banana") 는 컴파일에러
+
+    	//	시퀸스는 시작과 끝, int 2개로 변환 가능.
+    	(int start, int end) = 3..7
+        sequence = int[] (start, end)
+    	sequence[0] = 10
+    	if sequence[0] != start
+    		console.out("diff: sequence[0]=" + sequence[0] + ", start=" + start)
+    		// "diff: sequence[0]=10, start=3"
+    	seq1 = str[] ("wow", "hello", 1234) // 배열은 튜플을 받아들임.
+    	//int[] seq2 = (1234, "1234") // 컴파일에러. str -> int는 implicit 캐스팅이 되지 않음.
+
+		// 명시적 타입 캐스팅explicit typecast: (<타입>) 식별자
+		// 명시적으로 다른 타입으로 형변환 시도하는 문법이다. 다음의 규칙을 따른다.
+		//	1.	명시적 형변환은 묵시적 형변환보다 더 많은 변환을 처리할 수 있다.
+		//	2.	임의의 타입이 모든 타입으로 형변환을 지원하는 것은 아니다.
+		//		어느 타입으로 형변환이 가능한지는 각 타입의 개발자가 정의한다.
+		//	3.	형변환 가능 여부는 컴파일 타입에 확정된다. 지원되지 않는 형변환을 시도할
+		//		경우 에러로 간주한다.
+		//	4.	형변환은 해당 타입의 sharable, occupiable 속성 관계없이 항상 인스턴스를
+		//		발생시킨다.
+		//
+		// 어떻게 str객체는 int로 명시적 타입캐스팅을 지원하는가:
+		// 형변환을 지원하고 싶으면 지원하고 싶은 타입에 생성자를 확장해놓으면 된다.
+		// e.g.	+int
+		//			int(#str val)
+		//				...val을 int로 변환...
+		//		str name = ".."
+		//		(int) name // 인터프리터는 int(#str) 생성자를 토대로 형변환을 시도한다.
+		//
+		// 묵시적 형변환implicit typecast: <자동으로 수행됨>
+		// 특정 상황에서 인터프리터에 의해 자동으로 수행해 주는 형변환이다. 다음의 규칙을
+		// 따른다.
+		//	1. 파생클래스를 부모 클래스로 형변환
+		//	2. primitive 변수들 간의 형변환(e.g. float -> int)
+    	seq2 = int[] (1234, int "1234") // ok.
+    	tup = ?[] (1234, "1234") // ok
+    	seq3 = int[] tup // 컴파일 ok, 그러나 런타임 에러
+
+    	msg = ""
+        map1 = ["banana": 1, "apple": 2]
+    	for (str e, int n) in map1 // 튜플과 배열은 사실 맵이며, 맵은 (값 1개)와 (값1개, 키1개) 에 대한 for-in을 지원한다.
+    		msg += "$e + ${seq2[n]}" // if n >= seq2.len throw exception.
+    	console.out("seq1=" + msg) // "seq1=banana1234 apple1234"
+
+		//	단, node로 취급하기 때문에 에러 사전 탐지 불가.
+    	for e in tup // e = ?
+    		console.out(e) 	// "1234"
+    						// "1234"
+
+	void main()
+		tuple()
+		if 1
+			(str x, str y) = map(1, "Jae-in")
+			console.out("x=" + x + ", y=" + y) // "x=4, y=apple"
+
+		// console.out("x= " + x + ", y=" + y) // 에러
+		array()
+		sequence()
+		conversion()
+
+/* 결과:
+	Donald
+	Jung-un
+	Jung-un
+	x, name=4, apple
+	x, name=5, banana
+	x=4, y=apple
+	0
+	1
+	2
+	3 world
+	diff: sequence[0]=10, start=3
+	0
+	banana
+*/
+```
+
+
 #### 기본
 
 [][v] Container 기본
@@ -7376,8 +8295,8 @@ void ?(int a)
       - arr[3].to(Classizer<int>())    ||    arr[3].to<int>();
     - x 2안 to용 get을 만들어준다
       - arr.getT<int>(3);
-  - 
-  - 구체클래스에 대한 Container를 지정한 경우는 Weak, Bind에서 자유로워져야 하나? 아니면 모두 Bind에 묶인채로 쓰라고 해야 하나? --> 모두 Bind에 들어간다.Statement는 
+  -
+  - 구체클래스에 대한 Container를 지정한 경우는 Weak, Bind에서 자유로워져야 하나? 아니면 모두 Bind에 묶인채로 쓰라고 해야 하나? --> 모두 Bind에 들어간다.Statement는
 - 논리의 정리
   - Container의 목적은 월드에서 사용하기 위한 목적이다. 이게 가장 중요한 점이다. 물론 World는 Native와 양쪽이 통해있으므로 이것도 고려해야 한다.
   - Array<int>는 안된다. 월드 목적이므로 Node이상부터 가능하다.
@@ -7386,12 +8305,12 @@ void ?(int a)
       - 월드에서 사용할 수있어야 한다. 파서가 코드블럭을 만들때를 생각해보자. 1번은 쉽게 가능할 것이다. Array객체를 만들기만 하면 된다.
         - 물론 Native에서는 사용자가 만든 Array로부터 타입T특화를 사용하는 방법이 난감할 것이다.
       - 2번이라면 인터프리터는 모든종류의 사용가능한 조합을 들고 있어야 한다? --> 그렇지 않다. 월드는 배열에 타입이 없다. 자바스타일이다. 따라서 Array<Bind<Node>> 만 사용한다는 것이다.
-      - 만약 Native에서 Array<Integer> 같은게 있다고 하자. 월드는 이걸 인식할 수 있는가? 
+      - 만약 Native에서 Array<Integer> 같은게 있다고 하자. 월드는 이걸 인식할 수 있는가?
         - 인식할 수 있다.
         - 하지만 이걸 사용할 수 없는게 Array에는 Integer외에도 다른 것도 공존할 수 있어야 하기 때문이다. 따라서 Array는 Bind<Node>가 맞다.
-        - get(n).to(int) or arr[3].to<int>() 처럼 가야 한다. 
+        - get(n).to(int) or arr[3].to<int>() 처럼 가야 한다.
     - x 2안 사용자 정의에 따라서 native에서는 Array<Integer> 같은 것도 사용할 수 있게 하자
-  - get()의 반환형은 Bind<Node>가 아니라 Node&가 된다. 왜냐면 항상 Element가 Bind<Node>이므로. 조금 편해졌을 것이다. 
+  - get()의 반환형은 Bind<Node>가 아니라 Node&가 된다. 왜냐면 항상 Element가 Bind<Node>이므로. 조금 편해졌을 것이다.
 - class Iteratable {
   - virtual const Result& move(int step) = 0; // step can be negative
   - virtual Node& get() = 0;
@@ -7434,7 +8353,7 @@ void ?(int a)
   - }
   - bool operator bool() {
   - }
-  - Node& operator->() { 
+  - Node& operator->() {
     - if(_way->isNull()) return nulled<Node>();
     - return _way->get();
   - }
@@ -7467,7 +8386,7 @@ void ?(int a)
   - virtual const Result& set(Iterator e, const Node& rhs);
   - const Result& insert(int n, const Node& rhs) { return insert(getIterator(n), rhs); }
   - const Result& insert(int n, const This& rhs) { return insert(getIterator(n), rhs); }
-  - 
+  -
   - virtual const Result& insert(Iterator e, const Node& rhs);
   - const Result& push(const Node& rhs) { return insert(_length-1); }
   - const Result& enq(const Node& rhs) { return insert(0, rhs); }
@@ -7551,11 +8470,11 @@ void ?(int a)
    class Node {
 
        bool at(const Node& trg) {
-        
+
            const Bool& ret = call(Msg("at", {trg})).get<Bool>();
-        
+
            return &ret ? ret.get() : false;
-        
+
        }
 
    };
@@ -7567,7 +8486,7 @@ void ?(int a)
    def MyType MyOrg
 
        s1 = 2..3
-        
+
        bool at(int n): n at s1
 
 6. 월드는 해당소스를 파싱해서 ManagedObject("MyOrg") 를 생성하고 at이라는 메소드를 추가함.
@@ -7649,14 +8568,14 @@ void ?(int a)
                     그러나 최적화를 생각해보면 배열은 index를 기준으로 데이터가 밀집해
                     있어야 한다. 그래야 인덱싱이 빠르다. 맵은 데이터가 산발적으로 흩어질 수
                     밖에 없다. 둘은 별도로 가져가는게 좋을 것이다.
-                    
+
 
                     1안 { : } 사용
                         a = {"name": 1, "aaa": 2}
                         seq1 = seq(1..2, n->2*n)
                             //    def seq
                             //        seq(seq org, ?(int) l)
-                            //        getn(int n)                            
+                            //        getn(int n)
                             //            if seq.at()
                             //                l
                         seq1.start, seq1.end
@@ -7665,7 +8584,7 @@ void ?(int a)
                         2, 4
 
 
-​                
+
 ​                흐름:
 ​                1. 우측부터rightmost 파싱된다.
 ​                2. [] 는 node:node 타입이다.
@@ -7724,7 +8643,7 @@ def keyBase
 
 def returnKey = keyBase
     void stroke(): c.out("\n")
-        
+
 def keyChar = keyBase
     void stroke(): c.out(name)
 ```
@@ -7811,7 +8730,7 @@ arr1 = [int null]
     * [] 구문은 사실 generic의 <>를 간략하게 표현한 것이다.
     * **따라서 generic을 구현하지 않고서는 container를 일체 구현할 수 없다. 증명됨.**
 
-    
+
 
 ###### [x] 2안 바깥에 캐스팅을 이용한다.
 
@@ -7843,7 +8762,7 @@ keys.push(returnKey)
 
 
 
-​    
+
 
 
 
@@ -7865,7 +8784,7 @@ keys.push(returnKey)
 
 ##### 기본
 
-- 배열1과 배열2가 있을때 이 둘을 chain해서 배열1의 원소와  배열2의 원소를 모두 가진것처럼 보이는 배열을 만들수 있어야 한다. 
+- 배열1과 배열2가 있을때 이 둘을 chain해서 배열1의 원소와  배열2의 원소를 모두 가진것처럼 보이는 배열을 만들수 있어야 한다.
   - 예) Chain a, b
   - a.chainFront(b)
   - b.push(5)
@@ -7896,14 +8815,14 @@ keys.push(returnKey)
   - class Chain : public Array {
     - class Controller : public Containable { // World에 invisible해야 한다.
       - Controller() {}
-      - Controller(Chain& rhs) : _owner(rhs) {} 
-      - virtual const Result& insert(Iterator e, const Node& newone) { 
+      - Controller(Chain& rhs) : _owner(rhs) {}
+      - virtual const Result& insert(Iterator e, const Node& newone) {
         - if( ! _owner) return NullPointerException;
         - return owner->Container::insert(e, newone); }
       - }
-      - virtual Container& get(int n) { 
+      - virtual Container& get(int n) {
         - if( ! _owner) return NullPointerException;
-        - return _owner->Super::get(n); 
+        - return _owner->Super::get(n);
       - }
       - //each는 get을 사용할 것이므로 추가 구현없이 정상적으로 Container를 each하게 된다.
       - Weak<Chain> _owner;
@@ -7931,7 +8850,7 @@ keys.push(returnKey)
     - struct Translated {
       - int index;
       - Bind<Container> cont;
-      - bool isEmpty() { 
+      - bool isEmpty() {
         - return cont.isNull() || index < 0 || index >= cont->getLength();
       - }
       - Node& get() {
@@ -7950,7 +8869,7 @@ keys.push(returnKey)
       - });
       - return len;
     - }
-    - virtual const Result& set(int n, const Weak<Node>& rhs) 
+    - virtual const Result& set(int n, const Weak<Node>& rhs)
     - virtual const Result& insert(int n, const Weak<Node>& rhs) {
       - Translated bean = _translate(n);
       - if(bean.isEmpty()) return NullPointerException;
@@ -7975,7 +8894,7 @@ keys.push(returnKey)
 ### Scope
 라이프 사이클, GC
 
-#### 
+####
 
 #### scope는 Node다.
 
@@ -8011,7 +8930,7 @@ keys.push(returnKey)
   - virtual call() // Method의 call은 기본컨셉(Node의 call)과 다르다.
     - if([msg.name](http://msg.name/)() == "execute") // 종말메소드인 execute는 이렇게 수동으로 처리해야 한다.
       - return execute(msg)
-    - return Super::call() // Method가 msg를 bypass 하는 경우에는 어떠한 member도 scope에 추가하지 않는다. Method의 멤버가 추가되지 않으므로 재귀함수를 돈다고 가정했을때에 중복으로 scope에 등록되는 케이스는 발생하지 않는다. 요때는 기본컨셉(Method를 Node로써 다룸)으로 진행된다. ObjectSpace가 다빠지게 된다. 
+    - return Super::call() // Method가 msg를 bypass 하는 경우에는 어떠한 member도 scope에 추가하지 않는다. Method의 멤버가 추가되지 않으므로 재귀함수를 돈다고 가정했을때에 중복으로 scope에 등록되는 케이스는 발생하지 않는다. 요때는 기본컨셉(Method를 Node로써 다룸)으로 진행된다. ObjectSpace가 다빠지게 된다.
   - execute(msg)
     - Control& con = Scope.getControl();
     - int n = Scope.getLength()
@@ -8095,13 +9014,13 @@ keys.push(returnKey)
 
       - \1. 인덱스를 지정해서 잠시 덮어쓰는 방법.
 
-        insert(3, ....) 
+        insert(3, ....)
 
         - 이 경우, 기존에 3번 인덱스에 있던걸 기억해 두고 있어야 한다.
 
       - \2. 그냥 맨앞에 추가 하는 방법
 
-        pushHead(...) 
+        pushHead(...)
 
         - 이 경우, 그냥 원소를 넣으면 그만.
 
@@ -8111,11 +9030,11 @@ keys.push(returnKey)
 
 ##### scope symbol 반환 알고리즘 초안
 
-- Statement의 심볼 접근은 숨겨진 전역객체인 Scope를 통해서 해결한다. 
+- Statement의 심볼 접근은 숨겨진 전역객체인 Scope를 통해서 해결한다.
 - Scope는 3가지로 구분해서 심볼을 관리하며 Stack 구조를 가지고 있다.
   - GlobalSpace : 전역 공간이다. Scope가 소유한다.
   - ObjectSpace : 현재 메소드를 소유하는 객체의 멤버들이 들어있다.(메소드 + 멤버변수) 그때그때마다 객체의 member를 chain 시켜놓는다.
-  - LocalSpace : 현재 수행중인 메소드, 블록문에서 지정한 지역변수들이 여기에 임시로 들어가게 된다. Scope가 소유한다. int border가 있으며, 이것은 [x, length-1] 까지 이 함수에서 접근가능한 심볼의 범위를 나타내는 int 값 x를 담고 있다. 메소드가 이것을 placeBorder(int newborder)로 지정하고, Statement는 getVisibleElement()로 이 지정된 범위에서만 심볼을 찾아서 사용한다. 
+  - LocalSpace : 현재 수행중인 메소드, 블록문에서 지정한 지역변수들이 여기에 임시로 들어가게 된다. Scope가 소유한다. int border가 있으며, 이것은 [x, length-1] 까지 이 함수에서 접근가능한 심볼의 범위를 나타내는 int 값 x를 담고 있다. 메소드가 이것을 placeBorder(int newborder)로 지정하고, Statement는 getVisibleElement()로 이 지정된 범위에서만 심볼을 찾아서 사용한다.
   - 컴파일러가 최적화되면 getElement(index)를 바로 사용한다.
 - 알고리즘은 다음과 같다.
   - Scope {
@@ -8150,13 +9069,13 @@ keys.push(returnKey)
     - \3. 퍼포먼스는 중요하다. 매 getMember() 마다 Scope객체를 만드는건 너무 시간이 오래 걸린다.
     - \4. 소스코드의 변경은, 즉 Scope 객체의 변경을 의미한다. 편집모드에서는 Scope는 매번 변경되게 될 것이다.
   - 1안 compile, validate, execution 시에 scope를 만들어가면서 파싱한다.
-    - Scope는 실행시에 "a" 란 식별자에 접근하려는 코드가 있을때 실제로 이 변수를 반환하는 객체다. 이는 compile 과정에서 코드블럭에 "어떠한 객체에게 이 메시지를 전달해야 하는가"를 따지는데 사용된다. 
-    - Scope는 3종류가 있다. 
+    - Scope는 실행시에 "a" 란 식별자에 접근하려는 코드가 있을때 실제로 이 변수를 반환하는 객체다. 이는 compile 과정에서 코드블럭에 "어떠한 객체에게 이 메시지를 전달해야 하는가"를 따지는데 사용된다.
+    - Scope는 3종류가 있다.
       - \1. GlobalSpace라는 객체. 프로그램 시작전에 전역변수가 여기에 담긴다.
       - \2. LocalSpace라는 객체. Method에서 생성된 지역변수 + 전달받은 thisptr + Arguments 들이 여기에 생성되어 놓여진다. Class는 LocalSpace의 borderline을 그어놓고, 그 이후에 추가되는 것들만 검색되게 한다. Class 파싱이 끝나기 직전에는 LocalSpace의 borderline을 취소한다.
       - \3. Object Space. Object의 members 들. 객체 생성과 동시에 만들어진다.
     - 프로그램 실행과 동시에 GlobalSpace값을 추가된다.
-    - 그리고 이는 메소드를 파싱하면서 지역변수 목록을 메소드에 추가하게 되는데, 이때 LocalSpace에도 추가한다. 
+    - 그리고 이는 메소드를 파싱하면서 지역변수 목록을 메소드에 추가하게 되는데, 이때 LocalSpace에도 추가한다.
       - 지역변수 목록은 메소드의 멤버가 될 수 없다. 그렇게 되면 메소드 외부에서 지역변수에 접근할 수 있도록 되어버릴 것이다.
     - 단, LocalSpace는 구현이 좀 독특하다.
       - Class는 msg가 넘어오면 LocalSpace의 구성물을 잠시 꽁쳐두고 비워놓는다. (LocalSpace는 구성물을 꽁처두는데 최적화되어 퍼포먼스 loss가 발생해서는 안된다. swap(Stack&) 이런거 만들어 놓으면 될것이다.)
@@ -8186,9 +9105,9 @@ keys.push(returnKey)
         - boo()함수의 수행한다.
       - boo()가 끝나면 아까 기록했던 length가 되도록 pop한다. [현재 length 3이므로 pop() 1번 하게 됨]
       - foo()가 끝난다. 아까 length가 되도록 pop한다. [pop() 2번해서 length 0이 됨]
-      - MyClass1::call()이 끝난다. MyClass1은 아까 지역변수로 swap해둔 LocalSpace를 교체한다. 
+      - MyClass1::call()이 끝난다. MyClass1은 아까 지역변수로 swap해둔 LocalSpace를 교체한다.
     - 고찰내용
-      - 파서는 World코드로 지역변수의 정의를 보면 Function.stack에다가 지역변수 명세를 추가한다. 지역변수의 순서는 상관이 없다. 
+      - 파서는 World코드로 지역변수의 정의를 보면 Function.stack에다가 지역변수 명세를 추가한다. 지역변수의 순서는 상관이 없다.
       - scope는 multiple chain이다. 맨 위부터 Stack공간(Function의) -> 클래스(thisptr)의 all member 공간 ->전역변수 공간 으로 3개가 chain된다.
         - 메소드 안에서 다른 객체의 메소드를 호출한 경우는, 이것만으로는 해결되지 않는다.
           - class MyClass
@@ -8207,12 +9126,12 @@ keys.push(returnKey)
                 - methods[0] = boo()가 들어있으며
                 - variables[0] = Object(MyClass()) 가 들어있다.
                 - members는 methods, variables를 link해서 members[1] == variables[0]과 같다.
-            - \2. 프로그램이 실행되기 전에 전역객체가 만들어지고 Scope.전역공간에 등록된다. 이 코드에서는 비어있다. result main() 메소드가 생성되면서 
+            - \2. 프로그램이 실행되기 전에 전역객체가 만들어지고 Scope.전역공간에 등록된다. 이 코드에서는 비어있다. result main() 메소드가 생성되면서
             - \3. 이 코드에서는 언급되지 않았지만 main메소드가 객체가 생성되면서 메소드마다 가지고 있는 stack공간[0]에 지역변수 c1이 Object(MyClas1)으로 생성된다.
             - \4. main이 실행된다. 메소드의 stack공간이 Scope.지역공간에 push 된다. 결과, Scope는 클래스공간은 null이므로 전역공간 + main지역공간으로 이루어지게 된다. 따라서 Scope[0] = "c1"만 들고있는 1개 짜리 공간일 것이다.
             - \5. MyClass c1를 하게되면 ClassManager["MyClass1"].instantiate()가 되고, 이는 Object(MyClass1)를 만들면서 members가 MyClass1.methods를 link시키고, variables = MyClass1.variables에서 깊은복사하고, members는 variables를 link시킨다. 그러면 새로 만들어진 c1객체는 methods는 클래스의 것을 사용하되, variables는 클래스에서 복제된 자신만의 것을 갖는 상태로 출발하게 된다.
             - \5. c1.boo 가 수행된다. 이는 객체, c1으로 일단 메시지가 가는 것이다. c1은 Object, 객체. Object는 자신에게 msg가 왔을 경우, 클래스공간을 release하고 자신의 members를 link시킨다. (이미 자신이 등록되어있으면 무시된다). 결과 Scope는 [0] = c1, [1~n] = c1의 members로 이루어진 상태가 된다. 그리고 Scope에서 boo Method를 찾아서 반환한다.
-            - \6. 반환된 boo의 "()"가 수행된다. 이는 Method::call(args)와 같은 것이다. Method는 msg가 왔을 경우, 
+            - \6. 반환된 boo의 "()"가 수행된다. 이는 Method::call(args)와 같은 것이다. Method는 msg가 왔을 경우,
             - 문제점
               - 객체에 msg가 가지 않은 상태에서 함수에게만 msg가 가게 된다면 클래스공간이 업데이트 되지 않은 상태에서 지역공간에만 메소드stack공간이 추가될 것이다. 이게 가능한가?
               - 지역변수는 미리 만들어둔다? 그러면 초기화되지 않았는데 참조해버리는 경우는 어떻게 되나?
@@ -8221,7 +9140,7 @@ keys.push(returnKey)
           - for e in _subs
             - if found = e.find(needle)
               - return found
-      - Function은 execute("")가 되면 자신의 stack을 복제하여 scope의 stack 공간에 넣는다. (chain의 각 원소는 Bind<T>로 되어있다). 그리고 함수를 실행한다. 
+      - Function은 execute("")가 되면 자신의 stack을 복제하여 scope의 stack 공간에 넣는다. (chain의 각 원소는 Bind<T>로 되어있다). 그리고 함수를 실행한다.
       - 파서가 만들어놓은 코드 블럭이 담긴 Function의 실행부는, 함수 호출의 집합으로 이루어져있다. 함수호출은 3가지 값이 필요한데, 인자, 함수, thisptr 이다. 함수는 시스템에 유일하게 1개이므로 그냥 바인들로 문제없고 인자, thisptr은 그때그때 함수호출마다 "어느 객체가 thisptr인 함수호출인가" 에 의해서 변경되게 된다.
       - 이런 상황에서 퍼포먼스 최적화를 위해 최적화된 Bind을 정의한다. 이 Bind는 기존 Bind<T>의 일종이다. 처음 실행하면 cache값을 확인해서 -1 처럼 되어있다면 scope객체에 접근해서 주어진 이름으로 심볼을 찾아서 가지고 온다. 찾으려던 심볼이 확인되면 cache의 값을 scope의 인덱스로 업데이트하고 Bind는 심볼을 반환한다. 다음 접근요청이 들어오면 scope[cache]로 바로 심볼을 가져오고, 검증이 실패되었을때만 scope["foo"]처럼 심볼을 재 탐색해서 cache를 업데이트한다.
         - 결론적으로 scope["foo"] 와 같은 로드가 많이 걸리는 탐색작업을 "최초 1번"으로 제한 할 수 있다.
@@ -8235,7 +9154,7 @@ keys.push(returnKey)
           - 포인트는 1. 실행모드에서는 scope는 불필요한 데이터이다. 2. 재귀적으로 구성시켜야 한다. 3. 인스턴스별로 그 값이 달라야 한다.
           -  어떻게 구현할까?
             - 1안 lazy-초기화를 사용한다.
-              - 각 인스턴스는 요청을 받을때 member에다가 동적으로 값을 scope 쑤셔넣는다. scope의 기반이 되는 것은 owner로부터 받는다. 이 말은 owner(클래스, 혹은 메소드) 가 누구인지 알 고있어야 한다는 것이다. 
+              - 각 인스턴스는 요청을 받을때 member에다가 동적으로 값을 scope 쑤셔넣는다. scope의 기반이 되는 것은 owner로부터 받는다. 이 말은 owner(클래스, 혹은 메소드) 가 누구인지 알 고있어야 한다는 것이다.
               - owner에 대한 정의와 컨셉이 필요하다.
               - Scope Node::createScope() {
                 - Scope scope = getOwner().createScope();
@@ -8244,12 +9163,12 @@ keys.push(returnKey)
               - }
               - 매번 Scope값이 생성,채워져서 들어간다. 엄청난 퍼포먼스 loss가 예상되는데.
   - 3안 1안의 최적화 및 개선안
-    - 실행모드시에도 scope를 채우거나 빼내어가면서 실행을 한다. 모든 Statement들을 이 scope로부터 심볼에 접근하는 걸 대 원칙으로 한다. 
+    - 실행모드시에도 scope를 채우거나 빼내어가면서 실행을 한다. 모든 Statement들을 이 scope로부터 심볼에 접근하는 걸 대 원칙으로 한다.
       - IDE 모드(즉, 코드를 text를 input으로 보내어 compile, validate가 일어나는 과정) 에서는 코드의 변경이 많기때문에 getMember(String& name) 을 사용할 것이며, 이 함수는 scope에서 string 비교로 심볼을 찾는다.
       - 실행모드에서는 Interpreter가 getMember(String& name)을 getMember(int index)로 최적화시킨다. **따라서 Scope는 매 실행시마다 항상 동일한 인덱스가 나오도록 해야한다.**
       - Scope는 3개의 space로 이루어져있다.
         - \1. LocalSpace
-      - 메소드에서 같은 클래스의 다른 메소드를 부르는 경우, 만약 "지역변수는 LocalSpace에 선언될때마다 들어간다" 라는 것이면 
+      - 메소드에서 같은 클래스의 다른 메소드를 부르는 경우, 만약 "지역변수는 LocalSpace에 선언될때마다 들어간다" 라는 것이면
         - \1. 매번 객체생성해야한다.
         - \2. LocalSpace에 push, pop을 해야 한다. 매 메소드마다. 이건 꽤나 큰 loss일 수 있다.
       - 만약 메소드가 LocalSpace를 각각 들고 있고, 여기에 지역변수들이 이미 들어있다면 어떨까? push, pop은 인스턴스를 빼고 넣는게 아니라 단순히 이 원소를 사용한다 사용하지 않는다는 표시만 하는 거라면.
@@ -8260,14 +9179,14 @@ keys.push(returnKey)
 #### Scope에서 멤버 중복제거
 
 - 재귀메소드를 호출한다고 하자. 그러면 Method::getMembers()가 계속해서 쌓일 것이다. 어떻게 해결할까?
-- 쌓이지 않는다. 
-- x 1안 me로 접근 한 경우에만 Method::getMembers()가 쌓인다. 
+- 쌓이지 않는다.
+- x 1안 me로 접근 한 경우에만 Method::getMembers()가 쌓인다.
   - Method에는 이 Object에 대한 것 + 메소드 인자 + "me" 변수 만을 채워놓는다.
   - 메소드가 재귀호출되면 me 변수는 중복되어서 local에 들어갈 수 있다. scope는 [0]부터 탐색해서 중복무시하고 가장 먼저 매칭되는 것만 반환한다.
   - "만약 한 Space에서 2가지 이상의 식별자가 발견되면 모호성의 오류가 발생된다." 이거 때문에 me도 중복되어서는 안된다. "this" 도 마찬가지다.
-- 2안 this, me만 특별 취급한다. 
+- 2안 this, me만 특별 취급한다.
   - Object는, 자신이 등록되면 this, me를 scope에 setThis(), setMe()로 얻어놓는다.
-  - Scope는 저 함수가 불려지면, 
+  - Scope는 저 함수가 불려지면,
     - if(it.isExists())
       - if(_this.isBinded()
         - _this.bind(it)
@@ -8293,7 +9212,7 @@ keys.push(returnKey)
         - if msg == execute
           - execute()
         - else
-          - return 
+          - return
       - execute()
         - n = scope[2].getLength()
         - scope[2].push(args)
@@ -8318,7 +9237,7 @@ keys.push(returnKey)
 
 - scope에 보이고 빼는 건 자신이 정의된 소유자Method가 담당한다.
 
-  
+
 
 #### Scope는 Reversed-Stack, 클래스멤버는 Stack으로 구성해야 한다.
 
@@ -8348,7 +9267,7 @@ keys.push(returnKey)
 
 - 가장 중요한 것은 월드 자체는 현재 바이너리 실행모드인지 알아서는 안된다는 것이다. 똑같이 Statement를 실행할 뿐이지만 최적화Statement에서는 get(name)를 사용하지 않음으로써 속도가 개선될 뿐이다.
 - 따라서 실행모드와 IDE모드라는 것은 엄연히 존재하지 않는며, 구분하지 않는다. 여기서는 편의상 임시로 사용하는 용어다.
-- scope는 양쪽 모드에서 항상 구축이 되어야 한다. 그래야 지역변수가 참조가 될 수 있다. 
+- scope는 양쪽 모드에서 항상 구축이 되어야 한다. 그래야 지역변수가 참조가 될 수 있다.
 - 단, 바이너리 최적화가 이루어지면 scope.get("변수이름") --> scope.get(n)으로 탐색속도가 올라가는 것 뿐이다.
 - 고찰내용
   - 가장 중요한 것은 월드 자체는 현재 바이너리 실행모드인지 알아서는 안된다는 것이다. 똑같이 Statement를 실행할 뿐이지만 최적화Statement에서는 scope를 사용하지 않음으로써 scope 구현이 빠지게 되어야 한다.
@@ -8385,25 +9304,25 @@ keys.push(returnKey)
 
   - getMember(const String& name)으로 Scope객체에서 심볼을 찾는다. 따라서 Scope의 LocalSpace에 지역변수가 들어만 가있으면 된다.
   - 지역변수 생성시 LocalSpace에 변수를 push하며, 함수가 끝나면 Method는 LocalSpace를 release() 해버리면 된다. (자기껏만)
-  - 블록문이 끝나면 LocalSpace의 해당 element만 release된다. 
+  - 블록문이 끝나면 LocalSpace의 해당 element만 release된다.
   - LocalSpace는 Array<Bind<Object>>가 된다. (Reference나 Object가 올 수 있다.
 
 - 실행모드일 경우
 
-  - 컴파일러는 코드를 완전히 분석, 실행하여 이 시점에서 생기는 지역변수가 몇번 index의 LocalSpace에 들어가는지 파악해야 한다. 
-  - 그렇게 되면, 
+  - 컴파일러는 코드를 완전히 분석, 실행하여 이 시점에서 생기는 지역변수가 몇번 index의 LocalSpace에 들어가는지 파악해야 한다.
+  - 그렇게 되면,
     - 지역변수를 생성하는 Statement는, push가 아니라 setElement를 쓰도록 해서 탐색 속도를 낮추고 메모리 점유를 줄일 수 있다.
     - 심볼 접근시 문자열 비교가 아니라 getElement(index)로 하면 더 빨라진다.
   - 그 이외의 블록문이 끝나면 LocalSpace에서 remove하는 것, 함수가 끝나면 Method는 LocalSpace를 release() 해버리는 것(자기껏만)은 동일하다.
 
 - 고찰내용
 
-  - 메소드에서 같은 클래스의 다른 메소드를 부르는 경우, 만약 "지역변수는 LocalSpace에 선언될때마다 들어간다" 라는 것이면 
+  - 메소드에서 같은 클래스의 다른 메소드를 부르는 경우, 만약 "지역변수는 LocalSpace에 선언될때마다 들어간다" 라는 것이면
     - \1. 매번 객체생성해야한다.
     - \2. LocalSpace에 push, pop을 해야 한다. 매 메소드마다. 이건 꽤나 큰 loss일 수 있다.
   - 만약 메소드가 LocalSpace를 각각 들고 있고, 여기에 지역변수들이 이미 들어있다면 어떨까? push, pop은 인스턴스를 빼고 넣는게 아니라 단순히 이 원소를 사용한다 사용하지 않는다는 표시만 하는 거라면.
   - 지역변수는 블록문이 있다면 중간에 소멸되기도 해야 한다.
-    - 최적화가 되었을때 인덱스는 항상 유지가 되어야 한다. getMember(index)로 접근할 것이기 때문이다. scope에서 배열은 고정되어야 하며, 원소들은 삭제가 일어나서는 안된다. 
+    - 최적화가 되었을때 인덱스는 항상 유지가 되어야 한다. getMember(index)로 접근할 것이기 때문이다. scope에서 배열은 고정되어야 하며, 원소들은 삭제가 일어나서는 안된다.
     - LocalSpace[n].release(); 를 하도록 한다.
     - 블록문이라는 클래스를 만듬으로써 해결한다.
   - x 1안 Array로 member를 구성해둔다. 그리고 리사이클한다
@@ -8454,29 +9373,29 @@ keys.push(returnKey)
                 - device = 0;
               - }
             - }
-          - --> 고찰을 통해서 지역변수 리사이클은 폐지되었다. 이는, 사용자가 C++ 클래스나 메소드 안에서 지역변수를 만들때는 "생성자 이벤트"를 월드에서 호출할 방법이 없다. 사용자가 클래스를 정의할때 생성자에 "내가 최종 구체클래스라면, 생성자이벤트를 호출하라" 라는 걸 만들 수 밖에 없다. 
+          - --> 고찰을 통해서 지역변수 리사이클은 폐지되었다. 이는, 사용자가 C++ 클래스나 메소드 안에서 지역변수를 만들때는 "생성자 이벤트"를 월드에서 호출할 방법이 없다. 사용자가 클래스를 정의할때 생성자에 "내가 최종 구체클래스라면, 생성자이벤트를 호출하라" 라는 걸 만들 수 밖에 없다.
           - --> 혹은 사용자는 소멸자 코드를 "진짜 ~소멸자()"와 "release() 함수 안에서 state를 통해서 소멸자여부를 판단해서 수행하는 것"  2개로 나누는 방법도 있으나, 이것도 사용성이 번거롭기는 마찬가지다.
     - Container
     - Cell : Container
     - TCell<Node> : Cell
       - getElement에서는 캐스팅 하지 않음. insert, remove에서만 실시함.
   - v 2안 Array로 멤버를 구성한다. 리사이클은 하지 않는다.
-    - IDE모드냐 최적화모드냐에 따라서 동작이 변한다. 
+    - IDE모드냐 최적화모드냐에 따라서 동작이 변한다.
     - IDE 모드일 경우
       - getMember(const String& name)으로 Scope객체에서 심볼을 찾는다. 따라서 Scope의 LocalSpace에 지역변수가 들어만 가있으면 된다.
       - 지역변수 생성시 LocalSpace에 변수를 push하며, 함수가 끝나면 Method는 LocalSpace를 release() 해버리면 된다. (자기껏만)
-      - 블록문이 끝나면 LocalSpace의 해당 element만 release된다. 
+      - 블록문이 끝나면 LocalSpace의 해당 element만 release된다.
       - LocalSpace는 Array<Bind<Object>>가 된다. (Reference나 Object가 올 수 있다.
     - 실행모드일 경우
-      - 컴파일러는 코드를 완전히 분석, 실행하여 이 시점에서 생기는 지역변수가 몇번 index의 LocalSpace에 들어가는지 파악해야 한다. 
-      - 그렇게 되면, 
+      - 컴파일러는 코드를 완전히 분석, 실행하여 이 시점에서 생기는 지역변수가 몇번 index의 LocalSpace에 들어가는지 파악해야 한다.
+      - 그렇게 되면,
         - 지역변수를 생성하는 Statement는, push가 아니라 setElement를 쓰도록 해서 탐색 속도를 낮추고 메모리 점유를 줄일 수 있다.
         - 심볼 접근시 문자열 비교가 아니라 getElement(index)로 하면 더 빨라진다.
       - 그 이외의 블록문이 끝나면 LocalSpace에서 remove하는 것, 함수가 끝나면 Method는 LocalSpace를 release() 해버리는 것(자기껏만)은 동일하다.
 
 - LocalSpace는 어떻게 관리되는가?
 
-  블록문 으로 해결한다. 
+  블록문 으로 해결한다.
 
   - 1안 Scope에서 Unique로 관리. 이경우 메소드는 Scope를 사용하는 관계가 된다.
     - 1안 메소드는 시작전에 esp를 저장하듯이 pop을 해야 하는 index를 알고 있어야 한다.
@@ -8484,12 +9403,12 @@ keys.push(returnKey)
       - LocalSpace를 Cell<Bind<Node>>로  구성한다.
       - 블록문이 끝나면 setElement(index, NULL)로 만든다. Cell이라도 sort는 일어나지 않는다.
       - Method가 끝나면 Method는 처음 시작시 알아둔 LocalSpace의 length로 복원한다.
-  - 2안 매 메소드호출에서 
+  - 2안 매 메소드호출에서
 
 - 더 최적화할 수 있다.
 
   - Statemenet의 심볼이 LocalSpace인지, 어느 객체의 것인지 정해놓으면 더 빨라질 수 있다.
-  - LocalSpace::pop()은 심볼을 진짜 삭제하는 것이 아니라 
+  - LocalSpace::pop()은 심볼을 진짜 삭제하는 것이 아니라
 
 
 
@@ -8497,7 +9416,7 @@ keys.push(returnKey)
 
 #### scope에서의 식별자 검색과 모호성의 오류의 기준
 
-- 인터프리터는 파싱하면서 식별자를 Scope에게 질의한다. 
+- 인터프리터는 파싱하면서 식별자를 Scope에게 질의한다.
 - Scope는 LocalSpace, ObjectSpace(me, this), GlobalSpace 3개의 영역을 갖고 있고, 각 영역에 식별자와 매칭되는 객체를 찾을때까지만 탐색한다.
 - 만약 LocalSpace에 객체를 찾지못하면 ObjectSpace에 질의하고, ObjectSpace에서도 찾지못하면 GlobalSpace에서 질의한다.
 - 만약 한 Space에서 2가지 이상의 식별자가 발견되더라도 블록문 안에 있는 경우에는 예외적으로 허용되기때문에 존재할수 있다.
@@ -8518,7 +9437,7 @@ keys.push(returnKey)
           - _koo() // 에러. _koo는 me._koo()가 될텐데, me는 _goo이며 아무런 nested method를 갖고 있지 않다. _koo()는 foo()가 갖고 있다.
   - MyClass cls
   - cls.foo()
-- 1안 space별로 별도로 가져간다. 
+- 1안 space별로 별도로 가져간다.
   - GlobalSpace  & ClassSpace : isConsumable(msg) 가 2개 이상 있으면 안됨
   - LocalSpace : 있어도 됨. 맨 앞에거 기준으로 찾음.
   - Scope의 space는 container로 구성되어있으며 global과 classspace는 각각 container가 다르다(array vs chain) 따라서 이 둘을 합칠 수는 없으므로 별도의 class space라는 걸 만들지는 않는다. scope.validate()를 하거나 별도의 경로로 scope가 감지하도록 한다.
@@ -8531,7 +9450,7 @@ keys.push(returnKey)
 
 
 
-#### Scope_중_지역변수와_함수명의_충돌문제 
+#### Scope_중_지역변수와_함수명의_충돌문제
 
 - 지역변수는 a.foo 처럼 접근하는 것이며 함수는 a.foo(void)로 접근하는 것이다. 표기가 다르므로 충돌이 일어나지 않는다. --> #객체의_함수_접근이_이름만_가지고는_불가능하다_왜냐하면_오버로딩을_지원하기_때문이다 참조.
 
@@ -8543,7 +9462,7 @@ keys.push(returnKey)
 
   - 반면 변수명과 클래스명은 모호해질 수있기에 이것은 100% 에러일 것이다. 또한, 반면 변수명끼리는 겹처도 무시를 해주지 않는가. 대표적으로 블록문안에서의 중첩된 변수명의 경우. 어떤때는 중복이라며 에러를 내보내야 하고, 어떤때는 중복이라도 그냥 가야한다. 이 컨셉을 정해야 한다.
 
-    
+
 
 
 
@@ -8552,12 +9471,156 @@ keys.push(returnKey)
 ### 복제 상속
 접근자  오버라이딩
 
+```cpp
+import console
+
+def app
+    // 중첩클래스(nested class)
+    def Plant
+    	Plant(): console.out("default ctor")
+    	Plant(#str new): _name = new
+
+    	_name = "Plant"
+        str getName(): _name
+        // _age = 1 // Leaf에도 _age가 있기 때문에 Leaf에 중복정의에러 발생한다.
+        int getAge(): _age
+
+	// 메소드 재정의Overriding:
+	//  * 함수 명세signature가 같은 경우 overriding으로 판단한다. (= Java)
+	//  * 함수명과 인자리스트(즉, header) 까지만 일치할 경우, 메소드 은닉hiding 된다.
+    def Plant Leaf
+		// 생성자constructor: <타입명> ()
+		// 객체가 생성될때 호출되는 메소드다. 다음의 규칙을 따른다.
+		//	1. 생성자가 1개도 서술하지 않은 경우 인터프리터는 기본생성자를 만든다.
+		//	2. inline 초기화가 끝난 뒤, 생성자가 호출된다.
+		//	3. 부모클래스의 생성자를 명시적으로 호출할 수 있다.
+		//	4. 부모클래스의 생성자를 명시하지 않으면 부모의 기본생성자가 호출된다.
+		//	5. 부모생성자 호출 구문은 반드시 생성자 메소드 처음에 나와야 한다.
+
+    	Leaf() {} // 별다른 서술이 없어도 인터프리터는 부모클래스Super의 기본생성자를
+    			  // 호출한다.
+		Leaf(int new) // 생성자에는 재정의 재지정을 넣을 수 없다. 순서는 정해져있다.
+			Super("SuperLeaf") // 맨 앞에 와야 한다.
+			age = new //
+
+        str getName(): "Leaf" // overriding
+        _age = 3.5
+        float getAge(): age // 반환형이 다르므로 은닉이다.
+
+    void main()
+        p = Plant()
+        if 1
+            p = Leaf(3)
+       	console.("name=" + p.getName() + ", age=" + p.getAge())
+
+// 결과: name=Leaf, age=3
+```
+
 
 
 
 
 
 ### 확장
+
+```cpp
+import console
+
+// 타입 확장:
+// worldlang은 이미 정의된 타입의 인터페이스를 확장(추가)할 수 있다.
+// 이 모든 과정은 반드시 컴파일 타임에 확정되야 하며, 다음의 규칙을 따른다.
+//	1. 총 3가지 방법이 있다. 상속(이전 섹션 참조), 타입확장문법, 인스턴스 확장문법
+//	2. 확장문법은 크게 동일하며, 단, 아주 약간의 변화가 있다.
+//		<타입> {
+//			멤버(메소드, 변수) 정의
+//		}
+//		(즉, 이제껏 클래스 정의와, 메소드 안에서 변수 정의 모두 타입 확장문법이다.)
+//
+//	2.	클래스 확장class-extension: +<클래스>
+//		미리 정의되어있는 클래스에 새로운 인터페이스를 주입한다.
+//		다음의 규칙을 따른다.
+//			a. 주입한 인터페이스 안에서 protected 멤버에 접근할 수 없다.
+//				(캡슐화encapsulation를 깰 수 없기 때문이다.)
+//			b. 은닉되지 않는다.
+//			c. overriding 되지 않는다.
+//
+//	3.	메소드 또한 타입이다. 따라서 메소드 또한 메소드를 확장할 수 있는데,
+//		이를 클로져라고 한다. (추후 서술)
++str
+	str(#MyClass my) // 생성자
+		console.out("str(#MyClass)")
+
+MyClass
+	// 4. 인스턴스-확장Instance extension: <멤버변수 정의> { <멤버 정의> }
+	// 지정한 1개의 객체의 타입을 확장한 후, 즉시 정의한다.
+	// 확장된 타입은 재사용할 수 없다.
+	str name // 멤버변수 name 정의
+        res set(#str new) { // overriding
+        	console.out("name will be changed to " + new)
+        	name = new // 에러. 컴파일은 가능하나, 무한 재귀 호출 된다.
+        	return ok
+
+	// 위의 str name {} 과 동일하다.
+	str name1
+    	// 위의 res set(#str new)=>과 동일하다.
+    	set=>: console.out("name will be changed to " + new)
+
+    void print(): name1 = "hello"; console.out ("void print() : " + name1)
+    int print(int a): console.out("int print(int)")
+    //	name과 name1은 같은 set 메소드를 지니고 있으나, 이 둘은 별개의 메소드다.
+
+	A // 여태까지의 class 정의도 사실은 확장문법이다.
+		void $print()
+			console.out("MyClass.A.print()") // A는 이제 print()를 갖게되었다.
+			// 위의 str name1 케이스와 다를께 없다.
+
+
+	// type변수:
+	// type은 class들을 담을 수 있는 메타클래스 타입이다.
+	type $C
+		get: return A
+
+
+MyClass.A a // 전역객체 a
+MyClass.B b
+// MyClass.C c // 컴파일에러: MyClass.C는 변수다.
+type[] types = [MyClass().B, MyClass.C, MyClass.A]
+
++MyClass
+	// int name1 // 컴파일에러 Rule#2: 중복 정의
+	// float print(): console.out("float print()") // 컴파일에러 Rule#2: void print().
+	// void print()와 float print()를 피호출자callee는 구분 할 수 없다.
+	float print(float a): console.out("name=" + str(this) + (str) this)
+
+
+MyClass MyClass2
+	(age, grade)=> (int, float) print(float a)
+		console.out("MyClass.print(float) has been extended.")
+		return (age, grade)
+
+	/* 다음과 동일하다
+    (int, float) print(float a)
+    	(int age, float grade) = me.Super(a)
+    	console.out("MyClass.print(float) has been extended.")
+    	return (age, grade)
+    */
+
+app
+	void main()
+		MyClass me
+		me.print()
+		me.print(3.5)
+
+/* 결과:
+	will be changed to hello
+	void print() : hello
+	str(#MyClass)
+	str(#MyClass)
+	name=hellohello
+	MyClass.print(float) has been extended.
+*/
+```
+
 
 #### 1
 -   이미 존재하는 클래스A에 메소드, 멤버변수를 추가하는, 클래스의 내용물을 add 하는 기능이다. 주로 연산자 오버로딩을 정의할때 사용한다.
@@ -8572,7 +9635,7 @@ keys.push(returnKey)
         -   Node casted = [super.to](http://super.to/)(cls)
         -   if(casted) return casted
             -   --> return if([super.to](http://super.to/)(cls))
-        
+
         -   if(cls == COut)
             -   return COut(age);
     -   MyMyModule +(MyMyModule rhs)
@@ -8667,16 +9730,16 @@ keys.push(returnKey)
 #### 타입 확장문법
 
 ```cpp
-def A  
- void foo()  
- _name = ""  
+def A
+ void foo()
+ _name = ""
 
-//...  
-//...  
+//...
+//...
 
-//def +A := 5 : X 객체 초기화 구문은 확장시 적을 수 없다.  
-def +A // "+". 상속 정보는 따로 적을 수 없다.  
- //void foo() X. overriding이 아니라, 재정의다.  
+//def +A := 5 : X 객체 초기화 구문은 확장시 적을 수 없다.
+def +A // "+". 상속 정보는 따로 적을 수 없다.
+ //void foo() X. overriding이 아니라, 재정의다.
  str getName(): _name // O : protected 변수도, 확장후, 제어할 수 있다.
 ```
 
@@ -8718,7 +9781,7 @@ def A<T>
 
 ##### [v] 2안 바인딩할때, 별도의 클래스들을 뽑아낸다.
 * 지금까지 지식 remind
-	* 컴파일은 syntax parsing이 되었느냐를 의미한다. 
+	* 컴파일은 syntax parsing이 되었느냐를 의미한다.
 	* Binding은 각 객체에게 질의하고, 객체는 binding 여부를 반환한다.
 	* optimizing은 binding을 다시 수행하면서, scope["a"]를 scope[2] 료 교체하	거나하는 행위이다.
 
@@ -8729,10 +9792,10 @@ def A<T>
 	* 미완성객체는 컴파일시 각 구문과 멤버변수에서 T가 사용한 곳마다 구멍을 뚫어놓는다.
 		* 이 구멍은, Obj가 들어가야할 곳에 ParameterizedObj라는 객체를 생성해둔다.
 		* ParameterizedObj는 사용자가 원했던 <T>가 0번째 인자이므로, "0" 이라는 int값만 기록해둔다.
-	* binding을 하기 위한 API를 제공해야 한다. 
+	* binding을 하기 위한 API를 제공해야 한다.
 		* binding API보다는 하위 클래스여야 한다.
 
-	* Obj create(파라메터라이즈드 타입리스트) API를 제공한다. 
+	* Obj create(파라메터라이즈드 타입리스트) API를 제공한다.
 		* 미완성객체는 자기자신을 복제하고, 복제품의 ParameterizedTypeList에 주입된 인자를 할당한다.
 
 * 컴파일러는 worldlang syntax를 통해 A<int>를 보면, scope["A"].create("int")로 A<int>를 만들어낸다.
@@ -8771,7 +9834,7 @@ def A<T>
 		* 객체의 멤버 "T" 는 리플렉션용으로 그대로 놔두고, 이 객체는 더 이상 미완성이 아니라는 걸 표시해준다.
 	* 메소드라면 메소드 내의 statement를 검증하고
 	* Statement라면 현재 scope에서 주어진 member를 찾을 수 있는지 검사하고
-	* 
+	*
 
 
 
@@ -8837,7 +9900,7 @@ private:
   12. Optimization으로 코드를 더 간략하게 만든다.
   13. 런타임시 genericManagedObject는 class scope를 주입할 시점에 orgs의 값을 같이 넣는다.
 
- 
+
 
 * 결과
 
@@ -8847,7 +9910,7 @@ private:
 
   * 런타임에도 T에 항상 접근을 해야 한다.
 
-    
+
 
 * 엣지 케이스 도출
 
@@ -8923,9 +9986,158 @@ private:
 
 ### 오버라이딩 재지정 연산자
 
+```cpp
+import console
+
+def Person
+	int print(int a): console.out("print(int a)"); return 0
+	float print1(): console.out("print1()"); 2.5
+	(int age, float grade) print2(): console.out("print2()"); return (24, 3.5)
+
+def Person Student
+	int print(int a)
+		ret = me.Super(a) // me.Super(a)는 Person.print(a)와 같다. (추후 서술)
+		console.out("Student.print(int a)")
+		return ret
+
+    // 재정의 재지정Redirection지정자: (반환값 이름=>) <함수 명세signature> (=>)
+    // 메소드 재정의overriding의 실행 순서를 쉽게 표현할 수 있다.
+    // 메소드 재정의는 원본 메소드Supermethod가 있던 자리에 다른 메소드로
+    // 덮어쓰는 것으로서, 재정의 한 메소드에서 원본 메소드를 호출 하게 되면
+    // 코드를 "추가" 하는 구현이 된다.
+    // 이때 재지정 연산자는 원본 메소드를 시작하기전, 시작 한 후 2 곳에 걸쳐서
+   	// 지정할 수 있다.
+
+    // 다음의 규칙을 따른다.
+    //	1. overriding 메소드에만 사용한다.
+    //	2. => 는 "기반 클래스의 오버라이딩된 메소드로 이행"을 의미한다.
+    //	   ( "me.Super(인자리스트)" 와 같다.)
+	//	3. => 이 함수명에 대해 앞인가 뒤인가로 수행 순서를 결정한다.
+	//        ( "=>" 반대편에 Super 가 붙는다고 생각하면 이해가 편하다.)
+	//        e.g. => 이 함수명 뒤에 붙는 경우: 내꺼 실행 후, 부모꺼 실행.
+	//                        " 앞        "      : 부모꺼 실행후, 내꺼 실행.
+
+	// 이를 활용하면, 다음처럼 줄일 수 있다.
+    ret => float print1()	// 재지정이 앞에 있으므로, 부모메소드가 먼저 호출된다.
+    	console.out("Student.print1(), ret=" + ret)
+    	return ret
+
+	// 재지정이 뒤에 있는 경우, 메소드가 끝나면 주어진 인자리스트로
+	// 그대로 부모메소드를 호출하고, 그 결과를 반환한다.
+	(int age, float grade) print2() =>: console.out("Student.print2()")
+    /* 이 코드는 다음과 동일하다.
+    	(int age, float grade) print2()
+    		console.out("Student.print2()")
+    		return print2()
+
+       그리고, 다음과 같이 해도 된다.
+    	(int, float) print2() =>
+    		if true
+    			return (0, 0.0)
+
+    		// 여기에 도달하면, 부모메소드의 반환값이 나간다.
+    */
+
+
+def app
+	void main()
+		s = Student()
+		console.out("print()=" + s.print(1))
+		console.out("print1()=" + s.print1())
+		(int a, float g) = s.print2()
+		console.out("print2()=" + a + ", " + g)
+
+/* 결과:
+	print(int a)
+	Student.print(int a)
+	print()=0
+	print1()
+	Student.print1(), ret=2.5
+	print1()=2.5
+	Student.print2()
+	print2()
+	print2()=24, 3.5
+*/
+```
+
+
+
 
 
 ### 클로저
+
+```cpp
+import console
+
+app
+	str(void) foo()
+		// 클로져closure: <메소드 안에서 메소드를 정의한다.>
+		// 메소드를 확장한 것을 클로져라고 한다.
+		// 클로져는 관련 요소factor들이 캡처capture를 통해 내부로 함축한다.
+		// 인스턴스 메소드의 한 종류이나, 사용시에는 static 메소드처럼
+		// 사용하게 되며, 일종의 외부로 늘어진 인터페이스로 만드는 것이 목표이다.
+		//
+		// 클로져는 다음의 특성을 갖는다.
+		//	1. 자신을 포함하는 메소드outer-method와 지역변수local-scope를 공유한다.
+		//	2. 중괄호 사용을 권장하지 않는다.
+		//		앞서 서술했듯, 블록문에는 중괄호 사용이 원칙이다.
+		//		하지만, 클래스와 그 멤버들direct members에게만 중괄호가 필수이며,
+		//		그 이외의 경우인 메소드 안쪽에서는 편의를 위해 사용이 권장되지 않는다.
+		//		메소드 안쪽에서는 편의를 위해 사용하지 않을 것를 권장한다.
+		//	3. 	인터프리터는 해당 클로져의 구문을 파악하여 어떤 식별자를 캡처capture
+        //		해야하는지 자동으로 파악한다.
+		//	4.	클로져에 의해 캡쳐된 식별자는 클로져의 라이프 사이클과 동기화 된다.
+		//		(즉, 지역변수일지라도 소멸되지 않는다)
+		int sum = 0
+		int add(int a, int b) // 클로져.
+			sum = a + b // 클로져는 지역변수를 공유한다.
+
+
+		// 함수 위임자delegator: <반환형>(<타입리스트>)
+		// 메소드 또한 객체1st-class-citizen이며, 이에 대한 refer로 다룰 수 있다.
+		//	1. 	refer와 메소드간 타입은 정확하게 일치해야 한다.
+		//		묵시적형변환과 관계없다. 단, 반환된 값은 물론 묵시적 형변환이
+		//		적용될 수 있다.
+		//			e.g.	int foo(int) {}
+		//					bool(int) fdelegator = foo // 컴파일 에러.
+		//					int(int) fdel1 = foo
+		//					bool res = fdel1(35) // ok.
+		//	2.	복수의 메소드를 가리킬 수 있으며, +=, -= 연산자를 사용한다.
+		//	3.	위임자를 호출시, 가리키는 모든 메소드가 호출된다
+		//	4.	메소드를 -= 제거할때, 클로저에 내포된 객체도 동일해야 제거된다.
+		//	5.	배열로써, 소유한 메소드를 순회할 수 있다.
+		int(int, int) getClosure(): add
+
+		int(int, int) fdelegate = int dummy(int a, int b) // 메소드에 대한 refer
+			console.out("a=" + a + ", b=" + b)
+
+		fdelegate += getClosure()
+		// float(int, int) fptr1 = getClosure() // 컴파일 에러.
+		// int(int, float) fptr2 = getClosure() // 컴파일 에러.
+		if fdelegate(3, 5) == getClosure()(3,5)
+        	MyClass // 중첩클래스.
+        		int count = 0;
+            	str(void) print(int(int, int) fdel)
+                	str to_return() // 클로져를 반환하고 있다.
+                		"answer to life the universe and everything is " + fdel(26, 16)
+
+        	return MyClass().print(fdelegate)
+
+        // else가 없으므로 명시적/묵시적인 return은 발생하지 않으며,
+        // 반환형 str(void)의 기본값인 null이 유지된다.
+
+
+    void main()
+		str(void) fptr = foo()
+		fptr()
+        console.out("sum is " + sum)
+
+/*	결과:
+	a=3, b=5
+	answer to life the universe and everything is 42
+	sum is 42
+*/
+```
 
 #### 중첩메소드를 람다로 발전 시킬 수 있는가?
 
@@ -8939,11 +10151,11 @@ private:
       - _nested() // 빌드에러
       - {
         - int age = 5
-        - _nested() 
+        - _nested()
       - }
       - {
         - float age = 3.5
-        - _nested() // 타입 확정이 무너진다. 
+        - _nested() // 타입 확정이 무너진다.
       - }
 - 2안 이제 람다 문법과 설계가 정해졌다
   - class A
@@ -8970,7 +10182,7 @@ private:
   - 따라서 호출 우선순위는 ObjectSpace 보다 위이며, LocalSpace보다는 아래다.
   - 외부 개발자(Native포함)나 외부 클래스, 모듈에서는 절대 중첩메소드를 접근이 불가능하다.
 
-- Method는 LocalSpace에서 관리되므로 Ownee Method에서 owner 메소드에서 선언된 지역변수를 참조 할 수 있다. == closure 
+- Method는 LocalSpace에서 관리되므로 Ownee Method에서 owner 메소드에서 선언된 지역변수를 참조 할 수 있다. == closure
 
 - 고찰내용
 
@@ -8986,7 +10198,7 @@ private:
 
   - v getName()도 메소드다. 그렇다면 getMethod.getMethod.getMethod.getMethod.... 도 가능한거 아니냐.
 
-    무한 루프 없음. 증명됨. 
+    무한 루프 없음. 증명됨.
 
     - World는 메시지 기반.
     - 메소드는 msg를 직접 처리할 수 있는 무언가이다. Object는 target으로 이용되거나 msg를 전달할뿐 자기가 msg를 처리하지는 못한다.
@@ -8998,8 +10210,8 @@ private:
       - MyFoo my; // 이시점에서는 아무런 초기화도 일어나지 않음.
         - my.getMember() 호출 --> getMember가 처음 호출이니 getClass().getMembers()를 불러서 chain시도 --> TClass<MyFoo>().getMembers()가 처음 불러진 경우 MyFoo::onInitializeMethods() 호출 --> MyFoo::onInitializeMethods()는 Super::onInitializeMethods() += Method<print>() 를 append해서 반환함. --> TClass<MyFoo>는 독자적인 Method<print>() 객체를 갖게 됨 --> MyFoo 객체는 TClass<MyFoo>의 멤버를 chain함. 즉 MyFoo가 갖고있는 Method<print>는 TClass<MyFoo>의 것임. TClass<MyFoo>가 갖고 있는 Method::getName() Method객체도 TClass<MyFoo>만의 것임.
       - my.getName(void).getName(void) 를 한 경우
-        - my.getName(void)는 사실상 TClass<MyFoo>가 독자적으로 갖고있는 Method(getName)를 반환함. --> .getName(void)를 하면 이 Method(getName)은 처음으로 getMembers()가 불러졌으므로 TClass<Method>::getMembers()를 호출함 --> 결과적으로 TClass<Method>에 독자적인 Method<getName>()객체가 들어가게 됨. 
-      - 여기서 이 반환값에 다시 .getName(void)가 호출한다면? 
+        - my.getName(void)는 사실상 TClass<MyFoo>가 독자적으로 갖고있는 Method(getName)를 반환함. --> .getName(void)를 하면 이 Method(getName)은 처음으로 getMembers()가 불러졌으므로 TClass<Method>::getMembers()를 호출함 --> 결과적으로 TClass<Method>에 독자적인 Method<getName>()객체가 들어가게 됨.
+      - 여기서 이 반환값에 다시 .getName(void)가 호출한다면?
         - TClass<Method>::getMembers()에 들어있는 Method<getName>은 getMembers가 호출된 적이 없으므로 TClass<Method>::getMembers()를 호출 함 --> 결과 자기자신이 들어있는 Members를 chain함.
         - 도식화하면 이런거임
         - Method::getMembers() --> TClass<Method>::getMembers()
@@ -9022,7 +10234,7 @@ private:
                 - Super()
             - class Object
               - Object()
-                - 
+                -
             - class TClass<Foo>
               - TClass<Foo>()
                 - Super()
@@ -9073,7 +10285,7 @@ private:
                 - me.getName()
               - void _print(string msg)
                 - return Console.println("msg = " + msg);
-          - **이 관점은, 중첩메소드는 Method에 속한 것이 아니라 scope의 관점에서 일시적으로 Object에 추가되었다가 빠지는 것**. 라고 보는 것이다. 즉 중첩메소드는 Method의 멤버가 아니다. 단지 Method는 별도의 중첩메소드용 배열을 들고 있다가 자신이 scope에 등록될때 이 배열을 localspace에 얻는것에 불과하다. 따라서 이 메소드에 들어온 순간에만 중첩메소드들이 visible해진다. 
+          - **이 관점은, 중첩메소드는 Method에 속한 것이 아니라 scope의 관점에서 일시적으로 Object에 추가되었다가 빠지는 것**. 라고 보는 것이다. 즉 중첩메소드는 Method의 멤버가 아니다. 단지 Method는 별도의 중첩메소드용 배열을 들고 있다가 자신이 scope에 등록될때 이 배열을 localspace에 얻는것에 불과하다. 따라서 이 메소드에 들어온 순간에만 중첩메소드들이 visible해진다.
           - 각 중첩메소드들의 소속은 어디까지나 Object이다. 따라서 저 중첩메소드들만 LocalSpace 영역에 살짝 올라간다.
           - 충돌을 방지하기 위해서 중첩메소드는 private다. 즉 앞에 _를 붙이게 된다. 그러면 getName() 을 중복 정의해서 충돌되지는 않을 것이다. 이는 사용자가 public 메소드를 메소드 안에 정의하게 하는 것을 의례 사용하지 못하도록 막으려는 것이다. 중첩메소드는 어디까지나 "요 함수 내에서만 작게 쓰이고 싶어" 를 위해서 나온것이지, 외부 함수까지 메소드 안에 쓰게 되면 foo.print.getAge() 처럼, 메소드의 의의가 사라지게 된다.
           - 그리고 이는 C++의 중첩클래스와 완전히 궤를 같이한다. scope의 문제로 만드는 것이다. scope를 제외하면 외부에서 이 함수를 접근할 방법이 없으며, 순간적으로 사용되고 그 외에는 사라진것 처럼 보인다. 작은 scope 내에서 반복 작업을 reuse하는 용도로만 사용되며, 메소드 안에 속한 메소드가 되지 않게 한다.
@@ -9086,7 +10298,7 @@ private:
 
 
 
-#### Delegator와 closure는 다른 것이다. 
+#### Delegator와 closure는 다른 것이다.
 
 - Delegator는 메소드들을 가리키는 것. closure는 지역변수를 내포할 수 있는 메소드. 2개는 별개의 클래스가 되어야 한다.
 
@@ -9108,7 +10320,7 @@ private:
       - void(void) a
       - void(int) b
       - void A.(int) c
-      - a = b = c // 모두 컴파일 에러가 나야 한다. 
+      - a = b = c // 모두 컴파일 에러가 나야 한다.
     - 다시말하면 인자타입과 static여부 자체가 하나의 타입으로 다뤄줘야한다. 어떻게 할까?
     - Delegator& a;
     - Delegator& b = a; // 이거 되야 하나 안되야 하나?
@@ -9130,7 +10342,7 @@ private:
     - a = b ok
     - 이걸 컴파일타임에 할 수 있어야 한다. 즉 월드문법에서 중요시 생각하고 있는 건 타입리스트 + staitc여부 2개이다. closure는 고려하지 않는다는 걸 알 수 있다. 사용자의 입장에서 생각하고 있는 것이다.
     - [] 어떻게 할까?
-      - [x] 1안 wygiwys로 간다. 
+      - [x] 1안 wygiwys로 간다.
         - [] static딜리게이터는 어느때건 closure화될 수 있으며 반대도 가능하다. 이말은 static딜리게이터는 closure 화되는 코드를 담고 있거나, 이걸 외부에서 주입할 수 있다는 것이다. 이대로 c++코드도 따라간다.
           - 이건 어떻게 할까? 중요한건 코드가 아니라 멤버변수다.
           - 캡처를 하려면 다량의 멤버변수를 요구하게 된다. Object Refer 1개와 캡쳐한 로컬스페이스 Array 1개. 막대한 비용이 든다. 이걸 매 static delegator마다 탑재하게 하자고?
@@ -9142,7 +10354,7 @@ private:
           - void(void) fptr2 = a.print (클로져)
       - [v] 2안 Delegator::assign() 재정의
         - 같은 타입일뿐만 아니라 getParams()가 완전히 동일해야만 할당이 이루어지도록 한다.
-        - 월드 컴파일러는 
+        - 월드 컴파일러는
 
   - [x] 1안 Delegator > InstanceDelegator > Closure 순으로 상속
 
@@ -9154,7 +10366,7 @@ private:
 
   - [] 2안 Delegator Slice 패턴
 
-    유일하게 구현 가능한 안이지만, 너무 구현이 더럽다. 다른 방법은 없을까? 
+    유일하게 구현 가능한 안이지만, 너무 구현이 더럽다. 다른 방법은 없을까?
 
     - class Delegator : public TRefer<Method>, public Methodable
       - Delegator(Params&, bool is_static, Pattern& new_pattern)
@@ -9163,7 +10375,7 @@ private:
       - TStrong<Params> _params; *// 월드컴파일러(=WC)는 Method의 것을 복제시킬것인지, 아니면 새로운 Params를 넣어줄 것인지 정할 수 있음. 생성자에서 주입되며, 주입되면 2번다시 변경안됨.*
       - virtual const Params& getParams() { return *_params; } *// WC는 변경할 수 있음.*
       - virtual Refer to(const Class& cls) {
-        - if cls.isSubOf(Method) 
+        - if cls.isSubOf(Method)
           - return *this;
         - return Super::to(cls);
       - }
@@ -9202,7 +10414,7 @@ private:
 
   - [x] 3안 Delegator와 Refer<Delegator> 패턴
 
-    Refer<Delegator>도 params를 들고있어야 하므로 Params는 총 3개가 된다. 실패. 
+    Refer<Delegator>도 params를 들고있어야 하므로 Params는 총 3개가 된다. 실패.
 
     - class Binder
       - bool isBindable(const Node& obj) = 0;
@@ -9275,7 +10487,7 @@ private:
   - [v] Closure는 지역변수 참조가 가능한 중첩메소드.
     - *[x] 만약 #지역변수-중복-되는-경우-scope는-어떻게-구현해야-하는가 이걸 동일한 인덱스가 나오도록 해결할수 있다면 closure는 캡쳐가 필요없게 된다. 왠냐하면 closure가 소지한 STMT들이 항상 언제 호출되건 동일한 scope[index]의 지역변수를 참조해버리면 되기 때문이다.*
       - [v] 반론 - 멤버변수 vs 지역변수로 총돌되는 경우는 여전히 안될 것 같다. 이런 상황을 봐라.
-        - class A 
+        - class A
           - int a = 3
           - void foo()
             - Console.out(a) *// 1*
@@ -9302,7 +10514,7 @@ private:
               - str str1 = "hello" // str1의 값은 함수내의 "시간"에 의존된다.
               - boo() // boo함수는 유일하기 때문에 boo는 호출이 된다.
             - void boo()
-            - 
+            -
 
 #### MethodDelegation
 
@@ -9317,7 +10529,7 @@ private:
   - [] void(int) f22 = a.foo.capture(a) 가능해야 하나?
     - [] 가능하다고 한다면, capture는 당연히 void(int)를 반환해야만 한다. 모든 메소드의 공통 메소드로 빼게 되면 Delegator라는 객체를 반환형으로 할 수 밖에 없다. 어디선가는 타입 검사를 해야만 한다.
       - Delegator에도 내가 받을 수 있는 타입이 명시되어있다. 가지고 있다. 고로 런타임에는 판별할 수 있다.
-      - 컴파일타임에 a.foo가 무슨 메소드인지 알고 있으며 여기서 반환한 capture는 native상에서는 Delegator로 나오지만 이 Delegator가 가지고 있을 타입이 무엇일지는 유추할 수 있다. 
+      - 컴파일타임에 a.foo가 무슨 메소드인지 알고 있으며 여기서 반환한 capture는 native상에서는 Delegator로 나오지만 이 Delegator가 가지고 있을 타입이 무엇일지는 유추할 수 있다.
 - 대입
   - f3 = f2
   - f3 = f1
@@ -9345,10 +10557,10 @@ private:
 
 #### 메소드는_어떻게_캡쳐가_이루어지는가_캡쳐_문법
 
-- 문제 정의 
+- 문제 정의
   - \#람다메소드 에 의하면 결국은 closure가 지원이 되려면 일반메소드가 thisptr등을 모조리 싸안고 내적화 되어야 하며, 그것을 trigger하는 방법이 필요하다.  크게 3가지 방법으로 나뉘어진다.
     - \1. API화 시키며, 사용자에게 이 것을 강제하는 경우
-      - 예) class A 
+      - 예) class A
         - void foo(int a, bool b)
       - A a
       - void(int, bool) closure1 = a.foo.capture(a)
@@ -9357,7 +10569,7 @@ private:
         - void foo(int a, bool b)
       - A a
       - void(int, bool) closure1 = a.foo // 실제 코드블럭은 a.foo.capture(a)로 변형한다.
-      -  // 문제는 어떻게 이렇게 만들것인가? 와 모든 시나리오를 찾아낼 수 있는가? 
+      -  // 문제는 어떻게 이렇게 만들것인가? 와 모든 시나리오를 찾아낼 수 있는가?
 - [v] 1안 외부 API로 두고, syntactic sugar로는  제공한다.
   - \#closure_syntactic_sugar
   - Method는 Object에 속한것이 아니다. Class에 속한 것이며 Object들은 Method들을 간접적으로 공유해야 한다. 이거는 fix된 사실이다.
@@ -9382,9 +10594,9 @@ private:
       - }
 - *[x] 2안 문법의 일반화를 유지하기 위해 어떻게든 Method.to<Delegator>()를 가능하게 한다.*
   - Method::to<StaticDelegator>()가 가능하도록 하겠다는 것이다.
-    - object.call(getElement)를 한 경우, object는 
-    - void(int, bool) = a.foo 
-  - 개념적으로 접근하자. 
+    - object.call(getElement)를 한 경우, object는
+    - void(int, bool) = a.foo
+  - 개념적으로 접근하자.
     - 메소드는 Object의 것이 아니다. 다만 일시적인 상황에서만 Object가 누구인지 연관성을 가질 수 있다. 그리고 그 경우는 앞에 . 을 찍히는 경우이다.
       - 예1) a.foo --> 이 경우 foo는 a가 누구인지 일시적으로 알게 된다.
       - 예2) a.foo(5) --> foo와 a는 서로 관련이 없으나 이 경우에만 foo는 자신을 호출한 객체가 a 임을 알 수 있어야 한다.
@@ -9423,7 +10635,7 @@ private:
 
 - \#월드문법 참고
 - *[x] 1안 Delegator도 메소드의 일종으로 한다.*
-  - 메소드란 -> 어떠한 방법으로든 주어진 인자를 통해서 아웃풋을 내뱉는 액션, 즉 execute를 가지고 있는 Object.  Delegator도 메소드의 일종이다. proxy로 하고는 있다만 메소드이긴 하다. 
+  - 메소드란 -> 어떠한 방법으로든 주어진 인자를 통해서 아웃풋을 내뱉는 액션, 즉 execute를 가지고 있는 Object.  Delegator도 메소드의 일종이다. proxy로 하고는 있다만 메소드이긴 하다.
   - *[x] Native FRX에서 Method <- Delegator(or ConsumableMethod) 순으로 상속구조가 잡히는 것처럼 월드코드로부터 파싱된 MgdMethod나 Delegator나 모두 메소드의 일종이며, World코드 상에서 void(int) a를 Method b인 b에 할당하는 게 올바른 코드가 되는 걸 설명할 수 있게 된다.*
     - --> Delegator는 메소드가 아니다. Refer가 Object가 아니듯이 말이다. Delegator는 Method와 동일한 인터페이스를 갖고는 있지만 Method 특유의 고유성(stmt를 가지고 있는 등)을 지니지 못하며 흉내만 낸다.
 - *[x] 2안 Object가 run()가지게 되었으므로 Delegator를 Object 밑에 둔다.*
@@ -9442,7 +10654,7 @@ private:
         - MgdMethod
       - Delegator
         - StaticMethodDelegator --> 더 좋은 이름은 없을까? 너무 길다
-        - MethodDelegator 
+        - MethodDelegator
 - [v] 3안 Delegator를 TRefer<Method>로 만든다.
   - 이는 Delegator의 요구사항인, "정의는 호환되지 않게, 사용은 호환되게"를 반영한 것이다.
   - Node
@@ -9503,19 +10715,19 @@ private:
       - _boo()
   - 1 // C/++       -> 3 5 15 5
   - 2 // Python/JS -> 3 5 15 15
-  - 2안으로 따라간다. 1안은 너무 WorldFrx 코드가 지저분해진다. 
+  - 2안으로 따라간다. 1안은 너무 WorldFrx 코드가 지저분해진다.
   - 변수, 함수의 중복정의는 일체 허용하지 않는다. 고로, block scope라는 건 없다. BlockStatement는 scope를 갖는데, 이는 지역변수가 아니라 static이나 closure를 위한 것이다.
   - 정의부는 실행부보다 먼저 나와야 한다.
   - delegator가 capture()로부터 생성되는 시점에 capture이루어진다.
   - 링킹 최적화후
   - closure 및 delegator 정의부:
     - 해당 closure의 코드를 컴파일하면서(링킹이 아님) 사용하는 외부지역변수(member변수가 아니다)의 목록(localspace) 에 넣는다.
-    - 그리고 해당 expr에 localspace[n==방금insert된 index] 을 참조하도록 바꿔준다. 
+    - 그리고 해당 expr에 localspace[n==방금insert된 index] 을 참조하도록 바꿔준다.
     - 만약 컴파일 전이라면 localspace["변수명"]
-  - 실행부: 
+  - 실행부:
     - 해당 closure가 들고있는 "capture 희망목록"에 접근할 수 있어야 한다.
     - 그 목록에 현재의 scope에 있는 것들을 줄 수 있는 지 확인한다. 안되면 링킹에러다.
-    - 정의부에서 추려낸 지역변수 목록들만 capture 뜨는 명령어 ( Method.capture(1,5, 10) )를 사용해서 delegator를 만들도록 stmt를 정의한다. 
+    - 정의부에서 추려낸 지역변수 목록들만 capture 뜨는 명령어 ( Method.capture(1,5, 10) )를 사용해서 delegator를 만들도록 stmt를 정의한다.
     - 컴파일최적화 전이라면 Method.capture("변수명1", "변수명2", ...)
 - [x][x] *closure 원격 native 생성 문제*
   - *[x] Native환경에서 원격지에 있는 closure() 해서 그걸 원격지의 객체 중 하나의 Refer에 할당한 경우, 이때 생성된 closure는 실제 동작과는 다르게 된다. 어떻게 하면 좋을까?*
@@ -9523,7 +10735,7 @@ private:
 - [][v] closure의 생성자의 인자리스트에 scope를 명시해야 하는가?
   - closure는 생성되는 순간 scope를 반드시 참조해야 한다. 생성자에 인자로 두면 명시적으로 이걸 드러낼 수 있다. 다만 귀찮아질 것이다.
   - [v] 1안 네
-    - 로컬 스페이스는 scope에 속한 것이며 각 object마다 고유의 것이 아니다. 
+    - 로컬 스페이스는 scope에 속한 것이며 각 object마다 고유의 것이 아니다.
     - 종속관계는 가능한한 드러내는 게 좋다.
 - TEST Driven Development
   - TEST#1
@@ -9630,6 +10842,76 @@ def app
 
 ### 예외처리
 
+```cpp
+import console
+import file
+
+Opener
+	file f = null
+	str path
+		ret => set
+			// 예외처리try-catch: try <코드> catch(인자리스트) <코드>
+			// 다음의 규칙을 따른다.
+			//	1.	예외가 발생하면, 자동으로 throw 처리된다.
+			//	2.	예외exception을 throw <변수> 를 하게 되면,
+			//		해당 함수의 호출자에게로 돌아간다propagate.
+			//		(1depth stack unwinding.)
+			//	3.	처리되지 않은 예외를 받은 호출자(메소드 또는 블록문)는 먼저
+			//		자신을 콜스택에서 제거하고, 자신이 소유한 적절한 catch 멤버를
+			//		찾아 호출한다.
+			//		(catch에서 다시 예외가 발생하면 호출자의 콜스택은 이미
+			//		제거되었으므로 무한 재귀는 일어나지 않는다.)
+			//	4.	3에서도 찾지 못하면 자동으로 다시 throw 처리된다.
+			//	5.	최종적으로 처리되지않은 예외가 main()을 벗어나면
+			//		프로세스를 중단한다.
+			//	6.	catch에서 throw를 하지 않으면 예외처리를 처리consume했다고
+			//		판단한다.
+			f.close()
+			f.open(new, "rw") // Rule#1, 2: 내부에서 fileexception이 발생한다.
+
+			// Rule#3에 의해서 f.open()에서 발생한 익셉션은, path.set() 메소드가
+			// 소유한 catch() 함수 중 가장 적절한 인자를 가진 catch(fileexcept)로
+			// 넘겨진다.
+			catch(rfile e)
+			     console.out("fail to open " + ret)
+			     f.open(new, "rw") // 다시 fileexcept가 발생한다.
+			     // Rule#1, 2에 의해 str.set()을 호출한 foo()의 블록문으로 throw.
+
+			catch(except e) // 눈치챘겠지만, 사실 catch 또한 클로져에 불과하다.
+			     console.out("can't reach here.")
+			     return ret // catch의 반환형은 외부메소드의 반환형(res ret)여야 한다.
+			     // Rule#3: 여기서 return 되면 str.set()에서 return 되게 된다.
+
+			console.out("path is " + new)
+			f.open(new, "rw") // Rule#3: 여기 예외도 catch(fileexcept)로 간다.
+			return ret
+
+		ret => get
+			consol.out("getting path(" res + ") from some Opener object.")
+			return ret
+
+
+app
+    res foo()
+		with Opener()
+			it.path = "/usr/bin/bash" // 최종적으로 fileexcept가 발생한다.
+
+			catch(except e) // 이 블록문에서 나온 예외는 여기서 catch된다.
+				console.out("oh dear.")
+				// 블록문이 종료된다.
+
+			console.out("can't reach here.")
+
+    	console.out("can you see this?")
+    void main():foo()
+
+/* 결과:
+	fail to open /usr/bin/bash
+	oh dear.
+	can you see this?
+*/
+```
+
 #### try-catch 같은 것은 반드시 있어야 한다. 좀 더 혁신적인 방법이나 혁신적인 표기법은 없을까?
 
 - 1안 pythonstyle + 클래스 catch
@@ -9647,6 +10929,57 @@ def app
 
 
 
+
+
+
+
+### 메타
+
+```cpp
+import console
+
+Person
+	void say(): console.out(" - I don't know my name.")
+
+Person Chales
+	void say(): console.out(" - My name is Chales Lee.")
+
+Person Park
+	void say(): console.out(" - My name is Hoon Park.")
+
+
+app
+	main()
+		type[] cls = [Person, Chales, Park] // 사실 class 또한 타입에 불과하다.
+		for type e in cls
+			console.out("\n" + e.name + " has " + e.subs.len  " children.")
+			for var child in e.subs
+				console.out("\n - " + child.name)
+				console.out(" - " + e.size + " bytes. nd is sub of " + e.name + " ? -> " + ...
+				child.isSub(e))
+
+			// 객체 정의: e.instance() | e() | e.new()
+			// 모두 node타입의("?") 객체를 반환한다.
+			? instance = e.instance()
+			Person p = instance // 이것과 위. 2줄은 컴파일 될 수 없다.
+			p.say() // 위의 3줄은 e().say()와 같다.
+
+
+/* 결과:
+Person has 2 children.
+
+ - Chales
+ - 24 bytes. and is sub of Person ? -> true
+ - My name is Chales Lee.
+
+ - Park
+ - 24 bytes. and is sub of Person ? -> true
+ - My name is Hoon Park.
+
+Chales has 0 children.
+Park has 0 children.
+*/
+```
 
 
 
@@ -9684,11 +11017,11 @@ def app
 
 #### 묵시적형변환으로 인해 임시객체가 생성되므로 메소드 내부에서 set 된 값이 할당되지 않는다.
 
-- 예) 
+- 예)
   - NativeMethod void foo(Integer& mul); 이라는게 있다고 하자. 이는 mul을 2배로 하는 것이다.
   - 만약 mul에 Float을 넣게되면 [Float.to](http://float.to/)<Integer>()가 되고, 이 때 나온 Integer는 전혀다른 객체다. 그러므로 Integer가 foo() 내부에서 2배가 되더라도 외부의 Float은 2배가 되지 않는다.
   - c++은 이런경우 "int변수를 넣거나, mul을 const 로 선언해라" 라는 에러를 내보낸다.
-- 결론 : 묵시적은 다운캐스팅과 World의 pretype에 한해서만 동작하는 경우 2종류가 있다. 뒤의 pretype은 명시적 캐스팅으로 동작하는 것으로, 이는 새로운 객체가 탄생하는 것이다. 새로운 객체는 당연히 return후에도 호출자 함수내의 코드에 영향을 줘선 안된다. pretype은 대부분 occupiable이기에 더욱 그렇다. 
+- 결론 : 묵시적은 다운캐스팅과 World의 pretype에 한해서만 동작하는 경우 2종류가 있다. 뒤의 pretype은 명시적 캐스팅으로 동작하는 것으로, 이는 새로운 객체가 탄생하는 것이다. 새로운 객체는 당연히 return후에도 호출자 함수내의 코드에 영향을 줘선 안된다. pretype은 대부분 occupiable이기에 더욱 그렇다.
   - str은 occupiable이다. 밑에 예제를 보자.
   - class A
     - void foo()
@@ -9732,7 +11065,7 @@ def app
 
   - 2-1안 그 심볼정보를 "IDE에서만 정보 노출시키기"로, Source 객체에 삽입시킨다.
 
-    
+
 
 #### WORLDLANG에서 C++의 operator+는 +()로 표현하도록 한다.
 
@@ -9746,11 +11079,11 @@ def app
 
     - 아마 function 문법은 가운데 +()형태로 오는 경우도 있다 라고 정의하면 될것같다. 하지만 직접 해보지 않으면 모르겠네.
 
-  - 모듈개발자가 operator+로 정의하면 이게 world는  +로 인식이 되어야한다. 
+  - 모듈개발자가 operator+로 정의하면 이게 world는  +로 인식이 되어야한다.
 
     - 즉 매크로 안에 "operator+"로  입력한 경우에는 world에서 +()로 바꿔넣어야 한다. 하드코딩하면 될것이다.
 
-      
+
 
 #### 사용자가_vector를_모듈의_메소드의_인자로_사용하고_싶을_경우는?
 
@@ -9795,7 +11128,7 @@ def app
 - C++에서 World 함수를 호출하고 싶다면 파서가 파싱하면서 CustomClass 인스턴스의 내용물을 채우는 것이다. C++에서는 call("") 함수를 사용해서 함수를 호출하면 된다.
 - 시나리오
   - World의 to함수와 native의 Bind<Node> to(Class&)의 경우
-    - World코드의 to함수를 떠올려보자. 
+    - World코드의 to함수를 떠올려보자.
       - int a = 5
       - [a.to](http://a.to/)(string) + "world" // --> 5world가 된다.
     - 이때의 to 함수의 정의는 World에서 어떻게 될까?
@@ -9846,7 +11179,7 @@ def app
       - }
 - 고찰 내용
   - 예를들어보자.
-    - class Node 
+    - class Node
       - virtual bool execute()
     - World코드에서
       - class MyClass
@@ -9940,7 +11273,7 @@ def app
 
 
 
-#### Native C++ 함수와 World 함수간의 바인딩 
+#### Native C++ 함수와 World 함수간의 바인딩
 
 - 사용자는 C++ class를 만들면서 메소드중 World에 노출시키고싶은 함수에 대해 World매크로를 사용하여 메타정보를 생성하게 한다.
   - 예) "foo", "int"
@@ -10001,8 +11334,8 @@ def app
               - foo(int a);
               - boo(int& a);
               - foo(3.5f); // ok
-              - boo(3.5f); // no. 
-            - World에서는 int, float은 sharable이 될 방법이 존재하지 않는다. 
+              - boo(3.5f); // no.
+            - World에서는 int, float은 sharable이 될 방법이 존재하지 않는다.
               - class WorldClass
                 - result foo(int)
               - WorldClass().foo(3.6f) 는 이론상으로는 "변환이 될 가능성"이 있다. 자세한건 형변환 우선순위를 참고하자.
@@ -10021,7 +11354,7 @@ def app
   - DECL이 선언되야할 장소는?
     - 1안 - DECL 안에 wrapping을 수행하도록 한다?
     - 2안 - DECL과 method를 따로 내보내고 method안에서 필요시 wrapping하게 한다.
-      - 조건1. DECL선언해야 한다. 
+      - 조건1. DECL선언해야 한다.
       - 조건2. 함수를 DECL에서 선언한것과 동일하게 적어야 한다.
         - 이때 반환형 T가 Sharable인지 occupiable인지는 구분하지 않아도 일단 돌아는 간다. 퍼포먼스는 문제가 있겠지만.
       - 예제
@@ -10033,8 +11366,8 @@ def app
             - char buf[256];
             - gen_xml_parsed(buf, [path.to](http://path.to/)<char*>());
             - return String(buf);
-            - 따라서 
-          - --> type T=String은 sharable이나, 값으로 넘어왔다. 
+            - 따라서
+          - --> type T=String은 sharable이나, 값으로 넘어왔다.
           - World는 다음과 같이 expand 한다.
           - \#if T==VALUE
             - T _result;
@@ -10090,7 +11423,7 @@ def app
 #### World에 visible하다는 뜻은 무엇인가
 
 - \1. Node 계층에 있어야 한다.
-- \2. Scope에 등록이 되어야 한다. 
+- \2. Scope에 등록이 되어야 한다.
 
 
 
@@ -10151,12 +11484,12 @@ def app
     - return b;
 - 고찰 내용
   - 동작 가능한가가 중요하지 않다. 좋은 설계를 찾는 것이 중요하다.
-    - 중복된 코드가 없어야 하며, 
+    - 중복된 코드가 없어야 하며,
     - 직관적이고,
     - 여러 관점에서 사용할 수 있어야 하고,
     - 속도가 합리적이야 한다.
     - 상속 트리를 잘 구성해야 한다.
-  - v 1안 
+  - v 1안
     - Statement
       - Arguments params // [0]은 target이다.
       - virtual execute()
@@ -10398,7 +11731,7 @@ public:
 
 ##### [v] 3안 이름에 매크로를
 * native 개발자는 virtual 이라고 하더라도 overridable을 지원할지 안할지 결정할 수 있다. (권장은 안함)
-* 
+*
 
 ```cpp
 class myClass : public obj {
@@ -10415,11 +11748,11 @@ public:
 ###### [x] Q1. WRD_CLASS안에서도 FUNC와 OVERRIDE를 구분해서 적어야하나? 그냥 FUNC로만 적도록 우리가 해줄 순 없을까?
 * overriding을 할것인지는, 사용자가 WRD_OVERRIDABLE을 이름에 붙였다는걸 보고 판단이 가능하다.
 * 그런데 그 판단은 SFINAE를 통해서만 된다.
-* SFINAE는 전처리 이후의 컴파일 타임이다. 즉 이시 점에서는 이미 매크로는 expanding이 되었다. 
+* SFINAE는 전처리 이후의 컴파일 타임이다. 즉 이시 점에서는 이미 매크로는 expanding이 되었다.
 * 따라서, 판단은 가능하지만 판단할 시점에서 메소드를 추가하는건 도저히 불가능하다.
 
 ##### [v] 다른 언어는 어떻게?
-* 부스트 파이선의 경우 virtual 메소드를 지정했으면 개발자가 wraper 클래스를 만들것을 강제한다. 
+* 부스트 파이선의 경우 virtual 메소드를 지정했으면 개발자가 wraper 클래스를 만들것을 강제한다.
 	* 이것보단 낫지.
 
 
@@ -10428,7 +11761,7 @@ public:
 
 #### pointer를 wrapping 하는 방법은?
 
-* sharable은 그냥 보통이 pointer다. 
+* sharable은 그냥 보통이 pointer다.
 * occupiable은 pointer를 둔게 해줄 수 없다. 이런경우 별도의 wrapping 하는 C 함수를 따로 만들어서 처리행 ㅑ한다.
 ```cpp
 TNativeWrapper<wrapper_c>();
@@ -10502,7 +11835,7 @@ wrapper_c(arg)
 * 프로그램 실행에는 영향을 주지 않는다.
 * 객체에 대한 metadata 이다.
 * 메타 프로그래밍이 아니다. 이는 프로그램 읽는 걸 어렵게 한다고 본다.
-	
+
 #### [v] Q1. 어떻게 annotation을 구현할까?
 * 요구사항
 	* 상속이 되면 안된다.
@@ -10556,7 +11889,7 @@ private:
 ```
 
 * Object.clone()시 sharedMembers는 shallow cpy, 기타 members를 deepcpy 된다.
-* 파서는 annotations을 항상 sharedMembers로 넣는다. 
+* 파서는 annotations을 항상 sharedMembers로 넣는다.
 	* annotations를 명시하지 않을 경우, Method는 default로 빈 배열을 반환한다.
 * static은 원래 상속되지 않으며, 자식 클래스에서 부모클래스와 같은 이름의 변수를 만드는 것이 가능하다.
 
@@ -10568,13 +11901,13 @@ private:
 * 어렵다.
 
 #### 결론
-* Annotation이란 프로그램 로직에 영향을 주지 않는 것으로 한다. 
+* Annotation이란 프로그램 로직에 영향을 주지 않는 것으로 한다.
 * 컴파일러와 무관계한 것으로 한다.
-* 추가적인 정보일 뿐이다. 
+* 추가적인 정보일 뿐이다.
 * 이는 대부분 document 작성을 위해서 사용될 것이다.
 
 #### [..] Q3. annotation 의 상세한 구현 방법은?
-* 파서가 static const 멤버인, 모든 Object가 가지고 있는 annotations 객체의 구성물을, 파서가  객체에 채워넣는 식으로 하자. (메소드 포함) 
+* 파서가 static const 멤버인, 모든 Object가 가지고 있는 annotations 객체의 구성물을, 파서가  객체에 채워넣는 식으로 하자. (메소드 포함)
 * 상세한 내용은 나중에 다시.
 
 
@@ -10618,18 +11951,18 @@ private:
 #### Validation의 기본 :  #Vistored_Validation_알고리즘
 
 - 초안
-  - compile()과정이 끝나면 Class목록을 들고있을 것이고, 이들을 루트클래스라고 한다. 
+  - compile()과정이 끝나면 Class목록을 들고있을 것이고, 이들을 루트클래스라고 한다.
   - 클래스 혹은 메소드(메소드도 클래스다)안에 클래스가 있는 것들을 nested class라고 하며 이것들도 owner클래스의 함수나, 변수처럼 member로써 할당이 되어있다. 그래서 이 클래스 안에서만 접근이 가능하도록 되어있다.
     - class A
       - class B
     - 자연스럽게, 월드문법은 위의 경우, A.B b 로 접근해야 한다.
   - 검증은 중앙집중적 visitor 형태다. 그 이유는 2가지가 있는데,
-    - \1. Validator라는 외부모듈안에 검증을 위한 모든 코드가 들어있는데, 이는 실행only만 되는 kernel만 있는 경우에서는 validate코드가 필요 없기 때문이다. 
+    - \1. Validator라는 외부모듈안에 검증을 위한 모든 코드가 들어있는데, 이는 실행only만 되는 kernel만 있는 경우에서는 validate코드가 필요 없기 때문이다.
     - \2. 어찌됐건 범용 Visitor 는 반드시 필요한 상황이다. 따라서 Vistor로 validation을 구현하면 상당히 재사용적인 측면에서 이득을 볼 수 있다.
   - validate는 고유의 알고리즘으로 statement, class, method를 vistor패턴으로 탐색하면서 자신이 주도적으로 검증한다.
   - C-REPL이 적용되지 않은 지금, 검증은 통째로 루트클래스 목록채로 이루어진다. 알고리즘은 이렇다.
   - \1. 루트클래스를 순회하면서 검증한다.
-    - \2. 클래스의 검증이 먼저 이루어진다. 
+    - \2. 클래스의 검증이 먼저 이루어진다.
     - \3. 클래스는 자신의 멤버들을 검증한다.
       - **클래스를 scope에 reg 한다.**
       - \4. 멤버가 클래스일 경우는 2로 재귀된다.
@@ -10645,16 +11978,16 @@ private:
         - 메소드를 scope.unreg한다.
       - 클래스는 scope.unreg 한다.
   - 고찰내용
-    - 이 문제는 컴파일 과정에서 "이 요청은 이 심볼에 접근하려고 하는데, 과연 접근 할 수 있는가 없는가"를 런타임 돌지 않고 사전에 탐지하는 것을 말한다. 이 과정은 validate에서 수행되어야 한다. 
+    - 이 문제는 컴파일 과정에서 "이 요청은 이 심볼에 접근하려고 하는데, 과연 접근 할 수 있는가 없는가"를 런타임 돌지 않고 사전에 탐지하는 것을 말한다. 이 과정은 validate에서 수행되어야 한다.
     - 심볼접근은 scope를 통해서 이루어지므로 compile시점에서는 scope가 실제로 이걸 들고있는지는 몰라도 된다.
     - 어떤식으로 scope와 method, statement, 심볼접근을 연동시키면 될까?
     - x 1안 - validate라는 것은 사실상 런타임을 미리 강제로 trigger 시키는 것이 아닌가?
       - 아니다. 실제 무슨 값이 나오는지 계산을 하는것이 아니다 호출 가능성이 있는가. 즉, 100% 성공하는가 여부만 검증하는데 있다. 이것은 주로, 이 객체가 이심볼을 가지고 있는가 아닌가만 따지게 된다.
-    - 2안 - 케이스바이케이스로 나누어 생각해보자. 그러면 해결책이 보일 것이다. 
+    - 2안 - 케이스바이케이스로 나누어 생각해보자. 그러면 해결책이 보일 것이다.
       - 메소드를 호출 하는 경우 : 이 경우는 반드시 Class값이 존재한다. 따라서 쉽다.
       - 지역변수를 호출했던 경우.
     - v 3안 - validation()에서 execution처럼 scope를 구축해가면서 DFS로 검증해간다.
-      - compile()과정이 끝나면 Class목록을 들고있을 것이고, 이들을 루트클래스라고 한다. 
+      - compile()과정이 끝나면 Class목록을 들고있을 것이고, 이들을 루트클래스라고 한다.
       - 클래스 혹은 메소드(메소드도 클래스다)안에 클래스가 있는 것들을 nested class라고 하며 이것들도 owner클래스의 함수나, 변수처럼 member로써 할당이 되어있다. 그래서 이 클래스 안에서만 접근이 가능하도록 되어있다.
         - class A
           - class B
@@ -10662,7 +11995,7 @@ private:
       - 검증은 중앙집중적 visitor 형태다. Validator라는 외부모듈안에 검증을 위한 모든 코드가 들어있는데, 이는 실행only만 되는 kernel만 있는 경우에서는 validate코드가 필요 없기 때문이다. validate는 고유의 알고리즘으로 statement, class, method를 vistor패턴으로 탐색하면서 자신이 주도적으로 검증한다.
       - C-REPL이 적용되지 않은 지금, 검증은 통째로 루트클래스 목록채로 이루어진다. 알고리즘은 이렇다.
       - \1. 루트클래스를 순회하면서 검증한다.
-        - \2. 클래스의 검증이 먼저 이루어진다. 
+        - \2. 클래스의 검증이 먼저 이루어진다.
         - \3. 클래스는 자신의 멤버들을 검증한다.
           - **클래스를 scope에 reg 한다.**
           - \4. 멤버가 클래스일 경우는 2로 재귀된다.
@@ -10672,7 +12005,7 @@ private:
             - \7. member들을 검증한다. (메소드의 member는 메소드, 멤버변수, 인자, 반환형이 있다) 단, statement는 member가 아니므로 검증하지 않고, method(== closure)는 실행 시점이 중요하기 때문에 검증하지 않는다. closure는 owner의 지역변수를 공유하기 때문에 모든 실행시점에서 검증이 들어가야 한다.
             - \8. Statement들을 검증한다.
               - \9. 각 Statement는 symbol접근이 가능한지 scope를 놓고 검증한다.
-                - 심볼 접근 체크는 
+                - 심볼 접근 체크는
               - \10. statement가 만약 지역변수를 정의하는 statement라면 scope에 이 지역변수를 추가한다.
               - \11. statement가 closure를 호출하고 있다면 항상 6으로 재귀한다.
 - v 개선안
@@ -10692,10 +12025,10 @@ private:
 - 빌드 프로세스를 먼저 정의해야 이문제를 잘 해결 할 수 있다.
   - World코딩 --인터프리팅--> 코드블럭 --Validation--> 실행가능상태 --컴파일--> 최적화된 텍스트
   - 인터프리팅이 실패할 경우, 이는 인터프리트에러라고 하며, Parser가 주어진 텍스트 어느 위치에서 실패했다는 걸 명시해서 출력한다.
-  - Validation에서 에러가 검출 된 경우, 논리에러라고 한다. 런타임 에러가 아니기 때문에 값이 NULL이여서 에러다, 이런걸 확인하는게 아니다. 어느 상황이건 간에, 항상 말이 안되는 걸 검출해 내야한다. 예를들면 [String.to](http://string.to/)<MyClass>() 이런걸 시도하는 경우 논리에러가 된다. 
+  - Validation에서 에러가 검출 된 경우, 논리에러라고 한다. 런타임 에러가 아니기 때문에 값이 NULL이여서 에러다, 이런걸 확인하는게 아니다. 어느 상황이건 간에, 항상 말이 안되는 걸 검출해 내야한다. 예를들면 [String.to](http://string.to/)<MyClass>() 이런걸 시도하는 경우 논리에러가 된다.
 - 정리하자.
 - 코드블럭이 생성조차 안된다 => 인터프리트 에러. 파서가 "몇번째줄에 오류 생성" 고지
-- 이 코드블럭은 항상 100% 실패한다 혹은 금지된 행동을 한다 => 논리에러. 
+- 이 코드블럭은 항상 100% 실패한다 혹은 금지된 행동을 한다 => 논리에러.
   - 에러를 고지하는 걸 TXT 창에서 하도록 할 수 있는가? 편집하는 곳은 TXT이기 때문에 여기서도 에러가 표시되어야 한다. 이렇게 되려면, 이 코드블럭은 무슨 라인과 매핑된다는 정보가 있어야 할 것 같은데?
     - 그게 바로 RawStatement다.
     - RawFile {
@@ -10712,11 +12045,11 @@ private:
     - RawFile이 사라지면 RawSTatement가 사라진다. RawStatement가 사라지면 generated_by_me가 사라진다. Thing는 Class가 될 수도 있고, statement가 될 수 도 있다. class가 사라지면 모든 Object가 사라진다.
     - 1안 - 파서가 논리에러를 탐지한다.
       - Parser가 에러체크의 주체인 경우는 에러여부와 함께 어느 라인에서 에러가 발생했다는 것도 알 수 있다.
-    - v 2안 - 각 객체가 Thing::validate()로 탐지한다. 
+    - v 2안 - 각 객체가 Thing::validate()로 탐지한다.
       - 이 경우 객체에서 에러를 여러개 리턴할 수 있어야 한다.
       - 1안 -  각 리턴을 통해서 #line #col 을 알아낼 수 있어야 한다.
       - 2안 - 객체가 리턴하면 파서는 객체와 <--> #line, #col 을 매핑시켜서 에러를 보고한다.
-    - 다른 관점에서 바라보자. C++ 은 어떻게 할까? 
+    - 다른 관점에서 바라보자. C++ 은 어떻게 할까?
       - C++은 1pass compile이다. linking이 따로 있기 때문에 2pass가되서 이런 문제를 해결한다.
 - 이 코드블럭을 돌려봤을때 어떨때는 실패하기도 한다. => 런타임에러
 
@@ -10742,7 +12075,7 @@ private:
   - 3패스: 파싱한 요소들을 가지고 바로 Class, Method 인스턴스를 생성해서 넣어버림. (중첩)메소드의 Stmt들은 ADT를 만들어서 나중작업으로 queue에 담아둠.
     - 각 ADT들은 자신들이 컴파일이 완료되면 어느 Node 밑에 들어가야 하는지 기억해두고 있어야 함.
     - 만약 메소드 헤더에 모르는 타입이(혹은 아직 파싱하지 않은) 존재하는 경우, 본래 메소드 인스턴스가 들어가야 자리에 DummyNode를 넣어둔다. 그리고 이 ADT를 3패스용 queue에 넣어두고, 모든 파싱을 수행 한다.
-    - 파싱이 끝나면 3패스용 queue에 담겨둔 것들을, 각각 update()를 시키고 update()함수가 되면 아까 미뤄두었던 Method인스턴스를 생성해서 this인 DummyNode가 있는곳에 대체시킨다. 
+    - 파싱이 끝나면 3패스용 queue에 담겨둔 것들을, 각각 update()를 시키고 update()함수가 되면 아까 미뤄두었던 Method인스턴스를 생성해서 this인 DummyNode가 있는곳에 대체시킨다.
     - 이 과정을 각 queue의 원소들이 더이상 어떤것도 update()를 시도해도 변화가 없을때까지 무한 반복을 돈다. 루프가 끝났을때 원소가 queue에 잔류하고 있다면 그것들은 모두 알수없는 식별자를 사용한 것이다.
   - 4패스: 이 시점이면 모든 선언(=헤더)들은 존재가 확실시 된 상태. 그러므로 queue를 하나씩 꺼내면서 편하게 ADT를 분석해서 expr를 만들고 다니면 됨.
 - [v] 2안 - ADT 작성후, BFS
@@ -10786,7 +12119,7 @@ private:
   - 파이썬과 world의 차이가 무엇일까 파이썬에다가 validation 기능 하는 플러그인을 하나 만들어서 코드 수정시마다 돌리게 하면 World처럼 코드의 검증이 바로바로 되게 할 수 있는거 아닌가
     - --> 아니다. 언어적 밑바침이 있어야 한다. 파이썬은 동적타이핑이 지원된다. 런타임의 함수의 추가와 삭제가 되는 것이다. 따라서 로직을 따라가지 않고서는 이 함수의 이 라인에서 과연 이 함수가 있을지 없을지는 보장할 수 없게 된다.
     - validation을 지원하기 위해서는 강한타입과 정적타입을 택해야만 한다.
-  - 하지만 C-REPL이 되게 위해서는 컴파일 시간이 있어서는 안된다. 이는 정적바인딩을 할 수 없다는 것이다. 
+  - 하지만 C-REPL이 되게 위해서는 컴파일 시간이 있어서는 안된다. 이는 정적바인딩을 할 수 없다는 것이다.
   - 정적바인딩을 해버리면 나중에 코드 1줄을 수정했을때, 그 코드를 사용하는, 영향을 받는 모든 부분들을 역추적해서, 그 부분들을 다시 링킹(=바인딩) 과 검증을 실시해야 한다. 매 코드 수정마다 말이다. 퍼포먼스 적으로 너무 안좋다.
   - 따라서 동적바인딩으로, 어떤 함수를 호출할것인가 같은 문제는 런타임에 결정해야 한다.
   - 반면 정적타입으로 런타임에 함수의 추가/클래스의 구성의 수정 같은 건 지원하면 안된다.
@@ -10808,8 +12141,8 @@ private:
 #### 인터프리팅시 Symbol 참조 에러시, report 알고리즘
 
 - 문제정의 : 파싱을 할때, 주어진 심볼이 참조가능한지 아닌지 논리에러를 탐지하기 위한 과정을 말한다. 이는 문제가 생긴 World코드에 대해서 "검증"하는 로직과 "이 코드에 에러가 발생되었다"를 알리는 로직이 어떻게 연계해야하는지를 정의하는 것에 있다.
-- 파서는 텍스트를 파싱하면서 코드블럭을 생성하면서 코드블럭(Statement, Calling, Method, Class, Object, ...)가 어떤 파일의 어떤 line, col에서 생성되었는지를 파서가 기록한다. 해당 정보는 Member로써 추가된다. member는 잘 알다시피 런타임에 데이터가 추가되는 것이다. 
-- 왜 이런형태를 취하냐면, 이 정보는 실행시에는 필요없는 정보이기 때문이다. 이 정보는 IDE에서 인터프리터와 연동하기 위한, 즉 편집을 위한 추가 정보다. 이러한 추가정보는 일단 빌드가 되고 바이너리가 나오고 나면 전혀 필요가 없다. (그리고 그것이 코드 난독화에도 도움을 준다) 
+- 파서는 텍스트를 파싱하면서 코드블럭을 생성하면서 코드블럭(Statement, Calling, Method, Class, Object, ...)가 어떤 파일의 어떤 line, col에서 생성되었는지를 파서가 기록한다. 해당 정보는 Member로써 추가된다. member는 잘 알다시피 런타임에 데이터가 추가되는 것이다.
+- 왜 이런형태를 취하냐면, 이 정보는 실행시에는 필요없는 정보이기 때문이다. 이 정보는 IDE에서 인터프리터와 연동하기 위한, 즉 편집을 위한 추가 정보다. 이러한 추가정보는 일단 빌드가 되고 바이너리가 나오고 나면 전혀 필요가 없다. (그리고 그것이 코드 난독화에도 도움을 준다)
 - IDE는 코드블럭을 인터프리터와 공유하므로 사용자가 선택한 코드블럭이 어느 파일의 어느 line, col에서 나온것인지 바로 알 수있게 된다.
 - 반대의 케이스는 어떻게 되는지 궁금할 것이다. 사용자가 텍스트에서 선택한 것이 코드블럭으로 참조될 수있는 방법에 대해서 말이다. 이것은 IDE에서 지원을 해줘야 할것이다. 근본적인 방법은 Context REPL로 해결해야 하나, 이 알고리즘은 만들기가 힘드므로 당장 지원이 어렵다. 자세한 내용은 해당 항목 참조.
 
@@ -10836,7 +12169,7 @@ private:
           - **// m가 값이라면 변수명 + 값이 동일하면 된다.**
           - return m == e; // if m == e then this returns true and find will return its index.
         - })
-        - 
+        -
   - }
   - void initClasses()
     - Class classes[] = ....;
@@ -10856,7 +12189,7 @@ private:
 
   - 동적 디스패치를 달성하기 위한 알고리즘은 이렇다.
 
-    - \1. 부모클래스가 명시되어 있다면 일단 부모클래스의 모든 member를 복제해서 이 클래스를 만든다. 
+    - \1. 부모클래스가 명시되어 있다면 일단 부모클래스의 모든 member를 복제해서 이 클래스를 만든다.
     - \2. 새로 파싱된 자식클래스의 메소드 signature가 부모클랫의 것과 완전히 동일할 경우, 이 메소드는 append가 아니라 overwrite로써 기존의 것인 부모의 것을 덮어쓴다.
 
   - 여기서 문제가 되는 것은 자식클래스를 파싱하기전에 부모클래스를 파싱해야 한다는 점이다. 어떻게 달성하는가?
@@ -10866,8 +12199,8 @@ private:
     - 그러면 C++ 의 include와 다를게 없다. 이는 순환include 문제를 야기한다. java의 import처럼 가야한다.
     - import로 작성하면, 이 클래스들을 먼저 로드해서 scope에 넣어두자고 하면 된다고 생각했으나, 실제로는 이러면 안된다. 왜냐하면,
       - \1. 이방식은 c++의 include 방식이다. 즉, 순환참조를 해결 할 수 없다.
-        - import B 
-        - class A 
+        - import B
+        - class A
           - B b;
         - \-----
         - import A
@@ -10877,7 +12210,7 @@ private:
 
   - v 2안 클래스 스태킹업 알고리즘
 
-    빌드 단계를 하나 더 둬서, 1단계는 심볼인식을, 2단계는 심볼바인딩만 수행한다. 각 클래스를 로딩한 후, linking 단계에서 클래스 종속성을 위로 밀어올린다. 
+    빌드 단계를 하나 더 둬서, 1단계는 심볼인식을, 2단계는 심볼바인딩만 수행한다. 각 클래스를 로딩한 후, linking 단계에서 클래스 종속성을 위로 밀어올린다.
 
     - 클래스를 상속한다는 것은 클래스와 다른 클래스를 묶는 것으로 바인딩, 즉 링킹에 해당한다. 그러므로 상속처리도 링킹단계에서 하는게 맞다는 의견이다.
     - generation에서는 각 클래스를 그냥 생성한다. 다형성을 사용하든 오버로딩하든 메소드정보가 그대로 클래스에 들어가도록 한다.
@@ -10910,7 +12243,7 @@ private:
         - virtual string foo()
       - A a = ....
       - float c = a.foo() 반환값이 무엇인지 알수 없다. 컴파일러는 이게 에러인지 알 수 없다. 일단 돌려보지 않고는 모를것이다.
-  - 현재 월드 설계에서는 이러한 특성이 고려되지 않았다. 모든건 다 scope에 들어가 있기 때문에 A::foo()도, B::foo()다 같은 scope에 있다. 
+  - 현재 월드 설계에서는 이러한 특성이 고려되지 않았다. 모든건 다 scope에 들어가 있기 때문에 A::foo()도, B::foo()다 같은 scope에 있다.
   - 따라서 generating시 반환값여부까지 따져서 완전히 메소드가 동일하면 overwrite를 함으로써 동적디스패치를 달성해야한다.
 
 
@@ -10924,28 +12257,28 @@ private:
     - 클래스 정보가 생성되고, 안에 메소드들을 채우기 시작한다. 부모클래스가 "있다" 라는 건 알지만 실제로 부모클래스의 메소드를 이어받는 "linking"은 일어나지 않는다. 그 과정은 오버라이딩에 의한 메소드 재배치 등이 일어나야 하기 때문에 여기서 묶을 순 없다.
     - 클래스 생성 알고리즘은 #어떻게_부모클래스를_먼저_읽도록_할_수_있을까 를 참조하자.
     - 생성에 실패하면 생성오류가 나가며, 다음 라인을 읽어들인다.
-    - 파서가 알아서 연산자 우선순위 맞게 끊어서 우리에게 알려줄것이다. 
+    - 파서가 알아서 연산자 우선순위 맞게 끊어서 우리에게 알려줄것이다.
   - 2단계 : 코드블럭후보 --> **Linking & Validation 단계 -->** 코드블럭 확정
     - 지금까지 생성된 코드블럭후보는 자기자신은 완전하지만 외부와의 관계성이 누락된 상태이다. 이부분을 채워나가는 게 이 Linking단계이며, Linking단계가 완성되면 완전한 코드블럭이 만들어진다. 따라서 루프를 2번 돌 필요없이 각 개체별로 Linking단계가 끝나면 바로 이어서 Validation을 돌리도록 구성했다.
     - Linking을 채워야하는 건 크게 2종류로,
       - \1. 클래스의 상속처리 --> #어떻게_부모클래스를_먼저_읽도록_할_수_있을까  참조
         - 코드내에서 상속을 선언한 클래스는 코드블럭화 되면서 부모클래스의 member를 다 assign 시켜놓은 상태에서 파싱이 시작된다.
-        - 클래스의 함수를 파싱하면서 이미 상속받은 함수중에서 반환형, 인자리스트, 함수명이 정확히 일치하는 함수가 있다면 그 함수를 제거하고 그 함수가 있던 자리에 이제부터 구현될 statement들을 넣는다. 
-          지금 이 동작이 오버라이딩을 구현하고 있는 것이다. 
+        - 클래스의 함수를 파싱하면서 이미 상속받은 함수중에서 반환형, 인자리스트, 함수명이 정확히 일치하는 함수가 있다면 그 함수를 제거하고 그 함수가 있던 자리에 이제부터 구현될 statement들을 넣는다.
+          지금 이 동작이 오버라이딩을 구현하고 있는 것이다.
       - \2. Statement들의 심볼 바인딩 --> Scope 기반 알고리즘으로 처리한다.
-        - 각 statement들이 실제로 어떠한 함수들과 바인딩되어야 하는지를 결정한다. 
+        - 각 statement들이 실제로 어떠한 함수들과 바인딩되어야 하는지를 결정한다.
         - 이때 묵시적형변환까지 고려되어 변환가능한 함수가 2개 이상인지 고려한다. 2개 이상이라면 모호성오류가 나온다. 함수가 결정되면 콜해야 하는 함수로 코드블럭을 고쳐쓴다. 오버로딩이 여기서 결정된다.
         - 이때 각 statement는
           - caller = Object
           - msg
-            - name = "foo" --> 정확히 누가 이 메시지를 받을 것인지가 정해져있는 상태다. 오버로딩을 따질 필요가 없다. 
+            - name = "foo" --> 정확히 누가 이 메시지를 받을 것인지가 정해져있는 상태다. 오버로딩을 따질 필요가 없다.
             - args = {argument list}
         - 로 구성되어 있게 된다.
   - 3단계 -> validation을 돌린다. --> #Vistored_Validation_알고리즘. 인터프리터과정이 끝난다.
     - 중앙집중적 visitor 패턴으로 구현된다.
   - 4단계 -> 런타임.
-    -  함수를 실행하게 되면 caller.call(msg)로 보내게 된다. 
-    - 정확히 누가 이메시지를 받아야하는지 안에서 따질 필요가 있다. 이는 동적디스패치를 위한 것이다. 
+    -  함수를 실행하게 되면 caller.call(msg)로 보내게 된다.
+    - 정확히 누가 이메시지를 받아야하는지 안에서 따질 필요가 있다. 이는 동적디스패치를 위한 것이다.
     - 단, 오버로딩의 체크 여부는 이미 끝나있다. 이게 끝나지 않았다면 모호성이든 중복이든 에러가 나야 한다. 고로 무언가의 힌트를 줘서 Linking 이후에 오버로딩된 함수들을 다 재끼고 정확하게 특정 함수로 빠르게 전달되는 방법을 생각해야 한다 --> #함수_바인딩_퍼포먼스_알고리즘_최적화
     - Object는 생성시에 메타Class의 함수들을 전부 안고서 시작하게 된다. 따라서 object가 가리키는 메타Class로 다시 던질 필요없이 걍 Object가 지지고볶고 다하면 된다. (Chain으로 되어있기 때문에 그러면서도 메모리의 loss는 없다)
     - Object에 이 Method가 무슨 Method인가에 따라서 동적디스패치가 이루어진다.
@@ -10956,11 +12289,11 @@ private:
 
 - IDE에서 그려지는 그래픽요소(임시로 글리프라하자)는 코드블럭과 별개의 인스턴이나 매우 관련이 많다. 코드블럭이 생성되면 IDE는 RawStatment의 member로 RawStatement에 의해서 생성된 코드블럭과 매핑되는 글리프들을 Bind한 것들을 넣어둔다. 이후 RawStatement가 삭제되면 관련된 글리프들도 같이 삭제 시킨다.
 - 고찰내용
-  - IDE 상에서 그려지는 그래픽 요소(이후 글리프라고 하자)는 코드블럭과는 다른 인스턴스다. 물론 이 둘은 매우 관련이 많을 것이다. 코드블럭은 파서에서 생성되며 IDE는 값을 readonly 상태이므로 이것을 글리프는 bind<>하고 있을 것이다. 
-  - C-REPL이건 풀빌드 방식이건간에 코드블럭이 제거된 경우, 새로 생성된 경우, 수정된 경우 3가지 케이스에 대해서 글리프를 어떻게 update할 것인지를 정해야 한다. 생성시와 소멸은 쉬울 것이다. 
+  - IDE 상에서 그려지는 그래픽 요소(이후 글리프라고 하자)는 코드블럭과는 다른 인스턴스다. 물론 이 둘은 매우 관련이 많을 것이다. 코드블럭은 파서에서 생성되며 IDE는 값을 readonly 상태이므로 이것을 글리프는 bind<>하고 있을 것이다.
+  - C-REPL이건 풀빌드 방식이건간에 코드블럭이 제거된 경우, 새로 생성된 경우, 수정된 경우 3가지 케이스에 대해서 글리프를 어떻게 update할 것인지를 정해야 한다. 생성시와 소멸은 쉬울 것이다.
     - 생성된 코드블럭의 owner를 파악하여, 그것과 매칭되는 글리프 밑에 새로 글리프를 생성하면 된다.
     - 소멸은 단순히 지워버리면 되는 것이고.
-  - 문제는 업데이트다. 간단한 질문으로부터 출발하자. 
+  - 문제는 업데이트다. 간단한 질문으로부터 출발하자.
   - 텍스트가 약간 수정되었다고 하자. 코드블럭은 수정되는가, 아니면 새로 만들어져서 덮어씌워지는가?
     - 덮어씌워져야한다.  수정이라는 것은 없다. 삭제와 생성만 있을 뿐이다.
       - 1: abc.hello()
@@ -10971,7 +12304,7 @@ private:
         - 3: print(a.getAge() + ddd.grade())
       - 이것처럼, 2번라인이 완전히 바뀌었다.
     - C-REPL을 한다고 하자. 사용자가 코드를 수정한 경우, 어떻게 이것이 인터프리터로 전달되고, 글리프가 업데이트 되는가?
-      - 현재 예상되는 C-REPL API는 "한줄"에 대해서 수정,삭제를 할 수 있는 것 뿐이다. 삭제를 한다고 해보자. IDE는 자신이 삭제할 것이 어떠한 RawStatement인지 알고 있으며 이것들로부터 생성된 Thing들이 누구인지도 알 고있다. 이 Thing들을 wrap하고 있는 글리프들이 누구인지 어떻게 알지? 
+      - 현재 예상되는 C-REPL API는 "한줄"에 대해서 수정,삭제를 할 수 있는 것 뿐이다. 삭제를 한다고 해보자. IDE는 자신이 삭제할 것이 어떠한 RawStatement인지 알고 있으며 이것들로부터 생성된 Thing들이 누구인지도 알 고있다. 이 Thing들을 wrap하고 있는 글리프들이 누구인지 어떻게 알지?
       - v 1안 인터프리터는 RawStatement에 대해서는 free하게 권한을 풀어준다고 볼 수 있다. 삭제와 삽입을 할 수 있으므로. 따라서 만약, RawStatement가 Node의 일종이 될 수 있다면 여기에 member로써 글리프의 대한 bind<T>도 넣을 수 있지 않을까?
 
 
@@ -10979,7 +12312,7 @@ private:
 #### 수정시 재빌드 하는 방법
 
 - C-REPL은 재빌드라는 게 없다. 굳이 한다고 해도 문제될 것은 없다. RawSTatement와 Class 를 비우고 들어가면 된니까. 다만, 코드블럭을 비울때 어떤걸 비울지 어떻게 결정할 수 있을까.
-  - 모든 built-in도 하나의 class로써 일반화되서 들어가있다. 
+  - 모든 built-in도 하나의 class로써 일반화되서 들어가있다.
   - v 1안 RawStatement 기준으로 날린다. 파서가 RawStatement를 날리면서 이거로부터 생성된 Thing들을 다 delete시키면 되는거 아닌가.
 
 
@@ -11005,7 +12338,7 @@ private:
 ###### Actors
 
 * core[corelib] : dll. world의 모든 기능이 포함된 핵심파일
-  * indep : sharedmem API를 wrapping한다, Sharemem wrapper class(세마포어 포함) 
+  * indep : sharedmem API를 wrapping한다, Sharemem wrapper class(세마포어 포함)
   * world : sharedmemory에 싱글톤을 만드는 API와 Heap에 만드는 API 2종류가 있어야 한다. sharedmemory에 만드는 경우, nodes structure를  생성하는 코드는 모두 shared memory에 만들어져야 한다.
 * worldlang[interpreter] : core를 바탕으로 작성된 shell 기반 프로그램. socket, sharememory, pipe, commandline등이 input.
   * start process
@@ -11201,12 +12534,12 @@ private:
     - Exception에는 메시지와 함께 어느 Thing에서 에러가 났는지 bind되어있음. Thing은 파서가 생성시 col, line, 파일이름을 member로써 끼워둠.
   - 만약 C-REPL을 적용되었을때도, 이러한 프로세스가 사용 가능한가?
     - col, line의 숫자가 변경되어야 한다. 이것을 어떻게 연동할 것인가?
-    - 아래에 나와있는 RawStatement를 사용하면 된다. 
+    - 아래에 나와있는 RawStatement를 사용하면 된다.
     - 단, line계산은 그때그때 해주는 수 밖에 없다. 하지만 에러라인은 그렇게 많지 않고. 한 파일안에 라인수는 많아봤자. 10000줄 정도다. 100라인정도가 에러났을경우, 10000*100이 되니까. n^2이긴 하나 이 무식한 방법이 당장 못써먹을 정도는 아니다.
 - x 2안 Parser::validate()  Visitor패턴
-  - 에러 번호와 col은 파서가 알고 있으므로 알려주는데 무리가 없으며, 이 정보는 편집시에만 제공되므로 메모리 퍼포먼스도 만족한다. 
+  - 에러 번호와 col은 파서가 알고 있으므로 알려주는데 무리가 없으며, 이 정보는 편집시에만 제공되므로 메모리 퍼포먼스도 만족한다.
   - standalone에서는 텍스트가 검증되었다고 판단한다. 여기에서는 변수에 특문이 있다는 식의 것은 검증하지 않을 것이다. standalone은 컴파일이 모두 끝난 상황에서 돌아간다는 걸 가정으로 한다.
-  - 즉, 개발 과정은 진화된 대화식 개발방법으로 된다. 기존 인터프리터의 대화형 도구(한줄 한줄 읽는 형태가 아니라 "텍스트 에디터" 자체가 대화식 개발방법으라고 가정한다. 이는 인터프리터와 "문맥"을 함께 대화할 수 있는 수단이 된다. 
+  - 즉, 개발 과정은 진화된 대화식 개발방법으로 된다. 기존 인터프리터의 대화형 도구(한줄 한줄 읽는 형태가 아니라 "텍스트 에디터" 자체가 대화식 개발방법으라고 가정한다. 이는 인터프리터와 "문맥"을 함께 대화할 수 있는 수단이 된다.
   - validate과정은 논리에러를 찾아낸다. 컴파일에러는 실행자체가 100% 불가능한 경우(정확히는 코드블럭이 생성 불가능한 경우), 논리에러는 실행을 할 수 있을 것이나, 심볼을 못찾는 등으로 인하여 런타임에 실행이 100% fail될 경우다. 런타임오류는 인터프리터가 판단할 수 없는, 사용자에 의도와 어긋나는 동작을 수행하는 오류들을 말한다.
   - text를 input하게 되면, 인터프리터는 compile --> validate 과정을 거친다. compile과정은 validate한걸, 한번 더 최적화시켜서 구조를 바꾼뒤 바이너리파일로 저장하고 여기까지의 과정을 빌드라고 한다.
   - 바이너리파일을 input하게 되면 인터프리터는 execution만 거치며, 이것이 standalone으로 동작할때의 구성이다. compile이 완료된 바이너리는 검증이 끝났다는 걸 기본으로 하며, 이진으로 작성되어 난독화시키고, 최적화가 들어가며(예를들면 심볼을 탐색할때 getMember(string) 대신 getMember(index)를 사용) 코드블럭을 바로 생성하여 실행만 수행한다.
@@ -11216,15 +12549,15 @@ private:
 
 #### IDE에서 선택한 코드가 코드블럭을 선택하도록 하는 방법은?
 
-- C-REPL이라면 인터프리터가 아마도 텍스트도 들고 있어야 한다. 그때 텍스트를 통짜로 구성하는 것이 아니라 RawStatement 라는 클래스를 만들어서, 요게 텍스트 1줄을 가리키도록 한다. 
+- C-REPL이라면 인터프리터가 아마도 텍스트도 들고 있어야 한다. 그때 텍스트를 통짜로 구성하는 것이 아니라 RawStatement 라는 클래스를 만들어서, 요게 텍스트 1줄을 가리키도록 한다.
 - RawStatement {
   - string one_line_code;
   - public int getLineNumber() const;
   - Bind<RawFile> owner;
   - List<Weak<Thing>> generated_by_me;
 - }
-- Thing은 파서로 생성된 경우, 파서가 member로 
-  - Weak<RawStatement> owner, 
+- Thing은 파서로 생성된 경우, 파서가 member로
+  - Weak<RawStatement> owner,
   - int column;
 - 2가지를 만들어 놓는다.
 
@@ -11235,16 +12568,16 @@ private:
 #### 어떻게 IDE와 인터프리터가 통신하는가. 위의 모든 것들을 구현하기 위해서.
 
 - C-REPL일때는 대화형 인터페이스라는 점을 들어서, parser.InsertStatment("~~~~~") 같은 API를 사용하도록 한다. --> C-REPL은 아직 도입되지 않았으니까 다루지 말자.
-- 풀빌드 시스템에서는 
+- 풀빌드 시스템에서는
   - \1. 시스템을 초기상태(built-in 클래스만 들어있으며, Object도 없는 상황)로 되돌리는 API
-    - 사용자는 클래스는 날리되 Object는 남겨야하는 상황이 있을 수 있는가? --> 
-      - 아니 없다. 따라서 클래스를 날리면 인터프리터는 Object도 다 날려줘야 한다. 마찬가지로 코드는 날리면서 클래스는 놔두는 것도 없다. 코드 == 클래스 == 코드블럭이므로 이들은 정확하게 항상 싱크가 맞아야한다. 
+    - 사용자는 클래스는 날리되 Object는 남겨야하는 상황이 있을 수 있는가? -->
+      - 아니 없다. 따라서 클래스를 날리면 인터프리터는 Object도 다 날려줘야 한다. 마찬가지로 코드는 날리면서 클래스는 놔두는 것도 없다. 코드 == 클래스 == 코드블럭이므로 이들은 정확하게 항상 싱크가 맞아야한다.
     - v 1안 RawStatement를 날리면 저것들 다 날아가게?
       - 외부에서 인터프리터와의 소통은 텍스트로 수행한다. 바이너리 클래스로 삽입하는 것은 사실상 소통의 흐름을 단절시키고 폐쇄된 공간에서 빠르게 작업을 수행하는 것과 같다. 편집이 허용되지 않으므로. 따라서 클래스의 편집은 텍스트로만 허용이 되어야 한다. 사용자가 직접 인터프리터의 클래스의 내용을 쥐잡듯이 휘저어 대면 안된다. 마찬가지로 ClassBase의 member들은 const로써 공개가되어야 한다. 값을 확인하고, 데이터를 보고, 흐름이 어떻게 흘러가는지는 언제든지 IDE가 지켜볼 수 있지만 이미 파싱되어서 생성된 Class정보를 IDE가 직접 쑤셔대면 안된다.
       - 따라서, 유일한 의사소통 통로인 RawStatement를 IDE가 삭제요청을 하면 나머지 관련된 것들이 싸그리 날아가는 방식은 합리적이라고 볼 수 있다.
   - \2. compile API(== parse)
-    - getParser().parse(filepath)를 여러번 호출하기만 하면 되는 것인가? 
-    - 이미 로드되었는지는 어떻게 알지? 
+    - getParser().parse(filepath)를 여러번 호출하기만 하면 되는 것인가?
+    - 이미 로드되었는지는 어떻게 알지?
     - 파일이 변경되었을때는 같은 path가 오더라도 다시 로드를 수행하는게 맞다. 이건 어떻게 체크하지?
       - 1안 RawSTatement를 저장하는 "RawFile" 같은게 있어서 얘는 자신이 성공적으로 로드한 파일의 날짜를 기록해놓는다. 이걸로 대조해서 다를경우에는 RawFile을 날리고(== RawStatement도 날아가고 ==> 관련 Class도 날아가고 => 관련 Object도 다 날아가고) 다시 넣게 한다.
       - 2안 IDE가 알아서 해야지. 중복되지 않게. IDE가 알아서 interpreter의 클래스 정보도 해제해주고.
@@ -11308,9 +12641,9 @@ private:
 ##### Msg클래스는 WRD_CLASS를 써야한다.
 
 - Thing에서 상속받은 구체클래스다.
-- instantiate()는 반환형이 Instance부터 가능하다. 
+- instantiate()는 반환형이 Instance부터 가능하다.
 - **[v] 1안 값으로 반환하는 경우에도 전방선언은 유효하다.**
-  \#include <iostream> using namespace std;  // A.hpp class B; class A { public:     B foo(); };  // A.cpp class B { public:     int age; };  B A::foo() {     return B(); }  int main() {     A a;     a.foo();     return 0; }  // compile ok. 
+  \#include <iostream> using namespace std;  // A.hpp class B; class A { public:     B foo(); };  // A.cpp class B { public:     int age; };  B A::foo() {     return B(); }  int main() {     A a;     a.foo();     return 0; }  // compile ok.
 
 
 
@@ -11320,7 +12653,7 @@ private:
   - 2안 thisptr은 배열에 넣지 않는다. 모든 Msg는 별도의 TStrong<Object> thisptr라는 멤버변수를 갖게 된다.
 - 고찰내용
   - Msg Args의 첫번째 위치에 넣는 방법도 생각해볼 수 있겠지만 그래서는 안된다. 이유는 이렇다.
-    - \1. thisptr는 도중에 변경된다. 런타임에서만 확정된다. 
+    - \1. thisptr는 도중에 변경된다. 런타임에서만 확정된다.
     - \2. 아무 생각없이 thisptr를 msg에 넣게 되면 msg가 resize가 일어나면서 매번 퍼포먼스 로스가 발생한다.
     - \3. 그러므로 thisptr를 msg에 넣어야하는 주체인 Expr인 Msg를 만들면서 미리 thisptr를 넣기 위한 여분의 공간을 1개 끝에 더 만들어서 넣는다. 그리고 Expr은 이 부분을 실행시킨다.
   - 고찰을 통한 요구사항 추출
@@ -11328,8 +12661,8 @@ private:
     - \2. static메소드에 thisptr가 포함된 msg가 들어가도 동작이 가능해야 한다. 즉, static 메소드는 args와 thisptr가 서로 구분이 가야한다. thisptr는 args의 일부로써 취급받지만 때로는 평범한 arg와는 선을 그어야 한다.
     - \3. 런타임에 thisptr가 추가되거나 set 될 수 있다. 이때 resize가 발생하지 않도록 해야 한다.
     - \4. 사용자는 Msg를 Object.run()에게 던질경우, 이 결과가 InstanceMethod에게 도달할 것인지,  static메소드에게 갈것인지 몰라도 되야 한다. 따라서 Msg는 런타임에 thistpr가 추가될 수 있게 된다.
-  - [x] 1안 thisptr도 배열에 넣는다. 
-    - thisptr 조차 하나로 arg로 판단하므로 static메소드는 thisptr가 없으면 에러를 내뱉는다. 
+  - [x] 1안 thisptr도 배열에 넣는다.
+    - thisptr 조차 하나로 arg로 판단하므로 static메소드는 thisptr가 없으면 에러를 내뱉는다.
     - 마찬가지로 InstanceMethod도 thisptr가 없으면 에러가 된다
     - 사용자는 Object.run(Msg)를 보낼때 미리 이 Msg는 thisptr를 필요로 하는지 아닌지를 알고 있어야 한다. 안 그러면 resize가 발생한다.
       - Msg는 기본적으로 항상 thisptr을 위한 size+1를 만들어놓는 다면?
@@ -11343,10 +12676,10 @@ private:
           - [v] 그러나 이 편의방법을 사용하는 경우, 어쨌거나 args.resize()가 일어날 가능성이 있다. 이걸 막기 위해서는 처음부터 Object.run()을 호출하기 전에 사용자는 static인지를 확인 한 뒤, static이 아닐 경우에는 resize(args.size() + 1)을 해야만 하는 것이다.
   - **[v] 2안 thisptr는 배열에 넣지 않는다.**
     - 모든 메시지는 thisptr을 소유한다. 특별취급한다. args에 들어가지 않는다. 모든 Msg는 thisptr 만큼 메모리가 늘어난다.
-    - 이 방법을 택한 근본적인 이유는 thisptr를 배열에 넣게 됨으로써 가지는 merit이 없기 때문이다. 
-      - thisptr가 배열에 들어가게끔 하는 이유는 뻔하다. 인자의 하나로써 일반적인 로직 하나로 해결하겠다는 것. 
-      - 주된 사용처는 Method에서 인자리스트가 제대로 들어있는지 to<T>()를 통해서 validation을 하는 곳일 것이다. 
-      - 하지만 thisptr가 워낙에 특이한변수이다보니 이곳에서조차, thisptr일 경우에는 thisptr->func(args)처럼 특수한 처리를 해줘야만 한다. 
+    - 이 방법을 택한 근본적인 이유는 thisptr를 배열에 넣게 됨으로써 가지는 merit이 없기 때문이다.
+      - thisptr가 배열에 들어가게끔 하는 이유는 뻔하다. 인자의 하나로써 일반적인 로직 하나로 해결하겠다는 것.
+      - 주된 사용처는 Method에서 인자리스트가 제대로 들어있는지 to<T>()를 통해서 validation을 하는 곳일 것이다.
+      - 하지만 thisptr가 워낙에 특이한변수이다보니 이곳에서조차, thisptr일 경우에는 thisptr->func(args)처럼 특수한 처리를 해줘야만 한다.
       - Thisptr != Object& 이다. args 배열은 Object&라는 관점에서만 바라보기 때문에, thisptr로써 주어진 object&인지, 인자로써 주어진 object& 인지 구분이 쉽지 않고, 대부분의 상황에서 이 구분을 필요로 했다. 다시말하면 그 일반적인 로직의 다양성이 적다는 것이다. (기껏 하나의 배열로 합쳐봤자 쓸데가 없다는 얘기)
       - 되려 분리시켰을때의 편의성이나 static/instance메소드를 특정하지 않고도 메소드를 보낼 수 있는 점등 장점이 더 많다.
 
@@ -11358,7 +12691,7 @@ private:
   - 요약하면 Refer는 생성시에 const 여부가 결정되며, const 타입의 일부이므로 한번 const Refer이면 계속 const Refer여야 한다.
 - 일반적으로 생각했을때는 msg의 내용이 변하면 안된다고 볼것이다. 그러나 msg가 처리되는 시나리오와 method로 넘어가는 과정, refer클래스와 const 정책을 모두 고려하면 const로 가면안되고, 각 인자가 const Refer인지 아닌지를 정하게끔 해야 한다.
 - 먼저 const 정책문서를 보면 알겠지만 Refer는 2가지 형태의 const를 갖는다. 하나는 native에서만 들어나는 const고, 하나는 managed,nateve모두 들어나는 const인, isConst()다. 둘중 하나라도 const가 되어있다면 get() const를 호출했을때만 유의미한 값이 나온다. const를 결정하는 것은 사실상 Refer클래스가 담당하는 것이며, 원본은 const가 아니라도 Refer는 그것을 const 취급할 수 있다. Refer는 const여부는 생성자에서 정해지며, 소멸될때까지 const는 계속 유지된다. 따라서 const라는 건 궁극적으로는 const ptr라고 불러야 한다.
-  - class A 
+  - class A
   - class B : A
   - Refer<A> a = new B()
   - const Refer<B> b // b는 C++적인 const만 적용되어있다. b.isConst()는 false다.
@@ -11366,7 +12699,7 @@ private:
   - b = a1; // err. b는 c++ const객체이므로 assign이 안된다.
   - Refer<B> b1 = (const B*) new B();
   - b1.isConst() // true
-  - b1 = a1; // B가 sharable인가 occupiable인가 따라 다르다. 
+  - b1 = a1; // B가 sharable인가 occupiable인가 따라 다르다.
 - occupiable sharable 문서를 또 보면 알겠지만 isOccupiable은 metaclass에 저장되어있고, pretype을 제외하면 사용자 클래스는 모두 sharable이다. occupiable이냐 sharable이냐의 동작상 차이는 오직 Refer클래스에 복사생성 및 operator=()에만 존재한다. sharable이면 Refer객체인 rhs를 그대로 복사하며(isConst()여부도) occupiable이면 deepcopy를 시전한다. 그것뿐이다.
 - msg의 args는 Node에 대한 배열이다. 이 Node에는 다른 expr이 들어갈 수도있고 Integer가 그대로 박혀있을 수도 있다. 후자를 프로그래밍 언어에서는 리터럴상수라고 한다. **리터럴상수로 된 경우는 얼마나 메소드를 수행하던 그 인자값이 항상 동일해야한다.**
 - 메소드는 주어진 인자를 최종적으로 cast()함수를 사용한다. cast의 반환값은 refer로, 바로 반환이 가능한 케이스(업캐스팅, 다운캐스팅)은 Refer객체를 바로 만들어보내고, 그게 아닐 경우는 생성자를 호출하여 객체를 복사한다.
@@ -11392,8 +12725,8 @@ private:
     - \1. thisptr가 필요한 순간은 Object에서 Method로 call을 redirection 하는 순간일 뿐이다. 왜냐하면 Method는 Object에 속한것이 아니며, call()은 인자리스트가 fix되어있기 때문에 Method에게 Object자신의 thisptr를 전해줘야만 하기 때문이다.
     - \2. Method의 thisptr는 실행중인 상태에서만 조회가 가능하다. 당연히 왜냐하면 Method는 모든 객체의 것이니까.
     - \3. 콜스택에 함수가 들어가있는 모든 함수는 자신의 thisptr를 알려줄 수 있어야 한다.
-      - 예) A함수 실행 -> 안에서, B객체의 C함수를 호출한 상황일때, C함수 안에서 A함수의 getObject()를 했을때 
-  - v 1안 모든 Message 객체는 .thisptr라는 멤버변수를 두고 거기에 담아둔다. 
+      - 예) A함수 실행 -> 안에서, B객체의 C함수를 호출한 상황일때, C함수 안에서 A함수의 getObject()를 했을때
+  - v 1안 모든 Message 객체는 .thisptr라는 멤버변수를 두고 거기에 담아둔다.
     - 반대의견
       - Message는 Expression이 하나씩 소유하고 있음을 생각해보면 답이 나온다. Expression은 Method가 가지고 있으며 Method는 시스템에 1개다. Expression도 한개다. 고로 그 안의 Message도 한개다. 그런데 thisptr는 클래스는 같아도 여러개의 객체가 나오므로 Message에 넣어질 thisptr는 여러개가 된다. 따라서 모든 Message마다 thisptr를 갖고 있는 것은 낭비일 것이다.
       - 만약 World에서 Object가 아닌 Method.getName()을 한다고 해보자. 이 알고리즘이 제대로 될것인가?
@@ -11402,7 +12735,7 @@ private:
 시나리오
 
 - 작성
-  - IDE에서 사용자가 메소드를 작성한다. 컴파일되고 Wrd는 이 메소드가 static인지 아닌지, 인자는 뭐가 필요한지 알게된다. IDE에게 그것을 고지하고 IDE는 인식한 뒤, 사용자에게 그것을 고지한다. 사용자가 잘못된 인자를 Method에 넣거나, 일반메소드를 static메소드처럼 사용한 경우, IDE는 그것을 컴파일러에게 넘기고, 컴파일러는 CREPL로 이걸 처리하면서 에러를 뿜어낸다. 사용자는 에러를 보고 올바르게 고친다. 사용자가 제대로 작성한 메소드호출 코드를 작성하면 Wrd는 메소드를 호출하기 위한 msg를 생성할때 이 Method가 static이 아니라는 사실을 알게된 순간 첫번째 element를 this를 위해 추가로 size+1하여 생성하고 앞에서부터 인자를 채워넣는다. (this는 맨 뒤에 위치하게 된다) 
+  - IDE에서 사용자가 메소드를 작성한다. 컴파일되고 Wrd는 이 메소드가 static인지 아닌지, 인자는 뭐가 필요한지 알게된다. IDE에게 그것을 고지하고 IDE는 인식한 뒤, 사용자에게 그것을 고지한다. 사용자가 잘못된 인자를 Method에 넣거나, 일반메소드를 static메소드처럼 사용한 경우, IDE는 그것을 컴파일러에게 넘기고, 컴파일러는 CREPL로 이걸 처리하면서 에러를 뿜어낸다. 사용자는 에러를 보고 올바르게 고친다. 사용자가 제대로 작성한 메소드호출 코드를 작성하면 Wrd는 메소드를 호출하기 위한 msg를 생성할때 이 Method가 static이 아니라는 사실을 알게된 순간 첫번째 element를 this를 위해 추가로 size+1하여 생성하고 앞에서부터 인자를 채워넣는다. (this는 맨 뒤에 위치하게 된다)
 - 실행
   - Managed
     - Wrd는 Object에 먼저가서 사용자가 어떤 member를 가져가길 원하는지 질의해서 찾아낸다. 그리고 methodcallstmt는 msg 인자 맨 뒤에 caller(= this)를 넣고 Method.call(msg)을 수행한다. 수행이 끝나도 msg 맨 뒤의 thisptr는 그대로 유지한다.
@@ -11451,13 +12784,13 @@ private:
 
 - 모든 것은 객체다. 하지만 World에서 더 중요한 것은 Message다.
 
-- Message란 함수호출을 위한 의지를 의미한다. 
+- Message란 함수호출을 위한 의지를 의미한다.
 
 - 객체는 함수와 자기의 변수를 가지고 있다.
 
-- Object는 객체다. 고로 함수가 존재하고 메타클래 Class<Object>는 각 함수에 대한 Function을 가지고 있으므로 이걸 통해서 호출이 가능하다. 
+- Object는 객체다. 고로 함수가 존재하고 메타클래 Class<Object>는 각 함수에 대한 Function을 가지고 있으므로 이걸 통해서 호출이 가능하다.
 
-- 하지만 Object 자체는 메시지를 받을 수 없다. 
+- 하지만 Object 자체는 메시지를 받을 수 없다.
 
 - 이말은, World 개발자는 Object의 함수를 간접적으로 사용하는 것은 가능할지라도(Class<Object>().call("")을 통해서..) Object를 직접 Reference로 가리키던가 Node화 시키는 것은 불가능하다는 것이다.
 
@@ -11473,7 +12806,7 @@ private:
 
   - a.foo(3) // a.foo.call("foo", [int(3)]) 의 축약버전이다.
 
-    
+
 
 ##### 하위 Node로의 매시지 전파
 
@@ -11489,7 +12822,7 @@ private:
 - 월드 코드 "foo[0].getManager().getName()" 가 있을 경우, 어떤식으로 진행되는가?
 
   - 파서가 코드블럭을 만들어내면 끝나는 작업이다.
-  - foo, [0], getManager (), getName () 이렇게 끊는다. 
+  - foo, [0], getManager (), getName () 이렇게 끊는다.
   - Statment[]를 생성한다.
     - Statement6
       - Statement5
@@ -11551,7 +12884,7 @@ private:
 
           - 기존 로직 수정이 거의 없고 예외처리가 존재하지 않는다.
 
-            
+
 
 ##### Msg의인자는Method에const로넘어가면안된다
 
