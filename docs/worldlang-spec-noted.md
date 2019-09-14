@@ -2953,6 +2953,87 @@ A.nested()
 
 # [v] 중첩객체
 
+## 생성자의 구현원리 
+* world에서 static 메소드라는건 없다.
+* 그러나 생성자 만큼은 static처럼 돌아간다. (물론 티는 안난다.)
+  생성자는 따라서 this가 존재하지 않는다.
+* 모든 node는 owner를 가지고 있으며 대개는 컴파일러에게 주입된 origin객체를 들고 있다.
+* 생성자는 static 메소드이므로 생성자를 호출하기 위해서 해당 타입의 객체로 thisptr를 교체하지 않는다.
+```cpp
+// 예)
+def My
+	void foo()
+		// foo() 안에 들어온 이상 thisptr는 My의 복사 혹은 origin객체다. 
+		a = A() // A()가 호출되는 것만으로는 thisptr가 a로 교체되지 않는다.
+		a.koo() // 자, 이제 koo()에서는 thisptr가 a로 교체될 것이다.
+```
+* 생성자가 호출되면, 일단 객체가 copy 된다. 중첩되지 않은 origin객체는 owner로 null을 들고 있게 된다.
+  그러므로 이 경우에는 null이 copy 되고 추가 작업은 없다.
+* 그러나 중첩객체의 생성자가 호출되면, 중첩객체의 origin으로부터 copy가 될텐데, 중첩객체의 origin은
+  이미 owner로 origin인 소유객체를 들고있는 상태이다. (컴파일러가 그렇게 주입했다)
+  그러므로 그 값이 일단 copy 된다.
+* 생성자에서 thisptr에 접근한다면, caller, 즉 이 객체의 생성자를 호출한 객체가 나온다.
+* 중첩객체의 생성자를 호출하기 위해서는 문법적으로 2가지 중 하나를 만족해야 한다.
+	- 그 중첩객체를 소유한 origin 혹은 복사 객체로부터 생성자를 호출한다.
+	```cpp
+		// 1
+		.namespace.A()
+
+		// 2
+		ns = namespace()
+		ns.A()
+	```
+	- 중첩객체의 소유자가 scope에 등록된 상태에서 생성자를 호출한다.
+	```cpp
+		def namespace
+			def A
+				...
+			void foo()
+				A() // thisptr는 namespace 이다. 문제가 전혀 없다.
+			
+			def List
+				def Node
+				void foo()
+					Node() // 역시 thisptr는 List의 일종이다. Node의 owner타입과 같다.
+	```
+* 컴파일러는 origin객체를 파싱하면서, 소유/중첩 의 관계를 다 알고 있어야 하며,
+  이러한 관계에 적합하지 않은 중첩객체의 생성자 호출시 에러를 내야 한다.
+
+* 만약 생성자가 호출했을 경우에도 추가적으로 thisptr를 체크하고,
+  이상이 없다면 thisptr를 _owner에 할당한다.
+  이로써, 중첩객체들은 항상 유효한 부모객체를 소유할 수 있게 된다.
+	```cpp
+		A::A()
+		{
+			Node* thisptr = scope["thisptr"];
+			if(!thisptr) return ERRROR!;
+
+			if(getOwner() && !thisptr.isSubOf(getOwner()))
+				return ERRROR!;
+
+			_owner = thisptr;
+		}
+	```
+
+
+```cpp
+def namespace
+	def A
+	def List
+		def Node
+		node = Node null
+
+		void foo()
+			node = Node()
+		
+
+def app
+	void main()
+		a = namespace.A()
+		l = .namespace.List()
+```
+
+
 * protected건 public이건 모든 inner 객체는 owner를 가지고 있다.
 * 또한 모든 중첩 객체는 복제가 가능하다.
 ```cpp
