@@ -1051,7 +1051,11 @@ activity = Activity (Service system.get_service("Reckon")).get_activity()
 
 # 흐름 제어
 
-## for-in
+
+
+
+
+## for
 
 for문은 var가 true를 의미하면 루프를 지속한다. null은 0을 의미하며 0은 false를 의미한다.
 
@@ -1174,7 +1178,9 @@ with name
 
 
 
-## [v] break, continue, return
+
+
+## [x] break, continue, return
 
 * break는 블록문 1개를 반환값과 함께 벗어난다.
 * continue는 블록문 처음으로 되돌아간다.
@@ -2398,6 +2404,946 @@ def app
 ```
 
 
+## 멤버변수 컨셉
+
+- v 멤버변수는 Object에 속한것이냐 아니냐 기준으로 배열을 2개 만든다.
+
+  - Object와 Method는 본격적으로 멤버변수를 다룬다. 멤버변수를 어떻게 구성할것인가는 생각외로 상당히 복잡한 문제가 되는데, 왜냐하면 const여부, static여부, private/public 여부, variable여부 등등 여러가지 요인들이 한번에 얽혀있기 때문이다.
+    - [확정] 1. class - object 멤버를 구분해야 한다.
+      - class에 속한것(메소드 + static variable)은 모든 object가 공유하는 것이므로 이것들은 모든 object가 생성될때마다 추가할 필요가 없어야 한다. 따라서 최소한 이둘은 반드시 구분할 필요가 있다.
+    - \2. static 메소드 구현방법
+      - 구현 알고리즘에 따라서 static 메소드는 일반 메소드와 별도로 구분할 필요가 있는가?
+    - \3. public/private
+      - 얼핏 생각하면 외부에서 call()을 하는 경우에는 public 메소드만 호출가능해야 한다. 고로 private 메소드가 담길것과 public 메소드가 담길것이 구분이 되어야 하지 않겠냐는 것이다.
+    - \4. const
+      - 객체가 const화 되어있일때와 nonconst일때와 같은 메소드명으로 호출한다고 하더라도 다른 메소드가 호출되어야 한다. 즉 "caller의 const 또한 msg의 일부" 인 셈이다. 따라서 public/private와 마찬가지로 구분될 필요가 있다.
+  - 그러나 문제는 저 4가지를 모두 채택할 경우, 멤버변수는 총 2^4 = 16개의 별도의 container에 담겨지게 된다는 것이다. 따라서 최적화를 고려해야만 하는 상황이다.
+  - v 1안 굳이 구별할 필요가 없는 상황을 만든다.
+    - const, public/private는 Object내부에서 걸러서 에러를 반환하도록 한다. 별도의 배열을 두지 않는다.  두는 이유는 "탐색시 빠르라고" 인데, 어짜피 최적화 과정이 들어가면 탐색 없이 함수를 특정할 수 있도록 해야 한다.
+      - vtable 대신 Object.getMembers()[n] O(1)로 접근하게 된다.
+  - x 2안 구별해야 하지만, 눈속임으로 구별하는 것처럼 만든다.
+  - x 3안 16개의 container가 되더라도 속도가 낮춰지지 않게 하면 된다. 생성/실행시 퍼포먼스가 떨어지지 않는 방향으로 접근한다.
+    - 갯수가 많아졌을때의 부담은
+      - \1. 바로 탐색이 느리다는것과
+      - \2. 객체 생성시 부담이 생길 수 있다는 것이다.
+
+- v 구성 및 객체생성
+
+  - 시나리오
+    - \1. 각 Class들은 부모의 메소드들을 copy한다. 이는 chain deep depth로 인한 퍼포먼스를 줄이기 위함이다.
+    - \2. Object의 Members는 lazy하게 동작한다. 이때 Object는 getClass().getMembers()를 chain으로 가져와서 초기화한다.
+    - \3. 각 Class는 프로세스 시작과 동시에 ClassTree 구축을 위해서 인스턴스가 자동발생한다. Class생성자에서 자동으로 initialize()를 실시한다. 단, Class::initialize() 안에서도 members를 구성하지는 않는다. lazy하게 간다.
+    - \4. 만약 Class::getMembers()가 불려진 경우, getSuperClass().getMembers() 목록을 가져와 일단 clone한다. ClassTree 구축은 이미 끝났기 때문에 getSuperClass() 이때 한다고 해도 인스턴스만 생성한다. 그러나 이후에 호출되는 Members()는 SuperClass의 4번이 다시 반복되게 만든다.
+    - \5. 그 후, T::onInitializeMethods()로 wrapping된 메소드 목록을 가져와서 append한다.
+    - \6. T::onInitializeMethods() 안에서 Method객체가 생성된다. Method는 클래스가 아니므로 3번 과정이 반복되지 않는다. 결과적으로 T::onInitializeMethods는 TClass<T>::getMembers()가 불려지는 최초 1번만 cb된다.
+  - 예외 시나리오
+    - class Method {
+      - const String& getName();
+      - Method[] onInitializeMethods() {
+        - v  getName()에 대한 Method를 만들어서 넘길 수 있는가? --> 넘기는 건 가능하다.
+          - Method::getMembers() -> TClass<Method>::getMembers() -> Method::onInitializeMethods() -> Method newone(...) -> Method::Method(...)
+          - 결론 : Method가 생성된 것이지, Member가 구성된게 아니기 때문에 재귀에 빠지지는 않을 것이다. 그리고 이 루프가 시작된 발발지점도 생성자에 의해서가 아니라 getMember()에 인한 것이다. 무한 재귀는 성립되지 않는다.
+        - Method.get("getName(void)").get("getName(void)").get("getName(void)").get("getName(void)").get("getName(void)").get("getName(void)") 할시, getMember()는 여러번 구축되는가? 메모리 낭비가 되지는 않는가?
+          - 하나씩 추려서 치환해가보자.
+          - == TMethod<getName>().get("getName(void)").get("......");
+          - TMethod<getName>은 Method의 일종이다.  그래서 get()은 getMember()를 호출하고, SuperClass인 Method::getMember()를 호출한다. Method::getMember()는 Class<Method>::getMember()를 호출하며, Class::getMember()는 이미 한번 초기화가 된 경우에는 저장된 멤버를 바로 리턴한다.
+          - 즉, TMethod<getName>()에 담겨있는 TMethod<getName>()은 TClass<Method>::getMember()에 담겨있던 것을 TClass<TMethod<getName>>이 복제한 놈이다. 메모리 낭비가 아니다. 이는 TClass<T>에 T() 객체 한개가 들어있는 걸 생각하면 된다. 무한 루프 및 무한 재귀는 돌지 않는다.
+      - }
+    - };
+    - Method.get("getName(void)").get("getName(void)") 시, 문제가 발생하는가?
+      - == TNativeMethod<getName>().get("getName(void)")
+  - class Object
+    - friend class Class;
+    - Chain _members;
+    - virtual Container& getMembers()
+      - return _members;
+  - Class는 Array Memebers를 갖고 Array ObjectVariables를 갖는다. ObjectVariables는 Members를 chain 한다.
+  - virtual Container Node::getMembers(); // invisible
+  - TRefer<T> TClass::instantiate()
+    - T& newed = *(new T());
+    - _chainMembers(newd);
+    - return TRefer<T>(newed);
+  - class Class
+    - void _chainMembers(Object& obj)
+      - Chain& tweak = obj._members;
+      - tweak.chain(getMembers());
+      - tweak.chain(getObjectVariables().clone());
+  - 파싱시에는 variable, function은 super의 것을 chain을 유지한다.
+
+- 필요시 member라고 해서 variable과 function과 chain을 유지한 것을 값으로 생성해서 반환해준다. 값으로 내보내도 chain을 묶는것 뿐이므로 퍼포먼스 로스는 적다.
+
+- 하나의 객체는 private variable, public variable 2종류를 갖는다.
+
+- 클래스.instantiate()를 하게 되면 메타클래스의 variable을 복제해서 넣는다. 그리고 생성자를 호출한다. 객체의 variable은 chain되지 않은것을 복제했으므로 chain이 아니다.
+
+- 객체가 함수를 사용할때는 chain되지 않은 함수의 것을 바로 사용하므로 역시 탐색시 로스는 없다.
+
+
+
+## 무엇인 member의 기준이 되는가? --> 메시지 스택이 전파될 수 있는가.
+
+- 메시지 스택이 전파될 수 있는가? 그걸 허용하는가?
+- class A
+  - class B
+    - void print()
+      - a = 5;
+- A.B.print 이걸 보자. 여기에는 3가지 메시지가 들어있다. {"A"}, {"B"}, {"print"} 그리고 각각은 stack으로 뒤에것은 앞에것에 영향을 받는다.
+- 이것은 메시지가 전파되는 구조가 아니다. 각 메시지는 독립적으로 소비되지만, 메시지 스택은 공유되기 때문에 앞의 메시지는 뒤에 메시지에 영향을 끼치는 구조다.
+- 만약 Statement가 멤버라면 월드코드에서 누구나가 "a=5" 라는 statement에 접근할 수 있어야 한다.
+- 위의 기준대로 각 개념들이 member인지 아닌지 따져보면,
+- Statement : 아니다.
+- **Method의 인자 : 맞다. method의 첫번째 인자가 무슨 타입인지 rtti로 알아내고 싶을때가 있기 때문이다.**
+- **Method의 반환값 : 맞다.**
+- **Method의 Method : 맞다.**
+- **Method의 멤버변수 : 맞다.**
+
+
+
+## Object의_멤버변수_초기화_문제
+
+- 문제정의 : Object가 Managed에서 생성될때는 TClass<T>::instantiate() 안해서 new T()로 객체를 만들고, 만든 T*->getMembers()로 Chain을 가져와서 chain(메소드.getMembers())하고, 메소드의 ObjectVariables()를 clone한걸 chain시키게 하는 동작을 함으로써 객체의 members 초기화가 완료된다. 이 과정은 쉽게 말해서 Native함수들을 Managed에 visible할 수있는 준비를 만드는 것이다. 그러나 Native에서 객체를 만드는 경우는 어떤가? Object 클래스는 부모클래스이기 때문에 이 생성자 안에서는 도대체 사용자 클래스인 자식클래스가 무엇인지 알 방법이 없다. 자식클래스의 생성자에는, 자식클래스가 사용자의 클래스이기 때문에 함부로 생성자의 코드를 작성할 수 없다. 방법은?
+- v 1안 Lazy 초기화를 수행한다.
+  - "Members에 접근은 반드시 getMembers()로만 수행해야 한다" 는 조건이 완벽하다면, 이 함수가 불려졌을때 Members가 비어있을 경우 메타클래스로부터 members를 가져와서 초기화한다.
+
+
+
+## 멤버변수 기초
+
+- 고찰내용
+
+  - 어떠한 변수를 생성해야한다는 정보를 누가 들고 있어야 하나?
+
+    - \1. 생성자코드에 추가되도록 한다.
+
+      - 아마도 자바에서 사용하는 방법일 것이다.하지만...
+
+    - v 2. 클래스 자체가 변수도 들고있고, 클래스를 clone한다.
+
+      - 클래스는 변수가 무엇인지 알아둘 필요가 있긴 하다. World에서 변수 접근, 변수에 할당은 모두 "메시지"로 취급한다. 함수나 변수나 구분은 할 필요가 없는 것이다.
+
+      - 클래스가 함수를 담을 수 있다면, 구조상 변수도 담을 수 있는 잠재성이 있다.
+
+      - 그럼, 그걸 어떻게 하는가?
+
+        - v 1안
+          - 클래스는 Node[] members; 를 갖게 한다. 그리고 여기에 Function이나 멤버변수가 들어가면 된다.
+          - 이 Node가 일반 클래스인가, 아니면 데이터타입의 클래스(int, float, double, string ...) 인가를 구분짓는 것은 setter와 getter 메시지를 처리 할 수 있는가 아닌가다.
+          - 클래스를 instantiate()를 하게 되면 T()를 생성하고 MetaClass가 가진 members중 Node[]만 복사해서 insert 시켜 주면 된다.
+          - 임의 Node  a에게 메시지가 온 경우,  #메시지_전파_알고리즘 에 따라 scope의 관점에서 올라가면 된다.
+            - 만약 객체소유의 관점에서 올라가면 멤버변수가 메시지_전파_알고리즘 에 반응해버린다.
+          - 문제점
+            - 함수인 Member만 모아서 접근하는 건 쉬움. 이미 있으니까. 하지만 멤버변수인 Member들만 모아서 접근하는 방법은? for문을 도는 방법밖에 없다고 말하지는 말아줘.
+              - 이러한 ContainerForContainer를 Chain이라고 이름을 붙였다. 이걸 통해서 해결한다.
+              - 구체적인 설계는?
+                - 1안 - 최대한 쪼갠다.
+                  - 하나의 클래스는 private variable, private function, public function, public variable 4종류를 가직 있다.
+                  - 파싱시에는 variable, function은 super의 것을 chain을 유지한다.
+                  - 파싱이 끝나면 incarnate()를 통해서 원소를 복제하고 chain을 푼다. 이후로는 메타정보 injection이 불가능하다는 얘기다.
+                  - 필요시 member라고 해서 variable과 function과 chain을 유지한 것을 값으로 생성해서 반환해준다. 값으로 내보내도 chain을 묶는것 뿐이므로 퍼포먼스 로스는 적다.
+                  - 하나의 객체는 private variable, public variable 2종류를 갖는다.
+                  - 클래스.instantiate()를 하게 되면 메타클래스의 variable을 복제해서 넣는다. 그리고 생성자를 호출한다.
+
+      - 2안
+
+        - 준비
+
+          - 메타클래스는 Member를 2개 가지고 있음.  1개는 변수만 들어있는 Member이자 다른 1개를 super로 가리키는 것, 또 1개는 함수만 들어있는 Member. Member에는 함수와 멤버변수가 들어갈 수 있음.
+          - 클래스 파싱될때 모든 함수를 먼저 함수Member에 넣음.
+          - 그리고 멤버변수Member super를 함수Member로 지정함.
+          - 파싱된 멤버변수를 멤버변수Member에 넣음. 이제 멤버변수Member는 모든 멤버변수를 가지고 있음.
+
+        - 결과
+
+          - 메시지전파는 함수Member만 접근하면 됨. 문제없음.
+          - 새로운 Node생성시, 멤버변수Member를 복제하여 새로운Node에 집어 넣으면 됨. 해당 Node는 독립적인 멤버변수를 가지고 있으며, 게다가 함수Member는 기존처럼 super로 가지고 있기에 메모리에 포함되지 않음.
+
+        - 문제점
+
+
+
+## static변수는_어떻게_구현하는가
+
+- Generating단계에서 class 객체를 추가하면서 members에는 static변수와 method만 담는다.
+- WorldObject생성시 붙여지는 멤버변수는 별도의 const Members& getMemberVariables() const에 담겨지며 이것의 nonconst 버전은 friend 클래스들에게만 공개된다.
+- ClassManager에 의해서 제공되는 class는 nonconst로 제공된다.
+- 고찰내용
+  - v 1안 일반 멤버변수는 class의 멤버가 아니다.
+    - Class의 일반 변수는 world에 visible 해서는 안된다. 함수와 static 변수만 visible 해야한다.
+    - Generating단계에서 파싱을 하면서 class 객체를 추가하는데 이때 Class.member에는 Method와 static 변수가 nonconst로 접근할 수 있다. 멤버변수는 별도의 내부 members에 담겨지며, 이것들은 별도의 const Members& getMemberVariables() const 와 같이 접근해야 하며, nonconst로 접근할 수 있는 것은 일부 friend로 선언된 클래스들 뿐이다.
+    - 대박이네.. 어제하루종일 고민한건데... 이렇게 간단히 풀리다니.
+    - v 문제없어 보이긴하는데..시나리오로 검증해보자.
+      - C++ 관점에서
+        - classManager로 nonconst인 Class를 얻을 수 있다.
+        - class는 member인 method와 static 변수를 있는 그대로 제공한다.
+        - 객체시 추가될 멤버변수는 const Members getMemberVariables()로 얻어온다.
+      - world의 관점에서
+        - member인 method와 static변수는 당연히 getMember()로 얻어 올 수 있다.
+        - 원한다면 getMemberVariables()도 visible하게 할 수 있을 것이다.
+
+
+
+## 객체의 Member initializing 알고리즘
+
+- Node는 member를 가지고 있다.
+- 각 함수는 자신이 private 여부를 가지고 있다.
+- ObjectType Class는 variable member와 function member, 그리고 Chain<T> member 3개를 가지고 있다. 이중 앞의 2개를 member가 chain하고 있다. function이 앞에, variable이 뒤에 속해있다.
+- variable에 바로 push를 해도 알아서 잘 들어간다.
+  - Container는 Attacher처럼 어떠한 타입에 대해서도 일단은 호출이 가능하고 AttachableType() 체크를 통해서 받아들일지 아닐지를 결정한다. 따라서 chain인 member도 일단은 push가 가능하다. push 할 원소를 앞의 chained 컨테이너와 뒤의 컨테이너에 각각 물어봐서 넣을 수 있다고 판단되면 그곳에 넣는다.
+- 각 variable, function은 부모의 variable, function에 대한 chain이 아니다. 상속시, 부모의 함수를 push 하고 자신의 것을 넣는다.
+  - 중복으로 인한 메모리를 낭비하는 이유는, 이게 퍼포먼스가 빠르기 때문이다.
+- 객체를 생성하는 방법은 variable만 복제하는 것이다. 복제된 variable은 원본 function을 chain한 상태가 된다.
+- 고찰내용
+  - 클래스 문제점
+    - factor가 많다.
+      - private-public 이냐
+      - 멤버냐 function이냐
+      - member
+      - private-variable
+      - public-variable
+      - private-function
+      - public-function
+      - private-member
+      - public-member
+      - 하나의 컨테이너로부터 다양한 컨테이너를 뽑아내는 방법은?
+      - 필수인 것들만 뽑아보자.
+        - all-variable : 객체 생성을 위해서
+        - all-function
+        - all-member : 일괄 적용을 위해
+        - public이냐 private이냐는 건 파서가 직접 판단해서 런타임 에러를 올려보내도록 한다.
+        -  function이냐 variable이냐 를 구분하지 않을 방법은?
+          - 이는 빠른 객체 생성을 위해서 필요했다. 객체 생성시에 variable을 복사해야 하기 때문이다.
+          - Node는 member만 가지고 있고,
+          - 클래스 & 객체는 변수member + 함수member 로 이루어져 있다. 이 2개는 member와 동기화 되는 거고.
+        - member가 chain이며 function이 앞에 들어가 있는 상황에서  member.push(variable)를 하게 되면 어떻게 되는가?
+          - 각 container는 어떠한 타입을 받을 수 있다는 정보가 있어야 한다. 기존 World는 이게 없었기 때문에 Container<T>는 있어도 ContainerBase 같은 건 있을 수 없었던 것이다. ContainerBase는 push(Node&)가 있어야 하며, 어떠한 타입에 대해서 연산이 가능한지를 알려주는 getPushableType() 같은 게 있어야 한다. 마치 Attacher 처럼.
+  - 전역변수인지 아닌지는, 해당 object가 어느 scope에 속하는가에 따라서 정해질 뿐이다.
+  - 상위 scope에서 객체를 접근할 경우 재귀적으로 접근이 동작하지 않는다.
+  - 재귀적으로 할 경우 중복된 메시지수신이 존재했을때 순서에 의해서 수신자가 반응하게 되므로 예상치 못한 결과가 나오게 된다. 송신자는 접근시, 접근할 객체를 찾을 타겟을 정확하게 지정해야 한다.
+
+
+
+## Scope, 객체와 메소드 간의 메시지 전달 체계
+
+- 상당히 까다로운 문제였다.
+- \#Message는_name_thisptr_args를_모두_하나의_Array로_구성한다
+- **thisptr은 Object와 관련이 없다.**
+- **Method.call(msg)에서 Method가 static Method가 아니라면 msg 마지막에 thisptr를 넣어둬야한다.**
+- CallStmt나 Method를 굳이 Native환경에서 쓰고 싶다는 변태적인 개발자는 직접 msg를 생성할때 args를 size+1한 뒤에 끝에다가 this로 사용할 object를 넣어둬야 한다. Method::run(msg)에다가 Method::run(thisptr, msg)로 하자는 의견도 있었다. 그러나 Method에는 StaticMethod도 나올 수 있으며 이 경우 thisptr는 완전히 필요없는 인자가 된다. Method라는 클래스에는 Static메소드도 포함된 상태이기 때문에 특정 자식클래스에서만 사용한는걸 공통클래스로 끌어올리는데는 조금 석연찮다.
+- **Msg는 모두다 인자로써만 취급하기에 자신의 마지막 arg가 thisptr인지 아닌지는 알 도리가 없다. 메소드가 마지막 인자를 thisptr로써 취급하는 것 뿐이다.**
+- **Scope.stack(Object&)는 ObjectSpace를 등록하며, scope의 localspace의 "this" 라는 변수를 만들어(이미 있다는 덮어써서) 주어진 object로 assign한다.**
+- **Object는 call할때 scope에 대해서 아무런 동작을 하지 않는다. 그저 자신의 member들만 뒤진다.**
+- **NativeMethod 역시 scope에 대해서 아무런 동작을 할 필요가 없다.**
+- **StaticMethod는 Object관련된 scope 조작이 없다. LocalSpace만 add한다.**
+- 왜냐하면 Method::stack을 보면 다른 모든것들은 scope에서 나오고 있기 때문이다.
+- 이 둘을 모두 scope에서 출발하도록, Method&origin도 그렇게 만들면 _stack의 args를 scope만 받도록 만들 수 있다.
+- 그렇게 되면 object와 method 모두 같은 함수인 _stack을 두도록 할 수 있다.
+- 왜 msg에 뒀을까? 이유가 있을 것이다. --> #Message는_thisptr를_어떻게_다뤄야_할까
+- **일반 nonstatic ManagedMethod는 외부로부터 this에 사용할 Object가 msg 뒤에 담겨있다는 걸 안다. nonstatic ManagedMethod는 this로 사용할 object를 꺼내서 scope.objectSpace.push() 한다. 함수가 끝나면 objectspace.pop()을 한다.**
+- ManagedMethod가 자신이 static인지 아닌지 아는 방법은 isStatic()을 사용하면 된다.
+
+
+
+
+
+
+
+## 함수 디덕션. 코드를 보고 어떻게 무슨 오버로딩된 메소드인지 파악하는 가.
+
+- 요구사항
+  - 함수디덕션의 핵심은, expr에 담긴 argument들을, expr에서 호출하려고 하는 함수명세를 통해 도출된 함수후보군 중에서 가장 비슷한 함수의 parameter로 명시적 캐스팅을 묵시적으로시켜서 호출이 허용되도록 만드는 것이다.
+  - 모든 명시적캐스팅들은 주어진 상황에 따라 묵시적으로 캐스팅이 될 수 없다. 오직 pretype 들에 대해서만 world가 미리 정의한 묵시적 캐스팅만 해당한다.
+  - 여기서 핵심은 함수후보군을 찾아내는 것과, 그 후보군 중에서 가장 적합한 것 1개를 도출해 내는 과정과, 그 프로세스를 어느 클래스에서 가지고 있어야 하는 것 3가지다.
+  - 가장 먼저 #묵시적_캐스팅-정책 이선결되어야 한다.
+- 고찰결과 각 인자는 implicit casting(업캐스팅과 prebuilt 타입간의 제한된 casting)만 고려해서 가장 bestfit을 찾아내면 된다.
+- 속도가 매우 중요하다. 캐스팅은 상당히 많이 사용되기 때문이다.
+- .cast<T>는 묵시적캐스팅이다.
+  - world에서는 invisible하다.
+  - 빠르다.
+  - 함수 deduction시 사용된다.
+  - 다라서 Method 안에서 사용되는 캐스팅은 to()가 아니라 cast<T>다.
+  - 묵시적 캐스팅은 업캐스팅과 기본제공타입의 명시적캐스팅이 있다.
+  - 기본타입의 명시적 캐스팅은 매우 빠르게 제공되어야 하므로 override를 사용해서 제공된다. (즉, 이 기본타입들은 생성자를 통해서 캐스팅을 공개하지않아도 된다는 것이다. 이 방법은 오래걸리니까).
+
+
+
+
+
+
+
+
+
+### deduction 함수 바인딩
+
+- c++처럼, 함수의 signature와 정확히 일치 되지 않더라도 유도리있게 파서가 "이 심볼이지??ㅋㅋ" 하면서 매칭해주는 알고리즘이다.
+- 고찰로 알아낸, 이 문제의 가장 포인트는,
+  - 묵시적 형변환으로 함수를 바인딩하는 것은 "**사용자의 의도와 실제가 달랐을 경우, 유도리있게 비슷한 걸 정해준다**"는 컨셉임을 잊지 말하야 한다. 이는 "형변환이 가능하다"와는 다른 얘기인것이다.
+    - 예를들면 [float.to](http://float.to/)(string)은 가능하다. 하지만 그렇다고해서 foo(string) 함수에 사용자가 foo(3.5)로 호출하는 것이 용납되는 것은 아닌 것이다. 명시적으로 캐스팅을 해야하지. 이를테면,
+      - foo(string)
+      - foo(int)
+      - foo(3.5)는 어디로 가야 하나? --> 정답은 foo(int)로 가야한다. 둘다 형변환은 가능하지만 묵시적변환은 int -> string은 동작하지 않아야 하는 것이다.
+    - 하지만 foo(float) 함수를 foo(5)로 하는 건, 유도리 있게 해줄만 하다고 여겨지게 된다.
+- 묵시적 형변환은 "계열" 을 기반으로 판단된다.
+  - Numeric계열(int, char, float, bool)
+  - 문자열계열(string)
+  - custom계열(클래스 계층구조로 판정)
+  - 계열이 다르면 묵시적 형변환은 일어나지 않는다.
+- 알고리즘은 다음과 같다.
+  - 파서는 foo(int, float)라는 코드를 봤을때 적절한 call 코드블럭으로 파싱해야한다.
+  - 함수명 foo를 갖고 있는 현 scope의 모든 함수목록을 가져온다.
+    - foo(char, string), foo(bool, result), foo(result, float), foo(int, float, string), foo(float, int)
+  - 가져오는 도중 정확히 일치되면 그걸로 끝낸다. --> END
+  - 차선책을 찾기 위해 본격적인 묵시적형변환을 통한 함수바인딩 로직에 들어간다.
+    - 가져온 후보군 들을 탐색하면서,
+      - 메소드들에게 parameter를 넘겨주고 실행가능한지 evaluate()하라고 한다.
+      - int now = 메소드::evaluate(int current_most_low_evaluated_value) {
+        - 인자 다르면 return -1
+        - int sum = 0;
+        - for 모든 Arguments {
+          - sum += evaluated = Argument.evaluate(param[n]) {
+            - String/Numeric::evaluate() {
+              - if 같은 계열 아니면, return -1
+              - return 0;
+            - }
+            - 기타 모든 계열(==custom::evaluate() {
+              - if ! param.getClass().isSubOf(getClass()) return -1
+              - return param.getSuperClasses().level - getSuperClasses().level;
+            - }
+          - }
+          - if evaluated < 0, 탈락.
+          - if sum > current_most_low_evaluated_value, 탈락. 더 볼것도 없다.
+        - }
+        - return sum;
+      - }
+      - if now < 0, 후보군에서 제거
+      - if !now, 이 놈입니다. 잡아가세요.
+    - if 남은_후보군.getLength() >= 2, 모호성의 오류
+    - if ! 남은_후보군.getLength(), 함수가 없습니다. 에러.
+    - return 남은_후보군[0];
+- 위와 같이 하게 되면, 다음과 같은 상황에서도 모호성의 오류가 나온다.
+  - void print(int, char, float) {} // 1
+  - void print(float, float, int) {} // 2
+  - print(3.5f, 3.5f, 3.5f);
+- 얼핏보면 float이 일치된 갯수가 2번이 더 많으니까, 2번째 print로 가야하지 않냐고 생각할지도 모른다.
+- 고찰 내용
+  - World 함수 안에
+    - foo()
+    - foo(char)
+    - foo(string)
+  - 3개가 있을때 내가 foo(20440) 을 한 경우, 어떤 함수가 호출되어야 할지를 정하라는 것이다.
+  - 1안 범용의 룰을 만들고 모든 타입에 대해서 적용시킨다.
+    - 1안 아무런 호출도 하지 않아야 할까?
+      - 그럼 foo(int)
+        - foo(string)
+        - foo(char)
+        - 이 상황에서 foo(36452.5) 는 어떤가? 이래도 아무런 호출을 하지 않아야 맞는가?
+        - 아니면 foo((int) 36542.3) 나, foo((int) grade) 를 앞에 붙여줘야 맞는가?
+      - 다른 예는 어때?
+        - foo(Parent)
+        - foo(Child)
+        - 에서 foo(GrandChild) 는 어떤가?
+    - 2안 하니면 숫자와 가까우니까 char?
+    - 3안 아니면 경우의 수가 가장 크니까 string?
+  - 2안 축소화된 매우 알기쉬운 범용룰 1개를 만들고, 일부 타입에 대해서만 특수룰을 적용시킨다.
+
+
+
+## TClass Origin 새로 설계
+### [v] 요구사항
+* Origin 객체라는 것이 나왔고 사실 이것이 Type을 대신하고 있다.
+* 이제 기존 TClass가 Type을 대신하고 있었으므로 이걸 해결해보자.
+
+### [v] 1안 TClass를 제거하자.
+
+
+```cpp
+template <typename T>
+class tRtti {
+public:
+  bool isADT() {
+  bool isPtr()
+  ..
+  ..
+  origin* _org;
+  tRtti<typename T::Super> _getSuper() { return tRtti<T::Super>(); }
+  oigin& getOrigin() { return *_org; }
+  res& init() {
+    originMgr& mgr = Core::get().getOriginMgr();
+    _org = mgr[getName()];
+  }
+};
+
+class object : public node { // object는 originMgr에 있으면 origin객체인 것이다.
+  TStrong<TArray<Object> > _supers; // Origin이 복제되어도 shallow copy.
+  TStrong<TArray<Object> > _subs;
+  bool* _isInit;
+
+  object() { _isInit = new bool(); }
+  object(const object& rhs) { _isInit = rhs._isInit; }
+
+  virtual TArray<Object> getSupers() { return _supers; }
+  virtual TArray<Object> getSubs() { return _subs; }
+  const object& getSuper() { return getSupers()[0]; }
+  const object& getOrigin() { return Core::get().get....; }
+  bool isInit() { return _isInit; }
+  res& init() {
+    if(isInit()) return rOk;
+    Origin& sup = getSuper(); // init을 돌리기전에 모든 Origin객체들은 일단 add 되어있다.
+    if(sup.init()) return rAbort;
+    sup.getSubs().add(*this);
+    getSupers().add(sup);
+    return tRtti::init();
+  }
+};
+
+class originMgr {
+  operator[](const string& name);
+  originMgr() {
+    objs.add(_builtIns);
+  }
+  res& add(const object& origin?) {
+    if(origin == 중복) return rAbort;
+    return objs.push_back(origin);
+  }
+
+  res& init() {
+    for(object& o : objs)
+      o.init();
+  }
+  static tArray<Object> _builtIns;
+};
+
+class node {
+  // Object보다 상위클래스들은 WRD_BASE_CLASS를 쓴다. 그러면 자동으로 static 타임에 DummyOriginObject를 만들어 OriginMgr::_builtIns.add(DummyObject()); 를 넣어둔다.
+  WRD_BASE_CLASS(
+
+  virtual res& init() {
+    if(isInit()) return rAbort;
+
+
+    return rOk;
+  }
+  static res _onInitMethods(tArray<Method>& tray) {
+    Object._onInitMethods(tray);
+    Instance._onInitMethods(tray); // Unit, Instance 의 것들이 담겨진다. visible 하게됨.
+    // 보통은 자기껏만 담도록 macro가 expand 된다.
+  }
+  virtual bool isInit() { return true; }
+  virtual TArray<Object> getSons();
+  bool isSub(const Thing& rhs) {
+    // 1. tier 비교
+    // 2. 동 tier가 같은 클래스인지 비교
+  }
+  bool isSuper(const Thing& rhs);
+}
+
+
+
+// 사용법:
+tRtti<MyCppObj>::getOrigin().getName().... // 1
+Core::get().getOriginMgr()["MyCppObj"].getName() // 2
+```
+
+* Origin은 3군데에서 불러진다.
+* C++ 빌트인 클래스의 경우, macro WRD_MACRO에 의해.
+  * .item(모듈파일) 에 의해
+  * .wrd 파일에 의해
+
+* Origin을 불려지면 OriginMgr에 담겨진다.
+* 1,2는 먼저 수행되며 수행후 init()이 된다.
+  * 2를 보면 알겠지만 native 클래스는 Mgr클래스로부터 상속을 받을 수 없기때문에 가능하다.
+
+* TClass는 tRtti가 되며 단순히,
+  * 메타프로그래밍 + Origin객체에 쉽게 접근가능
+* 만 지원하게된다. mgr에서는 필요가 없다.
+
+
+* cast(), isSub(), getSubs() 모두 Thing에서 호출이 가능해야 한다.
+* TClass는 사라지고 Object가 계층 구조를 보관한다.
+* Origin객체란 OriginMgr에 보관된 Object를 말하는 것이다.
+* Origin객체는 OriginMgr["name"]으로 쉽게 접근 가능하다.
+* Thing, Instance 들은 Object보다 상위인데도 cast, isSub가 가능해야 하므로 이를 위한 DummyOriginObject를 생성한다.
+  * Dummy는 복제 될 수 없다.
+  * WrappedMethod는 초기화가 된 이후에, this를 호출시 바인딩한다.
+  * DummyOBject는 OriginMgr가 시작하자마자 만들어 둔다.
+    * tRtti로 Object보다 상위의 모든 클래스들을 알아내서 만들어낸다.
+    * 모든 월드 native 클래스들은 Super라는 typedef가 있어야 한다.
+    * tRtti _getSuper()는 오직 OriginMgr에만 열려있다. 다른 사람들은 Thing::getSuper()를 쓰자.
+
+### [v] Q1. Instance에 있는 getId()도 visible 할 수 있는가?
+* 예전 설계에서는 TClass가 Type을 담당했기 때문에 Node 보다 구체클래스들도 TClass에 메소드를 넣을 수 있었다.
+  * Tclass는 이러한 메소드들을 담아두는 역할을 수행했기 때문에 Node::getMembers()를 갖지 못해도 일단 메소드를 보관해  놓았다.
+  * Object가 나올때는 이러한 TClass()의 메소드를 shallow copy했기 때문에 문제가 발생하지 않았다.
+* 이제 새로운 설계에서는 TClass는 사라지고 Origin 객체가 이걸 대신한다.
+  * 메소드들은 WRD 매크로를 쓰면 일부 매소드들에서만 참조할 수 있는, wrap한 메소드 배열을 returning 하는 static 메소드를 private로 하나씩 박아넣고 있다.
+  * getMembers() 를 가지고 있는 Node는 초기화시에 Node::onInitWrappers()를 부를때 모든 supers를 다 부른다.
+  * 보통은 origin객체 초기화시에 부모origin의 members를 복제해 넣고, onInitWrappers()를 호출해서 wrapped된 메소드 배열을 가져와 getMembers에 넣는다.
+
+### [v] Q2. Thing, Instance에도 여전이 cast, isObject를 쓸 수 있는가?
+* TClass가 Object로 이관되면서 계층 구조는 Object에서부터 가지게 된다.
+* Thing, Instance는 Object가 아니기 때문에 여기에 계층 구조를 직접 넣을 수없다.
+* origin객체에 접근할때 항상 originMgr["이름"] 으로 접근한다. 문자열인, 이름이 중요하다.
+* Thing, Instance에 대해 더미Object를 생성해서 시작하자마자 originMgr가 생성해둔다.
+  * 생성해야할 더미Object는 각 Thing, Instance들이 별도 정의된 매크로에 의해 expand되어, originMgr::_getBuiltIns()에 append해둔다.
+  * 일단 Object가 주입만 되면, 런타임시에는 더미Object이건 정상 Object이건 구분없이 돌아갈 수 있다.
+* Thing::isSub()가 불려지면 originMgr["Thing"]을 찾아내서 사용할 것이다.
+
+### [v] Q3. 최적화 방안
+* 객체가 lost 를 식별하면 자동으로 originMgr에서 업데이트 하는 tWeak를 모든 thing들이 share 하면된다.
+
+
+
+## origin 객체는 생성자 호출이 불가능할때가 있다
+
+기본생성자가 없으므로 시스템에서 origin객체를 하나 만들어놓고 시작이 불가능한데?
+
+
+객체의 생성
+1. 생성자를 통하기전에 def 를 통해서 객체는 초기화된 상태로 생성된다.
+2. 초기화 수식이 동작한다.
+3. def A =  B() 가 동작한다.
+----여기까지 프로그램 시작전 ----
+4. 사용자에 의해 생성자가 호출된다.
+
+
+
+## 중첩된 객체의 문법
+
+```cpp
+def Part
+    __name = "unknown"
+    def name
+        get: _name
+        // can't call set()
+def Part2
+    def Nested // nested obj.
+        void say()
+            c.out("name=$name") // can access scope of owner object.
+
+    def name = "unknown" // nested obj. prototyped from str
+        get=>: path = directoy + val // str.val
+        _set=> // can't modify value of "name" at outside.
+
+    directory = "/home/me/"
+    path = directory + name
+
+// Part2().Nested는 Part2.Nested의 복제.
+// 이걸 막으려면,
+def Part3
+    def $Nested // usually declare nested origin obj as static.
+        void say(): c.out("...")
+// Now, all copies of Part3 shares same Nested obj. no instance bloating.
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [v] this가 겹치는 순간
+
+### 문제
+
+```cpp
+def myObj
+  _age = 30
+
+def child := myObj
+  def age = int?
+      $set: // myObj.age를 가리키도록 하고 싶다면?
+        // 참고로 현재 this는 age인 상태.
+```
+
+### [x] 1안 각 클래스는 static으로 private this 라는 변수를 가지고 있다.
+
+```cpp
+def myObj
+  $this := This?
+
+def child := myObj
+  $this := This?
+  def age := int?
+        $set: child.this
+```
+
+### [v] Q2 super.this를 사용한다면?
+
+```cpp
+def myObj
+  age := 5
+
+def child := myObj
+  $this := This?
+    def age := int?
+        void say()
+      // myObj.age를 사용하고 싶다면.
+```
+
+```cpp
+1: myObj.this.age
+2: myObj.age
+3: this.myObj.age
+4: this.myObj::age
+```
+
+### [x] 2안 A.this를 한 경우, A에 대한 this property가 동작한다면
+
+### [x] 3안 namespace를 사용한다면?
+* members는 member로 등록될때 Name이외에도 namespace 항목이 또 있음.
+* getmembers에서 name만 입력하면 구체 --> 기본 순으로 같은 name인걸 찾음
+* namespace까지 정확하게 입력하면 탐색시 namespace도 고려해서 찾음.
+```cpp
+def myns
+
+  def A
+    void foo()
+    void boo()
+      foo()
+      this.foo()
+      .myns.A.foo()
+      myns.A.foo()
+      A.foo()
+```
+
+#### namespace 문법
+* def로 재활용하자. 굳이 뭘 또 키워드를 만드냐.
+* 클래스 확장 문법을 지원해줘야 namespace가 제기능을 한다. (그래야 다른 소스파일에서도 그 namespace안에다가 멤버 넣지)
+
+#### [v] Q3 this와 name이 다를때의 문제
+
+```cpp
+def parent
+  void foo()
+def child := parent
+  void foo()
+  void exec()
+      // parent의 foo()를 호출하고 싶다면?
+```
+
+#### 고찰
+
+* parent.foo() 와 this.foo()는 어떻게 다른가?
+  * .은 객체 안에 있는 객체에 접근하는 것이다.
+  * this.parent.foo()를 한 경우, parent.foo가 하나의 메소드명이 아니라 parent라는 객체 안에 있는 foo를 찾는걸 의미하게 된다.
+
+### [x] 3-1안 각 식별자는 namespace가 존재한다. 그러나 키워드는 없다.
+
+* namespace가 존재하나 worldlang에서 namespace를 명시적으로 줄 순 없다. 객체의 def를 통해 간접적으로 정의된다.
+
+```cpp
+def wrd
+  $name = "wrd"
+    def device // 풀네임: wrd::device
+      name := str? // wrd::device::name
+        get: wrd::name
+      def part := device
+        void foo(): throw ERROR
+        device = ""
+            name = ""
+            void boo()
+
+
+        str foo()
+      c.out(this.part.wrd::device::foo())
+            c.out(this.part.device::foo())
+      return name // this.name
+
+```
+
+```cpp
+// namespace를 이름에 넣자는 생각:
+1:  parent::foo()
+    this.parent::foo()
+1-1:parent's foo()
+    this.parent's foo()
+2:  parent.this.foo()
+3:  parent#foo()
+    this.parent#foo()
+4:  parent-foo()
+    this.parent-foo()
+5:  parent_foo()
+    this.parent_foo()
+6:  parentFoo()
+    this.parentFoo()
+7:  parent`foo()
+    this.parent`foo()
+```
+
+
+
+### [x] 3-2안 특정 타입화된 this
+
+```cpp
+def parent
+  void foo()
+def child
+  void foo()
+    void exec()
+      parent.foo()
+      child.foo()
+      foo()
+      this.foo()
+
+      this$parent.foo()
+
+      c.out(this.part$device.foo())
+      c.out(part%device.foo())
+```
+
+
+
+#### [x] Q2. 여기서 한발 나아가 타입 수렴이라는 키워드를 만들면?
+
+```cpp
+def dev
+  dev()
+    dev(str new): name = new
+  name := ""
+        =>set: len = name.len
+  len = 0
+    void say(): c.out("name=$name")
+
+def bicycle := dev
+  _parts = { def handle := dev
+    handle(): super("handle")
+  , def wheel := dev
+    wheel(): super("wheel")
+  }
+  =>void say()
+        for e in parts: e.say()
+
+b = bicycle
+b.say()
+
+d = dev bicycle
+d.say()
+
+f = dev%bicycle
+f.say()
+
+f1 =
+```
+
+* 많이 생각해봤는데, 쓸데가 없다. 예상치 못한 동작이 나간다.
+
+### [x] 4안 this안에 base클래스와 owner클래스가 들어있다면?
+
+```cpp
+def base
+  name := "base.name"
+def marine := base
+  name := "marine.name"
+
+  def gun := base
+    name := "gun.name"
+
+        void foo()
+            base.name // base origin객체의 name
+            name // gun객체의 이름
+            this.name // gun 객체의 이름
+            this.base.name // gun객체의 base의 name
+            marine.name // marine origin객체의 이름.
+            marine.base.name // marine origin객체의 상속받은 base의 name.
+            this.marine.name // 이 this 객체와 연관된 marine객체의 name.
+            this.marine.base.name // 이 this객체와 연관된 marine객체의 부모클래스중 하나인 base의 이름.
+
+            m = marine() // .marine()
+            m = this.marine() // this와 연관된 marine객체의 복제
+            m = .marine() // .marine()
+
+            b = base()
+```
+
+#### [x] 4-1안 항상 classscope이 우선한다면?
+
+```cpp
+def base
+  name := ""
+def marine := base
+  name := ""
+
+    def gun := base // marine의 base 로부터 assign
+    def gun2 := .base // 밖의 base 로부터 assign
+        name = ""
+        void foo()
+          base.name // gun2가 상속한 base객체의 name.
+          name // gun2의 name
+          this.name // gun2의 이름
+          marine.name // this와 연관된 marine객체의 이름.
+          marine.base.name // this와 연관된 marine객체의 name
+          this.marine.name // this와 연관된 marine객체의 name
+          this.marine.base.name // 이 this객체와 연관된 marine객체의 부모클래스중 하나인 base의 이름.
+          m = marine()
+          m = .marine()
+```
+
+
+
+### [v] 5안 owner, sub의 사용
+```cpp
+def base
+	name := ""
+def marine := base
+	name := ""
+	age = 0
+	def gun := base
+		void foo()
+			super.name // gun의 부모 base의 name
+			name // gun의 name
+			this.name // gun의 name
+			marine.name // origin객체 marine의 name
+			this.marine.name // 에러
+			outer.name // this를 가지고 있는 marine의 name
+			age // ⇒ outer.name
+			outer.super.name // this를 가지고 있는 marine의 부모클래스 base의 name
+			a = outer()
+			a1 = outer().super()
+```
+#### 알고리즘
+* scope은 다음의 규칙을 따른다.
+	* locals : local scope의 배열
+	* objects : object scope의 배열
+		* 대개, 새로운 object가 call되면, object는 이전의 object scope을hidden 처리시킨다.
+		* 그러나 이 object가 자신이 inner일 경우는 outer를 그대로 유지시킨다.
+		* 모든 inner 객체는 outer를 변수로 가지고 있다.
+		* 모든 object는 sub를 변수로 가지고 있다.
+	* globals
+
+* 예를들면, 다음처럼 구성된다.
+	* locals
+		* local[1] : visible
+		* local[0] : visible
+	* objects
+		* object[3] : visible // inner
+			* 부모클래스의 모든 멤버를 포함해서
+		* object[2] : visible // outer
+			* 부모클래스의 모든 멤버를 포함해서
+		* --------------- hidden - marker ---------------
+		* object[1] : hidden
+		* object[0] : hidden
+	* globals
+
+#### 분석
+
+* 단점
+	* inner가 길어지면, outer.outer.super.super 가 된다.
+		* 반론 : 다른 언어들은 대부분 이런 기능조차 지원하지 않는다.
+		* 정 길다면 다른언어들처럼 별도의 reference를 생성자에서 받도록 직접 짜라.
+	* 명시적으로 클래스명을 딱 지정하지 못한다.
+* 장점
+	* 새로운 문법이나 특문의 추가가 없다.
+	* 직관적이다. 외울필요가 없다.
+
+
+
+
+#### [v] Q1 namspace도 확장을 쓸것이고, 이것도 결국 중첩클래스이다. public 문제 어떻게 되나?
+
+
+
+
+
+## 객체의 구현 : Obj
+
+ def Obj := Occupying
+	* this를 점거한다.
+	* origin객체가 될 수 있다.
+	* sharedmember가 존재한다.
+		* sharedmember멤버를 런타임에 추가할 수 있다.
+		* sharedmember에 일반 변수가 들어 있으면 static이다.
+			* 그 변수가 refer로 감싸져있으면 sharable.
+			* 아니면 occupiable.
+	* shared member와 별도로 occupiying member가 배열로 존재한다.
+		* 외부에는 getMembers()는 sharedmember와 occupying member의 chain구조다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# [v] 중첩객체
+
+* protected건 public이건 모든 inner 객체는 owner를 가지고 있다.
+* 또한 모든 중첩 객체는 복제가 가능하다.
+```cpp
+def plant
+	name = ""
+
+def bowl := plant
+	plants = plant[]()
+	void print()
+		for p in plants
+			c.out("$p.name, ")
+	def carrot := plant
+		print() // outer.print()
+
+b = bowl()
+c = b.carrot;
+c1 = c1()
+// c1.print()의 결과는 c.print()의 결과와 같음
+```
+
+## [v] Q1 protected 중첩객체인 경우,  owner.this도 접근 가능? --> 네.
+
+## [v] Q2 그러나 property는 그럼?
+```cpp
+def myObj
+  _name = ""
+  def nested := str?
+    get: _name // nested는 _name을 접근 중.
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## [v] def 문법
 
 ### def의 시행착오
@@ -2894,200 +3840,7 @@ def #Key
                 .
 
 
-### def는 새로운 origin객체를 정의한다는 것이다.
-* 새로운 인터페이스의 추가를 의미한다.
-
-#### def가 없이 메소드의 정의를 할 수 있다.
-* def가 없다면 메소드의 추가가 아닌 재 정의를 의미한다.
-```cpp
-def A
-	_in := ""
-	name := str // name은 str의 refer이다.
-		get: in // get() 되면 this 대신 in을 내보낸다.
-	name1 := str? // name1은 str refer이며 null이 들어가있다.
-	age := int? // int null --> int 0
-```
-
-### def는 객체의 정의임을 잊지말자.
-```cpp
-def A
-	def nested
-
-A.nested
-a = A()
-a.nested // A.nested로부터 op=이 된것이다. nested는 sharable이므로 shallow cpy된 상태이다.
-
-A.nested()
-```
-* nested는 A에 static에 등록되어 있는것과 동시에 A안에 정의되어 있는 객체이다.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# [v] 중첩객체
-
-## 생성자의 구현원리 
-* world에서 static 메소드라는건 없다.
-* 그러나 생성자 만큼은 static처럼 돌아간다. (물론 티는 안난다.)
-  생성자는 따라서 this가 존재하지 않는다.
-* 모든 node는 owner를 가지고 있으며 대개는 컴파일러에게 주입된 origin객체를 들고 있다.
-* 생성자는 static 메소드이므로 생성자를 호출하기 위해서 해당 타입의 객체로 thisptr를 교체하지 않는다.
-```cpp
-// 예)
-def My
-	void foo()
-		// foo() 안에 들어온 이상 thisptr는 My의 복사 혹은 origin객체다. 
-		a = A() // A()가 호출되는 것만으로는 thisptr가 a로 교체되지 않는다.
-		a.koo() // 자, 이제 koo()에서는 thisptr가 a로 교체될 것이다.
-```
-* 생성자가 호출되면, 일단 객체가 copy 된다. 중첩되지 않은 origin객체는 owner로 null을 들고 있게 된다.
-  그러므로 이 경우에는 null이 copy 되고 추가 작업은 없다.
-* 그러나 중첩객체의 생성자가 호출되면, 중첩객체의 origin으로부터 copy가 될텐데, 중첩객체의 origin은
-  이미 owner로 origin인 소유객체를 들고있는 상태이다. (컴파일러가 그렇게 주입했다)
-  그러므로 그 값이 일단 copy 된다.
-* 생성자에서 thisptr에 접근한다면, caller, 즉 이 객체의 생성자를 호출한 객체가 나온다.
-* 중첩객체의 생성자를 호출하기 위해서는 문법적으로 2가지 중 하나를 만족해야 한다.
-	- 그 중첩객체를 소유한 origin 혹은 복사 객체로부터 생성자를 호출한다.
-	```cpp
-		// 1
-		.namespace.A()
-
-		// 2
-		ns = namespace()
-		ns.A()
-	```
-	- 중첩객체의 소유자가 scope에 등록된 상태에서 생성자를 호출한다.
-	```cpp
-		def namespace
-			def A
-				...
-			void foo()
-				A() // thisptr는 namespace 이다. 문제가 전혀 없다.
-			
-			def List
-				def Node
-				void foo()
-					Node() // 역시 thisptr는 List의 일종이다. Node의 owner타입과 같다.
-	```
-* 컴파일러는 origin객체를 파싱하면서, 소유/중첩 의 관계를 다 알고 있어야 하며,
-  이러한 관계에 적합하지 않은 중첩객체의 생성자 호출시 에러를 내야 한다.
-
-* 만약 생성자가 호출했을 경우에도 추가적으로 thisptr를 체크하고,
-  이상이 없다면 thisptr를 _owner에 할당한다.
-  이로써, 중첩객체들은 항상 유효한 부모객체를 소유할 수 있게 된다.
-	```cpp
-		A::A()
-		{
-			Node* thisptr = scope["thisptr"];
-			if(!thisptr) return ERRROR!;
-
-			if(getOwner() && !thisptr.isSubOf(getOwner()))
-				return ERRROR!;
-
-			_owner = thisptr;
-		}
-	```
-
-
-```cpp
-def namespace
-	def A
-	def List
-		def Node
-		node = Node null
-
-		void foo()
-			node = Node()
-		
-
-def app
-	void main()
-		a = namespace.A()
-		l = .namespace.List()
-```
-
-
-* protected건 public이건 모든 inner 객체는 owner를 가지고 있다.
-* 또한 모든 중첩 객체는 복제가 가능하다.
-```cpp
-def plant
-	name = ""
-
-def bowl := plant
-	plants = plant[]()
-	void print()
-		for p in plants
-			c.out("$p.name, ")
-	def carrot := plant
-		print() // outer.print()
-
-b = bowl()
-c = b.carrot;
-c1 = c1()
-// c1.print()의 결과는 c.print()의 결과와 같음
-```
-
-## [v] Q1 protected 중첩객체인 경우,  owner.this도 접근 가능? --> 네.
-
-## [v] Q2 그러나 property는 그럼?
-```cpp
-def myObj
-  _name = ""
-  def nested := str?
-    get: _name // nested는 _name을 접근 중.
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# 람다
+# 람다 샘플 만들어보기
 
 ​```cpp
 def app
@@ -3134,6 +3887,35 @@ key,
 
 
 
+### def는 새로운 origin객체를 정의한다는 것이다.
+* 새로운 인터페이스의 추가를 의미한다.
+
+#### def가 없이 메소드의 정의를 할 수 있다.
+* def가 없다면 메소드의 추가가 아닌 재 정의를 의미한다.
+```cpp
+def A
+	_in := ""
+	name := str // name은 str의 refer이다.
+		get: in // get() 되면 this 대신 in을 내보낸다.
+	name1 := str? // name1은 str refer이며 null이 들어가있다.
+	age := int? // int null --> int 0
+```
+
+### def는 객체의 정의임을 잊지말자.
+```cpp
+def A
+	def nested
+
+A.nested
+a = A()
+a.nested // A.nested로부터 op=이 된것이다. nested는 sharable이므로 shallow cpy된 상태이다.
+
+A.nested()
+```
+* nested는 A에 static에 등록되어 있는것과 동시에 A안에 정의되어 있는 객체이다.
+
+
+
 
 
 
@@ -3145,237 +3927,6 @@ key,
 
 
 # 객체의 내부 구조
-
-## 멤버변수 컨셉
-
-- v 멤버변수는 Object에 속한것이냐 아니냐 기준으로 배열을 2개 만든다.
-
-  - Object와 Method는 본격적으로 멤버변수를 다룬다. 멤버변수를 어떻게 구성할것인가는 생각외로 상당히 복잡한 문제가 되는데, 왜냐하면 const여부, static여부, private/public 여부, variable여부 등등 여러가지 요인들이 한번에 얽혀있기 때문이다.
-    - [확정] 1. class - object 멤버를 구분해야 한다.
-      - class에 속한것(메소드 + static variable)은 모든 object가 공유하는 것이므로 이것들은 모든 object가 생성될때마다 추가할 필요가 없어야 한다. 따라서 최소한 이둘은 반드시 구분할 필요가 있다.
-    - \2. static 메소드 구현방법
-      - 구현 알고리즘에 따라서 static 메소드는 일반 메소드와 별도로 구분할 필요가 있는가?
-    - \3. public/private
-      - 얼핏 생각하면 외부에서 call()을 하는 경우에는 public 메소드만 호출가능해야 한다. 고로 private 메소드가 담길것과 public 메소드가 담길것이 구분이 되어야 하지 않겠냐는 것이다.
-    - \4. const
-      - 객체가 const화 되어있일때와 nonconst일때와 같은 메소드명으로 호출한다고 하더라도 다른 메소드가 호출되어야 한다. 즉 "caller의 const 또한 msg의 일부" 인 셈이다. 따라서 public/private와 마찬가지로 구분될 필요가 있다.
-  - 그러나 문제는 저 4가지를 모두 채택할 경우, 멤버변수는 총 2^4 = 16개의 별도의 container에 담겨지게 된다는 것이다. 따라서 최적화를 고려해야만 하는 상황이다.
-  - v 1안 굳이 구별할 필요가 없는 상황을 만든다.
-    - const, public/private는 Object내부에서 걸러서 에러를 반환하도록 한다. 별도의 배열을 두지 않는다.  두는 이유는 "탐색시 빠르라고" 인데, 어짜피 최적화 과정이 들어가면 탐색 없이 함수를 특정할 수 있도록 해야 한다.
-      - vtable 대신 Object.getMembers()[n] O(1)로 접근하게 된다.
-  - x 2안 구별해야 하지만, 눈속임으로 구별하는 것처럼 만든다.
-  - x 3안 16개의 container가 되더라도 속도가 낮춰지지 않게 하면 된다. 생성/실행시 퍼포먼스가 떨어지지 않는 방향으로 접근한다.
-    - 갯수가 많아졌을때의 부담은
-      - \1. 바로 탐색이 느리다는것과
-      - \2. 객체 생성시 부담이 생길 수 있다는 것이다.
-
-- v 구성 및 객체생성
-
-  - 시나리오
-    - \1. 각 Class들은 부모의 메소드들을 copy한다. 이는 chain deep depth로 인한 퍼포먼스를 줄이기 위함이다.
-    - \2. Object의 Members는 lazy하게 동작한다. 이때 Object는 getClass().getMembers()를 chain으로 가져와서 초기화한다.
-    - \3. 각 Class는 프로세스 시작과 동시에 ClassTree 구축을 위해서 인스턴스가 자동발생한다. Class생성자에서 자동으로 initialize()를 실시한다. 단, Class::initialize() 안에서도 members를 구성하지는 않는다. lazy하게 간다.
-    - \4. 만약 Class::getMembers()가 불려진 경우, getSuperClass().getMembers() 목록을 가져와 일단 clone한다. ClassTree 구축은 이미 끝났기 때문에 getSuperClass() 이때 한다고 해도 인스턴스만 생성한다. 그러나 이후에 호출되는 Members()는 SuperClass의 4번이 다시 반복되게 만든다.
-    - \5. 그 후, T::onInitializeMethods()로 wrapping된 메소드 목록을 가져와서 append한다.
-    - \6. T::onInitializeMethods() 안에서 Method객체가 생성된다. Method는 클래스가 아니므로 3번 과정이 반복되지 않는다. 결과적으로 T::onInitializeMethods는 TClass<T>::getMembers()가 불려지는 최초 1번만 cb된다.
-  - 예외 시나리오
-    - class Method {
-      - const String& getName();
-      - Method[] onInitializeMethods() {
-        - v  getName()에 대한 Method를 만들어서 넘길 수 있는가? --> 넘기는 건 가능하다.
-          - Method::getMembers() -> TClass<Method>::getMembers() -> Method::onInitializeMethods() -> Method newone(...) -> Method::Method(...)
-          - 결론 : Method가 생성된 것이지, Member가 구성된게 아니기 때문에 재귀에 빠지지는 않을 것이다. 그리고 이 루프가 시작된 발발지점도 생성자에 의해서가 아니라 getMember()에 인한 것이다. 무한 재귀는 성립되지 않는다.
-        - Method.get("getName(void)").get("getName(void)").get("getName(void)").get("getName(void)").get("getName(void)").get("getName(void)") 할시, getMember()는 여러번 구축되는가? 메모리 낭비가 되지는 않는가?
-          - 하나씩 추려서 치환해가보자.
-          - == TMethod<getName>().get("getName(void)").get("......");
-          - TMethod<getName>은 Method의 일종이다.  그래서 get()은 getMember()를 호출하고, SuperClass인 Method::getMember()를 호출한다. Method::getMember()는 Class<Method>::getMember()를 호출하며, Class::getMember()는 이미 한번 초기화가 된 경우에는 저장된 멤버를 바로 리턴한다.
-          - 즉, TMethod<getName>()에 담겨있는 TMethod<getName>()은 TClass<Method>::getMember()에 담겨있던 것을 TClass<TMethod<getName>>이 복제한 놈이다. 메모리 낭비가 아니다. 이는 TClass<T>에 T() 객체 한개가 들어있는 걸 생각하면 된다. 무한 루프 및 무한 재귀는 돌지 않는다.
-      - }
-    - };
-    - Method.get("getName(void)").get("getName(void)") 시, 문제가 발생하는가?
-      - == TNativeMethod<getName>().get("getName(void)")
-  - class Object
-    - friend class Class;
-    - Chain _members;
-    - virtual Container& getMembers()
-      - return _members;
-  - Class는 Array Memebers를 갖고 Array ObjectVariables를 갖는다. ObjectVariables는 Members를 chain 한다.
-  - virtual Container Node::getMembers(); // invisible
-  - TRefer<T> TClass::instantiate()
-    - T& newed = *(new T());
-    - _chainMembers(newd);
-    - return TRefer<T>(newed);
-  - class Class
-    - void _chainMembers(Object& obj)
-      - Chain& tweak = obj._members;
-      - tweak.chain(getMembers());
-      - tweak.chain(getObjectVariables().clone());
-  - 파싱시에는 variable, function은 super의 것을 chain을 유지한다.
-
-- 필요시 member라고 해서 variable과 function과 chain을 유지한 것을 값으로 생성해서 반환해준다. 값으로 내보내도 chain을 묶는것 뿐이므로 퍼포먼스 로스는 적다.
-
-- 하나의 객체는 private variable, public variable 2종류를 갖는다.
-
-- 클래스.instantiate()를 하게 되면 메타클래스의 variable을 복제해서 넣는다. 그리고 생성자를 호출한다. 객체의 variable은 chain되지 않은것을 복제했으므로 chain이 아니다.
-
-- 객체가 함수를 사용할때는 chain되지 않은 함수의 것을 바로 사용하므로 역시 탐색시 로스는 없다.
-
-
-
-## 무엇인 member의 기준이 되는가? --> 메시지 스택이 전파될 수 있는가.
-
-- 메시지 스택이 전파될 수 있는가? 그걸 허용하는가?
-- class A
-  - class B
-    - void print()
-      - a = 5;
-- A.B.print 이걸 보자. 여기에는 3가지 메시지가 들어있다. {"A"}, {"B"}, {"print"} 그리고 각각은 stack으로 뒤에것은 앞에것에 영향을 받는다.
-- 이것은 메시지가 전파되는 구조가 아니다. 각 메시지는 독립적으로 소비되지만, 메시지 스택은 공유되기 때문에 앞의 메시지는 뒤에 메시지에 영향을 끼치는 구조다.
-- 만약 Statement가 멤버라면 월드코드에서 누구나가 "a=5" 라는 statement에 접근할 수 있어야 한다.
-- 위의 기준대로 각 개념들이 member인지 아닌지 따져보면,
-- Statement : 아니다.
-- **Method의 인자 : 맞다. method의 첫번째 인자가 무슨 타입인지 rtti로 알아내고 싶을때가 있기 때문이다.**
-- **Method의 반환값 : 맞다.**
-- **Method의 Method : 맞다.**
-- **Method의 멤버변수 : 맞다.**
-
-
-
-## Object의_멤버변수_초기화_문제
-
-- 문제정의 : Object가 Managed에서 생성될때는 TClass<T>::instantiate() 안해서 new T()로 객체를 만들고, 만든 T*->getMembers()로 Chain을 가져와서 chain(메소드.getMembers())하고, 메소드의 ObjectVariables()를 clone한걸 chain시키게 하는 동작을 함으로써 객체의 members 초기화가 완료된다. 이 과정은 쉽게 말해서 Native함수들을 Managed에 visible할 수있는 준비를 만드는 것이다. 그러나 Native에서 객체를 만드는 경우는 어떤가? Object 클래스는 부모클래스이기 때문에 이 생성자 안에서는 도대체 사용자 클래스인 자식클래스가 무엇인지 알 방법이 없다. 자식클래스의 생성자에는, 자식클래스가 사용자의 클래스이기 때문에 함부로 생성자의 코드를 작성할 수 없다. 방법은?
-- v 1안 Lazy 초기화를 수행한다.
-  - "Members에 접근은 반드시 getMembers()로만 수행해야 한다" 는 조건이 완벽하다면, 이 함수가 불려졌을때 Members가 비어있을 경우 메타클래스로부터 members를 가져와서 초기화한다.
-
-
-
-## 멤버변수 기초
-
-- 고찰내용
-
-  - 어떠한 변수를 생성해야한다는 정보를 누가 들고 있어야 하나?
-
-    - \1. 생성자코드에 추가되도록 한다.
-
-      - 아마도 자바에서 사용하는 방법일 것이다.하지만...
-
-    - v 2. 클래스 자체가 변수도 들고있고, 클래스를 clone한다.
-
-      - 클래스는 변수가 무엇인지 알아둘 필요가 있긴 하다. World에서 변수 접근, 변수에 할당은 모두 "메시지"로 취급한다. 함수나 변수나 구분은 할 필요가 없는 것이다.
-
-      - 클래스가 함수를 담을 수 있다면, 구조상 변수도 담을 수 있는 잠재성이 있다.
-
-      - 그럼, 그걸 어떻게 하는가?
-
-        - v 1안
-          - 클래스는 Node[] members; 를 갖게 한다. 그리고 여기에 Function이나 멤버변수가 들어가면 된다.
-          - 이 Node가 일반 클래스인가, 아니면 데이터타입의 클래스(int, float, double, string ...) 인가를 구분짓는 것은 setter와 getter 메시지를 처리 할 수 있는가 아닌가다.
-          - 클래스를 instantiate()를 하게 되면 T()를 생성하고 MetaClass가 가진 members중 Node[]만 복사해서 insert 시켜 주면 된다.
-          - 임의 Node  a에게 메시지가 온 경우,  #메시지_전파_알고리즘 에 따라 scope의 관점에서 올라가면 된다.
-            - 만약 객체소유의 관점에서 올라가면 멤버변수가 메시지_전파_알고리즘 에 반응해버린다.
-          - 문제점
-            - 함수인 Member만 모아서 접근하는 건 쉬움. 이미 있으니까. 하지만 멤버변수인 Member들만 모아서 접근하는 방법은? for문을 도는 방법밖에 없다고 말하지는 말아줘.
-              - 이러한 ContainerForContainer를 Chain이라고 이름을 붙였다. 이걸 통해서 해결한다.
-              - 구체적인 설계는?
-                - 1안 - 최대한 쪼갠다.
-                  - 하나의 클래스는 private variable, private function, public function, public variable 4종류를 가직 있다.
-                  - 파싱시에는 variable, function은 super의 것을 chain을 유지한다.
-                  - 파싱이 끝나면 incarnate()를 통해서 원소를 복제하고 chain을 푼다. 이후로는 메타정보 injection이 불가능하다는 얘기다.
-                  - 필요시 member라고 해서 variable과 function과 chain을 유지한 것을 값으로 생성해서 반환해준다. 값으로 내보내도 chain을 묶는것 뿐이므로 퍼포먼스 로스는 적다.
-                  - 하나의 객체는 private variable, public variable 2종류를 갖는다.
-                  - 클래스.instantiate()를 하게 되면 메타클래스의 variable을 복제해서 넣는다. 그리고 생성자를 호출한다.
-
-      - 2안
-
-        - 준비
-
-          - 메타클래스는 Member를 2개 가지고 있음.  1개는 변수만 들어있는 Member이자 다른 1개를 super로 가리키는 것, 또 1개는 함수만 들어있는 Member. Member에는 함수와 멤버변수가 들어갈 수 있음.
-          - 클래스 파싱될때 모든 함수를 먼저 함수Member에 넣음.
-          - 그리고 멤버변수Member super를 함수Member로 지정함.
-          - 파싱된 멤버변수를 멤버변수Member에 넣음. 이제 멤버변수Member는 모든 멤버변수를 가지고 있음.
-
-        - 결과
-
-          - 메시지전파는 함수Member만 접근하면 됨. 문제없음.
-          - 새로운 Node생성시, 멤버변수Member를 복제하여 새로운Node에 집어 넣으면 됨. 해당 Node는 독립적인 멤버변수를 가지고 있으며, 게다가 함수Member는 기존처럼 super로 가지고 있기에 메모리에 포함되지 않음.
-
-        - 문제점
-
-
-
-## static변수는_어떻게_구현하는가
-
-- Generating단계에서 class 객체를 추가하면서 members에는 static변수와 method만 담는다.
-- WorldObject생성시 붙여지는 멤버변수는 별도의 const Members& getMemberVariables() const에 담겨지며 이것의 nonconst 버전은 friend 클래스들에게만 공개된다.
-- ClassManager에 의해서 제공되는 class는 nonconst로 제공된다.
-- 고찰내용
-  - v 1안 일반 멤버변수는 class의 멤버가 아니다.
-    - Class의 일반 변수는 world에 visible 해서는 안된다. 함수와 static 변수만 visible 해야한다.
-    - Generating단계에서 파싱을 하면서 class 객체를 추가하는데 이때 Class.member에는 Method와 static 변수가 nonconst로 접근할 수 있다. 멤버변수는 별도의 내부 members에 담겨지며, 이것들은 별도의 const Members& getMemberVariables() const 와 같이 접근해야 하며, nonconst로 접근할 수 있는 것은 일부 friend로 선언된 클래스들 뿐이다.
-    - 대박이네.. 어제하루종일 고민한건데... 이렇게 간단히 풀리다니.
-    - v 문제없어 보이긴하는데..시나리오로 검증해보자.
-      - C++ 관점에서
-        - classManager로 nonconst인 Class를 얻을 수 있다.
-        - class는 member인 method와 static 변수를 있는 그대로 제공한다.
-        - 객체시 추가될 멤버변수는 const Members getMemberVariables()로 얻어온다.
-      - world의 관점에서
-        - member인 method와 static변수는 당연히 getMember()로 얻어 올 수 있다.
-        - 원한다면 getMemberVariables()도 visible하게 할 수 있을 것이다.
-
-
-
-## 객체의 Member initializing 알고리즘
-
-- Node는 member를 가지고 있다.
-- 각 함수는 자신이 private 여부를 가지고 있다.
-- ObjectType Class는 variable member와 function member, 그리고 Chain<T> member 3개를 가지고 있다. 이중 앞의 2개를 member가 chain하고 있다. function이 앞에, variable이 뒤에 속해있다.
-- variable에 바로 push를 해도 알아서 잘 들어간다.
-  - Container는 Attacher처럼 어떠한 타입에 대해서도 일단은 호출이 가능하고 AttachableType() 체크를 통해서 받아들일지 아닐지를 결정한다. 따라서 chain인 member도 일단은 push가 가능하다. push 할 원소를 앞의 chained 컨테이너와 뒤의 컨테이너에 각각 물어봐서 넣을 수 있다고 판단되면 그곳에 넣는다.
-- 각 variable, function은 부모의 variable, function에 대한 chain이 아니다. 상속시, 부모의 함수를 push 하고 자신의 것을 넣는다.
-  - 중복으로 인한 메모리를 낭비하는 이유는, 이게 퍼포먼스가 빠르기 때문이다.
-- 객체를 생성하는 방법은 variable만 복제하는 것이다. 복제된 variable은 원본 function을 chain한 상태가 된다.
-- 고찰내용
-  - 클래스 문제점
-    - factor가 많다.
-      - private-public 이냐
-      - 멤버냐 function이냐
-      - member
-      - private-variable
-      - public-variable
-      - private-function
-      - public-function
-      - private-member
-      - public-member
-      - 하나의 컨테이너로부터 다양한 컨테이너를 뽑아내는 방법은?
-      - 필수인 것들만 뽑아보자.
-        - all-variable : 객체 생성을 위해서
-        - all-function
-        - all-member : 일괄 적용을 위해
-        - public이냐 private이냐는 건 파서가 직접 판단해서 런타임 에러를 올려보내도록 한다.
-        -  function이냐 variable이냐 를 구분하지 않을 방법은?
-          - 이는 빠른 객체 생성을 위해서 필요했다. 객체 생성시에 variable을 복사해야 하기 때문이다.
-          - Node는 member만 가지고 있고,
-          - 클래스 & 객체는 변수member + 함수member 로 이루어져 있다. 이 2개는 member와 동기화 되는 거고.
-        - member가 chain이며 function이 앞에 들어가 있는 상황에서  member.push(variable)를 하게 되면 어떻게 되는가?
-          - 각 container는 어떠한 타입을 받을 수 있다는 정보가 있어야 한다. 기존 World는 이게 없었기 때문에 Container<T>는 있어도 ContainerBase 같은 건 있을 수 없었던 것이다. ContainerBase는 push(Node&)가 있어야 하며, 어떠한 타입에 대해서 연산이 가능한지를 알려주는 getPushableType() 같은 게 있어야 한다. 마치 Attacher 처럼.
-  - 전역변수인지 아닌지는, 해당 object가 어느 scope에 속하는가에 따라서 정해질 뿐이다.
-  - 상위 scope에서 객체를 접근할 경우 재귀적으로 접근이 동작하지 않는다.
-  - 재귀적으로 할 경우 중복된 메시지수신이 존재했을때 순서에 의해서 수신자가 반응하게 되므로 예상치 못한 결과가 나오게 된다. 송신자는 접근시, 접근할 객체를 찾을 타겟을 정확하게 지정해야 한다.
-
-
-## 객체의 구현 : Obj
-
- def Obj := Occupying
-	* this를 점거한다.
-	* origin객체가 될 수 있다.
-	* sharedmember가 존재한다.
-		* sharedmember멤버를 런타임에 추가할 수 있다.
-		* sharedmember에 일반 변수가 들어 있으면 static이다.
-			* 그 변수가 refer로 감싸져있으면 sharable.
-			* 아니면 occupiable.
-	* shared member와 별도로 occupiying member가 배열로 존재한다.
-		* 외부에는 getMembers()는 sharedmember와 occupying member의 chain구조다.
-
 
 ## [v] 최적화를 위한 scope의 인덱스 상수화
 ### 요구사항
@@ -3474,516 +4025,6 @@ C.boo()
 */
 c.boo()
 ```
-
-
-
-
-
-## Scope, 객체와 메소드 간의 메시지 전달 체계
-
-- 상당히 까다로운 문제였다.
-- \#Message는_name_thisptr_args를_모두_하나의_Array로_구성한다
-- **thisptr은 Object와 관련이 없다.**
-- **Method.call(msg)에서 Method가 static Method가 아니라면 msg 마지막에 thisptr를 넣어둬야한다.**
-- CallStmt나 Method를 굳이 Native환경에서 쓰고 싶다는 변태적인 개발자는 직접 msg를 생성할때 args를 size+1한 뒤에 끝에다가 this로 사용할 object를 넣어둬야 한다. Method::run(msg)에다가 Method::run(thisptr, msg)로 하자는 의견도 있었다. 그러나 Method에는 StaticMethod도 나올 수 있으며 이 경우 thisptr는 완전히 필요없는 인자가 된다. Method라는 클래스에는 Static메소드도 포함된 상태이기 때문에 특정 자식클래스에서만 사용한는걸 공통클래스로 끌어올리는데는 조금 석연찮다.
-- **Msg는 모두다 인자로써만 취급하기에 자신의 마지막 arg가 thisptr인지 아닌지는 알 도리가 없다. 메소드가 마지막 인자를 thisptr로써 취급하는 것 뿐이다.**
-- **Scope.stack(Object&)는 ObjectSpace를 등록하며, scope의 localspace의 "this" 라는 변수를 만들어(이미 있다는 덮어써서) 주어진 object로 assign한다.**
-- **Object는 call할때 scope에 대해서 아무런 동작을 하지 않는다. 그저 자신의 member들만 뒤진다.**
-- **NativeMethod 역시 scope에 대해서 아무런 동작을 할 필요가 없다.**
-- **StaticMethod는 Object관련된 scope 조작이 없다. LocalSpace만 add한다.**
-- 왜냐하면 Method::stack을 보면 다른 모든것들은 scope에서 나오고 있기 때문이다.
-- 이 둘을 모두 scope에서 출발하도록, Method&origin도 그렇게 만들면 _stack의 args를 scope만 받도록 만들 수 있다.
-- 그렇게 되면 object와 method 모두 같은 함수인 _stack을 두도록 할 수 있다.
-- 왜 msg에 뒀을까? 이유가 있을 것이다. --> #Message는_thisptr를_어떻게_다뤄야_할까
-- **일반 nonstatic ManagedMethod는 외부로부터 this에 사용할 Object가 msg 뒤에 담겨있다는 걸 안다. nonstatic ManagedMethod는 this로 사용할 object를 꺼내서 scope.objectSpace.push() 한다. 함수가 끝나면 objectspace.pop()을 한다.**
-- ManagedMethod가 자신이 static인지 아닌지 아는 방법은 isStatic()을 사용하면 된다.
-
-
-
-
-
-
-
-# 함수 디덕션
-
-- 요구사항
-  - 코드를 보고 어떻게 무슨 오버로딩된 메소드인지 파악하는 가.
-  - 함수디덕션의 핵심은, expr에 담긴 argument들을, expr에서 호출하려고 하는 함수명세를 통해 도출된 함수후보군 중에서 가장 비슷한 함수의 parameter로 명시적 캐스팅을 묵시적으로시켜서 호출이 허용되도록 만드는 것이다.
-  - 모든 명시적캐스팅들은 주어진 상황에 따라 묵시적으로 캐스팅이 될 수 없다. 오직 pretype 들에 대해서만 world가 미리 정의한 묵시적 캐스팅만 해당한다.
-  - 여기서 핵심은 함수후보군을 찾아내는 것과, 그 후보군 중에서 가장 적합한 것 1개를 도출해 내는 과정과, 그 프로세스를 어느 클래스에서 가지고 있어야 하는 것 3가지다.
-  - 가장 먼저 #묵시적_캐스팅-정책 이선결되어야 한다.
-- 고찰결과 각 인자는 implicit casting(업캐스팅과 prebuilt 타입간의 제한된 casting)만 고려해서 가장 bestfit을 찾아내면 된다.
-- 속도가 매우 중요하다. 캐스팅은 상당히 많이 사용되기 때문이다.
-- .cast<T>는 묵시적캐스팅이다.
-  - world에서는 invisible하다.
-  - 빠르다.
-  - 함수 deduction시 사용된다.
-  - 다라서 Method 안에서 사용되는 캐스팅은 to()가 아니라 cast<T>다.
-  - 묵시적 캐스팅은 업캐스팅과 기본제공타입의 명시적캐스팅이 있다.
-  - 기본타입의 명시적 캐스팅은 매우 빠르게 제공되어야 하므로 override를 사용해서 제공된다. (즉, 이 기본타입들은 생성자를 통해서 캐스팅을 공개하지않아도 된다는 것이다. 이 방법은 오래걸리니까).
-
-
-
-
-
-
-
-## deduction 함수 바인딩
-
-- c++처럼, 함수의 signature와 정확히 일치 되지 않더라도 유도리있게 파서가 "이 심볼이지??ㅋㅋ" 하면서 매칭해주는 알고리즘이다.
-- 고찰로 알아낸, 이 문제의 가장 포인트는,
-  - 묵시적 형변환으로 함수를 바인딩하는 것은 "**사용자의 의도와 실제가 달랐을 경우, 유도리있게 비슷한 걸 정해준다**"는 컨셉임을 잊지 말하야 한다. 이는 "형변환이 가능하다"와는 다른 얘기인것이다.
-    - 예를들면 [float.to](http://float.to/)(string)은 가능하다. 하지만 그렇다고해서 foo(string) 함수에 사용자가 foo(3.5)로 호출하는 것이 용납되는 것은 아닌 것이다. 명시적으로 캐스팅을 해야하지. 이를테면,
-      - foo(string)
-      - foo(int)
-      - foo(3.5)는 어디로 가야 하나? --> 정답은 foo(int)로 가야한다. 둘다 형변환은 가능하지만 묵시적변환은 int -> string은 동작하지 않아야 하는 것이다.
-    - 하지만 foo(float) 함수를 foo(5)로 하는 건, 유도리 있게 해줄만 하다고 여겨지게 된다.
-- 묵시적 형변환은 "계열" 을 기반으로 판단된다.
-  - Numeric계열(int, char, float, bool)
-  - 문자열계열(string)
-  - custom계열(클래스 계층구조로 판정)
-  - 계열이 다르면 묵시적 형변환은 일어나지 않는다.
-- 알고리즘은 다음과 같다.
-  - 파서는 foo(int, float)라는 코드를 봤을때 적절한 call 코드블럭으로 파싱해야한다.
-  - 함수명 foo를 갖고 있는 현 scope의 모든 함수목록을 가져온다.
-    - foo(char, string), foo(bool, result), foo(result, float), foo(int, float, string), foo(float, int)
-  - 가져오는 도중 정확히 일치되면 그걸로 끝낸다. --> END
-  - 차선책을 찾기 위해 본격적인 묵시적형변환을 통한 함수바인딩 로직에 들어간다.
-    - 가져온 후보군 들을 탐색하면서,
-      - 메소드들에게 parameter를 넘겨주고 실행가능한지 evaluate()하라고 한다.
-      - int now = 메소드::evaluate(int current_most_low_evaluated_value) {
-        - 인자 다르면 return -1
-        - int sum = 0;
-        - for 모든 Arguments {
-          - sum += evaluated = Argument.evaluate(param[n]) {
-            - String/Numeric::evaluate() {
-              - if 같은 계열 아니면, return -1
-              - return 0;
-            - }
-            - 기타 모든 계열(==custom::evaluate() {
-              - if ! param.getClass().isSubOf(getClass()) return -1
-              - return param.getSuperClasses().level - getSuperClasses().level;
-            - }
-          - }
-          - if evaluated < 0, 탈락.
-          - if sum > current_most_low_evaluated_value, 탈락. 더 볼것도 없다.
-        - }
-        - return sum;
-      - }
-      - if now < 0, 후보군에서 제거
-      - if !now, 이 놈입니다. 잡아가세요.
-    - if 남은_후보군.getLength() >= 2, 모호성의 오류
-    - if ! 남은_후보군.getLength(), 함수가 없습니다. 에러.
-    - return 남은_후보군[0];
-- 위와 같이 하게 되면, 다음과 같은 상황에서도 모호성의 오류가 나온다.
-  - void print(int, char, float) {} // 1
-  - void print(float, float, int) {} // 2
-  - print(3.5f, 3.5f, 3.5f);
-- 얼핏보면 float이 일치된 갯수가 2번이 더 많으니까, 2번째 print로 가야하지 않냐고 생각할지도 모른다.
-- 고찰 내용
-  - World 함수 안에
-    - foo()
-    - foo(char)
-    - foo(string)
-  - 3개가 있을때 내가 foo(20440) 을 한 경우, 어떤 함수가 호출되어야 할지를 정하라는 것이다.
-  - 1안 범용의 룰을 만들고 모든 타입에 대해서 적용시킨다.
-    - 1안 아무런 호출도 하지 않아야 할까?
-      - 그럼 foo(int)
-        - foo(string)
-        - foo(char)
-        - 이 상황에서 foo(36452.5) 는 어떤가? 이래도 아무런 호출을 하지 않아야 맞는가?
-        - 아니면 foo((int) 36542.3) 나, foo((int) grade) 를 앞에 붙여줘야 맞는가?
-      - 다른 예는 어때?
-        - foo(Parent)
-        - foo(Child)
-        - 에서 foo(GrandChild) 는 어떤가?
-    - 2안 하니면 숫자와 가까우니까 char?
-    - 3안 아니면 경우의 수가 가장 크니까 string?
-  - 2안 축소화된 매우 알기쉬운 범용룰 1개를 만들고, 일부 타입에 대해서만 특수룰을 적용시킨다.
-
-
-
-## [v] Q1. Instance에 있는 getId()도 visible 할 수 있는가?
-* 예전 설계에서는 TClass가 Type을 담당했기 때문에 Node 보다 구체클래스들도 TClass에 메소드를 넣을 수 있었다.
-  * Tclass는 이러한 메소드들을 담아두는 역할을 수행했기 때문에 Node::getMembers()를 갖지 못해도 일단 메소드를 보관해  놓았다.
-  * Object가 나올때는 이러한 TClass()의 메소드를 shallow copy했기 때문에 문제가 발생하지 않았다.
-* 이제 새로운 설계에서는 TClass는 사라지고 Origin 객체가 이걸 대신한다.
-  * 메소드들은 WRD 매크로를 쓰면 일부 매소드들에서만 참조할 수 있는, wrap한 메소드 배열을 returning 하는 static 메소드를 private로 하나씩 박아넣고 있다.
-  * getMembers() 를 가지고 있는 Node는 초기화시에 Node::onInitWrappers()를 부를때 모든 supers를 다 부른다.
-  * 보통은 origin객체 초기화시에 부모origin의 members를 복제해 넣고, onInitWrappers()를 호출해서 wrapped된 메소드 배열을 가져와 getMembers에 넣는다.
-
-## [v] Q2. Thing, Instance에도 여전이 cast, isObject를 쓸 수 있는가?
-* TClass가 Object로 이관되면서 계층 구조는 Object에서부터 가지게 된다.
-* Thing, Instance는 Object가 아니기 때문에 여기에 계층 구조를 직접 넣을 수없다.
-* origin객체에 접근할때 항상 originMgr["이름"] 으로 접근한다. 문자열인, 이름이 중요하다.
-* Thing, Instance에 대해 더미Object를 생성해서 시작하자마자 originMgr가 생성해둔다.
-  * 생성해야할 더미Object는 각 Thing, Instance들이 별도 정의된 매크로에 의해 expand되어, originMgr::_getBuiltIns()에 append해둔다.
-  * 일단 Object가 주입만 되면, 런타임시에는 더미Object이건 정상 Object이건 구분없이 돌아갈 수 있다.
-* Thing::isSub()가 불려지면 originMgr["Thing"]을 찾아내서 사용할 것이다.
-
-## [v] Q3. 최적화 방안
-* 객체가 lost 를 식별하면 자동으로 originMgr에서 업데이트 하는 tWeak를 모든 thing들이 share 하면된다.
-
-
-
-## origin 객체는 생성자 호출이 불가능할때가 있다
-
-기본생성자가 없으므로 시스템에서 origin객체를 하나 만들어놓고 시작이 불가능한데?
-
-
-객체의 생성
-1. 생성자를 통하기전에 def 를 통해서 객체는 초기화된 상태로 생성된다.
-2. 초기화 수식이 동작한다.
-3. def A =  B() 가 동작한다.
-----여기까지 프로그램 시작전 ----
-4. 사용자에 의해 생성자가 호출된다.
-
-
-
-## 중첩된 객체의 문법
-
-```cpp
-def Part
-    __name = "unknown"
-    def name
-        get: _name
-        // can't call set()
-def Part2
-    def Nested // nested obj.
-        void say()
-            c.out("name=$name") // can access scope of owner object.
-
-    def name = "unknown" // nested obj. prototyped from str
-        get=>: path = directoy + val // str.val
-        _set=> // can't modify value of "name" at outside.
-
-    directory = "/home/me/"
-    path = directory + name
-
-// Part2().Nested는 Part2.Nested의 복제.
-// 이걸 막으려면,
-def Part3
-    def $Nested // usually declare nested origin obj as static.
-        void say(): c.out("...")
-// Now, all copies of Part3 shares same Nested obj. no instance bloating.
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## [v] this가 겹치는 순간
-
-### 문제
-
-```cpp
-def myObj
-  _age = 30
-
-def child := myObj
-  def age = int?
-      $set: // myObj.age를 가리키도록 하고 싶다면?
-        // 참고로 현재 this는 age인 상태.
-```
-
-### [x] 1안 각 클래스는 static으로 private this 라는 변수를 가지고 있다.
-
-```cpp
-def myObj
-  $this := This?
-
-def child := myObj
-  $this := This?
-  def age := int?
-        $set: child.this
-```
-
-### [v] Q2 super.this를 사용한다면?
-
-```cpp
-def myObj
-  age := 5
-
-def child := myObj
-  $this := This?
-    def age := int?
-        void say()
-      // myObj.age를 사용하고 싶다면.
-```
-
-```cpp
-1: myObj.this.age
-2: myObj.age
-3: this.myObj.age
-4: this.myObj::age
-```
-
-### [x] 2안 A.this를 한 경우, A에 대한 this property가 동작한다면
-
-### [x] 3안 namespace를 사용한다면?
-* members는 member로 등록될때 Name이외에도 namespace 항목이 또 있음.
-* getmembers에서 name만 입력하면 구체 --> 기본 순으로 같은 name인걸 찾음
-* namespace까지 정확하게 입력하면 탐색시 namespace도 고려해서 찾음.
-```cpp
-def myns
-
-  def A
-    void foo()
-    void boo()
-      foo()
-      this.foo()
-      .myns.A.foo()
-      myns.A.foo()
-      A.foo()
-```
-
-#### namespace 문법
-* def로 재활용하자. 굳이 뭘 또 키워드를 만드냐.
-* 클래스 확장 문법을 지원해줘야 namespace가 제기능을 한다. (그래야 다른 소스파일에서도 그 namespace안에다가 멤버 넣지)
-
-#### [v] Q3 this와 name이 다를때의 문제
-
-```cpp
-def parent
-  void foo()
-def child := parent
-  void foo()
-  void exec()
-      // parent의 foo()를 호출하고 싶다면?
-```
-
-#### 고찰
-
-* parent.foo() 와 this.foo()는 어떻게 다른가?
-  * .은 객체 안에 있는 객체에 접근하는 것이다.
-  * this.parent.foo()를 한 경우, parent.foo가 하나의 메소드명이 아니라 parent라는 객체 안에 있는 foo를 찾는걸 의미하게 된다.
-
-### [x] 3-1안 각 식별자는 namespace가 존재한다. 그러나 키워드는 없다.
-
-* namespace가 존재하나 worldlang에서 namespace를 명시적으로 줄 순 없다. 객체의 def를 통해 간접적으로 정의된다.
-
-```cpp
-def wrd
-  $name = "wrd"
-    def device // 풀네임: wrd::device
-      name := str? // wrd::device::name
-        get: wrd::name
-      def part := device
-        void foo(): throw ERROR
-        device = ""
-            name = ""
-            void boo()
-
-
-        str foo()
-      c.out(this.part.wrd::device::foo())
-            c.out(this.part.device::foo())
-      return name // this.name
-
-```
-
-```cpp
-// namespace를 이름에 넣자는 생각:
-1:  parent::foo()
-    this.parent::foo()
-1-1:parent's foo()
-    this.parent's foo()
-2:  parent.this.foo()
-3:  parent#foo()
-    this.parent#foo()
-4:  parent-foo()
-    this.parent-foo()
-5:  parent_foo()
-    this.parent_foo()
-6:  parentFoo()
-    this.parentFoo()
-7:  parent`foo()
-    this.parent`foo()
-```
-
-
-
-### [x] 3-2안 특정 타입화된 this
-
-```cpp
-def parent
-  void foo()
-def child
-  void foo()
-    void exec()
-      parent.foo()
-      child.foo()
-      foo()
-      this.foo()
-
-      this$parent.foo()
-
-      c.out(this.part$device.foo())
-      c.out(part%device.foo())
-```
-
-
-
-#### [x] Q2. 여기서 한발 나아가 타입 수렴이라는 키워드를 만들면?
-
-```cpp
-def dev
-  dev()
-    dev(str new): name = new
-  name := ""
-        =>set: len = name.len
-  len = 0
-    void say(): c.out("name=$name")
-
-def bicycle := dev
-  _parts = { def handle := dev
-    handle(): super("handle")
-  , def wheel := dev
-    wheel(): super("wheel")
-  }
-  =>void say()
-        for e in parts: e.say()
-
-b = bicycle
-b.say()
-
-d = dev bicycle
-d.say()
-
-f = dev%bicycle
-f.say()
-
-f1 =
-```
-
-* 많이 생각해봤는데, 쓸데가 없다. 예상치 못한 동작이 나간다.
-
-### [x] 4안 this안에 base클래스와 owner클래스가 들어있다면?
-
-```cpp
-def base
-  name := "base.name"
-def marine := base
-  name := "marine.name"
-
-  def gun := base
-    name := "gun.name"
-
-        void foo()
-            base.name // base origin객체의 name
-            name // gun객체의 이름
-            this.name // gun 객체의 이름
-            this.base.name // gun객체의 base의 name
-            marine.name // marine origin객체의 이름.
-            marine.base.name // marine origin객체의 상속받은 base의 name.
-            this.marine.name // 이 this 객체와 연관된 marine객체의 name.
-            this.marine.base.name // 이 this객체와 연관된 marine객체의 부모클래스중 하나인 base의 이름.
-
-            m = marine() // .marine()
-            m = this.marine() // this와 연관된 marine객체의 복제
-            m = .marine() // .marine()
-
-            b = base()
-```
-
-#### [x] 4-1안 항상 classscope이 우선한다면?
-
-```cpp
-def base
-  name := ""
-def marine := base
-  name := ""
-
-    def gun := base // marine의 base 로부터 assign
-    def gun2 := .base // 밖의 base 로부터 assign
-        name = ""
-        void foo()
-          base.name // gun2가 상속한 base객체의 name.
-          name // gun2의 name
-          this.name // gun2의 이름
-          marine.name // this와 연관된 marine객체의 이름.
-          marine.base.name // this와 연관된 marine객체의 name
-          this.marine.name // this와 연관된 marine객체의 name
-          this.marine.base.name // 이 this객체와 연관된 marine객체의 부모클래스중 하나인 base의 이름.
-          m = marine()
-          m = .marine()
-```
-
-
-
-### [v] 5안 owner, sub의 사용
-```cpp
-def base
-	name := ""
-def marine := base
-	name := ""
-	age = 0
-	def gun := base
-		void foo()
-			super.name // gun의 부모 base의 name
-			name // gun의 name
-			this.name // gun의 name
-			marine.name // origin객체 marine의 name
-			this.marine.name // 에러
-			outer.name // this를 가지고 있는 marine의 name
-			age // ⇒ outer.name
-			outer.super.name // this를 가지고 있는 marine의 부모클래스 base의 name
-			a = outer()
-			a1 = outer().super()
-```
-#### 알고리즘
-* scope은 다음의 규칙을 따른다.
-	* locals : local scope의 배열
-	* objects : object scope의 배열
-		* 대개, 새로운 object가 call되면, object는 이전의 object scope을hidden 처리시킨다.
-		* 그러나 이 object가 자신이 inner일 경우는 outer를 그대로 유지시킨다.
-		* 모든 inner 객체는 outer를 변수로 가지고 있다.
-		* 모든 object는 sub를 변수로 가지고 있다.
-	* globals
-
-* 예를들면, 다음처럼 구성된다.
-	* locals
-		* local[1] : visible
-		* local[0] : visible
-	* objects
-		* object[3] : visible // inner
-			* 부모클래스의 모든 멤버를 포함해서
-		* object[2] : visible // outer
-			* 부모클래스의 모든 멤버를 포함해서
-		* --------------- hidden - marker ---------------
-		* object[1] : hidden
-		* object[0] : hidden
-	* globals
-
-#### 분석
-
-* 단점
-	* inner가 길어지면, outer.outer.super.super 가 된다.
-		* 반론 : 다른 언어들은 대부분 이런 기능조차 지원하지 않는다.
-		* 정 길다면 다른언어들처럼 별도의 reference를 생성자에서 받도록 직접 짜라.
-	* 명시적으로 클래스명을 딱 지정하지 못한다.
-* 장점
-	* 새로운 문법이나 특문의 추가가 없다.
-	* 직관적이다. 외울필요가 없다.
-
-
-
-
-#### [v] Q1 namspace도 확장을 쓸것이고, 이것도 결국 중첩클래스이다. public 문제 어떻게 되나?
-
-
 
 
 
@@ -4918,7 +4959,7 @@ class myObj : public obj {
 
 
 
-### [v] 프로토타입 기반에서 생성자가 의미가 있는가
+# [v] 프로토타입 기반에서 생성자가 의미가 있는가
 
 ```cpp
 def Part
@@ -4992,7 +5033,7 @@ def Part
 
 
 
-### 프로퍼티의 구현의 초안
+# 프로퍼티의 구현의 초안
 
 요구사항을 뽑아보자.
 
@@ -8473,11 +8514,11 @@ def app
    class Node {
 
        bool at(const Node& trg) {
-    
+        
            const Bool& ret = call(Msg("at", {trg})).get<Bool>();
-    
+        
            return &ret ? ret.get() : false;
-    
+        
        }
 
    };
@@ -8489,7 +8530,7 @@ def app
    def MyType MyOrg
 
        s1 = 2..3
-    
+        
        bool at(int n): n at s1
 
 6. 월드는 해당소스를 파싱해서 ManagedObject("MyOrg") 를 생성하고 at이라는 메소드를 추가함.
@@ -10984,127 +11025,6 @@ Park has 0 children.
 */
 ```
 
-## TClass Origin 새로 설계
-### [v] 요구사항
-* Origin 객체라는 것이 나왔고 사실 이것이 Type을 대신하고 있다.
-* 이제 기존 TClass가 Type을 대신하고 있었으므로 이걸 해결해보자.
-
-### [v] 1안 TClass를 제거하자.
-
-
-```cpp
-template <typename T>
-class tRtti {
-public:
-  bool isADT() {
-  bool isPtr()
-  ..
-  ..
-  origin* _org;
-  tRtti<typename T::Super> _getSuper() { return tRtti<T::Super>(); }
-  oigin& getOrigin() { return *_org; }
-  res& init() {
-    originMgr& mgr = Core::get().getOriginMgr();
-    _org = mgr[getName()];
-  }
-};
-
-class object : public node { // object는 originMgr에 있으면 origin객체인 것이다.
-  TStrong<TArray<Object> > _supers; // Origin이 복제되어도 shallow copy.
-  TStrong<TArray<Object> > _subs;
-  bool* _isInit;
-
-  object() { _isInit = new bool(); }
-  object(const object& rhs) { _isInit = rhs._isInit; }
-
-  virtual TArray<Object> getSupers() { return _supers; }
-  virtual TArray<Object> getSubs() { return _subs; }
-  const object& getSuper() { return getSupers()[0]; }
-  const object& getOrigin() { return Core::get().get....; }
-  bool isInit() { return _isInit; }
-  res& init() {
-    if(isInit()) return rOk;
-    Origin& sup = getSuper(); // init을 돌리기전에 모든 Origin객체들은 일단 add 되어있다.
-    if(sup.init()) return rAbort;
-    sup.getSubs().add(*this);
-    getSupers().add(sup);
-    return tRtti::init();
-  }
-};
-
-class originMgr {
-  operator[](const string& name);
-  originMgr() {
-    objs.add(_builtIns);
-  }
-  res& add(const object& origin?) {
-    if(origin == 중복) return rAbort;
-    return objs.push_back(origin);
-  }
-
-  res& init() {
-    for(object& o : objs)
-      o.init();
-  }
-  static tArray<Object> _builtIns;
-};
-
-class node {
-  // Object보다 상위클래스들은 WRD_BASE_CLASS를 쓴다. 그러면 자동으로 static 타임에 DummyOriginObject를 만들어 OriginMgr::_builtIns.add(DummyObject()); 를 넣어둔다.
-  WRD_BASE_CLASS(
-
-  virtual res& init() {
-    if(isInit()) return rAbort;
-
-
-    return rOk;
-  }
-  static res _onInitMethods(tArray<Method>& tray) {
-    Object._onInitMethods(tray);
-    Instance._onInitMethods(tray); // Unit, Instance 의 것들이 담겨진다. visible 하게됨.
-    // 보통은 자기껏만 담도록 macro가 expand 된다.
-  }
-  virtual bool isInit() { return true; }
-  virtual TArray<Object> getSons();
-  bool isSub(const Thing& rhs) {
-    // 1. tier 비교
-    // 2. 동 tier가 같은 클래스인지 비교
-  }
-  bool isSuper(const Thing& rhs);
-}
-
-
-
-// 사용법:
-tRtti<MyCppObj>::getOrigin().getName().... // 1
-Core::get().getOriginMgr()["MyCppObj"].getName() // 2
-```
-
-* Origin은 3군데에서 불러진다.
-* C++ 빌트인 클래스의 경우, macro WRD_MACRO에 의해.
-  * .item(모듈파일) 에 의해
-  * .wrd 파일에 의해
-
-* Origin을 불려지면 OriginMgr에 담겨진다.
-* 1,2는 먼저 수행되며 수행후 init()이 된다.
-  * 2를 보면 알겠지만 native 클래스는 Mgr클래스로부터 상속을 받을 수 없기때문에 가능하다.
-
-* TClass는 tRtti가 되며 단순히,
-  * 메타프로그래밍 + Origin객체에 쉽게 접근가능
-* 만 지원하게된다. mgr에서는 필요가 없다.
-
-
-* cast(), isSub(), getSubs() 모두 Thing에서 호출이 가능해야 한다.
-* TClass는 사라지고 Object가 계층 구조를 보관한다.
-* Origin객체란 OriginMgr에 보관된 Object를 말하는 것이다.
-* Origin객체는 OriginMgr["name"]으로 쉽게 접근 가능하다.
-* Thing, Instance 들은 Object보다 상위인데도 cast, isSub가 가능해야 하므로 이를 위한 DummyOriginObject를 생성한다.
-  * Dummy는 복제 될 수 없다.
-  * WrappedMethod는 초기화가 된 이후에, this를 호출시 바인딩한다.
-  * DummyOBject는 OriginMgr가 시작하자마자 만들어 둔다.
-    * tRtti로 Object보다 상위의 모든 클래스들을 알아내서 만들어낸다.
-    * 모든 월드 native 클래스들은 Super라는 typedef가 있어야 한다.
-    * tRtti _getSuper()는 오직 OriginMgr에만 열려있다. 다른 사람들은 Thing::getSuper()를 쓰자.
 
 
 
