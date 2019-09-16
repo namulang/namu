@@ -1177,7 +1177,41 @@ with name
 * 따라서 if 문만 벗어나게 된다.
 
 
+## [v] ret문
+* 복합 키워드라는 걸 만들었다.
+  * 키워드 2개 이상을 연이어 붙여서 조합하는 키워드다.
+* ret는 다음과 같이 조합할 수 있으며 기본적으로 기능은 동일하다.
+  * ret     하나의 블록문을 벗어난다. 값도 반환한다.
+  * retif   하나의 if 문을 벗어난다.
+  * retfor 
+  * retfun  하나의 함수를 벗어난다.
 
+```cpp
+  str foo(str name)
+    out := with name
+      is "hello": retif it + " world"
+      if name.has('s')
+        retwith "error"
+      else
+        "nothing"
+
+    c.out("out is $out")
+    retfun out
+
+    (int, "") temp()
+      ret (3, "wow")
+```
+
+## [v] again
+* for 루프 한해서 루프를 한번더 돈다.
+* 블록문을 다시 실행하게 하는 걸 생각해봤으나, 사실상 goto와 기능이 비슷해져서 취소했다.
+```cpp
+   b = for a in ("wow", "jo", "what"): with a
+      is "wow": retfor "wow"
+      is "jo": sum += it
+      else
+        again // 한번더 루프를 돈다.
+```
 
 
 ## [x] break, continue, return
