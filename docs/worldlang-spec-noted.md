@@ -1078,6 +1078,56 @@ for a
     a = null
 ```
 
+* 객체는 null이면 false, null이 아니면 true로 boolean값으로 묵시적 변환이 가능하다.
+* 같은 이름을 가진 객체의 정의는 2번 이상 있을 수 없다.
+  단 예외적으로 정의가 for  있는 경우는 예외로 한다.
+* 위의 경우, 2번째 루프부터는 객체의 정의는 무시되며, 값만 객체에 할당된다.
+
+```cpp
+def b
+    n = 0
+
+myA getMyA(b)
+    retfun ++b.n < 5 ? myA() : null;
+
+for a := getMyA(b.n)
+    c.out("n=$b.n")
+```
+
+```java
+BufferedReader reader = new BuffererdReader(new InputStreamReader(assets.open(srcOfAsset)));
+FileWriter writer = new FileWriter(dst);
+
+// 위와 같을때 아래 4줄을 잘 보자.
+
+String line = writer.readLine();
+while (line != null) {
+    writer.write(line);
+    String line = writer.nextLine();
+}
+
+// 혹은 위의 4줄은 다음과 같이 3줄로 압축 할 수도 있다.
+
+String line;
+while ((line = writer.readLine()) != null)
+    writer.write(line)
+```
+
+* 위의 자바 코드는 world에서는 다음과 같이 압축한다.
+
+```cpp
+reader := bufferedReader(inputStreamReader(assets.open(srcOfAsset)))
+writer := fileWriter(dst)
+
+
+// 자바의 4줄 혹은 3줄이 다음과 같이 2줄로 압축된다.
+// 중괄호도 없으며, 괄호 갯수도 적어 훨씬 깔끔하다.
+
+while line := writer.readLine()
+    writer.write(line)
+```
+
+
 for in은 별도의 문법이다.
 <var>의 getiterator()를 호출하여 가져온 뒤, 자동으로 next를 호출한다.
 
@@ -1108,7 +1158,7 @@ with name
 		// no 일 경우에도 is 5는 검사한다.
 	if it.has('a')
 		c.out("wow!")
-	
+
 	c.out("중간에 다른 코드가 자유롭게 나올 수 있다.")
 
 	is 5: return
@@ -1196,7 +1246,7 @@ with name
 * ret는 다음과 같이 조합할 수 있으며 기본적으로 기능은 동일하다.
   * ret     하나의 블록문을 벗어난다. 값도 반환한다.
   * retif   하나의 if 문을 벗어난다.
-  * retfor 
+  * retfor
   * retfun  하나의 함수를 벗어난다.
 
 ```cpp
@@ -6720,11 +6770,11 @@ def app
 		if 1
 			p1 = Plant("Where is my santa?") // Plant(#str) 생성자로 객체 정의
 			p1.getName() == p.name // "herb" == "herb"
-	
+
 			p2 = p1
 			p2.name = "chikery"
 			p1.getName() == p.name // "chikery" == "chikery"
-	
+
 			// p1이 소멸된다.
 			// GC(a.k.a GarbageCollection):
 			//	모든 객체(int, str의 primitive 변수 포함해서)는 refcount 기반의 제한적인
@@ -6734,10 +6784,10 @@ def app
 			//			in java)	new Daemon(); // 자바는 ref 없이 생존할 수 있다.
 			//		2. GC의 한번쯤은 들어봤을, 유명한 원형-참조circular reference 문제.
 			//			(현재 limitation. 해결방안 생각중)
-	
+
 		else: console.out("no") console.out("p.age is " + p.age)
 		// 인라인 지정자 뒤에 바로 다음 구문을 붙여쓰고 있다. 유효한 문법이다. 권장 안하나, 허용한다.
-	
+
 		Plant.test(Plant(), str("5.5")) // 이름-없는-객체nameless object 를 생성가능하다.
 		console.out("end of program")
 
@@ -8607,11 +8657,11 @@ def app
    class Node {
 
        bool at(const Node& trg) {
-        
+
            const Bool& ret = call(Msg("at", {trg})).get<Bool>();
-        
+
            return &ret ? ret.get() : false;
-        
+
        }
 
    };
@@ -8623,7 +8673,7 @@ def app
    def MyType MyOrg
 
        s1 = 2..3
-        
+
        bool at(int n): n at s1
 
 6. 월드는 해당소스를 파싱해서 ManagedObject("MyOrg") 를 생성하고 at이라는 메소드를 추가함.
