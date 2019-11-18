@@ -1155,12 +1155,11 @@ for <a> in <b>
 
 
 
-## [v] switch 대체
-### 현재 구현
-* is 는 with 안에서 사용한다.
+## ~~switch 대체~~
+## switch
+* is 는 switch 안에서 사용한다.
 * is 는 if it ==, 혹은 if it 과 같다.
-* switch문과 똑같은 기능은 제공하지 않는다. switch처럼 사용할 순 있어도,
-* if 중간에 다른 코드가 올 수 있는 것처럼 is 또한 그렇다.
+* switch 안에 다음 depth에서 반드시 is가 나와야 한다.
 
 ```cpp
 with name
@@ -1171,7 +1170,7 @@ with name
 	if it.has('a')
 		c.out("wow!")
 
-	c.out("중간에 다른 코드가 자유롭게 나올 수 있다.")
+	c.out("중간에 다른 코드가 자유롭게 나올 수 없다.") // X
 
 	is 5: return
 	is > 7: return
@@ -1223,7 +1222,7 @@ with name
 * bison은 <expr>을 파싱하기 전에, 바로 stmt를 생성하지 않고 부모에게 미룰 수 있어야 한다.
 
 
-##### 만약 if 가 도중에 나온다면
+##### ~~만약 if 가 도중에 나온다면 : switch 바로 다음 depth에서 if는 나올 수 없다~~
 * is는 무조건 else if로 치환되는가?
 * 그렇다면 is 다음에 if 가 나오고 그 다음에 is가 나오면 어떤 동작이 되는가?
 * is 뒤에 else가 오고 다시 is가 나오면?
@@ -1289,13 +1288,13 @@ with name
 ```
 
 
-## [x] break, continue, return
+## ~~break, continue, return~~
 
 * break는 블록문 1개를 반환값과 함께 벗어난다.
 * continue는 블록문 처음으로 되돌아간다.
 * return은 메소드를 반환값과 함께 벗어난다.
 
-### [x] return을 break를 이용해서 키워드를 합칠 수 없을까?
+### ~~return을 break를 이용해서 키워드를 합칠 수 없을까? : 안된다.~~
 * 안된다.
 * 블록문과 메소드는 결정적인 차이가 있는데, 블록문과 달리 메소드는 caller가 누구인지
   100% 확정이 안된다는 것이다.
