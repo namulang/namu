@@ -1338,26 +1338,42 @@ with name
 
 ## Method 는 클래스다.
 
-- Object는 독립적인 ObjectSpace 유지하는 인스턴스적인 개체를 의미한다. 이것은 Class를 하나 모방 하고있으며, 그 클래스로부터 메소드 내역을 pointing하고 객체내역을 cloning 함으로써 고유값을 갖는다.
-- Method는 하나의 종말메소드를 가질 수 있는 LocalSpace에서 동작되는 Static Unique 클래스이다.
+- Object는 독립적인 ObjectSpace 유지하는 인스턴스적인 개체를 의미한다.
+- Object는 개개의 인스턴스마다 고유의 멤버를 소유 할 수 있고, 객체 통틀어서 공유하는 멤버도 있을 수 있다.
+- 사용자는 def 문법을 통해서 최초의 객체를 정의할 수 있고 이를 origin 객체라고 한다.
+- 모든 origin객체는 복제를 통해 복사본을 생성할 수 있고 모방 하고있으며, 복사본은 일부 멤버는 origin 객체로부터 멤버를 공유하며 일부는 복사본 고유의 멤버를 소유한다. 
+- 객체의 공유 멤버로써 메소드가 있을 수 있다.
+- 메소드는 객체로 정의 될 수 없다.
+  - 메소드는 블록문의 일종이다.
+  - 왜냐하면 메소드와 블록문은 공유 되는 것이며, 메소드 실행시 멤버가 생성되어야 하고, 이 멤버는  메소드 인스턴스의 라이프 사이클과 관계없이 매 실행이 끝나면 소멸되기 때문이다.
   - 값을 가질 수 없으나, 메소드는 가질 수 있다.
   - **동작시 LocalSpace에서 관리된다. --> #Method는_ThisPtr이_꼭_필요하다_어떻게_얻을_수_있을까 참고**
+- static 클래스는 존재하지 않는다. static 메소드 역시 존재하지 않는다.
+  - 이는 개념을 쉽게 만들어서 learning curve를 낮추기 위함이다.
 - Nested Things
-  - 클래스가 Nested 된 경우, 이 클래스는 owner클래스에 대한 어떠한 정보도 갖고 있지 않다.
-    - FAQ. 자동으로 NestedClass는 OwnerClass의 this를 갖도록 하면 더 편하지 않을까?
-      - NestedClass가 OwnerClass와 1:1로 사용되리란 법이 없다. 극단적인 예를들면 OwnerClass는 1000개가 instance가 나왔을때 random확률로 1개의 NestedClass가 나오는 상황도 있을 수 있다. 또는 OwnerClass는 instance 나오지 않았는데 NestedClass만 나오는 상황도 있을 수 있다.
-  - 외부에서도 NestedClass의 객체를 만들 수 있다. _ prefix가 안붙어있다면 말이지.
+  - ~~클래스가 Nested 된 경우, 이 클래스는 owner클래스에 대한 어떠한 정보도 갖고 있지 않다.~~
+  - Nested 클래스는 자동으로 outer 클래스의 객체에 대한 this를 갖게 된다.
+  - 모든 Nested 클래스로 정의된 객체는 protected 접근자를 자동으로 갖는다.
+  - 모든 Nested 클래스로 정의된 객체는 반드시 outer 클래스의 객체가 있어야 생성된다.
+    - [v] FAQ. 자동으로 NestedClass는 OwnerClass의 this를 갖도록 하면 더 편하지 않을까?
+      - ~~NestedClass가 OwnerClass와 1:1로 사용되리란 법이 없다. 극단적인 예를들면 OwnerClass는 1000개가 instance가 나왔을때 random확률로 1개의 NestedClass가 나오는 상황도 있을 수 있다. 또는 OwnerClass는 instance 나오지 않았는데 NestedClass만 나오는 상황도 있을 수 있다.~~
+  - ~~외부에서도 NestedClass의 객체를 만들 수 있다. _ prefix가 안붙어있다면 말이지.~~
 - Exception 핸들링또한 Nested Method를 통해서 돌아간다. 그 함수안에서 발생된 Exception은 그 메소드의 _except() 로 넘겨지게 된다.
-- Method는 World의 Class가 될 수 없다. (단, 객체의 일종이긴 한것이다. World의 클래스는 TClass<T>로 생성되어야 한다). 왜냐하면 멤버변수를 가질 수 없고 (멤버변수를 갖기 위해서는 별도의 getVariableMembers변수가 필요하다) 객체를 만들 수 없기 때문이다.
-- 그러나 Method와 Class는 같은 계통의 부모클래스인 Node를 갖는다. 왜냐하면 Membre로 Method를 가질 수 있다는 공통점이 있기 때문이다.
+- ~~Method는 World의 Class가 될 수 없다. (단, 객체의 일종이긴 한것이다. World의 클래스는 TClass<T>로 생성되어야 한다). 왜냐하면 멤버변수를 가질 수 없고 (멤버변수를 갖기 위해서는 별도의 getVariableMembers변수가 필요하다) 객체를 만들 수 없기 때문이다.~~
+- 그러나 Method 또한 Node이기에 Node 클래스들이 갖는 재귀적 구조(Node가 Node를 갖는 구조)를 띈다.
+- 메소드는 Object가 아니므로 객체마다의 멤버는 가질 수 없으나 공유멤버는 가질 수 있다.
+- 고로 메소드는 역설적이게도 또 다른 메소드를 Member로 가질 수 있다.
+  - Nested 메소드 또한 이러한 구조를 띌 수 있기에 가능한 것이며,
+  - 기본적으로 Method 클래스는 부모 클래스로부터 상속받은 메소드을 가지고 있다.
+    - 다만 이렇게 할 경우, Method.getName().getName().getName().... 식으로 호출이 무한정 가능하게 되므로 이를 막을 장치가 필요하다.
 - 고찰내용
   - Nested Method에서 확장된 아이디어인데, 이게 생각보다 괜찮다.
   - 먼저 다음의 아이디어에서 출발한다.
     - World에서 보여지는 Method는 사실 Class다. Method는 다만 변수를 가질 수 없으며,  Method를 선언됨과 동시에 자신을 소유한 클래스에게 등록되며, 함수가 호출될때 인자1로 클래스의 thisptr를 가지고 있으며, call(args)라고 하는 실질적으로 명령을 수행할 수 있는 창구가 디폴트로 있다는 점이다.
-    - 따라서 설계상, class Method : public Class 가 된다.
-    - Method는 클래스이므로 virtual void onIn(), onOut() 이런걸 재 사용하게끔 할 수 있다.
+    - ~~따라서 설계상, class Method : public Class 가 된다.~~
+    - ~~Method는 클래스이므로 virtual void onIn(), onOut() 이런걸 재 사용하게끔 할 수 있다.~~
   - Nested Method
-    - Method도 클래스이므로 Method에서 메소드를 정의할 수 있다. thisptr는 최초 object가 call을 받은시점에서 삽입되어있으므로 Nested Method 안에서도 thisptr은 그대로 유지 및 참조가 가능하다.
+    - ~~method도 클래스이므로~~ Method에서 메소드를 정의할 수 있다. thisptr는 최초 object가 call을 받은시점에서 삽입되어있으므로 Nested Method 안에서도 thisptr은 그대로 유지 및 참조가 가능하다.
     - 다형성을 사용하면 여러가지 이벤트 핸들링이나 exception처리를 메소드에서 할 수 있다.
     - 중첩메소드는 Owner메소드의 지역변수를 참조할 수 있다. --> Scope알고리즘 참조
     - 중첩메소드에서 다른 중첩메소드를 호출 할 수 있는가? --> 네.
