@@ -1,8 +1,8 @@
 import console aka c
 
-app
+def app
 	main()
 		c.out("Enter an integer: ")
 		c.in(int number)
-		
+
 		c.out("You entered=${number}")

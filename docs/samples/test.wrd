@@ -1,26 +1,25 @@
 import console aka c
 
-app,
-	read()
-		Error[] errors
+def app
+	Error[] read()
+		errors = Error[] null
 		insideResult = false
 
 		if !mXmlReader
 			c.out("You must open() the file")
-			return errors
+			retfun errors
 
-		for !mXmlReader.atEnd() with mXmlReader
-			switch(readNext())
+		for !mXmlReader.atEnd(): with mXmlReader
+			switch readNext()
 				is QXmlStreamReader.StartElement
-					if name() == ResultElementName
-						insideResults = true
+					insertResult = name() == ResultElementName;
 
 					if insideResults && name() == ErrorElementName
-						Error item readError(it)
+						item = readError(it)
 						erros.push(item)
+
 				is QXmlStreamReader.EndElement
-					if name == ResultElementName
-						insideResults = false
+					insertResults = name != ResultElementName;
 
 				is QXmlStreamReader.NoToken
 				is QXmlStreamReader.Invalid
@@ -32,7 +31,9 @@ app,
 				is QXmlStreamReader.EntityReference
 				is QXmlStreamReader.Processing
 					c.out("do nothing")	
+
 		return errors
 
-	main(str[] args)
-		read()
+	void main(str[] args)
+		for e in read()
+			c.out("err: $e")
