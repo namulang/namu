@@ -2876,7 +2876,7 @@ def app
 * Origin 객체라는 것이 나왔고 사실 이것이 Type을 대신하고 있다.
 * 이제 기존 TClass가 Type을 대신하고 있었으므로 이걸 해결해보자.
 
-### [v] 1안 TClass를 제거하자.
+### [x] 1안 TClass를 제거하자.
 
 
 ```cpp
@@ -3013,6 +3013,34 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 
 ### [v] Q3. 최적화 방안
 * 객체가 lost 를 식별하면 자동으로 originMgr에서 업데이트 하는 tWeak를 모든 thing들이 share 하면된다.
+
+## [x] 1-2안 1안은 대체로 맞지만 Reflection 정보가 Object에 있으면 안된다.
+### 이유
+* 왜냐하면 Thing이나 Instance 같은 애들은 isSub()를 사용할 수 없게 된다. Object클래스가 아니므로 _supers를 갖지 못한 것이다.
+
+### 다음처럼 하면 된다.
+* TRtti든 TClass든 TTrait든 아무튼 뭔가는 C++ Reflection (T가 무엇인지, primitive인지 포인터인지, 메소드인지, static인지  등등...) 만 동작하는 클래스가 하나 있으며 이것은 어떠한 종속성도 없다.
+* OriginManager는 그대로 유지 된다.
+* TClass는 제거도 유지된다. 대신 Thing은 isSub, isSupers, getName을 할 수 있어야 한다.
+* Native를 wrap 해서 mgd로 만들어주는 함수는 onWrap() 으로 명명하며, Thing에 둔다.
+* WRD_CLASS 매크로에 method 목록을 지정할 수 있으며 이 경우에만 onWrap()을 오버라이딩 한다.
+* TWrappedNativeMethod는 기존 알고리즘과 동일하다. 주의할 점으로, native 메소드를 호출할때 명시적으로 메소드를 지정해야 한다. 멀티디스패치가 되지 않도록 한다.
+  이를테면, this->T::MethodName(Args...)가 되야 한다.  this->MethodName(Args....) 가 아니라.
+	* 멀티디스패치로 할 경우, world 문법상에서 Native를 wrap한 origin객체 안에서 super.MethodName()가 불가능해진다.
+* MgdObject는 WRD_CLASS의 method목록이 없는 버전을 사용한다. MgdObject는 별도의 native 메소드가 없기 때문이다.
+  이경우 Object의 onWrap()까지만 불리므로 Object까지의 C++ 메소드들만 wrap 된다.
+* 모든 WRD_CLASS 매크로는 __sub_clses, __super_clses, 이들의 static 접근자인 getSubsStatic(), getSupersStatic()의 정의와 getSubs(), getSupers()를 overriding한 메소드를 정의한다.
+* getSupers(), getSubs()는 Super::getSubs()를 불러서 복제한 후, onWrap()을 호출하여  캐시화한다.
+* WRD_CLASS의 메소드 목록이 있는 버전은 WRD_CLASS의 인자 T가 Node이거나 Node보다 하위클래스여야 한다. static_assert등으로 될 수 있으면 막자.
+* 아.. 안된다.
+
+### 왜 이방법이 안됩니까?
+* 지금 하고자 하는 것은 결국 TClass의 구현을 Thing에다가 넣어서 TClass를 없애자는 것
+* 그러나 OriginManager에 Thing 을 insert 할 수 없다. Thing은 ADT이므로 객체를 만들 수 없는 것이다.
+
+## [v] 3안 결국은 TClass와 같은 설계가 필요하다.
+* C++에는 Worldlang에는 없는 ADT라는게 존재한다. 그리고 ADT는 별도의 member 혹은 wrapped native Method들을 어디선가 들고 있어야만 한다.
+* 따라서 TClass가 필요하다. Origin이라는 명확한 객체로 뽑아 낼 수 없는 T에 대해서도 멤버정보를 들고 있을 수 있는 클래스템플릿.
 
 
 
