@@ -3018,7 +3018,7 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 ### 이유
 * 왜냐하면 Thing이나 Instance 같은 애들은 isSub()를 사용할 수 없게 된다. Object클래스가 아니므로 _supers를 갖지 못한 것이다.
 
-### 다음처럼 하면 된다.
+### [v] 다음처럼 하면 된다.
 * TRtti든 TClass든 TTrait든 아무튼 뭔가는 C++ Reflection (T가 무엇인지, primitive인지 포인터인지, 메소드인지, static인지  등등...) 만 동작하는 클래스가 하나 있으며 이것은 어떠한 종속성도 없다.
 * OriginManager는 그대로 유지 된다.
 * TClass는 제거도 유지된다. 대신 Thing은 isSub, isSupers, getName을 할 수 있어야 한다.
@@ -3032,15 +3032,24 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 * 모든 WRD_CLASS 매크로는 __sub_clses, __super_clses, 이들의 static 접근자인 getSubsStatic(), getSupersStatic()의 정의와 getSubs(), getSupers()를 overriding한 메소드를 정의한다.
 * getSupers(), getSubs()는 Super::getSubs()를 불러서 복제한 후, onWrap()을 호출하여  캐시화한다.
 * WRD_CLASS의 메소드 목록이 있는 버전은 WRD_CLASS의 인자 T가 Node이거나 Node보다 하위클래스여야 한다. static_assert등으로 될 수 있으면 막자.
-* 아.. 안된다.
 
 ### 왜 이방법이 안됩니까?
 * 지금 하고자 하는 것은 결국 TClass의 구현을 Thing에다가 넣어서 TClass를 없애자는 것
 * 그러나 OriginManager에 Thing 을 insert 할 수 없다. Thing은 ADT이므로 객체를 만들 수 없는 것이다.
 
-## [v] 3안 결국은 TClass와 같은 설계가 필요하다.
+### 그렇다면 그 제약을 안고가자.
+* 먼저 Worldfrx에서 stub을 채워서 ADT를 없앤다.
+* MgdObject를 상속받은 3rd파티 개발자는 ADT를 클래스 상속계층 중간에 끼울 수 있다.
+* 그때 ADT가 중간에 있어도 말단 구체클래스에서는 ADT의 onWrap()을 불러줄 것이므로 멥버를 가져올 수 는 있다.
+* 그래도 여전히 3rd파티 개발자는 자신의 ADT의 TClass 같은 것을 가져오거나, 자신의 객체가 그 ADT의 일종인지 알아내는 방법은 없을 것이다.
+  제약으로 안고간다. 어짜피 c++의 dynamic_cast 등을 쓰면 된다.
+
+## [x] 3안 결국은 TClass와 같은 설계가 필요하다.
 * C++에는 Worldlang에는 없는 ADT라는게 존재한다. 그리고 ADT는 별도의 member 혹은 wrapped native Method들을 어디선가 들고 있어야만 한다.
 * 따라서 TClass가 필요하다. Origin이라는 명확한 객체로 뽑아 낼 수 없는 T에 대해서도 멤버정보를 들고 있을 수 있는 클래스템플릿.
+
+### 이걸 택하지 않은 이유
+* 되도록이면 클래스 갯수를 줄여서 경량화 하고 싶다.
 
 
 
