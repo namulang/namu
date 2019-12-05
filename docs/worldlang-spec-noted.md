@@ -1426,6 +1426,15 @@ with name
     - 잘생각해보자. Method는 객체처럼 동작한다. Method도 Method를 가지고 있다면, 이것은 마치 진짜 객체가 아닌가? Nested Method와 Nested Class의 차이가 무엇인가?
       - class MyClass
 
+### Method는 Object가 아니다.
+* Object의 정의는 객체마다 고유의 member(인스턴스 멤버)를 가질 수 있는 것을 말한다.
+	* 인스턴스 멤버는 lifecycle이 객체와 일치된다.
+* Node는 shared 이든 인스턴스 멤버든 아무튼 member를 가질 수 있다는 것이다.
+* Method는 Method 객체가 설사 clone() 되더라도 각 객체마다 인스턴스 멤버를 가져야 하는 요구사항이 없다.
+  대신에 static 변수같이 모든 Method 마다 공유하는 shared 멤버는 있어야 한다.
+* 따라서 Method는 Object와 동작이 상이하나 Node의 일종인 것은 맞다.
+* Methods는 블록문의 한 종류로 볼 수 있다. Block문은 Statement의 한 종류다.
+  따라서 Node <-- Expr <-- BlockExpr <-- Method 의 상속구조가 된다.
 
 
 ## Method의 생성과 초기화
