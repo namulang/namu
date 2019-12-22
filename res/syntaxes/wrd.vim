@@ -1,49 +1,73 @@
-" Vim syntax file
-" Language:    	World 
-" Maintainer:   kniz <kniz@kniz.net>
-" URL:			kniz.net
-" Last Change:  2018 Mar 30
-
 " quit when a syntax file was already loaded
-if exists("b:current_syntax")
-  finish
+if !exists("main_syntax")
+  if exists("b:current_syntax")
+    finish
+  endif
 endif
 
-" Defines
-syn keyword defKeyword		class extend inherit if for while return break continue import
-syn keyword defValue		true false success wrongdata wrongparam error
-syn keyword defPretype		int float void result string char null
-syn match defIdentifier		"[_a-z0-9]\+"
-syn match defClass			"[A-Z][a-zA-Z0-9]\+"
-syn match defMethod			/[_a-zA-Z0-9]\+(/he=e-1
-syn match defOperator		"!=\|:=:\|=<\|>=\|=\|+\|\*\|/\|<->\|->\|<-\|:-\|!-\|-\|<\|>"
-syn match defBrace			"(\|)\|\[\|\]\|{\|}"
-syn match defComment      	"//[^\n]*"
-syn region defString		start=+"+ end=+"+
+let s:cpo_save = &cpo
+set cpo&vim
 
-" Colors
-highlight clrKeyword 		ctermfg=Red 	guifg=#EA2E49
-highlight clrPretype		ctermfg=Red 	guifg=#EA2E49
-highlight clrValue			ctermfg=Red 	guifg=#EA2E49
-highlight clrClass			ctermfg=Yellow 	guifg=#E3CDA4
-highlight clrIdentifier		ctermfg=Cyan 	guifg=#77C4D3
-highlight clrString			ctermfg=Green 	guifg=#E6E7A7
-hi clrOperator				ctermfg=Gray 	guifg=#8C95A1
-"hi clrBrace				ctermfg=LightBlue
-hi clrComment				ctermfg=Gray	guifg=#7E827A
-hi clrMethod				ctermfg=DarkRed	guifg=#D9FF99
 
-" Linkage
-hi def link defKeyword		clrKeyword
-hi def link defPretype		clrPretype
-hi def link defValue		clrValue
-hi def link defClass		clrClass
-hi def link defOperator		clrOperator
-hi def link defBrace		clrOperator
-hi def link defString		clrString
-hi def link defIdentifier	clrIdentifier
-hi def link defComment		clrComment
-hi def link defMethod		clrMethod
+" keyword definitions
+syn keyword synKeyword	if def else switch for again ret retif retfor retswitch
+syn keyword synKeyword	import aka
+syn keyword synPretype	int float str void res bool char this super
+syn keyword synConst	true false null
 
-let b:current_syntax = "wrd"
 
+" Comments
+syn keyword javaTodo		 contained TODO FIXME XXX
+if exists("java_comment_strings")
+  syn region  javaCommentString    contained start=+"+ end=+"+ end=+$+ end=+\*/+me=s-1,he=s-1 contains=javaSpecial,javaCommentStar,javaSpecialChar,@Spell
+  syn region  javaComment2String   contained start=+"+	end=+$\|"+  contains=javaSpecial,javaSpecialChar,@Spell
+  syn match   javaCommentCharacter contained "'\\[^']\{1,6\}'" contains=javaSpecialChar
+  syn match   javaCommentCharacter contained "'\\''" contains=javaSpecialChar
+  syn match   javaCommentCharacter contained "'[^\\]'"
+  syn cluster javaCommentSpecial add=javaCommentString,javaCommentCharacter,javaNumber
+  syn cluster javaCommentSpecial2 add=javaComment2String,javaCommentCharacter,javaNumber
+endif
+syn region  javaComment		 start="/\*"  end="\*/" contains=@javaCommentSpecial,javaTodo,@Spell
+syn match   javaCommentStar	 contained "^\s*\*[^/]"me=e-1
+syn match   javaCommentStar	 contained "^\s*\*$"
+syn match   javaLineComment	 "//.*" contains=@javaCommentSpecial2,javaTodo,@Spell
+hi def link javaCommentString javaString
+hi def link javaComment2String javaString
+hi def link javaCommentCharacter javaCharacter
+
+" match the special comment /**/
+syn match   javaComment		 "/\*\*/"
+
+" Strings and constants
+syn match   javaSpecialError	 contained "\\."
+syn match   javaSpecialCharError contained "[^']"
+syn match   javaSpecialChar	 contained "\\\([4-9]\d\|[0-3]\d\d\|[\"\\'ntbrf]\|u\x\{4\}\)"
+syn region  javaString		start=+"+ end=+"+ end=+$+ contains=javaSpecialChar,javaSpecialError,@Spell
+" next line disabled, it can cause a crash for a long line
+"syn match   javaStringError	  +"\([^"\\]\|\\.\)*$+
+syn match   javaCharacter	 "'[^']*'" contains=javaSpecialChar,javaSpecialCharError
+syn match   javaCharacter	 "'\\''" contains=javaSpecialChar
+syn match   javaCharacter	 "'[^\\]'"
+syn match   javaNumber		 "\<\(0[bB][0-1]\+\|0[0-7]*\|0[xX]\x\+\|\d\(\d\|_\d\)*\)[lL]\=\>"
+syn match   javaNumber		 "\(\<\d\(\d\|_\d\)*\.\(\d\(\d\|_\d\)*\)\=\|\.\d\(\d\|_\d\)*\)\([eE][-+]\=\d\(\d\|_\d\)*\)\=[fFdD]\="
+syn match   javaNumber		 "\<\d\(\d\|_\d\)*[eE][-+]\=\d\(\d\|_\d\)*[fFdD]\=\>"
+syn match   javaNumber		 "\<\d\(\d\|_\d\)*\([eE][-+]\=\d\(\d\|_\d\)*\)\=[fFdD]\>"
+
+" The default highlighting.
+hi def link synKeyword Conditional
+hi def link javaSpecial		Special
+hi def link javaSpecialError		Error
+hi def link javaSpecialCharError	Error
+hi def link javaString			String
+hi def link javaCharacter		Character
+hi def link javaSpecialChar		SpecialChar
+hi def link javaNumber			Number
+hi def link javaComment		Comment
+hi def link javaLineComment Comment
+hi def link synConst		Constant
+hi def link synPretype Typedef
+hi def link javaCommentStar		javaComment
+
+let b:spell_options="contained"
+let &cpo = s:cpo_save
+unlet s:cpo_save
