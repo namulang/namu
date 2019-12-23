@@ -1,0 +1,8 @@
+def node
+
+def proxy := node
+    binder<node> _proxy;
+
+    refer cast<T>()
+
+def refer := proxy
