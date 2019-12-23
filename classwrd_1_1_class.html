@@ -46,7 +46,71 @@
         <h1>
           <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span>Class <span class="m-thin">class</span>
         </h1>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#pri-methods">Private functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
 <aside class="m-note m-default"><h4>Remark</h4><p><a href="classwrd_1_1_class.html" class="m-dox">Class</a> returning TClass&lt;Class&gt; as result of getClass() because this func always returns metaclass no matter of what This type is, users need to care about getting meta of metaclass on calling getClass(). for example, <a href="classwrd_1_1_thing.html" class="m-dox">Thing</a>&amp; thing1 = ...; // let&#x27;s assume that got from outside. <a href="classwrd_1_1_object.html" class="m-dox">Object</a> obj;</p></aside><p>wbool compare = obj.isSub(thing1.getClass()); // user intend to get class of <a href="classwrd_1_1_thing.html" class="m-dox">Thing</a>. // however, value &#x27;compare&#x27; will definitely be false if // thing was actually a retrived one by calling Thing.getClass() before.</p><p>// because Class::getClass() will return <a href="classwrd_1_1_t_class.html" class="m-dox">TClass</a>&lt;TClass&lt;T&gt; &gt;, // that stmt will be translated that checks object vs TClass&lt;T&gt;.</p>
+        <section id="pri-methods">
+          <h2><a href="#pri-methods">Private functions</a></h2>
+          <dl class="m-dox">
+            <dt>
+              <span class="m-dox-wrap-bumper">auto <a href="#a11fcdddfdea1dc6725144f55cee31554" class="m-dox">getName</a>(</span><span class="m-dox-wrap">) const -&gt; const <a href="classwrd_1_1_string.html" class="m-dox">String</a>&amp; <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-dox-wrap-bumper">auto <a href="#a0f444b4b141ebf47d994fedbf0167f85" class="m-dox">getSupers</a>(</span><span class="m-dox-wrap">) const -&gt; const <a href="classwrd_1_1_classes.html" class="m-dox">Classes</a>&amp; <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-dox-wrap-bumper">auto <a href="#a8e9a52624632da5acad8268332177921" class="m-dox">getSubs</a>(</span><span class="m-dox-wrap">) const -&gt; const <a href="classwrd_1_1_classes.html" class="m-dox">Classes</a>&amp; <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-dox-wrap-bumper">auto <a href="#aa614823f47adbb548d2fcdedaf80b915" class="m-dox">instantiate</a>(</span><span class="m-dox-wrap">) const -&gt; <a href="class_t_strong.html" class="m-dox">Strong</a> <span class="m-label m-flat m-warning">pure virtual</span></span>
+            </dt>
+            <dd></dd>
+            <dt>
+              <span class="m-dox-wrap-bumper">auto <a href="#aba0c736d5d73b5ac1777d1d414ef4351" class="m-dox">call</a>(</span><span class="m-dox-wrap">const Message&amp; msg) -&gt; <a href="classwrd_1_1_node.html" class="m-dox">Node</a>&amp; <span class="m-label m-flat m-warning">virtual</span></span>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-dox-details" id="a11fcdddfdea1dc6725144f55cee31554"><div>
+            <h3>
+              <span class="m-dox-wrap-bumper">const <a href="classwrd_1_1_string.html" class="m-dox">String</a>&amp; wrd::<wbr />Class::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#a11fcdddfdea1dc6725144f55cee31554" class="m-dox-self">getName</a>(</span><span class="m-dox-wrap">) const <span class="m-label m-warning">virtual</span> <span class="m-label m-danger">private</span></span></span>
+            </h3>
+          </div></section>
+          <section class="m-dox-details" id="a0f444b4b141ebf47d994fedbf0167f85"><div>
+            <h3>
+              <span class="m-dox-wrap-bumper">const <a href="classwrd_1_1_classes.html" class="m-dox">Classes</a>&amp; wrd::<wbr />Class::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#a0f444b4b141ebf47d994fedbf0167f85" class="m-dox-self">getSupers</a>(</span><span class="m-dox-wrap">) const <span class="m-label m-warning">virtual</span> <span class="m-label m-danger">private</span></span></span>
+            </h3>
+          </div></section>
+          <section class="m-dox-details" id="a8e9a52624632da5acad8268332177921"><div>
+            <h3>
+              <span class="m-dox-wrap-bumper">const <a href="classwrd_1_1_classes.html" class="m-dox">Classes</a>&amp; wrd::<wbr />Class::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#a8e9a52624632da5acad8268332177921" class="m-dox-self">getSubs</a>(</span><span class="m-dox-wrap">) const <span class="m-label m-warning">virtual</span> <span class="m-label m-danger">private</span></span></span>
+            </h3>
+          </div></section>
+          <section class="m-dox-details" id="aa614823f47adbb548d2fcdedaf80b915"><div>
+            <h3>
+              <span class="m-dox-wrap-bumper"><a href="class_t_strong.html" class="m-dox">Strong</a> wrd::<wbr />Class::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#aa614823f47adbb548d2fcdedaf80b915" class="m-dox-self">instantiate</a>(</span><span class="m-dox-wrap">) const <span class="m-label m-warning">pure virtual</span> <span class="m-label m-danger">private</span></span></span>
+            </h3>
+          </div></section>
+          <section class="m-dox-details" id="aba0c736d5d73b5ac1777d1d414ef4351"><div>
+            <h3>
+              <span class="m-dox-wrap-bumper"><a href="classwrd_1_1_node.html" class="m-dox">Node</a>&amp; wrd::<wbr />Class::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#aba0c736d5d73b5ac1777d1d414ef4351" class="m-dox-self">call</a>(</span><span class="m-dox-wrap">const Message&amp; msg) <span class="m-label m-warning">virtual</span> <span class="m-label m-danger">private</span></span></span>
+            </h3>
+          </div></section>
+        </section>
       </div>
     </div>
   </div>
