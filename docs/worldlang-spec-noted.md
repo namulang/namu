@@ -2671,7 +2671,7 @@ class tDeep<T> : public deep {
 
 
 
-## 무엇인 member의 기준이 되는가? --> 메시지 스택이 전파될 수 있는가.
+## [v] 무엇인 member의 기준이 되는가? --> 메시지 스택이 전파될 수 있는가.
 
 - 메시지 스택이 전파될 수 있는가? 그걸 허용하는가?
 - class A
@@ -2693,8 +2693,18 @@ class tDeep<T> : public deep {
 ## Object의_멤버변수_초기화_문제
 
 - 문제정의 : Object가 Managed에서 생성될때는 TClass<T>::instantiate() 안해서 new T()로 객체를 만들고, 만든 T*->getMembers()로 Chain을 가져와서 chain(메소드.getMembers())하고, 메소드의 ObjectVariables()를 clone한걸 chain시키게 하는 동작을 함으로써 객체의 members 초기화가 완료된다. 이 과정은 쉽게 말해서 Native함수들을 Managed에 visible할 수있는 준비를 만드는 것이다. 그러나 Native에서 객체를 만드는 경우는 어떤가? Object 클래스는 부모클래스이기 때문에 이 생성자 안에서는 도대체 사용자 클래스인 자식클래스가 무엇인지 알 방법이 없다. 자식클래스의 생성자에는, 자식클래스가 사용자의 클래스이기 때문에 함부로 생성자의 코드를 작성할 수 없다. 방법은?
-- v 1안 Lazy 초기화를 수행한다.
+### [x] 1안 Lazy 초기화를 수행한다.
   - "Members에 접근은 반드시 getMembers()로만 수행해야 한다" 는 조건이 완벽하다면, 이 함수가 불려졌을때 Members가 비어있을 경우 메타클래스로부터 members를 가져와서 초기화한다.
+
+
+### [v] 2안 이제 Prototype기반이므로 그냥 객체를 clone() 하면 된다.
+* origin 객체가 생성될때는 파서가 직접 members를 채워넣는 섬세한 작업을 한다.
+    * members안에 sharable 멤버는 shallow에 감싸여져 있으므로 항상 shallow cpy가 된다.
+* 객체가 복제될때는 members.clone()을 하게 되고,
+    * shallow에 감싸져 있는것은 shallow copy가,
+    * 나머지, members에 객체가 직접 박혀져 있는 건 deep cpy
+    * deep에 감싸져 있는것은 deepcpy를 할찌 shallowcpy를 할지 T의 occupiable을 보고 결정한다.
+
 
 
 
@@ -2704,56 +2714,65 @@ class tDeep<T> : public deep {
 
   - 어떠한 변수를 생성해야한다는 정보를 누가 들고 있어야 하나?
 
-    - \1. 생성자코드에 추가되도록 한다.
+    - [x] 1. 생성자코드에 추가되도록 한다.
 
       - 아마도 자바에서 사용하는 방법일 것이다.하지만...
 
-    - v 2. 클래스 자체가 변수도 들고있고, 클래스를 clone한다.
+    - [v] 2. origin 객체자체가 변수도 들고있고, 클래스를 clone한다.
 
-      - 클래스는 변수가 무엇인지 알아둘 필요가 있긴 하다. World에서 변수 접근, 변수에 할당은 모두 "메시지"로 취급한다. 함수나 변수나 구분은 할 필요가 없는 것이다.
+      - 객체는 변수가 무엇인지 알아둘 필요가 있긴 하다. World에서 변수 접근, 변수에 할당은 모두 "메시지"로 취급한다. 함수나 변수나 구분은 할 필요가 없는 것이다.
 
-      - 클래스가 함수를 담을 수 있다면, 구조상 변수도 담을 수 있는 잠재성이 있다.
+      - [x] 클래스가 함수를 담을 수 있다면, 구조상 변수도 담을 수 있는 잠재성이 있다.
 
       - 그럼, 그걸 어떻게 하는가?
 
         - v 1안
-          - 클래스는 Node[] members; 를 갖게 한다. 그리고 여기에 Function이나 멤버변수가 들어가면 된다.
-          - 이 Node가 일반 클래스인가, 아니면 데이터타입의 클래스(int, float, double, string ...) 인가를 구분짓는 것은 setter와 getter 메시지를 처리 할 수 있는가 아닌가다.
-          - 클래스를 instantiate()를 하게 되면 T()를 생성하고 MetaClass가 가진 members중 Node[]만 복사해서 insert 시켜 주면 된다.
-          - 임의 Node  a에게 메시지가 온 경우,  #메시지_전파_알고리즘 에 따라 scope의 관점에서 올라가면 된다.
-            - 만약 객체소유의 관점에서 올라가면 멤버변수가 메시지_전파_알고리즘 에 반응해버린다.
-          - 문제점
-            - 함수인 Member만 모아서 접근하는 건 쉬움. 이미 있으니까. 하지만 멤버변수인 Member들만 모아서 접근하는 방법은? for문을 도는 방법밖에 없다고 말하지는 말아줘.
-              - 이러한 ContainerForContainer를 Chain이라고 이름을 붙였다. 이걸 통해서 해결한다.
-              - 구체적인 설계는?
-                - 1안 - 최대한 쪼갠다.
-                  - 하나의 클래스는 private variable, private function, public function, public variable 4종류를 가직 있다.
-                  - 파싱시에는 variable, function은 super의 것을 chain을 유지한다.
-                  - 파싱이 끝나면 incarnate()를 통해서 원소를 복제하고 chain을 푼다. 이후로는 메타정보 injection이 불가능하다는 얘기다.
-                  - 필요시 member라고 해서 variable과 function과 chain을 유지한 것을 값으로 생성해서 반환해준다. 값으로 내보내도 chain을 묶는것 뿐이므로 퍼포먼스 로스는 적다.
-                  - 하나의 객체는 private variable, public variable 2종류를 갖는다.
-                  - 클래스.instantiate()를 하게 되면 메타클래스의 variable을 복제해서 넣는다. 그리고 생성자를 호출한다.
+          - 객체는 Node[] members; 를 갖게 한다. 그리고 여기에 Function이나 멤버변수가 들어가면 된다.
+          - 이 Node가 메소드인가, 아니면 데이터타입의 클래스(int, float, double, string ...) 인가를 구분짓는 것은 setter와 getter 메시지를 처리 할 수 있는가 아닌가다.
+          - [x] 클래스를 instantiate()를 하게 되면 T()를 생성하고 MetaClass가 가진 members중 Node[]만 복사해서 insert 시켜 주면 된다.
+          - [v] 임의 Node  a에게 메시지가 온 경우,  #메시지_전파_알고리즘 에 따라 scope의 관점에서 올라가면 된다.
+            - [v] 만약 객체소유의 관점에서 올라가면 멤버변수가 메시지_전파_알고리즘 에 반응해버린다.
+            - 즉, 다음과 같은 코드는 용인할 수없다.
+            ```wrd
+                def A
+                    void print()
+                def B
+                    void foo()
+                    a := A()
 
-      - 2안
+                B().print() // 컴파일 에러. 그러나 객체소유의 관점에서 본다면, B()는 print()를 처리할 수 있다는 얘기가 된다.
+            ```
 
+          - [v] 문제점
+            - [v] 함수인 Member만 모아서 접근하는 건 쉬움. 이미 있으니까. 하지만 멤버변수인 Member들만 모아서 접근하는 방법은? for문을 도는 방법밖에 없다고 말하지는 말아줘.
+              - [x] 이러한 ContainerForContainer를 Chain이라고 이름을 붙였다. 이걸 통해서 해결한다.
+                  - 구체적인 설계는?
+                    - 1안 - 최대한 쪼갠다.
+                      - 하나의 클래스는 private variable, private function, public function, public variable 4종류를 가직 있다.
+                      - 파싱시에는 variable, function은 super의 것을 chain을 유지한다.
+                      - 파싱이 끝나면 incarnate()를 통해서 원소를 복제하고 chain을 푼다. 이후로는 메타정보 injection이 불가능하다는 얘기다.
+                      - 필요시 member라고 해서 variable과 function과 chain을 유지한 것을 값으로 생성해서 반환해준다. 값으로 내보내도 chain을 묶는것 뿐이므로 퍼포먼스 로스는 적다.
+                      - 하나의 객체는 private variable, public variable 2종류를 갖는다.
+                      - 클래스.instantiate()를 하게 되면 메타클래스의 variable을 복제해서 넣는다. 그리고 생성자를 호출한다.
+
+              - [v] 디버깅 시에는 그냥 for문을 돈다. 최적화가 되면 for문을 돌 필요 없이 인덱스를 지정해서 가져오게 된다. 
+
+      - [x] 2안
         - 준비
-
           - 메타클래스는 Member를 2개 가지고 있음.  1개는 변수만 들어있는 Member이자 다른 1개를 super로 가리키는 것, 또 1개는 함수만 들어있는 Member. Member에는 함수와 멤버변수가 들어갈 수 있음.
           - 클래스 파싱될때 모든 함수를 먼저 함수Member에 넣음.
           - 그리고 멤버변수Member super를 함수Member로 지정함.
           - 파싱된 멤버변수를 멤버변수Member에 넣음. 이제 멤버변수Member는 모든 멤버변수를 가지고 있음.
 
         - 결과
-
           - 메시지전파는 함수Member만 접근하면 됨. 문제없음.
           - 새로운 Node생성시, 멤버변수Member를 복제하여 새로운Node에 집어 넣으면 됨. 해당 Node는 독립적인 멤버변수를 가지고 있으며, 게다가 함수Member는 기존처럼 super로 가지고 있기에 메모리에 포함되지 않음.
 
-        - 문제점
 
 
+## [v] static변수는_어떻게_구현하는가
 
-## static변수는_어떻게_구현하는가
-
+### [x] 1안
 - Generating단계에서 class 객체를 추가하면서 members에는 static변수와 method만 담는다.
 - WorldObject생성시 붙여지는 멤버변수는 별도의 const Members& getMemberVariables() const에 담겨지며 이것의 nonconst 버전은 friend 클래스들에게만 공개된다.
 - ClassManager에 의해서 제공되는 class는 nonconst로 제공된다.
@@ -2771,10 +2790,14 @@ class tDeep<T> : public deep {
         - member인 method와 static변수는 당연히 getMember()로 얻어 올 수 있다.
         - 원한다면 getMemberVariables()도 visible하게 할 수 있을 것이다.
 
+### [v] 2안 shallow 객체를 사용한다.
+* shallow로 감싸진 상태에서 members에 들어가 있다면, shallow cpy가 된다. sharable로썩 동작하는 것이다.
+* 따라서 occupiable이었던 int 와 같은 객체도 sharable 멤버로 취급되게 된다.
+* 처음에 컴파일러가 어떻게 감싸서 members에 넣느냐에 따라 static 멤버인지를 결정 할 수 있게 되는 것이다.
 
 
-## 객체의 Member initializing 알고리즘
 
+## [x] 객체의 Member initializing 알고리즘
 - Node는 member를 가지고 있다.
 - 각 함수는 자신이 private 여부를 가지고 있다.
 - ObjectType Class는 variable member와 function member, 그리고 Chain<T> member 3개를 가지고 있다. 이중 앞의 2개를 member가 chain하고 있다. function이 앞에, variable이 뒤에 속해있다.
@@ -2815,6 +2838,7 @@ class tDeep<T> : public deep {
 
 ## Scope, 객체와 메소드 간의 메시지 전달 체계
 
+### [x] 1안 
 - 상당히 까다로운 문제였다.
 - \#Message는_name_thisptr_args를_모두_하나의_Array로_구성한다
 - **thisptr은 Object와 관련이 없다.**
@@ -3093,7 +3117,7 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 * WRD_CLASS 매크로에 method 목록을 지정할 수 있으며 이 경우에만 onWrap()을 오버라이딩 한다.
 * TWrappedNativeMethod는 기존 알고리즘과 동일하다. 주의할 점으로, native 메소드를 호출할때 명시적으로 메소드를 지정해야 한다. 멀티디스패치가 되지 않도록 한다.
   이를테면, this->T::MethodName(Args...)가 되야 한다.  this->MethodName(Args....) 가 아니라.
-	* 멀티디스패치로 할 경우, world 문법상에서 Native를 wrap한 origin객체 안에서 super.MethodName()가 불가능해진다.
+	*클래스인가 멀티디스패치로 할 경우, world 문법상에서 Native를 wrap한 origin객체 안에서 super.MethodName()가 불가능해진다.
 * MgdObject는 WRD_CLASS의 method목록이 없는 버전을 사용한다. MgdObject는 별도의 native 메소드가 없기 때문이다.
   이경우 Object의 onWrap()까지만 불리므로 Object까지의 C++ 메소드들만 wrap 된다.
 * 모든 WRD_CLASS 매크로는 __sub_clses, __super_clses, 이들의 static 접근자인 getSubsStatic(), getSupersStatic()의 정의와 getSubs(), getSupers()를 overriding한 메소드를 정의한다.
@@ -12965,10 +12989,11 @@ private:
 
 
 
-### Msg의_마지막_위치에_Thisptr를_넣어야_한다?
+### [v] Msg의_마지막_위치에_Thisptr를_넣어야_한다?
 
 - 결론
-  - 2안 thisptr은 배열에 넣지 않는다. 모든 Msg는 별도의 TStrong<Object> thisptr라는 멤버변수를 갖게 된다.
+  - [v] 2안 thisptr은 배열에 넣지 않는다. 모든 Msg는 별도의 TStrong<Object> thisptr라는 멤버변수를 갖게 된다.
+
 - 고찰내용
   - Msg Args의 첫번째 위치에 넣는 방법도 생각해볼 수 있겠지만 그래서는 안된다. 이유는 이렇다.
     - \1. thisptr는 도중에 변경된다. 런타임에서만 확정된다.
