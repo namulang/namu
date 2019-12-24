@@ -2539,7 +2539,7 @@ def app
 
 ## 멤버변수 컨셉
 
-- v 멤버변수는 Object에 속한것이냐 아니냐 기준으로 배열을 2개 만든다.
+### [x] 1안 멤버변수는 Object에 속한것이냐 아니냐 기준으로 배열을 2개 만든다.
 
   - Object와 Method는 본격적으로 멤버변수를 다룬다. 멤버변수를 어떻게 구성할것인가는 생각외로 상당히 복잡한 문제가 되는데, 왜냐하면 const여부, static여부, private/public 여부, variable여부 등등 여러가지 요인들이 한번에 얽혀있기 때문이다.
     - [확정] 1. class - object 멤버를 구분해야 한다.
@@ -2560,7 +2560,7 @@ def app
       - \1. 바로 탐색이 느리다는것과
       - \2. 객체 생성시 부담이 생길 수 있다는 것이다.
 
-- v 구성 및 객체생성
+#### [x] 구성 및 객체생성
 
   - 시나리오
     - \1. 각 Class들은 부모의 메소드들을 copy한다. 이는 chain deep depth로 인한 퍼포먼스를 줄이기 위함이다.
@@ -2610,6 +2610,64 @@ def app
 - 클래스.instantiate()를 하게 되면 메타클래스의 variable을 복제해서 넣는다. 그리고 생성자를 호출한다. 객체의 variable은 chain되지 않은것을 복제했으므로 chain이 아니다.
 
 - 객체가 함수를 사용할때는 chain되지 않은 함수의 것을 바로 사용하므로 역시 탐색시 로스는 없다.
+
+
+### [v] 2안 배열은 한개다. 그러나 안에 들어가 있는 멤버가 refer로 감싸져 있으면 sharable로 동작한다.
+
+#### 먼저 refer는 T가 occupible인지 sharable인지에 따라 assign()이 다르게 동작한다.
+* 그러나 int는 occupible이지만 static int는 공유가 되어야 한다.
+* 그러므로 refer와 비슷하지만 조금 다른 뭔가를 만들어야 한다.
+    * 그것은 객체를 가리키며,
+    * Node의 일종이여야 하고
+    * TBinder를 사용하며
+    * T가 occupible인지 여부와 관계없이 shallow cpy를 수행한다.
+* 이를 Ptr 라고 한다.
+
+```cpp
+class ptr : public node {
+    // TBinder<Node>를 사용하여 무조건 모든 msg를 ptr로 redirection
+    // to<T>()를 지원한다.
+    Node getPtr();
+};
+
+class shallow : public ptr {
+    // operator= 혹은 assign()은 shallow cpy
+    clone() // TBinder<Node>를 shallow cpy 한다.
+};
+
+class deep : public ptr {
+    // operator=()에서 T가 무슨 타입인가에 따라 occupible, sharable를 구분
+    clone() // TBinder<Node>를 deep cpy
+};
+
+template <typename T>
+class tDeep<T> : public deep {
+    T get(); 을 지원한다.
+};
+```
+
+#### 이제 Origin객체를 구성할때 1개의 배열로 구성할 수 있다.
+* 파서는 origin객체를 생성하면서 그 members라는 하나의 배열에 멤버들을 static, private, public 구분없이 넣는다.
+    * public, private는 구분하지 않는 이유는, 결국 최적화시점에는 index로 접근할 것이기 때문.
+    * static 변수 (메소드)일 경우에는 그 변수나 메소드를 생성하고 ptr로 감싸서 넣는다.
+    * 일반변수 일때는 그 변수를 그대로 넣는다.
+* 복제할때 origin객체의 members도 clone()이 된다.
+* members의 원소가 변수가 그대로 들어있는 경우는 deep cpy, shallow.clone()은 shallowcpy 가 된다.
+  결과적으로 members.clone()를 복제객체에 넣기만 하면 끝난다.
+
+#### 상속의 경우
+* 복제객체를 포함해서 모든 객체의 members는 사실 Chain이다.
+* 그래서 파서는 새로운 배열에 멤버를 넣고나서 이걸 생성한 객체의 members에 add 한다.
+* 만약 복제한 객체가 아무런 상속도 없었다면 members는 비어있을 것이고 Chain에는 1개의 container만 들어간다.
+* 그러나 상속을 2,3개 받은 상태에서 복제한 객체를 파싱한다면 이미 그 객체의 members에는 2,3개의 container가 들어가 있다.
+* 파서는 members에 몇개의 container가 있건말건 항상 새로운 container를 만들어 거기에 파싱으로 멤버를 채워넣고, 그것을 add 한다.
+
+
+#### 단점: 퍼포먼스 비용
+- 왜냐하면 shared member를 따로 모아놓아서 chain을 걸면 더 빠를 텐데말이다.
+- 그리고 members에는 여러개의 container가 병렬로 되어있으므로 2 depth 탐색이다.
+  최적화 과정을 거치면 이부분을 수정할 수 있다.
+
 
 
 
