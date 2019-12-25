@@ -2836,35 +2836,15 @@ class tDeep<T> : public deep {
 
 
 
-## Scope, 객체와 메소드 간의 메시지 전달 체계
-
-### [x] 1안 
-- 상당히 까다로운 문제였다.
-- \#Message는_name_thisptr_args를_모두_하나의_Array로_구성한다
-- **thisptr은 Object와 관련이 없다.**
-- **Method.call(msg)에서 Method가 static Method가 아니라면 msg 마지막에 thisptr를 넣어둬야한다.**
-- CallStmt나 Method를 굳이 Native환경에서 쓰고 싶다는 변태적인 개발자는 직접 msg를 생성할때 args를 size+1한 뒤에 끝에다가 this로 사용할 object를 넣어둬야 한다. Method::run(msg)에다가 Method::run(thisptr, msg)로 하자는 의견도 있었다. 그러나 Method에는 StaticMethod도 나올 수 있으며 이 경우 thisptr는 완전히 필요없는 인자가 된다. Method라는 클래스에는 Static메소드도 포함된 상태이기 때문에 특정 자식클래스에서만 사용한는걸 공통클래스로 끌어올리는데는 조금 석연찮다.
-- **Msg는 모두다 인자로써만 취급하기에 자신의 마지막 arg가 thisptr인지 아닌지는 알 도리가 없다. 메소드가 마지막 인자를 thisptr로써 취급하는 것 뿐이다.**
-- **Scope.stack(Object&)는 ObjectSpace를 등록하며, scope의 localspace의 "this" 라는 변수를 만들어(이미 있다는 덮어써서) 주어진 object로 assign한다.**
-- **Object는 call할때 scope에 대해서 아무런 동작을 하지 않는다. 그저 자신의 member들만 뒤진다.**
-- **NativeMethod 역시 scope에 대해서 아무런 동작을 할 필요가 없다.**
-- **StaticMethod는 Object관련된 scope 조작이 없다. LocalSpace만 add한다.**
-- 왜냐하면 Method::stack을 보면 다른 모든것들은 scope에서 나오고 있기 때문이다.
-- 이 둘을 모두 scope에서 출발하도록, Method&origin도 그렇게 만들면 _stack의 args를 scope만 받도록 만들 수 있다.
-- 그렇게 되면 object와 method 모두 같은 함수인 _stack을 두도록 할 수 있다.
-- 왜 msg에 뒀을까? 이유가 있을 것이다. --> #Message는_thisptr를_어떻게_다뤄야_할까
-- **일반 nonstatic ManagedMethod는 외부로부터 this에 사용할 Object가 msg 뒤에 담겨있다는 걸 안다. nonstatic ManagedMethod는 this로 사용할 object를 꺼내서 scope.objectSpace.push() 한다. 함수가 끝나면 objectspace.pop()을 한다.**
-- ManagedMethod가 자신이 static인지 아닌지 아는 방법은 isStatic()을 사용하면 된다.
 
 
 
 
 
 
-
-## 함수 디덕션. 코드를 보고 어떻게 무슨 오버로딩된 메소드인지 파악하는 가.
-
-- 요구사항
+## [v] 함수 디덕션.
+  
+### [v] 요구사항
   - 함수디덕션의 핵심은, expr에 담긴 argument들을, expr에서 호출하려고 하는 함수명세를 통해 도출된 함수후보군 중에서 가장 비슷한 함수의 parameter로 명시적 캐스팅을 묵시적으로시켜서 호출이 허용되도록 만드는 것이다.
   - 모든 명시적캐스팅들은 주어진 상황에 따라 묵시적으로 캐스팅이 될 수 없다. 오직 pretype 들에 대해서만 world가 미리 정의한 묵시적 캐스팅만 해당한다.
   - 여기서 핵심은 함수후보군을 찾아내는 것과, 그 후보군 중에서 가장 적합한 것 1개를 도출해 내는 과정과, 그 프로세스를 어느 클래스에서 가지고 있어야 하는 것 3가지다.
@@ -2887,8 +2867,7 @@ class tDeep<T> : public deep {
 
 
 
-### deduction 함수 바인딩
-
+### [v] deduction 함수 바인딩
 - c++처럼, 함수의 signature와 정확히 일치 되지 않더라도 유도리있게 파서가 "이 심볼이지??ㅋㅋ" 하면서 매칭해주는 알고리즘이다.
 - 고찰로 알아낸, 이 문제의 가장 포인트는,
   - 묵시적 형변환으로 함수를 바인딩하는 것은 "**사용자의 의도와 실제가 달랐을 경우, 유도리있게 비슷한 걸 정해준다**"는 컨셉임을 잊지 말하야 한다. 이는 "형변환이 가능하다"와는 다른 얘기인것이다.
@@ -2962,14 +2941,13 @@ class tDeep<T> : public deep {
 
 
 
+
 ## TClass Origin 새로 설계
 ### [v] 요구사항
 * Origin 객체라는 것이 나왔고 사실 이것이 Type을 대신하고 있다.
 * 이제 기존 TClass가 Type을 대신하고 있었으므로 이걸 해결해보자.
 
-### [x] 1안 TClass를 제거하자.
-
-
+### [v] 1안 TClass를 제거하자.
 ```cpp
 template <typename T>
 class tRtti {
@@ -3011,24 +2989,37 @@ class object : public node { // object는 originMgr에 있으면 origin객체인
 };
 
 class originMgr {
+  hashmap<String, Object> ...;
   operator[](const string& name);
-  originMgr() {
-    objs.add(_builtIns);
+
+  private res& set(Object);
+  Object& get(const object& origin?) {
+      만약 hashmap(origin.getName()); 없으면,
+      hashmap.put()
   }
-  res& add(const object& origin?) {
-    if(origin == 중복) return rAbort;
-    return objs.push_back(origin);
+  template <typename T>
+  Object& get() {
+      return get(Dummy<T>())
   }
 
   res& init() {
-    for(object& o : objs)
-      o.init();
+      Thing, 
   }
-  static tArray<Object> _builtIns;
 };
 
+
+template <typename T>
+class dummy : public Object {
+    // T가 ADT여도 생성이 가능해야 한다.
+    // T에 대한 Name을 제공해야 한다.
+    // T의 부모와 자식을 가질 수 있어야 한다. (Object가 이걸 하고 있다)
+    // World에 visible한 멤버들은 이 dummy에 주입되어야 한다. (T::onInitMembers() 같은걸 호출해야 할것 이다)
+}
+
+
 class node {
-  // Object보다 상위클래스들은 WRD_BASE_CLASS를 쓴다. 그러면 자동으로 static 타임에 DummyOriginObject를 만들어 OriginMgr::_builtIns.add(DummyObject()); 를 넣어둔다.
+  // Object보다 상위클래스들은 WRD_BASE_CLASS를 쓴다. 그러면 자동으로 static 타임에 orgMgr::get().get<This>();를 넣어둔다.
+  // 안쪽에서 lazy 하게 org객체가 초기화된다.
   WRD_BASE_CLASS(
 
   virtual res& init() {
@@ -3077,9 +3068,9 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 * Origin객체란 OriginMgr에 보관된 Object를 말하는 것이다.
 * Origin객체는 OriginMgr["name"]으로 쉽게 접근 가능하다.
 * Thing, Instance 들은 Object보다 상위인데도 cast, isSub가 가능해야 하므로 이를 위한 DummyOriginObject를 생성한다.
-  * Dummy는 복제 될 수 없다.
   * WrappedMethod는 초기화가 된 이후에, this를 호출시 바인딩한다.
-  * DummyOBject는 OriginMgr가 시작하자마자 만들어 둔다.
+  * DummyObject는 OrgMgr가 시작하기 전에 각 클래스들에 매크로(WRD_CLASS)로 정의된 initiator가 static 변수 초기화 타임에 orgMgr에 get()을 호출한다.
+  * orgMgr.get<T>()은 T에 대한 dummyObject를 생성하고 이 더미는 T의 멤버, visible한 변수, 부모와 자식의 관계정보를 모두 가지고 있어야 한다.
     * tRtti로 Object보다 상위의 모든 클래스들을 알아내서 만들어낸다.
     * 모든 월드 native 클래스들은 Super라는 typedef가 있어야 한다.
     * tRtti _getSuper()는 오직 OriginMgr에만 열려있다. 다른 사람들은 Thing::getSuper()를 쓰자.
@@ -3088,9 +3079,11 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 * 예전 설계에서는 TClass가 Type을 담당했기 때문에 Node 보다 구체클래스들도 TClass에 메소드를 넣을 수 있었다.
   * Tclass는 이러한 메소드들을 담아두는 역할을 수행했기 때문에 Node::getMembers()를 갖지 못해도 일단 메소드를 보관해  놓았다.
   * Object가 나올때는 이러한 TClass()의 메소드를 shallow copy했기 때문에 문제가 발생하지 않았다.
+
 * 이제 새로운 설계에서는 TClass는 사라지고 Origin 객체가 이걸 대신한다.
   * 메소드들은 WRD 매크로를 쓰면 일부 매소드들에서만 참조할 수 있는, wrap한 메소드 배열을 returning 하는 static 메소드를 private로 하나씩 박아넣고 있다.
-  * getMembers() 를 가지고 있는 Node는 초기화시에 Node::onInitWrappers()를 부를때 모든 supers를 다 부른다.
+  * [x] getMembers() 를 가지고 있는 Node는 초기화시에 Node::onInitWrappers()를 부를때 모든 supers를 다 부른다.
+  * OriginMgr는 외부에서 <T>get()이 호출되면 안에서 dummy객체를 만들고, dummy객체는 onInitWrappers()를 호출해서 더미안에 멤버를 채워넣는다.
   * 보통은 origin객체 초기화시에 부모origin의 members를 복제해 넣고, onInitWrappers()를 호출해서 wrapped된 메소드 배열을 가져와 getMembers에 넣는다.
 
 ### [v] Q2. Thing, Instance에도 여전이 cast, isObject를 쓸 수 있는가?
@@ -3124,11 +3117,11 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 * getSupers(), getSubs()는 Super::getSubs()를 불러서 복제한 후, onWrap()을 호출하여  캐시화한다.
 * WRD_CLASS의 메소드 목록이 있는 버전은 WRD_CLASS의 인자 T가 Node이거나 Node보다 하위클래스여야 한다. static_assert등으로 될 수 있으면 막자.
 
-### 왜 이방법이 안됩니까?
+### [x] 왜 이방법이 안됩니까?
 * 지금 하고자 하는 것은 결국 TClass의 구현을 Thing에다가 넣어서 TClass를 없애자는 것
 * 그러나 OriginManager에 Thing 을 insert 할 수 없다. Thing은 ADT이므로 객체를 만들 수 없는 것이다.
 
-### 그렇다면 그 제약을 안고가자.
+### [x] 그렇다면 그 제약을 안고가자. -> orgMgr는 어떠한 ADT라도 dummy를 만들 수 있다.
 * 먼저 Worldfrx에서 stub을 채워서 ADT를 없앤다.
 * MgdObject를 상속받은 3rd파티 개발자는 ADT를 클래스 상속계층 중간에 끼울 수 있다.
 * 그때 ADT가 중간에 있어도 말단 구체클래스에서는 ADT의 onWrap()을 불러줄 것이므로 멥버를 가져올 수 는 있다.
@@ -3139,8 +3132,13 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 * C++에는 Worldlang에는 없는 ADT라는게 존재한다. 그리고 ADT는 별도의 member 혹은 wrapped native Method들을 어디선가 들고 있어야만 한다.
 * 따라서 TClass가 필요하다. Origin이라는 명확한 객체로 뽑아 낼 수 없는 T에 대해서도 멤버정보를 들고 있을 수 있는 클래스템플릿.
 
-### 이걸 택하지 않은 이유
+### [v] TClass<T>를 없애려고 한 이유
 * 되도록이면 클래스 갯수를 줄여서 경량화 하고 싶다.
+
+
+
+
+
 
 
 
@@ -13025,6 +13023,35 @@ private:
       - 하지만 thisptr가 워낙에 특이한변수이다보니 이곳에서조차, thisptr일 경우에는 thisptr->func(args)처럼 특수한 처리를 해줘야만 한다.
       - Thisptr != Object& 이다. args 배열은 Object&라는 관점에서만 바라보기 때문에, thisptr로써 주어진 object&인지, 인자로써 주어진 object& 인지 구분이 쉽지 않고, 대부분의 상황에서 이 구분을 필요로 했다. 다시말하면 그 일반적인 로직의 다양성이 적다는 것이다. (기껏 하나의 배열로 합쳐봤자 쓸데가 없다는 얘기)
       - 되려 분리시켰을때의 편의성이나 static/instance메소드를 특정하지 않고도 메소드를 보낼 수 있는 점등 장점이 더 많다.
+
+
+### Scope, 객체와 메소드 간의 메시지 전달 체계
+
+#### [x] 1안 
+- 상당히 까다로운 문제였다.
+- \#Message는_name_thisptr_args를_모두_하나의_Array로_구성한다
+- **thisptr은 Object와 관련이 없다.**
+- **Method.call(msg)에서 Method가 static Method가 아니라면 msg 마지막에 thisptr를 넣어둬야한다.**
+- CallStmt나 Method를 굳이 Native환경에서 쓰고 싶다는 변태적인 개발자는 직접 msg를 생성할때 args를 size+1한 뒤에 끝에다가 this로 사용할 object를 넣어둬야 한다. Method::run(msg)에다가 Method::run(thisptr, msg)로 하자는 의견도 있었다. 그러나 Method에는 StaticMethod도 나올 수 있으며 이 경우 thisptr는 완전히 필요없는 인자가 된다. Method라는 클래스에는 Static메소드도 포함된 상태이기 때문에 특정 자식클래스에서만 사용한는걸 공통클래스로 끌어올리는데는 조금 석연찮다.
+- **Msg는 모두다 인자로써만 취급하기에 자신의 마지막 arg가 thisptr인지 아닌지는 알 도리가 없다. 메소드가 마지막 인자를 thisptr로써 취급하는 것 뿐이다.**
+- **Scope.stack(Object&)는 ObjectSpace를 등록하며, scope의 localspace의 "this" 라는 변수를 만들어(이미 있다는 덮어써서) 주어진 object로 assign한다.**
+- **Object는 call할때 scope에 대해서 아무런 동작을 하지 않는다. 그저 자신의 member들만 뒤진다.**
+- **NativeMethod 역시 scope에 대해서 아무런 동작을 할 필요가 없다.**
+- **StaticMethod는 Object관련된 scope 조작이 없다. LocalSpace만 add한다.**
+- 왜냐하면 Method::stack을 보면 다른 모든것들은 scope에서 나오고 있기 때문이다.
+- 이 둘을 모두 scope에서 출발하도록, Method&origin도 그렇게 만들면 _stack의 args를 scope만 받도록 만들 수 있다.
+- 그렇게 되면 object와 method 모두 같은 함수인 _stack을 두도록 할 수 있다.
+- 왜 msg에 뒀을까? 이유가 있을 것이다. --> #Message는_thisptr를_어떻게_다뤄야_할까
+- **일반 nonstatic ManagedMethod는 외부로부터 this에 사용할 Object가 msg 뒤에 담겨있다는 걸 안다. nonstatic ManagedMethod는 this로 사용할 object를 꺼내서 scope.objectSpace.push() 한다. 함수가 끝나면 objectspace.pop()을 한다.**
+- ManagedMethod가 자신이 static인지 아닌지 아는 방법은 isStatic()을 사용하면 된다.
+
+#### [v] 2안
+* Msg에는 thisptr는 args와는 별도로 취급한다.
+* Msg.thisptr는 Object.call()이 불린순간, Object가 thisptr를 채워넣는다.
+    * 참고로 world에는 static 메소드는 존재하지 않는다. 클로저 조차도 사실은 thisptr를 채워놓은 Msg와 Scope를 이용하는 것이다.
+* Object 안쪽에서 채워지므로 Native 개발자는 그냥 Msg에 args만 넣어서 호출하면 된다.
+
+
 
 
 
