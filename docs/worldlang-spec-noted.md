@@ -1,4 +1,5 @@
 
+    blablabla
 # Worldlang Specification Noted
 
 # 수정내역
@@ -2498,21 +2499,21 @@ def A // 객체 A를 정의한다. 원본객체는 생략되었다. 고로, 이 
     	c.out("hello world. I'm " + age + " years old.") // print의 구현
    	int age = 0
 
-def B = A // 객체 B를 정의한다. A의 인터페이스를 물려받는다.
+def B := A // 객체 B를 정의한다. A의 인터페이스를 물려받는다.
 	void say() // 거기에 say() 메소드를 확장했다.
     	c.out("and you?")
 
 def app
 	void main()
-    	a1 = A() // a1은 A 객체로부터 인터페이스를 모두 물려받는다.
-    	b1 = B()
+    	a1 := A() // a1은 A 객체로부터 인터페이스를 모두 물려받는다.
+    	b1 := B()
     	b1.age = 5
 
     	c.out("a1' age is " + a1.age) // a1's age is 0
     	c.out(b1.age) // 5
 
 		A.age = 20
-    	def C = A
+    	def C := A
     		// 메소드 안에서 새로운 객체를 만들 수 있듯,
     		// 새로운 객체를 만들면서 인터페이스 확장도 당연히 가능하다.
     		// "C = A"는 프로그램 시작시 수행된다.
@@ -2521,8 +2522,8 @@ def app
     			say()
 				print()
     	C.wow()
-    	a2 = A() // a2.age는 20, A.age도 20 이다.
-    	c1 = C() // c1.age는 0, C.age도 0이다.
+    	a2 := A() // a2.age는 20, A.age도 20 이다.
+    	c1 := C() // c1.age는 0, C.age도 0이다.
 
 
     //C foo() {} // 컴파일에러: C는 지역객체이므로 메소드 밖과 시그내쳐signature에서는 사용할 수 없다.
@@ -3142,11 +3143,11 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 
 
 
-## origin 객체는 생성자 호출이 불가능할때가 있다
+## [v] origin 객체는 생성자 호출이 불가능할때가 있다
 
 * 기본생성자가 없으므로 시스템에서 origin객체를 하나 만들어놓고 시작이 불가능한데?
 
-### 1안 문제가 없다
+### [v] 1안 문제가 없다
 * 임의의 타입 T가 ADT일 경우 더미객체가 만들어지므로 항상 문제는 생기지 않는다.
     * 생성자를 호출하지 않기 때문이다.
 
@@ -3162,33 +3163,51 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 
 
 
+## [x] 객체 정의 --> 위에 다 있는 내용이며, 일부는 잘못되었다.
+
+ def Obj := Occupying
+	* this를 점거한다.
+	* origin객체가 될 수 있다.
+	* sharedmember가 존재한다.
+		* sharedmember멤버를 런타임에 추가할 수 있다.
+		* sharedmember에 일반 변수가 들어 있으면 static이다.
+			* 그 변수가 refer로 감싸져있으면 sharable.
+			* 아니면 occupiable.
+	* shared member와 별도로 occupiying member가 배열로 존재한다.
+		* 외부에는 getMembers()는 sharedmember와 occupying member의 chain구조다.
+
+ [v] 중첩객체
 
 
-
-       
-
-
-## 중첩된 객체의 문법
+## [] 문법
+* 객체의 정의를 객체 정의 블록문 안쪽에서 하면 된다.
+* 메소드 안에서도 가능하다.
+* expr 취급이므로 메소드 호출 안쪽에서도 가능하다.
 
 ```cpp
 def Part
     __name = "unknown"
+
     def name
         get: _name
         // can't call set()
+
 def Part2
+
     def Nested // nested obj.
         void say()
             c.out("name=$name") // can access scope of owner object.
 
-    def name = "unknown" // nested obj. prototyped from str
-        get=>: path = directoy + val // str.val
-        _set=> // can't modify value of "name" at outside.
+    def name := "unknown" // nested obj. prototyped from str
+        get: path = directoy + val // str.val
+        _set: // can't modify value of "name" at outside.
 
-    directory = "/home/me/"
-    path = directory + name
+    _directory := "/home/me/"
+    path := directory + name
+
 
 // Part2().Nested는 Part2.Nested의 복제.
+// 위의 Part2 origin객체는 Nested origin객체 
 // 이걸 막으려면,
 def Part3
     def $Nested // usually declare nested origin obj as static.
@@ -3203,9 +3222,38 @@ def Part3
 
 
 
+## [] 구현
 
 
+* protected건 public이건 모든 inner 객체는 owner를 가지고 있다.
+* 또한 모든 중첩 객체는 복제가 가능하다.
+```cpp
+def plant
+	name = ""
 
+def bowl := plant
+	plants = plant[]()
+	void print()
+		for p in plants
+			c.out("$p.name, ")
+	def carrot := plant
+		print() // outer.print()
+
+b = bowl()
+c = b.carrot;
+c1 = c1()
+// c1.print()의 결과는 c.print()의 결과와 같음
+```
+
+## [v] Q1 protected 중첩객체인 경우,  owner.this도 접근 가능? --> 네.
+
+## [v] Q2 그러나 property는 그럼?
+```cpp
+def myObj
+  _name = ""
+  def nested := str?
+    get: _name // nested는 _name을 접근 중.
+```
 
 
 
@@ -3510,80 +3558,6 @@ def marine := base
 
 
 #### [v] Q1 namspace도 확장을 쓸것이고, 이것도 결국 중첩클래스이다. public 문제 어떻게 되나?
-
-
-
-
-
-## 객체의 구현 : Obj
-
- def Obj := Occupying
-	* this를 점거한다.
-	* origin객체가 될 수 있다.
-	* sharedmember가 존재한다.
-		* sharedmember멤버를 런타임에 추가할 수 있다.
-		* sharedmember에 일반 변수가 들어 있으면 static이다.
-			* 그 변수가 refer로 감싸져있으면 sharable.
-			* 아니면 occupiable.
-	* shared member와 별도로 occupiying member가 배열로 존재한다.
-		* 외부에는 getMembers()는 sharedmember와 occupying member의 chain구조다.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# [v] 중첩객체
-
-* protected건 public이건 모든 inner 객체는 owner를 가지고 있다.
-* 또한 모든 중첩 객체는 복제가 가능하다.
-```cpp
-def plant
-	name = ""
-
-def bowl := plant
-	plants = plant[]()
-	void print()
-		for p in plants
-			c.out("$p.name, ")
-	def carrot := plant
-		print() // outer.print()
-
-b = bowl()
-c = b.carrot;
-c1 = c1()
-// c1.print()의 결과는 c.print()의 결과와 같음
-```
-
-## [v] Q1 protected 중첩객체인 경우,  owner.this도 접근 가능? --> 네.
-
-## [v] Q2 그러나 property는 그럼?
-```cpp
-def myObj
-  _name = ""
-  def nested := str?
-    get: _name // nested는 _name을 접근 중.
-```
-
 
 
 
@@ -4178,6 +4152,95 @@ A.nested()
 
 
 
+
+
+
+# 늦은 정의문
+## 동기
+* 다른 언어에서 람다를 자주 사용하다보면, 람다는 메소드 호출 괄호안에서 정의되기 때문에
+  람다의 내용이 길어질수록 가독성이 떨어지는 것을 경험할 수 있다.
+
+```java
+button.setOnClickListenerAndDoSomethingSerious(v -> {
+    blablabla
+    blablabla
+    blablabla
+    blablabla
+}, (whenNot, date, time) -> {
+    blablabla
+    blablabla
+}, onHoeverEvent -> {
+    blablabla
+    blablabla
+    blablabla
+    blablabla
+});
+```
+
+* 가독성이 떨어지는 이유는, 함수의 시작과 끝이 한줄에 끝나지 않고 개행으로 이어지기 때문에
+  개행된 줄의 구문이 함수에 속한 것인지, 람다에 속한것인지 바로 알 수 없다는 것에 기인한다.
+* 가독성을 높여보자.
+
+## 1안 함수의 정의를 미리 적고, 람다를 나중에 채워넣는다면?
+
+### 1-1안 키워드를 사용해서, 실수 인지 나중에 나올 변수인지 구분하자.
+
+* def 는 헷갈리므로, later 라든가 lazy 든가 같은 키워드를 사용하면 더 좋을 것이다.
+* 단, 람다 문법은, 이 예제에서는 사용하지 않는다.
+
+```wrd
+bt.setOnClickListenerAndDo(later onClick, later whenNot, later onHover);
+    def onClick(v):
+        blablablabla
+        blablablabla
+        blablablabla
+    def whenNot(whenNot, date, time):
+        blablablabla
+        blablablabla
+        blablablabla
+    onHover := listener.hoverEventMethod // 이 부분만은 굳이 later를 쓰지 않아도 된다.
+```
+
+* 람다문법은 아직 정해지지 않았다. 하지만 이 방법은 기본적으로 변수의 이름을
+적어줘서 구분을 하는 방법이기 때문에 람다를 적용하기가 쉽지 않을 것이다.
+
+
+### 1-2안 링킹 판단 미루기
+
+* 링킹 오류인지를 일단 판단을 유보하는 것이다.
+* 그래서 해당 메소드의 안쪽에서 정의가 되어있다면, 에러를 내보내지 않는다.
+* 물론 그 멤버는 정의된 expr의 scope를 따른다.
+
+```wrd
+bt.setOnClickListenerAnd(onClick, whenNot, onHover) // 여기까지만 적으면 컴파일 에러다.
+// 왜냐하면 이 expr 위쪽으로는 onClick, whenNot등이 없기 때문이다.
+    void onClick(View v):
+        blablablabla
+        blablablabla
+        blablablabla
+    void whenNot(not, date, time):
+        blablablabla
+        blablablabla
+        blablablabla
+    onHover := listener.hoverEventMethod
+```
+
+* 정리하면,
+    * 정의된 식별자는 소유하고 있는 멤버들이 즉각적으로 visible 하게 된다.
+
+
+* 다음처럼 사용도 할 수 있다.
+
+```wrd
+a := obj[] {myObj(5), myObj(7), def another() := myObj
+    void say(): foo("hello world") // 자 딱봐도 가독성이 어려워 보인다.
+    // 그러나 허용은 해줄 것이다. 룰에서 벗어난 것이 아니므로.
+}
+    def myObj := obj
+        myObj(int val): ...
+        void foo(str msg)
+            blabla
+```
 
 
 
