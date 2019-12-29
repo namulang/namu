@@ -4075,6 +4075,64 @@ def #Key
                 .
                 .
 
+#### [?] 5안 def와 from.
+* 식별자의 정의와 할당은 구별이 되어야 하기 때문에 := 연산자가 추가되었다.
+* 일관성을 갖추기 위해 def는 :=를 사용하는 것을 제안했다.
+
+```wrd
+def A := B
+    void say()
+```
+
+* 그러나 저자리에 := 가 들어가 있으므로 마치, 다른 연산자도 들어갈 수 있는 듯한
+  착각이 들게 된다.
+
+```wrd
+a := def A() + 5 // A origin객체를 정의하고, 그것의 복제객체를 만든 뒤, 거기에 b를 더한다.
+    void say()
+// 물론 위의 코드는 def문법 중간에 +가 온 경우이므로 사실상 잘못된 사용이다.
+// 그러나 +를 :=로 바꾸면 올바른 문법이 된다는게 문제다.
+// 따라서 기존 문법의 def 안쪽에서의 := 는 일반적인 :=와 달리 expr 취급이 아니라는
+// 부분을 말하고 싶은 것이다.
+
+a := def A()
+    void say()
++ 5
+
+// 굳이 말하면 위처럼 적는 것이 올바른 문법이지만, 이또한 잘못된 문법이다.
+// 월드에서는 개행이 한번되면 라인이 끝난것으로 판정한다. 
+// + 5는 양수 "5"를 뜻하는 것인지, a 정의 시에 사용되는 2항 연산자와 5인지 
+// 분간이 안가기 때문이다.
+```
+
+* 그리하여 := 대신 다른걸 넣어두자.
+```wrd
+def A from B
+    void say()
+
+1: def key("a key") from myApp.getKeyObject("key")
+2: def key("a key") : myApp.getKeyObject("key")
+3: def key("a key") at myApp.getKeyObject("key")
+
+    key(str name): this.name = name
+    void say()
+
+    _name := ""
+
+def myApp from app
+    obj getKeyObject(str name)
+        with name
+            is "key": retfun def keyBase
+                void say() {}
+    void main()
+        ... 
+```
+
+* from이 좋아보인다. 의미상 맞다.
+* from을 쓰면 그 자리는 expr 자리가 아니라는 걸 확실히 알 수 있다.
+
+
+
 
 ### [v] def 문법으로 바로 생성자 호출
 
