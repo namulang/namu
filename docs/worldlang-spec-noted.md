@@ -2479,7 +2479,7 @@ def app
 
 
 
-#  객체의 정의
+#  [v] 객체의 정의
 * 직접 정의 & 복제
 
 * Prototyping 기반
@@ -2704,7 +2704,7 @@ class tDeep<T> : public deep {
 * 객체가 복제될때는 members.clone()을 하게 되고,
     * shallow에 감싸져 있는것은 shallow copy가,
     * 나머지, members에 객체가 직접 박혀져 있는 건 deep cpy
-    * deep에 감싸져 있는것은 deepcpy를 할찌 shallowcpy를 할지 T의 occupiable을 보고 결정한다.
+adfq   * deep에 감싸져 있는것은 deepcpy를 할찌 shallowcpy를 할지 T의 occupiable을 보고 결정한다.
 
 
 
@@ -4076,7 +4076,48 @@ def #Key
                 .
 
 
-# 람다 샘플 만들어보기
+### def 문법으로 바로 생성자 호출
+
+* def 뒤에 식별자 바로 뒤에 괄호는 생성자를 호출한다.
+* def의 := rhs의 () 괄호는 해당 식별자의 생성자다.
+
+```wrd
+def obj
+    obj(str name): say(); _name = name
+
+    _name := "init"
+    void say(): c.out(name)
+
+def myObj("kniz") := obj("unname")
+    myObj(str name)
+        super(name)
+        name += ", hello."
+
+
+// 결과:
+//  프로그램 시작 직후:
+// "init"
+// "unname"
+
+myObj.say() // "kniz, hello."
+```
+* 먼저 obj origin객체에 unname 인자를 넣어 객체를 복제한다.
+* 그걸 myObj에 넣고 추가로 myObj() 생성자를 추가한다.
+* obj origin객체의 name은 이미 init으로 초기화가 된 상태.
+  (origin 객체가 정의될때는  생성자가 호출되지 않는다)
+* 이제 obj의 생성자가 호출되면 init은 unname으로 바뀐다.
+
+
+
+
+
+
+
+
+
+
+
+# [?] 람다 샘플 만들어보기
 
 ​```cpp
 def app
@@ -4155,7 +4196,7 @@ A.nested()
 
 
 
-# 늦은 정의문
+# 연기된 바인딩 문법
 ## 동기
 * 다른 언어에서 람다를 자주 사용하다보면, 람다는 메소드 호출 괄호안에서 정의되기 때문에
   람다의 내용이 길어질수록 가독성이 떨어지는 것을 경험할 수 있다.
@@ -4227,13 +4268,14 @@ bt.setOnClickListenerAnd(onClick, whenNot, onHover) // 여기까지만 적으면
 
 * 정리하면,
     * 정의된 식별자는 소유하고 있는 멤버들이 즉각적으로 visible 하게 된다.
+* 위 한줄만 spec 에 추가해두면 된다.
 
 
 * 다음처럼 사용도 할 수 있다.
 
 ```wrd
 a := obj[] {myObj(5), myObj(7), def another() := myObj
-    void say(): foo("hello world") // 자 딱봐도 가독성이 어려워 보인다.
+    void say(): foo("hello world") // 자 딱봐도 delayed binding 문법을 사용하지 않으면 가독성이 낮아 보인다.
     // 그러나 허용은 해줄 것이다. 룰에서 벗어난 것이 아니므로.
 }
     def myObj := obj
