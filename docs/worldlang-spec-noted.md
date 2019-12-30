@@ -4173,9 +4173,9 @@ myObj.say() // "kniz, hello."
 
 
 
-### [?] 객체의 정의시 호출되는 흐름이 개발자가 너무 따라가기 힘들다.
+### [v] 객체의 정의시 호출되는 흐름이 개발자가 너무 따라가기 힘들다.
 
-#### [?] 1안 현재안
+#### [v] 1안 현재안
 
 ```wrd
 temp := def myObj("kniz") := obj("unname")
@@ -4209,63 +4209,44 @@ temp := intValue := 55
 ```
 
 
-##### [?] 만약 def 가 한줄에 2번 등장한다면?
+##### [v] 만약 def 가 한줄에 2번 등장한다면?
 
+이제 expr로 개발자가 착각할 수 있기 때문에 "from" 키워드로 변경되었다.
+def가 2번 등장할 일은 없어졌다. 가독성도 좋아졌을 것이다.
 
-
-
-
-# [?] 람다 샘플 만들어보기
-
-​```cpp
-def app
-    void print(str(int) func, int type)
-        c.out("msg=$func(type)")
-    void main()
-        // [v] 1
-        print(type ->
-            with type
-                is 1: "hello"
-                default: "world"
-        , 1)
-        // [v] 2
-        print(type -> with type: is 1: "hello": default: "world", 1)
-        // [v] 3
-        str foo(int code)
-            with type
-                is 1: "hello"
-                default: "world"
-        print(foo, 1)
-        // [v] 4
-        print(str foo(int code)
-            with type
-                is 1: "hello"
-                  default: "world"
-        , 1)
-        // 1-2
-        print(str(int type)
-            with type
-                is 1: "hello"
-                  default: "world"
-        , 1)
-
-
+* wrd 버전
+```wrd
+def myApp
+    temp := def myObj("kniz") from obj("unname")
+        myObj(str new): a = name
+        _a := "name"
 ```
 
-```cpp
-key,
-    name=""
-    x = 0: get
-    y = 0: get
-
+* 같은 내용의 자바 버전
+```java
+class myApp {
+    class myObj extends obj {
+        private String a = "name"
+        public myObj(String new1) {
+            super("unname")
+            a = new1;
+        }
+    }
+    public myObj temp = new myObj("kniz");
+}
 ```
 
 
 
-### def는 새로운 origin객체를 정의한다는 것이다.
-* 새로운 인터페이스의 추가를 의미한다.
 
-#### def가 없이 메소드의 정의를 할 수 있다.
+
+
+
+### [v] def는 새로운 origin객체를 정의한다는 것은, 인터페이스를 추가한 새로운 객체를 생성한다는 것을 뜻한다.
+* 새로운 인터페이스의 추가/재정의를 의미한다.
+* def 문법에 나온 객체는, 선언된 scope에 영속적으로 소속된다.
+
+#### [x] def가 없이 메소드의 정의를 할 수 있다.
 * def가 없다면 메소드의 추가가 아닌 재 정의를 의미한다.
 ```cpp
 def A
@@ -4276,25 +4257,47 @@ def A
 	age := int? // int null --> int 0
 ```
 
-### def는 객체의 정의임을 잊지말자.
+### [v] def로 정의된 중첩 origin 객체는 외부의 origin객체에 자동으로 소속된다는 것을 잊지말자.
 ```cpp
 def A
 	def nested
+    mem := def nested1 // mem은 origin객체를 가리키고 있다. nested1은 그리고 sharable이다.
+        void say()
+            c.out(age)
+    mem2 := nested()
+    mem3 := def nested2() // mem3은 origin객체로부터 복제된 객체를 가리키고 있다.
+                          // 생성자 초기화 문법에 의해서 mem3 := .... 는 A(int new) 생성자 안쪽에도 들어간다.
+        void say()
+            c.out(age)
 
-A.nested
-a = A()
-a.nested // A.nested로부터 op=이 된것이다. nested는 sharable이므로 shallow cpy된 상태이다.
+    A(int new): age = new
+    _age := 5
+
+A.nested // ok
+A.mem // ok
+A.mem2 // ok
+
+a = A(25)
+a.nested // == A.nested
+a.mem // != A.mem
+a.mem2 // != A.mem2
+
+A.mem.say() // 5
+a.mem.say() // 5
+a.mem3.say() // 25
 
 A.nested()
 ```
-* nested는 A에 static에 등록되어 있는것과 동시에 A안에 정의되어 있는 객체이다.
+
+* 따라서 만약 def를 사용하고 싶은데, 그 객체가 모든 객체가 공유해야 한다면 경우라면 굳이 def문법으로 복제객체까지
+  생성할 필요가 없다.
 
 
 
 
 
 
-# 연기된 바인딩 문법
+# [?] 연기된 바인딩 문법
 ## 동기
 * 다른 언어에서 람다를 자주 사용하다보면, 람다는 메소드 호출 괄호안에서 정의되기 때문에
   람다의 내용이 길어질수록 가독성이 떨어지는 것을 경험할 수 있다.
