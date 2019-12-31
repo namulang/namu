@@ -4334,7 +4334,7 @@ A.nested()
 
 
 
-# [?] 연기된 바인딩 문법
+# [x] 연기된 바인딩 문법
 ## 동기
 * 다른 언어에서 람다를 자주 사용하다보면, 람다는 메소드 호출 괄호안에서 정의되기 때문에
   람다의 내용이 길어질수록 가독성이 떨어지는 것을 경험할 수 있다.
@@ -4360,9 +4360,9 @@ button.setOnClickListenerAndDoSomethingSerious(v -> {
   개행된 줄의 구문이 함수에 속한 것인지, 람다에 속한것인지 바로 알 수 없다는 것에 기인한다.
 * 가독성을 높여보자.
 
-## 1안 함수의 정의를 미리 적고, 람다를 나중에 채워넣는다면?
+## [x] 1안 함수의 정의를 미리 적고, 람다를 나중에 채워넣는다면?
 
-### 1-1안 키워드를 사용해서, 실수 인지 나중에 나올 변수인지 구분하자.
+### [x] 1-1안 키워드를 사용해서, 실수 인지 나중에 나올 변수인지 구분하자.
 
 * def 는 헷갈리므로, later 라든가 lazy 든가 같은 키워드를 사용하면 더 좋을 것이다.
 * 단, 람다 문법은, 이 예제에서는 사용하지 않는다.
@@ -4384,7 +4384,20 @@ bt.setOnClickListenerAndDo(later onClick, later whenNot, later onHover);
 적어줘서 구분을 하는 방법이기 때문에 람다를 적용하기가 쉽지 않을 것이다.
 
 
-### 1-2안 링킹 판단 미루기
+#### [v] 미리 정의를 해놓고 쓰는 기존방법과 라인수에서 차이가 없다.
+```wrd
+def onClick(v):
+    blablablabla
+    blablablabla
+    blablablabla
+def whenNot(whenNot, date, time):
+    blablablabla
+    blablablabla
+    blablablabla
+bt.setOnClickListenerAndDo(later onClick, later whenNot, listener.hoverEventMethod)
+```
+
+### [x] 1-2안 링킹 판단 미루기
 
 * 링킹 오류인지를 일단 판단을 유보하는 것이다.
 * 그래서 해당 메소드의 안쪽에서 정의가 되어있다면, 에러를 내보내지 않는다.
@@ -4422,6 +4435,14 @@ a := obj[] {myObj(5), myObj(7), def another() := myObj
             blabla
 ```
 
+* 역시 1-1안과 마찬가지로, 가독성이 나쁘다고 판단한 이유는, 메소드 호출 인자리스트 안쪽에서 개행이 일어나기 때문이다.
+* 그러므로 미리 객체를 def 하고 나서 그걸 인자에 적으면 된다.
+
+
+## 결론
+* 메소드 안쪽에서의 def를 가독성을 높이고 싶다면 "람다 객체 정의 문법" 같은걸 만들어야 한다.
+* 이 방법은 오히려 일반적인 독해방법인 "정의가 먼저 나오고, 사용이 나온다"를 역순으로 타고 가는 것이므로 가독성이 더
+  나빠질수 밖에 없다.
 
 
 
