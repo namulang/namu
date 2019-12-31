@@ -4170,6 +4170,43 @@ myObj.say() // "kniz, hello."
 
 
 
+### [v] 초기자 문법; initializer syntax
+* 자바처럼 def 내에서 멤버변수의 정의시에 초기화도 같이 할 수 있다.
+* 초기자 문법은 객체의 생성자에 "서두"에 적은것과 같은 결과를 가져온다.
+
+```wrd
+def myObj
+    age := 5
+    name := "wow"
+
+    myObj(int age, str name)
+        this.age = age
+        this.name = name
+
+    myObj()
+        c.out("default ctor")
+```
+
+* 위의 코드는 아래와 같다.
+
+```wrd
+def myObj
+    age := int null
+    name := str null
+
+    myObj(int age, str name)
+        age = 5
+        name = "wow"
+        this.age = age
+        this.name = name
+
+    myObj()
+        age = 5
+        name = "wow"
+        c.out("default ctor")
+```
+
+
 
 
 
