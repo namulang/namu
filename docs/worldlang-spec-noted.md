@@ -4452,7 +4452,7 @@ a := obj[] {myObj(5), myObj(7), def another() := myObj
 
 
 
-# 객체의 내부 구조
+# [v] 객체의 내부 구조
 
 ## [v] 최적화를 위한 scope의 인덱스 상수화
 ### 요구사항
@@ -4488,7 +4488,7 @@ a := obj[] {myObj(5), myObj(7), def another() := myObj
 	* object의 멤버가 일종의 call을 하려고 하면 (get/set/생성자 모두 포함) 자신을 소유한 owner인 object의 scope 추가를 명령한다.
 	* object는 scope가 추가 cb이 왔을때 자신의 owner가 있다면 그 owner에 대해 scope추가를 먼저 cb한다.
 	* 지역변수는 owner가 없다.
-	* method, 변수도 object다.
+	* 변수는 object이며, method 는 Node의 일종이다.
 	* method는 this가 될 수 없다. 그러나 method안의 method는 outer인 method를 접근할 방법은 알 고있어야 한다.
 * with에 의해서 확장된 경우는 해당 식별자만 scope 추가하면된다.
 	```cpp
@@ -4517,8 +4517,8 @@ def A
 def B := A
 	=>void do()
 		c.out("B")
-		inner.do()
-	def inner := A
+		in.do()
+	_in = def inner() := A
 		void foo()
 
 def C := B
@@ -4526,15 +4526,15 @@ def C := B
 		foo()
 
 c = C()
-C.boo()
+c.boo()
 /*
-	C.get()
-		[Method]C.get은 object이므로 this인 C를 load시도
+	C.boo()
+		[Method]C.boo은 object이므로 this인 C를 load시도
 			[Object]C는 outer가 없으므로, 자기의 members만 object scope에 load.
-		[Method]C.get은 자신을 load 완료.
+		[Method]C.boo은 자신을 load 완료.
 			(Method는 자신의 static, 인자리스트, class 등을 load한다)
-		[Method]C.get은 함수가 끝나면 자신을 unload.
-		[Method]c.get은 this에 unload시도
+		[Method]C.boo은 함수가 끝나면 자신을 unload.
+		[Method]c.boo은 this에 unload시도
 			[Object]C는 outer가 없으므로 자신을 바로 unload.
 	.boo
 		C.getMember("boo")
@@ -4576,7 +4576,7 @@ c.boo()
 
 
 
-# 프로퍼티
+# [v] 프로퍼티
 
 ```cpp
 import console
@@ -4789,14 +4789,17 @@ app
 * 아무리 쉬운 코드라도, 타입유추할 껀덕지가 없다면 동작하지 못한다.
 * 게다가 오버로딩이 동작하지 못한다.
 
-#### [ ] 타입 정의 문법을 바꾸면?
+#### [v] 타입 정의 문법을 바꾸면?
 
 ```cpp
 [ ]1: YoungHee Cheolsoo
-[ ]2: CheolSoo = YoungHee
+[v]2: CheolSoo = YoungHee
 ```
 
-- 좀 더 시험해볼까
+* 2안의 변형안을 최종 선택했다.
+* def CheolSoo from YoungHee
+
+##### [x] 좀 더 시험해볼까
 
   ```cpp
   age = 25
@@ -4907,27 +4910,27 @@ app
 
 ## [v] 프로퍼티 가독성 문제
 
-### 예제
+### [v] 문제예제
 
 ```java
 def Lock
   get: true
 ```
-1. 개발자도 get을 보고 직접 타입을 유추해야 한다.
-  2. 어떻게하면 더 쉽게 쓰고, 더 새로운 문법 추가 없이, 개발자를 위한 가독성을 높일 수 있을까?
-2. 개발자는 사실 Lock이라는 객체를 만들고 싶었던 것이다. 그런데 오해석되었다.
+- 개발자도 get을 보고 직접 타입을 유추해야 한다.
+  어떻게하면 더 쉽게 쓰고, 더 새로운 문법 추가 없이, 개발자를 위한 가독성을 높일 수 있을까?
+- 개발자는 사실 Lock이라는 객체를 만들고 싶었던 것이다. 그런데 오해석되었다.
 
 ### 요구사항
 
-1. 객체가 존재하는데, get,set만 오버라이딩 한 상황을 표현할 수있어야 한다.
-2. 객체가 없는데 redirection만 한 것을 표현 할 수 있어야 한다.
+[v] 객체가 존재하는데, get,set만 오버라이딩 한 상황을 표현할 수있어야 한다.
+[v] 객체가 없는데 redirection만 한 것을 표현 할 수 있어야 한다.
    1. 이때 get/set의 반환값은 그 객체다.
    2. 컴파일이 가능해야한다.
    3. redirection만 하는 경우는 메소드를 추가할 수 없다.
    4. 이 객체는 별도의 메모리를 차지하면 안된다.
 3. 새로운 문법을 추가하는 건 피하고 싶다.
 
-### 예제
+### [v] 예제
 
 ```cpp
 def A
@@ -4937,7 +4940,7 @@ def A
       set: in = new
 
 def A
-  def age := 0 // X: 별도의 메모리를 차지하고 있다.
+  def age := 0 // X: int의 인터페이스만 변경하고 싶지, integer를 메모리에 두고 싶은 것은 아니지만 객체마다 별도의 메모리를 차지하고 있다.
         get=>:
     set=>:
 ```
@@ -4969,6 +4972,43 @@ def B
 #### 평가
 * def를 기반으로 하기 때문에 정의가 된다. 정의는 1개만 나오는 전역 scope에 속한다. 고로 모든 객체B마다 하나의 age가 나오진 않는다.
 * def를 쓰면 다른 메소드를 쓸 수 없다는 사실을 눈치채기 어렵다.
+
+
+### [v] 1-1안 최신 def 문법을 활용해서 1안을 변형해본다.
+* 최신 def 문법에 의하면, 1안의 문제점을 많이 해결할 수 있어보인다.
+    * def와 동시에 복제 객체를 생성하는 initializer syntax가 추가되었다.
+    * def 동시에 메소드를 정의한 그 자체가 새로운 타입으로 만들어 본다.
+
+```wrd
+def B
+    def A
+        void say()
+        age := 22
+
+    _age := def() from A.age // 이름을 생략할 수 있다.
+        get: A.age
+        set: A.age = new
+        //void print(): c.out(A.age) // get,set이 붙은 경우에는, base 객체인 A에 등장하는 메소드만 등장할 수 있다.
+
+    _age1 := def from int // 이렇게 해도 된다. age1은 origin객체만 가리킬것이며, A.age는 int이므로.
+        get: A.age // int가 반환되야 한다. from int 이므로.
+        set: A.age = new
+```
+#### def 후 복제 객체를 만드느냐가 굉장히 중요하다.
+* B.age는 모든 B 객체마다 1개씩 소유된다.
+* B.age는 integer에서 상속받아 set/get이 추가로 정의된 어떠한 origin객체(= ?)의 복제본이다.
+* 그러나 B.age는 A에서 모든것을 상속받았기 때문에 age를 가지고 있게된다.
+
+* B.age1은 이름없는 새로운 origin객체을 모든 B의 복제객체들이 공유한다. 따라서 B.age1은 모두 1개의 origin 객체를 가리키게 된다.
+* 그 B.age1은 age를 멤버로 한개 반드시 갖게된다.
+* B.age1이 성립되는 이유는 outer객체의 this를 필요로 하지 않기 때문이다. getter/setter에서 origin객체의 this를 참조하기 때문이다.
+
+* 결론적으로, outer객체의 this를 필요로 한 경우에는 _age 처럼 정의해야 한다.
+* 그리고 이 경우 비록 사용하지 않을지라도, this와 함께  멤버변수를 갖게 된다.(= 여기서는 A.age)
+* 최적화시에, 컴파일러가 만약 outer this를 사용하지 않는 프로퍼티를 발견한다면 추가적인 멤버변수를 만들지 않도록 할 수 있을 것이다.
+
+* getter/setter가 붙어버린 경우, 이 객체는 추가적인 public 메소드를 정의할 수 없다.
+* getter의 반환형과 setter의 인자는 이 객체의 base origin 객체가 된다.
 
 
 ### [x] 2안
@@ -5039,7 +5079,7 @@ def My
   age2 := wrap(int())
 ```
 
-#### 평가
+#### [x] 평가
 
 * 2안의 모든 장점을 가지면서도 새로운 키워드 추가도 없다. 그리고 정의만 봐도 무슨 데이터로부터 의존하는 건지 확 들어온다.
 * 이겁니다. 여러분 이거예요.
@@ -5058,7 +5098,7 @@ wrap<T>는 기본적으로 이렇게 해야 하는데?
 
 
 
-#### 알고리즘
+#### [x] 알고리즘
 ```cpp
 // 만약 Refer가 visible 할수만 있다면 매우 깔끔하게 끝날것이다. Wrap하고 Refer는 하는게 똑같다.  2222
 class Wrap : public Refer
@@ -5082,7 +5122,7 @@ private:
 };
 ```
 2.
-### Mgd에서 get/set을 오버라이딩 한 경우,
+#### [x] Mgd에서 get/set을 오버라이딩 한 경우,
 
 * get은 오버라이딩 할 수 있으며 모든 것은 개발자의 책임이다.
 * wrap을 world객체로 짜는 경우
@@ -5108,7 +5148,7 @@ private:
     * scope도 Node의 일종이므로 getMember()를 타게 된다.
 
 ### [x] 4안 refer를 공개한다면?
-### [v] Q5. Origin과 TClass를 통합해야 한다. --> 새로운 문서
+### [x] Q5. Origin과 TClass를 통합해야 한다. --> 새로운 문서
 
 #### 제약조건
 ```cpp
@@ -5178,13 +5218,11 @@ a.unknown = 5
 
 * get은 객체가 null이어도 호출이 가능하다는 걸 잊지말라.
 
-### [v] 6안 ?? 문법을 새로 추가한다.
+### [x] 6안 ?? 문법을 새로 추가한다.
 
-​	prop이나 int?? 이나 아무튼 새로운 문법이 필요하다.
-
-​	그리고 Refer 클래스에서 의해서 wrapping 되도록 한다.
-
-​	refer는 별도의 메소드를 가질 순 없지만 onset, onget에 대해서 처리를 할 수 있다.
+prop이나 int?? 이나 아무튼 새로운 문법이 필요하다.
+그리고 Refer 클래스에서 의해서 wrapping 되도록 한다.
+refer는 별도의 메소드를 가질 순 없지만 onset, onget에 대해서 처리를 할 수 있다.
 
 
 
@@ -5192,7 +5230,7 @@ a.unknown = 5
 
 
 
-## [..] null 된 프로퍼티의 구현방법
+## [x] null 된 프로퍼티의 구현방법
 ### 요구사항
 ```cpp
 def A
@@ -5324,7 +5362,7 @@ o3.boo()
 
 
 
-### [..] 3안 - 문법의 추가 없이 해결
+### [x] 3안 - 문법의 추가 없이 해결
 
 ```cpp
 def test
@@ -5354,7 +5392,7 @@ a = t.age + 5
 * 제일 깔끔하다.
 * 애매하지도 않다.
 
-#### [..] 구현방법
+#### [v] 구현방법
 * 다음의 조건을 만족하는 FRX c++ 클래스를 만들면 된다.
 	* occupiable이어야 한다.
 	* Object의 일종이다.
