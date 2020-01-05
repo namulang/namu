@@ -5071,9 +5071,6 @@ c.out(outer().prop2) // err
 outer().prop3 = 5
 c.out(outer.prop3.cnt) // 1
 // outer.prop3은 복제가 되지 않았으므로 공유되고 있다.
-
-
-
 ```
 
 
@@ -5465,13 +5462,22 @@ a = t.age + 5
 * 제일 깔끔하다.
 * 애매하지도 않다.
 
-#### [v] 구현방법
+#### [x] 구현방법
 * 다음의 조건을 만족하는 FRX c++ 클래스를 만들면 된다.
 	* occupiable이어야 한다.
 	* Object의 일종이다.
 	* set/get의 인자/반환형이 worldlang에서 개발자가 지정한  타입이다.
 	* getMember(n) 안에서 call(Msg("onGet")) 을 호출한다.
 	* Native에서 프로퍼티로 내보내는 방법은 --> 별도 문서 참조
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5565,6 +5571,8 @@ DX.name = "kkk"
 
 ## 프로퍼티의 구현
 
+### [x] 1안 
+
 def Property := Obj
 
 - Refer를 가지고 있다.
@@ -5591,6 +5599,82 @@ class myObj : public obj {
 	static int getVer();
 }
 ```
+
+
+
+### [v] 2안
+* set,get은 외부에서 호출하는 것이다.
+    * 만약 proptected accessor가 붙이면 호출이 불가능해진다.
+* overriding이 가능하다.
+* set은 overrloading이 가능하다.
+* get은 반환값이 항상 정해져 있다.
+* get은 Thing.to<T>()를 통해서 호출된다.
+```cpp
+Refer<T> Thing::to<T>()
+{
+    Refer res = run(Msg("get"));
+
+    //res를 T의 생성자에 넣으려고 시도.
+}
+```
+
+* set은 operator=()를 통해서, Refer의 operator=를 통해서 불려진다.
+
+```cpp
+class MyClass : public Object {
+    public:
+        WRD_CLASS(MyClass, Object,
+            SET()
+                // operator=를 wrd의 "set"이라는 메소드로 wrap한다.
+                // MyClass& set(const MyClass& rhs) {
+                //  return operator=(rhs);
+                // } 도 만들어 놓는다.
+                // 이걸 만드는 이유는 operator=가 overriding이 안되기 때문이다.
+                // C++은 왜 operator=가 overriding이 안되게 했는가?:
+                //  상속받은 클래스에서 virtual로 오버라이딩한 경우,
+                //  인자로 반드시 상속된 객체가 와야 하기 때문에 RTTI를 
+                //  쓰게 되기 때문이다.
+                //  class A {
+                //      virtual operator=(const A& rhs) = 0;
+                //  };
+                //  class B : public A {
+                //      int age;
+                //      virtual operator=(const A& rhs) {
+                //          만약 rhs가 정말로정말로 A객체였다면
+                //          age = rhs.age;를 할 수가 없다.
+                //      }
+                //  };
+
+                // 그러나 우리는 node 기반으로 가고 있고 모든것은 
+                // 실행이 될 수도 있고 안될수 있다는 전제를 안고 있다.
+                // 대신에 명시적 캐스팅이라는 짐을 덜어낼 수 있었다.
+                // 그러므로 할당연산자도 기반타입으로부터 받을 수 있도록
+                // 하여 짐을 덜도록 해야지, 안그러면 operator=에 앞서서
+                // 개발자는 반드시 타입캐스팅을 해야 할 것이다.
+
+            SET(int new1)
+        )
+
+        MyClass& operator=(const MyClass& rhs) { // SET()
+            if (this == &rhs) return *this;
+
+            // do somthing..
+
+            return *this;
+        }
+
+        MyClass& operator=(int new1) 
+            ....
+        }
+};
+```
+
+```wrd
+my := MyClass()
+my = MyClass() // ok
+my = 3 // ok
+```
+
 
 
 
