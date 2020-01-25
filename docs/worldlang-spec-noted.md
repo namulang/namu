@@ -10370,7 +10370,7 @@ import console
 		console.out("str(#MyClass)")
 
 MyClass
-	// 4. 인스턴스-확장Instance extension: <멤버변수 정의> { <멤버 정의> }
+	// 4. [x] 인스턴스-확장Instance extension: <멤버변수 정의> { <멤버 정의> }
 	// 지정한 1개의 객체의 타입을 확장한 후, 즉시 정의한다.
 	// 확장된 타입은 재사용할 수 없다.
 	str name // 멤버변수 name 정의
@@ -10562,7 +10562,8 @@ def +A // "+". 상속 정보는 따로 적을 수 없다.
  str getName(): _name // O : protected 변수도, 확장후, 제어할 수 있다.
 ```
 
--   클래스 확장문법은 이제, protected도 public도 다 제어할 수 있다.
+* **클래스 확장문법은 이제, protected도 public도 다 제어할 수 있다.**
+* 클래스 확장은 오직 public만 호출 할 수 있다. 캡슐화를 깰 수 없다.
 
 
 
@@ -10815,7 +10816,7 @@ def Person
 
 def Person Student
 	int print(int a)
-		ret = me.Super(a) // me.Super(a)는 Person.print(a)와 같다. (추후 서술)
+		got = me.Super(a) // me.Super(a)는 Person.print(a)와 같다. (추후 서술)
 		console.out("Student.print(int a)")
 		return ret
 
@@ -10837,9 +10838,9 @@ def Person Student
 	//                        " 앞        "      : 부모꺼 실행후, 내꺼 실행.
 
 	// 이를 활용하면, 다음처럼 줄일 수 있다.
-    ret => float print1()	// 재지정이 앞에 있으므로, 부모메소드가 먼저 호출된다.
-    	console.out("Student.print1(), ret=" + ret)
-    	return ret
+    got => float print1()	// 재지정이 앞에 있으므로, 부모메소드가 먼저 호출된다.
+    	console.out("Student.print1(), got=" + got)
+    	return got 
 
 	// 재지정이 뒤에 있는 경우, 메소드가 끝나면 주어진 인자리스트로
 	// 그대로 부모메소드를 호출하고, 그 결과를 반환한다.
@@ -10853,7 +10854,6 @@ def Person Student
     	(int, float) print2() =>
     		if true
     			return (0, 0.0)
-
     		// 여기에 도달하면, 부모메소드의 반환값이 나간다.
     */
 
