@@ -10912,19 +10912,18 @@ app
 			sum = a + b // 클로져는 지역변수를 공유한다.
 
 
-		// 함수 위임자delegator: <반환형>(<타입리스트>)
-		// 메소드 또한 객체1st-class-citizen이며, 이에 대한 refer로 다룰 수 있다.
+		// 함수 위임자delegator: 
+		// 메소드 또한 객체1st-class-citizen이며, 메소드에 바인딩된 모든 identifier는 origin 객체이다.
+        // 따라서 메소드의 refer를 만들 수 있다. 객체하고 똑같다.
+        // 이는 전통적인 java, C#의 형태와 유사한 것이다.
+        //
 		//	1. 	refer와 메소드간 타입은 정확하게 일치해야 한다.
 		//		묵시적형변환과 관계없다. 단, 반환된 값은 물론 묵시적 형변환이
 		//		적용될 수 있다.
-		//			e.g.	int foo(int) {}
-		//					bool(int) fdelegator = foo // 컴파일 에러.
-		//					int(int) fdel1 = foo
-		//					bool res = fdel1(35) // ok.
-		//	2.	복수의 메소드를 가리킬 수 있으며, +=, -= 연산자를 사용한다.
-		//	3.	위임자를 호출시, 가리키는 모든 메소드가 호출된다
-		//	4.	메소드를 -= 제거할때, 클로저에 내포된 객체도 동일해야 제거된다.
-		//	5.	배열로써, 소유한 메소드를 순회할 수 있다.
+		//			e.g.    float func(int a, str b)
+        //                  int doSomething(func f, int a, str b)
+        //                      f(a, b)
+        //
 		int(int, int) getClosure(): add
 
 		int(int, int) fdelegate = int dummy(int a, int b) // 메소드에 대한 refer
