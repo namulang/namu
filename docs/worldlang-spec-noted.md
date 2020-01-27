@@ -11619,18 +11619,27 @@ def app
 
 ```cpp
 def app
-    void print(str(int) func, int type)
-        c.out("msg=$func(type)")
+
+    str f(int a)
+
+    void print(f func, int type)
+        c.out("msg=$f(type)")
+
     void main()
         // 1
-        print(type /*, arg1, arg2*/ ->
+        print(type ->
             with type
                 is 1: "hello"
                 default: "world"
-        , 1)
-        // or
+        , 1) // 가능하다. 하지만,
+        // 또는
         print(type -> with type: is 1: "hello": default: "world", 1)
-```
+        // 또는
+        print(do, 1)
+            out str do(int type): with type // out을 쓰지 않으면 에러다.
+                is 1: "hello"
+                default: "world"
+```     
 
 
 
@@ -11668,18 +11677,20 @@ Opener
 	file f = null
 	str path
 		ret => set
-			// 예외처리try-catch: try <코드> catch(인자리스트) <코드>
+			// 예외처리@res: @warn, @err, @res(exceptiontype identifier)
 			// 다음의 규칙을 따른다.
 			//	1.	예외가 발생하면, 자동으로 throw 처리된다.
-			//	2.	예외exception을 throw <변수> 를 하게 되면,
-			//		해당 함수의 호출자에게로 돌아간다propagate.
-			//		(1depth stack unwinding.)
+			//	2.	예외exception을 return <변수> 를 하게 되면,
+			//		해당 함수의 호출자에게로 돌아간다.
 			//	3.	처리되지 않은 예외를 받은 호출자(메소드 또는 블록문)는 먼저
 			//		자신을 콜스택에서 제거하고, 자신이 소유한 적절한 catch 멤버를
-			//		찾아 호출한다.
-			//		(catch에서 다시 예외가 발생하면 호출자의 콜스택은 이미
-			//		제거되었으므로 무한 재귀는 일어나지 않는다.)
-			//	4.	3에서도 찾지 못하면 자동으로 다시 throw 처리된다.
+			//		찾아 호출한다. catch메소드는 @로 시작하는 특수 메소드 이며
+            //          @res는 모든것을 개발자가 컨트롤하고
+            //          @warn은 로그를 찍고 null을 return하며
+            //          @err은 로그를찍고 프로그램을 종료하거나 breakpoint를 건다.
+            //	    	(catch에서 다시 예외가 발생하면 호출자의 콜스택은 이미
+			//		    제거되었으므로 무한 재귀는 일어나지 않는다.)
+			//	4.	3에서도 찾지 못하면 자동으로 다시 return 처리된다.
 			//	5.	최종적으로 처리되지않은 예외가 main()을 벗어나면
 			//		프로세스를 중단한다.
 			//	6.	catch에서 throw를 하지 않으면 예외처리를 처리consume했다고
