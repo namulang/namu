@@ -11669,6 +11669,7 @@ def app
 
 # 예외처리
 
+## [x] 1안
 ```cpp
 import console
 import file
@@ -11741,7 +11742,7 @@ app
 */
 ```
 
-## try-catch 같은 것은 반드시 있어야 한다. 좀 더 혁신적인 방법이나 혁신적인 표기법은 없을까?
+## [v] try-catch 같은 것은 반드시 있어야 한다. 좀 더 혁신적인 방법이나 혁신적인 표기법은 없을까?
 
 - 1안 pythonstyle + 클래스 catch
   - class A
@@ -11754,6 +11755,321 @@ app
       - ret success
     - catch(nullexcp e)
       - throw e;
+
+
+## [v] 2안
+* @res를 사용한다.
+* @res는 블록문처럼 동작하며, 속한 scope에서 발생한 익셉션을 처리한다.
+* 예외처리 블록문에서 retfun하면 함수가 끝나며, retfun으로 다시 예외를
+  던지면 예외가 전파된다.
+* 예외는 생성순간 콜스택을 기록해서 가지고 있다.
+* with 문을 통해서 예외처리가 적용되는 블록을 제한 할 수 있다.
+
+```wrd
+@res(rNull e)
+    c.out("nullex!")
+a.b.c.d.connectNetwork()
+@warn(rNetwork) // automatically print logs and continue.
+@err(rDivideZero) // print logs and exit func.
+```
+
+### 고찰
+```wrd
+// 1. 자바의 경우
+Manager mgr = getManager();
+if (mgr == null) return;
+Noder noder = mgr.getNoder();
+if (noder == null) return;
+Node[] nodes = noder.getNodes();
+if (nodes == null) return;
+Node n = nodes.get(0);
+
+Moduler moduler = mgr.getModuler();
+if (moduler == null) return;
+PackageInfo info = moduler.getInfoFrom(2);
+if (info == null) return;
+int len = info.getModules().getLen()
+
+// 2. 코틀린
+Node n = getManager()?.getNoder()?.getNodes()?.get(0);
+int len = getManager()?.getModuler()?.getInfoFrom(2)?.getModules().getLen();
+
+// 1안
+if !(mgr := getManager()): ret
+noder := mgr.getNoder()
+if !noder: ret
+nodes := noder.getNodes()
+if !nodes: ret
+n = nodes.get(0)
+
+moduler := mgr.getModuler()
+if !moduler: ret
+info := moduler.getInfoFrom(2)
+if !info: ret
+len := info.getModules().getLen()
+
+
+// 2안
+@err(nullErr): ret
+n := (mgr := getManager()).getNoder().getNodes().get(0)
+len := mgr.getModuler().getInfoFrom(2).getModules().getLen()
+
+// 3안
+Node n
+len := int 0
+with getManager()
+    // 사용자는 res에서 상속할 수 있다.
+    // getManager()를 포함해서 밑 부분에 더미 객체가 반환된 경우, 그에 적합한 @err 부분이 호출된다.
+    // @err은 메소드 안에만 사용할 수 있다. 블록문에도 scope이 걸린다.
+    // @err은 기본적으로 명시하지 않으면 브포가 걸린다. 브포를 걸수 없을 때는 프로그램을 종료한다.
+    // null객체는 존재하지 않는다. 대신 더미 객체를 사용한다.
+    @err(res): ret // nullErr를 걸지 않을 경우 브포가 걸린다.
+    n = getNoder().getNodes().get(0)
+    len = getModuler().getInfoFrom(2).getModules().getLen()
+
+
+// [x] 3-1안
+// 블록문은 별도의 scope을 가지지 않는다.
+with getManager()
+    @err(res): ret // 이것도 블록문에 속하지 않으므로, 매우 불편해질 것이다.
+    n := getNoder().getNodes().get(0)
+    len := getModuler().getInfoFrom(2).getModules().getLen()
+
+// [v] 3-2안
+// out 키워드를 앞에 붙이면 해당 변수는 블록문에서 벗어난다.
+// len := 33 // 이걸 넣으면 out len쪽에 에러가 발생. len은 이미 이미있다.
+
+with getManager()
+    @err(nullRes): ret
+    out n := getNoder().getNodes().get(0)
+    out len := getModuler().getInfoFrom(2).getModules().getLen()
+
+    out def A // [v]
+    //def out A [x]
+
+c.println("n=$n len=$len")
+
+// 코틀린에 safe navigator에 비하면 코드는 더 길어졌지만 (라인수 4)
+// try-catch 문법과 safe navigation을 하나로 합쳤다는 점이 큰 장점으로 느껴진다.
+```
+
+* [v] out의 문제.
+* 위에서는 out을 블록문 안쪽에서만 사용하고 있으니 문제가 없어보이는데,
+* 메소드 안에서 쓰는 경우는 문제가 될 수도 있다.
+
+```wrd
+void foo(node[] nodes)
+    out len := nodes.len
+void boo()
+    len *= 2
+
+foo([node(), node()])
+boo()
+```
+* [v] 왜 문제가 되는가?
+* 우리는 수정을 메소드 1개 단위로 수정을 하는 경우가 많다.
+* 그러므로 메소드 안쪽의 블록안의 변수를 out으로 해도 메소드 1개
+  안쪽에서 벌어지는 일이므로 영향력이 적다.
+* 또다른 문제는 없는가?
+```wrd
+int foo(node[] ns)
+    @warn(null): ret 0
+
+    if ns.len > 0
+        out len := ns.len
+    else
+        c.out("no way.")
+
+    c.out("len=$len")
+    ret len
+```
+* 위의 코드는 다음과 같다.
+
+```wrd
+void foo(node[] ns)
+    len := 0 // 추가됨
+    if ns?.len > 0
+        len = ns.len
+    else
+        c.out("no way")
+
+    c.out("len=$len")
+    ret len
+
+* [v] 그러면 이름을 out이라고하지말고 메소드까지로 scope를 변경한다는 의미로 바꾸자.
+```wrd
+// 현재안:
+out len := 3
+
+// 1안: 메소드의 변수로 올린다는 뜻을 강조해본다.
+func len := 3 // 메소드 처럼 보인다.
+funcval len := 3 // 너무 길다.
+funv len := 3 // 유력
+metv len := 3
+tofuncv len
+fl len // function local variable
+flv len := 3
+hoist len := 3 // [x] hoist가 아니라 블록 밖으로 꺼내는 것.
+
+// 최종후보:
+out len := 3 // ok.
+funv len := 3 // X
+```
+
+* 결국은 out이다. 의미는 좀 헷갈릴 수 있지만, 간결하고 쉽게 사용하는 단어는
+      out이 제일 적당하다고 본다.
+
+
+```wrd
+// C++
+void send()
+{
+    throw new NullPointerException();
+    return;
+}
+void receive()
+    try
+    {
+        send();
+    }
+    catch(NullPointerException ex)
+    {
+        do_something();
+    }
+}
+
+// 자바
+void send() {
+    throw new NullPointerException();
+    return;
+}
+void receive() {
+    try {
+        send();
+    } catch(NullPointerException ex) {
+        do_something();
+    }
+}
+
+// 파이썬:
+def send():
+    nulled = None;
+    nulled.age // == raise NullPointerException()
+
+def receive():
+    try:
+        send()
+    except NullPointerException:
+        do_something()
+
+
+
+
+// 1안: throw, try를 없애고 ret를 사용한다.
+def foo
+    void say()
+foo send()
+    ret null // res는 어떤 타입에서도 나갈 수 있다.
+
+void receive()
+    f := send()
+    @err(nullAccessErr): do_something() // 호출한 메소드에서 res가 반환되면 @err중에서 분기된다.
+
+    // null 반환시 do_something에서 처리를 하였기 때문에 null이 들어간 f는 계속 사용된다.
+    f.say(); // null은 어떠한 메시지도 받을 수 있으며 null이 반환된다.
+
+int receive2()
+    send()
+    // @err가 없는 경우, res를 return 한다
+
+int main()
+    receive2() // 여기서 @err가 없으므로 exception으로 프로그램은 종료/브포 가 걸린다.
+```
+
+* 다른 예제
+```wrd
+def foo
+    void say()
+def app
+    foo getFoo()
+        ret networkRes() // res는 어떤 타입을 반환하는 메소드에서도 나갈 수 있다.
+
+    void take1()
+        f := getFoo() // f에는 networkRes를 가지고 있는 null객체가 들어있다.
+                      // @err이 없으므로 f에는 null객체가 할당된 후, 반환한 err을 그대로 main()으로 넘긴다.
+                      // main에도 @err이 없으므로 getFoo()로부터의 callstack이 찍힌다.
+
+    void take2()
+        with f := getFoo()
+            @err(res r): r.calls.print() // 어떠한 res도 다 받는다.
+            @err(networkRes r)
+                r.calls.print()
+                retfun; // err은 블록문이다. ret를 하게 되면 f.say()가 수행될 것이다.
+        f.say() // f에는 null이 들어가있다. 이 라인을 수행하면 nullAccessErr가 반환된다.
+                // take2에는 @err이 없다. getFoo() 안에만 @err이 있다. 따라서 err이 밖으로 반환된다.
+
+    void take3()
+        @err(networkRes r): r.calls.print() // 별다른 반환을 하지 않으면 "ret" 와 동일하게 동작한다.
+        @err(nullAccessRes r): c.println("null Access!")
+
+        f := getFoo()
+        f.say();
+
+    void main()
+        take1()
+        take2()
+```
+
+* 다른 예제
+
+```wrd
+def app
+    void main()
+        f := getFoo()
+        @res(networkRes r)
+            doSomething()
+            ret foo()
+
+        @warn(nullAccessRes r) // 인자명은 없으면 안 된다.
+        @err(divideZeroRes r)
+        // @res: 에러가 반환되면 불려진다. 별다른 명시가 없으면 ret null을 한다.
+        // @warn: @res동작을 수행하며, 추가로 로그를 찍는다.
+        // @err: 별다른 @res, @warn 등이 없으면, 컴파일러는 메소드에 @err(res r)을 넣어둔다. 
+        // @warn의 동작을 수행하며  메소드를 종료한다. 반환값은 이 res가 된다.
+        // @quit: @err을 수행하고, 브레이크 포인트를 걸거나 프로그램을 종료한다.
+        // res가 반환될때마다 컴파일러는 res에 콜스택을 pushBack으로 추가해놓는다. 
+        // 브레이크 포인트가 걸렸을때 콜스택의 최상단은 처음 exception이 발생했던 곳으로 위치하도록 조정한다.
+
+        // main()에는 별다른 명시가 없을 경우 @quit(res r) 를 추가한다.
+```
+
+* 잘못된 예제
+```wrd
+@res(res r)
+@quit(res r) // 이미 res로 지정이 되어있기 때문에 컴파일 에러다.
+
+@res(res r)
+@quit(nullAccessRes r) // 에러가 아니다.
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
