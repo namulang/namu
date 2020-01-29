@@ -4974,7 +4974,7 @@ def B
 * def를 쓰면 다른 메소드를 쓸 수 없다는 사실을 눈치채기 어렵다.
 
 
-### [v] 1-1안 최신 def 문법을 활용해서 1안을 변형해본다.
+### [x] 1-1안 최신 def 문법을 활용해서 1안을 변형해본다.
 * 최신 def 문법에 의하면, 1안의 문제점을 많이 해결할 수 있어보인다.
     * def와 동시에 복제 객체를 생성하는 initializer syntax가 추가되었다.
     * def 동시에 메소드를 정의한 그 자체가 새로운 타입으로 만들어 본다.
@@ -5072,6 +5072,412 @@ outer().prop3 = 5
 c.out(outer.prop3.cnt) // 1
 // outer.prop3은 복제가 되지 않았으므로 공유되고 있다.
 ```
+
+#### 고찰
+##### [x] @get
+* worldlang은 공변은 지원하지 않기 때문에 (무공변;invariant) 모든 메소드는 virtual.
+* 따라서 인자리스트가 없는 get은 반환형이 부모의 것으로 고정이 되어야만 한다. 이는 Node를 뜻하게 된다.
+* 그러나 get에서 return시 This 타입이 나오도록 컴파일러가 검증을 한다. (실제는 반환형은 node지만 월드문법상에서는 This인 것이다)
+* 컴파일러는 get의 반환형이 This 라는 것 뿐만 아니라 super.get()이 어떤 타입이라는 것도 알고 있어야 한다.
+* [?] super.super.get()도?
+* get(This a) 처럼 인자를 둬서 구분하자는 아이디어도 있었지만 그럴려면 super.get(b) 같은 식으로 개발자는 super의 인자가 무엇인지 알고 있어야 하며,
+  저 인자는 사용되지 않는 인자인 것이다. 역시 좋은 생각은 아니다.
+* native는 일단 생각하지 말자.
+
+* get은 오직 to() 로만 호출된다. to는 일단 This.get()을 호출한 뒤, 반환된 node 객체를 들고 주어진 타입 T에 대한 생성자에 넣을 수 있는지를 판단한다.
+
+
+
+##### [x] @set으로 sharable, occupiable을 구분하자.
+* set은 인자리스트가 존재하므로 공변 문제에서 자유롭다.
+* set은 operator=()와 동일하다. operator=를 native에서 visible하게 한 경우 wrdfrx은 "@set" 이라는 이름으로 변경해서 내보낸다.
+* set은 reference가 변경될때는 호출되지 않는다. set은 객체간 할당이 일어나는 순간에만 외부에서 호출된다.
+```wrd
+def me
+    @ctor(): c.out("me @ctor:")
+    age := 22
+    @get()
+        c.out("me @get")
+        ret this
+
+    @set(me new)
+        age = new.age
+        c.out("me @set: age=$age")
+
+def superInt from 5
+    @ctor(int new): super(new)
+    =>@set(int new)
+        c.out("superInt @set(int): new=$new")
+    =>@set(superInt new)
+        c.out("superInt @set(superInt): new=$new")
+    =>@get()
+        c.out("superInt @get retv=$retv")
+        ret this
+
+def app
+    void foo(me old, superInt val)
+        c.out("app.foo():")
+
+        old = me()
+        val = superInt(55)
+        val = 55
+
+    void main()
+        //foo(me(), 55) // err
+        foo(me(), superInt(33))
+
+```
+* 결과
+
+    me @ctor
+    me @get
+    superInt @get retv=33
+    app.foo():
+    me @ctor
+    me @get
+
+[v] : 본래 sharable인 me는 set이 불리지 않을 것이다.
+      하지만 여기에서는 set()을 개발자가 만들어 놓았다.
+      불리는가? 불리지 않는가? --> 안불린다. sharable이므로.
+      set()를 개발자가 정의했는가 아닌가로, sharable, occupaible을
+      구분 할 수 있는가? --> 구분X
+
+* 초안에서는 구분해주자 였다.
+- 컴파일러는 파싱단계에서 현재 파싱중인 클래스에서 개발자가 set을 정의하였는가 여부는 알 수가 있다.
+- [v] 한번 set을 정의하면 그것은 occupiable로 고정이 된다? --> set과는 관계 없다.
+```wrd
+def base // sharable이다.
+
+def A // occupiable이다.
+    @set(A new)
+
+def B from A // B는 occupiable이다.
+
+base := base()
+base = base() // base는 base()를 가리킨다.
+b := B()
+base = b // base는 B()를 가리킨다.
+b = B() // b는 B()로 할당된다.
+```
+- [v] 단점은, 일단 한번 occupiable이 되면 다시 sharable로 돌릴 수 없다.
+      set을 구현하면서도 sharable로 쓸 수는 없다. --> 맞다. 그래서 이방법은 쓰지 않는다.
+- [v] 동작이 아무래도 sharable처럼 동작하는지 occupiable로 동작하는지 알아먹기가 힘들다.
+      이것이 복잡한 코드의 경우 독해가 힘들게 될 수 있을까? --> 힘들게 된다. 매우.
+      어떠한 객체가 occupiable인지 sharable인지를 알려면 클래스 정의를 열어서 @set을 찾아야만 한다.
+      [x] 만약 개발자 입장에서 occupiable인지 sharable인지가 로직에 영향을 미치지 않는다면은 이 문제가
+          크게 문제가 되지는 않을 것이다.
+          당연히 신경쓴다. JAVA는 대부분은 sharable 방식이니까 괜찮은 것이지 C++에서 포인터와 객체가 구분이 안간다고 한다면 지옥일 것이다.
+          ```wrd
+            def base
+            def A from base
+                age := 0
+                @set(A new): age = new.age
+
+            b := base()
+            a := A()
+            a1 := a
+            a.age = 27
+
+            if a1.age > 20 // 자 보아라. 신경쓰지.
+          ```
+
+- 따라서 대부분의 객체는 sharable를 기반으로 되어 있어야만 한다.
+  하지만 이럴 경우, sharable에 @set을 달아도 @set은 호출이 되지 않는다. 객체간의 할당이 일어나지 않았기 때문이다.
+
+- [?] sharable 객체인 경우 @set을 호출하는 것과 관계없이 sharable 처럼 동작하는 것이 100% 보장된다면 어떨까?
+어떤 구조를 만들면 100% 보장하면서 @set을 호출하는게 자연스럽게 될 수 있을까?
+
+- [x] 1안 단순히 refer가 새로운 객체를 가리키기 직전에 set을 한번 호출 해줌
+- 이경우 개발자는 set에 주어진 인자를 this에게 할당을 한다고 하더라도 의미가 없게 된다.
+```wrd
+def a
+    age := 3
+    @set(a new): age = new.a + 5
+a1 := a()
+a1 = a() // a1.@set(a()) 가 호출된다.
+```
+- @set에서 new는 a()이다. a1.age = 3 + 5 = 8이 되며, 이후, a1은 new를 가리키는 것으로 변경되므로,
+  a1.age는 5가 된다.
+- 좀 헷갈리겠는데.
+
+- [?] 2안 set()은 할당을 하기 위한 메소드가 아니라 일종의 콜백인 것이다.
+```wrd
+def a
+    age:=3
+    @set(): age += 5
+a1 := a()
+a2 := a()
+a2.age = 8
+a1 = a2 
+```
+- a1를 감싸고 있는 refer는 새로 생성한 a2 객체를 가리킨다.
+- 그리고 refer는 a1.@set()을 호출한다.
+- 결과 a1.age는 13이 된다.
+
+- [?] 프로퍼티처럼 사용이 가능한가?
+```wrd
+def outer
+    age := 3
+    inner := def from int
+        @set(): age = this
+        //@get()은 생략할 경우 ret this 가 된다.
+
+o := outer()
+o.inner = 5
+c.out(o.inner)
+```
+
+- [?] 가장 큰 문제점은 set이 자동으로 이루어지기 때문에 @set()이 불리기 전에 이미 외부에서 주입된 int는
+inner에게 할당이 되어있다는 것이다. 어떻게 해결할가?
+
+    - [x] 1안 개발자는 실질적으로 변수에 값을 set 할지 안할지를 set() 안해서 결정할 수 있도록 하자.
+    ```wrd
+    def outer
+        age := 3
+        inner := def from int
+            @set()
+                //super.@set() 을 하면 inner는 변수 int가 할당된다.
+                //=>@set() 을 해도 inner에 int가 할당된다.
+                c.out("me")
+    outer.inner = 33
+    ```
+        - @set에서 사용자가 할당하려고 한 inner 객체가 무엇인지 알지 못한다.
+        - inner는 int를 받을 수 없다. 이름 모를 객체 def가 @set에 인자로 들어와야 한다.
+          문법적으로 잘못되었다.
+        - 설사 된다고 하더라도 outer.inner의 결과가 33이 할당되지 않는다는 건 혼란스럽게 만든다.
+
+
+    - [?] 2안 할당은 반드시 된다. 인자로 할당되고 난 뒤에 객체가 들어간다.
+    ```wrd
+    def outer
+        age := 3
+        inner := def from int
+                @set(This new) // set(This)를 한 경우 반드시 =>를 넣어야 한다? 혹은 set(This)는 이미 끝마치고 난 뒤에 이게 불린다?
+                @set(int new)
+    outer.inner = 33
+    //outer.inner = 3.5 //err. inner에 @set(float)은 없기 때문이다.
+    ```
+
+    - [x] 3안은 1안을 거의 따라가되, 개발자의 책임으로 미룬다.
+    ```wrd
+    def person
+        name := "wow"
+
+    def outer
+        age := 3
+        inner1 := def from int
+        inner2 := def from int
+            @set(int new): age = new
+
+        inner3 := def from int
+            @set(This new): inner3 = new
+            @set(int new): age = new
+
+        inner4 := def from person()
+            @set(str name): this.name = name
+
+        @set(str name): this.name = name
+
+o := outer()
+o.inner1 = 55
+o.inner1 = outer().inner1
+o.inner2 = 55
+o.inner2 = outer().inner2
+o.inner3 = 55
+o.inner3 = outer().inner3
+o.inner4 = 55
+o.inner4 = outer().inner4
+
+```
+
+```wrd
+def A
+    fakeAge := def() from int
+        @set(int new)=>
+            c.out("retv=$retv")
+            ret retv
+
+        @get(): ret this
+
+    realName := ""
+    fakeName := def name from str
+        @set(name new): realName = new
+
+a := A()
+a.fakeAge = 5
+```
+
+- 프로퍼티처럼 사용하려면 반드시 특정 타입을 지정하고 from으로 복제해야 한다.
+- set의 인자는 그 특정타입이다. 변수명은 자유롭게 정한다.
+- set에 =>를 하게 되면 프로퍼티 자신이 들고 있는 변수에 할당한다.
+- 프로퍼티가 들고 있는 변수에 값을 할당하지 않으면, 최적화된다.
+- get의 반환값은 프로퍼티 자신이다.
+
+* @set의 범위를 제한해서 프로퍼티처럼만 사용하도록 하자는 것이다.
+* 평가전략에서 반드시 성공하는 조합일 경우에만 cb을 호출하기 때문에 모호함이 없게 된다.
+* 동작도 심플하고, 프로퍼티 클래스 같은걸 C++에 만들어 놓고 컴파일러는 프로퍼티를 보는 순간
+  그 클래스로 우겨넣으면 되지 않을까?
+  그 클래스에 to()가 호출되면 @get()를 실행하고,
+  그 클래스에 operator=나 
+
+
+[x] 2번째는 @set(This)를 만들지 못하게 막는다. 나머지는 풀어둔다.
+    ```wrd
+    def A
+    def B from A
+        @set(A new))
+    def C from B
+
+    a := A()
+    b := B()
+    a = A()
+    b = a
+
+    c := C()
+    c = a
+    c = C()
+    b = c
+
+    ```
+
+    [v] 일관성을 가진다면 정의된 @set은 overloading도 가능해야 하며, 상속도 되야 한다.
+        따라서 c = C()와 b = c가 문제 케이스가 될 수 있다. 생각을 해보자.
+        ```wrd
+        def base
+            void foo(base new): c.out("base")
+        def deriv from base
+            void foo(deriv new): c.out("deriv")
+        def dderiv from deriv
+
+        b := base()
+        d := deriv()
+        d.foo(d) // deriv
+        d.foo(b) // base
+        dd := dderiv()
+        dd.foo(d) // deriv
+        dd.foo(b) // base
+        ```
+        Members는 FILO 구조다. 가장 최근에 추가된 메소드가 젤 먼저 매칭된다.
+
+        마찬가지로 c = C(), b = c에 적용을 해보자.
+        ```wrd
+        def A
+        def B from A
+            @set()
+        def C from B
+        b := B()
+        c := c()
+
+        c = C() // c.@set(C)
+        c = b // c.@set(A)
+        c = a // c.@set(A)
+        b = c // b.@set(A)
+        ```
+
+        일단 말은 되는거 같다. 구현이 좀 어려울 것 같다.
+
+
+    superInt @set(superInt): new=55
+    superInt @set(int): new=55
+
+
+[x] : 복사 생성자나, 그밖에 할당이 이루어지는 경우도 @set이 대신 호출이 되야 하는가?
+
+[x] 생각을 다시 정리해보자.
+
+[v] 목표를 달성하기로만 한다면 쉬운 문제다. prop이라는 키워드를 만들면된다.
+```wrd
+def complex
+    name := ""
+    age := 0
+
+def A
+    _real := complex()
+
+    fake := prop from complex
+        @get(): real
+        @set(complex c): real = c
+
+    fake2 := prop() from complex
+        @get()=>: c.out("wow!")
+        @set(complex c)=>: c.out("set!")
+
+    fake3 := prop() from int
+        @get()=>: c.out("fake3")
+        @set(int new): c.out("ignore")
+
+    fake4 := prop() from complex
+        _@set(complex c) // block.
+        //@get()은 open
+
+a := A()
+a.fake = complex()
+a.fake2 = complex()
+a.fake3 = 55
+a.fake3 // "0"
+//a.fake4 = complex() 에러.
+a.fake4.age // null
+```
+
+* 정리하면 prop은 다음의 규칙을 갖는다.
+    * prop은 반드시 기반 클래스를 필요로 한다.
+    * prop은 nested에서만 사용이 가능하다.
+    * prop은 임의타입 T에 대한 refer다.
+        * 밖으로 나갈때는 T의 refer로써 나간다. 들어올땐 T로써 받는다.
+        * 따라서 새로운 public 인터페이스를 정의할 수 없다.
+        * refer이므로 @get,@set을 기본적으로 prop이 들고있는 refer에 할당을 해준다.
+        * 내장된 refer를 전혀 사용하지 않는다면, 컴파일러가 최적화타임에 이걸 감지하고, 제거한다.
+
+* 충족된 조건은,
+    * 문법이 지극히 심플하고, 혼란의 여지가 없다.
+    * 직관적이다. prop이라는 키워드를 보는 순간, 어떠한 용도로 사용될것인지 명확하다.
+
+* 개선하고 싶은 점은,
+    * prop, @set, @get 3개나 키워드가 추가되었다.
+    * 무언가 새로운 객체를 정의한다는 점에서는 prop과 def 는 닮았다.
+    * 좀 더 일반화된 문법을 제시할 순 없는가?
+    * 단, 명확성이 일관성보다는 우선되어야 한다.
+
+* 본질을 찾아보자.
+    * prop은 refer에 대해서 get, set 시점을 콘트롤 하고자 하는 것이다. 객체를 컨트롤 하는 것이 아니라는 점을 명백히 해야 한다.
+    * prop은 절대로 T에 대한 객체나 T에 대한 객체의 상속객체가 될 수 없다.
+        * prop은 owner객체의 라이프사이클과 동기화 된다. 그러나 prop의 사용법 중에는 새로운 객체 T를 만들어 밖으로 내보내는 일도 가능해야 한다.
+        * 반환된 T객체는 prop과는 무관한 객체가 되어도 괜찮다.
+
+            ```wrd
+            def A
+                real := complex()
+                fake := prop from complex
+                    @get(): complexJob()
+                    @set(complex c): updateJob(c)
+
+                complex _complexJob(): complex()
+                void _updateJob(complex c)
+            ```
+
+            * 그러나 만약 prop.@get이 T(complex)가 아니라 prop 자체였다면...
+            ```wrd
+                fake := prop from complex
+                    @get(): complexJob() // complex -> prop으로 변환이 가능해야 한다.
+
+                complex _complexJob(): complex()
+            ```
+
+    * prop을 없애고 싶다면 T를 prop으로 자동 반환하는 방법을 찾아야 한다.
+        * 만약 위의 @get문제를 해결해서 어떻게든 complex -> prop으로 변환해서 반환하는 방법을 잘 찾는다면,
+          이제 prop에는 def 처럼 인터페이스를 추가할 수 있게 될것이다. def와 prop의 차이가 미비하므로, prop을 없앨 수 있다.
+
+          * [x] def로 prop을 구현할 수 있는가? // 안된다. Node::run()을 재정의해야 하기 때문에.
+          * 따라서 def와 prop은 새로운 인터페이스를 정의할 수 있다고 하더라도,
+            prop은 설사 T와 관련이 전혀 없는, 복제 객체가 아니더라도 msg를 route 해줘야 한다는(= refer처럼) 동작상의 차이가 있다.
+
+
+* [v] 결론
+    * def는 객체를 커스터마이징 하는 것.
+    * prop은 임의의 객체 T 에 대한 refer를 커스터마이징 하는것.
+    * 따라서 둘은 절대로 하나의 문법이 될 수 없다.
+
+
 
 
 
