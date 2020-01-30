@@ -7681,7 +7681,7 @@ res := env.calculate()
 
 
 
-### [v] 5안 property getter에서는 null이 무시된다.
+### [x] 5안 property getter에서는 null이 무시된다.
 
 * 이 아이디어는 wreckpattern에 기초하고 있다.
 
@@ -7708,7 +7708,7 @@ res := env.calculate()
 
 * worldlang개발자는 getter를 직접 만들지 말고 프로퍼티를 주로 사용해야 한다.
 
-### 결과
+#### 결과
 
 * 문법의 추가가 없다. (?.)
 * getter에서만 null이 무시되므로 의도와 거의 높은 확률로 부합한다.
@@ -7717,10 +7717,39 @@ res := env.calculate()
 
 
 
+
+### [v] 6안 safe-navigation과 nullex를 지원한다.
+* 다음과 같은 문법이 있을때
+```wrd
+activity := getActivity()
+if activity == null: retfun
+
+context := activity.getContext()
+if context == null: retfun
+
+resources := context.getResources()
+if resources == null: retfun
+resources.getString(R.string.name)
+
+```
+* @warn(rNull)를 사용하면 다음과 같이 사용 가능하다.
+```wrd
+with
+    @warn(rNull)
+    getActivity().getContext().getResource().getString(R.string.name)
+
+// 혹은 safe navigation을 사용한다.
+getActivity()?.getContext()?.getResources()?.getString(R.string.name)
+```
+
+
+
+
 ## [..] 사용자의 cpp 코드에서는 null을 사용자가 직접하지 않도록 가능한 해야 한다.
 
 cpp 코드에 의해서 멋대로 crash가 나서는 안된다.
 FRX이 막아줘야 한다.
+
 
 
 
