@@ -11316,6 +11316,171 @@ def app
 
 
 
+# [v] 함수위임자
+## 문제를 정리해보자.
+* 2가지가 문제다.
+    - 생성자 호출인지, 메소드타입을 정의한 것인지 구분이 안간다.
+    - 메소드의 타입을 써넣은 것인지 메소드의 정의부를 넣은것인지 구분이 잘 안간다.
+
+## 문제 케이스
+```wrd
+str(int) // 메소드타입? or void의 생성자 호출? 아님 다음줄에 메소드의 body가 올까?
+```
+
+
+## 해법
+```wrd
+// C++
+class A
+{
+    public:
+        // 객체:
+        A foo()
+        {
+            return A();
+        }
+        // 메소드:
+        function<void, int> func()
+        {
+            return [](int) -> void {
+            };
+        }
+};
+
+
+// 자바
+new A();
+interface Func {
+    void temp(int age);
+}
+public Func foo() {
+    return age -> {
+        doSomething(age)
+    }
+}
+
+
+// 파이썬:
+A()
+def foo():
+    return lambda age: doSomething(age)
+
+
+
+// [x] 1안: void(int)는 함수포인터다.
+A()
+def void(int) foo()
+    ret void(int age) // 반드시 변수명을 넣어줘야 한다.
+    //ret void(int)로 해버리면 void의 생성자로 인식한다.
+        doSomething(age)
+
+// 문제: 해결불가
+void(int) // 람다의 정의인가, void의 생성자인가?
+
+
+
+// 2안: ?
+A()
+def void ?(int) foo()
+    ret void ?(int age)
+        doSomething(age)
+
+setCallback(void ?(int age)
+    doSomething(age)
+)
+// 메소드명에만 ?넣고 변수에는 안넣는다. 일관성이 없다.
+// ? 한글자를 넣는것보다 더 줄일 수 있는 방법은?
+void ?(int) // 함수타입인지, 메소드의 정의부인지 구분이 잘 안간다.
+
+
+// [x] 3안: fun
+// 메소드 타입이 void(int) 처럼 쓰는 부분에서 이미 실패다.
+A()
+fun void(int) foo()
+    ret fun void(int age)
+        doSomething(age)
+
+setCallback(fun void(int age)
+    doSomething(age)
+)
+
+
+
+// [x] 4안: 다른 언어처럼, 메소드 1개 붙은 def는 메소드타입으로 취급한다.
+// def는 객체로, 컴파일러가 메소드타입처럼 쓸 수 있도록 하므로 복잡해진다.
+// 그리고 def안에 변수를 정의하면 어떻게 되는가?
+A()
+def func
+    void temp(int age)
+
+func foo()
+    ret age ->: doSomething(age)
+
+
+def func2
+    void temp(int age)
+    age := 3
+func foo()
+    ret age ->
+        doSomething(age)
+        age + 3
+
+
+// [x] 4-1안: 메소드타입 정의를 위한 키워드를 추가한다.
+// 동작은 가능하리라 본다. 키워드가 또 추가되는 셈이다.
+A()
+fun func: void temp(int age)
+func foo()
+    ret age ->: doSomething(age)
+
+
+// [v] 5안: 메소드 또한 origin 객체다. 타입이 될 수 있다.
+// 다음에서 힌트를 얻는다:
+def test
+    @ctor(int age): this.age = age
+    age := 3
+    //int getAge(): 55 와 동일하다.
+    age getAge(): 55
+    // age를 여기에 적었다고 해서, age 객체가 나가는 것이 아니다.
+    // age의 origin인 int의 복제된 객체(occupiable일 경우) 혹은
+    // age를 reference할 수 있는 것이 생성되는 것이다.
+
+    void say(int age)
+    say getComplex()
+        ret c
+    // test.say는 메소드객체다.
+    // 그러나 마찬가지로 say를 반환형에 썼다고해서 say 자체가 나가는 것이 아니다.
+    // say또한 origin객체이므로 타입이 될 수 있다는 것을 알 수 있다.
+```
+
+## 활용
+```wrd
+A()
+test say()
+say foo()
+    ret () -> test(doSomething(age))
+// 파이썬 대비 1줄 추가로 정리할 수 있었다.
+// 이정도면 대박 아닌가.
+
+
+
+// 주의사항:
+// 1. 전역메소드를 만들 수 있어야 한다.
+test say(): null
+
+// 2. private 라면 접근이 불가능하다. origin객체로써 사용도 불가능하다.
+test _say2(): null
+say2 foo() // 컴파일 에러.
+    ret test().say
+
+// 3. 메소드는 비어있을 경우 null이 반환된다.
+test say()
+
+// 4. 타입용도로 만든 메소드이지만 어쨌건 호출은 가능하다.
+
+```
+
+
 
 
 # 클로저
@@ -11347,7 +11512,7 @@ app
 			sum = a + b // 클로져는 지역변수를 공유한다.
 
 
-		// 함수 위임자delegator: 
+		// [x] 함수 위임자delegator: 
 		// 메소드 또한 객체1st-class-citizen이며, 메소드에 바인딩된 모든 identifier는 origin 객체이다.
         // 따라서 메소드의 refer를 만들 수 있다. 객체하고 똑같다.
         // 이는 전통적인 java, C#의 형태와 유사한 것이다.
@@ -11391,6 +11556,7 @@ app
 	sum is 42
 */
 ```
+
 
 ## 중첩메소드를 람다로 발전 시킬 수 있는가?
 
