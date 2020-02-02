@@ -1170,7 +1170,7 @@ for <a> in <b>
 
 
 
-## ~~switch 대체~~
+## [x] ~~switch 대체~~
 ## switch
 * is 는 switch 안에서 사용한다.
 * is 는 if it ==, 혹은 if it 과 같다.
@@ -1318,6 +1318,118 @@ with name
 
 
 
+
+## [v] switch
+```wrd
+// 기존문법
+with name
+    is "wow": doSomething()
+    is "hello": retfun
+
+그러나 with와 switch를 같이 쓰는 건 해보니 굉장히 복잡해진다.
+왜냐하면 with를 이미 사용한 상황에서 switch만 하고 싶은데, with로 인해서 API가 다시 덮어지는 현상이 있었기 때문.
+
+
+// C++, 자바
+switch(integer only)
+{
+    case 1: return "wow"; break;
+    case 3:
+    case 4:
+    case 5:
+        return "middle"; break;
+
+    case 6:
+    case 7:
+    case 8:
+        return "good"; break;
+
+    default:
+        throw Exception();
+}
+
+// python: 없음. if-else
+if age == 1:
+    return "wow"
+else if age == 3 or age == 4 or age == 5:
+    return "middle"
+else if age == 6 or age == 7 or age == 8:
+    return "good"
+else
+    raise Exception()
+
+
+
+// kotlin:
+when(age)
+    1 -> return "wow"
+    3,4,5 -> return "middle"
+    else -> throw Exception()
+    in 6..8 -> return "good!"
+
+
+// swift:
+switch age {
+    case 1:
+        return "wow";
+    case 3:
+        fallthrough;
+    case 4:
+        fallthrough;
+    case 5:
+        return "middle";
+    case 6...8:
+        return "good";
+    default:
+        throw Exception();
+}
+
+
+// ruby:
+case x
+    when 1..5
+      "It's between 1 and 5"
+    when 6
+      "It's 6"
+    when "foo", "bar"
+      "It's either foo or bar"
+    when String
+      "You passed a string"
+    else
+      "You gave me #{x} -- I have no idea what to do with that."
+end
+
+
+
+// 현재안:
+switch x
+    is == 6: "6"
+    is == "foo": "foo"
+    is == "String": "str"
+    else
+        "others"
+// 단점:
+// 결국은 is라는 새로운 키워드를 추가했다. (키워드2개추가)
+// 활용도는 더 떨어진다.
+// 만약 키워드를 줄일 수 있는 방법을 찾으면 더 좋고, 그게 아니라면 다른 언어와 비슷한 활용도를
+// 갖도록 한다.
+
+
+
+// [v] 1안: if a == 1 || a == 2를 축약하는 방법을 제시한다. 그리고 if 를 쓴다.
+// 1-1안: 컨테이너를 쓴다.
+// 단 elif 키워드를 추가해줘야 한다.
+if (1, 3, 7).has(a)
+if 1..2.has(a)
+if {n|1..2}.has(a)
+if ("wow", "foo", "good").has(a)
+
+if x == 1: ret "wow"
+elif (3, 4, 5).has(x): ret "middle"
+elif 6..8.has(x): ret "good"
+else: ret res()
+// 충분히 간략화 되었음을 알 수 있다. 이걸로 간다.
+```
 
 
 
