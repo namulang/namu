@@ -8435,7 +8435,7 @@ def app
 //	0.1, 0.1, 0.1
 ```
 
-## Shareable의 기본
+## [x] Shareable의 기본
 
 - **고찰과정**
 
@@ -8539,7 +8539,7 @@ def app
 
 
 
-## 멤버변수는_occupiable_멤버함수는_sharable_로_할_수_있을까?
+## [x] 멤버변수는_occupiable_멤버함수는_sharable_로_할_수_있을까?
 
 - 그런 특성을 가지고 있는 것은 사실이다. 그러나 occupiable, sharable 로직을 객체 복제(메소드, 멤버변수의 복제)에 재사용하는 것은 안된다. 왜냐하면 occupiable, sharable 로직이 발동되려면 opearator=가 일단 호출이 되어야 하기 때문이다.
 - 현재의 chain을 통한 자연스러운 컨셉(메소드는 공유, 멤버변수들은 operator=를 호출함으로써 occupiable, sharable 로직을 발동시키는 것)이 더 메모리나 퍼포먼스 적에서 이득이다.
@@ -8579,6 +8579,217 @@ def app
 - **답 : 문제 정의자체가 잘못되었다.**
   - 반환형이 Reference던 String이던, String& 이던 상관없다. 어짜피 TNativeMethod는 반환한 값으로부터 Refer returned = cb(..)->to<String>()를 할것이기 때문이다.
   - 따라서 sharable인지 occupiable인지는 상관안해도 된다.
+
+
+## 현재안
+* immutable, mutable이란 전통적인 용어 대신에 sharable, occupiable이란 용어를
+* 만들어서 사용해왔다.
+* sharable은 refer로 항상 감싸져 있는 객체,
+* 모든 객체는 operator=()로 할당연산이 가능.
+* occpiable은 객체 자체를 스택에 둠. 그래서 객체간 op=()가 호출되므로 mutable처럼 동작.
+
+```wrd
+a := 3 // occupiable
+b := a
+a = 4
+a != b // true
+
+c := complex()
+d := c
+c.age = 33
+c.age == d.age // true
+```
+
+
+## 개선해보자
+### 포인트
+* 먼저 착각했던게, "immutable은 refer로 감쌀 수 없음"이 아니라는 점이다.
+* Mutable과 refer는 관련이 없다. 평가전락과도 관련이 없다.
+* byVal을 사용한다고 하더라도 immutable객체와 mutable객체를 만들 수 있다.
+```cpp
+MyClass m;
+m.readValue();
+m.setValue(int newValue) // 만약 newValue가 없었더만 MyClass는 immutable객체다.
+
+
+```java
+String a = "wow";
+String b = a;
+//a.insert(1, 'o'); // 이렇게 string에 원소를 끼워넣는건 할 수 없다.
+b = "changed";
+a != b // true.
+```
+
+* 문자열의 일부만 바꿀 수 없다. API가 없다. 하려면 통째로 바꿔야 한다. string이 immutable임을 알 수 있는 대목.
+* a는 바뀌기 전에 b를 가리키고 있다. string이 mutable 이기 때문에 a != b가 되는 것이다.
+  b가 새로운 메모리를 가리키는 immutable이기 때문에.
+    ```java
+    Complex a = new Complex();
+    Complex b = a;
+    b.setName("kkk");
+    a == b // true
+    ```
+    * b가 mutable이면 이런 결과가 된다.
+
+
+* 하지만 String은 객체이며 int, bool 같은 primitives와는 다르게 취급한다.
+* 자바에서 모든 객체는 refer에 감싸져 있다. 따라서 String은 객체이므로 refer로 감싸져 있지만
+  immutable인 변수인것이다.
+
+
+
+
+```wrd
+// 1안: 모든 객체는 refer로 감싸져 있다. refer는 T가 immutable이면 clone()만 한다.
+//      mutable이면 기존대로 pointer만 바꾼다.
+//      결론적으로 객체의 할당연산자는 worldlang에서 없다.
+a := 3
+b := a // b는 refer로 감싸져 있으며 refer는 a에서 값을 clone()해 넣어두었다.
+a = 5
+a != b
+
+c := complex()
+d := c // c 또한 refer로 감싸져 있으며 refer는 c로 포인터만 옮겼다.
+c.setName("kkk") // c 객체의 name이라는 문자열이 "kkk"로 복제된다.
+d == c
+
+
+
+// [x] 2안: scope가 immutable이면 clone()을 한다.
+// 모든 변수는 결국 scope에 들어간다.
+b := a // a는 int, immutable. 그러면 scope는 b라고 하는 변수가 있던 곳에 int() 객체를 다시 넣는다.
+
+    // [?] 객체 안에 있는 immutable은?
+    def person
+        name := "wow"
+        c := def com()
+            address := "korea"
+            id := 3
+
+    person.name = "ok"
+    person.c = person().c
+    // members().replace(n, obj) 이런 코드로 컴파일러가 치환할 수 있어야 한다.
+    // scope던 object이던 같은 Container를 사용해야 한다.
+
+
+// [x] 3안: mutable의 경우에도 scope의 member에 넣는다. 그리고 scope에 refer를 두지 않고 바로 객체를 넣는다.
+//      member 변수라고 해도 결국은 scope에 있을 것이다.
+//      (chain이 되어있으므로 scope에 조작을 가하면 객체의 members에 조작을 가하는 것과 동일하다)
+// 동작은 되는데, 문제는 객체가 교체되며 members를 Node 타입이기 때문에 본래 어떠한 타입의 변수였는지를 알지 못한다.
+// 월드는 타입이 분명 존재한다. 단, 문법 전체에 잘 들어나지 않을 뿐이다.
+def base
+def derived from base
+def another
+b := base() // 언급이 없어도 b는 base 타입이다.
+b = derived // ok
+b = another // err.
+
+// 타입을 담당하는 것은 refer다.
+// scope에 "b"라는 변수명에 refer가 들어있고 그 refer가 base() 객체를 가리키고 있는 것이다.
+// 만약 scope["b"]에 base()객체를 바로 넣는다고 하자. 이렇게 하면 another()객체를 replace 하는 요청도
+// OK가 되버린다. base타입의 변수라는 정보가 어디에도 없기 때문에.
+```
+
+
+### [v] 3-1안: origin 노드라면 refer로, 그외의 복제 객체라면 refer로 씌워서 둔다.
+* [x] 이렇게 하면 scope에는 항상 refer가 있을 것이다.
+* [v] members를 Array<Refer>로 할 수 있을까? --> 아니.
+* [v] Refer를 members에 두지 않아도 된다면, 그것은 어떤 상황인가? --> origin 노드다.
+    * 먼저 immutable/mutable에 장단점을 확실히 하자.
+        * mutable이란 객체는 그대로 동일한 메모리에 있고, 객체가 가진 값만 바뀐다는 것이다.
+        * C++로 간단히 재현이 가능하다.
+        ```cpp
+        void foo(int& a)
+        {
+            a += 2;
+        }
+        int a = 5;
+        foo(a); // foo 안쪽에서 a가 변경되었다는 것을 알아야만 한다. sideeffect 있는 함수가 되는 것이다.
+        int ten = a * 2; // 10이라고 생각했겠지만 실제로는 14가 된다.
+        ```
+
+        * 그리고 멀티스레딩에서 장점도 있다.
+        * 이처럼 메소드 안쪽에서 해당 객체의 값이 변경이 되는가 아닌가를 결정하는 것이 mutable이다.
+
+        ```java
+        void foo(String a) {
+            a = a + "wow" // string은 immutable이다.
+        }
+        String a = new String("zzz");
+        foo(a); // foo 안에서의 동작이 외부의 a에 영향을 미치지 않았다.
+        System.out.println(a); // zzz가 나온다.
+
+        void boo(Complex c) {
+            c.real = 1;
+            c.fake = 0;
+        }
+        Complex c = new Complex(0, 0);
+        boo(c); // 안에서 c의 객체가 변경되었다.
+        System.out.println(c.real + "," + c.fake); // 1, 0
+        ```
+
+        * C++에서는 byVal, byPointer, byReference를 개발자가 고를 수 있도록 만들어서, 어떤 타입이든
+          바로 immutable처럼 사용할 수 있다.
+        * 반면, Java, C#, python 등은 by object(bySharing)을 사용하고, 이는 특정 타입을 제외하고는
+          기본 mutable로 고정되어 있다.
+        * const, final 같은 키워드는 immutability를 보장하지는 않는다는 걸 명심하자.
+          객체는 엄밀히 조작이 가능하나, 그 객체에 접근할 수 있는 변수가 const, final로 되어있는 것이다.
+          어떻게든 다른 경로를 통해서 그 객체에 접근할 수 만 있다면 변경이 가능한 상태가 된다.
+        * 평가전략은 immutable에도 영향을 어느정도 미친다. immtuable에서 가장중요한 것은 객체가 복사되는
+          순간 (할당연산, 복제 생성, 메소드에 인자로 넘기는 것...)에 다른 객체를 만들어낸 것이기 때문이다.
+
+
+    * 문제로 다시 돌아가면 "타입정보"가 필요하기 때문에 객체는 무조건 refer로 감싸야 한다. refer가
+      immutable로 다룰지 mutable로 다룰지 결정한다.
+
+        * 반대로 얘기하면 refer가 감싸고 있는 immutable객체를 refer를 거치지 않고 어떻게든 접근이 가능했다면,
+          그리고 이 객체만 들고 바로 interaction을 한다면 mutable 객체처럼 사용할 수 있다.
+          만약 거기에 그러한 public api가 있다면 말이다.
+        * 예를들면 자바의 String은 immutable인데, 그것은 언어적인 차원에서 지원을 하였기 때문만 아니라
+          String 클래스 자체에 mutable 한 메소드를 만들지 않았기 때문이기도 한것이다.
+        * Native 프레임워크에서도 primitives들은 setter를 제공하지 않아야 한다.
+        ```cpp
+            class MyClass : public Object {
+                public:
+                    void foo(Int& a) { // 보통은 (int a) 혹은 (Int a)로 할것이나, 설령 인자로 &를 주었다고 하더라도
+                        int a = a.get();
+                        Int b = a + 5; // 식으로 쓰도록 primitives 들을 잘 만들어야 한다.
+                    }
+            };
+
+    * 메소드는 객체가 아니라 Node의 일종이다.
+    * 메소드와 메소드Ref는 구분을 해야 한다.
+      그러나 worldlang 문법에서는 이 둘을 구분해서 정의하지 않도록 되어있다. origin객체인
+      메소드만 정의하면 자동으로 그에 맞는 ref가 생성된다.
+      ```wrd
+        void foo(int a) // foo는 origin node다.
+        a := foo // a는 foo를 가리키고 있으며 타입은 foo라는 origin node다.
+        foo() // 에러. 메소드는 생성자가 없다.
+        foo = foo // 에러. foo는 refer가 아니라 메소드이다.
+
+        // 이는 전혀 이상한 문법이 아니다. 객체로 치환하면 바로 이해할 수 있다.
+        def msg // msg는 origin node다.
+            title := "unknown"
+        m := msg // m은 msg를 가리키고 있으며 타입은 msg 이다.
+        m = msg() // 객체이므로 생성자가 있다.
+      ```
+
+    * origin node는 정의와 동시에 프로그램 시작시에 컴파일러가 origin 배열에 추가해둔다.
+      그리고 이후 그것을 타입으로 삼는 모든 변수는 그 origin에 대한 refer로 만든다.
+    * origin node들은 refer에 감쌀 필요가 없다.
+        * 컴파일러는 'a = b 와 같은 할당연산을 "a"라는 refer를 찾아서 set(b)를 호출'로
+          변환한다.
+        * origin node 같은 것들은 그것을 가리키는 식별자가 항상 동일해야 한다.
+        * 때문에 origin node들은 scope에 refer에 씌우지 않고 넣어두면 된다. 컴파일러는
+          scope에서 가져온 객체가 refer가 아닌데 사용자는 할당연산을 시도했다면
+          에러를 내보내면 된다.
+
+    * 따라서 members에는 refer가 아닌 것들도 들어갈 수 있다. origin node들 말이다.
+
+
+
+
+
 
 
 
