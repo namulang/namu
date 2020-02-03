@@ -9114,6 +9114,8 @@ app
 
 # 상수화
 
+## [x] 기존안
+
 ```cpp
 import console
 
@@ -9169,7 +9171,7 @@ app
 */
 ```
 
-## const의 기본
+### [x] const의 기본
 
 - Java, python은 const를 지원하지 않는다. const가 없어도 사실 사용상에 문제가 없다. 실수를 줄여주기 위한 측면이나 동시에 귀찮은 존재가 되기도 한다.
 
@@ -9371,15 +9373,15 @@ app
 
 
 
-## CRefer는_존재하지_않는다
+### [x] CRefer는_존재하지_않는다
 
 - CRefer가 존재하는 이유는 isConst()인 Refer는 Native사용자가 get() const 를 해야 한다는 걸 빌드타임에 강제하기 위함이다. 따라서 Refer와 다르게 CRefer는 get() const 만 갖고 있게 된다.
 - 하지만 문제는 Native개발자가 접하는 클래스는 Refer가 아니라 Node다. 따라서 이 시점에서 구체클래스를 가져오는 방법은 to를 사용하는 것이며 설사 Node가 isConst()라고 하더라도 C++의 const는 아니기 때문에 to<T>() 함수가 호출 가능하고 반환값은 null을 가리키는 Refer가 된다. 즉 CRefer(혹은 const Refer)를 만들어봤자 결국 사용자는 to<T>()를 하고, 반환값이 null이 아닌지를 확인 한 후, null이면 to<T>() const를 다시 호출해야 하는 식으로 가야 한다는 것이다.
 - 어짜피 CRefer로 구체클래스를 뽑아내지 않으면 빌트타임에 const 여부를 강제할 수 없다. 따라서 그럴바에야 차라리 CRefer와 Refer를 통합시켜서 클래스 1개라도 더 줄이는게 좋은 선택이라고 판단된다.
 
-## Refer는_const를_정보를_가지고_있다.
+### [x] Refer는_const를_정보를_가지고_있다.
 
-## Refer는_const_T_캐스트가_되어야만_한다.
+### [x] Refer는_const_T_캐스트가_되어야만_한다.
 
 - 요구사항
 
@@ -9405,7 +9407,7 @@ app
 
 
 
-## Node는 isConst()를 가지고있다. Method는 isConst() == true면 method에서 사용하는 thisptr가 const Object가 되어야 한다.
+### [x] Node는 isConst()를 가지고있다. Method는 isConst() == true면 method에서 사용하는 thisptr가 const Object가 되어야 한다.
 
 - Stmt는 msg를 구성할때 World코드상 const로 되어있다면 msg 맨 뒤에 Refer<const Object>()로 넣어두고, nonconst라면 msg 맨 뒤를 Refer<Object>로 넣어둔다. (Msg의 맨 뒤는 실행시마다 변경되는것이다)
 - Method는 isStatic()이 false일 때만 msg 맨 뒤에서 OBject를 꺼내야 하는데, isConst()가 true면 cast<const Object>()를 한다. 만약 Stmt는 Msg 맨 뒤에 Refer<const Object>()로 넣어뒀는데 Method는 refer.cast<Object>()를 하게 되면 NullRefer가 나오게 된다. 이것은 Refer<const T>의 동작이다. --> #Refer_const_T_캐스트가_되어야만_한다
@@ -9415,13 +9417,12 @@ app
 
 
 
-## const...뺄까?
+### [v] const...뺄까?
 
 * 코드가 너무 복잡해짐. 이 언어는 가볍게 배우고 빨리 실습해보고.. 이랬음 좋겠다.
 
 
-
-## [v] 문제#2 const 여부를 변수에 표현하지 않으면 너무 가독성이 떨어진다
+### [v] 문제#2 const 여부를 변수에 표현하지 않으면 너무 가독성이 떨어진다 --> 맞다.
 
   * 일반적인 타입 정보는 그게 정확히 무엇인지는 중요하지 않고 사용자가 쓰려고 하는 API를 이 타입이 가지고 있을 것이 라는 것만 중요하다. 그래서 타입을 표기할 필요가 없다.
 
@@ -9436,7 +9437,7 @@ app
     p.setName("new") // compile error.
     ```
 
-## [v] 문제#3 const의 표기법
+### [v] 문제#3 const의 표기법
 
   ```cpp
   [v]1: age = #int
@@ -9545,7 +9546,7 @@ app
 
 
 
-## [v] const 변수를 만드는 법?
+### [v] const 변수를 만드는 법?
 
 ```cpp
 [v]1: #age = 25 // 숫자는 자동 const.
@@ -9569,14 +9570,14 @@ app
   #p = getOneOfPerson(2)
   ```
 
-## 구현이 없는 함수를 어떻게 정의할까?
+## [v] 구현이 없는 함수를 어떻게 정의할까?
 
 * 구현이 없는 블록문 같은 경우도 있을 수 있을 것이다.
   * if a == 5
   * else
     * ....
 
-* 1안
+* [x] 1안 --> 반환형을 적지 않았다. 그러니 함수호출이다. 명확한 문법이다.
 
   ```cpp
   print() // --> 이미 함수 호출 처럼 보이기 시작하지 않은가?
@@ -9587,7 +9588,7 @@ app
                   // 아니면 print() 라는 클로져를 정의한 것일까?
   ```
 
-* 2안
+* [x] 2안
 
   * 파이썬 방식
 
@@ -9601,7 +9602,7 @@ app
       main()
   ```
 
-* 3안 - 메소드입니다 라는 특문을 넣는다.
+* [x] 3안 - 메소드입니다 라는 특문을 넣는다.
 
   ```cpp
   app,
@@ -9612,6 +9613,125 @@ app
       main()
           foo(?(str msg): msg.len,"hello")
   ```
+
+### [v] 현재안
+* 함수 정의는 반드시 앞에 반환형이 와야 한다.
+* 인자리스트에서 변수명은 생략이 가능하다.
+* 함수 body가 없다면 null을 반환하는 빈 메소드이다.
+```wrd
+void foo(int a, int b)
+    retfun
+void foo1(int a, int b) // 위와 동일하다.
+void foo2(int, int) // 위와 동일하다.
+
+foo(5, 6) // 함수 호출이다.
+```
+
+
+
+
+
+## [v] const correctness라고 한다.
+* C++은 객체를 const 하는 방법과 refer에 const를 붙이는 방법 모두 제공한다.
+* java는 객체를 const 비스무리하게 하는 방법은 제공하지만 refer에 const를 붙이는 방법은 없다.
+* swift는 refer를 const화하는 방법만 'let' 이라는 키워드로 제공한다.
+  객체 자체를 immutable로 하고 싶다면 처음부터 struct로 만들어야 한다.
+  let으로 만든 참조자의 값을 var로 assign 하는 것도 된다. 왜냐하면 객체를 const 하는게 아니라 참조자를 const하는 거니까.
+  ```swift
+  class Foo {
+    var age = 20
+  }
+  let f = Foo()
+  f.age = 5 // ok.
+  var f1 = f // ok.
+  ```
+
+* javascript도 const라는 키워드로 refer만 const를 하고 있다.
+
+### [v] 1안: const 빼자.
+C++ 방식이라면 유용하겠지만, 대부분의 언어는 그렇게 까지 하지는 않는다. 그리고 refer만 const가 된다고 해도 크게 유용한가는 좀 의문스럽다.
+
+* 단, immutable object에 대한 const는 의미가 있다.
+  이를 테면 int를 const하게 되면 c++의 const와 같은 효과가 난다. 
+
+* 키워드가 줄어드는 효과는 있다.
+
+### [x] 2안: const는 refer만 된다. (immutable객체의 경우 완전 const화) 변수명에 붙인다.
+```wrd
+def Animal
+    DEFAULT_NAME := "default"
+
+    str getName(): defaultName  // 반환형은 변수를 만드는 것이 아니기 때문에 const를 붙일 수 없다.
+    _$#age := 1 // 최악의 경우 특문 3개가 붙는다.
+    int getAge(): age
+
+    int _foo() // 메소드에도 #는 붙이지 않는다.
+
+def app
+    Animal[] #anims1 // anims2가 초기화가 되어야 anims1이 초기화가 가능한경우, 참 난감하다.
+    Animal[] #anims2
+    #beav := Beaver anims1[0]
+    #anim := anims2[0]
+
+    beav.walk() // ok
+    beav.set("good") // ok
+    anim = null // err
+```
+
+* 이 경우 const는 생성 이후 1번은 set이 가능해야 한다는 규칙등이 들어가야 한다.
+  매끄럽지 않은 문법이다.
+
+### [v] 1안으로 결정 이유
+* C++ 수준의 const라면 상당히 유용할 수 있다. 하지만 배열이나 참조자, 객체 같은 개념과 같이 섞이면
+  그 문법이 처참한 수준으로 복잡해진다. 단적인 예를 들어준다.
+    ```wrd
+    #Animal#[#str] #getArray(#str nameOfArray) // 쉽게 이해가 가는가?
+
+    // 해설하면 이렇다:
+    #int // const int
+    #Animal[] // 원소가 const 인 배열 타입
+    Animal#[] // 배열이 const인 타입
+    #Animal#[] // 둘다.
+    #Animal#[#str] // 원소가 const Animal이며 키가 const str인 const 배열타입.
+
+    void #foo() // const this를 표현하기 위해서 메소드에도 const.
+
+    // 결론: 인자로 const str을 받으며 `원소가 const Animal이고 key가 const str인 const 배열'을
+    // 반환하는 const 메소드.
+    ```
+
+* 그래서인지 많은 언어들에서는, 이정도로는 지원하지않고 refer만 const하는 수준까지만 지원한다.
+  그러나 이럴 경우 C++에 비해서 그렇게 유용하지 않다.
+* 실무에서 자바로 개발한 경험에 비추어 볼때 가장 많이 constness를 쓴 것은 final static으로 
+  상수를 정의한 것이다.
+  ```java
+    class My {
+        public final static DEFAULT_NAME = "wow";
+    }
+  ```
+
+* 그러나 이 기능만을 위해서 키워드를 넣는 것은 말이 안된다.
+  오히려 상수화 자체를 없애버리는 대신에 const 키워드를 제거하는게 득이 된다고 봤다.
+    * 그 이유로, DEFAULT_NAME을 본 순간 이게 const라는 건 누구나 안다. 정상적인 개발자라면.
+      그리고 거기에 새로운 값을 넣으려는 사람도 없다.
+      ```java
+        My.DEFAULT_NAME = "have you ever seen a person who tried this?";
+      ```
+* 그리고 const가 빠지면 특문의 조합이 최대 2개까지만 나오므로 그렇게 부담이 되지 않는다.
+  3개가 붙으면 좀 너무하다 싶어지기 때문이다.
+    ```wrd
+    def my
+        _$#age := 5 // private static const int age = 5;
+    ```
+
+* 그래서 상수로 쓰고 싶은 것은 대문자 스네이크로 표현시키고, const 기능은 지원하지 않는 것으로 했다.
+
+
+
+
+
+
+
 
 
 
