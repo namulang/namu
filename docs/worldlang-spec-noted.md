@@ -9752,13 +9752,15 @@ def app
 
 # 프로그램 구조
 
-## 엔트리포인트의 알고리즘
+## [x] 기존안
+
+### 엔트리포인트의 알고리즘
 
 - Application라는 클래스가 모든 프로그램에 반드시 있어야 한다. 이 함수의 main() 함수는 프로그램이 실행되었을때 딱 1번 실행된다.
 
 
 
-## 엔트리포인트 --> Main.main
+### [x] 엔트리포인트 --> Main.main
 
 - 1안 Application이라는 클래스에서 상속받은 물건이 1개는 있어야 한다.
   - 어떤 클래스를 돌려야 하는지는 월드가 상속을 따져가면서 판단해야한다.
@@ -9767,7 +9769,95 @@ def app
 
 
 
-## res main() 과 res main(str[] args) 를 모두 지원하자
+### [x] res main() 과 res main(str[] args) 를 모두 지원하자
+
+
+## [v] 문제가 무엇인가?
+* worldlang에서 stmt라는 건 없고, 모든 것은 expr이다.
+* 변수를 정의하는 것, 메소드를 정의하는 것 전부 expr이다.
+* 그러므로 .wrd 파일에서 바로 expr 쓸 수 있는 것은 당연한 것이다.
+
+```wrd
+// test.wrd 파일:
+def A // 이것도 expr이다.
+    age := 3
+
+globalValue := "wow" // 이것도 expr이다.
+
+// [v] 그러면 이것도 올 수 있는가? --> 예.
+for c in globalValue // 참고로, c는 변수를 정의한 것이다.
+                     // 앞서 c라는 변수가 있었다면 컴파일 에러가 된다.
+    c.out(c)
+```
+
+### [v] 구현은?
+* 만약 expr로 취급하지 않는 버전을 구현할 수 있다면, expr로 취급하는 코드도 구현할 수 있어야 한다.
+
+#### [v] 1안: 2PASS
+* 1PASS: 파서에서 넘어온 토큰이 타입 정의와 관련된 부분이면 origin node를 만들어둔다.
+  메소드 body, 초기식, expr 과 같은 타입과 관련되지 않은 부분들은 AST 상태로만 만들어서 보존한다.
+* 2PASS: AST를 탐색하면서 이미 만들어진 origin node 배열을 참고삼아 코드를 완성한다.
+
+* [?]어떻게 AST를 구성되며, 만들어진 타입과 이 AST를 어떻게 바인딩 할 것인지등은 나중에 결정하자.
+
+## 컴파일러는 엔트리 포인트로 해당 프로젝트의 app의 파생 객체를 찾는다.
+```wrd
+// worldlang의 predefined 객체: app
+def app
+    // 앱 이름
+    // 앱 속성
+    // 디버그 속성
+    // 컴파일러 속성 등등
+    void main(str[] args)
+
+
+// 개발자는 app을 상속한 origin node를 하나 만들어둔다:
+def person
+    @ctor(int newAge): age = newAge
+    age := def() from 0
+        _set()=>// person 객체내에서는 age에 변수를 적용할 수 있다.
+
+people := [person(0), person(1), person(2)]
+for p in people
+    out sum :+= p.age
+// sum := for p in people: sum += p.age 와 같다. for은 마지막 수행 결과를 그대로 반환한다.
+c.out("sum=$sum")
+
+def myApp from app
+    void main(str[] args)
+        if args.len < 1: retfun rOutOfBoundary
+        c.out("sum of people($people.len)=$sum")
+```
+* 프로그램이 시작되면 먼저 각 파일의 line by line으로 실행한다.
+    * 어떠한 파일이 먼저 시작될 것인지는 spec상으로 보장하지 않는다.
+* 그리고 나서 app의 상속 origin 객체를 찾아 main을 실행한다.
+    * main은 오직 1종류 void main(str[] args) 만 제공한다.
+    * main의 결과 반환값은 void 이다. 그러나 exception이 반환된 경우 OS에 -1을 반환한다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
