@@ -10333,6 +10333,186 @@ def app
 
 
 
+## [v] 그룹은 제거되었다 --> 타입리스트
+* python은 그룹과 배열은 비슷한 컨테이너이지만 그룹은 const 화 된걸 지칭했다.
+* world 기존안에서는 그룹과 배열은 같은 거였다.
+  하지만 다음의 예제를 보고는 불가능하다는걸 알았다.
+```wrd
+// 기존안에서는 배열을 괄호로 표현했다
+(1,2,3,4,5) // 1..5와 같다.
+arr := (1,2,3,4,5) // ok
+val1 := 1
+val2 := 2
+arr2 := (val1, val2) // ok
+(elem1, elem2).len == 2 // ok
+
+(elem1, elem2) := (val1, val2) // ?
+```
+* (elem1, elem2)만 보았을때 컴파일러는 당연히 이걸 배열로 만든다.
+  근데 이 배열이 lhs에 있을때만 multi 할당연산/정의으로 보는 것이다.
+* [?] 이게 맞는가? 다른 방법은 없는가?
+
+### [x] 1안 어떻게든 맞춰본다.
+```wrd
+// 맞춰볼려고 해도 위의 배열관점에서 보면 문법은 잘못된 것이다.
+(elem1, elem2) := (1, 2)
+// 이건 뭐하고 같냐면,
+
+arr := (elem1, elem2)
+(1,2) := arr
+```
+* (a,b)를 배열로 보는 순간 이렇게 말이 안되는 현상이 나온다.
+* (a,b)가 왼쪽에 있을때만 배열이 아니라 multi 할당으로 볼 수 도 있을 것이다.
+  근데 그럴바에야 다른 기호를 써서 명료하게 하는게 훨씬 낫다.
+
+### [x] 2안 다른 기호를 사용한다.
+* 멀티 할당은 (, )를. 배열은 [, ]를 사용한다.
+
+```
+def base
+    _age := 0
+    @ctor(int age): this.age = age
+    int say(): c.out("base"): age
+
+def derive1 from base
+    int say(): c.out("derive1"): age
+
+def derive2 from base
+    int say(): c.out("derive2"): age
+    void foo()
+
+// 문법:
+// * 2가지 형태로 지원된다. grp의 정의와 사용
+//  * 정의는 괄호 안에 인자의 수를 적고 정의연산 반대편에 매칭되는 인자의 수를 마찬가지로
+//    괄호안에 적는다.
+//  * 각 인자는 별도로 생성이 된다.
+// * 인자 목록이 2개 이상이여야 한다. 1개면 그룹이 아니다.
+//  * (a)는 우선순위를 위한 () 인지 구분이 안가며,
+//    1개짜리는 의미가 없다.
+// * grp은 메소드를 가지지 않는다. expr에 grp이 있으면 for문을 돌린것처럼 동작한다.
+// * grp의 expr의 결과는 grp이 나온다.
+// * 인자의 목록의 공통 base 타입과 인자의 갯수로 grp은 정해진다.
+//   타입이 같아도 인자의 갯수가 다르면 다른 grp 타입이다.
+// * group은 재귀적으로 정의될 수 없다. 너무 복잡해진다.
+//   마찬가지 이유때문에 함수의 인자로 넘길수도 없다.
+// * group은 배열로 assign 할 수 있다.
+// * group은 상수적인 배열의 특성을 갖는다. 동적으로 size가 변하거나 정의할 수 없다.
+
+(1,2,3) // ok
+
+(a, b, c) := (1, 2, 3)
+a == 1 // ok
+
+grp := (a, b, c) // ok. grp는 int의 3개 원소를 가진 group
+grp1 := (a, b, c, 4) // ok.
+//grp = grp1 // err. 서로 다른 group타입이다.
+
+
+(res1, res2, res3) := grp // ok.
+res1 == a // ok
+grp.say() // ok
+(res1, res2, res3) = grp.say() // ok
+
+
+// [x] grp의 특정 원소만 접근하고 싶다면? 그런데 grp이 배열 타입이라면?
+// [x] 메소드가 값을 2개를 반환하는 경우, 호출자는 반드시 2개의 인자를 모두 적어야 한다.
+// 쓰지도 않을 값인데 인자를 적어야 하는건 조금 귀찮을 것이다. 원하는 output 원소만
+// 받을 수 있는 방법은?
+// [x] grp이 많이 쓰일 수록 반복문이 더 많아지는 셈이된다.
+grp.say();
+.....
+grp.say();
+grp.say();
+
+// 위의 것은 사실,
+for e in grp
+    e.say();
+    ...
+    e.say();
+    e.say();
+
+
+
+
+// 활용:
+//grp.len == 3 // err.
+//grp[0] == a // err.
+//grp.add(x) // err.
+
+grp.say()
+//grp.foo() // grp는 base다.
+
+arr := node[] grp
+arr.len == 2
+arr[0] == a
+//arr.print() // err.
+nodes.len
+
+grp := (base, derive1, derive2) // grp는 base의 group타입.
+
+// ,로 구분한다:
+1,2,3 // ok
+a, b, c := 1,2,3
+
+int, float, char foo(int i, float f, char c)
+    ret i, f, c
+a, b, c := foo()
+
+a1 := int
+b1 := float
+c1 := char
+a1, b1, c1 := foo(0, 0, 0)
+
+
+a := int, b := float // ok
+
+def A
+    _real := 0
+    age := prop from int
+        @get(): real
+        @set(int new): real = new
+    int, A foo(int age): A(age), age
+    //(int, float), char foo(int i, float f, char c) // 재귀 안됨
+        //ret ((i + c, c), i+f)
+    int, float, char foo(int i, float f, char c): ret i+c, c, i+f
+
+    // 배열로 보내면, caller가 batch 작업을 할 수 있음.
+    node[] foo(int i, float f, char c): ret [i, f, c]
+```
+
+* group은 아직 실사용하기에는 구멍이 너무 많다.
+
+* 타입리스트은 재귀 안됨
+
+```wrd
+ai, af, ac := foo(1,2,3) // ok
+arr := [a1, af, ac] // ok
+
+[a1, af, ac] := foo(1,2,3) // x. 좌변이 객체1개.
+
+arr := [foo(1,2,3)] // 지원 가능할 듯.
+```
+
+### [v] 3안 타입리스트을 배열로 캐스팅 문법
+```wrd
+a1, a2, a3 := foo() // ok. a1는 int, a2는 float, a3는 char
+arr := [a1, a2, a3] // ok. arr은 float[]으로 유도됨
+
+// 위의 2줄을 하나로 줄인다면,
+arr := float[] foo() // ok. 그러나 사용자는 float으로 유도해야 한다는 걸 알고 있어야 함.
+```
+
+#### 타입리스트도 하나의 객체다.
+```wrd
+foo().len == 3
+types := foo()
+types.r0 // int
+types.r1 // float
+types.r2 // char
+// for type in types // 에러. types는 1개의 객체이지, 배열이 아니다. 순회할 수 없다.
+// 타입이 제각각 다르기 때문이다.
+
+```
 
 
 
