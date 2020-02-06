@@ -10519,6 +10519,94 @@ types.r2 // char
 
 
 
+## [v] 컨테이너 간 캐스팅
+* 오직 2종류의 컨테이너만 지원한다.
+```wrd
+int[str] // str이 key이며 value가 int인 맵.
+int[] // int의 배열 key. key가 int인 맵과 유사하다는 걸 알 수 있다.
+
+int[]! // int의 배열인 타입의 null.
+
+[1, 2, 3] // int의 배열
+[2.5, 3.5, 4.5] // float의 배열
+[] // 경로를 내보낸다. 왜냐하면 이렇게 하면 node의 배열로 인지한다.
+// node 타입으로 인지할때에는 개발자가 명시적으로 node임을 적지 않을 경우 경고가 나간다.
+
+// [ ] 은 타입을 유추한다.
+arr := [1, 3.5, 4] // int -> float은 묵시적 변환이 된다. float -> int은 묵시적 변환이 안된다.
+// 결과적으로 float[]과 같다.
+
+arr := int[] // int[] origin객체를 가리킨다.
+
+arr := int[]() // int인 배열을 만든다.
+
+arr := int[] [3.5] // float[]이 int[]로 캐스팅 된다.
+// 배열객체는 다른 배열객체로 캐스팅이 요청 받았을 경우 배열이 들고 있는 trait T
+// 가 해당 캐스팅을 허용할 수 있는가로 결정한다.
+// 명시적 캐스팅 float -> int는 허용된다. 고로 이 문법은 올바르다.
+// array 객체는 캐스팅시, array객체가 들고 있는 type을 먼저 int로 변경하고,
+// 원소들을 일괄적으로 순회하면서 float -> int로 캐스팅한다.
+
+def base
+def derive from base
+
+baseArr := [base derive()]
+arr := derive[] baseArr // base[]가 derive[]로 캐스팅시도한다.
+// base.to<derive>()를 묻는 것이며, 명시적 캐스팅은 기본적으로 공변관계인 경우
+// 캐스팅을 무조건 허용한다. 그러므로 올바른 문법이다.
+// 이제 base[]객체는 캐스팅이 시작되면 먼저 자기가 들고 있는 type 객체를 derive로 고친다.
+// 그리고 원소를 모두 순회하면서  derive()를 derive로 캐스팅시도한다.
+// derive()는 자신이 그대로 나오면 되므로 별도의 immutable처럼 객체가 생성되지 않고 자신을 그대로
+// 내보낸다. 결과 arr은 derive[]이며,
+arr[0] === baseArr[0] // 가 옳다.
+// 이는 base가 mutable 객체이므로 개발자는 이런 결과가 될것이라는 걸 쉽게 예측할 수 있다.
+
+arr := int[] [] // node[] 배열이 int[]으로 캐스팅 된다. node로 타입이 유도되었으므로 경고가 나간다.
+```
+
+## [v] 배열의 정의문법 심화
+```wrd
+int[][] // 띄어쓰기가 없으므로 int[] [] 와 구분한다.
+// 이것은 int[] 를 원소로 갖는 [] 라는 뜻이다.
+arr := [int[](), [1, 2]] // 2차원 배열
+arr[0].len == 0 // ok
+arr[1][1] == 2 // ok
+
+// 다음의 코드는 무슨 뜻인가?
+int[][str] foo(int[] arr, base[str] cache], str key)
+int[][str][] getSome(foo lambda, base[str] cache), str key)
+    got := int[][str][]()
+    for n in 1..10
+        got.add(foo(arr, cache, key))
+    ret got
+
+got := getSome(....)
+for e in got // e는 map
+    @warn(null) // 이게 없으면 for에서 nullexception이 발생할 수 있다.
+    for n in e["key1"] // n은 int[]이다.
+        out sum :+= n // out은 메소드에 변수가 놓여지게 한다.
+
+c.out("sum=$sum")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
