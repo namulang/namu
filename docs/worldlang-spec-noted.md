@@ -10618,50 +10618,139 @@ c.out("sum=$sum")
 
 ## 시퀸스
 
-### Sequence 기본
+### [x] 1안 초안
+#### Sequence 기본
 
 - 기호 {} 를 사용한다.
 - Sequence = {2*n+1 | 3...10}
 - {n|3...10} == {3...10}
 - {1...5} == {5}
 
-### 새로운 Sequence 문법
+#### [x] 새로운 Sequence 문법
+```wrd
+a = {"name": 1, "aaa": 2}
+seq1 = seq(1..2, n->2*n)
+    //    def seq
+    //        seq(seq org, ?(int) l)
+    //        getn(int n)
+    //            if seq.at()
+    //                l
+seq1.start, seq1.end
+for n = seq1.in()
+    c.out("$n, ")
+``
+
+
+### [v] 2안 .., -> 을 사용한다.
+#### 시퀸스 필요성
+* 배열과 닮은 컨테이너. 그러나 expr에 의해 일정한 값이 계산되어 나온다.
+* 변수를 생성하는 팩토리와 닮았다.
+* 값을 가공해서 반환해야 하므로 가공하는 함수f 를 개발자들이 쉽게 정의할 수 있어야 한다.
+  그리고 그럴때 쓰는 게 람다다.
+* 따라서 문법은 람다를 일부 결합한 듯한 모양새를 갖추되 컴파일러는 절대로 시퀸스와
+  일반 람다를 모호하게 두어서는 안된다.
+
+
+#### 정의 문법
+
+  <시작값>..<끝값> [-> <stmts>]
+
+```wrd
+seq := 1..3 // 상수화된 [1, 2, 3]
+seq.len == 3
+seq[1] == 2
+//seq.add(4) err. 상수다. seq는 add라는 메소드가 없다.
+
+seq2 := 3..5 -> n*2 + " hello!"
+seq2.len // 3
+seq2[2] // == (5*2 + " hello!") == "10 hello!"
+```
+
+#### 시퀸스의 타입
+##### 1안
+* 모든 것은 타입이 지정되어야 한다. 그래야 반환형에 적을 수 있다.
+* 배열과 비슷하지만(read), 분명히 다르다(write) 그러므로 타입도 다르게 표현해야 한다.
+```wrd
+intSeq := int.. // 비어있는 int seq의 origin객체를 가리킨다.
+intSeq1 := int..() // 비어있는 int seq의 복사 객체를 가리킨다. 둘다 의미 없다.
+intSeq2 := 2..3
+intSeq1 = intSeq2 // ok
+
+for n in intSeq1
+    out sum :+= n
+n == 5 // ok
+
+int[] getCache(int arg1, int arg2)
+    got := int[]()
+    got.add(arg1, arg2)
+    ret got
+
+int.. getCache1(int arg1, int arg2)
+    ret arg1..arg2
+```
+
+
+##### 2안: const 인 배열
+* 사용법이 const 된 배열과 매우 흡사하다.
+* const를 제한적으로 허용해주고 시퀸스를 배열로 대체한다.
+```wrd
+intSeq := #int[]
+intSeq1 := #int[]()
+intSeq2 := 2..3 // #int[] 와 같다.
+// 여기서 보면 알겠지만 변수를 상수화 시키려면 타입에 붙어야 한다.
+// 모든 시퀸스는 상수화가 되어야 한다. 하지만 보통 const는 참조자에 붙인다.
+// 따라서 const문법은 참조자에, 타입에 2종류가 된다.
+
+intSeq3 := 5
+intSeq3 := #5
+def base1
+    age := 0
+def #base2
+    age := 0
+b1 := #base1()
+//b1.age = 5// b1은 const다.
+b2 := base2() // base2는 const가 맞다. 그러나 복제객체는 const가 아니지.
+b2.age = 5 // ok
+
+#str #foo(#int age, #str name) // immutable을 반환할때 const 를 붙이는 것은 의미가없다.
+    // const를 쓰게 되면 이렇게 const 메소드도 넣을 수 있어야 한다.
+    // age = 5 에러.
+    ret str age // ok. 이때 이미 새로운 객체 str이 발생한다. str은 immutable이니까.
+name := "name"
+copied := foo(b2.age, name)
+name = "oh?"
+name != copied // true
 
 
 
-/*    #Animal:#str [] 캐스팅:
-                핵심:
-                Q. map은 정말로 배열을 대체할 수 있는가.
-                Q. 배열이 map으로 캐스팅이 될 수 있는가.
-                    문법적으로는 같게 할 수 있다.
-                    그러나 최적화를 생각해보면 배열은 index를 기준으로 데이터가 밀집해
-                    있어야 한다. 그래야 인덱싱이 빠르다. 맵은 데이터가 산발적으로 흩어질 수
-                    밖에 없다. 둘은 별도로 가져가는게 좋을 것이다.
+#base2 foo(#int age, #base2 b) // mutable인 base2는 const로 반환할지 선택이 가능하다.
+    // age = 5 // 에러.
+    ret b // ok.
+b2 := base2()
+cBase2 := foo(b2.age, b2) // str은 immutable. 그러니 #str -> str로 객체가 복제된 것이다.
+b2 === cBase2
+
+b2.age = 5 // ok
+//cBase2.age = 5 // 에러
+// 보다시피 const는 불완전하기 때문에 온전히 immutable을 보장하지는 못한다.
+
+cBase2 = base2() // ok
+//cBase2.age = 5 // 에러. cBase2는 const base2 타입이기 때문이다.
+// 여기서 world의 const는 참조자에게 붙는다는 것을 알 수 있다.
+// (immutable객체도 항상 참조자가 물고 있다. 그러나 immutable객체는 매 할당마다 새로운
+// 객체가 할당되기 때문에 그 차이를 모르는 것이다.)
 
 
-                    1안 { : } 사용
-                        a = {"name": 1, "aaa": 2}
-                        seq1 = seq(1..2, n->2*n)
-                            //    def seq
-                            //        seq(seq org, ?(int) l)
-                            //        getn(int n)
-                            //            if seq.at()
-                            //                l
-                        seq1.start, seq1.end
-                        for n = seq1.in()
-                            c.out("$n, ")
-                        2, 4
+b := #base2
+i := #int
+i()
+b() // 생성자는 별다른 명세가 없어도 const 메소드다.
+```
 
+arr := int[] seq // ok. int[]은 seq 로부터의 캐스팅을 지원해야 한다.
+// seq는 int.. 이므로 
 
-
-​                흐름:
-​                1. 우측부터rightmost 파싱된다.
-​                2. [] 는 node:node 타입이다.
-​        */
-
-
-
-
+```
 
 
 
