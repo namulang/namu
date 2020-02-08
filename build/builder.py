@@ -295,7 +295,7 @@ def checkDependencies():
     global python3
     print("")
     print ("checking dependencies...", end=" ")
-    simple_depencies = ["git", "cmake", "java", "g++"]
+    simple_depencies = ["git", "cmake", "java", "g++", "doxygen"]
 
     for e in simple_depencies:
         if not shutil.which(e):
