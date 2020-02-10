@@ -1,17 +1,17 @@
 echo build...
-flex -d flex.l
+flex -d wrdc.l
 if [ $? -eq 0 ]; then
-    bison bison.cpp --defines=bison.h -o bison.tab.cpp --debug
+    bison wrdcBison.cpp --defines=wrdcBison.h -o wrdcBison.tab.cpp --debug
     if [ $? -eq 0 ]; then
-        g++ bison.tab.cpp lex.yy.c main.cpp -o wrdcd -g -DYYDEBUG=1
+        g++ wrdcBison.tab.cpp lex.yy.c main.cpp -o wrdcd -g -DYYDEBUG=1
     fi
 fi
 
-flex flex.l
+flex wrdc.l
 if [ $? -eq 0 ]; then
-    bison bison.cpp --defines=bison.h -o bison.tab.cpp --debug
+    bison wrdcBison.cpp --defines=wrdcBison.h -o wrdcBison.tab.cpp --debug
     if [ $? -eq 0 ]; then
-        g++ bison.tab.cpp lex.yy.c main.cpp -o wrdc -g -DYYDEBUG=1
+        g++ wrdcBison.tab.cpp lex.yy.c main.cpp -o wrdc -g
         if [ $? -eq 0 ]; then
             echo done. running...
             ./wrdcd -d hello.wrd

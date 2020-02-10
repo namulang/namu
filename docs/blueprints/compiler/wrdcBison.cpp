@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <string>
 #include <map>
-#include "node.hpp"
+#include <vector>
+#include "wrdcNode.hpp"
+using namespace std;
 
 int yylex();
 extern int yylineno;
@@ -28,21 +30,22 @@ void yyerror(const char* s)
     char charVal;
     const char* strVal;
     Node* node;
+    void* nodes;
 }
 
 %verbose
 %start tfile
 
-%token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tme tgot tnode tnull tsuper tout tin
-
+%token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tme tgot tnode tnull tsuper tout tin tindent tdedent
 %token <intVal> tinteger teof
 %token <floatVal> tfloat
 %token <boolVal> tbool
 %token <charVal> tchar
 %token <strVal> tstr
 %token <strVal> tidentifier tfuncname
-%token teol topDefAssign topPlusAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign
-%type <node> tstmt tlhsexpr/*only lhs*/ texpr trhsexpr tcast targs ttlist tblock tfile tfunc tvalue tassign tdefAssign tplusAssign tminusAssign tsquareAssign tdivideAssign tmodAssign tpowAssign
+%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign
+%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast targs ttlist tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf
+%type <nodes> telifBlocks
 
 %printer { fprintf(yyo, "%s[%d]", wrd::getName($$), $$); } tinteger;
 %printer { fprintf(yyo, "%s", $$); } tidentifier;
@@ -59,7 +62,48 @@ void yyerror(const char* s)
 
 %%
 
-tvalue      : tinteger {
+telseBlock  : teol telse teol tindentBlock {
+                $$ = $4;
+            }
+
+telifBlock  : teol telif tbranch {
+                $$ = $3;
+            }
+
+telifBlocks : telifBlock {
+                vector<Branch*>* ret = new vector<Branch*>;
+                ret->push_back((Branch*) $1);
+                $$ = ret;
+            }
+            | telifBlocks telifBlock {
+                vector<Branch*>* blk = (vector<Branch*>*) $1;
+                blk->push_back((Branch*) $2);
+                $$ = $1;
+            }
+
+tbranch     : trhsexpr teol tindentBlock {
+                $$ = new Branch($1, (Container*) $3);
+            }
+
+termIf      : tif tbranch telifBlocks telseBlock {
+                $$ = new If((Branch*) $2, (vector<Branch*>*) $3, (Block*) $4);
+            }
+            | tif tbranch telifBlocks {
+                $$ = new If((Branch*) $2, (vector<Branch*>*) $3, 0);
+            }
+            | tif tbranch telseBlock {
+                $$ = new If((Branch*) $2, (Block*) $3);
+            }
+            | tif tbranch {
+                $$ = new If((Branch*) $2);
+            }
+            ;
+
+// trhsexpr과 tlhsexpr:
+//  tlhsexpr은 할당이 가능한 변수. lvalue.
+//  trhsexpr은 값을 나타내는 모든 표현식.
+//  따라서 범주상으로 보았을때 trhsexpr 은 tlhsexpr을 포함한다. 더 크다는 얘기다.
+trhsexpr    : tinteger {
                 $$ = new Int($1);
             }
             | tbool {
@@ -74,17 +118,13 @@ tvalue      : tinteger {
             | tchar {
                 $$ = new Char($1);
             }
-            | tidentifier {
-                $$ = new Id($1);
-            }
-            ;
-
-trhsexpr    : tvalue {
-                $$ = $1;
-            }
             | ttlist {
                 $$ = $1;
             }
+            | tlhsexpr {
+                $$ = $1;
+            }
+
             | trhsexpr '+' trhsexpr {
                 $$ = new Plus($1, $3);
             }
@@ -103,84 +143,77 @@ trhsexpr    : tvalue {
             | trhsexpr '^' trhsexpr {
                 $$ = new Power($1, $3);
             }
+            | trhsexpr '<' trhsexpr {
+                $$ = new Less($1, $3);
+            }
+            | trhsexpr topLessEqual trhsexpr {
+                $$ = new LessEqual($1, $3);
+            }
+            | trhsexpr '>' trhsexpr {
+                $$ = new More($1, $3);
+            }
+            | trhsexpr topMoreEqual trhsexpr {
+                $$ = new MoreEqual($1, $3);
+            }
+            | trhsexpr topEqual trhsexpr {
+                $$ = new Equal($1, $3);
+            }
+            | trhsexpr topRefEqual trhsexpr {
+                $$ = new RefEqual($1, $3);
+            }
+            | trhsexpr topNotEqual trhsexpr {
+                $$ = new NotEqual($1, $3);
+            }
+            | trhsexpr topNotRefEqual trhsexpr {
+                $$ = new NotRefEqual($1, $3);
+            }
+
             | tcast { $$ = $1; }
-            | tfor tidentifier tin texpr tblock {
-                $$ = new For(new Id($2), $4, (Container*) $5);
+            | tfor tidentifier tin trhsexpr teol tindentBlock {
+                $$ = new For(new Id($2), $4, (Container*) $6);
             }
+            | termIf { $$ = $1; }
             | tfunc { $$ = $1; }
-            | tassign { $$ = $1; }
             ;
 
-tlhsexpr    : tdefAssign { $$ = $1; }
-            | tplusAssign { $$ = $1; }
-            | tminusAssign { $$ = $1; }
-            | tsquareAssign { $$ = $1; }
-            | tdivideAssign { $$ = $1; }
-            | tmodAssign { $$ = $1; }
-            | tpowAssign { $$ = $1; }
-            //| tidentifier tlist {}
-            ;
-
-texpr       : trhsexpr { $$ = $1; }
-            | tlhsexpr { $$ = $1; }
-
-tassign     : tidentifier '=' texpr {
-                $$ = new Assign(new Id($1), $3);
+tlhsexpr    : tidentifier { $$ = new Id($1); }
+            | tlhsexpr '=' trhsexpr {
+                $$ = new Assign($1, $3);
+            }
+            | tlhsexpr topDefAssign trhsexpr {
+                $$ = new DefAssign($1, $3);
+            }
+            | tlhsexpr topPlusAssign trhsexpr {
+                $$ = new PlusAssign($1, $3);
+            }
+            | tlhsexpr topMinusAssign trhsexpr {
+                $$ = new MinusAssign($1, $3);
+            }
+            | tlhsexpr topSquareAssign trhsexpr {
+                $$ = new SquareAssign($1, $3);
+            }
+            | tlhsexpr topDivideAssign trhsexpr {
+                $$ = new DivideAssign($1, $3);
+            }
+            | tlhsexpr topModAssign trhsexpr {
+                $$ = new ModulerAssign($1, $3);
+            }
+            | tlhsexpr topPowAssign trhsexpr {
+                $$ = new PowAssign($1, $3);
             }
             ;
 
-tdefAssign  : tidentifier topDefAssign texpr {
-                $$ = new DefAssign(new Id($1), $3);
-            }
-            ;
-
-tplusAssign : tidentifier topPlusAssign texpr {
-                $$ = new PlusAssign(new Id($1), $3);
-            }
-            ;
-
-tminusAssign : tidentifier topMinusAssign texpr {
-                $$ = new MinusAssign(new Id($1), $3);
-            }
-            ;
-
-tsquareAssign : tidentifier topSquareAssign texpr {
-                $$ = new SquareAssign(new Id($1), $3);
-            }
-            ;
-
-tdivideAssign : tidentifier topDivideAssign texpr {
-                $$ = new DivideAssign(new Id($1), $3);
-            }
-            ;
-
-tmodAssign : tidentifier topModAssign texpr {
-                $$ = new ModulerAssign(new Id($1), $3);
-            }
-            ;
-
-tpowAssign : tidentifier topPowAssign texpr {
-                $$ = new PowAssign(new Id($1), $3);
-            }
-            ;
-
-tcast       : tidentifier texpr {
+tcast       : tidentifier trhsexpr {
                 $$ = new Cast(new Id($1), $2);
             }
             ;
 
-/*tarr        : topen_bracket targs tclose_bracket { if (IS_DEBUG) cout << "[]"; }
-             | topen_bracket tclose_bracket { if (IS_DEBUG) cout << "[]"; }
-            ;*/
-
-
-
-targs       : texpr {
+targs       : trhsexpr {
                 Args* ret = new Args();
                 ret->add($1);
                 $$ = ret;
             }
-            | targs ',' texpr {
+            | targs ',' trhsexpr {
                 Args* ret = (Args*) $1;
                 ret->add($3);
                 $$ = ret;
@@ -200,16 +233,15 @@ tfunc       : tfuncname ttlist {
             }
             ;
 
-tstmt       : texpr teol {
+tstmt       : trhsexpr teol {
                 $$ = new Stmt($1);
             }
             | teol {
                 $$ = new Stmt(new Str(""));
             }
-            | texpr teof {
+            | trhsexpr teof {
                 $$ = new Stmt($1);
             }
-
             ;
 
 tblock      : tstmt {
@@ -225,6 +257,10 @@ tblock      : tstmt {
                 $$ = ret;
             }
             ;
+
+tindentBlock: tindent tblock tdedent {
+                $$ = $2;
+            }
 
 tfile       : tblock teof {
                 Block* blk = (Block*) $1;
