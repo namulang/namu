@@ -49,17 +49,28 @@ class Node {
     }
     Node* l() { return get("l"); }
     Node* r() { return get("r"); }
+    string print() { return print(0); }
+    virtual string print(int lv) {
+        return tab(lv) + _onPrint(lv);
+    }
+    virtual string _onPrint(int lv) { return ""; }
 
-    virtual string _onPrintIn() { return ""; }
-    virtual string _onPrintOut() { return ""; }
-    virtual string _onPrint() { return ""; }
-    string print() {
-        return _onPrintIn() + _onPrint() + _onPrintOut();
+    static string clr(Color c) {
+        return string("\033[") + to_string(c) + "m";
     }
 
-    static string clr(Color c)
-    {
-        return string("\033[") + to_string(c) + "m";
+    string tab(int cnt) {
+        cout << name() << " -> tab(" << cnt << ")\n";
+        static string unit;
+        if (unit.size() <= 0) {
+            for (int n=0; n < 4/*TAB_WIDTH*/ ;n++)
+                unit += " ";
+        }
+
+        string ret;
+        for (int n=0; n < cnt ;n++)
+            ret += unit;
+        return ret;
     }
 
     map<string, Node*> nodes;
@@ -68,7 +79,7 @@ class Node {
 class Value : public Node {
 public:
     Value(string value) : _value(value) {}
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         return clr(NUMBER) + _value;
     }
 
@@ -79,7 +90,7 @@ class Id : public Value {
 public:
     Id(string name) : Value(name) {}
     virtual string name() { return "id"; }
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         return clr(BLUE) + _value;
     }
 };
@@ -88,7 +99,7 @@ class Origin : public Value {
 public:
     Origin(string name) : Value(name) {}
     virtual string name() { return "origin"; }
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         return clr(TYPE) + _value;
     }
 };
@@ -97,7 +108,7 @@ class Keyword : public Value {
 public:
     Keyword(string name) : Value(name) {}
     virtual string name() { return "keyword"; }
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         return clr(KEYWORD) + _value;
     }
 };
@@ -121,7 +132,7 @@ class Bool : public Value {
 public:
     Bool(bool value) : Value(to_string(value)) {}
     virtual string name() { return "bool"; }
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         return clr(KEYWORD) + _value;
     }
 };
@@ -134,45 +145,77 @@ class Str : public Value {
 public:
     Str(string value) : Value(value) {}
     virtual string name() { return "str"; }
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         return clr(STRING) + _value;
     }
 };
 
 class Op2 : public Node {
 public:
-    Op2(char symbol, Node* l, Node* r) : Node(l, r), _symbol(symbol) {}
-    virtual string name() { return to_string(_symbol); }
-    virtual string _onPrint() {
+    Op2(const char* symbol, Node* l, Node* r) : Node(l, r), _symbol(symbol) {}
+    virtual string name() { return _symbol; }
+    virtual string _onPrint(int lv) {
         return clr(OP) + "(" + l()->print() + " " + clr(OP) + _symbol + " " + r()->print() + clr(OP) + ")";
     }
 
-    char _symbol;
+    const char* _symbol;
 };
 
 class Plus : public Op2 {
 public:
-    Plus(Node* l, Node* r) : Op2('+', l, r) {}
+    Plus(Node* l, Node* r) : Op2("+", l, r) {}
 };
 class Minus : public Op2 {
 public:
-    Minus(Node* l, Node* r) : Op2('-', l, r) {}
+    Minus(Node* l, Node* r) : Op2("-", l, r) {}
 };
 class Square : public Op2 {
 public:
-    Square(Node* l, Node* r) : Op2('*', l, r) {}
+    Square(Node* l, Node* r) : Op2("*", l, r) {}
 };
 class Divide : public Op2 {
 public:
-    Divide(Node* l, Node* r) : Op2('/', l, r) {}
+    Divide(Node* l, Node* r) : Op2("/", l, r) {}
 };
 class Moduler : public Op2 {
 public:
-    Moduler(Node* l, Node* r) : Op2('%', l, r) {}
+    Moduler(Node* l, Node* r) : Op2("%", l, r) {}
 };
 class Power : public Op2 {
 public:
-    Power(Node* l, Node* r) : Op2('^', l, r) {}
+    Power(Node* l, Node* r) : Op2("^", l, r) {}
+};
+class Less : public Op2 {
+public:
+    Less(Node* l, Node* r) : Op2("<", l, r) {}
+};
+class LessEqual : public Op2 {
+public:
+    LessEqual(Node* l, Node* r) : Op2("<=", l, r) {}
+};
+class More : public Op2 {
+public:
+    More(Node* l, Node* r) : Op2(">", l, r) {}
+};
+class MoreEqual : public Op2 {
+public:
+    MoreEqual(Node* l, Node* r) : Op2(">=", l, r) {}
+};
+class Equal : public Op2 {
+public:
+    Equal(Node* l, Node* r) : Op2("==", l, r) {}
+};
+class NotEqual : public Op2 {
+public:
+    NotEqual(Node* l, Node* r) : Op2("!=", l, r) {}
+};
+class RefEqual : public Op2 {
+public:
+    RefEqual(Node* l, Node* r) : Op2("===", l, r) {}
+};
+class NotRefEqual : public Op2 {
+public:
+    NotRefEqual(Node* l, Node* r) : Op2("!==", l, r) {}
 };
 
 class SomeAssign : public Node {
@@ -180,7 +223,7 @@ public:
     SomeAssign(string symbols, Node* l, Node* r) : Node(l, r), _symbols(symbols) {}
 
     virtual string name() { return "someassign"; }
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         return l()->print() + clr(OP) + " " + _symbols + " " + r()->print();
     }
 
@@ -231,7 +274,7 @@ class Cast : public Node {
 public:
     Cast(Node* to, Node* from) : Node(to, from) {}
     virtual string name() { return "cast"; }
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         return clr(OP) + "(" + l()->print() + clr(OP) + ") " + r()->print();
     }
 };
@@ -253,10 +296,11 @@ public:
         return _len;
     }
 
-    virtual string _onPrint() {
+    using Node::print;
+    virtual string print(int lv) {
         string sum;
         for (int n=0; n < len() ;n++)
-            sum += get(n)->print();
+            sum += get(n)->print(lv+1);
         return sum;
     }
 
@@ -275,8 +319,8 @@ public:
         add("block", con);
     }
 
-    virtual string _onPrint() {
-        return block()->print();
+    virtual string _onPrint(int lv) {
+        return block()->print(lv);
     }
 
     Block* block() {
@@ -292,19 +336,69 @@ public:
     }
 
     virtual string name() { return "for"; }
-    virtual string _onPrint() {
-        return clr(KEYWORD) + " " + l()->print() + clr(KEYWORD) + " in " + r()->print() + "\n\t"+ block()->print();
+    virtual string _onPrint(int lv) {
+        return clr(KEYWORD) + " for" + l()->print() + clr(KEYWORD) + " in " + r()->print() + "\n"+ block()->print(lv);
     }
 };
 
 
 
+class Branch : public BlockHave {
+public:
+    Branch(Node* expr, Container* then): BlockHave(then) {
+        lIs(expr);
+    }
+
+    virtual string name() { return "if"; }
+    using Node::print;
+    virtual string print(int lv) {
+        return l()->print() + "\n" + block()->print(lv);
+    }
+};
+
+class BranchHave : public Node {
+public:
+    BranchHave(Branch* branch) {
+        add("branch", branch);
+    }
+
+    using Node::print;
+    virtual string print(int lv) { return _onPrint(lv); }
+    virtual string _onPrint(int lv) {
+        return branch()->print(lv);
+    }
+
+    Branch* branch() {
+        return (Branch*) get("branch");
+    }
+};
+
+class If : public BranchHave {
+public:
+    If(Branch* then, vector<Branch*>* elifs, Block* els): BranchHave(then), _elifs(elifs), _els(els) {}
+    If(Branch* then) : BranchHave(then), _els(0) {}
+    If(Branch* then, Block* els) : BranchHave(then), _els(els) {}
+
+    virtual string name() { return "if"; }
+    virtual string _onPrint(int lv) {
+        cout << name() << ": lv=" << lv << "\n";
+        string elifs;
+        if (_elifs)
+            for (Branch* e : *_elifs)
+                elifs += "\n" + clr(KEYWORD) + "elif " + e->print(lv);
+        string elses = _els ? clr(KEYWORD) + "else \n" + _els->print(lv) : "";
+        return clr(KEYWORD) + "if " + BranchHave::_onPrint(lv) + elifs + elses;
+    }
+
+    vector<Branch*>* _elifs;
+    Block* _els;
+};
 
 class Args : public Container {
 public:
     Args() {}
     virtual string name() { return "args"; }
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         string sum = len() > 0 ? get(0)->print() : "";
         for (int n=1; n < len() ;n++)
             sum += clr(OP) + ", " + get(n)->print();
@@ -318,7 +412,7 @@ public:
     TypeList(Args* args) : Node(args) {}
 
     virtual string name() { return "typelist"; }
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         string ret = clr(OP) + "(";
         if (l())
             ret += l()->print();
@@ -331,7 +425,7 @@ public:
     Func(string name, TypeList* types) : Node(new Str(name), types) {}
 
     virtual string name() { return "func"; }
-    virtual string _onPrint() {
+    virtual string _onPrint(int lv) {
         Value* name = (Value*) l();
         return clr(FUNC) + name->_value + r()->print();
     }
@@ -343,8 +437,9 @@ public:
     Stmt(Node* expr) : Node(expr) {}
 
     virtual string name() { return "stmt"; }
-    virtual string _onPrint() {
-        return l()->print() + clr(WHITE) + "\n";
+    using Node::print;
+    virtual string print(int lv) {
+        return l()->print(lv) + clr(WHITE) + "\n";
     }
 };
 
@@ -352,7 +447,7 @@ class File : public Node {
 public:
     File(Block* blk) : Node(blk) {}
     virtual string name() { return "file"; }
-    virtual string _onPrint() {
-        return l()->print();
+    virtual string _onPrint(int lv) {
+        return l()->print(lv-1);
     }
 };
