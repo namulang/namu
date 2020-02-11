@@ -82,11 +82,14 @@ got { return tgot; }
 <dedent>\t {
     nowIndent = (nowIndent + TAB_WIDTH) & ~(TAB_WIDTH - 1);
 }
+<dedent>\0 {
+    cout << "----------------------dedent: EOF!!!!!\n";
+    return meetEof();
+}
 <dedent>. {
     char ch = yytext[0];
 
     int prevIndentLv = indentLvs.size() ? indentLvs.top() : 0;
-    cout << "  ---  dedent check finish. prevIndentLv=" << prevIndentLv << " indentLvs.size()=" << indentLvs.size() << "\n";
     if (nowIndent < prevIndentLv)
         return goOutdent(ch, nowIndent);
     else if (nowIndent == prevIndentLv) {
@@ -186,10 +189,12 @@ true|false {
 
 int meetEof() {
     static int cnt = 0;
-    switch (cnt++) {
+    switch (++cnt) {
         case 0:
+            cout << "-------- return teol\n";
             return teol;
         case 1:
+            cout << "-------- return teof\n";
             return teof;
     }
     return 0;

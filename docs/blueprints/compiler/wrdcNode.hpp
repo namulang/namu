@@ -313,11 +313,25 @@ public:
 };
 
 
-class BlockHave : public Node {
+class Haver : public Node {
 public:
-    BlockHave(Container* con) {
-        add("block", con);
+    Haver(Node* con) {
+        add("has", con);
     }
+
+    virtual string _onPrint(int lv) {
+        return has()->print(lv);
+    }
+
+    Node* has() {
+        return (Node*) get("has");
+    }
+};
+
+class BlockHaver : public Haver {
+public:
+    BlockHaver(Node* what) : Haver(what) {}
+
 
     virtual string _onPrint(int lv) {
         return block()->print(lv);
@@ -325,12 +339,13 @@ public:
 
     Block* block() {
         return (Block*) get("block");
+        return (Block*) has();
     }
 };
 
-class For : public BlockHave {
+class For : public BlockHaver {
 public:
-    For(Node* id, Node* container, Container* block) : BlockHave(block) {
+    For(Node* id, Node* container, Node* block) : BlockHaver(block) {
         lIs(id);
         rIs(container);
     }
@@ -343,9 +358,9 @@ public:
 
 
 
-class Branch : public BlockHave {
+class Branch : public BlockHaver {
 public:
-    Branch(Node* expr, Container* then): BlockHave(then) {
+    Branch(Node* expr, Node* then): BlockHaver(then) {
         lIs(expr);
     }
 
@@ -356,38 +371,34 @@ public:
     }
 };
 
-class BranchHave : public Node {
+class BranchHaver : public Haver {
 public:
-    BranchHave(Branch* branch) {
-        add("branch", branch);
-    }
+    BranchHaver(Node* branch): Haver(branch) {}
 
     using Node::print;
-    virtual string print(int lv) { return _onPrint(lv); }
     virtual string _onPrint(int lv) {
         return branch()->print(lv);
     }
 
     Branch* branch() {
-        return (Branch*) get("branch");
+        return (Branch*) has();
     }
 };
 
-class If : public BranchHave {
+class If : public BranchHaver {
 public:
-    If(Branch* then, vector<Branch*>* elifs, Block* els): BranchHave(then), _elifs(elifs), _els(els) {}
-    If(Branch* then) : BranchHave(then), _els(0) {}
-    If(Branch* then, Block* els) : BranchHave(then), _els(els) {}
+    If(Node* then, vector<Branch*>* elifs, Block* els): BranchHaver(then), _elifs(elifs), _els(els) {}
+    If(Node* then) : BranchHaver(then), _els(0) {}
+    If(Node* then, Block* els) : BranchHaver(then), _els(els) {}
 
     virtual string name() { return "if"; }
     virtual string _onPrint(int lv) {
-        cout << name() << ": lv=" << lv << "\n";
         string elifs;
         if (_elifs)
             for (Branch* e : *_elifs)
-                elifs += "\n" + clr(KEYWORD) + "elif " + e->print(lv);
+                elifs += clr(KEYWORD) + "elif " + e->print(lv);
         string elses = _els ? clr(KEYWORD) + "else \n" + _els->print(lv) : "";
-        return clr(KEYWORD) + "if " + BranchHave::_onPrint(lv) + elifs + elses;
+        return clr(KEYWORD) + "if " + BranchHaver::_onPrint(lv) + elifs + elses;
     }
 
     vector<Branch*>* _elifs;
@@ -398,7 +409,8 @@ class Args : public Container {
 public:
     Args() {}
     virtual string name() { return "args"; }
-    virtual string _onPrint(int lv) {
+    using Node::print;
+    virtual string print(int lv) {
         string sum = len() > 0 ? get(0)->print() : "";
         for (int n=1; n < len() ;n++)
             sum += clr(OP) + ", " + get(n)->print();
@@ -439,7 +451,12 @@ public:
     virtual string name() { return "stmt"; }
     using Node::print;
     virtual string print(int lv) {
-        return l()->print(lv) + clr(WHITE) + "\n";
+        char newLine = hasHaver() ? '\0' : '\n';
+        return l()->print(lv) + clr(WHITE) + newLine;
+    }
+
+    bool hasHaver() {
+        return dynamic_cast<Haver*>(l());
     }
 };
 
