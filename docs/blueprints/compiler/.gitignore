@@ -1,0 +1,6 @@
+wrdc
+wrdcd
+bison.tab.cpp
+bison.h
+lex.yy.c
+bison.output
