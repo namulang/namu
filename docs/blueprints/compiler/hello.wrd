@@ -1,11 +1,16 @@
-res := if a > 5
+res := float if a > 5
     if true
         if true
             for a in k
                 dn = 3
-elif a == 5
+// comment.
+elif a == 5 /* also, comment */
     cout("a=" + a)
     dn = k
+
+elif a == 7
+    a = 0
+
 else
     d
 foo()
