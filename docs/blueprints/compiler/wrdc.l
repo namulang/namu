@@ -10,12 +10,25 @@
     int nowIndent = 0;
     stack<int> indentLvs;
     static const int TAB_WIDTH = 4;
+    extern int nowRule;
+    extern int prevRule;
 
     int goOutdent(char ch, int nowIndent);
     int meetEof();
+    void shiftRules(int new1) {
+        prevRule = nowRule;
+        nowRule = new1;
+    }
+    int goOutdent(char ch, int nowIndent);
+    int meetEof();
     void changeRule(const char* name, int new1) {
-        cout << " ---- CHANGE RULE to " << name << "\n";
+        shiftRules(new1);
         BEGIN(new1);
+        cout << " ---- CHANGE RULE to " << name << "(" << new1 << ")\n";
+    }
+    void changePrevRule() {
+        cout << " ---- CHANGE PREV RULE TO " << prevRule << "\n";
+        BEGIN(prevRule);
     }
 %}
 
@@ -23,6 +36,7 @@
 %x dquote
 %x indent
 %x dedent
+%x commenting
 
 %%
 
@@ -51,6 +65,26 @@ got { return tgot; }
 
 
 
+<dedent>\/\/[^\n]* { cout << "!!!!2"; }
+<indent>\/\/[^\n]* { cout << "!!!!3"; }
+\/\/[^\n]* { cout << "!!!!1"; }
+
+"/*" {
+    changeRule("commenting", commenting);
+}
+<indent>"/*" {
+    changeRule("commenting", commenting);
+}
+<dedent>"/*" {
+    changeRule("commenting", commenting);
+}
+<commenting>"*/" {
+    changePrevRule();
+    cout << "!!!!!!!!!!!end";
+}
+<commenting>. { cout << "1";}
+<commenting>\n { cout << "2"; }
+
 [a-zA-Z][a-zA-Z0-9_]*   {
     yylval.strVal = strdup(yytext);
     return tidentifier;
@@ -60,7 +94,7 @@ got { return tgot; }
     changeRule("dquote", dquote); // maximum parsing을 하기 때문에 state 관리를 해줘야 한다.
 }
 
-    <dquote>[^\"]*\" { // dquote 상태일때, <" 를 제외한 문자> + "가 붙는 경우
+    <dquote>[^\"\n]*\" { // dquote 상태일때, <" 를 제외한 문자> + "가 붙는 경우
         changeRule("INITIAL", INITIAL);
         string parsed = "\"" + string(yytext);
         yylval.strVal = strdup(parsed.c_str());
@@ -214,6 +248,9 @@ int goOutdent(char prev, int nowIndent)
     cout << " ----- dedent: pop! now " << indentLvs.size() << " dedentLv left. \n";
     return tdedent;
 }
+
+int nowRule = INITIAL;
+int prevRule = INITIAL;
 int yywrap()
 {
     return 1;
