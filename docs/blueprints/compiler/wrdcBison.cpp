@@ -43,8 +43,8 @@ void yyerror(const char* s)
 %token <charVal> tchar
 %token <strVal> tstr
 %token <strVal> tidentifier tfuncname
-%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign
-%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast targs ttlist tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf
+%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq
+%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast targs ttlist tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf tseq
 %type <nodes> telifBlocks
 
 %printer { fprintf(yyo, "%s[%d]", wrd::getName($$), $$); } tinteger;
@@ -119,6 +119,9 @@ trhsexpr    : tinteger {
                 $$ = new Char($1);
             }
             | ttlist {
+                $$ = $1;
+            }
+            | tseq {
                 $$ = $1;
             }
             | tlhsexpr {
@@ -227,6 +230,10 @@ ttlist      : '(' targs ')' { //  " "를 쓰면 안된다.
                 $$ = new TypeList();
             }
             ;
+
+tseq        : trhsexpr topSeq trhsexpr {
+                  $$ = new Sequence($1, $3);
+            }
 
 tfunc       : tfuncname ttlist {
                 $$ = new Func($1, (TypeList*) $2);

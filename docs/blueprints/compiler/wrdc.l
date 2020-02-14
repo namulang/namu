@@ -155,6 +155,7 @@ got { return tgot; }
 \=\=\= { return topRefEqual; }
 \!\= { return topNotEqual; }
 \!\=\= { return topNotRefEqual; }
+\.\. { return topSeq; }
 
 \'.\' {
     yylval.charVal = yytext[1];

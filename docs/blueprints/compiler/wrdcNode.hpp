@@ -432,6 +432,15 @@ public:
     }
 };
 
+class Sequence : public Node {
+public:
+    Sequence(Node* start, Node* end): Node(start, end) {}
+    virtual string name() { return "sequence"; }
+    virtual string _onPrint(int lv) {
+        return l()->print() + clr(KEYWORD) + ".." + r()->print();
+    }
+};
+
 class Func : public Node {
 public:
     Func(string name, TypeList* types) : Node(new Str(name), types) {}
