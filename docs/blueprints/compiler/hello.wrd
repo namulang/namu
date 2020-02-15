@@ -8,6 +8,8 @@ elif a == 5 /* also, comment */
     cout("a=" + a)
     dn := int[][] [1, 2, foo(3)]
     dmap := int[str] [(2, "banana"), (3, "apple")]
+    dn.len
+    dn.each(foo(n))
 
 elif a == 7
     a = 0

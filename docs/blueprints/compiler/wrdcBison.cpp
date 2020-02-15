@@ -44,7 +44,7 @@ void yyerror(const char* s)
 %token <strVal> tstr
 %token <strVal> tidentifier tfuncname
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq
-%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast targs ttlist tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf tseq tarray ttuple ttype tmap ttuples
+%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast targs ttlist tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf tseq tarray ttuple ttype tmap ttuples taccess
 %type <nodes> telifBlocks
 
 %printer { fprintf(yyo, "%s[%d]", wrd::getName($$), $$); } tinteger;
@@ -59,6 +59,7 @@ void yyerror(const char* s)
 %left '%' '^'
 %left '+' '-'
 %left '*' '/'
+%left '.'
 
 %%
 
@@ -114,6 +115,7 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             | tmap { $$ = $1; }
             | tlhsexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
+            | taccess { $$ = $1; }
             | trhsexpr '+' trhsexpr {
                 $$ = new Plus($1, $3);
             }
@@ -251,6 +253,10 @@ tarray      : '[' targs ']' {
 tseq        : trhsexpr topSeq trhsexpr {
                 $$ = new Sequence($1, $3);
             }
+
+taccess     : trhsexpr '.' tidentifier { $$ = new Access($1, new Id($3)); }
+            | trhsexpr '.' tfunc { $$ = new Access($1, $3); }
+            ;
 
 tfunc       : tfuncname ttlist {
                 $$ = new Func($1, (TypeList*) $2);
