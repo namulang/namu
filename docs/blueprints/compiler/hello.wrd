@@ -6,7 +6,7 @@ res := float if a > 5
 // comment.
 elif a == 5 /* also, comment */
     cout("a=" + a)
-    dn = k
+    dn := [1, 2, foo(3)]
 
 elif a == 7
     a = 0
