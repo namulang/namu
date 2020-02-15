@@ -405,6 +405,15 @@ public:
     Block* _els;
 };
 
+class Tuple : public Node {
+public:
+    Tuple(Node* val, Node* key): Node(val, key) {}
+    virtual string name() { return "tuple"; }
+    virtual string _onPrint(int lv) {
+        return l()->print() + clr(CONTAINER) + ":" + r()->print();
+    }
+};
+
 class Args : public Container {
 public:
     Args() {}
@@ -413,7 +422,7 @@ public:
     virtual string print(int lv) {
         string sum = len() > 0 ? get(0)->print() : "";
         for (int n=1; n < len() ;n++)
-            sum += clr(OP) + ", " + get(n)->print();
+            sum += clr(CONTAINER) + ", " + get(n)->print();
         return sum;
     }
 };
