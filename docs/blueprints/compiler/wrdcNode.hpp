@@ -18,7 +18,7 @@ class Node {
 
             OP = RED,
             PLAIN = WHITE,
-            COMMENT = GREEN,
+            CONTAINER = GREEN,
             TYPE = BLUE,
             FUNC = YELLOW,
             KEYWORD = CYAN,
@@ -425,10 +425,10 @@ public:
 
     virtual string name() { return "typelist"; }
     virtual string _onPrint(int lv) {
-        string ret = clr(OP) + "(";
+        string ret = clr(CONTAINER) + "(";
         if (l())
             ret += l()->print();
-        return ret + clr(OP) + ")";
+        return ret + clr(CONTAINER) + ")";
     }
 };
 
@@ -437,7 +437,21 @@ public:
     Sequence(Node* start, Node* end): Node(start, end) {}
     virtual string name() { return "sequence"; }
     virtual string _onPrint(int lv) {
-        return l()->print() + clr(KEYWORD) + ".." + r()->print();
+        return l()->print() + clr(CONTAINER) + ".." + r()->print();
+    }
+};
+
+class Array : public Node {
+public:
+    Array() {}
+    Array(Node* args): Node(args) {}
+
+    virtual string name() { return "array"; }
+    virtual string _onPrint(int lv) {
+        string ret = clr(CONTAINER) + "[";
+        if (l())
+            ret += l()->print();
+        return ret + clr(CONTAINER) + "]";
     }
 };
 
