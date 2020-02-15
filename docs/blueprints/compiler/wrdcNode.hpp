@@ -239,6 +239,15 @@ public:
     string _symbols;
 };
 
+class Access : public Node {
+public:
+    Access(Node* obj, Node* member): Node(obj, member) {}
+    virtual string name() { return "access"; }
+    virtual string _onPrint(int lv) {
+        return l()->print() + clr(OP) + "." + r()->print();
+    }
+};
+
 class Assign : public SomeAssign {
 public:
     Assign(Node* l, Node* r) : SomeAssign("=", l, r) {}
