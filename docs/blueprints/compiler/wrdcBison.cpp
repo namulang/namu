@@ -44,7 +44,6 @@ void yyerror(const char* s)
 %token <strVal> tstr
 %token <strVal> tidentifier tfuncname
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq
-%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast targs ttlist tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf tseq tarray
 %type <nodes> telifBlocks
 
 %printer { fprintf(yyo, "%s[%d]", wrd::getName($$), $$); } tinteger;
@@ -122,6 +121,12 @@ trhsexpr    : tinteger {
                 $$ = $1;
             }
             | tseq {
+                $$ = $1;
+            }
+            | tarray {
+                $$ = $1;
+            }
+            | tmap {
                 $$ = $1;
             }
             | tlhsexpr {
@@ -206,8 +211,16 @@ tlhsexpr    : tidentifier { $$ = new Id($1); }
             }
             ;
 
-tcast       : tidentifier trhsexpr {
-                $$ = new Cast(new Id($1), $2);
+ttype       : tidentifier {
+                $$ = new Id($1);
+            }
+            | ttuple {
+                $$ = $1;
+            }
+            ;
+
+tcast       : ttype trhsexpr {
+                $$ = new Cast($1, $2);
             }
             ;
 
@@ -230,6 +243,25 @@ ttlist      : '(' targs ')' { //  " "를 쓰면 안된다.
                 $$ = new TypeList();
             }
             ;
+
+ttuple      : trhsexpr ':' trhsexpr {
+                $$ = new Tuple($1, $3);
+            }
+ttuples     : ttuple {
+                  Args* ret = new Args();
+                  ret->add($1);
+                  $$ = ret;
+            }
+            | ttuples ',' ttuple {
+                Args* ret = (Args*) $1;
+                ret->add($3);
+                $$ = ret;
+            }
+            ;
+
+tmap        : '[' ttuples ']' {
+                $$ = new Array($2);
+            }
 
 tarray      : '[' targs ']' {
                 $$ = new Array($2);
