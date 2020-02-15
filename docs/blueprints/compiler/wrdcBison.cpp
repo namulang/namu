@@ -44,6 +44,7 @@ void yyerror(const char* s)
 %token <strVal> tstr
 %token <strVal> tidentifier tfuncname
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq
+%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast targs ttlist tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf tseq tarray ttuple ttype tmap ttuples
 %type <nodes> telifBlocks
 
 %printer { fprintf(yyo, "%s[%d]", wrd::getName($$), $$); } tinteger;
@@ -102,37 +103,17 @@ termIf      : tif tbranch telifBlocks telseBlock {
 //  tlhsexpr은 할당이 가능한 변수. lvalue.
 //  trhsexpr은 값을 나타내는 모든 표현식.
 //  따라서 범주상으로 보았을때 trhsexpr 은 tlhsexpr을 포함한다. 더 크다는 얘기다.
-trhsexpr    : tinteger {
-                $$ = new Int($1);
-            }
-            | tbool {
-                $$ = new Bool($1);
-            }
-            | tfloat {
-                $$ = new Float($1);
-            }
-            | tstr {
-                $$ = new Str($1);
-            }
-            | tchar {
-                $$ = new Char($1);
-            }
-            | ttlist {
-                $$ = $1;
-            }
-            | tseq {
-                $$ = $1;
-            }
-            | tarray {
-                $$ = $1;
-            }
-            | tmap {
-                $$ = $1;
-            }
-            | tlhsexpr {
-                $$ = $1;
-            }
-
+trhsexpr    : tinteger { $$ = new Int($1); }
+            | tbool { $$ = new Bool($1); }
+            | tfloat { $$ = new Float($1); }
+            | tstr { $$ = new Str($1); }
+            | tchar { $$ = new Char($1); }
+            | ttlist { $$ = $1; }
+            | tseq { $$ = $1; }
+            | tarray { $$ = $1; }
+            | tmap { $$ = $1; }
+            | tlhsexpr { $$ = $1; }
+            | tcast %dprec 1 { $$ = $1; }
             | trhsexpr '+' trhsexpr {
                 $$ = new Plus($1, $3);
             }
@@ -175,8 +156,6 @@ trhsexpr    : tinteger {
             | trhsexpr topNotRefEqual trhsexpr {
                 $$ = new NotRefEqual($1, $3);
             }
-
-            | tcast { $$ = $1; }
             | tfor tidentifier tin trhsexpr teol tindentBlock {
                 $$ = new For(new Id($2), $4, (Container*) $6);
             }
@@ -211,12 +190,14 @@ tlhsexpr    : tidentifier { $$ = new Id($1); }
             }
             ;
 
-ttype       : tidentifier {
-                $$ = new Id($1);
+ttype       : tidentifier { $$ = new Id($1); }
+            | ttype '[' ']' {
+                $$ = new Origin($1->print() + "{}");
             }
-            | ttuple {
-                $$ = $1;
+            | ttype '[' ttype ']' {
+                $$ = new MapOrigin($1, $3);
             }
+            | ttuple { $$ = $1; }
             ;
 
 tcast       : ttype trhsexpr {

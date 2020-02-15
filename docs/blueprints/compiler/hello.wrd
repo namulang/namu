@@ -6,8 +6,8 @@ res := float if a > 5
 // comment.
 elif a == 5 /* also, comment */
     cout("a=" + a)
-    dn := [1, 2, foo(3)]
-    dmap := [(2, "banana"), (3, "apple")]
+    dn := int[][] [1, 2, foo(3)]
+    dmap := int[str] [(2, "banana"), (3, "apple")]
 
 elif a == 7
     a = 0

@@ -91,7 +91,7 @@ public:
     Id(string name) : Value(name) {}
     virtual string name() { return "id"; }
     virtual string _onPrint(int lv) {
-        return clr(BLUE) + _value;
+        return clr(TYPE) + _value;
     }
 };
 
@@ -101,6 +101,15 @@ public:
     virtual string name() { return "origin"; }
     virtual string _onPrint(int lv) {
         return clr(TYPE) + _value;
+    }
+};
+
+class MapOrigin : public Node {
+public:
+    MapOrigin(Node* val, Node* key): Node(val, key) {}
+    virtual string name() { return "mapOrigin"; }
+    virtual string _onPrint(int lv) {
+        return l()->print() + clr(OP) + "[" + r()->print() + "]";
     }
 };
 
