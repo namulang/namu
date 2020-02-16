@@ -116,7 +116,7 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             | tlhsexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
             | taccess { $$ = $1; }
-            | trhsexpr '+' trhsexpr {
+            | trhsexpr '+' trhsexpr %dprec 2 {
                 $$ = new Plus($1, $3);
             }
             | trhsexpr '-' trhsexpr {
