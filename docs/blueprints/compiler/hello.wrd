@@ -3,6 +3,8 @@ res := float if a > 5
         if true
             for a in 2..foo(5)
                 dn = float a + 3
+        else
+            retfun 0
 // comment.
 elif a == 5 /* also, comment */
     cout("a=" + a)
@@ -12,8 +14,8 @@ elif a == 5 /* also, comment */
     dn.each(foo(n))
 
 elif a == 7
-    a = 0
+    ret a = 0
 
 else
-    d
+    retif d
 foo()

@@ -44,7 +44,7 @@ void yyerror(const char* s)
 %token <strVal> tstr
 %token <strVal> tidentifier tfuncname
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq
-%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast targs ttlist tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf tseq tarray ttuple ttype tmap ttuples taccess
+%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast targs ttlist tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf tseq tarray ttuple ttype tmap ttuples taccess treturn
 %type <nodes> telifBlocks
 
 %printer { fprintf(yyo, "%s[%d]", wrd::getName($$), $$); } tinteger;
@@ -258,12 +258,22 @@ taccess     : trhsexpr '.' tidentifier { $$ = new Access($1, new Id($3)); }
             | trhsexpr '.' tfunc { $$ = new Access($1, $3); }
             ;
 
+treturn     : tret trhsexpr { $$ = new Return("ret", $2); }
+            | tretfun trhsexpr { $$ = new Return("retfun", $2); }
+            | tretif trhsexpr { $$ = new Return("retif", $2); }
+            | tretwith trhsexpr { $$ = new Return("retwith", $2); }
+            | tretfor trhsexpr { $$ = new Return("retfor", $2); }
+            ;
+
 tfunc       : tfuncname ttlist {
                 $$ = new Func($1, (TypeList*) $2);
             }
             ;
 
 tstmt       : trhsexpr teol {
+                $$ = new Stmt($1);
+            }
+            | treturn teol {
                 $$ = new Stmt($1);
             }
             | teol {

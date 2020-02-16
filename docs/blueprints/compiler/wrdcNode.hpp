@@ -113,20 +113,12 @@ public:
     }
 };
 
-class Keyword : public Value {
-public:
-    Keyword(string name) : Value(name) {}
-    virtual string name() { return "keyword"; }
-    virtual string _onPrint(int lv) {
-        return clr(KEYWORD) + _value;
-    }
-};
-
 class Int : public Value {
 public:
     Int(int value) : Value(to_string(value)) {}
     virtual string name() { return "int"; }
 };
+
 class Char : public Value {
 public:
     Char(char value) : Value(to_string(value)) {}
@@ -359,6 +351,17 @@ public:
         return (Block*) get("block");
         return (Block*) has();
     }
+};
+
+class Return : public Node {
+public:
+    Return(string name, Node* what): Node(what), _name(name) {}
+    virtual string name() { return "return"; }
+    virtual string _onPrint(int lv) {
+        return clr(KEYWORD) + _name + " " + l()->print();
+    }
+
+    string _name;
 };
 
 class For : public BlockHaver {
