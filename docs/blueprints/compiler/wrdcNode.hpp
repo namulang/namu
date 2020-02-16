@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
+#include <vector>
 #include <map>
 
 using namespace std;
@@ -55,7 +56,8 @@ class Node {
     }
     virtual string _onPrint(int lv) { return ""; }
 
-    static string clr(Color c) {
+    static string clr(Color c)
+    {
         return string("\033[") + to_string(c) + "m";
     }
 
@@ -79,6 +81,7 @@ class Node {
 class Value : public Node {
 public:
     Value(string value) : _value(value) {}
+    using Node::print;
     virtual string _onPrint(int lv) {
         return clr(NUMBER) + _value;
     }
@@ -90,6 +93,7 @@ class Id : public Value {
 public:
     Id(string name) : Value(name) {}
     virtual string name() { return "id"; }
+    using Node::print;
     virtual string _onPrint(int lv) {
         return clr(TYPE) + _value;
     }
@@ -99,6 +103,7 @@ class Origin : public Value {
 public:
     Origin(string name) : Value(name) {}
     virtual string name() { return "origin"; }
+    using Node::print;
     virtual string _onPrint(int lv) {
         return clr(TYPE) + _value;
     }
@@ -107,18 +112,19 @@ public:
 class MapOrigin : public Node {
 public:
     MapOrigin(Node* val, Node* key): Node(val, key) {}
+
     virtual string name() { return "mapOrigin"; }
     virtual string _onPrint(int lv) {
         return l()->print() + clr(CONTAINER) + "[" + r()->print() + clr(CONTAINER) + "]";
     }
 };
 
+
 class Int : public Value {
 public:
     Int(int value) : Value(to_string(value)) {}
     virtual string name() { return "int"; }
 };
-
 class Char : public Value {
 public:
     Char(char value) : Value(to_string(value)) {}
@@ -133,6 +139,7 @@ class Bool : public Value {
 public:
     Bool(bool value) : Value(to_string(value)) {}
     virtual string name() { return "bool"; }
+    using Node::print;
     virtual string _onPrint(int lv) {
         return clr(KEYWORD) + _value;
     }
@@ -146,6 +153,7 @@ class Str : public Value {
 public:
     Str(string value) : Value(value) {}
     virtual string name() { return "str"; }
+    using Node::print;
     virtual string _onPrint(int lv) {
         return clr(STRING) + _value;
     }
@@ -155,6 +163,7 @@ class Op2 : public Node {
 public:
     Op2(const char* symbol, Node* l, Node* r) : Node(l, r), _symbol(symbol) {}
     virtual string name() { return _symbol; }
+    using Node::print;
     virtual string _onPrint(int lv) {
         return clr(OP) + "(" + l()->print() + " " + clr(OP) + _symbol + " " + r()->print() + clr(OP) + ")";
     }
@@ -219,11 +228,14 @@ public:
     NotRefEqual(Node* l, Node* r) : Op2("!==", l, r) {}
 };
 
+
+
 class SomeAssign : public Node {
 public:
     SomeAssign(string symbols, Node* l, Node* r) : Node(l, r), _symbols(symbols) {}
 
     virtual string name() { return "someassign"; }
+    using Node::print;
     virtual string _onPrint(int lv) {
         return l()->print() + clr(OP) + " " + _symbols + " " + r()->print();
     }
@@ -234,6 +246,7 @@ public:
 class Access : public Node {
 public:
     Access(Node* obj, Node* member): Node(obj, member) {}
+
     virtual string name() { return "access"; }
     virtual string _onPrint(int lv) {
         return l()->print() + clr(OP) + "." + r()->print();
@@ -284,10 +297,12 @@ class Cast : public Node {
 public:
     Cast(Node* to, Node* from) : Node(to, from) {}
     virtual string name() { return "cast"; }
+    using Node::print;
     virtual string _onPrint(int lv) {
         return clr(OP) + "(" + l()->print() + clr(OP) + ") " + r()->print();
     }
 };
+
 
 class Container : public Node {
 public:
@@ -310,7 +325,7 @@ public:
     virtual string print(int lv) {
         string sum;
         for (int n=0; n < len() ;n++)
-            sum += get(n)->print(lv+1);
+            sum += get(n)->print(lv + 1);
         return sum;
     }
 
@@ -323,18 +338,21 @@ public:
 };
 
 
+
+
+
+
+
+
+
 class Haver : public Node {
 public:
     Haver(Node* con) {
         add("has", con);
     }
 
-    virtual string _onPrint(int lv) {
-        return has()->print(lv);
-    }
-
     Node* has() {
-        return (Node*) get("has");
+        return (Block*) get("has");
     }
 };
 
@@ -342,13 +360,10 @@ class BlockHaver : public Haver {
 public:
     BlockHaver(Node* what) : Haver(what) {}
 
-
     virtual string _onPrint(int lv) {
         return block()->print(lv);
     }
-
     Block* block() {
-        return (Block*) get("block");
         return (Block*) has();
     }
 };
@@ -356,9 +371,10 @@ public:
 class Return : public Node {
 public:
     Return(string name, Node* what): Node(what), _name(name) {}
+
     virtual string name() { return "return"; }
     virtual string _onPrint(int lv) {
-        return clr(RED) + _name + " " + l()->print();
+        return clr(RED) + _name + " " +  l()->print();
     }
 
     string _name;
@@ -366,22 +382,20 @@ public:
 
 class For : public BlockHaver {
 public:
-    For(Node* id, Node* container, Node* block) : BlockHaver(block) {
+    For(Node* id, Node* container, Container* block) : BlockHaver(block) {
         lIs(id);
         rIs(container);
     }
 
     virtual string name() { return "for"; }
+    using Node::print;
     virtual string _onPrint(int lv) {
-        return clr(KEYWORD) + " for" + l()->print() + clr(KEYWORD) + " in " + r()->print() + "\n"+ block()->print(lv);
+        return clr(KEYWORD) + "for " + l()->print() + clr(KEYWORD) + " in " + r()->print() + "\n" + block()->print(lv);
     }
 };
-
-
-
 class Branch : public BlockHaver {
 public:
-    Branch(Node* expr, Node* then): BlockHaver(then) {
+    Branch(Node* expr, Container* then): BlockHaver(then) {
         lIs(expr);
     }
 
@@ -394,7 +408,7 @@ public:
 
 class BranchHaver : public Haver {
 public:
-    BranchHaver(Node* branch): Haver(branch) {}
+    BranchHaver(Node* branch) : Haver(branch) {}
 
     using Node::print;
     virtual string _onPrint(int lv) {
@@ -407,10 +421,11 @@ public:
 };
 
 class If : public BranchHaver {
+
 public:
-    If(Node* then, vector<Branch*>* elifs, Block* els): BranchHaver(then), _elifs(elifs), _els(els) {}
-    If(Node* then) : BranchHaver(then), _els(0) {}
-    If(Node* then, Block* els) : BranchHaver(then), _els(els) {}
+    If(Branch* then, vector<Branch*>* elifs, Block* els): BranchHaver(then), _elifs(elifs), _els(els) {}
+    If(Branch* then) : BranchHaver(then), _els(0) {}
+    If(Branch* then, Block* els) : BranchHaver(then), _els(els) {}
 
     virtual string name() { return "if"; }
     virtual string _onPrint(int lv) {
@@ -426,9 +441,13 @@ public:
     Block* _els;
 };
 
+
+
+
 class Tuple : public Node {
 public:
     Tuple(Node* val, Node* key): Node(val, key) {}
+
     virtual string name() { return "tuple"; }
     virtual string _onPrint(int lv) {
         return l()->print() + clr(CONTAINER) + ":" + r()->print();
@@ -454,6 +473,7 @@ public:
     TypeList(Args* args) : Node(args) {}
 
     virtual string name() { return "typelist"; }
+    using Node::print;
     virtual string _onPrint(int lv) {
         string ret = clr(CONTAINER) + "(";
         if (l())
@@ -464,7 +484,8 @@ public:
 
 class Sequence : public Node {
 public:
-    Sequence(Node* start, Node* end): Node(start, end) {}
+    Sequence(Node* start, Node* end) : Node(start, end) {}
+
     virtual string name() { return "sequence"; }
     virtual string _onPrint(int lv) {
         return l()->print() + clr(CONTAINER) + ".." + r()->print();
@@ -474,7 +495,7 @@ public:
 class Array : public Node {
 public:
     Array() {}
-    Array(Node* args): Node(args) {}
+    Array(Node* args) : Node(args) {}
 
     virtual string name() { return "array"; }
     virtual string _onPrint(int lv) {
@@ -490,6 +511,7 @@ public:
     Func(string name, TypeList* types) : Node(new Str(name), types) {}
 
     virtual string name() { return "func"; }
+    using Node::print;
     virtual string _onPrint(int lv) {
         Value* name = (Value*) l();
         return clr(FUNC) + name->_value + r()->print();
@@ -509,7 +531,8 @@ public:
     }
 
     bool hasHaver() {
-        return dynamic_cast<Haver*>(l());
+        Haver* casted = dynamic_cast<Haver*>(l());
+        return casted;
     }
 };
 
@@ -517,6 +540,7 @@ class File : public Node {
 public:
     File(Block* blk) : Node(blk) {}
     virtual string name() { return "file"; }
+    using Node::print;
     virtual string _onPrint(int lv) {
         return l()->print(lv-1);
     }

@@ -5,11 +5,12 @@ res := float if a > 5
                 dn = float a + 3
         else
             retfun 0
+
 // comment.
 elif a == 5 /* also, comment */
     cout("a=" + a)
     dn := int[][] [1, 2, foo(3)]
-    dmap := int[str] [(2, "banana"), (3, "apple")]
+    dmap := int[str] [(3, "banana"), (3, "apple")]
     dn.len
     dn.each(foo(n))
 
@@ -18,4 +19,4 @@ elif a == 7
 
 else
     retif d
-foo()
+
