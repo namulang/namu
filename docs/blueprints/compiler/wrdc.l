@@ -10,6 +10,7 @@
     int nowIndent = 0;
     stack<int> indentLvs;
     static const int TAB_WIDTH = 4;
+
     extern int nowRule;
     extern int prevRule;
 
@@ -19,8 +20,6 @@
         prevRule = nowRule;
         nowRule = new1;
     }
-    int goOutdent(char ch, int nowIndent);
-    int meetEof();
     void changeRule(const char* name, int new1) {
         shiftRules(new1);
         BEGIN(new1);
@@ -32,8 +31,8 @@
     }
 %}
 
-%s tfile
 %x dquote
+%s tfile
 %x indent
 %x dedent
 %x commenting
@@ -62,8 +61,6 @@ this { return tthis; }
 super { return tsuper; }
 me { return tme; }
 got { return tgot; }
-
-
 
 <dedent>\/\/[^\n]* { cout << "!!!!2"; }
 <indent>\/\/[^\n]* { cout << "!!!!3"; }
@@ -108,6 +105,8 @@ got { return tgot; }
     return teol;
 }
 
+
+
 <dedent>\n {
     nowIndent = 0;
     return teol;
@@ -124,6 +123,7 @@ got { return tgot; }
     char ch = yytext[0];
 
     int prevIndentLv = indentLvs.size() ? indentLvs.top() : 0;
+    cout << "  ---  ch=" << ch << "(" << (int) ch << ") dedent check finish. prevIndentLv=" << prevIndentLv << " indentLvs.size()=" << indentLvs.size() << "\n";
     if (nowIndent < prevIndentLv)
         return goOutdent(ch, nowIndent);
     else if (nowIndent == prevIndentLv) {
@@ -167,7 +167,7 @@ true|false {
     return tbool;
 }
 
-[a-zA-Z][a-zA-Z0-9_]+\( {
+[a-zA-A][a-zA-Z0-9_]+\( {
     string temp = yytext;
     temp = temp.substr(0, temp.size()-1);
     yylval.strVal = strdup(temp.c_str());
@@ -183,7 +183,6 @@ true|false {
     cout << "---------------- indent newline\n";
     nowIndent = 0;
 }
-
 <indent>. {
     char ch = yytext[0];
 
@@ -200,6 +199,7 @@ true|false {
         return goOutdent(ch, nowIndent);
     }
 }
+
 <indent><<EOF>> {
     cout << "----------------------EOF!!!!!\n";
     if (goOutdent(yytext[0], nowIndent) == tdedent) {
@@ -210,11 +210,14 @@ true|false {
     cout << "----------- return meetEof()\n";
     return meetEof();
 }
-[ ]* {}
+
+[ ]* {
+}
 
 . {
     return yytext[0];
 }
+
 <<EOF>> {
     return meetEof();
 }
@@ -224,6 +227,7 @@ true|false {
 
 int meetEof() {
     static int cnt = 0;
+    cout << "----------- meetEOF(" << cnt << ")\n";
     switch (++cnt) {
         case 0:
             cout << "-------- return teol\n";
@@ -252,6 +256,7 @@ int goOutdent(char prev, int nowIndent)
 
 int nowRule = INITIAL;
 int prevRule = INITIAL;
+
 int yywrap()
 {
     return 1;

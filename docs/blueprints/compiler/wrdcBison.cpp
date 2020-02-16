@@ -70,7 +70,6 @@ telseBlock  : teol telse teol tindentBlock {
 telifBlock  : teol telif tbranch {
                 $$ = $3;
             }
-
 telifBlocks : telifBlock {
                 vector<Branch*>* ret = new vector<Branch*>;
                 ret->push_back((Branch*) $1);
@@ -166,9 +165,6 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             ;
 
 tlhsexpr    : tidentifier { $$ = new Id($1); }
-            | tlhsexpr '=' trhsexpr {
-                $$ = new Assign($1, $3);
-            }
             | tlhsexpr topDefAssign trhsexpr {
                 $$ = new DefAssign($1, $3);
             }
@@ -190,11 +186,14 @@ tlhsexpr    : tidentifier { $$ = new Id($1); }
             | tlhsexpr topPowAssign trhsexpr {
                 $$ = new PowAssign($1, $3);
             }
+            | tlhsexpr '=' trhsexpr {
+                $$ = new Assign($1, $3);
+            }
             ;
 
 ttype       : tidentifier { $$ = new Id($1); }
             | ttype '[' ']' {
-                $$ = new Origin($1->print() + "{}");
+                $$ = new Origin($1->print() + "[]");
             }
             | ttype '[' ttype ']' {
                 $$ = new MapOrigin($1, $3);
@@ -206,6 +205,15 @@ tcast       : ttype trhsexpr {
                 $$ = new Cast($1, $2);
             }
             ;
+
+
+treturn     : tret trhsexpr { $$ = new Return("ret", $2); }
+            | tretfun trhsexpr { $$ = new Return("retfun", $2); }
+            | tretif trhsexpr { $$ = new Return("retif", $2); }
+            | tretwith trhsexpr { $$ = new Return("retwith", $2); }
+            | tretfor trhsexpr { $$ = new Return("retfor", $2); }
+            ;
+
 
 targs       : trhsexpr {
                 Args* ret = new Args();
@@ -230,10 +238,11 @@ ttlist      : '(' targs ')' { //  " "를 쓰면 안된다.
 ttuple      : trhsexpr ':' trhsexpr {
                 $$ = new Tuple($1, $3);
             }
+
 ttuples     : ttuple {
-                  Args* ret = new Args();
-                  ret->add($1);
-                  $$ = ret;
+                Args* ret = new Args();
+                ret->add($1);
+                $$ = ret;
             }
             | ttuples ',' ttuple {
                 Args* ret = (Args*) $1;
@@ -258,13 +267,6 @@ taccess     : trhsexpr '.' tidentifier { $$ = new Access($1, new Id($3)); }
             | trhsexpr '.' tfunc { $$ = new Access($1, $3); }
             ;
 
-treturn     : tret trhsexpr { $$ = new Return("ret", $2); }
-            | tretfun trhsexpr { $$ = new Return("retfun", $2); }
-            | tretif trhsexpr { $$ = new Return("retif", $2); }
-            | tretwith trhsexpr { $$ = new Return("retwith", $2); }
-            | tretfor trhsexpr { $$ = new Return("retfor", $2); }
-            ;
-
 tfunc       : tfuncname ttlist {
                 $$ = new Func($1, (TypeList*) $2);
             }
@@ -282,6 +284,7 @@ tstmt       : trhsexpr teol {
             | trhsexpr teof {
                 $$ = new Stmt($1);
             }
+
             ;
 
 tblock      : tstmt {
