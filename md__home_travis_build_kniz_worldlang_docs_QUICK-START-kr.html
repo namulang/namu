@@ -126,7 +126,19 @@
 
 <span class="n">val</span> <span class="o">=</span> <span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="mf">0.</span><span class="p">.</span><span class="n">max</span> <span class="c1">// for returns last expr while it loops.</span>
     <span class="n">n</span>
-<span class="n">val</span> <span class="o">==</span> <span class="mi">10</span> <span class="c1">// true</span></pre><h2>closure</h2><pre class="m-code"><span class="kt">int</span> <span class="n">func</span><span class="p">()</span>
+<span class="n">val</span> <span class="o">==</span> <span class="mi">10</span> <span class="c1">// true</span></pre><p># 프로퍼티</p><pre class="m-code"><span class="n">def</span> <span class="n">myObj</span>
+    <span class="nl">_realAge</span> <span class="p">:</span><span class="o">=</span> <span class="mi">22</span>
+    <span class="nl">age</span> <span class="p">:</span><span class="o">=</span> <span class="n">prop</span> <span class="n">propOfRealAge</span> <span class="n">from</span> <span class="kt">int</span>
+        <span class="err">@</span><span class="n">get</span><span class="p">()</span><span class="o">:</span> <span class="n">ret</span> <span class="n">realAge</span>
+        <span class="err">@</span><span class="n">set</span><span class="p">(</span><span class="kt">int</span> <span class="k">new</span><span class="p">)</span>
+            <span class="n">cout</span><span class="p">(</span><span class="s">&quot;age.@set&quot;</span><span class="p">)</span>
+            <span class="n">realAge</span> <span class="o">=</span> <span class="k">new</span>
+
+<span class="n">def</span> <span class="n">myObj2</span>
+    <span class="nl">age</span> <span class="p">:</span><span class="o">=</span> <span class="n">prop</span> <span class="n">from</span> <span class="kt">int</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
+        <span class="err">@</span><span class="n">set</span><span class="o">=&gt;:</span> <span class="n">cout</span><span class="p">(</span><span class="s">&quot;age.@set&quot;</span><span class="p">)</span>
+
+<span class="c1">// myObj&#39;s age will do exactly same actions to what the &#39;age&#39; from myObj2 will.</span></pre><h2>closure</h2><pre class="m-code"><span class="kt">int</span> <span class="n">func</span><span class="p">()</span>
 <span class="n">func</span> <span class="n">foo</span><span class="p">()</span> <span class="c1">// returns a function.</span>
     <span class="err">$</span><span class="nl">cnt</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span> <span class="c1">// $ means &quot;static&quot; which only can be prefix of a variable.</span>
 
