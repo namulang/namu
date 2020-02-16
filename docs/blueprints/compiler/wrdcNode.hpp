@@ -109,7 +109,7 @@ public:
     MapOrigin(Node* val, Node* key): Node(val, key) {}
     virtual string name() { return "mapOrigin"; }
     virtual string _onPrint(int lv) {
-        return l()->print() + clr(OP) + "[" + r()->print() + "]";
+        return l()->print() + clr(CONTAINER) + "[" + r()->print() + clr(CONTAINER) + "]";
     }
 };
 
@@ -358,7 +358,7 @@ public:
     Return(string name, Node* what): Node(what), _name(name) {}
     virtual string name() { return "return"; }
     virtual string _onPrint(int lv) {
-        return clr(KEYWORD) + _name + " " + l()->print();
+        return clr(RED) + _name + " " + l()->print();
     }
 
     string _name;
@@ -417,8 +417,8 @@ public:
         string elifs;
         if (_elifs)
             for (Branch* e : *_elifs)
-                elifs += clr(KEYWORD) + "elif " + e->print(lv);
-        string elses = _els ? clr(KEYWORD) + "else \n" + _els->print(lv) : "";
+                elifs += tab(lv) + clr(KEYWORD) + "elif " + e->print(lv);
+        string elses = _els ? tab(lv) + clr(KEYWORD) + "else \n" + _els->print(lv) : "";
         return clr(KEYWORD) + "if " + BranchHaver::_onPrint(lv) + elifs + elses;
     }
 
