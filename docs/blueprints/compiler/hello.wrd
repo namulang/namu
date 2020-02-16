@@ -2,7 +2,7 @@ res := float if a > 5
     if true
         if true
             for a in 2..foo(5)
-                dn = 3
+                dn = float a + 3
 // comment.
 elif a == 5 /* also, comment */
     cout("a=" + a)
