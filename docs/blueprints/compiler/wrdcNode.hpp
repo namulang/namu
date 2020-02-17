@@ -467,10 +467,10 @@ public:
     }
 };
 
-class TypeList : public Node {
+class List : public Node {
 public:
-    TypeList() {}
-    TypeList(Args* args) : Node(args) {}
+    List() {}
+    List(Args* args) : Node(args) {}
 
     virtual string name() { return "typelist"; }
     using Node::print;
@@ -508,7 +508,7 @@ public:
 
 class Func : public Node {
 public:
-    Func(string name, TypeList* types) : Node(new Str(name), types) {}
+    Func(string name, List* types) : Node(new Str(name), types) {}
 
     virtual string name() { return "func"; }
     using Node::print;
