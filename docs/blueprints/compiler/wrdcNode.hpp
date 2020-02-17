@@ -171,6 +171,16 @@ public:
     const char* _symbol;
 };
 
+class Param : public Node {
+public:
+    Param(Node* type, Node* var): Node(type, var) {}
+
+    virtual string name() { return "param"; }
+    virtual string _onPrint(int lv) {
+        return l()->print() + " " + r()->print();
+    }
+};
+
 class Plus : public Op2 {
 public:
     Plus(Node* l, Node* r) : Op2("+", l, r) {}
@@ -472,7 +482,7 @@ public:
     List() {}
     List(Args* args) : Node(args) {}
 
-    virtual string name() { return "typelist"; }
+    virtual string name() { return "list"; }
     using Node::print;
     virtual string _onPrint(int lv) {
         string ret = clr(CONTAINER) + "(";
@@ -508,9 +518,34 @@ public:
 
 class Func : public Node {
 public:
-    Func(string name, List* types) : Node(new Str(name), types) {}
+    Func(Node* retType, string name, Node* params, Node* block) {
+        add("retType", retType);
+        _name = name;
+        add("params", params);
+        add("block", block);
+    }
+    Func(Node* retType, string name, Node* params) {
+        add("retType", retType);
+        add("name", new Id(name));
+        add("params", params);
+    }
 
     virtual string name() { return "func"; }
+    virtual string _onPrint(int lv) {
+        Node* blk = get("block");
+        string blkStr = blk ? "\n" + blk->print() : "";
+        return get("retType")->print() + " " + clr(FUNC) + _name +
+            clr(CONTAINER) + "(" + get("params")->print() + clr(CONTAINER) + ")" + blkStr;
+    }
+
+    string _name;
+};
+
+class FuncCall : public Node {
+public:
+    FuncCall(string name, List* types) : Node(new Str(name), types) {}
+
+    virtual string name() { return "funcCall"; }
     using Node::print;
     virtual string _onPrint(int lv) {
         Value* name = (Value*) l();

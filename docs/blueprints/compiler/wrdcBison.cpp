@@ -44,8 +44,12 @@ void yyerror(const char* s)
 %token <strVal> tstr
 %token <strVal> tidentifier tfuncname
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq
-%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples
+
+
+%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples tparam tparams tfunc
+
 %type <nodes> telifBlocks
+
 
 %printer { fprintf(yyo, "%s[%d]", wrd::getName($$), $$); } tinteger;
 %printer { fprintf(yyo, "%s", $$); } tidentifier;
@@ -160,6 +164,7 @@ trhsexpr    : tinteger { $$ = new Int($1); }
                 $$ = new For(new Id($2), $4, (Container*) $6);
             }
             | termIf { $$ = $1; }
+            | tfuncCall { $$ = $1; }
             | tfunc { $$ = $1; }
             ;
 
@@ -270,11 +275,34 @@ tseq        : trhsexpr topSeq trhsexpr {
             }
 
 taccess     : trhsexpr '.' tidentifier { $$ = new Access($1, new Id($3)); }
-            | trhsexpr '.' tfunc { $$ = new Access($1, $3); }
+            | trhsexpr '.' tfuncCall { $$ = new Access($1, $3); }
             ;
 
-tfunc       : tfuncname trhslist {
-                $$ = new Func($1, (List*) $2);
+tparam      : ttype tidentifier {
+                $$ = new Param($1, new Id($2));
+            }
+
+tparams     : tparam {
+                Args* ret = new Args();
+                ret->add($1);
+                $$ = ret;
+            }
+            | tparams tparam {
+                Args* ret = (Args*) $1;
+                ret->add($2);
+                $$ = ret;
+            }
+            ;
+
+tfunc       : ttype tfuncname '(' tparams ')' teol tindentBlock {
+                $$ = new Func($1, $2, $4, $7);
+            }
+            | ttype tfuncname '(' tparams ')' teol {
+                $$ = new Func($1, $2, $4);
+            }
+
+tfuncCall   : tfuncname trhslist {
+                $$ = new FuncCall($1, (List*) $2);
             }
             ;
 
