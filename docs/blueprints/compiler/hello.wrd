@@ -1,3 +1,6 @@
+int[] foo(int max)
+    retfun 1..max
+
 res := float if a > 5
     if true
         if true
