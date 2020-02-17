@@ -44,7 +44,7 @@ void yyerror(const char* s)
 %token <strVal> tstr
 %token <strVal> tidentifier tfuncname
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq
-%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast targs ttlist tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf tseq tarray ttuple ttype tmap ttuples taccess treturn
+%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfunc telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples
 %type <nodes> telifBlocks
 
 %printer { fprintf(yyo, "%s[%d]", wrd::getName($$), $$); } tinteger;
@@ -108,7 +108,6 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             | tfloat { $$ = new Float($1); }
             | tstr { $$ = new Str($1); }
             | tchar { $$ = new Char($1); }
-            | ttlist { $$ = $1; }
             | tseq { $$ = $1; }
             | tarray { $$ = $1; }
             | tmap { $$ = $1; }
@@ -165,30 +164,23 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             ;
 
 tlhsexpr    : tidentifier { $$ = new Id($1); }
-            | tlhsexpr topDefAssign trhsexpr {
-                $$ = new DefAssign($1, $3);
-            }
-            | tlhsexpr topPlusAssign trhsexpr {
-                $$ = new PlusAssign($1, $3);
-            }
-            | tlhsexpr topMinusAssign trhsexpr {
-                $$ = new MinusAssign($1, $3);
-            }
-            | tlhsexpr topSquareAssign trhsexpr {
-                $$ = new SquareAssign($1, $3);
-            }
-            | tlhsexpr topDivideAssign trhsexpr {
-                $$ = new DivideAssign($1, $3);
-            }
-            | tlhsexpr topModAssign trhsexpr {
-                $$ = new ModulerAssign($1, $3);
-            }
-            | tlhsexpr topPowAssign trhsexpr {
-                $$ = new PowAssign($1, $3);
-            }
-            | tlhsexpr '=' trhsexpr {
-                $$ = new Assign($1, $3);
-            }
+            | tlhslist '=' trhslist { $$ = new Assign($1, $3); }
+            | tlhslist topDefAssign trhslist { $$ = new DefAssign($1, $3); }
+            | tlhslist topPlusAssign trhslist { $$ = new PlusAssign($1, $3); }
+            | tlhslist topMinusAssign trhslist { $$ = new MinusAssign($1, $3); }
+            | tlhslist topSquareAssign trhslist { $$ = new SquareAssign($1, $3); }
+            | tlhslist topDivideAssign trhslist { $$ = new DivideAssign($1, $3); }
+            | tlhslist topModAssign trhslist { $$ = new ModulerAssign($1, $3); }
+            | tlhslist topPowAssign trhslist { $$ = new PowAssign($1, $3); }
+
+            | tlhsexpr topDefAssign trhsexpr { $$ = new DefAssign($1, $3); }
+            | tlhsexpr topPlusAssign trhsexpr { $$ = new PlusAssign($1, $3); }
+            | tlhsexpr topMinusAssign trhsexpr { $$ = new MinusAssign($1, $3); }
+            | tlhsexpr topSquareAssign trhsexpr { $$ = new SquareAssign($1, $3); }
+            | tlhsexpr topDivideAssign trhsexpr { $$ = new DivideAssign($1, $3); }
+            | tlhsexpr topModAssign trhsexpr { $$ = new ModulerAssign($1, $3); }
+            | tlhsexpr topPowAssign trhsexpr { $$ = new PowAssign($1, $3); }
+            | tlhsexpr '=' trhsexpr { $$ = new Assign($1, $3); }
             ;
 
 ttype       : tidentifier { $$ = new Id($1); }
@@ -198,7 +190,6 @@ ttype       : tidentifier { $$ = new Id($1); }
             | ttype '[' ttype ']' {
                 $$ = new MapOrigin($1, $3);
             }
-            | ttuple { $$ = $1; }
             ;
 
 tcast       : ttype trhsexpr {
@@ -215,25 +206,40 @@ treturn     : tret trhsexpr { $$ = new Return("ret", $2); }
             ;
 
 
-targs       : trhsexpr {
+tlhsargs    : tlhsexpr {
                 Args* ret = new Args();
                 ret->add($1);
                 $$ = ret;
             }
-            | targs ',' trhsexpr {
+            | tlhsargs ',' tlhsexpr {
+                Args* ret = (Args*) $1;
+                ret->add($3);
+                $$ = ret;
+            }
+
+trhsargs    : trhsexpr {
+                Args* ret = new Args();
+                ret->add($1);
+                $$ = ret;
+            }
+            | trhsargs ',' trhsexpr {
                 Args* ret = (Args*) $1;
                 ret->add($3);
                 $$ = ret;
             }
             ;
 
-ttlist      : '(' targs ')' { //  " "를 쓰면 안된다.
-                $$ = new TypeList((Args*) $2);
+trhslist    : '(' trhsargs ')' { //  " "를 쓰면 안된다.
+                $$ = new List((Args*) $2);
             }
             | '(' ')' {
-                $$ = new TypeList();
+                $$ = new List();
             }
             ;
+
+tlhslist    : '(' tlhsargs ')' {
+                $$ = new List((Args*) $2);
+            }
 
 ttuple      : trhsexpr ':' trhsexpr {
                 $$ = new Tuple($1, $3);
@@ -255,7 +261,7 @@ tmap        : '[' ttuples ']' {
                 $$ = new Array($2);
             }
 
-tarray      : '[' targs ']' {
+tarray      : '[' trhsargs ']' {
                 $$ = new Array($2);
             }
 
@@ -267,8 +273,8 @@ taccess     : trhsexpr '.' tidentifier { $$ = new Access($1, new Id($3)); }
             | trhsexpr '.' tfunc { $$ = new Access($1, $3); }
             ;
 
-tfunc       : tfuncname ttlist {
-                $$ = new Func($1, (TypeList*) $2);
+tfunc       : tfuncname trhslist {
+                $$ = new Func($1, (List*) $2);
             }
             ;
 
