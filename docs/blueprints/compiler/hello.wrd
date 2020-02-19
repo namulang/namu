@@ -1,10 +1,10 @@
 //def A
 
-def A
+def _A
     n := 5
 
-b := def B from A
-    int[] foo(int max)
+b := def _$B from A
+    int[] _foo(int max)
         retfun 1..max
 
 res := float if a > 5
