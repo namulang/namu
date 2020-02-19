@@ -11,7 +11,7 @@ def Hello
         int[] _foo(int max)
             retfun 1..max
 
-        res := float if a > 5
+        res := float if a > 0 & a < 5
             if true
                 if true
                     for a in 2..foo(5)
@@ -26,7 +26,7 @@ def Hello
             dn.len
             dn.each(foo(n))
 
-        elif a == 7
+        elif a == 7 | a== 6
             ret a = 0
 
         else
