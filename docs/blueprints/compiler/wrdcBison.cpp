@@ -42,7 +42,10 @@ void yyerror(const char* s)
 %token <boolVal> tbool
 %token <charVal> tchar
 %token <strVal> tstr
-%token <strVal> tidentifier tfuncname
+
+%token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname
+%type <strVal> tid tfuncname
+
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq
 
 
@@ -51,10 +54,6 @@ void yyerror(const char* s)
 %type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock
 
 %type <nodes> telifBlocks
-
-
-%printer { fprintf(yyo, "%s[%d]", wrd::getName($$), $$); } tinteger;
-%printer { fprintf(yyo, "%s", $$); } tidentifier;
 
 // 우선순위: 밑으로 갈수록 높음.
 //  결합 순서 정의:
@@ -68,6 +67,14 @@ void yyerror(const char* s)
 %left '.'
 
 %%
+
+tid         : tnormalId { $$ = $1; }
+            | taccessedId { $$ = $1; }
+            ;
+
+tfuncname   : tnormalFuncname { $$ = $1; }
+            | taccessedFuncname { $$ = $1; }
+            ;
 
 telseBlock  : teol telse teol tindentBlock {
                 $$ = $4;
@@ -162,7 +169,7 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             | trhsexpr topNotRefEqual trhsexpr {
                 $$ = new NotRefEqual($1, $3);
             }
-            | tfor tidentifier tin trhsexpr teol tindentBlock {
+            | tfor tid tin trhsexpr teol tindentBlock {
                 $$ = new For(new Id($2), $4, (Container*) $6);
             }
             | termIf { $$ = $1; }
@@ -170,12 +177,12 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             ;
 
 tdefexpr    : tlhslist topDefAssign trhslist { $$ = new DefAssign($1, $3); }
-            | tlhsexpr topDefAssign trhsexpr { $$ = new DefAssign($1, $3); }
+            | tid topDefAssign trhsexpr { $$ = new DefAssign(new Id($1), $3); }
             | tdefOrigin { $$ = $1; }
             | tfunc { $$ = $1; }
             ;
 
-tlhsexpr    : tidentifier { $$ = new Id($1); }
+tlhsexpr    : tid { $$ = new Id($1); }
             | tdefexpr { $$ = $1; }
             | tlhslist '=' trhslist { $$ = new Assign($1, $3); }
             | tlhslist topPlusAssign trhslist { $$ = new PlusAssign($1, $3); }
@@ -194,7 +201,7 @@ tlhsexpr    : tidentifier { $$ = new Id($1); }
             | tlhsexpr '=' trhsexpr { $$ = new Assign($1, $3); }
             ;
 
-ttype       : tidentifier { $$ = new Id($1); }
+ttype       : tnormalId { $$ = new Id($1); }
             | ttype '[' ']' {
                 $$ = new Origin($1->print() + "[]");
             }
@@ -280,11 +287,11 @@ tseq        : trhsexpr topSeq trhsexpr {
                 $$ = new Sequence($1, $3);
             }
 
-taccess     : trhsexpr '.' tidentifier { $$ = new Access($1, new Id($3)); }
+taccess     : trhsexpr '.' tnormalId { $$ = new Access($1, new Id($3)); }
             | trhsexpr '.' tfuncCall { $$ = new Access($1, $3); }
             ;
 
-tparam      : ttype tidentifier {
+tparam      : ttype tid {
                 $$ = new Param($1, new Id($2));
             }
 
@@ -300,10 +307,10 @@ tparams     : tparam {
             }
             ;
 
-tdefOrigin  : tdef tidentifier teol tdefIndentBlock {
+tdefOrigin  : tdef tid teol tdefIndentBlock {
                 $$ = new Def($2, 0, $4);
             }
-            | tdef tidentifier tfrom tidentifier teol tdefIndentBlock {
+            | tdef tid tfrom tnormalId teol tdefIndentBlock {
                 $$ = new Def($2, new Id($4), $6);
             }
             ;
@@ -315,7 +322,7 @@ tfunc       : ttype tfuncname '(' tparams ')' teol tindentBlock {
                 $$ = new Func($1, $2, $4);
             }
 
-tfuncCall   : tfuncname trhslist {
+tfuncCall   : tnormalFuncname trhslist {
                 $$ = new FuncCall($1, (List*) $2);
             }
             ;

@@ -2,32 +2,15 @@
 #include <string>
 class Node;
 #include "wrdcBison.h"
-using namespace std;
 int yylex();
 extern int yylineno;
 extern char* yytext;
 int yyparse();
 
-namespace wrd
-{
-    const char* getName(int type)
-    {
-        switch(type)
-        {
-#define N(x) case x: return #x;
-            N(tidentifier)
-            N(tinteger)
-        default:
-            return "";
-        }
-    }
-}
-
 extern FILE *yyin, *yyout;
 
 int main(int argc, char* argv[])
 {
-    using namespace wrd;
     using namespace std;
 
     cout    << "\n"

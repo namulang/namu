@@ -84,7 +84,12 @@ got { return tgot; }
 
 [a-zA-Z][a-zA-Z0-9_]*   {
     yylval.strVal = strdup(yytext);
-    return tidentifier;
+    return tnormalId;
+}
+
+(_$|_|$)[a-zA-Z0-9_]+ {
+    yylval.strVal = strdup(yytext);
+    return taccessedId;
 }
 
 <INITIAL>\" {
@@ -167,13 +172,22 @@ true|false {
     return tbool;
 }
 
-[a-zA-A][a-zA-Z0-9_]+\( {
+(_$|$|_)[a-zA-Z0-9_]+\( {
     string temp = yytext;
     temp = temp.substr(0, temp.size()-1);
     yylval.strVal = strdup(temp.c_str());
     unput('(');
-    return tfuncname;
+    return taccessedFuncname;
 }
+
+[a-zA-Z][a-zA-Z0-9_]*\( {
+    string temp = yytext;
+    temp = temp.substr(0, temp.size()-1);
+    yylval.strVal = strdup(temp.c_str());
+    unput('(');
+    return tnormalFuncname;
+}
+
 
 <indent>[ ] { nowIndent++; }
 <indent>\t {
