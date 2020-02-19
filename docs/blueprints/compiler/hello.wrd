@@ -16,6 +16,8 @@ def Hello
                 if true
                     for a in 2..foo(5)
                         dn = float a + 3
+                        if dn == 0
+                            again
                 else
                     retfun 0
 
@@ -24,7 +26,7 @@ def Hello
             cout("a=" + a)
             (dn, dmap) := (int[][] [1, 2, foo(3)], int[str] [3:"banana", 3: "apple"])
             dn.len
-            dn.each(foo(n))
+            dn?.each(foo(n))
 
         elif a == 7 | a== 6
             ret a = 0

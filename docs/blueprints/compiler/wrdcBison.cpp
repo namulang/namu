@@ -49,10 +49,10 @@ void yyerror(const char* s)
 %token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname
 %type <strVal> tid tfuncname
 
-%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq
+%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi
 
 
-%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples tparam tparams tfunc tctorfunc tdtorfunc
+%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples tparam tparams tfunc tctorfunc tdtorfunc tsafeAccess
 
 %type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock
 
@@ -132,6 +132,7 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             | tlhsexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
             | taccess { $$ = $1; }
+            | tsafeAccess { $$ = $1; }
             | trhsexpr '+' trhsexpr %dprec 2 {
                 $$ = new Plus($1, $3);
             }
@@ -301,6 +302,10 @@ taccess     : trhsexpr '.' tnormalId { $$ = new Access($1, new Id($3)); }
             | trhsexpr '.' tfuncCall { $$ = new Access($1, $3); }
             ;
 
+tsafeAccess : trhsexpr topSafeNavi tnormalId { $$ = new SafeAccess($1, new Id($3)); }
+            | trhsexpr topSafeNavi tfuncCall { $$ = new SafeAccess($1, $3); }
+            ;
+
 tparam      : ttype tid {
                 $$ = new Param($1, new Id($2));
             }
@@ -365,6 +370,7 @@ tdefStmt    : tdefexpr teol { $$ = new Stmt($1); }
 
 tstmt       : trhsexpr teol { $$ = new Stmt($1); }
             | treturn teol { $$ = new Stmt($1); }
+            | tagain teol { $$ = new Again(); }
             | trhsexpr teof { $$ = new Stmt($1); }
             | teol { $$ = new Stmt(new Str("")); }
             ;
