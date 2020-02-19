@@ -271,6 +271,16 @@ public:
     }
 };
 
+class SafeAccess : public Node {
+public:
+    SafeAccess(Node* obj, Node* member): Node(obj, member) {}
+    virtual string name() { return "safeAccess"; }
+    virtual string _onPrint(int lv) {
+        return l()->print() + clr(OP) + "?." + r()->print();
+    }
+};
+
+
 class Assign : public SomeAssign {
 public:
     Assign(Node* l, Node* r) : SomeAssign("=", l, r) {}
@@ -396,6 +406,14 @@ public:
     }
 
     string _name;
+};
+
+class Again : public Node {
+public:
+    virtual string name() { return "again"; }
+    virtual string _onPrint(int lv) {
+        return clr(RED) + "again\n";
+    }
 };
 
 class For : public BlockHaver {

@@ -162,6 +162,7 @@ got { return tgot; }
 \=\=\= { return topRefEqual; }
 \!\= { return topNotEqual; }
 \!\=\= { return topNotRefEqual; }
+\?\. { return topSafeNavi; }
 \.\. { return topSeq; }
 
 \'.\' {
