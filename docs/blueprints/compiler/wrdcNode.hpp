@@ -533,9 +533,25 @@ public:
     virtual string name() { return "func"; }
     virtual string _onPrint(int lv) {
         Node* blk = get("block");
-        string blkStr = blk ? "\n" + blk->print() : "";
+        string blkStr = blk ? "\n" + blk->print(lv) : "";
         return get("retType")->print() + " " + clr(FUNC) + _name +
             clr(CONTAINER) + "(" + get("params")->print() + clr(CONTAINER) + ")" + blkStr;
+    }
+
+    string _name;
+};
+
+class Def : public BlockHaver {
+public:
+    Def(string name, Node* from, Node* block): BlockHaver(block), _name(name) {
+        add("from", from);
+    }
+
+    virtual string name() { return "def"; }
+    virtual string _onPrint(int lv) {
+        Node* from = get("from");
+        string fromStr = from ? clr(KEYWORD) + " from "+ clr(TYPE) + from->print() : "";
+        return clr(KEYWORD) + "def " + clr(TYPE) + _name + fromStr + "\n" + has()->print(lv);
     }
 
     string _name;
