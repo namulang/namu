@@ -120,7 +120,6 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             | tlhsexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
             | taccess { $$ = $1; }
-            | tdefOrigin { $$ = $1; }
             | trhsexpr '+' trhsexpr %dprec 2 {
                 $$ = new Plus($1, $3);
             }
@@ -172,6 +171,7 @@ trhsexpr    : tinteger { $$ = new Int($1); }
 
 tdefexpr    : tlhslist topDefAssign trhslist { $$ = new DefAssign($1, $3); }
             | tlhsexpr topDefAssign trhsexpr { $$ = new DefAssign($1, $3); }
+            | tdefOrigin { $$ = $1; }
             | tfunc { $$ = $1; }
             ;
 
@@ -344,7 +344,7 @@ tblock      : tstmt {
             }
             ;
 
-tdefBlock   : tdefexpr {
+tdefBlock   : tdefStmt {
                 Block* ret = new Block();
                 if ($1)
                     ret->add($1);
@@ -362,7 +362,7 @@ tdefIndentBlock: tindent tdefBlock tdedent { $$ = $2; }
 
 tindentBlock: tindent tblock tdedent { $$ = $2; }
 
-tfile       : tblock teof {
+tfile       : tdefBlock teof {
                 Block* blk = (Block*) $1;
                 File* ret = new File(blk);
                 cout << ret->print();
