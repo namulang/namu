@@ -61,6 +61,12 @@ this { return tthis; }
 super { return tsuper; }
 me { return tme; }
 got { return tgot; }
+@ctor { return tfctor; }
+@dtor { return tfdtor; }
+@res { return tfres; }
+@warn { return tfwarn; }
+@err { return tferr; }
+
 
 <dedent>\/\/[^\n]* { cout << "!!!!2"; }
 <indent>\/\/[^\n]* { cout << "!!!!3"; }
@@ -119,10 +125,6 @@ got { return tgot; }
 <dedent>[ ] { nowIndent++; }
 <dedent>\t {
     nowIndent = (nowIndent + TAB_WIDTH) & ~(TAB_WIDTH - 1);
-}
-<dedent>\0 {
-    cout << "----------------------dedent: EOF!!!!!\n";
-    return meetEof();
 }
 <dedent>. {
     char ch = yytext[0];

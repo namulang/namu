@@ -1,30 +1,34 @@
-//def A
+def Hello
+    def _A
+        @ctor()
+            cout("A()")
+        @dtor()
+            cout("~A()")
 
-def _A
-    n := 5
+        n := 5
 
-b := def _$B from A
-    int[] _foo(int max)
-        retfun 1..max
+    b := def _$B from A
+        int[] _foo(int max)
+            retfun 1..max
 
-res := float if a > 5
-    if true
-        if true
-            for a in 2..foo(5)
-                dn = float a + 3
+        res := float if a > 5
+            if true
+                if true
+                    for a in 2..foo(5)
+                        dn = float a + 3
+                else
+                    retfun 0
+
+        // comment.
+        elif a == 5 /* also, comment */
+            cout("a=" + a)
+            (dn, dmap) := (int[][] [1, 2, foo(3)], int[str] [3:"banana", 3: "apple"])
+            dn.len
+            dn.each(foo(n))
+
+        elif a == 7
+            ret a = 0
+
         else
-            retfun 0
-
-// comment.
-elif a == 5 /* also, comment */
-    cout("a=" + a)
-    (dn, dmap) := (int[][] [1, 2, foo(3)], int[str] [3:"banana", 3: "apple"])
-    dn.len
-    dn.each(foo(n))
-
-elif a == 7
-    ret a = 0
-
-else
-    retif d
+            retif d
 

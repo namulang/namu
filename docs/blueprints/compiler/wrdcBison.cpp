@@ -37,6 +37,8 @@ void yyerror(const char* s)
 %start tfile
 
 %token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tme tgot tnode tnull tsuper tout tin tindent tdedent
+%token tfctor tfdtor tfres tfwarn tferr
+
 %token <intVal> tinteger teof
 %token <floatVal> tfloat
 %token <boolVal> tbool
@@ -49,7 +51,7 @@ void yyerror(const char* s)
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq
 
 
-%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples tparam tparams tfunc
+%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples tparam tparams tfunc tctorfunc tdtorfunc
 
 %type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock
 
@@ -180,6 +182,8 @@ tdefexpr    : tlhslist topDefAssign trhslist { $$ = new DefAssign($1, $3); }
             | tid topDefAssign trhsexpr { $$ = new DefAssign(new Id($1), $3); }
             | tdefOrigin { $$ = $1; }
             | tfunc { $$ = $1; }
+            | tctorfunc { $$ = $1; }
+            | tdtorfunc { $$ = $1; }
             ;
 
 tlhsexpr    : tid { $$ = new Id($1); }
@@ -318,9 +322,31 @@ tdefOrigin  : tdef tid teol tdefIndentBlock {
 tfunc       : ttype tfuncname '(' tparams ')' teol tindentBlock {
                 $$ = new Func($1, $2, $4, $7);
             }
+            | ttype tfuncname '(' ')' teol tindentBlock {
+                $$ = new Func($1, $2, 0, $6);
+            }
             | ttype tfuncname '(' tparams ')' teol {
                 $$ = new Func($1, $2, $4);
             }
+            | ttype tfuncname '(' ')' teol {
+                $$ = new Func($1, $2, 0);
+            }
+
+tctorfunc   : tfctor '(' tparams ')' teol tindentBlock {
+                $$ = new Func(new Id(""), "@ctor", $3, $6);
+            }
+            | tfctor '(' ')' teol tindentBlock {
+                $$ = new Func(new Id(""), "@ctor", 0, $5);
+            }
+            ;
+
+tdtorfunc   : tfdtor '(' tparams ')' teol tindentBlock {
+                $$ = new Func(new Id(""), "@dtor", $3, $6);
+            }
+            | tfdtor '(' ')' teol tindentBlock {
+                $$ = new Func(new Id(""), "@dtor", 0, $5);
+            }
+            ;
 
 tfuncCall   : tnormalFuncname trhslist {
                 $$ = new FuncCall($1, (List*) $2);
@@ -369,10 +395,15 @@ tdefIndentBlock: tindent tdefBlock tdedent { $$ = $2; }
 
 tindentBlock: tindent tblock tdedent { $$ = $2; }
 
-tfile       : tdefBlock teof {
-                Block* blk = (Block*) $1;
-                File* ret = new File(blk);
-                cout << ret->print();
-                $$ = ret;
+tfile       : tfile tdefOrigin {
+                cout << $2->print();
+                $$ = $2;
             }
+            | tdefOrigin {
+                cout << $1->print();
+                $$ = $1;
+            }
+            | teol {}
+            | tfile teol { $$ = $1; }
+            | tfile teof { $$ = $1; }
             ;

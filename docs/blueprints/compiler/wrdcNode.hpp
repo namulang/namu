@@ -534,8 +534,9 @@ public:
     virtual string _onPrint(int lv) {
         Node* blk = get("block");
         string blkStr = blk ? "\n" + blk->print(lv) : "";
+        string params = get("params") ? get("params")->print() : "";
         return get("retType")->print() + " " + clr(FUNC) + _name +
-            clr(CONTAINER) + "(" + get("params")->print() + clr(CONTAINER) + ")" + blkStr;
+            clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" + blkStr;
     }
 
     string _name;
