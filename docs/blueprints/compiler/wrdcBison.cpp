@@ -38,6 +38,7 @@ void yyerror(const char* s)
 
 %token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tme tgot tnode tnull tsuper tout tin tindent tdedent
 %token tfctor tfdtor tfres tfwarn tferr
+%token tand tor
 
 %token <intVal> tinteger teof
 %token <floatVal> tfloat
@@ -63,6 +64,8 @@ void yyerror(const char* s)
 //      left: 왼쪽 결합.
 //      right: 오른쪽 결합.
 %left ":=" '=' "+=" "-=" "/=" "*=" "%=" "^="
+%left '&' '|'
+%left '<' '>' topMoreEqual topLessEqual topEqual topRefEqual topNotEqual topNotRefEqual
 %left '%' '^'
 %left '+' '-'
 %left '*' '/'
@@ -132,45 +135,48 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             | trhsexpr '+' trhsexpr %dprec 2 {
                 $$ = new Plus($1, $3);
             }
-            | trhsexpr '-' trhsexpr {
+            | trhsexpr '-' trhsexpr %dprec 2 {
                 $$ = new Minus($1, $3);
             }
-            | trhsexpr '*' trhsexpr {
+            | trhsexpr '*' trhsexpr %dprec 2 {
                 $$ = new Square($1, $3);
             }
-            | trhsexpr '/' trhsexpr {
+            | trhsexpr '/' trhsexpr %dprec 2 {
                 $$ = new Divide($1, $3);
             }
-            | trhsexpr '%' trhsexpr {
+            | trhsexpr '%' trhsexpr %dprec 2 {
                 $$ = new Moduler($1, $3);
             }
-            | trhsexpr '^' trhsexpr {
+            | trhsexpr '^' trhsexpr %dprec 2 {
                 $$ = new Power($1, $3);
             }
-            | trhsexpr '<' trhsexpr {
+            | trhsexpr '<' trhsexpr %dprec 2 {
                 $$ = new Less($1, $3);
             }
-            | trhsexpr topLessEqual trhsexpr {
+            | trhsexpr topLessEqual trhsexpr %dprec 2 {
                 $$ = new LessEqual($1, $3);
             }
-            | trhsexpr '>' trhsexpr {
+            | trhsexpr '>' trhsexpr %dprec 2 {
                 $$ = new More($1, $3);
             }
-            | trhsexpr topMoreEqual trhsexpr {
+            | trhsexpr topMoreEqual trhsexpr %dprec 2 {
                 $$ = new MoreEqual($1, $3);
             }
-            | trhsexpr topEqual trhsexpr {
+            | trhsexpr topEqual trhsexpr %dprec 2 {
                 $$ = new Equal($1, $3);
             }
-            | trhsexpr topRefEqual trhsexpr {
+            | trhsexpr topRefEqual trhsexpr %dprec 2 {
                 $$ = new RefEqual($1, $3);
             }
-            | trhsexpr topNotEqual trhsexpr {
+            | trhsexpr topNotEqual trhsexpr %dprec 2 {
                 $$ = new NotEqual($1, $3);
             }
-            | trhsexpr topNotRefEqual trhsexpr {
+            | trhsexpr topNotRefEqual trhsexpr %dprec 2 {
                 $$ = new NotRefEqual($1, $3);
             }
+            | trhsexpr '&' trhsexpr %dprec 3 { $$ = new And($1, $3); }
+            | trhsexpr '|' trhsexpr %dprec 3 { $$ = new Or($1, $3); }
+
             | tfor tid tin trhsexpr teol tindentBlock {
                 $$ = new For(new Id($2), $4, (Container*) $6);
             }

@@ -237,6 +237,14 @@ class NotRefEqual : public Op2 {
 public:
     NotRefEqual(Node* l, Node* r) : Op2("!==", l, r) {}
 };
+class And : public Op2 {
+public:
+    And(Node* l, Node* r): Op2("&", l, r) {}
+};
+class Or : public Op2 {
+public:
+    Or(Node* l, Node* r): Op2("|", l, r) {}
+};
 
 
 
