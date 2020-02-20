@@ -26,9 +26,10 @@ def Hello
 
         // comment.
         elif a == 5 /* also, comment */
-            cout("a=" + a)
-            (dn, dmap) := (int[][] [1, 2, foo(3)], int[str] [3:"banana", 3: "apple"])
-            dn.len
+            with dn
+                cout("a=" + a)
+                (dn, dmap) := (int[][] [1, 2, foo(3)], int[str] [3:"banana", 3: "apple"])
+                len // dn.len
             dn?.each(foo(n))
 
         elif a == 7 | a== 6

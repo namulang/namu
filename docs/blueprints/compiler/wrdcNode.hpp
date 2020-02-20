@@ -445,6 +445,21 @@ public:
         return clr(KEYWORD) + "for " + l()->print() + clr(KEYWORD) + " in " + r()->print() + "\n" + block()->print(lv);
     }
 };
+
+class With : public BlockHaver {
+public:
+    With(Node* id, Node* block): BlockHaver(block) {
+        lIs(id);
+    }
+    With(Node* block): BlockHaver(block) {}
+
+    virtual string name() { return "with"; }
+    virtual string _onPrint(int lv) {
+        string id = l() ? l()->print() : "";
+        return clr(KEYWORD) + "with " + id + "\n" + block()->print(lv);
+    }
+};
+
 class Branch : public BlockHaver {
 public:
     Branch(Node* expr, Container* then): BlockHaver(then) {
