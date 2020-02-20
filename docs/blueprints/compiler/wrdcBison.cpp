@@ -183,6 +183,15 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             | tfor tid tin trhsexpr teol tindentBlock {
                 $$ = new For(new Id($2), $4, (Container*) $6);
             }
+
+            | twith tnormalId teol tindentBlock {
+                $$ = new With(new Id($2), $4);
+            }
+            | twith teol tindentBlock {
+                $$ = new With(0, $3);
+            }
+            ;
+
             | termIf { $$ = $1; }
             | tfuncCall { $$ = $1; }
             ;
