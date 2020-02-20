@@ -212,11 +212,16 @@ tlhsexpr    : tid { $$ = new Id($1); }
             | tlhsexpr '=' trhsexpr { $$ = new Assign($1, $3); }
             ;
 
-ttype       : tnormalId { $$ = new Id($1); }
+ttype       : tnormalId {
+                  cout << "--------ttype(normalId=" << $1 << "\n";
+                  $$ = new Id($1);
+              }
             | ttype '[' ']' {
+                  cout << "--------ttype[]=" << $1->print() << "\n";
                 $$ = new Origin($1->print() + "[]");
             }
             | ttype '[' ttype ']' {
+                cout << "--------ttype[ttype]\n";
                 $$ = new MapOrigin($1, $3);
             }
             ;

@@ -21,6 +21,8 @@
         nowRule = new1;
     }
     void changeRule(const char* name, int new1) {
+        if (nowRule == new1) return;
+
         shiftRules(new1);
         BEGIN(new1);
         cout << " ---- CHANGE RULE to " << name << "(" << new1 << ")\n";
@@ -36,6 +38,7 @@
 %x indent
 %x dedent
 %x commenting
+%x arraytyping
 
 %%
 
@@ -67,6 +70,10 @@ got { return tgot; }
 @warn { return tfwarn; }
 @err { return tferr; }
 
+true|false {
+    yylval.boolVal = string(yytext) == "true" ? true : false;
+    return tbool;
+}
 
 <dedent>\/\/[^\n]* { cout << "!!!!2"; }
 <indent>\/\/[^\n]* { cout << "!!!!3"; }
@@ -87,6 +94,44 @@ got { return tgot; }
 }
 <commenting>. { cout << "1";}
 <commenting>\n { cout << "2"; }
+
+
+
+
+
+
+[a-zA-Z][a-zA-Z0-9_]*\[ {
+    string temp = yytext;
+    changeRule("arraytyping", arraytyping);
+
+    unput('[');
+    temp = temp.substr(0, temp.size()-1);
+    yylval.strVal = strdup(temp.c_str());
+    return tnormalId;
+}
+
+<arraytyping>\[ {
+    cout << "----------lex: found '[' \n";
+    return yytext[0];
+}
+<arraytyping>\]\[ {
+    unput('[');
+    return yytext[0];
+}
+<arraytyping>\] {
+    changePrevRule();
+    cout << "----------lex: found ']' \n";
+    return yytext[0];
+}
+<arraytyping>[a-zA-Z0-9_]+\] {
+    string temp = yytext;
+    temp = temp.substr(0, temp.size()-1);
+    unput(']');
+    yylval.strVal = strdup(temp.c_str());
+    cout << "----------lex: tnormalId is " << yylval.strVal << " ---- \n";
+    return tnormalId;
+}
+
 
 [a-zA-Z][a-zA-Z0-9_]*   {
     yylval.strVal = strdup(yytext);
@@ -139,6 +184,11 @@ got { return tgot; }
     }
 }
 
+
+
+
+
+
 ([1-9][0-9]*|0) {
     yylval.intVal = atoi(yytext);
     return tinteger;
@@ -168,11 +218,6 @@ got { return tgot; }
 \'.\' {
     yylval.charVal = yytext[1];
     return tchar;
-}
-
-true|false {
-    yylval.boolVal = string(yytext) == "true" ? true : false;
-    return tbool;
 }
 
 (_$|$|_)[a-zA-Z0-9_]+\( {
