@@ -133,12 +133,29 @@ true|false {
 }
 
 
+
 [a-zA-Z][a-zA-Z0-9_]*   {
     yylval.strVal = strdup(yytext);
     return tnormalId;
 }
 
 (_$|_|$)[a-zA-Z0-9_]+ {
+    // Accessed 컨셉:
+    //  배경:
+    //      * accessed란 식별자 정의시, 그 앞에 protected인지 static인지 속성을 지정하는 것을 말한다.
+    //      * 이때 이 accessed가 올바르게 작성된것인지 판단을 lexer에서 하는지, parser에서 하는지를 구분하고자 한다.
+    //
+    //  해결:
+    //      * lex에서는 accessed가 올 수 있는자리다... 라는 것 까지만 판단한다.
+    //      *  이를테면 모든 시나리오를 고려했을때 해당 lexer 룰의 accessed가 와도 되는 케이스가 1개라도 존재한다면
+    //      *  lex에서는 accessed가 올 수 있다는 걸 rule에 포함할 것이다.
+    //      * 정말로 accessed가 올바르게 작성되었는가는 파서가 판단한다.
+    //      *  왜냐하면 이것을 정확하게 알기 위해서는 파서가 앞 뒤의 문맥을 보고 판단을 해야 하기 때문이다.
+    //
+    //  결론:
+    //      * lexer는 문맥을 보지 못한다. 해당 rule에 accessed가 올 수 있는 1가지의 시나리오라도 존재한다면 rule에 포함한다.
+    //      * 파서는 문맥을 볼 수 있으므로, lexer가 건내준 accessed가 올바른 것인지 최종 판단한다.
+
     yylval.strVal = strdup(yytext);
     return taccessedId;
 }

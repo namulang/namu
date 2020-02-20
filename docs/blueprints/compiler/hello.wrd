@@ -10,11 +10,11 @@ def Hello
 
         n := 5
 
-    b := def _$B from A
-        res=>int[] _foo(int max)
+    _b := def _$B from A
+        $res=>int[] _foo(int max)
             retfun 1..max
 
-        res := float if a > 0 & a < 5
+        $res := float if a > 0 & a < 5
             if true
                 if true
                     for a in 2..foo(5)
