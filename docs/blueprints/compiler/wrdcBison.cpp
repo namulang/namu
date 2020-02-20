@@ -342,12 +342,12 @@ tfunclist   : '(' ')' { $$ = 0; }
             ;
 
 tfuncleft   : topRedirect { $$ = new Redirect(); }
-            | tnormalId topRedirect { $$ = new Redirect(new Id($1)); }
+            | tid topRedirect { $$ = new Redirect(new Id($1)); }
             | tlhslist topRedirect { $$ = new Redirect($1); }
             ;
 
 tfuncright  : topRedirect { $$ = new Redirect(); }
-            | topRedirect tnormalId { $$ = new Redirect(new Id($2)); }
+            | topRedirect tid { $$ = new Redirect(new Id($2)); }
             | topRedirect tlhslist { $$ = new Redirect($2); }
             ;
 
