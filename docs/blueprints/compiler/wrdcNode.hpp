@@ -95,7 +95,23 @@ public:
     virtual string name() { return "id"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        return clr(TYPE) + _value;
+        int color = _getColor(_value);
+        return clr(Color(color)) + _value;
+    }
+
+    int _getColor(const string& value) {
+        static vector<string> prebuilt = {
+            "null",
+            "got",
+            "super",
+            "this",
+            "me",
+        };
+
+        for(string e : prebuilt)
+            if(_value == e) return RED;
+
+        return TYPE;
     }
 };
 
