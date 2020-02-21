@@ -17,6 +17,9 @@ def Hello
 
         $res := float if a > 0 & a < 5
             if true
+                @err(rNull r)
+                    cout("err(rNull)")
+
                 if true
                     for a in 2..foo(5)
                         dn = float a + 3
