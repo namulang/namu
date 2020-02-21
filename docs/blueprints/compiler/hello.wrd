@@ -1,14 +1,17 @@
 def Hello
-    def _A
+    def _A from proxy
         @ctor()
             cout("A()")
         @dtor()
             cout("~A()")
 
+        void foo()=>
+            s
+
         n := 5
 
     b := def _$B from A
-        int[] _foo(int max)
+        res=>int[] _foo(int max)
             retfun 1..max
 
         res := float if a > 0 & a < 5

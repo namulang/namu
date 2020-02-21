@@ -165,7 +165,10 @@ public:
     virtual string name() { return _symbol; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        return clr(OP) + "(" + l()->print() + " " + clr(OP) + _symbol + " " + r()->print() + clr(OP) + ")";
+        string  lStr = l() ? l()->print() : "",
+                rStr = r() ? r()->print() : "";
+
+        return clr(OP) + "(" + lStr + " " + clr(OP) + _symbol + " " + rStr + clr(OP) + ")";
     }
 
     const char* _symbol;
@@ -244,6 +247,19 @@ public:
 class Or : public Op2 {
 public:
     Or(Node* l, Node* r): Op2("|", l, r) {}
+};
+
+class Redirect : public Op2 {
+public:
+    Redirect(Node* l, Node* r): Op2("=>", l, r) {}
+    Redirect(Node* l): Op2("=>", l, 0) {}
+    Redirect(): Op2("=>", 0, 0) {}
+
+    virtual string _onPrint(int lv) {
+        string  lStr = l() ? l()->print() : "",
+                rStr = r() ? r()->print() : "";
+        return lStr + " " + clr(OP) + _symbol + " " + rStr;
+    }
 };
 
 
@@ -544,25 +560,26 @@ public:
 
 class Func : public Node {
 public:
-    Func(Node* retType, string name, Node* params, Node* block) {
+    Func(Node* lRedirect, Node* retType, string name, Node* params, Node* rRedirect, Node* block) {
+        add("lRedirect", lRedirect);
         add("retType", retType);
         _name = name;
         add("params", params);
+        add("rRedirect", rRedirect);
         add("block", block);
-    }
-    Func(Node* retType, string name, Node* params) {
-        add("retType", retType);
-        add("name", new Id(name));
-        add("params", params);
     }
 
     virtual string name() { return "func"; }
     virtual string _onPrint(int lv) {
         Node* blk = get("block");
-        string blkStr = blk ? "\n" + blk->print(lv) : "";
-        string params = get("params") ? get("params")->print() : "";
-        return get("retType")->print() + " " + clr(FUNC) + _name +
-            clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" + blkStr;
+        string  blkStr = blk ? "\n" + blk->print(lv) : "",
+                params = get("params") ? get("params")->print() : "",
+                lRed = get("lRedirect") ? get("lRedirect")->print() : "",
+                rRed = get("rRedirect") ? get("rRedirect")->print() : "";
+
+        return lRed + get("retType")->print() +
+            " " + clr(FUNC) + _name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
+            rRed + blkStr;
     }
 
     string _name;

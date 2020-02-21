@@ -49,10 +49,12 @@ void yyerror(const char* s)
 %token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname
 %type <strVal> tid tfuncname
 
-%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi
+%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topRedirect
 
 
-%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples tparam tparams tfunc tctorfunc tdtorfunc tsafeAccess
+%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples tparam tparams tsafeAccess
+
+%type <node> tfunc tctorfunc tdtorfunc tfunclist tfuncleft tfuncright
 
 %type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock
 
@@ -335,32 +337,38 @@ tdefOrigin  : tdef tid teol tdefIndentBlock {
             }
             ;
 
-tfunc       : ttype tfuncname '(' tparams ')' teol tindentBlock {
-                $$ = new Func($1, $2, $4, $7);
-            }
-            | ttype tfuncname '(' ')' teol tindentBlock {
-                $$ = new Func($1, $2, 0, $6);
-            }
-            | ttype tfuncname '(' tparams ')' teol {
-                $$ = new Func($1, $2, $4);
-            }
-            | ttype tfuncname '(' ')' teol {
-                $$ = new Func($1, $2, 0);
-            }
+tfunclist   : '(' ')' { $$ = 0; }
+            | '(' tparams ')' { $$ = $2; }
+            ;
 
-tctorfunc   : tfctor '(' tparams ')' teol tindentBlock {
-                $$ = new Func(new Id(""), "@ctor", $3, $6);
+tfuncleft   : topRedirect { $$ = new Redirect(); }
+            | tnormalId topRedirect { $$ = new Redirect(new Id($1)); }
+            | tlhslist topRedirect { $$ = new Redirect($1); }
+            ;
+
+tfuncright  : topRedirect { $$ = new Redirect(); }
+            | topRedirect tnormalId { $$ = new Redirect(new Id($2)); }
+            | topRedirect tlhslist { $$ = new Redirect($2); }
+            ;
+
+tfunc       : ttype tfuncname tfunclist teol tindentBlock {
+                $$ = new Func(0, $1, $2, $3, 0, $5);
             }
-            | tfctor '(' ')' teol tindentBlock {
-                $$ = new Func(new Id(""), "@ctor", 0, $5);
+            | tfuncleft ttype tfuncname tfunclist teol tindentBlock {
+                $$ = new Func($1, $2, $3, $4, 0, $6);
+            }
+            | ttype tfuncname tfunclist tfuncright teol tindentBlock {
+                $$ = new Func(0, $1, $2, $3, $4, $6);
             }
             ;
 
-tdtorfunc   : tfdtor '(' tparams ')' teol tindentBlock {
-                $$ = new Func(new Id(""), "@dtor", $3, $6);
+tctorfunc   : tfctor tfunclist teol tindentBlock {
+                $$ = new Func(0, new Id(""), "@ctor", $2, 0, $4);
             }
-            | tfdtor '(' ')' teol tindentBlock {
-                $$ = new Func(new Id(""), "@dtor", 0, $5);
+            ;
+
+tdtorfunc   : tfdtor tfunclist teol tindentBlock {
+                $$ = new Func(0, new Id(""), "@dtor", $2, 0, $4);
             }
             ;
 

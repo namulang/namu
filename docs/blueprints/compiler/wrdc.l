@@ -214,6 +214,7 @@ true|false {
 \!\=\= { return topNotRefEqual; }
 \?\. { return topSafeNavi; }
 \.\. { return topSeq; }
+\=\> { return topRedirect; }
 
 \'.\' {
     yylval.charVal = yytext[1];
