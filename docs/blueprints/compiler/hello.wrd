@@ -6,12 +6,12 @@ def Hello
             cout("~A()")
 
         void foo()=>
-            s
+            cout("n=" + this.n + " and got=" + got)
 
         n := 5
 
     _b := def _$B from A
-        $res=>int[] _foo(int max)
+        $got=>int[] _foo(int max)
             retfun 1..max
 
         $res := float if a > 0 & a < 5

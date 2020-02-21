@@ -36,7 +36,7 @@ void yyerror(const char* s)
 %verbose
 %start tfile
 
-%token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tme tgot tnode tnull tsuper tout tin tindent tdedent
+%token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tnode tout tin tindent tdedent
 %token tfctor tfdtor tfres tfwarn tferr
 %token tand tor
 

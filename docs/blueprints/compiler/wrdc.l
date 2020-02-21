@@ -60,10 +60,6 @@ retfun { return tretfun; }
 retif { return tretif; }
 retfor { return tretfor; }
 retwith { return tretwith; }
-this { return tthis; }
-super { return tsuper; }
-me { return tme; }
-got { return tgot; }
 @ctor { return tfctor; }
 @dtor { return tfdtor; }
 @res { return tfres; }
