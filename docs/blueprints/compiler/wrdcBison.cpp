@@ -200,8 +200,6 @@ tdefexpr    : tlhslist topDefAssign trhslist { $$ = new DefAssign($1, $3); }
             | tid topDefAssign trhsexpr { $$ = new DefAssign(new Id($1), $3); }
             | tdefOrigin { $$ = $1; }
             | tfunc { $$ = $1; }
-            | tctorfunc { $$ = $1; }
-            | tdtorfunc { $$ = $1; }
             ;
 
 tlhsexpr    : tid { $$ = new Id($1); }
@@ -388,6 +386,8 @@ tfuncCall   : tnormalFuncname trhslist {
 
 tdefStmt    : tdefexpr teol { $$ = new Stmt($1); }
             | teol { $$ = new Stmt(new Str("")); }
+            | tctorfunc teol { $$ = $1; }
+            | tdtorfunc teol { $$ = $1; }
             ;
 
 tstmt       : trhsexpr teol { $$ = new Stmt($1); }

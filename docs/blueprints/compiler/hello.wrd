@@ -1,3 +1,4 @@
+
 def Hello
     def _A from proxy
         @ctor()
