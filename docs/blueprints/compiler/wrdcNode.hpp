@@ -115,7 +115,7 @@ public:
 
     virtual string name() { return "mapOrigin"; }
     virtual string _onPrint(int lv) {
-        return l()->print() + clr(CONTAINER) + "[" + r()->print() + clr(CONTAINER) + "]";
+        return l()->print() + clr(TYPE) + "[" + r()->print() + clr(TYPE) + "]";
     }
 };
 
