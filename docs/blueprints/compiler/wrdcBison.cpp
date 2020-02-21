@@ -367,6 +367,15 @@ tfunc       : ttype tfuncname tfunclist teol tindentBlock {
             | ttype tfuncname tfunclist tfuncright teol tindentBlock {
                 $$ = new Func(0, $1, $2, $3, $4, $6);
             }
+            | tferr tfunclist teol tindentBlock {
+                $$ = new Func(0, new Id(""), "@err", $2, 0, $4);
+            }
+            | tfwarn tfunclist teol tindentBlock {
+                $$ = new Func(0, new Id(""), "@war", $2, 0, $4);
+            }
+            | tfres tfunclist teol tindentBlock {
+                $$ = new Func(0, new Id(""), "@res", $2, 0, $4);
+            }
             ;
 
 tctorfunc   : tfctor tfunclist teol tindentBlock {
