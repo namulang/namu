@@ -8,6 +8,7 @@
 using namespace std;
 
 int yylex();
+File* parsed = 0;
 extern int yylineno;
 extern char* yytext;
 namespace wrd {
@@ -479,9 +480,9 @@ tfile       : tfile tdefOrigin {
                 $$ = ret;
             }
             | timportStmt {
-                File* ret = new File();
-                ret->add($1);
-                $$ = ret;
+                parsed = new File();
+                parsed->add($1);
+                $$ = parsed;
             }
             | tfile timportStmt {
                 File* ret = (File*) $1;
@@ -489,14 +490,11 @@ tfile       : tfile tdefOrigin {
                 $$ = ret;
             }
             | tdefOrigin {
-                File* ret = new File();
-                ret->add($1);
+                parsed = new File();
+                parsed->add($1);
                 $$ = $1;
             }
             | teol {}
             | tfile teol { $$ = $1; }
-            | tfile teof {
-                cout << $1->print();
-                $$ = $1;
-            }
+            | tfile teof { $$ = $1; }
             ;
