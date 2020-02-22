@@ -134,6 +134,7 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             | tarray { $$ = $1; }
             | tmap { $$ = $1; }
             | tlhsexpr { $$ = $1; }
+            | tdefexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
             | taccess { $$ = $1; }
             | tsafeAccess { $$ = $1; }
@@ -205,7 +206,6 @@ tdefexpr    : tlhslist topDefAssign trhslist { $$ = new DefAssign($1, $3); }
             ;
 
 tlhsexpr    : tid { $$ = new Id($1); }
-            | tdefexpr { $$ = $1; }
             | tlhslist '=' trhslist { $$ = new Assign($1, $3); }
             | tlhslist topPlusAssign trhslist { $$ = new PlusAssign($1, $3); }
             | tlhslist topMinusAssign trhslist { $$ = new MinusAssign($1, $3); }
