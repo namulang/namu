@@ -2,12 +2,14 @@
 #include <string>
 class Node;
 #include "wrdcBison.h"
+#include "wrdcNode.hpp"
 int yylex();
 extern int yylineno;
 extern char* yytext;
 int yyparse();
 
 extern FILE *yyin, *yyout;
+extern File* parsed;
 
 int main(int argc, char* argv[])
 {
@@ -42,6 +44,8 @@ int main(int argc, char* argv[])
         cout << " <press ctrl + c or d if you want to quit>\n";
 
     int res = yyparse();
+    if (parsed)
+        cout << parsed->print();
     if (res)
         cout << " FAILED!\n";
     return res;
