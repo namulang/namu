@@ -52,7 +52,9 @@ void yyerror(const char* s)
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topRedirect
 
 
-%type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples tparam tparams tsafeAccess
+%type <node> tstmt tcast tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
+
+%type <node> trhsexpr trhslist tlhslist trhsIdExpr trhsListExpr tlhsIds tlhsId trhsIds tdefId tdefIds tdeflist
 
 %type <node> timportStmt
 
@@ -67,7 +69,7 @@ void yyerror(const char* s)
 //      정해주지 않으면 모호성 오류 나온다.
 //      left: 왼쪽 결합.
 //      right: 오른쪽 결합.
-%left ":=" '=' "+=" "-=" "/=" "*=" "%=" "^="
+%right ":=" '=' "+=" "-=" "/=" "*=" "%=" "^=" topPlusAssign topDivideAssign topModAssign topPowAssign topSquareAssign topMinusAssign topDefAssign
 %left '&' '|'
 %left '<' '>' topMoreEqual topLessEqual topEqual topRefEqual topNotEqual topNotRefEqual
 %left '%' '^'
@@ -125,7 +127,7 @@ termIf      : tif tbranch telifBlocks telseBlock {
 //  tlhsexpr은 할당이 가능한 변수. lvalue.
 //  trhsexpr은 값을 나타내는 모든 표현식.
 //  따라서 범주상으로 보았을때 trhsexpr 은 tlhsexpr을 포함한다. 더 크다는 얘기다.
-trhsexpr    : tinteger { $$ = new Int($1); }
+trhsIdExpr  : tinteger { $$ = new Int($1); }
             | tbool { $$ = new Bool($1); }
             | tfloat { $$ = new Float($1); }
             | tstr { $$ = new Str($1); }
@@ -133,57 +135,29 @@ trhsexpr    : tinteger { $$ = new Int($1); }
             | tseq { $$ = $1; }
             | tarray { $$ = $1; }
             | tmap { $$ = $1; }
-            | tlhsexpr { $$ = $1; }
+            | tlhsId { $$ = $1; }
             | tdefexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
-            | taccess { $$ = $1; }
+            | taccess %dprec 1 { $$ = $1; }
             | tsafeAccess { $$ = $1; }
-            | trhsexpr '+' trhsexpr %dprec 2 {
-                $$ = new Plus($1, $3);
-            }
-            | trhsexpr '-' trhsexpr %dprec 2 {
-                $$ = new Minus($1, $3);
-            }
-            | trhsexpr '*' trhsexpr %dprec 2 {
-                $$ = new Square($1, $3);
-            }
-            | trhsexpr '/' trhsexpr %dprec 2 {
-                $$ = new Divide($1, $3);
-            }
-            | trhsexpr '%' trhsexpr %dprec 2 {
-                $$ = new Moduler($1, $3);
-            }
-            | trhsexpr '^' trhsexpr %dprec 2 {
-                $$ = new Power($1, $3);
-            }
-            | trhsexpr '<' trhsexpr %dprec 2 {
-                $$ = new Less($1, $3);
-            }
-            | trhsexpr topLessEqual trhsexpr %dprec 2 {
-                $$ = new LessEqual($1, $3);
-            }
-            | trhsexpr '>' trhsexpr %dprec 2 {
-                $$ = new More($1, $3);
-            }
-            | trhsexpr topMoreEqual trhsexpr %dprec 2 {
-                $$ = new MoreEqual($1, $3);
-            }
-            | trhsexpr topEqual trhsexpr %dprec 2 {
-                $$ = new Equal($1, $3);
-            }
-            | trhsexpr topRefEqual trhsexpr %dprec 2 {
-                $$ = new RefEqual($1, $3);
-            }
-            | trhsexpr topNotEqual trhsexpr %dprec 2 {
-                $$ = new NotEqual($1, $3);
-            }
-            | trhsexpr topNotRefEqual trhsexpr %dprec 2 {
-                $$ = new NotRefEqual($1, $3);
-            }
-            | trhsexpr '&' trhsexpr %dprec 3 { $$ = new And($1, $3); }
-            | trhsexpr '|' trhsexpr %dprec 3 { $$ = new Or($1, $3); }
+            | trhsIdExpr '+' trhsIdExpr %dprec 2 { $$ = new Plus($1, $3); }
+            | trhsIdExpr '-' trhsIdExpr %dprec 2 { $$ = new Minus($1, $3); }
+            | trhsIdExpr '*' trhsIdExpr %dprec 2 { $$ = new Square($1, $3); }
+            | trhsIdExpr '/' trhsIdExpr %dprec 2 { $$ = new Divide($1, $3); }
+            | trhsIdExpr '%' trhsIdExpr %dprec 2 { $$ = new Moduler($1, $3); }
+            | trhsIdExpr '^' trhsIdExpr %dprec 2 { $$ = new Power($1, $3); }
+            | trhsIdExpr '<' trhsIdExpr %dprec 2 { $$ = new Less($1, $3); }
+            | trhsIdExpr topLessEqual trhsIdExpr %dprec 2 { $$ = new LessEqual($1, $3); }
+            | trhsIdExpr '>' trhsIdExpr %dprec 2 { $$ = new More($1, $3); }
+            | trhsIdExpr topMoreEqual trhsIdExpr %dprec 2 { $$ = new MoreEqual($1, $3); }
+            | trhsIdExpr topEqual trhsIdExpr %dprec 2 { $$ = new Equal($1, $3); }
+            | trhsIdExpr topRefEqual trhsIdExpr %dprec 2 { $$ = new RefEqual($1, $3); }
+            | trhsIdExpr topNotEqual trhsIdExpr %dprec 2 { $$ = new NotEqual($1, $3); }
+            | trhsIdExpr topNotRefEqual trhsIdExpr %dprec 2 { $$ = new NotRefEqual($1, $3); }
+            | trhsIdExpr '&' trhsIdExpr %dprec 3 { $$ = new And($1, $3); }
+            | trhsIdExpr '|' trhsIdExpr %dprec 3 { $$ = new Or($1, $3); }
 
-            | tfor tid tin trhsexpr teol tindentBlock {
+            | tfor tid tin trhsIdExpr teol tindentBlock {
                 $$ = new For(new Id($2), $4, (Container*) $6);
             }
 
@@ -197,31 +171,57 @@ trhsexpr    : tinteger { $$ = new Int($1); }
 
             | termIf { $$ = $1; }
             | tfuncCall { $$ = $1; }
+
+            | tnormalId topPlusAssign trhsIdExpr { $$ = new PlusAssign(new Id($1), $3); }
+            | tnormalId topMinusAssign trhsIdExpr { $$ = new MinusAssign(new Id($1), $3); }
+            | tnormalId topSquareAssign trhsIdExpr { $$ = new SquareAssign(new Id($1), $3); }
+            | tnormalId topDivideAssign trhsIdExpr { $$ = new DivideAssign(new Id($1), $3); }
+            | tnormalId topModAssign trhsIdExpr { $$ = new ModulerAssign(new Id($1), $3); }
+            | tnormalId topPowAssign trhsIdExpr { $$ = new PowAssign(new Id($1), $3); }
+            | tnormalId '=' trhsIdExpr { $$ = new Assign(new Id($1), $3); }
             ;
 
-tdefexpr    : tlhslist topDefAssign trhslist { $$ = new DefAssign($1, $3); }
-            | tid topDefAssign trhsexpr { $$ = new DefAssign(new Id($1), $3); }
+
+trhsListExpr: trhslist { $$ = $1; } // tlhslist --> can be trhslist.
+            | trhsListExpr '+' trhsListExpr %dprec 2 { $$ = new Plus($1, $3); }
+            | trhsListExpr '-' trhsListExpr %dprec 2 { $$ = new Minus($1, $3); }
+            | trhsListExpr '*' trhsListExpr %dprec 2 { $$ = new Square($1, $3); }
+            | trhsListExpr '/' trhsListExpr %dprec 2 { $$ = new Divide($1, $3); }
+            | trhsListExpr '%' trhsListExpr %dprec 2 { $$ = new Moduler($1, $3); }
+            | trhsListExpr '^' trhsListExpr %dprec 2 { $$ = new Power($1, $3); }
+            | trhsListExpr '<' trhsListExpr %dprec 2 { $$ = new Less($1, $3); }
+            | trhsListExpr topLessEqual trhsListExpr %dprec 2 { $$ = new LessEqual($1, $3); }
+            | trhsListExpr '>' trhsListExpr %dprec 2 { $$ = new More($1, $3); }
+            | trhsListExpr topMoreEqual trhsListExpr %dprec 2 { $$ = new MoreEqual($1, $3); }
+            | trhsListExpr topEqual trhsListExpr %dprec 2 { $$ = new Equal($1, $3); }
+            | trhsListExpr topRefEqual trhsListExpr %dprec 2 { $$ = new RefEqual($1, $3); }
+            | trhsListExpr topNotEqual trhsListExpr %dprec 2 { $$ = new NotEqual($1, $3); }
+            | trhsListExpr topNotRefEqual trhsListExpr %dprec 2 { $$ = new NotRefEqual($1, $3); }
+            | trhsListExpr '&' trhsListExpr %dprec 3 { $$ = new And($1, $3); }
+            | trhsListExpr '|' trhsListExpr %dprec 3 { $$ = new Or($1, $3); }
+
+            | tlhslist '=' trhsListExpr { $$ = new Assign($1, $3); }
+            | tlhslist topPlusAssign trhsListExpr { $$ = new PlusAssign($1, $3); }
+            | tlhslist topMinusAssign trhsListExpr { $$ = new MinusAssign($1, $3); }
+            | tlhslist topSquareAssign trhsListExpr { $$ = new SquareAssign($1, $3); }
+            | tlhslist topDivideAssign trhsListExpr { $$ = new DivideAssign($1, $3); }
+            | tlhslist topModAssign trhsListExpr { $$ = new ModulerAssign($1, $3); }
+            | tlhslist topPowAssign trhsListExpr { $$ = new PowAssign($1, $3); }
+            ;
+
+trhsexpr    : trhsIdExpr { $$ = $1; }
+            | trhsListExpr { $$ = $1; }
+            ;
+
+
+
+
+tdefexpr    : tdeflist topDefAssign trhsListExpr { $$ = new DefAssign($1, $3); }
+            | tid topDefAssign trhsIdExpr { $$ = new DefAssign(new Id($1), $3); }
             | tdefOrigin { $$ = $1; }
             | tfunc { $$ = $1; }
             ;
 
-tlhsexpr    : tid { $$ = new Id($1); }
-            | tlhslist '=' trhslist { $$ = new Assign($1, $3); }
-            | tlhslist topPlusAssign trhslist { $$ = new PlusAssign($1, $3); }
-            | tlhslist topMinusAssign trhslist { $$ = new MinusAssign($1, $3); }
-            | tlhslist topSquareAssign trhslist { $$ = new SquareAssign($1, $3); }
-            | tlhslist topDivideAssign trhslist { $$ = new DivideAssign($1, $3); }
-            | tlhslist topModAssign trhslist { $$ = new ModulerAssign($1, $3); }
-            | tlhslist topPowAssign trhslist { $$ = new PowAssign($1, $3); }
-
-            | tlhsexpr topPlusAssign trhsexpr { $$ = new PlusAssign($1, $3); }
-            | tlhsexpr topMinusAssign trhsexpr { $$ = new MinusAssign($1, $3); }
-            | tlhsexpr topSquareAssign trhsexpr { $$ = new SquareAssign($1, $3); }
-            | tlhsexpr topDivideAssign trhsexpr { $$ = new DivideAssign($1, $3); }
-            | tlhsexpr topModAssign trhsexpr { $$ = new ModulerAssign($1, $3); }
-            | tlhsexpr topPowAssign trhsexpr { $$ = new PowAssign($1, $3); }
-            | tlhsexpr '=' trhsexpr { $$ = new Assign($1, $3); }
-            ;
 
 ttype       : tnormalId {
                   cout << "--------ttype(normalId=" << $1 << "\n";
@@ -237,7 +237,7 @@ ttype       : tnormalId {
             }
             ;
 
-tcast       : ttype trhsexpr {
+tcast       : ttype trhsIdExpr {
                 $$ = new Cast($1, $2);
             }
             ;
@@ -251,30 +251,18 @@ treturn     : tret trhsexpr { $$ = new Return("ret", $2); }
             ;
 
 
-tlhsargs    : tlhsexpr {
+trhsIds     : trhsexpr {
                 Args* ret = new Args();
                 ret->add($1);
                 $$ = ret;
             }
-            | tlhsargs ',' tlhsexpr {
-                Args* ret = (Args*) $1;
-                ret->add($3);
-                $$ = ret;
-            }
-
-trhsargs    : trhsexpr {
-                Args* ret = new Args();
-                ret->add($1);
-                $$ = ret;
-            }
-            | trhsargs ',' trhsexpr {
+            | trhsIds ',' trhsexpr {
                 Args* ret = (Args*) $1;
                 ret->add($3);
                 $$ = ret;
             }
             ;
-
-trhslist    : '(' trhsargs ')' { //  " "를 쓰면 안된다.
+trhslist    : '(' trhsIds ')' { //  " "를 쓰면 안된다.
                 $$ = new List((Args*) $2);
             }
             | '(' ')' {
@@ -282,9 +270,44 @@ trhslist    : '(' trhsargs ')' { //  " "를 쓰면 안된다.
             }
             ;
 
-tlhslist    : '(' tlhsargs ')' {
+tlhsId      : tnormalId { $$ = new Id($1); }
+            | tlhslist { $$ = $1; }
+            ;
+tlhsIds     : tlhsId {
+                Args* ret = new Args();
+                ret->add($1);
+                $$ = ret;
+            }
+            | tlhsIds ',' tlhsId {
+                Args* ret = (Args*) $1;
+                ret->add($3);
+                $$ = ret;
+            }
+tlhslist    : '(' tlhsIds ')' {
                 $$ = new List((Args*) $2);
             }
+            ;
+
+tdefId      : tid { $$ = new Id($1); }
+            | tdeflist { $$ = $1; }
+            ;
+tdefIds     : tdefId {
+                Args* ret = new Args();
+                ret->add($1);
+                $$ = ret;
+            }
+            | tlhsIds ',' tlhsId {
+                Args* ret = (Args*) $1;
+                ret->add($3);
+                $$ = ret;
+            }
+tdeflist    : '(' tdefIds ')' {
+                $$ = new List((Args*) $2);
+            }
+            ;
+
+
+
 
 ttuple      : trhsexpr ':' trhsexpr {
                 $$ = new Tuple($1, $3);
@@ -306,7 +329,7 @@ tmap        : '[' ttuples ']' {
                 $$ = new Array($2);
             }
 
-tarray      : '[' trhsargs ']' {
+tarray      : '[' trhsIds ']' {
                 $$ = new Array($2);
             }
 
