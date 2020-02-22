@@ -1,3 +1,4 @@
+import console.cout
 
 def Hello
     def _A from proxy
@@ -42,3 +43,5 @@ def Hello
         else
             retif d
 
+
+import system

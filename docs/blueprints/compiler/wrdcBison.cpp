@@ -54,6 +54,8 @@ void yyerror(const char* s)
 
 %type <node> tstmt tlhsexpr/*only lhs*/ trhsexpr tcast trhsargs tlhsargs tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn tlhslist trhslist ttuple ttuples tparam tparams tsafeAccess
 
+%type <node> timportStmt
+
 %type <node> tfunc tctorfunc tdtorfunc tfunclist tfuncleft tfuncright
 
 %type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock
@@ -434,19 +436,44 @@ tdefBlock   : tdefStmt {
             }
             ;
 
+
+timportStmt : timport taccess teol {
+                $$ = new ImportStmt($2);
+            }
+            | timport tnormalId teol {
+                $$ = new ImportStmt(new Id($2));
+            }
+            ;
+
+
 tdefIndentBlock: tindent tdefBlock tdedent { $$ = $2; }
 
 tindentBlock: tindent tblock tdedent { $$ = $2; }
 
 tfile       : tfile tdefOrigin {
-                cout << $2->print();
-                $$ = $2;
+                File* ret = (File*) $1;
+                ret->add($2);
+                $$ = ret;
+            }
+            | timportStmt {
+                File* ret = new File();
+                ret->add($1);
+                $$ = ret;
+            }
+            | tfile timportStmt {
+                File* ret = (File*) $1;
+                ret->add($2);
+                $$ = ret;
             }
             | tdefOrigin {
-                cout << $1->print();
+                File* ret = new File();
+                ret->add($1);
                 $$ = $1;
             }
             | teol {}
             | tfile teol { $$ = $1; }
-            | tfile teof { $$ = $1; }
+            | tfile teof {
+                cout << $1->print();
+                $$ = $1;
+            }
             ;
