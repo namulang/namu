@@ -662,12 +662,17 @@ public:
     }
 };
 
-class File : public Node {
+class ImportStmt : public Node {
 public:
-    File(Block* blk) : Node(blk) {}
+    ImportStmt(Node* access): Node(access) {}
+    virtual string name() { return "import"; }
+    virtual string _onPrint(int lv) {
+        return clr(KEYWORD) + "import " + l()->print() + "\n";
+    }
+};
+
+class File : public Container {
+public:
     virtual string name() { return "file"; }
     using Node::print;
-    virtual string _onPrint(int lv) {
-        return l()->print(lv-1);
-    }
 };
