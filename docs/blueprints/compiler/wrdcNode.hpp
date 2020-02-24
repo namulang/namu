@@ -153,7 +153,7 @@ public:
 };
 class Bool : public Value {
 public:
-    Bool(bool value) : Value(to_string(value)) {}
+    Bool(bool value) : Value(value ? "true" : "false") {}
     virtual string name() { return "bool"; }
     using Node::print;
     virtual string _onPrint(int lv) {
@@ -517,7 +517,7 @@ public:
             for (Branch* e : *_elifs)
                 elifs += tab(lv) + clr(KEYWORD) + "elif " + e->print(lv);
         string elses = _els ? tab(lv) + clr(KEYWORD) + "else \n" + _els->print(lv) : "";
-        return clr(KEYWORD) + "if(" + to_string(lv) + ") " + BranchHaver::_onPrint(lv) + elifs + elses;
+        return clr(KEYWORD) + "if " + BranchHaver::_onPrint(lv) + elifs + elses;
     }
 
     vector<Branch*>* _elifs;
