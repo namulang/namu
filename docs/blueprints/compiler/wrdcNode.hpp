@@ -359,7 +359,7 @@ public:
     virtual string name() { return "cast"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        return clr(OP) + "(" + l()->print() + clr(OP) + ") " + r()->print();
+        return clr(OP) + "(" + l()->print(lv) + clr(OP) + ") " + r()->print(lv);
     }
 };
 
@@ -485,7 +485,7 @@ public:
     virtual string name() { return "if"; }
     using Node::print;
     virtual string print(int lv) {
-        return l()->print() + "\n" + block()->print(lv);
+        return l()->print(lv) + "\n" + block()->print(lv);
     }
 };
 
@@ -517,7 +517,7 @@ public:
             for (Branch* e : *_elifs)
                 elifs += tab(lv) + clr(KEYWORD) + "elif " + e->print(lv);
         string elses = _els ? tab(lv) + clr(KEYWORD) + "else \n" + _els->print(lv) : "";
-        return clr(KEYWORD) + "if " + BranchHaver::_onPrint(lv) + elifs + elses;
+        return clr(KEYWORD) + "if(" + to_string(lv) + ") " + BranchHaver::_onPrint(lv) + elifs + elses;
     }
 
     vector<Branch*>* _elifs;

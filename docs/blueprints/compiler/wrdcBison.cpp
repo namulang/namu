@@ -429,7 +429,7 @@ tdefStmt    : tdefexpr teol { $$ = new Stmt($1); }
 
 tstmt       : trhsexpr teol { $$ = new Stmt($1); }
             | treturn teol { $$ = new Stmt($1); }
-            | tagain teol { $$ = new Again(); }
+            | tagain teol { $$ = new Stmt(new Again()); }
             | trhsexpr teof { $$ = new Stmt($1); }
             | teol { $$ = new Stmt(new Str("")); }
             ;
