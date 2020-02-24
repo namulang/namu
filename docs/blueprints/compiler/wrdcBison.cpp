@@ -61,7 +61,7 @@ void yyerror(const char* s)
 
 %type <node> tfunc tctorfunc tdtorfunc tfunclist tfuncleft tfuncright
 
-%type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock
+%type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock tdefOriginStmt
 
 %type <nodes> telifBlocks
 
@@ -369,6 +369,8 @@ tdefOrigin  : tdef tid teol tdefIndentBlock {
                 $$ = new Def($2, new Id($4), $6);
             }
             ;
+tdefOriginStmt: tdefOrigin teol { $$ = new Stmt($1); }
+            ;
 
 tfunclist   : '(' ')' { $$ = 0; }
             | '(' tparams ')' { $$ = $2; }
@@ -421,8 +423,8 @@ tfuncCall   : tnormalFuncname trhslist {
 
 tdefStmt    : tdefexpr teol { $$ = new Stmt($1); }
             | teol { $$ = new Stmt(new Str("")); }
-            | tctorfunc teol { $$ = $1; }
-            | tdtorfunc teol { $$ = $1; }
+            | tctorfunc teol { $$ = new Stmt($1); }
+            | tdtorfunc teol { $$ = new Stmt($1); }
             ;
 
 tstmt       : trhsexpr teol { $$ = new Stmt($1); }
@@ -474,7 +476,7 @@ tdefIndentBlock: tindent tdefBlock tdedent { $$ = $2; }
 
 tindentBlock: tindent tblock tdedent { $$ = $2; }
 
-tfile       : tfile tdefOrigin {
+tfile       : tfile tdefOriginStmt {
                 File* ret = (File*) $1;
                 ret->add($2);
                 $$ = ret;
@@ -489,7 +491,7 @@ tfile       : tfile tdefOrigin {
                 ret->add($2);
                 $$ = ret;
             }
-            | tdefOrigin {
+            | tdefOriginStmt {
                 parsed = new File();
                 parsed->add($1);
                 $$ = $1;

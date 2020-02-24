@@ -52,7 +52,7 @@ class Node {
     Node* r() { return get("r"); }
     string print() { return print(0); }
     virtual string print(int lv) {
-        return tab(lv) + _onPrint(lv);
+        return _onPrint(lv);
     }
     virtual string _onPrint(int lv) { return ""; }
 
@@ -287,7 +287,7 @@ public:
     virtual string name() { return "someassign"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        return l()->print() + clr(OP) + " " + _symbols + " " + r()->print();
+        return l()->print(lv) + clr(OP) + " " + _symbols + " " + r()->print(lv);
     }
 
     string _symbols;
@@ -653,7 +653,7 @@ public:
     using Node::print;
     virtual string print(int lv) {
         char newLine = hasHaver() ? '\0' : '\n';
-        return l()->print(lv) + clr(WHITE) + newLine;
+        return tab(lv) + l()->print(lv) + clr(WHITE) + newLine;
     }
 
     bool hasHaver() {
@@ -666,8 +666,8 @@ class ImportStmt : public Node {
 public:
     ImportStmt(Node* access): Node(access) {}
     virtual string name() { return "import"; }
-    virtual string _onPrint(int lv) {
-        return clr(KEYWORD) + "import " + l()->print() + "\n";
+    virtual string print(int lv) {
+        return tab(lv) + clr(KEYWORD) + "import " + l()->print() + "\n";
     }
 };
 
