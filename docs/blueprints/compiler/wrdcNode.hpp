@@ -6,6 +6,8 @@
 
 using namespace std;
 
+extern bool USE_OP;
+
 class Node {
     public:
         enum Color {
@@ -184,7 +186,11 @@ public:
         string  lStr = l() ? l()->print() : "",
                 rStr = r() ? r()->print() : "";
 
-        return clr(OP) + "(" + lStr + " " + clr(OP) + _symbol + " " + rStr + clr(OP) + ")";
+        string body = lStr + " " + clr(OP) + _symbol + " " + rStr;
+
+        if(USE_OP)
+            return clr(OP) + "(" + body + clr(OP) + ")";
+        return body;
     }
 
     const char* _symbol;
@@ -359,7 +365,9 @@ public:
     virtual string name() { return "cast"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        return clr(OP) + "(" + l()->print(lv) + clr(OP) + ") " + r()->print(lv);
+        string castType = USE_OP ? clr(OP) + "(" + l()->print(lv) + clr(OP) + ")" : l()->print(lv);
+
+        return castType + " " + r()->print(lv);
     }
 };
 
