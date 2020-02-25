@@ -55,7 +55,7 @@ void yyerror(const char* s)
 
 %type <node> tstmt tcast tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
 
-%type <node> trhsexpr trhslist tlhslist trhsIdExpr trhsListExpr tlhsIds tlhsId trhsIds tdefId tdefIds tdeflist
+%type <node> trhsexpr trhslist tlhslist trhsIdExpr trhsListExpr tlhsIds tlhsId trhsIds tdefId tdefIds tdeflist toutableId
 
 %type <node> timportStmt
 
@@ -216,9 +216,12 @@ trhsexpr    : trhsIdExpr { $$ = $1; }
 
 
 
+toutableId  : tid { $$ = new Id($1); }
+            | tout tid { $$ = new Out(new Id($2)); }
+            ;
 
 tdefexpr    : tdeflist topDefAssign trhsListExpr { $$ = new DefAssign($1, $3); }
-            | tid topDefAssign trhsIdExpr { $$ = new DefAssign(new Id($1), $3); }
+            | toutableId topDefAssign trhsIdExpr { $$ = new DefAssign($1, $3); }
             | tdefOrigin { $$ = $1; }
             | tfunc { $$ = $1; }
             ;
@@ -289,7 +292,7 @@ tlhslist    : '(' tlhsIds ')' {
             }
             ;
 
-tdefId      : tid { $$ = new Id($1); }
+tdefId      : toutableId { $$ = $1; }
             | tdeflist { $$ = $1; }
             ;
 tdefIds     : tdefId {
@@ -297,11 +300,12 @@ tdefIds     : tdefId {
                 ret->add($1);
                 $$ = ret;
             }
-            | tlhsIds ',' tlhsId {
+            | tdefIds ',' tdefId {
                 Args* ret = (Args*) $1;
                 ret->add($3);
                 $$ = ret;
             }
+            ;
 tdeflist    : '(' tdefIds ')' {
                 $$ = new List((Args*) $2);
             }
