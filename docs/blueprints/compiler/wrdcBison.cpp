@@ -91,8 +91,8 @@ tfuncname   : tnormalFuncname { $$ = $1; }
             | taccessedFuncname { $$ = $1; }
             ;
 
-telseBlock  : teol telse teol tindentBlock {
-                $$ = $4;
+telseBlock  : teol telse tindentBlock {
+                $$ = $3;
             }
 
 telifBlock  : teol telif tbranch {
@@ -109,8 +109,8 @@ telifBlocks : telifBlock {
                 $$ = $1;
             }
 
-tbranch     : trhsexpr teol tindentBlock {
-                $$ = new Branch($1, (Container*) $3);
+tbranch     : trhsexpr tindentBlock {
+                $$ = new Branch($1, (Container*) $2);
             }
 
 termIf      : tif tbranch telifBlocks telseBlock {
@@ -161,15 +161,15 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | trhsIdExpr '&' trhsIdExpr %dprec 3 { $$ = new And($1, $3); }
             | trhsIdExpr '|' trhsIdExpr %dprec 3 { $$ = new Or($1, $3); }
 
-            | tfor tid tin trhsIdExpr teol tindentBlock {
-                $$ = new For(new Id($2), $4, (Container*) $6);
+            | tfor tid tin trhsIdExpr tindentBlock {
+                $$ = new For(new Id($2), $4, (Container*) $5);
             }
 
-            | twith tnormalId teol tindentBlock {
-                $$ = new With(new Id($2), $4);
+            | twith tnormalId tindentBlock {
+                $$ = new With(new Id($2), $3);
             }
-            | twith teol tindentBlock {
-                $$ = new With(0, $3);
+            | twith tindentBlock {
+                $$ = new With(0, $2);
             }
             ;
 
@@ -368,14 +368,15 @@ tparams     : tparam {
             ;
 
 
-tpropexpr   : tprop tid tfrom tnormalId teol tpropIndentBlock {
-                $$ = new Prop(new Id($2), new Id($4), $6);
+tpropexpr   : tprop tid tfrom tnormalId tpropIndentBlock {
+                $$ = new Prop(new Id($2), new Id($4), $5);
             }
-            | tprop tfrom tnormalId teol tpropIndentBlock {
-                $$ = new Prop(0, new Id($3), $5);
+            | tprop tfrom tnormalId tpropIndentBlock {
+                $$ = new Prop(0, new Id($3), $4);
             }
             ;
-tpropIndentBlock: tindent tpropBlock tdedent { $$ = $2; }
+tpropIndentBlock: teol tindent tpropBlock tdedent { $$ = $3; }
+            | ':' tgetsetterExpr { $$ = new InlineStmt($2); }
             ;
 tpropBlock  : tgetsetterStmt {
                 Block* ret = new Block();
@@ -395,14 +396,14 @@ tgetsetFuncName : tfget { $$ = $1; }
 tgetsetList : tfunclist { $$ = $1; }
             | { $$ = 0; }
             ;
-tgetsetterExpr: tgetsetFuncName tgetsetList teol tindentBlock {
-                $$ = new Func(0, 0, $1, $2, 0, $4);
+tgetsetterExpr: tgetsetFuncName tgetsetList tindentBlock {
+                $$ = new Func(0, 0, $1, $2, 0, $3);
             }
-            | tfuncleft tgetsetFuncName tgetsetList teol tindentBlock {
-                $$ = new Func($1, 0, $2, $3, 0, $5);
+            | tfuncleft tgetsetFuncName tgetsetList tindentBlock {
+                $$ = new Func($1, 0, $2, $3, 0, $4);
             }
-            | tgetsetFuncName tgetsetList tfuncright teol tindentBlock {
-                $$ = new Func(0, 0, $1, $2, $3, $5);
+            | tgetsetFuncName tgetsetList tfuncright tindentBlock {
+                $$ = new Func(0, 0, $1, $2, $3, $4);
             }
             ;
 tgetsetterStmt: tgetsetterExpr teol { $$ = new Stmt($1); }
@@ -410,11 +411,11 @@ tgetsetterStmt: tgetsetterExpr teol { $$ = new Stmt($1); }
 
 
 
-tdefOrigin  : tdef tid teol tdefIndentBlock {
-                $$ = new Def($2, 0, $4);
+tdefOrigin  : tdef tid tdefIndentBlock {
+                $$ = new Def($2, 0, $3);
             }
-            | tdef tid tfrom tnormalId teol tdefIndentBlock {
-                $$ = new Def($2, new Id($4), $6);
+            | tdef tid tfrom tnormalId tdefIndentBlock {
+                $$ = new Def($2, new Id($4), $5);
             }
             ;
 tdefOriginStmt: tdefOrigin teol { $$ = new Stmt($1); }
@@ -434,33 +435,33 @@ tfuncright  : topRedirect { $$ = new Redirect(); }
             | topRedirect tlhslist { $$ = new Redirect($2); }
             ;
 
-tfunc       : ttype tfuncname tfunclist teol tindentBlock {
-                $$ = new Func(0, $1, $2, $3, 0, $5);
+tfunc       : ttype tfuncname tfunclist tindentBlock {
+                $$ = new Func(0, $1, $2, $3, 0, $4);
             }
-            | tfuncleft ttype tfuncname tfunclist teol tindentBlock {
-                $$ = new Func($1, $2, $3, $4, 0, $6);
+            | tfuncleft ttype tfuncname tfunclist tindentBlock {
+                $$ = new Func($1, $2, $3, $4, 0, $5);
             }
-            | ttype tfuncname tfunclist tfuncright teol tindentBlock {
-                $$ = new Func(0, $1, $2, $3, $4, $6);
+            | ttype tfuncname tfunclist tfuncright tindentBlock {
+                $$ = new Func(0, $1, $2, $3, $4, $5);
             }
-            | tferr tfunclist teol tindentBlock {
-                $$ = new Func(0, 0, "@err", $2, 0, $4);
+            | tferr tfunclist tindentBlock {
+                $$ = new Func(0, 0, "@err", $2, 0, $3);
             }
-            | tfwarn tfunclist teol tindentBlock {
-                $$ = new Func(0, 0, "@war", $2, 0, $4);
+            | tfwarn tfunclist tindentBlock {
+                $$ = new Func(0, 0, "@war", $2, 0, $3);
             }
-            | tfres tfunclist teol tindentBlock {
-                $$ = new Func(0, 0, "@res", $2, 0, $4);
-            }
-            ;
-
-tctorfunc   : tfctor tfunclist teol tindentBlock {
-                $$ = new Func(0, new Id(""), $1, $2, 0, $4);
+            | tfres tfunclist tindentBlock {
+                $$ = new Func(0, 0, "@res", $2, 0, $3);
             }
             ;
 
-tdtorfunc   : tfdtor tfunclist teol tindentBlock {
-                $$ = new Func(0, new Id(""), "@dtor", $2, 0, $4);
+tctorfunc   : tfctor tfunclist tindentBlock {
+                $$ = new Func(0, new Id(""), $1, $2, 0, $3);
+            }
+            ;
+
+tdtorfunc   : tfdtor tfunclist tindentBlock {
+                $$ = new Func(0, new Id(""), "@dtor", $2, 0, $3);
             }
             ;
 
@@ -520,9 +521,17 @@ timportStmt : timport taccess teol {
             ;
 
 
-tdefIndentBlock: tindent tdefBlock tdedent { $$ = $2; }
+tdefIndentBlock: teol tindent tdefBlock tdedent { $$ = $3; }
+            | ':' tdefexpr { $$ = new InlineStmt($2); }
+            | ':' tctorfunc { $$ = new InlineStmt($2); }
+            | ':' tdtorfunc { $$ = new InlineStmt($2); }
+            ;
 
-tindentBlock: tindent tblock tdedent { $$ = $2; }
+tindentBlock: teol tindent tblock tdedent { $$ = $3; }
+            | ':' trhsexpr { $$ = new InlineStmt($2); }
+            | ':' treturn { $$ = new InlineStmt($2); }
+            | ':' tagain { $$ = new InlineStmt(new Again()); }
+            ;
 
 tfile       : tfile tdefOriginStmt {
                 File* ret = (File*) $1;
