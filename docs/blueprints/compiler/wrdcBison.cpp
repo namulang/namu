@@ -45,7 +45,7 @@ void yyerror(const char* s)
 %token <floatVal> tfloat
 %token <boolVal> tbool
 %token <charVal> tchar
-%token <strVal> tstr tfctor tfdtor
+%token <strVal> tstr tfctor tfdtor tfget tfset
 
 %token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname
 %type <strVal> tid tfuncname
@@ -64,6 +64,9 @@ void yyerror(const char* s)
 %type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock tdefOriginStmt
 
 %type <nodes> telifBlocks
+
+%type <node> tgetsetterStmt tgetsetterExpr tpropexpr tpropIndentBlock tpropBlock tgetsetList
+%type <strVal> tgetsetFuncName
 
 // 우선순위: 밑으로 갈수록 높음.
 //  결합 순서 정의:
@@ -224,6 +227,7 @@ tdefexpr    : tdeflist topDefAssign trhsListExpr { $$ = new DefAssign($1, $3); }
             | toutableId topDefAssign trhsIdExpr { $$ = new DefAssign($1, $3); }
             | tdefOrigin { $$ = $1; }
             | tfunc { $$ = $1; }
+            | tpropexpr { $$ = $1; }
             ;
 
 
@@ -366,6 +370,49 @@ tparams     : tparam {
             }
             ;
 
+
+tpropexpr   : tprop tid tfrom tnormalId teol tpropIndentBlock {
+                $$ = new Prop(new Id($2), new Id($4), $6);
+            }
+            | tprop tfrom tnormalId teol tpropIndentBlock {
+                $$ = new Prop(0, new Id($3), $5);
+            }
+            ;
+tpropIndentBlock: tindent tpropBlock tdedent { $$ = $2; }
+            ;
+tpropBlock  : tgetsetterStmt {
+                Block* ret = new Block();
+                ret->add($1);
+                $$ = ret;
+            }
+            | tpropBlock tgetsetterStmt {
+                Block* ret = (Block*) $1;
+                ret->add($2);
+                $$ = ret;
+            }
+            ;
+
+tgetsetFuncName : tfget { $$ = $1; }
+            | tfset { $$ = $1; }
+            ;
+tgetsetList : tfunclist { $$ = $1; }
+            | { $$ = 0; }
+            ;
+tgetsetterExpr: tgetsetFuncName tgetsetList teol tindentBlock {
+                $$ = new Func(0, 0, $1, $2, 0, $4);
+            }
+            | tfuncleft tgetsetFuncName tgetsetList teol tindentBlock {
+                $$ = new Func($1, 0, $2, $3, 0, $5);
+            }
+            | tgetsetFuncName tgetsetList tfuncright teol tindentBlock {
+                $$ = new Func(0, 0, $1, $2, $3, $5);
+            }
+            ;
+tgetsetterStmt: tgetsetterExpr teol { $$ = new Stmt($1); }
+            ;
+
+
+
 tdefOrigin  : tdef tid teol tdefIndentBlock {
                 $$ = new Def($2, 0, $4);
             }
@@ -400,13 +447,13 @@ tfunc       : ttype tfuncname tfunclist teol tindentBlock {
                 $$ = new Func(0, $1, $2, $3, $4, $6);
             }
             | tferr tfunclist teol tindentBlock {
-                $$ = new Func(0, new Id(""), "@err", $2, 0, $4);
+                $$ = new Func(0, 0, "@err", $2, 0, $4);
             }
             | tfwarn tfunclist teol tindentBlock {
-                $$ = new Func(0, new Id(""), "@war", $2, 0, $4);
+                $$ = new Func(0, 0, "@war", $2, 0, $4);
             }
             | tfres tfunclist teol tindentBlock {
-                $$ = new Func(0, new Id(""), "@res", $2, 0, $4);
+                $$ = new Func(0, 0, "@res", $2, 0, $4);
             }
             ;
 

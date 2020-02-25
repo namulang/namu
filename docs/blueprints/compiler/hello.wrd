@@ -10,7 +10,12 @@ def Hello
         void foo()=>
             cout("n=" + this.n + " and got=" + got)
 
-        n := 5
+        _age := 22
+        getAge := prop from int
+            got => @get
+                retfun age + got
+            @set(int new)=>
+                age = new
 
     _b := def _$B from A
         $got=>int[] _foo(int max)

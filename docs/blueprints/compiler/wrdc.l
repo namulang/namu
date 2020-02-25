@@ -60,14 +60,34 @@ retfun { return tretfun; }
 retif { return tretif; }
 retfor { return tretfor; }
 retwith { return tretwith; }
+(_)*@set {
+    yylval.strVal = strdup(yytext);
+    return tfset;
+}
+(_)*@get {
+    yylval.strVal = strdup(yytext);
+    return tfget;
+}
 (_)*@ctor {
     yylval.strVal = strdup(yytext);
     return tfctor;
 }
-(_)*@dtor { return tfdtor; }
-(_)*@res { return tfres; }
-(_)*@warn { return tfwarn; }
-(_)*@err { return tferr; }
+(_)*@dtor {
+    yylval.strVal = strdup(yytext);
+    return tfdtor;
+}
+(_)*@res {
+    yylval.strVal = strdup(yytext);
+    return tfres;
+}
+(_)*@warn {
+    yylval.strVal = strdup(yytext);
+    return tfwarn;
+}
+(_)*@err {
+    yylval.strVal = strdup(yytext);
+    return tferr;
+}
 
 true|false {
     yylval.boolVal = string(yytext) == "true" ? true : false;
