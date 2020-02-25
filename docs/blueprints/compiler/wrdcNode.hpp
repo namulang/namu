@@ -64,7 +64,6 @@ class Node {
     }
 
     string tab(int cnt) {
-        cout << name() << " -> tab(" << cnt << ")\n";
         static string unit;
         if (unit.size() <= 0) {
             for (int n=0; n < 4/*TAB_WIDTH*/ ;n++)
