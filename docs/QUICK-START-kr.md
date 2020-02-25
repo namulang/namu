@@ -126,6 +126,24 @@ val == 10 // true
 ```
 
 
+# 프로퍼티
+```wrd
+def myObj
+    _realAge := 22
+    age := prop propOfRealAge from int
+        @get(): ret realAge
+        @set(int new)
+            cout("age.@set")
+            realAge = new
+
+def myObj2
+    age := prop from int(22)
+        @set=>: cout("age.@set")
+
+// myObj's age will do exactly same actions to what the 'age' from myObj2 will.
+```
+
+
 # closure
 
 ```wrd
