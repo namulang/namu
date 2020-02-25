@@ -25,10 +25,12 @@
 
         shiftRules(new1);
         BEGIN(new1);
-        cout << " ---- CHANGE RULE to " << name << "(" << new1 << ")\n";
+        if (yydebug)
+            cout << " ---- CHANGE RULE to " << name << "(" << new1 << ")\n";
     }
     void changePrevRule() {
-        cout << " ---- CHANGE PREV RULE TO " << prevRule << "\n";
+        if (yydebug)
+            cout << " ---- CHANGE PREV RULE TO " << prevRule << "\n";
         BEGIN(prevRule);
     }
 %}
@@ -94,9 +96,9 @@ true|false {
     return tbool;
 }
 
-<dedent>\/\/[^\n]* { cout << "!!!!2"; }
-<indent>\/\/[^\n]* { cout << "!!!!3"; }
-\/\/[^\n]* { cout << "!!!!1"; }
+<dedent>\/\/[^\n]* { if(yydebug) cout << "!!!!2"; }
+<indent>\/\/[^\n]* { if(yydebug) cout << "!!!!3"; }
+\/\/[^\n]* { if(yydebug) cout << "!!!!1"; }
 
 "/*" {
     changeRule("commenting", commenting);
@@ -109,10 +111,11 @@ true|false {
 }
 <commenting>"*/" {
     changePrevRule();
-    cout << "!!!!!!!!!!!end";
+    if(yydebug)
+        cout << "!!!!!!!!!!!end";
 }
-<commenting>. { cout << "1";}
-<commenting>\n { cout << "2"; }
+<commenting>. { if(yydebug) cout << "1";}
+<commenting>\n { if(yydebug) cout << "2"; }
 
 
 
@@ -130,7 +133,8 @@ true|false {
 }
 
 <arraytyping>\[ {
-    cout << "----------lex: found '[' \n";
+    if(yydebug)
+        cout << "----------lex: found '[' \n";
     return yytext[0];
 }
 <arraytyping>\]\[ {
@@ -139,7 +143,8 @@ true|false {
 }
 <arraytyping>\] {
     changePrevRule();
-    cout << "----------lex: found ']' \n";
+    if(yydebug)
+        cout << "----------lex: found ']' \n";
     return yytext[0];
 }
 <arraytyping>[a-zA-Z0-9_]+\] {
@@ -147,7 +152,8 @@ true|false {
     temp = temp.substr(0, temp.size()-1);
     unput(']');
     yylval.strVal = strdup(temp.c_str());
-    cout << "----------lex: tnormalId is " << yylval.strVal << " ---- \n";
+    if(yydebug)
+        cout << "----------lex: tnormalId is " << yylval.strVal << " ---- \n";
     return tnormalId;
 }
 
@@ -191,7 +197,8 @@ true|false {
     }
 
 \n {
-    cout << " --- enter indent rule\n";
+    if(yydebug)
+        cout << " --- enter indent rule\n";
     nowIndent = 0;
     changeRule("indent", indent);
     return teol;
@@ -211,7 +218,8 @@ true|false {
     char ch = yytext[0];
 
     int prevIndentLv = indentLvs.size() ? indentLvs.top() : 0;
-    cout << "  ---  ch=" << ch << "(" << (int) ch << ") dedent check finish. prevIndentLv=" << prevIndentLv << " indentLvs.size()=" << indentLvs.size() << "\n";
+    if(yydebug)
+        cout << "  ---  ch=" << ch << "(" << (int) ch << ") dedent check finish. prevIndentLv=" << prevIndentLv << " indentLvs.size()=" << indentLvs.size() << "\n";
     if (nowIndent < prevIndentLv)
         return goOutdent(ch, nowIndent);
     else if (nowIndent == prevIndentLv) {
@@ -279,14 +287,16 @@ true|false {
     nowIndent = (nowIndent + TAB_WIDTH) & ~(TAB_WIDTH - 1);
 }
 <indent>\n {
-    cout << "---------------- indent newline\n";
+    if(yydebug)
+        cout << "---------------- indent newline\n";
     nowIndent = 0;
 }
 <indent>. {
     char ch = yytext[0];
 
     int prevIndentLv = indentLvs.size() ? indentLvs.top() : 0;
-    cout << "  ---  indent check finish. prevIndentLv=" << prevIndentLv << " indentLvs.size()=" << indentLvs.size() << "\n";
+    if(yydebug)
+        cout << "  ---  indent check finish. prevIndentLv=" << prevIndentLv << " indentLvs.size()=" << indentLvs.size() << "\n";
     if (nowIndent > prevIndentLv) {
         indentLvs.push(nowIndent);
         unput(ch);
@@ -300,13 +310,16 @@ true|false {
 }
 
 <indent><<EOF>> {
-    cout << "----------------------EOF!!!!!\n";
+    if(yydebug)
+        cout << "----------------------EOF!!!!!\n";
     if (goOutdent(yytext[0], nowIndent) == tdedent) {
-        cout << "----------- return tdedent from EOF!\n";
+        if(yydebug)
+            cout << "----------- return tdedent from EOF!\n";
         return tdedent;
     }
 
-    cout << "----------- return meetEof()\n";
+    if(yydebug)
+        cout << "----------- return meetEof()\n";
     return meetEof();
 }
 
@@ -326,13 +339,16 @@ true|false {
 
 int meetEof() {
     static int cnt = 0;
-    cout << "----------- meetEOF(" << cnt << ")\n";
+    if(yydebug)
+        cout << "----------- meetEOF(" << cnt << ")\n";
     switch (++cnt) {
         case 0:
-            cout << "-------- return teol\n";
+            if(yydebug)
+                cout << "-------- return teol\n";
             return teol;
         case 1:
-            cout << "-------- return teof\n";
+            if(yydebug)
+                cout << "-------- return teof\n";
             return teof;
     }
     return 0;
@@ -349,7 +365,8 @@ int goOutdent(char prev, int nowIndent)
         unput(' ');
     unput('\n');
     changeRule("dedent", dedent);
-    cout << " ----- dedent: pop! now " << indentLvs.size() << " dedentLv left. \n";
+    if(yydebug)
+        cout << " ----- dedent: pop! now " << indentLvs.size() << " dedentLv left. \n";
     return tdedent;
 }
 
