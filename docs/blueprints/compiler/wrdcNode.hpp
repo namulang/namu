@@ -624,10 +624,10 @@ public:
         string  blkStr = blk ? "\n" + blk->print(lv) : "",
                 params = get("params") ? get("params")->print() : "",
                 lRed = get("lRedirect") ? get("lRedirect")->print() : "",
-                rRed = get("rRedirect") ? get("rRedirect")->print() : "";
+                rRed = get("rRedirect") ? get("rRedirect")->print() : "",
+                retType = get("retType") ? get("retType")->print() + " ": "";
 
-        return lRed + get("retType")->print() +
-            " " + clr(FUNC) + _name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
+        return lRed + retType + clr(FUNC) + _name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
             rRed + blkStr;
     }
 
@@ -649,6 +649,24 @@ public:
 
     string _name;
 };
+
+
+class Prop : public BlockHaver {
+public:
+    Prop(Node* name, Node* from, Node* blk): BlockHaver(blk) {
+        add("name", name);
+        add("from", from);
+    }
+
+    virtual string name() { return "prop"; }
+    virtual string _onPrint(int lv) {
+        string  n = get("name") ? get("name")->print() + " ": "",
+                f = get("from") ? get("from")->print() : "";
+        return clr(KEYWORD) + "prop " + n + "from " + f + "\n" +
+            has()->print(lv);
+    }
+};
+
 
 class FuncCall : public Node {
 public:
