@@ -2,7 +2,7 @@ import console.cout
 
 def Hello
     def _A from proxy
-        @ctor()
+        _@ctor()
             cout("A()")
         @dtor()
             cout("~A()")
