@@ -412,6 +412,10 @@ public:
 class Block : public Container {
 public:
     virtual string name() { return "block"; }
+
+    virtual string print(int lv) {
+        return "\n" + Container::print(lv);
+    }
 };
 
 
@@ -620,7 +624,7 @@ public:
     virtual string name() { return "func"; }
     virtual string _onPrint(int lv) {
         Node* blk = get("block");
-        string  blkStr = blk ? "\n" + blk->print(lv) : "",
+        string  blkStr = blk ? blk->print(lv) : "",
                 params = get("params") ? get("params")->print() : "",
                 lRed = get("lRedirect") ? get("lRedirect")->print() : "",
                 rRed = get("rRedirect") ? get("rRedirect")->print() : "",
@@ -694,6 +698,17 @@ public:
     bool hasHaver() {
         Haver* casted = dynamic_cast<Haver*>(l());
         return casted;
+    }
+};
+
+class InlineStmt : public Stmt {
+public:
+    InlineStmt() {}
+    InlineStmt(Node* expr): Stmt(expr) {}
+
+    virtual string name() { return "inlineStmt"; }
+    virtual string print(int lv) {
+        return clr(OP) + ": " + l()->print(lv);
     }
 };
 
