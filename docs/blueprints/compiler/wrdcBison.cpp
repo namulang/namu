@@ -38,14 +38,14 @@ void yyerror(const char* s)
 %start tfile
 
 %token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tnode tout tin tindent tdedent
-%token tfctor tfdtor tfres tfwarn tferr
+%token tfres tfwarn tferr
 %token tand tor
 
 %token <intVal> tinteger teof
 %token <floatVal> tfloat
 %token <boolVal> tbool
 %token <charVal> tchar
-%token <strVal> tstr
+%token <strVal> tstr tfctor tfdtor
 
 %token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname
 %type <strVal> tid tfuncname
@@ -411,7 +411,7 @@ tfunc       : ttype tfuncname tfunclist teol tindentBlock {
             ;
 
 tctorfunc   : tfctor tfunclist teol tindentBlock {
-                $$ = new Func(0, new Id(""), "@ctor", $2, 0, $4);
+                $$ = new Func(0, new Id(""), $1, $2, 0, $4);
             }
             ;
 

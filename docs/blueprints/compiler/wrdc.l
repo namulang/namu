@@ -60,11 +60,14 @@ retfun { return tretfun; }
 retif { return tretif; }
 retfor { return tretfor; }
 retwith { return tretwith; }
-@ctor { return tfctor; }
-@dtor { return tfdtor; }
-@res { return tfres; }
-@warn { return tfwarn; }
-@err { return tferr; }
+(_)*@ctor {
+    yylval.strVal = strdup(yytext);
+    return tfctor;
+}
+(_)*@dtor { return tfdtor; }
+(_)*@res { return tfres; }
+(_)*@warn { return tfwarn; }
+(_)*@err { return tferr; }
 
 true|false {
     yylval.boolVal = string(yytext) == "true" ? true : false;
@@ -234,7 +237,7 @@ true|false {
     return tchar;
 }
 
-(_$|$|_)[a-zA-Z0-9_]+\( {
+(_)[a-zA-Z0-9_]+\( {
     string temp = yytext;
     temp = temp.substr(0, temp.size()-1);
     yylval.strVal = strdup(temp.c_str());
