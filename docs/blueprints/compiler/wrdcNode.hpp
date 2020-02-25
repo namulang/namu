@@ -465,7 +465,7 @@ class Again : public Node {
 public:
     virtual string name() { return "again"; }
     virtual string _onPrint(int lv) {
-        return clr(RED) + "again\n";
+        return clr(RED) + "again";
     }
 };
 
@@ -479,7 +479,7 @@ public:
     virtual string name() { return "for"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        return clr(KEYWORD) + "for " + l()->print() + clr(KEYWORD) + " in " + r()->print() + "\n" + block()->print(lv);
+        return clr(KEYWORD) + "for " + l()->print() + clr(KEYWORD) + " in " + r()->print() + block()->print(lv);
     }
 };
 
@@ -493,7 +493,7 @@ public:
     virtual string name() { return "with"; }
     virtual string _onPrint(int lv) {
         string id = l() ? l()->print() : "";
-        return clr(KEYWORD) + "with " + id + "\n" + block()->print(lv);
+        return clr(KEYWORD) + "with " + id + block()->print(lv);
     }
 };
 
@@ -506,7 +506,7 @@ public:
     virtual string name() { return "if"; }
     using Node::print;
     virtual string print(int lv) {
-        return l()->print(lv) + "\n" + block()->print(lv);
+        return l()->print(lv) + block()->print(lv);
     }
 };
 
@@ -537,7 +537,7 @@ public:
         if (_elifs)
             for (Branch* e : *_elifs)
                 elifs += tab(lv) + clr(KEYWORD) + "elif " + e->print(lv);
-        string elses = _els ? tab(lv) + clr(KEYWORD) + "else \n" + _els->print(lv) : "";
+        string elses = _els ? tab(lv) + clr(KEYWORD) + "else" + _els->print(lv) : "";
         return clr(KEYWORD) + "if " + BranchHaver::_onPrint(lv) + elifs + elses;
     }
 
@@ -647,7 +647,7 @@ public:
     virtual string _onPrint(int lv) {
         Node* from = get("from");
         string fromStr = from ? clr(KEYWORD) + " from "+ clr(TYPE) + from->print() : "";
-        return clr(KEYWORD) + "def " + clr(TYPE) + _name + fromStr + "\n" + has()->print(lv);
+        return clr(KEYWORD) + "def " + clr(TYPE) + _name + fromStr + has()->print(lv);
     }
 
     string _name;
@@ -665,8 +665,7 @@ public:
     virtual string _onPrint(int lv) {
         string  n = get("name") ? get("name")->print() + " ": "",
                 f = get("from") ? get("from")->print() : "";
-        return clr(KEYWORD) + "prop " + n + "from " + f + "\n" +
-            has()->print(lv);
+        return clr(KEYWORD) + "prop " + n + "from " + f + has()->print(lv);
     }
 };
 
