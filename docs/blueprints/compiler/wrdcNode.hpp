@@ -372,6 +372,16 @@ public:
 };
 
 
+class Out : public Node {
+public:
+    Out(Node* id): Node(id) {}
+    virtual string name() { return "out"; }
+    virtual string _onPrint(int lv) {
+        return clr(KEYWORD) + "out " + l()->print(lv);
+    }
+};
+
+
 class Container : public Node {
 public:
 
