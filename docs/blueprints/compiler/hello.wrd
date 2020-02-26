@@ -4,10 +4,8 @@ def Hello
     def _A from proxy
         _@ctor(): cout("A()")
         @dtor()
-            cout("~A()")
 
-        void foo()=>
-            cout("n=" + this.n + " and got=" + got)
+        int[] _foo(int max) // does nothing.
 
         _age := 22
         getAge := prop from int
