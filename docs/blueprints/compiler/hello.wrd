@@ -8,7 +8,7 @@ def Hello
         int[] _foo(int max, int min) // does nothing.
 
         _age := 22
-        getAge := prop from int
+        getAge := prop from int(5)
             got => @get
                 retfun age + got
             @set(int new)=>
