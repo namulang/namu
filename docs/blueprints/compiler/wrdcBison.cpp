@@ -459,15 +459,15 @@ tfunc       : ttype tfuncname tfunclist tindentBlock {
             ;
 
 tctorfunc   : tfctor tfunclist tindentBlock {
-                $$ = new Func(0, new Id(""), $1, $2, 0, $3);
+                $$ = new Func(0, 0, $1, $2, 0, $3);
             }
             | tfctor tfunclist {
-                $$ = new Func(0, new Id(""), $1, $2, 0, 0);
+                $$ = new Func(0, 0, $1, $2, 0, 0);
             }
             ;
 
 tdtorfunc   : tfdtor tfunclist tindentBlock {
-                $$ = new Func(0, new Id(""), $1, $2, 0, $3);
+                $$ = new Func(0, 0, $1, $2, 0, $3);
             }
             | tfdtor tfunclist {
                 $$ = new Func(0, 0, $1, $2, 0, 0);
