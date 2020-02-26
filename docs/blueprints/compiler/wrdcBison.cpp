@@ -360,9 +360,9 @@ tparams     : tparam {
                 ret->add($1);
                 $$ = ret;
             }
-            | tparams tparam {
+            | tparams ',' tparam {
                 Args* ret = (Args*) $1;
-                ret->add($2);
+                ret->add($3);
                 $$ = ret;
             }
             ;

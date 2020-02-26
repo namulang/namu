@@ -5,7 +5,7 @@ def Hello
         _@ctor(): cout("A()")
         @dtor()
 
-        int[] _foo(int max) // does nothing.
+        int[] _foo(int max, int min) // does nothing.
 
         _age := 22
         getAge := prop from int
@@ -15,7 +15,7 @@ def Hello
                 age = new
 
     _b := def _$B from A
-        $got=>int[] _foo(int max)
+        $got=>int[] _foo(int max, int min)
             retfun 1..max
 
         $res := float if a > 0 & a < 5
