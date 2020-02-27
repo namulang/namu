@@ -10,7 +10,7 @@ def Hello
         _age := 22
         getAge := prop from int(5)
             got => @get
-                retfun age + got
+                retfun this.age + got
             @set(int new)=>
                 age = new
 
