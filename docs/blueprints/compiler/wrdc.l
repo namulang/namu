@@ -48,10 +48,28 @@ for { return tfor; }
 if { return tif; }
 else { return telse; }
 elif { return telif; }
-def { return tdef; }
+"def"[\(]* {
+    string temp = yytext;
+    if(temp[temp.size()-1] == '(') {
+        temp = temp.substr(0, temp.size()-1);
+        unput('(');
+    }
+
+    yylval.strVal = strdup(temp.c_str());
+    return tdef;
+}
 from { return tfrom; }
 out { return tout; }
-prop { return tprop; }
+"prop"[\(]* {
+    string temp = yytext;
+    if(temp[temp.size()-1] == '(') {
+        temp = temp.substr(0, temp.size()-1);
+        unput('(');
+    }
+
+    yylval.strVal = strdup(temp.c_str());
+    return tprop;
+}
 import { return timport; }
 aka { return taka; }
 with { return twith; }

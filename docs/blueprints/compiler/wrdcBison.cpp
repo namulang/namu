@@ -369,10 +369,16 @@ tparams     : tparam {
 
 
 tpropexpr   : tprop tid tfrom trhsexpr tpropIndentBlock {
-                $$ = new Prop(new Id($2), $4, $5);
+                $$ = new Prop(new Id($2), 0, $4, $5);
+            }
+            | tprop tid trhslist tfrom trhsexpr tpropIndentBlock {
+                $$ = new Prop(new Id($2), $3, $5, $6);
             }
             | tprop tfrom trhsexpr tpropIndentBlock {
-                $$ = new Prop(0, $3, $4);
+                $$ = new Prop(0, 0, $3, $4);
+            }
+            | tprop trhslist tfrom trhsexpr tpropIndentBlock {
+                $$ = new Prop(0, $2, $4, $5);
             }
             ;
 tpropIndentBlock: teol tindent tpropBlock tdedent { $$ = $3; }
@@ -413,10 +419,16 @@ tgetsetterStmt: tgetsetterExpr teol { $$ = new Stmt($1); }
 
 
 tdefOrigin  : tdef tid tdefIndentBlock {
-                $$ = new Def($2, 0, $3);
+                $$ = new Def($2, 0, 0, $3);
+            }
+            | tdef tid trhslist tdefIndentBlock {
+                $$ = new Def($2, $3, 0, $4);
+            }
+            | tdef tid trhslist tfrom trhsexpr tdefIndentBlock {
+                $$ = new Def($2, $3, $5, $6);
             }
             | tdef tid tfrom trhsexpr tdefIndentBlock {
-                $$ = new Def($2, $4, $5);
+                $$ = new Def($2, 0, $4, $5);
             }
             ;
 tdefOriginStmt: tdefOrigin teol { $$ = new Stmt($1); }
