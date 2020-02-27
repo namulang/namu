@@ -142,7 +142,6 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | tlhsId { $$ = $1; }
             | tdefexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
-            | taccess %dprec 1 { $$ = $1; }
             | tsafeAccess { $$ = $1; }
             | trhsIdExpr '+' trhsIdExpr %dprec 2 { $$ = new Plus($1, $3); }
             | trhsIdExpr '-' trhsIdExpr %dprec 2 { $$ = new Minus($1, $3); }
@@ -276,6 +275,7 @@ trhslist    : '(' trhsIds ')' { //  " "를 쓰면 안된다.
             ;
 
 tlhsId      : tnormalId { $$ = new Id($1); }
+            | taccess { $$ = $1; }
             | tlhslist { $$ = $1; }
             ;
 tlhsIds     : tlhsId {
