@@ -377,6 +377,7 @@ tpropexpr   : tprop tid tfrom trhsexpr tpropIndentBlock {
             ;
 tpropIndentBlock: teol tindent tpropBlock tdedent { $$ = $3; }
             | ':' tgetsetterExpr { $$ = new InlineStmt($2); }
+            | { $$ = 0; }
             ;
 tpropBlock  : tgetsetterStmt {
                 Block* ret = new Block();
@@ -438,9 +439,6 @@ tfuncright  : topRedirect { $$ = new Redirect(); }
 tfunc       : ttype tfuncname tfunclist tindentBlock {
                 $$ = new Func(0, $1, $2, $3, 0, $4);
             }
-            | ttype tfuncname tfunclist {
-                $$ = new Func(0, $1, $2, $3, 0, 0);
-            }
             | tfuncleft ttype tfuncname tfunclist tindentBlock {
                 $$ = new Func($1, $2, $3, $4, 0, $5);
             }
@@ -461,16 +459,10 @@ tfunc       : ttype tfuncname tfunclist tindentBlock {
 tctorfunc   : tfctor tfunclist tindentBlock {
                 $$ = new Func(0, 0, $1, $2, 0, $3);
             }
-            | tfctor tfunclist {
-                $$ = new Func(0, 0, $1, $2, 0, 0);
-            }
             ;
 
 tdtorfunc   : tfdtor tfunclist tindentBlock {
                 $$ = new Func(0, 0, $1, $2, 0, $3);
-            }
-            | tfdtor tfunclist {
-                $$ = new Func(0, 0, $1, $2, 0, 0);
             }
             ;
 
@@ -534,12 +526,14 @@ tdefIndentBlock: teol tindent tdefBlock tdedent { $$ = $3; }
             | ':' tdefexpr { $$ = new InlineStmt($2); }
             | ':' tctorfunc { $$ = new InlineStmt($2); }
             | ':' tdtorfunc { $$ = new InlineStmt($2); }
+            | { $$ = 0; }
             ;
 
 tindentBlock: teol tindent tblock tdedent { $$ = $3; }
             | ':' trhsexpr { $$ = new InlineStmt($2); }
             | ':' treturn { $$ = new InlineStmt($2); }
             | ':' tagain { $$ = new InlineStmt(new Again()); }
+            | { $$ = 0; }
             ;
 
 tfile       : tfile tdefOriginStmt {

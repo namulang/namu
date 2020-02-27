@@ -646,8 +646,10 @@ public:
     virtual string name() { return "def"; }
     virtual string _onPrint(int lv) {
         Node* from = get("from");
-        string fromStr = from ? clr(KEYWORD) + " from "+ clr(TYPE) + from->print() : "";
-        return clr(KEYWORD) + "def " + clr(TYPE) + _name + fromStr + has()->print(lv);
+        string  fromStr = from ? clr(KEYWORD) + " from "+ clr(TYPE) + from->print() : "",
+                blk = has() ? has()->print(lv) : "";
+
+        return clr(KEYWORD) + "def " + clr(TYPE) + _name + fromStr + blk;
     }
 
     string _name;
@@ -664,8 +666,9 @@ public:
     virtual string name() { return "prop"; }
     virtual string _onPrint(int lv) {
         string  n = get("name") ? get("name")->print() + " ": "",
-                f = get("from") ? get("from")->print() : "";
-        return clr(KEYWORD) + "prop " + n + "from " + f + has()->print(lv);
+                f = get("from") ? get("from")->print() : "",
+                blk = has() ? has()->print(lv) : "";
+        return clr(KEYWORD) + "prop " + n + "from " + f + blk;
     }
 };
 
