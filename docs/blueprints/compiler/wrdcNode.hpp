@@ -610,20 +610,19 @@ public:
     }
 };
 
-class Func : public Node {
+class Func : public BlockHaver {
 public:
-    Func(Node* lRedirect, Node* retType, string name, Node* params, Node* rRedirect, Node* block) {
+    Func(Node* lRedirect, Node* retType, string name, Node* params, Node* rRedirect, Node* block): BlockHaver(block) {
         add("lRedirect", lRedirect);
         add("retType", retType);
         _name = name;
         add("params", params);
         add("rRedirect", rRedirect);
-        add("block", block);
     }
 
     virtual string name() { return "func"; }
     virtual string _onPrint(int lv) {
-        Node* blk = get("block");
+        Node* blk = has();
         string  blkStr = blk ? blk->print(lv) : "",
                 params = get("params") ? get("params")->print() : "",
                 lRed = get("lRedirect") ? get("lRedirect")->print() : "",
@@ -699,13 +698,31 @@ public:
     virtual string name() { return "stmt"; }
     using Node::print;
     virtual string print(int lv) {
-        char newLine = hasHaver() ? '\0' : '\n';
+        string newLine = hasHaver(l(), 1) ? "" : "\n";
         return tab(lv) + l()->print(lv) + clr(WHITE) + newLine;
     }
 
-    bool hasHaver() {
-        Haver* casted = dynamic_cast<Haver*>(l());
-        return casted;
+    bool hasHaver(Node* it, int c) {
+        if(!it) return false;
+        Haver* haver = dynamic_cast<Haver*>(it);
+        if(haver && haver->has()) {
+            cout << "------------- hasHaver: " << it->name() << "return true\n";
+            return true;
+        }
+
+        // search manually all of children.
+        map<string, Node*>& map = it->nodes;
+        std::map<string, Node*>::iterator e = map.begin();
+        int n=0;
+        while(e != map.end()) {
+            Node* child = e->second;
+            cout << "------------- hasHaver: loops[" << it->name() << "][" << c << "] child[" << n << "]=" << (child ? child->name() : "") << "\n";
+            if(hasHaver(child, c+1)) return true;
+            e++;
+            n++;
+        }
+
+        return false;
     }
 };
 
@@ -716,7 +733,7 @@ public:
 
     virtual string name() { return "inlineStmt"; }
     virtual string print(int lv) {
-        return clr(OP) + ": " + l()->print(lv);
+        return clr(OP) + ": " + l()->print(lv) + "\n";
     }
 };
 
