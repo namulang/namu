@@ -13,9 +13,9 @@ def Hello
                 retfun this.age + got
             @set(int new)=>
                 age = new
-        name := prop from str("defaultName")
+        name := prop() from str("defaultName")
 
-    _b := def _$B from A
+    _b := def _$B() from A
         $got=>int[] _foo(int max, int min)
             retfun 1..max
 

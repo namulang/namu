@@ -639,17 +639,20 @@ public:
 
 class Def : public BlockHaver {
 public:
-    Def(string name, Node* from, Node* block): BlockHaver(block), _name(name) {
+    Def(string name, Node* list, Node* from, Node* block): BlockHaver(block), _name(name) {
         add("from", from);
+        add("list", list);
     }
 
     virtual string name() { return "def"; }
     virtual string _onPrint(int lv) {
         Node* from = get("from");
-        string  fromStr = from ? clr(KEYWORD) + " from "+ clr(TYPE) + from->print() : "",
+        string  name = clr(TYPE) + _name != "" ? _name : "",
+                ls = get("list") ? get("list")->print() : "",
+                fromStr = from ? clr(KEYWORD) + " from "+ clr(TYPE) + from->print() : "",
                 blk = has() ? has()->print(lv) : "";
 
-        return clr(KEYWORD) + "def " + clr(TYPE) + _name + fromStr + blk;
+        return clr(KEYWORD) + "def " + name + ls + fromStr + blk;
     }
 
     string _name;
@@ -658,17 +661,20 @@ public:
 
 class Prop : public BlockHaver {
 public:
-    Prop(Node* name, Node* from, Node* blk): BlockHaver(blk) {
+    Prop(Node* name, Node* list, Node* from, Node* blk): BlockHaver(blk) {
         add("name", name);
+        add("list", list);
         add("from", from);
     }
 
     virtual string name() { return "prop"; }
     virtual string _onPrint(int lv) {
-        string  n = get("name") ? get("name")->print() + " ": "",
+        string  n = get("name") ? get("name")->print() : "",
                 f = get("from") ? get("from")->print() : "",
+                list = get("list") ? get("list")->print() + " " : "",
                 blk = has() ? has()->print(lv) : "";
-        return clr(KEYWORD) + "prop " + n + "from " + f + blk;
+
+        return clr(KEYWORD) + "prop" + n + list + "from " + f + blk;
     }
 };
 
