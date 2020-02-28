@@ -578,6 +578,9 @@ public:
 
     virtual string name() { return "list"; }
     using Node::print;
+    void add(Node* args) {
+        lIs(args);
+    }
     virtual string _onPrint(int lv) {
         string ret = clr(CONTAINER) + "(";
         if (l())
