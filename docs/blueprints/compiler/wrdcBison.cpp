@@ -54,7 +54,7 @@ void yyerror(const char* s)
 
 %type <node> tstmt tcast tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
 
-%type <node> trhsexpr trhslist tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem
+%type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem
 
 %type <node> timportStmt
 
@@ -141,6 +141,7 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | tdefexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
             | tsafeAccess { $$ = $1; }
+            | '(' trhsIdExpr ')' { $$ = $2; }
             | trhsIdExpr '+' trhsIdExpr %dprec 2 { $$ = new Plus($1, $3); }
             | trhsIdExpr '-' trhsIdExpr %dprec 2 { $$ = new Minus($1, $3); }
             | trhsIdExpr '*' trhsIdExpr %dprec 2 { $$ = new Square($1, $3); }
@@ -251,9 +252,10 @@ treturn     : tret trhsexpr { $$ = new Return("ret", $2); }
             ;
 
 
-trhsIds     : trhsexpr {
+trhsIds     : trhsexpr ',' trhsexpr {
                 Args* ret = new Args();
                 ret->add($1);
+                ret->add($3);
                 $$ = ret;
             }
             | trhsIds ',' trhsexpr {
@@ -264,9 +266,6 @@ trhsIds     : trhsexpr {
             ;
 trhslist    : '(' trhsIds ')' { //  " "를 쓰면 안된다.
                 $$ = new List((Args*) $2);
-            }
-            | '(' ')' {
-                $$ = new List();
             }
             ;
 
@@ -369,17 +368,28 @@ tparams     : tparam {
             }
             ;
 
+tfuncRhsList: trhslist { $$ = $1; }
+            | '(' ')' { $$ = new List(); }
+            | '(' trhsexpr ')' {
+                List* ret = new List();
+                Args* args = new Args();
+                args->add($2);
+                ret->add(args);
+                $$ = ret;
+            }
+            ;
+
 
 tpropexpr   : tprop tid tfrom trhsexpr tpropIndentBlock {
                 $$ = new Prop(new Id($2), 0, $4, $5);
             }
-            | tprop tid trhslist tfrom trhsexpr tpropIndentBlock {
+            | tprop tid tfuncRhsList tfrom trhsexpr tpropIndentBlock {
                 $$ = new Prop(new Id($2), $3, $5, $6);
             }
             | tprop tfrom trhsexpr tpropIndentBlock {
                 $$ = new Prop(0, 0, $3, $4);
             }
-            | tprop trhslist tfrom trhsexpr tpropIndentBlock {
+            | tprop tfuncRhsList tfrom trhsexpr tpropIndentBlock {
                 $$ = new Prop(0, $2, $4, $5);
             }
             ;
@@ -423,10 +433,10 @@ tgetsetterStmt: tgetsetterExpr teol { $$ = new Stmt($1); }
 tdefOrigin  : tdef tid tdefIndentBlock {
                 $$ = new Def($2, 0, 0, $3);
             }
-            | tdef tid trhslist tdefIndentBlock {
+            | tdef tid tfuncRhsList tdefIndentBlock {
                 $$ = new Def($2, $3, 0, $4);
             }
-            | tdef tid trhslist tfrom trhsexpr tdefIndentBlock {
+            | tdef tid tfuncRhsList tfrom trhsexpr tdefIndentBlock {
                 $$ = new Def($2, $3, $5, $6);
             }
             | tdef tid tfrom trhsexpr tdefIndentBlock {
@@ -480,10 +490,10 @@ tdtorfunc   : tfdtor tfunclist tindentBlock {
             }
             ;
 
-tfuncCall   : tnormalFuncname trhslist {
+tfuncCall   : tnormalFuncname tfuncRhsList {
                 $$ = new FuncCall(new Id($1), (List*) $2);
             }
-            | ttype trhslist {
+            | ttype tfuncRhsList {
                 $$ = new FuncCall($1, $2);
             }
             ;
