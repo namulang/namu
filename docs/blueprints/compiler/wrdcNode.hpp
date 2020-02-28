@@ -612,10 +612,10 @@ public:
 
 class Func : public BlockHaver {
 public:
-    Func(Node* lRedirect, Node* retType, string name, Node* params, Node* rRedirect, Node* block): BlockHaver(block) {
+    Func(Node* lRedirect, Node* retType, Node* name, Node* params, Node* rRedirect, Node* block): BlockHaver(block) {
         add("lRedirect", lRedirect);
         add("retType", retType);
-        _name = name;
+        add("name", name);
         add("params", params);
         add("rRedirect", rRedirect);
     }
@@ -623,13 +623,14 @@ public:
     virtual string name() { return "func"; }
     virtual string _onPrint(int lv) {
         Node* blk = has();
-        string  blkStr = blk ? blk->print(lv) : "",
+        string  name = get("name") ? get("name")->print() : "",
+                blkStr = blk ? blk->print(lv) : "",
                 params = get("params") ? get("params")->print() : "",
                 lRed = get("lRedirect") ? get("lRedirect")->print() : "",
                 rRed = get("rRedirect") ? get("rRedirect")->print() : "",
                 retType = get("retType") ? get("retType")->print() + " ": "";
 
-        return lRed + retType + clr(FUNC) + _name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
+        return lRed + retType + clr(FUNC) + name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
             rRed + blkStr;
     }
 
@@ -680,7 +681,7 @@ public:
 
 class FuncCall : public Node {
 public:
-    FuncCall(string name, List* types) : Node(new Str(name), types) {}
+    FuncCall(Node* name, Node* types) : Node(name, types) {}
 
     virtual string name() { return "funcCall"; }
     using Node::print;
