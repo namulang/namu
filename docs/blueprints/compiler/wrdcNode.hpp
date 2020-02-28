@@ -7,6 +7,7 @@
 using namespace std;
 
 extern bool USE_OP;
+extern int yydebug;
 
 class Node {
     public:
@@ -710,7 +711,7 @@ public:
         if(!it) return false;
         Haver* haver = dynamic_cast<Haver*>(it);
         if(haver && haver->has()) {
-            cout << "------------- hasHaver: " << it->name() << "return true\n";
+            if(yydebug) cout << "------------- hasHaver: " << it->name() << "return true\n";
             return true;
         }
 
@@ -721,6 +722,9 @@ public:
         while(e != map.end()) {
             Node* child = e->second;
             cout << "------------- hasHaver: loops[" << it->name() << "][" << c << "] child[" << n << "]=" << (child ? child->name() : "") << "\n";
+            if (yydebug) {
+                cout << "------------- hasHaver: loops[" << it->name() << "][" << c << "] child[" << n << "]=" << (child ? child->name() : "") << "\n";
+            }
             if(hasHaver(child, c+1)) return true;
             e++;
             n++;
