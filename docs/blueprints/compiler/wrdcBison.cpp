@@ -38,14 +38,13 @@ void yyerror(const char* s)
 %start tfile
 
 %token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tnode tout tin tindent tdedent
-%token tfres tfwarn tferr
 %token tand tor
 
 %token <intVal> tinteger teof
 %token <floatVal> tfloat
 %token <boolVal> tbool
 %token <charVal> tchar
-%token <strVal> tstr tfctor tfdtor tfget tfset
+%token <strVal> tstr tfctor tfdtor tfget tfset tfres tfwarn tferr
 
 %token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname
 %type <strVal> tid tfuncname
@@ -65,8 +64,7 @@ void yyerror(const char* s)
 
 %type <nodes> telifBlocks
 
-%type <node> tgetsetterStmt tgetsetterExpr tpropexpr tpropIndentBlock tpropBlock tgetsetList
-%type <strVal> tgetsetFuncName
+%type <node> tgetsetterStmt tgetsetterExpr tpropexpr tpropIndentBlock tpropBlock tgetsetList tgetsetFuncName
 
 // 우선순위: 밑으로 갈수록 높음.
 //  결합 순서 정의:
@@ -401,8 +399,8 @@ tpropBlock  : tgetsetterStmt {
             }
             ;
 
-tgetsetFuncName : tfget { $$ = $1; }
-            | tfset { $$ = $1; }
+tgetsetFuncName : tfget { $$ = new Id($1); }
+            | tfset { $$ = new Id($1); }
             ;
 tgetsetList : tfunclist { $$ = $1; }
             | { $$ = 0; }
@@ -453,37 +451,40 @@ tfuncright  : topRedirect { $$ = new Redirect(); }
             ;
 
 tfunc       : ttype tfuncname tfunclist tindentBlock {
-                $$ = new Func(0, $1, $2, $3, 0, $4);
+                $$ = new Func(0, $1, new Id($2), $3, 0, $4);
             }
             | tfuncleft ttype tfuncname tfunclist tindentBlock {
-                $$ = new Func($1, $2, $3, $4, 0, $5);
+                $$ = new Func($1, $2, new Id($3), $4, 0, $5);
             }
             | ttype tfuncname tfunclist tfuncright tindentBlock {
-                $$ = new Func(0, $1, $2, $3, $4, $5);
+                $$ = new Func(0, $1, new Id($2), $3, $4, $5);
             }
             | tferr tfunclist tindentBlock {
-                $$ = new Func(0, 0, "@err", $2, 0, $3);
+                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
             | tfwarn tfunclist tindentBlock {
-                $$ = new Func(0, 0, "@war", $2, 0, $3);
+                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
             | tfres tfunclist tindentBlock {
-                $$ = new Func(0, 0, "@res", $2, 0, $3);
+                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
             ;
 
 tctorfunc   : tfctor tfunclist tindentBlock {
-                $$ = new Func(0, 0, $1, $2, 0, $3);
+                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
             ;
 
 tdtorfunc   : tfdtor tfunclist tindentBlock {
-                $$ = new Func(0, 0, $1, $2, 0, $3);
+                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
             ;
 
 tfuncCall   : tnormalFuncname trhslist {
-                $$ = new FuncCall($1, (List*) $2);
+                $$ = new FuncCall(new Id($1), (List*) $2);
+            }
+            | ttype trhslist {
+                $$ = new FuncCall($1, $2);
             }
             ;
 
