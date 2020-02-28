@@ -55,7 +55,7 @@ void yyerror(const char* s)
 
 %type <node> tstmt tcast tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
 
-%type <node> trhsexpr trhslist tlhslist trhsIdExpr trhsListExpr tlhsIds tlhsId trhsIds tdefId tdefIds tdeflist toutableId
+%type <node> trhsexpr trhslist tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem
 
 %type <node> timportStmt
 
@@ -139,7 +139,7 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | tseq { $$ = $1; }
             | tarray { $$ = $1; }
             | tmap { $$ = $1; }
-            | tlhsId { $$ = $1; }
+            | ttype { $$ = $1; }
             | tdefexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
             | tsafeAccess { $$ = $1; }
@@ -230,9 +230,7 @@ tdefexpr    : tdeflist topDefAssign trhsListExpr { $$ = new DefAssign($1, $3); }
             ;
 
 
-ttype       : tnormalId {
-                  $$ = new Id($1);
-              }
+ttype       : tlhsId { $$ = $1; }
             | ttype '[' ']' {
                 $$ = new Origin($1->print() + "[]");
             }
@@ -278,17 +276,23 @@ tlhsId      : tnormalId { $$ = new Id($1); }
             | taccess { $$ = $1; }
             | tlhslist { $$ = $1; }
             ;
-tlhsIds     : tlhsId {
+tlhslistElem: tlhsId {
                 Args* ret = new Args();
                 ret->add($1);
                 $$ = ret;
             }
-            | tlhsIds ',' tlhsId {
+            | tlhslistElem ',' tlhsId {
                 Args* ret = (Args*) $1;
                 ret->add($3);
                 $$ = ret;
             }
-tlhslist    : '(' tlhsIds ')' {
+            | tlhslistElem ',' tlhslist {
+                Args* ret = (Args*) $1;
+                ret->add($3);
+                $$ = ret;
+            }
+            ;
+tlhslist    : '(' tlhslistElem ')' {
                 $$ = new List((Args*) $2);
             }
             ;
