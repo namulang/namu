@@ -3,7 +3,7 @@ import console.cout
 def Hello
     def _A from proxy
         _@ctor(): cout("A()")
-        @dtor()
+        @dtor() // function can has empty body.
 
         int[] _foo(int max, int min) // does nothing.
 
@@ -13,6 +13,7 @@ def Hello
                 retfun this.age + got
             @set(int new)=>
                 age = new
+                //for n in 2..5 -> keywords which can have block stmt exception func should have its body.
         name := prop() from str("defaultName")
 
     _b := def _$B() from A

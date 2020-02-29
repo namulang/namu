@@ -52,7 +52,9 @@ void yyerror(const char* s)
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topRedirect
 
 
-%type <node> tstmt tcast tblock tindentBlock tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
+%type <node> tblock tindentBlock temptiableIndentBlock
+%type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
+
 
 %type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem
 
@@ -415,13 +417,18 @@ tgetsetFuncName : tfget { $$ = new Id($1); }
 tgetsetList : tfunclist { $$ = $1; }
             | { $$ = 0; }
             ;
-tgetsetterExpr: tgetsetFuncName tgetsetList tindentBlock {
+
+temptiableIndentBlock: tindentBlock { $$ = $1; }
+            | { $$ = 0; }
+            ;
+
+tgetsetterExpr: tgetsetFuncName tgetsetList temptiableIndentBlock {
                 $$ = new Func(0, 0, $1, $2, 0, $3);
             }
-            | tfuncleft tgetsetFuncName tgetsetList tindentBlock {
+            | tfuncleft tgetsetFuncName tgetsetList temptiableIndentBlock {
                 $$ = new Func($1, 0, $2, $3, 0, $4);
             }
-            | tgetsetFuncName tgetsetList tfuncright tindentBlock {
+            | tgetsetFuncName tgetsetList tfuncright temptiableIndentBlock {
                 $$ = new Func(0, 0, $1, $2, $3, $4);
             }
             ;
@@ -460,32 +467,32 @@ tfuncright  : topRedirect { $$ = new Redirect(); }
             | topRedirect tlhslist { $$ = new Redirect($2); }
             ;
 
-tfunc       : ttype tfuncname tfunclist tindentBlock {
+tfunc       : ttype tfuncname tfunclist temptiableIndentBlock {
                 $$ = new Func(0, $1, new Id($2), $3, 0, $4);
             }
-            | tfuncleft ttype tfuncname tfunclist tindentBlock {
+            | tfuncleft ttype tfuncname tfunclist temptiableIndentBlock {
                 $$ = new Func($1, $2, new Id($3), $4, 0, $5);
             }
-            | ttype tfuncname tfunclist tfuncright tindentBlock {
+            | ttype tfuncname tfunclist tfuncright temptiableIndentBlock {
                 $$ = new Func(0, $1, new Id($2), $3, $4, $5);
             }
-            | tferr tfunclist tindentBlock {
+            | tferr tfunclist temptiableIndentBlock {
                 $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
-            | tfwarn tfunclist tindentBlock {
+            | tfwarn tfunclist temptiableIndentBlock {
                 $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
-            | tfres tfunclist tindentBlock {
-                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
-            }
-            ;
-
-tctorfunc   : tfctor tfunclist tindentBlock {
+            | tfres tfunclist temptiableIndentBlock {
                 $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
             ;
 
-tdtorfunc   : tfdtor tfunclist tindentBlock {
+tctorfunc   : tfctor tfunclist temptiableIndentBlock {
+                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
+            }
+            ;
+
+tdtorfunc   : tfdtor tfunclist temptiableIndentBlock {
                 $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
             ;
@@ -560,7 +567,6 @@ tindentBlock: teol tindent tblock tdedent { $$ = $3; }
             | ':' trhsexpr { $$ = new InlineStmt($2); }
             | ':' treturn { $$ = new InlineStmt($2); }
             | ':' tagain { $$ = new InlineStmt(new Again()); }
-            | { $$ = 0; }
             ;
 
 tfile       : tfile tdefOriginStmt {
