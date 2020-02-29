@@ -675,10 +675,10 @@ public:
     virtual string _onPrint(int lv) {
         string  n = get("name") ? get("name")->print() : "",
                 f = get("from") ? get("from")->print() : "",
-                list = get("list") ? get("list")->print() + " " : "",
+                list = get("list") ? get("list")->print() : "",
                 blk = has() ? has()->print(lv) : "";
 
-        return clr(KEYWORD) + "prop" + n + list + "from " + f + blk;
+        return clr(KEYWORD) + "prop" + n + list + " from " + f + blk;
     }
 };
 
