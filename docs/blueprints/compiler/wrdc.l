@@ -14,7 +14,7 @@
     extern int nowRule;
     extern int prevRule;
 
-    int goOutdent(char ch, int nowIndent);
+    int goOutdent(char ch);
     int meetEof();
     void shiftRules(int new1) {
         prevRule = nowRule;
@@ -228,7 +228,10 @@ true|false {
     nowIndent = 0;
     return teol;
 }
-<dedent>[ ] { nowIndent++; }
+<dedent>[ ] {
+    cout << "<dedent> nowIndent=" << nowIndent << "\n";
+    nowIndent++;
+}
 <dedent>\t {
     nowIndent = (nowIndent + TAB_WIDTH) & ~(TAB_WIDTH - 1);
 }
@@ -237,12 +240,17 @@ true|false {
 
     int prevIndentLv = indentLvs.size() ? indentLvs.top() : 0;
     if(yydebug)
-        cout << "  ---  ch=" << ch << "(" << (int) ch << ") dedent check finish. prevIndentLv=" << prevIndentLv << " indentLvs.size()=" << indentLvs.size() << "\n";
-    if (nowIndent < prevIndentLv)
-        return goOutdent(ch, nowIndent);
+        cout << "  ---  ch=" << ch << "(" << (int) ch << ") dedent check finish. prevIndentLv=" << prevIndentLv << " indentLvs.size()=" << indentLvs.size() << " nowIndent=" << nowIndent << "\n";
+
+    if (nowIndent < prevIndentLv) {
+        int res = goOutdent(ch);
+        nowIndent = 0;
+        return res;
+    }
     else if (nowIndent == prevIndentLv) {
         unput(ch);
         changeRule("INITIAL", INITIAL);
+        nowIndent = 0;
     }
 }
 
@@ -323,14 +331,14 @@ true|false {
         changeRule("INITIAL", INITIAL);
         unput(ch);
     } else {
-        return goOutdent(ch, nowIndent);
+        return goOutdent(ch);
     }
 }
 
 <indent><<EOF>> {
     if(yydebug)
         cout << "----------------------EOF!!!!!\n";
-    if (goOutdent(yytext[0], nowIndent) == tdedent) {
+    if (goOutdent(yytext[0]) == tdedent) {
         if(yydebug)
             cout << "----------- return tdedent from EOF!\n";
         return tdedent;
@@ -372,19 +380,25 @@ int meetEof() {
     return 0;
 }
 
-int goOutdent(char prev, int nowIndent)
+int goOutdent(char prev)
 {
     int top = indentLvs.size() ? indentLvs.top() : 0;
     if (nowIndent >= top) return 0;
 
     indentLvs.pop();
     unput(prev);
+    cout << " ----- prev=" << prev << " nowIndent=" << nowIndent << "\n";
     for (int n=0; n < nowIndent ;n++)
         unput(' ');
-    unput('\n');
+    if (prev != ',' && prev != ')' || top - nowIndent != TAB_WIDTH) {
+        if(yydebug) cout << " ----- dedent and newline!\n";
+        unput('\n');
+    } else if(yydebug) cout << " ----- dedent only!\n";
+
     changeRule("dedent", dedent);
     if(yydebug)
         cout << " ----- dedent: pop! now " << indentLvs.size() << " dedentLv left. \n";
+    nowIndent = 0;
     return tdedent;
 }
 
