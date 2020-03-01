@@ -21,7 +21,9 @@ def Hello
             retfun 1..max
 
         $res := float if a > 0 & a < 5
-            if true
+            if 33 > (for n in 3..5
+                2*n
+            )
                 @err(rNull r)
                     cout("err(rNull)")
 

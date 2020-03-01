@@ -74,6 +74,7 @@ class Node {
         string ret;
         for (int n=0; n < cnt ;n++)
             ret += unit;
+        cout << "------------ tab: " << name() << "(" << cnt << ")\n";
         return ret;
     }
 
@@ -133,7 +134,7 @@ public:
 
     virtual string name() { return "mapOrigin"; }
     virtual string _onPrint(int lv) {
-        return l()->print() + clr(TYPE) + "[" + r()->print() + clr(TYPE) + "]";
+        return l()->print(lv) + clr(TYPE) + "[" + r()->print(lv) + clr(TYPE) + "]";
     }
 };
 
@@ -183,8 +184,8 @@ public:
     virtual string name() { return _symbol; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        string  lStr = l() ? l()->print() : "",
-                rStr = r() ? r()->print() : "";
+        string  lStr = l() ? l()->print(lv) : "",
+                rStr = r() ? r()->print(lv) : "";
 
         string body = lStr + " " + clr(OP) + _symbol + " " + rStr;
 
@@ -202,7 +203,7 @@ public:
 
     virtual string name() { return "param"; }
     virtual string _onPrint(int lv) {
-        return l()->print() + " " + r()->print();
+        return l()->print(lv) + " " + r()->print(lv);
     }
 };
 
@@ -278,8 +279,8 @@ public:
     Redirect(): Op2("=>", 0, 0) {}
 
     virtual string _onPrint(int lv) {
-        string  lStr = l() ? l()->print() : "",
-                rStr = r() ? r()->print() : "";
+        string  lStr = l() ? l()->print(lv) : "",
+                rStr = r() ? r()->print(lv) : "";
         return lStr + " " + clr(OP) + _symbol + " " + rStr;
     }
 };
@@ -305,7 +306,7 @@ public:
 
     virtual string name() { return "access"; }
     virtual string _onPrint(int lv) {
-        return l()->print() + clr(OP) + "." + r()->print();
+        return l()->print(lv) + clr(OP) + "." + r()->print(lv);
     }
 };
 
@@ -314,7 +315,7 @@ public:
     SafeAccess(Node* obj, Node* member): Node(obj, member) {}
     virtual string name() { return "safeAccess"; }
     virtual string _onPrint(int lv) {
-        return l()->print() + clr(OP) + "?." + r()->print();
+        return l()->print(lv) + clr(OP) + "?." + r()->print(lv);
     }
 };
 
@@ -456,7 +457,7 @@ public:
 
     virtual string name() { return "return"; }
     virtual string _onPrint(int lv) {
-        return clr(RED) + _name + " " +  l()->print();
+        return clr(RED) + _name + " " +  l()->print(lv);
     }
 
     string _name;
@@ -480,7 +481,7 @@ public:
     virtual string name() { return "for"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        return clr(KEYWORD) + "for " + l()->print() + clr(KEYWORD) + " in " + r()->print() + block()->print(lv);
+        return clr(KEYWORD) + "for " + l()->print(lv) + clr(KEYWORD) + " in " + r()->print(lv) + block()->print(lv);
     }
 };
 
@@ -493,7 +494,7 @@ public:
 
     virtual string name() { return "with"; }
     virtual string _onPrint(int lv) {
-        string id = l() ? l()->print() : "";
+        string id = l() ? l()->print(lv) : "";
         return clr(KEYWORD) + "with " + id + block()->print(lv);
     }
 };
@@ -555,7 +556,7 @@ public:
 
     virtual string name() { return "tuple"; }
     virtual string _onPrint(int lv) {
-        return l()->print() + clr(CONTAINER) + ":" + r()->print();
+        return l()->print(lv) + clr(CONTAINER) + ":" + r()->print(lv);
     }
 };
 
@@ -609,7 +610,7 @@ public:
     virtual string _onPrint(int lv) {
         string ret = clr(CONTAINER) + "[";
         if (l())
-            ret += l()->print();
+            ret += l()->print(lv);
         return ret + clr(CONTAINER) + "]";
     }
 };
@@ -627,12 +628,12 @@ public:
     virtual string name() { return "func"; }
     virtual string _onPrint(int lv) {
         Node* blk = has();
-        string  name = get("name") ? get("name")->print() : "",
+        string  name = get("name") ? get("name")->print(lv) : "",
                 blkStr = blk ? blk->print(lv) : "",
-                params = get("params") ? get("params")->print() : "",
-                lRed = get("lRedirect") ? get("lRedirect")->print() : "",
-                rRed = get("rRedirect") ? get("rRedirect")->print() : "",
-                retType = get("retType") ? get("retType")->print() + " ": "";
+                params = get("params") ? get("params")->print(lv) : "",
+                lRed = get("lRedirect") ? get("lRedirect")->print(lv) : "",
+                rRed = get("rRedirect") ? get("rRedirect")->print(lv) : "",
+                retType = get("retType") ? get("retType")->print(lv) + " ": "";
 
         return lRed + retType + clr(FUNC) + name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
             rRed + blkStr;
@@ -652,8 +653,8 @@ public:
     virtual string _onPrint(int lv) {
         Node* from = get("from");
         string  name = clr(TYPE) + _name != "" ? _name : "",
-                ls = get("list") ? get("list")->print() : "",
-                fromStr = from ? clr(KEYWORD) + " from "+ clr(TYPE) + from->print() : "",
+                ls = get("list") ? get("list")->print(lv) : "",
+                fromStr = from ? clr(KEYWORD) + " from "+ clr(TYPE) + from->print(lv) : "",
                 blk = has() ? has()->print(lv) : "";
 
         return clr(KEYWORD) + "def " + name + ls + fromStr + blk;
@@ -673,9 +674,9 @@ public:
 
     virtual string name() { return "prop"; }
     virtual string _onPrint(int lv) {
-        string  n = get("name") ? get("name")->print() : "",
-                f = get("from") ? get("from")->print() : "",
-                list = get("list") ? get("list")->print() : "",
+        string  n = get("name") ? get("name")->print(lv) : "",
+                f = get("from") ? get("from")->print(lv) : "",
+                list = get("list") ? get("list")->print(lv) : "",
                 blk = has() ? has()->print(lv) : "";
 
         return clr(KEYWORD) + "prop" + n + list + " from " + f + blk;
@@ -691,7 +692,7 @@ public:
     using Node::print;
     virtual string _onPrint(int lv) {
         Value* name = (Value*) l();
-        return clr(FUNC) + name->_value + r()->print();
+        return clr(FUNC) + name->_value + r()->print(lv);
     }
 };
 
@@ -750,7 +751,7 @@ public:
     ImportStmt(Node* access): Node(access) {}
     virtual string name() { return "import"; }
     virtual string print(int lv) {
-        return tab(lv) + clr(KEYWORD) + "import " + l()->print() + "\n";
+        return tab(lv) + clr(KEYWORD) + "import " + l()->print(lv) + "\n";
     }
 };
 
