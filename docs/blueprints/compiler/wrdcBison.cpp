@@ -142,7 +142,6 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | tfloat { $$ = new Float($1); }
             | tstr { $$ = new Str($1); }
             | tchar { $$ = new Char($1); }
-            | tseq { $$ = $1; }
             | tarray { $$ = $1; }
             | tmap { $$ = $1; }
             | ttype { $$ = $1; }
@@ -168,6 +167,7 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | trhsIdExpr '|' trhsIdExpr %dprec 3 { $$ = new Or($1, $3); }
 
             | termFor %dprec 4 { $$ = $1; }
+            | tseq %dprec 4 { $$ = $1; }
 
             | twith tnormalId tindentBlock {
                 $$ = new With(new Id($2), $3);

@@ -24,7 +24,7 @@ def Hello
             if 33 > (for n in 3..5
                 2*n
             )
-                b1 := for n in 3..5: 2*n
+                b1 := for n in 3..5 * foo(): 2*n
                 @err(rNull r)
                     cout("err(rNull)")
 
