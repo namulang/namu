@@ -38,7 +38,6 @@ void yyerror(const char* s)
 %start tfile
 
 %token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tnode tout tin tindent tdedent
-%token tand tor
 
 %token <intVal> tinteger teof
 %token <floatVal> tfloat
@@ -73,7 +72,7 @@ void yyerror(const char* s)
 //      정해주지 않으면 모호성 오류 나온다.
 //      left: 왼쪽 결합.
 //      right: 오른쪽 결합.
-%right ":=" '=' "+=" "-=" "/=" "*=" "%=" "^=" topPlusAssign topDivideAssign topModAssign topPowAssign topSquareAssign topMinusAssign topDefAssign
+%right '=' topPlusAssign topDivideAssign topModAssign topPowAssign topSquareAssign topMinusAssign topDefAssign
 %left '&' '|'
 %left '<' '>' topMoreEqual topLessEqual topEqual topRefEqual topNotEqual topNotRefEqual
 %left '%' '^'
