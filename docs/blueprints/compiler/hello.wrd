@@ -24,11 +24,12 @@ def Hello
             if 33 > (for n in 3..5
                 2*n
             )
+                b1 := for n in 3..5: 2*n
                 @err(rNull r)
                     cout("err(rNull)")
 
                 if true
-                    for a in 2..foo(5)
+                    a := for a in 2..foo(5)
                         dn = float a + 3
                         if dn == 0
                             again

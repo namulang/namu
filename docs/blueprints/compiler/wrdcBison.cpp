@@ -53,7 +53,7 @@ void yyerror(const char* s)
 
 
 %type <node> tblock tindentBlock temptiableIndentBlock
-%type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
+%type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
 
 
 %type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem
@@ -113,6 +113,12 @@ tbranch     : trhsexpr tindentBlock {
                 $$ = new Branch($1, (Container*) $2);
             }
 
+termFor     : tfor tid tin trhsIdExpr tindentBlock {
+                $$ = new For(new Id($2), $4, (Container*) $5);
+            }
+            ;
+
+
 termIf      : tif tbranch telifBlocks telseBlock {
                 $$ = new If((Branch*) $2, (vector<Branch*>*) $3, (Block*) $4);
             }
@@ -161,9 +167,7 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | trhsIdExpr '&' trhsIdExpr %dprec 3 { $$ = new And($1, $3); }
             | trhsIdExpr '|' trhsIdExpr %dprec 3 { $$ = new Or($1, $3); }
 
-            | tfor tid tin trhsIdExpr tindentBlock {
-                $$ = new For(new Id($2), $4, (Container*) $5);
-            }
+            | termFor %dprec 4 { $$ = $1; }
 
             | twith tnormalId tindentBlock {
                 $$ = new With(new Id($2), $3);
