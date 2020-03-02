@@ -143,7 +143,7 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | tchar { $$ = new Char($1); }
             | tarray { $$ = $1; }
             | tmap { $$ = $1; }
-            | ttype { $$ = $1; }
+            | ttype %dprec 1 { $$ = $1; }
             | tdefexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
             | tsafeAccess { $$ = $1; }
@@ -179,13 +179,13 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | termIf { $$ = $1; }
             | tfuncCall { $$ = $1; }
 
-            | tnormalId topPlusAssign trhsIdExpr { $$ = new PlusAssign(new Id($1), $3); }
-            | tnormalId topMinusAssign trhsIdExpr { $$ = new MinusAssign(new Id($1), $3); }
-            | tnormalId topSquareAssign trhsIdExpr { $$ = new SquareAssign(new Id($1), $3); }
-            | tnormalId topDivideAssign trhsIdExpr { $$ = new DivideAssign(new Id($1), $3); }
-            | tnormalId topModAssign trhsIdExpr { $$ = new ModulerAssign(new Id($1), $3); }
-            | tnormalId topPowAssign trhsIdExpr { $$ = new PowAssign(new Id($1), $3); }
-            | tnormalId '=' trhsIdExpr { $$ = new Assign(new Id($1), $3); }
+            | tnormalId topPlusAssign trhsIdExpr %dprec 5 { $$ = new PlusAssign(new Id($1), $3); }
+            | tnormalId topMinusAssign trhsIdExpr %dprec 5 { $$ = new MinusAssign(new Id($1), $3); }
+            | tnormalId topSquareAssign trhsIdExpr %dprec 5 { $$ = new SquareAssign(new Id($1), $3); }
+            | tnormalId topDivideAssign trhsIdExpr %dprec 5 { $$ = new DivideAssign(new Id($1), $3); }
+            | tnormalId topModAssign trhsIdExpr %dprec 5 { $$ = new ModulerAssign(new Id($1), $3); }
+            | tnormalId topPowAssign trhsIdExpr %dprec 5 { $$ = new PowAssign(new Id($1), $3); }
+            | tnormalId '=' trhsIdExpr %dprec 5 { $$ = new Assign(new Id($1), $3); }
             ;
 
 
