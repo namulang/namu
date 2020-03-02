@@ -20,7 +20,7 @@ def Hello
         $got=>int[] _foo(int max, int min)
             retfun 1..max
 
-        $res := float if a > 0 & a < 5
+        $res := float if a > 0.3 & a < 5
             if 33 > (for n in 3..5
                 2*n
             )

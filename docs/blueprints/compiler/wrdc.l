@@ -264,7 +264,7 @@ true|false {
     return tinteger;
 }
 
-([1-9][0-9]*.[0-9]+|0.0) {
+([1-9][0-9]*.[0-9]+|0.[0-9]+) {
     yylval.floatVal= atof(yytext);
     return tfloat;
 }
