@@ -50,5 +50,51 @@ def Hello
         else
             retif d
 
+def unit
+    name := prop from int
+        @get: "unit" + objName()
+        _@set
+    res init()
+
+def key from unit
+    @ctor(char newValue, float newStroke)
+        value = newValue
+        stroke = newStroke
+
+    void type()
+        cout("user types $value with $stroke stroke.")
+
+    _value := 'a'
+    _stroke := 0.0
+
+def row from key[]
+
+    _end := _start := 'a'
+
+    @ctor(char newStart, char newEnd)
+        start = newStart
+        end = newEnd
+
+    res init()
+        stk = 0.0
+        for c in end..start
+            add(key(c, stk += 0.1))
+        ret rOk
+
+def keyboard from row[]
+    res init()
+        add(row('0', '9'))
+        add(row('q', ']'))
+        add(row('a', ';'))
+        add(row('z', '/'))
+
+        res := rOk
+        for r in this
+            res += r.init()
+        ret res
+
+def app
+    void main()
+        keyboard.init()
 
 import system
