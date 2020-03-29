@@ -590,9 +590,11 @@ tfile       : tfile tdefOriginStmt {
             | tdefOriginStmt {
                 parsed = new File();
                 parsed->add($1);
-                $$ = $1;
+                $$ = parsed;
             }
-            | teol {}
+            | teol {
+                $$ = parsed = new File();
+            }
             | tfile teol { $$ = $1; }
             | tfile teof { $$ = $1; }
             ;
