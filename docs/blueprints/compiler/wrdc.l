@@ -229,7 +229,7 @@ true|false {
     return teol;
 }
 <dedent>[ ] {
-    cout << "<dedent> nowIndent=" << nowIndent << "\n";
+    if (yydebug) cout << "<dedent> nowIndent=" << nowIndent << "\n";
     nowIndent++;
 }
 <dedent>\t {
@@ -387,7 +387,7 @@ int goOutdent(char prev)
 
     indentLvs.pop();
     unput(prev);
-    cout << " ----- prev=" << prev << " nowIndent=" << nowIndent << "\n";
+    if (yydebug) cout << " ----- prev=" << prev << " nowIndent=" << nowIndent << "\n";
     for (int n=0; n < nowIndent ;n++)
         unput(' ');
     if (prev != ',' && prev != ')' || top - nowIndent != TAB_WIDTH) {

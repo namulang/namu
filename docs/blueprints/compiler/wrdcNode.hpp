@@ -74,7 +74,7 @@ class Node {
         string ret;
         for (int n=0; n < cnt ;n++)
             ret += unit;
-        cout << "------------ tab: " << name() << "(" << cnt << ")\n";
+        if (yydebug) cout << "------------ tab: " << name() << "(" << cnt << ")\n";
         return ret;
     }
 
@@ -723,10 +723,7 @@ public:
         int n=0;
         while(e != map.end()) {
             Node* child = e->second;
-            cout << "------------- hasHaver: loops[" << it->name() << "][" << c << "] child[" << n << "]=" << (child ? child->name() : "") << "\n";
-            if (yydebug) {
-                cout << "------------- hasHaver: loops[" << it->name() << "][" << c << "] child[" << n << "]=" << (child ? child->name() : "") << "\n";
-            }
+            if (yydebug) cout << "------------- hasHaver: loops[" << it->name() << "][" << c << "] child[" << n << "]=" << (child ? child->name() : "") << "\n";
             if(hasHaver(child, c+1)) return true;
             e++;
             n++;
@@ -744,7 +741,7 @@ public:
     virtual string name() { return "inlineStmt"; }
     virtual string print(int lv) {
         return clr(OP) + ": " + l()->print(lv) + "\n";
-    }
+            }
 };
 
 class ImportStmt : public Node {
