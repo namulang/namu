@@ -55,7 +55,7 @@ void yyerror(const char* s)
 %type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
 
 
-%type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem
+%type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem textendableId
 
 %type <node> timportStmt
 
@@ -439,17 +439,20 @@ tgetsetterStmt: tgetsetterExpr teol { $$ = new Stmt($1); }
             ;
 
 
+textendableId: tid { $$ = new Id($1); }
+            | '+' tid { $$ = new Id(string("+") + $2); }
+            ;
 
-tdefOrigin  : tdef tid tdefIndentBlock {
+tdefOrigin  : tdef textendableId tdefIndentBlock {
                 $$ = new Def($2, 0, 0, $3);
             }
-            | tdef tid tfuncRhsList tdefIndentBlock {
+            | tdef textendableId tfuncRhsList tdefIndentBlock {
                 $$ = new Def($2, $3, 0, $4);
             }
-            | tdef tid tfuncRhsList tfrom trhsexpr tdefIndentBlock {
+            | tdef textendableId tfuncRhsList tfrom trhsexpr tdefIndentBlock {
                 $$ = new Def($2, $3, $5, $6);
             }
-            | tdef tid tfrom trhsexpr tdefIndentBlock {
+            | tdef textendableId tfrom trhsexpr tdefIndentBlock {
                 $$ = new Def($2, 0, $4, $5);
             }
             ;

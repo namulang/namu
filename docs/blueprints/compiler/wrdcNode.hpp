@@ -644,7 +644,8 @@ public:
 
 class Def : public BlockHaver {
 public:
-    Def(string name, Node* list, Node* from, Node* block): BlockHaver(block), _name(name) {
+    Def(Node* name, Node* list, Node* from, Node* block): BlockHaver(block) {
+        add("name", name);
         add("from", from);
         add("list", list);
     }
@@ -652,7 +653,7 @@ public:
     virtual string name() { return "def"; }
     virtual string _onPrint(int lv) {
         Node* from = get("from");
-        string  name = clr(TYPE) + _name != "" ? _name : "",
+        string  name = clr(TYPE) + (get("name") ? get("name")->print(lv) : ""),
                 ls = get("list") ? get("list")->print(lv) : "",
                 fromStr = from ? clr(KEYWORD) + " from "+ clr(TYPE) + from->print(lv) : "",
                 blk = has() ? has()->print(lv) : "";
