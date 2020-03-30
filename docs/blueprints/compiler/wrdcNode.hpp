@@ -118,13 +118,13 @@ public:
     }
 };
 
-class Origin : public Value {
+class Origin : public Node {
 public:
-    Origin(string name) : Value(name) {}
+    Origin(Node* name) : Node(name) {}
     virtual string name() { return "origin"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        return clr(TYPE) + _value;
+        return clr(TYPE) + l()->print(lv);
     }
 };
 
@@ -134,7 +134,7 @@ public:
 
     virtual string name() { return "mapOrigin"; }
     virtual string _onPrint(int lv) {
-        return l()->print(lv) + clr(TYPE) + "[" + r()->print(lv) + clr(TYPE) + "]";
+        return l()->print(lv) + clr(TYPE) + "{" + r()->print(lv) + clr(TYPE) + "}";
     }
 };
 
@@ -328,6 +328,17 @@ public:
     }
 };
 
+class ContainerAccess : public Node {
+public:
+    ContainerAccess(Node* container, Node* key): Node(container, key) {}
+
+    virtual string name() { return "containerAccess"; }
+    virtual string _onPrint(int lv) {
+        return l()->print(lv) + clr(CONTAINER) + "[" + r()->print(lv) + clr(CONTAINER) + "]";
+    }
+};
+
+
 class SafeAccess : public Node {
 public:
     SafeAccess(Node* obj, Node* member): Node(obj, member) {}
@@ -495,6 +506,9 @@ public:
         lIs(id);
         rIs(container);
     }
+    For(Node* cond, Container* block): BlockHaver(block) {
+        lIs(cond);
+    }
 
     virtual string name() { return "for"; }
     using Node::print;
@@ -629,10 +643,10 @@ public:
 
     virtual string name() { return "array"; }
     virtual string _onPrint(int lv) {
-        string ret = clr(CONTAINER) + "[";
+        string ret = clr(CONTAINER) + "{";
         if (l())
             ret += l()->print(lv);
-        return ret + clr(CONTAINER) + "]";
+        return ret + clr(CONTAINER) + "}";
     }
 };
 
@@ -713,8 +727,7 @@ public:
     virtual string name() { return "funcCall"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        Value* name = (Value*) l();
-        return clr(FUNC) + name->_value + r()->print(lv);
+        return clr(FUNC) + l()->print(lv) + r()->print(lv);
     }
 };
 
