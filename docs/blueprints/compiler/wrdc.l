@@ -285,6 +285,8 @@ true|false {
 \?\. { return topSafeNavi; }
 \.\. { return topSeq; }
 \=\> { return topRedirect; }
+\+\+ { return topUplus; }
+\-\- { return topUminus; }
 
 \'.\' {
     yylval.charVal = yytext[1];

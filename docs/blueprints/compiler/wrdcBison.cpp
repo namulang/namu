@@ -48,8 +48,7 @@ void yyerror(const char* s)
 %token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname
 %type <strVal> tid tfuncname
 
-%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topRedirect
-
+%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topRedirect topUplus topUminus
 
 %type <node> tblock tindentBlock temptiableIndentBlock
 %type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
@@ -148,6 +147,12 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | tcast %dprec 1 { $$ = $1; }
             | tsafeAccess { $$ = $1; }
             | '(' trhsIdExpr ')' { $$ = $2; }
+
+            | topUplus trhsIdExpr %dprec 1 { $$ = new UPre(new Id("++"), $2); }
+            | trhsIdExpr topUplus %dprec 1 { $$ = new UPost(new Id("++"), $1); }
+            | topUminus trhsIdExpr %dprec 1 { $$ = new UPre(new Id("--"), $2); }
+            | trhsIdExpr topUminus %dprec 1 { $$ = new UPost(new Id("--"), $1); }
+
             | trhsIdExpr '+' trhsIdExpr %dprec 2 { $$ = new Plus($1, $3); }
             | trhsIdExpr '-' trhsIdExpr %dprec 2 { $$ = new Minus($1, $3); }
             | trhsIdExpr '*' trhsIdExpr %dprec 2 { $$ = new Square($1, $3); }
@@ -340,10 +345,12 @@ ttuples     : ttuple {
 tmap        : '[' ttuples ']' {
                 $$ = new Array($2);
             }
+            ;
 
 tarray      : '[' trhsIds ']' {
                 $$ = new Array($2);
             }
+            ;
 
 tseq        : trhsexpr topSeq trhsexpr {
                 $$ = new Sequence($1, $3);
