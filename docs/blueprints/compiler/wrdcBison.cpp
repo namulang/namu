@@ -45,13 +45,13 @@ void yyerror(const char* s)
 %token <charVal> tchar
 %token <strVal> tstr tfctor tfdtor tfget tfset tfres tfwarn tferr
 
-%token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname
+%token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname tconName
 %type <strVal> tid tfuncname
 
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topRedirect topUplus topUminus
 
 %type <node> tblock tindentBlock temptiableIndentBlock
-%type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess treturn ttuple ttuples tparam tparams tsafeAccess
+%type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturn ttuple ttuples tparam tparams tsafeAccess tconNames
 
 
 %type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem textendableId
@@ -156,6 +156,8 @@ trhsIdExpr  : tinteger { $$ = new Int($1); }
             | topUminus trhsIdExpr %dprec 1 { $$ = new UPre(new Id("--"), $2); }
             | trhsIdExpr topUminus %dprec 1 { $$ = new UPost(new Id("--"), $1); }
 
+            | tconAccess %dprec 1 { $$ = $1; }
+
             | trhsIdExpr '+' trhsIdExpr %dprec 2 { $$ = new Plus($1, $3); }
             | trhsIdExpr '-' trhsIdExpr %dprec 2 { $$ = new Minus($1, $3); }
             | trhsIdExpr '*' trhsIdExpr %dprec 2 { $$ = new Square($1, $3); }
@@ -241,10 +243,26 @@ tdefexpr    : tdeflist topDefAssign trhsListExpr { $$ = new DefAssign($1, $3); }
             | tpropexpr { $$ = $1; }
             ;
 
+tconNames   : tconName '{' '}' {
+                $$ = new Origin(new Id(string($1) + "{}"));
+            }
+            | tconNames '{' '}' {
+                $$ = new Origin(new Id($1->print() + "{}"));
+            }
+            | tconName '{' ttype '}' {
+                $$ = new MapOrigin(new Id($1), $3);
+            }
+            | tconNames '{' ttype '}' {
+                $$ = new MapOrigin($1, $3);
+            }
+            ;
 
 ttype       : tlhsId { $$ = $1; }
-            | ttype '[' ']' {
-                $$ = new Origin($1->print() + "[]");
+            | tconNames { $$ = $1; }
+            ;
+
+tconAccess  : tnormalId '[' trhsIdExpr ']' {
+                $$ = new ContainerAccess(new Id($1), $3);
             }
             | ttype '[' ttype ']' {
                 $$ = new MapOrigin($1, $3);
@@ -345,12 +363,12 @@ ttuples     : ttuple {
             }
             ;
 
-tmap        : '[' ttuples ']' {
+tmap        : '{' ttuples '}' {
                 $$ = new Array($2);
             }
             ;
 
-tarray      : '[' trhsIds ']' {
+tarray      : '{' trhsIds '}' {
                 $$ = new Array($2);
             }
             ;

@@ -140,35 +140,35 @@ true|false {
 
 
 
-[a-zA-Z][a-zA-Z0-9_]*\[ {
+[a-zA-Z][a-zA-Z0-9_]*\{ {
     string temp = yytext;
     changeRule("arraytyping", arraytyping);
 
-    unput('[');
+    unput('{');
     temp = temp.substr(0, temp.size()-1);
     yylval.strVal = strdup(temp.c_str());
-    return tnormalId;
+    return tconName;
 }
 
-<arraytyping>\[ {
+<arraytyping>\{ {
     if(yydebug)
-        cout << "----------lex: found '[' \n";
+        cout << "----------lex: found '{' \n";
     return yytext[0];
 }
-<arraytyping>\]\[ {
-    unput('[');
+<arraytyping>\}\{ {
+    unput('{');
     return yytext[0];
 }
-<arraytyping>\] {
+<arraytyping>\} {
     changePrevRule();
     if(yydebug)
-        cout << "----------lex: found ']' \n";
+        cout << "----------lex: found '}' \n";
     return yytext[0];
 }
-<arraytyping>[a-zA-Z0-9_]+\] {
+<arraytyping>[a-zA-Z0-9_]+\} {
     string temp = yytext;
     temp = temp.substr(0, temp.size()-1);
-    unput(']');
+    unput('}');
     yylval.strVal = strdup(temp.c_str());
     if(yydebug)
         cout << "----------lex: tnormalId is " << yylval.strVal << " ---- \n";
