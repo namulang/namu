@@ -45,7 +45,7 @@ void yyerror(const char* s)
 %token <charVal> tchar
 %token <strVal> tstr tfctor tfdtor tfget tfset tfres tfwarn tferr
 
-%token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname tconName
+%token <strVal> tnormalId taccessedId taccessedFuncname tnormalFuncname tconName tdeckId
 %type <strVal> tid tfuncname
 
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topRedirect topUplus topUminus
@@ -388,6 +388,10 @@ tsafeAccess : trhsexpr topSafeNavi tnormalId { $$ = new SafeAccess($1, new Id($3
 tparam      : ttype tid {
                 $$ = new Param($1, new Id($2));
             }
+            | tdeckId {
+                $$ = new Param(new Id($1), new Id($1));
+            }
+            ;
 
 tparams     : tparam {
                 Args* ret = new Args();
