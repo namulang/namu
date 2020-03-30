@@ -499,7 +499,10 @@ public:
     virtual string name() { return "for"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        return clr(KEYWORD) + "for " + l()->print(lv) + clr(KEYWORD) + " in " + r()->print(lv) + block()->print(lv);
+        string  id = l() ? l()->print(lv) : "",
+                in = r() ? clr(KEYWORD) + " in " + r()->print(lv) : "";
+
+        return clr(KEYWORD) + "for " + id + in + block()->print(lv);
     }
 };
 

@@ -114,6 +114,9 @@ tbranch     : trhsexpr tindentBlock {
 termFor     : tfor tid tin trhsIdExpr tindentBlock {
                 $$ = new For(new Id($2), $4, (Container*) $5);
             }
+            | tfor trhsIdExpr tindentBlock {
+                $$ = new For($2, (Container*) $3);
+            }
             ;
 
 

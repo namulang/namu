@@ -97,4 +97,49 @@ def app
     void main()
         keyboard.init()
 
+//import console.out.print
+
+def global
+    suits := ["Hearts", "Diamonds", "Spades", "Clubs"]
+    ranks := ["Two", "Three", "Four"]
+    values := ["Two":2, "Three":3, "Four":4]
+    playing := true
+
+def card
+    @ctor(str nsuit, str nrank)
+        suit = nsuit
+        rank = nrank
+
+    _suit := ""
+    _rank := ""
+
+def +str
+    @ctor(card c): ret "$c.rank of $c.suit"
+    @ctor(cards cards1)
+        toRet := ""
+        ret for c in cards1
+            toRet += "\n ${str c}"
+
+def hand
+    _cards := str[]()
+    _value := _aces := 0
+
+    void addCard(card ncard)
+        cards.add(ncard)
+        value := values[ncard.rank]
+
+    void adjustForAce()
+        for value > 21 & aces
+            value -= 10
+            aces -= 1
+
+def deck
+    @ctor()
+        for s in suits: for r in ranks: cards.add(card(s, r))
+
+    void shuffle(): random.shuffle(deck)
+    void deal(): retfun deck.pop()
+
+    _cards := str[]()
+
 import system
