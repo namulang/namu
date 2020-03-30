@@ -175,7 +175,10 @@ true|false {
     return tnormalId;
 }
 
-
+@[a-zA-Z][a-zA-Z0-9_]* {
+    yylval.strVal = strdup(yytext);
+    return tdeckId;
+}
 
 [a-zA-Z][a-zA-Z0-9_]*   {
     yylval.strVal = strdup(yytext);

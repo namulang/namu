@@ -114,19 +114,19 @@ def card
     _rank := ""
 
 def +str
-    @ctor(card c): ret "$c.rank of $c.suit"
-    @ctor(cards cards1)
+    @ctor(@card): ret "$card.rank of $card.suit"
+    @ctor(@cards)
         toRet := ""
-        ret for c in cards1
+        ret for c in cards
             toRet += "\n ${str c}"
 
 def hand
     _cards := str{}()
     _value := _aces := 0
 
-    void addCard(card ncard)
-        cards.add(ncard)
-        value := values[ncard.rank]
+    void addCard(@card)
+        cards.add(card)
+        value := values[card.rank]
 
     void adjustForAce()
         for value > 21 & aces
