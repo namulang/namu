@@ -40,7 +40,7 @@ def Hello
         elif a == 5 /* also, comment */
             with dn
                 cout("a=" + a)
-                (out dn, dmap) := (int{}{} {1, 2, foo(3)}, int{str} {3:"banana", 3: "apple"})
+                (out dn, dmap) := (int{}{str} {1, 2, foo(3)}, int{str} {3:"banana", 3: "apple"})
                 len // dn.len
             dn?.each(foo(n))
 
