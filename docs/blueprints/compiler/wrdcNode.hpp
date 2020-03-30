@@ -178,6 +178,24 @@ public:
     }
 };
 
+class Unary : public Node {
+public:
+    Unary(Node* l, Node* r): Node(l, r) {}
+
+    virtual string name() { return "upre"; }
+    virtual string _onPrint(int lv) {
+        return l()->print(lv) + r()->print(lv);
+    }
+};
+class UPre : public Unary {
+public:
+    UPre(Node* symbol, Node* id): Unary(symbol, id) {}
+};
+class UPost : public Unary {
+public:
+    UPost(Node* symbol, Node* id): Unary(id, symbol) {}
+};
+
 class Op2 : public Node {
 public:
     Op2(const char* symbol, Node* l, Node* r) : Node(l, r), _symbol(symbol) {}
