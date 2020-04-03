@@ -181,7 +181,7 @@ true|false {
 }
 
 [a-zA-Z][a-zA-Z0-9_]*   {
-    yylval.strVal = strdup(yytext);
+   yylval.strVal = strdup(yytext);
     return tnormalId;
 }
 
@@ -206,13 +206,13 @@ true|false {
     return taccessedId;
 }
 
-<INITIAL>\" {
+<INITIAL>\' {
     changeRule("dquote", dquote); // maximum parsing을 하기 때문에 state 관리를 해줘야 한다.
 }
 
-    <dquote>[^\"\n]*\" { // dquote 상태일때, <" 를 제외한 문자> + "가 붙는 경우
+    <dquote>[^\'\n]*\' { // dquote 상태일때, <" 를 제외한 문자> + "가 붙는 경우
         changeRule("INITIAL", INITIAL);
-        string parsed = "\"" + string(yytext);
+        string parsed = "\'" + string(yytext);
         yylval.strVal = strdup(parsed.c_str());
         return tstr;
     }

@@ -2,7 +2,7 @@ import console.cout
 
 def Hello
     def _A from proxy
-        _@ctor(): cout("A()")
+        _@ctor(): cout('A()')
         @dtor() // function can has empty body.
 
         int{} _foo(int max, int min) // does nothing.
@@ -14,7 +14,7 @@ def Hello
             @set(int new)=>
                 age = new
                 //for n in 2..5 -> keywords which can have block stmt exception func should have its body.
-        name := prop() from str("defaultName")
+        name := prop() from str('defaultName')
 
     _b := def _$B() from A
         $got=>int{} _foo(int max, int min)
@@ -26,7 +26,7 @@ def Hello
             )
                 b1 := for n in 3..5 * foo(): 2*n
                 @err(rNull r)
-                    cout("err(rNull)")
+                    cout('err(rNull)')
 
                 if true
                     a := for a in 2..foo(5)
@@ -39,8 +39,8 @@ def Hello
         // comment.
         elif a == 5 /* also, comment */
             with dn
-                cout("a=" + a)
-                (out dn, dmap) := (int{}{str} {1, 2, foo(3)}, int{str} {3:"banana", 3: "apple"})
+                cout('a=' + a)
+                (out dn, dmap) := (int{}{str} {1, 2, foo(3)}, int{str} {3:'banana', 3: 'apple'})
                 len // dn.len
             dn?.each(foo(n))
 
@@ -52,7 +52,7 @@ def Hello
 
 def unit
     name := prop from int
-        @get: "unit" + objName()
+        @get: 'unit' + objName()
         _@set
     res init()
 
@@ -62,7 +62,7 @@ def key from unit
         stroke = newStroke
 
     void type()
-        cout("user types $value with $stroke stroke.")
+        cout('user types $value with $stroke stroke.')
 
     _value := 'a'
     _stroke := 0.0
@@ -100,9 +100,9 @@ def app
 //import console.out.print
 
 def global
-    suits := ["Hearts", "Diamonds", "Spades", "Clubs"]
-    ranks := ["Two", "Three", "Four"]
-    values := ["Two":2, "Three":3, "Four":4]
+    suits := ['Hearts', 'Diamonds', 'Spades', 'Clubs']
+    ranks := ['Two', 'Three', 'Four']
+    values := ['Two':2, 'Three':3, 'Four':4]
     playing := true
 
 def card
@@ -110,15 +110,15 @@ def card
         suit = nsuit
         rank = nrank
 
-    _suit := ""
-    _rank := ""
+    _suit := ''
+    _rank := ''
 
 def +str
-    @ctor(@card): ret "$card.rank of $card.suit"
+    @ctor(@card): ret '$card.rank of $card.suit'
     @ctor(@cards)
-        toRet := ""
+        toRet := ''
         ret for c in cards
-            toRet += "\n ${str c}"
+            toRet += '\n ${str c}'
 
 def hand
     _cards := str{}()
