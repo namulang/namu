@@ -39,8 +39,8 @@ void yyerror(const char* s)
 
 %token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tnode tout tin tindent tdedent
 
-%token <intVal> tinteger teof
-%token <floatVal> tfloat
+%token <intVal> teof
+%token <floatVal> tnum
 %token <boolVal> tbool
 %token <charVal> tchar
 %token <strVal> tstr tfctor tfdtor tfget tfset tfres tfwarn tferr
@@ -138,9 +138,8 @@ termIf      : tif tbranch telifBlocks telseBlock {
 //  tlhsexpr은 할당이 가능한 변수. lvalue.
 //  trhsexpr은 값을 나타내는 모든 표현식.
 //  따라서 범주상으로 보았을때 trhsexpr 은 tlhsexpr을 포함한다. 더 크다는 얘기다.
-trhsIdExpr  : tinteger { $$ = new Int($1); }
-            | tbool { $$ = new Bool($1); }
-            | tfloat { $$ = new Float($1); }
+trhsIdExpr  : tbool { $$ = new Bool($1); }
+            | tnum { $$ = new Float($1); }
             | tstr { $$ = new Str($1); }
             | tchar { $$ = new Char($1); }
             | tarray { $$ = $1; }

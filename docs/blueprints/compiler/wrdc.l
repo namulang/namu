@@ -264,12 +264,12 @@ true|false {
 
 ([1-9][0-9]*|0) {
     yylval.intVal = atoi(yytext);
-    return tinteger;
+    return tnum;
 }
 
 ([1-9][0-9]*.[0-9]+|0.[0-9]+) {
     yylval.floatVal= atof(yytext);
-    return tfloat;
+    return tnum;
 }
 
 := { return topDefAssign; }
