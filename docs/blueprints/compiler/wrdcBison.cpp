@@ -37,7 +37,7 @@ void yyerror(const char* s)
 %verbose
 %start tfile
 
-%token tfor tdef twith tret tretfun tretif tretwith tretfor tif telse telif tfrom tagain tprop timport taka tthis tnode tout tin tindent tdedent
+%token tfor tdef twith tret treturn tif telse telif tfrom tagain tprop timport taka tthis tnode tout tin tindent tdedent
 
 %token <intVal> teof
 %token <floatVal> tnum
@@ -51,7 +51,7 @@ void yyerror(const char* s)
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topRedirect topUplus topUminus
 
 %type <node> tblock tindentBlock temptiableIndentBlock
-%type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturn ttuple ttuples tparam tparams tsafeAccess tconNames
+%type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturnexpr ttuple ttuples tparam tparams tsafeAccess tconNames
 
 
 %type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem textendableId
@@ -274,11 +274,8 @@ tcast       : ttype trhsIdExpr {
             ;
 
 
-treturn     : tret trhsexpr { $$ = new Return("ret", $2); }
-            | tretfun trhsexpr { $$ = new Return("retfun", $2); }
-            | tretif trhsexpr { $$ = new Return("retif", $2); }
-            | tretwith trhsexpr { $$ = new Return("retwith", $2); }
-            | tretfor trhsexpr { $$ = new Return("retfor", $2); }
+treturnexpr : tret trhsexpr { $$ = new Return("ret", $2); }
+            | treturn trhsexpr { $$ = new Return("return", $2); }
             ;
 
 
@@ -549,7 +546,7 @@ tdefStmt    : tdefexpr teol { $$ = new Stmt($1); }
             ;
 
 tstmt       : trhsexpr teol { $$ = new Stmt($1); }
-            | treturn teol { $$ = new Stmt($1); }
+            | treturnexpr teol { $$ = new Stmt($1); }
             | tagain teol { $$ = new Stmt(new Again()); }
             | trhsexpr teof { $$ = new Stmt($1); }
             | teol { $$ = new Stmt(new Str("")); }
@@ -602,7 +599,7 @@ tdefIndentBlock: teol tindent tdefBlock tdedent { $$ = $3; }
 
 tindentBlock: teol tindent tblock tdedent { $$ = $3; }
             | ':' trhsexpr { $$ = new InlineStmt($2); }
-            | ':' treturn { $$ = new InlineStmt($2); }
+            | ':' treturnexpr { $$ = new InlineStmt($2); }
             | ':' tagain { $$ = new InlineStmt(new Again()); }
             ;
 

@@ -10,7 +10,7 @@ def Hello
         _age := num{}()
         getAge := prop from num(5)
             got => @get
-                retfun this.age + got
+                return this.age + got
             @set(num new)=>
                 age = new
                 //for n in 2..5 -> keywords which can have block stmt exception func should have its body.
@@ -18,7 +18,7 @@ def Hello
 
     _b := def _$B() from A
         $got=>num{} _foo(num max, num min)
-            retfun 1..max
+            return 1..max
 
         $res := num if a > 0.3 & a < 5
             if 33 > (for n in 3..5
@@ -34,7 +34,7 @@ def Hello
                         if dn == 0
                             again
                 else
-                    retfun 0
+                    return 0
 
         // comment.
         elif a == 5 /* also, comment */
@@ -48,7 +48,7 @@ def Hello
             ret a = 0
 
         else
-            retif d
+            d
 
 def unit
     name := prop from num
@@ -138,7 +138,7 @@ def deck
         for s in suits: for r in ranks: cards.add(card(s, r))
 
     void shuffle(): random.shuffle(deck)
-    void deal(): retfun deck.pop()
+    void deal(): return deck.pop()
 
     _cards := str{}()
 
