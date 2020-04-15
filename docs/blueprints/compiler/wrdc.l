@@ -76,10 +76,7 @@ with { return twith; }
 again { return tagain; }
 in { return tin; }
 ret { return tret; }
-retfun { return tretfun; }
-retif { return tretif; }
-retfor { return tretfor; }
-retwith { return tretwith; }
+return { return treturn; }
 (_)*@set {
     yylval.strVal = strdup(yytext);
     return tfset;
