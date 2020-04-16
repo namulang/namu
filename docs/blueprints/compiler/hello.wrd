@@ -32,7 +32,7 @@ def Hello
                     a := for a in 2..foo(5)
                         dn = a + 3
                         if dn == 0
-                            again
+                            next
                 else
                     return 0
 
@@ -96,8 +96,6 @@ def keyboard from row{}
 def app
     void main()
         keyboard.init()
-
-//import console.out.prnum
 
 def global
     suits := ['Hearts', 'Diamonds', 'Spades', 'Clubs']

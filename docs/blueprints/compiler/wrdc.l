@@ -73,7 +73,7 @@ out { return tout; }
 import { return timport; }
 aka { return taka; }
 with { return twith; }
-again { return tagain; }
+next { return tnext; }
 in { return tin; }
 ret { return tret; }
 return { return treturn; }

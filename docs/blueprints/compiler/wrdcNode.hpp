@@ -492,11 +492,11 @@ public:
     string _name;
 };
 
-class Again : public Node {
+class Next: public Node {
 public:
-    virtual string name() { return "again"; }
+    virtual string name() { return "next"; }
     virtual string _onPrint(int lv) {
-        return clr(RED) + "again";
+        return clr(RED) + "next";
     }
 };
 
