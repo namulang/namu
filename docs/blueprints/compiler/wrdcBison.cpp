@@ -37,7 +37,7 @@ void yyerror(const char* s)
 %verbose
 %start tfile
 
-%token tfor tdef twith tret treturn tif telse telif tfrom tagain tprop timport taka tthis tnode tout tin tindent tdedent
+%token tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tout tin tindent tdedent
 
 %token <intVal> teof
 %token <floatVal> tnum
@@ -547,7 +547,7 @@ tdefStmt    : tdefexpr teol { $$ = new Stmt($1); }
 
 tstmt       : trhsexpr teol { $$ = new Stmt($1); }
             | treturnexpr teol { $$ = new Stmt($1); }
-            | tagain teol { $$ = new Stmt(new Again()); }
+            | tnext teol { $$ = new Stmt(new Next()); }
             | trhsexpr teof { $$ = new Stmt($1); }
             | teol { $$ = new Stmt(new Str("")); }
             ;
@@ -600,7 +600,7 @@ tdefIndentBlock: teol tindent tdefBlock tdedent { $$ = $3; }
 tindentBlock: teol tindent tblock tdedent { $$ = $3; }
             | ':' trhsexpr { $$ = new InlineStmt($2); }
             | ':' treturnexpr { $$ = new InlineStmt($2); }
-            | ':' tagain { $$ = new InlineStmt(new Again()); }
+            | ':' tnext { $$ = new InlineStmt(new Next()); }
             ;
 
 tfile       : tfile tdefOriginStmt {
