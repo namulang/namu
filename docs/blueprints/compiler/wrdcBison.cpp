@@ -263,9 +263,6 @@ ttype       : tlhsId { $$ = $1; }
 tconAccess  : tnormalId '[' trhsIdExpr ']' {
                 $$ = new ContainerAccess(new Id($1), $3);
             }
-            | ttype '[' ttype ']' {
-                $$ = new MapOrigin($1, $3);
-            }
             ;
 
 tcast       : ttype trhsIdExpr {
