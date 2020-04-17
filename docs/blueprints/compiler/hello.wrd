@@ -98,9 +98,9 @@ def app
         keyboard.init()
 
 def global
-    suits := ['Hearts', 'Diamonds', 'Spades', 'Clubs']
-    ranks := ['Two', 'Three', 'Four']
-    values := ['Two':2, 'Three':3, 'Four':4]
+    suits := {'Hearts', 'Diamonds', 'Spades', 'Clubs'}
+    ranks := {'Two', 'Three', 'Four'}
+    values := {'Two':2, 'Three':3, 'Four':4}
     playing := true
 
 def card
@@ -112,24 +112,24 @@ def card
     _rank := ''
 
 def +str
-    @ctor(@card): ret '$card.rank of $card.suit'
-    @ctor(@cards)
+    @ctor(card acard): ret '$acard.rank of $acard.suit'
+    @ctor(cards acards)
         toRet := ''
-        ret for c in cards
+        ret for c in acards
             toRet += '\n ${str c}'
 
 def hand
     _cards := str{}()
     _value := _aces := 0
 
-    void addCard(@card)
-        cards.add(card)
-        value := values[card.rank]
+    void addCard(card acard)
+        acards.add(acard)
+        value := values[acard.rank]
 
     void adjustForAce()
-        for value > 21 & aces
+        /*for value > 21 & aces
             value -= 10
-            aces -= 1
+            aces -= 1*/
 
 def deck
     @ctor()
