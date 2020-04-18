@@ -11,6 +11,7 @@ int yylex();
 File* parsed = 0;
 extern int yylineno;
 extern char* yytext;
+Node::Color Node::over = Node::NONE;
 namespace wrd {
     const char* getName(int type);
 }

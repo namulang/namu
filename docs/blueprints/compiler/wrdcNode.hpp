@@ -12,6 +12,7 @@ extern int yydebug;
 class Node {
     public:
         enum Color {
+            NONE = 0,
             RED = 31,
             GREEN = 32,
             WHITE = 37,
@@ -57,10 +58,19 @@ class Node {
     virtual string print(int lv) {
         return _onPrint(lv);
     }
+    static Color over;
+    virtual string print(int lv, Color color) {
+        over = color;
+        string ret = _onPrint(lv);
+        over = NONE;
+        return ret;
+    }
     virtual string _onPrint(int lv) { return ""; }
 
     static string clr(Color c)
     {
+        if(over != NONE && c != over) return clr(over);
+
         return string("\033[") + to_string(c) + "m";
     }
 
@@ -663,14 +673,14 @@ public:
     virtual string name() { return "func"; }
     virtual string _onPrint(int lv) {
         Node* blk = has();
-        string  name = get("name") ? get("name")->print(lv) : "",
+        string  name = get("name") ? get("name")->print(lv, FUNC) : "",
                 blkStr = blk ? blk->print(lv) : "",
                 params = get("params") ? get("params")->print(lv) : "",
                 lRed = get("lRedirect") ? get("lRedirect")->print(lv) : "",
                 rRed = get("rRedirect") ? get("rRedirect")->print(lv) : "",
                 retType = get("retType") ? get("retType")->print(lv) + " ": "";
 
-        return lRed + retType + clr(FUNC) + name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
+        return lRed + retType + name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
             rRed + blkStr;
     }
 
@@ -727,7 +737,7 @@ public:
     virtual string name() { return "funcCall"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        return clr(FUNC) + l()->print(lv) + r()->print(lv);
+        return l()->print(lv, FUNC) + r()->print(lv);
     }
 };
 
