@@ -260,7 +260,7 @@ true|false {
 
 
 ([1-9][0-9]*|0) {
-    yylval.intVal = atoi(yytext);
+    yylval.floatVal = atof(yytext);
     return tnum;
 }
 
