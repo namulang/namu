@@ -127,9 +127,9 @@ def hand
         value := values[acard.rank]
 
     void adjustForAce()
-        /*for value > 21 & aces
+        for value > 21 & aces
             value -= 10
-            aces -= 1*/
+            aces -= 1
 
 def deck
     @ctor()
