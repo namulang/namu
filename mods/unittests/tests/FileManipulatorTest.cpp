@@ -5,7 +5,7 @@ WRD_TEST_START(FileManipulatorTest)
 	T(File().remove())
 	
 	std::string current = ".";
-	std::string input_path = current + "/resources/sample.txt";
+	std::string input_path = current + "/../res/unittest/sample.txt";
 
 	AsciiStream as(input_path);
 	T(as.getPath() == input_path);
