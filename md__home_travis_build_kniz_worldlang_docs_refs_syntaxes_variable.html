@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::Thing class | world-doc</title>
+  <title>variable | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,33 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span>Thing <span class="m-thin">class</span>
+          variable
         </h1>
-        <p>Thing은 World의 최상위 객체</p>
+<p>기본 제공 타입은 기본자료형(primitive data type)과 선정의 타입 (pretype) 2종류로 나뉘어집니다.</p><p>기본 자료형은 총 7 종류이며, pretype은 밑에서 얘기하겠습니다.</p><table class="m-table"><thead><tr><th>타입명</th><th>종류</th><th>표현 범위</th><th>크기</th><th>기본값</th><th>casting 우선순위(낮은쪽 -&gt; 높은쪽)</th></tr></thead><tbody><tr><td>int</td><td>정수</td><td>signed</td><td>32bit</td><td>0</td><td>4</td></tr><tr><td>float</td><td>실수</td><td>signed</td><td>32bit</td><td>0.0</td><td>5</td></tr><tr><td>str</td><td>문자열</td><td>.</td><td>.</td><td>&quot;&quot;</td><td>6</td></tr><tr><td>bool</td><td>true / false</td><td>.</td><td>.</td><td>false</td><td>2</td></tr><tr><td>char</td><td>정수</td><td>unsigned</td><td>16bit</td><td>0</td><td>3</td></tr><tr><td>byte</td><td>정수</td><td>signed</td><td>8bit</td><td>0</td><td>3</td></tr><tr><td>res</td><td>결과</td><td>.</td><td>.</td><td>rok</td><td>1</td></tr></tbody></table><pre class="m-code"><span class="k">import</span> <span class="n">console</span>
+
+<span class="n">def</span> <span class="n">app</span> <span class="c1">// 객체 app</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// app의 변수, age.</span>
+    <span class="kt">void</span>   <span class="n">main</span>   <span class="p">(</span>   <span class="p">)</span>  <span class="c1">// whitespace 무시</span>
+        <span class="n">age</span><span class="o">=</span><span class="mi">0</span> <span class="c1">// 지역변수 age와 member변수와 이름 중복 허용</span>
+        <span class="o">++</span><span class="n">age</span><span class="o">++</span> <span class="o">*=</span> <span class="mi">2</span> <span class="c1">// age == 4</span>
+        <span class="c1">// 연산자 우선순위 존재함.</span>
+        <span class="c1">// 다음 연산자 지원 : += -= /= %= &lt;= &lt; &gt; &gt;= = == != --</span>
+
+        <span class="n">pow</span> <span class="o">=</span> <span class="n">age</span><span class="o">^</span><span class="mi">2</span> <span class="c1">// =&gt; age*age == 16</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;hello world!&quot;</span><span class="p">[</span><span class="mi">-9999999</span><span class="o">~</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;boy aged &quot;</span> <span class="o">+</span> <span class="n">pow</span><span class="p">)</span> <span class="c1">// str은 UTF-16 인코딩</span>
+        <span class="c1">// Sequence: x~y 로 표현하며 [x, y)의 범위를 가짐.</span>
+        <span class="c1">// str[-9999]는 0으로 예외처리.</span>
+        <span class="c1">// str[99999999]는 str의 length-1로 예외처리.</span>
+        <span class="c1">// int + str시, implicit 캐스팅 우선순위(3vs5)에 따라, int-&gt;str casting</span>
+
+
+<span class="c1">// 결과: hellboy aged 16</span></pre><p>## 이름 중복을 허용한다.</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
+    <span class="n">def</span> <span class="nl">B</span> <span class="p">:</span><span class="o">=</span> <span class="n">A</span>
+        <span class="kt">void</span> <span class="n">say</span><span class="p">()</span>
+        <span class="kt">void</span> <span class="n">foo</span><span class="p">()</span>
+            <span class="n">say</span><span class="p">()</span> <span class="c1">// A.B.say()와 A.say()가 충돌하고 있다.</span>
+
+    <span class="kt">void</span> <span class="n">say</span><span class="p">()</span></pre><p>local scope을 우선하는 것이다. local scope이란 즉, 해당 메소드가 정의된 클래스를 우선하는 것으로, 해당 클래스를 작성중일 개발자가 그러한 클래스나 메소드가 있다는걸 가장 잘 알고있다. 그러니, 대부분의 의도또한 local scope에 있는걸 사용하려는 것일 것이다.</p><h3>전역변수는 . 으로 접근한다.</h3><h3>여러개의 변수를 동시에 정의 가능하다.</h3><ul><li>튜플을 이용하면 가능하다.</li></ul>
       </div>
     </div>
   </div>

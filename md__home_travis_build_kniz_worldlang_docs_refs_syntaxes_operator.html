@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>연산자 | world-doc</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">world-doc</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-dox-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path d="m6 0c-3.3144 0-6 2.6856-6 6 0 3.3144 2.6856 6 6 6 1.4858 0 2.8463-0.54083 3.8945-1.4355-0.0164 0.33797 0.14734 0.75854 0.5 1.1504l3.2227 3.7891c0.55185 0.6139 1.4517 0.66544 2.002 0.11524 0.55022-0.55022 0.49866-1.4501-0.11524-2.002l-3.7891-3.2246c-0.39184-0.35266-0.81242-0.51469-1.1504-0.5 0.89472-1.0482 1.4355-2.4088 1.4355-3.8945 0-3.3128-2.6856-5.998-6-5.998zm0 1.5625a4.4375 4.4375 0 0 1 4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375-4.4375 4.4375 4.4375 0 0 1 4.4375-4.4375z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li><a href="pages.html">Pages</a></li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-dox-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <path d="m6 0c-3.3144 0-6 2.6856-6 6 0 3.3144 2.6856 6 6 6 1.4858 0 2.8463-0.54083 3.8945-1.4355-0.0164 0.33797 0.14734 0.75854 0.5 1.1504l3.2227 3.7891c0.55185 0.6139 1.4517 0.66544 2.002 0.11524 0.55022-0.55022 0.49866-1.4501-0.11524-2.002l-3.7891-3.2246c-0.39184-0.35266-0.81242-0.51469-1.1504-0.5 0.89472-1.0482 1.4355-2.4088 1.4355-3.8945 0-3.3128-2.6856-5.998-6-5.998zm0 1.5625a4.4375 4.4375 0 0 1 4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375-4.4375 4.4375 4.4375 0 0 1 4.4375-4.4375z"/>
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          연산자
+        </h1>
+<p>## 연산자 기본</p><pre class="m-code"><span class="n">def</span> <span class="n">app</span>
+    <span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+        <span class="n">age</span> <span class="o">=</span> <span class="mi">21</span>
+        <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">20</span> <span class="p">{</span> <span class="c1">// 블록문시 {, }를 사용가능 하지만,</span>
+            <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">20</span> <span class="o">&amp;</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="c1">// 생략을 권장.</span>
+                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here&quot;</span><span class="p">)</span>
+
+            <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// 허용된 중복 정의</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="mi">1</span><span class="o">~</span><span class="mi">5</span> <span class="c1">// ~는 1부터 5까지를 의미함. [1, 5)</span>
+                <span class="n">sum</span> <span class="o">+=</span> <span class="n">n</span>
+
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;sum=&quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="p">)</span> <span class="c1">// &quot;sum=10&quot;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">age</span> <span class="o">==</span> <span class="mi">20</span> <span class="c1">// 블록문 뒤에 다음 stmt 가능.</span>
+            <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="o">!</span> <span class="p">(</span><span class="n">age</span> <span class="o">==</span> <span class="mi">21</span><span class="p">)</span> <span class="o">|</span> <span class="n">sum</span> <span class="c1">// |는 or연산. sum이 0이 아니면 true로 판단</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;sum=&quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="p">)</span>
+        <span class="n">elif</span> <span class="o">!</span> <span class="n">sum</span> <span class="c1">// elif == else if</span>
+            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">-1</span> <span class="c1">// 함수 종료. 반환</span>
+
+        <span class="n">bit</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">bit</span> <span class="o">||</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">// &quot;6&quot;</span>
+        <span class="c1">// ||, &amp;&amp;, ~~ 비트 연산자</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+
+<span class="k">import</span> <span class="n">console</span> <span class="c1">// 외부 scope 이면, 어느 위치에든 선언 가능.</span>
+
+
+<span class="cm">/* 결과:</span>
+<span class="cm">sum=10</span>
+<span class="cm">sum=10</span>
+<span class="cm">6</span>
+<span class="cm">*/</span></pre><h3>연산자 우선순위</h3><p>위에 있을 수록, 우선된다. 크게 5가지로 다음과 같이 분류하며, 단항 -&gt; 이항 순으로 나온다. 동일한 우선순위라면 왼쪽에서 오른쪽으로 평가된다.</p><ol><li>접근</li><li>단항</li><li>이항 산술</li><li>비트연산</li><li>비교</li></ol><table class="m-table"><thead><tr><th>연산자operator</th><th>설명</th><th>예제</th></tr></thead><tbody><tr><td>()</td><td>괄호</td><td>(void func(int val) {})</td></tr><tr><td>메소드명( &lt; 인자리스트&gt;=&quot;&quot;&gt; )</td><td>함수호출</td><td>func(35)</td></tr><tr><td>.</td><td>접근자</td><td>a.b</td></tr><tr><td>&lt; 타입&gt;=&quot;&quot;&gt;</td><td>캐스팅</td><td>int val</td></tr><tr><td>[]</td><td>원소접근</td><td>arr[5]</td></tr><tr><td>++, &ndash;, **</td><td>후위 단항unary postfix</td><td>a++</td></tr><tr><td>++, &ndash;, **</td><td>전위 단항</td><td>**a // a*a</td></tr><tr><td>_</td><td>보호 속성 단항protected</td><td>str _val {}</td></tr><tr><td>$, #</td><td>상수 / 정적 속성 단항</td><td>#str $#_val {}</td></tr><tr><td>+</td><td>확장 속성 단항</td><td>#str +#$_val {}</td></tr><tr><td>-</td><td>음수 단항<br />양수 단항unary plus 연산자는 없다</td><td>a = -a</td></tr><tr><td>!</td><td>부정logical not</td><td>!++a</td></tr><tr><td>~~</td><td>비트연산 부정</td><td>~~a</td></tr><tr><td>*, /, %, ^</td><td>이항 곱, 나눗셈, 나머지 연산</td><td>a % b</td></tr><tr><td>+, -</td><td>이항 덧셈, 뺄셈</td><td>a - b</td></tr><tr><td>&lt;&lt;, &gt;&gt;</td><td>비트 SHIFT 연산</td><td>a &lt;&lt; 3</td></tr><tr><td>&amp;&amp;</td><td>비트 AND 연산</td><td>a &amp;&amp; 0x01</td></tr><tr><td>%%</td><td>비트 XOR 연산</td><td>a %% 0x01</td></tr><tr><td>||</td><td>비트 OR 연산</td><td>0x02 || 0x01</td></tr><tr><td>~</td><td>범위 연산</td><td>0 ~ b</td></tr><tr><td>&lt;=, &lt;, &gt;, &gt;=, ==, !=, &ndash;</td><td>비교 연산</td><td>a &gt; b</td></tr><tr><td>&amp;, |</td><td>논리 연산</td><td>if a &amp; b</td></tr><tr><td>=, *=, /=, %=, +=, -=, &amp;&amp;=, ||=, ^^=,</td><td>할당 연산</td><td>a &amp;&amp;= 0x02</td></tr></tbody></table><h3>비교연산자와 참조자 비교 연산자</h3><pre class="m-code"><span class="nl">a1</span> <span class="p">:</span><span class="o">=</span> <span class="n">My</span><span class="p">()</span>
+<span class="nl">a2</span> <span class="p">:</span><span class="o">=</span> <span class="n">My</span><span class="p">()</span>
+
+<span class="n">a1</span> <span class="o">==</span> <span class="n">a2</span> <span class="c1">// true</span>
+<span class="n">a1</span> <span class="o">===</span> <span class="n">a2</span> <span class="c1">// false</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">a1</span> <span class="c1">// now a2 reference to what a1 is pointing.</span>
+<span class="n">a1</span> <span class="o">===</span> <span class="n">a2</span> <span class="c1">// true</span></pre><h3>할당연산자는 참조자만 변경한다.</h3>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-dox-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-dox-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-dox-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search.js"></script>
+<script src="searchdata.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.11 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
