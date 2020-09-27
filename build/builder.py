@@ -364,7 +364,7 @@ cwd = ""
 def _where(name):
     cmd = ""
     prefix = ""
-    if platform.system() == "Linux":
+    if platform.system() == "Linux" or platform.system() == "Darwin":
         cmd = "which"
     elif platform.system() == "Windows":
         cmd = "where"
