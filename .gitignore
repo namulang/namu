@@ -52,3 +52,4 @@ build/*.tmp
 tags
 docs/html/
 docs/xml/
+.DS_Store
