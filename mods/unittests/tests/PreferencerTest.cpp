@@ -24,7 +24,7 @@ WRD_TEST_START(PreferencerTest)
 	}
 
 	{
-		T(pr.parse(File("resources/preferencer1.pref")))
+		T(pr.parse(File("../res/unittest/preferencer1.pref")))
 		const ClassType& preference1 = pr["preference1"];
 		T( ! preference1.isNull())
 		T(preference1.getKey() == "preference1")
