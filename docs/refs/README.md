@@ -1,6 +1,6 @@
-[TOC]
-
 # WORLD LANGUAGE SPECIFICATION
+
+[TOC]
 
 ## 수정내역
 
