@@ -32,4 +32,8 @@
 ### syntaxes
 
 - [Hello worlds!](md___users_kniz_repo_worldlang_docs_refs_syntaxes__hello__world.html)
+- [variable](md___users_kniz_repo_worldlang_docs_refs_syntaxes_variable.html)
+- [operator](md___users_kniz_repo_worldlang_docs_refs_syntaxes_operator.html)
+- [block statement](md___users_kniz_repo_worldlang_docs_refs_syntaxes_blockstmt.html)
+
 
