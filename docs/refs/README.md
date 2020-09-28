@@ -35,5 +35,7 @@
 - [variable](md___users_kniz_repo_worldlang_docs_refs_syntaxes_variable.html)
 - [operator](md___users_kniz_repo_worldlang_docs_refs_syntaxes_operator.html)
 - [block statement](md___users_kniz_repo_worldlang_docs_refs_syntaxes_blockstmt.html)
-
-
+- [casting](md___users_kniz_repo_worldlang_docs_refs_syntaxes_casting.html)
+- [for](md___users_kniz_repo_worldlang_docs_refs_syntaxes_for.html)
+- [continue](md___users_kniz_repo_worldlang_docs_refs_syntaxes_continue.html)
+- [ret](md___users_kniz_repo_worldlang_docs_refs_syntaxes_ret.html)
