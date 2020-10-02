@@ -1,30 +1,30 @@
 # 캐스팅
 
-Casting은 3 종류가 존재한다.
+## Casting은 3 종류가 존재한다.
 - Native에서의 dynamic cast
 - worldlang ast를 대상으로 한 묵시적 형변환
 - worldlang ast를 대상으로 한 명시적 형변환
 
 ## 명시적 형변환
-  - 월드의 형변환은 1가지 문법으로 100% 대체가 가능한데, to() 함수다. to 함수는 다음과 같은 순서로 우선순위를 갖는다.
+  - 월드의 형변환은 1가지 문법으로 100% 대체가 가능한데, as() 함수다. as 함수는 다음과 같은 순서로 우선순위를 갖는다.
     - 사용자가 정의한 캐스팅코드
     - 거기에 없으면 클래스 계층상 구체클래스타입을 원하는 경우(= RTTI)
     - 거기에 없으면 주체자(= This)의 생성자를 통한 호환
     - 거기에도 없으면 실패. 끝.
   - 1번을 제외한 2-3번은 모두 WorldFrx 안에 탑재되어있어야 한다.
-  - 월드Frx의 실체는 Native에 있기에 형변환을 실질적으로 수행하는 코드는 Native여야 한다. 따라서 Node를 binding하는 Refer가 반환형이기 때문에, Node에 정의된 virtual Refer to(Class&) 함수가 실질적인 형변환을 수행한다.
-  - Native환경에서는 타입이 구체적으로 나와야 편하기 때문에 TRefer<T> to<T>()를 제공한다.
+  - 월드Frx의 실체는 Native에 있기에 형변환을 실질적으로 수행하는 코드는 Native여야 한다. 따라서 Node를 binding하는 Refer가 반환형이기 때문에, Node에 정의된 virtual Refer as(Class&) 함수가 실질적인 형변환을 수행한다.
+  - Native환경에서는 타입이 구체적으로 나와야 편하기 때문에 TRefer<T> as<T>()를 제공한다.
 
-- 추가적으로 지역변수에다가 to를 사용한 경우에는 #로컬바인딩 을 가능하게 함으로써 해결되었다.
+- 추가적으로 지역변수에다가 as를 사용한 경우에는 #로컬바인딩 을 가능하게 함으로써 해결되었다.
 
 ## 사용자가 정의한 생성자는 캐스팅에 이용된다.
 
 * 사용자는 외부 타입에 대해 메소드를 끼워넣을수 있다. (extend)
 
-## to함수의 반환형은 Strong Refer다.
+## as함수의 반환형은 Strong Refer다.
 
-- to함수는 World에 visible해야 하므로 반환형은 Bind가 될 수없다. Refer다. Refer는 Strong을 기본으로 하고 있다.
-- Strong로 나간걸 Weak로 받을 수 있다. 따라서 to함수로 Strong인채로 나가야만 한다. (weak로만 나가면 to함수 안에서 새로 객체를 생성해서 내보낼 수가 없게 된다는 얘기다. 선택권은 호출자(caller)에게 줘야하므로 Strong으로만 내보내야 한다)
+- as함수는 World에 visible해야 하므로 반환형은 Bind가 될 수없다. Refer다. Refer는 Strong을 기본으로 하고 있다.
+- Strong로 나간걸 Weak로 받을 수 있다. 따라서 as함수로 Strong인채로 나가야만 한다. (weak로만 나가면 as함수 안에서 새로 객체를 생성해서 내보낼 수가 없게 된다는 얘기다. 선택권은 호출자(caller)에게 줘야하므로 Strong으로만 내보내야 한다)
 
 ## 묵시적캐스팅
 
@@ -68,7 +68,7 @@ ast를 대상으로 해서 부모클래스로의 캐스팅 + 일부 primitive �
 
 ## 캐스팅 문법
 
-<변수> <변수>
+<expr> as <identifer>
 
 * 모든 변수는 캐스팅의 타입으로 사용 가능하다.
 
@@ -80,14 +80,14 @@ def B from A
 
 a := B()
 
-b := b a // err. b는 아직 정의되지 않았다.
-b := B a
+b := a as b // err. b는 아직 정의되지 않았다.
+b := a as B
+b := a as B() // err.
 
 A get()
     return B()
 
-b2 := b B a get() // (b) ((B) ((a) get()))
-
+b2 := get() as a as B as b // (b) ((B) ((a) get()))
 ```
 
 ## 상수를 명시적 캐스팅에 이용해서는 안된다.
@@ -95,7 +95,6 @@ b2 := b B a get() // (b) ((B) ((a) get()))
 ```cpp
 a := 35
 a1 := int 35
-
 a2 := 35 a // err
 ```
 

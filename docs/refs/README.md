@@ -39,3 +39,5 @@
 - [for](md___users_kniz_repo_worldlang_docs_refs_syntaxes_for.html)
 - [continue](md___users_kniz_repo_worldlang_docs_refs_syntaxes_continue.html)
 - [ret](md___users_kniz_repo_worldlang_docs_refs_syntaxes_ret.html)
+- [method]()
+- [accessor]()
