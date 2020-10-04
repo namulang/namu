@@ -118,18 +118,17 @@ A.print(35)
 
 ## 커스텀 명시적 캐스팅
 
-* 임의 타입에 대해서 다른 타입으로 명시적 변환이 가능하도록 하려면 확장을 사용한다.
+* 임의 타입에 대해서 다른 타입으로 명시적 변환이 가능하도록 하려면 @as를 오버라이딩한다.
 
 '''go
 def base
 def my base
     name := ""
 
-    as(to str) str
+    @as(to str) str
         sys.term.out("as")
         ret name 
 
-base1 := my.new() as base
+base1 := my() as base
 base1 as str // as
 base1 as my
-
