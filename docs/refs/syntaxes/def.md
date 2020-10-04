@@ -93,3 +93,55 @@ p2.name === p2.name // false
 * 문법은 다음과 같다.
 
     def <this-identifier> <identifier>
+
+## 객체는 package 안에 존재한다.
+
+'''go
+package org.worldlang.example
+
+def example1
+    ....
+
+* namespace 라는 것은 없다.
+
+## 중첩 origin 객체
+
+* 중첩 origin 객체 public으로 될 수 있다.
+* origin 중첩 객체는 origin객체를 owner로 삼는다.
+* owner의 origin 중첩 객체는 복제 객체로부터 참조하는 origin 중첩객체와 동일한 객체이다.
+
+```cpp
+def test
+    name := ""
+
+    def in
+        koo() void: c.out("name=$name")
+
+    foo() in
+        ret in()
+
+def app
+    main() void
+        test.in.koo() // name=
+        test.name = "wow"
+        test.in.koo() // name=wow
+
+        new := test()
+        // test.in = new.in -> err. in은 ref가 아니다.
+        new.name = "new"
+        new.foo().koo() // name=new
+
+        test.in.koo() // name=wow
+        new.in.koo() // name=wow
+
+        nested := new.in // ok
+        nested1 := new.in() // ok
+```
+
+## 중첩 객체는 object scope에 등록할때 owner것을 먼저 등록 한다.
+
+* owner와 중첩객체 통째로 context switching 될 수 있다.
+
+## 중첩 객체는 복제될때 현재 object scope의 owner를 내부 참조자에 할당한다.
+
+* 즉 scope은 object scope이 2개 이상 들어갈 수 있어야 하며 어떤게 owner인지 분간해야 한다.
