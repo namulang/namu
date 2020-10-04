@@ -115,3 +115,21 @@ A.print(35)
 
 여기서 35는 string으로 형변환 된다. print 메소드 안쪽에서 parameter a에 값을 반영하지만 모든 pretype은 immutable 이기 때문에 형변환 여부와 관계없이 메소드 내부에서의 set 연산에 외부가 영향을 받지 않는다.
 만약 array 같은 것이 묵시적형변환이 된다고 했다면 문제가 심각했을 것이다.
+
+## 커스텀 명시적 캐스팅
+
+* 임의 타입에 대해서 다른 타입으로 명시적 변환이 가능하도록 하려면 확장을 사용한다.
+
+'''go
+def base
+def my base
+    name := ""
+
+    as(to str) str
+        sys.term.out("as")
+        ret name 
+
+base1 := my.new() as base
+base1 as str // as
+base1 as my
+
