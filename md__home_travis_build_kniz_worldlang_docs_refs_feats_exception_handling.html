@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>프로토타이핑 기반 | world-doc</title>
+  <title>Exception handling | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,24 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          프로토타이핑 기반
+          Exception handling
         </h1>
-<ul><li>origin 객체의 생성은 프로그램 시작시 끝난다.</li><li>생성자가 호출되면 origin객체를 현재의 복제한 뒤, 생성자 함수는 생성된 멤버변수의 조작만 하는 일종의 이벤트 + 객체복제의 신호 로써 취급한다.<ul><li>기반 클래스인 Object의 생성자에서:는 객체를 가상 복제하는 코드가 들어있게 된다.</li></ul></li><li>origin 객체는 기본적으로 런타임에 수정이 가능하다.</li></ul><h3>복제는 shallow copy 다.</h3>
+<h3>try - catch를 사용하지 않는다.</h3><ul><li>try catch는 하는 역할이 많다.<ul><li>여러 종류의 에러를 반환값에다가 추가로 전달한다.</li><li>범위에 걸쳐서 에러를 찾게 한다.<ul><li>그러나 대부분은 exception이 발생하는 부분은 1부분에 불과하다. 나머지는 불필요하게 범위를 설정한 것이다.</li></ul></li><li>exception이 처리되지 않을 경우 unwinding이 된다.</li></ul></li><li>익셉션의 단점은<ul><li>로직과 예외처리가 완전히 분리되지 않는다.<ul><li>로직안에 다른 예외처리를 넣는 경우도 부지기수다.</li></ul></li><li>문법이 장황하다.<ul><li>블록문이 2,3개씩 들어가야 하며 블록문 마다 키워드, 메소드형태의 시그내처, 괄호 등</li></ul></li><li>프로그램의 동작이 일반적이지 않다.<ul><li>메소드처럼 보이지만 그 안에서 return하면 함수 자체가 종료된다.</li><li>익셉션을 처리하지 않을 경우, 상위로 전파된다. 그게 잘 눈에 보이지 않는다.</li></ul></li><li>잘못 짤 수 있다.<ul><li>global exception을 만들어버리면 모든 에러를 다 흡수해버린다. 눈에 띄지 않게 된다.</li></ul></li><li>예외처리 부분이 길어지면 오히려 코드에 집중을 못하게 된다.</li></ul></li></ul><h3>err라는 타입을 빌트인으로 제공한다.</h3><h3>메소드는 err를 반환한다는 것을 문법으로 간략하게 표현하게 한다.</h3><pre class="m-code"><span class="n">def</span> <span class="n">customErr</span> <span class="n">err</span>
+    <span class="n">customErr</span><span class="p">()</span><span class="o">:</span> <span class="n">super</span><span class="p">(</span><span class="s">&quot;customMsg&quot;</span><span class="p">)</span>
+
+<span class="n">def</span> <span class="n">app</span>
+    <span class="n">foo</span><span class="p">(</span><span class="n">val</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">void</span> <span class="n">on</span> <span class="n">err</span> 
+        <span class="k">if</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">:</span> <span class="k">return</span> <span class="n">customErr</span>
+
+    <span class="n">boo</span><span class="p">()</span> <span class="n">foo</span>
+
+    <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
+        <span class="n">val</span> <span class="n">on</span> <span class="nl">res</span> <span class="p">:</span><span class="o">=</span> <span class="n">boo</span><span class="p">()(</span><span class="mi">5</span><span class="p">)</span></pre><h3>반환형으로 err 타입을 명시할 수 없다. 그럴 경우 void를 적는다.</h3><h3>err를 받으려면 on 키워드를 쓴다. on err 메소드에 대해서만 가능하다.</h3><ul><li>err를 받는 용도로 사용된다. 문법은 &lt;identifier&gt; on &lt;identifier&gt;</li></ul><h3>on은 왼쪽의 lhsexpr과 동일한 우선순위를 갖는다.</h3><h3>on으로 반환할 수 있다.</h3><pre class="m-code"><span class="n">def</span> <span class="n">app</span>
+    <span class="n">foo</span><span class="p">()</span> <span class="kt">int</span> <span class="n">on</span> <span class="n">err</span>
+        <span class="k">return</span> <span class="mi">55</span> <span class="n">on</span> <span class="n">customErr</span></pre><h3>on은 반환형으로 res을 반환한다.</h3><pre class="m-code"><span class="k">if</span> <span class="n">val</span> <span class="n">on</span> <span class="nl">res</span> <span class="p">:</span><span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="mi">-5</span><span class="p">)</span> <span class="c1">// res가 null이 아님. 즉 에러라면.</span>
+    <span class="p">....</span></pre><h3>빌트인 err들을 제공한다.</h3><h3>err는 exception 처럼 unwinding이 되지 않는다.</h3><pre class="m-code"><span class="n">def</span> <span class="n">app</span>
+    <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
+        <span class="n">koo</span><span class="p">(</span><span class="n">boo</span><span class="p">()(</span><span class="mi">5</span><span class="p">),</span> <span class="mi">22</span><span class="p">)</span> <span class="c1">// boo()(5)에서 err가 발생했지만 잡아낼 수 없다.</span></pre><h3>익셉션은 없으나 런타임 에러는 존재한다.</h3><ul><li>프로그램을 종료시킬 것이며 이 에러를 catch하는 방법은 없다.</li></ul>
       </div>
     </div>
   </div>
