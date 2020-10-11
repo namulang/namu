@@ -47,3 +47,28 @@ def a
 * print()를 소유한 객체는 foo 메소드다. 따라서 foo 메소드는 localscope을 하나 추가한다.
   print()안쪽에서 a 에 대해 접근이 가능하다.
 * 참고로, b는 중첩메소드가 정의되는 시점에는 아직 정의되지 않았다. 따라서 접근이 안된다.
+
+
+
+## this
+
+* global scope에 접근하는 키워드다.
+* global scope는 기본적으로 scope에 들어가 있다. this는 이름 충돌시에 사용한다.
+
+## me
+
+* 실행중인 메소드다.
+* RTTI 관련 메소드가 기본적으로 제공된다.
+    * me.name
+    * me.super(....)
+
+* 메소드를 생성자처럼 사용하면 메소드가 생성되는 대신에 메소드호출이 된다.
+
+
+## with
+
+* with (식별자)* 블록문
+* 블록문을 실행한다.
+* 식별자가 있는 경우 블록문을 실행하는 동안 식별자의 object scope을 현재 this object scope보다 상위로 올린다.
+    * local scope보다는 상위가 아니다.
+* with 안에 with가 있을 수 있다.
