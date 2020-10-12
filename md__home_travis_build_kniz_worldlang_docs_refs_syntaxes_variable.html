@@ -46,7 +46,7 @@
         <h1>
           variable
         </h1>
-<p>기본 제공 타입은 기본자료형(primitive data type)과 선정의 타입 (pretype) 2종류로 나뉘어집니다.</p><p>기본 자료형은 총 7 종류이며, pretype은 밑에서 얘기하겠습니다.</p><table class="m-table"><thead><tr><th>타입명</th><th>종류</th><th>표현 범위</th><th>크기</th><th>기본값</th><th>casting 우선순위(낮은쪽 -&gt; 높은쪽)</th></tr></thead><tbody><tr><td>int</td><td>정수</td><td>signed</td><td>32bit</td><td>0</td><td>4</td></tr><tr><td>float</td><td>실수</td><td>signed</td><td>32bit</td><td>0.0</td><td>5</td></tr><tr><td>str</td><td>문자열</td><td>.</td><td>.</td><td>&quot;&quot;</td><td>6</td></tr><tr><td>bool</td><td>true / false</td><td>.</td><td>.</td><td>false</td><td>2</td></tr><tr><td>char</td><td>정수</td><td>unsigned</td><td>16bit</td><td>0</td><td>3</td></tr><tr><td>byte</td><td>정수</td><td>signed</td><td>8bit</td><td>0</td><td>3</td></tr><tr><td>res</td><td>결과</td><td>.</td><td>.</td><td>rok</td><td>1</td></tr></tbody></table><pre class="m-code"><span class="k">import</span> <span class="n">console</span>
+<table class="m-table"><thead><tr><th>타입명</th><th>종류</th><th>표현 범위</th><th>크기</th><th>기본값</th><th>casting (high order)</th><th>literal const</th></tr></thead><tbody><tr><td>int</td><td>정수</td><td>signed</td><td>CPU</td><td>0</td><td>4</td><td>1234</td></tr><tr><td>flt</td><td>실수</td><td>signed</td><td>CPU</td><td>0.0</td><td>5</td><td>1234f, 12.34f</td></tr><tr><td>str</td><td>문자열</td><td>.</td><td>.</td><td>&quot;&quot;</td><td>6</td><td>&quot;1234&quot;, &#x27;1234&#x27;</td></tr><tr><td>bool</td><td>true / false</td><td>.</td><td>.</td><td>false</td><td>2</td><td>true, false</td></tr></tbody></table><p>| err | 결과 | . | . | N/A | 1 |</p><pre class="m-code"><span class="k">import</span> <span class="n">console</span>
 
 <span class="n">def</span> <span class="n">app</span> <span class="c1">// 객체 app</span>
     <span class="n">age</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// app의 변수, age.</span>
@@ -64,7 +64,7 @@
         <span class="c1">// int + str시, implicit 캐스팅 우선순위(3vs5)에 따라, int-&gt;str casting</span>
 
 
-<span class="c1">// 결과: hellboy aged 16</span></pre><p>## 이름 중복을 허용한다.</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
+<span class="c1">// 결과: hellboy aged 16</span></pre><h3>int, flt은 뒤에 8의 배수로 byte를 64까지 붙일 수 있다.</h3><ul><li>int8, int64</li><li>flt8, flt32</li></ul><p>## 이름 중복을 허용한다.</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
     <span class="n">def</span> <span class="nl">B</span> <span class="p">:</span><span class="o">=</span> <span class="n">A</span>
         <span class="kt">void</span> <span class="n">say</span><span class="p">()</span>
         <span class="kt">void</span> <span class="n">foo</span><span class="p">()</span>
