@@ -46,32 +46,22 @@
         <h1>
           null safety
         </h1>
-<h3>exception handling의 한 종류이다.</h3><h3>모든 타입은 nonnull이다.</h3><ul><li>메소드 반환값이 평가되는 line을 제외하고는 100% 모든 값은 null이 존재하지 않는다.</li><li>world는 함수 호출 직후, exception에 대해 명시하지 않으면 에러로 간주한다. null또한 exception이다.</li></ul><pre class="m-code"><span class="k">try</span> <span class="nl">b</span> <span class="p">:</span><span class="o">=</span> <span class="n">boo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">as</span> <span class="nl">nullExcept</span><span class="p">:</span> <span class="k">return</span>
-
-<span class="k">try</span> <span class="nl">k</span> <span class="p">:</span><span class="o">=</span> <span class="n">koo</span><span class="p">(</span><span class="n">boo</span><span class="p">(</span><span class="n">foo</span><span class="p">()))</span>
-    <span class="n">on</span> <span class="nl">nullExcept</span><span class="p">:</span>
-
-<span class="c1">// b, k는 non null이다.</span></pre><ul><li>기존 프로그래밍 언어에서 null을 반환해야할 상황에서 월드 개발자는 다음 중 1개를 해야 한다.<ul><li>나머지 코드를 무시하고 리턴한다.</li><li>err를 반환한다.</li><li>다른 값으로 대신 채운다.</li></ul></li></ul><h3>편의를 위해 safe navigation을 제공한다.</h3><ul><li>문법: &quot;?.&quot;</li><li>멤버의 반환에 대해서만 사용이 가능하다.</li></ul><pre class="m-code"><span class="n">boo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="n">sayHello</span><span class="p">()</span>
+<h3>exception handling의 한 종류이다.</h3><h3>non null타입과 nullable 타입을 혼용한다.</h3><ul><li>?를 붙이면 nullable, 기본적으로는 non null 이다.</li></ul><h3>편의를 위해 safe navigation을 제공한다.</h3><ul><li>문법: &quot;?.&quot;</li><li>멤버의 반환에 대해서만 사용이 가능하다.</li></ul><pre class="m-code"><span class="n">boo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="n">sayHello</span><span class="p">()</span>
 
 <span class="c1">// 2:</span>
 <span class="k">try</span> <span class="nl">b</span> <span class="p">:</span><span class="o">=</span> <span class="n">boo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">on</span> <span class="nl">nullErr</span><span class="p">:</span> <span class="k">return</span></pre><h3>nullable 타입을 지원하지 않는다.</h3><ul><li>null이 있을 수도 있는 타입을 지역변수건 메소드인자건 메소드반환이건 변수로 정의할 수 없다.</li><li>null과 정상값이 같이 혼재하는 멤버를 만들수만 있는 것이다.</li><li>고로 property나 메소드의 반환형에 &quot;?&quot;이 들어갈 수 있게된다.</li></ul><pre class="m-code"><span class="n">def</span> <span class="n">app</span>
-    <span class="nl">name</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;wow&quot;</span><span class="o">?</span> <span class="c1">// err</span>
-    <span class="nl">name</span> <span class="p">:</span><span class="o">=</span> <span class="n">str</span><span class="o">?</span> <span class="c1">// err</span>
+    <span class="n">on</span> <span class="nl">nullErr</span><span class="p">:</span> <span class="k">return</span></pre><h3>ref가 boolean으로 캐스팅이 될때 null 여부 체크 결과를 반환한다.</h3><pre class="m-code"><span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="n">view</span><span class="o">?</span><span class="p">.</span><span class="n">activity</span>
+<span class="nl">b</span> <span class="p">:</span><span class="o">=</span> <span class="n">view</span><span class="o">?</span><span class="p">.</span><span class="n">fragment</span>
 
-    <span class="n">foo</span><span class="p">()</span> <span class="kt">void</span><span class="o">?</span>
-    <span class="n">foo</span><span class="p">()</span> <span class="kt">int</span><span class="o">?</span>
-    <span class="n">foo</span><span class="p">()</span> <span class="kt">int</span> <span class="n">on</span> <span class="n">nullErr</span> <span class="c1">// 위와 같은 코드</span>
-    <span class="n">foo</span><span class="p">()</span> <span class="kt">int</span><span class="o">?</span> <span class="n">on</span> <span class="n">outOfBoundErr</span>
-    <span class="n">foo</span><span class="p">(</span><span class="n">msg</span> <span class="n">str</span><span class="o">?</span><span class="p">)</span> <span class="kt">int</span><span class="o">?</span> <span class="c1">// err</span></pre><h3>프로퍼티에 ?를 묘사한 경우, get()에 그 nullErr를 반환하는 코드가 반드시 1번은 나와야 한다. (verification error)</h3><pre class="m-code"><span class="n">def</span> <span class="n">my</span>
-    <span class="n">name</span> <span class="n">str</span><span class="o">?</span> <span class="c1">// err</span>
+<span class="k">if</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span>
+   <span class="p">...</span></pre><h3>nullablle 타입에 대해 이 코드라인에서 null 체크가 이루어졌다는걸 컴파일러는 기억해야 한다.</h3><pre class="m-code"><span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="n">view</span><span class="o">?</span><span class="p">.</span><span class="n">fragment</span> <span class="c1">// a fragment?</span>
 
-    <span class="nl">n</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>
-    <span class="n">name</span> <span class="n">str</span><span class="o">?</span>
-    <span class="c1">// | name str on nullErr</span>
-        <span class="err">@</span><span class="n">get</span><span class="p">()</span>
-            <span class="k">return</span> <span class="k">if</span> <span class="o">++</span><span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">:</span> <span class="s">&quot;wow&quot;</span><span class="o">:</span> <span class="k">else</span><span class="o">:</span> <span class="n">nullex</span></pre>
+<span class="n">go</span><span class="p">(</span><span class="n">nonnull</span> <span class="n">fragment</span><span class="p">)</span>
+    <span class="n">nonnull</span><span class="p">.</span><span class="n">doSomething</span><span class="p">()</span>
+
+<span class="n">go</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1">// err. a is nullable.</span>
+<span class="k">if</span> <span class="n">a</span>
+    <span class="n">go</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1">// ok. a was nullable. but null checked.</span></pre>
       </div>
     </div>
   </div>
