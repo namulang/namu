@@ -20,15 +20,84 @@
         * global exception을 만들어버리면 모든 에러를 다 흡수해버린다. 눈에 띄지 않게 된다.
     * 예외처리 부분이 길어지면 오히려 코드에 집중을 못하게 된다.
 
+## try - on
 
-## err라는 타입을 빌트인으로 제공한다.
+    try (expr)
+        on (errType)
+        ..
+        ..
+
+* 예제
+```go
+def app
+    foo() int
+    boo(n int) bool on nullErr, err ==> 
+        if n < 0
+            return nullErr
+        else
+            return err
+
+    koo(n bool)
+
+    main() void
+        b := boo(5) // err
+
+        try b := boo(5)
+            as nullErr: return
+
+        try k := koo(b := boo(foo())) // try - on
+            on nullErr:
+                ....
+                ,,,
+                k = ...
+                // err. b = ... 가 없다.
+
+            on err:
+                return
+            // 2개 모두 적어야 한다.
+```
+
+## try에서 수행중 발생한 모든 에러를 on 중에 하나와 매칭해서 처리한다.
+
+## try-on vs try-catch
+
+* tryon은 한줄에 포커스를 맞춘다. (한 메소드 콜이 아니라) 여러줄에 걸쳐서 예외처리를 하면 예외처리에 들어갈 라인도 같이 길어진다. 이는 try-catch가 예외처리와 로직을 분화하는 방식이 마음에 안들어서 그런것이다. 예외처리와 로직을 분리가 어렵다.
+    * 전통적인 if 예외처리와 try-catch의 예외처리 방식이 이질적인데 개발자들은 2가지 모두 사용한다. 그래서 한가지 방식으로 예외처리 방식을 합치고자 한 것이다.
+* try-on은 예외를 처리하지 않으면 경고로 취급한다. 
+* 처리되지 않은 예외는 즉각 런타임 에러다.
+* try-on은 명시가 없으면 예외를 밖으로 던지지 못한다.
+
+## 한줄의 에러는 한번에 처리할 수 있다.
+
+* 도중에 err가 발생하면 나머지 동작은 중지된다.
+* 블록문 안쪽이 아닌 변수 정의에서 try를 한 경우 Err가 발생하면, 이 값에 별도의 동작을 할당하지 않으면 에어로 간주한다. (verification error)
+* 여러줄은 안된다.
+* 여러개의 err가 동시에 on에 도착하는 일은 없다.
+
+## 빌트인으로 exception 객체를 제공한다.
+
+## 새로운 exception 객체를 생성해서 반환할 수 있다.
+
+```go
+def app
+    def myErr err
+        msg := ""
+        myErr(msg str)
+            this.msg = msg    
+            
+    foo(msg str) void on err
+        return myErr(msg)
+
+    main() void
+        try foo("wow"): on myErr:
+            myErr.log() // "wow"
+```
 
 ## 메소드는 err를 반환한다는 것을 문법으로 간략하게 표현하게 한다.
 
 ```go
-
 def customErr err
-    customErr(): super("customMsg")
+     customErr(): super("customMsg")
 
 def app
     foo(val int) void on err 
@@ -42,11 +111,6 @@ def app
 
 ## 반환형으로 err 타입을 명시할 수 없다. 그럴 경우 void를 적는다.
 
-## err를 받으려면 on 키워드를 쓴다. on err 메소드에 대해서만 가능하다.
-
-* err를 받는 용도로 사용된다. 문법은
-    <identifier> on <identifier>
-
 ## on은 왼쪽의 lhsexpr과 동일한 우선순위를 갖는다.
 
 ## on으로 반환할 수 있다.
@@ -57,23 +121,6 @@ def app
         return 55 on customErr
 ```
 
-## on은 반환형으로 res을 반환한다.
+## 에러는 handling 하지 않으면 경고 처리한다.
 
-```go
-if val on res := foo(-5) // res가 null이 아님. 즉 에러라면.
-    ....
-```
-
-## 빌트인 err들을 제공한다.
-
-## err는 exception 처럼 unwinding이 되지 않는다.
-
-```go
-def app
-    main() void
-        koo(boo()(5), 22) // boo()(5)에서 err가 발생했지만 잡아낼 수 없다.
-```
-
-## 익셉션은 없으나 런타임 에러는 존재한다.
-
-* 프로그램을 종료시킬 것이며 이 에러를 catch하는 방법은 없다.
+## 처리 되지 않은 에러는 즉시 F/C로 이어진다.
