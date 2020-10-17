@@ -1,18 +1,12 @@
 # variable
 
-기본 제공 타입은 기본자료형(primitive data type)과 선정의 타입 (pretype) 2종류로 나뉘어집니다.
-
-기본 자료형은 총 7 종류이며, pretype은 밑에서 얘기하겠습니다.
-
-| 타입명 | 종류         | 표현 범위 | 크기  | 기본값 | casting 우선순위(낮은쪽 -> 높은쪽) |
-| ------ | ------------ | --------- | ----- | ------ | ---------------------------------- |
-| int    | 정수         | signed    | 32bit | 0      | 4                                  |
-| float  | 실수         | signed    | 32bit | 0.0    | 5                                  |
-| str    | 문자열       | .         | .     | ""     | 6                                  |
-| bool   | true / false | .         | .     | false  | 2                                  |
-| char   | 정수         | unsigned  | 16bit | 0      | 3                                  |
-| byte   | 정수         | signed    | 8bit  | 0      | 3                                  |
-| res    | 결과         | .         | .     | rok    | 1                                  |
+| 타입명 | 종류         | 표현 범위 | 크기  | 기본값 | casting (high order) | literal const |
+| ------ | ------------ | --------- | ----- | ------ | -------------------- | ------------- |
+| int    | 정수         | signed    | CPU   | 0      | 4                    | 1234          |
+| flt    | 실수         | signed    | CPU   | 0.0    | 5                    | 1234f, 12.34f |
+| str    | 문자열       | .         | .     | ""     | 6                    | "1234", '1234'|
+| bool   | true / false | .         | .     | false  | 2                    | true, false   |
+| err    | 결과         | .         | .     | N/A    | 1                    |
 
 ```cpp
 import console
@@ -36,6 +30,10 @@ def app // 객체 app
 // 결과: hellboy aged 16
 ```
 
+## int, flt은 뒤에 8의 배수로 byte를 64까지 붙일 수 있다.
+
+* int8, int64
+* flt8, flt32
 
 ## 이름 중복을 허용한다.
 ```java
