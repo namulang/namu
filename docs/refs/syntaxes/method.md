@@ -23,6 +23,10 @@
 
 ## 중첩 메소드의 accessor가 protected, public 이건 동작에는 차이가 없다.
 
+## 중첩메소드는 상위 메소드의 local scope을 공유한다.
+
+## 중첩메소드에서 참조하는 상위 메소드의 local variable은 중첩메소드가 정의되는 코드보다 먼저 등장해야한다.
+
 ## 클래스 계층
 * Method는 Object와 동작이 상이하나 Node의 일종인 것은 맞다.
 * Methods는 블록문의 한 종류로 볼 수 있다. Block문은 Statement의 한 종류다.
