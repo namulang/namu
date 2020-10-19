@@ -68,9 +68,18 @@ ast를 대상으로 해서 부모클래스로의 캐스팅 + 일부 primitive �
 
 ## 캐스팅 문법
 
-<expr> as <identifer>
+    <expr> as <identifer>
+    <expr> as? <identifier>
 
 * 모든 변수는 캐스팅의 타입으로 사용 가능하다.
+* as에서 casting이 실패하면 런타임 에러가 된다.
+* as?에서 casting이 실패하면 null이 들어간다.
+
+## is
+
+    <expr is <identifier>
+
+* casting이 가능하면 true, 불가능하면 false가 나온다.
 
 ```cpp
 def A
@@ -116,7 +125,12 @@ A.print(35)
 여기서 35는 string으로 형변환 된다. print 메소드 안쪽에서 parameter a에 값을 반영하지만 모든 pretype은 immutable 이기 때문에 형변환 여부와 관계없이 메소드 내부에서의 set 연산에 외부가 영향을 받지 않는다.
 만약 array 같은 것이 묵시적형변환이 된다고 했다면 문제가 심각했을 것이다.
 
-## 커스텀 명시적 캐스팅
+## 커스텀 명시적 캐스팅은 지원하지 않는다.
+
+* 왜냐하면 캐스팅이 가능한지 가능하지 않은지 여부를 컴파일타임에 알 수 없기 때문이다.
+* 또한 자바는 커스텀 캐스팅을 지원하지 않지만 크게 문제될 것이 없다. parseInt() 같은 함수를 사용하므로.
+
+## 다만 빌트인 타입에 대한 캐스팅은 native API "as"로 지원한다.
 
 * 임의 타입에 대해서 다른 타입으로 명시적 변환이 가능하도록 하려면 @as를 오버라이딩한다.
 
