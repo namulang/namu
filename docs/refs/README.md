@@ -17,27 +17,48 @@
 
 ## 목차
 
+### Quick Start
+
+- [KR](md__home_travis_build_kniz_worldlang_docs_QUICK-START-kr.html)
+
 ### goals
 
-- [goals](md___users_kniz_repo_worldlang_docs_refs_goals__g_o_a_l_s.html)
+- [goals](md__home_travis_build_kniz_worldlang_docs_refs_goals_GOALS.html)
 
 ### features
 
-- [Prototyping inheritance](md___users_kniz_repo_worldlang_docs_refs_feats__prototyping__inheritance.html)
-- [Reduced syntax](md___users_kniz_repo_worldlang_docs_refs_feats__reduced_syntax.html)
-- [Static strong types](md___users_kniz_repo_worldlang_docs_refs_feats__static__strong__types.html)
-- [Type deduction](md___users_kniz_repo_worldlang_docs_refs_feats__type_deduction.html.html)
-- [C-REPL](md___users_kniz_repo_worldlang_docs_refs_feats__c-_r_e_p_l.html)
+- [C-REPL](md__home_travis_build_kniz_worldlang_docs_refs_feats_C-REPL.html)
+- [Entrypoint](md__home_travis_build_kniz_worldlang_docs_refs_feats_entrypoint.html)
+- [Exception handling](md__home_travis_build_kniz_worldlang_docs_refs_feats_exception_handling.html)
+- [Immutable](md__home_travis_build_kniz_worldlang_docs_refs_feats_immutable.html)
+- [Interoperability](md__home_travis_build_kniz_worldlang_docs_refs_feats_interoperability.html)
+- [Life cycle](md__home_travis_build_kniz_worldlang_docs_refs_feats_life_cycle.html)
+- [Module](md__home_travis_build_kniz_worldlang_docs_refs_feats_module.html)
+- [Null safety](md__home_travis_build_kniz_worldlang_docs_refs_feats_null_safety.html)
+- [Prototyping inheritance](md__home_travis_build_kniz_worldlang_docs_refs_feats_Prototyping_Inheritance.html)
+- [Scope](md__home_travis_build_kniz_worldlang_docs_refs_feats_scope.html)
+- [Type deduction](md__home_travis_build_kniz_worldlang_docs_refs_feats_Type_deduction.html)
+- [Type](md__home_travis_build_kniz_worldlang_docs_refs_feats_type.html)
 
 ### syntaxes
 
-- [Hello worlds!](md___users_kniz_repo_worldlang_docs_refs_syntaxes__hello__world.html)
-- [variable](md___users_kniz_repo_worldlang_docs_refs_syntaxes_variable.html)
-- [operator](md___users_kniz_repo_worldlang_docs_refs_syntaxes_operator.html)
-- [block statement](md___users_kniz_repo_worldlang_docs_refs_syntaxes_blockstmt.html)
-- [casting](md___users_kniz_repo_worldlang_docs_refs_syntaxes_casting.html)
-- [for](md___users_kniz_repo_worldlang_docs_refs_syntaxes_for.html)
-- [continue](md___users_kniz_repo_worldlang_docs_refs_syntaxes_continue.html)
-- [ret](md___users_kniz_repo_worldlang_docs_refs_syntaxes_ret.html)
-- [method]()
-- [accessor]()
+- [block statement](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_blockstmt.html)
+- [casting](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_casting.html)
+- [closure](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_closure.html)
+- [container](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_container.html)
+- [continue](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_continue.html)
+- [def](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_def.html)
+- [delegator](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_delegator.html)
+- [expression](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_expression.html)
+- [for](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_for.html)
+- [generic](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_generic.html)
+- [method](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_method.html)
+- [operator](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_operator.html)
+- [overloading](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_overloading.html)
+- [property](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_property.html)
+- [reference](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_reference.html)
+- [ret](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_ret.html)
+- [scope](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_scope.html)
+- [specifier](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_specifier.html)
+- [variable](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_variable.html)
+- [void](md__home_travis_build_kniz_worldlang_docs_refs_syntaxes_void.html)
