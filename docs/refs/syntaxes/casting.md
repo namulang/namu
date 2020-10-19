@@ -1,4 +1,4 @@
-# 캐스팅
+# casting 
 
 ## Casting은 3 종류가 존재한다.
 - Native에서의 dynamic cast

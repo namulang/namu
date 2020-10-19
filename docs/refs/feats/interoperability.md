@@ -1,4 +1,4 @@
-# extends other languages
+# Interoperability 
 
 ## 다른 언어로 모듈을 작성할 수 있도록 API를 제공하는 것이 목적이다.
 
