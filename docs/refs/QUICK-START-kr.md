@@ -1,7 +1,10 @@
-# Hello world!
+# Quick Start KR 
 
 ```wrd
-c.print("Hello world!")
+import sys.cons aka c
+def app
+    main() void
+        c.out("Hello world!")
 ```
 
 

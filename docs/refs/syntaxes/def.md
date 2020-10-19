@@ -1,4 +1,4 @@
-# Definition of object
+# def
 
 ## 프로토타이핑 기반
 

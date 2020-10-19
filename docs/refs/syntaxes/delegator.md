@@ -1,4 +1,4 @@
-# method delegator
+# delegator
 
 ## 메소드를 정의하면 그것이 곧 delegator로 사용할 수 있다.
 
