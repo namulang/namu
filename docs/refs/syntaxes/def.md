@@ -19,30 +19,32 @@
 
 * 기본 생성자는 origin객체가 최초로 접근되어질때 호출된다.
 * 이는, origin객체들 간에 순서를 정해주지 않으면 상호 의존 문제가 발생할 수 있기 때문이다.
+* 객체 자체는 이미 만들어져 있다.
 * 복사 생성자는 원본의 복제 객체가 나올때 호출된다.
 
 '''go
 def person
     name str
+    @ctor
+        name = "I'm unique"
     ctor()
         name = "ctor"
-
     ctor(src person)
         name = src.name()
 
 def app
     main() void
-        person.name // ctor
+        person.name // I'm unique 
         person.name = "hello"
 
-        person().name // "hello"
-        new person().name // "ctor"
+        person().name // "ctor"
+        person.clone().name // hello
 '''
 
 ## origin 객체
 
 * origin객체는 컴파일러로부터 생성되며 생성된 후에는 사용자는 절대로 접근이 불가능하다.
-* origin객체가 생성되면 이로부터 복제된 객체가 1개 시스템에 의해서 생성되며 이를 unique객체라고 한다.
+* origin객체가 생성되면 이로부터 복제된 객체 1개 시스템에 의해서 생성되며 이를 unique객체라고 한다.
 * unique객체는 origin객체의 이름을 부여받으며 사용자는 unique객체에 접근할 수 있다.
 
 ## unique 객체는 lazy하게 시스템에 의해서 복제된다.
@@ -56,6 +58,12 @@ def app
 * 따라서 기존의 로직들이 훼손된 원본에 의해서 다른 결과를 만들어 낼 수 있다. 이것은 장점이기도 하고 단점이기도 하다.
 * unique 객체를 복제하기 위해서 문법을 작성하면 실제로는 unique 객체의 원본인 origin객체로부터 복제된다.
 * 따라서 unique객체로부터 복제를 하더라도 항상 초기상태의 값으로 객체가 생성된다.
+
+## 프로토타이핑이라는 것이 숨겨진다.
+
+* 전부 복제를 기반으로 동작한다. 그러나 문법으로만 봐서는 class 기반 처럼 보이게 된다.
+* unique객체에 생성자를 호출하면 origin객체로부터 객체가 나온다.
+* 복제를 하고 싶다면 clone()을 호출한다.
 
 ## 멤버는 동적으로 구성한다. 이후 최적화를 통해 정적으로 만든다.
 
@@ -150,3 +158,8 @@ def app
 ## 중첩 객체는 복제될때 현재 object scope의 owner를 내부 참조자에 할당한다.
 
 * 즉 scope은 object scope이 2개 이상 들어갈 수 있어야 하며 어떤게 owner인지 분간해야 한다.
+
+## 기본적으로 제공하는 메소드
+
+* obj 상속받은 객체라면 다음의 메소드를 기본 제공한다.
+    * ctor(), ctor(rhs), clone(), get(), set()
