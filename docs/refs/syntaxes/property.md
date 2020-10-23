@@ -20,6 +20,18 @@ def objA
     @set(new): ret name1 as objA // ok
 ```
 
+## get() / set()을 갑자기 추가해도 다른 코드는 전혀 변경이 없어야 한다.
+
+```go
+def app
+    name := "hello"
+
+    main() void
+        sys.out(name)
+```
+
+* 위 코드에서 name에 @get, @set을 둬서 프로퍼티로 만들어도 main() 코드 변경이 없어야 한다.
+
 ## 프로퍼티를 정의하려면 객체 정의(복제 혹은 origin)후 블록문에 넣으면 된다.
 
 * 일반 메소드를 복제 객체 정의의 블록문에 넣을 수는 없다. 오직 프로퍼티 관련만 가능하다.
@@ -72,3 +84,9 @@ def person
         @get: person.name // origin객체.name
         @set: name = new // 복제객체.name
 ''' 
+
+## 프로퍼티 오버라이딩
+
+* 프로퍼티 또한 오버라이딩 할 수 있다.
+* 프로퍼티가 소유한 메모리는 고정되고 @get, @set 메소드만 오버라이딩 된다.
+* 공변을 허용하므로 타입이 일치하지 않아도 된다. 변수명이 일치해야 한다.
