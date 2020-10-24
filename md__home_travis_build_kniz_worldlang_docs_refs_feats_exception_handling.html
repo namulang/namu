@@ -46,7 +46,7 @@
         <h1>
           Exception handling
         </h1>
-<h3>try - catch를 사용하지 않는다.</h3><h3>메소드는 err를 반환한다는 것을 문법으로 간략하게 표현하게 한다.</h3><pre class="m-code"><span class="n">def</span> <span class="n">customErr</span> <span class="n">err</span>
+<h3>try - catch 대신 try-on을 사용한다.</h3><h3>try - on은 하나의 코드 라인에 대해서만 체크한다.</h3><ul><li>excpetion handling은 범위체크를 지원하면서 예외코드와 실행코드를 분리시키자는 의도다.</li><li>그러나 실제로 개발자들은 exception 안쪽에서도 예외처리를 종종한다.</li><li>따라서 어짜피 안될바에야 C 처럼 하나의 라인에 집중하게끔 한다.</li></ul><h3>메소드는 err를 반환한다는 것을 문법으로 간략하게 표현하게 한다.</h3><pre class="m-code"><span class="n">def</span> <span class="n">customErr</span> <span class="n">err</span>
      <span class="n">customErr</span><span class="p">()</span><span class="o">:</span> <span class="n">super</span><span class="p">(</span><span class="s">&quot;customMsg&quot;</span><span class="p">)</span>
 
 <span class="n">def</span> <span class="n">app</span>
@@ -56,7 +56,16 @@
     <span class="n">boo</span><span class="p">()</span> <span class="n">foo</span>
 
     <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
-        <span class="n">val</span> <span class="n">on</span> <span class="nl">res</span> <span class="p">:</span><span class="o">=</span> <span class="n">boo</span><span class="p">()(</span><span class="mi">5</span><span class="p">)</span></pre><h3>반환형으로 err 타입을 명시할 수 없다. 그럴 경우 void를 적는다.</h3><h3>err을 받지 않으면 경고처리 된다.</h3><ul><li>할당 연산자에서 err을 받지 않으면 값이 할당연산자의 최종 값이 된다.</li><li>할당 연산자에서 err까지 받으면 err값이 최종 값이 된다.</li></ul><pre class="m-code"><span class="n">foo</span><span class="p">(</span><span class="n">val</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="n">on</span> <span class="n">err</span>
+        <span class="nl">val</span> <span class="p">:</span><span class="o">=</span> <span class="n">boo</span><span class="p">()(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// okay. 그러나 exception이 발생하면 F/C</span>
+        <span class="k">try</span> <span class="nl">val</span> <span class="p">:</span><span class="o">=</span> <span class="n">boo</span><span class="p">()(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="c1">// doSomething() // try on 사이에는 다른 라인이 와서는 안된다.</span>
+        <span class="n">on</span> <span class="n">customErr</span>
+            <span class="n">sys</span><span class="p">.</span><span class="n">cons</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;$it&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="p">.</span><span class="n">cons</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;customErr&quot;</span><span class="p">)</span>
+        <span class="n">on</span> <span class="n">err</span> <span class="c1">// on은 이어서 여러개 와도 된다.</span>
+            <span class="p">.....</span>
+
+        <span class="k">return</span> <span class="c1">// on이 다 끝나면 일반 구문이 와도 된다.</span></pre><h3>반환형으로 err 타입을 명시할 수 없다. 그럴 경우 void를 적는다.</h3><h3>err을 받지 않으면 경고처리 된다.</h3><ul><li>할당 연산자에서 err을 받지 않으면 값이 할당연산자의 최종 값이 된다.</li><li>할당 연산자에서 err까지 받으면 err값이 최종 값이 된다.</li></ul><pre class="m-code"><span class="n">foo</span><span class="p">(</span><span class="n">val</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="n">on</span> <span class="n">err</span>
     <span class="p">....</span>
 
 <span class="k">if</span> <span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// if a가 0이 아니라면</span>
