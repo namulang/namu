@@ -95,6 +95,8 @@ def app
 
 ## sequence
 
+* array의 일부 기능만 가지고 있는 제한된 컨테이너다.
+
 ### 문법
 
     (include number) .. (include number)
@@ -106,6 +108,59 @@ for num in 1..arr.len
     sys.out("$num,")
 // 1,2,3,
 ```
+
+### 원소마다 메모리를 점유하지 않는다.
+
+### operator [, ]를 지원하지 못한다.
+
+* 대신 get(n)을 지원한다.
+* operator[]를 지원하지 못하는 이유는 operator[]는 반환형E가 immutable이어도 mutable처럼 만들어주는 특이한 메소드이기 때문이다.
+```go
+ar := [1, 2]
+ar[0] = 3 // int는 immutable이지만 3으로 변경되어야 한다.
+```
+
+### seq 클래스가 이 문법을 구현한다.
+
+### seq는 당연히 제네릭이다.
+
+### seq는 그외에도 step을 받는 생성자들이 있다.
+
+* 직접 seq 객체를 생성하면 이 값을 채울 수 있다.
+* seq도 반환할 수 있게 된다.
+
+```go
+foo(s int, e int, s step) seq<int> // int만 step 이 있다.
+    return seq<str>(s, e, s)
+
+for n in foo(5, 1, -2)
+    .......
+```
+
+### seq<str>은 생성자 인자에 step이 없다.
+
+### iterator를 내보낼 수 있어야 한다.
+
+### has(elem E) bool를 지원한다.
+
+### step이 얼마인지, start, end는 얼마인지 외부에서 seq객체로부터 알 수 있어야 한다.
+
+### a..b에서 a가 더 작은 경우 reverse로 동작한다.
+
+* step은 항상 1 혹은 -1이다.
+
+### a..b 문법은 seq의 인자 2개짜리 생성자를 부르는 syntactic sugar다.
+```go
+sys.cons.out("$4..2.step")
+
+```
+
+### ".." 문법은 반환형에 사용할 수 없다.
+
+* 반환형에는 값이 아니라 타입이 와야 한다.
+* 2..4 로 사용하면 이것은 타입이 아니라 값이다.
+* 반환하고 싶다면 seq를 사용하라.
+
 
 
 ## pair
