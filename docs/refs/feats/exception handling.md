@@ -1,6 +1,12 @@
 # Exception handling
 
-## try - catch를 사용하지 않는다.
+## try - catch 대신 try-on을 사용한다.
+
+## try - on은 하나의 코드 라인에 대해서만 체크한다.
+
+* excpetion handling은 범위체크를 지원하면서 예외코드와 실행코드를 분리시키자는 의도다.
+* 그러나 실제로 개발자들은 exception 안쪽에서도 예외처리를 종종한다.
+* 따라서 어짜피 안될바에야 C 처럼 하나의 라인에 집중하게끔 한다.
 
 ## 메소드는 err를 반환한다는 것을 문법으로 간략하게 표현하게 한다.
 
@@ -15,7 +21,16 @@ def app
     boo() foo
 
     main() void
-        val on res := boo()(5)
+        val := boo()(5) // okay. 그러나 exception이 발생하면 F/C
+        try val := boo()(5)
+        // doSomething() // try on 사이에는 다른 라인이 와서는 안된다.
+        on customErr
+            sys.cons.out("$it")
+            sys.cons.out("customErr")
+        on err // on은 이어서 여러개 와도 된다.
+            .....
+
+        return // on이 다 끝나면 일반 구문이 와도 된다.
 ```
 
 ## 반환형으로 err 타입을 명시할 수 없다. 그럴 경우 void를 적는다.
