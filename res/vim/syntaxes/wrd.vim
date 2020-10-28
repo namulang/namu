@@ -1,8 +1,6 @@
 " quit when a syntax file was already loaded
-if !exists("main_syntax")
-  if exists("b:current_syntax")
+if exists("b:current_syntax")
     finish
-  endif
 endif
 
 let s:cpo_save = &cpo
@@ -10,10 +8,14 @@ set cpo&vim
 
 
 " keyword definitions
-syn keyword synKeyword	if def else switch for again ret retif retfor retswitch
-syn keyword synKeyword	import aka
-syn keyword synPretype	int float str void res bool char this super
-syn keyword synConst	true false null
+syn keyword synKeyword if def else elif for break continue ret return package
+syn keyword synKeyword aka it with on try in
+syn keyword synPretype int int8 int16 int32 int64
+syn keyword synPretype char
+syn keyword synPretype flt flt8 flt16 flt32 flt64
+syn keyword synPretype str void err bool this super me
+syn keyword synPretype ctor set get as
+syn keyword synConst    true false null
 
 
 " Comments
@@ -71,3 +73,5 @@ hi def link javaCommentStar		javaComment
 let b:spell_options="contained"
 let &cpo = s:cpo_save
 unlet s:cpo_save
+
+let b:current_syntax = "wrd"
