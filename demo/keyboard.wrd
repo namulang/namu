@@ -1,0 +1,52 @@
+package wrd.lang.example.keyboard
+
+sys.cons aka c
+
+def unit
+    // name := int // err. if you define refer for immutable obj, then @get or @set should be define.
+    name := int
+        @get: "unit" + objName()
+        _@set
+    res init() = null
+
+def key unit
+    @ctor(newVal char, newStroke int)
+        val = newVal
+        stroke = newStroke
+
+    type() void
+        c.out("user types $val with $stroke stroke.")
+
+    _value := 'a'
+    _stroke := 0.0
+
+def row key[]
+
+    _end := _start := 'a' // 'a' is char
+
+    @ctor(newStart char, newEnd char)
+        start = newStart
+        end = newEnd
+
+    init() void on err
+        stk := 0.0
+        for c in end..start // char can convert to int. but str can't
+            add(key(c, stk += 0.1))
+
+        if stk > 1.5
+            return err("invalid stk")
+
+def keyboard row[]
+    init() void on err
+        add(row('0', '\\'))
+        add(row('q', ']'))
+        add(row('a', ';'))
+        add(row('z', '/'))
+
+        for r in this
+            try r.init()
+            on err: return it
+
+def app
+    main() void
+        keyboard.init()

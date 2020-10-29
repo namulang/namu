@@ -1,0 +1,5 @@
+package wrd.lang.example.helloWorld
+
+def app
+    main() void
+        sys.cons.out("Hello world!")
