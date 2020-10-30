@@ -1,0 +1,26 @@
+package wrd.lang.example.part
+sys.cons aka c
+
+def part
+    name := str
+        _@set=>
+
+    @ctor(newname str): name = newname
+    say() void = 0
+
+def body part
+    say() void: c.out("I'm a body") // ' inside of a pair of "".
+
+def button part("button")
+def mouse part("mouse")
+    @ctor(): super("overwrite this")
+    @ctor(a new) // do nothing
+
+def app
+    main() void
+        c.out(mouse.name == mouse().name)
+        c.out(mouse(1).name)
+
+    arr := part[]
+    tuple := part:?str // :?
+    map := part[str]
