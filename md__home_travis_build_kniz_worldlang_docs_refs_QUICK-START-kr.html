@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Quick Start KR | world-doc</title>
+  <title>Quick Start in KR | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,25 +44,26 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          Quick Start KR
+          Quick Start in KR
         </h1>
-<pre class="m-code"><span class="k">import</span> <span class="n">sys</span><span class="p">.</span><span class="n">cons</span> <span class="n">aka</span> <span class="n">c</span>
+<pre class="m-code"><span class="c1">// don&#39;t need to import sys.cons.</span>
+
 <span class="n">def</span> <span class="n">app</span>
     <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
-        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;Hello world!&quot;</span><span class="p">)</span></pre><h2>변수와 표현식</h2><pre class="m-code"><span class="nl">str1</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;message&quot;</span> <span class="c1">// 변수의 정의</span>
+        <span class="n">sys</span><span class="p">.</span><span class="n">cons</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;Hello world!&quot;</span><span class="p">)</span></pre><h2>변수와 표현식</h2><ul><li>정의시, type은 항상 뒤에 옵니다.</li></ul><pre class="m-code"><span class="nl">str1</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;message&quot;</span> <span class="c1">// 변수의 정의</span>
 <span class="n">str1</span> <span class="o">=</span> <span class="s">&quot;wow&quot;</span> 
 <span class="nl">bool1</span> <span class="p">:</span><span class="o">=</span> <span class="nb">false</span>
-<span class="nl">float1</span> <span class="p">:</span><span class="o">=</span> <span class="mf">3.5</span> <span class="o">+</span> <span class="mi">3</span>
+<span class="nl">flt1</span> <span class="p">:</span><span class="o">=</span> <span class="mf">3.5</span> <span class="o">+</span> <span class="mi">3</span>
 <span class="nl">char1</span> <span class="p">:</span><span class="o">=</span> <span class="sc">&#39;c&#39;</span>
-<span class="nl">int1</span> <span class="p">:</span><span class="o">+=</span> <span class="mi">15</span>
+<span class="nl">int1</span> <span class="p">:</span><span class="o">=</span> <span class="mi">15</span>
 
-<span class="nl">toInt</span> <span class="p">:</span><span class="o">=</span> <span class="kt">int</span> <span class="n">float3</span> <span class="c1">// casts float to int.</span></pre><p># 흐름 제어</p><pre class="m-code"><span class="nl">msg</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;hello&quot;</span>
+<span class="nl">toInt</span> <span class="p">:</span><span class="o">=</span> <span class="n">int1</span> <span class="n">as</span> <span class="n">flt64</span> <span class="c1">// casts int as 64bit float.</span></pre><p># 흐름 제어</p><pre class="m-code"><span class="nl">msg</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;hello&quot;</span>
 <span class="k">for</span> <span class="n">ch</span> <span class="n">in</span> <span class="n">msg</span>
     <span class="n">c</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;ch=$ch&quot;</span><span class="p">)</span> <span class="c1">// ch=h ch=e ch=l...</span>
 
-<span class="nl">sum</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="mf">2..3</span>
-    <span class="k">if</span> <span class="n">sum</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+<span class="nl">n</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="o">++</span><span class="n">n</span> <span class="o">&lt;</span> <span class="mi">3</span>
+    <span class="k">if</span> <span class="n">sum</span> <span class="n">in</span> <span class="mf">1..0</span> <span class="c1">// reversed range.</span>
         <span class="n">sum</span> <span class="o">+=</span> <span class="n">n</span>
     <span class="n">elif</span> <span class="n">sum</span> <span class="o">==</span> <span class="mi">2</span>
         <span class="n">sum</span> <span class="o">-=</span> <span class="n">n</span></pre><h2>컨테이너</h2><pre class="m-code"><span class="nl">intArr</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
@@ -73,105 +74,133 @@
 <span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="n">seq</span>
     <span class="n">c</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">intArr</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
 
-<span class="p">(</span><span class="n">intVal</span><span class="p">,</span> <span class="n">floatVal</span><span class="p">)</span> <span class="o">:=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>
+<span class="n">intVal</span><span class="p">,</span> <span class="nl">floatVal</span> <span class="p">:</span><span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">3.5</span> <span class="c1">// , for list</span>
 
-<span class="nl">map</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="nl">intVal</span><span class="p">:</span><span class="s">&quot;banana&quot;</span><span class="p">,</span> <span class="nl">floatVal</span> <span class="p">:</span> <span class="s">&quot;apple&quot;</span><span class="p">]</span> <span class="c1">// float[str] type.</span>
-<span class="n">c</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;how many apple do you have = $map[&#39;apple&#39;]&quot;</span><span class="p">)</span> <span class="c1">// 2.0</span></pre><h2>함수</h2><pre class="m-code"><span class="kt">int</span> <span class="n">getLen</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span>
+<span class="nl">tup1</span> <span class="p">:</span><span class="o">=</span> <span class="nl">intVal</span><span class="p">:</span><span class="s">&quot;banana&quot;</span>
+<span class="nl">map</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="n">tup1</span><span class="p">,</span> <span class="nl">floatVal</span><span class="p">:</span><span class="s">&quot;apple&quot;</span><span class="p">]</span> <span class="c1">// mas as float[str]</span>
+
+<span class="n">sys</span><span class="p">.</span><span class="n">cons</span> <span class="n">aka</span> <span class="n">c</span> <span class="c1">// typedef</span>
+<span class="n">c</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;how many apple do you have = $map[&#39;apple&#39;]&quot;</span><span class="p">)</span> <span class="c1">// &quot;how many apple do you have = 2.0&quot;</span></pre><h2>함수</h2><ul><li>정의시, 역시 type은 항상 뒤에 옵니다.</li></ul><pre class="m-code"><span class="n">getLen</span><span class="p">(</span><span class="n">b</span> <span class="kt">int</span><span class="p">...)</span> <span class="kt">int</span> <span class="c1">// ... means varidic argument</span>
     <span class="nl">sum</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> 
+    <span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="n">b</span>
         <span class="n">sum</span><span class="o">++</span>
-    <span class="n">retfun</span> <span class="n">sum</span>
+    <span class="k">return</span> <span class="n">sum</span>
 
-<span class="kt">int</span> <span class="n">foo</span><span class="p">(</span><span class="kt">int</span><span class="p">..</span> <span class="n">useless</span><span class="p">)</span> <span class="c1">// does nothing</span>
+<span class="n">foo</span><span class="p">(</span><span class="n">useless</span> <span class="kt">int</span><span class="p">...)</span> <span class="kt">int</span> <span class="o">=</span> <span class="n">null</span> <span class="c1">// abstract method def.</span>
 <span class="nl">likeFptr</span> <span class="p">:</span><span class="o">=</span> <span class="n">foo</span>
-<span class="n">likeFptr</span><span class="p">()</span> <span class="o">==</span> <span class="n">null</span>
+<span class="n">likeFptr</span><span class="p">()</span> <span class="c1">// foo is abstrat. Exception occurs.</span>
 
-<span class="n">likeFptr</span> <span class="o">=</span> <span class="n">getLen</span> <span class="c1">// ok</span></pre><h2>객체정의</h2><pre class="m-code"><span class="n">def</span> <span class="n">base</span>
-    <span class="nl">_realAge</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span> <span class="c1">// protected</span>
-    <span class="nl">age</span> <span class="p">:</span><span class="o">=</span> <span class="n">prop</span> <span class="n">from</span> <span class="kt">int</span>
-        <span class="err">@</span><span class="n">get</span><span class="p">()</span><span class="o">:</span> <span class="n">realAge</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="err">@</span><span class="n">set</span><span class="p">(</span><span class="kt">int</span> <span class="k">new</span><span class="p">)</span><span class="o">:</span> <span class="n">realAge</span> <span class="o">=</span> <span class="k">new</span>
+<span class="n">likeFptr</span> <span class="o">=</span> <span class="n">getLen</span> <span class="c1">// ok to assign.</span>
+<span class="n">lifeFptr</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="c1">// true</span></pre><h2>객체정의</h2><pre class="m-code"><span class="n">sys</span><span class="p">.</span><span class="n">cons</span> <span class="n">aka</span> <span class="n">c</span>
 
-    <span class="err">@</span><span class="n">ctor</span><span class="p">(</span><span class="kt">int</span> <span class="n">newAge</span><span class="p">)</span>
+<span class="n">def</span> <span class="n">base</span>
+    <span class="nl">_realAge</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span> <span class="c1">// &quot;_&quot; means protected</span>
+
+    <span class="nl">age</span> <span class="p">:</span><span class="o">=</span> <span class="kt">int</span> <span class="c1">// all member variables are property.</span>
+        <span class="err">@</span><span class="nl">get</span><span class="p">:</span> <span class="n">realAge</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="err">@</span><span class="nl">set</span><span class="p">:</span> <span class="n">realAge</span> <span class="o">=</span> <span class="n">it</span>  <span class="c1">// it refers the parameter of this method which has a single parameter.</span>
+
+    <span class="err">@</span><span class="n">ctor</span><span class="p">(</span><span class="n">newAge</span> <span class="kt">int</span><span class="p">)</span>
         <span class="n">realAge</span> <span class="o">=</span> <span class="n">newAge</span>
         <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;constructor(int)&quot;</span><span class="p">)</span>
 
     <span class="err">@</span><span class="n">ctor</span><span class="p">()</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;constructor()&quot;</span><span class="p">)</span>
 
-    <span class="kt">int</span> <span class="n">say</span><span class="p">()</span>
+    <span class="n">say</span><span class="p">()</span> <span class="n">str</span><span class="o">?</span> <span class="c1">// returning value can be assigned to null.</span>
         <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;age=$age&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">null</span>
 
-<span class="n">def</span> <span class="n">derive</span> <span class="n">from</span> <span class="n">base</span>
+<span class="n">def</span> <span class="n">derive</span> <span class="n">base</span>
 
     <span class="err">@</span><span class="n">ctor</span><span class="p">(</span><span class="kt">int</span> <span class="k">new</span><span class="p">)</span> <span class="c1">// ctor does nothing but calls super()</span>
 
     <span class="c1">// overrided</span>
-    <span class="kt">int</span> <span class="n">say</span><span class="p">()</span><span class="o">=&gt;</span> <span class="c1">// derive.say() print &quot;derive.say&quot; before calls super&#39;s one.</span>
+    <span class="n">say</span><span class="p">()</span> <span class="n">str</span><span class="o">?</span> <span class="o">=&gt;</span> <span class="c1">// derive.say() print &quot;derive.say&quot; before calls super&#39;s one.</span>
         <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;derive.say!&quot;</span><span class="p">)</span>
 
-<span class="nl">b</span> <span class="p">:</span><span class="o">=</span> <span class="n">base</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// b was created from &quot;base&quot; object.</span>
-<span class="n">b</span><span class="p">.</span><span class="n">say</span><span class="p">()</span> <span class="c1">// &quot;age=2&quot;</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">derive</span> <span class="c1">// there is no class. all of them are object, too.</span>
-<span class="n">b</span><span class="p">.</span><span class="n">say</span><span class="p">()</span>
+<span class="nl">b1</span> <span class="p">:</span><span class="o">=</span> <span class="n">base</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// b was created from &quot;base&quot; object.</span>
+<span class="n">b1</span><span class="p">.</span><span class="n">say</span><span class="p">()</span> <span class="c1">// &quot;age=2&quot;</span>
+<span class="n">derive</span><span class="p">.</span><span class="n">say</span><span class="p">()</span> <span class="c1">// there is no class. all of them are object, too.</span>
+<span class="n">derive</span><span class="p">.</span><span class="n">say</span><span class="p">()</span> <span class="c1">// now, &quot;age=2&quot;</span>
 
 <span class="c1">// derive.realAge // can&#39;t access private member at outside.</span>
 
 <span class="nl">msg1</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;hello&quot;</span> <span class="c1">// string is also a object.</span>
 <span class="nl">msg2</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;hel&quot;</span> <span class="o">+</span> <span class="s">&quot;lo&quot;</span>
 <span class="n">msg1</span> <span class="o">==</span> <span class="n">msg2</span> <span class="c1">// true</span>
-<span class="n">msg1</span> <span class="o">===</span> <span class="n">msg2</span> <span class="c1">// however, they aren&#39;t same object.</span></pre><h2>표현식기반</h2><pre class="m-code"><span class="nl">isGood</span> <span class="p">:</span><span class="o">=</span> <span class="nb">false</span>
-<span class="nl">max</span> <span class="p">:</span><span class="o">=</span> <span class="k">if</span> <span class="n">isGood</span>
+<span class="n">msg1</span> <span class="o">===</span> <span class="n">msg2</span> <span class="c1">// however, they aren&#39;t same object.</span></pre><h2>표현식기반</h2><pre class="m-code"><span class="nl">max</span> <span class="p">:</span><span class="o">=</span> <span class="k">if</span> <span class="nl">isGood</span> <span class="p">:</span><span class="o">=</span> <span class="nb">false</span> <span class="c1">// max as int</span>
     <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;never reach here.&quot;</span><span class="p">)</span>
     <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;and returns the last expr to outside of block&quot;</span><span class="p">)</span>
     <span class="mi">-1</span> 
 <span class="k">else</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;or use </span><span class="se">\&quot;</span><span class="s">ret</span><span class="se">\&quot;</span><span class="s"> keyword&quot;</span><span class="p">)</span><span class="o">:</span> <span class="n">ret</span> <span class="mi">10</span>
 
-<span class="n">val</span> <span class="o">=</span> <span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="mf">0.</span><span class="p">.</span><span class="n">max</span> <span class="c1">// for returns last expr while it loops.</span>
+<span class="k">if</span> <span class="nl">isGood</span><span class="p">:</span> <span class="k">return</span><span class="p">;</span> <span class="c1">// never reach here</span>
+
+<span class="nl">val</span> <span class="p">:</span><span class="o">=</span> <span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="mf">0.</span><span class="p">.</span><span class="n">max</span> <span class="c1">// &quot;for&quot; returns last expr while it loops.</span>
     <span class="n">n</span>
 <span class="n">val</span> <span class="o">==</span> <span class="mi">10</span> <span class="c1">// true</span></pre><p># 프로퍼티</p><pre class="m-code"><span class="n">def</span> <span class="n">myObj</span>
-    <span class="nl">_realAge</span> <span class="p">:</span><span class="o">=</span> <span class="mi">22</span>
-    <span class="nl">age</span> <span class="p">:</span><span class="o">=</span> <span class="n">prop</span> <span class="n">propOfRealAge</span> <span class="n">from</span> <span class="kt">int</span>
-        <span class="err">@</span><span class="n">get</span><span class="p">()</span><span class="o">:</span> <span class="n">ret</span> <span class="n">realAge</span>
-        <span class="err">@</span><span class="n">set</span><span class="p">(</span><span class="kt">int</span> <span class="k">new</span><span class="p">)</span>
-            <span class="n">cout</span><span class="p">(</span><span class="s">&quot;age.@set&quot;</span><span class="p">)</span>
-            <span class="n">realAge</span> <span class="o">=</span> <span class="k">new</span>
+    <span class="nl">age</span> <span class="p">:</span><span class="o">=</span> <span class="mi">22</span> <span class="c1">// age as int. it has value 22. but is also property.</span>
+        <span class="n">got</span> <span class="o">=&gt;</span> <span class="err">@</span><span class="n">get</span>
+            <span class="n">sys</span><span class="p">.</span><span class="n">cons</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;this will return $got&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">got</span>
 
 <span class="n">def</span> <span class="n">myObj2</span>
-    <span class="nl">age</span> <span class="p">:</span><span class="o">=</span> <span class="n">prop</span> <span class="n">from</span> <span class="kt">int</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span>
+    <span class="nl">age</span> <span class="p">:</span><span class="o">=</span> <span class="mi">22</span>
         <span class="err">@</span><span class="n">set</span><span class="o">=&gt;:</span> <span class="n">cout</span><span class="p">(</span><span class="s">&quot;age.@set&quot;</span><span class="p">)</span>
+        <span class="n">_</span><span class="err">@</span><span class="n">get</span><span class="o">=&gt;</span> <span class="c1">// @get returns value of age.</span>
 
-<span class="c1">// myObj&#39;s age will do exactly same actions to what the &#39;age&#39; from myObj2 will.</span></pre><h2>closure</h2><pre class="m-code"><span class="kt">int</span> <span class="n">func</span><span class="p">()</span>
-<span class="n">func</span> <span class="n">foo</span><span class="p">()</span> <span class="c1">// returns a function.</span>
-    <span class="nl">$cnt</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span> <span class="c1">// $ means &quot;static&quot; which only can be prefix of a variable.</span>
+<span class="n">def</span> <span class="n">app</span>
+    <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
+        <span class="n">with</span> <span class="n">myObj</span>
+            <span class="n">age</span> <span class="c1">// == 22</span>
+            <span class="n">age</span> <span class="o">=</span> <span class="mi">5</span>
+            <span class="n">age</span> <span class="c1">// == 5</span>
 
-    <span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="mf">1.</span><span class="p">.</span><span class="n">cnt</span><span class="o">++</span> <span class="c1">// &quot;++&quot; priority precedes to &quot;..&quot;</span>
-        <span class="n">out</span> <span class="nl">arr</span> <span class="p">:</span><span class="o">=</span> <span class="kt">int</span><span class="p">[]()</span> <span class="c1">// define a empty int[]</span>
-        <span class="c1">// out puts variable out of &quot;for&quot; block.</span>
-        <span class="n">arr</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">myObj2</span><span class="p">.</span><span class="n">age</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">if</span> <span class="n">myObj2</span><span class="p">.</span><span class="n">age</span> <span class="o">==</span> <span class="mi">10</span> <span class="c1">// compile err. it&#39;s protected.</span></pre><h2>closure</h2><pre class="m-code"><span class="n">def</span> <span class="n">app</span>
+    <span class="kt">int</span> <span class="n">func</span><span class="p">()</span> <span class="o">=</span> <span class="n">null</span> <span class="c1">// abstract method.</span>
 
-    <span class="kt">int</span> <span class="n">getLenFrom</span><span class="p">()</span> <span class="c1">// this is a method in a method.</span>
-        <span class="n">arr</span><span class="p">.</span><span class="n">len</span> <span class="c1">// all of expr always returns last expr to outside.</span>
-                <span class="c1">// and it can access local variable at outer method.</span>
-    <span class="n">ret</span> <span class="n">func</span> 
+    <span class="n">foo</span><span class="p">()</span> <span class="n">func</span> <span class="c1">// returns a function.</span>
 
-<span class="nl">f1</span> <span class="p">:</span><span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
-<span class="nl">f2</span> <span class="p">:</span><span class="o">=</span> <span class="n">foo</span><span class="p">()</span>
+        <span class="nl">$cnt</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span> <span class="c1">// $ means &quot;static&quot; which only can be prefix of a variable.</span>
 
-<span class="nl">len1</span> <span class="p">:</span><span class="o">=</span> <span class="n">f1</span><span class="p">()</span>
-<span class="nl">len2</span> <span class="p">:</span><span class="o">=</span> <span class="n">f2</span><span class="p">()</span>
-<span class="n">len1</span> <span class="o">==</span> <span class="mi">0</span> <span class="n">and</span> <span class="n">len2</span> <span class="o">==</span> <span class="mi">1</span> <span class="c1">// true</span></pre><h2>exceptions</h2><pre class="m-code"><span class="n">getActivity</span><span class="p">()</span><span class="o">?</span><span class="p">.</span><span class="n">getAppContext</span><span class="p">()</span><span class="o">?</span><span class="p">.</span><span class="n">getResources</span><span class="p">()</span><span class="o">?</span><span class="p">.</span><span class="n">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// safe navigation</span>
+        <span class="nl">arr</span> <span class="p">:</span><span class="o">=</span> <span class="kt">int</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="nl">n</span> <span class="p">:</span><span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="o">++</span><span class="n">cnt</span>
+            <span class="n">arr</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
-<span class="n">with</span>
-    <span class="err">@</span><span class="n">warn</span><span class="p">(</span><span class="n">rNull</span><span class="p">)</span> <span class="c1">// catches rNull exception and just print logs.</span>
-    <span class="n">Resources</span> <span class="n">res</span> <span class="o">=</span> <span class="n">getActivity</span><span class="p">().</span><span class="n">getAppContext</span><span class="p">().</span><span class="n">getResources</span><span class="p">()</span>
-    <span class="n">res</span><span class="p">.</span><span class="n">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="err">@</span><span class="n">res</span><span class="p">(</span><span class="n">rOutOfBound</span> <span class="n">ex</span><span class="p">)</span> <span class="c1">// res also caches exception but does nothing.</span>
-        <span class="n">c</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;ex=$ex&quot;</span><span class="p">)</span>
-        <span class="n">ex</span><span class="p">.</span><span class="n">calls</span><span class="p">.</span><span class="n">print</span><span class="p">()</span>
-        <span class="n">retfun</span> <span class="n">ex</span> <span class="c1">// throw.</span>
-<span class="nl">actitivty</span> <span class="p">:</span><span class="o">=</span> <span class="n">Activity</span> <span class="n">null</span> <span class="c1">// assign null.</span>
-<span class="n">activity</span><span class="p">.</span><span class="n">getAppContext</span><span class="p">()</span> <span class="c1">// this occurs rNull exception but no catch, F/C occur.</span></pre><h2>all preserved keywords</h2><h3>syntax</h3><p>def from with if elif else ret retfun retif retfor again out prop import aka</p><h3>predefined</h3><p>int float str bool char void this me got node null super</p><h3>operators</h3><p>. &lt;casting&gt; $ _ + - / * % += := == === -= /= *= ^ ! %= :+= :-= :*= :%= %= :/= [] .. () ++ ** &ndash; // /* */ : =&gt; -&gt;</p>
+        <span class="n">getLenFrom</span><span class="p">()</span> <span class="kt">int</span> <span class="c1">// a nested method like a closure.</span>
+            <span class="n">arr</span><span class="p">.</span><span class="n">len</span> <span class="c1">// all of expr always returns last expr to outside.</span>
+
+        <span class="n">ret</span> <span class="n">getLenFrom</span>
+
+    <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
+        <span class="n">foo</span><span class="p">()()</span> <span class="c1">// == 1</span>
+        <span class="n">foo</span><span class="p">()()</span> <span class="c1">// == 2</span></pre><h2>exceptions</h2><pre class="m-code"><span class="n">def</span> <span class="n">app</span>
+    <span class="n">safeNavigation</span><span class="p">()</span> <span class="kt">void</span>
+        <span class="n">getActivity</span><span class="p">()</span><span class="o">?</span><span class="p">.</span><span class="n">getAppContext</span><span class="p">()</span><span class="o">?</span><span class="p">.</span><span class="n">getResources</span><span class="p">()</span><span class="o">?</span><span class="p">.</span><span class="n">getString</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// safe navigation</span>
+
+    <span class="n">exceptionHandling</span><span class="p">()</span> <span class="kt">int</span> <span class="n">on</span> <span class="n">nullErr</span><span class="p">,</span> <span class="n">ioErr</span> <span class="c1">// specifying that returns err with value.</span>
+        <span class="k">try</span> <span class="n">Resources</span> <span class="n">res</span> <span class="o">=</span> <span class="n">getActivity</span><span class="p">().</span><span class="n">getAppContext</span><span class="p">().</span><span class="n">getResources</span><span class="p">()</span>
+        <span class="n">on</span> <span class="nl">nullErr</span><span class="p">:</span> <span class="k">return</span> <span class="n">it</span> <span class="c1">// throw.</span>
+        <span class="n">on</span> <span class="nl">ioErr</span><span class="p">:</span> <span class="k">return</span> <span class="mi">-1</span> <span class="n">on</span> <span class="n">it</span>
+
+        <span class="k">return</span> <span class="n">err</span><span class="p">(</span><span class="s">&quot;unknown&quot;</span><span class="p">)</span>
+
+    <span class="n">foo</span><span class="p">(</span><span class="n">val</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span>
+        <span class="k">return</span> <span class="n">val</span>
+
+    <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
+        <span class="n">safeNavigation</span><span class="p">()</span>
+
+        <span class="c1">// try is available when calls method specified errs with &quot;on&quot; keyword.</span>
+        <span class="k">try</span> <span class="nl">val</span> <span class="p">:</span><span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="n">exceptionHandling</span><span class="p">())</span>
+        <span class="n">on</span> <span class="nl">err</span><span class="p">:</span> <span class="n">ret</span> <span class="n">handling</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">-1</span>
+            <span class="k">try</span> <span class="n">val</span> <span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="n">exceptionHandling</span><span class="p">())</span>
+            <span class="n">on</span> <span class="nl">err</span><span class="p">:</span>
+                <span class="n">sys</span><span class="p">.</span><span class="n">cons</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;you will see this sentence.&quot;</span><span class="p">)</span>
+                <span class="k">return</span></pre><ul><li>결과: you will see this sentence</li></ul><h2>all preserved keywords</h2><h3>syntax</h3><p>def with if elif else ret return break continue aka as try on in for</p><h3>primitive types</h3><p>int int8 int16 int32 int64 flt flt32 flt64 str bool char void err obj null</p><h3>predeclared objects</h3><p>me it null super</p><h3>operators</h3><p>. _ + - / * % += := == === -= /= *= ^ %= ! ^ &amp; | !! ^^ &amp;&amp; || [] ... () ++ ** &ndash; // /* */ : =&gt; -&gt; ,</p>
       </div>
     </div>
   </div>
