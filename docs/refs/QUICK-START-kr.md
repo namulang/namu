@@ -1,24 +1,27 @@
-# Quick Start KR 
+# Quick Start in KR 
 
 ```wrd
-import sys.cons aka c
+// don't need to import sys.cons.
+
 def app
     main() void
-        c.out("Hello world!")
+        sys.cons.out("Hello world!")
 ```
 
 
 # 변수와 표현식
 
+* 정의시, type은 항상 뒤에 옵니다.
+
 ```wrd
 str1 := "message" // 변수의 정의
 str1 = "wow" 
 bool1 := false
-float1 := 3.5 + 3
+flt1 := 3.5 + 3
 char1 := 'c'
-int1 :+= 15
+int1 := 15
 
-toInt := int float3 // casts float to int.
+toInt := int1 as flt64 // casts int as 64bit float.
 ```
 
 
@@ -28,9 +31,9 @@ msg := "hello"
 for ch in msg
     c.print("ch=$ch") // ch=h ch=e ch=l...
 
-sum := 0
-for n in 2..3
-    if sum <= 0
+n := 0
+for ++n < 3
+    if sum in 1..0 // reversed range.
         sum += n
     elif sum == 2
         sum -= n
@@ -48,61 +51,70 @@ seq.len == 3 // true
 for n in seq
     c.print(intArr[n])
 
-(intVal, floatVal) := (2, 3.5)
+intVal, floatVal := 2, 3.5 // , for list
 
-map := [intVal:"banana", floatVal : "apple"] // float[str] type.
-c.print("how many apple do you have = $map['apple']") // 2.0
+tup1 := intVal:"banana"
+map := [tup1, floatVal:"apple"] // mas as float[str]
+
+sys.cons aka c // typedef
+c.print("how many apple do you have = $map['apple']") // "how many apple do you have = 2.0"
 ```
 
 
 # 함수
 
+* 정의시, 역시 type은 항상 뒤에 옵니다.
+
 ```wrd
-int getLen(int a, int b)
+getLen(b int...) int // ... means varidic argument
     sum := 0
-    for n in [a, b] 
+    for n in b
         sum++
-    retfun sum
+    return sum
 
-int foo(int.. useless) // does nothing
+foo(useless int...) int = null // abstract method def.
 likeFptr := foo
-likeFptr() == null
+likeFptr() // foo is abstrat. Exception occurs.
 
-likeFptr = getLen // ok
+likeFptr = getLen // ok to assign.
+lifeFptr() == 0 // true
 ```
 
 
 # 객체정의
 
 ```wrd
-def base
-    _realAge := 0 // protected
-    age := prop from int
-        @get(): realAge + 1
-        @set(int new): realAge = new
+sys.cons aka c
 
-    @ctor(int newAge)
+def base
+    _realAge := 0 // "_" means protected
+
+    age := int // all member variables are property.
+        @get: realAge + 1
+        @set: realAge = it  // it refers the parameter of this method which has a single parameter.
+
+    @ctor(newAge int)
         realAge = newAge
         c.out("constructor(int)")
 
     @ctor(): c.out("constructor()")
 
-    int say()
+    say() str? // returning value can be assigned to null.
         c.out("age=$age")
-        return 0
+        return null
 
-def derive from base
+def derive base
 
     @ctor(int new) // ctor does nothing but calls super()
 
     // overrided
-    int say()=> // derive.say() print "derive.say" before calls super's one.
+    say() str? => // derive.say() print "derive.say" before calls super's one.
         c.out("derive.say!")
 
-b := base(1) // b was created from "base" object.
-b.say() // "age=2"
-b = derive // there is no class. all of them are object, too.
-b.say()
+b1 := base(1) // b was created from "base" object.
+b1.say() // "age=2"
+derive.say() // there is no class. all of them are object, too.
+derive.say() // now, "age=2"
 
 // derive.realAge // can't access private member at outside.
 
@@ -112,18 +124,18 @@ msg1 == msg2 // true
 msg1 === msg2 // however, they aren't same object.
 ```
 
-
 # 표현식기반
 
 ```wrd
-isGood := false
-max := if isGood
+max := if isGood := false // max as int
     c.out("never reach here.")
     c.out("and returns the last expr to outside of block")
     -1 
 else: c.out("or use \"ret\" keyword"): ret 10
 
-val = for n in 0..max // for returns last expr while it loops.
+if isGood: return; // never reach here
+
+val := for n in 0..max // "for" returns last expr while it loops.
     n
 val == 10 // true
 ```
@@ -132,76 +144,101 @@ val == 10 // true
 # 프로퍼티
 ```wrd
 def myObj
-    _realAge := 22
-    age := prop propOfRealAge from int
-        @get(): ret realAge
-        @set(int new)
-            cout("age.@set")
-            realAge = new
+    age := 22 // age as int. it has value 22. but is also property.
+        got => @get
+            sys.cons.out("this will return $got")
+            return got
 
 def myObj2
-    age := prop from int(22)
+    age := 22
         @set=>: cout("age.@set")
+        _@get=> // @get returns value of age.
 
-// myObj's age will do exactly same actions to what the 'age' from myObj2 will.
+def app
+    main() void
+        with myObj
+            age // == 22
+            age = 5
+            age // == 5
+
+        myObj2.age = 10
+        if myObj2.age == 10 // compile err. it's protected.
 ```
-
 
 # closure
 
 ```wrd
-int func()
-func foo() // returns a function.
-    $cnt := 0 // $ means "static" which only can be prefix of a variable.
+def app
+    int func() = null // abstract method.
 
-    for n in 1..cnt++ // "++" priority precedes to ".."
-        out arr := int[]() // define a empty int[]
-        // out puts variable out of "for" block.
-        arr.add(n)
+    foo() func // returns a function.
 
-    int getLenFrom() // this is a method in a method.
-        arr.len // all of expr always returns last expr to outside.
-                // and it can access local variable at outer method.
-    ret func 
+        $cnt := 0 // $ means "static" which only can be prefix of a variable.
 
-f1 := foo()
-f2 := foo()
+        arr := int[]
+        for (n := 1) < ++cnt
+            arr.add(n)
 
-len1 := f1()
-len2 := f2()
-len1 == 0 and len2 == 1 // true
+        getLenFrom() int // a nested method like a closure.
+            arr.len // all of expr always returns last expr to outside.
+
+        ret getLenFrom
+
+    main() void
+        foo()() // == 1
+        foo()() // == 2
 ```
 
 
 # exceptions
 
 ```wrd
-getActivity()?.getAppContext()?.getResources()?.getString(1) // safe navigation
+def app
+    safeNavigation() void
+        getActivity()?.getAppContext()?.getResources()?.getString(1) // safe navigation
 
-with
-    @warn(rNull) // catches rNull exception and just print logs.
-    Resources res = getActivity().getAppContext().getResources()
-    res.getString(1)
-    @res(rOutOfBound ex) // res also caches exception but does nothing.
-        c.print("ex=$ex")
-        ex.calls.print()
-        retfun ex // throw.
-actitivty := Activity null // assign null.
-activity.getAppContext() // this occurs rNull exception but no catch, F/C occur.
+    exceptionHandling() int on nullErr, ioErr // specifying that returns err with value.
+        try Resources res = getActivity().getAppContext().getResources()
+        on nullErr: return it // throw.
+        on ioErr: return -1 on it
+
+        return err("unknown")
+
+    foo(val int) int
+        return val
+
+    main() void
+        safeNavigation()
+
+        // try is available when calls method specified errs with "on" keyword.
+        try val := foo(exceptionHandling())
+        on err: ret handling()
+
+        if val == -1
+            try val = foo(exceptionHandling())
+            on err:
+                sys.cons.out("you will see this sentence.")
+                return
 ```
 
+* 결과: you will see this sentence
 
 # all preserved keywords
 
 ## syntax
 
-def from with if elif else ret retfun retif retfor again out prop import aka
+def with if elif else ret return break continue aka as try on in for 
  
-## predefined
+## primitive types
 
-int float str bool char void this me got node null super @set @get @ctor @dtor
+int int8 int16 int32 int64 flt flt32 flt64 str bool char void err obj null
+
+## predeclared objects
+
+me it null super @set @get @ctor
 
 ## operators
 
-. <casting> $ _ + - / * % += := == === -= /= *= ^ ! %= :+= :-= :*= :%= %= :/= 
-[] ..  () ++ ** -- // /* */ : => -> 
+. _ + - / * % += := == === -= /= *= ^ %=
+! ^ & | !! ^^ && ||
+[] ...  () ++ ** -- // /* */ : => -> ,
