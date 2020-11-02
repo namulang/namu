@@ -19,7 +19,7 @@
 
 ### Quick Start
 
-- [KR](md__home_travis_build_kniz_worldlang_docs_QUICK-START-kr.html)
+- [KR](md__home_travis_build_kniz_worldlang_docs_refs_QUICK-START-kr.html)
 
 ### goals
 
