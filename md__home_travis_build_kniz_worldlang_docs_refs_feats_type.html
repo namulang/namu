@@ -46,7 +46,19 @@
         <h1>
           type
         </h1>
-<h3>worldlang은 타입이 존재한다.</h3><h3>type은 worldfrx에 type, ttype&lt;T&gt; 와 같은 컴포넌트로 구현된다.</h3><h3>type은 monostate다.</h3><h3>type은 C++의 RTTI를 제공한다.</h3><ul><li>부모 클래스 판단</li><li>&quot;is&quot; 메소드가 여기서 구현</li></ul><h3>type은 메소드콜의 인자의 verification에도 사용된다.</h3><h3>type은 nativeType과 mgdType 2종류로 상속된다.</h3><h3>mgdType은 origin객체를 반환할 수 있다.</h3>
+<h3>worldlang은 타입이 존재한다.</h3><h3>type은 worldfrx에 type, ttype&lt;T&gt; 와 같은 컴포넌트로 구현된다.</h3><h3>type은 monostate다.</h3><h3>type은 C++의 RTTI를 제공한다.</h3><ul><li>부모 클래스 판단</li><li>&quot;is&quot; 메소드가 여기서 구현</li></ul><h3>type은 메소드콜의 인자의 verification에도 사용된다.</h3><h3>type은 nativeType과 mgdType 2종류로 상속된다.</h3><h3>mgdType은 origin객체를 반환할 수 있다.</h3><h3>aka</h3><ul><li><p>식별자의 별칭을 만들 수 있다.</p><p>&lt; 원본식별자&gt;=&quot;&quot;&gt; aka &lt; 별칭이름&gt;=&quot;&quot;&gt;</p></li></ul><h4>정의와 동시에 aka를 쓰는 경우 문법이 조금 생소할 수 있다.</h4><pre class="m-code"><span class="n">def</span> <span class="n">person</span> <span class="n">obj</span><span class="p">()</span> 
+    <span class="n">callback</span><span class="p">()</span> <span class="kt">void</span> <span class="n">aka</span> <span class="n">c</span>
+
+    <span class="n">callback</span><span class="p">(</span><span class="n">whatever</span> <span class="n">flt</span><span class="p">)</span> <span class="kt">void</span> <span class="o">=</span> <span class="n">null</span> <span class="n">aka</span> <span class="n">c2</span>
+
+    <span class="n">callback</span><span class="p">(</span><span class="n">whatever</span> <span class="n">str</span><span class="p">)</span> <span class="kt">void</span>
+        <span class="n">doSomething</span><span class="p">()</span>
+        <span class="p">...</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">lamb</span><span class="p">,</span><span class="n">da</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span> <span class="n">aka</span> <span class="n">l</span>
+            <span class="p">....</span>
+    <span class="n">aka</span> <span class="n">c3</span>
+
+<span class="n">aka</span> <span class="n">p</span></pre><ul><li>정의는 식별자를 대신한다.</li><li>따라서 정의가 모두 끝나고 난 뒤에 aka가 나와야 한다.</li><li>그러나 정의는 대부분 개행을 가지고 있다.</li><li>그러니 개행이 끝나고 정의블록문의 시작했던 indent 앞에 바로 aka가 나오면 된다.</li><li>블록문이 없는 정의라면 바로 이어서 같은 라인에 aka가 나온다.</li></ul>
       </div>
     </div>
   </div>
