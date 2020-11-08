@@ -57,12 +57,12 @@
 
 ## 메소드 식별문법
 
-* 메소드 메소드명과 인자리스트를 함께 적는다. 인자리스트는 반드시 변수명이 함께 있어야 한다. 인자리스트가 빈 메소드라면 void를 넣는다.
+* 메소드 메소드명과 인자리스트를 함께 적는다. 인자리스트는 반드시 변수명이 함께 있어야 한다.
 '''go
 def person
     sayHello(name str, age int) res
 
-person.sayHello(name str, age int)
+person.sayHello(var1 str, var2 int)
 '''
 
 * 만약 메소드명 만으로도 식별이 가능하다면 인자리스트를 생략할 수 있다.
@@ -70,6 +70,14 @@ person.sayHello(name str, age int)
 '''go
 person.sayHello
 '''
+
+### 빈 메소드일 경우는 void를 넣는다.
+
+```go
+def person
+    sayHello() = null
+person.sayHello(void)
+```
 
 ## 특수 메소드
 
@@ -109,12 +117,40 @@ def app
         ret sys.csol.print("p.age=$p.age")
 
     main() void
-        person.delayCall(_callback)
+        person.delayCall(callback)
 '''
 
 ## 메소드를 ptr에 넘길 경우, 클로져 처럼 동작한다.
 
 * object scope가 캡처되서 FuncRef에 기록된다.
+
+## 멤버함수 ptr 라는건 없다.
+
+* 메소드를 갖는 클래스가 다르더라도 signature만 동일하다면 호출이 가능하다.
+
+```go
+sys.cons aka c
+
+def person
+    do() void = null aka d
+    do(#d)
+        d.do()
+
+def boy
+    do() void: c.out("shopping!")
+
+def girl
+    do() void: c.out("exercise hardly!")
+
+def app
+    main() void
+        person.do(boy.do)
+        person.do(girl.do)
+```
+        
+
+        
+
 
 ## 식별자 바인딩은 매번 get("identifier-name")을 넣음으로써 매번 검색한다.
 
