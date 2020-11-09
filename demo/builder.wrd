@@ -1,0 +1,40 @@
+package wrd.lang.example.builder
+
+def building
+    _floor := "One"
+    _size := "Big"
+
+    @ctor()
+        buildFloor()
+        buildSize()
+
+    buildFloor() void on err: on notImplErr
+    buildSize() void on notImplErr: on notImplErr
+
+def house building
+    buildFloor() void: floor = "One"
+    buildSize() void: size = "Big"
+
+def flat from building
+    buildFloor() void: floor = "More than one"
+    buildSize() void: size = "Small"
+
+def complexBuilding building
+
+def complexHouse complexBuilding
+    buildFloor() void: floor = "One"
+    buildSize() void: size = "Big and fancy"
+
+def app
+    building construcBuilding(#building)
+        return building()
+
+    main() void on err
+        house.print()
+        flat.print()
+        complex = constructBuilding(complexHouse)
+
+        sys.cons aka c
+        if complex != complexHouse: return on err
+        if complex === complexHouse: return on err
+
