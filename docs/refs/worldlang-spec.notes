@@ -192,11 +192,15 @@ def app // 객체 app
 // 결과: hellboy aged 16
 ```
 
+## [x] num, str만 사용하자?
 
-
-
-
-
+* int, float을 num이라는 걸로 대체하고 char str은 str로 대체해서 사용하자는 아이디어.
+* 여러 샘플앱을 만들어본 결과,
+    * 실수를 사용하면 == 5 같은 부분에서 부정확하고
+    * char를 표현해야만 하는 경우가 있으며
+    * H/W 기반 앱이나 과학분야나 특정 분야에서 애로사항이 많을 것으로 보인다.
+    * interoperability를 지원할때 문제가 많이 발생한다.
+* 지원하지 않기로 한다.
 
 ## 식별자-정의시-파이썬처럼-타입을-적지않으면 auto로 인식되게 할 수 있을까?*
 
@@ -8621,6 +8625,12 @@ def app
 
 
 
+## [x] 개발자가 immutable 객체를 만들 수 있도록 해줄까?
+
+* 다른 언어도 지원하지 않는 내용이다.
+* 기본적으로 mutable 처럼 동작하는데, 코드만 봐서는 이게 immtuable인지 아닌지 알기가 힘들다.
+    * 기본적인 타입, accessor를 기억해야 하고 추가로 immutable 여부를 기억해야 한다.
+* 지원했을때의 큰 메리트를 느끼지 못한다.
 
 
 ## 객체를 생성하여 반환하는 native함수를 wrapping할때 사용자의 sharable, occupiable 부담을 덜어줄 수 있는 방법은?
@@ -9881,8 +9891,9 @@ def person
         _set()=>// person 객체내에서는 age에 변수를 적용할 수 있다.
 
 people := [person(0), person(1), person(2)]
+sum := 0
 for p in people
-    out sum :+= p.age
+    sum += p.age
 // sum := for p in people: sum += p.age 와 같다. for은 마지막 수행 결과를 그대로 반환한다.
 c.out("sum=$sum")
 
@@ -13710,12 +13721,20 @@ Park has 0 children.
 
 
 
+## 바인딩의 큰 방향
+
+* 타 언어가 worldlang에 맞춰야 한다. 그렇게 되면
+    * worldlang bridge API가 단순해진다.
+    * 자동 마샬링 등을 신경을 덜 써도 된다.
+* 자동 마샬링은 반드시 그 언어에 포인터 연산이 추가되게 된다.
+* 자동 마샬링/바인딩을 사용하지 않으므로 포인터연산과 관련된 부분이 제거된다.
 
 
-## 기본타입에 대해서는 mashalling이 지원되어야 한다.
+
+
+## [x] 기본타입에 대해서는 mashalling이 지원되어야 한다.
 
 - wbool Node::isConst() const 를 보니까 그런 생각이 드네.
-
 
 
 ## World개발자/모듈개발자가 함수내에서 사용가능한 predefined
@@ -14622,31 +14641,6 @@ private:
 ## [..] Q3. annotation 의 상세한 구현 방법은?
 * 파서가 static const 멤버인, 모든 Object가 가지고 있는 annotations 객체의 구성물을, 파서가  객체에 채워넣는 식으로 하자. (메소드 포함)
 * 상세한 내용은 나중에 다시.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
