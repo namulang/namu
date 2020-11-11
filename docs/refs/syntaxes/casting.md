@@ -134,7 +134,7 @@ A.print(35)
 
 * 임의 타입에 대해서 다른 타입으로 명시적 변환이 가능하도록 하려면 @as를 오버라이딩한다.
 
-'''go
+```go
 def base
 def my base
     name := ""

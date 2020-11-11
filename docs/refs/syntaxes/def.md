@@ -22,7 +22,7 @@
 * 객체 자체는 이미 만들어져 있다.
 * 복사 생성자는 원본의 복제 객체가 나올때 호출된다.
 
-'''go
+```go
 def person
     name str
     @ctor
@@ -39,7 +39,7 @@ def app
 
         person().name // "ctor"
         person.clone().name // hello
-'''
+```
 
 ## origin 객체
 
@@ -87,7 +87,7 @@ def app
 
 ## 객체의 variable은 생성자에서 새로운 객체로 할당되어야 한다.
 
-'''go
+```go
 def person
     name str
     name1 := "world"
@@ -101,7 +101,7 @@ p2 := person()
 
 p1.name === p2.name // true
 p2.name === p2.name // false
-'''
+```
 
 * 월드는 복제될때 모든 member에 대해서 얇은 복사를 자동으로 수행한다.
 * 그리고 나서 생성자를 호출한다.
@@ -116,7 +116,7 @@ p2.name === p2.name // false
 
 ## 객체는 package 안에 존재한다.
 
-'''go
+```go
 package org.worldlang.example
 
 def example1
