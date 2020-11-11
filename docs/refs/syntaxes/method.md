@@ -58,18 +58,18 @@
 ## 메소드 식별문법
 
 * 메소드 메소드명과 인자리스트를 함께 적는다. 인자리스트는 반드시 변수명이 함께 있어야 한다.
-'''go
+```go
 def person
     sayHello(name str, age int) res
 
 person.sayHello(var1 str, var2 int)
-'''
+```
 
 * 만약 메소드명 만으로도 식별이 가능하다면 인자리스트를 생략할 수 있다.
 
-'''go
+```go
 person.sayHello
-'''
+```
 
 ### 빈 메소드일 경우는 void를 넣는다.
 
@@ -91,7 +91,7 @@ person.sayHello(void)
 * void를 반환하는 경우라도 return문 1개는 있어야 한다.
 * 비어있는 메소드라도 메소드 호출만 불가능 할 뿐, 접근은 가능하다.
 
-'''go
+```go
 def person
     someCallback() void
         return
@@ -100,13 +100,13 @@ def person
 person.someCallback()
 person.someCallback2() // err.
 person.someCallback2.name
-'''
+```
 
 ## 메소드ptr를 정의하는 문법
 
 * 비어있는 메소드를 정의하는 것으로 메소드 ptr의 타입을 정의 하도록 한다.
 
-'''go
+```go
 def person
     someCallback(p person) int
     delayCall(fn someCallback) void
@@ -118,7 +118,7 @@ def app
 
     main() void
         person.delayCall(callback)
-'''
+```
 
 ## 메소드를 ptr에 넘길 경우, 클로져 처럼 동작한다.
 

@@ -6,7 +6,7 @@
 
 ## 모든 블록문은 마지막 라인을 자동으로 반환한다.
 
-'''go
+```go
 def app
     foo() bool
         age := 35
@@ -20,20 +20,20 @@ def app
         sys.term.out("res=$res")
 
 // result: false
-'''
+```
 
 ## Worldfrx를 통해서 expression 객체를 module에서 조작해서는 안된다. (invisible)
 
 ## if-else 에서 양쪽 블록문 안에서의 값으로 수렴한다.
 
-'''go
+```go
 res := if 3 < 5
     "wow"
 else
     {person("boy"), person("girl")}
 
 // is 는 node 타입이다.
-'''
+```
 
 ## expression과 statement는 구분이 필요하다. 모든 statement가 expression인건 아니다.
 

@@ -76,14 +76,14 @@ objA.name2 = objA.name1 // err.
 
 ## 프로퍼티는 origin객체를 대상으로 할 수도, 복제 객체를 대상으로 할 수도 있다.
 
-'''go
+```go
 def person
     _name := "wow"
 
     name1 str
         @get: person.name // origin객체.name
         @set: name = new // 복제객체.name
-''' 
+``` 
 
 ## 프로퍼티 오버라이딩
 
