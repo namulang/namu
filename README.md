@@ -34,10 +34,12 @@ it has following main features.
 		pixel art, particle effects, retro sound fx, RPGistic UI, Worldmap, quest and archivement.
 
 
-### Development 
-> * CMake + GDB + GCC + python(for some scripts) + java
-> * Windows + minGW only.
-> * fully made of C++.
+### Dev. Environment
+> * build: cmake&make, clang, python(for some scripts) + bison
+> * issue-tracker: github project
+> * unit-test: gtest
+> * road-map: refer https://time.graphics/line/436582
+> * os: linux, macos, windows + minGW
 
 
 ### How to Start
@@ -45,9 +47,9 @@ it has following main features.
 
 Preparing: to build World, following softwares will be needed.
     		
-	python over 3.x, git, cmake, g++ and make,
+	python 3.+, cmake, make, and clang
 
-if you're trying on windows, then it's recommended to install minGW install these softwares on your own.
+if you're trying on windows, then it's recommended to install minGW and above softwares.
 
 Then, just enter:
 		
