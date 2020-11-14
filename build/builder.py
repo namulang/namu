@@ -94,7 +94,7 @@ def _publishDoc():
         print("fail to commit on gh-pages.")
         print("it seems that nothing changed.")
         _cleanIntermediates()
-        return -1
+        return 0
     res = os.system("git push origin gh-pages")
     if res != 0:
         print("fail to push on gh-pages")
