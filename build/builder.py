@@ -317,6 +317,7 @@ def checkDependencies():
 
 def version():
     global ver_name, ver_major, ver_minor, ver_fix, cwd, python3
+    print("")
     print("Builder. Support-utility for building World " + ver_name + " v" + str(ver_major) + "." + str(ver_minor) + str(ver_fix))
     print("Copyrights (c) kniz, 2009-2018")
     print(frame)
@@ -384,11 +385,9 @@ def _extractEnv():
         python3 = os.environ["PYTHON"]
     else:
         python3 = _where("python3")
-        print("python3=" + python3)
         if not python3:
             print("no!")
             python3 = _where("python")
-        print("python3=" + python3)
         return python3 == ""
 
 def _init():
