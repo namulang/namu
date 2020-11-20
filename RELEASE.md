@@ -1,10 +1,9 @@
 World Release Notes
 ===================
-## v0.2 Seed Update
+## v0.1 Essence Update
 ###	changelist
 
-### history
-#### legend
+## legend
 	Month-Day-Year vMajor.Minor(single digit)Fix#Build
 	UpdateName
 		+ 	Improved
@@ -12,7 +11,7 @@ World Release Notes
 		- 	Bug fix mostly.
 		--	Fatal bug was fixed.
 
-#### list
+## history
 	02-25 2016 v0.01a#9444		
 	World Dust Update v0.1
 
@@ -33,3 +32,5 @@ World Release Notes
 	01-15 2012 v0.00a#3086		Not public.
 	??-?? ???? v0.00a#????		
 	10-03 2011 v0.01#2976		Not public.
+
+

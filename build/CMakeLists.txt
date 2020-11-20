@@ -4,7 +4,7 @@ project(World)
 #defines:
 set(SHOW_CMAKE_VARIABLES 1)
 set(VERSION_MAJOR 0)
-set(VERSION_MINOR 2)
+set(VERSION_MINOR 1)
 set(VERSION_FIX 0)
 set(BUILD_COUNT 35)
 set(VERSION_NAME "Seed")

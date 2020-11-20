@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-message("\tbuilding independentor...")
+message("\tbuilding independents...")
 message("\t\tconfigure_files...")
 #  expanding:
 set(configures
@@ -29,5 +29,5 @@ add_definitions(-DBUILD_TARGET_INDEPENDENTOR)
 
 
 #  execute:
-add_library(independentor SHARED ${sources})
-set_target_properties(independentor PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
+add_library(independents SHARED ${sources})
+set_target_properties(independents PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
