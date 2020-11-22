@@ -7,7 +7,7 @@ namespace wrd
 {
 	namespace indep
 	{
-		class BuildFeatures
+		class BuildFeature
 		{
 			typedef std::string string;
 
