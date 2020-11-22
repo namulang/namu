@@ -13,6 +13,12 @@
 
 #define WRD_DELAY(x) x WRD_VOID()
 
+#define _STR(x)			#x
+#define WRD_TO_STR(x)	_STR(x)
+
+#define _CONCAT(x, y)	x##y
+#define WRD_CONCAT(x, y)	_CONCAT(x, y)
+
 //	why delaying comma expressoin?:
 //		it can causes delimiter issue on expanding macros for template parameters.
 #define _COMMA() ,

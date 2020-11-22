@@ -5,10 +5,10 @@ namespace wrd
 	namespace indep
 	{
 		using namespace std;
-	   
+
 		#define THIS BuildFeatures
 		#define _INTEGER_METHOD(function, value)    \
-			wint THIS::function                \
+			wint THIS::function                     \
 			{                                      \
 				return value;                      \
 			}
