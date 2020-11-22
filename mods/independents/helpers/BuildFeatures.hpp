@@ -8,29 +8,29 @@ namespace wrd
 	namespace indep
 	{
 		class BuildFeatures
-		{	WRD_INHERIT(BuildFeatures)
+		{
 			typedef std::string string;
 
 		public:
-			struct Date 
+			struct Date
 			{
-				static WRD_LAZY_METHOD(const string&, get, WRD_VOID(), string, WRD_BUILD_DATE)
+				static WRD_SINGLETON_GETTER(const string&, get, WRD_VOID(), string, WRD_BUILD_DATE)
 				static wint getYear();
 				static wint getMonth();
 				static wint getDay();
 			};
 			struct Time
 			{
-				static WRD_LAZY_METHOD(const string&, get, WRD_VOID(), string, WRD_BUILD_TIME)
+				static WRD_SINGLETON_GETTER(const string&, get, WRD_VOID(), string, WRD_BUILD_TIME)
 				static wint getHour();
 				static wint getMinute();
 				static wint getSecond();
 			};
 			struct Version
 			{
-				static WRD_LAZY_METHOD(const string&, get, WRD_VOID(), string, WRD_BUILD_VERSION)
-				static WRD_LAZY_METHOD(const string&, getValue, WRD_VOID(), string, WRD_BUILD_VERSION_VALUE)
-				static WRD_LAZY_METHOD(const string&, getName, WRD_VOID(), string, WRD_BUILD_VERSION_NAME)
+				static WRD_SINGLETON_GETTER(const string&, get, WRD_VOID(), string, WRD_BUILD_VERSION)
+				static WRD_SINGLETON_GETTER(const string&, getValue, WRD_VOID(), string, WRD_BUILD_VERSION_VALUE)
+				static WRD_SINGLETON_GETTER(const string&, getName, WRD_VOID(), string, WRD_BUILD_VERSION_NAME)
 				static wint getMajor();
 				static wint getMinor();
 				static wint getFix();
@@ -45,8 +45,8 @@ namespace wrd
 			struct Platform
 			{
 				static PlatformType get();
-				static WRD_LAZY_METHOD(const string&, getName, WRD_VOID(), string, WRD_BUILD_PLATFORM_NAME)
-				static WRD_LAZY_METHOD(const string&, getVersion, WRD_VOID(), string, WRD_BUILD_PLATFORM_VERSION)
+				static WRD_SINGLETON_GETTER(const string&, getName, WRD_VOID(), string, WRD_BUILD_PLATFORM_NAME)
+				static WRD_SINGLETON_GETTER(const string&, getVersion, WRD_VOID(), string, WRD_BUILD_PLATFORM_VERSION)
 			};
 			enum BuildType
 			{
@@ -58,7 +58,7 @@ namespace wrd
 			struct Building
 			{
 				static BuildType get();
-				static WRD_LAZY_METHOD(const string&, getName, WRD_VOID(), string, WRD_BUILD_TYPENAME)
+				static WRD_SINGLETON_GETTER(const string&, getName, WRD_VOID(), string, WRD_BUILD_TYPENAME)
 			};
 		};
 	}
