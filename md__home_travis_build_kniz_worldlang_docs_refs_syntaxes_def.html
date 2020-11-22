@@ -73,7 +73,7 @@
 <span class="nl">p2</span> <span class="p">:</span><span class="o">=</span> <span class="n">person</span><span class="p">()</span>
 
 <span class="n">p1</span><span class="p">.</span><span class="n">name</span> <span class="o">===</span> <span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="c1">// true</span>
-<span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="o">===</span> <span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="c1">// false</span></pre><ul><li>월드는 복제될때 모든 member에 대해서 얇은 복사를 자동으로 수행한다.</li><li>그리고 나서 생성자를 호출한다.</li><li>&quot;org&quot;는 origin 객체를 가리킨다.</li><li>&quot;this&quot;는 이 복제본 객체를 가리킨다.</li></ul><h3>상속</h3><ul><li><p>문법은 다음과 같다.</p><p>def &lt;this-identifier&gt; &lt;identifier&gt;</p></li></ul><h3>객체는 package 안에 존재한다.</h3><pre class="m-code"><span class="n">package</span> <span class="n">org</span><span class="p">.</span><span class="n">worldlang</span><span class="p">.</span><span class="n">example</span>
+<span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="o">===</span> <span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="c1">// false</span></pre><ul><li>월드는 복제될때 모든 member에 대해서 얇은 복사를 자동으로 수행한다.</li><li>그리고 나서 생성자를 호출한다.</li><li>&quot;org&quot;는 origin 객체를 가리킨다.</li><li>&quot;me&quot;는 이 복제본 객체를 가리킨다.</li></ul><h3>상속</h3><ul><li><p>문법은 다음과 같다.</p><p>def &lt;me-identifier&gt; &lt;identifier&gt;</p></li></ul><h3>객체는 package 안에 존재한다.</h3><pre class="m-code"><span class="n">package</span> <span class="n">org</span><span class="p">.</span><span class="n">worldlang</span><span class="p">.</span><span class="n">example</span>
 
 <span class="n">def</span> <span class="n">example1</span>
     <span class="p">....</span>
@@ -111,7 +111,16 @@
         <span class="k">new</span><span class="p">.</span><span class="n">in</span><span class="p">.</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
 
         <span class="nl">nested</span> <span class="p">:</span><span class="o">=</span> <span class="k">new</span><span class="p">.</span><span class="n">in</span> <span class="c1">// ok</span>
-        <span class="nl">nested1</span> <span class="p">:</span><span class="o">=</span> <span class="k">new</span><span class="p">.</span><span class="n">in</span><span class="p">()</span> <span class="c1">// ok</span></pre><h3>중첩 객체는 object scope에 등록할때 owner것을 먼저 등록 한다.</h3><ul><li>owner와 중첩객체 통째로 context switching 될 수 있다.</li></ul><h3>중첩 객체는 복제될때 현재 object scope의 owner를 내부 참조자에 할당한다.</h3><ul><li>즉 scope은 object scope이 2개 이상 들어갈 수 있어야 하며 어떤게 owner인지 분간해야 한다.</li></ul><h3>기본적으로 제공하는 메소드</h3><ul><li>obj 상속받은 객체라면 다음의 메소드를 기본 제공한다.<ul><li>ctor(), ctor(rhs), clone(), get(), set()</li></ul></li></ul>
+        <span class="nl">nested1</span> <span class="p">:</span><span class="o">=</span> <span class="k">new</span><span class="p">.</span><span class="n">in</span><span class="p">()</span> <span class="c1">// ok</span></pre><h3>중첩 객체는 object scope에 등록할때 owner것을 먼저 등록 한다.</h3><ul><li>owner와 중첩객체 통째로 context switching 될 수 있다.</li></ul><h3>중첩 객체는 복제될때 현재 object scope의 owner를 내부 참조자에 할당한다.</h3><ul><li>즉 scope은 object scope이 2개 이상 들어갈 수 있어야 하며 어떤게 owner인지 분간해야 한다.</li></ul><h3>me는 scope에 들어갈 때 Object scope에 속한 것처럼 register 된다.</h3><ul><li>예를들어 MyObject 라는 객체가 있을 경우, MyObject 객체는 object scope에 자신을 등록할때 me를 MyObject scope에 넣어둔다.</li><li>그리고 편의를 위해서 local space에 me를 MyObject.me로 redirection 되도록 한다.</li><li><p>따라서 다음과 같은 코드는 모두 같은 것이다.</p><pre class="m-code"><span class="n">foo</span><span class="p">()</span>
+<span class="n">me</span><span class="p">.</span><span class="n">foo</span><span class="p">()</span>
+<span class="n">MyObject</span><span class="p">.</span><span class="n">me</span><span class="p">.</span><span class="n">foo</span><span class="p">()</span></pre></li></ul><h3>me가 Object scope에 들어감으로써 중첩 객체 접근문제가 해결된다.</h3><ul><li>중첩객체는 owner 참조를 반드시 들고 있으며, object scope 등록시에 이 owner를 먼저 등록시키기 때문이다.</li><li>Object scope에는 me가 2개 존재하게 된다.</li><li>일반적인 객체는 1개만 me가 등록되기 때문에 다른 객체의 me를 무단으로 참조할 수는 없으므로 안전하다.</li></ul><pre class="m-code"><span class="n">def</span> <span class="n">outer</span>
+    <span class="n">foo</span><span class="p">()</span> <span class="kt">void</span>
+
+    <span class="n">def</span> <span class="n">inner</span>
+        <span class="n">foo</span><span class="p">()</span> <span class="kt">void</span>
+            <span class="n">foo</span><span class="p">()</span> <span class="c1">// inner.foo()</span>
+            <span class="n">me</span><span class="p">.</span><span class="n">foo</span><span class="p">()</span> <span class="c1">// inner</span>
+            <span class="n">outer</span><span class="p">.</span><span class="n">me</span><span class="p">.</span><span class="n">foo</span><span class="p">()</span> <span class="c1">// outer.foo()</span></pre><h3>기본적으로 제공하는 메소드</h3><ul><li>obj 상속받은 객체라면 다음의 메소드를 기본 제공한다.<ul><li>ctor(), ctor(rhs), clone(), get(), set()</li></ul></li></ul>
       </div>
     </div>
   </div>
