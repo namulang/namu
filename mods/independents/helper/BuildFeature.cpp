@@ -1,4 +1,4 @@
-#include "BuildFeatures.hpp"
+#include "BuildFeature.hpp"
 
 namespace wrd
 {
@@ -6,17 +6,17 @@ namespace wrd
 	{
 		using namespace std;
 
-		#define THIS BuildFeatures
+		#define THIS BuildFeature
 		#define _INTEGER_METHOD(function, value)    \
 			wint THIS::function                     \
 			{                                      \
 				return value;                      \
 			}
-	   
+
 		_INTEGER_METHOD(Date::getYear(), WRD_BUILD_DATE_YEAR)
 		_INTEGER_METHOD(Date::getMonth(), WRD_BUILD_DATE_MONTH)
 		_INTEGER_METHOD(Date::getDay(), WRD_BUILD_DATE_DAY)
-	   
+
 		_INTEGER_METHOD(Time::getHour(), WRD_BUILD_TIME_HOUR)
 		_INTEGER_METHOD(Time::getMinute(), WRD_BUILD_TIME_MINUTE)
 		_INTEGER_METHOD(Time::getSecond(), WRD_BUILD_TIME_SECOND)
