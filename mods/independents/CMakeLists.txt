@@ -4,7 +4,7 @@ message("\tbuilding independents...")
 message("\t\tconfigure_files...")
 #  expanding:
 set(configures
-	"macros/BuildInformation.hpp.in"
+	"def/BuildInformation.hpp.in"
 )
 foreach(e ${configures})
     #  extract output filepath:
