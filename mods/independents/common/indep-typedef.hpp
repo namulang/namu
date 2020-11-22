@@ -7,6 +7,8 @@
 //	---------------------------------------------------------------------------------
 #pragma once
 
+#include "../def/common.hpp"
+
 namespace wrd
 {
 	typedef int 				wint;
