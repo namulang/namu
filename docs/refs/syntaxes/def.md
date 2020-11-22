@@ -106,13 +106,13 @@ p2.name === p2.name // false
 * 월드는 복제될때 모든 member에 대해서 얇은 복사를 자동으로 수행한다.
 * 그리고 나서 생성자를 호출한다.
 * "org"는 origin 객체를 가리킨다.
-* "this"는 이 복제본 객체를 가리킨다.
+* "me"는 이 복제본 객체를 가리킨다.
 
 ## 상속
 
 * 문법은 다음과 같다.
 
-    def <this-identifier> <identifier>
+    def <me-identifier> <identifier>
 
 ## 객체는 package 안에 존재한다.
 
@@ -165,6 +165,35 @@ def app
 ## 중첩 객체는 복제될때 현재 object scope의 owner를 내부 참조자에 할당한다.
 
 * 즉 scope은 object scope이 2개 이상 들어갈 수 있어야 하며 어떤게 owner인지 분간해야 한다.
+
+## me는 scope에 들어갈 때 Object scope에 속한 것처럼 register 된다.
+
+* 예를들어 MyObject 라는 객체가 있을 경우, MyObject 객체는 object scope에 자신을 등록할때 me를 MyObject scope에 넣어둔다.
+* 그리고 편의를 위해서 local space에 me를 MyObject.me로 redirection 되도록 한다.
+* 따라서 다음과 같은 코드는 모두 같은 것이다.
+```go
+foo()
+me.foo()
+MyObject.me.foo()
+```
+
+## me가 Object scope에 들어감으로써 중첩 객체 접근문제가 해결된다.
+
+* 중첩객체는 owner 참조를 반드시 들고 있으며, object scope 등록시에 이 owner를 먼저 등록시키기 때문이다.
+* Object scope에는 me가 2개 존재하게 된다.
+* 일반적인 객체는 1개만 me가 등록되기 때문에 다른 객체의 me를 무단으로 참조할 수는 없으므로 안전하다.
+
+```go
+def outer
+    foo() void
+
+    def inner
+        foo() void
+            foo() // inner.foo()
+            me.foo() // inner
+            outer.me.foo() // outer.foo()
+```
+
 
 ## 기본적으로 제공하는 메소드
 
