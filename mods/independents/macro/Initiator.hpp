@@ -5,13 +5,11 @@
 		WRD_UNWRAP __VA_ARGS__												\
 	});
 
-namespace wrd
-{
+namespace wrd {
 	///	Initiator can runs statements before main().
 	///	@Usage	just @refer WRD_INITIATOR or,
 	///			static<optional> Initiator <name>([]() { <your codes> });
-	struct Initiator
-	{
+	struct Initiator {
 		template <typename T>
 		Initiator(T func) { func(); }
 	};
