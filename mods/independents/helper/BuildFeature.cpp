@@ -7,23 +7,17 @@ namespace wrd {
 
         WRD_DEF_THIS(BuildFeature)
 
-		#define _INTEGER_METHOD(function, value)    \
-			wint This::function                     \
-			{                                      \
-				return value;                      \
-			}
+		wint This::Date::getYear() { return WRD_BUILD_DATE_YEAR; }
+		wint This::Date::getMonth() { return WRD_BUILD_DATE_MONTH; }
+		wint This::Date::getDay() { return WRD_BUILD_DATE_DAY; }
 
-		_INTEGER_METHOD(Date::getYear(), WRD_BUILD_DATE_YEAR)
-		_INTEGER_METHOD(Date::getMonth(), WRD_BUILD_DATE_MONTH)
-		_INTEGER_METHOD(Date::getDay(), WRD_BUILD_DATE_DAY)
+        wint This::Time::getHour() { return WRD_BUILD_TIME_HOUR; }
+        wint This::Time::getMin() { return WRD_BUILD_TIME_MINUTE; }
+        wint This::Time::getSec() { return WRD_BUILD_TIME_SECOND; }
 
-		_INTEGER_METHOD(Time::getHour(), WRD_BUILD_TIME_HOUR)
-		_INTEGER_METHOD(Time::getMinute(), WRD_BUILD_TIME_MINUTE)
-		_INTEGER_METHOD(Time::getSecond(), WRD_BUILD_TIME_SECOND)
-
-		_INTEGER_METHOD(Version::getMajor(), WRD_BUILD_VERSION_MAJOR)
-		_INTEGER_METHOD(Version::getMinor(), WRD_BUILD_VERSION_MINOR)
-		_INTEGER_METHOD(Version::getFix(), WRD_BUILD_VERSION_FIX)
+        wint This::Version::getMajor() { return WRD_BUILD_VERSION_MAJOR; }
+        wint This::Version::getMinor() { return WRD_BUILD_VERSION_MINOR; }
+        wint This::Version::getFix() { return WRD_BUILD_VERSION_FIX; }
 
 		This::PlatformType This::Platform::get() {
 			static PlatformType inner = PLATFORM_TYPE_START;
