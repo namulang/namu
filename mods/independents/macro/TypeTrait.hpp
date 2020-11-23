@@ -14,7 +14,7 @@ namespace wrd
 
 	template <typename T>
 	class TypeTrait<T&> {
-        public:
+    public:
 		typedef T Org;
 		typedef T& Ref;
 		typedef T* Ptr;
@@ -25,7 +25,7 @@ namespace wrd
 
 	template <typename T>
 	class TypeTrait<T*> {
-        public:
+    public:
 		typedef T Org;
 		typedef T& Ref;
 		typedef T* Ptr;

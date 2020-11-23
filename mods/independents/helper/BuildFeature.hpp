@@ -5,11 +5,15 @@
 
 namespace wrd {
 	namespace indep {
+        using std::string;
+
 		class BuildFeature {
-			typedef std::string string;
+            WRD_DECL_THIS(BuildFeature)
 
 		public:
 			struct Date {
+                WRD_DECL_THIS(Date)
+
 				static WRD_SINGLETON_GETTER(const string&, get, WRD_VOID(), string, WRD_BUILD_DATE)
 				static wint getYear();
 				static wint getMonth();
@@ -17,6 +21,8 @@ namespace wrd {
 			};
 
 			struct Time {
+                WRD_DECL_THIS(Time)
+
 				static WRD_SINGLETON_GETTER(const string&, get, WRD_VOID(), string, WRD_BUILD_TIME)
 				static wint getHour();
 				static wint getMinute();
@@ -24,6 +30,8 @@ namespace wrd {
 			};
 
 			struct Version {
+                WRD_DECL_THIS(Version)
+
 				static WRD_SINGLETON_GETTER(const string&, get, WRD_VOID(), string, WRD_BUILD_VERSION)
 				static WRD_SINGLETON_GETTER(const string&, getValue, WRD_VOID(), string, WRD_BUILD_VERSION_VALUE)
 				static WRD_SINGLETON_GETTER(const string&, getName, WRD_VOID(), string, WRD_BUILD_VERSION_NAME)
@@ -40,6 +48,8 @@ namespace wrd {
 			};
 
 			struct Platform {
+                WRD_DECL_THIS(Platform)
+
 				static PlatformType get();
 				static WRD_SINGLETON_GETTER(const string&, getName, WRD_VOID(), string, WRD_BUILD_PLATFORM_NAME)
 				static WRD_SINGLETON_GETTER(const string&, getVersion, WRD_VOID(), string, WRD_BUILD_PLATFORM_VERSION)
@@ -53,6 +63,8 @@ namespace wrd {
 			};
 
 			struct Building {
+                WRD_DECL_THIS(Building)
+
 				static BuildType get();
 				static WRD_SINGLETON_GETTER(const string&, getName, WRD_VOID(), string, WRD_BUILD_TYPENAME)
 			};
