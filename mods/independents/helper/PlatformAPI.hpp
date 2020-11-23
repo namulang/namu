@@ -7,8 +7,8 @@ namespace wrd {
 
 		class PlatformAPI {
             WRD_DECL_THIS(PlatformAPI)
-		public:
 
+		public:
 			enum ConsoleColor {
 				CONSOLE_COLOR_START = 0,
 				BLACK=CONSOLE_COLOR_START, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN,

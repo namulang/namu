@@ -5,9 +5,10 @@ namespace wrd {
 
 		using namespace std;
 
-		#define THIS BuildFeature
+        WRD_DEF_THIS(BuildFeature)
+
 		#define _INTEGER_METHOD(function, value)    \
-			wint THIS::function                     \
+			wint This::function                     \
 			{                                      \
 				return value;                      \
 			}
@@ -24,7 +25,7 @@ namespace wrd {
 		_INTEGER_METHOD(Version::getMinor(), WRD_BUILD_VERSION_MINOR)
 		_INTEGER_METHOD(Version::getFix(), WRD_BUILD_VERSION_FIX)
 
-		THIS::PlatformType THIS::Platform::get() {
+		This::PlatformType This::Platform::get() {
 			static PlatformType inner = PLATFORM_TYPE_START;
 			if(inner == PLATFORM_TYPE_START)
 			{
@@ -42,7 +43,7 @@ namespace wrd {
 			return inner;
 		}
 
-		THIS::BuildType THIS::Building::get() {
+		This::BuildType This::Building::get() {
 			static BuildType inner = BUILD_TYPE_START;
 			if(inner == BUILD_TYPE_START)
 			{
