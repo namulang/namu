@@ -25,8 +25,8 @@ namespace wrd {
 
 				static WRD_SINGLETON_GETTER(const string&, get, WRD_VOID(), string, WRD_BUILD_TIME)
 				static wint getHour();
-				static wint getMinute();
-				static wint getSecond();
+				static wint getMin();
+				static wint getSec();
 			};
 
 			struct Version {
