@@ -14,7 +14,7 @@ namespace wrd {
 			struct Date {
                 WRD_DECL_THIS(Date)
 
-				static WRD_SINGLETON_GETTER(const string&, get, WRD_VOID(), string, WRD_BUILD_DATE)
+				static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_DATE)
 				static wint getYear();
 				static wint getMonth();
 				static wint getDay();
@@ -23,7 +23,7 @@ namespace wrd {
 			struct Time {
                 WRD_DECL_THIS(Time)
 
-				static WRD_SINGLETON_GETTER(const string&, get, WRD_VOID(), string, WRD_BUILD_TIME)
+				static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_TIME)
 				static wint getHour();
 				static wint getMin();
 				static wint getSec();
@@ -32,9 +32,9 @@ namespace wrd {
 			struct Version {
                 WRD_DECL_THIS(Version)
 
-				static WRD_SINGLETON_GETTER(const string&, get, WRD_VOID(), string, WRD_BUILD_VERSION)
-				static WRD_SINGLETON_GETTER(const string&, getValue, WRD_VOID(), string, WRD_BUILD_VERSION_VALUE)
-				static WRD_SINGLETON_GETTER(const string&, getName, WRD_VOID(), string, WRD_BUILD_VERSION_NAME)
+				static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_VERSION)
+				static WRD_SINGLETON_GETTER(const string& getValue(), string, WRD_BUILD_VERSION_VALUE)
+				static WRD_SINGLETON_GETTER(const string& getName(), string, WRD_BUILD_VERSION_NAME)
 				static wint getMajor();
 				static wint getMinor();
 				static wint getFix();
@@ -51,8 +51,8 @@ namespace wrd {
                 WRD_DECL_THIS(Platform)
 
 				static PlatformType get();
-				static WRD_SINGLETON_GETTER(const string&, getName, WRD_VOID(), string, WRD_BUILD_PLATFORM_NAME)
-				static WRD_SINGLETON_GETTER(const string&, getVersion, WRD_VOID(), string, WRD_BUILD_PLATFORM_VERSION)
+				static WRD_SINGLETON_GETTER(const string& getName(), string, WRD_BUILD_PLATFORM_NAME)
+				static WRD_SINGLETON_GETTER(const string& getVersion(), string, WRD_BUILD_PLATFORM_VERSION)
 			};
 
 			enum BuildType {
@@ -66,7 +66,7 @@ namespace wrd {
                 WRD_DECL_THIS(Building)
 
 				static BuildType get();
-				static WRD_SINGLETON_GETTER(const string&, getName, WRD_VOID(), string, WRD_BUILD_TYPENAME)
+				static WRD_SINGLETON_GETTER(const string& getName(), string, WRD_BUILD_TYPENAME)
 			};
 		};
 	}
