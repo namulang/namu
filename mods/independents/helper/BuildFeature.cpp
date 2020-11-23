@@ -1,9 +1,8 @@
 #include "BuildFeature.hpp"
 
-namespace wrd
-{
-	namespace indep
-	{
+namespace wrd {
+	namespace indep {
+
 		using namespace std;
 
 		#define THIS BuildFeature
@@ -25,8 +24,7 @@ namespace wrd
 		_INTEGER_METHOD(Version::getMinor(), WRD_BUILD_VERSION_MINOR)
 		_INTEGER_METHOD(Version::getFix(), WRD_BUILD_VERSION_FIX)
 
-		THIS::PlatformType THIS::Platform::get()
-		{
+		THIS::PlatformType THIS::Platform::get() {
 			static PlatformType inner = PLATFORM_TYPE_START;
 			if(inner == PLATFORM_TYPE_START)
 			{
@@ -44,8 +42,7 @@ namespace wrd
 			return inner;
 		}
 
-		THIS::BuildType THIS::Building::get()
-		{
+		THIS::BuildType THIS::Building::get() {
 			static BuildType inner = BUILD_TYPE_START;
 			if(inner == BUILD_TYPE_START)
 			{

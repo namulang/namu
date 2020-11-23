@@ -10,18 +10,15 @@
 #endif
 #include <time.h>
 
-namespace wrd
-{
-	namespace indep
-	{
+namespace wrd {
+	namespace indep {
+
 		#define CLASS PlatformAPI
 		using namespace std;
 
 #ifdef WRD_BUILD_PLATFORM_IS_LINUX
-		namespace
-		{
-			bool _isAnsiColorTerminal()
-			{
+		namespace {
+			bool _isAnsiColorTerminal() {
 				static vector<string> samples = {
 					"xterm", "rxvt", "vt100",
 					"linux", "screen",
@@ -32,8 +29,7 @@ namespace wrd
 				}) != samples.end();
 			}
 
-			void _printColorCharacter(CLASS::ConsoleColor fore, CLASS::ConsoleColor back)
-			{
+			void _printColorCharacter(CLASS::ConsoleColor fore, CLASS::ConsoleColor back) {
 				static vector<string> fores = {
 					"\x1B[0;30m", "\x1B[0;34m", "\x1B[0;32m", "\x1B[0;36m", // black, blue, green, cyan
 					"\x1B[0;31m", "\x1B[0;35m", "\x1B[0;33m", "\x1B[0;37m", // red, purple, yellow, white
@@ -51,8 +47,7 @@ namespace wrd
 		}
 #endif
 
-		void CLASS::updateConsoleColor(ConsoleColor fore, ConsoleColor back)
-		{
+		void CLASS::updateConsoleColor(ConsoleColor fore, ConsoleColor back) {
 #if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back << 4 | fore);
 #elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX
@@ -66,8 +61,7 @@ namespace wrd
 #endif
 		}
 
-		string CLASS::createCurrentTime(const string& strftime_format)
-		{
+		string CLASS::createCurrentTime(const string& strftime_format) {
 			time_t t = time(0);
 			struct tm* timeinfo = localtime(&t);
 
