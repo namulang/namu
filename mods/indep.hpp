@@ -12,5 +12,5 @@
 #pragma once
 
 //	include:
-#include "independentor/macros.hpp"
-#include "independentor/helpers.hpp"
+#include "indep/macro.hpp"
+#include "indep/helper.hpp"

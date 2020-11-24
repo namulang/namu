@@ -29,5 +29,5 @@ add_definitions(-DBUILD_TARGET_INDEPENDENTOR)
 
 
 #  execute:
-add_library(independents SHARED ${sources})
-set_target_properties(independents PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
+add_library(indep SHARED ${sources})
+set_target_properties(indep PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
