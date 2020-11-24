@@ -9,7 +9,7 @@ before_install:
 - sudo add-apt-repository ppa:deadsnakes/ppa -y
 - sudo apt-get update -qq
 - sudo apt-get install -qq default-jre
-- sudo apt-get install -qq g++-7 gcc-7
+- sudo apt-get install -qq clang-3.8
 - sudo apt-get install -qq doxygen graphviz
 - sudo apt-get install -qq python3.7 python3-pip
 - sudo python3.7 -m pip install --upgrade jinja2 Pygments
@@ -17,12 +17,12 @@ before_install:
 sudo: required
 dist: xenial
 language: cpp
-compiler: g++
+compiler: c++
 os: linux
 script:
 - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
 - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
-- export CC=gcc-7 CXX=g++-7 PYTHON=$(which python3.7)
+- export CC=cc CXX=c++ PYTHON=$(which python3.7)
 - $PYTHON build/builder.py build
 - if [ "$BRANCH" == "master" ]; then
     $PYTHON build/builder.py doc;
