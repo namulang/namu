@@ -1,7 +1,6 @@
 #pragma once
 
 #define WRD_NULL        0x00
-#define WRD_LOCALE      "korean"
 #define WRD_IDX_ERROR   -1
 
 #ifdef UNICODE
