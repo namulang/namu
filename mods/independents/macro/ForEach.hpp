@@ -26,7 +26,7 @@
  * prior written authorization from the authors.
  */
 
-//	modification: kniz
+//    modification: kniz
 
 #pragma once
 
@@ -43,36 +43,36 @@
 #define _WRD_EACH_LIST_NEXT1(test, next) _WRD_EACH_NEXT0(test, WRD_COMMA next, 0)
 #define _WRD_EACH_LIST_NEXT(test, next)  _WRD_EACH_LIST_NEXT1(_WRD_EACH_GET_END test, next)
 
-//	Applies the function macro `f` to each of the remaining parameters.
+//    Applies the function macro `f` to each of the remaining parameters.
 #define _WRD_EACH0(f, x, peek, ...) f(x) _WRD_EACH_NEXT(peek, _WRD_EACH1)(f, peek, __VA_ARGS__)
 #define _WRD_EACH1(f, x, peek, ...) f(x) _WRD_EACH_NEXT(peek, _WRD_EACH0)(f, peek, __VA_ARGS__)
 #define WRD_EACH(f, ...) WRD_EVAL(_WRD_EACH1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
-//	EACH macro for various parametered function:
-//		usage:
-//			#define X(x, y) cout << (x+y);
-//			WRD_EACH_TUPLE(X, (1,2), (2,3)) // please be careful to wrap with a paranthesis each set of parameters.
+//    EACH macro for various parametered function:
+//        usage:
+//            #define X(x, y) cout << (x+y);
+//            WRD_EACH_TUPLE(X, (1,2), (2,3)) // please be careful to wrap with a paranthesis each set of parameters.
 //
-//		output:
-//			37
+//        output:
+//            37
 #define _WRD_EACH_TUPLE0(f, x, peek, ...) f x _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE1)(f, peek, __VA_ARGS__)
 #define _WRD_EACH_TUPLE1(f, x, peek, ...) f x _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE0)(f, peek, __VA_ARGS__)
 #define WRD_EACH_TUPLE(f, ...) WRD_EVAL(_WRD_EACH_TUPLE1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
-//	EACH macro for expanding:
-//		usage:
-//			#define X(x, y) cout << (x+y);
-//			int b = 5;
-//			WRD_EACH_EXPAND(X, b, 1,2,3) 
-//			//== cout << (b+1); cout << (b+2); cout << (b+3);
+//    EACH macro for expanding:
+//        usage:
+//            #define X(x, y) cout << (x+y);
+//            int b = 5;
+//            WRD_EACH_EXPAND(X, b, 1,2,3)
+//            //== cout << (b+1); cout << (b+2); cout << (b+3);
 //
-//		output:
-//			678
+//        output:
+//            678
 #define _WRD_EACH_EXPAND0(f, s, x, peek, ...) f(s, x) _WRD_EACH_NEXT(peek, _WRD_EACH_EXPAND1)(f, s, peek, __VA_ARGS__)
 #define _WRD_EACH_EXPAND1(f, s, x, peek, ...) f(s, x) _WRD_EACH_NEXT(peek, _WRD_EACH_EXPAND0)(f, s, peek, __VA_ARGS__)
 #define WRD_EACH_EXPAND(f, ...) WRD_EVAL(_WRD_EACH_EXPAND1(f, s, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
-//	Applies the function macro `f` to each of the remaining parameters and inserts commas between the results.
+//    Applies the function macro `f` to each of the remaining parameters and inserts commas between the results.
 #define _WRD_EACH_LIST0(f, x, peek, ...) f(x) _WRD_EACH_LIST_NEXT(peek, _WRD_EACH_LIST1)(f, peek, __VA_ARGS__)
 #define _WRD_EACH_LIST1(f, x, peek, ...) f(x) _WRD_EACH_LIST_NEXT(peek, _WRD_EACH_LIST0)(f, peek, __VA_ARGS__)
 #define WRD_EACH_LIST(f, ...) WRD_EVAL(_WRD_EACH_LIST1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
