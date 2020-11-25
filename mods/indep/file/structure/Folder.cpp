@@ -5,17 +5,17 @@ namespace wrd
 	namespace fm
 	{
 		using namespace std;
-		#define THIS Folder
+        WRD_DEF_THIS(Folder)
 
-		Folder::Option::Option(wbool is_reculsive) : _is_reculsive(is_reculsive) {}
-		wbool Folder::Option::isReculsive() const { return _is_reculsive; }
+		This::Option::Option(wbool is_reculsive) : _is_reculsive(is_reculsive) {}
+		wbool This::Option::isReculsive() const { return _is_reculsive; }
 
-		THIS::THIS(const std::string& new_path) : Super(new_path), _iterator(0), _sub_file(0) {}
-		THIS::THIS(const File* owner, const string& path, Option option) : Super(owner, path), _iterator(0), _sub_file(0), _option(option) {}
-		THIS::THIS(const string& path, Option option) : Super(0, path), _iterator(0), _sub_file(0), _option(option) {}
-		THIS::~THIS() { _release(); }
+		This::Folder(const std::string& new_path) : Super(new_path), _iterator(0), _sub_file(0) {}
+		This::Folder(const File* owner, const string& path, Option option) : Super(owner, path), _iterator(0), _sub_file(0), _option(option) {}
+		This::Folder(const string& path, Option option) : Super(0, path), _iterator(0), _sub_file(0), _option(option) {}
+		This::~Folder() { _release(); }
 
-		wbool THIS::init()
+		wbool This::init()
 		{
 			if(isInit())
 				_release();
@@ -25,11 +25,11 @@ namespace wrd
 				std::cout << strerror(errno) << "=opendir(" << getPath().c_str() << ")\n";
 			return ! isInit();
 		}
-		wbool THIS::isInit() const { return _iterator; }
+		wbool This::isInit() const { return _iterator; }
 
-		const THIS::Option& THIS::getOption() const { return _option; }
+		const This::Option& This::getOption() const { return _option; }
 
-		const File& THIS::next()
+		const File& This::next()
 		{
 			//  main:
 			//      prepare start_iterator just after returned before:
@@ -50,34 +50,34 @@ namespace wrd
 			return *to_return;
 		}
 
-		const File& THIS::peek() const { return _sub_file ? _sub_file->peek() : *this; }
+		const File& This::peek() const { return _sub_file ? _sub_file->peek() : *this; }
 
-		wbool THIS::release()
+		wbool This::release()
 		{
 			_release();
 			return Super::release();
 		}
 
-		const File* THIS::_prepare() const
+		const File* This::_prepare() const
 		{
 			if(_sub_file && getOption().isReculsive() && _sub_file->isFolder())
 				return &_sub_file->next();
 			return 0;
 		}
 
-		const File* THIS::_next() const { return _sub_file && getOption().isReculsive() ? &_sub_file->next() : _sub_file; }
+		const File* This::_next() const { return _sub_file && getOption().isReculsive() ? &_sub_file->next() : _sub_file; }
 		/// @remark not allowed.
-		THIS::Folder(const Folder& rhs) : File(rhs), _iterator(0) { }
-		Folder& THIS::operator=(const Folder& rhs) { return *this; }
+		This::Folder(const Folder& rhs) : File(rhs), _iterator(0) { }
+		Folder& This::operator=(const Folder& rhs) { return *this; }
 
-		wbool THIS::_isFiltered(const File& target) const
+		wbool This::_isFiltered(const File& target) const
 		{
 			if(target.isNull()) return _iterator != 0; // if next() called at least once and there is no target.
 
 			return false; // okay. seems that we found it.
 		}
 
-		File* THIS::_createSubFile(DIR* e)
+		File* This::_createSubFile(DIR* e)
 		{
 			//  pre:
 			if( ! e) return 0;
@@ -98,7 +98,7 @@ namespace wrd
 			return new File(this, name);
 		}
 
-		void THIS::_release()
+		void This::_release()
 		{
 			if(_sub_file)
 				_sub_file->release();

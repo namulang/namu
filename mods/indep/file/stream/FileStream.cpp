@@ -6,41 +6,41 @@ namespace wrd
 {
 	namespace fm
 	{
-		#define THIS FileStream
+        WRD_DEF_THIS(FileStream)
 
-		THIS::THIS() : _mode(MODE_TYPE_START), _fd(0) {}
-		THIS::THIS(const std::string& new_path) : Super(new_path), _mode(MODE_TYPE_START), _fd(0)  {}
-		THIS::~THIS() { release(); }
+		This::FileStream() : _mode(MODE_TYPE_START), _fd(0) {}
+		This::FileStream(const std::string& new_path) : Super(new_path), _mode(MODE_TYPE_START), _fd(0)  {}
+		This::~FileStream() { release(); }
 
-		THIS& THIS::operator+=(wint delta)
+		This& This::operator+=(wint delta)
 		{
 			if(isInit())
 				setCursor(getCursor() + delta);
 			return *this;
 		}
 
-		THIS& THIS::operator-=(wint delta)
+		This& This::operator-=(wint delta)
 		{
 			if(isInit()) 
 				setCursor(getCursor() - delta);
 			return *this;
 		}
 
-		THIS& THIS::operator=(wint new_position)
+		This& This::operator=(wint new_position)
 		{
 			if(isInit()) 
 				setCursor(new_position);
 			return *this;
 		}
 
-		wint THIS::getCursor() const 
+		wint This::getCursor() const 
 		{
 			if( ! isInit()) return 0;
 
 			return ftell(_fd);
 		}
 
-		wint THIS::getEndOfFile() const
+		wint This::getEndOfFile() const
 		{
 			if( ! isInit()) return 0;
 
@@ -55,7 +55,7 @@ namespace wrd
 
 			return to_return;
 		}
-		wbool THIS::setCursor(wint new_position)
+		wbool This::setCursor(wint new_position)
 		{
 			if( ! isInit()) return true;
 			
@@ -65,14 +65,14 @@ namespace wrd
 
 			return false;
 		}
-		wbool THIS::setPath(const std::string& new_path) { return _setPath(new_path); }
-		wbool THIS::setPath(const Super& path)
+		wbool This::setPath(const std::string& new_path) { return _setPath(new_path); }
+		wbool This::setPath(const Super& path)
 		{ 
 			if(path.isNull()) return true; 
 			
 			return _setPath(path.getPath()); 
 		}
-		wbool THIS::init()
+		wbool This::init()
 		{
 			if(getMode() != APPENDABLE) return false;
 
@@ -82,8 +82,8 @@ namespace wrd
 			fclose(tmp);
 			return false;
 		}
-		wbool THIS::isInit() const { return _fd; }
-		wbool THIS::release()
+		wbool This::isInit() const { return _fd; }
+		wbool This::release()
 		{
 			if(_fd)
 				fclose(_fd);
@@ -93,17 +93,17 @@ namespace wrd
 
 			return Super::release();            
 		}
-		wbool THIS::setMode(Mode new_mode)
+		wbool This::setMode(Mode new_mode)
 		{
 			if(isInit()) return true;
 
 			_mode = new_mode;
 			return false;
 		}
-		THIS::Mode THIS::getMode() const { return _mode; }    
-		THIS::THIS(const Super& object) {}
+		This::Mode This::getMode() const { return _mode; }    
+		This::FileStream(const Super& object) {}
 
-		std::string THIS::readWhole()
+		std::string This::readWhole()
 		{
 			const wint SIZE = 65535;
 			char buffer[SIZE] = {0, };
@@ -119,7 +119,7 @@ namespace wrd
 			return contents;
 		}
 		
-		wbool THIS::isEndOfFile() const
+		wbool This::isEndOfFile() const
 		{
 			if( ! _fd) return true;
 
