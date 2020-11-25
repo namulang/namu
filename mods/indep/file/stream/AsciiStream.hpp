@@ -2,43 +2,43 @@
 
 #include "FileStream.hpp"
 
-namespace wrd
-{
-	namespace fm
-	{
-		class File;
+namespace wrd {
+    namespace fm {
 
-		class AsciiStream : public FileStream
-		{	WRD_DECL_THIS(AsciiStream, FileStream)
-		public:
-			AsciiStream();
-			AsciiStream(const std::string& new_path);
-			AsciiStream(const File& file);
-			virtual ~AsciiStream();
+        class File;
 
-		public:
-			using FileStream::operator=;
+        class AsciiStream : public FileStream {
+            WRD_DECL_THIS(AsciiStream, FileStream)
 
-			virtual wbool init();
-			
-			using FileStream::write;
-			template <typename T>
-			wcnt write(const T& datum) { return write(to_string(datum)); }
+        public:
+            AsciiStream();
+            AsciiStream(const std::string& new_path);
+            AsciiStream(const File& file);
+            virtual ~AsciiStream();
 
-			wcnt write(const std::string& datum);
-			virtual wcnt write(const void* chunks, wcnt bytes);
-			virtual wcnt read(void* target, wcnt bytes);
-			std::string readToken(const std::string& delimeter = " ");
-			std::string readLine();
-			virtual wbool release();
+        public:
+            using FileStream::operator=;
 
-		private:
-			AsciiStream(const PathedObject& object);
-			std::string _peelOffBuffer(wcnt bytes/*except for null*/);
-			wcnt _readToBuffer(wcnt bytes=1024);
+            virtual wbool init();
 
-		private:
-			std::string _buffer;
-		};
-	}
+            using FileStream::write;
+            template <typename T>
+            wcnt write(const T& datum) { return write(to_string(datum)); }
+
+            wcnt write(const std::string& datum);
+            virtual wcnt write(const void* chunks, wcnt bytes);
+            virtual wcnt read(void* target, wcnt bytes);
+            std::string readToken(const std::string& delimeter = " ");
+            std::string readLine();
+            virtual wbool release();
+
+        private:
+            AsciiStream(const PathedObject& object);
+            std::string _peelOffBuffer(wcnt bytes/*except for null*/);
+            wcnt _readToBuffer(wcnt bytes=1024);
+
+        private:
+            std::string _buffer;
+        };
+    }
 }

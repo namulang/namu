@@ -2,12 +2,11 @@
 
 #include "PathedObject.hpp"
 
-namespace wrd
-{
-	namespace fm
-	{
-		class File : public PathedObject
-		{	WRD_DECL_THIS(File, PathedObject)
+namespace wrd {
+	namespace fm {
+
+		class File : public PathedObject {
+            WRD_DECL_THIS(File, PathedObject)
 			friend class Folder;
 
 		public:

@@ -3,12 +3,12 @@
 #include "../../indep-common.hpp"
 #include "../../macro.hpp"
 
-namespace wrd
-{
-	namespace fm
-	{
-		class PathedObject
-		{	WRD_DECL_THIS(PathedObject)
+namespace wrd {
+	namespace fm {
+
+		class PathedObject {
+            WRD_DECL_THIS(PathedObject)
+
 		public:
 			PathedObject();
 			PathedObject(const std::string& path);

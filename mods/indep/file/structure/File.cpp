@@ -1,9 +1,8 @@
 #include "File.hpp"
 
-namespace wrd
-{
-	namespace fm
-	{
+namespace wrd {
+	namespace fm {
+
 		using namespace std;
         WRD_DEF_THIS(File)
 
@@ -13,21 +12,20 @@ namespace wrd
 
 		const string& This::getName() const { return _name; }
 
-		wbool This::remove()
-		{
+		wbool This::remove() {
 			wbool result = ::remove(getPath().c_str());
-			if( ! result)
+			if(!result)
 				return release();
 
 			return result;
 		}
+
 		wbool This::init() { return false; }
 		wbool This::isInit() const { return true; }
 
-		const string& This::getBaseDirectory() const
-		{
+		const string& This::getBaseDirectory() const {
 			static const string inner = "";
-			if( ! _owner) return inner;
+			if(!_owner) return inner;
 
 			return _owner->getPath();
 		}
@@ -35,8 +33,7 @@ namespace wrd
 		wbool This::isFolder() const { return _isFolder(_getInfo(getPath())); }
 		wubyte This::getSize() const { return _getInfo(getPath()).st_size; }
 
-		wbool This::release()
-		{
+		wbool This::release() {
 			// PathedObject::release(); --> _path should not be released.
 			// _owner should not be released.
 			return false;
@@ -47,16 +44,14 @@ namespace wrd
 
 		wbool This::_isFolder(struct stat& info) { return info.st_mode & S_IFDIR; }
 
-		struct stat& This::_getInfo(const string& path)
-		{
+		struct stat& This::_getInfo(const string& path) {
 			static struct stat inner = {0, };
 
 			stat(path.c_str(), &inner);
 			return inner;
 		}
 
-		void This::_setName(const string& new_name)
-		{
+		void This::_setName(const string& new_name) {
 			_name = new_name;
 			_setPath(_owner ? _owner->getPath() + "/" + _name : _name);
 		}

@@ -2,14 +2,14 @@
 
 #include "FileStream.hpp"
 
-namespace wrd
-{
-	namespace fm
-	{
+namespace wrd {
+	namespace fm {
+
 		class File;
-		
-		class BinaryStream : public FileStream
-		{	WRD_DECL_THIS(BinaryStream, FileStream)
+
+		class BinaryStream : public FileStream {
+            WRD_DECL_THIS(BinaryStream, FileStream)
+
 		public:
 			BinaryStream();
 			BinaryStream(const std::string& new_path);
@@ -18,10 +18,11 @@ namespace wrd
 
 		public:
 			using FileStream::operator=;
-			
+			using FileStream::read;
+			using FileStream::write;
+
 			virtual wbool init();
 
-			using FileStream::write;
 			template <typename T>
 			wcnt write(const T& datum) { return write(&datum, sizeof(T)); }
 
@@ -30,10 +31,8 @@ namespace wrd
 			virtual wcnt write(const void* chunks, wcnt bytes);
 			virtual wcnt read(void* target, wcnt bytes);
 
-			using FileStream::read;
 			template <typename T>
-			T read()
-			{
+			T read() {
 				T to_return;
 				read(&to_return, sizeof(T));
 				return to_return;
@@ -43,7 +42,6 @@ namespace wrd
 
 		private:
 			BinaryStream(const PathedObject& object);
-
 		};
 	}
 }

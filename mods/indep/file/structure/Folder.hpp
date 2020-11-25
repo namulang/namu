@@ -2,15 +2,16 @@
 
 #include "File.hpp"
 
-namespace wrd
-{
-	namespace fm
-	{
-		class Folder : public File
-		{	WRD_DECL_THIS(Folder, File)
+namespace wrd {
+	namespace fm {
+
+		class Folder : public File {
+            WRD_DECL_THIS(Folder, File)
+
 		public:
-			class Option
-			{
+			class Option {
+                WRD_DECL_THIS(Option)
+
 			public:
 				Option(wbool is_reculsive = true);
 
