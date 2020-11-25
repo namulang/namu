@@ -8,7 +8,7 @@ namespace wrd
 	class Res;
 
 	class Bindable
-	{	WRD_INHERIT(Bindable)
+	{	WRD_DECL_THIS(Bindable)
 	public:
         const Instance* operator->() const;
         Instance* operator->();

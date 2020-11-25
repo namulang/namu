@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../fm-commons.hpp"
+#include "../../indep-common.hpp"
+#include "../../macro.hpp"
 
 namespace wrd
 {

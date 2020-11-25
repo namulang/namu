@@ -7,7 +7,7 @@
 		namespace ut											\
 		{														\
 			class name : public TestCase						\
-			{	WRD_INHERIT(name, TestCase)						\
+			{	WRD_DECL_THIS(name, TestCase)						\
 			public:												\
 				virtual WRD_LAZY_METHOD(std::string&, getName,	\
 					const, std::string, #name)					\
