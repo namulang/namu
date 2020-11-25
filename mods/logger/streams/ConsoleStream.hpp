@@ -7,7 +7,7 @@ namespace wrd
 	namespace log
 	{
 		class ConsoleStream : public Stream
-		{	WRD_INHERIT(ConsoleStream, Stream)
+		{	WRD_DECL_THIS(ConsoleStream, Stream)
 		public:
 			virtual const char* getName() const;
 			virtual wbool dump(const char* message);

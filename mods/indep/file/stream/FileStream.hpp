@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../file-structures/PathedObject.hpp"
+#include "../structure/PathedObject.hpp"
 
 namespace wrd
 {

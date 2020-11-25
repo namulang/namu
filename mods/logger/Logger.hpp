@@ -7,7 +7,7 @@ namespace wrd
 	namespace log
 	{
 		class Logger : public Stream
-		{	WRD_INHERIT(Logger, Stream)
+		{	WRD_DECL_THIS(Logger, Stream)
 		public:
 			virtual const char* getName() const;
 			const Stream& operator[](widx n) const;

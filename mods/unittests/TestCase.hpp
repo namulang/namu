@@ -9,7 +9,7 @@ namespace wrd
 			return "(#" WRD_TO_STR(__LINE__) ") " #expression;
 
 	class TestCase
-	{	WRD_INHERIT(TestCase)
+	{	WRD_DECL_THIS(TestCase)
 	public:
 		virtual const std::string& getName() const = 0;
 		virtual bool test();

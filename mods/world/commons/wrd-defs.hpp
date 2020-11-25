@@ -90,10 +90,10 @@
 		virtual TStrong<Instance> _clone() const { return TCloner<This>::clone(*this); }	\
 	private:
 #define WRD_CLASS_2(THIS, SUPER)\
-    WRD_INHERIT_2(THIS, SUPER) 	\
+    WRD_DECL_THIS_2(THIS, SUPER) 	\
     _CLASS_BASE()
 #define WRD_CLASS_1(THIS)		\
-    WRD_INHERIT_1(THIS)			\
+    WRD_DECL_THIS_1(THIS)			\
     _CLASS_BASE()
 #define WRD_CLASS(...) 			WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
 
@@ -125,10 +125,10 @@
 		virtual TStrong<Instance> _clone() const;		\
 	private:
 #define WRD_CLASS_DECL_2(THIS, SUPER)	\
-	WRD_INHERIT_2(THIS, SUPER)			\
+	WRD_DECL_THIS_2(THIS, SUPER)			\
 	_CLASS_DECL_BASE()
 #define WRD_CLASS_DECL_1(THIS)	\
-	WRD_INHERIT_1(THIS)			\
+	WRD_DECL_THIS_1(THIS)			\
 	_CLASS_DECL_BASE()
 #define WRD_CLASS_DECL(...) WRD_OVERLOAD(WRD_CLASS_DECL, __VA_ARGS__)
 

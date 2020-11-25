@@ -7,7 +7,7 @@ namespace wrd
 	namespace pref
 	{
 		class Object
-		{	WRD_INHERIT(Object)
+		{	WRD_DECL_THIS(Object)
 		public:
 			virtual wbool release() = 0;
 			virtual Object& clone() const = 0;
