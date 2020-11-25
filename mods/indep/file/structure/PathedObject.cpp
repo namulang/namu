@@ -4,18 +4,18 @@ namespace wrd
 {
 	namespace fm
 	{
-		#define THIS PathedObject
+        WRD_DEF_THIS(PathedObject)
 		using namespace std;
 
-		THIS::THIS() {}
-		THIS::THIS(const string& path) : _path(path) {}
-		THIS::THIS(const This& rhs) : _path(rhs._path) {}
-		const string& THIS::getPath() const { return _path; }
-		wbool THIS::isNull() const { return ! this; }
-		wbool THIS::release() { _path.clear(); return false; }
+		This::PathedObject() {}
+		This::PathedObject(const string& path) : _path(path) {}
+		This::PathedObject(const This& rhs) : _path(rhs._path) {}
+		const string& This::getPath() const { return _path; }
+		wbool This::isNull() const { return ! this; }
+		wbool This::release() { _path.clear(); return false; }
 
-		THIS& THIS::operator=(const This& rhs) { return *this; }    
+		This& This::operator=(const This& rhs) { return *this; }    
 
-		wbool THIS::_setPath(const string& new_path) { _path = new_path; return false; }
+		wbool This::_setPath(const string& new_path) { _path = new_path; return false; }
 	}
 }

@@ -5,19 +5,20 @@ namespace wrd
 {
 	namespace fm
 	{
-		#define THIS AsciiStream
+        WRD_DEF_THIS(AsciiStream)
+
 		using namespace std;
 
-		THIS::THIS() : Super() {}
-		THIS::THIS(const string& new_path) : Super(new_path) {}
-		THIS::THIS(const File& file) : Super()
+		This::AsciiStream() : Super() {}
+		This::AsciiStream(const string& new_path) : Super(new_path) {}
+		This::AsciiStream(const File& file) : Super()
 		{
 			if( ! file.isNull())
 				setPath(file.getPath());
 		}
-		THIS::~THIS() { release(); }
+		This::~AsciiStream() { release(); }
 
-		wbool THIS::init() 
+		wbool This::init()
 		{
 			if(Super::init()) return true;
 
@@ -38,16 +39,16 @@ namespace wrd
 			return ! isInit();
 		}
 		
-		wcnt THIS::write(const string& datum) { return write(datum.c_str(), sizeof(char) * datum.size()); }
+		wcnt This::write(const string& datum) { return write(datum.c_str(), sizeof(char) * datum.size()); }
 		
-		wcnt THIS::write(const void* chunks, wcnt bytes)
+		wcnt This::write(const void* chunks, wcnt bytes)
 		{
 			if( ! isInit()) return 0;
 
 			return fwrite(chunks, 1, bytes, _fd);
 		}
 
-		wcnt THIS::read(void* target, wcnt bytes)
+		wcnt This::read(void* target, wcnt bytes)
 		{
 			string buffer = _peelOffBuffer(bytes);
 			
@@ -60,7 +61,7 @@ namespace wrd
 			return max;
 		}
 
-		string THIS::readToken(const string& delimeter)
+		string This::readToken(const string& delimeter)
 		{
 			wbool matched_once = false;
 			wcnt last = 0;
@@ -87,17 +88,17 @@ namespace wrd
 			return to_return;
 		}
 
-		string THIS::readLine() { return readToken("\n"); }
+		string This::readLine() { return readToken("\n"); }
 
-		wbool THIS::release()
+		wbool This::release()
 		{
 			_buffer.clear();
 			return Super::release();
 		}
 
-		THIS::THIS(const PathedObject& object) {}
+		This::AsciiStream(const PathedObject& object) {}
 		
-		string THIS::_peelOffBuffer(wcnt bytes/*except for null*/)
+		string This::_peelOffBuffer(wcnt bytes/*except for null*/)
 		{
 			if(_buffer.length() < bytes)
 				_readToBuffer();
@@ -108,7 +109,7 @@ namespace wrd
 			return to_return;
 		}
 		
-		wcnt THIS::_readToBuffer(wcnt bytes)
+		wcnt This::_readToBuffer(wcnt bytes)
 		{
 			if( ! isInit()) return 0;
 
