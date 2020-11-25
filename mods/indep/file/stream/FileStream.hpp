@@ -2,15 +2,14 @@
 
 #include "../structure/PathedObject.hpp"
 
-namespace wrd
-{
-	namespace fm
-	{
-		class FileStream : public PathedObject
-		{	WRD_DECL_THIS(FileStream, PathedObject)
+namespace wrd {
+	namespace fm {
+
+		class FileStream : public PathedObject {
+            WRD_DECL_THIS(FileStream, PathedObject)
+
 		public:
-			enum Mode
-			{
+			enum Mode {
 				MODE_TYPE_START = 0,
 				READ_ONLY = MODE_TYPE_START,
 				OVERWRITE_ONLY,
@@ -49,7 +48,7 @@ namespace wrd
 			std::string readWhole();
 			wbool isEndOfFile() const;
 
-		private:        
+		private:
 			FileStream(const PathedObject& object);
 
 		protected:

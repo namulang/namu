@@ -1,9 +1,8 @@
 #include "Folder.hpp"
 
-namespace wrd
-{
-	namespace fm
-	{
+namespace wrd {
+	namespace fm {
+
 		using namespace std;
         WRD_DEF_THIS(Folder)
 
@@ -15,33 +14,30 @@ namespace wrd
 		This::Folder(const string& path, Option option) : Super(0, path), _iterator(0), _sub_file(0), _option(option) {}
 		This::~Folder() { _release(); }
 
-		wbool This::init()
-		{
+		wbool This::init() {
 			if(isInit())
 				_release();
-			
+
 			_iterator = opendir(getPath().c_str());
 			if( ! _iterator)
 				std::cout << strerror(errno) << "=opendir(" << getPath().c_str() << ")\n";
 			return ! isInit();
 		}
-		wbool This::isInit() const { return _iterator; }
 
+		wbool This::isInit() const { return _iterator; }
 		const This::Option& This::getOption() const { return _option; }
 
-		const File& This::next()
-		{
+		const File& This::next() {
 			//  main:
 			//      prepare start_iterator just after returned before:
 			//          if _sub_file is not a folder, we should not call its next():
 			//              because File.next() always returns valid value. we'll fall into infinite loops.
 			const File* to_return = _prepare();
-			while(_isFiltered(*to_return))
-			{
+			while(_isFiltered(*to_return)) {
 				if(_sub_file)
 					delete _sub_file;
 				_sub_file = _createSubFile(_iterator);
-				if( ! _sub_file)
+				if(!_sub_file)
 					release();
 
 				to_return = _next();
@@ -52,14 +48,12 @@ namespace wrd
 
 		const File& This::peek() const { return _sub_file ? _sub_file->peek() : *this; }
 
-		wbool This::release()
-		{
+		wbool This::release() {
 			_release();
 			return Super::release();
 		}
 
-		const File* This::_prepare() const
-		{
+		const File* This::_prepare() const {
 			if(_sub_file && getOption().isReculsive() && _sub_file->isFolder())
 				return &_sub_file->next();
 			return 0;
@@ -70,17 +64,15 @@ namespace wrd
 		This::Folder(const Folder& rhs) : File(rhs), _iterator(0) { }
 		Folder& This::operator=(const Folder& rhs) { return *this; }
 
-		wbool This::_isFiltered(const File& target) const
-		{
+		wbool This::_isFiltered(const File& target) const {
 			if(target.isNull()) return _iterator != 0; // if next() called at least once and there is no target.
 
 			return false; // okay. seems that we found it.
 		}
 
-		File* This::_createSubFile(DIR* e)
-		{
+		File* This::_createSubFile(DIR* e) {
 			//  pre:
-			if( ! e) return 0;
+			if(!e) return 0;
 
 
 			//  main
@@ -98,8 +90,7 @@ namespace wrd
 			return new File(this, name);
 		}
 
-		void This::_release()
-		{
+		void This::_release() {
 			if(_sub_file)
 				_sub_file->release();
 			delete _sub_file;
