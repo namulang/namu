@@ -4,32 +4,32 @@
 #include "../../macro.hpp"
 
 namespace wrd {
-	namespace fm {
+    namespace fm {
 
-		class PathedObject {
+        class PathedObject {
             WRD_DECL_THIS(PathedObject)
 
-		public:
-			PathedObject();
-			PathedObject(const std::string& path);
-			PathedObject(const PathedObject& rhs);
+        public:
+            PathedObject();
+            PathedObject(const std::string& path);
+            PathedObject(const PathedObject& rhs);
 
-		public:
-			virtual wbool init() = 0;
-			virtual wbool isInit() const = 0;
-			const std::string& getPath() const;
-			wbool isNull() const;
-			virtual wbool release();
+        public:
+            virtual wbool init() = 0;
+            virtual wbool isInit() const = 0;
+            const std::string& getPath() const;
+            wbool isNull() const;
+            virtual wbool release();
 
-		protected:
-			wbool _setPath(const std::string& new_path);
+        protected:
+            wbool _setPath(const std::string& new_path);
 
-		private:
-			/// @remark not allowed.
-			PathedObject& operator=(const PathedObject& rhs);
+        private:
+            /// @remark not allowed.
+            PathedObject& operator=(const PathedObject& rhs);
 
-		private:
-			std::string _path;
-		};
-	}
+        private:
+            std::string _path;
+        };
+    }
 }
