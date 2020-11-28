@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project(World)
+project(World C CXX)
 
 #defines:
 set(SHOW_CMAKE_VARIABLES 1)
@@ -26,6 +26,28 @@ message("${VERSION}")
 message(" on ${BUILD_DATE_AND_TIME}")
 message("----------------------------------------")
 message("")
+
+message("\ninitialize CMake variables...")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -fdiagnostics-color=always")  #default options.
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-sign-compare -Wno-address -Wno-unused-local-typedefs -Wno-undefined-bool-conversion")  #compiler options.
+set(CXX_DEFINITIONS "${DEFINITIONS} -DUNICODE")
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+set(CMAKE_MACOSX_RPATH 1)
+cmake_policy(SET CMP0015 NEW)
+cmake_policy(SET CMP0042 NEW)
+
+set(WORLD_LIBRARY_EXTENSION "so")
+get_filename_component(WORLD_DIRECTORY ${CMAKE_SOURCE_DIR} DIRECTORY)
+set(WORLD_DEFAULT_INCLUDE_DIRECTORY ${WORLD_DIRECTORY}/mods /usr/local/include)
+include_directories(${WORLD_DEFAULT_INCLUDE_DIRECTORY})
+
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /usr/lib /usr/local/lib)
+
 if(SHOW_CMAKE_VARIABLES)
     message(STATUS "CMAKE_BINARY_DIR:           " ${CMAKE_BINARY_DIR})
     message(STATUS "CMAKE_CURRENT_BINARY_DIR:   " ${CMAKE_CURRENT_BINARY_DIR})
@@ -75,19 +97,6 @@ if(SHOW_CMAKE_VARIABLES)
     message(STATUS "CMAKE_AR: " ${CMAKE_AR})
     message(STATUS "CMAKE_RANLIB: " ${CMAKE_RANLIB})
 endif(SHOW_CMAKE_VARIABLES)
-
-message("\ninitialize CMake variables...")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -fdiagnostics-color=always")  #default options.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-sign-compare -Wno-address -Wno-unused-local-typedefs -Wno-undefined-bool-conversion")  #compiler options.
-set(CXX_DEFINITIONS "${DEFINITIONS} -DUNICODE")
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
-set(WORLD_LIBRARY_EXTENSION "so")
-get_filename_component(WORLD_DIRECTORY ${CMAKE_SOURCE_DIR} DIRECTORY)
-set(WORLD_DEFAULT_INCLUDE_DIRECTORY ${WORLD_DIRECTORY}/mods /usr/local/include)
-include_directories(${WORLD_DEFAULT_INCLUDE_DIRECTORY})
 
 message("\tcompile options are ${CMAKE_CXX_FLAGS}")
 message("\tcommon definitions are ${CXX_DEFINITIONS}")
