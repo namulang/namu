@@ -45,7 +45,7 @@ BuildInformation.hpp
 FileManipulatorTest.txt
 .vscode/
 generated/
-build/unittests*
+build/*Test
 build/html/
 build/xml/
 build/*.tmp
