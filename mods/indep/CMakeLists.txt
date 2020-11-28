@@ -1,6 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-message("\tbuilding independents...")
+set(moduleName "indep")
+
+message("\tbuilding ${moduleName}...")
 message("\t\tconfigure_files...")
 #  expanding:
 set(configures
@@ -18,7 +20,6 @@ endforeach(e)
 file(GLOB_RECURSE sources
     "*.c"
     "*.cpp"
-    "*.cc"
 )
 #          logging sources:
 foreach(e ${sources})
@@ -29,5 +30,7 @@ add_definitions(-DBUILD_TARGET_INDEPENDENTOR)
 
 
 #  execute:
-add_library(indep SHARED ${sources})
-set_target_properties(indep PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
+add_library(${moduleName} SHARED ${sources})
+set_target_properties(${moduleName} PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
+
+add_subdirectory(test)
