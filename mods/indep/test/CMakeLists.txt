@@ -4,7 +4,7 @@ set(testName ${moduleName}Test)
 find_library(pathGtest
     NAMES libgtest.a
     REQUIRED)
-set(dependencies ${moduleName} pathGtest)
+set(dependencies ${moduleName} ${pathGtest})
 
 message("test ${testName}... dependents to ${dependencies}")
 
@@ -15,5 +15,3 @@ file(GLOB_RECURSE sources
 
 add_executable(${testName} ${sources})
 target_link_libraries(${testName} ${dependencies})
-
-#add_dependencies(${testName} ${moduleName})
