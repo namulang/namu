@@ -13,3 +13,4 @@
 #include "macro/Initiator.hpp"
 #include "macro/AssignGuard.hpp"
 #include "macro/TypeTrait.hpp"
+#include "macro/WrdTest.hpp"
