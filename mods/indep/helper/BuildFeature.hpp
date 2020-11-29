@@ -14,6 +14,7 @@ namespace wrd {
             struct Date {
                 WRD_DECL_THIS(Date)
 
+            public:
                 static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_DATE)
                 static wint getYear();
                 static wint getMonth();
@@ -23,6 +24,7 @@ namespace wrd {
             struct Time {
                 WRD_DECL_THIS(Time)
 
+            public:
                 static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_TIME)
                 static wint getHour();
                 static wint getMin();
@@ -32,6 +34,7 @@ namespace wrd {
             struct Version {
                 WRD_DECL_THIS(Version)
 
+            public:
                 static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_VERSION)
                 static WRD_SINGLETON_GETTER(const string& getValue(), string, WRD_BUILD_VERSION_VALUE)
                 static WRD_SINGLETON_GETTER(const string& getName(), string, WRD_BUILD_VERSION_NAME)
@@ -50,6 +53,7 @@ namespace wrd {
             struct Platform {
                 WRD_DECL_THIS(Platform)
 
+            public:
                 static PlatformType get();
                 static WRD_SINGLETON_GETTER(const string& getName(), string, WRD_BUILD_PLATFORM_NAME)
                 static WRD_SINGLETON_GETTER(const string& getVersion(), string, WRD_BUILD_PLATFORM_VERSION)
@@ -65,6 +69,7 @@ namespace wrd {
             struct Building {
                 WRD_DECL_THIS(Building)
 
+            public:
                 static BuildType get();
                 static WRD_SINGLETON_GETTER(const string& getName(), string, WRD_BUILD_TYPENAME)
             };
