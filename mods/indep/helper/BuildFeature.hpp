@@ -44,10 +44,12 @@ namespace wrd {
             };
 
             enum PlatformType {
-                PLATFORM_TYPE_START = 0,
-                WINDOW = PLATFORM_TYPE_START,
+                PLATFORM_TYPE_START = -1,
+                WINDOW,
+                LINUX,
+                MACOS,
+                OTHERS,
                 PLATFORM_TYPE_END,
-                LINUX = PLATFORM_TYPE_END
             };
 
             struct Platform {
@@ -60,10 +62,10 @@ namespace wrd {
             };
 
             enum BuildType {
-                BUILD_TYPE_START = 0,
-                DEBUG = BUILD_TYPE_START,
+                BUILD_TYPE_START = -1,
+                DEBUG,
+                RELEASE,
                 BUILD_TYPE_END,
-                RELEASE = BUILD_TYPE_END
             };
 
             struct Building {
