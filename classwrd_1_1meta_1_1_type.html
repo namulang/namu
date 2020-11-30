@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::Initiator struct | world-doc</title>
+  <title>wrd::meta::Type class | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,19 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span>Initiator <span class="m-thin">struct</span>
+          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1meta.html">meta</a>::<wbr/></span>Type <span class="m-thin">class</span>
         </h1>
-<p><a href="structwrd_1_1_initiator.html" class="m-dox">Initiator</a> can runs statements before main().  just  WRD_INITIATOR(myIniti) { &lt;your codes&gt;=&quot;&quot;&gt; }; static&lt;optional&gt; <a href="structwrd_1_1_initiator.html" class="m-dox">Initiator</a> &lt;name&gt;([]() { &lt;your codes&gt;=&quot;&quot;&gt; });</p>
+<aside class="m-note m-default"><h4>Remark</h4><p><a href="classwrd_1_1meta_1_1_type.html" class="m-dox">Type</a> returning TType&lt;Type&gt; as result of getType() because this func always returns metaclass no matter of what This type is, users need to care about getting meta of metaclass on calling getType(). for example, <a href="classwrd_1_1_thing.html" class="m-dox">Thing</a>&amp; thing1 = ...; // let&#x27;s assume that got from outside. <a href="classwrd_1_1_object.html" class="m-dox">Object</a> obj;</p></aside><p>wbool compare = obj.isSub(thing1.getType()); // user intend to get class of <a href="classwrd_1_1_thing.html" class="m-dox">Thing</a>. // however, value &#x27;compare&#x27; will definitely be false if // thing was actually a retrived one by calling Thing.getType() before.</p><p>// because Type::getType() will return <a href="classwrd_1_1meta_1_1_t_type.html" class="m-dox">TType</a>&lt;TType&lt;T&gt; &gt;, // that stmt will be translated that checks object vs TType&lt;T&gt;.</p>
+        <section id="derived-classes">
+          <h2><a href="#derived-classes">Derived classes</a></h2>
+          <dl class="m-dox">
+            <dt>
+              <div class="m-dox-template">template&lt;typename T&gt;</div>
+              class <a href="classwrd_1_1meta_1_1_t_type.html" class="m-dox">TType</a>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
       </div>
     </div>
   </div>
