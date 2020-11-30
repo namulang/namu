@@ -275,12 +275,17 @@ def build():
 
 def _ut():
     print("")
-    print("let's initiate unit tests...", end=" ")
+    print("let's initiate unit tests...")
     global cwd
-    res = os.system(cwd + "/unittests")
-    if res == 0:
-        print("done")
-    return res
+
+    files = os.listdir(cwd)
+    ret = 0
+    for file in files:
+        if len(file) < 4 or file[-4:] != "Test":
+            continue
+        res = os.system(cwd + "/" + file)
+        if res != 0: ret = res
+    return ret
 
 def commit():
     return 0
