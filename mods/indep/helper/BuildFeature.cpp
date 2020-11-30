@@ -24,7 +24,7 @@ namespace wrd {
 			if(inner == PLATFORM_TYPE_START)
 			{
 				const string& name = getName();
-				const char* map[] = {"Windows", "Linux", WRD_NULL};
+				const char* map[] = {"Windows", "Linux", "Darwin", "Others", WRD_NULL};
 				int n=-1;
 				while(map[++n])
 					if(name == map[n])
@@ -42,7 +42,7 @@ namespace wrd {
 			if(inner == BUILD_TYPE_START)
 			{
 				const string& name = getName();
-				const char* map[] = {"BUILD_TYPE_START", "DEBUG", "RELEASE", WRD_NULL};
+				const char* map[] = {"DEBUG", "RELEASE", WRD_NULL};
 				int n=-1;
 				while(map[++n])
 					if(name == map[n])
