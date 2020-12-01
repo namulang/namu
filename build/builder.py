@@ -345,6 +345,8 @@ def clean():
     global cwd
     _clean(cwd)
     _cleanIntermediates()
+    _cleanDir(cwd + "/../bin")
+    _cleanDir(cwd + "/mods")
     os.system("rm -rf " + cwd + "/html")
     print("was removed successfully.")
 
@@ -364,7 +366,12 @@ def _clean(directory):
             if dir == "CMakeFiles" or dir == "tmp" or dir == "generated":
                 abs_dir = os.path.join(path, dir)
                 print("\t * " + abs_dir)
-                shutil.rmtree(abs_dir)
+                _cleanDir(abs_dir)
+
+def _cleanDir(dir):
+    if os.path.isdir(dir) == False: return
+    shutil.rmtree(dir)
+
 cwd = ""
 
 def _where(name):
