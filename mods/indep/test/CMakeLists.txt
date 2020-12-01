@@ -15,3 +15,4 @@ file(GLOB_RECURSE sources
 
 add_executable(${testName} ${sources})
 target_link_libraries(${testName} ${dependencies})
+add_dependencies(${testName} ${moduleName})
