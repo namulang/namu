@@ -53,3 +53,4 @@ tags
 docs/html/
 docs/xml/
 .DS_Store
+bin/
