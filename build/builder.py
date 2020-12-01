@@ -278,7 +278,7 @@ def _ut():
     print("let's initiate unit tests...")
     global cwd
 
-    files = os.listdir(cwd)
+    files = os.listdir(cwd + "/../bin")
     ret = 0
     for file in files:
         if len(file) < 4 or file[-4:] != "Test":
