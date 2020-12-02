@@ -57,7 +57,7 @@ def _cleanIntermediates():
 
 def doc():
     # Idea from Travis Gockel.
-    global cwd, python3
+    global cwd, python3, externalDir
 
     _cleanIntermediates()
     os.system("rm -rf " + cwd + "/html")
@@ -74,7 +74,7 @@ def doc():
 
     # build doxygen + m.css:
     print("generating docs using doxygen...", end=" ")
-    res = os.system(python3 + " " + cwd + "/m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
+    res = os.system(python3 + " " + externalDir + "/m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
     if res != 0:
         print("fail to run m.css doxy parser.")
         _cleanIntermediates()
@@ -276,14 +276,14 @@ def build():
 def _ut():
     print("")
     print("let's initiate unit tests...")
-    global cwd
+    global cwd, binDir
 
-    files = os.listdir(cwd + "/../bin")
+    files = os.listdir(binDir)
     ret = 0
     for file in files:
         if len(file) < 4 or file[-4:] != "Test":
             continue
-        res = os.system(cwd + "/../bin/" + file)
+        res = os.system(binDir + "/" + file)
         if res != 0: ret = res
     return ret
 
@@ -342,10 +342,11 @@ def help():
 
 def clean():
     print("Clearing next following files...")
-    global cwd
+    global cwd, binDir, externalDir
     _clean(cwd)
     _cleanIntermediates()
-    _cleanDir(cwd + "/../bin")
+    _cleanDir(binDir)
+    _cleanDir(externalDir)
     _cleanDir(cwd + "/mods")
     os.system("rm -rf " + cwd + "/html")
     print("was removed successfully.")
@@ -372,7 +373,6 @@ def _cleanDir(dir):
     if os.path.isdir(dir) == False: return
     shutil.rmtree(dir)
 
-cwd = ""
 
 def _where(name):
     cmd = ""
@@ -401,10 +401,18 @@ def _extractEnv():
             print("no!")
             python3 = _where("python")
         return python3 == ""
+cwd = ""
+wrdDir = ""
+binDir = ""
+externalDir = ""
 
 def _init():
-    global cwd
-    cwd=os.path.dirname(os.path.realpath(sys.argv[0]))
+    global cwd, wrdDir, binDir, externalDir
+    cwd = os.path.dirname(os.path.realpath(sys.argv[0]))
+    wrdDir = cwd + "/.."
+    binDir = wrdDir + "/bin"
+    externalDir = wrdDir + "/external"
+
     _extractBuildInfo()
     return _extractEnv()
 
