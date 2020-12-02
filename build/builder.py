@@ -283,7 +283,7 @@ def _ut():
     for file in files:
         if len(file) < 4 or file[-4:] != "Test":
             continue
-        res = os.system(cwd + "/" + file)
+        res = os.system(cwd + "/../bin/" + file)
         if res != 0: ret = res
     return ret
 
