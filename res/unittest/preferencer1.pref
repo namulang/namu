@@ -1,7 +1,0 @@
-class preference1
-    int age = 23
-    float grade=4.5
-    string name            =                       "kniz"
-class food
-    string favorite = "donut"
-    int count=22
