@@ -2,9 +2,7 @@
 
 using namespace wrd::indep;
 
-WRD_DEF_TEST(BuildFeature)
-
-TEST(ThisTest, dateGetter) {
+TEST(BuildFeature, dateGetter) {
 	BuildFeature::Date date;
     ASSERT_GT(date.getYear(), 0);
     ASSERT_GT(date.getMonth(), 0);
@@ -12,14 +10,14 @@ TEST(ThisTest, dateGetter) {
     ASSERT_STRNE(date.get().c_str(), "");
 }
 
-TEST(ThisTest, timeGetter) {
+TEST(BuildFeature, timeGetter) {
     ASSERT_GT(BuildFeature::Time::getHour(), 0);
     ASSERT_GT(BuildFeature::Time::getMin(), 0);
     ASSERT_GT(BuildFeature::Time::getSec(), 0);
     ASSERT_STRNE(BuildFeature::Time::get().c_str(), "");
 }
 
-TEST(ThisTest, versionGetter) {
+TEST(BuildFeature, versionGetter) {
     ASSERT_GE(BuildFeature::Version::getMajor(), 0);
     ASSERT_GE(BuildFeature::Version::getMinor(), 0);
     ASSERT_GE(BuildFeature::Version::getFix(), 0);
@@ -28,7 +26,7 @@ TEST(ThisTest, versionGetter) {
     ASSERT_STRNE(BuildFeature::Version::getName().c_str(), "");
 }
 
-TEST(ThisTest, platformGetter) {
+TEST(BuildFeature, platformGetter) {
     BuildFeature::PlatformType type = BuildFeature::Platform::get();
     ASSERT_GT(type, BuildFeature::PLATFORM_TYPE_START);
     ASSERT_LE(type, BuildFeature::PLATFORM_TYPE_END);
