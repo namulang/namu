@@ -346,7 +346,6 @@ def clean():
     _clean(cwd)
     _cleanIntermediates()
     _cleanDir(binDir)
-    _cleanDir(externalDir)
     _cleanDir(cwd + "/mods")
     os.system("rm -rf " + cwd + "/html")
     print("was removed successfully.")
