@@ -1,13 +1,12 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-message("\n\tbuilding logger...")
+message("\n\tbuilding ${moduleName}...")
 
 #   defines:
 #       define sources:
 file(GLOB_RECURSE sources
     "*.c"
     "*.cpp"
-    "*.cc"
 )
 #           logging sources:
 foreach(e ${sources})
@@ -16,13 +15,13 @@ endforeach(e)
 #       define predefinitions:
 add_definitions(-DBUILD_TARGET_LOGGER)
 #       define libraries:
-set(dependencies independentor file-manipulator)
+set(dependencies indep)
 foreach(e ${dependencies})
     message("\t\tlinking ${e}")
 endforeach(e)
 
 
 #   execute:
-add_library(logger SHARED ${sources})
-set_target_properties(logger PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
-target_link_libraries(logger ${dependencies})
+add_library(clog SHARED ${sources})
+set_target_properties(clog PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
+target_link_libraries(clog ${dependencies})
