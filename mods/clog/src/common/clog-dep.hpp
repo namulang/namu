@@ -1,7 +1,6 @@
 #pragma once
 
-#include <independentor.hpp>
-#include <file-manipulator.hpp>
+#include <indep.hpp>
 #include <vector>
 #include <string>
 #include <string.h>
