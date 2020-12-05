@@ -16,7 +16,7 @@ before_install:
 - cd external
 - git clone https://github.com/google/googletest.git
 - cd googletest
-- cmake .
+- cmake -DBUILD_SHARED_LIBS=ON .
 - sudo make install
 - cd ../..
 
