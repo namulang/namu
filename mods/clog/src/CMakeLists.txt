@@ -12,8 +12,6 @@ file(GLOB_RECURSE sources
 foreach(e ${sources})
     message("\t\tembeding ${e}")
 endforeach(e)
-#       define predefinitions:
-add_definitions(-DBUILD_TARGET_LOGGER)
 #       define libraries:
 set(dependencies indep)
 foreach(e ${dependencies})
