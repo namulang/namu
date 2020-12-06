@@ -23,9 +23,6 @@ file(GLOB_RECURSE sources
 foreach(e ${sources})
     message("\t\tembeding ${e}")
 endforeach(e)
-#      define predefinitions:
-add_definitions(-DBUILD_TARGET_INDEPENDENTOR)
-
 
 #  execute:
 add_library(${moduleName} SHARED ${sources})
