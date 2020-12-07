@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../log-common.hpp"
+#include "../common.hpp"
 
 namespace wrd { namespace clog {
 

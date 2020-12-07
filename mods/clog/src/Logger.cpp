@@ -1,7 +1,7 @@
 #include "Logger.hpp"
 #include <iostream>
 #include <stdarg.h>
-#include "streams.hpp"
+#include "stream.hpp"
 
 namespace wrd { namespace clog {
 

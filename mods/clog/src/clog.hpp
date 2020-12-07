@@ -1,4 +1,4 @@
 #pragma once
 
-#include "streams.hpp"
+#include "stream.hpp"
 #include "Logger.hpp"

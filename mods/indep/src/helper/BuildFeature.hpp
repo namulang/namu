@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../macro.hpp"
-#include "../indep-common.hpp"
+#include "../macros.hpp"
+#include "../commons.hpp"
 
 namespace wrd { namespace indep {
     using std::string;
