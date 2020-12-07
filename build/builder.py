@@ -284,8 +284,9 @@ def _ut():
         if len(file) < 4 or file[-4:] != "Test":
             continue
         res = os.system(binDir + "/" + file)
-        if res != 0: ret = res
-    return ret
+        if res != 0: return res
+
+    return 0
 
 def commit():
     return 0
