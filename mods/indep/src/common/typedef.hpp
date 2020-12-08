@@ -9,8 +9,7 @@
 
 #include "../def/common.hpp"
 
-namespace wrd
-{
+namespace wrd {
 	typedef int 				wint;
 	typedef unsigned int		wuint;
 	typedef bool 				wbool;
@@ -31,4 +30,5 @@ namespace wrd
 	typedef wuchar				wubyte;
 	typedef wint64				wid;
 	typedef wint				wcnt;
+    constexpr widx WRD_INDEX_ERROR = -1;
 }

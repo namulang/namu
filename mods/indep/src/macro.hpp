@@ -1,6 +1,6 @@
 #pragma once
 
-#include "commons.hpp"
+#include "common.hpp"
 #include "def.hpp"
 #include "macro/MemLeak.hpp" // 메모리누수 검출 매크로.
 #include "macro/ArgCounter.hpp"
