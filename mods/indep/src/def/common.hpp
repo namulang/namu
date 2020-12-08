@@ -1,7 +1,6 @@
 #pragma once
 
 #define WRD_NULL 0x00
-constexpr widx WRD_INDEX_ERROR = -1;
 
 #ifdef UNICODE
     #define tchar wchar_t
