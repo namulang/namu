@@ -5,8 +5,6 @@ struct HasSuper : public NoSuper {
     typedef NoSuper Super;
 };
 
-#define WRD_TAG
-
 namespace wrd { namespace meta {
 
     TEST(RttiTest, SuperTypedefTest) {
@@ -16,6 +14,6 @@ namespace wrd { namespace meta {
 
     TEST(RttiTest, AdaptiveSuperTest) {
         ASSERT_EQ(TType<TAdaptiveSuper<NoSuper>::Super>(), TType<Adam>());
-        WRD_I(typeid(TAdaptiveSuper<NoSuper>::Super).name())
+        ASSERT_EQ(TType<TAdaptiveSuper<HasSuper>::Super>(), TType<NoSuper>::get());
     }
 }}

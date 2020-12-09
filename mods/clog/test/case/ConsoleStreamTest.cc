@@ -3,7 +3,6 @@
 #include <filesystem>
 
 namespace wrd { namespace clog {
-#define WRD_TAG
 
     using namespace std::__fs;
 
