@@ -1,4 +1,4 @@
-#include "common/clog-test-dep.hpp"
+#include "common/dep.hpp"
 
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);

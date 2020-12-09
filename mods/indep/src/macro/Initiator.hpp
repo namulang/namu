@@ -1,6 +1,7 @@
 #pragma once
 
-#define WRD_INITIATOR(name) static Initiator WRD_CONCAT(__initi__ ## name ##_, __COUNTER__) ([]()
+#define WRD_INITIATOR(name, body) \
+    static Initiator WRD_CONCAT(__initi__ ## name ##_, __COUNTER__) ([]() body)
 
 namespace wrd {
 	///	Initiator can runs statements before main().
