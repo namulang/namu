@@ -1,4 +1,4 @@
-#include "../common/clog-test-dep.hpp"
+#include "../common/dep.hpp"
 #include <stdio.h>
 #include <filesystem>
 

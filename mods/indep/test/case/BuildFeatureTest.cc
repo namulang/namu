@@ -1,4 +1,4 @@
-#include "../common/indep-test-dep.hpp"
+#include "../common/dep.hpp"
 
 using namespace wrd::indep;
 
