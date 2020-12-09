@@ -1,5 +1,5 @@
-#pragma once
+#include "Rtti.hpp"
 
 namespace wrd { namespace meta {
-    class Adam {};
+
 }}
