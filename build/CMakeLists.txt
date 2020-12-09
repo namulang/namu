@@ -6,7 +6,7 @@ set(SHOW_CMAKE_VARIABLES 1)
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
 set(VERSION_FIX 0)
-set(BUILD_COUNT 59)
+set(BUILD_COUNT 64)
 set(VERSION_NAME "Seed")
 set(VERSION_VALUE "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_FIX}")
 set(VERSION "${PROJECT_NAME} ${UPDATE_NAME} v${VERSION_VALUE}")
@@ -46,6 +46,7 @@ get_filename_component(WRD_DIR ${CMAKE_SOURCE_DIR} DIRECTORY)
 set(WRD_DEFAULT_INC_DIR
     ${WRD_DIR}/mods/indep/src
     ${WRD_DIR}/mods/clog/src
+    ${WRD_DIR}/mods/meta/src
     /usr/local/include)
 include_directories(${WRD_DEFAULT_INC_DIR})
 

@@ -8,6 +8,6 @@ namespace wrd { namespace meta {
 }}
 
 #define WRD_INIT_META(This) \
-    WRD_INITIATOR(initMeta) { \
+    WRD_INITIATOR(initMeta, { \
         TType<This>().init(); \
-    };
+    })

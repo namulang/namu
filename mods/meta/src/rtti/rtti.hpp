@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../memory/TStrong.inl"
+#include "../common.hpp"
+#include "./type/Adam.hpp"
 
 namespace wrd { namespace meta {
 
-    class MetaIf
-    {
+    class MetaIf {
     protected:
         typedef short yes;
         typedef char no;
@@ -13,8 +13,7 @@ namespace wrd { namespace meta {
 
     // inspired by boost::is_abstract()
     template <typename T>
-    struct TIfAbstract : public MetaIf
-    {
+    struct TIfAbstract : public MetaIf {
         template <typename U> static no _foo(U (*)());
         template <typename U> static yes _foo(...);
 
@@ -22,8 +21,7 @@ namespace wrd { namespace meta {
     };
 
     template <typename T>
-    struct TIfTemplate : public MetaIf
-    {
+    struct TIfTemplate : public MetaIf {
         template <template<typename> class Template, typename X>
         static yes _foo(Template<X>*);
         static no _foo(...);
@@ -32,8 +30,7 @@ namespace wrd { namespace meta {
     };
 
     template <typename T, typename Super> // is T is sub of Super
-    struct TIfSub : public MetaIf
-    {
+    struct TIfSub : public MetaIf {
         static yes _foo(Super*);
         static no _foo(...);
 
@@ -45,14 +42,14 @@ namespace wrd { namespace meta {
     template <typename T>
     struct TAEmptyCan {
         typedef void is;
-    }
-    template <typename T>
-    struct TIfHasSuperTypedef<T, typename TAEmptyCan<T::Super>::is> : public MetaIf {
-        static const wbool is = false;
-    }
+    };
     template <typename T, typename = void>
     struct TIfHasSuperTypedef : public MetaIf {
-        static const wbool is = true;
+        static inline constexpr wbool is = false;
+    };
+    template <typename T>
+    struct TIfHasSuperTypedef<T, typename TAEmptyCan<typename T::Super>::is> : public MetaIf {
+        static inline constexpr wbool is = true;
     };
 
     template <typename T, wbool typedefSuper = TIfHasSuperTypedef<T>::is>
@@ -61,12 +58,11 @@ namespace wrd { namespace meta {
     };
     template <typename T>
     struct TAdaptiveSuper<T, true> {
-        typedef T::Super Super;
+        typedef typename T::Super Super;
     };
 
     template <typename T>
-    struct TIfStaticMethod : public MetaIf
-    {
+    struct TIfStaticMethod : public MetaIf {
         template <typename R, typename... Args>
         static yes _foo( R(*)(Args...) );
         static no _foo(...);
@@ -74,14 +70,27 @@ namespace wrd { namespace meta {
         static const bool is = sizeof(_foo( (T) 0 )) == sizeof(yes);
     };
 
-    template <typename T, wbool is_adt = TIfAbstract<T>::is, wbool is_an_instance = TIfSub<T, Instance>::is>
+    template <typename T, wbool is_adt = TIfAbstract<T>::is>
     struct TInstanceMaker {
 		static void* make() { return WRD_NULL; }
     };
     template <typename T>
-    struct TInstanceMaker<T, false, true> {
+    struct TInstanceMaker<T, false> {
 		static void* make() { return new T(); }
     };
+
+    struct NameDemangler {
+		static std::string demangle(const wchar* org) {
+            wchar* demangled = WRD_NULL;
+            int status = 0;
+
+            demangled = ::abi::__cxa_demangle(org, 0, 0, &status);
+            std::string ret(demangled);
+
+            free(demangled);
+            return ret;
+        }
+	};
 
 	///	@remark	TClass is a class template using monostate pattern.
 	///			so it duplicates all static variables on each modules and it causes that can't
@@ -99,18 +108,6 @@ namespace wrd { namespace meta {
 	struct TNameGetter {
         static const wchar* getRawName() { return typeid(T).name(); }
         static std::string getName() { return NameDemangler::demangle(getRawName()); }
-    }
+    };
 
-    struct NameDemangler {
-		static std::string demangle(const wchar* org) {
-            wchar* demangled = WRD_NULL;
-            int status = 0;
-
-            demangled = abi::__cxa_demangle(org, 0, 0, &status);
-            std::string ret(demangled);
-
-            free(demangled);
-            return ret;
-        }
-	};
 } }
