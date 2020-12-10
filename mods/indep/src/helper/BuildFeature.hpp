@@ -67,8 +67,8 @@ namespace wrd { namespace indep {
             BUILD_TYPE_END,
         };
 
-        struct Building {
-            WRD_DECL_THIS(Building)
+        struct Config {
+            WRD_DECL_THIS(Config)
 
         public:
             static BuildType get();

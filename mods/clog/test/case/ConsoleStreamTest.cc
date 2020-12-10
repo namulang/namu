@@ -10,6 +10,7 @@ namespace wrd { namespace clog {
     public:
         void SetUp() {
             delLogFile();
+            ASSERT_FALSE(ConsoleStreamTest::hasLogFile());
         }
         void TearDown() {
             delLogFile();
@@ -43,8 +44,6 @@ namespace wrd { namespace clog {
     } ThisTest;
 
     TEST_F(ConsoleStreamTest, dumpFormat) {
-        ASSERT_FALSE(ThisTest::hasLogFile());
-
         Logger::getInstance().dumpFormat("hello");
         Logger::getInstance().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " "hello",
             wrd::indep::PlatformAPI::createCurrentTime("%b %d %Y  %X").c_str(), "I",
@@ -60,5 +59,14 @@ namespace wrd { namespace clog {
         WRD_E("this is not an error.")
 
         ASSERT_TRUE(ThisTest::hasLogFile());
+    }
+
+    TEST_F(ConsoleStreamTest, debugDumpFormat) {
+        typedef indep::BuildFeature Feature;
+        wbool isDbg = Feature::Config::get() == Feature::DEBUG;
+
+        WRD_DW("if it's debug mode, this msg should be shown.");
+
+        ASSERT_EQ(isDbg, ThisTest::hasLogFile());
     }
 }}
