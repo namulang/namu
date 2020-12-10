@@ -4,8 +4,9 @@
 	wrd::clog::Logger::getInstance().func(\
         "%s " WRD_TAG " %s <%s::%s#%d> %s", \
         wrd::indep::PlatformAPI::createCurrentTime("%b %d %Y  %X").c_str(), \
-        level, __FILENAME__, __func__, __LINE__, msg); \
+        level, __FILENAME__, __func__, __LINE__, (std::string() + msg).c_str()); \
     }
+// TODO: optimization now to use string concat is required.
 
 #define WRD_LOG(level, msg) _LOG(dumpFormat, level, msg)
 
