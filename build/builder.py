@@ -36,6 +36,10 @@ def branch(command):
         return commit()
     elif command == "build":
         return build()
+    elif command == "rel":
+        return relBuild()
+    elif command == "dbg":
+        return dbgBuild();
     elif command == "run":
         arg = None if len(sys.argv) < 3 else sys.argv[2]
         return run(arg)
@@ -117,6 +121,18 @@ def run(arg):
             return result
         return _ut()
 
+config=""
+
+def dbgBuild():
+    global config
+    config="-DCMAKE_BUILD_TYPE=DEBUG"
+    clean()
+    return build()
+
+def relBuild():
+    clean()
+    return build()
+
 # currently this application only supports window and linux.
 def isWindow():
     return platform.system().find("Windows") >= 0
@@ -139,7 +155,9 @@ def _createMakefiles():
     generator = "MinGW Makefiles" if isWindow() else "Unix Makefiles"
     print("generating makefiles as " + generator + "...")
 
-    res = os.system("cmake . -G \"" + generator + "\"")
+    global config
+    print("------------- config=" + config)
+    res = os.system("cmake . -G \"" + generator + "\" " + config)
     if res != 0:
         return -1
 
@@ -264,7 +282,7 @@ def _make():
 def build():
     #_beautify()
     _injectBuildInfo()
-    if _createMakefiles(): 
+    if _createMakefiles():
         return -1
     if _make():
         return -1
