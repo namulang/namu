@@ -8,19 +8,21 @@ namespace wrd { namespace clog {
         WRD_DECL_THIS(Logger, Stream)
 
     public:
-        virtual const char* getName() const;
+        virtual const wchar* getName() const;
         const Stream& operator[](widx n) const;
         Stream& operator[](widx n);
-        const Stream& operator[](const char* message) const;
-        Stream& operator[](const char* message);
+        const Stream& operator[](const wchar* message) const;
+        Stream& operator[](const wchar* message);
 
         Stream& getStream(widx n);
         const Stream& getStream(widx n) const;
-        const Stream& getStream(const char* c_message) const;
-        Stream& getStream(const char* message);
+        const Stream& getStream(const wchar* c_message) const;
+        Stream& getStream(const wchar* message);
         wcnt getStreamCount() const;
-        virtual wbool dump(const char* message);
-        wbool dumpFormat(const char* format, ...);
+        virtual wbool dump(const wchar* message);
+        wbool dumpDbg(const wchar* message);
+        wbool dumpFormat(const wchar* format, ...);
+        wbool dumpDbgFormat(const wchar* format, ...);
         wbool pushStream(Stream* new_stream);
         virtual wbool isInit() const;
         static Logger& getInstance();
@@ -30,6 +32,8 @@ namespace wrd { namespace clog {
         Logger(const Logger& rhs);
         virtual wbool init();
         virtual wbool release();
+        static wbool isDbg();
+        wbool _dumpFormat(const wchar* fmt, va_list va);
 
     private:
         std::vector<Stream*> _streams;

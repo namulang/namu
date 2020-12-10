@@ -1,18 +1,18 @@
 #include "Logger.hpp"
 #include <iostream>
-#include <stdarg.h>
 #include "stream.hpp"
 
 namespace wrd { namespace clog {
 
     WRD_DEF_THIS(Logger)
     typedef std::string string;
+    typedef wrd::indep::BuildFeature::Config Config;
 
-    const char* This::getName() const { return "Logger"; }
+    const wchar* This::getName() const { return "Logger"; }
     const Stream& This::operator[](widx n) const { return getStream(n); }
     Stream& This::operator[](widx n) { return getStream(n); }
-    const Stream& This::operator[](const char* message) const { return getStream(message); }
-    Stream& This::operator[](const char* message) { return getStream(message); }
+    const Stream& This::operator[](const wchar* message) const { return getStream(message); }
+    Stream& This::operator[](const wchar* message) { return getStream(message); }
 
     Stream& This::getStream(widx n) {
         if(n < 0 || n >= getStreamCount())
@@ -26,7 +26,7 @@ namespace wrd { namespace clog {
         return unconst.getStream(n);
     }
 
-    const Stream& This::getStream(const char* c_message) const {
+    const Stream& This::getStream(const wchar* c_message) const {
         string message = c_message;
         for(auto e : _streams)
             if(string(e->getName()) == message)
@@ -35,7 +35,7 @@ namespace wrd { namespace clog {
         return nulr<Stream>();
     }
 
-    Stream& This::getStream(const char* message) {
+    Stream& This::getStream(const wchar* message) {
         const This* consted = this;
 
         return const_cast<Stream&>(consted->getStream(message));
@@ -43,7 +43,7 @@ namespace wrd { namespace clog {
 
     wcnt This::getStreamCount() const { return _streams.size(); }
 
-    wbool This::dump(const char* message) {
+    wbool This::dump(const wchar* message) {
         wbool result = false;
         for(auto e : _streams)
             result |= e->dump(message);
@@ -51,15 +51,37 @@ namespace wrd { namespace clog {
         return result;
     }
 
-    wbool This::dumpFormat(const char* format, ...) {
+    wbool This::dumpDbg(const wchar* msg) {
+        if(!isDbg()) return false;
+
+        return dump(msg);
+    }
+
+    wbool This::dumpFormat(const wchar* format, ...) {
         va_list va;
         va_start(va, format);
-
-        char buffer[1024];
-        vsnprintf(buffer, 1024, format, va);
+        wbool ret = _dumpFormat(format, va);
         va_end(va);
 
+        return ret;
+    }
+
+    wbool This::_dumpFormat(const wchar* fmt, va_list va) {
+        wchar buffer[1024];
+        vsnprintf(buffer, 1024, fmt, va);
+
         return dump(buffer);
+    }
+
+    wbool This::dumpDbgFormat(const wchar* format, ...) {
+        if(!isDbg()) return false;
+
+        va_list va;
+        va_start(va, format);
+        wbool ret = _dumpFormat(format, va);
+        va_end(va);
+
+        return ret;
     }
 
     wbool This::pushStream(Stream* new_stream) {
@@ -113,4 +135,8 @@ namespace wrd { namespace clog {
 
     This::Logger() : Super() {}
     This::Logger(const This& rhs) : Super(rhs) {}
+
+    wbool This::isDbg() {
+        return Config::get() == indep::BuildFeature::DEBUG;
+    }
 } }

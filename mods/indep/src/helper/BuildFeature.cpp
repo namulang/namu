@@ -36,7 +36,7 @@ namespace wrd { namespace indep {
         return inner;
     }
 
-    This::BuildType This::Building::get() {
+    This::BuildType This::Config::get() {
         static BuildType inner = BUILD_TYPE_START;
         if(inner == BUILD_TYPE_START)
         {
