@@ -28,7 +28,7 @@ os: linux
 script:
 - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
 - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH, PR=$PR, BRANCH=$BRANCH"
-- export CC=cc CXX=c++ PYTHON=$(which python3.7)
+- export CC=clang CXX=clang++ PYTHON=$(which python3.7)
 - $PYTHON build/builder.py build
 - if [ "$BRANCH" == "master" ]; then
     $PYTHON build/builder.py doc;
