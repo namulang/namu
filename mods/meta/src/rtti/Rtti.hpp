@@ -11,32 +11,23 @@ namespace wrd { namespace meta {
         typedef char no;
     };
 
-    // inspired by boost::is_abstract()
-    template <typename T>
-    struct TIfAbstract : public MetaIf {
-        template <typename U> static no _foo(U (*)());
-        template <typename U> static yes _foo(...);
-
-        static const wbool is = sizeof(TIfAbstract<T>::template _foo<T>(0)) == sizeof(yes);
-    };
-
     template <typename T>
     struct TIfTemplate : public MetaIf {
         template <template<typename> class Template, typename X>
         static yes _foo(Template<X>*);
         static no _foo(...);
 
-        static const wbool is = sizeof(_foo((T*)0)) == sizeof(yes);
+        static inline constexpr wbool is = sizeof(_foo((T*)0)) == sizeof(yes);
     };
 
     template <typename T, typename Super> // is T is sub of Super
-    struct TIfSub : public MetaIf {
-        static yes _foo(Super*);
-        static no _foo(...);
+    struct TIfSub {
+        static inline constexpr wbool is = std::is_base_of<Super, T>::value;
+    };
 
-        enum {
-            is = sizeof(_foo((T*) 0)) == sizeof(yes)
-        };
+    template <typename T>
+    struct TIfAbstract {
+        static inline constexpr wbool is = std::is_abstract<T>::value;
     };
 
     template <typename T>
@@ -59,15 +50,6 @@ namespace wrd { namespace meta {
     template <typename T>
     struct TAdaptiveSuper<T, true> {
         typedef typename T::Super Super;
-    };
-
-    template <typename T>
-    struct TIfStaticMethod : public MetaIf {
-        template <typename R, typename... Args>
-        static yes _foo( R(*)(Args...) );
-        static no _foo(...);
-
-        static const bool is = sizeof(_foo( (T) 0 )) == sizeof(yes);
     };
 
     template <typename T, wbool is_adt = TIfAbstract<T>::is>
