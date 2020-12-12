@@ -55,5 +55,8 @@ namespace wrd { namespace meta {
 
             isInit = newState;
         }
+
+    private:
+        wbool _logInitOk(wbool res);
     };
 }}

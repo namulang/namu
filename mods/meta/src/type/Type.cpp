@@ -26,7 +26,7 @@ namespace wrd { namespace meta {
 
         //  main:
 		_setInit(true);
-        WRD_I("init %s type's meta info.", getName().c_str());
+        WRD_I("initializing %s type's meta info...", getName().c_str());
         //        get Supers info from Super:
         //                at this point TType<Super> is instantiated, and "Super" also is all of this sequences.
         Type& super = const_cast<Type&>(getSuper());
@@ -37,7 +37,7 @@ namespace wrd { namespace meta {
         mySupers.push_back(&super);
         //        notify to super:
         super._getSubs().push_back(this);
-        return true;
+        return _logInitOk(true);
     }
 
     wbool This::rel() {
@@ -64,5 +64,19 @@ namespace wrd { namespace meta {
             (const Type&) *its[myTier];
 
         return *this == target;	// operator== is virtual func.
+    }
+
+    wbool This::_logInitOk(wbool res) {
+        if(!res) {
+            WRD_E("couldn't init meta of %s class.", getName().c_str());
+            return res;
+        }
+
+#define _FUNC(func) WRD_DI("\t  ." #func "=%s", func ? "true" : "false");
+        WRD_EACH(_FUNC, isTemplate(), isAbstract())
+#undef _FUNC
+
+        WRD_DI("... %s class init completed.", getName().c_str());
+        return res;
     }
 }}
