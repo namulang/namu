@@ -26,7 +26,7 @@ namespace wrd { namespace meta {
 
         //  main:
 		_setInit(true);
-        WRD_I("init " + getName() + " type's meta info.");
+        WRD_I("init %s type's meta info.", getName().c_str());
         //        get Supers info from Super:
         //                at this point TType<Super> is instantiated, and "Super" also is all of this sequences.
         Type& super = const_cast<Type&>(getSuper());
