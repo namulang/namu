@@ -46,81 +46,81 @@
         <h1>
           def
         </h1>
-<h3>프로토타이핑 기반</h3><ul><li>새로운 객체를 정의할 수 있고, 그 객체로부터 복제를 정의할 수 있다. (프로토타이핑 상속의 기본 조건)</li><li>새로운 객체를 origin 객체라고 한다.</li></ul><h3>프로토타이핑을 하는 이유</h3><ul><li>가장 큰 이유는 class라고 하는 개념을 덜 수 있기 때문이다. 이는 문법에서 몇가지 개념을 덜수 있게 해준다.<ul><li>static 메소드, static 변수</li><li>class 라는 문법, class는 객체가 아니라는 구분</li></ul></li><li>그러나 동시에 프로토타이핑은 2가지 단점이 있다.<ul><li>전역변수로써 생긴다. 의존성이 겉으로 드러나지 않는다.</li><li>어느샌가 원본이 훼손되어 있는 경우 디버깅이 매우 어렵다.</li></ul></li></ul><h3>생성자는 2벌을 준비한다.</h3><ul><li>기본 생성자는 origin객체가 최초로 접근되어질때 호출된다.</li><li>이는, origin객체들 간에 순서를 정해주지 않으면 상호 의존 문제가 발생할 수 있기 때문이다.</li><li>객체 자체는 이미 만들어져 있다.</li><li>복사 생성자는 원본의 복제 객체가 나올때 호출된다.</li></ul><pre class="m-code"><span class="n">def</span> <span class="n">person</span>
-    <span class="n">name</span> <span class="n">str</span>
-    <span class="err">@</span><span class="n">ctor</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;I&#39;m unique&quot;</span>
-    <span class="n">ctor</span><span class="p">()</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;ctor&quot;</span>
-    <span class="n">ctor</span><span class="p">(</span><span class="n">src</span> <span class="n">person</span><span class="p">)</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">src</span><span class="p">.</span><span class="n">name</span><span class="p">()</span>
+<h2>프로토타이핑 기반</h2><ul><li>새로운 객체를 정의할 수 있고, 그 객체로부터 복제를 정의할 수 있다. (프로토타이핑 상속의 기본 조건)</li><li>새로운 객체를 origin 객체라고 한다.</li></ul><h2>프로토타이핑을 하는 이유</h2><ul><li>가장 큰 이유는 class라고 하는 개념을 덜 수 있기 때문이다. 이는 문법에서 몇가지 개념을 덜수 있게 해준다.<ul><li>static 메소드, static 변수</li><li>class 라는 문법, class는 객체가 아니라는 구분</li></ul></li><li>그러나 동시에 프로토타이핑은 2가지 단점이 있다.<ul><li>전역변수로써 생긴다. 의존성이 겉으로 드러나지 않는다.</li><li>어느샌가 원본이 훼손되어 있는 경우 디버깅이 매우 어렵다.</li></ul></li></ul><h2>생성자는 2벌을 준비한다.</h2><ul><li>기본 생성자는 origin객체가 최초로 접근되어질때 호출된다.</li><li>이는, origin객체들 간에 순서를 정해주지 않으면 상호 의존 문제가 발생할 수 있기 때문이다.</li><li>객체 자체는 이미 만들어져 있다.</li><li>복사 생성자는 원본의 복제 객체가 나올때 호출된다.</li></ul><pre class="m-code"><span class="nx">def</span> <span class="nx">person</span>
+    <span class="nx">name</span> <span class="nx">str</span>
+    <span class="err">@</span><span class="nx">ctor</span>
+        <span class="nx">name</span> <span class="p">=</span> <span class="s">&quot;I&#39;m unique&quot;</span>
+    <span class="nx">ctor</span><span class="p">()</span>
+        <span class="nx">name</span> <span class="p">=</span> <span class="s">&quot;ctor&quot;</span>
+    <span class="nx">ctor</span><span class="p">(</span><span class="nx">src</span> <span class="nx">person</span><span class="p">)</span>
+        <span class="nx">name</span> <span class="p">=</span> <span class="nx">src</span><span class="p">.</span><span class="nx">name</span><span class="p">()</span>
 
-<span class="n">def</span> <span class="n">app</span>
-    <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
-        <span class="n">person</span><span class="p">.</span><span class="n">name</span> <span class="c1">// I&#39;m unique </span>
-        <span class="n">person</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span>
+<span class="nx">def</span> <span class="nx">app</span>
+    <span class="nx">main</span><span class="p">()</span> <span class="nx">void</span>
+        <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="c1">// I&#39;m unique </span>
+        <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="s">&quot;hello&quot;</span>
 
-        <span class="n">person</span><span class="p">().</span><span class="n">name</span> <span class="c1">// &quot;ctor&quot;</span>
-        <span class="n">person</span><span class="p">.</span><span class="n">clone</span><span class="p">().</span><span class="n">name</span> <span class="c1">// hello</span></pre><h3>origin 객체</h3><ul><li>origin객체는 컴파일러로부터 생성되며 생성된 후에는 사용자는 절대로 접근이 불가능하다.</li><li>origin객체가 생성되면 이로부터 복제된 객체 1개 시스템에 의해서 생성되며 이를 unique객체라고 한다.</li><li>unique객체는 origin객체의 이름을 부여받으며 사용자는 unique객체에 접근할 수 있다.</li></ul><h3>은 unique 객체의 생성자다.</h3><ul><li>1번만 불려질 것이며</li><li>unique객체에 접근하려고 하는 순간 호출된다.</li><li>프로퍼티의 기본값은 처음부터 할당이 되어있다.</li><li>()은 origin 객체의 복제시 호출된다.</li></ul><h3>unique 객체는 lazy하게 시스템에 의해서 복제된다.</h3><ul><li>접근하는 순간 복제된다.</li><li>Generic unique 객체를 위해서이기도 하다.</li></ul><h3>unique 객체는 복제되지 않는다.</h3><ul><li>프로토타이핑은 원본이 객체이므로 원본이 쉽게 훼손될 수 있으며 그걸 눈치채기가 어렵다.</li><li>따라서 기존의 로직들이 훼손된 원본에 의해서 다른 결과를 만들어 낼 수 있다. 이것은 장점이기도 하고 단점이기도 하다.</li><li>unique 객체를 복제하기 위해서 문법을 작성하면 실제로는 unique 객체의 원본인 origin객체로부터 복제된다.</li><li>따라서 unique객체로부터 복제를 하더라도 항상 초기상태의 값으로 객체가 생성된다.</li></ul><h3>프로토타이핑이라는 것이 숨겨진다.</h3><ul><li>전부 복제를 기반으로 동작한다. 그러나 문법으로만 봐서는 class 기반 처럼 보이게 된다.</li><li>unique객체에 생성자를 호출하면 origin객체로부터 객체가 나온다.</li><li>복제를 하고 싶다면 clone()을 호출한다.</li></ul><h3>멤버는 동적으로 구성한다. 이후 최적화를 통해 정적으로 만든다.</h3><ul><li>디버깅 모드에서는 멤버는 동적으로 구성된다.</li><li>멤버는 WorldFRX 외부에서는 변경할 수 없다.</li><li>최적화 과정 중에, 이 멤버를 정적으로 구성하는 게 포함되어 있다.</li></ul><h3>멤버는 Chain 자료구조로 구성된다.</h3><ul><li>겉보기에는 1차원 배열처럼 보이므로 간결한 API를 제공한다.</li><li>유동적으로 배열의 내용을 구성할 수 있으며 원본의 배열 내용이 변경되어도 추가 비용없이 동기화된다.</li><li>탐색에 O(n)의 비용이 소모된다.</li><li>내부적으로 public member와 private member 2종류가 존재하며 이 들을 chain으로 묶은 배열이 존재한다.</li></ul><h3>객체의 variable은 생성자에서 새로운 객체로 할당되어야 한다.</h3><pre class="m-code"><span class="n">def</span> <span class="n">person</span>
-    <span class="n">name</span> <span class="n">str</span>
-    <span class="nl">name1</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;world&quot;</span>
+        <span class="nx">person</span><span class="p">().</span><span class="nx">name</span> <span class="c1">// &quot;ctor&quot;</span>
+        <span class="nx">person</span><span class="p">.</span><span class="nx">clone</span><span class="p">().</span><span class="nx">name</span> <span class="c1">// hello</span></pre><h2>origin 객체</h2><ul><li>origin객체는 컴파일러로부터 생성되며 생성된 후에는 사용자는 절대로 접근이 불가능하다.</li><li>origin객체가 생성되면 이로부터 복제된 객체 1개 시스템에 의해서 생성되며 이를 unique객체라고 한다.</li><li>unique객체는 origin객체의 이름을 부여받으며 사용자는 unique객체에 접근할 수 있다.</li></ul><h2>@ctor은 unique 객체의 생성자다.</h2><ul><li>1번만 불려질 것이며</li><li>unique객체에 접근하려고 하는 순간 호출된다.</li><li>프로퍼티의 기본값은 처음부터 할당이 되어있다.</li><li>@ctor()은 origin 객체의 복제시 호출된다.</li></ul><h2>unique 객체는 lazy하게 시스템에 의해서 복제된다.</h2><ul><li>접근하는 순간 복제된다.</li><li>Generic unique 객체를 위해서이기도 하다.</li></ul><h2>unique 객체는 복제되지 않는다.</h2><ul><li>프로토타이핑은 원본이 객체이므로 원본이 쉽게 훼손될 수 있으며 그걸 눈치채기가 어렵다.</li><li>따라서 기존의 로직들이 훼손된 원본에 의해서 다른 결과를 만들어 낼 수 있다. 이것은 장점이기도 하고 단점이기도 하다.</li><li>unique 객체를 복제하기 위해서 문법을 작성하면 실제로는 unique 객체의 원본인 origin객체로부터 복제된다.</li><li>따라서 unique객체로부터 복제를 하더라도 항상 초기상태의 값으로 객체가 생성된다.</li></ul><h2>프로토타이핑이라는 것이 숨겨진다.</h2><ul><li>전부 복제를 기반으로 동작한다. 그러나 문법으로만 봐서는 class 기반 처럼 보이게 된다.</li><li>unique객체에 생성자를 호출하면 origin객체로부터 객체가 나온다.</li><li>복제를 하고 싶다면 clone()을 호출한다.</li></ul><h2>멤버는 동적으로 구성한다. 이후 최적화를 통해 정적으로 만든다.</h2><ul><li>디버깅 모드에서는 멤버는 동적으로 구성된다.</li><li>멤버는 WorldFRX 외부에서는 변경할 수 없다.</li><li>최적화 과정 중에, 이 멤버를 정적으로 구성하는 게 포함되어 있다.</li></ul><h2>멤버는 Chain 자료구조로 구성된다.</h2><ul><li>겉보기에는 1차원 배열처럼 보이므로 간결한 API를 제공한다.</li><li>유동적으로 배열의 내용을 구성할 수 있으며 원본의 배열 내용이 변경되어도 추가 비용없이 동기화된다.</li><li>탐색에 O(n)의 비용이 소모된다.</li><li>내부적으로 public member와 private member 2종류가 존재하며 이 들을 chain으로 묶은 배열이 존재한다.</li></ul><h2>객체의 variable은 생성자에서 새로운 객체로 할당되어야 한다.</h2><pre class="m-code"><span class="nx">def</span> <span class="nx">person</span>
+    <span class="nx">name</span> <span class="nx">str</span>
+    <span class="nx">name1</span> <span class="o">:=</span> <span class="s">&quot;world&quot;</span>
 
-    <span class="n">person</span><span class="p">()</span>
-        <span class="n">name1</span> <span class="o">=</span> <span class="n">org</span><span class="p">.</span><span class="n">name1</span><span class="p">()</span>
+    <span class="nx">person</span><span class="p">()</span>
+        <span class="nx">name1</span> <span class="p">=</span> <span class="nx">org</span><span class="p">.</span><span class="nx">name1</span><span class="p">()</span>
 
-<span class="n">person</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span>
-<span class="nl">p1</span> <span class="p">:</span><span class="o">=</span> <span class="n">person</span><span class="p">()</span>
-<span class="nl">p2</span> <span class="p">:</span><span class="o">=</span> <span class="n">person</span><span class="p">()</span>
+<span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="s">&quot;hello&quot;</span>
+<span class="nx">p1</span> <span class="o">:=</span> <span class="nx">person</span><span class="p">()</span>
+<span class="nx">p2</span> <span class="o">:=</span> <span class="nx">person</span><span class="p">()</span>
 
-<span class="n">p1</span><span class="p">.</span><span class="n">name</span> <span class="o">===</span> <span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="c1">// true</span>
-<span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="o">===</span> <span class="n">p2</span><span class="p">.</span><span class="n">name</span> <span class="c1">// false</span></pre><ul><li>월드는 복제될때 모든 member에 대해서 얇은 복사를 자동으로 수행한다.</li><li>그리고 나서 생성자를 호출한다.</li><li>&quot;org&quot;는 origin 객체를 가리킨다.</li><li>&quot;me&quot;는 이 복제본 객체를 가리킨다.</li></ul><h3>상속</h3><ul><li><p>문법은 다음과 같다.</p><p>def &lt;me-identifier&gt; &lt;identifier&gt;</p></li></ul><h3>객체는 package 안에 존재한다.</h3><pre class="m-code"><span class="n">package</span> <span class="n">org</span><span class="p">.</span><span class="n">worldlang</span><span class="p">.</span><span class="n">example</span>
+<span class="nx">p1</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span><span class="p">=</span> <span class="nx">p2</span><span class="p">.</span><span class="nx">name</span> <span class="c1">// true</span>
+<span class="nx">p2</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span><span class="p">=</span> <span class="nx">p2</span><span class="p">.</span><span class="nx">name</span> <span class="c1">// false</span></pre><ul><li>월드는 복제될때 모든 member에 대해서 얇은 복사를 자동으로 수행한다.</li><li>그리고 나서 생성자를 호출한다.</li><li>&quot;org&quot;는 origin 객체를 가리킨다.</li><li>&quot;me&quot;는 이 복제본 객체를 가리킨다.</li></ul><h2>상속</h2><ul><li><p>문법은 다음과 같다.</p><p>def &lt;me-identifier&gt; &lt;identifier&gt;</p></li></ul><h2>객체는 package 안에 존재한다.</h2><pre class="m-code"><span class="kn">package</span> <span class="nx">org</span><span class="p">.</span><span class="nx">worldlang</span><span class="p">.</span><span class="nx">example</span>
 
-<span class="n">def</span> <span class="n">example1</span>
-    <span class="p">....</span>
+<span class="nx">def</span> <span class="nx">example1</span>
+    <span class="o">...</span><span class="p">.</span>
 
-<span class="o">*</span> <span class="k">namespace</span> <span class="err">라는</span> <span class="err">것은</span> <span class="err">없다</span><span class="p">.</span>
+<span class="o">*</span> <span class="nx">namespace</span> <span class="nx">라는</span> <span class="nx">것은</span> <span class="nx">없다</span><span class="p">.</span>
 
-<span class="cp">## 중첩 origin 객체</span>
+<span class="err">##</span> <span class="nx">중첩</span> <span class="nx">origin</span> <span class="nx">객체</span>
 
-<span class="o">*</span> <span class="err">중첩</span> <span class="n">origin</span> <span class="err">객체</span> <span class="n">public으로</span> <span class="err">될</span> <span class="err">수</span> <span class="err">있다</span><span class="p">.</span>
-<span class="o">*</span> <span class="n">origin</span> <span class="err">중첩</span> <span class="err">객체는</span> <span class="n">origin객체를</span> <span class="n">owner로</span> <span class="err">삼는다</span><span class="p">.</span>
-<span class="o">*</span> <span class="n">owner의</span> <span class="n">origin</span> <span class="err">중첩</span> <span class="err">객체는</span> <span class="err">복제</span> <span class="err">객체로부터</span> <span class="err">참조하는</span> <span class="n">origin</span> <span class="err">중첩객체와</span> <span class="err">동일한</span> <span class="err">객체이다</span><span class="p">.</span>
+<span class="o">*</span> <span class="nx">중첩</span> <span class="nx">origin</span> <span class="nx">객체</span> <span class="nx">public으로</span> <span class="nx">될</span> <span class="nx">수</span> <span class="nx">있다</span><span class="p">.</span>
+<span class="o">*</span> <span class="nx">origin</span> <span class="nx">중첩</span> <span class="nx">객체는</span> <span class="nx">origin객체를</span> <span class="nx">owner로</span> <span class="nx">삼는다</span><span class="p">.</span>
+<span class="o">*</span> <span class="nx">owner의</span> <span class="nx">origin</span> <span class="nx">중첩</span> <span class="nx">객체는</span> <span class="nx">복제</span> <span class="nx">객체로부터</span> <span class="nx">참조하는</span> <span class="nx">origin</span> <span class="nx">중첩객체와</span> <span class="nx">동일한</span> <span class="nx">객체이다</span><span class="p">.</span>
 
-<span class="err">```</span><span class="n">cpp</span>
-<span class="n">def</span> <span class="n">test</span>
-    <span class="nl">name</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="s">``</span><span class="err">`</span><span class="nx">cpp</span>
+<span class="nx">def</span> <span class="nx">test</span>
+    <span class="nx">name</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span>
 
-    <span class="n">def</span> <span class="n">in</span>
-        <span class="n">koo</span><span class="p">()</span> <span class="kt">void</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;name=$name&quot;</span><span class="p">)</span>
+    <span class="nx">def</span> <span class="nx">in</span>
+        <span class="nx">koo</span><span class="p">()</span> <span class="nx">void</span><span class="p">:</span> <span class="nx">c</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;name=$name&quot;</span><span class="p">)</span>
 
-    <span class="n">foo</span><span class="p">()</span> <span class="n">in</span>
-        <span class="n">ret</span> <span class="n">in</span><span class="p">()</span>
+    <span class="nx">foo</span><span class="p">()</span> <span class="nx">in</span>
+        <span class="nx">ret</span> <span class="nx">in</span><span class="p">()</span>
 
-<span class="n">def</span> <span class="n">app</span>
-    <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
-        <span class="n">test</span><span class="p">.</span><span class="n">in</span><span class="p">.</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=</span>
-        <span class="n">test</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;wow&quot;</span>
-        <span class="n">test</span><span class="p">.</span><span class="n">in</span><span class="p">.</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
+<span class="nx">def</span> <span class="nx">app</span>
+    <span class="nx">main</span><span class="p">()</span> <span class="nx">void</span>
+        <span class="nx">test</span><span class="p">.</span><span class="nx">in</span><span class="p">.</span><span class="nx">koo</span><span class="p">()</span> <span class="c1">// name=</span>
+        <span class="nx">test</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="s">&quot;wow&quot;</span>
+        <span class="nx">test</span><span class="p">.</span><span class="nx">in</span><span class="p">.</span><span class="nx">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
 
-        <span class="k">new</span> <span class="o">:=</span> <span class="n">test</span><span class="p">()</span>
+        <span class="nx">new</span> <span class="o">:=</span> <span class="nx">test</span><span class="p">()</span>
         <span class="c1">// test.in = new.in -&gt; err. in은 ref가 아니다.</span>
-        <span class="k">new</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;new&quot;</span>
-        <span class="k">new</span><span class="p">.</span><span class="n">foo</span><span class="p">().</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=new</span>
+        <span class="nx">new</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="s">&quot;new&quot;</span>
+        <span class="nx">new</span><span class="p">.</span><span class="nx">foo</span><span class="p">().</span><span class="nx">koo</span><span class="p">()</span> <span class="c1">// name=new</span>
 
-        <span class="n">test</span><span class="p">.</span><span class="n">in</span><span class="p">.</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
-        <span class="k">new</span><span class="p">.</span><span class="n">in</span><span class="p">.</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
+        <span class="nx">test</span><span class="p">.</span><span class="nx">in</span><span class="p">.</span><span class="nx">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
+        <span class="nx">new</span><span class="p">.</span><span class="nx">in</span><span class="p">.</span><span class="nx">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
 
-        <span class="nl">nested</span> <span class="p">:</span><span class="o">=</span> <span class="k">new</span><span class="p">.</span><span class="n">in</span> <span class="c1">// ok</span>
-        <span class="nl">nested1</span> <span class="p">:</span><span class="o">=</span> <span class="k">new</span><span class="p">.</span><span class="n">in</span><span class="p">()</span> <span class="c1">// ok</span></pre><h3>중첩 객체는 object scope에 등록할때 owner것을 먼저 등록 한다.</h3><ul><li>owner와 중첩객체 통째로 context switching 될 수 있다.</li></ul><h3>중첩 객체는 복제될때 현재 object scope의 owner를 내부 참조자에 할당한다.</h3><ul><li>즉 scope은 object scope이 2개 이상 들어갈 수 있어야 하며 어떤게 owner인지 분간해야 한다.</li></ul><h3>me는 scope에 들어갈 때 Object scope에 속한 것처럼 register 된다.</h3><ul><li>예를들어 MyObject 라는 객체가 있을 경우, MyObject 객체는 object scope에 자신을 등록할때 me를 MyObject scope에 넣어둔다.</li><li>그리고 편의를 위해서 local space에 me를 MyObject.me로 redirection 되도록 한다.</li><li><p>따라서 다음과 같은 코드는 모두 같은 것이다.</p><pre class="m-code"><span class="n">foo</span><span class="p">()</span>
-<span class="n">me</span><span class="p">.</span><span class="n">foo</span><span class="p">()</span>
-<span class="n">MyObject</span><span class="p">.</span><span class="n">me</span><span class="p">.</span><span class="n">foo</span><span class="p">()</span></pre></li></ul><h3>me가 Object scope에 들어감으로써 중첩 객체 접근문제가 해결된다.</h3><ul><li>중첩객체는 owner 참조를 반드시 들고 있으며, object scope 등록시에 이 owner를 먼저 등록시키기 때문이다.</li><li>Object scope에는 me가 2개 존재하게 된다.</li><li>일반적인 객체는 1개만 me가 등록되기 때문에 다른 객체의 me를 무단으로 참조할 수는 없으므로 안전하다.</li></ul><pre class="m-code"><span class="n">def</span> <span class="n">outer</span>
-    <span class="n">foo</span><span class="p">()</span> <span class="kt">void</span>
+        <span class="nx">nested</span> <span class="o">:=</span> <span class="nx">new</span><span class="p">.</span><span class="nx">in</span> <span class="c1">// ok</span>
+        <span class="nx">nested1</span> <span class="o">:=</span> <span class="nx">new</span><span class="p">.</span><span class="nx">in</span><span class="p">()</span> <span class="c1">// ok</span></pre><h2>중첩 객체는 object scope에 등록할때 owner것을 먼저 등록 한다.</h2><ul><li>owner와 중첩객체 통째로 context switching 될 수 있다.</li></ul><h2>중첩 객체는 복제될때 현재 object scope의 owner를 내부 참조자에 할당한다.</h2><ul><li>즉 scope은 object scope이 2개 이상 들어갈 수 있어야 하며 어떤게 owner인지 분간해야 한다.</li></ul><h2>me는 scope에 들어갈 때 Object scope에 속한 것처럼 register 된다.</h2><ul><li>예를들어 MyObject 라는 객체가 있을 경우, MyObject 객체는 object scope에 자신을 등록할때 me를 MyObject scope에 넣어둔다.</li><li>그리고 편의를 위해서 local space에 me를 MyObject.me로 redirection 되도록 한다.</li><li><p>따라서 다음과 같은 코드는 모두 같은 것이다.</p><pre class="m-code"><span class="nx">foo</span><span class="p">()</span>
+<span class="nx">me</span><span class="p">.</span><span class="nx">foo</span><span class="p">()</span>
+<span class="nx">MyObject</span><span class="p">.</span><span class="nx">me</span><span class="p">.</span><span class="nx">foo</span><span class="p">()</span></pre></li></ul><h2>me가 Object scope에 들어감으로써 중첩 객체 접근문제가 해결된다.</h2><ul><li>중첩객체는 owner 참조를 반드시 들고 있으며, object scope 등록시에 이 owner를 먼저 등록시키기 때문이다.</li><li>Object scope에는 me가 2개 존재하게 된다.</li><li>일반적인 객체는 1개만 me가 등록되기 때문에 다른 객체의 me를 무단으로 참조할 수는 없으므로 안전하다.</li></ul><pre class="m-code"><span class="nx">def</span> <span class="nx">outer</span>
+    <span class="nx">foo</span><span class="p">()</span> <span class="nx">void</span>
 
-    <span class="n">def</span> <span class="n">inner</span>
-        <span class="n">foo</span><span class="p">()</span> <span class="kt">void</span>
-            <span class="n">foo</span><span class="p">()</span> <span class="c1">// inner.foo()</span>
-            <span class="n">me</span><span class="p">.</span><span class="n">foo</span><span class="p">()</span> <span class="c1">// inner</span>
-            <span class="n">outer</span><span class="p">.</span><span class="n">me</span><span class="p">.</span><span class="n">foo</span><span class="p">()</span> <span class="c1">// outer.foo()</span></pre><h3>기본적으로 제공하는 메소드</h3><ul><li>obj 상속받은 객체라면 다음의 메소드를 기본 제공한다.<ul><li>ctor(), ctor(rhs), clone(), get(), set()</li></ul></li></ul>
+    <span class="nx">def</span> <span class="nx">inner</span>
+        <span class="nx">foo</span><span class="p">()</span> <span class="nx">void</span>
+            <span class="nx">foo</span><span class="p">()</span> <span class="c1">// inner.foo()</span>
+            <span class="nx">me</span><span class="p">.</span><span class="nx">foo</span><span class="p">()</span> <span class="c1">// inner</span>
+            <span class="nx">outer</span><span class="p">.</span><span class="nx">me</span><span class="p">.</span><span class="nx">foo</span><span class="p">()</span> <span class="c1">// outer.foo()</span></pre><h2>기본적으로 제공하는 메소드</h2><ul><li>obj 상속받은 객체라면 다음의 메소드를 기본 제공한다.<ul><li>ctor(), ctor(rhs), clone(), get(), set()</li></ul></li></ul>
       </div>
     </div>
   </div>
@@ -166,7 +166,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.11 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

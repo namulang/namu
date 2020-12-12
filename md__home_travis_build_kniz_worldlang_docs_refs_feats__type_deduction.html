@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>continue | world-doc</title>
+  <title>Type deduction | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,31 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          continue
+          Type deduction
         </h1>
-<ul><li>for문을 다시 한번 수행한다.</li></ul>
+<ol><li><strong>객체 정의 구현 알고리즘</strong><ol><li>컴파일을 시작한다.</li><li>scope에서 origin 객체를 찾아, 없으면 ManagedObject를 생성해 scope에 넣는다.</li><li>Origin 객체로부터 상속 구조를 만들어낸다. 그리고 메소드 / 멤버변수를 복제&amp;추가한다.(Mouse1 -&gt; Part)<ol><li>Unique한 멤버변수들은 origin에 바로 담고, sharing 할 것들은 origin이 binder로 가리키는 shared에 담는다.</li></ol><p>```cpp uniques = parent.uniques.clone() if C-REPL shared = new Chain() shared-&gt;chain(*parent.shared) else // optimization shared = new Array() *shared = parent.shared-&gt;clone() ```</p><ol><li>초기화 수식은 실행하지 않는다. 각 멤버변수들은 default 상태로 구성된다. 멤버변수는 절대로 삭제되거나, 여기서 추가되지 않는다. 이를 OriginShell이라 하자.</li></ol></li><li>origin shell을 바탕으로 컴파일 validation을 진행한다.</li><li>프로그램 시작 도중, static변수 초기화처럼 origin객체들을 모두 생성한다.</li><li>각 origin 객체 마다<ol><li>scope에서 찾아, 초기화가 되었는지 state 질의해, 안되어있으면 init 한다.<ol><li><strong>origin_shell.assign(expr) 한다.</strong><ol><li><p><strong>반환한 객체가 null이면 에러.</strong></p><p><strong>origin_shell 기준으로 assign이므로 expr의 객체가 origin 객체 scope을 초과한 멤버변수/메소드가 있다면 자연스럽게 무시된다.</strong></p></li></ol></li><li>멤버변수의 초기화식을 수행한다.</li><li>origin객체의 완성. 확정짓는다.</li></ol></li><li>있으면 scope에서 바로 반환한다. 초기화 중이건 상관하지 않는다.</li></ol></li><li>사용자가 생성자를 호출하면, origin객체를 가상 복제한다.</li><li>가상 복제한 객체에 생성자를 수행한다.</li><li>생성자 체인 내부에서는 이미 생성된 멤버변수들에 대해 조작만 가한다.</li></ol></li></ol><pre class="m-code"><span class="n">def</span> <span class="n">Part</span>
+    <span class="n">Part</span><span class="p">(</span><span class="n">str</span> <span class="n">newname</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="cm">/*default*/</span><span class="p">)</span><span class="o">:</span> <span class="n">name</span> <span class="o">=</span> <span class="n">new_name</span>
+
+    <span class="n">_name</span> <span class="o">=</span> <span class="s">&quot;unknown&quot;</span>
+    <span class="kt">void</span> <span class="n">say</span><span class="p">()</span><span class="o">:</span> <span class="n">null</span>
+    <span class="cp">#year = foo(lambda, complex_msg) </span><span class="c1">// year is const</span>
+
+<span class="n">def</span> <span class="n">Body</span> <span class="o">=</span> <span class="n">Part</span>
+    <span class="kt">void</span> <span class="n">say</span><span class="p">()</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;Body&quot;</span><span class="p">)</span>
+
+<span class="n">def</span> <span class="n">Button</span> <span class="o">=</span> <span class="n">Part</span><span class="p">(</span><span class="s">&quot;button&quot;</span><span class="p">)</span> <span class="c1">// prototyped from Part has text &quot;button&quot; of its name.</span>
+<span class="n">def</span> <span class="n">Mouse</span> <span class="o">=</span> <span class="n">Part</span><span class="p">(</span><span class="s">&quot;mouse&quot;</span><span class="p">)</span>
+    <span class="n">Mouse</span><span class="p">()</span><span class="o">:</span> <span class="n">super</span><span class="p">(</span><span class="s">&quot;overwrite this&quot;</span><span class="p">)</span>
+    <span class="n">Mouse</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">)</span> <span class="c1">// do nothing</span>
+
+<span class="n">def</span> <span class="n">app</span>
+    <span class="kt">void</span> <span class="n">main</span><span class="p">()</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">Mouse</span><span class="p">().</span><span class="n">name</span><span class="p">)</span> <span class="c1">// &quot;overwrite this&quot;</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">Mouse</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">name</span><span class="p">)</span> <span class="c1">// &quot;mouse&quot;</span>
+
+    <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">Part</span> <span class="n">null</span><span class="p">]</span>
+    <span class="n">tuple</span> <span class="o">=</span> <span class="nl">Part</span><span class="p">:</span><span class="n">str</span> <span class="n">null</span>
+    <span class="n">maps</span> <span class="o">=</span> <span class="p">[</span><span class="nl">Part</span><span class="p">:</span><span class="n">str</span> <span class="n">null</span><span class="p">]</span></pre>
       </div>
     </div>
   </div>

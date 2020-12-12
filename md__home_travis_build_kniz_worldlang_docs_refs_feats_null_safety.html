@@ -46,22 +46,22 @@
         <h1>
           null safety
         </h1>
-<h3>exception handling의 한 종류이다.</h3><h3>non null타입과 nullable 타입을 혼용한다.</h3><ul><li>?를 붙이면 nullable, 기본적으로는 non null 이다.</li></ul><h3>편의를 위해 safe navigation을 제공한다.</h3><ul><li>문법: &quot;?.&quot;</li><li>멤버의 반환에 대해서만 사용이 가능하다.</li></ul><pre class="m-code"><span class="n">boo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">?</span><span class="p">.</span><span class="n">sayHello</span><span class="p">()</span>
+<h2>exception handling의 한 종류이다.</h2><h2>non null타입과 nullable 타입을 혼용한다.</h2><ul><li>?를 붙이면 nullable, 기본적으로는 non null 이다.</li></ul><h2>편의를 위해 safe navigation을 제공한다.</h2><ul><li>문법: &quot;?.&quot;</li><li>멤버의 반환에 대해서만 사용이 가능하다.</li></ul><pre class="m-code"><span class="nx">boo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="err">?</span><span class="p">.</span><span class="nx">sayHello</span><span class="p">()</span>
 
 <span class="c1">// 2:</span>
-<span class="k">try</span> <span class="nl">b</span> <span class="p">:</span><span class="o">=</span> <span class="n">boo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">on</span> <span class="nl">nullErr</span><span class="p">:</span> <span class="k">return</span></pre><h3>ref가 boolean으로 캐스팅이 될때 null 여부 체크 결과를 반환한다.</h3><pre class="m-code"><span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="n">view</span><span class="o">?</span><span class="p">.</span><span class="n">activity</span>
-<span class="nl">b</span> <span class="p">:</span><span class="o">=</span> <span class="n">view</span><span class="o">?</span><span class="p">.</span><span class="n">fragment</span>
+<span class="nx">try</span> <span class="nx">b</span> <span class="o">:=</span> <span class="nx">boo</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="nx">on</span> <span class="nx">nullErr</span><span class="p">:</span> <span class="k">return</span></pre><h2>ref가 boolean으로 캐스팅이 될때 null 여부 체크 결과를 반환한다.</h2><pre class="m-code"><span class="nx">a</span> <span class="o">:=</span> <span class="nx">view</span><span class="err">?</span><span class="p">.</span><span class="nx">activity</span>
+<span class="nx">b</span> <span class="o">:=</span> <span class="nx">view</span><span class="err">?</span><span class="p">.</span><span class="nx">fragment</span>
 
-<span class="k">if</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span>
-   <span class="p">...</span></pre><h3>nullablle 타입에 대해 이 코드라인에서 null 체크가 이루어졌다는걸 컴파일러는 기억해야 한다.</h3><pre class="m-code"><span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="n">view</span><span class="o">?</span><span class="p">.</span><span class="n">fragment</span> <span class="c1">// a fragment?</span>
+<span class="k">if</span> <span class="nx">a</span> <span class="o">&amp;</span> <span class="nx">b</span>
+   <span class="o">...</span></pre><h2>nullablle 타입에 대해 이 코드라인에서 null 체크가 이루어졌다는걸 컴파일러는 기억해야 한다.</h2><pre class="m-code"><span class="nx">a</span> <span class="o">:=</span> <span class="nx">view</span><span class="err">?</span><span class="p">.</span><span class="nx">fragment</span> <span class="c1">// a fragment?</span>
 
-<span class="n">go</span><span class="p">(</span><span class="n">nonnull</span> <span class="n">fragment</span><span class="p">)</span>
-    <span class="n">nonnull</span><span class="p">.</span><span class="n">doSomething</span><span class="p">()</span>
+<span class="k">go</span><span class="p">(</span><span class="nx">nonnull</span> <span class="nx">fragment</span><span class="p">)</span>
+    <span class="nx">nonnull</span><span class="p">.</span><span class="nx">doSomething</span><span class="p">()</span>
 
-<span class="n">go</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1">// err. a is nullable.</span>
-<span class="k">if</span> <span class="n">a</span>
-    <span class="n">go</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1">// ok. a was nullable. but null checked.</span></pre>
+<span class="k">go</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// err. a is nullable.</span>
+<span class="k">if</span> <span class="nx">a</span>
+    <span class="k">go</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">// ok. a was nullable. but null checked.</span></pre>
       </div>
     </div>
   </div>
@@ -107,7 +107,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.11 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

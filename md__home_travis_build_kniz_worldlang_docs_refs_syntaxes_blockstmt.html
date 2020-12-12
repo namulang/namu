@@ -46,13 +46,13 @@
         <h1>
           block stmt
         </h1>
-<h3>블록문은 생략한다.</h3><h3>개행이 되면 블록문이 종료된 것으로 판단한다.</h3><pre class="m-code"><span class="kt">void</span> <span class="n">print</span><span class="p">()</span>
+<h2>블록문은 생략한다.</h2><h2>개행이 되면 블록문이 종료된 것으로 판단한다.</h2><pre class="m-code"><span class="kt">void</span> <span class="n">print</span><span class="p">()</span>
     <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
-<span class="p">()</span></pre><p>위의 () 는 메소드 print의 호출이 아니라, 빈 튜플의 정의다.</p><h3>블록문을 사용하는 흐름 제어 키워드에서 변수를 정의할 수 있다.</h3><pre class="m-code"><span class="k">if</span> <span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="mi">55</span>
+<span class="p">()</span></pre><p>위의 () 는 메소드 print의 호출이 아니라, 빈 튜플의 정의다.</p><h2>블록문을 사용하는 흐름 제어 키워드에서 변수를 정의할 수 있다.</h2><pre class="m-code"><span class="k">if</span> <span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="mi">55</span>
     <span class="n">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="n">a</span><span class="o">++</span> <span class="c1">// err</span></pre><ul><li>if 의 조건expr도 또 하나의 local scope으로 정의한다.</li><li>따라서 if가 종료되면 변수도 사라진다.</li></ul><pre class="m-code"><span class="k">for</span> <span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="n">get</span><span class="p">()</span>
     <span class="n">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="n">a</span><span class="o">++</span> <span class="c1">// err</span></pre><p>get()의 결과가 true 일 동안 계속 반복한다.</p><h3>메소드의 호출은 블록문이 아니다.</h3><pre class="m-code"><span class="n">print</span><span class="p">(</span><span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="mi">55</span><span class="p">)</span>
+<span class="n">a</span><span class="o">++</span> <span class="c1">// err</span></pre><p>get()의 결과가 true 일 동안 계속 반복한다.</p><h2>메소드의 호출은 블록문이 아니다.</h2><pre class="m-code"><span class="n">print</span><span class="p">(</span><span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="mi">55</span><span class="p">)</span>
 <span class="n">a</span><span class="o">++</span></pre>
       </div>
     </div>
@@ -99,7 +99,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.11 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

@@ -46,38 +46,38 @@
         <h1>
           property
         </h1>
-<h3>프로퍼티는 setter와 getter를 함축하는 객체다.</h3><ul><li>외부에서 이 객체에 접근하고, 새로운 참조값을 할당할때에 불려지는 setter와 getter에 대한 이벤트를 처리 할 수 있는 객체다.</li><li>worldlang 문법적으로는 모든 객체는 정의시 setter, getter를 함축한다. 그렇게 보여진다.</li><li>setter/getter에는 그것이 속한 객체의 object scope가 없는 상태에서 메소드가 실행된다.</li><li>setter/getter는 유일하게 static 메소드 처럼 동작하는 메소드다.</li></ul><pre class="m-code"><span class="nl">name1</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;&quot;</span>
+<h2>프로퍼티는 setter와 getter를 함축하는 객체다.</h2><ul><li>외부에서 이 객체에 접근하고, 새로운 참조값을 할당할때에 불려지는 setter와 getter에 대한 이벤트를 처리 할 수 있는 객체다.</li><li>worldlang 문법적으로는 모든 객체는 정의시 setter, getter를 함축한다. 그렇게 보여진다.</li><li>setter/getter에는 그것이 속한 객체의 object scope가 없는 상태에서 메소드가 실행된다.</li><li>setter/getter는 유일하게 static 메소드 처럼 동작하는 메소드다.</li></ul><pre class="m-code"><span class="nx">name1</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span>
 
-<span class="n">def</span> <span class="n">objA</span>
-    <span class="nl">name</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;&quot;</span>
-    <span class="nl">name1</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;hello&quot;</span>
-        <span class="err">@</span><span class="n">get</span><span class="o">=&gt;</span>
-        <span class="err">@</span><span class="n">set</span>
+<span class="nx">def</span> <span class="nx">objA</span>
+    <span class="nx">name</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span>
+    <span class="nx">name1</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
+        <span class="err">@</span><span class="nx">get</span><span class="p">=&gt;</span>
+        <span class="err">@</span><span class="nx">set</span>
+    
+    <span class="err">@</span><span class="nx">get</span><span class="p">:</span> <span class="nx">ret</span> <span class="nx">name</span> <span class="nx">as</span> <span class="nx">objA</span> <span class="c1">// err. getter에서는 getter가 속한 객체(objA)의 object scope가 없다.</span>
+    <span class="err">@</span><span class="nx">set</span><span class="p">(</span><span class="nx">new</span><span class="p">):</span> <span class="nx">ret</span> <span class="nx">name1</span> <span class="nx">as</span> <span class="nx">objA</span> <span class="c1">// ok</span></pre><h2>get() / set()을 갑자기 추가해도 다른 코드는 전혀 변경이 없어야 한다.</h2><pre class="m-code"><span class="nx">def</span> <span class="nx">app</span>
+    <span class="nx">name</span> <span class="o">:=</span> <span class="s">&quot;hello&quot;</span>
 
-    <span class="err">@</span><span class="nl">get</span><span class="p">:</span> <span class="n">ret</span> <span class="n">name</span> <span class="n">as</span> <span class="n">objA</span> <span class="c1">// err. getter에서는 getter가 속한 객체(objA)의 object scope가 없다.</span>
-    <span class="err">@</span><span class="n">set</span><span class="p">(</span><span class="k">new</span><span class="p">)</span><span class="o">:</span> <span class="n">ret</span> <span class="n">name1</span> <span class="n">as</span> <span class="n">objA</span> <span class="c1">// ok</span></pre><h3>get() / set()을 갑자기 추가해도 다른 코드는 전혀 변경이 없어야 한다.</h3><pre class="m-code"><span class="n">def</span> <span class="n">app</span>
-    <span class="nl">name</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;hello&quot;</span>
+    <span class="nx">main</span><span class="p">()</span> <span class="nx">void</span>
+        <span class="nx">sys</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span></pre><ul><li>위 코드에서 name에 @get, @set을 둬서 프로퍼티로 만들어도 main() 코드 변경이 없어야 한다.</li></ul><h2>프로퍼티를 정의하려면 객체 정의(복제 혹은 origin)후 블록문에 넣으면 된다.</h2><ul><li>일반 메소드를 복제 객체 정의의 블록문에 넣을 수는 없다. 오직 프로퍼티 관련만 가능하다.</li></ul><h2>프로퍼티라고 해도, 객체는 값을 가지고 있다.</h2><ul><li>단순히 proxy로써 동작하는 게 아니다. 참조값을 가지는 동작위에 overriding을 한거라고 보면 된다.</li></ul><h2>get, set은 특수 메소드다.</h2><ul><li>특수메소드는 앞에 @ 를 붙이며, 별도의 명시가 없어도 고유의 인자리스트를 생략하도록 한다.</li></ul><h2>getter/setter를 생략할 경우, 기존 값이 그대로 나간다.</h2><ul><li>막고 싶다면 앞에 _ 를 붙인다.</li></ul><pre class="m-code"><span class="nx">def</span> <span class="nx">objA</span>
+    <span class="nx">name1</span> <span class="nx">str</span>
+        <span class="err">@</span><span class="nx">get</span><span class="p">=&gt;</span>
+            <span class="nx">sys</span><span class="p">.</span><span class="nx">term</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;good!&quot;</span><span class="p">)</span>
+        <span class="err">@</span><span class="nx">set</span><span class="p">:</span> <span class="nx">sys</span><span class="p">.</span><span class="nx">term</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;you can call but never change&quot;</span><span class="p">)</span>
 
-    <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
-        <span class="n">sys</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></pre><ul><li>위 코드에서 name에 , 을 둬서 프로퍼티로 만들어도 main() 코드 변경이 없어야 한다.</li></ul><h3>프로퍼티를 정의하려면 객체 정의(복제 혹은 origin)후 블록문에 넣으면 된다.</h3><ul><li>일반 메소드를 복제 객체 정의의 블록문에 넣을 수는 없다. 오직 프로퍼티 관련만 가능하다.</li></ul><h3>프로퍼티라고 해도, 객체는 값을 가지고 있다.</h3><ul><li>단순히 proxy로써 동작하는 게 아니다. 참조값을 가지는 동작위에 overriding을 한거라고 보면 된다.</li></ul><h3>get, set은 특수 메소드다.</h3><ul><li>특수메소드는 앞에 @ 를 붙이며, 별도의 명시가 없어도 고유의 인자리스트를 생략하도록 한다.</li></ul><h3>getter/setter를 생략할 경우, 기존 값이 그대로 나간다.</h3><ul><li>막고 싶다면 앞에 _ 를 붙인다.</li></ul><pre class="m-code"><span class="n">def</span> <span class="n">objA</span>
-    <span class="n">name1</span> <span class="n">str</span>
-        <span class="err">@</span><span class="n">get</span><span class="o">=&gt;</span>
-            <span class="n">sys</span><span class="p">.</span><span class="n">term</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;good!&quot;</span><span class="p">)</span>
-        <span class="err">@</span><span class="nl">set</span><span class="p">:</span> <span class="n">sys</span><span class="p">.</span><span class="n">term</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;you can call but never change&quot;</span><span class="p">)</span>
+    <span class="nx">name2</span> <span class="o">:=</span> <span class="s">&quot;can&#39;t call set()&quot;</span>
+        <span class="err">@</span><span class="nx">get</span>
+        <span class="nx">_</span><span class="err">@</span><span class="nx">set</span>
 
-    <span class="nl">name2</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;can&#39;t call set()&quot;</span>
-        <span class="err">@</span><span class="n">get</span>
-        <span class="n">_</span><span class="err">@</span><span class="n">set</span>
+<span class="nx">objA</span><span class="p">.</span><span class="nx">name1</span> <span class="p">=</span> <span class="s">&quot;wow&quot;</span> <span class="c1">// --&gt; try &#39;objA.name1 = &quot;wow&quot;&#39; but not worked.</span>
+<span class="nx">objA</span><span class="p">.</span><span class="nx">name1</span> <span class="c1">// good!</span>
+<span class="nx">objA</span><span class="p">.</span><span class="nx">name2</span> <span class="c1">// never change</span>
+<span class="nx">objA</span><span class="p">.</span><span class="nx">name2</span> <span class="p">=</span> <span class="nx">objA</span><span class="p">.</span><span class="nx">name1</span> <span class="c1">// err.</span></pre><h2>임의 타입 T에 대해 setter/getter가 존재하면 T에 대한 ref는 setter/getter를 호출한다.</h2><ul><li>T는 getter, setter가 있건 말건 절대로 변경하지 않는다.</li><li>T를 참조할 Ref는 T가 setter/getter가 있을 경우 그 메소드를 찾아내서 사전에 호출하는 방식이다.</li></ul><h2>프로퍼티가 아닌 객체가 프로퍼티를 추가하더라도 하위호환성은 지켜진다.</h2><ul><li>일반 복제 객체가 이후 프로퍼티로써 변경된다 하더라도 다른 코드는 일절 변경이 없어야 한다.</li></ul><h2>프로퍼티는 origin객체를 대상으로 할 수도, 복제 객체를 대상으로 할 수도 있다.</h2><pre class="m-code"><span class="nx">def</span> <span class="nx">person</span>
+    <span class="nx">_name</span> <span class="o">:=</span> <span class="s">&quot;wow&quot;</span>
 
-<span class="n">objA</span><span class="p">.</span><span class="n">name1</span> <span class="o">=</span> <span class="s">&quot;wow&quot;</span> <span class="c1">// --&gt; try &#39;objA.name1 = &quot;wow&quot;&#39; but not worked.</span>
-<span class="n">objA</span><span class="p">.</span><span class="n">name1</span> <span class="c1">// good!</span>
-<span class="n">objA</span><span class="p">.</span><span class="n">name2</span> <span class="c1">// never change</span>
-<span class="n">objA</span><span class="p">.</span><span class="n">name2</span> <span class="o">=</span> <span class="n">objA</span><span class="p">.</span><span class="n">name1</span> <span class="c1">// err.</span></pre><h3>임의 타입 T에 대해 setter/getter가 존재하면 T에 대한 ref는 setter/getter를 호출한다.</h3><ul><li>T는 getter, setter가 있건 말건 절대로 변경하지 않는다.</li><li>T를 참조할 Ref는 T가 setter/getter가 있을 경우 그 메소드를 찾아내서 사전에 호출하는 방식이다.</li></ul><h3>프로퍼티가 아닌 객체가 프로퍼티를 추가하더라도 하위호환성은 지켜진다.</h3><ul><li>일반 복제 객체가 이후 프로퍼티로써 변경된다 하더라도 다른 코드는 일절 변경이 없어야 한다.</li></ul><h3>프로퍼티는 origin객체를 대상으로 할 수도, 복제 객체를 대상으로 할 수도 있다.</h3><pre class="m-code"><span class="n">def</span> <span class="n">person</span>
-    <span class="nl">_name</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;wow&quot;</span>
-
-    <span class="n">name1</span> <span class="n">str</span>
-        <span class="err">@</span><span class="nl">get</span><span class="p">:</span> <span class="n">person</span><span class="p">.</span><span class="n">name</span> <span class="c1">// origin객체.name</span>
-        <span class="err">@</span><span class="nl">set</span><span class="p">:</span> <span class="n">name</span> <span class="o">=</span> <span class="k">new</span> <span class="c1">// 복제객체.name</span></pre><h3>프로퍼티 오버라이딩</h3><ul><li>프로퍼티 또한 오버라이딩 할 수 있다.</li><li>프로퍼티가 소유한 메모리는 고정되고 ,  메소드만 오버라이딩 된다.</li><li>공변을 허용하므로 타입이 일치하지 않아도 된다. 변수명이 일치해야 한다.</li></ul>
+    <span class="nx">name1</span> <span class="nx">str</span>
+        <span class="err">@</span><span class="nx">get</span><span class="p">:</span> <span class="nx">person</span><span class="p">.</span><span class="nx">name</span> <span class="c1">// origin객체.name</span>
+        <span class="err">@</span><span class="nx">set</span><span class="p">:</span> <span class="nx">name</span> <span class="p">=</span> <span class="nx">new</span> <span class="c1">// 복제객체.name</span></pre><h2>프로퍼티 오버라이딩</h2><ul><li>프로퍼티 또한 오버라이딩 할 수 있다.</li><li>프로퍼티가 소유한 메모리는 고정되고 @get, @set 메소드만 오버라이딩 된다.</li><li>공변을 허용하므로 타입이 일치하지 않아도 된다. 변수명이 일치해야 한다.</li></ul>
       </div>
     </div>
   </div>
@@ -123,7 +123,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.11 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
