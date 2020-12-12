@@ -26,11 +26,9 @@ TEST(RttiTest, BasicBehavior) {
     ASSERT_TRUE((TIfSub<HasSuper, NoSuper>::is));
 
     void* instance = TInstanceMaker<NoSuper>::make();
-    if (!instance)
-        WRD_I("instance == null")
+    WRD_I("instance=%x", instance);
     ASSERT_FALSE(instance);
     instance = TInstanceMaker<HasSuper>::make();
-    if (!instance)
-        WRD_I("instance == null")
+    WRD_I("instance=%x", instance);
     ASSERT_TRUE(instance);
 }
