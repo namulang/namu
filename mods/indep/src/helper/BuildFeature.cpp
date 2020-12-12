@@ -41,7 +41,7 @@ namespace wrd { namespace indep {
         if(inner == BUILD_TYPE_START)
         {
             const string& name = getName();
-            const char* map[] = {"DEBUG", "RELEASE", WRD_NULL};
+            const char* map[] = {"Debug", "Release", WRD_NULL};
             int n=-1;
             while(map[++n])
                 if(name == map[n])
