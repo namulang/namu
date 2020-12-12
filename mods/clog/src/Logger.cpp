@@ -51,37 +51,14 @@ namespace wrd { namespace clog {
         return result;
     }
 
-    wbool This::dumpDbg(const wchar* msg) {
-        if(!isDbg()) return false;
-
-        return dump(msg);
-    }
-
-    wbool This::dumpFormat(const wchar* format, ...) {
+    wbool This::dumpFormat(const wchar* fmt, ...) {
         va_list va;
-        va_start(va, format);
-        wbool ret = _dumpFormat(format, va);
+        va_start(va, fmt);
+        wchar buf[1024];
+        vsnprintf(buf, 1024, fmt, va);
         va_end(va);
 
-        return ret;
-    }
-
-    wbool This::_dumpFormat(const wchar* fmt, va_list va) {
-        wchar buffer[1024];
-        vsnprintf(buffer, 1024, fmt, va);
-
-        return dump(buffer);
-    }
-
-    wbool This::dumpDbgFormat(const wchar* format, ...) {
-        if(!isDbg()) return false;
-
-        va_list va;
-        va_start(va, format);
-        wbool ret = _dumpFormat(format, va);
-        va_end(va);
-
-        return ret;
+        return dump(buf);
     }
 
     wbool This::pushStream(Stream* new_stream) {
@@ -135,8 +112,4 @@ namespace wrd { namespace clog {
 
     This::Logger() : Super() {}
     This::Logger(const This& rhs) : Super(rhs) {}
-
-    wbool This::isDbg() {
-        return Config::get() == indep::BuildFeature::DEBUG;
-    }
 } }

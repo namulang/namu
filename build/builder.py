@@ -125,7 +125,7 @@ config=""
 
 def dbgBuild():
     global config
-    config="-DCMAKE_BUILD_TYPE=DEBUG"
+    config="-DCMAKE_BUILD_TYPE=Debug"
     clean()
     return build()
 

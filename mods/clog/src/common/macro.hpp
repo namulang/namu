@@ -21,6 +21,12 @@
 #define WRD_I(fmt, ...) _LOG(dumpFormat, "I", fmt, ## __VA_ARGS__)
 #define WRD_E(fmt, ...) _LOG(dumpFormat, "E", fmt, ## __VA_ARGS__)
 #define WRD_W(fmt, ...) _LOG(dumpFormat, "W", fmt, ## __VA_ARGS__)
-#define WRD_DI(fmt, ...) _LOG(dumpDbgFormat, "I", fmt, ## __VA_ARGS__)
-#define WRD_DE(fmt, ...) _LOG(dumpDbgFormat, "E", fmt, ## __VA_ARGS__)
-#define WRD_DW(fmt, ...) _LOG(dumpDbgFormat, "W", fmt, ## __VA_ARGS__)
+#ifdef WRD_DEBUG
+#   define WRD_DI(fmt, ...) WRD_I(fmt, ## __VA_ARGS__)
+#   define WRD_DE(fmt, ...) WRD_I(fmt, ## __VA_ARGS__)
+#   define WRD_DW(fmt, ...) WRD_I(fmt, ## __VA_ARGS__)
+#else
+#   define WRD_DI(fmt, ...)
+#   define WRD_DE(fmt, ...)
+#   define WRD_DW(fmt, ...)
+#endif
