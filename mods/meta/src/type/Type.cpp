@@ -20,15 +20,23 @@ namespace wrd { namespace meta {
 		//			please you make sure not to use those APIs.
 		//
 		//		Object class should not initialize explicitly:
-        //      	or This makes recursive call.
-        //			Because if we make a instance of TType<Object>, it triggers Type::init inside of it.
+        //      	or This makes recursive call. Because if we make a instance of TType<Object>,
+        //      	it triggers Type::init inside of it.
         if(isInit()) return true;
 
         //  main:
+        //      setting init flag first is important:
+        //          when we construct structure between super and subs,
+        //          we need to assign ptr of static variable. but can't gaurantee that this ptr is
+        //          belonged to static memory. so we're going to use get() static func.
+        //          when static variable at get() func was not initialized before, its constructor
+        //          will leds us to here, however nothing serius happen because init flag was set
+        //          to true.
 		_setInit(true);
         WRD_I("initializing %s type's meta info...", getName().c_str());
-        //        get Supers info from Super:
-        //                at this point TType<Super> is instantiated, and "Super" also is all of this sequences.
+        //      get Supers info from Super:
+        //          at this point TType<Super> is instantiated, and "Super" also is all of this
+        //          sequences.
         Type& super = const_cast<Type&>(getSuper());
         super.init();
         //        constructing SuperType:
@@ -36,7 +44,7 @@ namespace wrd { namespace meta {
         mySupers = super._getSupers();
         mySupers.push_back(&super);
         //        notify to super:
-        super._getSubs().push_back(this);
+        super._getSubs().push_back(&_getStatic());
         return _logInitOk(true);
     }
 

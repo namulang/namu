@@ -49,6 +49,7 @@ namespace wrd { namespace meta {
 		//	Type:
 		virtual Types& _getSupers() = 0;
 		virtual Types& _getSubs() = 0;
+        virtual Type& _getStatic() const = 0;
         void _setInit(wbool newState) {
             const wbool& res = isInit();
             wbool& isInit = const_cast<wbool&>(res);
