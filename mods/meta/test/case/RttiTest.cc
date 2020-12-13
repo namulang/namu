@@ -31,4 +31,10 @@ TEST(RttiTest, BasicBehavior) {
     instance = TInstanceMaker<HasSuper>::make();
     WRD_I("instance=%x", instance);
     ASSERT_TRUE(instance);
+
+    ASSERT_FALSE(TIfHasSuperTypedef<NoSuper>::is);
+    ASSERT_TRUE(TIfHasSuperTypedef<HasSuper>::is);
+
+    ASSERT_EQ(typeid(TAdaptiveSuper<NoSuper>::Super), typeid(Adam));
+    ASSERT_EQ(typeid(TAdaptiveSuper<HasSuper>::Super), typeid(NoSuper));
 }
