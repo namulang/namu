@@ -23,7 +23,7 @@ namespace wrd { namespace meta {
         ASSERT_EQ(subs.size(), 1);
         ASSERT_EQ(*subs[0], TType<MyDerivedClass>::get());
 
-        ASSERT_STREQ(type.getSuper().getName().c_str(), "Adam");
+        ASSERT_STREQ(type.getSuper().getName().c_str(), "wrd::meta::Adam");
     }
 
 }}

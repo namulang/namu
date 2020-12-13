@@ -22,10 +22,14 @@ namespace wrd { namespace meta {
         //TODO: virtual wbool isImmutable() const;
 		const Type& getSuper() const;
 		const wbool& isInit() const;
-        static WRD_SINGLETON_GETTER(This);
+        static const This& get();
 
     protected:
         Types& _getSupers();
         Types& _getSubs();
+        Type& _getStatic() const;
+
+    private:
+        TType(wbool); // for skipping recursive static variable init.
     };
 }}
