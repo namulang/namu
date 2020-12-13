@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::meta::TNameGetter struct | world-doc</title>
+  <title>if | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,10 +44,10 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-dox-template">template&lt;typename T&gt;</div>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1meta.html">meta</a>::<wbr/></span>TNameGetter <span class="m-thin">struct</span>
+          if
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>TClass is a class template using monostate pattern. so it duplicates all static variables on each modules and it causes that can&#x27;t check hierarchy properly. sure, I can exports them,template classes, as external symbol for 3rd party modules to link and make it act well. but this requires user to declare another macro or statements such as burden to get them be annoy. instead of that, I put those inside of static symbols at normal nested private class. now, TClass of course will be duplicated on each modules and code bloated but it will act like proxy pointing this nested class.</p></aside><p>in conclusion, users can ignore this background reasons and use WRD_CLASS macro without additional consideration.</p>
+<ul><li>branch 한다.</li></ul><h2>if 역시 expr 으로 취급한다.</h2><h2>if 에서 else를 적지 않을 경우 기본값이 나갈 수 있다.</h2><pre class="m-code"><span class="nx">retVal</span> <span class="o">:=</span> <span class="k">if</span> <span class="nx">size</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="nx">obj</span> <span class="c1">// size &lt;= 0 이면 retVal은 null,</span>
+<span class="c1">// retVal 타입은 obj?가 된다.</span></pre>
       </div>
     </div>
   </div>

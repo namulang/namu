@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::meta::TNameGetter struct | world-doc</title>
+  <title>block stmt | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,10 +44,16 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-dox-template">template&lt;typename T&gt;</div>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1meta.html">meta</a>::<wbr/></span>TNameGetter <span class="m-thin">struct</span>
+          block stmt
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>TClass is a class template using monostate pattern. so it duplicates all static variables on each modules and it causes that can&#x27;t check hierarchy properly. sure, I can exports them,template classes, as external symbol for 3rd party modules to link and make it act well. but this requires user to declare another macro or statements such as burden to get them be annoy. instead of that, I put those inside of static symbols at normal nested private class. now, TClass of course will be duplicated on each modules and code bloated but it will act like proxy pointing this nested class.</p></aside><p>in conclusion, users can ignore this background reasons and use WRD_CLASS macro without additional consideration.</p>
+<h2>블록문은 생략한다.</h2><h2>개행이 되면 블록문이 종료된 것으로 판단한다.</h2><pre class="m-code"><span class="kt">void</span> <span class="n">print</span><span class="p">()</span>
+    <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+<span class="p">()</span></pre><p>위의 () 는 메소드 print의 호출이 아니라, 빈 튜플의 정의다.</p><h2>블록문을 사용하는 흐름 제어 키워드에서 변수를 정의할 수 있다.</h2><pre class="m-code"><span class="k">if</span> <span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="mi">55</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">a</span><span class="o">++</span> <span class="c1">// err</span></pre><ul><li>if 의 조건expr도 또 하나의 local scope으로 정의한다.</li><li>따라서 if가 종료되면 변수도 사라진다.</li></ul><pre class="m-code"><span class="k">for</span> <span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="n">get</span><span class="p">()</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">a</span><span class="o">++</span> <span class="c1">// err</span></pre><p>get()의 결과가 true 일 동안 계속 반복한다.</p><h2>메소드의 호출은 블록문이 아니다.</h2><pre class="m-code"><span class="n">print</span><span class="p">(</span><span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="mi">55</span><span class="p">)</span>
+<span class="n">a</span><span class="o">++</span></pre>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::meta::TNameGetter struct | world-doc</title>
+  <title>variable | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,10 +44,33 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-dox-template">template&lt;typename T&gt;</div>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1meta.html">meta</a>::<wbr/></span>TNameGetter <span class="m-thin">struct</span>
+          variable
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>TClass is a class template using monostate pattern. so it duplicates all static variables on each modules and it causes that can&#x27;t check hierarchy properly. sure, I can exports them,template classes, as external symbol for 3rd party modules to link and make it act well. but this requires user to declare another macro or statements such as burden to get them be annoy. instead of that, I put those inside of static symbols at normal nested private class. now, TClass of course will be duplicated on each modules and code bloated but it will act like proxy pointing this nested class.</p></aside><p>in conclusion, users can ignore this background reasons and use WRD_CLASS macro without additional consideration.</p>
+<table class="m-table"><thead><tr><th>타입명</th><th>종류</th><th>표현 범위</th><th>크기</th><th>기본값</th><th>casting (high order)</th><th>literal const</th></tr></thead><tbody><tr><td>int</td><td>정수</td><td>signed</td><td>CPU</td><td>0</td><td>4</td><td>1234</td></tr><tr><td>flt</td><td>실수</td><td>signed</td><td>CPU</td><td>0.0</td><td>5</td><td>1234f, 12.34f</td></tr><tr><td>str</td><td>문자열</td><td>.</td><td>.</td><td>&quot;&quot;</td><td>6</td><td>&quot;1234&quot;, &#x27;1234&#x27;</td></tr><tr><td>bool</td><td>true / false</td><td>.</td><td>.</td><td>false</td><td>2</td><td>true, false</td></tr></tbody></table><p>| err | 결과 | . | . | N/A | 1 |</p><pre class="m-code"><span class="k">import</span> <span class="n">console</span>
+
+<span class="n">def</span> <span class="n">app</span> <span class="c1">// 객체 app</span>
+    <span class="n">age</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1">// app의 변수, age.</span>
+    <span class="kt">void</span>   <span class="n">main</span>   <span class="p">(</span>   <span class="p">)</span>  <span class="c1">// whitespace 무시</span>
+        <span class="n">age</span><span class="o">=</span><span class="mi">0</span> <span class="c1">// 지역변수 age와 member변수와 이름 중복 허용</span>
+        <span class="o">++</span><span class="n">age</span><span class="o">++</span> <span class="o">*=</span> <span class="mi">2</span> <span class="c1">// age == 4</span>
+        <span class="c1">// 연산자 우선순위 존재함.</span>
+        <span class="c1">// 다음 연산자 지원 : += -= /= %= &lt;= &lt; &gt; &gt;= = == != --</span>
+
+        <span class="n">pow</span> <span class="o">=</span> <span class="n">age</span><span class="o">^</span><span class="mi">2</span> <span class="c1">// =&gt; age*age == 16</span>
+        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;hello world!&quot;</span><span class="p">[</span><span class="mi">-9999999</span><span class="o">~</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">&quot;boy aged &quot;</span> <span class="o">+</span> <span class="n">pow</span><span class="p">)</span> <span class="c1">// str은 UTF-16 인코딩</span>
+        <span class="c1">// Sequence: x~y 로 표현하며 [x, y)의 범위를 가짐.</span>
+        <span class="c1">// str[-9999]는 0으로 예외처리.</span>
+        <span class="c1">// str[99999999]는 str의 length-1로 예외처리.</span>
+        <span class="c1">// int + str시, implicit 캐스팅 우선순위(3vs5)에 따라, int-&gt;str casting</span>
+
+
+<span class="c1">// 결과: hellboy aged 16</span></pre><h2>int, flt은 뒤에 8의 배수로 byte를 64까지 붙일 수 있다.</h2><ul><li>int8, int64</li><li>flt8, flt32</li></ul><h2>이름 중복을 허용한다.</h2><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
+    <span class="n">def</span> <span class="n">B</span> <span class="p">:</span><span class="o">=</span> <span class="n">A</span>
+        <span class="kt">void</span> <span class="nf">say</span><span class="p">()</span>
+        <span class="kt">void</span> <span class="nf">foo</span><span class="p">()</span>
+            <span class="n">say</span><span class="p">()</span> <span class="c1">// A.B.say()와 A.say()가 충돌하고 있다.</span>
+
+    <span class="kt">void</span> <span class="nf">say</span><span class="p">()</span></pre><p>local scope을 우선하는 것이다. local scope이란 즉, 해당 메소드가 정의된 클래스를 우선하는 것으로, 해당 클래스를 작성중일 개발자가 그러한 클래스나 메소드가 있다는걸 가장 잘 알고있다. 그러니, 대부분의 의도또한 local scope에 있는걸 사용하려는 것일 것이다.</p><h2>전역변수는 . 으로 접근한다.</h2><h2>여러개의 변수를 동시에 정의 가능하다.</h2><ul><li>튜플을 이용하면 가능하다.</li></ul>
       </div>
     </div>
   </div>

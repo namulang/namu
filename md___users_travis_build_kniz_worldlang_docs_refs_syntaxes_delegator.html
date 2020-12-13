@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::meta::TNameGetter struct | world-doc</title>
+  <title>delegator | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,10 +44,22 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-dox-template">template&lt;typename T&gt;</div>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1meta.html">meta</a>::<wbr/></span>TNameGetter <span class="m-thin">struct</span>
+          delegator
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>TClass is a class template using monostate pattern. so it duplicates all static variables on each modules and it causes that can&#x27;t check hierarchy properly. sure, I can exports them,template classes, as external symbol for 3rd party modules to link and make it act well. but this requires user to declare another macro or statements such as burden to get them be annoy. instead of that, I put those inside of static symbols at normal nested private class. now, TClass of course will be duplicated on each modules and code bloated but it will act like proxy pointing this nested class.</p></aside><p>in conclusion, users can ignore this background reasons and use WRD_CLASS macro without additional consideration.</p>
+<h2>메소드를 정의하면 그것이 곧 delegator로 사용할 수 있다.</h2><pre class="m-code"><span class="nx">cb</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">str</span><span class="p">)</span> <span class="nx">void</span> <span class="c1">// or = 0</span>
+<span class="nx">foo</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">str</span><span class="p">,</span> <span class="err">@</span><span class="nx">cb</span><span class="p">)</span> <span class="nx">void</span>
+    <span class="nx">cb</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span></pre><h2>메소드 정의시 뒤에 = 0을 붙이면 해당 메소드는 abstract 이다. (method.md 참고)</h2><h2>메소드에 this는 값으로 접근했을때의 this이다.</h2><ul><li>임의의 객체를 통해서 메소드에 접근하였고 그것이 값으로써 다른 변수의 할당될때 해당 변수는 delegator로 정의된다.</li><li>delegator로 메소드가 값을 넣을때 delegator는 메소드 접근시 사용한 this를 capture해 놓는다.</li><li>클로져는 현재의 local scope 까지 capture하므로 delegator에서 구현이 하나 더 추가된 것이다.</li><li>delegator는 메소드가 호출되기 직전 capture한 scope를 load한다.</li><li>메소드가 끝나면 scope를 원상복구 시킨다.</li></ul><pre class="m-code"><span class="nx">def</span> <span class="nx">person</span>
+    <span class="nx">sayHello</span><span class="p">()</span> <span class="nx">void</span>
+        <span class="nx">sys</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;hello world&quot;</span><span class="p">)</span>
+
+<span class="nx">p</span> <span class="o">:=</span> <span class="nx">person</span><span class="p">()</span>
+
+<span class="nx">arr</span> <span class="o">:=</span> <span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">sayHello</span><span class="p">,</span> <span class="nx">person</span><span class="p">.</span><span class="nx">sayHello</span><span class="p">]</span>
+<span class="nx">arr2</span> <span class="nx">person</span><span class="p">.</span><span class="nx">sayHello</span><span class="p">[]</span> <span class="c1">// 타입으로 접근한 것이므로 this는 무시된다.</span>
+<span class="nx">arr2</span> <span class="p">=</span> <span class="nx">arr</span>
+
+<span class="k">for</span> <span class="nx">fn</span> <span class="nx">in</span> <span class="nx">arr2</span>
+    <span class="nx">fn</span><span class="p">()</span> <span class="c1">// 사용시 this를 필요로 하지 않는다.</span></pre>
       </div>
     </div>
   </div>
