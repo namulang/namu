@@ -17,8 +17,10 @@ before_install:
 - git clone https://github.com/google/googletest.git
 - cd googletest
 - cmake .
-- sudo make install
-- cd ../..
+- make
+- cd bin
+- sudo cp ./* /usr/lib
+- cd ../../..
 
 sudo: required
 dist: xenial
