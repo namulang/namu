@@ -4,13 +4,14 @@ namespace wrd { namespace meta {
 
     TEST(DefaultBehavior, initSystem) {}
 
-    class MyClass {};
-    WRD_INIT_META(MyClass);
+    class MyClass {
+        WRD_INIT_META(MyClass);
+    };
 
     struct MyDerivedClass : public MyClass {
+        WRD_INIT_META(MyDerivedClass);
         typedef MyClass Super;
     };
-    WRD_INIT_META(MyDerivedClass);
 
     TEST(DefaultBehavior, basicBehavior) {
         ASSERT_FALSE(TType<MyClass>().isTemplate());
