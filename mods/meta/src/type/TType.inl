@@ -13,7 +13,7 @@ namespace wrd { namespace meta {
     TEMPL void* THIS::make() const { return TInstanceMaker<T>::make(); }
     TEMPL wcnt THIS::getSize() const { return sizeof(T); }
 
-    TEMPL WRD_SINGLETON_GETTER(const Type& THIS::getSuper() const, TType<typename TAdaptiveSuper<T>::Super>, TType<typename TAdaptiveSuper<T>::Super>());
+    TEMPL WRD_SINGLETON_GETTER(const Type& THIS::getSuper() const, TType<typename TAdaptiveSuper<T>::Super>);
 
     TEMPL const wbool& THIS::isInit() const {
         static wbool inner = typeid(T) == typeid(Adam);
