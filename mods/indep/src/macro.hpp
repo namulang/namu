@@ -11,6 +11,6 @@
 #include "macro/DeclThis.hpp"
 #include "macro/SingletoneGetter.hpp"
 #include "macro/Initiator.hpp"
-#include "macro/AssignGuard.hpp"
 #include "macro/TypeTrait.hpp"
 #include "macro/Nul.hpp"
+#include "macro/Gets.hpp"
