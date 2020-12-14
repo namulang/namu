@@ -13,3 +13,5 @@
 #include "macro/Initiator.hpp"
 #include "macro/AssignGuard.hpp"
 #include "macro/TypeTrait.hpp"
+#include "macro/Nil.hpp"
+#include "macro/Nul.hpp"
