@@ -24,4 +24,3 @@
 #define _COMMA() ,
 #define WRD_COMMA() WRD_DELAY(_COMMA)()
 #define __FILENAME__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
-
