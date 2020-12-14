@@ -52,6 +52,9 @@ namespace wrd { namespace indep {
         A* aNul = &WRD_GETS(b, getNul());
         ASSERT_TRUE(nul(aNul));
 
+        A& a0 = WRD_GETS(b.getNul());
+        ASSERT_TRUE(nul(a0));
+
         A& a2 = WRD_GETS(c,getB(),getA());
         ASSERT_FALSE(nul(a2));
         A* a2Nul = &WRD_GETS(c,getNul(),getA());
