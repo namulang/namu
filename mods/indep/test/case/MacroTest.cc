@@ -62,4 +62,19 @@ namespace wrd { namespace indep {
         A* a3Nul = &WRD_GETS(d,getNul(),getB(),getA());
         ASSERT_TRUE(nul(a3Nul));
     }
+
+    TEST(MacroTest, UnconstCalltest) {
+        struct A {
+            WRD_DECL_THIS(A)
+
+        public:
+            wbool foo() {
+                return true;
+            }
+            wbool foo() const WRD_UNCONST_FUNC(foo())
+        } a;
+
+        const A& aConst = a;
+        ASSERT_TRUE(aConst.foo());
+    }
 }}
