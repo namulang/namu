@@ -10,10 +10,13 @@ namespace wrd {
 		return *ret;
 	}
 
-    wbool nul(void* any);
+    template <typename T>
+    wbool nul(T* any) {
+        return !any;
+    }
 
     template <typename T>
-    wbool nil(T& any) {
+    wbool nul(T& any) {
         return !&any;
     }
 }

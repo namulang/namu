@@ -60,7 +60,7 @@ namespace wrd { namespace meta {
         //        "Tier" means that how this class are inherited far from the Root class, that is, Object.
         //        So, if the "this" is a super of given object "it", its "tier"th super class
         //        would must be the class of "this".
-        if(nil(it)) return false;
+        if(nul(it)) return false;
         const Types& its = it.getSupers();
         wcnt myTier = getSupers().size(),
              itsTier = its.size();
