@@ -64,6 +64,11 @@ namespace wrd { namespace indep {
         ASSERT_FALSE(nul(a3));
         A* a3Nul = &WRD_GETS(d,getNul(),getB(),getA());
         ASSERT_TRUE(nul(a3Nul));
+
+        A& a4 = WRD_GETS(d.getC().getB(),getA());
+        ASSERT_FALSE(nul(a4));
+        A* a4Nul = &WRD_GETS(d.getC().getB(),getNul());
+        ASSERT_TRUE(nul(a4Nul));
     }
 
     TEST(MacroTest, UnconstCalltest) {
