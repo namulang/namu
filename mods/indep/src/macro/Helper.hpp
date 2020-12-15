@@ -14,7 +14,7 @@
 #define WRD_DELAY(x) x WRD_VOID()
 
 #define _STR(x)            #x
-#define WRD_TO_STR(x)    _STR(x)
+#define WRD_STR(x)    _STR(x)
 
 #define _CONCAT(x, y)    x##y
 #define WRD_CONCAT(x, y)    _CONCAT(x, y)
