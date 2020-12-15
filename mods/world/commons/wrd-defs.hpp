@@ -135,18 +135,10 @@
 ///    this macro should be placed at implement file which include header file using DECLARE macro.
 #define _WRD_CLASS_DEF_BEAN_1(THIS)	_WRD_CLASS_DEF_BEAN_2(WRD_VOID(), THIS)
 #define _WRD_CLASS_DEF_BEAN_2(TEMPL, THIS)																								\
-    TEMPL const Str& THIS::__wrd_meta_class_bean::getNameStatic()																		\
-    {																																	\
-        static Str inner = MetaBean::_getDemangledName(typeid(THIS).name());															\
-		return inner;																													\
-    }																																	\
-	TEMPL WRD_LAZY_METHOD_4(const Class&, THIS::__wrd_meta_class_bean::getSuperStatic, WRD_VOID(), TClass<typename THIS::Super>)		\
-	TEMPL WRD_LAZY_METHOD_4(const Container&, THIS::__wrd_meta_class_bean::getNodesStatic, WRD_VOID(), Array)							\
+
+
 	TEMPL WRD_LAZY_METHOD_4(const Classes&, THIS::__wrd_meta_class_bean::getSupersStatic, WRD_VOID(), Classes)							\
 	TEMPL WRD_LAZY_METHOD_4(const Classes&, THIS::__wrd_meta_class_bean::getSubsStatic, WRD_VOID(), Classes)							\
-	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isOccupyStatic, WRD_VOID(), wbool, TIfSub<THIS WRD_COMMA() Object>::is)	\
-	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isADTStatic, WRD_VOID(), wbool, TIfADT< THIS >::is)						\
-	TEMPL WRD_LAZY_METHOD_5(wbool, THIS::__wrd_meta_class_bean::isTemplateStatic, WRD_VOID(), wbool, TIfTemplate< THIS >::is)			\
 	TEMPL const wbool& THIS::__wrd_meta_class_bean::isInitStatic()																				\
 	{																																	\
 		static wbool inner = &getNameStatic() == &TClass<Thing>::getNameStatic();														\
