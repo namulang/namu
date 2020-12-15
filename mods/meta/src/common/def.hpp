@@ -9,5 +9,5 @@ namespace wrd { namespace meta {
 
 #define WRD_INIT_META(This) \
     WRD_INITIATOR(initMeta, { \
-        TType<This>().init(); \
+        wrd::meta::TType<This>().init(); \
     })
