@@ -17,7 +17,7 @@ namespace wrd { namespace memlite {
 
 	Id This::getId() const
 	{
-		if(_id.s.blk_n == WRD_INDEX_ERROR)
+		if(_id.s.tag_n == WRD_INDEX_ERROR)
 			_getMgr().bind((This&)*this);
 		return _id;
 	}
