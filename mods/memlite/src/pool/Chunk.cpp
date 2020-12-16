@@ -5,7 +5,7 @@ namespace wrd { namespace memlite {
 	WRD_DEF_THIS(Chunk, Allocator)
 
 	This::Chunk(wcnt blksize, wbool is_fixed)
-        : Super(blksize), _heap(0), _is_fixed(is_fixed) {}
+        : Super(blksize), _heap(0), _is_fixed(is_fixed) { This::rel(); }
 	This::~Chunk() { This::rel(); }
 	wcnt This::getLen() const { return _len; }
 	wcnt This::getSize() const { return _sz; }
