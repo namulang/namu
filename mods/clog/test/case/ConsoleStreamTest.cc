@@ -6,8 +6,7 @@ namespace wrd { namespace clog {
 
     using namespace std::__fs;
 
-    typedef class ConsoleStreamTest : public ::testing::Test {
-    public:
+    typedef struct ConsoleStreamTest : public ::testing::Test {
         void SetUp() {
             delLogFile();
             ASSERT_FALSE(ConsoleStreamTest::hasLogFile());
