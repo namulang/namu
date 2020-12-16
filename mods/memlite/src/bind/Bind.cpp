@@ -29,7 +29,7 @@ namespace wrd { namespace memlite {
 		return _bind(new1);
 	}
 
-	wbool This::isBind() const { return _its_id.s.blk_n != WRD_INDEX_ERROR; }
+	wbool This::isBind() const { return _its_id.s.tag_n != WRD_INDEX_ERROR; }
 
 	wbool This::unbind()
 	{
