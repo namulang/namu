@@ -32,7 +32,7 @@ namespace wrd { namespace memlite {
 	TEMPL wbool THIS::_bind(const Instance& it)
 	{
 		wbool res = _bind(it);
-        if(res) {
+        if(!res) {
             WRD_E("super::_bind() was failed.");
             return res;
         }
@@ -86,12 +86,12 @@ namespace wrd { namespace memlite {
 	TEMPL wbool THIS::_bind(const Instance& it)
 	{
         wbool res = _bind(it);
-        if(res) {
+        if(!res) {
             WRD_E("super::_bind() was failed.");
             return res;
         }
 
-	    if( ! it.isHeap()) {
+	    if(!it.isHeap()) {
 	        WRD_W("it is local variable. couldn't bind it strongly.");
             return true;
         }
