@@ -31,7 +31,7 @@ namespace wrd { namespace memlite {
 	
 	TEMPL wbool THIS::_bind(const Instance& it)
 	{
-		wbool res = _bind(it);
+		wbool res = SUPER::_bind(it);
         if(!res) {
             WRD_E("super::_bind() was failed.");
             return res;

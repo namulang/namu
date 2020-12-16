@@ -26,8 +26,8 @@ namespace wrd { namespace memlite {
 	TEMPL wbool THIS::bind(T& new1) { return this->_bind(new1); }
 	TEMPL const Type& THIS::getBindable() const { return TType<T>::get(); }
 	
-	TEMPL T& THIS::get() { return SUPER::get(); }
-	TEMPL const T& THIS::get() const { return SUPER::get(); }
+	TEMPL T& THIS::get() { return Bindable::get<T>(); }
+	TEMPL const T& THIS::get() const { return Bindable::get<T>(); }
 	TEMPL wbool THIS::isConst() const { return false; }
 	
 #undef THIS
@@ -62,7 +62,7 @@ namespace wrd { namespace memlite {
 	TEMPL wbool THIS::bind(T& new1) { return this->_bind(new1); }
 	TEMPL wbool THIS::bind(const T& new1) { return this->_bind(new1); }
 	TEMPL const Type& THIS::getBindable() const { return TType<T>::get(); }
-	TEMPL const T& THIS::get() const { return SUPER::get(); }
+	TEMPL const T& THIS::get() const { return Bindable::get<T>(); }
 	TEMPL wbool THIS::isConst() const { return true; }
 
 #undef THIS
