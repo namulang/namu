@@ -18,8 +18,8 @@ before_install:
 - cd googletest
 - cmake .
 - make
-- cd bin
-- sudo cp ./* /usr/lib
+- cd lib
+- sudo cp ./*.a /usr/lib
 - cd ../../..
 
 sudo: required
