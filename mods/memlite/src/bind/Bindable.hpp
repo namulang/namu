@@ -26,6 +26,8 @@ namespace wrd { namespace memlite {
 
 		template <typename T> T& get() {
 			Instance& got = WRD_GETS(_get());
+            WRD_NUL(got, nulr<T>())
+
             if(!got.getType().isSub(TType<T>::get()))
                 return nulr<T>();
 

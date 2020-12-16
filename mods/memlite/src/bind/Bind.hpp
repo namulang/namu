@@ -55,14 +55,11 @@ namespace wrd { namespace memlite {
         //	Bind:
 		wbool bind(Instance& new1);
 		virtual wbool isBind() const;
-        /// mostly, unbind is replacable to rel() comletely.
-        /// but some class(e.g. Refer) treat differently between unbind() and rel().
 		virtual wbool unbind();
 		Id getItsId() const;
 		using Bindable::canBind;
 		virtual wbool canBind(const Type& cls) const;
         virtual wbool isConst() const = 0;
-		wbool rel();
 
 	protected://Bind:
 		virtual wbool _bind(const Instance& it);
