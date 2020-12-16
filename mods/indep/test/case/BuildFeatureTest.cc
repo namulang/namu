@@ -11,7 +11,7 @@ TEST(BuildFeature, dateGetter) {
 }
 
 TEST(BuildFeature, timeGetter) {
-    ASSERT_GT(BuildFeature::Time::getHour(), 0);
+    ASSERT_GE(BuildFeature::Time::getHour(), 0);
     ASSERT_GE(BuildFeature::Time::getMin(), 0);
     ASSERT_GE(BuildFeature::Time::getSec(), 0);
     ASSERT_STRNE(BuildFeature::Time::get().c_str(), "");
