@@ -17,7 +17,7 @@ namespace wrd { namespace memlite {
 	Unit& This::get(Id id)
 	{
 		Unit& got = get(id.s.blk_n);
-		if( ! &got ||
+		if( nul(got) ||
 			got.blk.getId().num != id.num)
 			return nulr<Unit>();
 
@@ -29,7 +29,7 @@ namespace wrd { namespace memlite {
 	void* This::new1()
 	{
 		Unit* res = (Unit*)Chunk::new1();
-		if( ! res)
+		if(!res)
 			return res;
 
 		::new (&res->blk) BindTag(_genId(res));

@@ -10,7 +10,7 @@ namespace wrd { namespace memlite {
 
 	const Chunk& This::getChunk() const
 	{
-		if( ! _pt)
+		if(!_pt)
 			return nulr<Chunk>();
 
 		return Instancer::get().getPool()[*_pt][*_pt];
@@ -22,7 +22,7 @@ namespace wrd { namespace memlite {
 	{
 		if(_pt && isHeap())
 			delete _pt;
-		_pt = NULL;
+		_pt = WRD_NULL;
 		_strong = 0;
 		return true;
 	}
@@ -31,7 +31,6 @@ namespace wrd { namespace memlite {
 	const Type& This::getBindable() const { return TType<Instance>::get(); }
 	wbool This::canBind(const Type& type) const { return type.isSub(getBindable()); }
 	Id This::getId() const { return _id; }
-
 	wbool This::isHeap() const { return _id.s.chk_n != WRD_INDEX_ERROR; }
 	wbool This::rel() { return unbind(); }
 

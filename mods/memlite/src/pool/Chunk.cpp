@@ -13,7 +13,7 @@ namespace wrd { namespace memlite {
 	void* This::new1()
 	{
 		if(	_len >= _sz	&& 
-			resize((getSize() + 1) * 2))
+			!resize((getSize() + 1) * 2))
 			return NULL;
 
 		widx* ret = (widx*)_get(_head);
