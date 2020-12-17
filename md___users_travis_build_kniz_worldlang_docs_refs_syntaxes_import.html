@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::meta::TNameGetter struct | world-doc</title>
+  <title>import | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,10 +44,9 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-dox-template">template&lt;typename T&gt;</div>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1meta.html">meta</a>::<wbr/></span>TNameGetter <span class="m-thin">struct</span>
+          import
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>TClass is a class template using monostate pattern. so it duplicates all static variables on each modules and it causes that can&#x27;t check hierarchy properly. sure, I can exports them,template classes, as external symbol for 3rd party modules to link and make it act well. but this requires user to declare another macro or statements such as burden to get them be annoy. instead of that, I put those inside of static symbols at normal nested private class. now, TClass of course will be duplicated on each modules and code bloated but it will act like proxy pointing this nested class.</p></aside><p>in conclusion, users can ignore this background reasons and use WRD_CLASS macro without additional consideration.</p>
+<h2>import 뒤에 사용할 type과 module path를 적어야 한다.</h2><h2>import를 두는 이유는 속도 최적화 때문이다.</h2><ul><li>이론상 import가 없더라도 동작에는 문제가 없다.</li><li>단 시스템은 type을 import 할 수 있더라도, 현재 프로그램을 돌리기 위한 최소한의 type만 load 해두는 것이 속도에 매우 이익이 된다.<ul><li>매우 많은 모듈이 worldlang으로 시스템에 존재한다고 가정하자.</li><li>이러한 최적화가 없다면 hello world 프로그램을 돌리기 위해서 필요하지도 않은 directx, socket, opencv 등을 load를 해두거나</li><li>2 pass 를 돌릴때 의존 관계를 유추하여 만들어 낼 수 있어야 한다. 많은 시간이 소요될 것이다.</li></ul></li></ul>
       </div>
     </div>
   </div>
