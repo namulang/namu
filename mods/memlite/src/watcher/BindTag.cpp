@@ -38,7 +38,7 @@ namespace wrd { namespace memlite {
 	{
 		if(!isHeap()) return false;
         if(!vote) {
-            WRD_E("vote is 0");
+            WRD_I("vote is 0");
             return false;
         }
 

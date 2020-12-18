@@ -17,9 +17,15 @@ namespace wrd { namespace memlite {
 	Unit& This::get(Id id)
 	{
 		Unit& got = get(id.s.tag_n);
-		if( nul(got) ||
-			got.blk.getId().num != id.num)
+		if(nul(got)) {
+            WRD_W("can't return Unit(%x): it's nul!", &got);
+            return nulr<Unit>();
+        }
+        if(got.blk.getId().num != id.num) {
+            WRD_W("can't return Unit.blk.getId(%d) != id.num(%d)",
+                    got.blk.getId().num, id.num);
 			return nulr<Unit>();
+        }
 
 		return got;
 	}

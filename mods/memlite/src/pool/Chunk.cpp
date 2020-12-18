@@ -13,12 +13,14 @@ namespace wrd { namespace memlite {
 	void* This::new1()
 	{
 		if(	_len >= _sz	&& 
-			!resize((getSize() + 1) * 2))
-			return NULL;
+			!resize((getSize() + 1) * 2)) {
+            WRD_E("new1() failed. tried to resize, but didn't work.");
+			return WRD_NULL;
+        }
 
 		widx* ret = (widx*)_get(_head);
-		if( ! ret)
-			return NULL;
+		if(!ret)
+			return WRD_NULL;
 
 		_head = *ret;
 		_len++;
@@ -74,8 +76,10 @@ namespace wrd { namespace memlite {
 
 	void* This::_get(widx n)
 	{
-		if(n < 0 || n >= _sz)
+		if(n < 0 || n >= _sz) {
+            WRD_W("n(%d) is out of size(%d)", n, _sz);
 			return WRD_NULL;
+        }
 		return _heap + n*_getRealBlkSize();
 	}
 

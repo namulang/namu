@@ -55,6 +55,8 @@ namespace wrd { namespace memlite {
 		//			refering. for instance, the scenario for binding non-heap allocated
 		//			instance.
 		_its_id = it.getId();
+        WRD_DI("Bind(%x) binds Instance(%x) of %s class",
+                this, &it, it.getType().getName().c_str());
 	    return true;
 	}
 	
@@ -73,8 +75,10 @@ namespace wrd { namespace memlite {
 	    //    Only not available combination between this and rhs is,
 	    //    when this is nonconst but rhs is const.
 	    //    because when we accept this case, in consequence, rhs's binded one will loose their constness.
-	    if(!isConst() && rhs.isConst())
+	    if(!isConst() && rhs.isConst()) {
+            WRD_W("Bind assign failed. me.const=%d but rhs.isConst()=%d", isConst(), rhs.isConst());
 	        return false; // the only case can't accept.
+        }
 	
 	    return _bind(rhs.get());
 	}

@@ -11,8 +11,11 @@ namespace wrd { namespace memlite {
 	{
 		// this guards cant exist at Chunk::_get().
 		// we should put here.
-		if(n < 0 || n >= getLen())
+		if(n < 0 || n >= getLen()) {
+            WRD_W("n(%d) is out of length(%d)", n, getLen());
 			return WRD_NULL;
+        }
+
 		return _get(n);
 	}
 
