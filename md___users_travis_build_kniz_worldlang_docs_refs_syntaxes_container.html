@@ -47,7 +47,9 @@
           container
         </h1>
 <h2>array, map, tuple 3종류를 기본 제공한다.</h2><h2>자바처럼 arraylist의 버금가는 활용도를 제공한다.</h2><ul><li>자바는 기본 배열은 어느순간 잘 안쓰게 되고 확장성 있는 arraylist를 사용을 자주한다.</li><li>효율성을 버리고, 타입을 일원화하는데 초점을 맞춘다.</li></ul><h2>container는 생성자 문법이 통용되지 않는다.</h2><ul><li>&quot;[&quot;, &quot;]&quot; 를 통해서 별도로 생성자처럼 사용한다.</li></ul><h2>container는 unique object가 존재하지 않는다.</h2><ul><li>unique object에 접근하는 것처럼 문법을 작성하면 실제로는 텅빈 container를 만드는 것이다.</li><li>container는 생성자가 없기 때문이다.</li></ul><h2>array</h2><h3>문법</h3><pre>[((value) (, value)*)*]
-</pre><ul><li>type deduction으로 값의 타입을 보고 어떠한 배열인지를 유추한다.</li><li>텅빈 배열을 만들 수 있다.</li></ul><pre class="m-code"><span class="nx">arr</span> <span class="o">:=</span> <span class="nx">str</span><span class="p">[]</span>
+</pre><ul><li>type deduction으로 값의 타입을 보고 어떠한 배열인지를 유추한다.</li><li>텅빈 배열을 만들 수 있다.</li></ul><pre class="m-code"><span class="nx">arr</span> <span class="o">:=</span> <span class="nx">str</span><span class="p">[]</span> <span class="c1">// arr is refer to str array.</span>
+<span class="nx">arr2</span> <span class="o">:=</span> <span class="nx">str</span><span class="p">[]()</span> <span class="c1">// empty arry to str.</span>
+<span class="nx">arr</span> <span class="p">=</span> <span class="nx">arr2</span>
 <span class="nx">arr</span><span class="p">.</span><span class="nx">len</span> <span class="c1">// 0</span>
 
 
@@ -85,12 +87,12 @@
 <span class="k">for</span> <span class="nx">v</span> <span class="nx">in</span> <span class="kd">map</span><span class="p">.</span><span class="nx">vals</span>
     <span class="nx">sys</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;value=$v&quot;</span><span class="p">)</span>
 
-<span class="kd">map</span><span class="p">.</span><span class="nx">keys</span></pre><h2>container 간 캐스팅은 container가 가진 타입 T에 대해서만 지원해야 한다.</h2><ul><li>원소에 대해서 casting을 해서 변환을 하면 안된다.</li><li>그것은 캐스팅이 아니라 변환(conversion)에 해당한다.</li></ul><h2>복잡한 컨테이너 문법</h2><pre class="m-code"><span class="nx">def</span> <span class="nx">app</span>
+<span class="kd">map</span><span class="p">.</span><span class="nx">keys</span></pre><h2>container 간 캐스팅은 container가 가진 타입 T에 대해서만 지원해야 한다.</h2><ul><li>원소에 대해서 casting을 해서 변환을 하면 안된다.</li><li>그것은 캐스팅이 아니라 변환(conversion)에 해당한다.</li></ul><h2>복잡한 컨테이너 문법</h2><pre class="m-code"><span class="nx">def</span> <span class="nx">app</span> <span class="nx">commonMyApp</span>
     <span class="nx">res</span><span class="p">,</span> <span class="nx">res2</span> <span class="p">=&gt;</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">arr</span> <span class="kt">int</span><span class="p">[],</span> <span class="nx">cache</span> <span class="nx">base</span><span class="p">[</span><span class="nx">str</span><span class="p">],</span> <span class="nx">key</span> <span class="nx">str</span><span class="p">)</span> <span class="kt">int</span><span class="p">[][</span><span class="nx">str</span><span class="p">],</span> <span class="nx">base</span><span class="p">[</span><span class="nx">str</span><span class="p">]</span> <span class="nx">on</span> <span class="nx">err</span>
-        <span class="k">return</span> <span class="kt">int</span><span class="p">[][</span><span class="nx">str</span><span class="p">],</span> <span class="nx">base</span><span class="p">[</span><span class="nx">str</span><span class="p">]</span> <span class="nx">on</span> <span class="nx">myErr</span>
+        <span class="k">return</span> <span class="kt">int</span><span class="p">[][</span><span class="nx">str</span><span class="p">](),</span> <span class="nx">base</span><span class="p">[</span><span class="nx">str</span><span class="p">]()</span> <span class="nx">on</span> <span class="nx">myErr</span>
 
     <span class="nx">main</span><span class="p">()</span> <span class="nx">void</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="nx">on</span> <span class="nx">res</span> <span class="o">:=</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">null</span><span class="p">,</span> <span class="nx">null</span><span class="p">,</span> <span class="nx">null</span><span class="p">))</span> <span class="nx">as</span> <span class="nx">myErr</span>
+        <span class="k">if</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="nx">on</span> <span class="nx">res</span> <span class="o">:=</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">null</span><span class="p">,</span> <span class="nx">null</span><span class="p">,</span> <span class="nx">null</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="nx">age</span> <span class="o">:=</span> <span class="nx">a</span><span class="p">[</span><span class="s">&quot;wow&quot;</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
