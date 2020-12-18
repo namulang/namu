@@ -20,7 +20,10 @@ before_install:
 - make
 - cd lib
 - sudo cp ./*.a /usr/lib
-- cd ../../..
+- cd ..
+- cd googletest/include
+- sudo mv gtest /usr/local/include
+- cd ../../../..
 
 sudo: required
 dist: xenial
