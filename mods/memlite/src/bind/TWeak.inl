@@ -15,8 +15,7 @@ namespace wrd { namespace memlite {
 	TEMPL T* THIS::operator->() { return &this->get(); }
 	TEMPL T& THIS::operator*() { return this->get(); }
 
-	TEMPL THIS& THIS::operator=(const This& rhs)
-	{
+	TEMPL THIS& THIS::operator=(const This& rhs) {
         if(this == &rhs) return *this;
 
 		SUPER::operator=(rhs);
@@ -25,11 +24,11 @@ namespace wrd { namespace memlite {
 
 	TEMPL wbool THIS::bind(T& new1) { return this->_bind(new1); }
 	TEMPL const Type& THIS::getBindable() const { return TType<T>::get(); }
-	
+
 	TEMPL T& THIS::get() { return Bindable::get<T>(); }
 	TEMPL const T& THIS::get() const { return Bindable::get<T>(); }
 	TEMPL wbool THIS::isConst() const { return false; }
-	
+
 #undef THIS
 #define THIS TWeak<const T>
 
@@ -43,16 +42,14 @@ namespace wrd { namespace memlite {
 	TEMPL const T* THIS::operator->() const { return &this->get(); }
 	TEMPL const T& THIS::operator*() const { return this->get(); }
 
-	TEMPL THIS& THIS::operator=(const This& rhs)
-	{
+	TEMPL THIS& THIS::operator=(const This& rhs) {
         if(this == &rhs) return *this;
-	
+
 		SUPER::operator=(rhs);
 	    return *this;
 	}
 
-	TEMPL THIS& THIS::operator=(const TWeak<T>& rhs)
-	{
+	TEMPL THIS& THIS::operator=(const TWeak<T>& rhs) {
         if(this == &rhs) return *this;
 
 		SUPER::operator=(rhs);

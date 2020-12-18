@@ -42,8 +42,8 @@ namespace wrd { namespace memlite {
     ///				because it was declared to class template, user need to bind or get binded using type T.
     ///				of course these are based on class Bind, user can use loose-check API case by case.
     ///
-    class Bind : public Instance, public Bindable
-	{	WRD_DECL_THIS(Bind, Instance)
+    class Bind : public Instance, public Bindable {
+        WRD_DECL_THIS(Bind, Instance)
 		friend class BindTag; // for _get()
 
 	public:
@@ -51,7 +51,6 @@ namespace wrd { namespace memlite {
 		wbool operator!=(const This& rhs) const;
 		This& operator=(const This& rhs);
 
-	public:
         //	Bind:
 		wbool bind(Instance& new1);
 		virtual wbool isBind() const;
@@ -61,7 +60,8 @@ namespace wrd { namespace memlite {
 		virtual wbool canBind(const Type& cls) const;
         virtual wbool isConst() const = 0;
 
-	protected://Bind:
+	protected:
+        //  Bind:
 		virtual wbool _bind(const Instance& it);
 		virtual Instance& _get();
 		wbool _assign(const This& rhs);

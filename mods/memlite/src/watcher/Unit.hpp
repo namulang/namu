@@ -11,11 +11,10 @@ namespace wrd { namespace memlite {
 	///			because used up element will be set to integer, which is for index,
 	///			if Unit has no widx in front of its member, its blk member-variable
 	///			definitely would be polluted and accessing it causes Undefined Behavior.
-	///			
-	///			and we need the blk that can be used after it freed, this is why we 
+	///
+	///			and we need the blk that can be used after it freed, this is why we
 	///			put an additional value, next. see @Block to know the reason.
-	struct Unit
-	{
+	struct Unit {
 		widx next;
 		BindTag blk;
 	};

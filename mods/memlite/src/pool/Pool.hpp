@@ -4,8 +4,8 @@
 
 namespace wrd { namespace memlite {
 
-	class Pool : public MemoryHaver
-	{	WRD_DECL_THIS(Pool, MemoryHaver)
+	class Pool : public MemoryHaver {
+        WRD_DECL_THIS(Pool, MemoryHaver)
 
 	public:
 		Pool();

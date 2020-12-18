@@ -4,8 +4,8 @@
 
 namespace wrd { namespace memlite {
 
-	class Chunk : public Allocator
-	{	WRD_DECL_THIS(Chunk, Allocator)
+	class Chunk : public Allocator {
+        WRD_DECL_THIS(Chunk, Allocator)
 
 	public:
 		static constexpr wcnt INIT_SZ = 20;

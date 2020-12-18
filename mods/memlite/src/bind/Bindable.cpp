@@ -11,8 +11,7 @@ namespace wrd { namespace memlite {
 	This::operator wbool() const { return isBind(); }
 	wbool This::bind(const Instance& it) { return _bind(it); }
 
-	wbool This::canBind(const Instance& it)
-	{
+	wbool This::canBind(const Instance& it) {
 		WRD_NUL(it, false)
 		return canBind(it.getType());
 	}

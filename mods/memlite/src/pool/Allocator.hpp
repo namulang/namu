@@ -4,8 +4,8 @@
 
 namespace wrd { namespace memlite {
 
-	class Allocator : public MemoryHaver
-	{	WRD_DECL_THIS(Allocator, MemoryHaver)
+	class Allocator : public MemoryHaver {
+        WRD_DECL_THIS(Allocator, MemoryHaver)
 
 	public:
 		Allocator(wcnt blksize = 1);

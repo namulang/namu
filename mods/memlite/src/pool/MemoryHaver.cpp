@@ -7,8 +7,7 @@ namespace wrd { namespace memlite {
 	void* This::operator[](widx n) { return get(n); }
 	const void* This::operator[](widx n) const { return get(n); }
 
-	void* This::get(widx n)
-	{
+	void* This::get(widx n) {
 		// this guards cant exist at Chunk::_get().
 		// we should put here.
 		if(n < 0 || n >= getLen()) {

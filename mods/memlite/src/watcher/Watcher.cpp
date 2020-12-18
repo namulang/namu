@@ -14,8 +14,7 @@ namespace wrd { namespace memlite {
 	Unit& This::get(widx n) { return *(Unit*)_get(n); }
 	const Unit& This::get(widx n) const { return ((Watcher*)this)->get(n); }
 
-	Unit& This::get(Id id)
-	{
+	Unit& This::get(Id id) {
 		Unit& got = get(id.s.tag_n);
 		if(nul(got)) {
             WRD_W("can't return Unit(%x): it's nul!", &got);
@@ -32,8 +31,7 @@ namespace wrd { namespace memlite {
 
 	const Unit& This::get(Id id) const WRD_UNCONST_FUNC(get(id))
 
-	void* This::new1()
-	{
+	void* This::new1() {
 		Unit* res = (Unit*)Chunk::new1();
 		if(!res)
 			return res;
@@ -42,8 +40,7 @@ namespace wrd { namespace memlite {
 		return res;
 	}
 
-	Id This::_genId(void* pt) const
-	{
+	Id This::_genId(void* pt) const {
 		static wcnt serial = 0;
 		// Watcher concern about bkl_n at Id. on the other hand, Chunk is chk_n.
 		// eventually, if Instance was born from heap, first it take chk_n from chunk when it borns.
@@ -51,8 +48,7 @@ namespace wrd { namespace memlite {
 		return Id(_getIdx(pt), WRD_INDEX_ERROR, ++serial);
 	}
 
-	widx This::_getIdx(void* it) const
-	{
+	widx This::_getIdx(void* it) const {
 		if(!has(*(Instance*)it)) // "has" func will treat it as void*, too.
 			return -1;
 

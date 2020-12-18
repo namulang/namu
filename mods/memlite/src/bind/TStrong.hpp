@@ -5,8 +5,8 @@
 namespace wrd { namespace memlite {
 
 	template <typename T>
-	class TStrong : public TWeak<T>
-	{	WRD_DECL_THIS(TStrong, TWeak<T>)
+	class TStrong : public TWeak<T> {
+        WRD_DECL_THIS(TStrong, TWeak<T>)
 
 	public:
 		TStrong();
@@ -15,19 +15,18 @@ namespace wrd { namespace memlite {
 		TStrong(const This& rhs);
 		virtual ~TStrong();
 
-	public:
 		This& operator=(const This& rhs);
 
-	public:
 		virtual wbool unbind();
 
 	protected:
 		//Bind:
 		virtual wbool _bind(const Instance& it);
 	};
+
 	template <typename T>
-	class TStrong<const T> : public TWeak<const T>
-	{	WRD_DECL_THIS(TStrong, TWeak<const T>)
+	class TStrong<const T> : public TWeak<const T> {
+        WRD_DECL_THIS(TStrong, TWeak<const T>)
 
 	public:
 		TStrong();
@@ -39,11 +38,9 @@ namespace wrd { namespace memlite {
 		TStrong(const TStrong<T>& rhs);
 		virtual ~TStrong();
 
-	public:
 		This& operator=(const This& rhs);
 		This& operator=(const TStrong<T>& rhs);
 
-	public:
 		virtual wbool unbind();
 
 	protected:

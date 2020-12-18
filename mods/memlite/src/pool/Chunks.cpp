@@ -22,16 +22,14 @@ namespace wrd { namespace memlite {
 	wcnt This::getLen() const { return _chunks.size(); }
 	wcnt This::getSize() const { return getLen(); }
 
-	void* This::new1()
-	{
+	void* This::new1() {
 		widx n = _findCapable();
 		void* ret = _chunks[n]->new1();
 		Instance::_vault.set(ret, n);
 		return ret;
 	}
 
-	wbool This::del(void* pt, wcnt sz)
-	{
+	wbool This::del(void* pt, wcnt sz) {
 		//	in fact, cast wasn't be deallocated yet:
 		//		if we guarrantee that destructor didn't change its _id value,
 		//		_id will keep its value till now.
@@ -39,13 +37,11 @@ namespace wrd { namespace memlite {
 		return _chunks[chk_n]->del(pt, sz);
 	}
 
-	widx This::_findCapable()
-	{
+	widx This::_findCapable() {
 		wcnt sz = _chunks.size();
 		widx end = _s;
 
-		do
-		{
+		do {
 			const Chunk& e = get(_s);
 			if(!nul(e) && e.isCapable())
 				return _s;
@@ -59,8 +55,7 @@ namespace wrd { namespace memlite {
 
 	wbool This::has(const Instance& it) const { return _chunks[it.getId().s.chk_n]->has(it); }
 
-	wbool This::resize(wcnt new1)
-	{
+	wbool This::resize(wcnt new1) {
 		_s = _chunks.size();
 		if(_s > new1) _s = new1-1;
 		if(_s < 0) _s = 0;
@@ -70,8 +65,7 @@ namespace wrd { namespace memlite {
 		return true;
 	}
 
-	wbool This::_rel()
-	{
+	wbool This::_rel() {
 		for(Chunk* e : _chunks)
 			e->rel();
 		_chunks.clear();
@@ -79,8 +73,7 @@ namespace wrd { namespace memlite {
 		return true;
 	}
 
-	void* This::_get(widx n)
-	{
+	void* This::_get(widx n) {
 		if (0 > n || n >= _chunks.size())
 			return WRD_NULL;
 

@@ -4,8 +4,8 @@
 
 namespace wrd { namespace memlite {
 
-	class Bindable
-	{	WRD_DECL_THIS(Bindable)
+	class Bindable {
+        WRD_DECL_THIS(Bindable)
 
 	public:
         const Instance* operator->() const;
@@ -13,8 +13,7 @@ namespace wrd { namespace memlite {
         const Instance& operator*() const;
         Instance& operator*();
         operator wbool() const;
-	
-	public:
+
 		wbool bind(const Instance& it);
 		virtual const Type& getBindable() const = 0;
 		wbool canBind(const Instance& it);
