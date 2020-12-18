@@ -38,7 +38,7 @@ namespace wrd { namespace memlite {
 
         Id id = tag.getId();
         ASSERT_GT(id.s.serial, 0);
-        ASSERT_GE(id.s.tag_n,  0);
+        ASSERT_GE(id.s.tagN,  0);
     }
 
     TEST(BindTest, bindSameInstanceFewTimesTest) {

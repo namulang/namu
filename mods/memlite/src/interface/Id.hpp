@@ -7,13 +7,13 @@ namespace wrd { namespace memlite {
     union Id {
 
 		struct SeperatedId {
-			wint tag_n:21;
-			wint chk_n:22;
+			wint tagN:21;
+			wint chkN:22;
 			wuint serial:21;
 		} s;
 		wint64 num;
 
 		Id(wint64 it);
-		Id(wint new_tag_n = WRD_INDEX_ERROR, wint new_chk_n = WRD_INDEX_ERROR, wuint new_serial = 0);
+		Id(wint new_tagN = WRD_INDEX_ERROR, wint newChkN = WRD_INDEX_ERROR, wuint newSerial = 0);
     };
 }}

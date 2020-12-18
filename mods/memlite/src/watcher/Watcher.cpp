@@ -15,7 +15,7 @@ namespace wrd { namespace memlite {
 	const Unit& This::get(widx n) const { return ((Watcher*)this)->get(n); }
 
 	Unit& This::get(Id id) {
-		Unit& got = get(id.s.tag_n);
+		Unit& got = get(id.s.tagN);
 		if(nul(got)) {
             WRD_W("can't return Unit(%x): it's nul!", &got);
             return nulr<Unit>();
@@ -42,9 +42,9 @@ namespace wrd { namespace memlite {
 
 	Id This::_genId(void* pt) const {
 		static wcnt serial = 0;
-		// Watcher concern about bkl_n at Id. on the other hand, Chunk is chk_n.
-		// eventually, if Instance was born from heap, first it take chk_n from chunk when it borns.
-		// and take tag_n from Watcher when user try to access its Block instance.
+		// Watcher concern about bkl_n at Id. on the other hand, Chunk is chkN.
+		// eventually, if Instance was born from heap, first it take chkN from chunk when it borns.
+		// and take tagN from Watcher when user try to access its Block instance.
 		return Id(_getIdx(pt), WRD_INDEX_ERROR, ++serial);
 	}
 

@@ -14,7 +14,7 @@ namespace wrd { namespace memlite {
 	const Chunk& This::operator[](const Instance& inst) const { return get(inst); }
 
 	Chunk& This::get(widx n) { return *(Chunk*)_get(n); }
-	Chunk& This::get(const Instance& it) { return *(Chunk*)_get(it.getId().s.chk_n); }
+	Chunk& This::get(const Instance& it) { return *(Chunk*)_get(it.getId().s.chkN); }
 	const Chunk& This::get(const Instance& it) const { return ((Chunks*)this)->get(it); }
 	const Chunk& This::get(widx n) const { return ((Chunks*)this)->get(n); }
 
@@ -33,8 +33,8 @@ namespace wrd { namespace memlite {
 		//	in fact, cast wasn't be deallocated yet:
 		//		if we guarrantee that destructor didn't change its _id value,
 		//		_id will keep its value till now.
-		widx chk_n = ((Instance*) pt)->_id.s.chk_n;
-		return _chunks[chk_n]->del(pt, sz);
+		widx chkN = ((Instance*) pt)->_id.s.chkN;
+		return _chunks[chkN]->del(pt, sz);
 	}
 
 	widx This::_findCapable() {
@@ -53,7 +53,7 @@ namespace wrd { namespace memlite {
 		return _s;
 	}
 
-	wbool This::has(const Instance& it) const { return _chunks[it.getId().s.chk_n]->has(it); }
+	wbool This::has(const Instance& it) const { return _chunks[it.getId().s.chkN]->has(it); }
 
 	wbool This::resize(wcnt new1) {
 		_s = _chunks.size();

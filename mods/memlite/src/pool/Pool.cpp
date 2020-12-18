@@ -24,29 +24,29 @@ namespace wrd { namespace memlite {
 		return got.has(it);
 	}
 
-	wcnt This::getSize() const { return _chunkset.capacity(); }
-	wcnt This::getLen() const { return _chunkset.size(); }
+	wcnt This::getSize() const { return _chunks.capacity(); }
+	wcnt This::getLen() const { return _chunks.size(); }
 
 	wbool This::rel() {
-		for(Chunks* e : _chunkset) {
+		for(Chunks* e : _chunks) {
 			if (!e) continue;
 			e->rel();
 			delete e;
 		}
 
-		_chunkset.clear();
+		_chunks.clear();
 		return true;
 	}
 
 	void* This::_get(widx n) {
 		if(0 > n) return WRD_NULL;
 
-		while((int)_chunkset.size() - 1 < n)
-			_chunkset.push_back(NULL);
+		while((int)_chunks.size() - 1 < n)
+			_chunks.push_back(NULL);
 
-		if(!_chunkset[n])
-			_chunkset[n] = new Chunks(n);
+		if(!_chunks[n])
+			_chunks[n] = new Chunks(n);
 
-		return _chunkset[n];
+		return _chunks[n];
 	}
 }}

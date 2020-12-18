@@ -67,6 +67,6 @@ namespace wrd { namespace memlite {
 		wbool _assign(const This& rhs);
 
 	private:
-		Id _its_id; // id for binded one
+		Id _itsId; // id for binded one
 	};
 }}

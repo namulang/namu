@@ -43,8 +43,8 @@ namespace wrd { namespace memlite {
             ASSERT_TRUE(tag.canBind(TType<Instance>()));
 
             Id id = tag.getId();
-            ASSERT_NE(id.s.tag_n, WRD_INDEX_ERROR);
-            ASSERT_NE(id.s.chk_n, WRD_INDEX_ERROR);
+            ASSERT_NE(id.s.tagN, WRD_INDEX_ERROR);
+            ASSERT_NE(id.s.chkN, WRD_INDEX_ERROR);
             ASSERT_GT(id.s.serial, 0);
             ASSERT_TRUE(tag.isHeap());
 

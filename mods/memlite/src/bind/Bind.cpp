@@ -27,14 +27,14 @@ namespace wrd { namespace memlite {
 		return _bind(new1);
 	}
 
-	wbool This::isBind() const { return _its_id.s.tag_n != WRD_INDEX_ERROR; }
+	wbool This::isBind() const { return _itsId.s.tagN != WRD_INDEX_ERROR; }
 
 	wbool This::unbind() {
-		_its_id.num = WRD_INDEX_ERROR;
+		_itsId.num = WRD_INDEX_ERROR;
 		return true;
 	}
 
-	Id This::getItsId() const { return _its_id; }
+	Id This::getItsId() const { return _itsId; }
 	wbool This::canBind(const Type& type) const { return getBindable().isSuper(type); }
 
 	wbool This::_bind(const Instance& it) {
@@ -50,14 +50,14 @@ namespace wrd { namespace memlite {
 		//			no matter how block reacts, anyway it won't refuse binder's
 		//			refering. for instance, the scenario for binding non-heap allocated
 		//			instance.
-		_its_id = it.getId();
+		_itsId = it.getId();
         WRD_DI("Bind(%x) binds Instance(%x) of %s class",
                 this, &it, it.getType().getName().c_str());
 	    return true;
 	}
 
 	Instance& This::_get() {
-        Instance& ins = WRD_GETS(_getBindTag(_its_id),get());
+        Instance& ins = WRD_GETS(_getBindTag(_itsId),get());
         WRD_NUL_THEN_LOG(ins)
 
 	    return ins;

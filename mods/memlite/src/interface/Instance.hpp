@@ -19,13 +19,13 @@ namespace wrd { namespace memlite {
 		class Vault {
 
 		public:
-			wbool set(void* rcver, widx chk_n);
+			wbool set(void* rcver, widx chkN);
 			widx get(void* rcver);
 			wbool rel();
 
 		private:
 			void* _rcver;
-			widx _chk_n;
+			widx _chkN;
 		};
 
 		Instance();
