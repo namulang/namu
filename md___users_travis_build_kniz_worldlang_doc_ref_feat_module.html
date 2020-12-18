@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::meta::TNameGetter struct | world-doc</title>
+  <title>module | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,10 +44,9 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <div class="m-dox-template">template&lt;typename T&gt;</div>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1meta.html">meta</a>::<wbr/></span>TNameGetter <span class="m-thin">struct</span>
+          module
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>TClass is a class template using monostate pattern. so it duplicates all static variables on each modules and it causes that can&#x27;t check hierarchy properly. sure, I can exports them,template classes, as external symbol for 3rd party modules to link and make it act well. but this requires user to declare another macro or statements such as burden to get them be annoy. instead of that, I put those inside of static symbols at normal nested private class. now, TClass of course will be duplicated on each modules and code bloated but it will act like proxy pointing this nested class.</p></aside><p>in conclusion, users can ignore this background reasons and use WRD_CLASS macro without additional consideration.</p>
+<h2>worldlang interpreter에서 attach 할 수 있는 AST 패키지를 module이라고 한다.</h2><h2>C module, C++ module, worldlang module 여러가지가 있다.</h2><h2>확장자는 wmod</h2><h2>모듈 식별자</h2><ul><li>고유의 모듈을 식별하기 위해서 다음의 구성을 사용한다.</li><li><p>package는 여러개가 붙을 수 있다.</p><p>&lt;id&gt;.&lt;package&gt;.&lt;objname&gt; kniz.example1.consoleTest kniz.example1.demo1.situ1.test2.consoleTest2</p></li></ul><h2>id는 고유한 것이다.</h2><ul><li>worldlang site에서 등록해야 한다.</li><li>등록 방법은 비밀번호와 id만 묻는 것으로 간단하다.</li><li>등록된 id로만 worldlang store에 모듈을 등록할 수 있다.</li><li>등록된 id로만 이 모듈이 verified 된 것인지 보장할 수 있다.</li></ul>
       </div>
     </div>
   </div>
