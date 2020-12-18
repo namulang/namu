@@ -29,7 +29,7 @@ namespace wrd { namespace memlite {
 	const Type& This::getBindable() const { return TType<Instance>::get(); }
 	wbool This::canBind(const Type& type) const { return type.isSub(getBindable()); }
 	Id This::getId() const { return _id; }
-	wbool This::isHeap() const { return _id.s.chk_n != WRD_INDEX_ERROR; }
+	wbool This::isHeap() const { return _id.s.chkN != WRD_INDEX_ERROR; }
 	wbool This::rel() { return unbind(); }
 
 	wbool This::_onStrong(wcnt vote) {
@@ -57,7 +57,7 @@ namespace wrd { namespace memlite {
 	wbool This::_completeId(Instance& it) {
 		//	complete mine:
 		Id mine = getId();
-		mine.s.chk_n = it._id.s.chk_n;
+		mine.s.chkN = it._id.s.chkN;
 		//	propagate it:
 		return _sync(mine);
 	}

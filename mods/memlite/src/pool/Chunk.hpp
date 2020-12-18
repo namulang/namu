@@ -42,6 +42,6 @@ namespace wrd { namespace memlite {
 		widx _head;
 		wcnt _len, _sz;
 		wuchar* _heap;
-		wbool _is_fixed;
+		wbool _isFixed;
 	};
 }}

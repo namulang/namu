@@ -5,7 +5,7 @@ namespace wrd { namespace memlite {
 	WRD_DEF_THIS(Chunk, Allocator)
 
 	This::Chunk(wcnt blksize, wbool is_fixed)
-        : Super(blksize), _heap(0), _is_fixed(is_fixed) { This::rel(); }
+        : Super(blksize), _heap(0), _isFixed(is_fixed) { This::rel(); }
 	This::~Chunk() { This::rel(); }
 	wcnt This::getLen() const { return _len; }
 	wcnt This::getSize() const { return _sz; }
@@ -44,7 +44,7 @@ namespace wrd { namespace memlite {
 	wbool This::resize(wcnt new_sz) {
 		//	pre:
 		if(new_sz < INIT_SZ) new_sz = INIT_SZ;
-		if(_is_fixed) new_sz = INIT_SZ;
+		if(_isFixed) new_sz = INIT_SZ;
 		if(new_sz == _sz) return false;
 
 		//	main:
@@ -67,7 +67,7 @@ namespace wrd { namespace memlite {
 
 	const wuchar* This::getEOB() const WRD_UNCONST_FUNC(_getEOB())
 	const wuchar* This::getHeap() const { return _heap; }
-	wbool This::isFixed() const { return _is_fixed; }
+	wbool This::isFixed() const { return _isFixed; }
 
 	void* This::_get(widx n) {
 		if(n < 0 || n >= _sz) {

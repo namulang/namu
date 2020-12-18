@@ -29,6 +29,6 @@ namespace wrd { namespace memlite {
 		virtual void* _get(widx n);
 
 	private:
-		std::vector<Chunks*> _chunkset;
+		std::vector<Chunks*> _chunks;
 	};
 }}

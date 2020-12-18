@@ -6,7 +6,7 @@ namespace wrd { namespace memlite {
 	WRD_DEF_THIS(Instance)
 	This::Vault Instance::_vault;
 
-	This::Instance() { _id.s.chk_n = _vault.get(this); }
+	This::Instance() { _id.s.chkN = _vault.get(this); }
 	This::Instance(Id id) : _id(id) {} // no binding required.
 	This::~Instance() { _getMgr().unbind(*this); }
 
@@ -16,7 +16,7 @@ namespace wrd { namespace memlite {
 	void This::operator delete(void* pt, size_t sz) { _getMgr()._del(pt, sz); }
 
 	Id This::getId() const {
-		if(_id.s.tag_n == WRD_INDEX_ERROR)
+		if(_id.s.tagN == WRD_INDEX_ERROR)
 			_getMgr().bind((This&)*this);
 		return _id;
 	}
@@ -44,9 +44,9 @@ namespace wrd { namespace memlite {
 
 	Instancer& This::_getMgr() { return Instancer::get(); }
 
-	wbool This::Vault::set(void* rcver, widx chk_n) {
+	wbool This::Vault::set(void* rcver, widx chkN) {
 		_rcver = rcver;
-		_chk_n = chk_n;
+		_chkN = chkN;
 		return true;
 	}
 
@@ -55,7 +55,7 @@ namespace wrd { namespace memlite {
 		if( ! _rcver) return WRD_INDEX_ERROR;
 
 		//	main:
-		widx ret = _chk_n;
+		widx ret = _chkN;
 		if(rcver != _rcver) {
 			WRD_W("rcver(%x) != _rcver(%x)", rcver, _rcver);
 			ret = WRD_INDEX_ERROR;
