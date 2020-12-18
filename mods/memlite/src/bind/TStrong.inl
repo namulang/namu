@@ -24,8 +24,8 @@ namespace wrd { namespace memlite {
 		if(!this->isBind()) return true;
 		BindTag& tag = this->_getBindTag(this->getItsId());
         WRD_NUL(tag, SUPER::unbind());
+
 		tag._onStrong(-1);
-	
 	    return SUPER::unbind();
 	}
 	
@@ -78,8 +78,8 @@ namespace wrd { namespace memlite {
 		if(!this->isBind()) return true;
 		BindTag& tag = this->_getBindTag(this->getItsId());
         WRD_NUL(tag, SUPER::unbind());
+
 		tag._onStrong(-1);
-	
 	    return SUPER::unbind();
 	}
 	
