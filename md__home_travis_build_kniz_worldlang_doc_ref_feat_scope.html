@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::memlite::WatchCell struct | world-doc</title>
+  <title>scope | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,22 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1memlite.html">memlite</a>::<wbr/></span>WatchCell <span class="m-thin">struct</span>
+          scope
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>Immortality of <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> instance. <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> is managed by <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> and <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> set used instances to some index for chaining linked list. in order to hand over quickly to caller when it requires <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> to alloc new an instance.</p></aside><p>because used up element will be set to integer, which is for index, if <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> has no widx in front of its member, its blk member-variable definitely would be polluted and accessing it causes Undefined Behavior.</p><p>and we need the blk that can be used after it freed, this is why we put an additional value, next. see @Block to know the reason.</p>
+<h2>scope은 3종류로 분류한다.</h2><ul><li>global scope 은 전역변수와 모든 origin객체가 놓여진다.</li><li>object scope 은 객체 1개에 대한 멤버들이 등록된다.</li><li>local scope 은 메소드 실행 도중에 발생하는 객체들이 등록된다.</li></ul><h2>모든 객체는, 자신이 메소드를 처리할때 scope을 갱신하려고 한다.</h2><h2>일반 객체는 자신이 가진 member로 object scope을 교체하고 localscope을 비운다.</h2><h2>메소드는 local scope을 추가한다.</h2><h2>메소드는 실행 도중에 변수의 정의가 나오면 local scope에 추가한다.</h2><h2>scope는 외부에서 제네릭객체에 접근한다는 사실을 판별해야 한다.</h2><ul><li>제네릭 객체에 접근하려고 하고 있으며, 그 generic 객체가 아직 없다면 새로 unique객체를 만들어야 하기 때문에.</li><li>혹은 generic 객체에 접근할때의 이벤트를 외부에서 cb을 받을 수있게 하거나.</li><li>generic의 unique객체를 만들때에는 일단 unique객체를 scope에 낑겨넣고 verfiication을 돌린다.<ul><li>다시 scope에 질의해서 무한 루프를 도는 걸 막아야 하기 때문이다.</li><li>verification이 실패시 넣었던 객체를 다시 지운다.</li></ul></li></ul><h2>일반 객체는 정의를 scan 하는 과정과 verify 하는 과정 2PASS를 돌린다.</h2><ul><li>따라서 객체의 메소드를 정의할때 안에 구현에서 아직 나오지 않은 다른 메소드를 사용하더라도 문제가 없다.</li></ul><h2>메시지는 메시지를 처리하는 주체를 소유한 객체에게 전달된다.</h2><pre class="m-code"><span class="n">def</span> <span class="n">a</span>
+    <span class="kt">void</span> <span class="n">print</span><span class="p">()</span>
+    <span class="kt">void</span> <span class="n">foo</span><span class="p">()</span>
+        <span class="n">print</span><span class="p">()</span></pre><ul><li>여기서 print() 는 this.print() 와 같은 것이다. print()를 소유한 객체는 foo 메소드가 아니라 a 객체다.</li><li>a 객체는 일반 객체이므로 자신이 가진 member인 print와 foo를 object scope에 등록한 후 local scope을 비운다.</li></ul><h2>위의 알고리즘을 따르면, 중첩 메소드도 해결된다.</h2><pre class="m-code"><span class="n">def</span> <span class="n">a</span>
+
+    <span class="kt">void</span> <span class="n">foo</span><span class="p">()</span>
+        <span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="mi">35</span>
+
+        <span class="kt">void</span> <span class="n">print</span><span class="p">()</span>
+            <span class="n">a</span><span class="o">++</span>
+            <span class="n">b</span><span class="o">++</span> <span class="c1">// err</span>
+
+        <span class="nl">b</span> <span class="p">:</span><span class="o">=</span> <span class="mi">5</span>
+        <span class="n">print</span><span class="p">()</span></pre><ul><li>print()를 소유한 객체는 foo 메소드다. 따라서 foo 메소드는 localscope을 하나 추가한다. print()안쪽에서 a 에 대해 접근이 가능하다.</li><li>참고로, b는 중첩메소드가 정의되는 시점에는 아직 정의되지 않았다. 따라서 접근이 안된다.</li></ul><h2>this</h2><ul><li>global scope에 접근하는 키워드다.</li><li>global scope는 기본적으로 scope에 들어가 있다. this는 이름 충돌시에 사용한다.</li></ul><h2>me</h2><ul><li>실행중인 메소드다.</li><li>RTTI 관련 메소드가 기본적으로 제공된다.<ul><li>me.name</li><li>me.super(....)</li></ul></li><li>메소드를 생성자처럼 사용하면 메소드가 생성되는 대신에 메소드호출이 된다.</li></ul><h2>with</h2><ul><li>with (식별자)* 블록문</li><li>블록문을 실행한다.</li><li>식별자가 있는 경우 블록문을 실행하는 동안 식별자의 object scope을 현재 this object scope보다 상위로 올린다.<ul><li>local scope보다는 상위가 아니다.</li></ul></li><li>with 안에 with가 있을 수 있다.</li></ul>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::memlite::WatchCell struct | world-doc</title>
+  <title>Exception handling | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,36 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1memlite.html">memlite</a>::<wbr/></span>WatchCell <span class="m-thin">struct</span>
+          Exception handling
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>Immortality of <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> instance. <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> is managed by <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> and <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> set used instances to some index for chaining linked list. in order to hand over quickly to caller when it requires <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> to alloc new an instance.</p></aside><p>because used up element will be set to integer, which is for index, if <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> has no widx in front of its member, its blk member-variable definitely would be polluted and accessing it causes Undefined Behavior.</p><p>and we need the blk that can be used after it freed, this is why we put an additional value, next. see @Block to know the reason.</p>
+<h2>try - catch 대신 try-on을 사용한다.</h2><h2>try - on은 하나의 코드 라인에 대해서만 체크한다.</h2><ul><li>excpetion handling은 범위체크를 지원하면서 예외코드와 실행코드를 분리시키자는 의도다.</li><li>그러나 실제로 개발자들은 exception 안쪽에서도 예외처리를 종종한다.</li><li>따라서 어짜피 안될바에야 C 처럼 하나의 라인에 집중하게끔 한다.</li></ul><h2>메소드는 err를 반환한다는 것을 문법으로 간략하게 표현하게 한다.</h2><pre class="m-code"><span class="nx">def</span> <span class="nx">customErr</span> <span class="nx">err</span>
+     <span class="nx">customErr</span><span class="p">():</span> <span class="nx">super</span><span class="p">(</span><span class="s">&quot;customMsg&quot;</span><span class="p">)</span>
+
+<span class="nx">def</span> <span class="nx">app</span>
+    <span class="nx">foo</span><span class="p">(</span><span class="nx">val</span> <span class="kt">int</span><span class="p">)</span> <span class="nx">void</span> <span class="nx">on</span> <span class="nx">customErr</span>
+        <span class="k">if</span> <span class="nx">val</span> <span class="p">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="nx">customErr</span>
+
+    <span class="nx">boo</span><span class="p">()</span> <span class="nx">foo</span>
+
+    <span class="nx">main</span><span class="p">()</span> <span class="nx">void</span>
+        <span class="nx">val</span> <span class="o">:=</span> <span class="nx">boo</span><span class="p">()(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// okay. 그러나 exception이 발생하면 F/C</span>
+        <span class="nx">try</span> <span class="nx">val</span> <span class="o">:=</span> <span class="nx">boo</span><span class="p">()(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="c1">// doSomething() // try on 사이에는 다른 라인이 와서는 안된다.</span>
+        <span class="nx">on</span> <span class="nx">customErr</span>
+            <span class="nx">sys</span><span class="p">.</span><span class="nx">cons</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;$it&quot;</span><span class="p">)</span>
+            <span class="nx">sys</span><span class="p">.</span><span class="nx">cons</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;customErr&quot;</span><span class="p">)</span>
+        <span class="nx">on</span> <span class="nx">err</span> <span class="c1">// on은 이어서 여러개 와도 된다.</span>
+            <span class="o">...</span><span class="p">..</span>
+
+        <span class="k">return</span> <span class="c1">// on이 다 끝나면 일반 구문이 와도 된다.</span></pre><h2>반환형으로 err 타입을 명시할 수 없다. 그럴 경우 void를 적는다.</h2><h2>err을 받지 않으면 경고처리 된다.</h2><ul><li>할당 연산자에서 err을 받지 않으면 값이 할당연산자의 최종 값이 된다.</li><li>할당 연산자에서 err까지 받으면 err값이 최종 값이 된다.</li></ul><pre class="m-code"><span class="nx">foo</span><span class="p">(</span><span class="nx">val</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="nx">on</span> <span class="nx">err</span>
+    <span class="o">...</span><span class="p">.</span>
+
+<span class="k">if</span> <span class="nx">a</span> <span class="o">:=</span> <span class="nx">foo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// if a가 0이 아니라면</span>
+<span class="k">if</span> <span class="nx">a</span> <span class="nx">on</span> <span class="nx">res</span> <span class="o">:=</span> <span class="nx">foo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// if foo(5)에서 err가 나왔다면</span>
+<span class="k">if</span> <span class="p">!(</span><span class="nx">a</span> <span class="nx">on</span> <span class="nx">res</span> <span class="o">!=</span> <span class="nx">foo</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span> <span class="c1">// if foo(5)에서 err가 나오지 않았다면</span>
+<span class="k">if</span> <span class="nx">on</span> <span class="nx">res</span> <span class="o">:=</span> <span class="nx">foo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// if foo(5)에서 err가 나왔다면</span></pre><h2>on으로 반환할 수 있다.</h2><pre class="m-code"><span class="nx">def</span> <span class="nx">app</span>
+    <span class="nx">foo</span><span class="p">()</span> <span class="kt">int</span> <span class="nx">on</span> <span class="nx">err</span>
+        <span class="k">return</span> <span class="mi">55</span> <span class="nx">on</span> <span class="nx">customErr</span></pre><h2>에러는 handling 하지 않아도 경고가 아니다. 단순히 반환값 중 1 개일 뿐이다.</h2><h2>exception이란 없으며 모든 것은 런타임 에러, 즉 F/C로 이어진다.</h2>
       </div>
     </div>
   </div>

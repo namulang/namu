@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::memlite::WatchCell struct | world-doc</title>
+  <title>generic | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,26 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1memlite.html">memlite</a>::<wbr/></span>WatchCell <span class="m-thin">struct</span>
+          generic
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>Immortality of <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> instance. <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> is managed by <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> and <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> set used instances to some index for chaining linked list. in order to hand over quickly to caller when it requires <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> to alloc new an instance.</p></aside><p>because used up element will be set to integer, which is for index, if <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> has no widx in front of its member, its blk member-variable definitely would be polluted and accessing it causes Undefined Behavior.</p><p>and we need the blk that can be used after it freed, this is why we put an additional value, next. see @Block to know the reason.</p>
+<h2>C# 수준의 제네릭을 지원한다.</h2><ul><li>자바와 같이 꼼수로 처리하는 수준보다 뛰어나야 한다.</li><li>대체될 수 있는 타입의 빈공간을 파라메터로써 마련한 뒤에 컴파일이 종료되어야 한다.</li><li>제네릭 객체 자체는 사용자가 접근하지 못한다. 항상 타입파라메터를 채운 객체만 접근할 수 있다.</li></ul><h2>문법</h2><pre class="m-code"><span class="nx">def</span> <span class="p">(</span><span class="nx">identifier</span><span class="p">)&lt;(</span><span class="nx">identifier</span><span class="p">)&gt;</span>
+    <span class="o">...</span></pre><h2>unique 객체를 처음으로 접근한 순간 unique 객체가 생성된다.</h2><h2>binding(=verification)은 unique 객체가 생성된 순간 처음으로 실시된다.</h2><ul><li>다시말해서 런타임에 verification이 발생할 수 있어야 한다.</li><li>사용자는 항상 디버깅 모드에 있기 때문이다.</li></ul><h2>generic 객체는 일반 obj하고는 동작이 다르다.</h2><ul><li>객체로써 나오긴 하였으나 T가 들어가는 곳에 parameterizedType 배열의 인덱스의 접근하는 코드로 대신 채워진다.</li><li>완성된 unique 객체는 parameterizedType 배열에 T 원소를 채워넣는 것을 말한다.</li><li>T가 채워넣어지기 전 generic에 접근한 경우 parameterizedType이 비어있으므로 동작에 실패한다.</li></ul><h2>T는 동일한 클래스 계층이 아니어도 돌아갈 수 있어야 한다.</h2><pre class="m-code"><span class="nx">def</span> <span class="nx">A</span>
+    <span class="nx">foo</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">str</span><span class="p">)</span> <span class="nx">void</span>
+<span class="nx">def</span> <span class="nx">B</span>
+    <span class="nx">foo</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">str</span><span class="p">)</span> <span class="kt">int</span>
+
+<span class="nx">def</span> <span class="nx">generic</span><span class="p">&lt;</span><span class="nx">T</span><span class="p">&gt;</span>
+    <span class="nx">elem</span> <span class="o">:=</span> <span class="nx">T</span><span class="p">()</span>
+    
+    <span class="nx">foo</span><span class="p">()</span> <span class="nx">void</span>
+        <span class="nx">elem</span><span class="p">.</span><span class="nx">foo</span><span class="p">(</span><span class="s">&quot;wow&quot;</span><span class="p">)</span>
+
+<span class="nx">def</span> <span class="nx">app</span>
+    <span class="nx">main</span><span class="p">()</span> <span class="nx">void</span>
+        <span class="nx">generic</span><span class="p">&lt;</span><span class="nx">A</span><span class="p">&gt;.</span><span class="nx">foo</span><span class="p">()</span>
+        <span class="nx">generic</span><span class="p">&lt;</span><span class="nx">B</span><span class="p">&gt;.</span><span class="nx">foo</span><span class="p">()</span>
+
+        <span class="nx">generic</span><span class="p">.</span><span class="nx">foo</span><span class="p">()</span> <span class="c1">// err</span></pre><ul><li>만약 elem.foo(&quot;wow&quot;)의 반환값을 처리하는 코드가 있었다면 generic는 컴파일되지 않았을 것이다.</li></ul><h2>generic은 인자T를 받아들여서 obj를 생성하는 간편 함수를 제공해야 한다.</h2><h2>기본 container 들 모두 wrd 언어로 짜야한다.</h2><ul><li>native binding API를 통해서 C++ container 등을 proxy 한다.</li></ul><h2>타입파라메터가 없는 generic 객체를 만들때는 verification은 하지 않는다.</h2><h2>scope는 외부에서 제네릭객체에 접근한다는 사실을 판별해야 한다.</h2><ul><li>제네릭 객체에 접근하려고 하고 있으며, 그 generic 객체가 아직 없다면 새로 unique객체를 만들어야 하기 때문에.</li><li>혹은 generic 객체에 접근할때의 이벤트를 외부에서 cb을 받을 수있게 하거나.</li></ul>
       </div>
     </div>
   </div>

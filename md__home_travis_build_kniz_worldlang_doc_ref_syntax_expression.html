@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::memlite::WatchCell struct | world-doc</title>
+  <title>Expression | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,26 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1memlite.html">memlite</a>::<wbr/></span>WatchCell <span class="m-thin">struct</span>
+          Expression
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>Immortality of <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> instance. <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> is managed by <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> and <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> set used instances to some index for chaining linked list. in order to hand over quickly to caller when it requires <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> to alloc new an instance.</p></aside><p>because used up element will be set to integer, which is for index, if <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> has no widx in front of its member, its blk member-variable definitely would be polluted and accessing it causes Undefined Behavior.</p><p>and we need the blk that can be used after it freed, this is why we put an additional value, next. see @Block to know the reason.</p>
+<h2>기존 언어의 statement 중 상당 수가 expression 기반이다.</h2><ul><li>객체의 정의, 메소드의 정의, 변수의 정의, if, for 등</li></ul><h2>모든 블록문은 마지막 라인을 자동으로 반환한다.</h2><pre class="m-code"><span class="nx">def</span> <span class="nx">app</span>
+    <span class="nx">foo</span><span class="p">()</span> <span class="kt">bool</span>
+        <span class="nx">age</span> <span class="o">:=</span> <span class="mi">35</span>
+        <span class="nx">isYoung</span> <span class="o">:=</span> <span class="k">if</span> <span class="nx">age</span> <span class="p">&lt;</span> <span class="mi">25</span>
+            <span class="kc">true</span>
+        <span class="k">else</span>
+            <span class="kc">false</span>
+
+    <span class="nx">main</span><span class="p">()</span> <span class="nx">void</span>
+        <span class="nx">res</span> <span class="o">:=</span> <span class="nx">foo</span><span class="p">()</span>
+        <span class="nx">sys</span><span class="p">.</span><span class="nx">term</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;res=$res&quot;</span><span class="p">)</span>
+
+<span class="c1">// result: false</span></pre><h2>Worldfrx를 통해서 expression 객체를 module에서 조작해서는 안된다. (invisible)</h2><h2>if-else 에서 양쪽 블록문 안에서의 값으로 수렴한다.</h2><pre class="m-code"><span class="nx">res</span> <span class="o">:=</span> <span class="k">if</span> <span class="mi">3</span> <span class="p">&lt;</span> <span class="mi">5</span>
+    <span class="s">&quot;wow&quot;</span>
+<span class="k">else</span>
+    <span class="p">{</span><span class="nx">person</span><span class="p">(</span><span class="s">&quot;boy&quot;</span><span class="p">),</span> <span class="nx">person</span><span class="p">(</span><span class="s">&quot;girl&quot;</span><span class="p">)}</span>
+
+<span class="c1">// is 는 node 타입이다.</span></pre><h2>expression과 statement는 구분이 필요하다. 모든 statement가 expression인건 아니다.</h2><ul><li>대표적으로 import 를 들 수있다.</li><li>문법의 추가로 또다른 예가 생길 수 있다.</li></ul>
       </div>
     </div>
   </div>

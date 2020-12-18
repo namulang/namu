@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::memlite::WatchCell struct | world-doc</title>
+  <title>import | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,9 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1memlite.html">memlite</a>::<wbr/></span>WatchCell <span class="m-thin">struct</span>
+          import
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>Immortality of <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> instance. <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> is managed by <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> and <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> set used instances to some index for chaining linked list. in order to hand over quickly to caller when it requires <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> to alloc new an instance.</p></aside><p>because used up element will be set to integer, which is for index, if <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> has no widx in front of its member, its blk member-variable definitely would be polluted and accessing it causes Undefined Behavior.</p><p>and we need the blk that can be used after it freed, this is why we put an additional value, next. see @Block to know the reason.</p>
+<h2>import 뒤에 사용할 type과 module path를 적어야 한다.</h2><h2>import를 두는 이유는 속도 최적화 때문이다.</h2><ul><li>이론상 import가 없더라도 동작에는 문제가 없다.</li><li>단 시스템은 type을 import 할 수 있더라도, 현재 프로그램을 돌리기 위한 최소한의 type만 load 해두는 것이 속도에 매우 이익이 된다.<ul><li>매우 많은 모듈이 worldlang으로 시스템에 존재한다고 가정하자.</li><li>이러한 최적화가 없다면 hello world 프로그램을 돌리기 위해서 필요하지도 않은 directx, socket, opencv 등을 load를 해두거나</li><li>2 pass 를 돌릴때 의존 관계를 유추하여 만들어 낼 수 있어야 한다. 많은 시간이 소요될 것이다.</li></ul></li></ul>
       </div>
     </div>
   </div>

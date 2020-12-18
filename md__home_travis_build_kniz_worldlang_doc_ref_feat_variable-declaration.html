@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::memlite::WatchCell struct | world-doc</title>
+  <title>variable declaration | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,27 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1memlite.html">memlite</a>::<wbr/></span>WatchCell <span class="m-thin">struct</span>
+          variable declaration
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>Immortality of <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> instance. <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> is managed by <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> and <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> set used instances to some index for chaining linked list. in order to hand over quickly to caller when it requires <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> to alloc new an instance.</p></aside><p>because used up element will be set to integer, which is for index, if <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> has no widx in front of its member, its blk member-variable definitely would be polluted and accessing it causes Undefined Behavior.</p><p>and we need the blk that can be used after it freed, this is why we put an additional value, next. see @Block to know the reason.</p>
+<ul><li>약식과 정식이 존재한다.</li></ul><h2>정식</h2><pre class="m-code"><span class="nx">n</span> <span class="kt">int</span> <span class="o">:=</span> <span class="mi">55</span>
+<span class="nx">obj</span> <span class="nx">myObj</span><span class="err">?</span> <span class="o">:=</span> <span class="nx">myDerivedObj</span><span class="p">()</span></pre><h2>약식</h2><pre class="m-code"><span class="nx">n</span> <span class="o">:=</span> <span class="mi">55</span>
+<span class="nx">obj</span> <span class="o">:=</span> <span class="nx">myDerivedObj</span><span class="p">()</span></pre><h2>함수 파라메터의 약식</h2><ul><li>일반 약식과 다르게 함수 파라메터는 좀 더 기호가 추가되어야 한다. <code class="m-code"><span class="nx">foo</span><span class="p">(</span><span class="cm">/*약식*/</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">obj</span> <span class="nx">myObj</span><span class="err">?</span><span class="p">,</span> <span class="nx">n2</span> <span class="kt">int</span> <span class="o">:=</span> <span class="cm">/*기본값*/</span><span class="mi">55</span><span class="p">)</span></code></li><li>함수 약식 선언은 함수 signature 밖에서는 절대로 사용할 수 없다.<ul><li>띄어쓰기만을 기준으로 약식 문법이 이루어져 있기 때문에 밖에서 사용하는 순간 다른 문법과 많은 충돌을 일으키기 때문이다.</li></ul></li><li>정식은 함수 파라메터에서도 사용이 가능하다.</li></ul><h2>null ref declaration</h2><ul><li><p>mutable 타입에 한하여 null인 reference를 쉽게 정의할 수 있다.</p><pre class="m-code"><span class="nx">def</span> <span class="nx">myObj</span>
+    <span class="o">...</span>
+<span class="nx">obj1</span> <span class="o">:=</span> <span class="nx">myObj</span> <span class="c1">// myObj 유니크 오브젝트를 ref에 넣었다.</span>
+<span class="nx">obj2</span> <span class="o">:=</span> <span class="nx">null</span> <span class="nx">as</span> <span class="nx">myObj</span> <span class="c1">// obj2는 myObj? 로 유추되며 null이 할당된다.</span>
+<span class="nx">obj3</span> <span class="nx">myObj</span><span class="err">?</span> <span class="o">:=</span> <span class="nx">null</span> <span class="c1">// 위와 동일하다.</span>
+<span class="nx">obj4</span> <span class="o">:=</span> <span class="nx">myObj</span><span class="err">?</span> <span class="c1">// 위와 동일하다.</span>
+
+<span class="nx">int1</span> <span class="o">:=</span> <span class="kt">int</span> <span class="c1">// Unique오브젝트가 존재하지 않으며 immutable인 경우 int(0)의 객체가 복제되어 할당된다.</span>
+<span class="nx">int2</span> <span class="o">:=</span> <span class="kt">int</span><span class="err">?</span> <span class="c1">// error. immutable은 ref를 만들 수 없다.</span>
+
+
+<span class="nx">arr</span> <span class="o">:=</span> <span class="p">[]</span> <span class="c1">// arr은빈node[] 객체가 할당된다.</span>
+<span class="nx">arr1</span> <span class="o">:=</span> <span class="nx">null</span> <span class="nx">as</span> <span class="nx">myObj</span><span class="p">[]</span> <span class="c1">// arr1은 myObj[]의 refer이며 null이 할당된다.</span>
+<span class="nx">arr2</span> <span class="nx">myObj</span><span class="p">[]</span><span class="err">?</span> <span class="o">:=</span> <span class="nx">null</span> <span class="c1">// 위와 같다.</span>
+<span class="nx">arr3</span> <span class="o">:=</span> <span class="nx">myObj</span><span class="p">[]</span><span class="err">?</span> <span class="c1">// 위와 같다.</span>
+<span class="nx">arr4</span> <span class="o">:=</span> <span class="p">[</span><span class="nx">myObj</span><span class="err">?</span><span class="p">]</span> <span class="c1">// myObj의 null을 1개 가지고 있는 myObj[] 배열이 arr4에 할당된다.</span>
+<span class="nx">arr4</span><span class="p">.</span><span class="nx">len</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;</span> <span class="p">!</span><span class="nx">arr4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">// true</span></pre></li></ul>
       </div>
     </div>
   </div>

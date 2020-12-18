@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::memlite::WatchCell struct | world-doc</title>
+  <title>specifier | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,39 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1memlite.html">memlite</a>::<wbr/></span>WatchCell <span class="m-thin">struct</span>
+          specifier
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>Immortality of <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> instance. <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> is managed by <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> and <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> set used instances to some index for chaining linked list. in order to hand over quickly to caller when it requires <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> to alloc new an instance.</p></aside><p>because used up element will be set to integer, which is for index, if <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> has no widx in front of its member, its blk member-variable definitely would be polluted and accessing it causes Undefined Behavior.</p><p>and we need the blk that can be used after it freed, this is why we put an additional value, next. see @Block to know the reason.</p>
+<h2>protected accessor는 멤버 식별자 앞에 _ 를 붙인다</h2><ul><li>접근할때는 _ 는 이름에 포함되지 않는다.</li><li>__를 두번 쓴 경우는 맨 앞의 _만 포함된다.</li></ul><h2>class 앞에 _를 붙이면 packaged 가 된다.</h2><ul><li>동일한 패키지 안에서는 접근 가능하다.</li><li>여기서 접근이 차단되는 것은 unique 객체를 의미한다.</li><li>복제된 객체라면 packaged 접근자라고 하더라도 외부에서 가져갈 수 있다.</li></ul><h2>==&gt; 재지정 연산자</h2><ul><li>문법: ((identifier)* ==&gt;)* (method signature) (==&gt;)*</li><li>==&gt; 는 메소드 signature 앞에 올 수도 있고 뒤에 올 수도 있다.</li></ul><h3>==&gt;가 메소드 앞에 오면 super를 먼저 call 한다.</h3><ul><li>1: ==&gt; 앞에 아무것도 적지 않으면 super의 반환값을 그대로 반환한다.</li><li>2: ==&gt; 앞에 식별자를 적으면 super의 반환값이 그 식별자에 담긴다.</li><li>만약 2번을 사용하고자 하는데 on err 도 반환하고 있었다면 try를 앞에 적어줘야 한다.</li></ul><pre class="m-code"><span class="nx">def</span> <span class="nx">boy</span> <span class="nx">person</span>
+    <span class="c1">// 1:</span>
+    <span class="o">==</span><span class="p">&gt;</span> <span class="nx">sayHello</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">str</span><span class="p">)</span>
+        <span class="o">...</span><span class="p">.</span>
+
+    <span class="c1">// 또는</span>
+
+    <span class="nx">res</span> <span class="o">==</span><span class="p">&gt;</span> <span class="nx">sayHello</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nx">res</span>
+
+
+
+    <span class="c1">// 2:</span>
+    <span class="o">==</span><span class="p">&gt;</span> <span class="nx">sayHello</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">str</span><span class="p">)</span> <span class="kt">float</span> <span class="nx">on</span> <span class="nx">err</span>
+        <span class="k">return</span> <span class="nx">doSomething</span><span class="p">()</span>
+
+    <span class="c1">// 또는</span>
+
+    <span class="nx">try</span> <span class="nx">res</span> <span class="o">==</span><span class="p">&gt;</span> <span class="nx">sayHello</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">str</span><span class="p">)</span> <span class="kt">float</span> <span class="nx">on</span> <span class="nx">err</span>
+        <span class="nx">on</span> <span class="nx">nullErr</span><span class="p">:</span> <span class="k">return</span> <span class="nx">nullErr</span>
+        <span class="nx">on</span> <span class="nx">outOfBoundErr</span><span class="p">:</span> <span class="k">return</span> <span class="nx">outOfBoundErr</span>
+
+        <span class="k">return</span> <span class="nx">doSomething</span><span class="p">()</span></pre><h3>==&gt; 가 뒤에 오는 경우는 super한 결과를 반환한다.</h3><pre class="m-code"><span class="nx">def</span> <span class="nx">boy</span> <span class="nx">person</span>
+    <span class="nx">explainMe</span><span class="p">()</span> <span class="nx">void</span>
+        <span class="nx">doSomething</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nx">me</span><span class="p">.</span><span class="nx">super</span><span class="p">()</span>
+  
+    <span class="c1">// 또는 </span>
+
+    <span class="nx">explainMe</span><span class="p">()</span> <span class="nx">void</span> <span class="o">==</span><span class="p">&gt;</span>
+        <span class="nx">doSomething</span><span class="p">()</span></pre>
       </div>
     </div>
   </div>

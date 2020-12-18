@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::memlite::WatchCell struct | world-doc</title>
+  <title>reference | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,9 +44,9 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span><span class="m-breadcrumb"><a href="namespacewrd_1_1memlite.html">memlite</a>::<wbr/></span>WatchCell <span class="m-thin">struct</span>
+          reference
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>Immortality of <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> instance. <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> is managed by <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> and <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> set used instances to some index for chaining linked list. in order to hand over quickly to caller when it requires <a href="classwrd_1_1memlite_1_1_chunks.html" class="m-dox">Chunks</a> to alloc new an instance.</p></aside><p>because used up element will be set to integer, which is for index, if <a href="structwrd_1_1memlite_1_1_watch_cell.html" class="m-dox">WatchCell</a> has no widx in front of its member, its blk member-variable definitely would be polluted and accessing it causes Undefined Behavior.</p><p>and we need the blk that can be used after it freed, this is why we put an additional value, next. see @Block to know the reason.</p>
+<h2>Ref 클래스가 담당한다.</h2><h2>Strong 바인딩을 표현한다.</h2><h2>Node의 일종이며 proxy로 동작한다.</h2><h2>컴파일러는 mutable 변수를 발견하면 이 Ref를 member로 등록한다.</h2><h2>컴파일러는 immutable 변수를 발견하면 그 변수를 직접 member로 등록할 수 있다. (안해도 동작에는 차이가 없다)</h2><h2>Ref는 Node 타입이면 무엇이든 바인드 할 수 있어야 한다.</h2><h2>Ref는 getType()이라는 verify용 함수가 있다.</h2><ul><li>TVarRef&lt;T&gt;는 getType()을 고정된 TClass&lt;T&gt;로 반환한다.</li><li>GVarRef는 getType()을 변수로 제공한다. 컴파일러가 생성할 수 있도록.</li></ul><h2>verify는 RTTI를 사용하는 것이다.</h2><ul><li>바인딩된 객체가 getType()과 자식 혹은 동일한 타입인지를 체크한다.</li></ul><h2>메소드에 대한 참조자는 FuncRef 라는 별도의 클래스를 상속받아 사용한다.</h2><ul><li>메소드의 경우에는 상속으로 체크할 수 없고, 인자의 종류와 갯수가 정확히 일치하는 지를 기준으로 verify 해야 하기 때문이다.&#x27;</li><li>인자의 종류가 정확히 일치해야 한다. 묵시적 변환 같은 것 허용하지 않는다.</li></ul>
       </div>
     </div>
   </div>
