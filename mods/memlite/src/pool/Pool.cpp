@@ -17,8 +17,7 @@ namespace wrd { namespace memlite {
 	const Chunks& This::get(widx n) const { return ((Pool*)this)->get(n); }
 	Chunks& This::get(widx n) { return *(Chunks*)_get(n); }
 
-	wbool This::has(const Instance& it) const
-	{
+	wbool This::has(const Instance& it) const {
 		const Chunks& got = get(it.getType().getSize());
         WRD_NUL(got, false)
 
@@ -28,10 +27,8 @@ namespace wrd { namespace memlite {
 	wcnt This::getSize() const { return _chunkset.capacity(); }
 	wcnt This::getLen() const { return _chunkset.size(); }
 
-	wbool This::rel()
-	{
-		for(Chunks* e : _chunkset)
-		{
+	wbool This::rel() {
+		for(Chunks* e : _chunkset) {
 			if (!e) continue;
 			e->rel();
 			delete e;
@@ -41,8 +38,7 @@ namespace wrd { namespace memlite {
 		return true;
 	}
 
-	void* This::_get(widx n)
-	{
+	void* This::_get(widx n) {
 		if(0 > n) return WRD_NULL;
 
 		while((int)_chunkset.size() - 1 < n)

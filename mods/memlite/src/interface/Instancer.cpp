@@ -4,14 +4,12 @@ namespace wrd { namespace memlite {
 
 	WRD_DEF_THIS(Instancer)
 
-	wbool This::bind(Instance& new1)
-	{
+	wbool This::bind(Instance& new1) {
 		Unit& un = *(Unit*) _watcher.new1();
 		return un.blk.bind(new1);
 	}
 
-	wbool This::unbind(Instance& old)
-	{
+	wbool This::unbind(Instance& old) {
 		if(!_hasBindTag(old)) return true; // optimization.
 
 		Unit& un = _watcher[old.getId()];

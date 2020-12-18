@@ -8,16 +8,14 @@ namespace wrd { namespace memlite {
 	wbool This::operator==(const This& rhs) const { return &get() == &rhs.get(); }
 	wbool This::operator!=(const This& rhs) const { return ! operator==(rhs); }
 
-	This& This::operator=(const This& rhs)
-	{
+	This& This::operator=(const This& rhs) {
         if(this == &rhs) return *this;
 
 		_assign(rhs);
 		return *this;
 	}
 
-	wbool This::bind(Instance& new1)
-	{
+	wbool This::bind(Instance& new1) {
 		// type checking before binding only is required to Bind class.
 		// Derived classes from this doesn't need it. because its type is specified.
 		// prevent wrong type providing by compiler.
@@ -31,8 +29,7 @@ namespace wrd { namespace memlite {
 
 	wbool This::isBind() const { return _its_id.s.tag_n != WRD_INDEX_ERROR; }
 
-	wbool This::unbind()
-	{
+	wbool This::unbind() {
 		_its_id.num = WRD_INDEX_ERROR;
 		return true;
 	}
@@ -40,15 +37,14 @@ namespace wrd { namespace memlite {
 	Id This::getItsId() const { return _its_id; }
 	wbool This::canBind(const Type& type) const { return getBindable().isSuper(type); }
 
-	wbool This::_bind(const Instance& it)
-	{
+	wbool This::_bind(const Instance& it) {
 	    unbind();
 		//	regardless of result from _onStrong binder can bind:
 		//		there are two reasons:
 		//			because Block has equal lifecycle to what it bind, if there is
 		//			a request by user to refer a bind for binding freed instance,
 		//			user has responsibilty to treat wrongly.
-		//			so, we should not consider such cases. 
+		//			so, we should not consider such cases.
 		//
 		//		and:
 		//			no matter how block reacts, anyway it won't refuse binder's
@@ -59,17 +55,15 @@ namespace wrd { namespace memlite {
                 this, &it, it.getType().getName().c_str());
 	    return true;
 	}
-	
-	Instance& This::_get()
-	{
+
+	Instance& This::_get() {
         Instance& ins = WRD_GETS(_getBindTag(_its_id),get());
         WRD_NUL_THEN_LOG(ins)
 
 	    return ins;
 	}
-	
-	wbool This::_assign(const This& rhs)
-	{
+
+	wbool This::_assign(const This& rhs) {
 	    if(this == &rhs) return true;
 
 	    //    Only not available combination between this and rhs is,
@@ -79,7 +73,7 @@ namespace wrd { namespace memlite {
             WRD_W("Bind assign failed. me.const=%d but rhs.isConst()=%d", isConst(), rhs.isConst());
 	        return false; // the only case can't accept.
         }
-	
+
 	    return _bind(rhs.get());
 	}
 

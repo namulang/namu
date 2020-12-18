@@ -15,15 +15,13 @@ namespace wrd { namespace memlite {
 	void* This::operator new(size_t sz) { return _getMgr()._new1(sz); }
 	void This::operator delete(void* pt, size_t sz) { _getMgr()._del(pt, sz); }
 
-	Id This::getId() const
-	{
+	Id This::getId() const {
 		if(_id.s.tag_n == WRD_INDEX_ERROR)
 			_getMgr().bind((This&)*this);
 		return _id;
 	}
 
-	wbool This::isHeap() const
-	{
+	wbool This::isHeap() const {
 		const BindTag& blk = getBindTag();
         WRD_NUL(blk, false)
 
@@ -39,30 +37,26 @@ namespace wrd { namespace memlite {
         return const_cast<BindTag&>(WRD_GETS(_getMgr().getWatcher()[id], blk));
     }
 
-	wbool This::_setId(Id new1)
-	{
+	wbool This::_setId(Id new1) {
 		_id = new1;
 		return true;
 	}
 
 	Instancer& This::_getMgr() { return Instancer::get(); }
 
-	wbool This::Vault::set(void* rcver, widx chk_n)
-	{
+	wbool This::Vault::set(void* rcver, widx chk_n) {
 		_rcver = rcver;
 		_chk_n = chk_n;
 		return true;
 	}
 
-	widx This::Vault::get(void* rcver)
-	{
+	widx This::Vault::get(void* rcver) {
 		//	pre:
 		if( ! _rcver) return WRD_INDEX_ERROR;
 
 		//	main:
 		widx ret = _chk_n;
-		if(rcver != _rcver)
-		{
+		if(rcver != _rcver) {
 			WRD_W("rcver(%x) != _rcver(%x)", rcver, _rcver);
 			ret = WRD_INDEX_ERROR;
 		}

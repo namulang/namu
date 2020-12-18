@@ -10,9 +10,8 @@ namespace wrd { namespace memlite {
 	wcnt This::getLen() const { return _len; }
 	wcnt This::getSize() const { return _sz; }
 
-	void* This::new1()
-	{
-		if(	_len >= _sz	&& 
+	void* This::new1() {
+		if(	_len >= _sz	&&
 			!resize((getSize() + 1) * 2)) {
             WRD_E("new1() failed. tried to resize, but didn't work.");
 			return WRD_NULL;
@@ -27,25 +26,22 @@ namespace wrd { namespace memlite {
 		return ret;
 	}
 
-	wbool This::del(void* used, wcnt)
-	{
+	wbool This::del(void* used, wcnt) {
 		if(!used) return false;
-		*(widx*)used = _head;
 
+		*(widx*)used = _head;
 		_head = ((wuchar*)used - _heap) / _getRealBlkSize();
 		_len--;
 		return true;
 	}
 
-	wbool This::rel()
-	{
+	wbool This::rel() {
 		_len = _sz = 0;
 		_head = 0;
 		return _freeHeap(&_heap);
 	}
 
-	wbool This::resize(wcnt new_sz)
-	{
+	wbool This::resize(wcnt new_sz) {
 		//	pre:
 		if(new_sz < INIT_SZ) new_sz = INIT_SZ;
 		if(_is_fixed) new_sz = INIT_SZ;
@@ -64,8 +60,7 @@ namespace wrd { namespace memlite {
 		return _index(_len);
 	}
 
-	wbool This::has(const Instance& it) const
-	{
+	wbool This::has(const Instance& it) const {
 		void* pt = (void*) &it;
 		return _heap && _heap <= pt && pt <= getEOB();
 	}
@@ -74,8 +69,7 @@ namespace wrd { namespace memlite {
 	const wuchar* This::getHeap() const { return _heap; }
 	wbool This::isFixed() const { return _is_fixed; }
 
-	void* This::_get(widx n)
-	{
+	void* This::_get(widx n) {
 		if(n < 0 || n >= _sz) {
             WRD_W("n(%d) is out of size(%d)", n, _sz);
 			return WRD_NULL;
@@ -83,8 +77,7 @@ namespace wrd { namespace memlite {
 		return _heap + n*_getRealBlkSize();
 	}
 
-	wuchar* This::_getEOB()
-	{
+	wuchar* This::_getEOB() {
 		wuchar* org = (wuchar*) _get(_sz - 1);
 		if(!org)
 			return WRD_NULL;
@@ -92,26 +85,22 @@ namespace wrd { namespace memlite {
 		return org + _getRealBlkSize() - 1;
 	}
 
-	wbool This::_index(widx start)
-	{
+	wbool This::_index(widx start) {
 		for(wcnt n=start; n < _sz ;n++)
 			*(widx*)_get(n) = n+1;
 
 		return true;
 	}
 
-	wcnt This::_getRealBlkSize() const
-	{
+	wcnt This::_getRealBlkSize() const {
 		wcnt sz = getBlkSize();
 		return sz < 4 ? 4 : sz;
 	}
 
 	void* This::_allocHeap(wcnt new_sz) { return malloc(new_sz * _getRealBlkSize()); }
 
-	wbool This::_freeHeap(wuchar** heap)
-	{
-		if(*heap)
-		{
+	wbool This::_freeHeap(wuchar** heap) {
+		if(*heap) {
 			free(*heap);
 			*heap = NULL;
 		}

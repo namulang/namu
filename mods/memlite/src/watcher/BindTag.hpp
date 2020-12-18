@@ -6,8 +6,8 @@
 namespace wrd { namespace memlite {
 
     class Chunk;
-    class BindTag : public Instance, public Bindable
-    {	WRD_DECL_THIS(BindTag, Instance)
+    class BindTag : public Instance, public Bindable {
+        WRD_DECL_THIS(BindTag, Instance)
 		template <typename T> friend class TWeak;
 		template <typename T> friend class TStrong;
 
