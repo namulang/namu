@@ -6,6 +6,7 @@ namespace wrd { namespace memlite {
 
 	class Pool : public MemoryHaver {
         WRD_DECL_THIS(Pool, MemoryHaver)
+        WRD_INIT_META(This)
 
 	public:
 		Pool();

@@ -7,6 +7,7 @@ namespace wrd { namespace memlite {
 	template <typename T>
 	class TStrong : public TWeak<T> {
         WRD_DECL_THIS(TStrong, TWeak<T>)
+        WRD_INIT_META(This)
 
 	public:
 		TStrong();
@@ -27,6 +28,7 @@ namespace wrd { namespace memlite {
 	template <typename T>
 	class TStrong<const T> : public TWeak<const T> {
         WRD_DECL_THIS(TStrong, TWeak<const T>)
+        WRD_INIT_META(This)
 
 	public:
 		TStrong();

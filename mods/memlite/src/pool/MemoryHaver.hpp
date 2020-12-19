@@ -7,6 +7,7 @@ namespace wrd { namespace memlite {
     class Instance;
 	class MemoryHaver {
         WRD_DECL_THIS(MemoryHaver)
+        WRD_INIT_META(This)
 
 	public:
 		void* operator[](widx n);

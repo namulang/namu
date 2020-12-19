@@ -44,6 +44,7 @@ namespace wrd { namespace memlite {
     ///
     class Bind : public Instance, public Bindable {
         WRD_DECL_THIS(Bind, Instance)
+        WRD_INIT_META(This)
 		friend class BindTag; // for _get()
 
 	public:

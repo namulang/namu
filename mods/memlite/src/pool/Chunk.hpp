@@ -6,6 +6,7 @@ namespace wrd { namespace memlite {
 
 	class Chunk : public Allocator {
         WRD_DECL_THIS(Chunk, Allocator)
+        WRD_INIT_META(This)
 
 	public:
 		static constexpr wcnt INIT_SZ = 20;
