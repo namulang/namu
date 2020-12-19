@@ -27,7 +27,12 @@ namespace wrd { namespace memlite {
 		return _bind(new1);
 	}
 
-	wbool This::isBind() const { return _itsId.s.tagN != WRD_INDEX_ERROR; }
+	wbool This::isBind() const {
+        const BindTag& tag = _getBindTag(_itsId);
+        if(nul(tag)) return false;
+
+        return tag.isBind();
+    }
 
 	wbool This::unbind() {
 		_itsId.num = WRD_INDEX_ERROR;

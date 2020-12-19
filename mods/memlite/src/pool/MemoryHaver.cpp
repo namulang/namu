@@ -10,10 +10,7 @@ namespace wrd { namespace memlite {
 	void* This::get(widx n) {
 		// this guards cant exist at Chunk::_get().
 		// we should put here.
-		if(n < 0 || n >= getLen()) {
-            WRD_W("n(%d) is out of length(%d)", n, getLen());
-			return WRD_NULL;
-        }
+		if(n < 0 || n >= getLen()) return WRD_NULL;
 
 		return _get(n);
 	}

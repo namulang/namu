@@ -70,10 +70,8 @@ namespace wrd { namespace memlite {
 	wbool This::isFixed() const { return _isFixed; }
 
 	void* This::_get(widx n) {
-		if(n < 0 || n >= _sz) {
-            WRD_W("n(%d) is out of size(%d)", n, _sz);
-			return WRD_NULL;
-        }
+		if(n < 0 || n >= _sz) return WRD_NULL;
+
 		return _heap + n*_getRealBlkSize();
 	}
 

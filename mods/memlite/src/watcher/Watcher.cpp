@@ -16,10 +16,8 @@ namespace wrd { namespace memlite {
 
 	WatchCell& This::get(Id id) {
 		WatchCell& got = get(id.s.tagN);
-		if(nul(got)) {
-            WRD_W("can't return WatchCell(%x): it's nul!", &got);
-            return nulr<WatchCell>();
-        }
+        WRD_NUL(got, nulr<WatchCell>());
+
         if(got.blk.getId().num != id.num) {
             WRD_W("can't return WatchCell.blk.getId(%d) != id.num(%d)",
                     got.blk.getId().num, id.num);
