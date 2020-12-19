@@ -32,7 +32,7 @@ namespace wrd { namespace memlite {
 	const Unit& This::get(Id id) const WRD_UNCONST_FUNC(get(id))
 
 	void* This::new1() {
-		Unit* res = (Unit*)Chunk::new1();
+		Unit* res = (Unit*)Super::new1();
 		if(!res)
 			return res;
 

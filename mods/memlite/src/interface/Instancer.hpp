@@ -11,7 +11,6 @@ namespace wrd { namespace memlite {
 		friend class Instance;
 
 	public:
-		//	Instancer:
 		wbool bind(Instance& new1);
 		wbool unbind(Instance& old);
 		const Pool& getPool() const;

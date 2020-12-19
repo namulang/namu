@@ -9,6 +9,7 @@ namespace wrd { namespace memlite {
         WRD_INIT_META(This)
 
 	public:
+        //  Allocator:
 		Allocator(wcnt blksize = 1);
 
 		virtual void* new1() = 0;

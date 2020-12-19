@@ -11,6 +11,7 @@ namespace wrd { namespace memlite {
 		friend class BindTag;
 
 	public:
+        /// TWeak:
 		TWeak();
 		TWeak(T& it);
 		TWeak(T* it);
@@ -21,14 +22,15 @@ namespace wrd { namespace memlite {
         T* operator->();
         T& operator*();
 		This& operator=(const This& rhs);
-
-		wbool bind(T& new1);
-		virtual const Type& getBindable() const;
-        using Bindable::get;
 		T& get();
 		const T& get() const;
-		virtual wbool isConst() const;
-        // Instance:
+
+		wbool bind(T& new1);
+        //  Bindable:
+		const Type& getBindable() const;
+        using Bindable::get;
+		wbool isConst() const;
+        //  TypeProvidable:
         const Type& getType() const {
             return TType<This>::get();
         }
@@ -40,6 +42,7 @@ namespace wrd { namespace memlite {
 		friend class BindTag;
 
 	public:
+        /// TWeak:
 		TWeak();
 		TWeak(T& it);
 		TWeak(T* it);
@@ -55,11 +58,12 @@ namespace wrd { namespace memlite {
 
 		wbool bind(T& new1);
 		wbool bind(const T& new1);
-		virtual const Type& getBindable() const;
-        using Bindable::get;
 		const T& get() const;
-		virtual wbool isConst() const;
-        // Instance:
+        //  Bindable:
+		const Type& getBindable() const;
+        using Bindable::get;
+		wbool isConst() const;
+        //  TypeProvidable:
         const Type& getType() const {
             return TType<This>::get();
         }

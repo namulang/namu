@@ -10,6 +10,7 @@ namespace wrd { namespace memlite {
         WRD_INIT_META(This)
 
 	public:
+        //  TStrong:
 		TStrong();
 		TStrong(T& it);
 		TStrong(T* it);
@@ -18,11 +19,12 @@ namespace wrd { namespace memlite {
 
 		This& operator=(const This& rhs);
 
-		virtual wbool unbind();
+        //  Bindable:
+		wbool unbind();
 
 	protected:
-		//Bind:
-		virtual wbool _bind(const Instance& it);
+		//  Bindable:
+		wbool _bind(const Instance& it);
 	};
 
 	template <typename T>
@@ -31,6 +33,7 @@ namespace wrd { namespace memlite {
         WRD_INIT_META(This)
 
 	public:
+        //  TStrong:
 		TStrong();
 		TStrong(T& it);
 		TStrong(T* it);
@@ -43,10 +46,11 @@ namespace wrd { namespace memlite {
 		This& operator=(const This& rhs);
 		This& operator=(const TStrong<T>& rhs);
 
-		virtual wbool unbind();
+        //  Bindable:
+		wbool unbind();
 
 	protected:
-		//Bind:
-		virtual wbool _bind(const Instance& it);
+		//  Bindable:
+		wbool _bind(const Instance& it);
 	};
 }}
