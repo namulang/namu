@@ -298,13 +298,19 @@ def _ut():
 
     files = os.listdir(binDir)
     ret = 0
+    failedCnt = 0
     for file in files:
         if len(file) < 4 or file[-4:] != "Test":
             continue
         res = os.system(binDir + "/" + file)
-        if res != 0: return res
+        if res != 0:
+            print("[!] " + file + " was failed!")
+            ret = res;
+            failedCnt += 1
 
-    return 0
+    if failedCnt > 0:
+        print("[!] total " + str(failedCnt) + " TC files has reported that failed.")
+    return ret
 
 def commit():
     return 0
