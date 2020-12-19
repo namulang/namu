@@ -71,7 +71,7 @@ namespace wrd { namespace clog {
     }
 
     wbool This::init() {
-        release();
+        rel();
 
         static Stream* streams[] = {new ConsoleStream(), new FileLogStream("./logs"), 0};
         Stream* e = 0;
@@ -89,17 +89,17 @@ namespace wrd { namespace clog {
         return true;
     }
 
-    wbool This::release() {
+    wbool This::rel() {
         for(auto e : _streams)
         {
-            e->release();
+            e->rel();
             delete e;
         }
         _streams.clear();
-        return Super::release();
+        return Super::rel();
     }
 
-    This& This::getInstance() {
+    This& This::get() {
         static This* inner = 0;
         if(inner->isNull())
         {
