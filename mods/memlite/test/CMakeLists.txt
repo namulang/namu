@@ -4,7 +4,7 @@ set(testName ${moduleName}Test)
 find_library(pathGtest
     NAMES libgtest.a
     REQUIRED)
-set(dependencies ${moduleName} ${pathGtest})
+set(dependencies ${moduleName} ${pathGtest} ${CMAKE_THREAD_LIBS_INIT})
 
 message("test ${testName}... dependents to ${dependencies}")
 
