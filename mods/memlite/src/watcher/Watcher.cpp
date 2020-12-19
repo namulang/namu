@@ -4,35 +4,35 @@ namespace wrd { namespace memlite {
 
 	WRD_DEF_THIS(Watcher, Chunk)
 
-	This::Watcher() : Chunk(sizeof(Unit), false) {}
+	This::Watcher() : Chunk(sizeof(WatchCell), false) {}
 
-	Unit& This::operator[](widx n) { return get(n); }
-	Unit& This::operator[](Id id) { return get(id); }
-	const Unit& This::operator[](widx n) const { return get(n); }
-	const Unit& This::operator[](Id id) const { return get(id); }
+	WatchCell& This::operator[](widx n) { return get(n); }
+	WatchCell& This::operator[](Id id) { return get(id); }
+	const WatchCell& This::operator[](widx n) const { return get(n); }
+	const WatchCell& This::operator[](Id id) const { return get(id); }
 
-	Unit& This::get(widx n) { return *(Unit*)_get(n); }
-	const Unit& This::get(widx n) const { return ((Watcher*)this)->get(n); }
+	WatchCell& This::get(widx n) { return *(WatchCell*)_get(n); }
+	const WatchCell& This::get(widx n) const { return ((Watcher*)this)->get(n); }
 
-	Unit& This::get(Id id) {
-		Unit& got = get(id.s.tagN);
+	WatchCell& This::get(Id id) {
+		WatchCell& got = get(id.s.tagN);
 		if(nul(got)) {
-            WRD_W("can't return Unit(%x): it's nul!", &got);
-            return nulr<Unit>();
+            WRD_W("can't return WatchCell(%x): it's nul!", &got);
+            return nulr<WatchCell>();
         }
         if(got.blk.getId().num != id.num) {
-            WRD_W("can't return Unit.blk.getId(%d) != id.num(%d)",
+            WRD_W("can't return WatchCell.blk.getId(%d) != id.num(%d)",
                     got.blk.getId().num, id.num);
-			return nulr<Unit>();
+			return nulr<WatchCell>();
         }
 
 		return got;
 	}
 
-	const Unit& This::get(Id id) const WRD_UNCONST_FUNC(get(id))
+	const WatchCell& This::get(Id id) const WRD_UNCONST_FUNC(get(id))
 
 	void* This::new1() {
-		Unit* res = (Unit*)Super::new1();
+		WatchCell* res = (WatchCell*)Super::new1();
 		if(!res)
 			return res;
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../pool/Chunk.hpp"
-#include "Unit.hpp"
+#include "WatchCell.hpp"
 
 namespace wrd { namespace memlite {
 
@@ -15,15 +15,15 @@ namespace wrd { namespace memlite {
         //  Watcher:
 		Watcher();
 
-		Unit& operator[](widx n);
-		Unit& operator[](Id id);
-		const Unit& operator[](widx n) const;
-		const Unit& operator[](Id id) const;
+		WatchCell& operator[](widx n);
+		WatchCell& operator[](Id id);
+		const WatchCell& operator[](widx n) const;
+		const WatchCell& operator[](Id id) const;
 
-		Unit& get(widx n);
-		Unit& get(Id id);
-		const Unit& get(widx n) const;
-		const Unit& get(Id id) const;
+		WatchCell& get(widx n);
+		WatchCell& get(Id id);
+		const WatchCell& get(widx n) const;
+		const WatchCell& get(Id id) const;
 		//	Allocator:
 		void* new1();
 
