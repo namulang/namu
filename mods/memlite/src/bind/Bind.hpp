@@ -54,18 +54,20 @@ namespace wrd { namespace memlite {
 
         //	Bind:
 		wbool bind(Instance& new1);
-		virtual wbool isBind() const;
-		virtual wbool unbind();
 		Id getItsId() const;
-		using Bindable::canBind;
-		virtual wbool canBind(const Type& cls) const;
         virtual wbool isConst() const = 0;
+        //  Bindable:
+		wbool isBind() const;
+		wbool unbind();
+		using Bindable::canBind;
+		wbool canBind(const Type& cls) const;
 
 	protected:
         //  Bind:
-		virtual wbool _bind(const Instance& it);
-		virtual Instance& _get();
 		wbool _assign(const This& rhs);
+        //  Bindable:
+		wbool _bind(const Instance& it);
+		Instance& _get();
 
 	private:
 		Id _itsId; // id for binded one

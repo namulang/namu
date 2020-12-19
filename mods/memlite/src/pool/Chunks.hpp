@@ -9,33 +9,36 @@ namespace wrd { namespace memlite {
         WRD_INIT_META(This)
 
 	public:
+        //  Chunks:
 		Chunks(wcnt blkbyte = 0);
 		virtual ~Chunks();
 
-		//	MemoryHaver:
 		Chunk& operator[](widx n);
 		Chunk& operator[](const Instance& inst);
 		const Chunk& operator[](widx n) const;
 		const Chunk& operator[](const Instance& inst) const;
 
-		//	Allocator:
-		virtual void* new1();
-		virtual wbool del(void* pt, wcnt sz);
-		virtual wbool has(const Instance& it) const;
-		virtual wbool resize(wcnt new1);
-		//	MemoryHaver:
+		//	Chunks:
 		Chunk& get(widx n);
 		Chunk& get(const Instance& it);
 		const Chunk& get(const Instance& it) const;
 		const Chunk& get(widx n) const;
-		virtual wcnt getLen() const;
-		virtual wcnt getSize() const;
-		virtual wbool rel();
+		//	Allocator:
+		void* new1();
+		wbool del(void* pt, wcnt sz);
+		wbool resize(wcnt new1);
+        //  MemoryHaver:
+		wbool has(const Instance& it) const;
+		wcnt getLen() const;
+		wcnt getSize() const;
+		wbool rel();
 
 	private:
+        //  Chunks:
 		widx _findCapable();
 		wbool _rel();
-		virtual void* _get(widx n);
+        //  MemoryHaver:
+		void* _get(widx n);
 
 		std::vector<Chunk*> _chunks;
 		int _s;

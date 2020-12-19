@@ -9,6 +9,7 @@ namespace wrd { namespace memlite {
         WRD_INIT_META(This)
 
 	public:
+        //  Pool:
 		Pool();
 		virtual ~Pool();
 
@@ -21,13 +22,15 @@ namespace wrd { namespace memlite {
 		const Chunks& get(const Instance& inst) const;
 		const Chunks& get(widx n) const;
 		Chunks& get(widx n);
-		virtual wbool has(const Instance& it) const;
-		virtual wcnt getSize() const;
-		virtual wcnt getLen() const;
-		virtual wbool rel();
+        //  MemoryHaver:
+		wbool has(const Instance& it) const;
+		wcnt getSize() const;
+		wcnt getLen() const;
+		wbool rel();
 
 	protected:
-		virtual void* _get(widx n);
+        //  MemoryHaver:
+		void* _get(widx n);
 
 	private:
 		std::vector<Chunks*> _chunks;

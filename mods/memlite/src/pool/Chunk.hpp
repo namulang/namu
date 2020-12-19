@@ -9,31 +9,36 @@ namespace wrd { namespace memlite {
         WRD_INIT_META(This)
 
 	public:
+        //  Chunk:
 		static constexpr wcnt INIT_SZ = 20;
 
 		Chunk(wcnt blksize = 1, wbool is_fixed = true);
 		virtual ~Chunk();
 
-		virtual wcnt getLen() const;
-		virtual wcnt getSize() const;
-		virtual void* new1();
-		virtual wbool del(void* used, wcnt);
-		virtual wbool rel();
-		/// @remark	@ref Chunk can resize its data. but can't persist whole memory allocated before,
-		///			it's a kind of memory flashing and can't give a way for accessing it.
-		///			at outside, ptr for them should be daggled.
-		virtual wbool resize(wcnt new_sz);
-		virtual wbool has(const Instance& it) const;
 		const wuchar* getEOB() const;
 		const wuchar* getHeap() const;
 		wbool isFixed() const;
+        //  Allocator:
+		void* new1();
+		wbool del(void* used, wcnt);
+		/// @remark	@ref Chunk can resize its data. but can't persist whole memory allocated before,
+		///			it's a kind of memory flashing and can't give a way for accessing it.
+		///			at outside, ptr for them should be daggled.
+		wbool resize(wcnt new_sz);
+        //  MemoryHaver:
+		wcnt getLen() const;
+		wcnt getSize() const;
+		wbool rel();
+		wbool has(const Instance& it) const;
 
 	protected:
+        //  MemoryHaver:
 		/// @return	returns regarding current size, not length.
 		///			can return garbage if size is bigger than n.
-		virtual void* _get(widx n);
+		void* _get(widx n);
 
 	private:
+        //  Chunk:
 		wuchar* _getEOB();
 		wbool _index(widx start);
 		wcnt _getRealBlkSize() const;

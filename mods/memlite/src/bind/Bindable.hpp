@@ -9,6 +9,7 @@ namespace wrd { namespace memlite {
         WRD_INIT_META(This)
 
 	public:
+        //  Bindable:
         const Instance* operator->() const;
         Instance* operator->();
         const Instance& operator*() const;
@@ -37,6 +38,7 @@ namespace wrd { namespace memlite {
 		template <typename T> const T& get() const WRD_UNCONST_FUNC(get<T>())
 
 	protected:
+        //  Bindable:
 		virtual Instance& _get() = 0;
 		virtual wbool _bind(const Instance& it) = 0;
 	};

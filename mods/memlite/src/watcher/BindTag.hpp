@@ -13,31 +13,34 @@ namespace wrd { namespace memlite {
 		template <typename T> friend class TStrong;
 
     public:
+        //  BindTag:
 		BindTag();
 		BindTag(Id id);
 
 		const Chunk& getChunk() const;
 		wcnt getStrongCnt() const;
+		wbool rel();
 		//	Bindable:
-		virtual wbool unbind();
-		virtual wbool isBind() const;
-		virtual const Type& getBindable() const;
+		wbool unbind();
+		wbool isBind() const;
+		const Type& getBindable() const;
 		using Bindable::canBind;
-		virtual wbool canBind(const Type& cls) const;
+		wbool canBind(const Type& cls) const;
 		//	Instance:
-		virtual Id getId() const;
-		virtual wbool isHeap() const;
-		virtual wbool rel();
+		Id getId() const;
+		wbool isHeap() const;
         //  TypeProvidable:
         const Type& getType() const {
             return TType<BindTag>::get();
         }
 
 	protected:
-		virtual Instance& _get();
-		virtual wbool _bind(const Instance& new1);
+        //  Bindable:
+		Instance& _get();
+		wbool _bind(const Instance& new1);
 
 	private:
+        //  BindTag:
         wbool _onStrong(wcnt vote);
 		wbool _completeId(Instance& it);
 		wbool _sync(Id new1);

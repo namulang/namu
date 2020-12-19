@@ -28,6 +28,7 @@ namespace wrd { namespace memlite {
 			widx _chkN;
 		};
 
+        //  Instance:
 		Instance();
 		Instance(Id id);
 		virtual ~Instance();
@@ -42,6 +43,7 @@ namespace wrd { namespace memlite {
 		const BindTag& getBindTag() const;
 
 	protected:
+        //  Instance:
 		wbool _setId(Id new1);
 		static BindTag& _getBindTag(Id id);
         static Instancer& _getMgr();
