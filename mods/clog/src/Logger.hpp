@@ -23,13 +23,13 @@ namespace wrd { namespace clog {
         wbool dumpFormat(const wchar* fmt, ...);
         wbool pushStream(Stream* new_stream);
         virtual wbool isInit() const;
-        static Logger& getInstance();
+        static Logger& get();
 
     private:
         Logger();
         Logger(const Logger& rhs);
         virtual wbool init();
-        virtual wbool release();
+        virtual wbool rel();
 
     private:
         std::vector<Stream*> _streams;

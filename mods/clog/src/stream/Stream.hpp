@@ -15,13 +15,13 @@ namespace wrd { namespace clog {
         virtual wbool dump(const char* message);
         wbool isNull() const;
         wbool isEnable() const;
-        void setEnable(wbool is_enable);
+        void setEnable(wbool isEnable);
         virtual const char* getName() const = 0;
         virtual wbool init();
         virtual wbool isInit() const;
-        virtual wbool release();
+        virtual wbool rel();
 
     private:
-        wbool _is_enable;
+        wbool _isEnable;
     };
 } }

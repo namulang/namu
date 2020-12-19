@@ -4,23 +4,23 @@ namespace wrd { namespace clog {
 
     WRD_DEF_THIS(Stream)
 
-    This::Stream(): _is_enable(true) {}
+    This::Stream(): _isEnable(true) {}
     This::~Stream() {}
 
-    wbool This::dump(const char* message) { return ! _is_enable; }
+    wbool This::dump(const char* message) { return ! _isEnable; }
     wbool This::isNull() const { return ! this; }
-    wbool This::isEnable() const { return _is_enable; }
-    void This::setEnable(wbool is_enable) { _is_enable = is_enable; }
+    wbool This::isEnable() const { return _isEnable; }
+    void This::setEnable(wbool isEnable) { _isEnable = isEnable; }
 
     wbool This::init() {
-        _is_enable = true;
+        _isEnable = true;
         return ! isInit();
     }
 
-    wbool This::isInit() const { return _is_enable; }
+    wbool This::isInit() const { return _isEnable; }
 
-    wbool This::release() {
-        _is_enable = false;
+    wbool This::rel() {
+        _isEnable = false;
         return false;
     }
 } }
