@@ -7,6 +7,7 @@ namespace wrd { namespace memlite {
 
 	class Watcher : public Chunk {
         WRD_DECL_THIS(Watcher, Chunk)
+        WRD_INIT_META(This)
 		friend class Instancer;
 		friend class BindTag;
 

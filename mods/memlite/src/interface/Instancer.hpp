@@ -7,6 +7,7 @@ namespace wrd { namespace memlite {
 
 	class Instancer {
         WRD_DECL_THIS(Instancer)
+        WRD_INIT_META(This)
 		friend class Instance;
 
 	public:

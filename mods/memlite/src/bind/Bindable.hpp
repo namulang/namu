@@ -6,6 +6,7 @@ namespace wrd { namespace memlite {
 
 	class Bindable {
         WRD_DECL_THIS(Bindable)
+        WRD_INIT_META(This)
 
 	public:
         const Instance* operator->() const;

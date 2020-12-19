@@ -6,6 +6,7 @@ namespace wrd { namespace memlite {
 
 	class Allocator : public MemoryHaver {
         WRD_DECL_THIS(Allocator, MemoryHaver)
+        WRD_INIT_META(This)
 
 	public:
 		Allocator(wcnt blksize = 1);

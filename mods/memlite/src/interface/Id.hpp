@@ -5,7 +5,6 @@
 namespace wrd { namespace memlite {
 
     union Id {
-
 		struct SeperatedId {
 			wint tagN:21;
 			wint chkN:22;

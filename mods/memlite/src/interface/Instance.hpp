@@ -9,7 +9,7 @@ namespace wrd { namespace memlite {
 
 	class Instance : public TypeProvidable {
         WRD_DECL_THIS(Instance)
-        WRD_INIT_META(Instance)
+        WRD_INIT_META(This)
 		friend class BindTag;
 		friend class Watcher; // for Vault.
 		friend class Chunks; // for Vault.

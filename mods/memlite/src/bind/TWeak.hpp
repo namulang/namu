@@ -7,6 +7,7 @@ namespace wrd { namespace memlite {
 	template <typename T>
 	class TWeak : public Bind {
         WRD_DECL_THIS(TWeak)
+        WRD_INIT_META(This)
 		friend class BindTag;
 
 	public:
@@ -35,6 +36,7 @@ namespace wrd { namespace memlite {
 	template <typename T>
 	class TWeak<const T> : public Bind {
         WRD_DECL_THIS(TWeak, Bind)
+        WRD_INIT_META(This)
 		friend class BindTag;
 
 	public:

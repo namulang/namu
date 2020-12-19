@@ -6,6 +6,7 @@ namespace wrd { namespace memlite {
 
 	class Chunks : public Allocator {
         WRD_DECL_THIS(Chunks, Allocator)
+        WRD_INIT_META(This)
 
 	public:
 		Chunks(wcnt blkbyte = 0);
