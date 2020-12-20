@@ -9,13 +9,14 @@ namespace wrd { namespace clog {
         WRD_DECL_THIS(FileLogStream, Stream)
 
     public:
+        //  FileLogStream:
         FileLogStream();
         FileLogStream(const std::string& new_path);
 
-    public:
-        virtual const char* getName() const;
         wbool setPath(const std::string& new_path);
         const std::string& getPath() const;
+        //  Stream:
+        virtual const char* getName() const;
         virtual wbool dump(const char* message);
 
     private:

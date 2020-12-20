@@ -8,7 +8,8 @@ namespace wrd { namespace clog {
         WRD_DECL_THIS(ConsoleStream, Stream)
 
     public:
-        virtual const char* getName() const;
-        virtual wbool dump(const char* message);
+        //  Stream:
+        const char* getName() const;
+        wbool dump(const char* message);
     };
 } }
