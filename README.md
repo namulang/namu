@@ -38,7 +38,7 @@ it has following main features.
 > * build: cmake&make, clang, python(for some scripts) + bison
 > * issue-tracker: github project
 > * unit-test: gtest
-> * road-map: refer https://time.graphics/line/436582
+> * road-map: refer http://free-timeline.com/?shared=10593
 > * os: linux, macos, windows + minGW
 
 
