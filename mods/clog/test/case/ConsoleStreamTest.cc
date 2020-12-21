@@ -24,7 +24,7 @@ namespace wrd { namespace clog {
             static const char* name = NULL;
 
             if(name == NULL) {
-                Logger& log = Logger::getInstance();
+                Logger& log = Logger::get();
                 for (int n=0; n < log.getStreamCount() ;n++) {
                     FileLogStream* as = dynamic_cast<FileLogStream*>(&log[n]);
                     if(as) {
@@ -43,8 +43,8 @@ namespace wrd { namespace clog {
     } ThisTest;
 
     TEST_F(ConsoleStreamTest, dumpFormat) {
-        Logger::getInstance().dumpFormat("hello");
-        Logger::getInstance().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " "hello",
+        Logger::get().dumpFormat("hello");
+        Logger::get().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " "hello",
             wrd::indep::PlatformAPI::createCurrentTime("%b %d %Y  %X").c_str(), "I",
             __FILENAME__, __func__, __LINE__);
 

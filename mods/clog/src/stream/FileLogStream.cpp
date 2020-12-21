@@ -11,7 +11,7 @@ namespace wrd { namespace clog {
     const char* This::getName() const { return "FileLogStream"; }
 
     wbool This::setPath(const string& new_path) {
-        release();
+        rel();
         _path = new_path;
         return false;
     }
