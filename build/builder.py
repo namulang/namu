@@ -9,6 +9,29 @@ from operator import eq
 
 frame = "======================================================="
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+def printErr(msg):
+    print(bcolors.WARNING + " ✘ " + bcolors.ENDC + msg)
+
+def printInfo(msg):
+    print(bcolors.OKCYAN + msg + bcolors.ENDC)
+
+def printInfoEnd(msg):
+    print(bcolors.OKCYAN + msg + bcolors.ENDC, end=" ")
+
+def printOk(msg):
+    print(bcolors.OKGREEN + " ✓ " + bcolors.ENDC + msg)
+
 def cmdstr(cmd):
     try:
         ret = str(subprocess.check_output(cmd, shell=True))
@@ -17,7 +40,7 @@ def cmdstr(cmd):
         else:
             ret = ret[2:-3]
     except:
-        print("[!] error on running " + cmd)
+        printErr("error on running " + cmd)
         ret = ""
         return ret
 
@@ -48,16 +71,16 @@ def branch(command):
     elif command == "pubdoc":
         return _publishDoc()
 
-    print(command + " is unknown.")
+    printErr(command + " is unknown.")
     return -1
 
 def _cleanIntermediates():
-    print("removing intermediate outputs...", end=" ")
+    printInfoEnd("removing intermediate outputs...")
     os.system("rm -rf " + cwd + "/xml")
     os.system("rm -rf " + cwd + "/*.tmp")
     os.system("git config --unset user.name") # remove local config only
     os.system("git config --unset user.email")
-    print("done.")
+    printOk("done.")
 
 def doc():
     # Idea from Travis Gockel.
@@ -67,20 +90,20 @@ def doc():
     os.system("rm -rf " + cwd + "/html")
 
     # standby gh-pages repo:
-    print("cloning gh-pages branch...", end=" ")
+    printInfoEnd("cloning gh-pages branch...")
     res = os.system("git clone -b gh-pages --depth 5 git@github.com:kniz/worldlang.git --single-branch " + cwd + "/html")
     if res != 0:
-        print("fail to clone gh-pages repo.")
+        printErr("fail to clone gh-pages repo.")
         _cleanIntermediates()
         return -1
-    print("done.")
+    printOk("done.")
     os.system("git rm -rf " + cwd + "/html")
 
     # build doxygen + m.css:
-    print("generating docs using doxygen...", end=" ")
+    printInfoEnd("generating docs using doxygen...")
     res = os.system(python3 + " " + externalDir + "/m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
     if res != 0:
-        print("fail to run m.css doxy parser.")
+        printErr("fail to run m.css doxy parser.")
         _cleanIntermediates()
         return -1
     print("done.")
@@ -95,13 +118,13 @@ def _publishDoc():
     os.system("git config user.email \"knizofficial@gmail.com\"")
     res = os.system("git commit -m \"The our poor little Autobot \(❍ᴥ❍ʋ)/ generated docs for " + origin + ", clitter-clatter.\"")
     if res != 0:
-        print("fail to commit on gh-pages.")
-        print("it seems that nothing changed.")
+        printErr("fail to commit on gh-pages.")
+        printInfo("but it seems that nothing changed.")
         _cleanIntermediates()
         return 0
     res = os.system("git push origin gh-pages")
     if res != 0:
-        print("fail to push on gh-pages")
+        printErr("fail to push on gh-pages")
         _cleanIntermediates()
         return -1
     os.chdir(cwd)
@@ -153,16 +176,17 @@ def isWindow():
 def _createMakefiles():
     print("")
     generator = "MinGW Makefiles" if isWindow() else "Unix Makefiles"
-    print("generating makefiles as " + generator + "...")
+    printInfoEnd("generating makefiles as " + generator + "...")
 
     global config
-    print("------------- config=" + config)
     res = os.system("cmake . -G \"" + generator + "\" " + config)
     if res != 0:
         return -1
 
+    printOk("done")
+
 # World uses BuildInfo at RELEASE.md
-# and builder.py drives to all world libraries and make it sync all build-info including 
+# and builder.py drives to all world libraries and make it sync all build-info including
 # doc releasing.
 ver_major = 0
 ver_minor = 0
@@ -192,6 +216,7 @@ def _extractBuildInfo(): # from RELEASE.md at root directory.
 
     fp.close()
 updated = False
+
 def _updateLine(lines, n, trg, basestr):
     global updated
     idx = len(basestr)-1
@@ -214,7 +239,7 @@ def _injectBuildInfo():
     global cwd, ver_major, ver_minor, ver_fix, ver_name, ver_buildcnt
     path = cwd + "/CMakeLists.txt"
 
-    print("updating buildinfo on CMakeLists.txt...", end=" ")
+    printInfoEnd("updating buildinfo on CMakeLists.txt...")
     global updated
     updated = False;
     fp = open(path, "r")
@@ -232,18 +257,18 @@ def _injectBuildInfo():
     fp.close()
 
     if updated == False:
-        print("skip")
+        printOk("skip")
         return
 
     fp = open(path, "w")
-    fp.write("".join(lines)) 
+    fp.write("".join(lines))
     fp.close()
 
 def _incBuildCnt():
     global cwd
     path = cwd + "/CMakeLists.txt"
 
-    print("Increase Build count...", end=" ")
+    printInfoEnd("Increase Build count...")
     fp = open(path, "r")
     lines = fp.readlines()
     buildcnt = 0
@@ -258,26 +283,26 @@ def _incBuildCnt():
     fp = open(path, "w")
     fp.write("".join(lines))
     fp.close()
-    print("done")
+    printOk("done")
 
 def _make():
     print("")
     make_option = "-j4 -s"  # j4 -> 4 multithread.
                             # s ->  don't print command.
-    print("making " + make_option + "...", end=" ")
+    printInfoEnd("making " + make_option + "...")
     if isWindow():
         os.system("mingw32-make -v")
         result = os.system("mingw32-make " + make_option)
         if result != 0:
-            print("failed")
+            printErr("failed")
             return -1
     else:
         os.system("make -v")
         result = os.system("make " + make_option)
         if result != 0:
-            print("failed")
+            printErr("failed")
             return -1
-    print("done")
+    printOk("done")
 
 def build():
     #_beautify()
@@ -293,7 +318,7 @@ def build():
 
 def _ut():
     print("")
-    print("let's initiate unit tests...")
+    printInfoEnd("let's initiate unit tests...")
     global cwd, binDir
 
     files = os.listdir(binDir)
@@ -304,12 +329,14 @@ def _ut():
             continue
         res = os.system(binDir + "/" + file)
         if res != 0:
-            print("[!] " + file + " was failed!")
+            printErr(file + " was failed!")
             ret = res;
             failedCnt += 1
 
     if failedCnt > 0:
-        print("[!] total " + str(failedCnt) + " TC files has reported that failed.")
+        printErr("total " + str(failedCnt) + " TC files has reported that failed.")
+    else:
+        printOk("all TCs have been passed!");
     return ret
 
 def commit():
@@ -317,33 +344,33 @@ def commit():
 
 def _extractPythonVersion(verstr):
     if not verstr:
-        print("couldn't get version of python.")
+        printErr("couldn't get version of python.")
         return 0.0
     return float(verstr[7:10])
 
 def checkDependencies():
     global python3
     print("")
-    print ("checking dependencies...", end=" ")
+    printInfoEnd("checking dependencies...")
     simple_depencies = ["git", "cmake", "java", "g++", "doxygen"]
 
     for e in simple_depencies:
         if not shutil.which(e):
-            print("[!] " + e + " is NOT installed!")
+            printErr(e + " is NOT installed!")
             return -1
 
     if isWindow():
         if not shutil.which("mingw32-make"):
-            print("[!] mingw32-make on Windows is NOT installed!")
+            printErr("mingw32-make on Windows is NOT installed!")
             return -1
     elif not shutil.which("make"):
-        print("[!] make for linux is NOT installed!")
+        printErr("make for linux is NOT installed!")
         return -1
 
     if _extractPythonVersion(cmdstr(python3 + " --version")) < 3.6:
-        print("[!] requires python over v3.6")
+        printErr("requires python over v3.6")
         return -1
-    print("done")
+    printOk("done")
 
 def version():
     global ver_name, ver_major, ver_minor, ver_fix, cwd, python3
@@ -366,14 +393,14 @@ def help():
     print("\t * run\t\tbuild + run one of predefined programs.")
 
 def clean():
-    print("Clearing next following files...")
+    printInfoEnd("Clearing next following files...")
     global cwd, binDir, externalDir
     _clean(cwd)
     _cleanIntermediates()
     _cleanDir(binDir)
     _cleanDir(cwd + "/mods")
     os.system("rm -rf " + cwd + "/html")
-    print("was removed successfully.")
+    printOk("was removed successfully.")
 
 def _clean(directory):
     for path, dirs, files in os.walk(directory):
@@ -407,7 +434,7 @@ def _where(name):
         cmd = "where"
         prefix = "\""
     else:
-        print("[!] " + platform.system() + " unsupported.")
+        printErr(platform.system() + " unsupported.")
         return ""
 
     print("cmd=" + cmd + ", name=" + name)
@@ -422,7 +449,6 @@ def _extractEnv():
     else:
         python3 = _where("python3")
         if not python3:
-            print("no!")
             python3 = _where("python")
         return python3 == ""
 cwd = ""
@@ -447,7 +473,7 @@ def main():
 
     os.chdir(cwd)
     if checkDependencies():
-        print("\n[!] This program needs following softwares to be fully functional.")
+        printErr("This program needs following softwares to be fully functional.")
         return -1
 
     if len(sys.argv) == 1:
@@ -460,5 +486,5 @@ def main():
 
 ret = main()
 if ret != 0:
-    print("[!] ends with " + str(ret) + " exit code.")
+    printErr("ends with " + str(ret) + " exit code.")
 sys.exit(ret)
