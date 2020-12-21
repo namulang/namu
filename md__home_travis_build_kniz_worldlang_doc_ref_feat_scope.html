@@ -59,7 +59,16 @@
             <span class="n">b</span><span class="o">++</span> <span class="c1">// err</span>
 
         <span class="nl">b</span> <span class="p">:</span><span class="o">=</span> <span class="mi">5</span>
-        <span class="n">print</span><span class="p">()</span></pre><ul><li>print()를 소유한 객체는 foo 메소드다. 따라서 foo 메소드는 localscope을 하나 추가한다. print()안쪽에서 a 에 대해 접근이 가능하다.</li><li>참고로, b는 중첩메소드가 정의되는 시점에는 아직 정의되지 않았다. 따라서 접근이 안된다.</li></ul><h2>this</h2><ul><li>global scope에 접근하는 키워드다.</li><li>global scope는 기본적으로 scope에 들어가 있다. this는 이름 충돌시에 사용한다.</li></ul><h2>me</h2><ul><li>실행중인 메소드다.</li><li>RTTI 관련 메소드가 기본적으로 제공된다.<ul><li>me.name</li><li>me.super(....)</li></ul></li><li>메소드를 생성자처럼 사용하면 메소드가 생성되는 대신에 메소드호출이 된다.</li></ul><h2>with</h2><ul><li>with (식별자)* 블록문</li><li>블록문을 실행한다.</li><li>식별자가 있는 경우 블록문을 실행하는 동안 식별자의 object scope을 현재 this object scope보다 상위로 올린다.<ul><li>local scope보다는 상위가 아니다.</li></ul></li><li>with 안에 with가 있을 수 있다.</li></ul>
+        <span class="n">print</span><span class="p">()</span></pre><ul><li>print()를 소유한 객체는 foo 메소드다. 따라서 foo 메소드는 localscope을 하나 추가한다. print()안쪽에서 a 에 대해 접근이 가능하다.</li><li>참고로, b는 중첩메소드가 정의되는 시점에는 아직 정의되지 않았다. 따라서 접근이 안된다.</li></ul><h2>this</h2><ul><li>global scope에 접근하는 키워드다.</li><li>global scope는 기본적으로 scope에 들어가 있다. this는 이름 충돌시에 사용한다.</li></ul><h2>me</h2><ul><li>실행중인 메소드다.</li><li>RTTI 관련 메소드가 기본적으로 제공된다.<ul><li>me.name</li><li>me.super(....)</li></ul></li><li>메소드를 생성자처럼 사용하면 메소드가 생성되는 대신에 메소드호출이 된다.</li></ul><h2>with</h2><ul><li>with (식별자)* 블록문</li><li>블록문을 실행한다.</li><li>식별자가 있는 경우 블록문을 실행하는 동안 식별자의 object scope을 현재 this object scope보다 상위로 올린다.<ul><li>local scope보다는 상위가 아니다.</li></ul></li><li>with 안에 with가 있을 수 있다.</li></ul><h2>scope와 이름충돌</h2><ul><li><p>동일한 scope에 내에 같은 이름이 있으면 컴파일 에러로 판단한다.</p><pre class="m-code"><span class="nx">def</span> <span class="nx">sample</span>
+    <span class="nx">foo</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="nx">void</span>
+        <span class="nx">foo</span> <span class="o">:=</span> <span class="mi">5</span> <span class="c1">// ok</span>
+        <span class="nx">foo</span> <span class="nx">aka</span> <span class="nx">boo</span> <span class="c1">// ok</span>
+        <span class="nx">foo</span> <span class="nx">aka</span> <span class="nx">koo</span> <span class="c1">// ok</span>
+        <span class="nx">foo</span> <span class="nx">aka</span> <span class="nx">foo</span> <span class="c1">// err. &#39;foo&#39; is on same scope, local scope, already.</span>
+        <span class="nx">with</span> <span class="nx">boo</span>
+            <span class="nx">n</span> <span class="o">:=</span> <span class="nx">it</span><span class="o">++</span> <span class="c1">// err. n is on local scope. duplicated.</span>
+            <span class="err">$</span><span class="nx">n</span> <span class="o">:=</span> <span class="nx">it</span> <span class="c1">// err. static n var is on local scope too.</span>
+            <span class="p">(</span><span class="err">$</span><span class="nx">b</span> <span class="o">:=</span> <span class="nx">it</span><span class="p">)</span> <span class="nx">aka</span> <span class="nx">n</span> <span class="c1">// err. &#39;n&#39; is on local scope already.</span></pre></li></ul><h2>메소드가 소유한 subnodes와 메소드 안에서 생성하는 모든 것들은 local scope이다.</h2><ul><li>메소드의 parameter list</li><li>반환값</li><li>메소드 실행중 생성되는 local 변수</li><li>메소드의 static variable</li><li>메소드가 기본 제공하는 Method 클래스의 메소드들</li></ul>
       </div>
     </div>
   </div>
