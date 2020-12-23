@@ -52,7 +52,7 @@ set(WRD_DEFAULT_INC_DIR
     /usr/local/include)
 include_directories(${WRD_DEFAULT_INC_DIR})
 
-set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /usr/lib /usr/local/lib)
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /usr/local/lib)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${WRD_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${WRD_DIR}/bin)
