@@ -19,7 +19,7 @@ before_install:
 - cmake .
 - make
 - cd lib
-- sudo cp ./*.a /usr/lib/usr/local/lib
+- sudo cp ./*.a /usr/local/lib
 - cd ..
 - cd googletest/include
 - sudo mv gtest /usr/local/include
