@@ -6,7 +6,7 @@ set(SHOW_CMAKE_VARIABLES 1)
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
 set(VERSION_FIX 0)
-set(BUILD_COUNT 137)
+set(BUILD_COUNT 138)
 set(VERSION_NAME "Seed")
 set(VERSION_VALUE "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_FIX}")
 set(VERSION "${PROJECT_NAME} ${UPDATE_NAME} v${VERSION_VALUE}")
@@ -28,6 +28,9 @@ message("----------------------------------------")
 message("")
 
 message("\ninitialize CMake variables...")
+set(CMAKE_C_COMPILER "clang")
+set(CMAKE_CXX_COMPILER "clang++")
+set(dependencies "c++abi")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -stdlib=libc++")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -fdiagnostics-color=always")  #default options.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-sign-compare -Wno-address -Wno-unused-local-typedefs -Wno-undefined-bool-conversion")  #compiler options.
@@ -52,10 +55,10 @@ set(WRD_DEFAULT_INC_DIR
     /usr/local/include)
 include_directories(${WRD_DEFAULT_INC_DIR})
 
-set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /usr/local/lib)
-
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${WRD_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${WRD_DIR}/bin)
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY} /usr/local/lib)
+
 
 if(SHOW_CMAKE_VARIABLES)
     message(STATUS "CMAKE_THREAD_LIBS_INIT      " ${CMAKE_THREAD_LIBS_INIT})

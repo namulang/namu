@@ -4,9 +4,9 @@ set(testName ${moduleName}Test)
 find_library(pathGtest
     NAMES libgtest.a
     REQUIRED)
-set(dependencies ${moduleName} ${pathGtest} ${CMAKE_THREAD_LIBS_INIT})
+set(dependencies ${dependencies} ${moduleName} ${pathGtest})
 
-message("test ${testName}... dependents to ${dependencies}")
+message("\ttest ${testName}... dependents to ${dependencies}")
 
 #      define sources:
 file(GLOB_RECURSE sources
