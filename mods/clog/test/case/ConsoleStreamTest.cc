@@ -4,7 +4,7 @@
 
 namespace wrd { namespace clog {
 
-    using namespace std::__fs;
+    using namespace std;
 
     typedef struct ConsoleStreamTest : public ::testing::Test {
         void SetUp() {
