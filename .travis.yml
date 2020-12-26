@@ -25,7 +25,7 @@ before_install:
 - cd ../../../..
 
 sudo: required
-dist: xenial
+dist: focal
 language: cpp
 os: linux
 script:
