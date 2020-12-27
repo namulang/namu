@@ -20,7 +20,7 @@ jobs:
         - os: osx
           osx_image: xcode12
           addons:
-            brew:
+            homebrew:
                 update: true
                 packages:
                 - doxygen
