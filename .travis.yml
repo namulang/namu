@@ -20,6 +20,7 @@ jobs:
         - os: osx
           osx_image: xcode12
           addons:
+            ssh_known_hosts: github.com
             homebrew:
                 update: true
                 packages:
@@ -29,8 +30,6 @@ jobs:
                 - python3-pip
                 - cmake
                 - wget
-            before_script:
-            - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 install:
   # decrypt rsa key:
