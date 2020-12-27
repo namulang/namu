@@ -14,6 +14,9 @@ jobs:
                 - python3-pip
                 - cmake
                 - wget
+          before_install:
+          - sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+
         - os: osx
           osx_image: xcode12
           addons:
@@ -27,14 +30,13 @@ jobs:
                 - cmake
                 - wget
 
-before_install:
+install:
   # decrypt rsa key:
   - openssl aes-256-cbc -K $encrypted_9d345fbe8fd6_key -iv $encrypted_9d345fbe8fd6_iv -in build/travis_ci_rsa.enc -out build/travis_ci_rsa -d
   - chmod 0600 build/travis_ci_rsa
   - cp build/travis_ci_rsa ~/.ssh/id_rsa
   # install deps:
   - sudo python3 -m pip install --upgrade jinja2 Pygments
-  - sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
   # googletest
   - cd external
   - git clone https://github.com/google/googletest.git
