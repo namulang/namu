@@ -1,20 +1,20 @@
 language: cpp
 
-addons:
-    apt:
-        update: true
-        packages:
-        - doxygen
-        - graphviz
-        - python3.7
-        - python3-pip
-        - cmake
-        - wget
-
 jobs:
     include:
         - os: linux
           dist: focal
+          addons:
+            apt:
+                update: true
+                packages:
+                - doxygen
+                - graphviz
+                - python3.7
+                - python3-pip
+                - cmake
+                - wget
+
 
 before_install:
   # decrypt rsa key:
