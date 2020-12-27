@@ -29,6 +29,8 @@ jobs:
                 - python3-pip
                 - cmake
                 - wget
+            before_script:
+            - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
 install:
   # decrypt rsa key:
