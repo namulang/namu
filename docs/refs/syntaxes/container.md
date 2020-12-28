@@ -241,3 +241,17 @@ def app
 * 배열1과 배열2가 있을때 이 둘을 chain해서 배열1의 원소와  배열2의 원소를 모두 가진것처럼 보이는 배열을 만들수 있어야 한다.
 * List건, vector건 모든 컨테이너에 적용되야 한다.
 
+
+## container는 known worldlang class 이다.
+* 순수 c++ 로 작성된 것은 native영역에만 존재하거나 극히 일부분의 managed 영역 객체에 한한다.
+* managed 영역에 실재하게 되는 인스턴스가 순수 c++로 작성되는 것을 최대한 피한다.
+* managed 영역에 존재하게 하는 가장 확실한 방법은 world언어로 작성하여 module로 import 시키는 방법이다.
+* 이 방법에서 벗어나서 managed 영역에 존재한다는 것은 예외적인 상황을 의미하므로 이러한 상황을 피하는 것이다.
+* container 또한 별도의 world언어로 작성된 module로써 import되어 시스템에 들어간다.
+* 그러나 interpreter는 특정 문법이 동작하려면 container의 존재를 알 수 있어야 하며, node가 container 인지 아닌지 등을 알 수 있어야 한다.
+* 그러므로 predefined library로써 프로그램 파싱전에 반드시 import 된다는 걸 언어 스펙으로써 보장한다.
+* unique한 string을 주어졌을때 이걸로부터 특정 클래스의 TMeta를 접근할 수 있는 방법이 제공된다.
+    * 이 방법은 어디서건 어느때에건 호출 할 수 있어야 한다.
+    * interpreter는 이걸 사용해서 container의 meta클래스를 얻어올 수 있다.
+    * interpreter는 이걸 사용해서 container의 객체를 생성하거나 상속관계를 verify 할 수 있게 된다.
+* 이 string은 alltime unique해야 하며, 로케일, 지역, 언어, 재부팅, 시간변경, 단말 변경에 관계없이 동일한 unique 한 값을 정의할 수 있어야 한다.
