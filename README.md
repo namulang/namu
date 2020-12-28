@@ -1,8 +1,9 @@
-[![](https://img.shields.io/github/release-pre/kniz/worldlang.svg?label=latest%20release&style=flat)](https://github.com/kniz/worldlang/releases)
-![](https://img.shields.io/github/release-date-pre/kniz/worldlang.svg?label=on&style=flat)
-[![](https://img.shields.io/travis/kniz/worldlang.svg?label=linux&style=flat)](https://travis-ci.org/kniz/worldlang)
-![](https://img.shields.io/github/languages/code-size/kniz/worldlang.svg?style=flat)
-[![](https://img.shields.io/github/downloads/kniz/worldlang/total.svg?style=flat)](https://github.com/kniz/worldlang/releases)
+[![](https://img.shields.io/github/v/release/kniz/worldlang.svg?include_prereleases&label=latest%20release&style=for-the-badge)](https://github.com/kniz/worldlang/releases)
+![](https://img.shields.io/github/release-date-pre/kniz/worldlang.svg?label=on&style=for-the-badge)
+[![](https://badges.herokuapp.com/travis/kniz/worldlang?branch=master&label=linux&env=BADGE=linux&style=for-the-badge)](https://travis-ci.org/kniz/worldlang)
+[![](https://badges.herokuapp.com/travis/kniz/worldlang?branch=master&label=osx&env=BADGE=osx&style=for-the-badge)](https://travis-ci.org/kniz/worldlang)
+![](https://img.shields.io/github/languages/code-size/kniz/worldlang.svg?style=for-the-badge)
+[![](https://img.shields.io/github/downloads/kniz/worldlang/total.svg?style=for-the-badge)](https://github.com/kniz/worldlang/releases)
 
 WORLD, <br/>The new programming language.
 =======================================
