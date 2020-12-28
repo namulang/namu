@@ -3,7 +3,7 @@ language: cpp
 jobs:
     include:
         - os: linux
-          - BADGE=linux
+          env: BADGE=linux
           dist: focal
           addons:
             apt:
@@ -19,7 +19,7 @@ jobs:
           - sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 
         - os: osx
-          - BADGE=osx
+          env: BADGE=osx
           osx_image: xcode12
           addons:
             ssh_known_hosts: github.com
