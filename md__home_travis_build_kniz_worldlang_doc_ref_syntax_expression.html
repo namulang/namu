@@ -59,11 +59,13 @@
         <span class="nx">sys</span><span class="p">.</span><span class="nx">term</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;res=$res&quot;</span><span class="p">)</span>
 
 <span class="c1">// result: false</span></pre><h2>Worldfrx를 통해서 expression 객체를 module에서 조작해서는 안된다. (invisible)</h2><h2>if-else 에서 양쪽 블록문 안에서의 값으로 수렴한다.</h2><pre class="m-code"><span class="nx">res</span> <span class="o">:=</span> <span class="k">if</span> <span class="mi">3</span> <span class="p">&lt;</span> <span class="mi">5</span>
-    <span class="s">&quot;wow&quot;</span>
+    <span class="s">&quot;wow&quot;</span> <span class="c1">// str type</span>
 <span class="k">else</span>
-    <span class="p">{</span><span class="nx">person</span><span class="p">(</span><span class="s">&quot;boy&quot;</span><span class="p">),</span> <span class="nx">person</span><span class="p">(</span><span class="s">&quot;girl&quot;</span><span class="p">)}</span>
+    <span class="p">[</span><span class="nx">person</span><span class="p">(</span><span class="s">&quot;boy&quot;</span><span class="p">),</span> <span class="nx">person</span><span class="p">(</span><span class="s">&quot;girl&quot;</span><span class="p">)]</span> <span class="c1">// arr type</span>
 
-<span class="c1">// is 는 node 타입이다.</span></pre><h2>expression과 statement는 구분이 필요하다. 모든 statement가 expression인건 아니다.</h2><ul><li>대표적으로 import 를 들 수있다.</li><li>문법의 추가로 또다른 예가 생길 수 있다.</li></ul>
+<span class="c1">// res는 str과 arr 모두 가능해야 한다.</span>
+<span class="c1">// str과 arr를 모두 포함할 수 있는 타입은 node 밖에 없다.</span>
+<span class="nx">res</span> <span class="nx">is</span> <span class="nx">node</span> <span class="c1">// true</span></pre><h2>expression과 statement는 구분이 필요하다. 모든 statement가 expression인건 아니다.</h2><ul><li>대표적으로 import 를 들 수있다.</li><li>문법의 추가로 또다른 예가 생길 수 있다.</li></ul>
       </div>
     </div>
   </div>

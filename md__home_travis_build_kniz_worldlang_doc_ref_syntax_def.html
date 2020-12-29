@@ -76,42 +76,31 @@
 <span class="nx">p2</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span><span class="p">=</span> <span class="nx">p2</span><span class="p">.</span><span class="nx">name</span> <span class="c1">// false</span></pre><ul><li>월드는 복제될때 모든 member에 대해서 얇은 복사를 자동으로 수행한다.</li><li>그리고 나서 생성자를 호출한다.</li><li>&quot;org&quot;는 origin 객체를 가리킨다.</li><li>&quot;me&quot;는 이 복제본 객체를 가리킨다.</li></ul><h2>상속</h2><ul><li><p>문법은 다음과 같다.</p><p>def &lt;me-identifier&gt; &lt;identifier&gt;</p></li></ul><h2>객체는 package 안에 존재한다.</h2><pre class="m-code"><span class="kn">package</span> <span class="nx">org</span><span class="p">.</span><span class="nx">worldlang</span><span class="p">.</span><span class="nx">example</span>
 
 <span class="nx">def</span> <span class="nx">example1</span>
-    <span class="o">...</span><span class="p">.</span>
+    <span class="o">...</span><span class="p">.</span></pre><ul><li>namespace 라는 것은 없다.</li></ul><h2>중첩 origin 객체</h2><ul><li>중첩 origin 객체 public으로 될 수 있다.</li><li>origin 중첩 객체는 origin객체를 owner로 삼는다.</li><li>owner의 origin 중첩 객체는 복제 객체로부터 참조하는 origin 중첩객체와 동일한 객체이다.</li></ul><pre class="m-code"><span class="n">def</span> <span class="n">test</span>
+    <span class="nl">name</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;&quot;</span>
 
-<span class="o">*</span> <span class="nx">namespace</span> <span class="nx">라는</span> <span class="nx">것은</span> <span class="nx">없다</span><span class="p">.</span>
+    <span class="n">def</span> <span class="n">in</span>
+        <span class="n">koo</span><span class="p">()</span> <span class="kt">void</span><span class="o">:</span> <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;name=$name&quot;</span><span class="p">)</span>
 
-<span class="err">##</span> <span class="nx">중첩</span> <span class="nx">origin</span> <span class="nx">객체</span>
+    <span class="n">foo</span><span class="p">()</span> <span class="n">in</span>
+        <span class="n">ret</span> <span class="n">in</span><span class="p">()</span>
 
-<span class="o">*</span> <span class="nx">중첩</span> <span class="nx">origin</span> <span class="nx">객체</span> <span class="nx">public으로</span> <span class="nx">될</span> <span class="nx">수</span> <span class="nx">있다</span><span class="p">.</span>
-<span class="o">*</span> <span class="nx">origin</span> <span class="nx">중첩</span> <span class="nx">객체는</span> <span class="nx">origin객체를</span> <span class="nx">owner로</span> <span class="nx">삼는다</span><span class="p">.</span>
-<span class="o">*</span> <span class="nx">owner의</span> <span class="nx">origin</span> <span class="nx">중첩</span> <span class="nx">객체는</span> <span class="nx">복제</span> <span class="nx">객체로부터</span> <span class="nx">참조하는</span> <span class="nx">origin</span> <span class="nx">중첩객체와</span> <span class="nx">동일한</span> <span class="nx">객체이다</span><span class="p">.</span>
+<span class="n">def</span> <span class="n">app</span>
+    <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
+        <span class="n">test</span><span class="p">.</span><span class="n">in</span><span class="p">.</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=</span>
+        <span class="n">test</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;wow&quot;</span>
+        <span class="n">test</span><span class="p">.</span><span class="n">in</span><span class="p">.</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
 
-<span class="s">``</span><span class="err">`</span><span class="nx">cpp</span>
-<span class="nx">def</span> <span class="nx">test</span>
-    <span class="nx">name</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span>
-
-    <span class="nx">def</span> <span class="nx">in</span>
-        <span class="nx">koo</span><span class="p">()</span> <span class="nx">void</span><span class="p">:</span> <span class="nx">c</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;name=$name&quot;</span><span class="p">)</span>
-
-    <span class="nx">foo</span><span class="p">()</span> <span class="nx">in</span>
-        <span class="nx">ret</span> <span class="nx">in</span><span class="p">()</span>
-
-<span class="nx">def</span> <span class="nx">app</span>
-    <span class="nx">main</span><span class="p">()</span> <span class="nx">void</span>
-        <span class="nx">test</span><span class="p">.</span><span class="nx">in</span><span class="p">.</span><span class="nx">koo</span><span class="p">()</span> <span class="c1">// name=</span>
-        <span class="nx">test</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="s">&quot;wow&quot;</span>
-        <span class="nx">test</span><span class="p">.</span><span class="nx">in</span><span class="p">.</span><span class="nx">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
-
-        <span class="nx">new</span> <span class="o">:=</span> <span class="nx">test</span><span class="p">()</span>
+        <span class="k">new</span> <span class="o">:=</span> <span class="n">test</span><span class="p">()</span>
         <span class="c1">// test.in = new.in -&gt; err. in은 ref가 아니다.</span>
-        <span class="nx">new</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="s">&quot;new&quot;</span>
-        <span class="nx">new</span><span class="p">.</span><span class="nx">foo</span><span class="p">().</span><span class="nx">koo</span><span class="p">()</span> <span class="c1">// name=new</span>
+        <span class="k">new</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;new&quot;</span>
+        <span class="k">new</span><span class="p">.</span><span class="n">foo</span><span class="p">().</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=new</span>
 
-        <span class="nx">test</span><span class="p">.</span><span class="nx">in</span><span class="p">.</span><span class="nx">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
-        <span class="nx">new</span><span class="p">.</span><span class="nx">in</span><span class="p">.</span><span class="nx">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
+        <span class="n">test</span><span class="p">.</span><span class="n">in</span><span class="p">.</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
+        <span class="k">new</span><span class="p">.</span><span class="n">in</span><span class="p">.</span><span class="n">koo</span><span class="p">()</span> <span class="c1">// name=wow</span>
 
-        <span class="nx">nested</span> <span class="o">:=</span> <span class="nx">new</span><span class="p">.</span><span class="nx">in</span> <span class="c1">// ok</span>
-        <span class="nx">nested1</span> <span class="o">:=</span> <span class="nx">new</span><span class="p">.</span><span class="nx">in</span><span class="p">()</span> <span class="c1">// ok</span></pre><h2>중첩 객체는 object scope에 등록할때 owner것을 먼저 등록 한다.</h2><ul><li>owner와 중첩객체 통째로 context switching 될 수 있다.</li></ul><h2>중첩 객체는 복제될때 현재 object scope의 owner를 내부 참조자에 할당한다.</h2><ul><li>즉 scope은 object scope이 2개 이상 들어갈 수 있어야 하며 어떤게 owner인지 분간해야 한다.</li></ul><h2>me는 scope에 들어갈 때 Object scope에 속한 것처럼 register 된다.</h2><ul><li>예를들어 MyObject 라는 객체가 있을 경우, MyObject 객체는 object scope에 자신을 등록할때 me를 MyObject scope에 넣어둔다.</li><li>그리고 편의를 위해서 local space에 me를 MyObject.me로 redirection 되도록 한다.</li><li><p>따라서 다음과 같은 코드는 모두 같은 것이다.</p><pre class="m-code"><span class="nx">foo</span><span class="p">()</span>
+        <span class="nl">nested</span> <span class="p">:</span><span class="o">=</span> <span class="k">new</span><span class="p">.</span><span class="n">in</span> <span class="c1">// ok</span>
+        <span class="nl">nested1</span> <span class="p">:</span><span class="o">=</span> <span class="k">new</span><span class="p">.</span><span class="n">in</span><span class="p">()</span> <span class="c1">// ok</span></pre><h2>중첩 객체는 object scope에 등록할때 owner것을 먼저 등록 한다.</h2><ul><li>owner와 중첩객체 통째로 context switching 될 수 있다.</li></ul><h2>중첩 객체는 복제될때 현재 object scope의 owner를 내부 참조자에 할당한다.</h2><ul><li>즉 scope은 object scope이 2개 이상 들어갈 수 있어야 하며 어떤게 owner인지 분간해야 한다.</li></ul><h2>me는 scope에 들어갈 때 Object scope에 속한 것처럼 register 된다.</h2><ul><li>예를들어 MyObject 라는 객체가 있을 경우, MyObject 객체는 object scope에 자신을 등록할때 me를 MyObject scope에 넣어둔다.</li><li>그리고 편의를 위해서 local space에 me를 MyObject.me로 redirection 되도록 한다.</li><li><p>따라서 다음과 같은 코드는 모두 같은 것이다.</p><pre class="m-code"><span class="nx">foo</span><span class="p">()</span>
 <span class="nx">me</span><span class="p">.</span><span class="nx">foo</span><span class="p">()</span>
 <span class="nx">MyObject</span><span class="p">.</span><span class="nx">me</span><span class="p">.</span><span class="nx">foo</span><span class="p">()</span></pre></li></ul><h2>me가 Object scope에 들어감으로써 중첩 객체 접근문제가 해결된다.</h2><ul><li>중첩객체는 owner 참조를 반드시 들고 있으며, object scope 등록시에 이 owner를 먼저 등록시키기 때문이다.</li><li>Object scope에는 me가 2개 존재하게 된다.</li><li>일반적인 객체는 1개만 me가 등록되기 때문에 다른 객체의 me를 무단으로 참조할 수는 없으므로 안전하다.</li></ul><pre class="m-code"><span class="nx">def</span> <span class="nx">outer</span>
     <span class="nx">foo</span><span class="p">()</span> <span class="nx">void</span>
