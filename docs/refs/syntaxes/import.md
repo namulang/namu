@@ -1,0 +1,10 @@
+# import
+
+## import 뒤에 사용할 type과 module path를 적어야 한다.
+
+## import를 두는 이유는 속도 최적화 때문이다.
+* 이론상 import가 없더라도 동작에는 문제가 없다.
+* 단 시스템은 type을 import 할 수 있더라도, 현재 프로그램을 돌리기 위한 최소한의 type만 load 해두는 것이 속도에 매우 이익이 된다.
+    * 매우 많은 모듈이 worldlang으로 시스템에 존재한다고 가정하자.
+    * 이러한 최적화가 없다면 hello world 프로그램을 돌리기 위해서 필요하지도 않은 directx, socket, opencv 등을 load를 해두거나
+    * 2 pass 를 돌릴때 의존 관계를 유추하여 만들어 낼 수 있어야 한다. 많은 시간이 소요될 것이다.
