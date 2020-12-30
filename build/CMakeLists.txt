@@ -6,7 +6,7 @@ set(SHOW_CMAKE_VARIABLES 1)
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
 set(VERSION_FIX 0)
-set(BUILD_COUNT 141)
+set(BUILD_COUNT 142)
 set(VERSION_NAME "Seed")
 set(VERSION_VALUE "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_FIX}")
 set(VERSION "${PROJECT_NAME} ${UPDATE_NAME} v${VERSION_VALUE}")
@@ -49,10 +49,10 @@ cmake_policy(SET CMP0042 NEW)
 set(WORLD_LIBRARY_EXTENSION "so")
 get_filename_component(WRD_DIR ${CMAKE_SOURCE_DIR} DIRECTORY)
 set(WRD_DEFAULT_INC_DIR
-    ${WRD_DIR}/mods/indep/src
-    ${WRD_DIR}/mods/clog/src
-    ${WRD_DIR}/mods/meta/src
-    ${WRD_DIR}/mods/memlite/src
+    ${WRD_DIR}/mod/indep/src
+    ${WRD_DIR}/mod/clog/src
+    ${WRD_DIR}/mod/meta/src
+    ${WRD_DIR}/mod/memlite/src
     /usr/local/include)
 include_directories(${WRD_DEFAULT_INC_DIR})
 
@@ -120,4 +120,4 @@ message("\tall libraries extension is ${WORLD_LIBRARY_EXTENSION}")
 message("\tworld project directory is ${WRD_DIR}")
 message("\tdefault include directory is ${WRD_DEFAULT_INC_DIR}")
 add_definitions(${CXX_DEFINITIONS})
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../mods ${CMAKE_CURRENT_BINARY_DIR}/mods)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../mod ${CMAKE_CURRENT_BINARY_DIR}/mod)
