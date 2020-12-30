@@ -19,15 +19,15 @@
 
 ### Quick Start
 
-- [KR](md__home_travis_build_kniz_worldlang_doc_ref_QUICK-START-kr.html)
+- [KR](md__home_travis_build_kniz_worldlang_doc_ref__q_u_i_c_k-_s_t_a_r_t-kr.html)
 
 ### goals
 
-- [goals](md__home_travis_build_kniz_worldlang_doc_ref_goal_GOAL.html)
+- [goals](md__home_travis_build_kniz_worldlang_doc_ref_goal__g_o_a_l.html)
 
 ### features
 
-- [C-REPL](md__home_travis_build_kniz_worldlang_doc_ref_feat_C-REPL.html)
+- [C-REPL](md__home_travis_build_kniz_worldlang_doc_ref_feat__c-_r_e_p_l.html)
 - [Entrypoint](md__home_travis_build_kniz_worldlang_doc_ref_feat_entrypoint.html)
 - [Exception handling](md__home_travis_build_kniz_worldlang_doc_ref_feat_exception_handling.html)
 - [Immutable](md__home_travis_build_kniz_worldlang_doc_ref_feat_immutable.html)
@@ -35,9 +35,9 @@
 - [Life cycle](md__home_travis_build_kniz_worldlang_doc_ref_feat_life_cycle.html)
 - [Module](md__home_travis_build_kniz_worldlang_doc_ref_feat_module.html)
 - [Null safety](md__home_travis_build_kniz_worldlang_doc_ref_feat_null_safety.html)
-- [Prototyping inheritance](md__home_travis_build_kniz_worldlang_doc_ref_feat_Prototyping_Inheritance.html)
+- [Prototyping inheritance](md__home_travis_build_kniz_worldlang_doc_ref_feat__prototyping__inheritance.html)
 - [Scope](md__home_travis_build_kniz_worldlang_doc_ref_feat_scope.html)
-- [Type deduction](md__home_travis_build_kniz_worldlang_doc_ref_feat_Type_deduction.html)
+- [Type deduction](md__home_travis_build_kniz_worldlang_doc_ref_feat__type_deduction.html)
 - [Type](md__home_travis_build_kniz_worldlang_doc_ref_feat_type.html)
 
 ### syntaxes
@@ -58,7 +58,6 @@
 - [property](md__home_travis_build_kniz_worldlang_doc_ref_syntax_property.html)
 - [reference](md__home_travis_build_kniz_worldlang_doc_ref_syntax_reference.html)
 - [ret](md__home_travis_build_kniz_worldlang_doc_ref_syntax_ret.html)
-- [scope](md__home_travis_build_kniz_worldlang_doc_ref_syntax_scope.html)
 - [specifier](md__home_travis_build_kniz_worldlang_doc_ref_syntax_specifier.html)
 - [variable](md__home_travis_build_kniz_worldlang_doc_ref_syntax_variable.html)
 - [void](md__home_travis_build_kniz_worldlang_doc_ref_syntax_void.html)
