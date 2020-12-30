@@ -60,7 +60,7 @@ script:
 - export CC=clang CXX=clang++ PYTHON=$(which python3)
 
 - $PYTHON build/builder.py build
-- if [ "$BRANCH" == "master" && "$TRAVIS_OS_NAME" == "linux" ]; then
+- if [ "$BRANCH" == "master" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then
     $PYTHON build/builder.py doc;
     $PYTHON build/builder.py pubdoc;
   fi
