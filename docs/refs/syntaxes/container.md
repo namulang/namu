@@ -26,7 +26,9 @@
 * 텅빈 배열을 만들 수 있다.
 
 ```go
-arr := str[]
+arr := str[] // arr is refer to str array.
+arr2 := str[]() // empty arry to str.
+arr = arr2
 arr.len // 0
 
 
@@ -220,12 +222,12 @@ map.keys
 ## 복잡한 컨테이너 문법
 
 ```go
-def app
+def app commonMyApp
     res, res2 => foo(arr int[], cache base[str], key str) int[][str], base[str] on err
-        return int[][str], base[str] on myErr
+        return int[][str](), base[str]() on myErr
 
     main() void
-        if (a, b on res := foo(null, null, null)) as myErr
+        if a, b on res := foo(null, null, null)
             return
 
         age := a["wow"][3]
