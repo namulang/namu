@@ -81,3 +81,24 @@ def a
     * local scope보다는 상위가 아니다.
 * with 안에 with가 있을 수 있다.
 
+## scope와 이름충돌
+* 동일한 scope에 내에 같은 이름이 있으면 컴파일 에러로 판단한다.
+```go
+def sample
+    foo(n int) void
+        foo := 5 // ok
+        foo aka boo // ok
+        foo aka koo // ok
+        foo aka foo // err. 'foo' is on same scope, local scope, already.
+        with boo
+            n := it++ // err. n is on local scope. duplicated.
+            $n := it // err. static n var is on local scope too.
+            ($b := it) aka n // err. 'n' is on local scope already.
+```
+
+## 메소드가 소유한 subnodes와 메소드 안에서 생성하는 모든 것들은 local scope이다.
+* 메소드의 parameter list
+* 반환값
+* 메소드 실행중 생성되는 local 변수
+* 메소드의 static variable
+* 메소드가 기본 제공하는 Method 클래스의 메소드들
