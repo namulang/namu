@@ -26,17 +26,35 @@
 
 ### 정의와 동시에 aka를 쓰는 경우 문법이 조금 생소할 수 있다.
 
+* aka는 앞에 있는 식별자를 최대한 크게 인식하려고 한다.
+* aka는 다른 expr 안에 들어갈 수 없다. aka가 항상 최종 expr 밖에 있어야 한다.
+* 괄호를 사용하면 최종expr도 중간expr로 변환할 수 있다. 그러므로 aka를 괄호 안에 넣어서 다른 expr에 포함시킬 수 있다.
+
 ```go
 def person obj() 
-    callback() void aka c
+    callback() void aka c // "void aka c"(X) "(callback() void) aka c"(O)
 
-    callback(whatever flt) void = null aka c2
+    callback(whatever flt) void = null aka c2 // "null aka c2"(X) "void = null aka c2"(X) "(callback(whatever flt) void = null) aka c2"(O)
 
     callback(whatever str) void
         doSomething()
         ...
-        return (lamb,da) -> str aka l
+        return (lamb,da) -> str aka l // err.
             ....
+
+        return (lamb,da) -> str
+            ....
+        aka l // err. returnExpr is not identifier.
+
+        (lamb, da) -> str
+            ....
+        aka l
+        return l // ok.
+
+        return ((labm, da) -> str
+            ....
+        aka l) // ok.
+
     aka c3
 
 aka p
