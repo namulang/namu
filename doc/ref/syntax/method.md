@@ -55,21 +55,31 @@
 하나의 Type으로는 불가능하고 인자와 반환형을 통해서 verify를 해야한다.
 단순히 Ref를 통해서 Verify 하기가 힘든다.
 
-## 메소드 식별문법
+## 메소드 정의 문법
 
-* 메소드 메소드명과 인자리스트를 함께 적는다. 인자리스트는 반드시 변수명이 함께 있어야 한다.
+* 메소드 메소드명과 인자리스트를 함께 적는다. 인자리스트는 반드시 type declaration이 포함되어있어야 한다.
 ```go
 def person
+    // 다음은 모두 같은 것이다.
     sayHello(name str, age int) res
-
-person.sayHello(var1 str, var2 int)
+    sayHello2(name := "defaultStr", age := 0) res
+    sayHello3(name str := "", age int := 0) res
 ```
+
+## 메소드 식별문법
 
 * 만약 메소드명 만으로도 식별이 가능하다면 인자리스트를 생략할 수 있다.
 
 ```go
 person.sayHello
 ```
+
+* 그 이외의 경우에는 타입리스트를 모두 적어줘야 한다.
+```go
+person.sayHello(str, int)
+```
+* 타입리스트는 인자리스트와 달리 타입 식별자 1개로 이루어진 리스트다.
+* 단, 파서는 타입리스트 안에 있는 식별자가 모두 타입인지는 알 수 없다. verify 단계에서 감지하게 된다.
 
 ### 빈 메소드일 경우는 void를 넣는다.
 
