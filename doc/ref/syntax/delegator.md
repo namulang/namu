@@ -3,12 +3,11 @@
 ## 메소드를 정의하면 그것이 곧 delegator로 사용할 수 있다.
 
 ```go
-cb(msg str) void // or = 0
+cb(msg str) void // just interface. can't call this function directly.
+cb2(msg str) void: ret // returining void. this's accessible.
 foo(msg str, @cb) void
     cb(str)
 ```
-
-## 메소드 정의시 뒤에 = 0을 붙이면 해당 메소드는 abstract 이다. (method.md 참고)
 
 ## 메소드에 this는 값으로 접근했을때의 this이다.
 

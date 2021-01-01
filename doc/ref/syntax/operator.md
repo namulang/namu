@@ -3,35 +3,33 @@
 ## 연산자 기본
 ```cpp
 def app
-    int main()
-        age = 21
-        sum = 0
+    main() int
+        age := 21
+        sum := 0
 
-        if age > 20 { // 블록문시 {, }를 사용가능 하지만,
+        if age > 20
             if age > 20 & age < 20 // 생략을 권장.
                 console.out("can't reach here")
 
-            sum = 0 // 허용된 중복 정의
-            for n in 1~5 // ~는 1부터 5까지를 의미함. [1, 5)
+            sum := 0 // 허용된 중복 정의
+            for n in 1..5 // ..는 1부터 5까지를 의미함. [1, 5)
                 sum += n
 
-            console.out("sum=" + sum) // "sum=10"
-        } else if age == 20 // 블록문 뒤에 다음 stmt 가능.
+            console.out("sum=$sum") // "sum=10"
+        else if age == 20 // 블록문 뒤에 다음 stmt 가능.
             sum = 0
-        if ! (age == 21) | sum // |는 or연산. sum이 0이 아니면 true로 판단
+        if !(age == 21) | sum // |는 or연산. sum이 0이 아니면 true로 판단
             console.out("sum=" + sum)
-        elif ! sum // elif == else if
+        elif !sum // elif == else if
             console.out("can't reach here")
             return -1 // 함수 종료. 반환
 
-        bit = 2
+        bit := 2
         console.out(bit || 4) // "6"
         // ||, &&, ~~ 비트 연산자
         return 0
 
-
 import console // 외부 scope 이면, 어느 위치에든 선언 가능.
-
 
 /* 결과:
 sum=10
@@ -79,7 +77,7 @@ sum=10
 
 ## 비교연산자와 참조자 비교 연산자
 
-```wrd
+```go
 a1 := My()
 a2 := My()
 

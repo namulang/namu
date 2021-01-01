@@ -28,11 +28,13 @@ def app
 
 ```go
 res := if 3 < 5
-    "wow"
+    "wow" // str type
 else
-    {person("boy"), person("girl")}
+    [person("boy"), person("girl")] // arr type
 
-// is 는 node 타입이다.
+// res는 str과 arr 모두 가능해야 한다.
+// str과 arr를 모두 포함할 수 있는 타입은 node 밖에 없다.
+res is node // true
 ```
 
 ## expression과 statement는 구분이 필요하다. 모든 statement가 expression인건 아니다.
