@@ -5,11 +5,16 @@ for문은 var가 true를 의미하면 루프를 지속한다. null은 0을 의�
 
 ```cpp
 for <var>
+    ...
 for true
+    ...
 for is_success
+    ...
 
 for null
+    ...
 for false
+    ...
 
 a = Obj()
 for a
