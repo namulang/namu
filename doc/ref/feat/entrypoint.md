@@ -1,7 +1,10 @@
 # entrypoint
 
-## 모든 프로젝트는 app 이라는 객체가 1개는 있어야 한다.
+## 각 module은 main 이라는 메소드를 가질 수 있다.
+* 없어도 된다.
 
-## app은 main 메소드를 정의해야 한다.
+## main은 다음 형태 중 1개면 된다.
+* main() void
+* main(args str[]) void
 
-* 메인 메소드 signature 이렇다. main(args str[]) int
+## 프로그램을 종료하면서 에러코드를 내보내고 싶다면 sys pkg를 사용한다.
