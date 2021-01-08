@@ -9,13 +9,12 @@
     * 물론 수행하는 코드가 결과를 print하도록 구현했을 수는 있다.
 * 단 결과를 받는 쪽은 언제든 수행중 혹은 수행한 AST 구조를 실시간으로 받을 수 있어야 한다.
 
-## verification을 거쳐야 한다.
+## 4 phase를 거친다, generation -> bind&verify -> initialize -> merge
 
-* 코드를 파싱은 물론 worldlang 특성상 verify를 해줘야 AST가 생성된다.
-
-## 파싱이 완료되면 AST 객체는 일단 생성된다.
-
-* verification 도중에 AST 객체가 생성되어서는 안된다.
+* generation은 파서가 일단 AST 객체를 생성한다.
+* bind&verify에서는 AST를 깊이 탐색하면서 검증한다. AST객체를 meet 한 경우 필요하면 bind를 수행한다. (상속 등)
+* initialize는 origin 객체의 초기식을 수행하고 origin객체를 완성한다.
+* merge는 처리한 module과 그 origin 객체를 최종적으로 시스템에 반영한다.
 
 ## C-REPL 모드, REP 모드 2종류가 있다.
 
