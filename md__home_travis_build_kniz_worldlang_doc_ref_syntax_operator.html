@@ -46,40 +46,7 @@
         <h1>
           operator
         </h1>
-<h2>연산자 기본</h2><pre class="m-code"><span class="n">def</span> <span class="n">app</span>
-    <span class="n">main</span><span class="p">()</span> <span class="kt">int</span>
-        <span class="nl">age</span> <span class="p">:</span><span class="o">=</span> <span class="mi">21</span>
-        <span class="nl">sum</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>
-
-        <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">20</span>
-            <span class="k">if</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">20</span> <span class="o">&amp;</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="c1">// 생략을 권장.</span>
-                <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here&quot;</span><span class="p">)</span>
-
-            <span class="nl">sum</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span> <span class="c1">// 허용된 중복 정의</span>
-            <span class="k">for</span> <span class="n">n</span> <span class="n">in</span> <span class="mf">1..5</span> <span class="c1">// ..는 1부터 5까지를 의미함. [1, 5)</span>
-                <span class="n">sum</span> <span class="o">+=</span> <span class="n">n</span>
-
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;sum=$sum&quot;</span><span class="p">)</span> <span class="c1">// &quot;sum=10&quot;</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="n">age</span> <span class="o">==</span> <span class="mi">20</span> <span class="c1">// 블록문 뒤에 다음 stmt 가능.</span>
-            <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="o">!</span><span class="p">(</span><span class="n">age</span> <span class="o">==</span> <span class="mi">21</span><span class="p">)</span> <span class="o">|</span> <span class="n">sum</span> <span class="c1">// |는 or연산. sum이 0이 아니면 true로 판단</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;sum=&quot;</span> <span class="o">+</span> <span class="n">sum</span><span class="p">)</span>
-        <span class="n">elif</span> <span class="o">!</span><span class="n">sum</span> <span class="c1">// elif == else if</span>
-            <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;can&#39;t reach here&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="mi">-1</span> <span class="c1">// 함수 종료. 반환</span>
-
-        <span class="nl">bit</span> <span class="p">:</span><span class="o">=</span> <span class="mi">2</span>
-        <span class="n">console</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">bit</span> <span class="o">||</span> <span class="mi">4</span><span class="p">)</span> <span class="c1">// &quot;6&quot;</span>
-        <span class="c1">// ||, &amp;&amp;, ~~ 비트 연산자</span>
-        <span class="k">return</span> <span class="mi">0</span>
-
-<span class="k">import</span> <span class="n">console</span> <span class="c1">// 외부 scope 이면, 어느 위치에든 선언 가능.</span>
-
-<span class="cm">/* 결과:</span>
-<span class="cm">sum=10</span>
-<span class="cm">sum=10</span>
-<span class="cm">6</span>
-<span class="cm">*/</span></pre><h2>연산자 우선순위</h2><p>위에 있을 수록, 우선된다. 크게 5가지로 다음과 같이 분류하며, 단항 -&gt; 이항 순으로 나온다. 동일한 우선순위라면 왼쪽에서 오른쪽으로 평가된다.</p><ol><li>접근</li><li>단항</li><li>이항 산술</li><li>비트연산</li><li>비교</li></ol><table class="m-table"><thead><tr><th>연산자operator</th><th>설명</th><th>예제</th></tr></thead><tbody><tr><td>()</td><td>괄호</td><td>(void func(int val) {})</td></tr><tr><td>메소드명( &lt;인자리스트&gt; )</td><td>함수호출</td><td>func(35)</td></tr><tr><td>.</td><td>접근자</td><td>a.b</td></tr><tr><td>&lt;타입&gt;</td><td>캐스팅</td><td>int val</td></tr><tr><td>[]</td><td>원소접근</td><td>arr[5]</td></tr><tr><td>++, &ndash;, **</td><td>후위 단항unary postfix</td><td>a++</td></tr><tr><td>++, &ndash;, **</td><td>전위 단항</td><td>**a // a*a</td></tr><tr><td>_</td><td>보호 속성 단항protected</td><td>str _val {}</td></tr><tr><td>$, #</td><td>상수 / 정적 속성 단항</td><td>#str $#_val {}</td></tr><tr><td>+</td><td>확장 속성 단항</td><td>#str +#$_val {}</td></tr><tr><td>-</td><td>음수 단항<br />양수 단항unary plus 연산자는 없다</td><td>a = -a</td></tr><tr><td>!</td><td>부정logical not</td><td>!++a</td></tr><tr><td>~~</td><td>비트연산 부정</td><td>~~a</td></tr><tr><td>*, /, %, ^</td><td>이항 곱, 나눗셈, 나머지 연산</td><td>a % b</td></tr><tr><td>+, -</td><td>이항 덧셈, 뺄셈</td><td>a - b</td></tr><tr><td>&lt;&lt;, &gt;&gt;</td><td>비트 SHIFT 연산</td><td>a &lt;&lt; 3</td></tr><tr><td>&amp;&amp;</td><td>비트 AND 연산</td><td>a &amp;&amp; 0x01</td></tr><tr><td>%%</td><td>비트 XOR 연산</td><td>a %% 0x01</td></tr><tr><td>||</td><td>비트 OR 연산</td><td>0x02 || 0x01</td></tr><tr><td>~</td><td>범위 연산</td><td>0 ~ b</td></tr><tr><td>&lt;=, &lt;, &gt;, &gt;=, ==, !=, &ndash;</td><td>비교 연산</td><td>a &gt; b</td></tr><tr><td>&amp;, |</td><td>논리 연산</td><td>if a &amp; b</td></tr><tr><td>=, *=, /=, %=, +=, -=, &amp;&amp;=, ||=, ^^=,</td><td>할당 연산</td><td>a &amp;&amp;= 0x02</td></tr></tbody></table><h2>비교연산자와 참조자 비교 연산자</h2><pre class="m-code"><span class="nx">a1</span> <span class="o">:=</span> <span class="nx">My</span><span class="p">()</span>
+<h2>연산자 우선순위</h2><ul><li>위에 있을 수록, 우선된다.</li></ul><table class="m-table"><thead><tr><th>연산자operator</th><th>설명</th><th>Associativity</th><th>예제</th></tr></thead><tbody><tr><td>()</td><td>괄호</td><td>None</td><td>(func(val))</td></tr><tr><td>(), [], ., ++, &ndash;, **</td><td>Postfix(함수호출, 접근 등)</td><td>right</td><td>func(35)</td></tr><tr><td>++, &ndash;, **, !, -, ~~</td><td>Prefix</td><td>left</td><td>**a // a*a</td></tr><tr><td>as</td><td>캐스팅</td><td>None</td><td>int val</td></tr><tr><td>*, /, %</td><td>이항 곱, 나눗셈, 나머지</td><td>right</td><td>a % b</td></tr><tr><td>+, -</td><td>이항 덧셈, 뺄셈</td><td>right</td><td>a - b</td></tr><tr><td>&lt;&lt;, &gt;&gt;</td><td>비트 SHIFT 연산</td><td>right</td><td>a &lt;&lt; 3</td></tr><tr><td>&amp;&amp;</td><td>비트 AND 연산</td><td>right</td><td>a &amp;&amp; 0x01</td></tr><tr><td>^^</td><td>비트 XOR 연산</td><td>right</td><td>a %% 0x01</td></tr><tr><td>||</td><td>비트 OR 연산</td><td>right</td><td>0x02 || 0x01</td></tr><tr><td>..</td><td>범위 연산</td><td>None</td><td>0 ~ b</td></tr><tr><td>&lt;=, &lt;, &gt;, &gt;=, ==, !=, ===, !==</td><td>비교 연산</td><td>right</td><td>a &gt; b</td></tr><tr><td>&amp;</td><td>논리 AND 연산</td><td>right</td><td>a &amp; b</td></tr></tbody></table><p>| | | 논리 OR 연산 | right | a | b | | =, *=, /=, %=, +=, -= | 할당 연산 | left | a &amp;&amp;= 0x02 |</p><h2>비교연산자와 참조자 비교 연산자</h2><pre class="m-code"><span class="nx">a1</span> <span class="o">:=</span> <span class="nx">My</span><span class="p">()</span>
 <span class="nx">a2</span> <span class="o">:=</span> <span class="nx">My</span><span class="p">()</span>
 
 <span class="nx">a1</span> <span class="o">==</span> <span class="nx">a2</span> <span class="c1">// true</span>
