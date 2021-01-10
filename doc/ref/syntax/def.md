@@ -1,9 +1,8 @@
 # def
 
-## 프로토타이핑 기반
+## 프로토타이핑 패턴에 기반을 둔 클래스 기반 상속
 
 * 새로운 객체를 정의할 수 있고, 그 객체로부터 복제를 정의할 수 있다. (프로토타이핑 상속의 기본 조건)
-* 새로운 객체를 origin 객체라고 한다.
 
 ## 프로토타이핑을 하는 이유
 
@@ -15,56 +14,64 @@
     * 전역변수로써 생긴다. 의존성이 겉으로 드러나지 않는다.
     * 어느샌가 원본이 훼손되어 있는 경우 디버깅이 매우 어렵다.
 
-## 생성자는 2벌을 준비한다.
+* worldlang은 CREPL을 달성하는 것이 가장 중요한 언어다. 동시에 사전에 에러를 많이 찾아야 하므로 정적언어가 되어야 한다.
+* 따라서 동적으로 구성을 변경할 수 있으면서도 정적언어를 띌수 있어야 했기에 프로토타이핑 기반으로 구현을 하되 문법은 클래스 기반으로 보이게 된다.
+* 또한 클래스라는 개념을 1개 없애서 좀 더 단순하게 만들 수 있다.
+    * 모든 것은 객체다. 그런데 def 시 생성을 하지 않으면 디버깅을 위해서 접근을 막은 것에 불과하다.
 
-* 기본 생성자는 origin객체가 최초로 접근되어질때 호출된다.
-* 이는, origin객체들 간에 순서를 정해주지 않으면 상호 의존 문제가 발생할 수 있기 때문이다.
-* 객체 자체는 이미 만들어져 있다.
-* 복사 생성자는 원본의 복제 객체가 나올때 호출된다.
+* 위의 특성은 대개 동적 언어에 부합하는 특성이다. 정적언어를 띄는 world에는 어울리지 않는다.
+* 그래서 origin, type, clone 3가지로 해결한다.
+
+## 클래스처럼, 때로는 프로토타입처럼 사용한다.
+* world에는 클래스가 없다. 모든 것은 객체다.
+* origin 객체는 def 를 통해서 정의되는 객체로 사용자는 절대로 origin 객체의 데이터를 변경할 수 없다.
+* origin 객체의 메소드를 호출할 수 있으나 이것은 언어 spec 상에서 약속된 일부 RTTI 관련 메소드 뿐이다. origin 객체로부터 복제객체를 생성할 수 있다.
+* origin 객체의 불변성과 복제를 통한 사용은 클래스를 떠올리게 한다.
+* def를 하면서 동시에 그 타입으로 unique 객체를 완성 할 수 있다.
+* unique 객체는 mutable 한 객체로써 worldlang spec상 unique와 origin은 별도의 객체다.
 
 ```go
-def person
-    name str
-    @ctor
-        name = "I'm unique"
-    ctor()
-        name = "ctor"
-    ctor(src person)
-        name = src.name()
+def Person
+    age := 5
+Person.age // 에러
 
-def app
-    main() void
-        person.name // I'm unique 
-        person.name = "hello"
+def person()
+    age := 5
 
-        person().name // "ctor"
-        person.clone().name // hello
+person.age = 3 // unique객체.age == 3
+p := person()
+p.age != person.age // true
+p2 := person(person)
+p2.age == person.age // true
 ```
+
+## 생성자는 outer scope에 속한 특수한 static func다.
+* 생성자가 외부에 놓여질때 타입이름으로 놓여져야 한다, "@ctor"이 아니라.
+* type Person의 생성자는 Person에 있는 것이 아니라 Person의 origin를 갖고 있는 객체가 소유한다. (대부분은 module일 것이다)
+* 이는 모호성 오류를 해결하기 위해서이다. 다음 예제를 보자.
+```go
+def A
+    @ctor(int)
+def B A
+    @ctor()
+a A := B(5)
+```
+* 만약 생성자가 객체에 속한 것이라면 생성자는 당연히 상속된다. 그러므로 B(5)는 옳은 문장이 되어야 한다. 그러나 데이터의 무결성이 엉망이 된다.
+* 생성자를 밖에 둔 경우에만 B 객체에 접근없이 B(5)를 호출할 수 있게 된다.
 
 ## origin 객체
 
 * origin객체는 컴파일러로부터 생성되며 생성된 후에는 사용자는 절대로 접근이 불가능하다.
-* origin객체가 생성되면 이로부터 복제된 객체 1개 시스템에 의해서 생성되며 이를 unique객체라고 한다.
-* unique객체는 origin객체의 이름을 부여받으며 사용자는 unique객체에 접근할 수 있다.
+* def 에 명시하면, origin객체가 생성될때 이로부터 복제된 객체 1개가 시스템에 의해서 생성되며 type name에 바인딩 된다. 이를 unique객체라고 한다.
+* unique객체가 명시될때 생성자의 인자를 다양하게 줄 수 있다.
 
-## @ctor은 unique 객체의 생성자다.
+## unique 객체는 intepreting 3 phase인 initialize 단계에서 eval 된다.
 
-* 1번만 불려질 것이며
-* unique객체에 접근하려고 하는 순간 호출된다.
-* 프로퍼티의 기본값은 처음부터 할당이 되어있다.
-* @ctor()은 origin 객체의 복제시 호출된다.
+## unique 객체는 복제된다.
 
-## unique 객체는 lazy하게 시스템에 의해서 복제된다.
+## 생성자는 origin 객체를 복제하는 것이다.
 
-* 접근하는 순간 복제된다.
-* Generic unique 객체를 위해서이기도 하다.
-
-## unique 객체는 복제되지 않는다.
-
-* 프로토타이핑은 원본이 객체이므로 원본이 쉽게 훼손될 수 있으며 그걸 눈치채기가 어렵다.
-* 따라서 기존의 로직들이 훼손된 원본에 의해서 다른 결과를 만들어 낼 수 있다. 이것은 장점이기도 하고 단점이기도 하다.
-* unique 객체를 복제하기 위해서 문법을 작성하면 실제로는 unique 객체의 원본인 origin객체로부터 복제된다.
-* 따라서 unique객체로부터 복제를 하더라도 항상 초기상태의 값으로 객체가 생성된다.
+## 복사생성자는 임의의 객체를 복제하는 것이다.
 
 ## 프로토타이핑이라는 것이 숨겨진다.
 
@@ -83,41 +90,77 @@ def app
 * 겉보기에는 1차원 배열처럼 보이므로 간결한 API를 제공한다.
 * 유동적으로 배열의 내용을 구성할 수 있으며 원본의 배열 내용이 변경되어도 추가 비용없이 동기화된다.
 * 탐색에 O(n)의 비용이 소모된다.
-* 내부적으로 public member와 private member 2종류가 존재하며 이 들을 chain으로 묶은 배열이 존재한다.
+* shared sub chain 1개와 all subs chain 1개 non shared sub array 1개 총 3개로 구성된다.
 
-## 객체의 variable은 생성자에서 새로운 객체로 할당되어야 한다.
+## origin 객체의 정의 알고리즘
 
-```go
-def person
-    name str
-    name1 := "world"
+* obj는 NonShared array와 Share chain과 subs Chain 3개를 가지고 있다. (물론 더 있다)
+* chain 자료 구조는 add 된 container 갯수와 관계없이 일정한 복잡도와 퍼포먼스를 낼 수 있다. 이를 위해서 단방향 linked list의 Node처럼 구현된다. (list가 아니다)
+* origin 객체를 정의 할때 다음의 알고리즘으로 작성한다.
+    * 파서 혹은 native 언어에 의해서 작성된다. 다음은 mgd origin obj에 대해서만 적용된다.
+    * 파서는 origin 객체를 생성해야 하므로 new MgdObj()를 통해서 만들어 낸다.
+    * origin객체 생성시, 중첩객체 여부를 고려하지 않는다. 상속만 고려한다.
+    * generation 단계
+        * interpreting의 첫 1 phase인 generation단계에서도 어떠한 이름을 가진 객체가 부모인지는 Type에 바인딩 시킬 수 있다.
+        * 파서는 scope가 객체를 접근하는 족족, origin객체가 없을 경우 그 자리에서 origin과 Type객체를 만들 도록 lazy한 getter를 들고 있어야 한다.
+        * origin객체를 생성하면서 인자로 미리 작성해둔 Type 객체를 생성자의 인자로 넣는다.
+        * Type 객체는 어떤 origin 객체가 부모인지 기록되어 있다.
+    * verify&bind 단계에서는 상속을 처리한다.
 
-    person()
-        name1 = org.name1()
+## 복제객체의 생성
+* 생성자를 호출하면 origin객체의 복제를 만드는 작업을 한다. 이는 클래스에서 객체를 만드는 것과 비슷하다.
+* 다음의 과정으로 진행한다.
+    * 생성자를 호출하기 위해 2 종류의 인자가 필요하다.
+        * 1. 복제하려는 origin 객체
+        * 2. 생성자 인자
+    * origin객체는 생성자가 알고 있다.
+    * 복사 생성자라면 "2. 생성자 인자"에 this로 넘어온다.
+    * 생성자에서는 다음과 같이 된다.
+        * nativeClone을 한다.
+        * origin객체로부터 _type이 복제되고
+        * S chain은 shallowcpy
+        * NS는 deepcpy 된다.
+        * 생성자 코드를 실행한다. 
+* native객체일 경우에는 단순히 가상복사생성자를 처리하면 된다.
+* clone() 메소드 사용하면 native이건 mgd 이건 복제가 완료된다. (native 환경에서도 mgd객체를 복제할 수 있다는 뜻이다)
 
-person.name = "hello"
-p1 := person()
-p2 := person()
-
-p1.name === p2.name // true
-p2.name === p2.name // false
-```
-
-* 월드는 복제될때 모든 member에 대해서 얇은 복사를 자동으로 수행한다.
-* 그리고 나서 생성자를 호출한다.
-* "org"는 origin 객체를 가리킨다.
-* "me"는 이 복제본 객체를 가리킨다.
+## 기본생성자
+* 흔히 하듯, 생성자를 명시하지 않으면 기본생성자가 추가된다.
+* 복사생성자를 명시하지 않으면 복사생성자가 추가된다.
 
 ## 상속
 
 * 문법은 다음과 같다.
 
-    def <me-identifier> <identifier>
+    def <me-identifier>(<constructor call>)* <expr>
 
-## 객체는 package 안에 존재한다.
+* 상속시 부모 클래스가 오는 자리에 expr이 올 수 있다.
+```go
+foo() A
+   return .....
+def B foo()
+```
+* 상속 단계에서 expr의 output Type으로 진행 한 후, 초기식 단계에서 expr을 직접 수행하여 결과를 assign 한다.
+
+* 상속은 verify&bind 단계에서 진행한다.
+    * 2PASS에서는 생성된 origin객체는 자신의 type에 기록된 부모객체로부터 상속을 수행한다.
+    * 부모객체는 다음과 같은 모양새를 갖는다.
+    * 부모의 S chain은 global scope이 포함되어 부모의 부모클래스들의 모든  상속된 최종 Shared 가 들어있다.
+    * 부모의 NS array는 조상과 부모 자신의 모든 NS nodes가 1개의 배열에 들어있다.
+    * 부모의 chain은 이 S와 NS가 chain으로 묶여있다.
+    * 먼저 부모의 S를 앞에 새로운 배열을 담은 S chain을 this에 할당한다.
+    * 파서는 Schain의 첫번째 배열인 이 새로운 배열에 메소드와 static 변수등을 넣을 것이다.
+    * 부모의 NS arr를 deepcpy해서 this에 push 하면 상속 완료.
+
+## origin객체의 초기화
+* 3phase initialization 에서 origin 객체도 초기화 된다. 이때 다음 요소가 eval 되어야 한다.
+    * origin 객체의 부모클래스의 expr
+    * origin 객체의 sub variable의 기본값
+
+## 객체는 보통 module 안에 존재한다.
 
 ```go
-package org.worldlang.example
+module org.worldlang.example
 
 def example1
     ....
@@ -125,47 +168,32 @@ def example1
 
 * namespace 라는 것은 없다.
 
-## 중첩 origin 객체
+## 중첩 객체
 
-* 중첩 origin 객체 public으로 될 수 있다.
-* origin 중첩 객체는 origin객체를 owner로 삼는다.
-* owner의 origin 중첩 객체는 복제 객체로부터 참조하는 origin 중첩객체와 동일한 객체이다.
-
-```cpp
-def test
-    name := ""
-
-    def in
-        koo() void: c.out("name=$name")
-
-    foo() in
-        ret in()
-
-def app
-    main() void
-        test.in.koo() // name=
-        test.name = "wow"
-        test.in.koo() // name=wow
-
-        new := test()
-        // test.in = new.in -> err. in은 ref가 아니다.
-        new.name = "new"
-        new.foo().koo() // name=new
-
-        test.in.koo() // name=wow
-        new.in.koo() // name=wow
-
-        nested := new.in // ok
-        nested1 := new.in() // ok
+* world는 중첩객체에 대해서 별다른 기능을 지원하지 않는다. 그냥 객체와 다를 게 없다.
+```go
+def A
+    foo() void
+    def B // 여기서 B와 A는 아무런 관련이 없다. foo()를 호출하려면 A객체가 필요하다.
 ```
 
-## 중첩 객체는 object scope에 등록할때 owner것을 먼저 등록 한다.
+### 중첩 객체를 지원하지 않는 이유는 무엇인가
+* java처럼 중첩객체가 소유자 객체를 capture하는 식으로 지원하는데, 문제를 복잡하게 만든다. 예제를 보자.
+```go
+def A
+    def B
+        def C
+def D A.B // 에러
+def A2 A
+    def D A.B // ok
+```
+* 예제에서 def D A.B와 같은 케이스는 컴파일 에러가 되어야 한다.
+* 자바는 이러한 케이스를 다 계산한다. 그러나 굳이 지원하지 않아도 ptr를 직접 만들면 해결이 가능하고, 아니면 메소드내 객체방식으로 해결도 가능하다.
+* namespace는 module이라는 키워드가 있기 때문에 중첩객체의 필요성이 없다 (실제로 자바에서 namespace가 있는가?) 중첩객체를 써야하는 이유는 없는 것이다.
+* C#, swift, python 모두 지원하지 않는다. java만 지원한다.
 
-* owner와 중첩객체 통째로 context switching 될 수 있다.
-
-## 중첩 객체는 복제될때 현재 object scope의 owner를 내부 참조자에 할당한다.
-
-* 즉 scope은 object scope이 2개 이상 들어갈 수 있어야 하며 어떤게 owner인지 분간해야 한다.
+### 단, module 만은 예외다.
+* module scope은 module 밑의 origin 객체의 shared chain을 구성할때 밑에 깔리고 시작한다.
 
 ## me는 scope에 들어갈 때 Object scope에 속한 것처럼 register 된다.
 
@@ -177,24 +205,6 @@ foo()
 me.foo()
 MyObject.me.foo()
 ```
-
-## me가 Object scope에 들어감으로써 중첩 객체 접근문제가 해결된다.
-
-* 중첩객체는 owner 참조를 반드시 들고 있으며, object scope 등록시에 이 owner를 먼저 등록시키기 때문이다.
-* Object scope에는 me가 2개 존재하게 된다.
-* 일반적인 객체는 1개만 me가 등록되기 때문에 다른 객체의 me를 무단으로 참조할 수는 없으므로 안전하다.
-
-```go
-def outer
-    foo() void
-
-    def inner
-        foo() void
-            foo() // inner.foo()
-            me.foo() // inner
-            outer.me.foo() // outer.foo()
-```
-
 
 ## 기본적으로 제공하는 메소드
 
