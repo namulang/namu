@@ -52,7 +52,7 @@
 - [expression](md__home_travis_build_kniz_worldlang_doc_ref_syntax_expression.html)
 - [for](md__home_travis_build_kniz_worldlang_doc_ref_syntax_for.html)
 - [generic](md__home_travis_build_kniz_worldlang_doc_ref_syntax_generic.html)
-- [method](md__home_travis_build_kniz_worldlang_doc_ref_syntax_method.html)
+- [func](md__home_travis_build_kniz_worldlang_doc_ref_syntax_func.html)
 - [operator](md__home_travis_build_kniz_worldlang_doc_ref_syntax_operator.html)
 - [overloading](md__home_travis_build_kniz_worldlang_doc_ref_syntax_overloading.html)
 - [property](md__home_travis_build_kniz_worldlang_doc_ref_syntax_property.html)
