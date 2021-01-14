@@ -21,10 +21,7 @@
 
 ## 메소드의 sub nodes는 이름앞에 "_"를 붙이지 않더라도 private 접근제한자를 갖는다.
 * 외부에서 호출할 수는 없다.
-
-## 중첩메소드는 상위 메소드의 local scope을 공유한다.
-
-## 중첩메소드에서 참조하는 상위 메소드의 local variable은 중첩메소드가 정의되는 코드보다 먼저 등장해야한다.
+* 문법상에서 유일하게 사용되는 private다. 
 
 ## 클래스 계층
 * Func는 Object와 동작이 상이하나 Node의 일종인 것은 맞다.
@@ -46,8 +43,13 @@
 
 ## 메소드ptr는 Ref에서 상속한 Delegator로 사용한다.
 * Ref는 type 이라는 별도의 Object로 verify를 한다.
+
+## 각 함수 origin 객체는 FuncType 이라는 type을 1개씩 갖는다.
 * 함수는 FuncType 이라는 별도의 클래스로 verify를 한다.
-    * FuncType은 하나의 Type으로는 불가능하고 인자와 반환형을 통해서 verify 한다.
+* FuncType은 하나의 Type으로는 불가능하고 인자와 반환형을 통해서 verify 한다.
+* 반환형과 인자타입리스트가 동일하더라도 함수가 다르면 다른 FuncType 객체가 나온다.
+* native에서 템플릿을 사용하여 함수의 type을 가져올 수 없다. functype은 인스턴스별로 unique 하다.
+* FuncType.isSame(type)은 인자리스트와 반환형이 동일하면 true를 반환한다.
 
 ## 메소드 정의 문법
 * 메소드 메소드명과 인자리스트를 함께 적는다. 인자리스트는 반드시 type declaration이 포함되어있어야 한다.
@@ -170,3 +172,52 @@ def app
 * optimization 과정이 끝날 경우, 이 과정은 상수타임에 끝나도록 한다.
 
 ## 메소드를 생성자처럼 사용하면 메소드가 생성되는 대신에 메소드호출이 된다.
+
+## 메소드의 구현
+* 객체와 달리 메소드는 scope이 항상 동적으로 구성된다.
+* func의 origin객체라 생성되는 시점에서 module scope을 깔고 자신의 shared chain을 구성해놓지 않는다.
+* S(shared sub chain)과 NS(non shared sub array)가 obj 처럼 존재한다.
+* 메소드 내에서 정의된 static 객체, origin 객체(객체 혹은 함수)가 S chain에 generation 단계에서 추가된다.
+* 로컬변수, 인자리스트는 NS에 정의된다.
+
+## 메소드의 실행 알고리즘
+* thisobj와 인자리스트가 넘어온다.
+* thisobj로 objscope을 교체한다.
+    * thisobj는 module scope까지 이미 가지고 있으므로 stackframe이 ptr를 1개 바꾸기만 하면 된다.
+    * stackframe은 이미 있던 scope(= frame)을 stack에 넣고, 새로운 frame을 만들어 넘어온 thisobj의 scope으로 갱신한다.
+    * 이렇게 하는 이유는 외부에서도 stackframe의 목록을 접근할 수 있어야 하는 요구사항이 때문이다.
+    * 새로 추가된 frame의 chain에 func의 S를 push하고 NS를 deepcpy한 뒤 push한다.
+    * 메소드를 실행한다.
+    * stackframe을 pop 한다.
+
+## func과 obj는 같은 부모로 구성할 수 있다.
+* 둘 모두 chain, S chain, NS array 3개가 필요하다.
+
+## func을 run() 하는 메소드는 func에만 정의되어 있다.
+* native world frx은 node 타입을 기반으로 동작하기때문에, 메소드 호출을 위해서는 캐스팅이 필요하다.
+
+## 중첩메소드는 상위 메소드의 local scope을 공유한다.
+* 중첩메소드의 정의 시점 보다 이후에 나오는 outer func의 로컬변수는 참조할 수 없다.
+```go
+def person
+    foo() void
+        age := 12
+        koo(val int) int
+            sum := val + age
+            return sum + nextYear // err: nextYear가 없다.
+        nextYear := 1
+        // koo의 정의가 여기에 있었다면 에러가 발생하지않는다.
+        koo(5)
+```
+* 명백히 말하면 실행시점에서의 바인딩을 체크해야 하나, 그렇게 되면 실행시점마다 바인딩을 체크해야 한다. if 등으로 branch 까지 고려하면 복잡도가 늘어나므로 제한을 두었다.
+
+## 중첩메소드는 outer func의 sub를 모두 접근 가능하다.
+* 메소드의 sub는 private로 되어있지만, 중첩메소드는 접근 할 수 있다.
+
+## 중첩메소드의 실행 알고리즘
+* 실행시 obj scope을 교체하지 않는다.
+    * 따라서 실행시 outer func의 scope이 들어간 상태에서 실행이 된다. outer func의 local변수에 접근이 가능한 것이다.
+* 이미 있는 chain에 자신의 S, NS를 각각 얹는다.
+
+## 중첩메소드에서 참조하는 상위 메소드의 local variable은 중첩메소드가 정의되는 코드보다 먼저 등장해야한다.
+
