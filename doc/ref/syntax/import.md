@@ -8,3 +8,7 @@
     * 매우 많은 모듈이 worldlang으로 시스템에 존재한다고 가정하자.
     * 이러한 최적화가 없다면 hello world 프로그램을 돌리기 위해서 필요하지도 않은 directx, socket, opencv 등을 load를 해두거나
     * 2 pass 를 돌릴때 의존 관계를 유추하여 만들어 낼 수 있어야 한다. 많은 시간이 소요될 것이다.
+
+## import 는 .wrd 파일 바로 안쪽에서만 서술할 수 있다.
+* 따라서 import는 expr이 아니다.
+* generation 단계에서 import가 보이면 해당 모듈을 초기화한다. module은 이 과정에서 .so 파일을 load 하고 내부의 origin obj를 interpreting 혹은 dyn link 한다.
