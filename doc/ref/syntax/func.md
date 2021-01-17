@@ -1,7 +1,7 @@
 # func 
 
 ## Func는 일반 객체와 다른, 확장이 불가능한 builtin 객체다.
-* 메소드 또한 origin 객체로써 취급한다. 그러나 일반 origin객체와는 다음과 같은 항목에서 다르다.
+* 메소드 또한 객체로써 취급한다. 그러나 일반 객체와는 다음과 같은 항목에서 다르다.
     * 그러나 메소드의 메소드는 고정된 항목들이며 메소드로부터 확장하거나 extend가 불가능하다.
     * 메소드가 제공하는 메소드는 RTTI 관련 항목이다.
     - 메소드는 Object가 아니므로 객체마다의 멤버는 가질 수 없으나 공유멤버는 가질 수 있다.
@@ -44,7 +44,7 @@
 ## 메소드ptr는 Ref에서 상속한 Delegator로 사용한다.
 * Ref는 type 이라는 별도의 Object로 verify를 한다.
 
-## 각 함수 origin 객체는 FuncType 이라는 type을 1개씩 갖는다.
+## 각 함수 객체는 FuncType 이라는 type을 1개씩 갖는다.
 * 함수는 FuncType 이라는 별도의 클래스로 verify를 한다.
 * FuncType은 하나의 Type으로는 불가능하고 인자와 반환형을 통해서 verify 한다.
 * 반환형과 인자타입리스트가 동일하더라도 함수가 다르면 다른 FuncType 객체가 나온다.
@@ -103,7 +103,7 @@ person.sayHello(void)
 ## 인터페이스 메소드
 * 뒤에 = null을 적은 메소드는 호출이 불가능하다. 인터페이스로 사용된다.
 * overriding 혹은 type으로써 사용된다.
-* 구현시 origin은 정상적으로 생성된다.
+* 구현시 함수객체는 정상적으로 생성된다.
 * Null이 할당된것과 같다.
 * 접근은 가능하다.
 * RTTI 메소드도 호출할 수 있다.
@@ -175,9 +175,9 @@ def app
 
 ## 메소드의 구현
 * 객체와 달리 메소드는 scope이 항상 동적으로 구성된다.
-* func의 origin객체라 생성되는 시점에서 module scope을 깔고 자신의 shared chain을 구성해놓지 않는다.
+* func객체가 생성되는 시점에서 module scope을 깔고 자신의 shared chain을 구성해놓지 않는다.
 * S(shared sub chain)과 NS(non shared sub array)가 obj 처럼 존재한다.
-* 메소드 내에서 정의된 static 객체, origin 객체(객체 혹은 함수)가 S chain에 generation 단계에서 추가된다.
+* 메소드 내에서 정의된 static 객체, origin 객체, 함수객체가 S chain에 generation 단계에서 추가된다.
 * 로컬변수, 인자리스트는 NS에 정의된다.
 
 ## 메소드의 실행 알고리즘
@@ -189,6 +189,10 @@ def app
     * 새로 추가된 frame의 chain에 func의 S를 push하고 NS를 deepcpy한 뒤 push한다.
     * 메소드를 실행한다.
     * stackframe을 pop 한다.
+
+## func도 origin 을 가지고 있다.
+* func 객체는 시스템내 유일하게 1개가 파서로부터 생성되서 origin객체에 붙어있게 된다.
+* func.origin에는 이 origin객체를 가리키게 된다.
 
 ## func과 obj는 같은 부모로 구성할 수 있다.
 * 둘 모두 chain, S chain, NS array 3개가 필요하다.
