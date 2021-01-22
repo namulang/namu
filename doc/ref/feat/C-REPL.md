@@ -57,6 +57,69 @@
 
 ## 일단 스레드는 생각하지 않는다.
 
+## 종속 관계를 무시할 수 있는 인터프리팅 알고리즘
+* 모던 언어들은 다음과 같은 의존관계도  쉽게 컴파일 해준다.
+```go
+module my
+
+def B A // 아직 A가 나오지 않았어도 컴파일 ok다.
+    foo(a A, c C) void // 역시 아직 A가 나오지 않았다.
+
+def A // 같은 파일 내에 어딘가 나오면 괜찮다.
+// C 또한 같은 my module안에 다른 파일 어딘가에만 있다면 괜찮다.
+```
+
+* 다음과 같이 동작하면 된다.
+    * Type에는 부모 클래스가 무엇인지 generation 단계에서 정의된다.
+    * moduler 는 Type을 input으로 넘겨주면 바로 origin 객체를 넘길 준비가 되어야 한다.
+    * Type이 mgd 인 경우에도 부모 클래스 정보가 참조자를 가리키는 sub nodes로써 구현이 되어야 한다.
+    * moduler는 module을 import할 때, native module이라면 dynlink 만 수행하면 되지만 mgd module이라면 interpret 단계를 모두 거쳐야 한다.
+    * 하나의 module을 interpret 하는 도중에 다른 module을 interpret 할 수 있어야 한다.
+    * moduler 또한 obj의 일종이다. scope 안에 해당 moduler가 load한 module들이 sub로 chain구조로 자리잡는다.
+    * moduler는 하나의 module을 load할때 임시moduler를 만든다.
+        * 만들때 시스템 moduler의 scope을 chain의 base에 bind하고나서 자신의 scope를 push 한다.
+        * interpret 과정에서 찾아낸 module, obj는 임시moduler에 push 한다. 
+        * load가 성공하면 시스템 moduler에 module을 merge 하고 임시moduler는 제거한다.
+    * 하나의 module은 다음과 같이 load 된다.
+        * generation 단계:
+            * MgdType을 생성하여 상속 관계 정보를 만든다.
+            * 빈 origin 객체를 생성하여 mgdType을 끼워넣는다.
+            * interpret 하면서 심볼(func, 중첩객체 등)을 발견하면 origin 객체에 add 한다.
+            * 이 단계에서 모든 심볼(expr, func, obj, ...)은 다 AST로 나와야 한다.
+            * 바인딩 정보를 요하는 부분은 임시로 AdapterExpr을 넣어둔다.
+                * scope에 "~~가 있을거라고 한다" 수준의 expr이다.
+            * module은 임시moduler에 들어가 있는 상태다.
+
+        * bind&verify:
+            * module을 순회한다.
+            * module내의 sub를 순회한다.
+            * origin obj를 만나면 obj.isInit()== true 라면 pass 한다.
+                * false라면 obj.getType().getSuper()로 부모 타입을 뽑는다.
+                * 부모 타입을 moduler에 질의하여 origin 객체를 가져온다.
+                * 부모 origin 객체를 가져와서 상속 과정을 완료한다.
+                    * 부모의 S를 복제한 후, this.S를 add 한다.. 등등
+                * AdapterExpr을 발견하면 scope에 정말로 ~~가 있는지 검사한다.
+                    * 있다면 AccessorExpr로 인스턴스를 교체한다.
+
+        * initialization:
+            * 생성한 origin 객체를 순회하면서 초기식을 수행해서 상속을 완료한다.
+
+        * merge:
+            * 여기까지 문제가 없었다면 임시moduler의 module을 시스템moduler에 추가한다.
+            * 임시moduler는 제거한다.
+
+## generation 단계에서 AccessExpr을 생성할때 뒤에 괄호까지 봐야 한다.
+* 다음 예제를 보자.
+```go
+def a()
+    b := 5
+    b() void
+    b(val int) void
+```
+* 여기서 a.b는 AccessExpr(AccessExpr(scope, "a", null), "b", null) 로 번역된다.
+* 여기서 a.b()는 AccessExpr(AccessExpr(scope, "a", null), "b", {}) 로 번역된다.
+* 여기서 a.b(5)는 AccessExpr(AccessExpr(scope, "a", null), "b", {int(5)}) 로 번역된다.
+
 ## 추적검증
 
 * 코드의 변경시 이 코드를 사용하는 코드가 어디인지 빠르게 검증해야 한다.
