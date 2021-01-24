@@ -57,6 +57,8 @@ def branch(command):
         return clean()
     elif command == "commit":
         return commit()
+    elif command == "rebuild":
+        return rebuild()
     elif command == "build":
         return build()
     elif command == "rel":
@@ -303,6 +305,10 @@ def _make():
             printErr("failed")
             return -1
     printOk("done")
+
+def rebuild():
+    clean()
+    return build()
 
 def build():
     #_beautify()
