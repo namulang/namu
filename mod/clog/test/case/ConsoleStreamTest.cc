@@ -1,6 +1,5 @@
 #include "../common/dep.hpp"
 #include <stdio.h>
-#include <filesystem>
 
 namespace wrd { namespace clog {
 
@@ -17,7 +16,7 @@ namespace wrd { namespace clog {
 
         static void delLogFile() {
             WRD_I("delLogFile");
-            filesystem::remove(getLogFilePath());
+            std::remove(getLogFilePath());
         }
 
         static const char* getLogFilePath() {
@@ -37,7 +36,8 @@ namespace wrd { namespace clog {
         }
 
         static wbool hasLogFile() {
-            return filesystem::exists(getLogFilePath());
+            struct stat buffer;
+            return stat(getLogFilePath(), &buffer) == 0;
         }
 
     } ThisTest;
