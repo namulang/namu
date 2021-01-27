@@ -269,7 +269,6 @@ def _injectBuildInfo():
 def _incBuildCnt():
     global cwd
     path = cwd + "/CMakeLists.txt"
-
     printInfoEnd("Increase Build count...")
     fp = open(path, "r")
     lines = fp.readlines()
@@ -306,11 +305,40 @@ def _make():
             return -1
     printOk("done")
 
+def _checkGTest():
+    global externalDir
+    dir = os.path.join(externalDir, "googletest")
+    printInfoEnd("checking googletest repo at externalDir...")
+    if _hasDir(dir):
+        printOk("repo found. skip installing it.")
+        return
+
+    _makeDir(dir)
+    os.system("git clone https://github.com/google/googletest " + dir)
+    os.system("cmake " + os.path.join(dir, "CMakeLists.txt"))
+    originDir = os.getcwd()
+    os.chdir(dir)
+    os.system("sudo make install")
+    os.chdir(originDir)
+    printOk("installed.")
+    _cleanIntermediates()
+
+def _makeDir(dir):
+    try:
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+    except OSError:
+        print("can't create dir at " + dir)
+
+def _hasDir(dir):
+    return os.path.exists(dir)
+
 def rebuild():
     clean()
     return build()
 
 def build():
+    _checkGTest()
     #_beautify()
     _injectBuildInfo()
     if _createMakefiles():
