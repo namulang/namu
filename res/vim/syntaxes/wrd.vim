@@ -8,14 +8,14 @@ set cpo&vim
 
 
 " keyword definitions
-syn keyword synKeyword if def else elif for break continue ret return package
+syn keyword synKeyword if def else elif for continue ret return module import
 syn keyword synKeyword aka it with on try in
 syn keyword synPretype int int8 int16 int32 int64
 syn keyword synPretype char
 syn keyword synPretype flt flt8 flt16 flt32 flt64
 syn keyword synPretype str void err bool this super me
 syn keyword synPretype ctor set get as
-syn keyword synConst    true false null
+syn keyword synConst   true false null
 
 
 " Comments
