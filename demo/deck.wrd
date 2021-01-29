@@ -1,6 +1,6 @@
-package wrd.lang.example.part
+module wrd.lang.example.part
 
-def global
+def global()
     suits := ["Hearts", "diamonds", "Spades", "Clovers"]
     values := ["Two":2, "Three":3, "Four":4]
     // values := [ranks[0]:2, ranks[1]:3, ranks[2]:4] // err
@@ -10,8 +10,8 @@ def global
 
 def card
     @ctor(nsuit str, nrank str)
-        suit = nsuit
-        rank = nrank
+        _suit = nsuit
+        _rank = nrank
     _suit := ""
     _rank := ""
 
@@ -22,17 +22,17 @@ def hand
     _value := _aces := 0
 
     addCard(acard card) void
-        cards.add(acard)
-        value := global.values[acard.rank]
+        _cards.add(acard)
+        _value := global.values[acard.rank]
 
     adjustForAce() void
-        for value > 21 & aces
-            value -= 10
+        for _value > 21 & aces
+            _value -= 10
             aces--
 
 def deck
     @ctor()
-        for s in suits: for r in ranks: cards.add(card(s, r))
+        for s in global.suits: for r in global.ranks: _cards.add(card(s, r))
     shuffle() void: random.shuffle(deck)
     deal() void
         // return deck.pop() // err. returning something to void
@@ -42,8 +42,7 @@ def deck
 
 sys.cons aka c // affects to all statement inside of each classes.
 
-def app
-    main() void
-        with deck
-            shuffle()
-            deal()
+main() void
+    with deck
+        shuffle()
+        deal()

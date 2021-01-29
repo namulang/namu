@@ -1,5 +1,5 @@
-package wrd.lang.example.petshop
-sys.cons aka c
+module wrd.lang.example.petshop
+import sys.cons aka c
 
 def petShop
     /* a pet shop */
@@ -8,11 +8,11 @@ def petShop
 
     _myFactory rFac?
 
-    @ctor(#factory(someVal flt64, x int, y char, z bool)): sys.cons.out("f is $factory")
-    @ctor(#rFac): myFactory = rFac
+    @ctor(@factory(someVal flt64, x int, y char, z bool)): sys.cons.out("f is $factory")
+    @ctor(@rFac): _myFactory = rFac
 
     showPet() void
-        mypet = myFactory(0, 0, 0, false)
+        mypet = _myFactory(0, 0, 0, false)
         c.out("we have a lovely $mypet")
         c.out("it says $pet.speak()")
 
@@ -23,15 +23,14 @@ def dog pet
 def cat pet
     speak() void: "meow"
 
-def app
-    randomAnimal(s flt64, x int, y char, z bool) pet: return random.choice([dog(), cat()])
+randomAnimal(s flt64, x int, y char, z bool) pet: return random.choice([dog(), cat()])
 
-    main() void
-        catShop = petShop((x as int, y, z, a) -> cat())
-        catShop.showPet()
-        c.out("")
+main() void
+    catShop = petShop((x as int, y, z, a) -> cat())
+    catShop.showPet()
+    c.out("")
 
-        shop = petShop(randomAnimal)
-        for n in 0..3
-            shop.showPet()
-            c.out("=" * 20)
+    shop = petShop(randomAnimal)
+    for n in 0..3
+        shop.showPet()
+        c.out("=" * 20)
