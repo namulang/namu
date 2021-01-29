@@ -1,16 +1,15 @@
 package wrd.lang.example.builtInTypes
 
-def app
-    _age := 0
+_age := 0
 
-    main() void
-        sys.cons aka c
-        age:=0
-        ++age++ *= 2
+main() void
+    sys.cons aka c
+    _age:=0
+    ++_age++ *= 2
 
-        pow := age^3
-        pow^^ // age ^ 2
+    pow := _age^3
+    pow^^ // age ^ 2
 
-        bitwise := (pow || ~~5 && 0x033 ^^ 0xFF) << 2
-        if bitwise & pow > 0
-            c.out("okay")
+    bitwise := (pow || ~~5 && 0x033 ^^ 0xFF) << 2
+    if bitwise & pow > 0
+        c.out("okay")

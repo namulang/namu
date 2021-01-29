@@ -1,5 +1,4 @@
-package wrd.lang.example.helloWorld
+module wrd.lang.example.helloWorld
 
-def app
-    main() void
-        sys.cons.out("Hello world!")
+main() void
+    sys.cons.out("Hello world!")

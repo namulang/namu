@@ -1,4 +1,4 @@
-package wrd.lang.example.builder
+module wrd.lang.example.builder
 
 def building
     _floor := "One"
@@ -8,33 +8,32 @@ def building
         buildFloor()
         buildSize()
 
-    buildFloor() void on err: on notImplErr
-    buildSize() void on notImplErr: on notImplErr
+    buildFloor() void on err: ret on notImplErr
+    buildSize() void on notImplErr: ret on notImplErr
 
 def house building
-    buildFloor() void: floor = "One"
-    buildSize() void: size = "Big"
+    buildFloor() void: _floor = "One"
+    buildSize() void: _size = "Big"
 
 def flat from building
-    buildFloor() void: floor = "More than one"
-    buildSize() void: size = "Small"
+    buildFloor() void: _floor = "More than one"
+    buildSize() void: _size = "Small"
 
 def complexBuilding building
 
 def complexHouse complexBuilding
-    buildFloor() void: floor = "One"
-    buildSize() void: size = "Big and fancy"
+    buildFloor() void: _floor = "One"
+    buildSize() void: _size = "Big and fancy"
 
-def app
-    building construcBuilding(#building)
-        return building()
+building construcBuilding(#building)
+    return building()
 
-    main() void on err
-        house.print()
-        flat.print()
-        complex = constructBuilding(complexHouse)
+main() void on err
+    house.print()
+    flat.print()
+    complex = constructBuilding(complexHouse)
 
-        sys.cons aka c
-        if complex != complexHouse: return on err
-        if complex === complexHouse: return on err
+    sys.cons aka c
+    if complex != complexHouse: return on err
+    if complex === complexHouse: return on err
 

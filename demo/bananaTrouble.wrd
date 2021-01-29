@@ -3,14 +3,14 @@ sys.cons aka c
 
 def hello
     def a
-        _@ctor(): cout("A()")
+        _@ctor(): c.cout("A()")
 
         _foo(max int, min int) int
 
-        _age := int[]
+        _age := int[]()
         getAge := 5
-            got => @get: ret age + got
-            @set=>: age = it
+            got => @get: ret _age + got
+            @set=>: _age = it
 
         name := "defaultName"
 
@@ -23,24 +23,24 @@ def hello
                 2*n
             )
                 // 문제2
-                try b1 := for n in 3 .. 5 * foo()
+                b1 on e := for n in 3 .. 5 * _foo()
                     2 * n
-                on nullErr: c.out("nullErr")
+                if e == nullErr: c.out("nullErr")
 
                 if true
-                    a := for a in 2..foo(5)
+                    a := for a in 2.._foo(5)
                         dn := a + 3
                         if !dn
                             continue
                 else
                     return 0
             elif a == 5 /* comment */
-                with dn
-                    c.out("a=$a")
-                    dn, dmap := [1, 2, foo(3)], [3: "banana", 3: "apple"] as int[str]
+                with a
+                    c.out("a=$it")
+                    dn, dmap := [1, 2, _foo(3)], [3: "banana", 3: "apple"] as int[str]
                     len // dn.len
                 if dn: for n in dn
-                    foo(n)
+                    _foo(n)
 
             elif a == 7 | a == 6
                 a = 0
