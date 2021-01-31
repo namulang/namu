@@ -16,6 +16,9 @@ jobs:
                 - cmake
                 - wget
           before_install:
+          - gpg --keyserver keyserver.ubuntu.com --recv-keys 16126D3A3E5C1192
+          - gpg --export --armor 16126D3A3E5C1192 | sudo apt-key add -
+          - sudo apt-get update
           - sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 
         - os: osx
