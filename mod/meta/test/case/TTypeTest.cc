@@ -27,4 +27,24 @@ namespace wrd { namespace meta {
         ASSERT_STREQ(type.getSuper().getName().c_str(), "wrd::meta::Adam");
     }
 
+    TEST(DefaultBehavior, CustomTypeInheritTest) {
+        static const std::string trg = "injected";
+        static const int fooRet = 22;
+
+        struct A {};
+        struct CustomA {
+            typedef struct MyType : Type {
+                int foo() const {
+                    return fooRet;
+                }
+                const std::string& getName() const {
+                    return trg;
+                }
+            } SuperType;
+        };
+
+        EXPECT_NE(TType<A>().getName(), TType<CustomA>().getName());
+        EXPECT_EQ(TType<CustomA>::get().foo(), fooRet);
+    }
+
 }}

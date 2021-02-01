@@ -38,3 +38,17 @@ TEST(RttiTest, BasicBehavior) {
     ASSERT_EQ(typeid(TAdaptiveSuper<NoSuper>::Super), typeid(Adam));
     ASSERT_EQ(typeid(TAdaptiveSuper<HasSuper>::Super), typeid(NoSuper));
 }
+
+TEST(RttiTest, SuperTypeDefTest) {
+    struct A {};
+    struct CustomA {
+        typedef struct MyType : Type {
+            int foo() {
+                return 22;
+            }
+        } SuperType;
+    };
+
+    ASSERT_EQ(typeid(TSuperTypeDef<A>::is), typeid(Type));
+    ASSERT_EQ(typeid(TSuperTypeDef<CustomA>::is), typeid(CustomA::MyType));
+}

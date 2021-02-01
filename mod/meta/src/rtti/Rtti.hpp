@@ -92,4 +92,21 @@ namespace wrd { namespace meta {
         static std::string getName() { return NameDemangler::demangle(getRawName()); }
     };
 
+    // famous void_t def:
+    //  predefined at c++17 (if we use c++17, we can remove this)
+    template <typename T>
+    using void_t = void;
+
+    // SuperTypeChecker:
+    //  if user defined SuperType on their own, we let their TType classes inherit their SuperType class.
+    //  otherwise, just use Type as base class.
+    template <typename T, typename = void>
+    struct TSuperTypeDef {
+        using is = Type;
+    };
+    template <typename T>
+    struct TSuperTypeDef<T, void_t<typename T::SuperType>> {
+        using is = typename T::SuperType;
+    };
+
 } }
