@@ -94,6 +94,30 @@ namespace wrd { namespace memlite {
         ASSERT_EQ(tagWeak.getStrongCnt(), 1);
     }
 
+    TEST(BindTest, BindByValueTest) {
+        TStrong<A> strA(new A());
+        const BindTag& tag = strA->getBindTag();
+        ASSERT_FALSE(nul(tag));
+        ASSERT_EQ(tag.getStrongCnt(), 1);
+
+        Bind bindA(strA);
+        ASSERT_EQ(&strA.get(), &bindA.get());
+        ASSERT_EQ(tag.getStrongCnt(), 2);
+
+        strA.unbind();
+        ASSERT_EQ(tag.getStrongCnt(), 1);
+
+        {
+            Bind bindA2(bindA);
+            ASSERT_EQ(tag.getStrongCnt(), 2);
+        }
+
+        ASSERT_EQ(tag.getStrongCnt(), 1);
+        bindA.unbind();
+
+        ASSERT_EQ(tag.getStrongCnt(), 0);
+    }
+
     TEST(BindTest, WeakBindButInstanceGoneTest) {
         TStrong<A> strA(new A());
         TWeak<A> weakA(*strA);

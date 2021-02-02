@@ -17,10 +17,9 @@ namespace wrd { namespace memlite {
         operator wbool() const;
 
 		wbool bind(const Instance& it);
-		virtual const Type& getBindable() const = 0;
+        virtual wbool unbind() = 0;
 		wbool canBind(const Instance& it);
 		virtual wbool canBind(const Type& it) const = 0;
-		virtual wbool unbind() = 0;
 		virtual wbool isBind() const = 0;
 		Instance& get();
 		const Instance& get() const;
@@ -40,6 +39,6 @@ namespace wrd { namespace memlite {
 	protected:
         //  Bindable:
 		virtual Instance& _get() = 0;
-		virtual wbool _bind(const Instance& it) = 0;
+        virtual wbool _bind(const Instance& it) = 0;
 	};
 }}

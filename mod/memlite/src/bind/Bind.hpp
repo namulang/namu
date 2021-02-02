@@ -5,6 +5,7 @@
 
 namespace wrd { namespace memlite {
 
+    class BindTacticable;
     ///	Bind:
     ///		Overview:
     ///			can guarrantee that specific instance freed completely and track of them.
@@ -45,9 +46,16 @@ namespace wrd { namespace memlite {
     class Bind : public Instance, public Bindable {
         WRD_DECL_THIS(Bind, Instance)
         WRD_INIT_META(This)
+        template <typename T> friend class TWeakTactic;
+        template <typename T> friend class TStrongTactic;
 		friend class BindTag; // for _get()
 
 	public:
+        Bind() {} // TODO: remove this line
+        Bind(BindTacticable* tactic);
+        Bind(const This& rhs);
+        ~Bind();
+
 		wbool operator==(const This& rhs) const;
 		wbool operator!=(const This& rhs) const;
 		This& operator=(const This& rhs);
@@ -55,21 +63,23 @@ namespace wrd { namespace memlite {
         //	Bind:
 		wbool bind(Instance& new1);
 		Id getItsId() const;
-        virtual wbool isConst() const = 0;
+        wbool isConst() const;
         //  Bindable:
 		wbool isBind() const;
 		wbool unbind();
 		using Bindable::canBind;
 		wbool canBind(const Type& cls) const;
+        //  Instance:
+        const Type& getType() const;
 
 	protected:
-        //  Bind:
-		wbool _assign(const This& rhs);
+        wbool _assign(const Bind& rhs);
         //  Bindable:
 		wbool _bind(const Instance& it);
 		Instance& _get();
 
 	private:
 		Id _itsId; // id for binded one
+        BindTacticable* _tactic;
 	};
 }}

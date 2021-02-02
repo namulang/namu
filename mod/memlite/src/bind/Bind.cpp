@@ -1,17 +1,24 @@
 #include "Bind.hpp"
 #include "../watcher/BindTag.hpp"
+#include "BindTacticable.hpp"
 
 namespace wrd { namespace memlite {
 
 	WRD_DEF_THIS(Bind)
 
+    Bind::Bind(BindTacticable* tactic): _tactic(tactic) {
+        if(!tactic) WRD_W("tactic == null");
+    }
+
+    Bind::Bind(const This& rhs): _tactic(rhs._tactic) { _assign(rhs); }
+    Bind::~Bind() { This::unbind(); }
 	wbool This::operator==(const This& rhs) const { return &get() == &rhs.get(); }
 	wbool This::operator!=(const This& rhs) const { return ! operator==(rhs); }
 
 	This& This::operator=(const This& rhs) {
         if(this == &rhs) return *this;
 
-		_assign(rhs);
+        _assign(rhs);
 		return *this;
 	}
 
@@ -35,30 +42,16 @@ namespace wrd { namespace memlite {
     }
 
 	wbool This::unbind() {
-		_itsId.num = WRD_INDEX_ERROR;
-		return true;
+        return _tactic->unbind(*this);
 	}
 
 	Id This::getItsId() const { return _itsId; }
-	wbool This::canBind(const Type& type) const { return getBindable().isSuper(type); }
+    wbool This::isConst() const { return _tactic->isConst(); }
+	wbool This::canBind(const Type& type) const { return getType().isSuper(type); }
+    const Type& This::getType() const { return _tactic->getType(); }
 
 	wbool This::_bind(const Instance& it) {
-	    unbind();
-		//	regardless of result from _onStrong binder can bind:
-		//		there are two reasons:
-		//			because Block has equal lifecycle to what it bind, if there is
-		//			a request by user to refer a bind for binding freed instance,
-		//			user has responsibilty to treat wrongly.
-		//			so, we should not consider such cases.
-		//
-		//		and:
-		//			no matter how block reacts, anyway it won't refuse binder's
-		//			refering. for instance, the scenario for binding non-heap allocated
-		//			instance.
-		_itsId = it.getId();
-        WRD_DI("Bind(%x) binds Instance(%x) of %s class",
-                this, &it, it.getType().getName().c_str());
-	    return true;
+        return _tactic->bind(*this, it);
 	}
 
 	Instance& This::_get() {
@@ -68,19 +61,9 @@ namespace wrd { namespace memlite {
 	    return ins;
 	}
 
-	wbool This::_assign(const This& rhs) {
-	    if(this == &rhs) return true;
-
-	    //    Only not available combination between this and rhs is,
-	    //    when this is nonconst but rhs is const.
-	    //    because when we accept this case, in consequence, rhs's binded one will loose their constness.
-	    if(!isConst() && rhs.isConst()) {
-            WRD_W("Bind assign failed. me.const=%d but rhs.isConst()=%d", isConst(), rhs.isConst());
-	        return false; // the only case can't accept.
-        }
-
-	    return _bind(rhs.get());
-	}
+    wbool This::_assign(const Bind& rhs) {
+        return _tactic->assign(*this, rhs);
+    }
 
 #undef This
 }}

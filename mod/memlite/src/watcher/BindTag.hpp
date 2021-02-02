@@ -11,6 +11,8 @@ namespace wrd { namespace memlite {
         WRD_INIT_META(This)
 		template <typename T> friend class TWeak;
 		template <typename T> friend class TStrong;
+        template <typename T> friend class TWeakTactic;
+		template <typename T> friend class TStrongTactic;
 
     public:
         //  BindTag:
