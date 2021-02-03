@@ -2,7 +2,7 @@
 
 namespace wrd { namespace meta {
 
-    TEST(DefaultBehavior, initSystem) {}
+    TEST(TTypeTest, initSystem) {}
 
     class MyClass {
         WRD_INIT_META(MyClass);
@@ -13,7 +13,7 @@ namespace wrd { namespace meta {
         typedef MyClass Super;
     };
 
-    TEST(DefaultBehavior, basicBehavior) {
+    TEST(TTypeTest, basicBehavior) {
         ASSERT_FALSE(TType<MyClass>().isTemplate());
         ASSERT_FALSE(TType<MyClass>().isAbstract());
 
@@ -27,7 +27,7 @@ namespace wrd { namespace meta {
         ASSERT_STREQ(type.getSuper().getName().c_str(), "wrd::meta::Adam");
     }
 
-    TEST(DefaultBehavior, CustomTypeInheritTest) {
+    TEST(TTypeTest, CustomTypeInheritTest) {
         static const std::string trg = "injected";
         static const int fooRet = 22;
 
@@ -45,6 +45,32 @@ namespace wrd { namespace meta {
 
         EXPECT_NE(TType<A>().getName(), TType<CustomA>().getName());
         EXPECT_EQ(TType<CustomA>::get().foo(), fooRet);
+    }
+
+
+    struct A {
+        WRD_INIT_META(A);
+
+        A(): value(true) {}
+        wbool value;
+    };
+    TEST(TTypeTest, makeInstanceTest) {
+        TType<A> type;
+        A* arr[] = {(A*) type.make(), type.makeAs<A>()};
+        ASSERT_TRUE(arr[0]);
+        ASSERT_TRUE(arr[1]);
+        ASSERT_NE(arr[0], arr[1]);
+    }
+
+    struct B {
+        WRD_INIT_META(B);
+
+        B(wbool newValue): value(newValue) {}
+        wbool value;
+    };
+    TEST(TTypeTest, makeInstanceNegativeTest) {
+        TType<B> type;
+        ASSERT_FALSE(type.make());
     }
 
 }}
