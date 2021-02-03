@@ -26,11 +26,6 @@ namespace wrd { namespace meta {
     };
 
     template <typename T>
-    struct TIfAbstract {
-        static inline constexpr wbool is = std::is_abstract<T>::value;
-    };
-
-    template <typename T>
     struct TAEmptyCan {
         typedef void is;
     };
@@ -52,12 +47,12 @@ namespace wrd { namespace meta {
         typedef typename T::Super Super;
     };
 
-    template <typename T, wbool is_adt = TIfAbstract<T>::is>
+    template <typename T, wbool canMake = std::is_constructible<T>::value>
     struct TInstanceMaker {
 		static void* make() { return WRD_NULL; }
     };
     template <typename T>
-    struct TInstanceMaker<T, false> {
+    struct TInstanceMaker<T, true> {
 		static void* make() { return new T(); }
     };
 

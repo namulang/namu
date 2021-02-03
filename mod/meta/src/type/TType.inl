@@ -9,7 +9,7 @@ namespace wrd { namespace meta {
 
     TEMPL THIS::TType() { this->init(); }
     TEMPL WRD_SINGLETON_GETTER(wbool THIS::isTemplate() const, wbool, TIfTemplate<T>::is);
-    TEMPL WRD_SINGLETON_GETTER(wbool THIS::isAbstract() const, wbool, TIfAbstract<T>::is);
+    TEMPL WRD_SINGLETON_GETTER(wbool THIS::isAbstract() const, wbool, !std::is_constructible<T>::value);
     TEMPL WRD_SINGLETON_GETTER(const std::string& THIS::getName() const, std::string, TNameGetter<T>::getName());
     TEMPL void* THIS::make() const { return TInstanceMaker<T>::make(); }
     TEMPL wcnt THIS::getSize() const { return sizeof(T); }

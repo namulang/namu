@@ -26,7 +26,17 @@ namespace wrd { namespace meta {
         virtual wbool isTemplate() const = 0;
         virtual wbool isAbstract() const = 0;
         virtual const std::string& getName() const = 0;
+
+        /// @brief  create an instance to be refered this type.
+        /// @remark available when the type defines a ctor without any params.
+        /// @return return an address of new instance, however, if ctor without any params
+        ///         isn't defined, then returns null.
         virtual void* make() const = 0;
+        template <typename T>
+        T* makeAs() const {
+            return (T*) make();
+        }
+
 		virtual wcnt getSize() const = 0;
 		virtual wbool init();
         virtual wbool rel();
