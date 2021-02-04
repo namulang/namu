@@ -1,6 +1,6 @@
 #include "../common/dep.hpp"
 
-using namespace wrd::indep;
+using namespace wrd;
 
 TEST(BuildFeature, dateGetter) {
 	BuildFeature::Date date;

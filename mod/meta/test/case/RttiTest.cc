@@ -10,7 +10,6 @@ struct HasSuper : public NoSuper {
 };
 
 using namespace wrd;
-using namespace wrd::meta;
 
 TEST(RttiTest, BasicBehavior) {
     ASSERT_FALSE(TIfHasSuperTypedef<NoSuper>::is);

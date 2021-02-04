@@ -1,5 +1,5 @@
 #pragma once
 
-namespace wrd { namespace meta {
+namespace wrd {
     class Adam {};
-}}
+}

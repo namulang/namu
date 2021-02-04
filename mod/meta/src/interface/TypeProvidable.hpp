@@ -1,7 +1,7 @@
 #pragma once
 
-namespace wrd { namespace meta {
+namespace wrd {
     struct TypeProvidable {
         virtual const Type& getType() const = 0;
     };
-}}
+}

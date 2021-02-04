@@ -1,6 +1,6 @@
 #include "Instancer.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	WRD_DEF_THIS(Instancer)
 
@@ -22,4 +22,4 @@ namespace wrd { namespace memlite {
 	const Watcher& This::getWatcher() const { return _watcher; }
 	wbool This::_hasBindTag(const Instance& it) const { return it._id.s.tagN != WRD_INDEX_ERROR; }
 
-}}
+}

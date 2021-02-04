@@ -2,7 +2,7 @@
 
 #include "Chunk.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	class Chunks : public Allocator {
         WRD_DECL_THIS(Chunks, Allocator)
@@ -43,4 +43,4 @@ namespace wrd { namespace memlite {
 		std::vector<Chunk*> _chunks;
 		int _s;
 	};
-}}
+}

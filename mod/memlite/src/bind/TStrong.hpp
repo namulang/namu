@@ -2,7 +2,7 @@
 
 #include "TWeak.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	template <typename T>
 	class TStrong : public TWeak<T> {
@@ -35,4 +35,4 @@ namespace wrd { namespace memlite {
 
         using Super::operator=;
 	};
-}}
+}

@@ -2,11 +2,11 @@
 #include <iostream>
 #include "stream.hpp"
 
-namespace wrd { namespace clog {
+namespace wrd {
 
     WRD_DEF_THIS(Logger)
     typedef std::string string;
-    typedef wrd::indep::BuildFeature::Config Config;
+    typedef wrd::BuildFeature::Config Config;
 
     const wchar* This::getName() const { return "Logger"; }
     const Stream& This::operator[](widx n) const { return getStream(n); }
@@ -112,4 +112,4 @@ namespace wrd { namespace clog {
 
     This::Logger() : Super() {}
     This::Logger(const This& rhs) : Super(rhs) {}
-} }
+}

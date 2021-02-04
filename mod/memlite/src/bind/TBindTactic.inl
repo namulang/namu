@@ -1,6 +1,6 @@
 #include "TBindTactic.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 #define TEMPL template <typename T>
 #define THIS TBindTactic<T>
@@ -22,4 +22,4 @@ namespace wrd { namespace memlite {
 
 #undef TEMPL
 #undef THIS
-}}
+}

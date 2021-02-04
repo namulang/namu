@@ -3,7 +3,7 @@
 #include "Stream.hpp"
 #include <fstream>
 
-namespace wrd { namespace clog {
+namespace wrd {
 
     class FileLogStream : public Stream {
         WRD_DECL_THIS(FileLogStream, Stream)
@@ -23,4 +23,4 @@ namespace wrd { namespace clog {
         std::ofstream _file;
         std::string _path;
     };
-} }
+}

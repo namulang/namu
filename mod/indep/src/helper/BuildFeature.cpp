@@ -1,6 +1,6 @@
 #include "BuildFeature.hpp"
 
-namespace wrd { namespace indep {
+namespace wrd {
 
     using namespace std;
 
@@ -53,4 +53,4 @@ namespace wrd { namespace indep {
 
         return inner;
     }
-} }
+}

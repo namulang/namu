@@ -2,7 +2,7 @@
 
 #include "stream/Stream.hpp"
 
-namespace wrd { namespace clog {
+namespace wrd {
 
     class Logger : public Stream {
         WRD_DECL_THIS(Logger, Stream)
@@ -38,4 +38,4 @@ namespace wrd { namespace clog {
     private:
         std::vector<Stream*> _streams;
     };
-} }
+}

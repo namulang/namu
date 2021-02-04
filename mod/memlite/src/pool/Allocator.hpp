@@ -2,7 +2,7 @@
 
 #include "MemoryHaver.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	class Allocator : public MemoryHaver {
         WRD_DECL_THIS(Allocator, MemoryHaver)
@@ -20,4 +20,4 @@ namespace wrd { namespace memlite {
 	private:
 		wcnt _blksize;
 	};
-}}
+}

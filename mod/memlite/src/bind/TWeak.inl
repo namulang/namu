@@ -1,7 +1,7 @@
 #include "TWeak.hpp"
 #include "TWeakTactic.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 #define TEMPL template <typename T>
 #define THIS TWeak<T>
@@ -56,4 +56,4 @@ namespace wrd { namespace memlite {
 #undef TEMPL
 #undef SUPER
 
-}}
+}

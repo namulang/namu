@@ -2,7 +2,7 @@
 #include "TWeak.inl"
 #include "TStrongTactic.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 #define TEMPL	template <typename T>
 #define THIS	TStrong<T>
@@ -27,4 +27,4 @@ namespace wrd { namespace memlite {
 #undef THIS
 #undef SUPER
 
-}}
+}

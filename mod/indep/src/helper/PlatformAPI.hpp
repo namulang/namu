@@ -2,7 +2,7 @@
 
 #include "BuildFeature.hpp"
 
-namespace wrd { namespace indep {
+namespace wrd {
 
     class PlatformAPI {
         WRD_DECL_THIS(PlatformAPI)
@@ -20,4 +20,4 @@ namespace wrd { namespace indep {
         static void updateConsoleColor(ConsoleColor fore, ConsoleColor back);
         static std::string createCurrentTime(const std::string& strftime_format);
     };
-} }
+}

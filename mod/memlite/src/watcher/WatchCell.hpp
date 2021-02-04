@@ -2,7 +2,7 @@
 
 #include "BindTag.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 	///	@remark Immortality of WatchCell instance.
 	///			WatchCell is managed by Chunks and Chunks set used instances to some
 	///			index for chaining linked list. in order to hand over quickly to
@@ -18,4 +18,4 @@ namespace wrd { namespace memlite {
 		widx next;
 		BindTag blk;
 	};
-}}
+}

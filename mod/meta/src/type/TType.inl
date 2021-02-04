@@ -2,7 +2,7 @@
 #include "../rtti/Rtti.hpp"
 #include "Type.hpp"
 
-namespace wrd { namespace meta {
+namespace wrd {
 #define TEMPL template <typename T>
 #define THIS TType<T>
 #define SUPER Type
@@ -39,4 +39,4 @@ namespace wrd { namespace meta {
 #undef TEMPL
 #undef THIS
 #undef SUPER
-}}
+}

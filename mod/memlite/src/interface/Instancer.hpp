@@ -3,7 +3,7 @@
 #include "../pool/Pool.hpp"
 #include "../watcher/Watcher.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	class Instancer {
         WRD_DECL_THIS(Instancer)
@@ -25,4 +25,4 @@ namespace wrd { namespace memlite {
 		Pool _pool;
 		Watcher _watcher;
 	};
-}}
+}

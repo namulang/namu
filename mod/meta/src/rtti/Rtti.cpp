@@ -1,5 +1,5 @@
 #include "Rtti.hpp"
 
-namespace wrd { namespace meta {
+namespace wrd {
 
-}}
+}

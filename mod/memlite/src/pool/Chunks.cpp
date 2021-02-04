@@ -1,7 +1,7 @@
 #include "Chunks.hpp"
 #include "../interface/Instance.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	WRD_DEF_THIS(Chunks, Allocator)
 
@@ -79,4 +79,4 @@ namespace wrd { namespace memlite {
 
 		return _chunks[n];
 	}
-}}
+}

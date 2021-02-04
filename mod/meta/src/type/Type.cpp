@@ -1,6 +1,6 @@
 #include "Type.hpp"
 
-namespace wrd { namespace meta {
+namespace wrd {
     WRD_DEF_THIS(Type)
 
     wbool This::operator==(const This& rhs) const { return &getName() == &rhs.getName(); }
@@ -87,4 +87,4 @@ namespace wrd { namespace meta {
         WRD_DI("... %s class init completed.", getName().c_str());
         return res;
     }
-}}
+}

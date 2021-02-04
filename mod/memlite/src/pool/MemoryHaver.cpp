@@ -1,6 +1,6 @@
 #include "MemoryHaver.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	WRD_DEF_THIS(MemoryHaver)
 
@@ -18,4 +18,4 @@ namespace wrd { namespace memlite {
 	const void* This::get(widx n) const WRD_UNCONST_FUNC(get(n))
 	wbool This::isFull() const { return getLen() >= getSize(); }
 	wbool This::isCapable() const { return getLen() < getSize(); }
-}}
+}

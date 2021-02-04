@@ -1,6 +1,6 @@
 #include "FileLogStream.hpp"
 
-namespace wrd { namespace clog {
+namespace wrd {
 
     WRD_DEF_THIS(FileLogStream)
     typedef std::string string;
@@ -28,4 +28,4 @@ namespace wrd { namespace clog {
         return false;
     }
 
-} }
+}
