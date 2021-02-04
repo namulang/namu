@@ -2,7 +2,7 @@
 
 #include "../interface/Instance.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	class Bindable {
         WRD_DECL_THIS(Bindable)
@@ -41,4 +41,4 @@ namespace wrd { namespace memlite {
 		virtual Instance& _get() = 0;
         virtual wbool _bind(const Instance& it) = 0;
 	};
-}}
+}

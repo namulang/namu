@@ -1,7 +1,7 @@
 #include "BindTag.hpp"
 #include "../interface/Instancer.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	WRD_DEF_THIS(BindTag, Instance)
 
@@ -67,4 +67,4 @@ namespace wrd { namespace memlite {
 			_pt->_setId(new1);
 		return _setId(new1);
 	}
- }}
+ }

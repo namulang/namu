@@ -1,7 +1,7 @@
 #include "Instance.hpp"
 #include "Instancer.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	WRD_DEF_THIS(Instance)
 	This::Vault Instance::_vault;
@@ -66,4 +66,4 @@ namespace wrd { namespace memlite {
 	}
 
 	wbool This::Vault::rel() { return set(NULL, WRD_INDEX_ERROR); }
-}}
+}

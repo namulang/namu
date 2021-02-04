@@ -3,7 +3,7 @@
 #include "Type.hpp"
 #include "../rtti.hpp"
 
-namespace wrd { namespace meta {
+namespace wrd {
 
 	///	@remark	TType returns TType<Type> as its meta class.
 	///			however, this makes impossible to get specific TType instance
@@ -37,4 +37,4 @@ namespace wrd { namespace meta {
     private:
         TType(wbool); // for skipping recursive static variable init.
     };
-}}
+}

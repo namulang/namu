@@ -2,7 +2,7 @@
 
 #include "Allocator.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	class Chunk : public Allocator {
         WRD_DECL_THIS(Chunk, Allocator)
@@ -50,4 +50,4 @@ namespace wrd { namespace memlite {
 		wuchar* _heap;
 		wbool _isFixed;
 	};
-}}
+}

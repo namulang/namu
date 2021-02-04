@@ -3,7 +3,7 @@
 #include "../pool/Chunk.hpp"
 #include "WatchCell.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	class Watcher : public Chunk {
         WRD_DECL_THIS(Watcher, Chunk)
@@ -32,4 +32,4 @@ namespace wrd { namespace memlite {
 		Id _genId(void* pt) const;
 		widx _getIdx(void* it) const;
 	};
-}}
+}

@@ -1,6 +1,6 @@
 #include "Adam.hpp"
 #include "TType.inl"
 
-namespace wrd { namespace meta {
+namespace wrd {
     WRD_INIT_META(Adam)
-}}
+}

@@ -2,7 +2,7 @@
 
 #include "../common.hpp"
 
-namespace wrd { namespace clog {
+namespace wrd {
 
     class Stream {
         WRD_DECL_THIS(Stream)
@@ -24,4 +24,4 @@ namespace wrd { namespace clog {
     private:
         wbool _isEnable;
     };
-} }
+}

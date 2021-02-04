@@ -2,7 +2,7 @@
 
 #include "Stream.hpp"
 
-namespace wrd { namespace clog {
+namespace wrd {
 
     class ConsoleStream : public Stream {
         WRD_DECL_THIS(ConsoleStream, Stream)
@@ -12,4 +12,4 @@ namespace wrd { namespace clog {
         const char* getName() const;
         wbool dump(const char* message);
     };
-} }
+}

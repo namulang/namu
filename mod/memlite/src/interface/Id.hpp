@@ -2,7 +2,7 @@
 
 #include "../common.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
     union Id {
 		struct SeperatedId {
@@ -15,4 +15,4 @@ namespace wrd { namespace memlite {
 		Id(wint64 it);
 		Id(wint new_tagN = WRD_INDEX_ERROR, wint newChkN = WRD_INDEX_ERROR, wuint newSerial = 0);
     };
-}}
+}

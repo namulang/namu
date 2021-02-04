@@ -2,7 +2,7 @@
 
 #include "../common.hpp"
 
-namespace wrd { namespace meta {
+namespace wrd {
 	///	@remark	Type returning TType<Type> as result of getType()
 	///			because this func always returns metaclass no matter of what This type is,
 	///			users need to care about getting meta of metaclass on calling getType().
@@ -70,4 +70,4 @@ namespace wrd { namespace meta {
     private:
         wbool _logInitOk(wbool res);
     };
-}}
+}

@@ -3,7 +3,7 @@
 #include "TBindTactic.inl"
 #include "../interface/Instance.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
     template <typename T>
     class TWeakTactic : public TBindTactic<T> {
@@ -51,4 +51,4 @@ namespace wrd { namespace memlite {
 
         static inline This singletone;
     };
-}}
+}

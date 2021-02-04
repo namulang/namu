@@ -1,6 +1,6 @@
 #include "Watcher.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	WRD_DEF_THIS(Watcher, Chunk)
 
@@ -53,4 +53,4 @@ namespace wrd { namespace memlite {
 		widx ret = ((wuchar*)it - getHeap()) / getBlkSize();
 		return ret;
 	}
-}}
+}

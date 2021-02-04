@@ -1,7 +1,7 @@
 #include "ConsoleStream.hpp"
 #include <iostream>
 
-namespace wrd { namespace clog {
+namespace wrd {
 
     WRD_DEF_THIS(ConsoleStream)
 
@@ -14,4 +14,4 @@ namespace wrd { namespace clog {
         cout << message << "\n";
         return false;
     }
-} }
+}

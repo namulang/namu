@@ -3,7 +3,7 @@
 #include "../interface/Instance.hpp"
 #include "../bind/Bindable.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
     class Chunk;
     class BindTag : public Instance, public Bindable {
@@ -50,4 +50,4 @@ namespace wrd { namespace memlite {
 		Instance* _pt;
 		wcnt _strong;
     };
-}}
+}

@@ -2,7 +2,7 @@
 
 #include "Id.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	class BindTag;
 	class Instancer;
@@ -52,4 +52,4 @@ namespace wrd { namespace memlite {
 		Id _id;
 		static Vault _vault;
 	};
-}}
+}

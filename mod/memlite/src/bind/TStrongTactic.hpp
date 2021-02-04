@@ -2,7 +2,7 @@
 
 #include "TWeakTactic.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
     template <typename T>
     class TStrongTactic : public TWeakTactic<T> {
@@ -40,4 +40,4 @@ namespace wrd { namespace memlite {
 
         static inline This singletone;
     };
-}}
+}

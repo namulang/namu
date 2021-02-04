@@ -10,7 +10,7 @@
 #endif
 #include <time.h>
 
-namespace wrd { namespace indep {
+namespace wrd {
 
     WRD_DEF_THIS(PlatformAPI)
     using namespace std;
@@ -69,4 +69,4 @@ namespace wrd { namespace indep {
 
         return buffer;
     }
-} }
+}

@@ -2,7 +2,7 @@
 
 #include "Bind.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	template <typename T>
 	class TWeak : public Bind {
@@ -60,4 +60,4 @@ namespace wrd { namespace memlite {
     protected:
         TWeak(BindTacticable* tactic);
 	};
-}}
+}

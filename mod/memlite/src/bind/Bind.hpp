@@ -3,7 +3,7 @@
 #include "Bindable.hpp"
 #include "../interface/Instance.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
     class BindTacticable;
     ///	Bind:
@@ -82,4 +82,4 @@ namespace wrd { namespace memlite {
 		Id _itsId; // id for binded one
         BindTacticable* _tactic;
 	};
-}}
+}

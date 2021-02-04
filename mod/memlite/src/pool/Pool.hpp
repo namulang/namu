@@ -2,7 +2,7 @@
 
 #include "Chunks.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	class Pool : public MemoryHaver {
         WRD_DECL_THIS(Pool, MemoryHaver)
@@ -35,4 +35,4 @@ namespace wrd { namespace memlite {
 	private:
 		std::vector<Chunks*> _chunks;
 	};
-}}
+}

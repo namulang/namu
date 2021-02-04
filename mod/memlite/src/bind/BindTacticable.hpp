@@ -2,7 +2,7 @@
 
 #include "../common.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
     class Bind;
     class Instance;
@@ -14,4 +14,4 @@ namespace wrd { namespace memlite {
         virtual const Type& getType() = 0;
         virtual wbool isConst() const = 0;
     };
-}}
+}

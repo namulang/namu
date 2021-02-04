@@ -3,7 +3,7 @@
 #include "../common.hpp"
 #include "./type/Adam.hpp"
 
-namespace wrd { namespace meta {
+namespace wrd {
 
     class MetaIf {
     protected:
@@ -104,4 +104,4 @@ namespace wrd { namespace meta {
         using is = typename T::SuperType;
     };
 
-} }
+ }

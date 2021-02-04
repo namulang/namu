@@ -2,7 +2,7 @@
 
 #include "BindTacticable.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
     template <typename T>
     class TBindTactic : public BindTacticable {
@@ -17,4 +17,4 @@ namespace wrd { namespace memlite {
         virtual const Type& getType();
         virtual wbool isConst() const;
     };
-}}
+}

@@ -2,7 +2,7 @@
 #include "../watcher/BindTag.hpp"
 #include "BindTacticable.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	WRD_DEF_THIS(Bind)
 
@@ -66,4 +66,4 @@ namespace wrd { namespace memlite {
     }
 
 #undef This
-}}
+}

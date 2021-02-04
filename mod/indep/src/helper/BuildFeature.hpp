@@ -3,7 +3,7 @@
 #include "../macro.hpp"
 #include "../common.hpp"
 
-namespace wrd { namespace indep {
+namespace wrd {
     using std::string;
 
     class BuildFeature {
@@ -75,4 +75,4 @@ namespace wrd { namespace indep {
             static WRD_SINGLETON_GETTER(const string& getName(), string, WRD_BUILD_TYPENAME)
         };
     };
-} }
+}

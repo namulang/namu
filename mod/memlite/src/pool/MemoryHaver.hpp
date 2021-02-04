@@ -2,7 +2,7 @@
 
 #include "../common.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
     class Instance;
 	class MemoryHaver {
@@ -25,4 +25,4 @@ namespace wrd { namespace memlite {
 	protected:
 		virtual void* _get(widx n) = 0;
 	};
-}}
+}

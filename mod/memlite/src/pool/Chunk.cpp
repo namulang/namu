@@ -1,6 +1,6 @@
 #include "Chunk.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	WRD_DEF_THIS(Chunk, Allocator)
 
@@ -104,4 +104,4 @@ namespace wrd { namespace memlite {
 		}
 		return true;
 	}
-}}
+}

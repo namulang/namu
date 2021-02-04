@@ -1,7 +1,7 @@
 #include "Pool.hpp"
 #include "../interface/Instance.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
 	WRD_DEF_THIS(Pool, MemoryHaver)
 
@@ -49,4 +49,4 @@ namespace wrd { namespace memlite {
 
 		return _chunks[n];
 	}
-}}
+}

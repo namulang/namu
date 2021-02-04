@@ -1,6 +1,6 @@
 #include "Stream.hpp"
 
-namespace wrd { namespace clog {
+namespace wrd {
 
     WRD_DEF_THIS(Stream)
 
@@ -23,4 +23,4 @@ namespace wrd { namespace clog {
         _isEnable = false;
         return false;
     }
-} }
+}

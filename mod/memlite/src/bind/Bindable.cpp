@@ -1,6 +1,6 @@
 #include "Bindable.hpp"
 
-namespace wrd { namespace memlite {
+namespace wrd {
 
     WRD_DEF_THIS(Bindable)
 
@@ -18,4 +18,4 @@ namespace wrd { namespace memlite {
 
 	Instance& This::get() { return _get(); }
 	const Instance& This::get() const WRD_UNCONST_FUNC(_get())
-}}
+}

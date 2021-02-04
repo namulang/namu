@@ -1,9 +1,9 @@
 #pragma once
 
 #define _LOG(func, level, fmt, ...) { \
-	wrd::clog::Logger::get().func(\
+	wrd::Logger::get().func(\
         "%s " WRD_TAG " %s <%s::%s#%d> " fmt, \
-        wrd::indep::PlatformAPI::createCurrentTime("%b %d %Y  %X").c_str(), \
+        wrd::PlatformAPI::createCurrentTime("%b %d %Y  %X").c_str(), \
         level, __FILENAME__, __func__, __LINE__, ## __VA_ARGS__); \
     }
 
