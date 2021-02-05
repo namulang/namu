@@ -45,7 +45,7 @@ namespace wrd {
             //			instance.
             me._itsId = it.getId();
             WRD_DI("Bind(%x) binds Instance(%x) of %s class",
-                    me, &it, it.getType().getName().c_str());
+                    &me, &it, it.getType().getName().c_str());
             return true;
         }
 
