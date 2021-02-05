@@ -1,5 +1,6 @@
 #include "TWeak.hpp"
 #include "TWeakTactic.hpp"
+#include "TBindable.inl"
 
 namespace wrd {
 
@@ -20,13 +21,12 @@ namespace wrd {
 	TEMPL THIS& THIS::operator=(const Bind& rhs) {
         if(this == &rhs) return *this;
 
-		SUPER::operator=(rhs);
+        SUPER::operator=(rhs);
 		return *this;
 	}
 
-	TEMPL wbool THIS::bind(T& new1) { return this->_bind(new1); }
-	TEMPL T& THIS::get() { return Bindable::get<T>(); }
-	TEMPL const T& THIS::get() const { return Bindable::get<T>(); }
+	TEMPL T& THIS::get() { return TBindable<Instance>::get<T>(); }
+	TEMPL const T& THIS::get() const { return TBindable<Instance>::get<T>(); }
 
 #undef THIS
 #define THIS TWeak<const T>
@@ -48,9 +48,8 @@ namespace wrd {
 	    return *this;
 	}
 
-	TEMPL wbool THIS::bind(T& new1) { return this->_bind(new1); }
 	TEMPL wbool THIS::bind(const T& new1) { return this->_bind(new1); }
-	TEMPL const T& THIS::get() const { return Bindable::get<T>(); }
+	TEMPL const T& THIS::get() const { return TBindable<Instance>::get<T>(); }
 
 #undef THIS
 #undef TEMPL

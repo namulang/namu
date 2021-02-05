@@ -26,8 +26,8 @@ namespace wrd {
 		const T& get() const;
 
 		wbool bind(T& new1);
-        //  Bindable:
-        using Bindable::get;
+        //  TBindable:
+        using TBindable::get;
 
     protected:
         TWeak(BindTacticable* tactic);
@@ -54,8 +54,9 @@ namespace wrd {
 		wbool bind(T& new1);
 		wbool bind(const T& new1);
 		const T& get() const;
-        //  Bindable:
-        using Bindable::get;
+        //  TBindable:
+        using TBindable::get;
+        using TBindable::bind;
 
     protected:
         TWeak(BindTacticable* tactic);

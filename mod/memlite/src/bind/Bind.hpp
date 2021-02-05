@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Bindable.hpp"
+#include "TBindable.hpp"
 #include "../interface/Instance.hpp"
 
 namespace wrd {
@@ -43,7 +43,7 @@ namespace wrd {
     ///				because it was declared to class template, user need to bind or get binded using type T.
     ///				of course these are based on class Bind, user can use loose-check API case by case.
     ///
-    class Bind : public Instance, public Bindable {
+    class Bind : public Instance, public TBindable<Instance> {
         WRD_DECL_THIS(Bind, Instance)
         WRD_INIT_META(This)
         template <typename T> friend class TWeakTactic;
@@ -64,17 +64,17 @@ namespace wrd {
 		wbool bind(Instance& new1);
 		Id getItsId() const;
         wbool isConst() const;
-        //  Bindable:
+        //  TBindable:
 		wbool isBind() const;
 		wbool unbind();
-		using Bindable::canBind;
+		using TBindable::canBind;
 		wbool canBind(const Type& cls) const;
         //  Instance:
         const Type& getType() const;
 
 	protected:
         wbool _assign(const Bind& rhs);
-        //  Bindable:
+        //  TBindable:
 		wbool _bind(const Instance& it);
 		Instance& _get();
 
