@@ -1,6 +1,7 @@
 #include "Bind.hpp"
 #include "../watcher/BindTag.hpp"
 #include "BindTacticable.hpp"
+#include "TBindable.inl"
 
 namespace wrd {
 
