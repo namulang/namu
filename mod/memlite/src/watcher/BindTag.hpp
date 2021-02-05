@@ -10,9 +10,9 @@ namespace wrd {
         WRD_DECL_THIS(BindTag, Instance)
         WRD_INIT_META(This)
 		template <typename T> friend class TWeak;
-		template <typename T> friend class TStrong;
+		template <typename T> friend class TStr;
         template <typename T> friend class TWeakTactic;
-		template <typename T> friend class TStrongTactic;
+		template <typename T> friend class TStrTactic;
 
     public:
         //  BindTag:

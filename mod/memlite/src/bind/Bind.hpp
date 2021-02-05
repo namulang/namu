@@ -38,7 +38,7 @@ namespace wrd {
     ///				from consted Binder, s/he will get nulled reference.) user needs to checks that returned value
     ///				was nullref on using loose-checking API.
     ///
-    ///			class TWeak, class TStrong:
+    ///			class TWeak, class TStr:
     ///				these represent Binder on strict-checking layer.
     ///				because it was declared to class template, user need to bind or get binded using type T.
     ///				of course these are based on class Bind, user can use loose-check API case by case.
@@ -47,7 +47,7 @@ namespace wrd {
         WRD_DECL_THIS(Bind, Instance)
         WRD_INIT_META(This)
         template <typename T> friend class TWeakTactic;
-        template <typename T> friend class TStrongTactic;
+        template <typename T> friend class TStrTactic;
 		friend class BindTag; // for _get()
 
 	public:

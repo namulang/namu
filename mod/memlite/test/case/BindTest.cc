@@ -28,7 +28,7 @@ struct B : public Instance {
 };
 
 TEST(BindTest, defaultBehaviorTest) {
-    TStrong<A> b1 = new A();
+    TStr<A> b1 = new A();
     ASSERT_FALSE(nul(*b1));
     ASSERT_FALSE(nul(b1->getType()));
 
@@ -49,9 +49,9 @@ TEST(BindTest, bindSameInstanceFewTimesTest) {
         ASSERT_EQ(B::get(), 1);
         ASSERT_EQ(b1.getBindTag().getStrongCnt(), 0);
 
-        TStrong<B>  bb1(b1),
-                    bb2(TStrong<B>(new B(b1))),
-                    bb3;
+        TStr<B> bb1(b1),
+                bb2(TStr<B>(new B(b1))),
+                bb3;
         ASSERT_EQ(B::get(), 2);
         ASSERT_TRUE(bb1.isBind());
         ASSERT_FALSE(nul(bb1->getBindTag()));
@@ -80,7 +80,7 @@ TEST(BindTest, bindSameInstanceFewTimesTest) {
 }
 
 TEST(BindTest, StrongAndWeakTest) {
-    TStrong<A> strA(new A());
+    TStr<A> strA(new A());
     ASSERT_TRUE(strA.isBind());
 
     const BindTag& tag = strA->getBindTag();
@@ -95,7 +95,7 @@ TEST(BindTest, StrongAndWeakTest) {
 }
 
 TEST(BindTest, BindByValueTest) {
-    TStrong<A> strA(new A());
+    TStr<A> strA(new A());
     const BindTag& tag = strA->getBindTag();
     ASSERT_FALSE(nul(tag));
     ASSERT_EQ(tag.getStrongCnt(), 1);
@@ -119,7 +119,7 @@ TEST(BindTest, BindByValueTest) {
 }
 
 TEST(BindTest, WeakBindButInstanceGoneTest) {
-    TStrong<A> strA(new A());
+    TStr<A> strA(new A());
     TWeak<A> weakA(*strA);
 
     const BindTag& tag = weakA->getBindTag();

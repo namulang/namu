@@ -5,8 +5,8 @@
 namespace wrd {
 
     template <typename T>
-    class TStrongTactic : public TWeakTactic<T> {
-        WRD_DECL_THIS(TStrongTactic, TWeakTactic<T>);
+    class TStrTactic : public TWeakTactic<T> {
+        WRD_DECL_THIS(TStrTactic, TWeakTactic<T>);
 
     public:
         wbool unbind(Bind& me) {
