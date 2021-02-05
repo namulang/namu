@@ -6,7 +6,7 @@ set(SHOW_CMAKE_VARIABLES 1)
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
 set(VERSION_FIX 0)
-set(BUILD_COUNT 151)
+set(BUILD_COUNT 152)
 set(VERSION_NAME "Seed")
 set(VERSION_VALUE "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_FIX}")
 set(VERSION "${PROJECT_NAME} ${UPDATE_NAME} v${VERSION_VALUE}")
@@ -53,6 +53,7 @@ set(WRD_DEFAULT_INC_DIR
     ${WRD_DIR}/mod/clog/src
     ${WRD_DIR}/mod/meta/src
     ${WRD_DIR}/mod/memlite/src
+    ${WRD_DIR}/mod/interp/src
     /usr/local/include)
 include_directories(${WRD_DEFAULT_INC_DIR})
 
