@@ -1,3 +1,3 @@
 #pragma once
 
-#include "bind/TStrong.inl"
+#include "bind/TStr.inl"
