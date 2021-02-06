@@ -21,10 +21,55 @@ namespace wrd {
         TRet(T newVal, Err& newErr) : v(newVal), e(newErr) {}
 
         T v;
-        TStrong<Err> e;
+        TStr<Err> e;
     };
 
-    class Node : public Instance {
+    template <typename T>
+    class Iter : public TypeProvidable {
+        WRD_CLASS(Iteration)
+
+    public:
+        /// @return true if there are more data to proceed
+        virtual wbool operator==(const This& rhs) = 0;
+        virtual wbool operator++() = 0;
+        virtual wbool operator--() = 0;
+        T& operator*() { return get(); }
+        T* operator->() { return &get(); }
+        const T& operator*() const { return get(); }
+        const T* operator->() const { return &get(); }
+        operator wbool() const { return isEnd(); }
+
+        virtual wbool isEnd() const = 0;
+        virtual const T& get() const = 0;
+        virtual T& get() = 0;
+    };
+
+    struct Containable {
+        Node& operator[](widx n) { return get(n); }
+        Node& operator[](widx n) WRD_UNCONST_FUNC(operator[](n))
+
+        virtual wcnt getLen() = 0;
+
+        virtual TStr<Iter> getHead() = 0;
+        virtual TStr<Iter> getTail() = 0;
+
+        virtual Node& get(widx n) = 0;
+        const Node& get(widx n) const WRD_UNCONST_FUNC(get(n))
+        template <typename T>
+        T& get(lambda); // use getHead()
+        Node& get(lambda) { return get<Node>(lambda); }
+
+        /// @return true if element got deleted successfully.
+        virtual wbool del(Node& it) = 0;
+        /// delete last element if exists.
+        wbool del() { return del(get(getLen()-1)); }
+        virtual wbool add(Node& new1) = 0;
+        /// @return how many element has been added from rhs.
+        wcnt add(const Containable& rhs);
+        wcnt del(const Containable& rhs);
+    };
+
+    class Node : public Instance, public Containable {
         WRD_CLASS(Node, Instance)
 
     public:
@@ -44,52 +89,103 @@ namespace wrd {
         }
 
         void _setInit(wbool newVal) { _isInit = newVal; }
-        virtual Container getSubs() = 0;
+        virtual SequentialContainer getSubs() = 0;
 
+        using Containable::get;
         template <typename T>
-        TArr<T> getOfType(std::string name, WType... args);
+        TArr<T> get(std::string name, WType... args);
         Arr get(std::string name, WType... args);
         template <typename T>
-        TArr<T&> getOfType(std::string name, WType args[]);
+        TArr<T&> get(std::string name, WType args[]);
         Arr get(std::string name, WType args[]);
         template <typename T>
         TArr<T> get(std::string);
         Arr get(std::string);
 
+        /// @param args nullable.
+        virtual Ret<Ref> run(const Arr& args);
+        Ret<Ref> run() { return run(nulr<Arr>()); }
+
+        const Node& getOrigin() const;
+
+    protected:
+        wbool del(Node& it) override;
+        wbool add(Node& it) override;
+
+    private:
         wbool _isInit;
     };
 
-    template <typename T>
-    class TRef : public Node {
+    class Ref : public Node, TBindable<Node> {
+        WRD_CLASS(TRef, Node)
+
+        Node& _get() override { return *_ptr; }
+        // override get() funcs...
+        // isInit...
+
+        wbool isBind() const { return _ptr.isBind(); }
+        // override TBindable...
+
+        Ret<Ref> run(const Arr& args) override;
+
+        Str _ptr;
     };
 
-    typedef TRef<Node> Ref;
+    template <typename T>
+    class TRef : public Ref {
+    };
 
     class Scope : public Node {
-        Container getSubs() {
+        Container getSubs() override {
             return _scope;
         }
 
         Chain _scope;
     };
     class Func : public Scope {
-    };
+        WRD_CLASS(Func, Scope)
 
-    class Obj : public Scope {
+    public:
+        Ret<Ref> run(const Arr& args) override;
     };
 
     class Container : public Obj {
+        wcnt getLen() override;
+
+        wcnt _len;
+    };
+
+    class SequentialContainer : public Container {
+        using Container::add;
+        virtual wbool add(Node& it, widx at) = 0;
+        using Container::del;
+        virtual wbool del(widx at) = 0;
+    };
+
+    class Arr : public SequentialContainer {
+        WRD_CLASS(Arr, SequentialContainer)
+
+    public:
+        Arr();
+        Arr(const vector<Node*>& rhs);
+        Arr(const vector<Str>& rhs);
+        Arr(wcnt len, const Node rhs[]);
+        Arr(wcnt len, Node... rhs);
+        Arr(const This& rhs);
+
+        std::vector<Str> _vector;
     };
 
     template <typename T>
-    class TArr : public Container {
+    class TArr : public Arr {
     };
-    typedef TArr<Node> Arr;
+
+    class Chain : public SequentialContainer {
+    };
 
     template <typename T>
-    class TChain : public Container {
+    class TChain : public Chain {
     };
-    typedef TChain<Node> Chain;
 
 
     // iteration #2:

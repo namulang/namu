@@ -6,6 +6,9 @@
     WRD_INIT_META(THIS) \
 public: \
     typedef SuperType WType; \
+    virtual Type& getType() const { \
+        return TType<This>::get(); \
+    } \
 private:
 
 #define WRD_CLASS_1(THIS) \
