@@ -11,8 +11,11 @@ namespace wrd {
     TEMPL THIS::TWeak() : SUPER(&TWeakTactic<T>::singletone) {}
     TEMPL THIS::TWeak(T& it) : SUPER(&TWeakTactic<T>::singletone) { this->bind(it); }
     TEMPL THIS::TWeak(T* it) : SUPER(&TWeakTactic<T>::singletone) { this->bind(*it); }
+	TEMPL THIS::TWeak(const T& it) : SUPER(&TWeakTactic<const T>::singletone) { this->bind(it); }
+	TEMPL THIS::TWeak(const T* it) : SUPER(&TWeakTactic<const T>::singletone) { this->bind(*it); }
     TEMPL THIS::TWeak(const Bind& rhs) { this->_assign(rhs); }
     TEMPL THIS::TWeak(BindTacticable* tactic): SUPER(tactic) {}
+
 	TEMPL const T* THIS::operator->() const { return &this->get(); }
 	TEMPL const T& THIS::operator*() const { return this->get(); }
 	TEMPL T* THIS::operator->() { return &this->get(); }
@@ -27,32 +30,11 @@ namespace wrd {
 
 	TEMPL T& THIS::get() { return TBindable<Instance>::get<T>(); }
 	TEMPL const T& THIS::get() const { return TBindable<Instance>::get<T>(); }
-
-#undef THIS
-#define THIS TWeak<const T>
-
-	TEMPL THIS::TWeak() : SUPER(&TWeakTactic<const T>::singletone) {}
-	TEMPL THIS::TWeak(T& it) : SUPER(&TWeakTactic<const T>::singletone) { this->bind(it); }
-	TEMPL THIS::TWeak(T* it) : SUPER(&TWeakTactic<const T>::singletone) { this->bind(*it); }
-	TEMPL THIS::TWeak(const T& it) : SUPER(&TWeakTactic<const T>::singletone) { this->bind(it); }
-	TEMPL THIS::TWeak(const T* it) : SUPER(&TWeakTactic<const T>::singletone) { this->bind(*it); }
-	TEMPL THIS::TWeak(const Bind& rhs) : SUPER(&TWeakTactic<const T>::singletone) { this->_assign(rhs); }
-    TEMPL THIS::TWeak(BindTacticable* tactic): SUPER(tactic) {}
-	TEMPL const T* THIS::operator->() const { return &this->get(); }
-	TEMPL const T& THIS::operator*() const { return this->get(); }
-
-	TEMPL THIS& THIS::operator=(const Bind& rhs) {
-        if(this == &rhs) return *this;
-
-		SUPER::operator=(rhs);
-	    return *this;
-	}
-
 	TEMPL wbool THIS::bind(const T& new1) { return this->_bind(new1); }
-	TEMPL const T& THIS::get() const { return TBindable<Instance>::get<T>(); }
+    TEMPL wbool THIS::bind(T& new1) { return this->_bind(new1); }
 
+#undef SUPER
 #undef THIS
 #undef TEMPL
-#undef SUPER
 
 }

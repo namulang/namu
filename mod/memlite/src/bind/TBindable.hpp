@@ -18,6 +18,7 @@ namespace wrd {
         operator wbool() const;
 
 		wbool bind(T& it) { return _bind(it); }
+		wbool bind(const T& it) { return _bind(it); }
         virtual wbool unbind() = 0;
 		wbool canBind(const T& it);
 		virtual wbool canBind(const Type& it) const = 0;
@@ -41,5 +42,15 @@ namespace wrd {
         //  TBindable:
 		virtual T& _get() = 0;
         virtual wbool _bind(const T& it) = 0;
+        virtual wbool _bind(const T& it) {
+            // type checking before binding only is required to Bind class.
+            // Derived classes from this doesn't need it. because its type is specified.
+            // prevent wrong type providing by compiler.
+            if(!canBind(it)) {
+                WRD_W("can't bind it(%s) instance", it.getType().getName().c_str());
+                return false;
+            }
+            return true;
+        }
 	};
 }
