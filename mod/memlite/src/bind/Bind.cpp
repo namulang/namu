@@ -23,18 +23,6 @@ namespace wrd {
 		return *this;
 	}
 
-	wbool This::bind(Instance& new1) {
-		// type checking before binding only is required to Bind class.
-		// Derived classes from this doesn't need it. because its type is specified.
-		// prevent wrong type providing by compiler.
-		if(!canBind(new1)) {
-            WRD_W("can't bind new1(%s) instance", new1.getType().getName().c_str());
-            return false;
-        }
-
-		return _bind(new1);
-	}
-
 	wbool This::isBind() const {
         const BindTag& tag = _getBindTag(_itsId);
         if(nul(tag)) return false;
@@ -52,6 +40,8 @@ namespace wrd {
     const Type& This::getType() const { return _tactic->getType(); }
 
 	wbool This::_bind(const Instance& it) {
+        if(!TBindable<Instance>::_bind(it)) return false;
+
         return _tactic->bind(*this, it);
 	}
 

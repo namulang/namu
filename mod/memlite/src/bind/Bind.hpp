@@ -61,7 +61,6 @@ namespace wrd {
 		This& operator=(const This& rhs);
 
         //	Bind:
-		wbool bind(Instance& new1);
 		Id getItsId() const;
         wbool isConst() const;
         //  TBindable:
@@ -75,7 +74,7 @@ namespace wrd {
 	protected:
         wbool _assign(const Bind& rhs);
         //  TBindable:
-		wbool _bind(const Instance& it);
+		wbool _bind(const Instance& it) override;
 		Instance& _get();
 
 	private:

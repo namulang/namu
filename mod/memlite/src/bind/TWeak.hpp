@@ -15,6 +15,8 @@ namespace wrd {
 		TWeak();
 		TWeak(T& it);
 		TWeak(T* it);
+		TWeak(const T& it);
+		TWeak(const T* it);
 		TWeak(const Bind& rhs);
 
         const T* operator->() const;
@@ -27,34 +29,7 @@ namespace wrd {
 
 		wbool bind(T& new1);
         //  TBindable:
-        using TBindable::get;
-
-    protected:
-        TWeak(BindTacticable* tactic);
-	};
-	template <typename T>
-	class TWeak<const T> : public Bind {
-        WRD_DECL_THIS(TWeak, Bind)
-        WRD_INIT_META(This)
-		friend class BindTag;
-
-	public:
-        /// TWeak:
-		TWeak();
-		TWeak(T& it);
-		TWeak(T* it);
-		TWeak(const T& it);
-		TWeak(const T* it);
-		TWeak(const Bind& rhs);
-
-        const T* operator->() const;
-        const T& operator*() const;
-		This& operator=(const Bind& rhs);
-
 		wbool bind(T& new1);
-		wbool bind(const T& new1);
-		const T& get() const;
-        //  TBindable:
         using TBindable::get;
         using TBindable::bind;
 
