@@ -26,7 +26,8 @@ namespace wrd {
 		T& get();
 		const T& get() const;
 
-		template <typename E> E& get() {
+		template <typename E>
+        E& get() {
 			T& got = _get();
             WRD_NUL(got, nulr<E>())
 
@@ -41,7 +42,6 @@ namespace wrd {
 	protected:
         //  TBindable:
 		virtual T& _get() = 0;
-        virtual wbool _bind(const T& it) = 0;
         virtual wbool _bind(const T& it) {
             // type checking before binding only is required to Bind class.
             // Derived classes from this doesn't need it. because its type is specified.

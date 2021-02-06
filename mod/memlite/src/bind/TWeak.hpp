@@ -28,8 +28,8 @@ namespace wrd {
 		const T& get() const;
 
 		wbool bind(T& new1);
+        wbool bind(const T& new1);
         //  TBindable:
-		wbool bind(T& new1);
         using TBindable::get;
         using TBindable::bind;
 
