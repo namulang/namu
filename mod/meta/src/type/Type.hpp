@@ -3,19 +3,19 @@
 #include "../common.hpp"
 
 namespace wrd {
-	///	@remark	Type returning TType<Type> as result of getType()
-	///			because this func always returns metaclass no matter of what This type is,
-	///			users need to care about getting meta of metaclass on calling getType().
-	///			for example,
-	///				Thing& thing1 = ...; // let's assume that got from outside.
-	///				Object obj;
-	///
-	///				wbool compare = obj.isSub(thing1.getType()); // user intend to get class of Thing.
-	///				// however, value 'compare' will definitely be false if
-	///				// thing was actually a retrived one by calling Thing.getType() before.
-	///
-	///				// because Type::getType() will return TType<TType<T> >,
-	///				// that stmt will be translated that checks object vs TType<T>.
+    /// @remark Type returning TType<Type> as result of getType()
+    ///         because this func always returns metaclass no matter of what This type is,
+    ///         users need to care about getting meta of metaclass on calling getType().
+    ///         for example,
+    ///             Thing& thing1 = ...; // let's assume that got from outside.
+    ///             Object obj;
+    ///
+    ///             wbool compare = obj.isSub(thing1.getType()); // user intend to get class of Thing.
+    ///             // however, value 'compare' will definitely be false if
+    ///             // thing was actually a retrived one by calling Thing.getType() before.
+    ///
+    ///             // because Type::getType() will return TType<TType<T> >,
+    ///             // that stmt will be translated that checks object vs TType<T>.
     class Type {
         WRD_DECL_THIS(Type)
 
@@ -37,12 +37,12 @@ namespace wrd {
             return (T*) make();
         }
 
-		virtual wcnt getSize() const = 0;
-		virtual wbool init();
+        virtual wcnt getSize() const = 0;
+        virtual wbool init();
         virtual wbool rel();
         virtual const Type& getSuper() const = 0;
         virtual const wbool& isInit() const = 0;
-		const Types& getLeafs() const;
+        const Types& getLeafs() const;
         const Types& getSubs() const {
             return (const_cast<This*>(this))->_getSubs();
         }
@@ -51,14 +51,14 @@ namespace wrd {
         }
 
         wbool isSuper(const Type& it) const;
-		template <typename T> wbool isSuper() const { return isSuper(T::get()); }
-		wbool isSub(const Type& it) const { return it.isSuper(*this); }
-		template <typename T> wbool isSub() const { return T::get().isSuper(*this); }
+        template <typename T> wbool isSuper() const { return isSuper(T::get()); }
+        wbool isSub(const Type& it) const { return it.isSuper(*this); }
+        template <typename T> wbool isSub() const { return T::get().isSuper(*this); }
 
     protected:
-		//	Type:
-		virtual Types& _getSupers() = 0;
-		virtual Types& _getSubs() = 0;
+        //  Type:
+        virtual Types& _getSupers() = 0;
+        virtual Types& _getSubs() = 0;
         virtual Type& _getStatic() const = 0;
         void _setInit(wbool newState) {
             const wbool& res = isInit();
