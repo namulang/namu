@@ -25,8 +25,8 @@ namespace wrd {
     };
 
     template <typename T>
-    class Iter : public TypeProvidable {
-        WRD_CLASS(Iteration)
+    class TIter : public TypeProvidable {
+        WRD_CLASS(TIter)
 
     public:
         /// @return true if there are more data to proceed
@@ -50,8 +50,8 @@ namespace wrd {
 
         virtual wcnt getLen() = 0;
 
-        virtual TStr<Iter> getHead() = 0;
-        virtual TStr<Iter> getTail() = 0;
+        virtual TStr<TIter> getHead() = 0;
+        virtual TStr<TIter> getTail() = 0;
 
         virtual Node& get(widx n) = 0;
         const Node& get(widx n) const WRD_UNCONST_FUNC(get(n))
@@ -187,7 +187,7 @@ namespace wrd {
     class TChain : public Chain {
     };
 
-
+/*
     // iteration #2:
     // 강제로 AST를 조직함. Console 이라는 obj 안에 있는 void print(msg str)를 실행하는 callExpr 실행
     // 강제로 obj를 scope에 등록을 해둔 상태에서 callexpr를 실행함.
@@ -261,5 +261,5 @@ namespace wrd {
     class ImportExpr : public Expr {
     };
     class Thread : public ? {
-    };
+    }; */
 }
