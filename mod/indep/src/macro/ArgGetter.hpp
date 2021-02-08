@@ -1,30 +1,30 @@
 #pragma once
 
-//		argument getter:
-//			this macro can pick designated indexing argument among varidics.
+//      argument getter:
+//          this macro can pick designated indexing argument among varidics.
 //
-//			VARG2?:
-//				WRD_GET_VARG2_... are created for assuming varidic arguments
-//				are paired. for instance,
+//          VARG2?:
+//              WRD_GET_VARG2_... are created for assuming varidic arguments
+//              are paired. for instance,
 //
-//					MyMacro(int, value1, float, value2, char, value3, double, value4...)
-//				
-//				As you can see, even the macro can't distinguish whether those macro 
-//				arguments are a set of two, macro developer's want to.
-//				Might can be used in this situation.
+//                  MyMacro(int, value1, float, value2, char, value3, double, value4...)
+//              
+//              As you can see, even the macro can't distinguish whether those macro 
+//              arguments are a set of two, macro developer's want to.
+//              Might can be used in this situation.
 //
-//				usage:
-//					VARG2 macro assumes that your macro's arguments were paired with 
-//					two arguments as one. like,
-//				
-//						MyMacro(  int, value1,     float, value2,     char, value3...
-//								  X_1    Y_1        X_2    Y_2         X_3    Y_3
-//					so, at example above, WRD_GET_VARG2_X_2 will be substitued
-//					to 'float'.
+//              usage:
+//                  VARG2 macro assumes that your macro's arguments were paired with 
+//                  two arguments as one. like,
+//              
+//                      MyMacro(  int, value1,     float, value2,     char, value3...
+//                                X_1    Y_1        X_2    Y_2         X_3    Y_3
+//                  so, at example above, WRD_GET_VARG2_X_2 will be substitued
+//                  to 'float'.
 //
-//		argument getter defines:
-//			Yeah, I know. This is looks somewhat stupid. 
-//			if you have better idea, please let me know. I beg you.
+//      argument getter defines:
+//          Yeah, I know. This is looks somewhat stupid. 
+//          if you have better idea, please let me know. I beg you.
 #define WRD_GET_VARG_1(_1, ...) _1
 #define WRD_GET_VARG_2(_1, _2, ...) _2
 #define WRD_GET_VARG_3(_1, _2, _3, ...) _3
