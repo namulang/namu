@@ -5,9 +5,9 @@
 
 namespace wrd {
 
-	///	@remark	TType returns TType<Type> as its meta class.
-	///			however, this makes impossible to get specific TType instance
-	///			at a binder.
+    /// @remark TType returns TType<Type> as its meta class.
+    ///         however, this makes impossible to get specific TType instance
+    ///         at a binder.
     ///
     ///         if user typedefs SuperType at their type T, then TType
     ///         inherits from given SuperType.
@@ -23,10 +23,10 @@ namespace wrd {
         wbool isAbstract() const;
         const std::string& getName() const;
         void* make() const;
-		wcnt getSize() const;
+        wcnt getSize() const;
         //TODO: virtual wbool isImmutable() const;
-		const Type& getSuper() const;
-		const wbool& isInit() const;
+        const Type& getSuper() const;
+        const wbool& isInit() const;
         static const This& get();
 
     protected:
