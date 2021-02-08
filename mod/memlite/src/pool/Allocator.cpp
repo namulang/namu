@@ -2,8 +2,8 @@
 
 namespace wrd {
 
-	WRD_DEF_THIS(Allocator, MemoryHaver)
+    WRD_DEF_THIS(Allocator, MemoryHaver)
 
-	This::Allocator(wcnt blksize) : _blksize(blksize) {}
-	wcnt This::getBlkSize() const { return _blksize; }
+    This::Allocator(wcnt blksize) : _blksize(blksize) {}
+    wcnt This::getBlkSize() const { return _blksize; }
 }

@@ -4,35 +4,35 @@
 
 namespace wrd {
 
-	class Pool : public MemoryHaver {
+    class Pool : public MemoryHaver {
         WRD_DECL_THIS(Pool, MemoryHaver)
         WRD_INIT_META(This)
 
-	public:
+    public:
         //  Pool:
-		Pool();
-		virtual ~Pool();
+        Pool();
+        virtual ~Pool();
 
-		Chunks& operator[](widx n);
-		Chunks& operator[](const Instance& inst);
-		const Chunks& operator[](widx n) const;
-		const Chunks& operator[](const Instance& inst) const;
+        Chunks& operator[](widx n);
+        Chunks& operator[](const Instance& inst);
+        const Chunks& operator[](widx n) const;
+        const Chunks& operator[](const Instance& inst) const;
 
-		Chunks& get(const Instance& inst);
-		const Chunks& get(const Instance& inst) const;
-		const Chunks& get(widx n) const;
-		Chunks& get(widx n);
+        Chunks& get(const Instance& inst);
+        const Chunks& get(const Instance& inst) const;
+        const Chunks& get(widx n) const;
+        Chunks& get(widx n);
         //  MemoryHaver:
-		wbool has(const Instance& it) const;
-		wcnt getSize() const;
-		wcnt getLen() const;
-		wbool rel();
+        wbool has(const Instance& it) const;
+        wcnt getSize() const;
+        wcnt getLen() const;
+        wbool rel();
 
-	protected:
+    protected:
         //  MemoryHaver:
-		void* _get(widx n);
+        void* _get(widx n);
 
-	private:
-		std::vector<Chunks*> _chunks;
-	};
+    private:
+        std::vector<Chunks*> _chunks;
+    };
 }
