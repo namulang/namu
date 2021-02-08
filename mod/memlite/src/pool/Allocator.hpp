@@ -4,20 +4,20 @@
 
 namespace wrd {
 
-	class Allocator : public MemoryHaver {
+    class Allocator : public MemoryHaver {
         WRD_DECL_THIS(Allocator, MemoryHaver)
         WRD_INIT_META(This)
 
-	public:
+    public:
         //  Allocator:
-		Allocator(wcnt blksize = 1);
+        Allocator(wcnt blksize = 1);
 
-		virtual void* new1() = 0;
-		virtual wbool del(void* used, wcnt sz) = 0;
-		virtual wbool resize(wcnt new1) = 0;
-		wcnt getBlkSize() const;
+        virtual void* new1() = 0;
+        virtual wbool del(void* used, wcnt sz) = 0;
+        virtual wbool resize(wcnt new1) = 0;
+        wcnt getBlkSize() const;
 
-	private:
-		wcnt _blksize;
-	};
+    private:
+        wcnt _blksize;
+    };
 }
