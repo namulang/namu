@@ -3,36 +3,36 @@
 #include "Overload.hpp"
 
 namespace wrd {
-	template <typename T>
-	class _TGet {
-	public:
-		static T& set(const T& expr) { return *store() = (T*) &expr, get(); }
-		static T& get() { return **store(); }
-		static T** store() {
-			static T* inner = 0;
-			return &inner;
-		}
-	};
-	template <typename T>
-	class _TGet<T*> {
-	public:
-	   static T* set(const T* trg) { return *store() = (T*) trg; }
-	   static T* get() { return *store(); }
-	   static T** store() {
-		   static T* inner = 0;
-		   return &inner;
-	   }
-	};
-	template <typename T>
-	class _TGet<T&> {
-	public:
-		static T& set(const T& expr) { return *store() = (T*) &expr, get(); }
-		static T& get() { return **store(); }
-		static T** store() {
-			static T* inner = 0;
-			return &inner;
-		}
-	};
+    template <typename T>
+    class _TGet {
+    public:
+        static T& set(const T& expr) { return *store() = (T*) &expr, get(); }
+        static T& get() { return **store(); }
+        static T** store() {
+            static T* inner = 0;
+            return &inner;
+        }
+    };
+    template <typename T>
+    class _TGet<T*> {
+    public:
+       static T* set(const T* trg) { return *store() = (T*) trg; }
+       static T* get() { return *store(); }
+       static T** store() {
+           static T* inner = 0;
+           return &inner;
+       }
+    };
+    template <typename T>
+    class _TGet<T&> {
+    public:
+        static T& set(const T& expr) { return *store() = (T*) &expr, get(); }
+        static T& get() { return **store(); }
+        static T** store() {
+            static T* inner = 0;
+            return &inner;
+        }
+    };
 }
 
 #define _PUT(exp) _TGet<TypeTrait<decltype(exp)>::Org>::set(exp)
