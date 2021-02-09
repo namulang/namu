@@ -9,7 +9,7 @@ namespace wrd {
 
     public:
         //  Stream:
-        const char* getName() const;
-        wbool dump(const char* message);
+        const char* getName() const override;
+        wbool dump(const char* message) override;
     };
 }

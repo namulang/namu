@@ -12,11 +12,11 @@ namespace wrd {
         virtual ~Stream();
 
         /// @return true means an error.
-        virtual wbool dump(const char* message);
+        virtual wbool dump(const wchar* message);
         wbool isNull() const;
         wbool isEnable() const;
         void setEnable(wbool isEnable);
-        virtual const char* getName() const = 0;
+        virtual const wchar* getName() const = 0;
         virtual wbool init();
         virtual wbool isInit() const;
         virtual wbool rel();
