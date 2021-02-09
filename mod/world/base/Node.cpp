@@ -14,13 +14,13 @@ namespace wrd
 	wbool THIS::isOccupy() const { return getClass().isOccupy(); }
 	Node& THIS::getNode(widx n) { return _getNodes()[n]; }
 	const Node& THIS::getNode(widx n) const { return getNodes()[n]; }
-	Node& THIS::getNode(const Str& name) { /*TODO: return _get(false, [&name](Node& e) { return e.getName() == name; });*/ return nulr<Node>(); }
+	Node& THIS::getNode(const Str& name) { /*TODO: return _get(false, [&name](Node& e) { return e.getName() == name; });*/ return nulOf<Node>(); }
 
 	const Node& THIS::getNode(const Str& name) const
 	{
 		/* TODO: WRD_UNCONST()
 		return unconst._get(true, [&name](Node& e) { return e.getName() == name; }); */
-		return nulr<Node>();
+		return nulOf<Node>();
 	}
 
 	Strong THIS::use(Msg& msg)
@@ -59,7 +59,7 @@ namespace wrd
 	Node& THIS::_get(wbool want_const, std::function<wbool(Node&)> tester)
 	{
 		/* TODO:
-		WRD_ARE_NULL(nulr<Node>(), msg, members)
+		WRD_ARE_NULL(nulOf<Node>(), msg, members)
 
 		Node* found = NULL;
 		if(_getNodes().each<T>([&found, want_const, tester](Node& e) {
@@ -71,10 +71,10 @@ namespace wrd
 			found = &e;
 			return wasgood; // means keep eaching.
 		}))
-			return wasdup.err(".....").returns(nulr<Node>());
+			return wasdup.err(".....").returns(nulOf<Node>());
 
 		return *found;
 		*/
-		return nulr<Node>();
+		return nulOf<Node>();
 	}
 }

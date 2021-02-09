@@ -104,7 +104,7 @@ namespace wrd {
 
         /// @param args nullable.
         virtual Ret<Ref> run(const Arr& args);
-        Ret<Ref> run() { return run(nulr<Arr>()); }
+        Ret<Ref> run() { return run(nulOf<Arr>()); }
 
         const Node& getOrigin() const;
 

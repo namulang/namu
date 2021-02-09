@@ -5,7 +5,7 @@
 namespace wrd {
     /// means null-reference.
     template <typename T>
-    T& nulr() {
+    T& nulOf() {
         T* ret = 0;
         return *ret;
     }

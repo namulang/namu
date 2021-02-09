@@ -37,7 +37,7 @@ namespace wrd {
 
 #define _PUT(exp) _TGet<TypeTrait<decltype(exp)>::Org>::set(exp)
 #define _GET(exp) _TGet<TypeTrait<decltype(exp)>::Org>::get()
-#define _NULR(exp) nulr<TypeTrait<decltype(exp)>::Org>()
+#define _NULR(exp) nulOf<TypeTrait<decltype(exp)>::Org>()
 
 #define WRD_GETS_1(e1) (nul(_PUT((e1))) ? _NULR((e1)) : (_GET((e1))))
 #define WRD_GETS_2(e1, e2) (nul(_PUT((e1))) ? _NULR((e1.e2)) : _PUT(_GET(e1).e2))

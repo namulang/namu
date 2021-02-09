@@ -11,7 +11,7 @@ namespace wrd {
 
     const Chunk& This::getChunk() const {
         if(!_pt)
-            return nulr<Chunk>();
+            return nulOf<Chunk>();
 
         return Instancer::get().getPool()[*_pt][*_pt];
     }

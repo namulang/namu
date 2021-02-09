@@ -16,12 +16,12 @@ namespace wrd {
 
     WatchCell& This::get(Id id) {
         WatchCell& got = get(id.s.tagN);
-        WRD_NUL(got, nulr<WatchCell>());
+        WRD_NUL(got, nulOf<WatchCell>());
 
         if(got.blk.getId().num != id.num) {
             WRD_W("can't return WatchCell.blk.getId(%d) != id.num(%d)",
                     got.blk.getId().num, id.num);
-            return nulr<WatchCell>();
+            return nulOf<WatchCell>();
         }
 
         return got;

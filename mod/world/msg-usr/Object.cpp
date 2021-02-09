@@ -6,10 +6,10 @@ namespace wrd
 #define THIS Object
 	WRD_CLASS_DEF(THIS)
 
-	Container& THIS::getShared() {	/* TODO: return */ return nulr<Container>(); }
-	const Container& THIS::getShared() const { /* TODO: */ return nulr<const Container>(); }
-	Container& THIS::getVars() {	/* TODO: return */ return nulr<Container>(); }
-	const Container& THIS::getVars() const { /* TODO: */ return nulr<const Container>(); }
+	Container& THIS::getShared() {	/* TODO: return */ return nulOf<Container>(); }
+	const Container& THIS::getShared() const { /* TODO: */ return nulOf<const Container>(); }
+	Container& THIS::getVars() {	/* TODO: return */ return nulOf<Container>(); }
+	const Container& THIS::getVars() const { /* TODO: */ return nulOf<const Container>(); }
 
 	Strong THIS::use(Msg& msg)
 	{
@@ -32,7 +32,7 @@ namespace wrd
 	const Origin& THIS::getOrigin() const
 	{
 		//	TODO:
-		return nulr<const Origin>();
+		return nulOf<const Origin>();
 	}
 
 	Res& THIS::_initNodes()

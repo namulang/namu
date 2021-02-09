@@ -3,7 +3,7 @@
 using namespace wrd;
 
 TEST(BuildFeature, dateGetter) {
-	BuildFeature::Date date;
+    BuildFeature::Date date;
     ASSERT_GT(date.getYear(), 0);
     ASSERT_GT(date.getMonth(), 0);
     ASSERT_GT(date.getDay(), 0);
