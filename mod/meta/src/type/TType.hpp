@@ -19,20 +19,20 @@ namespace wrd {
     public:
         TType();
 
-        wbool isTemplate() const;
-        wbool isAbstract() const;
-        const std::string& getName() const;
-        void* make() const;
-        wcnt getSize() const;
+        wbool isTemplate() const override;
+        wbool isAbstract() const override;
+        const std::string& getName() const override;
+        void* make() const override;
+        wcnt getSize() const override;
         //TODO: virtual wbool isImmutable() const;
-        const Type& getSuper() const;
-        const wbool& isInit() const;
+        const Type& getSuper() const override;
+        const wbool& isInit() const override;
         static const This& get();
 
     protected:
-        Types& _getSupers();
-        Types& _getSubs();
-        Type& _getStatic() const;
+        Types& _getSupers() override;
+        Types& _getSubs() override;
+        Type& _getStatic() const override;
 
     private:
         TType(wbool); // for skipping recursive static variable init.
