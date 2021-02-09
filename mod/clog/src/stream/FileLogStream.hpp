@@ -16,8 +16,8 @@ namespace wrd {
         wbool setPath(const std::string& new_path);
         const std::string& getPath() const;
         //  Stream:
-        virtual const char* getName() const;
-        virtual wbool dump(const char* message);
+        const char* getName() const override;
+        wbool dump(const char* message) override;
 
     private:
         std::ofstream _file;

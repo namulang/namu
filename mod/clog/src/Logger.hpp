@@ -23,17 +23,17 @@ namespace wrd {
         wbool pushStream(Stream* new_stream);
         static Logger& get();
         //  Stream:
-        const wchar* getName() const;
-        wbool dump(const wchar* message);
-        wbool isInit() const;
+        const wchar* getName() const override;
+        wbool dump(const wchar* message) override;
+        wbool isInit() const override;
 
     private:
         //  Logger:
         Logger();
         Logger(const Logger& rhs);
         //  Stream:
-        wbool init();
-        wbool rel();
+        wbool init() override;
+        wbool rel() override;
 
     private:
         std::vector<Stream*> _streams;
