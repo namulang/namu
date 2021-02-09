@@ -7,7 +7,7 @@ TEST(MacroTest, nul) {
     wint a = 5;
     wint* aPtr = &a;
     wint* aNul = WRD_NULL;
-    wint& refNul = nulr<wint>();
+    wint& refNul = nulOf<wint>();
     wint& refA = *aPtr;
 
     ASSERT_TRUE(nul(refNul));
@@ -24,7 +24,7 @@ TEST(MacroTest, WRD_GETtest) {
             return a;
         }
         A& getNul() {
-            return nulr<A>();
+            return nulOf<A>();
         }
         A a;
     } b;
@@ -33,7 +33,7 @@ TEST(MacroTest, WRD_GETtest) {
             return b;
         }
         B& getNul() {
-            return nulr<B>();
+            return nulOf<B>();
         }
         B b;
     } c;
@@ -42,7 +42,7 @@ TEST(MacroTest, WRD_GETtest) {
             return c;
         }
         C& getNul() {
-            return nulr<C>();
+            return nulOf<C>();
         }
         C c;
     } d;

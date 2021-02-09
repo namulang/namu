@@ -16,7 +16,7 @@ namespace wrd {
 
     Stream& This::getStream(widx n) {
         if(n < 0 || n >= getStreamCount())
-            return nulr<Stream>();
+            return nulOf<Stream>();
 
         return *_streams[n];
     }
@@ -32,7 +32,7 @@ namespace wrd {
             if(string(e->getName()) == message)
                 return *e;
 
-        return nulr<Stream>();
+        return nulOf<Stream>();
     }
 
     Stream& This::getStream(const wchar* message) {

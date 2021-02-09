@@ -29,10 +29,10 @@ namespace wrd {
         template <typename E>
         E& get() {
             T& got = _get();
-            WRD_NUL(got, nulr<E>())
+            WRD_NUL(got, nulOf<E>())
 
             if(!got.getType().isSub(TType<E>::get()))
-                return nulr<E>();
+                return nulOf<E>();
 
             return (E&) got;
         }

@@ -12,7 +12,7 @@ TEST(ChunkTest, MemoryHaverTest) {
     ASSERT_FALSE(chk[-1]);
     ASSERT_TRUE(chk.isFull());
     ASSERT_FALSE(chk.isCapable());
-    ASSERT_FALSE(chk.has(nulr<Instance>()));
+    ASSERT_FALSE(chk.has(nulOf<Instance>()));
 }
 
 TEST(ChunkTest, AllocatorTest) {

@@ -29,7 +29,7 @@
 #define _ARE_NULL(VALUE, RET)		WRD_IS_NULL(VALUE, RET)
 #define WRD_ARE_NULL(RET, ...)		NE_EACH_EXPAND(_ARE_NULL, RET, __VA_ARGS__)
 
-#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL_3(*this, wasnull, nulr<TYPE>())
+#define WRD_IS_THIS_1(TYPE)			WRD_IS_NULL_3(*this, wasnull, nulOf<TYPE>())
 #define WRD_IS_THIS_0()				WRD_IS_THIS_1(This)
 #define WRD_IS_THIS(...) 			WRD_OVERLOAD(WRD_IS_THIS, __VA_ARGS__)
 
@@ -181,7 +181,7 @@
 
 #define _PUT(exp) _TGet<TypeTrait<decltype(exp)>::Org>::set(exp)
 #define _GET(exp) _TGet<TypeTrait<decltype(exp)>::Org>::get()
-#define _NULR(exp) nulr<TypeTrait<decltype(exp)>::Org>()
+#define _NULR(exp) nulOf<TypeTrait<decltype(exp)>::Org>()
 #define WRD_GET_2(e1, e2) _PUT(e1).isNull() ? _NULR(e1.e2) : _PUT(e1.e2)
 #define WRD_GET_3(e1, e2, e3) _PUT(e1).isNull() ? _NULR(e1.e2.e3) : (_PUT(e1.e2).isNull() ? _NULR(e1.e2.e3) : _PUT(e1.e2.e3))
 #define WRD_GET_4(e1, e2, e3, e4) _PUT(e1).isNull() ? _NULR(e1.e2.e3.e4) : (_PUT(e1.e2).isNull() ? _NULR(e1.e2.e3.e4) : (_PUT(e1.e2.e3).isNull() ? _NULR(e1.e2.e3.e4) : _PUT(e1.e2.e3.e4)))

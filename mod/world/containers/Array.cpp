@@ -41,7 +41,7 @@ namespace wrd
 	Node& THIS::_get(widx n)
 	{
 		if(0 > n || n >= _arr.size())
-			return nulr<Node>();
+			return nulOf<Node>();
 		return _arr[n].get();
 	}
 }

@@ -87,7 +87,7 @@ namespace wrd
 		const Node& getNode(const Str& name) const;
 		virtual Strong use(Msg& msg);
 		virtual CStrong use(Msg& msg) const;
-		virtual WRD_LAZY_METHOD(Origin&, getOrigin, const, Origin&, nulr<Origin>());
+		virtual WRD_LAZY_METHOD(Origin&, getOrigin, const, Origin&, nulOf<Origin>());
 		virtual wbool canUse(const Msg& msg) const;
 		virtual wbool isStatic() const;
 		virtual wbool isConst() const;

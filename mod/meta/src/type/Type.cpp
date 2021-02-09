@@ -8,7 +8,7 @@ namespace wrd {
 
     const Types& This::getLeafs() const {
         //TODO: change to range based for loop.
-        return nulr<Types>();
+        return nulOf<Types>();
     }
 
     wbool This::init() {
