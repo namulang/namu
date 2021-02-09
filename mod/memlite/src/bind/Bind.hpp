@@ -64,18 +64,18 @@ namespace wrd {
         Id getItsId() const;
         wbool isConst() const;
         //  TBindable:
-        wbool isBind() const;
-        wbool unbind();
+        wbool isBind() const override;
+        wbool unbind() override;
         using TBindable::canBind;
-        wbool canBind(const Type& cls) const;
+        wbool canBind(const Type& cls) const override;
         //  Instance:
-        const Type& getType() const;
+        const Type& getType() const override;
 
     protected:
         wbool _assign(const Bind& rhs);
         //  TBindable:
         wbool _bind(const Instance& it) override;
-        Instance& _get();
+        Instance& _get() override;
 
     private:
         Id _itsId; // id for binded one
