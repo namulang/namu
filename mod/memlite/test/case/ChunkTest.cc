@@ -22,8 +22,6 @@ TEST(ChunkTest, AllocatorTest) {
     ASSERT_TRUE(chk.rel());
     ASSERT_EQ(chk.getLen(), 0);
     ASSERT_EQ(chk.getSize(), 0);
-    ASSERT_FALSE(chk.getEOB());
-    ASSERT_FALSE(chk.getHeap());
 }
 
 TEST(ChunkTest, ChunkListTest) {
@@ -55,8 +53,6 @@ TEST(ChunkTest, ChunkListTest) {
     ASSERT_TRUE(chk[0]);
     ASSERT_EQ(chk[0], heap.ptrs[0]);
     ASSERT_FALSE(chk[-1]);
-    ASSERT_TRUE(chk.getEOB());
-    ASSERT_TRUE(chk.getHeap());
 
     ASSERT_TRUE(heap.new1(chk, 1));
     ASSERT_EQ(chk.getLen(), 2);
@@ -69,12 +65,10 @@ TEST(ChunkTest, ChunkListTest) {
     ASSERT_EQ(chk.getLen(), 0);
     ASSERT_EQ(chk.getSize(), 0);
     ASSERT_FALSE(chk[0]);
-    ASSERT_FALSE(chk.getHeap());
     ASSERT_EQ(chk.getBlkSize(), 4);
 
     ASSERT_TRUE(chk.rel());
     ASSERT_EQ(chk.getSize(), 0);
-    ASSERT_FALSE(chk.getHeap());
     ASSERT_EQ(chk.getBlkSize(), 4);
     ASSERT_FALSE(chk.isFixed());
 
@@ -86,8 +80,6 @@ TEST(ChunkTest, ChunkListTest) {
     ASSERT_EQ(chk[4], chk[0]);
     ASSERT_EQ(chk[0], chk[-1]);
     ASSERT_TRUE(chk[-1] == WRD_NULL);
-    ASSERT_TRUE(chk.getHeap());
-    ASSERT_TRUE(chk.getEOB());
     ASSERT_FALSE(chk.isFull());
     ASSERT_TRUE(chk.isCapable());
 

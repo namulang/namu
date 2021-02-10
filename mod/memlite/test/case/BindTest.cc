@@ -5,14 +5,14 @@ using namespace wrd;
 struct A : public Instance {
     int age;
 
-    const Type& getType() const {
+    Type& getType() {
         return TType<A>::get();
     }
 };
 
 struct B : public Instance {
     B() { ++get(); }
-    B(const B&) { ++get(); }
+    B(B&) { ++get(); }
     ~B() { --get(); }
 
     float grade;
@@ -22,7 +22,7 @@ struct B : public Instance {
         return n;
     }
 
-    const Type& getType() const {
+    Type& getType() {
         return TType<B>::get();
     }
 };
@@ -32,7 +32,7 @@ TEST(BindTest, defaultBehaviorTest) {
     ASSERT_FALSE(nul(*b1));
     ASSERT_FALSE(nul(b1->getType()));
 
-    const BindTag& tag = b1->getBindTag();
+    BindTag& tag = b1->getBindTag();
     ASSERT_FALSE(nul(tag));
     ASSERT_TRUE(tag.isHeap());
 
@@ -83,12 +83,12 @@ TEST(BindTest, StrongAndWeakTest) {
     TStr<A> strA(new A());
     ASSERT_TRUE(strA.isBind());
 
-    const BindTag& tag = strA->getBindTag();
+    BindTag& tag = strA->getBindTag();
     ASSERT_FALSE(nul(tag));
     ASSERT_EQ(tag.getStrongCnt(), 1);
 
     TWeak<A> weakA(*strA);
-    const BindTag& tagWeak = weakA->getBindTag();
+    BindTag& tagWeak = weakA->getBindTag();
     ASSERT_FALSE(nul(tagWeak));
     ASSERT_EQ(&tagWeak, &tag);
     ASSERT_EQ(tagWeak.getStrongCnt(), 1);
@@ -96,7 +96,7 @@ TEST(BindTest, StrongAndWeakTest) {
 
 TEST(BindTest, BindByValueTest) {
     TStr<A> strA(new A());
-    const BindTag& tag = strA->getBindTag();
+    BindTag& tag = strA->getBindTag();
     ASSERT_FALSE(nul(tag));
     ASSERT_EQ(tag.getStrongCnt(), 1);
 
@@ -122,7 +122,7 @@ TEST(BindTest, WeakBindButInstanceGoneTest) {
     TStr<A> strA(new A());
     TWeak<A> weakA(*strA);
 
-    const BindTag& tag = weakA->getBindTag();
+    BindTag& tag = weakA->getBindTag();
     ASSERT_FALSE(nul(tag));
     ASSERT_EQ(tag.getStrongCnt(), 1);
 

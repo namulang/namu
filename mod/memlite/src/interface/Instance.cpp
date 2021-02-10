@@ -10,31 +10,31 @@ namespace wrd {
     This::Instance(Id id) : _id(id) {} // no binding required.
     This::~Instance() { _getMgr().unbind(*this); }
 
-    wbool This::operator==(const This& rhs) const { return _id.num == rhs._id.num; }
-    wbool This::operator!=(const This& rhs) const { return ! operator==(rhs); }
+    wbool This::operator==(This& rhs) { return _id.num == rhs._id.num; }
+    wbool This::operator!=(This& rhs) { return ! operator==(rhs); }
     void* This::operator new(size_t sz) { return _getMgr()._new1(sz); }
     void This::operator delete(void* pt, size_t sz) { _getMgr()._del(pt, sz); }
 
-    Id This::getId() const {
+    Id This::getId() {
         if(_id.s.tagN == WRD_INDEX_ERROR)
             _getMgr().bind((This&)*this);
         return _id;
     }
 
-    wbool This::isHeap() const {
-        const BindTag& blk = getBindTag();
+    wbool This::isHeap() {
+        BindTag& blk = getBindTag();
         WRD_NUL(blk, false)
 
         return blk.isHeap();
     }
 
-    const BindTag& This::getBindTag() const { return _getBindTag(getId()); }
+    BindTag& This::getBindTag() { return _getBindTag(getId()); }
 
     // rel() have not to reset Id. it's regarding to instance info.
     // as long as instance keep alive, that info need to be stuck to instance.
 
     BindTag& This::_getBindTag(Id id) {
-        return const_cast<BindTag&>(WRD_GETS(_getMgr().getWatcher()[id], blk));
+        return WRD_GETS(_getMgr().getWatcher()[id], blk);
     }
 
     wbool This::_setId(Id new1) {

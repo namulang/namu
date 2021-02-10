@@ -7,8 +7,8 @@ namespace wrd {
     This::Chunk(wcnt blksize, wbool is_fixed)
         : Super(blksize), _heap(0), _isFixed(is_fixed) { This::rel(); }
     This::~Chunk() { This::rel(); }
-    wcnt This::getLen() const { return _len; }
-    wcnt This::getSize() const { return _sz; }
+    wcnt This::getLen() { return _len; }
+    wcnt This::getSize() { return _sz; }
 
     void* This::new1() {
         if( _len >= _sz &&
@@ -60,18 +60,15 @@ namespace wrd {
         return _index(_len);
     }
 
-    wbool This::has(const Instance& it) const {
+    wbool This::has(Instance& it) {
         void* pt = (void*) &it;
-        return _heap && _heap <= pt && pt <= getEOB();
+        return _heap && _heap <= pt && pt <= _getEOB();
     }
 
-    const wuchar* This::getEOB() const WRD_UNCONST_FUNC(_getEOB())
-    const wuchar* This::getHeap() const { return _heap; }
-    wbool This::isFixed() const { return _isFixed; }
+    wuchar* This::_getHeap() { return _heap; }
+    wbool This::isFixed() { return _isFixed; }
 
-    void* This::_get(widx n) {
-        if(n < 0 || n >= _sz) return WRD_NULL;
-
+    void* This::_onGet(widx n) {
         return _heap + n*_getRealBlkSize();
     }
 
@@ -90,7 +87,7 @@ namespace wrd {
         return true;
     }
 
-    wcnt This::_getRealBlkSize() const {
+    wcnt This::_getRealBlkSize() {
         wcnt sz = getBlkSize();
         return sz < 4 ? 4 : sz;
     }

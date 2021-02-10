@@ -33,14 +33,14 @@ namespace wrd {
         Instance(Id id);
         virtual ~Instance();
 
-        wbool operator==(const This& rhs) const;
-        wbool operator!=(const This& rhs) const;
+        wbool operator==(This& rhs);
+        wbool operator!=(This& rhs);
         void* operator new(size_t sz);
         void operator delete(void* pt, size_t sz);
 
-        virtual Id getId() const;
-        virtual wbool isHeap() const;
-        const BindTag& getBindTag() const;
+        virtual Id getId();
+        virtual wbool isHeap();
+        BindTag& getBindTag();
 
     protected:
         //  Instance:

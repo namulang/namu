@@ -19,27 +19,27 @@ namespace wrd {
         BindTag();
         BindTag(Id id);
 
-        const Chunk& getChunk() const;
-        wcnt getStrongCnt() const;
+        Chunk& getChunk();
+        wcnt getStrongCnt();
         wbool rel();
         //  TBindable:
         wbool unbind();
-        wbool isBind() const;
-        const Type& getBindable() const;
+        wbool isBind();
+        Type& getBindable();
         using TBindable::canBind;
-        wbool canBind(const Type& cls) const;
+        wbool canBind(Type& cls);
         //  Instance:
-        Id getId() const;
-        wbool isHeap() const;
+        Id getId();
+        wbool isHeap();
         //  TypeProvidable:
-        const Type& getType() const {
+        Type& getType() {
             return TType<BindTag>::get();
         }
 
     protected:
         //  TBindable:
         Instance& _get();
-        wbool _bind(const Instance& new1);
+        wbool _bind(Instance& new1);
 
     private:
         //  BindTag:

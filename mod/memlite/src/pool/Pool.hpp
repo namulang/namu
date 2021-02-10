@@ -14,23 +14,19 @@ namespace wrd {
         virtual ~Pool();
 
         Chunks& operator[](widx n);
-        Chunks& operator[](const Instance& inst);
-        const Chunks& operator[](widx n) const;
-        const Chunks& operator[](const Instance& inst) const;
+        Chunks& operator[](Instance& inst);
 
-        Chunks& get(const Instance& inst);
-        const Chunks& get(const Instance& inst) const;
-        const Chunks& get(widx n) const;
+        Chunks& get(Instance& inst);
         Chunks& get(widx n);
         //  MemoryHaver:
-        wbool has(const Instance& it) const;
-        wcnt getSize() const;
-        wcnt getLen() const;
+        wbool has(Instance& it);
+        wcnt getSize();
+        wcnt getLen();
         wbool rel();
 
     protected:
         //  MemoryHaver:
-        void* _get(widx n);
+        void* _onGet(widx n);
 
     private:
         std::vector<Chunks*> _chunks;

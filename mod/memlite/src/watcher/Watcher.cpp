@@ -8,11 +8,8 @@ namespace wrd {
 
     WatchCell& This::operator[](widx n) { return get(n); }
     WatchCell& This::operator[](Id id) { return get(id); }
-    const WatchCell& This::operator[](widx n) const { return get(n); }
-    const WatchCell& This::operator[](Id id) const { return get(id); }
 
     WatchCell& This::get(widx n) { return *(WatchCell*)_get(n); }
-    const WatchCell& This::get(widx n) const { return ((Watcher*)this)->get(n); }
 
     WatchCell& This::get(Id id) {
         WatchCell& got = get(id.s.tagN);
@@ -27,8 +24,6 @@ namespace wrd {
         return got;
     }
 
-    const WatchCell& This::get(Id id) const WRD_UNCONST_FUNC(get(id))
-
     void* This::new1() {
         WatchCell* res = (WatchCell*)Super::new1();
         if(!res)
@@ -38,7 +33,7 @@ namespace wrd {
         return res;
     }
 
-    Id This::_genId(void* pt) const {
+    Id This::_genId(void* pt) {
         static wcnt serial = 0;
         // Watcher concern about bkl_n at Id. on the other hand, Chunk is chkN.
         // eventually, if Instance was born from heap, first it take chkN from chunk when it borns.
@@ -46,11 +41,11 @@ namespace wrd {
         return Id(_getIdx(pt), WRD_INDEX_ERROR, ++serial);
     }
 
-    widx This::_getIdx(void* it) const {
+    widx This::_getIdx(void* it) {
         if(!has(*(Instance*)it)) // "has" func will treat it as void*, too.
             return -1;
 
-        widx ret = ((wuchar*)it - getHeap()) / getBlkSize();
+        widx ret = ((wuchar*)it - _getHeap()) / getBlkSize();
         return ret;
     }
 }

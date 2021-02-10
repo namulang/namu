@@ -4,13 +4,13 @@
 using namespace wrd;
 
 struct A : public Instance {
-    WRD_SINGLETON_GETTER(const Type& getType() const, TType<A>)
+    WRD_SINGLETON_GETTER(Type& getType(), TType<A>)
 
     int age;
 };
 
 struct B : public A {
-    WRD_SINGLETON_GETTER(const Type& getType() const, TType<B>)
+    WRD_SINGLETON_GETTER(Type& getType(), TType<B>)
 
     float grade;
 };
@@ -20,13 +20,13 @@ struct PNode : public PInstance {};
 struct PObject : public PNode {};
 
 struct PA : public PObject {
-    WRD_SINGLETON_GETTER(const Type& getType() const, TType<PA>)
+    WRD_SINGLETON_GETTER(Type& getType(), TType<PA>)
 
     int age;
 };
 
 struct PB : public PA {
-    WRD_SINGLETON_GETTER(const Type& getType() const, TType<PB>)
+    WRD_SINGLETON_GETTER(Type& getType(), TType<PB>)
 
     float grade;
 };

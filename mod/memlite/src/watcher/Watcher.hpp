@@ -17,19 +17,15 @@ namespace wrd {
 
         WatchCell& operator[](widx n);
         WatchCell& operator[](Id id);
-        const WatchCell& operator[](widx n) const;
-        const WatchCell& operator[](Id id) const;
 
         WatchCell& get(widx n);
         WatchCell& get(Id id);
-        const WatchCell& get(widx n) const;
-        const WatchCell& get(Id id) const;
         //  Allocator:
         void* new1();
 
     protected:
         //  Watcher:
-        Id _genId(void* pt) const;
-        widx _getIdx(void* it) const;
+        Id _genId(void* pt);
+        widx _getIdx(void* it);
     };
 }
