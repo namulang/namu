@@ -7,14 +7,6 @@ namespace wrd {
     template <typename T>
     class TBindTactic : public BindTacticable {
     public:
-        virtual const Type& getType() const;
-        virtual wbool isConst() const;
-    };
-
-    template <typename T>
-    class TBindTactic<const T> : public BindTacticable {
-    public:
-        virtual const Type& getType() const;
-        virtual wbool isConst() const;
+        virtual Type& getType();
     };
 }

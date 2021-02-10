@@ -9,14 +9,14 @@ namespace wrd {
     This::BindTag() : Super(), _pt(NULL), _strong(0) {}
     This::BindTag(Id id) : Super(id), _pt(NULL), _strong(0) {}
 
-    const Chunk& This::getChunk() const {
+    Chunk& This::getChunk() {
         if(!_pt)
             return nulOf<Chunk>();
 
         return Instancer::get().getPool()[*_pt][*_pt];
     }
 
-    wcnt This::getStrongCnt() const { return _strong; }
+    wcnt This::getStrongCnt() { return _strong; }
 
     wbool This::unbind() {
         if(_pt && isHeap())
@@ -26,11 +26,11 @@ namespace wrd {
         return true;
     }
 
-    wbool This::isBind() const { return _pt; }
-    const Type& This::getBindable() const { return TType<Instance>::get(); }
-    wbool This::canBind(const Type& type) const { return type.isSub(getBindable()); }
-    Id This::getId() const { return _id; }
-    wbool This::isHeap() const { return _id.s.chkN != WRD_INDEX_ERROR; }
+    wbool This::isBind() { return _pt; }
+    Type& This::getBindable() { return TType<Instance>::get(); }
+    wbool This::canBind(Type& type) { return type.isSub(getBindable()); }
+    Id This::getId() { return _id; }
+    wbool This::isHeap() { return _id.s.chkN != WRD_INDEX_ERROR; }
     wbool This::rel() { return unbind(); }
 
     wbool This::_onStrong(wcnt vote) {
@@ -48,7 +48,7 @@ namespace wrd {
 
     Instance& This::_get() { return *_pt; }
 
-    wbool This::_bind(const Instance& it) {
+    wbool This::_bind(Instance& it) {
         unbind();
 
         _pt = (Instance*) &it;

@@ -14,23 +14,19 @@ namespace wrd {
         virtual ~Chunks();
 
         Chunk& operator[](widx n);
-        Chunk& operator[](const Instance& inst);
-        const Chunk& operator[](widx n) const;
-        const Chunk& operator[](const Instance& inst) const;
+        Chunk& operator[](Instance& inst);
 
         //  Chunks:
         Chunk& get(widx n);
-        Chunk& get(const Instance& it);
-        const Chunk& get(const Instance& it) const;
-        const Chunk& get(widx n) const;
+        Chunk& get(Instance& it);
         //  Allocator:
         void* new1();
         wbool del(void* pt, wcnt sz);
         wbool resize(wcnt new1);
         //  MemoryHaver:
-        wbool has(const Instance& it) const;
-        wcnt getLen() const;
-        wcnt getSize() const;
+        wbool has(Instance& it);
+        wcnt getLen();
+        wcnt getSize();
         wbool rel();
 
     private:
@@ -38,7 +34,7 @@ namespace wrd {
         widx _findCapable();
         wbool _rel();
         //  MemoryHaver:
-        void* _get(widx n);
+        void* _onGet(widx n) override;
 
         std::vector<Chunk*> _chunks;
         int _s;

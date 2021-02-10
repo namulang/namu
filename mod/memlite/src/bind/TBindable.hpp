@@ -11,20 +11,18 @@ namespace wrd {
 
     public:
         //  TBindable:
-        const T* operator->() const;
         T* operator->();
-        const T& operator*() const;
         T& operator*();
-        operator wbool() const;
+        operator wbool();
 
         wbool bind(T& it) { return _bind(it); }
-        wbool bind(const T& it) { return _bind(it); }
         virtual wbool unbind() = 0;
-        wbool canBind(const T& it);
-        virtual wbool canBind(const Type& it) const = 0;
-        virtual wbool isBind() const = 0;
+        wbool canBind(T& it);
+        wbool canBind(T&& it) { return canBind(it); }
+        virtual wbool canBind(Type& it) = 0;
+        wbool canBind(Type&& it) { return canBind(it); }
+        virtual wbool isBind() = 0;
         T& get();
-        const T& get() const;
 
         template <typename E>
         E& get() {
@@ -37,12 +35,10 @@ namespace wrd {
             return (E&) got;
         }
 
-        template <typename E> const E& get() const WRD_UNCONST_FUNC(get<E>())
-
     protected:
         //  TBindable:
         virtual T& _get() = 0;
-        virtual wbool _bind(const T& it) {
+        virtual wbool _bind(T& it) {
             // type checking before binding only is required to Bind class.
             // Derived classes from this doesn't need it. because its type is specified.
             // prevent wrong type providing by compiler.

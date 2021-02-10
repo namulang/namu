@@ -53,28 +53,27 @@ namespace wrd {
     public:
         Bind() {} // TODO: remove this line
         Bind(BindTacticable* tactic);
-        Bind(const This& rhs);
+        Bind(This& rhs);
         ~Bind();
 
-        wbool operator==(const This& rhs) const;
-        wbool operator!=(const This& rhs) const;
-        This& operator=(const This& rhs);
+        wbool operator==(This& rhs);
+        wbool operator!=(This& rhs);
+        This& operator=(This& rhs);
 
         //  Bind:
-        Id getItsId() const;
-        wbool isConst() const;
+        Id getItsId();
         //  TBindable:
-        wbool isBind() const override;
+        wbool isBind() override;
         wbool unbind() override;
         using TBindable::canBind;
-        wbool canBind(const Type& cls) const override;
+        wbool canBind(Type& cls) override;
         //  Instance:
-        const Type& getType() const override;
+        Type& getType() override;
 
     protected:
-        wbool _assign(const Bind& rhs);
+        wbool _assign(Bind& rhs);
         //  TBindable:
-        wbool _bind(const Instance& it) override;
+        wbool _bind(Instance& it) override;
         Instance& _get() override;
 
     private:

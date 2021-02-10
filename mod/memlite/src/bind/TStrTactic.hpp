@@ -19,7 +19,7 @@ namespace wrd {
             return Super::unbind(me);
         }
 
-        wbool bind(Bind& me, const Instance& it) {
+        wbool bind(Bind& me, Instance& it) {
             wbool res = Super::bind(me, it);
             if(!res) {
                 WRD_E("super::_bind() was failed.");

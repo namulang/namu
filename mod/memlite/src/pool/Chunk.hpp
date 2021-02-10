@@ -7,6 +7,7 @@ namespace wrd {
     class Chunk : public Allocator {
         WRD_DECL_THIS(Chunk, Allocator)
         WRD_INIT_META(This)
+        friend class Watcher;
 
     public:
         //  Chunk:
@@ -15,33 +16,35 @@ namespace wrd {
         Chunk(wcnt blksize = 1, wbool is_fixed = true);
         virtual ~Chunk();
 
-        const wuchar* getEOB() const;
-        const wuchar* getHeap() const;
-        wbool isFixed() const;
+        void* operator[](widx n) { return get(n); }
+
+        void* get(widx n) { return _get(n); }
+        wbool isFixed();
         //  Allocator:
-        void* new1();
+        void* new1() override;
         wbool del(void* used, wcnt);
         /// @remark @ref Chunk can resize its data. but can't persist whole memory allocated before,
         ///         it's a kind of memory flashing and can't give a way for accessing it.
         ///         at outside, ptr for them should be daggled.
         wbool resize(wcnt new_sz);
         //  MemoryHaver:
-        wcnt getLen() const;
-        wcnt getSize() const;
+        wcnt getLen();
+        wcnt getSize();
         wbool rel();
-        wbool has(const Instance& it) const;
+        wbool has(Instance& it);
 
     protected:
         //  MemoryHaver:
         /// @return returns regarding current size, not length.
         ///         can return garbage if size is bigger than n.
-        void* _get(widx n);
+        void* _onGet(widx n);
 
     private:
         //  Chunk:
         wuchar* _getEOB();
+        wuchar* _getHeap();
         wbool _index(widx start);
-        wcnt _getRealBlkSize() const;
+        wcnt _getRealBlkSize();
         void* _allocHeap(wcnt new_sz);
         wbool _freeHeap(wuchar** heap);
 

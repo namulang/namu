@@ -15,20 +15,14 @@ namespace wrd {
         TWeak();
         TWeak(T& it);
         TWeak(T* it);
-        TWeak(const T& it);
-        TWeak(const T* it);
-        TWeak(const Bind& rhs);
+        TWeak(Bind& rhs);
 
-        const T* operator->() const;
-        const T& operator*() const;
         T* operator->();
         T& operator*();
-        This& operator=(const Bind& rhs);
+        This& operator=(Bind& rhs);
         T& get();
-        const T& get() const;
 
         wbool bind(T& new1);
-        wbool bind(const T& new1);
         //  TBindable:
         using TBindable::get;
         using TBindable::bind;
