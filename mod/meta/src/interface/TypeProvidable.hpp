@@ -2,6 +2,6 @@
 
 namespace wrd {
     struct TypeProvidable {
-        virtual const Type& getType() const = 0;
+        virtual Type& getType() = 0;
     };
 }
