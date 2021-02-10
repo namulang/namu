@@ -7,11 +7,8 @@ namespace wrd {
 
     WRD_DEF_THIS(Bind)
 
-    Bind::Bind(BindTacticable* tactic): _tactic(tactic) {
-        if(!tactic) WRD_W("tactic == null");
-    }
-
-    Bind::Bind(This& rhs): _tactic(rhs._tactic) { _assign(rhs); }
+    Bind::Bind(Type& type, BindTacticable* tactic): _type(type), _tactic(tactic) {}
+    Bind::Bind(This& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
     Bind::~Bind() { This::unbind(); }
     wbool This::operator==(This& rhs) { return &get() == &rhs.get(); }
     wbool This::operator!=(This& rhs) { return ! operator==(rhs); }
@@ -36,7 +33,7 @@ namespace wrd {
 
     Id This::getItsId() { return _itsId; }
     wbool This::canBind(Type& type) { return getType().isSuper(type); }
-    Type& This::getType() { return _tactic->getType(); }
+    Type& This::getType() { return _type; }
 
     wbool This::_bind(Instance& it) {
         if(!TBindable<Instance>::_bind(it)) return false;

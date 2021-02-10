@@ -46,13 +46,12 @@ namespace wrd {
     class Bind : public Instance, public TBindable<Instance> {
         WRD_DECL_THIS(Bind, Instance)
         WRD_INIT_META(This)
-        template <typename T> friend class TWeakTactic;
-        template <typename T> friend class TStrTactic;
+        friend class WeakTactic;
+        friend class StrTactic;
         friend class BindTag; // for _get()
 
     public:
-        Bind() {} // TODO: remove this line
-        Bind(BindTacticable* tactic);
+        Bind(Type& type, BindTacticable* tactic);
         Bind(This& rhs);
         ~Bind();
 
@@ -79,5 +78,6 @@ namespace wrd {
     private:
         Id _itsId; // id for binded one
         BindTacticable* _tactic;
+        Type& _type;
     };
 }

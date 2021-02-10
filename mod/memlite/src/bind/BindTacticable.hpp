@@ -6,7 +6,7 @@ namespace wrd {
 
     class Bind;
     class Instance;
-    class BindTacticable : public TypeProvidable {
+    class BindTacticable {
     public:
         virtual wbool assign(Bind& me, Bind& rhs) = 0;
         virtual wbool unbind(Bind& me) = 0;

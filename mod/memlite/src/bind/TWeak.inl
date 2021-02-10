@@ -1,5 +1,5 @@
 #include "TWeak.hpp"
-#include "TWeakTactic.hpp"
+#include "WeakTactic.hpp"
 #include "TBindable.inl"
 
 namespace wrd {
@@ -8,11 +8,11 @@ namespace wrd {
 #define THIS TWeak<T>
 #define SUPER Bind
 
-    TEMPL THIS::TWeak() : SUPER(&TWeakTactic<T>::singletone) {}
-    TEMPL THIS::TWeak(T& it) : SUPER(&TWeakTactic<T>::singletone) { this->bind(it); }
-    TEMPL THIS::TWeak(T* it) : SUPER(&TWeakTactic<T>::singletone) { this->bind(*it); }
+    TEMPL THIS::TWeak() : SUPER(TType<T>::get(), &WeakTactic::singletone) {}
+    TEMPL THIS::TWeak(T& it) : SUPER(TType<T>::get(), &WeakTactic::singletone) { this->bind(it); }
+    TEMPL THIS::TWeak(T* it) : SUPER(TType<T>::get(), &WeakTactic::singletone) { this->bind(*it); }
     TEMPL THIS::TWeak(Bind& rhs) { this->_assign(rhs); }
-    TEMPL THIS::TWeak(BindTacticable* tactic): SUPER(tactic) {}
+    TEMPL THIS::TWeak(BindTacticable* tactic): SUPER(TType<T>::get(), tactic) {}
 
 	TEMPL T* THIS::operator->() { return &this->get(); }
 	TEMPL T& THIS::operator*() { return this->get(); }
