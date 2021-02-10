@@ -11,8 +11,8 @@ namespace wrd {
         WRD_INIT_META(This)
         template <typename T> friend class TWeak;
         template <typename T> friend class TStr;
-        template <typename T> friend class TWeakTactic;
-        template <typename T> friend class TStrTactic;
+        friend class WeakTactic;
+        friend class StrTactic;
 
     public:
         //  BindTag:

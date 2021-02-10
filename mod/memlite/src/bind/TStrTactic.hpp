@@ -1,12 +1,11 @@
 #pragma once
 
-#include "TWeakTactic.hpp"
+#include "WeakTactic.hpp"
 
 namespace wrd {
 
-    template <typename T>
-    class TStrTactic : public TWeakTactic<T> {
-        WRD_DECL_THIS(TStrTactic, TWeakTactic<T>);
+    class StrTactic : public WeakTactic {
+        WRD_DECL_THIS(StrTactic, WeakTactic);
 
     public:
         wbool unbind(Bind& me) {
