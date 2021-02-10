@@ -28,6 +28,6 @@ namespace wrd {
         using TBindable::bind;
 
     protected:
-        TWeak(BindTacticable* tactic);
+        TWeak(BindTacticable& tactic);
     };
 }
