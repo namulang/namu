@@ -51,7 +51,7 @@ namespace wrd {
         friend class BindTag; // for _get()
 
     public:
-        Bind(Type& type, BindTacticable* tactic);
+        Bind(Type& type, BindTacticable& tactic);
         Bind(This& rhs);
         ~Bind();
 
@@ -77,7 +77,7 @@ namespace wrd {
 
     private:
         Id _itsId; // id for binded one
-        BindTacticable* _tactic;
+        BindTacticable& _tactic;
         Type& _type;
     };
 }
