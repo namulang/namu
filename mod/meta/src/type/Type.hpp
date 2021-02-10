@@ -20,46 +20,42 @@ namespace wrd {
         WRD_DECL_THIS(Type)
 
     public:
-        virtual wbool operator==(const This& rhs) const;
-        wbool operator!=(const This& rhs) const;
+        virtual wbool operator==(This& rhs);
+        wbool operator==(This&& rhs) { return operator==(rhs); }
+        wbool operator!=(This& rhs);
+        wbool operator!=(This&& rhs) { return operator!=(rhs); }
 
-        virtual wbool isTemplate() const = 0;
-        virtual wbool isAbstract() const = 0;
-        virtual const std::string& getName() const = 0;
+        virtual wbool isTemplate() = 0;
+        virtual wbool isAbstract() = 0;
+        virtual const std::string& getName() = 0;
 
         /// @brief  create an instance to be refered this type.
         /// @remark available when the type defines a ctor without any params.
         /// @return return an address of new instance, however, if ctor without any params
         ///         isn't defined, then returns null.
-        virtual void* make() const = 0;
+        virtual void* make() = 0;
         template <typename T>
-        T* makeAs() const {
+        T* makeAs() {
             return (T*) make();
         }
 
-        virtual wcnt getSize() const = 0;
+        virtual wcnt getSize() = 0;
         virtual wbool init();
         virtual wbool rel();
-        virtual const Type& getSuper() const = 0;
-        virtual const wbool& isInit() const = 0;
-        const Types& getLeafs() const;
-        const Types& getSubs() const {
-            return (const_cast<This*>(this))->_getSubs();
-        }
-        const Types& getSupers() const {
-            return (const_cast<This*>(this))->_getSupers();
-        }
+        virtual Type& getSuper() = 0;
+        virtual const wbool& isInit() = 0;
+        Types& getLeafs();
+        virtual Types& getSubs() = 0;
+        virtual Types& getSupers() = 0;
 
-        wbool isSuper(const Type& it) const;
-        template <typename T> wbool isSuper() const { return isSuper(T::get()); }
-        wbool isSub(const Type& it) const { return it.isSuper(*this); }
-        template <typename T> wbool isSub() const { return T::get().isSuper(*this); }
+        wbool isSuper(Type& it);
+        template <typename T> wbool isSuper() { return isSuper(T::get()); }
+        wbool isSub(Type& it) { return it.isSuper(*this); }
+        template <typename T> wbool isSub() { return T::get().isSuper(*this); }
 
     protected:
         //  Type:
-        virtual Types& _getSupers() = 0;
-        virtual Types& _getSubs() = 0;
-        virtual Type& _getStatic() const = 0;
+        virtual Type& _getStatic() = 0;
         void _setInit(wbool newState) {
             const wbool& res = isInit();
             wbool& isInit = const_cast<wbool&>(res);
