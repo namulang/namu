@@ -20,14 +20,14 @@ namespace wrd {
         Chunk& get(widx n);
         Chunk& get(Instance& it);
         //  Allocator:
-        void* new1();
-        wbool del(void* pt, wcnt sz);
-        wbool resize(wcnt new1);
+        void* new1() override;
+        wbool del(void* pt, wcnt sz) override;
+        wbool resize(wcnt new1) override;
         //  MemoryHaver:
-        wbool has(Instance& it);
-        wcnt getLen();
-        wcnt getSize();
-        wbool rel();
+        wbool has(Instance& it) override;
+        wcnt getLen() override;
+        wcnt getSize() override;
+        wbool rel() override;
 
     private:
         //  Chunks:
