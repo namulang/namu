@@ -22,22 +22,22 @@ namespace wrd {
         wbool isFixed();
         //  Allocator:
         void* new1() override;
-        wbool del(void* used, wcnt);
+        wbool del(void* used, wcnt) override;
         /// @remark @ref Chunk can resize its data. but can't persist whole memory allocated before,
         ///         it's a kind of memory flashing and can't give a way for accessing it.
         ///         at outside, ptr for them should be daggled.
-        wbool resize(wcnt new_sz);
+        wbool resize(wcnt new_sz) override;
         //  MemoryHaver:
-        wcnt getLen();
-        wcnt getSize();
-        wbool rel();
-        wbool has(Instance& it);
+        wcnt getLen() override;
+        wcnt getSize() override;
+        wbool rel() override;
+        wbool has(Instance& it) override;
 
     protected:
         //  MemoryHaver:
         /// @return returns regarding current size, not length.
         ///         can return garbage if size is bigger than n.
-        void* _onGet(widx n);
+        void* _onGet(widx n) override;
 
     private:
         //  Chunk:
