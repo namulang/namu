@@ -17,12 +17,12 @@ TEST(TTypeTest, basicBehavior) {
     ASSERT_FALSE(TType<MyClass>().isTemplate());
     ASSERT_FALSE(TType<MyClass>().isAbstract());
 
-    const Type& type = TType<MyClass>();
+    Type&& type = TType<MyClass>();
     EXPECT_STREQ(type.getName().c_str(), "MyClass");
 
-    const Types& subs = type.getSubs();
+    Types& subs = type.getSubs();
     ASSERT_EQ(subs.size(), 1);
-    ASSERT_EQ(*subs[0], TType<MyDerivedClass>::get());
+    ASSERT_TRUE(*subs[0] == TType<MyDerivedClass>::get());
 
     ASSERT_STREQ(type.getSuper().getName().c_str(), "wrd::Adam");
 }
@@ -37,7 +37,7 @@ TEST(TTypeTest, CustomTypeInheritTest) {
             int foo() const {
                 return fooRet;
             }
-            const std::string& getName() const {
+            const std::string& getName() {
                 return trg;
             }
         } SuperType;
