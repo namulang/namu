@@ -20,6 +20,7 @@ namespace wrd {
         WRD_DECL_THIS(Type)
 
     public:
+        virtual ~Type() {}
         virtual wbool operator==(This& rhs);
         wbool operator==(This&& rhs) { return operator==(rhs); }
         wbool operator!=(This& rhs);

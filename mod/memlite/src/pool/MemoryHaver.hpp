@@ -10,6 +10,7 @@ namespace wrd {
         WRD_INIT_META(This)
 
     public:
+        virtual ~MemoryHaver() {}
         virtual wbool has(Instance& it) = 0;
         virtual wcnt getLen() = 0;
         virtual wcnt getSize() = 0;
