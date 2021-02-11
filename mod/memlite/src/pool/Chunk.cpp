@@ -68,7 +68,9 @@ namespace wrd {
     wuchar* This::_getHeap() { return _heap; }
     wbool This::isFixed() { return _isFixed; }
 
-    void* This::_onGet(widx n) {
+    void* This::_get(widx n) {
+        if(n < 0 | n >= getSize()) return WRD_NULL;
+
         return _heap + n*_getRealBlkSize();
     }
 

@@ -26,7 +26,7 @@ namespace wrd {
 
     protected:
         //  MemoryHaver:
-        void* _onGet(widx n);
+        void* _get(widx n) override;
 
     private:
         std::vector<Chunks*> _chunks;

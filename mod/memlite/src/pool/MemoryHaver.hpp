@@ -18,7 +18,6 @@ namespace wrd {
         wbool isCapable();
 
     protected:
-        void* _get(widx n);
-        virtual void* _onGet(widx n) = 0;
+        virtual void* _get(widx n) = 0;
     };
 }

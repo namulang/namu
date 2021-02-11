@@ -34,7 +34,7 @@ namespace wrd {
         widx _findCapable();
         wbool _rel();
         //  MemoryHaver:
-        void* _onGet(widx n) override;
+        void* _get(widx n) override;
 
         std::vector<Chunk*> _chunks;
         int _s;
