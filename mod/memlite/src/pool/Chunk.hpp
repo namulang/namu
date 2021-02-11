@@ -14,7 +14,7 @@ namespace wrd {
         static constexpr wcnt INIT_SZ = 20;
 
         Chunk(wcnt blksize = 1, wbool is_fixed = true);
-        virtual ~Chunk();
+        ~Chunk();
 
         void* operator[](widx n) { return get(n); }
 
