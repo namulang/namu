@@ -37,7 +37,7 @@ namespace wrd {
         //  MemoryHaver:
         /// @return returns regarding current size, not length.
         ///         can return garbage if size is bigger than n.
-        void* _onGet(widx n) override;
+        void* _get(widx n) override;
 
     private:
         //  Chunk:

@@ -77,7 +77,7 @@ namespace wrd {
 
     private:
         Id _itsId; // id for binded one
-        BindTacticable& _tactic;
         Type& _type;
+        BindTacticable& _tactic;
     };
 }

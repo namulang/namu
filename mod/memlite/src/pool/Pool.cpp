@@ -34,7 +34,7 @@ namespace wrd {
         return true;
     }
 
-    void* This::_onGet(widx n) {
+    void* This::_get(widx n) {
         while((int)_chunks.size() - 1 < n)
             _chunks.push_back(NULL);
 

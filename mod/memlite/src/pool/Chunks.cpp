@@ -69,7 +69,9 @@ namespace wrd {
         return true;
     }
 
-    void* This::_onGet(widx n) {
+    void* This::_get(widx n) {
+        if(n < 0 || n >= getLen()) return WRD_NULL;
+
         return _chunks[n];
     }
 }

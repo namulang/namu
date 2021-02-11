@@ -77,8 +77,11 @@ TEST(ChunkTest, ChunkListTest) {
     ASSERT_TRUE(chk.resize(Chunk::INIT_SZ + 5));
     ASSERT_EQ(chk.getSize(), Chunk::INIT_SZ + 5);
     ASSERT_EQ(chk.getLen(), 0);
-    ASSERT_EQ(chk[4], chk[0]);
-    ASSERT_EQ(chk[0], chk[-1]);
+    ASSERT_TRUE(chk[4]);
+    ASSERT_TRUE(chk[0]);
+    ASSERT_NE(chk[4], chk[0]);
+    ASSERT_FALSE(chk[-1]);
+    ASSERT_NE(chk[0], chk[-1]);
     ASSERT_TRUE(chk[-1] == WRD_NULL);
     ASSERT_FALSE(chk.isFull());
     ASSERT_TRUE(chk.isCapable());
@@ -92,7 +95,7 @@ TEST(ChunkTest, ChunkListTest) {
     ASSERT_EQ(chk.getLen(), 100);
     ASSERT_GT(chk.getSize(), 100);
     ASSERT_TRUE(chk[0]);
-    ASSERT_TRUE(chk[100] == WRD_NULL);
+    ASSERT_TRUE(chk[100]);
     ASSERT_TRUE(heap.rel(chk));
     ASSERT_FALSE(chk.getLen());
 
