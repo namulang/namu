@@ -9,6 +9,14 @@ public: \
     virtual Type& getType() const { \
         return TType<This>::get(); \
     } \
+    WRD_CLONE(THIS) \
+private:
+
+#define WRD_CLONE(THIS) \
+public: \
+    TStr<THIS> clone() { \
+        return new THIS(*this); \
+    } \
 private:
 
 #define WRD_CLASS_1(THIS) \

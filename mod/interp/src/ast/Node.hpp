@@ -24,56 +24,151 @@ namespace wrd {
         TStr<Err> e;
     };
 
+    class Iter : public Iteration {
+        WRD_CLASS(Iter)
+
+    public:
+        Iter(Iteration& newStep): _step(newStep) {}
+
+        /// @return true if there are more data to proceed
+        wbool operator==(This& rhs) { return isSame(rhs._step); }
+        wbool operator==(This&& rhs) { return operator==(rhs); }
+        wbool operator++() { return next(); }
+        wbool operator--() { return prev(); }
+
+        Node& operator*() { return _get(); }
+        Node* operator->() { return &_get(); }
+
+        operator wbool() { return !isEnd(); }
+
+        wbool isSame(Iteration& rhs) override { return _step->isSame(rhs); }
+        wbool isEnd() override { return _step->isEnd(rhs); }
+        wbool next() override { return _step->next(rhs); }
+        wbool prev() override { return _step->prev(rhs); }
+
+        Node& get() { return _get(); }
+
+    protected:
+        virtual Node& _get() { return _step->_get(); }
+
+    private:
+        This& _assign(This& rhs) {
+            _step.bind(_step->clone());
+            return *this;
+        }
+
+    protected:
+        TStr<Iteration> _step;
+    };
+
+    class Iteration : public TypeProvidable {
+        WRD_CLASS(Iteration)
+        friend class Iter;
+
+    public:
+        virtual wbool isSame(Iteration& rhs) = 0;
+        wbool isSame(Iteration&& rhs) { return isSame(rhs); }
+        virtual wbool isEnd() = 0;
+        virtual wbool next() = 0;
+        virtual wbool prev() = 0;
+
+    protected:
+        virtual Node& _get() = 0;
+    };
+
     template <typename T>
-    class TIter : public TypeProvidable {
-        WRD_CLASS(TIter)
+    class TIter : public Iter {
+        WRD_CLASS(TIter, Iter)
 
     public:
         /// @return true if there are more data to proceed
-        virtual wbool operator==(const This& rhs) = 0;
-        virtual wbool operator++() = 0;
-        virtual wbool operator--() = 0;
-        T& operator*() { return get(); }
-        T* operator->() { return &get(); }
-        const T& operator*() const { return get(); }
-        const T* operator->() const { return &get(); }
-        operator wbool() const { return isEnd(); }
+        T& operator*() { return (T&) _get(); }
+        T* operator->() { return (T*) &_get(); }
 
-        virtual wbool isEnd() const = 0;
-        virtual const T& get() const = 0;
-        virtual T& get() = 0;
+        T& get() { return (T&) _get(); }
     };
 
     struct Containable {
         Node& operator[](widx n) { return get(n); }
-        Node& operator[](widx n) WRD_UNCONST_FUNC(operator[](n))
 
         virtual wcnt getLen() = 0;
 
-        virtual TStr<TIter> getHead() = 0;
-        virtual TStr<TIter> getTail() = 0;
-
-        virtual Node& get(widx n) = 0;
-        const Node& get(widx n) const WRD_UNCONST_FUNC(get(n))
+        Node& get(widx n) { return _get(n); }
         template <typename T>
-        T& get(lambda); // use getHead()
-        Node& get(lambda) { return get<Node>(lambda); }
+        T& get(std::function<wbool(T&)> l); // TODO: use getHead()
+        Node& get(std::function<wbool(Node&)> l) { return get<Node>(l); }
 
-        /// @return true if element got deleted successfully.
-        virtual wbool del(Node& it) = 0;
-        /// delete last element if exists.
-        wbool del() { return del(get(getLen()-1)); }
-        virtual wbool add(Node& new1) = 0;
+        Iter head() { return _iter(0); }
+        Iter tail() { return _iter(getLen() - 1); }
+        Iter iter(idx n) { return _iter(n); }
+        Iter iter(Node& elem) {
+            Iter ret;
+            each([&ret](Iter& e, Node& myelem) {
+                if(&elem != &myelem) return true;
+
+                ret = e;
+                return false;
+            });
+            return ret;
+        }
+
+        template <typename T>
+        void each(Iter& from, Iter& to, std::function<wbool(Iter&, T&)> l) {
+            for (Iter e=from; e == to ;++e) {
+                T& t = e->cast<T>();
+                if(nul(t)) continue;
+
+                if(!l(e, t)) return;
+            }
+        }
+        template <typename T>
+        void each(std::function<wbool(Iter&, T&)> l) {
+            each(head(), tail(), l);
+        }
+
+        wbool add(Node& new1) ( return _add(new1); }
         /// @return how many element has been added from rhs.
-        wcnt add(const Containable& rhs);
-        wcnt del(const Containable& rhs);
+        wcnt add(Iter& from, Iter& to) {
+            int ret = 0;
+            each(from, to, [&ret](Iter& e, Node& elem) {
+                if(add(e)) ret++;
+            });
+            return ret;
+        }
+        wcnt add(Containable& rhs) {
+            return add(rhs.head(), tail());
+        }
+        wbool add(Node& new1) {
+            return add(tail(), new1);
+        }
+        virtual wbool add(Iter& new1, Node& new1) = 0;
+
+        wbool del(Node& it) { return del(iter(it)); }
+        /// delete last element if exists.
+        wbool del() { return del(tail()); }
+        wcnt del(Iter& from, Iter& to) {
+            int ret = 0;
+            each(from, to, [&ret](Iter& e, Node& elem) {
+                if(del(e)) ret++;
+            });
+            return ret;
+        }
+        wcnt del(Containable& rhs) {
+            return del(rhs.head(), rhs.tail());
+        }
+        /// @return true if element got deleted successfully.
+        virtual wbool del(Iter& it) = 0;
+
+    protected:
+        virtual Iter _iter(widx n) = 0;
+        virtual Node& _get(widx n) = 0;
     };
 
     class Node : public Instance, public Containable {
         WRD_CLASS(Node, Instance)
 
     public:
-        wbool isInit() const {
+        wbool isInit() {
             return _isInit;
         }
 
@@ -103,10 +198,10 @@ namespace wrd {
         Arr get(std::string);
 
         /// @param args nullable.
-        virtual Ret<Ref> run(const Arr& args);
+        virtual Ret<Ref> run(Arr& args);
         Ret<Ref> run() { return run(nulOf<Arr>()); }
 
-        const Node& getOrigin() const;
+        Node& getOrigin();
 
     protected:
         wbool del(Node& it) override;
@@ -123,10 +218,10 @@ namespace wrd {
         // override get() funcs...
         // isInit...
 
-        wbool isBind() const { return _ptr.isBind(); }
+        wbool isBind() { return _ptr.isBind(); }
         // override TBindable...
 
-        Ret<Ref> run(const Arr& args) override;
+        Ret<Ref> run(Arr& args) override;
 
         Str _ptr;
     };
@@ -146,7 +241,7 @@ namespace wrd {
         WRD_CLASS(Func, Scope)
 
     public:
-        Ret<Ref> run(const Arr& args) override;
+        Ret<Ref> run(Arr& args) override;
     };
 
     class Container : public Obj {
@@ -167,11 +262,11 @@ namespace wrd {
 
     public:
         Arr();
-        Arr(const vector<Node*>& rhs);
-        Arr(const vector<Str>& rhs);
-        Arr(wcnt len, const Node rhs[]);
+        Arr(vector<Node*>& rhs);
+        Arr(vector<Str>& rhs);
+        Arr(wcnt len, Node rhs[]);
         Arr(wcnt len, Node... rhs);
-        Arr(const This& rhs);
+        Arr(This& rhs);
 
         std::vector<Str> _vector;
     };
