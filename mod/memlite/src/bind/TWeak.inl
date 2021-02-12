@@ -26,12 +26,11 @@ namespace wrd {
 
 	TEMPL T& THIS::get() {
         Instance& got = SUPER::get();
-        WRD_NUL(got, nulOf<T>())
-        if(!got.getType().isSub(TType<T>::get()))
-            return nulOf<T>();
+        if(nul(got)) return nulOf<T>();
 
-        return (T&) got;
+        return got.cast<T>();
     }
+
     TEMPL wbool THIS::bind(T& new1) { return SUPER::bind(new1); }
 
 #undef SUPER
