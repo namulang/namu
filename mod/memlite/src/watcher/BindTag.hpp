@@ -23,23 +23,22 @@ namespace wrd {
         wcnt getStrongCnt();
         wbool rel();
         //  TBindable:
-        wbool unbind();
-        wbool isBind();
+        wbool unbind() override;
+        wbool isBind() override;
         Type& getBindable();
         using TBindable::canBind;
-        wbool canBind(Type& cls);
+        wbool canBind(Type& cls) override;
+        Instance& get() override;
+        wbool bind(Instance& new1) override;
         //  Instance:
-        Id getId();
-        wbool isHeap();
+        Id getId() override;
+        wbool isHeap() override;
         //  TypeProvidable:
-        Type& getType() {
+        Type& getType() override{
             return TType<BindTag>::get();
         }
 
     protected:
-        //  TBindable:
-        Instance& _get();
-        wbool _bind(Instance& new1);
 
     private:
         //  BindTag:
