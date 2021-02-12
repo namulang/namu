@@ -9,7 +9,7 @@ namespace wrd {
         if(&me == &rhs) return true;
 
         me._tactic = rhs._tactic;
-        return me._bind(rhs.get());
+        return me.bind(rhs.get());
     }
 
     wbool This::unbind(Bind& me) {

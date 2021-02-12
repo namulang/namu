@@ -46,9 +46,9 @@ namespace wrd {
         return true;
     }
 
-    Instance& This::_get() { return *_pt; }
+    Instance& This::get() { return *_pt; }
 
-    wbool This::_bind(Instance& it) {
+    wbool This::bind(Instance& it) {
         unbind();
 
         _pt = (Instance*) &it;

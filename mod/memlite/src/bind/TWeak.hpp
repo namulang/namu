@@ -17,10 +17,10 @@ namespace wrd {
         TWeak(T* it);
         TWeak(Bind& rhs);
 
-        T* operator->();
-        T& operator*();
+        T* operator->() override;
+        T& operator*() override;
         This& operator=(Bind& rhs);
-        T& get();
+        T& get() override;
 
         wbool bind(T& new1);
         //  TBindable:

@@ -24,8 +24,15 @@ namespace wrd {
 		return *this;
 	}
 
-	TEMPL T& THIS::get() { return TBindable<Instance>::get<T>(); }
-    TEMPL wbool THIS::bind(T& new1) { return this->_bind(new1); }
+	TEMPL T& THIS::get() {
+        Instance& got = SUPER::get();
+        WRD_NUL(got, nulOf<T>())
+        if(!got.getType().isSub(TType<T>::get()))
+            return nulOf<T>();
+
+        return (T&) got;
+    }
+    TEMPL wbool THIS::bind(T& new1) { return SUPER::bind(new1); }
 
 #undef SUPER
 #undef THIS

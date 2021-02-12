@@ -19,10 +19,10 @@ namespace wrd {
         Chunks& get(Instance& inst);
         Chunks& get(widx n);
         //  MemoryHaver:
-        wbool has(Instance& it);
-        wcnt getSize();
-        wcnt getLen();
-        wbool rel();
+        wbool has(Instance& it) override;
+        wcnt getSize() override;
+        wcnt getLen() override;
+        wbool rel() override;
 
     protected:
         //  MemoryHaver:

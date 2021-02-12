@@ -19,7 +19,7 @@ namespace wrd {
     wbool This::bind(Bind& me, Instance& it) {
         wbool res = Super::bind(me, it);
         if(!res) {
-            WRD_E("super::_bind() was failed.");
+            WRD_E("super::bind() was failed.");
             return res;
         }
 

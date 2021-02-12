@@ -35,13 +35,13 @@ namespace wrd {
     wbool This::canBind(Type& type) { return getType().isSuper(type); }
     Type& This::getType() { return _type; }
 
-    wbool This::_bind(Instance& it) {
-        if(!TBindable<Instance>::_bind(it)) return false;
+    wbool This::bind(Instance& it) {
+        if(!TBindable<Instance>::bind(it)) return false;
 
         return _tactic.bind(*this, it);
     }
 
-    Instance& This::_get() {
+    Instance& This::get() {
         Instance& ins = WRD_GETS(_getBindTag(_itsId),get());
         WRD_NUL_THEN_LOG(ins)
 

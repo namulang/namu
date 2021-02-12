@@ -66,14 +66,14 @@ namespace wrd {
         wbool unbind() override;
         using TBindable::canBind;
         wbool canBind(Type& cls) override;
+        using TBindable::get;
+        Instance& get() override;
+        wbool bind(Instance& it) override;
         //  Instance:
         Type& getType() override;
 
     protected:
         wbool _assign(Bind& rhs);
-        //  TBindable:
-        wbool _bind(Instance& it) override;
-        Instance& _get() override;
 
     private:
         Id _itsId; // id for binded one

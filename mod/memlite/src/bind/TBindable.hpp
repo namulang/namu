@@ -11,22 +11,31 @@ namespace wrd {
 
     public:
         //  TBindable:
-        T* operator->();
-        T& operator*();
+        virtual T* operator->();
+        virtual T& operator*();
         operator wbool();
 
-        wbool bind(T& it) { return _bind(it); }
+        virtual wbool bind(T& it) {
+            // type checking before binding only is required to Bind class.
+            // Derived classes from this doesn't need it. because its type is specified.
+            // prevent wrong type providing by compiler.
+            if(!canBind(it)) {
+                WRD_W("can't bind it(%s) instance", it.getType().getName().c_str());
+                return false;
+            }
+            return true;
+        }
         virtual wbool unbind() = 0;
         wbool canBind(T& it);
         wbool canBind(T&& it) { return canBind(it); }
         virtual wbool canBind(Type& it) = 0;
         wbool canBind(Type&& it) { return canBind(it); }
         virtual wbool isBind() = 0;
-        T& get();
+        virtual T& get() = 0;
 
         template <typename E>
         E& get() {
-            T& got = _get();
+            T& got = get();
             WRD_NUL(got, nulOf<E>())
 
             if(!got.getType().isSub(TType<E>::get()))
@@ -37,16 +46,5 @@ namespace wrd {
 
     protected:
         //  TBindable:
-        virtual T& _get() = 0;
-        virtual wbool _bind(T& it) {
-            // type checking before binding only is required to Bind class.
-            // Derived classes from this doesn't need it. because its type is specified.
-            // prevent wrong type providing by compiler.
-            if(!canBind(it)) {
-                WRD_W("can't bind it(%s) instance", it.getType().getName().c_str());
-                return false;
-            }
-            return true;
-        }
     };
 }
