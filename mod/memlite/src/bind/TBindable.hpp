@@ -36,15 +36,9 @@ namespace wrd {
         template <typename E>
         E& get() {
             T& got = get();
-            WRD_NUL(got, nulOf<E>())
+            if(nul(got)) return nulOf<E>();
 
-            if(!got.getType().isSub(TType<E>::get()))
-                return nulOf<E>();
-
-            return (E&) got;
+            return got.template cast<E>();
         }
-
-    protected:
-        //  TBindable:
     };
 }
