@@ -5,7 +5,7 @@ namespace wrd {
 
     WRD_DEF_THIS(WeakTactic)
 
-    wbool This::assign(Bind& me, Bind& rhs) {
+    wbool This::assign(Bind& me, const Bind& rhs) {
         if(&me == &rhs) return true;
 
         me._tactic = rhs._tactic;
@@ -17,7 +17,7 @@ namespace wrd {
         return true;
     }
 
-    wbool This::bind(Bind& me, Instance& it) {
+    wbool This::bind(Bind& me, const Instance& it) {
         unbind(me);
         //  regardless of result from _onStrong binder can bind:
         //      there are two reasons:

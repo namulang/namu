@@ -13,19 +13,22 @@ namespace wrd {
     public:
         /// TWeak:
         TWeak();
-        TWeak(T& it);
-        TWeak(T* it);
-        TWeak(Bind& rhs);
+        TWeak(const T& it);
+        TWeak(const T* it);
+        TWeak(const Bind& rhs);
 
         T* operator->() override;
         T& operator*() override;
-        This& operator=(Bind& rhs);
-        T& get() override;
-
-        wbool bind(T& new1);
+        const T* operator->() const WRD_UNCONST_FUNC(operator->())
+        const T& operator*() const WRD_UNCONST_FUNC(operator*())
+        This& operator=(const Bind& rhs);
         //  TBindable:
         using TBindable::get;
+        T& get() override;
+        const T& get() const WRD_UNCONST_FUNC(get())
+
         using TBindable::bind;
+        wbool bind(const T& new1);
 
     protected:
         TWeak(BindTacticable& tactic);

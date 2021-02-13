@@ -33,7 +33,7 @@ namespace wrd {
         return res;
     }
 
-    Id This::_genId(void* pt) {
+    Id This::_genId(void* pt) const {
         static wcnt serial = 0;
         // Watcher concern about bkl_n at Id. on the other hand, Chunk is chkN.
         // eventually, if Instance was born from heap, first it take chkN from chunk when it borns.
@@ -41,7 +41,7 @@ namespace wrd {
         return Id(_getIdx(pt), WRD_INDEX_ERROR, ++serial);
     }
 
-    widx This::_getIdx(void* it) {
+    widx This::_getIdx(void* it) const {
         if(!has(*(Instance*)it)) // "has" func will treat it as void*, too.
             return -1;
 

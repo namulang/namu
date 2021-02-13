@@ -9,14 +9,14 @@ namespace wrd {
     This::~Chunks() { _rel(); }
 
     Chunk& This::operator[](widx n) { return get(n); }
-    Chunk& This::operator[](Instance& inst) { return get(inst); }
+    Chunk& This::operator[](const Instance& inst) { return get(inst); }
 
     Chunk& This::get(widx n) { return *(Chunk*)_get(n); }
-    Chunk& This::get(Instance& it) { return *(Chunk*)_get(it.getId().s.chkN); }
+    Chunk& This::get(const Instance& it) { return *(Chunk*)_get(it.getId().s.chkN); }
 
     wbool This::rel() { return _rel(); }
-    wcnt This::getLen() { return _chunks.size(); }
-    wcnt This::getSize() { return getLen(); }
+    wcnt This::getLen() const { return _chunks.size(); }
+    wcnt This::getSize() const { return getLen(); }
 
     void* This::new1() {
         widx n = _findCapable();
@@ -49,7 +49,7 @@ namespace wrd {
         return _s;
     }
 
-    wbool This::has(Instance& it) { return _chunks[it.getId().s.chkN]->has(it); }
+    wbool This::has(const Instance& it) const { return _chunks[it.getId().s.chkN]->has(it); }
 
     wbool This::resize(wcnt new1) {
         _s = _chunks.size();

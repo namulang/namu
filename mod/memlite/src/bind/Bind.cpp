@@ -7,38 +7,38 @@ namespace wrd {
 
     WRD_DEF_THIS(Bind)
 
-    Bind::Bind(Type& type, BindTacticable& tactic): _type(type), _tactic(tactic) {}
-    Bind::Bind(This& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
+    Bind::Bind(const Type& type, BindTacticable& tactic): _type(&type.getStatic()), _tactic(&tactic) {}
+    Bind::Bind(const This& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
     Bind::~Bind() { This::unbind(); }
-    wbool This::operator==(This& rhs) { return &get() == &rhs.get(); }
-    wbool This::operator!=(This& rhs) { return ! operator==(rhs); }
+    wbool This::operator==(const This& rhs) const { return &get() == &rhs.get(); }
+    wbool This::operator!=(const This& rhs) const { return ! operator==(rhs); }
 
-    This& This::operator=(This& rhs) {
+    This& This::operator=(const This& rhs) {
         if(this == &rhs) return *this;
 
         _assign(rhs);
         return *this;
     }
 
-    wbool This::isBind() {
-        BindTag& tag = _getBindTag(_itsId);
+    wbool This::isBind() const {
+        const BindTag& tag = _getBindTag(_itsId);
         if(nul(tag)) return false;
 
         return tag.isBind();
     }
 
     wbool This::unbind() {
-        return _tactic.unbind(*this);
+        return _tactic->unbind(*this);
     }
 
-    Id This::getItsId() { return _itsId; }
-    wbool This::canBind(Type& type) { return getType().isSuper(type); }
-    Type& This::getType() { return _type; }
+    Id This::getItsId() const { return _itsId; }
+    wbool This::canBind(const Type& type) const { return getType().isSuper(type); }
+    const Type& This::getType() const { return *_type; }
 
-    wbool This::bind(Instance& it) {
+    wbool This::bind(const Instance& it) {
         if(!TBindable<Instance>::bind(it)) return false;
 
-        return _tactic.bind(*this, it);
+        return _tactic->bind(*this, it);
     }
 
     Instance& This::get() {
@@ -48,8 +48,8 @@ namespace wrd {
         return ins;
     }
 
-    wbool This::_assign(Bind& rhs) {
-        return _tactic.assign(*this, rhs);
+    wbool This::_assign(const Bind& rhs) {
+        return _tactic->assign(*this, rhs);
     }
 
 #undef This

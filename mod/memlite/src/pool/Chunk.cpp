@@ -7,8 +7,8 @@ namespace wrd {
     This::Chunk(wcnt blksize, wbool is_fixed)
         : Super(blksize), _heap(0), _isFixed(is_fixed) { This::rel(); }
     This::~Chunk() { This::rel(); }
-    wcnt This::getLen() { return _len; }
-    wcnt This::getSize() { return _sz; }
+    wcnt This::getLen() const { return _len; }
+    wcnt This::getSize() const { return _sz; }
 
     void* This::new1() {
         if( _len >= _sz &&
@@ -60,13 +60,13 @@ namespace wrd {
         return _index(_len);
     }
 
-    wbool This::has(Instance& it) {
+    wbool This::has(const Instance& it) const {
         void* pt = (void*) &it;
         return _heap && _heap <= pt && pt <= _getEOB();
     }
 
+    wbool This::isFixed() const { return _isFixed; }
     wuchar* This::_getHeap() { return _heap; }
-    wbool This::isFixed() { return _isFixed; }
 
     void* This::_get(widx n) {
         if(n < 0 | n >= getSize()) return WRD_NULL;

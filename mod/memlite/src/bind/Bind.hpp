@@ -51,33 +51,33 @@ namespace wrd {
         friend class BindTag; // for _get()
 
     public:
-        Bind(Type& type, BindTacticable& tactic);
-        Bind(This& rhs);
+        Bind(const Type& type, BindTacticable& tactic);
+        Bind(const This& rhs);
         ~Bind();
 
-        wbool operator==(This& rhs);
-        wbool operator!=(This& rhs);
-        This& operator=(This& rhs);
+        wbool operator==(const This& rhs) const;
+        wbool operator!=(const This& rhs) const;
+        This& operator=(const This& rhs);
 
         //  Bind:
-        Id getItsId();
+        Id getItsId() const;
         //  TBindable:
-        wbool isBind() override;
+        wbool isBind() const override;
         wbool unbind() override;
         using TBindable::canBind;
-        wbool canBind(Type& cls) override;
+        wbool canBind(const Type& cls) const override;
         using TBindable::get;
+        wbool bind(const Instance& it) override;
         Instance& get() override;
-        wbool bind(Instance& it) override;
         //  Instance:
-        Type& getType() override;
+        const Type& getType() const override;
 
     protected:
-        wbool _assign(Bind& rhs);
+        wbool _assign(const Bind& rhs);
 
     private:
         Id _itsId; // id for binded one
-        Type& _type;
-        BindTacticable& _tactic;
+        const Type* _type;
+        BindTacticable* _tactic;
     };
 }

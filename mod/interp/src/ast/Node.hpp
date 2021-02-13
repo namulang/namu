@@ -9,6 +9,10 @@ namespace wrd {
     // * 아무런 구현이 없는 WType클래스의 injection
     // * Func.run()의 가구현
     // * ref 구현
+
+    typedef TStr<Node> Str;
+    typedef TWeak<Node> Weak;
+
     class WType : public Type {
         WRD_DECL_THIS(WType, Type)
     };
@@ -24,32 +28,58 @@ namespace wrd {
         TStr<Err> e;
     };
 
-    class Iter : public Iteration {
-        WRD_CLASS(Iter)
+    class Iteratable : public TypeProvidable {
+    public:
+        virtual wbool isEnd() = 0;
+        virtual wbool next() = 0;
+        virtual wbool prev() = 0;
+        virtual Node& get() = 0;
+
+        virtual wbool hasSame(Containable& it) = 0;
+        wbool hasSame(Iter& it) {
+            return hasSame(it._step._own.get());
+        }
+        wbool hasSame(Iteration& it) {
+            return hasSame(it._own.get());
+        }
+    };
+
+    class Iteration : public Iteratable {
+        WRD_CLASS(Iteration)
+        friend class Iter;
 
     public:
-        Iter(Iteration& newStep): _step(newStep) {}
+        Iteration(Containable& own): _own(own) {}
+
+        virtual wbool hasSame(Containable& rhs) {
+            return &_own.get() == &rhs;
+        }
+
+    protected:
+        TWeak<Containable> _own;
+    };
+
+    class Iter : public Iteration {
+        WRD_CLASS(Iter)
+        friend class Iteration;
+
+    public:
+        Iter(Iteration* newStep): _step(newStep) {}
 
         /// @return true if there are more data to proceed
-        wbool operator==(This& rhs) { return isSame(rhs._step); }
+        wbool operator==(This& rhs) { return hasSame(rhs._step); }
         wbool operator==(This&& rhs) { return operator==(rhs); }
         wbool operator++() { return next(); }
         wbool operator--() { return prev(); }
-
-        Node& operator*() { return _get(); }
-        Node* operator->() { return &_get(); }
-
+        virtual Node& operator*() { return _get(); }
+        virtual Node* operator->() { return &_get(); }
         operator wbool() { return !isEnd(); }
 
-        wbool isSame(Iteration& rhs) override { return _step->isSame(rhs); }
+        wbool hasSame(Containable& it) override { return _step->hasSame(it); }
         wbool isEnd() override { return _step->isEnd(rhs); }
         wbool next() override { return _step->next(rhs); }
         wbool prev() override { return _step->prev(rhs); }
-
-        Node& get() { return _get(); }
-
-    protected:
-        virtual Node& _get() { return _step->_get(); }
+        Node& get() override { return _step->get(); }
 
     private:
         This& _assign(This& rhs) {
@@ -61,47 +91,37 @@ namespace wrd {
         TStr<Iteration> _step;
     };
 
-    class Iteration : public TypeProvidable {
-        WRD_CLASS(Iteration)
-        friend class Iter;
-
-    public:
-        virtual wbool isSame(Iteration& rhs) = 0;
-        wbool isSame(Iteration&& rhs) { return isSame(rhs); }
-        virtual wbool isEnd() = 0;
-        virtual wbool next() = 0;
-        virtual wbool prev() = 0;
-
-    protected:
-        virtual Node& _get() = 0;
-    };
-
     template <typename T>
     class TIter : public Iter {
         WRD_CLASS(TIter, Iter)
 
     public:
         /// @return true if there are more data to proceed
-        T& operator*() { return (T&) _get(); }
-        T* operator->() { return (T*) &_get(); }
+        T& operator*() override { return (T&) _get(); }
+        T* operator->() override { return (T*) &_get(); }
 
-        T& get() { return (T&) _get(); }
+        T& get() override { return (T&) _get(); }
     };
 
-    struct Containable {
-        Node& operator[](widx n) { return get(n); }
+    class Containable {
+        WRD_CLASS(Containable)
+
+    public:
+        virtual Node& operator[](widx n) { return get(n); }
 
         virtual wcnt getLen() = 0;
 
-        Node& get(widx n) { return _get(n); }
+        virtual Node& get(widx n) = 0;
         template <typename T>
         T& get(std::function<wbool(T&)> l); // TODO: use getHead()
-        Node& get(std::function<wbool(Node&)> l) { return get<Node>(l); }
+        virtual Node& get(std::function<wbool(Node&)> l) { return get<Node>(l); }
 
-        Iter head() { return _iter(0); }
-        Iter tail() { return _iter(getLen() - 1); }
-        Iter iter(idx n) { return _iter(n); }
-        Iter iter(Node& elem) {
+        // TODO: set funcs.
+
+        virtual Iter head() { return iter(0); }
+        virtual Iter tail() { return iter(getLen() - 1); }
+        virtual Iter iter(idx n) = 0;
+        virtual Iter iter(Node& elem) {
             Iter ret;
             each([&ret](Iter& e, Node& myelem) {
                 if(&elem != &myelem) return true;
@@ -125,8 +145,17 @@ namespace wrd {
         void each(std::function<wbool(Iter&, T&)> l) {
             each(head(), tail(), l);
         }
+    };
 
-        wbool add(Node& new1) ( return _add(new1); }
+    class ArrContainable : public Containable {
+        WRD_CLASS(ArrContainable, Containable)
+
+    public:
+        wbool add(Node& new1) ( return add(tail(), new1); }
+        wbool add(Node&& new1) ( return add(new1); }
+        wcnt add(Iter&& from, Iter&& to) {
+            return add(from, to);
+        }
         /// @return how many element has been added from rhs.
         wcnt add(Iter& from, Iter& to) {
             int ret = 0;
@@ -135,13 +164,70 @@ namespace wrd {
             });
             return ret;
         }
+        wcnt add(Containable&& rhs) {
+            return add(rhs);
+        }
         wcnt add(Containable& rhs) {
             return add(rhs.head(), tail());
         }
-        wbool add(Node& new1) {
-            return add(tail(), new1);
+        virtual wbool add(Iter& e, Node& new1) {
+            if(nul(e) || nul(new1)) return false;
+            if(!e.hasSame(*this)) return false;
+            if(e.isEnd()) return false;
+
+            return true;
         }
-        virtual wbool add(Iter& new1, Node& new1) = 0;
+
+        wbool del(Node& it) { return del(iter(it)); }
+        /// delete last element if exists.
+        wbool del() { return del(tail()); }
+        wcnt del(Iter&& from, Iter&& to) {
+            return del(from, to);
+        }
+        wcnt del(Iter& from, Iter& to) {
+            int ret = 0;
+            each(from, to, [&ret](Iter& e, Node& elem) {
+                if(del(e)) ret++;
+            });
+            return ret;
+        }
+        wcnt del(Containable& rhs) {
+            return del(rhs.head(), rhs.tail());
+        }
+        /// @return true if element got deleted successfully.
+        virtual wbool del(Iter& it) {
+            if(nul(it)) return false;
+            if(!it.hasSame(*this)) return false;
+            if(it.isEnd()) return false;
+
+            return true;
+        }
+    };
+
+    class MapContainable : public Containable {
+        virtual wbool add(Node& key, Node& val) = 0;
+        /// @return how many element has been added from rhs.
+        wcnt add(Iter& from, Iter& to) {
+            int ret = 0;
+            each<Pair>(from, to, [&ret](Iter& e, Pair& elem) {
+                if(add(elem)) ret++;
+            });
+            return ret;
+        }
+        wcnt add(Containable& rhs) {
+            return add(rhs.head(), tail());
+        }
+        wbool add(Node& key, Node& val) {
+            return add(Pair(key, val));
+        }
+        wbool add(Pair&& new1) {
+            return add(new1);
+        }
+        virtual wbool add(Pair& new1) {
+            if(nul(new1)) return false;
+
+            return true;
+        }
 
         wbool del(Node& it) { return del(iter(it)); }
         /// delete last element if exists.
@@ -157,11 +243,123 @@ namespace wrd {
             return del(rhs.head(), rhs.tail());
         }
         /// @return true if element got deleted successfully.
-        virtual wbool del(Iter& it) = 0;
+        virtual wbool del(Iter& it) {
+            if(nul(it)) return false;
+            if(!it.hasSame(*this)) return false;
+            if(it.isEnd()) return false;
 
-    protected:
-        virtual Iter _iter(widx n) = 0;
-        virtual Node& _get(widx n) = 0;
+            return true;
+        }
+    };
+
+    /// @remark prefix 'N' means "native".
+    class NArr : public Containable {
+        WRD_CLASS(NArr, Containable)
+
+        friend class NArrIteration : public Iteration {
+            WRD_CLASS(NArrIteration, Iteration)
+            friend class NArr;
+
+        public:
+            NArrIteration(NArr& own, widx startN): Super(own), _n(startN) {}
+
+            wbool hasSame(Iteration& rhs) override {
+                return Super::hasSame(rhs) && _n == rhs._n;
+            }
+            wbool isEnd() override {
+                return _isValidN(_n);
+            }
+            wbool next() override {
+                if(!_isValidN(_n + 1)) return false;
+
+                _n++;
+                return true;
+            }
+            wbool prev() override {
+                if(!_isValidN(_n - 1)) return false;
+
+                _n--;
+                return true;
+            }
+            Node& get() override {
+                if(isEnd()) return nulOf<Node>();
+                return _arr->get(_n);
+            }
+
+        private:
+            wbool _isValidN(wdx n) {
+                if(!_arr) return true;
+                return _arr->_isValidN(n);
+            }
+
+            widx _n;
+        };
+
+    public:
+        wcnt getLen() override {
+            return _vec.size();
+        };
+
+        Node& get(widx n) override {
+            if(!_isValidN(n)) return nulOf<Node>();
+
+            return *_vec[n];
+        }
+        Iter iter(idx n) override {
+            return Iter(new NArrIteration(*this, n));
+        }
+        wbool add(Iter& e, Node& new1) override {
+            if(!Super::add(e, new1)) return false;
+            NArrIteration& cast = (NArrIteration&) new1._step;
+
+            widx n = cast._n;
+            return _vec.insert(_vec.begin() + n, new1);
+        }
+        wbool del(Iter& it) override {
+            if(!Super::del(it)) return false;
+            NArrIteration& cast = (NArrIteration&) new1._step;
+
+            return _vec.erase(_vec.begin() + cast._n);
+        }
+
+    private:
+        wbool _isValidN(widx n) {
+            return n < 0 || n >= getLen();
+        }
+
+        std::vector<Str> _vec;
+    };
+
+    class Pair : public Obj {
+        WRD_CLASS(Pair, Obj)
+
+    public:
+        virtual Node& getKey();
+        virtual Node& getVal();
+    };
+
+    template <typename K, typename V>
+    class TPair : public Pair {
+        WRD_CLASS(TPair, Pair)
+
+    public:
+        K& getKey() override;
+        V& getVal() override;
+    };
+
+    class NMap : public Containable {
+        WRD_CLASS(NMap, Containable)
+
+        friend class NMapIteration : public Iteration {
+            WRD_CLASS(NMapIteration, Iteration)
+            friend class NMap;
+
+        public:
+            NMapIteration(NMap& own,
+        };
+
+    private:
+        map<Str, Str> _map;
     };
 
     class Node : public Instance, public Containable {
