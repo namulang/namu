@@ -11,12 +11,12 @@ namespace wrd {
 
     public:
         virtual ~MemoryHaver() {}
-        virtual wbool has(Instance& it) = 0;
-        virtual wcnt getLen() = 0;
-        virtual wcnt getSize() = 0;
+        virtual wbool has(const Instance& it) const = 0;
+        virtual wcnt getLen() const = 0;
+        virtual wcnt getSize() const = 0;
         virtual wbool rel() = 0;
-        wbool isFull();
-        wbool isCapable();
+        wbool isFull() const;
+        wbool isCapable() const;
 
     protected:
         virtual void* _get(widx n) = 0;

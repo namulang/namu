@@ -19,7 +19,7 @@ namespace wrd {
         void* operator[](widx n) { return get(n); }
 
         void* get(widx n) { return _get(n); }
-        wbool isFixed();
+        wbool isFixed() const;
         //  Allocator:
         void* new1() override;
         wbool del(void* used, wcnt) override;
@@ -28,21 +28,23 @@ namespace wrd {
         ///         at outside, ptr for them should be daggled.
         wbool resize(wcnt new_sz) override;
         //  MemoryHaver:
-        wcnt getLen() override;
-        wcnt getSize() override;
+        wcnt getLen() const override;
+        wcnt getSize() const override;
         wbool rel() override;
-        wbool has(Instance& it) override;
+        wbool has(const Instance& it) const override;
 
     protected:
         //  MemoryHaver:
         /// @return returns regarding current size, not length.
         ///         can return garbage if size is bigger than n.
         void* _get(widx n) override;
+        wuchar* _getHeap();
+        const wuchar* _getHeap() const WRD_UNCONST_FUNC(_getHeap())
 
     private:
         //  Chunk:
+        const wuchar* _getEOB() const WRD_UNCONST_FUNC(_getEOB())
         wuchar* _getEOB();
-        wuchar* _getHeap();
         wbool _index(widx start);
         wcnt _getRealBlkSize();
         void* _allocHeap(wcnt new_sz);

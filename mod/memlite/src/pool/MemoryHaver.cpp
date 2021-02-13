@@ -4,6 +4,6 @@ namespace wrd {
 
     WRD_DEF_THIS(MemoryHaver)
 
-    wbool This::isFull() { return getLen() >= getSize(); }
-    wbool This::isCapable() { return getLen() < getSize(); }
+    wbool This::isFull() const { return getLen() >= getSize(); }
+    wbool This::isCapable() const { return getLen() < getSize(); }
 }

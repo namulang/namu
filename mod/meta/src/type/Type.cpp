@@ -3,10 +3,10 @@
 namespace wrd {
     WRD_DEF_THIS(Type)
 
-    wbool This::operator==(This& rhs) { return &getName() == &rhs.getName(); }
-    wbool This::operator!=(This& rhs) { return !operator==(rhs); }
+    wbool This::operator==(const This& rhs) const { return &getName() == &rhs.getName(); }
+    wbool This::operator!=(const This& rhs) const { return !operator==(rhs); }
 
-    Types& This::getLeafs() {
+    const Types& This::getLeafs() const {
         //TODO: change to range based for loop.
         return nulOf<Types>();
     }
@@ -37,14 +37,14 @@ namespace wrd {
         //      get Supers info from Super:
         //          at this point TType<Super> is instantiated, and "Super" also is all of this
         //          sequences.
-        Type& super = getSuper();
+        Type& super = const_cast<Type&>(getSuper());
         super.init();
         //        constructing SuperType:
-        Types& mySupers = getSupers();
-        mySupers = super.getSupers();
+        Types& mySupers = _getSupers();
+        mySupers = super._getSupers();
         mySupers.push_back(&super);
         //        notify to super:
-        super.getSubs().push_back(&_getStatic());
+        super._getSubs().push_back(&_getStatic());
         return _logInitOk(true);
     }
 
@@ -54,22 +54,22 @@ namespace wrd {
         return true;
     }
 
-    wbool This::isSuper(Type& it) {
+    wbool This::isSuper(const Type& it) const {
         //  checking class hierarchy algorithm:
         //        Use the "Tier" of the class hierarchy info to check it.
         //        "Tier" means that how this class are inherited far from the Root class, that is, Object.
         //        So, if the "this" is a super of given object "it", its "tier"th super class
         //        would must be the class of "this".
         if(nul(it)) return false;
-        Types& its = it.getSupers();
+        const Types& its = it.getSupers();
         wcnt myTier = getSupers().size(),
              itsTier = its.size();
         if(myTier > itsTier) return false;
 
 
         //  main:
-        Type& target = itsTier == myTier ? it :
-            (Type&) *its[myTier];
+        const Type& target = itsTier == myTier ? it :
+            (const Type&) *its[myTier];
 
         return *this == target; // operator== is virtual func.
     }

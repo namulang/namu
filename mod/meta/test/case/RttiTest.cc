@@ -15,8 +15,8 @@ TEST(RttiTest, BasicBehavior) {
     ASSERT_FALSE(TIfHasSuperTypedef<NoSuper>::is);
     ASSERT_TRUE(TIfHasSuperTypedef<HasSuper>::is);
 
-    ASSERT_TRUE(TType<TAdaptiveSuper<NoSuper>::Super>() == TType<Adam>());
-    ASSERT_TRUE(TType<TAdaptiveSuper<HasSuper>::Super>() == TType<NoSuper>::get());
+    ASSERT_EQ(TType<TAdaptiveSuper<NoSuper>::Super>(), TType<Adam>());
+    ASSERT_EQ(TType<TAdaptiveSuper<HasSuper>::Super>(), TType<NoSuper>::get());
 
     ASSERT_FALSE((TIfSub<NoSuper, HasSuper>::is));
     ASSERT_TRUE((TIfSub<HasSuper, NoSuper>::is));

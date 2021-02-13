@@ -1,8 +1,11 @@
 #pragma once
 
 namespace wrd {
-    struct TypeProvidable {
-        virtual Type& getType() = 0;
+    class TypeProvidable {
+        WRD_DECL_THIS(TypeProvidable)
+
+    public:
+        virtual const Type& getType() const = 0;
 
         template <typename T>
         T& cast() {
@@ -11,5 +14,8 @@ namespace wrd {
 
             return (T&) *this;
         }
+
+        template <typename T>
+        const T& cast() const WRD_UNCONST_FUNC(cast<T>())
     };
 }

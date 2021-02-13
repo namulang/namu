@@ -9,19 +9,19 @@ namespace wrd {
     This::~Pool() { rel(); }
 
     Chunks& This::operator[](widx n) { return get(n); }
-    Chunks& This::operator[](Instance& inst) { return get(inst); }
-    Chunks& This::get(Instance& inst) { return get(inst.getType().getSize()); }
+    Chunks& This::operator[](const Instance& inst) { return get(inst); }
+    Chunks& This::get(const Instance& inst) { return get(inst.getType().getSize()); }
     Chunks& This::get(widx n) { return *(Chunks*)_get(n); }
 
-    wbool This::has(Instance& it) {
-        Chunks& got = get(it.getType().getSize());
+    wbool This::has(const Instance& it) const {
+        const Chunks& got = get(it.getType().getSize());
         WRD_NUL(got, false)
 
         return got.has(it);
     }
 
-    wcnt This::getSize() { return _chunks.capacity(); }
-    wcnt This::getLen() { return _chunks.size(); }
+    wcnt This::getSize() const { return _chunks.capacity(); }
+    wcnt This::getLen() const { return _chunks.size(); }
 
     wbool This::rel() {
         for(Chunks* e : _chunks) {

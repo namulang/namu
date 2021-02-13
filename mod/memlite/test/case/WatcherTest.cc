@@ -5,7 +5,7 @@ using namespace wrd;
 struct A : public Instance {
     int age;
 
-    Type& getType() {
+    const Type& getType() const override {
         return TType<A>::get();
     }
 };
@@ -13,18 +13,18 @@ struct A : public Instance {
 struct B : public A {
     float grade;
 
-    Type& getType() {
+    const Type& getType() const override {
         return TType<B>::get();
     }
 };
 
 TEST(WatcherTest, localVariableBindTagTest) {
     A a;
-    BindTag& tag = a.getBindTag();
+    const BindTag& tag = a.getBindTag();
     ASSERT_FALSE(nul(tag));
     ASSERT_TRUE(tag.getId().s.serial);
 
-    Chunk& chk = tag.getChunk();
+    const Chunk& chk = tag.getChunk();
     ASSERT_TRUE(nul(chk));
 }
 
@@ -35,11 +35,11 @@ TEST(WatcherTest, heapVariableBindTagTest) {
     {
         A* new1 = new A();
 
-        BindTag& tag = new1->getBindTag();
+        const BindTag& tag = new1->getBindTag();
         ASSERT_FALSE(nul(tag));
         ASSERT_GT(tag.getId().s.serial, 0);
         ASSERT_TRUE(tag.isBind());
-        ASSERT_TRUE(tag.getBindable() == TType<Instance>());
+        ASSERT_EQ(tag.getBindable(), TType<Instance>());
         ASSERT_TRUE(tag.canBind(TType<Instance>()));
 
         Id id = tag.getId();
@@ -48,7 +48,7 @@ TEST(WatcherTest, heapVariableBindTagTest) {
         ASSERT_GT(id.s.serial, 0);
         ASSERT_TRUE(tag.isHeap());
 
-        Chunk& chk = tag.getChunk();
+        const Chunk& chk = tag.getChunk();
         ASSERT_FALSE(nul(chk));
         ASSERT_TRUE(chk.has(*new1));
         ASSERT_GT(chk.getLen(), 0);

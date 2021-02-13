@@ -13,9 +13,11 @@ namespace wrd {
         //  TBindable:
         virtual T* operator->();
         virtual T& operator*();
-        operator wbool();
+        const T* operator->() const WRD_UNCONST_FUNC(operator->())
+        const T& operator*() const WRD_UNCONST_FUNC(operator*())
+        operator wbool() const;
 
-        virtual wbool bind(T& it) {
+        virtual wbool bind(const T& it) {
             // type checking before binding only is required to Bind class.
             // Derived classes from this doesn't need it. because its type is specified.
             // prevent wrong type providing by compiler.
@@ -26,12 +28,11 @@ namespace wrd {
             return true;
         }
         virtual wbool unbind() = 0;
-        wbool canBind(T& it);
-        wbool canBind(T&& it) { return canBind(it); }
-        virtual wbool canBind(Type& it) = 0;
-        wbool canBind(Type&& it) { return canBind(it); }
-        virtual wbool isBind() = 0;
+        wbool canBind(const T& it) const;
+        virtual wbool canBind(const Type& it) const = 0;
+        virtual wbool isBind() const = 0;
         virtual T& get() = 0;
+        const T& get() const WRD_UNCONST_FUNC(get())
 
         template <typename E>
         E& get() {
@@ -40,5 +41,7 @@ namespace wrd {
 
             return got.template cast<E>();
         }
+        template <typename E>
+        const E& get() const WRD_UNCONST_FUNC(get<E>())
     };
 }

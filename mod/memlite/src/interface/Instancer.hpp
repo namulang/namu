@@ -11,16 +11,16 @@ namespace wrd {
         friend class Instance;
 
     public:
-        wbool bind(Instance& new1);
-        wbool unbind(Instance& old);
-        Pool& getPool();
-        Watcher& getWatcher();
+        wbool bind(const Instance& new1);
+        wbool unbind(const Instance& old);
+        const Pool& getPool() const;
+        const Watcher& getWatcher() const;
         static WRD_SINGLETON_GETTER(This)
 
     private:
         void* _new1(size_t sz);
         void _del(void* pt, wcnt sz);
-        wbool _hasBindTag(Instance& it);
+        wbool _hasBindTag(const Instance& it) const;
 
         Pool _pool;
         Watcher _watcher;

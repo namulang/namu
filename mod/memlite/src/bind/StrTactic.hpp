@@ -9,7 +9,7 @@ namespace wrd {
 
     public:
         wbool unbind(Bind& me);
-        wbool bind(Bind& me, Instance& it);
+        wbool bind(Bind& me, const Instance& it);
 
         static This singletone;
     };

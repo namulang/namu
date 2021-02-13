@@ -9,15 +9,15 @@ namespace wrd {
 #define SUPER Bind
 
     TEMPL THIS::TWeak() : SUPER(TType<T>::get(), WeakTactic::singletone) {}
-    TEMPL THIS::TWeak(T& it) : SUPER(TType<T>::get(), WeakTactic::singletone) { this->bind(it); }
-    TEMPL THIS::TWeak(T* it) : SUPER(TType<T>::get(), WeakTactic::singletone) { this->bind(*it); }
-    TEMPL THIS::TWeak(Bind& rhs) { this->_assign(rhs); }
+    TEMPL THIS::TWeak(const T& it) : SUPER(TType<T>::get(), WeakTactic::singletone) { this->bind(it); }
+    TEMPL THIS::TWeak(const T* it) : SUPER(TType<T>::get(), WeakTactic::singletone) { this->bind(*it); }
+    TEMPL THIS::TWeak(const Bind& rhs) { this->_assign(rhs); }
     TEMPL THIS::TWeak(BindTacticable& tactic): SUPER(TType<T>::get(), tactic) {}
 
 	TEMPL T* THIS::operator->() { return &this->get(); }
 	TEMPL T& THIS::operator*() { return this->get(); }
 
-	TEMPL THIS& THIS::operator=(Bind& rhs) {
+	TEMPL THIS& THIS::operator=(const Bind& rhs) {
         if(this == &rhs) return *this;
 
         SUPER::operator=(rhs);
@@ -31,7 +31,7 @@ namespace wrd {
         return got.cast<T>();
     }
 
-    TEMPL wbool THIS::bind(T& new1) { return SUPER::bind(new1); }
+    TEMPL wbool THIS::bind(const T& new1) { return SUPER::bind(new1); }
 
 #undef SUPER
 #undef THIS
