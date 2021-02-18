@@ -6,8 +6,8 @@ namespace wrd {
 
     class NArr;
     template <typename T> class TNArr;
-    class Containable : public TypeProvidable {
-        WRD_CLASS(Containable, TypeProvidable)
+    class Containable : public Clonable {
+        WRD_INTERFACE(Containable, Clonable)
 
     public:
         virtual wcnt getLen() const = 0;
