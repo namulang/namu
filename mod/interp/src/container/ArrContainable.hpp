@@ -5,7 +5,7 @@
 namespace wrd {
 
     class ArrContainable : public Containable {
-        WRD_CLASS(ArrContainable, Containable)
+        WRD_INTERFACE(ArrContainable, Containable)
 
     public:
         Node& operator[](widx n) { return get(n); }

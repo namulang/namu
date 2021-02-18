@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../../common.hpp"
+#include "../../ast/Clonable.hpp"
 #include "../../type/WType.hpp"
 
 namespace wrd {
 
     class Containable;
     class Node;
-    class Iterable : public TypeProvidable {
-        WRD_CLASS(Iterable, TypeProvidable)
+    class Iterable : public Clonable {
+        WRD_INTERFACE(Iterable, Clonable)
 
     public:
         virtual wbool isEnd() const = 0;

@@ -6,7 +6,7 @@
 namespace wrd {
 
     class Iteration : public Instance, public Iterable {
-        WRD_CLASS(Iteration)
+        WRD_INTERFACE(Iteration)
         friend class Iter;
 
     public:
