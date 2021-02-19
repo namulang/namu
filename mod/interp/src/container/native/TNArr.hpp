@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NArr.hpp"
+#include "../iterator/TIter.hpp"
 
 namespace wrd {
 
@@ -10,7 +11,7 @@ namespace wrd {
 
     public:
         T& operator[](widx n) { return get(n); }
-        const T& operator[](widx n) { return get(n); }
+        const T& operator[](widx n) const { return get(n); }
 
         using Super::get;
         T& get(widx n) override { return (T&) Super::get(n); }
@@ -24,6 +25,7 @@ namespace wrd {
         TIter<T> head() const override { return iter(0); }
         TIter<T> tail() const override { return iter(getLen()); }
         TIter<T> iter(widx n) const {
+            return TIter(_onIter(n));
         }
         TIter<T> iter(const T& elem) const {
             return Super::iter(elem);
