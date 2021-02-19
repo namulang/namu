@@ -1,27 +1,25 @@
 #pragma once
 
 #include "Iterable.hpp"
-#include "../Containable.hpp"
+#include "../../ast/Clonable.hpp"
 
 namespace wrd {
 
-    class Iteration : public Instance, public Iterable {
+    class Iteration : public Instance, public Iterable, public Clonable {
         WRD_INTERFACE(Iteration)
         friend class Iter;
 
     public:
-        Iteration(const Containable& own): _own(const_cast<Containable&>(own)) {}
-
         virtual wbool operator==(const Iteration& rhs) const {
-            return isFrom(rhs._own);
+            return isFrom(rhs.getContainer());
         }
 
         wbool isFrom(const Containable& rhs) const override {
-            return &_own == &rhs;
+            return &getContainer() == &rhs;
         }
 
-    protected:
-        Containable& _own;
+        virtual Containable& getContainer() = 0;
+        const Containable& getContainer() const WRD_UNCONST_FUNC(getContainer())
     };
 
 }

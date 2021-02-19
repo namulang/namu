@@ -5,7 +5,7 @@
 namespace wrd {
 
     class ArrContainable : public Containable {
-        WRD_INTERFACE(ArrContainable, Containable)
+        WRD_DECL_THIS(ArrContainable, Containable)
 
     public:
         Node& operator[](widx n) { return get(n); }
@@ -20,7 +20,10 @@ namespace wrd {
 
         Iter head() const override { return iter(0); }
         Iter tail() const override { return iter(getLen()); }
-        virtual Iter iter(widx n) const = 0;
+        Iter iter(widx n) const {
+            return Iter(_onIter(n));
+        }
+
         Iter iter(const Node& elem) const {
             const Iter* ret;
             each<Node>([&ret, &elem](const Iter& e, const Node& myelem) {
@@ -76,5 +79,8 @@ namespace wrd {
 
             return true;
         }
+
+    protected:
+        virtual Iteration* _onIter(widx n) const = 0;
     };
 }

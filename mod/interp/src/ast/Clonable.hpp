@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class Clonable : public TypeProvidable {
+    class Clonable {
         WRD_DECL_THIS(Clonable)
         WRD_INIT_META(This)
 

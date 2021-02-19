@@ -4,11 +4,13 @@
 
 namespace wrd {
 
-    class Iter : public Iterable {
+    class Iter : public Iterable, public Clonable, public TypeProvidable {
         WRD_CLASS(Iter)
         friend class Iteration;
+        friend class NArr;
 
     public:
+        Iter() {}
         Iter(Iteration* newStep): _step(newStep) {}
         Iter(const Iter& rhs) {
             _assign(rhs);
@@ -25,17 +27,34 @@ namespace wrd {
         virtual const Node* operator->() const WRD_UNCONST_FUNC(operator->())
         operator wbool() { return !isEnd(); }
 
-        wbool isFrom(const Containable& it) const override { return _step->isFrom(it); }
-        wbool isEnd() const override { return _step->isEnd(); }
-        wbool next() override { return _step->next(); }
-        wbool prev() override { return _step->prev(); }
+        wbool isFrom(const Containable& it) const override {
+            if(!_step) return false;
+            return _step->isFrom(it);
+        }
 
-        Node& get() override { return _step->get(); }
-        const Node& get() const override { return _step->get(); }
+        wbool isEnd() const override {
+            if(!_step) return true;
+            return _step->isEnd();
+        }
+
+        wbool next() override {
+            if(!_step) return false;
+            return _step->next();
+        }
+
+        wbool prev() override {
+            if(!_step) return false;
+            return _step->prev();
+        }
+
+        Node& get() override {
+            if(!_step) return nulOf<Node>();
+            return _step->get();
+        }
 
     private:
         This& _assign(const This& rhs) {
-            _step.bind(_step->clone());
+            _step.bind((Iteration*) _step->clone());
             return *this;
         }
 

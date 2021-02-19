@@ -3,6 +3,13 @@
 #include "../common.hpp"
 
 namespace wrd {
+
+
+    class Node : public Instance {
+        WRD_INTERFACE(Node, Instance)
+    };
+
+    /*
     // iteration #1:
     // 강제로 Func를 상속한 c++ 클래스를 만들고 그 안에서 hello world 찍기
     // * node의 기본적인 API의 틀만 적기
@@ -127,7 +134,6 @@ namespace wrd {
     class TChain : public Chain {
     };
 
-/*
     // iteration #2:
     // 강제로 AST를 조직함. Console 이라는 obj 안에 있는 void print(msg str)를 실행하는 callExpr 실행
     // 강제로 obj를 scope에 등록을 해둔 상태에서 callexpr를 실행함.

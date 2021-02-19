@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-#define _WRD_INTERFACE_FOOTER(THIS) \
+#define WRD_INTERFACE_FOOTER(THIS) \
         WRD_INIT_META(THIS) \
     public: \
         typedef WType SuperType; \
@@ -22,10 +22,10 @@ namespace wrd {
 
 #define WRD_INTERFACE_1(THIS) \
         WRD_DECL_THIS_1(THIS) \
-        _WRD_INTERFACE_FOOTER(THIS)
+        WRD_INTERFACE_FOOTER(THIS)
 #define WRD_INTERFACE_2(THIS, SUPER) \
         WRD_DECL_THIS_2(THIS, SUPER) \
-        _WRD_INTERFACE_FOOTER(THIS)
+        WRD_INTERFACE_FOOTER(THIS)
 #define WRD_INTERFACE(...) WRD_OVERLOAD(WRD_INTERFACE, __VA_ARGS__)
 
 #define WRD_CLASS_1(THIS) \
