@@ -69,7 +69,7 @@ namespace wrd {
     wuchar* This::_getHeap() { return _heap; }
 
     void* This::_get(widx n) {
-        if(n < 0 | n >= getSize()) return WRD_NULL;
+        if(n < 0 || n >= getSize()) return WRD_NULL;
 
         return _heap + n*_getRealBlkSize();
     }
