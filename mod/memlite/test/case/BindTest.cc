@@ -41,21 +41,25 @@ TEST(BindTest, defaultBehaviorTest) {
     ASSERT_GE(id.s.tagN,  0);
 }
 
+TEST(BindTest, shouldNotBindLocalInstance) {
+    TStr<A> binder;
+    ASSERT_FALSE(binder.bind(A()));
+    ASSERT_FALSE(binder.isBind());
+}
+
 TEST(BindTest, bindSameInstanceFewTimesTest) {
     ASSERT_EQ(B::get(), 0);
 
     {
-        B b1;
+        B localB1;
         ASSERT_EQ(B::get(), 1);
-        ASSERT_EQ(b1.getBindTag().getStrongCnt(), 0);
+        ASSERT_EQ(localB1.getBindTag().getStrongCnt(), 0);
 
-        TStr<B> bb1(b1),
-                bb2(TStr<B>(new B(b1))),
+        TStr<B> bb1(localB1),
+                bb2(TStr<B>(new B(localB1))),
                 bb3;
         ASSERT_EQ(B::get(), 2);
-        ASSERT_TRUE(bb1.isBind());
-        ASSERT_FALSE(nul(bb1->getBindTag()));
-        ASSERT_EQ(bb1->getBindTag().getStrongCnt(), 0);
+        ASSERT_FALSE(bb1.isBind());
 
         ASSERT_TRUE(bb2.isBind());
         ASSERT_FALSE(nul(bb2->getBindTag()));
