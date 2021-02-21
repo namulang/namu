@@ -18,6 +18,7 @@ namespace wrd {
         operator wbool() const;
 
         virtual wbool bind(const T& it) {
+            if(nul(it)) return false;
             // type checking before binding only is required to Bind class.
             // Derived classes from this doesn't need it. because its type is specified.
             // prevent wrong type providing by compiler.
