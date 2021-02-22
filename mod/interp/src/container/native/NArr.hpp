@@ -31,13 +31,13 @@ namespace wrd {
                 return _isValidN(_n);
             }
             wbool next() override {
-                if(!_isValidN(_n + 1)) return false;
+                if(!_isValidN(_n+1)) return false;
 
                 _n++;
                 return true;
             }
             wbool prev() override {
-                if(!_isValidN(_n - 1)) return false;
+                if(!_isValidN(_n-1)) return false;
 
                 _n--;
                 return true;
@@ -69,8 +69,6 @@ namespace wrd {
         wbool set(widx n, const Node& new1) override;
 
         Iteration* _onIter(widx n) const override {
-            if(!_isValidN(n)) return NULL;
-
             This* unconst = const_cast<This*>(this);
             return new NArrIteration(*unconst, n);
         }
@@ -79,15 +77,13 @@ namespace wrd {
 
         using Super::add;
         wbool add(const Iter& e, const Node& new1) override;
+        wbool add(widx n, const Node& new1) override;
         using Super::del;
         wbool del(const Iter& it) override;
+        wbool del(widx n) override;
 
     private:
-        wbool _isValidN(widx n) const {
-            // if n == getLen means it's end of buffer.
-            return n < 0 || n > getLen();
-        }
-
+        wbool _isValidN(widx n) const;
         std::vector<Str> _vec;
     };
 }

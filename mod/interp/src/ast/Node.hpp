@@ -5,7 +5,7 @@
 namespace wrd {
 
 
-    class Node : public Instance {
+    class Node : public Instance, public Clonable {
         WRD_INTERFACE(Node, Instance)
     };
 
