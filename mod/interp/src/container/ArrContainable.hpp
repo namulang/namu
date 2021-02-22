@@ -49,13 +49,8 @@ namespace wrd {
         wcnt add(const Containable& rhs) {
             return add(rhs.head(), tail());
         }
-        virtual wbool add(const Iter& e, const Node& new1) {
-            if(nul(e) || nul(new1)) return false;
-            if(!e.isFrom(*this)) return false;
-            if(e.isEnd()) return false;
-
-            return true;
-        }
+        virtual wbool add(const Iter& e, const Node& new1) = 0;
+        virtual wbool add(widx n, const Node& new1) = 0;
 
         wbool del(const Node& it) { return del(iter(it)); }
         /// delete last element if exists.
@@ -72,13 +67,8 @@ namespace wrd {
             return del(rhs.head(), rhs.tail());
         }
         /// @return true if element got deleted successfully.
-        virtual wbool del(const Iter& it) {
-            if(nul(it)) return false;
-            if(!it.isFrom(*this)) return false;
-            if(it.isEnd()) return false;
-
-            return true;
-        }
+        virtual wbool del(const Iter& it) = 0;
+        virtual wbool del(widx n) = 0;
 
     protected:
         virtual Iteration* _onIter(widx n) const = 0;
