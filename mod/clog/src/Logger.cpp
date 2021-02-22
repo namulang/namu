@@ -44,6 +44,8 @@ namespace wrd {
     wcnt This::getStreamCount() const { return _streams.size(); }
 
     wbool This::dump(const wchar* message) {
+        if(!isEnable()) return false;
+
         wbool result = false;
         for(auto e : _streams)
             result |= e->dump(message);
@@ -72,6 +74,7 @@ namespace wrd {
 
     wbool This::init() {
         rel();
+        Super::init();
 
         static Stream* streams[] = {new ConsoleStream(), new FileLogStream("./logs"), 0};
         Stream* e = 0;
