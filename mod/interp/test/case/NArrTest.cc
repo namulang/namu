@@ -54,7 +54,7 @@ TEST(NArrFixture, addDel10Elems) {
 
 void benchMark(int cnt) {
     Logger::get().setEnable(false);
-    vector<MyNode*> vec;
+    vector<Str> vec;
 
     auto start = chrono::steady_clock::now();
     for(int n=0; n < cnt; n++) {
