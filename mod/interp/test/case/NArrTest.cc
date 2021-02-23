@@ -58,13 +58,10 @@ void benchMark(int cnt) {
 
     auto start = chrono::steady_clock::now();
     for(int n=0; n < cnt; n++) {
-        vec.push_back(new MyNode(n));
+        vec.push_back(Str(new MyNode(n)));
     }
     int sz = vec.size();
     auto startDeleting = chrono::steady_clock::now();
-    for(int n=0; n < cnt; n++) {
-        delete vec[n];
-    }
     vec.clear();
     auto end = chrono::steady_clock::now();
 
