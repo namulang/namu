@@ -96,5 +96,4 @@ TEST(NArrFixture, benchMarkTest) {
     benchMark(100);
     benchMark(1000);
     benchMark(10000);
-    benchMark(50000);
 }
