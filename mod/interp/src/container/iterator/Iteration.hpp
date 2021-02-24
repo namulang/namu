@@ -5,6 +5,7 @@
 
 namespace wrd {
 
+    class Containable;
     class Iteration : public Instance, public Iterable, public Clonable {
         WRD_INTERFACE(Iteration)
         friend class Iter;
@@ -17,9 +18,5 @@ namespace wrd {
         wbool isFrom(const Containable& rhs) const override {
             return &getContainer() == &rhs;
         }
-
-        virtual Containable& getContainer() = 0;
-        const Containable& getContainer() const WRD_UNCONST_FUNC(getContainer())
     };
-
 }
