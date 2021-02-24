@@ -13,7 +13,7 @@ namespace wrd {
     }
 
     wbool This::set(const Iter& at, const Node& new1) {
-        auto cast = at._step->cast<NArrIteration>();
+        NArrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;
 
         return set(cast._n, new1);
@@ -34,6 +34,7 @@ namespace wrd {
         if(nul(e) || nul(new1)) return false;
         if(!e.isFrom(*this)) return false;
         NArrIteration& cast = (NArrIteration&) *e._step;
+        if(nul(cast)) return false;
 
         return add(cast._n, new1);
     }
@@ -47,11 +48,9 @@ namespace wrd {
         return true;
     }
 
-    wbool This::del(const Iter& it) {
-        if(nul(it)) return false;
-        if(!it.isFrom(*this)) return false;
-        if(it.isEnd()) return false;
-        NArrIteration& cast = (NArrIteration&) *it._step;
+    wbool This::del(const Iter& at) {
+        NArrIteration& cast = _getIterationFrom(at);
+        if(nul(cast)) return false;
 
         _vec.erase(_vec.begin() + cast._n);
         return del(cast._n);

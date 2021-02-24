@@ -1,14 +1,12 @@
 #pragma once
 
-#include "../ArrContainable.hpp"
+#include "NArrContainer.hpp"
 #include "../../ast/Node.hpp"
 
 namespace wrd {
 
-    class NArr : public ArrContainable, public Clonable, public TypeProvidable {
-        WRD_DECL_THIS(NArr, ArrContainable)
-        WRD_INTERFACE_FOOTER(NArr)
-        WRD_CLONE(This)
+    class NArr : public NArrContainer {
+        WRD_CLASS(NArr, NArrContainer)
 
         friend class NArrIteration;
         class NArrIteration : public Iteration {
@@ -36,12 +34,6 @@ namespace wrd {
                 _n++;
                 return true;
             }
-            wbool prev() override {
-                if(!_isValidN(_n-1)) return false;
-
-                _n--;
-                return true;
-            }
             Node& get() override {
                 if(isEnd()) return nulOf<Node>();
                 return _own.get(_n);
@@ -61,10 +53,10 @@ namespace wrd {
     public:
         wcnt getLen() const override;
 
-        using Super::get;
+        using ArrContainable::get;
         Node& get(widx n) override;
 
-        using Super::set;
+        using ArrContainable::set;
         wbool set(const Iter& at, const Node& new1) override;
         wbool set(widx n, const Node& new1) override;
 
@@ -75,15 +67,23 @@ namespace wrd {
 
         void empty() override;
 
-        using Super::add;
+        using ArrContainable::add;
         wbool add(const Iter& e, const Node& new1) override;
         wbool add(widx n, const Node& new1) override;
-        using Super::del;
+        using ArrContainable::del;
         wbool del(const Iter& it) override;
         wbool del(widx n) override;
 
     private:
+        NArrIteration& _getIterationFrom(const Iter& it) {
+            if(nul(it)) return nulOf<NArrIteration>();
+            if(!it.isFrom(*this)) return nulOf<NArrIteration>();
+            if(it.isEnd()) return nulOf<NArrIteration>();
+            return (NArrIteration&) *it._step;
+        }
+
         wbool _isValidN(widx n) const;
+
         std::vector<Str> _vec;
     };
 }
