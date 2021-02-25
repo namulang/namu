@@ -33,7 +33,7 @@ namespace wrd {
         //          will leds us to here, however nothing serius happen because init flag was set
         //          to true.
         _setInit(true);
-        WRD_I("initializing %s type's meta info...", getName().c_str());
+        WRD_DI("initializing %s type's meta info...", getName().c_str());
         //      get Supers info from Super:
         //          at this point TType<Super> is instantiated, and "Super" also is all of this
         //          sequences.
