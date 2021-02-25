@@ -60,7 +60,7 @@ def branch(command):
     elif command == "rebuild":
         return rebuild()
     elif command == "build":
-        return build()
+        return build("silent")
     elif command == "rel":
         return relBuild()
     elif command == "dbg":
@@ -156,7 +156,7 @@ def dbgBuild():
 
 def relBuild():
     clean()
-    return build()
+    return build("silent")
 
 # currently this application only supports window and linux.
 def isWindow():
@@ -337,7 +337,7 @@ def rebuild():
     clean()
     return build()
 
-def build():
+def build(arg = ""):
     _checkGTest()
     #_beautify()
     _injectBuildInfo()
@@ -345,12 +345,12 @@ def build():
         return -1
     if _make():
         return -1
-    if _ut():
+    if _ut(arg):
         return -1
     _incBuildCnt()
     return 0
 
-def _ut():
+def _ut(arg):
     print("")
     printInfoEnd("let's initiate unit tests...")
     global cwd, binDir
@@ -361,7 +361,7 @@ def _ut():
     for file in files:
         if len(file) < 4 or file[-4:] != "Test":
             continue
-        res = os.system(binDir + "/" + file)
+        res = os.system(binDir + "/" + file + " " + arg)
         if res != 0:
             printErr(file + " was failed!")
             ret = res;
