@@ -18,12 +18,6 @@ namespace wrd {
     }
 
     wbool This::bind(Bind& me, const Instance& it) {
-        Id itsId = it.getId();
-        if(!itsId.isOnHeap()) {
-            WRD_W("Bind(%x) can't bind local(%x) object. it was a %s class.", &me, &it, it.getType().getName().c_str());
-            return false;
-        }
-
         unbind(me);
         //  regardless of result from _onStrong binder can bind:
         //      there are two reasons:
