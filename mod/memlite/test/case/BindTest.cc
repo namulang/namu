@@ -3,6 +3,9 @@
 using namespace wrd;
 
 struct A : public Instance {
+    A(): age(0) {}
+    A(int newAge): age(newAge) {}
+
     int age;
 
     const Type& getType() const override {
@@ -120,6 +123,31 @@ TEST(BindTest, BindByValueTest) {
     bindA.unbind();
 
     ASSERT_EQ(tag.getStrongCnt(), 0);
+}
+
+void integrity(int cnt) {
+    std::vector<TStr<A>> tray;
+    std::vector<Id> ids;
+    for(int n=0; n < cnt; n++) {
+        A* new1 = new A(n);
+        tray.push_back(TStr<A>(new1));
+        ids.push_back(new1->getId());
+    }
+
+    const Watcher& watcher = Instancer::get().getWatcher();
+    for(int n=0; n < cnt;n++) {
+        Id id = ids[n];
+        ASSERT_EQ(tray[n]->getId(), id);
+
+        const BindTag& tag = watcher[id].blk;
+        ASSERT_EQ(id.num, tag.getId().num);
+    }
+}
+
+TEST(BindTest, bindMultiplTimesIntegrityTest) {
+    integrity(10);
+    integrity(100);
+    integrity(1000);
 }
 
 TEST(BindTest, WeakBindButInstanceGoneTest) {
