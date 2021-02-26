@@ -40,8 +40,38 @@ TEST(BindTest, defaultBehaviorTest) {
     ASSERT_TRUE(tag.isHeap());
 
     Id id = tag.getId();
-    ASSERT_GT(id.s.serial, 0);
-    ASSERT_GE(id.s.tagN,  0);
+    ASSERT_GT(id.serial, 0);
+    ASSERT_GE(id.tagN,  0);
+}
+
+TEST(BindTest, shouldBindTagInaccessibleAfterInstanceTermination) {
+    Id id;
+    const Watcher& watcher = Instancer::get().getWatcher();
+    const BindTag* tag;
+    {
+        B b1;
+        id = b1.getId();
+        tag = &watcher[id].blk;
+        ASSERT_FALSE(nul(tag));
+        ASSERT_EQ(id, tag->getId());
+    }
+
+    ASSERT_TRUE(nul(watcher[id]));
+}
+
+TEST(BindTest, supportLocalBindingTest) {
+    TStr<B> bind;
+    ASSERT_FALSE(bind);
+
+    {
+        B b;
+        bind.bind(b);
+        ASSERT_TRUE(bind);
+        ASSERT_EQ(&(*bind), &b);
+    }
+
+    ASSERT_FALSE(bind);
+    ASSERT_TRUE(nul(*bind));
 }
 
 TEST(BindTest, bindSameInstanceFewTimesTest) {
@@ -136,7 +166,7 @@ void integrity(int cnt) {
         ASSERT_EQ(tray[n]->getId(), id);
 
         const BindTag& tag = watcher[id].blk;
-        ASSERT_EQ(id.num, tag.getId().num);
+        ASSERT_EQ(id, tag.getId());
     }
 }
 

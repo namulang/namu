@@ -13,7 +13,7 @@ namespace wrd {
     }
 
     wbool This::unbind(Bind& me) {
-        me._itsId.num = WRD_INDEX_ERROR;
+        me._itsId.rel();
         return true;
     }
 

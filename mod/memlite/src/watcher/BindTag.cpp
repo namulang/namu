@@ -4,10 +4,13 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(BindTag, Instance)
+    WRD_DEF_THIS(BindTag)
 
-    This::BindTag() : Super(), _pt(NULL), _strong(0) {}
-    This::BindTag(Id id) : Super(id), _pt(NULL), _strong(0) {}
+    This::BindTag() : _pt(NULL), _strong(0) {}
+    This::BindTag(Id id) : _pt(NULL), _strong(0), _id(id) {}
+    This::~BindTag() {
+        _id.serial = 0;
+    }
 
     const Chunk& This::getChunk() const {
         if(!_pt)
@@ -30,7 +33,7 @@ namespace wrd {
     const Type& This::getBindable() const { return TType<Instance>::get(); }
     wbool This::canBind(const Type& type) const { return type.isSub(getBindable()); }
     Id This::getId() const { return _id; }
-    wbool This::isHeap() const { return _id.s.chkN != WRD_INDEX_ERROR; }
+    wbool This::isHeap() const { return _id.chkN != WRD_INDEX_ERROR; }
     wbool This::rel() { return unbind(); }
 
     wbool This::_onStrong(wcnt vote) {
@@ -58,7 +61,7 @@ namespace wrd {
     wbool This::_completeId(Instance& it) {
         //  complete mine:
         Id mine = getId();
-        mine.s.chkN = it._id.s.chkN;
+        mine.chkN = it._id.chkN;
         //  propagate it:
         return _sync(mine);
     }
@@ -66,6 +69,7 @@ namespace wrd {
     wbool This::_sync(Id new1) {
         if(_pt)
             _pt->_setId(new1);
-        return _setId(new1);
+        _id = new1;
+        return true;
     }
  }
