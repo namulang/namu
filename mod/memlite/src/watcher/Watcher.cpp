@@ -12,8 +12,8 @@ namespace wrd {
     WatchCell& This::get(widx n) { return *(WatchCell*)_get(n); }
 
     WatchCell& This::get(Id id) {
-        WatchCell& got = get(id.s.tagN);
-        WRD_NUL(got, nulOf<WatchCell>());
+        WatchCell& got = get(id.tagN);
+        if(nul(got)) return nulOf<WatchCell>();
 
         if(got.blk.getId().num != id.num) {
             WRD_W("can't return WatchCell.blk.getId(%d) != id.num(%d)",
@@ -31,6 +31,13 @@ namespace wrd {
 
         ::new (&res->blk) BindTag(_genId(res));
         return res;
+    }
+
+    wbool This::del(void* used, wcnt sz) {
+        WatchCell& cell = *((WatchCell*) used);
+        cell.~WatchCell();
+
+        return Super::del(used, sz);
     }
 
     Id This::_genId(void* pt) const {

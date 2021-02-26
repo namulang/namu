@@ -20,6 +20,6 @@ namespace wrd {
     void This::_del(void* pt, wcnt sz) { _pool[sz].del(pt, sz); }
     const Pool& This::getPool() const { return _pool; }
     const Watcher& This::getWatcher() const { return _watcher; }
-    wbool This::_hasBindTag(const Instance& it) const { return it._id.s.tagN != WRD_INDEX_ERROR; }
+    wbool This::_hasBindTag(const Instance& it) const { return it._id.tagN != WRD_INDEX_ERROR; }
 
 }

@@ -6,17 +6,17 @@ namespace wrd {
     WRD_DEF_THIS(Instance)
     This::Vault Instance::_vault;
 
-    This::Instance() { _id.s.chkN = _vault.get(this); }
+    This::Instance() { _id.chkN = _vault.get(this); }
     This::Instance(Id id) : _id(id) {} // no binding required.
     This::~Instance() { _getMgr().unbind(*this); }
 
-    wbool This::operator==(const This& rhs) const { return _id.num == rhs._id.num; }
-    wbool This::operator!=(const This& rhs) const { return ! operator==(rhs); }
+    wbool This::operator==(const This& rhs) const { return _id == rhs._id; }
+    wbool This::operator!=(const This& rhs) const { return !operator==(rhs); }
     void* This::operator new(size_t sz) { return _getMgr()._new1(sz); }
     void This::operator delete(void* pt, size_t sz) { _getMgr()._del(pt, sz); }
 
     Id This::getId() const {
-        if(_id.s.tagN == WRD_INDEX_ERROR)
+        if(_id.tagN == WRD_INDEX_ERROR)
             _getMgr().bind((This&)*this);
         return _id;
     }

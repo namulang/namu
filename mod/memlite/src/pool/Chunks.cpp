@@ -12,7 +12,7 @@ namespace wrd {
     Chunk& This::operator[](const Instance& inst) { return get(inst); }
 
     Chunk& This::get(widx n) { return *(Chunk*)_get(n); }
-    Chunk& This::get(const Instance& it) { return *(Chunk*)_get(it.getId().s.chkN); }
+    Chunk& This::get(const Instance& it) { return *(Chunk*)_get(it.getId().chkN); }
 
     wbool This::rel() { return _rel(); }
     wcnt This::getLen() const { return _chunks.size(); }
@@ -29,7 +29,7 @@ namespace wrd {
         //  in fact, cast wasn't be deallocated yet:
         //      if we guarrantee that destructor didn't change its _id value,
         //      _id will keep its value till now.
-        widx chkN = ((Instance*) pt)->_id.s.chkN;
+        widx chkN = ((Instance*) pt)->_id.chkN;
         return _chunks[chkN]->del(pt, sz);
     }
 
@@ -49,7 +49,7 @@ namespace wrd {
         return _s;
     }
 
-    wbool This::has(const Instance& it) const { return _chunks[it.getId().s.chkN]->has(it); }
+    wbool This::has(const Instance& it) const { return _chunks[it.getId().chkN]->has(it); }
 
     wbool This::resize(wcnt new1) {
         _s = _chunks.size();
