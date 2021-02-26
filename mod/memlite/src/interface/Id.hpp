@@ -15,6 +15,13 @@ namespace wrd {
         Id(wint64 it);
         Id(wint new_tagN = WRD_INDEX_ERROR, wint newChkN = WRD_INDEX_ERROR, wuint newSerial = 0);
 
+        wbool operator==(const Id& rhs) const {
+            return num == rhs.num;
+        }
+        wbool operator!=(const Id& rhs) const {
+            return !operator==(rhs);
+        }
+
         wbool isOnHeap() const {
             return s.chkN >= 0;
         }
