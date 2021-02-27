@@ -53,8 +53,8 @@ TEST_F(ConsoleStreamTest, dumpFormat) {
 TEST_F(ConsoleStreamTest, macro) {
     ASSERT_FALSE(ThisTest::hasLogFile());
 
-    WRD_W("world!")
-    WRD_E("this is not an error.")
+    WRD_W("world!");
+    WRD_E("this is not an error.");
 
     ASSERT_TRUE(ThisTest::hasLogFile());
 }
