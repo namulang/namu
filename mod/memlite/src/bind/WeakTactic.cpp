@@ -31,8 +31,6 @@ namespace wrd {
         //          refering. for instance, the scenario for binding non-heap allocated
         //          instance.
         me._itsId = it.getId();
-        WRD_DI("Bind(%x) binds Instance(%x) of %s class",
-                &me, &it, it.getType().getName().c_str());
         return true;
     }
 
