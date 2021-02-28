@@ -22,10 +22,7 @@ namespace wrd {
     }
 
     wbool This::isHeap() const {
-        const BindTag& blk = getBindTag();
-        WRD_NUL(blk, false)
-
-        return blk.isHeap();
+        return _id.isHeap();
     }
 
     const BindTag& This::getBindTag() const { return _getBindTag(getId()); }

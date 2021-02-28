@@ -21,7 +21,7 @@ namespace wrd {
             serial = 0;
         }
 
-        wbool isOnHeap() const {
+        wbool isHeap() const {
             return chkN >= 0;
         }
 

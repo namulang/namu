@@ -22,7 +22,7 @@ namespace wrd {
     wcnt This::getStrongCnt() const { return _strong; }
 
     wbool This::unbind() {
-        if(_pt && isHeap())
+        if(_pt && _id.isHeap())
             delete _pt;
         _pt = WRD_NULL;
         _strong = 0;
@@ -33,11 +33,10 @@ namespace wrd {
     const Type& This::getBindable() const { return TType<Instance>::get(); }
     wbool This::canBind(const Type& type) const { return type.isSub(getBindable()); }
     Id This::getId() const { return _id; }
-    wbool This::isHeap() const { return _id.chkN != WRD_INDEX_ERROR; }
     wbool This::rel() { return unbind(); }
 
     wbool This::_onStrong(wcnt vote) {
-        if(!isHeap()) return false;
+        if(!_id.isHeap()) return false;
         if(!vote) {
             WRD_I("vote is 0");
             return false;
