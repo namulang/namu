@@ -33,7 +33,6 @@ namespace wrd {
         wbool bind(const Instance& new1) override;
         //  Instance:
         Id getId() const;
-        wbool isHeap() const;
         //  TypeProvidable:
         const Type& getType() const override{
             return TType<BindTag>::get();
