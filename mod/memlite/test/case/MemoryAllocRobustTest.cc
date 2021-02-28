@@ -3,33 +3,36 @@
 
 using namespace wrd;
 
-struct A : public Instance {
-    WRD_SINGLETON_GETTER(const Type& getType() const, TType<A>)
+namespace {
+    struct A : public Instance {
+        WRD_SINGLETON_GETTER(const Type& getType() const, TType<A>)
 
-    int age;
-};
+        int age;
+    };
 
-struct B : public A {
-    WRD_SINGLETON_GETTER(const Type& getType() const, TType<B>)
 
-    float grade;
-};
+    struct B : public A {
+        WRD_SINGLETON_GETTER(const Type& getType() const, TType<B>)
 
-struct PInstance { Id _id; };
-struct PNode : public PInstance {};
-struct PObject : public PNode {};
+        float grade;
+    };
 
-struct PA : public PObject {
-    WRD_SINGLETON_GETTER(const Type& getType() const, TType<PA>)
+    struct PInstance { Id _id; };
+    struct PNode : public PInstance {};
+    struct PObject : public PNode {};
 
-    int age;
-};
+    struct PA : public PObject {
+        WRD_SINGLETON_GETTER(const Type& getType() const, TType<PA>)
 
-struct PB : public PA {
-    WRD_SINGLETON_GETTER(const Type& getType() const, TType<PB>)
+        int age;
+    };
 
-    float grade;
-};
+    struct PB : public PA {
+        WRD_SINGLETON_GETTER(const Type& getType() const, TType<PB>)
+
+        float grade;
+    };
+}
 
 time_t run1(int& crc, int n)
 {

@@ -14,7 +14,6 @@ namespace wrd {
 
         virtual void* new1() = 0;
         virtual wbool del(void* used, wcnt sz) = 0;
-        virtual wbool resize(wcnt new1) = 0;
         wcnt getBlkSize() const;
 
     private:

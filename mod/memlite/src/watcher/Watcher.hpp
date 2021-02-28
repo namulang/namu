@@ -25,7 +25,9 @@ namespace wrd {
         const WatchCell& get(widx n) const WRD_UNCONST_FUNC(get(n));
         const WatchCell& get(Id id) const WRD_UNCONST_FUNC(get(id));
         //  Allocator:
-        void* new1();
+        void* new1() override;
+
+        wbool del(void* used, wcnt sz) override;
 
     protected:
         //  Watcher:

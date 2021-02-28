@@ -1,27 +1,29 @@
 #include "../common/dep.hpp"
+#include <vector>
 
 using namespace wrd;
+using namespace std;
 
 TEST(ChunkTest, MemoryHaverTest) {
-    Chunk chk(4, false);
+    Chunk chk(4);
 
-    ASSERT_EQ(chk.getLen(), 0);
-    ASSERT_EQ(chk.getSize(), 0);
-    ASSERT_EQ(chk[0], chk.get(0));
-    ASSERT_FALSE(chk[1]);
-    ASSERT_FALSE(chk[-1]);
-    ASSERT_TRUE(chk.isFull());
-    ASSERT_FALSE(chk.isCapable());
-    ASSERT_FALSE(chk.has(nulOf<Instance>()));
+    EXPECT_EQ(chk.getLen(), 0);
+    EXPECT_EQ(chk.getSize(), Chunk::MIN_SZ);
+    EXPECT_EQ(chk[0], chk.get(0));
+    EXPECT_TRUE(chk[1]);
+    EXPECT_FALSE(chk[-1]);
+    EXPECT_FALSE(chk.isFull());
+    EXPECT_TRUE(chk.isCapable());
+    EXPECT_FALSE(chk.has(nulOf<Instance>()));
 }
 
 TEST(ChunkTest, AllocatorTest) {
-    Chunk chk(4, false);
+    Chunk chk(4);
 
-    ASSERT_EQ(chk.getBlkSize(), 4);
-    ASSERT_TRUE(chk.rel());
-    ASSERT_EQ(chk.getLen(), 0);
-    ASSERT_EQ(chk.getSize(), 0);
+    EXPECT_EQ(chk.getBlkSize(), 4);
+    EXPECT_TRUE(chk.rel());
+    EXPECT_EQ(chk.getLen(), 0);
+    EXPECT_EQ(chk.getSize(), 0);
 }
 
 TEST(ChunkTest, ChunkListTest) {
@@ -31,83 +33,77 @@ TEST(ChunkTest, ChunkListTest) {
             for(int n=0; n < cnt ; n++)
             {
                 void* ptr = chk.new1();
-                ptrs.push_back(ptr);
                 if(!ptr)
                     return false;
             }
             return true;
         }
-        wbool rel(Chunk& chk) {
-            if(!chk.rel()) return false;
-            ptrs.clear();
-            return true;
-        }
-        std::vector<void*> ptrs;
     } heap;
-    Chunk chk(4, false);
 
-    ASSERT_FALSE(chk.isFixed());
-    ASSERT_TRUE(heap.new1(chk, 1));
-    ASSERT_EQ(chk.getLen(), 1);
-    ASSERT_EQ(chk.getSize(), Chunk::INIT_SZ);
-    ASSERT_TRUE(chk[0]);
-    ASSERT_EQ(chk[0], heap.ptrs[0]);
-    ASSERT_FALSE(chk[-1]);
+    Chunk chk(4, 1112);
 
-    ASSERT_TRUE(heap.new1(chk, 1));
-    ASSERT_EQ(chk.getLen(), 2);
-    ASSERT_GE(chk.getSize(), chk.getLen());
-    ASSERT_TRUE(chk[1]);
-    ASSERT_TRUE(chk.has(*(Instance*)chk[1]));
-    ASSERT_EQ(chk.getBlkSize(), 4);
+    EXPECT_TRUE(heap.new1(chk, 1));
+    EXPECT_EQ(chk.getLen(), 1);
+    EXPECT_EQ(chk.getSize(), 1112);
+    EXPECT_TRUE(chk[0]);
+    EXPECT_FALSE(chk[-1]);
 
-    ASSERT_TRUE(heap.rel(chk));
-    ASSERT_EQ(chk.getLen(), 0);
-    ASSERT_EQ(chk.getSize(), 0);
-    ASSERT_FALSE(chk[0]);
-    ASSERT_EQ(chk.getBlkSize(), 4);
+    EXPECT_TRUE(heap.new1(chk, 1));
+    EXPECT_EQ(chk.getLen(), 2);
+    EXPECT_GE(chk.getSize(), chk.getLen());
+    EXPECT_TRUE(chk[1]);
+    EXPECT_TRUE(chk.has(*(Instance*)chk[1]));
+    EXPECT_EQ(chk.getBlkSize(), 4);
 
-    ASSERT_TRUE(chk.rel());
-    ASSERT_EQ(chk.getSize(), 0);
-    ASSERT_EQ(chk.getBlkSize(), 4);
-    ASSERT_FALSE(chk.isFixed());
+    EXPECT_EQ(chk.getLen(), 2);
+    EXPECT_EQ(chk.getSize(), 1112);
+    EXPECT_TRUE(chk[0]);
+    EXPECT_EQ(chk.getBlkSize(), 4);
 
-    ASSERT_TRUE(chk.resize(5));
-    ASSERT_EQ(chk.getSize(), Chunk::INIT_SZ);
-    ASSERT_TRUE(chk.resize(Chunk::INIT_SZ + 5));
-    ASSERT_EQ(chk.getSize(), Chunk::INIT_SZ + 5);
-    ASSERT_EQ(chk.getLen(), 0);
-    ASSERT_TRUE(chk[4]);
-    ASSERT_TRUE(chk[0]);
-    ASSERT_NE(chk[4], chk[0]);
-    ASSERT_FALSE(chk[-1]);
-    ASSERT_NE(chk[0], chk[-1]);
-    ASSERT_TRUE(chk[-1] == WRD_NULL);
-    ASSERT_FALSE(chk.isFull());
-    ASSERT_TRUE(chk.isCapable());
+    EXPECT_TRUE(heap.new1(chk, 10));
+    EXPECT_EQ(chk.getLen(), 12);
 
-    ASSERT_TRUE(heap.new1(chk, 10));
-    ASSERT_TRUE(heap.rel(chk));
-    ASSERT_FALSE(chk.getLen());
+    EXPECT_TRUE(heap.new1(chk, 100));
+    EXPECT_EQ(chk.getLen(), 112);
+    EXPECT_EQ(chk.getSize(), 1112);
+    EXPECT_TRUE(chk[0]);
+    EXPECT_TRUE(chk[100]);
 
-    ASSERT_TRUE(heap.new1(chk, 100));
-    ASSERT_TRUE(chk.resize(105));
-    ASSERT_EQ(chk.getLen(), 100);
-    ASSERT_GT(chk.getSize(), 100);
-    ASSERT_TRUE(chk[0]);
-    ASSERT_TRUE(chk[100]);
-    ASSERT_TRUE(heap.rel(chk));
-    ASSERT_FALSE(chk.getLen());
+    EXPECT_TRUE(heap.new1(chk, 1000));
+    EXPECT_EQ(chk.getLen(), 1112);
 
-    ASSERT_TRUE(heap.new1(chk, 1000));
-    ASSERT_TRUE(heap.rel(chk));
-    ASSERT_FALSE(chk.getLen());
+    EXPECT_FALSE(heap.new1(chk, 1));
+    EXPECT_NE(chk.getLen(), 1113);
 
-    ASSERT_TRUE(heap.new1(chk, 10000));
-    ASSERT_TRUE(heap.rel(chk));
-    ASSERT_FALSE(chk.getLen());
+    EXPECT_TRUE(chk.rel());
+    EXPECT_EQ(chk.getSize(), 0);
+    EXPECT_EQ(chk.getBlkSize(), 4);
 
-    ASSERT_TRUE(heap.new1(chk, 100000));
-    ASSERT_TRUE(heap.rel(chk));
-    ASSERT_FALSE(chk.getLen());
+    EXPECT_EQ(chk.getLen(), 0);
+    EXPECT_FALSE(chk[4]);
+    EXPECT_FALSE(chk[0]);
+    EXPECT_TRUE(chk.isFull());
+    EXPECT_FALSE(chk.isCapable());
+
+}
+
+void addIntegrityTest(Chunk& chk, int cnt) {
+    for(int n=0; n < cnt ; n++) {
+        int* val = (int*) chk.new1();
+        *val = n;
+    }
+
+    for(int n=0; n < cnt ;n++) {
+        int* actual = (int*) chk[n];
+        EXPECT_EQ(*actual, n);
+    }
+}
+
+TEST(ChunkTest, addIntegrityTest100) {
+    Chunk chk(4, 100);
+    addIntegrityTest(chk, 100);
+}
+TEST(ChunkTest, addIntegrityTest10000) {
+    Chunk chk(4, 10000);
+    addIntegrityTest(chk, 10000);
 }

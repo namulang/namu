@@ -169,7 +169,7 @@ void integrity(int cnt) {
         ASSERT_EQ(id, tag.getId());
     }
 }
-
+/*
 TEST(BindTest, bindMultiplTimesIntegrityTest) {
     integrity(10);
     integrity(100);
@@ -188,3 +188,4 @@ TEST(BindTest, WeakBindButInstanceGoneTest) {
     ASSERT_FALSE(weakA.isBind());
     ASSERT_TRUE(nul(*weakA));
 }
+*/
