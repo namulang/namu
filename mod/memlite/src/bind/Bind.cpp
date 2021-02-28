@@ -42,10 +42,7 @@ namespace wrd {
     }
 
     Instance& This::get() {
-        Instance& ins = WRD_GETS(_getBindTag(_itsId),get());
-        WRD_NUL_THEN_LOG(ins)
-
-        return ins;
+        return WRD_GETS(_getBindTag(_itsId),get());
     }
 
     wbool This::_assign(const Bind& rhs) {

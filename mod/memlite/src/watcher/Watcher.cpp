@@ -15,16 +15,24 @@ namespace wrd {
         WatchCell& got = get(id.tagN);
         if(nul(got)) return nulOf<WatchCell>();
 
-        if(got.blk.getId().num != id.num) {
-            WRD_W("can't return WatchCell.blk.getId(%d) != id.num(%d)",
-                    got.blk.getId().num, id.num);
+        Id gotId = got.blk.getId();
+        if(gotId.tagN != id.tagN) {
+            WRD_W("BindTag was corrupted! WatchCell.id(%d.%d.%d) != id(%d.%d.%d)",
+                    gotId.tagN, gotId.chkN, gotId.serial, id.tagN, id.chkN, id.serial);
             return nulOf<WatchCell>();
         }
+        if(gotId.chkN != id.chkN || gotId.serial != id.serial)
+            // BindTag has been changed its instance to bind.
+            return nulOf<WatchCell>();
 
         return got;
     }
 
     void* This::new1() {
+        if(isFull())
+            if(!_resize(getSize()*2 + 1))
+                return WRD_E("resize Watcher failed! this damage system seriously !!!!"), nullptr;
+
         WatchCell* res = (WatchCell*)Super::new1();
         if(!res)
             return res;

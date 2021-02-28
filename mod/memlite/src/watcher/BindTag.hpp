@@ -6,8 +6,8 @@
 namespace wrd {
 
     class Chunk;
-    class BindTag : public Instance, public TBindable<Instance> {
-        WRD_DECL_THIS(BindTag, Instance)
+    class BindTag : public TypeProvidable, public TBindable<Instance> {
+        WRD_DECL_THIS(BindTag)
         WRD_INIT_META(This)
         template <typename T> friend class TWeak;
         template <typename T> friend class TStr;
@@ -18,6 +18,7 @@ namespace wrd {
         //  BindTag:
         BindTag();
         BindTag(Id id);
+        ~BindTag();
 
         const Chunk& getChunk() const;
         wcnt getStrongCnt() const;
@@ -31,8 +32,8 @@ namespace wrd {
         wbool canBind(const Type& cls) const override;
         wbool bind(const Instance& new1) override;
         //  Instance:
-        Id getId() const override;
-        wbool isHeap() const override;
+        Id getId() const;
+        wbool isHeap() const;
         //  TypeProvidable:
         const Type& getType() const override{
             return TType<BindTag>::get();
@@ -46,5 +47,6 @@ namespace wrd {
 
         Instance* _pt;
         wcnt _strong;
+        Id _id;
     };
 }

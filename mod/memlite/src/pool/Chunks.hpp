@@ -26,7 +26,10 @@ namespace wrd {
         //  Allocator:
         void* new1() override;
         wbool del(void* pt, wcnt sz) override;
-        wbool resize(wcnt new1) override;
+        /// @remark @ref Chunk can resize its data. but can't persist whole memory allocated before,
+        ///         it's a kind of memory flashing and can't give a way for accessing it.
+        ///         at outside, ptr for them should be daggled.
+        virtual wbool resize(wcnt new1);
         //  MemoryHaver:
         wbool has(const Instance& it) const override;
         wcnt getLen() const override;

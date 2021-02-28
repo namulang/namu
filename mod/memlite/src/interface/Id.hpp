@@ -1,33 +1,36 @@
 #pragma once
 
 #include "../common.hpp"
+#include <iostream>
 
 namespace wrd {
 
-    union Id {
-        struct SeperatedId {
-            wint tagN:21;
-            wint chkN:22;
-            wuint serial:21;
-        } s;
-        wint64 num;
-
-        Id(wint64 it);
-        Id(wint new_tagN = WRD_INDEX_ERROR, wint newChkN = WRD_INDEX_ERROR, wuint newSerial = 0);
+    struct Id {
+        Id(wint new_tagN, wint newChkN, wuint newSerial);
+        Id();
 
         wbool operator==(const Id& rhs) const {
-            return num == rhs.num;
+            return tagN == rhs.tagN && chkN == rhs.chkN && serial == rhs.serial;
         }
         wbool operator!=(const Id& rhs) const {
             return !operator==(rhs);
         }
 
+        void rel() {
+            tagN = chkN = WRD_INDEX_ERROR;
+            serial = 0;
+        }
+
         wbool isOnHeap() const {
-            return s.chkN >= 0;
+            return chkN >= 0;
         }
 
         wbool isValid() const {
-            return s.tagN >= 0;
+            return tagN >= 0;
         }
+
+        wint tagN:21;
+        wint chkN:22;
+        wuint serial:21;
     };
 }
