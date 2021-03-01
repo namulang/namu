@@ -10,8 +10,6 @@ namespace wrd {
     This::Instance(Id id) : _id(id) {} // no binding required.
     This::~Instance() { _getMgr().unbind(*this); }
 
-    wbool This::operator==(const This& rhs) const { return _id == rhs._id; }
-    wbool This::operator!=(const This& rhs) const { return !operator==(rhs); }
     void* This::operator new(size_t sz) { return _getMgr()._new1(sz); }
     void This::operator delete(void* pt, size_t sz) { _getMgr()._del(pt, sz); }
 
@@ -42,23 +40,17 @@ namespace wrd {
     Instancer& This::_getMgr() { return Instancer::get(); }
 
     wbool This::Vault::set(void* rcver, widx chkN) {
-        _rcver = rcver;
-        _chkN = chkN;
+        if(nul(rcver)) return false;
+
+        _vaults[rcver].n = chkN;
         return true;
     }
 
     widx This::Vault::get(void* rcver) {
-        //  pre:
-        if( ! _rcver) return WRD_INDEX_ERROR;
+        widx ret = _vaults[rcver].n;
+        if(ret > WRD_INDEX_ERROR)
+            _vaults.erase(rcver);
 
-        //  main:
-        widx ret = _chkN;
-        if(rcver != _rcver) {
-            WRD_W("rcver(%x) != _rcver(%x)", rcver, _rcver);
-            ret = WRD_INDEX_ERROR;
-        }
-
-        set(NULL, WRD_INDEX_ERROR);
         return ret;
     }
 

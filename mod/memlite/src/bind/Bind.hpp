@@ -55,8 +55,6 @@ namespace wrd {
         Bind(const This& rhs);
         ~Bind();
 
-        wbool operator==(const This& rhs) const;
-        wbool operator!=(const This& rhs) const;
         This& operator=(const This& rhs);
 
         //  Bind:
@@ -74,6 +72,7 @@ namespace wrd {
 
     protected:
         wbool _assign(const Bind& rhs);
+        wbool _onSame(const TypeProvidable& rhs) const override;
 
     private:
         Id _itsId; // id for binded one

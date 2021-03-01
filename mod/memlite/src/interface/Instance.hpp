@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Id.hpp"
+#include <map>
 
 namespace wrd {
 
@@ -16,6 +17,10 @@ namespace wrd {
         friend class Instancer; // for _id.
 
     public:
+        struct Defaulter {
+            widx n = WRD_INDEX_ERROR;
+        };
+
         class Vault {
 
         public:
@@ -24,8 +29,7 @@ namespace wrd {
             wbool rel();
 
         private:
-            void* _rcver;
-            widx _chkN;
+            std::map<void*, Defaulter> _vaults;
         };
 
         //  Instance:
@@ -33,8 +37,6 @@ namespace wrd {
         Instance(Id id);
         virtual ~Instance();
 
-        wbool operator==(const This& rhs) const;
-        wbool operator!=(const This& rhs) const;
         void* operator new(size_t sz);
         void operator delete(void* pt, size_t sz);
 
