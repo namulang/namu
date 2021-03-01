@@ -5,6 +5,15 @@ namespace wrd {
         WRD_DECL_THIS(TypeProvidable)
 
     public:
+        wbool operator==(const This& rhs) const {
+            if(getType() != rhs.getType()) return false;
+
+            return _onSame(rhs);
+        }
+        wbool operator!=(const This& rhs) const {
+            return !operator==(rhs);
+        }
+
         virtual const Type& getType() const = 0;
 
         template <typename T>
@@ -17,5 +26,10 @@ namespace wrd {
 
         template <typename T>
         const T& cast() const WRD_UNCONST_FUNC(cast<T>())
+
+    protected:
+        virtual wbool _onSame(const This& rhs) const {
+            return this == &rhs;
+        }
     };
 }

@@ -10,8 +10,6 @@ namespace wrd {
     Bind::Bind(const Type& type, BindTacticable& tactic): _type(&type.getStatic()), _tactic(&tactic) {}
     Bind::Bind(const This& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
     Bind::~Bind() { This::unbind(); }
-    wbool This::operator==(const This& rhs) const { return &get() == &rhs.get(); }
-    wbool This::operator!=(const This& rhs) const { return ! operator==(rhs); }
 
     This& This::operator=(const This& rhs) {
         if(this == &rhs) return *this;
@@ -49,5 +47,8 @@ namespace wrd {
         return _tactic->assign(*this, rhs);
     }
 
-#undef This
+    wbool This::_onSame(const TypeProvidable& rhs) const {
+        const This& cast = (const This&) rhs;
+        return get() == cast.get();
+    }
 }

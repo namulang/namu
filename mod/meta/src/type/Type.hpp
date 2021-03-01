@@ -21,7 +21,7 @@ namespace wrd {
 
     public:
         virtual ~Type() {}
-        virtual wbool operator==(const This& rhs) const;
+        wbool operator==(const This& rhs) const;
         wbool operator!=(const This& rhs) const;
 
         virtual wbool isTemplate() const = 0;
