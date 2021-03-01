@@ -29,6 +29,30 @@ TEST(WatcherTest, localVariableBindTagTest) {
     ASSERT_TRUE(nul(chk));
 }
 
+TEST(WatcherTest, NestedClassBindTest) {
+    class Inner : public Instance {
+    public:
+        const Type& getType() const override {
+            return TType<Inner>::get();
+        }
+    };
+
+    class Outer : public Instance {
+    public:
+        Outer(Inner* in): inner(in) {}
+
+        const Type& getType() const override {
+            return TType<Outer>::get();
+        }
+
+        Inner* inner;
+    };
+
+    auto* b = new Outer(new Inner());
+    ASSERT_TRUE(b->getId().isHeap());
+    ASSERT_TRUE(b->inner->getId().isHeap());
+}
+
 TEST(WatcherTest, heapVariableBindTagTest) {
     vector<A*> arr;
 
@@ -47,7 +71,7 @@ TEST(WatcherTest, heapVariableBindTagTest) {
         ASSERT_NE(id.tagN, WRD_INDEX_ERROR);
         ASSERT_NE(id.chkN, WRD_INDEX_ERROR);
         ASSERT_GT(id.serial, 0);
-        ASSERT_TRUE(tag.isHeap());
+        ASSERT_TRUE(id.isHeap());
 
         const Chunk& chk = tag.getChunk();
         ASSERT_FALSE(nul(chk));
