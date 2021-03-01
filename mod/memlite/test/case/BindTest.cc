@@ -37,7 +37,7 @@ TEST(BindTest, defaultBehaviorTest) {
 
     const BindTag& tag = b1->getBindTag();
     ASSERT_FALSE(nul(tag));
-    ASSERT_TRUE(tag.isHeap());
+    ASSERT_TRUE(b1->isHeap());
 
     Id id = tag.getId();
     ASSERT_GT(id.serial, 0);
