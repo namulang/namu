@@ -62,7 +62,10 @@ namespace wrd {
 
         wcnt getLen() const override;
 
+        using Super::set;
         wbool set(const Iter& at, const Node& new1) override;
+
+        using Super::add;
         wbool add(const Iter& at, const Node& new1) override;
         wbool del(const Iter& at) override;
 
