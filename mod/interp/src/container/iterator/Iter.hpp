@@ -18,8 +18,6 @@ namespace wrd {
         }
 
         /// @return true if there are more data to proceed
-        wbool operator==(const This& rhs) const { return _step == rhs._step; }
-        wbool operator!=(const This& rhs) const { return !operator==(rhs); }
         wbool operator++() { return next(); }
         virtual Node& operator*() { return get(); }
         virtual Node* operator->() { return &get(); }
@@ -55,8 +53,12 @@ namespace wrd {
 
     private:
         This& _assign(const This& rhs) {
-            _step.bind((Iteration*) _step->clone());
+            _step.bind((Iteration*) rhs._step->clone());
             return *this;
+        }
+        wbool _onSame(const TypeProvidable& rhs) const override {
+            const This& cast = (const This&) rhs;
+            return _step == cast._step;
         }
 
     protected:

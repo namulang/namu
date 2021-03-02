@@ -16,6 +16,9 @@ namespace wrd {
         using ArrContainable::get;
         const Node& get(widx n) const override WRD_UNCONST_FUNC(get(n))
 
+        using Super::set;
+        using ArrContainable::set;
+
         Iter head() const override { return iter(0); }
         Iter tail() const override { return iter(getLen()); }
 
@@ -24,7 +27,7 @@ namespace wrd {
         }
 
         Iter iter(const Node& elem) const {
-            const Iter* ret;
+            const Iter* ret = 0;
             each<Node>([&ret, &elem](const Iter& e, const Node& myelem) {
                 if(&elem != &myelem) return true;
 

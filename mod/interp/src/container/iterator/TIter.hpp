@@ -16,6 +16,6 @@ namespace wrd {
         const T* operator->() const override { return (T*) &get(); }
 
         T& get() override { return (T&) get(); }
-        const T& get() const override { return (T&) get(); }
+        const T& get() const { return (T&) get(); }
     };
 }

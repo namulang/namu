@@ -60,12 +60,10 @@ namespace wrd {
 
         if(!last) return Iter();
 
-        return Iter(new NChainIteration(*this, *last, last->tail()));
+        return Iter(new NChainIteration(*this, *last, last->_arr->tail()));
     }
 
     void This::empty() {
-        if(!_arr) return;
-
         _arr->empty();
     }
 }
