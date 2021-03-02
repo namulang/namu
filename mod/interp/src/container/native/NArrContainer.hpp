@@ -36,6 +36,9 @@ namespace wrd {
             });
             return Iter(*ret);
         }
+        Iter iter(const Node* elem) const {
+            return iter(*elem);
+        }
 
         using Super::add;
         using ArrContainable::add;
