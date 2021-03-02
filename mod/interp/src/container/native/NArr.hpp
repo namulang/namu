@@ -16,20 +16,14 @@ namespace wrd {
         public:
             NArrIteration(NArr& own, widx n): _n(n), _own(own) {}
 
-            wbool operator==(const Iteration& rhs) const override {
-                if(Super::operator!=(rhs)) return false;
-
-                const NArrIteration& cast = rhs.cast<NArrIteration>();
-                if(nul(cast)) return false;
-
-                return _n == cast._n;
-            }
-
             wbool isEnd() const override {
-                return _isValidN(_n);
+                return !_isValidN(_n);
             }
             wbool next() override {
-                if(!_isValidN(_n+1)) return false;
+                // if iteration reached to the last element to iterate, it can precede to next,
+                // which means to the End of a buffer.
+                // however, if it reached to already, it can't.
+                if(!_isValidN(_n)) return false;
 
                 _n++;
                 return true;
@@ -40,10 +34,21 @@ namespace wrd {
             }
             Containable& getContainer() override { return _own; }
 
+        protected:
+            wbool _onSame(const TypeProvidable& rhs) const override {
+                if(!Super::_onSame(rhs)) return false;
+
+                const This& cast = (const This&) rhs;
+                if(nul(cast)) return false;
+
+                return _n == cast._n;
+            }
+
         private:
             wbool _isValidN(widx n) const {
                 if(nul(_own)) return true;
-                return _own._isValidN(n);
+                wbool ret = _own._isValidN(n);
+                return ret;
             }
 
             widx _n;
@@ -53,26 +58,28 @@ namespace wrd {
     public:
         wcnt getLen() const override;
 
-        using ArrContainable::get;
+        using Super::get;
         Node& get(widx n) override;
 
-        using ArrContainable::set;
+        using Super::set;
         wbool set(const Iter& at, const Node& new1) override;
         wbool set(widx n, const Node& new1) override;
 
+        void empty() override;
+
+        using Super::add;
+        wbool add(const Iter& e, const Node& new1) override;
+        wbool add(widx n, const Node& new1) override;
+
+        using Super::del;
+        wbool del(const Iter& it) override;
+        wbool del(widx n) override;
+
+    protected:
         Iteration* _onIter(widx n) const override {
             This* unconst = const_cast<This*>(this);
             return new NArrIteration(*unconst, n);
         }
-
-        void empty() override;
-
-        using ArrContainable::add;
-        wbool add(const Iter& e, const Node& new1) override;
-        wbool add(widx n, const Node& new1) override;
-        using ArrContainable::del;
-        wbool del(const Iter& it) override;
-        wbool del(widx n) override;
 
     private:
         NArrIteration& _getIterationFrom(const Iter& it) {

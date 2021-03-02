@@ -13,6 +13,7 @@ public:
     int number;
 };
 
+/*
 TEST(NArrFixture, instantiateTest) {
     NArr arr;
 }
@@ -97,3 +98,4 @@ TEST(NArrFixture, benchMarkTest) {
     benchMark(1000);
     benchMark(10000);
 }
+*/

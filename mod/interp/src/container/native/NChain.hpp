@@ -17,15 +17,6 @@ namespace wrd {
             NChainIteration(const NChain& own, const NChain& iteratingChain, const Iter& conIter)
                 : _own(const_cast<NChain&>(own)), _ownIter(iteratingChain), _iter(conIter) {}
 
-            wbool operator==(const Iteration& rhs) const override {
-                if(Super::operator!=(rhs)) return false;
-
-                const NChainIteration& cast = rhs.cast<NChainIteration>();
-                if(nul(cast)) return false;
-
-                return _iter == cast._iter;
-            }
-
             wbool isEnd() const override {
                 if(_iter) return false;
                 if(!_ownIter) return false;
@@ -34,9 +25,9 @@ namespace wrd {
             }
 
             wbool next() override {
-                ++_iter;
-                if(_iter) return true;
+                if(++_iter) return true;
 
+                // arr iteration has reached to tail of the arr:
                 _ownIter = _ownIter->_next;
                 if(!_ownIter) return false;
                 return _iter = _ownIter->_arr->head();
@@ -48,6 +39,16 @@ namespace wrd {
 
             Containable& getContainer() override { return _own; }
             Iter& getContainerIter() { return _iter; }
+
+        protected:
+            wbool _onSame(const TypeProvidable& rhs) const override {
+                if(!Super::_onSame(rhs)) return false;
+
+                const This& cast = (const This&) rhs;
+                if(nul(cast)) return false;
+
+                return _iter == cast._iter;
+            }
 
         private:
             NChain& _own;

@@ -4,8 +4,9 @@
 namespace wrd {
 
 #define THIS NContainer
+#define TEMPL template <typename T>
 
-    template <typename T>
+    TEMPL
     TNArr<T> THIS::get(std::function<wbool(const T&)> l) const {
         TNArr<T> ret;
 
@@ -16,9 +17,9 @@ namespace wrd {
         return ret;
     }
 
-    template <typename T>
+    TEMPL
     void THIS::each(const Iter& from, const Iter& to, std::function<wbool(Iter&, T&)> l) {
-        for(Iter e=from; e == to ;++e) {
+        for(Iter e=from; e != to ;++e) {
             T& t = e->cast<T>();
             if(nul(t)) continue;
 
@@ -26,14 +27,14 @@ namespace wrd {
         }
     }
 
-    template <typename T>
+    TEMPL
     void THIS::each(std::function<wbool(Iter&, T&)> l) {
         each(head(), tail(), l);
     }
 
-    template <typename T>
+    TEMPL
     void THIS::each(const Iter& from, const Iter& to, std::function<wbool(const Iter&, const T&)> l) const {
-        for(Iter e=from; e == to ;++e) {
+        for(Iter e=from; e != to ;++e) {
             T& t = e->cast<T>();
             if(nul(t)) continue;
 
@@ -41,11 +42,12 @@ namespace wrd {
         }
     }
 
-    template <typename T>
+    TEMPL
     void THIS::each(std::function<wbool(const Iter&, const T&)> l) const {
         each(head(), tail(), l);
     }
 
 
+#undef TEMPL
 #undef THIS
 }
