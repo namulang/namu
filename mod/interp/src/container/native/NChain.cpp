@@ -1,3 +1,4 @@
+#include "NContainer.inl"
 #include "NChain.hpp"
 #include "NArr.hpp"
 
@@ -29,10 +30,42 @@ namespace wrd {
         return containerIter.getContainer().set(containerIter, new1);
     }
 
+    wbool This::add(const Node& new1) {
+        return getContainer().add(new1);
+    }
+
+    wbool This::del(const Node& it) {
+        wbool ret = false;
+        each<Node>([&ret, &it](Iter& e, Node& elem) {
+            if(&elem != &it) return true;
+
+            ret = e.getContainer().del(e);
+            return false;
+        });
+
+        return ret;
+    }
+
     wbool This::del(const Iter& at) {
         Iter& containerIter = _getContainerIterFromChainIter(at);
 
         return containerIter.getContainer().del(containerIter);
+    }
+
+    wcnt This::del(const Iter& from, const Iter& end) {
+        NContainer& endCon = _getContainerIterFromChainIter(end).getContainer();
+        wcnt ret = 0;
+
+        each<NContainer>(from, end, [&endCon, &ret, &end](NChain& chn, NContainer& itsCon) {
+            if(&itsCon == &endCon)
+                return ret += chn.del(chn.head(), end), false;
+
+            ret += itsCon.getLen();
+            itsCon.empty();
+            return true;
+        });
+
+        return ret;
     }
 
     wbool This::link(const NContainer& new1) {
@@ -65,5 +98,9 @@ namespace wrd {
 
     void This::empty() {
         _arr->empty();
+        each<NContainer>([](NChain& chn, NContainer& itsCon) {
+            itsCon.empty();
+            return true;
+        });
     }
 }

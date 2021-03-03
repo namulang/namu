@@ -1,13 +1,12 @@
-#include "NContainer.hpp"
+#pragma once
+
 #include "../../ast/Node.hpp"
+#include "NContainer.hpp"
 
 namespace wrd {
 
-#define THIS NContainer
-#define TEMPL template <typename T>
-
-    TEMPL
-    TNArr<T> THIS::get(std::function<wbool(const T&)> l) const {
+    template <typename T>
+    TNArr<T> NContainer::get(std::function<wbool(const T&)> l) const {
         TNArr<T> ret;
 
         each<T>([&ret](const Iter& e, const T& elem) {
@@ -17,8 +16,18 @@ namespace wrd {
         return ret;
     }
 
-    TEMPL
-    void THIS::each(const Iter& from, const Iter& to, std::function<wbool(Iter&, T&)> l) {
+    template <typename T>
+    void NContainer::each(std::function<wbool(Iter&, T&)> l) {
+        each(head(), tail(), l);
+    }
+
+    template <typename T>
+    void NContainer::each(std::function<wbool(const Iter&, const T&)> l) const {
+        each(head(), tail(), l);
+    }
+
+    template <typename T>
+    void NContainer::each(const Iter& from, const Iter& to, std::function<wbool(Iter&, T&)> l) {
         for(Iter e=from; e != to ;++e) {
             T& t = e->cast<T>();
             if(nul(t)) continue;
@@ -27,13 +36,8 @@ namespace wrd {
         }
     }
 
-    TEMPL
-    void THIS::each(std::function<wbool(Iter&, T&)> l) {
-        each(head(), tail(), l);
-    }
-
-    TEMPL
-    void THIS::each(const Iter& from, const Iter& to, std::function<wbool(const Iter&, const T&)> l) const {
+    template <typename T>
+    void NContainer::each(const Iter& from, const Iter& to, std::function<wbool(const Iter&, const T&)> l) const {
         for(Iter e=from; e != to ;++e) {
             T& t = e->cast<T>();
             if(nul(t)) continue;
@@ -41,13 +45,4 @@ namespace wrd {
             if(!l(e, t)) return;
         }
     }
-
-    TEMPL
-    void THIS::each(std::function<wbool(const Iter&, const T&)> l) const {
-        each(head(), tail(), l);
-    }
-
-
-#undef TEMPL
-#undef THIS
 }

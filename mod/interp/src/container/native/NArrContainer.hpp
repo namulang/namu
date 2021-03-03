@@ -25,52 +25,13 @@ namespace wrd {
         Iter iter(widx n) const override {
             return Iter(_onIter(n));
         }
-
-        Iter iter(const Node& elem) const {
-            const Iter* ret = 0;
-            each<Node>([&ret, &elem](const Iter& e, const Node& myelem) {
-                if(&elem != &myelem) return true;
-
-                ret = &e;
-                return false;
-            });
-            return Iter(*ret);
-        }
-        Iter iter(const Node* elem) const {
-            return iter(*elem);
-        }
+        Iter iter(const Node& elem) const;
 
         using Super::add;
         using ArrContainable::add;
-        wbool add(const Node& new1) override { return add(tail(), new1); }
-        wcnt add(const Iter& from, const Iter& to) override {
-            int ret = 0;
-            each<Node>(from, to, [this, &ret](const Iter& e, const Node& elem) {
-                if(add(elem)) ret++;
-
-                return true;
-            });
-            return ret;
-        }
-        wcnt add(const Containable& rhs) override {
-            return add(rhs.head(), tail());
-        }
 
         using Super::del;
         using ArrContainable::del;
         wbool del(const Node& it) override { return del(iter(it)); }
-        /// delete last element if exists.
-        wbool del() override { return del(tail()); }
-        wcnt del(const Iter& from, const Iter& to) override {
-            int ret = 0;
-            each<Node>(from, to, [this, &ret](const Iter& e, const Node& elem) {
-                if(del(e)) ret++;
-                return true;
-            });
-            return ret;
-        }
-        wcnt del(const Containable& rhs) override {
-            return del(rhs.head(), rhs.tail());
-        }
     };
 }

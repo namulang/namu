@@ -1,6 +1,8 @@
 #pragma once
 
-#include "../common.hpp"
+#include "Clonable.hpp"
+#include "../type/WType.hpp"
+#include "../container/native/NChain.hpp"
 
 namespace wrd {
 

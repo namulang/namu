@@ -32,7 +32,7 @@ namespace wrd {
                 if(isEnd()) return nulOf<Node>();
                 return _own.get(_n);
             }
-            Containable& getContainer() override { return _own; }
+            NContainer& getContainer() override { return _own; }
 
         protected:
             wbool _onSame(const TypeProvidable& rhs) const override {
@@ -40,7 +40,6 @@ namespace wrd {
 
                 const This& cast = (const This&) rhs;
                 if(nul(cast)) return false;
-
                 return _n == cast._n;
             }
 
@@ -72,6 +71,7 @@ namespace wrd {
         wbool add(widx n, const Node& new1) override;
 
         using Super::del;
+        wcnt del(const Iter& from, const Iter& end) override;
         wbool del(const Iter& it) override;
         wbool del(widx n) override;
 

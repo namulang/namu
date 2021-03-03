@@ -5,20 +5,14 @@
 
 namespace wrd {
 
-    class Containable;
     class Iteration : public Instance, public Iterable, public Clonable {
         WRD_INTERFACE(Iteration, Instance)
         friend class Iter;
 
     public:
-        wbool isFrom(const Containable& rhs) const override {
-            return &getContainer() == &rhs;
-        }
+        wbool isFrom(const NContainer& rhs) const override;
 
     protected:
-        wbool _onSame(const TypeProvidable& rhs) const override {
-            const This& cast = (const This&) rhs;
-            return isFrom(cast.getContainer());
-        }
+        wbool _onSame(const TypeProvidable& rhs) const override;
     };
 }
