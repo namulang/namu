@@ -91,11 +91,14 @@ namespace wrd {
         using Super::each;
         template <typename T>
         void each(const Iter& from, const Iter& end, std::function<wbool(NChain&, T&)> l) {
-            NChain& endChn = (NChain&) end.getContainer().cast<NChain>();
-            if(nul(endChn)) return;
+            const NChain* endChn = nullptr;
+            if(!nul(end)) {
+                endChn = &end.getContainer().cast<NChain>();
+                if(nul(endChn)) return;
+            }
 
             for(NChain* e = (NChain*) &from.getContainer().cast<NChain>();
-                !nul(e) && e != &endChn;
+                !nul(e) && e != endChn;
                 e = &(*_next)) {
                 auto& arr = e->_arr->cast<T>();
                 if(nul(arr)) continue;
@@ -105,11 +108,14 @@ namespace wrd {
         }
         template <typename T>
         void each(const Iter& from, const Iter& end, std::function<wbool(const NChain&, const T&)> l) const {
-            const NChain& endChn = end.getContainer().cast<NChain>();
-            if(nul(endChn)) return;
+            const NChain* endChn = nullptr;
+            if(!nul(end)) {
+                endChn = &end.getContainer().cast<NChain>();
+                if(nul(endChn)) return;
+            }
 
             for(const NChain* e = &from.getContainer().cast<NChain>();
-                !nul(e) && e != &endChn;
+                !nul(e) && e != endChn;
                 e = &(*_next)) {
                 auto& arr = e->_arr->cast<T>();
                 if(nul(arr)) continue;
@@ -119,11 +125,11 @@ namespace wrd {
         }
         template <typename T>
         void each(std::function<wbool(NChain&, T&)> l) {
-            each(head(), tail(), l);
+            each(head(), nulOf<Iter>(), l);
         }
         template <typename T>
         void each(std::function<wbool(const NChain&, const T&)> l) const {
-            each(head(), tail(), l);
+            each(head(), nulOf<Iter>(), l);
         }
 
     private:
