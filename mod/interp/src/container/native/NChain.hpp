@@ -37,7 +37,7 @@ namespace wrd {
                 return *_iter;
             }
 
-            Containable& getContainer() override { return _own; }
+            NContainer& getContainer() override { return _own; }
             Iter& getContainerIter() { return _iter; }
 
         protected:
@@ -65,16 +65,21 @@ namespace wrd {
         using Super::set;
         wbool set(const Iter& at, const Node& new1) override;
 
+        Iter head() const override;
+        Iter tail() const override;
+
         using Super::add;
         wbool add(const Iter& at, const Node& new1) override;
+        wbool add(const Node& new1) override;
+
+        using Super::del;
+        wbool del(const Node& it) override;
         wbool del(const Iter& at) override;
+        wcnt del(const Iter& from, const Iter& end) override;
 
         wbool link(const NContainer& new1);
         wbool link(const NChain& new1);
         wbool unlink();
-
-        Iter head() const override;
-        Iter tail() const override;
 
         void empty() override;
 
@@ -85,22 +90,40 @@ namespace wrd {
 
         using Super::each;
         template <typename T>
-        void each(std::function<wbool(NChain&, T&)> l) {
-            for(NChain* e=this; e ;e=&(*_next)) {
-                auto& arr = e->_arr->cast<T>();
-                if(nul(arr)) continue;
+        void each(const Iter& from, const Iter& end, std::function<wbool(NChain&, T&)> l) {
+            NChain& endChn = (NChain&) end.getContainer().cast<NChain>();
+            if(nul(endChn)) return;
 
-                if(!l(e, arr)) break;
-            }
-        }
-        template <typename T>
-        void each(std::function<wbool(const NChain&, const T&)> l) const {
-            for(const NChain* e=this; e ;e=&(*_next)) {
+            for(NChain* e = (NChain*) &from.getContainer().cast<NChain>();
+                !nul(e) && e != &endChn;
+                e = &(*_next)) {
                 auto& arr = e->_arr->cast<T>();
                 if(nul(arr)) continue;
 
                 if(!l(*e, arr)) break;
             }
+        }
+        template <typename T>
+        void each(const Iter& from, const Iter& end, std::function<wbool(const NChain&, const T&)> l) const {
+            const NChain& endChn = end.getContainer().cast<NChain>();
+            if(nul(endChn)) return;
+
+            for(const NChain* e = &from.getContainer().cast<NChain>();
+                !nul(e) && e != &endChn;
+                e = &(*_next)) {
+                auto& arr = e->_arr->cast<T>();
+                if(nul(arr)) continue;
+
+                if(!l(*e, arr)) break;
+            }
+        }
+        template <typename T>
+        void each(std::function<wbool(NChain&, T&)> l) {
+            each(head(), tail(), l);
+        }
+        template <typename T>
+        void each(std::function<wbool(const NChain&, const T&)> l) const {
+            each(head(), tail(), l);
         }
 
     private:

@@ -1,4 +1,5 @@
 #include "../common/dep.hpp"
+#include "../../src/container/native/NContainer.inl"
 #include <chrono>
 
 using namespace wrd;

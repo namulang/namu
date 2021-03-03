@@ -1,3 +1,4 @@
+#include "../../ast/Node.hpp"
 #include "NContainer.inl"
 #include "NArr.hpp"
 

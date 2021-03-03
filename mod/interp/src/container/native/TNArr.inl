@@ -1,3 +1,4 @@
+#include "NContainer.inl"
 #include "TNArr.hpp"
 
 namespace wrd {

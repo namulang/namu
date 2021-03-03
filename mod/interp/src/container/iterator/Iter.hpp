@@ -25,7 +25,7 @@ namespace wrd {
         virtual const Node* operator->() const WRD_UNCONST_FUNC(operator->())
         operator wbool() const { return !isEnd(); }
 
-        wbool isFrom(const Containable& it) const override {
+        wbool isFrom(const NContainer& it) const override {
             if(!_step) return false;
             return _step->isFrom(it);
         }
@@ -45,11 +45,11 @@ namespace wrd {
             return _step->get();
         }
 
-        Containable& getContainer() override {
-            if(!_step) return nulOf<Containable>();
+        NContainer& getContainer() override {
+            if(!_step) return nulOf<NContainer>();
             return _step->getContainer();
         }
-
+        const NContainer& getContainer() const WRD_UNCONST_FUNC(getContainer());
 
     private:
         This& _assign(const This& rhs) {

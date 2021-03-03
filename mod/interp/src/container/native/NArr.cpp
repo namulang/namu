@@ -1,5 +1,5 @@
+#include "NContainer.inl"
 #include "NArr.hpp"
-#include "../../ast/Node.hpp"
 
 namespace wrd {
 
@@ -61,6 +61,20 @@ namespace wrd {
         _vec.erase(_vec.begin() + n);
         return true;
     }
+
+    wcnt This::del(const Iter& from, const Iter& end) {
+        NArrIteration&  endIter = _getIterationFrom(end),
+                    &   fromIter = _getIterationFrom(from);
+        if(nul(endIter) || nul(fromIter))
+            return WRD_E("from(%x) or end(%x) one of these is null.", &endIter, &fromIter), 0;
+
+        widx fromN = fromIter._n;
+        wcnt cnt = endIter._n - fromN;
+        for(int n=0; n < cnt ;n++)
+            _vec.erase(_vec.begin() + fromN);
+        return cnt;
+    }
+
 
     wcnt This::getLen() const {
         return _vec.size();
