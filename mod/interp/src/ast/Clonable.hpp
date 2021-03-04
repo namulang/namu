@@ -9,6 +9,8 @@ namespace wrd {
         WRD_INIT_META(This)
 
     public:
+        virtual ~Clonable() {}
+
         virtual This* clone() const = 0;
     };
 }

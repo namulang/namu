@@ -12,6 +12,8 @@ namespace wrd {
         WRD_DECL_THIS(Containable)
 
     public:
+        virtual ~Containable() {}
+
         virtual wcnt getLen() const = 0;
 
         virtual NArr get(std::function<wbool(const Node&)> l) const = 0;

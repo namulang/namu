@@ -11,6 +11,8 @@ namespace wrd {
         WRD_DECL_THIS(Iterable)
 
     public:
+        virtual ~Iterable() {}
+
         virtual wbool isEnd() const = 0;
         virtual wbool next() = 0;
         virtual Node& get() = 0;

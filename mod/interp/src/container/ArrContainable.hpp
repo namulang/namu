@@ -9,6 +9,8 @@ namespace wrd {
         WRD_DECL_THIS(ArrContainable)
 
     public:
+        virtual ~ArrContainable() {}
+
         virtual Node& operator[](widx n) = 0;
         virtual const Node& operator[](widx n) const = 0;
 
