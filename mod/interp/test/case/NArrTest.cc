@@ -14,7 +14,6 @@ public:
     int number;
 };
 
-/*
 TEST(NArrFixture, instantiateTest) {
     NArr arr;
 }
@@ -99,4 +98,59 @@ TEST(NArrFixture, benchMarkTest) {
     benchMark(1000);
     benchMark(10000);
 }
-*/
+
+class MyMyNode : public MyNode {
+    WRD_CLASS(MyMyNode, MyNode)
+
+public:
+    MyMyNode(int num): Super(num) {}
+};
+
+TEST(NArrFixture, testContainableAPI) {
+    NArr* arr = new NArr();
+    Containable* con = arr;
+    ASSERT_EQ(con->getLen(), 0);
+
+    Iter head = con->head();
+    ASSERT_TRUE(head.isEnd());
+    Iter tail = con->tail();
+    ASSERT_TRUE(tail.isEnd());
+
+    ASSERT_TRUE(con->add(head, new MyNode(0)));
+    ASSERT_TRUE(con->add(tail, new MyMyNode(1)));
+    ASSERT_EQ(con->getLen(), 2);
+
+    int expectVal = 0;
+    for(Iter e=con->head(); e != con->tail() ;++e) {
+        MyNode& elem = e->cast<MyNode>();
+        ASSERT_FALSE(nul(elem));
+        ASSERT_EQ(elem.number, expectVal++);
+    }
+
+    expectVal = 0;
+    for(int n=0; n < arr->getLen() ;n++) {
+        MyNode& elem = arr->get(n).cast<MyNode>();
+        ASSERT_FALSE(nul(elem));
+        ASSERT_EQ(elem.number, expectVal++);
+    }
+
+    NArr tray = arr->get<MyNode>([](const MyNode& elem) {
+        return true;
+    });
+    ASSERT_EQ(tray.getLen(), 2);
+
+    int cnt = 0;
+    tray = arr->get<MyNode>([&cnt](const MyNode& elem) {
+        if(++cnt > 1) return false;
+        return true;
+    });
+    ASSERT_EQ(tray.getLen(), 1);
+
+    tray = arr->get<MyMyNode>([](const MyMyNode& elem) {
+        if(elem.number == 1) return true;
+        return false;
+    });
+    ASSERT_EQ(tray.getLen(), 1);
+
+    delete con;
+}
