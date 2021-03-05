@@ -48,6 +48,10 @@ namespace wrd {
         return true;
     }
 
+    wbool This::del() {
+        return del(iter(getLen() - 1));
+    }
+
     wbool This::del(const Iter& at) {
         NArrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;

@@ -71,6 +71,8 @@ namespace wrd {
         wbool add(widx n, const Node& new1) override;
 
         using Super::del;
+        /// delete last element if exists.
+        wbool del() override;
         wcnt del(const Iter& from, const Iter& end) override;
         wbool del(const Iter& it) override;
         wbool del(widx n) override;

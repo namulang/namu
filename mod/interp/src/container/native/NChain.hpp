@@ -73,6 +73,7 @@ namespace wrd {
         wbool add(const Node& new1) override;
 
         using Super::del;
+        wbool del() override;
         wbool del(const Node& it) override;
         wbool del(const Iter& at) override;
         wcnt del(const Iter& from, const Iter& end) override;
@@ -141,6 +142,8 @@ namespace wrd {
 
             return cast.getContainerIter();
         }
+        NChain& _getLastChain();
+        const NChain& _getLastChain() const WRD_UNCONST_FUNC(_getLastChain())
 
         TStr<NContainer> _arr;
         TStr<NChain> _next;
