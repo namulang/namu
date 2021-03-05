@@ -107,6 +107,7 @@ public:
 };
 
 TEST(NArrFixture, testContainableAPI) {
+    //  initial state:
     NArr* arr = new NArr();
     Containable* con = arr;
     ASSERT_EQ(con->getLen(), 0);
@@ -120,6 +121,7 @@ TEST(NArrFixture, testContainableAPI) {
     ASSERT_TRUE(con->add(con->tail(), new MyMyNode(1)));
     ASSERT_EQ(con->getLen(), 2);
 
+    // add:
     int expectVal = 0;
     for(Iter e=con->head(); e != con->tail() ;++e) {
         MyNode& elem = e->cast<MyNode>();
@@ -127,6 +129,7 @@ TEST(NArrFixture, testContainableAPI) {
         ASSERT_EQ(elem.number, expectVal++);
     }
 
+    // get & each:
     expectVal = 0;
     for(int n=0; n < arr->getLen() ;n++) {
         MyNode& elem = arr->get(n).cast<MyNode>();
@@ -151,6 +154,19 @@ TEST(NArrFixture, testContainableAPI) {
         return false;
     });
     ASSERT_EQ(tray.getLen(), 1);
+
+    //  del:
+    ASSERT_TRUE(con->del());
+    ASSERT_EQ(con->getLen(), 1);
+    ASSERT_EQ(con->get(0).cast<MyNode>().number, 0);
+
+    //  add with element:
+    NArr arr2;
+    ASSERT_EQ(arr2.add(*con), 1);
+    ASSERT_TRUE(arr2.add(new MyNode(1)));
+    ASSERT_TRUE(arr2.add(new MyMyNode(2)));
+    ASSERT_TRUE(arr2.add(new MyNode(3)));
+    ASSERT_EQ(arr2.getLen(), 4);
 
     delete con;
 }

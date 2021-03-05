@@ -34,6 +34,13 @@ namespace wrd {
         return getContainer().add(new1);
     }
 
+    wbool This::del() {
+        NChain& last = _getLastChain();
+        if(nul(last)) return false;
+
+        return last.getContainer().del();
+    }
+
     wbool This::del(const Node& it) {
         wbool ret = false;
         each<Node>([&ret, &it](Iter& e, Node& elem) {
@@ -85,15 +92,10 @@ namespace wrd {
     }
 
     Iter This::tail() const {
-        const NChain* last = nullptr;
-        each<NContainer>([&last](const NChain& chn, const NContainer& con) {
-            last = &chn;
-            return true;
-        });
+        const NChain& last = _getLastChain();
+        if(nul(last)) return Iter();
 
-        if(!last) return Iter();
-
-        return Iter(new NChainIteration(*this, *last, last->_arr->tail()));
+        return Iter(new NChainIteration(*this, last, last._arr->tail()));
     }
 
     void This::empty() {
@@ -103,4 +105,14 @@ namespace wrd {
             return true;
         });
     }
+
+    NChain& This::_getLastChain() {
+        NChain* last = nullptr;
+        each<NContainer>([&last](NChain& chn, NContainer& con) {
+            last = &chn;
+            return true;
+        });
+        return *last;
+    }
+
 }

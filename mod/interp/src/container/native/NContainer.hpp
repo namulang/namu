@@ -30,10 +30,6 @@ namespace wrd {
         }
 
         using Containable::del;
-        /// delete last element if exists.
-        wbool del() override {
-            return del(tail());
-        }
         wcnt del(const Containable& rhs) override {
             return del(rhs.head(), rhs.tail());
         }
