@@ -9,8 +9,9 @@ namespace wrd {
     TNArr<T> NContainer::get(std::function<wbool(const T&)> l) const {
         TNArr<T> ret;
 
-        each<T>([&ret](const Iter& e, const T& elem) {
-            ret.add(elem);
+        each<T>([&ret, l](const Iter& e, const T& elem) {
+            if(l(elem))
+                ret.add(elem);
             return true;
         });
         return ret;

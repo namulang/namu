@@ -116,8 +116,8 @@ TEST(NArrFixture, testContainableAPI) {
     Iter tail = con->tail();
     ASSERT_TRUE(tail.isEnd());
 
-    ASSERT_TRUE(con->add(head, new MyNode(0)));
-    ASSERT_TRUE(con->add(tail, new MyMyNode(1)));
+    ASSERT_TRUE(con->add(con->head(), new MyNode(0)));
+    ASSERT_TRUE(con->add(con->tail(), new MyMyNode(1)));
     ASSERT_EQ(con->getLen(), 2);
 
     int expectVal = 0;
@@ -141,7 +141,7 @@ TEST(NArrFixture, testContainableAPI) {
 
     int cnt = 0;
     tray = arr->get<MyNode>([&cnt](const MyNode& elem) {
-        if(++cnt > 1) return false;
+        if(cnt >= 1) return false;
         return true;
     });
     ASSERT_EQ(tray.getLen(), 1);
