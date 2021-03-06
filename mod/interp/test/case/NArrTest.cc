@@ -166,7 +166,44 @@ TEST(NArrFixture, testContainableAPI) {
     ASSERT_TRUE(arr2.add(new MyNode(1)));
     ASSERT_TRUE(arr2.add(new MyMyNode(2)));
     ASSERT_TRUE(arr2.add(new MyNode(3)));
+    ASSERT_EQ(arr2[2].cast<MyNode>().number, 2);
+    ASSERT_EQ(arr2[3].cast<MyNode>().number, 3);
     ASSERT_EQ(arr2.getLen(), 4);
+
+    Iter e = arr2.head();
+    ++e;
+    ++e;
+    ASSERT_EQ(e->cast<MyNode>().number, 2);
+    ASSERT_TRUE(arr2.add(e, new MyNode(5)));
+    ASSERT_TRUE(arr2.add(2, new MyNode(6)));
+
+    ASSERT_EQ(arr2[0].cast<MyNode>().number, 0);
+    ASSERT_EQ(arr2[1].cast<MyNode>().number, 1);
+    ASSERT_EQ(arr2[2].cast<MyNode>().number, 6);
+    ASSERT_EQ(arr2[3].cast<MyNode>().number, 5);
+    ASSERT_EQ(arr2[4].cast<MyNode>().number, 2);
+    ASSERT_EQ(arr2[5].cast<MyNode>().number, 3);
+
+    ASSERT_EQ(con->getLen(), 1);
+    ASSERT_EQ(con->add(arr2.iter(1), arr2.iter(3)), 2);
+    ASSERT_EQ(con->getLen(), 3);
+    e=con->head();
+    MyNode* elem = &e->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 0);
+
+    ++e;
+    elem = &e->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 1);
+
+    ++e;
+    elem = &e->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 6);
+
+    ++e;
+    ASSERT_FALSE(e);
 
     delete con;
 }
