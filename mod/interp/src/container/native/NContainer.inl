@@ -8,7 +8,6 @@ namespace wrd {
     template <typename T>
     TNArr<T> NContainer::get(std::function<wbool(const T&)> l) const {
         TNArr<T> ret;
-
         each<T>([&ret, l](const Iter& e, const T& elem) {
             if(l(elem))
                 ret.add(elem);
