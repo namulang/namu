@@ -158,7 +158,7 @@ TEST(NArrFixture, testContainableAPI) {
     //  del:
     ASSERT_TRUE(con->del());
     ASSERT_EQ(con->getLen(), 1);
-    ASSERT_EQ(con->get(0).cast<MyNode>().number, 0);
+    ASSERT_EQ(arr->get(0).cast<MyNode>().number, 0);
 
     //  add with element:
     NArr arr2;
