@@ -44,7 +44,10 @@ namespace wrd {
     }
 
     wbool This::_assign(const Bind& rhs) {
-        return _tactic->assign(*this, rhs);
+        unbind();
+        _type = rhs._type;
+        _tactic = rhs._tactic;
+        return bind(rhs.get());
     }
 
     wbool This::_onSame(const TypeProvidable& rhs) const {

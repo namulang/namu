@@ -5,13 +5,6 @@ namespace wrd {
 
     WRD_DEF_THIS(WeakTactic)
 
-    wbool This::assign(Bind& me, const Bind& rhs) {
-        if(&me == &rhs) return true;
-
-        me._tactic = rhs._tactic;
-        return me.bind(rhs.get());
-    }
-
     wbool This::unbind(Bind& me) {
         me._itsId.rel();
         return true;

@@ -151,6 +151,17 @@ TEST(BindTest, BindByValueTest) {
     ASSERT_EQ(tag.getStrongCnt(), 0);
 }
 
+TEST(BindTest, assignTest) {
+    TStr<A> strA(new A());
+    TStr<A> strA1;
+
+    ASSERT_TRUE(strA.getItsId().isValid());
+    ASSERT_TRUE(strA.getItsId().isValid());
+    ASSERT_FALSE(strA1.getItsId().isValid());
+    strA = strA1;
+    ASSERT_FALSE(strA.getItsId().isValid());
+}
+
 void integrity(int cnt) {
     std::vector<TStr<A>> tray;
     std::vector<Id> ids;
@@ -169,7 +180,7 @@ void integrity(int cnt) {
         ASSERT_EQ(id, tag.getId());
     }
 }
-/*
+
 TEST(BindTest, bindMultiplTimesIntegrityTest) {
     integrity(10);
     integrity(100);
@@ -188,4 +199,3 @@ TEST(BindTest, WeakBindButInstanceGoneTest) {
     ASSERT_FALSE(weakA.isBind());
     ASSERT_TRUE(nul(*weakA));
 }
-*/
