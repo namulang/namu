@@ -18,7 +18,15 @@ namespace wrd {
         }
 
         /// @return true if there are more data to proceed
-        wbool operator++() { return next(); }
+        Iter& operator++() {
+            next();
+            return *this;
+        }
+        Iter operator++(int) {
+            Iter ret = *this;
+            next();
+            return ret;
+        }
         virtual Node& operator*() { return get(); }
         virtual Node* operator->() { return &get(); }
         virtual const Node& operator*() const WRD_UNCONST_FUNC(operator*())

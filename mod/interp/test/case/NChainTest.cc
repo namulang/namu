@@ -17,48 +17,39 @@ TEST(NChainFixture, instantiateTest) {
     ASSERT_FALSE(nul(chn.getContainer()));
 }
 
-TEST(NChainFixture, simpleAdd1ElemTest) {
+void simpleAddDelTest(int cnt) {
     TNArr<MyNode>* arr = new TNArr<MyNode>();
     NChain chn(*arr);
     ASSERT_EQ(0, arr->getLen());
     ASSERT_EQ(chn.getLen(), arr->getLen());
     ASSERT_TRUE(nul(chn.getNext()));
 
-    const int EXPECT_NUMBER = 5;
-    MyNode& new1 = *(new MyNode(EXPECT_NUMBER));
-    arr->add(new1);
-    ASSERT_EQ(chn.getLen(), 1);
+    vector<MyNode*> tray;
+    for(int n=0; n < cnt ;n++) {
+        MyNode* new1 = new MyNode(n);
+        arr->add(new1);
+        tray.push_back(new1);
+    }
+
+    ASSERT_EQ(chn.getLen(), n);
 
     wbool isOk = false;
+    int index = 0;
+    ASSERT_TRUE(nul(chn.getNext()));
     chn.each<MyNode>([&isOk, &new1](const Iter& e, const MyNode& elem) {
-        if(&elem != &new1) return isOk = false;
-        if(elem.number != EXPECT_NUMBER) return isOk = false;
-        isOk = true;
-        return true;
+        if(&elem != tray[index++]) return isOk = false;
+        if(elem.number != index) return isOk = false;
+        return isOk = true;
     });
-
     ASSERT_TRUE(isOk);
 }
 
-TEST(NChainFixture, simpleAddDelTest) {
-    TNArr<MyNode>* arr = new TNArr<MyNode>();
-    NChain chn(*arr);
-    ASSERT_EQ(0, arr->getLen());
-    ASSERT_EQ(chn.getLen(), arr->getLen());
-    ASSERT_TRUE(nul(chn.getNext()));
-
-    const int EXPECT_NUMBER = 5;
-    MyNode& new1 = *(new MyNode(EXPECT_NUMBER));
-    arr->add(new1);
-    ASSERT_EQ(chn.getLen(), 1);
-
-    wbool isOk = false;
-    chn.each<MyNode>([&isOk, &new1](const Iter& e, const MyNode& elem) {
-        if(&elem != &new1) return isOk = false;
-        if(elem.number != EXPECT_NUMBER) return isOk = false;
-        isOk = true;
-        return true;
-    });
-
-    ASSERT_TRUE(isOk);
+TEST(NChainFixture, simpleAddDelTest1) {
+    simpleAddDelTest(100);
+}
+TEST(NChainFixture, simpleAddDelTest1) {
+    simpleAddDelTest(1000);
+}
+TEST(NChainFixture, simpleAddDelTest1) {
+    simpleAddDelTest(10000);
 }
