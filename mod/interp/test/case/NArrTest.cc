@@ -172,7 +172,7 @@ TEST(NArrFixture, testContainableAPI) {
 
     Iter e = arr2.head();
     ++e;
-    ++e;
+    e++;
     ASSERT_EQ(e->cast<MyNode>().number, 2);
     ASSERT_TRUE(arr2.add(e, new MyNode(5)));
     ASSERT_TRUE(arr2.add(2, new MyNode(6)));
@@ -192,18 +192,15 @@ TEST(NArrFixture, testContainableAPI) {
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 0);
 
-    ++e;
-    elem = &e->cast<MyNode>();
+    elem = &(++e)->cast<MyNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 1);
 
-    ++e;
-    elem = &e->cast<MyNode>();
+    elem = &(++e)->cast<MyNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
 
-    ++e;
-    ASSERT_FALSE(e);
+    ASSERT_FALSE(++e);
 
     delete con;
 }
