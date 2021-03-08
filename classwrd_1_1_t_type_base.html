@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>wrd::Type class | world-doc</title>
+  <title>wrd::TTypeBase class | world-doc</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
   <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
   <link rel="icon" href="favicon-dark.png" type="image/png" />
@@ -44,7 +44,8 @@
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
         <h1>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span>Type <span class="m-thin">class</span>
+          <div class="m-dox-template">template&lt;typename T&gt;</div>
+          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span>TTypeBase <span class="m-thin">class</span>
         </h1>
         <div class="m-block m-default">
           <h3>Contents</h3>
@@ -52,24 +53,29 @@
             <li>
               Reference
               <ul>
+                <li><a href="#base-classes">Base classes</a></li>
                 <li><a href="#derived-classes">Derived classes</a></li>
                 <li><a href="#pub-methods">Public functions</a></li>
               </ul>
             </li>
           </ul>
         </div>
-<aside class="m-note m-default"><h4>Remark</h4><p><a href="classwrd_1_1_type.html" class="m-dox">Type</a> returning TType&lt;Type&gt; as result of getType() because this func always returns metaclass no matter of what This type is, users need to care about getting meta of metaclass on calling getType(). for example, Thing&amp; thing1 = ...; // let&#x27;s assume that got from outside. <a href="classwrd_1_1_object.html" class="m-dox">Object</a> obj;</p></aside><p>wbool compare = obj.isSub(thing1.getType()); // user intend to get class of Thing. // however, value &#x27;compare&#x27; will definitely be false if // thing was actually a retrived one by calling Thing.getType() before.</p><p>// because Type::getType() will return <a href="classwrd_1_1_t_type.html" class="m-dox">TType</a>&lt;TType&lt;T&gt; &gt;, // that stmt will be translated that checks object vs TType&lt;T&gt;.</p>
+<aside class="m-note m-default"><h4>Remark</h4><p><a href="classwrd_1_1_t_type_base.html" class="m-dox">TTypeBase</a> returns TTypeBase&lt;Type&gt; as its meta class. however, this makes impossible to get specific <a href="classwrd_1_1_t_type_base.html" class="m-dox">TTypeBase</a> instance at a binder.</p></aside><p>if user typedefs SuperType at their type T, then <a href="classwrd_1_1_t_type_base.html" class="m-dox">TTypeBase</a> inherits from given SuperType. this eventually make user add API to want to <a href="classwrd_1_1_t_type_base.html" class="m-dox">TTypeBase</a> class.</p>
+        <section id="base-classes">
+          <h2><a href="#base-classes">Base classes</a></h2>
+          <dl class="m-dox">
+            <dt>
+              class <a href="classwrd_1_1_type.html" class="m-dox">Type</a>
+            </dt>
+            <dd></dd>
+          </dl>
+        </section>
         <section id="derived-classes">
           <h2><a href="#derived-classes">Derived classes</a></h2>
           <dl class="m-dox">
             <dt>
               <div class="m-dox-template">template&lt;typename T&gt;</div>
-              class <a href="classwrd_1_1_t_type_base.html" class="m-dox">TTypeBase</a>
-            </dt>
-            <dd></dd>
-            <dt>
-              <div class="m-dox-template">template&lt;typename T&gt;</div>
-              class <a href="classwrd_1_1_t_type_base.html" class="m-dox">TTypeBase</a>
+              class <a href="classwrd_1_1_t_type.html" class="m-dox">TType</a>
             </dt>
             <dd></dd>
           </dl>
@@ -78,16 +84,19 @@
           <h2><a href="#pub-methods">Public functions</a></h2>
           <dl class="m-dox">
             <dt>
-              <span class="m-dox-wrap-bumper">auto <a href="#a2a4f98f4e8cbf8f5beb0b0890795cd92" class="m-dox">make</a>(</span><span class="m-dox-wrap">) const -&gt; void* <span class="m-label m-flat m-warning">pure virtual</span></span>
+              <span class="m-dox-wrap-bumper">auto <a href="#ab699c9d518cdfb4fc5cad018a778c8f3" class="m-dox">make</a>(</span><span class="m-dox-wrap">) const -&gt; void* <span class="m-label m-flat m-warning">override</span></span>
             </dt>
             <dd>create an instance to be refered this type.</dd>
           </dl>
         </section>
         <section>
           <h2>Function documentation</h2>
-          <section class="m-dox-details" id="a2a4f98f4e8cbf8f5beb0b0890795cd92"><div>
+          <section class="m-dox-details" id="ab699c9d518cdfb4fc5cad018a778c8f3"><div>
             <h3>
-              <span class="m-dox-wrap-bumper">void* wrd::<wbr />Type::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#a2a4f98f4e8cbf8f5beb0b0890795cd92" class="m-dox-self">make</a>(</span><span class="m-dox-wrap">) const <span class="m-label m-warning">pure virtual</span></span></span>
+              <div class="m-dox-template">
+                template&lt;typename T&gt;
+              </div>
+              <span class="m-dox-wrap-bumper">void* wrd::<wbr />TTypeBase&lt;T&gt;::<wbr /></span><span class="m-dox-wrap"><span class="m-dox-wrap-bumper"><a href="#ab699c9d518cdfb4fc5cad018a778c8f3" class="m-dox-self">make</a>(</span><span class="m-dox-wrap">) const <span class="m-label m-warning">override</span></span></span>
             </h3>
             <p>create an instance to be refered this type.</p>
             <table class="m-table m-fullwidth m-flat">
