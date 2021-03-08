@@ -24,13 +24,15 @@ namespace wrd {
                 return _ownIter->_next;
             }
 
-            wbool next() override {
-                if(++_iter) return true;
+            wcnt next(wcnt step) override {
+                wcnt stepped = _iter.next(step),
+                     remain = step - stepped;
+                if(remain == 0) return 0;
 
                 // arr iteration has reached to tail of the arr:
-                _ownIter = _ownIter->_next;
-                if(!_ownIter) return false;
-                return _iter = _ownIter->_arr->head();
+                if(!_ownIter) return stepped;
+                _iter = _ownIter->_arr->head();
+                return stepped + next(remain);
             }
 
             Node& get() override {

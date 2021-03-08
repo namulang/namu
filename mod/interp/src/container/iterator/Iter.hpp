@@ -19,12 +19,12 @@ namespace wrd {
 
         /// @return true if there are more data to proceed
         Iter& operator++() {
-            next();
+            next(1);
             return *this;
         }
         Iter operator++(int) {
             Iter ret = *this;
-            next();
+            next(1);
             return ret;
         }
         virtual Node& operator*() { return get(); }
@@ -43,9 +43,9 @@ namespace wrd {
             return _step->isEnd();
         }
 
-        wbool next() override {
+        wcnt next(wcnt step) override {
             if(!_step) return false;
-            return _step->next();
+            return _step->next(step);
         }
 
         Node& get() override {

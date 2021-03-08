@@ -17,16 +17,19 @@ namespace wrd {
             NArrIteration(NArr& own, widx n): _n(n), _own(own) {}
 
             wbool isEnd() const override {
-                return !_isValidN(_n);
+                return !_own._isValidN(_n);
             }
-            wbool next() override {
+            wcnt next(wcnt step) override {
                 // if iteration reached to the last element to iterate, it can precede to next,
                 // which means to the End of a buffer.
                 // however, if it reached to already, it can't.
-                if(!_isValidN(_n)) return false;
+                widx newN = _n + step;
+                widx lastN = _own.getLen();
+                widx availableN = newN > lastN ? lastN : newN;
+                wcnt toStep = availableN - _n;
 
-                _n++;
-                return true;
+                _n += toStep;
+                return toStep;
             }
             Node& get() override {
                 if(isEnd()) return nulOf<Node>();
@@ -40,14 +43,8 @@ namespace wrd {
 
                 const This& cast = (const This&) rhs;
                 if(nul(cast)) return false;
-                return _n == cast._n;
-            }
 
-        private:
-            wbool _isValidN(widx n) const {
-                if(nul(_own)) return true;
-                wbool ret = _own._isValidN(n);
-                return ret;
+                return _n == cast._n;
             }
 
             widx _n;
