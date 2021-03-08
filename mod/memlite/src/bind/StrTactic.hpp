@@ -8,8 +8,8 @@ namespace wrd {
         WRD_DECL_THIS(StrTactic, WeakTactic);
 
     public:
-        wbool unbind(Bind& me);
-        wbool bind(Bind& me, const Instance& it);
+        wbool unbind(Bind& me) override;
+        wbool bind(Bind& me, const Instance& it) override;
 
         static This singletone;
     };

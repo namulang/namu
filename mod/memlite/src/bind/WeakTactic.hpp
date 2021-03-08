@@ -9,8 +9,8 @@ namespace wrd {
         WRD_DECL_THIS(WeakTactic, BindTacticable);
 
     public:
-        wbool unbind(Bind& me);
-        wbool bind(Bind& me, const Instance& it);
+        wbool unbind(Bind& me) override;
+        wbool bind(Bind& me, const Instance& it) override;
 
     public:
         static This singletone;
