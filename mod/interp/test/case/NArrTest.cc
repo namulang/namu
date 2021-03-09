@@ -123,7 +123,7 @@ TEST(NArrFixture, testContainableAPI) {
 
     // add:
     int expectVal = 0;
-    for(Iter e=con->head(); e != con->tail() ;++e) {
+    for(Iter e=con->head(); e != con->tail() ;e++) {
         MyNode& elem = e->cast<MyNode>();
         ASSERT_FALSE(nul(elem));
         ASSERT_EQ(elem.number, expectVal++);
@@ -171,8 +171,7 @@ TEST(NArrFixture, testContainableAPI) {
     ASSERT_EQ(arr2.getLen(), 4);
 
     Iter e = arr2.head();
-    ++e;
-    e++;
+    e = e + 2;
     ASSERT_EQ(e->cast<MyNode>().number, 2);
     ASSERT_TRUE(arr2.add(e, new MyNode(5)));
     ASSERT_TRUE(arr2.add(2, new MyNode(6)));
