@@ -17,7 +17,10 @@ namespace wrd {
             _assign(rhs);
         }
 
-        /// @return true if there are more data to proceed
+        Iter operator+(wcnt step) {
+            next(step);
+            return *this;
+        }
         Iter& operator++() {
             next(1);
             return *this;
@@ -26,6 +29,10 @@ namespace wrd {
             Iter ret = *this;
             next(1);
             return ret;
+        }
+        Iter& operator+=(wcnt step) {
+            next(step);
+            return *this;
         }
         virtual Node& operator*() { return get(); }
         virtual Node* operator->() { return &get(); }
