@@ -201,5 +201,37 @@ TEST(NArrFixture, testContainableAPI) {
 
     ASSERT_FALSE(++e);
 
+    ASSERT_TRUE(con->getLen() > 0);
+    con->empty();
+    ASSERT_TRUE(con->getLen() == 0);
+
+    ASSERT_EQ(con->add(arr2.head() + 2, arr2.tail()), 4);
+    e = con->head();
+    elem = &e->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 6);
+
+    elem = &(++e)->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 5);
+
+    elem = &(++e)->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 2);
+
+    elem = &(++e)->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 3);
+
+    ASSERT_EQ(con->del(con->head() + 1, con->head() + 3), 2);
+    e = con->head();
+    elem = &e->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 6);
+
+    elem = &(++e)->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 3);
+
     delete con;
 }
