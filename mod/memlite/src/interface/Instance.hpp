@@ -35,6 +35,7 @@ namespace wrd {
         //  Instance:
         Instance();
         Instance(Id id);
+        Instance(const This& rhs);
         virtual ~Instance();
 
         void* operator new(size_t sz);

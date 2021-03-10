@@ -7,7 +7,10 @@ namespace wrd {
     This::Vault Instance::_vault;
 
     This::Instance() { _id.chkN = _vault.get(this); }
-    This::Instance(Id id) : _id(id) {} // no binding required.
+    This::Instance(Id id): _id(id) {} // no binding required.
+    This::Instance(const This& rhs) {
+        _id.chkN = _vault.get(this); // _id is only belonged to the instance. not able to be copied.
+    }
     This::~Instance() { _getMgr().unbind(*this); }
 
     void* This::operator new(size_t sz) { return _getMgr()._new1(sz); }
