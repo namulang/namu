@@ -18,8 +18,8 @@ namespace wrd {
                 : _own(const_cast<NChain&>(own)), _ownIter(iteratingChain), _iter(conIter) {}
 
             wbool isEnd() const override {
-                if(_iter) return false;
-                if(!_ownIter) return false;
+                if(!_iter) return true;
+                if(!_ownIter) return true;
 
                 return _ownIter->_next;
             }
@@ -109,6 +109,7 @@ namespace wrd {
                 if(!l(*e, arr)) break;
             }
         }
+        /// @param  end Nullable. meaning of the end of NChain list.
         template <typename T>
         void each(const Iter& from, const Iter& end, std::function<wbool(const NChain&, const T&)> l) const {
             const NChain* endChn = nullptr;

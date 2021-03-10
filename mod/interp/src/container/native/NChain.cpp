@@ -27,7 +27,7 @@ namespace wrd {
     wbool This::add(const Iter& at, const Node& new1) {
         Iter& containerIter = _getContainerIterFromChainIter(at);
 
-        return containerIter.getContainer().set(containerIter, new1);
+        return containerIter.getContainer().add(containerIter, new1);
     }
 
     wbool This::add(const Node& new1) {
@@ -60,13 +60,17 @@ namespace wrd {
     }
 
     wcnt This::del(const Iter& from, const Iter& end) {
-        NContainer& endCon = _getContainerIterFromChainIter(end).getContainer();
+        Iter& fromInnerIter = _getContainerIterFromChainIter(from);
+        NContainer& fromCon = fromInnerIter.getContainer();
+        Iter& endInnerIter = _getContainerIterFromChainIter(end);
+        NContainer& endCon = endInnerIter.getContainer();
+        if(endInnerIter.isFrom(fromCon)) return fromCon.del(fromInnerIter, endInnerIter);
+
         wcnt ret = 0;
-
-        each<NContainer>(from, end, [&endCon, &ret, &end](NChain& chn, NContainer& itsCon) {
-            if(&itsCon == &endCon)
-                return ret += chn.del(chn.head(), end), false;
-
+        each<NContainer>(from, nulOf<Iter>(), [&endCon, &ret, &endInnerIter](NChain& chn, NContainer& itsCon) {
+            if(&itsCon == &endCon) {
+l               return ret += itsCon.del(itsCon.head(), endInnerIter), false;
+            }
             ret += itsCon.getLen();
             itsCon.empty();
             return true;
