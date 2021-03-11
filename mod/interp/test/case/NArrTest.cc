@@ -120,6 +120,8 @@ TEST(NArrFixture, testIter) {
 
     EXPECT_TRUE(arr.head()+2 == index2);
     EXPECT_TRUE(arr.head() == head);
+
+    ASSERT_EQ(e.next(1), 0);
 }
 
 TEST(NArrFixture, testContainableAPI) {

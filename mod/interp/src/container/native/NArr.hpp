@@ -20,10 +20,21 @@ namespace wrd {
             wbool isEnd() const override {
                 return !_own._isValidN(_n);
             }
+
+            /// if iteration reached to the last element to iterate, it can precede to next,
+            /// which means to the End of a buffer.
+            /// however, this step wasn't regarded to a step even though it proceeds.
             wcnt next(wcnt step) override {
-                // if iteration reached to the last element to iterate, it can precede to next,
-                // which means to the End of a buffer.
-                // however, if it reached to already, it can't.
+                //  pre:
+                if(step <= 0) return 0;
+
+                widx lastN = _own.getLen()-1;
+                if(_n >= lastN) {
+                    _n = lastN + 1;
+                    return 0;
+                }
+
+                //  post:
                 widx newN = _n + step;
                 widx lastN = _own.getLen();
                 widx availableN = newN > lastN ? lastN : newN;
