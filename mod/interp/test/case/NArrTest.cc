@@ -106,6 +106,22 @@ public:
     MyMyNode(int num): Super(num) {}
 };
 
+TEST(NArrFixture, testIter) {
+    NArr arr;
+    arr.add(new MyNode(0));
+    arr.add(new MyNode(1));
+    arr.add(new MyNode(2));
+
+    typedef NArr::NArrIteration NArrIteration;
+
+    Iter e = arr.head();
+    Iter head = e++;
+    Iter index2 = ++e;
+
+    EXPECT_TRUE(arr.head()+2 == index2);
+    EXPECT_TRUE(arr.head() == head);
+}
+
 TEST(NArrFixture, testContainableAPI) {
     //  initial state:
     NArr* arr = new NArr();
