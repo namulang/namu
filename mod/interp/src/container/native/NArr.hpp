@@ -8,6 +8,7 @@ namespace wrd {
     class NArr : public NArrContainer {
         WRD_CLASS(NArr, NArrContainer)
 
+    public:
         friend class NArrIteration;
         class NArrIteration : public Iteration {
             WRD_CLASS(NArrIteration, Iteration)
@@ -47,6 +48,7 @@ namespace wrd {
                 return _n == cast._n;
             }
 
+        private:
             widx _n;
             NArr& _own;
         };
