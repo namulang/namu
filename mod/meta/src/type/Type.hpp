@@ -52,9 +52,9 @@ namespace wrd {
         }
 
         wbool isSuper(const Type& it) const;
-        template <typename T> wbool isSuper() const { return isSuper(T::get()); }
+        template <typename T> wbool isSuper() const;
         wbool isSub(const Type& it) const { return it.isSuper(*this); }
-        template <typename T> wbool isSub() const { return T::get().isSuper(*this); }
+        template <typename T> wbool isSub() const;
         const Type& getStatic() const WRD_UNCONST_FUNC(_getStatic())
 
     protected:

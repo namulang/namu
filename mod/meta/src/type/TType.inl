@@ -1,6 +1,6 @@
+#include "Type.inl"
 #include "TType.hpp"
 #include "../rtti/Rtti.hpp"
-#include "Type.hpp"
 
 namespace wrd {
 #define TEMPL template <typename T>
