@@ -25,6 +25,7 @@ namespace wrd {
             }
 
             wcnt next(wcnt step) override {
+                if(step <= 0) return 0;
                 wcnt stepped = _iter.next(step),
                      remain = step - stepped;
                 if(remain == 0) return 0;
@@ -32,6 +33,7 @@ namespace wrd {
                 // arr iteration has reached to tail of the arr:
                 if(!_ownIter) return stepped;
                 _iter = _ownIter->_arr->head();
+                remain--;
                 return stepped + next(remain);
             }
 
@@ -120,7 +122,7 @@ namespace wrd {
 
             for(const NChain* e = &from.getContainer().cast<NChain>();
                 !nul(e) && e != endChn;
-                e = &(*_next)) {
+                e = &(*e->_next)) {
                 auto& arr = e->_arr->cast<T>();
                 if(nul(arr)) continue;
 

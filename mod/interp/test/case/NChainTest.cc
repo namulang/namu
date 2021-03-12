@@ -180,3 +180,71 @@ TEST(NChainFixture, testContainableAPI) {
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 }
+
+void examineChain2Element(NChain& chn, int val1, int val2) {
+    MyNode* elem = &chn.head()->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, val1);
+
+    elem = &(++chn.head())->cast<MyNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, val2);
+}
+
+TEST(NChainFixture, testLinkedChainWithNContainerAPI) {
+    NArr arr1;
+    NChain chn1(arr1);
+    NArr arr2;
+    NChain chn2(arr2);
+
+    //  add each chains:
+    ASSERT_TRUE(chn2.add(new MyNode(6)));
+    ASSERT_TRUE(chn2.add(new MyNode(5)));
+    examineChain2Element(chn2, 6, 5);
+
+    NArr arr3;
+    NChain chn3(arr3);
+    ASSERT_TRUE(chn3.add(new MyNode(2)));
+    ASSERT_TRUE(chn3.add(new MyNode(3)));
+    examineChain2Element(chn3, 2, 3);
+
+    ASSERT_TRUE(arr1.add(new MyNode(0)));
+    ASSERT_TRUE(chn1.add(new MyNode(1)));
+    examineChain2Element(chn1, 0, 1);
+
+    //  link:
+    ASSERT_TRUE(nul(chn1.getNext()));
+    ASSERT_TRUE(nul(chn2.getNext()));
+    ASSERT_TRUE(nul(chn3.getNext()));
+    ASSERT_TRUE(chn1.link(chn2));
+    ASSERT_TRUE(nul(chn1.getNext().getNext()));
+    ASSERT_TRUE(chn2.link(chn3));
+    ASSERT_TRUE(nul(chn3.getNext()));
+    ASSERT_TRUE(nul(chn1.getNext().getNext().getNext()));
+    ASSERT_EQ(chn1.getLen(), 6);
+
+    Iter e = chn1.head();
+    MyNode* mynode = &(e++)->cast<MyNode>();
+    ASSERT_FALSE(nul(mynode));
+    ASSERT_EQ(mynode->number, 0);
+
+    mynode = &(e++)->cast<MyNode>();
+    ASSERT_FALSE(nul(mynode));
+    ASSERT_EQ(mynode->number, 1);
+
+    mynode = &(e++)->cast<MyNode>();
+    ASSERT_FALSE(nul(mynode));
+    ASSERT_EQ(mynode->number, 6);
+
+    mynode = &(e++)->cast<MyNode>();
+    ASSERT_FALSE(nul(mynode));
+    ASSERT_EQ(mynode->number, 5);
+
+    mynode = &(e++)->cast<MyNode>();
+    ASSERT_FALSE(nul(mynode));
+    ASSERT_EQ(mynode->number, 2);
+
+    mynode = &(e++)->cast<MyNode>();
+    ASSERT_FALSE(nul(mynode));
+    ASSERT_EQ(mynode->number, 3);
+}
