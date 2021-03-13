@@ -28,7 +28,7 @@ namespace wrd {
                 if(step <= 0) return 0;
                 wcnt stepped = _iter.next(step),
                      remain = step - stepped;
-                if(remain == 0) return 0;
+                if(remain == 0) return stepped;
 
                 // arr iteration has reached to tail of the arr:
                 if(!_ownIter) return stepped;
@@ -104,7 +104,7 @@ namespace wrd {
 
             for(NChain* e = (NChain*) &from.getContainer().cast<NChain>();
                 !nul(e) && e != endChn;
-                e = &(*_next)) {
+                e = &(*e->_next)) {
                 auto& arr = e->_arr->cast<T>();
                 if(nul(arr)) continue;
 
@@ -141,7 +141,7 @@ namespace wrd {
     private:
         Iter& _getContainerIterFromChainIter(const Iter& wrap) {
             if(nul(wrap)) return nulOf<Iter>();
-            if(!wrap.isFrom(*this)) return nulOf<Iter>();
+            if(!wrap._step->getType().isSub<NChainIteration>()) return nulOf<Iter>();
             NChainIteration& cast = (NChainIteration&) *wrap._step;
             if(nul(cast)) return nulOf<Iter>();
 

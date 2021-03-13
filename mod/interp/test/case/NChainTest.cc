@@ -196,23 +196,31 @@ TEST(NChainFixture, testLinkedChainWithNContainerAPI) {
     NChain chn1(arr1);
     NArr arr2;
     NChain chn2(arr2);
+    vector<int> expectElementNums;
 
-    //  add each chains:
+    // add each chains:
     ASSERT_TRUE(chn2.add(new MyNode(6)));
-    ASSERT_TRUE(chn2.add(new MyNode(5)));
+    ASSERT_TRUE(chn2.add(new MyMyNode(5)));
     examineChain2Element(chn2, 6, 5);
 
     NArr arr3;
     NChain chn3(arr3);
     ASSERT_TRUE(chn3.add(new MyNode(2)));
-    ASSERT_TRUE(chn3.add(new MyNode(3)));
+    ASSERT_TRUE(chn3.add(new MyMyNode(3)));
     examineChain2Element(chn3, 2, 3);
 
     ASSERT_TRUE(arr1.add(new MyNode(0)));
-    ASSERT_TRUE(chn1.add(new MyNode(1)));
+    ASSERT_TRUE(chn1.add(new MyMyNode(1)));
     examineChain2Element(chn1, 0, 1);
 
-    //  link:
+    expectElementNums.push_back(0);
+    expectElementNums.push_back(1);
+    expectElementNums.push_back(6);
+    expectElementNums.push_back(5);
+    expectElementNums.push_back(2);
+    expectElementNums.push_back(3);
+
+    // link:
     ASSERT_TRUE(nul(chn1.getNext()));
     ASSERT_TRUE(nul(chn2.getNext()));
     ASSERT_TRUE(nul(chn3.getNext()));
@@ -223,6 +231,7 @@ TEST(NChainFixture, testLinkedChainWithNContainerAPI) {
     ASSERT_TRUE(nul(chn1.getNext().getNext().getNext()));
     ASSERT_EQ(chn1.getLen(), 6);
 
+    // add with link:
     Iter e = chn1.head();
     MyNode* mynode = &(e++)->cast<MyNode>();
     ASSERT_FALSE(nul(mynode));
@@ -247,4 +256,36 @@ TEST(NChainFixture, testLinkedChainWithNContainerAPI) {
     mynode = &(e++)->cast<MyNode>();
     ASSERT_FALSE(nul(mynode));
     ASSERT_EQ(mynode->number, 3);
+
+    // each with link:
+    int cnt = 0;
+    auto lambda = [&cnt, &expectElementNums](const Iter& e, const MyNode& elem) {
+        if(nul(elem)) return cnt = -1, false;
+
+        if(elem.number != expectElementNums[cnt++]) return cnt = -1, false;
+        return true;
+    };
+    chn1.each<MyNode>(lambda);
+    ASSERT_EQ(cnt, 6);
+
+    cnt = 2;
+    chn2.each<MyNode>(lambda);
+    ASSERT_EQ(cnt, 6);
+
+    cnt = 4;
+    expectElementNums[5] = -1;
+    chn3.each<MyNode>(lambda);
+    ASSERT_EQ(cnt, -1);
+
+    // del with link:
+    ASSERT_EQ(chn1.getLen(), 6);
+    ASSERT_EQ(chn1.getContainer().getLen(), 2);
+    ASSERT_EQ(chn2.getLen(), 4);
+    ASSERT_EQ(chn2.getContainer().getLen(), 2);
+    ASSERT_EQ(chn3.getLen(), 2);
+    ASSERT_EQ(chn3.getContainer().getLen(), 2);
+
+    ASSERT_EQ(chn1.del(chn1.head()+1, chn2.head()+1), 2);
+    ASSERT_EQ(chn1.getLen(), 4);
+    ASSERT_EQ(chn2.getLen(), 3);
 }
