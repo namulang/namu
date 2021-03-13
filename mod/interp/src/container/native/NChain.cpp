@@ -67,13 +67,12 @@ namespace wrd {
         if(endInnerIter.isFrom(fromCon)) return fromCon.del(fromInnerIter, endInnerIter);
 
         wcnt ret = 0;
-        each<NContainer>(from, nulOf<Iter>(), [&endCon, &ret, &endInnerIter](NChain& chn, NContainer& itsCon) {
-            if(&itsCon == &endCon) {
-l               return ret += itsCon.del(itsCon.head(), endInnerIter), false;
-            }
-            ret += itsCon.getLen();
-            itsCon.empty();
-            return true;
+        each<NContainer>(from, nulOf<Iter>(), [&](NChain& chn, NContainer& itsCon) {
+            wbool isLast = false;
+            Iter    head = &itsCon == &fromCon ? fromInnerIter : itsCon.head(),
+                    tail = &itsCon == &endCon ? isLast = true, endInnerIter : itsCon.tail();
+            ret += itsCon.del(head, tail);
+            return !isLast;
         });
 
         return ret;
