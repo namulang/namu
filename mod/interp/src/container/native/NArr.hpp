@@ -97,7 +97,6 @@ namespace wrd {
         NArrIteration& _getIterationFrom(const Iter& it) {
             if(nul(it)) return nulOf<NArrIteration>();
             if(!it.isFrom(*this)) return nulOf<NArrIteration>();
-            if(it.isEnd()) return nulOf<NArrIteration>();
             return (NArrIteration&) *it._step;
         }
 
