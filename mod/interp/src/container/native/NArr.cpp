@@ -58,7 +58,6 @@ namespace wrd {
         if(nul(cast)) return false;
         if(cast.isEnd()) return false;
 
-        _vec.erase(_vec.begin() + cast._n);
         return del(cast._n);
     }
 

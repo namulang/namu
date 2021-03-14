@@ -36,7 +36,6 @@ namespace wrd {
 
                 //  post:
                 widx newN = _n + step;
-                widx lastN = _own.getLen();
                 widx availableN = newN > lastN ? lastN : newN;
                 wcnt toStep = availableN - _n;
 

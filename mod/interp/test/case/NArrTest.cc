@@ -20,12 +20,16 @@ TEST(NArrFixture, instantiateTest) {
 
 TEST(NArrFixture, shouldNotCanAddLocalObject) {
     NArr arr;
-    MyNode localObj(5);
     ASSERT_EQ(arr.getLen(), 0);
 
-    ASSERT_FALSE(arr.add(localObj));
-    ASSERT_EQ(arr.getLen(), 0);
+    {
+        MyNode localObj(5);
+        ASSERT_TRUE(arr.add(localObj));
+        ASSERT_FALSE(nul(arr[0]));
+        ASSERT_EQ(arr.getLen(), 1);
+    }
 
+    ASSERT_EQ(arr.getLen(), 1);
     auto& elem = arr[0];
     ASSERT_TRUE(nul(elem));
 }
@@ -162,7 +166,7 @@ TEST(NArrFixture, testContainableAPI) {
 
     int cnt = 0;
     tray = arr->get<MyNode>([&cnt](const MyNode& elem) {
-        if(cnt >= 1) return false;
+        if(cnt++ >= 1) return false;
         return true;
     });
     ASSERT_EQ(tray.getLen(), 1);
