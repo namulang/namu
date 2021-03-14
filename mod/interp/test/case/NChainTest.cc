@@ -2,6 +2,7 @@
 #include "../../src/container/native/NContainer.inl"
 
 using namespace wrd;
+using namespace std;
 
 class MyNode : public Node {
     WRD_CLASS(MyNode, Node)
@@ -31,26 +32,26 @@ void simpleAddDelTest(int cnt) {
         tray.push_back(new1);
     }
 
-    ASSERT_EQ(chn.getLen(), n);
+    ASSERT_EQ(chn.getLen(), cnt);
 
     wbool isOk = false;
     int index = 0;
     ASSERT_TRUE(nul(chn.getNext()));
-    chn.each<MyNode>([&isOk, &new1](const Iter& e, const MyNode& elem) {
-        if(&elem != tray[index++]) return isOk = false;
-        if(elem.number != index) return isOk = false;
+    chn.each<MyNode>([&](const Iter& e, const MyNode& elem) {
+        if(&elem != tray[index]) return isOk = false;
+        if(elem.number != index++) return isOk = false;
         return isOk = true;
     });
     ASSERT_TRUE(isOk);
 }
 
-TEST(NChainFixture, simpleAddDelTest1) {
-    simpleAddDelTest(100);
+TEST(NChainFixture, simpleAddDelTest10) {
+    simpleAddDelTest(10);
 }
-TEST(NChainFixture, simpleAddDelTest1) {
+TEST(NChainFixture, simpleAddDelTest1000) {
     simpleAddDelTest(1000);
 }
-TEST(NChainFixture, simpleAddDelTest1) {
+TEST(NChainFixture, simpleAddDelTest10000) {
     simpleAddDelTest(10000);
 }
 
