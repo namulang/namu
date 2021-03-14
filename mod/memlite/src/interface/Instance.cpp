@@ -45,12 +45,13 @@ namespace wrd {
     wbool This::Vault::set(void* rcver, widx chkN) {
         if(nul(rcver)) return false;
 
-        _vaults[rcver].n = chkN;
+        _vaults[rcver] = chkN;
         return true;
     }
 
     widx This::Vault::get(void* rcver) {
-        widx ret = _vaults[rcver].n;
+        auto e = _vaults.find(rcver);
+        widx ret = e == _vaults.end() ? WRD_INDEX_ERROR : _vaults[rcver];
         if(ret > WRD_INDEX_ERROR)
             _vaults.erase(rcver);
 
