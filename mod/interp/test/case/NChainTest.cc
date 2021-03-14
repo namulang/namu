@@ -289,3 +289,11 @@ TEST(NChainFixture, testLinkedChainWithNContainerAPI) {
     ASSERT_EQ(chn1.getLen(), 4);
     ASSERT_EQ(chn2.getLen(), 3);
 }
+
+TEST(NChainFixture, testIfNChainLinkItself) {
+    NChain chn;
+    chn.add(new MyNode(0));
+    chn.add(new MyNode(1));
+    ASSERT_FALSE(chn.link(chn));
+    ASSERT_EQ(chn.getLen(), 2);
+}
