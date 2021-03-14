@@ -3,6 +3,8 @@
 #include "Id.hpp"
 #include <map>
 
+struct ChunksFixture;
+
 namespace wrd {
 
     class BindTag;
@@ -15,12 +17,9 @@ namespace wrd {
         friend class Watcher; // for Vault.
         friend class Chunks; // for Vault.
         friend class Instancer; // for _id.
+        friend struct ::ChunksFixture; // for Vault.
 
     public:
-        struct Defaulter {
-            widx n = WRD_INDEX_ERROR;
-        };
-
         class Vault {
 
         public:
@@ -28,8 +27,12 @@ namespace wrd {
             widx get(void* rcver);
             wbool rel();
 
+            std::map<void*, int>& getVaults() {
+                return _vaults;
+            }
+
         private:
-            std::map<void*, Defaulter> _vaults;
+            std::map<void*, int> _vaults;
         };
 
         //  Instance:

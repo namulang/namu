@@ -22,8 +22,11 @@ namespace wrd {
     wcnt This::getStrongCnt() const { return _strong; }
 
     wbool This::unbind() {
-        if(_pt && _id.isHeap())
+        if(_pt && _id.isHeap()) {
+            WRD_DI("BindTag(chkN=%d) deletes instance(%x)", _id.chkN, _pt);
             delete _pt;
+        }
+
         _pt = WRD_NULL;
         _strong = 0;
         return true;

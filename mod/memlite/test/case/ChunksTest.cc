@@ -15,7 +15,17 @@ public:
     std::vector<void*> ptrs;
 };
 
-TEST(ChunksTest, initialStateTest) {
+struct ChunksFixture : public ::testing::Test {
+    void TearDown() {
+        Instance::_vault.getVaults().clear();
+    }
+
+    int getVaultsSize() {
+        return Instance::_vault.getVaults().size();
+    }
+};
+
+TEST_F(ChunksFixture, initialStateTest) {
     Chunks chks1;
 
     ASSERT_EQ(chks1.getBlkSize(), 0);
@@ -25,7 +35,7 @@ TEST(ChunksTest, initialStateTest) {
     ASSERT_TRUE(nul(chks1[-1]));
 }
 
-TEST(ChunksTest, resizeFewTimesTest) {
+TEST_F(ChunksFixture, resizeFewTimesTest) {
     Heap heap;
     Chunks chks2(4);
 
@@ -51,7 +61,7 @@ TEST(ChunksTest, resizeFewTimesTest) {
     ASSERT_TRUE(chks2.rel());
 }
 
-TEST(ChunksTest, resizeLotsOfTimesTest) {
+TEST_F(ChunksFixture, resizeLotsOfTimesTest) {
     Heap heap;
     Chunks chks2(4);
 
@@ -59,21 +69,29 @@ TEST(ChunksTest, resizeLotsOfTimesTest) {
     heap.rel(chks2);
     ASSERT_EQ(chks2.getLen(), 0);
     ASSERT_EQ(chks2.getSize(), 0);
+    TearDown();
+    ASSERT_EQ(getVaultsSize(), 0);
 
     heap.new1(chks2, 100);
     heap.rel(chks2);
     ASSERT_EQ(chks2.getLen(), 0);
     ASSERT_EQ(chks2.getSize(), 0);
+    TearDown();
+    ASSERT_EQ(getVaultsSize(), 0);
 
     heap.new1(chks2, 1000);
     heap.rel(chks2);
     ASSERT_EQ(chks2.getLen(), 0);
     ASSERT_EQ(chks2.getSize(), 0);
+    TearDown();
+    ASSERT_EQ(getVaultsSize(), 0);
 
     heap.new1(chks2, 10000);
     heap.rel(chks2);
     ASSERT_EQ(chks2.getLen(), 0);
     ASSERT_EQ(chks2.getSize(), 0);
+    TearDown();
+    ASSERT_EQ(getVaultsSize(), 0);
 
     heap.new1(chks2, 100000);
     heap.rel(chks2);
