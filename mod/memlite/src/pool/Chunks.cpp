@@ -70,7 +70,7 @@ namespace wrd {
     }
 
     void* This::_get(widx n) {
-        if(n < 0 || n >= getLen()) return WRD_NULL;
+        if(n < 0 || n >= getLen()) return nullptr;
 
         return _chunks[n];
     }

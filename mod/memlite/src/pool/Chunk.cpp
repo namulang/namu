@@ -36,7 +36,7 @@ namespace wrd {
 
         widx* ret = (widx*)_get(_head);
         if(!ret)
-            return WRD_NULL;
+            return nullptr;
 
         _head = *ret;
         _len++;
@@ -68,7 +68,7 @@ namespace wrd {
     wuchar* This::_getHeap() { return _heap; }
 
     void* This::_get(widx n) {
-        if(n < 0 || n >= getSize()) return WRD_NULL;
+        if(n < 0 || n >= getSize()) return nullptr;
 
         return _heap + n*_getRealBlkSize();
     }
@@ -76,7 +76,7 @@ namespace wrd {
     wuchar* This::_getEOB() {
         wuchar* org = (wuchar*) _get(_sz - 1);
         if(!org)
-            return WRD_NULL;
+            return nullptr;
 
         return org + _getRealBlkSize() - 1;
     }

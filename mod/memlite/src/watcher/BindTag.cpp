@@ -27,7 +27,7 @@ namespace wrd {
             delete _pt;
         }
 
-        _pt = WRD_NULL;
+        _pt = nullptr;
         _strong = 0;
         return true;
     }

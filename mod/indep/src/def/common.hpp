@@ -1,7 +1,5 @@
 #pragma once
 
-#define WRD_NULL 0x00
-
 #ifdef UNICODE
     #define tchar wchar_t
     #define tmain wmain
