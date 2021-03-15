@@ -6,7 +6,7 @@ TEST(MacroTest, nul) {
 
     wint a = 5;
     wint* aPtr = &a;
-    wint* aNul = WRD_NULL;
+    wint* aNul = nullptr;
     wint& refNul = nulOf<wint>();
     wint& refA = *aPtr;
 

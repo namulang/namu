@@ -22,7 +22,7 @@ namespace wrd {
     }
 
     TEMPL const THIS& THIS::get() {
-        static THIS* inner = WRD_NULL;
+        static THIS* inner = nullptr;
         if(!inner) {
             inner = new THIS(false);
             inner->init();

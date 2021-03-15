@@ -49,7 +49,7 @@ namespace wrd {
 
     template <typename T, wbool canMake = std::is_constructible<T>::value>
     struct TInstanceMaker {
-        static void* make() { return WRD_NULL; }
+        static void* make() { return nullptr; }
     };
     template <typename T>
     struct TInstanceMaker<T, true> {
@@ -58,7 +58,7 @@ namespace wrd {
 
     struct NameDemangler {
         static std::string demangle(const wchar* org) {
-            wchar* demangled = WRD_NULL;
+            wchar* demangled = nullptr;
             int status = 0;
 
             demangled = ::abi::__cxa_demangle(org, 0, 0, &status);
