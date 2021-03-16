@@ -54,14 +54,14 @@ namespace wrd {
             return Super::del(it);
         }
 
-        template <typename E>
+        template <typename E = T>
         void each(const TIter<T>& from, const TIter<T>& to, std::function<wbool(TIter<T>&, E&)> l);
         template <typename E>
         void each(const TIter<T>& from, const TIter<T>& to, std::function<wbool(const TIter<T>&, const E&)> l) const;
 
-        template <typename E>
+        template <typename E = T>
         void each(std::function<wbool(TIter<T>&, E&)> l);
-        template <typename E>
+        template <typename E = T>
         void each(std::function<wbool(const TIter<T>&, const E&)> l) const;
     };
 }
