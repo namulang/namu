@@ -36,7 +36,7 @@ namespace wrd {
         virtual wbool add(const Iter& at, const Node& new1) = 0;
         wbool add(const Iter& at, const Node* new1) {
             return add(at, *new1);
-       }
+        }
         virtual wcnt add(const Iter& from, const Iter& to) = 0;
         virtual wcnt add(const Containable& rhs) = 0;
 
@@ -45,7 +45,7 @@ namespace wrd {
         wbool del(const Node* it) {
             return del(*it);
         }
-       virtual wbool del(const Iter& it) = 0;
+        virtual wbool del(const Iter& it) = 0;
         virtual wcnt del(const Iter& from, const Iter& to) = 0;
         virtual wcnt del(const Containable& rhs) = 0;
 

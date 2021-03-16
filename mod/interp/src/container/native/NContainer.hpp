@@ -34,13 +34,13 @@ namespace wrd {
             return del(rhs.head(), rhs.tail());
         }
 
-        template <typename T>
+        template <typename T = Node>
         void each(const Iter& from, const Iter& to, std::function<wbool(Iter&, T&)> l);
-        template <typename T>
+        template <typename T = Node>
         void each(const Iter& from, const Iter& to, std::function<wbool(const Iter&, const T&)> l) const;
-        template <typename T>
+        template <typename T = Node>
         void each(std::function<wbool(Iter&, T&)> l);
-        template <typename T>
+        template <typename T = Node>
         void each(std::function<wbool(const Iter&, const T&)> l) const;
     };
 }
