@@ -26,6 +26,9 @@ namespace wrd {
         virtual Iter head() const = 0;
         virtual Iter tail() const = 0;
 
+        /// @param step step from the head of this container.
+        virtual Iter iter(wcnt step) const = 0;
+
         virtual wbool add(const Node& new1) = 0;
         wbool add(const Node* new1) {
             return add(*new1);

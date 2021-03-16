@@ -153,7 +153,7 @@ TEST(NChainFixture, testContainableAPI) {
     con->empty();
     ASSERT_TRUE(con->getLen() == 0);
 
-    ASSERT_EQ(con->add(arr2.head() + 2, arr2.tail()), 4);
+    ASSERT_EQ(con->add(arr2.iter(2), arr2.tail()), 4);
     e = con->head();
     elem = &e->cast<MyNode>();
     ASSERT_FALSE(nul(elem));
