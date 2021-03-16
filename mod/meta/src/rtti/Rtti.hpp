@@ -100,8 +100,7 @@ namespace wrd {
         using is = Type;
     };
     template <typename T>
-    struct TSuperTypeDef<T, void_t<typename T::SuperType>> {
+    struct TSuperTypeDef<T, void_t<int T::SuperType::*>> {
         using is = typename T::SuperType;
     };
-
  }

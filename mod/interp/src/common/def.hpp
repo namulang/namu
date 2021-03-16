@@ -5,12 +5,12 @@
 namespace wrd {
 
 #define WRD_INTERFACE_FOOTER(THIS) \
-        WRD_INIT_META(THIS) \
     public: \
         typedef WType SuperType; \
-        const Type& getType() const override { \
+        const WType& getType() const override { \
             return TType<This>::get(); \
         } \
+        WRD_INIT_META(THIS) \
     private:
 
 #define WRD_CLONE(THIS) \
