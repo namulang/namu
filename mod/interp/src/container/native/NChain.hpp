@@ -72,6 +72,7 @@ namespace wrd {
 
         Iter head() const override;
         Iter tail() const override;
+        Iter iter(wcnt step) const override;
 
         using Super::add;
         wbool add(const Iter& at, const Node& new1) override;

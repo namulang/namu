@@ -22,8 +22,6 @@ namespace wrd {
             return set(n, *new1);
         }
 
-        virtual Iter iter(widx n) const = 0;
-
         /// @return how many element has been added from rhs.
         virtual wbool add(widx n, const Node& new1) = 0;
         wbool add(widx n, const Node* new1) {

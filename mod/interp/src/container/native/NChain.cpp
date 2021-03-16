@@ -100,6 +100,12 @@ namespace wrd {
         return Iter(new NChainIteration(*this, *this, _arr->head()));
     }
 
+    Iter This::iter(wcnt step) const {
+        Iter ret = head();
+        ret.step(step);
+        return ret;
+    }
+
     Iter This::tail() const {
         const NChain& last = _getLastChain();
         if(nul(last)) return Iter();
