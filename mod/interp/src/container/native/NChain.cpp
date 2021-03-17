@@ -102,7 +102,7 @@ namespace wrd {
 
     Iter This::iter(wcnt step) const {
         Iter ret = head();
-        ret.step(step);
+        ret.next(step);
         return ret;
     }
 

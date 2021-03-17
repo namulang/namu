@@ -6,4 +6,6 @@ namespace wrd {
     class WType : public Type {
         WRD_DECL_THIS(WType, Type)
     };
+
+    typedef std::vector<WType*> WTypes;
 }

@@ -10,6 +10,10 @@ class MyNode : public Node {
 public:
     MyNode(int num): number(num) {}
 
+    NContainer& subs() override { return nulOf<NContainer>(); }
+    wbool canRun(const WTypes& types) const override { return false; }
+    Str run(NContainer& args) override { return Str(); }
+
     int number;
 };
 
