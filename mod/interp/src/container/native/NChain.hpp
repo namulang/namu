@@ -84,7 +84,7 @@ namespace wrd {
         wbool del(const Iter& at) override;
         wcnt del(const Iter& from, const Iter& end) override;
 
-        wbool link(const NContainer& new1);
+        TStr<NChain> link(const NContainer& new1);
         wbool link(const NChain& new1);
         wbool unlink();
 
