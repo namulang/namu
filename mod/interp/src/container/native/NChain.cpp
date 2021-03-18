@@ -78,11 +78,13 @@ namespace wrd {
         return ret;
     }
 
-    wbool This::link(const NContainer& new1) {
+    TStr<NChain> This::link(const NContainer& new1) {
         if(&new1 == &getContainer())
             return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), false;
 
-        return _next.bind(new NChain(new1));
+        TStr<NChain> ret = new NChain(new1);
+        _next.bind(ret);
+        return ret;
     }
 
     wbool This::link(const NChain& new1) {
