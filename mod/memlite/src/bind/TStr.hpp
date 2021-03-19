@@ -14,6 +14,7 @@ namespace wrd {
         TStr();
         TStr(const T& it);
         TStr(const T* it);
+        TStr(const This& rhs);
         TStr(const Bind& rhs);
 
         using Super::operator=;
