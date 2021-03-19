@@ -15,6 +15,7 @@ namespace wrd {
         TWeak();
         TWeak(const T& it);
         TWeak(const T* it);
+        TWeak(const This& rhs);
         TWeak(const Bind& rhs);
 
         T* operator->() override;
