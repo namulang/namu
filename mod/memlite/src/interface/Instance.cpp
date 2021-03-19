@@ -26,14 +26,10 @@ namespace wrd {
         return _id.isHeap();
     }
 
-    const BindTag& This::getBindTag() const { return _getBindTag(getId()); }
+    const BindTag& This::getBindTag() const { return BindTag::getBindTag(getId()); }
 
     // rel() have not to reset Id. it's regarding to instance info.
     // as long as instance keep alive, that info need to be stuck to instance.
-
-    BindTag& This::_getBindTag(Id id) {
-        return const_cast<BindTag&>(WRD_GETS(_getMgr().getWatcher()[id], blk));
-    }
 
     wbool This::_setId(Id new1) {
         _id = new1;

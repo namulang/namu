@@ -51,7 +51,6 @@ namespace wrd {
     protected:
         //  Instance:
         wbool _setId(Id new1);
-        static BindTag& _getBindTag(Id id);
         static Instancer& _getMgr();
 
     private:

@@ -19,7 +19,7 @@ namespace wrd {
     }
 
     wbool This::isBind() const {
-        const BindTag& tag = _getBindTag(_itsId);
+        const BindTag& tag = _getBindTag();
         if(nul(tag)) return false;
 
         return tag.isBind();
@@ -40,7 +40,7 @@ namespace wrd {
     }
 
     Instance& This::get() {
-        return WRD_GETS(_getBindTag(_itsId),get());
+        return WRD_GETS(_getBindTag(),get());
     }
 
     wbool This::_assign(const Bind& rhs) {
@@ -53,5 +53,9 @@ namespace wrd {
     wbool This::_onSame(const TypeProvidable& rhs) const {
         const This& cast = (const This&) rhs;
         return get() == cast.get();
+    }
+
+    BindTag& This::_getBindTag() const {
+        return const_cast<BindTag&>(BindTag::getBindTag(_itsId));
     }
 }

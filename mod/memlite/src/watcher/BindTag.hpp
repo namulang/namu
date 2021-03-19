@@ -37,6 +37,7 @@ namespace wrd {
         const Type& getType() const override{
             return TType<BindTag>::get();
         }
+        static const BindTag& getBindTag(Id id);
 
     private:
         //  BindTag:
