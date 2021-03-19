@@ -1,11 +1,11 @@
 #pragma once
 
 #include "TBindable.hpp"
-#include "../interface/Instance.hpp"
 
 namespace wrd {
 
     class BindTacticable;
+    class BindTag;
     /// Bind:
     ///     Overview:
     ///         can guarrantee that specific instance freed completely and track of them.
@@ -43,7 +43,7 @@ namespace wrd {
     ///             because it was declared to class template, user need to bind or get binded using type T.
     ///             of course these are based on class Bind, user can use loose-check API case by case.
     ///
-    class Bind : public Instance, public TBindable<Instance> {
+    class Bind : public TypeProvidable, public TBindable<Instance> {
         WRD_DECL_THIS(Bind, Instance)
         WRD_INIT_META(This)
         friend class WeakTactic;
@@ -53,7 +53,7 @@ namespace wrd {
     public:
         Bind(const Type& type, BindTacticable& tactic);
         Bind(const This& rhs);
-        ~Bind();
+        virtual ~Bind();
 
         This& operator=(const This& rhs);
 
@@ -67,7 +67,7 @@ namespace wrd {
         using TBindable::get;
         wbool bind(const Instance& it) override;
         Instance& get() override;
-        //  Instance:
+        //  TypeProvidable:
         const Type& getType() const override;
 
     protected:
@@ -75,6 +75,8 @@ namespace wrd {
         wbool _onSame(const TypeProvidable& rhs) const override;
 
     private:
+        BindTag& _getBindTag() const;
+
         Id _itsId; // id for binded one
         const Type* _type;
         BindTacticable* _tactic;

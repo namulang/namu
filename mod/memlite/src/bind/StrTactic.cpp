@@ -9,7 +9,7 @@ namespace wrd {
     wbool This::unbind(Bind& me) {
         if(!me.isBind()) return true;
 
-        BindTag& tag = me._getBindTag(me.getItsId());
+        BindTag& tag = me._getBindTag();
         WRD_NUL(tag, Super::unbind(me));
 
         tag._onStrong(-1);
@@ -32,7 +32,7 @@ namespace wrd {
         //  StrongBinder가 붙지 않는다면 그대로 계속 메모리상주하게 된다.
         //  Strong이 Count.strong=0인 instance를 bind하는 순간, 이 instance는
         //  bind에 의해서 해제될 수 있게 된다.
-        return me._getBindTag(me.getItsId())._onStrong(1);
+        return me._getBindTag()._onStrong(1);
     }
 
     This This::singletone;

@@ -74,4 +74,8 @@ namespace wrd {
         _id = new1;
         return true;
     }
+
+    const BindTag& This::getBindTag(Id id) {
+        return const_cast<BindTag&>(WRD_GETS(Instancer::get().getWatcher()[id], blk));
+    }
  }
