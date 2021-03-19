@@ -302,3 +302,85 @@ TEST(NChainFixture, testIfNChainLinkItself) {
     ASSERT_FALSE(chn.link(chn));
     ASSERT_EQ(chn.getLen(), 2);
 }
+
+TEST(NChainFixture, testShouldLinkOverwritePrevious) {
+    TStr<NArr> arr1Str(new NArr());
+    const BindTag* arr1tag = &BindTag::getBindTag(arr1Str.getItsId());
+    ASSERT_FALSE(nul(arr1tag));
+    ASSERT_EQ(arr1tag->getStrongCnt(), 1);
+
+    TWeak<NArr> arr1Weak = arr1Str;
+    arr1Str->add(new MyNode(0));
+    arr1Str->add(new MyNode(1));
+    ASSERT_EQ(arr1Str->getLen(), 2);
+    ASSERT_EQ(arr1tag->getStrongCnt(), 1);
+
+
+    NChain chn2;
+    chn2.add(new MyNode(2));
+    chn2.add(new MyNode(3));
+    ASSERT_EQ(chn2.getLen(), 2);
+
+    ASSERT_TRUE(chn2.link(*arr1Str));
+    ASSERT_EQ(arr1tag->getStrongCnt(), 2);
+    // chn2 --> unknown chain instance holding arr1
+    ASSERT_EQ(chn2.getLen(), 4);
+
+    arr1Str.unbind();
+    ASSERT_EQ(arr1tag->getStrongCnt(), 1);
+    ASSERT_EQ(chn2.getLen(), 4);
+    ASSERT_TRUE(arr1Weak.isBind());
+
+    NArr arr2;
+    ASSERT_TRUE(arr1Weak.isBind());
+    chn2.link(arr2);
+    ASSERT_EQ(arr1tag->getStrongCnt(), 0);
+    // this overwrites chain containing arr1. it's now dangling.
+    // chn2(2, 3) --> unknown chain instance holding arr2(null)
+    //   |--- X --> unknown chain instance holding arr1(0, 1)
+    ASSERT_FALSE(arr1Weak.isBind());
+
+    ASSERT_EQ(chn2.getLen(), 2);
+}
+
+TEST(NChainFixture, testDelWithLink) {
+    NChain chn;
+    chn.add(new MyNode(1));
+    ASSERT_EQ(chn.getLen(), 1);
+
+    {
+        NArr arr1;
+        arr1.add(new MyNode(2));
+        arr1.add(new MyNode(3));
+
+        auto arr1Str = chn.link(arr1);
+        // chn --> arr1Str with arr1
+        //  ^
+        //  |
+        // head
+        ASSERT_EQ(chn.getLen(), 3);
+        TWeak<NChain> arr2Weak;
+        {
+            NArr arr2;
+            arr2.add(new MyNode(4));
+            arr2.add(new MyNode(5));
+            arr2.add(new MyNode(6));
+            auto arr2Str = arr1Str->link(arr2);
+            arr2Weak = arr2Str;
+            // now, chn --> arr1Str with arr1 --> arr2Str with arr2
+            ASSERT_EQ(arr2Str->getLen(), 3);
+            ASSERT_EQ(arr1Str->getLen(), 3 + arr1.getLen());
+            ASSERT_EQ(chn.getLen(), 1 + arr1.getLen() + arr2.getLen());
+        }
+
+        arr1Str->unlink();
+        // now, chn --> arr1Str with arr1
+        ASSERT_FALSE(arr2Weak.isBind());
+        ASSERT_EQ(chn.getLen(), 1 + arr1.getLen());
+
+        MyNode& last = chn.iter(chn.getLen() - 1)->cast<MyNode>();
+        ASSERT_EQ(last.number, 3);
+    }
+    chn.unlink();
+    ASSERT_EQ(chn.getLen(), 1);
+}
