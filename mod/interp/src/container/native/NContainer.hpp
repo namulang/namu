@@ -35,11 +35,11 @@ namespace wrd {
         }
 
         template <typename T = Node>
-        void each(const Iter& from, const Iter& to, std::function<wbool(Iter&, T&)> l);
+        void each(const Iter& from, const Iter& to, std::function<wbool(const Iter&, T&)> l);
         template <typename T = Node>
         void each(const Iter& from, const Iter& to, std::function<wbool(const Iter&, const T&)> l) const;
         template <typename T = Node>
-        void each(std::function<wbool(Iter&, T&)> l);
+        void each(std::function<wbool(const Iter&, T&)> l);
         template <typename T = Node>
         void each(std::function<wbool(const Iter&, const T&)> l) const;
     };

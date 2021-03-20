@@ -43,10 +43,10 @@ namespace wrd {
 
     wbool This::del(const Node& it) {
         wbool ret = false;
-        each<Node>([&ret, &it](Iter& e, Node& elem) {
+        each<Node>([&ret, &it](const Iter& e, Node& elem) {
             if(&elem != &it) return true;
 
-            ret = e.getContainer().del(e);
+            ret = const_cast<NContainer&>(e.getContainer()).del(e);
             return false;
         });
 

@@ -17,7 +17,7 @@ namespace wrd {
     }
 
     template <typename T>
-    void NContainer::each(std::function<wbool(Iter&, T&)> l) {
+    void NContainer::each(std::function<wbool(const Iter&, T&)> l) {
         each(head(), tail(), l);
     }
 
@@ -27,7 +27,7 @@ namespace wrd {
     }
 
     template <typename T>
-    void NContainer::each(const Iter& from, const Iter& to, std::function<wbool(Iter&, T&)> l) {
+    void NContainer::each(const Iter& from, const Iter& to, std::function<wbool(const Iter&, T&)> l) {
         for(Iter e=from; e != to ;++e) {
             T& t = e->cast<T>();
             if(nul(t)) continue;
