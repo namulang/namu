@@ -115,6 +115,13 @@ namespace wrd {
         return Iter(new NChainIteration(*this, last, last._arr->tail()));
     }
 
+    Iter This::last() const {
+        const NChain& last = _getLastChain();
+        if(nul(last)) return Iter();
+
+        return Iter(new NChainIteration(*this, last, last._arr->last()));
+    }
+
     void This::empty() {
         _arr->empty();
         each<NContainer>([](NChain& chn, NContainer& itsCon) {

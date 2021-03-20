@@ -8,6 +8,7 @@ namespace wrd {
 #define THIS TWeak<T>
 #define SUPER Bind
 
+    TEMPL THIS::TWeak() : SUPER(TType<T>::get(), WeakTactic::singletone) {}
     TEMPL THIS::TWeak(const T& it): SUPER(TType<T>::get(), WeakTactic::singletone) { this->bind(it); }
     TEMPL THIS::TWeak(const T* it): SUPER(TType<T>::get(), WeakTactic::singletone) { this->bind(*it); }
     TEMPL THIS::TWeak(const THIS& rhs): SUPER(TType<T>::get(), WeakTactic::singletone) { this->_assign(rhs); }

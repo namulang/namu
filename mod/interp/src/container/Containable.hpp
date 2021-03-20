@@ -23,8 +23,9 @@ namespace wrd {
             return set(at, *new1);
         }
 
-        virtual Iter head() const = 0;
-        virtual Iter tail() const = 0;
+        virtual Iter head() const { return iter(0); }
+        virtual Iter tail() const { return iter(getLen()); }
+        virtual Iter last() const { return iter(getLen()-1); }
 
         /// @param step step from the head of this container.
         virtual Iter iter(wcnt step) const = 0;

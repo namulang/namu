@@ -19,9 +19,6 @@ namespace wrd {
         using Super::set;
         using ArrContainable::set;
 
-        Iter head() const override { return iter(0); }
-        Iter tail() const override { return iter(getLen()); }
-
         Iter iter(widx n) const override {
             return Iter(_onIter(n));
         }
