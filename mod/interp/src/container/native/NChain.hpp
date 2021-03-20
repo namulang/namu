@@ -72,6 +72,7 @@ namespace wrd {
 
         Iter head() const override;
         Iter tail() const override;
+        Iter last() const override;
         Iter iter(wcnt step) const override;
 
         using Super::add;

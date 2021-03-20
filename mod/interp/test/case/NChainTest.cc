@@ -384,3 +384,18 @@ TEST(NChainFixture, testDelWithLink) {
     chn.unlink();
     ASSERT_EQ(chn.getLen(), 1);
 }
+
+TEST(NChainFixture, testLastIterator) {
+    NChain chn;
+    ASSERT_EQ(chn.getLen(), 0);
+    chn.add(new MyNode(1));
+    chn.add(new MyNode(3));
+    chn.add(chn.last(), new MyNode(2));
+
+    wint checker = 0;
+    wbool sorted = true;
+    chn.each<MyNode>([&](const Iter& e, const MyNode& elem) {
+        return sorted = (elem.number == ++checker);
+    });
+    ASSERT_TRUE(sorted);
+}
