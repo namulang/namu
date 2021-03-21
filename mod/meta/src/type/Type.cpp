@@ -22,7 +22,7 @@ namespace wrd {
         //      Object class should not initialize explicitly:
         //          or This makes recursive call. Because if we make a instance of TType<Object>,
         //          it triggers Type::init inside of it.
-        if(isInit()) return true;
+        if(isInit()) return false;
 
         //  main:
         //      setting init flag first is important:
