@@ -46,7 +46,6 @@ namespace wrd {
     wbool This::_assign(const Bind& rhs) {
         unbind();
         _type = rhs._type;
-        _tactic = rhs._tactic;
         if (nul(_tactic))
             _tactic = rhs._tactic;
         return bind(rhs.get());
