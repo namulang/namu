@@ -7,7 +7,7 @@
 
 namespace wrd {
 
-    class Node : public Instance, public Clonable {
+    class Node : public Instance, public Clonable, public Asable {
         WRD_INTERFACE(Node, Instance)
 
     public:
@@ -41,6 +41,14 @@ namespace wrd {
             static std::string dummy = "";
             return dummy;
         }
+        // Asable:
+        using Asable::is;
+        wbool is(const Type& type) const override {
+            return getType().is(type);
+        }
+
+        using Asable::as;
+        Ref as(const Node& it) const override;
 
     private:
         static WTypes _createTypesFromArgs(const NContainer& args) {
