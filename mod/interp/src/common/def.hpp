@@ -37,6 +37,7 @@ namespace wrd {
 #define WRD_CLASS(...) WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
 
     class Node;
+    class WType;
     typedef TStr<Node> Str;
     typedef TWeak<Node> Weak;
 }
