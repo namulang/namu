@@ -10,7 +10,7 @@ namespace wrd {
     template <typename E>
     void THIS::each(const TIter<T>& from, const TIter<T>& to, std::function<wbool(TIter<T>&, E&)> l) {
         for(TIter<T> e=from; e == to ;++e) {
-            E& t = e->cast<E>();
+            E& t = e->template cast<E>();
             if(nul(t)) continue;
 
             if(!l(e, t)) return;
@@ -27,7 +27,7 @@ namespace wrd {
     template <typename E>
     void THIS::each(const TIter<T>& from, const TIter<T>& to, std::function<wbool(const TIter<T>&, const E&)> l) const {
         for(TIter<T> e=from; e == to ;++e) {
-            E& t = e->cast<E>();
+            E& t = e->template cast<E>();
             if(nul(t)) continue;
 
             if(!l(e, t)) return;
@@ -37,7 +37,7 @@ namespace wrd {
     TEMPL
     template <typename E>
     void THIS::each(std::function<wbool(const TIter<T>&, const E&)> l) const {
-        each(head(), tail(), l);
+        each(headT(), tailT(), l);
     }
 
 #undef TEMPL

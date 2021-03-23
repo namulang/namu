@@ -14,7 +14,6 @@ namespace wrd {
 
         using Super::get;
         using ArrContainable::get;
-        const Node& get(widx n) const override WRD_UNCONST_FUNC(get(n))
 
         using Super::set;
         using ArrContainable::set;

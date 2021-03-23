@@ -68,6 +68,7 @@ namespace wrd {
 
         using Super::get;
         Node& get(widx n) override;
+        const Node& get(widx n) const override WRD_UNCONST_FUNC(get(n))
 
         using Super::set;
         wbool set(const Iter& at, const Node& new1) override;
