@@ -23,7 +23,7 @@ TEST(NArrFixture, instantiateTest) {
 }
 
 TEST(NArrFixture, shouldNotCanAddLocalObject) {
-    NArr arr;
+    TNArr<MyNode> arr;
     ASSERT_EQ(arr.getLen(), 0);
 
     {
@@ -39,7 +39,7 @@ TEST(NArrFixture, shouldNotCanAddLocalObject) {
 }
 
 TEST(NArrFixture, simpleAddDelTest) {
-    NArr arr;
+    TNArr<MyNode> arr;
     ASSERT_EQ(arr.getLen(), 0);
 
     const int EXPECT_NUMBER = 5;
@@ -52,7 +52,7 @@ TEST(NArrFixture, simpleAddDelTest) {
 }
 
 TEST(NArrFixture, addDel10Elems) {
-    NArr arr;
+    TNArr<MyNode> arr;
     const int cnt = 10;
     for(int n=0; n < cnt; n++) {
         ASSERT_TRUE(arr.add(*(new MyNode(n))));
@@ -134,7 +134,7 @@ TEST(NArrFixture, testIter) {
 
 TEST(NArrFixture, testContainableAPI) {
     //  initial state:
-    NArr* arr = new NArr();
+    TNArr<MyNode>* arr = new TNArr<MyNode>();
     Containable* con = arr;
     ASSERT_EQ(con->getLen(), 0);
 
@@ -184,21 +184,21 @@ TEST(NArrFixture, testContainableAPI) {
     //  del:
     ASSERT_TRUE(con->del());
     ASSERT_EQ(con->getLen(), 1);
-    ASSERT_EQ(arr->get(0).cast<MyNode>().number, 0);
+    ASSERT_EQ(arr->get(0).number, 0);
 
     //  add with element:
-    NArr arr2;
+    TNArr<MyNode> arr2;
     ASSERT_EQ(arr2.add(*con), 1);
     ASSERT_TRUE(arr2.add(new MyNode(1)));
     ASSERT_TRUE(arr2.add(new MyMyNode(2)));
     ASSERT_TRUE(arr2.add(new MyNode(3)));
-    ASSERT_EQ(arr2[2].cast<MyNode>().number, 2);
-    ASSERT_EQ(arr2[3].cast<MyNode>().number, 3);
+    ASSERT_EQ(arr2[2].number, 2);
+    ASSERT_EQ(arr2[3].number, 3);
     ASSERT_EQ(arr2.getLen(), 4);
 
-    Iter e = arr2.head();
+    TIter<MyNode> e = arr2.headT();
     e = e + 2;
-    ASSERT_EQ(e->cast<MyNode>().number, 2);
+    ASSERT_EQ(e->number, 2);
     ASSERT_TRUE(arr2.add(e, new MyNode(5)));
     ASSERT_TRUE(arr2.add(2, new MyNode(6)));
 
@@ -212,7 +212,7 @@ TEST(NArrFixture, testContainableAPI) {
     ASSERT_EQ(con->getLen(), 1);
     ASSERT_EQ(con->add(arr2.iter(1), arr2.iter(3)), 2);
     ASSERT_EQ(con->getLen(), 3);
-    e=con->head();
+    e=arr->headT();
     MyNode* elem = &e->cast<MyNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 0);
@@ -232,7 +232,7 @@ TEST(NArrFixture, testContainableAPI) {
     ASSERT_TRUE(con->getLen() == 0);
 
     ASSERT_EQ(con->add(arr2.head() + 2, arr2.tail()), 4);
-    e = con->head();
+    e = arr->headT();
     elem = &e->cast<MyNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
@@ -250,7 +250,7 @@ TEST(NArrFixture, testContainableAPI) {
     ASSERT_EQ(elem->number, 3);
 
     ASSERT_EQ(con->del(con->head() + 1, con->head() + 3), 2);
-    e = con->head();
+    e = arr->headT();
     elem = &e->cast<MyNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);

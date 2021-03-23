@@ -27,7 +27,7 @@ namespace wrd {
 
         TIter<T> headT() const { return iterT(0); }
         TIter<T> tailT() const { return iterT(getLen()); }
-        TIter<T> iterT(widx n) {
+        TIter<T> iterT(widx n) const {
             return TIter<T>(_onIter(n));
         }
         TIter<T> iterT(const T& elem) const {
@@ -45,8 +45,14 @@ namespace wrd {
         wbool add(const T& new1) {
             return Super::add(new1);
         }
+        wbool add(const T* new1) {
+            return Super::add(*new1);
+        }
         wbool add(const TIter<T>& e, const T& new1) {
             return Super::add(e, new1);
+        }
+        wbool add(const TIter<T>& e, const T* new1) {
+            return Super::add(e, *new1);
         }
 
         using Super::del;

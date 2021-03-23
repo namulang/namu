@@ -55,6 +55,7 @@ namespace wrd {
             return _step->next(step);
         }
 
+        using Iterable::get;
         Node& get() override {
             if(!_step) return nulOf<Node>();
             return _step->get();
