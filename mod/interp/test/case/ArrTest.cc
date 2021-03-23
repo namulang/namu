@@ -1,5 +1,4 @@
 #include "../common/dep.hpp"
-#include "../../src/container/native/NContainer.inl"
 #include <chrono>
 
 using namespace wrd;
@@ -18,12 +17,12 @@ public:
     int number;
 };
 
-TEST(NArrFixture, instantiateTest) {
-    NArr arr;
+TEST(ArrFixture, instantiateTest) {
+    Arr arr;
 }
 
-TEST(NArrFixture, shouldNotCanAddLocalObject) {
-    TNArr<MyNode> arr;
+TEST(ArrFixture, shouldNotCanAddLocalObject) {
+    TArr<MyNode> arr;
     ASSERT_EQ(arr.getLen(), 0);
 
     {
@@ -38,8 +37,8 @@ TEST(NArrFixture, shouldNotCanAddLocalObject) {
     ASSERT_TRUE(nul(elem));
 }
 
-TEST(NArrFixture, simpleAddDelTest) {
-    TNArr<MyNode> arr;
+TEST(ArrFixture, simpleAddDelTest) {
+    TArr<MyNode> arr;
     ASSERT_EQ(arr.getLen(), 0);
 
     const int EXPECT_NUMBER = 5;
@@ -51,8 +50,8 @@ TEST(NArrFixture, simpleAddDelTest) {
     ASSERT_EQ(elem1.number, EXPECT_NUMBER);
 }
 
-TEST(NArrFixture, addDel10Elems) {
-    TNArr<MyNode> arr;
+TEST(ArrFixture, addDel10Elems) {
+    TArr<MyNode> arr;
     const int cnt = 10;
     for(int n=0; n < cnt; n++) {
         ASSERT_TRUE(arr.add(*(new MyNode(n))));
@@ -61,12 +60,13 @@ TEST(NArrFixture, addDel10Elems) {
     ASSERT_EQ(arr.getLen(), cnt);
 }
 
-void benchMarkNArr(int cnt) {
+void benchMarkArr(int cnt) {
     Logger::get().setEnable(false);
     vector<Str> vec;
 
     auto start = chrono::steady_clock::now();
     for(int n=0; n < cnt; n++) {
+
         vec.push_back(Str(new MyNode(n)));
     }
     int sz = vec.size();
@@ -79,11 +79,11 @@ void benchMarkNArr(int cnt) {
     auto totalElapsed = end - start;
 
     Logger::get().setEnable(true);
-    WRD_I("[benchMarkNArr]: vector took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
+    WRD_I("[benchMarkArr]: vector took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
     Logger::get().setEnable(false);
 
 
-    NArr arr;
+    Arr arr;
     start = chrono::steady_clock::now();
     for(int n=0; n < cnt; n++) {
         arr.add(*(new MyNode(n)));
@@ -98,13 +98,13 @@ void benchMarkNArr(int cnt) {
     totalElapsed = end - start;
 
     Logger::get().setEnable(true);
-    WRD_I("[benchMarkNArr]: NArr took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
+    WRD_I("[benchMarkArr]: Arr took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
 }
 
-TEST(NArrFixture, benchMarkNArrTest) {
-    benchMarkNArr(100);
-    benchMarkNArr(1000);
-    benchMarkNArr(10000);
+TEST(ArrFixture, benchMarkArrTest) {
+    benchMarkArr(100);
+    benchMarkArr(1000);
+    benchMarkArr(10000);
 }
 
 class MyMyNode : public MyNode {
@@ -114,13 +114,11 @@ public:
     MyMyNode(int num): Super(num) {}
 };
 
-TEST(NArrFixture, testIter) {
-    NArr arr;
+TEST(ArrFixture, testIter) {
+    Arr arr;
     arr.add(new MyNode(0));
     arr.add(new MyNode(1));
     arr.add(new MyNode(2));
-
-    typedef NArr::NArrIteration NArrIteration;
 
     Iter e = arr.head();
     Iter head = e++;
@@ -132,9 +130,9 @@ TEST(NArrFixture, testIter) {
     ASSERT_EQ(e.next(1), 0);
 }
 
-TEST(NArrFixture, testContainableAPI) {
+TEST(ArrFixture, testContainableAPI) {
     //  initial state:
-    TNArr<MyNode>* arr = new TNArr<MyNode>();
+    TArr<MyNode>* arr = new TArr<MyNode>();
     Containable* con = arr;
     ASSERT_EQ(con->getLen(), 0);
 
@@ -187,7 +185,7 @@ TEST(NArrFixture, testContainableAPI) {
     ASSERT_EQ(arr->get(0).number, 0);
 
     //  add with element:
-    TNArr<MyNode> arr2;
+    TArr<MyNode> arr2;
     ASSERT_EQ(arr2.add(*con), 1);
     ASSERT_TRUE(arr2.add(new MyNode(1)));
     ASSERT_TRUE(arr2.add(new MyMyNode(2)));
