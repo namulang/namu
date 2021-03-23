@@ -20,7 +20,7 @@ namespace wrd {
     TEMPL
     template <typename E>
     void THIS::each(std::function<wbool(TIter<T>&, E&)> l) {
-        each(head(), tail(), l);
+        each(headT(), tailT(), l);
     }
 
     TEMPL

@@ -8,6 +8,9 @@ namespace wrd {
         WRD_CLASS(Arr, Obj)
 
     public:
+        Arr() {}
+        Arr(const NArr& nativeArr): _arr(nativeArr) {}
+
         Node& operator[](widx n) override { return _arr[n]; }
         const Node& operator[](widx n) const override { return _arr[n]; }
 
@@ -31,6 +34,10 @@ namespace wrd {
         Node& get(widx n) override { return _arr.get(n); }
         const Node& get(widx n) const override { return _arr.get(n); }
         NArr get(std::function<wbool(const Node&)> l) const override { return _arr.get(l); }
+        template <typename T>
+        TNArr<T> get(std::function<wbool(const T&)> l) const {
+            return _arr.get(l);
+        }
 
         using Containable::set;
         using ArrContainable::set;
@@ -55,8 +62,25 @@ namespace wrd {
 
         void empty() override { _arr.empty(); }
 
-    private:
-        Iteration* _onIter(widx n) const { return nullptr; }
+        template <typename T = Node>
+        void each(const Iter& from, const Iter& to, std::function<wbool(const Iter&, T&)> l) {
+            _arr.each(from, to, l);
+        }
+        template <typename T = Node>
+        void each(const Iter& from, const Iter& to, std::function<wbool(const Iter&, const T&)> l) const {
+            _arr.each(from, to, l);
+        }
+        template <typename T = Node>
+        void each(std::function<wbool(const Iter&, T&)> l) {
+            _arr.each(l);
+        }
+        template <typename T = Node>
+        void each(std::function<wbool(const Iter&, const T&)> l) const {
+            _arr.each(l);
+        }
+
+    protected:
+        Iteration* _onIter(widx n) const override { return nullptr; }
         NArr _arr;
     };
 }

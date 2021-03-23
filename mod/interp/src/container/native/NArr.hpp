@@ -7,6 +7,8 @@ namespace wrd {
 
     class NArr : public NArrContainer {
         WRD_CLASS(NArr, NArrContainer)
+        template <typename T>
+        friend class TArr;
 
     public:
         friend class NArrIteration;
