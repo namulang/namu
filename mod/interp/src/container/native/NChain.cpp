@@ -79,17 +79,15 @@ namespace wrd {
     }
 
     TStr<NChain> This::link(const NContainer& new1) {
-        if(&new1 == &getContainer())
-            return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), TStr<NChain>();
-
-        TStr<NChain> ret = new NChain(new1);
-        _next.bind(*ret);
-        return ret;
+        NChain* ret = new NChain(new1);
+        link(*ret);
+        return TStr<NChain>(ret);
     }
 
     wbool This::link(const NChain& new1) {
-        if(&new1 == this)
-            return WRD_W("recursive link detected!! new1(%x) is thisptr.", &new1), false;
+        if(nul(new1) || nul(new1.getContainer())) return TStr<NChain>();
+        if(&new1.getContainer() == &getContainer())
+            return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), TStr<NChain>();
 
         return _next.bind(new1);
     }
