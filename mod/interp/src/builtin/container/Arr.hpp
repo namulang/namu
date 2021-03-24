@@ -14,6 +14,19 @@ namespace wrd {
         Node& operator[](widx n) override { return _arr[n]; }
         const Node& operator[](widx n) const override { return _arr[n]; }
 
+        // Arr:
+        NArr& getNative() { return _arr; }
+        const NArr& getNative() const { return _arr; }
+
+        // Node:
+        void rel() override {
+            _arr.empty();
+
+            Super::rel();
+        }
+
+        // Containable:
+
         wcnt getLen() const override { return _arr.getLen(); }
 
         Iter head() const override { return _arr.head(); }
@@ -81,6 +94,7 @@ namespace wrd {
 
     protected:
         Iteration* _onIter(widx n) const override { return nullptr; }
+
         NArr _arr;
     };
 }

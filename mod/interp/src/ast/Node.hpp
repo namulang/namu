@@ -36,6 +36,9 @@ namespace wrd {
         }
 
         virtual Str run(NContainer& args) = 0;
+        /// release all holding resources and ready to be terminated.
+        /// @remark some class won't be able to reinitialize after rel() got called.
+        virtual void rel() {}
 
         virtual const std::string& getName() const {
             static std::string dummy = "";
