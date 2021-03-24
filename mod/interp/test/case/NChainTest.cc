@@ -37,6 +37,9 @@ void simpleAddDelTest(int cnt) {
     }
 
     ASSERT_EQ(chn.getLen(), cnt);
+    ASSERT_EQ(chn.getLen(), cnt);
+    ASSERT_EQ(chn.getLen(), cnt);
+    ASSERT_EQ(chn.getLen(), cnt);
 
     wbool isOk = false;
     int index = 0;
@@ -78,6 +81,11 @@ TEST(NChainFixture, testContainableAPI) {
 
     ASSERT_TRUE(con->add(con->head(), new MyNode(0)));
     ASSERT_TRUE(con->add(con->tail(), new MyMyNode(1)));
+    ASSERT_EQ(con->getLen(), 2);
+    ASSERT_EQ(con->getLen(), 2);
+    ASSERT_EQ(con->getLen(), 2);
+    ASSERT_EQ(con->getLen(), 2);
+    ASSERT_EQ(con->getLen(), 2);
     ASSERT_EQ(con->getLen(), 2);
 
     //  add:
@@ -194,6 +202,25 @@ void examineChain2Element(NChain& chn, int val1, int val2) {
     elem = &(++chn.head())->cast<MyNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, val2);
+}
+
+TEST(NChainFixture, testLinkedChainWithOnly1Element) {
+    NArr arr1;
+    arr1.add(new MyNode(0));
+    NChain chn1(arr1);
+    ASSERT_EQ(chn1.getLen(), 1);
+
+    NArr arr2;
+    arr2.add(new MyNode(0));
+    NChain chn2(arr2);
+    ASSERT_EQ(chn2.getLen(), 1);
+    chn2.link(chn1);
+    ASSERT_EQ(chn2.getLen(), 2);
+
+    int n=0;
+    for(Iter e=chn2.head(); e ;e++)
+        n++;
+    ASSERT_EQ(n, 2);
 }
 
 TEST(NChainFixture, testLinkedChainWithNContainerAPI) {
