@@ -15,13 +15,12 @@ namespace wrd {
 
         public:
             NChainIteration(const NChain& own, const NChain& iteratingChain, const Iter& conIter)
-                : _own(const_cast<NChain&>(own)), _ownIter(iteratingChain), _iter(conIter) {}
+                : _own(const_cast<NChain&>(own)), _ownIter(iteratingChain), _iter(conIter) {
+                    if(!_iter) next(1);
+                }
 
             wbool isEnd() const override {
-                if(!_iter) return true;
-                if(!_ownIter) return true;
-
-                return _ownIter->_next;
+                return !_iter;
             }
 
             wcnt next(wcnt step) override {
