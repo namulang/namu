@@ -31,7 +31,7 @@ struct B : public Instance {
 };
 
 TEST(BindTest, defaultBehaviorTest) {
-    TStr<A> b1 = new A();
+    TStr<A> b1(new A());
     ASSERT_FALSE(nul(*b1));
     ASSERT_FALSE(nul(b1->getType()));
 

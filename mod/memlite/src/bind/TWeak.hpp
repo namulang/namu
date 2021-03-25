@@ -13,10 +13,10 @@ namespace wrd {
     public:
         /// TWeak:
         TWeak();
-        TWeak(const T& it);
-        TWeak(const T* it);
+        explicit TWeak(const T& it);
+        explicit TWeak(const T* it);
         TWeak(const This& rhs);
-        TWeak(const Bind& rhs);
+        explicit TWeak(const Bind& rhs);
 
         T* operator->() override;
         T& operator*() override;

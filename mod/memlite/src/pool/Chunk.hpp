@@ -13,7 +13,7 @@ namespace wrd {
         //  Chunk:
         static constexpr wcnt MIN_SZ = 20;
 
-        Chunk(wcnt blockSz=1, wcnt sz=MIN_SZ);
+        explicit Chunk(wcnt blockSz=1, wcnt sz=MIN_SZ);
         ~Chunk();
 
         void* operator[](widx n) { return get(n); }

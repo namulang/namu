@@ -11,7 +11,7 @@ namespace wrd {
     public:
         //  FileLogStream:
         FileLogStream();
-        FileLogStream(const std::string& new_path);
+        explicit FileLogStream(const std::string& new_path);
 
         wbool setPath(const std::string& new_path);
         const std::string& getPath() const;

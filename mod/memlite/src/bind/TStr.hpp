@@ -12,10 +12,10 @@ namespace wrd {
     public:
         //  TStr:
         TStr();
-        TStr(const T& it);
-        TStr(const T* it);
+        explicit TStr(const T& it);
+        explicit TStr(const T* it);
         TStr(const This& rhs);
-        TStr(const Bind& rhs);
+        explicit TStr(const Bind& rhs);
 
         using Super::operator=;
     };

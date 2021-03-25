@@ -37,7 +37,7 @@ namespace wrd {
 
         //  Instance:
         Instance();
-        Instance(Id id);
+        explicit Instance(Id id);
         Instance(const This& rhs);
         virtual ~Instance();
 
