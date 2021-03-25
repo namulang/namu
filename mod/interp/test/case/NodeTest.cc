@@ -3,34 +3,36 @@
 using namespace wrd;
 using namespace std;
 
-class MyFunc : public Func {
-    WRD_CLASS(MyFunc, Func)
+namespace {
+    class MyFunc : public Func {
+        WRD_CLASS(MyFunc, Func)
 
-public:
-    MyFunc(): Super("MyFunc") {}
+    public:
+        MyFunc(): Super("MyFunc") {}
 
-    void setUp() {
-        _executed = false;
-    }
+        void setUp() {
+            _executed = false;
+        }
 
-    Str run(NContainer& args) override {
-        WRD_I("hello world!");
-        _executed = true;
-        return Str();
-    }
+        Str run(NContainer& args) override {
+            WRD_I("hello world!");
+            _executed = true;
+            return Str();
+        }
 
-    wbool isRun() const {
-        return _executed;
-    }
+        wbool isRun() const {
+            return _executed;
+        }
 
-protected:
-    Str _onRun(NContainer& args) override {
-        return Str();
-    }
+    protected:
+        Str _onRun(NContainer& args) override {
+            return Str();
+        }
 
-private:
-    wbool _executed;
-};
+    private:
+        wbool _executed;
+    };
+}
 
 TEST(NodeTest, testManuallyMakeNodeStructure) {
     // prepare:
