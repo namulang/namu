@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../builtin/container/Arr.hpp"
+#include "../builtin/container/TArr.hpp"
 #include "Frame.hpp"
 
 namespace wrd {
@@ -9,5 +9,8 @@ namespace wrd {
         WRD_CLASS(StackFrame, Arr)
 
     public:
+        Frame& getCurrentFrame() {
+            return get(getLen() - 1);
+        }
     };
 }

@@ -9,7 +9,7 @@ namespace wrd {
 
     public:
         Arr() {}
-        Arr(const NArr& nativeArr): _arr(nativeArr) {}
+        explicit Arr(const NArr& nativeArr): _arr(nativeArr) {}
 
         Node& operator[](widx n) override { return _arr[n]; }
         const Node& operator[](widx n) const override { return _arr[n]; }

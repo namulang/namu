@@ -36,6 +36,11 @@ namespace wrd {
 
         void rel() override { _sframe.rel(); }
 
+    protected:
+        StackFrame& _getStackFrame() {
+            return _sframe;
+        }
+
     private:
         StackFrame _sframe;
     };
