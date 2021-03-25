@@ -10,7 +10,7 @@ namespace wrd {
 
     public:
         //  Chunks:
-        Chunks(wcnt blkbyte = 0);
+        explicit Chunks(wcnt blkbyte = 0);
         virtual ~Chunks();
 
         Chunk& operator[](widx n);

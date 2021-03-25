@@ -10,7 +10,7 @@ namespace wrd {
 
     public:
         //  Allocator:
-        Allocator(wcnt blksize = 1);
+        explicit Allocator(wcnt blksize = 1);
 
         virtual void* new1() = 0;
         virtual wbool del(void* used, wcnt sz) = 0;

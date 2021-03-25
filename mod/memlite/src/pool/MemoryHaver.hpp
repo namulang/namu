@@ -11,6 +11,7 @@ namespace wrd {
 
     public:
         virtual ~MemoryHaver() {}
+
         virtual wbool has(const Instance& it) const = 0;
         virtual wcnt getLen() const = 0;
         virtual wcnt getSize() const = 0;

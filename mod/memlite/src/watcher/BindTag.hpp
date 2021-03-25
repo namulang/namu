@@ -17,7 +17,7 @@ namespace wrd {
     public:
         //  BindTag:
         BindTag();
-        BindTag(Id id);
+        explicit BindTag(Id id);
         ~BindTag();
 
         const Chunk& getChunk() const;
