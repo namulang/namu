@@ -4,53 +4,51 @@
 using namespace wrd;
 using namespace std;
 
-class MyFunc : public Func {
-    WRD_CLASS(MyFunc, Func)
+namespace {
+    class MyFunc : public Func {
+        WRD_CLASS(MyFunc, Func)
 
-public:
-    MyFunc(std::string name = "MyFunc"): Super(name) {}
+    public:
+        MyFunc(std::string name = "MyFunc"): Super(name) {
+            WRD_E("MyFunc(%x) new", this);
+        }
+        ~MyFunc() {
+            WRD_E("MyFunc(%x) delete", this);
+        }
 
-    void setUp() {
-        _executed = false;
-        _res = false;
-    }
+        void setUp() {
+            _executed = false;
+            _res = false;
+        }
 
-    wbool isRun() const {
-        return _executed;
-    }
+        wbool isRun() const {
+            return _executed;
+        }
 
-    void setLambda(function<wbool(const StackFrame&)> lambda) {
-        _lambda = lambda;
-    }
+        void setLambda(function<wbool(const StackFrame&)> lambda) {
+            _lambda = lambda;
+        }
 
-    wbool isSuccess() const {
-        return _res;
-    }
+        wbool isSuccess() const {
+            return _res;
+        }
 
-protected:
-    Str _onRun(NContainer& args) override {
-        WRD_I("hello world!");
-        _executed = true;
+    protected:
+        Str _onRun(NContainer& args) override {
+            WRD_I("hello world!");
+            _executed = true;
 
-        if(_lambda)
-            _res = _lambda((StackFrame&) Thread::get().getStackFrame());
-        return Str();
-    }
+            if(_lambda)
+                _res = _lambda((StackFrame&) Thread::get().getStackFrame());
+            return Str();
+        }
 
-private:
-    wbool _executed;
-    wbool _res;
-    function<wbool(const StackFrame&)> _lambda;
-};
-
-struct FuncFixture : public ::testing::Test {
-    void SetUp() {
-        func.setUp();
-        ASSERT_FALSE(func.isRun());
-    }
-
-    MyFunc func;
-};
+    private:
+        wbool _executed;
+        wbool _res;
+        function<wbool(const StackFrame&)> _lambda;
+    };
+}
 
 wbool checkFrameHasFuncAndObjScope(const Frame& fr, const Func& func, const Obj& obj) {
     if(nul(fr)) return false;
@@ -77,8 +75,9 @@ wbool checkFrameHasFuncAndObjScope(const Frame& fr, const Func& func, const Obj&
     return true;
 }
 
-TEST_F(FuncFixture, testFuncConstructNewFrame) {
+TEST(FuncFixture, testFuncConstructNewFrame) {
     Obj obj;
+    MyFunc func;
     obj.subs().add(func);
     WRD_E("obj.len=%d", obj.subs().getLen());
     int n = 0;
@@ -89,19 +88,20 @@ TEST_F(FuncFixture, testFuncConstructNewFrame) {
     NArr args;
     args.add(obj);
 
-    func.setLambda([this, &obj](const StackFrame& sf) {
+    func.setLambda([&func, &obj](const StackFrame& sf) {
         if(sf.getLen() != 1) return false;
 
-        return checkFrameHasFuncAndObjScope(sf[0], this->func, obj);
+        return checkFrameHasFuncAndObjScope(sf[0], func, obj);
     });
 
     func.run(args);
     ASSERT_TRUE(func.isRun());
     ASSERT_TRUE(func.isSuccess());
     ASSERT_TRUE(func.isSuccess());
+    func.setLambda(nullptr);
 }
 
-TEST_F(FuncFixture, testCallFuncInsideFunc) {
+TEST(FuncFixture, testCallFuncInsideFunc) {
     Obj obj1;
     MyFunc obj1func1("obj1func1");
     MyFunc obj1func2("obj1func2");
