@@ -63,72 +63,12 @@ namespace wrd {
     };
 
     /// managed object.
-    class Obj : public Node {
-        WRD_CLASS(Obj, Node)
-
-    public:
-        Obj(std::string name = "", NContainer* newCon = new NChain())
-            : _con(new NChain()), _name(name) {}
-
-        NContainer& subs() override {
-            return *_con;
-        }
-
-        Str run(NContainer& args) override {
-            //TODO: call ctor.
-            return Str();
-        }
-
-        wbool canRun(const WTypes& types) const override {
-            // TODO:
-            return false;
-        }
-
-        const std::string& getName() const override {
-            return _name;
-        }
-
-    private:
-        TStr<NContainer> _con;
-        const std::string _name;
-    };
-
-    class NObj : public Obj {
+    /*class NObj : public Obj {
         WRD_CLASS(NObj, Obj)
 
     public:
         NObj(): Super("", new NArr()) {}
-    };
-
-    class Func : public Node {
-        WRD_CLASS(Func, Node)
-
-    public:
-        Func(const std::string& name): _name(name) {}
-
-        NContainer& subs() override {
-            return _shares;
-        }
-
-        Str run(NContainer& args) override {
-            // TODO: implicit casting
-            return Str();
-        }
-
-        wbool canRun(const WTypes& types) const override {
-            // TODO:
-            return true;
-        }
-
-        const std::string& getName() const override {
-            return _name;
-        }
-
-    private:
-        NArr _shares; // shared nodes container.
-        const std::string _name;
-    };
-
+    };*/
 
     /*
     // iteration #1:

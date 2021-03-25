@@ -12,7 +12,7 @@ namespace wrd {
 
     public:
         Iter() {}
-        Iter(Iteration* newStep): _step(newStep) {}
+        explicit Iter(Iteration* newStep): _step(newStep) {}
         Iter(const Iter& rhs) {
             _assign(rhs);
         }

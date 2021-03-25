@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Arr.hpp"
+#include "../../container/iterator/TIter.hpp"
 
 namespace wrd {
 

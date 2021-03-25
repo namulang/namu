@@ -70,7 +70,7 @@ public:
 };
 TEST(NChainFixture, testContainableAPI) {
     //  initial state:
-    TStr<NChain> arr = new NChain();
+    TStr<NChain> arr(new NChain());
     Containable* con = &arr.get();
     ASSERT_EQ(con->getLen(), 0);
 

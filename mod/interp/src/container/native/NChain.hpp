@@ -62,7 +62,7 @@ namespace wrd {
 
     public:
         NChain();
-        NChain(const NContainer& con): _arr(con) {}
+        explicit NChain(const NContainer& con): _arr(con) {}
 
         wcnt getLen() const override;
 

@@ -10,7 +10,7 @@ namespace wrd {
 
     public:
         TIter() {}
-        TIter(Iteration* newStep): Super(newStep) {}
+        explicit TIter(Iteration* newStep): Super(newStep) {}
 
         /// @return true if there are more data to proceed
         This operator+(wcnt step) {

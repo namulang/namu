@@ -9,8 +9,8 @@ namespace wrd {
 
     public:
         Ref() {}
-        Ref(const Node& new1): _str(new1) {}
-        Ref(const Node* new1): _str(new1) {}
+        explicit Ref(const Node& new1): _str(new1) {}
+        explicit Ref(const Node* new1): _str(new1) {}
 
         // Node:
         NContainer& subs() override {
