@@ -19,7 +19,7 @@ namespace wrd {
     typedef tchar               wtchar;
     typedef short int           wshort;
     typedef unsigned short int  wushort;
-    typedef float               wfloat;
+    typedef float               wflt;
     typedef double              wdbl;
     typedef long                wlong;
     typedef unsigned long       wulong;
