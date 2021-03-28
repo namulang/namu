@@ -9,4 +9,8 @@ namespace wrd {
         return getType().as(it);
     }
 
+    Ref This::impliAs(const Node& inst) const {
+        return getType().impliAs(inst);
+    }
+
 }

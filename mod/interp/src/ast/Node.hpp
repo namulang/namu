@@ -53,6 +53,12 @@ namespace wrd {
         using Asable::as;
         Ref as(const Node& it) const override;
 
+        wbool isImpliAs(const Type& to) const {
+            return getType().isImpliAs(to);
+        }
+
+        Ref impliAs(const Node& inst) const;
+
     private:
         static WTypes _createTypesFromArgs(const NContainer& args) {
             WTypes ret;
