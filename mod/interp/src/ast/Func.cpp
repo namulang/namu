@@ -35,4 +35,8 @@ namespace wrd {
         return sf.del();
     }
 
+    const WTypes& This::getTypes() const {
+        static WTypes inner;
+        return inner;
+    }
 }

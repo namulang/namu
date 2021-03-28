@@ -20,6 +20,9 @@ namespace {
             return Str();
         }
 
+        using Super::subs;
+        NContainer& subs() override { return _shares; }
+
         wbool isRun() const {
             return _executed;
         }
@@ -31,6 +34,7 @@ namespace {
 
     private:
         wbool _executed;
+        NArr _shares;
     };
 }
 
