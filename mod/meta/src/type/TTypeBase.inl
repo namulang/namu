@@ -4,18 +4,32 @@
 
 namespace wrd {
 
-#define TEMPL template <typename T>
-#define THIS TTypeBase<T>
-#define SUPER Type
+#define TEMPL template <typename T, typename S>
+#define THIS TTypeBase<T, S>
+#define SUPER S
 
     TEMPL THIS::TTypeBase() { this->init(); }
-    TEMPL WRD_SINGLETON_GETTER(wbool THIS::isTemplate() const, wbool, TIfTemplate<T>::is);
-    TEMPL WRD_SINGLETON_GETTER(wbool THIS::isAbstract() const, wbool, !std::is_constructible<T>::value);
-    TEMPL WRD_SINGLETON_GETTER(const std::string& THIS::getName() const, std::string, TNameGetter<T>::getName());
+    TEMPL wbool THIS::isTemplate() const {
+        static wbool inner = TIfTemplate<T>::is;
+        return inner;
+    }
+
+    TEMPL wbool THIS::isAbstract() const {
+        static wbool inner = !std::is_constructible<T>::value;
+        return inner;
+    }
+
+    TEMPL const std::string& THIS::getName() const {
+        static std::string inner = TNameGetter<T>::getName();
+        return inner;
+    }
+
     TEMPL void* THIS::make() const { return TInstanceMaker<T>::make(); }
     TEMPL wcnt THIS::getSize() const { return sizeof(T); }
 
-    TEMPL WRD_SINGLETON_GETTER(const Type& THIS::getSuper() const, TType<typename TAdaptiveSuper<T>::Super>);
+    TEMPL const Type& THIS::getSuper() const {
+        return TType<typename TAdaptiveSuper<T>::Super>::get();
+    }
 
     TEMPL const wbool& THIS::isInit() const {
         static wbool inner = typeid(T) == typeid(Adam);
@@ -32,8 +46,16 @@ namespace wrd {
         return *inner;
     }
 
-    TEMPL WRD_SINGLETON_GETTER(Types& THIS::_getSupers(), Types);
-    TEMPL WRD_SINGLETON_GETTER(Types& THIS::_getSubs(), Types);
+    TEMPL Types& THIS::_getSupers() {
+        static Types inner;
+        return inner;
+    }
+
+    TEMPL Types& THIS::_getSubs() {
+        static Types inner;
+        return inner;
+    }
+
     TEMPL Type& THIS::_getStatic() const { return const_cast<THIS&>(get()); }
     TEMPL THIS::TTypeBase(wbool) {}
 
