@@ -4,11 +4,11 @@
 
 namespace wrd {
 
-    class Wstr : public PrimitiveObj<std::string> {
+    class WFlt : public PrimitiveObj<float> {
 
-        class WstrType : public TTypeBase<Wstr, WType> {
-            typedef TTypeBase<Wstr, WType> _S;
-            WRD_DECL_THIS(WstrType, _S)
+        class WFltType : public TTypeBase<WFlt, WType> {
+            typedef TTypeBase<WFlt, WType> _S;
+            WRD_DECL_THIS(WFltType, _S)
 
         protected:
             const Ases& _getImplis() const override {
@@ -16,26 +16,29 @@ namespace wrd {
                 if(inner) return *inner;
 
                 inner = new Ases();
-                struct ToWint: public As {
+                struct ToWstr: public As {
                     const WType& getType() const override {
                         // TODO:
                         return nulOf<WType>();
                     }
-                    Ref as(const Node& strObj) const override {
+
+                    Ref as(const Node& fltObj) const override {
                         // TODO:
                         return Ref();
                     }
                 };
-                inner->push_back(new ToWint());
+                inner->push_back(new ToWstr());
 
                 return *inner;
             }
         };
 
-        WRD_CLASS(Wstr, PrimitiveObj, WstrType)
+        WRD_CLASS(WFlt, PrimitiveObj, WFltType)
 
     public:
-        Wstr() {}
-        Wstr(const std::string& val): Super(val) {}
+        WFlt() {}
+        WFlt(const wflt& val): Super(val) {}
     };
+
+
 }

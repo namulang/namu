@@ -4,11 +4,11 @@
 
 namespace wrd {
 
-    class Wflt : public PrimitiveObj<float> {
+    class WInt : public PrimitiveObj<float> {
 
-        class WfltType : public TTypeBase<Wflt, WType> {
-            typedef TTypeBase<Wflt, WType> _S;
-            WRD_DECL_THIS(WfltType, _S)
+        class WIntType : public TTypeBase<WInt, WType> {
+            typedef TTypeBase<WInt, WType> _S;
+            WRD_DECL_THIS(WIntType, _S)
 
         protected:
             const Ases& _getImplis() const override {
@@ -22,7 +22,7 @@ namespace wrd {
                         return nulOf<WType>();
                     }
 
-                    Ref as(const Node& fltObj) const override {
+                    Ref as(const Node& intObj) const override {
                         // TODO:
                         return Ref();
                     }
@@ -33,12 +33,10 @@ namespace wrd {
             }
         };
 
-        WRD_CLASS(Wflt, PrimitiveObj, WfltType)
+        WRD_CLASS(WInt, PrimitiveObj, WIntType)
 
     public:
-        Wflt() {}
-        Wflt(const wflt& val): Super(val) {}
+        WInt() {}
+        WInt(const wint& val): Super(val) {}
     };
-
-
 }
