@@ -7,7 +7,9 @@
 
 namespace wrd {
 
-    class Node : public Instance, public Clonable, public Asable {
+    class Ref;
+    template <typename T> class TRef;
+    class Node : public Instance, public Clonable {
         WRD_INTERFACE(Node, Instance)
 
     public:
@@ -44,20 +46,30 @@ namespace wrd {
             static std::string dummy = "";
             return dummy;
         }
-        // Asable:
-        using Asable::is;
-        wbool is(const Type& type) const override {
+
+        template <typename T>
+        wbool is() const {
+            return is(TType<T>::get());
+        }
+        wbool is(const WType& type) const {
             return getType().is(type);
         }
 
-        using Asable::as;
-        Ref as(const Node& it) const override;
+        template <typename T>
+        TRef<T> as() const;
+        Ref as(const WType& to) const;
 
-        wbool isImpliAs(const Type& to) const {
-            return getType().isImpliAs(to);
+        template <typename T>
+        wbool isImpli() const {
+            return isImpli(TType<T>::get());
+        }
+        wbool isImpli(const WType& to) const {
+            return getType().isImpli(to);
         }
 
-        Ref impliAs(const Node& inst) const;
+        template <typename T>
+        TRef<T> asImpli() const;
+        Ref asImpli(const WType& to) const;
 
     private:
         static WTypes _createTypesFromArgs(const NContainer& args) {

@@ -1,20 +1,21 @@
 #pragma once
 
-#include "Asable.hpp"
+#include "As.hpp"
 
 namespace wrd {
 
-    class MgdAs: public TypeProvidable, public Asable {
-        WRD_INTERFACE(MgdAs, Asable)
+    class MgdAs: public As {
+        WRD_DECL_THIS(MgdAs, As)
 
-        explicit MgdAs(const Type& type): _type(type) {}
-
-        const Type& getType() const override {
+    public:
+        typedef WType SuperType;
+        const WType& getType() const override {
             return *_type;
         }
+        WRD_INIT_META(This)
 
-        const Type* _type;
+        explicit MgdAs(const WType& type): _type(&type) {}
+
+        const WType* _type;
     };
-
-    typedef std::vector<Asable*> Asables;
 }

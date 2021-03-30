@@ -1,4 +1,4 @@
 #pragma once
 
-#include "type/WType.hpp"
+#include "type/WType.inl"
 #include "type/MgdAs.hpp"

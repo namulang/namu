@@ -39,6 +39,10 @@ namespace {
         const WTypes& getTypes() const override { return _types; }
         WTypes& getTypes() { return _types; }
 
+        const WType& getReturnType() const override {
+            return TType<Node>::get();
+        }
+
     protected:
         Str _onRun(NContainer& args) override {
             WRD_I("hello world!");
@@ -96,7 +100,7 @@ TEST(FuncFixture, testFuncConstructNewFrame) {
     NArr args;
     args.add(obj);
 
-    func.setLambda([&func, &obj](auto args, auto sf) {
+    func.setLambda([&func, &obj](const auto& args, const auto& sf) {
         if(sf.getLen() != 1) return false;
 
         return checkFrameHasFuncAndObjScope(sf[0], func, obj);
@@ -120,31 +124,31 @@ TEST(FuncFixture, testCallFuncInsideFunc) {
     MyFunc obj2func1("obj2func1");
     obj2.subs().add(obj2func1);
 
-    obj1func1.setLambda([&obj1, &obj1func1, &obj1func2](auto args, auto sf) {
+    obj1func1.setLambda([&obj1, &obj1func1, &obj1func2](const auto& args, const auto& sf) {
         if(sf.getLen() != 1) return WRD_E("obj1func1: sf.getLen() != 1"), false;
         if(!checkFrameHasFuncAndObjScope(sf[0], obj1func1, obj1)) return false;
 
-        NArr args;
-        args.add(obj1);
-        obj1func2.run(args);
+        NArr funcArgs;
+        funcArgs.add(obj1);
+        obj1func2.run(funcArgs);
         if(sf.getLen() != 1)
             return WRD_E("return of obj1func1: sf.getLen() != 1"), false;
         return true;
     });
-    obj1func2.setLambda([&obj2, &obj1func2, &obj1, &obj2func1](auto args, auto sf) {
+    obj1func2.setLambda([&obj2, &obj1func2, &obj1, &obj2func1](const auto& args, const auto& sf) {
         if(sf.getLen() != 2) return WRD_E("obj1func2: sf.getLen() != 2"), false;
 
         if(!checkFrameHasFuncAndObjScope(sf[1], obj1func2, obj1)) return false;
 
-        NArr args;
-        args.add(obj2);
+        NArr funcArgs;
+        funcArgs.add(obj2);
 
-        obj2func1.run(args);
+        obj2func1.run(funcArgs);
         if(sf.getLen() != 2)
             return WRD_E("return of obj1func2: sf.getLen() != 2"), false;
         return true;
     });
-    obj2func1.setLambda([&obj2, &obj2func1](auto args, auto sf) {
+    obj2func1.setLambda([&obj2, &obj2func1](const auto& args, const auto& sf) {
         if(sf.getLen() != 3) return false;
 
         if(!checkFrameHasFuncAndObjScope(sf[2], obj2func1, obj2)) return false;
@@ -158,21 +162,33 @@ TEST(FuncFixture, testCallFuncInsideFunc) {
 }
 
 TEST(FuncFixture, testFuncHasStrParameter) {
+    // prepare:
+    std::string expectVal = "hello world!";
     MyFunc func1;
-    func1.getTypes().push_back(&TType<Str>::get());
-    func1.setLambda([&](auto args, auto sf) {
-        const WTypes& types = getTypes();
-        if(args.getLen() != types.size() + 1) return false;
+    Obj obj;
+    obj.subs().add(func1);
 
-        TRef<String>
-        for(int n=0; types.size() ;n++) {
-            const WType& expectType = *types[n];
-            Ref cast = args[n+1].impliAs(expectType);
-            if(!cast) return false;
+    WTypes& types = func1.getTypes();
+    types.push_back(&obj.getType());
+    types.push_back(&TType<Wstr>::get());
+    func1.setLambda([&](const NContainer& args, const StackFrame& sf) {
+        const WTypes& types = func1.getTypes();
+        if(args.getLen() != types.size()) return false;
 
-            tray.push_back(cast);
-        }
+        const WType& expectType = *types[1];
+        TRef<Wstr> cast(args.iter(1)->asImpli(expectType));
+        if(!cast) return false;
 
-        tray
+        return cast->get() == expectVal;
     });
+
+    NArr args;
+    args.add(obj);
+    args.add(new Wstr(expectVal));
+    Iter e = args.iter(1);
+    Node& elem1 = *e;
+    Wstr& cast = elem1.cast<Wstr>();
+
+    func1.run(args);
+    ASSERT_TRUE(func1.isSuccess());
 }
