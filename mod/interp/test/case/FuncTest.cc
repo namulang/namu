@@ -170,13 +170,13 @@ TEST(FuncFixture, testFuncHasStrParameter) {
 
     WTypes& types = func1.getTypes();
     types.push_back(&obj.getType());
-    types.push_back(&TType<Wstr>::get());
+    types.push_back(&TType<WStr>::get());
     func1.setLambda([&](const NContainer& args, const StackFrame& sf) {
         const WTypes& types = func1.getTypes();
         if(args.getLen() != types.size()) return false;
 
         const WType& expectType = *types[1];
-        TRef<Wstr> cast(args.iter(1)->asImpli(expectType));
+        TRef<WStr> cast(args.iter(1)->asImpli(expectType));
         if(!cast) return false;
 
         return cast->get() == expectVal;
@@ -184,10 +184,10 @@ TEST(FuncFixture, testFuncHasStrParameter) {
 
     NArr args;
     args.add(obj);
-    args.add(new Wstr(expectVal));
+    args.add(new WStr(expectVal));
     Iter e = args.iter(1);
     Node& elem1 = *e;
-    Wstr& cast = elem1.cast<Wstr>();
+    WStr& cast = elem1.cast<WStr>();
 
     func1.run(args);
     ASSERT_TRUE(func1.isSuccess());

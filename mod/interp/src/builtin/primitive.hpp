@@ -1,5 +1,5 @@
 #pragma once
 
-#include "primitive/Wflt.hpp"
-#include "primitive/Wint.hpp"
-#include "primitive/Wstr.hpp"
+#include "primitive/WFlt.hpp"
+#include "primitive/WInt.hpp"
+#include "primitive/WStr.hpp"
