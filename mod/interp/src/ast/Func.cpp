@@ -23,7 +23,7 @@ namespace wrd {
         Frame* fr = new Frame();
         sf.add(fr);
         me._onInStackFrame(sf, args);
-        fr->push(_shares);
+        fr->push(subs());
         //TODO: fr->push(Parameter);
         return true;
     }
@@ -38,5 +38,20 @@ namespace wrd {
     const WTypes& This::getTypes() const {
         static WTypes inner;
         return inner;
+    }
+
+    wbool This::canRun(const WTypes& types) const {
+        const WTypes& mine = getTypes();
+        wcnt len = mine.size();
+        if(types.size() != len) return false;
+
+        for(int n=0; n < len ;n++) {
+            const WType& it = *types[n];
+            const WType& me = *mine[n];
+
+            if(!it.isImpli(me)) return false;
+        }
+
+        return true;
     }
 }

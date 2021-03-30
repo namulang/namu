@@ -1,16 +1,20 @@
 #pragma once
 
 #include "../common.hpp"
-#include "Asable.hpp"
+#include "As.hpp"
 
 namespace wrd {
 
-    class WType : public Type, public Asable {
+    class Ref;
+    template <typename T> class TRef;
+    class WType : public Type {
         WRD_DECL_THIS(WType, Type)
 
     public:
         // WType:
-        wbool isImpliAs(const Type& to) const {
+        template <typename T>
+        wbool isImpli() const;
+        wbool isImpli(const WType& to) const {
             if(to.isSuper(*this)) return true;
 
             for(auto e : _getImplis())
@@ -18,18 +22,21 @@ namespace wrd {
             return false;
         }
 
-        Ref impliAs(const Node& inst) const;
+        template <typename T>
+        TRef<T> asImpli(const Node& it) const;
+        Ref asImpli(const Node& it, const WType& to) const;
 
-        // Asable:
-        using Asable::is;
-        wbool is(const Type& type) const override {
-            if(isImpliAs(type)) return true;
+        template <typename T>
+        wbool is() const;
+        wbool is(const WType& type) const {
+            if(isImpli(type)) return true;
 
             // TODO: redirection to as list.
             return false;
         }
-        using Asable::as;
-        Ref as(const Node& it) const override;
+        template <typename T>
+        TRef<T> as(const Node& it) const;
+        Ref as(const Node& it, const WType& to) const;
 
     protected:
         // WType:
@@ -39,5 +46,5 @@ namespace wrd {
         }
     };
 
-    typedef std::vector<WType*> WTypes;
+    typedef std::vector<const WType*> WTypes;
 }

@@ -27,6 +27,18 @@ namespace {
             return _executed;
         }
 
+        const WType& getReturnType() const override {
+            return TType<Node>::get();
+        }
+
+        const WTypes& getTypes() const override {
+            static WTypes inner;
+            if(inner.size() == 0)
+                inner.push_back(&TType<Obj>::get());
+
+            return inner;
+        }
+
     protected:
         Str _onRun(NContainer& args) override {
             return Str();
