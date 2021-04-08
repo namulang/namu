@@ -31,6 +31,13 @@ namespace wrd {
         virtual Iter iter(wcnt step) const = 0;
 
         virtual wbool add(const Node& new1) = 0;
+        wbool add(std::initializer_list<Node*> elems) {
+            wbool ret = false;
+            for(auto* elem : elems)
+                ret = add(elem);
+            return ret;
+        }
+
         wbool add(const Node* new1) {
             return add(*new1);
         }

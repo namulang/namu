@@ -9,6 +9,9 @@ namespace wrd {
 
     public:
         Arr() {}
+        explicit Arr(std::initializer_list<Node*> elems) {
+            add(elems);
+        }
         explicit Arr(const NArr& nativeArr): _arr(nativeArr) {}
 
         Node& operator[](widx n) override { return _arr[n]; }
@@ -54,6 +57,12 @@ namespace wrd {
 
         using Containable::set;
         using ArrContainable::set;
+        wbool add(std::initializer_list<Node*> elems) {
+            wbool ret = false;
+            for(auto* elem : elems)
+                ret = _arr.add(elem);
+            return ret;
+        }
         wbool set(const Iter& at, const Node& new1) override { return _arr.set(at, new1); }
         wbool set(widx n, const Node& new1) override { return _arr.set(n, new1); }
 

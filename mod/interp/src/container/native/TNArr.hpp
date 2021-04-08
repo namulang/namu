@@ -10,6 +10,11 @@ namespace wrd {
         WRD_CLASS(TNArr, NArr)
 
     public:
+        TNArr() {}
+        TNArr(std::initializer_list<T*> elems) {
+            add(elems);
+        }
+
         T& operator[](widx n) override { return get(n); }
         const T& operator[](widx n) const override { return get(n); }
 
@@ -42,6 +47,12 @@ namespace wrd {
         }
 
         using Super::add;
+        wbool add(std::initializer_list<T*> elems) {
+            wbool ret = false;
+            for(auto* elem : elems)
+                ret = add(elem);
+            return ret;
+        }
         wbool add(const T& new1) {
             return Super::add(new1);
         }

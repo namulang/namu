@@ -66,6 +66,11 @@ namespace wrd {
         };
 
     public:
+        NArr() {}
+        NArr(std::initializer_list<Node*> elems) {
+            add(elems);
+        }
+
         wcnt getLen() const override;
 
         using Super::get;
