@@ -36,3 +36,18 @@
 * .wrd 파일에는 반드시 1개의 module 키워드를 넣어서 이 파일이 어떠한 모듈의 일부분인지를 표시한다.
 * .wrd 파일 밑에 나오는 origin 객체, 전역변수, 함수는 모두 module에 바로 직속한 것이 된다.
 * 따라서 .wrd 파일 안에 바로 함수를 적는 것이 허용된다.
+
+## module 키워드 또한 srcframe에 origin, 커스텀 func 들을 넣어두는 역할을 수행하는 것이다.
+* module은 객체다.
+* module의 S에는 모듈 공통 API가 들어간다.
+    * getPath()
+    * getName()
+* NS에는 module 만의 커스텀 필드/func가 들어간다.
+    * origin 객체, func
+* 이 NS를 srcframe에 넣어두는 것이 module 키워드의 역할이다.
+
+## src frame이란 SrcFile 객체가 들고 있는 chain을 말한다.
+* 객체다.
+* S에는 SrcFile 공통의 API가,
+* NS에는 이 srcFrame에서 정의된 module 키워드와 import 문들을 위한 scope들이 들어가 있다.
+* origin 객체가 생성될때 자신이 어느 srcFile 객체로부터 나왔는지를 trace 할 수 있어야 C-REPL을 달 성할 수 있다.
