@@ -150,12 +150,16 @@ config=""
 
 def dbgBuild():
     global config
+
     config="-DCMAKE_BUILD_TYPE=Debug"
     clean()
     return build()
 
 def relBuild():
+    global config
+
     clean()
+    config="-DCMAKE_BUILD_TYPE=Release"
     return build("silent")
 
 # currently this application only supports window and linux.
