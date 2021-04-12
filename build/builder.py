@@ -51,6 +51,9 @@ python3 = ""
 def branch(command):
     if command == "help":
         return help()
+    elif command == "mv":
+        arg = None if len(sys.argv) < 3 else sys.argv[2]
+        return mv(arg)
     elif command == "history":
         return history()
     elif command == "clean":
@@ -75,6 +78,22 @@ def branch(command):
 
     printErr(command + " is unknown.")
     return -1
+
+def mv(directory):
+    print("directory= " + directory)
+    for path, dirs, files in os.walk(directory):
+        for file in files:
+            ext = os.path.splitext(file)[1]
+            if  ext != ".in" and ext != ".cc" and ext != ".cpp" and ext != ".hpp" and ext != ".inl":
+                continue
+
+            prevPath = os.path.join(path, file)
+            nextPath = os.path.join(path, file[:1].lower() + file[1:])
+            if prevPath == nextPath: continue
+            answer = input(prevPath + " -> " + nextPath + " -> [y/n] ")
+            if answer == "": answer = "y"
+            if answer == "y":
+                os.system("git mv " + prevPath + " " + nextPath)
 
 def _cleanIntermediates():
     printInfoEnd("removing intermediate outputs...")
