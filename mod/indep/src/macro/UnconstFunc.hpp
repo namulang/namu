@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Overload.hpp"
+#include "overload.hpp"
 
 #define WRD_UNCONST_FUNC_2(type, funcCall) { \
         type* uncThis = const_cast<type*>(this); \

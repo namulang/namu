@@ -6,12 +6,12 @@
 namespace wrd {
     using std::string;
 
-    class BuildFeature {
-        WRD_DECL_THIS(BuildFeature)
+    class buildFeature {
+        WRD_DECL_THIS(buildFeature)
 
     public:
-        struct Date {
-            WRD_DECL_THIS(Date)
+        struct date {
+            WRD_DECL_THIS(date)
 
         public:
             static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_DATE)
@@ -20,8 +20,8 @@ namespace wrd {
             static wint getDay();
         };
 
-        struct Time {
-            WRD_DECL_THIS(Time)
+        struct time {
+            WRD_DECL_THIS(time)
 
         public:
             static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_TIME)
@@ -30,8 +30,8 @@ namespace wrd {
             static wint getSec();
         };
 
-        struct Version {
-            WRD_DECL_THIS(Version)
+        struct version {
+            WRD_DECL_THIS(version)
 
         public:
             static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_VERSION)
@@ -42,7 +42,7 @@ namespace wrd {
             static wint getFix();
         };
 
-        enum PlatformType {
+        enum platformType {
             PLATFORM_TYPE_START = -1,
             WINDOW,
             LINUX,
@@ -51,27 +51,27 @@ namespace wrd {
             PLATFORM_TYPE_END,
         };
 
-        struct Platform {
-            WRD_DECL_THIS(Platform)
+        struct platform {
+            WRD_DECL_THIS(platform)
 
         public:
-            static PlatformType get();
+            static platformType get();
             static WRD_SINGLETON_GETTER(const string& getName(), string, WRD_BUILD_PLATFORM_NAME)
             static WRD_SINGLETON_GETTER(const string& getVersion(), string, WRD_BUILD_PLATFORM_VERSION)
         };
 
-        enum BuildType {
+        enum buildType {
             BUILD_TYPE_START = -1,
             DEBUG,
             RELEASE,
             BUILD_TYPE_END,
         };
 
-        struct Config {
-            WRD_DECL_THIS(Config)
+        struct config {
+            WRD_DECL_THIS(config)
 
         public:
-            static BuildType get();
+            static buildType get();
             static WRD_SINGLETON_GETTER(const string& getName(), string, WRD_BUILD_TYPENAME)
         };
     };

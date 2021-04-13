@@ -1,4 +1,4 @@
 #pragma once
 
-#include "def/BuildInformation.hpp"
+#include "def/buildInformation.hpp"
 #include "def/common.hpp"

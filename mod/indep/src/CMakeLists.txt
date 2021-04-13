@@ -4,7 +4,7 @@ message("\tbuilding ${moduleName}...")
 message("\t\tconfigure_files...")
 #  expanding:
 set(configures
-	"def/BuildInformation.hpp.in"
+	"def/buildInformation.hpp.in"
 )
 foreach(e ${configures})
     #  extract output filepath:

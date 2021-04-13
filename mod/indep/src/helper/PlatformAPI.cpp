@@ -1,4 +1,4 @@
-#include "PlatformAPI.hpp"
+#include "platformAPI.hpp"
 #if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
 #  include <windows.h>
 #elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX
