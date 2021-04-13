@@ -1,4 +1,4 @@
-#include "BuildFeature.hpp"
+#include "buildFeature.hpp"
 
 namespace wrd {
 

@@ -30,8 +30,8 @@
 
 #pragma once
 
-#include "Helper.hpp"
-#include "Evaluator.hpp"
+#include "helper.hpp"
+#include "evaluator.hpp"
 
 #define _WRD_EACH_GET_END2() 0, WRD_CONSUME_ARGS
 #define _WRD_EACH_GET_END1(...) _WRD_EACH_GET_END2

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DefThis.hpp"
+#include "defThis.hpp"
 
 #define WRD_DECL_THIS_2(THIS, SUPER) \
     public: \

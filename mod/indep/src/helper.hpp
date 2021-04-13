@@ -1,5 +1,5 @@
 #pragma once
 
-#include "helper/BuildFeature.hpp"
-#include "helper/PlatformAPI.hpp"
-#include "helper/Nulr.hpp"
+#include "helper/buildFeature.hpp"
+#include "helper/platformAPI.hpp"
+#include "helper/nulr.hpp"
