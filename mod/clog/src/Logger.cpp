@@ -6,7 +6,6 @@ namespace wrd {
 
     WRD_DEF_THIS(Logger)
     typedef std::string string;
-    typedef wrd::BuildFeature::Config Config;
 
     const wchar* This::getName() const { return "Logger"; }
     const Stream& This::operator[](widx n) const { return getStream(n); }
