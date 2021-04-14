@@ -4,11 +4,11 @@
 
 namespace wrd {
 
-    class PlatformAPI {
-        WRD_DECL_THIS(PlatformAPI)
+    class platformAPI {
+        WRD_DECL_THIS(platformAPI)
 
     public:
-        enum ConsoleColor {
+        enum consoleColor {
             CONSOLE_COLOR_START = 0,
             BLACK=CONSOLE_COLOR_START, BLUE, GREEN, CYAN, RED, MAGENTA, BROWN,
             LIGHTGRAY, DARKGRAY, LIGHTBLUE, LIGHTGREEN, LIGHTCYAN, LIGHTRED,
@@ -17,7 +17,7 @@ namespace wrd {
             WHITE = CONSOLE_COLOR_END
         };
 
-        static void updateConsoleColor(ConsoleColor fore, ConsoleColor back);
+        static void updateConsoleColor(consoleColor fore, consoleColor back);
         static std::string createCurrentTime(const std::string& strftime_format);
     };
 }

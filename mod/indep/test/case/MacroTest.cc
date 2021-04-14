@@ -2,7 +2,7 @@
 
 using namespace wrd;
 
-TEST(MacroTest, nul) {
+TEST(macroTest, nul) {
 
     wint a = 5;
     wint* aPtr = &a;
@@ -17,7 +17,7 @@ TEST(MacroTest, nul) {
     ASSERT_FALSE(nul(aPtr));
 }
 
-TEST(MacroTest, WRD_GETtest) {
+TEST(macroTest, WRD_GETtest) {
     struct A {};
     struct B {
         A& getA() {
@@ -71,7 +71,7 @@ TEST(MacroTest, WRD_GETtest) {
     ASSERT_TRUE(nul(a4Nul));
 }
 
-TEST(MacroTest, UnconstCalltest) {
+TEST(macroTest, UnconstCalltest) {
     struct A {
         WRD_DECL_THIS(A)
 
