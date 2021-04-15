@@ -4,12 +4,12 @@
 
 namespace wrd {
 
-    class Stream {
-        WRD_DECL_THIS(Stream)
+    class stream {
+        WRD_DECL_THIS(stream)
 
     public:
-        Stream();
-        virtual ~Stream();
+        stream();
+        virtual ~stream();
 
         /// @return true means an error.
         virtual wbool dump(const wchar* message);

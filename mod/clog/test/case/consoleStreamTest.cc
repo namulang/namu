@@ -4,10 +4,10 @@
 using namespace std;
 using namespace wrd;
 
-typedef struct ConsoleStreamTest : public ::testing::Test {
+typedef struct consoleStreamTest : public ::testing::Test {
     void SetUp() {
         delLogFile();
-        ASSERT_FALSE(ConsoleStreamTest::hasLogFile());
+        ASSERT_FALSE(consoleStreamTest::hasLogFile());
     }
     void TearDown() {
         delLogFile();
@@ -22,9 +22,9 @@ typedef struct ConsoleStreamTest : public ::testing::Test {
         static const char* name = NULL;
 
         if(name == NULL) {
-            Logger& log = Logger::get();
+            logger& log = logger::get();
             for (int n=0; n < log.getStreamCount() ;n++) {
-                FileLogStream* as = dynamic_cast<FileLogStream*>(&log[n]);
+                fileLogStream* as = dynamic_cast<fileLogStream*>(&log[n]);
                 if(as) {
                     name = as->getPath().c_str();
                     break;
@@ -39,30 +39,30 @@ typedef struct ConsoleStreamTest : public ::testing::Test {
         return stat(getLogFilePath(), &buffer) == 0;
     }
 
-} ThisTest;
+} thisTest;
 
-TEST_F(ConsoleStreamTest, dumpFormat) {
-    Logger::get().dumpFormat("hello");
-    Logger::get().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " "hello",
-        wrd::PlatformAPI::createCurrentTime("%b %d %Y  %X").c_str(), "I",
+TEST_F(consoleStreamTest, dumpFormat) {
+    logger::get().dumpformat("hello");
+    logger::get().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " "hello",
+        wrd::platformAPI::createCurrentTime("%b %d %Y  %X").c_str(), "I",
         __FILENAME__, __func__, __LINE__);
 
-    ASSERT_TRUE(ThisTest::hasLogFile());
+    ASSERT_TRUE(thisTest::hasLogFile());
 }
 
-TEST_F(ConsoleStreamTest, macro) {
-    ASSERT_FALSE(ThisTest::hasLogFile());
+TEST_F(consoleStreamTest, macro) {
+    ASSERT_FALSE(thisTest::hasLogFile());
 
     WRD_W("world!");
     WRD_E("this is not an error.");
 
-    ASSERT_TRUE(ThisTest::hasLogFile());
+    ASSERT_TRUE(thisTest::hasLogFile());
 }
 
-TEST_F(ConsoleStreamTest, debugDumpFormat) {
-    wbool isDbg = BuildFeature::Config::get() == BuildFeature::DEBUG;
+TEST_F(consoleStreamTest, debugDumpFormat) {
+    wbool isDbg = buildFeature::config::get() == buildFeature::DEBUG;
 
     WRD_DW("if it's debug mode, this msg should be shown.");
 
-    ASSERT_EQ(isDbg, ThisTest::hasLogFile());
+    ASSERT_EQ(isDbg, thisTest::hasLogFile());
 }

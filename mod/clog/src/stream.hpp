@@ -1,5 +1,5 @@
 #pragma once
 
-#include "stream/Stream.hpp"
-#include "stream/ConsoleStream.hpp"
-#include "stream/FileLogStream.hpp"
+#include "stream/stream.hpp"
+#include "stream/consoleStream.hpp"
+#include "stream/fileLogStream.hpp"

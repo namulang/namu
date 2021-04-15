@@ -28,7 +28,7 @@ namespace wrd {
             }) != samples.end();
         }
 
-        void _printColorCharacter(This::consoleColor fore, This::consoleColor back) {
+        void _printColorCharacter(me::consoleColor fore, me::consoleColor back) {
             static vector<string> fores = {
                 "\x1B[0;30m", "\x1B[0;34m", "\x1B[0;32m", "\x1B[0;36m", // black, blue, green, cyan
                 "\x1B[0;31m", "\x1B[0;35m", "\x1B[0;33m", "\x1B[0;37m", // red, purple, yellow, white
@@ -46,7 +46,7 @@ namespace wrd {
     }
 #endif
 
-    void This::updateConsoleColor(consoleColor fore, consoleColor back) {
+    void me::updateConsoleColor(consoleColor fore, consoleColor back) {
 #if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back << 4 | fore);
 #elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX
@@ -60,7 +60,7 @@ namespace wrd {
 #endif
     }
 
-    string This::createCurrentTime(const string& strftime_format) {
+    string me::createCurrentTime(const string& strftime_format) {
         time_t t = time(0);
         struct tm* timeinfo = localtime(&t);
 

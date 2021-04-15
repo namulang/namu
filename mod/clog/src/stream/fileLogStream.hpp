@@ -1,21 +1,21 @@
 #pragma once
 
-#include "Stream.hpp"
+#include "stream.hpp"
 #include <fstream>
 
 namespace wrd {
 
-    class FileLogStream : public Stream {
-        WRD_DECL_THIS(FileLogStream, Stream)
+    class fileLogStream : public stream {
+        WRD_DECL_THIS(fileLogStream, stream)
 
     public:
-        //  FileLogStream:
-        FileLogStream();
-        explicit FileLogStream(const std::string& new_path);
+        //  fileLogStream:
+        fileLogStream();
+        explicit fileLogStream(const std::string& new_path);
 
         wbool setPath(const std::string& new_path);
         const std::string& getPath() const;
-        //  Stream:
+        //  stream:
         const char* getName() const override;
         wbool dump(const char* message) override;
 
