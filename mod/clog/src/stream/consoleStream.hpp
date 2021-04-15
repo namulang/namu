@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Stream.hpp"
+#include "stream.hpp"
 
 namespace wrd {
 
-    class ConsoleStream : public Stream {
-        WRD_DECL_THIS(ConsoleStream, Stream)
+    class consoleStream : public stream {
+        WRD_DECL_THIS(consoleStream, stream)
 
     public:
         //  Stream:

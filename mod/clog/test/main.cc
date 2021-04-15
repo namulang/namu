@@ -2,7 +2,7 @@
 
 int main(int argc, char** argv) {
     if(argc == 2 && std::string(argv[1]) == "silent") {
-        wrd::Stream& console = wrd::Logger::get().getStream("ConsoleStream");
+        wrd::stream& console = wrd::logger::get().getStream("consoleStream");
         console.setEnable(false);
     }
 

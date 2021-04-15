@@ -6,19 +6,19 @@ namespace wrd {
 
     WRD_DEF_THIS(buildFeature)
 
-    wint This::date::getYear() { return WRD_BUILD_DATE_YEAR; }
-    wint This::date::getMonth() { return WRD_BUILD_DATE_MONTH; }
-    wint This::date::getDay() { return WRD_BUILD_DATE_DAY; }
+    wint me::date::getYear() { return WRD_BUILD_DATE_YEAR; }
+    wint me::date::getMonth() { return WRD_BUILD_DATE_MONTH; }
+    wint me::date::getDay() { return WRD_BUILD_DATE_DAY; }
 
-    wint This::time::getHour() { return WRD_BUILD_TIME_HOUR; }
-    wint This::time::getMin() { return WRD_BUILD_TIME_MINUTE; }
-    wint This::time::getSec() { return WRD_BUILD_TIME_SECOND; }
+    wint me::time::getHour() { return WRD_BUILD_TIME_HOUR; }
+    wint me::time::getMin() { return WRD_BUILD_TIME_MINUTE; }
+    wint me::time::getSec() { return WRD_BUILD_TIME_SECOND; }
 
-    wint This::version::getMajor() { return WRD_BUILD_VERSION_MAJOR; }
-    wint This::version::getMinor() { return WRD_BUILD_VERSION_MINOR; }
-    wint This::version::getFix() { return WRD_BUILD_VERSION_FIX; }
+    wint me::version::getMajor() { return WRD_BUILD_VERSION_MAJOR; }
+    wint me::version::getMinor() { return WRD_BUILD_VERSION_MINOR; }
+    wint me::version::getFix() { return WRD_BUILD_VERSION_FIX; }
 
-    This::platformType This::platform::get() {
+    me::platformType me::platform::get() {
         static platformType inner = PLATFORM_TYPE_START;
         if(inner == PLATFORM_TYPE_START)
         {
@@ -36,7 +36,7 @@ namespace wrd {
         return inner;
     }
 
-    This::buildType This::config::get() {
+    me::buildType me::config::get() {
         static buildType inner = BUILD_TYPE_START;
         if(inner == BUILD_TYPE_START)
         {

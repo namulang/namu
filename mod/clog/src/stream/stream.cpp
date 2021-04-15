@@ -1,0 +1,26 @@
+#include "stream.hpp"
+
+namespace wrd {
+
+    WRD_DEF_THIS(stream)
+
+    me::stream(): _isEnable(true) {}
+    me::~stream() {}
+
+    wbool me::dump(const char* message) { return ! _isEnable; }
+    wbool me::isNull() const { return ! this; }
+    wbool me::isEnable() const { return _isEnable; }
+    void me::setEnable(wbool isEnable) { _isEnable = isEnable; }
+
+    wbool me::init() {
+        _isEnable = true;
+        return ! isInit();
+    }
+
+    wbool me::isInit() const { return _isEnable; }
+
+    wbool me::rel() {
+        _isEnable = false;
+        return false;
+    }
+}

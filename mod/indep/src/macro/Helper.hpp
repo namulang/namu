@@ -7,7 +7,7 @@
 #define WRD_UNWRAP(...) __VA_ARGS__
 
 #define WRD_UNCONST_0()             WRD_UNCONST_1(unconst)
-#define WRD_UNCONST_1(value)        WRD_UNCONST_2(This, value)
+#define WRD_UNCONST_1(value)        WRD_UNCONST_2(me, value)
 #define WRD_UNCONST_2(type, value)  WRD_UNWRAP(type)& value = *(const_cast<WRD_UNWRAP(type)*>(this));
 #define WRD_UNCONST(...)            WRD_OVERLOAD(WRD_UNCONST, __VA_ARGS__)
 
