@@ -66,7 +66,7 @@ class MyMyNode : public MyNode {
     WRD_CLASS(MyMyNode, MyNode)
 
 public:
-    MyMyNode(int num): Super(num) {}
+    MyMyNode(int num): super(num) {}
 };
 TEST(NChainFixture, testContainableAPI) {
     //  initial state:

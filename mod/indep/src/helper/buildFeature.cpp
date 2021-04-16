@@ -4,7 +4,7 @@ namespace wrd {
 
     using namespace std;
 
-    WRD_DEF_THIS(buildFeature)
+    WRD_DEF_ME(buildFeature)
 
     wint me::date::getYear() { return WRD_BUILD_DATE_YEAR; }
     wint me::date::getMonth() { return WRD_BUILD_DATE_MONTH; }

@@ -3,14 +3,14 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(Iteration)
+    WRD_DEF_ME(Iteration)
 
-    wbool This::isFrom(const NContainer& rhs) const {
+    wbool me::isFrom(const NContainer& rhs) const {
         return &getContainer() == &rhs;
     }
 
-    wbool This::_onSame(const TypeProvidable& rhs) const {
-        const This& cast = (const This&) rhs;
+    wbool me::_onSame(const TypeProvidable& rhs) const {
+        const me& cast = (const me&) rhs;
         return isFrom(cast.getContainer());
     }
 }

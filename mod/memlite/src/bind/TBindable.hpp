@@ -6,8 +6,8 @@ namespace wrd {
 
     template <typename T>
     class TBindable {
-        WRD_DECL_THIS(TBindable)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(TBindable)
+        WRD_INIT_META(me)
 
     public:
         //  TBindable:

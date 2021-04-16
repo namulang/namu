@@ -5,45 +5,45 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(Bind)
+    WRD_DEF_ME(Bind)
 
     Bind::Bind(const Type& type, BindTacticable& tactic): _type(&type.getStatic()), _tactic(&tactic) {}
-    Bind::Bind(const This& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
-    Bind::~Bind() { This::unbind(); }
+    Bind::Bind(const me& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
+    Bind::~Bind() { me::unbind(); }
 
-    This& This::operator=(const This& rhs) {
+    me& me::operator=(const me& rhs) {
         if(this == &rhs) return *this;
 
         _assign(rhs);
         return *this;
     }
 
-    wbool This::isBind() const {
+    wbool me::isBind() const {
         const BindTag& tag = _getBindTag();
         if(nul(tag)) return false;
 
         return tag.isBind();
     }
 
-    wbool This::unbind() {
+    wbool me::unbind() {
         return _tactic->unbind(*this);
     }
 
-    Id This::getItsId() const { return _itsId; }
-    wbool This::canBind(const Type& type) const { return getType().isSuper(type); }
-    const Type& This::getType() const { return *_type; }
+    Id me::getItsId() const { return _itsId; }
+    wbool me::canBind(const Type& type) const { return getType().isSuper(type); }
+    const Type& me::getType() const { return *_type; }
 
-    wbool This::bind(const Instance& it) {
+    wbool me::bind(const Instance& it) {
         if(!TBindable<Instance>::bind(it)) return false;
 
         return _tactic->bind(*this, it);
     }
 
-    Instance& This::get() {
+    Instance& me::get() {
         return WRD_GETS(_getBindTag(),get());
     }
 
-    wbool This::_assign(const Bind& rhs) {
+    wbool me::_assign(const Bind& rhs) {
         unbind();
         _type = rhs._type;
         if (nul(_tactic))
@@ -51,12 +51,12 @@ namespace wrd {
         return bind(rhs.get());
     }
 
-    wbool This::_onSame(const TypeProvidable& rhs) const {
-        const This& cast = (const This&) rhs;
+    wbool me::_onSame(const TypeProvidable& rhs) const {
+        const me& cast = (const me&) rhs;
         return get() == cast.get();
     }
 
-    BindTag& This::_getBindTag() const {
+    BindTag& me::_getBindTag() const {
         return const_cast<BindTag&>(BindTag::getBindTag(_itsId));
     }
 }

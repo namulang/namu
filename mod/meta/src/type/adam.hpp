@@ -1,5 +1,5 @@
 #pragma once
 
 namespace wrd {
-    class Adam {};
+    class adam {};
 }

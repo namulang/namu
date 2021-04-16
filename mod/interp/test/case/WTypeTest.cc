@@ -18,7 +18,7 @@ namespace {
     class Chef : public Obj {
 
         class MyType : public WType {
-            WRD_DECL_THIS(MyType, WType);
+            WRD_DECL_ME(MyType, WType);
 
         protected:
             const Ases& _getImplis() const override {

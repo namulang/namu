@@ -5,7 +5,7 @@
 namespace wrd {
 
     class logger : public stream {
-        WRD_DECL_THIS(logger, stream)
+        WRD_DECL_ME(logger, stream)
 
     public:
         //  Logger:

@@ -18,16 +18,16 @@ namespace wrd {
         T& operator[](widx n) override { return get(n); }
         const T& operator[](widx n) const override { return get(n); }
 
-        using Super::get;
-        T& get(widx n) override { return (T&) Super::get(n); }
-        const T& get(widx n) const override { return (T&) Super::get(n); }
+        using super::get;
+        T& get(widx n) override { return (T&) super::get(n); }
+        const T& get(widx n) const override { return (T&) super::get(n); }
 
-        using Super::set;
+        using super::set;
         wbool set(widx n, const T& new1) {
-            return Super::set(n, new1);
+            return super::set(n, new1);
         }
         wbool set(const Iter& at, const T& new1) {
-            return Super::set(at, new1);
+            return super::set(at, new1);
         }
 
         TIter<T> headT() const { return iterT(0); }
@@ -46,7 +46,7 @@ namespace wrd {
             return TIter<T>(*ret);
         }
 
-        using Super::add;
+        using super::add;
         wbool add(std::initializer_list<T*> elems) {
             wbool ret = false;
             for(auto* elem : elems)
@@ -54,21 +54,21 @@ namespace wrd {
             return ret;
         }
         wbool add(const T& new1) {
-            return Super::add(new1);
+            return super::add(new1);
         }
         wbool add(const T* new1) {
-            return Super::add(*new1);
+            return super::add(*new1);
         }
         wbool add(const TIter<T>& e, const T& new1) {
-            return Super::add(e, new1);
+            return super::add(e, new1);
         }
         wbool add(const TIter<T>& e, const T* new1) {
-            return Super::add(e, *new1);
+            return super::add(e, *new1);
         }
 
-        using Super::del;
+        using super::del;
         wcnt del(const T& it) {
-            return Super::del(it);
+            return super::del(it);
         }
 
         template <typename E = T>

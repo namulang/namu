@@ -5,7 +5,7 @@
 namespace wrd {
 
     class platformAPI {
-        WRD_DECL_THIS(platformAPI)
+        WRD_DECL_ME(platformAPI)
 
     public:
         enum consoleColor {

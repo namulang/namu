@@ -6,13 +6,13 @@
 namespace wrd {
 
     class WeakTactic : public BindTacticable {
-        WRD_DECL_THIS(WeakTactic, BindTacticable);
+        WRD_DECL_ME(WeakTactic, BindTacticable);
 
     public:
         wbool unbind(Bind& me) override;
         wbool bind(Bind& me, const Instance& it) override;
 
     public:
-        static This singletone;
+        static me singletone;
     };
 }

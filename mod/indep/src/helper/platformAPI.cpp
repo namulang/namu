@@ -12,7 +12,7 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(platformAPI)
+    WRD_DEF_ME(platformAPI)
     using namespace std;
 
 #ifdef WRD_BUILD_PLATFORM_IS_LINUX

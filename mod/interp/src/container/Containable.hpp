@@ -9,7 +9,7 @@ namespace wrd {
 
     /// @remark Containable has API treating iter ref and element as its parameter.
     class Containable {
-        WRD_DECL_THIS(Containable)
+        WRD_DECL_ME(Containable)
 
     public:
         virtual ~Containable() {}

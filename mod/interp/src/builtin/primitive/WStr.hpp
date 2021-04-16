@@ -8,7 +8,7 @@ namespace wrd {
 
         class WStrType : public TTypeBase<WStr, WType> {
             typedef TTypeBase<WStr, WType> _S;
-            WRD_DECL_THIS(WStrType, _S)
+            WRD_DECL_ME(WStrType, _S)
 
         protected:
             const Ases& _getImplis() const override {
@@ -36,6 +36,6 @@ namespace wrd {
 
     public:
         WStr() {}
-        WStr(const std::string& val): Super(val) {}
+        WStr(const std::string& val): super(val) {}
     };
 }

@@ -6,8 +6,8 @@
 namespace wrd {
 
     class Watcher : public Chunk {
-        WRD_DECL_THIS(Watcher, Chunk)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(Watcher, Chunk)
+        WRD_INIT_META(me)
         friend class Instancer;
         friend class BindTag;
 

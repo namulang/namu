@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(logger)
+    WRD_DEF_ME(logger)
     typedef std::string string;
 
     const wchar* me::getName() const { return "logger"; }

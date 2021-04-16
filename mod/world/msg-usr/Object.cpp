@@ -3,39 +3,39 @@
 
 namespace wrd
 {
-#define THIS Object
-	WRD_CLASS_DEF(THIS)
+#define ME Object
+	WRD_CLASS_DEF(ME)
 
-	Container& THIS::getShared() {	/* TODO: return */ return nulOf<Container>(); }
-	const Container& THIS::getShared() const { /* TODO: */ return nulOf<const Container>(); }
-	Container& THIS::getVars() {	/* TODO: return */ return nulOf<Container>(); }
-	const Container& THIS::getVars() const { /* TODO: */ return nulOf<const Container>(); }
+	Container& ME::getShared() {	/* TODO: return */ return nulOf<Container>(); }
+	const Container& ME::getShared() const { /* TODO: */ return nulOf<const Container>(); }
+	Container& ME::getVars() {	/* TODO: return */ return nulOf<Container>(); }
+	const Container& ME::getVars() const { /* TODO: */ return nulOf<const Container>(); }
 
-	Strong THIS::use(Msg& msg)
+	Strong ME::use(Msg& msg)
 	{
 		//	TODO:
 		return Strong();
 	}
 
-	CStrong THIS::use(Msg& msg) const
+	CStrong ME::use(Msg& msg) const
 	{
 		//	TODO:
 		return CStrong();
 	}
 
-	wbool THIS::canUse(const Msg& msg) const
+	wbool ME::canUse(const Msg& msg) const
 	{
 		//	TODO:
 		return false;
 	}
 
-	const Origin& THIS::getOrigin() const
+	const Origin& ME::getOrigin() const
 	{
 		//	TODO:
 		return nulOf<const Origin>();
 	}
 
-	Res& THIS::_initNodes()
+	Res& ME::_initNodes()
 	{	//	TODO:
 		return wasgood;
 	}

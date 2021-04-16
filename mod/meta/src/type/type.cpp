@@ -1,17 +1,17 @@
-#include "Type.hpp"
+#include "type.hpp"
 
 namespace wrd {
-    WRD_DEF_THIS(Type)
+    WRD_DEF_ME(type)
 
-    wbool This::operator==(const This& rhs) const { return &getName() == &rhs.getName(); }
-    wbool This::operator!=(const This& rhs) const { return !operator==(rhs); }
+    wbool me::operator==(const me& rhs) const { return &getName() == &rhs.getName(); }
+    wbool me::operator!=(const me& rhs) const { return !operator==(rhs); }
 
-    const Types& This::getLeafs() const {
+    const types& me::getLeafs() const {
         //TODO: change to range based for loop.
-        return nulOf<Types>();
+        return nulOf<types>();
     }
 
-    wbool This::init() {
+    wbool me::init() {
         //  pre:
         //      Caution for not refering metaclass and binding inside of this:
         //          while this func is called, a structuring for metaclass doesn't finished.
@@ -20,7 +20,7 @@ namespace wrd {
         //          please you make sure not to use those APIs.
         //
         //      Object class should not initialize explicitly:
-        //          or This makes recursive call. Because if we make a instance of TType<Object>,
+        //          or me makes recursive call. Because if we make a instance of TType<Object>,
         //          it triggers Type::init inside of it.
         if(isInit()) return false;
 
@@ -37,10 +37,10 @@ namespace wrd {
         //      get Supers info from Super:
         //          at this point TType<Super> is instantiated, and "Super" also is all of this
         //          sequences.
-        Type& super = const_cast<Type&>(getSuper());
+        type& super = const_cast<type&>(getSuper());
         super.init();
         //        constructing SuperType:
-        Types& mySupers = _getSupers();
+        types& mySupers = _getSupers();
         mySupers = super._getSupers();
         mySupers.push_back(&super);
         //        notify to super:
@@ -48,33 +48,33 @@ namespace wrd {
         return _logInitOk(true);
     }
 
-    wbool This::rel() {
+    wbool me::rel() {
         // TODO:
         _setInit(false);
         return true;
     }
 
-    wbool This::isSuper(const Type& it) const {
+    wbool me::isSuper(const type& it) const {
         //  checking class hierarchy algorithm:
         //        Use the "Tier" of the class hierarchy info to check it.
         //        "Tier" means that how this class are inherited far from the Root class, that is, Object.
         //        So, if the "this" is a super of given object "it", its "tier"th super class
         //        would must be the class of "this".
         if(nul(it)) return false;
-        const Types& its = it.getSupers();
+        const types& its = it.getSupers();
         wcnt myTier = getSupers().size(),
              itsTier = its.size();
         if(myTier > itsTier) return false;
 
 
         //  main:
-        const Type& target = itsTier == myTier ? it :
-            (const Type&) *its[myTier];
+        const type& target = itsTier == myTier ? it :
+            (const type&) *its[myTier];
 
         return *this == target; // operator== is virtual func.
     }
 
-    wbool This::_logInitOk(wbool res) {
+    wbool me::_logInitOk(wbool res) {
         if(!res) {
             WRD_E("couldn't init meta of %s class.", getName().c_str());
             return res;

@@ -5,21 +5,21 @@
 namespace wrd {
 
     class StrTactic : public WeakTactic {
-        WRD_DECL_THIS(StrTactic, WeakTactic);
+        WRD_DECL_ME(StrTactic, WeakTactic);
 
     public:
         wbool unbind(Bind& me) {
             if(!me.isBind()) return true;
 
             BindTag& tag = me._getBindTag();
-            WRD_NUL(tag, Super::unbind(me));
+            WRD_NUL(tag, super::unbind(me));
 
             tag._onStrong(-1);
-            return Super::unbind(me);
+            return super::unbind(me);
         }
 
         wbool bind(Bind& me, Instance& it) {
-            wbool res = Super::bind(me, it);
+            wbool res = super::bind(me, it);
             if(!res) {
                 WRD_E("super::_bind() was failed.");
                 return res;
@@ -37,6 +37,6 @@ namespace wrd {
             return me._getBindTag()._onStrong(1);
         }
 
-        static inline This singletone;
+        static inline me singletone;
     };
 }

@@ -2,14 +2,14 @@
 
 #include "defThis.hpp"
 
-#define WRD_DECL_THIS_2(THIS, SUPER) \
+#define WRD_DECL_ME_2(ME, SUPER) \
     public: \
-        WRD_DEF_THIS_2(THIS, SUPER) \
+        WRD_DEF_ME_2(ME, SUPER) \
     private:
 
-#define WRD_DECL_THIS_1(THIS) \
+#define WRD_DECL_ME_1(ME) \
     public: \
-        WRD_DEF_THIS_1(THIS) \
+        WRD_DEF_ME_1(ME) \
     private:
 
-#define WRD_DECL_THIS(...)  WRD_OVERLOAD(WRD_DECL_THIS, __VA_ARGS__)
+#define WRD_DECL_ME(...)  WRD_OVERLOAD(WRD_DECL_ME, __VA_ARGS__)

@@ -5,12 +5,12 @@
 namespace wrd {
 
     class StrTactic : public WeakTactic {
-        WRD_DECL_THIS(StrTactic, WeakTactic);
+        WRD_DECL_ME(StrTactic, WeakTactic);
 
     public:
         wbool unbind(Bind& me) override;
         wbool bind(Bind& me, const Instance& it) override;
 
-        static This singletone;
+        static me singletone;
     };
 }

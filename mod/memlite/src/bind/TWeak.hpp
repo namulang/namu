@@ -6,8 +6,8 @@ namespace wrd {
 
     template <typename T>
     class TWeak : public Bind {
-        WRD_DECL_THIS(TWeak, Bind)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(TWeak, Bind)
+        WRD_INIT_META(me)
         friend class BindTag;
 
     public:
@@ -15,14 +15,14 @@ namespace wrd {
         TWeak();
         explicit TWeak(const T& it);
         explicit TWeak(const T* it);
-        TWeak(const This& rhs);
+        TWeak(const me& rhs);
         explicit TWeak(const Bind& rhs);
 
         T* operator->() override;
         T& operator*() override;
         const T* operator->() const WRD_UNCONST_FUNC(operator->())
         const T& operator*() const WRD_UNCONST_FUNC(operator*())
-        This& operator=(const Bind& rhs);
+        me& operator=(const Bind& rhs);
         //  TBindable:
         using TBindable::get;
         T& get() override;

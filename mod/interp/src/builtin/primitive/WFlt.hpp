@@ -8,7 +8,7 @@ namespace wrd {
 
         class WFltType : public TTypeBase<WFlt, WType> {
             typedef TTypeBase<WFlt, WType> _S;
-            WRD_DECL_THIS(WFltType, _S)
+            WRD_DECL_ME(WFltType, _S)
 
         protected:
             const Ases& _getImplis() const override {
@@ -37,7 +37,7 @@ namespace wrd {
 
     public:
         WFlt() {}
-        WFlt(const wflt& val): Super(val) {}
+        WFlt(const wflt& val): super(val) {}
     };
 
 

@@ -1,18 +1,18 @@
 #pragma once
 
 #include "../common.hpp"
-#include "./type/Adam.hpp"
+#include "./type/adam.hpp"
 
 namespace wrd {
 
-    class MetaIf {
+    class metaIf {
     protected:
         typedef short yes;
         typedef char no;
     };
 
     template <typename T>
-    struct TIfTemplate : public MetaIf {
+    struct tifTemplate : public metaIf {
         template <template<typename> class Template, typename X>
         static yes _foo(Template<X>*);
         static no _foo(...);
@@ -20,43 +20,43 @@ namespace wrd {
         static inline constexpr wbool is = sizeof(_foo((T*)0)) == sizeof(yes);
     };
 
-    template <typename T, typename Super> // is T is sub of Super
-    struct TIfSub {
-        static inline constexpr wbool is = std::is_base_of<Super, T>::value;
+    template <typename T, typename super> // is T is sub of super
+    struct tifSub {
+        static inline constexpr wbool is = std::is_base_of<super, T>::value;
     };
 
     template <typename T>
-    struct TAEmptyCan {
+    struct taEmptyCan {
         typedef void is;
     };
     template <typename T, typename = void>
-    struct TIfHasSuperTypedef : public MetaIf {
+    struct tifHasSuperTypedef : public metaIf {
         static inline constexpr wbool is = false;
     };
     template <typename T>
-    struct TIfHasSuperTypedef<T, typename TAEmptyCan<typename T::Super>::is> : public MetaIf {
+    struct tifHasSuperTypedef<T, typename taEmptyCan<typename T::super>::is> : public metaIf {
         static inline constexpr wbool is = true;
     };
 
-    template <typename T, wbool typedefSuper = TIfHasSuperTypedef<T>::is>
-    struct TAdaptiveSuper : MetaIf {
-        typedef Adam Super;
+    template <typename T, wbool typedefsuper = tifHasSuperTypedef<T>::is>
+    struct tadaptiveSuper : metaIf {
+        typedef adam super;
     };
     template <typename T>
-    struct TAdaptiveSuper<T, true> {
-        typedef typename T::Super Super;
+    struct tadaptiveSuper<T, true> {
+        typedef typename T::super super;
     };
 
     template <typename T, wbool canMake = std::is_constructible<T>::value>
-    struct TInstanceMaker {
+    struct tinstanceMaker {
         static void* make() { return nullptr; }
     };
     template <typename T>
-    struct TInstanceMaker<T, true> {
+    struct tinstanceMaker<T, true> {
         static void* make() { return new T(); }
     };
 
-    struct NameDemangler {
+    struct nameDemangler {
         static std::string demangle(const wchar* org) {
             wchar* demangled = nullptr;
             int status = 0;
@@ -82,9 +82,9 @@ namespace wrd {
     ///         in conclusion, users can ignore this background reasons and use WRD_CLASS macro without
     ///         additional consideration.
     template <typename T>
-    struct TNameGetter {
+    struct tnameGetter {
         static const wchar* getRawName() { return typeid(T).name(); }
-        static std::string getName() { return NameDemangler::demangle(getRawName()); }
+        static std::string getName() { return nameDemangler::demangle(getRawName()); }
     };
 
     // famous void_t def:
@@ -92,15 +92,15 @@ namespace wrd {
     template <typename T>
     using void_t = void;
 
-    // SuperTypeChecker:
-    //  if user defined SuperType on their own, we let their TType classes inherit their SuperType class.
+    // superTypeChecker:
+    //  if user defined superType on their own, we let their TType classes inherit their superType class.
     //  otherwise, just use Type as base class.
     template <typename T, typename = void>
-    struct TSuperTypeDef {
-        using is = Type;
+    struct tsuperTypeDef {
+        using is = type;
     };
     template <typename T>
-    struct TSuperTypeDef<T, void_t<int T::SuperType::*>> {
-        using is = typename T::SuperType;
+    struct tsuperTypeDef<T, void_t<int T::superType::*>> {
+        using is = typename T::superType;
     };
  }

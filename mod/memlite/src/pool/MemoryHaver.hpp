@@ -6,8 +6,8 @@ namespace wrd {
 
     class Instance;
     class MemoryHaver {
-        WRD_DECL_THIS(MemoryHaver)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(MemoryHaver)
+        WRD_INIT_META(me)
 
     public:
         virtual ~MemoryHaver() {}

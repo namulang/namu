@@ -68,12 +68,12 @@ namespace wrd {
         const NContainer& getContainer() const WRD_UNCONST_FUNC(getContainer());
 
     private:
-        This& _assign(const This& rhs) {
+        me& _assign(const me& rhs) {
             _step.bind((Iteration*) rhs._step->clone());
             return *this;
         }
         wbool _onSame(const TypeProvidable& rhs) const override {
-            const This& cast = (const This&) rhs;
+            const me& cast = (const me&) rhs;
             return _step == cast._step;
         }
 

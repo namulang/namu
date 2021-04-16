@@ -3,13 +3,13 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(Node)
+    WRD_DEF_ME(Node)
 
-    Ref This::as(const WType& to) const {
+    Ref me::as(const WType& to) const {
         return getType().as(*this, to);
     }
 
-    Ref This::asImpli(const WType& to) const {
+    Ref me::asImpli(const WType& to) const {
         return getType().asImpli(*this, to);
     }
 

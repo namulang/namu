@@ -4,11 +4,11 @@
 namespace wrd {
 
 #define TEMPL template <typename T>
-#define THIS TNArr<T>
+#define ME TNArr<T>
 
     TEMPL
     template <typename E>
-    void THIS::each(const TIter<T>& from, const TIter<T>& to, std::function<wbool(TIter<T>&, E&)> l) {
+    void ME::each(const TIter<T>& from, const TIter<T>& to, std::function<wbool(TIter<T>&, E&)> l) {
         for(TIter<T> e=from; e == to ;++e) {
             E& t = e->template cast<E>();
             if(nul(t)) continue;
@@ -19,13 +19,13 @@ namespace wrd {
 
     TEMPL
     template <typename E>
-    void THIS::each(std::function<wbool(TIter<T>&, E&)> l) {
+    void ME::each(std::function<wbool(TIter<T>&, E&)> l) {
         each(headT(), tailT(), l);
     }
 
     TEMPL
     template <typename E>
-    void THIS::each(const TIter<T>& from, const TIter<T>& to, std::function<wbool(const TIter<T>&, const E&)> l) const {
+    void ME::each(const TIter<T>& from, const TIter<T>& to, std::function<wbool(const TIter<T>&, const E&)> l) const {
         for(TIter<T> e=from; e == to ;++e) {
             E& t = e->template cast<E>();
             if(nul(t)) continue;
@@ -36,10 +36,10 @@ namespace wrd {
 
     TEMPL
     template <typename E>
-    void THIS::each(std::function<wbool(const TIter<T>&, const E&)> l) const {
+    void ME::each(std::function<wbool(const TIter<T>&, const E&)> l) const {
         each(headT(), tailT(), l);
     }
 
 #undef TEMPL
-#undef THIS
+#undef ME
 }

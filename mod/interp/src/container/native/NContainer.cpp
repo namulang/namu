@@ -4,9 +4,9 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(NContainer)
+    WRD_DEF_ME(NContainer)
 
-    NArr This::get(std::function<wbool(const Node&)> l) const {
+    NArr me::get(std::function<wbool(const Node&)> l) const {
         NArr ret;
         each<Node>([&ret, l](const Iter& e, const Node& elem) {
             if(l(elem))

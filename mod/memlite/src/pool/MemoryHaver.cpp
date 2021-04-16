@@ -2,8 +2,8 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(MemoryHaver)
+    WRD_DEF_ME(MemoryHaver)
 
-    wbool This::isFull() const { return getLen() >= getSize(); }
-    wbool This::isCapable() const { return getLen() < getSize(); }
+    wbool me::isFull() const { return getLen() >= getSize(); }
+    wbool me::isCapable() const { return getLen() < getSize(); }
 }

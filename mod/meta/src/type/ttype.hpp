@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TTypeBase.hpp"
+#include "ttypeBase.hpp"
 
 namespace wrd {
 
@@ -12,5 +12,5 @@ namespace wrd {
     ///         inherits from given SuperType.
     ///         this eventually make user add API to want to TType class.
     template<typename T>
-    class TType : public TTypeBase<T> {};
+    class ttype : public ttypeBase<T> {};
 }

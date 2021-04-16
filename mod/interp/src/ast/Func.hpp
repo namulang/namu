@@ -8,7 +8,7 @@ namespace wrd {
         WRD_INTERFACE(Func, Scope)
 
     public:
-        explicit Func(const std::string& name): Super(name) {}
+        explicit Func(const std::string& name): super(name) {}
 
         Str run(NContainer& args) override;
         wbool canRun(const WTypes& types) const override;

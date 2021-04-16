@@ -3,6 +3,6 @@
 
 namespace wrd
 {
-#define THIS Manager
+#define ME Manager
 	WRD_CLASS_DEF(Manager)
 }

@@ -1,24 +1,24 @@
 #pragma once
 
 namespace wrd {
-    class TypeProvidable {
-        WRD_DECL_THIS(TypeProvidable)
+    class typeProvidable {
+        WRD_DECL_ME(typeProvidable)
 
     public:
-        wbool operator==(const This& rhs) const {
+        wbool operator==(const me& rhs) const {
             if(getType() != rhs.getType()) return false;
 
             return _onSame(rhs);
         }
-        wbool operator!=(const This& rhs) const {
+        wbool operator!=(const me& rhs) const {
             return !operator==(rhs);
         }
 
-        virtual const Type& getType() const = 0;
+        virtual const type& getType() const = 0;
 
         template <typename T>
         T& cast() {
-            if(!getType().isSub(TType<T>::get()))
+            if(!getType().isSub(ttype<T>::get()))
                 return nulOf<T>();
 
             return (T&) *this;
@@ -28,7 +28,7 @@ namespace wrd {
         const T& cast() const WRD_UNCONST_FUNC(cast<T>())
 
     protected:
-        virtual wbool _onSame(const This& rhs) const {
+        virtual wbool _onSame(const me& rhs) const {
             return this == &rhs;
         }
     };

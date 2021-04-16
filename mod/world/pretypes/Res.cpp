@@ -3,18 +3,18 @@
 
 namespace wrd
 {
-#define THIS Res
+#define ME Res
 
-	WRD_CLASS_DEF(THIS)
+	WRD_CLASS_DEF(ME)
 	
-	THIS::operator wbool() const { return isErr(); }
+	ME::operator wbool() const { return isErr(); }
 	//	TODO: all below funcs.
-	wbool THIS::isErr() const { return ! isGood(); }
+	wbool ME::isErr() const { return ! isGood(); }
 	//	TODO: imple these funcs.
-	Res& THIS::warn(...) { return wasgood; }
-	Res& THIS::err(...) { return wasgood; }
-	Res& THIS::info(...) { return wasgood; };
-	Res& THIS::dbg(...) { return wasgood; };
+	Res& ME::warn(...) { return wasgood; }
+	Res& ME::err(...) { return wasgood; }
+	Res& ME::info(...) { return wasgood; };
+	Res& ME::dbg(...) { return wasgood; };
 
-#undef THIS
+#undef ME
 }

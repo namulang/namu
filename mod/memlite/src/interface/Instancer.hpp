@@ -6,8 +6,8 @@
 namespace wrd {
 
     class Instancer {
-        WRD_DECL_THIS(Instancer)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(Instancer)
+        WRD_INIT_META(me)
         friend class Instance;
 
     public:
@@ -15,7 +15,7 @@ namespace wrd {
         wbool unbind(const Instance& old);
         const Pool& getPool() const;
         const Watcher& getWatcher() const;
-        static WRD_SINGLETON_GETTER(This)
+        static WRD_SINGLETON_GETTER(me)
 
     private:
         void* _new1(size_t sz);

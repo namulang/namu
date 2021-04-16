@@ -3,9 +3,9 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(As)
+    WRD_DEF_ME(As)
 
-    wbool This::is(const WType& to) const {
+    wbool me::is(const WType& to) const {
         return getType() == to;
     }
 }

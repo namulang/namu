@@ -7,11 +7,11 @@ namespace wrd {
     using std::string;
 
     class buildFeature {
-        WRD_DECL_THIS(buildFeature)
+        WRD_DECL_ME(buildFeature)
 
     public:
         struct date {
-            WRD_DECL_THIS(date)
+            WRD_DECL_ME(date)
 
         public:
             static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_DATE)
@@ -21,7 +21,7 @@ namespace wrd {
         };
 
         struct time {
-            WRD_DECL_THIS(time)
+            WRD_DECL_ME(time)
 
         public:
             static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_TIME)
@@ -31,7 +31,7 @@ namespace wrd {
         };
 
         struct version {
-            WRD_DECL_THIS(version)
+            WRD_DECL_ME(version)
 
         public:
             static WRD_SINGLETON_GETTER(const string& get(), string, WRD_BUILD_VERSION)
@@ -52,7 +52,7 @@ namespace wrd {
         };
 
         struct platform {
-            WRD_DECL_THIS(platform)
+            WRD_DECL_ME(platform)
 
         public:
             static platformType get();
@@ -68,7 +68,7 @@ namespace wrd {
         };
 
         struct config {
-            WRD_DECL_THIS(config)
+            WRD_DECL_ME(config)
 
         public:
             static buildType get();

@@ -3,14 +3,14 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(WeakTactic)
+    WRD_DEF_ME(WeakTactic)
 
-    wbool This::unbind(Bind& me) {
+    wbool me::unbind(Bind& me) {
         me._itsId.rel();
         return true;
     }
 
-    wbool This::bind(Bind& me, const Instance& it) {
+    wbool me::bind(Bind& me, const Instance& it) {
         unbind(me);
         //  regardless of result from _onStrong binder can bind:
         //      there are two reasons:
@@ -27,5 +27,5 @@ namespace wrd {
         return true;
     }
 
-    This This::singletone;
+    me me::singletone;
 }

@@ -73,7 +73,7 @@ TEST(macroTest, WRD_GETtest) {
 
 TEST(macroTest, UnconstCalltest) {
     struct A {
-        WRD_DECL_THIS(A)
+        WRD_DECL_ME(A)
 
     public:
         wbool foo() {

@@ -5,27 +5,27 @@
 
 namespace wrd {
 
-#define THIS WType
+#define ME WType
 
     template <typename T>
-    wbool THIS::isImpli() const {
+    wbool ME::isImpli() const {
         return isImpli(TType<T>::get());
     }
 
     template <typename T>
-    TRef<T> THIS::asImpli(const Node& it) const {
+    TRef<T> ME::asImpli(const Node& it) const {
         return asImpli(it, TType<T>::get());
     }
 
     template <typename T>
-    wbool THIS::is() const {
+    wbool ME::is() const {
         return is(TType<T>::get());
     }
 
     template <typename T>
-    TRef<T> THIS::as(const Node& it) const {
+    TRef<T> ME::as(const Node& it) const {
         return as(it, TType<T>::get());
     }
 
-#undef THIS
+#undef ME
 }
