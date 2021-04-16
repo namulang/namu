@@ -12,10 +12,10 @@ namespace wrd {
         Node& operator[](widx n) override { return get(n); }
         const Node& operator[](widx n) const override { return get(n); }
 
-        using Super::get;
+        using super::get;
         using ArrContainable::get;
 
-        using Super::set;
+        using super::set;
         using ArrContainable::set;
 
         Iter iter(widx n) const override {
@@ -23,10 +23,10 @@ namespace wrd {
         }
         Iter iter(const Node& elem) const;
 
-        using Super::add;
+        using super::add;
         using ArrContainable::add;
 
-        using Super::del;
+        using super::del;
         using ArrContainable::del;
         wbool del(const Node& it) override { return del(iter(it)); }
     };

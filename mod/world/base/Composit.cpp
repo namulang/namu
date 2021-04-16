@@ -5,14 +5,14 @@
 
 namespace wrd
 {
-#define THIS Composit
-	WRD_CLASS_DEF(THIS)
+#define ME Composit
+	WRD_CLASS_DEF(ME)
 
-	THIS::THIS() : _nodes(0) {}
-	THIS::THIS(const This& rhs) : Super(rhs) { _assign(rhs); }
-	THIS::~THIS() { _release(); }
+	ME::ME() : _nodes(0) {}
+	ME::ME(const me& rhs) : super(rhs) { _assign(rhs); }
+	ME::~ME() { _release(); }
 
-	THIS& THIS::_assign(const This& rhs)
+	ME& ME::_assign(const me& rhs)
 	{
 		_release();
 		//TODO: if(rhs._nodes)
@@ -20,7 +20,7 @@ namespace wrd
 		return *this;
 	}
 
-	Res& THIS::_release()
+	Res& ME::_release()
 	{
 		if(_nodes)
 			_nodes->release();
@@ -28,26 +28,26 @@ namespace wrd
 		return wasgood;
 	}
 
-	THIS& THIS::operator=(const This& rhs)
+	ME& ME::operator=(const me& rhs)
 	{
 		WRD_ASSIGN_GUARD()
-		Super::operator=(rhs);
+		super::operator=(rhs);
 		return _assign(rhs);
 	}
 
-	Res& THIS::init()
+	Res& ME::init()
 	{
 		WRD_IS_SUPER(init())
 		return _initNodes();
 	}
 
-	Res& THIS::release()
+	Res& ME::release()
 	{
 		_release();
-		return Super::release();
+		return super::release();
 	}
 
-    const Container& THIS::getNodes() const
+    const Container& ME::getNodes() const
     {
 		//	TODO: 
 		//if( ! _nodes)
@@ -57,7 +57,7 @@ namespace wrd
         return *_nodes;
     }
 
-    Res& THIS::_initNodes()
+    Res& ME::_initNodes()
     {
 		/* TODO:
         _getNodes().release();

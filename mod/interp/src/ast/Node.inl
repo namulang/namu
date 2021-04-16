@@ -5,17 +5,17 @@
 
 namespace wrd {
 
-#define THIS Node
+#define ME Node
 
     template <typename T>
-    TRef<T> THIS::asImpli() const {
+    TRef<T> ME::asImpli() const {
         return TRef<T>(asImpli(TType<T>::get()));
     }
 
     template <typename T>
-    TRef<T> THIS::as() const {
+    TRef<T> ME::as() const {
         return TRef<T>(as(TType<T>::get()));
     }
 
-#undef THIS
+#undef ME
 }

@@ -3,27 +3,27 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(Pool, MemoryHaver)
+    WRD_DEF_ME(Pool, MemoryHaver)
 
-    This::Pool() {}
-    This::~Pool() { rel(); }
+    me::Pool() {}
+    me::~Pool() { rel(); }
 
-    Chunks& This::operator[](widx n) { return get(n); }
-    Chunks& This::operator[](const Instance& inst) { return get(inst); }
-    Chunks& This::get(const Instance& inst) { return get(inst.getType().getSize()); }
-    Chunks& This::get(widx n) { return *(Chunks*)_get(n); }
+    Chunks& me::operator[](widx n) { return get(n); }
+    Chunks& me::operator[](const Instance& inst) { return get(inst); }
+    Chunks& me::get(const Instance& inst) { return get(inst.getType().getSize()); }
+    Chunks& me::get(widx n) { return *(Chunks*)_get(n); }
 
-    wbool This::has(const Instance& it) const {
+    wbool me::has(const Instance& it) const {
         const Chunks& got = get(it.getType().getSize());
         WRD_NUL(got, false)
 
         return got.has(it);
     }
 
-    wcnt This::getSize() const { return _chunks.capacity(); }
-    wcnt This::getLen() const { return _chunks.size(); }
+    wcnt me::getSize() const { return _chunks.capacity(); }
+    wcnt me::getLen() const { return _chunks.size(); }
 
-    wbool This::rel() {
+    wbool me::rel() {
         for(Chunks* e : _chunks) {
             if (!e) continue;
             e->rel();
@@ -34,7 +34,7 @@ namespace wrd {
         return true;
     }
 
-    void* This::_get(widx n) {
+    void* me::_get(widx n) {
         while((int)_chunks.size() - 1 < n)
             _chunks.push_back(NULL);
 

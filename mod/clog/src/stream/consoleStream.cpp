@@ -3,7 +3,7 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(consoleStream)
+    WRD_DEF_ME(consoleStream)
 
     const char* me::getName() const { return "consoleStream"; }
 

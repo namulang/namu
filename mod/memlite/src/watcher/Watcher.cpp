@@ -2,16 +2,16 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(Watcher, Chunk)
+    WRD_DEF_ME(Watcher, Chunk)
 
-    This::Watcher() : Chunk(sizeof(WatchCell), false) {}
+    me::Watcher() : Chunk(sizeof(WatchCell), false) {}
 
-    WatchCell& This::operator[](widx n) { return get(n); }
-    WatchCell& This::operator[](Id id) { return get(id); }
+    WatchCell& me::operator[](widx n) { return get(n); }
+    WatchCell& me::operator[](Id id) { return get(id); }
 
-    WatchCell& This::get(widx n) { return *(WatchCell*)_get(n); }
+    WatchCell& me::get(widx n) { return *(WatchCell*)_get(n); }
 
-    WatchCell& This::get(Id id) {
+    WatchCell& me::get(Id id) {
         WatchCell& got = get(id.tagN);
         if(nul(got)) return nulOf<WatchCell>();
 
@@ -28,12 +28,12 @@ namespace wrd {
         return got;
     }
 
-    void* This::new1() {
+    void* me::new1() {
         if(isFull())
             if(!_resize(getSize()*2 + 1))
                 return WRD_E("resize Watcher failed! this damage system seriously !!!!"), nullptr;
 
-        WatchCell* res = (WatchCell*)Super::new1();
+        WatchCell* res = (WatchCell*)super::new1();
         if(!res)
             return res;
 
@@ -41,14 +41,14 @@ namespace wrd {
         return res;
     }
 
-    wbool This::del(void* used, wcnt sz) {
+    wbool me::del(void* used, wcnt sz) {
         WatchCell& cell = *((WatchCell*) used);
         cell.~WatchCell();
 
-        return Super::del(used, sz);
+        return super::del(used, sz);
     }
 
-    Id This::_genId(void* pt) const {
+    Id me::_genId(void* pt) const {
         static wcnt serial = 0;
         // Watcher concern about bkl_n at Id. on the other hand, Chunk is chkN.
         // eventually, if Instance was born from heap, first it take chkN from chunk when it borns.
@@ -56,7 +56,7 @@ namespace wrd {
         return Id(_getIdx(pt), WRD_INDEX_ERROR, ++serial);
     }
 
-    widx This::_getIdx(void* it) const {
+    widx me::_getIdx(void* it) const {
         if(!has(*(Instance*)it)) // "has" func will treat it as void*, too.
             return -1;
 

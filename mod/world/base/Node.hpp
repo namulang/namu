@@ -69,8 +69,8 @@ namespace wrd
 	public:
 		Node& operator[](widx n);
 		const Node& operator[](widx n) const;
-		wbool operator==(const This& rhs);
-		wbool operator!=(const This& rhs);
+		wbool operator==(const me& rhs);
+		wbool operator!=(const me& rhs);
 
 	public:
 		//	Node:

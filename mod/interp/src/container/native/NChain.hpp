@@ -46,9 +46,9 @@ namespace wrd {
 
         protected:
             wbool _onSame(const TypeProvidable& rhs) const override {
-                if(!Super::_onSame(rhs)) return false;
+                if(!super::_onSame(rhs)) return false;
 
-                const This& cast = (const This&) rhs;
+                const me& cast = (const me&) rhs;
                 if(nul(cast)) return false;
 
                 return _iter == cast._iter;
@@ -66,7 +66,7 @@ namespace wrd {
 
         wcnt getLen() const override;
 
-        using Super::set;
+        using super::set;
         wbool set(const Iter& at, const Node& new1) override;
 
         Iter head() const override;
@@ -74,11 +74,11 @@ namespace wrd {
         Iter last() const override;
         Iter iter(wcnt step) const override;
 
-        using Super::add;
+        using super::add;
         wbool add(const Iter& at, const Node& new1) override;
         wbool add(const Node& new1) override;
 
-        using Super::del;
+        using super::del;
         wbool del() override;
         wbool del(const Node& it) override;
         wbool del(const Iter& at) override;
@@ -95,7 +95,7 @@ namespace wrd {
         NChain& getNext() { return *_next; }
         const NChain& getNext() const { return *_next; }
 
-        using Super::each;
+        using super::each;
         template <typename T>
         void each(const Iter& from, const Iter& end, std::function<wbool(NChain&, T&)> l) {
             const NChain* endChn = nullptr;

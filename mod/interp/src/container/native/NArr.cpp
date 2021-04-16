@@ -3,16 +3,16 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(NArr)
+    WRD_DEF_ME(NArr)
 
-    Node& This::get(widx n) {
+    Node& me::get(widx n) {
         if(!_isValidN(n)) return nulOf<Node>();
 
         Bind& ret = _vec[n];
         return (Node&) *ret;
     }
 
-    wbool This::set(const Iter& at, const Node& new1) {
+    wbool me::set(const Iter& at, const Node& new1) {
         NArrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;
         if(cast.isEnd()) return false;
@@ -20,18 +20,18 @@ namespace wrd {
         return set(cast._n, new1);
     }
 
-    wbool This::_isValidN(widx n) const {
+    wbool me::_isValidN(widx n) const {
         return 0 <= n && n < getLen();
     }
 
-    wbool This::set(widx n, const Node& new1) {
+    wbool me::set(widx n, const Node& new1) {
         if(!_isValidN(n)) return false;
 
         _vec[n].bind(new1);
         return true;
     }
 
-    wbool This::add(const Iter& e, const Node& new1) {
+    wbool me::add(const Iter& e, const Node& new1) {
         if(nul(e) || nul(new1)) return false;
         if(!e.isFrom(*this)) return false;
         NArrIteration& cast = (NArrIteration&) *e._step;
@@ -40,7 +40,7 @@ namespace wrd {
         return add(cast._n, new1);
     }
 
-    wbool This::add(widx n, const Node& new1) {
+    wbool me::add(widx n, const Node& new1) {
         if(n < 0 || n > getLen()) return false; // if n equals to getLen(), it means that will be added at end of container.
 
         Str wrap(new1);
@@ -49,11 +49,11 @@ namespace wrd {
         return true;
     }
 
-    wbool This::del() {
+    wbool me::del() {
         return del(iter(getLen() - 1));
     }
 
-    wbool This::del(const Iter& at) {
+    wbool me::del(const Iter& at) {
         NArrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;
         if(cast.isEnd()) return false;
@@ -61,13 +61,13 @@ namespace wrd {
         return del(cast._n);
     }
 
-    wbool This::del(widx n) {
+    wbool me::del(widx n) {
         if(!_isValidN(n)) return false;
         _vec.erase(_vec.begin() + n);
         return true;
     }
 
-    wcnt This::del(const Iter& from, const Iter& end) {
+    wcnt me::del(const Iter& from, const Iter& end) {
         NArrIteration&  endIter = _getIterationFrom(end),
                     &   fromIter = _getIterationFrom(from);
         if(nul(endIter) || nul(fromIter))
@@ -83,11 +83,11 @@ namespace wrd {
     }
 
 
-    wcnt This::getLen() const {
+    wcnt me::getLen() const {
         return _vec.size();
     };
 
-    void This::empty() {
+    void me::empty() {
         _vec.clear();
     }
 }

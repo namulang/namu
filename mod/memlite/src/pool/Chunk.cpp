@@ -2,17 +2,17 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(Chunk, Allocator)
+    WRD_DEF_ME(Chunk, Allocator)
 
-    This::Chunk(wcnt blksize, wcnt sz)
-        : Super(blksize), _head(0), _len(0), _sz(0), _heap(0) {
+    me::Chunk(wcnt blksize, wcnt sz)
+        : super(blksize), _head(0), _len(0), _sz(0), _heap(0) {
             _resize(sz);
         }
-    This::~Chunk() { This::rel(); }
-    wcnt This::getLen() const { return _len; }
-    wcnt This::getSize() const { return _sz; }
+    me::~Chunk() { me::rel(); }
+    wcnt me::getLen() const { return _len; }
+    wcnt me::getSize() const { return _sz; }
 
-    wbool This::_resize(wcnt newSz) {
+    wbool me::_resize(wcnt newSz) {
         //  pre:
         if(newSz < MIN_SZ) newSz = MIN_SZ;
         if(newSz == _sz) return false;
@@ -30,7 +30,7 @@ namespace wrd {
         return _index(_len);
     }
 
-    void* This::new1() {
+    void* me::new1() {
         if(_len >= _sz)
             return WRD_E("new1() failed. chunk was full. you should have not called this in this situtation."), nullptr;
 
@@ -43,7 +43,7 @@ namespace wrd {
         return ret;
     }
 
-    wbool This::del(void* used, wcnt) {
+    wbool me::del(void* used, wcnt) {
         if(!used) return false;
 
         *(widx*)used = _head;
@@ -54,26 +54,26 @@ namespace wrd {
         return true;
     }
 
-    wbool This::rel() {
+    wbool me::rel() {
         _len = _sz = 0;
         _head = 0;
         return _freeHeap(&_heap);
     }
 
-    wbool This::has(const Instance& it) const {
+    wbool me::has(const Instance& it) const {
         void* pt = (void*) &it;
         return _heap && _heap <= pt && pt <= _getEOB();
     }
 
-    wuchar* This::_getHeap() { return _heap; }
+    wuchar* me::_getHeap() { return _heap; }
 
-    void* This::_get(widx n) {
+    void* me::_get(widx n) {
         if(n < 0 || n >= getSize()) return nullptr;
 
         return _heap + n*_getRealBlkSize();
     }
 
-    wuchar* This::_getEOB() {
+    wuchar* me::_getEOB() {
         wuchar* org = (wuchar*) _get(_sz - 1);
         if(!org)
             return nullptr;
@@ -81,21 +81,21 @@ namespace wrd {
         return org + _getRealBlkSize() - 1;
     }
 
-    wbool This::_index(widx start) {
+    wbool me::_index(widx start) {
         for(wcnt n=start; n < _sz ;n++)
             *(widx*)_get(n) = n+1;
 
         return true;
     }
 
-    wcnt This::_getRealBlkSize() {
+    wcnt me::_getRealBlkSize() {
         wcnt sz = getBlkSize();
         return sz < 4 ? 4 : sz;
     }
 
-    void* This::_allocHeap(wcnt newSz) { return malloc(newSz * _getRealBlkSize()); }
+    void* me::_allocHeap(wcnt newSz) { return malloc(newSz * _getRealBlkSize()); }
 
-    wbool This::_freeHeap(wuchar** heap) {
+    wbool me::_freeHeap(wuchar** heap) {
         if(*heap) {
             free(*heap);
             *heap = NULL;

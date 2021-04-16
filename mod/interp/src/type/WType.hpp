@@ -8,7 +8,7 @@ namespace wrd {
     class Ref;
     template <typename T> class TRef;
     class WType : public Type {
-        WRD_DECL_THIS(WType, Type)
+        WRD_DECL_ME(WType, Type)
 
     public:
         // WType:

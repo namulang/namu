@@ -45,7 +45,7 @@ namespace wrd {
         Str run(NContainer& args) override { return Str(); }
         void rel() override {
             _rel();
-            Super::rel();
+            super::rel();
         }
 
     private:

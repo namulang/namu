@@ -5,8 +5,8 @@
 namespace wrd {
 
     class Pool : public MemoryHaver {
-        WRD_DECL_THIS(Pool, MemoryHaver)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(Pool, MemoryHaver)
+        WRD_INIT_META(me)
 
     public:
         //  Pool:

@@ -10,30 +10,30 @@ namespace wrd {
 
     public:
         TRef() {}
-        explicit TRef(const Ref& rhs): Super(rhs) {}
-        explicit TRef(const T& new1): Super(new1) {}
-        explicit TRef(const T* new1): Super(new1) {}
+        explicit TRef(const Ref& rhs): super(rhs) {}
+        explicit TRef(const T& new1): super(new1) {}
+        explicit TRef(const T* new1): super(new1) {}
 
         T* operator->() override {
-            return (T*) Super::operator->();
+            return (T*) super::operator->();
         }
         T& operator*() override {
-            return (T&) Super::operator*();
+            return (T&) super::operator*();
         }
         const T* operator->() const WRD_UNCONST_FUNC(operator->())
         const T& operator*() const WRD_UNCONST_FUNC(operator*())
 
-        using Super::get;
+        using super::get;
         T& get() override {
-            return (T&) Super::get();
+            return (T&) super::get();
         }
 
-        using Super::bind;
+        using super::bind;
         wbool bind(const T& it) {
-            return Super::bind(it);
+            return super::bind(it);
         }
         wbool bind(const T* it) {
-            return Super::bind(*it);
+            return super::bind(*it);
         }
     };
 }

@@ -16,7 +16,7 @@ namespace wrd {
     ///         in conlusion, it prevent halting process or give a chance to let developer be advised.
     ///
     ///     TypeCheking:
-    ///         This was most valuable requirement when I design component of bind.
+    ///         me was most valuable requirement when I design component of bind.
     ///         in fact, Bind was suggested to replace sort of exisiting smart-ptr concept things, such as weakptr.
     ///         because weakptr was planned to replace and enhance existing pointer of c/c++, they were very strict to
     ///         check type and whether template param T was const or not.
@@ -44,18 +44,18 @@ namespace wrd {
     ///             of course these are based on class Bind, user can use loose-check API case by case.
     ///
     class Bind : public TypeProvidable, public TBindable<Instance> {
-        WRD_DECL_THIS(Bind, Instance)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(Bind, Instance)
+        WRD_INIT_META(me)
         friend class WeakTactic;
         friend class StrTactic;
         friend class BindTag; // for _get()
 
     public:
         Bind(const Type& type, BindTacticable& tactic);
-        Bind(const This& rhs);
+        Bind(const me& rhs);
         virtual ~Bind();
 
-        This& operator=(const This& rhs);
+        me& operator=(const me& rhs);
 
         //  Bind:
         Id getItsId() const;

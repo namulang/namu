@@ -3,11 +3,11 @@
 #include "dep.hpp"
 
 namespace wrd {
-    class Type;
-    typedef std::vector<Type*> Types;
+    class type;
+    typedef std::vector<type*> types;
 }
 
-#define WRD_INIT_META(This) \
+#define WRD_INIT_META(me) \
     WRD_INITIATOR(initMeta, { \
-        ::wrd::TType<This>().init(); \
+        ::wrd::ttype<me>().init(); \
     })

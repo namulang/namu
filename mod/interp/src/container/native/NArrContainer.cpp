@@ -3,9 +3,9 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(NArrContainer)
+    WRD_DEF_ME(NArrContainer)
 
-    Iter This::iter(const Node& elem) const {
+    Iter me::iter(const Node& elem) const {
         const Iter* ret = 0;
         each<Node>([&ret, &elem](const Iter& e, const Node& myelem) {
             if(&elem != &myelem) return true;

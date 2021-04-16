@@ -4,6 +4,6 @@
 
 namespace wrd
 {
-#define THIS Str
-	WRD_CLASS_DEF(THIS)
+#define ME Str
+	WRD_CLASS_DEF(ME)
 }

@@ -1,4 +1,4 @@
-#include "Rtti.hpp"
+#include "rtti.hpp"
 
 namespace wrd {
 

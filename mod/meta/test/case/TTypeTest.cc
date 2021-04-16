@@ -2,49 +2,49 @@
 
 using namespace wrd;
 
-TEST(TTypeTest, initSystem) {}
+TEST(ttypeTest, initSystem) {}
 
-class MyClass {
-    WRD_INIT_META(MyClass);
+class myClass {
+    WRD_INIT_META(myClass);
 };
 
-struct MyDerivedClass : public MyClass {
-    WRD_INIT_META(MyDerivedClass);
-    typedef MyClass Super;
+struct myDerivedClass : public myClass {
+    WRD_INIT_META(myDerivedClass);
+    typedef myClass super;
 };
 
-TEST(TTypeTest, basicBehavior) {
-    ASSERT_FALSE(TType<MyClass>().isTemplate());
-    ASSERT_FALSE(TType<MyClass>().isAbstract());
+TEST(ttypeTest, basicBehavior) {
+    ASSERT_FALSE(ttype<myClass>().isTemplate());
+    ASSERT_FALSE(ttype<myClass>().isAbstract());
 
-    const Type& type = TType<MyClass>();
-    EXPECT_STREQ(type.getName().c_str(), "MyClass");
+    const type& type = ttype<myClass>();
+    EXPECT_STREQ(type.getName().c_str(), "myClass");
 
-    const Types& subs = type.getSubs();
+    const types& subs = type.getSubs();
     ASSERT_EQ(subs.size(), 1);
-    ASSERT_EQ(*subs[0], TType<MyDerivedClass>::get());
+    ASSERT_EQ(*subs[0], ttype<myDerivedClass>::get());
 
-    ASSERT_STREQ(type.getSuper().getName().c_str(), "wrd::Adam");
+    ASSERT_STREQ(type.getSuper().getName().c_str(), "wrd::adam");
 }
 
-TEST(TTypeTest, CustomTypeInheritTest) {
+TEST(ttypeTest, customTypeInheritTest) {
     static const std::string trg = "injected";
     static const int fooRet = 22;
 
     struct A {};
-    struct CustomA {
-        typedef struct MyType : Type {
+    struct customA {
+        typedef struct myType : type {
             int foo() const {
                 return fooRet;
             }
             const std::string& getName() const {
                 return trg;
             }
-        } SuperType;
+        } superType;
     };
 
-    EXPECT_NE(TType<A>().getName(), TType<CustomA>().getName());
-    EXPECT_EQ(TType<CustomA>::get().foo(), fooRet);
+    EXPECT_NE(ttype<A>().getName(), ttype<customA>().getName());
+    EXPECT_EQ(ttype<customA>::get().foo(), fooRet);
 }
 
 
@@ -54,8 +54,8 @@ struct A {
     A(): value(true) {}
     wbool value;
 };
-TEST(TTypeTest, makeInstanceTest) {
-    TType<A> type;
+TEST(ttypeTest, makeInstanceTest) {
+    ttype<A> type;
     A* arr[] = {(A*) type.make(), type.makeAs<A>()};
     ASSERT_TRUE(arr[0]);
     ASSERT_TRUE(arr[1]);
@@ -68,7 +68,7 @@ struct B {
     B(wbool newValue): value(newValue) {}
     wbool value;
 };
-TEST(TTypeTest, makeInstanceNegativeTest) {
-    TType<B> type;
+TEST(ttypeTest, makeInstanceNegativeTest) {
+    ttype<B> type;
     ASSERT_FALSE(type.make());
 }

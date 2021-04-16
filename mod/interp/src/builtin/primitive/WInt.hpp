@@ -8,7 +8,7 @@ namespace wrd {
 
         class WIntType : public TTypeBase<WInt, WType> {
             typedef TTypeBase<WInt, WType> _S;
-            WRD_DECL_THIS(WIntType, _S)
+            WRD_DECL_ME(WIntType, _S)
 
         protected:
             const Ases& _getImplis() const override {
@@ -37,6 +37,6 @@ namespace wrd {
 
     public:
         WInt() {}
-        WInt(const wint& val): Super(val) {}
+        WInt(const wint& val): super(val) {}
     };
 }

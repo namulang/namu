@@ -52,9 +52,9 @@ namespace wrd {
 
         protected:
             wbool _onSame(const TypeProvidable& rhs) const override {
-                if(!Super::_onSame(rhs)) return false;
+                if(!super::_onSame(rhs)) return false;
 
-                const This& cast = (const This&) rhs;
+                const me& cast = (const me&) rhs;
                 if(nul(cast)) return false;
 
                 return _n == cast._n;
@@ -73,21 +73,21 @@ namespace wrd {
 
         wcnt getLen() const override;
 
-        using Super::get;
+        using super::get;
         Node& get(widx n) override;
         const Node& get(widx n) const override WRD_UNCONST_FUNC(get(n))
 
-        using Super::set;
+        using super::set;
         wbool set(const Iter& at, const Node& new1) override;
         wbool set(widx n, const Node& new1) override;
 
         void empty() override;
 
-        using Super::add;
+        using super::add;
         wbool add(const Iter& e, const Node& new1) override;
         wbool add(widx n, const Node& new1) override;
 
-        using Super::del;
+        using super::del;
         /// delete last element if exists.
         wbool del() override;
         wcnt del(const Iter& from, const Iter& end) override;
@@ -96,7 +96,7 @@ namespace wrd {
 
     protected:
         Iteration* _onIter(widx n) const override {
-            This* unconst = const_cast<This*>(this);
+            me* unconst = const_cast<me*>(this);
             return new NArrIteration(*unconst, n);
         }
 

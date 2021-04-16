@@ -9,14 +9,14 @@ namespace {
         WRD_CLASS(MyFunc, Func)
 
     public:
-        MyFunc(std::string name = "MyFunc"): Super(name) {
+        MyFunc(std::string name = "MyFunc"): super(name) {
             WRD_E("MyFunc(%x) new", this);
         }
         ~MyFunc() {
             WRD_E("MyFunc(%x) delete", this);
         }
 
-        using Super::subs;
+        using super::subs;
         NContainer& subs() override { return _shares; }
 
         void setUp() {

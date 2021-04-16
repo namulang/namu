@@ -6,7 +6,7 @@ namespace wrd {
 
     /// @remark ArrContainable has API treating index as its parameter.
     class ArrContainable {
-        WRD_DECL_THIS(ArrContainable)
+        WRD_DECL_ME(ArrContainable)
 
     public:
         virtual ~ArrContainable() {}

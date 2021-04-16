@@ -5,7 +5,7 @@
 namespace wrd {
 
     class stream {
-        WRD_DECL_THIS(stream)
+        WRD_DECL_ME(stream)
 
     public:
         stream();

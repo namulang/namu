@@ -42,7 +42,7 @@ typedef struct consoleStreamTest : public ::testing::Test {
 } thisTest;
 
 TEST_F(consoleStreamTest, dumpFormat) {
-    logger::get().dumpformat("hello");
+    logger::get().dumpFormat("hello");
     logger::get().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " "hello",
         wrd::platformAPI::createCurrentTime("%b %d %Y  %X").c_str(), "I",
         __FILENAME__, __func__, __LINE__);

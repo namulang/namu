@@ -8,7 +8,7 @@ namespace wrd {
     class Containable;
     class Node;
     class Iterable {
-        WRD_DECL_THIS(Iterable)
+        WRD_DECL_ME(Iterable)
 
     public:
         virtual ~Iterable() {}

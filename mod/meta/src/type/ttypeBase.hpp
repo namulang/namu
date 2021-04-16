@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Type.hpp"
+#include "type.hpp"
 #include "../rtti.hpp"
 
 namespace wrd {
@@ -12,13 +12,13 @@ namespace wrd {
     ///         if user typedefs SuperType at their type T, then TTypeBase
     ///         inherits from given SuperType.
     ///         this eventually make user add API to want to TTypeBase class.
-    template <typename T, typename S = typename TSuperTypeDef<T>::is>
-    class TTypeBase : public S {
-        typedef TTypeBase<T, S> _T;
-        WRD_DECL_THIS(_T, S)
+    template <typename T, typename S = typename tsuperTypeDef<T>::is>
+    class ttypeBase : public S {
+        typedef ttypeBase<T, S> _T;
+        WRD_DECL_ME(_T, S)
 
     public:
-        TTypeBase();
+        ttypeBase();
 
         wbool isTemplate() const override;
         wbool isAbstract() const override;
@@ -26,16 +26,16 @@ namespace wrd {
         void* make() const override;
         wcnt getSize() const override;
         //TODO: virtual wbool isImmutable() const;
-        const Type& getSuper() const override;
+        const type& getSuper() const override;
         const wbool& isInit() const override;
-        static const This& get();
+        static const me& get();
 
     protected:
-        Types& _getSupers() override;
-        Types& _getSubs() override;
-        Type& _getStatic() const override;
+        types& _getSupers() override;
+        types& _getSubs() override;
+        type& _getStatic() const override;
 
     private:
-        TTypeBase(wbool); // for skipping recursive static variable init.
+        ttypeBase(wbool); // for skipping recursive static variable init.
     };
 }

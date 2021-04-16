@@ -10,23 +10,23 @@ namespace wrd {
 
     public:
         TIter() {}
-        explicit TIter(Iteration* newStep): Super(newStep) {}
+        explicit TIter(Iteration* newStep): super(newStep) {}
 
         /// @return true if there are more data to proceed
-        This operator+(wcnt step) {
+        me operator+(wcnt step) {
             next(step);
             return *this;
         }
-        This& operator++() {
+        me& operator++() {
             next(1);
             return *this;
         }
-        This operator++(int) {
-            This ret = *this;
+        me operator++(int) {
+            me ret = *this;
             next(1);
             return ret;
         }
-        This& operator+=(wcnt step) {
+        me& operator+=(wcnt step) {
             next(step);
             return *this;
         }
@@ -36,7 +36,7 @@ namespace wrd {
         const T& operator*() const override { return (const T&) get(); }
         const T* operator->() const override { return (const T*) &get(); }
 
-        T& get() override { return (T&) Super::get(); }
-        const T& get() const { return (const T&) Super::get(); }
+        T& get() override { return (T&) super::get(); }
+        const T& get() const { return (const T&) super::get(); }
     };
 }

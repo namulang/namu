@@ -8,7 +8,7 @@ namespace {
         WRD_CLASS(MyFunc, Func)
 
     public:
-        MyFunc(): Super("MyFunc") {}
+        MyFunc(): super("MyFunc") {}
 
         void setUp() {
             _executed = false;
@@ -20,7 +20,7 @@ namespace {
             return Str();
         }
 
-        using Super::subs;
+        using super::subs;
         NContainer& subs() override { return _shares; }
 
         wbool isRun() const {

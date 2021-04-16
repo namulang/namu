@@ -4,13 +4,13 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(NChain)
+    WRD_DEF_ME(NChain)
 
-    This::NChain(): _arr(new NArr()) {}
+    me::NChain(): _arr(new NArr()) {}
 
-    wcnt This::getLen() const {
+    wcnt me::getLen() const {
         wcnt len = 0;
-        each<NContainer>([&len](const This& chn, const NContainer& con) {
+        each<NContainer>([&len](const me& chn, const NContainer& con) {
             len += con.getLen();
             return true;
         });
@@ -18,30 +18,30 @@ namespace wrd {
         return len;
     }
 
-    wbool This::set(const Iter& at, const Node& new1) {
+    wbool me::set(const Iter& at, const Node& new1) {
         Iter& containerIter = _getContainerIterFromChainIter(at);
 
         return containerIter.getContainer().set(containerIter, new1);
     }
 
-    wbool This::add(const Iter& at, const Node& new1) {
+    wbool me::add(const Iter& at, const Node& new1) {
         Iter& containerIter = _getContainerIterFromChainIter(at);
 
         return containerIter.getContainer().add(containerIter, new1);
     }
 
-    wbool This::add(const Node& new1) {
+    wbool me::add(const Node& new1) {
         return getContainer().add(new1);
     }
 
-    wbool This::del() {
+    wbool me::del() {
         NChain& last = _getLastChain();
         if(nul(last)) return false;
 
         return last.getContainer().del();
     }
 
-    wbool This::del(const Node& it) {
+    wbool me::del(const Node& it) {
         wbool ret = false;
         each<Node>([&ret, &it](const Iter& e, Node& elem) {
             if(&elem != &it) return true;
@@ -53,13 +53,13 @@ namespace wrd {
         return ret;
     }
 
-    wbool This::del(const Iter& at) {
+    wbool me::del(const Iter& at) {
         Iter& containerIter = _getContainerIterFromChainIter(at);
 
         return containerIter.getContainer().del(containerIter);
     }
 
-    wcnt This::del(const Iter& from, const Iter& end) {
+    wcnt me::del(const Iter& from, const Iter& end) {
         Iter& fromInnerIter = _getContainerIterFromChainIter(from);
         NContainer& fromCon = fromInnerIter.getContainer();
         Iter& endInnerIter = _getContainerIterFromChainIter(end);
@@ -78,13 +78,13 @@ namespace wrd {
         return ret;
     }
 
-    TStr<NChain> This::link(const NContainer& new1) {
+    TStr<NChain> me::link(const NContainer& new1) {
         NChain* ret = new NChain(new1);
         link(*ret);
         return TStr<NChain>(ret);
     }
 
-    wbool This::link(const NChain& new1) {
+    wbool me::link(const NChain& new1) {
         if(nul(new1) || nul(new1.getContainer())) return TStr<NChain>();
         if(&new1.getContainer() == &getContainer())
             return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), TStr<NChain>();
@@ -92,35 +92,35 @@ namespace wrd {
         return _next.bind(new1);
     }
 
-    wbool This::unlink() {
+    wbool me::unlink() {
         return _next.unbind();
     }
 
-    Iter This::head() const {
+    Iter me::head() const {
         return Iter(new NChainIteration(*this, *this, _arr->head()));
     }
 
-    Iter This::iter(wcnt step) const {
+    Iter me::iter(wcnt step) const {
         Iter ret = head();
         ret.next(step);
         return ret;
     }
 
-    Iter This::tail() const {
+    Iter me::tail() const {
         const NChain& last = _getLastChain();
         if(nul(last)) return Iter();
 
         return Iter(new NChainIteration(*this, last, last._arr->tail()));
     }
 
-    Iter This::last() const {
+    Iter me::last() const {
         const NChain& last = _getLastChain();
         if(nul(last)) return Iter();
 
         return Iter(new NChainIteration(*this, last, last._arr->last()));
     }
 
-    void This::empty() {
+    void me::empty() {
         _arr->empty();
         each<NContainer>([](NChain& chn, NContainer& itsCon) {
             itsCon.empty();
@@ -128,7 +128,7 @@ namespace wrd {
         });
     }
 
-    NChain& This::_getLastChain() {
+    NChain& me::_getLastChain() {
         NChain* last = nullptr;
         each<NContainer>([&last](NChain& chn, NContainer& con) {
             last = &chn;

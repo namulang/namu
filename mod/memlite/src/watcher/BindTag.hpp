@@ -7,8 +7,8 @@ namespace wrd {
 
     class Chunk;
     class BindTag : public TypeProvidable, public TBindable<Instance> {
-        WRD_DECL_THIS(BindTag)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(BindTag)
+        WRD_INIT_META(me)
         template <typename T> friend class TWeak;
         template <typename T> friend class TStr;
         friend class WeakTactic;

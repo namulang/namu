@@ -5,8 +5,8 @@
 namespace wrd {
 
     class Chunk : public Allocator {
-        WRD_DECL_THIS(Chunk, Allocator)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(Chunk, Allocator)
+        WRD_INIT_META(me)
         friend class Watcher;
 
     public:

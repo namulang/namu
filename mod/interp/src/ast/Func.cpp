@@ -4,9 +4,9 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(Func)
+    WRD_DEF_ME(Func)
 
-    Str This::run(NContainer& args) {
+    Str me::run(NContainer& args) {
         StackFrame& sf = Thread::get()._getStackFrame();
         _onInStackFrame(sf, args);
 
@@ -16,7 +16,7 @@ namespace wrd {
         return ret;
     }
 
-    wbool This::_onInStackFrame(StackFrame& sf, NContainer& args) {
+    wbool me::_onInStackFrame(StackFrame& sf, NContainer& args) {
         Obj& me = args.head()->cast<Obj>();
         if(nul(me)) return WRD_E("args[0] wasn't Obj."), false;
 
@@ -28,19 +28,19 @@ namespace wrd {
         return true;
     }
 
-    wbool This::_onOutStackFrame(StackFrame& sf, NContainer& args) {
+    wbool me::_onOutStackFrame(StackFrame& sf, NContainer& args) {
         Obj& me = args.head()->cast<Obj>();
         if(nul(me)) return WRD_E("args[0] wasn't Obj."), false;
 
         return sf.del();
     }
 
-    const WTypes& This::getTypes() const {
+    const WTypes& me::getTypes() const {
         static WTypes inner;
         return inner;
     }
 
-    wbool This::canRun(const WTypes& types) const {
+    wbool me::canRun(const WTypes& types) const {
         const WTypes& mine = getTypes();
         wcnt len = mine.size();
         if(types.size() != len) return false;

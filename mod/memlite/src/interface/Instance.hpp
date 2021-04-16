@@ -11,8 +11,8 @@ namespace wrd {
     class Instancer;
 
     class Instance : public TypeProvidable {
-        WRD_DECL_THIS(Instance)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(Instance)
+        WRD_INIT_META(me)
         friend class BindTag;
         friend class Watcher; // for Vault.
         friend class Chunks; // for Vault.
@@ -38,7 +38,7 @@ namespace wrd {
         //  Instance:
         Instance();
         explicit Instance(Id id);
-        Instance(const This& rhs);
+        Instance(const me& rhs);
         virtual ~Instance();
 
         void* operator new(size_t sz);

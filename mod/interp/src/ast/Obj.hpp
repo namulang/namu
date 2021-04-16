@@ -10,9 +10,9 @@ namespace wrd {
 
     public:
         explicit Obj(std::string name = "", NContainer* newCon = new NChain())
-            : Super(name), _con(newCon) {}
+            : super(name), _con(newCon) {}
 
-        using Super::subs;
+        using super::subs;
         NContainer& subs() override {
             return *_con;
         }

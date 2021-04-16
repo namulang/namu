@@ -2,32 +2,32 @@
 
 namespace wrd
 {
-#define THIS World
-	THIS::THIS() {}
-	Instancer& THIS::getInstancer() { return _instancer; }
-	const Instancer& THIS::getInstancer() const { return _instancer; }
-	Classer& THIS::getClasser() { return _classer; }
-	const Classer& THIS::getClasser() const { return _classer; }
+#define ME World
+	ME::ME() {}
+	Instancer& ME::getInstancer() { return _instancer; }
+	const Instancer& ME::getInstancer() const { return _instancer; }
+	Classer& ME::getClasser() { return _classer; }
+	const Classer& ME::getClasser() const { return _classer; }
 
-	Res& THIS::init()
+	Res& ME::init()
 	{
 		_instancer.init();
 		_classer.init();
 		return wasgood;
 	}
 
-	THIS& THIS::get()
+	ME& ME::get()
 	{
-		static This* inner = NULL;
+		static me* inner = NULL;
 		if( ! inner)
 		{
-			inner = ::new This();
+			inner = ::new me();
 			inner->init();
 		}
 
 		return *inner;
 	}
-#undef THIS
+#undef ME
 }
 
 namespace wrd 

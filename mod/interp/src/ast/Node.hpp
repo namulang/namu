@@ -85,7 +85,7 @@ namespace wrd {
         WRD_CLASS(NObj, Obj)
 
     public:
-        NObj(): Super("", new NArr()) {}
+        NObj(): super("", new NArr()) {}
     };*/
 
     /*

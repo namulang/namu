@@ -2,7 +2,7 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(fileLogStream)
+    WRD_DEF_ME(fileLogStream)
     typedef std::string string;
 
     me::fileLogStream() {}

@@ -11,11 +11,11 @@ namespace wrd
     {	WRD_CLASS_DECL(Composit, Node)
     public:
 		Composit();
-		Composit(const This& rhs);
+		Composit(const me& rhs);
 		virtual ~Composit();
 
 	public:
-		This& operator=(const This& rhs);
+		me& operator=(const me& rhs);
 
 	public:
 		//    Node:
@@ -28,7 +28,7 @@ namespace wrd
     private: //    Node:
         virtual Res& _initNodes();
 		Res& _release();
-		This& _assign(const This& rhs);
+		me& _assign(const me& rhs);
 
     private:
         //    _nodes can't be declared with protected accessor:

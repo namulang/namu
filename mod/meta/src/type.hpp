@@ -1,4 +1,4 @@
 #pragma once
 
-#include "type/TTypeBase.inl"
-#include "type/TType.hpp"
+#include "type/ttypeBase.inl"
+#include "type/ttype.hpp"

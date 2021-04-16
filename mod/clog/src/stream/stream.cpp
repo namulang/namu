@@ -2,7 +2,7 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(stream)
+    WRD_DEF_ME(stream)
 
     me::stream(): _isEnable(true) {}
     me::~stream() {}

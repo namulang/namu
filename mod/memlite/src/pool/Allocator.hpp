@@ -5,8 +5,8 @@
 namespace wrd {
 
     class Allocator : public MemoryHaver {
-        WRD_DECL_THIS(Allocator)
-        WRD_INIT_META(This)
+        WRD_DECL_ME(Allocator)
+        WRD_INIT_META(me)
 
     public:
         //  Allocator:

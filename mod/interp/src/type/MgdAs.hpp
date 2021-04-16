@@ -5,14 +5,14 @@
 namespace wrd {
 
     class MgdAs: public As {
-        WRD_DECL_THIS(MgdAs, As)
+        WRD_DECL_ME(MgdAs, As)
 
     public:
         typedef WType SuperType;
         const WType& getType() const override {
             return *_type;
         }
-        WRD_INIT_META(This)
+        WRD_INIT_META(me)
 
         explicit MgdAs(const WType& type): _type(&type) {}
 

@@ -10,8 +10,8 @@ namespace wrd
 		State();
 
 	public:
-		wbool operator==(const This& rhs);
-		wbool operator!=(const This& rhs);
+		wbool operator==(const me& rhs);
+		wbool operator!=(const me& rhs);
 
     public:
         virtual const wbool& isInit() const;

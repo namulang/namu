@@ -4,20 +4,20 @@
 
 namespace wrd {
 
-    WRD_DEF_THIS(StrTactic)
+    WRD_DEF_ME(StrTactic)
 
-    wbool This::unbind(Bind& me) {
+    wbool me::unbind(Bind& me) {
         if(!me.isBind()) return true;
 
         BindTag& tag = me._getBindTag();
-        WRD_NUL(tag, Super::unbind(me));
+        WRD_NUL(tag, super::unbind(me));
 
         tag._onStrong(-1);
-        return Super::unbind(me);
+        return super::unbind(me);
     }
 
-    wbool This::bind(Bind& me, const Instance& it) {
-        wbool res = Super::bind(me, it);
+    wbool me::bind(Bind& me, const Instance& it) {
+        wbool res = super::bind(me, it);
         if(!res) {
             WRD_E("super::bind() was failed.");
             return res;
@@ -35,5 +35,5 @@ namespace wrd {
         return me._getBindTag()._onStrong(1);
     }
 
-    This This::singletone;
+    me me::singletone;
 }
