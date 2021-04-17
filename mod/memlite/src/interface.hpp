@@ -1,4 +1,4 @@
 #pragma once
 
-#include "interface/Instance.hpp"
-#include "interface/Instancer.hpp"
+#include "interface/instance.hpp"
+#include "interface/instancer.hpp"

@@ -1,5 +1,5 @@
 #pragma once
 
-#include "watcher/Watcher.hpp"
-#include "watcher/WatchCell.hpp"
-#include "watcher/BindTag.hpp"
+#include "watcher/watcher.hpp"
+#include "watcher/watchCell.hpp"
+#include "watcher/bindTag.hpp"

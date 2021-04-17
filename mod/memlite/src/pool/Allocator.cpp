@@ -1,9 +1,0 @@
-#include "Allocator.hpp"
-
-namespace wrd {
-
-    WRD_DEF_ME(Allocator, MemoryHaver)
-
-    me::Allocator(wcnt blksize) : _blksize(blksize) {}
-    wcnt me::getBlkSize() const { return _blksize; }
-}
