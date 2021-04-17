@@ -12,7 +12,7 @@ namespace wrd {
     public:
         virtual ~memoryHaver() {}
 
-        virtual wbool has(const Instance& it) const = 0;
+        virtual wbool has(const instance& it) const = 0;
         virtual wcnt getLen() const = 0;
         virtual wcnt getSize() const = 0;
         virtual wbool rel() = 0;

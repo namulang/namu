@@ -7,11 +7,11 @@ namespace wrd {
     me::watcher() : chunk(sizeof(watchCell), false) {}
 
     watchCell& me::operator[](widx n) { return get(n); }
-    watchCell& me::operator[](Id newId) { return get(newId); }
+    watchCell& me::operator[](id newId) { return get(newId); }
 
     watchCell& me::get(widx n) { return *(watchCell*)_get(n); }
 
-    watchCell& me::get(Id newId) {
+    watchCell& me::get(id newId) {
         watchCell& got = get(newId.tagN);
         if(nul(got)) return nulOf<watchCell>();
 
@@ -37,7 +37,7 @@ namespace wrd {
         if(!res)
             return res;
 
-        ::new (&res->blk) BindTag(_genId(res));
+        ::new (&res->blk) bindTag(_genId(res));
         return res;
     }
 
@@ -57,7 +57,7 @@ namespace wrd {
     }
 
     widx me::_getIdx(void* it) const {
-        if(!has(*(Instance*)it)) // "has" func will treat it as void*, too.
+        if(!has(*(instance*)it)) // "has" func will treat it as void*, too.
             return -1;
 
         widx ret = ((wuchar*)it - _getHeap()) / getBlkSize();

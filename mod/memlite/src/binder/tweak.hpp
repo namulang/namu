@@ -1,12 +1,12 @@
 #pragma once
 
-#include "bind.hpp"
+#include "binder.hpp"
 
 namespace wrd {
 
     template <typename T>
-    class tweak : public bind {
-        WRD_DECL_ME(tweak, bind)
+    class tweak : public binder {
+        WRD_DECL_ME(tweak, binder)
         WRD_INIT_META(me)
         friend class bindTag;
 
@@ -16,13 +16,13 @@ namespace wrd {
         explicit tweak(const T& it);
         explicit tweak(const T* it);
         tweak(const me& rhs);
-        explicit tweak(const bind& rhs);
+        explicit tweak(const binder& rhs);
 
         T* operator->() override;
         T& operator*() override;
         const T* operator->() const WRD_UNCONST_FUNC(operator->())
         const T& operator*() const WRD_UNCONST_FUNC(operator*())
-        me& operator=(const bind& rhs);
+        me& operator=(const binder& rhs);
         //  tbindable:
         using tbindable::get;
         T& get() override;

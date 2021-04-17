@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../interface/instance.hpp"
-#include "../bind/tbindable.hpp"
+#include "../binder/tbindable.hpp"
 
 namespace wrd {
 

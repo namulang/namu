@@ -18,12 +18,12 @@ namespace wrd {
         watchCell& operator[](widx n);
         watchCell& operator[](id newId);
         const watchCell& operator[](widx n) const WRD_UNCONST_FUNC(operator[](n))
-        const watchCell& operator[](id newId) const WRD_UNCONST_FUNC(operator[](id))
+        const watchCell& operator[](id newId) const WRD_UNCONST_FUNC(operator[](newId))
 
         watchCell& get(widx n);
         watchCell& get(id newId);
         const watchCell& get(widx n) const WRD_UNCONST_FUNC(get(n));
-        const watchCell& get(id newId) const WRD_UNCONST_FUNC(get(id));
+        const watchCell& get(id newId) const WRD_UNCONST_FUNC(get(newId));
         //  Allocator:
         void* new1() override;
 

@@ -37,7 +37,7 @@ namespace wrd {
 
         //  instance:
         instance();
-        explicit instance(id id);
+        explicit instance(id newId);
         instance(const me& rhs);
         virtual ~instance();
 

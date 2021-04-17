@@ -1,21 +1,21 @@
 #include "weakTactic.hpp"
-#include "bind.hpp"
+#include "binder.hpp"
 
 namespace wrd {
 
     WRD_DEF_ME(weakTactic)
 
-    wbool me::unbind(bind& me) {
+    wbool me::unbind(binder& me) {
         me._itsId.rel();
         return true;
     }
 
-    wbool me::bind(bind& me, const instance& it) {
+    wbool me::bind(binder& me, const instance& it) {
         unbind(me);
         //  regardless of result from _onStrong binder can bind:
         //      there are two reasons:
         //          because Block has equal lifecycle to what it bind, if there is
-        //          a request by user to refer a bind for binding freed instance,
+        //          a request by user to refer a binder for binding freed instance,
         //          user has responsibilty to treat wrongly.
         //          so, we should not consider such cases.
         //
