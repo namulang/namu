@@ -29,8 +29,8 @@ namespace wrd {
     ///             so, strict type-checking of existing smart pointers doesn't matched to what Worldfrx willing to do.
     ///
     ///     Design:
-    ///         bind components are mostly constructed to 3 classes and they form 2 layers vertically.
-    ///         class bind:
+    ///         binder components are mostly constructed to 3 classes and they form 2 layers vertically.
+    ///         class binder:
     ///             represents binder on loose-checking layer. user can try any type to bind or get from the
     ///             binded. compiler won't complain about.
     ///             but because of loose-checking, if it's not proper request, binder will warn you at runtime as result.
@@ -43,21 +43,21 @@ namespace wrd {
     ///             because it was declared to class template, user need to bind or get binded using type T.
     ///             of course these are based on class bind, user can use loose-check API case by case.
     ///
-    class bind : public typeProvidable, public tbindable<instance> {
-        WRD_DECL_ME(bind, instance)
+    class binder : public typeProvidable, public tbindable<instance> {
+        WRD_DECL_ME(binder, instance)
         WRD_INIT_META(me)
         friend class weakTactic;
         friend class strTactic;
         friend class bindTag; // for _get()
 
     public:
-        bind(const type& type, bindTacticable& tactic);
-        bind(const me& rhs);
-        virtual ~bind();
+        binder(const type& type, bindTacticable& tactic);
+        binder(const me& rhs);
+        virtual ~binder();
 
         me& operator=(const me& rhs);
 
-        //  bind:
+        //  binder:
         id getItsId() const;
         //  tbindable:
         wbool isBind() const override;
@@ -71,7 +71,7 @@ namespace wrd {
         const type& getType() const override;
 
     protected:
-        wbool _assign(const bind& rhs);
+        wbool _assign(const binder& rhs);
         wbool _onSame(const typeProvidable& rhs) const override;
 
     private:

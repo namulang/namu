@@ -7,7 +7,7 @@ namespace wrd {
     me::vault instance::_vault;
 
     me::instance() { _id.chkN = _vault.get(this); }
-    me::instance(Id id): _id(id) {} // no binding required.
+    me::instance(id newId): _id(newId) {} // no binding required.
     me::instance(const me& rhs) {
         _id.chkN = _vault.get(this); // _id is only belonged to the instance. not able to be copied.
     }
@@ -16,7 +16,7 @@ namespace wrd {
     void* me::operator new(size_t sz) { return _getMgr()._new1(sz); }
     void me::operator delete(void* pt, size_t sz) { _getMgr()._del(pt, sz); }
 
-    Id me::getId() const {
+    id me::getId() const {
         if(_id.tagN == WRD_INDEX_ERROR)
             _getMgr().bind((me&)*this);
         return _id;
@@ -31,7 +31,7 @@ namespace wrd {
     // rel() have not to reset Id. it's regarding to instance info.
     // as long as instance keep alive, that info need to be stuck to instance.
 
-    wbool me::_setId(Id new1) {
+    wbool me::_setId(id new1) {
         _id = new1;
         return true;
     }

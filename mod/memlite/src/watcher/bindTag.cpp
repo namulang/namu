@@ -1,6 +1,6 @@
 #include "bindTag.hpp"
 #include "../interface/instancer.hpp"
-#include "../bind/tbindable.inl"
+#include "../binder/tbindable.inl"
 
 namespace wrd {
 

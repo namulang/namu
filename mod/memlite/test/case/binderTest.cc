@@ -133,7 +133,7 @@ TEST(bindTest, bindByValueTest) {
     ASSERT_FALSE(nul(tag));
     ASSERT_EQ(tag.getStrongCnt(), 1);
 
-    bind bindA(strA);
+    binder bindA(strA);
     ASSERT_EQ(&strA.get(), &bindA.get());
     ASSERT_EQ(tag.getStrongCnt(), 2);
 
@@ -141,7 +141,7 @@ TEST(bindTest, bindByValueTest) {
     ASSERT_EQ(tag.getStrongCnt(), 1);
 
     {
-        bind bindA2(bindA);
+        binder bindA2(bindA);
         ASSERT_EQ(tag.getStrongCnt(), 2);
     }
 

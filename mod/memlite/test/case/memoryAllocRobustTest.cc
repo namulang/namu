@@ -17,7 +17,7 @@ namespace {
         float grade;
     };
 
-    struct pinstance { Id _id; };
+    struct pinstance { id _id; };
     struct pnode : public pinstance {};
     struct pobject : public pnode {};
 

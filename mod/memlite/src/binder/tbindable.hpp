@@ -31,7 +31,7 @@ namespace wrd {
         wbool bind(const instance* it) { return bind(*it); }
         virtual wbool unbind() = 0;
         wbool canBind(const T& it) const;
-        virtual wbool canBind(const Type& it) const = 0;
+        virtual wbool canBind(const type& it) const = 0;
         virtual wbool isBind() const = 0;
         virtual T& get() = 0;
         const T& get() const WRD_UNCONST_FUNC(get())

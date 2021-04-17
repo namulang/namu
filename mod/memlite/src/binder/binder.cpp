@@ -1,15 +1,15 @@
-#include "bind.hpp"
+#include "binder.hpp"
 #include "../watcher/bindTag.hpp"
 #include "bindTacticable.hpp"
 #include "tbindable.inl"
 
 namespace wrd {
 
-    WRD_DEF_ME(bind)
+    WRD_DEF_ME(binder)
 
-    bind::bind(const type& type, bindTacticable& tactic): _type(&type.getStatic()), _tactic(&tactic) {}
-    bind::bind(const me& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
-    bind::~bind() { me::unbind(); }
+    binder::binder(const type& type, bindTacticable& tactic): _type(&type.getStatic()), _tactic(&tactic) {}
+    binder::binder(const me& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
+    binder::~binder() { me::unbind(); }
 
     me& me::operator=(const me& rhs) {
         if(this == &rhs) return *this;
@@ -29,7 +29,7 @@ namespace wrd {
         return _tactic->unbind(*this);
     }
 
-    Id me::getItsId() const { return _itsId; }
+    id me::getItsId() const { return _itsId; }
     wbool me::canBind(const type& type) const { return getType().isSuper(type); }
     const type& me::getType() const { return *_type; }
 
@@ -43,7 +43,7 @@ namespace wrd {
         return WRD_GETS(_getBindTag(),get());
     }
 
-    wbool me::_assign(const bind& rhs) {
+    wbool me::_assign(const binder& rhs) {
         unbind();
         _type = rhs._type;
         if (nul(_tactic))

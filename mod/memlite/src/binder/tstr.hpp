@@ -15,7 +15,7 @@ namespace wrd {
         explicit tstr(const T& it);
         explicit tstr(const T* it);
         tstr(const me& rhs);
-        explicit tstr(const bind& rhs);
+        explicit tstr(const binder& rhs);
 
         using super::operator=;
     };
