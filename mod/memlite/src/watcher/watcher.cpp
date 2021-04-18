@@ -17,12 +17,12 @@ namespace wrd {
 
         id gotId = got.blk.getId();
         if(gotId.tagN != newId.tagN) {
-            WRD_W("BindTag was corrupted! watchCell.id(%d.%d.%d) != id(%d.%d.%d)",
+            WRD_W("bindTag was corrupted! watchCell.id(%d.%d.%d) != id(%d.%d.%d)",
                     gotId.tagN, gotId.chkN, gotId.serial, newId.tagN, newId.chkN, newId.serial);
             return nulOf<watchCell>();
         }
         if(gotId.chkN != newId.chkN || gotId.serial != newId.serial)
-            // BindTag has been changed its instance to bind.
+            // bindTag has been changed its instance to bind.
             return nulOf<watchCell>();
 
         return got;

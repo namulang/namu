@@ -1,5 +1,5 @@
 #pragma once
 
-#include "primitive/WFlt.hpp"
-#include "primitive/WInt.hpp"
-#include "primitive/WStr.hpp"
+#include "primitive/fltObj.hpp"
+#include "primitive/intObj.hpp"
+#include "primitive/strObj.hpp"

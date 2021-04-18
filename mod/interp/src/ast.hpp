@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ast/Node.inl"
-#include "ast/Obj.hpp"
-#include "ast/Func.hpp"
-#include "ast/TRef.hpp"
+#include "ast/node.inl"
+#include "ast/obj.hpp"
+#include "ast/func.hpp"
+#include "ast/tref.hpp"
