@@ -1,0 +1,261 @@
+#include "../common/dep.hpp"
+#include <chrono>
+
+using namespace wrd;
+using namespace std;
+
+class myNode : public node {
+    WRD_CLASS(myNode, node)
+
+public:
+    myNode(int num): number(num) {}
+
+    ncontainer& subs() override { return nulOf<ncontainer>(); }
+    wbool canRun(const wtypes& types) const override { return false; }
+    str run(ncontainer& args) override { return str(); }
+
+    int number;
+};
+
+TEST(arrFixture, instantiateTest) {
+    arr arr;
+}
+
+TEST(arrFixture, shouldNotCanAddLocalObject) {
+    tarr<myNode> arr;
+    ASSERT_EQ(arr.getLen(), 0);
+
+    {
+        myNode localObj(5);
+        ASSERT_TRUE(arr.add(localObj));
+        ASSERT_FALSE(nul(arr[0]));
+        ASSERT_EQ(arr.getLen(), 1);
+    }
+
+    ASSERT_EQ(arr.getLen(), 1);
+    auto& elem = arr[0];
+    ASSERT_TRUE(nul(elem));
+}
+
+TEST(arrFixture, simpleAddDelTest) {
+    tarr<myNode> arr;
+    ASSERT_EQ(arr.getLen(), 0);
+
+    const int EXPECT_NUMBER = 5;
+    arr.add(*(new myNode(EXPECT_NUMBER)));
+    ASSERT_EQ(arr.getLen(), 1);
+
+    auto elem1 = arr[0].cast<myNode>();
+    ASSERT_FALSE(nul(elem1));
+    ASSERT_EQ(elem1.number, EXPECT_NUMBER);
+}
+
+TEST(arrFixture, addDel10Elems) {
+    tarr<myNode> arr;
+    const int cnt = 10;
+    for(int n=0; n < cnt; n++) {
+        ASSERT_TRUE(arr.add(*(new myNode(n))));
+    }
+
+    ASSERT_EQ(arr.getLen(), cnt);
+}
+
+void benchMarkArr(int cnt) {
+    logger::get().setEnable(false);
+    vector<str> vec;
+
+    auto start = chrono::steady_clock::now();
+    for(int n=0; n < cnt; n++) {
+
+        vec.push_back(str(new myNode(n)));
+    }
+    int sz = vec.size();
+    auto startDeleting = chrono::steady_clock::now();
+    vec.clear();
+    auto end = chrono::steady_clock::now();
+
+    auto addingElapsed = startDeleting - start;
+    auto removingElapsed = end - startDeleting;
+    auto totalElapsed = end - start;
+
+    logger::get().setEnable(true);
+    WRD_I("[benchMarkArr]: vector took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
+    logger::get().setEnable(false);
+
+
+    arr arr;
+    start = chrono::steady_clock::now();
+    for(int n=0; n < cnt; n++) {
+        arr.add(*(new myNode(n)));
+    }
+    sz = arr.getLen();
+    startDeleting = chrono::steady_clock::now();
+    arr.empty();
+    end = chrono::steady_clock::now();
+
+    addingElapsed = startDeleting - start;
+    removingElapsed = end - startDeleting;
+    totalElapsed = end - start;
+
+    logger::get().setEnable(true);
+    WRD_I("[benchMarkArr]: arr took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
+}
+
+TEST(arrFixture, benchMarkArrTest) {
+    benchMarkArr(100);
+    benchMarkArr(1000);
+    benchMarkArr(10000);
+}
+
+class myMyNode : public myNode {
+    WRD_CLASS(myMyNode, myNode)
+
+public:
+    myMyNode(int num): super(num) {}
+};
+
+TEST(arrFixture, testIter) {
+    arr arr;
+    arr.add(new myNode(0));
+    arr.add(new myNode(1));
+    arr.add(new myNode(2));
+
+    wrd::iterator e = arr.head();
+    wrd::iterator head = e++;
+    wrd::iterator index2 = ++e;
+
+    EXPECT_TRUE(arr.head()+2 == index2);
+    EXPECT_TRUE(arr.head() == head);
+
+    ASSERT_EQ(e.next(1), 0);
+}
+
+TEST(arrFixture, testContainableAPI) {
+    //  initial state:
+    tarr<myNode>* arr = new tarr<myNode>();
+    containable* con = arr;
+    ASSERT_EQ(con->getLen(), 0);
+
+    wrd::iterator head = con->head();
+    ASSERT_TRUE(head.isEnd());
+    wrd::iterator tail = con->tail();
+    ASSERT_TRUE(tail.isEnd());
+
+    ASSERT_TRUE(con->add(con->head(), new myNode(0)));
+    ASSERT_TRUE(con->add(con->tail(), new myMyNode(1)));
+    ASSERT_EQ(con->getLen(), 2);
+
+    // add:
+    int expectVal = 0;
+    for(wrd::iterator e=con->head(); e != con->tail() ;e++) {
+        myNode& elem = e->cast<myNode>();
+        ASSERT_FALSE(nul(elem));
+        ASSERT_EQ(elem.number, expectVal++);
+    }
+
+    // get & each:
+    expectVal = 0;
+    for(int n=0; n < arr->getLen() ;n++) {
+        myNode& elem = arr->get(n).cast<myNode>();
+        ASSERT_FALSE(nul(elem));
+        ASSERT_EQ(elem.number, expectVal++);
+    }
+
+    narr tray = arr->get<myNode>([](const myNode& elem) {
+        return true;
+    });
+    ASSERT_EQ(tray.getLen(), 2);
+
+    int cnt = 0;
+    tray = arr->get<myNode>([&cnt](const myNode& elem) {
+        if(cnt++ >= 1) return false;
+        return true;
+    });
+    ASSERT_EQ(tray.getLen(), 1);
+
+    tray = arr->get<myMyNode>([](const myMyNode& elem) {
+        if(elem.number == 1) return true;
+        return false;
+    });
+    ASSERT_EQ(tray.getLen(), 1);
+
+    //  del:
+    ASSERT_TRUE(con->del());
+    ASSERT_EQ(con->getLen(), 1);
+    ASSERT_EQ(arr->get(0).number, 0);
+
+    //  add with element:
+    tarr<myNode> arr2;
+    ASSERT_EQ(arr2.add(*con), 1);
+    ASSERT_TRUE(arr2.add(new myNode(1)));
+    ASSERT_TRUE(arr2.add(new myMyNode(2)));
+    ASSERT_TRUE(arr2.add(new myNode(3)));
+    ASSERT_EQ(arr2[2].number, 2);
+    ASSERT_EQ(arr2[3].number, 3);
+    ASSERT_EQ(arr2.getLen(), 4);
+
+    titerator<myNode> e = arr2.headT();
+    e = e + 2;
+    ASSERT_EQ(e->number, 2);
+    ASSERT_TRUE(arr2.add(e, new myNode(5)));
+    ASSERT_TRUE(arr2.add(2, new myNode(6)));
+
+    ASSERT_EQ(arr2[0].cast<myNode>().number, 0);
+    ASSERT_EQ(arr2[1].cast<myNode>().number, 1);
+    ASSERT_EQ(arr2[2].cast<myNode>().number, 6);
+    ASSERT_EQ(arr2[3].cast<myNode>().number, 5);
+    ASSERT_EQ(arr2[4].cast<myNode>().number, 2);
+    ASSERT_EQ(arr2[5].cast<myNode>().number, 3);
+
+    ASSERT_EQ(con->getLen(), 1);
+    ASSERT_EQ(con->add(arr2.iter(1), arr2.iter(3)), 2);
+    ASSERT_EQ(con->getLen(), 3);
+    e=arr->headT();
+    myNode* elem = &e->cast<myNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 0);
+
+    elem = &(++e)->cast<myNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 1);
+
+    elem = &(++e)->cast<myNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 6);
+
+    ASSERT_FALSE(++e);
+
+    ASSERT_TRUE(con->getLen() > 0);
+    con->empty();
+    ASSERT_TRUE(con->getLen() == 0);
+
+    ASSERT_EQ(con->add(arr2.head() + 2, arr2.tail()), 4);
+    e = arr->headT();
+    elem = &e->cast<myNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 6);
+
+    elem = &(++e)->cast<myNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 5);
+
+    elem = &(++e)->cast<myNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 2);
+
+    elem = &(++e)->cast<myNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 3);
+
+    ASSERT_EQ(con->del(con->head() + 1, con->head() + 3), 2);
+    e = arr->headT();
+    elem = &e->cast<myNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 6);
+
+    elem = &(++e)->cast<myNode>();
+    ASSERT_FALSE(nul(elem));
+    ASSERT_EQ(elem->number, 3);
+
+    delete con;
+}

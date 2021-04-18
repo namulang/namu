@@ -6,9 +6,9 @@ namespace wrd {
 
 #define WRD_INTERFACE_FOOTER(ME, SUPERTYPE) \
     public: \
-        typedef SUPERTYPE SuperType; \
-        const SuperType& getType() const override { \
-            return TType<me>::get(); \
+        typedef SUPERTYPE superType; \
+        const superType& getType() const override { \
+            return ttype<me>::get(); \
         } \
         WRD_INIT_META(ME) \
     private:
@@ -22,9 +22,9 @@ namespace wrd {
 
 #define WRD_INTERFACE_1(ME) \
         WRD_DECL_ME_1(ME) \
-        WRD_INTERFACE_FOOTER(ME, WType)
+        WRD_INTERFACE_FOOTER(ME, wtype)
 #define WRD_INTERFACE_2(ME, SUPER) \
-        WRD_INTERFACE_3(ME, SUPER, WType)
+        WRD_INTERFACE_3(ME, SUPER, wtype)
 #define WRD_INTERFACE_3(ME, SUPER, SUPERTYPE) \
         WRD_DECL_ME_2(ME, SUPER) \
         WRD_INTERFACE_FOOTER(ME, SUPERTYPE)
@@ -41,8 +41,8 @@ namespace wrd {
         WRD_CLONE(ME)
 #define WRD_CLASS(...) WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
 
-    class Node;
-    class WType;
-    typedef TStr<Node> Str;
-    typedef TWeak<Node> Weak;
+    class node;
+    class wtype;
+    typedef tstr<node> str;
+    typedef tweak<node> weak;
 }
