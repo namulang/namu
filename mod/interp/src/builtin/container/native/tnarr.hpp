@@ -1,7 +1,7 @@
 #pragma once
 
 #include "narr.hpp"
-#include "../iterator/titerator.hpp"
+#include "iterator/titerator.hpp"
 
 namespace wrd {
 

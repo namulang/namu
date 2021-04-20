@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../ast/node.hpp"
+#include "../../../ast/node.hpp"
 #include "ncontainer.hpp"
 
 namespace wrd {

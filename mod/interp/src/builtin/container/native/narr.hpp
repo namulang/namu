@@ -1,7 +1,7 @@
 #pragma once
 
 #include "narrContainer.hpp"
-#include "../../ast/node.hpp"
+#include "../../../ast/node.hpp"
 
 namespace wrd {
 
