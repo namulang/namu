@@ -2,8 +2,8 @@
 
 #include "clonable.hpp"
 #include "../type/wtype.hpp"
-#include "../container/native/nchain.hpp"
-#include "../container/native/narr.hpp"
+#include "../builtin/container/native/nchain.hpp"
+#include "../builtin/container/native/narr.hpp"
 
 namespace wrd {
 
