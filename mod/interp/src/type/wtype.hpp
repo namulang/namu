@@ -38,6 +38,10 @@ namespace wrd {
         tref<T> as(const node& it) const;
         ref as(const node& it, const wtype& to) const;
 
+        virtual wbool isImmutable() const {
+            return false;
+        }
+
     protected:
         // wtype:
         virtual const casts& _getImplis() const {

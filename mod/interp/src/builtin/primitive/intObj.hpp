@@ -10,6 +10,11 @@ namespace wrd {
             typedef ttypeBase<intObj, wtype> _S;
             WRD_DECL_ME(intType, _S)
 
+        public:
+            wbool isImmutable() const override {
+                return true;
+            }
+
         protected:
             const casts& _getImplis() const override {
                 static casts* inner = nullptr;
@@ -37,6 +42,6 @@ namespace wrd {
 
     public:
         intObj() {}
-        intObj(const wint& val): super(val) {}
+        intObj(wint val): super(val) {}
     };
 }

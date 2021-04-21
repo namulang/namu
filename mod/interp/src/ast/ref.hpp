@@ -11,6 +11,9 @@ namespace wrd {
         ref() {}
         explicit ref(const node& new1): _str(new1) {}
         explicit ref(const node* new1): _str(new1) {}
+        ref(const me& rhs): super(rhs) {
+            bind(*rhs);
+        }
 
         // node:
         ncontainer& subs() override {
@@ -32,7 +35,9 @@ namespace wrd {
         // tbindable:
         using tbindable::bind;
         wbool bind(const node& it) override {
-            return _str.bind(it);
+            if(!it.getType().isImmutable())
+                return _str.bind(it);
+            return _str.bind((node*) it.clone());
         }
 
         using tbindable::unbind;

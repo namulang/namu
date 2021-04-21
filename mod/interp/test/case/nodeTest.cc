@@ -109,3 +109,41 @@ TEST(NodeTest, testManualNativefuncCall) {
     subs[0].run(args);
     ASSERT_TRUE(func.isRun());
 }
+
+TEST(NodeTest, testImmutableNegative) {
+    tref<fltObj> r1(new fltObj(1.0f));
+    wrd::ref r2 = r1;
+    ASSERT_TRUE(r1);
+    ASSERT_TRUE(r2);
+    ASSERT_EQ(*r1, *r2);
+
+    r1->get() = 0.5f;
+    ASSERT_NE(*r1, *r2);
+}
+
+namespace {
+    struct myObj : public obj {
+        WRD_CLASS(myObj, obj)
+
+    public:
+        myObj(int newVal): val(newVal) {}
+
+        int val;
+
+        wbool _onSame(const typeProvidable& rhs) const override {
+            const myObj& cast = (const myObj&) rhs;
+            return val == cast.val;
+        }
+    };
+}
+
+TEST(NodeTest, testImmutablePositive) {
+    wrd::ref r1(new myObj(1));
+    wrd::ref r2 = r1;
+    ASSERT_TRUE(r1);
+    ASSERT_TRUE(r2);
+    ASSERT_EQ(*r1, *r2);
+
+    r1->cast<myObj>().val = 2;
+    ASSERT_EQ(*r1, *r2);
+}

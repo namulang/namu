@@ -15,6 +15,12 @@ namespace wrd {
         T& get() { return _val; }
         const T& get() const { return _val; }
 
+    protected:
+        wbool _onSame(const typeProvidable& rhs) const override {
+            const me& cast = (const me&) rhs;
+            return _val == cast._val;
+        }
+
     private:
         T _val;
     };

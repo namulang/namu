@@ -10,6 +10,11 @@ namespace wrd {
             typedef ttypeBase<fltObj, wtype> _S;
             WRD_DECL_ME(fltType, _S)
 
+        public:
+            wbool isImmutable() const override {
+                return true;
+            }
+
         protected:
             const casts& _getImplis() const override {
                 static casts* inner = nullptr;
@@ -37,7 +42,7 @@ namespace wrd {
 
     public:
         fltObj() {}
-        fltObj(const wflt& val): super(val) {}
+        fltObj(wflt val): super(val) {}
     };
 
 
