@@ -10,6 +10,11 @@ namespace wrd {
             typedef ttypeBase<strObj, wtype> _S;
             WRD_DECL_ME(strType, _S)
 
+        public:
+            wbool isImmutable() const override {
+                return true;
+            }
+
         protected:
             const casts& _getImplis() const override {
                 static casts* inner = nullptr;
