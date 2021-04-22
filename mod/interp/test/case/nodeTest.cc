@@ -50,7 +50,7 @@ namespace {
     };
 }
 
-TEST(NodeTest, testManuallyMakeNodeStructure) {
+TEST(nodeTest, testManuallyMakeNodeStructure) {
     // prepare:
     tstr<nchain> frameEmulator;
     obj obj;
@@ -91,7 +91,7 @@ TEST(NodeTest, testManuallyMakeNodeStructure) {
     WRD_E("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 }
 
-TEST(NodeTest, testManualNativefuncCall) {
+TEST(nodeTest, testManualNativefuncCall) {
     // prepare:
     myFunc func;
 
@@ -110,7 +110,7 @@ TEST(NodeTest, testManualNativefuncCall) {
     ASSERT_TRUE(func.isRun());
 }
 
-TEST(NodeTest, testImmutableNegative) {
+TEST(nodeTest, testImmutablePositive) {
     tref<fltObj> r1(new fltObj(1.0f));
     wrd::ref r2 = r1;
     ASSERT_TRUE(r1);
@@ -137,7 +137,7 @@ namespace {
     };
 }
 
-TEST(NodeTest, testImmutablePositive) {
+TEST(nodeTest, testImmutablePositive) {
     wrd::ref r1(new myObj(1));
     wrd::ref r2 = r1;
     ASSERT_TRUE(r1);
