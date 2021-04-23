@@ -17,11 +17,11 @@ public:
     int number;
 };
 
-TEST(arrFixture, instantiateTest) {
+TEST(arrTest, instantiateTest) {
     arr arr;
 }
 
-TEST(arrFixture, shouldNotCanAddLocalObject) {
+TEST(arrTest, shouldNotCanAddLocalObject) {
     tarr<myNode> arr;
     ASSERT_EQ(arr.getLen(), 0);
 
@@ -37,7 +37,7 @@ TEST(arrFixture, shouldNotCanAddLocalObject) {
     ASSERT_TRUE(nul(elem));
 }
 
-TEST(arrFixture, simpleAddDelTest) {
+TEST(arrTest, simpleAddDelTest) {
     tarr<myNode> arr;
     ASSERT_EQ(arr.getLen(), 0);
 
@@ -50,7 +50,7 @@ TEST(arrFixture, simpleAddDelTest) {
     ASSERT_EQ(elem1.number, EXPECT_NUMBER);
 }
 
-TEST(arrFixture, addDel10Elems) {
+TEST(arrTest, addDel10Elems) {
     tarr<myNode> arr;
     const int cnt = 10;
     for(int n=0; n < cnt; n++) {
@@ -101,7 +101,7 @@ void benchMarkArr(int cnt) {
     WRD_I("[benchMarkArr]: arr took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
 }
 
-TEST(arrFixture, benchMarkArrTest) {
+TEST(arrTest, benchMarkArrTest) {
     benchMarkArr(100);
     benchMarkArr(1000);
     benchMarkArr(10000);
@@ -114,7 +114,7 @@ public:
     myMyNode(int num): super(num) {}
 };
 
-TEST(arrFixture, testIter) {
+TEST(arrTest, testIter) {
     arr arr;
     arr.add(new myNode(0));
     arr.add(new myNode(1));
@@ -130,7 +130,7 @@ TEST(arrFixture, testIter) {
     ASSERT_EQ(e.next(1), 0);
 }
 
-TEST(arrFixture, testContainableAPI) {
+TEST(arrTest, testContainableAPI) {
     //  initial state:
     tarr<myNode>* arr = new tarr<myNode>();
     containable* con = arr;

@@ -6,7 +6,7 @@ using namespace std;
 namespace {
 }
 
-TEST(trefFixture, testCast) {
+TEST(trefTest, testCast) {
     tref<obj> obj1(new obj());
 
     obj& cast = *obj1;

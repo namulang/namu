@@ -17,7 +17,7 @@ public:
     int number;
 };
 
-TEST(nchainFixture, instantiateTest) {
+TEST(nchainTest, instantiateTest) {
     nchain chn;
     ASSERT_FALSE(nul(chn.getContainer()));
 }
@@ -52,13 +52,13 @@ void simpleAddDelTest(int cnt) {
     ASSERT_TRUE(isOk);
 }
 
-TEST(nchainFixture, simpleAddDelTest10) {
+TEST(nchainTest, simpleAddDelTest10) {
     simpleAddDelTest(10);
 }
-TEST(nchainFixture, simpleAddDelTest1000) {
+TEST(nchainTest, simpleAddDelTest1000) {
     simpleAddDelTest(1000);
 }
-TEST(nchainFixture, simpleAddDelTest10000) {
+TEST(nchainTest, simpleAddDelTest10000) {
     simpleAddDelTest(10000);
 }
 
@@ -68,7 +68,7 @@ class myMyNode : public myNode {
 public:
     myMyNode(int num): super(num) {}
 };
-TEST(nchainFixture, testcontainableAPI) {
+TEST(nchainTest, testcontainableAPI) {
     //  initial state:
     tstr<nchain> arr(new nchain());
     containable* con = &arr.get();
@@ -204,7 +204,7 @@ void examineChain2Element(nchain& chn, int val1, int val2) {
     ASSERT_EQ(elem->number, val2);
 }
 
-TEST(nchainFixture, testLinkedChainWithOnly1Element) {
+TEST(nchainTest, testLinkedChainWithOnly1Element) {
     narr arr1;
     arr1.add(new myNode(0));
     nchain chn1(arr1);
@@ -223,7 +223,7 @@ TEST(nchainFixture, testLinkedChainWithOnly1Element) {
     ASSERT_EQ(n, 2);
 }
 
-TEST(nchainFixture, testLinkedChainWithNContainerAPI) {
+TEST(nchainTest, testLinkedChainWithNContainerAPI) {
     narr arr1;
     nchain chn1(arr1);
     narr arr2;
@@ -322,7 +322,7 @@ TEST(nchainFixture, testLinkedChainWithNContainerAPI) {
     ASSERT_EQ(chn2.getLen(), 3);
 }
 
-TEST(nchainFixture, testIfnchainLinkItself) {
+TEST(nchainTest, testIfnchainLinkItself) {
     nchain chn;
     chn.add(new myNode(0));
     chn.add(new myNode(1));
@@ -330,7 +330,7 @@ TEST(nchainFixture, testIfnchainLinkItself) {
     ASSERT_EQ(chn.getLen(), 2);
 }
 
-TEST(nchainFixture, testShouldLinkOverwritePrevious) {
+TEST(nchainTest, testShouldLinkOverwritePrevious) {
     tstr<narr> arr1Str(new narr());
     const bindTag* arr1tag = &bindTag::getBindTag(arr1Str.getItsId());
     ASSERT_FALSE(nul(arr1tag));
@@ -370,7 +370,7 @@ TEST(nchainFixture, testShouldLinkOverwritePrevious) {
     ASSERT_EQ(chn2.getLen(), 2);
 }
 
-TEST(nchainFixture, testDelWithLink) {
+TEST(nchainTest, testDelWithLink) {
     nchain chn;
     chn.add(new myNode(1));
     ASSERT_EQ(chn.getLen(), 1);
@@ -412,7 +412,7 @@ TEST(nchainFixture, testDelWithLink) {
     ASSERT_EQ(chn.getLen(), 1);
 }
 
-TEST(nchainFixture, testLastIterator) {
+TEST(nchainTest, testLastIterator) {
     nchain chn;
     ASSERT_EQ(chn.getLen(), 0);
     chn.add(new myNode(1));

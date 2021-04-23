@@ -15,7 +15,7 @@ public:
     std::vector<void*> ptrs;
 };
 
-struct chunksFixture : public ::testing::Test {
+struct chunksTest : public ::testing::Test {
     void tearDown() {
         instance::_vault.getVaults().clear();
     }
@@ -25,7 +25,7 @@ struct chunksFixture : public ::testing::Test {
     }
 };
 
-TEST_F(chunksFixture, initialStateTest) {
+TEST_F(chunksTest, initialStateTest) {
     chunks chks1;
 
     ASSERT_EQ(chks1.getBlkSize(), 0);
@@ -35,7 +35,7 @@ TEST_F(chunksFixture, initialStateTest) {
     ASSERT_TRUE(nul(chks1[-1]));
 }
 
-TEST_F(chunksFixture, resizeFewTimesTest) {
+TEST_F(chunksTest, resizeFewTimesTest) {
     heap heap;
     chunks chks2(4);
 
@@ -61,7 +61,7 @@ TEST_F(chunksFixture, resizeFewTimesTest) {
     ASSERT_TRUE(chks2.rel());
 }
 
-TEST_F(chunksFixture, resizeLotsOfTimesTest) {
+TEST_F(chunksTest, resizeLotsOfTimesTest) {
     heap heap;
     chunks chks2(4);
 
