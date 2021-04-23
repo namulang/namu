@@ -3,7 +3,7 @@
 #include "id.hpp"
 #include <map>
 
-struct chunksFixture;
+struct chunksTest;
 
 namespace wrd {
 
@@ -17,7 +17,7 @@ namespace wrd {
         friend class watcher; // for vault.
         friend class chunks; // for vault.
         friend class instancer; // for _id.
-        friend struct ::chunksFixture; // for vault.
+        friend struct ::chunksTest; // for vault.
 
     public:
         class vault {

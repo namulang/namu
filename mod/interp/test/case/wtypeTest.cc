@@ -50,7 +50,7 @@ namespace {
     };
 }
 
-TEST(wtypeFixture, testchefImplicitCastTofood) {
+TEST(wtypeTest, testchefImplicitCastTofood) {
     // prepare:
     const string expectName = "HealthPotion";
     const int expectCalorie = 350;

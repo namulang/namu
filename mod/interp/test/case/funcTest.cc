@@ -87,7 +87,7 @@ wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj&
     return true;
 }
 
-TEST(funcFixture, testfuncConstructNewFrame) {
+TEST(funcTest, testfuncConstructNewFrame) {
     obj obj;
     myfunc func;
     obj.subs().add(func);
@@ -113,7 +113,7 @@ TEST(funcFixture, testfuncConstructNewFrame) {
     func.setLambda(nullptr);
 }
 
-TEST(funcFixture, testCallfuncInsidefunc) {
+TEST(funcTest, testCallfuncInsidefunc) {
     obj obj1;
     myfunc obj1func1("obj1func1");
     myfunc obj1func2("obj1func2");
@@ -161,7 +161,7 @@ TEST(funcFixture, testCallfuncInsidefunc) {
     ASSERT_TRUE(obj1func1.isSuccess());
 }
 
-TEST(funcFixture, testfuncHasStrParameter) {
+TEST(funcTest, testfuncHasStrParameter) {
     // prepare:
     std::string expectVal = "hello world!";
     myfunc func1;

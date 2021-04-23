@@ -2,7 +2,7 @@
 
 using namespace wrd;
 
-TEST(buildFeature, dateGetter) {
+TEST(buildFeatureTest, dateGetter) {
     buildFeature::date date;
     ASSERT_GT(date.getYear(), 0);
     ASSERT_GT(date.getMonth(), 0);
@@ -10,14 +10,14 @@ TEST(buildFeature, dateGetter) {
     ASSERT_STRNE(date.get().c_str(), "");
 }
 
-TEST(buildFeature, timeGetter) {
+TEST(buildFeatureTest, timeGetter) {
     ASSERT_GE(buildFeature::time::getHour(), 0);
     ASSERT_GE(buildFeature::time::getMin(), 0);
     ASSERT_GE(buildFeature::time::getSec(), 0);
     ASSERT_STRNE(buildFeature::time::get().c_str(), "");
 }
 
-TEST(buildFeature, versionGetter) {
+TEST(buildFeatureTest, versionGetter) {
     ASSERT_GE(buildFeature::version::getMajor(), 0);
     ASSERT_GE(buildFeature::version::getMinor(), 0);
     ASSERT_GE(buildFeature::version::getFix(), 0);
@@ -26,7 +26,7 @@ TEST(buildFeature, versionGetter) {
     ASSERT_STRNE(buildFeature::version::getName().c_str(), "");
 }
 
-TEST(buildFeature, platformGetter) {
+TEST(buildFeatureTest, platformGetter) {
     buildFeature::platformType type = buildFeature::platform::get();
     ASSERT_GT(type, buildFeature::PLATFORM_TYPE_START);
     ASSERT_LE(type, buildFeature::PLATFORM_TYPE_END);

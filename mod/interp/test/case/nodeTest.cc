@@ -137,7 +137,7 @@ namespace {
     };
 }
 
-TEST(nodeTest, testImmutablePositive) {
+TEST(nodeTest, testImmutableNegative) {
     wrd::ref r1(new myObj(1));
     wrd::ref r2 = r1;
     ASSERT_TRUE(r1);
