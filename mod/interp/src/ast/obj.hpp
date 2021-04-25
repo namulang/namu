@@ -1,10 +1,11 @@
 #pragma once
 
 #include "scope.hpp"
+#include "../frame/frameInteractable.hpp"
 
 namespace wrd {
 
-    class obj : public scope {
+    class obj : public scope, public frameInteractable {
         WRD_CLASS(obj, scope)
         friend class func;
 
@@ -28,8 +29,8 @@ namespace wrd {
         }
 
     protected:
-        wbool _onInStackFrame(stackFrame& sf, ncontainer&) override;
-        wbool _onOutStackFrame(stackFrame& sf, ncontainer&) override;
+        wbool _onInFrame(frame& sf, ncontainer& args) override;
+        wbool _onOutFrame(frame& sf, ncontainer& args) override;
 
     private:
         tstr<ncontainer> _con;

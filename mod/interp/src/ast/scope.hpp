@@ -15,10 +15,6 @@ namespace wrd {
             return _name;
         }
 
-    protected:
-        virtual wbool _onInStackFrame(stackFrame& sf, ncontainer& args) = 0;
-        virtual wbool _onOutStackFrame(stackFrame& sf, ncontainer& args) = 0;
-
     private:
         std::string _name;
     };
