@@ -106,7 +106,9 @@ TEST(funcTest, testfuncConstructNewFrame) {
         return checkFrameHasfuncAndObjScope(sf[0], func, obj);
     });
 
+    ASSERT_EQ(thread::get().getStackFrame().getLen(), 0);
     func.run(args);
+    ASSERT_EQ(thread::get().getStackFrame().getLen(), 0);
     ASSERT_TRUE(func.isRun());
     ASSERT_TRUE(func.isSuccess());
     ASSERT_TRUE(func.isSuccess());
@@ -157,7 +159,9 @@ TEST(funcTest, testCallfuncInsidefunc) {
 
     narr args;
     args.add(obj1);
+    ASSERT_EQ(thread::get().getStackFrame().getLen(), 0);
     obj1func1.run(args);
+    ASSERT_EQ(thread::get().getStackFrame().getLen(), 0);
     ASSERT_TRUE(obj1func1.isSuccess());
 }
 

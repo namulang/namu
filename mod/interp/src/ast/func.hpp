@@ -1,10 +1,11 @@
 #pragma once
 
 #include "scope.hpp"
+#include "../frame/frameInteractable.hpp"
 
 namespace wrd {
 
-    class func : public scope {
+    class func : public scope, public frameInteractable {
         WRD_INTERFACE(func, scope)
 
     public:
@@ -20,7 +21,7 @@ namespace wrd {
     protected:
         virtual str _onRun(ncontainer& args) = 0;
 
-        wbool _onInStackFrame(stackFrame& sf, ncontainer& args) override;
-        wbool _onOutStackFrame(stackFrame& sf, ncontainer& args) override;
+        wbool _onInFrame(frame& sf, ncontainer& args) override;
+        wbool _onOutFrame(frame& sf, ncontainer& args) override;
     };
 }

@@ -5,13 +5,16 @@ namespace wrd {
 
     WRD_DEF_ME(obj)
 
-    wbool me::_onInStackFrame(stackFrame& sf, ncontainer&) {
-        frame& fr = sf.getCurrentFrame();
+    wbool me::_onInFrame(frame& fr, ncontainer& args) {
+        WRD_DI("%s._onInFrame()", getName().c_str());
+
         return fr.push(subs());
     }
 
-    wbool me::_onOutStackFrame(stackFrame& sf, ncontainer&) {
-        return sf.getCurrentFrame().pop();
+    wbool me::_onOutFrame(frame& fr, ncontainer& args) {
+        WRD_DI("%s._onOutFrame()", getName().c_str());
+
+        return fr.pop();
     }
 
 }

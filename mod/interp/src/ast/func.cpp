@@ -1,5 +1,6 @@
 #include "func.hpp"
 #include "obj.hpp"
+#include "../frame/frameInteract.hpp"
 #include "../frame/thread.hpp"
 
 namespace wrd {
@@ -7,32 +8,35 @@ namespace wrd {
     WRD_DEF_ME(func)
 
     str me::run(ncontainer& args) {
-        stackFrame& sf = thread::get()._getStackFrame();
-        _onInStackFrame(sf, args);
+        obj& meObj = args.head()->cast<obj>();
+        if(nul(meObj)) return WRD_E("args[0] wasn't obj."), str();
 
-        str ret = _onRun(args);
+        stackFrame& fr = thread::get()._getStackFrame();
+        fr.add(new frame());
 
-        _onOutStackFrame(sf, args);
+        str ret;
+        { frameInteract inter(meObj, args);
+            { frameInteract inter(*this, args);
+                //TODO: fr->push(Parameter);
+                ret = _onRun(args);
+            }
+        }
+
+        fr.del();
         return ret;
     }
 
-    wbool me::_onInStackFrame(stackFrame& sf, ncontainer& args) {
-        obj& me = args.head()->cast<obj>();
-        if(nul(me)) return WRD_E("args[0] wasn't obj."), false;
+    wbool me::_onInFrame(frame& fr, ncontainer& args) {
+        WRD_DI("%s._onInFrame()", getName().c_str());
 
-        frame* fr = new frame();
-        sf.add(fr);
-        me._onInStackFrame(sf, args);
-        fr->push(subs());
-        //TODO: fr->push(Parameter);
+        fr.push(subs());
         return true;
     }
 
-    wbool me::_onOutStackFrame(stackFrame& sf, ncontainer& args) {
-        obj& me = args.head()->cast<obj>();
-        if(nul(me)) return WRD_E("args[0] wasn't obj."), false;
+    wbool me::_onOutFrame(frame& fr, ncontainer& args) {
+        WRD_DI("%s._onOutFrame()", getName().c_str());
 
-        return sf.del();
+        return fr.pop();
     }
 
     const wtypes& me::getTypes() const {
