@@ -1,21 +1,25 @@
 #pragma once
 
-#include "scope.hpp"
+#include "node.hpp"
 #include "../frame/frameInteractable.hpp"
 
 namespace wrd {
 
-    class obj : public scope, public frameInteractable {
-        WRD_CLASS(obj, scope)
+    class obj : public node, public frameInteractable {
+        WRD_CLASS(obj, node)
         friend class func;
 
     public:
         explicit obj(std::string name = "", ncontainer* newCon = new nchain())
-            : super(name), _con(newCon) {}
+            : _con(newCon), _name(name) {}
 
         using super::subs;
         ncontainer& subs() override {
             return *_con;
+        }
+
+        const std::string& getName() const override {
+            return _name;
         }
 
         str run(ncontainer& args) override {
@@ -34,5 +38,6 @@ namespace wrd {
 
     private:
         tstr<ncontainer> _con;
+        std::string _name;
     };
 }
