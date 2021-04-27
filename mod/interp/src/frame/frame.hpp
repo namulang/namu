@@ -12,15 +12,15 @@ namespace wrd {
             _rel();
         }
 
-        wbool push(ncontainer& con) {
+        wbool add(ncontainer& con) {
             nchain* chn = &con.cast<nchain>();
             if(nul(chn))
                 chn = new nchain(con);
 
-            return push(*chn);
+            return add(*chn);
         }
 
-        wbool push(nchain& new1) {
+        wbool add(nchain& new1) {
             WRD_DI("Stack(%x).push(Chain(%x))", this, &new1);
 
             if(_links)
@@ -28,7 +28,7 @@ namespace wrd {
             return _links.bind(new1);
         }
 
-        tstr<nchain> pop() {
+        tstr<nchain> del() {
             tstr<nchain> ret;
             if(_links) {
                 ret.bind(*_links);

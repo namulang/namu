@@ -29,14 +29,14 @@ namespace wrd {
     wbool me::_onInFrame(frame& fr, ncontainer& args) {
         WRD_DI("%s._onInFrame()", getName().c_str());
 
-        fr.push(subs());
+        fr.add(subs());
         return true;
     }
 
     wbool me::_onOutFrame(frame& fr, ncontainer& args) {
         WRD_DI("%s._onOutFrame()", getName().c_str());
 
-        return fr.pop();
+        return fr.del();
     }
 
     const wtypes& me::getTypes() const {
