@@ -8,13 +8,13 @@ namespace wrd {
     wbool me::_onInFrame(frame& fr, ncontainer& args) {
         WRD_DI("%s._onInFrame()", getName().c_str());
 
-        return fr.push(subs());
+        return fr.add(subs());
     }
 
     wbool me::_onOutFrame(frame& fr, ncontainer& args) {
         WRD_DI("%s._onOutFrame()", getName().c_str());
 
-        return fr.pop();
+        return fr.del();
     }
 
 }
