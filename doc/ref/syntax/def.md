@@ -183,3 +183,34 @@ MyObject.me.foo()
 
 * obj 상속받은 객체라면 다음의 메소드를 기본 제공한다.
     * ctor(), ctor(rhs), clone(), get(), set()
+
+## typelist 정의
+
+* 단순히 encapsulation만을 사용해서 원하는 타입의 객체들을 하나의 객체로 묶으려면 다음과 같이 해야 한다.
+```wrd
+def person
+    name str
+    age int
+    weight flt
+
+person.name
+person.age
+person.weight
+```
+
+* 이와 같은 성격의 객체를 typelist라고 정의하며 다음과 같이 축약할 수 있다.
+```wrd
+def person -> name str, age int, weight flt
+
+person.name
+person.age
+person.weight
+```
+
+* 만약 @type 선언 문법을 사용하면 더 줄일 수 있다.
+```wrd
+def tempVal -> @str, @int, @flt
+foo() tempVal: tempVal("Chales", 35, 89.5)
+ret := foo()
+c.out("value1=$ret.str, val2=$ret.int")
+```
