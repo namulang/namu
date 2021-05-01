@@ -25,7 +25,7 @@ namespace wrd {
     }
 
     TEMPL void* ME::make() const { return tinstanceMaker<T>::make(); }
-    TEMPL wcnt ME::getSize() const { return sizeof(T); }
+    TEMPL wcnt ME::size() const { return sizeof(T); }
 
     TEMPL const type& ME::getSuper() const {
         return ttype<typename tadaptiveSuper<T>::super>::get();

@@ -25,8 +25,8 @@ namespace wrd {
         const chunks& get(widx n) const WRD_UNCONST_FUNC(get(n))
         //  memoryHaver:
         wbool has(const instance& it) const override;
-        wcnt getSize() const override;
-        wcnt getLen() const override;
+        wcnt size() const override;
+        wcnt len() const override;
         wbool rel() override;
 
     protected:

@@ -75,12 +75,12 @@ TEST(nodeTest, testManuallyMakeNodeStructure) {
     WRD_E("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 
     // then:
-    ASSERT_EQ(chnOffunc->getLen(), 2);
-    ASSERT_EQ(chnOffunc->getLen(), 2);
-    ASSERT_EQ(chnOffunc->getLen(), 2);
+    ASSERT_EQ(chnOffunc->len(), 2);
+    ASSERT_EQ(chnOffunc->len(), 2);
+    ASSERT_EQ(chnOffunc->len(), 2);
 
     int n=0;
-    for(wrd::iterator e=chnOffunc->head(); e ;e++)
+    for(wrd::iterator e=chnOffunc->begin(); e ;e++)
         WRD_E("[%d]=%s", n++, e->getType().getName().c_str());
 
     WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
@@ -101,7 +101,7 @@ TEST(nodeTest, testManualNativefuncCall) {
     narr args;
     args.add(obj);
     narr subs = obj.sub(func.getName(), args);
-    ASSERT_EQ(subs.getLen(), 1);
+    ASSERT_EQ(subs.len(), 1);
     ASSERT_TRUE(subs[0].canRun(args));
 
     // when:

@@ -27,7 +27,7 @@ namespace wrd {
         wbool set(const iterator& at, const T& new1) { return super::set(at, new1); }
 
         titerator<T> headT() const { return iterT(0); }
-        titerator<T> tailT() const { return iterT(getLen()); }
+        titerator<T> tailT() const { return iterT(len()); }
         titerator<T> iterT(widx n) const { return titerator<T>(_arr._onIter(n)); }
         titerator<T> iterT(const T& elem) const {
             const titerator<T>* ret = 0;

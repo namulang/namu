@@ -66,8 +66,8 @@ wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj&
     if(nul(fr)) return false;
 
     int n = 0;
-    WRD_E("fr.len=%d", fr.subs().getLen());
-    for(wrd::iterator e=fr.subs().head(); e ;e++)
+    WRD_E("fr.len=%d", fr.subs().len());
+    for(wrd::iterator e=fr.subs().begin(); e ;e++)
         WRD_E(" - func(\"%s\") calls: fr[%d]=%s", func.getName().c_str(), n++, e->getType().getName().c_str());
 
     const nchain& funcScope = fr.subs().cast<nchain>();
@@ -81,7 +81,7 @@ wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj&
         return WRD_E("obj.subs(%x) != objScope(%x)", &obj.subs(), &objScope), false;
 
     narr foundfunc = fr.sub(func.getName());
-    if(foundfunc.getLen() != 1)
+    if(foundfunc.len() != 1)
         return WRD_E("couldn't find %s func on frame(%x)", func.getName().c_str(), &fr), false;
 
     return true;
@@ -91,9 +91,9 @@ TEST(funcTest, testfuncConstructNewFrame) {
     obj obj;
     myfunc func;
     obj.subs().add(func);
-    WRD_E("obj.len=%d", obj.subs().getLen());
+    WRD_E("obj.len=%d", obj.subs().len());
     int n = 0;
-    for(wrd::iterator e=obj.subs().head(); e ;e++) {
+    for(wrd::iterator e=obj.subs().begin(); e ;e++) {
         WRD_E(" - fr[%d]=%s", n++, e->getType().getName().c_str());
     }
 
@@ -101,14 +101,14 @@ TEST(funcTest, testfuncConstructNewFrame) {
     args.add(obj);
 
     func.setLambda([&func, &obj](const auto& args, const auto& sf) {
-        if(sf.getLen() != 1) return false;
+        if(sf.len() != 1) return false;
 
         return checkFrameHasfuncAndObjScope(sf[0], func, obj);
     });
 
-    ASSERT_EQ(thread::get().getStackFrame().getLen(), 0);
+    ASSERT_EQ(thread::get().getStackFrame().len(), 0);
     func.run(args);
-    ASSERT_EQ(thread::get().getStackFrame().getLen(), 0);
+    ASSERT_EQ(thread::get().getStackFrame().len(), 0);
     ASSERT_TRUE(func.isRun());
     ASSERT_TRUE(func.isSuccess());
     ASSERT_TRUE(func.isSuccess());
@@ -127,18 +127,18 @@ TEST(funcTest, testCallfuncInsidefunc) {
     obj2.subs().add(obj2func1);
 
     obj1func1.setLambda([&obj1, &obj1func1, &obj1func2](const auto& args, const auto& sf) {
-        if(sf.getLen() != 1) return WRD_E("obj1func1: sf.getLen() != 1"), false;
+        if(sf.len() != 1) return WRD_E("obj1func1: sf.len() != 1"), false;
         if(!checkFrameHasfuncAndObjScope(sf[0], obj1func1, obj1)) return false;
 
         narr funcArgs;
         funcArgs.add(obj1);
         obj1func2.run(funcArgs);
-        if(sf.getLen() != 1)
-            return WRD_E("return of obj1func1: sf.getLen() != 1"), false;
+        if(sf.len() != 1)
+            return WRD_E("return of obj1func1: sf.len() != 1"), false;
         return true;
     });
     obj1func2.setLambda([&obj2, &obj1func2, &obj1, &obj2func1](const auto& args, const auto& sf) {
-        if(sf.getLen() != 2) return WRD_E("obj1func2: sf.getLen() != 2"), false;
+        if(sf.len() != 2) return WRD_E("obj1func2: sf.len() != 2"), false;
 
         if(!checkFrameHasfuncAndObjScope(sf[1], obj1func2, obj1)) return false;
 
@@ -146,12 +146,12 @@ TEST(funcTest, testCallfuncInsidefunc) {
         funcArgs.add(obj2);
 
         obj2func1.run(funcArgs);
-        if(sf.getLen() != 2)
-            return WRD_E("return of obj1func2: sf.getLen() != 2"), false;
+        if(sf.len() != 2)
+            return WRD_E("return of obj1func2: sf.len() != 2"), false;
         return true;
     });
     obj2func1.setLambda([&obj2, &obj2func1](const auto& args, const auto& sf) {
-        if(sf.getLen() != 3) return false;
+        if(sf.len() != 3) return false;
 
         if(!checkFrameHasfuncAndObjScope(sf[2], obj2func1, obj2)) return false;
         return true;
@@ -159,9 +159,9 @@ TEST(funcTest, testCallfuncInsidefunc) {
 
     narr args;
     args.add(obj1);
-    ASSERT_EQ(thread::get().getStackFrame().getLen(), 0);
+    ASSERT_EQ(thread::get().getStackFrame().len(), 0);
     obj1func1.run(args);
-    ASSERT_EQ(thread::get().getStackFrame().getLen(), 0);
+    ASSERT_EQ(thread::get().getStackFrame().len(), 0);
     ASSERT_TRUE(obj1func1.isSuccess());
 }
 
@@ -177,7 +177,7 @@ TEST(funcTest, testfuncHasStrParameter) {
     types.push_back(&ttype<strObj>::get());
     func1.setLambda([&](const ncontainer& args, const stackFrame& sf) {
         const wtypes& types = func1.getTypes();
-        if(args.getLen() != types.size()) return false;
+        if(args.len() != types.size()) return false;
 
         const wtype& expectType = *types[1];
         tref<strObj> cast(args.iter(1)->asImpli(expectType));

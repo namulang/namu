@@ -24,7 +24,7 @@ namespace wrd {
         wbool isAbstract() const override;
         const std::string& getName() const override;
         void* make() const override;
-        wcnt getSize() const override;
+        wcnt size() const override;
         //TODO: virtual wbool isImmutable() const;
         const type& getSuper() const override;
         const wbool& isInit() const override;

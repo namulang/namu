@@ -76,8 +76,8 @@ TEST(watcherTest, heapVariableBindTagTest) {
         const chunk& chk = tag.getChunk();
         ASSERT_FALSE(nul(chk));
         ASSERT_TRUE(chk.has(*new1));
-        ASSERT_GT(chk.getLen(), 0);
-        ASSERT_GT(chk.getSize(),  0);
+        ASSERT_GT(chk.len(), 0);
+        ASSERT_GT(chk.size(),  0);
         new1->age = n;
         arr.push_back(new1);
     }

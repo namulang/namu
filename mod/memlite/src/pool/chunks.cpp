@@ -15,8 +15,8 @@ namespace wrd {
     chunk& me::get(const instance& it) { return *(chunk*)_get(it.getId().chkN); }
 
     wbool me::rel() { return _rel(); }
-    wcnt me::getLen() const { return _chunks.size(); }
-    wcnt me::getSize() const { return getLen(); }
+    wcnt me::len() const { return _chunks.size(); }
+    wcnt me::size() const { return len(); }
 
     void* me::new1() {
         widx n = _findCapable();
@@ -45,7 +45,7 @@ namespace wrd {
             if(_s >= sz) _s = 0;
         } while(_s != end);
 
-        resize(getLen() + 1);
+        resize(len() + 1);
         return _s;
     }
 
@@ -70,7 +70,7 @@ namespace wrd {
     }
 
     void* me::_get(widx n) {
-        if(n < 0 || n >= getLen()) return nullptr;
+        if(n < 0 || n >= len()) return nullptr;
 
         return _chunks[n];
     }

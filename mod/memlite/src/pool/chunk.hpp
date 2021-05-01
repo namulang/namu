@@ -24,8 +24,8 @@ namespace wrd {
         void* new1() override;
         wbool del(void* used, wcnt) override;
         //  MemoryHaver:
-        wcnt getLen() const override;
-        wcnt getSize() const override;
+        wcnt len() const override;
+        wcnt size() const override;
         wbool rel() override;
         wbool has(const instance& it) const override;
 

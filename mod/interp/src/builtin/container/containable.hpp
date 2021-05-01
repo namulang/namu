@@ -14,7 +14,7 @@ namespace wrd {
     public:
         virtual ~containable() {}
 
-        virtual wcnt getLen() const = 0;
+        virtual wcnt len() const = 0;
 
         virtual narr get(std::function<wbool(const node&)> l) const = 0;
 
@@ -23,9 +23,9 @@ namespace wrd {
             return set(at, *new1);
         }
 
-        virtual iterator head() const { return iter(0); }
-        virtual iterator tail() const { return iter(getLen()); }
-        virtual iterator last() const { return iter(getLen()-1); }
+        virtual iterator begin() const { return iter(0); }
+        virtual iterator end() const { return iter(len()); }
+        virtual iterator last() const { return iter(len()-1); }
 
         /// @param step step from the head of this container.
         virtual iterator iter(wcnt step) const = 0;

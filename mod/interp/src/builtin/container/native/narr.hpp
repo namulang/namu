@@ -30,7 +30,7 @@ namespace wrd {
                 //  pre:
                 if(step <= 0) return 0;
 
-                widx lastN = _own.getLen()-1;
+                widx lastN = _own.len()-1;
                 if(_n >= lastN) {
                     _n = lastN + 1;
                     return 0;
@@ -71,7 +71,7 @@ namespace wrd {
             add(elems);
         }
 
-        wcnt getLen() const override;
+        wcnt len() const override;
 
         using super::get;
         node& get(widx n) override;
