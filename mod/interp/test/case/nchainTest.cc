@@ -25,8 +25,8 @@ TEST(nchainTest, instantiateTest) {
 void simpleAddDelTest(int cnt) {
     tnarr<myNode>* arr = new tnarr<myNode>();
     nchain chn(*arr);
-    ASSERT_EQ(0, arr->getLen());
-    ASSERT_EQ(chn.getLen(), arr->getLen());
+    ASSERT_EQ(0, arr->len());
+    ASSERT_EQ(chn.len(), arr->len());
     ASSERT_TRUE(nul(chn.getNext()));
 
     vector<myNode*> tray;
@@ -36,10 +36,10 @@ void simpleAddDelTest(int cnt) {
         tray.push_back(new1);
     }
 
-    ASSERT_EQ(chn.getLen(), cnt);
-    ASSERT_EQ(chn.getLen(), cnt);
-    ASSERT_EQ(chn.getLen(), cnt);
-    ASSERT_EQ(chn.getLen(), cnt);
+    ASSERT_EQ(chn.len(), cnt);
+    ASSERT_EQ(chn.len(), cnt);
+    ASSERT_EQ(chn.len(), cnt);
+    ASSERT_EQ(chn.len(), cnt);
 
     wbool isOk = false;
     int index = 0;
@@ -72,25 +72,25 @@ TEST(nchainTest, testcontainableAPI) {
     //  initial state:
     tstr<nchain> arr(new nchain());
     containable* con = &arr.get();
-    ASSERT_EQ(con->getLen(), 0);
+    ASSERT_EQ(con->len(), 0);
 
-    wrd::iterator head = arr->head();
+    wrd::iterator head = arr->begin();
     ASSERT_TRUE(head.isEnd());
-    wrd::iterator tail = con->tail();
+    wrd::iterator tail = con->end();
     ASSERT_TRUE(tail.isEnd());
 
-    ASSERT_TRUE(con->add(con->head(), new myNode(0)));
-    ASSERT_TRUE(con->add(con->tail(), new myMyNode(1)));
-    ASSERT_EQ(con->getLen(), 2);
-    ASSERT_EQ(con->getLen(), 2);
-    ASSERT_EQ(con->getLen(), 2);
-    ASSERT_EQ(con->getLen(), 2);
-    ASSERT_EQ(con->getLen(), 2);
-    ASSERT_EQ(con->getLen(), 2);
+    ASSERT_TRUE(con->add(con->begin(), new myNode(0)));
+    ASSERT_TRUE(con->add(con->end(), new myMyNode(1)));
+    ASSERT_EQ(con->len(), 2);
+    ASSERT_EQ(con->len(), 2);
+    ASSERT_EQ(con->len(), 2);
+    ASSERT_EQ(con->len(), 2);
+    ASSERT_EQ(con->len(), 2);
+    ASSERT_EQ(con->len(), 2);
 
     //  add:
     int expectVal = 0;
-    for(wrd::iterator e=con->head(); e != con->tail() ;e++) {
+    for(wrd::iterator e=con->begin(); e != con->end() ;e++) {
         myNode& elem = e->cast<myNode>();
         ASSERT_FALSE(nul(elem));
         ASSERT_EQ(elem.number, expectVal++);
@@ -100,7 +100,7 @@ TEST(nchainTest, testcontainableAPI) {
     narr tray = arr->get<myNode>([](const myNode& elem) {
         return true;
     });
-    ASSERT_EQ(tray.getLen(), 2);
+    ASSERT_EQ(tray.len(), 2);
 
     int cnt = 0;
     tray = arr->get<myNode>([&cnt](const myNode& elem) {
@@ -108,18 +108,18 @@ TEST(nchainTest, testcontainableAPI) {
         cnt++;
         return true;
     });
-    ASSERT_EQ(tray.getLen(), 1);
+    ASSERT_EQ(tray.len(), 1);
 
     tray = arr->get<myMyNode>([](const myMyNode& elem) {
         if(elem.number == 1) return true;
         return false;
     });
-    ASSERT_EQ(tray.getLen(), 1);
+    ASSERT_EQ(tray.len(), 1);
 
     //  del:
     ASSERT_TRUE(con->del());
-    ASSERT_EQ(con->getLen(), 1);
-    ASSERT_EQ(con->head()->cast<myNode>().number, 0);
+    ASSERT_EQ(con->len(), 1);
+    ASSERT_EQ(con->begin()->cast<myNode>().number, 0);
 
     //  add with element:
     narr arr2;
@@ -129,9 +129,9 @@ TEST(nchainTest, testcontainableAPI) {
     ASSERT_TRUE(arr2.add(new myNode(3)));
     ASSERT_EQ(arr2[2].cast<myNode>().number, 2);
     ASSERT_EQ(arr2[3].cast<myNode>().number, 3);
-    ASSERT_EQ(arr2.getLen(), 4);
+    ASSERT_EQ(arr2.len(), 4);
 
-    wrd::iterator e = arr2.head();
+    wrd::iterator e = arr2.begin();
     e = e + 2;
     ASSERT_EQ(e->cast<myNode>().number, 2);
     ASSERT_TRUE(arr2.add(e, new myNode(5)));
@@ -144,10 +144,10 @@ TEST(nchainTest, testcontainableAPI) {
     ASSERT_EQ(arr2[4].cast<myNode>().number, 2);
     ASSERT_EQ(arr2[5].cast<myNode>().number, 3);
 
-    ASSERT_EQ(con->getLen(), 1);
+    ASSERT_EQ(con->len(), 1);
     ASSERT_EQ(con->add(arr2.iter(1), arr2.iter(3)), 2);
-    ASSERT_EQ(con->getLen(), 3);
-    e=con->head();
+    ASSERT_EQ(con->len(), 3);
+    e=con->begin();
     myNode* elem = &e->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 0);
@@ -161,12 +161,12 @@ TEST(nchainTest, testcontainableAPI) {
     ASSERT_EQ(elem->number, 6);
     ASSERT_FALSE(++e);
 
-    ASSERT_TRUE(con->getLen() > 0);
+    ASSERT_TRUE(con->len() > 0);
     con->empty();
-    ASSERT_TRUE(con->getLen() == 0);
+    ASSERT_TRUE(con->len() == 0);
 
-    ASSERT_EQ(con->add(arr2.iter(2), arr2.tail()), 4);
-    e = con->head();
+    ASSERT_EQ(con->add(arr2.iter(2), arr2.end()), 4);
+    e = con->begin();
     elem = &e->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
@@ -183,8 +183,8 @@ TEST(nchainTest, testcontainableAPI) {
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 
-    ASSERT_EQ(con->del(con->head() + 1, con->head() + 3), 2);
-    e = con->head();
+    ASSERT_EQ(con->del(con->begin() + 1, con->begin() + 3), 2);
+    e = con->begin();
     elem = &e->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
@@ -195,11 +195,11 @@ TEST(nchainTest, testcontainableAPI) {
 }
 
 void examineChain2Element(nchain& chn, int val1, int val2) {
-    myNode* elem = &chn.head()->cast<myNode>();
+    myNode* elem = &chn.begin()->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, val1);
 
-    elem = &(++chn.head())->cast<myNode>();
+    elem = &(++chn.begin())->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, val2);
 }
@@ -208,17 +208,17 @@ TEST(nchainTest, testLinkedChainWithOnly1Element) {
     narr arr1;
     arr1.add(new myNode(0));
     nchain chn1(arr1);
-    ASSERT_EQ(chn1.getLen(), 1);
+    ASSERT_EQ(chn1.len(), 1);
 
     narr arr2;
     arr2.add(new myNode(0));
     nchain chn2(arr2);
-    ASSERT_EQ(chn2.getLen(), 1);
+    ASSERT_EQ(chn2.len(), 1);
     chn2.link(chn1);
-    ASSERT_EQ(chn2.getLen(), 2);
+    ASSERT_EQ(chn2.len(), 2);
 
     int n=0;
-    for(wrd::iterator e=chn2.head(); e ;e++)
+    for(wrd::iterator e=chn2.begin(); e ;e++)
         n++;
     ASSERT_EQ(n, 2);
 }
@@ -261,10 +261,10 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
     ASSERT_TRUE(chn2.link(chn3));
     ASSERT_TRUE(nul(chn3.getNext()));
     ASSERT_TRUE(nul(chn1.getNext().getNext().getNext()));
-    ASSERT_EQ(chn1.getLen(), 6);
+    ASSERT_EQ(chn1.len(), 6);
 
     // add with link:
-    wrd::iterator e = chn1.head();
+    wrd::iterator e = chn1.begin();
     myNode* mynode = &(e++)->cast<myNode>();
     ASSERT_FALSE(nul(mynode));
     ASSERT_EQ(mynode->number, 0);
@@ -310,16 +310,16 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
     ASSERT_EQ(cnt, -1);
 
     // del with link:
-    ASSERT_EQ(chn1.getLen(), 6);
-    ASSERT_EQ(chn1.getContainer().getLen(), 2);
-    ASSERT_EQ(chn2.getLen(), 4);
-    ASSERT_EQ(chn2.getContainer().getLen(), 2);
-    ASSERT_EQ(chn3.getLen(), 2);
-    ASSERT_EQ(chn3.getContainer().getLen(), 2);
+    ASSERT_EQ(chn1.len(), 6);
+    ASSERT_EQ(chn1.getContainer().len(), 2);
+    ASSERT_EQ(chn2.len(), 4);
+    ASSERT_EQ(chn2.getContainer().len(), 2);
+    ASSERT_EQ(chn3.len(), 2);
+    ASSERT_EQ(chn3.getContainer().len(), 2);
 
-    ASSERT_EQ(chn1.del(chn1.head()+1, chn2.head()+1), 2);
-    ASSERT_EQ(chn1.getLen(), 4);
-    ASSERT_EQ(chn2.getLen(), 3);
+    ASSERT_EQ(chn1.del(chn1.begin()+1, chn2.begin()+1), 2);
+    ASSERT_EQ(chn1.len(), 4);
+    ASSERT_EQ(chn2.len(), 3);
 }
 
 TEST(nchainTest, testIfnchainLinkItself) {
@@ -327,7 +327,7 @@ TEST(nchainTest, testIfnchainLinkItself) {
     chn.add(new myNode(0));
     chn.add(new myNode(1));
     ASSERT_FALSE(chn.link(chn));
-    ASSERT_EQ(chn.getLen(), 2);
+    ASSERT_EQ(chn.len(), 2);
 }
 
 TEST(nchainTest, testShouldLinkOverwritePrevious) {
@@ -339,23 +339,23 @@ TEST(nchainTest, testShouldLinkOverwritePrevious) {
     tweak<narr> arr1Weak = arr1Str;
     arr1Str->add(new myNode(0));
     arr1Str->add(new myNode(1));
-    ASSERT_EQ(arr1Str->getLen(), 2);
+    ASSERT_EQ(arr1Str->len(), 2);
     ASSERT_EQ(arr1tag->getStrongCnt(), 1);
 
 
     nchain chn2;
     chn2.add(new myNode(2));
     chn2.add(new myNode(3));
-    ASSERT_EQ(chn2.getLen(), 2);
+    ASSERT_EQ(chn2.len(), 2);
 
     ASSERT_TRUE(chn2.link(*arr1Str));
     ASSERT_EQ(arr1tag->getStrongCnt(), 2);
     // chn2 --> unknown chain instance holding arr1
-    ASSERT_EQ(chn2.getLen(), 4);
+    ASSERT_EQ(chn2.len(), 4);
 
     arr1Str.unbind();
     ASSERT_EQ(arr1tag->getStrongCnt(), 1);
-    ASSERT_EQ(chn2.getLen(), 4);
+    ASSERT_EQ(chn2.len(), 4);
     ASSERT_TRUE(arr1Weak.isBind());
 
     narr arr2;
@@ -367,13 +367,13 @@ TEST(nchainTest, testShouldLinkOverwritePrevious) {
     //   |--- X --> unknown chain instance holding arr1(0, 1)
     ASSERT_FALSE(arr1Weak.isBind());
 
-    ASSERT_EQ(chn2.getLen(), 2);
+    ASSERT_EQ(chn2.len(), 2);
 }
 
 TEST(nchainTest, testDelWithLink) {
     nchain chn;
     chn.add(new myNode(1));
-    ASSERT_EQ(chn.getLen(), 1);
+    ASSERT_EQ(chn.len(), 1);
 
     {
         narr arr1;
@@ -385,7 +385,7 @@ TEST(nchainTest, testDelWithLink) {
         //  ^
         //  |
         // head
-        ASSERT_EQ(chn.getLen(), 3);
+        ASSERT_EQ(chn.len(), 3);
         tweak<nchain> arr2Weak;
         {
             narr arr2;
@@ -395,26 +395,26 @@ TEST(nchainTest, testDelWithLink) {
             auto arr2Str = arr1Str->link(arr2);
             arr2Weak = arr2Str;
             // now, chn --> arr1Str with arr1 --> arr2Str with arr2
-            ASSERT_EQ(arr2Str->getLen(), 3);
-            ASSERT_EQ(arr1Str->getLen(), 3 + arr1.getLen());
-            ASSERT_EQ(chn.getLen(), 1 + arr1.getLen() + arr2.getLen());
+            ASSERT_EQ(arr2Str->len(), 3);
+            ASSERT_EQ(arr1Str->len(), 3 + arr1.len());
+            ASSERT_EQ(chn.len(), 1 + arr1.len() + arr2.len());
         }
 
         arr1Str->unlink();
         // now, chn --> arr1Str with arr1
         ASSERT_FALSE(arr2Weak.isBind());
-        ASSERT_EQ(chn.getLen(), 1 + arr1.getLen());
+        ASSERT_EQ(chn.len(), 1 + arr1.len());
 
-        myNode& last = chn.iter(chn.getLen() - 1)->cast<myNode>();
+        myNode& last = chn.iter(chn.len() - 1)->cast<myNode>();
         ASSERT_EQ(last.number, 3);
     }
     chn.unlink();
-    ASSERT_EQ(chn.getLen(), 1);
+    ASSERT_EQ(chn.len(), 1);
 }
 
 TEST(nchainTest, testLastIterator) {
     nchain chn;
-    ASSERT_EQ(chn.getLen(), 0);
+    ASSERT_EQ(chn.len(), 0);
     chn.add(new myNode(1));
     chn.add(new myNode(3));
     chn.add(chn.last(), new myNode(2));

@@ -9,8 +9,8 @@ namespace wrd {
             _resize(sz);
         }
     me::~chunk() { me::rel(); }
-    wcnt me::getLen() const { return _len; }
-    wcnt me::getSize() const { return _sz; }
+    wcnt me::len() const { return _len; }
+    wcnt me::size() const { return _sz; }
 
     wbool me::_resize(wcnt newSz) {
         //  pre:
@@ -68,7 +68,7 @@ namespace wrd {
     wuchar* me::_getHeap() { return _heap; }
 
     void* me::_get(widx n) {
-        if(n < 0 || n >= getSize()) return nullptr;
+        if(n < 0 || n >= size()) return nullptr;
 
         return _heap + n*_getRealBlkSize();
     }

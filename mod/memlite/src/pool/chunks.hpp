@@ -32,8 +32,8 @@ namespace wrd {
         virtual wbool resize(wcnt new1);
         //  MemoryHaver:
         wbool has(const instance& it) const override;
-        wcnt getLen() const override;
-        wcnt getSize() const override;
+        wcnt len() const override;
+        wcnt size() const override;
         wbool rel() override;
 
     private:

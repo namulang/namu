@@ -39,7 +39,7 @@ namespace wrd {
             return (T*) make();
         }
 
-        virtual wcnt getSize() const = 0;
+        virtual wcnt size() const = 0;
         virtual wbool init();
         virtual wbool rel();
         virtual const type& getSuper() const = 0;

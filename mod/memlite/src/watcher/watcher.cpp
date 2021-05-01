@@ -30,7 +30,7 @@ namespace wrd {
 
     void* me::new1() {
         if(isFull())
-            if(!_resize(getSize()*2 + 1))
+            if(!_resize(size()*2 + 1))
                 return WRD_E("resize watcher failed! this damage system seriously !!!!"), nullptr;
 
         watchCell* res = (watchCell*)super::new1();

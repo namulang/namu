@@ -18,12 +18,12 @@ namespace wrd {
 
     template <typename T>
     void ncontainer::each(std::function<wbool(const iterator&, T&)> l) {
-        each(head(), tail(), l);
+        each(begin(), end(), l);
     }
 
     template <typename T>
     void ncontainer::each(std::function<wbool(const iterator&, const T&)> l) const {
-        each(head(), tail(), l);
+        each(begin(), end(), l);
     }
 
     template <typename T>

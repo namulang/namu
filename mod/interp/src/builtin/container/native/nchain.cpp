@@ -8,10 +8,10 @@ namespace wrd {
 
     me::nchain(): _arr(new narr()) {}
 
-    wcnt me::getLen() const {
+    wcnt me::len() const {
         wcnt len = 0;
         each<ncontainer>([&len](const me& chn, const ncontainer& con) {
-            len += con.getLen();
+            len += con.len();
             return true;
         });
 
@@ -69,8 +69,8 @@ namespace wrd {
         wcnt ret = 0;
         each<ncontainer>(from, nulOf<iterator>(), [&](nchain& chn, ncontainer& itsCon) {
             wbool isLast = false;
-            iterator    head = &itsCon == &fromCon ? fromInnerIter : itsCon.head(),
-                    tail = &itsCon == &endCon ? isLast = true, endInnerIter : itsCon.tail();
+            iterator    head = &itsCon == &fromCon ? fromInnerIter : itsCon.begin(),
+                    tail = &itsCon == &endCon ? isLast = true, endInnerIter : itsCon.end();
             ret += itsCon.del(head, tail);
             return !isLast;
         });
@@ -96,21 +96,21 @@ namespace wrd {
         return _next.unbind();
     }
 
-    iterator me::head() const {
-        return iterator(new nchainIteration(*this, *this, _arr->head()));
+    iterator me::begin() const {
+        return iterator(new nchainIteration(*this, *this, _arr->begin()));
     }
 
     iterator me::iter(wcnt step) const {
-        iterator ret = head();
+        iterator ret = begin();
         ret.next(step);
         return ret;
     }
 
-    iterator me::tail() const {
+    iterator me::end() const {
         const nchain& last = _getLastChain();
         if(nul(last)) return iterator();
 
-        return iterator(new nchainIteration(*this, last, last._arr->tail()));
+        return iterator(new nchainIteration(*this, last, last._arr->end()));
     }
 
     iterator me::last() const {

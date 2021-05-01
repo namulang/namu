@@ -21,7 +21,7 @@ namespace wrd {
     }
 
     wbool me::_isValidN(widx n) const {
-        return 0 <= n && n < getLen();
+        return 0 <= n && n < len();
     }
 
     wbool me::set(widx n, const node& new1) {
@@ -41,7 +41,7 @@ namespace wrd {
     }
 
     wbool me::add(widx n, const node& new1) {
-        if(n < 0 || n > getLen()) return false; // if n equals to getLen(), it means that will be added at end of container.
+        if(n < 0 || n > len()) return false; // if n equals to len(), it means that will be added at end of container.
 
         str wrap(new1);
         if(!wrap) return false;
@@ -50,7 +50,7 @@ namespace wrd {
     }
 
     wbool me::del() {
-        return del(iter(getLen() - 1));
+        return del(iter(len() - 1));
     }
 
     wbool me::del(const iterator& at) {
@@ -73,7 +73,7 @@ namespace wrd {
         if(nul(endIter) || nul(fromIter))
             return WRD_E("from(%x) or end(%x) one of these is null.", &endIter, &fromIter), 0;
 
-        widx fromN = fromIter.isEnd() ? getLen()-1 : fromIter._n;
+        widx fromN = fromIter.isEnd() ? len()-1 : fromIter._n;
         wcnt cnt = endIter._n - fromN;
         if(cnt <= 0) return 0;
 
@@ -83,7 +83,7 @@ namespace wrd {
     }
 
 
-    wcnt me::getLen() const {
+    wcnt me::len() const {
         return _vec.size();
     };
 
@@ -93,7 +93,7 @@ namespace wrd {
 
     tstr<instance> me::deepClone() const {
         me* ret = new me();
-        for(auto e=head(); e ;e++)
+        for(auto e=begin(); e ;e++)
             ret->add((node*) e->clone());
 
         return tstr<instance>(ret);

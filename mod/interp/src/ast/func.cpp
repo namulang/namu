@@ -8,7 +8,7 @@ namespace wrd {
     WRD_DEF_ME(func)
 
     str me::run(ncontainer& args) {
-        obj& meObj = args.head()->cast<obj>();
+        obj& meObj = args.begin()->cast<obj>();
         if(nul(meObj)) return WRD_E("args[0] wasn't obj."), str();
 
         stackFrame& fr = thread::get()._getStackFrame();

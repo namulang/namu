@@ -7,8 +7,8 @@ using namespace std;
 TEST(chunkTest, memoryHaverTest) {
     chunk chk(4);
 
-    EXPECT_EQ(chk.getLen(), 0);
-    EXPECT_EQ(chk.getSize(), chunk::MIN_SZ);
+    EXPECT_EQ(chk.len(), 0);
+    EXPECT_EQ(chk.size(), chunk::MIN_SZ);
     EXPECT_EQ(chk[0], chk.get(0));
     EXPECT_TRUE(chk[1]);
     EXPECT_FALSE(chk[-1]);
@@ -22,8 +22,8 @@ TEST(chunkTest, allocatorTest) {
 
     EXPECT_EQ(chk.getBlkSize(), 4);
     EXPECT_TRUE(chk.rel());
-    EXPECT_EQ(chk.getLen(), 0);
-    EXPECT_EQ(chk.getSize(), 0);
+    EXPECT_EQ(chk.len(), 0);
+    EXPECT_EQ(chk.size(), 0);
 }
 
 TEST(chunkTest, chunkListTest) {
@@ -43,43 +43,43 @@ TEST(chunkTest, chunkListTest) {
     chunk chk(4, 1112);
 
     EXPECT_TRUE(heap.new1(chk, 1));
-    EXPECT_EQ(chk.getLen(), 1);
-    EXPECT_EQ(chk.getSize(), 1112);
+    EXPECT_EQ(chk.len(), 1);
+    EXPECT_EQ(chk.size(), 1112);
     EXPECT_TRUE(chk[0]);
     EXPECT_FALSE(chk[-1]);
 
     EXPECT_TRUE(heap.new1(chk, 1));
-    EXPECT_EQ(chk.getLen(), 2);
-    EXPECT_GE(chk.getSize(), chk.getLen());
+    EXPECT_EQ(chk.len(), 2);
+    EXPECT_GE(chk.size(), chk.len());
     EXPECT_TRUE(chk[1]);
     EXPECT_TRUE(chk.has(*(instance*)chk[1]));
     EXPECT_EQ(chk.getBlkSize(), 4);
 
-    EXPECT_EQ(chk.getLen(), 2);
-    EXPECT_EQ(chk.getSize(), 1112);
+    EXPECT_EQ(chk.len(), 2);
+    EXPECT_EQ(chk.size(), 1112);
     EXPECT_TRUE(chk[0]);
     EXPECT_EQ(chk.getBlkSize(), 4);
 
     EXPECT_TRUE(heap.new1(chk, 10));
-    EXPECT_EQ(chk.getLen(), 12);
+    EXPECT_EQ(chk.len(), 12);
 
     EXPECT_TRUE(heap.new1(chk, 100));
-    EXPECT_EQ(chk.getLen(), 112);
-    EXPECT_EQ(chk.getSize(), 1112);
+    EXPECT_EQ(chk.len(), 112);
+    EXPECT_EQ(chk.size(), 1112);
     EXPECT_TRUE(chk[0]);
     EXPECT_TRUE(chk[100]);
 
     EXPECT_TRUE(heap.new1(chk, 1000));
-    EXPECT_EQ(chk.getLen(), 1112);
+    EXPECT_EQ(chk.len(), 1112);
 
     EXPECT_FALSE(heap.new1(chk, 1));
-    EXPECT_NE(chk.getLen(), 1113);
+    EXPECT_NE(chk.len(), 1113);
 
     EXPECT_TRUE(chk.rel());
-    EXPECT_EQ(chk.getSize(), 0);
+    EXPECT_EQ(chk.size(), 0);
     EXPECT_EQ(chk.getBlkSize(), 4);
 
-    EXPECT_EQ(chk.getLen(), 0);
+    EXPECT_EQ(chk.len(), 0);
     EXPECT_FALSE(chk[4]);
     EXPECT_FALSE(chk[0]);
     EXPECT_TRUE(chk.isFull());

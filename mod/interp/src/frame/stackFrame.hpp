@@ -10,7 +10,7 @@ namespace wrd {
 
     public:
         frame& getCurrentFrame() {
-            return get(getLen() - 1);
+            return get(len() - 1);
         }
     };
 }

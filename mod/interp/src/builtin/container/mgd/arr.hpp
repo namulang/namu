@@ -30,10 +30,10 @@ namespace wrd {
 
         // containable:
 
-        wcnt getLen() const override { return _arr.getLen(); }
+        wcnt len() const override { return _arr.len(); }
 
-        iterator head() const override { return _arr.head(); }
-        iterator tail() const override { return _arr.tail(); }
+        iterator begin() const override { return _arr.begin(); }
+        iterator end() const override { return _arr.end(); }
         iterator last() const override { return _arr.last(); }
         iterator iter(wcnt step) const override { return _arr.iter(step); }
         iterator iter(const node& elem) const {

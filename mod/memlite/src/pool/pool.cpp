@@ -10,18 +10,18 @@ namespace wrd {
 
     chunks& me::operator[](widx n) { return get(n); }
     chunks& me::operator[](const instance& inst) { return get(inst); }
-    chunks& me::get(const instance& inst) { return get(inst.getType().getSize()); }
+    chunks& me::get(const instance& inst) { return get(inst.getType().size()); }
     chunks& me::get(widx n) { return *(chunks*)_get(n); }
 
     wbool me::has(const instance& it) const {
-        const chunks& got = get(it.getType().getSize());
+        const chunks& got = get(it.getType().size());
         WRD_NUL(got, false)
 
         return got.has(it);
     }
 
-    wcnt me::getSize() const { return _chunks.capacity(); }
-    wcnt me::getLen() const { return _chunks.size(); }
+    wcnt me::size() const { return _chunks.capacity(); }
+    wcnt me::len() const { return _chunks.size(); }
 
     wbool me::rel() {
         for(chunks* e : _chunks) {

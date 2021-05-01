@@ -32,7 +32,7 @@ namespace wrd {
                 // arr iteration has reached to tail of the arr:
                 _ownIter = _ownIter->_next;
                 if(!_ownIter) return stepped;
-                _iter = _ownIter->_arr->head();
+                _iter = _ownIter->_arr->begin();
                 remain--;
                 return stepped + next(remain);
             }
@@ -64,13 +64,13 @@ namespace wrd {
         nchain();
         explicit nchain(const ncontainer& con): _arr(con) {}
 
-        wcnt getLen() const override;
+        wcnt len() const override;
 
         using super::set;
         wbool set(const iterator& at, const node& new1) override;
 
-        iterator head() const override;
-        iterator tail() const override;
+        iterator begin() const override;
+        iterator end() const override;
         iterator last() const override;
         iterator iter(wcnt step) const override;
 
@@ -133,11 +133,11 @@ namespace wrd {
         }
         template <typename T>
         void each(std::function<wbool(nchain&, T&)> l) {
-            each(head(), nulOf<iterator>(), l);
+            each(begin(), nulOf<iterator>(), l);
         }
         template <typename T>
         void each(std::function<wbool(const nchain&, const T&)> l) const {
-            each(head(), nulOf<iterator>(), l);
+            each(begin(), nulOf<iterator>(), l);
         }
 
         tstr<instance> deepClone() const override {

@@ -31,7 +31,7 @@ namespace wrd {
         }
 
         titerator<T> headT() const { return iterT(0); }
-        titerator<T> tailT() const { return iterT(getLen()); }
+        titerator<T> tailT() const { return iterT(len()); }
         titerator<T> iterT(widx n) const {
             return titerator<T>(_onIter(n));
         }
