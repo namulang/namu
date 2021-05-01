@@ -140,6 +140,11 @@ namespace wrd {
             each(head(), nulOf<iterator>(), l);
         }
 
+        tstr<instance> deepClone() const override {
+            // TODO:
+            return tstr<instance>(this);
+        }
+
     private:
         iterator& _getContainerIterFromChainIter(const iterator& wrap) {
             if(nul(wrap)) return nulOf<iterator>();

@@ -90,4 +90,12 @@ namespace wrd {
     void me::empty() {
         _vec.clear();
     }
+
+    tstr<instance> me::deepClone() const {
+        me* ret = new me();
+        for(auto e=head(); e ;e++)
+            ret->add((node*) e->clone());
+
+        return tstr<instance>(ret);
+    }
 }

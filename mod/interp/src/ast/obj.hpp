@@ -10,12 +10,12 @@ namespace wrd {
         friend class func;
 
     public:
-        explicit obj(std::string name = "", ncontainer* newCon = new nchain())
-            : _con(newCon), _name(name) {}
+        explicit obj(std::string name = "")
+            : _subs(new nchain(_owns)), _name(name) {}
 
         using super::subs;
         ncontainer& subs() override {
-            return *_con;
+            return *_subs;
         }
 
         const std::string& getName() const override {
@@ -33,11 +33,14 @@ namespace wrd {
         }
 
     protected:
+        // frameInteractable:
         wbool _onInFrame(frame& sf, ncontainer& args) override;
         wbool _onOutFrame(frame& sf, ncontainer& args) override;
 
     private:
-        tstr<ncontainer> _con;
+        tstr<nchain> _shares;
+        narr _owns;
+        tstr<nchain> _subs;
         std::string _name;
     };
 }
