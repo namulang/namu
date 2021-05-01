@@ -101,6 +101,10 @@ namespace wrd {
             _arr.each(l);
         }
 
+        tstr<instance> deepClone() const override {
+            return _arr.deepClone();
+        }
+
     protected:
         iteration* _onIter(widx n) const override { return nullptr; }
 

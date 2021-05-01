@@ -259,3 +259,20 @@ TEST(arrTest, testContainableAPI) {
 
     delete con;
 }
+
+TEST(arrTest, testDeepClone) {
+    narr arr1;
+    arr1.add(new myNode(1));
+    arr1.add(new myNode(2));
+    ASSERT_EQ(arr1.getLen(), 2);
+
+    tstr<narr> arr2wrap(arr1.deepClone());
+    ASSERT_TRUE(arr2wrap);
+    narr& arr2 = *arr2wrap;
+    ASSERT_EQ(arr1.getLen(), arr2.getLen());
+
+    for(int n=0; n < 2; n++) {
+        ASSERT_EQ(arr1[n].cast<myNode>().number, arr2[n].cast<myNode>().number);
+        ASSERT_NE(&arr1[n], &arr2[n]);
+    }
+}

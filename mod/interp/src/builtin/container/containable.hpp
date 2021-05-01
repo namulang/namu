@@ -58,6 +58,8 @@ namespace wrd {
         virtual wcnt del(const containable& rhs) = 0;
 
         virtual void empty() = 0;
+
+        virtual tstr<instance> deepClone() const = 0;
     };
 
 }

@@ -94,6 +94,8 @@ namespace wrd {
         wbool del(const iterator& it) override;
         wbool del(widx n) override;
 
+        tstr<instance> deepClone() const override;
+
     protected:
         iteration* _onIter(widx n) const override {
             me* unconst = const_cast<me*>(this);
