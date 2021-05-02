@@ -259,3 +259,29 @@ TEST(narrTest, testcontainableAPI) {
 
     delete con;
 }
+
+TEST(narrTest, testRangeBasedForLoop) {
+
+    narr arr1;
+    arr1.add(new myNode(3));
+    arr1.add(new myNode(7));
+
+    int sum = 0;
+    for(auto& e : arr1) {
+        myNode& cast = e.cast<myNode>();
+        sum += cast.number;
+    }
+
+    int sum2 = 0;
+    for(const node& e : arr1) {
+        const myNode& cast = e.cast<myNode>();
+        sum2 += cast.number;
+    }
+    ASSERT_EQ(sum2, sum);
+
+    int expect = 0;
+    for(int n=0; n < arr1.len(); n++)
+        expect += arr1[n].cast<myNode>().number;
+
+    ASSERT_EQ(sum, expect);
+}

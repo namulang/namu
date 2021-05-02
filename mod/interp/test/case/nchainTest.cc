@@ -426,3 +426,32 @@ TEST(nchainTest, testLastIterator) {
     });
     ASSERT_TRUE(sorted);
 }
+
+TEST(nchainTest, testRangeBasedForLoop) {
+    nchain arr1;
+    arr1.add(new myNode(3));
+    arr1.add(new myNode(7));
+    nchain arr2;
+    arr2.add(new myNode(1));
+    arr2.add(new myNode(2));
+    arr1.link(arr2);
+
+    int sum = 0;
+    for(auto& e : arr1) {
+        myNode& cast = e.cast<myNode>();
+        sum += cast.number;
+    }
+
+    int sum2 = 0;
+    for(const node& e : arr1) {
+        const myNode& cast = e.cast<myNode>();
+        sum2 += cast.number;
+    }
+    ASSERT_EQ(sum2, sum);
+
+    int expect = 0;
+    for(wrd::iterator e=arr1.begin(); e ; e++)
+        expect += e->cast<myNode>().number;
+
+    ASSERT_EQ(sum, expect);
+}
