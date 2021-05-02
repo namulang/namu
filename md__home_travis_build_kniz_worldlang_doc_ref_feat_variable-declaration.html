@@ -46,28 +46,28 @@
         <h1>
           variable declaration
         </h1>
-<h2>문법</h2><ul><li><p>&lt;identifier&gt; &lt;type&gt; (:= expr)*</p><pre class="m-code"><span class="nx">n</span> <span class="kt">int</span>
-<span class="nx">grade</span> <span class="nx">flt32</span> <span class="o">:=</span> <span class="mf">3.5</span>
-<span class="nx">objs</span> <span class="nx">str</span><span class="p">[]</span><span class="err">?</span> <span class="o">:=</span> <span class="p">[</span><span class="s">&quot;why&quot;</span><span class="p">,</span> <span class="s">&quot;so&quot;</span><span class="p">,</span> <span class="s">&quot;serius?&quot;</span><span class="p">]</span></pre></li></ul><h2>type deduction을 지원한다.</h2><ul><li>&lt;identifier&gt; := expr</li></ul><pre class="m-code"><span class="nx">n</span> <span class="o">:=</span> <span class="mi">4</span>
-<span class="nx">grade</span> <span class="o">:=</span> <span class="mf">3.5</span>
-<span class="nx">objs</span> <span class="o">:=</span> <span class="p">[</span><span class="s">&quot;why&quot;</span><span class="p">,</span> <span class="s">&quot;so&quot;</span><span class="p">,</span> <span class="s">&quot;serius?&quot;</span><span class="p">]</span></pre><h2>null ref declaration</h2><ul><li>mutable 타입에 한하여 null인 reference를 쉽게 정의할 수 있다.</li></ul><pre class="m-code"><span class="nx">def</span> <span class="nx">myObj</span>
-    <span class="o">...</span>
-<span class="nx">obj1</span> <span class="o">:=</span> <span class="nx">myObj</span> <span class="c1">// myObj 유니크 오브젝트를 ref에 넣었다.</span>
+<h3>문법</h3><ul><li><p>&lt;identifier&gt; &lt;type&gt; (:= expr)*</p><pre class="m-code"><span class="n">n</span> <span class="kt">int</span>
+<span class="n">grade</span> <span class="nl">flt32</span> <span class="p">:</span><span class="o">=</span> <span class="mf">3.5</span>
+<span class="n">objs</span> <span class="n">str</span><span class="p">[]</span><span class="o">?</span> <span class="o">:=</span> <span class="p">[</span><span class="s">&quot;why&quot;</span><span class="p">,</span> <span class="s">&quot;so&quot;</span><span class="p">,</span> <span class="s">&quot;serius?&quot;</span><span class="p">]</span></pre></li></ul><h3>type deduction을 지원한다.</h3><ul><li>&lt;identifier&gt; := expr</li></ul><pre class="m-code"><span class="nl">n</span> <span class="p">:</span><span class="o">=</span> <span class="mi">4</span>
+<span class="nl">grade</span> <span class="p">:</span><span class="o">=</span> <span class="mf">3.5</span>
+<span class="nl">objs</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="s">&quot;why&quot;</span><span class="p">,</span> <span class="s">&quot;so&quot;</span><span class="p">,</span> <span class="s">&quot;serius?&quot;</span><span class="p">]</span></pre><h3>null ref declaration</h3><ul><li>mutable 타입에 한하여 null인 reference를 쉽게 정의할 수 있다.</li></ul><pre class="m-code"><span class="n">def</span> <span class="n">myObj</span>
+    <span class="p">...</span>
+<span class="nl">obj1</span> <span class="p">:</span><span class="o">=</span> <span class="n">myObj</span> <span class="c1">// myObj 유니크 오브젝트를 ref에 넣었다.</span>
 <span class="c1">// 다음 4개의 ref는 모두 동일한 코드이다.</span>
-<span class="nx">obj2</span> <span class="o">:=</span> <span class="nx">null</span> <span class="nx">as</span> <span class="nx">myObj</span> <span class="c1">// obj2는 myObj? 로 유추되며 null이 할당된다.</span>
-<span class="nx">obj3</span> <span class="nx">myObj</span><span class="err">?</span> <span class="o">:=</span> <span class="nx">null</span>
-<span class="nx">obj4</span> <span class="o">:=</span> <span class="nx">myObj</span><span class="err">?</span>
-<span class="nx">obj5</span> <span class="nx">myObj</span><span class="err">?</span>
+<span class="nl">obj2</span> <span class="p">:</span><span class="o">=</span> <span class="n">null</span> <span class="n">as</span> <span class="n">myObj</span> <span class="c1">// obj2는 myObj? 로 유추되며 null이 할당된다.</span>
+<span class="n">obj3</span> <span class="n">myObj</span><span class="o">?</span> <span class="o">:=</span> <span class="n">null</span>
+<span class="nl">obj4</span> <span class="p">:</span><span class="o">=</span> <span class="n">myObj</span><span class="o">?</span>
+<span class="n">obj5</span> <span class="n">myObj</span><span class="o">?</span>
 
-<span class="nx">int1</span> <span class="o">:=</span> <span class="kt">int</span> <span class="c1">// Unique오브젝트가 존재하지 않으며 immutable인 경우 int(0)의 객체가 복제되어 할당된다.</span>
-<span class="nx">int2</span> <span class="o">:=</span> <span class="kt">int</span><span class="err">?</span> <span class="c1">// error. immutable은 ref를 만들 수 없다.</span>
+<span class="nl">int1</span> <span class="p">:</span><span class="o">=</span> <span class="kt">int</span> <span class="c1">// Unique오브젝트가 존재하지 않으며 immutable인 경우 int(0)의 객체가 복제되어 할당된다.</span>
+<span class="nl">int2</span> <span class="p">:</span><span class="o">=</span> <span class="kt">int</span><span class="o">?</span> <span class="c1">// error. immutable은 ref를 만들 수 없다.</span>
 
-<span class="nx">arr</span> <span class="o">:=</span> <span class="p">[]</span> <span class="c1">// arr은빈node[] 객체가 할당된다.</span>
-<span class="nx">arr1</span> <span class="o">:=</span> <span class="nx">null</span> <span class="nx">as</span> <span class="nx">myObj</span><span class="p">[]</span> <span class="c1">// arr1은 myObj[]의 refer이며 null이 할당된다.</span>
-<span class="nx">arr2</span> <span class="nx">myObj</span><span class="p">[]</span><span class="err">?</span> <span class="o">:=</span> <span class="nx">null</span> <span class="c1">// 위와 같다.</span>
-<span class="nx">arr3</span> <span class="o">:=</span> <span class="nx">myObj</span><span class="p">[]</span><span class="err">?</span> <span class="c1">// 위와 같다.</span>
-<span class="nx">arr4</span> <span class="o">:=</span> <span class="p">[</span><span class="nx">myObj</span><span class="err">?</span><span class="p">]</span> <span class="c1">// myObj의 null을 1개 가지고 있는 myObj[] 배열이 arr4에 할당된다.</span>
-<span class="nx">arr4</span><span class="p">.</span><span class="nx">len</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;</span> <span class="p">!</span><span class="nx">arr4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">// true</span></pre>
+<span class="nl">arr</span> <span class="p">:</span><span class="o">=</span> <span class="p">[]</span> <span class="c1">// arr은빈node[] 객체가 할당된다.</span>
+<span class="nl">arr1</span> <span class="p">:</span><span class="o">=</span> <span class="n">null</span> <span class="n">as</span> <span class="n">myObj</span><span class="p">[]</span> <span class="c1">// arr1은 myObj[]의 refer이며 null이 할당된다.</span>
+<span class="n">arr2</span> <span class="n">myObj</span><span class="p">[]</span><span class="o">?</span> <span class="o">:=</span> <span class="n">null</span> <span class="c1">// 위와 같다.</span>
+<span class="nl">arr3</span> <span class="p">:</span><span class="o">=</span> <span class="n">myObj</span><span class="p">[]</span><span class="o">?</span> <span class="c1">// 위와 같다.</span>
+<span class="nl">arr4</span> <span class="p">:</span><span class="o">=</span> <span class="p">[</span><span class="n">myObj</span><span class="o">?</span><span class="p">]</span> <span class="c1">// myObj의 null을 1개 가지고 있는 myObj[] 배열이 arr4에 할당된다.</span>
+<span class="n">arr4</span><span class="p">.</span><span class="n">len</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;</span> <span class="o">!</span><span class="n">arr4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">// true</span></pre>
       </div>
     </div>
   </div>
@@ -113,7 +113,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

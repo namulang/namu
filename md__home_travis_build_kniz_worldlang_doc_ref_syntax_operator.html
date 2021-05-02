@@ -46,13 +46,13 @@
         <h1>
           operator
         </h1>
-<h2>연산자 우선순위</h2><ul><li>위에 있을 수록, 우선된다.</li></ul><table class="m-table"><thead><tr><th>연산자operator</th><th>설명</th><th>Associativity</th><th>예제</th></tr></thead><tbody><tr><td>()</td><td>괄호</td><td>None</td><td>(func(val))</td></tr><tr><td>(), [], ., ++, &ndash;, **</td><td>Postfix(함수호출, 접근 등)</td><td>right</td><td>func(35)</td></tr><tr><td>++, &ndash;, **, !, -, ~~</td><td>Prefix</td><td>left</td><td>**a // a*a</td></tr><tr><td>as</td><td>캐스팅</td><td>None</td><td>int val</td></tr><tr><td>*, /, %</td><td>이항 곱, 나눗셈, 나머지</td><td>right</td><td>a % b</td></tr><tr><td>+, -</td><td>이항 덧셈, 뺄셈</td><td>right</td><td>a - b</td></tr><tr><td>&lt;&lt;, &gt;&gt;</td><td>비트 SHIFT 연산</td><td>right</td><td>a &lt;&lt; 3</td></tr><tr><td>&amp;&amp;</td><td>비트 AND 연산</td><td>right</td><td>a &amp;&amp; 0x01</td></tr><tr><td>^^</td><td>비트 XOR 연산</td><td>right</td><td>a %% 0x01</td></tr><tr><td>||</td><td>비트 OR 연산</td><td>right</td><td>0x02 || 0x01</td></tr><tr><td>..</td><td>범위 연산</td><td>None</td><td>0 ~ b</td></tr><tr><td>&lt;=, &lt;, &gt;, &gt;=, ==, !=, ===, !==</td><td>비교 연산</td><td>right</td><td>a &gt; b</td></tr><tr><td>&amp;</td><td>논리 AND 연산</td><td>right</td><td>a &amp; b</td></tr></tbody></table><p>| | | 논리 OR 연산 | right | a | b | | =, *=, /=, %=, +=, -= | 할당 연산 | left | a &amp;&amp;= 0x02 |</p><h2>비교연산자와 참조자 비교 연산자</h2><pre class="m-code"><span class="nx">a1</span> <span class="o">:=</span> <span class="nx">My</span><span class="p">()</span>
-<span class="nx">a2</span> <span class="o">:=</span> <span class="nx">My</span><span class="p">()</span>
+<h3>연산자 우선순위</h3><ul><li>위에 있을 수록, 우선된다.</li></ul><table class="m-table"><thead><tr><th>연산자operator</th><th>설명</th><th>Associativity</th><th>예제</th></tr></thead><tbody><tr><td>()</td><td>괄호</td><td>None</td><td>(func(val))</td></tr><tr><td>(), [], ., ++, &ndash;, **</td><td>Postfix(함수호출, 접근 등)</td><td>right</td><td>func(35)</td></tr><tr><td>++, &ndash;, **, !, -, ~~</td><td>Prefix</td><td>left</td><td>**a // a*a</td></tr><tr><td>as</td><td>캐스팅</td><td>None</td><td>int val</td></tr><tr><td>*, /, %</td><td>이항 곱, 나눗셈, 나머지</td><td>right</td><td>a % b</td></tr><tr><td>+, -</td><td>이항 덧셈, 뺄셈</td><td>right</td><td>a - b</td></tr><tr><td>&lt;&lt;, &gt;&gt;</td><td>비트 SHIFT 연산</td><td>right</td><td>a &lt;&lt; 3</td></tr><tr><td>&amp;&amp;</td><td>비트 AND 연산</td><td>right</td><td>a &amp;&amp; 0x01</td></tr><tr><td>^^</td><td>비트 XOR 연산</td><td>right</td><td>a %% 0x01</td></tr><tr><td>||</td><td>비트 OR 연산</td><td>right</td><td>0x02 || 0x01</td></tr><tr><td>..</td><td>범위 연산</td><td>None</td><td>0 ~ b</td></tr><tr><td>&lt;=, &lt;, &gt;, &gt;=, ==, !=, ===, !==</td><td>비교 연산</td><td>right</td><td>a &gt; b</td></tr><tr><td>&amp;</td><td>논리 AND 연산</td><td>right</td><td>a &amp; b</td></tr></tbody></table><p>| | | 논리 OR 연산 | right | a | b | | =, *=, /=, %=, +=, -= | 할당 연산 | left | a &amp;&amp;= 0x02 |</p><h3>비교연산자와 참조자 비교 연산자</h3><pre class="m-code"><span class="nl">a1</span> <span class="p">:</span><span class="o">=</span> <span class="n">My</span><span class="p">()</span>
+<span class="nl">a2</span> <span class="p">:</span><span class="o">=</span> <span class="n">My</span><span class="p">()</span>
 
-<span class="nx">a1</span> <span class="o">==</span> <span class="nx">a2</span> <span class="c1">// true</span>
-<span class="nx">a1</span> <span class="o">==</span><span class="p">=</span> <span class="nx">a2</span> <span class="c1">// false</span>
-<span class="nx">a2</span> <span class="p">=</span> <span class="nx">a1</span> <span class="c1">// now a2 reference to what a1 is pointing.</span>
-<span class="nx">a1</span> <span class="o">==</span><span class="p">=</span> <span class="nx">a2</span> <span class="c1">// true</span></pre><h2>할당연산자는 참조자만 변경한다.</h2>
+<span class="n">a1</span> <span class="o">==</span> <span class="n">a2</span> <span class="c1">// true</span>
+<span class="n">a1</span> <span class="o">===</span> <span class="n">a2</span> <span class="c1">// false</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">a1</span> <span class="c1">// now a2 reference to what a1 is pointing.</span>
+<span class="n">a1</span> <span class="o">===</span> <span class="n">a2</span> <span class="c1">// true</span></pre><h3>할당연산자는 참조자만 변경한다.</h3>
       </div>
     </div>
   </div>
@@ -98,7 +98,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

@@ -46,11 +46,11 @@
         <h1>
           casting
         </h1>
-<h2>Casting은 3 종류가 존재한다.</h2><ul><li>Native에서의 dynamic cast</li><li>worldlang ast를 대상으로 한 묵시적 형변환</li><li>worldlang ast를 대상으로 한 명시적 형변환</li></ul><h2>명시적 형변환</h2><ul><li>월드의 형변환은 1가지 문법으로 100% 대체가 가능한데, as() 함수다. as 함수는 다음과 같은 순서로 우선순위를 갖는다.<ul><li>사용자가 정의한 캐스팅코드</li><li>거기에 없으면 클래스 계층상 구체클래스타입을 원하는 경우(= RTTI)</li><li>거기에도 없으면 실패. 끝.</li></ul></li><li>1, 2번은 모두 WorldFrx 안에 탑재되어있어야 한다.</li><li>Node에 정의된 virtual Refer as(Class&amp;) 함수가 실질적인 형변환을 수행한다.</li><li>Native환경에서는 타입이 구체적으로 나와야 편하기 때문에 TRefer&lt;T&gt; as&lt;T&gt;()도 제공한다.</li></ul><h2>native 언어의 지역변수는 명시적 캐스팅이 안된다.</h2><pre class="m-code"> <span class="p">{</span><span class="n">c</span><span class="o">++</span><span class="p">}</span>
+<h3>Casting은 3 종류가 존재한다.</h3><ul><li>Native에서의 dynamic cast</li><li>worldlang ast를 대상으로 한 묵시적 형변환</li><li>worldlang ast를 대상으로 한 명시적 형변환</li></ul><h3>명시적 형변환</h3><ul><li>월드의 형변환은 1가지 문법으로 100% 대체가 가능한데, as() 함수다. as 함수는 다음과 같은 순서로 우선순위를 갖는다.<ul><li>사용자가 정의한 캐스팅코드</li><li>거기에 없으면 클래스 계층상 구체클래스타입을 원하는 경우(= RTTI)</li><li>거기에도 없으면 실패. 끝.</li></ul></li><li>1, 2번은 모두 WorldFrx 안에 탑재되어있어야 한다.</li><li>Node에 정의된 virtual Refer as(Class&amp;) 함수가 실질적인 형변환을 수행한다.</li><li>Native환경에서는 타입이 구체적으로 나와야 편하기 때문에 TRefer&lt;T&gt; as&lt;T&gt;()도 제공한다.</li></ul><p>## native 언어의 지역변수는 명시적 캐스팅이 안된다.</p><pre class="m-code"><span class="p">{</span><span class="n">c</span><span class="o">++</span><span class="p">}</span>
 <span class="kt">void</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="n">Int</span> <span class="nf">val</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
     <span class="n">val</span><span class="p">.</span><span class="n">as</span><span class="o">&lt;</span><span class="n">Flt</span><span class="o">&gt;</span><span class="p">()</span>
-<span class="p">}</span></pre><h2>native 환경에서 지역변수도 바인딩 된다.</h2><ul><li>smartptr 같은 바인딩은 본래 HEAP에 속한 인스턴스에 한해서 동작한다.</li><li><p>그러나 native 환경에서 사용자가 개발할 때는 local 변수나 HEAP에 속한 변수도 모두 한 데 넣고 범용적으로 처리할 경우가 있다.</p><pre class="m-code"> <span class="p">{</span><span class="n">c</span><span class="o">++</span><span class="p">}</span>
+<span class="p">}</span></pre><h3>native 환경에서 지역변수도 바인딩 된다.</h3><ul><li>smartptr 같은 바인딩은 본래 HEAP에 속한 인스턴스에 한해서 동작한다.</li><li><p>그러나 native 환경에서 사용자가 개발할 때는 local 변수나 HEAP에 속한 변수도 모두 한 데 넣고 범용적으로 처리할 경우가 있다.</p><pre class="m-code"><span class="p">{</span><span class="n">c</span><span class="o">++</span><span class="p">}</span>
 <span class="n">ref</span><span class="o">*</span> <span class="n">getArray</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">static</span> <span class="n">Int</span> <span class="n">staticInt</span><span class="p">(</span><span class="mi">22</span><span class="p">);</span>
     <span class="k">static</span> <span class="n">ref</span> <span class="n">cache</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
@@ -66,9 +66,9 @@
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ref</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;val&quot;</span><span class="p">))</span>
             <span class="k">return</span><span class="p">;</span>
     <span class="p">}</span>
-<span class="p">}</span></pre></li><li>이를 위해서 world에서 적용하는 binding API는 로컬변수에 대한 바인딩도 지원한다.</li><li>로컬바인딩은 Weak만 지원한다. 다음의 기능을 제공한다.<ul><li>Binding 여부를 알려줄 수 있다.</li><li>Binding 했던 인스턴스가 사라졌다는 걸 알려줄 수 있다.</li><li>Binding 유지는 할 수 없다. (Weak)</li></ul></li></ul><h2>as함수의 반환형은 Bind 다.</h2><ul><li>Bind 클래스는 Strong과 Weak 모드 양쪽으로 동작 가능한 클래스다. wrd frx 에서는 대부분 이 Bind 클래스로 나갈 것이다.</li><li>상황에 따라서 Weak일 수도 있으며 Strong 일 수도 있다.</li><li>이는 로컬바인딩으로 나가는 상황을 고려한 것이다.</li><li>Strong로 나간걸 Weak로 받을 수 있다. Bind로도 받을 수 있다.</li><li>Weak를 Strong으로 받을 수 없다. Bind로는 받을 수 있다. 타입체킹을 해야 한다.</li></ul><h2>묵시적캐스팅</h2><p>ast를 대상으로 해서 부모클래스로의 캐스팅 + 일부 primitive 변환이 해당된다.</p><p>묵시적 캐스팅의 의의는 함수 디덕션 과정 (참고로 함수디덕션은 단순히 함수호출을 의미하는게 아니다. World는 모든 것이 msg의 송수신, 즉, 함수로 보기 때문에 생성자 생성과 연산자, if 같은 keyword까지 포함한 모든 것을 의미한다)에서 주어진 인자로 이 함수를 호출 할 수 있는 지를 판단하기 위해 타입의 교량역할을 하는 것이다.</p><h2>built-in type에 대한 묵시적 형변환 목록</h2><ul><li>built-in 타입들에 대해서 최소한의 묵시적형변환을 지원해준다. 그 이외에는 직접 개발자가 캐스팅을 코드에 명시해야 한다.</li><li>사용자가 작성한 타입을 부득이 다른 타입으로 변환한다는 것은 World가 적절한 타입으로 변경해준다는 걸 의미한다. 여기서 &quot;적절함&quot; 이란 일종의 AI를 의미한다. AI를 넣을 수 없다면 그걸 대신 할 수 있는 대중의 합의점에 해당하는 데이터가 필요로 해진다.</li><li>형변환 테이블에는 비슷한 그룹군이 담겨있다. 우선순위는 존재하지 않는다.<ul><li>원칙<ul><li>작은것은 큰것으로 흘러가는 것이 원칙이다. 그러나 사용성을 위하여 몇가지 예외를 둔다. (int -&gt; float, char -&gt; int, int -&gt; string)</li><li>예외적으로 숫자 그룹군끼리는 서로 호환된다.</li><li>대부분의 built 타입은 string으로 묵시적 변환될 수 없다.</li></ul></li><li>int --&gt; float, char, bool</li><li>float --&gt; int, bool</li><li>char --&gt; float, int, bool</li><li>bool --&gt; int</li><li>result --&gt; string, bool</li></ul></li><li>예외적으로 0과 null은 false로 변환 될 수 있다. 0 이외의 값은 true다.</li></ul><h2>str은 묵시적캐스팅에 해당하지 않는다.</h2><p>산술연산인 int, char, byte, 등만 해당된다. 자바와 같은 방법이다. str도 포함되면 모호성 오류가 너무 많다는 걸 알았다. 단, 자바처럼 str + int 식의 + 에 한해서만 묵시적 캐스팅을 지원해 줘야한다.</p><h2>메소드 호출시 인자에 대해서는 묵시적 변환만 이루어진다.</h2><p>이 말은, 어떤 메소드를 호출해야 하는지 바인딩을 선택하는 과정에서 묵시적 변환으로 판단해야 한다는 것이다. 캐스팅의 주체는 객체 자체가 해야 한다. 따라서 메소드 호출을 담당하는 객체는, 각 인자들에게 해당 타입으로 변환이 가능한지를 질의한다.</p><h2>연산자 우선순위는 파서에 의해서 구현된다.</h2><h2>캐스팅 문법</h2><pre>&lt;expr&gt; as &lt;identifer&gt;
+<span class="p">}</span></pre></li><li>이를 위해서 world에서 적용하는 binding API는 로컬변수에 대한 바인딩도 지원한다.</li><li>로컬바인딩은 Weak만 지원한다. 다음의 기능을 제공한다.<ul><li>Binding 여부를 알려줄 수 있다.</li><li>Binding 했던 인스턴스가 사라졌다는 걸 알려줄 수 있다.</li><li>Binding 유지는 할 수 없다. (Weak)</li></ul></li></ul><h3>as함수의 반환형은 Bind 다.</h3><ul><li>Bind 클래스는 Strong과 Weak 모드 양쪽으로 동작 가능한 클래스다. wrd frx 에서는 대부분 이 Bind 클래스로 나갈 것이다.</li><li>상황에 따라서 Weak일 수도 있으며 Strong 일 수도 있다.</li><li>이는 로컬바인딩으로 나가는 상황을 고려한 것이다.</li><li>Strong로 나간걸 Weak로 받을 수 있다. Bind로도 받을 수 있다.</li><li>Weak를 Strong으로 받을 수 없다. Bind로는 받을 수 있다. 타입체킹을 해야 한다.</li></ul><h3>묵시적캐스팅</h3><p>ast를 대상으로 해서 부모클래스로의 캐스팅 + 일부 primitive 변환이 해당된다.</p><p>묵시적 캐스팅의 의의는 함수 디덕션 과정 (참고로 함수디덕션은 단순히 함수호출을 의미하는게 아니다. World는 모든 것이 msg의 송수신, 즉, 함수로 보기 때문에 생성자 생성과 연산자, if 같은 keyword까지 포함한 모든 것을 의미한다)에서 주어진 인자로 이 함수를 호출 할 수 있는 지를 판단하기 위해 타입의 교량역할을 하는 것이다.</p><h3>built-in type에 대한 묵시적 형변환 목록</h3><ul><li>built-in 타입들에 대해서 최소한의 묵시적형변환을 지원해준다. 그 이외에는 직접 개발자가 캐스팅을 코드에 명시해야 한다.</li><li>사용자가 작성한 타입을 부득이 다른 타입으로 변환한다는 것은 World가 적절한 타입으로 변경해준다는 걸 의미한다. 여기서 &quot;적절함&quot; 이란 일종의 AI를 의미한다. AI를 넣을 수 없다면 그걸 대신 할 수 있는 대중의 합의점에 해당하는 데이터가 필요로 해진다.</li><li>형변환 테이블에는 비슷한 그룹군이 담겨있다. 우선순위는 존재하지 않는다.<ul><li>원칙<ul><li>작은것은 큰것으로 흘러가는 것이 원칙이다. 그러나 사용성을 위하여 몇가지 예외를 둔다. (int -&gt; float, char -&gt; int, int -&gt; string)</li><li>예외적으로 숫자 그룹군끼리는 서로 호환된다.</li><li>대부분의 built 타입은 string으로 묵시적 변환될 수 없다.</li></ul></li><li>int &ndash;&gt; float, char, bool</li><li>float &ndash;&gt; int, bool</li><li>char &ndash;&gt; float, int, bool</li><li>bool &ndash;&gt; int</li><li>result &ndash;&gt; string, bool</li></ul></li><li>예외적으로 0과 null은 false로 변환 될 수 있다. 0 이외의 값은 true다.</li></ul><h3>str은 묵시적캐스팅에 해당하지 않는다.</h3><p>산술연산인 int, char, byte, 등만 해당된다. 자바와 같은 방법이다. str도 포함되면 모호성 오류가 너무 많다는 걸 알았다. 단, 자바처럼 str + int 식의 + 에 한해서만 묵시적 캐스팅을 지원해 줘야한다.</p><h3>메소드 호출시 인자에 대해서는 묵시적 변환만 이루어진다.</h3><p>이 말은, 어떤 메소드를 호출해야 하는지 바인딩을 선택하는 과정에서 묵시적 변환으로 판단해야 한다는 것이다. 캐스팅의 주체는 객체 자체가 해야 한다. 따라서 메소드 호출을 담당하는 객체는, 각 인자들에게 해당 타입으로 변환이 가능한지를 질의한다.</p><h3>연산자 우선순위는 파서에 의해서 구현된다.</h3><h3>캐스팅 문법</h3><pre>&lt;expr&gt; as &lt;identifer&gt;
 &lt;expr&gt; as? &lt;identifier&gt;
-</pre><ul><li>모든 변수는 캐스팅의 타입으로 사용 가능하다.</li><li>as에서 casting이 실패하면 런타임 에러가 된다.</li><li>as?에서 casting이 실패하면 null이 들어간다.</li></ul><h2>as의 알고리즘</h2><ul><li>as는 매우 기본적인 func이므로 node가 갖는다.</li><li>is도 같이 제공해야 한다.</li><li>native 환경에서는 as&lt;T&gt;가 더 편할 것이다. 같이 제공한다.</li><li>as 안쪽에서는 각 class 안쪽에서 type에 대해 적절한 bind가 나가도록 구현한다.<ul><li>is 와 짝이 맞아야 한다.</li></ul></li></ul><h2>is</h2><pre>&lt;expr is &lt;identifier&gt;
+</pre><ul><li>모든 변수는 캐스팅의 타입으로 사용 가능하다.</li><li>as에서 casting이 실패하면 런타임 에러가 된다.</li><li>as?에서 casting이 실패하면 null이 들어간다.</li></ul><h3>as의 알고리즘</h3><ul><li>as는 매우 기본적인 func이므로 node가 갖는다.</li><li>is도 같이 제공해야 한다.</li><li>native 환경에서는 as&lt;T&gt;가 더 편할 것이다. 같이 제공한다.</li><li>as 안쪽에서는 각 class 안쪽에서 type에 대해 적절한 bind가 나가도록 구현한다.<ul><li>is 와 짝이 맞아야 한다.</li></ul></li></ul><h3>is</h3><pre>&lt;expr is &lt;identifier&gt;
 </pre><ul><li>casting이 가능하면 true, 불가능하면 false가 나온다.</li></ul><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
     <span class="n">bla</span> <span class="n">bla</span><span class="p">...</span>
 
@@ -83,48 +83,45 @@
 <span class="n">get</span><span class="p">()</span> <span class="n">A</span>
     <span class="k">return</span> <span class="n">B</span><span class="p">()</span>
 
-<span class="nl">b2</span> <span class="p">:</span><span class="o">=</span> <span class="n">get</span><span class="p">()</span> <span class="n">as</span> <span class="n">a</span> <span class="n">as</span> <span class="n">B</span> <span class="n">as</span> <span class="n">b</span> <span class="c1">// (b) ((B) ((a) get()))</span></pre><h2>상수를 명시적 캐스팅에 이용해서는 안된다.</h2><pre class="m-code"><span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="mi">35</span> <span class="c1">// ok</span>
+<span class="nl">b2</span> <span class="p">:</span><span class="o">=</span> <span class="n">get</span><span class="p">()</span> <span class="n">as</span> <span class="n">a</span> <span class="n">as</span> <span class="n">B</span> <span class="n">as</span> <span class="n">b</span> <span class="c1">// (b) ((B) ((a) get()))</span></pre><h3>상수를 명시적 캐스팅에 이용해서는 안된다.</h3><pre class="m-code"><span class="nl">a</span> <span class="p">:</span><span class="o">=</span> <span class="mi">35</span> <span class="c1">// ok</span>
 <span class="nl">a1</span> <span class="p">:</span><span class="o">=</span> <span class="mf">35.5</span> <span class="n">as</span> <span class="kt">int</span> <span class="c1">// ok</span>
-<span class="nl">a2</span> <span class="p">:</span><span class="o">=</span> <span class="n">a</span> <span class="n">as</span> <span class="mf">35.5</span> <span class="c1">// err</span></pre><ul><li>착각하지 않도록 하자. 상수도 묵시적 변환은 이루어진다.</li></ul><h2>묵시적 형변환으로 다른 타입이 되어 setter 메소드에 넘겨도 괜찮다.</h2><ul><li><p>다음의 시나리오를 보자.</p><pre class="m-code"><span class="n">def</span> <span class="n">a</span><span class="p">()</span>
+<span class="nl">a2</span> <span class="p">:</span><span class="o">=</span> <span class="n">a</span> <span class="n">as</span> <span class="mf">35.5</span> <span class="c1">// err</span></pre><ul><li>착각하지 않도록 하자. 상수도 묵시적 변환은 이루어진다.</li></ul><h3>묵시적 형변환으로 다른 타입이 되어 setter 메소드에 넘겨도 괜찮다.</h3><ul><li><p>다음의 시나리오를 보자.</p><pre class="m-code"><span class="n">def</span> <span class="n">a</span><span class="p">()</span>
     <span class="n">print</span><span class="p">(</span><span class="n">msg</span> <span class="n">str</span><span class="p">)</span> <span class="kt">void</span>
         <span class="n">msg</span> <span class="o">+=</span> <span class="s">&quot;msg = &quot;</span>
         <span class="n">c</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
     <span class="n">print</span><span class="p">(</span><span class="n">msg</span> <span class="n">flt</span><span class="p">)</span> <span class="kt">void</span>
 
 <span class="n">a</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="mi">35</span><span class="p">)</span> <span class="c1">// err</span>
-<span class="n">a</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="mi">35</span> <span class="o">+</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="c1">// &quot;msg = 35&quot;</span></pre></li><li>35는 string으로 형변환 되지 않는다. 너무 많은 모호성 오류가 나오기 때문이다.<ul><li>만약 array 같은 것이 묵시적형변환이 된다고 했다면 문제가 더 심각했을 것이다.</li></ul></li><li>str에 대한 + * - / 등의 산술 연산으로 인한 타입유추는 str를 지원한다.</li></ul><h2>커스텀 명시적 캐스팅은 as 를 오버라이딩 해서 지원한다.</h2><ul><li>임의 타입에 대해서 다른 타입으로 명시적 변환이 가능하도록 하려면 @as를 오버라이딩한다.</li></ul><pre class="m-code"><span class="nx">def</span> <span class="nx">base</span>
-<span class="nx">def</span> <span class="nx">my</span> <span class="nx">base</span>
-    <span class="nx">name</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span>
+<span class="n">a</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="mi">35</span> <span class="o">+</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="c1">// &quot;msg = 35&quot;</span></pre></li><li>35는 string으로 형변환 되지 않는다. 너무 많은 모호성 오류가 나오기 때문이다.<ul><li>만약 array 같은 것이 묵시적형변환이 된다고 했다면 문제가 더 심각했을 것이다.</li></ul></li><li>str에 대한 + * - / 등의 산술 연산으로 인한 타입유추는 str를 지원한다.</li></ul><h3>커스텀 명시적 캐스팅은 as 를 오버라이딩 해서 지원한다.</h3><ul><li>임의 타입에 대해서 다른 타입으로 명시적 변환이 가능하도록 하려면 를 오버라이딩한다.</li></ul><pre class="m-code"><span class="n">def</span> <span class="n">base</span>
+<span class="n">def</span> <span class="n">my</span> <span class="n">base</span>
+    <span class="nl">name</span> <span class="p">:</span><span class="o">=</span> <span class="s">&quot;&quot;</span>
 
-    <span class="err">@</span><span class="nx">as</span> <span class="nx">str</span>
-        <span class="nx">sys</span><span class="p">.</span><span class="nx">term</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;as&quot;</span><span class="p">)</span>
-        <span class="nx">ret</span> <span class="nx">name</span> 
-    <span class="err">@</span><span class="nx">as</span> <span class="kt">int</span>
-        <span class="o">...</span>
+    <span class="err">@</span><span class="n">as</span> <span class="n">str</span>
+        <span class="n">sys</span><span class="p">.</span><span class="n">term</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;as&quot;</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="n">name</span> 
+    <span class="err">@</span><span class="n">as</span> <span class="kt">int</span>
+        <span class="p">...</span>
 
-<span class="nx">base1</span> <span class="o">:=</span> <span class="nx">my</span><span class="p">()</span> <span class="nx">as</span> <span class="nx">base</span>
-<span class="nx">base1</span> <span class="nx">as</span> <span class="nx">str</span> <span class="c1">// as</span>
-<span class="nx">base1</span> <span class="nx">as</span> <span class="kt">int</span>
-<span class="nx">base1</span> <span class="nx">as</span> <span class="nx">my</span>
+<span class="nl">base1</span> <span class="p">:</span><span class="o">=</span> <span class="n">my</span><span class="p">()</span> <span class="n">as</span> <span class="n">base</span>
+<span class="n">base1</span> <span class="n">as</span> <span class="n">str</span> <span class="c1">// as</span>
+<span class="n">base1</span> <span class="n">as</span> <span class="kt">int</span>
+<span class="n">base1</span> <span class="n">as</span> <span class="n">my</span>
 
-<span class="err">##</span> <span class="nx">upcasting의</span> <span class="nx">알고리즘</span>
-<span class="o">*</span> <span class="nx">구현상</span> <span class="nx">문제가</span> <span class="nx">되지</span> <span class="nx">않는다</span><span class="p">.</span> <span class="nx">다음</span> <span class="nx">예제를</span> <span class="nx">놓고</span> <span class="nx">시나리오를</span> <span class="nx">분류해보면</span> <span class="nx">명확해진다</span><span class="p">.</span>
-<span class="s">``</span><span class="err">`</span><span class="k">go</span>
-<span class="nx">def</span> <span class="nx">A</span>
-    <span class="nx">foo</span><span class="p">()</span> <span class="nx">void</span><span class="p">:</span> <span class="nx">sys</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">)</span>
-    <span class="nx">boo</span><span class="p">()</span> <span class="nx">void</span>
+<span class="cp">## upcasting의 알고리즘</span>
+<span class="o">*</span> <span class="err">구현상</span> <span class="err">문제가</span> <span class="err">되지</span> <span class="err">않는다</span><span class="p">.</span> <span class="err">다음</span> <span class="err">예제를</span> <span class="err">놓고</span> <span class="err">시나리오를</span> <span class="err">분류해보면</span> <span class="err">명확해진다</span><span class="p">.</span>
+<span class="err">```</span><span class="n">go</span>
+<span class="n">def</span> <span class="n">A</span>
+    <span class="n">foo</span><span class="p">()</span> <span class="kt">void</span><span class="o">:</span> <span class="n">sys</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">)</span>
+    <span class="n">boo</span><span class="p">()</span> <span class="kt">void</span>
 
-<span class="nx">def</span> <span class="nx">B</span>
-    <span class="nx">foo</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="nx">void</span><span class="p">:</span> <span class="nx">sys</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;B(int)&quot;</span><span class="p">)</span>
-    <span class="nx">boo</span><span class="p">()</span> <span class="nx">void</span><span class="p">:</span> <span class="nx">syhs</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;B.boo()&quot;</span><span class="p">)</span>
+<span class="n">def</span> <span class="n">B</span>
+    <span class="n">foo</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="kt">void</span><span class="o">:</span> <span class="n">sys</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;B(int)&quot;</span><span class="p">)</span>
+    <span class="n">boo</span><span class="p">()</span> <span class="kt">void</span><span class="o">:</span> <span class="n">syhs</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;B.boo()&quot;</span><span class="p">)</span>
 
-<span class="nx">a</span> <span class="nx">A</span> <span class="o">:=</span> <span class="nx">B</span><span class="p">()</span>
-<span class="nx">a</span><span class="p">.</span><span class="nx">foo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// 에러</span>
-<span class="p">(</span><span class="nx">a</span> <span class="nx">as</span> <span class="nx">B</span><span class="p">).</span><span class="nx">foo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="nx">a</span><span class="p">.</span><span class="nx">boo</span><span class="p">()</span> <span class="c1">// B.boo가 나온다. 당연하다.</span></pre><pre>* boo()와 같이 파생과 부모에서 signature가 같다면 이건 override가 된다. 문제 없다.
-* 부모에는 없고 자식에게는 있는 거라면 업캐스팅은 부모만 다루기 때문에 문제가 되지 않는다.
-* 부모에는 있고 자식에게만 없는 경우는 존재하지 않는다.
-</pre><h2>downcasting의 알고리즘</h2><ul><li>문제가 되는 것은 downcasting 이다.</li><li>컴파일 시점에서는 항상 캐스팅이 성공한다고 가정하고 verify 한다.</li><li>런타임에 실제로 캐스팅이 실패한 경우 Exception을 내보낸다.</li></ul>
+<span class="n">a</span> <span class="nl">A</span> <span class="p">:</span><span class="o">=</span> <span class="n">B</span><span class="p">()</span>
+<span class="n">a</span><span class="p">.</span><span class="n">foo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// 에러</span>
+<span class="p">(</span><span class="n">a</span> <span class="n">as</span> <span class="n">B</span><span class="p">).</span><span class="n">foo</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">a</span><span class="p">.</span><span class="n">boo</span><span class="p">()</span> <span class="c1">// B.boo가 나온다. 당연하다.</span></pre><ul><li>boo()와 같이 파생과 부모에서 signature가 같다면 이건 override가 된다. 문제 없다.</li><li>부모에는 없고 자식에게는 있는 거라면 업캐스팅은 부모만 다루기 때문에 문제가 되지 않는다.</li><li>부모에는 있고 자식에게만 없는 경우는 존재하지 않는다.</li></ul><h3>downcasting의 알고리즘</h3><ul><li>문제가 되는 것은 downcasting 이다.</li><li>컴파일 시점에서는 항상 캐스팅이 성공한다고 가정하고 verify 한다.</li><li>런타임에 실제로 캐스팅이 실패한 경우 Exception을 내보낸다.</li></ul>
       </div>
     </div>
   </div>
@@ -170,7 +167,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

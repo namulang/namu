@@ -46,17 +46,17 @@
         <h1>
           closure
         </h1>
-<h2>월드에서는 중첩메소드를 delegation한 것이 closure다.</h2><h2>closure는 지역변수를 포함한 변수의 lifecycle을 capture하여 지연시킨다.</h2><pre class="m-code"><span class="nx">def</span> <span class="nx">app</span>
-    <span class="nx">cb</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">str</span><span class="p">)</span> <span class="nx">str</span> <span class="p">=</span> <span class="mi">0</span>
+<h3>월드에서는 중첩메소드를 delegation한 것이 closure다.</h3><h3>closure는 지역변수를 포함한 변수의 lifecycle을 capture하여 지연시킨다.</h3><pre class="m-code"><span class="n">def</span> <span class="n">app</span>
+    <span class="n">cb</span><span class="p">(</span><span class="n">msg</span> <span class="n">str</span><span class="p">)</span> <span class="n">str</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="nx">sayHello</span><span class="p">(</span><span class="nx">msg</span> <span class="nx">str</span><span class="p">)</span> <span class="nx">cb</span>
-        <span class="nx">firstLetter</span><span class="p">(</span><span class="nx">from</span> <span class="nx">str</span><span class="p">)</span> <span class="nx">str</span>
-            <span class="k">return</span> <span class="nx">from</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">msg</span>
-        <span class="k">return</span> <span class="nx">firstLetter</span>
+    <span class="n">sayHello</span><span class="p">(</span><span class="n">msg</span> <span class="n">str</span><span class="p">)</span> <span class="n">cb</span>
+        <span class="n">firstLetter</span><span class="p">(</span><span class="n">from</span> <span class="n">str</span><span class="p">)</span> <span class="n">str</span>
+            <span class="k">return</span> <span class="n">from</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">msg</span>
+        <span class="k">return</span> <span class="n">firstLetter</span>
 
-    <span class="nx">main</span><span class="p">()</span> <span class="nx">void</span>
-        <span class="nx">cb</span> <span class="o">:=</span> <span class="nx">sayHello</span><span class="p">(</span><span class="s">&quot;ell&quot;</span><span class="p">)</span>
-        <span class="nx">sys</span><span class="p">.</span><span class="nx">out</span><span class="p">(</span><span class="s">&quot;res=$cb(&#39;hello&#39;)&quot;</span><span class="p">)</span></pre><h2>delegation의 파생클래스로써 구현된다.</h2><ul><li>object scope만 capture하는 delegation 구현을 기본적으로 수행하며</li><li>local scope 까지 수행한다.</li></ul><h2>최적화를 한다면 closure 에서 실제로 참조하는 외부 변수들만 capture하도록 할 수 있다.</h2>
+    <span class="n">main</span><span class="p">()</span> <span class="kt">void</span>
+        <span class="nl">cb</span> <span class="p">:</span><span class="o">=</span> <span class="n">sayHello</span><span class="p">(</span><span class="s">&quot;ell&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="p">.</span><span class="n">out</span><span class="p">(</span><span class="s">&quot;res=$cb(&#39;hello&#39;)&quot;</span><span class="p">)</span></pre><h3>delegation의 파생클래스로써 구현된다.</h3><ul><li>object scope만 capture하는 delegation 구현을 기본적으로 수행하며</li><li>local scope 까지 수행한다.</li></ul><h3>최적화를 한다면 closure 에서 실제로 참조하는 외부 변수들만 capture하도록 할 수 있다.</h3>
       </div>
     </div>
   </div>
@@ -102,7 +102,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

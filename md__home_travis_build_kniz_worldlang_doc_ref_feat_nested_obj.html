@@ -46,14 +46,14 @@
         <h1>
           중첩 객체
         </h1>
-<ul><li><p>world는 중첩객체에 대해서 별다른 기능을 지원하지 않는다. 그냥 객체와 다를 게 없다.</p><pre class="m-code"><span class="nx">def</span> <span class="nx">A</span>
-    <span class="nx">foo</span><span class="p">()</span> <span class="nx">void</span>
-    <span class="nx">def</span> <span class="nx">B</span> <span class="c1">// 여기서 B와 A는 아무런 관련이 없다. foo()를 호출하려면 A객체가 필요하다.</span></pre></li></ul><h2>중첩 객체를 지원하지 않는 이유는 무엇인가</h2><ul><li><p>java처럼 중첩객체가 소유자 객체를 capture하는 식으로 지원하는데, 문제를 복잡하게 만든다. 예제를 보자.</p><pre class="m-code"><span class="nx">def</span> <span class="nx">A</span>
-    <span class="nx">def</span> <span class="nx">B</span>
-        <span class="nx">def</span> <span class="nx">C</span>
-<span class="nx">def</span> <span class="nx">D</span> <span class="nx">A</span><span class="p">.</span><span class="nx">B</span> <span class="c1">// 에러</span>
-<span class="nx">def</span> <span class="nx">A2</span> <span class="nx">A</span>
-    <span class="nx">def</span> <span class="nx">D</span> <span class="nx">A</span><span class="p">.</span><span class="nx">B</span> <span class="c1">// ok</span></pre></li><li>예제에서 def D A.B와 같은 케이스는 컴파일 에러가 되어야 한다.</li><li>자바는 이러한 케이스를 다 계산한다. 그러나 굳이 지원하지 않아도 ptr를 직접 만들면 해결이 가능하고, 아니면 메소드내 객체방식으로 해결도 가능하다.</li><li>namespace는 module이라는 키워드가 있기 때문에 중첩객체의 필요성이 없다 (실제로 자바에서 namespace가 있는가?) 중첩객체를 써야하는 이유는 없는 것이다.</li><li>C#, swift, python 모두 지원하지 않는다. java만 지원한다.</li></ul><h2>단, module 만은 예외다.</h2><ul><li>module scope은 module 밑의 origin 객체의 shared chain을 구성할때 밑에 깔리고 시작한다.</li></ul><h2>메소드 내 중첩 객체</h2><ul><li>메소드 내의 객체는 별도의 문법으로 취급한다. 별도의 origin, 별도의 복제방법</li><li>메소드 내에서 정의한 origin의 복제 객체는 생성시점의 모든 scope을 다 접근 가능한 상태가 된다. (= closure)</li><li>메소드 내에서 정의했으므로 private로 선언된다.</li><li>이 객체의 타입을 그대로 public API로 만들거나 외부에서 접근이 불가능하다.</li><li>외부에 이 객체를 public type으로 upcasting 해서 return 하는 것은 가능하다.</li><li>호출자의 scope을 생성자 안에서 알 수 있어야 한다.</li></ul><h3>메소드 내 중첩 객체의 origin 정의 알고리즘</h3><ul><li>일반적인 origin객체는 verify(binding) 시점에서 상속을 완성하면서 module scope위에 각 객체의 shared scope 이 chain을 쌓기 시작하는데, 메소드 내 객체도 동일하게 진행한다.</li><li>완성된 origin 객체는 func의 shared 에 private로써 추가한다.</li><li>protected 심볼을 public API의 반환형 및 인자로써 넣으면 verify시 에러로 간주해야 한다.</li><li>메소드 내의 origin 객체는 별도의 c++ 클래스로 표현한다. 일반적인 Origin 객체와는 달라야 한다.</li></ul><h3>메소드 내 중첩객체의 복제</h3><ul><li>&quot;메소드 내의 객체의 복제객체&quot;는 일반 복제 객체와 동일한 클래스로 구성할 수 있다.</li><li>객체를 생성할때 일반 origin객체는 shared chain ref를 shallow cpy하고 NS 배열을 deepcpy하면 끝이다. 그러나 메소드 내 origin 객체라는 별도의 native c++ 클래스의 clone()을 수행할 때는 origin의 S chain을 순회하면서 module scope을 제외하고 나머지 부분들의 chain copy를 deepcpy 한다.</li><li>이때 복제한 제일 첫번째 원소는 생성 시점의 현재 호출자 scope의 맨 뒤를 가리키도록 한다. NS는 deepcpy 한다. 다</li><li>호출자의 scope(= frame)을 알아내기 위해서 stackframe[1] 을 호출하면 된다. stackframe[0]은 생성자 자신의 scope이 할당되어있을 것이다.</li><li>native 환경에서 clone()을 호출할 수 있어야 한다. native 환경에서 stackframe[1] 할때도 호출자의 frame이 반환되어야 한다.</li></ul>
+<ul><li><p>world는 중첩객체에 대해서 별다른 기능을 지원하지 않는다. 그냥 객체와 다를 게 없다.</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
+    <span class="n">foo</span><span class="p">()</span> <span class="kt">void</span>
+    <span class="n">def</span> <span class="n">B</span> <span class="c1">// 여기서 B와 A는 아무런 관련이 없다. foo()를 호출하려면 A객체가 필요하다.</span></pre></li></ul><h3>중첩 객체를 지원하지 않는 이유는 무엇인가</h3><ul><li><p>java처럼 중첩객체가 소유자 객체를 capture하는 식으로 지원하는데, 문제를 복잡하게 만든다. 예제를 보자.</p><pre class="m-code"><span class="n">def</span> <span class="n">A</span>
+    <span class="n">def</span> <span class="n">B</span>
+        <span class="n">def</span> <span class="n">C</span>
+<span class="n">def</span> <span class="n">D</span> <span class="n">A</span><span class="p">.</span><span class="n">B</span> <span class="c1">// 에러</span>
+<span class="n">def</span> <span class="n">A2</span> <span class="n">A</span>
+    <span class="n">def</span> <span class="n">D</span> <span class="n">A</span><span class="p">.</span><span class="n">B</span> <span class="c1">// ok</span></pre></li><li>예제에서 def D A.B와 같은 케이스는 컴파일 에러가 되어야 한다.</li><li>자바는 이러한 케이스를 다 계산한다. 그러나 굳이 지원하지 않아도 ptr를 직접 만들면 해결이 가능하고, 아니면 메소드내 객체방식으로 해결도 가능하다.</li><li>namespace는 pack이라는 키워드가 있기 때문에 중첩객체의 필요성이 없다 (실제로 자바에서 namespace가 있는가?) 중첩객체를 써야하는 이유는 없는 것이다.</li><li>C#, swift, python 모두 지원하지 않는다. java만 지원한다.</li></ul><h3>단, pack 만은 예외다.</h3><ul><li>pack scope은 pack 밑의 origin 객체의 shared chain을 구성할때 밑에 깔리고 시작한다.</li></ul><h2>메소드 내 중첩 객체</h2><ul><li>메소드 내의 객체는 별도의 문법으로 취급한다. 별도의 origin, 별도의 복제방법</li><li>메소드 내에서 정의한 origin의 복제 객체는 생성시점의 모든 scope을 다 접근 가능한 상태가 된다. (= closure)</li><li>메소드 내에서 정의했으므로 private로 선언된다.</li><li>이 객체의 타입을 그대로 public API로 만들거나 외부에서 접근이 불가능하다.</li><li>외부에 이 객체를 public type으로 upcasting 해서 return 하는 것은 가능하다.</li><li>호출자의 scope을 생성자 안에서 알 수 있어야 한다.</li></ul><h3>메소드 내 중첩 객체의 origin 정의 알고리즘</h3><ul><li>일반적인 origin객체는 verify(binding) 시점에서 상속을 완성하면서 pack scope위에 각 객체의 shared scope 이 chain을 쌓기 시작하는데, 메소드 내 객체도 동일하게 진행한다.</li><li>완성된 origin 객체는 func의 shared 에 private로써 추가한다.</li><li>protected 심볼을 public API의 반환형 및 인자로써 넣으면 verify시 에러로 간주해야 한다.</li><li>메소드 내의 origin 객체는 별도의 c++ 클래스로 표현한다. 일반적인 Origin 객체와는 달라야 한다.</li></ul><h3>메소드 내 중첩객체의 복제</h3><ul><li>&quot;메소드 내의 객체의 복제객체&quot;는 일반 복제 객체와 동일한 클래스로 구성할 수 있다.</li><li>객체를 생성할때 일반 origin객체는 shared chain ref를 shallow cpy하고 NS 배열을 deepcpy하면 끝이다. 그러나 메소드 내 origin 객체라는 별도의 native c++ 클래스의 clone()을 수행할 때는 origin의 S chain을 순회하면서 pack scope을 제외하고 나머지 부분들의 chain copy를 deepcpy 한다.</li><li>이때 복제한 제일 첫번째 원소는 생성 시점의 현재 호출자 scope의 맨 뒤를 가리키도록 한다. NS는 deepcpy 한다. 다</li><li>호출자의 scope(= frame)을 알아내기 위해서 stackframe[1] 을 호출하면 된다. stackframe[0]은 생성자 자신의 scope이 할당되어있을 것이다.</li><li>native 환경에서 clone()을 호출할 수 있어야 한다. native 환경에서 stackframe[1] 할때도 호출자의 frame이 반환되어야 한다.</li></ul>
       </div>
     </div>
   </div>
@@ -99,7 +99,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

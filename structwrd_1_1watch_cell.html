@@ -46,7 +46,7 @@
         <h1>
           <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span>watchCell <span class="m-thin">struct</span>
         </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>Immortality of WatchCell instance. WatchCell is managed by Chunks and Chunks set used instances to some index for chaining linked list. in order to hand over quickly to caller when it requires Chunks to alloc new an instance.</p></aside><p>because used up element will be set to integer, which is for index, if WatchCell has no widx in front of its member, its blk member-variable definitely would be polluted and accessing it causes Undefined Behavior.</p><p>and we need the blk that can be used after it freed, this is why we put an additional value, next. see @Block to know the reason.</p>
+<aside class="m-note m-default"><h4>Remark</h4><p>Immortality of WatchCell instance. WatchCell is managed by Chunks and Chunks set used instances to some index for chaining linked list. in order to hand over quickly to caller when it requires Chunks to alloc new an instance.</p></aside><p>because used up element will be set to integer, which is for index, if WatchCell has no widx in front of its member, its blk member-variable definitely would be polluted and accessing it causes Undefined Behavior.</p><p>and we need the blk that can be used after it freed, this is why we put an additional value, next. see  to know the reason.</p>
       </div>
     </div>
   </div>
@@ -92,7 +92,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

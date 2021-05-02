@@ -46,33 +46,33 @@
         <h1>
           type
         </h1>
-<h2>worldlang은 타입이 존재한다.</h2><h2>type은 worldfrx에 type, ttype&lt;T&gt; 와 같은 컴포넌트로 구현된다.</h2><h2>type은 monostate다.</h2><h2>type은 C++의 RTTI를 제공한다.</h2><ul><li>부모 클래스 판단</li><li>&quot;is&quot; 메소드가 여기서 구현</li></ul><h2>type은 메소드콜의 인자의 verification에도 사용된다.</h2><h2>type은 nativeType과 mgdType 2종류로 상속된다.</h2><h2>mgdType은 origin객체를 반환할 수 있다.</h2><h2>aka</h2><ul><li><p>식별자의 별칭을 만들 수 있다.</p><p>&lt;원본식별자&gt; aka &lt;별칭이름&gt;</p></li></ul><h3>정의와 동시에 aka를 쓰는 경우 문법이 조금 생소할 수 있다.</h3><ul><li>aka는 앞에 있는 식별자를 최대한 크게 인식하려고 한다.</li><li>aka는 다른 expr 안에 들어갈 수 없다. aka가 항상 최종 expr 밖에 있어야 한다.</li><li>괄호를 사용하면 최종expr도 중간expr로 변환할 수 있다. 그러므로 aka를 괄호 안에 넣어서 다른 expr에 포함시킬 수 있다.</li></ul><pre class="m-code"><span class="nx">def</span> <span class="nx">person</span> <span class="nx">obj</span><span class="p">()</span> 
-    <span class="nx">callback</span><span class="p">()</span> <span class="nx">void</span> <span class="nx">aka</span> <span class="nx">c</span> <span class="c1">// &quot;void aka c&quot;(X) &quot;(callback() void) aka c&quot;(O)</span>
+<h3>worldlang은 타입이 존재한다.</h3><h3>type은 worldfrx에 type, ttype&lt;T&gt; 와 같은 컴포넌트로 구현된다.</h3><h3>type은 monostate다.</h3><h3>type은 C++의 RTTI를 제공한다.</h3><ul><li>부모 클래스 판단</li><li>&quot;is&quot; 메소드가 여기서 구현</li></ul><h3>type은 메소드콜의 인자의 verification에도 사용된다.</h3><h3>type은 nativeType과 mgdType 2종류로 상속된다.</h3><h3>mgdType은 origin객체를 반환할 수 있다.</h3><h3>aka</h3><ul><li><p>식별자의 별칭을 만들 수 있다.</p><p>&lt; 원본식별자&gt;=&quot;&quot;&gt; aka &lt; 별칭이름&gt;=&quot;&quot;&gt;</p></li></ul><h4>정의와 동시에 aka를 쓰는 경우 문법이 조금 생소할 수 있다.</h4><ul><li>aka는 앞에 있는 식별자를 최대한 크게 인식하려고 한다.</li><li>aka는 다른 expr 안에 들어갈 수 없다. aka가 항상 최종 expr 밖에 있어야 한다.</li><li>괄호를 사용하면 최종expr도 중간expr로 변환할 수 있다. 그러므로 aka를 괄호 안에 넣어서 다른 expr에 포함시킬 수 있다.</li></ul><pre class="m-code"><span class="n">def</span> <span class="n">person</span> <span class="n">obj</span><span class="p">()</span> 
+    <span class="n">callback</span><span class="p">()</span> <span class="kt">void</span> <span class="n">aka</span> <span class="n">c</span> <span class="c1">// &quot;void aka c&quot;(X) &quot;(callback() void) aka c&quot;(O)</span>
 
-    <span class="nx">callback</span><span class="p">(</span><span class="nx">whatever</span> <span class="nx">flt</span><span class="p">)</span> <span class="nx">void</span> <span class="p">=</span> <span class="nx">null</span> <span class="nx">aka</span> <span class="nx">c2</span> <span class="c1">// &quot;null aka c2&quot;(X) &quot;void = null aka c2&quot;(X) &quot;(callback(whatever flt) void = null) aka c2&quot;(O)</span>
+    <span class="n">callback</span><span class="p">(</span><span class="n">whatever</span> <span class="n">flt</span><span class="p">)</span> <span class="kt">void</span> <span class="o">=</span> <span class="n">null</span> <span class="n">aka</span> <span class="n">c2</span> <span class="c1">// &quot;null aka c2&quot;(X) &quot;void = null aka c2&quot;(X) &quot;(callback(whatever flt) void = null) aka c2&quot;(O)</span>
 
-    <span class="nx">callback</span><span class="p">(</span><span class="nx">whatever</span> <span class="nx">str</span><span class="p">)</span> <span class="nx">void</span>
-        <span class="nx">doSomething</span><span class="p">()</span>
-        <span class="o">...</span>
-        <span class="k">return</span> <span class="p">(</span><span class="nx">lamb</span><span class="p">,</span><span class="nx">da</span><span class="p">)</span> <span class="o">-</span><span class="p">&gt;</span> <span class="nx">str</span> <span class="nx">aka</span> <span class="nx">l</span> <span class="c1">// err.</span>
-            <span class="o">...</span><span class="p">.</span>
+    <span class="n">callback</span><span class="p">(</span><span class="n">whatever</span> <span class="n">str</span><span class="p">)</span> <span class="kt">void</span>
+        <span class="n">doSomething</span><span class="p">()</span>
+        <span class="p">...</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">lamb</span><span class="p">,</span><span class="n">da</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span> <span class="n">aka</span> <span class="n">l</span> <span class="c1">// err.</span>
+            <span class="p">....</span>
 
-        <span class="k">return</span> <span class="p">(</span><span class="nx">lamb</span><span class="p">,</span><span class="nx">da</span><span class="p">)</span> <span class="o">-</span><span class="p">&gt;</span> <span class="nx">str</span>
-            <span class="o">...</span><span class="p">.</span>
-        <span class="nx">aka</span> <span class="nx">l</span> <span class="c1">// err. returnExpr is not identifier.</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">lamb</span><span class="p">,</span><span class="n">da</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span>
+            <span class="p">....</span>
+        <span class="n">aka</span> <span class="n">l</span> <span class="c1">// err. returnExpr is not identifier.</span>
 
-        <span class="p">(</span><span class="nx">lamb</span><span class="p">,</span> <span class="nx">da</span><span class="p">)</span> <span class="o">-</span><span class="p">&gt;</span> <span class="nx">str</span>
-            <span class="o">...</span><span class="p">.</span>
-        <span class="nx">aka</span> <span class="nx">l</span>
-        <span class="k">return</span> <span class="nx">l</span> <span class="c1">// ok.</span>
+        <span class="p">(</span><span class="n">lamb</span><span class="p">,</span> <span class="n">da</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span>
+            <span class="p">....</span>
+        <span class="n">aka</span> <span class="n">l</span>
+        <span class="k">return</span> <span class="n">l</span> <span class="c1">// ok.</span>
 
-        <span class="k">return</span> <span class="p">((</span><span class="nx">labm</span><span class="p">,</span> <span class="nx">da</span><span class="p">)</span> <span class="o">-</span><span class="p">&gt;</span> <span class="nx">str</span>
-            <span class="o">...</span><span class="p">.</span>
-        <span class="nx">aka</span> <span class="nx">l</span><span class="p">)</span> <span class="c1">// ok.</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">labm</span><span class="p">,</span> <span class="n">da</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span>
+            <span class="p">....</span>
+        <span class="n">aka</span> <span class="n">l</span><span class="p">)</span> <span class="c1">// ok.</span>
 
-    <span class="nx">aka</span> <span class="nx">c3</span>
+    <span class="n">aka</span> <span class="n">c3</span>
 
-<span class="nx">aka</span> <span class="nx">p</span></pre><ul><li>정의는 식별자를 대신한다.</li><li>따라서 정의가 모두 끝나고 난 뒤에 aka가 나와야 한다.</li><li>그러나 정의는 대부분 개행을 가지고 있다.</li><li>그러니 개행이 끝나고 정의블록문의 시작했던 indent 앞에 바로 aka가 나오면 된다.</li><li>블록문이 없는 정의라면 바로 이어서 같은 라인에 aka가 나온다.</li></ul><h2>type을 정의하면 그것의 unique object가 그 type이름에 대신들어간다.</h2><ul><li>메소드도 마찬가지다.</li></ul><h2>type에 대고 생성자를 호출하면 unique obj의 복제가 아니라 type의 복제가 된다.</h2><h2>class란 native type 을 의미하며 meta 모듈에 의해 관리된다.</h2><h2>meta module</h2><ul><li>별도의 기반 모듈로써 native의 reflection을 담당한다.</li><li>world에서 제공하는 메타 API의 backend 에 해당한다.</li></ul><h3>unregister를 지원해야 한다.</h3><ul><li>C-REPL 지원을 위해서 native 모듈도 붙었다가 떼어졌다가 된다.</li><li>따라서 native class 정보 또한 시스템에서 제거될 수 있어야 한다.</li></ul><h3>타입의 연관정보는 모두 meta 모듈에 의존한다.</h3><h3>매크로를 통해서 meta class를 생성할 수 있어야 한다.</h3><ul><li>이경우 프로그램이 시작하기 전에 자동으로 register를 한다.</li><li>unregister는 자동으로 할수 없다.</li></ul><h3>사용자가 정의한 metaclass 객체를 생성/등록 할 수도 있어야 한다.</h3><ul><li>상속 기반이 아니라 객체 기반이어야 한다는 것이다.</li><li>물론 unregister도 가능해야 한다.</li></ul><h2>빌트인 타입</h2><ul><li>인터프리터가 인지하고 있는 타입을 빌트인 타입이라고 한다.</li><li>빌트인 타입은 다른 타입과 달리 인터프리터 연관된 이점 및 특징을 가진다.</li></ul><h3>종류</h3><ul><li>primitive types: int, str, err, node, void, bool, flt</li><li>containers: arr, list, map</li></ul><h3>빌트인 타입은 native로 편하게 접근할 수 있는 경로 제공되는 mgd object이다.</h3><ul><li>대부분 native 클래스로써 제공될 것이다. 인터프리터는 이 클래스의 객체를 생성하기만 하면 되므로 편리한 접근방법을 제시한 것이다.</li><li>반면, mgd Object라는 것은 일반적인 mgdObject가 가지는 특성을 그대로 가지고 있으며 world시스템 입장에서 봤을때는 이것인 mgdobject인지 native object 인지 구분이 가선 안된다는 것이다.</li><li>보통은 Object 클래스에서 상속해 native 클래스를 정의한 뒤, 시스템이 초기화되는 시점에 이 native 클래스들을 초기화화는 queue에 집어넣는 형태로 구현된다.</li><li>일반 mgdobject와 구분이 가면 안되기 때문에 엄연히 moduled path 가 존재해야 한다.</li><li>속도 최적화를 위해서 완전한 일반 mgd object 기반으로 만들지 않는 것이다.</li></ul><h3>사용성에 있어서도 mgd object와 native object는 차이가 있어서는 안된다.</h3><ul><li>이를테면 mgd object의 경우 다른 IDE는 source code를 보여주는 창을 띄워줌으로써 해당 타입에 어떠한 메소드들이 있는지를 보게 해준다.</li><li>이 예를 기준으로 한다면 native object도 소스코드를 보여주지는 못할지언정 마찬가지로 어떠한 메소드가 있는지를 IDE에서 동일하게 리스트로 보여줄 수는 있어야 한다.</li></ul><h2>Type.getType() 은 자기 자신이 나와야 한다.</h2>
+<span class="n">aka</span> <span class="n">p</span></pre><ul><li>정의는 식별자를 대신한다.</li><li>따라서 정의가 모두 끝나고 난 뒤에 aka가 나와야 한다.</li><li>그러나 정의는 대부분 개행을 가지고 있다.</li><li>그러니 개행이 끝나고 정의블록문의 시작했던 indent 앞에 바로 aka가 나오면 된다.</li><li>블록문이 없는 정의라면 바로 이어서 같은 라인에 aka가 나온다.</li></ul><h3>type을 정의하면 그것의 unique object가 그 type이름에 대신들어간다.</h3><ul><li>메소드도 마찬가지다.</li></ul><h3>type에 대고 생성자를 호출하면 unique obj의 복제가 아니라 type의 복제가 된다.</h3><h3>class란 native type 을 의미하며 meta 모듈에 의해 관리된다.</h3><h3>meta pack</h3><ul><li>별도의 기반 모듈로써 native의 reflection을 담당한다.</li><li>world에서 제공하는 메타 API의 backend 에 해당한다.</li></ul><h4>unregister를 지원해야 한다.</h4><ul><li>C-REPL 지원을 위해서 native 모듈도 붙었다가 떼어졌다가 된다.</li><li>따라서 native class 정보 또한 시스템에서 제거될 수 있어야 한다.</li></ul><h4>타입의 연관정보는 모두 meta 모듈에 의존한다.</h4><h4>매크로를 통해서 meta class를 생성할 수 있어야 한다.</h4><ul><li>이경우 프로그램이 시작하기 전에 자동으로 register를 한다.</li><li>unregister는 자동으로 할수 없다.</li></ul><h4>사용자가 정의한 metaclass 객체를 생성/등록 할 수도 있어야 한다.</h4><ul><li>상속 기반이 아니라 객체 기반이어야 한다는 것이다.</li><li>물론 unregister도 가능해야 한다.</li></ul><h3>빌트인 타입</h3><ul><li>인터프리터가 인지하고 있는 타입을 빌트인 타입이라고 한다.</li><li>빌트인 타입은 다른 타입과 달리 인터프리터 연관된 이점 및 특징을 가진다.</li></ul><h4>종류</h4><ul><li>primitive types: int, str, err, node, void, bool, flt</li><li>containers: arr, list, map</li></ul><h4>빌트인 타입은 native로 편하게 접근할 수 있는 경로 제공되는 mgd object이다.</h4><ul><li>대부분 native 클래스로써 제공될 것이다. 인터프리터는 이 클래스의 객체를 생성하기만 하면 되므로 편리한 접근방법을 제시한 것이다.</li><li>반면, mgd Object라는 것은 일반적인 mgdObject가 가지는 특성을 그대로 가지고 있으며 world시스템 입장에서 봤을때는 이것인 mgdobject인지 native object 인지 구분이 가선 안된다는 것이다.</li><li>보통은 Object 클래스에서 상속해 native 클래스를 정의한 뒤, 시스템이 초기화되는 시점에 이 native 클래스들을 초기화화는 queue에 집어넣는 형태로 구현된다.</li><li>일반 mgdobject와 구분이 가면 안되기 때문에 엄연히 packd path 가 존재해야 한다.</li><li>속도 최적화를 위해서 완전한 일반 mgd object 기반으로 만들지 않는 것이다.</li></ul><h4>사용성에 있어서도 mgd object와 native object는 차이가 있어서는 안된다.</h4><ul><li>이를테면 mgd object의 경우 다른 IDE는 source code를 보여주는 창을 띄워줌으로써 해당 타입에 어떠한 메소드들이 있는지를 보게 해준다.</li><li>이 예를 기준으로 한다면 native object도 소스코드를 보여주지는 못할지언정 마찬가지로 어떠한 메소드가 있는지를 IDE에서 동일하게 리스트로 보여줄 수는 있어야 한다.</li></ul><h3>Type.getType() 은 자기 자신이 나와야 한다.</h3>
       </div>
     </div>
   </div>
@@ -118,7 +118,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>

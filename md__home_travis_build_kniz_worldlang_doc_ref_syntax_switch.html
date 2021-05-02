@@ -46,11 +46,11 @@
         <h1>
           switch
         </h1>
-<h2>요점</h2><ul><li>2개의 form이 존재한다.</li><li>primitive 변수와 enum에 대해서만 switch를 사용할 수 있다. 일반 클래스는 지원 하지 않는다.</li></ul><h2>문법</h2><pre class="m-code">switch expr
-    (&lt;number&gt; | &lt;string&gt; | &lt;boolean&gt;) [, (&lt;number&gt; | &lt;string&gt;)]*
-        // if expr.operator==() 로 번역
-    range
-        // range.has(expr) 로 번역</pre><h2>verification</h2><ul><li>range의 타입과 expr의 타입이 서로 호환가능해야 함. 예) 2..3.has(2.5) 는 true다. (float -&gt; int) 그러나 2..5.has(&quot;3&quot;) 는 verification err가 되어야 한다.</li><li>expr의 타입은 operator==를 지원하는 타입이어야 한다. primitive 타입만 operator==를 제공하므로 일반 클래스는 여기서 걸러진다.</li></ul>
+<h3>요점</h3><ul><li>2개의 form이 존재한다.</li><li>primitive 변수와 enum에 대해서만 switch를 사용할 수 있다. 일반 클래스는 지원 하지 않는다.</li></ul><p>## 문법</p><pre class="m-code"><span class="k">switch</span> <span class="n">expr</span>
+    <span class="p">(</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">boolean</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">[,</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">number</span><span class="o">&gt;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">)]</span><span class="o">*</span>
+        <span class="c1">// if expr.operator==() 로 번역</span>
+    <span class="n">range</span>
+        <span class="c1">// range.has(expr) 로 번역</span></pre><h3>verification</h3><ul><li>range의 타입과 expr의 타입이 서로 호환가능해야 함. 예) 2..3.has(2.5) 는 true다. (float -&gt; int) 그러나 2..5.has(&quot;3&quot;) 는 verification err가 되어야 한다.</li><li>expr의 타입은 operator==를 지원하는 타입이어야 한다. primitive 타입만 operator==를 제공하므로 일반 클래스는 여기서 걸러진다.</li></ul>
       </div>
     </div>
   </div>
@@ -96,7 +96,7 @@
   <div class="m-container">
     <div class="m-row">
       <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.17 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
       </div>
     </div>
   </div>
