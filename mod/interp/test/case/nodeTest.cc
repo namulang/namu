@@ -111,7 +111,7 @@ TEST(nodeTest, testManualNativefuncCall) {
 }
 
 TEST(nodeTest, testImmutablePositive) {
-    tref<fltObj> r1(new fltObj(1.0f));
+    tref<wFlt> r1(new wFlt(1.0f));
     wrd::ref r2 = r1;
     ASSERT_TRUE(r1);
     ASSERT_TRUE(r2);

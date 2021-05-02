@@ -4,10 +4,10 @@
 
 namespace wrd {
 
-    class intObj : public primitiveObj<wint> {
+    class wInt : public primitiveObj<wint> {
 
-        class intType : public ttypeBase<intObj, wtype> {
-            typedef ttypeBase<intObj, wtype> _S;
+        class intType : public ttypeBase<wInt, wtype> {
+            typedef ttypeBase<wInt, wtype> _S;
             WRD_DECL_ME(intType, _S)
 
         public:
@@ -27,7 +27,7 @@ namespace wrd {
                         return nulOf<wtype>();
                     }
 
-                    ref as(const node& intObj) const override {
+                    ref as(const node& wInt) const override {
                         // TODO:
                         return ref();
                     }
@@ -38,10 +38,10 @@ namespace wrd {
             }
         };
 
-        WRD_CLASS(intObj, primitiveObj, intType)
+        WRD_CLASS(wInt, primitiveObj, intType)
 
     public:
-        intObj() {}
-        intObj(wint val): super(val) {}
+        wInt() {}
+        wInt(wint val): super(val) {}
     };
 }

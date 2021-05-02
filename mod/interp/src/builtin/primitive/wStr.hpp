@@ -4,11 +4,11 @@
 
 namespace wrd {
 
-    class fltObj : public primitiveObj<wflt> {
+    class wStr : public primitiveObj<std::string> {
 
-        class fltType : public ttypeBase<fltObj, wtype> {
-            typedef ttypeBase<fltObj, wtype> _S;
-            WRD_DECL_ME(fltType, _S)
+        class strType : public ttypeBase<wStr, wtype> {
+            typedef ttypeBase<wStr, wtype> _S;
+            WRD_DECL_ME(strType, _S)
 
         public:
             wbool isImmutable() const override {
@@ -21,29 +21,26 @@ namespace wrd {
                 if(inner) return *inner;
 
                 inner = new casts();
-                struct toWstr: public cast {
+                struct toWInt: public cast {
                     const wtype& getType() const override {
                         // TODO:
                         return nulOf<wtype>();
                     }
-
-                    ref as(const node& fltObj) const override {
+                    ref as(const node& wStr) const override {
                         // TODO:
                         return ref();
                     }
                 };
-                inner->push_back(new toWstr());
+                inner->push_back(new toWInt());
 
                 return *inner;
             }
         };
 
-        WRD_CLASS(fltObj, primitiveObj, fltType)
+        WRD_CLASS(wStr, primitiveObj, strType)
 
     public:
-        fltObj() {}
-        fltObj(wflt val): super(val) {}
+        wStr() {}
+        wStr(const std::string& val): super(val) {}
     };
-
-
 }
