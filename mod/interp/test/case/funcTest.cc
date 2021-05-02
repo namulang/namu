@@ -174,13 +174,13 @@ TEST(funcTest, testfuncHasStrParameter) {
 
     wtypes& types = func1.getTypes();
     types.push_back(&obj.getType());
-    types.push_back(&ttype<strObj>::get());
+    types.push_back(&ttype<wStr>::get());
     func1.setLambda([&](const ncontainer& args, const stackFrame& sf) {
         const wtypes& types = func1.getTypes();
         if(args.len() != types.size()) return false;
 
         const wtype& expectType = *types[1];
-        tref<strObj> cast(args.iter(1)->asImpli(expectType));
+        tref<wStr> cast(args.iter(1)->asImpli(expectType));
         if(!cast) return false;
 
         return cast->get() == expectVal;
@@ -188,10 +188,10 @@ TEST(funcTest, testfuncHasStrParameter) {
 
     narr args;
     args.add(obj);
-    args.add(new strObj(expectVal));
+    args.add(new wStr(expectVal));
     wrd::iterator e = args.iter(1);
     node& elem1 = *e;
-    strObj& cast = elem1.cast<strObj>();
+    wStr& cast = elem1.cast<wStr>();
 
     func1.run(args);
     ASSERT_TRUE(func1.isSuccess());
