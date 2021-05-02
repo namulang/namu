@@ -50,3 +50,18 @@ def A
 
 ## 여러개의 변수를 동시에 정의 가능하다.
 * 튜플을 이용하면 가능하다.
+
+## 이 primitive 타입을 상속받는 것은 불가능하다.
+* primitive는 속도와, interpreting에서 필수적인 타입이므로 반드시 native 클래스로 만들어야한다.
+* native 클래스에서 만든 것을 mgd 쪽에서 상속받을 수 있으려면 별도의 wrapper클래스를 만들어
+  이 안쪽에서 native 클래스의 ptr를 들고 있도록 구성해야만 한다.
+    * native 클래스를 obj에서 상속받도록 하는 방법도 떠올릴 수가 있는데 이 클래스를 mgd에서 상속한
+      경우, overriding된 메소드를 native에서 safe 하게 호출하려면 c++의 함수호출 문법만으로는 불가능하다.
+      obj.get(...).run(args) 와 같은 문법을 사용해야 overriding safe 한걸 보장할 수 있다.
+    * 그러나 run(args)를 하는 방법은 상대적으로 느릴 수 밖에 없다.
+    * 이걸 쉽게 해주는 API set이 bridge API 다.
+
+* primitive를 상속받고자 하는 경우는 적으며, 퍼포먼스를 확보하기 위해서 bridgeAPI를 사용하거나
+  그와 유사한 구조로 하지 않기로 했다.
+* 직접 native 클래스로 obj를 상속해서 primitive타입을 만들 것이며, 이것을 상속하지 못하도록
+  막으므로써 overriding 문제를 회피한다.
