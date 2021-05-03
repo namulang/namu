@@ -1,3 +1,5 @@
+#pragma once
+
 #include "tbindable.hpp"
 
 namespace wrd {

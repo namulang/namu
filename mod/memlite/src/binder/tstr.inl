@@ -1,3 +1,5 @@
+#pragma once
+
 #include "tstr.hpp"
 #include "tweak.inl"
 #include "strTactic.hpp"
