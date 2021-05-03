@@ -12,6 +12,8 @@ namespace wrd {
         explicit func(const std::string& name): _name(name) {}
 
         str run(ncontainer& args) override;
+
+        using super::canRun;
         wbool canRun(const wtypes& types) const override;
 
         /// @return object and parameter types.
