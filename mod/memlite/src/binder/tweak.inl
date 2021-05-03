@@ -1,3 +1,5 @@
+#pragma once
+
 #include "tweak.hpp"
 #include "weakTactic.hpp"
 #include "tbindable.inl"
