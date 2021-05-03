@@ -6,21 +6,11 @@ namespace wrd {
 
     class wStr : public primitiveObj<std::string> {
 
-        class strType : public ttypeBase<wStr, wtype> {
-            typedef ttypeBase<wStr, wtype> _S;
-            WRD_DECL_ME(strType, _S)
-
-        public:
-            wbool isImmutable() const override {
-                return true;
-            }
+        class strType : public primitiveType {
+            WRD_DECL_ME(strType, primitiveType)
 
         protected:
-            const casts& _getImplis() const override {
-                static casts* inner = nullptr;
-                if(inner) return *inner;
-
-                inner = new casts();
+            void _onCreateImplis(casts& tray) const override {
                 struct toWInt: public cast {
                     const wtype& getType() const override {
                         // TODO:
@@ -31,9 +21,7 @@ namespace wrd {
                         return ref();
                     }
                 };
-                inner->push_back(new toWInt());
-
-                return *inner;
+                tray.push_back(new toWInt());
             }
         };
 
@@ -42,5 +30,9 @@ namespace wrd {
     public:
         wStr() {}
         wStr(const std::string& val): super(val) {}
+
+    protected:
+        void _onCreateCtors(tnarr<func>& tray) const override {
+        }
     };
 }
