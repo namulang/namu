@@ -2,6 +2,8 @@
 
 #include "node.hpp"
 #include "../frame/frameInteractable.hpp"
+#include "../builtin/container/native/tnarr.inl"
+#include "func.hpp"
 
 namespace wrd {
 
@@ -11,7 +13,16 @@ namespace wrd {
 
     public:
         explicit obj(std::string name = "")
-            : _subs(new nchain(_owns)), _name(name) {}
+            : _owns(new narr()), _subs(new nchain(*_owns)), _name(name) {}
+        explicit obj(const me& rhs) {
+            _assign(rhs);
+        }
+
+        me& operator=(const me& rhs) {
+            super::operator=(rhs);
+
+            return _assign(rhs);
+        }
 
         using super::subs;
         ncontainer& subs() override {
@@ -22,15 +33,9 @@ namespace wrd {
             return _name;
         }
 
-        str run(ncontainer& args) override {
-            //TODO: call ctor.
-            return str();
-        }
+        str run(ncontainer& args) override;
 
-        wbool canRun(const wtypes& types) const override {
-            // TODO:
-            return false;
-        }
+        wbool canRun(const wtypes& types) const override;
 
     protected:
         // frameInteractable:
@@ -38,8 +43,12 @@ namespace wrd {
         wbool _onOutFrame(frame& sf, ncontainer& args) override;
 
     private:
+        me& _assign(const me& rhs);
+
+    private:
+        tstr<tnarr<func>> _ctors;
         tstr<nchain> _shares;
-        narr _owns;
+        tstr<narr> _owns;
         tstr<nchain> _subs;
         std::string _name;
     };
