@@ -11,7 +11,6 @@ namespace wrd {
     public:
         explicit func(const std::string& name): _name(name) {}
 
-        str run(ncontainer& args) override;
         using super::subs;
         ncontainer& subs() override { return _shares; }
 
