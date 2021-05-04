@@ -12,10 +12,5 @@ namespace wrd {
         return tref<T>(asImpli(ttype<T>::get()));
     }
 
-    template <typename T>
-    tref<T> ME::as() const {
-        return tref<T>(as(ttype<T>::get()));
-    }
-
 #undef ME
 }

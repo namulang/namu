@@ -14,7 +14,7 @@ namespace wrd {
         friend class frameInteract;
 
     protected:
-        virtual wbool _onInFrame(frame& sf, ncontainer& args) = 0;
-        virtual wbool _onOutFrame(frame& sf, ncontainer& args) = 0;
+        virtual wbool _onInFrame(frame& sf, const ncontainer& args) = 0;
+        virtual wbool _onOutFrame(frame& sf, const ncontainer& args) = 0;
     };
 }

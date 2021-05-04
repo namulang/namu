@@ -36,23 +36,24 @@ namespace wrd {
         T& get() { return _val; }
         const T& get() const { return _val; }
 
+        using super::getCtors;
+        funcs& getCtors() override {
+            static funcs* ctors = nullptr;
+            if(!ctors) {
+                ctors = new funcs();
+                _onCreateCtors(*ctors);
+            }
+
+            return *ctors;
+        }
+
     protected:
         wbool _onSame(const typeProvidable& rhs) const override {
             const me& cast = (const me&) rhs;
             return _val == cast._val;
         }
 
-        tnarr<func> _getCtors() const {
-            static tstr<tnarr<func>> ctors;
-            if(!ctors) {
-                tnarr<func>* tray = new tnarr<func>();
-                _onCreateCtors(*tray);
-
-                ctors.bind(tray);
-            }
-        }
-
-        virtual void _onCreateCtors(tnarr<func>& tray) const = 0;
+        virtual void _onCreateCtors(funcs& tray) const = 0;
 
     private:
         T _val;

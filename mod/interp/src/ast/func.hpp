@@ -12,6 +12,11 @@ namespace wrd {
         explicit func(const std::string& name): _name(name) {}
 
         str run(ncontainer& args) override;
+        using super::subs;
+        ncontainer& subs() override { return _shares; }
+
+        using super::run;
+        str run(const ncontainer& args) override;
 
         using super::canRun;
         wbool canRun(const wtypes& types) const override;
@@ -26,10 +31,13 @@ namespace wrd {
     protected:
         virtual str _onRun(ncontainer& args) = 0;
 
-        wbool _onInFrame(frame& sf, ncontainer& args) override;
-        wbool _onOutFrame(frame& sf, ncontainer& args) override;
+        wbool _onInFrame(frame& sf, const ncontainer& args) override;
+        wbool _onOutFrame(frame& sf, const ncontainer& args) override;
 
     private:
         std::string _name;
+        narr _shares;
     };
+
+    typedef tnarr<func> funcs;
 }

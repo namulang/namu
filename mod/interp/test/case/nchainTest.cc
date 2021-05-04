@@ -12,7 +12,7 @@ public:
 
     ncontainer& subs() override { return nulOf<ncontainer>(); }
     wbool canRun(const wtypes& types) const override { return false; }
-    str run(ncontainer& args) override { return str(); }
+    str run(const ncontainer& args) override { return str(); }
 
     int number;
 };

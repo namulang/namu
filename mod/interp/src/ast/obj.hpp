@@ -8,7 +8,7 @@
 namespace wrd {
 
     class obj : public node, public frameInteractable {
-        WRD_CLASS(obj, node)
+        WRD_INTERFACE(obj, node)
         friend class func;
 
     public:
@@ -33,20 +33,22 @@ namespace wrd {
             return _name;
         }
 
-        str run(ncontainer& args) override;
+        using super::run;
+        str run(const ncontainer& args) override;
 
         wbool canRun(const wtypes& types) const override;
+        virtual funcs& getCtors() = 0;
+        const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
 
     protected:
         // frameInteractable:
-        wbool _onInFrame(frame& sf, ncontainer& args) override;
-        wbool _onOutFrame(frame& sf, ncontainer& args) override;
+        wbool _onInFrame(frame& sf, const ncontainer& args) override;
+        wbool _onOutFrame(frame& sf, const ncontainer& args) override;
 
     private:
         me& _assign(const me& rhs);
 
     private:
-        tstr<tnarr<func>> _ctors;
         tstr<nchain> _shares;
         tstr<narr> _owns;
         tstr<nchain> _subs;

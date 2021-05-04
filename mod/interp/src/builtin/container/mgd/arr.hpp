@@ -105,6 +105,13 @@ namespace wrd {
             return _arr.deepClone();
         }
 
+        using super::getCtors;
+        funcs& getCtors() override {
+            static funcs inner;
+            // TODO:
+            return inner;
+        }
+
     protected:
         iteration* _onIter(widx n) const override { return nullptr; }
 

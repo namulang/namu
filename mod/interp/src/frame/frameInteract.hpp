@@ -11,12 +11,12 @@ namespace wrd {
         WRD_INIT_META(frameInteract)
 
     public:
-        frameInteract(frameInteractable& interactable, ncontainer& args);
+        frameInteract(frameInteractable& interactable, const ncontainer& args);
         virtual ~frameInteract();
 
     private:
         frameInteractable& _interactable;
-        ncontainer& _args;
+        const ncontainer& _args;
         frame& _frame;
     };
 }

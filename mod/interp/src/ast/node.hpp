@@ -37,7 +37,11 @@ namespace wrd {
             return canRun(_createTypesFromArgs(args));
         }
 
-        virtual str run(ncontainer& args) = 0;
+        virtual str run(const ncontainer& args) = 0;
+        str run() {
+            static narr empty;
+            return run(empty);
+        }
         /// release all holding resources and ready to be terminated.
         /// @remark some class won't be able to reinitialize after rel() got called.
         virtual void rel() {}
@@ -56,7 +60,9 @@ namespace wrd {
         }
 
         template <typename T>
-        tref<T> as() const;
+        tref<T> as() const {
+            return tref<T>(as(ttype<T>::get()));
+        }
         ref as(const wtype& to) const;
 
         template <typename T>
