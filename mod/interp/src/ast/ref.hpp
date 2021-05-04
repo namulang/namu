@@ -27,7 +27,7 @@ namespace wrd {
             return _str->canRun(types);
         }
 
-        str run(ncontainer& args) override {
+        str run(const ncontainer& args) override {
             if (!_str) return str();
             return _str->run(args);
         }

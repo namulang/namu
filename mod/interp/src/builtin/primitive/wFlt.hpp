@@ -33,7 +33,7 @@ namespace wrd {
         wFlt(wflt val): super(val) {}
 
     protected:
-        void _onCreateCtors(tnarr<func>& tray) const override {
+        void _onCreateCtors(funcs& tray) const override {
         }
     };
 

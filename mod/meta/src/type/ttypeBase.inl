@@ -1,3 +1,5 @@
+#pragma once
+
 #include "type.inl"
 #include "ttypeBase.hpp"
 #include "../rtti/rtti.hpp"

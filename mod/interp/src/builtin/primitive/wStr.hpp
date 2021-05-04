@@ -32,7 +32,7 @@ namespace wrd {
         wStr(const std::string& val): super(val) {}
 
     protected:
-        void _onCreateCtors(tnarr<func>& tray) const override {
+        void _onCreateCtors(funcs& tray) const override {
         }
     };
 }

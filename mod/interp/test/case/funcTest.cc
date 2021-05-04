@@ -16,9 +16,6 @@ namespace {
             WRD_E("myfunc(%x) delete", this);
         }
 
-        using super::subs;
-        ncontainer& subs() override { return _shares; }
-
         void setUp() {
             _executed = false;
             _res = false;
@@ -57,7 +54,6 @@ namespace {
         wbool _executed;
         wbool _res;
         function<wbool(const ncontainer&, const stackFrame&)> _lambda;
-        narr _shares;
         wtypes _types;
     };
 }
@@ -87,8 +83,21 @@ wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj&
     return true;
 }
 
+namespace {
+    struct myObj : public obj {
+        WRD_CLASS(myObj, obj)
+
+    public:
+        using super::getCtors;
+        funcs& getCtors() override {
+            static funcs inner;
+            return inner;
+        }
+    };
+}
+
 TEST(funcTest, testfuncConstructNewFrame) {
-    obj obj;
+    myObj obj;
     myfunc func;
     obj.subs().add(func);
     WRD_E("obj.len=%d", obj.subs().len());
@@ -116,13 +125,13 @@ TEST(funcTest, testfuncConstructNewFrame) {
 }
 
 TEST(funcTest, testCallfuncInsidefunc) {
-    obj obj1;
+    myObj obj1;
     myfunc obj1func1("obj1func1");
     myfunc obj1func2("obj1func2");
     obj1.subs().add(obj1func1);
     obj1.subs().add(obj1func2);
 
-    obj obj2;
+    myObj obj2;
     myfunc obj2func1("obj2func1");
     obj2.subs().add(obj2func1);
 
@@ -169,7 +178,7 @@ TEST(funcTest, testfuncHasStrParameter) {
     // prepare:
     std::string expectVal = "hello world!";
     myfunc func1;
-    obj obj;
+    myObj obj;
     obj.subs().add(func1);
 
     wtypes& types = func1.getTypes();

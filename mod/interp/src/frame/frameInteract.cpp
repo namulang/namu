@@ -7,7 +7,7 @@ namespace wrd {
 
     WRD_DEF_ME(frameInteract)
 
-    me::frameInteract(frameInteractable& interactable, ncontainer& args)
+    me::frameInteract(frameInteractable& interactable, const ncontainer& args)
         :_interactable(interactable), _args(args), _frame(thread::get()._getStackFrame().getCurrentFrame()) {
         _interactable._onInFrame(_frame, _args);
     }

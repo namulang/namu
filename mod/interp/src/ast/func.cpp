@@ -7,7 +7,7 @@ namespace wrd {
 
     WRD_DEF_ME(func)
 
-    str me::run(ncontainer& args) {
+    str me::run(const ncontainer& args) {
         obj& meObj = args.begin()->cast<obj>();
         if(nul(meObj)) return WRD_E("args[0] wasn't obj."), str();
 
@@ -17,8 +17,8 @@ namespace wrd {
         str ret;
         { frameInteract inter(meObj, args);
             { frameInteract inter(*this, args);
-                //TODO: fr->push(Parameter);
-                ret = _onRun(args);
+                //TODO: cast all of args and turns into nonconst new array.
+                ret = _onRun((ncontainer&) args);
             }
         }
 
@@ -26,14 +26,14 @@ namespace wrd {
         return ret;
     }
 
-    wbool me::_onInFrame(frame& fr, ncontainer& args) {
+    wbool me::_onInFrame(frame& fr, const ncontainer& args) {
         WRD_DI("%s._onInFrame()", getName().c_str());
 
         fr.add(subs());
         return true;
     }
 
-    wbool me::_onOutFrame(frame& fr, ncontainer& args) {
+    wbool me::_onOutFrame(frame& fr, const ncontainer& args) {
         WRD_DI("%s._onOutFrame()", getName().c_str());
 
         return fr.del();

@@ -14,14 +14,11 @@ namespace {
             _executed = false;
         }
 
-        str run(ncontainer& args) override {
+        str run(const ncontainer& args) override {
             WRD_I("hello world!");
             _executed = true;
             return str();
         }
-
-        using super::subs;
-        ncontainer& subs() override { return _shares; }
 
         wbool isRun() const {
             return _executed;
@@ -46,14 +43,35 @@ namespace {
 
     private:
         wbool _executed;
-        narr _shares;
+    };
+}
+
+namespace {
+    struct myObj : public obj {
+        WRD_CLASS(myObj, obj)
+
+    public:
+        myObj(int newVal = 0): val(newVal) {}
+
+        int val;
+
+        wbool _onSame(const typeProvidable& rhs) const override {
+            const myObj& cast = (const myObj&) rhs;
+            return val == cast.val;
+        }
+
+        using super::getCtors;
+        funcs& getCtors() override {
+            static funcs inner;
+            return inner;
+        }
     };
 }
 
 TEST(nodeTest, testManuallyMakeNodeStructure) {
     // prepare:
     tstr<nchain> frameEmulator;
-    obj obj;
+    myObj obj;
     myFunc func;
     WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
 
@@ -95,7 +113,7 @@ TEST(nodeTest, testManualNativefuncCall) {
     // prepare:
     myFunc func;
 
-    obj obj;
+    myObj obj;
     obj.subs().add(func);
 
     narr args;
@@ -119,22 +137,6 @@ TEST(nodeTest, testImmutablePositive) {
 
     r1->get() = 0.5f;
     ASSERT_NE(*r1, *r2);
-}
-
-namespace {
-    struct myObj : public obj {
-        WRD_CLASS(myObj, obj)
-
-    public:
-        myObj(int newVal): val(newVal) {}
-
-        int val;
-
-        wbool _onSame(const typeProvidable& rhs) const override {
-            const myObj& cast = (const myObj&) rhs;
-            return val == cast.val;
-        }
-    };
 }
 
 TEST(nodeTest, testImmutableNegative) {

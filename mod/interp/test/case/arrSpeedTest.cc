@@ -19,11 +19,22 @@ namespace  {
         WRD_I("[%s]: it took total %d ms.", name.c_str(), totalElapsed / chrono::milliseconds(1));
         logger::get().setEnable(false);
     }
+
+    struct myObj : public obj {
+        WRD_CLASS(myObj, obj)
+
+    public:
+        using super::getCtors;
+        funcs& getCtors() override {
+            static funcs inner;
+            return inner;
+        }
+    };
 }
 
 TEST(arrSpeedTest, testBenchmark) {
     int clc = 0;
-    obj obj1;
+    myObj obj1;
     benchMark("create narr 100000 times", 100000, [&clc]() {
         narr ar;
         clc += ((int64_t) &ar) % 2;
@@ -39,7 +50,7 @@ TEST(arrSpeedTest, testBenchmark) {
     });
 
     benchMark("create obj 100000 times", 100000, [&clc]() {
-        obj ar;
+        myObj ar;
         clc += ((int64_t) &ar) % 2;
     });
 
