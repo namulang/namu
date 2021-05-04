@@ -35,6 +35,5 @@ namespace wrd {
 
     protected:
         void _onCreateCtors(funcs& tray) const override;
-        }
     };
 }
