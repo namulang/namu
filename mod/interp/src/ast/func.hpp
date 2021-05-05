@@ -34,6 +34,9 @@ namespace wrd {
         wbool _onOutFrame(frame& sf, const ncontainer& args) override;
 
     private:
+        tstr<narr> _asArgs(const ncontainer& args);
+
+    private:
         std::string _name;
         narr _shares;
     };
