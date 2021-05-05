@@ -99,6 +99,7 @@ namespace {
 TEST(funcTest, testfuncConstructNewFrame) {
     myObj obj;
     myfunc func;
+    func.getTypes().push_back(&obj.getType());
     obj.subs().add(func);
     WRD_E("obj.len=%d", obj.subs().len());
     int n = 0;
