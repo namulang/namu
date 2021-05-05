@@ -28,10 +28,7 @@ namespace wrd {
         }
 
     protected:
-        virtual str _onRun(ncontainer& args) = 0;
-
-        wbool _onInFrame(frame& sf, const ncontainer& args) override;
-        wbool _onOutFrame(frame& sf, const ncontainer& args) override;
+        virtual str _onCast(narr& castedArgs) = 0;
 
     private:
         tstr<narr> _asArgs(const ncontainer& args);

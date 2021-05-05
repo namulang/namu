@@ -4,8 +4,8 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    class myFunc : public func {
-        WRD_CLASS(myFunc, func)
+    class myFunc : public mgdFunc {
+        WRD_CLASS(myFunc, mgdFunc)
 
     public:
         myFunc(): super("myFunc") {}
@@ -37,7 +37,7 @@ namespace {
         }
 
     protected:
-        str _onRun(ncontainer& args) override {
+        str _onRun(narr& args) override {
             return str();
         }
 

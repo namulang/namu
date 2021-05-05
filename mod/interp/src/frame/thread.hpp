@@ -7,7 +7,7 @@ namespace wrd {
     class thread : public node {
         WRD_CLASS(thread, node)
         friend class obj; // to access stackFrame.
-        friend class func; // to access stackFrame.
+        friend class mgdFunc; // to access stackFrame.
         friend class frameInteract; // to access stackFrame.
 
     private:

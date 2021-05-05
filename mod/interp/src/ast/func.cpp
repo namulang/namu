@@ -1,7 +1,5 @@
 #include "func.hpp"
-#include "obj.hpp"
-#include "../frame/frameInteract.hpp"
-#include "../frame/thread.hpp"
+#include "ref.hpp"
 
 namespace wrd {
 
@@ -26,37 +24,10 @@ namespace wrd {
     }
 
     str me::run(const ncontainer& args) {
-        tstr<narr> asedArgs = _asArgs(args);
-        if(!asedArgs) return WRD_E("invalid args to call %s func.", getType().getName().c_str()), str();
+        tstr<narr> castedArgs = _asArgs(args);
+        if(!castedArgs) return WRD_E("invalid args to call %s func.", getType().getName().c_str()), str();
 
-        narr& params = *asedArgs;
-        obj& meObj = params[0].cast<obj>();
-        stackFrame& fr = thread::get()._getStackFrame();
-        fr.add(new frame());
-
-        str ret;
-        { frameInteract inter(meObj, args);
-            { frameInteract inter(*this, args);
-                //TODO: cast all of args and turns into nonconst new array.
-                ret = _onRun((ncontainer&) args);
-            }
-        }
-
-        fr.del();
-        return ret;
-    }
-
-    wbool me::_onInFrame(frame& fr, const ncontainer& args) {
-        WRD_DI("%s._onInFrame()", getName().c_str());
-
-        fr.add(subs());
-        return true;
-    }
-
-    wbool me::_onOutFrame(frame& fr, const ncontainer& args) {
-        WRD_DI("%s._onOutFrame()", getName().c_str());
-
-        return fr.del();
+        return _onCast(*castedArgs);
     }
 
     const wtypes& me::getTypes() const {

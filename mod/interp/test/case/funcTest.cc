@@ -5,8 +5,8 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    class myfunc : public func {
-        WRD_CLASS(myfunc, func)
+    class myfunc : public mgdFunc {
+        WRD_CLASS(myfunc, mgdFunc)
 
     public:
         myfunc(std::string name = "myfunc"): super(name) {
@@ -41,7 +41,7 @@ namespace {
         }
 
     protected:
-        str _onRun(ncontainer& args) override {
+        str _onRun(narr& args) override {
             WRD_I("hello world!");
             _executed = true;
 
@@ -128,12 +128,15 @@ TEST(funcTest, testfuncConstructNewFrame) {
 TEST(funcTest, testCallfuncInsidefunc) {
     myObj obj1;
     myfunc obj1func1("obj1func1");
+    obj1func1.getTypes().push_back(&obj1.getType());
     myfunc obj1func2("obj1func2");
+    obj1func2.getTypes().push_back(&obj1.getType());
     obj1.subs().add(obj1func1);
     obj1.subs().add(obj1func2);
 
     myObj obj2;
     myfunc obj2func1("obj2func1");
+    obj2func1.getTypes().push_back(&obj2.getType());
     obj2.subs().add(obj2func1);
 
     obj1func1.setLambda([&obj1, &obj1func1, &obj1func2](const auto& args, const auto& sf) {
