@@ -47,8 +47,8 @@ namespace {
 }
 
 namespace {
-    struct myObj : public obj {
-        WRD_CLASS(myObj, obj)
+    struct myObj : public mgdObj {
+        WRD_CLASS(myObj, mgdObj)
 
     public:
         myObj(int newVal = 0): val(newVal) {}

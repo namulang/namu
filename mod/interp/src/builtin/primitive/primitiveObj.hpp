@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../ast/obj.hpp"
+#include "../../ast/mgd.hpp"
 
 namespace wrd {
 
@@ -26,8 +26,8 @@ namespace wrd {
     };
 
     template <typename T>
-    class primitiveObj : public obj {
-        WRD_INTERFACE(primitiveObj, obj)
+    class primitiveObj : public mgdObj {
+        WRD_INTERFACE(primitiveObj, mgdObj)
 
     public:
         primitiveObj(): _val() {}
