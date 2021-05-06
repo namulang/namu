@@ -4,8 +4,8 @@
 
 namespace wrd {
 
-    class arr : public obj, public containable, public arrContainable {
-        WRD_CLASS(arr, obj)
+    class arr : public mgdObj, public containable, public arrContainable {
+        WRD_CLASS(arr, mgdObj)
 
     public:
         arr() {}

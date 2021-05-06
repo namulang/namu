@@ -5,8 +5,8 @@ using namespace std;
 
 namespace {
 
-    class food : public obj {
-        WRD_CLASS(food, obj)
+    class food : public mgdObj {
+        WRD_CLASS(food, mgdObj)
 
     public:
         food(string newName, int newCalorie): name(newName), calorie(newCalorie) {}
@@ -21,7 +21,7 @@ namespace {
         }
     };
 
-    class chef : public obj {
+    class chef : public mgdObj {
 
         class myType : public wtype {
             WRD_DECL_ME(myType, wtype);
@@ -48,7 +48,7 @@ namespace {
                 return *inner;
             }
         };
-        WRD_CLASS(chef, obj, myType)
+        WRD_CLASS(chef, mgdObj, myType)
 
         using super::getCtors;
         funcs& getCtors() override {

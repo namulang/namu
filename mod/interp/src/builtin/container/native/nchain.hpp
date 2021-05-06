@@ -140,9 +140,14 @@ namespace wrd {
             each(begin(), nulOf<iterator>(), l);
         }
 
+        /// returned deep cloned of this object.
+        /// @remark even if the chain has already linked to the another chain instance,
+        ///         only this object will be deep cloned. cloned instance has the same linkage like
+        ///         which the original chain object has.
         tstr<instance> deepClone() const override {
-            // TODO:
-            return tstr<instance>(this);
+            nchain* ret = new nchain(getContainer().deepClone()->cast<ncontainer>());
+            ret->link(getNext());
+            return tstr<instance>(ret);
         }
 
     private:

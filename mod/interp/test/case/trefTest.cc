@@ -4,8 +4,8 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    struct myObj : public obj {
-        WRD_CLASS(myObj, obj)
+    struct myObj : public mgdObj {
+        WRD_CLASS(myObj, mgdObj)
 
     public:
         using super::getCtors;

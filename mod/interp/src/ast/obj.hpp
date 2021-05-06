@@ -9,19 +9,16 @@ namespace wrd {
 
     class obj : public node, public frameInteractable {
         WRD_INTERFACE(obj, node)
-        friend class func;
+        friend class mgdObj;
 
     public:
-        explicit obj(std::string name = "")
-            : _owns(new narr()), _subs(new nchain(*_owns)), _name(name) {}
-        explicit obj(const me& rhs) {
-            _assign(rhs);
-        }
+        explicit obj(const std::string& name = "", const narr& subItself = *new narr()):
+            _name(name), _subs(new nchain(subItself)) {}
+        explicit obj(const me& rhs) {}
 
         me& operator=(const me& rhs) {
-            super::operator=(rhs);
-
-            return _assign(rhs);
+            if (&rhs == this) return *this;
+            return *this;
         }
 
         using super::subs;
@@ -40,18 +37,8 @@ namespace wrd {
         virtual funcs& getCtors() = 0;
         const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
 
-    protected:
-        // frameInteractable:
-        wbool _onInFrame(frame& sf, const ncontainer& args) override;
-        wbool _onOutFrame(frame& sf, const ncontainer& args) override;
-
     private:
-        me& _assign(const me& rhs);
-
-    private:
-        tstr<nchain> _shares;
-        tstr<narr> _owns;
-        tstr<nchain> _subs;
         std::string _name;
+        tstr<nchain> _subs;
     };
 }
