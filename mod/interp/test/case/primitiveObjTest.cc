@@ -9,7 +9,7 @@ namespace {
 TEST(primitiveObjTest, testCreateWIntInMgd) {
     wInt origin(1);
 
-    tstr<wInt> inst(origin.run(narr({&origin})));
+    tstr<wInt> inst(origin.run(narr({&origin, &origin})));
     ASSERT_TRUE(inst);
     ASSERT_EQ(origin.get(), inst->get());
     ASSERT_NE(&origin, &(*inst));
@@ -17,4 +17,17 @@ TEST(primitiveObjTest, testCreateWIntInMgd) {
 
 TEST(primitiveObjTest, testCloneWIntInMgd) {
     wInt origin(1);
+
+    tstr<wInt> inst(origin.clone());
+    ASSERT_TRUE(inst);
+    ASSERT_EQ(origin.get(), inst->get());
+    ASSERT_NE(&origin, &(*inst));
+}
+
+TEST(primitiveObjTest, testDefaultCtor) {
+    wInt origin(1);
+
+    tstr<wInt> inst(origin.run(narr({&origin})));
+    ASSERT_TRUE(inst);
+    ASSERT_EQ(inst->get(), 0);
 }

@@ -24,16 +24,6 @@ namespace wrd {
             str _onRun(narr& args) override {
                 return str(new wInt());
             }
-        };
-        struct intCtor : public wIntCtor {
-            WRD_CLASS(intCtor, wIntCtor)
-
-        public:
-            str _onRun(narr& args) override {
-                int val = args.begin()->as<wInt>()->get();
-
-                return str(new wInt(val));
-            }
             const wtypes& getTypes() const override {
                 static wtypes* inner = nullptr;
                 if(!inner) {
@@ -43,10 +33,29 @@ namespace wrd {
                 return *inner;
             }
         };
+        struct cpyCtor: public wIntCtor {
+            WRD_CLASS(cpyCtor, wIntCtor)
+
+        public:
+            str _onRun(narr& args) override {
+                int val = args[1].as<wInt>()->get();
+
+                return str(new wInt(val));
+            }
+            const wtypes& getTypes() const override {
+                static wtypes* inner = nullptr;
+                if(!inner) {
+                    inner = new wtypes();
+                    inner->push_back(&ttype<wInt>::get());
+                    inner->push_back(&ttype<wInt>::get());
+                }
+                return *inner;
+            }
+        };
     }
 
     void me::_onCreateCtors(tnarr<func>& tray) const {
         tray.add(new defaultCtor());
-        tray.add(new intCtor());
+        tray.add(new cpyCtor());
     }
 }
