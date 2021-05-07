@@ -203,8 +203,6 @@ TEST(funcTest, testfuncHasStrParameter) {
     args.add(obj);
     args.add(new wStr(expectVal));
     wrd::iterator e = args.iter(1);
-    node& elem1 = *e;
-    wStr& cast = elem1.cast<wStr>();
 
     func1.run(args);
     ASSERT_TRUE(func1.isSuccess());
