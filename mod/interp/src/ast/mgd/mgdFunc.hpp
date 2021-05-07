@@ -16,6 +16,5 @@ namespace wrd {
 
         wbool _onInFrame(frame& sf, const ncontainer& args) override;
         wbool _onOutFrame(frame& sf, const ncontainer& args) override;
-
     };
 }

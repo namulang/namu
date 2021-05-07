@@ -1,17 +1,16 @@
 #include "wInt.hpp"
 #include "../../ast/tref.hpp"
-#include "../../ast/mgd/mgdFunc.hpp"
 
 namespace wrd {
 
     WRD_DEF_ME(wInt)
 
     namespace {
-        class wIntCtor : public mgdFunc {
-            WRD_INTERFACE(wIntCtor, mgdFunc)
+        class wIntCtor : public primitiveCtor {
+            WRD_INTERFACE(wIntCtor, primitiveCtor)
 
         public:
-            wIntCtor(): super("") {}
+            wIntCtor(): super() {}
 
             const wtype& getReturnType() const override {
                 return ttype<wInt>::get();
@@ -21,24 +20,20 @@ namespace wrd {
             WRD_CLASS(defaultCtor, wIntCtor)
 
         public:
-            str _onRun(narr& args) override {
+            str _onCast(narr& args) override {
                 return str(new wInt());
             }
             const wtypes& getTypes() const override {
-                static wtypes* inner = nullptr;
-                if(!inner) {
-                    inner = new wtypes();
-                    inner->push_back(&ttype<wInt>::get());
-                }
-                return *inner;
+                static wtypes inner;
+                return inner;
             }
         };
         struct cpyCtor: public wIntCtor {
             WRD_CLASS(cpyCtor, wIntCtor)
 
         public:
-            str _onRun(narr& args) override {
-                int val = args[1].as<wInt>()->get();
+            str _onCast(narr& args) override {
+                int val = args[0].as<wInt>()->get();
 
                 return str(new wInt(val));
             }
@@ -46,7 +41,6 @@ namespace wrd {
                 static wtypes* inner = nullptr;
                 if(!inner) {
                     inner = new wtypes();
-                    inner->push_back(&ttype<wInt>::get());
                     inner->push_back(&ttype<wInt>::get());
                 }
                 return *inner;
