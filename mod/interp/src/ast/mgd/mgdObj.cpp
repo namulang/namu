@@ -9,6 +9,7 @@ namespace wrd {
         _shares = rhs._shares;
         _subs.bind(*rhs.subs().deepClone());
         _subs->link(*_shares);
+        _org = rhs._org;
 
         return *this;
     }

@@ -8,7 +8,7 @@ namespace wrd {
         WRD_INTERFACE(mgdObj, obj)
 
     public:
-        explicit mgdObj(const std::string& name = ""): super(name) {}
+        explicit mgdObj(const std::string& name = ""): super(name), _org(this) {}
         explicit mgdObj(const me& rhs): super(rhs) {
             _assign(rhs);
         }
@@ -21,6 +21,10 @@ namespace wrd {
             return _assign(rhs);
         }
 
+        const obj& getOrigin() const override {
+            return *_org;
+        }
+
     protected:
         wbool _onInFrame(frame& fr, const ncontainer& args) override;
         wbool _onOutFrame(frame& fr, const ncontainer& args) override;
@@ -30,5 +34,6 @@ namespace wrd {
 
     private:
         tstr<nchain> _shares;
+        obj* _org;
     };
 }

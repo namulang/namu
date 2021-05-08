@@ -27,6 +27,9 @@ namespace wrd {
 
             return *ctors;
         }
+        const obj& getOrigin() const override {
+            return *this;
+        }
 
     protected:
         wbool _onSame(const typeProvidable& rhs) const override {
