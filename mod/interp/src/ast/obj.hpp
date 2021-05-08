@@ -36,6 +36,7 @@ namespace wrd {
         wbool canRun(const wtypes& types) const override;
         virtual funcs& getCtors() = 0;
         const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
+        virtual const obj& getOrigin() const = 0;
 
     private:
         std::string _name;
