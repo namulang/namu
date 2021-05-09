@@ -55,6 +55,7 @@ set(WRD_DEFAULT_INC_DIR
     ${WRD_DIR}/mod/meta/src
     ${WRD_DIR}/mod/memlite/src
     ${WRD_DIR}/mod/interp/src
+    ${WRD_DIR}/mod/swrd/src
     /usr/local/include)
 include_directories(${WRD_DEFAULT_INC_DIR})
 
