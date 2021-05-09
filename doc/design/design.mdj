@@ -726,7 +726,7 @@
 											"top": 662,
 											"width": 135,
 											"height": 13,
-											"text": "moduler"
+											"text": "packr"
 										},
 										{
 											"_type": "LabelView",
@@ -4683,7 +4683,7 @@
 											"top": 253,
 											"width": 121.36083984375,
 											"height": 13,
-											"text": "(from moduler)"
+											"text": "(from packr)"
 										},
 										{
 											"_type": "LabelView",
@@ -4862,7 +4862,7 @@
 											"top": 518,
 											"width": 121.36083984375,
 											"height": 13,
-											"text": "(from moduler)"
+											"text": "(from packr)"
 										},
 										{
 											"_type": "LabelView",
@@ -8473,7 +8473,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF3JBwbO9Jkp5M="
 							},
-							"name": "moduler",
+							"name": "packr",
 							"ownedElements": [
 								{
 									"_type": "UMLClass",

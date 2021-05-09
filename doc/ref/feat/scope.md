@@ -2,7 +2,7 @@
 
 ## scope은 3종류로 분류한다.
 * object scope 은 객체 1개에 대한 멤버들이 등록된다.
-    * world에서는 가장 바깥 공간에 module 객체가 있다. module 또한 obj 이므로 전역공간이 별도로 존재하지 않는다.
+    * world에서는 가장 바깥 공간에 pack 객체가 있다. pack 또한 obj 이므로 전역공간이 별도로 존재하지 않는다.
 * local scope 은 메소드 실행 도중에 발생하는 객체들이 등록된다.
 
 ## 모든 메소드는 실행하기 전에 넘겨받은 thisobj 로 scope을 갱신하려고 한다.

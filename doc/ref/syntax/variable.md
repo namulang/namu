@@ -46,7 +46,7 @@ def A
 * 가까운 scope을 우선하는 것이다. 여기서는 메소드 안에 정의된 say()를 우선하는 것으로, 해당 클래스를 작성중일 개발자가 그러한 클래스나 메소드가 있다는걸 가장 잘 알고있다. 그러니, 대부분의 의도또한 local scope에 있는걸 사용하려는 것일 것이다.
 
 ## 전역변수는 .<변수명> 으로 접근한다.
-* moduleScopeAccessExpr로 번역될 것이며 이 Expr은 stackframe에서 가장 밑에 있는 frame을 찾아서 탐색한다.
+* packScopeAccessExpr로 번역될 것이며 이 Expr은 stackframe에서 가장 밑에 있는 frame을 찾아서 탐색한다.
 
 ## 여러개의 변수를 동시에 정의 가능하다.
 * 튜플을 이용하면 가능하다.

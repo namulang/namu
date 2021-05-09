@@ -13,7 +13,7 @@
 * 그러나 interpreter는 컴파일타임에 verify 하고 에러를 내보낸다.
 * 특정 요소가 protected인지 public인지 판단은 getName()[0] == '_' 으로 한다.
 * protected 일 경우, 접근을 해도 되는지 여부는 node.isAccessibleFrom(obj) 로 체크한다.
-    * node가 일반 객체일 경우에는 isAccessibleFrom(thisObj)는 thisObj와 node가 동일한 module에 속해 있다면 true다.
+    * node가 일반 객체일 경우에는 isAccessibleFrom(thisObj)는 thisObj와 node가 동일한 pack에 속해 있다면 true다.
         * node.getType().getModule() 로 얻어올 수 있다.
     * node가 중첩메소드일 경우에는 thisObj == func.origin로 비교 한다.
 

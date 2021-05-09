@@ -1,4 +1,4 @@
-module wrd.lang.example.part
+pack wrd.lang.example.part
 import sys.cons aka c
 
 def part

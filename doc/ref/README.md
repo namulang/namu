@@ -33,7 +33,7 @@
 - [Immutable](md__home_travis_build_kniz_worldlang_doc_ref_feat_immutable.html)
 - [Interoperability](md__home_travis_build_kniz_worldlang_doc_ref_feat_interoperability.html)
 - [Life cycle](md__home_travis_build_kniz_worldlang_doc_ref_feat_life_cycle.html)
-- [Module](md__home_travis_build_kniz_worldlang_doc_ref_feat_module.html)
+- [Pack](md__home_travis_build_kniz_worldlang_doc_ref_feat_pack.html)
 - [Null safety](md__home_travis_build_kniz_worldlang_doc_ref_feat_null_safety.html)
 - [Prototyping inheritance](md__home_travis_build_kniz_worldlang_doc_ref_feat__prototyping__inheritance.html)
 - [Scope](md__home_travis_build_kniz_worldlang_doc_ref_feat_scope.html)

@@ -1,6 +1,6 @@
 # entrypoint
 
-## 각 module은 main 이라는 메소드를 가질 수 있다.
+## 각 pack은 main 이라는 메소드를 가질 수 있다.
 * 없어도 된다.
 
 ## main은 다음 형태 중 1개면 된다.

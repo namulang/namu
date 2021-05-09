@@ -22,7 +22,7 @@ def app
 // result: false
 ```
 
-## Worldfrx를 통해서 expression 객체를 module에서 조작해서는 안된다. (invisible)
+## Worldfrx를 통해서 expression 객체를 pack에서 조작해서는 안된다. (invisible)
 
 ## if-else 에서 양쪽 블록문 안에서의 값으로 수렴한다.
 
