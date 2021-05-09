@@ -1,6 +1,7 @@
 %{
 #include "../common.hpp"
 #include "../ast.hpp"
+#include "../interp/smallWorld.hpp"
 
 using namespace wrd::swrd;
 
@@ -140,7 +141,8 @@ tdefStmt    : tdefexpr teol {
             ;
 
 tdefBlock   : tdefStmt {
-                $$ = $1;
+                $$ = new obj();
+                $$->add(*$1);
                 WRD_DI("tdefBlock(%x) <-- tdefStmt(%x)", $$, $1);
             }
             | tdefBlock tdefStmt {
@@ -151,14 +153,17 @@ tdefBlock   : tdefStmt {
             ;
 
 tfile       : tfile tdefOriginStmt {
-                $1->add(*$2);
                 $$ = $1;
+                $$->add(*$2);
                 WRD_DI("tfile(%x) <-- tfile(%x), tdefOriginStmt(%x)", $$, $1, $2);
             }
             | tdefOriginStmt {
-                $$ = root = new obj();
+                const std::string& name = wrd::swrd::smallWorld::getFileName();
+                $$ = root = new obj(name);
+                wrd::id id = $1->getId();
                 $$->add(*$1);
-                WRD_DI("tfile(%x) <-- tdefOriginStmt(%x)", $$, $1);
+                WRD_DI("$1 = %x, %d.%d.%d", $1, id.tagN, id.chkN, id.serial);
+                WRD_DI("tfile(%s %x) <-- tdefOriginStmt(%x)", name.c_str(), $$, $1);
             }
             | teol {
                 $$ = root = new obj();

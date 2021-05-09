@@ -13,8 +13,10 @@ namespace wrd { namespace swrd {
         static tstr<obj> interp(const std::string& script);
         static tstr<obj> interpFile(const wchar* path);
         static tstr<obj> interpFile(const std::string& path);
+        static const std::string& getFileName();
 
     private:
+        static std::string _extractFileName(const std::string& path);
         static tstr<obj> _runParser();
     };
 }}

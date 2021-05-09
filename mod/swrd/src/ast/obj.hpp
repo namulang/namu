@@ -39,7 +39,7 @@ namespace wrd { namespace swrd {
         void add(const obj& new1) {
             if(nul(new1)) return;
 
-            _subs.insert(make_pair(new1.getName(), new1));
+            _subs.insert(make_pair(new1.getName(), tstr<me>(new1)));
         }
         void add(std::initializer_list<obj*> subs) {
             for(auto e : subs)

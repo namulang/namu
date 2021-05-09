@@ -140,7 +140,7 @@ true|false {
 
     <DQUOTING>[^\'\n]*\' { // DQUOTING 상태일때, <" 를 제외한 문자> + "가 붙는 경우
         changeRule("INITIAL", INITIAL);
-        string parsed = "\'" + string(yytext);
+        string parsed = string(yytext, strlen(yytext)-1);
         yylval.strVal = strdup(parsed.c_str());
         return tstr;
     }
