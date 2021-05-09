@@ -58,3 +58,13 @@
 * 하나 pack의 객체로 부터 origins를 빼오는 주체를 extraction이라고 한다.
 * 여러가지 extraction 들이 predefine 되어있으며 각각 다른 언어체계로부터 origin 객체를 빼온다.
 * 한번 추출된 origin 객체는 언어의 관계없이 동일한 API 구성을 가지므로 호환성에 문제 없다.
+
+## packLoader는 init() 시에 pack을 1차로 load 한다.
+* pack은 manifest 파일, 각 entrypoint 별 load할 origin 객체들로 구성되며 1개의 파일로 배포된다.
+* pack은 'wpak' 확장자를 갖는다.
+* packLoader는 지정한 path에 있는 pack을 재귀적으로 탐색한다.
+* 탐색한 pack의 manifest 파일만 읽는다.
+    * manifest 에는 pack의 기본적인 정보와 pack path와 읽어야할 entrypoint가 기록되어있다.
+    * packLoader는 이시점에서 pack객체를 만들고 path와 매핑만 해둔다.
+* pack객체는 subs()를 처음 호출당하면 lazy하게 entrypoint들로부터 origin 객체를 extraction 시도한다.
+* entrypoint 갯수만큼 여러개의 extraction 들이 수행될 수 있다.
