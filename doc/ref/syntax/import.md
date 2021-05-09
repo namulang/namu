@@ -15,6 +15,6 @@
 
 ## import는 정적에서만(ast가 만들어지는 순간) 판단된다.
 
-## import는 뒤따라오는 pack을 src frame에 넣어두는 것이다.
-* 각 소스코드 파일에서 import를 선언한 것들이 srcframe 에 들어가게 된다.
-* 이 srcframe을 base로 삼아서 이 소스코드 파일에서 정의된 것들은 모두 자신의 chain 뒤에 srcframe을 link 하고 본다.
+## import는 뒤따라오는 pack을 file frame에 넣어두는 것이다.
+* 각 소스코드 파일에서 import를 선언한 것들이 src file frame 에 들어가게 된다.
+* 최종적으로 pack frame --> src file frame --> origin obj frame --> func frame 과 같이 구성되게 된다.
