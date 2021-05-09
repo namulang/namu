@@ -1,4 +1,4 @@
-module wrd.lang.example.keyboard
+pack wrd.lang.example.keyboard
 
 import sys.cons aka c
 

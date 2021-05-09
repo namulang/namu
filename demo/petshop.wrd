@@ -1,4 +1,4 @@
-module wrd.lang.example.petshop
+pack wrd.lang.example.petshop
 import sys.cons aka c
 
 def petShop

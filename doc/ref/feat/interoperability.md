@@ -19,11 +19,11 @@
 
 ## 모듈 단위로 각 언어는 바이너리를 배포한다.
 
-## 모듈 attach는 module manager에서 담당한다.
+## 모듈 attach는 pack manager에서 담당한다.
 
 ## 언어 별로 다양한 형태의 진입점을 갖는다.
 
-* modulemanager는 각 언어별로 attacher를 가지고 있다.
+* packmanager는 각 언어별로 attacher를 가지고 있다.
 * attacher는 built in 이다.
 * attacher는 진입점에 접근할 수 있다.
 

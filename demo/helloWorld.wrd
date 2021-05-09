@@ -1,4 +1,4 @@
-module wrd.lang.example.helloWorld
+pack wrd.lang.example.helloWorld
 
 main() void
     sys.cons.out("Hello world!")

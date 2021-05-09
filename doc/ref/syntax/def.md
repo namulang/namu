@@ -47,7 +47,7 @@ p2.age == person.age // true
 
 ## 생성자는 outer scope에 속한 특수한 static func다.
 * 생성자가 외부에 놓여질때 타입이름으로 놓여져야 한다, "@ctor"이 아니라.
-* type Person의 생성자는 Person에 있는 것이 아니라 Person의 origin를 갖고 있는 객체가 소유한다. (대부분은 module일 것이다)
+* type Person의 생성자는 Person에 있는 것이 아니라 Person의 origin를 갖고 있는 객체가 소유한다. (대부분은 pack일 것이다)
 * 이는 모호성 오류를 해결하기 위해서이다. 다음 예제를 보자.
 ```go
 def A
@@ -157,10 +157,10 @@ def B foo()
     * origin 객체의 부모클래스의 expr
     * origin 객체의 sub variable의 기본값
 
-## 객체는 보통 module 안에 존재한다.
+## 객체는 보통 pack 안에 존재한다.
 
 ```go
-module org.worldlang.example
+pack org.worldlang.example
 
 def example1
     ....

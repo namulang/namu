@@ -175,7 +175,7 @@ def app
 
 ## 메소드의 구현
 * 객체와 달리 메소드는 scope이 항상 동적으로 구성된다.
-* func객체가 생성되는 시점에서 module scope을 깔고 자신의 shared chain을 구성해놓지 않는다.
+* func객체가 생성되는 시점에서 pack scope을 깔고 자신의 shared chain을 구성해놓지 않는다.
 * S(shared sub chain)과 NS(non shared sub array)가 obj 처럼 존재한다.
 * 메소드 내에서 정의된 static 객체, origin 객체, 함수객체가 S chain에 generation 단계에서 추가된다.
 * 로컬변수, 인자리스트는 NS에 정의된다.
@@ -183,7 +183,7 @@ def app
 ## 메소드의 실행 알고리즘
 * thisobj와 인자리스트가 넘어온다.
 * thisobj로 objscope을 교체한다.
-    * thisobj는 module scope까지 이미 가지고 있으므로 stackframe이 ptr를 1개 바꾸기만 하면 된다.
+    * thisobj는 pack scope까지 이미 가지고 있으므로 stackframe이 ptr를 1개 바꾸기만 하면 된다.
     * stackframe은 이미 있던 scope(= frame)을 stack에 넣고, 새로운 frame을 만들어 넘어온 thisobj의 scope으로 갱신한다.
     * 이렇게 하는 이유는 외부에서도 stackframe의 목록을 접근할 수 있어야 하는 요구사항이 때문이다.
     * 새로 추가된 frame의 chain에 func의 S를 push하고 NS를 deepcpy한 뒤 push한다.

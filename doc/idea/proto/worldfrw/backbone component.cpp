@@ -225,7 +225,7 @@ class Node : public ? {
 
 class CompositNode : public Node {
 	//	_members can't be declared with protected accessor:
-	//		if we do that, module developers can use _members and remove or insert some Node at runtime.
+	//		if we do that, pack developers can use _members and remove or insert some Node at runtime.
 	Chain _members; // of Container.
 	//	getMember(); 는 공개하지 않는다:
 	//		사용자는 Container채로 받게 되면 밖에서 remove, insert를 할 수 있게 된다.

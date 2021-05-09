@@ -74,7 +74,7 @@ aka p
 
 ## class란 native type 을 의미하며 meta 모듈에 의해 관리된다.
 
-## meta module
+## meta pack
 
 * 별도의 기반 모듈로써 native의 reflection을 담당한다.
 * world에서 제공하는 메타 API의 backend 에 해당한다.
@@ -110,7 +110,7 @@ aka p
 * 대부분 native 클래스로써 제공될 것이다. 인터프리터는 이 클래스의 객체를 생성하기만 하면 되므로 편리한 접근방법을 제시한 것이다.
 * 반면, mgd Object라는 것은 일반적인 mgdObject가 가지는 특성을 그대로 가지고 있으며 world시스템 입장에서 봤을때는 이것인 mgdobject인지 native object 인지 구분이 가선 안된다는 것이다.
 * 보통은 Object 클래스에서 상속해 native 클래스를 정의한 뒤, 시스템이 초기화되는 시점에 이 native 클래스들을 초기화화는 queue에 집어넣는 형태로 구현된다.
-* 일반 mgdobject와 구분이 가면 안되기 때문에 엄연히 moduled path 가 존재해야 한다. 
+* 일반 mgdobject와 구분이 가면 안되기 때문에 엄연히 packd path 가 존재해야 한다. 
 * 속도 최적화를 위해서 완전한 일반 mgd object 기반으로 만들지 않는 것이다.
 
 ### 사용성에 있어서도 mgd object와 native object는 차이가 있어서는 안된다.

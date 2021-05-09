@@ -1,4 +1,4 @@
-module wrd.lang.example.part
+pack wrd.lang.example.part
 
 def global()
     suits := ["Hearts", "diamonds", "Spades", "Clovers"]

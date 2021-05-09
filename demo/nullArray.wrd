@@ -1,4 +1,4 @@
-module wrd.lang.example.nullArray
+pack wrd.lang.example.nullArray
 
 main() void
     def myObj

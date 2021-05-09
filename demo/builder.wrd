@@ -1,4 +1,4 @@
-module wrd.lang.example.builder
+pack wrd.lang.example.builder
 
 def building
     _floor := "One"
