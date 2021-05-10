@@ -68,3 +68,23 @@
     * packLoader는 이시점에서 pack객체를 만들고 path와 매핑만 해둔다.
 * pack객체는 subs()를 처음 호출당하면 lazy하게 entrypoint들로부터 origin 객체를 extraction 시도한다.
 * entrypoint 갯수만큼 여러개의 extraction 들이 수행될 수 있다.
+
+## packLoader는 다양한 extraction을 가지고 있다.
+* c++ extraction, mgd extraction, c# extraction 등
+
+## packLoader는 subs()로 자신의 origin 객체들, 즉 pack을 반환할 수 있다.
+
+## packLoader는 chain 구조로 되어있다.
+* obj이므로 당연하다.
+* 1개의 packLoader는 다른 packLoader 객체를 link 할 수 있어야 한다.
+
+## mgd extraction은 interpreter 객체를 통해서 origin 객체 배열을 뽑아낸다.
+* extraction은 interpreter에게 해석할 파일들을 전달하면서 link할 defaultPackLoader도 같이 넘긴다.
+* interpreter는 packLoader객체를 하나 만들고 넘겨받은 packLoader객체를 link한다.
+    * 이 packLoader는 subs()에서 defaultPackLoader의 것들까지 포함해서 반환할 것이다.
+* interpreter가 추출한 origin 객체들은 모두 생성한 packLoader의 container에 넣는다.
+    * link()의 packLoader에 넣는게 아니다.
+* 1차로 추출된 이후, verification 한다.
+    * packerLoader의 container 부분만 검증한다.
+    * scope을 찾을때는 packLoader.sub()를 검색하므로 defaultPackLoader.subs()도 검색하게 된다.
+* 이상이 없다면 packLoader의 container 부분을 defaultPackLoader에 add한다.
