@@ -1,18 +1,20 @@
 %{
+#pragma once
 #include "../common.hpp"
-#include "../ast.hpp"
 #include "../interp/smallWorld.hpp"
+
+namespace wrd { namespace swrd {
+    class obj;
+}}
 
 using namespace wrd::swrd;
 
 int yylex();
-wrd::swrd::obj* root = nullptr;
+extern wrd::swrd::obj* root;
 extern int yylineno;
 extern char* yytext;
 
-void yyerror(const char* s) {
-    WRD_E("error #%d: %s, %s", yylineno, s, yytext);
-}
+void yyerror(const char* s);
 
 %}
 
@@ -35,7 +37,7 @@ void yyerror(const char* s) {
 %token <floatVal> tnum
 %token <boolVal> tbool
 %token <charVal> tokChar
-%token <strVal> tstr
+%token <strVal> tokStr
 %token <strVal> tid tcontainerName
 %token teol
 %type <obj> tfile tarray
@@ -63,7 +65,7 @@ trhsexpr    : tbool {
                 $$ = new terminalObj($1);
                 WRD_DI("trhsexpr(%x) <-- %d", $$, $1);
             }
-            | tstr {
+            | tokStr {
                 $$ = new terminalObj($1);
                 WRD_DI("trhsexpr(%x) <-- '%s'", $$, $1);
             }
