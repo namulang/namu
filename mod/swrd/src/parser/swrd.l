@@ -142,7 +142,7 @@ true|false {
         changeRule("INITIAL", INITIAL);
         string parsed = string(yytext, strlen(yytext)-1);
         yylval.strVal = strdup(parsed.c_str());
-        return tstr;
+        return tokStr;
     }
 
 \n {
@@ -261,6 +261,7 @@ true|false {
 
 int nowRule = INITIAL;
 int prevRule = INITIAL;
+wrd::swrd::obj* root = nullptr;
 
 int meetEof() {
     static int cnt = 0;
@@ -297,6 +298,10 @@ int goOutdent(char prev)
     WRD_DI(" ----- dedent: pop! now %d dedentLv left.", indentLvs.size());
     nowIndent = 0;
     return tdedent;
+}
+
+void yyerror(const char* s) {
+    WRD_E("error #%d: %s, %s", yylineno, s, yytext);
 }
 
 int yywrap() {
