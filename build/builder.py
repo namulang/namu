@@ -405,7 +405,10 @@ def _extractPythonVersion(verstr):
         return 0.0
     return float(verstr[7:10])
 
+flexVerExpect = [2, 6, 0]
+
 def checkDependencies():
+    global flexVerExpect
     global python3
     print("")
     printInfoEnd("checking dependencies...")
@@ -427,7 +430,26 @@ def checkDependencies():
     if _extractPythonVersion(cmdstr(python3 + " --version")) < 3.6:
         printErr("requires python over v3.6")
         return -1
+
+    (isCompatible, ver) = isFlexCompatible()
+    if isCompatible == False:
+        printErr("your flex version is " + ver + ". it requires to be over " +
+            str(flexVerExpect[0]) + "." + str(flexVerExpect[1]) + "." + str(flexVerExpect[2]))
+        return -1
+
+
     printOk("done")
+
+def isFlexCompatible():
+    global flexVerExpect
+    res = cmdstr("flex -V")[5:]
+    vers = [int(res[0:1]), int(res[2:3]), int(res[4:])]
+    for n in range(len(vers)):
+        print(vers[n])
+        print(flexVerExpect[n])
+        if vers[n] > flexVerExpect[n]: return True, res
+        if vers[n] < flexVerExpect[n]: return False, res
+    return True, res
 
 def version():
     global ver_name, ver_major, ver_minor, ver_fix, cwd, python3
