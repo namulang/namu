@@ -23,7 +23,7 @@ jobs:
           - gpg --export --armor 16126D3A3E5C1192 | sudo apt-key add -
           - sudo apt-get update
           - sudo apt-get install libclang-common-12-dev
-          - sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+          - bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 
         - os: osx
           env: BADGE=osx
