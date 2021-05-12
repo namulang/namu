@@ -39,6 +39,8 @@ jobs:
                 - python3-pip
                 - cmake
                 - wget
+                - bison
+                - flex
 
 install:
   # decrypt rsa key:
