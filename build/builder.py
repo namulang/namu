@@ -32,6 +32,9 @@ def printInfoEnd(msg):
 def printOk(msg):
     print(bcolors.OKGREEN + " ✓ " + bcolors.ENDC + msg)
 
+def printOkEnd(msg):
+    print(bcolors.OKGREEN + " ✓ " + bcolors.ENDC + msg, end=' ')
+
 def cmdstr(cmd):
     try:
         ret = str(subprocess.check_output(cmd, shell=True))
@@ -44,7 +47,6 @@ def cmdstr(cmd):
         ret = ""
         return ret
 
-    print(ret + "= call(" + cmd + ")")
     return ret
 
 python3 = ""
@@ -412,12 +414,13 @@ def checkDependencies():
     global python3
     print("")
     printInfoEnd("checking dependencies...")
-    simple_depencies = ["git", "cmake", "clang", "doxygen", "bison", "flex"]
+    simple_depencies = ["git", "cmake", "clang", "doxygen", "bison"]
 
     for e in simple_depencies:
         if not shutil.which(e):
             printErr(e + " is NOT installed!")
             return -1
+        printOkEnd(e)
 
     if isWindow():
         if not shutil.which("mingw32-make"):
@@ -433,20 +436,17 @@ def checkDependencies():
 
     (isCompatible, ver) = isFlexCompatible()
     if isCompatible == False:
-        printErr("your flex version is " + ver + ". it requires to be over " +
+        printErr("your flex version is " + ver + ". it requires v" +
             str(flexVerExpect[0]) + "." + str(flexVerExpect[1]) + "." + str(flexVerExpect[2]))
         return -1
-
-
-    printOk("done")
+    else: printOk("flex")
 
 def isFlexCompatible():
     global flexVerExpect
     res = cmdstr("flex -V")[5:]
-    vers = [int(res[0:1]), int(res[2:3]), int(res[4:])]
+    verStrs = res.split(".")
+    vers = [int(verStrs[0]), int(verStrs[1]), int(verStrs[2])]
     for n in range(len(vers)):
-        print(vers[n])
-        print(flexVerExpect[n])
         if vers[n] > flexVerExpect[n]: return True, res
         if vers[n] < flexVerExpect[n]: return False, res
     return True, res
@@ -475,7 +475,7 @@ def help():
     print("\t * run\t\tbuild + run one of predefined programs.")
 
 def clean():
-    printInfoEnd("Clearing next following files...")
+    printInfo("Clearing next following files...")
     global cwd, binDir, externalDir
     _clean(cwd)
     _cleanIntermediates()
