@@ -443,9 +443,10 @@ def checkDependencies():
 
 def isFlexCompatible():
     global flexVerExpect
-    res = cmdstr("flex -V")[5:]
+    res = cmdstr("flex -V")[5:] # res will be set to "flex 2.3.54" on linux and "flex 2.3.54 Apple(32...)" on macos
     verStrs = res.split(".")
-    vers = [int(verStrs[0]), int(verStrs[1]), int(verStrs[2])]
+    patchVer = verStrs[2].split(" ")[0] # remove 'Apple(32...)' strings if it has.
+    vers = [int(verStrs[0]), int(verStrs[1]), int(patchVer)]
     for n in range(len(vers)):
         if vers[n] > flexVerExpect[n]: return True, res
         if vers[n] < flexVerExpect[n]: return False, res
