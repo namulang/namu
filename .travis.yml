@@ -40,6 +40,8 @@ jobs:
                 - wget
                 - bison
                 - flex
+          before_install:
+              - export PATH="/usr/local/opt/flex/bin:$PATH"
 
 install:
   # decrypt rsa key:
