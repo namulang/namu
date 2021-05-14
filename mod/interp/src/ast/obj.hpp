@@ -38,7 +38,7 @@ namespace wrd {
         const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
         virtual const obj& getOrigin() const = 0;
 
-    private:
+    protected:
         std::string _name;
         tstr<nchain> _subs;
     };

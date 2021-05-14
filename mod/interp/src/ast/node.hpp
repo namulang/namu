@@ -16,6 +16,10 @@ namespace wrd {
         virtual ncontainer& subs() = 0;
         const ncontainer& subs() const WRD_UNCONST_FUNC(subs())
 
+        template <typename T>
+        tnarr<T> sub(std::function<wbool(const T&)> l) const {
+            return subs().get<T>(l);
+        }
         narr sub(const std::string& name) const {
             return subs().get([&](const node& elem) {
                 return elem.getName() == name;
