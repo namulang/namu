@@ -50,6 +50,7 @@ build/html/
 build/xml/
 external/googletest
 build/*.tmp
+build/mod/
 tags
 docs/html/
 docs/xml/
