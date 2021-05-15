@@ -52,9 +52,9 @@
     <span class="n">val</span><span class="p">.</span><span class="n">as</span><span class="o">&lt;</span><span class="n">Flt</span><span class="o">&gt;</span><span class="p">()</span>
 <span class="p">}</span></pre><h3>native 환경에서 지역변수도 바인딩 된다.</h3><ul><li>smartptr 같은 바인딩은 본래 HEAP에 속한 인스턴스에 한해서 동작한다.</li><li><p>그러나 native 환경에서 사용자가 개발할 때는 local 변수나 HEAP에 속한 변수도 모두 한 데 넣고 범용적으로 처리할 경우가 있다.</p><pre class="m-code"><span class="p">{</span><span class="n">c</span><span class="o">++</span><span class="p">}</span>
 <span class="n">ref</span><span class="o">*</span> <span class="n">getArray</span><span class="p">()</span> <span class="p">{</span>
-    <span class="k">static</span> <span class="n">Int</span> <span class="n">staticInt</span><span class="p">(</span><span class="mi">22</span><span class="p">);</span>
+    <span class="k">static</span> <span class="n">Int</span> <span class="nf">staticInt</span><span class="p">(</span><span class="mi">22</span><span class="p">);</span>
     <span class="k">static</span> <span class="n">ref</span> <span class="n">cache</span><span class="p">[]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="k">new</span> <span class="nf">ref</span><span class="p">(</span><span class="k">new</span> <span class="n">Int</span><span class="p">()),</span>
+        <span class="k">new</span> <span class="n">ref</span><span class="p">(</span><span class="k">new</span> <span class="n">Int</span><span class="p">()),</span>
         <span class="k">new</span> <span class="n">ref</span><span class="p">(</span><span class="o">&amp;</span><span class="n">staticInt</span><span class="p">)</span> <span class="c1">// smartptr라면 heap에 있는 변수가 아니므로 binding 이 불가능하다.</span>
     <span class="p">};</span>
     <span class="k">return</span> <span class="n">cache</span><span class="p">;</span>
