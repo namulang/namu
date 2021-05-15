@@ -233,10 +233,8 @@ def _extractBuildInfo(): # from RELEASE.md at root directory.
             ver_major = int(line[4:minor_head_n-1])
             ver_minor = int(line[minor_head_n: minor_head_n+1])
             fix_head_n = line.find('.', minor_head_n) + 1
-            ver_name_n = line.find(' ', fix_head_n+1)
-            print("ver_name_n=" + str(ver_name_n))
+            ver_name_n = line.find(' ', fix_head_n+1) + 1
             ver_fix_str = line[fix_head_n: ver_name_n]
-            print("fix_head_n=" + str(fix_head_n) + " ver_fix_str=" + ver_fix_str)
             if ver_fix_str in "" or ver_fix_str in " ":
                 ver_fix = 0
             else:
@@ -253,16 +251,14 @@ def _updateLine(lines, n, trg, basestr):
     value = int(lines[n][idx:len(lines[n])-2])
     if value != trg:
         lines[n] = basestr + str(trg) + ")\n"
-        print(lines[n])
         updated = True
 
 def _updateLineString(lines, n, trg, basestr):
     global updated
     idx = len(basestr)-1
     value = lines[n][idx:len(lines[n])-2]
-    if eq(value, trg):
-        lines[n] = basestr + str(trg) + ")\n"
-        print(lines[n])
+    if not eq(value, trg):
+        lines[n] = basestr + "\"" + str(trg) + "\")\n"
         updated = True
 
 def _injectBuildInfo():
@@ -293,6 +289,7 @@ def _injectBuildInfo():
     fp = open(path, "w")
     fp.write("".join(lines))
     fp.close()
+    printOk("updated!")
 
 def _incBuildCnt():
     global cwd
