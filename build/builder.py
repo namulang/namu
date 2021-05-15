@@ -232,8 +232,11 @@ def _extractBuildInfo(): # from RELEASE.md at root directory.
             minor_head_n = line.find('.', 5) + 1
             ver_major = int(line[4:minor_head_n-1])
             ver_minor = int(line[minor_head_n: minor_head_n+1])
-            ver_name_n = line.find(' ', minor_head_n+1)+1
-            ver_fix_str = line[minor_head_n+1: ver_name_n]
+            fix_head_n = line.find('.', minor_head_n) + 1
+            ver_name_n = line.find(' ', fix_head_n+1)
+            print("ver_name_n=" + str(ver_name_n))
+            ver_fix_str = line[fix_head_n: ver_name_n]
+            print("fix_head_n=" + str(fix_head_n) + " ver_fix_str=" + ver_fix_str)
             if ver_fix_str in "" or ver_fix_str in " ":
                 ver_fix = 0
             else:
@@ -455,7 +458,7 @@ def isFlexCompatible():
 def version():
     global ver_name, ver_major, ver_minor, ver_fix, cwd, python3
     print("")
-    print("Builder. Support-utility for building World " + ver_name + " v" + str(ver_major) + "." + str(ver_minor) + str(ver_fix))
+    print("Builder. Support-utility for building World " + ver_name + " v" + str(ver_major) + "." + str(ver_minor) + "." + str(ver_fix))
     print("Copyrights (c) kniz, 2009-2018")
     print(frame)
     print("")

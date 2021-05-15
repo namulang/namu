@@ -1,6 +1,6 @@
 World Release Notes
 ===================
-## v0.1 Essence Update
+## v0.1.2 Essence Update
 ###	changelist
 
 ## legend
