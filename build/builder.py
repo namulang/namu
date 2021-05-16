@@ -212,7 +212,7 @@ def _createMakefiles():
 
     printOk("done")
 
-# World uses BuildInfo at RELEASE.md
+# World uses BuildInfo at CHANGELOGS
 # and builder.py drives to all world libraries and make it sync all build-info including
 # doc releasing.
 ver_major = 0
@@ -220,9 +220,9 @@ ver_minor = 0
 ver_fix = 0
 ver_name = ""
 ver_buildcnt = 0
-def _extractBuildInfo(): # from RELEASE.md at root directory.
+def _extractBuildInfo(): # from CHANGELOGS at root directory.
     global cwd, ver_major, ver_minor, ver_fix, ver_name, ver_buildcnt
-    path = cwd + "/../RELEASE.md"
+    path = cwd + "/../CHANGELOGS"
 
     fp = open(path, "r")
     while True:
