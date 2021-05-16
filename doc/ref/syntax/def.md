@@ -135,7 +135,7 @@ a A := B(5)
     def <me-identifier>(<constructor call>)* <expr>
 
 * 상속시 부모 클래스가 오는 자리에 expr이 올 수 있다.
-```go
+```wrd
 foo() A
    return .....
 def B foo()
