@@ -66,3 +66,35 @@ gets(name str) ret<ref[]>
 get("anyName") // anyName인 객체를 찾는 것이다.
 get("anyName", {}) // anyName() 를 찾는 것이다.
 ```
+
+## 블록문 내의 변수의 scope는 항상 indent depth에 의해 판단된다.
+* 다른 언어에 비해 expression 기반인 wrd 는 변수의 scope을 생소한 케이스가 몇개 있다.
+
+```wrd
+if val := foo()
+    val++
+print(val)
+```
+
+* val은 if 문 내에서 정의되었지만 indent level은 print(val) 구문과 동일하다.
+* 따라서 if 블록문 밖에서도 접근이 가능하다.
+
+```wrd
+for n in arr
+    print(n)
+print("finally n was $n")
+```
+
+* 마찬가지로 foo 문 내에서 정의된 n은 for 문 바깥에서도 접근이 가능하다.
+* 따라서 다음과 같은 코드는 에러다.
+
+```wrd
+for n in arr
+    print(n)
+
+for n in arr2 // err: n은 이미 정의한 적이 있다.
+    print(n)
+
+for n2 in arr2 // ok
+    print(n)
+```
