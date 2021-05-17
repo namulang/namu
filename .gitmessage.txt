@@ -1,0 +1,21 @@
+
+
+##### Subject 50 characters ################# -> |
+#<type>: <subject>
+#############################################
+# Type can be
+#   feat:   new feature
+#   fix:    bug fix
+#   refact: refactoring production code
+#   style:  formatting, missing semi colons, etc; no code change
+#   doc:    changes to documentation
+#   test:   adding or refactoring tests. no production code change
+#   chore:  updating grunt tasks etc. no production code change
+# e.g.
+#chore: change build envrionment.
+
+# one empty single line should be between subject and body.
+
+######## Body 72 characters ####################################### -> |
+# You can use multiple lines here of course.
+# --- COMMIT END ---
