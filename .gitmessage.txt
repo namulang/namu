@@ -1,7 +1,7 @@
 
 
 ##### Subject 50 characters ################# -> |
-#<type>: <subject>
+#<type>: <module>: <subject>
 #############################################
 # Type can be
 #   feat:   new feature
@@ -11,8 +11,11 @@
 #   doc:    changes to documentation
 #   test:   adding or refactoring tests. no production code change
 #   chore:  updating grunt tasks etc. no production code change
+# Module is one of sub module like 'interp', 'swrd' or blank if
+# the commit affects entire this repository.
 # e.g.
 #chore: change build envrionment.
+#test: interp: add new test case for parsing blank src.
 
 # one empty single line should be between subject and body.
 
