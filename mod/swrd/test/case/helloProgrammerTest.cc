@@ -10,13 +10,13 @@ TEST(helloProgrammerTest, testScript) {
         "   say := 'html is not a programming language!'\n"
         "";
 
-    tstr<swrd::obj> file = swrd::smallWorld::interp(script);
+    tstr<sobj> file = swrd::interp(script);
     ASSERT_TRUE(file);
 
-    swrd::obj& programmer = file->sub("programmer");
+    sobj& programmer = file->sub("programmer");
     ASSERT_FALSE(nul(programmer));
 
-    swrd::obj& say = programmer.sub("say");
+    sobj& say = programmer.sub("say");
     ASSERT_FALSE(nul(say));
 
     ASSERT_STREQ(say.asStr().c_str(), "html is not a programming language!");
@@ -28,17 +28,41 @@ TEST(helloProgrammerTest, testScriptEndsWithEOF) {
         "   say := 'html is not a programming language!'\n"
         "   age := 12";
 
-    tstr<swrd::obj> file = swrd::smallWorld::interp(script);
+    tstr<sobj> file = swrd::interp(script);
     ASSERT_TRUE(file);
 
-    swrd::obj& programmer = file->sub("programmer");
+    sobj& programmer = file->sub("programmer");
     ASSERT_FALSE(nul(programmer));
 
-    swrd::obj& say = programmer.sub("say");
+    sobj& say = programmer.sub("say");
     ASSERT_FALSE(nul(say));
     ASSERT_STREQ(say.asStr().c_str(), "html is not a programming language!");
 
-    swrd::obj& age = programmer.sub("age");
+    sobj& age = programmer.sub("age");
     ASSERT_FALSE(nul(age));
     ASSERT_EQ(age.asInt(), 12);
+}
+
+TEST(helloProgrammerTest, testScriptWithPackScope) {
+    const std::string script =
+        "say := 'html is not a programming language!'\n"
+        "age := 12\n"
+        "def ramen\n"
+        " name := 'doshirak'\n";
+
+    tstr<sobj> file = swrd::interp(script);
+    ASSERT_TRUE(file);
+
+    sobj& say = file->sub("say");
+    ASSERT_FALSE(nul(say));
+    ASSERT_STREQ(say.asStr().c_str(), "html is not a programming language!");
+
+    sobj& ramen = file->sub("ramen");
+    ASSERT_FALSE(nul(ramen));
+
+    {
+        sobj& name = ramen.sub("name");
+        ASSERT_FALSE(nul(name));
+        ASSERT_STREQ(name.asStr().c_str(), "doshirak");
+    }
 }
