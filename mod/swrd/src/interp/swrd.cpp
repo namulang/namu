@@ -1,45 +1,45 @@
-#include "smallWorld.hpp"
+#include "swrd.hpp"
 #include <fstream>
 #include "flex.hpp"
 
-namespace wrd { namespace swrd {
+namespace wrd {
 
     namespace {
         std::string _fileName;
     }
 
-    WRD_DEF_ME(smallWorld)
+    WRD_DEF_ME(swrd)
 
-    tstr<obj> me::interp(const wchar* script) {
+    tstr<sobj> me::interp(const wchar* script) {
         YY_BUFFER_STATE buffer = yy_scan_string(script);
-        tstr<obj> ret = _runParser();
+        tstr<sobj> ret = _runParser();
         yy_delete_buffer(buffer);
         return ret;
     }
-    tstr<obj> me::interp(const std::string& script) {
+    tstr<sobj> me::interp(const std::string& script) {
         return interp(script.c_str());
     }
-    tstr<obj> me::interpFile(const wchar* path) {
+    tstr<sobj> me::interpFile(const wchar* path) {
         yyin = fopen(path, "r");
         if(!yyin)
-            return WRD_E("invalid file path %s.", path), tstr<obj>();
+            return WRD_E("invalid file path %s.", path), tstr<sobj>();
 
         _fileName = _extractFileName(path);
         WRD_I("interpreting file '%s'...", _fileName.c_str());
         return _runParser();
     }
-    tstr<obj> me::interpFile(const std::string& path) {
+    tstr<sobj> me::interpFile(const std::string& path) {
         return interpFile(path.c_str());
     }
 
-    tstr<obj> me::_runParser() {
+    tstr<sobj> me::_runParser() {
         int res = yyparse();
         if(res)
-            return WRD_E("interpretion has been failed. res=%d", res), tstr<obj>();
+            return WRD_E("interpretion has been failed. res=%d", res), tstr<sobj>();
         if(!root)
             WRD_E("nothing interpreted.");
 
-        return tstr<obj>(root);
+        return tstr<sobj>(root);
     }
 
     const std::string& me::getFileName() {
@@ -52,4 +52,4 @@ namespace wrd { namespace swrd {
 
         return path.substr(atSlash + 1);
     }
-}}
+}

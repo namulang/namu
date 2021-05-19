@@ -2,21 +2,21 @@
 
 #include "../common.hpp"
 
-namespace wrd { namespace swrd {
+namespace wrd {
 
-    class obj : public instance {
-        WRD_DECL_ME(obj, instance)
-        WRD_INIT_META(obj)
+    class sobj : public instance {
+        WRD_DECL_ME(sobj, instance)
+        WRD_INIT_META(sobj)
 
         typedef std::map<std::string, tstr<me>> myMap;
         typedef myMap::iterator iterator;
 
     public:
-        obj(std::initializer_list<me*> subs, const std::string& name = ""): _name(name) {
+        sobj(std::initializer_list<me*> subs, const std::string& name = ""): _name(name) {
             add(subs);
         }
-        obj(const me& rhs, const std::string& name = ""): _subs(rhs._subs), _name(name) {}
-        obj(const std::string& name = ""): _name(name) {}
+        sobj(const me& rhs, const std::string& name = ""): _subs(rhs._subs), _name(name) {}
+        sobj(const std::string& name = ""): _name(name) {}
 
         me& operator[](const std::string& name) {
             return sub(name);
@@ -36,16 +36,16 @@ namespace wrd { namespace swrd {
             return _subs.find(name) != _subs.end();
         }
 
-        void add(const obj& new1) {
+        void add(const sobj& new1) {
             if(nul(new1)) return;
 
             _subs.insert(make_pair(new1.getName(), tstr<me>(new1)));
         }
-        void add(std::initializer_list<obj*> subs) {
+        void add(std::initializer_list<sobj*> subs) {
             for(auto e : subs)
                 add(*e);
         }
-        void del(const obj& it) {
+        void del(const sobj& it) {
             del(it.getName());
         }
         void del(const std::string& name) {
@@ -88,4 +88,4 @@ namespace wrd { namespace swrd {
         myMap _subs;
         std::string _name;
     };
-}}
+}

@@ -1,16 +1,16 @@
 %{
 #pragma once
 #include "../common.hpp"
-#include "../interp/smallWorld.hpp"
+#include "../interp/swrd.hpp"
 
-namespace wrd { namespace swrd {
+namespace wrd {
     class obj;
-}}
+}
 
-using namespace wrd::swrd;
+using namespace wrd;
 
 int yylex();
-extern wrd::swrd::obj* root;
+extern wrd::sobj* root;
 extern int yylineno;
 extern char* yytext;
 
@@ -25,7 +25,7 @@ void yyerror(const char* s);
     bool boolVal;
     char charVal;
     const char* strVal;
-    wrd::swrd::obj* obj;
+    wrd::sobj* obj;
 }
 
 %verbose
@@ -58,19 +58,19 @@ void yyerror(const char* s);
 //  trhsexpr은 값을 나타내는 모든 표현식.
 //  따라서 범주상으로 보았을때 trhsexpr 은 tlhsexpr을 포함한다. 더 크다는 얘기다.
 trhsexpr    : tbool {
-                $$ = new terminalObj($1);
+                $$ = new termSobj($1);
                 WRD_DI("trhsexpr(%x) <-- %s", $$, $1 ? "true" : "false");
             }
             | tnum {
-                $$ = new terminalObj($1);
+                $$ = new termSobj($1);
                 WRD_DI("trhsexpr(%x) <-- %d", $$, $1);
             }
             | tokStr {
-                $$ = new terminalObj($1);
+                $$ = new termSobj($1);
                 WRD_DI("trhsexpr(%x) <-- '%s'", $$, $1);
             }
             | tokChar {
-                $$ = new terminalObj($1);
+                $$ = new termSobj($1);
                 WRD_DI("trhsexpr(%x) <-- tokChar(%c)", $$, $1);
             }
             | tarray {
@@ -91,7 +91,7 @@ tdefexpr    : tid topDefAssign trhsexpr {
             ;
 
 trhsIds     : trhsexpr ',' trhsexpr {
-                $$ = new obj();
+                $$ = new sobj();
                 $$->add(*$1);
                 $1->add(*$3);
                 WRD_DI("trhsIds(%x) <-- trhsexpr(%x) , trhsexpr(%x)", $$, $1, $3);
@@ -117,7 +117,6 @@ tdefIndentBlock: teol tindent tdefBlock tdedent {
                 $$ = $2;
                 WRD_DI("tdefIndentBlock(%x) <-- : tdefexpr(%x)", $$, $2);
             }
-            | { $$ = 0; }
             ;
 
 tdefOrigin  : tdef tid tdefIndentBlock {
@@ -143,7 +142,7 @@ tdefStmt    : tdefexpr teol {
             ;
 
 tdefBlock   : tdefStmt {
-                $$ = new obj();
+                $$ = new sobj();
                 $$->add(*$1);
                 WRD_DI("tdefBlock(%x) <-- tdefStmt(%x)", $$, $1);
             }
@@ -154,21 +153,16 @@ tdefBlock   : tdefStmt {
             }
             ;
 
-tfile       : tfile tdefOriginStmt {
-                $$ = $1;
-                $$->add(*$2);
-                WRD_DI("tfile(%x) <-- tfile(%x), tdefOriginStmt(%x)", $$, $1, $2);
-            }
-            | tdefOriginStmt {
-                const std::string& name = wrd::swrd::smallWorld::getFileName();
-                $$ = root = new obj(name);
+tfile       : tdefBlock {
+                const std::string& name = wrd::swrd::getFileName();
+                $$ = root = $1;
+                root->setName(name);
                 wrd::id id = $1->getId();
-                $$->add(*$1);
                 WRD_DI("$1 = %x, %d.%d.%d", $1, id.tagN, id.chkN, id.serial);
-                WRD_DI("tfile(%s %x) <-- tdefOriginStmt(%x)", name.c_str(), $$, $1);
+                WRD_DI("tfile(%s %x) <-- tdefOriginStmt(%x)", root->getName().c_str(), $$, $1);
             }
             | teol {
-                $$ = root = new obj();
+                $$ = root = new sobj();
                 WRD_DI("tfile(%x) <-- \\n", $$);
             }
             | tfile teol {
