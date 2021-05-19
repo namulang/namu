@@ -1,11 +1,11 @@
 %{
-namespace wrd { namespace swrd {
-    class obj;
-}}
+namespace wrd {
+    class sobj;
+}
 #include "swrdParser.hpp"
 #include "../common.hpp"
 using namespace std;
-using namespace wrd::swrd;
+using namespace wrd;
 
 int nowIndent = 0;
 stack<int> indentLvs;
@@ -261,7 +261,7 @@ true|false {
 
 int nowRule = INITIAL;
 int prevRule = INITIAL;
-wrd::swrd::obj* root = nullptr;
+wrd::sobj* root = nullptr;
 
 int meetEof() {
     static int cnt = 0;

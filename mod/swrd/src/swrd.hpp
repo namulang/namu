@@ -1,3 +1,3 @@
 #pragma once
 
-#include "interp/smallWorld.hpp"
+#include "interp/swrd.hpp"
