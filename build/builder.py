@@ -380,13 +380,15 @@ def _ut(arg):
     printInfoEnd("let's initiate unit tests...")
     global cwd, binDir
 
-    files = os.listdir(binDir)
+    originDir = os.getcwd()
+    os.chdir(binDir)
+    files = os.listdir('.')
     ret = 0
     failedCnt = 0
     for file in files:
         if len(file) < 4 or file[-4:] != "Test":
             continue
-        res = os.system(binDir + "/" + file + " " + arg)
+        res = os.system("./" + file + " " + arg)
         if res != 0:
             printErr(file + " was failed!")
             ret = res;
@@ -396,6 +398,7 @@ def _ut(arg):
         printErr("total " + str(failedCnt) + " TC files has reported that failed.")
     else:
         printOk("all TCs have been passed!");
+    os.chdir(originDir)
     return ret
 
 def commit():
