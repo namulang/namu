@@ -8,7 +8,10 @@ namespace wrd {
         WRD_INTERFACE(mgdObj, obj)
 
     public:
-        explicit mgdObj(const std::string& name = ""): super(name), _org(this) {}
+        explicit mgdObj(const std::string& name = "")
+            : super(name), _org(this) {
+            _subs->link(*_shares);
+        }
         explicit mgdObj(const me& rhs): super(rhs) {
             _assign(rhs);
         }
