@@ -1,6 +1,9 @@
-# World Release Notes
+# Changelogs
 ## v0.1.3 Essence Update 0.3
-it's released at 05-03 2021. build # was 209 and major changes are as follows:
+released on 05-03 2021.
+build # was 209 and major changes are as follows:
+
+### features
 * implmentation of Essence Update Iteration#3.
 * add basic components of ast. (obj, pack, node, ...)
 
