@@ -1,41 +1,51 @@
-World Release Notes
-===================
-## v0.1.3 Essence Update
-###	changelist
+# World Release Notes
+## v0.1.3 Essence Update 0.3
+it's released at 05-03 2021. build # was 209 and major changes are as follows:
+* implmentation of Essence Update Iteration#3.
+* add basic components of ast. (obj, pack, node, ...)
 
-## legend
-	Month-Day-Year vMajor.Minor(single digit)Fix#Build
-	UpdateName
-		+ 	Improved
-		++	Very Improved.
-		- 	Bug fix mostly.
-		--	Fatal bug was fixed.
+## v0.01a Dust Update build# 9444
+it was 02-25 2016.
+Dust is the name of an update used by the 'Node Engine' project that was origin of the 'world language'.
+'NodeEngine' is a result of consideration how to visualize programming elements and let users express and orgranize their thoughts in visual. Unfortunately, as a result of deliberation, I had to accept not to release to public because it's not enough useful to what I intended to be.
 
-## history
-    05-03 2021 v0.1.3   build#209
-    World Essence Update v0.1.3
-        +iteration#3
-        +add basic components of ast (obj, pack, node, ...)
+it has been developed by myself for quite a while, so even if it's not released officially I want to keep it below as records.
 
-	02-25 2016 v0.01a#9444		
-	World Dust Update v0.1
+## v0.01a Dust Update build# 8392
+updated on 04-24 2015. not released in public.
+## v0.01a Dust Update build# 7001
+updated on 03-29 2015, not released in public.
+## v0.01a Dust Update build# 4429
+updated on 02-02 2014, not released in public.
+## v0.01a Dust Update build# 4317
+updated on 10-30 2013, not released in public.
+    + graphics(dx9) module was added.
 
-	04-24 2015 v0.01a#8392		Not public.
-	03-29 2015 v0.01a#7001		Not public.
-	??-?? ???? v0.01a#????
-	02-02 2014 v0.01a#4429		Not public.
-	10-30 2013 v0.01a#4317
-		++ Graphics module was added.
+## v0.01a Dust Update build# 4162
+updated on 01-29 2013, not released in public.
 
-	01-29 2013 v0.01a#4162		Not public.
-	10-19 2012 v0.01a#3727		Not public.
-	05-19 2012 v0.01a#3600		Not public.
-	05-05 2012 v0.01a#3559		Not public.
-	04-15 2012 v0.01a#3531		Not public.
-	03-15 2012 v0.01a#3445		Not public.
-	02-20 2012 v0.00a#3377		Not public.
-	01-15 2012 v0.00a#3086		Not public.
-	??-?? ???? v0.00a#????		
-	10-03 2011 v0.01#2976		Not public.
+## v0.01a Dust Update build# 3727
+updated on 10-19 2012, not released in public.
 
+## v0.01a Dust Update build# 3600
+updated on 05-19 2012, not released in public.
 
+## v0.01a Dust Update build# 3559
+updated on 05-05 2012, not released in public.
+
+## v0.01a Dust Update build# 3531
+updated on 04-15 2012, not released in public.
+
+## v0.01a Dust Update build# 3445
+updated on 03-15 2012, not released in public.
+
+## v0.00a Dust Update build# 3377
+updated on 02-20 2012, not released in public.
+
+## v0.00a Dust Update Build# 3086
+updated on 01-15 2012, not released in public.
+
+## v0.00a Dust Update Build# 2976
+updated on 10-03 2011, not released in public.
+
+## start developing NodeEngine on 2010.
