@@ -5,8 +5,7 @@
 
 namespace wrd {
 
-    class metaIf {
-    protected:
+    struct metaIf {
         typedef short yes;
         typedef char no;
     };

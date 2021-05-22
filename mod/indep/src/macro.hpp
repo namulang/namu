@@ -15,3 +15,4 @@
 #include "macro/nul.hpp"
 #include "macro/gets.hpp"
 #include "macro/unconstFunc.hpp"
+#include "macro/staticAsserts.hpp"
