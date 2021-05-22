@@ -1,14 +1,27 @@
 # Exception handling
 
-## try - catch 대신 try-on을 사용한다.
+## try - catch는 사라진다. 에러는 단순히 또 하나의 반환값이다.
 
-## try - on은 하나의 코드 라인에 대해서만 체크한다.
+## on 키워드는 유일하게 메소드에서 multi value return을 하게 해준다.
+* on 키워드를 제외하고 multi value가 되는 경우는 없다.
+
+## on 키워드는 err 값을 반환한다.
+```wrd
+foo() str on permErr
+
+got := retVal on someErr := foo()
+// got == permErr
+```
+
+## worldlang은 예외처리시 하나의 코드 라인에 대해서만 체크한다.
 
 * excpetion handling은 범위체크를 지원하면서 예외코드와 실행코드를 분리시키자는 의도다.
 * 그러나 실제로 개발자들은 exception 안쪽에서도 예외처리를 종종한다.
 * 따라서 어짜피 안될바에야 C 처럼 하나의 라인에 집중하게끔 한다.
 
-## 메소드는 err를 반환한다는 것을 문법으로 간략하게 표현하게 한다.
+## 보통 on으로 받은 에러는 when 으로 처리한다.
+
+## 예제
 
 ```go
 def customErr err
@@ -17,20 +30,23 @@ def customErr err
 def app
     foo(val int) void on customErr
         if val < 0: return customErr
+        // return; 과 같다. 에러가 아니라면 굳이 on 으로 반환을 하지 않아도 좋다.
 
     boo() foo
 
     main() void
         val := boo()(5) // okay. 그러나 exception이 발생하면 F/C
-        try val := boo()(5)
-        // doSomething() // try on 사이에는 다른 라인이 와서는 안된다.
-        on customErr
-            sys.cons.out("$it")
-            sys.cons.out("customErr")
-        on err // on은 이어서 여러개 와도 된다.
-            .....
+        when val on res := boo()(5)
+            // doSomething() // try on 사이에는 다른 expr이 와서는 안된다.
+            customErr, permErr // res == customErr || res == permErr
+                sys.cons.out("$it")
+                sys.cons.out("customErr")
+                // break를 넣을 필요가 없다.
 
-        return // on이 다 끝나면 일반 구문이 와도 된다.
+            else // == default
+                ....
+
+        return // when이 다 끝나면 일반 구문이 와도 된다.
 ```
 
 ## 반환형으로 err 타입을 명시할 수 없다. 그럴 경우 void를 적는다.
