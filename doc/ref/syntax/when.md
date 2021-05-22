@@ -1,12 +1,12 @@
-# switch
+# when
 
 ## 요점
 * 2개의 form이 존재한다.
-* primitive 변수와 enum에 대해서만 switch를 사용할 수 있다. 일반 클래스는 지원 하지 않는다.
+* primitive 변수와 enum에 대해서만 when을 사용할 수 있다. 일반 클래스는 지원 하지 않는다.
 
 ## 문법
 ```world
-switch expr
+when expr
     (<number> | <string> | <boolean>) [, (<number> | <string>)]*
         // if expr.operator==() 로 번역
     range
