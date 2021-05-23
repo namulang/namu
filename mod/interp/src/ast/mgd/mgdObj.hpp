@@ -9,7 +9,7 @@ namespace wrd {
 
     public:
         explicit mgdObj(const std::string& name = "")
-            : super(name), _org(this) {
+            : super(name), _shares(new nchain()), _org(this) {
             _subs->link(*_shares);
         }
         explicit mgdObj(const me& rhs): super(rhs) {
@@ -23,6 +23,11 @@ namespace wrd {
 
             return _assign(rhs);
         }
+
+        ncontainer& getShares() {
+            return *_shares;
+        }
+        const ncontainer& getShares() const WRD_UNCONST_FUNC(getShares())
 
         const obj& getOrigin() const override {
             return *_org;
