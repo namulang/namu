@@ -66,3 +66,22 @@ TEST(helloProgrammerTest, testScriptWithPackScope) {
         ASSERT_STREQ(name.asStr().c_str(), "doshirak");
     }
 }
+
+TEST(helloProgrammerTest, testNullObjNegative) {
+
+    const std::string script =
+        "say := 'html is not a programming language!'\n"
+        "age := 12\n"
+        "def ramen\n"
+        " name := 'doshirak'\n";
+
+    tstr<sobj> file = swrd::interp(script);
+    ASSERT_TRUE(file);
+
+    sobj& notExist = file->sub("dogecoin");
+    ASSERT_FALSE(notExist);
+    ASSERT_STREQ(notExist.asStr().c_str(), "");
+    ASSERT_EQ(notExist.asInt(), 0);
+    ASSERT_EQ(notExist.asBool(), false);
+    ASSERT_EQ(notExist.asChar(), '\0');
+}

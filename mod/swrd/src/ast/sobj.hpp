@@ -27,9 +27,11 @@ namespace wrd {
         }
         const me& operator[](widx n) const WRD_UNCONST_FUNC(operator[](n))
 
-        me& sub(const std::string& name) {
-            return *_subs[name];
+        operator wbool() const {
+            return isExist();
         }
+
+        me& sub(const std::string& name);
         const me& sub(const std::string& name) const WRD_UNCONST_FUNC(sub(name))
 
         wbool has(const std::string& name) const {
@@ -83,6 +85,9 @@ namespace wrd {
             return inner;
         }
         virtual wbool asBool() const { return false; }
+        virtual wbool isExist() const {
+            return true;
+        }
 
     private:
         myMap _subs;
