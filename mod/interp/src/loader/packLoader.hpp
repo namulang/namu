@@ -1,6 +1,6 @@
 #pragma once
 
-#include "pack.hpp"
+#include "../ast/pack.hpp"
 
 namespace wrd {
 
@@ -8,7 +8,10 @@ namespace wrd {
         WRD_CLASS(packLoader, node)
 
     public:
-        packLoader(): _subs(new nchain()) {}
+        packLoader(std::initializer_list<const wchar*> paths)
+            : _subs(new nchain()) {
+            _init(paths);
+        }
 
         wbool canRun(const wtypes& types) const override {
             return false;
@@ -18,17 +21,15 @@ namespace wrd {
             return str();
         }
 
-        static const packLoader& get() {
-            return _systemLoader;
-        }
-
         using super::subs;
         ncontainer& subs() override {
             return *_subs;
         }
 
     private:
-        static packLoader _systemLoader;
+        void _init(std::initializer_list<const wchar*> paths);
+
+    private:
         tstr<nchain> _subs;
     };
 }
