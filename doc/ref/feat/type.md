@@ -30,7 +30,7 @@
 * aka는 다른 expr 안에 들어갈 수 없다. aka가 항상 최종 expr 밖에 있어야 한다.
 * 괄호를 사용하면 최종expr도 중간expr로 변환할 수 있다. 그러므로 aka를 괄호 안에 넣어서 다른 expr에 포함시킬 수 있다.
 
-```go
+```wrd
 def person obj() 
     callback() void aka c // "void aka c"(X) "(callback() void) aka c"(O)
 
@@ -65,6 +65,8 @@ aka p
 * 그러나 정의는 대부분 개행을 가지고 있다.
 * 그러니 개행이 끝나고 정의블록문의 시작했던 indent 앞에 바로 aka가 나오면 된다.
 * 블록문이 없는 정의라면 바로 이어서 같은 라인에 aka가 나온다.
+
+## aka도 statement다.
 
 ## type을 정의하면 그것의 unique object가 그 type이름에 대신들어간다.
 

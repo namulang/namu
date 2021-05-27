@@ -88,3 +88,37 @@
     * packerLoader의 container 부분만 검증한다.
     * scope을 찾을때는 packLoader.sub()를 검색하므로 defaultPackLoader.subs()도 검색하게 된다.
 * 이상이 없다면 packLoader의 container 부분을 defaultPackLoader에 add한다.
+
+## app도 pack이 될 수 있다. pack을 모듈로 사용하던 app으로 사용하던 차이가 없다.
+* 내부적으로는 2개 모두 pack으로 취급한다.
+* main()이 있으면 먼저 main() 실행한다.
+* 2개 모두 동일하게 packLoader로부터 읽혀진다.
+* 2개 모두 동일하게 manifest를 먼저 읽는다.
+* 즉, project == app 또한 packLoader가 읽어들인다.
+
+## main()이 담긴 pack을 배포할수 있다.
+* android를 떠올려보면 java main()이 android sdk 안에 있다는걸 알 수있다.
+  이와 같은 pack이 될 것이다.
+
+## 클래스는 항상 어떤 pack 안에 있다.
+* 동일한 pack 내에 다른 클래스를 사용할때는 with(== import)를 하지 않아도 되는 이유는,
+  2개가 같은 pack scope안에 있기 때문에 불과하다.
+* 다른 pack안에 있는 클래스를 접근할때에는 pack을 먼저 접근하는 것이 원칙이다.
+* 그러나 매번 이렇게 하면 힘드므로 with 문을 주로 사용한다.
+
+```wrd
+// myapp pack scope:
+mymodule.person.foo() // 1
+
+    with mymodule
+    person.foo() // 2
+```
+
+* interpreter는 시작시 mymodule을 pack의 scope에도 넣어둔다.
+* filescope은 packscope을 link 시킨다.
+* filescope에 import가 나올 경우 이 pack의 subs()를 모두 filescope에 추가해둔다.
+* 이미 다른 문서에서 언급했다시피 동일한 frame 객체 내에 2개 이상의 이름이 verify단계에서 검출하면
+  에러다.
+* 실제 runtime에서는 가장 먼저 이름과 일치하는 객체로 바로 실행한다. 2개 이상의 이름이 있는지 verify
+  를 하지 않는다.
+
