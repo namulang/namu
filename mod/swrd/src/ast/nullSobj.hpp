@@ -11,7 +11,7 @@ namespace wrd {
     public:
         nullSobj(): super() {}
 
-        const std:string& asStr() const override {
+        const std::string& asStr() const override {
             static std::string inner = "";
             return inner;
         }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "obj.hpp"
+#include "manifest.hpp"
 
 namespace wrd {
 
@@ -12,9 +13,7 @@ namespace wrd {
             _manifest.filePath = filePath;
             _loadManifest(_manifest);
         }
-        pack(const me& rhs) {
-            _assign(rhs);
-        }
+        pack(const me& rhs) { _assign(rhs); }
 
         me& operator=(const me& rhs) {
             if(this == &rhs) return *this;
@@ -32,22 +31,10 @@ namespace wrd {
             return *_subs;
         }
 
-        manifest& getManifest() {
-            return _manifest;
-        }
-        const manifest& getManifest() const {
-            return _manifest;
-        }
-
-        const manifest& getManifest() const WRD_UNCONST_FUNC(getManifest())
-
-        str run(const ncontainer& args) override {
-            return str();
-        }
-
-        wbool canRun(const wtypes& types) const override {
-            return false;
-        }
+        manifest& getManifest() { return _manifest; }
+        const manifest& getManifest() const { return _manifest; }
+        str run(const ncontainer& args) override { return str(); }
+        wbool canRun(const wtypes& types) const override { return false; }
 
     private:
         tstr<nchain> _loadOrigins(const std::string& path) {
