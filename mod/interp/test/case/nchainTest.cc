@@ -455,3 +455,34 @@ TEST(nchainTest, testRangeBasedForLoop) {
 
     ASSERT_EQ(sum, expect);
 }
+
+TEST(nchainTest, testLinkArrayAndChain) {
+
+    narr arr1;
+    arr1.add(new myNode(1));
+    arr1.add(new myNode(2));
+    nchain chn(arr1);
+    ASSERT_EQ(chn.len(), 2);
+    ASSERT_TRUE(nul(chn.getNext()));
+
+    nchain chn2;
+    chn2.add(new myNode(3));
+    narr arr2;
+    arr2.add(new myNode(4));
+    arr2.add(new myNode(5));
+    chn2.link(arr2);
+    ASSERT_EQ(chn2.len(), 3);
+    ASSERT_FALSE(nul(chn2.getNext()));
+    ASSERT_EQ(&chn2.getNext().getContainer(), &arr2);
+
+    chn.link(chn2);
+    int cnt = 5;
+    ASSERT_EQ(chn.len(), cnt);
+
+    int expect[] = {1, 2, 3, 4, 5};
+    int n=0;
+    for(node& e : chn) {
+        myNode& cast = e.cast<myNode>();
+        ASSERT_EQ(cast.number, expect[n++]);
+    }
+}
