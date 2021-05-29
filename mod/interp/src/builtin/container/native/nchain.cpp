@@ -79,8 +79,10 @@ namespace wrd {
     }
 
     tstr<nchain> me::link(const ncontainer& new1) {
-        nchain* ret = new nchain(new1);
-        link(*ret);
+        if(nul(new1)) return tstr<nchain>();
+
+        nchain& ret = new1.getType().isSub<nchain>() ? (nchain&) new1 : *new nchain(new1);
+        link(ret);
         return tstr<nchain>(ret);
     }
 
