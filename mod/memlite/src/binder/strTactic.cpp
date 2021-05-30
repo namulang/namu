@@ -24,7 +24,7 @@ namespace wrd {
         }
 
         if(!it.isHeap()) {
-            WRD_W("it is local variable. couldn't bind it strongly.");
+            WRD_DW("it is local variable. couldn't bind it strongly.");
             return true;
         }
 
