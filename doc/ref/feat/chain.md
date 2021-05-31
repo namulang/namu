@@ -43,33 +43,32 @@
 
 * chain은 본래 array를 품고 있는 것이지만, 또다른 chain을 품고 있을 수도 있다.
 * 1depth가 array만 품고 있는 chain을 연결한 것을 의미하다고 했을때 chain은 2depth까지 지원한다.
-    * nchain<T> 클래스는 ADT로, 외부에서는 이 인터페이스로만 조작한다.
-    * nmonoChain<T> 은 array를 포함할 수 있는 일반적인 chain이다.
-    * npolyChain<T> 은 monoChain을 포함할 수 있는 chain이다.
+    * nchain<T> 은 array를 포함할 수 있는 일반적인 chain이다.
+    * ndeepChain<T> 은 일반 nchain<T>을 포함할 수 있는 chain이다.
 
 ## 3 depth부터는 iteration이 동작하지 않는다.
 
-## npolyChain<T>는 2가지 변수를 갖는다.
-* nmonoChain<T>는 Chain* next, ncontainer라는 변수 2개만 있으면 된다.
-* npoly는 Chain* next, nmonoChain* bean 이라는 변수 2개가 필요하다.
+## ndeepChain<T>는 2가지 변수를 갖는다.
+* nChain<T>는 Chain* next, ncontainer라는 변수 2개만 있으면 된다.
+* ndeep는 Chain* next, nChain* bean 이라는 변수 2개가 필요하다.
 * bean에는 포함할 다른 2depth nchain이, next에는 1depth 다음 chain이 들어있다.
 
 ## ChainIteration::next() 알고리즘
 * nchain<T>은 _nextChain(ChainIteration&) = 0; 이라는 pure virtual 을 가진다. 이 함수는 
   인자로 주어진 ChainIteration을 하나 움직인다.
-    * _nextChain()은 nmonoChain과 npolyChain이냐에 따라서 동작이 다르다.
+    * _nextChain()은 nChain과 ndeepChain이냐에 따라서 동작이 다르다.
 
 * ChainIteration은 nchain* face, nchain* bean 2개의 변수를 갖는다.
 * ChainIteration::get() 은 *bean 을 한다.
 * ChainIteration::next() 에서는 face->_nextChain(*this) 를 수행한다.
 
-* nmonoChain::_nextChain(ChainIteration& e) 에서는,
+* nChain::_nextChain(ChainIteration& e) 에서는,
 ```cpp
 e.face = e.face->next;
 e.bean = e.face;
 ```
 
-* npolyChain::_nextChain(ChainIteration& e) 에서는,
+* ndeepChain::_nextChain(ChainIteration& e) 에서는,
 ```cpp
 if(e.bean == e.face)
     e.bean = this->bean;
@@ -82,9 +81,9 @@ if (!e.bean) {
 }
 ```
 
-## 잘 구성하면 npolyChain은 nmonoChain에서 상속받게 할 수 있을 것이다.
+## 잘 구성하면 ndeepChain은 nChain에서 상속받게 할 수 있을 것이다.
 
-## npolyChain을 iteration으로 탐색시에는 1depth chain과 비교했을때 퍼포먼스 차이가 거의 없다는 것이 특징이다.
+## ndeepChain을 iteration으로 탐색시에는 1depth chain과 비교했을때 퍼포먼스 차이가 거의 없다는 것이 특징이다.
 
-## npolyChain으로 임의 접근을 하는 경우에는 물론 2번 접근이 필요하므로 배로 느리다.
+## ndeepChain으로 임의 접근을 하는 경우에는 물론 2번 접근이 필요하므로 배로 느리다.
 
