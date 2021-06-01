@@ -87,3 +87,4 @@ if (!e.bean) {
 
 ## ndeepChain으로 임의 접근을 하는 경우에는 물론 2번 접근이 필요하므로 배로 느리다.
 
+## chain은 element 별 iterator와 container 별 iterator 2개를 제공할 수 있어야 한다.
