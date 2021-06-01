@@ -194,6 +194,9 @@ def app
 * func 객체는 시스템내 유일하게 1개가 파서로부터 생성되서 origin객체에 붙어있게 된다.
 * func.origin에는 이 origin객체를 가리키게 된다.
 
+## func는 blockExpr가 아니며, blockExpr를 aggregation으로 가질 뿐이다.
+* blockExpr의 종류는 일반과 withBlockExpr 2 종류가 있다.
+
 ## func과 obj는 같은 부모로 구성할 수 있다.
 * 둘 모두 chain, S chain, NS array 3개가 필요하다.
 
