@@ -1,6 +1,5 @@
 #include "../../../ast/node.hpp"
-#include "ncontainer.inl"
-#include "narr.hpp"
+#include "tnarr.inl"
 
 namespace wrd {
 

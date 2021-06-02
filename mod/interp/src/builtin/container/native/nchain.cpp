@@ -1,6 +1,6 @@
-#include "ncontainer.inl"
 #include "nchain.hpp"
-#include "narr.hpp"
+#include "ncontainer.inl"
+#include "tnarr.hpp"
 
 namespace wrd {
 
@@ -35,7 +35,7 @@ namespace wrd {
     }
 
     wbool me::del() {
-        nchain& last = _getLastChain();
+        me& last = _getLastChain();
         if(nul(last)) return false;
 
         return last.getContainer().del();
@@ -67,7 +67,7 @@ namespace wrd {
         if(endInnerIter.isFrom(fromCon)) return fromCon.del(fromInnerIter, endInnerIter);
 
         wcnt ret = 0;
-        each<ncontainer>(from, nulOf<iterator>(), [&](nchain& chn, ncontainer& itsCon) {
+        each<ncontainer>(from, nulOf<iterator>(), [&](me& chn, ncontainer& itsCon) {
             wbool isLast = false;
             iterator    head = &itsCon == &fromCon ? fromInnerIter : itsCon.begin(),
                     tail = &itsCon == &endCon ? isLast = true, endInnerIter : itsCon.end();
@@ -78,18 +78,18 @@ namespace wrd {
         return ret;
     }
 
-    tstr<nchain> me::link(const ncontainer& new1) {
-        if(nul(new1)) return tstr<nchain>();
+    tstr<me> me::link(const ncontainer& new1) {
+        if(nul(new1)) return tstr<me>();
 
-        nchain& ret = new1.getType().isSub<nchain>() ? (nchain&) new1 : *new nchain(new1);
+        me& ret = new1.getType().isSub<me>() ? (me&) new1 : *new me(new1);
         link(ret);
-        return tstr<nchain>(ret);
+        return tstr<me>(ret);
     }
 
-    wbool me::link(const nchain& new1) {
-        if(nul(new1) || nul(new1.getContainer())) return tstr<nchain>();
+    wbool me::link(const me& new1) {
+        if(nul(new1) || nul(new1.getContainer())) return tstr<me>();
         if(&new1.getContainer() == &getContainer())
-            return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), tstr<nchain>();
+            return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), tstr<me>();
 
         return _next.bind(new1);
     }
@@ -98,45 +98,20 @@ namespace wrd {
         return _next.unbind();
     }
 
-    iterator me::begin() const {
-        return iterator(new nchainIteration(*this, *this, _arr->begin()));
-    }
-
-    iterator me::iter(wcnt step) const {
-        iterator ret = begin();
-        ret.next(step);
-        return ret;
-    }
-
-    iterator me::end() const {
-        const nchain& last = _getLastChain();
-        if(nul(last)) return iterator();
-
-        return iterator(new nchainIteration(*this, last, last._arr->end()));
-    }
-
-    iterator me::last() const {
-        const nchain& last = _getLastChain();
-        if(nul(last)) return iterator();
-
-        return iterator(new nchainIteration(*this, last, last._arr->last()));
-    }
-
     void me::empty() {
         _arr->empty();
-        each<ncontainer>([](nchain& chn, ncontainer& itsCon) {
+        each<ncontainer>([](me& chn, ncontainer& itsCon) {
             itsCon.empty();
             return true;
         });
     }
 
-    nchain& me::_getLastChain() {
-        nchain* last = nullptr;
-        each<ncontainer>([&last](nchain& chn, ncontainer& con) {
+    me& me::_getLastChain() {
+        me* last = nullptr;
+        each<ncontainer>([&last](me& chn, ncontainer& con) {
             last = &chn;
             return true;
         });
         return *last;
     }
-
 }

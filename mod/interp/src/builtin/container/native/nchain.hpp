@@ -2,19 +2,20 @@
 
 #include "ncontainer.hpp"
 #include "../../../ast/node.hpp"
+#include "iterator/titerator.inl"
 
 namespace wrd {
 
     class nchain : public ncontainer {
         WRD_CLASS(nchain, ncontainer)
 
-        friend class nchainIteration;
-        class nchainIteration : public iteration {
-            WRD_CLASS(nchainIteration, iteration)
+        friend class elemIteration;
+        class elemIteration : public iteration {
+            WRD_CLASS(elemIteration, iteration)
             friend class nchain;
 
         public:
-            nchainIteration(const nchain& own, const nchain& iteratingChain, const iterator& conIter)
+            elemIteration(const nchain& own, const nchain& iteratingChain, const iterator& conIter)
                 : _own(const_cast<nchain&>(own)), _ownIter(iteratingChain), _iter(conIter) {
                     if(!_iter) next(1);
                 }
@@ -69,74 +70,69 @@ namespace wrd {
         using super::set;
         wbool set(const iterator& at, const node& new1) override;
 
-        iterator begin() const override;
-        iterator end() const override;
-        iterator last() const override;
-        iterator iter(wcnt step) const override;
-
         using super::add;
         wbool add(const iterator& at, const node& new1) override;
         wbool add(const node& new1) override;
 
         using super::del;
-        wbool del() override;
         wbool del(const node& it) override;
+        wbool del() override;
         wbool del(const iterator& at) override;
         wcnt del(const iterator& from, const iterator& end) override;
 
-        tstr<nchain> link(const ncontainer& new1);
-        wbool link(const nchain& new1);
+        tstr<me> link(const ncontainer& new1);
+        wbool link(const me& new1);
         wbool unlink();
 
         void empty() override;
 
         ncontainer& getContainer() { return *_arr; }
         const ncontainer& getContainer() const { return *_arr; }
-        nchain& getNext() { return *_next; }
-        const nchain& getNext() const { return *_next; }
+        me& getNext() { return *_next; }
+        const me& getNext() const { return *_next; }
 
         using super::each;
-        template <typename T>
-        void each(const iterator& from, const iterator& end, std::function<wbool(nchain&, T&)> l) {
-            const nchain* endChn = nullptr;
+        template <typename E>
+        void each(const iterator& from, const iterator& end, std::function<wbool(me&, E&)> l) {
+            const me* endChn = nullptr;
             if(!nul(end)) {
-                endChn = &end.getContainer().cast<nchain>();
+                endChn = &end.getContainer().cast<me>();
                 if(nul(endChn)) return;
             }
 
-            for(nchain* e = (nchain*) &from.getContainer().cast<nchain>();
+            for(me* e = (me*) &from.getContainer().cast<me>();
                 !nul(e) && e != endChn;
                 e = &(*e->_next)) {
-                auto& arr = e->_arr->cast<T>();
+                auto& arr = e->_arr->template cast<E>();
                 if(nul(arr)) continue;
 
                 if(!l(*e, arr)) break;
             }
         }
         /// @param  end Nullable. meaning of the end of nchain list.
-        template <typename T>
-        void each(const iterator& from, const iterator& end, std::function<wbool(const nchain&, const T&)> l) const {
-            const nchain* endChn = nullptr;
+        template <typename E>
+        void each(const iterator& from, const iterator& end, std::function<wbool(const me&, const E&)> l) const {
+            const me* endChn = nullptr;
             if(!nul(end)) {
-                endChn = &end.getContainer().cast<nchain>();
+                endChn = &end.getContainer().cast<me>();
                 if(nul(endChn)) return;
             }
 
-            for(const nchain* e = &from.getContainer().cast<nchain>();
+            for(const me* e = &from.getContainer().cast<me>();
                 !nul(e) && e != endChn;
                 e = &(*e->_next)) {
-                auto& arr = e->_arr->cast<T>();
+                auto& arr = e->_arr->template cast<E>();
                 if(nul(arr)) continue;
 
                 if(!l(*e, arr)) break;
             }
         }
-        template <typename T>
-        void each(std::function<wbool(nchain&, T&)> l) {
+        template <typename E>
+        void each(std::function<wbool(me&, E&)> l) {
             each(begin(), nulOf<iterator>(), l);
         }
-        template <typename T>
-        void each(std::function<wbool(const nchain&, const T&)> l) const {
+        template <typename E>
+        void each(std::function<wbool(const me&, const E&)> l) const {
             each(begin(), nulOf<iterator>(), l);
         }
 
@@ -145,24 +141,33 @@ namespace wrd {
         ///         only this object will be deep cloned. cloned instance has the same linkage like
         ///         which the original chain object has.
         tstr<instance> deepClone() const override {
-            nchain* ret = new nchain(getContainer().deepClone()->cast<ncontainer>());
+            me* ret = new me(getContainer().deepClone()->template cast<ncontainer>());
             ret->link(getNext());
             return tstr<instance>(ret);
+        }
+
+    protected:
+        iteration* _onMakeIteration(wcnt step) const override {
+            me* unconst = const_cast<me*>(this);
+            iteration* ret = new elemIteration(*unconst, *unconst, _arr->begin());
+            ret->next(step);
+            return ret;
         }
 
     private:
         iterator& _getContainerIterFromChainIter(const iterator& wrap) {
             if(nul(wrap)) return nulOf<iterator>();
-            if(!wrap._step->getType().isSub<nchainIteration>()) return nulOf<iterator>();
-            nchainIteration& cast = (nchainIteration&) *wrap._step;
+            if(!wrap._step->getType().isSub<elemIteration>()) return nulOf<iterator>();
+            elemIteration& cast = (elemIteration&) *wrap._step;
             if(nul(cast)) return nulOf<iterator>();
 
             return cast.getContainerIter();
         }
-        nchain& _getLastChain();
-        const nchain& _getLastChain() const WRD_UNCONST_FUNC(_getLastChain())
+        me& _getLastChain();
+        const me& _getLastChain() const WRD_UNCONST_FUNC(_getLastChain())
 
+    private:
         tstr<ncontainer> _arr;
-        tstr<nchain> _next;
+        tstr<me> _next;
     };
 }

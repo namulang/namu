@@ -2,8 +2,7 @@
 
 #include "clonable.hpp"
 #include "../type/wtype.hpp"
-#include "../builtin/container/native/nchain.hpp"
-#include "../builtin/container/native/narr.hpp"
+#include "../builtin/container/native/tnarr.hpp"
 
 namespace wrd {
 
@@ -20,11 +19,7 @@ namespace wrd {
         tnarr<T> sub(std::function<wbool(const T&)> l) const {
             return subs().get<T>(l);
         }
-        narr sub(const std::string& name) const {
-            return subs().get([&](const node& elem) {
-                return elem.getName() == name;
-            });
-        }
+        narr sub(const std::string& name) const;
         narr sub(const std::string& name, const ncontainer& args) {
             return sub(name, _createTypesFromArgs(args));
         }
@@ -42,10 +37,8 @@ namespace wrd {
         }
 
         virtual str run(const ncontainer& args) = 0;
-        str run() {
-            static narr empty;
-            return run(empty);
-        }
+        str run();
+
         /// release all holding resources and ready to be terminated.
         /// @remark some class won't be able to reinitialize after rel() got called.
         virtual void rel() {}

@@ -31,8 +31,5 @@ namespace wrd {
         /// delete last element if exists.
         /// @return true if element got deleted successfully.
         virtual wbool del(widx n) = 0;
-
-    protected:
-        virtual iteration* _onIter(widx n) const = 0;
     };
 }
