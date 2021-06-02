@@ -1,13 +1,15 @@
 #pragma once
 
-#include "iterable.hpp"
+#include "titerable.hpp"
 #include "../../../../ast/clonable.hpp"
 
 namespace wrd {
 
-    class iteration : public instance, public iterable, public clonable {
+    class node;
+    class iteration : public instance, public titerable<node>, public clonable {
         WRD_INTERFACE(iteration, instance)
-        friend class iterator;
+        template <typename T>
+        friend class titerator;
 
     public:
         wbool isFrom(const ncontainer& rhs) const override;

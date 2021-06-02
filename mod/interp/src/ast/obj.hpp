@@ -3,6 +3,7 @@
 #include "node.hpp"
 #include "../frame/frameInteractable.hpp"
 #include "../builtin/container/native/tnarr.inl"
+#include "../builtin/container/native/nchain.hpp"
 #include "func.hpp"
 
 namespace wrd {

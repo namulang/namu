@@ -1,13 +1,70 @@
 #pragma once
 
-#include "narr.hpp"
-#include "iterator/titerator.hpp"
+#include "narrContainer.hpp"
+#include "../../../ast/node.hpp"
 
 namespace wrd {
 
     template <typename T>
-    class tnarr : public narr {
-        WRD_CLASS(tnarr, narr)
+    class tnarr : public narrContainer {
+        WRD_CLASS(tnarr, narrContainer)
+        template <typename E> friend class tarr;
+
+    public:
+        friend class narrIteration;
+        class narrIteration : public iteration {
+            WRD_CLASS(narrIteration, iteration)
+            template<typename E>
+            friend class tnarr;
+
+        public:
+            narrIteration(tnarr& own, widx n): _n(n), _own(own) {}
+
+            wbool isEnd() const override {
+                return !_own._isValidN(_n);
+            }
+
+            /// if iteration reached to the last element to iterate, it can precede to next,
+            /// which means to the End of a buffer.
+            /// however, this step wasn't regarded to a step even though it proceeds.
+            wcnt next(wcnt step) override {
+                //  pre:
+                if(step <= 0) return 0;
+
+                widx lastN = _own.len()-1;
+                if(_n >= lastN) {
+                    _n = lastN + 1;
+                    return 0;
+                }
+
+                //  post:
+                widx newN = _n + step;
+                widx availableN = newN > lastN ? lastN : newN;
+                wcnt toStep = availableN - _n;
+
+                _n += toStep;
+                return toStep;
+            }
+            node& get() override {
+                if(isEnd()) return nulOf<node>();
+                return _own.get(_n);
+            }
+            ncontainer& getContainer() override { return _own; }
+
+        protected:
+            wbool _onSame(const typeProvidable& rhs) const override {
+                if(!super::_onSame(rhs)) return false;
+
+                const me& cast = (const me&) rhs;
+                if(nul(cast)) return false;
+
+                return _n == cast._n;
+            }
+
+        private:
+            widx _n;
+            tnarr& _own;
+        };
 
     public:
         tnarr() {}
@@ -18,67 +75,50 @@ namespace wrd {
         T& operator[](widx n) override { return get(n); }
         const T& operator[](widx n) const override { return get(n); }
 
+        wcnt len() const override;
+
         using super::get;
-        T& get(widx n) override { return (T&) super::get(n); }
-        const T& get(widx n) const override { return (T&) super::get(n); }
+        T& get(widx n) override;
+        const T& get(widx n) const override WRD_UNCONST_FUNC(get(n))
 
         using super::set;
-        wbool set(widx n, const T& new1) {
-            return super::set(n, new1);
-        }
-        wbool set(const iterator& at, const T& new1) {
-            return super::set(at, new1);
-        }
-
-        titerator<T> headT() const { return iterT(0); }
-        titerator<T> tailT() const { return iterT(len()); }
-        titerator<T> iterT(widx n) const {
-            return titerator<T>(_onIter(n));
-        }
-        titerator<T> iterT(const T& elem) const {
-            const titerator<T>* ret = 0;
-            each<T>([&ret, &elem](const titerator<T>& e, const T& myelem) {
-                if(&elem != &myelem) return true;
-
-                ret = &e;
-                return false;
-            });
-            return titerator<T>(*ret);
-        }
+        wbool set(const iterator& at, const node& new1) override;
+        wbool set(widx n, const node& new1) override;
 
         using super::add;
-        wbool add(std::initializer_list<T*> elems) {
-            wbool ret = false;
-            for(auto* elem : elems)
-                ret = add(elem);
-            return ret;
-        }
-        wbool add(const T& new1) {
-            return super::add(new1);
-        }
-        wbool add(const T* new1) {
-            return super::add(*new1);
-        }
-        wbool add(const titerator<T>& e, const T& new1) {
-            return super::add(e, new1);
-        }
-        wbool add(const titerator<T>& e, const T* new1) {
-            return super::add(e, *new1);
-        }
+        wbool add(const iterator& e, const node& new1) override;
+        wbool add(widx n, const node& new1) override;
 
         using super::del;
-        wcnt del(const T& it) {
-            return super::del(it);
+        wbool del(const node& it) override { return del(iter(it)); }
+        wcnt del(const iterator& from, const iterator& end) override;
+        wbool del(const iterator& it) override;
+        /// delete last element if exists.
+        wbool del() override;
+        wbool del(widx n) override;
+
+        void empty() override;
+
+        tstr<instance> deepClone() const override;
+
+    protected:
+        iteration* _onMakeIteration(wcnt step) const override {
+            me* unconst = const_cast<me*>(this);
+            return new narrIteration(*unconst, step);
         }
 
-        template <typename E = T>
-        void each(const titerator<T>& from, const titerator<T>& to, std::function<wbool(titerator<T>&, E&)> l);
-        template <typename E>
-        void each(const titerator<T>& from, const titerator<T>& to, std::function<wbool(const titerator<T>&, const E&)> l) const;
+    private:
+        narrIteration& _getIterationFrom(const iterator& it) {
+            if(nul(it)) return nulOf<narrIteration>();
+            if(!it.isFrom(*this)) return nulOf<narrIteration>();
+            return (narrIteration&) *it._step;
+        }
 
-        template <typename E = T>
-        void each(std::function<wbool(titerator<T>&, E&)> l);
-        template <typename E = T>
-        void each(std::function<wbool(const titerator<T>&, const E&)> l) const;
+        wbool _isValidN(widx n) const;
+
+    private:
+        std::vector<str> _vec;
     };
+
+    typedef tnarr<node> narr;
 }

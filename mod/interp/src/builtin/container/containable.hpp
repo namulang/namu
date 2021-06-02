@@ -1,11 +1,13 @@
 #pragma once
 
-#include "native/iterator/iterator.hpp"
+#include "native/iterator/titerator.hpp"
 
 namespace wrd {
 
-    class narr;
+
+    class node;
     template <typename T> class tnarr;
+    typedef tnarr<node> narr;
 
     /// @remark containable has API treating iterator ref and element as its parameter.
     class containable {
@@ -23,12 +25,25 @@ namespace wrd {
             return set(at, *new1);
         }
 
-        virtual iterator begin() const { return iter(0); }
-        virtual iterator end() const { return iter(len()); }
-        virtual iterator last() const { return iter(len()-1); }
+        virtual iterator begin() const { return iter<node>(0); }
+        virtual iterator end() const { return iter<node>(len()); }
+        virtual iterator last() const { return iter<node>(len()-1); }
 
-        /// @param step step from the head of this container.
-        virtual iterator iter(wcnt step) const = 0;
+        template <typename T>
+        titerator<T> begin() const { return iter<T>(0); }
+        template <typename T>
+        titerator<T> end() const { return iter<T>(len()); }
+        template <typename T>
+        titerator<T> last() const { return iter<T>(len()-1); }
+
+        template <typename T>
+        titerator<T> iter(wcnt step) const {
+            return titerator<T>(_onMakeIteration(step));
+        }
+        iterator iter(wcnt step) const {
+            return iter<node>(step);
+        }
+        virtual iterator iter(const node& elem) const = 0;
 
         virtual wbool add(const node& new1) = 0;
         wbool add(std::initializer_list<node*> elems) {
@@ -60,6 +75,9 @@ namespace wrd {
         virtual void empty() = 0;
 
         virtual tstr<instance> deepClone() const = 0;
+
+    protected:
+        virtual iteration* _onMakeIteration(wcnt step) const = 0;
     };
 
 }

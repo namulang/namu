@@ -1,6 +1,7 @@
 #pragma once
 
 #include "node.hpp"
+#include "../builtin/container/native/tnarr.hpp"
 #include "../frame/frameInteractable.hpp"
 
 namespace wrd {
