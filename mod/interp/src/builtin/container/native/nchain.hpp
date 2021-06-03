@@ -91,51 +91,6 @@ namespace wrd {
         me& getNext() { return *_next; }
         const me& getNext() const { return *_next; }
 
-        using super::each;
-        template <typename E>
-        void each(const iterator& from, const iterator& end, std::function<wbool(me&, E&)> l) {
-            const me* endChn = nullptr;
-            if(!nul(end)) {
-                endChn = &end.getContainer().cast<me>();
-                if(nul(endChn)) return;
-            }
-
-            for(me* e = (me*) &from.getContainer().cast<me>();
-                !nul(e) && e != endChn;
-                e = &(*e->_next)) {
-                auto& arr = e->_arr->template cast<E>();
-                if(nul(arr)) continue;
-
-                if(!l(*e, arr)) break;
-            }
-        }
-        /// @param  end Nullable. meaning of the end of nchain list.
-        template <typename E>
-        void each(const iterator& from, const iterator& end, std::function<wbool(const me&, const E&)> l) const {
-            const me* endChn = nullptr;
-            if(!nul(end)) {
-                endChn = &end.getContainer().cast<me>();
-                if(nul(endChn)) return;
-            }
-
-            for(const me* e = &from.getContainer().cast<me>();
-                !nul(e) && e != endChn;
-                e = &(*e->_next)) {
-                auto& arr = e->_arr->template cast<E>();
-                if(nul(arr)) continue;
-
-                if(!l(*e, arr)) break;
-            }
-        }
-        template <typename E>
-        void each(std::function<wbool(me&, E&)> l) {
-            each(begin(), nulOf<iterator>(), l);
-        }
-        template <typename E>
-        void each(std::function<wbool(const me&, const E&)> l) const {
-            each(begin(), nulOf<iterator>(), l);
-        }
-
         /// returned deep cloned of this object.
         /// @remark even if the chain has already linked to the another chain instance,
         ///         only this object will be deep cloned. cloned instance has the same linkage like

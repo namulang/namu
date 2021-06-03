@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ncontainer.inl"
 #include "tnarr.hpp"
 #include "../../../ast/node.hpp"
 #include "iterator/titerator.inl"

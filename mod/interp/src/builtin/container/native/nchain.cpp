@@ -1,5 +1,4 @@
 #include "nchain.hpp"
-#include "ncontainer.inl"
 #include "tnarr.hpp"
 
 namespace wrd {
@@ -10,10 +9,10 @@ namespace wrd {
 
     wcnt me::len() const {
         wcnt len = 0;
-        each<ncontainer>([&len](const me& chn, const ncontainer& con) {
-            len += con.len();
-            return true;
-        });
+        /* TODO: container iterator
+        for(auto& container : *this) {
+            len += container.len();
+        }*/
 
         return len;
     }
@@ -42,15 +41,11 @@ namespace wrd {
     }
 
     wbool me::del(const node& it) {
-        wbool ret = false;
-        each<node>([&ret, &it](const iterator& e, node& elem) {
-            if(&elem != &it) return true;
+        for(iterator e=begin(); e ; ++e)
+            if(&e.get() == &it)
+                return const_cast<ncontainer&>(e.getContainer()).del(e);
 
-            ret = const_cast<ncontainer&>(e.getContainer()).del(e);
-            return false;
-        });
-
-        return ret;
+        return false;
     }
 
     wbool me::del(const iterator& at) {
@@ -67,13 +62,14 @@ namespace wrd {
         if(endInnerIter.isFrom(fromCon)) return fromCon.del(fromInnerIter, endInnerIter);
 
         wcnt ret = 0;
+        /* TODO: container iterator:
         each<ncontainer>(from, nulOf<iterator>(), [&](me& chn, ncontainer& itsCon) {
             wbool isLast = false;
             iterator    head = &itsCon == &fromCon ? fromInnerIter : itsCon.begin(),
                     tail = &itsCon == &endCon ? isLast = true, endInnerIter : itsCon.end();
             ret += itsCon.del(head, tail);
             return !isLast;
-        });
+        });*/
 
         return ret;
     }
@@ -100,18 +96,20 @@ namespace wrd {
 
     void me::empty() {
         _arr->empty();
+        /* TODO: container iter:
         each<ncontainer>([](me& chn, ncontainer& itsCon) {
             itsCon.empty();
             return true;
-        });
+        });*/
     }
 
     me& me::_getLastChain() {
         me* last = nullptr;
+        /* TODO: container iter:
         each<ncontainer>([&last](me& chn, ncontainer& con) {
             last = &chn;
             return true;
-        });
+        });*/
         return *last;
     }
 }

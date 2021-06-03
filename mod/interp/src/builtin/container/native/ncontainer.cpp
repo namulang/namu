@@ -7,11 +7,9 @@ namespace wrd {
 
     narr me::get(std::function<wbool(const node&)> l) const {
         narr ret;
-        each<node>([&ret, l](const iterator& e, const node& elem) {
+        for(const node& elem : *this)
             if(l(elem))
                 ret.add(elem);
-            return true;
-        });
 
         return ret;
     }

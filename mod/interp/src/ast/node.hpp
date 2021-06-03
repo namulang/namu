@@ -20,16 +20,10 @@ namespace wrd {
             return subs().get<T>(l);
         }
         narr sub(const std::string& name) const;
-        narr sub(const std::string& name, const ncontainer& args) {
-            return sub(name, _createTypesFromArgs(args));
-        }
-        narr sub(const std::string& name, const wtypes& types) {
-            return subs().get([&](const node& elem) {
-                return elem.getName() == name && elem.canRun(types);
-            });
-        }
-        narr sub(const std::string& name, const ncontainer& args) const WRD_UNCONST_FUNC(sub(name, args))
-        narr sub(const std::string& name, const wtypes& types) const WRD_UNCONST_FUNC(sub(name, types))
+        narr sub(const std::string& name, const ncontainer& args);
+        narr sub(const std::string& name, const wtypes& types);
+        narr sub(const std::string& name, const ncontainer& args) const;
+        narr sub(const std::string& name, const wtypes& types) const;
 
         virtual wbool canRun(const wtypes& types) const = 0;
         wbool canRun(const ncontainer& args) const {
