@@ -22,15 +22,12 @@ namespace wrd {
         tnarr<T>& getNative() { return _arr; }
         const tnarr<T>& getNative() const { return _arr; }
 
-        iterator iter(const node& elem) const override {
-            const iterator* ret = 0;
-            each<node>([&ret, &elem](const iterator& e, const node& myelem) {
-                if(&elem != &myelem) return true;
+        iterator iter(const node& it) const override {
+            for(iterator e=begin(); e ; ++e)
+                if(&e.get() == &it)
+                    return iterator(e);
 
-                ret = &e;
-                return false;
-            });
-            return iterator(*ret);
+            return iterator();
         }
 
         // node:
@@ -81,23 +78,6 @@ namespace wrd {
         wcnt del(const containable& rhs) override { return _arr.del(rhs); }
 
         void empty() override { _arr.empty(); }
-
-        template <typename E = node>
-        void each(const iterator& from, const iterator& to, std::function<wbool(const iterator&, E&)> l) {
-            _arr.each(from, to, l);
-        }
-        template <typename E = node>
-        void each(const iterator& from, const iterator& to, std::function<wbool(const iterator&, const E&)> l) const {
-            _arr.each(from, to, l);
-        }
-        template <typename E = node>
-        void each(std::function<wbool(const iterator&, E&)> l) {
-            _arr.each(l);
-        }
-        template <typename E = node>
-        void each(std::function<wbool(const iterator&, const E&)> l) const {
-            _arr.each(l);
-        }
 
         tstr<instance> deepClone() const override {
             return _arr.deepClone();

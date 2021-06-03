@@ -19,10 +19,10 @@ namespace wrd {
         }
         wcnt add(const iterator& from, const iterator& to) override {
             int ret = 0;
-            each<node>(from, to, [this, &ret](const iterator& e, const node& elem) {
-                if(add(elem)) ret++;
+            for(iterator e=from; e != to ;++e) {
+                if(add(*e)) ret++;
                 return true;
-            });
+            }
             return ret;
         }
         wcnt add(const containable& rhs) override {
@@ -35,24 +35,11 @@ namespace wrd {
         }
 
         using containable::iter;
-        iterator iter(const node& elem) const override {
-            const iterator* ret = 0;
-            each<node>([&ret, &elem](const iterator& e, const node& myelem) {
-                if(&elem != &myelem) return true;
-
-                ret = &e;
-                return false;
-            });
-            return iterator(*ret);
+        iterator iter(const node& it) const override {
+            for(iterator e=begin(); e ; ++e)
+                if(&e.get() == &it)
+                    return iterator(e);
+            return iterator();
         }
-
-        template <typename T = node>
-        void each(const iterator& from, const iterator& to, std::function<wbool(const iterator&, T&)> l);
-        template <typename T = node>
-        void each(const iterator& from, const iterator& to, std::function<wbool(const iterator&, const T&)> l) const;
-        template <typename T = node>
-        void each(std::function<wbool(const iterator&, T&)> l);
-        template <typename T = node>
-        void each(std::function<wbool(const iterator&, const T&)> l) const;
     };
 }
