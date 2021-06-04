@@ -16,35 +16,29 @@ namespace wrd {
     public:
         virtual ~containable() {}
 
+        // len:
         virtual wcnt len() const = 0;
 
+        // get:
         virtual narr get(std::function<wbool(const node&)> l) const = 0;
 
-        virtual wbool set(const iterator& at, const node& new1) = 0;
-        wbool set(const iterator& at, const node* new1) {
-            return set(at, *new1);
-        }
-
+        // iter:
         virtual iterator begin() const { return iter<node>(0); }
         virtual iterator end() const { return iter<node>(len()); }
         virtual iterator last() const { return iter<node>(len()-1); }
 
-        template <typename T>
-        titerator<T> begin() const { return iter<T>(0); }
-        template <typename T>
-        titerator<T> end() const { return iter<T>(len()); }
-        template <typename T>
-        titerator<T> last() const { return iter<T>(len()-1); }
-
-        template <typename T>
-        titerator<T> iter(wcnt step) const {
-            return titerator<T>(_onMakeIteration(step));
-        }
-        iterator iter(wcnt step) const {
-            return iter<node>(step);
-        }
+        template <typename T> titerator<T> begin() const { return iter<T>(0); }
+        template <typename T> titerator<T> end() const { return iter<T>(len()); }
+        template <typename T> titerator<T> last() const { return iter<T>(len()-1); }
+        template <typename T> titerator<T> iter(wcnt step) const { return titerator<T>(_onMakeIteration(step)); }
+        iterator iter(wcnt step) const { return iter<node>(step); }
         virtual iterator iter(const node& elem) const = 0;
 
+        // set:
+        virtual wbool set(const iterator& at, const node& new1) = 0;
+        wbool set(const iterator& at, const node* new1) { return set(at, *new1); }
+
+        // add:
         virtual wbool add(const node& new1) = 0;
         wbool add(std::initializer_list<node*> elems) {
             wbool ret = false;
@@ -52,26 +46,21 @@ namespace wrd {
                 ret = add(elem);
             return ret;
         }
-
-        wbool add(const node* new1) {
-            return add(*new1);
-        }
+        wbool add(const node* new1) { return add(*new1); }
         virtual wbool add(const iterator& at, const node& new1) = 0;
-        wbool add(const iterator& at, const node* new1) {
-            return add(at, *new1);
-        }
+        wbool add(const iterator& at, const node* new1) { return add(at, *new1); }
         virtual wcnt add(const iterator& from, const iterator& to) = 0;
         virtual wcnt add(const containable& rhs) = 0;
 
+        // del:
         virtual wbool del() = 0;
         virtual wbool del(const node& it) = 0;
-        wbool del(const node* it) {
-            return del(*it);
-        }
+        wbool del(const node* it) { return del(*it); }
         virtual wbool del(const iterator& it) = 0;
         virtual wcnt del(const iterator& from, const iterator& to) = 0;
         virtual wcnt del(const containable& rhs) = 0;
 
+        // etc:
         virtual void empty() = 0;
 
         virtual tstr<instance> deepClone() const = 0;
