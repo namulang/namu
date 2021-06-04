@@ -8,11 +8,23 @@ namespace wrd {
         WRD_INTERFACE(ncontainer, instance)
 
     public:
+        // get:
         using containable::get;
         template <typename T>
         tnarr<T> get(std::function<wbool(const T&)> l) const;
         narr get(std::function<wbool(const node&)> l) const override;
 
+        // iter:
+        using containable::iter;
+        iterator iter(const node& it) const override {
+            for(iterator e=begin(); e ; ++e)
+                if(&e.get() == &it)
+                    return iterator(e);
+
+            return iterator();
+        }
+
+        // add:
         using containable::add;
         wbool add(const node& new1) override {
             return add(end(), new1);
@@ -29,17 +41,10 @@ namespace wrd {
             return add(rhs.begin(), rhs.end());
         }
 
+        // del:
         using containable::del;
         wcnt del(const containable& rhs) override {
             return del(rhs.begin(), rhs.end());
-        }
-
-        using containable::iter;
-        iterator iter(const node& it) const override {
-            for(iterator e=begin(); e ; ++e)
-                if(&e.get() == &it)
-                    return iterator(e);
-            return iterator();
         }
     };
 }

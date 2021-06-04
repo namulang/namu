@@ -72,23 +72,29 @@ namespace wrd {
             add(elems);
         }
 
+        // operator:
         T& operator[](widx n) override { return get(n); }
         const T& operator[](widx n) const override { return get(n); }
 
+        // len:
         wcnt len() const override;
 
+        // get:
         using super::get;
         T& get(widx n) override;
         const T& get(widx n) const override WRD_UNCONST_FUNC(get(n))
 
+        // set:
         using super::set;
         wbool set(const iterator& at, const node& new1) override;
         wbool set(widx n, const node& new1) override;
 
+        // add:
         using super::add;
         wbool add(const iterator& e, const node& new1) override;
         wbool add(widx n, const node& new1) override;
 
+        // del:
         using super::del;
         wbool del(const node& it) override { return del(iter(it)); }
         wcnt del(const iterator& from, const iterator& end) override;
@@ -97,6 +103,7 @@ namespace wrd {
         wbool del() override;
         wbool del(widx n) override;
 
+        // etc:
         void empty() override;
 
         tstr<instance> deepClone() const override;

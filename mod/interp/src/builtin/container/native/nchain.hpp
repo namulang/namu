@@ -65,29 +65,36 @@ namespace wrd {
         nchain();
         explicit nchain(const ncontainer& con): _arr(con) {}
 
+        // len:
         wcnt len() const override;
 
+        // set:
         using super::set;
         wbool set(const iterator& at, const node& new1) override;
 
+        // add:
         using super::add;
         wbool add(const iterator& at, const node& new1) override;
         wbool add(const node& new1) override;
 
+        // link:
+        tstr<me> link(const ncontainer& new1);
+        wbool link(const me& new1);
+        wbool unlink();
+
+        // del:
         using super::del;
         wbool del(const node& it) override;
         wbool del() override;
         wbool del(const iterator& at) override;
         wcnt del(const iterator& from, const iterator& end) override;
 
-        tstr<me> link(const ncontainer& new1);
-        wbool link(const me& new1);
-        wbool unlink();
-
+        // etc:
         void empty() override;
 
         ncontainer& getContainer() { return *_arr; }
         const ncontainer& getContainer() const { return *_arr; }
+
         me& getNext() { return *_next; }
         const me& getNext() const { return *_next; }
 
