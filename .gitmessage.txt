@@ -1,7 +1,6 @@
 
-
 ##### Subject 60 characters ########################### -> |
-#<type>: <module>: <subject>
+#<module>: <type>: <subject>
 #######################################################
 # Type can be
 #   feat:   new feature
