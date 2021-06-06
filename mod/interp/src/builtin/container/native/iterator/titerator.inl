@@ -10,7 +10,7 @@ namespace wrd {
 
     TEMPL
     T& ME::get() {
-        if(!_step) return nulOf<node>();
+        if(!_step) return nulOf<T>();
 
         while(!isEnd()) {
             T& ret = _step->get().cast<T>();
