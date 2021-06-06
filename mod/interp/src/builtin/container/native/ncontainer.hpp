@@ -11,7 +11,16 @@ namespace wrd {
         // get:
         using containable::get;
         template <typename T>
-        tnarr<T> get(std::function<wbool(const T&)> l) const;
+        tnarr<T> get(std::function<wbool(const T&)> l) const {
+            tnarr<T> ret;
+            for(titerator<T> e=begin<T>(); e ; ++e) {
+                const T& elem = *e;
+                if(l(elem))
+                    ret.add(elem);
+            }
+
+            return ret;
+        }
         narr get(std::function<wbool(const node&)> l) const override;
 
         // iter:
