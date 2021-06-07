@@ -1,5 +1,6 @@
 #include "obj.hpp"
 #include "func.hpp"
+#include "../builtin/container/containable.inl"
 
 namespace wrd {
 

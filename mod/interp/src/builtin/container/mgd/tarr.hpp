@@ -29,7 +29,6 @@ namespace wrd {
         //  get:
         T& get(widx n) override { return _arr.get(n); }
         const T& get(widx n) const override { return _arr.get(n); }
-        narr get(std::function<wbool(const node&)> l) const override { return _arr.get(l); }
         template <typename E> tnarr<E> get(std::function<wbool(const E&)> l) const { return _arr.get(l); }
 
         //  iter:
