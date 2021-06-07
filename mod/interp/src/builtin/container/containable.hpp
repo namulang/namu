@@ -20,7 +20,9 @@ namespace wrd {
         virtual wcnt len() const = 0;
 
         // get:
-        virtual narr get(std::function<wbool(const node&)> l) const = 0;
+        template <typename T>
+        tnarr<T> get(std::function<wbool(const T&)> l) const;
+        narr get(std::function<wbool(const node&)> l) const;
 
         // iter:
         virtual iterator begin() const { return iter<node>(0); }
