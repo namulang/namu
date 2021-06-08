@@ -25,16 +25,25 @@ namespace wrd {
         narr get(std::function<wbool(const node&)> l) const;
 
         // iter:
-        virtual iterator begin() const { return iter<node>(0); }
-        virtual iterator end() const { return iter<node>(len()); }
-        virtual iterator last() const { return iter<node>(len()-1); }
-
+        iterator begin() const { return iter<node>(0); }
+        iterator end() const { return iter<node>(len()); }
+        iterator last() const { return iter<node>(len()-1); }
         template <typename T> titerator<T> begin() const { return iter<T>(0); }
         template <typename T> titerator<T> end() const { return iter<T>(len()); }
         template <typename T> titerator<T> last() const { return iter<T>(len()-1); }
         template <typename T> titerator<T> iter(wcnt step) const { return titerator<T>(_onMakeIteration(step)); }
         iterator iter(wcnt step) const { return iter<node>(step); }
-        virtual iterator iter(const node& elem) const = 0;
+        iterator iter(const node& elem) const {
+            return iter<node>(elem);
+        }
+        template <typename T>
+        titerator<T> iter(const T& it) const {
+            for(titerator<T> e=begin<T>(); e ; ++e)
+                if(&e.get() == &it)
+                    return titerator<T>(e);
+
+            return titerator<T>();
+        }
 
         // set:
         virtual wbool set(const iterator& at, const node& new1) = 0;
