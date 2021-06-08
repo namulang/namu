@@ -8,16 +8,6 @@ namespace wrd {
         WRD_INTERFACE(ncontainer, instance)
 
     public:
-        // iter:
-        using containable::iter;
-        iterator iter(const node& it) const override {
-            for(iterator e=begin(); e ; ++e)
-                if(&e.get() == &it)
-                    return iterator(e);
-
-            return iterator();
-        }
-
         // add:
         using containable::add;
         wbool add(const node& new1) override {

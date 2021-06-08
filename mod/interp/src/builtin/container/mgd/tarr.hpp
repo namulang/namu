@@ -31,15 +31,6 @@ namespace wrd {
         const T& get(widx n) const override { return _arr.get(n); }
         template <typename E> tnarr<E> get(std::function<wbool(const E&)> l) const { return _arr.get(l); }
 
-        //  iter:
-        iterator iter(const node& it) const override {
-            for(iterator e=begin(); e ; ++e)
-                if(&e.get() == &it)
-                    return iterator(e);
-
-            return iterator();
-        }
-
         //  set:
         using containable::set;
         using arrContainable::set;
