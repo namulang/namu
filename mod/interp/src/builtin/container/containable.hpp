@@ -50,7 +50,7 @@ namespace wrd {
         wbool set(const iterator& at, const node* new1) { return set(at, *new1); }
 
         // add:
-        virtual wbool add(const node& new1) = 0;
+        virtual wbool add(const iterator& at, const node& new1) = 0;
         wbool add(std::initializer_list<node*> elems) {
             wbool ret = false;
             for(auto* elem : elems)
@@ -58,18 +58,30 @@ namespace wrd {
             return ret;
         }
         wbool add(const node* new1) { return add(*new1); }
-        virtual wbool add(const iterator& at, const node& new1) = 0;
+        wbool add(const node& new1) {
+            return add(end(), new1);
+        }
+        wcnt add(const iterator& from, const iterator& to) {
+            int ret = 0;
+            for(iterator e=from; e != to ;++e) {
+                if(add(*e)) ret++;
+                return true;
+            }
+            return ret;
+        }
+        wcnt add(const containable& rhs) {
+            return add(rhs.begin(), rhs.end());
+        }
         wbool add(const iterator& at, const node* new1) { return add(at, *new1); }
-        virtual wcnt add(const iterator& from, const iterator& to) = 0;
-        virtual wcnt add(const containable& rhs) = 0;
 
         // del:
-        virtual wbool del() = 0;
-        virtual wbool del(const node& it) = 0;
+        /// delete last element if exists.
+        wbool del() { return del(iter(len() - 1)); }
         wbool del(const node* it) { return del(*it); }
+        wbool del(const node& it) { return del(iter(it)); }
         virtual wbool del(const iterator& it) = 0;
-        virtual wcnt del(const iterator& from, const iterator& to) = 0;
-        virtual wcnt del(const containable& rhs) = 0;
+        virtual wcnt del(const iterator& from, const iterator& end) = 0;
+        wcnt del(const containable& rhs) { return del(rhs.begin(), rhs.end()); }
 
         // etc:
         virtual void empty() = 0;

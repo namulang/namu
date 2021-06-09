@@ -96,11 +96,8 @@ namespace wrd {
 
         // del:
         using super::del;
-        wbool del(const node& it) override { return del(iter(it)); }
         wcnt del(const iterator& from, const iterator& end) override;
         wbool del(const iterator& it) override;
-        /// delete last element if exists.
-        wbool del() override;
         wbool del(widx n) override;
 
         // etc:
