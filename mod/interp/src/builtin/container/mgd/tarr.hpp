@@ -46,20 +46,14 @@ namespace wrd {
                 ret = _arr.add(elem);
             return ret;
         }
-        wbool add(const node& new1) override { return _arr.add(new1); }
         wbool add(const iterator& at, const node& new1) override { return _arr.add(at, new1); }
-        wcnt add(const iterator& from, const iterator& to) override { return _arr.add(from, to); }
-        wcnt add(const containable& rhs) override { return _arr.add(rhs); }
         wbool add(widx n, const node& new1) override { return _arr.add(n, new1); }
 
         //  del:
         using containable::del;
-        wbool del(const node& it) override { return del(iter(it)); }
         wbool del(widx n) override { return _arr.del(n); }
-        wbool del() override { return _arr.del(); }
         wbool del(const iterator& it) override { return _arr.del(it); }
         wcnt del(const iterator& from, const iterator& to) override { return _arr.del(from, to); }
-        wcnt del(const containable& rhs) override { return _arr.del(rhs); }
 
         //  etc:
         void empty() override { _arr.empty(); }

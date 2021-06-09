@@ -60,11 +60,6 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::del() {
-        return del(iter(len() - 1));
-    }
-
-    TEMPL
     wbool ME::del(const iterator& at) {
         narrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;

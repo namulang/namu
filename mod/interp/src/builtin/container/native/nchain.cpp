@@ -29,25 +29,6 @@ namespace wrd {
         return containerIter.getContainer().add(containerIter, new1);
     }
 
-    wbool me::add(const node& new1) {
-        return getContainer().add(new1);
-    }
-
-    wbool me::del() {
-        me& last = _getLastChain();
-        if(nul(last)) return false;
-
-        return last.getContainer().del();
-    }
-
-    wbool me::del(const node& it) {
-        for(iterator e=begin(); e ; ++e)
-            if(&e.get() == &it)
-                return const_cast<ncontainer&>(e.getContainer()).del(e);
-
-        return false;
-    }
-
     wbool me::del(const iterator& at) {
         iterator& containerIter = _getContainerIterFromChainIter(at);
 

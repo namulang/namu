@@ -75,7 +75,6 @@ namespace wrd {
         // add:
         using super::add;
         wbool add(const iterator& at, const node& new1) override;
-        wbool add(const node& new1) override;
 
         // link:
         tstr<me> link(const ncontainer& new1);
@@ -84,8 +83,6 @@ namespace wrd {
 
         // del:
         using super::del;
-        wbool del(const node& it) override;
-        wbool del() override;
         wbool del(const iterator& at) override;
         wcnt del(const iterator& from, const iterator& end) override;
 
@@ -110,6 +107,7 @@ namespace wrd {
 
     protected:
         iteration* _onMakeIteration(wcnt step) const override {
+            // TODO: optimize using containerIteration
             me* unconst = const_cast<me*>(this);
             iteration* ret = new elemIteration(*unconst, *unconst, _arr->begin());
             ret->next(step);
