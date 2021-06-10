@@ -14,17 +14,16 @@ namespace wrd {
         explicit tref(const T& new1): super(new1) {}
         explicit tref(const T* new1): super(new1) {}
 
-        T* operator->() override {
+        T* operator->() {
             return (T*) super::operator->();
         }
-        T& operator*() override {
+        T& operator*() {
             return (T&) super::operator*();
         }
         const T* operator->() const WRD_UNCONST_FUNC(operator->())
         const T& operator*() const WRD_UNCONST_FUNC(operator*())
 
-        using super::get;
-        T& get() override {
+        T& get() {
             return (T&) super::get();
         }
 

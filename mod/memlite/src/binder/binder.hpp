@@ -55,6 +55,10 @@ namespace wrd {
         binder(const me& rhs);
         virtual ~binder();
 
+        instance* operator->() { return &get(); }
+        instance& operator*() { return get(); }
+        const instance* operator->() const WRD_UNCONST_FUNC(operator->())
+        const instance& operator*() const WRD_UNCONST_FUNC(operator*())
         me& operator=(const me& rhs);
 
         //  binder:
@@ -64,9 +68,20 @@ namespace wrd {
         wbool unbind() override;
         using tbindable::canBind;
         wbool canBind(const type& cls) const override;
-        using tbindable::get;
         wbool bind(const instance& it) override;
-        instance& get() override;
+
+        instance& get();
+        const instance& get() const WRD_UNCONST_FUNC(get())
+        template <typename E>
+        E& get() {
+            instance& got = get();
+            if(nul(got)) return nulOf<E>();
+
+            return got.template cast<E>();
+        }
+        template <typename E>
+        const E& get() const WRD_UNCONST_FUNC(get<E>())
+
         //  typeProvidable:
         const type& getType() const override;
 

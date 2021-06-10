@@ -23,8 +23,6 @@ namespace wrd {
         const T* operator->() const WRD_UNCONST_FUNC(operator->())
         const T& operator*() const WRD_UNCONST_FUNC(operator*())
         me& operator=(const binder& rhs);
-        //  tbindable:
-        using tbindable::get;
         T& get();
         const T& get() const WRD_UNCONST_FUNC(get())
 

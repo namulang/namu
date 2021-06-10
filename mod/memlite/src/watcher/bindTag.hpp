@@ -20,6 +20,11 @@ namespace wrd {
         explicit bindTag(id newId);
         ~bindTag();
 
+        instance* operator->() { return &get(); }
+        instance& operator*() { return get(); }
+        const instance* operator->() const WRD_UNCONST_FUNC(operator->())
+        const instance& operator*() const WRD_UNCONST_FUNC(operator*())
+
         const chunk& getChunk() const;
         wcnt getStrongCnt() const;
         wbool rel();
@@ -28,7 +33,19 @@ namespace wrd {
         wbool isBind() const override;
         const type& getBindable() const;
         using tbindable::canBind;
-        instance& get() override;
+
+        instance& get();
+        const instance& get() const WRD_UNCONST_FUNC(get())
+        template <typename E>
+        E& get() {
+            instance& got = get();
+            if(nul(got)) return nulOf<E>();
+
+            return got.template cast<E>();
+        }
+        template <typename E>
+        const E& get() const WRD_UNCONST_FUNC(get<E>())
+
         wbool canBind(const type& cls) const override;
         wbool bind(const instance& new1) override;
         //  Instance:
