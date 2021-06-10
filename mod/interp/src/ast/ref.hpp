@@ -15,6 +15,11 @@ namespace wrd {
             bind(*rhs);
         }
 
+        node* operator->() { return &get(); }
+        node& operator*() { return get(); }
+        const node* operator->() const WRD_UNCONST_FUNC(operator->())
+        const node& operator*() const WRD_UNCONST_FUNC(operator*())
+
         // node:
         ncontainer& subs() override {
             if (!_str) return nulOf<ncontainer>();
@@ -45,6 +50,20 @@ namespace wrd {
             return _str.unbind();
         }
 
+        node& get() {
+            return _str.get();
+        }
+        const node& get() const WRD_UNCONST_FUNC(get())
+        template <typename E>
+        E& get() {
+            node& got = get();
+            if(nul(got)) return nulOf<E>();
+
+            return got.template cast<E>();
+        }
+        template <typename E>
+        const E& get() const WRD_UNCONST_FUNC(get<E>())
+
         using tbindable::canBind;
         wbool canBind(const type& it) const override {
             return _str.canBind(it);
@@ -52,11 +71,6 @@ namespace wrd {
 
         wbool isBind() const override {
             return _str.isBind();
-        }
-
-        using tbindable::get;
-        node& get() override {
-            return _str.get();
         }
 
     private:
