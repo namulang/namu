@@ -3,13 +3,13 @@
 #<module>: <type>: <subject>
 #######################################################
 # Type can be
-#   feat:   new feature
-#   fix:    bug fix
-#   refact: refactoring production code
-#   style:  formatting, missing semi colons, etc; no code change
-#   doc:    changes to documentation
-#   test:   adding or refactoring tests. no production code change
-#   chore:  updating grunt tasks etc. no production code change
+#   feat:       new feature
+#   fix:        bug fix
+#   refactor:   refactoring production code
+#   style:      formatting, missing semi colons, etc; no code change
+#   doc:        changes to documentation
+#   test:       adding or refactoring tests. no production code change
+#   chore:      updating grunt tasks etc. no production code change
 # Module is one of sub module like 'interp', 'swrd' or blank if
 # the commit affects entire this repository.
 # e.g.
