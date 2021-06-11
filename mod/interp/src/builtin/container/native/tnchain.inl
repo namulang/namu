@@ -1,13 +1,18 @@
-#include "nchain.hpp"
+#pragma once
+
+#include "tnchain.hpp"
 #include "tnarr.hpp"
 
 namespace wrd {
 
-    WRD_DEF_ME(nchain)
+#define TEMPL template <typename T>
+#define ME tnchain<T>
 
-    me::nchain(): _arr(new narr()) {}
+    TEMPL
+    ME::tnchain(): _arr(new narr()) {}
 
-    wcnt me::len() const {
+    TEMPL
+    wcnt ME::len() const {
         wcnt len = 0;
         /* TODO: container iterator
         for(auto& container : *this) {
@@ -17,25 +22,29 @@ namespace wrd {
         return len;
     }
 
-    wbool me::set(const iterator& at, const node& new1) {
+    TEMPL
+    wbool ME::set(const iterator& at, const node& new1) {
         iterator& containerIter = _getContainerIterFromChainIter(at);
 
         return containerIter.getContainer().set(containerIter, new1);
     }
 
-    wbool me::add(const iterator& at, const node& new1) {
+    TEMPL
+    wbool ME::add(const iterator& at, const node& new1) {
         iterator& containerIter = _getContainerIterFromChainIter(at);
 
         return containerIter.getContainer().add(containerIter, new1);
     }
 
-    wbool me::del(const iterator& at) {
+    TEMPL
+    wbool ME::del(const iterator& at) {
         iterator& containerIter = _getContainerIterFromChainIter(at);
 
         return containerIter.getContainer().del(containerIter);
     }
 
-    wcnt me::del(const iterator& from, const iterator& end) {
+    TEMPL
+    wcnt ME::del(const iterator& from, const iterator& end) {
         iterator& fromInnerIter = _getContainerIterFromChainIter(from);
         ncontainer& fromCon = fromInnerIter.getContainer();
         iterator& endInnerIter = _getContainerIterFromChainIter(end);
@@ -44,7 +53,7 @@ namespace wrd {
 
         wcnt ret = 0;
         /* TODO: container iterator:
-        each<ncontainer>(from, nulOf<iterator>(), [&](me& chn, ncontainer& itsCon) {
+        each<ncontainer>(from, nulOf<iterator>(), [&](ME& chn, ncontainer& itsCon) {
             wbool isLast = false;
             iterator    head = &itsCon == &fromCon ? fromInnerIter : itsCon.begin(),
                     tail = &itsCon == &endCon ? isLast = true, endInnerIter : itsCon.end();
@@ -55,42 +64,50 @@ namespace wrd {
         return ret;
     }
 
-    tstr<me> me::link(const ncontainer& new1) {
-        if(nul(new1)) return tstr<me>();
+    TEMPL
+    tstr<ME> ME::link(const ncontainer& new1) {
+        if(nul(new1)) return tstr<ME>();
 
-        me& ret = new1.getType().isSub<me>() ? (me&) new1 : *new me(new1);
+        ME& ret = new1.getType().isSub<ME>() ? (ME&) new1 : *new ME(new1);
         link(ret);
-        return tstr<me>(ret);
+        return tstr<ME>(ret);
     }
 
-    wbool me::link(const me& new1) {
-        if(nul(new1) || nul(new1.getContainer())) return tstr<me>();
+    TEMPL
+    wbool ME::link(const ME& new1) {
+        if(nul(new1) || nul(new1.getContainer())) return tstr<ME>();
         if(&new1.getContainer() == &getContainer())
-            return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), tstr<me>();
+            return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), tstr<ME>();
 
         return _next.bind(new1);
     }
 
-    wbool me::unlink() {
+    TEMPL
+    wbool ME::unlink() {
         return _next.unbind();
     }
 
-    void me::empty() {
+    TEMPL
+    void ME::empty() {
         _arr->empty();
         /* TODO: container iter:
-        each<ncontainer>([](me& chn, ncontainer& itsCon) {
+        each<ncontainer>([](ME& chn, ncontainer& itsCon) {
             itsCon.empty();
             return true;
         });*/
     }
 
-    me& me::_getLastChain() {
-        me* last = nullptr;
+    TEMPL
+    ME& ME::_getLastChain() {
+        ME* last = nullptr;
         /* TODO: container iter:
-        each<ncontainer>([&last](me& chn, ncontainer& con) {
+        each<ncontainer>([&last](ME& chn, ncontainer& con) {
             last = &chn;
             return true;
         });*/
         return *last;
     }
+
+#undef ME
+#undef TEMPL
 }

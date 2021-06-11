@@ -6,6 +6,9 @@ namespace wrd {
 
     WRD_DEF_ME(obj)
 
+    me::obj(const std::string& name, const narr& subItself)
+        : _name(name), _subs(new nchain(subItself)) {}
+
     str me::run(const ncontainer& args) {
         tnarr<func> candidates = getCtors().get<func>([&args](const func& candidate) {
             return candidate.canRun(args);

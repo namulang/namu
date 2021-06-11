@@ -1,5 +1,7 @@
 #include "mgdFunc.hpp"
 #include "../obj.hpp"
+#include "../../builtin/container/native/tnarr.inl"
+#include "../../builtin/container/native/tnchain.inl"
 #include "../../frame/frameInteract.hpp"
 #include "../../frame/thread.hpp"
 

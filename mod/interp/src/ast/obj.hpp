@@ -2,19 +2,19 @@
 
 #include "node.hpp"
 #include "../frame/frameInteractable.hpp"
-#include "../builtin/container/native/tnarr.inl"
-#include "../builtin/container/native/nchain.hpp"
-#include "func.hpp"
+#include "../builtin/container/native/tnchain.inl"
 
 namespace wrd {
+
+    class func;
+    typedef tnarr<func> funcs;
 
     class obj : public node, public frameInteractable {
         WRD_INTERFACE(obj, node)
         friend class mgdObj;
 
     public:
-        explicit obj(const std::string& name = "", const narr& subItself = *new narr()):
-            _name(name), _subs(new nchain(subItself)) {}
+        explicit obj(const std::string& name = "", const narr& subItself = *new narr());
         explicit obj(const me& rhs) {}
 
         me& operator=(const me& rhs) {

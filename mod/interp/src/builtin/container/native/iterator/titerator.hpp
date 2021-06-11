@@ -8,9 +8,8 @@ namespace wrd {
     class titerator : public titerable<T>, public clonable, public typeProvidable {
         WRD_CLASS(titerator)
         friend class iteration;
-        template <typename E>
-        friend class tnarr;
-        friend class nchain;
+        template <typename E> friend class tnarr;
+        template <typename E> friend class tnchain;
 
     public:
         titerator() {}
