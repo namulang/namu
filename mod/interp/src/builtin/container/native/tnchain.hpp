@@ -6,17 +6,20 @@
 
 namespace wrd {
 
-    class nchain : public ncontainer {
-        WRD_CLASS(nchain, ncontainer)
+    class node;
+
+    template <typename T>
+    class tnchain : public ncontainer {
+        WRD_CLASS(tnchain, ncontainer)
 
         friend class elemIteration;
         class elemIteration : public iteration {
             WRD_CLASS(elemIteration, iteration)
-            friend class nchain;
+            friend class tnchain;
 
         public:
-            elemIteration(const nchain& own, const nchain& iteratingChain, const iterator& conIter)
-                : _own(const_cast<nchain&>(own)), _ownIter(iteratingChain), _iter(conIter) {
+            elemIteration(const tnchain& own, const tnchain& iteratingChain, const iterator& conIter)
+                : _own(const_cast<tnchain&>(own)), _ownIter(iteratingChain), _iter(conIter) {
                     if(!_iter) next(1);
                 }
 
@@ -56,14 +59,14 @@ namespace wrd {
             }
 
         private:
-            nchain& _own;
-            tstr<nchain> _ownIter;
+            tnchain& _own;
+            tstr<tnchain> _ownIter;
             iterator _iter;
         };
 
     public:
-        nchain();
-        explicit nchain(const ncontainer& con): _arr(con) {}
+        tnchain();
+        explicit tnchain(const ncontainer& con): _arr(con) {}
 
         // len:
         wcnt len() const override;
@@ -130,4 +133,6 @@ namespace wrd {
         tstr<ncontainer> _arr;
         tstr<me> _next;
     };
+
+    typedef tnchain<node> nchain;
 }
