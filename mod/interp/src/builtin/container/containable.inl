@@ -11,7 +11,7 @@ namespace wrd {
     template <typename T>
     tnarr<T> ME::get(std::function<wbool(const T&)> l) const {
         tnarr<T> ret;
-        for(titerator<T> e=begin<T>(); e ; ++e) {
+        for(titer<T> e=begin<T>(); e ; ++e) {
             const T& elem = *e;
             if(l(elem))
                 ret.add(elem);

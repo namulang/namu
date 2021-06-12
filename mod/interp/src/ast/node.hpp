@@ -71,7 +71,7 @@ namespace wrd {
     private:
         static wtypes _createTypesFromArgs(const ncontainer& args) {
             wtypes ret;
-            for(iterator e=args.begin(); e ;e++)
+            for(iter e=args.begin(); e ;e++)
                 ret.push_back(const_cast<wtype*>(&e->getType()));
             return ret;
         }

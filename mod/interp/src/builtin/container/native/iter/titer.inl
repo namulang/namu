@@ -1,12 +1,12 @@
 #pragma once
 
-#include "titerator.hpp"
+#include "titer.hpp"
 #include "../../../../ast/node.hpp"
 
 namespace wrd {
 
 #define TEMPL template <typename T>
-#define ME titerator<T>
+#define ME titer<T>
 
     TEMPL
     T& ME::get() {
