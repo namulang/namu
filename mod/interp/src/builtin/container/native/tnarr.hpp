@@ -45,8 +45,8 @@ namespace wrd {
                 _n += toStep;
                 return toStep;
             }
-            node& get() override {
-                if(isEnd()) return nulOf<node>();
+            instance& get() override {
+                if(isEnd()) return nulOf<instance>();
                 return _own.get(_n);
             }
             ncontainer& getContainer() override { return _own; }
