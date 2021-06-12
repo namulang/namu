@@ -2,7 +2,7 @@
 
 #include "tnarr.hpp"
 #include "../../../ast/node.hpp"
-#include "iterator/titerator.inl"
+#include "iter/titer.inl"
 
 namespace wrd {
 
@@ -18,7 +18,7 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::set(const iterator& at, const node& new1) {
+    wbool ME::set(const wrd::iter& at, const node& new1) {
         narrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;
         if(cast.isEnd()) return false;
@@ -40,7 +40,7 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::add(const iterator& e, const node& new1) {
+    wbool ME::add(const wrd::iter& e, const node& new1) {
         if(nul(e) || nul(new1)) return false;
         if(!e.isFrom(*this)) return false;
         narrIteration& cast = (narrIteration&) *e._step;
@@ -60,7 +60,7 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::del(const iterator& at) {
+    wbool ME::del(const wrd::iter& at) {
         narrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;
         if(cast.isEnd()) return false;
@@ -76,7 +76,7 @@ namespace wrd {
     }
 
     TEMPL
-    wcnt ME::del(const iterator& from, const iterator& end) {
+    wcnt ME::del(const wrd::iter& from, const wrd::iter& end) {
         narrIteration&  endIter = _getIterationFrom(end),
                     &   fromIter = _getIterationFrom(from);
         if(nul(endIter) || nul(fromIter))

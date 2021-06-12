@@ -86,18 +86,18 @@ namespace wrd {
 
         // set:
         using super::set;
-        wbool set(const iterator& at, const node& new1) override;
+        wbool set(const wrd::iter& at, const node& new1) override;
         wbool set(widx n, const node& new1) override;
 
         // add:
         using super::add;
-        wbool add(const iterator& e, const node& new1) override;
+        wbool add(const wrd::iter& e, const node& new1) override;
         wbool add(widx n, const node& new1) override;
 
         // del:
         using super::del;
-        wcnt del(const iterator& from, const iterator& end) override;
-        wbool del(const iterator& it) override;
+        wcnt del(const wrd::iter& from, const wrd::iter& end) override;
+        wbool del(const wrd::iter& it) override;
         wbool del(widx n) override;
 
         // etc:
@@ -112,7 +112,7 @@ namespace wrd {
         }
 
     private:
-        narrIteration& _getIterationFrom(const iterator& it) {
+        narrIteration& _getIterationFrom(const wrd::iter& it) {
             if(nul(it)) return nulOf<narrIteration>();
             if(!it.isFrom(*this)) return nulOf<narrIteration>();
             return (narrIteration&) *it._step;

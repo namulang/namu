@@ -2,7 +2,7 @@
 
 #include "ncontainer.hpp"
 #include "../../../ast/node.hpp"
-#include "iterator/titerator.inl"
+#include "iter/titer.inl"
 
 namespace wrd {
 
@@ -18,8 +18,8 @@ namespace wrd {
             friend class tnchain;
 
         public:
-            elemIteration(const tnchain& own, const tnchain& iteratingChain, const iterator& conIter)
-                : _own(const_cast<tnchain&>(own)), _ownIter(iteratingChain), _iter(conIter) {
+            elemIteration(const tnchain& iteratingChain, const wrd::iter& conIter)
+                : _ownIter(iteratingChain), _iter(conIter) {
                     if(!_iter) next(1);
                 }
 
@@ -41,12 +41,15 @@ namespace wrd {
                 return stepped + next(remain);
             }
 
-            node& get() override {
+            ncontainer& getContainer() override {
+                return _iter->cast<ncontainer>();
+            }
+
+            instance& get() override {
                 return *_iter;
             }
 
-            ncontainer& getContainer() override { return _own; }
-            iterator& getContainerIter() { return _iter; }
+            wrd::iter& getContainerIter() { return _iter; }
 
         protected:
             wbool _onSame(const typeProvidable& rhs) const override {
@@ -59,10 +62,55 @@ namespace wrd {
             }
 
         private:
-            tnchain& _own;
             tstr<tnchain> _ownIter;
-            iterator _iter;
+            wrd::iter _iter;
         };
+
+        friend class chnIteration;
+        class chnIteration : public iteration {
+            WRD_CLASS(chnIteration, iteration)
+            friend class tnchain;
+
+        public:
+            chnIteration(const tnchain& start): _chn(start) {}
+            chnIteration() {}
+
+            wbool isEnd() const override {
+                return !_chn;
+            }
+
+            wcnt next(wcnt step) override {
+                wcnt n=0;
+                for(; n < step ;n++) {
+                    if(isEnd()) return n;
+
+                    _chn.bind(_chn->getNext());
+                }
+
+                return n;
+            }
+
+            instance& get() override {
+                return *_chn;
+            }
+
+            ncontainer& getContainer() override {
+                return *_chn;
+            }
+
+        protected:
+            wbool _onSame(const typeProvidable& rhs) const override {
+                if(!super::_onSame(rhs)) return false;
+
+                const me& trg = (const me&) rhs;
+                return _chn == trg._chn;
+            }
+
+        private:
+            tstr<tnchain> _chn;
+        };
+
+        typedef titer<me> chnIter;
 
     public:
         tnchain();
@@ -71,13 +119,31 @@ namespace wrd {
         // len:
         wcnt len() const override;
 
+        // iter:
+        chnIter beginChain() const { return iterChain(0); }
+        chnIter endChain() const {
+            return chnIter(new chnIteration());
+        }
+        titer<me> lastChain() const {
+            me* last = nullptr;
+            for(chnIter e=beginChain(); e ; ++e)
+                last = &e.get();
+
+            return chnIter(new chnIteration(*last));
+        }
+        titer<me> iterChain(wcnt step) const {
+            titer<me> ret(new chnIteration(*this));
+            ret.next(step);
+            return ret;
+        }
+
         // set:
         using super::set;
-        wbool set(const iterator& at, const node& new1) override;
+        wbool set(const wrd::iter& at, const node& new1) override;
 
         // add:
         using super::add;
-        wbool add(const iterator& at, const node& new1) override;
+        wbool add(const wrd::iter& at, const node& new1) override;
 
         // link:
         tstr<me> link(const ncontainer& new1);
@@ -86,8 +152,8 @@ namespace wrd {
 
         // del:
         using super::del;
-        wbool del(const iterator& at) override;
-        wcnt del(const iterator& from, const iterator& end) override;
+        wbool del(const wrd::iter& at) override;
+        wcnt del(const wrd::iter& from, const wrd::iter& end) override;
 
         // etc:
         void empty() override;
@@ -112,22 +178,20 @@ namespace wrd {
         iteration* _onMakeIteration(wcnt step) const override {
             // TODO: optimize using containerIteration
             me* unconst = const_cast<me*>(this);
-            iteration* ret = new elemIteration(*unconst, *unconst, _arr->begin());
+            iteration* ret = new elemIteration(*unconst, _arr->begin());
             ret->next(step);
             return ret;
         }
 
     private:
-        iterator& _getContainerIterFromChainIter(const iterator& wrap) {
-            if(nul(wrap)) return nulOf<iterator>();
-            if(!wrap._step->getType().isSub<elemIteration>()) return nulOf<iterator>();
+        wrd::iter& _getContainerIterFromChainIter(const wrd::iter& wrap) {
+            if(nul(wrap)) return nulOf<wrd::iter>();
+            if(!wrap._step->getType().isSub<elemIteration>()) return nulOf<wrd::iter>();
             elemIteration& cast = (elemIteration&) *wrap._step;
-            if(nul(cast)) return nulOf<iterator>();
+            if(nul(cast)) return nulOf<wrd::iter>();
 
             return cast.getContainerIter();
         }
-        me& _getLastChain();
-        const me& _getLastChain() const WRD_UNCONST_FUNC(_getLastChain())
 
     private:
         tstr<ncontainer> _arr;

@@ -34,7 +34,7 @@ namespace wrd {
         //  set:
         using containable::set;
         using arrContainable::set;
-        wbool set(const iterator& at, const node& new1) override { return _arr.set(at, new1); }
+        wbool set(const wrd::iter& at, const node& new1) override { return _arr.set(at, new1); }
         wbool set(widx n, const node& new1) override { return _arr.set(n, new1); }
 
         //  add:
@@ -46,14 +46,14 @@ namespace wrd {
                 ret = _arr.add(elem);
             return ret;
         }
-        wbool add(const iterator& at, const node& new1) override { return _arr.add(at, new1); }
+        wbool add(const wrd::iter& at, const node& new1) override { return _arr.add(at, new1); }
         wbool add(widx n, const node& new1) override { return _arr.add(n, new1); }
 
         //  del:
         using containable::del;
         wbool del(widx n) override { return _arr.del(n); }
-        wbool del(const iterator& it) override { return _arr.del(it); }
-        wcnt del(const iterator& from, const iterator& to) override { return _arr.del(from, to); }
+        wbool del(const wrd::iter& it) override { return _arr.del(it); }
+        wcnt del(const wrd::iter& from, const wrd::iter& to) override { return _arr.del(from, to); }
 
         //  etc:
         void empty() override { _arr.empty(); }

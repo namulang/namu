@@ -9,7 +9,7 @@ namespace wrd {
     class iteration : public instance, public titerable<instance>, public clonable {
         WRD_INTERFACE(iteration, instance)
         template <typename T>
-        friend class titerator;
+        friend class titer;
 
     public:
         wbool isFrom(const ncontainer& rhs) const override;

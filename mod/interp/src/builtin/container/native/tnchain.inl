@@ -14,49 +14,48 @@ namespace wrd {
     TEMPL
     wcnt ME::len() const {
         wcnt len = 0;
-        /* TODO: container iterator
-        for(auto& container : *this) {
-            len += container.len();
-        }*/
+
+        for(chnIter e=beginChain(); e ;++e)
+            len += e->getContainer().len();
 
         return len;
     }
 
     TEMPL
-    wbool ME::set(const iterator& at, const node& new1) {
-        iterator& containerIter = _getContainerIterFromChainIter(at);
+    wbool ME::set(const wrd::iter& at, const node& new1) {
+        wrd::iter& containerIter = _getContainerIterFromChainIter(at);
 
         return containerIter.getContainer().set(containerIter, new1);
     }
 
     TEMPL
-    wbool ME::add(const iterator& at, const node& new1) {
-        iterator& containerIter = _getContainerIterFromChainIter(at);
+    wbool ME::add(const wrd::iter& at, const node& new1) {
+        wrd::iter& containerIter = _getContainerIterFromChainIter(at);
 
         return containerIter.getContainer().add(containerIter, new1);
     }
 
     TEMPL
-    wbool ME::del(const iterator& at) {
-        iterator& containerIter = _getContainerIterFromChainIter(at);
+    wbool ME::del(const wrd::iter& at) {
+        wrd::iter& containerIter = _getContainerIterFromChainIter(at);
 
         return containerIter.getContainer().del(containerIter);
     }
 
     TEMPL
-    wcnt ME::del(const iterator& from, const iterator& end) {
-        iterator& fromInnerIter = _getContainerIterFromChainIter(from);
+    wcnt ME::del(const wrd::iter& from, const wrd::iter& end) {
+        wrd::iter& fromInnerIter = _getContainerIterFromChainIter(from);
         ncontainer& fromCon = fromInnerIter.getContainer();
-        iterator& endInnerIter = _getContainerIterFromChainIter(end);
+        wrd::iter& endInnerIter = _getContainerIterFromChainIter(end);
         ncontainer& endCon = endInnerIter.getContainer();
         if(endInnerIter.isFrom(fromCon)) return fromCon.del(fromInnerIter, endInnerIter);
 
         wcnt ret = 0;
-        /* TODO: container iterator:
-        each<ncontainer>(from, nulOf<iterator>(), [&](ME& chn, ncontainer& itsCon) {
+        /* TODO: container wrd::iter:
+        each<ncontainer>(from, nulOf<wrd::iter>(), [&](ME& chn, ncontainer& itsCon) {
             wbool isLast = false;
-            iterator    head = &itsCon == &fromCon ? fromInnerIter : itsCon.begin(),
-                    tail = &itsCon == &endCon ? isLast = true, endInnerIter : itsCon.end();
+            wrd::iter    head = &itsCon == &fromCon ? fromInnerIter : itsCon.begin(),
+                        tail = &itsCon == &endCon ? isLast = true, endInnerIter : itsCon.end();
             ret += itsCon.del(head, tail);
             return !isLast;
         });*/
@@ -90,22 +89,11 @@ namespace wrd {
     TEMPL
     void ME::empty() {
         _arr->empty();
-        /* TODO: container iter:
+        /* TODO: container wrd::iter:
         each<ncontainer>([](ME& chn, ncontainer& itsCon) {
             itsCon.empty();
             return true;
         });*/
-    }
-
-    TEMPL
-    ME& ME::_getLastChain() {
-        ME* last = nullptr;
-        /* TODO: container iter:
-        each<ncontainer>([&last](ME& chn, ncontainer& con) {
-            last = &chn;
-            return true;
-        });*/
-        return *last;
     }
 
 #undef ME

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "native/iterator/titerator.hpp"
+#include "native/iter/titer.hpp"
 
 namespace wrd {
 
@@ -9,7 +9,7 @@ namespace wrd {
     template <typename T> class tnarr;
     typedef tnarr<node> narr;
 
-    /// @remark containable has API treating iterator ref and element as its parameter.
+    /// @remark containable has API treating iter ref and element as its parameter.
     class containable {
         WRD_DECL_ME(containable)
 
@@ -25,32 +25,32 @@ namespace wrd {
         narr get(std::function<wbool(const node&)> l) const;
 
         // iter:
-        iterator begin() const { return iter<node>(0); }
-        iterator end() const { return iter<node>(len()); }
-        iterator last() const { return iter<node>(len()-1); }
-        template <typename T> titerator<T> begin() const { return iter<T>(0); }
-        template <typename T> titerator<T> end() const { return iter<T>(len()); }
-        template <typename T> titerator<T> last() const { return iter<T>(len()-1); }
-        template <typename T> titerator<T> iter(wcnt step) const { return titerator<T>(_onMakeIteration(step)); }
-        iterator iter(wcnt step) const { return iter<node>(step); }
-        iterator iter(const node& elem) const {
+        wrd::iter begin() const { return iter<node>(0); }
+        wrd::iter end() const { return iter<node>(len()); }
+        wrd::iter last() const { return iter<node>(len()-1); }
+        template <typename T> titer<T> begin() const { return iter<T>(0); }
+        template <typename T> titer<T> end() const { return iter<T>(len()); }
+        template <typename T> titer<T> last() const { return iter<T>(len()-1); }
+        template <typename T> titer<T> iter(wcnt step) const { return titer<T>(_onMakeIteration(step)); }
+        wrd::iter iter(wcnt step) const { return iter<node>(step); }
+        wrd::iter iter(const node& elem) const {
             return iter<node>(elem);
         }
         template <typename T>
-        titerator<T> iter(const T& it) const {
-            for(titerator<T> e=begin<T>(); e ; ++e)
+        titer<T> iter(const T& it) const {
+            for(titer<T> e=begin<T>(); e ; ++e)
                 if(&e.get() == &it)
-                    return titerator<T>(e);
+                    return titer<T>(e);
 
-            return titerator<T>();
+            return titer<T>();
         }
 
         // set:
-        virtual wbool set(const iterator& at, const node& new1) = 0;
-        wbool set(const iterator& at, const node* new1) { return set(at, *new1); }
+        virtual wbool set(const wrd::iter& at, const node& new1) = 0;
+        wbool set(const wrd::iter& at, const node* new1) { return set(at, *new1); }
 
         // add:
-        virtual wbool add(const iterator& at, const node& new1) = 0;
+        virtual wbool add(const wrd::iter& at, const node& new1) = 0;
         wbool add(std::initializer_list<node*> elems) {
             wbool ret = false;
             for(auto* elem : elems)
@@ -61,9 +61,9 @@ namespace wrd {
         wbool add(const node& new1) {
             return add(end(), new1);
         }
-        wcnt add(const iterator& from, const iterator& to) {
+        wcnt add(const wrd::iter& from, const wrd::iter& to) {
             int ret = 0;
-            for(iterator e=from; e != to ;++e) {
+            for(wrd::iter e=from; e != to ;++e) {
                 if(add(*e)) ret++;
                 return true;
             }
@@ -72,15 +72,15 @@ namespace wrd {
         wcnt add(const containable& rhs) {
             return add(rhs.begin(), rhs.end());
         }
-        wbool add(const iterator& at, const node* new1) { return add(at, *new1); }
+        wbool add(const wrd::iter& at, const node* new1) { return add(at, *new1); }
 
         // del:
         /// delete last element if exists.
         wbool del() { return del(iter(len() - 1)); }
         wbool del(const node* it) { return del(*it); }
         wbool del(const node& it) { return del(iter(it)); }
-        virtual wbool del(const iterator& it) = 0;
-        virtual wcnt del(const iterator& from, const iterator& end) = 0;
+        virtual wbool del(const wrd::iter& it) = 0;
+        virtual wcnt del(const wrd::iter& from, const wrd::iter& end) = 0;
         wcnt del(const containable& rhs) { return del(rhs.begin(), rhs.end()); }
 
         // etc:
