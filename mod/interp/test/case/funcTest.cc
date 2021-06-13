@@ -63,7 +63,7 @@ wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj&
 
     int n = 0;
     WRD_E("fr.len=%d", fr.subs().len());
-    for(wrd::iterator e=fr.subs().begin(); e ;e++)
+    for(iter e=fr.subs().begin(); e ;e++)
         WRD_E(" - func(\"%s\") calls: fr[%d]=%s", func.getName().c_str(), n++, e->getType().getName().c_str());
 
     const nchain& funcScope = fr.subs().cast<nchain>();
@@ -103,7 +103,7 @@ TEST(funcTest, testfuncConstructNewFrame) {
     obj.subs().add(func);
     WRD_E("obj.len=%d", obj.subs().len());
     int n = 0;
-    for(wrd::iterator e=obj.subs().begin(); e ;e++) {
+    for(iter e=obj.subs().begin(); e ;e++) {
         WRD_E(" - fr[%d]=%s", n++, e->getType().getName().c_str());
     }
 
@@ -202,7 +202,7 @@ TEST(funcTest, testfuncHasStrParameter) {
     narr args;
     args.add(obj);
     args.add(new wStr(expectVal));
-    wrd::iterator e = args.iter(1);
+    iter e = args.iter(1);
 
     func1.run(args);
     ASSERT_TRUE(func1.isSuccess());

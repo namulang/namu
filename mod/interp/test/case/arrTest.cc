@@ -120,9 +120,9 @@ TEST(arrTest, testIter) {
     arr.add(new myNode(1));
     arr.add(new myNode(2));
 
-    wrd::iterator e = arr.begin();
-    wrd::iterator head = e++;
-    wrd::iterator index2 = ++e;
+    iter e = arr.begin();
+    iter head = e++;
+    iter index2 = ++e;
 
     EXPECT_TRUE(arr.begin()+2 == index2);
     EXPECT_TRUE(arr.begin() == head);
@@ -136,9 +136,9 @@ TEST(arrTest, testContainableAPI) {
     containable* con = arr;
     ASSERT_EQ(con->len(), 0);
 
-    wrd::iterator head = con->begin();
+    iter head = con->begin();
     ASSERT_TRUE(head.isEnd());
-    wrd::iterator tail = con->end();
+    iter tail = con->end();
     ASSERT_TRUE(tail.isEnd());
 
     ASSERT_TRUE(con->add(con->begin(), new myNode(0)));
@@ -147,7 +147,7 @@ TEST(arrTest, testContainableAPI) {
 
     // add:
     int expectVal = 0;
-    for(wrd::iterator e=con->begin(); e != con->end() ;e++) {
+    for(iter e=con->begin(); e != con->end() ;e++) {
         myNode& elem = e->cast<myNode>();
         ASSERT_FALSE(nul(elem));
         ASSERT_EQ(elem.number, expectVal++);
@@ -161,19 +161,21 @@ TEST(arrTest, testContainableAPI) {
         ASSERT_EQ(elem.number, expectVal++);
     }
 
-    narr tray = arr->get<myNode>([](const myNode& elem) {
-        return true;
-    });
-    ASSERT_EQ(tray.len(), 2);
+    {
+        tnarr<myNode> tray = arr->get<myNode>([](const myNode& elem) {
+            return true;
+        });
+        ASSERT_EQ(tray.len(), 2);
 
-    int cnt = 0;
-    tray = arr->get<myNode>([&cnt](const myNode& elem) {
-        if(cnt++ >= 1) return false;
-        return true;
-    });
-    ASSERT_EQ(tray.len(), 1);
+        int cnt = 0;
+        tray = arr->get<myNode>([&cnt](const myNode& elem) {
+            if(cnt++ >= 1) return false;
+            return true;
+        });
+        ASSERT_EQ(tray.len(), 1);
+    }
 
-    tray = arr->get<myMyNode>([](const myMyNode& elem) {
+    tnarr<myMyNode> tray = arr->get<myMyNode>([](const myMyNode& elem) {
         if(elem.number == 1) return true;
         return false;
     });
@@ -194,7 +196,7 @@ TEST(arrTest, testContainableAPI) {
     ASSERT_EQ(arr2[3].number, 3);
     ASSERT_EQ(arr2.len(), 4);
 
-    titerator<myNode> e = arr2.headT();
+    titer<myNode> e = arr2.begin<myNode>();
     e = e + 2;
     ASSERT_EQ(e->number, 2);
     ASSERT_TRUE(arr2.add(e, new myNode(5)));
@@ -210,7 +212,7 @@ TEST(arrTest, testContainableAPI) {
     ASSERT_EQ(con->len(), 1);
     ASSERT_EQ(con->add(arr2.iter(1), arr2.iter(3)), 2);
     ASSERT_EQ(con->len(), 3);
-    e=arr->headT();
+    e=arr->begin<myNode>();
     myNode* elem = &e->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 0);
@@ -230,7 +232,7 @@ TEST(arrTest, testContainableAPI) {
     ASSERT_TRUE(con->len() == 0);
 
     ASSERT_EQ(con->add(arr2.begin() + 2, arr2.end()), 4);
-    e = arr->headT();
+    e = arr->begin<myNode>();
     elem = &e->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
@@ -248,7 +250,7 @@ TEST(arrTest, testContainableAPI) {
     ASSERT_EQ(elem->number, 3);
 
     ASSERT_EQ(con->del(con->begin() + 1, con->begin() + 3), 2);
-    e = arr->headT();
+    e = arr->begin<myNode>();
     elem = &e->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
