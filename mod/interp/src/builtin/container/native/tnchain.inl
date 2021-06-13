@@ -51,14 +51,12 @@ namespace wrd {
         if(endInnerIter.isFrom(fromCon)) return fromCon.del(fromInnerIter, endInnerIter);
 
         wcnt ret = 0;
-        /* TODO: container wrd::iter:
-        each<ncontainer>(from, nulOf<wrd::iter>(), [&](ME& chn, ncontainer& itsCon) {
-            wbool isLast = false;
-            wrd::iter    head = &itsCon == &fromCon ? fromInnerIter : itsCon.begin(),
-                        tail = &itsCon == &endCon ? isLast = true, endInnerIter : itsCon.end();
+        for(chnIter e=beginChain(); e ;++e) {
+            ncontainer& itsCon = e->getContainer();
+            wrd::iter   head = &itsCon == &fromCon ? fromInnerIter : itsCon.begin(),
+                        tail = &itsCon == &endCon ? endInnerIter : itsCon.end();
             ret += itsCon.del(head, tail);
-            return !isLast;
-        });*/
+        }
 
         return ret;
     }
@@ -88,12 +86,8 @@ namespace wrd {
 
     TEMPL
     void ME::empty() {
-        _arr->empty();
-        /* TODO: container wrd::iter:
-        each<ncontainer>([](ME& chn, ncontainer& itsCon) {
-            itsCon.empty();
-            return true;
-        });*/
+        for(chnIter e=beginChain(); e ;++e)
+            e->getContainer().empty();
     }
 
 #undef ME
