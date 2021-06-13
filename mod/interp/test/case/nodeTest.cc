@@ -98,8 +98,8 @@ TEST(nodeTest, testManuallyMakeNodeStructure) {
     ASSERT_EQ(chnOffunc->len(), 2);
 
     int n=0;
-    for(wrd::iterator e=chnOffunc->begin(); e ;e++)
-        WRD_E("[%d]=%s", n++, e->getType().getName().c_str());
+    for(const auto& elem : *chnOffunc)
+        WRD_E("[%d]=%s", n++, elem.getType().getName().c_str());
 
     WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
     WRD_E("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);

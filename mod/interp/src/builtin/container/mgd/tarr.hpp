@@ -20,8 +20,8 @@ namespace wrd {
 
         // containable:
         //  operator:
-        node& operator[](widx n) override { return _arr[n]; }
-        const node& operator[](widx n) const override { return _arr[n]; }
+        T& operator[](widx n) override { return _arr[n]; }
+        const T& operator[](widx n) const override { return _arr[n]; }
 
         //  len:
         wcnt len() const override { return _arr.len(); }
@@ -81,4 +81,6 @@ namespace wrd {
 
         tnarr<T> _arr;
     };
+
+    typedef tarr<node> arr;
 }

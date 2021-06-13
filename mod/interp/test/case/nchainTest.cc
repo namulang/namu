@@ -40,15 +40,13 @@ void simpleAddDelTest(int cnt) {
     ASSERT_EQ(chn.len(), cnt);
     ASSERT_EQ(chn.len(), cnt);
 
-    wbool isOk = false;
     int index = 0;
     ASSERT_TRUE(nul(chn.getNext()));
-    chn.each<myNode>([&](const wrd::iterator& e, const myNode& elem) {
-        if(&elem != tray[index]) return isOk = false;
-        if(elem.number != index++) return isOk = false;
-        return isOk = true;
-    });
-    ASSERT_TRUE(isOk);
+    for(titer<myNode> e=chn.begin<myNode>(); e ;++e) {
+        const myNode& elem = *e;
+        ASSERT_EQ(&elem, tray[index]);
+        ASSERT_EQ(elem.number, index++);
+    }
 }
 
 TEST(nchainTest, simpleAddDelTest10) {
@@ -73,9 +71,9 @@ TEST(nchainTest, testcontainableAPI) {
     containable* con = &arr.get();
     ASSERT_EQ(con->len(), 0);
 
-    wrd::iterator head = arr->begin();
+    iter head = arr->begin();
     ASSERT_TRUE(head.isEnd());
-    wrd::iterator tail = con->end();
+    iter tail = con->end();
     ASSERT_TRUE(tail.isEnd());
 
     ASSERT_TRUE(con->add(con->begin(), new myNode(0)));
@@ -89,27 +87,29 @@ TEST(nchainTest, testcontainableAPI) {
 
     //  add:
     int expectVal = 0;
-    for(wrd::iterator e=con->begin(); e != con->end() ;e++) {
+    for(iter e=con->begin(); e != con->end() ;e++) {
         myNode& elem = e->cast<myNode>();
         ASSERT_FALSE(nul(elem));
         ASSERT_EQ(elem.number, expectVal++);
     }
 
     //  get & each:
-    narr tray = arr->get<myNode>([](const myNode& elem) {
-        return true;
-    });
-    ASSERT_EQ(tray.len(), 2);
+    {
+        tnarr<myNode> tray = arr->get<myNode>([](const myNode& elem) {
+            return true;
+        });
+        ASSERT_EQ(tray.len(), 2);
 
-    int cnt = 0;
-    tray = arr->get<myNode>([&cnt](const myNode& elem) {
-        if(cnt >= 1) return false;
-        cnt++;
-        return true;
-    });
-    ASSERT_EQ(tray.len(), 1);
+        int cnt = 0;
+        tray = arr->get<myNode>([&cnt](const myNode& elem) {
+            if(cnt >= 1) return false;
+            cnt++;
+            return true;
+        });
+        ASSERT_EQ(tray.len(), 1);
+    }
 
-    tray = arr->get<myMyNode>([](const myMyNode& elem) {
+    tnarr<myMyNode> tray = arr->get<myMyNode>([](const myMyNode& elem) {
         if(elem.number == 1) return true;
         return false;
     });
@@ -130,7 +130,7 @@ TEST(nchainTest, testcontainableAPI) {
     ASSERT_EQ(arr2[3].cast<myNode>().number, 3);
     ASSERT_EQ(arr2.len(), 4);
 
-    wrd::iterator e = arr2.begin();
+    iter e = arr2.begin();
     e = e + 2;
     ASSERT_EQ(e->cast<myNode>().number, 2);
     ASSERT_TRUE(arr2.add(e, new myNode(5)));
@@ -217,7 +217,7 @@ TEST(nchainTest, testLinkedChainWithOnly1Element) {
     ASSERT_EQ(chn2.len(), 2);
 
     int n=0;
-    for(wrd::iterator e=chn2.begin(); e ;e++)
+    for(iter e=chn2.begin(); e ;e++)
         n++;
     ASSERT_EQ(n, 2);
 }
@@ -263,7 +263,7 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
     ASSERT_EQ(chn1.len(), 6);
 
     // add with link:
-    wrd::iterator e = chn1.begin();
+    iter e = chn1.begin();
     myNode* mynode = &(e++)->cast<myNode>();
     ASSERT_FALSE(nul(mynode));
     ASSERT_EQ(mynode->number, 0);
@@ -290,22 +290,23 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
 
     // each with link:
     int cnt = 0;
-    auto lambda = [&cnt, &expectElementNums](const wrd::iterator& e, const myNode& elem) {
-        if(nul(elem)) return cnt = -1, false;
-
-        if(elem.number != expectElementNums[cnt++]) return cnt = -1, false;
-        return true;
+    auto lambda = [&cnt, &expectElementNums](const ncontainer& chn) -> void {
+        for(titer<myNode> e=chn.begin<myNode>() ; e ;++e) {
+            const myNode& elem = *e;
+            ASSERT_FALSE(nul(elem));
+            ASSERT_EQ(elem.number, expectElementNums[cnt++]);
+        }
     };
-    chn1.each<myNode>(lambda);
+    lambda(chn1);
     ASSERT_EQ(cnt, 6);
 
     cnt = 2;
-    chn2.each<myNode>(lambda);
+    lambda(chn2);
     ASSERT_EQ(cnt, 6);
 
     cnt = 4;
     expectElementNums[5] = -1;
-    chn3.each<myNode>(lambda);
+    lambda(chn3);
     ASSERT_EQ(cnt, -1);
 
     // del with link:
@@ -420,9 +421,8 @@ TEST(nchainTest, testLastIterator) {
 
     wint checker = 0;
     wbool sorted = true;
-    chn.each<myNode>([&](const wrd::iterator& e, const myNode& elem) {
-        return sorted = (elem.number == ++checker);
-    });
+    for(titer<myNode> e=chn.begin<myNode>(); e ; ++e)
+        ASSERT_EQ(e->number, ++checker);
     ASSERT_TRUE(sorted);
 }
 
@@ -449,7 +449,7 @@ TEST(nchainTest, testRangeBasedForLoop) {
     ASSERT_EQ(sum2, sum);
 
     int expect = 0;
-    for(wrd::iterator e=arr1.begin(); e ; e++)
+    for(iter e=arr1.begin(); e ; e++)
         expect += e->cast<myNode>().number;
 
     ASSERT_EQ(sum, expect);
