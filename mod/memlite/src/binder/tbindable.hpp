@@ -11,7 +11,7 @@ namespace wrd {
 
     public:
         //  tbindable:
-        operator wbool() const;
+        explicit operator wbool() const;
 
         virtual wbool bind(const T& it) {
             if(nul(it)) return false;

@@ -11,7 +11,6 @@ namespace wrd {
     }
 
     wbool me::bind(binder& me, const instance& it) {
-        unbind(me);
         //  regardless of result from _onStrong binder can bind:
         //      there are two reasons:
         //          because Block has equal lifecycle to what it bind, if there is
