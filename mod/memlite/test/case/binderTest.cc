@@ -199,3 +199,16 @@ TEST(bindTest, WeakBindButInstanceGoneTest) {
     ASSERT_FALSE(weakA.isBind());
     ASSERT_TRUE(nul(*weakA));
 }
+
+TEST(bindTest, bindNullShouldUnbindPrevious) {
+    tstr<A> strA(new A(18));
+    ASSERT_TRUE(strA);
+    ASSERT_EQ(strA->age, 18);
+
+    strA.bind(new A(22));
+    ASSERT_TRUE(strA);
+    ASSERT_EQ(strA->age, 22);
+
+    strA.bind(nullptr);
+    ASSERT_FALSE(strA.isBind());
+}

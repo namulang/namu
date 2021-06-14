@@ -34,6 +34,7 @@ namespace wrd {
     const type& me::getType() const { return *_type; }
 
     wbool me::bind(const instance& it) {
+        unbind();
         if(!tbindable<instance>::bind(it)) return false;
 
         return _tactic->bind(*this, it);
