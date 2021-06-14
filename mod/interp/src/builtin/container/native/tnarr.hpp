@@ -50,15 +50,12 @@ namespace wrd {
                 return _own.get(_n);
             }
             ncontainer& getContainer() override { return _own; }
+            const ncontainer& getContainer() const WRD_UNCONST_FUNC(getContainer())
 
         protected:
             wbool _onSame(const typeProvidable& rhs) const override {
-                if(!super::_onSame(rhs)) return false;
-
                 const me& cast = (const me&) rhs;
-                if(nul(cast)) return false;
-
-                return _n == cast._n;
+                return isFrom(cast.getContainer()) && _n == cast._n;
             }
 
         private:

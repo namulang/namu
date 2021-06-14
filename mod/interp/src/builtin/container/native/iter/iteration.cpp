@@ -8,9 +8,4 @@ namespace wrd {
     wbool me::isFrom(const ncontainer& rhs) const {
         return &getContainer() == &rhs;
     }
-
-    wbool me::_onSame(const typeProvidable& rhs) const {
-        const me& cast = (const me&) rhs;
-        return isFrom(cast.getContainer());
-    }
 }

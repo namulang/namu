@@ -6,6 +6,7 @@ namespace wrd {
 
     public:
         wbool operator==(const me& rhs) const {
+            if(nul(rhs)) return false;
             if(getType() != rhs.getType()) return false;
 
             return _onSame(rhs);
