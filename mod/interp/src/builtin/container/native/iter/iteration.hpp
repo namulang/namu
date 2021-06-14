@@ -14,7 +14,5 @@ namespace wrd {
     public:
         wbool isFrom(const ncontainer& rhs) const override;
 
-    protected:
-        wbool _onSame(const typeProvidable& rhs) const override;
     };
 }
