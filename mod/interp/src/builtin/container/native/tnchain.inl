@@ -72,9 +72,9 @@ namespace wrd {
 
     TEMPL
     wbool ME::link(const ME& new1) {
-        if(nul(new1) || nul(new1.getContainer())) return tstr<ME>();
+        if(nul(new1) || nul(new1.getContainer())) return false;
         if(&new1.getContainer() == &getContainer())
-            return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), tstr<ME>();
+            return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), false;
 
         return _next.bind(new1);
     }
