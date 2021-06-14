@@ -77,7 +77,9 @@ namespace wrd {
         }
 
     protected:
-        iteration* _onMakeIteration(wcnt step) const override { /*TODO:*/ return nullptr; }
+        iteration* _onMakeIteration(wcnt step) const override {
+            return _arr._onMakeIteration(step);
+        }
 
         tnarr<T> _arr;
     };

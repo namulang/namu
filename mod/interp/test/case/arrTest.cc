@@ -202,12 +202,12 @@ TEST(arrTest, testContainableAPI) {
     ASSERT_TRUE(arr2.add(e, new myNode(5)));
     ASSERT_TRUE(arr2.add(2, new myNode(6)));
 
-    ASSERT_EQ(arr2[0].cast<myNode>().number, 0);
+    ASSERT_EQ(arr2[0].number, 0);
     ASSERT_EQ(arr2[1].cast<myNode>().number, 1);
-    ASSERT_EQ(arr2[2].cast<myNode>().number, 6);
+    ASSERT_EQ(arr2[2].number, 6);
     ASSERT_EQ(arr2[3].cast<myNode>().number, 5);
-    ASSERT_EQ(arr2[4].cast<myNode>().number, 2);
-    ASSERT_EQ(arr2[5].cast<myNode>().number, 3);
+    ASSERT_EQ(arr2[4].number, 2);
+    ASSERT_EQ(arr2[5].number, 3);
 
     ASSERT_EQ(con->len(), 1);
     ASSERT_EQ(con->add(arr2.iter(1), arr2.iter(3)), 2);

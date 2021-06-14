@@ -40,7 +40,7 @@ namespace wrd {
         T* operator->() { return &get(); }
         const T& operator*() const WRD_UNCONST_FUNC(operator*())
         const T* operator->() const WRD_UNCONST_FUNC(operator->())
-        operator wbool() const { return !isEnd(); }
+        explicit operator wbool() const { return !isEnd(); }
 
         wbool isFrom(const ncontainer& it) const override {
             if(!_step) return false;

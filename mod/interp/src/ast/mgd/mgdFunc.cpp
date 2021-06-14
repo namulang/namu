@@ -19,7 +19,8 @@ namespace wrd {
     wbool me::_onOutFrame(frame& fr, const ncontainer& args) {
         WRD_DI("%s._onOutFrame()", getName().c_str());
 
-        return fr.del();
+        fr.del();
+        return true;
     }
 
     str me::_onCast(narr& castedArgs) {
