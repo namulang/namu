@@ -35,48 +35,48 @@ namespace  {
 TEST(arrSpeedTest, testBenchmark) {
     int clc = 0;
     myObj obj1;
-    benchMark("create narr 100000 times", 100000, [&clc]() {
+    benchMark("create narr 10000 times", 10000, [&clc]() {
         narr ar;
         clc += ((int64_t) &ar) % 2;
     });
-    benchMark("create arr 100000 times", 100000, [&clc]() {
+    benchMark("create arr 10000 times", 10000, [&clc]() {
         arr ar;
         clc += ((int64_t) &ar) % 2;
     });
 
-    benchMark("create vector 100000 times", 100000, [&clc]() {
+    benchMark("create vector 10000 times", 10000, [&clc]() {
         vector<node> ar;
         clc += ((int64_t) &ar) % 2;
     });
 
-    benchMark("create obj 100000 times", 100000, [&clc]() {
+    benchMark("create obj 10000 times", 10000, [&clc]() {
         myObj ar;
         clc += ((int64_t) &ar) % 2;
     });
 
-    benchMark("create nchain 100000 times", 100000, [&clc]() {
+    benchMark("create nchain 10000 times", 10000, [&clc]() {
         nchain ar;
         clc += ((int64_t) &ar) % 2;
     });
 
-    benchMark("add narr 100000 times", 100000, [&]() {
+    benchMark("add narr 10000 times", 10000, [&]() {
         narr ar;
         ar.add(obj1);
         clc += ((int64_t) &ar) % 2;
     });
-    benchMark("add arr 100000 times", 100000, [&]() {
+    benchMark("add arr 10000 times", 10000, [&]() {
         arr ar;
         ar.add(obj1);
         clc += ((int64_t) &ar) % 2;
     });
 
-    benchMark("add vector 100000 times", 100000, [&]() {
+    benchMark("add vector 10000 times", 10000, [&]() {
         vector<str> ar;
         ar.push_back(str(obj1));
         clc += ((int64_t) &ar) % 2;
     });
 
-    benchMark("add nchain 100000 times", 100000, [&]() {
+    benchMark("add nchain 10000 times", 10000, [&]() {
         nchain ar;
         ar.add(obj1);
         clc += ((int64_t) &ar) % 2;
