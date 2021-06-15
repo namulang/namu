@@ -24,10 +24,26 @@ namespace wrd {
                 }
 
             wbool isEnd() const override {
-                return !_iter;
+                return !_ownIter || !_iter;
             }
 
             wcnt next(wcnt step) override {
+                wcnt remain = step;
+
+                // if _ownIter was invalidated then _iter too.
+                while(remain > 0) {
+                    remain -= _iter.next(step);
+                    if(remain <= 0) break;
+
+                    // _iter moved to 'End' state now.
+                    _ownIter = _ownIter->_next;
+                    if(!_ownIter) break;
+                    _iter = _ownIter->_arr->begin();
+                    if(_iter) remain--;
+                }
+
+                return step - remain;
+                /*
                 if(step <= 0) return 0;
                 wcnt stepped = _iter.next(step),
                      remain = step - stepped;
@@ -39,11 +55,11 @@ namespace wrd {
                 _iter = _ownIter->_arr->begin();
                 remain--;
                 return stepped + next(remain);
+                */
             }
 
-            ncontainer& getContainer() override {
-                return _iter->cast<ncontainer>();
-            }
+            ncontainer& getContainer() override { return _ownIter->template cast<ncontainer>(); }
+            const ncontainer& getContainer() const WRD_UNCONST_FUNC(getContainer())
 
             instance& get() override {
                 return *_iter;
@@ -53,11 +69,7 @@ namespace wrd {
 
         protected:
             wbool _onSame(const typeProvidable& rhs) const override {
-                if(!super::_onSame(rhs)) return false;
-
                 const me& cast = (const me&) rhs;
-                if(nul(cast)) return false;
-
                 return _iter == cast._iter;
             }
 
