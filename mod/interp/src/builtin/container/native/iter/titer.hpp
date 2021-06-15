@@ -59,6 +59,12 @@ namespace wrd {
 
         using titerable<T>::get;
         T& get() override;
+
+        template <typename E>
+        E& get() {
+            return get().template cast<E>();
+        }
+
         ncontainer& getContainer() override {
             if(!_step) return nulOf<ncontainer>();
             return _step->getContainer();

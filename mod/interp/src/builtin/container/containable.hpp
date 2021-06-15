@@ -26,8 +26,8 @@ namespace wrd {
 
         // iter:
         wrd::iter begin() const { return iter<node>(0); }
-        wrd::iter end() const { return iter<node>(len()); }
-        wrd::iter last() const { return iter<node>(len()-1); }
+        virtual wrd::iter end() const { return iter<node>(len()); }
+        virtual wrd::iter last() const { return iter<node>(len()-1); }
         template <typename T> titer<T> begin() const { return iter<T>(0); }
         template <typename T> titer<T> end() const { return iter<T>(len()); }
         template <typename T> titer<T> last() const { return iter<T>(len()-1); }
@@ -63,10 +63,9 @@ namespace wrd {
         }
         wcnt add(const wrd::iter& from, const wrd::iter& to) {
             int ret = 0;
-            for(wrd::iter e=from; e != to ;++e) {
-                if(add(*e)) ret++;
-                return true;
-            }
+            for(wrd::iter e=from; e != to ;++e)
+                if(add(*e))
+                    ret++;
             return ret;
         }
         wcnt add(const containable& rhs) {

@@ -27,7 +27,7 @@ namespace wrd {
         }
         const me& operator[](widx n) const WRD_UNCONST_FUNC(operator[](n))
 
-        operator wbool() const {
+        explicit operator wbool() const {
             return isExist();
         }
 

@@ -195,9 +195,9 @@ TEST(narrTest, testcontainableAPI) {
     ASSERT_EQ(arr2[3].number, 3);
     ASSERT_EQ(arr2.len(), 4);
 
-    titer<myNode> e = arr2.begin<myNode>();
+    iter e = arr2.begin();
     e = e + 2;
-    ASSERT_EQ(e->number, 2);
+    ASSERT_EQ(e.get<myNode>().number, 2);
     ASSERT_TRUE(arr2.add(e, new myNode(5)));
     ASSERT_TRUE(arr2.add(2, new myNode(6)));
 
@@ -211,50 +211,50 @@ TEST(narrTest, testcontainableAPI) {
     ASSERT_EQ(con->len(), 1);
     ASSERT_EQ(con->add(arr2.iter(1), arr2.iter(3)), 2);
     ASSERT_EQ(con->len(), 3);
-    e=arr->begin<myNode>();
-    myNode* elem = &e->cast<myNode>();
+    titer<myNode> e2=arr->begin<myNode>();
+    myNode* elem = &e2->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 0);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 1);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
 
-    ASSERT_FALSE(++e);
+    ASSERT_FALSE(++e2);
 
     ASSERT_TRUE(con->len() > 0);
     con->empty();
     ASSERT_TRUE(con->len() == 0);
 
     ASSERT_EQ(con->add(arr2.begin() + 2, arr2.end()), 4);
-    e = arr->begin<myNode>();
-    elem = &e->cast<myNode>();
+    e2 = arr->begin<myNode>();
+    elem = &e2->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 5);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 2);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 
     ASSERT_EQ(con->del(con->begin() + 1, con->begin() + 3), 2);
-    e = arr->begin<myNode>();
-    elem = &e->cast<myNode>();
+    e2 = arr->begin<myNode>();
+    elem = &e2->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 

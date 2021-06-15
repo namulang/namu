@@ -146,6 +146,9 @@ TEST(nchainTest, testcontainableAPI) {
     ASSERT_EQ(con->len(), 1);
     ASSERT_EQ(con->add(arr2.iter(1), arr2.iter(3)), 2);
     ASSERT_EQ(con->len(), 3);
+
+    // con = {0, 1, 6}
+
     e=con->begin();
     myNode* elem = &e->cast<myNode>();
     ASSERT_FALSE(nul(elem));
