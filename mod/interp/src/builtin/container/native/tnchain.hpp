@@ -32,7 +32,7 @@ namespace wrd {
 
                 // if _ownIter was invalidated then _iter too.
                 while(remain > 0) {
-                    remain -= _iter.next(step);
+                    remain -= _iter.next(remain);
                     if(remain <= 0) break;
 
                     // _iter moved to 'End' state now.
@@ -43,19 +43,6 @@ namespace wrd {
                 }
 
                 return step - remain;
-                /*
-                if(step <= 0) return 0;
-                wcnt stepped = _iter.next(step),
-                     remain = step - stepped;
-                if(remain == 0) return stepped;
-
-                // arr iteration has reached to tail of the arr:
-                _ownIter = _ownIter->_next;
-                if(!_ownIter) return stepped;
-                _iter = _ownIter->_arr->begin();
-                remain--;
-                return stepped + next(remain);
-                */
             }
 
             ncontainer& getContainer() override { return _ownIter->template cast<ncontainer>(); }
@@ -70,7 +57,8 @@ namespace wrd {
         protected:
             wbool _onSame(const typeProvidable& rhs) const override {
                 const me& cast = (const me&) rhs;
-                return _iter == cast._iter;
+                return  (isEnd() && cast.isEnd()) ||
+                        _iter == cast._iter;
             }
 
         private:
@@ -115,7 +103,8 @@ namespace wrd {
                 if(!super::_onSame(rhs)) return false;
 
                 const me& trg = (const me&) rhs;
-                return _chn == trg._chn;
+                return  (isEnd() && trg.isEnd()) ||
+                        _chn == trg._chn;
             }
 
         private:
@@ -136,18 +125,19 @@ namespace wrd {
         chnIter endChain() const {
             return chnIter(new chnIteration());
         }
-        titer<me> lastChain() const {
+        chnIter lastChain() const {
             me* last = nullptr;
             for(chnIter e=beginChain(); e ; ++e)
                 last = &e.get();
 
             return chnIter(new chnIteration(*last));
         }
-        titer<me> iterChain(wcnt step) const {
-            titer<me> ret(new chnIteration(*this));
+        chnIter iterChain(wcnt step) const {
+            chnIter ret = _iterChain(*this);
             ret.next(step);
             return ret;
         }
+
 
         // set:
         using super::set;
@@ -195,8 +185,12 @@ namespace wrd {
             return ret;
         }
 
+        chnIter _iterChain(const me& start) const {
+            return chnIter(new chnIteration(start));
+        }
+
     private:
-        wrd::iter& _getContainerIterFromChainIter(const wrd::iter& wrap) {
+        wrd::iter& _getArrIterFromChainIter(const wrd::iter& wrap) {
             if(nul(wrap)) return nulOf<wrd::iter>();
             if(!wrap._step->getType().isSub<elemIteration>()) return nulOf<wrd::iter>();
             elemIteration& cast = (elemIteration&) *wrap._step;

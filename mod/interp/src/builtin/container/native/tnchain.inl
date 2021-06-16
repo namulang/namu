@@ -23,40 +23,40 @@ namespace wrd {
 
     TEMPL
     wbool ME::set(const wrd::iter& at, const node& new1) {
-        wrd::iter& containerIter = _getContainerIterFromChainIter(at);
+        wrd::iter& containerIter = _getArrIterFromChainIter(at);
 
         return containerIter.getContainer().set(containerIter, new1);
     }
 
     TEMPL
     wbool ME::add(const wrd::iter& at, const node& new1) {
-        wrd::iter& containerIter = _getContainerIterFromChainIter(at);
+        wrd::iter& containerIter = _getArrIterFromChainIter(at);
 
         return containerIter.getContainer().add(containerIter, new1);
     }
 
     TEMPL
     wbool ME::del(const wrd::iter& at) {
-        wrd::iter& containerIter = _getContainerIterFromChainIter(at);
+        wrd::iter& containerIter = _getArrIterFromChainIter(at);
 
         return containerIter.getContainer().del(containerIter);
     }
 
     TEMPL
     wcnt ME::del(const wrd::iter& from, const wrd::iter& end) {
-        wrd::iter& fromInnerIter = _getContainerIterFromChainIter(from);
-        ncontainer& fromCon = fromInnerIter.getContainer();
-        wrd::iter& endInnerIter = _getContainerIterFromChainIter(end);
-        ncontainer& endCon = endInnerIter.getContainer();
-        if(endInnerIter.isFrom(fromCon)) return fromCon.del(fromInnerIter, endInnerIter);
+        const me& fromChain = from.getContainer().cast<me>();
+        const me& endChain = end.getContainer().cast<me>();
 
+        chnIter e = _iterChain(fromChain);
         wcnt ret = 0;
-        for(chnIter e=beginChain(); e ;++e) {
-            ncontainer& itsCon = e->getContainer();
-            wrd::iter   head = &itsCon == &fromCon ? fromInnerIter : itsCon.begin(),
-                        tail = &itsCon == &endCon ? endInnerIter : itsCon.end();
-            ret += itsCon.del(head, tail);
-        }
+        do {
+            me& eChain = *e;
+            ncontainer& eArr = eChain.getContainer();
+            wrd::iter   arrBegin = &eChain == &fromChain ? _getArrIterFromChainIter(from) : eArr.begin(),
+                        arrEnd = &eChain == &endChain ? _getArrIterFromChainIter(end) : eArr.end();
+
+            ret += eArr.del(arrBegin, arrEnd);
+        } while(&(e++).get() != &endChain);
 
         return ret;
     }
