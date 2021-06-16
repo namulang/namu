@@ -28,22 +28,19 @@ namespace wrd {
             /// which means to the End of a buffer.
             /// however, this step wasn't regarded to a step even though it proceeds.
             wcnt next(wcnt step) override {
-                //  pre:
                 if(step <= 0) return 0;
+                if(isEnd()) return 0;
 
-                widx lastN = _own.len()-1;
-                if(_n >= lastN) {
-                    _n = lastN + 1;
-                    return 0;
+                int len = _own.len(),
+                    lastN = len - 1;
+                int toLast = lastN - _n;
+
+                _n += step;
+                if(_n > lastN) {
+                    _n = len;
+                    step = toLast;
                 }
-
-                //  post:
-                widx newN = _n + step;
-                widx availableN = newN > lastN ? lastN : newN;
-                wcnt toStep = availableN - _n;
-
-                _n += toStep;
-                return toStep;
+                return step;
             }
             instance& get() override {
                 if(isEnd()) return nulOf<instance>();

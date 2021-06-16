@@ -296,8 +296,15 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
     auto lambda = [&cnt, &expectElementNums](const ncontainer& chn) -> void {
         for(titer<myNode> e=chn.begin<myNode>() ; e ;++e) {
             const myNode& elem = *e;
-            ASSERT_FALSE(nul(elem));
-            ASSERT_EQ(elem.number, expectElementNums[cnt++]);
+            if(nul(elem)) {
+                cnt = -1;
+                return;
+            }
+
+            if(elem.number != expectElementNums[cnt++]) {
+                cnt = -1;
+                return;
+            }
         }
     };
     lambda(chn1);
@@ -408,7 +415,11 @@ TEST(nchainTest, testDelWithLink) {
         ASSERT_FALSE(arr2Weak.isBind());
         ASSERT_EQ(chn.len(), 1 + arr1.len());
 
-        myNode& last = chn.iter(chn.len() - 1)->cast<myNode>();
+        WRD_DI("chn.len()=%d", chn.len());
+        iter e = chn.iter(chn.len() - 1);
+        node& n = *e;
+
+        myNode& last = e->cast<myNode>();
         ASSERT_EQ(last.number, 3);
     }
     chn.unlink();
