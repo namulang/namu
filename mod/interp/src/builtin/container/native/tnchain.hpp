@@ -115,10 +115,14 @@ namespace wrd {
 
     public:
         tnchain();
-        explicit tnchain(const ncontainer& con): _arr(con) {}
+        template <typename E>
+        explicit tnchain(const tnarr<E>& arr): _arr(arr) {}
+        template <typename E>
+        explicit tnchain(const tnarr<E>* arr): _arr(arr) {}
 
         // len:
         wcnt len() const override;
+        wcnt chainLen() const;
 
         // iter:
         chnIter beginChain() const { return iterChain(0); }
@@ -171,9 +175,63 @@ namespace wrd {
         ///         only this object will be deep cloned. cloned instance has the same linkage like
         ///         which the original chain object has.
         tstr<instance> deepClone() const override {
-            me* ret = new me(getContainer().deepClone()->template cast<ncontainer>());
+            me* ret = wrap(getContainer().deepClone()->template cast<ncontainer>());
             ret->link(getNext());
             return tstr<instance>(ret);
+        }
+
+        /// wrap given container as the same level to this chain.
+        /// @param toShallowWrap
+        ///        if this is a chain, then the wrap func returns it as it is.
+        ///        if this is any container except chain, then it returns after
+        ///        wrapping given container.
+        template <typename E>
+        static tnchain<E>* wrap(const ncontainer& toShallowWrap) {
+            typedef tnchain<E> O;
+
+            O* ret = const_cast<O*>(&toShallowWrap.cast<O>());
+            if(!ret) {
+                ret = new O();
+                ret->_arr.bind(toShallowWrap);
+            }
+
+            return ret;
+        }
+
+        template <typename E>
+        static tnchain<E>* wrap(const ncontainer* toShallowWrap) {
+            return wrap<E>(*toShallowWrap);
+        }
+
+        static me* wrap(const ncontainer& toShallowWrap) {
+            return wrap<T>(toShallowWrap);
+        }
+
+        static me* wrap(const ncontainer* toShallowWrap) {
+            return wrap<T>(*toShallowWrap);
+        }
+
+        /// wrap given container no matter what it is.
+        template <typename E>
+        static tnchain<E>* wrapDeep(const ncontainer& toDeepWrap) {
+            tnchain<E>* innerChn = wrap(toDeepWrap);
+
+            tnchain<E>* ret = new tnchain<E>();
+            ret->_arr.bind(innerChn);
+            return ret;
+        }
+
+        template <typename E>
+        static tnchain<E>* wrapDeep(const ncontainer* toDeepWrap) {
+            return wrapDeep(*toDeepWrap);
+        }
+
+        static me* wrapDeep(const ncontainer& toDeepWrap) {
+            return wrap<T>(toDeepWrap);
+        }
+
+        static me* wrapDeep(const ncontainer* toDeepWrap) {
+            return wrap<T>(*toDeepWrap);
         }
 
     protected:
@@ -190,10 +248,10 @@ namespace wrd {
         }
 
     private:
-        wrd::iter& _getArrIterFromChainIter(const wrd::iter& wrap) {
-            if(nul(wrap)) return nulOf<wrd::iter>();
-            if(!wrap._step->getType().isSub<elemIteration>()) return nulOf<wrd::iter>();
-            elemIteration& cast = (elemIteration&) *wrap._step;
+        wrd::iter& _getArrIterFromChainIter(const wrd::iter& wrapper) {
+            if(nul(wrapper)) return nulOf<wrd::iter>();
+            if(!wrapper._step->getType().isSub<elemIteration>()) return nulOf<wrd::iter>();
+            elemIteration& cast = (elemIteration&) *wrapper._step;
             if(nul(cast)) return nulOf<wrd::iter>();
 
             return cast.getContainerIter();

@@ -13,11 +13,7 @@ namespace wrd {
         }
 
         wbool add(ncontainer& con) {
-            nchain* chn = &con.cast<nchain>();
-            if(nul(chn))
-                chn = new nchain(con);
-
-            return add(*chn);
+            return add(*nchain::wrap(con));
         }
 
         wbool add(nchain& new1) {

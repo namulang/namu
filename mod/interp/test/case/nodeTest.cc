@@ -85,7 +85,7 @@ TEST(nodeTest, testManuallyMakeNodeStructure) {
     // when:
     frameEmulator.bind(obj.subs());
     //  push another:
-    nchain* chnOffunc = new nchain(func.subs());
+    nchain* chnOffunc = nchain::wrap(func.subs());
     chnOffunc->link(*frameEmulator);
     frameEmulator.bind(*chnOffunc);
 
