@@ -22,6 +22,15 @@ namespace wrd {
     }
 
     TEMPL
+    wcnt ME::chainLen() const {
+        wcnt len = 0;
+        for(chnIter e = beginChain(); e ;++e)
+            len++;
+
+        return len;
+    }
+
+    TEMPL
     wbool ME::set(const wrd::iter& at, const node& new1) {
         wrd::iter& containerIter = _getArrIterFromChainIter(at);
 
@@ -65,7 +74,7 @@ namespace wrd {
     tstr<ME> ME::link(const ncontainer& new1) {
         if(nul(new1)) return tstr<ME>();
 
-        ME& ret = new1.getType().isSub<ME>() ? (ME&) new1 : *new ME(new1);
+        ME& ret = *wrap(new1);
         link(ret);
         return tstr<ME>(ret);
     }
