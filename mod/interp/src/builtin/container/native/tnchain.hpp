@@ -185,53 +185,31 @@ namespace wrd {
         ///        if this is a chain, then the wrap func returns it as it is.
         ///        if this is any container except chain, then it returns after
         ///        wrapping given container.
-        template <typename E>
-        static tnchain<E>* wrap(const ncontainer& toShallowWrap) {
-            typedef tnchain<E> O;
-
-            O* ret = const_cast<O*>(&toShallowWrap.cast<O>());
+        static me* wrap(const ncontainer& toShallowWrap) {
+            me* ret = const_cast<me*>(&toShallowWrap.cast<me>());
             if(!ret) {
-                ret = new O();
+                ret = new me();
                 ret->_arr.bind(toShallowWrap);
             }
 
             return ret;
         }
 
-        template <typename E>
-        static tnchain<E>* wrap(const ncontainer* toShallowWrap) {
-            return wrap<E>(*toShallowWrap);
-        }
-
-        static me* wrap(const ncontainer& toShallowWrap) {
-            return wrap<T>(toShallowWrap);
-        }
-
         static me* wrap(const ncontainer* toShallowWrap) {
-            return wrap<T>(*toShallowWrap);
+            return wrap(*toShallowWrap);
         }
 
         /// wrap given container no matter what it is.
-        template <typename E>
-        static tnchain<E>* wrapDeep(const ncontainer& toDeepWrap) {
-            tnchain<E>* innerChn = wrap(toDeepWrap);
+        static me* wrapDeep(const ncontainer& toDeepWrap) {
+            me* innerChn = wrap(toDeepWrap);
 
-            tnchain<E>* ret = new tnchain<E>();
+            me* ret = new me();
             ret->_arr.bind(innerChn);
             return ret;
         }
 
-        template <typename E>
-        static tnchain<E>* wrapDeep(const ncontainer* toDeepWrap) {
-            return wrapDeep(*toDeepWrap);
-        }
-
-        static me* wrapDeep(const ncontainer& toDeepWrap) {
-            return wrap<T>(toDeepWrap);
-        }
-
         static me* wrapDeep(const ncontainer* toDeepWrap) {
-            return wrap<T>(*toDeepWrap);
+            return wrapDeep(*toDeepWrap);
         }
 
     protected:
