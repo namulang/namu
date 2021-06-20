@@ -499,3 +499,36 @@ TEST(nchainTest, testLinkArrayAndChain) {
         ASSERT_EQ(cast.number, expect[n++]);
     }
 }
+
+TEST(nchainTest, testDeepChainIteration) {
+    tnchain<myNode> chn1;
+    chn1.add(new myNode(1));
+    chn1.add(new myNode(2));
+    ASSERT_EQ(chn1.len(), 2);
+
+    tnchain<myNode> chn2;
+    chn2.add(new myNode(3));
+    chn2.add(new myNode(4));
+    ASSERT_EQ(chn2.len(), 2);
+
+    tstr<tnchain<myNode>> root(tnchain<myNode>::wrapDeep(chn1));
+    ASSERT_EQ(root->len(), 2);
+
+    chn1.link(chn2);
+    ASSERT_EQ(chn1.len(), 4);
+    ASSERT_EQ(root->len(), 4);
+
+    tnchain<myNode> chn3;
+    chn3.add(new myNode(5));
+    chn3.add(new myNode(6));
+    ASSERT_EQ(chn3.len(), 2);
+
+    root->link(chn3);
+    ASSERT_EQ(root->len(), 6);
+
+    int expect = 1;
+    for(const node& e : *root) {
+        ASSERT_EQ(expect, e.cast<myNode>().number);
+        expect++;
+    }
+}
