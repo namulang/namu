@@ -23,10 +23,8 @@ namespace wrd {
             return res;
         }
 
-        if(!it.isHeap()) {
-            WRD_DW("it is local variable. couldn't bind it strongly.");
+        if(!it.isHeap())
             return true;
-        }
 
         //  처음에 instance가 instancer에 생성되었을때는 strong==0 이며,
         //  StrongBinder가 붙지 않는다면 그대로 계속 메모리상주하게 된다.
