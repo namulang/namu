@@ -11,15 +11,7 @@ namespace wrd {
     TEMPL
     T& ME::get() {
         if(!_step) return nulOf<T>();
-
-        while(!isEnd()) {
-            T& ret = _step->get().cast<T>();
-            if(!nul(ret)) return ret;
-
-            next(1);
-        }
-
-        return nulOf<T>();
+        return _step->get().cast<T>();
     }
 
 
