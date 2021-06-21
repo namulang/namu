@@ -19,6 +19,19 @@ namespace wrd {
 
         template <typename T>
         T& cast() {
+            // this protection:
+            //  this c wrd interpreter uses references in default, and not any pointers.
+            //  so you always care about a refer can be nulled.
+            //  for a convenience of our API users I put this guard.
+            //
+            //  please note that checking whether thisptr is null isn't recommended in
+            //  ordinary cpp.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wtautological-undefined-compare"
+            if (this == nullptr)
+                return nulOf<T>();
+#pragma clang diagnostic pop
+
             if(!getType().isSub(ttype<T>::get()))
                 return nulOf<T>();
 

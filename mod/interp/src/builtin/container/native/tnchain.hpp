@@ -45,7 +45,10 @@ namespace wrd {
                 return step - remain;
             }
 
-            ncontainer& getContainer() override { return _ownIter->template cast<ncontainer>(); }
+            ncontainer& getContainer() override {
+                if(!_ownIter) return nulOf<nconatiner>();
+                return _ownIter->template cast<ncontainer>();
+            }
             const ncontainer& getContainer() const WRD_UNCONST_FUNC(getContainer())
 
             instance& get() override {
