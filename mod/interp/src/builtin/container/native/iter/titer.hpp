@@ -12,8 +12,12 @@ namespace wrd {
         template <typename E> friend class tnchain;
 
     public:
-        titer() {}
-        explicit titer(iteration* newStep): _step(newStep) {}
+        titer() {
+            _nextToMatchParamType();
+        }
+        explicit titer(iteration* newStep): _step(newStep) {
+            _nextToMatchParamType();
+        }
         titer(const me& rhs) {
             _assign(rhs);
         }
@@ -54,7 +58,13 @@ namespace wrd {
 
         wcnt next(wcnt step) override {
             if(!_step) return false;
-            return _step->next(step);
+
+            for(int n=0; n < step ; n++) {
+                if(_step->next(1) <= 0) return n;
+                _nextToMatchParamType();
+            }
+
+            return step;
         }
 
         using titerable<T>::get;
@@ -76,9 +86,20 @@ namespace wrd {
             _step.bind((iteration*) rhs._step->clone());
             return *this;
         }
+
         wbool _onSame(const typeProvidable& rhs) const override {
             const me& cast = (const me&) rhs;
             return _step == cast._step;
+        }
+
+        /// iterates until points to object of compatible type to given parameterized type T.
+        /// titer should be alwyas stable state which points to object of proper type.
+        void _nextToMatchParamType() {
+            while(!isEnd()) {
+                if(!nul(get())) return;
+
+                next(1);
+            }
         }
 
     protected:
