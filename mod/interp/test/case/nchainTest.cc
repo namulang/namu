@@ -532,3 +532,125 @@ TEST(nchainTest, testDeepChainIteration) {
         expect++;
     }
 }
+
+struct myNode2 : public myNode {
+    WRD_CLASS(myNode2, myNode)
+
+public:
+    myNode2(int val) : super(val) {}
+};
+
+template <typename T = myNode>
+static wbool isMyNodesHasEqualIntArray(const tnchain<myNode>& root, int expects[], int expectSize) {
+    titer<T> myE = root.begin<T>();
+    for(int n=0; n < expectSize ;n++) {
+        if(myE.isEnd()) return false;
+        if(expects[n] != myE->number) return false;
+        T* got = &myE.get();
+        titer<T> myEcopy = myE;
+        got = &myEcopy.get();
+
+
+
+        myE++;
+    }
+
+    return true;
+}
+
+TEST(nchainTest, testTIterator) {
+    tnchain<myNode> chn1;
+    chn1.add(new myNode(1));
+    chn1.add(new myNode(1));
+    chn1.add(new myNode2(2));
+    chn1.add(new myNode(1));
+    ASSERT_EQ(chn1.len(), 4);
+    {
+        titer<myNode2> e2 = chn1.begin<myNode2>();
+        ASSERT_FALSE(e2.isEnd());
+        ASSERT_EQ(e2->number, 2);
+    }
+
+    tnchain<myNode> chn2;
+    chn2.add(new myNode(1));
+    ASSERT_EQ(chn2.len(), 1);
+    {
+        titer<myNode2> e2 = chn2.begin<myNode2>();
+        ASSERT_TRUE(e2.isEnd());
+    }
+
+    tnchain<myNode> chn3;
+    chn3.add(new myNode2(2));
+    {
+        titer<myNode2> e2 = chn3.begin<myNode2>();
+        ASSERT_FALSE(e2.isEnd());
+        ASSERT_EQ(e2->number, 2);
+    }
+
+    chn1.link(chn2);
+    chn2.link(chn3);
+
+    {
+        ASSERT_EQ(chn1.len(), 6);
+        int expects[] = {1, 1, 2, 1, 1, 2};
+        ASSERT_TRUE(isMyNodesHasEqualIntArray<>(chn1, expects, 6));
+    }
+
+    {
+        titer<myNode2> e2 = chn1.begin<myNode2>();
+        ASSERT_FALSE(e2.isEnd());
+        e2++;
+        ASSERT_NE(&e2.get(), (&(chn1.begin() + 3).get()));
+        ASSERT_EQ(&e2.get(), (&chn1.last().get()));
+    }
+
+}
+
+TEST(nchainTest, testDeepChainAddDel) {
+    tnchain<myNode> chn1;
+    chn1.add(new myNode(1));
+    chn1.add(new myNode2(2));
+
+    tnchain<myNode> chn2;
+    chn2.add(new myNode2(3));
+    chn2.add(new myNode(4));
+    chn1.link(chn2);
+
+    tstr<tnchain<myNode>> root(tnchain<myNode>::wrapDeep(chn1));
+
+    tnchain<myNode> chn3;
+    chn3.add(new myNode2(5));
+    chn3.add(new myNode(6));
+
+    root->link(chn3);
+
+    iter e = root->begin();
+    e = e + 2;
+    ASSERT_FALSE(nul(*e));
+
+    ASSERT_EQ(root->len(), 6);
+    root->del(e);
+    ASSERT_EQ(root->len(), 5);
+
+    {
+        int expects[] = {1, 2, 4, 5, 6};
+        ASSERT_TRUE(isMyNodesHasEqualIntArray<>(*root, expects, 5));
+    }
+
+    {
+        int expects[] = {2, 5};
+        ASSERT_TRUE(isMyNodesHasEqualIntArray<myNode2>(*root, expects, 2));
+    }
+
+    ASSERT_EQ(root->len(), 5);
+    root->del(root->begin() + 1, root->last());
+    ASSERT_EQ(root->len(), 2);
+
+    {
+        int expects[] = {1, 6};
+        ASSERT_TRUE(isMyNodesHasEqualIntArray<>(*root, expects, 2));
+    }
+
+    titer<myNode2> emptyE = root->begin<myNode2>();
+    ASSERT_TRUE(emptyE.isEnd());
+}
