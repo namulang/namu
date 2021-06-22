@@ -24,7 +24,7 @@ namespace wrd {
                 }
 
             wbool isEnd() const override {
-                return !_ownIter || !_iter;
+                return !_ownIter->_next && !_iter;
             }
 
             wcnt next(wcnt step) override {
@@ -36,8 +36,8 @@ namespace wrd {
                     if(remain <= 0) break;
 
                     // _iter moved to 'End' state now.
+                    if(isEnd()) break;
                     _ownIter = _ownIter->_next;
-                    if(!_ownIter) break;
                     _iter = _ownIter->_arr->begin();
                     if(_iter) remain--;
                 }
@@ -46,7 +46,7 @@ namespace wrd {
             }
 
             ncontainer& getContainer() override {
-                if(!_ownIter) return nulOf<nconatiner>();
+                if(!_ownIter) return nulOf<ncontainer>();
                 return _ownIter->template cast<ncontainer>();
             }
             const ncontainer& getContainer() const WRD_UNCONST_FUNC(getContainer())
@@ -65,7 +65,7 @@ namespace wrd {
             }
 
         private:
-            tstr<tnchain> _ownIter;
+            tstr<tnchain> _ownIter; // _ownIter shouldn't be null always.
             wrd::iter _iter;
         };
 
