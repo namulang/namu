@@ -417,7 +417,6 @@ TEST(nchainTest, testDelWithLink) {
 
         WRD_DI("chn.len()=%d", chn.len());
         iter e = chn.iter(chn.len() - 1);
-        node& n = *e;
 
         myNode& last = e->cast<myNode>();
         ASSERT_EQ(last.number, 3);
@@ -546,11 +545,6 @@ static wbool isMyNodesHasEqualIntArray(const tnchain<myNode>& root, int expects[
     for(int n=0; n < expectSize ;n++) {
         if(myE.isEnd()) return false;
         if(expects[n] != myE->number) return false;
-        T* got = &myE.get();
-        titer<T> myEcopy = myE;
-        got = &myEcopy.get();
-
-
 
         myE++;
     }
