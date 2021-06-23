@@ -17,7 +17,7 @@ namespace wrd {
     wbool me::_onInFrame(frame& fr, const ncontainer& args) {
         WRD_DI("%s._onInFrame()", getName().c_str());
 
-        return fr.add(subs());
+        return fr.add(*nchain::wrapDeep(subs()));
     }
 
     wbool me::_onOutFrame(frame& fr, const ncontainer& args) {

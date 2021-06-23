@@ -3,7 +3,7 @@
 #include "../ast/node.hpp"
 #include <gtest/gtest_prod.h>
 
-class frameTest;
+struct frameTest;
 
 namespace wrd {
 
