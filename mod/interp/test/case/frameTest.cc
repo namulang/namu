@@ -60,7 +60,7 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     };
     ASSERT_EQ(owns.get<myNode>(lambda).len(), 2);
 
-    fr.add(owns);
+    fr.add(*nchain::wrapDeep(owns));
     ASSERT_EQ(fr.sub<myNode>(lambda).len(), 4);
     ASSERT_EQ(owns.get<myNode>(lambda).len(), 2);
 
@@ -68,5 +68,6 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     titer<myNode> e = getLinks(fr).begin<myNode>();
     for (int expect : expects) {
         ASSERT_EQ(expect, e->num);
+        ++e;
     }
 }
