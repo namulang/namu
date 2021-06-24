@@ -36,5 +36,5 @@ endforeach(e)
 
 #  execute:
 add_library(${moduleName} SHARED ${sources})
-set_target_properties(${moduleName} PROPERTIES SUFFIX ".${WORLD_LIBRARY_EXTENSION}")
+set_target_properties(${moduleName} PROPERTIES SUFFIX ".${WRD_LIBRARY_EXTENSION}")
 target_link_libraries(${moduleName} ${dependencies})

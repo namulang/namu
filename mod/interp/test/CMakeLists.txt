@@ -23,3 +23,5 @@ target_link_libraries(${testName} ${libraries}
 	PRIVATE Threads::Threads)
 
 add_dependencies(${testName} ${moduleName})
+
+add_subdirectory(samplePack)
