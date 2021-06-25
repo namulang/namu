@@ -15,9 +15,9 @@ namespace wrd {
         tcppBridge(T* real): _real(real) {}
 
     public:
-        static me def() {
+        static me* def() {
             // TODO: need to handle ctor with argument.
-            return me(new T());
+            return new me(new T());
         }
 
         using super::getCtors;
@@ -28,9 +28,9 @@ namespace wrd {
         }
 
         template <typename Ret, typename... Args>
-        me& func(const std::string& name, Ret(T::*fptr)(Args...)) {
+        me* func(const std::string& name, Ret(T::*fptr)(Args...)) {
             getShares().add(new tcppBridgeFunc<Ret, T, Args...>(name, fptr));
-            return *this;
+            return this;
         }
 
     private:
