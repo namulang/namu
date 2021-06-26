@@ -31,15 +31,15 @@ namespace {
 }
 
 TEST_F(bridgeCPPTest, testNormalWrapping) {
-    tcppBridge<kniz> bridge = tcppBridge<kniz>::def()
-        .func<int, string>("say", &kniz::say);
+    tstr<tcppBridge<kniz>> bridge(tcppBridge<kniz>::def()
+        ->func<int, string>("say", &kniz::say));
         // TODO: how to handle void return & void parameter
         //.func<void, void>(&kniz::say);
 
     narr args;
-    args.add(bridge);
+    args.add(*bridge);
     args.add(new wStr("hello native!"));
-    node& func = bridge.sub("say")[0];
+    node& func = bridge->sub("say")[0];
     ASSERT_FALSE(nul(func));
 
     func.run(args);
