@@ -190,13 +190,13 @@ true|false {
 
 
 ([1-9][0-9]*|0) {
-    yylval.floatVal = atof(yytext);
-    return tnum;
+    yylval.intVal = atof(yytext);
+    return tint;
 }
 
 ([1-9][0-9]*.[0-9]+|0.[0-9]+) {
     yylval.floatVal= atof(yytext);
-    return tnum;
+    return tfloat;
 }
 
 := { return topDefAssign; }

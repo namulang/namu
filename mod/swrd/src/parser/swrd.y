@@ -33,8 +33,8 @@ void yyerror(const char* s);
 
 %token tdef tprop tnode tin tindent tdedent
 
-%token <intVal> teof
-%token <floatVal> tnum
+%token <intVal> teof tint
+%token <floatVal> tfloat
 %token <boolVal> tbool
 %token <charVal> tokChar
 %token <strVal> tokStr
@@ -43,6 +43,7 @@ void yyerror(const char* s);
 %type <obj> tfile tarray
 %type <obj> trhsexpr trhsIds
 %type <obj> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock tdefOriginStmt
+%type <obj> tver
 
 // 우선순위: 밑으로 갈수록 높음.
 //  결합 순서 정의:
@@ -53,6 +54,10 @@ void yyerror(const char* s);
 
 %%
 
+tver        : tint "." tint "." tint {
+                $$ = new
+            }
+
 // trhsexpr과 tlhsexpr:
 //  tlhsexpr은 할당이 가능한 변수. lvalue.
 //  trhsexpr은 값을 나타내는 모든 표현식.
@@ -61,7 +66,11 @@ trhsexpr    : tbool {
                 $$ = new termSobj($1);
                 WRD_DI("trhsexpr(%x) <-- %s", $$, $1 ? "true" : "false");
             }
-            | tnum {
+            | tfloat {
+                $$ = new termSobj($1);
+                WRD_DI("trhsexpr(%x) <-- %f", $$, $1);
+            }
+            | tint {
                 $$ = new termSobj($1);
                 WRD_DI("trhsexpr(%x) <-- %d", $$, $1);
             }
