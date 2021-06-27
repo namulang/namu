@@ -199,6 +199,11 @@ true|false {
     return tfloat;
 }
 
+([0-9]+.[0-9]+.[0-9]+) {
+    yylval.strVal = yytext;
+    return tver;
+}
+
 := { return topDefAssign; }
 
 \'.\' {

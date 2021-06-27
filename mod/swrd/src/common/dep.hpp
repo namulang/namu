@@ -5,3 +5,4 @@
 #include <string>
 #include <memlite.hpp>
 #include <algorithm>
+#include <sstream>
