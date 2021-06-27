@@ -39,11 +39,11 @@ void yyerror(const char* s);
 %token <charVal> tokChar
 %token <strVal> tokStr
 %token <strVal> tid tcontainerName
+%token <strVal> tver
 %token teol
 %type <obj> tfile tarray
 %type <obj> trhsexpr trhsIds
-%type <obj> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock tdefOriginStmt
-%type <obj> tver
+%type <obj> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock
 
 // 우선순위: 밑으로 갈수록 높음.
 //  결합 순서 정의:
@@ -54,10 +54,6 @@ void yyerror(const char* s);
 
 %%
 
-tver        : tint "." tint "." tint {
-                $$ = new
-            }
-
 // trhsexpr과 tlhsexpr:
 //  tlhsexpr은 할당이 가능한 변수. lvalue.
 //  trhsexpr은 값을 나타내는 모든 표현식.
@@ -65,6 +61,10 @@ tver        : tint "." tint "." tint {
 trhsexpr    : tbool {
                 $$ = new termSobj($1);
                 WRD_DI("trhsexpr(%x) <-- %s", $$, $1 ? "true" : "false");
+            }
+            | tver {
+                $$ = new verSobj($1);
+                WRD_DI("tver(%x) <-- %s", $$, $1);
             }
             | tfloat {
                 $$ = new termSobj($1);
@@ -135,18 +135,9 @@ tdefOrigin  : tdef tid tdefIndentBlock {
             }
             ;
 
-tdefOriginStmt: tdefOrigin teol {
-                $$ = $1;
-                WRD_DI("tdefOriginStmt(%x) <-- tdefOrigin(%x) \\n", $$, $1);
-            }
-            ;
-
 tdefStmt    : tdefexpr teol {
                 $$ = $1;
                 WRD_DI("tdefStmt(%x) <-- tdefexpr(%x) \\n", $$, $1);
-            }
-            | teol {
-                WRD_DI("tdefStmt(null) <-- \\n");
             }
             ;
 

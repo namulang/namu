@@ -1,0 +1,7 @@
+// wrd pack manifest:
+
+//  name of pack.
+name := "samplePack"
+
+//
+// ver := "2.1.0"
