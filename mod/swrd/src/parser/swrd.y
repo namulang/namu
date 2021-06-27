@@ -139,6 +139,10 @@ tdefStmt    : tdefexpr teol {
                 $$ = $1;
                 WRD_DI("tdefStmt(%x) <-- tdefexpr(%x) \\n", $$, $1);
             }
+            | teol {
+                $$ = nullptr;
+                WRD_DI("tdefStmt(null) <-- \\n");
+            }
             ;
 
 tdefBlock   : tdefStmt {
@@ -148,7 +152,8 @@ tdefBlock   : tdefStmt {
             }
             | tdefBlock tdefStmt {
                 $$ = $1;
-                $$->add(*$2);
+                if ($2 != nullptr)
+                    $$->add(*$2);
                 WRD_DI("tdefBlock(%x) <-- tdefBlock(%x) tdefStmt(%x)", $$, $1, $2);
             }
             ;
@@ -159,7 +164,7 @@ tfile       : tdefBlock {
                 root->setName(name);
                 wrd::id id = $1->getId();
                 WRD_DI("$1 = %x, %d.%d.%d", $1, id.tagN, id.chkN, id.serial);
-                WRD_DI("tfile(%s %x) <-- tdefOriginStmt(%x)", root->getName().c_str(), $$, $1);
+                WRD_DI("tfile(%s %x) <-- tdefBlock(%x)", root->getName().c_str(), $$, $1);
             }
             | teol {
                 $$ = root = new sobj();

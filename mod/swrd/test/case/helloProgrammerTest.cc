@@ -88,18 +88,23 @@ TEST(helloProgrammerTest, testNullObjNegative) {
 
 TEST(helloProgrammerTest, testVerObject) {
     const std::string script =
-        "name := 'dark souls'\n"
-        "ver := 1.0.8\n";
+        "def man\n" // TODO: swrd parser only believe that def keyword will be front of script.
+        "   dummy := 5\n"
+        "   name := 'dark souls'\n"
+        "   ver := 1.0.8\n";
 
     tstr<sobj> file = swrd::interp(script);
     ASSERT_TRUE(file);
+    file = swrd::interp(script);
+    ASSERT_TRUE(file);
 
-    sobj& name = file->sub("name");
+    sobj& man = file->sub("man");
+    sobj& name = man.sub("name");
     ASSERT_FALSE(nul(name));
 
     ASSERT_STREQ(name.asStr().c_str(), "dark souls");
 
-    verSobj& ver = file->sub("ver").cast<verSobj>();
+    verSobj& ver = man.sub("ver").cast<verSobj>();
     ASSERT_FALSE(nul(ver));
     ASSERT_STREQ(ver.asStr().c_str(), "1.0.8");
     ASSERT_EQ(ver.asMajor(), 1);
@@ -113,4 +118,26 @@ TEST(helloProgrammerTest, testVerObject) {
     ASSERT_TRUE(ver < verSobj(1, 1, 8));
     ASSERT_FALSE(ver < verSobj(0, 2, 8));
     ASSERT_TRUE(ver > verSobj(0, 2, 8));
+}
+
+TEST(helloProgrammerTest, testManifestScript) {
+    const std::string script =
+        "def entrypoints\n"
+        "   def cpp\n"
+        "       path := './libsamplePack.pack'\n"
+        "name := 'samplePack'\n"
+        "ver := 2.1.0\n"
+        "author := 'kniz'\n";
+
+    tstr<sobj> file = swrd::interp(script);
+    ASSERT_TRUE(file);
+
+    ASSERT_TRUE(file->sub("ver").cast<verSobj>() < verSobj(2, 1, 1));
+    ASSERT_STREQ(file->sub("author").asStr().c_str(), "kniz");
+
+    sobj& entrys = file->sub("entrypoints");
+    ASSERT_FALSE(nul(entrys));
+
+    sobj& cpp = entrys.sub("cpp");
+    ASSERT_STREQ(cpp.sub("path").asStr().c_str(), "./libsamplePack.pack");
 }
