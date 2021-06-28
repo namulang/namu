@@ -62,7 +62,7 @@ namespace wrd {
             _name = newName;
         }
 
-        wcnt size() const {
+        wcnt len() const {
             return _subs.size();
         }
 
