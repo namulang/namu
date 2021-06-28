@@ -120,6 +120,20 @@ TEST(helloProgrammerTest, testVerObject) {
     ASSERT_TRUE(ver > verSobj(0, 2, 8));
 }
 
+TEST(helloProgrammerTest, testNullThisTest) {
+    const std::string script =
+        "def empty\n"
+        "  name := 'wow'\n";
+
+    tstr<sobj> file = swrd::interp(script);
+    ASSERT_TRUE(file);
+
+    sobj& name = file->sub("empty").sub("name");
+    ASSERT_TRUE(name);
+    sobj& shouldNotExist = name.sub("should empty").sub("but can call sub also").sub("and again");
+    ASSERT_FALSE(shouldNotExist);
+}
+
 TEST(helloProgrammerTest, testManifestScript) {
     const std::string script =
         "def entrypoints\n"
@@ -138,6 +152,6 @@ TEST(helloProgrammerTest, testManifestScript) {
     sobj& entrys = file->sub("entrypoints");
     ASSERT_FALSE(nul(entrys));
 
-    sobj& cpp = entrys.sub("cpp");
-    ASSERT_STREQ(cpp.sub("path").asStr().c_str(), "./libsamplePack.pack");
+    ASSERT_EQ(entrys.len(), 1);
+    ASSERT_STREQ(entrys.sub("cpp").sub("path").asStr().c_str(), "./libsamplePack.pack");
 }
