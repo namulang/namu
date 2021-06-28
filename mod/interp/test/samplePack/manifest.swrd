@@ -1,14 +1,7 @@
-// wrd pack manifest:
-
-//  name of pack.
-name := 'samplePack'
-
-//  pack version:
-//      consists of major.minor.fix version.
-ver := 2.1.0
-
-author := 'kniz'
-
 def entrypoints
     def cpp
         path := './libsamplePack.pack'
+
+name := 'samplePack'
+ver := 2.1.0
+author := 'kniz'
