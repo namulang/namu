@@ -41,6 +41,8 @@ namespace wrd {
         WRD_CLONE(ME)
 #define WRD_CLASS(...) WRD_OVERLOAD(WRD_CLASS, __VA_ARGS__)
 
+    const std::string MANIFEST_FILENAME = "manifest.swrd";
+
     class node;
     class wtype;
     typedef tstr<node> str;
