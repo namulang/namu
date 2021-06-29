@@ -155,3 +155,16 @@ TEST(helloProgrammerTest, testManifestScript) {
     ASSERT_EQ(entrys.len(), 1);
     ASSERT_STREQ(entrys.sub("cpp").sub("path").asStr().c_str(), "./libsamplePack.pack");
 }
+
+TEST(helloProgrammerTest, testNullThisAccess) {
+    const std::string script =
+        "def empty\n"
+        "  name := 'wow'\n";
+
+    tstr<sobj> file = swrd::interp(script);
+    ASSERT_TRUE(file);
+
+    string shouldExist = file->sub("null obj").sub("and so null").asStr();
+    ASSERT_FALSE(nul(shouldExist));
+    ASSERT_STREQ(shouldExist.c_str(), "");
+}
