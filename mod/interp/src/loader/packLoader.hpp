@@ -11,7 +11,11 @@ namespace wrd {
         packLoader(std::initializer_list<const wchar*> paths)
             : _subs(new nchain()) {
 
+            const std::string& cwd = fsystem::getCurrentDir();
+            WRD_I("find packs relative to %s or absolute", cwd.c_str());
+
             for(const wchar* path : paths) {
+                WRD_I("pack path: %s", path);
                 _traversePack(std::string(path));
             }
         }
