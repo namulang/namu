@@ -1,5 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
+set(packName "samplePack")
 set(packOutDir "${WRD_PACK_OUTPUT_DIRECTORY}/${packName}")
 foreach(d ${dependencies})
 	set(libraries ${libraries} PUBLIC ${d})
