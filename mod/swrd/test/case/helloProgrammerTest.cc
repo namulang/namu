@@ -134,6 +134,44 @@ TEST(helloProgrammerTest, testNullThisTest) {
     ASSERT_FALSE(shouldNotExist);
 }
 
+TEST(helloProgrammerTest, testIteration) {
+    const std::string script =
+        "def person\n"
+        "   name := 'gorden freeman'\n"
+        "   lookingFor := 'crowbar'\n"
+        "   whenWillThereBeAHalflife := 3\n";
+
+    tstr<sobj> file = swrd::interp(script);
+    ASSERT_TRUE(file);
+
+    map<string, string> expects;
+    expects.insert(make_pair("name", "gorden freeman"));
+    expects.insert(make_pair("lookingFor", "crowbar"));
+    expects.insert(make_pair("whenWillThereBeAHalflife", "3"));
+
+    sobj& person = file->sub("person");
+    ASSERT_EQ(expects.size(), person.len());
+
+    for(const auto& pair : person) {
+        const string& name = pair.first;
+
+        ASSERT_STREQ(pair.second->asStr().c_str(), expects[name].c_str());
+    }
+}
+
+TEST(helloProgrammerTest, testNullThisAccess) {
+    const std::string script =
+        "def empty\n"
+        "  name := 'wow'\n";
+
+    tstr<sobj> file = swrd::interp(script);
+    ASSERT_TRUE(file);
+
+    string shouldExist = file->sub("null obj").sub("and so null").asStr();
+    ASSERT_FALSE(nul(shouldExist));
+    ASSERT_STREQ(shouldExist.c_str(), "");
+}
+
 TEST(helloProgrammerTest, testManifestScript) {
     const std::string script =
         "def entrypoints\n"
@@ -154,17 +192,4 @@ TEST(helloProgrammerTest, testManifestScript) {
 
     ASSERT_EQ(entrys.len(), 1);
     ASSERT_STREQ(entrys.sub("cpp").sub("path").asStr().c_str(), "./libsamplePack.pack");
-}
-
-TEST(helloProgrammerTest, testNullThisAccess) {
-    const std::string script =
-        "def empty\n"
-        "  name := 'wow'\n";
-
-    tstr<sobj> file = swrd::interp(script);
-    ASSERT_TRUE(file);
-
-    string shouldExist = file->sub("null obj").sub("and so null").asStr();
-    ASSERT_FALSE(nul(shouldExist));
-    ASSERT_STREQ(shouldExist.c_str(), "");
 }
