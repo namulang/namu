@@ -10,8 +10,7 @@ namespace wrd {
 
     public:
         pack(const std::string& filePath): super(), _subs(new narr()) {
-            _manifest.filePath = filePath;
-            _loadManifest(_manifest);
+            _manifest = _interpManifest(filePath);
         }
         pack(const me& rhs) { _assign(rhs); }
 
@@ -27,7 +26,8 @@ namespace wrd {
         ncontainer& subs() override {
             if(_subs) return super::subs();
 
-            _subs = _loadOrigins(getName());
+            if (!_subs)
+                _subs = _loadOrigins(getName());
             return *_subs;
         }
 
@@ -35,6 +35,12 @@ namespace wrd {
         const manifest& getManifest() const { return _manifest; }
         str run(const ncontainer& args) override { return str(); }
         wbool canRun(const wtypes& types) const override { return false; }
+
+        wbool isValid() const override {
+            if(!_manifest.isValid()) return false;
+
+            return super::isValid();
+        }
 
     private:
         tstr<nchain> _loadOrigins(const std::string& path) {
@@ -45,9 +51,8 @@ namespace wrd {
             tstr<nchain> ret;
             return ret;
         }
-        void _loadManifest(manifest& man) const {
-            // TODO: open pack zip file -> extract manifest.swrd file -> interpret it & load values
-        }
+
+        manifest _interpManifest(const std::string& manPath) const;
 
         me& _assign(const me& rhs) {
             _manifest = rhs._manifest;

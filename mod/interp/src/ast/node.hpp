@@ -3,12 +3,13 @@
 #include "clonable.hpp"
 #include "../type/wtype.hpp"
 #include "../builtin/container/native/tnarr.hpp"
+#include "validable.hpp"
 
 namespace wrd {
 
     class ref;
     template <typename T> class tref;
-    class node : public instance, public clonable {
+    class node : public instance, public clonable, public validable {
         WRD_INTERFACE(node, instance)
 
     public:
@@ -62,6 +63,10 @@ namespace wrd {
         }
         wbool isImpli(const wtype& to) const {
             return getType().isImpli(to);
+        }
+
+        wbool isValid() const override {
+            return true;
         }
 
         template <typename T>
