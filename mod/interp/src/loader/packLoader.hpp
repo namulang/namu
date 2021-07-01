@@ -10,14 +10,7 @@ namespace wrd {
     public:
         packLoader(std::initializer_list<const wchar*> paths)
             : _subs(new nchain()) {
-
-            const std::string& cwd = fsystem::getCurrentDir();
-            WRD_I("find packs relative to %s or absolute", cwd.c_str());
-
-            for(const wchar* path : paths) {
-                WRD_I("pack path: %s", path);
-                _traversePack(std::string(path));
-            }
+            _traversePack(paths);
         }
 
         wbool canRun(const wtypes& types) const override {
@@ -51,6 +44,17 @@ namespace wrd {
             return dirPath;
         }
 
+        void _traversePack(std::initializer_list<const wchar*> paths) {
+            const std::string& cwd = fsystem::getCurrentDir();
+            WRD_I("find packs relative to %s or absolute", cwd.c_str());
+
+            for(const wchar* path : paths) {
+                WRD_I("pack path: %s", path);
+
+                _traversePack(std::string(path));
+            }
+        }
+
         void _traversePack(const std::string& dirPath) {
             const std::string& filtered = _filterDirPath(dirPath);
             DIR* dir = opendir(dirPath.c_str());
@@ -73,8 +77,16 @@ namespace wrd {
         }
 
         void _createPack(const std::string& dirPath, const std::string& manifestName) {
-            // TODO:
-            WRD_E("found pack at %s / %s", dirPath.c_str(), manifestName.c_str());
+            std::string manifestPath = dirPath + manifestName;
+
+            pack* new1 = new pack(manifestPath);
+            if(!new1->isValid()) {
+                WRD_E("pack [%s] has failed to init.", manifestPath.c_str());
+                return;
+            }
+
+            _subs->add(new1);
+            WRD_I("new pack [%s] has been added.", manifestPath.c_str());
         }
 
     private:
