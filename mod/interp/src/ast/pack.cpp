@@ -20,15 +20,13 @@ namespace wrd {
         orgExtractor extractor;
         for(auto& pair: entrypoints) {
             const std::string& lang = pair.first;
-            if(!extractor.getExtraction(lang))
+            if(nul(extractor.getExtraction(lang)))
                 return WRD_E("error to load %s: lang '%s' unsupported.", manPath.c_str(), lang.c_str()), manifest();
 
             if(!pair.second)
-                return WRD_E("error to load %s: no entrypoint path", manPath.c_str());
+                return WRD_E("error to load %s: no entrypoint path", manPath.c_str()), manifest();
 
-            std::vector<std::string> paths;
-            paths.add(pair.second->asStr()); // == path
-            entrypoint newPoint = {lang, paths};
+            entrypoint newPoint = {lang, {pair.second->asStr()}};
             points.push_back(newPoint);
         }
 

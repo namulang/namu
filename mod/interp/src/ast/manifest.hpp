@@ -6,6 +6,9 @@
 namespace wrd {
 
     struct entrypoint : public validable {
+
+        entrypoint(const std::string& newLang, const std::vector<std::string> newPaths)
+            : lang(newLang), paths(newPaths) {}
         virtual ~entrypoint() {}
 
         wbool isValid() const override {
@@ -19,6 +22,12 @@ namespace wrd {
     typedef std::vector<entrypoint> entrypoints;
 
     struct manifest : public validable {
+
+        manifest() {}
+        manifest(const std::string& newName, const std::string& newFilePath,
+            const std::string& newAuthor, const std::string& newVer, const entrypoints& newPoints)
+            : name(newName), filePath(newFilePath), author(newAuthor), ver(newVer), points(newPoints) {}
+
         virtual ~manifest() {}
 
         wbool isValid() const override {
