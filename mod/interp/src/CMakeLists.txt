@@ -13,7 +13,7 @@ file(GLOB_RECURSE sources
 foreach(e ${sources})
     message("\t\tembeding ${e}")
 endforeach(e)
-set(dependencies indep clog memlite meta)
+set(dependencies indep clog memlite meta swrd)
 foreach(e ${dependencies})
     message("\t\tlinking ${e}")
 endforeach(e)
