@@ -24,8 +24,6 @@ namespace wrd {
 
         using super::subs;
         ncontainer& subs() override {
-            if(_subs) return super::subs();
-
             if (!_subs)
                 _subs = _loadOrigins(getName());
             return *_subs;

@@ -5,8 +5,8 @@
 
 namespace wrd {
 
-    class swrd {
-        WRD_DECL_ME(swrd)
+    class sinterpreter {
+        WRD_DECL_ME(sinterpreter)
 
     public:
         static tstr<sobj> interp(const wchar* script);

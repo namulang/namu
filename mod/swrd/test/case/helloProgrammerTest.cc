@@ -10,7 +10,7 @@ TEST(helloProgrammerTest, testScript) {
         "   say := 'html is not a programming language!'\n"
         "";
 
-    tstr<sobj> file = swrd::interp(script);
+    tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
     sobj& programmer = file->sub("programmer");
@@ -28,7 +28,7 @@ TEST(helloProgrammerTest, testScriptEndsWithEOF) {
         "   say := 'html is not a programming language!'\n"
         "   age := 12";
 
-    tstr<sobj> file = swrd::interp(script);
+    tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
     sobj& programmer = file->sub("programmer");
@@ -50,7 +50,7 @@ TEST(helloProgrammerTest, testScriptWithPackScope) {
         "def ramen\n"
         " name := 'doshirak'\n";
 
-    tstr<sobj> file = swrd::interp(script);
+    tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
     sobj& say = file->sub("say");
@@ -75,7 +75,7 @@ TEST(helloProgrammerTest, testNullObjNegative) {
         "def ramen\n"
         " name := 'doshirak'\n";
 
-    tstr<sobj> file = swrd::interp(script);
+    tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
     sobj& notExist = file->sub("dogecoin");
@@ -93,9 +93,9 @@ TEST(helloProgrammerTest, testVerObject) {
         "   name := 'dark souls'\n"
         "   ver := 1.0.8\n";
 
-    tstr<sobj> file = swrd::interp(script);
+    tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
-    file = swrd::interp(script);
+    file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
     sobj& man = file->sub("man");
@@ -125,7 +125,7 @@ TEST(helloProgrammerTest, testNullThisTest) {
         "def empty\n"
         "  name := 'wow'\n";
 
-    tstr<sobj> file = swrd::interp(script);
+    tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
     sobj& name = file->sub("empty").sub("name");
@@ -141,7 +141,7 @@ TEST(helloProgrammerTest, testIteration) {
         "   lookingFor := 'crowbar'\n"
         "   whenWillThereBeAHalflife := 3\n";
 
-    tstr<sobj> file = swrd::interp(script);
+    tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
     map<string, string> expects;
@@ -164,7 +164,7 @@ TEST(helloProgrammerTest, testNullThisAccess) {
         "def empty\n"
         "  name := 'wow'\n";
 
-    tstr<sobj> file = swrd::interp(script);
+    tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
     string shouldExist = file->sub("null obj").sub("and so null").asStr();
@@ -181,7 +181,7 @@ TEST(helloProgrammerTest, testManifestScript) {
         "ver := 2.1.0\n"
         "author := 'kniz'\n";
 
-    tstr<sobj> file = swrd::interp(script);
+    tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
     ASSERT_TRUE(file->sub("ver").cast<verSobj>() < verSobj(2, 1, 1));

@@ -1,3 +1,3 @@
 #pragma once
 
-#include "interp/swrd.hpp"
+#include "interp/sinterpreter.hpp"
