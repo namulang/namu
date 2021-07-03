@@ -1,7 +1,7 @@
 %{
 #pragma once
 #include "../common.hpp"
-#include "../interp/swrd.hpp"
+#include "../interp/sinterpreter.hpp"
 
 namespace wrd {
     class obj;
@@ -159,12 +159,10 @@ tdefBlock   : tdefStmt {
             ;
 
 tfile       : tdefBlock {
-                const std::string& name = wrd::swrd::getFileName();
                 $$ = root = $1;
-                root->setName(name);
                 wrd::id id = $1->getId();
                 WRD_DI("$1 = %x, %d.%d.%d", $1, id.tagN, id.chkN, id.serial);
-                WRD_DI("tfile(%s %x) <-- tdefBlock(%x)", root->getName().c_str(), $$, $1);
+                WRD_DI("tfile(%x) <-- tdefBlock(%x)", $$, $1);
             }
             | teol {
                 $$ = root = new sobj();

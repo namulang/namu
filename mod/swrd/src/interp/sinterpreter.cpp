@@ -4,11 +4,7 @@
 
 namespace wrd {
 
-    namespace {
-        std::string _fileName;
-    }
-
-    WRD_DEF_ME(swrd)
+    WRD_DEF_ME(sinterpreter)
 
     tstr<sobj> me::interp(const wchar* script) {
         YY_BUFFER_STATE buffer = yy_scan_string(script);
@@ -24,9 +20,15 @@ namespace wrd {
         if(!yyin)
             return WRD_E("invalid file path %s.", path), tstr<sobj>();
 
-        _fileName = _extractFileName(path);
-        WRD_I("interpreting file '%s'...", _fileName.c_str());
-        return _runParser();
+        std::string fileName = _extractFileName(path);
+        WRD_I("interpreting file '%s'...", fileName.c_str());
+
+        tstr<sobj> ret = _runParser();
+
+        ret->setName(fileName);
+        fclose(yyin);
+        WRD_I("%s swrd file interpreted.", fileName.c_str());
+        return ret;
     }
     tstr<sobj> me::interpFile(const std::string& path) {
         return interpFile(path.c_str());
@@ -40,10 +42,6 @@ namespace wrd {
             WRD_E("nothing interpreted.");
 
         return tstr<sobj>(root);
-    }
-
-    const std::string& me::getFileName() {
-        return _fileName;
     }
 
     std::string me::_extractFileName(const std::string& path) {
