@@ -25,7 +25,7 @@ namespace wrd {
         using super::subs;
         ncontainer& subs() override {
             if (!_subs)
-                _subs = _loadOrigins(getName());
+                _subs = _loadOrigins();
             return *_subs;
         }
 
@@ -40,8 +40,12 @@ namespace wrd {
             return super::isValid();
         }
 
+        const std::string& getName() const override {
+            return _manifest.name;
+        }
+
     private:
-        tstr<nchain> _loadOrigins(const std::string& path) {
+        tstr<nchain> _loadOrigins() {
             // TODO: we know which entrypoints was belonged to this pack file.
             //  -> standby originExtractor matched to those entrypoints
             //  -> extraction all origins
