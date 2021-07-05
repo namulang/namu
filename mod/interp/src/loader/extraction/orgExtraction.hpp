@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../builtin/container/native/tnarr.inl"
+#include "../../builtin/container/native/tnarr.inl"
 
 namespace wrd {
 
@@ -10,7 +10,7 @@ namespace wrd {
         WRD_INIT_META(orgExtraction)
 
     public:
-        virtual tnarr<obj> extract(const std::string& filePath) const = 0;
+        virtual narr extract(const std::string& filePath) const = 0;
         virtual const std::string& getName() const = 0;
     };
 }

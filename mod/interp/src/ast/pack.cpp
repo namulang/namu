@@ -35,4 +35,23 @@ namespace wrd {
         // post: all data interpreted. merge to manifest.
         return manifest {name, manPath, author, ver, points};
     }
+
+    tstr<nchain> me::_loadOrigins() {
+        if(_manifest.points.size() <= 0)
+            return WRD_E("no entrypoints provided."), tstr<nchain>();
+
+        narr tray;
+        for(entrypoint point : _manifest.points) {
+            const orgExtraction& ext = orgExtractor().getExtraction(point.lang);
+            if(nul(ext)) {
+                WRD_E("language '%s' is not supported", point.lang.c_str());
+                continue;
+            }
+
+            for(const std::string path : point.paths)
+                tray.add(ext.extract(path));
+        }
+
+        return tstr<nchain>(new nchain(tray));
+    }
 }

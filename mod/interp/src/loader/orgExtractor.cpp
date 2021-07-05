@@ -1,5 +1,6 @@
 #include "orgExtractor.hpp"
 #include "../ast/obj.hpp"
+#include "extraction.hpp"
 
 namespace wrd {
 
@@ -9,20 +10,7 @@ namespace wrd {
         static orgExtractions* inner = nullptr;
         if(!inner) {
             inner = new orgExtractions();
-
-            struct cppExtraction : public orgExtraction {
-                tnarr<obj> extract(const std::string& filePath) const override {
-                    // TODO:
-                    return tnarr<obj>();
-                }
-
-                const std::string& getName() const override {
-                    static std::string inner = "cpp";
-                    return inner;
-                }
-            };
-
-            inner->push_back(new cppExtraction());
+            inner->push_back(new cppOrgExtraction());
         }
 
         return *inner;
