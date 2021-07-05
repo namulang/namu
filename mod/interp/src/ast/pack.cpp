@@ -7,7 +7,7 @@ namespace wrd {
 
     manifest me::_interpManifest(const std::string& manPath) const {
         // TODO: open pack zip file -> extract manifest.swrd file -> interpret it & load values
-        tstr<sobj> loaded = sinterpreter().interp(manPath);
+        tstr<sobj> loaded = sinterpreter().interpFile(manPath);
         if(!loaded)
             return WRD_E("error to load %s: interpretion err", manPath.c_str()), manifest();
 
@@ -23,10 +23,12 @@ namespace wrd {
             if(nul(extractor.getExtraction(lang)))
                 return WRD_E("error to load %s: lang '%s' unsupported.", manPath.c_str(), lang.c_str()), manifest();
 
-            if(!pair.second)
+            const std::string& path = pair.second->sub("path").asStr();
+            if(nul(path))
                 return WRD_E("error to load %s: no entrypoint path", manPath.c_str()), manifest();
 
-            entrypoint newPoint = {lang, {pair.second->asStr()}};
+            // TODO: path should be multiple
+            entrypoint newPoint = {lang, {path}};
             points.push_back(newPoint);
         }
 
