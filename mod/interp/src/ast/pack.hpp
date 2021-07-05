@@ -45,14 +45,7 @@ namespace wrd {
         }
 
     private:
-        tstr<nchain> _loadOrigins() {
-            // TODO: we know which entrypoints was belonged to this pack file.
-            //  -> standby originExtractor matched to those entrypoints
-            //  -> extraction all origins
-            //  -> stack up this 'ret' value.
-            tstr<nchain> ret;
-            return ret;
-        }
+        tstr<nchain> _loadOrigins();
 
         manifest _interpManifest(const std::string& manPath) const;
 
