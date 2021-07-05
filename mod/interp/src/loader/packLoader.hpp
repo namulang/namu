@@ -46,10 +46,10 @@ namespace wrd {
 
         void _traversePack(std::initializer_list<const wchar*> paths) {
             const std::string& cwd = fsystem::getCurrentDir();
-            WRD_I("find packs relative to %s or absolute", cwd.c_str());
+            WRD_I("finding packs relative to %s or absolute", cwd.c_str());
 
             for(const wchar* path : paths) {
-                WRD_I("pack path: %s", path);
+                WRD_I("try pack path: %s", path);
 
                 _traversePack(std::string(path));
             }
@@ -77,7 +77,7 @@ namespace wrd {
         }
 
         void _createPack(const std::string& dirPath, const std::string& manifestName) {
-            std::string manifestPath = dirPath + manifestName;
+            std::string manifestPath = dirPath + DELIMITER + manifestName;
 
             pack* new1 = new pack(manifestPath);
             if(!new1->isValid()) {
@@ -86,7 +86,22 @@ namespace wrd {
             }
 
             _subs->add(new1);
-            WRD_I("new pack [%s] has been added.", manifestPath.c_str());
+            _logPack(*new1);
+        }
+
+        void _logPack(const pack& pak) const {
+            WRD_I("new pack [%s] has been added.", pak.getName().c_str());
+
+            const manifest& mani = pak.getManifest();
+            WRD_DI("\t.filePath=%s", mani.filePath.c_str());
+            WRD_DI("\t.author=%s", mani.author.c_str());
+            WRD_DI("\t.ver=%s", mani.ver.c_str());
+
+            WRD_DI("\t.entrypoints=");
+            for(const entrypoint& point : mani.points) {
+                WRD_DI("\t\t.lang=%s", point.lang.c_str());
+                WRD_DI("\t\t.paths=%s", point.paths[0].c_str());
+            }
         }
 
     private:
