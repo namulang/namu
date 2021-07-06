@@ -16,7 +16,7 @@ TEST(helloProgrammerTest, testScript) {
     sobj& programmer = file->sub("programmer");
     ASSERT_FALSE(nul(programmer));
 
-    sobj& say = programmer.sub("say");
+    sobj& say = programmer["say"];
     ASSERT_FALSE(nul(say));
 
     ASSERT_STREQ(say.asStr().c_str(), "html is not a programming language!");
@@ -34,11 +34,11 @@ TEST(helloProgrammerTest, testScriptEndsWithEOF) {
     sobj& programmer = file->sub("programmer");
     ASSERT_FALSE(nul(programmer));
 
-    sobj& say = programmer.sub("say");
+    sobj& say = programmer["say"];
     ASSERT_FALSE(nul(say));
     ASSERT_STREQ(say.asStr().c_str(), "html is not a programming language!");
 
-    sobj& age = programmer.sub("age");
+    sobj& age = programmer["age"];
     ASSERT_FALSE(nul(age));
     ASSERT_EQ(age.asInt(), 12);
 }
@@ -61,7 +61,7 @@ TEST(helloProgrammerTest, testScriptWithPackScope) {
     ASSERT_FALSE(nul(ramen));
 
     {
-        sobj& name = ramen.sub("name");
+        sobj& name = ramen["name"];
         ASSERT_FALSE(nul(name));
         ASSERT_STREQ(name.asStr().c_str(), "doshirak");
     }
@@ -99,12 +99,12 @@ TEST(helloProgrammerTest, testVerObject) {
     ASSERT_TRUE(file);
 
     sobj& man = file->sub("man");
-    sobj& name = man.sub("name");
+    sobj& name = man["name"];
     ASSERT_FALSE(nul(name));
 
     ASSERT_STREQ(name.asStr().c_str(), "dark souls");
 
-    verSobj& ver = man.sub("ver").cast<verSobj>();
+    verSobj& ver = man["ver"].cast<verSobj>();
     ASSERT_FALSE(nul(ver));
     ASSERT_STREQ(ver.asStr().c_str(), "1.0.8");
     ASSERT_EQ(ver.asMajor(), 1);
@@ -128,9 +128,9 @@ TEST(helloProgrammerTest, testNullThisTest) {
     tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
-    sobj& name = file->sub("empty").sub("name");
+    sobj& name = file->sub("empty")["name"];
     ASSERT_TRUE(name);
-    sobj& shouldNotExist = name.sub("should empty").sub("but can call sub also").sub("and again");
+    sobj& shouldNotExist = name["food"]["noodle"]["Jajangmyeon"];
     ASSERT_FALSE(shouldNotExist);
 }
 
@@ -167,7 +167,7 @@ TEST(helloProgrammerTest, testNullThisAccess) {
     tstr<sobj> file = sinterpreter().interp(script);
     ASSERT_TRUE(file);
 
-    string shouldExist = file->sub("null obj").sub("and so null").asStr();
+    string shouldExist = file->sub("null obj")["and so null"].asStr();
     ASSERT_FALSE(nul(shouldExist));
     ASSERT_STREQ(shouldExist.c_str(), "");
 }
@@ -191,5 +191,5 @@ TEST(helloProgrammerTest, testManifestScript) {
     ASSERT_FALSE(nul(entrys));
 
     ASSERT_EQ(entrys.len(), 1);
-    ASSERT_STREQ(entrys.sub("cpp").sub("path").asStr().c_str(), "./libsamplePack.pack");
+    ASSERT_STREQ(entrys["cpp"]["path"].asStr().c_str(), "./libsamplePack.pack");
 }

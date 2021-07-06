@@ -26,6 +26,10 @@ namespace wrd {
         return run(empty);
     }
 
+    narr me::operator[](const std::string& name) const {
+        return sub(name);
+    }
+
     narr me::sub(const std::string& name, const ncontainer& args) {
         return sub(name, _createTypesFromArgs(args));
     }
