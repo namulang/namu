@@ -13,6 +13,9 @@ namespace wrd {
         WRD_INTERFACE(node, instance)
 
     public:
+        narr operator[](const std::string& name) const;
+
+    public:
         virtual ncontainer& subs() = 0;
         const ncontainer& subs() const WRD_UNCONST_FUNC(subs())
 
