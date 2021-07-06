@@ -6,12 +6,10 @@
 namespace wrd {
 
     class pack : public node {
-        WRD_CLASS(pack, node)
+        WRD_INTERFACE(pack, node)
 
     public:
-        pack(const std::string& filePath): super(), _subs(new narr()) {
-            _manifest = _interpManifest(filePath);
-        }
+        pack(const manifest& manifest): super(), _manifest(manifest), _subs(new narr()) {}
         pack(const me& rhs) { _assign(rhs); }
 
         me& operator=(const me& rhs) {
@@ -25,7 +23,7 @@ namespace wrd {
         using super::subs;
         ncontainer& subs() override {
             if (!_subs)
-                _subs = _loadOrigins();
+                _subs = _loadOrigins(_manifest.points[0].paths);
             return *_subs;
         }
 
@@ -44,14 +42,15 @@ namespace wrd {
             return _manifest.name;
         }
 
+    protected:
+        virtual tstr<nchain> _loadOrigins(const std::vector<std::string>& filePaths) = 0;
+
     private:
-        tstr<nchain> _loadOrigins();
-
-        manifest _interpManifest(const std::string& manPath) const;
-
         me& _assign(const me& rhs) {
             _manifest = rhs._manifest;
             _filePath = rhs._filePath;
+            _subs = rhs._subs;
+
             return *this;
         }
 

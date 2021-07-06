@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../ast/pack.hpp"
+#include "packMaker.hpp"
 
 namespace wrd {
 
@@ -8,11 +9,8 @@ namespace wrd {
         WRD_CLASS(packLoader, node)
 
     public:
-        packLoader(std::initializer_list<const wchar*> paths)
-            : _subs(new nchain()) {
-            _traversePack(paths);
-        }
-
+        packLoader(const wchar* path) : _subs(new nchain()) { _traversePack({path}); }
+        packLoader(std::initializer_list<const wchar*> paths) : _subs(new nchain()) { _traversePack(paths); }
         wbool canRun(const wtypes& types) const override {
             return false;
         }
@@ -79,9 +77,15 @@ namespace wrd {
         void _createPack(const std::string& dirPath, const std::string& manifestName) {
             std::string manifestPath = dirPath + DELIMITER + manifestName;
 
-            pack* new1 = new pack(manifestPath);
-            if(!new1->isValid()) {
-                WRD_E("pack [%s] has failed to init.", manifestPath.c_str());
+            manifest mani = _interpManifest(manifestPath);
+            if(!mani.isValid()) {
+                WRD_E("invalid manifest[%s] found.", manifestPath.c_str());
+                return;
+            }
+
+            pack* new1 = packMaker().makeWith(mani);
+            if(nul(new1)) {
+                WRD_E("fail to make a pack[%s].", mani.name.c_str());
                 return;
             }
 
@@ -103,6 +107,8 @@ namespace wrd {
                 WRD_DI("\t\t.paths=%s", point.paths[0].c_str());
             }
         }
+
+        manifest _interpManifest(const std::string& manPath) const;
 
     private:
         tstr<nchain> _subs;
