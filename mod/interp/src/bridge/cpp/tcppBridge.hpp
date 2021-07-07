@@ -20,6 +20,11 @@ namespace wrd {
             return new me(new T());
         }
 
+        const std::string& getName() const override {
+            static const std::string& inner = ttype<T>::get().getName();
+            return inner;
+        }
+
         using super::getCtors;
         funcs& getCtors() override {
             // TODO: pass real constructor of given type T.

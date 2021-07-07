@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../common.hpp"
+#include <iostream>
 #include "./type/adam.hpp"
 
 namespace wrd {
@@ -66,6 +67,12 @@ namespace wrd {
             free(demangled);
             return ret;
         }
+        static std::string filterDemangle(const wchar* org) {
+            const std::string& raw = demangle(org);
+            int n = raw.rfind(":");
+
+            return raw.substr(n + 1, raw.length());
+        }
     };
 
     /// @remark TClass is a class template using monostate pattern.
@@ -83,7 +90,11 @@ namespace wrd {
     template <typename T>
     struct tnameGetter {
         static const wchar* getRawName() { return typeid(T).name(); }
-        static std::string getName() { return nameDemangler::demangle(getRawName()); }
+        static std::string getName() {
+            std::string ret = nameDemangler::filterDemangle(getRawName());
+
+            return ret;
+        }
     };
 
     // famous void_t def:

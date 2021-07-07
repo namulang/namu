@@ -27,7 +27,5 @@ TEST(packLoaderTest, testLoadSamplePack) {
     const node& pack = loader["samplePack"][0];
     ASSERT_FALSE(nul(pack));
 
-    /*TODO:
-    pak["demoClass"]
-    */
+    //pak["demoClass"]
 }

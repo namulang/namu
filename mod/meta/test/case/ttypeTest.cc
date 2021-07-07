@@ -24,7 +24,7 @@ TEST(ttypeTest, basicBehavior) {
     ASSERT_EQ(subs.size(), 1);
     ASSERT_EQ(*subs[0], ttype<myDerivedClass>::get());
 
-    ASSERT_STREQ(type.getSuper().getName().c_str(), "wrd::adam");
+    ASSERT_STREQ(type.getSuper().getName().c_str(), "adam");
 }
 
 TEST(ttypeTest, customTypeInheritTest) {

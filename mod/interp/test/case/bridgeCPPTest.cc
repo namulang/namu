@@ -45,3 +45,12 @@ TEST_F(bridgeCPPTest, testNormalWrapping) {
     func.run(args);
     ASSERT_TRUE(kniz::isRun);
 }
+
+TEST_F(bridgeCPPTest, testHasName) {
+
+    tstr<obj> bridge(tcppBridge<kniz>::def()
+        ->func<int, string>("say", &kniz::say));
+
+    ASSERT_TRUE(bridge);
+    ASSERT_STREQ(bridge->getName().c_str(), "kniz");
+}
