@@ -1,23 +1,31 @@
 #include "../../../ast/pack.hpp"
 
+typedef wrd::tnarr<wrd::obj> wrd_bridge_cpp_origins;
+
 namespace wrd {
+
+    typedef void* libHandle;
+    typedef std::vector<libHandle> libHandles;
+    typedef void (*entrypointFunc)(wrd_bridge_cpp_origins*);
 
     class cppPack : public pack {
         WRD_CLASS(cppPack, pack)
 
     public:
         cppPack(const manifest& manifest): super(manifest) {}
+        ~cppPack() override { _rel(); }
+
+    public:
+        void rel() override {
+            _rel();
+            super::rel();
+        }
 
     protected:
-        tstr<nchain> _loadOrigins(const std::vector<std::string>& filePaths) override {
-            if(filePaths.size() <= 0)
-                return WRD_E("no entrypoints provided."), tstr<nchain>();
+        tstr<nchain> _loadOrigins(const std::vector<std::string>& filePaths) override;
+        void _rel();
 
-            narr tray;
-            /* TODO:
-            */
-
-            return tstr<nchain>(new nchain(tray));
-        }
+    private:
+        libHandles _handles;
     };
 }

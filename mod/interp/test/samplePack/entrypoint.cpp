@@ -8,10 +8,7 @@ struct helloWorld {
     }
 };
 
-extern "C" struct wrd_bridge_cpp_origins* wrd_module_entrypoint(struct wrd_bridge_cpp_origins* packs) {
-
-    packs->arr[packs->size++] = tcppBridge<helloWorld>::def()
-        ->func("say", &helloWorld::say);
-
-    return packs;
+extern "C" void wrd_bridge_cpp_entrypoint(wrd_bridge_cpp_origins* tray) {
+    tray->add(tcppBridge<helloWorld>::def()
+        ->func("say", &helloWorld::say));
 }
