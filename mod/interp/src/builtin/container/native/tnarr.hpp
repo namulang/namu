@@ -62,8 +62,10 @@ namespace wrd {
 
     public:
         tnarr() {}
-        tnarr(std::initializer_list<T*> elems) {
-            add(elems);
+        tnarr(std::initializer_list<const node*> elems) { add(elems); }
+        template <typename... Es> tnarr(const Es&... elems) {
+            static_assert(areBaseOfT<T, Es...>::value);
+            add( { (T*) &elems... } );
         }
 
         // operator:
