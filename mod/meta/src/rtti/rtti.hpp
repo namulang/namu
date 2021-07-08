@@ -113,4 +113,7 @@ namespace wrd {
     struct tsuperTypeDef<T, void_t<int T::superType::*>> {
         using is = typename T::superType;
     };
- }
+
+    template <typename T, typename... Es>
+    using areBaseOfT = std::conjunction<std::is_base_of<T, Es>...>;
+}

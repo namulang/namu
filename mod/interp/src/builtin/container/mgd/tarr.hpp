@@ -10,9 +10,7 @@ namespace wrd {
 
     public:
         tarr() {}
-        explicit tarr(std::initializer_list<node*> elems) {
-            add(elems);
-        }
+        explicit tarr(std::initializer_list<const T*> elems) { add(elems); }
         explicit tarr(const tnarr<T>& nativeArr): _arr(nativeArr) {}
 
         tnarr<T>& getNative() { return _arr; }

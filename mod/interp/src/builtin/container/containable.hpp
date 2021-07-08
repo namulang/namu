@@ -54,7 +54,7 @@ namespace wrd {
 
         // add:
         virtual wbool add(const wrd::iter& at, const node& new1) = 0;
-        wbool add(std::initializer_list<node*> elems) {
+        wbool add(std::initializer_list<const node*> elems) {
             wbool ret = false;
             for(auto* elem : elems)
                 ret = add(elem);

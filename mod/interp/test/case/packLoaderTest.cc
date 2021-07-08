@@ -24,15 +24,15 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
 TEST(packLoaderTest, testLoadSamplePack) {
     packLoader loader("pack");
 
-    const node& pack = loader["samplePack"];
+    node& pack = loader["samplePack"];
     ASSERT_FALSE(nul(pack));
 
-    /*ASSERT_EQ(pack.subs().len(), 1);
-    const node& origin = pack["helloWorld"];
+    ASSERT_EQ(pack.subs().len(), 1);
+    node& origin = pack["helloWorld"];
     ASSERT_FALSE(nul(origin));
 
     {
-        const func& sayFunc = origin["say"].cast<func>();
+        func& sayFunc = origin["say"].cast<func>();
         ASSERT_FALSE(nul(sayFunc));
 
         // TODO: fill return type:
@@ -43,18 +43,18 @@ TEST(packLoaderTest, testLoadSamplePack) {
     }
 
     {
-        const func& add = origin["add"].cast<func>();
+        func& add = origin["add"].cast<func>();
         ASSERT_FALSE(nul(add));
 
         // TODO: return type check
 
         const wtypes& argTypes = add.getTypes();
-        ASSERt_EQ(argTypes.size(), 2);
-        ASSERT_EQ(argTypes[0], origin.getType());
-        ASSERT_EQ(argTypes[1], ttype<wInt>());
+        ASSERT_EQ(argTypes.size(), 2);
+        ASSERT_EQ(*argTypes[0], origin.getType());
+        ASSERT_EQ(*argTypes[1], ttype<wInt>());
 
-        str retVal = add.run(narr {&origin, &wInt(5)} );
+        wInt arg1(5);
+        str retVal = add.run(narr {&origin, &arg1} );
         // TODO: ret val check
     }
-    */
 }
