@@ -9,7 +9,18 @@ namespace wrd {
 #define ME containable
 
     template <typename T>
-    tnarr<T> ME::get(std::function<wbool(const T&)> l) const {
+    T& ME::get(std::function<wbool(const T&)> l) const {
+        for(titer<T> e=begin<T>(); e ; ++e) {
+            const T& elem = *e;
+            if(l(elem))
+                return const_cast<T&>(elem);
+        }
+
+        return nulOf<T>();
+    }
+
+    template <typename T>
+    tnarr<T> ME::getAll(std::function<wbool(const T&)> l) const {
         tnarr<T> ret;
         for(titer<T> e=begin<T>(); e ; ++e) {
             const T& elem = *e;

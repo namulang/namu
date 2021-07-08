@@ -76,11 +76,11 @@ wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj&
 
     for(int n=0; n < funcNameSize; n++) {
         const char* name = funcNames[n];
-        if(fr.sub(name).len() != 1)
+        if(fr.subAll(name).len() != 1)
             return WRD_E("fr.sub(%s) is 0 or +2 founds", name), false;
     }
 
-    narr foundfunc = fr.sub(func.getName());
+    narr foundfunc = fr.subAll(func.getName());
     if(foundfunc.len() != 1)
         return WRD_E("couldn't find %s func on frame(%x)", func.getName().c_str(), &fr), false;
 

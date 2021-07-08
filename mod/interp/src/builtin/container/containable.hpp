@@ -21,8 +21,11 @@ namespace wrd {
 
         // get:
         template <typename T>
-        tnarr<T> get(std::function<wbool(const T&)> l) const;
-        narr get(std::function<wbool(const node&)> l) const;
+        T& get(std::function<wbool(const T&)> l) const;
+        node& get(std::function<wbool(const node&)> l) const;
+        template <typename T>
+        tnarr<T> getAll(std::function<wbool(const T&)> l) const;
+        narr getAll(std::function<wbool(const node&)> l) const;
 
         // iter:
         wrd::iter begin() const { return iter<node>(0); }

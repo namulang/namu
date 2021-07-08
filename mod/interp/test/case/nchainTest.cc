@@ -95,13 +95,13 @@ TEST(nchainTest, testcontainableAPI) {
 
     //  get & each:
     {
-        tnarr<myNode> tray = arr->get<myNode>([](const myNode& elem) {
+        tnarr<myNode> tray = arr->getAll<myNode>([](const myNode& elem) {
             return true;
         });
         ASSERT_EQ(tray.len(), 2);
 
         int cnt = 0;
-        tray = arr->get<myNode>([&cnt](const myNode& elem) {
+        tray = arr->getAll<myNode>([&cnt](const myNode& elem) {
             if(cnt >= 1) return false;
             cnt++;
             return true;
@@ -109,7 +109,7 @@ TEST(nchainTest, testcontainableAPI) {
         ASSERT_EQ(tray.len(), 1);
     }
 
-    tnarr<myMyNode> tray = arr->get<myMyNode>([](const myMyNode& elem) {
+    tnarr<myMyNode> tray = arr->getAll<myMyNode>([](const myMyNode& elem) {
         if(elem.number == 1) return true;
         return false;
     });
