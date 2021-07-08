@@ -10,22 +10,22 @@ namespace wrd {
         : _name(name), _subs(new nchain(subItself)) {}
 
     str me::run(const ncontainer& args) {
-        tnarr<func> candidates = getCtors().get<func>([&args](const func& candidate) {
+        func& fun = getCtors().get<func>([&args](const func& candidate) {
             return candidate.canRun(args);
         });
 
-        if(candidates.len() != 1)
+        if(nul(fun))
             return WRD_E("%s object isn't constructable with given args", getType().getName().c_str()), str();
 
-        return candidates[0].run(args);
+        return fun.run(args);
     }
 
     wbool me::canRun(const wtypes& types) const {
-        tnarr<func> candidates = getCtors().get<func>([&types](const func& f) {
+        func& fun = getCtors().get<func>([&types](const func& f) {
             return f.canRun(types);
         });
 
-        if(candidates.len() != 1)
+        if(nul(fun))
             return WRD_E("%s object isn't constructable with given args", getType().getName().c_str()), false;
         return true;
     }

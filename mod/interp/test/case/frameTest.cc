@@ -46,7 +46,7 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     nchain chnBase;
     chnBase.add(new myNode(1));
     chnBase.add(new myNode(2));
-    ASSERT_EQ(chnBase.len(), 2);
+    ASSERT_FALSE(nul(owns.get<myNode>(lambda)));
     fr.add(chnBase);
 
     nchain shares;
@@ -61,8 +61,8 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     ASSERT_EQ(owns.get<myNode>(lambda).len(), 2);
 
     fr.add(*nchain::wrapDeep(owns));
-    ASSERT_EQ(fr.sub<myNode>(lambda).len(), 4);
-    ASSERT_EQ(owns.get<myNode>(lambda).len(), 2);
+    ASSERT_EQ(fr.subAll<myNode>(lambda).len(), 4);
+    ASSERT_EQ(owns.getAll<myNode>(lambda).len(), 2);
 
     int expects[] = {4, 3, 1, 2};
     titer<myNode> e = getLinks(fr).begin<myNode>();

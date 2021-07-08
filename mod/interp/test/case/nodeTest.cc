@@ -118,7 +118,7 @@ TEST(nodeTest, testManualNativefuncCall) {
 
     narr args;
     args.add(obj);
-    narr subs = obj.sub(func.getName(), args);
+    narr subs = obj.subAll(func.getName(), args);
     ASSERT_EQ(subs.len(), 1);
     ASSERT_TRUE(subs[0].canRun(args));
 

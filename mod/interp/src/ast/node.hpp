@@ -13,7 +13,7 @@ namespace wrd {
         WRD_INTERFACE(node, instance)
 
     public:
-        narr operator[](const std::string& name) const;
+        node& operator[](const std::string& name) const { return sub(name); }
 
     public:
         wbool isSub(const type& it) const { return getType().isSub(it); }
@@ -27,14 +27,25 @@ namespace wrd {
         const ncontainer& subs() const WRD_UNCONST_FUNC(subs())
 
         template <typename T>
-        tnarr<T> sub(std::function<wbool(const T&)> l) const {
+        node& sub(std::function<wbool(const T&)> l) const {
             return subs().get<T>(l);
         }
-        narr sub(const std::string& name) const;
-        narr sub(const std::string& name, const ncontainer& args);
-        narr sub(const std::string& name, const wtypes& types);
-        narr sub(const std::string& name, const ncontainer& args) const;
-        narr sub(const std::string& name, const wtypes& types) const;
+        node& sub(const std::string& name) const;
+        node& sub(const std::string& name, const ncontainer& args);
+        node& sub(const std::string& name, const wtypes& types);
+        node& sub(const std::string& name, const ncontainer& args) const;
+        node& sub(const std::string& name, const wtypes& types) const;
+
+        template <typename T>
+        tnarr<T> subAll(std::function<wbool(const T&)> l) const {
+            return subs().getAll<T>(l);
+        }
+        narr subAll(const std::string& name) const;
+        narr subAll(const std::string& name, const ncontainer& args);
+        narr subAll(const std::string& name, const wtypes& types);
+        narr subAll(const std::string& name, const ncontainer& args) const;
+        narr subAll(const std::string& name, const wtypes& types) const;
+ 
 
         virtual wbool canRun(const wtypes& types) const = 0;
         wbool canRun(const ncontainer& args) const {

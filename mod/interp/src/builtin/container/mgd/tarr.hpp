@@ -29,7 +29,8 @@ namespace wrd {
         //  get:
         T& get(widx n) override { return _arr.get(n); }
         const T& get(widx n) const override { return _arr.get(n); }
-        template <typename E> tnarr<E> get(std::function<wbool(const E&)> l) const { return _arr.get(l); }
+        template <typename E> tnarr<E> getAll(std::function<wbool(const E&)> l) const { return _arr.template getAll<E>(l); }
+        template <typename E> E& get(std::function<wbool(const E&)> l) const { return _arr.template get<E>(l); }
 
         //  set:
         using containable::set;

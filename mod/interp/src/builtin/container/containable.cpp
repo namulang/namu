@@ -6,7 +6,11 @@ namespace wrd {
 
     WRD_DEF_ME(containable)
 
-    narr me::get(std::function<wbool(const node&)> l) const {
+    node& me::get(std::function<wbool(const node&)> l) const {
         return get<node>(l);
+    }
+
+    narr me::getAll(std::function<wbool(const node&)> l) const {
+        return getAll<node>(l);
     }
 }

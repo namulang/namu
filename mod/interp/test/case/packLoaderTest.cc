@@ -24,8 +24,37 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
 TEST(packLoaderTest, testLoadSamplePack) {
     packLoader loader("pack");
 
-    const node& pack = loader["samplePack"][0];
+    const node& pack = loader["samplePack"];
     ASSERT_FALSE(nul(pack));
 
-    //pak["demoClass"]
+    /*ASSERT_EQ(pack.subs().len(), 1);
+    const node& origin = pack["helloWorld"];
+    ASSERT_FALSE(nul(origin));
+
+    {
+        const func& sayFunc = origin["say"].cast<func>();
+        ASSERT_FALSE(nul(sayFunc));
+
+        // TODO: fill return type:
+        // ASSERT_EQ(sayFunc.getReturnType(), ...
+
+        ASSERT_EQ(sayFunc.getTypes().size(), 1); // 1 for originObj as "me"
+        sayFunc.run(narr {&origin} ); // TODO: need to return value check
+    }
+
+    {
+        const func& add = origin["add"].cast<func>();
+        ASSERT_FALSE(nul(add));
+
+        // TODO: return type check
+
+        const wtypes& argTypes = add.getTypes();
+        ASSERt_EQ(argTypes.size(), 2);
+        ASSERT_EQ(argTypes[0], origin.getType());
+        ASSERT_EQ(argTypes[1], ttype<wInt>());
+
+        str retVal = add.run(narr {&origin, &wInt(5)} );
+        // TODO: ret val check
+    }
+    */
 }

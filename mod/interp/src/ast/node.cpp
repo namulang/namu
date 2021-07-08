@@ -15,31 +15,46 @@ namespace wrd {
         return getType().asImpli(*this, to);
     }
 
-    narr me::sub(const std::string& name) const {
-        return subs().get([&](const node& elem) {
-            return elem.getName() == name;
-        });
-    }
-
     str me::run() {
         static narr empty;
         return run(empty);
     }
 
-    narr me::operator[](const std::string& name) const {
-        return sub(name);
+    node& me::sub(const std::string& name) const {
+        return subs().get([&](const node& elem) {
+            return elem.getName() == name;
+        });
     }
 
-    narr me::sub(const std::string& name, const ncontainer& args) {
+    node& me::sub(const std::string& name, const ncontainer& args) {
         return sub(name, _createTypesFromArgs(args));
     }
 
-    narr me::sub(const std::string& name, const wtypes& types) {
+    node& me::sub(const std::string& name, const wtypes& types) {
         return subs().get([&](const node& elem) {
             return elem.getName() == name && elem.canRun(types);
         });
     }
 
-    narr me::sub(const std::string& name, const ncontainer& args) const WRD_UNCONST_FUNC(sub(name, args))
-    narr me::sub(const std::string& name, const wtypes& types) const WRD_UNCONST_FUNC(sub(name, types))
+    node& me::sub(const std::string& name, const ncontainer& args) const WRD_UNCONST_FUNC(sub(name, args))
+    node& me::sub(const std::string& name, const wtypes& types) const WRD_UNCONST_FUNC(sub(name, types))
+
+    narr me::subAll(const std::string& name) const {
+        return subs().getAll([&](const node& elem) {
+            return elem.getName() == name;
+        });
+    }
+
+    narr me::subAll(const std::string& name, const ncontainer& args) {
+        return subAll(name, _createTypesFromArgs(args));
+    }
+
+    narr me::subAll(const std::string& name, const wtypes& types) {
+        return subs().getAll([&](const node& elem) {
+            return elem.getName() == name && elem.canRun(types);
+        });
+    }
+
+    narr me::subAll(const std::string& name, const ncontainer& args) const WRD_UNCONST_FUNC(subAll(name, args))
+    narr me::subAll(const std::string& name, const wtypes& types) const WRD_UNCONST_FUNC(subAll(name, types))
 }

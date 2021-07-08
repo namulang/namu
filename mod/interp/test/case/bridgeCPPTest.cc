@@ -39,7 +39,7 @@ TEST_F(bridgeCPPTest, testNormalWrapping) {
     narr args;
     args.add(*bridge);
     args.add(new wStr("hello native!"));
-    node& func = bridge->sub("say")[0];
+    node& func = bridge->sub("say");
     ASSERT_FALSE(nul(func));
 
     func.run(args);
