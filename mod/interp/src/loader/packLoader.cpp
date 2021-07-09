@@ -4,7 +4,7 @@ namespace wrd {
 
     WRD_DEF_ME(packLoader)
 
-    manifest me::_interpManifest(const std::string& manPath) const {
+    manifest me::_interpManifest(const std::string& dir, const std::string& manPath) const {
         // TODO: open pack zip file -> extract manifest.swrd file -> interpret it & load values
         tstr<sobj> loaded = sinterpreter().interpFile(manPath);
         if(!loaded)
@@ -17,7 +17,7 @@ namespace wrd {
         entrypoints points;
         sobj& entrypoints = loaded->sub("entrypoints");
         for(auto& pair: entrypoints) {
-            const std::string& path = pair.second->sub("path").asStr();
+            const std::string& path = dir + DELIMITER + pair.second->sub("path").asStr();
             if(nul(path))
                 return WRD_E("error to load %s: no entrypoint path", manPath.c_str()), manifest();
 

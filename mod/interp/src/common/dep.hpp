@@ -4,3 +4,4 @@
 #include <dirent.h> // not compatible to winOs
 #include <swrd.hpp>
 #include <dlfcn.h>
+#include <array>

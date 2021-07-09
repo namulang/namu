@@ -97,7 +97,7 @@ namespace wrd {
     };
 
     TEMPL
-    void ME::empty() {
+    void ME::rel() {
         _vec.clear();
     }
 

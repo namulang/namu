@@ -97,7 +97,7 @@ namespace wrd {
         wbool del(widx n) override;
 
         // etc:
-        void empty() override;
+        void rel() override;
 
         tstr<instance> deepClone() const override;
 

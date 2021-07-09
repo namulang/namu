@@ -89,7 +89,7 @@ void benchMarkNArr(int cnt) {
     }
     sz = arr.len();
     startDeleting = chrono::steady_clock::now();
-    arr.empty();
+    arr.rel();
     end = chrono::steady_clock::now();
 
     addingElapsed = startDeleting - start;
@@ -227,7 +227,7 @@ TEST(narrTest, testcontainableAPI) {
     ASSERT_FALSE(++e2);
 
     ASSERT_TRUE(con->len() > 0);
-    con->empty();
+    con->rel();
     ASSERT_TRUE(con->len() == 0);
 
     ASSERT_EQ(con->add(arr2.begin() + 2, arr2.end()), 4);
