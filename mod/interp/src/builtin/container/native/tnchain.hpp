@@ -165,7 +165,7 @@ namespace wrd {
         wcnt del(const wrd::iter& from, const wrd::iter& end) override;
 
         // etc:
-        void empty() override;
+        void rel() override;
 
         ncontainer& getContainer() { return *_arr; }
         const ncontainer& getContainer() const { return *_arr; }

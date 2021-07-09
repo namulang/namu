@@ -49,12 +49,15 @@ TEST(packLoaderTest, testLoadSamplePack) {
         // TODO: return type check
 
         const wtypes& argTypes = add.getTypes();
-        ASSERT_EQ(argTypes.size(), 2);
+        ASSERT_EQ(argTypes.size(), 3);
         ASSERT_EQ(*argTypes[0], origin.getType());
         ASSERT_EQ(*argTypes[1], ttype<wInt>());
 
         wInt arg1(5);
-        str retVal = add.run(narr {&origin, &arg1} );
+        str retVal = add.run(narr {&origin, &arg1} ); // should nothing happen
+        // TODO: ret val check
+
+        retVal = add.run(narr(origin, wInt(5), wInt(3)));
         // TODO: ret val check
     }
 }

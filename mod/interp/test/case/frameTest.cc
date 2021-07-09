@@ -46,7 +46,6 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     nchain chnBase;
     chnBase.add(new myNode(1));
     chnBase.add(new myNode(2));
-    ASSERT_FALSE(nul(owns.get<myNode>(lambda)));
     fr.add(chnBase);
 
     nchain shares;
@@ -58,7 +57,7 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     auto lambda = [](const myNode& elem) {
         return true;
     };
-    ASSERT_EQ(owns.get<myNode>(lambda).len(), 2);
+    ASSERT_FALSE(nul(owns.get<myNode>(lambda)));
 
     fr.add(*nchain::wrapDeep(owns));
     ASSERT_EQ(fr.subAll<myNode>(lambda).len(), 4);

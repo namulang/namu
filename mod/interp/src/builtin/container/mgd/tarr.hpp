@@ -55,19 +55,16 @@ namespace wrd {
         wcnt del(const wrd::iter& from, const wrd::iter& to) override { return _arr.del(from, to); }
 
         //  etc:
-        void empty() override { _arr.empty(); }
-
         tstr<instance> deepClone() const override {
             return _arr.deepClone();
         }
-
-        // node:
         void rel() override {
-            _arr.empty();
+            _arr.rel();
 
            super::rel();
         }
 
+        // node:
         using super::getCtors;
         funcs& getCtors() override {
             static funcs inner;

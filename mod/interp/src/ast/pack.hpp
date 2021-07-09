@@ -9,7 +9,7 @@ namespace wrd {
         WRD_INTERFACE(pack, node)
 
     public:
-        pack(const manifest& manifest): super(), _manifest(manifest), _subs(new narr()) {}
+        pack(const manifest& manifest): super(), _manifest(manifest) {}
         pack(const me& rhs) { _assign(rhs); }
 
         me& operator=(const me& rhs) {
@@ -42,8 +42,15 @@ namespace wrd {
             return _manifest.name;
         }
 
+        void rel() override {
+            if(_subs)
+                _subs->rel();
+
+            super::rel();
+        }
+
     protected:
-        virtual tstr<nchain> _loadOrigins(const std::vector<std::string>& filePaths) = 0;
+        virtual tstr<narr> _loadOrigins(const std::vector<std::string>& filePaths) = 0;
 
     private:
         me& _assign(const me& rhs) {

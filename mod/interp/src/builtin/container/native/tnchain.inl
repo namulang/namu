@@ -94,9 +94,9 @@ namespace wrd {
     }
 
     TEMPL
-    void ME::empty() {
+    void ME::rel() {
         for(chnIter e=beginChain(); e ;++e)
-            e->getContainer().empty();
+            e->getContainer().rel();
     }
 
 #undef ME

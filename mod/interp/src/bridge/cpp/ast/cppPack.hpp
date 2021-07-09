@@ -13,16 +13,19 @@ namespace wrd {
 
     public:
         cppPack(const manifest& manifest): super(manifest) {}
-        ~cppPack() override { _rel(); }
+        ~cppPack() override { me::rel(); }
 
     public:
         void rel() override {
-            _rel();
+            // sequence of rel() matters:
+            //  before release handles from _rel(),
+            //  origin instances should be freed first from super::rel();
             super::rel();
+            _rel();
         }
 
     protected:
-        tstr<nchain> _loadOrigins(const std::vector<std::string>& filePaths) override;
+        tstr<narr> _loadOrigins(const std::vector<std::string>& filePaths) override;
         void _rel();
 
     private:

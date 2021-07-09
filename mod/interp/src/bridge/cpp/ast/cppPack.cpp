@@ -5,13 +5,13 @@ namespace wrd {
 
     WRD_DEF_ME(cppPack)
 
-    static constexpr const wchar* ENTRYPOINT_NAME = "";
+    static constexpr const wchar* ENTRYPOINT_NAME = "wrd_bridge_cpp_entrypoint";
 
-    tstr<nchain> me::_loadOrigins(const std::vector<std::string>& filePaths) {
+    tstr<narr> me::_loadOrigins(const std::vector<std::string>& filePaths) {
         if(filePaths.size() <= 0)
             return WRD_E("no entrypoints provided."), tstr<nchain>();
 
-        narr orgs;
+        narr* orgs = new narr();
         for(const std::string& path : filePaths) {
             libHandle newHandle = dlopen(path.c_str(), RTLD_LAZY);
             if(!newHandle) {
@@ -34,13 +34,13 @@ namespace wrd {
                 continue;
             }
 
-            orgs.add(tray);
+            orgs->add(tray);
             _handles.push_back(newHandle); // don't close yet.
             WRD_I("pack[%s] loads origins from %s", getName().c_str(), path.c_str());
         }
 
         WRD_I("pack[%s] origins loaded.", getName().c_str());
-        return tstr<nchain>(new nchain(orgs));
+        return tstr<narr>(orgs);
     }
 
     void me::_rel() {

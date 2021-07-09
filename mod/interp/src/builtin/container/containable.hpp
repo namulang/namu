@@ -86,7 +86,7 @@ namespace wrd {
         wcnt del(const containable& rhs) { return del(rhs.begin(), rhs.end()); }
 
         // etc:
-        virtual void empty() = 0;
+        virtual void rel() = 0;
 
         virtual tstr<instance> deepClone() const = 0;
 

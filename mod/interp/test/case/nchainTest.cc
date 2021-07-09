@@ -164,7 +164,7 @@ TEST(nchainTest, testcontainableAPI) {
     ASSERT_FALSE(++e);
 
     ASSERT_TRUE(con->len() > 0);
-    con->empty();
+    con->rel();
     ASSERT_TRUE(con->len() == 0);
 
     ASSERT_EQ(con->add(arr2.iter(2), arr2.end()), 4);

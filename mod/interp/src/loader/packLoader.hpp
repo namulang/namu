@@ -77,7 +77,7 @@ namespace wrd {
         void _createPack(const std::string& dirPath, const std::string& manifestName) {
             std::string manifestPath = dirPath + DELIMITER + manifestName;
 
-            manifest mani = _interpManifest(manifestPath);
+            manifest mani = _interpManifest(dirPath, manifestPath);
             if(!mani.isValid()) {
                 WRD_E("invalid manifest[%s] found.", manifestPath.c_str());
                 return;
@@ -108,7 +108,7 @@ namespace wrd {
             }
         }
 
-        manifest _interpManifest(const std::string& manPath) const;
+        manifest _interpManifest(const std::string& dir, const std::string& manPath) const;
 
     private:
         tstr<nchain> _subs;
