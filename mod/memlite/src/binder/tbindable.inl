@@ -10,7 +10,7 @@ namespace wrd {
 	TEMPL ME::operator wbool() const { return isBind(); }
 
 	TEMPL wbool ME::canBind(const T& it) const {
-        WRD_NUL(it, false)
+        if(nul(it)) return false;
 	    return canBind(it.getType());
 	}
 
