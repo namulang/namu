@@ -55,9 +55,10 @@ TEST(packLoaderTest, testLoadSamplePack) {
 
         wInt arg1(5);
         str retVal = add.run(narr {&origin, &arg1} ); // should nothing happen
-        // TODO: ret val check
+        ASSERT_FALSE(retVal);
 
         retVal = add.run(narr(origin, wInt(5), wInt(3)));
-        // TODO: ret val check
+        ASSERT_TRUE(retVal);
+        ASSERT_EQ(retVal->cast<wInt>().get(), 8);
     }
 }
