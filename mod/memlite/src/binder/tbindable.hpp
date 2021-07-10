@@ -17,10 +17,7 @@ namespace wrd {
             // type checking before binding only is required to Bind class.
             // Derived classes from this doesn't need it. because its type is specified.
             // prevent wrong type providing by compiler.
-            if(!canBind(it)) {
-                WRD_W("can't bind it(%s) instance", it.getType().getName().c_str());
-                return false;
-            }
+            if(!canBind(it)) return false;
             return true;
         }
         wbool bind(const instance* it) { return bind(*it); }
