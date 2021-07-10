@@ -4,12 +4,17 @@ namespace wrd {
 
     struct marshalErr {};
 
-    template <typename nativeType, typename tmarshalType>
+    template <typename tnativeType, typename tmarshalType>
     struct tnormalMarshaling : public metaIf {
-        typedef tmarshalType marshalType;
+        typedef tmarshalType mgdType;
+        typedef tnativeType nativeType;
 
-        static nativeType from(node& it) {
-            return ((marshalType&) it).get();
+        static nativeType toNative(node& it) {
+            return ((mgdType&) it).get();
+        }
+
+        static str toMgd(nativeType it) {
+            return str(new mgdType(it));
         }
 
         static yes canMarshal();
@@ -17,11 +22,17 @@ namespace wrd {
 
     template <typename T>
     struct tmarshaling : public metaIf {
-        typedef void marshalType;
+        typedef void mgdType;
 
-        static T from(node& it) {
+        static T toNative(node& it) {
             throw marshalErr();
         }
+
+        template <typename E>
+        static str toMgd(E it) {
+           return str();
+        }
+
         static no canMarshal();
     };
 
