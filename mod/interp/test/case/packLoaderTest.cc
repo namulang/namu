@@ -35,18 +35,17 @@ TEST(packLoaderTest, testLoadSamplePack) {
         func& sayFunc = origin["say"].cast<func>();
         ASSERT_FALSE(nul(sayFunc));
 
-        // TODO: fill return type:
-        // ASSERT_EQ(sayFunc.getReturnType(), ...
-
+        ASSERT_EQ(sayFunc.getReturnType(), wVoid().getType());
         ASSERT_EQ(sayFunc.getTypes().size(), 1); // 1 for originObj as "me"
-        sayFunc.run(narr {&origin} ); // TODO: need to return value check
+
+        str res = sayFunc.run(narr {&origin} );
+        ASSERT_TRUE(res);
+        ASSERT_EQ(res->cast<wVoid>(), wVoid());
     }
 
     {
         func& add = origin["add"].cast<func>();
         ASSERT_FALSE(nul(add));
-
-        // TODO: return type check
 
         const wtypes& argTypes = add.getTypes();
         ASSERT_EQ(argTypes.size(), 3);

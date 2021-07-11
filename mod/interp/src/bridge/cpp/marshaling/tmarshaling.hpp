@@ -20,6 +20,18 @@ namespace wrd {
         static yes canMarshal();
     };
 
+    template <>
+    struct tnormalMarshaling<void, wVoid> : public metaIf {
+        typedef wVoid mgdType;
+        typedef void nativeType;
+
+        static str toMgd() {
+            return str(new wVoid());
+        }
+
+        static yes canMarshal();
+    };
+
     template <typename T>
     struct tmarshaling : public metaIf {
         typedef void mgdType;
@@ -44,6 +56,9 @@ namespace wrd {
 
     template <>
     struct tmarshaling<const std::string> : public tnormalMarshaling<const std::string&, wStr> {};
+
+    template <>
+    struct tmarshaling<void> : public tnormalMarshaling<void, wVoid> {};
 
     // TODO: add more.
 }
