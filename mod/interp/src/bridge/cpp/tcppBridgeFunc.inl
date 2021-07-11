@@ -5,9 +5,10 @@
 
 namespace wrd {
 
+#define TEMPL template <typename Ret, typename T, typename... Args>
 #define ME tcppBridgeFuncBase<Ret, T, Args...>
-    template <typename Ret, typename T, typename... Args>
-    const wtypes& ME::getTypes() const {
+
+    TEMPL const wtypes& ME::getTypes() const {
         static wtypes* inner = nullptr;
         if(!inner) {
             inner = new wtypes();
@@ -21,25 +22,28 @@ namespace wrd {
 #undef ME
 #define ME tcppBridgeFunc<Ret, T, Args...>
 
-    template <typename Ret, typename T, typename... Args>
+    TEMPL
     template <size_t... index>
     str ME::_marshal(narr& args, std::index_sequence<index...>) {
         auto& me = (tcppBridge<T>&) args[0];
 
-        return tmarshaling<Ret>::toMgd((me._real->*_fptr)(tmarshaling<Args>::toNative(args[index + 1])...));
+        return tmarshaling<Ret>::toMgd((me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index + 1])...));
     }
 
 #undef ME
+#undef TEMPL
+#define TEMPL template <typename T, typename... Args>
 #define ME tcppBridgeFunc<void, T, Args...>
 
-    template <typename T, typename... Args>
+    TEMPL
     template <size_t... index>
     str ME::_marshal(narr& args, std::index_sequence<index...>) {
         auto& me = (tcppBridge<T>&) args[0];
 
-        (me._real->*_fptr)(tmarshaling<Args>::toNative(args[index + 1])...);
-        return str();
+        (me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index + 1])...);
+        return tmarshaling<void>::toMgd();
     }
 
+#undef TEMPL
 #undef ME
 }

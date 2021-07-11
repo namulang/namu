@@ -3,3 +3,4 @@
 #include "primitive/wFlt.hpp"
 #include "primitive/wInt.hpp"
 #include "primitive/wStr.hpp"
+#include "primitive/wVoid.hpp"
