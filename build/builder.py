@@ -239,7 +239,7 @@ def _extractBuildInfo(): # from CHANGELOGS at root directory.
                 ver_fix = 0
             else:
                 ver_fix = int(ver_fix_str)
-            ver_name = line[ver_name_n: len(line)-6-1-1]
+            ver_name = line[ver_name_n: len(line)-5]
             break
 
     fp.close()
