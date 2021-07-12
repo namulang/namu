@@ -1,4 +1,18 @@
 # Changelogs
+## v0.1.4 Essence Update 0.4
+released on 06-26 2021
+build# 226.
+
+### major changes
+* all: doc: license has been changed from LGPL to MIT
+* all: chore: unittests now runs at 'bin' dir.
+* interp: feat: add c++ bridge API
+* interp: feat: pack importing
+* interp: feat: tnchain supports deep(= nested) chaining
+* interp: refactor: container components
+* interp: feat: abstracts extracting origin
+
+
 ## v0.1.3 Essence Update 0.3
 released on 05-03 2021.
 build # was 209 and major changes are as follows:
@@ -6,6 +20,7 @@ build # was 209 and major changes are as follows:
 ### features
 * implmentation of Essence Update Iteration#3.
 * add basic components of ast. (obj, pack, node, ...)
+
 
 ## v0.01a Dust Update build# 9444
 it was 02-25 2016.
