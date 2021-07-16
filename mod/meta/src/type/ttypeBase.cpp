@@ -8,7 +8,12 @@ namespace wrd {
     ME::ttypeBase() { this->init(); }
     wbool ME::isTemplate() const { return false; }
     wbool ME::isAbstract() const { return true; }
-    const std::string& ME::getName() const { return "void"; }
+
+    const std::string& ME::getName() const {
+        static const std::string inner = "void";
+        return inner;
+    }
+
     void* ME::make() const { return nullptr; }
     wcnt ME::size() const { return 0; }
 
