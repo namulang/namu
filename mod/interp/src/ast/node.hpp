@@ -45,7 +45,6 @@ namespace wrd {
         narr subAll(const std::string& name, const wtypes& types);
         narr subAll(const std::string& name, const ncontainer& args) const;
         narr subAll(const std::string& name, const wtypes& types) const;
- 
 
         virtual wbool canRun(const wtypes& types) const = 0;
         wbool canRun(const ncontainer& args) const {

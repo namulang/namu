@@ -27,6 +27,9 @@ namespace wrd {
     }
 
     node& me::sub(const std::string& name, const ncontainer& args) {
+        if(nul(args))
+            return sub(name);
+
         return sub(name, _createTypesFromArgs(args));
     }
 
@@ -46,6 +49,9 @@ namespace wrd {
     }
 
     narr me::subAll(const std::string& name, const ncontainer& args) {
+        if(nul(args))
+            return subAll(name);
+
         return subAll(name, _createTypesFromArgs(args));
     }
 
