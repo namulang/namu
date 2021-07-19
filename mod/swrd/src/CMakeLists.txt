@@ -6,8 +6,8 @@ message("\t\tconfigure_files...")
 find_package(BISON)
 find_package(FLEX)
 
-bison_target(swrdParser parser/swrd.y ${CMAKE_CURRENT_SOURCE_DIR}/parser/swrdParser.cpp COMPILE_FLAGS "-l")
-flex_target(swrdScanner parser/swrd.l ${CMAKE_CURRENT_SOURCE_DIR}/parser/swrdScanner.cpp COMPILE_FLAGS "-L")
+bison_target(swrdParser parser/swrdParser.y ${CMAKE_CURRENT_SOURCE_DIR}/parser/swrdParser.cpp COMPILE_FLAGS "-l")
+flex_target(swrdScanner parser/swrdScanner.l ${CMAKE_CURRENT_SOURCE_DIR}/parser/swrdScanner.cpp COMPILE_FLAGS "-L")
 add_flex_bison_dependency(swrdScanner swrdParser)
 
 #  defines:
