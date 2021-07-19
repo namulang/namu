@@ -8,6 +8,7 @@ find_package(FLEX)
 
 bison_target(wrdParser parser/wrdParser.y ${CMAKE_CURRENT_SOURCE_DIR}/parser/wrdParser.cpp COMPILE_FLAGS "-l")
 flex_target(wrdScanner parser/wrdScanner.l ${CMAKE_CURRENT_SOURCE_DIR}/parser/wrdScanner.cpp COMPILE_FLAGS "-L")
+add_flex_bison_dependency(wrdScanner wrdParser)
 
 #  defines:
 #      define sources:
