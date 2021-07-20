@@ -56,3 +56,7 @@ docs/html/
 docs/xml/
 .DS_Store
 bin/
+mod/interp/src/parser/wrdScanner.cpp
+mod/interp/src/parser/wrdParser.cpp
+mod/swrd/src/parser/swrdParser.cpp
+mod/swrd/src/parser/swrdScanner.cpp
