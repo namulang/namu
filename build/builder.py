@@ -123,12 +123,12 @@ def doc():
     os.system("git rm -rf " + cwd + "/html")
 
     # build doxygen + m.css:
-    printInfoEnd("generating docs using doxygen...")
-    res = os.system(python3 + " " + externalDir + "/m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
-    if res != 0:
-        printErr("fail to run m.css doxy parser.")
-        _cleanIntermediates()
-        return -1
+    # TODO: printInfoEnd("generating docs using doxygen...")
+    # TODO: res = os.system(python3 + " " + externalDir + "/m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
+    # TODO: if res != 0:
+    # TODO:     printErr("fail to run m.css doxy parser.")
+    # TODO:      _cleanIntermediates()
+    # TODO:     return -1
     print("done.")
 
 def _publishDoc():
