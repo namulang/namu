@@ -90,5 +90,9 @@ struct YYLTYPE
 
 
 int yyparse (yyscan_t scanner);
+/* "%code provides" blocks.  */
+
+    #include "wrdScanner.hpp"
+
 
 #endif /* !YY_YY_USERS_ITAEHUN_DROPBOX_WRDLANG_MOD_INTERP_SRC_PARSER_WRDPARSER_HPP_INCLUDED  */

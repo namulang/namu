@@ -423,7 +423,7 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    62,    62
+       0,    66,    66
 };
 #endif
 
@@ -2625,10 +2625,15 @@ yypdumpstack (yyGLRStack* yystackp)
 
 
 
-%code provides {
-    #include "wrdScanner.hpp"
-}
-
 /*  ============================================================================================
     |                                         EPILOGUE                                         |
     ============================================================================================  */
+
+void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
+    // TODO:
+}
+
+int yywrap(yyscan_t scanner) {
+    // TODO:
+    return 1;
+}

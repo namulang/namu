@@ -4,8 +4,6 @@
     ============================================================================================  */
     #pragma once
 
-    typedef void* yyscan_t;
-
     #include <iostream>
     using std::cout;
 }
@@ -15,11 +13,19 @@
     ============================================================================================  */
 
 %code requires {
-
+    typedef void* yyscan_t;
 }
 
 %code provides {
-    #include "wrdScanner.hpp"
+    //extern wrd::sobj* root;
+    extern int yylineno;
+    extern char* yytext;
+
+    extern "C" {
+        int yylex(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
+        void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg);
+        int yywrap(yyscan_t scanner);
+    }
 }
 
 /*  ============================================================================================
@@ -32,7 +38,7 @@
 }
 
 %verbose
-%define api.pure /* reentrant */
+%define api.pure
 %glr-parser
 %locations
 
