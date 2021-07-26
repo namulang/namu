@@ -8,7 +8,7 @@ namespace wrd {
         //TODO: WRD_CLASS(interpreter)
 
     public:
-        void test(const wchar* msg);
+        wbool test(const wchar* msg);
     };
 
 }
