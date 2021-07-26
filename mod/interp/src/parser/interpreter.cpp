@@ -5,7 +5,7 @@ namespace wrd {
 
     WRD_DEF_ME(interpreter)
 
-    wbool test(const wchar* msg) {
+    wbool me::test(const wchar* msg) {
         yyscan_t scanner;
         yylex_init(&scanner);
 
@@ -25,6 +25,6 @@ namespace wrd {
         int ret = yyparse(scanner);
 
         yylex_destroy(scanner);
-        return ret;
+        return ret == 0;
     }
 }
