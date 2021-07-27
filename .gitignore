@@ -63,3 +63,5 @@ bin/
 */parser/swrdParser.hpp
 */parser/swrdScanner.cpp
 */parser/*.output
+*/parser/*.gv
+*/src/parser/*.jpg
