@@ -64,8 +64,6 @@ def branch(command):
         return commit()
     elif command == "rebuild":
         return rebuild()
-    elif command == "build":
-        return build("silent")
     elif command == "rel":
         return relBuild()
     elif command == "dbg":
@@ -78,7 +76,7 @@ def branch(command):
     elif command == "pubdoc":
         return _publishDoc()
 
-    printErr(command + " is unknown.")
+    printErr(command + " is unknown command.")
     return -1
 
 def mv(directory):
@@ -472,7 +470,6 @@ def help():
     print("\t * help")
     print("\t * history")
     print("\t * clean\tclear all cache files of cmake outputs.")
-    print("\t * build\tbuild binary with previous config and run UT. version will be increased when it success.")
     print("\t * dbg\t\tbuild binary with debug configuration.")
     print("\t * rel\t\tbuild binary with release configuration. binary optimized, debug logs will be hidden.")
     print("\t * doc\t\tgenerate documents only.")
