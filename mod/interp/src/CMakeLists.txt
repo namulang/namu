@@ -7,11 +7,11 @@ find_package(BISON)
 find_package(FLEX)
 
 set(PARSER_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/parser)
-set(BISON_COMPILE_FLAGS "-l")
+set(BISON_COMPILE_FLAGS "-l --feature=diagnostics-show-caret --warnings --color")
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
     set(BISON_REPORT_FILENAME "bisonReport")
-    set(BISON_COMPILE_FLAGS "${BISON_COMPILE_FLAGS} --graph=${PARSER_SRC_DIR}/${BISON_REPORT_FILENAME}.gv")
+    set(BISON_COMPILE_FLAGS "${BISON_COMPILE_FLAGS} --verbose --report=all --debug --graph=${PARSER_SRC_DIR}/${BISON_REPORT_FILENAME}.gv")
 endif (${CMAKE_BUILD_TYPE} STREQUAL Debug)
 
 message("\t\tbison ${BISON_COMPILE_FLAGS}")
