@@ -17,12 +17,12 @@ namespace wrd {
         }
 
         // TODO: provide API to manipulate these variable
-#if WRD_IS_DBG
+#if YYDEBUG
         yyset_debug(1, scanner); // For Flex (no longer a global, but rather a member of yyguts_t)
         yydebug = 1;             // For Bison (still global, even in a reentrant parser)
 #endif
 
-        int ret = yyparse(*this, scanner);
+        int ret = yyparse(scanner);
 
         yylex_destroy(scanner);
         return ret == 0;
