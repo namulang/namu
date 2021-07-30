@@ -6,6 +6,7 @@
 
     #include <iostream>
     using std::cout;
+    #include "interpretable.hpp"
 }
 
 /*  ============================================================================================
@@ -37,14 +38,12 @@
     void* voidp;
 }
 
-%verbose
 %define api.pure
 %glr-parser
 %locations
 
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
-/*%define api.namespace { wrd }*/
 
 /*  ============================================================================================
     |                                        BISON SYMBOLS                                     |
