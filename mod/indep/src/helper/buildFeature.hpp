@@ -72,6 +72,7 @@ namespace wrd {
 
         public:
             static buildType get();
+            static wbool isDbg();
             static WRD_SINGLETON_GETTER(const string& getName(), string, WRD_BUILD_TYPENAME)
         };
     };
