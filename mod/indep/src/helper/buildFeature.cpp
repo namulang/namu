@@ -53,4 +53,12 @@ namespace wrd {
 
         return inner;
     }
+
+    wbool me::config::isDbg() {
+#ifdef WRD_IS_DBG
+        return true;
+#else
+        return false;
+#endif
+    }
 }
