@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../common.hpp"
+#include <iostream>
 #include "interpretable.hpp"
 
 namespace wrd {
@@ -11,5 +12,4 @@ namespace wrd {
     public:
         wbool test(const wchar* msg) override;
     };
-
 }

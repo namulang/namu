@@ -7,7 +7,7 @@ namespace wrd {
 
     wbool me::test(const wchar* msg) {
         yyscan_t scanner;
-        yylex_init(&scanner);
+        yylex_init_extra(this, &scanner);
 
         //TODO: read from file: yyset_in(input_file, scanner);
         std::string str(msg);
@@ -22,7 +22,7 @@ namespace wrd {
         yydebug = 1;             // For Bison (still global, even in a reentrant parser)
 #endif
 
-        int ret = yyparse(scanner);
+        int ret = yyparse(this, scanner);
 
         yylex_destroy(scanner);
         return ret == 0;
