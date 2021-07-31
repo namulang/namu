@@ -1,4 +1,15 @@
 # Changelogs
+## v0.1.5 Essence Update 0.5
+released on 07-31 2021
+build# 233
+
+### major changes
+* interp: feat: basic structure of parser & scanner
+* interp: feat: introduce new packLoader
+* interp: chore: generates visualized bison reports
+* doc: remove dependency to m.css
+
+
 ## v0.1.4 Essence Update 0.4
 released on 06-26 2021
 build# 226.
