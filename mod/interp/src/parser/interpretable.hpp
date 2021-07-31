@@ -1,6 +1,7 @@
 #pragma once
 
 #include <indep.hpp>
+#include <iostream>
 
 namespace wrd {
 
