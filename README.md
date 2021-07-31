@@ -54,7 +54,7 @@ if you're trying on windows, then it's recommended to install minGW and above so
 
 Then, just enter:
 		
-	python ./build/builder.py build
+	python ./build/builder.py dbg
 
 All script you need for doing something on World is just at builder.py.
 
