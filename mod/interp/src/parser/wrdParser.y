@@ -23,9 +23,8 @@
     extern char* yytext;
 
     extern "C" {
-        int yylex(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
-        void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg);
-        int yywrap(yyscan_t scanner);
+        int yylex(YYSTYPE* val, YYLTYPE* loc, wrd::interpretable* interp, yyscan_t scanner);
+        void yyerror(YYLTYPE* loc, wrd::interpretable* interp, yyscan_t scanner, const char* msg);
     }
 }
 
@@ -42,8 +41,8 @@
 %glr-parser
 %locations
 
-%lex-param {yyscan_t scanner}
-%parse-param {yyscan_t scanner}
+%lex-param {wrd::interpretable* interp} {yyscan_t scanner}
+%parse-param {wrd::interpretable* interp} {yyscan_t scanner}
 
 /*  ============================================================================================
     |                                        BISON SYMBOLS                                     |
@@ -69,7 +68,7 @@
 %%
 
 prog: INT ';' {
-   cout << "wow!";
+    // TODO:
 }
 
 %%
@@ -78,11 +77,6 @@ prog: INT ';' {
     |                                         EPILOGUE                                         |
     ============================================================================================  */
 
-void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
+void yyerror(YYLTYPE* loc, wrd::interpretable* interp, yyscan_t scanner, const char* msg) {
     // TODO:
-}
-
-int yywrap(yyscan_t scanner) {
-    // TODO:
-    return 1;
 }
