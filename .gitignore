@@ -48,7 +48,7 @@ generated/
 build/*Test
 build/html/
 build/xml/
-external/googletest/
+external/
 build/*.tmp
 build/mod/
 tags
