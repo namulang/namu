@@ -7,7 +7,8 @@ on:
     branches: [ master ]
     
 jobs:
-  build:
+  build on linux:
+    name: build on linux
     runs-on: ubuntu-latest
 
     steps:
@@ -20,9 +21,6 @@ jobs:
     - name: checkout repository codes
       uses: actions/checkout@v2
     
-    - name: prepare to build environments.
-      run: |
-    
     - name: build & test current codes.
       run: |
         export C=clang CXX=clang++ PYTHON=$(which python3)
@@ -32,3 +30,19 @@ jobs:
         ls ${{github.workspace}}
         echo $PYTHON
         sudo $PYTHON ${{github.workspace}}/build/builder.py dbg
+        
+  build on macos:
+    name: build on macos
+    runs-on: macos-latest
+    
+    steps:
+      - name: blank...
+
+  publish doc:
+    needs: [build on linux, build on macos]
+    if: always()
+    name: publish doc
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: blank
