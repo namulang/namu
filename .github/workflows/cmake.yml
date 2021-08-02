@@ -30,4 +30,4 @@ jobs:
         echo github.history=${{github.repository}}
         echo github.workspace=${{github.workspace}}
         ls ${{github.workspace}}
-        $PYTHON ${{github.workspace}}/build/builder.py dbg
+        sudo $PYTHON ${{github.workspace}}/build/builder.py dbg
