@@ -25,4 +25,9 @@ jobs:
         export=clang CXX=clang++ PYTHON=$(which python3)
     
     - name: build & test current codes.
-      run: $PYTHON build/builder.py dbg
+      run: |
+        ls .
+        echo github.history=${{github.repository}}
+        echo github.workspace=${{github.workspace}}
+        ls ${{github.workspace}}
+        $PYTHON ${{github.workspace}}/build/builder.py dbg
