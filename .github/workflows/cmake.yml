@@ -37,6 +37,7 @@ jobs:
     
     steps:
       - name: blank...
+        run: echo wow.
 
   publish doc:
     needs: [build on linux, build on macos]
@@ -46,3 +47,4 @@ jobs:
     
     steps:
       - name: blank
+        run: echo balk
