@@ -29,6 +29,9 @@ jobs:
         echo github.workspace=${{github.workspace}}
         ls ${{github.workspace}}
         echo $PYTHON
+        echo flex --version
+        echo $(which flex)
+        ls -l ${{github.workspace}}/mode/swrd/src/parser
         sudo $PYTHON ${{github.workspace}}/build/builder.py dbg
         
   build-on-macos:
