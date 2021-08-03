@@ -107,27 +107,27 @@ def doc():
     # Idea from Travis Gockel.
     global cwd, python3, externalDir
 
+    _checkMCSS();
     _cleanIntermediates()
     os.system("rm -rf " + cwd + "/html")
 
     # standby gh-pages repo:
     printInfoEnd("cloning gh-pages branch...")
-    res = os.system("git clone -b gh-pages --depth 5 git@github.com:kniz/worldlang.git --single-branch " + cwd + "/html")
+    res = os.system("git clone -b gh-pages --depth 5 https://github.com/kniz/worldlang --single-branch " + cwd + "/html")
     if res != 0:
         printErr("fail to clone gh-pages repo.")
         _cleanIntermediates()
         return -1
     printOk("done.")
-    os.system("git rm -rf " + cwd + "/html")
 
     # build doxygen + m.css:
-    # TODO: printInfoEnd("generating docs using doxygen...")
-    # TODO: res = os.system(python3 + " " + externalDir + "/m.css/doxygen/dox2html5.py " + cwd + "/Doxyfile")
-    # TODO: if res != 0:
-    # TODO:     printErr("fail to run m.css doxy parser.")
-    # TODO:      _cleanIntermediates()
-    # TODO:     return -1
-    print("done.")
+    printInfoEnd("generating docs using doxygen...")
+    res = os.system(python3 + " " + externalDir + "/m.css/documentation/doxygen.py " + cwd + "/Doxyfile")
+    if res != 0:
+        printErr("fail to run m.css doxy parser.")
+        _cleanIntermediates()
+        return -1
+    return 0
 
 def _publishDoc():
     # pushing on gh-pages:
@@ -328,10 +328,22 @@ def _make():
             return -1
     printOk("done")
 
+def _checkMCSS():
+    global externalDir
+    dir = os.path.join(externalDir, "m.css")
+    printInfoEnd("checking m.css repo at " + externalDir + "....")
+    if _hasDir(dir):
+        printOk("repo found. skip cloning it")
+        return
+
+    _makeDir(dir)
+    os.system("git clone https://github.com/mosra/m.css.git " + dir)
+    printOk("cloned")
+
 def _checkGTest():
     global externalDir
     dir = os.path.join(externalDir, "googletest")
-    printInfoEnd("checking googletest repo at externalDir...")
+    printInfoEnd("checking googletest repo at " + externalDir + "...")
     if _hasDir(dir):
         printOk("repo found. skip installing it.")
         return
