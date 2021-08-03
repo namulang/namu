@@ -24,14 +24,12 @@ jobs:
     - name: build & test current codes.
       run: |
         export C=clang CXX=clang++ PYTHON=$(which python3)
-        ls .
         echo github.history=${{github.repository}}
         echo github.workspace=${{github.workspace}}
-        ls ${{github.workspace}}
         echo $PYTHON
         echo flex --version
         echo $(which flex)
-        ls -l ${{github.workspace}}/mode/swrd/src/parser
+        ls -l ${{github.workspace}}/mod/swrd/src/parser
         sudo $PYTHON ${{github.workspace}}/build/builder.py dbg
         
   build-on-macos:
