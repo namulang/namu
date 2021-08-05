@@ -58,6 +58,19 @@ namespace wrd {
         return inner;
     }
 
+    TEMPL types** ME::_onGetLeafs() const {
+        static types* inner = nullptr;
+        return &inner;
+    }
+
+    TEMPL void ME::_onAddSubClass(const type& subClass) {
+        super::_onAddSubClass(subClass);
+
+        types** leafs = _onGetLeafs();
+        if(*leafs)
+            this->_setLeafs(nullptr);
+    }
+
     TEMPL type& ME::_getStatic() const { return const_cast<ME&>(get()); }
     TEMPL ME::ttypeBase(wbool) {}
 

@@ -44,6 +44,8 @@ namespace wrd {
         virtual wbool rel();
         virtual const type& getSuper() const = 0;
         virtual const wbool& isInit() const = 0;
+
+        /// returns all most derived class from this class.
         const types& getLeafs() const;
         const types& getSubs() const {
             return (const_cast<me*>(this))->_getSubs();
@@ -70,7 +72,21 @@ namespace wrd {
             isInit = newState;
         }
 
+        virtual void _onAddSubClass(const me& subClass);
+        virtual types** _onGetLeafs() const = 0;
+        void _setLeafs(types* newLeafs) const {
+            types** leafs = _onGetLeafs();
+            if(*leafs == newLeafs) return;
+
+            if(*leafs)
+                delete *leafs;
+
+            *leafs = newLeafs;
+        }
+        void foo() {}
+
     private:
         wbool _logInitOk(wbool res);
+        void _findLeafs(const type& cls, types& tray) const;
     };
 }

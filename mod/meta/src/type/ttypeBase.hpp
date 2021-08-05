@@ -34,6 +34,8 @@ namespace wrd {
         types& _getSupers() override;
         types& _getSubs() override;
         type& _getStatic() const override;
+        types** _onGetLeafs() const override;
+        void _onAddSubClass(const type& subClass) override;
 
     private:
         ttypeBase(wbool); // for skipping recursive static variable init.
