@@ -50,6 +50,19 @@ namespace wrd {
 
     ME::ttypeBase(wbool) {}
 
+    types** ME::_onGetLeafs() const {
+        static types* inner = nullptr;
+        return &inner;
+    }
+
+    void ME::_onAddSubClass(const type& subClass) {
+        super::_onAddSubClass(subClass);
+
+        types** leafs = _onGetLeafs();
+        if(*leafs)
+            this->_setLeafs(nullptr);
+    }
+
 #undef TEMPL
 #undef ME
 #undef SUPER
