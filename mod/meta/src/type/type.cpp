@@ -7,45 +7,68 @@ namespace wrd {
     wbool me::operator!=(const me& rhs) const { return !operator==(rhs); }
 
     const types& me::getLeafs() const {
-        //TODO: change to range based for loop.
-        return nulOf<types>();
+        types* leafs = *_onGetLeafs();
+        if(!leafs) {
+            // TODO: search & extract all derive classes.
+            leafs = new types();
+            _setLeafs(leafs);
+
+            _findLeafs(*this, *leafs);
+        }
+
+        return *leafs;
+    }
+
+    void me::_findLeafs(const type& cls, types& tray) const {
+        for(const type* sub : cls.getSubs()) {
+            WRD_E("findLeafs: sub=%s, getSubs().size()=%d", sub->getName().c_str(), sub->getSubs().size());
+            if(sub->getSubs().size() == 0)
+                tray.push_back(const_cast<type*>(sub));
+
+            _findLeafs(*sub, tray);
+        }
     }
 
     wbool me::init() {
-        //  pre:
-        //      Caution for not refering metaclass and binding inside of this:
-        //          while this func is called, a structuring for metaclass doesn't finished.
-        //          so if you call funcs using metaclass (in)directly, that calling makes
-        //          crash or infinite loop.
-        //          please you make sure not to use those APIs.
+        // pre:
+        //  Caution for not refering metaclass and binding inside of this:
+        //  while this func is called, a structuring for metaclass doesn't finished.
+        //  so if you call funcs using metaclass (in)directly, that calling makes
+        //  crash or infinite loop.
+        //  please you make sure not to use those APIs.
         //
-        //      Object class should not initialize explicitly:
-        //          or me makes recursive call. Because if we make a instance of TType<Object>,
-        //          it triggers Type::init inside of it.
+        // Object class should not initialize explicitly:
+        //  or me makes recursive call. Because if we make a instance of TType<Object>,
+        //  it triggers Type::init inside of it.
         if(isInit()) return false;
 
-        //  main:
-        //      setting init flag first is important:
-        //          when we construct structure between super and subs,
-        //          we need to assign ptr of static variable. but can't gaurantee that this ptr is
-        //          belonged to static memory. so we're going to use get() static func.
-        //          when static variable at get() func was not initialized before, its constructor
-        //          will leds us to here, however nothing serius happen because init flag was set
-        //          to true.
+        // main:
+        //  setting init flag first is important:
+        //      when we construct structure between super and subs,
+        //      we need to assign ptr of static variable. but can't gaurantee that this ptr is
+        //      belonged to static memory. so we're going to use get() static func.
+        //      when static variable at get() func was not initialized before, its constructor
+        //      will leds us to here, however nothing serius happen because init flag was set
+        //      to true.
         _setInit(true);
         WRD_DI("initializing %s type's meta info...", getName().c_str());
-        //      get Supers info from Super:
-        //          at this point TType<Super> is instantiated, and "Super" also is all of this
-        //          sequences.
+        //  get Supers info from Super:
+        //      at this point TType<Super> is instantiated, and "Super" also is all of this
+        //      sequences.
         type& super = const_cast<type&>(getSuper());
         super.init();
         //        constructing SuperType:
         types& mySupers = _getSupers();
         mySupers = super._getSupers();
         mySupers.push_back(&super);
-        //        notify to super:
-        super._getSubs().push_back(&_getStatic());
+        // post:
+        //  notify to super:
+        super._onAddSubClass(*this);
         return _logInitOk(true);
+    }
+
+    void me::_onAddSubClass(const me& subClass) {
+        _getSubs().push_back(&subClass._getStatic());
     }
 
     wbool me::rel() {
