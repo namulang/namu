@@ -66,7 +66,7 @@ jobs:
           sudo $PYTHON ${{github.workspace}}/build/builder.py pubdoc
 
       - name: push the commit
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@master
         with:
           directory: ${{github.workspace}}/build/html
           github_token: ${{secrets.GITHUB_TOKEN}}
