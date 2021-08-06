@@ -56,10 +56,10 @@ docs/html/
 docs/xml/
 .DS_Store
 bin/
-**/parser/wrdScanner.cpp
-**/parser/wrdScanner.hpp
-**/parser/wrdParser.cpp
-**/parser/wrdParser.hpp
+**/parser/lowscanner.cpp
+**/parser/lowscanner.hpp
+**/parser/lowparser.cpp
+**/parser/lowparser.hpp
 **/parser/swrdParser.cpp
 **/parser/swrdParser.hpp
 **/parser/swrdScanner.cpp
