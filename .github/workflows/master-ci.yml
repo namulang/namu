@@ -50,11 +50,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout repository codes
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
       - name: install native dependencies.
         run: sudo apt install doxygen graphviz python3 python3-pip
 
@@ -66,16 +61,6 @@ jobs:
           export C=clang CXX=clang++ PYTHON=$(which python3)
           sudo $PYTHON ${{github.workspace}}/build/builder.py doc
           sudo $PYTHON ${{github.workspace}}/build/builder.py pubdoc
-
-      - name: test
-        working-directory: 4{{github.workspace}}/build/html
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ls -l .
-          git status
-          git branch
-          echo $GITHUB_TOKEN
 
       - name: push the commit
         uses: ad-m/github-push-action@v0.6.0
