@@ -21,7 +21,7 @@ TEST(ttypeTest, basicBehavior) {
     EXPECT_STREQ(type.getName().c_str(), "myClass");
 
     const types& subs = type.getSubs();
-    ASSERT_EQ(subs.size(), 1);
+    ASSERT_EQ(subs.size(), 2);
     ASSERT_EQ(*subs[0], ttype<myDerivedClass>::get());
 
     ASSERT_STREQ(type.getSuper().getName().c_str(), "adam");
@@ -71,4 +71,25 @@ struct B {
 TEST(ttypeTest, makeInstanceNegativeTest) {
     ttype<B> type;
     ASSERT_FALSE(type.make());
+}
+
+struct myDerivedClass2 : public myClass {
+    WRD_INIT_META(myDerivedClass2);
+    typedef myClass super;
+};
+
+struct myDerivedClass3 : public myDerivedClass {
+    WRD_INIT_META(myDerivedClass3);
+    typedef myDerivedClass super;
+};
+
+TEST(ttypeTest, iterateLeafClassTest) {
+    const type& typ = ttype<myClass>();
+    ASSERT_EQ(typ.getSubs().size(), 2);
+
+    const types& subs = typ.getLeafs();
+    ASSERT_FALSE(nul(subs));
+
+    ASSERT_TRUE(*subs[0] == ttype<myDerivedClass3>());
+    ASSERT_TRUE(*subs[1] == ttype<myDerivedClass>());
 }
