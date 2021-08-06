@@ -35,7 +35,7 @@ jobs:
     - name: install native dependencies.
       run: |
         brew update
-        brew install doxygen graphviz python3 python3-pip cmake wget bison flex
+        brew install doxygen graphviz python3 cmake wget bison flex
 
     - name: install python dependencies.
       run: sudo python3 -m pip install --upgrade jinja2 Pygments
