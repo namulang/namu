@@ -1,115 +1,332 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8" />
-  <title>world-doc</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
-  <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
-  <link rel="icon" href="favicon-dark.png" type="image/png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#22272e" />
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>world-doc: File List</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header><nav id="navigation">
-  <div class="m-container">
-    <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">world-doc</a>
-      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
-        <a href="#search" class="m-dox-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
-          <path d="m6 0c-3.3144 0-6 2.6856-6 6 0 3.3144 2.6856 6 6 6 1.4858 0 2.8463-0.54083 3.8945-1.4355-0.0164 0.33797 0.14734 0.75854 0.5 1.1504l3.2227 3.7891c0.55185 0.6139 1.4517 0.66544 2.002 0.11524 0.55022-0.55022 0.49866-1.4501-0.11524-2.002l-3.7891-3.2246c-0.39184-0.35266-0.81242-0.51469-1.1504-0.5 0.89472-1.0482 1.4355-2.4088 1.4355-3.8945 0-3.3128-2.6856-5.998-6-5.998zm0 1.5625a4.4375 4.4375 0 0 1 4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375-4.4375 4.4375 4.4375 0 0 1 4.4375-4.4375z"/>
-        </svg></a>
-        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
-        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
-      </div>
-      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
-        <div class="m-row">
-          <ol class="m-col-t-6 m-col-m-none">
-            <li><a href="pages.html">Pages</a></li>
-            <li><a href="namespaces.html">Namespaces</a></li>
-          </ol>
-          <ol class="m-col-t-6 m-col-m-none" start="3">
-            <li><a href="annotated.html">Classes</a></li>
-            <li><a href="files.html" id="m-navbar-current">Files</a></li>
-            <li class="m-show-m"><a href="#search" class="m-dox-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
-              <path d="m6 0c-3.3144 0-6 2.6856-6 6 0 3.3144 2.6856 6 6 6 1.4858 0 2.8463-0.54083 3.8945-1.4355-0.0164 0.33797 0.14734 0.75854 0.5 1.1504l3.2227 3.7891c0.55185 0.6139 1.4517 0.66544 2.002 0.11524 0.55022-0.55022 0.49866-1.4501-0.11524-2.002l-3.7891-3.2246c-0.39184-0.35266-0.81242-0.51469-1.1504-0.5 0.89472-1.0482 1.4355-2.4088 1.4355-3.8945 0-3.3128-2.6856-5.998-6-5.998zm0 1.5625a4.4375 4.4375 0 0 1 4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375-4.4375 4.4375 4.4375 0 0 1 4.4375-4.4375z"/>
-            </svg></a></li>
-          </ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav></header>
-<main><article>
-  <div class="m-container m-container-inflatable">
-    <div class="m-row">
-      <div class="m-col-l-10 m-push-l-1">
-        <h1>Files</h2>
-        <ul class="m-dox">
-        </ul>
-        <script>
-        function toggle(e) {
-            e.parentElement.className = e.parentElement.className == 'm-dox-collapsible' ?
-                'm-dox-expansible' : 'm-dox-collapsible';
-            return false;
-        }
-        /* Collapse all nodes marked as such. Doing it via JS instead of directly in
-           markup so disabling it doesn't harm usability. The list is somehow
-           regenerated on every iteration and shrinks as I change the classes. It's not
-           documented anywhere and I'm not sure if this is the same across browsers, so
-           I am going backwards in that list to be sure.  */
-        var collapsed = document.getElementsByClassName("collapsed");
-        for(var i = collapsed.length - 1; i >= 0; --i)
-            collapsed[i].className = 'm-dox-expansible';
-        </script>
-      </div>
-    </div>
-  </div>
-</article></main>
-<div class="m-dox-search" id="search">
-  <a href="#!" onclick="return hideSearch()"></a>
-  <div class="m-container">
-    <div class="m-row">
-      <div class="m-col-m-8 m-push-m-2">
-        <div class="m-dox-search-header m-text m-small">
-          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
-          <div id="search-symbolcount">&hellip;</div>
-        </div>
-        <div class="m-dox-search-content">
-          <form>
-            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
-          </form>
-          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
-          <div id="search-help" class="m-text m-dim m-text-center">
-            <p class="m-noindent">Search for symbols, directories, files, pages or
-            modules. You can omit any prefix from the symbol or file path; adding a
-            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
-            directory.</p>
-            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
-            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
-            <span class="m-label m-dim">Enter</span> to go.
-            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
-            copy a link to the result using <span class="m-label m-dim">⌘</span>
-            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
-            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
-
-          </div>
-          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
-          <ul id="search-results"></ul>
-        </div>
-      </div>
-    </div>
-  </div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">world-doc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
 </div>
-<script src="search.js"></script>
-<script src="searchdata.js" async="async"></script>
-<footer><nav>
-  <div class="m-container">
-    <div class="m-row">
-      <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
-      </div>
-    </div>
-  </div>
-</nav></footer>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">File List</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock">Here is a list of all documented files with brief descriptions:</div><div class="directory">
+<div class="levels">[detail level <span onclick="javascript:toggleLevel(1);">1</span><span onclick="javascript:toggleLevel(2);">2</span><span onclick="javascript:toggleLevel(3);">3</span><span onclick="javascript:toggleLevel(4);">4</span><span onclick="javascript:toggleLevel(5);">5</span><span onclick="javascript:toggleLevel(6);">6</span><span onclick="javascript:toggleLevel(7);">7</span><span onclick="javascript:toggleLevel(8);">8</span>]</div><table class="directory">
+<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="toggleFolder('0_')">&#9660;</span><span id="img_0_" class="iconfopen" onclick="toggleFolder('0_')">&#160;</span><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html" target="_self">mod</a></td><td class="desc"></td></tr>
+<tr id="row_0_0_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_0_" class="arrow" onclick="toggleFolder('0_0_')">&#9660;</span><span id="img_0_0_" class="iconfopen" onclick="toggleFolder('0_0_')">&#160;</span><a class="el" href="dir_d1224740a1128ee4d0767e933a68f623.html" target="_self">clog</a></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_0_0_" class="arrow" onclick="toggleFolder('0_0_0_')">&#9658;</span><span id="img_0_0_0_" class="iconfclosed" onclick="toggleFolder('0_0_0_')">&#160;</span><a class="el" href="dir_608f911bd4d04f5e1a4206bd3268a5ee.html" target="_self">src</a></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_0_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_0_0_0_" class="arrow" onclick="toggleFolder('0_0_0_0_')">&#9658;</span><span id="img_0_0_0_0_" class="iconfclosed" onclick="toggleFolder('0_0_0_0_')">&#160;</span><a class="el" href="dir_40bf8f10df2f099272ebd1642e3109be.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_0_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="clog_2src_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_0_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="clog_2src_2common_2macro_8hpp_source.html"><span class="icondoc"></span></a><b>macro.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_1_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_0_0_1_" class="arrow" onclick="toggleFolder('0_0_0_1_')">&#9658;</span><span id="img_0_0_0_1_" class="iconfclosed" onclick="toggleFolder('0_0_0_1_')">&#160;</span><a class="el" href="dir_8a654391993af05251494720645ca2f3.html" target="_self">stream</a></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_1_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="console_stream_8hpp_source.html"><span class="icondoc"></span></a><b>consoleStream.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_1_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="file_log_stream_8hpp_source.html"><span class="icondoc"></span></a><b>fileLogStream.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_1_2_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="stream_2stream_8hpp_source.html"><span class="icondoc"></span></a><b>stream.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_2_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="clog_8hpp_source.html"><span class="icondoc"></span></a><b>clog.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_3_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="clog_2src_2common_8hpp_source.html"><span class="icondoc"></span></a><b>common.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_4_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="logger_8hpp_source.html"><span class="icondoc"></span></a><b>logger.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_0_0_5_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="stream_8hpp_source.html"><span class="icondoc"></span></a><b>stream.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_0_1_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_0_1_" class="arrow" onclick="toggleFolder('0_0_1_')">&#9658;</span><span id="img_0_0_1_" class="iconfclosed" onclick="toggleFolder('0_0_1_')">&#160;</span><a class="el" href="dir_b04f43d8999f03fef234ae39467aff64.html" target="_self">test</a></td><td class="desc"></td></tr>
+<tr id="row_0_0_1_0_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_0_1_0_" class="arrow" onclick="toggleFolder('0_0_1_0_')">&#9658;</span><span id="img_0_0_1_0_" class="iconfclosed" onclick="toggleFolder('0_0_1_0_')">&#160;</span><a class="el" href="dir_275333f9f3bc0142e3711eb2ef3dc4b5.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_0_1_0_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="clog_2test_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_1_" class="arrow" onclick="toggleFolder('0_1_')">&#9660;</span><span id="img_0_1_" class="iconfopen" onclick="toggleFolder('0_1_')">&#160;</span><a class="el" href="dir_17e8a8c1b3357b494ba7d0ba9b0a9eb4.html" target="_self">indep</a></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_1_0_" class="arrow" onclick="toggleFolder('0_1_0_')">&#9658;</span><span id="img_0_1_0_" class="iconfclosed" onclick="toggleFolder('0_1_0_')">&#160;</span><a class="el" href="dir_c57c1fa376491f7a65117dbab57bf2a4.html" target="_self">src</a></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_0_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_1_0_0_" class="arrow" onclick="toggleFolder('0_1_0_0_')">&#9658;</span><span id="img_0_1_0_0_" class="iconfclosed" onclick="toggleFolder('0_1_0_0_')">&#160;</span><a class="el" href="dir_320fd37c8bc518aeb38d93ef44a3c1ad.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_0_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="indep_2src_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_0_1_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="typedef_8hpp_source.html"><span class="icondoc"></span></a><b>typedef.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_1_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_1_0_1_" class="arrow" onclick="toggleFolder('0_1_0_1_')">&#9658;</span><span id="img_0_1_0_1_" class="iconfclosed" onclick="toggleFolder('0_1_0_1_')">&#160;</span><a class="el" href="dir_f9d9967ff1b9d26233948333242fe3fa.html" target="_self">def</a></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_1_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="indep_2src_2def_2common_8hpp_source.html"><span class="icondoc"></span></a><b>common.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_2_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_1_0_2_" class="arrow" onclick="toggleFolder('0_1_0_2_')">&#9658;</span><span id="img_0_1_0_2_" class="iconfclosed" onclick="toggleFolder('0_1_0_2_')">&#160;</span><a class="el" href="dir_0dbcc4e2326e049ae969b17f13af4546.html" target="_self">fsystem</a></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_2_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="fsystem_2fsystem_8hpp_source.html"><span class="icondoc"></span></a><b>fsystem.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_3_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_1_0_3_" class="arrow" onclick="toggleFolder('0_1_0_3_')">&#9658;</span><span id="img_0_1_0_3_" class="iconfclosed" onclick="toggleFolder('0_1_0_3_')">&#160;</span><a class="el" href="dir_a860eddb546dfa371cb5b71d8922fa7c.html" target="_self">helper</a></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_3_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="build_feature_8hpp_source.html"><span class="icondoc"></span></a><b>buildFeature.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_3_1_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="nulr_8hpp_source.html"><span class="icondoc"></span></a><b>nulr.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_3_2_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="platform_a_p_i_8hpp_source.html"><span class="icondoc"></span></a><b>platformAPI.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_1_0_4_" class="arrow" onclick="toggleFolder('0_1_0_4_')">&#9658;</span><span id="img_0_1_0_4_" class="iconfclosed" onclick="toggleFolder('0_1_0_4_')">&#160;</span><a class="el" href="dir_e353fd1ca3f38a492b25a59d7a6f3001.html" target="_self">macro</a></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="arg_counter_8hpp_source.html"><span class="icondoc"></span></a><b>argCounter.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_1_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="arg_getter_8hpp_source.html"><span class="icondoc"></span></a><b>argGetter.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_2_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="arg_list_8hpp_source.html"><span class="icondoc"></span></a><b>argList.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_3_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="decl_this_8hpp_source.html"><span class="icondoc"></span></a><b>declThis.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_4_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="def_this_8hpp_source.html"><span class="icondoc"></span></a><b>defThis.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_5_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="evaluator_8hpp_source.html"><span class="icondoc"></span></a><b>evaluator.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_6_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="for_each_8hpp_source.html"><span class="icondoc"></span></a><b>forEach.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_7_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="gets_8hpp_source.html"><span class="icondoc"></span></a><b>gets.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_8_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="macro_2helper_8hpp_source.html"><span class="icondoc"></span></a><b>helper.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_9_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="initiator_8hpp_source.html"><span class="icondoc"></span></a><b>initiator.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_10_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="mem_leak_8hpp_source.html"><span class="icondoc"></span></a><b>memLeak.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_11_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="nul_8hpp_source.html"><span class="icondoc"></span></a><b>nul.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_12_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="overload_8hpp_source.html"><span class="icondoc"></span></a><b>overload.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_13_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="pair_8hpp_source.html"><span class="icondoc"></span></a><b>pair.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_14_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="singletone_getter_8hpp_source.html"><span class="icondoc"></span></a><b>singletoneGetter.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_15_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="static_asserts_8hpp_source.html"><span class="icondoc"></span></a><b>staticAsserts.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_16_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="type_trait_8hpp_source.html"><span class="icondoc"></span></a><b>typeTrait.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_4_17_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="unconst_func_8hpp_source.html"><span class="icondoc"></span></a><b>unconstFunc.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_5_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="indep_2src_2common_8hpp_source.html"><span class="icondoc"></span></a><b>common.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_6_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="indep_2src_2def_8hpp_source.html"><span class="icondoc"></span></a><b>def.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_7_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="fsystem_8hpp_source.html"><span class="icondoc"></span></a><b>fsystem.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_8_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="helper_8hpp_source.html"><span class="icondoc"></span></a><b>helper.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_9_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="indep_8hpp_source.html"><span class="icondoc"></span></a><b>indep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_0_10_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="indep_2src_2macro_8hpp_source.html"><span class="icondoc"></span></a><b>macro.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_1_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_1_1_" class="arrow" onclick="toggleFolder('0_1_1_')">&#9658;</span><span id="img_0_1_1_" class="iconfclosed" onclick="toggleFolder('0_1_1_')">&#160;</span><a class="el" href="dir_16a11fd7b91814c331b19f2df0d27f5a.html" target="_self">test</a></td><td class="desc"></td></tr>
+<tr id="row_0_1_1_0_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_1_1_0_" class="arrow" onclick="toggleFolder('0_1_1_0_')">&#9658;</span><span id="img_0_1_1_0_" class="iconfclosed" onclick="toggleFolder('0_1_1_0_')">&#160;</span><a class="el" href="dir_7701b4a4a6454e25c4d015431f5f16c7.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_1_1_0_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="indep_2test_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_2_" class="arrow" onclick="toggleFolder('0_2_')">&#9660;</span><span id="img_0_2_" class="iconfopen" onclick="toggleFolder('0_2_')">&#160;</span><a class="el" href="dir_9c09537570c25807b6316b702d3e3c6f.html" target="_self">interp</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_2_0_" class="arrow" onclick="toggleFolder('0_2_0_')">&#9658;</span><span id="img_0_2_0_" class="iconfclosed" onclick="toggleFolder('0_2_0_')">&#160;</span><a class="el" href="dir_43e043a6167848ca2d6afb51aea05239.html" target="_self">src</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_0_0_" class="arrow" onclick="toggleFolder('0_2_0_0_')">&#9658;</span><span id="img_0_2_0_0_" class="iconfclosed" onclick="toggleFolder('0_2_0_0_')">&#160;</span><a class="el" href="dir_5bc6a1fc45e5df02c09d3826066148bd.html" target="_self">ast</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_0_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><span id="arr_0_2_0_0_0_" class="arrow" onclick="toggleFolder('0_2_0_0_0_')">&#9658;</span><span id="img_0_2_0_0_0_" class="iconfclosed" onclick="toggleFolder('0_2_0_0_0_')">&#160;</span><a class="el" href="dir_55595911de116dfb82dbf6f8157e9331.html" target="_self">exprs</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_0_0_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="block_expr_8hpp_source.html"><span class="icondoc"></span></a><b>blockExpr.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_0_1_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="get_expr_8hpp_source.html"><span class="icondoc"></span></a><b>getExpr.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_0_2_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="run_expr_8hpp_source.html"><span class="icondoc"></span></a><b>runExpr.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_1_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><span id="arr_0_2_0_0_1_" class="arrow" onclick="toggleFolder('0_2_0_0_1_')">&#9658;</span><span id="img_0_2_0_0_1_" class="iconfclosed" onclick="toggleFolder('0_2_0_0_1_')">&#160;</span><a class="el" href="dir_d93b56c2e9b9419df2104d0c45867a01.html" target="_self">mgd</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_1_0_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="mgd_func_8hpp_source.html"><span class="icondoc"></span></a><b>mgdFunc.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_1_1_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="mgd_obj_8hpp_source.html"><span class="icondoc"></span></a><b>mgdObj.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_2_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="clonable_8hpp_source.html"><span class="icondoc"></span></a><b>clonable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_3_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="expr_8hpp_source.html"><span class="icondoc"></span></a><b>expr.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_4_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="exprs_8hpp_source.html"><span class="icondoc"></span></a><b>exprs.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_5_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="func_8hpp_source.html"><span class="icondoc"></span></a><b>func.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_6_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="manifest_8hpp_source.html"><span class="icondoc"></span></a><b>manifest.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_7_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="ast_2mgd_8hpp_source.html"><span class="icondoc"></span></a><b>mgd.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_8_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="interp_2src_2ast_2node_8hpp_source.html"><span class="icondoc"></span></a><b>node.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_9_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="obj_8hpp_source.html"><span class="icondoc"></span></a><b>obj.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_10_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="pack_8hpp_source.html"><span class="icondoc"></span></a><b>pack.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_11_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="point_8hpp_source.html"><span class="icondoc"></span></a><b>point.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_12_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="ref_8hpp_source.html"><span class="icondoc"></span></a><b>ref.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_13_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="tref_8hpp_source.html"><span class="icondoc"></span></a><b>tref.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_0_14_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="validable_8hpp_source.html"><span class="icondoc"></span></a><b>validable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_0_1_" class="arrow" onclick="toggleFolder('0_2_0_1_')">&#9658;</span><span id="img_0_2_0_1_" class="iconfclosed" onclick="toggleFolder('0_2_0_1_')">&#160;</span><a class="el" href="dir_99a540fc07fc7697ecfd1467de1cd091.html" target="_self">bridge</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_0_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><span id="arr_0_2_0_1_0_" class="arrow" onclick="toggleFolder('0_2_0_1_0_')">&#9658;</span><span id="img_0_2_0_1_0_" class="iconfclosed" onclick="toggleFolder('0_2_0_1_0_')">&#160;</span><a class="el" href="dir_c572e9e3561e5cb441a3593dc1e57f26.html" target="_self">cpp</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_0_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><span id="arr_0_2_0_1_0_0_" class="arrow" onclick="toggleFolder('0_2_0_1_0_0_')">&#9658;</span><span id="img_0_2_0_1_0_0_" class="iconfclosed" onclick="toggleFolder('0_2_0_1_0_0_')">&#160;</span><a class="el" href="dir_5a5bfdfbccb91c89b26c23214b0d758a.html" target="_self">loader</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_0_0_0_" style="display:none;"><td class="entry"><span style="width:112px;display:inline-block;">&#160;</span><a href="cpp_pack_loading_8hpp_source.html"><span class="icondoc"></span></a><b>cppPackLoading.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_0_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><span id="arr_0_2_0_1_0_1_" class="arrow" onclick="toggleFolder('0_2_0_1_0_1_')">&#9658;</span><span id="img_0_2_0_1_0_1_" class="iconfclosed" onclick="toggleFolder('0_2_0_1_0_1_')">&#160;</span><a class="el" href="dir_7ac0096a764dec134a12bed8e572f702.html" target="_self">marshaling</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_0_1_0_" style="display:none;"><td class="entry"><span style="width:112px;display:inline-block;">&#160;</span><a href="tmarshaling_8hpp_source.html"><span class="icondoc"></span></a><b>tmarshaling.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_0_2_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="bridge_2cpp_2loader_8hpp_source.html"><span class="icondoc"></span></a><b>loader.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_0_3_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="marshaling_8hpp_source.html"><span class="icondoc"></span></a><b>marshaling.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_0_4_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="tcpp_bridge_8hpp_source.html"><span class="icondoc"></span></a><b>tcppBridge.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_0_5_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="tcpp_bridge_func_8hpp_source.html"><span class="icondoc"></span></a><b>tcppBridgeFunc.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_1_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="cpp_8hpp_source.html"><span class="icondoc"></span></a><b>cpp.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_0_2_" class="arrow" onclick="toggleFolder('0_2_0_2_')">&#9658;</span><span id="img_0_2_0_2_" class="iconfclosed" onclick="toggleFolder('0_2_0_2_')">&#160;</span><a class="el" href="dir_66bac994287ef758303edef2916e2d60.html" target="_self">builtin</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><span id="arr_0_2_0_2_0_" class="arrow" onclick="toggleFolder('0_2_0_2_0_')">&#9658;</span><span id="img_0_2_0_2_0_" class="iconfclosed" onclick="toggleFolder('0_2_0_2_0_')">&#160;</span><a class="el" href="dir_96e63bfd45fd690fcdcf818790ae0e3d.html" target="_self">container</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><span id="arr_0_2_0_2_0_0_" class="arrow" onclick="toggleFolder('0_2_0_2_0_0_')">&#9658;</span><span id="img_0_2_0_2_0_0_" class="iconfclosed" onclick="toggleFolder('0_2_0_2_0_0_')">&#160;</span><a class="el" href="dir_37ed3ee9f93f0db5d08687d70da77b29.html" target="_self">mgd</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_0_0_" style="display:none;"><td class="entry"><span style="width:112px;display:inline-block;">&#160;</span><a href="tarr_8hpp_source.html"><span class="icondoc"></span></a><b>tarr.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><span id="arr_0_2_0_2_0_1_" class="arrow" onclick="toggleFolder('0_2_0_2_0_1_')">&#9658;</span><span id="img_0_2_0_2_0_1_" class="iconfclosed" onclick="toggleFolder('0_2_0_2_0_1_')">&#160;</span><a class="el" href="dir_92410e64e4a37c5b37876d59cb4f619a.html" target="_self">native</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_1_0_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><span id="arr_0_2_0_2_0_1_0_" class="arrow" onclick="toggleFolder('0_2_0_2_0_1_0_')">&#9658;</span><span id="img_0_2_0_2_0_1_0_" class="iconfclosed" onclick="toggleFolder('0_2_0_2_0_1_0_')">&#160;</span><a class="el" href="dir_3d07f49b427e9fa82172dd8506a166ac.html" target="_self">iter</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_1_0_0_" style="display:none;"><td class="entry"><span style="width:128px;display:inline-block;">&#160;</span><a href="iteration_8hpp_source.html"><span class="icondoc"></span></a><b>iteration.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_1_0_1_" style="display:none;"><td class="entry"><span style="width:128px;display:inline-block;">&#160;</span><a href="titer_8hpp_source.html"><span class="icondoc"></span></a><b>titer.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_1_0_2_" style="display:none;"><td class="entry"><span style="width:128px;display:inline-block;">&#160;</span><a href="titerable_8hpp_source.html"><span class="icondoc"></span></a><b>titerable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_1_1_" style="display:none;"><td class="entry"><span style="width:112px;display:inline-block;">&#160;</span><a href="iter_8hpp_source.html"><span class="icondoc"></span></a><b>iter.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_1_2_" style="display:none;"><td class="entry"><span style="width:112px;display:inline-block;">&#160;</span><a href="narr_container_8hpp_source.html"><span class="icondoc"></span></a><b>narrContainer.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_1_3_" style="display:none;"><td class="entry"><span style="width:112px;display:inline-block;">&#160;</span><a href="ncontainer_8hpp_source.html"><span class="icondoc"></span></a><b>ncontainer.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_1_4_" style="display:none;"><td class="entry"><span style="width:112px;display:inline-block;">&#160;</span><a href="tnarr_8hpp_source.html"><span class="icondoc"></span></a><b>tnarr.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_1_5_" style="display:none;"><td class="entry"><span style="width:112px;display:inline-block;">&#160;</span><a href="tnchain_8hpp_source.html"><span class="icondoc"></span></a><b>tnchain.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_2_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="arr_containable_8hpp_source.html"><span class="icondoc"></span></a><b>arrContainable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_3_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="containable_8hpp_source.html"><span class="icondoc"></span></a><b>containable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_4_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="builtin_2container_2mgd_8hpp_source.html"><span class="icondoc"></span></a><b>mgd.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_0_5_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="native_8hpp_source.html"><span class="icondoc"></span></a><b>native.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_1_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><span id="arr_0_2_0_2_1_" class="arrow" onclick="toggleFolder('0_2_0_2_1_')">&#9658;</span><span id="img_0_2_0_2_1_" class="iconfclosed" onclick="toggleFolder('0_2_0_2_1_')">&#160;</span><a class="el" href="dir_58120c833a214b113f6494402cc34692.html" target="_self">primitive</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_1_0_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="primitive_ctor_8hpp_source.html"><span class="icondoc"></span></a><b>primitiveCtor.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_1_1_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="primitive_obj_8hpp_source.html"><span class="icondoc"></span></a><b>primitiveObj.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_1_2_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="primitive_type_8hpp_source.html"><span class="icondoc"></span></a><b>primitiveType.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_1_3_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="w_flt_8hpp_source.html"><span class="icondoc"></span></a><b>wFlt.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_1_4_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="w_int_8hpp_source.html"><span class="icondoc"></span></a><b>wInt.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_1_5_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="w_str_8hpp_source.html"><span class="icondoc"></span></a><b>wStr.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_1_6_" style="display:none;"><td class="entry"><span style="width:96px;display:inline-block;">&#160;</span><a href="w_void_8hpp_source.html"><span class="icondoc"></span></a><b>wVoid.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_2_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="container_8hpp_source.html"><span class="icondoc"></span></a><b>container.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_2_3_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="primitive_8hpp_source.html"><span class="icondoc"></span></a><b>primitive.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_3_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_0_3_" class="arrow" onclick="toggleFolder('0_2_0_3_')">&#9658;</span><span id="img_0_2_0_3_" class="iconfclosed" onclick="toggleFolder('0_2_0_3_')">&#160;</span><a class="el" href="dir_fa946ae0671583da8b3e82b3e149b1f2.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_3_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="interp_2src_2common_2def_8hpp_source.html"><span class="icondoc"></span></a><b>def.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_3_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="interp_2src_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_4_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_0_4_" class="arrow" onclick="toggleFolder('0_2_0_4_')">&#9658;</span><span id="img_0_2_0_4_" class="iconfclosed" onclick="toggleFolder('0_2_0_4_')">&#160;</span><a class="el" href="dir_c9de4cbbbf9c0c83aedcd3b36e2d8d04.html" target="_self">err</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_4_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="interp_2src_2err_2err_8hpp_source.html"><span class="icondoc"></span></a><b>err.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_4_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="ret_8hpp_source.html"><span class="icondoc"></span></a><b>ret.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_5_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_0_5_" class="arrow" onclick="toggleFolder('0_2_0_5_')">&#9658;</span><span id="img_0_2_0_5_" class="iconfclosed" onclick="toggleFolder('0_2_0_5_')">&#160;</span><a class="el" href="dir_b0c8a059184e0a80c0ee878043c91cf5.html" target="_self">frame</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_5_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="frame_2frame_8hpp_source.html"><span class="icondoc"></span></a><b>frame.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_5_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="frame_interact_8hpp_source.html"><span class="icondoc"></span></a><b>frameInteract.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_5_2_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="frame_interactable_8hpp_source.html"><span class="icondoc"></span></a><b>frameInteractable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_5_3_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="stack_frame_8hpp_source.html"><span class="icondoc"></span></a><b>stackFrame.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_5_4_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="thread_8hpp_source.html"><span class="icondoc"></span></a><b>thread.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_6_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_0_6_" class="arrow" onclick="toggleFolder('0_2_0_6_')">&#9658;</span><span id="img_0_2_0_6_" class="iconfclosed" onclick="toggleFolder('0_2_0_6_')">&#160;</span><a class="el" href="dir_5ee16d0465a342bbd4099ce63d119964.html" target="_self">loader</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_6_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="opaque_pack_loading_8hpp_source.html"><span class="icondoc"></span></a><b>opaquePackLoading.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_6_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="pack_loader_8hpp_source.html"><span class="icondoc"></span></a><b>packLoader.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_6_2_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="pack_loading_8hpp_source.html"><span class="icondoc"></span></a><b>packLoading.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_6_3_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="pack_makable_8hpp_source.html"><span class="icondoc"></span></a><b>packMakable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_7_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_0_7_" class="arrow" onclick="toggleFolder('0_2_0_7_')">&#9658;</span><span id="img_0_2_0_7_" class="iconfclosed" onclick="toggleFolder('0_2_0_7_')">&#160;</span><a class="el" href="dir_17919b5913e62fb425c6dea9b29075ab.html" target="_self">parser</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_7_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="interp_2src_2parser_2parser_8hpp_source.html"><span class="icondoc"></span></a><b>parser.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_7_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="parserable_8hpp_source.html"><span class="icondoc"></span></a><b>parserable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_8_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_0_8_" class="arrow" onclick="toggleFolder('0_2_0_8_')">&#9658;</span><span id="img_0_2_0_8_" class="iconfclosed" onclick="toggleFolder('0_2_0_8_')">&#160;</span><a class="el" href="dir_c617084dfbe70fe043baa30c02e0fee0.html" target="_self">type</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_8_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="as_8hpp_source.html"><span class="icondoc"></span></a><b>as.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_8_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="cast_8hpp_source.html"><span class="icondoc"></span></a><b>cast.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_8_2_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="mgd_as_8hpp_source.html"><span class="icondoc"></span></a><b>mgdAs.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_8_3_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="wtype_8hpp_source.html"><span class="icondoc"></span></a><b>wtype.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_9_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_0_9_" class="arrow" onclick="toggleFolder('0_2_0_9_')">&#9658;</span><span id="img_0_2_0_9_" class="iconfclosed" onclick="toggleFolder('0_2_0_9_')">&#160;</span><a class="el" href="dir_67f87c999e761f882df91ee9dcc739d0.html" target="_self">verifier</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_9_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="fail_8hpp_source.html"><span class="icondoc"></span></a><b>fail.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_9_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="fail_report_8hpp_source.html"><span class="icondoc"></span></a><b>failReport.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_10_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="interp_2src_2ast_8hpp_source.html"><span class="icondoc"></span></a><b>ast.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_11_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="bridge_8hpp_source.html"><span class="icondoc"></span></a><b>bridge.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_12_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="builtin_8hpp_source.html"><span class="icondoc"></span></a><b>builtin.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_13_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="interp_2src_2common_8hpp_source.html"><span class="icondoc"></span></a><b>common.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_14_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="interp_2src_2err_8hpp_source.html"><span class="icondoc"></span></a><b>err.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_15_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="frame_8hpp_source.html"><span class="icondoc"></span></a><b>frame.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_16_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="interp_2src_2interp_8hpp_source.html"><span class="icondoc"></span></a><b>interp.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_17_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="loader_8hpp_source.html"><span class="icondoc"></span></a><b>loader.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_18_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="interp_2src_2parser_8hpp_source.html"><span class="icondoc"></span></a><b>parser.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_19_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="interp_2src_2type_8hpp_source.html"><span class="icondoc"></span></a><b>type.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_0_20_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="verifier_8hpp_source.html"><span class="icondoc"></span></a><b>verifier.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_2_1_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_2_1_" class="arrow" onclick="toggleFolder('0_2_1_')">&#9658;</span><span id="img_0_2_1_" class="iconfclosed" onclick="toggleFolder('0_2_1_')">&#160;</span><a class="el" href="dir_5cfa2804124acabb961db350c54df68d.html" target="_self">test</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_1_0_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_2_1_0_" class="arrow" onclick="toggleFolder('0_2_1_0_')">&#9658;</span><span id="img_0_2_1_0_" class="iconfclosed" onclick="toggleFolder('0_2_1_0_')">&#160;</span><a class="el" href="dir_b5c2ec580c48e1415ce9280be77babd1.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_2_1_0_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="interp_2test_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_3_" class="arrow" onclick="toggleFolder('0_3_')">&#9660;</span><span id="img_0_3_" class="iconfopen" onclick="toggleFolder('0_3_')">&#160;</span><a class="el" href="dir_183e3a1c910cc57bcb9096081cc20a5a.html" target="_self">memlite</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_3_0_" class="arrow" onclick="toggleFolder('0_3_0_')">&#9658;</span><span id="img_0_3_0_" class="iconfclosed" onclick="toggleFolder('0_3_0_')">&#160;</span><a class="el" href="dir_058da9da71df8bc98ca908e6e581df4a.html" target="_self">src</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_0_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_3_0_0_" class="arrow" onclick="toggleFolder('0_3_0_0_')">&#9658;</span><span id="img_0_3_0_0_" class="iconfclosed" onclick="toggleFolder('0_3_0_0_')">&#160;</span><a class="el" href="dir_7f8ecff59fd0c745b24be009e1b823bb.html" target="_self">binder</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_0_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="binder_2binder_8hpp_source.html"><span class="icondoc"></span></a><b>binder.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_0_1_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="bind_tacticable_8hpp_source.html"><span class="icondoc"></span></a><b>bindTacticable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_0_2_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="str_tactic_8hpp_source.html"><span class="icondoc"></span></a><b>strTactic.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_0_3_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="tbindable_8hpp_source.html"><span class="icondoc"></span></a><b>tbindable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_0_4_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="tstr_8hpp_source.html"><span class="icondoc"></span></a><b>tstr.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_0_5_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="tweak_8hpp_source.html"><span class="icondoc"></span></a><b>tweak.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_0_6_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="weak_tactic_8hpp_source.html"><span class="icondoc"></span></a><b>weakTactic.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_1_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_3_0_1_" class="arrow" onclick="toggleFolder('0_3_0_1_')">&#9658;</span><span id="img_0_3_0_1_" class="iconfclosed" onclick="toggleFolder('0_3_0_1_')">&#160;</span><a class="el" href="dir_65965237bed30f5b62b4a16755785db3.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_1_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="memlite_2src_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_2_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_3_0_2_" class="arrow" onclick="toggleFolder('0_3_0_2_')">&#9658;</span><span id="img_0_3_0_2_" class="iconfclosed" onclick="toggleFolder('0_3_0_2_')">&#160;</span><a class="el" href="dir_7a9cd9ec71f54fbc69c0ab89afc79c7b.html" target="_self">interface</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_2_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="id_8hpp_source.html"><span class="icondoc"></span></a><b>id.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_2_1_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="instance_8hpp_source.html"><span class="icondoc"></span></a><b>instance.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_2_2_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="instancer_8hpp_source.html"><span class="icondoc"></span></a><b>instancer.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_3_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_3_0_3_" class="arrow" onclick="toggleFolder('0_3_0_3_')">&#9658;</span><span id="img_0_3_0_3_" class="iconfclosed" onclick="toggleFolder('0_3_0_3_')">&#160;</span><a class="el" href="dir_b71453e8c32e0f5cce1b87ae8a401e45.html" target="_self">pool</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_3_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="allocator_8hpp_source.html"><span class="icondoc"></span></a><b>allocator.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_3_1_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="chunk_8hpp_source.html"><span class="icondoc"></span></a><b>chunk.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_3_2_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="chunks_8hpp_source.html"><span class="icondoc"></span></a><b>chunks.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_3_3_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="memory_haver_8hpp_source.html"><span class="icondoc"></span></a><b>memoryHaver.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_3_4_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="pool_8hpp_source.html"><span class="icondoc"></span></a><b>pool.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_4_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_3_0_4_" class="arrow" onclick="toggleFolder('0_3_0_4_')">&#9658;</span><span id="img_0_3_0_4_" class="iconfclosed" onclick="toggleFolder('0_3_0_4_')">&#160;</span><a class="el" href="dir_bd62d7e6b22e0a67ee7eaee3324b7e98.html" target="_self">watcher</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_4_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="bind_tag_8hpp_source.html"><span class="icondoc"></span></a><b>bindTag.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_4_1_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="watch_cell_8hpp_source.html"><span class="icondoc"></span></a><b>watchCell.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_4_2_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="watcher_2watcher_8hpp_source.html"><span class="icondoc"></span></a><b>watcher.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_5_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="binder_8hpp_source.html"><span class="icondoc"></span></a><b>binder.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_6_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="memlite_2src_2common_8hpp_source.html"><span class="icondoc"></span></a><b>common.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_7_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="interface_8hpp_source.html"><span class="icondoc"></span></a><b>interface.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_8_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="memlite_8hpp_source.html"><span class="icondoc"></span></a><b>memlite.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_0_9_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="watcher_8hpp_source.html"><span class="icondoc"></span></a><b>watcher.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_3_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_3_1_" class="arrow" onclick="toggleFolder('0_3_1_')">&#9658;</span><span id="img_0_3_1_" class="iconfclosed" onclick="toggleFolder('0_3_1_')">&#160;</span><a class="el" href="dir_c73fbddabd0a6b501c1ead3c3c3d7738.html" target="_self">test</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_1_0_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_3_1_0_" class="arrow" onclick="toggleFolder('0_3_1_0_')">&#9658;</span><span id="img_0_3_1_0_" class="iconfclosed" onclick="toggleFolder('0_3_1_0_')">&#160;</span><a class="el" href="dir_5d749cf36c32996957e601ac9e418f5a.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_3_1_0_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="memlite_2test_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_4_" class="arrow" onclick="toggleFolder('0_4_')">&#9660;</span><span id="img_0_4_" class="iconfopen" onclick="toggleFolder('0_4_')">&#160;</span><a class="el" href="dir_1e11f2336c73eeea38a596e256bc072e.html" target="_self">meta</a></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_4_0_" class="arrow" onclick="toggleFolder('0_4_0_')">&#9658;</span><span id="img_0_4_0_" class="iconfclosed" onclick="toggleFolder('0_4_0_')">&#160;</span><a class="el" href="dir_954d80f82b3c2a1b7ba86dd5884d0828.html" target="_self">src</a></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_0_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_4_0_0_" class="arrow" onclick="toggleFolder('0_4_0_0_')">&#9658;</span><span id="img_0_4_0_0_" class="iconfclosed" onclick="toggleFolder('0_4_0_0_')">&#160;</span><a class="el" href="dir_a76637e8b5bb5b108152fd128ee623fb.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_0_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="meta_2src_2common_2def_8hpp_source.html"><span class="icondoc"></span></a><b>def.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_0_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="meta_2src_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_1_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_4_0_1_" class="arrow" onclick="toggleFolder('0_4_0_1_')">&#9658;</span><span id="img_0_4_0_1_" class="iconfclosed" onclick="toggleFolder('0_4_0_1_')">&#160;</span><a class="el" href="dir_8dadc6c30a7f32c7f52c0eb42932c775.html" target="_self">interface</a></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_1_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="type_providable_8hpp_source.html"><span class="icondoc"></span></a><b>typeProvidable.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_2_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_4_0_2_" class="arrow" onclick="toggleFolder('0_4_0_2_')">&#9658;</span><span id="img_0_4_0_2_" class="iconfclosed" onclick="toggleFolder('0_4_0_2_')">&#160;</span><a class="el" href="dir_56ca47002de299e44d2978a040bf8520.html" target="_self">rtti</a></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_2_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="rtti_2rtti_8hpp_source.html"><span class="icondoc"></span></a><b>rtti.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_3_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_4_0_3_" class="arrow" onclick="toggleFolder('0_4_0_3_')">&#9658;</span><span id="img_0_4_0_3_" class="iconfclosed" onclick="toggleFolder('0_4_0_3_')">&#160;</span><a class="el" href="dir_26b534d6957b51b5acfd35490870dcb5.html" target="_self">type</a></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_3_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="adam_8hpp_source.html"><span class="icondoc"></span></a><b>adam.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_3_1_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="ttype_8hpp_source.html"><span class="icondoc"></span></a><b>ttype.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_3_2_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="ttype_base_8hpp_source.html"><span class="icondoc"></span></a><b>ttypeBase.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_3_3_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="meta_2src_2type_2type_8hpp_source.html"><span class="icondoc"></span></a><b>type.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_4_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="meta_2src_2common_8hpp_source.html"><span class="icondoc"></span></a><b>common.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_5_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="meta_8hpp_source.html"><span class="icondoc"></span></a><b>meta.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_6_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="rtti_8hpp_source.html"><span class="icondoc"></span></a><b>rtti.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_0_7_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="meta_2src_2type_8hpp_source.html"><span class="icondoc"></span></a><b>type.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_4_1_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_4_1_" class="arrow" onclick="toggleFolder('0_4_1_')">&#9658;</span><span id="img_0_4_1_" class="iconfclosed" onclick="toggleFolder('0_4_1_')">&#160;</span><a class="el" href="dir_a14faa2bfad6e87b1a0f7c2e1d71911b.html" target="_self">test</a></td><td class="desc"></td></tr>
+<tr id="row_0_4_1_0_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_4_1_0_" class="arrow" onclick="toggleFolder('0_4_1_0_')">&#9658;</span><span id="img_0_4_1_0_" class="iconfclosed" onclick="toggleFolder('0_4_1_0_')">&#160;</span><a class="el" href="dir_715b07c15333cef614a13fda46203404.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_4_1_0_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="meta_2test_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_5_" class="arrow" onclick="toggleFolder('0_5_')">&#9660;</span><span id="img_0_5_" class="iconfopen" onclick="toggleFolder('0_5_')">&#160;</span><a class="el" href="dir_076db2f11c78d814606fa5d2acf07638.html" target="_self">swrd</a></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_5_0_" class="arrow" onclick="toggleFolder('0_5_0_')">&#9658;</span><span id="img_0_5_0_" class="iconfclosed" onclick="toggleFolder('0_5_0_')">&#160;</span><a class="el" href="dir_cfce72122a9a98fadc54556d88022a75.html" target="_self">src</a></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_0_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_5_0_0_" class="arrow" onclick="toggleFolder('0_5_0_0_')">&#9658;</span><span id="img_0_5_0_0_" class="iconfclosed" onclick="toggleFolder('0_5_0_0_')">&#160;</span><a class="el" href="dir_fa287b96b1ec16b249b5901ddf7f7dbf.html" target="_self">ast</a></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_0_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="null_sobj_8hpp_source.html"><span class="icondoc"></span></a><b>nullSobj.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_0_1_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="sobj_8hpp_source.html"><span class="icondoc"></span></a><b>sobj.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_0_2_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="term_sobj_8hpp_source.html"><span class="icondoc"></span></a><b>termSobj.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_0_3_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="ver_sobj_8hpp_source.html"><span class="icondoc"></span></a><b>verSobj.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_1_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_5_0_1_" class="arrow" onclick="toggleFolder('0_5_0_1_')">&#9658;</span><span id="img_0_5_0_1_" class="iconfclosed" onclick="toggleFolder('0_5_0_1_')">&#160;</span><a class="el" href="dir_58c77a3c022bffd7cd6b161c7dee4df0.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_1_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="swrd_2src_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_2_" class="even" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_5_0_2_" class="arrow" onclick="toggleFolder('0_5_0_2_')">&#9658;</span><span id="img_0_5_0_2_" class="iconfclosed" onclick="toggleFolder('0_5_0_2_')">&#160;</span><a class="el" href="dir_a0c10b5f6beb9c614ce54b401aa85a0e.html" target="_self">interp</a></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_2_0_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="flex_8hpp_source.html"><span class="icondoc"></span></a><b>flex.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_2_1_" class="even" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="sinterpreter_8hpp_source.html"><span class="icondoc"></span></a><b>sinterpreter.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_3_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="swrd_2src_2ast_8hpp_source.html"><span class="icondoc"></span></a><b>ast.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_4_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="swrd_2src_2common_8hpp_source.html"><span class="icondoc"></span></a><b>common.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_5_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="swrd_2src_2interp_8hpp_source.html"><span class="icondoc"></span></a><b>interp.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_6_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="swrd_2src_2parser_8hpp_source.html"><span class="icondoc"></span></a><b>parser.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_0_7_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="swrd_8hpp_source.html"><span class="icondoc"></span></a><b>swrd.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_5_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_5_1_" class="arrow" onclick="toggleFolder('0_5_1_')">&#9658;</span><span id="img_0_5_1_" class="iconfclosed" onclick="toggleFolder('0_5_1_')">&#160;</span><a class="el" href="dir_bdc44b576deadf998a3731bc12b91ce5.html" target="_self">test</a></td><td class="desc"></td></tr>
+<tr id="row_0_5_1_0_" style="display:none;"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><span id="arr_0_5_1_0_" class="arrow" onclick="toggleFolder('0_5_1_0_')">&#9658;</span><span id="img_0_5_1_0_" class="iconfclosed" onclick="toggleFolder('0_5_1_0_')">&#160;</span><a class="el" href="dir_c1be3f2d40e88de6001db34b6d7e2305.html" target="_self">common</a></td><td class="desc"></td></tr>
+<tr id="row_0_5_1_0_0_" style="display:none;"><td class="entry"><span style="width:80px;display:inline-block;">&#160;</span><a href="swrd_2test_2common_2dep_8hpp_source.html"><span class="icondoc"></span></a><b>dep.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span id="arr_0_6_" class="arrow" onclick="toggleFolder('0_6_')">&#9660;</span><span id="img_0_6_" class="iconfopen" onclick="toggleFolder('0_6_')">&#160;</span><a class="el" href="dir_743c5dda517693e9d6fcab5a69981582.html" target="_self">world</a></td><td class="desc"></td></tr>
+<tr id="row_0_6_0_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_6_0_" class="arrow" onclick="toggleFolder('0_6_0_')">&#9658;</span><span id="img_0_6_0_" class="iconfclosed" onclick="toggleFolder('0_6_0_')">&#160;</span><a class="el" href="dir_2ab0814b562432cc8968afd271be39df.html" target="_self">base</a></td><td class="desc"></td></tr>
+<tr id="row_0_6_0_0_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="_composit_8hpp_source.html"><span class="icondoc"></span></a><b>Composit.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_0_1_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="world_2base_2node_8hpp_source.html"><span class="icondoc"></span></a><b>Node.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_0_2_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="_state_8hpp_source.html"><span class="icondoc"></span></a><b>State.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_1_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_6_1_" class="arrow" onclick="toggleFolder('0_6_1_')">&#9658;</span><span id="img_0_6_1_" class="iconfclosed" onclick="toggleFolder('0_6_1_')">&#160;</span><a class="el" href="dir_b0b1d7ee04fc3c61fae2702a8199ee25.html" target="_self">msg-usr</a></td><td class="desc"></td></tr>
+<tr id="row_0_6_1_0_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="_manager_8hpp_source.html"><span class="icondoc"></span></a><b>Manager.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_1_1_" class="even" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="_object_8hpp_source.html"><span class="icondoc"></span></a><b>Object.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_2_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span id="arr_0_6_2_" class="arrow" onclick="toggleFolder('0_6_2_')">&#9658;</span><span id="img_0_6_2_" class="iconfclosed" onclick="toggleFolder('0_6_2_')">&#160;</span><a class="el" href="dir_a0f9a61ff892e6edb024ee8708509c5e.html" target="_self">pretypes</a></td><td class="desc"></td></tr>
+<tr id="row_0_6_2_0_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="world_2pretypes_2err_8hpp_source.html"><span class="icondoc"></span></a><b>Err.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_2_1_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="_info_8hpp_source.html"><span class="icondoc"></span></a><b>Info.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_2_2_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="_res_8hpp_source.html"><span class="icondoc"></span></a><b>Res.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_2_3_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="_reses_8hpp_source.html"><span class="icondoc"></span></a><b>Reses.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_2_4_" style="display:none;"><td class="entry"><span style="width:64px;display:inline-block;">&#160;</span><a href="_str_8hpp_source.html"><span class="icondoc"></span></a><b>Str.hpp</b></td><td class="desc"></td></tr>
+<tr id="row_0_6_3_"><td class="entry"><span style="width:48px;display:inline-block;">&#160;</span><a href="world_8hpp_source.html"><span class="icondoc"></span></a><b>world.hpp</b></td><td class="desc"></td></tr>
+</table>
+</div><!-- directory -->
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
 </body>
 </html>

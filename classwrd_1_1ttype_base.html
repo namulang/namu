@@ -1,102 +1,151 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8" />
-  <title>wrd::ttypeBase class | world-doc</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
-  <link rel="stylesheet" href="m-dark+doxygen.compiled.css" />
-  <link rel="icon" href="favicon-dark.png" type="image/png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#22272e" />
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>world-doc: wrd::ttypeBase&lt; T, S &gt; Class Template Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<header><nav id="navigation">
-  <div class="m-container">
-    <div class="m-row">
-      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">world-doc</a>
-      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
-        <a href="#search" class="m-dox-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
-          <path d="m6 0c-3.3144 0-6 2.6856-6 6 0 3.3144 2.6856 6 6 6 1.4858 0 2.8463-0.54083 3.8945-1.4355-0.0164 0.33797 0.14734 0.75854 0.5 1.1504l3.2227 3.7891c0.55185 0.6139 1.4517 0.66544 2.002 0.11524 0.55022-0.55022 0.49866-1.4501-0.11524-2.002l-3.7891-3.2246c-0.39184-0.35266-0.81242-0.51469-1.1504-0.5 0.89472-1.0482 1.4355-2.4088 1.4355-3.8945 0-3.3128-2.6856-5.998-6-5.998zm0 1.5625a4.4375 4.4375 0 0 1 4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375-4.4375 4.4375 4.4375 0 0 1 4.4375-4.4375z"/>
-        </svg></a>
-        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
-        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
-      </div>
-      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
-        <div class="m-row">
-          <ol class="m-col-t-6 m-col-m-none">
-            <li><a href="pages.html">Pages</a></li>
-            <li><a href="namespaces.html">Namespaces</a></li>
-          </ol>
-          <ol class="m-col-t-6 m-col-m-none" start="3">
-            <li><a href="annotated.html">Classes</a></li>
-            <li><a href="files.html">Files</a></li>
-            <li class="m-show-m"><a href="#search" class="m-dox-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
-              <path d="m6 0c-3.3144 0-6 2.6856-6 6 0 3.3144 2.6856 6 6 6 1.4858 0 2.8463-0.54083 3.8945-1.4355-0.0164 0.33797 0.14734 0.75854 0.5 1.1504l3.2227 3.7891c0.55185 0.6139 1.4517 0.66544 2.002 0.11524 0.55022-0.55022 0.49866-1.4501-0.11524-2.002l-3.7891-3.2246c-0.39184-0.35266-0.81242-0.51469-1.1504-0.5 0.89472-1.0482 1.4355-2.4088 1.4355-3.8945 0-3.3128-2.6856-5.998-6-5.998zm0 1.5625a4.4375 4.4375 0 0 1 4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375 4.4375 4.4375 4.4375 0 0 1-4.4375-4.4375 4.4375 4.4375 0 0 1 4.4375-4.4375z"/>
-            </svg></a></li>
-          </ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav></header>
-<main><article>
-  <div class="m-container m-container-inflatable">
-    <div class="m-row">
-      <div class="m-col-l-10 m-push-l-1">
-        <h1>
-          <div class="m-dox-template">template&lt;typename T, typename S = typename <a href="structwrd_1_1tsuper_type_def.html" class="m-dox">tsuperTypeDef</a>&lt;T&gt;::is&gt;</div>
-          <span class="m-breadcrumb"><a href="namespacewrd.html">wrd</a>::<wbr/></span>ttypeBase <span class="m-thin">class</span>
-        </h1>
-<aside class="m-note m-default"><h4>Remark</h4><p>TTypeBase returns TTypeBase&lt;Type&gt; as its meta class. however, this makes impossible to get specific TTypeBase instance at a binder.</p></aside><p>if user typedefs SuperType at their type T, then TTypeBase inherits from given SuperType. this eventually make user add API to want to TTypeBase class.</p>
-      </div>
-    </div>
-  </div>
-</article></main>
-<div class="m-dox-search" id="search">
-  <a href="#!" onclick="return hideSearch()"></a>
-  <div class="m-container">
-    <div class="m-row">
-      <div class="m-col-m-8 m-push-m-2">
-        <div class="m-dox-search-header m-text m-small">
-          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
-          <div id="search-symbolcount">&hellip;</div>
-        </div>
-        <div class="m-dox-search-content">
-          <form>
-            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
-          </form>
-          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
-          <div id="search-help" class="m-text m-dim m-text-center">
-            <p class="m-noindent">Search for symbols, directories, files, pages or
-            modules. You can omit any prefix from the symbol or file path; adding a
-            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
-            directory.</p>
-            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
-            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
-            <span class="m-label m-dim">Enter</span> to go.
-            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
-            copy a link to the result using <span class="m-label m-dim">⌘</span>
-            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
-            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
-
-          </div>
-          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
-          <ul id="search-results"></ul>
-        </div>
-      </div>
-    </div>
-  </div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">world-doc
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
 </div>
-<script src="search.js"></script>
-<script src="searchdata.js" async="async"></script>
-<footer><nav>
-  <div class="m-container">
-    <div class="m-row">
-      <div class="m-col-l-10 m-push-l-1">
-        <p>world-doc. Created by <a href="https://doxygen.org/">Doxygen</a> 1.8.13 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
-      </div>
-    </div>
-  </div>
-</nav></footer>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>wrd</b></li><li class="navelem"><a class="el" href="classwrd_1_1ttype_base.html">ttypeBase</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="classwrd_1_1ttype_base-members.html">List of all members</a>  </div>
+  <div class="headertitle">
+<div class="title">wrd::ttypeBase&lt; T, S &gt; Class Template Reference</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="ttype_base_8hpp_source.html">ttypeBase.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for wrd::ttypeBase&lt; T, S &gt;:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classwrd_1_1ttype_base.png" alt=""/>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:afb161e4756d6626dd2a174e6a5ee295e"><td class="memItemLeft" align="right" valign="top"><a id="afb161e4756d6626dd2a174e6a5ee295e"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>isTemplate</b> () const override</td></tr>
+<tr class="separator:afb161e4756d6626dd2a174e6a5ee295e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6448a033b620f457f9b490fb33602dde"><td class="memItemLeft" align="right" valign="top"><a id="a6448a033b620f457f9b490fb33602dde"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>isAbstract</b> () const override</td></tr>
+<tr class="separator:a6448a033b620f457f9b490fb33602dde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affd1785da64e370c431206e2629d4cf9"><td class="memItemLeft" align="right" valign="top"><a id="affd1785da64e370c431206e2629d4cf9"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const override</td></tr>
+<tr class="separator:affd1785da64e370c431206e2629d4cf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14df9c34b6a6c193e1f76442ed6bb654"><td class="memItemLeft" align="right" valign="top"><a id="a14df9c34b6a6c193e1f76442ed6bb654"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>make</b> () const override</td></tr>
+<tr class="separator:a14df9c34b6a6c193e1f76442ed6bb654"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a763151fb4b9eff25d9f586d108b0c44d"><td class="memItemLeft" align="right" valign="top"><a id="a763151fb4b9eff25d9f586d108b0c44d"></a>
+wcnt&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const override</td></tr>
+<tr class="separator:a763151fb4b9eff25d9f586d108b0c44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9c41003f3435f46baa9323d57567a6d"><td class="memItemLeft" align="right" valign="top"><a id="af9c41003f3435f46baa9323d57567a6d"></a>
+const <a class="el" href="classwrd_1_1type.html">type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSuper</b> () const override</td></tr>
+<tr class="separator:af9c41003f3435f46baa9323d57567a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7335a092f4c1f2fc39e21f0031ff567"><td class="memItemLeft" align="right" valign="top"><a id="ad7335a092f4c1f2fc39e21f0031ff567"></a>
+const wbool &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>isInit</b> () const override</td></tr>
+<tr class="separator:ad7335a092f4c1f2fc39e21f0031ff567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a56cdd930b4ef1fb81934c47e27899144"><td class="memItemLeft" align="right" valign="top"><a id="a56cdd930b4ef1fb81934c47e27899144"></a>
+static const me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()</td></tr>
+<tr class="separator:a56cdd930b4ef1fb81934c47e27899144"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a93d898f6fc8f25d61c511823050a8e21"><td class="memItemLeft" align="right" valign="top"><a id="a93d898f6fc8f25d61c511823050a8e21"></a>
+types &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getSupers</b> () override</td></tr>
+<tr class="separator:a93d898f6fc8f25d61c511823050a8e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96172c2048545e73bb3e6c79b451f967"><td class="memItemLeft" align="right" valign="top"><a id="a96172c2048545e73bb3e6c79b451f967"></a>
+types &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getSubs</b> () override</td></tr>
+<tr class="separator:a96172c2048545e73bb3e6c79b451f967"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0658c5fc794fe7ed9968c9562b82fdbe"><td class="memItemLeft" align="right" valign="top"><a id="a0658c5fc794fe7ed9968c9562b82fdbe"></a>
+<a class="el" href="classwrd_1_1type.html">type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getStatic</b> () const override</td></tr>
+<tr class="separator:a0658c5fc794fe7ed9968c9562b82fdbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dd486e41e680539c292bf0eecc3dc4b"><td class="memItemLeft" align="right" valign="top"><a id="a1dd486e41e680539c292bf0eecc3dc4b"></a>
+types **&#160;</td><td class="memItemRight" valign="bottom"><b>_onGetLeafs</b> () const override</td></tr>
+<tr class="separator:a1dd486e41e680539c292bf0eecc3dc4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a686083f791c60880fe6cd46bf9e9285e"><td class="memItemLeft" align="right" valign="top"><a id="a686083f791c60880fe6cd46bf9e9285e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_onAddSubClass</b> (const <a class="el" href="classwrd_1_1type.html">type</a> &amp;subClass) override</td></tr>
+<tr class="separator:a686083f791c60880fe6cd46bf9e9285e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename T, typename S = typename tsuperTypeDef&lt;T&gt;::is&gt;<br />
+class wrd::ttypeBase&lt; T, S &gt;</h3>
+
+<dl class="section remark"><dt>Remarks</dt><dd>TTypeBase returns TTypeBase&lt;Type&gt; as its meta class. however, this makes impossible to get specific TTypeBase instance at a binder.</dd></dl>
+<p>if user typedefs SuperType at their type T, then TTypeBase inherits from given SuperType. this eventually make user add API to want to TTypeBase class. </p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
+<li>/home/runner/work/worldlang/worldlang/mod/meta/src/type/<a class="el" href="ttype_base_8hpp_source.html">ttypeBase.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
 </body>
 </html>
