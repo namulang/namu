@@ -1,5 +1,5 @@
 #include "interpreter.hpp"
-#include "wrdScanner.hpp"
+#include "lowscanner.hpp"
 
 namespace wrd {
 
