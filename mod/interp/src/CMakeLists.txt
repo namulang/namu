@@ -16,9 +16,9 @@ endif (${CMAKE_BUILD_TYPE} STREQUAL Debug)
 
 message("\t\tbison ${BISON_COMPILE_FLAGS}")
 
-bison_target(wrdParser parser/wrdParser.y ${PARSER_SRC_DIR}/wrdParser.cpp COMPILE_FLAGS ${BISON_COMPILE_FLAGS})
-flex_target(wrdScanner parser/wrdScanner.l ${PARSER_SRC_DIR}/wrdScanner.cpp COMPILE_FLAGS "-L --header-file=${PARSER_SRC_DIR}/wrdScanner.hpp")
-add_flex_bison_dependency(wrdScanner wrdParser)
+bison_target(lowparser parser/lowparser.y ${PARSER_SRC_DIR}/lowparser.cpp COMPILE_FLAGS ${BISON_COMPILE_FLAGS})
+flex_target(lowscanner parser/lowscanner.l ${PARSER_SRC_DIR}/lowscanner.cpp COMPILE_FLAGS "-L --header-file=${PARSER_SRC_DIR}/lowscanner.hpp")
+add_flex_bison_dependency(lowscanner lowparser)
 
 #  defines:
 #      define sources:
@@ -26,11 +26,11 @@ file(GLOB_RECURSE sources
     "*.c"
     "*.cpp"
 )
-foreach(file ${BISON_wrdParser_OUTPUTS})
+foreach(file ${BISON_lowparser_OUTPUTS})
     list(APPEND sources ${file})
 endforeach(file)
 
-foreach(file ${FLEX_wrdScanner_OUTPUTS})
+foreach(file ${FLEX_lowscanner_OUTPUTS})
     list(APPEND sources ${file})
 endforeach(file)
 
