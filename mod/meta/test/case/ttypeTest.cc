@@ -90,6 +90,10 @@ TEST(ttypeTest, iterateLeafClassTest) {
     const types& subs = typ.getLeafs();
     ASSERT_FALSE(nul(subs));
 
+    // hierarchy:
+    //  myClass -------> myDerivedClass ----> "myDerivedClass3"
+    //             |---> "myDerivedClass2"
+    //  we should get 2 classes here as leaf class.
     ASSERT_TRUE(*subs[0] == ttype<myDerivedClass3>());
-    ASSERT_TRUE(*subs[1] == ttype<myDerivedClass>());
+    ASSERT_TRUE(*subs[1] == ttype<myDerivedClass2>());
 }
