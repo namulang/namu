@@ -6,7 +6,7 @@
 
     #include <iostream>
     using std::cout;
-    #include "interpretable.hpp"
+    #include "parserable.hpp"
 }
 
 /*  ============================================================================================
@@ -23,8 +23,8 @@
     extern char* yytext;
 
     extern "C" {
-        int yylex(YYSTYPE* val, YYLTYPE* loc, wrd::interpretable* interp, yyscan_t scanner);
-        void yyerror(YYLTYPE* loc, wrd::interpretable* interp, yyscan_t scanner, const char* msg);
+        int yylex(YYSTYPE* val, YYLTYPE* loc, wrd::parserable* interp, yyscan_t scanner);
+        void yyerror(YYLTYPE* loc, wrd::parserable* interp, yyscan_t scanner, const char* msg);
     }
 }
 
@@ -41,8 +41,8 @@
 %glr-parser
 %locations
 
-%lex-param {wrd::interpretable* interp} {yyscan_t scanner}
-%parse-param {wrd::interpretable* interp} {yyscan_t scanner}
+%lex-param {wrd::parserable* interp} {yyscan_t scanner}
+%parse-param {wrd::parserable* interp} {yyscan_t scanner}
 
 /*  ============================================================================================
     |                                        BISON SYMBOLS                                     |
@@ -77,6 +77,6 @@ prog: INT ';' {
     |                                         EPILOGUE                                         |
     ============================================================================================  */
 
-void yyerror(YYLTYPE* loc, wrd::interpretable* interp, yyscan_t scanner, const char* msg) {
+void yyerror(YYLTYPE* loc, wrd::parserable* interp, yyscan_t scanner, const char* msg) {
     // TODO:
 }
