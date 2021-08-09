@@ -9,7 +9,7 @@ namespace wrd {
         return un.blk.bind(new1);
     }
 
-    wbool me::unbind(const instance& old) {
+    wbool me::rel(const instance& old) {
         if(!_hasBindTag(old)) return true; // optimization.
 
         watchCell& un = _watcher[old.getId()];

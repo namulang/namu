@@ -100,13 +100,13 @@ TEST(bindTest, bindSameInstanceFewTimesTest) {
         ASSERT_TRUE(bb3.isBind());
         ASSERT_FALSE(nul(bb3->getBindTag()));
         ASSERT_EQ(bb3->getBindTag().getStrongCnt(), 2);
-        ASSERT_TRUE(bb2.unbind());
+        ASSERT_TRUE(bb2.rel());
         ASSERT_FALSE(bb2.isBind());
         ASSERT_TRUE(nul(bb2.get()));
         ASSERT_EQ(bb3->getBindTag().getStrongCnt(), 1);
         ASSERT_EQ(B::get(), 2);
-        ASSERT_TRUE(bb3.unbind());
-        ASSERT_TRUE(bb1.unbind());
+        ASSERT_TRUE(bb3.rel());
+        ASSERT_TRUE(bb1.rel());
     }
 
     ASSERT_EQ(B::get(), 0);
@@ -137,7 +137,7 @@ TEST(bindTest, bindByValueTest) {
     ASSERT_EQ(&strA.get(), &bindA.get());
     ASSERT_EQ(tag.getStrongCnt(), 2);
 
-    strA.unbind();
+    strA.rel();
     ASSERT_EQ(tag.getStrongCnt(), 1);
 
     {
@@ -146,7 +146,7 @@ TEST(bindTest, bindByValueTest) {
     }
 
     ASSERT_EQ(tag.getStrongCnt(), 1);
-    bindA.unbind();
+    bindA.rel();
 
     ASSERT_EQ(tag.getStrongCnt(), 0);
 }
@@ -195,7 +195,7 @@ TEST(bindTest, WeakBindButInstanceGoneTest) {
     ASSERT_FALSE(nul(tag));
     ASSERT_EQ(tag.getStrongCnt(), 1);
 
-    strA.unbind();
+    strA.rel();
     ASSERT_FALSE(weakA.isBind());
     ASSERT_TRUE(nul(*weakA));
 }

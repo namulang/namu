@@ -29,7 +29,7 @@ namespace wrd {
         wcnt getStrongCnt() const;
         wbool rel();
         //  tbindable:
-        wbool unbind() override;
+        wbool rel() override;
         wbool isBind() const override;
         const type& getBindable() const;
         using tbindable::canBind;

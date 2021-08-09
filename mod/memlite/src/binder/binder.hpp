@@ -65,7 +65,7 @@ namespace wrd {
         id getItsId() const;
         //  tbindable:
         wbool isBind() const override;
-        wbool unbind() override;
+        wbool rel() override;
         using tbindable::canBind;
         wbool canBind(const type& cls) const override;
         wbool bind(const instance& it) override;

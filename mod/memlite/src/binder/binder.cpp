@@ -9,7 +9,7 @@ namespace wrd {
 
     binder::binder(const type& type, bindTacticable& tactic): _type(&type.getStatic()), _tactic(&tactic) {}
     binder::binder(const me& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
-    binder::~binder() { me::unbind(); }
+    binder::~binder() { me::rel(); }
 
     me& me::operator=(const me& rhs) {
         if(this == &rhs) return *this;
@@ -25,8 +25,8 @@ namespace wrd {
         return tag.isBind();
     }
 
-    wbool me::unbind() {
-        return _tactic->unbind(*this);
+    wbool me::rel() {
+        return _tactic->rel(*this);
     }
 
     id me::getItsId() const { return _itsId; }
@@ -34,7 +34,7 @@ namespace wrd {
     const type& me::getType() const { return *_type; }
 
     wbool me::bind(const instance& it) {
-        unbind();
+        rel();
         if(!tbindable<instance>::bind(it)) return false;
 
         return _tactic->bind(*this, it);
@@ -45,7 +45,7 @@ namespace wrd {
     }
 
     wbool me::_assign(const binder& rhs) {
-        unbind();
+        rel();
         _type = rhs._type;
         if (nul(_tactic))
             _tactic = rhs._tactic;
