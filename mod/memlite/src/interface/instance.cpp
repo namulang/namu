@@ -11,7 +11,7 @@ namespace wrd {
     me::instance(const me& rhs) {
         _id.chkN = _vault.get(this); // _id is only belonged to the instance. not able to be copied.
     }
-    me::~instance() { _getMgr().unbind(*this); }
+    me::~instance() { _getMgr().rel(*this); }
 
     void* me::operator new(size_t sz) { return _getMgr()._new1(sz); }
     void me::operator delete(void* pt, size_t sz) { _getMgr()._del(pt, sz); }
