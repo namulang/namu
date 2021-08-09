@@ -5,7 +5,7 @@ namespace wrd {
 
     WRD_DEF_ME(weakTactic)
 
-    wbool me::unbind(binder& me) {
+    wbool me::rel(binder& me) {
         me._itsId.rel();
         return true;
     }

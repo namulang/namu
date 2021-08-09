@@ -9,7 +9,7 @@ namespace wrd {
         WRD_DECL_ME(weakTactic, bindTacticable);
 
     public:
-        wbool unbind(binder& me) override;
+        wbool rel(binder& me) override;
         wbool bind(binder& me, const instance& it) override;
 
     public:

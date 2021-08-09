@@ -21,7 +21,7 @@ namespace wrd {
 
     wcnt me::getStrongCnt() const { return _strong; }
 
-    wbool me::unbind() {
+    wbool me::rel() {
         if(_pt && _id.isHeap())
             delete _pt;
 
@@ -34,7 +34,7 @@ namespace wrd {
     const type& me::getBindable() const { return ttype<instance>::get(); }
     wbool me::canBind(const type& type) const { return type.isSub(getBindable()); }
     id me::getId() const { return _id; }
-    wbool me::rel() { return unbind(); }
+    wbool me::rel() { return rel(); }
 
     wbool me::_onStrong(wcnt vote) {
         if(!_id.isHeap()) return false;
@@ -45,14 +45,14 @@ namespace wrd {
 
         _strong += vote;
         if(_strong <= 0)
-            unbind();
+			rel();
         return true;
     }
 
     instance& me::get() { return *_pt; }
 
     wbool me::bind(const instance& it) {
-        unbind();
+        rel();
 
         _pt = (instance*) &it;
         return _completeId(*_pt);

@@ -12,7 +12,7 @@ namespace wrd {
 
     public:
         wbool bind(const instance& new1);
-        wbool unbind(const instance& old);
+        wbool rel(const instance& old);
         const pool& getPool() const;
         const watcher& getWatcher() const;
         static WRD_SINGLETON_GETTER(me)
