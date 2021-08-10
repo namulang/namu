@@ -27,9 +27,8 @@ namespace wrd {
 
         const chunk& getChunk() const;
         wcnt getStrongCnt() const;
-        wbool rel();
         //  tbindable:
-        wbool rel() override;
+        void rel() override;
         wbool isBind() const override;
         const type& getBindable() const;
         using tbindable::canBind;

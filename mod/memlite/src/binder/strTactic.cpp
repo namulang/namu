@@ -6,14 +6,13 @@ namespace wrd {
 
     WRD_DEF_ME(strTactic)
 
-    wbool me::rel(binder& me) {
-        if(!me.isBind()) return true;
+    void me::rel(binder& me) {
+        if(!me.isBind()) return;
 
         bindTag& tag = me._getBindTag();
-        WRD_NUL(tag, super::rel(me));
-
-        tag._onStrong(-1);
-        return super::rel(me);
+        if(!nul(tag))
+            tag._onStrong(-1);
+        super::rel(me);
     }
 
     wbool me::bind(binder& me, const instance& it) {

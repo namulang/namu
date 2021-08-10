@@ -21,20 +21,18 @@ namespace wrd {
 
     wcnt me::getStrongCnt() const { return _strong; }
 
-    wbool me::rel() {
+    void me::rel() {
         if(_pt && _id.isHeap())
             delete _pt;
 
         _pt = nullptr;
         _strong = 0;
-        return true;
     }
 
     wbool me::isBind() const { return _pt; }
     const type& me::getBindable() const { return ttype<instance>::get(); }
     wbool me::canBind(const type& type) const { return type.isSub(getBindable()); }
     id me::getId() const { return _id; }
-    wbool me::rel() { return rel(); }
 
     wbool me::_onStrong(wcnt vote) {
         if(!_id.isHeap()) return false;

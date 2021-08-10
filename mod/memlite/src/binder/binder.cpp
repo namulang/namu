@@ -25,8 +25,8 @@ namespace wrd {
         return tag.isBind();
     }
 
-    wbool me::rel() {
-        return _tactic->rel(*this);
+    void me::rel() {
+        _tactic->rel(*this);
     }
 
     id me::getItsId() const { return _itsId; }

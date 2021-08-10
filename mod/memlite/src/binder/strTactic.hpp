@@ -8,7 +8,7 @@ namespace wrd {
         WRD_DECL_ME(strTactic, weakTactic);
 
     public:
-        wbool rel(binder& me) override;
+        void rel(binder& me) override;
         wbool bind(binder& me, const instance& it) override;
 
         static me singletone;
