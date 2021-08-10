@@ -21,7 +21,7 @@ namespace wrd {
             return true;
         }
         wbool bind(const instance* it) { return bind(*it); }
-        virtual wbool rel() = 0;
+        virtual void rel() = 0;
         wbool canBind(const T& it) const;
         virtual wbool canBind(const type& it) const = 0;
         virtual wbool isBind() const = 0;
