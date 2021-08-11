@@ -5,7 +5,6 @@
 
 namespace wrd {
 
-    class node;
     class iteration : public instance, public titerable<instance>, public clonable {
         WRD_INTERFACE(iteration, instance)
         template <typename T>

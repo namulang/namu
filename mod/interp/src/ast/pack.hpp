@@ -2,33 +2,47 @@
 
 #include "obj.hpp"
 #include "manifest.hpp"
+#include "../loader/packLoading.hpp"
+#include "../loader/packMakable.hpp"
+
+typedef wrd::tnarr<wrd::obj> origins;
 
 namespace wrd {
 
-    class pack : public node {
-        WRD_INTERFACE(pack, node)
+    class pack : public node, public packMakable {
+        WRD_CLASS(pack, node)
 
     public:
-        pack(const manifest& manifest): super(), _manifest(manifest) {}
-        pack(const me& rhs) { _assign(rhs); }
-
-        me& operator=(const me& rhs) {
-            if(this == &rhs) return *this;
-
-            super::operator=(rhs);
-
-            return _assign(rhs);
-        }
+        pack(const manifest& manifest, const packLoadings& loadingsInHeap)
+            : super(), _loadings(loadingsInHeap), _manifest(manifest), _isVerified(false) {}
 
         using super::subs;
         ncontainer& subs() override {
-            if (!_subs)
-                _subs = _loadOrigins(_manifest.points[0].paths);
-            return *_subs;
+            return _origins;
         }
 
         manifest& getManifest() { return _manifest; }
         const manifest& getManifest() const { return _manifest; }
+
+        origins& make() override {
+            for(packLoading* load : _loadings)
+                _origins.add(load->make());
+            return _origins;
+        }
+        wbool verify(const packChain& mergedPacks) override {
+            for(packLoading* load : _loadings)
+                if(!load->verify(mergedPacks))
+                    return false;
+
+            return true;
+        }
+        wbool link(const packChain& mergedPacks) override {
+            for(packLoading* load : _loadings)
+                if(!load->link(mergedPacks))
+                    return false;
+            return true;
+        }
+
         str run(const ncontainer& args) override { return str(); }
         wbool canRun(const wtypes& types) const override { return false; }
 
@@ -43,27 +57,24 @@ namespace wrd {
         }
 
         void rel() override {
-            if(_subs)
-                _subs->rel();
-
             super::rel();
-        }
 
-    protected:
-        virtual tstr<narr> _loadOrigins(const std::vector<std::string>& filePaths) = 0;
-
-    private:
-        me& _assign(const me& rhs) {
-            _manifest = rhs._manifest;
-            _filePath = rhs._filePath;
-            _subs = rhs._subs;
-
-            return *this;
+            _origins.rel();
+            _isVerified = false;
+            for(packLoading* e : _loadings) {
+                e->rel();
+                delete e;
+            }
+            _loadings.clear();
         }
 
     private:
+        packLoadings _loadings;
         manifest _manifest;
-        std::string _filePath;
-        tstr<narr> _subs;
+        wbool _isVerified;
+        origins _origins;
     };
+
+    typedef tnarr<pack> packs;
+    typedef tnchain<pack> packChain;
 }

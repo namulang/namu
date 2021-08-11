@@ -1,8 +1,16 @@
 #include "packLoader.hpp"
+#include "../frame/thread.hpp"
 
 namespace wrd {
 
     WRD_DEF_ME(packLoader)
+
+    me::packLoader(const wchar* path): _mergedChain(_loadedPacks) {
+        _init({path});
+    }
+    me::packLoader(std::initializer_list<const wchar*> paths): _mergedChain(_loadedPacks) {
+        _init(paths);
+    }
 
     manifest me::_interpManifest(const std::string& dir, const std::string& manPath) const {
         // TODO: open pack zip file -> extract manifest.swrd file -> interpret it & load values
@@ -27,5 +35,41 @@ namespace wrd {
 
         // post: all data interpreted. merge to manifest.
         return manifest {name, manPath, author, ver, points};
+    }
+
+    const packLoadings& me::_getLoadings() const {
+        static packLoadings* inner = nullptr;
+        if(!inner) {
+            inner = new packLoadings();
+            for(const type* sub : ttype<packLoading>::get().getLeafs()) {
+                packLoading* new1 = sub->makeAs<packLoading>();
+                if(nul(new1)) {
+                    WRD_E("fail to make packMaking named to %s", sub->getName().c_str());
+                    continue;
+                }
+
+                inner->push_back(new1);
+            }
+        }
+
+        return *inner;
+    }
+
+    void me::_init(std::initializer_list<const wchar*> paths) {
+        // MAKE PACK step:
+        _mergedChain.link(thread::get().getPacks());
+        _makePackAt(paths);
+
+        // MAKE ORIGIN step:
+        for(titer<pack> e=_loadedPacks.begin<pack>(); e ;++e)
+            e->make();
+
+        // VERIFY step:
+        for(titer<pack> e=_loadedPacks.begin<pack>(); e ;++e)
+            e->verify(_mergedChain);
+
+        // LINK step:
+        for(titer<pack> e=_loadedPacks.begin<pack>(); e ;++e)
+            e->link(_mergedChain);
     }
 }

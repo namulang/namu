@@ -363,7 +363,7 @@ TEST(nchainTest, testShouldLinkOverwritePrevious) {
     // chn2 --> unknown chain instance holding arr1
     ASSERT_EQ(chn2.len(), 4);
 
-    arr1Str.unbind();
+    arr1Str.rel();
     ASSERT_EQ(arr1tag->getStrongCnt(), 1);
     ASSERT_EQ(chn2.len(), 4);
     ASSERT_TRUE(arr1Weak.isBind());
