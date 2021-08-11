@@ -9,6 +9,7 @@ namespace wrd {
         WRD_CLASS(packLoader, node)
 
     public:
+        packLoader();
         packLoader(const wchar* path);
         packLoader(std::initializer_list<const wchar*> paths);
         ~packLoader() override {
@@ -16,6 +17,19 @@ namespace wrd {
         }
 
     public:
+        void addPath(const std::string& filePath) {
+            _paths.push_back(filePath);
+        }
+        void addPath(const std::vector<std::string> paths) {
+            if(&_paths == &paths) return;
+
+            _paths.insert(_paths.end(), paths.begin(), paths.end());
+        }
+        void addPath(std::initializer_list<const wchar*> paths) {
+            for(const wchar* e : paths)
+                addPath(e);
+        }
+
         wbool canRun(const wtypes& types) const override {
             return false;
         }
@@ -30,16 +44,23 @@ namespace wrd {
         }
 
         void rel() override {
+            _paths.clear();
             _loadedPacks.rel();
             _mergedChain.unlink();
         }
 
+        wbool load();
+
         packs& getLoadedPacks() { return _loadedPacks; }
         const packs& getLoadedPacks() const { return _loadedPacks; }
 
-    private:
-        void _init(std::initializer_list<const wchar*> paths);
+        wbool link(const me& new1) {
+            if(nul(new1)) return false;
 
+            return _mergedChain.link(new1._mergedChain);
+        }
+
+    private:
         wbool _isExcludedFile(const std::string& fileName) {
             static const std::string EXCLUDED_FILES[] = {".", ".."};
             for(std::string exclusion : EXCLUDED_FILES)
@@ -57,14 +78,14 @@ namespace wrd {
             return dirPath;
         }
 
-        void _makePackAt(std::initializer_list<const wchar*> paths) {
-            const std::string& cwd = fsystem::getCurrentDir();
+        void _makePacks() {
+            std::string cwd = fsystem::getCurrentDir() + "/";
             WRD_I("finding packs relative to %s or absolute", cwd.c_str());
 
-            for(const wchar* path : paths) {
-                WRD_I("try pack path: %s", path);
+            for(const std::string& path : _paths) {
+                WRD_I("try pack path: %s", path.c_str());
 
-                _makePackAt(std::string(path));
+                _makePackAt(cwd + path);
             }
         }
 
@@ -146,6 +167,7 @@ namespace wrd {
     private:
         packs _loadedPacks;
         packChain _mergedChain;
+        std::vector<std::string> _paths;
         static constexpr wchar DELIMITER = '/';
     };
 }
