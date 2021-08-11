@@ -5,19 +5,19 @@ namespace wrd {
 
     WRD_DEF_ME(thread)
 
-    const packChain& me::getPacks() {
-        static packChain* inner = nullptr;
-        if(!inner) {
-            packs loadedPacks;
-            inner = new packChain(loadedPacks);
-            WRD_I("initiates loading system packs.");
+    const packLoader& me::getPackLoader() {
+        static packLoader* inner = nullptr;
 
-            packLoader loader({"pack/"});
-            WRD_I("%d system packs has been loaded.", loader.subs().len());
+        if(!inner) {
+            inner = new packLoader({"pack/"});
+
+            WRD_I("initiates loading system packs.");
+            inner->load();
+            WRD_I("%d system packs has been loaded.", inner->subs().len());
 
 #ifdef WRD_IS_DBG
             WRD_I("next following is list for them.");
-            for(const node& pak : loader.subs()) {
+            for(const node& pak : inner->subs()) {
                 const pack& cast = pak.cast<pack>();
                 if(nul(cast)) {
                     WRD_E("cast isn't type of pack&");
