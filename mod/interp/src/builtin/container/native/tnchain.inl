@@ -90,7 +90,8 @@ namespace wrd {
 
     TEMPL
     wbool ME::unlink() {
-        return _next.unbind();
+        _next.rel();
+		return true;
     }
 
     TEMPL

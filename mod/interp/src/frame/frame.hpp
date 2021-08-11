@@ -50,7 +50,7 @@ namespace wrd {
 
     private:
         void _rel() {
-            _links.unbind();
+            _links.rel();
         }
 
         tstr<nchain> _links;
