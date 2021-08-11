@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../ast/pack.hpp"
-#include "packMaker.hpp"
+#include "packLoading.hpp"
 
 namespace wrd {
 
@@ -9,8 +9,13 @@ namespace wrd {
         WRD_CLASS(packLoader, node)
 
     public:
-        packLoader(const wchar* path) : _subs(new nchain()) { _traversePack({path}); }
-        packLoader(std::initializer_list<const wchar*> paths) : _subs(new nchain()) { _traversePack(paths); }
+        packLoader(const wchar* path);
+        packLoader(std::initializer_list<const wchar*> paths);
+        ~packLoader() override {
+            me::rel();
+        }
+
+    public:
         wbool canRun(const wtypes& types) const override {
             return false;
         }
@@ -21,10 +26,20 @@ namespace wrd {
 
         using super::subs;
         ncontainer& subs() override {
-            return *_subs;
+            return _mergedChain;
         }
 
+        void rel() override {
+            _loadedPacks.rel();
+            _mergedChain.unlink();
+        }
+
+        packs& getLoadedPacks() { return _loadedPacks; }
+        const packs& getLoadedPacks() const { return _loadedPacks; }
+
     private:
+        void _init(std::initializer_list<const wchar*> paths);
+
         wbool _isExcludedFile(const std::string& fileName) {
             static const std::string EXCLUDED_FILES[] = {".", ".."};
             for(std::string exclusion : EXCLUDED_FILES)
@@ -42,18 +57,18 @@ namespace wrd {
             return dirPath;
         }
 
-        void _traversePack(std::initializer_list<const wchar*> paths) {
+        void _makePackAt(std::initializer_list<const wchar*> paths) {
             const std::string& cwd = fsystem::getCurrentDir();
             WRD_I("finding packs relative to %s or absolute", cwd.c_str());
 
             for(const wchar* path : paths) {
                 WRD_I("try pack path: %s", path);
 
-                _traversePack(std::string(path));
+                _makePackAt(std::string(path));
             }
         }
 
-        void _traversePack(const std::string& dirPath) {
+        void _makePackAt(const std::string& dirPath) {
             const std::string& filtered = _filterDirPath(dirPath);
             DIR* dir = opendir(dirPath.c_str());
             if(!dir) {
@@ -68,13 +83,13 @@ namespace wrd {
 
                 // TODO: refactor to be extentiable.
                 if(file->d_type == DT_DIR)
-                    _traversePack(filtered + DELIMITER + file->d_name);
+                    _makePackAt(filtered + DELIMITER + file->d_name);
                 else if(file->d_name == MANIFEST_FILENAME)
-                    _createPack(filtered, file->d_name);
+                    _addNewPack(filtered, file->d_name);
             }
         }
 
-        void _createPack(const std::string& dirPath, const std::string& manifestName) {
+        void _addNewPack(const std::string& dirPath, const std::string& manifestName) {
             std::string manifestPath = dirPath + DELIMITER + manifestName;
 
             manifest mani = _interpManifest(dirPath, manifestPath);
@@ -83,13 +98,20 @@ namespace wrd {
                 return;
             }
 
-            pack* new1 = packMaker().makeWith(mani);
-            if(nul(new1)) {
-                WRD_E("fail to make a pack[%s].", mani.name.c_str());
-                return;
+            packLoadings loadings;
+            for(entrypoint& point : mani.points) {
+                packLoading* newLoading = _makeLoading(point.lang);
+                if(!newLoading) {
+                    WRD_W("%s language not supported for loading %s pack.", mani.points[0].lang.c_str(), mani.name.c_str());
+                    continue;
+                }
+
+                newLoading->addPath(point.paths);
+                loadings.push_back(newLoading);
             }
 
-            _subs->add(new1);
+            pack* new1 = new pack(mani, loadings);
+            _loadedPacks.add(new1);
             _logPack(*new1);
         }
 
@@ -111,7 +133,19 @@ namespace wrd {
         manifest _interpManifest(const std::string& dir, const std::string& manPath) const;
 
     private:
-        tstr<nchain> _subs;
+        packLoading* _makeLoading(const std::string& name) const {
+            for(const packLoading* e : _getLoadings())
+                if(e->getName() == name)
+                    return (packLoading*) e->clone();
+
+            WRD_E("can't find exact packLoading like %s", name.c_str());
+            return nullptr;
+        }
+        const packLoadings& _getLoadings() const;
+
+    private:
+        packs _loadedPacks;
+        packChain _mergedChain;
         static constexpr wchar DELIMITER = '/';
     };
 }

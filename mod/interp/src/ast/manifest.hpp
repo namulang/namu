@@ -50,4 +50,6 @@ namespace wrd {
 
         entrypoints points;
     };
+
+    typedef std::vector<manifest> manifests;
 }

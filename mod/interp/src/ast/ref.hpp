@@ -45,9 +45,9 @@ namespace wrd {
             return _str.bind((node*) it.clone());
         }
 
-        using tbindable::unbind;
-        wbool unbind() override {
-            return _str.unbind();
+        using tbindable::rel;
+        void rel() override {
+            _str.rel();
         }
 
         node& get() {
