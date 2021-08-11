@@ -5,11 +5,13 @@ namespace wrd {
 
     WRD_DEF_ME(packLoader)
 
+    me::packLoader(): _mergedChain(_loadedPacks) {}
+
     me::packLoader(const wchar* path): _mergedChain(_loadedPacks) {
-        _init({path});
+        addPath(path);
     }
     me::packLoader(std::initializer_list<const wchar*> paths): _mergedChain(_loadedPacks) {
-        _init(paths);
+        init(path);
     }
 
     manifest me::_interpManifest(const std::string& dir, const std::string& manPath) const {
@@ -55,10 +57,13 @@ namespace wrd {
         return *inner;
     }
 
-    void me::_init(std::initializer_list<const wchar*> paths) {
+    wbool me::load() {
+        // TODO: returns result when it's fail
+        _loadedPacks.rel();
+        link(thread::get().getPackLoader());
+
         // MAKE PACK step:
-        _mergedChain.link(thread::get().getPacks());
-        _makePackAt(paths);
+        _makePacks();
 
         // MAKE ORIGIN step:
         for(titer<pack> e=_loadedPacks.begin<pack>(); e ;++e)
@@ -71,5 +76,7 @@ namespace wrd {
         // LINK step:
         for(titer<pack> e=_loadedPacks.begin<pack>(); e ;++e)
             e->link(_mergedChain);
+
+        return true;
     }
 }
