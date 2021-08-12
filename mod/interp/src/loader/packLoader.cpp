@@ -11,7 +11,7 @@ namespace wrd {
         addPath(path);
     }
     me::packLoader(std::initializer_list<const wchar*> paths): _mergedChain(_loadedPacks) {
-        init(path);
+        addPath(paths);
     }
 
     manifest me::_interpManifest(const std::string& dir, const std::string& manPath) const {
