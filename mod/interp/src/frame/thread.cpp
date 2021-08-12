@@ -27,8 +27,6 @@ namespace wrd {
                 WRD_DI(" - %s v%s", cast.getName().c_str(), cast.getManifest().version.c_str());
             }
 #endif
-
-            loadedPacks.add(loader.subs());
         }
 
         return *inner;
