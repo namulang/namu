@@ -4,14 +4,10 @@ using namespace wrd;
 using namespace std;
 
 TEST(packLoaderTest, testDefaultLoaderInit) {
-    const packChain& paks = wrd::thread::get().getPacks();
-    ASSERT_FALSE(nul(paks));
-}
+    const packLoader& systemLoader = wrd::thread::get().getPackLoader();
+    ASSERT_FALSE(nul(systemLoader));
 
-TEST(packLoaderTest, testLoadSamplePack) {
-    packLoader loader("pack");
-
-    node& pack = loader["samplePack"];
+    node& pack = systemLoader["samplePack"];
     ASSERT_FALSE(nul(pack));
 
     ASSERT_EQ(pack.subs().len(), 1);
