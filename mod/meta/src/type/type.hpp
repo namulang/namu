@@ -36,6 +36,8 @@ namespace wrd {
         virtual void* make() const = 0;
         template <typename T>
         T* makeAs() const {
+            // c++ is not allow for covariant against void*.
+            // that's is why I make another variant func of already made make().
             return (T*) make();
         }
 
