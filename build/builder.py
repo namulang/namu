@@ -68,9 +68,10 @@ def branch(command):
         return relBuild()
     elif command == "dbg":
         return dbgBuild();
+    elif command == "test":
+        return test("");
     elif command == "run":
-        arg = None if len(sys.argv) < 3 else sys.argv[2]
-        return run(arg)
+        return run()
     elif command == "doc":
         return doc()
     elif command == "pubdoc":
@@ -153,17 +154,12 @@ def _publishDoc():
     _cleanIntermediates()
     return 0
 
-def run(arg):
-    if arg is None:
-        print("build world and run one of next followings...")
-        print("\t * unittests")
-        return -1
 
-    if arg == "unittests":
-        result = build()
-        if result:
-            return result
-        return _ut()
+def run():
+    result = dbgbuild()
+    if result:
+        return result
+    return test("")
 
 config=""
 
@@ -179,7 +175,7 @@ def relBuild():
 
     clean()
     config="-DCMAKE_BUILD_TYPE=Release"
-    return build("silent")
+    return build()
 
 # currently this application only supports window and linux.
 def isWindow():
@@ -372,7 +368,7 @@ def rebuild():
     clean()
     return build()
 
-def build(arg = ""):
+def build():
     _checkGTest()
     #_beautify()
     _injectBuildInfo()
@@ -380,12 +376,11 @@ def build(arg = ""):
         return -1
     if _make():
         return -1
-    if _ut(arg):
-        return -1
     _incBuildCnt()
     return 0
 
-def _ut(arg):
+# arg is "" for dbg or "silent" for rel
+def test(arg):
     print("")
     printInfoEnd("let's initiate unit tests...")
     global cwd, binDir
@@ -484,8 +479,9 @@ def help():
     print("\t * clean\tclear all cache files of cmake outputs.")
     print("\t * dbg\t\tbuild binary with debug configuration.")
     print("\t * rel\t\tbuild binary with release configuration. binary optimized, debug logs will be hidden.")
+    print("\t * test\t\truns unit tests if they are built already.")
     print("\t * doc\t\tgenerate documents only.")
-    print("\t * run\t\tbuild + run one of predefined programs.")
+    print("\t * run\t\tdbg + test. build binary with latest codes and runs unittest.")
 
 def clean():
     printInfo("Clearing next following files...")
