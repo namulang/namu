@@ -1,0 +1,51 @@
+name: CI for master
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-on-linux:
+    name: build on linux
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: install native dependencies.
+      run: sudo apt install doxygen graphviz python3 python3-pip cmake wget bison flex
+
+    - name: install python dependencies.
+      run: sudo python3 -m pip install --upgrade jinja2 Pygments
+
+    - name: checkout repository codes
+      uses: actions/checkout@v2
+
+    - name: build & test current codes.
+      run: |
+        export C=clang CXX=clang++ PYTHON=$(which python3)
+        echo github.history=${{github.repository}}
+        echo github.workspace=${{github.workspace}}
+        echo $PYTHON
+        echo flex --version
+        echo $(which flex)
+        ls -l ${{github.workspace}}/mod/swrd/src/parser
+        sudo $PYTHON ${{github.workspace}}/build/builder.py dbg
+
+  build-on-macos:
+    name: build on macos
+    runs-on: macos-latest
+
+    steps:
+      - name: blank...
+        run: echo wow.
+
+  publish-doc:
+    needs: [build-on-linux, build-on-macos]
+    if: always()
+    name: publish doc
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: blank
+        run: echo balk
