@@ -2,6 +2,7 @@
 
 #include "parserable.hpp"
 #include "../ast/node.hpp"
+#include "../verifier/failReport.hpp"
 
 namespace wrd {
 
@@ -9,12 +10,19 @@ namespace wrd {
         WRD_INTERFACE(parser, parserable)
 
     public:
-        str parseFile(const std::string& path) {
+        str parseFile(const std::string& path, failReport& report) {
+            _report = &report;
             // TODO:
             return _root;
         }
+        str parseFile(const std::string& path) {
+            return parseFile(path, nulOf<failReport>());
+        }
 
-        str parseBuffer(const std::string& buffer);
+        str parseBuffer(const std::string& buffer, failReport& report);
+        str parseBuffer(const std::string& buffer) {
+            return parseBuffer(buffer, nulOf<failReport>());
+        }
 
     protected:
         str& getRootBinder() override {
@@ -23,5 +31,6 @@ namespace wrd {
 
     private:
         str _root;
+        failReport* _report;
     };
 }
