@@ -7,3 +7,4 @@
 #include "bridge.hpp"
 #include "loader.hpp"
 #include "parser.hpp"
+#include "verifier.hpp"

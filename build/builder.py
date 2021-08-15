@@ -156,7 +156,7 @@ def _publishDoc():
 
 
 def run():
-    result = dbgbuild()
+    result = dbgBuild()
     if result:
         return result
     return test("")
