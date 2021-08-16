@@ -1,6 +1,6 @@
 [![](https://img.shields.io/github/v/release/kniz/worldlang.svg?include_prereleases&label=latest%20release&style=flat-square)](https://github.com/kniz/worldlang/releases)
 ![](https://img.shields.io/github/release-date-pre/kniz/worldlang.svg?label=on&style=flat-square)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/kniz/worldlang/CI%20for%20master/master?style=flat-square)
+[![](https://img.shields.io/github/workflow/status/kniz/worldlang/CI%20for%20master/master?style=flat-square)](https://github.com/kniz/worldlang/actions/workflows/master-ci.yml)
 ![](https://img.shields.io/github/languages/code-size/kniz/worldlang.svg?style=flat-square)
 [![](https://img.shields.io/github/downloads/kniz/worldlang/total.svg?style=flat-square)](https://github.com/kniz/worldlang/releases)
 
