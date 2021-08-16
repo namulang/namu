@@ -2,7 +2,9 @@
 
 #include "../common/dep.hpp"
 
-struct point {
-	wcnt row;
-	wcnt col;
-};
+namespace wrd {
+	struct point {
+		wcnt row;
+		wcnt col;
+	};
+}
