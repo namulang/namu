@@ -1,7 +1,6 @@
 [![](https://img.shields.io/github/v/release/kniz/worldlang.svg?include_prereleases&label=latest%20release&style=flat-square)](https://github.com/kniz/worldlang/releases)
 ![](https://img.shields.io/github/release-date-pre/kniz/worldlang.svg?label=on&style=flat-square)
-[![](https://badges.herokuapp.com/travis/kniz/worldlang?branch=master&label=linux&env=BADGE=linux&style=flat-square)](https://travis-ci.org/kniz/worldlang)
-[![](https://badges.herokuapp.com/travis/kniz/worldlang?branch=master&label=osx&env=BADGE=osx&style=flat-square)](https://travis-ci.org/kniz/worldlang)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/kniz/worldlang/CI%20for%20master/master?style=flat-square)
 ![](https://img.shields.io/github/languages/code-size/kniz/worldlang.svg?style=flat-square)
 [![](https://img.shields.io/github/downloads/kniz/worldlang/total.svg?style=flat-square)](https://github.com/kniz/worldlang/releases)
 
