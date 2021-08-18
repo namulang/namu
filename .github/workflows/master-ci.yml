@@ -56,5 +56,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: blank
-        run: echo balk
+      - name: make documents for current implementation
+        run: |
+          export C=clang CXX=clang++ PYTHON=$(which python3)
+          sudo $PYTHON ${{github.workspace}}/build/builder.py doc
+
+      - name: push docs if it's different to previous commit
+        run: |
+          export C=clang CXX=clang++ PYTHON=$(which python3)
+          sudo $PYTHON ${{github.workspace}}/build/builder.py pubdoc
