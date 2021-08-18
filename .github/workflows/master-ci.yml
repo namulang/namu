@@ -52,7 +52,6 @@ jobs:
 
   publish-doc:
     needs: [build-on-linux, build-on-macos]
-    if: always()
     name: publish doc
     runs-on: ubuntu-latest
 
