@@ -377,7 +377,7 @@ def rebuild():
     return build()
 
 def build():
-    if checkDependencies(["git", "cmake", "clang", "bison", "flex"]):
+    if checkDependencies(["git", "cmake", "clang", "bison", "flex", "dot"]):
         printErr("This program needs following softwares to be fully functional.")
         return -1
 

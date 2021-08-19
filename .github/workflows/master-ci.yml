@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: install native dependencies.
-      run: sudo apt install python3 python3-pip cmake wget bison flex
+      run: sudo apt install python3 python3-pip cmake wget bison flex graphviz
 
     - name: checkout repository codes
       uses: actions/checkout@v2
@@ -32,7 +32,7 @@ jobs:
     - name: install native dependencies.
       run: |
         brew update
-        brew install python3 cmake wget bison flex
+        brew install python3 cmake wget bison flex graphviz
 
     - name: checkout repository codes
       uses: actions/checkout@v2
