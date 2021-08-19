@@ -108,6 +108,10 @@ def doc():
     # Idea from Travis Gockel.
     global cwd, python3, externalDir
 
+    if checkDependencies(["git", "cmake"]):
+        printErr("This program needs following softwares to be fully functional.")
+        return -1
+
     _checkMCSS();
     _cleanIntermediates()
     os.system("rm -rf " + cwd + "/html")
@@ -131,6 +135,10 @@ def doc():
     return 0
 
 def _publishDoc():
+    if checkDependencies(["git"]):
+        printErr("This program needs following softwares to be fully functional.")
+        return -1
+
     # pushing on gh-pages:
     origin = cmdstr("git rev-parse --verify HEAD")
     print("origin=" + str(origin))
@@ -369,6 +377,10 @@ def rebuild():
     return build()
 
 def build():
+    if checkDependencies(["git", "cmake", "clang", "bison", "flex"]):
+        printErr("This program needs following softwares to be fully functional.")
+        return -1
+
     _checkGTest()
     #_beautify()
     _injectBuildInfo()
@@ -417,18 +429,28 @@ def _extractPythonVersion(verstr):
 
 flexVerExpect = [2, 6, 0]
 
-def checkDependencies():
+def checkDependencies(deps):
     global flexVerExpect
     global python3
     print("")
     printInfoEnd("checking dependencies...")
-    simple_depencies = ["git", "cmake", "clang", "doxygen", "bison"]
 
-    for e in simple_depencies:
-        if not shutil.which(e):
+    for e in deps:
+        if e == "flex":
+            (isCompatible, ver) = isFlexCompatible()
+            if isCompatible == False:
+                printErr("your flex version is " + ver + ". it requires v" +
+                    str(flexVerExpect[0]) + "." + str(flexVerExpect[1]) + "." + str(flexVerExpect[2]))
+                return -1
+            printOkEnd("flex")
+
+        elif not shutil.which(e):
             printErr(e + " is NOT installed!")
             return -1
-        printOkEnd(e)
+        else:
+            printOkEnd(e)
+
+    print("")
 
     if isWindow():
         if not shutil.which("mingw32-make"):
@@ -442,12 +464,7 @@ def checkDependencies():
         printErr("requires python over v3.6")
         return -1
 
-    (isCompatible, ver) = isFlexCompatible()
-    if isCompatible == False:
-        printErr("your flex version is " + ver + ". it requires v" +
-            str(flexVerExpect[0]) + "." + str(flexVerExpect[1]) + "." + str(flexVerExpect[2]))
-        return -1
-    else: printOk("flex")
+    return 0
 
 def isFlexCompatible():
     global flexVerExpect
@@ -563,10 +580,6 @@ def main():
     version()
 
     os.chdir(cwd)
-    if checkDependencies():
-        printErr("This program needs following softwares to be fully functional.")
-        return -1
-
     if len(sys.argv) == 1:
         help()
     else:
