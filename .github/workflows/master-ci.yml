@@ -52,20 +52,33 @@ jobs:
     steps:
       - name: checkout repository codes
         uses: actions/checkout@v2
-
+        with:
+          persist-credentials: false
+          fetch-depth: 0
       - name: install native dependencies.
         run: sudo apt install doxygen graphviz python3 python3-pip
 
       - name: install python dependencies.
         run: sudo python3 -m pip install --upgrade jinja2 Pygments
 
-      - name: push docs if it's different to previous commit
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: commit docs if it's different to previous commit
         run: |
           export C=clang CXX=clang++ PYTHON=$(which python3)
           sudo $PYTHON ${{github.workspace}}/build/builder.py doc
           sudo $PYTHON ${{github.workspace}}/build/builder.py pubdoc
-          cd ${{github.workspace}}/build/html
-          git remote set-url --push origin https://kniz:$GITHUB_TOKEN@github.com/kniz/worldlang
-          git push origin gh-pages
+
+      - name: test
+        working-directory: 4{{github.workspace}}/build/html
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ls -l .
+          git status
+          git branch
+          echo $GITHUB_TOKEN
+
+      - name: push the commit
+        working-directory: ${{github.workspace}}/build/html
+        uses: ad-m/github-push-action@master
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          branch: ${{ github.ref}}
