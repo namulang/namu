@@ -152,13 +152,9 @@ def _publishDoc():
         printInfo("but it seems that nothing changed.")
         _cleanIntermediates()
         return 0
-    res = os.system("git push origin gh-pages")
-    if res != 0:
-        printErr("fail to push on gh-pages")
-        _cleanIntermediates()
-        return -1
-    os.chdir(cwd)
 
+    os.chdir(cwd)
+    print("now, please push new commit.")
     _cleanIntermediates()
     return 0
 
