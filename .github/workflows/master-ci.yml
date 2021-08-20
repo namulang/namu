@@ -59,16 +59,13 @@ jobs:
       - name: install python dependencies.
         run: sudo python3 -m pip install --upgrade jinja2 Pygments
 
-      - name: make documents for current implementation
-        run: |
-          export C=clang CXX=clang++ PYTHON=$(which python3)
-          sudo $PYTHON ${{github.workspace}}/build/builder.py doc
-
       - name: push docs if it's different to previous commit
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export C=clang CXX=clang++ PYTHON=$(which python3)
+          sudo $PYTHON ${{github.workspace}}/build/builder.py doc
           sudo $PYTHON ${{github.workspace}}/build/builder.py pubdoc
+          cd ${{github.workspace}}/build/html
           git remote set-url --push origin https://kniz:$GITHUB_TOKEN@github.com/kniz/worldlang
           git push origin gh-pages
