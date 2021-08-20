@@ -78,8 +78,8 @@ jobs:
           echo $GITHUB_TOKEN
 
       - name: push the commit
-        working-directory: ${{github.workspace}}/build/html
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@v0.6.0
         with:
+          directory: ${{github.workspace}}/build/html
           github_token: ${{secrets.GITHUB_TOKEN}}
           branch: ${{ github.ref}}
