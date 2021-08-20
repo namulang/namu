@@ -65,6 +65,10 @@ jobs:
           sudo $PYTHON ${{github.workspace}}/build/builder.py doc
 
       - name: push docs if it's different to previous commit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export C=clang CXX=clang++ PYTHON=$(which python3)
           sudo $PYTHON ${{github.workspace}}/build/builder.py pubdoc
+          git remote set-url --push origin https://kniz:$GITHUB_TOKEN@github.com/kniz/worldlang
+          git push origin gh-pages
