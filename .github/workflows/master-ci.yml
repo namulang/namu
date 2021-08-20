@@ -50,16 +50,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout repository codes
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
       - name: install native dependencies.
         run: sudo apt install doxygen graphviz python3 python3-pip
 
       - name: install python dependencies.
         run: sudo python3 -m pip install --upgrade jinja2 Pygments
+
+      - name: checkout master codes.
+        uses: actions/checkout@v2
 
       - name: commit docs if it's different to previous commit
         run: |
@@ -67,19 +65,9 @@ jobs:
           sudo $PYTHON ${{github.workspace}}/build/builder.py doc
           sudo $PYTHON ${{github.workspace}}/build/builder.py pubdoc
 
-      - name: test
-        working-directory: 4{{github.workspace}}/build/html
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ls -l .
-          git status
-          git branch
-          echo $GITHUB_TOKEN
-
       - name: push the commit
         uses: ad-m/github-push-action@v0.6.0
         with:
           directory: ${{github.workspace}}/build/html
           github_token: ${{secrets.GITHUB_TOKEN}}
-          branch: ${{ github.ref}}
+          branch: 'gh-pages'
