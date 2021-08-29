@@ -5,8 +5,7 @@ namespace wrd {
 
     WRD_DEF_ME(parser)
 
-    str me::parseBuffer(const std::string& buffer, failReport& report) {
-        _report = &report;
+    str me::parseBuffer(const std::string& buffer) {
         yyscan_t scanner;
         yylex_init_extra(this, &scanner);
 
@@ -19,10 +18,13 @@ namespace wrd {
         yydebug = 1;             // For Bison (still global, even in a reentrant parser)
 #endif
 
-        int ret = yyparse(this, scanner);
+        int res = yyparse(this, scanner);
         // TODO: handle ret.
 
         yylex_destroy(scanner);
-        return getRootBinder();
+        str ret = getRootBinder();
+
+		rel();
+		return ret;
     }
 }
