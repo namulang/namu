@@ -3,26 +3,37 @@
 #include "parserable.hpp"
 #include "../ast/node.hpp"
 #include "../verifier/failReport.hpp"
+#include "../ast/srcTbl.hpp"
 
 namespace wrd {
 
     class parser : public parserable, typeProvidable {
         WRD_INTERFACE(parser, parserable)
 
+	public:
+		parser() { me::rel(); }
+
     public:
-        str parseFile(const std::string& path, failReport& report) {
-            _report = &report;
+		me& setReport(failReport& report) {
+			_report = &report;
+			return *this;
+		}
+		me& setSrcTbl(srcTbl& srcTbl) {
+			_srcTbl = &srcTbl;
+			return *this;
+		}
+
+        str parseFile(const std::string& path) {
             // TODO:
             return _root;
         }
-        str parseFile(const std::string& path) {
-            return parseFile(path, nulOf<failReport>());
-        }
+        str parseBuffer(const std::string& buffer);
 
-        str parseBuffer(const std::string& buffer, failReport& report);
-        str parseBuffer(const std::string& buffer) {
-            return parseBuffer(buffer, nulOf<failReport>());
-        }
+		virtual void rel() {
+			_root.rel();
+			_srcTbl = nullptr;
+			_report = nullptr;
+		}
 
     protected:
         str& getRootBinder() override {
@@ -32,5 +43,6 @@ namespace wrd {
     private:
         str _root;
         failReport* _report;
+		srcTbl* _srcTbl;
     };
 }
