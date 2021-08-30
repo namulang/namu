@@ -6,7 +6,7 @@ message("\t\tconfigure_files...")
 find_package(BISON)
 find_package(FLEX)
 
-set(PARSER_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/parser)
+set(PARSER_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/loader/parser)
 set(BISON_COMPILE_FLAGS "-l --feature=diagnostics-show-caret --warnings --color")
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
@@ -16,8 +16,8 @@ endif (${CMAKE_BUILD_TYPE} STREQUAL Debug)
 
 message("\t\tbison ${BISON_COMPILE_FLAGS}")
 
-bison_target(lowparser parser/lowparser.y ${PARSER_SRC_DIR}/lowparser.cpp COMPILE_FLAGS ${BISON_COMPILE_FLAGS})
-flex_target(lowscanner parser/lowscanner.l ${PARSER_SRC_DIR}/lowscanner.cpp COMPILE_FLAGS "-L --header-file=${PARSER_SRC_DIR}/lowscanner.hpp")
+bison_target(lowparser ${PARSER_SRC_DIR}/lowparser.y ${PARSER_SRC_DIR}/lowparser.cpp COMPILE_FLAGS ${BISON_COMPILE_FLAGS})
+flex_target(lowscanner ${PARSER_SRC_DIR}/lowscanner.l ${PARSER_SRC_DIR}/lowscanner.cpp COMPILE_FLAGS "-L --header-file=${PARSER_SRC_DIR}/lowscanner.hpp")
 add_flex_bison_dependency(lowscanner lowparser)
 
 #  defines:
