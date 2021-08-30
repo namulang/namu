@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../common/dep.hpp"
+#include "../../common/dep.hpp"
 
 namespace wrd {
 	struct point {

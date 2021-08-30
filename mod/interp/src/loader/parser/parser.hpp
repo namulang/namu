@@ -1,9 +1,9 @@
 #pragma once
 
 #include "parserable.hpp"
-#include "../ast/node.hpp"
+#include "../../ast/node.hpp"
 #include "../verifier/failReport.hpp"
-#include "../ast/srcTbl.hpp"
+#include "../src/srcTbl.hpp"
 
 namespace wrd {
 
