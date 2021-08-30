@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/worldlang/worldlang/mod/interp/src/verifier/fail.hpp Source File</title>
+<title>world-doc: /home/runner/work/worldlang/worldlang/mod/interp/src/loader/verifier/fail.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_9c09537570c25807b6316b702d3e3c6f.html">interp</a></li><li class="navelem"><a class="el" href="dir_43e043a6167848ca2d6afb51aea05239.html">src</a></li><li class="navelem"><a class="el" href="dir_67f87c999e761f882df91ee9dcc739d0.html">verifier</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_9c09537570c25807b6316b702d3e3c6f.html">interp</a></li><li class="navelem"><a class="el" href="dir_43e043a6167848ca2d6afb51aea05239.html">src</a></li><li class="navelem"><a class="el" href="dir_5ee16d0465a342bbd4099ce63d119964.html">loader</a></li><li class="navelem"><a class="el" href="dir_94cbec41cde857ad71371d6a541de18c.html">verifier</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -71,25 +71,24 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../ast/point.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../src/point.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>wrd {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="structwrd_1_1fail.html">    7</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1fail.html">fail</a> {</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="structwrd_1_1fail.html">    7</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1fail.html">fail</a> : <span class="keyword">public</span> <a class="code" href="structwrd_1_1area.html">area</a> {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        <span class="keyword">enum</span> type {</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;            ERR = 0,</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;            WARN,</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        };</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="structwrd_1_1fail.html">fail</a>(fail::type t, <span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; s, <span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; e)</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            : fType(t), start(s), end(e) {}</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="structwrd_1_1fail.html">fail</a>(<span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; s, <span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; e, fail::type t)</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            : <a class="code" href="structwrd_1_1area.html">area</a>({s, e}), fType(t) {}</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        fail::type fType;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="structwrd_1_1point.html">point</a> start;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="structwrd_1_1point.html">point</a> end;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    };</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;}</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    };</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="astructwrd_1_1area_html"><div class="ttname"><a href="structwrd_1_1area.html">wrd::area</a></div><div class="ttdef"><b>Definition:</b> point.hpp:11</div></div>
 <div class="ttc" id="astructwrd_1_1fail_html"><div class="ttname"><a href="structwrd_1_1fail.html">wrd::fail</a></div><div class="ttdef"><b>Definition:</b> fail.hpp:7</div></div>
 <div class="ttc" id="astructwrd_1_1point_html"><div class="ttname"><a href="structwrd_1_1point.html">wrd::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>
 <!-- start footer part -->
