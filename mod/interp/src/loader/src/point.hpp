@@ -7,4 +7,9 @@ namespace wrd {
 		wcnt row;
 		wcnt col;
 	};
+
+	struct area {
+		point start;
+		point end;
+	};
 }
