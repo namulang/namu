@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['wrap_424',['wrap',['../classwrd_1_1tnchain.html#a144f6819f61b036ca4458effb8e70b1c',1,'wrd::tnchain']]],
-  ['wrapdeep_425',['wrapDeep',['../classwrd_1_1tnchain.html#a8d19d2b9ee410191e28e70915c91e4db',1,'wrd::tnchain']]]
+  ['tweak_434',['tweak',['../classwrd_1_1tweak.html#ab9c8ee3cfc4fadcfd6d64a870453415d',1,'wrd::tweak']]]
 ];
