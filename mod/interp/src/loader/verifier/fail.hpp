@@ -4,17 +4,15 @@
 
 namespace wrd {
 
-	struct fail {
+	struct fail : public area {
 		enum type {
 			ERR = 0,
 			WARN,
 		};
 
-		fail(fail::type t, const point& s, const point& e)
-			: fType(t), start(s), end(e) {}
+		fail(const point& s, const point& e, fail::type t)
+			: area({s, e}), fType(t) {}
 
 		fail::type fType;
-		point start;
-		point end;
 	};
 }
