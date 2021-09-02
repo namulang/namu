@@ -12,7 +12,7 @@ namespace wrd {
     ///         if user typedefs SuperType at their type T, then TTypeBase
     ///         inherits from given SuperType.
     ///         this eventually make user add API to want to TTypeBase class.
-    template <typename T, typename S = typename tsuperTypeDef<T>::is>
+    template <typename T, typename S = typename tmetaTypeDef<T>::is>
     class ttypeBase : public S {
         typedef ttypeBase<T, S> _T;
         WRD_DECL_ME(_T, S)

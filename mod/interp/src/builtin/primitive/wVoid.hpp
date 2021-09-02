@@ -27,7 +27,7 @@ namespace wrd {
             }
         };
 
-        WRD_CLASS(wVoid, mgdObj, voidType)
+        WRD(CLASS(wVoid, mgdObj, voidType))
 
     public:
         wVoid() {}

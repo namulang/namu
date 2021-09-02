@@ -5,7 +5,7 @@
 namespace wrd {
 
     class mgdObj : public obj {
-        WRD_INTERFACE(mgdObj, obj)
+        WRD(INTERFACE(mgdObj, obj))
 
     public:
         explicit mgdObj(const std::string& name = "")

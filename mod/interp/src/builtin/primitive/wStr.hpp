@@ -25,7 +25,7 @@ namespace wrd {
             }
         };
 
-        WRD_CLASS(wStr, primitiveObj, strType)
+        WRD(CLASS(wStr, primitiveObj, strType))
 
     public:
         wStr() {}

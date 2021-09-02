@@ -6,7 +6,7 @@ namespace wrd {
 
     class packLoader;
     class thread : public node {
-        WRD_CLASS(thread, node)
+        WRD(CLASS(thread, node))
         friend class obj; // to access stackFrame.
         friend class mgdFunc; // to access stackFrame.
         friend class frameInteract; // to access stackFrame.

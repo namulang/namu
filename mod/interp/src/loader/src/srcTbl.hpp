@@ -8,7 +8,7 @@ namespace wrd {
 	typedef std::unordered_map<node*, area> srcMap;
 
 	class srcTbl : public typeProvidable {
-		WRD_INTERFACE(srcTbl, typeProvidable)
+		WRD(INTERFACE(srcTbl, typeProvidable))
 
 	public:
 		const area& operator[](const node* origin) const { return get(origin); }

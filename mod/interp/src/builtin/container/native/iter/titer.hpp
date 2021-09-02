@@ -6,7 +6,7 @@ namespace wrd {
 
     template <typename T>
     class titer : public titerable<T>, public clonable, public typeProvidable {
-        WRD_CLASS(titer)
+        WRD(CLASS(titer))
         friend class iteration;
         template <typename E> friend class tnarr;
         template <typename E> friend class tnchain;

@@ -7,13 +7,13 @@ namespace wrd {
 
     template <typename T>
     class tnarr : public narrContainer {
-        WRD_CLASS(tnarr, narrContainer)
+        WRD(CLASS(tnarr, narrContainer))
         template <typename E> friend class tarr;
 
     public:
         friend class narrIteration;
         class narrIteration : public iteration {
-            WRD_CLASS(narrIteration, iteration)
+            WRD(CLASS(narrIteration, iteration))
             template<typename E>
             friend class tnarr;
 

@@ -5,7 +5,7 @@ using namespace std;
 
 namespace {
     struct myObj : public mgdObj {
-        WRD_CLASS(myObj, mgdObj)
+        WRD(CLASS(myObj, mgdObj))
 
     public:
         using super::getCtors;

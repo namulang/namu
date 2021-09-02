@@ -6,7 +6,7 @@
 namespace wrd {
 
     class packLoader : public node {
-        WRD_CLASS(packLoader, node)
+        WRD(CLASS(packLoader, node))
 
     public:
         packLoader();

@@ -10,7 +10,7 @@ typedef wrd::tnarr<wrd::obj> origins;
 namespace wrd {
 
     class pack : public node, public packMakable {
-        WRD_CLASS(pack, node)
+        WRD(CLASS(pack, node))
 
     public:
         pack(const manifest& manifest, const packLoadings& loadingsInHeap)

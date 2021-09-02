@@ -6,7 +6,7 @@
 namespace wrd {
 
     class narrContainer : public ncontainer, public arrContainable {
-        WRD_INTERFACE(narrContainer, ncontainer)
+        WRD(INTERFACE(narrContainer, ncontainer))
 
     public:
         using super::get;

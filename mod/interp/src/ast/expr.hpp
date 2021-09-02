@@ -5,7 +5,7 @@
 namespace wrd {
 
     class expr : public node {
-        WRD_INTERFACE(expr, node)
+        WRD(INTERFACE(expr, node))
 
     public:
         expr(std::initializer_list<const node*> newTerms): _terms(newTerms) {}

@@ -4,7 +4,7 @@ using namespace wrd;
 using namespace std;
 
 class myNode : public node {
-    WRD_CLASS(myNode, node)
+    WRD(CLASS(myNode, node))
 
 public:
     myNode(int num): number(num) {}
@@ -60,7 +60,7 @@ TEST(nchainTest, simpleAddDelTest10000) {
 }
 
 class myMyNode : public myNode {
-    WRD_CLASS(myMyNode, myNode)
+    WRD(CLASS(myMyNode, myNode))
 
 public:
     myMyNode(int num): super(num) {}
@@ -533,7 +533,7 @@ TEST(nchainTest, testDeepChainIteration) {
 }
 
 struct myNode2 : public myNode {
-    WRD_CLASS(myNode2, myNode)
+    WRD(CLASS(myNode2, myNode))
 
 public:
     myNode2(int val) : super(val) {}

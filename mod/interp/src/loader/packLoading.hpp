@@ -13,7 +13,7 @@ namespace wrd {
     typedef tnchain<pack> packChain;
 
     class packLoading : public instance, public packMakable, public clonable {
-        WRD_INTERFACE(packLoading, instance)
+        WRD(INTERFACE(packLoading, instance))
 
         typedef wbool (me::*packEvent)(const packChain&);
 

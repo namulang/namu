@@ -5,7 +5,7 @@
 namespace wrd {
 
     class primitiveCtor : public func {
-        WRD_INTERFACE(primitiveCtor, func)
+        WRD(INTERFACE(primitiveCtor, func))
 
     public:
         primitiveCtor(): super("") {}

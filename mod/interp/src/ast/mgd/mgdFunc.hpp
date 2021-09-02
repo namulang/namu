@@ -5,7 +5,7 @@
 namespace wrd {
 
     class mgdFunc : public func {
-        WRD_INTERFACE(mgdFunc, func)
+        WRD(INTERFACE(mgdFunc, func))
 
     public:
         explicit mgdFunc(const std::string& name): super(name) {}

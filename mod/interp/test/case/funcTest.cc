@@ -6,7 +6,7 @@ using namespace std;
 
 namespace {
     class myfunc : public mgdFunc {
-        WRD_CLASS(myfunc, mgdFunc)
+        WRD(CLASS(myfunc, mgdFunc))
 
     public:
         myfunc(std::string name = "myfunc"): super(name) {
@@ -89,7 +89,7 @@ wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj&
 
 namespace {
     struct myObj : public mgdObj {
-        WRD_CLASS(myObj, mgdObj)
+        WRD(CLASS(myObj, mgdObj))
 
     public:
         using super::getCtors;

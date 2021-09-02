@@ -5,7 +5,7 @@
 namespace wrd {
 
     /*class runExpr : public expr {
-        WRD_CLASS(runExpr, expr)
+        WRD(CLASS(runExpr, expr))
 
     public:
     };*/

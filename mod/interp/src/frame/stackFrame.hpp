@@ -6,7 +6,7 @@
 namespace wrd {
 
     class stackFrame : public tarr<frame> {
-        WRD_CLASS(stackFrame, tarr<frame>)
+        WRD(CLASS(stackFrame, tarr<frame>))
 
     public:
         frame& getCurrentFrame() {

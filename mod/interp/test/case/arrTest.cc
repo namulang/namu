@@ -5,7 +5,7 @@ using namespace wrd;
 using namespace std;
 
 class myNode : public node {
-    WRD_CLASS(myNode, node)
+    WRD(CLASS(myNode, node))
 
 public:
     myNode(int num): number(num) {}
@@ -108,7 +108,7 @@ TEST(arrTest, benchMarkArrTest) {
 }
 
 class myMyNode : public myNode {
-    WRD_CLASS(myMyNode, myNode)
+    WRD(CLASS(myMyNode, myNode))
 
 public:
     myMyNode(int num): super(num) {}
