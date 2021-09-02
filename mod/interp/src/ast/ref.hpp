@@ -5,7 +5,7 @@
 namespace wrd {
 
     class ref : public node, public tbindable<node> {
-        WRD_CLASS(ref, node)
+        WRD(CLASS(ref, node))
 
     public:
         ref() {}

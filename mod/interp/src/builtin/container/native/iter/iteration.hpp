@@ -6,7 +6,7 @@
 namespace wrd {
 
     class iteration : public instance, public titerable<instance>, public clonable {
-        WRD_INTERFACE(iteration, instance)
+        WRD(INTERFACE(iteration, instance))
         template <typename T>
         friend class titer;
 

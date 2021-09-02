@@ -8,7 +8,7 @@ namespace wrd {
     typedef std::vector<libHandle> libHandles;
 
     class cppPackLoading : public opaquePackLoading{
-        WRD_CLASS(cppPackLoading, opaquePackLoading)
+        WRD(CLASS(cppPackLoading, opaquePackLoading))
         typedef void (*entrypointFunc)(origins*);
 
     public:

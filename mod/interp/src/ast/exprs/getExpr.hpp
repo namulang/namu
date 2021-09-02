@@ -5,7 +5,7 @@
 namespace wrd {
 
     class getExpr : public expr {
-        WRD_CLASS(getExpr, expr)
+        WRD(CLASS(getExpr, expr))
 
     public:
         getExpr(const Ref& it, const wStr& newName, const arr& args)

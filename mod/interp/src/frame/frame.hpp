@@ -8,7 +8,7 @@ struct frameTest;
 namespace wrd {
 
     class frame : public node { // TODO: may be obj, not node.
-        WRD_CLASS(frame, node)
+        WRD(CLASS(frame, node))
         friend struct ::frameTest;
 
     public:

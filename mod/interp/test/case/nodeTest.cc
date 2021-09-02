@@ -5,7 +5,7 @@ using namespace std;
 
 namespace {
     class myFunc : public mgdFunc {
-        WRD_CLASS(myFunc, mgdFunc)
+        WRD(CLASS(myFunc, mgdFunc))
 
     public:
         myFunc(): super("myFunc") {}
@@ -48,7 +48,7 @@ namespace {
 
 namespace {
     struct myObj : public mgdObj {
-        WRD_CLASS(myObj, mgdObj)
+        WRD(CLASS(myObj, mgdObj))
 
     public:
         myObj(int newVal = 0): val(newVal) {}

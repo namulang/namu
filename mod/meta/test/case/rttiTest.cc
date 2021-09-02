@@ -11,7 +11,7 @@ struct hasSuper : public noSuper {
 
 using namespace wrd;
 
-TEST(rttiTest, basicBehavior) {
+TEST(rttiTest, metaTypeDefTest) {
     ASSERT_FALSE(tifHasSuperTypedef<noSuper>::is);
     ASSERT_TRUE(tifHasSuperTypedef<hasSuper>::is);
 
@@ -42,9 +42,9 @@ TEST(rttiTest, superTypeDefTest) {
             int foo() {
                 return 22;
             }
-        } superType;
+        } metaType;
     };
 
-    ASSERT_EQ(typeid(tsuperTypeDef<A>::is), typeid(type));
-    ASSERT_EQ(typeid(tsuperTypeDef<customA>::is), typeid(customA::myType));
+    ASSERT_EQ(typeid(tmetaTypeDef<A>::is), typeid(type));
+    ASSERT_EQ(typeid(tmetaTypeDef<customA>::is), typeid(customA::myType));
 }

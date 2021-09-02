@@ -85,7 +85,7 @@ namespace wrd {
     ///         now, TClass of course will be duplicated on each modules and code bloated but it will act
     ///         like proxy pointing this nested class.
     ///
-    ///         in conclusion, users can ignore this background reasons and use WRD_CLASS macro without
+    ///         in conclusion, users can ignore this background reasons and use CLASS macro without
     ///         additional consideration.
     template <typename T>
     struct tnameGetter {
@@ -102,16 +102,16 @@ namespace wrd {
     template <typename T>
     using void_t = void;
 
-    // superTypeChecker:
-    //  if user defined superType on their own, we let their TType classes inherit their superType class.
+    // metaTypeChecker:
+    //  if user defined metaType on their own, we let their TType classes inherit their superType class.
     //  otherwise, just use Type as base class.
     template <typename T, typename = void>
-    struct tsuperTypeDef {
+    struct tmetaTypeDef {
         using is = type;
     };
     template <typename T>
-    struct tsuperTypeDef<T, void_t<int T::superType::*>> {
-        using is = typename T::superType;
+    struct tmetaTypeDef<T, void_t<int T::metaType::*>> {
+        using is = typename T::metaType;
     };
 
     template <typename T, typename... Es>

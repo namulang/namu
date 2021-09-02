@@ -40,7 +40,7 @@ TEST(ttypeTest, customTypeInheritTest) {
             const std::string& getName() const {
                 return trg;
             }
-        } superType;
+        } metaType;
     };
 
     EXPECT_NE(ttype<A>().getName(), ttype<customA>().getName());

@@ -10,7 +10,7 @@ namespace wrd {
     class ref;
     template <typename T> class tref;
     class node : public instance, public clonable, public validable {
-        WRD_INTERFACE(node, instance)
+        WRD(INTERFACE(node, instance))
 
     public:
         node& operator[](const std::string& name) const { return sub(name); }
@@ -104,7 +104,7 @@ namespace wrd {
 
     /// managed object.
     /*class NObj : public obj {
-        WRD_CLASS(NObj, obj)
+        WRD(CLASS(NObj, obj))
 
     public:
         NObj(): super("", new narr()) {}
@@ -118,7 +118,7 @@ namespace wrd {
     // * func.run()의 가구현
     // * ref 구현
     class node : public instance, public containable {
-        WRD_CLASS(node, instance)
+        WRD(CLASS(node, instance))
 
     public:
         wbool isInit() {
@@ -165,7 +165,7 @@ namespace wrd {
     };
 
     class ref : public node, tbindable<node> {
-        WRD_CLASS(tref, node)
+        WRD(CLASS(tref, node))
 
         node& _get() override { return *_ptr; }
         // override get() funcs...
@@ -184,7 +184,7 @@ namespace wrd {
     };
 
     class func : public scope {
-        WRD_CLASS(func, scope)
+        WRD(CLASS(func, scope))
 
     public:
         ret<ref> run(arr& args) override;

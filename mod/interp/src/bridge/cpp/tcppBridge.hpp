@@ -7,7 +7,7 @@ namespace wrd {
 
     template <typename T>
     class tcppBridge : public mgdObj {
-        WRD_CLASS(tcppBridge, mgdObj)
+        WRD(CLASS(tcppBridge, mgdObj))
         template <typename Ret, typename T1, typename...Args>
         friend class tcppBridgeFunc;
 

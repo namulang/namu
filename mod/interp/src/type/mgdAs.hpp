@@ -8,7 +8,7 @@ namespace wrd {
         WRD_DECL_ME(mgdAs, cast)
 
     public:
-        typedef wtype superType;
+        typedef wtype metaType;
         const wtype& getType() const override {
             return *_type;
         }

@@ -10,7 +10,7 @@ namespace wrd {
     typedef tnarr<func> funcs;
 
     class obj : public node, public frameInteractable {
-        WRD_INTERFACE(obj, node)
+        WRD(INTERFACE(obj, node))
         friend class mgdObj;
 
     public:

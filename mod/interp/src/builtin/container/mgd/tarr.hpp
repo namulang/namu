@@ -6,7 +6,7 @@ namespace wrd {
 
     template <typename T>
     class tarr : public mgdObj, public containable, public arrContainable {
-        WRD_CLASS(tarr, mgdObj)
+        WRD(CLASS(tarr, mgdObj))
 
     public:
         tarr() {}

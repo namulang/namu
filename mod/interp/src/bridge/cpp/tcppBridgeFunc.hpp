@@ -7,7 +7,7 @@ namespace wrd {
 
     template <typename Ret, typename T, typename... Args>
     class tcppBridgeFuncBase : public func {
-        WRD_INTERFACE(tcppBridgeFuncBase, func)
+        WRD(INTERFACE(tcppBridgeFuncBase, func))
     protected:
         typedef Ret (T::*fptrType)(Args...);
 
@@ -34,7 +34,7 @@ namespace wrd {
     template <typename Ret, typename T, typename... Args>
     class tcppBridgeFunc : public tcppBridgeFuncBase<Ret, T, Args...> {
         typedef tcppBridgeFuncBase<Ret, T, Args...> __super;
-        WRD_CLASS(tcppBridgeFunc, __super)
+        WRD(CLASS(tcppBridgeFunc, __super))
 
     public:
         tcppBridgeFunc(const std::string& name, typename __super::fptrType fptr): super(name, fptr) {}
@@ -51,7 +51,7 @@ namespace wrd {
     template <typename T, typename... Args>
     class tcppBridgeFunc<void, T, Args...> : public tcppBridgeFuncBase<void, T, Args...> {
         typedef tcppBridgeFuncBase<void, T, Args...> __super;
-        WRD_CLASS(tcppBridgeFunc, __super)
+        WRD(CLASS(tcppBridgeFunc, __super))
 
     public:
         tcppBridgeFunc(const std::string& name, typename __super::fptrType fptr): super(name, fptr) {}

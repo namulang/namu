@@ -5,7 +5,7 @@
 namespace wrd {
 
     class failReport : public std::vector<fail>, typeProvidable, clonable {
-        WRD_CLASS(failReport, std::vector<fail>)
+        WRD(CLASS(failReport, std::vector<fail>))
 
     public:
         wbool hasErr() const {

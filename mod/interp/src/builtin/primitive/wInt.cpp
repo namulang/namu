@@ -7,7 +7,7 @@ namespace wrd {
 
     namespace {
         class wIntCtor : public primitiveCtor {
-            WRD_INTERFACE(wIntCtor, primitiveCtor)
+            WRD(INTERFACE(wIntCtor, primitiveCtor))
 
         public:
             wIntCtor(): super() {}
@@ -17,7 +17,7 @@ namespace wrd {
             }
         };
         struct defaultCtor : public wIntCtor {
-            WRD_CLASS(defaultCtor, wIntCtor)
+            WRD(CLASS(defaultCtor, wIntCtor))
 
         public:
             str _onCast(narr& args) override {
@@ -29,7 +29,7 @@ namespace wrd {
             }
         };
         struct cpyCtor: public wIntCtor {
-            WRD_CLASS(cpyCtor, wIntCtor)
+            WRD(CLASS(cpyCtor, wIntCtor))
 
         public:
             str _onCast(narr& args) override {

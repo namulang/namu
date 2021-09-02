@@ -10,11 +10,11 @@ namespace wrd {
 
     template <typename T>
     class tnchain : public ncontainer {
-        WRD_CLASS(tnchain, ncontainer)
+        WRD(CLASS(tnchain, ncontainer))
 
         friend class elemIteration;
         class elemIteration : public iteration {
-            WRD_CLASS(elemIteration, iteration)
+            WRD(CLASS(elemIteration, iteration))
             friend class tnchain;
 
         public:
@@ -71,7 +71,7 @@ namespace wrd {
 
         friend class chnIteration;
         class chnIteration : public iteration {
-            WRD_CLASS(chnIteration, iteration)
+            WRD(CLASS(chnIteration, iteration))
             friend class tnchain;
 
         public:

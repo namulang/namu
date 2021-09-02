@@ -27,7 +27,7 @@ namespace wrd {
             }
         };
 
-        WRD_CLASS(wInt, primitiveObj, intType)
+        WRD(CLASS(wInt, primitiveObj, intType))
 
     public:
         wInt() {}

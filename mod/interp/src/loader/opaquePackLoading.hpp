@@ -5,7 +5,7 @@
 namespace wrd {
 
     class opaquePackLoading : public packLoading {
-        WRD_INTERFACE(opaquePackLoading, packLoading)
+        WRD(INTERFACE(opaquePackLoading, packLoading))
 
     public:
         wbool verify(const packChain& mergedPacks) override { return true; }

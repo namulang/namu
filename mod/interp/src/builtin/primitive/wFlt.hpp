@@ -26,7 +26,7 @@ namespace wrd {
             }
         };
 
-        WRD_CLASS(wFlt, primitiveObj, fltType)
+        WRD(CLASS(wFlt, primitiveObj, fltType))
 
     public:
         wFlt() {}

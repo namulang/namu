@@ -7,7 +7,7 @@
 namespace wrd {
 
     class func : public node, public frameInteractable {
-        WRD_INTERFACE(func, node)
+        WRD(INTERFACE(func, node))
 
     public:
         explicit func(const std::string& name): _name(name) {}

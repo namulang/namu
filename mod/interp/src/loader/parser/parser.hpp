@@ -8,7 +8,7 @@
 namespace wrd {
 
     class parser : public parserable, typeProvidable {
-        WRD_INTERFACE(parser, parserable)
+        WRD(INTERFACE(parser, parserable))
 
 	public:
 		parser() { me::rel(); }

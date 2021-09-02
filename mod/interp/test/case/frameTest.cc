@@ -4,7 +4,7 @@ using namespace wrd;
 
 namespace {
     struct myNode : public node {
-        WRD_CLASS(myNode, node)
+        WRD(CLASS(myNode, node))
 
     public:
         myNode(int n): num(n) {}
