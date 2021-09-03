@@ -9,6 +9,8 @@ namespace wrd {
 
     class ref;
     template <typename T> class tref;
+
+    /// node provides common API to manipulate its sub nodes.
     class node : public instance, public clonable, public validable {
         WRD(INTERFACE(node, instance))
 

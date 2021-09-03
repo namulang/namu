@@ -1,6 +1,7 @@
 #include "obj.hpp"
 #include "func.hpp"
 #include "../builtin/container/containable.inl"
+#include "../frame/stackFrame.hpp"
 
 namespace wrd {
 
@@ -30,4 +31,16 @@ namespace wrd {
         return true;
     }
 
+    wbool me::_onInFrame(frame& fr, const ncontainer& args) {
+        WRD_DI("%s._onInFrame()", getName().c_str());
+
+        return fr.add(*nchain::wrapDeep(subs()));
+    }
+
+    wbool me::_onOutFrame(frame& fr, const ncontainer& args) {
+        WRD_DI("%s._onOutFrame()", getName().c_str());
+
+        fr.del();
+        return true;
+    }
 }
