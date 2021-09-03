@@ -99,9 +99,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1b50078bf1194bb0c7e23f7586dc955c"><td class="memItemLeft" align="right" valign="top"><a id="a1b50078bf1194bb0c7e23f7586dc955c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>mgdObj</b> (const std::string &amp;name)</td></tr>
 <tr class="separator:a1b50078bf1194bb0c7e23f7586dc955c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ac1b489003e8e546977b46a1ff79d67"><td class="memItemLeft" align="right" valign="top"><a id="a4ac1b489003e8e546977b46a1ff79d67"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>mgdObj</b> (const <a class="el" href="classwrd_1_1tnchain.html">nchain</a> &amp;shares, const <a class="el" href="classwrd_1_1tnarr.html">narr</a> &amp;owns, const std::string &amp;name)</td></tr>
-<tr class="separator:a4ac1b489003e8e546977b46a1ff79d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad98bf64eaa4c9b3ce4bbc7c22cb69a69"><td class="memItemLeft" align="right" valign="top"><a id="ad98bf64eaa4c9b3ce4bbc7c22cb69a69"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>mgdObj</b> (const std::string &amp;name, const <a class="el" href="classwrd_1_1tnchain.html">nchain</a> &amp;shares, const <a class="el" href="classwrd_1_1tnarr.html">narr</a> &amp;owns)</td></tr>
+<tr class="separator:ad98bf64eaa4c9b3ce4bbc7c22cb69a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2306d70e24d9829c9807bc49a09bfb8"><td class="memItemLeft" align="right" valign="top"><a id="ad2306d70e24d9829c9807bc49a09bfb8"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>mgdObj</b> (const me &amp;rhs)</td></tr>
 <tr class="separator:ad2306d70e24d9829c9807bc49a09bfb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,12 +121,6 @@ const <a class="el" href="classwrd_1_1tnarr.html">narr</a> &amp;&#160;</td><td c
 <tr class="memitem:a4ab6be8925f893648c34ef98e334d88e inherit pub_methods_classwrd_1_1obj"><td class="memItemLeft" align="right" valign="top"><a id="a4ab6be8925f893648c34ef98e334d88e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>obj</b> (const string &amp;name, const <a class="el" href="classwrd_1_1tnchain.html">nchain</a> &amp;subs)</td></tr>
 <tr class="separator:a4ab6be8925f893648c34ef98e334d88e inherit pub_methods_classwrd_1_1obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a591c9ff66c0ea4d31b7ea007e800b773 inherit pub_methods_classwrd_1_1obj"><td class="memItemLeft" align="right" valign="top"><a id="a591c9ff66c0ea4d31b7ea007e800b773"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>obj</b> (const me &amp;rhs)</td></tr>
-<tr class="separator:a591c9ff66c0ea4d31b7ea007e800b773 inherit pub_methods_classwrd_1_1obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2d4e90bbecde5a66cc586fc0660726a inherit pub_methods_classwrd_1_1obj"><td class="memItemLeft" align="right" valign="top"><a id="ae2d4e90bbecde5a66cc586fc0660726a"></a>
-me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const me &amp;rhs)</td></tr>
-<tr class="separator:ae2d4e90bbecde5a66cc586fc0660726a inherit pub_methods_classwrd_1_1obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b7b47dc3d0316d6b8aa329bf60cc307 inherit pub_methods_classwrd_1_1obj"><td class="memItemLeft" align="right" valign="top"><a id="a3b7b47dc3d0316d6b8aa329bf60cc307"></a>
 <a class="el" href="classwrd_1_1ncontainer.html">ncontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>subs</b> () override</td></tr>
 <tr class="separator:a3b7b47dc3d0316d6b8aa329bf60cc307 inherit pub_methods_classwrd_1_1obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -296,17 +290,17 @@ wbool&#160;</td><td class="memItemRight" valign="bottom"><b>_setId</b> (<a class
 static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getMgr</b> ()</td></tr>
 <tr class="separator:a652f6aa776b0743f0d6726971f02b54f inherit pro_static_methods_classwrd_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_classwrd_1_1obj"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classwrd_1_1obj')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classwrd_1_1obj.html">wrd::obj</a></td></tr>
+<tr class="memitem:afd2e4e7b5e40d4d3d64b82133ab76d79 inherit pro_attribs_classwrd_1_1obj"><td class="memItemLeft" align="right" valign="top"><a id="afd2e4e7b5e40d4d3d64b82133ab76d79"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>_name</b></td></tr>
+<tr class="separator:afd2e4e7b5e40d4d3d64b82133ab76d79 inherit pro_attribs_classwrd_1_1obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae350ba7195b4fca6eb18a019cfafd99b inherit pro_attribs_classwrd_1_1obj"><td class="memItemLeft" align="right" valign="top"><a id="ae350ba7195b4fca6eb18a019cfafd99b"></a>
 <a class="el" href="classwrd_1_1tstr.html">tstr</a>&lt; <a class="el" href="classwrd_1_1tnchain.html">nchain</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_subs</b></td></tr>
 <tr class="separator:ae350ba7195b4fca6eb18a019cfafd99b inherit pro_attribs_classwrd_1_1obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4eec79c1aec698d2a51c621be8043463 inherit pro_attribs_classwrd_1_1obj"><td class="memItemLeft" align="right" valign="top"><a id="a4eec79c1aec698d2a51c621be8043463"></a>
-const string *&#160;</td><td class="memItemRight" valign="bottom"><b>_name</b></td></tr>
-<tr class="separator:a4eec79c1aec698d2a51c621be8043463 inherit pro_attribs_classwrd_1_1obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classwrd_1_1mgd_obj.html">mgdObj</a> is a object structured in managed programming environment like 'wrd'. owned sub nodes of a object can only be manipulated through API provided <a class="el" href="classwrd_1_1mgd_obj.html">mgdObj</a>. because native object won't have owned nodes but only shared ones. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/runner/work/worldlang/worldlang/mod/interp/src/ast/mgd/<a class="el" href="mgd_obj_8hpp_source.html">mgdObj.hpp</a></li>
+<li>/home/runner/work/worldlang/worldlang/mod/wrd/src/ast/mgd/<a class="el" href="mgd_obj_8hpp_source.html">mgdObj.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

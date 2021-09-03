@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/worldlang/worldlang/mod/interp/src/builtin/container/containable.hpp Source File</title>
+<title>world-doc: /home/runner/work/worldlang/worldlang/mod/wrd/src/builtin/container/containable.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_9c09537570c25807b6316b702d3e3c6f.html">interp</a></li><li class="navelem"><a class="el" href="dir_43e043a6167848ca2d6afb51aea05239.html">src</a></li><li class="navelem"><a class="el" href="dir_66bac994287ef758303edef2916e2d60.html">builtin</a></li><li class="navelem"><a class="el" href="dir_96e63bfd45fd690fcdcf818790ae0e3d.html">container</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_2a714905afdaf79fc50a4fe91ffff2bf.html">src</a></li><li class="navelem"><a class="el" href="dir_444075918dea9096bfa9c8d5cdbdeb01.html">builtin</a></li><li class="navelem"><a class="el" href="dir_7ed1d4667c86e535af28281b16e741cc.html">container</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -125,21 +125,21 @@ $(function() {
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="comment">// add:</span></div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">virtual</span> wbool add(<span class="keyword">const</span> <a class="code" href="classwrd_1_1titer.html">wrd::iter</a>&amp; at, <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; new1) = 0;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        wbool add(std::initializer_list&lt;const node*&gt; elems) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            wbool <a class="code" href="structwrd_1_1ret.html">ret</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            wbool ret = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">auto</span>* elem : elems)</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <a class="code" href="structwrd_1_1ret.html">ret</a> = add(elem);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="structwrd_1_1ret.html">ret</a>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                ret = add(elem);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        wbool add(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>* new1) { <span class="keywordflow">return</span> add(*new1); }</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        wbool add(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; new1) {</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordflow">return</span> add(end(), new1);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        }</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        wcnt add(<span class="keyword">const</span> <a class="code" href="classwrd_1_1titer.html">wrd::iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classwrd_1_1titer.html">wrd::iter</a>&amp; to) {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordtype">int</span> <a class="code" href="structwrd_1_1ret.html">ret</a> = 0;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordtype">int</span> ret = 0;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keywordflow">for</span>(<a class="code" href="classwrd_1_1titer.html">wrd::iter</a> e=from; e != to ;++e)</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                <span class="keywordflow">if</span>(add(*e))</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                    <a class="code" href="structwrd_1_1ret.html">ret</a>++;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="structwrd_1_1ret.html">ret</a>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                    ret++;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        wcnt add(<span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; rhs) {</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordflow">return</span> add(rhs.begin(), rhs.end());</div>
@@ -167,7 +167,6 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1titer_html"><div class="ttname"><a href="classwrd_1_1titer.html">wrd::titer&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1containable_html_a209760da116044879ad932e3ebfca999"><div class="ttname"><a href="classwrd_1_1containable.html#a209760da116044879ad932e3ebfca999">wrd::containable::del</a></div><div class="ttdeci">wbool del()</div><div class="ttdoc">delete last element if exists.</div><div class="ttdef"><b>Definition:</b> containable.hpp:81</div></div>
-<div class="ttc" id="astructwrd_1_1ret_html"><div class="ttname"><a href="structwrd_1_1ret.html">wrd::ret</a></div><div class="ttdef"><b>Definition:</b> ret.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:14</div></div>
 <div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1containable_html"><div class="ttname"><a href="classwrd_1_1containable.html">wrd::containable</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:13</div></div>

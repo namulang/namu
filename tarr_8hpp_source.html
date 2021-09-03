@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/worldlang/worldlang/mod/interp/src/builtin/container/mgd/tarr.hpp Source File</title>
+<title>world-doc: /home/runner/work/worldlang/worldlang/mod/wrd/src/builtin/container/mgd/tarr.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_9c09537570c25807b6316b702d3e3c6f.html">interp</a></li><li class="navelem"><a class="el" href="dir_43e043a6167848ca2d6afb51aea05239.html">src</a></li><li class="navelem"><a class="el" href="dir_66bac994287ef758303edef2916e2d60.html">builtin</a></li><li class="navelem"><a class="el" href="dir_96e63bfd45fd690fcdcf818790ae0e3d.html">container</a></li><li class="navelem"><a class="el" href="dir_37ed3ee9f93f0db5d08687d70da77b29.html">mgd</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_2a714905afdaf79fc50a4fe91ffff2bf.html">src</a></li><li class="navelem"><a class="el" href="dir_444075918dea9096bfa9c8d5cdbdeb01.html">builtin</a></li><li class="navelem"><a class="el" href="dir_7ed1d4667c86e535af28281b16e741cc.html">container</a></li><li class="navelem"><a class="el" href="dir_b091ba26c94affdaaeb7890ebb6f00ff.html">mgd</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -111,10 +111,10 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">using</span> containable::add;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">using</span> <a class="code" href="classwrd_1_1arr_containable.html#adf356d54e68541154da9a121b083aeea">arrContainable::add</a>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        wbool add(std::initializer_list&lt;T*&gt; elems) {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            wbool <a class="code" href="structwrd_1_1ret.html">ret</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            wbool ret = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">auto</span>* elem : elems)</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                <a class="code" href="structwrd_1_1ret.html">ret</a> = _arr.add(elem);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="structwrd_1_1ret.html">ret</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                ret = _arr.add(elem);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        }</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        wbool add(<span class="keyword">const</span> <a class="code" href="classwrd_1_1titer.html">wrd::iter</a>&amp; at, <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; new1)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> _arr.add(at, new1); }</div>
 <div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classwrd_1_1tarr.html#a562bedda6c1bec0a7d4fbaa3e465693b">   49</a></span>&#160;        wbool <a class="code" href="classwrd_1_1tarr.html#a562bedda6c1bec0a7d4fbaa3e465693b">add</a>(widx n, <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; new1)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> _arr.add(n, new1); }</div>
@@ -158,7 +158,6 @@ $(function() {
 <div class="ttc" id="aclasswrd_1_1titer_html"><div class="ttname"><a href="classwrd_1_1titer.html">wrd::titer&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1mgd_obj_html"><div class="ttname"><a href="classwrd_1_1mgd_obj.html">wrd::mgdObj</a></div><div class="ttdef"><b>Definition:</b> mgdObj.hpp:10</div></div>
 <div class="ttc" id="aclasswrd_1_1containable_html_a209760da116044879ad932e3ebfca999"><div class="ttname"><a href="classwrd_1_1containable.html#a209760da116044879ad932e3ebfca999">wrd::containable::del</a></div><div class="ttdeci">wbool del()</div><div class="ttdoc">delete last element if exists.</div><div class="ttdef"><b>Definition:</b> containable.hpp:81</div></div>
-<div class="ttc" id="astructwrd_1_1ret_html"><div class="ttname"><a href="structwrd_1_1ret.html">wrd::ret</a></div><div class="ttdef"><b>Definition:</b> ret.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:14</div></div>
 <div class="ttc" id="aclasswrd_1_1arr_containable_html"><div class="ttname"><a href="classwrd_1_1arr_containable.html">wrd::arrContainable</a></div><div class="ttdef"><b>Definition:</b> arrContainable.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1arr_containable_html_adf356d54e68541154da9a121b083aeea"><div class="ttname"><a href="classwrd_1_1arr_containable.html#adf356d54e68541154da9a121b083aeea">wrd::arrContainable::add</a></div><div class="ttdeci">virtual wbool add(widx n, const node &amp;new1)=0</div></div>

@@ -133,10 +133,10 @@ $(function() {
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">int</span> status = 0;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            demangled = ::abi::__cxa_demangle(org, 0, 0, &amp;status);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            std::string <a class="code" href="structwrd_1_1ret.html">ret</a>(demangled);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            std::string ret(demangled);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            free(demangled);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="structwrd_1_1ret.html">ret</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        }</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">static</span> std::string filterDemangle(<span class="keyword">const</span> wchar* org) {</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keyword">const</span> std::string&amp; raw = demangle(org);</div>
@@ -150,9 +150,9 @@ $(function() {
 <div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structwrd_1_1tname_getter.html">   91</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tname_getter.html">tnameGetter</a> {</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> wchar* getRawName() { <span class="keywordflow">return</span> <span class="keyword">typeid</span>(T).name(); }</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keyword">static</span> std::string getName() {</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            std::string <a class="code" href="structwrd_1_1ret.html">ret</a> = nameDemangler::filterDemangle(getRawName());</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            std::string ret = nameDemangler::filterDemangle(getRawName());</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="structwrd_1_1ret.html">ret</a>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        }</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    };</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
@@ -182,7 +182,6 @@ $(function() {
 <div class="ttc" id="astructwrd_1_1tinstance_maker_html"><div class="ttname"><a href="structwrd_1_1tinstance_maker.html">wrd::tinstanceMaker</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:51</div></div>
 <div class="ttc" id="astructwrd_1_1name_demangler_html"><div class="ttname"><a href="structwrd_1_1name_demangler.html">wrd::nameDemangler</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:59</div></div>
 <div class="ttc" id="astructwrd_1_1tmeta_type_def_html"><div class="ttname"><a href="structwrd_1_1tmeta_type_def.html">wrd::tmetaTypeDef</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:109</div></div>
-<div class="ttc" id="astructwrd_1_1ret_html"><div class="ttname"><a href="structwrd_1_1ret.html">wrd::ret</a></div><div class="ttdef"><b>Definition:</b> ret.hpp:8</div></div>
 <div class="ttc" id="astructwrd_1_1tadaptive_super_html"><div class="ttname"><a href="structwrd_1_1tadaptive_super.html">wrd::tadaptiveSuper</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:42</div></div>
 <div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
 <div class="ttc" id="astructwrd_1_1tname_getter_html"><div class="ttname"><a href="structwrd_1_1tname_getter.html">wrd::tnameGetter</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:91</div></div>

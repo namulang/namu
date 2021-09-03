@@ -89,12 +89,12 @@ Inheritance diagram for wrd::getExpr:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2cc55bdab15b7d9a9005abff6c4f0845"><td class="memItemLeft" align="right" valign="top"><a id="a2cc55bdab15b7d9a9005abff6c4f0845"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>getExpr</b> (const Ref &amp;it, const <a class="el" href="classwrd_1_1w_str.html">wStr</a> &amp;newName, const <a class="el" href="classwrd_1_1tarr.html">arr</a> &amp;args)</td></tr>
-<tr class="separator:a2cc55bdab15b7d9a9005abff6c4f0845"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a957c1a7b80d3cf6c740192d9d6a37b60"><td class="memItemLeft" align="right" valign="top"><a id="a957c1a7b80d3cf6c740192d9d6a37b60"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>getExpr</b> (const Ref &amp;target, const <a class="el" href="classwrd_1_1w_str.html">wStr</a> &amp;newName)</td></tr>
-<tr class="separator:a957c1a7b80d3cf6c740192d9d6a37b60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a528585bb7a261af50b74212da83f2477"><td class="memItemLeft" align="right" valign="top"><a id="a528585bb7a261af50b74212da83f2477"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>getExpr</b> (const <a class="el" href="classwrd_1_1src.html">src</a> &amp;s, wcnt lineNum, const Ref &amp;it, const <a class="el" href="classwrd_1_1w_str.html">wStr</a> &amp;newName, const <a class="el" href="classwrd_1_1tarr.html">arr</a> &amp;args)</td></tr>
+<tr class="separator:a528585bb7a261af50b74212da83f2477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1ae52a5bbe59e1485db087c493ea898"><td class="memItemLeft" align="right" valign="top"><a id="ab1ae52a5bbe59e1485db087c493ea898"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>getExpr</b> (const <a class="el" href="classwrd_1_1src.html">src</a> &amp;s, wcnt lineNum, const Ref &amp;target, const <a class="el" href="classwrd_1_1w_str.html">wStr</a> &amp;newName)</td></tr>
+<tr class="separator:ab1ae52a5bbe59e1485db087c493ea898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa40b89772663a54204bbd01ea0a75675"><td class="memItemLeft" align="right" valign="top"><a id="aa40b89772663a54204bbd01ea0a75675"></a>
 <a class="el" href="classwrd_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classwrd_1_1ncontainer.html">ncontainer</a> &amp;args)</td></tr>
 <tr class="separator:aa40b89772663a54204bbd01ea0a75675"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -102,15 +102,21 @@ Public Member Functions</h2></td></tr>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>isValid</b> () const override</td></tr>
 <tr class="separator:a4e26ea759c1a4351d0d648254ad9ea1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwrd_1_1expr"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwrd_1_1expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwrd_1_1expr.html">wrd::expr</a></td></tr>
-<tr class="memitem:af8f26d1c554af4e3a4834ef181c064ec inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="af8f26d1c554af4e3a4834ef181c064ec"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>expr</b> (std::initializer_list&lt; const <a class="el" href="classwrd_1_1node.html">node</a> * &gt; newTerms)</td></tr>
-<tr class="separator:af8f26d1c554af4e3a4834ef181c064ec inherit pub_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cb32b07d81f72d0608b0df08ddd9131 inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a8cb32b07d81f72d0608b0df08ddd9131"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>expr</b> (const <a class="el" href="classwrd_1_1src.html">src</a> &amp;s, wcnt lineNum, std::initializer_list&lt; const <a class="el" href="classwrd_1_1node.html">node</a> * &gt; newTerms)</td></tr>
+<tr class="separator:a8cb32b07d81f72d0608b0df08ddd9131 inherit pub_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56d4d54e217a3dbc0897ee6efcb609a8 inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a56d4d54e217a3dbc0897ee6efcb609a8"></a>
 <a class="el" href="classwrd_1_1ncontainer.html">ncontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>subs</b> () override</td></tr>
 <tr class="separator:a56d4d54e217a3dbc0897ee6efcb609a8 inherit pub_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94222a86ec1f7fea45a4a1e27ded7b80 inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a94222a86ec1f7fea45a4a1e27ded7b80"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>canRun</b> (const wtypes &amp;args) const override</td></tr>
 <tr class="separator:a94222a86ec1f7fea45a4a1e27ded7b80 inherit pub_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0a5d2954db98a2a8bd3fdfa6faa9b40 inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="ab0a5d2954db98a2a8bd3fdfa6faa9b40"></a>
+const <a class="el" href="classwrd_1_1src.html">src</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSrc</b> () const</td></tr>
+<tr class="separator:ab0a5d2954db98a2a8bd3fdfa6faa9b40 inherit pub_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a724a75ddfc2c80e62d16fe1f954894e0 inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a724a75ddfc2c80e62d16fe1f954894e0"></a>
+wcnt&#160;</td><td class="memItemRight" valign="bottom"><b>getLineNum</b> () const</td></tr>
+<tr class="separator:a724a75ddfc2c80e62d16fe1f954894e0 inherit pub_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwrd_1_1node"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwrd_1_1node')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwrd_1_1node.html">wrd::node</a></td></tr>
 <tr class="memitem:ace4803ab5db2163f9c186a5f7c17de93 inherit pub_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="ace4803ab5db2163f9c186a5f7c17de93"></a>
 <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const std::string &amp;name) const</td></tr>
@@ -252,7 +258,7 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
 <tr class="separator:a652f6aa776b0743f0d6726971f02b54f inherit pro_static_methods_classwrd_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/runner/work/worldlang/worldlang/mod/interp/src/ast/exprs/<a class="el" href="get_expr_8hpp_source.html">getExpr.hpp</a></li>
+<li>/home/runner/work/worldlang/worldlang/mod/wrd/src/ast/exprs/<a class="el" href="get_expr_8hpp_source.html">getExpr.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
