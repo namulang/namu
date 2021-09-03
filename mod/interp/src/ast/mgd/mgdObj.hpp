@@ -4,6 +4,9 @@
 
 namespace wrd {
 
+    /// mgdObj is a object structured in managed programming environment like 'wrd'.
+    /// owned sub nodes of a object can only be manipulated through API provided mgdObj.
+    /// because native object won't have owned nodes but only shared ones.
     class mgdObj : public obj {
         WRD(INTERFACE(mgdObj, obj))
 
@@ -32,10 +35,6 @@ namespace wrd {
         const obj& getOrigin() const override {
             return *_org;
         }
-
-    protected:
-        wbool _onInFrame(frame& fr, const ncontainer& args) override;
-        wbool _onOutFrame(frame& fr, const ncontainer& args) override;
 
     private:
         me& _assign(const me& rhs);

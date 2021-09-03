@@ -9,6 +9,7 @@ namespace wrd {
     class func;
     typedef tnarr<func> funcs;
 
+    /// obj handles frame injection event of all objects.
     class obj : public node, public frameInteractable {
         WRD(INTERFACE(obj, node))
         friend class mgdObj;
@@ -38,6 +39,10 @@ namespace wrd {
         virtual funcs& getCtors() = 0;
         const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
         virtual const obj& getOrigin() const = 0;
+
+    protected:
+        wbool _onInFrame(frame& fr, const ncontainer& args) override;
+        wbool _onOutFrame(frame& fr, const ncontainer& args) override;
 
     protected:
         std::string _name;
