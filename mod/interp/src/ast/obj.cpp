@@ -5,10 +5,15 @@
 
 namespace wrd {
 
+    namespace {
+        static inline std::string emptyName = "";
+    }
+
     WRD_DEF_ME(obj)
 
-    me::obj(const std::string& name, const narr& subItself)
-        : _name(name), _subs(new nchain(subItself)) {}
+    me::obj(): _name(&emptyName) {}
+    me::obj(const string& name): _name(new string(name)) {}
+    me::obj(const string& name, const nchain& subs): _subs(subs), _name(new string(name)) {}
 
     str me::run(const ncontainer& args) {
         func& fun = getCtors().get<func>([&args](const func& candidate) {
@@ -42,5 +47,12 @@ namespace wrd {
 
         fr.del();
         return true;
+    }
+
+    void me::_destruct() {
+        // if we delete data, we don't have chance to set new name except making new object.
+        // so this is handled inside of destruct func.
+        if(_name && _name != &emptyName)
+            delete _name;
     }
 }

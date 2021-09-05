@@ -5,14 +5,17 @@
 
 namespace wrd {
 
+    /// bridge object only can shares 'shared' sub nodes.
     template <typename T>
-    class tcppBridge : public mgdObj {
-        WRD(CLASS(tcppBridge, mgdObj))
+    class tcppBridge : public obj {
+        WRD(CLASS(tcppBridge, obj))
         template <typename Ret, typename T1, typename...Args>
         friend class tcppBridgeFunc;
 
     private:
-        tcppBridge(T* real): _real(real) {}
+        tcppBridge(T* real): _real(real) {
+            _setSubs(*new nchain());
+        }
 
     public:
         static me* def() {
@@ -34,8 +37,14 @@ namespace wrd {
 
         template <typename Ret, typename... Args>
         me* func(const std::string& name, Ret(T::*fptr)(Args...)) {
-            getShares().add(new tcppBridgeFunc<Ret, T, Args...>(name, fptr));
+            subs().add(new tcppBridgeFunc<Ret, T, Args...>(name, fptr));
             return this;
+        }
+
+        const obj& getOrigin() const override {
+            // if an object doesn't have owned sub nodes it means that all instances of that classes
+            // are same and origin simulteneously.
+            return *this;
         }
 
     private:

@@ -11,9 +11,16 @@ namespace wrd {
         WRD(INTERFACE(mgdObj, obj))
 
     public:
-        explicit mgdObj(const std::string& name = "")
-            : super(name), _shares(new nchain()), _org(this) {
-            _subs->link(*_shares);
+        explicit mgdObj(): super(), _shares(new nchain()), _owns(new narr()), _org(this) {
+            _setSubs(*_makeNewSubs());
+        }
+        explicit mgdObj(const std::string& name)
+            : super(name), _shares(new nchain()), _owns(new narr()), _org(this) {
+            _setSubs(*_makeNewSubs());
+        }
+        explicit mgdObj(const nchain& shares, const narr& owns, const std::string& name)
+            : super(name), _shares(shares), _owns(owns), _org(this) {
+            _setSubs(*_makeNewSubs());
         }
         explicit mgdObj(const me& rhs): super(rhs) {
             _assign(rhs);
@@ -27,20 +34,33 @@ namespace wrd {
             return _assign(rhs);
         }
 
-        ncontainer& getShares() {
+        nchain& getShares() {
             return *_shares;
         }
-        const ncontainer& getShares() const WRD_UNCONST_FUNC(getShares())
+        const nchain& getShares() const WRD_UNCONST_FUNC(getShares())
+
+        narr& getOwns() {
+            return *_owns;
+        }
+        const narr& getOwns() const WRD_UNCONST_FUNC(getOwns())
 
         const obj& getOrigin() const override {
             return *_org;
         }
 
     private:
+        nchain* _makeNewSubs() {
+            nchain* ret = new nchain(*_owns);
+            ret->link(*_shares);
+
+            return ret;
+        }
+
         me& _assign(const me& rhs);
 
     private:
         tstr<nchain> _shares;
+        tstr<narr> _owns;
         obj* _org;
     };
 }

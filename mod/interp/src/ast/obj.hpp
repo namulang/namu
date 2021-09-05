@@ -15,21 +15,27 @@ namespace wrd {
         friend class mgdObj;
 
     public:
-        explicit obj(const std::string& name = "", const narr& subItself = *new narr());
-        explicit obj(const me& rhs) {}
+        explicit obj();
+        explicit obj(const string& name);
+        explicit obj(const string& name, const nchain& subs);
+        explicit obj(const me& rhs) { /*obj doesn't handle assignment. */ }
+        ~obj() override {
+            _destruct();
+        }
 
+    public:
         me& operator=(const me& rhs) {
-            if (&rhs == this) return *this;
+            if(this == &rhs) return *this;
+
+            _destruct();
+            _name = new string(*rhs._name);
+
             return *this;
         }
 
         using super::subs;
         ncontainer& subs() override {
             return *_subs;
-        }
-
-        const std::string& getName() const override {
-            return _name;
         }
 
         using super::run;
@@ -39,13 +45,24 @@ namespace wrd {
         virtual funcs& getCtors() = 0;
         const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
         virtual const obj& getOrigin() const = 0;
+        const std::string& getName() const override {
+            return *_name;
+        }
 
     protected:
         wbool _onInFrame(frame& fr, const ncontainer& args) override;
         wbool _onOutFrame(frame& fr, const ncontainer& args) override;
+        void _setSubs(const nchain& newSubs) {
+            _subs.bind(newSubs);
+        }
+
+    private:
+        /// 'destruct' is called when an irreversible state transition occurs.
+        /// conversely, 'release' is called when reinitialization is possible.
+        void _destruct();
 
     protected:
-        std::string _name;
         tstr<nchain> _subs;
+        const string* _name;
     };
 }
