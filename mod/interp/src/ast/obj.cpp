@@ -5,13 +5,9 @@
 
 namespace wrd {
 
-    namespace {
-        static inline std::string emptyName = "";
-    }
-
     WRD_DEF_ME(obj)
 
-    me::obj(): _name(&emptyName) {}
+    me::obj(): _name(nullptr) {}
     me::obj(const string& name): _name(new string(name)) {}
     me::obj(const string& name, const nchain& subs): _subs(subs), _name(new string(name)) {}
 
@@ -52,7 +48,8 @@ namespace wrd {
     void me::_destruct() {
         // if we delete data, we don't have chance to set new name except making new object.
         // so this is handled inside of destruct func.
-        if(_name && _name != &emptyName)
+        if(_name)
             delete _name;
+        _name = nullptr;
     }
 }

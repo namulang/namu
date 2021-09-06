@@ -12,15 +12,15 @@ namespace wrd {
 
     public:
         explicit mgdObj(): super(), _shares(new nchain()), _owns(new narr()), _org(this) {
-            _setSubs(*_makeNewSubs());
+            _subs.bind(_makeNewSubs());
         }
         explicit mgdObj(const std::string& name)
             : super(name), _shares(new nchain()), _owns(new narr()), _org(this) {
-            _setSubs(*_makeNewSubs());
+            _subs.bind(_makeNewSubs());
         }
         explicit mgdObj(const nchain& shares, const narr& owns, const std::string& name)
             : super(name), _shares(shares), _owns(owns), _org(this) {
-            _setSubs(*_makeNewSubs());
+            _subs.bind(_makeNewSubs());
         }
         explicit mgdObj(const me& rhs): super(rhs) {
             _assign(rhs);
