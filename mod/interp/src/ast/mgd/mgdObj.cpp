@@ -6,7 +6,7 @@ namespace wrd {
 
     me& me::_assign(const me& rhs) {
         _owns = rhs._owns->deepClone();
-        _setSubs(*_makeNewSubs());
+        _subs.bind(_makeNewSubs());
         _org = rhs._org;
 
         return *this;

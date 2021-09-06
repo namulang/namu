@@ -15,22 +15,22 @@ namespace wrd {
         friend class mgdObj;
 
     public:
-        explicit obj();
-        explicit obj(const string& name);
         explicit obj(const string& name, const nchain& subs);
-        explicit obj(const me& rhs) { /*obj doesn't handle assignment. */ }
+        explicit obj(const me& rhs): _name(nullptr) { _assign(rhs); }
         ~obj() override {
             _destruct();
         }
+
+    protected:
+        /// if you don't give any subs when construct an obj you should assign _subs to new nchain instance on ctor of derived class.
+        explicit obj();
+        explicit obj(const string& name);
 
     public:
         me& operator=(const me& rhs) {
             if(this == &rhs) return *this;
 
-            _destruct();
-            _name = new string(*rhs._name);
-
-            return *this;
+            return _assign(rhs);
         }
 
         using super::subs;
@@ -46,20 +46,26 @@ namespace wrd {
         const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
         virtual const obj& getOrigin() const = 0;
         const std::string& getName() const override {
+            if(!_name) return super::getName();
             return *_name;
         }
 
     protected:
         wbool _onInFrame(frame& fr, const ncontainer& args) override;
         wbool _onOutFrame(frame& fr, const ncontainer& args) override;
-        void _setSubs(const nchain& newSubs) {
-            _subs.bind(newSubs);
-        }
 
     private:
         /// 'destruct' is called when an irreversible state transition occurs.
         /// conversely, 'release' is called when reinitialization is possible.
         void _destruct();
+
+        me& _assign(const me& rhs) {
+            _destruct();
+            /*obj doesn't handle assignment. */
+            if(rhs._name)
+                _name = new string(*rhs._name);
+            return *this;
+        }
 
     protected:
         tstr<nchain> _subs;

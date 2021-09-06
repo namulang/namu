@@ -14,7 +14,7 @@ namespace wrd {
 
     private:
         tcppBridge(T* real): _real(real) {
-            _setSubs(*new nchain());
+            _subs.bind(new nchain());
         }
 
     public:
