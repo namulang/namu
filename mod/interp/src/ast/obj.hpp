@@ -16,7 +16,10 @@ namespace wrd {
 
     public:
         explicit obj(const string& name, const nchain& subs);
-        explicit obj(const me& rhs): _name(nullptr) { _assign(rhs); }
+        explicit obj(const me& rhs): _name(nullptr) {
+            // obj doesn't handle assignment.
+            _assign(rhs);
+        }
         ~obj() override {
             _destruct();
         }
