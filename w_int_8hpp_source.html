@@ -71,52 +71,52 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;primitiveObj.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../ast/ref.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>wrd {</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classwrd_1_1w_int.html">    8</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1w_int.html">wInt</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1primitive_obj.html">primitiveObj</a>&lt;wint&gt; {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">class </span>intType : <span class="keyword">public</span> <a class="code" href="classwrd_1_1primitive_type.html">primitiveType</a> {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;            WRD_DECL_ME(intType, <a class="code" href="classwrd_1_1primitive_type.html">primitiveType</a>)</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;wStr.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classwrd_1_1w_int.html">    7</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1w_int.html">wInt</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1primitive_obj.html">primitiveObj</a>&lt;wint&gt; {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">class </span>wIntType : <span class="keyword">public</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a> {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;            wbool isImmutable()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <span class="keywordtype">void</span> _onCreateImplis(casts&amp; tray)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                <span class="keyword">struct </span>toWstr: <span class="keyword">public</span> <a class="code" href="structwrd_1_1cast.html">cast</a> {</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; getType()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                        <span class="comment">// TODO:</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                        <span class="keywordflow">return</span> nulOf&lt;wtype&gt;();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                    }</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                    <a class="code" href="classwrd_1_1ref.html">ref</a> as(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; <a class="code" href="classwrd_1_1w_int.html">wInt</a>)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                        <span class="comment">// TODO:</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                        <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1ref.html">ref</a>();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                    }</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                };</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                tray.push_back(<span class="keyword">new</span> toWstr());</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <span class="keyword">const</span> <a class="code" href="classwrd_1_1ases.html">ases</a>&amp; _getImpliAses()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                <span class="keyword">static</span> <a class="code" href="classwrd_1_1ases.html">ases</a> inner;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                <span class="keywordflow">if</span>(inner.len() &lt;= 0) {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;                    <span class="keyword">struct </span>toWstr: <span class="keyword">public</span> <a class="code" href="structwrd_1_1tas.html">tas</a>&lt;wStr&gt; {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;                        <a class="code" href="classwrd_1_1tstr.html">str</a> as(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; <a class="code" href="classwrd_1_1w_int.html">wInt</a>, <span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;                            <span class="comment">// TODO:</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                            <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tstr.html">str</a>();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                        }</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                    };</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                    inner.add(<span class="keyword">new</span> toWstr());</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                }</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                <span class="keywordflow">return</span> inner;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            }</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        };</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1w_int.html">wInt</a>, <a class="code" href="classwrd_1_1primitive_obj.html">primitiveObj</a>, intType))</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="classwrd_1_1w_int.html">wInt</a>() {}</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="classwrd_1_1w_int.html">wInt</a>(wint val): super(val) {}</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordtype">void</span> _onCreateCtors(<a class="code" href="classwrd_1_1tnarr.html">funcs</a>&amp; tray) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    };</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1w_int.html">wInt</a>, <a class="code" href="classwrd_1_1primitive_obj.html">primitiveObj</a>, wIntType))</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classwrd_1_1w_int.html">wInt</a>() {}</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="classwrd_1_1w_int.html">wInt</a>(wint val): super(val) {}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordtype">void</span> _onCreateCtors(<a class="code" href="classwrd_1_1tnarr.html">funcs</a>&amp; tray) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    };</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructwrd_1_1cast_html"><div class="ttname"><a href="structwrd_1_1cast.html">wrd::cast</a></div><div class="ttdef"><b>Definition:</b> as.hpp:9</div></div>
-<div class="ttc" id="aclasswrd_1_1primitive_type_html"><div class="ttname"><a href="classwrd_1_1primitive_type.html">wrd::primitiveType</a></div><div class="ttdef"><b>Definition:</b> primitiveType.hpp:7</div></div>
+<div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
+<div class="ttc" id="astructwrd_1_1tas_html"><div class="ttname"><a href="structwrd_1_1tas.html">wrd::tas</a></div><div class="ttdef"><b>Definition:</b> tas.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:10</div></div>
-<div class="ttc" id="aclasswrd_1_1ref_html"><div class="ttname"><a href="classwrd_1_1ref.html">wrd::ref</a></div><div class="ttdef"><b>Definition:</b> ref.hpp:7</div></div>
-<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:14</div></div>
+<div class="ttc" id="aclasswrd_1_1ases_html"><div class="ttname"><a href="classwrd_1_1ases.html">wrd::ases</a></div><div class="ttdef"><b>Definition:</b> ases.hpp:7</div></div>
+<div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:12</div></div>
 <div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:9</div></div>
-<div class="ttc" id="aclasswrd_1_1primitive_obj_html"><div class="ttname"><a href="classwrd_1_1primitive_obj.html">wrd::primitiveObj</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:10</div></div>
-<div class="ttc" id="aclasswrd_1_1w_int_html"><div class="ttname"><a href="classwrd_1_1w_int.html">wrd::wInt</a></div><div class="ttdef"><b>Definition:</b> wInt.hpp:8</div></div>
+<div class="ttc" id="aclasswrd_1_1primitive_obj_html"><div class="ttname"><a href="classwrd_1_1primitive_obj.html">wrd::primitiveObj</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:9</div></div>
+<div class="ttc" id="aclasswrd_1_1w_int_html"><div class="ttname"><a href="classwrd_1_1w_int.html">wrd::wInt</a></div><div class="ttdef"><b>Definition:</b> wInt.hpp:7</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

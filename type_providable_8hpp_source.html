@@ -89,7 +89,7 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; getType() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        T&amp; <a class="code" href="structwrd_1_1cast.html">cast</a>() {</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        T&amp; cast() {</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            <span class="comment">// this protection:</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="comment">//  this c wrd interpreter uses references in default, and not any pointers.</span></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <span class="comment">//  so you always care about a refer can be nulled.</span></div>
@@ -110,7 +110,7 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        }</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">const</span> T&amp; <a class="code" href="structwrd_1_1cast.html">cast</a>() <span class="keyword">const</span> WRD_UNCONST_FUNC(<a class="code" href="structwrd_1_1cast.html">cast&lt;T&gt;</a>())</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">const</span> T&amp; cast() <span class="keyword">const</span> WRD_UNCONST_FUNC(cast&lt;T&gt;())</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">virtual</span> wbool _onSame(<span class="keyword">const</span> me&amp; rhs)<span class="keyword"> const </span>{</div>
@@ -119,7 +119,6 @@ $(function() {
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    };</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructwrd_1_1cast_html"><div class="ttname"><a href="structwrd_1_1cast.html">wrd::cast</a></div><div class="ttdef"><b>Definition:</b> as.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
 <div class="ttc" id="aclasswrd_1_1ttype_html"><div class="ttname"><a href="classwrd_1_1ttype.html">wrd::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:15</div></div>
 <div class="ttc" id="aclasswrd_1_1type_providable_html"><div class="ttname"><a href="classwrd_1_1type_providable.html">wrd::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:4</div></div>

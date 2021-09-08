@@ -19,6 +19,5 @@ var searchData=
   ['primitiveobj_122',['primitiveObj',['../classwrd_1_1primitive_obj.html',1,'wrd']]],
   ['primitiveobj_3c_20std_3a_3astring_20_3e_123',['primitiveObj&lt; std::string &gt;',['../classwrd_1_1primitive_obj.html',1,'wrd']]],
   ['primitiveobj_3c_20wflt_20_3e_124',['primitiveObj&lt; wflt &gt;',['../classwrd_1_1primitive_obj.html',1,'wrd']]],
-  ['primitiveobj_3c_20wint_20_3e_125',['primitiveObj&lt; wint &gt;',['../classwrd_1_1primitive_obj.html',1,'wrd']]],
-  ['primitivetype_126',['primitiveType',['../classwrd_1_1primitive_type.html',1,'wrd']]]
+  ['primitiveobj_3c_20wint_20_3e_125',['primitiveObj&lt; wint &gt;',['../classwrd_1_1primitive_obj.html',1,'wrd']]]
 ];

@@ -118,7 +118,7 @@ $(function() {
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <a class="code" href="classwrd_1_1ncontainer.html">ncontainer</a>&amp; getContainer()<span class="keyword"> override </span>{</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                <span class="keywordflow">if</span>(!_ownIter) <span class="keywordflow">return</span> nulOf&lt;ncontainer&gt;();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                <span class="keywordflow">return</span> _ownIter-&gt;template <a class="code" href="structwrd_1_1cast.html">cast&lt;ncontainer&gt;</a>();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;                <span class="keywordflow">return</span> _ownIter-&gt;template cast&lt;ncontainer&gt;();</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            }</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keyword">const</span> <a class="code" href="classwrd_1_1ncontainer.html">ncontainer</a>&amp; getContainer() <span class="keyword">const</span> WRD_UNCONST_FUNC(getContainer())</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
@@ -130,9 +130,9 @@ $(function() {
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            wbool _onSame(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type_providable.html">typeProvidable</a>&amp; rhs)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                <span class="keyword">const</span> me&amp; <a class="code" href="structwrd_1_1cast.html">cast</a> = (<span class="keyword">const</span> me&amp;) rhs;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordflow">return</span>  (isEnd() &amp;&amp; <a class="code" href="structwrd_1_1cast.html">cast</a>.isEnd()) ||</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                        _iter == <a class="code" href="structwrd_1_1cast.html">cast</a>._iter;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                <span class="keyword">const</span> me&amp; cast = (<span class="keyword">const</span> me&amp;) rhs;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordflow">return</span>  (isEnd() &amp;&amp; cast.isEnd()) ||</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                        _iter == cast._iter;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            }</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">private</span>:</div>
@@ -245,7 +245,7 @@ $(function() {
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="keyword">const</span> me&amp; getNext()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *_next; }</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
 <div class="line"><a name="l00180"></a><span class="lineno"><a class="line" href="classwrd_1_1tnchain.html#a3f93ce104dc5246ab19abdd02c17b956">  180</a></span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;instance&gt;</a> <a class="code" href="classwrd_1_1tnchain.html#a3f93ce104dc5246ab19abdd02c17b956">deepClone</a>()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            me* ret = <a class="code" href="classwrd_1_1tnchain.html#a144f6819f61b036ca4458effb8e70b1c">wrap</a>(getContainer().<a class="code" href="classwrd_1_1tnchain.html#a3f93ce104dc5246ab19abdd02c17b956">deepClone</a>()-&gt;<span class="keyword">template</span> <a class="code" href="structwrd_1_1cast.html">cast&lt;ncontainer&gt;</a>());</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            me* ret = <a class="code" href="classwrd_1_1tnchain.html#a144f6819f61b036ca4458effb8e70b1c">wrap</a>(getContainer().<a class="code" href="classwrd_1_1tnchain.html#a3f93ce104dc5246ab19abdd02c17b956">deepClone</a>()-&gt;<span class="keyword">template</span> cast&lt;ncontainer&gt;());</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            ret-&gt;link(getNext());</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tstr.html">tstr&lt;instance&gt;</a>(ret);</div>
 <div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        }</div>
@@ -307,11 +307,10 @@ $(function() {
 <div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;    <span class="keyword">typedef</span> tnchain&lt;node&gt; nchain;</div>
 <div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1iteration_html"><div class="ttname"><a href="classwrd_1_1iteration.html">wrd::iteration</a></div><div class="ttdef"><b>Definition:</b> iteration.hpp:8</div></div>
+<div class="ttc" id="aclasswrd_1_1iteration_html"><div class="ttname"><a href="classwrd_1_1iteration.html">wrd::iteration</a></div><div class="ttdef"><b>Definition:</b> iteration.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1instance_html"><div class="ttname"><a href="classwrd_1_1instance.html">wrd::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1tarr_html"><div class="ttname"><a href="classwrd_1_1tarr.html">wrd::tarr</a></div><div class="ttdef"><b>Definition:</b> tarr.hpp:8</div></div>
-<div class="ttc" id="astructwrd_1_1cast_html"><div class="ttname"><a href="structwrd_1_1cast.html">wrd::cast</a></div><div class="ttdef"><b>Definition:</b> as.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1tnchain_html"><div class="ttname"><a href="classwrd_1_1tnchain.html">wrd::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:12</div></div>
 <div class="ttc" id="aclasswrd_1_1titer_html"><div class="ttname"><a href="classwrd_1_1titer.html">wrd::titer&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1titer_html_a26aa9d01ec21a4522c1da392456c47e5"><div class="ttname"><a href="classwrd_1_1titer.html#a26aa9d01ec21a4522c1da392456c47e5">wrd::titer::next</a></div><div class="ttdeci">wcnt next(wcnt step) override</div><div class="ttdef"><b>Definition:</b> titer.hpp:59</div></div>
@@ -320,7 +319,7 @@ $(function() {
 <div class="ttc" id="aclasswrd_1_1ncontainer_html"><div class="ttname"><a href="classwrd_1_1ncontainer.html">wrd::ncontainer</a></div><div class="ttdef"><b>Definition:</b> ncontainer.hpp:7</div></div>
 <div class="ttc" id="aclasswrd_1_1tnchain_html_a3f93ce104dc5246ab19abdd02c17b956"><div class="ttname"><a href="classwrd_1_1tnchain.html#a3f93ce104dc5246ab19abdd02c17b956">wrd::tnchain::deepClone</a></div><div class="ttdeci">tstr&lt; instance &gt; deepClone() const override</div><div class="ttdef"><b>Definition:</b> tnchain.hpp:180</div></div>
 <div class="ttc" id="aclasswrd_1_1tnchain_html_a8d19d2b9ee410191e28e70915c91e4db"><div class="ttname"><a href="classwrd_1_1tnchain.html#a8d19d2b9ee410191e28e70915c91e4db">wrd::tnchain::wrapDeep</a></div><div class="ttdeci">static me * wrapDeep(const ncontainer &amp;toDeepWrap)</div><div class="ttdoc">wrap given container no matter what it is.</div><div class="ttdef"><b>Definition:</b> tnchain.hpp:206</div></div>
-<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:14</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:12</div></div>
 <div class="ttc" id="aclasswrd_1_1type_providable_html"><div class="ttname"><a href="classwrd_1_1type_providable.html">wrd::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:4</div></div>
 <div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:9</div></div>
 <!-- start footer part -->

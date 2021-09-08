@@ -73,21 +73,22 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;titerable.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../../../ast/clonable.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>wrd {</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classwrd_1_1iteration.html">    8</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1iteration.html">iteration</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classwrd_1_1titerable.html">titerable</a>&lt;instance&gt;, <span class="keyword">public</span> <a class="code" href="classwrd_1_1clonable.html">clonable</a> {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        WRD(INTERFACE(<a class="code" href="classwrd_1_1iteration.html">iteration</a>, <a class="code" href="classwrd_1_1instance.html">instance</a>))</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1titer.html">titer</a>;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        wbool isFrom(<span class="keyword">const</span> <a class="code" href="classwrd_1_1ncontainer.html">ncontainer</a>&amp; rhs) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    };</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;}</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../../../../type/wtype.hpp&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classwrd_1_1iteration.html">    9</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1iteration.html">iteration</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classwrd_1_1titerable.html">titerable</a>&lt;instance&gt;, <span class="keyword">public</span> <a class="code" href="classwrd_1_1clonable.html">clonable</a> {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        WRD(INTERFACE(<a class="code" href="classwrd_1_1iteration.html">iteration</a>, <a class="code" href="classwrd_1_1instance.html">instance</a>))</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1titer.html">titer</a>;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        wbool isFrom(<span class="keyword">const</span> <a class="code" href="classwrd_1_1ncontainer.html">ncontainer</a>&amp; rhs) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    };</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1iteration_html"><div class="ttname"><a href="classwrd_1_1iteration.html">wrd::iteration</a></div><div class="ttdef"><b>Definition:</b> iteration.hpp:8</div></div>
+<div class="ttc" id="aclasswrd_1_1iteration_html"><div class="ttname"><a href="classwrd_1_1iteration.html">wrd::iteration</a></div><div class="ttdef"><b>Definition:</b> iteration.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1instance_html"><div class="ttname"><a href="classwrd_1_1instance.html">wrd::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
 <div class="ttc" id="aclasswrd_1_1clonable_html"><div class="ttname"><a href="classwrd_1_1clonable.html">wrd::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclasswrd_1_1titer_html"><div class="ttname"><a href="classwrd_1_1titer.html">wrd::titer</a></div><div class="ttdef"><b>Definition:</b> titer.hpp:8</div></div>

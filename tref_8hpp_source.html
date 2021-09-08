@@ -76,14 +76,14 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>wrd {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">class </span>tref : <span class="keyword">public</span> ref {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        WRD(CLASS(tref, ref))</div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classwrd_1_1tref.html">    8</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1tref.html">tref</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1ref.html">ref</a> {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1tref.html">tref</a>, <a class="code" href="classwrd_1_1ref.html">ref</a>))</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        tref() {}</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">explicit</span> tref(<span class="keyword">const</span> ref&amp; rhs): super(rhs) {}</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">explicit</span> tref(<span class="keyword">const</span> T&amp; new1): super(new1) {}</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">explicit</span> tref(<span class="keyword">const</span> T* new1): super(new1) {}</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <a class="code" href="classwrd_1_1tref.html">tref</a>() {}</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classwrd_1_1tref.html">tref</a>(<span class="keyword">const</span> <a class="code" href="classwrd_1_1ref.html">ref</a>&amp; rhs): super(rhs) {}</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classwrd_1_1tref.html">tref</a>(<span class="keyword">const</span> T&amp; new1): super(new1) {}</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classwrd_1_1tref.html">tref</a>(<span class="keyword">const</span> T* new1): super(new1) {}</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        T* operator-&gt;() {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <span class="keywordflow">return</span> (T*) super::operator-&gt;();</div>
@@ -91,8 +91,8 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        T&amp; operator*() {</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            <span class="keywordflow">return</span> (T&amp;) super::operator*();</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        }</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">const</span> T* operator-&gt;() const WRD_UNCONST_FUNC(operator-&gt;())</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        const T&amp; operator*() const WRD_UNCONST_FUNC(operator*())</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">const</span> T* operator-&gt;() <span class="keyword">const</span> WRD_UNCONST_FUNC(operator-&gt;())</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> WRD_UNCONST_FUNC(<span class="keyword">operator</span>*())</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        T&amp; get() {</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="keywordflow">return</span> (T&amp;) super::get();</div>
@@ -108,6 +108,8 @@ $(function() {
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    };</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclasswrd_1_1ref_html"><div class="ttname"><a href="classwrd_1_1ref.html">wrd::ref</a></div><div class="ttdef"><b>Definition:</b> ref.hpp:7</div></div>
+<div class="ttc" id="aclasswrd_1_1tref_html"><div class="ttname"><a href="classwrd_1_1tref.html">wrd::tref</a></div><div class="ttdef"><b>Definition:</b> tref.hpp:8</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
