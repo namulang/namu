@@ -1,6 +1,6 @@
 #pragma once
 
-#include "decl.hpp"
+#include "dep.hpp"
 
 namespace wrd {
 
