@@ -6,7 +6,7 @@
 namespace wrd {
 
     /// bridge object only can shares 'shared' sub nodes.
-    template <typename T>
+    template <typename T, int lineNumber = __LINE__, const char* fileName = __FILE__>
     class tcppBridge : public obj {
         WRD(CLASS(tcppBridge, obj))
         template <typename Ret, typename T1, typename...Args>
