@@ -13,11 +13,11 @@
         } \
     private:
 
-//  META_TYE:
+//  TYPE:
 //      defines super meta type.
-//      for instance, if you set META_TYPE(wtype), then when you call getType() of your class,
+//      for instance, if you set TYPE(wtype), then when you call getType() of your class,
 //      it will returns instance of type of wtype.
-#define __WRD__DECL_META_TYPE(METATYPE) \
+#define __WRD__DECL_TYPE(METATYPE) \
     public: \
         typedef METATYPE metaType; \
         const METATYPE& getType() const override { \
@@ -32,13 +32,13 @@
 //      marks that this class is abstract.
 #define __WRD__DECL_INTERFACE_1(ME) \
         __WRD__DECL_ME_1(ME) \
-        __WRD__DECL_META_TYPE(wtype) \
+        __WRD__DECL_TYPE(wtype) \
         __WRD__DECL_INIT_META(ME)
 #define __WRD__DECL_INTERFACE_2(ME, SUPER) \
         __WRD__DECL_INTERFACE_3(ME, SUPER, wtype)
 #define __WRD__DECL_INTERFACE_3(ME, SUPER, SUPERTYPE) \
         __WRD__DECL_ME_2(ME, SUPER) \
-        __WRD__DECL_META_TYPE(SUPERTYPE) \
+        __WRD__DECL_TYPE(SUPERTYPE) \
         __WRD__DECL_INIT_META(ME)
 #define __WRD__DECL_INTERFACE(...) WRD_OVERLOAD(__WRD__DECL_INTERFACE, __VA_ARGS__)
 
