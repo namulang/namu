@@ -89,65 +89,61 @@ $(function() {
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <span class="stringliteral">&quot;can&#39;t marshal one of this func&#39;s parameter wtypes.&quot;</span>);</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        wbool _onInFrame(<a class="code" href="classwrd_1_1frame.html">frame</a>&amp; sf, <span class="keyword">const</span> <a class="code" href="classwrd_1_1ncontainer.html">ncontainer</a>&amp; args)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        wbool _onOutFrame(<a class="code" href="classwrd_1_1frame.html">frame</a>&amp; sf, <span class="keyword">const</span> <a class="code" href="classwrd_1_1ncontainer.html">ncontainer</a>&amp; args)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; getReturnType()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1ttype.html">ttype&lt;typename tmarshaling&lt;Ret&gt;::mgdType</a>&gt;::get();</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        }</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">const</span> wtypes&amp; <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html#aa7d8128d0a56d6689fe1573b1435cbc6">getTypes</a>() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        fptrType _fptr;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    };</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ret, <span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classwrd_1_1tcpp_bridge_func.html">   35</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html">tcppBridgeFuncBase</a>&lt;Ret, T, Args...&gt; {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html">tcppBridgeFuncBase</a>&lt;Ret, T, Args...&gt; <span class="keyword">__super</span>;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>, <span class="keyword">__super</span>))</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classwrd_1_1tcpp_bridge_func_base.html#a881a1f3795fe21af44171c86aed117c4">   21</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html#a881a1f3795fe21af44171c86aed117c4">getEvalType</a>()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1ttype.html">ttype&lt;typename tmarshaling&lt;Ret&gt;::mgdType</a>&gt;::get();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        }</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">const</span> wtypes&amp; <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html#aa7d8128d0a56d6689fe1573b1435cbc6">getTypes</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        fptrType _fptr;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    };</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Ret, <span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classwrd_1_1tcpp_bridge_func.html">   32</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html">tcppBridgeFuncBase</a>&lt;Ret, T, Args...&gt; {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html">tcppBridgeFuncBase</a>&lt;Ret, T, Args...&gt; <span class="keyword">__super</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>, <span class="keyword">__super</span>))</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">typename</span> __super::fptrType fptr): super(name, fptr) {}</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">typename</span> __super::fptrType fptr): super(name, fptr) {}</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _onCast(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordflow">return</span> _marshal(args, std::index_sequence_for&lt;Args...&gt;());</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span>... index&gt;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _marshal(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args, std::index_sequence&lt;index...&gt;);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    };</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classwrd_1_1tcpp_bridge_func_3_01void_00_01_t_00_01_args_8_8_8_01_4.html">   52</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>&lt;void, T, Args...&gt; : <span class="keyword">public</span> <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html">tcppBridgeFuncBase</a>&lt;void, T, Args...&gt; {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html">tcppBridgeFuncBase</a>&lt;void, T, Args...&gt; <span class="keyword">__super</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>, <span class="keyword">__super</span>))</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _onCast(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordflow">return</span> _marshal(args, std::index_sequence_for&lt;Args...&gt;());</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span>... index&gt;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _marshal(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args, std::index_sequence&lt;index...&gt;);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    };</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classwrd_1_1tcpp_bridge_func_3_01void_00_01_t_00_01_args_8_8_8_01_4.html">   49</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>&lt;void, T, Args...&gt; : <span class="keyword">public</span> <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html">tcppBridgeFuncBase</a>&lt;void, T, Args...&gt; {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classwrd_1_1tcpp_bridge_func_base.html">tcppBridgeFuncBase</a>&lt;void, T, Args...&gt; <span class="keyword">__super</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>, <span class="keyword">__super</span>))</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">typename</span> __super::fptrType fptr): super(name, fptr) {}</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="classwrd_1_1tcpp_bridge_func.html">tcppBridgeFunc</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">typename</span> __super::fptrType fptr): super(name, fptr) {}</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _onCast(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> _marshal(args, std::index_sequence_for&lt;Args...&gt;());</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span>... index&gt;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _marshal(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args, std::index_sequence&lt;index...&gt;);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    };</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _onCast(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordflow">return</span> _marshal(args, std::index_sequence_for&lt;Args...&gt;());</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span>... index&gt;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _marshal(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args, std::index_sequence&lt;index...&gt;);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    };</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1frame_html"><div class="ttname"><a href="classwrd_1_1frame.html">wrd::frame</a></div><div class="ttdef"><b>Definition:</b> frame.hpp:10</div></div>
+<div class="ttc" id="aclasswrd_1_1tcpp_bridge_func_base_html_a881a1f3795fe21af44171c86aed117c4"><div class="ttname"><a href="classwrd_1_1tcpp_bridge_func_base.html#a881a1f3795fe21af44171c86aed117c4">wrd::tcppBridgeFuncBase::getEvalType</a></div><div class="ttdeci">const wtype &amp; getEvalType() const override</div><div class="ttdef"><b>Definition:</b> tcppBridgeFunc.hpp:21</div></div>
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1tcpp_bridge_func_base_html"><div class="ttname"><a href="classwrd_1_1tcpp_bridge_func_base.html">wrd::tcppBridgeFuncBase</a></div><div class="ttdef"><b>Definition:</b> tcppBridgeFunc.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:10</div></div>
-<div class="ttc" id="aclasswrd_1_1ncontainer_html"><div class="ttname"><a href="classwrd_1_1ncontainer.html">wrd::ncontainer</a></div><div class="ttdef"><b>Definition:</b> ncontainer.hpp:7</div></div>
 <div class="ttc" id="aclasswrd_1_1ttype_html"><div class="ttname"><a href="classwrd_1_1ttype.html">wrd::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:15</div></div>
-<div class="ttc" id="aclasswrd_1_1tcpp_bridge_func_html"><div class="ttname"><a href="classwrd_1_1tcpp_bridge_func.html">wrd::tcppBridgeFunc</a></div><div class="ttdef"><b>Definition:</b> tcppBridgeFunc.hpp:35</div></div>
+<div class="ttc" id="aclasswrd_1_1tcpp_bridge_func_html"><div class="ttname"><a href="classwrd_1_1tcpp_bridge_func.html">wrd::tcppBridgeFunc</a></div><div class="ttdef"><b>Definition:</b> tcppBridgeFunc.hpp:32</div></div>
 <div class="ttc" id="astructwrd_1_1tmarshaling_html"><div class="ttname"><a href="structwrd_1_1tmarshaling.html">wrd::tmarshaling</a></div><div class="ttdef"><b>Definition:</b> tmarshaling.hpp:36</div></div>
 <div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1tcpp_bridge_func_base_html_aa7d8128d0a56d6689fe1573b1435cbc6"><div class="ttname"><a href="classwrd_1_1tcpp_bridge_func_base.html#aa7d8128d0a56d6689fe1573b1435cbc6">wrd::tcppBridgeFuncBase::getTypes</a></div><div class="ttdeci">const wtypes &amp; getTypes() const override</div></div>
-<div class="ttc" id="aclasswrd_1_1func_html"><div class="ttname"><a href="classwrd_1_1func.html">wrd::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:9</div></div>
+<div class="ttc" id="aclasswrd_1_1func_html"><div class="ttname"><a href="classwrd_1_1func.html">wrd::func</a></div><div class="ttdef"><b>Definition:</b> func.hpp:8</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

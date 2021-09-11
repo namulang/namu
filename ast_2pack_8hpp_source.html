@@ -119,43 +119,46 @@ $(function() {
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        }</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classwrd_1_1ncontainer.html">ncontainer</a>&amp; args)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tstr.html">str</a>(); }</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        wbool canRun(<span class="keyword">const</span> wtypes&amp; types)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">using</span> super::run;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; args)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tstr.html">str</a>(); }</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        wbool isValid()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">if</span>(!_manifest.isValid()) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">using</span> super::canRun;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        wbool canRun(<span class="keyword">const</span> wtypes&amp; types)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordflow">return</span> super::isValid();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        wbool isValid()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordflow">if</span>(!_manifest.isValid()) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">const</span> std::string&amp; getName()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> _manifest.name;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classwrd_1_1pack.html#a5d1bd9681d3f0c3d613975a8fa6c152a">   64</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classwrd_1_1pack.html#a5d1bd9681d3f0c3d613975a8fa6c152a">rel</a>()<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            super::rel();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordflow">return</span> super::isValid();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">const</span> std::string&amp; getName()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordflow">return</span> _manifest.name;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        }</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            _origins.rel();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            _srcs.clear();</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            _isVerified = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">for</span>(<a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>* e : _loadings) {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                e-&gt;rel();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                <span class="keyword">delete</span> e;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            _loadings.clear();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        packLoadings _loadings;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <a class="code" href="structwrd_1_1manifest.html">manifest</a> _manifest;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        wbool _isVerified;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">origins</a> _origins;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        srcs _srcs;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    };</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keyword">typedef</span> tnarr&lt;pack&gt; packs;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">typedef</span> tnchain&lt;pack&gt; packChain;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classwrd_1_1pack.html#a5d1bd9681d3f0c3d613975a8fa6c152a">   67</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classwrd_1_1pack.html#a5d1bd9681d3f0c3d613975a8fa6c152a">rel</a>()<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            super::rel();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            _origins.rel();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            _srcs.clear();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            _isVerified = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordflow">for</span>(<a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>* e : _loadings) {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                e-&gt;rel();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                <span class="keyword">delete</span> e;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            _loadings.clear();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        packLoadings _loadings;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <a class="code" href="structwrd_1_1manifest.html">manifest</a> _manifest;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        wbool _isVerified;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">origins</a> _origins;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        srcs _srcs;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    };</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">typedef</span> tnarr&lt;pack&gt; packs;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">typedef</span> tnchain&lt;pack&gt; packChain;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1tnchain_html"><div class="ttname"><a href="classwrd_1_1tnchain.html">wrd::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:12</div></div>
@@ -163,10 +166,11 @@ $(function() {
 <div class="ttc" id="astructwrd_1_1manifest_html"><div class="ttname"><a href="structwrd_1_1manifest.html">wrd::manifest</a></div><div class="ttdef"><b>Definition:</b> manifest.hpp:25</div></div>
 <div class="ttc" id="aclasswrd_1_1ncontainer_html"><div class="ttname"><a href="classwrd_1_1ncontainer.html">wrd::ncontainer</a></div><div class="ttdef"><b>Definition:</b> ncontainer.hpp:7</div></div>
 <div class="ttc" id="aclasswrd_1_1pack_makable_html"><div class="ttname"><a href="classwrd_1_1pack_makable.html">wrd::packMakable</a></div><div class="ttdef"><b>Definition:</b> packMakable.hpp:17</div></div>
-<div class="ttc" id="aclasswrd_1_1pack_html_a5d1bd9681d3f0c3d613975a8fa6c152a"><div class="ttname"><a href="classwrd_1_1pack.html#a5d1bd9681d3f0c3d613975a8fa6c152a">wrd::pack::rel</a></div><div class="ttdeci">void rel() override</div><div class="ttdef"><b>Definition:</b> pack.hpp:64</div></div>
+<div class="ttc" id="aclasswrd_1_1pack_html_a5d1bd9681d3f0c3d613975a8fa6c152a"><div class="ttname"><a href="classwrd_1_1pack.html#a5d1bd9681d3f0c3d613975a8fa6c152a">wrd::pack::rel</a></div><div class="ttdeci">void rel() override</div><div class="ttdef"><b>Definition:</b> pack.hpp:67</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:12</div></div>
 <div class="ttc" id="astructwrd_1_1tpair_html"><div class="ttname"><a href="structwrd_1_1tpair.html">wrd::tpair</a></div><div class="ttdef"><b>Definition:</b> tpair.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr&lt; wrd::obj &gt;</a></div></div>
+<div class="ttc" id="aclasswrd_1_1containable_html"><div class="ttname"><a href="classwrd_1_1containable.html">wrd::containable</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:13</div></div>
 <div class="ttc" id="aclasswrd_1_1pack_loading_html"><div class="ttname"><a href="classwrd_1_1pack_loading.html">wrd::packLoading</a></div><div class="ttdef"><b>Definition:</b> packLoading.hpp:15</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
