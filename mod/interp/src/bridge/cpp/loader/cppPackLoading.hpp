@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../../../loader/opaquePackLoading.hpp"
+#include "../../../ast/src.hpp"
+#include "../../../ast/pack.hpp"
 
 namespace wrd {
 
@@ -12,17 +14,7 @@ namespace wrd {
         typedef void (*entrypointFunc)(origins*);
 
     public:
-        origins& make() override {
-            origins& org = _getOrigins();
-            for(const std::string& path : _getPaths()) {
-                if(!_loadLibs(org)) {
-                    org.rel();
-                    return WRD_E("couldn't load c++ library at %s", path.c_str()), org;
-                }
-            }
-
-            return org;
-        }
+        tpair<origins&, srcs&> make() override;
 
         const std::string& getName() const override {
             static std::string inner = "cpp";
@@ -39,7 +31,7 @@ namespace wrd {
         }
 
     private:
-        wbool _loadLibs(origins& loadedClass);
+        wbool _loadLibs();
 
     private:
         libHandles _handles;

@@ -6,14 +6,14 @@
 namespace wrd {
 
     /// bridge object only can shares 'shared' sub nodes.
-    template <typename T, int lineNumber = __LINE__, const char* fileName = __FILE__>
+    template <typename T>
     class tcppBridge : public obj {
         WRD(CLASS(tcppBridge, obj))
         template <typename Ret, typename T1, typename...Args>
         friend class tcppBridgeFunc;
 
     private:
-        tcppBridge(T* real): _real(real) {
+        tcppBridge(T* real) : _real(real) {
             _subs.bind(new nchain());
         }
 
