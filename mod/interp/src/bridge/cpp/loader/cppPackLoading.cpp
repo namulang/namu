@@ -5,8 +5,26 @@ namespace wrd {
     WRD_DEF_ME(cppPackLoading)
 
     static constexpr const wchar* ENTRYPOINT_NAME = "wrd_bridge_cpp_entrypoint";
+    static srcs dummySrcs;
 
-    wbool me::_loadLibs(origins& tray) {
+    tpair<origins&, srcs&> me::make() {
+        super::make();
+
+        tpair<origins&, srcs&> ret(_getOrigins(), dummySrcs);
+        for(const std::string& path : _getPaths()) {
+            // With the current implementation, it is not yet possible to create an srcs
+            // object for a C++ class.
+            // ret.r variables won't be assigned to new data till this procedure has done.
+            if(!_loadLibs()) {
+                _getOrigins().rel();
+                return WRD_E("couldn't load c++ library at %s", path.c_str()), ret;
+            }
+        }
+
+        return ret;
+    }
+
+    wbool me::_loadLibs() {
         libHandle newHandle = nullptr;
         for(const std::string& path : _getPaths()) {
             newHandle = dlopen(path.c_str(), RTLD_LAZY);
@@ -21,8 +39,8 @@ namespace wrd {
                 goto FINALIZE;
             }
 
-            ep(&tray);
-            if(tray.len() <= 0) {
+            ep(&_getOrigins());
+            if(getOrigins().len() <= 0) {
                 WRD_W("pack returns no origin object.");
                 goto FINALIZE;
             }

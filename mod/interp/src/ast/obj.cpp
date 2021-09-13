@@ -9,7 +9,7 @@ namespace wrd {
 
     me::obj() {}
     me::obj(const string& name): _name(name) {}
-    me::obj(const string& name, const nchain& subs): _subs(subs), _name(name) {}
+    me::obj(const string& name, const nchain& subs): _name(name), _subs(subs) {}
 
     str me::run(const ncontainer& args) {
         func& fun = getCtors().get<func>([&args](const func& candidate) {

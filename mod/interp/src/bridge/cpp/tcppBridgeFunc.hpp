@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    template <typename Ret, typename T, typename... Args, int lineNumber = __LINE__, const wchar* fileName = __FILE__>
+    template <typename Ret, typename T, typename... Args>
     class tcppBridgeFuncBase : public func {
         WRD(INTERFACE(tcppBridgeFuncBase, func))
     protected:

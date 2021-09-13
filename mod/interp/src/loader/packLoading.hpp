@@ -27,12 +27,21 @@ namespace wrd {
             _paths.insert(_paths.end(), paths.begin(), paths.end());
         }
 
+        tpair<origins&, srcs&> make() override {
+            _origins.rel();
+            return tpair<origins&, srcs&>();
+        }
+
         virtual void rel() {
             _paths.clear();
             _origins.rel();
         }
 
         virtual const std::string& getName() const = 0;
+
+        const origins& getOrigins() const {
+            return _origins;
+        }
 
     protected:
         const std::vector<std::string>& _getPaths() const {

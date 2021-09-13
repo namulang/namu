@@ -24,11 +24,15 @@ namespace wrd {
         manifest& getManifest() { return _manifest; }
         const manifest& getManifest() const { return _manifest; }
 
-        origins& make() override {
-            for(packLoading* load : _loadings)
-                _origins.add(load->make());
-            return _origins;
+        tpair<origins&, srcs&> make() override {
+            for(packLoading* load : _loadings) {
+                auto res = load->make();
+                _origins.add(res.l);
+                _srcs.insert(_srcs.end(), res.r.begin(), res.r.end());
+            }
+            return tpair<origins&, srcs&>(_origins, _srcs);
         }
+
         wbool verify(const packChain& mergedPacks) override {
             for(packLoading* load : _loadings)
                 if(!load->verify(mergedPacks))
@@ -36,6 +40,7 @@ namespace wrd {
 
             return true;
         }
+
         wbool link(const packChain& mergedPacks) override {
             for(packLoading* load : _loadings)
                 if(!load->link(mergedPacks))
@@ -60,6 +65,7 @@ namespace wrd {
             super::rel();
 
             _origins.rel();
+            _srcs.clear();
             _isVerified = false;
             for(packLoading* e : _loadings) {
                 e->rel();
@@ -73,6 +79,7 @@ namespace wrd {
         manifest _manifest;
         wbool _isVerified;
         origins _origins;
+        srcs _srcs;
     };
 
     typedef tnarr<pack> packs;
