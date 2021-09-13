@@ -8,7 +8,8 @@ namespace wrd {
         WRD(INTERFACE(expr, node))
 
     public:
-        expr(std::initializer_list<const node*> newTerms): _terms(newTerms) {}
+        expr(const src& s, wcnt lineNum, std::initializer_list<const node*> newTerms)
+            : _terms(newTerms), _src(s), _lineNum(lineNum) {}
 
     public:
         ncontainer& subs() override {
@@ -27,7 +28,17 @@ namespace wrd {
             return true;
         }
 
+        const src& getSrc() const {
+            return *_src;
+        }
+
+        wcnt getLineNum() const {
+            return _lineNum;
+        }
+
     private:
         narr _terms;
+        tstr<src> _src;
+        wcnt _lineNum;
     };
 }
