@@ -5,60 +5,42 @@
 
 namespace wrd {
 
-    class packLoader : public node {
-        WRD(CLASS(packLoader, node))
+    class failReport;
+
+    class packLoader : public typeProvidable, public clonable {
+        WRD(CLASS(packLoader))
 
     public:
         packLoader();
-        packLoader(const wchar* path);
-        packLoader(std::initializer_list<const wchar*> paths);
-        ~packLoader() override {
-            me::rel();
-        }
 
     public:
-        void addPath(const std::string& filePath) {
+        me& addPath(const std::string& filePath) {
             _paths.push_back(filePath);
+            return *this;
         }
-        void addPath(const std::vector<std::string> paths) {
-            if(&_paths == &paths) return;
+        me& addPath(const std::vector<std::string> paths) {
+            if(&_paths == &paths) return *this;
 
             _paths.insert(_paths.end(), paths.begin(), paths.end());
+            return *this;
         }
-        void addPath(std::initializer_list<const wchar*> paths) {
+        me& addPath(std::initializer_list<const wchar*> paths) {
             for(const wchar* e : paths)
                 addPath(e);
+            return *this;
         }
 
-        wbool canRun(const wtypes& types) const override {
-            return false;
+        me& setReport(failReport& report) {
+            _report = &report;
+            return *this;
         }
 
-        str run(const ncontainer& args) override {
-            return str();
+        me& setBasePacks(packs& basis) {
+            _basePacks = &basis;
+            return *this;
         }
 
-        using super::subs;
-        ncontainer& subs() override {
-            return _mergedChain;
-        }
-
-        void rel() override {
-            _paths.clear();
-            _loadedPacks.rel();
-            _mergedChain.unlink();
-        }
-
-        wbool load();
-
-        packs& getLoadedPacks() { return _loadedPacks; }
-        const packs& getLoadedPacks() const { return _loadedPacks; }
-
-        wbool link(const me& new1) {
-            if(nul(new1)) return false;
-
-            return _mergedChain.link(new1._mergedChain);
-        }
+        tstr<packs> load();
 
     private:
         wbool _isExcludedFile(const std::string& fileName) {
@@ -78,18 +60,18 @@ namespace wrd {
             return dirPath;
         }
 
-        void _makePacks() {
+        void _makePacks(packs& tray) {
             std::string cwd = fsystem::getCurrentDir() + "/";
             WRD_I("finding packs relative to %s or absolute", cwd.c_str());
 
             for(const std::string& path : _paths) {
                 WRD_I("try pack path: %s", path.c_str());
 
-                _makePackAt(cwd + path);
+                _makePackAt(tray, cwd + path);
             }
         }
 
-        void _makePackAt(const std::string& dirPath) {
+        void _makePackAt(packs& tray, const std::string& dirPath) {
             const std::string& filtered = _filterDirPath(dirPath);
             DIR* dir = opendir(dirPath.c_str());
             if(!dir) {
@@ -104,13 +86,13 @@ namespace wrd {
 
                 // TODO: refactor to be extentiable.
                 if(file->d_type == DT_DIR)
-                    _makePackAt(filtered + DELIMITER + file->d_name);
+                    _makePackAt(tray, filtered + DELIMITER + file->d_name);
                 else if(file->d_name == MANIFEST_FILENAME)
-                    _addNewPack(filtered, file->d_name);
+                    _addNewPack(tray, filtered, file->d_name);
             }
         }
 
-        void _addNewPack(const std::string& dirPath, const std::string& manifestName) {
+        void _addNewPack(packs& tray, const std::string& dirPath, const std::string& manifestName) {
             std::string manifestPath = dirPath + DELIMITER + manifestName;
 
             manifest mani = _interpManifest(dirPath, manifestPath);
@@ -132,7 +114,7 @@ namespace wrd {
             }
 
             pack* new1 = new pack(mani, loadings);
-            _loadedPacks.add(new1);
+            tray.add(new1);
             _logPack(*new1);
         }
 
@@ -153,7 +135,6 @@ namespace wrd {
 
         manifest _interpManifest(const std::string& dir, const std::string& manPath) const;
 
-    private:
         packLoading* _makeLoading(const std::string& name) const {
             for(const packLoading* e : _getLoadings())
                 if(e->getName() == name)
@@ -165,8 +146,8 @@ namespace wrd {
         const packLoadings& _getLoadings() const;
 
     private:
-        packs _loadedPacks;
-        packChain _mergedChain;
+        packs* _basePacks;
+        failReport* _report;
         std::vector<std::string> _paths;
         static constexpr wchar DELIMITER = '/';
     };

@@ -5,6 +5,7 @@
 namespace wrd {
 
     class packLoader;
+
     class thread : public node {
         WRD(CLASS(thread, node))
         friend class obj; // to access stackFrame.
@@ -38,7 +39,7 @@ namespace wrd {
 
         void rel() override { _sframe.rel(); }
 
-        const packLoader& getPackLoader();
+        const packs& getPackLoader();
 
     protected:
         stackFrame& _getStackFrame() {

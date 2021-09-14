@@ -5,13 +5,31 @@ namespace wrd {
 
     WRD_DEF_ME(packLoader)
 
-    me::packLoader(): _mergedChain(_loadedPacks) {}
+    me::packLoader(): _basePacks(nullptr), _report(nullptr) {}
 
-    me::packLoader(const wchar* path): _mergedChain(_loadedPacks) {
-        addPath(path);
-    }
-    me::packLoader(std::initializer_list<const wchar*> paths): _mergedChain(_loadedPacks) {
-        addPath(paths);
+    tstr<packs> me::load() {
+        // TODO: returns result when it's fail
+        packs* ret = new packs();
+        packChain merged(ret);
+        if(_basePacks)
+            merged.link(*_basePacks);
+
+        // MAKE PACK step:
+        _makePacks(*ret);
+
+        // MAKE ORIGIN step:
+        for(titer<pack> e=ret->begin<pack>(); e ;++e)
+            e->make();
+
+        // VERIFY step:
+        for(titer<pack> e=ret->begin<pack>(); e ;++e)
+            e->verify(merged);
+
+        // LINK step:
+        for(titer<pack> e=ret->begin<pack>(); e ;++e)
+            e->link(merged);
+
+        return tstr(*ret);
     }
 
     manifest me::_interpManifest(const std::string& dir, const std::string& manPath) const {
@@ -57,26 +75,4 @@ namespace wrd {
         return *inner;
     }
 
-    wbool me::load() {
-        // TODO: returns result when it's fail
-        _loadedPacks.rel();
-        link(thread::get().getPackLoader());
-
-        // MAKE PACK step:
-        _makePacks();
-
-        // MAKE ORIGIN step:
-        for(titer<pack> e=_loadedPacks.begin<pack>(); e ;++e)
-            e->make();
-
-        // VERIFY step:
-        for(titer<pack> e=_loadedPacks.begin<pack>(); e ;++e)
-            e->verify(_mergedChain);
-
-        // LINK step:
-        for(titer<pack> e=_loadedPacks.begin<pack>(); e ;++e)
-            e->link(_mergedChain);
-
-        return true;
-    }
 }
