@@ -3,7 +3,6 @@
 #include "parserable.hpp"
 #include "../../ast/node.hpp"
 #include "../verifier/failReport.hpp"
-#include "../src/srcTbl.hpp"
 
 namespace wrd {
 
@@ -18,10 +17,6 @@ namespace wrd {
 			_report = &report;
 			return *this;
 		}
-		me& setSrcTbl(srcTbl& srcTbl) {
-			_srcTbl = &srcTbl;
-			return *this;
-		}
 
         str parseFile(const std::string& path) {
             // TODO:
@@ -31,7 +26,6 @@ namespace wrd {
 
 		virtual void rel() {
 			_root.rel();
-			_srcTbl = nullptr;
 			_report = nullptr;
 		}
 
@@ -43,6 +37,5 @@ namespace wrd {
     private:
         str _root;
         failReport* _report;
-		srcTbl* _srcTbl;
     };
 }
