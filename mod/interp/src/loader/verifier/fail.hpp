@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../src/point.hpp"
+#include "../../ast/point.hpp"
 
 namespace wrd {
 

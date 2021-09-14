@@ -6,3 +6,4 @@
 #include "ast/tref.hpp"
 #include "ast/pack.hpp"
 #include "ast/src.hpp"
+#include "ast/point.hpp"
