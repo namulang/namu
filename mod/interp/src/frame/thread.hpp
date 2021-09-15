@@ -39,7 +39,7 @@ namespace wrd {
 
         void rel() override { _sframe.rel(); }
 
-        const packs& getPackLoader();
+        const packs& getSystemPacks();
 
     protected:
         stackFrame& _getStackFrame() {

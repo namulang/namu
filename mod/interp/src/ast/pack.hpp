@@ -2,8 +2,8 @@
 
 #include "obj.hpp"
 #include "manifest.hpp"
-#include "../loader/packLoading.hpp"
-#include "../loader/packMakable.hpp"
+#include "../loader/pack/packLoading.hpp"
+#include "../loader/pack/packMakable.hpp"
 
 typedef wrd::tnarr<wrd::obj> origins;
 

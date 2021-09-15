@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../builtin/container/native/tnarr.inl"
-#include "../builtin/container/native/tnchain.inl"
-#include "../ast/obj.hpp"
+#include "../../builtin/container/native/tnarr.inl"
+#include "../../builtin/container/native/tnchain.inl"
+#include "../../ast/obj.hpp"
 #include "packMakable.hpp"
 
 namespace wrd {

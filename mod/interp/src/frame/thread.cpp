@@ -1,6 +1,6 @@
 #include "thread.hpp"
-#include "../loader/packLoader.hpp"
-#include "../loader/verifier/failReport.hpp"
+#include "../loader/pack/packLoader.hpp"
+#include "../loader/failReport.hpp"
 
 namespace wrd {
 
