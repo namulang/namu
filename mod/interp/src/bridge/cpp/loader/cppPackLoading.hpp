@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../loader/opaquePackLoading.hpp"
+#include "../../../loader/pack/opaquePackLoading.hpp"
 #include "../../../ast/src.hpp"
 #include "../../../ast/pack.hpp"
 

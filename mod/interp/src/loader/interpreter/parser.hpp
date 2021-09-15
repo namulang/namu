@@ -2,7 +2,7 @@
 
 #include "parserable.hpp"
 #include "../../ast/node.hpp"
-#include "../verifier/failReport.hpp"
+#include "../failReport.hpp"
 
 namespace wrd {
 
@@ -18,10 +18,6 @@ namespace wrd {
 			return *this;
 		}
 
-        str parseFile(const std::string& path) {
-            // TODO:
-            return _root;
-        }
         str parseBuffer(const std::string& buffer);
 
 		virtual void rel() {

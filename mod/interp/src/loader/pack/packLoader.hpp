@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ast/pack.hpp"
+#include "../../ast/pack.hpp"
 #include "packLoading.hpp"
 
 namespace wrd {

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../parser.hpp"
-#include "../verifier.hpp"
+#include "parser.hpp"
 
 namespace wrd {
 

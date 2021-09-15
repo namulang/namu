@@ -1,6 +1,6 @@
 #pragma once
 
-#include "loader/packLoader.hpp"
-#include "loader/parser.hpp"
-#include "loader/verifier.hpp"
-#include "loader/opaquePackLoading.hpp"
+#include "loader/fail.hpp"
+#include "loader/failReport.hpp"
+#include "loader/interpreter.hpp"
+#include "loader/pack.hpp"
