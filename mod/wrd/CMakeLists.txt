@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 message("building ${CMAKE_CURRENT_SOURCE_DIR}...")
 
-set(moduleName "interp")
+set(moduleName "wrd")
 set(defCandidates "WRD_TAG=\"${moduleName}\"")
 foreach(def ${defCandidates})
     message("\tadd define ${def}")
