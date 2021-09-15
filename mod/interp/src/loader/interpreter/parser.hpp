@@ -18,7 +18,8 @@ namespace wrd {
 			return *this;
 		}
 
-        str parseBuffer(const std::string& buffer);
+        /// @param script is null terminated cstring.
+        str parse(const wchar* script);
 
 		virtual void rel() {
 			_root.rel();
