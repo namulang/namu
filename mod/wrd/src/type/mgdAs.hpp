@@ -4,8 +4,8 @@
 
 namespace wrd {
 
-    class mgdAs: public cast {
-        WRD_DECL_ME(mgdAs, cast)
+    class mgdCast: public cast {
+        WRD_DECL_ME(mgdCast, cast)
 
     public:
         typedef wtype metaType;
@@ -14,7 +14,7 @@ namespace wrd {
         }
         WRD_INIT_META(me)
 
-        explicit mgdAs(const wtype& type): _type(&type) {}
+        explicit mgdCast(const wtype& type): _type(&type) {}
 
         const wtype* _type;
     };
