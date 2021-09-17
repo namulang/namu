@@ -15,7 +15,7 @@ namespace wrd {
         tcppBridgeFuncBase(const std::string& name, fptrType fptr): super(name), _fptr(fptr) {}
 
         static_assert(allTrues<(sizeof(tmarshaling<Args>::canMarshal() ) == sizeof(metaIf::yes))...>::value,
-            "can't marshal one of this func's parameter types.");
+            "can't marshal one of this func's parameter wtypes.");
 
     protected:
         wbool _onInFrame(frame& sf, const ncontainer& args) override { return true; }
@@ -25,7 +25,7 @@ namespace wrd {
             return ttype<typename tmarshaling<Ret>::mgdType>::get();
         }
 
-        const types& getTypes() const override;
+        const wtypes& getTypes() const override;
 
     protected:
         fptrType _fptr;

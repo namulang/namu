@@ -27,7 +27,7 @@ namespace wrd {
         }
 
         using super::canRun;
-        wbool canRun(const types& types) const override {
+        wbool canRun(const wtypes& types) const override {
             if (!_str) return false;
             return _str->canRun(types);
         }

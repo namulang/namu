@@ -23,8 +23,8 @@ namespace wrd {
             str _onCast(narr& args) override {
                 return str(new wInt());
             }
-            const types& getTypes() const override {
-                static types inner;
+            const wtypes& getTypes() const override {
+                static wtypes inner;
                 return inner;
             }
         };
@@ -37,10 +37,10 @@ namespace wrd {
 
                 return str(new wInt(val));
             }
-            const types& getTypes() const override {
-                static types* inner = nullptr;
+            const wtypes& getTypes() const override {
+                static wtypes* inner = nullptr;
                 if(!inner) {
-                    inner = new types();
+                    inner = new wtypes();
                     inner->push_back(&ttype<wInt>::get());
                 }
                 return *inner;

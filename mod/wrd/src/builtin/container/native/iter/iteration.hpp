@@ -2,6 +2,7 @@
 
 #include "titerable.hpp"
 #include "../../../../ast/clonable.hpp"
+#include "../../../../type/wtype.hpp"
 
 namespace wrd {
 
