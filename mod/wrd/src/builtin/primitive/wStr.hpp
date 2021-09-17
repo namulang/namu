@@ -5,26 +5,6 @@
 namespace wrd {
 
     class wStr : public primitiveObj<std::string> {
-
-        class strType : public primitiveType {
-            WRD_DECL_ME(strType, primitiveType)
-
-        protected:
-            void _onCreateImplis(casts& tray) const override {
-                struct toWInt: public cast {
-                    const wtype& getType() const override {
-                        // TODO:
-                        return nulOf<wtype>();
-                    }
-                    ref as(const node& wStr) const override {
-                        // TODO:
-                        return ref();
-                    }
-                };
-                tray.push_back(new toWInt());
-            }
-        };
-
         WRD(CLASS(wStr, primitiveObj, strType))
 
     public:
@@ -34,5 +14,19 @@ namespace wrd {
     protected:
         void _onCreateCtors(funcs& tray) const override {
         }
+            const ases& _getImpliAses() const override {
+				static ases inner;
+				if(inner.len() <= 0) {
+					struct toWInt: public tas<wInt> {
+						str as(const node& wStr, const type& to) const override {
+							// TODO:
+							return str();
+						}
+					};
+					inner.add(new toWInt());
+				}
+
+				return inner;
+            }
     };
 }

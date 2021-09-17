@@ -5,27 +5,6 @@
 namespace wrd {
 
     class wFlt : public primitiveObj<wflt> {
-
-        class fltType : public primitiveType {
-            WRD_DECL_ME(fltType, primitiveType)
-
-        protected:
-            void _onCreateImplis(casts& tray) const override {
-                struct toWstr: public cast {
-                    const wtype& getType() const override {
-                        // TODO:
-                        return nulOf<wtype>();
-                    }
-
-                    ref as(const node& wFlt) const override {
-                        // TODO:
-                        return ref();
-                    }
-                };
-                tray.push_back(new toWstr());
-            }
-        };
-
         WRD(CLASS(wFlt, primitiveObj, fltType))
 
     public:
@@ -35,6 +14,20 @@ namespace wrd {
     protected:
         void _onCreateCtors(funcs& tray) const override {
         }
+		const ases& _getImpliAses() const override {
+			static ases inner;
+			if(inner.len() <= 0) {
+				struct toWstr: public tas<wStr> {
+					str as(const node& wFlt, const type& to) const override {
+						// TODO:
+						return str();
+					}
+				};
+				inner.add(new toWstr());
+			}
+
+			return inner;
+		}
     };
 
 }

@@ -33,8 +33,8 @@ namespace {
             return _res;
         }
 
-        const wtypes& getTypes() const override { return _types; }
-        wtypes& getTypes() { return _types; }
+        const types& getTypes() const override { return _types; }
+        types& getTypes() { return _types; }
 
         const wtype& getReturnType() const override {
             return ttype<node>::get();
@@ -54,7 +54,7 @@ namespace {
         wbool _executed;
         wbool _res;
         function<wbool(const ncontainer&, const stackFrame&)> _lambda;
-        wtypes _types;
+        types _types;
     };
 }
 
@@ -193,11 +193,11 @@ TEST(funcTest, testfuncHasStrParameter) {
     myObj obj;
     obj.subs().add(func1);
 
-    wtypes& types = func1.getTypes();
+    types& types = func1.getTypes();
     types.push_back(&obj.getType());
     types.push_back(&ttype<wStr>::get());
     func1.setLambda([&](const ncontainer& args, const stackFrame& sf) {
-        const wtypes& types = func1.getTypes();
+        const types& types = func1.getTypes();
         if(args.len() != types.size()) return false;
 
         const wtype& expectType = *types[1];

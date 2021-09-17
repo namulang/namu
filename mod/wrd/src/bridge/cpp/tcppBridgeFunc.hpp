@@ -25,7 +25,7 @@ namespace wrd {
             return ttype<typename tmarshaling<Ret>::mgdType>::get();
         }
 
-        const wtypes& getTypes() const override;
+        const types& getTypes() const override;
 
     protected:
         fptrType _fptr;

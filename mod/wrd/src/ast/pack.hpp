@@ -49,7 +49,7 @@ namespace wrd {
         }
 
         str run(const ncontainer& args) override { return str(); }
-        wbool canRun(const wtypes& types) const override { return false; }
+        wbool canRun(const types& types) const override { return false; }
 
         wbool isValid() const override {
             if(!_manifest.isValid()) return false;

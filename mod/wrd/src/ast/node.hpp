@@ -1,14 +1,12 @@
 #pragma once
 
 #include "clonable.hpp"
-#include "../type/wtype.hpp"
 #include "../builtin/container/native/tnarr.hpp"
 #include "validable.hpp"
 
 namespace wrd {
 
-    class ref;
-    template <typename T> class tref;
+	class ases;
 
     /// node provides common API to manipulate its sub nodes.
     class node : public instance, public clonable, public validable {
@@ -34,9 +32,9 @@ namespace wrd {
         }
         node& sub(const std::string& name) const;
         node& sub(const std::string& name, const ncontainer& args);
-        node& sub(const std::string& name, const wtypes& types);
+        node& sub(const std::string& name, const types& types);
         node& sub(const std::string& name, const ncontainer& args) const;
-        node& sub(const std::string& name, const wtypes& types) const;
+        node& sub(const std::string& name, const types& types) const;
 
         template <typename T>
         tnarr<T> subAll(std::function<wbool(const T&)> l) const {
@@ -44,11 +42,11 @@ namespace wrd {
         }
         narr subAll(const std::string& name) const;
         narr subAll(const std::string& name, const ncontainer& args);
-        narr subAll(const std::string& name, const wtypes& types);
+        narr subAll(const std::string& name, const types& types);
         narr subAll(const std::string& name, const ncontainer& args) const;
-        narr subAll(const std::string& name, const wtypes& types) const;
+        narr subAll(const std::string& name, const types& types) const;
 
-        virtual wbool canRun(const wtypes& types) const = 0;
+        virtual wbool canRun(const types& types) const = 0;
         wbool canRun(const ncontainer& args) const {
             return canRun(_createTypesFromArgs(args));
         }
@@ -69,37 +67,45 @@ namespace wrd {
         wbool is() const {
             return is(ttype<T>::get());
         }
-        wbool is(const wtype& type) const {
-            return getType().is(type);
+        wbool is(const type& to) const {
+			return _getAses().is(to);
         }
-
         template <typename T>
-        tref<T> as() const {
-            return tref<T>(as(ttype<T>::get()));
+        tstr<t> as() const {
+            return as(ttype<T>::get());
         }
-        ref as(const wtype& to) const;
+        str as(const type& to) const {
+			return _getAses().as(*this, to);
+		}
 
         template <typename T>
         wbool isImpli() const {
             return isImpli(ttype<T>::get());
         }
-        wbool isImpli(const wtype& to) const {
-            return getType().isImpli(to);
+        wbool isImpli(const type& to) const {
+			return _getImpliAses().is(to);
         }
+        template <typename T>
+        tstr<T> asImpli() const {
+			return asImpli(ttype<T>::get());
+		}
+        str asImpli(const type& to) const {
+			return _getImpliAses().as(*this, to);
+		}
 
         wbool isValid() const override {
             return true;
         }
 
-        template <typename T>
-        tref<T> asImpli() const;
-        ref asImpli(const wtype& to) const;
+	protected:
+        virtual const ases& _getImpliAses() const;
+        virtual const ases& _getAses() const;
 
     private:
-        static wtypes _createTypesFromArgs(const ncontainer& args) {
-            wtypes ret;
+        static types _createTypesFromArgs(const ncontainer& args) {
+            types ret;
             for(iter e=args.begin(); e ;e++)
-                ret.push_back(const_cast<wtype*>(&e->getType()));
+                ret.push_back(&e->getType());
             return ret;
         }
     };

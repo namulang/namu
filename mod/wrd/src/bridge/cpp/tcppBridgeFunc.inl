@@ -8,10 +8,10 @@ namespace wrd {
 #define TEMPL template <typename Ret, typename T, typename... Args>
 #define ME tcppBridgeFuncBase<Ret, T, Args...>
 
-    TEMPL const wtypes& ME::getTypes() const {
-        static wtypes* inner = nullptr;
+    TEMPL const types& ME::getTypes() const {
+        static types* inner = nullptr;
         if(!inner) {
-            inner = new wtypes();
+            inner = new types();
             inner->push_back(&ttype<tcppBridge<T>>::get());
             (inner->push_back(&ttype<typename tmarshaling<Args>::mgdType>::get()), ...);
         }
