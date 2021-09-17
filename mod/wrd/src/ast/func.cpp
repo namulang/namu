@@ -6,15 +6,15 @@ namespace wrd {
     WRD_DEF_ME(func)
 
     tstr<narr> me::_asArgs(const ncontainer& args) {
-        const types& types = getTypes();
-        if(args.len() != types.size())
-            return WRD_E("length of args(%d) and types(%d) doesn't match.",
-                args.len(), types.size()), tstr<narr>();
+        const wtypes& typs = getTypes();
+        if(args.len() != typs.size())
+            return WRD_E("length of args(%d) and typs(%d) doesn't match.",
+                args.len(), typs.size()), tstr<narr>();
 
         tstr<narr> ret(new narr());
         int n = 0;
         for(const node& e: args) {
-            ref ased = e.as(*types[n++]);
+            str ased = e.as(*typs[n++]);
             if(!ased) return tstr<narr>();
 
             ret->add(*ased);
@@ -30,18 +30,18 @@ namespace wrd {
         return _onCast(*castedArgs);
     }
 
-    const types& me::getTypes() const {
-        static types inner;
+    const wtypes& me::getTypes() const {
+        static wtypes inner;
         return inner;
     }
 
-    wbool me::canRun(const types& types) const {
-        const types& mine = getTypes();
+    wbool me::canRun(const wtypes& typs) const {
+        const wtypes& mine = getTypes();
         wcnt len = mine.size();
-        if(types.size() != len) return false;
+        if(typs.size() != len) return false;
 
         for(int n=0; n < len ;n++) {
-            const wtype& it = *types[n];
+            const wtype& it = *typs[n];
             const wtype& me = *mine[n];
 
             if(!it.isImpli(me)) return false;

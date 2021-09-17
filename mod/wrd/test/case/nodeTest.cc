@@ -28,8 +28,8 @@ namespace {
             return ttype<node>::get();
         }
 
-        const types& getTypes() const override {
-            static types inner;
+        const wtypes& getTypes() const override {
+            static wtypes inner;
             if(inner.size() == 0)
                 inner.push_back(&ttype<obj>::get());
 
@@ -169,6 +169,29 @@ namespace {
     };
 
     class chef : public mgdObj {
+
+		class myType : public wtype {
+            WRD_DECL_ME(myType, wtype);
+
+        protected:
+            const ases& _getImpliAses() const override {
+                static ases* inner = nullptr;
+                if(inner) return *inner;
+
+                inner = new ases();
+                struct tofood : public tas<food> {
+                    str as(const node& it, const type& to) const override {
+                        const chef& chef1 = it.cast<chef>();
+                        if(nul(chef1)) return str();
+
+                        return str(new food(chef1.foodName, chef1.foodCalorie));
+                    }
+                };
+                inner->add(new tofood());
+
+                return *inner;
+            }
+        };
         WRD(CLASS(chef, mgdObj, myType))
 
         using super::getCtors;
@@ -176,24 +199,6 @@ namespace {
             static funcs inner;
             return inner;
         }
-
-		const ases& _getImpliAses() const override {
-			static ases* inner = nullptr;
-			if(inner) return *inner;
-
-			inner = new casts();
-			struct tofood : public tas<food> {
-				str as(const node& it, const type& to) const override {
-					const chef& chef1 = it.cast<chef>();
-					if(nul(chef1)) return str();
-
-					return str(new food(chef1.foodName, chef1.foodCalorie));
-				}
-			};
-			inner->add(new tofood());
-
-			return *inner;
-		}
 
     public:
         string foodName;
@@ -211,7 +216,7 @@ TEST(nodeTest, testchefImplicitCastTofood) {
 
     const wtype& chefType = chef.getType();
     ASSERT_TRUE(chefType.isImpli<food>());
-    tref<food> cast = chef.asImpli<food>();
+    tstr<food> cast = chef.asImpli<food>();
     ASSERT_TRUE(cast);
 
     EXPECT_EQ(cast->name, expectName);

@@ -23,8 +23,8 @@ namespace wrd {
             str _onCast(narr& args) override {
                 return str(new wVoid());
             }
-            const types& getTypes() const override {
-                static types inner;
+            const wtypes& getTypes() const override {
+                static wtypes inner;
                 return inner;
             }
         };
@@ -35,10 +35,10 @@ namespace wrd {
             str _onCast(narr& args) override {
                 return str(new wVoid());
             }
-            const types& getTypes() const override {
-                static types* inner = nullptr;
+            const wtypes& getTypes() const override {
+                static wtypes* inner = nullptr;
                 if(!inner) {
-                    inner = new types();
+                    inner = new wtypes();
                     inner->push_back(&ttype<wVoid>::get());
                 }
                 return *inner;

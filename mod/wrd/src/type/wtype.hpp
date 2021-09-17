@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../common.hpp"
-#include "cast.hpp"
+#include "as/ases.hpp"
 
 namespace wrd {
 
@@ -13,30 +13,41 @@ namespace wrd {
     public:
         // wtype:
         template <typename T>
-        wbool isImpli() const;
-        wbool isImpli(const wtype& to) const {
-            if(to.isSuper(*this)) return true;
-
-            for(auto e : _getImplis())
-                if(e->is(to)) return true;
-            return false;
+        wbool isImpli() const {
+			return this->isImpli(ttype<T>::get());
+		}
+        wbool isImpli(const type& to) const {
+            return _getImpliAses().is(*this, to);
         }
 
         template <typename T>
-        tref<T> asImpli(const node& it) const;
-        ref asImpli(const node& it, const wtype& to) const;
+        tstr<T> asImpli(const node& it) const {
+			return this->asImpli(ttype<T>::get());
+		}
+        str asImpli(const node& from, const type& to) const {
+			return _getImpliAses().as(from, to);
+		}
 
         template <typename T>
-        wbool is() const;
-        wbool is(const wtype& type) const {
-            if(isImpli(type)) return true;
+        wbool is() const {
+			return this->is(ttype<T>::get());
+		}
+        wbool is(const type& to) const {
+			if(isImpli(to)) return true;
 
-            // TODO: redirection to as list.
-            return false;
+            return _getAses().is(*this, to);
         }
+
         template <typename T>
-        tref<T> as(const node& it) const;
-        ref as(const node& it, const wtype& to) const;
+        tstr<T> as(const node& it) const {
+			return this->as(it, ttype<T>::get());
+		}
+        str as(const node& from, const type& to) const {
+			if(isImpli(to))
+				return asImpli(from, to);
+
+			return _getAses().as(from, to);
+		}
 
         virtual wbool isImmutable() const {
             return false;
@@ -44,10 +55,15 @@ namespace wrd {
 
     protected:
         // wtype:
-        virtual const casts& _getImplis() const {
-            static casts inner;
+        virtual const ases& _getImpliAses() const {
+            static ases inner;
             return inner;
         }
+
+        virtual const ases& _getAses() const {
+			static ases inner;
+			return inner;
+		}
     };
 
     typedef std::vector<const wtype*> wtypes;

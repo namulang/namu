@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../ast/mgd.hpp"
-#include "primitiveType.hpp"
 #include "primitiveCtor.hpp"
 
 namespace wrd {

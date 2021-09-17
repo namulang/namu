@@ -28,7 +28,7 @@ namespace wrd {
         using super::run;
         str run(const ncontainer& args) override;
 
-        wbool canRun(const types& types) const override;
+        wbool canRun(const wtypes& types) const override;
         virtual funcs& getCtors() = 0;
         const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
         virtual const obj& getOrigin() const = 0;

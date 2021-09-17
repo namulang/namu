@@ -16,7 +16,7 @@ namespace wrd {
             return _terms;
         }
 
-        wbool canRun(const types& args) const override {
+        wbool canRun(const wtypes& args) const override {
             return args.size() == 0;
         }
 

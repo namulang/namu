@@ -1,4 +1,3 @@
 #pragma once
 
-#include "type/wtype.inl"
-#include "type/mgdCast.hpp"
+#include "type/wtype.hpp"

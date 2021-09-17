@@ -1,11 +1,31 @@
 #pragma once
 
-#include "primitiveObj.hpp"
+#include "wStr.hpp"
 
 namespace wrd {
 
     class wVoid : public mgdObj {
-        WRD(CLASS(wVoid, mgdObj, voidType))
+
+		class wVoidType : public wtype {
+		public:
+			wbool isImmutable() const override { return true; }
+
+		protected:
+			const ases& _getImpliAses() const override {
+				static ases inner;
+				if(inner.len() <= 0) {
+					struct toStr: public tas<wStr>{
+						str as(const node& wVoid, const type& to) const override {
+							// TODO:
+							return str();
+						}
+					};
+					inner.add(new toStr());
+				}
+				return inner;
+			}
+		};
+		WRD(CLASS(wVoid, mgdObj, wVoidType))
 
     public:
         wVoid() {}
@@ -32,19 +52,5 @@ namespace wrd {
         }
 
         void _onCreateCtors(funcs& tray) const;
-
-		const ases& _getImpliAses() const override {
-			static ases inner;
-			if(inner.len() <= 0) {
-				struct toStr: public tas<wStr>{
-					str as(const node& wVoid, const type& to) const override {
-						// TODO:
-						return str();
-					}
-				};
-				tray.push_back(new toStr());
-			}
-			return inner;
-		}
     };
 }
