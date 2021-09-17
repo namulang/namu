@@ -6,9 +6,9 @@ namespace wrd {
     WRD_DEF_ME(func)
 
     tstr<narr> me::_asArgs(const ncontainer& args) {
-        const wtypes& types = getTypes();
+        const types& types = getTypes();
         if(args.len() != types.size())
-            return WRD_E("length of args(%d) and wtypes(%d) doesn't match.",
+            return WRD_E("length of args(%d) and types(%d) doesn't match.",
                 args.len(), types.size()), tstr<narr>();
 
         tstr<narr> ret(new narr());
@@ -30,13 +30,13 @@ namespace wrd {
         return _onCast(*castedArgs);
     }
 
-    const wtypes& me::getTypes() const {
-        static wtypes inner;
+    const types& me::getTypes() const {
+        static types inner;
         return inner;
     }
 
-    wbool me::canRun(const wtypes& types) const {
-        const wtypes& mine = getTypes();
+    wbool me::canRun(const types& types) const {
+        const types& mine = getTypes();
         wcnt len = mine.size();
         if(types.size() != len) return false;
 

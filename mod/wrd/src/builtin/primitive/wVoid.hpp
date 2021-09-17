@@ -1,32 +1,10 @@
 #pragma once
 
 #include "primitiveObj.hpp"
-#include "../../ast/ref.hpp"
 
 namespace wrd {
 
     class wVoid : public mgdObj {
-
-        class voidType : public primitiveType {
-            WRD_DECL_ME(voidType, primitiveType)
-
-        protected:
-            void _onCreateImplis(casts& tray) const override {
-                struct toWstr: public cast {
-                    const wtype& getType() const override {
-                        // TODO:
-                        return nulOf<wtype>();
-                    }
-
-                    ref as(const node& wVoid) const override {
-                        // TODO:
-                        return ref();
-                    }
-                };
-                tray.push_back(new toWstr());
-            }
-        };
-
         WRD(CLASS(wVoid, mgdObj, voidType))
 
     public:
@@ -54,5 +32,19 @@ namespace wrd {
         }
 
         void _onCreateCtors(funcs& tray) const;
+
+		const ases& _getImpliAses() const override {
+			static ases inner;
+			if(inner.len() <= 0) {
+				struct toStr: public tas<wStr>{
+					str as(const node& wVoid, const type& to) const override {
+						// TODO:
+						return str();
+					}
+				};
+				tray.push_back(new toStr());
+			}
+			return inner;
+		}
     };
 }

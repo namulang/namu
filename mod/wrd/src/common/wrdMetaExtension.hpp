@@ -15,8 +15,8 @@
 
 //  TYPE:
 //      defines super meta type.
-//      for instance, if you set TYPE(wtype), then when you call getType() of your class,
-//      it will returns instance of type of wtype.
+//      for instance, if you set TYPE(type), then when you call getType() of your class,
+//      it will returns instance of type of type.
 #define __WRD__DECL_TYPE(METATYPE) \
     public: \
         typedef METATYPE metaType; \
@@ -32,10 +32,10 @@
 //      marks that this class is abstract.
 #define __WRD__DECL_INTERFACE_1(ME) \
         __WRD__DECL_ME_1(ME) \
-        __WRD__DECL_TYPE(wtype) \
+        __WRD__DECL_TYPE(type) \
         __WRD__DECL_INIT_META(ME)
 #define __WRD__DECL_INTERFACE_2(ME, SUPER) \
-        __WRD__DECL_INTERFACE_3(ME, SUPER, wtype)
+        __WRD__DECL_INTERFACE_3(ME, SUPER, type)
 #define __WRD__DECL_INTERFACE_3(ME, SUPER, SUPERTYPE) \
         __WRD__DECL_ME_2(ME, SUPER) \
         __WRD__DECL_TYPE(SUPERTYPE) \

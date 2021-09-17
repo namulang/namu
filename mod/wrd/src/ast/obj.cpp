@@ -22,7 +22,7 @@ namespace wrd {
         return fun.run(args);
     }
 
-    wbool me::canRun(const wtypes& types) const {
+    wbool me::canRun(const types& types) const {
         func& fun = getCtors().get<func>([&types](const func& f) {
             return f.canRun(types);
         });

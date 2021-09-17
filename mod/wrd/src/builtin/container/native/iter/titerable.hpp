@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../../type/wtype.hpp"
+#include "../../../../common.hpp"
 
 namespace wrd {
 

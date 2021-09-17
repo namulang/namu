@@ -30,7 +30,7 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
         func& add = origin["add"].cast<func>();
         ASSERT_FALSE(nul(add));
 
-        const wtypes& argTypes = add.getTypes();
+        const types& argTypes = add.getTypes();
         ASSERT_EQ(argTypes.size(), 3);
         ASSERT_EQ(*argTypes[0], origin.getType());
         ASSERT_EQ(*argTypes[1], ttype<wInt>());

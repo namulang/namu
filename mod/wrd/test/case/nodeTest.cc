@@ -28,8 +28,8 @@ namespace {
             return ttype<node>::get();
         }
 
-        const wtypes& getTypes() const override {
-            static wtypes inner;
+        const types& getTypes() const override {
+            static types inner;
             if(inner.size() == 0)
                 inner.push_back(&ttype<obj>::get());
 
@@ -149,3 +149,72 @@ TEST(nodeTest, testImmutableNegative) {
     r1->cast<myObj>().val = 2;
     ASSERT_EQ(*r1, *r2);
 }
+
+namespace {
+
+    class food : public mgdObj {
+        WRD(CLASS(food, mgdObj))
+
+    public:
+        food(string newName, int newCalorie): name(newName), calorie(newCalorie) {}
+
+        string name;
+        int calorie;
+
+        using super::getCtors;
+        funcs& getCtors() override {
+            static funcs inner;
+            return inner;
+        }
+    };
+
+    class chef : public mgdObj {
+        WRD(CLASS(chef, mgdObj, myType))
+
+        using super::getCtors;
+        funcs& getCtors() override {
+            static funcs inner;
+            return inner;
+        }
+
+		const ases& _getImpliAses() const override {
+			static ases* inner = nullptr;
+			if(inner) return *inner;
+
+			inner = new casts();
+			struct tofood : public tas<food> {
+				str as(const node& it, const type& to) const override {
+					const chef& chef1 = it.cast<chef>();
+					if(nul(chef1)) return str();
+
+					return str(new food(chef1.foodName, chef1.foodCalorie));
+				}
+			};
+			inner->add(new tofood());
+
+			return *inner;
+		}
+
+    public:
+        string foodName;
+        int foodCalorie;
+    };
+}
+
+TEST(nodeTest, testchefImplicitCastTofood) {
+    // prepare:
+    const string expectName = "HealthPotion";
+    const int expectCalorie = 350;
+    chef chef;
+    chef.foodName = expectName;
+    chef.foodCalorie = expectCalorie;
+
+    const wtype& chefType = chef.getType();
+    ASSERT_TRUE(chefType.isImpli<food>());
+    tref<food> cast = chef.asImpli<food>();
+    ASSERT_TRUE(cast);
+
+    EXPECT_EQ(cast->name, expectName);
+    EXPECT_EQ(cast->calorie, expectCalorie);
+}
+

@@ -19,10 +19,10 @@ namespace wrd {
         str run(const ncontainer& args) override;
 
         using super::canRun;
-        wbool canRun(const wtypes& types) const override;
+        wbool canRun(const types& types) const override;
 
         /// @return object and parameter types.
-        virtual const wtypes& getTypes() const;
+        virtual const types& getTypes() const;
         virtual const wtype& getReturnType() const = 0;
         const std::string& getName() const override {
             return _name;

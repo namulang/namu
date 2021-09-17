@@ -2,18 +2,21 @@
 #include "ref.hpp"
 #include "../builtin/container/native/tnchain.inl"
 #include "../builtin/container/native/tnarr.inl"
+#include "cast/ases.hpp"
 
 namespace wrd {
 
     WRD_DEF_ME(node)
 
-    ref me::as(const wtype& to) const {
-        return getType().as(*this, to);
-    }
+	const ases& me::_getImpliAses() const {
+		static ases inner;
+		return inner;
+	}
 
-    ref me::asImpli(const wtype& to) const {
-        return getType().asImpli(*this, to);
-    }
+	const ases& me::_getAses() const {
+		static ases inner;
+		return inner;
+	}
 
     str me::run() {
         static narr empty;
@@ -33,14 +36,14 @@ namespace wrd {
         return sub(name, _createTypesFromArgs(args));
     }
 
-    node& me::sub(const std::string& name, const wtypes& types) {
+    node& me::sub(const std::string& name, const types& types) {
         return subs().get([&](const node& elem) {
             return elem.getName() == name && elem.canRun(types);
         });
     }
 
     node& me::sub(const std::string& name, const ncontainer& args) const WRD_UNCONST_FUNC(sub(name, args))
-    node& me::sub(const std::string& name, const wtypes& types) const WRD_UNCONST_FUNC(sub(name, types))
+    node& me::sub(const std::string& name, const types& types) const WRD_UNCONST_FUNC(sub(name, types))
 
     narr me::subAll(const std::string& name) const {
         return subs().getAll([&](const node& elem) {
@@ -55,12 +58,12 @@ namespace wrd {
         return subAll(name, _createTypesFromArgs(args));
     }
 
-    narr me::subAll(const std::string& name, const wtypes& types) {
+    narr me::subAll(const std::string& name, const types& types) {
         return subs().getAll([&](const node& elem) {
             return elem.getName() == name && elem.canRun(types);
         });
     }
 
     narr me::subAll(const std::string& name, const ncontainer& args) const WRD_UNCONST_FUNC(subAll(name, args))
-    narr me::subAll(const std::string& name, const wtypes& types) const WRD_UNCONST_FUNC(subAll(name, types))
+    narr me::subAll(const std::string& name, const types& types) const WRD_UNCONST_FUNC(subAll(name, types))
 }
