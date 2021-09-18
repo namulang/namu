@@ -8,6 +8,13 @@ namespace wrd {
     /// bridge object only can shares 'shared' sub nodes.
     template <typename T>
     class tcppBridge : public obj {
+		// TODO: how to impement 'as()' on bridge obj:
+		//	each tcppBridge obj has its unique type object. when it got called 'getType()'
+		//	it returns its type object.
+		//
+		//	however, type object is dynamically belongs to this bridge object, when user
+		//	tries to get ttype<T>, it's not derived from wtype so it won't have any 'as()'
+		//	func. user can't operate conversion in this way.
         WRD(CLASS(tcppBridge, obj))
         template <typename Ret, typename T1, typename...Args>
         friend class tcppBridgeFunc;
