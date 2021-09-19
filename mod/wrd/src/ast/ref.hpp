@@ -32,7 +32,7 @@ namespace wrd {
             return _str->canRun(types);
         }
 
-        str run(const ncontainer& args) override {
+        str run(const containable& args) override {
             if (!_str) return str();
             return _str->run(args);
         }

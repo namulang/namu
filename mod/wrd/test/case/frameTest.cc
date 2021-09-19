@@ -11,7 +11,7 @@ namespace {
 
         ncontainer& subs() override { return nulOf<ncontainer>(); }
         wbool canRun(const wtypes& types) const override { return false; }
-        str run(const ncontainer& args) override { return str(); }
+        str run(const containable& args) override { return str(); }
 
         int num;
     };

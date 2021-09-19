@@ -14,7 +14,7 @@ namespace {
             _executed = false;
         }
 
-        str run(const ncontainer& args) override {
+        str run(const containable& args) override {
             WRD_I("hello world!");
             _executed = true;
             return str();

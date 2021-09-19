@@ -47,7 +47,7 @@ namespace wrd {
         narr subAll(const std::string& name, const wtypes& types) const;
 
         virtual wbool canRun(const wtypes& typs) const = 0;
-        wbool canRun(const ncontainer& args) const {
+        wbool canRun(const containable& args) const {
             return canRun(_createTypesFromArgs(args));
         }
 
@@ -98,7 +98,7 @@ namespace wrd {
         }
 
     private:
-        static wtypes _createTypesFromArgs(const ncontainer& args) {
+        static wtypes _createTypesFromArgs(const containable& args) {
             wtypes ret;
             for(iter e=args.begin(); e ;e++)
                 ret.push_back((wtype*) &e->getType());

@@ -11,7 +11,7 @@ namespace wrd {
     me::obj(const string& name): _name(name) {}
     me::obj(const string& name, const nchain& subs): _name(name), _subs(subs) {}
 
-    str me::run(const ncontainer& args) {
+    str me::run(const containable& args) {
         func& fun = getCtors().get<func>([&args](const func& candidate) {
             return candidate.canRun(args);
         });
