@@ -16,7 +16,7 @@ namespace wrd {
         ncontainer& subs() override { return _shares; }
 
         using super::run;
-        str run(const ncontainer& args) override;
+        str run(const containable& args) override;
 
         using super::canRun;
         wbool canRun(const wtypes& typs) const override;
@@ -32,7 +32,7 @@ namespace wrd {
         virtual str _onCast(narr& castedArgs) = 0;
 
     private:
-        tstr<narr> _asArgs(const ncontainer& args);
+        tstr<narr> _asArgs(const containable& args);
 
     private:
         std::string _name;

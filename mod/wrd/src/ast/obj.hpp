@@ -26,7 +26,7 @@ namespace wrd {
         ncontainer& subs() override { return *_subs; }
 
         using super::run;
-        str run(const ncontainer& args) override;
+        str run(const containable& args) override;
 
         wbool canRun(const wtypes& types) const override;
         virtual funcs& getCtors() = 0;

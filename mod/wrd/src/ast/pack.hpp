@@ -48,7 +48,7 @@ namespace wrd {
             return true;
         }
 
-        str run(const ncontainer& args) override { return str(); }
+        str run(const containable& args) override { return str(); }
         wbool canRun(const wtypes& types) const override { return false; }
 
         wbool isValid() const override {

@@ -5,7 +5,7 @@ namespace wrd {
 
     WRD_DEF_ME(func)
 
-    tstr<narr> me::_asArgs(const ncontainer& args) {
+    tstr<narr> me::_asArgs(const containable& args) {
         const wtypes& typs = getTypes();
         if(args.len() != typs.size())
             return WRD_E("length of args(%d) and typs(%d) doesn't match.",
@@ -23,7 +23,7 @@ namespace wrd {
         return ret;
     }
 
-    str me::run(const ncontainer& args) {
+    str me::run(const containable& args) {
         tstr<narr> castedArgs = _asArgs(args);
         if(!castedArgs) return WRD_E("invalid args to call %s func.", getType().getName().c_str()), str();
 

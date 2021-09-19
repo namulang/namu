@@ -14,7 +14,7 @@ namespace wrd {
             : super(s, lineNum, &target, &newName), _it(it), _name(newName), _args(nulOf<arr>()) {}
 
     public:
-        str run(const ncontainer& args) {
+        str run(const containable& args) {
             // believe that this expression was checked to be valid.
             return str(_it->sub(_name, _args));
         }
