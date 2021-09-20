@@ -23,7 +23,7 @@ namespace wrd {
         if(nul(args))
             return sub(name);
 
-        return sub(name, _createTypesFromArgs(args));
+        return sub(name, createTypesFromArgs(args));
     }
 
     node& me::sub(const std::string& name, const wtypes& types) {
@@ -45,7 +45,7 @@ namespace wrd {
         if(nul(args))
             return subAll(name);
 
-        return subAll(name, _createTypesFromArgs(args));
+        return subAll(name, createTypesFromArgs(args));
     }
 
     narr me::subAll(const std::string& name, const wtypes& types) {

@@ -48,10 +48,10 @@ namespace wrd {
 
         virtual wbool canRun(const wtypes& typs) const = 0;
         wbool canRun(const containable& args) const {
-            return canRun(_createTypesFromArgs(args));
+            return canRun(createTypesFromArgs(args));
         }
 
-        virtual str run(const ncontainer& args) = 0;
+        virtual str run(const containable& args) = 0;
         str run();
 
         /// release all holding resources and ready to be terminated.
@@ -97,11 +97,14 @@ namespace wrd {
             return true;
         }
 
-    private:
-        static wtypes _createTypesFromArgs(const containable& args) {
+        virtual const wtype& getEvalType() const {
+            return getType();
+        }
+
+        static wtypes createTypesFromArgs(const containable& args) {
             wtypes ret;
             for(iter e=args.begin(); e ;e++)
-                ret.push_back((wtype*) &e->getType());
+                ret.push_back((wtype*) &e->getEvalType());
             return ret;
         }
     };
