@@ -25,6 +25,7 @@ namespace wrd {
 
         wbool isValid() const override {
             if(_lineNum < 1) return false;
+            if(nul(getEvalType())) return false;
 
             return true;
         }
