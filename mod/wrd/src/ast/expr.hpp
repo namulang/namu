@@ -1,35 +1,37 @@
 #pragma once
 
-#include "node.hpp"
+#include "src.hpp"
 
 namespace wrd {
 
     class expr : public node {
         WRD(INTERFACE(expr, node))
+        friend class exprMaker;
 
     public:
-        expr(const src& s, wcnt lineNum, std::initializer_list<const node*> newTerms)
-            : _terms(newTerms), _src(s), _lineNum(lineNum) {}
-
-    public:
-        ncontainer& subs() override {
-            return _terms;
-        }
+        ncontainer& subs() override;
 
         wbool canRun(const wtypes& args) const override {
             return args.size() == 0;
         }
 
+        const src& getSrc() const {
+            return *_src;
+        }
+
+        wcnt getLine() const {
+            return _lineNum;
+        }
+
         wbool isValid() const override {
-            for(node& term : _terms)
-                if(term.isValid())
-                    return false;
+            if(_lineNum < 1) return false;
 
             return true;
         }
 
-        const src& getSrc() const {
-            return *_src;
+    protected:
+        void _setSrc(const src& newSrc) {
+            _src.bind(newSrc);
         }
 
         wcnt getLineNum() const {
@@ -37,7 +39,6 @@ namespace wrd {
         }
 
     private:
-        narr _terms;
         tstr<src> _src;
         wcnt _lineNum;
     };
