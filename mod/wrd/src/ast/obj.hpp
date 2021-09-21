@@ -2,6 +2,7 @@
 
 #include "src.hpp"
 #include "../frame/frameInteractable.hpp"
+#include "scope.hpp"
 
 namespace wrd {
 
@@ -14,7 +15,7 @@ namespace wrd {
         friend class mgdObj;
 
     public:
-        explicit obj(const string& name, const nchain& subs);
+        explicit obj(const string& name, const scopeChn& subs);
 
     protected:
         /// if you don't give any subs when construct an obj you should assign _subs to new nchain instance on ctor of derived class.
@@ -43,6 +44,6 @@ namespace wrd {
 
     protected:
         std::string _name;
-        tstr<nchain> _subs;
+        tstr<scopeChn> _subs;
     };
 }

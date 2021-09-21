@@ -69,7 +69,7 @@ wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj&
     for(iter e=fr.subs().begin(); e ;e++)
         WRD_E(" - func(\"%s\") calls: fr[%d]=%s", func.getName().c_str(), n++, e->getType().getName().c_str());
 
-    const nchain& funcScope = fr.subs().cast<nchain>();
+    const scopeChn& funcScope = fr.subs().cast<scopeChn>();
     if(nul(funcScope)) return WRD_E("nul(funcScope)"), false;
     if(&func.subs() != &funcScope.getContainer())
         return WRD_E("func.subs(%x) != funcScope(%x)", &func.subs(), &funcScope), false;

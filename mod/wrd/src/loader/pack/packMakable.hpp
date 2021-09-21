@@ -5,7 +5,7 @@
 namespace wrd {
 
     class pack;
-    template <typename T> class tnchain;
+    template <typename T, typename defaultContainer> class tnchain;
     typedef tnchain<pack> packChain;
     class src;
     typedef std::vector<src> srcs;

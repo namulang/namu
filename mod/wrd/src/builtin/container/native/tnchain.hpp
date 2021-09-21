@@ -8,7 +8,7 @@ namespace wrd {
 
     class node;
 
-    template <typename T>
+    template <typename T, typename defaultContainer = narr>
     class tnchain : public ncontainer {
         WRD(CLASS(tnchain, ncontainer))
 

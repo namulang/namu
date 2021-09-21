@@ -1,4 +1,6 @@
 #include "scope.hpp"
+#include "../builtin/container/native/tnarr.inl"
+#include "../builtin/container/native/tnchain.inl"
 #include "node.hpp"
 #include "ref.hpp"
 

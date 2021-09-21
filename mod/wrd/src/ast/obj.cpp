@@ -9,7 +9,7 @@ namespace wrd {
 
     me::obj() {}
     me::obj(const string& name): _name(name) {}
-    me::obj(const string& name, const nchain& subs): _name(name), _subs(subs) {}
+    me::obj(const string& name, const scopeChn& subs): _name(name), _subs(subs) {}
 
     str me::run(const containable& args) {
         func& fun = getCtors().get<func>([&args](const func& candidate) {
@@ -35,7 +35,7 @@ namespace wrd {
     wbool me::_onInFrame(frame& fr, const ncontainer& args) {
         WRD_DI("%s._onInFrame()", getName().c_str());
 
-        return fr.add(*nchain::wrapDeep(subs()));
+        return fr.add(*scopeChn::wrapDeep(subs()));
     }
 
     wbool me::_onOutFrame(frame& fr, const ncontainer& args) {

@@ -21,7 +21,7 @@ namespace wrd {
 
     private:
         tcppBridge(T* real) : _real(real) {
-            _subs.bind(new nchain());
+            _subs.bind(new scopeChn());
         }
 
     public:

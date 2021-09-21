@@ -5,11 +5,11 @@
 
 namespace wrd {
 
-#define TEMPL template <typename T>
-#define ME tnchain<T>
+#define TEMPL template <typename T, typename defaultContainer>
+#define ME tnchain<T, defaultContainer>
 
     TEMPL
-    ME::tnchain(): _arr(new narr()) {}
+    ME::tnchain(): _arr(new defaultContainer()) {}
 
     TEMPL
     wcnt ME::len() const {
