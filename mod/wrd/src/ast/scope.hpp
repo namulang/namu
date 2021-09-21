@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../builtin/container/native/tnarr.inl"
+#include "../builtin/container/native/tnarr.hpp"
+#include "../builtin/container/native/tnchain.inl"
 
 namespace wrd {
 
@@ -12,4 +13,6 @@ namespace wrd {
     public:
         wbool add(widx n, const node& new1) override;
     };
+
+    typedef tnchain<node, scope> scopeChn;
 }

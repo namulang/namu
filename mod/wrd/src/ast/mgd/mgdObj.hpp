@@ -12,14 +12,14 @@ namespace wrd {
 
     public:
         explicit mgdObj()
-            : super(), _shares(new nchain()), _owns(new narr()), _org(this) {
+            : super(), _shares(new scopeChn()), _owns(new scope()), _org(this) {
             _subs.bind(_makeNewSubs());
         }
         explicit mgdObj(const std::string& name)
-            : super(name), _shares(new nchain()), _owns(new narr()), _org(this) {
+            : super(name), _shares(new scopeChn()), _owns(new scope()), _org(this) {
             _subs.bind(_makeNewSubs());
         }
-        explicit mgdObj(const std::string& name, const nchain& shares, const narr& owns)
+        explicit mgdObj(const std::string& name, const scopeChn& shares, const scope& owns)
             : super(name), _shares(shares), _owns(owns), _org(this) {
             _subs.bind(_makeNewSubs());
         }
@@ -35,10 +35,10 @@ namespace wrd {
             return _assign(rhs);
         }
 
-        nchain& getShares() {
+        scopeChn& getShares() {
             return *_shares;
         }
-        const nchain& getShares() const WRD_UNCONST_FUNC(getShares())
+        const scopeChn& getShares() const WRD_UNCONST_FUNC(getShares())
 
         narr& getOwns() {
             return *_owns;
@@ -50,8 +50,8 @@ namespace wrd {
         }
 
     private:
-        nchain* _makeNewSubs() {
-            nchain* ret = new nchain(*_owns);
+        scopeChn* _makeNewSubs() {
+            scopeChn* ret = new scopeChn(*_owns);
             ret->link(*_shares);
 
             return ret;
@@ -60,7 +60,7 @@ namespace wrd {
         me& _assign(const me& rhs);
 
     private:
-        tstr<nchain> _shares;
+        tstr<scopeChn> _shares;
         tstr<narr> _owns;
         obj* _org;
     };

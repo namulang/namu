@@ -31,7 +31,7 @@ struct frameTest : public ::testing::Test {
         thread::get().rel();
     }
 
-    nchain& getLinks(frame& fr) {
+    scopeChn& getLinks(frame& fr) {
         return *fr._links;
     }
 };
@@ -43,14 +43,14 @@ TEST_F(frameTest, testAccessFrame) {
 TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     frame& fr = getStackFrame().getCurrentFrame();
 
-    nchain chnBase;
+    scopeChn chnBase;
     chnBase.add(new myNode(1));
     chnBase.add(new myNode(2));
     fr.add(chnBase);
 
-    nchain shares;
+    scopeChn shares;
     shares.add(new myNode(3));
-    nchain owns;
+    scopeChn owns;
     owns.add(new myNode(4));
     owns.link(shares);
     ASSERT_EQ(owns.len(), 2);
@@ -59,7 +59,7 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     };
     ASSERT_FALSE(nul(owns.get<myNode>(lambda)));
 
-    fr.add(*nchain::wrapDeep(owns));
+    fr.add(*scopeChn::wrapDeep(owns));
     ASSERT_EQ(fr.subAll<myNode>(lambda).len(), 4);
     ASSERT_EQ(owns.getAll<myNode>(lambda).len(), 2);
 

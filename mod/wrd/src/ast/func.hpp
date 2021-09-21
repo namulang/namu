@@ -1,7 +1,7 @@
 #pragma once
 
 #include "node.hpp"
-#include "../builtin/container/native/tnarr.hpp"
+#include "scope.hpp"
 #include "../frame/frameInteractable.hpp"
 
 namespace wrd {
@@ -36,7 +36,7 @@ namespace wrd {
 
     private:
         std::string _name;
-        narr _shares;
+        scope _shares;
     };
 
     typedef tnarr<func> funcs;

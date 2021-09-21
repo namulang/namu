@@ -70,7 +70,7 @@ namespace {
 
 TEST(nodeTest, testManuallyMakeNodeStructure) {
     // prepare:
-    tstr<nchain> frameEmulator;
+    tstr<scopeChn> frameEmulator;
     myObj obj;
     myFunc func;
     WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
@@ -85,7 +85,7 @@ TEST(nodeTest, testManuallyMakeNodeStructure) {
     // when:
     frameEmulator.bind(obj.subs());
     //  push another:
-    nchain* chnOffunc = nchain::wrap(func.subs());
+    scopeChn* chnOffunc = scopeChn::wrap(func.subs());
     chnOffunc->link(*frameEmulator);
     frameEmulator.bind(*chnOffunc);
 

@@ -9,7 +9,7 @@ namespace wrd {
         WRD(CLASS(titer))
         friend class iteration;
         template <typename E> friend class tnarr;
-        template <typename E> friend class tnchain;
+        template <typename E, typename defaultContainer> friend class tnchain;
 
     public:
         titer() {
