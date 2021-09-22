@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['fail_52',['fail',['../structwrd_1_1fail.html',1,'wrd']]],
-  ['failreport_53',['failReport',['../classwrd_1_1fail_report.html',1,'wrd']]],
   ['filelogstream_54',['fileLogStream',['../classwrd_1_1file_log_stream.html',1,'wrd']]],
   ['frame_55',['frame',['../classwrd_1_1frame.html',1,'wrd']]],
   ['frameinteract_56',['frameInteract',['../classwrd_1_1frame_interact.html',1,'wrd']]],

@@ -76,7 +76,7 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>wrd {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">class </span>failReport;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">class </span>errReport;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classwrd_1_1pack_loader.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1pack_loader.html">packLoader</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1type_providable.html">typeProvidable</a>, <span class="keyword">public</span> <a class="code" href="classwrd_1_1clonable.html">clonable</a> {</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1pack_loader.html">packLoader</a>))</div>
@@ -101,7 +101,7 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        }</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        me&amp; setReport(<a class="code" href="classwrd_1_1fail_report.html">failReport</a>&amp; report) {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        me&amp; setReport(<a class="code" href="classwrd_1_1err_report.html">errReport</a>&amp; report) {</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            _report = &amp;report;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
@@ -218,7 +218,7 @@ $(function() {
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">packs</a>* _basePacks;</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <a class="code" href="classwrd_1_1fail_report.html">failReport</a>* _report;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <a class="code" href="classwrd_1_1err_report.html">errReport</a>* _report;</div>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        std::vector&lt;std::string&gt; _paths;</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keyword">static</span> constexpr wchar DELIMITER = <span class="charliteral">&#39;/&#39;</span>;</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    };</div>
@@ -226,13 +226,13 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1clonable_html"><div class="ttname"><a href="classwrd_1_1clonable.html">wrd::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
+<div class="ttc" id="aclasswrd_1_1err_report_html"><div class="ttname"><a href="classwrd_1_1err_report.html">wrd::errReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1pack_html"><div class="ttname"><a href="classwrd_1_1pack.html">wrd::pack</a></div><div class="ttdef"><b>Definition:</b> pack.hpp:12</div></div>
 <div class="ttc" id="astructwrd_1_1manifest_html"><div class="ttname"><a href="structwrd_1_1manifest.html">wrd::manifest</a></div><div class="ttdef"><b>Definition:</b> manifest.hpp:25</div></div>
 <div class="ttc" id="astructwrd_1_1entrypoint_html"><div class="ttname"><a href="structwrd_1_1entrypoint.html">wrd::entrypoint</a></div><div class="ttdef"><b>Definition:</b> manifest.hpp:9</div></div>
 <div class="ttc" id="astructwrd_1_1point_html"><div class="ttname"><a href="structwrd_1_1point.html">wrd::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>
 <div class="ttc" id="aclasswrd_1_1type_providable_html"><div class="ttname"><a href="classwrd_1_1type_providable.html">wrd::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:4</div></div>
 <div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:9</div></div>
-<div class="ttc" id="aclasswrd_1_1fail_report_html"><div class="ttname"><a href="classwrd_1_1fail_report.html">wrd::failReport</a></div><div class="ttdef"><b>Definition:</b> failReport.hpp:7</div></div>
 <div class="ttc" id="aclasswrd_1_1pack_loader_html"><div class="ttname"><a href="classwrd_1_1pack_loader.html">wrd::packLoader</a></div><div class="ttdef"><b>Definition:</b> packLoader.hpp:10</div></div>
 <div class="ttc" id="aclasswrd_1_1pack_loading_html"><div class="ttname"><a href="classwrd_1_1pack_loading.html">wrd::packLoading</a></div><div class="ttdef"><b>Definition:</b> packLoading.hpp:15</div></div>
 <!-- start footer part -->
