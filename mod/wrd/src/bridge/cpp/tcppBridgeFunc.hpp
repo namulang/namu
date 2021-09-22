@@ -21,7 +21,7 @@ namespace wrd {
         wbool _onInFrame(frame& sf, const ncontainer& args) override { return true; }
         wbool _onOutFrame(frame& sf, const ncontainer& args) override { return true; }
 
-        const wtype& getReturnType() const override {
+        const wtype& getEvalType() const override {
             return ttype<typename tmarshaling<Ret>::mgdType>::get();
         }
 

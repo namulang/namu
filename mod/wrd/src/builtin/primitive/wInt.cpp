@@ -12,7 +12,7 @@ namespace wrd {
         public:
             wIntCtor(): super() {}
 
-            const wtype& getReturnType() const override {
+            const wtype& getEvalType() const override {
                 return ttype<wInt>::get();
             }
         };

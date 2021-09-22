@@ -24,7 +24,7 @@ namespace {
             return _executed;
         }
 
-        const wtype& getReturnType() const override {
+        const wtype& getEvalType() const override {
             return ttype<node>::get();
         }
 
