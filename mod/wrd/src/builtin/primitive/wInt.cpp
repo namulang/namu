@@ -6,11 +6,11 @@ namespace wrd {
     WRD_DEF_ME(wInt)
 
     namespace {
-        class wIntCtor : public primitiveCtor {
-            WRD(INTERFACE(wIntCtor, primitiveCtor))
+        class wIntCtor : public func {
+            WRD(INTERFACE(wIntCtor, func))
 
         public:
-            wIntCtor(): super() {}
+            wIntCtor(): super("") {}
 
             const wtype& getEvalType() const override {
                 return ttype<wInt>::get();
