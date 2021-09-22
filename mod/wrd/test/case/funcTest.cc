@@ -36,7 +36,7 @@ namespace {
         const wtypes& getTypes() const override { return _types; }
         wtypes& getTypes() { return _types; }
 
-        const wtype& getReturnType() const override {
+        const wtype& getEvalType() const override {
             return ttype<node>::get();
         }
 

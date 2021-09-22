@@ -18,7 +18,7 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
         func& sayFunc = origin["say"].cast<func>();
         ASSERT_FALSE(nul(sayFunc));
 
-        ASSERT_EQ(sayFunc.getReturnType(), wVoid().getType());
+        ASSERT_EQ(sayFunc.getEvalType(), wVoid().getType());
         ASSERT_EQ(sayFunc.getTypes().size(), 1); // 1 for originObj as "me"
 
         str res = sayFunc.run(narr {&origin} );
