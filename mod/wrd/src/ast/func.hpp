@@ -2,11 +2,10 @@
 
 #include "node.hpp"
 #include "scope.hpp"
-#include "../frame/frameInteractable.hpp"
 
 namespace wrd {
 
-    class func : public node, public frameInteractable {
+    class func : public node {
         WRD(INTERFACE(func, node))
 
     public:

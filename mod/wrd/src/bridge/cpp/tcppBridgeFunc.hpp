@@ -18,9 +18,6 @@ namespace wrd {
             "can't marshal one of this func's parameter wtypes.");
 
     protected:
-        wbool _onInFrame(frame& sf, const ncontainer& args) override { return true; }
-        wbool _onOutFrame(frame& sf, const ncontainer& args) override { return true; }
-
         const wtype& getEvalType() const override {
             return ttype<typename tmarshaling<Ret>::mgdType>::get();
         }

@@ -25,17 +25,17 @@ namespace wrd {
 
     str me::_onCast(narr& castedArgs) {
         obj& meObj = castedArgs[0].cast<obj>();
-        stackFrame& fr = thread::get()._getStackFrame();
-        fr.add(new frame());
+        stackFrame& sf = thread::get()._getStackFrame();
+        sf.add(new frame());
 
         str ret;
         { frameInteract inter(meObj, castedArgs);
             { frameInteract inter(*this, castedArgs);
-                ret = _onRun(castedArgs);
+                ret = _blk->run(castedArgs);
             }
         }
 
-        fr.del();
+        sf.del();
         return ret;
     }
 }
