@@ -16,6 +16,10 @@ namespace wrd {
         blockExpr& getBlock() { return *_blk; }
         const blockExpr& getBlock() const { return *_blk; }
 
+        ncontainer& subs() override {
+            return _shares;
+        }
+
     protected:
         str _onCast(narr& castedArgs) override;
         wbool _onInFrame(frame& sf, const ncontainer& args) override;
@@ -23,5 +27,6 @@ namespace wrd {
 
     private:
         tstr<blockExpr> _blk;
+        scope _shares;
     };
 }
