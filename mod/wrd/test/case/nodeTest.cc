@@ -36,11 +36,6 @@ namespace {
             return inner;
         }
 
-    protected:
-        str _onRun(narr& args) override {
-            return str();
-        }
-
     private:
         wbool _executed;
     };
