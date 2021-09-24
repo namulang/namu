@@ -12,7 +12,10 @@ namespace wrd {
         explicit func(const std::string& name): _name(name) {}
 
         using super::subs;
-        ncontainer& subs() override { return _shares; }
+        ncontainer& subs() override {
+            static narr empty;
+            return empty;
+        }
 
         using super::run;
         str run(const containable& args) override;
@@ -34,7 +37,6 @@ namespace wrd {
 
     private:
         std::string _name;
-        scope _shares;
     };
 
     typedef tnarr<func> funcs;
