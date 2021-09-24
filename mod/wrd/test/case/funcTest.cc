@@ -8,8 +8,30 @@ namespace {
     class myfunc : public mgdFunc {
         WRD(CLASS(myfunc, mgdFunc))
 
+        class myBlock : public blockExpr {
+            WRD(CLASS(myBlock, blockExpr))
+
+        public:
+            str run(const containable& args) override {
+                WRD_I("hello world!");
+                _executed = true;
+
+                if(_lambda)
+                    _res = _lambda(args, (stackFrame&) wrd::thread::get().getStackFrame());
+                return str();
+            }
+
+            void setLambda(function<wbool(const containable&, const stackFrame&)> lambda) {
+                _lambda = lambda;
+            }
+
+            function<wbool(const containable&, const stackFrame&)> _lambda;
+            wbool _res;
+            wbool _executed;
+        };
+
     public:
-        myfunc(std::string name = "myfunc"): super(name) {
+        myfunc(std::string name = "myfunc"): super(name, new myBlock()) {
             WRD_E("myfunc(%x) new", this);
         }
         ~myfunc() {
@@ -17,43 +39,31 @@ namespace {
         }
 
         void setUp() {
-            _executed = false;
-            _res = false;
+            myBlock& blk = getBlock().cast<myBlock>();
+            blk._executed = false;
+            blk._res = false;
         }
 
         wbool isRun() const {
-            return _executed;
+            return getBlock().cast<myBlock>()._executed;
         }
 
-        void setLambda(function<wbool(const ncontainer&, const stackFrame&)> lambda) {
-            _lambda = lambda;
+        void setLambda(function<wbool(const containable&, const stackFrame&)> lambda) {
+            getBlock().cast<myBlock>()._lambda = lambda;
         }
 
         wbool isSuccess() const {
-            return _res;
+            return getBlock().cast<myBlock>()._res;
         }
-
-        const wtypes& getTypes() const override { return _types; }
-        wtypes& getTypes() { return _types; }
 
         const wtype& getEvalType() const override {
             return ttype<node>::get();
         }
 
-    protected:
-        str _onRun(narr& args) override {
-            WRD_I("hello world!");
-            _executed = true;
-
-            if(_lambda)
-                _res = _lambda(args, (stackFrame&) wrd::thread::get().getStackFrame());
-            return str();
-        }
+        const wtypes& getTypes() const override { return _types; }
+        wtypes& getTypes() { return _types; }
 
     private:
-        wbool _executed;
-        wbool _res;
-        function<wbool(const ncontainer&, const stackFrame&)> _lambda;
         wtypes _types;
     };
 }
@@ -196,7 +206,7 @@ TEST(funcTest, testfuncHasStrParameter) {
     wtypes& types = func1.getTypes();
     types.push_back(&obj.getType());
     types.push_back(&ttype<wStr>::get());
-    func1.setLambda([&](const ncontainer& args, const stackFrame& sf) {
+    func1.setLambda([&](const auto& args, const stackFrame& sf) {
         const wtypes& types = func1.getTypes();
         if(args.len() != types.size()) return false;
 
