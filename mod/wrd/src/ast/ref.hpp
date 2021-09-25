@@ -5,7 +5,17 @@
 namespace wrd {
 
     class ref : public node, public tbindable<node> {
-        WRD(CLASS(ref, node))
+
+        struct refType : public wtype {
+            wbool isImmutable() const override { return true; }
+
+        protected:
+            const ases& _getImpliAses() const override {
+                static ases inner;
+                return inner;
+            }
+        };
+        WRD(CLASS(ref, node, refType))
 
     public:
         ref() {}
