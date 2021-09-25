@@ -20,8 +20,11 @@ namespace wrd {
         tnarr<expr>& getExprs() { return _exprs; }
 
         str run(const containable& args) override {
-            // TODO:
-            return str();
+            str ret;
+            for(auto e=_exprs.begin<expr>(); e ; ++e)
+                ret = e->run(nulOf<containable>());
+
+            return ret;
         }
 
         const wtype& getEvalType() const override {
