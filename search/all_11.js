@@ -7,6 +7,7 @@ var searchData=
   ['src_141',['src',['../classwrd_1_1src.html',1,'wrd']]],
   ['srcerr_142',['srcErr',['../structwrd_1_1src_err.html',1,'wrd']]],
   ['stackframe_143',['stackFrame',['../classwrd_1_1stack_frame.html',1,'wrd']]],
-  ['stream_144',['stream',['../classwrd_1_1stream.html',1,'wrd']]],
-  ['strtactic_145',['strTactic',['../classwrd_1_1str_tactic.html',1,'wrd']]]
+  ['starter_144',['starter',['../classwrd_1_1starter.html',1,'wrd']]],
+  ['stream_145',['stream',['../classwrd_1_1stream.html',1,'wrd']]],
+  ['strtactic_146',['strTactic',['../classwrd_1_1str_tactic.html',1,'wrd']]]
 ];
