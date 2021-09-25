@@ -6,6 +6,7 @@ namespace wrd {
 
     class ref : public node, public tbindable<node> {
 
+    public:
         struct refType : public wtype {
             wbool isImmutable() const override { return true; }
 

@@ -6,7 +6,7 @@ namespace wrd {
 
     template <typename T>
     class tref : public ref {
-        WRD(CLASS(tref, ref))
+        WRD(CLASS(tref, ref, ref::refType))
 
     public:
         tref() {}

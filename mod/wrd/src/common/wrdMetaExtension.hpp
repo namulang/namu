@@ -20,7 +20,7 @@
 #define __WRD__DECL_TYPE(METATYPE) \
     public: \
         typedef METATYPE metaType; \
-        const METATYPE& getType() const override { \
+        const wtype& getType() const override { \
             return ttype<me>::get(); \
         } \
     private:
