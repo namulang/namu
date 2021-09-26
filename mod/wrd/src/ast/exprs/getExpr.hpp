@@ -16,6 +16,8 @@ namespace wrd {
         str run(const containable& args) override {
             // believe that this expression was checked to be valid.
             str me = _from->as<node>();
+            if(!me) return WRD_E("_from as node == null"), str();
+
             return str(me->sub(_name, *_args));
         }
 
