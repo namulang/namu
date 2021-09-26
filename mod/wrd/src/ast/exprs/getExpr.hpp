@@ -15,7 +15,8 @@ namespace wrd {
     public:
         str run(const containable& args) override {
             // believe that this expression was checked to be valid.
-            return str(_from->sub(_name, *_args));
+            str me = _from->as<node>();
+            return str(me->sub(_name, *_args));
         }
 
         const wtype& getEvalType() const override;
@@ -24,12 +25,11 @@ namespace wrd {
             if(!super::isValid()) return false;
             if(!_from) return false;
 
-            narr subs = _from->subAll(_name, *_args);
-            return subs.len() == 1;
+            return !nul(getEvalType());
         }
 
     private:
-        ref _from;
+        str _from;
         std::string _name;
         tstr<narr> _args;
     };

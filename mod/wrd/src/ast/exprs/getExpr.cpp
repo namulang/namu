@@ -5,10 +5,9 @@ namespace wrd {
     WRD_DEF_ME(getExpr)
 
     const wtype& me::getEvalType() const {
-        wtypes typs = node::createTypesFromArgs(*_args);
-        node& res = _from->sub(_name, *_args);
-        if(nul(res)) return nulOf<wtype>();
+        narr res = _from->subAll(_name, *_args);
+        if(res.len() != 1) return nulOf<wtype>();
 
-        return res.getEvalType();
+        return res[0].getEvalType();
     }
 }
