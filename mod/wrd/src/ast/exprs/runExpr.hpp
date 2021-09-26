@@ -14,10 +14,14 @@ namespace wrd {
         str run(const containable& args) override {
             if(!_me) return WRD_E("_me == null"), str();
 
-            return _me->
+            str me = _me->as<node>();
+            if(!me) return WRD_E("_me as node == null"), str();
+
+            return str(me->run(*_args));
+        }
 
     private:
         str _me;
-        scope _args;
+        tstr<narr> _args;
     };
 }
