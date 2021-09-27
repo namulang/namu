@@ -34,7 +34,10 @@ namespace wrd {
             // TODO: should fill with func, not sframe itself.
             return _sframe.getNative();
         }
+
+        using super::canRun;
         wbool canRun(const wtypes& types) const override { return false; }
+
         str run(const containable& args) override { return str(); }
 
         void rel() override { _sframe.rel(); }

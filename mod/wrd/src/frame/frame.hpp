@@ -47,7 +47,10 @@ namespace wrd {
         // node:
         using node::subs;
         ncontainer& subs() override { return *_links; }
+
+        using super::canRun;
         wbool canRun(const wtypes& types) const override { return false; }
+
         str run(const containable& args) override { return str(); }
         void rel() override {
             _rel();
