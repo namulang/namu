@@ -65,14 +65,21 @@ objA.name2 // never change
 objA.name2 = objA.name1 // err.
 ```
 
-## 임의 타입 T에 대해 setter/getter가 존재하면 T에 대한 ref는 setter/getter를 호출한다.
+## 임의 타입 T에 대해 setter/getter가 존재하면 T에 대한 property 객체를 scope에 추가한다.
 
-* T는 getter, setter가 있건 말건 절대로 변경하지 않는다.
-* T를 참조할 Ref는 T가 setter/getter가 있을 경우 그 메소드를 찾아내서 사전에 호출하는 방식이다.
+* property 객체는 as()가 호출시 @get() 함수를 부르고 assign() 함수를 부를 시 @set()을 부른다.
+* property이 이외에는 마치 ref 처럼 동작한다.
 
-## 프로퍼티가 아닌 객체가 프로퍼티를 추가하더라도 하위호환성은 지켜진다.
+## property 정의시에 초기화 구문을 적지 않을 경우, 실제로도 변수를 만들지 않는다.
 
-* 일반 복제 객체가 이후 프로퍼티로써 변경된다 하더라도 다른 코드는 일절 변경이 없어야 한다.
+* 반면 초기화 구문을 적을 경우는 이 property는 내부적으로 실제 obj를 갖는다.
+* 이를 실체가 있다고 한다.
+
+## 실체가 없는 property에서 @get, @set 중 한개만 적은 경우, 누락한 func는 private로 간주한다.
+
+## 실체가 있는 property에서 @get, @set 중 한개만 적은 경우, 누락한 func는 public으로 간주한다.
+
+## @get, @set은 closure로 구현된다.
 
 ## 프로퍼티는 origin객체를 대상으로 할 수도, 복제 객체를 대상으로 할 수도 있다.
 

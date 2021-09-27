@@ -97,6 +97,14 @@ namespace wrd {
             return true;
         }
 
+        /// getType() returns what it is. opposite to it, this returns what this class will
+        /// represents after evaluation.
+        ///
+        /// for example, the 'expr' class has derived from this node class. and if an user call the
+        /// funcs to get type of it, class 'wtype' of 'expr' will be returned.
+        /// but if that user call the 'getEvalType()' then the 'expr' object evaluate its terms and
+        /// returns type of the output. it could be integer if it was 'addExpr' and all terms are
+        /// constructed with integers.
         virtual const wtype& getEvalType() const {
             return getType();
         }
