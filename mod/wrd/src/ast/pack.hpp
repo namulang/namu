@@ -49,6 +49,8 @@ namespace wrd {
         }
 
         str run(const containable& args) override { return str(); }
+
+        using super::canRun;
         wbool canRun(const wtypes& types) const override { return false; }
 
         wbool isValid() const override {
