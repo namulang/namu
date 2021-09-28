@@ -6,26 +6,17 @@ namespace wrd {
 
     class wVoid : public mgdObj {
 
-		class wVoidType : public wtype {
-		public:
-			wbool isImmutable() const override { return true; }
+        class wVoidType : public wtype {
+        public:
+            wbool isImmutable() const override { return true; }
 
-		protected:
-			const ases& _getImpliAses() const override {
-				static ases inner;
-				if(inner.len() <= 0) {
-					struct toStr: public tas<wStr>{
-						str as(const node& wVoid, const type& to) const override {
-							// TODO:
-							return str();
-						}
-					};
-					inner.add(new toStr());
-				}
-				return inner;
-			}
-		};
-		WRD(CLASS(wVoid, mgdObj, wVoidType))
+        protected:
+            const ases& _getImpliAses() const override {
+                static ases inner;
+                return inner;
+            }
+        };
+        WRD(CLASS(wVoid, mgdObj, wVoidType))
 
     public:
         wVoid() {}

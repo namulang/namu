@@ -45,13 +45,47 @@ TEST_F(exprTest, standbyHelloWorldBridgeObj) {
 }
 
 TEST_F(exprTest, simpleGetExpr) {
-    getExpr exp(&bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
+    getExpr exp(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
     ASSERT_TRUE(exp.isValid());
 
     str res = exp.run();
     ASSERT_TRUE(res.isBind());
     ASSERT_TRUE(res.getType() == ttype<node>::get());
     ASSERT_TRUE(res->isSub<func>());
+}
+
+TEST_F(exprTest, simpleGetExprNegative) {
+    getExpr exp(bridge.get(), "main?", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
+    ASSERT_FALSE(exp.isValid());
+
+    getExpr exp2(bridge.get(), "main", wtypes({&ttype<wStr>::get()}));
+    ASSERT_FALSE(exp.isValid());
+}
+
+TEST_F(exprTest, simpleRunExpr) {
+    runExpr exp1(bridge->sub("main"), narr({&bridge.get(), new wStr("kniz!")}));
+    ASSERT_TRUE(exp1.isValid());
+
+    ASSERT_FALSE(helloWorld::isRun);
+
+    str res = exp1.run();
+    ASSERT_TRUE(res.isBind());
+    ASSERT_TRUE(res.getType() == ttype<node>::get());
+    ASSERT_TRUE(res->getType() == ttype<wVoid>::get());
+
+    ASSERT_TRUE(helloWorld::isRun);
+}
+
+TEST_F(exprTest, simpleRunExprNegative) {
+    runExpr exp1(bridge->sub("main"), narr({&bridge.get(), new wVoid()}));
+    ASSERT_FALSE(exp1.isValid());
+
+    ASSERT_FALSE(helloWorld::isRun);
+
+    str res = exp1.run();
+    ASSERT_FALSE(res.isBind());
+    ASSERT_TRUE(res.getType() == ttype<node>::get());
+    ASSERT_FALSE(helloWorld::isRun);
 }
 
 TEST_F(exprTest, constructExprInManual) {
