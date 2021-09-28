@@ -9,7 +9,7 @@ namespace wrd {
         WRD(CLASS(getExpr, expr))
 
     public:
-        getExpr(node* from, const std::string& name, wtypes args = wtypes())
+        getExpr(const node& from, const std::string& name, const wtypes& args = wtypes())
             : _from(from), _name(name), _types(args) {}
 
     public:
