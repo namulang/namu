@@ -25,7 +25,7 @@ namespace {
     };
 }
 
-TEST_F(exprTest, constructExprsInManual) {
+TEST_F(exprTest, standbyHelloWorldBridgeObj) {
     ASSERT_TRUE(bridge.isBind());
 
     tstr<wStr> msg(new wStr());
@@ -42,4 +42,22 @@ TEST_F(exprTest, constructExprsInManual) {
     ASSERT_TRUE(res.getType() == ttype<node>::get());
     ASSERT_TRUE(res->getType() == ttype<wVoid>::get());
     ASSERT_TRUE(helloWorld::isRun);
+}
+
+TEST_F(exprTest, simpleGetExpr) {
+    getExpr exp(&bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
+    ASSERT_TRUE(exp.isValid());
+
+    str res = exp.run();
+    ASSERT_TRUE(res.isBind());
+    ASSERT_TRUE(res.getType() == ttype<node>::get());
+    ASSERT_TRUE(res->isSub<func>());
+}
+
+TEST_F(exprTest, constructExprInManual) {
+    //blockExpr root;
+    //root.subs().add(new
+}
+
+TEST_F(exprTest, constructExprWithMaker) {
 }

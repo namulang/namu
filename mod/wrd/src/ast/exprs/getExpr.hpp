@@ -9,16 +9,17 @@ namespace wrd {
         WRD(CLASS(getExpr, expr))
 
     public:
-        getExpr(node* from, const std::string& name, narr* args = nullptr)
-            : _from(from), _name(name), _args(args) {}
+        getExpr(node* from, const std::string& name, wtypes args = wtypes())
+            : _from(from), _name(name), _types(args) {}
 
     public:
+        using super::run;
         str run(const containable& args) override {
             // believe that this expression was checked to be valid.
             str me = _from->as<node>();
             if(!me) return WRD_E("_from as node == null"), str();
 
-            return str(me->sub(_name, *_args));
+            return str(me->sub(_name, _types));
         }
 
         const wtype& getEvalType() const override;
@@ -33,6 +34,6 @@ namespace wrd {
     private:
         str _from;
         std::string _name;
-        tstr<narr> _args;
+        wtypes _types;
     };
 }

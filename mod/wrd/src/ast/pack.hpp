@@ -48,6 +48,7 @@ namespace wrd {
             return true;
         }
 
+        using super::run;
         str run(const containable& args) override { return str(); }
 
         using super::canRun;

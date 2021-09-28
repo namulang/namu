@@ -16,9 +16,12 @@ namespace wrd {
         blockExpr(const Es&... elems): _exprs(elems...) {}
 
     public:
-        const tnarr<expr>& getExprs() const { return _exprs; }
-        tnarr<expr>& getExprs() { return _exprs; }
+        using super::subs;
+        ncontainer& subs() override {
+            return _exprs;
+        }
 
+        using super::run;
         str run(const containable& args) override {
             str ret;
             for(auto e=_exprs.begin<expr>(); e ; ++e)

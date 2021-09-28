@@ -43,6 +43,7 @@ namespace wrd {
             return _str->canRun(types);
         }
 
+        using super::run;
         str run(const containable& args) override {
             if (!_str) return str();
             return _str->run(args);

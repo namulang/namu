@@ -9,6 +9,7 @@ namespace wrd {
         friend class exprMaker;
 
     public:
+        using super::subs;
         ncontainer& subs() override;
 
         wbool canRun(const wtypes& args) const override {
