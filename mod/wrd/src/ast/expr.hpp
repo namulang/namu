@@ -2,11 +2,17 @@
 
 #include "src.hpp"
 
+struct exprTest;
+
 namespace wrd {
 
     class expr : public node {
         WRD(INTERFACE(expr, node))
         friend class exprMaker;
+        friend struct ::exprTest;
+
+    public:
+        expr(): _lineNum(0) {}
 
     public:
         using super::subs;

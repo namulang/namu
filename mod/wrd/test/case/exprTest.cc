@@ -3,6 +3,17 @@
 using namespace wrd;
 using namespace std;
 
+struct exprTest : public ::testing::Test {
+    void SetUp();
+    void TearDown();
+
+    tstr<obj> bridge;
+
+    static void setLine(expr& exp, wcnt newLine) {
+        exp._lineNum = newLine;
+    }
+};
+
 namespace {
     struct helloWorld {
         void main(const string msg) {
@@ -13,17 +24,14 @@ namespace {
         static inline wbool isRun = false;
     };
 
-    struct exprTest : public ::testing::Test {
-        void SetUp() {
-            bridge.bind(tcppBridge<helloWorld>::def()
-                ->func("main", &helloWorld::main));
-        }
-
-        void TearDown() { helloWorld::isRun = false; }
-
-        tstr<obj> bridge;
-    };
 }
+
+void exprTest::SetUp() {
+    bridge.bind(tcppBridge<helloWorld>::def()
+        ->func("main", &helloWorld::main));
+}
+
+void exprTest::TearDown() { helloWorld::isRun = false; }
 
 TEST_F(exprTest, standbyHelloWorldBridgeObj) {
     ASSERT_TRUE(bridge.isBind());
@@ -46,6 +54,8 @@ TEST_F(exprTest, standbyHelloWorldBridgeObj) {
 
 TEST_F(exprTest, simpleGetExpr) {
     getExpr exp(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
+    ASSERT_FALSE(exp.isValid());
+    setLine(exp, 1);
     ASSERT_TRUE(exp.isValid());
 
     str res = exp.run();
@@ -56,14 +66,18 @@ TEST_F(exprTest, simpleGetExpr) {
 
 TEST_F(exprTest, simpleGetExprNegative) {
     getExpr exp(bridge.get(), "main?", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
+    setLine(exp, 1);
     ASSERT_FALSE(exp.isValid());
 
     getExpr exp2(bridge.get(), "main", wtypes({&ttype<wStr>::get()}));
+    setLine(exp2, 1);
     ASSERT_FALSE(exp.isValid());
 }
 
 TEST_F(exprTest, simpleRunExpr) {
     runExpr exp1(bridge->sub("main"), narr({&bridge.get(), new wStr("kniz!")}));
+    ASSERT_FALSE(exp1.isValid());
+    setLine(exp1, 1);
     ASSERT_TRUE(exp1.isValid());
 
     ASSERT_FALSE(helloWorld::isRun);
@@ -78,6 +92,7 @@ TEST_F(exprTest, simpleRunExpr) {
 
 TEST_F(exprTest, simpleRunExprNegative) {
     runExpr exp1(bridge->sub("main"), narr({&bridge.get(), new wVoid()}));
+    setLine(exp1, 1);
     ASSERT_FALSE(exp1.isValid());
 
     ASSERT_FALSE(helloWorld::isRun);
