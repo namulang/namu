@@ -7,7 +7,18 @@ struct exprTest;
 namespace wrd {
 
     class expr : public node {
-        WRD(INTERFACE(expr, node))
+    public:
+        class exprType : public wtype {
+            WRD(ME(exprType, wtype))
+
+        public:
+            using super::asImpli;
+            str asImpli(const node& from, const type& to) const override {
+                return str(((node&) from).run());
+            }
+        };
+
+        WRD(INTERFACE(expr, node, exprType))
         friend class exprMaker;
         friend struct ::exprTest;
 

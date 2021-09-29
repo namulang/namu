@@ -6,7 +6,7 @@
 namespace wrd {
 
     class blockExpr : public expr, public frameInteractable {
-        WRD(CLASS(blockExpr, expr))
+        WRD(CLASS(blockExpr, expr, expr::exprType))
         friend class mgdFunc;
 
     public:
