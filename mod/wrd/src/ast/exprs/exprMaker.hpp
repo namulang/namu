@@ -35,8 +35,8 @@ namespace wrd {
         const src& getSrc() const { return *_src; }
 
         template <typename T, typename... Args>
-        T* make(Args... args) const {
-            expr* ret = new T(args...);
+        T* make(const Args&... args) const {
+            T* ret = new T(args...);
             if(_src)
                 ret->_setSrc(*_src);
             ret->_setLine(_lineNum);
@@ -44,7 +44,7 @@ namespace wrd {
         }
 
     private:
-        src* _src;
+        const src* _src;
         int _lineNum;
     };
 }
