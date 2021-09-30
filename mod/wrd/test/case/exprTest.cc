@@ -116,4 +116,16 @@ TEST_F(exprTest, constructExprInManual) {
 }
 
 TEST_F(exprTest, constructExprWithMaker) {
+	exprMaker maker;
+	tstr<runExpr> r = maker.addLine().make<runExpr>(
+		*maker.make<getExpr>(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()})),
+		narr({&bridge.get(), new wStr("kniz!")})
+	);
+
+	ASSERT_EQ(r->getLine(), 1);
+
+	str res = r->run();
+	ASSERT_TRUE(res);
+    ASSERT_TRUE(res.getType() == ttype<node>::get());
+    ASSERT_TRUE(res->getType() == ttype<wVoid>::get());
 }
