@@ -12,8 +12,8 @@ namespace wrd {
     public:
         //  tstr:
         tstr();
-        explicit tstr(const T& it);
-        explicit tstr(const T* it);
+        tstr(const T& it);
+        tstr(const T* it);
         tstr(const me& rhs);
         tstr(const binder& rhs);
 

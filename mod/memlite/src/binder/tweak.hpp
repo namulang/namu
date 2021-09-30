@@ -13,8 +13,8 @@ namespace wrd {
     public:
         /// tweak:
         tweak();
-        explicit tweak(const T& it);
-        explicit tweak(const T* it);
+        tweak(const T& it);
+        tweak(const T* it);
         tweak(const me& rhs);
         explicit tweak(const binder& rhs);
 
