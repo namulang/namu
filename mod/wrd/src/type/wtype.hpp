@@ -5,8 +5,6 @@
 
 namespace wrd {
 
-    class ref;
-    template <typename T> class tref;
     class wtype : public type {
         WRD_DECL_ME(wtype, type)
 

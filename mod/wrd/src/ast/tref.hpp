@@ -1,38 +1,25 @@
 #pragma once
 
-#include "ref.hpp"
+#include "refTactic.hpp"
 
 namespace wrd {
 
-    template <typename T>
-    class tref : public ref {
-        WRD(CLASS(tref, ref, ref::refType))
+	class node;
 
-    public:
-        tref() {}
-        explicit tref(const ref& rhs): super(rhs) {}
-        explicit tref(const T& new1): super(new1) {}
-        explicit tref(const T* new1): super(new1) {}
+	template<typename T>
+	class tref : public tstr<T> {
+		WRD(ME(tref, tstr<T>),
+			INIT_META(me))
 
-        T* operator->() {
-            return (T*) super::operator->();
-        }
-        T& operator*() {
-            return (T&) super::operator*();
-        }
-        const T* operator->() const WRD_UNCONST_FUNC(operator->())
-        const T& operator*() const WRD_UNCONST_FUNC(operator*())
+		static_assert(tifSub<T, node>::is == true, "type T should be derived from the 'node' class.");
 
-        T& get() {
-            return (T&) super::get();
-        }
+	public:
+		tref(): super(refTactic::_singletone) {}
+		tref(const T& it): super(refTactic::_singletone) { this->bind(it); }
+		tref(const T* it): super(refTactic::_singletone) { this->bind(it); }
+		tref(const me& rhs): super(refTactic::_singletone) { this->bind(rhs.get()); }
+		explicit tref(const binder& rhs): super(refTactic::_singletone) { this->bind(rhs.get()); }
+	};
 
-        using super::bind;
-        wbool bind(const T& it) {
-            return super::bind(it);
-        }
-        wbool bind(const T* it) {
-            return super::bind(*it);
-        }
-    };
+	typedef tref<node> ref;
 }

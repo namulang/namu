@@ -18,5 +18,8 @@ namespace wrd {
         tstr(const binder& rhs);
 
         using super::operator=;
+
+	protected:
+		tstr(bindTacticable& tactic): super(tactic) {}
     };
 }

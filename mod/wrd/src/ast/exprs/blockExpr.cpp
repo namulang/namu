@@ -8,7 +8,7 @@ namespace wrd {
     wbool me::_onInFrame(frame& fr, const ncontainer& args) {
         WRD_DI("%s._onInFrame()", getName().c_str());
 
-        return fr.add(new scope());
+        return fr.add(new narr());
     }
 
     wbool me::_onOutFrame(frame& fr, const ncontainer& args) {

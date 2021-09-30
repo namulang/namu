@@ -106,7 +106,7 @@ TEST_F(exprTest, simpleRunExprNegative) {
 TEST_F(exprTest, constructExprInManual) {
 	getExpr g(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
 	setLine(g, 1);
-	runExpr r(g, narr({&bridge.get(), new wrd::ref(new wStr("kniz!"))}));
+	runExpr r(g, narr({&bridge.get(), new wStr("kniz!")}));
 	setLine(r, 1);
 
 	str res = r.run();
