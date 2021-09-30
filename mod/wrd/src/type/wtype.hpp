@@ -24,7 +24,7 @@ namespace wrd {
         tstr<T> asImpli(const node& it) const {
             return this->asImpli(ttype<T>::get());
         }
-        str asImpli(const node& from, const type& to) const {
+        virtual str asImpli(const node& from, const type& to) const {
             return _getImpliAses().as(from, to);
         }
 
