@@ -104,8 +104,15 @@ TEST_F(exprTest, simpleRunExprNegative) {
 }
 
 TEST_F(exprTest, constructExprInManual) {
-    //blockExpr root;
-    //root.subs().add(new
+	getExpr g(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
+	setLine(g, 1);
+	runExpr r(g, narr({&bridge.get(), new wrd::ref(new wStr("kniz!"))}));
+	setLine(r, 1);
+
+	str res = r.run();
+	ASSERT_TRUE(res);
+    ASSERT_TRUE(res.getType() == ttype<node>::get());
+    ASSERT_TRUE(res->getType() == ttype<wVoid>::get());
 }
 
 TEST_F(exprTest, constructExprWithMaker) {
