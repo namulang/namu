@@ -1,7 +1,6 @@
 #pragma once
 
 #include "node.hpp"
-#include "scope.hpp"
 
 namespace wrd {
 

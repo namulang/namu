@@ -1,7 +1,6 @@
 #pragma once
 
 #include "node.hpp"
-#include "scope.hpp"
 #include "../builtin/container/native/tnchain.inl"
 
 namespace wrd {
@@ -27,7 +26,7 @@ namespace wrd {
 
     private:
         std::string _fileName;
-        scopeChn _subs;
+        nchain _subs;
     };
 
     typedef std::vector<src> srcs;

@@ -8,8 +8,8 @@ namespace {
         WRD(CLASS(originObj, obj))
 
     public:
-        originObj(): super("", *new scopeChn()) {}
-        originObj(const std::string& name, const scopeChn& subs): super(name, subs) {}
+        originObj(): super("", *new nchain()) {}
+        originObj(const std::string& name, const nchain& subs): super(name, subs) {}
         originObj(const me& rhs) {
             _subs = rhs._subs;
         }
@@ -34,14 +34,14 @@ namespace {
 
 TEST(objTest, testMakeOriginObj) {
     const wchar* o2Name = "o2";
-    originObj o1, o2(o2Name, *new scopeChn());
+    originObj o1, o2(o2Name, *new nchain());
     ASSERT_STREQ(o1.getName().c_str(), "");
     ASSERT_STREQ(o2.getName().c_str(), o2Name);
     ASSERT_NE(o1.getId(), o2.getId());
     ASSERT_FALSE(nul(o1.subs()));
     ASSERT_FALSE(nul(o2.subs()));
 
-    scopeChn* newSubs = new scopeChn();
+    nchain* newSubs = new nchain();
     originObj o3("", *newSubs);
     ASSERT_FALSE(nul(o3.subs()));
 
@@ -58,8 +58,8 @@ TEST(objTest, testMakeOriginObj) {
 
 TEST(objTest, testCloneOriginObj) {
     const wchar* o2Name = "wow";
-    originObj o1, o2(o2Name, *new scopeChn());
-    scopeChn* newSubs = new scopeChn();
+    originObj o1, o2(o2Name, *new nchain());
+    nchain* newSubs = new nchain();
     originObj o3("", *newSubs);
 
     tstr<originObj> clone(o3.clone());

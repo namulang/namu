@@ -17,25 +17,25 @@ namespace wrd {
         }
 
         wbool add(ncontainer& con) {
-            return add(*scopeChn::wrap(con));
+            return add(*nchain::wrap(con));
         }
         wbool add(ncontainer* con) {
             return add(*con);
         }
 
-        wbool add(scopeChn& new1) {
+        wbool add(nchain& new1) {
             WRD_DI("Stack(%x).push(Chain(%x))", this, &new1);
 
             if(_links)
                 new1.link(*_links);
             return _links.bind(new1);
         }
-        wbool add(scopeChn* new1) {
+        wbool add(nchain* new1) {
             return add(*new1);
         }
 
-        tstr<scopeChn> del() {
-            tstr<scopeChn> ret;
+        tstr<nchain> del() {
+            tstr<nchain> ret;
             if(_links) {
                 ret.bind(*_links);
                 _links.bind(_links->getNext());
@@ -62,7 +62,7 @@ namespace wrd {
             _links.rel();
         }
 
-        tstr<scopeChn> _links;
+        tstr<nchain> _links;
     };
 
 }

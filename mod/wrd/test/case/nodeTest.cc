@@ -65,7 +65,7 @@ namespace {
 
 TEST(nodeTest, testManuallyMakeNodeStructure) {
     // prepare:
-    tstr<scopeChn> frameEmulator;
+    tstr<nchain> frameEmulator;
     myObj obj;
     myFunc func;
     WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
@@ -80,7 +80,7 @@ TEST(nodeTest, testManuallyMakeNodeStructure) {
     // when:
     frameEmulator.bind(obj.subs());
     //  push another:
-    scopeChn* chnOffunc = scopeChn::wrap(func.subs());
+    nchain* chnOffunc = nchain::wrap(func.subs());
     chnOffunc->link(*frameEmulator);
     frameEmulator.bind(*chnOffunc);
 
@@ -124,19 +124,24 @@ TEST(nodeTest, testManualNativefuncCall) {
 }
 
 TEST(nodeTest, testImmutablePositive) {
-    tref<wFlt> r1(new wFlt(1.0f));
-    wrd::ref r2 = r1;
+    tstr<wFlt> r1(new wFlt(1.0f));
+    str r2 = r1;
     ASSERT_TRUE(r1);
     ASSERT_TRUE(r2);
     ASSERT_EQ(*r1, *r2);
 
     r1->get() = 0.5f;
-    ASSERT_NE(*r1, *r2);
+    ASSERT_EQ(*r1, *r2);
+
+	wrd::ref r3(r1);
+	ASSERT_TRUE(r3);
+	ASSERT_EQ(r3->cast<wFlt>().get(), r1->get());
+	ASSERT_TRUE(&(r3->cast<wFlt>()) != &r1.get());
 }
 
 TEST(nodeTest, testImmutableNegative) {
-    wrd::ref r1(new myObj(1));
-    wrd::ref r2 = r1;
+    str r1(new myObj(1));
+    str r2 = r1;
     ASSERT_TRUE(r1);
     ASSERT_TRUE(r2);
     ASSERT_EQ(*r1, *r2);

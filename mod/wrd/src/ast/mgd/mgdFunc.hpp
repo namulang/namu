@@ -27,6 +27,6 @@ namespace wrd {
 
     private:
         tstr<blockExpr> _blk;
-        scope _shares;
+        narr _shares;
     };
 }

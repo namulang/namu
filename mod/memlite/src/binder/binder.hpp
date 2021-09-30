@@ -89,7 +89,7 @@ namespace wrd {
         wbool _assign(const binder& rhs);
         wbool _onSame(const typeProvidable& rhs) const override;
 
-    private:
+    protected:
         bindTag& _getBindTag() const;
 
         id _itsId; // id for binded one

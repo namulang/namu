@@ -1,5 +1,4 @@
 #include "wVoid.hpp"
-#include "../../ast/tref.hpp"
 
 namespace wrd {
 
