@@ -53,8 +53,8 @@ namespace wrd {
             _src.bind(newSrc);
         }
 
-        wcnt getLineNum() const {
-            return _lineNum;
+        void _setLine(wcnt newLine) {
+            _lineNum = newLine;
         }
 
     private:
