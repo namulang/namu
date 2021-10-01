@@ -6,7 +6,7 @@ find_library(pathGtest
     REQUIRED)
 set(dependencies ${dependencies} ${moduleName} ${pathGtest})
 foreach(d ${dependencies})
-	set(libraries ${libraries} PUBLIC ${d})
+    set(libraries ${libraries} PUBLIC ${d})
 endforeach(d)
 
 message("\ttest ${testName}... dependents to ${dependencies}")
@@ -20,7 +20,7 @@ add_executable(${testName} ${sources})
 
 find_package(Threads REQUIRED)
 target_link_libraries(${testName} ${libraries}
-	PRIVATE Threads::Threads)
+    PRIVATE Threads::Threads)
 
 add_dependencies(${testName} ${moduleName})
 
