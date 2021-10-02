@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    class failReport;
+    class errReport;
 
     class packLoader : public typeProvidable, public clonable {
         WRD(CLASS(packLoader))
@@ -30,7 +30,7 @@ namespace wrd {
             return *this;
         }
 
-        me& setReport(failReport& report) {
+        me& setReport(errReport& report) {
             _report = &report;
             return *this;
         }
@@ -147,7 +147,7 @@ namespace wrd {
 
     private:
         packs* _basePacks;
-        failReport* _report;
+        errReport* _report;
         std::vector<std::string> _paths;
         static constexpr wchar DELIMITER = '/';
     };

@@ -8,7 +8,7 @@ namespace wrd {
         WRD(CLASS(interpreter))
 
     public:
-        me& setReport(failReport& report) {
+        me& setReport(errReport& report) {
             _report = &report;
             return *this;
         }
@@ -30,6 +30,6 @@ namespace wrd {
         }
 
     private:
-        failReport* _report;
+        errReport* _report;
     };
 }
