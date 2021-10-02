@@ -1,6 +1,6 @@
 #include "thread.hpp"
 #include "../loader/pack/packLoader.hpp"
-#include "../loader/failReport.hpp"
+#include "../loader/errReport.hpp"
 
 namespace wrd {
 
@@ -13,7 +13,7 @@ namespace wrd {
             packLoader loader;
 
             WRD_I("initiates loading system packs.");
-            failReport report;
+            errReport report;
             inner = loader.setReport(report).addPath("pack/").load();
             WRD_I("%d system packs has been loaded.", inner->len());
 

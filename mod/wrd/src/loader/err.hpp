@@ -4,15 +4,15 @@
 
 namespace wrd {
 
-	struct fail : public area {
+	struct err: public area {
 		enum type {
 			ERR = 0,
 			WARN,
 		};
 
-		fail(const point& s, const point& e, fail::type t)
+		err(const point& s, const point& e, err::type t)
 			: area({s, e}), fType(t) {}
 
-		fail::type fType;
+		err::type fType;
 	};
 }

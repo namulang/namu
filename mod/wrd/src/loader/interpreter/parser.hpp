@@ -2,7 +2,7 @@
 
 #include "parserable.hpp"
 #include "../../ast/node.hpp"
-#include "../failReport.hpp"
+#include "../errReport.hpp"
 
 namespace wrd {
 
@@ -13,7 +13,7 @@ namespace wrd {
 		parser() { me::rel(); }
 
     public:
-		me& setReport(failReport& report) {
+		me& setReport(errReport& report) {
 			_report = &report;
 			return *this;
 		}
@@ -33,6 +33,6 @@ namespace wrd {
 
     private:
         str _root;
-        failReport* _report;
+        errReport* _report;
     };
 }
