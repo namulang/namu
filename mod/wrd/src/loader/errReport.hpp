@@ -4,8 +4,11 @@
 
 namespace wrd {
 
-    class errReport : public std::vector<err>, typeProvidable, clonable {
+    class errReport : public typeProvidable, clonable {
         WRD(CLASS(errReport, std::vector<err>))
+
+	public:
+		const err& operator[](widx n) const { return _errs[n]; }
 
     public:
         wbool hasErr() const {
@@ -18,6 +21,29 @@ namespace wrd {
             // TODO:
             return false;
         }
+
+		const err& get(widx n) const { return _errs[n]; }
+
+		wcnt len() const { return _errs.size(); }
+
+		void add(const err& new1) {
+			_errs.push_back(new1);
+		}
+
+		std::vector<err>::const_iterator begin() const {
+			return _errs.begin();
+		}
+
+		std::vector<err>::const_iterator end() const {
+			return _errs.end();
+		}
+
+		void rel() {
+			_errs.clear();
+		}
+
+	private:
+		std::vector<err> _errs;
     };
 }
 
