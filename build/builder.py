@@ -519,7 +519,7 @@ def _clean(directory):
                 os.remove(file_path)
 
         for dir in dirs:
-            if dir == "CMakeFiles" or dir == "tmp" or dir == "generated":
+            if dir == "CMakeFiles" or dir == "tmp" or dir == "generated" or dir == "cmake-build-debug" or dir == "Testing":
                 abs_dir = os.path.join(path, dir)
                 print("\t * " + abs_dir)
                 _cleanDir(abs_dir)
