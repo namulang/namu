@@ -21,10 +21,7 @@ namespace wrd {
         /// @param script is null terminated cstring.
         str parse(const wchar* script);
 
-		virtual void rel() {
-			_root.rel();
-			_report = nullptr;
-		}
+		virtual void rel();
 
     protected:
         str& getRootBinder() override {
