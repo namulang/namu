@@ -18,9 +18,20 @@ namespace wrd {
 			INFO,
 		};
 
+	public:
 		err(err::type t, wcnt errCode, const std::string& errMsg)
 			: super(), fType(t), code(errCode), msg(errMsg) {}
 
+	public:
+		void log() const {
+			switch(fType) {
+				case ERR: WRD_E("%s", msg.c_str()); break;
+				case WARN: WRD_W("%s", msg.c_str()); break;
+				case INFO: WRD_I("%s", msg.c_str()); break;
+			}
+		}
+
+	public:
 		err::type fType;
 		wcnt code;
 		std::string msg;

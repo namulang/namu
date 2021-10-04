@@ -69,6 +69,8 @@ TEST_F(verifierTest, verifyMyObj) {
 	ASSERT_EQ(e.fType, err::ERR);
 	ASSERT_EQ(e.code, TEST_VERI_CODE_WITH + 1);
 	ASSERT_EQ(e.msg, "val is 0");
+
+	report.log();
 	report.rel();
 
 	obj.val = 1;

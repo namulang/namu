@@ -21,7 +21,9 @@ namespace wrd {
             return has(err::WARN);
         }
         wbool has(err::type type) const {
-            // TODO:
+			for(auto& elem : _errs)
+				if(elem->fType == type)
+					return true;
             return false;
         }
 
@@ -40,6 +42,11 @@ namespace wrd {
 
 		std::vector<tstr<err>>::const_iterator end() const {
 			return _errs.end();
+		}
+
+		void log() const {
+			for(auto& elem : _errs)
+				elem->log();
 		}
 
 		void rel() {
