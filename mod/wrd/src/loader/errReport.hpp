@@ -11,6 +11,7 @@ namespace wrd {
 
 	public:
 		const err& operator[](widx n) const { return get(n); }
+		operator wbool() const { return hasErr(); }
 
     public:
         wbool hasErr() const {
@@ -24,19 +25,20 @@ namespace wrd {
             return false;
         }
 
-		const err& get(widx n) const { return _errs[n]; }
+		const err& get(widx n) const { return *_errs[n]; }
 
 		wcnt len() const { return _errs.size(); }
 
-		virtual void add(const err& new1) {
+		virtual wbool add(const err* new1) {
 			_errs.push_back(new1);
+			return true;
 		}
 
-		std::vector<err>::const_iterator begin() const {
+		std::vector<tstr<err>>::const_iterator begin() const {
 			return _errs.begin();
 		}
 
-		std::vector<err>::const_iterator end() const {
+		std::vector<tstr<err>>::const_iterator end() const {
 			return _errs.end();
 		}
 
@@ -45,14 +47,14 @@ namespace wrd {
 		}
 
 	private:
-		std::vector<err> _errs;
+		std::vector<tstr<err>> _errs;
     };
 
 	class dummyErrReport : public errReport {
 		WRD(CLASS(dummyErrReport, errReport))
 
 	public:
-		void add(const err& new1) override {}
+		wbool add(const err* new1) override { return false; }
 
 		static me singletone;
 	};
