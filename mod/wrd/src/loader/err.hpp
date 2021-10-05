@@ -49,10 +49,9 @@ namespace wrd {
 			INIT_META(me))
 
 	public:
-		srcErr(err::type t, wcnt errCode, const area& srcStart, const area& srcEnd)
-			: super(t, errCode), start(srcStart), end(srcEnd) {}
+		srcErr(err::type t, wcnt errCode, const area& newArea)
+			: super(t, errCode), srcArea(newArea) {}
 
-		area start;
-		area end;
+		area srcArea;
 	};
 }

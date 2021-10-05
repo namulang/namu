@@ -16,6 +16,7 @@ namespace wrd {
 
 			// msg for TC:
 			{BASE_TEST_CODE + 1, "val is 0"},
+			{BASE_TEST_CODE + 2, "grade should be positive"},
 		};
 
 		return inner;
