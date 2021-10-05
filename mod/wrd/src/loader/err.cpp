@@ -1,0 +1,23 @@
+#include "err.hpp"
+
+namespace wrd {
+
+	WRD_DEF_ME(err)
+
+	const msgMap& err::getErrMsgs() {
+		int id = 0;
+#define _ON_MSG(TEXT) {id++, TEXT},
+		static msgMap inner {
+			WRD_EACH(_ON_MSG,
+				"unknown"
+				/* to be continue... */
+			)
+#undef _ON_MSG
+
+			// msg for TC:
+			{BASE_TEST_CODE + 1, "val is 0"},
+		};
+
+		return inner;
+	}
+}
