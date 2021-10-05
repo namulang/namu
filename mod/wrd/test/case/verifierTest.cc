@@ -40,6 +40,21 @@ namespace {
 			return _err<err>(err::BASE_TEST_CODE + 1);
 		return false;
 	})
+
+	struct mymyObj : public myObj {
+		WRD(CLASS(mymyObj, myObj))
+
+	public:
+		mymyObj(): grade(0.0f) {}
+
+		wflt grade;
+	};
+
+	WRD_VERIFY(mymyObj, {
+		if(it.grade <= 0.0f)
+			return _warn<srcErr>(err::BASE_TEST_CODE + 2, area {{1, 1}, {1, 5}});
+		return false;
+	})
 }
 
 void verifierTest::SetUp() {
@@ -82,6 +97,34 @@ TEST_F(verifierTest, errMsgFor0ShouldExist) {
 	ASSERT_EQ(msgs.at(0), "unknown");
 }
 
-TEST_F(verifierTest, verifyNestedNode) {
+TEST_F(verifierTest, verifyInheritedClass) {
+	mymyObj it;
+	it.val = 0;
+	it.grade = -0.1f;
 
+	errReport report;
+	verifier veri;
+	veri.verify(it, report);
+
+	ASSERT_TRUE(report);
+	ASSERT_EQ(report.len(), 2);
+
+	const err& myObjE = report[0]; // verification of myObj
+	ASSERT_FALSE(nul(myObjE));
+	ASSERT_EQ(myObjE.fType, err::ERR);
+	ASSERT_EQ(myObjE.code, err::BASE_TEST_CODE + 1);
+	ASSERT_EQ(myObjE.msg, "val is 0");
+
+	const err& mymyObjE = report[1]; // of mymyObj
+	ASSERT_FALSE(nul(mymyObjE));
+	ASSERT_EQ(mymyObjE.fType, err::WARN);
+	ASSERT_EQ(mymyObjE.code, err::BASE_TEST_CODE + 2);
+	ASSERT_EQ(mymyObjE.msg, "grade should be positive");
+
+	const srcErr& cast = mymyObjE.cast<srcErr>();
+	ASSERT_FALSE(nul(cast));
+	ASSERT_EQ(cast.srcArea.start.row, 1);
+	ASSERT_EQ(cast.srcArea.start.col, 1);
+	ASSERT_EQ(cast.srcArea.end.row, 1);
+	ASSERT_EQ(cast.srcArea.end.col, 5);
 }
