@@ -15,8 +15,6 @@ struct verifierTest : public ::testing::Test {
 };
 
 namespace {
-	static constexpr wint TEST_VERI_CODE_WITH = 99999990; // not to be duplicated.
-
     struct myObj : public mgdObj {
         WRD(CLASS(myObj, mgdObj))
 
@@ -39,7 +37,7 @@ namespace {
 
 	WRD_VERIFY(myObj, {
 		if(it.val == 0)
-			return _err<err>(TEST_VERI_CODE_WITH + 1, "val is 0");
+			return _err<err>(err::BASE_TEST_CODE + 1);
 		return false;
 	})
 }
@@ -67,7 +65,7 @@ TEST_F(verifierTest, verifyMyObj) {
 	const err& e = report[0];
 	ASSERT_FALSE(nul(e));
 	ASSERT_EQ(e.fType, err::ERR);
-	ASSERT_EQ(e.code, TEST_VERI_CODE_WITH + 1);
+	ASSERT_EQ(e.code, err::BASE_TEST_CODE + 1);
 	ASSERT_EQ(e.msg, "val is 0");
 
 	report.log();
@@ -76,6 +74,12 @@ TEST_F(verifierTest, verifyMyObj) {
 	obj.val = 1;
 	veri.verify(obj, report);
 	ASSERT_FALSE(report);
+}
+
+TEST_F(verifierTest, errMsgFor0ShouldExist) {
+	const msgMap& msgs = err::getErrMsgs();
+	ASSERT_TRUE(msgs.size() > 0);
+	ASSERT_EQ(msgs.at(0), "unknown");
 }
 
 TEST_F(verifierTest, verifyNestedNode) {
