@@ -29,7 +29,7 @@ namespace wrd {
 
 			verifications& veris = _getVerifications(typ);
 			for(auto* elem : veris)
-				elem->verify(it, report);
+				elem->verify(*this, it, report);
 		}
 
 		static verifications& _getVerifications(const type& typ) {

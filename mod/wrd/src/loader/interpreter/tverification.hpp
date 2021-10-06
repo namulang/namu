@@ -14,8 +14,8 @@ namespace wrd {
 		const wtype& getType() const override {
 			return ttype<T>::get();
 		}
-		void verify(const typeProvidable& it, errReport& report) override {
-			super::verify(it, report);
+		void verify(const verifier& veri, const typeProvidable& it, errReport& report) override {
+			super::verify(veri, it, report);
 			_onVerify((T&) it, report);
 		}
 
