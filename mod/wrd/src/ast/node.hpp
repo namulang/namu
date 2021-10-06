@@ -27,7 +27,7 @@ namespace wrd {
         const ncontainer& subs() const WRD_UNCONST_FUNC(subs())
 
         template <typename T>
-        node& sub(std::function<wbool(const T&)> l) const {
+        T& sub(std::function<wbool(const T&)> l) const {
             return subs().get<T>(l);
         }
         node& sub(const std::string& name) const;
