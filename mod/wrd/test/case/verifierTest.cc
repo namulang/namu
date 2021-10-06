@@ -128,3 +128,35 @@ TEST_F(verifierTest, verifyInheritedClass) {
 	ASSERT_EQ(cast.srcArea.end.row, 1);
 	ASSERT_EQ(cast.srcArea.end.col, 5);
 }
+
+TEST_F(verifierTest, verifyNestedObject) {
+	myObj o1;
+	o1.val = 1;
+
+	mymyObj o2;
+	o2.val = 1;
+	o2.grade = 0.0f; // err
+	o1.subs().add(o2);
+	ASSERT_EQ(o1.subs().len(), 1);
+	mymyObj& o2Candidate = o1.sub<mymyObj>([](const auto& elem) { return true; });
+	ASSERT_FALSE(nul(o2Candidate));
+	ASSERT_EQ(&o2, &o2Candidate);
+
+	errReport report;
+	verifier veri;
+	veri.verify(o1, report);
+	ASSERT_FALSE(report);
+	ASSERT_FALSE(report.hasErr());
+	ASSERT_TRUE(report.hasWarn());
+	ASSERT_EQ(report.len(), 1);
+
+	const srcErr& e = report[0].cast<srcErr>();
+	ASSERT_FALSE(nul(e));
+	ASSERT_EQ(e.fType, err::WARN);
+	ASSERT_EQ(e.code, err::BASE_TEST_CODE + 2);
+	ASSERT_EQ(e.msg, "grade should be positive");
+	ASSERT_EQ(e.srcArea.start.row, 1);
+	ASSERT_EQ(e.srcArea.start.col, 1);
+	ASSERT_EQ(e.srcArea.end.row, 1);
+	ASSERT_EQ(e.srcArea.end.col, 5);
+}
