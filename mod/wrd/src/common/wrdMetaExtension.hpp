@@ -61,7 +61,7 @@
 	WRD_INITIATOR(verification, { \
 		class __unnamed_verifi : public tverification<ME> { \
 		protected: \
-			wbool _onVerify(const ME& it, errReport& report) BODY \
+			wbool _onVerify(const ME& it, errReport& report) override BODY \
 		}; \
 		verifier().add(new __unnamed_verifi()); \
 	})
