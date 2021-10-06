@@ -2,6 +2,8 @@
 #include "../builtin/container/native/tnchain.inl"
 #include "../builtin/container/native/tnarr.inl"
 #include "../type/as.hpp"
+#include "../loader/interpreter/tverification.hpp"
+#include "../loader/interpreter/verifier.hpp"
 
 namespace wrd {
 
@@ -55,4 +57,10 @@ namespace wrd {
 
     narr me::subAll(const std::string& name, const ncontainer& args) const WRD_UNCONST_FUNC(subAll(name, args))
     narr me::subAll(const std::string& name, const wtypes& types) const WRD_UNCONST_FUNC(subAll(name, types))
+
+	WRD_VERIFY(node, {
+		for(auto& elem : it.subs())
+			_verify(elem, report);
+		return false;
+	})
 }
