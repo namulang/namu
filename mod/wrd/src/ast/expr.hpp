@@ -37,15 +37,8 @@ namespace wrd {
             return *_src;
         }
 
-        wcnt getLine() const {
-            return _lineNum;
-        }
-
-        wbool isValid() const override {
-            if(_lineNum < 1) return false;
-            if(nul(getEvalType())) return false;
-
-            return true;
+        const point& getPos() const {
+            return _pos;
         }
 
     protected:
@@ -53,12 +46,12 @@ namespace wrd {
             _src.bind(newSrc);
         }
 
-        void _setLine(wcnt newLine) {
-            _lineNum = newLine;
+        void _setPos(const point& newPos) {
+            _pos = newPos;
         }
 
     private:
         tstr<src> _src;
-        wcnt _lineNum;
+        point _pos;
     };
 }
