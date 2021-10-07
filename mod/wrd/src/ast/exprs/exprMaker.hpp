@@ -8,21 +8,26 @@ namespace wrd {
         WRD(CLASS(exprMaker))
 
     public:
-        exprMaker(): _src(nullptr), _lineNum(0) {}
-        exprMaker(const src& s, int lineNum) {
+        exprMaker(): _src(nullptr), _pos{0, 0} {}
+        exprMaker(const src& s, wcnt row, wcnt col) {
             setSrc(s);
-            setLine(lineNum);
+            setCol(row);
+            setCol(col);
         }
 
     public:
-        me& operator++(int) { return addLine(); }
-        me& operator--(int) { return addLine(-1); }
+        me& addRow() { return addRow(1); }
+        me& addRow(wcnt step) { return setRow(_pos.row + step); }
+        me& addCol() { return addCol(1); }
+        me& addCol(wcnt step) { return setCol(_pos.col + step); }
 
-    public:
-        me& addLine() { return addLine(1); }
-        me& addLine(int step) { return setLine(_lineNum + step); }
-        me& setLine(int newLineNum) {
-            _lineNum = newLineNum;
+        me& setRow(wcnt row) {
+            _pos.row = row;
+            return *this;
+        }
+
+        me& setCol(wcnt col) {
+            _pos.col = col;
             return *this;
         }
 
@@ -31,7 +36,7 @@ namespace wrd {
             return *this;
         }
 
-        int getLine() const { return _lineNum; }
+        const point& getPos() const { return _pos; }
         const src& getSrc() const { return *_src; }
 
         template <typename T, typename... Args>
@@ -39,12 +44,12 @@ namespace wrd {
             T* ret = new T(args...);
             if(_src)
                 ret->_setSrc(*_src);
-            ret->_setLine(_lineNum);
+            ret->_setPos(_pos);
             return ret;
         }
 
     private:
         const src* _src;
-        int _lineNum;
+        point _pos;
     };
 }

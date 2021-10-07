@@ -9,8 +9,8 @@ struct exprTest : public ::testing::Test {
 
     tstr<obj> bridge;
 
-    static void setLine(expr& exp, wcnt newLine) {
-        exp._lineNum = newLine;
+    static void setLine(expr& exp, wcnt row, wcnt col) {
+        exp._pos = {row, col};
     }
 };
 
@@ -55,7 +55,7 @@ TEST_F(exprTest, standbyHelloWorldBridgeObj) {
 TEST_F(exprTest, simpleGetExpr) {
     getExpr exp(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
     ASSERT_FALSE(exp.isValid());
-    setLine(exp, 1);
+    setLine(exp, 1, 1);
     ASSERT_TRUE(exp.isValid());
 
     str res = exp.run();
@@ -66,18 +66,18 @@ TEST_F(exprTest, simpleGetExpr) {
 
 TEST_F(exprTest, simpleGetExprNegative) {
     getExpr exp(bridge.get(), "main?", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
-    setLine(exp, 1);
+    setLine(exp, 1, 1);
     ASSERT_FALSE(exp.isValid());
 
     getExpr exp2(bridge.get(), "main", wtypes({&ttype<wStr>::get()}));
-    setLine(exp2, 1);
+    setLine(exp2, 1, 1);
     ASSERT_FALSE(exp.isValid());
 }
 
 TEST_F(exprTest, simpleRunExpr) {
     runExpr exp1(bridge->sub("main"), narr({&bridge.get(), new wStr("kniz!")}));
     ASSERT_FALSE(exp1.isValid());
-    setLine(exp1, 1);
+    setLine(exp1, 1, 1);
     ASSERT_TRUE(exp1.isValid());
 
     ASSERT_FALSE(helloWorld::isRun);
@@ -92,7 +92,7 @@ TEST_F(exprTest, simpleRunExpr) {
 
 TEST_F(exprTest, simpleRunExprNegative) {
     runExpr exp1(bridge->sub("main"), narr({&bridge.get(), new wVoid()}));
-    setLine(exp1, 1);
+    setLine(exp1, 1, 1);
     ASSERT_FALSE(exp1.isValid());
 
     ASSERT_FALSE(helloWorld::isRun);
@@ -105,9 +105,9 @@ TEST_F(exprTest, simpleRunExprNegative) {
 
 TEST_F(exprTest, constructExprInManual) {
 	getExpr g(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
-	setLine(g, 1);
+	setLine(g, 1, 1);
 	runExpr r(g, narr({&bridge.get(), new wStr("kniz!")}));
-	setLine(r, 1);
+	setLine(r, 1, 1);
 
 	str res = r.run();
 	ASSERT_TRUE(res);
@@ -117,7 +117,7 @@ TEST_F(exprTest, constructExprInManual) {
 
 TEST_F(exprTest, constructExprWithMaker) {
 	exprMaker maker;
-	tstr<runExpr> r = maker.addLine().make<runExpr>(
+	tstr<runExpr> r = maker.addRow().make<runExpr>(
 		*maker.make<getExpr>(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()})),
 		narr({&bridge.get(), new wStr("kniz!")})
 	);
