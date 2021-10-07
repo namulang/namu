@@ -22,15 +22,9 @@ namespace wrd {
         }
 
         const wtype& getEvalType() const override;
-
-        /*TODO: wbool isValid() const override {
-            if(!super::isValid()) return false;
-            if(!_from) return false;
-
-            // TODO: I have to check that the evalType has what matched to given _types.
-            // Until then, I rather use as() func and it makes slow emmersively.
-            return !nul(getEvalType());
-        }*/
+        const node& getFrom() const { return *_from; }
+        const std::string& getName() const override { return _name; }
+        const wtypes& getTypes() const { return _types; }
 
     private:
         str _from;
