@@ -9,7 +9,7 @@ namespace wrd {
 	class ases;
 
     /// node provides common API to manipulate its sub nodes.
-    class node : public instance, public clonable, public validable {
+    class node : public instance, public clonable {
         WRD(INTERFACE(node, instance))
 
     public:
@@ -92,10 +92,6 @@ namespace wrd {
         str asImpli(const type& to) const {
 			return getType().asImpli(*this, to);
 		}
-
-        wbool isValid() const override {
-            return true;
-        }
 
         /// getType() returns what it is. opposite to it, this returns what this class will
         /// represents after evaluation.

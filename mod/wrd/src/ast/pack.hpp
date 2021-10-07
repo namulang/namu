@@ -54,12 +54,6 @@ namespace wrd {
         using super::canRun;
         wbool canRun(const wtypes& types) const override { return false; }
 
-        wbool isValid() const override {
-            if(!_manifest.isValid()) return false;
-
-            return super::isValid();
-        }
-
         const std::string& getName() const override {
             return _manifest.name;
         }
