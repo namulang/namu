@@ -1,6 +1,7 @@
 #pragma once
 
 #include "src.hpp"
+#include "point.hpp"
 
 struct exprTest;
 
@@ -23,7 +24,7 @@ namespace wrd {
         friend struct ::exprTest;
 
     public:
-        expr(): _lineNum(0) {}
+        expr(): _pos{0, 0} {}
 
     public:
         using super::subs;
