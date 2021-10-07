@@ -54,9 +54,16 @@ TEST_F(exprTest, standbyHelloWorldBridgeObj) {
 
 TEST_F(exprTest, simpleGetExpr) {
     getExpr exp(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
-    ASSERT_FALSE(exp.isValid());
+    errReport rep;
+    verifier veri;
+    veri.verify(exp, rep);
+    ASSERT_TRUE(rep); // should have some errors.
     setLine(exp, 1, 1);
-    ASSERT_TRUE(exp.isValid());
+
+    rep.rel();
+    ASSERT_FALSE(rep);
+    veri.verify(exp, rep);
+    ASSERT_FALSE(rep);
 
     str res = exp.run();
     ASSERT_TRUE(res.isBind());
@@ -67,18 +74,29 @@ TEST_F(exprTest, simpleGetExpr) {
 TEST_F(exprTest, simpleGetExprNegative) {
     getExpr exp(bridge.get(), "main?", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
     setLine(exp, 1, 1);
-    ASSERT_FALSE(exp.isValid());
+    errReport rep;
+    verifier veri;
+    veri.verify(exp, rep);
+    ASSERT_TRUE(rep); // should have some errs.
 
     getExpr exp2(bridge.get(), "main", wtypes({&ttype<wStr>::get()}));
     setLine(exp2, 1, 1);
-    ASSERT_FALSE(exp.isValid());
+    rep.rel();
+    veri.verify(exp, rep);
+    ASSERT_TRUE(rep);
 }
 
 TEST_F(exprTest, simpleRunExpr) {
     runExpr exp1(bridge->sub("main"), narr({&bridge.get(), new wStr("kniz!")}));
-    ASSERT_FALSE(exp1.isValid());
+    errReport rep;
+    verifier veri;
+    veri.verify(exp1, rep);
+    ASSERT_TRUE(rep);
+
     setLine(exp1, 1, 1);
-    ASSERT_TRUE(exp1.isValid());
+    rep.rel();
+    veri.verify(exp1, rep);
+    ASSERT_FALSE(rep);
 
     ASSERT_FALSE(helloWorld::isRun);
 
@@ -93,7 +111,10 @@ TEST_F(exprTest, simpleRunExpr) {
 TEST_F(exprTest, simpleRunExprNegative) {
     runExpr exp1(bridge->sub("main"), narr({&bridge.get(), new wVoid()}));
     setLine(exp1, 1, 1);
-    ASSERT_FALSE(exp1.isValid());
+    errReport rep;
+    verifier veri;
+    veri.verify(exp1, rep);
+    ASSERT_TRUE(rep);
 
     ASSERT_FALSE(helloWorld::isRun);
 
@@ -122,7 +143,7 @@ TEST_F(exprTest, constructExprWithMaker) {
 		narr({&bridge.get(), new wStr("kniz!")})
 	);
 
-	ASSERT_EQ(r->getLine(), 1);
+	ASSERT_EQ(r->getPos().row, 1);
 
 	str res = r->run();
 	ASSERT_TRUE(res);
