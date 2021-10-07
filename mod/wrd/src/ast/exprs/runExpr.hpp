@@ -30,16 +30,6 @@ namespace wrd {
             return _me->getEvalType();
         }
 
-        /* TODO: wbool isValid() const override {
-           if(!super::isValid()) return false;
-            if(!_me) return false;
-
-            str me = _me->as<node>();
-            if(!me) return false;
-
-            return me->canRun(_args);
-        }*/
-
         node& getMe() { return *_me; }
         const node& getMe() const { return *_me; }
 
