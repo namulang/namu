@@ -1,4 +1,34 @@
 # Changelogs
+## v0.1.6 Essence Update 0.6
+released on 09-22 2021
+build# 244
+
+## major changes
+* f1c9f95c - wrd: refactor: all expr now can holds row and col info
+* 7283c2ef - wrd: feat: err object can reports area of source code
+* 6694792b - wrd: feat: add verifier
+* c317d671 - chore: clean more folders on build directory
+* e16edbe1 - wrd: feat: add dummyErrReport
+* a6cfdf0e - wrd: feat: errReport has only public api to be needed
+* 7106393f - wrd: refactor: rename class name 'fail' & 'failReport'
+* 954f245d - wrd: refactor: improve implementation of immutable
+* b12d7cfd - wrd: refactor: loose limitation of explicit ctor of binders
+* 28fb0204 - wrd: fix: expr couldn't check validness when it comes to recursive
+* 47862906 - wrd: feat: fill missing implementation for blockExpr
+* 4d26e01d - wrd: feat: add blockExpr
+* ac7dabd1 - wrd: refactor: merge and reuse 'getEvalType' for returnType of func
+* 14855735 - wrd: feat: add exprMaker
+* d9b25dff - wrd: refactor: change structure of 'as' casting
+* 30c26ef4 - wrd: fix: remove legacy world codes
+* a17b0a58 - wrd: refactor: rename interp module to wrd
+* c324fe20 - interp: feat: you can specify src info for bridge API
+* c42d67ee - interp: feat: add generic visitor class
+* 90330081 - interp: feat: universal WRD macro.
+* a8f4a749 - interp: refactor: rename srcArea to area
+* f9fb8d16 - chore: publish doc has error
+* d5e3e2e4 - chore: github action for publish docs
+
+
 ## v0.1.5 Essence Update 0.5
 released on 07-31 2021
 build# 233
