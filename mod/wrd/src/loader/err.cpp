@@ -4,6 +4,10 @@ namespace wrd {
 
     WRD_DEF_ME(err)
 
+    namespace {
+        constexpr wint MAX_BUF = 512;
+    }
+
     const msgMap& err::getErrMsgs() {
         int id = 0;
 
@@ -28,9 +32,16 @@ namespace wrd {
 
             // msg for TC:
             {BASE_TEST_CODE + 1, "val is 0"},
-            {BASE_TEST_CODE + 2, "grade should be positive"},
+            {BASE_TEST_CODE + 2, "grade(%f) should be positive"},
         };
 
         return inner;
+    }
+
+    std::string me::_format(const std::string& fmt, va_list args) {
+        wchar buf[MAX_BUF] = {0, };
+        vsnprintf(buf, MAX_BUF, fmt.c_str(), args);
+
+        return buf;
     }
 }

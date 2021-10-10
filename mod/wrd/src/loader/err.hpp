@@ -22,9 +22,16 @@ namespace wrd {
 		};
 
 	public:
-		err(err::type t, wcnt errCode): super(), fType(t), code(errCode) {
-			msg = getErrMsgs().at(code);
+		err(err::type t, wcnt errCode, ...): super(), fType(t), code(errCode) {
+            va_list args;
+            va_start(args, errCode);
+
+            msg = _format(getErrMsgs().at(code), args);
+            va_end(args);
 		}
+        err(err::type t, wcnt errCode, va_list args): super(), fType(t), code(errCode) {
+            msg = _format(getErrMsgs().at(code), args);
+        }
 
 	public:
 		void log() const {
@@ -41,6 +48,9 @@ namespace wrd {
 		wcnt code;
 		std::string msg;
 		static constexpr wint BASE_TEST_CODE = 99999990; // not to be duplicated.
+
+    private:
+        std::string _format(const std::string& fmt, va_list args);
 	};
 
 	struct srcErr : public err {
@@ -49,8 +59,8 @@ namespace wrd {
 			INIT_META(me))
 
 	public:
-		srcErr(err::type t, wcnt errCode, const area& newArea)
-			: super(t, errCode), srcArea(newArea) {}
+        template <typename... Args>
+        srcErr(err::type t, wcnt errCode, const area& newArea, Args... args): super(t, errCode, args...), srcArea(newArea) {}
 
 		area srcArea;
 	};

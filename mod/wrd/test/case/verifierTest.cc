@@ -119,7 +119,7 @@ TEST_F(verifierTest, verifyInheritedClass) {
 	ASSERT_FALSE(nul(mymyObjE));
 	ASSERT_EQ(mymyObjE.fType, err::WARN);
 	ASSERT_EQ(mymyObjE.code, err::BASE_TEST_CODE + 2);
-	ASSERT_EQ(mymyObjE.msg, "grade should be positive");
+    ASSERT_EQ(mymyObjE.msg.substr(0, 5), "grade");
 
 	const srcErr& cast = mymyObjE.cast<srcErr>();
 	ASSERT_FALSE(nul(cast));
@@ -154,7 +154,7 @@ TEST_F(verifierTest, verifyNestedObject) {
 	ASSERT_FALSE(nul(e));
 	ASSERT_EQ(e.fType, err::WARN);
 	ASSERT_EQ(e.code, err::BASE_TEST_CODE + 2);
-	ASSERT_EQ(e.msg, "grade should be positive");
+	ASSERT_EQ(e.msg.substr(0, 5), "grade");
 	ASSERT_EQ(e.srcArea.start.row, 1);
 	ASSERT_EQ(e.srcArea.start.col, 1);
 	ASSERT_EQ(e.srcArea.end.row, 1);
