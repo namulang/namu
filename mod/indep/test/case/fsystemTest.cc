@@ -16,3 +16,17 @@ TEST(fsystemTest, recursiveDirSearchAtBin) {
     root.rel();
     ASSERT_TRUE(buildFound);
 }
+
+TEST(fsystemTest, dirSearchWithPathEndsWithSlash) {
+    auto root = fsystem::find("../");
+    wbool buildFound = false;
+
+    while(root) {
+        if(*root == "../build/CMakeLists.txt") {
+            buildFound = true;
+            break;
+        }
+    }
+    root.rel();
+    ASSERT_TRUE(buildFound);
+}

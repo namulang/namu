@@ -55,15 +55,24 @@ namespace wrd {
 
         private:
             void _addDir(const std::string& dirPath) {
-                DIR* newDir = opendir(dirPath.c_str());
+                std::string path = _filterPath(dirPath);
+                DIR* newDir = opendir(path.c_str());
                 if(!newDir) return;
 
-                _entries.push_back(entry {newDir, dirPath});
+                _entries.push_back(entry {newDir, path});
             }
             void _popDir() {
                 entry& e = _entries[_entries.size()-1];
                 closedir(e.dir);
                 _entries.pop_back();
+            }
+
+            std::string _filterPath(const std::string& org) {
+                int last = org.length() - 1;
+                if(org[last] == '/')
+                    return org.substr(0, last);
+
+                return org;
             }
 
         private:
