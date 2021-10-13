@@ -7,9 +7,11 @@ TEST(fsystemTest, recursiveDirSearchAtBin) {
     auto root = fsystem::find("..");
     wbool buildFound = false;
 
-    while(root) {
+    while(root.next()) {
         if(*root == "../build/CMakeLists.txt") {
             buildFound = true;
+            ASSERT_EQ(root.getName(), "CMakeLists.txt");
+            ASSERT_EQ(root.getDir(), "../build");
             break;
         }
     }
@@ -21,9 +23,11 @@ TEST(fsystemTest, dirSearchWithPathEndsWithSlash) {
     auto root = fsystem::find("../");
     wbool buildFound = false;
 
-    while(root) {
+    while(root.next()) {
         if(*root == "../build/CMakeLists.txt") {
             buildFound = true;
+            ASSERT_EQ(root.getName(), "CMakeLists.txt");
+            ASSERT_EQ(root.getDir(), "../build");
             break;
         }
     }
