@@ -4,7 +4,11 @@ namespace wrd {
 
     WRD_DEF_ME(fsystem)
 
-    const std::string& me::iterator::get() {
+    const std::string& me::iterator::get() const {
+        return _nowPath;
+    }
+
+    wbool me::iterator::next() {
         // assume that all of data to _entries was valid:
         //  which means, if returning value from readdir() was null,
         //  then the most top element of entries should be removed.
@@ -24,9 +28,11 @@ namespace wrd {
                 continue;
             }
 
-            return _nowPath = path;
+            _nowPath = path;
+            return true;
         }
 
-        return _nowPath = "";
+        _nowPath = "";
+        return false;
     }
 }

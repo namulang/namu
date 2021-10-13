@@ -37,6 +37,12 @@ namespace wrd {
             const std::string& operator*() {
                 return get();
             }
+
+            me& operator++(int) {
+                next();
+                return *this;
+            }
+
             operator wbool() const {
                 return !isEnd();
             }
@@ -47,7 +53,21 @@ namespace wrd {
                     _popDir();
             }
 
-            const std::string& get();
+            wbool next();
+
+            const std::string& get() const;
+
+            std::string getName() const {
+                const std::string& path = get();
+                widx slash = path.rfind('/');
+                return path.substr(slash + 1);
+            }
+
+            std::string getDir() const {
+                const std::string& path = get();
+                widx slash = path.rfind('/');
+                return path.substr(0, slash);
+            }
 
             wbool isEnd() const {
                 return _entries.size() == 0;
