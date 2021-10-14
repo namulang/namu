@@ -43,23 +43,6 @@ namespace wrd {
         tstr<packs> load();
 
     private:
-        wbool _isExcludedFile(const std::string& fileName) {
-            static const std::string EXCLUDED_FILES[] = {".", ".."};
-            for(std::string exclusion : EXCLUDED_FILES)
-                if(fileName == exclusion)
-                    return true;
-
-            return false;
-        }
-
-        std::string _filterDirPath(const string& dirPath) {
-            int last = dirPath.length() - 1;
-            if(dirPath[last] == DELIMITER)
-                return dirPath.substr(0, last);
-
-            return dirPath;
-        }
-
         void _makePacks(packs& tray) {
             std::string cwd = fsystem::getCurrentDir() + "/";
             WRD_I("finding packs relative to %s or absolute", cwd.c_str());
@@ -72,24 +55,10 @@ namespace wrd {
         }
 
         void _makePackAt(packs& tray, const std::string& dirPath) {
-            const std::string& filtered = _filterDirPath(dirPath);
-            DIR* dir = opendir(dirPath.c_str());
-            if(!dir) {
-                WRD_E("path %s permission denied.");
-                return;
-            }
-
-            struct dirent* file = nullptr;
-            while((file = readdir(dir))) {
-                if(_isExcludedFile(file->d_name))
-                    continue;
-
-                // TODO: refactor to be extentiable.
-                if(file->d_type == DT_DIR)
-                    _makePackAt(tray, filtered + DELIMITER + file->d_name);
-                else if(file->d_name == MANIFEST_FILENAME)
-                    _addNewPack(tray, filtered, file->d_name);
-            }
+            auto e = fsystem::find(dirPath);
+            while(e.next())
+                if(e.getName() == MANIFEST_FILENAME)
+                    _addNewPack(tray, e.getDir(), e.getName());
         }
 
         void _addNewPack(packs& tray, const std::string& dirPath, const std::string& manifestName) {
