@@ -13,6 +13,7 @@ namespace wrd {
         if(!_hasBindTag(old)) return true; // optimization.
 
         watchCell& un = _watcher[old.getId()];
+        if(nul(un)) return false;
         return _watcher.del(&un, sizeof(watchCell));
     }
 

@@ -212,3 +212,23 @@ TEST(bindTest, bindNullShouldUnbindPrevious) {
     strA.bind(nullptr);
     ASSERT_FALSE(strA.isBind());
 }
+
+// static variable could exists longer than watcher. in this situtation, trying to get
+// watchcell info would be failed by returning null reference.
+// we will verify that this memlite module can handle the situation properly.
+TEST(bindTest, bindStaticVariable) {
+    class myInstance : public instance {
+        WRD(ME(myInstance, instance))
+
+    public:
+        const type& getType() const override {
+            return ttype<myInstance>::get();
+        };
+    };
+
+    // this static object of an instance will trigger release of watchcell on its
+    // destructor.
+    static myInstance variable;
+    tstr<myInstance> binder;
+    binder.bind(variable); // this statement makes watchell of 'variable'.
+}
