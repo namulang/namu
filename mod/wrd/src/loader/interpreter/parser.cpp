@@ -30,7 +30,7 @@ namespace wrd {
 
 	void me::rel() {
 		_root.rel();
-		_report = &dummyErrReport::singletone;
+		_report.bind(dummyErrReport::singletone);
 	}
 
 }

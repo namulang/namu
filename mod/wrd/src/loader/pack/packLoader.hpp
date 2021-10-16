@@ -31,7 +31,7 @@ namespace wrd {
         }
 
         me& setReport(errReport& report) {
-            _report = &report;
+            _report.bind(report);
             return *this;
         }
 
@@ -116,7 +116,7 @@ namespace wrd {
 
     private:
         packs* _basePacks;
-        errReport* _report;
+        tstr<errReport> _report;
         std::vector<std::string> _paths;
         static constexpr wchar DELIMITER = '/';
     };

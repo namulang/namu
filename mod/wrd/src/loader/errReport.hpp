@@ -3,11 +3,12 @@
 #include "err.hpp"
 #include "../type/wtype.hpp"
 #include "../ast/clonable.hpp"
+#include "../common.hpp"
 
 namespace wrd {
 
-    class errReport : public typeProvidable, public clonable {
-        WRD(CLASS(errReport))
+    class errReport : public instance, public clonable {
+        WRD(CLASS(errReport, instance))
 
 	public:
 		const err& operator[](widx n) const { return get(n); }
