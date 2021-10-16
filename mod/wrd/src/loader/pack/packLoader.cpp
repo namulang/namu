@@ -6,7 +6,7 @@ namespace wrd {
 
     WRD_DEF_ME(packLoader)
 
-    me::packLoader(): _basePacks(nullptr), _report(&dummyErrReport::singletone) {}
+    me::packLoader(): _basePacks(nullptr), _report(dummyErrReport::singletone) {}
 
     tstr<packs> me::load() {
         // TODO: returns result when it's fail

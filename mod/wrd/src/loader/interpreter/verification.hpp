@@ -13,7 +13,7 @@ namespace wrd {
 
 	public:
 		virtual void verify(const verifier& veri, const typeProvidable& it, errReport& report) {
-			_report = &report;
+			_report.bind(report);
 			_verifier = &veri;
 		}
 
@@ -34,7 +34,7 @@ namespace wrd {
 		wbool _verify(const typeProvidable& it, errReport& report);
 
 	protected:
-		errReport* _report;
+		tstr<errReport> _report;
 		const verifier* _verifier;
 	};
 
