@@ -7,7 +7,7 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
     const packs& systemPacks = wrd::thread::get().getSystemPacks();
     ASSERT_FALSE(nul(systemPacks));
 
-    node& pak = systemPacks.get([](const node& e) { return e.getName() == "samplePack"; });
+    node& pak = systemPacks.get<node>([](const node& e) { return e.getName() == "samplePack"; });
     ASSERT_FALSE(nul(pak));
 
     ASSERT_EQ(pak.subs().len(), 1);
