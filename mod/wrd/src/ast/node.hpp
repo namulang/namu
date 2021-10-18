@@ -30,21 +30,31 @@ namespace wrd {
         T& sub(std::function<wbool(const T&)> l) const {
             return subs().get<T>(l);
         }
-        node& sub(const std::string& name) const;
-        node& sub(const std::string& name, const ncontainer& args);
-        node& sub(const std::string& name, const wtypes& types);
-        node& sub(const std::string& name, const ncontainer& args) const;
-        node& sub(const std::string& name, const wtypes& types) const;
+        template <typename T = me>
+        T& sub(const std::string& name) const;
+        template <typename T = me>
+        T& sub(const std::string& name, const ncontainer& args);
+        template <typename T = me>
+        T& sub(const std::string& name, const wtypes& types);
+        template <typename T = me>
+        T& sub(const std::string& name, const ncontainer& args) const;
+        template <typename T = me>
+        T& sub(const std::string& name, const wtypes& types) const;
 
         template <typename T>
         tnarr<T> subAll(std::function<wbool(const T&)> l) const {
             return subs().getAll<T>(l);
         }
-        narr subAll(const std::string& name) const;
-        narr subAll(const std::string& name, const ncontainer& args);
-        narr subAll(const std::string& name, const wtypes& types);
-        narr subAll(const std::string& name, const ncontainer& args) const;
-        narr subAll(const std::string& name, const wtypes& types) const;
+        template <typename T = me>
+        tnarr<T> subAll(const std::string& name) const;
+        template <typename T = me>
+        tnarr<T> subAll(const std::string& name, const ncontainer& args);
+        template <typename T = me>
+        tnarr<T> subAll(const std::string& name, const wtypes& types);
+        template <typename T = me>
+        tnarr<T> subAll(const std::string& name, const ncontainer& args) const;
+        template <typename T = me>
+        tnarr<T> subAll(const std::string& name, const wtypes& types) const;
 
         virtual wbool canRun(const wtypes& typs) const = 0;
         wbool canRun(const containable& args) const {
