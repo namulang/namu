@@ -1,6 +1,8 @@
 #include "thread.hpp"
 #include "../loader/pack/packLoader.hpp"
 #include "../loader/errReport.hpp"
+#include "../ast/node.inl"
+#include "../ast/func.hpp"
 
 namespace wrd {
 
@@ -32,5 +34,21 @@ namespace wrd {
         }
 
         return *inner;
+    }
+
+    str me::run(const containable& args) {
+        // TODO: args validness check.
+
+        // find 'main' func:
+        func& fun = _root->sub<func>("main"); // TODO: support generic type of str[]
+        if(nul(fun))
+            return WRD_E("there is no 'main' func."), str();
+
+        thread* prev = *_get();
+        *_get() = this;
+        str res = fun.run(args);
+        *_get() = prev;
+
+        return res;
     }
 }

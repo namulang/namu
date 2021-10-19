@@ -13,6 +13,7 @@ namespace wrd {
         friend class frameInteract; // to access stackFrame.
 
     private:
+        thread() {} // for singleton
         thread(const node& root): _root(root) {}
 
     public:
