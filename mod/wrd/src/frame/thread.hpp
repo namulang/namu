@@ -13,7 +13,7 @@ namespace wrd {
         friend class frameInteract; // to access stackFrame.
 
     private:
-        thread() {} // singletone.
+        thread(const node& root): _root(root) {}
 
     public:
         const stackFrame& getStackFrame() const {
@@ -21,24 +21,24 @@ namespace wrd {
         }
 
         static thread& get() {
-            thread_local static thread inner;
-            return inner;
+            return **_get();
         }
 
-        const instancer& getInstancer() const {
+        static const instancer& getInstancer() {
             return instancer::get();
         }
 
         // node:
         ncontainer& subs() override {
-            // TODO: should fill with func, not sframe itself.
-            return _sframe.getNative();
+            if(!_root) return nulOf<ncontainer>();
+
+            return _root->subs();
         }
 
         using super::canRun;
         wbool canRun(const wtypes& types) const override { return false; }
 
-        str run(const containable& args) override { return str(); }
+        str run(const containable& args) override;
 
         void rel() override { _sframe.rel(); }
 
@@ -50,7 +50,14 @@ namespace wrd {
         }
 
     private:
+        static thread** _get() {
+            thread_local static thread* inner = new thread();
+            return &inner;
+        }
+
+    private:
         stackFrame _sframe;
+        str _root;
     };
 
 }
