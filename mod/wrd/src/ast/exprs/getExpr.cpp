@@ -1,8 +1,7 @@
 #include "getExpr.hpp"
 #include "../../loader/interpreter/tverification.hpp"
 #include "../../loader/interpreter/verifier.hpp"
-#include "../ast/node.inl"
-#include "../ast/func.hpp"
+#include "../node.inl"
 
 namespace wrd {
 
@@ -27,20 +26,4 @@ namespace wrd {
         if(nul(it.getEvalType())) return _err<err>(2); // 2: evaludated as nulled type.
         return true;
     })
-
-    str me::run(const containable& args) {
-        // TODO: args validness check.
-
-        // find 'main' func:
-        func& fun = _root->sub<func>("main"); // TODO: support generic type of str[]
-        if(nul(fun))
-            return WRD_E("there is no 'main' func."), str();
-
-        thread* prev = *_get();
-        *_get() = this;
-        str res = fun.run(args);
-        *_get() = prev;
-
-        return res;
-    }
 }

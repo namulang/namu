@@ -24,7 +24,7 @@ namespace wrd {
 
     public:
 		me& setReport(errReport& report) {
-			_report = &report;
+            _report.bind(report);
 			return *this;
 		}
 
@@ -40,6 +40,6 @@ namespace wrd {
 
     private:
         str _root;
-        errReport* _report;
+        tstr<errReport> _report;
     };
 }
