@@ -4,29 +4,29 @@ import sys.cons aka c
 def petShop
     /* a pet shop */
     factory(useless flt64, use1 int, use2 char, use3 bool) pet = null aka rFac
-    factory(useless int, use1 int, use2 char, use3 bool) pet = null
+    factory(useless int, use1 int, use2 char, use3 bool) pet = null aka rFac2
 
     _myFactory rFac?
 
-    @ctor(@factory(someVal flt64, x int, y char, z bool)): sys.cons.out("f is $factory")
-    @ctor(@rFac): _myFactory = rFac
+    me(@rFac2): sys.cons.out("f is $rFac2")
+    me(@rFac): myFactory = rFac
 
     showPet() void
-        mypet = _myFactory(0, 0, 0, false)
+        mypet := _myFactory(0, 0, 0, false)
         c.out("we have a lovely $mypet")
         c.out("it says $pet.speak()")
 
 def pet
-def dog pet
+def dog from pet
     speak() void: "woof"
 
-def cat pet
+def cat from pet
     speak() void: "meow"
 
-randomAnimal(s flt64, x int, y char, z bool) pet: return random.choice([dog(), cat()])
+randomAnimal(s flt64, x int, y char, z bool) pet: return random.choice({dog(), cat()})
 
 main() void
-    catShop = petShop((x as int, y, z, a) -> cat())
+    catShop := petShop((x, y, z, a): cat())
     catShop.showPet()
     c.out("")
 
