@@ -6,9 +6,10 @@ main() void
         name := "cherry"
         price := 53
 
-        @ctor()
-        @ctor(price int)
-            me.price=price
+        me()
+        me(@price)
+            me.price = price
+
     myObj1 := myObj()
     myObj2 := myObj
     //objs := myObj[5] // err! argument can't exist in [].

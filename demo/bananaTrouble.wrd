@@ -1,20 +1,23 @@
-package wrd.lang.example.bananaTrouble
+pack wrd.lang.example.bananaTrouble
+import sys
 sys.cons aka c
 
 def hello
     def a
-        _@ctor(): c.cout("A()")
+        _age := int[]
 
-        _foo(max int, min int) int
-
-        _age := int[]()
         getAge := 5
-            got => @get: ret _age + got
-            @set=>: _age = it
+            got => get(): ret _age + got
+            set() =>: _age = it
 
         name := "defaultName"
 
-    _b := def bOrg a
+        _me(): c.cout("A()")
+
+        _foo(max int, min int) int
+
+
+    _b := def bOrg from a
         got => _foo(max int, min int) int[] // 문제1
             return ++got..max
 
@@ -25,7 +28,7 @@ def hello
                 // 문제2
                 b1 on e := for n in 3 .. 5 * _foo()
                     2 * n
-                if e == nullErr: c.out("nullErr")
+                if e is nullErr: c.out("nullErr")
 
                 if true
                     a := for a in 2.._foo(5)
@@ -39,10 +42,12 @@ def hello
                     c.out("a=$it")
                     dn, dmap := [1, 2, _foo(3)], [3: "banana", 3: "apple"] as int[str]
                     len // dn.len
+                    dmap := [3: "banana", 3: "apple"] as int[str]
+                    0
                 if dn: for n in dn
                     _foo(n)
 
-            elif a == 7 | a == 6
+            elif a == 7 || a == 6
                 a = 0
             else
                 0

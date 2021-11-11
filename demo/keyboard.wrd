@@ -9,8 +9,8 @@ def unit
         _@set
     init() void := null
 
-def key unit
-    @ctor(newVal char, newStroke int)
+def key from unit
+    me(newVal char, newStroke int)
         _value = newVal
         _stroke = newStroke
 
@@ -20,11 +20,11 @@ def key unit
     _value := 'a'
     _stroke := 0.0
 
-def row key[]
+def row from key[]
 
     _end := _start := 'a' // 'a' is char
 
-    @ctor(newStart char, newEnd char)
+    me(newStart start, newEnd end)
         _start = newStart
         _end = newEnd
 
@@ -36,7 +36,7 @@ def row key[]
         if stk > 1.5
             return err("invalid stk")
 
-def keyboard row[]
+def keyboard from row[]
     init() void on err
         add(row('0', '\\'))
         add(row('q', ']'))

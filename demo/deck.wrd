@@ -1,29 +1,29 @@
 pack wrd.lang.example.part
 
 def global()
-    suits := ["Hearts", "diamonds", "Spades", "Clovers"]
-    values := ["Two":2, "Three":3, "Four":4]
+    suits := {"Hearts", "diamonds", "Spades", "Clovers"}
+    values := {"Two":2, "Three":3, "Four":4}
     // values := [ranks[0]:2, ranks[1]:3, ranks[2]:4] // err
-    ranks := ["Two", "Three", "Four"]
-    values := [ranks[0]:2, ranks[1]:3, ranks[2]:4] // is this possible?
+    ranks := {"Two", "Three", "Four"}
+    values := {ranks[0]:2, ranks[1]:3, ranks[2]:4} // is this possible?
     playing := true
 
 def card
-    @ctor(nsuit str, nrank str)
+    me(nsuit str, nrank str)
         _suit = nsuit
         _rank = nrank
     _suit := ""
     _rank := ""
 
-    @to() str: "$rank of suit" // @to is syntactic sugar of "to(type str) str"
+    to() str: "$rank of suit" // @to is syntactic sugar of "to(type str) str"
 
 def hand
     _cards := str[]
     _value := _aces := 0
 
-    addCard(acard card) void
-        _cards.add(acard)
-        _value := global.values[acard.rank]
+    addCard(@card) void
+        _cards.add(card)
+        _value := global.values[card.rank]
 
     adjustForAce() void
         for _value > 21 & aces
@@ -31,7 +31,7 @@ def hand
             aces--
 
 def deck
-    @ctor()
+    me()
         for s in global.suits: for r in global.ranks: _cards.add(card(s, r))
     shuffle() void: random.shuffle(deck)
     deal() void
@@ -42,7 +42,6 @@ def deck
 
 sys.cons aka c // affects to all statement inside of each classes.
 
-main() void
-    with deck
-        shuffle()
-        deal()
+main() void: with deck
+    shuffle()
+    deal()
