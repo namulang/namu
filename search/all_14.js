@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['world_20language_20specification_246',['WORLD LANGUAGE SPECIFICATION',['../index.html',1,'']]],
-  ['when_247',['when',['../md__home_runner_work_worldlang_worldlang_doc_ref_syntax_when.html',1,'']]],
+  ['world_20language_20specification_247',['WORLD LANGUAGE SPECIFICATION',['../index.html',1,'']]],
   ['watchcell_248',['watchCell',['../structwrd_1_1watch_cell.html',1,'wrd']]],
   ['watcher_249',['watcher',['../classwrd_1_1watcher.html',1,'wrd']]],
   ['weaktactic_250',['weakTactic',['../classwrd_1_1weak_tactic.html',1,'wrd']]],

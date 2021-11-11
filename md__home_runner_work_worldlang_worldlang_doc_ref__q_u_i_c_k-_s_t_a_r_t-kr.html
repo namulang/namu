@@ -94,23 +94,31 @@ $(function() {
 <div class="line">    elif sum == 2</div>
 <div class="line">        sum -= n</div>
 </div><!-- fragment --><h1>컨테이너</h1>
-<div class="fragment"><div class="line">intArr := [1, 2, 3]</div>
-<div class="line">floatArr := [1.5, 2.5, 3.5]</div>
+<div class="fragment"><div class="line">intArr := {1, 2, 3}</div>
+<div class="line">floatArr := {1.5, 2.5, 3.5}</div>
 <div class="line"> </div>
 <div class="line">seq := 2..4</div>
 <div class="line">seq.len == 3 // true</div>
 <div class="line">for n in seq</div>
 <div class="line">    c.print(intArr[n])</div>
 <div class="line"> </div>
-<div class="line">intVal, floatVal := 2, 3.5 // , for list</div>
+<div class="line">pair1:= intVal;&quot;banana&quot;</div>
+<div class="line">pair1.key == 3.5</div>
+<div class="line">pair1.val = &quot;money?&quot;</div>
 <div class="line"> </div>
-<div class="line">tup1 := intVal:&quot;banana&quot;</div>
-<div class="line">map := [tup1, floatVal:&quot;apple&quot;] // mas as float[str]</div>
+<div class="line">map := {pair1, 2.5;&quot;apple&quot;} // mas as float[str]</div>
 <div class="line"> </div>
 <div class="line">sys.cons aka c // typedef</div>
 <div class="line">c.print(&quot;how many apple do you have = $map[&#39;apple&#39;]&quot;) // &quot;how many apple do you have = 2.0&quot;</div>
 </div><!-- fragment --><h1>함수</h1>
 <ul>
+<li>함수는 본문이 있는 소괄호로 정의합니다.<ul>
+<li>반환형을 없어도 된다는 얘기입니다.</li>
+<li>함수명이 없어도 된다는 얘기입니다.</li>
+<li>인자가 없어도 된다는 얘기입니다.</li>
+</ul>
+</li>
+<li>함수 안에서라면 인자타입이 없어도 됩니다.</li>
 <li>정의시, 역시 type은 항상 뒤에 옵니다.</li>
 </ul>
 <div class="fragment"><div class="line">getLen(b int...) int // ... means varidic argument</div>
@@ -119,8 +127,24 @@ $(function() {
 <div class="line">        sum++</div>
 <div class="line">    return sum</div>
 <div class="line"> </div>
-<div class="line">foo(useless int...) int = null // abstract method def.</div>
-<div class="line">likeFptr := foo</div>
+<div class="line">getLen(b int) // return type is deducted to &#39;int&#39;</div>
+<div class="line">    sum := 0</div>
+<div class="line">    return sum</div>
+<div class="line"> </div>
+<div class="line">(b int) // ok. but never got called.</div>
+<div class="line">    sum := 0</div>
+<div class="line">    return sum</div>
+<div class="line">    </div>
+<div class="line">fun := () // == returns closure refering &lt;nameless function&gt;() str.</div>
+<div class="line">    return &quot;&quot;</div>
+<div class="line">fun()</div>
+<div class="line"> </div>
+<div class="line">setClickListener((v): v.onClick())</div>
+<div class="line"> </div>
+<div class="line">// getLen(b int) --&gt; err. if context is missing, this should be regarded to a function call.</div>
+<div class="line"> </div>
+<div class="line">foo(useless int...) int = null // &#39;null&#39; declares that this is abstract method def.</div>
+<div class="line">likeFptr := foo // foo can be used as a type.</div>
 <div class="line">likeFptr() // foo is abstrat. Exception occurs.</div>
 <div class="line"> </div>
 <div class="line">likeFptr = getLen // ok to assign.</div>
@@ -128,34 +152,43 @@ $(function() {
 </div><!-- fragment --><h1>객체정의</h1>
 <div class="fragment"><div class="line">sys.cons aka c</div>
 <div class="line"> </div>
-<div class="line">def base</div>
+<div class="line">def base // base is incomplete origin object</div>
 <div class="line">    _realAge := 0 // &quot;_&quot; means protected</div>
 <div class="line"> </div>
-<div class="line">    age := int // all member variables are property.</div>
-<div class="line">        @get: realAge + 1</div>
-<div class="line">        @set: realAge = it  // it refers the parameter of this method which has a single parameter.</div>
+<div class="line">    age int // this property don&#39;t have a value.</div>
+<div class="line">        get(): realAge + 1</div>
+<div class="line">        set(new int): realAge = new // it refers the parameter of this method which has a single parameter.</div>
 <div class="line"> </div>
-<div class="line">    @ctor(newAge int)</div>
+<div class="line">    age2 := 0 // this property has value.</div>
+<div class="line">        get(old int): return old + 1 // getter should accepts 1 argument holding the value.</div>
+<div class="line">        set(new int) int: return new</div>
+<div class="line"> </div>
+<div class="line">    age3 := 0 // convenient way.</div>
+<div class="line">        get: return it + 1</div>
+<div class="line">        set: return it</div>
+<div class="line"> </div>
+<div class="line">    me(newAge int)</div>
 <div class="line">        realAge = newAge</div>
 <div class="line">        c.out(&quot;constructor(int)&quot;)</div>
 <div class="line"> </div>
-<div class="line">    @ctor(): c.out(&quot;constructor()&quot;)</div>
+<div class="line">    me(): c.out(&quot;constructor()&quot;)</div>
 <div class="line"> </div>
 <div class="line">    say() str? // returning value can be assigned to null.</div>
 <div class="line">        c.out(&quot;age=$age&quot;)</div>
 <div class="line">        return null</div>
 <div class="line"> </div>
-<div class="line">def derive base</div>
+<div class="line">def derive(1) from base // derive is complete origin object</div>
 <div class="line"> </div>
-<div class="line">    @ctor(int new) // ctor does nothing but calls super()</div>
+<div class="line">    me(new int) // ctor does nothing but calls super()</div>
+<div class="line">        super(new)</div>
 <div class="line"> </div>
 <div class="line">    // overrided</div>
-<div class="line">    say() str? =&gt; // derive.say() print &quot;derive.say&quot; before calls super&#39;s one.</div>
+<div class="line">    say() str? </div>
 <div class="line">        c.out(&quot;derive.say!&quot;)</div>
 <div class="line"> </div>
 <div class="line">b1 := base(1) // b was created from &quot;base&quot; object.</div>
 <div class="line">b1.say() // &quot;age=2&quot;</div>
-<div class="line">derive.say() // there is no class. all of them are object, too.</div>
+<div class="line">derive.say()</div>
 <div class="line">derive.say() // now, &quot;age=2&quot;</div>
 <div class="line"> </div>
 <div class="line">// derive.realAge // can&#39;t access private member at outside.</div>
@@ -179,14 +212,15 @@ $(function() {
 </div><!-- fragment --><h1>프로퍼티</h1>
 <div class="fragment"><div class="line">def myObj</div>
 <div class="line">    age := 22 // age as int. it has value 22. but is also property.</div>
-<div class="line">        got =&gt; @get</div>
-<div class="line">            sys.cons.out(&quot;this will return $got&quot;)</div>
-<div class="line">            return got</div>
+<div class="line">        get</div>
+<div class="line">            sys.cons.out(&quot;this will return $it&quot;)</div>
+<div class="line">            return it </div>
 <div class="line"> </div>
 <div class="line">def myObj2</div>
 <div class="line">    age := 22</div>
-<div class="line">        @set=&gt;: cout(&quot;age.@set&quot;)</div>
-<div class="line">        _@get=&gt; // @get returns value of age.</div>
+<div class="line">        set(new int) int: cout(&quot;age.$new&quot;)</div>
+<div class="line">        _get // get is normally returning value of age but isn&#39;t accessible from outside.</div>
+<div class="line">        // same as, &#39;_get(old int) int: return old&#39;</div>
 <div class="line"> </div>
 <div class="line">def app</div>
 <div class="line">    main() void</div>
@@ -199,20 +233,20 @@ $(function() {
 <div class="line">        if myObj2.age == 10 // compile err. it&#39;s protected.</div>
 </div><!-- fragment --><h1>closure</h1>
 <div class="fragment"><div class="line">def app</div>
-<div class="line">    int func() = null // abstract method.</div>
+<div class="line">    func() int = null // abstract method.</div>
 <div class="line"> </div>
 <div class="line">    foo() func // returns a function.</div>
 <div class="line"> </div>
-<div class="line">        $cnt := 0 // $ means &quot;static&quot; which only can be prefix of a variable.</div>
+<div class="line">        def cnt() from 0 // origin object can be shared and exist as only one instance during the process.</div>
 <div class="line"> </div>
 <div class="line">        arr := int[]</div>
 <div class="line">        for (n := 1) &lt; ++cnt</div>
 <div class="line">            arr.add(n)</div>
 <div class="line"> </div>
 <div class="line">        getLenFrom() int // a nested method like a closure.</div>
-<div class="line">            arr.len // all of expr always returns last expr to outside.</div>
-<div class="line"> </div>
-<div class="line">        ret getLenFrom</div>
+<div class="line">            arr.len // so, arr can be captured.</div>
+<div class="line">                    // all of expr always returns last expr to outside.</div>
+<div class="line">        ret getLenFrom // the capturing of arr variable occurs at here. (when assigning value to a closure)</div>
 <div class="line"> </div>
 <div class="line">    main() void</div>
 <div class="line">        foo()() // == 1</div>
@@ -220,7 +254,7 @@ $(function() {
 </div><!-- fragment --><h1>exceptions</h1>
 <div class="fragment"><div class="line">def app</div>
 <div class="line">    safeNavigation() void</div>
-<div class="line">        getActivity()?.getAppContext()?.getResources()?.getString(1) // safe navigation</div>
+<div class="line">        activity?.appContext?.res?.getString(1) // safe navigation</div>
 <div class="line"> </div>
 <div class="line">    exceptionHandling() int on nullErr, ioErr // specifying that returns err with value.</div>
 <div class="line">        try Resources res = getActivity().getAppContext().getResources()</div>
@@ -249,11 +283,11 @@ $(function() {
 </ul>
 <h1>all preserved keywords</h1>
 <h2>syntax</h2>
-<p>def with if elif else ret return break continue aka as try on in for</p>
+<p>def from with if elif else ret return continue switch import pack aka as try on in for</p>
 <h2>primitive types</h2>
 <p>int int8 int16 int32 int64 flt flt32 flt64 str bool char void err obj null</p>
 <h2>predeclared objects</h2>
-<p>me it null super @set @get @ctor</p>
+<p>me it null super</p>
 <h2>operators</h2>
 <p>. _ + - / * % += := == === -= /= *= ^ %= ! ^ &amp; | !! ^^ &amp;&amp; || [] ... () ++ ** &ndash; // /* */ : =&gt; -&gt; , </p>
 </div></div><!-- contents -->
