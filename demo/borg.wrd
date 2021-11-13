@@ -5,7 +5,7 @@ def borg
     state := ""
 
     me(): state = "Init"
-    as(@str): borg.state
+    as() str: borg.state
 
 def yourBorg from borg()
 
