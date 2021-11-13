@@ -4,9 +4,10 @@ import sys.cons aka c
 
 def unit
     // name := int // err. if you define refer for immutable obj, then @get or @set should be define.
-    name := int
-        @get: "unit" + objName()
-        _@set
+    name int
+        get(): "unit" + objName()
+        _set()
+
     init() void := null
 
 def key from unit

@@ -15,7 +15,7 @@ def card
     _suit := ""
     _rank := ""
 
-    to() str: "$rank of suit" // @to is syntactic sugar of "to(type str) str"
+    as() str: "$rank of suit"
 
 def hand
     _cards := str[]
