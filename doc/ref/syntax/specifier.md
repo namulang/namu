@@ -23,46 +23,37 @@
 * 여기서 접근이 차단되는 것은 unique 객체를 의미한다.
 * 복제된 객체라면 packaged 접근자라고 하더라도 외부에서 가져갈 수 있다.
 
-## ==> 재지정 연산자
+## -> 재지정 연산자
 
 * 문법:
-    ((identifier)* ==>)* (method signature) (==>)*
-* ==> 는 메소드 signature 앞에 올 수도 있고 뒤에 올 수도 있다.
+    ((identifier)* ->)* (method signature) (->)*
+* -> 는 메소드 signature 앞에 올 수도 있고 뒤에 올 수도 있다.
 
-### ==>가 메소드 앞에 오면 super를 먼저 call 한다.
+### ->가 메소드 앞에 오면 super를 먼저 call 한다.
 
-* 1: ==> 앞에 아무것도 적지 않으면 super의 반환값을 그대로 반환한다.
-* 2: ==> 앞에 식별자를 적으면 super의 반환값이 그 식별자에 담긴다.
+* 1: -> 앞에 아무것도 적지 않으면 super를 실행하되 반환값을 보존하지 않는다.
+* 2: -> 앞에 식별자를 적으면 super의 반환값이 그 식별자에 담긴다.
 * 만약 2번을 사용하고자 하는데 on err 도 반환하고 있었다면 try를 앞에 적어줘야 한다.
 
 ```go
 def boy person
     // 1:
-    ==> sayHello(msg str)
-        ....
-
-    // 또는
-
-    res ==> sayHello(msg str)
-        return res
-
-
+    -> sayHello(msg str) int
+        return 0 // super의 반환값은 사용하지 않는다.
 
     // 2:
-    ==> sayHello(msg str) float on err
+    -> sayHello(msg str) float on err
         return doSomething()
 
     // 또는
 
-    try res ==> sayHello(msg str) float on err
+    try res -> sayHello(msg str) float on err
         on nullErr: return nullErr
         on outOfBoundErr: return outOfBoundErr
 
         return doSomething()
 ```
-
-
-### ==> 가 뒤에 오는 경우는 super한 결과를 반환한다.
+### -> 가 뒤에 오는 경우는 super한 결과를 반환한다.
 
 ```go
 def boy person
@@ -72,6 +63,6 @@ def boy person
   
     // 또는 
 
-    explainMe() void ==>
+    explainMe() void ->
         doSomething()
  ```

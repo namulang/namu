@@ -12,7 +12,8 @@ def petShop
     me(@rFac): myFactory = rFac
 
     showPet() void
-        mypet := _myFactory(0, 0, 0, false)
+        if myFactory
+            mypet := myFactory(0, 0, 0, false)
         c.out("we have a lovely $mypet")
         c.out("it says $pet.speak()")
 
