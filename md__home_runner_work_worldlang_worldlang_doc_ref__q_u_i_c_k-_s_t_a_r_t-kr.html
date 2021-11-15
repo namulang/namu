@@ -82,6 +82,71 @@ $(function() {
 <div class="line">int1 := 15</div>
 <div class="line"> </div>
 <div class="line">toInt := int1 as flt64 // casts int as 64bit float.</div>
+</div><!-- fragment --><h1>Indentation 레벨에 의한 Scope 범위</h1>
+<ul>
+<li>항상 Indentation 레벨에 의해서 scope를 표현한다.</li>
+</ul>
+<div class="fragment"><div class="line">val := 0</div>
+<div class="line">if val == 0</div>
+<div class="line">    if val &gt; 0</div>
+<div class="line">        print(&#39;ok&#39;)</div>
+<div class="line">else</div>
+<div class="line">    print(&#39;no&#39;)</div>
+<div class="line"> </div>
+<div class="line">// below codes are same to the above.</div>
+<div class="line">if val == 0: if val &gt; 0: print(&#39;ok&#39;)</div>
+<div class="line">else: print(&#39;no&#39;) // &#39;else&#39; has no indentation level.</div>
+<div class="line">/* if above &#39;else&#39; statement has 1 level indentation like below,</div>
+<div class="line"> </div>
+<div class="line">    if val == 0: if val &gt; 0: print(&#39;ok&#39;)</div>
+<div class="line">        else: print(&#39;no&#39;)</div>
+<div class="line"> </div>
+<div class="line">    then it&#39;s like,</div>
+<div class="line"> </div>
+<div class="line">    if val == 0</div>
+<div class="line">        if val &gt; 0</div>
+<div class="line">            print(&#39;ok&#39;)</div>
+<div class="line">        else</div>
+<div class="line">            print(&#39;no&#39;)</div>
+<div class="line">*/</div>
+</div><!-- fragment --><ul>
+<li>closure에서도 동일하게 적용한다.</li>
+</ul>
+<div class="fragment"><div class="line">closure(n int) int = null</div>
+<div class="line"> </div>
+<div class="line">if val &gt; 0</div>
+<div class="line">    callClosure(c closure, n int) void</div>
+<div class="line">        c(n)</div>
+<div class="line"> </div>
+<div class="line">    callClosure((n int) int</div>
+<div class="line">        return n + 5</div>
+<div class="line">    , 22) // watch the comma. it&#39;s align to the indentation of &#39;callClosure&#39; function call.</div>
+<div class="line">          // which means that it&#39;s belongs to the call as one of argument.</div>
+<div class="line">          // if the comma has been attached to the end of &#39;return&#39; statment inside function,</div>
+<div class="line">          // it has totally different meaning.</div>
+<div class="line"> </div>
+<div class="line">    /* callClosure((n int) int</div>
+<div class="line">        return n + 5, 22)</div>
+<div class="line">    &#39;,&#39; is belongs to the line which has 2 indentation level. so it exists as one of term of</div>
+<div class="line">    &#39;return&#39; statement.</div>
+<div class="line">    now &#39;callClosure&#39; function is returning two integer, n+5 and 22, are not valid syntax</div>
+<div class="line">    on wrd language. */</div>
+<div class="line"> </div>
+<div class="line">    callClosure((n): switch n: 22, 23: doSomething(), 23) // ok</div>
+<div class="line">    // in above statement, comma was also used to represent the case statement, but it&#39;s not</div>
+<div class="line">    // ambigious because every case statement has at least one statement.</div>
+<div class="line"> </div>
+<div class="line">    callClosure((n): switch n: 22, 23</div>
+<div class="line">                // you can write statement without &#39;:&#39; after starting it.</div>
+<div class="line">                // but be careful to use indentation level.</div>
+<div class="line">                // I&#39;ve used &#39;:&#39; twice before below statement. so I must indent the context twice.</div>
+<div class="line">        // switch n</div>
+<div class="line">            // 22, 23</div>
+<div class="line">                doSomething()</div>
+<div class="line">                //doSomething(), 23 // err: , was belongs to the line which has 2 indentation level.</div>
+<div class="line">                                    // it means that &#39;23&#39; was one of terms as statement to</div>
+<div class="line">                                    // switch-case.</div>
+<div class="line">    , 23) // ok. &#39;23&#39; is the argument of callClosure.</div>
 </div><!-- fragment --><h1>흐름 제어</h1>
 <div class="fragment"><div class="line">msg := &quot;hello&quot;</div>
 <div class="line">for ch in msg</div>
@@ -102,15 +167,16 @@ $(function() {
 <div class="line">for n in seq</div>
 <div class="line">    c.print(intArr[n])</div>
 <div class="line"> </div>
-<div class="line">pair1:= intVal;&quot;banana&quot;</div>
+<div class="line">pair1 := intVal;&quot;banana&quot;</div>
 <div class="line">pair1.key == 3.5</div>
 <div class="line">pair1.val = &quot;money?&quot;</div>
 <div class="line"> </div>
-<div class="line">map := {pair1, 2.5;&quot;apple&quot;} // mas as float[str]</div>
+<div class="line">map := {pair1, 2.5;&quot;apple&quot;} // map as float[str]</div>
 <div class="line"> </div>
 <div class="line">sys.cons aka c // typedef</div>
 <div class="line">c.print(&quot;how many apple do you have = $map[&#39;apple&#39;]&quot;) // &quot;how many apple do you have = 2.0&quot;</div>
 </div><!-- fragment --><h1>함수</h1>
+<p>&lt;function-name&gt;* '(' (&lt;arg&gt; ,)* ')' &lt;return-type&gt;* &lt;stmt&gt;+</p>
 <ul>
 <li>함수는 본문이 있는 소괄호로 정의합니다.<ul>
 <li>반환형을 없어도 된다는 얘기입니다.</li>
@@ -120,6 +186,7 @@ $(function() {
 </li>
 <li>함수 안에서라면 인자타입이 없어도 됩니다.</li>
 <li>정의시, 역시 type은 항상 뒤에 옵니다.</li>
+<li>함수의 반환형에는 expr이 올 수 없습니다. 타입만 올 수 있습니다.</li>
 </ul>
 <div class="fragment"><div class="line">getLen(b int...) int // ... means varidic argument</div>
 <div class="line">    sum := 0</div>
@@ -131,17 +198,17 @@ $(function() {
 <div class="line">    sum := 0</div>
 <div class="line">    return sum</div>
 <div class="line"> </div>
-<div class="line">(b int) // ok. but never got called.</div>
+<div class="line">(b int) // ok. but never got called. because it has no name.</div>
 <div class="line">    sum := 0</div>
 <div class="line">    return sum</div>
 <div class="line">    </div>
-<div class="line">fun := () // == returns closure refering &lt;nameless function&gt;() str.</div>
+<div class="line">fun := () // == declare a closure refering &lt;nameless function&gt;() str.</div>
 <div class="line">    return &quot;&quot;</div>
 <div class="line">fun()</div>
 <div class="line"> </div>
-<div class="line">setClickListener((v): v.onClick())</div>
+<div class="line">setClickListener((v): v.onClick()) // if a func was nested, it works like a closure.</div>
 <div class="line"> </div>
-<div class="line">// getLen(b int) --&gt; err. if context is missing, this should be regarded to a function call.</div>
+<div class="line">// getLen(b int) // err. this is ambigious. if the body of func was missing, it should be regarded to a function call.</div>
 <div class="line"> </div>
 <div class="line">foo(useless int...) int = null // &#39;null&#39; declares that this is abstract method def.</div>
 <div class="line">likeFptr := foo // foo can be used as a type.</div>
@@ -185,6 +252,9 @@ $(function() {
 <div class="line">    // overrided</div>
 <div class="line">    say() str? </div>
 <div class="line">        c.out(&quot;derive.say!&quot;)</div>
+<div class="line"> </div>
+<div class="line">def derive2(2) from base(22) // you can call constructor of superclass.</div>
+<div class="line">    // this &#39;derive2&#39; is like a static variable of other languages.</div>
 <div class="line"> </div>
 <div class="line">b1 := base(1) // b was created from &quot;base&quot; object.</div>
 <div class="line">b1.say() // &quot;age=2&quot;</div>
@@ -234,8 +304,9 @@ $(function() {
 </div><!-- fragment --><h1>closure</h1>
 <div class="fragment"><div class="line">def app</div>
 <div class="line">    func() int = null // abstract method.</div>
+<div class="line">    // when you declare a func, the func can be also used as a type.</div>
 <div class="line"> </div>
-<div class="line">    foo() func // returns a function.</div>
+<div class="line">    foo() func // returns a function matching the signature of &#39;func&#39; function.</div>
 <div class="line"> </div>
 <div class="line">        def cnt() from 0 // origin object can be shared and exist as only one instance during the process.</div>
 <div class="line"> </div>
@@ -289,7 +360,7 @@ $(function() {
 <h2>predeclared objects</h2>
 <p>me it null super</p>
 <h2>operators</h2>
-<p>. _ + - / * % += := == === -= /= *= ^ %= ! ^ &amp; | !! ^^ &amp;&amp; || [] ... () ++ ** &ndash; // /* */ : =&gt; -&gt; , </p>
+<p>. _ + - / * % += := == === -= /= *= ^ %= ! ^ &amp; | !! ^^ &amp;&amp; || [] ... () ++ ** &ndash; // /* *&zwj;/ : =&gt; -&gt; , </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
