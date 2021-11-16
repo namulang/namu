@@ -43,18 +43,19 @@ for ++n < 3
 # 컨테이너
 
 ```wrd
-intArr := [1, 2, 3]
-floatArr := [1.5, 2.5, 3.5]
+intArr := {1, 2, 3}
+floatArr := {1.5, 2.5, 3.5}
 
 seq := 2..4
 seq.len == 3 // true
 for n in seq
     c.print(intArr[n])
 
-intVal, floatVal := 2, 3.5 // , for list
+pair1:= intVal;"banana"
+pair1.key == 3.5
+pair1.val = "money?"
 
-tup1 := intVal:"banana"
-map := [tup1, floatVal:"apple"] // mas as float[str]
+map := {pair1, 2.5;"apple"} // mas as float[str]
 
 sys.cons aka c // typedef
 c.print("how many apple do you have = $map['apple']") // "how many apple do you have = 2.0"
@@ -63,6 +64,11 @@ c.print("how many apple do you have = $map['apple']") // "how many apple do you 
 
 # 함수
 
+* 함수는 본문이 있는 소괄호로 정의합니다.
+    * 반환형을 없어도 된다는 얘기입니다.
+    * 함수명이 없어도 된다는 얘기입니다.
+    * 인자가 없어도 된다는 얘기입니다.
+* 함수 안에서라면 인자타입이 없어도 됩니다.
 * 정의시, 역시 type은 항상 뒤에 옵니다.
 
 ```wrd
@@ -72,8 +78,24 @@ getLen(b int...) int // ... means varidic argument
         sum++
     return sum
 
-foo(useless int...) int = null // abstract method def.
-likeFptr := foo
+getLen(b int) // return type is deducted to 'int'
+    sum := 0
+    return sum
+
+(b int) // ok. but never got called.
+    sum := 0
+    return sum
+    
+fun := () // == returns closure refering <nameless function>() str.
+    return ""
+fun()
+
+setClickListener((v): v.onClick())
+
+// getLen(b int) --> err. if context is missing, this should be regarded to a function call.
+
+foo(useless int...) int = null // 'null' declares that this is abstract method def.
+likeFptr := foo // foo can be used as a type.
 likeFptr() // foo is abstrat. Exception occurs.
 
 likeFptr = getLen // ok to assign.
@@ -86,34 +108,43 @@ lifeFptr() == 0 // true
 ```wrd
 sys.cons aka c
 
-def base
+def base // base is incomplete origin object
     _realAge := 0 // "_" means protected
 
-    age := int // all member variables are property.
-        @get: realAge + 1
-        @set: realAge = it  // it refers the parameter of this method which has a single parameter.
+    age int // this property don't have a value.
+        get(): realAge + 1
+        set(new int): realAge = new // it refers the parameter of this method which has a single parameter.
 
-    @ctor(newAge int)
+    age2 := 0 // this property has value.
+        get(old int): return old + 1 // getter should accepts 1 argument holding the value.
+        set(new int) int: return new
+
+    age3 := 0 // convenient way.
+        get: return it + 1
+        set: return it
+
+    me(newAge int)
         realAge = newAge
         c.out("constructor(int)")
 
-    @ctor(): c.out("constructor()")
+    me(): c.out("constructor()")
 
     say() str? // returning value can be assigned to null.
         c.out("age=$age")
         return null
 
-def derive base
+def derive(1) from base // derive is complete origin object
 
-    @ctor(int new) // ctor does nothing but calls super()
+    me(new int) // ctor does nothing but calls super()
+        super(new)
 
     // overrided
-    say() str? => // derive.say() print "derive.say" before calls super's one.
+    say() str? 
         c.out("derive.say!")
 
 b1 := base(1) // b was created from "base" object.
 b1.say() // "age=2"
-derive.say() // there is no class. all of them are object, too.
+derive.say()
 derive.say() // now, "age=2"
 
 // derive.realAge // can't access private member at outside.
@@ -145,14 +176,15 @@ val == 10 // true
 ```wrd
 def myObj
     age := 22 // age as int. it has value 22. but is also property.
-        got => @get
-            sys.cons.out("this will return $got")
-            return got
+        get
+            sys.cons.out("this will return $it")
+            return it 
 
 def myObj2
     age := 22
-        @set=>: cout("age.@set")
-        _@get=> // @get returns value of age.
+        set(new int) int: cout("age.$new")
+        _get // get is normally returning value of age but isn't accessible from outside.
+        // same as, '_get(old int) int: return old'
 
 def app
     main() void
@@ -169,20 +201,20 @@ def app
 
 ```wrd
 def app
-    int func() = null // abstract method.
+    func() int = null // abstract method.
 
     foo() func // returns a function.
 
-        $cnt := 0 // $ means "static" which only can be prefix of a variable.
+        def cnt() from 0 // origin object can be shared and exist as only one instance during the process.
 
         arr := int[]
         for (n := 1) < ++cnt
             arr.add(n)
 
         getLenFrom() int // a nested method like a closure.
-            arr.len // all of expr always returns last expr to outside.
-
-        ret getLenFrom
+            arr.len // so, arr can be captured.
+                    // all of expr always returns last expr to outside.
+        ret getLenFrom // the capturing of arr variable occurs at here. (when assigning value to a closure)
 
     main() void
         foo()() // == 1
@@ -195,7 +227,7 @@ def app
 ```wrd
 def app
     safeNavigation() void
-        getActivity()?.getAppContext()?.getResources()?.getString(1) // safe navigation
+        activity?.appContext?.res?.getString(1) // safe navigation
 
     exceptionHandling() int on nullErr, ioErr // specifying that returns err with value.
         try Resources res = getActivity().getAppContext().getResources()
@@ -227,7 +259,7 @@ def app
 
 ## syntax
 
-def with if elif else ret return break continue aka as try on in for 
+def from with if elif else ret return continue switch import pack aka as try on in for 
  
 ## primitive types
 
@@ -235,7 +267,7 @@ int int8 int16 int32 int64 flt flt32 flt64 str bool char void err obj null
 
 ## predeclared objects
 
-me it null super @set @get @ctor
+me it null super
 
 ## operators
 
