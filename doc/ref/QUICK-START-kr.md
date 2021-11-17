@@ -51,11 +51,11 @@ seq.len == 3 // true
 for n in seq
     c.print(intArr[n])
 
-pair1:= intVal;"banana"
+pair1 := intVal;"banana"
 pair1.key == 3.5
 pair1.val = "money?"
 
-map := {pair1, 2.5;"apple"} // mas as float[str]
+map := {pair1, 2.5;"apple"} // map as float[str]
 
 sys.cons aka c // typedef
 c.print("how many apple do you have = $map['apple']") // "how many apple do you have = 2.0"
@@ -64,12 +64,16 @@ c.print("how many apple do you have = $map['apple']") // "how many apple do you 
 
 # 함수
 
+   <function-name>* '(' (<arg> ,)* ')' <return-type>*
+       <stmt>+
+
 * 함수는 본문이 있는 소괄호로 정의합니다.
     * 반환형을 없어도 된다는 얘기입니다.
     * 함수명이 없어도 된다는 얘기입니다.
     * 인자가 없어도 된다는 얘기입니다.
 * 함수 안에서라면 인자타입이 없어도 됩니다.
 * 정의시, 역시 type은 항상 뒤에 옵니다.
+* 함수의 반환형에는 expr이 올 수 없습니다. 타입만 올 수 있습니다.
 
 ```wrd
 getLen(b int...) int // ... means varidic argument
@@ -82,17 +86,17 @@ getLen(b int) // return type is deducted to 'int'
     sum := 0
     return sum
 
-(b int) // ok. but never got called.
+(b int) // ok. but never got called. because it has no name.
     sum := 0
     return sum
     
-fun := () // == returns closure refering <nameless function>() str.
+fun := () // == declare a closure refering <nameless function>() str.
     return ""
 fun()
 
-setClickListener((v): v.onClick())
+setClickListener((v): v.onClick()) // if a func was nested, it works like a closure.
 
-// getLen(b int) --> err. if context is missing, this should be regarded to a function call.
+// getLen(b int) // err. this is ambigious. if the body of func was missing, it should be regarded to a function call.
 
 foo(useless int...) int = null // 'null' declares that this is abstract method def.
 likeFptr := foo // foo can be used as a type.
@@ -141,6 +145,9 @@ def derive(1) from base // derive is complete origin object
     // overrided
     say() str? 
         c.out("derive.say!")
+
+def derive2(2) from base(22) // you can call constructor of superclass.
+    // this 'derive2' is like a static variable of other languages.
 
 b1 := base(1) // b was created from "base" object.
 b1.say() // "age=2"
@@ -202,8 +209,9 @@ def app
 ```wrd
 def app
     func() int = null // abstract method.
+    // when you declare a func, the func can be also used as a type.
 
-    foo() func // returns a function.
+    foo() func // returns a function matching the signature of 'func' function.
 
         def cnt() from 0 // origin object can be shared and exist as only one instance during the process.
 
