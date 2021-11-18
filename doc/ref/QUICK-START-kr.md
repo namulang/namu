@@ -24,6 +24,76 @@ int1 := 15
 toInt := int1 as flt64 // casts int as 64bit float.
 ```
 
+# Indentation 레벨에 의한 Scope 범위
+
+* 항상 Indentation 레벨에 의해서 scope를 표현한다.
+
+```wrd
+val := 0
+if val == 0
+    if val > 0
+        print('ok')
+else
+    print('no')
+
+// below codes are same to the above.
+if val == 0: if val > 0: print('ok')
+else: print('no') // 'else' has no indentation level.
+/* if above 'else' statement has 1 level indentation like below,
+
+    if val == 0: if val > 0: print('ok')
+        else: print('no')
+
+    then it's like,
+
+    if val == 0
+        if val > 0
+            print('ok')
+        else
+            print('no')
+*/
+```
+
+* closure에서도 동일하게 적용한다.
+
+```wrd
+closure(n int) int = null
+
+if val > 0
+    callClosure(c closure, n int) void
+        c(n)
+
+    callClosure((n int) int
+        return n + 5
+    , 22) // watch the comma. it's align to the indentation of 'callClosure' function call.
+          // which means that it's belongs to the call as one of argument.
+          // if the comma has been attached to the end of 'return' statment inside function,
+          // it has totally different meaning.
+
+    /* callClosure((n int) int
+        return n + 5, 22)
+    ',' is belongs to the line which has 2 indentation level. so it exists as one of term of
+    'return' statement.
+    now 'callClosure' function is returning two integer, n+5 and 22, are not valid syntax
+    on wrd language. */
+
+    callClosure((n): switch n: 22, 23: doSomething(), 23) // ok
+    // in above statement, comma was also used to represent the case statement, but it's not
+    // ambigious because every case statement has at least one statement.
+
+    callClosure((n): switch n: 22, 23
+                // you can write statement without ':' after starting it.
+                // but be careful to use indentation level.
+                // I've used ':' twice before below statement. so I must indent the context twice.
+        // switch n
+            // 22, 23
+                doSomething()
+                //doSomething(), 23 // err: , was belongs to the line which has 2 indentation level.
+                                    // it means that '23' was one of terms as statement to
+                                    // switch-case.
+    , 23) // ok. '23' is the argument of callClosure.
+```
+
 
 # 흐름 제어
 ```wrd
