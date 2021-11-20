@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
             } else {
                 yyin = fopen(argv[n], "r");
                 cout << " opening " << argv[n] << " file...\n";
+                cout << yyin << "\n";
             }
         }
     }
