@@ -113,13 +113,13 @@ public:
     }
 
     int _getColor(const string& value) {
-        static vector<string> prebuilt = {
+        static vector<string> prebuilt({
             "null",
             "got",
             "super",
             "this",
             "me",
-        };
+        });
 
         for(string e : prebuilt)
             if(_value == e) return RED;
