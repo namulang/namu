@@ -38,7 +38,7 @@ void yyerror(const char* s)
 %verbose
 %start tfile
 
-%token tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tout tin tindent tdedent
+%token tpack tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tout tin tindent tdedent
 
 %token <intVal> teof
 %token <floatVal> tnum
@@ -57,7 +57,7 @@ void yyerror(const char* s)
 
 %type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem textendableId
 
-%type <node> timportStmt
+%type <node> timportStmt tpackStmt tpackStmts tpackBlocks
 
 %type <node> tfunc tctorfunc tdtorfunc tfunclist tfuncleft tfuncright
 
@@ -578,12 +578,33 @@ tdefBlock   : tdefStmt {
             }
             ;
 
+tpackStmt   : tpack taccess teol {
+                  Block* ret = new Block();
+                  if ($2)
+                     ret->add($2);
+                  $$ = ret;
+            }
 
 timportStmt : timport taccess teol {
                 $$ = new ImportStmt($2);
             }
             | timport tnormalId teol {
                 $$ = new ImportStmt(new Id($2));
+            }
+            ;
+tpackStmts  : tpackStmt { $$ = $1; }
+            | timportStmt { $$ = $1; }
+            ;
+tpackBlocks : tpackStmts {
+                Block* block = new Block();
+                if ($1)
+                    block->add($1);
+                $$ = block;
+            }
+            | tpackBlocks tpackStmts {
+                if ($2)
+                    ((Block*) $1)->add($2);
+                $$ = $1;
             }
             ;
 
@@ -606,15 +627,10 @@ tfile       : tfile tdefOriginStmt {
                 ret->add($2);
                 $$ = ret;
             }
-            | timportStmt {
+            | tpackBlocks {
                 parsed = new File();
-                parsed->add($1);
+                parsed->setHeader($1);
                 $$ = parsed;
-            }
-            | tfile timportStmt {
-                File* ret = (File*) $1;
-                ret->add($2);
-                $$ = ret;
             }
             | tdefOriginStmt {
                 parsed = new File();
