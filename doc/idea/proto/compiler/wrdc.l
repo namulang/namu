@@ -294,23 +294,6 @@ true|false {
     return tchar;
 }
 
-(_)[a-zA-Z0-9_]+\( {
-    string temp = yytext;
-    temp = temp.substr(0, temp.size()-1);
-    yylval.strVal = strdup(temp.c_str());
-    unput('(');
-    return taccessedFuncname;
-}
-
-[a-zA-Z][a-zA-Z0-9_]*\( {
-    string temp = yytext;
-    temp = temp.substr(0, temp.size()-1);
-    yylval.strVal = strdup(temp.c_str());
-    unput('(');
-    return tnormalFuncname;
-}
-
-
 <indent>[ ] { nowIndent++; }
 <indent>\t {
     nowIndent = (nowIndent + TAB_WIDTH) & ~(TAB_WIDTH - 1);
