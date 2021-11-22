@@ -94,18 +94,6 @@ return { return treturn; }
     yylval.strVal = strdup(yytext);
     return tfdtor;
 }
-(_)*@res {
-    yylval.strVal = strdup(yytext);
-    return tfres;
-}
-(_)*@warn {
-    yylval.strVal = strdup(yytext);
-    return tfwarn;
-}
-(_)*@err {
-    yylval.strVal = strdup(yytext);
-    return tferr;
-}
 
 true|false {
     yylval.boolVal = string(yytext) == "true" ? true : false;
@@ -285,7 +273,6 @@ true|false {
 \!\=\= { return topNotRefEqual; }
 \?\. { return topSafeNavi; }
 \.\. { return topSeq; }
-\=\> { return topRedirect; }
 \+\+ { return topUplus; }
 \-\- { return topUminus; }
 
