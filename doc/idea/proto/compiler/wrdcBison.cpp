@@ -38,7 +38,7 @@ void yyerror(const char* s)
 %verbose
 %start tfile
 
-%token tpack tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tout tin tindent tdedent
+%token tpack tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tin tindent tdedent
 
 %token <intVal> teof
 %token <floatVal> tnum
@@ -46,7 +46,7 @@ void yyerror(const char* s)
 %token <charVal> tchar
 %token <strVal> tstr tfctor tfdtor tfget tfset tfres
 
-%token <strVal> tnormalId taccessedId tconName tdeckId
+%token <strVal> tnormalId taccessedId tconName
 %type <strVal> tid
 
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topUplus topUminus
@@ -55,7 +55,7 @@ void yyerror(const char* s)
 %type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturnexpr ttuple ttuples tparam tparams tsafeAccess tconNames
 
 
-%type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tdefId tdefIds tdeflist toutableId tlhslistElem
+%type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tlhslistElem
 
 %type <node> timportStmt tpackStmt tpackStmts tpackBlocks
 
@@ -228,12 +228,8 @@ trhsexpr    : trhsIdExpr { $$ = $1; }
 
 
 
-toutableId  : tid { $$ = new Id($1); }
-            | tout tid { $$ = new Out(new Id($2)); }
-            ;
-
-tdefexpr    : tdeflist topDefAssign trhsListExpr { $$ = new DefAssign($1, $3); }
-            | toutableId topDefAssign trhsIdExpr { $$ = new DefAssign($1, $3); }
+tdefexpr    : tid topDefAssign trhsIdExpr { $$ = new DefAssign(new Id($1), $3); }
+            | tparam { $$ = $1; }
             | tdefOrigin { $$ = $1; }
             | tfunc { $$ = $1; }
             | tpropexpr { $$ = $1; }
@@ -315,28 +311,6 @@ tlhslist    : '(' tlhslistElem ')' {
             }
             ;
 
-tdefId      : toutableId { $$ = $1; }
-            | tdeflist { $$ = $1; }
-            ;
-tdefIds     : tdefId {
-                Args* ret = new Args();
-                ret->add($1);
-                $$ = ret;
-            }
-            | tdefIds ',' tdefId {
-                Args* ret = (Args*) $1;
-                ret->add($3);
-                $$ = ret;
-            }
-            ;
-tdeflist    : '(' tdefIds ')' {
-                $$ = new List((Args*) $2);
-            }
-            ;
-
-
-
-
 ttuple      : trhsexpr ':' trhsexpr {
                 $$ = new Tuple($1, $3);
             }
@@ -375,11 +349,8 @@ tsafeAccess : trhsexpr topSafeNavi tnormalId { $$ = new SafeAccess($1, new Id($3
             | trhsexpr topSafeNavi tfuncCall { $$ = new SafeAccess($1, $3); }
             ;
 
-tparam      : ttype tid {
-                $$ = new Param($1, new Id($2));
-            }
-            | tdeckId {
-                $$ = new Param(new Id($1), new Id($1));
+tparam      : tid ttype {
+                $$ = new Param($2, new Id($1));
             }
             ;
 

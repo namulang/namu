@@ -60,7 +60,6 @@ elif { return telif; }
     return tdef;
 }
 from { return tfrom; }
-out { return tout; }
 "prop"[\(]* {
     string temp = yytext;
     if(temp[temp.size()-1] == '(') {
@@ -159,11 +158,6 @@ true|false {
     if(yydebug)
         cout << "----------lex: tnormalId is " << yylval.strVal << " ---- \n";
     return tnormalId;
-}
-
-@[a-zA-Z][a-zA-Z0-9_]* {
-    yylval.strVal = strdup(yytext);
-    return tdeckId;
 }
 
 [a-zA-Z][a-zA-Z0-9_]*   {
