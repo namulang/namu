@@ -44,14 +44,14 @@ void yyerror(const char* s)
 %token <floatVal> tnum
 %token <boolVal> tbool
 %token <charVal> tchar
-%token <strVal> tstr tfctor tfdtor tfget tfset tfres tfwarn tferr
+%token <strVal> tstr tfctor tfdtor tfget tfset tfres
 
 %token <strVal> tnormalId taccessedId tconName tdeckId
 %type <strVal> tid
 
-%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topRedirect topUplus topUminus
+%token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topUplus topUminus
 
-%type <node> tblock tindentBlock temptiableIndentBlock
+%type <node> tblock tindentBlock
 %type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturnexpr ttuple ttuples tparam tparams tsafeAccess tconNames
 
 
@@ -59,7 +59,7 @@ void yyerror(const char* s)
 
 %type <node> timportStmt tpackStmt tpackStmts tpackBlocks
 
-%type <node> tfunc tctorfunc tdtorfunc tfunclist tfuncleft tfuncright
+%type <node> tfunc tctorfunc tdtorfunc tfunclist
 
 %type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock tdefOriginStmt
 
@@ -443,18 +443,8 @@ tgetsetList : tfunclist { $$ = $1; }
             | { $$ = 0; }
             ;
 
-temptiableIndentBlock: tindentBlock { $$ = $1; }
-            | { $$ = 0; }
-            ;
-
-tgetsetterExpr: tgetsetFuncName tgetsetList temptiableIndentBlock {
+tgetsetterExpr: tgetsetFuncName tgetsetList tindentBlock {
                 $$ = new Func(0, 0, $1, $2, 0, $3);
-            }
-            | tfuncleft tgetsetFuncName tgetsetList temptiableIndentBlock {
-                $$ = new Func($1, 0, $2, $3, 0, $4);
-            }
-            | tgetsetFuncName tgetsetList tfuncright temptiableIndentBlock {
-                $$ = new Func(0, 0, $1, $2, $3, $4);
             }
             ;
 tgetsetterStmt: tgetsetterExpr teol { $$ = new Stmt($1); }
@@ -480,42 +470,26 @@ tfunclist   : '(' ')' { $$ = 0; }
             | '(' tparams ')' { $$ = $2; }
             ;
 
-tfuncleft   : topRedirect { $$ = new Redirect(); }
-            | tid topRedirect { $$ = new Redirect(new Id($1)); }
-            | tlhslist topRedirect { $$ = new Redirect($1); }
-            ;
-
-tfuncright  : topRedirect { $$ = new Redirect(); }
-            | topRedirect tid { $$ = new Redirect(new Id($2)); }
-            | topRedirect tlhslist { $$ = new Redirect($2); }
-            ;
-
-tfunc       : ttype tid tfunclist temptiableIndentBlock {
-                $$ = new Func(0, $1, new Id($2), $3, 0, $4);
+tfunc       : tid tfunclist ttype tindentBlock {
+                $$ = new Func(0, $3, new Id($1), $2, 0, $4);
             }
-            | tfuncleft ttype tid tfunclist temptiableIndentBlock {
-                $$ = new Func($1, $2, new Id($3), $4, 0, $5);
-            }
-            | ttype tid tfunclist tfuncright temptiableIndentBlock {
-                $$ = new Func(0, $1, new Id($2), $3, $4, $5);
-            }
-            | tferr tfunclist temptiableIndentBlock {
+            | tid tfunclist tindentBlock {
                 $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
-            | tfwarn tfunclist temptiableIndentBlock {
-                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
+            | tfunclist ttype tindentBlock {
+                $$ = new Func(0, $2, new Id(""), $1, 0, $3);
             }
-            | tfres tfunclist temptiableIndentBlock {
+            | tfunclist tindentBlock {
+                $$ = new Func(0, 0, new Id(""), $1, 0, $2);
+            }
+            ;
+
+tctorfunc   : tfctor tfunclist tindentBlock {
                 $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
             ;
 
-tctorfunc   : tfctor tfunclist temptiableIndentBlock {
-                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
-            }
-            ;
-
-tdtorfunc   : tfdtor tfunclist temptiableIndentBlock {
+tdtorfunc   : tfdtor tfunclist tindentBlock {
                 $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
             ;
