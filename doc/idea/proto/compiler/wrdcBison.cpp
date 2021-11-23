@@ -197,6 +197,8 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
 
 
 tdefexpr    : tid topDefAssign trhsIdExpr { $$ = new DefAssign(new Id($1), $3); }
+            | tid ttype topDefAssign trhsIdExpr { $$ = new DefAssign(new Param($2, new Id($1)), $4); }
+            | tid ttype topDefAssign '{' '}' { $$ = new DefAssign(new Param($2, new Id($1)), new Array()); }
             | tparam { $$ = $1; }
             | tdefOrigin { $$ = $1; }
             | tfunc { $$ = $1; }
