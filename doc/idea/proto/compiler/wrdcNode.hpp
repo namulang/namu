@@ -459,7 +459,15 @@ public:
     }
 };
 
+class PackStmt : public Node {
+public:
+    PackStmt(Node* packPath): Node(packPath) {}
 
+    virtual string name() { return "pack"; }
+    virtual string print(int lv) {
+        return tab(lv) + clr(KEYWORD) + "pack " + l()->print(lv) + "\n";
+    }
+};
 
 
 

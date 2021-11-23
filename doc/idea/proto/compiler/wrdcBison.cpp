@@ -38,7 +38,7 @@ void yyerror(const char* s)
 %verbose
 %start tfile
 
-%token tpack tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tin tindent tdedent
+%token tpack tas tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tin tindent tdedent
 
 %token <intVal> teof
 %token <floatVal> tnum
@@ -55,7 +55,7 @@ void yyerror(const char* s)
 %type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturnexpr ttuple ttuples tparam tparams tsafeAccess tconNames
 
 
-%type <node> trhsexpr trhslist tfuncRhsList tlhslist trhsIdExpr trhsListExpr tlhsId trhsIds tlhslistElem
+%type <node> tfuncRhsList trhsIdExpr tlhsId trhsIds trhslist
 
 %type <node> timportStmt tpackStmt tpackStmts tpackBlocks
 
@@ -104,7 +104,7 @@ telifBlocks : telifBlock {
                 $$ = $1;
             }
 
-tbranch     : trhsexpr tindentBlock {
+tbranch     : trhsIdExpr tindentBlock {
                 $$ = new Branch($1, (Container*) $2);
             }
 
@@ -141,10 +141,11 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             | tchar { $$ = new Char($1); }
             | tarray { $$ = $1; }
             | tmap { $$ = $1; }
-            | ttype %dprec 1 { $$ = $1; }
             | tdefexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
+            | taccess { $$ = $1; }
             | tsafeAccess { $$ = $1; }
+            | tlhsId { $$ = $1; }
             | '(' trhsIdExpr ')' { $$ = $2; }
 
             | topUplus trhsIdExpr %dprec 1 { $$ = new UPre(new Id("++"), $2); }
@@ -195,39 +196,6 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             ;
 
 
-trhsListExpr: trhslist { $$ = $1; } // tlhslist --> can be trhslist.
-            | trhsListExpr '+' trhsListExpr %dprec 2 { $$ = new Plus($1, $3); }
-            | trhsListExpr '-' trhsListExpr %dprec 2 { $$ = new Minus($1, $3); }
-            | trhsListExpr '*' trhsListExpr %dprec 2 { $$ = new Square($1, $3); }
-            | trhsListExpr '/' trhsListExpr %dprec 2 { $$ = new Divide($1, $3); }
-            | trhsListExpr '%' trhsListExpr %dprec 2 { $$ = new Moduler($1, $3); }
-            | trhsListExpr '^' trhsListExpr %dprec 2 { $$ = new Power($1, $3); }
-            | trhsListExpr '<' trhsListExpr %dprec 2 { $$ = new Less($1, $3); }
-            | trhsListExpr topLessEqual trhsListExpr %dprec 2 { $$ = new LessEqual($1, $3); }
-            | trhsListExpr '>' trhsListExpr %dprec 2 { $$ = new More($1, $3); }
-            | trhsListExpr topMoreEqual trhsListExpr %dprec 2 { $$ = new MoreEqual($1, $3); }
-            | trhsListExpr topEqual trhsListExpr %dprec 2 { $$ = new Equal($1, $3); }
-            | trhsListExpr topRefEqual trhsListExpr %dprec 2 { $$ = new RefEqual($1, $3); }
-            | trhsListExpr topNotEqual trhsListExpr %dprec 2 { $$ = new NotEqual($1, $3); }
-            | trhsListExpr topNotRefEqual trhsListExpr %dprec 2 { $$ = new NotRefEqual($1, $3); }
-            | trhsListExpr '&' trhsListExpr %dprec 3 { $$ = new And($1, $3); }
-            | trhsListExpr '|' trhsListExpr %dprec 3 { $$ = new Or($1, $3); }
-
-            | tlhslist '=' trhsListExpr { $$ = new Assign($1, $3); }
-            | tlhslist topPlusAssign trhsListExpr { $$ = new PlusAssign($1, $3); }
-            | tlhslist topMinusAssign trhsListExpr { $$ = new MinusAssign($1, $3); }
-            | tlhslist topSquareAssign trhsListExpr { $$ = new SquareAssign($1, $3); }
-            | tlhslist topDivideAssign trhsListExpr { $$ = new DivideAssign($1, $3); }
-            | tlhslist topModAssign trhsListExpr { $$ = new ModulerAssign($1, $3); }
-            | tlhslist topPowAssign trhsListExpr { $$ = new PowAssign($1, $3); }
-            ;
-
-trhsexpr    : trhsIdExpr { $$ = $1; }
-            | trhsListExpr { $$ = $1; }
-            ;
-
-
-
 tdefexpr    : tid topDefAssign trhsIdExpr { $$ = new DefAssign(new Id($1), $3); }
             | tparam { $$ = $1; }
             | tdefOrigin { $$ = $1; }
@@ -258,24 +226,23 @@ tconAccess  : tnormalId '[' trhsIdExpr ']' {
             }
             ;
 
-tcast       : ttype trhsIdExpr {
-                $$ = new Cast($1, $2);
+tcast       : trhsIdExpr tas ttype {
+                $$ = new Cast($3, $1);
             }
             ;
 
-
-treturnexpr : tret trhsexpr { $$ = new Return("ret", $2); }
-            | treturn trhsexpr { $$ = new Return("return", $2); }
+treturnexpr : tret trhsIdExpr { $$ = new Return("ret", $2); }
+            | treturn trhsIdExpr { $$ = new Return("return", $2); }
             ;
 
 
-trhsIds     : trhsexpr ',' trhsexpr {
+trhsIds     : trhsIdExpr ',' trhsIdExpr {
                 Args* ret = new Args();
                 ret->add($1);
                 ret->add($3);
                 $$ = ret;
             }
-            | trhsIds ',' trhsexpr {
+            | trhsIds ',' trhsIdExpr {
                 Args* ret = (Args*) $1;
                 ret->add($3);
                 $$ = ret;
@@ -288,30 +255,9 @@ trhslist    : '(' trhsIds ')' { //  " "를 쓰면 안된다.
 
 tlhsId      : tnormalId { $$ = new Id($1); }
             | taccess { $$ = $1; }
-            | tlhslist { $$ = $1; }
-            ;
-tlhslistElem: tlhsId {
-                Args* ret = new Args();
-                ret->add($1);
-                $$ = ret;
-            }
-            | tlhslistElem ',' tlhsId {
-                Args* ret = (Args*) $1;
-                ret->add($3);
-                $$ = ret;
-            }
-            | tlhslistElem ',' tlhslist {
-                Args* ret = (Args*) $1;
-                ret->add($3);
-                $$ = ret;
-            }
-            ;
-tlhslist    : '(' tlhslistElem ')' {
-                $$ = new List((Args*) $2);
-            }
             ;
 
-ttuple      : trhsexpr ':' trhsexpr {
+ttuple      : trhsIdExpr ';' trhsIdExpr {
                 $$ = new Tuple($1, $3);
             }
 
@@ -337,20 +283,23 @@ tarray      : '{' trhsIds '}' {
             }
             ;
 
-tseq        : trhsexpr topSeq trhsexpr {
+tseq        : trhsIdExpr topSeq trhsIdExpr {
                 $$ = new Sequence($1, $3);
             }
 
-taccess     : trhsexpr '.' tnormalId { $$ = new Access($1, new Id($3)); }
-            | trhsexpr '.' tfuncCall { $$ = new Access($1, $3); }
+taccess     : tlhsId '.' tnormalId { $$ = new Access($1, new Id($3)); }
+            | tlhsId '.' tfuncCall { $$ = new Access($1, $3); }
             ;
 
-tsafeAccess : trhsexpr topSafeNavi tnormalId { $$ = new SafeAccess($1, new Id($3)); }
-            | trhsexpr topSafeNavi tfuncCall { $$ = new SafeAccess($1, $3); }
+tsafeAccess : trhsIdExpr topSafeNavi tnormalId { $$ = new SafeAccess($1, new Id($3)); }
+            | trhsIdExpr topSafeNavi tfuncCall { $$ = new SafeAccess($1, $3); }
             ;
 
 tparam      : tid ttype {
                 $$ = new Param($2, new Id($1));
+            }
+            | '@' tid {
+                $$ = new Id($2);
             }
             ;
 
@@ -368,7 +317,7 @@ tparams     : tparam {
 
 tfuncRhsList: trhslist { $$ = $1; }
             | '(' ')' { $$ = new List(); }
-            | '(' trhsexpr ')' {
+            | '(' trhsIdExpr ')' {
                 List* ret = new List();
                 Args* args = new Args();
                 args->add($2);
@@ -378,16 +327,16 @@ tfuncRhsList: trhslist { $$ = $1; }
             ;
 
 
-tpropexpr   : tprop tid tfrom trhsexpr tpropIndentBlock {
+tpropexpr   : tprop tid tfrom trhsIdExpr tpropIndentBlock {
                 $$ = new Prop(new Id($2), 0, $4, $5);
             }
-            | tprop tid tfuncRhsList tfrom trhsexpr tpropIndentBlock {
+            | tprop tid tfuncRhsList tfrom trhsIdExpr tpropIndentBlock {
                 $$ = new Prop(new Id($2), $3, $5, $6);
             }
-            | tprop tfrom trhsexpr tpropIndentBlock {
+            | tprop tfrom trhsIdExpr tpropIndentBlock {
                 $$ = new Prop(0, 0, $3, $4);
             }
-            | tprop tfuncRhsList tfrom trhsexpr tpropIndentBlock {
+            | tprop tfuncRhsList tfrom trhsIdExpr tpropIndentBlock {
                 $$ = new Prop(0, $2, $4, $5);
             }
             ;
@@ -427,10 +376,10 @@ tdefOrigin  : tdef tid tdefIndentBlock {
             | tdef tid tfuncRhsList tdefIndentBlock {
                 $$ = new Def(new Id($2), $3, 0, $4);
             }
-            | tdef tid tfuncRhsList tfrom trhsexpr tdefIndentBlock {
+            | tdef tid tfuncRhsList tfrom trhsIdExpr tdefIndentBlock {
                 $$ = new Def(new Id($2), $3, $5, $6);
             }
-            | tdef tid tfrom trhsexpr tdefIndentBlock {
+            | tdef tid tfrom trhsIdExpr tdefIndentBlock {
                 $$ = new Def(new Id($2), 0, $4, $5);
             }
             ;
@@ -443,6 +392,9 @@ tfunclist   : '(' ')' { $$ = 0; }
 
 tfunc       : tid tfunclist ttype tindentBlock {
                 $$ = new Func(0, $3, new Id($1), $2, 0, $4);
+            }
+            | tas tfunclist ttype tindentBlock {
+                $$ = new Func(0, $3, new Id("as"), $2, 0, $4);
             }
             | tid tfunclist tindentBlock {
                 $$ = new Func(0, 0, new Id($1), $2, 0, $3);
@@ -479,10 +431,10 @@ tdefStmt    : tdefexpr teol { $$ = new Stmt($1); }
             | tdtorfunc teol { $$ = new Stmt($1); }
             ;
 
-tstmt       : trhsexpr teol { $$ = new Stmt($1); }
+tstmt       : trhsIdExpr teol { $$ = new Stmt($1); }
             | treturnexpr teol { $$ = new Stmt($1); }
             | tnext teol { $$ = new Stmt(new Next()); }
-            | trhsexpr teof { $$ = new Stmt($1); }
+            | trhsIdExpr teof { $$ = new Stmt($1); }
             | teol { $$ = new Stmt(new Str("")); }
             ;
 
@@ -514,20 +466,16 @@ tdefBlock   : tdefStmt {
             }
             ;
 
-tpackStmt   : tpack taccess teol {
-                  Block* ret = new Block();
-                  if ($2)
-                     ret->add($2);
-                  $$ = ret;
-            }
-
-timportStmt : timport taccess teol {
-                $$ = new ImportStmt($2);
-            }
-            | timport tnormalId teol {
-                $$ = new ImportStmt(new Id($2));
+tpackStmt   : tpack tlhsId teol {
+                $$ = new PackStmt($2);
             }
             ;
+
+timportStmt : timport tlhsId teol {
+                $$ = new ImportStmt($2);
+            }
+            ;
+
 tpackStmts  : tpackStmt { $$ = $1; }
             | timportStmt { $$ = $1; }
             ;
@@ -553,7 +501,7 @@ tdefIndentBlock: teol tindent tdefBlock tdedent { $$ = $3; }
             ;
 
 tindentBlock: teol tindent tblock tdedent { $$ = $3; }
-            | ':' trhsexpr { $$ = new InlineStmt($2); }
+            | ':' trhsIdExpr { $$ = new InlineStmt($2); }
             | ':' treturnexpr { $$ = new InlineStmt($2); }
             | ':' tnext { $$ = new InlineStmt(new Next()); }
             ;
