@@ -76,6 +76,7 @@ with { return twith; }
 next { return tnext; }
 in { return tin; }
 ret { return tret; }
+as { return tas; }
 return { return treturn; }
 (_)*@set {
     yylval.strVal = strdup(yytext);
