@@ -405,19 +405,8 @@ public:
     virtual string name() { return "cast"; }
     using Node::print;
     virtual string _onPrint(int lv) {
-        string castType = USE_OP ? clr(OP) + "(" + l()->print(lv) + clr(OP) + ")" : l()->print(lv);
-
-        return castType + " " + r()->print(lv);
-    }
-};
-
-
-class Out : public Node {
-public:
-    Out(Node* id): Node(id) {}
-    virtual string name() { return "out"; }
-    virtual string _onPrint(int lv) {
-        return clr(KEYWORD) + "out " + l()->print(lv);
+        string castType = r()->print(lv) + clr(KEYWORD) + " as " + l()->print(lv);
+        return castType;
     }
 };
 
