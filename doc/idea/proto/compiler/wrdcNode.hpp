@@ -231,7 +231,16 @@ public:
 
     virtual string name() { return "param"; }
     virtual string _onPrint(int lv) {
-        return l()->print(lv) + " " + r()->print(lv);
+        return r()->print(lv) + " " + l()->print(lv);
+    }
+};
+
+class AkaStmt : public Node {
+public:
+    AkaStmt(Node* from, Node* to): Node(from, to) {}
+    virtual string name() { return "aka"; }
+    virtual string _onPrint(int lv) {
+        return l()->print(lv) + clr(KEYWORD) + " aka " + r()->print(lv) + "\n";
     }
 };
 
