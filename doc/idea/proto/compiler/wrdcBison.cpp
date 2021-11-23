@@ -65,6 +65,8 @@ void yyerror(const char* s)
 
 %type <nodes> telifBlocks
 
+%type <node> takaStmt
+
 %type <node> tgetsetterStmt tgetsetterExpr tpropexpr tpropIndentBlock tpropBlock tgetsetList tgetsetFuncName
 
 // 우선순위: 밑으로 갈수록 높음.
@@ -143,7 +145,6 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             | tmap { $$ = $1; }
             | tdefexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
-            | taccess { $$ = $1; }
             | tsafeAccess { $$ = $1; }
             | tlhsId { $$ = $1; }
             | '(' trhsIdExpr ')' { $$ = $2; }
@@ -202,6 +203,7 @@ tdefexpr    : tid topDefAssign trhsIdExpr { $$ = new DefAssign(new Id($1), $3); 
             | tparam { $$ = $1; }
             | tdefOrigin { $$ = $1; }
             | tfunc { $$ = $1; }
+            | takaStmt { $$ = $1; }
             | tpropexpr { $$ = $1; }
             ;
 
@@ -223,10 +225,14 @@ ttype       : tlhsId { $$ = $1; }
             | tconNames { $$ = $1; }
             ;
 
-tconAccess  : tnormalId '[' trhsIdExpr ']' {
-                $$ = new ContainerAccess(new Id($1), $3);
+tconAccess  : tlhsId '[' trhsIdExpr ']' {
+                $$ = new ContainerAccess($1, $3);
             }
             ;
+
+takaStmt    : tlhsId taka tlhsId {
+                $$ = new AkaStmt($1, $3);
+            }
 
 tcast       : trhsIdExpr tas ttype {
                 $$ = new Cast($3, $1);
@@ -385,7 +391,7 @@ tdefOrigin  : tdef tid tdefIndentBlock {
                 $$ = new Def(new Id($2), 0, $4, $5);
             }
             ;
-tdefOriginStmt: tdefOrigin teol { $$ = new Stmt($1); }
+tdefOriginStmt: tdefexpr teol { $$ = new Stmt($1); }
             ;
 
 tfunclist   : '(' ')' { $$ = 0; }
@@ -421,9 +427,6 @@ tdtorfunc   : tfdtor tfunclist tindentBlock {
 
 tfuncCall   : tid tfuncRhsList {
                 $$ = new FuncCall(new Id($1), (List*) $2);
-            }
-            | ttype tfuncRhsList {
-                $$ = new FuncCall($1, $2);
             }
             ;
 
