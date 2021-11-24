@@ -550,6 +550,30 @@ public:
     }
 };
 
+class SwitchExpr : public BlockHaver {
+public:
+    SwitchExpr(Node* id, Node* block): BlockHaver(block) {
+        lIs(id);
+    }
+
+    virtual string name() { return "switch"; }
+    virtual string _onPrint(int lv) {
+        return clr(KEYWORD) + "switch " + l()->print(lv) + block()->print(lv);
+    }
+};
+
+class CaseBlock : public BlockHaver {
+public:
+    CaseBlock(Node* id, Node* block): BlockHaver(block) {
+        lIs(id);
+    }
+    virtual string name() { return "case"; }
+    virtual string _onPrint(int lv) {
+        return l()->print(lv) + block()->print(lv);
+    }
+};
+
+
 class Branch : public BlockHaver {
 public:
     Branch(Node* expr, Container* then): BlockHaver(then) {
