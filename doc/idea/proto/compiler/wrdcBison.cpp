@@ -57,7 +57,7 @@ void yyerror(const char* s)
 
 %type <node> tfuncRhsList trhsIdExpr tlhsId trhsIds trhslist
 
-%type <node> timportStmt tpackStmt tpackStmts tpackBlocks
+%type <node> timportStmt tpackStmt tpackStmts tpackBlocks tpackAccess
 
 %type <node> tfunc tctorfunc tdtorfunc tfunclist
 
@@ -180,11 +180,12 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             | tchar { $$ = new Char($1); }
             | tswitchExpr { $$ = $1; }
             | tarray { $$ = $1; }
+            | tnormalId { $$ = new Str($1); }
             | tmap { $$ = $1; }
             | tdefexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
-            | tsafeAccess { $$ = $1; }
-            | tlhsId { $$ = $1; }
+            | tsafeAccess %dprec 1 { $$ = $1; }
+            | taccess %dprec 1 { $$ = $1; }
             | '(' trhsIdExpr ')' { $$ = $2; }
 
             | topUplus trhsIdExpr %dprec 1 { $$ = new UPre(new Id("++"), $2); }
@@ -300,7 +301,7 @@ trhslist    : '(' trhsIds ')' { //  " "를 쓰면 안된다.
             ;
 
 tlhsId      : tnormalId { $$ = new Id($1); }
-            | taccess { $$ = $1; }
+            | tpackAccess { $$ = $1; }
             ;
 
 ttuple      : trhsIdExpr ';' trhsIdExpr {
@@ -333,7 +334,11 @@ tseq        : trhsIdExpr topSeq trhsIdExpr {
                 $$ = new Sequence($1, $3);
             }
 
-taccess     : tlhsId '.' tnormalId { $$ = new Access($1, new Id($3)); }
+taccess     : trhsIdExpr '.' tnormalId { $$ = new Access($1, new Id($3)); }
+            | trhsIdExpr '.' tfuncCall { $$ = new Access($1, $3); }
+            ;
+
+tpackAccess : tlhsId '.' tnormalId { $$ = new Access($1, new Id($3)); }
             | tlhsId '.' tfuncCall { $$ = new Access($1, $3); }
             ;
 
