@@ -38,7 +38,7 @@ void yyerror(const char* s)
 %verbose
 %start tfile
 
-%token tpack tas tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tin tindent tdedent
+%token tpack tswitch tas tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tin tindent tdedent
 
 %token <intVal> teof
 %token <floatVal> tnum
@@ -65,7 +65,7 @@ void yyerror(const char* s)
 
 %type <nodes> telifBlocks
 
-%type <node> takaStmt
+%type <node> takaStmt tcaseIndentBlock tswitchExpr tcaseExpr tcaseStmt
 
 %type <node> tgetsetterStmt tgetsetterExpr tpropexpr tpropIndentBlock tpropBlock tgetsetList tgetsetFuncName
 
@@ -118,6 +118,43 @@ termFor     : tfor tid tin trhsIdExpr tindentBlock {
             }
             ;
 
+tcaseExpr   : trhsIdExpr {
+                Block* ret = new Block();
+                if ($1)
+                    ret->add($1);
+                $$ = ret;
+            }
+            | tcaseExpr ',' trhsIdExpr {
+                Block* ret = (Block*) $$;
+                if ($3)
+                    ret->add($3);
+                $$ = ret;
+            }
+            ;
+
+tcaseStmt   : tcaseExpr tindentBlock { $$ = new CaseBlock($1, $2); }
+            | telse tindentBlock { $$ = new CaseBlock(new Str("else"), $2); }
+            | teol { $$ = new Stmt(new Str("")); }
+            ;
+
+tcaseIndentBlock : tcaseStmt {
+                Block* ret = new Block();
+                if ($1)
+                    ret->add($1);
+                $$ = ret;
+            }
+            | tcaseIndentBlock tcaseStmt {
+                Block* ret = (Block*) $1;
+                if ($2)
+                    ret->add($2);
+                $$ = ret;
+            }
+            ;
+
+tswitchExpr : tswitch tlhsId teol tindent tcaseIndentBlock tdedent {
+                $$ = new SwitchExpr($2, $5);
+            }
+            ;
 
 termIf      : tif tbranch telifBlocks telseBlock {
                 $$ = new If((Branch*) $2, (vector<Branch*>*) $3, (Block*) $4);
@@ -141,6 +178,7 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             | tnum { $$ = new Float($1); }
             | tstr { $$ = new Str($1); }
             | tchar { $$ = new Char($1); }
+            | tswitchExpr { $$ = $1; }
             | tarray { $$ = $1; }
             | tmap { $$ = $1; }
             | tdefexpr { $$ = $1; }

@@ -44,6 +44,7 @@
 
 %%
 
+switch { return tswitch; }
 pack { return tpack; }
 for { return tfor; }
 if { return tif; }
