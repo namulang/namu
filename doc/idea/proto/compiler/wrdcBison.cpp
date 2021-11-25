@@ -269,8 +269,8 @@ tconAccess  : tlhsId '[' trhsIdExpr ']' {
             }
             ;
 
-takaStmt    : tlhsId taka tlhsId {
-                $$ = new AkaStmt($1, $3);
+takaStmt    : tlhsId taka tnormalId {
+                $$ = new AkaStmt($1, new Id($3));
             }
 
 tcast       : trhsIdExpr tas ttype {
@@ -521,6 +521,9 @@ tpackStmt   : tpack tlhsId teol {
 
 timportStmt : timport tlhsId teol {
                 $$ = new ImportStmt($2);
+            }
+            | timport tlhsId taka tnormalId {
+                $$ = new ImportStmt(new AkaStmt($2, new Id($4)));
             }
             ;
 
