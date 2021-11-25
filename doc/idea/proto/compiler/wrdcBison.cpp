@@ -38,7 +38,7 @@ void yyerror(const char* s)
 %verbose
 %start tfile
 
-%token tpack tswitch tas tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tin tindent tdedent
+%token tpack tswitch tas tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tin tindent tdedent tnull
 
 %token <intVal> teof
 %token <floatVal> tnum
@@ -59,7 +59,7 @@ void yyerror(const char* s)
 
 %type <node> timportStmt tpackStmt tpackStmts tpackBlocks tpackAccess
 
-%type <node> tfunc tctorfunc tdtorfunc tfunclist
+%type <node> tfunc tctorfunc tdtorfunc tfunclist tfuncBody
 
 %type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock tdefOriginStmt
 
@@ -272,6 +272,10 @@ tconAccess  : tlhsId '[' trhsIdExpr ']' {
 takaStmt    : tlhsId taka tnormalId {
                 $$ = new AkaStmt($1, new Id($3));
             }
+            | tfunc taka tnormalId {
+                $$ = new AkaStmt($1, new Id($3));
+            }
+            ;
 
 tcast       : trhsIdExpr tas ttype {
                 $$ = new Cast($3, $1);
@@ -441,21 +445,25 @@ tfunclist   : '(' ')' { $$ = 0; }
             | '(' tparams ')' { $$ = $2; }
             ;
 
-tfunc       : tid tfunclist ttype tindentBlock {
+tfunc       : tid tfunclist ttype tfuncBody {
                 $$ = new Func(0, $3, new Id($1), $2, 0, $4);
             }
-            | tas tfunclist ttype tindentBlock {
+            | tas tfunclist ttype tfuncBody {
                 $$ = new Func(0, $3, new Id("as"), $2, 0, $4);
             }
-            | tid tfunclist tindentBlock {
+            | tid tfunclist tfuncBody {
                 $$ = new Func(0, 0, new Id($1), $2, 0, $3);
             }
-            | tfunclist ttype tindentBlock {
+            | tfunclist ttype tfuncBody {
                 $$ = new Func(0, $2, new Id(""), $1, 0, $3);
             }
-            | tfunclist tindentBlock {
+            | tfunclist tfuncBody {
                 $$ = new Func(0, 0, new Id(""), $1, 0, $2);
             }
+            ;
+
+tfuncBody   : tindentBlock { $$ = $1; }
+            | '=' tnull { $$ = new Str(" = null"); }
             ;
 
 tctorfunc   : tfctor tfunclist tindentBlock {

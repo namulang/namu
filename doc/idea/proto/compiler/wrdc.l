@@ -71,6 +71,7 @@ from { return tfrom; }
     yylval.strVal = strdup(temp.c_str());
     return tprop;
 }
+null { return tnull; }
 import { return timport; }
 aka { return taka; }
 with { return twith; }
