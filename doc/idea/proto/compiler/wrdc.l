@@ -314,8 +314,8 @@ int meetEof() {
 more simple indentation implementation:
 
 // globals to track current indentation:
-int current_line_indent = 0;   /* indentation of the current line */
-int indent_level = 0;          /* indentation level passed to the parser
+int current_line_indent = 0;   // indentation of the current line
+int indent_level = 0;          // indentation level passed to the parser
 
 %x indent // start state for parsing the indentation
 %s normal // normal start state for everything else

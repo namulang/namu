@@ -52,16 +52,16 @@ void yyerror(const char* s)
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topUplus topUminus
 
 %type <node> tblock tindentBlock
-%type <node> tstmt tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturnexpr ttuple ttuples tparam tparams tsafeAccess tconNames
+%type <node> texpr tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturnexpr ttuple ttuples tparam tparams tsafeAccess tconNames
 
 
 %type <node> tfuncRhsList trhsIdExpr tlhsId trhsIds trhslist
 
-%type <node> timportStmt tpackStmt tpackStmts tpackBlocks tpackAccess
+%type <node> timportExpr tpackExpr tfileExpr tpackAccess
 
 %type <node> tfunc tctorfunc tdtorfunc tfunclist tfuncBody
 
-%type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock tdefOriginStmt
+%type <node> tdefOrigin tdefIndentBlock tdefexpr tdefBlock tdefBlockExpr
 
 %type <nodes> telifBlocks
 
@@ -134,7 +134,6 @@ tcaseExpr   : trhsIdExpr {
 
 tcaseStmt   : tcaseExpr tindentBlock { $$ = new CaseBlock($1, $2); }
             | telse tindentBlock { $$ = new CaseBlock(new Str("else"), $2); }
-            | teol { $$ = new Stmt(new Str("")); }
             ;
 
 tcaseIndentBlock : tcaseStmt {
@@ -151,7 +150,7 @@ tcaseIndentBlock : tcaseStmt {
             }
             ;
 
-tswitchExpr : tswitch tlhsId teol tindent tcaseIndentBlock tdedent {
+tswitchExpr : tswitch tlhsId teol tindent tcaseIndentBlock teol tdedent {
                 $$ = new SwitchExpr($2, $5);
             }
             ;
@@ -235,15 +234,19 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             | tnormalId '=' trhsIdExpr %dprec 5 { $$ = new Assign(new Id($1), $3); }
             ;
 
+tdefBlockExpr:  tfunc { $$ = $1; }
+                | tdefOrigin { $$ = $1; }
+                | tpropexpr { $$ = $1; }
+                | tctorfunc { $$ = $1; }
+                | tdtorfunc { $$ = $1; }
+                ;
 
 tdefexpr    : tid topDefAssign trhsIdExpr { $$ = new DefAssign(new Id($1), $3); }
             | tid ttype topDefAssign trhsIdExpr { $$ = new DefAssign(new Param($2, new Id($1)), $4); }
             | tid ttype topDefAssign '{' '}' { $$ = new DefAssign(new Param($2, new Id($1)), new Array()); }
             | tparam { $$ = $1; }
-            | tdefOrigin { $$ = $1; }
-            | tfunc { $$ = $1; }
             | takaStmt { $$ = $1; }
-            | tpropexpr { $$ = $1; }
+            | tdefBlockExpr { $$ = $1; }
             ;
 
 tconNames   : tconName '{' '}' {
@@ -438,8 +441,6 @@ tdefOrigin  : tdef tid tdefIndentBlock {
                 $$ = new Def(new Id($2), 0, $4, $5);
             }
             ;
-tdefOriginStmt: tdefexpr teol { $$ = new Stmt($1); }
-            ;
 
 tfunclist   : '(' ')' { $$ = 0; }
             | '(' tparams ')' { $$ = $2; }
@@ -481,53 +482,48 @@ tfuncCall   : tid tfuncRhsList {
             }
             ;
 
-tdefStmt    : tdefexpr teol { $$ = new Stmt($1); }
-            | teol { $$ = new Stmt(new Str("")); }
-            | tctorfunc teol { $$ = new Stmt($1); }
-            | tdtorfunc teol { $$ = new Stmt($1); }
+texpr       : trhsIdExpr { $$ = $1; }
+            | treturnexpr { $$ = $1; }
+            | tnext { $$ = new Next(); }
             ;
 
-tstmt       : trhsIdExpr teol { $$ = new Stmt($1); }
-            | treturnexpr teol { $$ = new Stmt($1); }
-            | tnext teol { $$ = new Stmt(new Next()); }
-            | trhsIdExpr teof { $$ = new Stmt($1); }
-            | teol { $$ = new Stmt(new Str("")); }
-            ;
-
-tblock      : tstmt {
+tblock      : texpr {
                 Block* ret = new Block();
                 if ($1)
                     ret->add($1);
                 $$ = ret;
             }
-            | tblock tstmt {
+            | tblock teol texpr {
                 Block* ret = (Block*) $1;
-                if ($2)
-                    ret->add($2);
+                if ($3)
+                    ret->add($3);
                 $$ = ret;
+            }
+            | tblock teof {
+                $$ = $1;
             }
             ;
 
-tdefBlock   : tdefStmt {
+tdefBlock   : tdefexpr {
                 Block* ret = new Block();
                 if ($1)
-                    ret->add($1);
+                    ret->add(new Stmt($1));
                 $$ = ret;
             }
-            | tdefBlock tdefStmt {
+            | tdefBlock teol tdefexpr {
                 Block* ret = (Block*) $1;
-                if ($2)
-                    ret->add($2);
+                if ($3)
+                    ret->add(new Stmt($3));
                 $$ = ret;
             }
             ;
 
-tpackStmt   : tpack tlhsId teol {
+tpackExpr   : tpack tlhsId {
                 $$ = new PackStmt($2);
             }
             ;
 
-timportStmt : timport tlhsId teol {
+timportExpr : timport tlhsId {
                 $$ = new ImportStmt($2);
             }
             | timport tlhsId taka tnormalId {
@@ -535,54 +531,32 @@ timportStmt : timport tlhsId teol {
             }
             ;
 
-tpackStmts  : tpackStmt { $$ = $1; }
-            | timportStmt { $$ = $1; }
+tfileExpr : tpackExpr { $$ = $1; }
+            | timportExpr { $$ = $1; }
+            | tdefexpr { $$ = $1; }
             ;
-tpackBlocks : tpackStmts {
-                Block* block = new Block();
-                if ($1)
-                    block->add($1);
-                $$ = block;
-            }
-            | tpackBlocks tpackStmts {
-                if ($2)
-                    ((Block*) $1)->add($2);
-                $$ = $1;
-            }
-            ;
-
 
 tdefIndentBlock: teol tindent tdefBlock tdedent { $$ = $3; }
             | ':' tdefexpr { $$ = new InlineStmt($2); }
-            | ':' tctorfunc { $$ = new InlineStmt($2); }
-            | ':' tdtorfunc { $$ = new InlineStmt($2); }
             | { $$ = 0; }
             ;
 
-tindentBlock: teol tindent tblock tdedent { $$ = $3; }
+tindentBlock: teol tindent tblock teol tdedent { $$ = $3; }
             | ':' trhsIdExpr { $$ = new InlineStmt($2); }
             | ':' treturnexpr { $$ = new InlineStmt($2); }
             | ':' tnext { $$ = new InlineStmt(new Next()); }
             ;
 
-tfile       : tfile tdefOriginStmt {
+tfile       : tfile teol tfileExpr {
                 File* ret = (File*) $1;
-                ret->add($2);
+                ret->add(new Stmt($3));
                 $$ = ret;
             }
-            | tpackBlocks {
+            | tfileExpr {
                 parsed = new File();
-                parsed->setHeader($1);
+                if ($1)
+                    parsed->add(new Stmt($1));
                 $$ = parsed;
             }
-            | tdefOriginStmt {
-                parsed = new File();
-                parsed->add($1);
-                $$ = parsed;
-            }
-            | teol {
-                $$ = parsed = new File();
-            }
-            | tfile teol { $$ = $1; }
             | tfile teof { $$ = $1; }
             ;

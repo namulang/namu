@@ -830,17 +830,4 @@ public:
 class File : public Container {
 public:
     virtual string name() { return "file"; }
-    using Node::print;
-    Node* getHeader() const { return _head; }
-    void setHeader(Node* h) {
-        _head = h;
-    }
-
-    virtual string print(int lv) {
-        if (_head)
-            _head->print(lv);
-        return Container::print(lv);
-    }
-
-    Node* _head;
 };
