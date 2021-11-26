@@ -3,23 +3,23 @@ import sys.cons aka c
 
 def part
     name := str
-        _set()=>
+        _set()
 
     me(newname name): name = newname
-    say() void := null
+    say() void = null
 
 def body from part
-    say() void: c.out("I'm a body") // ' inside of a pair of "".
+    say() void: c.out('I'm a body') // ' inside of a pair of ''.
 
 def button() from part
 def mouse() from part
-    me(): super("overwrite this")
+    me(): super('overwrite this')
     me(a new) // do nothing
 
 main() void
     c.out(mouse.name == mouse().name)
     c.out(mouse(1).name)
 
-arr := part[]
+arr := part{}
 tuple := part;?str // :?
-map := part[str]
+map := part{str}

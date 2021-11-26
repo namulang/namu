@@ -4,34 +4,49 @@ import sys.cons aka c
 def petShop
     /* a pet shop */
     factory(useless flt64, use1 int, use2 char, use3 bool) pet = null aka rFac
-    factory(useless int, use1 int, use2 char, use3 bool) pet = null aka rFac2
+    factory(useless int, use1 int, use2 char, use3 bool) pet
+        doSomething()
+    aka rFac2
 
     _myFactory rFac?
 
-    me(@rFac2): sys.cons.out("f is $rFac2")
+    me(@rFac2): sys.cons.out('f is $rFac2')
     me(@rFac): myFactory = rFac
 
     showPet() void
         if myFactory
             mypet := myFactory(0, 0, 0, false)
-        c.out("we have a lovely $mypet")
-        c.out("it says $pet.speak()")
+        c.out('we have a lovely $mypet')
+        c.out('it says $pet.speak()')
 
 def pet
 def dog from pet
-    speak() void: "woof"
+    speak() void: 'woof'
 
 def cat from pet
-    speak() void: "meow"
+    speak() void: 'meow'
 
 randomAnimal(s flt64, x int, y char, z bool) pet: return random.choice({dog(), cat()})
 
 main() void
     catShop := petShop((x, y, z, a): cat())
     catShop.showPet()
-    c.out("")
+    c.out('')
 
     shop = petShop(randomAnimal)
     for n in 0..3
         shop.showPet()
-        c.out("=" * 20)
+        c.out('=' * 20)
+
+
+
+if a == b
+    do()
+    do()
+elif a == 2
+elif a == 1 // ㅇㅏ무것도 없어도 ok
+    do()
+    do()
+    with do()
+        do() // eof 가 나와도 ok. // 한번에 2 depth 이상이 빠져도 ok
+do()

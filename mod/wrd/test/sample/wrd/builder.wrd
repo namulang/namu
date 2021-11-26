@@ -1,8 +1,8 @@
 pack wrd.lang.example.builder
 
 def building
-    _floor := "One"
-    _size := "Big"
+    _floor := 'One'
+    _size := 'Big'
 
     me()
         buildFloor()
@@ -12,18 +12,18 @@ def building
     buildSize() void on notImplErr: ret on notImplErr
 
 def house from building
-    buildFloor() void: _floor = "One"
-    buildSize() void: _size = "Big"
+    buildFloor() void: _floor = 'One'
+    buildSize() void: _size = 'Big'
 
 def flat from building
-    buildFloor() void: _floor = "More than one"
-    buildSize() void: _size = "Small"
+    buildFloor() void: _floor = 'More than one'
+    buildSize() void: _size = 'Small'
 
 def complexBuilding from building
 
 def complexHouse() from complexBuilding
-    buildFloor() void: _floor = "One"
-    buildSize() void: _size = "Big and fancy"
+    buildFloor() void: _floor = 'One'
+    buildSize() void: _size = 'Big and fancy'
 
 constructBuilding(@building) building
     return building()
