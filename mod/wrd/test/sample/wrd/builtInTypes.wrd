@@ -10,6 +10,6 @@ main() void
     pow := _age^3
     pow^^ // age ^ 2
 
-    bitwise := (pow | ~~5 & 0x033 ^ 0xFF) << 2
-    if bitwise && pow > 0
-        c.out("okay")
+    bitwise := (pow | ~~5 && 0x033 ^^ 0xFF) << 2
+    if bitwise & pow > 0
+        c.out('okay')

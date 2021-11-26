@@ -3,7 +3,7 @@ pack wrd.lang.example.nullArray
 main() void
     def myObj
         age := 0
-        name := "cherry"
+        name := 'cherry'
         price := 53
 
         me()
@@ -14,11 +14,11 @@ main() void
     myObj2 := myObj
     //objs := myObj[5] // err! argument can't exist in [].
 
-    objs := [myObj(), myObj()]
-    objs2 := myObj[]() // new myObj instance.
-    objs3 := myObj[](23) // new myObj with ctor(price int).
+    objs := {myObj(), myObj()}
+    objs2 := myObj{}() // new myObj instance.
+    objs3 := myObj{}(23) // new myObj with ctor(price int).
 
-    objsRef := myObj[] // ref to myObj[]
+    objsRef := myObj{} // ref to myObj[]
     objsRef := objs
 
     // all containers are mutable type.

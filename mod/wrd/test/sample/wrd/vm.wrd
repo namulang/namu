@@ -2,8 +2,8 @@ def androidVM
 def vm from androidVM
 
     _dayIndex := 0
-    _dailySneakingSuccessList := dailySneakingSuccess[]
-    _weeklySneakingSuccessList := weeklySneakingSuccessList[]
+    _dailySneakingSuccessList dailySneakingSuccess{}
+    _weeklySneakingSuccessList weeklySneakingSuccessList{} := {}
 
     me(@application)
         super(application)
@@ -17,7 +17,7 @@ def vm from androidVM
     $isSameAsYesterday(@context, @categoryType, prevDayTotal int, selectedDayTotal int) bool
         switch categoryType
             CATEGORY_SCREEN_TIME
-                return timeTextUtil.getTimeAbbreviationString(context, prevDayTotal).equals(timeTextUtil.getTimeAbbreviationString(context, selectedDayTotal)
+                return timeTextUtil.getTimeAbbreviationString(context, prevDayTotal).equals(timeTextUtil.getTimeAbbreviationString(context, selectedDayTotal))
 
             else
                 return prevDayTotal == selectedDayTotal
