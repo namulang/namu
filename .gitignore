@@ -71,3 +71,4 @@ bin/
 **/parser/*.output
 **/parser/*.gv
 **/src/parser/*.jpg
+**/*dSYM/Contents/*
