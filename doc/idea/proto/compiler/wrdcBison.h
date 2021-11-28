@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.7.6.  */
 
 /* Skeleton interface for Bison GLR parsers in C
 
-   Copyright (C) 2002-2015 Free Software Foundation, Inc.
+   Copyright (C) 2002-2015, 2018-2021 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -40,79 +40,77 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    tfor = 258,
-    tdef = 259,
-    twith = 260,
-    tret = 261,
-    tretfun = 262,
-    tretif = 263,
-    tretwith = 264,
-    tretfor = 265,
-    tif = 266,
-    telse = 267,
-    telif = 268,
-    tfrom = 269,
-    tagain = 270,
-    tprop = 271,
-    timport = 272,
-    taka = 273,
-    tthis = 274,
-    tme = 275,
-    tgot = 276,
-    tnode = 277,
-    tnull = 278,
-    tsuper = 279,
-    tout = 280,
-    tin = 281,
-    tindent = 282,
-    tdedent = 283,
-    tfctor = 284,
-    tfdtor = 285,
-    tfres = 286,
-    tfwarn = 287,
-    tferr = 288,
-    tand = 289,
-    tor = 290,
-    tinteger = 291,
-    teof = 292,
-    tfloat = 293,
-    tbool = 294,
-    tchar = 295,
-    tstr = 296,
-    tnormalId = 297,
-    taccessedId = 298,
-    taccessedFuncname = 299,
-    tnormalFuncname = 300,
-    teol = 301,
-    topDefAssign = 302,
-    topMinusAssign = 303,
-    topSquareAssign = 304,
-    topDivideAssign = 305,
-    topModAssign = 306,
-    topPowAssign = 307,
-    topLessEqual = 308,
-    topMoreEqual = 309,
-    topEqual = 310,
-    topRefEqual = 311,
-    topNotEqual = 312,
-    topNotRefEqual = 313,
-    topPlusAssign = 314,
-    topSeq = 315,
-    topSafeNavi = 316
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    tpack = 258,                   /* tpack  */
+    tswitch = 259,                 /* tswitch  */
+    tas = 260,                     /* tas  */
+    tfor = 261,                    /* tfor  */
+    tdef = 262,                    /* tdef  */
+    twith = 263,                   /* twith  */
+    tret = 264,                    /* tret  */
+    treturn = 265,                 /* treturn  */
+    tif = 266,                     /* tif  */
+    telse = 267,                   /* telse  */
+    telif = 268,                   /* telif  */
+    tfrom = 269,                   /* tfrom  */
+    tnext = 270,                   /* tnext  */
+    tprop = 271,                   /* tprop  */
+    timport = 272,                 /* timport  */
+    taka = 273,                    /* taka  */
+    tthis = 274,                   /* tthis  */
+    tnode = 275,                   /* tnode  */
+    tin = 276,                     /* tin  */
+    tindent = 277,                 /* tindent  */
+    tdedent = 278,                 /* tdedent  */
+    tnull = 279,                   /* tnull  */
+    teof = 280,                    /* teof  */
+    tnum = 281,                    /* tnum  */
+    tbool = 282,                   /* tbool  */
+    tchar = 283,                   /* tchar  */
+    tstr = 284,                    /* tstr  */
+    tfctor = 285,                  /* tfctor  */
+    tfdtor = 286,                  /* tfdtor  */
+    tfget = 287,                   /* tfget  */
+    tfset = 288,                   /* tfset  */
+    tfres = 289,                   /* tfres  */
+    tnormalId = 290,               /* tnormalId  */
+    taccessedId = 291,             /* taccessedId  */
+    tconName = 292,                /* tconName  */
+    teol = 293,                    /* teol  */
+    topDefAssign = 294,            /* topDefAssign  */
+    topMinusAssign = 295,          /* topMinusAssign  */
+    topSquareAssign = 296,         /* topSquareAssign  */
+    topDivideAssign = 297,         /* topDivideAssign  */
+    topModAssign = 298,            /* topModAssign  */
+    topPowAssign = 299,            /* topPowAssign  */
+    topLessEqual = 300,            /* topLessEqual  */
+    topMoreEqual = 301,            /* topMoreEqual  */
+    topEqual = 302,                /* topEqual  */
+    topRefEqual = 303,             /* topRefEqual  */
+    topNotEqual = 304,             /* topNotEqual  */
+    topNotRefEqual = 305,          /* topNotRefEqual  */
+    topPlusAssign = 306,           /* topPlusAssign  */
+    topSeq = 307,                  /* topSeq  */
+    topSafeNavi = 308,             /* topSafeNavi  */
+    topUplus = 309,                /* topUplus  */
+    topUminus = 310                /* topUminus  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
 union YYSTYPE
 {
-#line 25 "wrdcBison.cpp" /* glr.c:197  */
+#line 27 "wrdcBison.cpp"
 
     int typeId;
     int intVal;
@@ -123,9 +121,9 @@ union YYSTYPE
     Node* node;
     void* nodes;
 
-#line 127 "wrdcBison.h" /* glr.c:197  */
-};
+#line 125 "wrdcBison.h"
 
+};
 typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

@@ -200,7 +200,6 @@ true|false {
         cout << " --- enter indent rule\n";
     nowIndent = 0;
     changeRule("indent", indent);
-    return teol;
 }
 
 
@@ -237,7 +236,9 @@ true|false {
     return tchar;
 }
 
-<indent>[ ] { nowIndent++; }
+<indent>[ ] {
+    nowIndent++;
+}
 <indent>\t {
     nowIndent = (nowIndent + TAB_WIDTH) & ~(TAB_WIDTH - 1);
 }
@@ -251,14 +252,22 @@ true|false {
 
     int prevIndentLv = indentLvs.size() ? indentLvs.top() : 0;
     if(yydebug)
-        cout << "  ---  indent check finish. prevIndentLv=" << prevIndentLv << " indentLvs.size()=" << indentLvs.size() << "\n";
-    if (nowIndent > prevIndentLv) {
+        cout << "  ---  indent check finish. ch=" << ch << "(" << (int) ch << ") prevIndentLv=" << prevIndentLv << " indentLvs.size()=" << indentLvs.size() << "\n";
+    if (ch == 0) {
+    } else if (ch == 127) {
+        changeRule("INITIAL", INITIAL);
+        return tindent;
+    } else if (nowIndent > prevIndentLv) {
         indentLvs.push(nowIndent);
         unput(ch);
-        return tindent;
+        unput(127);
+        return teol;
+
     } else if (nowIndent == prevIndentLv) {
         changeRule("INITIAL", INITIAL);
         unput(ch);
+        return teol;
+
     } else {
         return goOutdent(ch);
     }
@@ -309,38 +318,6 @@ int meetEof() {
     return 0;
 }
 
-/*
-
-more simple indentation implementation:
-
-// globals to track current indentation:
-int current_line_indent = 0;   // indentation of the current line
-int indent_level = 0;          // indentation level passed to the parser
-
-%x indent // start state for parsing the indentation
-%s normal // normal start state for everything else
-
-%%
-<indent>" "      { current_line_indent++; }
-<indent>"\t"     { current_line_indent = (current_line_indent + 8) & ~7; }
-<indent>"\n"     { current_line_indent = 0; // ignoring blank line }
-<indent>.        {
-                   unput(*yytext);
-                   if (current_line_indent > indent_level) {
-                       indent_level++;
-                       return INDENT;
-                   } else if (current_line_indent < indent_level) {
-                       indent_level--;
-                       return UNINDENT;
-                   } else {
-                       BEGIN normal;
-                   }
-                 }
-
-<normal>"\n"     { current_line_indent = 0; BEGIN indent; }
-... other flex rules ...
-*/
-
 int goOutdent(char prev) {
     int top = indentLvs.size() ? indentLvs.top() : 0;
     if (nowIndent >= top) return 0;
@@ -351,6 +328,8 @@ int goOutdent(char prev) {
 
     if(yydebug)
         cout << " ----- dedent: pop! now " << indentLvs.size() << " dedentLv left. \n";
+
+    unput('\n');
     return tdedent;
 }
 

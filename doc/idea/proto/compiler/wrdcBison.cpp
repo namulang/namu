@@ -150,7 +150,7 @@ tcaseIndentBlock : tcaseStmt {
             }
             ;
 
-tswitchExpr : tswitch tlhsId teol tindent tcaseIndentBlock teol tdedent {
+tswitchExpr : tswitch tlhsId teol tindent tcaseIndentBlock tdedent {
                 $$ = new SwitchExpr($2, $5);
             }
             ;
@@ -499,9 +499,9 @@ tblock      : texpr {
                     ret->add($3);
                 $$ = ret;
             }
-            | tblock teof {
+            /*| tblock teof {
                 $$ = $1;
-            }
+            }*/
             ;
 
 tdefBlock   : tdefexpr {
@@ -518,7 +518,7 @@ tdefBlock   : tdefexpr {
             }
             ;
 
-tpackExpr   : tpack tlhsId {
+tpackExpr   : tpack tpackAccess {
                 $$ = new PackStmt($2);
             }
             ;
@@ -531,7 +531,7 @@ timportExpr : timport tlhsId {
             }
             ;
 
-tfileExpr : tpackExpr { $$ = $1; }
+tfileExpr   : tpackExpr { $$ = $1; }
             | timportExpr { $$ = $1; }
             | tdefexpr { $$ = $1; }
             ;
@@ -541,7 +541,7 @@ tdefIndentBlock: teol tindent tdefBlock tdedent { $$ = $3; }
             | { $$ = 0; }
             ;
 
-tindentBlock: teol tindent tblock teol tdedent { $$ = $3; }
+tindentBlock: teol tindent tblock tdedent { $$ = $3; }
             | ':' trhsIdExpr { $$ = new InlineStmt($2); }
             | ':' treturnexpr { $$ = new InlineStmt($2); }
             | ':' tnext { $$ = new InlineStmt(new Next()); }
@@ -549,13 +549,13 @@ tindentBlock: teol tindent tblock teol tdedent { $$ = $3; }
 
 tfile       : tfile teol tfileExpr {
                 File* ret = (File*) $1;
-                ret->add(new Stmt($3));
+                ret->add($3);
                 $$ = ret;
             }
             | tfileExpr {
                 parsed = new File();
                 if ($1)
-                    parsed->add(new Stmt($1));
+                    parsed->add($1);
                 $$ = parsed;
             }
             | tfile teof { $$ = $1; }
