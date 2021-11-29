@@ -1,43 +1,43 @@
-%{
-    class Node;
-    #include "wrdcBison.h"
-    #include <string>
-    #include <iostream>
-    #include <stack>
-    #include <vector>
-    using namespace std;
+class Node;
+#include "wrdcBison.h"
+#include <string>
+#include <iostream>
+#include <stack>
+#include <vector>
+using namespace std;
 
-    int nowIndent = 0;
-    stack<int> indentLvs;
-    static const int TAB_WIDTH = 4;
+int nowIndent = 0;
+stack<int> indentLvs;
+static const int TAB_WIDTH = 4;
 
-    extern int nowRule;
-    extern int prevRule;
+extern int nowRule;
+extern int prevRule;
 
-    int goOutdent(char ch);
-    int meetEof();
-    void shiftRules(int new1) {
-        prevRule = nowRule;
-        nowRule = new1;
-    }
-    void changeRule(const char* name, int new1) {
-        if (nowRule == new1) return;
+int goOutdent(char ch);
+int meetEof();
+void shiftRules(int new1) {
+    prevRule = nowRule;
+    nowRule = new1;
+}
+void changeRule(const char* name, int new1) {
+    if (nowRule == new1) return;
 
-        shiftRules(new1);
-        BEGIN(new1);
-        if (yydebug)
-            cout << " ---- CHANGE RULE to " << name << "(" << new1 << ")\n";
-    }
-    void changePrevRule() {
-        if (yydebug)
-            cout << " ---- CHANGE PREV RULE TO " << prevRule << "\n";
-        BEGIN(prevRule);
-    }
+    shiftRules(new1);
+    BEGIN(new1);
+    if (yydebug)
+        cout << " ---- CHANGE RULE to " << name << "(" << new1 << ")\n";
+}
+void changePrevRule() {
+    if (yydebug)
+        cout << " ---- CHANGE PREV RULE TO " << prevRule << "\n";
+    BEGIN(prevRule);
+}
 %}
 
 %x dquote
 %s tfile
 %x indent
+%x dedent
 %x commenting
 %x arraytyping
 
@@ -101,13 +101,12 @@ true|false {
     return tbool;
 }
 
-<indent>\/\/[^\n]* { if(yydebug) cout << "!!!!3"; }
-\/\/[^\n]* { if(yydebug) cout << "!!!!1"; }
+<INITIAL,indent,dedent>\/\/[^\n]*\n { cout << "consume single-line comment\n"; }
 
 "/*" {
     changeRule("commenting", commenting);
 }
-<indent>"/*" {
+<indent,dedent>"/*" {
     changeRule("commenting", commenting);
 }
 <commenting>"*/" {
@@ -250,7 +249,8 @@ true|false {
     if(yydebug)
         cout << " nowIndent = " << nowIndent << " newline!\n";
 }
-<indent>. {
+<dedent>\n { return teol; }
+<indent,dedent>. {
     char ch = yytext[0];
 
     int prevIndentLv = indentLvs.size() ? indentLvs.top() : 0;
@@ -271,7 +271,7 @@ true|false {
     }
 }
 
-<indent><<EOF>> {
+<indent,dedent><<EOF>> {
     if(yydebug)
         cout << "----------------------EOF!!!!!\n";
     if (goOutdent(yytext[0]) == tdedent) {
@@ -325,7 +325,7 @@ int goOutdent(char prev) {
     indentLvs.pop();
     unput(prev);
     unput('\n');
-    changeRule("INITIAL", INITIAL);
+    changeRule("DEDENT", dedent);
 
     if (yydebug) {
         cout << " ----- prev=" << prev << " nowIndent=" << nowIndent << "\n";
