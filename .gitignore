@@ -71,4 +71,6 @@ bin/
 **/parser/*.output
 **/parser/*.gv
 **/src/parser/*.jpg
+**/proto/compiler/*.output
+**/proto/compiler/*.tab.cpp
 **/*dSYM/Contents/*
