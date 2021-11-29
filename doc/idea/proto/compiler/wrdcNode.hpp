@@ -54,7 +54,7 @@ class Node {
     }
     Node* l() { return get("l"); }
     Node* r() { return get("r"); }
-    string print() { return print(0); }
+    string print() { return print(-1); }
     virtual string print(int lv) {
         return _onPrint(lv);
     }
@@ -452,6 +452,7 @@ class Block : public Container {
 public:
     virtual string name() { return "block"; }
 
+    using Container::print;
     virtual string print(int lv) {
         return "\n" + Container::print(lv);
     }
@@ -462,8 +463,8 @@ public:
     PackStmt(Node* packPath): Node(packPath) {}
 
     virtual string name() { return "pack"; }
-    virtual string print(int lv) {
-        return tab(lv) + clr(KEYWORD) + "pack " + l()->print(lv) + "\n";
+    virtual string _onPrint(int lv) {
+        return clr(KEYWORD) + "pack " + l()->print(lv) + "\n";
     }
 };
 
