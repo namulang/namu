@@ -487,33 +487,30 @@ texpr       : trhsIdExpr { $$ = $1; }
             | tnext { $$ = new Next(); }
             ;
 
-tblock      : texpr {
-                Block* ret = new Block();
-                if ($1)
-                    ret->add($1);
-                $$ = ret;
-            }
-            | tblock teol texpr {
-                Block* ret = (Block*) $1;
-                if ($3)
-                    ret->add($3);
-                $$ = ret;
-            }
-            /*| tblock teof {
-                $$ = $1;
-            }*/
-            ;
-
-tdefBlock   : tdefexpr {
+tblock      : texpr teol {
                 Block* ret = new Block();
                 if ($1)
                     ret->add(new Stmt($1));
                 $$ = ret;
             }
-            | tdefBlock teol tdefexpr {
+            | tblock texpr teol {
                 Block* ret = (Block*) $1;
-                if ($3)
-                    ret->add(new Stmt($3));
+                if ($2)
+                    ret->add(new Stmt($2));
+                $$ = ret;
+            }
+            ;
+
+tdefBlock   : tdefexpr teol {
+                Block* ret = new Block();
+                if ($1)
+                    ret->add(new Stmt($1));
+                $$ = ret;
+            }
+            | tdefBlock tdefexpr teol {
+                Block* ret = (Block*) $1;
+                if ($2)
+                    ret->add(new Stmt($2));
                 $$ = ret;
             }
             ;
@@ -547,12 +544,12 @@ tindentBlock: teol tindent tblock tdedent { $$ = $3; }
             | ':' tnext { $$ = new InlineStmt(new Next()); }
             ;
 
-tfile       : tfile teol tfileExpr {
+tfile       : tfile tfileExpr teol {
                 File* ret = (File*) $1;
-                ret->add($3);
+                ret->add($2);
                 $$ = ret;
             }
-            | tfileExpr {
+            | tfileExpr teol {
                 parsed = new File();
                 if ($1)
                     parsed->add($1);
