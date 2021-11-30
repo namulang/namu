@@ -1,4 +1,4 @@
-def androidVM
+//def androidVM
 def vm from androidVM
 
     _dayIndex := 0

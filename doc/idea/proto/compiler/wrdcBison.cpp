@@ -119,21 +119,23 @@ termFor     : tfor tid tin trhsIdExpr tindentBlock {
             ;
 
 tcaseExpr   : trhsIdExpr {
-                Block* ret = new Block();
-                if ($1)
-                    ret->add($1);
-                $$ = ret;
+                Args* args = new Args();
+                args->add($1);
+                $$ = args;
             }
             | tcaseExpr ',' trhsIdExpr {
-                Block* ret = (Block*) $$;
-                if ($3)
-                    ret->add($3);
-                $$ = ret;
+                Args* args = (Args*) $1;
+                args->add($3);
+                $$ = args;
             }
             ;
 
-tcaseStmt   : tcaseExpr tindentBlock { $$ = new CaseBlock($1, $2); }
-            | telse tindentBlock { $$ = new CaseBlock(new Str("else"), $2); }
+tcaseStmt   : tcaseExpr tindentBlock teol { $$ = new CaseBlock($1, $2); }
+            | telse tindentBlock teol {
+                Args* args = new Args();
+                args->add(new Str("else"));
+                $$ = new CaseBlock(args, $2);
+            }
             ;
 
 tcaseIndentBlock : tcaseStmt {

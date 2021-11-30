@@ -503,7 +503,7 @@ public:
 
     virtual string name() { return "return"; }
     virtual string _onPrint(int lv) {
-        return clr(RED) + _name + " " +  l()->print(lv);
+        return clr(KEYWORD) + _name + " " +  l()->print(lv);
     }
 
     string _name;
@@ -642,7 +642,7 @@ public:
     virtual string name() { return "args"; }
     using Node::print;
     virtual string print(int lv) {
-        string sum = len() > 0 ? get(0)->print() : "";
+        string sum = len() > 0 ? tab(lv) + get(0)->print() : "";
         for (int n=1; n < len() ;n++)
             sum += clr(CONTAINER) + ", " + get(n)->print();
         return sum;
@@ -686,7 +686,7 @@ public:
     virtual string _onPrint(int lv) {
         string ret = clr(CONTAINER) + "{";
         if (l())
-            ret += l()->print(lv);
+            ret += l()->print(0);
         return ret + clr(CONTAINER) + "}";
     }
 };
@@ -706,7 +706,7 @@ public:
         Node* blk = has();
         string  name = get("name") ? get("name")->print(lv, FUNC) : "",
                 blkStr = blk ? blk->print(lv) : "",
-                params = get("params") ? get("params")->print(lv) : "",
+                params = get("params") ? get("params")->print(0) : "",
                 lRed = get("lRedirect") ? get("lRedirect")->print(lv) : "",
                 rRed = get("rRedirect") ? get("rRedirect")->print(lv) : "",
                 retType = get("retType") ? get("retType")->print(lv) + " ": "";

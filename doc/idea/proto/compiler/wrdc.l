@@ -1,3 +1,4 @@
+%{
 class Node;
 #include "wrdcBison.h"
 #include <string>
