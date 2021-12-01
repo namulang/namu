@@ -19,6 +19,9 @@ def vm from androidVM
             CATEGORY_SCREEN_TIME
                 return timeTextUtil.getTimeAbbreviationString(context, prevDayTotal).equals(timeTextUtil.getTimeAbbreviationString(context, selectedDayTotal))
 
+            ALLOVER, PULLDOWN, 23
+                return // no parsing err. but verification err
+
             else
                 return prevDayTotal == selectedDayTotal
 

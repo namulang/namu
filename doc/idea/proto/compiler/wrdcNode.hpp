@@ -503,7 +503,8 @@ public:
 
     virtual string name() { return "return"; }
     virtual string _onPrint(int lv) {
-        return clr(KEYWORD) + _name + " " +  l()->print(lv);
+        string left = l() ? l()->print(lv) : "";
+        return clr(KEYWORD) + _name + " " + left;
     }
 
     string _name;

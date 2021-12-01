@@ -289,6 +289,7 @@ tcast       : trhsIdExpr tas ttype {
 
 treturnexpr : tret trhsIdExpr { $$ = new Return("ret", $2); }
             | treturn trhsIdExpr { $$ = new Return("return", $2); }
+            | treturn { $$ = new Return("return", nullptr); }
             ;
 
 
