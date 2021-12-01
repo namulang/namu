@@ -36,21 +36,20 @@ void changePrevRule() {
 %}
 
 %x dquote
-%s tfile
-%x indent
+%x normal
 %x dedent
 %x commenting
 %x arraytyping
 
 %%
 
-switch { return tswitch; }
-pack { return tpack; }
-for { return tfor; }
-if { return tif; }
-else { return telse; }
-elif { return telif; }
-"def"[\(]* {
+<normal>switch { return tswitch; }
+<normal>pack { return tpack; }
+<normal>for { return tfor; }
+<normal>if { return tif; }
+<normal>else { return telse; }
+<normal>elif { return telif; }
+<normal>"def"[\(]* {
     string temp = yytext;
     if(temp[temp.size()-1] == '(') {
         temp = temp.substr(0, temp.size()-1);
@@ -60,8 +59,8 @@ elif { return telif; }
     yylval.strVal = strdup(temp.c_str());
     return tdef;
 }
-from { return tfrom; }
-"prop"[\(]* {
+<normal>from { return tfrom; }
+<normal>"prop"[\(]* {
     string temp = yytext;
     if(temp[temp.size()-1] == '(') {
         temp = temp.substr(0, temp.size()-1);
@@ -71,43 +70,43 @@ from { return tfrom; }
     yylval.strVal = strdup(temp.c_str());
     return tprop;
 }
-null { return tnull; }
-import { return timport; }
-aka { return taka; }
-with { return twith; }
-next { return tnext; }
-in { return tin; }
-ret { return tret; }
-as { return tas; }
-return { return treturn; }
-(_)*@set {
+<normal>null { return tnull; }
+<normal>import { return timport; }
+<normal>aka { return taka; }
+<normal>with { return twith; }
+<normal>next { return tnext; }
+<normal>in { return tin; }
+<normal>ret { return tret; }
+<normal>as { return tas; }
+<normal>return { return treturn; }
+<normal>(_)*@set {
     yylval.strVal = strdup(yytext);
     return tfset;
 }
-(_)*@get {
+<normal>(_)*@get {
     yylval.strVal = strdup(yytext);
     return tfget;
 }
-(_)*@ctor {
+<normal>(_)*@ctor {
     yylval.strVal = strdup(yytext);
     return tfctor;
 }
-(_)*@dtor {
+<normal>(_)*@dtor {
     yylval.strVal = strdup(yytext);
     return tfdtor;
 }
 
-true|false {
+<normal>true|false {
     yylval.boolVal = string(yytext) == "true" ? true : false;
     return tbool;
 }
 
-<INITIAL,indent,dedent>\/\/[^\n]*\n { cout << "consume single-line comment\n"; }
+<normal,INITIAL,dedent>\/\/[^\n]*\n { cout << "consume single-line comment\n"; }
 
 "/*" {
     changeRule("commenting", commenting);
 }
-<indent,dedent>"/*" {
+<INITIAL,dedent>"/*" {
     changeRule("commenting", commenting);
 }
 <commenting>"*/" {
@@ -123,7 +122,7 @@ true|false {
 
 
 
-[a-zA-Z][a-zA-Z0-9_]*\{ {
+<normal>[a-zA-Z][a-zA-Z0-9_]*\{ {
     string temp = yytext;
     changeRule("arraytyping", arraytyping);
 
@@ -158,12 +157,12 @@ true|false {
     return tnormalId;
 }
 
-[a-zA-Z][a-zA-Z0-9_]*   {
+<normal>[a-zA-Z][a-zA-Z0-9_]*   {
    yylval.strVal = strdup(yytext);
     return tnormalId;
 }
 
-(_$|_|$)[a-zA-Z0-9_]+ {
+<normal>(_$|_|$)[a-zA-Z0-9_]+ {
     // Accessed 컨셉:
     //  배경:
     //      * accessed란 식별자 정의시, 그 앞에 protected인지 static인지 속성을 지정하는 것을 말한다.
@@ -184,74 +183,74 @@ true|false {
     return taccessedId;
 }
 
-<INITIAL>\' {
+<normal>\' {
     changeRule("dquote", dquote); // maximum parsing을 하기 때문에 state 관리를 해줘야 한다.
 }
 
     <dquote>[^\'\n]*\' { // dquote 상태일때, <" 를 제외한 문자> + "가 붙는 경우
-        changeRule("INITIAL", INITIAL);
+        changeRule("normal", normal);
         string parsed = "\'" + string(yytext);
         yylval.strVal = strdup(parsed.c_str());
         return tstr;
     }
 
-\n {
+<normal>\n {
     if(yydebug)
         cout << " --- enter indent rule\n";
     nowIndent = 0;
-    changeRule("indent", indent);
+    changeRule("INITIAL", INITIAL);
     return teol;
 }
 
 
-([1-9][0-9]*|0) {
+<normal>([1-9][0-9]*|0) {
     yylval.floatVal = atof(yytext);
     return tnum;
 }
 
-([1-9][0-9]*.[0-9]+|0.[0-9]+) {
+<normal>([1-9][0-9]*.[0-9]+|0.[0-9]+) {
     yylval.floatVal= atof(yytext);
     return tnum;
 }
 
-:= { return topDefAssign; }
-\+\= { return topPlusAssign; }
--= { return topMinusAssign; }
-\*= { return topSquareAssign; }
-\/= { return topDivideAssign; }
-%= { return topModAssign; }
-^= { return topPowAssign; }
-\<= { return topLessEqual; }
-\>\= { return topMoreEqual; }
-\=\= { return topEqual; }
-\=\=\= { return topRefEqual; }
-\!\= { return topNotEqual; }
-\!\=\= { return topNotRefEqual; }
-\?\. { return topSafeNavi; }
-\.\. { return topSeq; }
-\+\+ { return topUplus; }
-\-\- { return topUminus; }
+<normal>:= { return topDefAssign; }
+<normal>\+\= { return topPlusAssign; }
+<normal>-= { return topMinusAssign; }
+<normal>\*= { return topSquareAssign; }
+<normal>\/= { return topDivideAssign; }
+<normal>%= { return topModAssign; }
+<normal>^= { return topPowAssign; }
+<normal>\<= { return topLessEqual; }
+<normal>\>\= { return topMoreEqual; }
+<normal>\=\= { return topEqual; }
+<normal>\=\=\= { return topRefEqual; }
+<normal>\!\= { return topNotEqual; }
+<normal>\!\=\= { return topNotRefEqual; }
+<normal>\?\. { return topSafeNavi; }
+<normal>\.\. { return topSeq; }
+<normal>\+\+ { return topUplus; }
+<normal>\-\- { return topUminus; }
 
-\'.\' {
+<normal>\'.\' {
     yylval.charVal = yytext[1];
     return tchar;
 }
 
-<indent>[ ] {
+<INITIAL>[ ] {
     nowIndent++;
     cout << " nowIndent = " << nowIndent << "\n";
 }
-<indent>\t {
+<INITIAL>\t {
     nowIndent = (nowIndent + TAB_WIDTH) & ~(TAB_WIDTH - 1);
     cout << " nowIndent = " << nowIndent << "\n";
 }
-<indent>\n {
+<INITIAL>\n {
     nowIndent = 0;
     if(yydebug)
         cout << " nowIndent = " << nowIndent << " newline!\n";
 }
 <dedent>\n { return teol; }
-<indent,dedent>. {
+<INITIAL,dedent>. {
     char ch = yytext[0];
 
     int prevIndentLv = indentLvs.size() ? indentLvs.top() : 0;
@@ -261,18 +260,18 @@ true|false {
     } else if (nowIndent > prevIndentLv) {
         indentLvs.push(nowIndent);
         unput(ch);
-        changeRule("INITIAL", INITIAL);
+        changeRule("normal", normal);
         return tindent;
 
     } else if (nowIndent == prevIndentLv) {
-        changeRule("INITIAL", INITIAL);
+        changeRule("normal", normal);
         unput(ch);
     } else {
         return goOutdent(ch);
     }
 }
 
-<indent,dedent><<EOF>> {
+<INITIAL,dedent><<EOF>> {
     if(yydebug)
         cout << "----------------------EOF!!!!!\n";
     if (goOutdent(yytext[0]) == tdedent) {
@@ -286,14 +285,14 @@ true|false {
     return meetEof();
 }
 
-[ ]* {
+<normal>[ ]* {
 }
 
-. {
+<normal>. {
     return yytext[0];
 }
 
-<<EOF>> {
+<normal><<EOF>> {
     return meetEof();
 }
 
