@@ -1,4 +1,13 @@
 %{
+
+// #1 INITIAL은 indent를 체크하는 state여야 한다.
+// #2 dedent 후 \n이 온다.
+// #3 엔터 한번에 2개 이상의 dedent를 한 경우도 역시 dedent \n 을 매번 해준다.
+// #4 eof를 만나면 별다른 처리 없이 return 0 하면 된다.
+// #5 changeRule을 없앨 방법을 찾아보자:
+//    1. 내장된 매크로를 찾아서 있으면 사용한다.
+//    2. 로직적으로 필요없게 만들어본다.
+
 class Node;
 #include "wrdcBison.h"
 #include <string>
@@ -101,7 +110,13 @@ void changePrevRule() {
     return tbool;
 }
 
-<normal,INITIAL,dedent>\/\/[^\n]*\n { cout << "consume single-line comment\n"; }
+<normal,INITIAL,dedent>\/\/[^\n]*\n {
+    cout << "consume single-line comment\n";
+    nowIndent = 0;
+    if(YY_START == normal) {
+        return teol;
+    }
+}
 
 "/*" {
     changeRule("commenting", commenting);
