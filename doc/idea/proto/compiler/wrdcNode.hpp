@@ -39,7 +39,7 @@ class Node {
     }
 
     void add(const string& key, Node* new1) {
-        nodes.insert(make_pair(key, new1));
+        nodes[key] = new1;
     }
     Node* get(const string& key) {
         return nodes[key];
@@ -483,6 +483,10 @@ public:
     Node* has() {
         return (Block*) get("has");
     }
+
+    void has(Node* new1) {
+        add("has", new1);
+    }
 };
 
 class BlockHaver : public Haver {
@@ -694,12 +698,10 @@ public:
 
 class Func : public BlockHaver {
 public:
-    Func(Node* lRedirect, Node* retType, Node* name, Node* params, Node* rRedirect, Node* block): BlockHaver(block) {
-        add("lRedirect", lRedirect);
+    Func(Node* retType, Node* name, Node* params, Node* block): BlockHaver(block) {
         add("retType", retType);
         add("name", name);
         add("params", params);
-        add("rRedirect", rRedirect);
     }
 
     virtual string name() { return "func"; }
@@ -708,12 +710,13 @@ public:
         string  name = get("name") ? get("name")->print(lv, FUNC) : "",
                 blkStr = blk ? blk->print(lv) : "",
                 params = get("params") ? get("params")->print(0) : "",
-                lRed = get("lRedirect") ? get("lRedirect")->print(lv) : "",
-                rRed = get("rRedirect") ? get("rRedirect")->print(lv) : "",
-                retType = get("retType") ? get("retType")->print(lv) + " ": "";
+                retType = get("retType") ? get("retType")->print(lv) + " ": "",
+                aka = get("aka") ? clr(KEYWORD) + " aka " + get("aka")->print(lv) : "";
 
-        return lRed + retType + name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
-            rRed + blkStr;
+        cout << "============================ blkStr=" << blkStr << "\n";
+
+        return retType + name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
+            aka + blkStr;
     }
 
     string _name;

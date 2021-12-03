@@ -57,15 +57,15 @@ void yyerror(const char* s)
 
 %type <node> tfuncRhsList trhsIdExpr tlhsId trhsIds trhslist
 
-%type <node> timportExpr tpackExpr tfileExpr tpackAccess
+%type <node> timportExpr tpackExpr tfileExpr tpackAccess takaStmt
 
-%type <node> tfunc tctorfunc tdtorfunc tfunclist tfuncBody
+%type <node> tfunc tfuncHeader tctorfunc tdtorfunc tfunclist
 
-%type <node> tdefOrigin tdefIndentBlock tdefexpr tdefBlock tdefBlockExpr
+%type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock tdefBlockExpr
 
 %type <nodes> telifBlocks
 
-%type <node> takaStmt tcaseIndentBlock tswitchExpr tcaseExpr tcaseStmt
+%type <node> tcaseIndentBlock tswitchExpr tcaseExpr tcaseStmt
 
 %type <node> tgetsetterStmt tgetsetterExpr tpropexpr tpropIndentBlock tpropBlock tgetsetList tgetsetFuncName
 
@@ -277,9 +277,6 @@ tconAccess  : tlhsId '[' trhsIdExpr ']' {
 takaStmt    : tlhsId taka tnormalId {
                 $$ = new AkaStmt($1, new Id($3));
             }
-            | tfunc taka tnormalId {
-                $$ = new AkaStmt($1, new Id($3));
-            }
             ;
 
 tcast       : trhsIdExpr tas ttype {
@@ -425,7 +422,7 @@ tgetsetList : tfunclist { $$ = $1; }
             ;
 
 tgetsetterExpr: tgetsetFuncName tgetsetList tindentBlock {
-                $$ = new Func(0, 0, $1, $2, 0, $3);
+                $$ = new Func(0, $1, $2, $3);
             }
             ;
 tgetsetterStmt: tgetsetterExpr teol { $$ = new Stmt($1); }
@@ -449,34 +446,56 @@ tfunclist   : '(' ')' { $$ = 0; }
             | '(' tparams ')' { $$ = $2; }
             ;
 
-tfunc       : tid tfunclist ttype tfuncBody {
-                $$ = new Func(0, $3, new Id($1), $2, 0, $4);
+tfuncHeader : tid tfunclist ttype {
+                $$ = new Func($3, new Id($1), $2, 0);
             }
-            | tas tfunclist ttype tfuncBody {
-                $$ = new Func(0, $3, new Id("as"), $2, 0, $4);
+            | tas tfunclist ttype {
+                $$ = new Func($3, new Id("as"), $2, 0);
             }
-            | tid tfunclist tfuncBody {
-                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
+            | tid tfunclist {
+                $$ = new Func(0, new Id($1), $2, 0);
             }
-            | tfunclist ttype tfuncBody {
-                $$ = new Func(0, $2, new Id(""), $1, 0, $3);
+            | tfunclist ttype {
+                $$ = new Func($2, new Id(""), $1, 0);
             }
-            | tfunclist tfuncBody {
-                $$ = new Func(0, 0, new Id(""), $1, 0, $2);
+            | tfunclist {
+                $$ = new Func(0, new Id(""), $1, 0);
             }
             ;
 
-tfuncBody   : tindentBlock { $$ = $1; }
-            | '=' tnull { $$ = new Str(" = null"); }
+tfunc       : tfuncHeader tindentBlock {
+                Func* fun = (Func*) $1;
+                fun->has($2);
+                $$ = fun;
+            }
+            | tfuncHeader taka tnormalId tindentBlock {
+                Func* fun = (Func*) $1;
+                fun->add("aka", new Id($3));
+                fun->has($4);
+                cout << "===================== $4=" << $4->print() << "\n";
+                cout << "===================== $4=" << fun->has()->print() << "\n";
+                $$ = fun;
+            }
+            | tfuncHeader '=' tnull {
+                Func* fun = (Func*) $1;
+                fun->has(new Str(" = null"));
+                $$ = fun;
+            }
+            | tfuncHeader '=' tnull taka tnormalId {
+                Func* fun = (Func*) $1;
+                fun->has(new Str(" = null"));
+                fun->add("aka", new Id($5));
+                $$ = fun;
+            }
             ;
 
 tctorfunc   : tfctor tfunclist tindentBlock {
-                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
+                $$ = new Func(0, new Id($1), $2, $3);
             }
             ;
 
 tdtorfunc   : tfdtor tfunclist tindentBlock {
-                $$ = new Func(0, 0, new Id($1), $2, 0, $3);
+                $$ = new Func(0, new Id($1), $2, $3);
             }
             ;
 
@@ -504,16 +523,21 @@ tblock      : texpr teol {
             }
             ;
 
-tdefBlock   : tdefexpr teol {
+tdefStmt    : tdefexpr teol {
+                  $$ = new Stmt($1);
+            }
+            ;
+
+tdefBlock   : tdefStmt {
                 Block* ret = new Block();
                 if ($1)
-                    ret->add(new Stmt($1));
+                    ret->add($1);
                 $$ = ret;
             }
-            | tdefBlock tdefexpr teol {
+            | tdefBlock tdefStmt {
                 Block* ret = (Block*) $1;
                 if ($2)
-                    ret->add(new Stmt($2));
+                    ret->add($2);
                 $$ = ret;
             }
             ;
@@ -538,12 +562,16 @@ tfileExpr   : tpackExpr { $$ = $1; }
 
 tdefIndentBlock: teol tindent tdefBlock tdedent { $$ = $3; }
             | ':' tdefexpr { $$ = new InlineStmt($2); }
+            | ':' tdefexpr teol { $$ = new InlineStmt($2); }
             | { $$ = 0; }
             ;
 
 tindentBlock: teol tindent tblock tdedent { $$ = $3; }
+            | ':' trhsIdExpr teol { $$ = new InlineStmt($2); }
             | ':' trhsIdExpr { $$ = new InlineStmt($2); }
+            | ':' treturnexpr teol { $$ = new InlineStmt($2); }
             | ':' treturnexpr { $$ = new InlineStmt($2); }
+            | ':' tnext teol { $$ = new InlineStmt(new Next()); }
             | ':' tnext { $$ = new InlineStmt(new Next()); }
             ;
 
