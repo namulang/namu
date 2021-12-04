@@ -350,6 +350,16 @@ public:
     }
 };
 
+class NullableType : public Node {
+public:
+    NullableType(Node* type): Node(type) {}
+
+    virtual string name() { return "nullableType"; }
+    virtual string _onPrint(int lv) {
+        return l()->print(lv) + clr(OP) + "?";
+    }
+};
+
 class ContainerAccess : public Node {
 public:
     ContainerAccess(Node* container, Node* key): Node(container, key) {}

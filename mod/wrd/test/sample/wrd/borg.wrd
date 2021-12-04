@@ -1,10 +1,10 @@
 pack wrd.lang.example.borg
 
 def borg
-    _sharedState := node{}? // nullable to array
+    _sharedState node{}? // nullable to array
     state := ""
 
-    me(): state = "Init"
+    me(): state = "'Init'"
     as() str: borg.state
 
 def yourBorg from borg()
