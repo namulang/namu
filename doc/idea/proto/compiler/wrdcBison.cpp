@@ -266,7 +266,9 @@ tconNames   : tconName '{' '}' {
             ;
 
 ttype       : tlhsId { $$ = $1; }
+ttype       : tlhsId '?' { $$ = new NullableType($1); }
             | tconNames { $$ = $1; }
+            | tconNames '?' { $$ = new NullableType($1); }
             ;
 
 tconAccess  : tlhsId '[' trhsIdExpr ']' {
