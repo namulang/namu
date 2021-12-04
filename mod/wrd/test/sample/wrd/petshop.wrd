@@ -36,16 +36,3 @@ main() void
     for n in 0..3
         shop.showPet()
         c.out('=' * 20)
-
-
-
-if a == b
-    do()
-    do()
-elif a == 2
-elif a == 1 // ㅇㅏ무것도 없어도 ok
-    do()
-    do()
-    with do()
-        do() // eof 가 나와도 ok. // 한번에 2 depth 이상이 빠져도 ok
-do()

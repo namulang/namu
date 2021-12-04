@@ -52,14 +52,14 @@ void yyerror(const char* s)
 %token teol topDefAssign topMinusAssign topSquareAssign topDivideAssign topModAssign topPowAssign topLessEqual topMoreEqual topEqual topRefEqual topNotEqual topNotRefEqual topPlusAssign topSeq topSafeNavi topUplus topUminus
 
 %type <node> tblock tindentBlock
-%type <node> texpr tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturnexpr ttuple ttuples tparam tparams tsafeAccess tconNames
+%type <node> texpr tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturnexpr ttuple ttuples tparam tparams tnameOnlyParams tsafeAccess tconNames
 
 
 %type <node> tfuncRhsList trhsIdExpr tlhsId trhsIds trhslist
 
 %type <node> timportExpr tpackExpr tfileExpr tpackAccess takaStmt
 
-%type <node> tfunc tfuncHeader tctorfunc tdtorfunc tfunclist
+%type <node> tfunc tfuncHeader tctorfunc tdtorfunc tfunclist tfuncNameOnlyList tfuncAllList
 
 %type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock tdefBlockExpr
 
@@ -361,6 +361,18 @@ tparam      : tid ttype {
             }
             ;
 
+tnameOnlyParams : tid {
+                Args* ret = new Args();
+                ret->add(new Param(nullptr, new Id($1)));
+                $$ = ret;
+            }
+            | tnameOnlyParams ',' tid {
+                Args* ret = (Args*) $1;
+                ret->add(new Param(nullptr, new Id($3)));
+                $$ = ret;
+            }
+            ;
+
 tparams     : tparam {
                 Args* ret = new Args();
                 ret->add($1);
@@ -446,19 +458,25 @@ tfunclist   : '(' ')' { $$ = 0; }
             | '(' tparams ')' { $$ = $2; }
             ;
 
-tfuncHeader : tid tfunclist ttype {
+tfuncNameOnlyList : '(' tnameOnlyParams ')' { $$ = $2; }
+
+tfuncAllList : tfunclist { $$ = $1; }
+            | tfuncNameOnlyList { $$ = $1; }
+            ;
+
+tfuncHeader : tid tfuncAllList ttype {
                 $$ = new Func($3, new Id($1), $2, 0);
             }
-            | tas tfunclist ttype {
+            | tas tfuncAllList ttype {
                 $$ = new Func($3, new Id("as"), $2, 0);
             }
-            | tid tfunclist {
+            | tid tfuncAllList {
                 $$ = new Func(0, new Id($1), $2, 0);
             }
-            | tfunclist ttype {
+            | tfuncAllList ttype {
                 $$ = new Func($2, new Id(""), $1, 0);
             }
-            | tfunclist {
+            | tfuncAllList {
                 $$ = new Func(0, new Id(""), $1, 0);
             }
             ;
@@ -563,7 +581,7 @@ tfileExpr   : tpackExpr { $$ = $1; }
 tdefIndentBlock: teol tindent tdefBlock tdedent { $$ = $3; }
             | ':' tdefexpr { $$ = new InlineStmt($2); }
             | ':' tdefexpr teol { $$ = new InlineStmt($2); }
-            | { $$ = 0; }
+            | { $$ = new Str("\n"); }
             ;
 
 tindentBlock: teol tindent tblock tdedent { $$ = $3; }

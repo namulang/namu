@@ -231,7 +231,10 @@ public:
 
     virtual string name() { return "param"; }
     virtual string _onPrint(int lv) {
-        return r()->print(lv) + " " + l()->print(lv);
+        string type = r() ? r()->print(lv) + " " : "",
+               var = l() ? l()->print(lv) : "";
+
+        return type + var;
     }
 };
 
@@ -712,9 +715,6 @@ public:
                 params = get("params") ? get("params")->print(0) : "",
                 retType = get("retType") ? get("retType")->print(lv) + " ": "",
                 aka = get("aka") ? clr(KEYWORD) + " aka " + get("aka")->print(lv) : "";
-
-        cout << "============================ blkStr=" << blkStr << "\n";
-
         return retType + name + clr(CONTAINER) + "(" + params + clr(CONTAINER) + ")" +
             aka + blkStr;
     }
