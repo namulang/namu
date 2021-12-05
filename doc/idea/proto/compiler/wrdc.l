@@ -111,12 +111,8 @@ void changePrevRule() {
     return tbool;
 }
 
-<normal,INITIAL,dedent>\/\/[^\n]*\n {
+<normal,INITIAL,dedent>\/\/[^\n]* {
     cout << "consume single-line comment\n";
-    nowIndent = 0;
-    if(YY_START == normal) {
-        return teol;
-    }
 }
 
 "/*" {
