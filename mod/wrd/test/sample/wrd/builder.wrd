@@ -8,32 +8,32 @@ def building
         buildFloor()
         buildSize()
 
-    buildFloor() void on err: ret on notImplErr
-    buildSize() void on notImplErr: ret on notImplErr
+    buildFloor() void: ret
+    buildSize(): ret
 
 def house from building
-    buildFloor() void: _floor = 'One'
-    buildSize() void: _size = 'Big'
+    buildFloor(): floor = 'One'
+    buildSize(): size = 'Big'
 
 def flat from building
-    buildFloor() void: _floor = 'More than one'
-    buildSize() void: _size = 'Small'
+    buildFloor() void: floor = 'More than one'
+    buildSize() void: size = 'Small'
 
 def complexBuilding from building
 
 def complexHouse() from complexBuilding
-    buildFloor() void: _floor = 'One'
-    buildSize() void: _size = 'Big and fancy'
+    buildFloor() void: floor = 'One'
+    buildSize() void: size = 'Big and fancy'
 
 constructBuilding(@building) building
     return building()
 
-main() void on err
+main() void
     house().print()
     flat().print()
     complex := constructBuilding(complexHouse)
 
     sys.cons aka c
-    if complex != complexHouse: return on err
-    if complex === complexHouse: return on err
+    if complex != complexHouse: return
+    if complex == complexHouse: return
 
