@@ -216,8 +216,8 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             | termFor %dprec 4 { $$ = $1; }
             | tseq %dprec 4 { $$ = $1; }
 
-            | twith tnormalId tindentBlock {
-                $$ = new With(new Id($2), $3);
+            | twith taccess tindentBlock {
+                $$ = new With($2, $3);
             }
             | twith tindentBlock {
                 $$ = new With(0, $2);
@@ -227,13 +227,13 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             | termIf { $$ = $1; }
             | tfuncCall { $$ = $1; }
 
-            | tnormalId topPlusAssign trhsIdExpr %dprec 5 { $$ = new PlusAssign(new Id($1), $3); }
-            | tnormalId topMinusAssign trhsIdExpr %dprec 5 { $$ = new MinusAssign(new Id($1), $3); }
-            | tnormalId topSquareAssign trhsIdExpr %dprec 5 { $$ = new SquareAssign(new Id($1), $3); }
-            | tnormalId topDivideAssign trhsIdExpr %dprec 5 { $$ = new DivideAssign(new Id($1), $3); }
-            | tnormalId topModAssign trhsIdExpr %dprec 5 { $$ = new ModulerAssign(new Id($1), $3); }
-            | tnormalId topPowAssign trhsIdExpr %dprec 5 { $$ = new PowAssign(new Id($1), $3); }
-            | tnormalId '=' trhsIdExpr %dprec 5 { $$ = new Assign(new Id($1), $3); }
+            | trhsIdExpr topPlusAssign trhsIdExpr %dprec 5 { $$ = new PlusAssign($1, $3); }
+            | trhsIdExpr topMinusAssign trhsIdExpr %dprec 5 { $$ = new MinusAssign($1, $3); }
+            | trhsIdExpr topSquareAssign trhsIdExpr %dprec 5 { $$ = new SquareAssign($1, $3); }
+            | trhsIdExpr topDivideAssign trhsIdExpr %dprec 5 { $$ = new DivideAssign($1, $3); }
+            | trhsIdExpr topModAssign trhsIdExpr %dprec 5 { $$ = new ModulerAssign($1, $3); }
+            | trhsIdExpr topPowAssign trhsIdExpr %dprec 5 { $$ = new PowAssign($1, $3); }
+            | trhsIdExpr '=' trhsIdExpr %dprec 5 { $$ = new Assign($1, $3); }
             ;
 
 tdefBlockExpr:  tfunc { $$ = $1; }
