@@ -439,6 +439,8 @@ public:
     Container() : _len(0) {}
     using Node::add;
     void add(Node* new1) {
+        if (!new1) return;
+
         nodes.insert(make_pair(to_string(_len).c_str(), new1));
         _len++;
     }
@@ -757,20 +759,15 @@ public:
 
 class Prop : public BlockHaver {
 public:
-    Prop(Node* name, Node* list, Node* from, Node* blk): BlockHaver(blk) {
-        add("name", name);
-        add("list", list);
-        add("from", from);
+    Prop(Node* var, Node* blk): BlockHaver(blk) {
+        add("var", var);
     }
 
     virtual string name() { return "prop"; }
     virtual string _onPrint(int lv) {
-        string  n = get("name") ? get("name")->print(lv) : "",
-                f = get("from") ? get("from")->print(lv) : "",
-                list = get("list") ? get("list")->print(lv) : "",
-                blk = has() ? has()->print(lv) : "";
+        string var = get("var") ? get("var")->print(lv) : "";
 
-        return clr(KEYWORD) + "prop" + n + list + " from " + f + blk;
+        return var + has()->print(lv);
     }
 };
 

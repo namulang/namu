@@ -38,7 +38,7 @@ void yyerror(const char* s)
 %verbose
 %start tfile
 
-%token tpack tswitch tas tfor tdef twith tret treturn tif telse telif tfrom tnext tprop timport taka tthis tnode tin tindent tdedent tnull
+%token tpack tswitch tas tfor tdef twith tret treturn tif telse telif tfrom tnext timport taka tthis tnode tin tindent tdedent tnull
 
 %token <intVal> teof
 %token <floatVal> tnum
@@ -61,13 +61,13 @@ void yyerror(const char* s)
 
 %type <node> tfunc tfuncHeader tctorfunc tdtorfunc tfunclist tfuncNameOnlyList tfuncAllList
 
-%type <node> tdefOrigin tdefIndentBlock tdefexpr tdefStmt tdefBlock tdefBlockExpr
+%type <node> tdefOrigin tdefIndentBlock tdefexpr tdefvar tdefStmt tdefBlock tdefBlockExpr
 
 %type <nodes> telifBlocks
 
 %type <node> tcaseIndentBlock tswitchExpr tcaseExpr tcaseStmt
 
-%type <node> tgetsetterStmt tgetsetterExpr tpropexpr tpropIndentBlock tpropBlock tgetsetList tgetsetFuncName
+%type <node> tpropexpr propBlock tpropindentBlock
 
 // 우선순위: 밑으로 갈수록 높음.
 //  결합 순서 정의:
@@ -181,12 +181,10 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             | tchar { $$ = new Char($1); }
             | tswitchExpr { $$ = $1; }
             | tarray { $$ = $1; }
-            | tnormalId { $$ = new Str($1); }
+            | ttype %dprec 8 { $$ = $1; }
             | tmap { $$ = $1; }
             | tdefexpr { $$ = $1; }
             | tcast %dprec 1 { $$ = $1; }
-            | tsafeAccess %dprec 1 { $$ = $1; }
-            | taccess %dprec 1 { $$ = $1; }
             | '(' trhsIdExpr ')' { $$ = $2; }
 
             | topUplus trhsIdExpr %dprec 1 { $$ = new UPre(new Id("++"), $2); }
@@ -237,17 +235,18 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             ;
 
 tdefBlockExpr:  tfunc { $$ = $1; }
-                | tdefOrigin { $$ = $1; }
-                | tpropexpr { $$ = $1; }
-                | tctorfunc { $$ = $1; }
-                | tdtorfunc { $$ = $1; }
-                ;
+             | tdefOrigin { $$ = $1; }
+             | tpropexpr { $$ = $1; }
+             | tctorfunc { $$ = $1; }
+             | tdtorfunc { $$ = $1; }
+             ;
 
-tdefexpr    : tid topDefAssign trhsIdExpr { $$ = new DefAssign(new Id($1), $3); }
+tdefvar     : tid topDefAssign trhsIdExpr { $$ = new DefAssign(new Id($1), $3); }
             | tid ttype topDefAssign trhsIdExpr { $$ = new DefAssign(new Param($2, new Id($1)), $4); }
             | tid ttype topDefAssign '{' '}' { $$ = new DefAssign(new Param($2, new Id($1)), new Array()); }
             | tparam { $$ = $1; }
-            | takaStmt { $$ = $1; }
+
+tdefexpr    : takaStmt { $$ = $1; }
             | tdefBlockExpr { $$ = $1; }
             ;
 
@@ -400,47 +399,24 @@ tfuncRhsList: trhslist { $$ = $1; }
             ;
 
 
-tpropexpr   : tprop tid tfrom trhsIdExpr tpropIndentBlock {
-                $$ = new Prop(new Id($2), 0, $4, $5);
+propBlock   : tfunc teol {
+                Block* blk = new Block();
+                blk->add($1);
+                $$ = blk;
             }
-            | tprop tid tfuncRhsList tfrom trhsIdExpr tpropIndentBlock {
-                $$ = new Prop(new Id($2), $3, $5, $6);
-            }
-            | tprop tfrom trhsIdExpr tpropIndentBlock {
-                $$ = new Prop(0, 0, $3, $4);
-            }
-            | tprop tfuncRhsList tfrom trhsIdExpr tpropIndentBlock {
-                $$ = new Prop(0, $2, $4, $5);
-            }
-            ;
-tpropIndentBlock: teol tindent tpropBlock tdedent { $$ = $3; }
-            | ':' tgetsetterExpr { $$ = new InlineStmt($2); }
-            | { $$ = 0; }
-            ;
-tpropBlock  : tgetsetterStmt {
-                Block* ret = new Block();
-                ret->add($1);
-                $$ = ret;
-            }
-            | tpropBlock tgetsetterStmt {
-                Block* ret = (Block*) $1;
-                ret->add($2);
-                $$ = ret;
+            | propBlock tfunc teol {
+                Block* blk = (Block*) $1;
+                blk->add($2);
+                $$ = blk;
             }
             ;
 
-tgetsetFuncName : tfget { $$ = new Id($1); }
-            | tfset { $$ = new Id($1); }
-            ;
-tgetsetList : tfunclist { $$ = $1; }
-            | { $$ = 0; }
-            ;
+tpropindentBlock: teol tindent propBlock tdedent { $$ = $3; }
 
-tgetsetterExpr: tgetsetFuncName tgetsetList tindentBlock {
-                $$ = new Func(0, $1, $2, $3);
+tpropexpr   : tdefvar tpropindentBlock {
+                $$ = new Prop($1, $2);
             }
-            ;
-tgetsetterStmt: tgetsetterExpr teol { $$ = new Stmt($1); }
+            | tdefvar { $$ = $1; }
             ;
 
 tdefOrigin  : tdef tid tdefIndentBlock {

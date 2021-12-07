@@ -70,16 +70,6 @@ void changePrevRule() {
     return tdef;
 }
 <normal>from { return tfrom; }
-<normal>"prop"[\(]* {
-    string temp = yytext;
-    if(temp[temp.size()-1] == '(') {
-        temp = temp.substr(0, temp.size()-1);
-        unput('(');
-    }
-
-    yylval.strVal = strdup(temp.c_str());
-    return tprop;
-}
 <normal>null { return tnull; }
 <normal>import { return timport; }
 <normal>aka { return taka; }
@@ -89,21 +79,9 @@ void changePrevRule() {
 <normal>ret { return tret; }
 <normal>as { return tas; }
 <normal>return { return treturn; }
-<normal>(_)*@set {
-    yylval.strVal = strdup(yytext);
-    return tfset;
-}
-<normal>(_)*@get {
-    yylval.strVal = strdup(yytext);
-    return tfget;
-}
-<normal>(_)*@ctor {
+<normal>(_)*me {
     yylval.strVal = strdup(yytext);
     return tfctor;
-}
-<normal>(_)*@dtor {
-    yylval.strVal = strdup(yytext);
-    return tfdtor;
 }
 
 <normal>true|false {
