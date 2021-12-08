@@ -214,7 +214,7 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
             | termFor %dprec 4 { $$ = $1; }
             | tseq %dprec 4 { $$ = $1; }
 
-            | twith taccess tindentBlock {
+            | twith trhsIdExpr tindentBlock {
                 $$ = new With($2, $3);
             }
             | twith tindentBlock {
