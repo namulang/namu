@@ -6,7 +6,7 @@ main() void
         name := 'cherry'
         price := 53
 
-        me()
+        me(): ok()
         me(@price)
             me.price = price
 

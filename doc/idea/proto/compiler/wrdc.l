@@ -79,10 +79,6 @@ void changePrevRule() {
 <normal>ret { return tret; }
 <normal>as { return tas; }
 <normal>return { return treturn; }
-<normal>(_)*me {
-    yylval.strVal = strdup(yytext);
-    return tfctor;
-}
 
 <normal>true|false {
     yylval.boolVal = string(yytext) == "true" ? true : false;

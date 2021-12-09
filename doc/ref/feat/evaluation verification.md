@@ -6,5 +6,7 @@
 # verifier의 기준
 * 파싱이 가능한가 불가능한가는 이 단계에서 검증하지 않는다.
 * 의미를 파악해서 해당 의미를 가진 항목이 여기에 오는 것이 타당한가의 여부는 이 단계에서만 검출한다.
-    * 예를들어, 어떠한 expr 이 있을때 이 expr이 lhs인가 rhs인가를 판단하는 것은 verifier에서 검증해야 한다.
-    * lowscanner, lowparser에서 판단해서는 안된다. lowparser는 구분 없이 모두 expr로써만 받아들여야 한다.
+
+# 사례
+* 어떠한 expr 이 있을때 이 expr이 lhs인가 rhs인가를 판단하는 것은 verifier에서 검증해야 한다. lowscanner, lowparser에서 판단해서는 안된다. lowparser는 구분 없이 모두 expr로써만 받아들여야 한다.
+* 생성자를 정의한 것인지 일반 함수를 정의한 것인지에 대한 구분 역시 verifier에서 해야 한다.
