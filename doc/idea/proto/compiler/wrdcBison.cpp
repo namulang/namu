@@ -59,7 +59,7 @@ void yyerror(const char* s)
 
 %type <node> timportExpr tpackExpr tfileExpr tpackAccess takaStmt
 
-%type <node> tfunc tfuncHeader tctorfunc tdtorfunc tfunclist tfuncNameOnlyList tfuncAllList
+%type <node> tfunc tfuncHeader tfunclist tfuncNameOnlyList tfuncAllList
 
 %type <node> tdefOrigin tdefIndentBlock tdefexpr tdefvar tdefStmt tdefBlock tdefBlockExpr
 
@@ -91,6 +91,7 @@ tid         : tnormalId { $$ = $1; }
 telseBlock  : teol telse tindentBlock {
                 $$ = $3;
             }
+            ;
 
 telifBlock  : teol telif tbranch {
                 $$ = $3;
@@ -237,8 +238,6 @@ trhsIdExpr  : tbool { $$ = new Bool($1); }
 tdefBlockExpr:  tfunc { $$ = $1; }
              | tdefOrigin { $$ = $1; }
              | tpropexpr { $$ = $1; }
-             | tctorfunc { $$ = $1; }
-             | tdtorfunc { $$ = $1; }
              ;
 
 tdefvar     : tid topDefAssign trhsIdExpr { $$ = new DefAssign(new Id($1), $3); }
@@ -486,18 +485,9 @@ tfunc       : tfuncHeader tindentBlock {
             }
             ;
 
-tctorfunc   : tfctor tfunclist tindentBlock {
-                $$ = new Func(0, new Id($1), $2, $3);
-            }
-            ;
 
-tdtorfunc   : tfdtor tfunclist tindentBlock {
-                $$ = new Func(0, new Id($1), $2, $3);
-            }
-            ;
-
-tfuncCall   : tid tfuncRhsList {
-                $$ = new FuncCall(new Id($1), (List*) $2);
+tfuncCall   : ttype tfuncRhsList {
+                $$ = new FuncCall($1, (List*) $2);
             }
             ;
 
