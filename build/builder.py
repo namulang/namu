@@ -69,7 +69,9 @@ def branch(command):
     elif command == "dbg":
         return dbgBuild();
     elif command == "test":
-        return test("");
+        arg1 = "" if len(sys.argv) < 3 else sys.argv[2]
+        arg2 = "" if len(sys.argv) < 4 else sys.argv[3]
+        return test(arg1, arg2);
     elif command == "run":
         return run()
     elif command == "doc":
@@ -158,13 +160,6 @@ def _publishDoc():
     _cleanIntermediates()
     return 0
 
-
-def run():
-    result = dbgBuild()
-    if result:
-        return result
-    return test("")
-
 config=""
 
 def dbgBuild():
@@ -172,14 +167,14 @@ def dbgBuild():
 
     config="-DCMAKE_BUILD_TYPE=Debug"
     clean()
-    return build()
+    return build(True)
 
 def relBuild():
     global config
 
     clean()
     config="-DCMAKE_BUILD_TYPE=Release"
-    return build()
+    return build(True)
 
 # currently this application only supports window and linux.
 def isWindow():
@@ -370,41 +365,51 @@ def _hasDir(dir):
 
 def rebuild():
     clean()
-    return build()
+    return build(true)
 
-def build():
+def build(incVer):
     if checkDependencies(["git", "cmake", "clang", "bison", "flex", "dot"]):
         printErr("This program needs following softwares to be fully functional.")
         return -1
 
     _checkGTest()
     #_beautify()
-    _injectBuildInfo()
-    if _createMakefiles():
-        return -1
+    if incVer:
+        _injectBuildInfo()
+        if _createMakefiles():
+            return -1
+        _incBuildCnt()
     if _make():
         return -1
-    _incBuildCnt()
     return 0
 
 # arg is "" for dbg or "silent" for rel
-def test(arg):
+def test(filename, arg):
+    build(False)
     print("")
     printInfoEnd("let's initiate unit tests...")
     global cwd, binDir
 
     originDir = os.getcwd()
     os.chdir(binDir)
-    files = os.listdir('.')
-    ret = 0
     failedCnt = 0
-    for file in files:
-        if len(file) < 4 or file[-4:] != "Test":
-            continue
-        res = os.system("./" + file + " " + arg)
-        if res != 0:
-            printErr(file + " was failed!")
-            ret = res;
+    ret = 0
+    print("fileName = " + filename)
+    if filename is None or filename == "":
+        files = os.listdir('.')
+        for file in files:
+            if len(file) < 4 or file[-4:] != "Test":
+                continue
+            res = os.system("./" + file + " " + arg)
+            if res != 0:
+                printErr(file + " was failed!")
+                ret = res;
+                failedCnt += 1
+    else:
+        ret = os.system("./" + filename + " " + arg)
+        if ret != 0:
+            printErr(filename + " was failed!")
+            ret = res
             failedCnt += 1
 
     if failedCnt > 0:
@@ -490,11 +495,10 @@ def help():
     print("\t * help")
     print("\t * history")
     print("\t * clean\tclear all cache files of cmake outputs.")
-    print("\t * dbg\t\tbuild binary with debug configuration.")
-    print("\t * rel\t\tbuild binary with release configuration. binary optimized, debug logs will be hidden.")
-    print("\t * test\t\truns unit tests if they are built already.")
+    print("\t * dbg\t\tbuild new binary with debug configuration.")
+    print("\t * rel\t\tbuild new binary with release configuration. binary optimized, debug logs will be hidden.")
+    print("\t * test\t\truns unit tests but skip build if they are built already.")
     print("\t * doc\t\tgenerate documents only.")
-    print("\t * run\t\tdbg + test. build binary with latest codes and runs unittest.")
 
 def clean():
     printInfo("Clearing next following files...")
