@@ -10,3 +10,5 @@
 # 사례
 * 어떠한 expr 이 있을때 이 expr이 lhs인가 rhs인가를 판단하는 것은 verifier에서 검증해야 한다. lowscanner, lowparser에서 판단해서는 안된다. lowparser는 구분 없이 모두 expr로써만 받아들여야 한다.
 * 생성자를 정의한 것인지 일반 함수를 정의한 것인지에 대한 구분 역시 verifier에서 해야 한다.
+* import에서는 <id> . <id> 와 같은 꼴만 올 수 있다. 반면 함수 본문에서는 <id> . <funcCall> 도 올 수 있다.
+  그렇다고 해서 lowparser가 이 둘을 구분해서 받아들이려고 하면 구현이 어렵다. 더 큰 문법이 있다면 그 문법 1개만 남긴다. 그리고 verifier에서 검증한다.

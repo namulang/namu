@@ -55,9 +55,9 @@ void yyerror(const char* s)
 %type <node> texpr tcast tfile tfuncCall telseBlock telifBlock tbranch termIf termFor tseq tarray ttype tmap taccess tconAccess treturnexpr ttuple ttuples tparam tparams tnameOnlyParams tsafeAccess tconNames
 
 
-%type <node> tfuncRhsList trhsIdExpr tlhsId trhsIds trhslist
+%type <node> tfuncRhsList trhsIdExpr trhsIds trhslist
 
-%type <node> timportExpr tpackExpr tfileExpr tpackAccess takaStmt
+%type <node> timportExpr tpackExpr tfileExpr takaStmt
 
 %type <node> tfunc tfuncHeader tfunclist tfuncNameOnlyList tfuncAllList
 
@@ -153,7 +153,7 @@ tcaseIndentBlock : tcaseStmt {
             }
             ;
 
-tswitchExpr : tswitch tlhsId teol tindent tcaseIndentBlock tdedent {
+tswitchExpr : tswitch taccess teol tindent tcaseIndentBlock tdedent {
                 $$ = new SwitchExpr($2, $5);
             }
             ;
@@ -263,18 +263,18 @@ tconNames   : tconName '{' '}' {
             }
             ;
 
-ttype       : tlhsId { $$ = $1; }
-ttype       : tlhsId '?' { $$ = new NullableType($1); }
+ttype       : taccess { $$ = $1; }
+            | taccess '?' { $$ = new NullableType($1); }
             | tconNames { $$ = $1; }
             | tconNames '?' { $$ = new NullableType($1); }
             ;
 
-tconAccess  : tlhsId '[' trhsIdExpr ']' {
+tconAccess  : taccess '[' trhsIdExpr ']' {
                 $$ = new ContainerAccess($1, $3);
             }
             ;
 
-takaStmt    : tlhsId taka tnormalId {
+takaStmt    : taccess taka tnormalId {
                 $$ = new AkaStmt($1, new Id($3));
             }
             ;
@@ -308,10 +308,6 @@ trhslist    : '(' trhsIds ')' { //  " "를 쓰면 안된다.
             }
             ;
 
-tlhsId      : tnormalId { $$ = new Id($1); }
-            | tpackAccess { $$ = $1; }
-            ;
-
 ttuple      : trhsIdExpr ';' trhsIdExpr {
                 $$ = new Tuple($1, $3);
             }
@@ -342,12 +338,8 @@ tseq        : trhsIdExpr topSeq trhsIdExpr {
                 $$ = new Sequence($1, $3);
             }
 
-taccess     : trhsIdExpr '.' tnormalId { $$ = new Access($1, new Id($3)); }
-            | trhsIdExpr '.' tfuncCall { $$ = new Access($1, $3); }
-            ;
-
-tpackAccess : tlhsId '.' tnormalId { $$ = new Access($1, new Id($3)); }
-            | tlhsId '.' tfuncCall { $$ = new Access($1, $3); }
+taccess     : tnormalId { $$ = new Id($1); }
+            | trhsIdExpr '.' tnormalId { $$ = new Access($1, new Id($3)); }
             ;
 
 tsafeAccess : trhsIdExpr topSafeNavi tnormalId { $$ = new SafeAccess($1, new Id($3)); }
@@ -486,7 +478,7 @@ tfunc       : tfuncHeader tindentBlock {
             ;
 
 
-tfuncCall   : ttype tfuncRhsList {
+tfuncCall   : taccess tfuncRhsList {
                 $$ = new FuncCall($1, (List*) $2);
             }
             ;
@@ -529,15 +521,15 @@ tdefBlock   : tdefStmt {
             }
             ;
 
-tpackExpr   : tpack tpackAccess {
+tpackExpr   : tpack taccess {
                 $$ = new PackStmt($2);
             }
             ;
 
-timportExpr : timport tlhsId {
+timportExpr : timport taccess {
                 $$ = new ImportStmt($2);
             }
-            | timport tlhsId taka tnormalId {
+            | timport taccess taka tnormalId {
                 $$ = new ImportStmt(new AkaStmt($2, new Id($4)));
             }
             ;
