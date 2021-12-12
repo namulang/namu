@@ -385,7 +385,9 @@ def build(incVer):
 
 # arg is "" for dbg or "silent" for rel
 def test(filename, arg):
-    build(False)
+    if build(False) != 0:
+        return -1;
+
     print("")
     printInfoEnd("let's initiate unit tests...")
     global cwd, binDir
