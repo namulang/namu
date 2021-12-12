@@ -406,8 +406,8 @@ def test(filename, arg):
                 ret = res;
                 failedCnt += 1
     else:
-        ret = os.system("./" + filename + " " + arg)
-        if ret != 0:
+        res = os.system("./" + filename + " " + arg)
+        if res != 0:
             printErr(filename + " was failed!")
             ret = res
             failedCnt += 1
