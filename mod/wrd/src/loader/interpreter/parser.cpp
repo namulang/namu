@@ -6,6 +6,7 @@ namespace wrd {
     WRD_DEF_ME(parser)
 
     str me::parse(const wchar* script) {
+        yyscan_t scanner;
         lowstate state;
         yylex_init_extra(&state, &scanner);
 
