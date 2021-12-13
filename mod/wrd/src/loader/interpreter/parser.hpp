@@ -1,6 +1,5 @@
 #pragma once
 
-#include "parserable.hpp"
 #include "../../ast/node.hpp"
 #include "../errReport.hpp"
 
@@ -16,8 +15,8 @@ namespace wrd {
     ///
     /// the reason for configuring this structure is to make it easy to replace other
     /// parser generators.
-    class parser : public parserable, typeProvidable {
-        WRD(INTERFACE(parser, parserable))
+    class parser : public typeProvidable {
+        WRD(INTERFACE(parser, typeProvidable))
 
 	public:
 		parser() { me::rel(); }
@@ -33,13 +32,7 @@ namespace wrd {
 
 		virtual void rel();
 
-    protected:
-        str& getRootBinder() override {
-            return _root;
-        }
-
     private:
-        str _root;
         tstr<errReport> _report;
     };
 }
