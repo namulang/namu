@@ -3,10 +3,11 @@
     |                                          PROLOGUE                                        |
     ============================================================================================  */
 
-#include "parserable.hpp"
 #include "lowparser.hpp"
+#include "parser.hpp"
+#include "lowstate.hpp"
 
-#define YY_DECL int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, wrd::parserable* interp, yyscan_t yyscanner)
+#define YY_DECL int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner)
 }
 
 /*  ============================================================================================
@@ -14,12 +15,17 @@
     ============================================================================================  */
 
 %option reentrant bison-bridge bison-locations
-%option extra-type="wrd::parserable*"
+%option extra-type="wrd::lowstate*"
+
+
 
 /*  ============================================================================================
     |                                           RULES                                          |
     ============================================================================================  */
 %%
+
+
+
 
 [[:digit:]]+ {
     yylval->nint = atoi(yytext);
@@ -35,7 +41,7 @@
     |                                         EPILOGUE                                         |
     ============================================================================================  */
 
-int yywrap(wrd::parserable* interp, yyscan_t scanner) {
+int yywrap(yyscan_t scanner) {
     // TODO:
     return 1;
 }

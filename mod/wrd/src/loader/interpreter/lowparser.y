@@ -6,7 +6,9 @@
 
     #include <iostream>
     using std::cout;
-    #include "parserable.hpp"
+    #include "lowstate.hpp"
+    #include "../../builtin/primitive/wInt.hpp"
+    using namespace wrd;
 }
 
 /*  ============================================================================================
@@ -21,10 +23,14 @@
     //extern wrd::sobj* root;
     extern int yylineno;
     extern char* yytext;
+    namespace wrd {
+        struct lowstate;
+    }
 
     extern "C" {
-        int yylex(YYSTYPE* val, YYLTYPE* loc, wrd::parserable* interp, yyscan_t scanner);
-        void yyerror(YYLTYPE* loc, wrd::parserable* interp, yyscan_t scanner, const char* msg);
+        int yylex(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
+        void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg);
+        wrd::lowstate* yyget_extra(yyscan_t scanner);
     }
 }
 
@@ -41,17 +47,20 @@
 %glr-parser
 %locations
 
-%lex-param {wrd::parserable* interp} {yyscan_t scanner}
-%parse-param {wrd::parserable* interp} {yyscan_t scanner}
+%lex-param {yyscan_t scanner}
+%parse-param {yyscan_t scanner}
+
+
+
 
 /*  ============================================================================================
     |                                        BISON SYMBOLS                                     |
     ============================================================================================  */
 
-%start prog
+%start compilation-unit
 
 %token <nint> INT
-%type <voidp> prog
+%type <voidp> compilation-unit
 
 /*%type ?? ?? */
 
@@ -62,14 +71,24 @@
 /*%left ?? ?? */
 
 
+
+
+
+
 /*  ============================================================================================
     |                                           RULES                                          |
     ============================================================================================  */
 %%
 
-prog: INT ';' {
+compilation-unit: INT ';' {
     // TODO:
+    auto state = yyget_extra(scanner);
+    state->root.bind(new wInt(5));
 }
+
+
+
+
 
 %%
 
@@ -77,6 +96,6 @@ prog: INT ';' {
     |                                         EPILOGUE                                         |
     ============================================================================================  */
 
-void yyerror(YYLTYPE* loc, wrd::parserable* interp, yyscan_t scanner, const char* msg) {
+void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
     // TODO:
 }

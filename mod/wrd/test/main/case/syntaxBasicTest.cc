@@ -23,13 +23,21 @@ namespace {
     };
 }
 
+TEST_F(syntaxBasicTest, testParseHelloWorld) {
+    parse(R"SRC(
+        main() void
+            out('hello world!')
+    )SRC"); // this code can't be run, but can be parsed.
+}
+
 TEST_F(syntaxBasicTest, testHelloWorld) {
+    auto unit = parse(R"SRC(
     parse(R"SRC(
         import cons
 
         main() void
             cons.out('hello world!')
     )SRC");
-
+    ASSERT_FALSE(nul(unit));
     //TODO: const char* expectOut = "hello world!";
 }
