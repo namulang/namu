@@ -1,4 +1,5 @@
 #include "parser.hpp"
+#include "lowstate.hpp"
 #include "lowscanner.hpp"
 
 namespace wrd {
