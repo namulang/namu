@@ -1,9 +1,10 @@
 #pragma once
 
-#include "../../common.hpp"
+#include "tokenDispatcher.hpp"
 
 namespace wrd {
     struct lowstate {
         str root;
+        tokenDispatcher dispatcher;
     };
 }

@@ -4,10 +4,10 @@
     ============================================================================================  */
 
 #include "lowparser.hpp"
-#include "parser.hpp"
 #include "lowstate.hpp"
+#include "parser.hpp"
 
-#define YY_DECL int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner)
+#define YY_DECL int yylexOrigin(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner)
 }
 
 /*  ============================================================================================
