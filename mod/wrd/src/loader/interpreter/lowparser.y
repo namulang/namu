@@ -6,7 +6,7 @@
 
     #include <iostream>
     using std::cout;
-    #include "lowstate.hpp"
+    #include "parser.hpp"
     #include "../../builtin/primitive/wInt.hpp"
     using namespace wrd;
 }
@@ -24,13 +24,13 @@
     extern int yylineno;
     extern char* yytext;
     namespace wrd {
-        struct lowstate;
+        class parser;
     }
 
     extern "C" {
         int yylex(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg);
-        wrd::lowstate* yyget_extra(yyscan_t scanner);
+        wrd::parser* yyget_extra(yyscan_t scanner);
     }
 }
 
@@ -82,8 +82,8 @@
 
 compilation-unit: INT ';' {
     // TODO:
-    auto state = yyget_extra(scanner);
-    state->root.bind(new wInt(5));
+    auto* parser = yyget_extra(scanner);
+    parser->getRoot().bind(new wInt(5));
 }
 
 
