@@ -1,6 +1,7 @@
 #include "parser.hpp"
-#include "lowstate.hpp"
 #include "lowscanner.hpp"
+
+YY_DECL;
 
 namespace wrd {
 
@@ -8,8 +9,7 @@ namespace wrd {
 
     str me::parse(const wchar* script) {
         yyscan_t scanner;
-        lowstate state;
-        yylex_init_extra(&state, &scanner);
+        yylex_init_extra(this, &scanner);
 
         YY_BUFFER_STATE bufState = yy_scan_string((wchar*) script, scanner); // +2 is for space of END_OF_BUFFER, nullptr.
         if(!bufState)
@@ -25,11 +25,10 @@ namespace wrd {
 
         yylex_destroy(scanner);
         rel();
-        return state.root;
+        return _root;
     }
 
     void me::rel() {
         _report.bind(dummyErrReport::singletone);
     }
-
 }

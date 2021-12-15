@@ -2,6 +2,7 @@
 
 #include "../../ast/node.hpp"
 #include "../errReport.hpp"
+#include "tokenDispatcher.hpp"
 
 namespace wrd {
 
@@ -30,9 +31,16 @@ namespace wrd {
         /// @param script is null terminated cstring.
         str parse(const wchar* script);
 
+        tokenDispatcher& getDispatcher() { return _dispatcher; }
+        const tokenDispatcher& getDispatcher() const { return _dispatcher; }
+        str& getRoot() { return _root; }
+        const str& getRoot() const { return _root; }
+
 		virtual void rel();
 
     private:
+        str _root;
+        tokenDispatcher _dispatcher;
         tstr<errReport> _report;
     };
 }
