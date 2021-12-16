@@ -2,7 +2,7 @@
 
 #include "../../ast/node.hpp"
 #include "../errReport.hpp"
-#include "tokenDispatcher.hpp"
+#include "loweventer.hpp"
 
 namespace wrd {
 
@@ -14,8 +14,12 @@ namespace wrd {
     /// this 'parser' class creates and returns an appropriate AST structure if it is
     /// matched.
     ///
-    /// the reason for configuring this structure is to make it easy to replace other
+    /// the reason for constructing a structure like this is to make it easy to replace other
     /// parser generators.
+    /// to accomplish it, please note that this parser class should not be dependent to concrete
+    /// implementation which was defined at lowparser/scanner.
+    ///
+    /// lowparser/scanner should be dependent to THIS.
     class parser : public typeProvidable {
         WRD(INTERFACE(parser, typeProvidable))
 
@@ -31,16 +35,10 @@ namespace wrd {
         /// @param script is null terminated cstring.
         str parse(const wchar* script);
 
-        tokenDispatcher& getDispatcher() { return _dispatcher; }
-        const tokenDispatcher& getDispatcher() const { return _dispatcher; }
-        str& getRoot() { return _root; }
-        const str& getRoot() const { return _root; }
-
 		virtual void rel();
 
     private:
-        str _root;
-        tokenDispatcher _dispatcher;
         tstr<errReport> _report;
+        loweventer _eventer;
     };
 }

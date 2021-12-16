@@ -6,7 +6,7 @@
 
     #include <iostream>
     using std::cout;
-    #include "parser.hpp"
+    #include "loweventer.hpp"
     #include "../../builtin/primitive/wInt.hpp"
     using namespace wrd;
 }
@@ -24,13 +24,13 @@
     extern int yylineno;
     extern char* yytext;
     namespace wrd {
-        class parser;
+        class loweventer;
     }
 
     extern "C" {
         int yylex(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg);
-        wrd::parser* yyget_extra(yyscan_t scanner);
+        wrd::loweventer* yyget_extra(yyscan_t scanner);
     }
 }
 
@@ -82,8 +82,8 @@
 
 compilation-unit: INT ';' {
     // TODO:
-    auto* parser = yyget_extra(scanner);
-    parser->getRoot().bind(new wInt(5));
+    auto* eventer = yyget_extra(scanner);
+    eventer->getRoot().bind(new wInt(5));
 }
 
 
