@@ -9,7 +9,7 @@ namespace wrd {
 
     str me::parse(const wchar* script) {
         yyscan_t scanner;
-        yylex_init_extra(this, &scanner);
+        yylex_init_extra(&_eventer, &scanner);
 
         YY_BUFFER_STATE bufState = yy_scan_string((wchar*) script, scanner); // +2 is for space of END_OF_BUFFER, nullptr.
         if(!bufState)
@@ -25,7 +25,7 @@ namespace wrd {
 
         yylex_destroy(scanner);
         rel();
-        return _root;
+        return _eventer.getRoot();
     }
 
     void me::rel() {
