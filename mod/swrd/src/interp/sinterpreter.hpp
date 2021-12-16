@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../ast.hpp"
-#include "../parser.hpp"
 
 namespace wrd {
 

@@ -1,4 +1,5 @@
 #include "swrd.hpp"
+#include "../parser/swrdParser.hpp"
 #include <fstream>
 #include "flex.hpp"
 

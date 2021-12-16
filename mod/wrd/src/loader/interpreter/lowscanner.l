@@ -49,5 +49,6 @@ int yywrap(yyscan_t scanner) {
 
 int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner) {
     return yyget_extra(yyscanner)->onScanToken([&]() {
+        return 0;
     });
 }
