@@ -60,6 +60,7 @@
 %start compilation-unit
 
 %token <nint> INT
+%token NEWLINE
 %type <voidp> compilation-unit
 
 /*%type ?? ?? */
