@@ -1,5 +1,5 @@
 #include "parser.hpp"
-#include "lowscanner.hpp"
+#include "bison/lowscanner.hpp"
 
 YY_DECL;
 

@@ -1,5 +1,5 @@
 #include "loweventer.hpp"
-#include "lowparser.hpp"
+#include "bison/lowparser.hpp"
 
 namespace wrd {
 
