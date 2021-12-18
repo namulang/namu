@@ -4,48 +4,33 @@
 #include <functional>
 #include "../../ast/node.hpp"
 #include "tokenDispatcher.hpp"
+#include "bison/scanMode.hpp"
 
 namespace wrd {
-
-    class loweventer;
-    typedef std::function<wint()> tokenScan;
-    typedef std::function<wint(loweventer&, tokenScan)> tokenScanMode;
 
     class loweventer : public typeProvidable, public clonable {
         WRD(CLASS(loweventer))
         friend class tokenScanModable;
 
     public:
-        loweventer();
-
-    public:
-        void onScanIndent(wcnt newCol) {
-            int prevlv = _indents.size() ? _indents.back() : 0;
-        }
-
-        wint onScanToken(tokenScan originScanner) {
-            return _mode(*this, originScanner);
-        }
+        loweventer(): _mode(nullptr) {}
+        virtual ~loweventer();
 
     public:
         str& getRoot() { return _root; }
         tokenDispatcher& getDispatcher() { return _dispatcher; }
-        void setTokenScanMode(tokenScanMode new1) {
+        std::vector<wcnt>& getIndents() { return _indents; }
+        scanMode& getScanMode() const { return *_mode; }
+        void setScanMode(scanMode* new1) {
+            if(_mode)
+                delete _mode;
             _mode = new1;
         }
-        std::vector<wcnt>& getIndents() { return _indents; }
 
     private:
-        void _onIndent(int newlv) {
-        }
-
-        void _onDedent(int newlv) {
-        }
-
-    private:
+        scanMode* _mode;
         str _root;
         tokenDispatcher _dispatcher;
-        tokenScanMode _mode;
         std::vector<wcnt> _indents;
     };
 }
