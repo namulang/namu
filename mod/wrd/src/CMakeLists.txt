@@ -6,7 +6,7 @@ message("\t\tconfigure_files...")
 find_package(BISON)
 find_package(FLEX)
 
-set(PARSER_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/loader/interpreter)
+set(PARSER_SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/loader/interpreter/bison)
 set(BISON_COMPILE_FLAGS "-l --feature=diagnostics-show-caret --warnings --color")
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Debug)

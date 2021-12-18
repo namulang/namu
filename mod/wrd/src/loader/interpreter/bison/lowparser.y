@@ -6,8 +6,8 @@
 
     #include <iostream>
     using std::cout;
-    #include "loweventer.hpp"
-    #include "../../builtin/primitive/wInt.hpp"
+    #include "../loweventer.hpp"
+    #include "../../../builtin/primitive/wInt.hpp"
     using namespace wrd;
 }
 
