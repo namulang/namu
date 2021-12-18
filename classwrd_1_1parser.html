@@ -73,7 +73,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="wrd_2src_2loader_2interpreter_2parser_8hpp_source.html">parser.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="parser_8hpp_source.html">parser.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for wrd::parser:</div>
 <div class="dyncontent">
@@ -111,7 +111,8 @@ template&lt;typename T &gt; </td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>parser is a class that finally parses the wrd file and creates an ast structure. this has a parser and a scanner created from a parser generator such as bison internally, and these are called low-level parsers and low-level scanners. low-level parser/scanner focuses on whether the string given as input matches a specific grammar, and passes it to the parser when matching. this 'parser' class creates and returns an appropriate AST structure if it is matched.</p>
-<p>the reason for configuring this structure is to make it easy to replace other parser generators. </p>
+<p>the reason for constructing a structure like this is to make it easy to replace other parser generators. to accomplish it, please note that this parser class should not be dependent to concrete implementation which was defined at lowparser/scanner.</p>
+<p>lowparser/scanner should be dependent to THIS. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5b69137a1ddc805362ce5d8ac48d2a54"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5b69137a1ddc805362ce5d8ac48d2a54">&#9670;&nbsp;</a></span>parse()</h2>
@@ -138,7 +139,7 @@ template&lt;typename T &gt; </td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/runner/work/worldlang/worldlang/mod/wrd/src/loader/interpreter/<a class="el" href="wrd_2src_2loader_2interpreter_2parser_8hpp_source.html">parser.hpp</a></li>
+<li>/home/runner/work/worldlang/worldlang/mod/wrd/src/loader/interpreter/<a class="el" href="parser_8hpp_source.html">parser.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -65,7 +65,7 @@ $(function() {
 <div class="title">Quick Start in KR </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="fragment"><div class="line">// don&#39;t need to import sys.cons.</div>
+<div class="textblock"><div class="fragment"><div class="line">import sys.cons.</div>
 <div class="line"> </div>
 <div class="line">def app</div>
 <div class="line">    main() void</div>
@@ -81,7 +81,8 @@ $(function() {
 <div class="line">char1 := &#39;c&#39;</div>
 <div class="line">int1 := 15</div>
 <div class="line"> </div>
-<div class="line">toInt := int1 as flt64 // casts int as 64bit float.</div>
+<div class="line">// casts int as 64bit float, after that assign it to variable &#39;toInt&#39;</div>
+<div class="line">toInt := int1 as flt64</div>
 </div><!-- fragment --><h1>Indentation 레벨에 의한 Scope 범위</h1>
 <ul>
 <li>항상 Indentation 레벨에 의해서 scope를 표현한다.</li>
@@ -92,6 +93,12 @@ $(function() {
 <div class="line">        print(&#39;ok&#39;)</div>
 <div class="line">else</div>
 <div class="line">    print(&#39;no&#39;)</div>
+</div><!-- fragment --><ul>
+<li>':'를 사용하면 indent 없이 block문을 작성할 수 있다.</li>
+</ul>
+<div class="fragment"><div class="line">// &#39;:&#39; only allow to follow a single statement.</div>
+<div class="line">if val == 0: print(&#39;this and then,&#39;)</div>
+<div class="line">    print(&#39;this too&#39;) // err</div>
 <div class="line"> </div>
 <div class="line">// below codes are same to the above.</div>
 <div class="line">if val == 0: if val &gt; 0: print(&#39;ok&#39;)</div>
@@ -129,34 +136,25 @@ $(function() {
 <div class="line">        return n + 5, 22)</div>
 <div class="line">    &#39;,&#39; is belongs to the line which has 2 indentation level. so it exists as one of term of</div>
 <div class="line">    &#39;return&#39; statement.</div>
-<div class="line">    now &#39;callClosure&#39; function is returning two integer, n+5 and 22, are not valid syntax</div>
-<div class="line">    on wrd language. */</div>
+<div class="line">    now &#39;callClosure&#39; function is returning two integer, n+5 and 22, and is not valid syntax</div>
+<div class="line">    in wrdlang. */</div>
 <div class="line"> </div>
 <div class="line">    callClosure((n): switch n: 22, 23: doSomething(), 23) // ok</div>
 <div class="line">    // in above statement, comma was also used to represent the case statement, but it&#39;s not</div>
 <div class="line">    // ambigious because every case statement has at least one statement.</div>
 <div class="line"> </div>
-<div class="line">    callClosure((n): switch n: 22, 23</div>
-<div class="line">                // you can write statement without &#39;:&#39; after starting it.</div>
-<div class="line">                // but be careful to use indentation level.</div>
-<div class="line">                // I&#39;ve used &#39;:&#39; twice before below statement. so I must indent the context twice.</div>
-<div class="line">        // switch n</div>
-<div class="line">            // 22, 23</div>
-<div class="line">                doSomething()</div>
-<div class="line">                //doSomething(), 23 // err: , was belongs to the line which has 2 indentation level.</div>
-<div class="line">                                    // it means that &#39;23&#39; was one of terms as statement to</div>
-<div class="line">                                    // switch-case.</div>
-<div class="line">    , 23) // ok. &#39;23&#39; is the argument of callClosure.</div>
+<div class="line">    callClosure((n): switch n: 22, 23: doSomething()</div>
+<div class="line">    , 23) // err. newline should not exist when you put &#39;:&#39; to represent a block statement.</div>
 </div><!-- fragment --><h1>흐름 제어</h1>
 <div class="fragment"><div class="line">msg := &quot;hello&quot;</div>
 <div class="line">for ch in msg</div>
-<div class="line">    c.print(&quot;ch=$ch&quot;) // ch=h ch=e ch=l...</div>
+<div class="line">    c.print(&quot;ch=$ch &quot;) // this&#39;ll shows like &#39;ch=h ch=e ch=l ch=l ch=o&#39;</div>
 <div class="line"> </div>
 <div class="line">n := 0</div>
 <div class="line">for ++n &lt; 3</div>
-<div class="line">    if sum in 1..0 // reversed range.</div>
+<div class="line">    if sum in 1..0 // allow reversed range.</div>
 <div class="line">        sum += n</div>
-<div class="line">    elif sum == 2</div>
+<div class="line">    elif sum == 2 // elif is same to &#39;else if&#39;</div>
 <div class="line">        sum -= n</div>
 </div><!-- fragment --><h1>컨테이너</h1>
 <div class="fragment"><div class="line">intArr := {1, 2, 3}</div>
@@ -167,13 +165,13 @@ $(function() {
 <div class="line">for n in seq</div>
 <div class="line">    c.print(intArr[n])</div>
 <div class="line"> </div>
-<div class="line">pair1 := intVal;&quot;banana&quot;</div>
-<div class="line">pair1.key == 3.5</div>
+<div class="line">pair1 := intArr[2];&quot;banana&quot; // &#39;;&#39; represents a pair. and a pair contains &#39;key&#39; and &#39;val&#39;.</div>
+<div class="line">pair1.key == 3.5 // false</div>
 <div class="line">pair1.val = &quot;money?&quot;</div>
 <div class="line"> </div>
 <div class="line">map := {pair1, 2.5;&quot;apple&quot;} // map as float[str]</div>
 <div class="line"> </div>
-<div class="line">sys.cons aka c // typedef</div>
+<div class="line">sys.cons aka c</div>
 <div class="line">c.print(&quot;how many apple do you have = $map[&#39;apple&#39;]&quot;) // &quot;how many apple do you have = 2.0&quot;</div>
 </div><!-- fragment --><h1>함수</h1>
 <p>&lt;function-name&gt;* '(' (&lt;arg&gt; ,)* ')' &lt;return-type&gt;* &lt;stmt&gt;+</p>
@@ -188,13 +186,13 @@ $(function() {
 <li>정의시, 역시 type은 항상 뒤에 옵니다.</li>
 <li>함수의 반환형에는 expr이 올 수 없습니다. 타입만 올 수 있습니다.</li>
 </ul>
-<div class="fragment"><div class="line">getLen(b int...) int // ... means varidic argument</div>
+<div class="fragment"><div class="line">getLen(b int...) int // &#39;...&#39; means varidic argument</div>
 <div class="line">    sum := 0</div>
 <div class="line">    for n in b</div>
 <div class="line">        sum++</div>
 <div class="line">    return sum</div>
 <div class="line"> </div>
-<div class="line">getLen(b int) // return type is deducted to &#39;int&#39;</div>
+<div class="line">getLen(b int) // return type is deduced to &#39;int&#39;</div>
 <div class="line">    sum := 0</div>
 <div class="line">    return sum</div>
 <div class="line"> </div>
@@ -212,7 +210,7 @@ $(function() {
 <div class="line"> </div>
 <div class="line">foo(useless int...) int = null // &#39;null&#39; declares that this is abstract method def.</div>
 <div class="line">likeFptr := foo // foo can be used as a type.</div>
-<div class="line">likeFptr() // foo is abstrat. Exception occurs.</div>
+<div class="line">likeFptr() // foo is abstract. Exception occurs.</div>
 <div class="line"> </div>
 <div class="line">likeFptr = getLen // ok to assign.</div>
 <div class="line">lifeFptr() == 0 // true</div>
