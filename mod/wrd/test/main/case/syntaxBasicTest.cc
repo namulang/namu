@@ -24,7 +24,7 @@ namespace {
 }
 
 TEST_F(syntaxBasicTest, test1) {
-    parse("2233;");
+    parse("                         2233;");
 }
 
 TEST_F(syntaxBasicTest, testParseHelloWorld) {
