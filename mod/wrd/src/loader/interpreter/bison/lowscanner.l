@@ -55,9 +55,13 @@ int yywrap(yyscan_t scanner) {
 
 int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner) {
     wrd::loweventer* eventer = yyget_extra(yyscanner);
-    wrd::scanMode* mode = &eventer->getScanMode();
-    if(!mode) // init: scanMode
-        eventer->setScanMode(mode = new wrd::indentMode());
+    if(!eventer->isInit()) // init: tokenScanable
+        eventer->setScan<wrd::indentScan>();
 
-    return mode->onScan(*eventer, yylval_param, yylloc_param, yyscanner);
+    int tok;
+    do
+        tok = eventer->onScan(*eventer, yylval_param, yylloc_param, yyscanner);
+    while(tok != wrd::tokenScanable::DO_RESCAN);
+
+    return tok;
 }
