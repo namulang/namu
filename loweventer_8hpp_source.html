@@ -84,7 +84,7 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span>tokenScanModable;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classwrd_1_1loweventer.html">loweventer</a>(): _mode(<span class="keyword">nullptr</span>) {}</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classwrd_1_1loweventer.html">loweventer</a>(): _mode(<span class="keyword">nullptr</span>), _isIgnoreWhitespace(<span class="keyword">false</span>) {}</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a>&amp; getRoot() { <span class="keywordflow">return</span> _root; }</div>
@@ -106,16 +106,21 @@ $(function() {
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        wint onEndOfFile();</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        wint onIndent(wcnt col, wint tok);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        wint onDedent(wcnt col, wint tok);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> onNewLine();</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        wchar onScanUnexpected(wchar token);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classwrd_1_1token_scan.html">tokenScan</a>* _mode;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _root;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <a class="code" href="classwrd_1_1token_dispatcher.html">tokenDispatcher</a> _dispatcher;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::vector&lt;wcnt&gt; _indents;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    };</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        wint onIgnoreIndent(wint tok);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">void</span> onNewLine();</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        wchar onScanUnexpected(wchar token);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="classwrd_1_1token_scan.html">tokenScan</a>* _mode;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        wbool _isIgnoreWhitespace;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _root;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="classwrd_1_1token_dispatcher.html">tokenDispatcher</a> _dispatcher;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::vector&lt;wcnt&gt; _indents;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    };</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1token_scan_html"><div class="ttname"><a href="classwrd_1_1token_scan.html">wrd::tokenScan</a></div><div class="ttdef"><b>Definition:</b> tokenScan.hpp:14</div></div>
