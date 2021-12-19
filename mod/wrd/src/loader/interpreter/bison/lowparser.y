@@ -15,6 +15,12 @@
 
 %code requires {
     typedef void* yyscan_t;
+
+    struct lloc {
+        int first_line, first_column;
+        int last_line, last_column;
+        int colcnt;
+    };
 }
 
 %code provides {

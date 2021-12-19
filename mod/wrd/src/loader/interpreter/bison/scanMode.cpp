@@ -1,5 +1,6 @@
 #include "scanMode.hpp"
 #include "lowscanner.hpp"
+#include <iostream>
 
 YY_DECL;
 
@@ -20,6 +21,7 @@ namespace wrd {
 
     wint indentMode::onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner) {
         // TODO:
+        std::cout << "yyloc.col=" << yylloc->first_column << "\n";
         return yylexOrigin(yylval, yylloc, yyscanner);
     }
 }
