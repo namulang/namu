@@ -43,6 +43,11 @@
 
 [[:space:]]+ ;
 
+<<EOF>> {
+    std::cout << "---EOF!\n";
+    return ENDOFFILE;
+}
+
 %%
 /*  ============================================================================================
     |                                         EPILOGUE                                         |
@@ -63,5 +68,7 @@ int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner) {
         tok = eventer->onScan(*eventer, yylval_param, yylloc_param, yyscanner);
     while(tok != wrd::tokenScan::DO_RESCAN);
 
+    if(tok == YY_NULL)
+        std::cout << "ok! yyterminate()!\n";
     return tok;
 }

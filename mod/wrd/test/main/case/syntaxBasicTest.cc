@@ -27,6 +27,10 @@ TEST_F(syntaxBasicTest, test1) {
     parse("                         2233;");
 }
 
+TEST_F(syntaxBasicTest, test2) {
+    parse("2233;");
+}
+
 TEST_F(syntaxBasicTest, testParseHelloWorld) {
     parse(R"SRC(
         main() void

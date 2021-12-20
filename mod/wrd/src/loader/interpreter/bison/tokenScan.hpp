@@ -15,13 +15,14 @@ namespace wrd {
         WRD(INTERFACE(tokenScan))
 
     public:
-        virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner) = 0;
-
-    public:
         enum eventToken {
             DO_RESCAN = -100,
             EXIT_SCAN,
+            TERMINATE = 0,
         };
+
+    public:
+        virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner) = 0;
     };
 
     class normalScan : public tokenScan {

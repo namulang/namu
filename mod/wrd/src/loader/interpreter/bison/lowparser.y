@@ -64,8 +64,8 @@
 
 %start compilation-unit
 
+%token NEWLINE INDENT IF ENDOFFILE
 %token <nint> INT
-%token NEWLINE INDENT IF
 %type <voidp> compilation-unit
 
 /*%type ?? ?? */
