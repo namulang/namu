@@ -53,6 +53,7 @@
 
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
+%define api.location.type {lloc}
 
 
 
