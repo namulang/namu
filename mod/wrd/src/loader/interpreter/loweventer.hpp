@@ -25,14 +25,29 @@ namespace wrd {
 
         template <typename T>
         void setScan() {
-            WRD_DI("change scanmode(%s -> %s)", !_mode ? "" : _mode->getType().getName().c_str(),
+            WRD_DI("change scanmode(%s -> %s)", !_mode ? "<null>" : _mode->getType().getName().c_str(),
                     T::_instance->getType().getName().c_str());
             _mode = T::_instance;
         }
 
     public:
         // events:
-        wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t scanner) override;
+        wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) override;
+        wint onEndOfFile() {
+            WRD_DI("tokenEvent: onEndOfFile()");
+            // TODO:
+            return tokenScan::TERMINATE;
+        }
+        wint onIndent(wcnt col, wint tok) {
+            WRD_DI("tokenEvent: onIndent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
+            _indents.push_back(col);
+            return INDENT;
+        }
+        wint onDedent(wcnt col, wint tok) {
+            WRD_DI("tokenEvent: onDedent(col: %d, tok: %d)", col, tok);
+            // TODO:
+            return 0;
+        }
 
     private:
         tokenScan* _mode;

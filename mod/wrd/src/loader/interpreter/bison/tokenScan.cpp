@@ -9,13 +9,16 @@ namespace wrd {
     wint normalScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
         wint tok;
         if(!eventer.getDispatcher().pop(tok)) {
-            WRD_DI("dispatcher[queue] == null. route to yylexOrigin()");
             tok = yylexOrigin(val, loc, scanner);
-            if(tok == NEWLINE)
-                eventer.setScan<indentScan>();
+            WRD_DI("dispatcher[queue] == null. yylexOrigin() returns %c(%d)", (char) tok, tok);
         }
 
-        WRD_DI("enqueued %c(%d) token dispatched.", (wrd::wchar) tok, tok);
+        switch(tok) {
+            case NEWLINE:   eventer.setScan<indentScan>(); break;
+            case ENDOFFILE: return eventer.onEndOfFile();
+        }
+
+        WRD_DI("%c(%d) token dispatched.", (wrd::wchar) tok, tok);
         return tok;
     }
 
@@ -31,9 +34,9 @@ namespace wrd {
         WRD_DI("column check: cur[%d] prev[%d]", cur, prev);
 
         if(cur > prev)
-            return _onIndent(eventer, cur, tok);
+            return eventer.onIndent(cur, tok);
         else if(cur < prev)
-            return _onDedent(eventer, cur, tok);
+            return eventer.onDedent(cur, tok);
 
         eventer.setScan<normalScan>();
         return tok;
@@ -41,13 +44,4 @@ namespace wrd {
 
     indentScan* indentScan::_instance = new indentScan();
 
-    wint indentScan::_onIndent(loweventer& ev, wcnt col, wint tok) {
-        WRD_DI("new indent(col: %d) of %d found.", col, ev.getIndents().size());
-        ev.getIndents().push_back(col);
-        return INDENT;
-    }
-    wint indentScan::_onDedent(loweventer& ev, wcnt col, wint tok) {
-        // TODO:
-        return 0;
-    }
 }
