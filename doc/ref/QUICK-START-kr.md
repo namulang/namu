@@ -1,7 +1,7 @@
 # Quick Start in KR 
 
 ```wrd
-// don't need to import sys.cons.
+import sys.cons.
 
 def app
     main() void
@@ -21,7 +21,8 @@ flt1 := 3.5 + 3
 char1 := 'c'
 int1 := 15
 
-toInt := int1 as flt64 // casts int as 64bit float.
+// casts int as 64bit float, after that assign it to variable 'toInt'
+toInt := int1 as flt64
 ```
 
 # Indentation 레벨에 의한 Scope 범위
@@ -35,6 +36,14 @@ if val == 0
         print('ok')
 else
     print('no')
+```
+
+* ':'를 사용하면 indent 없이 block문을 작성할 수 있다.
+
+```wrd
+// ':' only allow to follow a single statement.
+if val == 0: print('this and then,')
+    print('this too') // err
 
 // below codes are same to the above.
 if val == 0: if val > 0: print('ok')
@@ -74,24 +83,15 @@ if val > 0
         return n + 5, 22)
     ',' is belongs to the line which has 2 indentation level. so it exists as one of term of
     'return' statement.
-    now 'callClosure' function is returning two integer, n+5 and 22, are not valid syntax
-    on wrd language. */
+    now 'callClosure' function is returning two integer, n+5 and 22, and is not valid syntax
+    in wrdlang. */
 
     callClosure((n): switch n: 22, 23: doSomething(), 23) // ok
     // in above statement, comma was also used to represent the case statement, but it's not
     // ambigious because every case statement has at least one statement.
 
-    callClosure((n): switch n: 22, 23
-                // you can write statement without ':' after starting it.
-                // but be careful to use indentation level.
-                // I've used ':' twice before below statement. so I must indent the context twice.
-        // switch n
-            // 22, 23
-                doSomething()
-                //doSomething(), 23 // err: , was belongs to the line which has 2 indentation level.
-                                    // it means that '23' was one of terms as statement to
-                                    // switch-case.
-    , 23) // ok. '23' is the argument of callClosure.
+    callClosure((n): switch n: 22, 23: doSomething()
+    , 23) // err. newline should not exist when you put ':' to represent a block statement.
 ```
 
 
@@ -99,13 +99,13 @@ if val > 0
 ```wrd
 msg := "hello"
 for ch in msg
-    c.print("ch=$ch") // ch=h ch=e ch=l...
+    c.print("ch=$ch ") // this'll shows like 'ch=h ch=e ch=l ch=l ch=o'
 
 n := 0
 for ++n < 3
-    if sum in 1..0 // reversed range.
+    if sum in 1..0 // allow reversed range.
         sum += n
-    elif sum == 2
+    elif sum == 2 // elif is same to 'else if'
         sum -= n
 ```
 
@@ -121,13 +121,13 @@ seq.len == 3 // true
 for n in seq
     c.print(intArr[n])
 
-pair1 := intVal;"banana"
-pair1.key == 3.5
+pair1 := intArr[2];"banana" // ';' represents a pair. and a pair contains 'key' and 'val'.
+pair1.key == 3.5 // false
 pair1.val = "money?"
 
 map := {pair1, 2.5;"apple"} // map as float[str]
 
-sys.cons aka c // typedef
+sys.cons aka c
 c.print("how many apple do you have = $map['apple']") // "how many apple do you have = 2.0"
 ```
 
@@ -146,13 +146,13 @@ c.print("how many apple do you have = $map['apple']") // "how many apple do you 
 * 함수의 반환형에는 expr이 올 수 없습니다. 타입만 올 수 있습니다.
 
 ```wrd
-getLen(b int...) int // ... means varidic argument
+getLen(b int...) int // '...' means varidic argument
     sum := 0
     for n in b
         sum++
     return sum
 
-getLen(b int) // return type is deducted to 'int'
+getLen(b int) // return type is deduced to 'int'
     sum := 0
     return sum
 
@@ -170,7 +170,7 @@ setClickListener((v): v.onClick()) // if a func was nested, it works like a clos
 
 foo(useless int...) int = null // 'null' declares that this is abstract method def.
 likeFptr := foo // foo can be used as a type.
-likeFptr() // foo is abstrat. Exception occurs.
+likeFptr() // foo is abstract. Exception occurs.
 
 likeFptr = getLen // ok to assign.
 lifeFptr() == 0 // true
