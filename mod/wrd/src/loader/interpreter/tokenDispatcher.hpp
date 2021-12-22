@@ -20,6 +20,10 @@ namespace wrd {
             return true;
         }
 
+        wcnt len() const {
+            return _toks.size();
+        }
+
     private:
         std::list<wint> _toks;
     };

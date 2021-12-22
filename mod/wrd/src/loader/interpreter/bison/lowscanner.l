@@ -29,22 +29,22 @@
     ============================================================================================  */
 %%
 
-
-
+";" { return yytext[0]; }
+if { return IF; }
+[ \t]+ ;
+\n {
+    yylloc->colcnt = 0;
+    return NEWLINE;
+}
 
 [[:digit:]]+ {
     yylval->nint = atoi(yytext);
     return INT;
 }
 
-";" {
-    return yytext[0];
-}
-
-[[:space:]]+ ;
-
 <<EOF>> {
     std::cout << "---EOF!\n";
+    yylloc->colcnt = 0;
     return ENDOFFILE;
 }
 
@@ -66,9 +66,7 @@ int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner) {
     int tok;
     do
         tok = eventer->onScan(*eventer, yylval_param, yylloc_param, yyscanner);
-    while(tok != wrd::tokenScan::DO_RESCAN);
+    while(tok == SCAN_AGAIN);
 
-    if(tok == YY_NULL)
-        std::cout << "ok! yyterminate()!\n";
     return tok;
 }

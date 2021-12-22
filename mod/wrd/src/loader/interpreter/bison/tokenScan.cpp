@@ -6,19 +6,25 @@ YY_DECL;
 
 namespace wrd {
 
-    wint normalScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
+    wint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
         wint tok;
-        if(!eventer.getDispatcher().pop(tok)) {
+        tokenDispatcher& disp = eventer.getDispatcher();
+        if(!disp.pop(tok)) {
             tok = yylexOrigin(val, loc, scanner);
-            WRD_DI("dispatcher[queue] == null. yylexOrigin() returns %c(%d)", (char) tok, tok);
-        }
+            WRD_DI("%s: dispatcher[null]. yylexOrigin() -> %c(%d)", getType().getName().c_str(), (char) tok, tok);
+        } else
+            WRD_DI("%s: dispatcher[%d].dispatch(token: %c(%d)", getType().getName().c_str(), disp.len(), (char) tok, tok);
 
+        return tok;
+    }
+
+    wint normalScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
+        wint tok = super::onScan(eventer, val, loc, scanner);
         switch(tok) {
             case NEWLINE:   eventer.setScan<indentScan>(); break;
             case ENDOFFILE: return eventer.onEndOfFile();
         }
 
-        WRD_DI("%c(%d) token dispatched.", (wrd::wchar) tok, tok);
         return tok;
     }
 
@@ -26,12 +32,18 @@ namespace wrd {
 
     wint indentScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
         wint tok = super::onScan(eventer, val, loc, scanner);
-        if(tok == NEWLINE)
-            return tokenScan::DO_RESCAN;
+        if(tok == NEWLINE) {
+            WRD_DI("indentScan: ignore NEWLINE");
+            return SCAN_AGAIN;
+        }
 
         wcnt cur = loc->first_column;
-        wcnt prev = eventer.getIndents().back();
-        WRD_DI("column check: cur[%d] prev[%d]", cur, prev);
+        std::vector<wcnt>& ind = eventer.getIndents();
+        if(ind.size() == 0)
+            ind.push_back(cur);
+
+        wcnt prev = ind.back();
+        WRD_DI("indentScan: column check: cur[%d] prev[%d]", cur, prev);
 
         if(cur > prev)
             return eventer.onIndent(cur, tok);

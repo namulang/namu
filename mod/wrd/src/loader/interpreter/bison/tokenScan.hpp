@@ -15,17 +15,10 @@ namespace wrd {
         WRD(INTERFACE(tokenScan))
 
     public:
-        enum eventToken {
-            DO_RESCAN = -100,
-            EXIT_SCAN,
-            TERMINATE = 0,
-        };
-
-    public:
-        virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner) = 0;
+        virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner);
     };
 
-    class normalScan : public tokenScan {
+    class normalScan: public tokenScan {
         WRD(CLASS(normalScan, tokenScan))
         friend class loweventer;
 
@@ -36,8 +29,8 @@ namespace wrd {
         static normalScan* _instance;
     };
 
-    class indentScan : public normalScan {
-        WRD(CLASS(indentScan, normalScan))
+    class indentScan : public tokenScan {
+        WRD(CLASS(indentScan, tokenScan))
         friend class loweventer;
 
     public:

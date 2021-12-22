@@ -13,14 +13,12 @@ namespace wrd {
         friend class tokenScanModable;
 
     public:
-        loweventer(): _mode(nullptr) {
-            _indents.push_back(0);
-        }
+        loweventer(): _mode(nullptr) {}
 
     public:
         str& getRoot() { return _root; }
         tokenDispatcher& getDispatcher() { return _dispatcher; }
-        std::vector<wcnt> getIndents() { return _indents; }
+        std::vector<wcnt>& getIndents() { return _indents; }
         wbool isInit() const { return _mode; }
 
         template <typename T>
@@ -33,21 +31,9 @@ namespace wrd {
     public:
         // events:
         wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) override;
-        wint onEndOfFile() {
-            WRD_DI("tokenEvent: onEndOfFile()");
-            // TODO:
-            return tokenScan::TERMINATE;
-        }
-        wint onIndent(wcnt col, wint tok) {
-            WRD_DI("tokenEvent: onIndent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
-            _indents.push_back(col);
-            return INDENT;
-        }
-        wint onDedent(wcnt col, wint tok) {
-            WRD_DI("tokenEvent: onDedent(col: %d, tok: %d)", col, tok);
-            // TODO:
-            return 0;
-        }
+        wint onEndOfFile();
+        wint onIndent(wcnt col, wint tok);
+        wint onDedent(wcnt col, wint tok);
 
     private:
         tokenScan* _mode;
