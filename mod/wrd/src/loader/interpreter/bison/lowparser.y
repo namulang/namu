@@ -64,9 +64,10 @@
 
 %start compilation-unit
 
-%token NEWLINE INDENT IF ENDOFFILE
+%token SCAN_AGAIN SCAN_EXIT
+%token NEWLINE INDENT DEDENT IF ENDOFFILE
 %token <nint> INT
-%type <voidp> compilation-unit
+%type <voidp> compilation-unit ifexpr expr block indentblock
 
 /*%type ?? ?? */
 
@@ -86,12 +87,27 @@
     ============================================================================================  */
 %%
 
-compilation-unit: INT ';' {
+compilation-unit: block {
     // TODO:
     auto* eventer = yyget_extra(scanner);
     eventer->getRoot().bind(new wInt(5));
 }
 
+block: expr NEWLINE {
+   } | block expr NEWLINE {
+   }
+
+indentblock: NEWLINE INDENT block DEDENT {
+         }
+
+ifexpr: IF indentblock {
+    // TODO:
+    }
+
+expr: ifexpr {
+    // TODO:
+  } | INT ';' {
+  }
 
 
 

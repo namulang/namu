@@ -24,14 +24,14 @@ namespace {
 }
 
 TEST_F(syntaxBasicTest, test1) {
-    parse("                         2233;");
+    parse(R"SRC(
+if
+            22 ;
+            if
+                    33;)SRC");
 }
 
-TEST_F(syntaxBasicTest, test2) {
-    parse("2233;");
-}
-
-TEST_F(syntaxBasicTest, testParseHelloWorld) {
+/*TEST_F(syntaxBasicTest, testParseHelloWorld) {
     parse(R"SRC(
         main() void
             out('hello world!')
@@ -48,4 +48,4 @@ TEST_F(syntaxBasicTest, testHelloWorld) {
     )SRC");
     ASSERT_FALSE(nul(unit));
     //TODO: const char* expectOut = "hello world!";
-}
+}*/
