@@ -64,10 +64,10 @@
 
 %start compilation-unit
 
-%token SCAN_AGAIN SCAN_EXIT
+%token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT
 %token NEWLINE INDENT DEDENT IF ENDOFFILE
 %token <nint> INT
-%type <voidp> compilation-unit ifexpr expr block indentblock
+%type <voidp> compilation-unit ifexpr lineexpr compoundexpr block indentblock
 
 /*%type ?? ?? */
 
@@ -93,22 +93,24 @@ compilation-unit: block {
     eventer->getRoot().bind(new wInt(5));
 }
 
-block: expr NEWLINE {
-   } | block expr NEWLINE {
+block: lineexpr NEWLINE {
+   } | compoundexpr {
+   } | block lineexpr NEWLINE {
+   } | block compoundexpr {
    }
 
-indentblock: NEWLINE INDENT block DEDENT {
-         }
+compoundexpr : ifexpr {
+           }
+
+lineexpr: INT ';' {
+      }
 
 ifexpr: IF indentblock {
     // TODO:
     }
 
-expr: ifexpr {
-    // TODO:
-  } | INT ';' {
-  }
-
+indentblock: NEWLINE INDENT block DEDENT {
+         }
 
 
 
