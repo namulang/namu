@@ -11,6 +11,10 @@ namespace wrd {
             _toks.push_back(newToken);
         }
 
+        void addFront(wint newToken) {
+            _toks.insert(_toks.begin(), newToken);
+        }
+
         wbool pop(wint& output) {
             if(_toks.size() <= 0)
                 return false;

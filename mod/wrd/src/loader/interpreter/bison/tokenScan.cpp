@@ -15,17 +15,13 @@ namespace wrd {
         } else
             WRD_DI("%s: dispatcher[%d].dispatch(token: %c(%d)", getType().getName().c_str(), disp.len(), (char) tok, tok);
 
+        if(tok == ENDOFFILE)
+            return eventer.onEndOfFile();
         return tok;
     }
 
     wint normalScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
-        wint tok = super::onScan(eventer, val, loc, scanner);
-        switch(tok) {
-            case NEWLINE:   eventer.setScan<indentScan>(); break;
-            case ENDOFFILE: return eventer.onEndOfFile();
-        }
-
-        return tok;
+        return super::onScan(eventer, val, loc, scanner);
     }
 
     normalScan* normalScan::_instance = new normalScan();
