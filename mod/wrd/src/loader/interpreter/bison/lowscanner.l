@@ -27,6 +27,10 @@
 /*  ============================================================================================
     |                                           RULES                                          |
     ============================================================================================  */
+
+/* reusable pattern: */
+
+/* actual-pattern: */
 %%
 
 ";" { return yytext[0]; }
@@ -39,8 +43,23 @@ if { return IF; }
 }
 
 [[:digit:]]+ {
-    yylval->nint = atoi(yytext);
+    yylval->integer = atoi(yytext);
     return INT;
+}
+
+[[:alpha:]]+[[:alnum:]]* {
+    yylval->string = yytext;
+    return NAME;
+}
+
+\'[^\r\f\n\']*\' {
+    yylval->string = yytext;
+    return STRING;
+}
+
+\"[^\r\f\n\"]*\" {
+    yylval->string = yytext;
+    return STRING;
 }
 
 <<EOF>> {

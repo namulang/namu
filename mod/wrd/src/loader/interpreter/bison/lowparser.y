@@ -43,8 +43,9 @@
     ============================================================================================  */
 
 %union {
-    int nint; // n means 'native'.
+    int integer;
     void* voidp;
+    char* string;
 }
 
 %define api.pure
@@ -64,9 +65,17 @@
 
 %start compilation-unit
 
+// mode:
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT
+
+// valueless-token:
 %token NEWLINE INDENT DEDENT IF ENDOFFILE
-%token <nint> INT
+
+// value-holding-token:
+%token <integer> INT
+%token <str> NAME STRING
+
+// nonterminal:
 %type <voidp> compilation-unit ifexpr lineexpr compoundexpr block indentblock
 
 /*%type ?? ?? */
@@ -103,6 +112,7 @@ compoundexpr : ifexpr {
            }
 
 lineexpr: INT ';' {
+      } | STRING ';' {
       }
 
 ifexpr: IF indentblock {

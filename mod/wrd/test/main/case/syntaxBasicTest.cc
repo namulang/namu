@@ -11,8 +11,14 @@ namespace {
         str parse(const wchar* src) {
             parser p;
             str ret = p.parse(src);
-            EXPECT_TRUE(ret.isBind());
+            EXPECT_TRUE(ret.isBind()) << "test code: " << src << "\n";
             return ret;
+        }
+
+        void parseFail(const wchar* src) {
+            parser p;
+            str ret = p.parse(src);
+            EXPECT_FALSE(ret.isBind()) << "test code: " << src << "\n";
         }
 
         wbool assertSame(str unit, const wchar* expect) {
@@ -29,6 +35,23 @@ if
             22 ;
             if
                     33;)SRC");
+}
+
+TEST_F(syntaxBasicTest, test2) {
+    parse(R"SRC(
+if
+            'hell   "   o';
+            if
+                    "hel'lo";)SRC");
+}
+
+TEST_F(syntaxBasicTest, stringLiteralShouldFail) {
+    parseFail(R"SRC(
+if
+            'he
+            ll';
+            if
+                    "hel'lo";)SRC");
 }
 
 /*TEST_F(syntaxBasicTest, testParseHelloWorld) {
