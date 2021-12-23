@@ -509,6 +509,14 @@ def clean():
     _cleanIntermediates()
     _cleanDir(binDir)
     _cleanDir(cwd + "/mod")
+    bisonDir = cwd + "/../mod/wrd/src/loader/interpreter/bison"
+    try:
+        os.remove(bisonDir + "/lowparser.hpp")
+        os.remove(bisonDir + "/lowparser.cpp")
+        os.remove(bisonDir + "/lowscanner.hpp")
+        os.remove(bisonDir + "/lowscanner.cpp")
+    except FileNotFoundError:
+        pass
     os.system("rm -rf " + cwd + "/html")
     printOk("was removed successfully.")
 
