@@ -38,7 +38,7 @@ if { return IF; }
 [ \t]+ ;
 \n {
     yylloc->colcnt = 0;
-    yyget_extra(yyscanner)->getDispatcher().add(SCAN_MODE_INDENT);
+    yyget_extra(yyscanner)->onNewLine();
     return NEWLINE;
 }
 
