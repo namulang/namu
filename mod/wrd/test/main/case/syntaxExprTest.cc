@@ -32,31 +32,31 @@ namespace {
 TEST_F(syntaxExprTest, exprTest) {
     parse(R"SRC(
 if
-            22 ;
+            22
             if
-                    33;)SRC");
+                    33)SRC");
 }
 
 TEST_F(syntaxExprTest, test2) {
     parse(R"SRC(
 if
-            'hell   "   o';
+            'hell   "   o'
             if
-                    "hel'lo";)SRC");
+                    "hel'lo")SRC");
 }
 
 TEST_F(syntaxExprTest, stringLiteralShouldFail) {
     parseFail(R"SRC(
 if
             'he
-            ll';
+            ll'
             if
-                    "hel'lo";)SRC");
+                    "hel'lo")SRC");
 }
 
 TEST_F(syntaxExprTest, exprTest3) {
     parse(R"SRC(
-   if 22
+   if
     2 + 3*27 + 44 - 27/34*43 - 1
     )SRC");
 }

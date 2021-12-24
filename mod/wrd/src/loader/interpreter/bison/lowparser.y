@@ -69,16 +69,23 @@
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT
 
 // valueless-token:
-%token NEWLINE INDENT DEDENT IF ENDOFFILE
+%token NEWLINE INDENT DEDENT IF ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS
 
 // value-holding-token:
 %token <integer> INT
 %token <str> NAME STRING
 
 // nonterminal:
-%type <voidp> compilation-unit ifexpr lineexpr compoundexpr block indentblock
+%type <voidp> compilation-unit block indentblock
 
-/*%type ?? ?? */
+// term:
+%type <voidp> term unary postfix primary
+//  expr:
+//      tier:
+%type <voidp> expr expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
+
+//  keyword:
+%type <voidp> if
 
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
@@ -102,20 +109,56 @@ compilation-unit: block {
     eventer->getRoot().bind(new wInt(5));
 }
 
-block: lineexpr NEWLINE {
-   } | compoundexpr {
-   } | block lineexpr NEWLINE {
-   } | block compoundexpr {
+block: expr NEWLINE {
+   } | block expr NEWLINE {
+   }
+unary: primary {
+   } | unary postfix {
+   }
+postfix: {
+     }
+primary: INT {
+     } | STRING {
+     } | '(' expr ')' {
+     }
+
+// term:
+term: unary {
    }
 
-compoundexpr : ifexpr {
-           }
+// expr:
+expr: expr10 {
+  } | if {
+  }
 
-lineexpr: INT ';' {
-      } | STRING ';' {
-      }
+expr10: expr9 {
+    }
+expr9: expr8 {
+   }
+expr8: expr7 {
+   }
+expr7: expr6 {
+   }
+expr6: expr5 {
+   }
+expr5: expr4 {
+   }
+expr4: expr3 {
+   }
+expr3: expr2 {
+   }
+expr2: expr1 {
+   } | expr1 '+' expr1 {
+   }
 
-ifexpr: IF indentblock {
+expr1: term {
+   } | term '*' term {
+   } | term '/' term {
+   }
+
+
+// keyword:
+if: IF indentblock {
     // TODO:
     }
 

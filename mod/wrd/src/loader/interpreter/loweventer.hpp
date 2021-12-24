@@ -34,10 +34,7 @@ namespace wrd {
         wint onEndOfFile();
         wint onIndent(wcnt col, wint tok);
         wint onDedent(wcnt col, wint tok);
-        void onNewLine() {
-            if(_indents.size() >= 1)
-                _dispatcher.add(SCAN_MODE_INDENT);
-        }
+        void onNewLine();
 
     private:
         tokenScan* _mode;
