@@ -4,7 +4,7 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    struct syntaxBasicTest : public ::testing::Test {
+    struct syntaxExprTest : public ::testing::Test {
         void SetUp() {}
         void TearDown() {}
 
@@ -29,7 +29,7 @@ namespace {
     };
 }
 
-TEST_F(syntaxBasicTest, test1) {
+TEST_F(syntaxExprTest, exprTest) {
     parse(R"SRC(
 if
             22 ;
@@ -37,7 +37,7 @@ if
                     33;)SRC");
 }
 
-TEST_F(syntaxBasicTest, test2) {
+TEST_F(syntaxExprTest, test2) {
     parse(R"SRC(
 if
             'hell   "   o';
@@ -45,7 +45,7 @@ if
                     "hel'lo";)SRC");
 }
 
-TEST_F(syntaxBasicTest, stringLiteralShouldFail) {
+TEST_F(syntaxExprTest, stringLiteralShouldFail) {
     parseFail(R"SRC(
 if
             'he
@@ -54,14 +54,21 @@ if
                     "hel'lo";)SRC");
 }
 
-/*TEST_F(syntaxBasicTest, testParseHelloWorld) {
+TEST_F(syntaxExprTest, exprTest3) {
+    parse(R"SRC(
+   if 22
+    2 + 3*27 + 44 - 27/34*43 - 1
+    )SRC");
+}
+
+/*TEST_F(syntaxExprTest, testParseHelloWorld) {
     parse(R"SRC(
         main() void
             out('hello world!')
     )SRC"); // this code can't be run, but can be parsed.
 }
 
-TEST_F(syntaxBasicTest, testHelloWorld) {
+TEST_F(syntaxExprTest, testHelloWorld) {
     auto unit = parse(R"SRC(
     parse(R"SRC(
         import cons
