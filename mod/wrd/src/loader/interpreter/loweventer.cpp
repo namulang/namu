@@ -40,14 +40,21 @@ namespace wrd {
         WRD_DI("tokenEvent: onDedent(col: %d, tok: %d) indents.size()=", col, tok, _indents.size());
 
         _indents.pop_back();
+        _dispatcher.add(NEWLINE);
 
         while(_indents.back() > col) {
             WRD_DI("tokenEvent: onDedent: indentlv become %d -> %d", _indents.back(), _indents[_indents.size()-2]);
             _dispatcher.add(DEDENT);
+            _dispatcher.add(NEWLINE);
             _indents.pop_back();
         }
 
         _dispatcher.add(tok);
         return DEDENT;
+    }
+
+    void me::onNewLine() {
+        if(_indents.size() >= 1)
+            _dispatcher.add(SCAN_MODE_INDENT);
     }
 }
