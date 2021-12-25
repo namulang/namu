@@ -6,38 +6,39 @@ YY_DECL;
 
 namespace wrd {
 
-    wint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
-        wint tok;
+    wint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
         tokenDispatcher& disp = eventer.getDispatcher();
-        if(!disp.pop(tok)) {
+        wint tok;
+        isBypass = disp.pop(tok);
+        WRD_DI("%s: dispatcher[%d]%s(token: %c[%d])", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", (char) tok, tok);
+
+        if(!isBypass)
             tok = yylexOrigin(val, loc, scanner);
-            WRD_DI("%s: dispatcher[null]. yylexOrigin() -> %c(%d)", getType().getName().c_str(), (char) tok, tok);
-        } else
-            WRD_DI("%s: dispatcher[%d].dispatch(token: %c(%d)", getType().getName().c_str(), disp.len(), (char) tok, tok);
 
         if(tok == ENDOFFILE)
             return eventer.onEndOfFile();
         return tok;
     }
 
-    wint normalScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
-        return super::onScan(eventer, val, loc, scanner);
+    wint normalScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
+        return super::onScan(eventer, val, loc, scanner, isBypass);
     }
 
     normalScan* normalScan::_instance = new normalScan();
 
-    wint indentScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
-        wint tok = super::onScan(eventer, val, loc, scanner);
-        if(tok == NEWLINE) {
+    wint indentScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
+        wint tok = super::onScan(eventer, val, loc, scanner, isBypass);
+        if(!isBypass && tok == NEWLINE) {
             WRD_DI("indentScan: ignore NEWLINE");
             return SCAN_AGAIN;
         }
 
+        eventer.setScan<normalScan>();
+        if(isBypass) return tok;
+
         wcnt cur = loc->first_column;
         std::vector<wcnt>& ind = eventer.getIndents();
-        if(ind.size() == 0) {
-            WRD_DI("indentScan: initial indent lv: %d", cur);
-            ind.push_back(cur);
+        if(ind.size() == 0) { WRD_DI("indentScan: initial indent lv: %d", cur); ind.push_back(cur);
         }
 
         wcnt prev = ind.back();
@@ -48,7 +49,6 @@ namespace wrd {
         else if(cur < prev)
             return eventer.onDedent(cur, tok);
 
-        eventer.setScan<normalScan>();
         return tok;
     }
 

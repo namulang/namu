@@ -15,7 +15,11 @@ namespace wrd {
         WRD(INTERFACE(tokenScan))
 
     public:
-        virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner);
+        wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
+            wbool dum;
+            return onScan(eventer, val, loc, scanner, dum);
+        }
+        virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner, wbool& isBypass);
     };
 
     class normalScan: public tokenScan {
@@ -23,7 +27,8 @@ namespace wrd {
         friend class loweventer;
 
     public:
-        wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner) override;
+        using super::onScan;
+        wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner, wbool& isBypass) override;
 
     private:
         static normalScan* _instance;
@@ -34,7 +39,8 @@ namespace wrd {
         friend class loweventer;
 
     public:
-        wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner) override;
+        using super::onScan;
+        wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner, wbool& isBypass) override;
 
     private:
         wint _onIndent(loweventer& ev, wcnt col, wint tok);
