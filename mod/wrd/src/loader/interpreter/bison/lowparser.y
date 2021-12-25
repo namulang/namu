@@ -115,10 +115,13 @@ block: expr NEWLINE {
 unary: primary {
    } | unary postfix {
    }
-postfix: {
+postfix: DOUBLE_MINUS {
+     } | DOUBLE_PLUS {
      }
 primary: INT {
+       WRD_DI("INT(%d)", yylval.integer);
      } | STRING {
+       WRD_DI("STRING(%s)", yylval.string);
      } | '(' expr ')' {
      }
 
@@ -148,12 +151,13 @@ expr4: expr3 {
 expr3: expr2 {
    }
 expr2: expr1 {
-   } | expr1 '+' expr1 {
+   } | expr2 '+' expr1 {
+   } | expr2 '-' expr1 {
    }
 
 expr1: term {
-   } | term '*' term {
-   } | term '/' term {
+   } | expr1 '*' term {
+   } | expr1 '/' term {
    }
 
 

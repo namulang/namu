@@ -21,7 +21,7 @@ namespace wrd {
     wint me::onEndOfFile() {
         WRD_DI("tokenEvent: onEndOfFile() indents.size()=%d", _indents.size());
         if(_indents.size() > 1) {
-            _dispatcher.addFront(onDedent(0, ENDOFFILE));
+            _dispatcher.addFront(onDedent(_indents.front(), ENDOFFILE));
             return NEWLINE;
         }
 
@@ -37,7 +37,7 @@ namespace wrd {
     }
 
     wint me::onDedent(wcnt col, wint tok) {
-        WRD_DI("tokenEvent: onDedent(col: %d, tok: %d) indents.size()=", col, tok, _indents.size());
+        WRD_DI("tokenEvent: onDedent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
 
         _indents.pop_back();
         _dispatcher.add(NEWLINE);
