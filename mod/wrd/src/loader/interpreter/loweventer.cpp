@@ -4,7 +4,7 @@
 namespace wrd {
     WRD_DEF_ME(loweventer)
 
-    wint me::onScan(loweventer& ev, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
+    wint me::onScan(loweventer& ev, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
         int tok;
         do {
             tok = _mode->onScan(ev, val, loc, scanner);

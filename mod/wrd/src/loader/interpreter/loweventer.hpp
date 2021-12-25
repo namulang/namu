@@ -30,7 +30,8 @@ namespace wrd {
 
     public:
         // events:
-        wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) override;
+        using super::onScan;
+        wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) override;
         wint onEndOfFile();
         wint onIndent(wcnt col, wint tok);
         wint onDedent(wcnt col, wint tok);
