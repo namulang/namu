@@ -33,10 +33,9 @@
 /* actual-pattern: */
 %%
 
-[*+-/] { return yytext[0]; }
+[*+-/\(\)] { return yytext[0]; }
 \-\- { return DOUBLE_MINUS; }
 \+\+ { return DOUBLE_PLUS; }
-if { return IF; }
 [ \t]+ ;
 \n {
     yylloc->colcnt = 0;
@@ -44,9 +43,17 @@ if { return IF; }
     return NEWLINE;
 }
 
+if { return IF; }
+void { return VOID; }
+int { return INT; }
+str { return STR; }
+bool { return BOOL; }
+flt { return FLT; }
+null { return NUL; }
+
 [[:digit:]]+ {
     yylval->integer = atoi(yytext);
-    return INT;
+    return INTVAL;
 }
 
 [[:alpha:]]+[[:alnum:]]* {
@@ -56,12 +63,12 @@ if { return IF; }
 
 \'[^\r\f\n\']*\' {
     yylval->string = yytext;
-    return STRING;
+    return STRVAL;
 }
 
 \"[^\r\f\n\"]*\" {
     yylval->string = yytext;
-    return STRING;
+    return STRVAL;
 }
 
 <<EOF>> {
