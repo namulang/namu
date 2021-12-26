@@ -69,23 +69,32 @@
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT
 
 // valueless-token:
-%token NEWLINE INDENT DEDENT IF ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS
+%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS
+//  primitive-type:
+%token VOID INT STR BOOL FLT NUL
+//  reserved-keyword:
+%token IF
 
 // value-holding-token:
-%token <integer> INT
-%token <str> NAME STRING
+%token <integer> INTVAL
+%token <str> NAME STRVAL
 
 // nonterminal:
 %type <voidp> compilation-unit block indentblock
-
-// term:
+//  term:
 %type <voidp> term unary postfix primary
-//  expr:
 //      tier:
 %type <voidp> expr expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 
 //  keyword:
-%type <voidp> if
+%type <voidp> keywordexpr if
+//  def:
+%type <voidp> defexpr
+//      value:
+%type <voidp> defval-exp-no-initial-value
+//      func:
+%type <voidp> param params paramlist
+%type <voidp> deffunc-default
 
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
@@ -118,10 +127,10 @@ unary: primary {
 postfix: DOUBLE_MINUS {
      } | DOUBLE_PLUS {
      }
-primary: INT {
-       WRD_DI("INT(%d)", yylval.integer);
-     } | STRING {
-       WRD_DI("STRING(%s)", yylval.string);
+primary: INTVAL {
+       WRD_DI("INTVAL(%d)", yylval.integer);
+     } | STRVAL {
+       WRD_DI("STRVAL(%s)", yylval.string);
      } | '(' expr ')' {
      }
 
@@ -131,7 +140,8 @@ term: unary {
 
 // expr:
 expr: expr10 {
-  } | if {
+  } | keywordexpr {
+  } | defexpr {
   }
 
 expr10: expr9 {
@@ -162,9 +172,42 @@ expr1: term {
 
 
 // keyword:
-if: IF indentblock {
+keywordexpr: if {
+         }
+if: IF expr indentblock {
     // TODO:
     }
+
+// defs:
+//      type:
+type: VOID {
+  } | INT {
+  } | STR {
+  } | BOOL {
+  } | FLT {
+  } | NAME {
+  }
+
+//      variable:
+defexpr: defval-exp-no-initial-value {
+     } | deffunc-default {
+     }
+defval-exp-no-initial-value: NAME type { // exp means 'explicitly'
+                         }
+
+//      param:
+param: defval-exp-no-initial-value {
+   }
+params: param {
+    } | params ',' param {
+    }
+paramlist: '(' params ')' {
+       } | '(' ')' {
+       }
+
+//      func:
+deffunc-default: NAME paramlist type indentblock {
+             }
 
 indentblock: NEWLINE INDENT block DEDENT {
          }

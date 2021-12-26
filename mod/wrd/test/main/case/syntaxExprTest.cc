@@ -1,63 +1,45 @@
-#include "../common/dep.hpp"
+#include "../syntaxTest.hpp"
 
 using namespace wrd;
 using namespace std;
 
 namespace {
-    struct syntaxExprTest : public ::testing::Test {
-        void SetUp() {}
-        void TearDown() {}
-
-        str parse(const wchar* src) {
-            parser p;
-            str ret = p.parse(src);
-            EXPECT_TRUE(ret.isBind()) << "test code: " << src << "\n";
-            return ret;
-        }
-
-        void parseFail(const wchar* src) {
-            parser p;
-            str ret = p.parse(src);
-            EXPECT_FALSE(ret.isBind()) << "test code: " << src << "\n";
-        }
-
-        wbool assertSame(str unit, const wchar* expect) {
-            // TODO: run unit and gather output and compare it to expect
-            return true;
-        }
-
-    };
+    struct syntaxExprTest : public syntaxTest {};
 }
 
 TEST_F(syntaxExprTest, exprTest) {
     parse(R"SRC(
-if
-            22
-            if
-                    33)SRC");
+main() void
+    if 11
+                22
+                if 22
+                        33)SRC");
 }
 
-TEST_F(syntaxExprTest, test2) {
+TEST_F(syntaxExprTest, exprTest1) {
     parse(R"SRC(
-if
-            'hell   "   o'
-            if
-                    "hel'lo")SRC");
+ foo(abc int) int
+    if "hello"
+                'hell  "  o'
+                if 33
+                        "hel'lo")SRC");
 }
 
 TEST_F(syntaxExprTest, stringLiteralShouldFail) {
     parseFail(R"SRC(
-if
-            'he
-            ll'
-            if
-                    "hel'lo")SRC");
+ foo(abc int) int
+    if 'hello'
+                'he
+                ll'
+                if 'false'
+                        "hel'lo")SRC");
 }
 
 TEST_F(syntaxExprTest, exprTest3) {
     parse(R"SRC(
-   if
-    2 + 3*27 + 44 - 27/34*43 - 1
+ main() void
+    if 'good'
+      2 + 3*27 + 44 - 27/34*43 - 1
     )SRC");
 }
 
