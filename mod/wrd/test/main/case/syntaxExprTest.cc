@@ -43,6 +43,29 @@ TEST_F(syntaxExprTest, exprTest3) {
     )SRC");
 }
 
+TEST_F(syntaxExprTest, exprTest4) {
+    parse(R"SRC(
+ main() void
+    if 'good'
+      2 + (if 3
+       3*27
+      )+ 44 - 27/34*43 - 1
+    )SRC");
+    parseFail(R"SRC(
+ main() void
+    if 'good'
+      2 + (if 3
+       3*27)+ 44 - 27/34*43 - 1
+    )SRC");
+    parseFail(R"SRC(
+ main() void
+    if 'good'
+      2 + if 3
+       3*27
+      + 44 - 27/34*43 - 1
+    )SRC");
+}
+
 /*TEST_F(syntaxExprTest, testParseHelloWorld) {
     parse(R"SRC(
         main() void
