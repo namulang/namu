@@ -10,7 +10,7 @@ namespace wrd {
         tokenDispatcher& disp = eventer.getDispatcher();
         wint tok;
         isBypass = disp.pop(tok);
-        WRD_DI("%s: dispatcher[%d]%s(token: %c[%d])", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", (char) tok, tok);
+        WRD_DI("%s: dispatcher[%d]%s(token: %c[%d])", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", tok <= 127 ? (char) tok : '?', tok);
 
         if(!isBypass)
             tok = yylexOrigin(val, loc, scanner);
