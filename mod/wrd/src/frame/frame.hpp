@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../ast/node.hpp"
-#include <gtest/gtest_prod.h>
 
 struct frameTest;
 
@@ -25,7 +24,6 @@ namespace wrd {
 
         wbool add(nchain& new1) {
             WRD_DI("Stack(%x).push(Chain(%x))", this, &new1);
-
             if(_links)
                 new1.link(*_links);
             return _links.bind(new1);

@@ -167,7 +167,7 @@ namespace wrd {
         // etc:
         void rel() override;
 
-        ncontainer& getContainer() { return *_arr; }
+        ncontainer& getContainer();
         const ncontainer& getContainer() const { return *_arr; }
 
         me& getNext() { return *_next; }
@@ -188,16 +188,7 @@ namespace wrd {
         ///        if this is a chain, then the wrap func returns it as it is.
         ///        if this is any container except chain, then it returns after
         ///        wrapping given container.
-        static me* wrap(const ncontainer& toShallowWrap) {
-            me* ret = const_cast<me*>(&toShallowWrap.cast<me>());
-            if(!ret) {
-                ret = new me();
-                ret->_arr.bind(toShallowWrap);
-            }
-
-            return ret;
-        }
-
+        static me* wrap(const ncontainer& toShallowWrap);
         static me* wrap(const ncontainer* toShallowWrap) {
             return wrap(*toShallowWrap);
         }

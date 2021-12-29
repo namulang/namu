@@ -35,7 +35,7 @@ namespace wrd {
             return WRD_E("new1() failed. chunk was full. you should have not called this in this situtation."), nullptr;
 
         widx* ret = (widx*)_get(_head);
-        if(!ret)
+        if(nul(ret))
             return nullptr;
 
         _head = *ret;
