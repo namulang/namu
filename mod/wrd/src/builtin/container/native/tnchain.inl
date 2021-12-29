@@ -95,9 +95,25 @@ namespace wrd {
     }
 
     TEMPL
+    ME* ME::wrap(const ncontainer& toShallowWrap) {
+        ME* ret = const_cast<me*>(&toShallowWrap.cast<ME>());
+        if(nul(ret)) {
+            ret = new me();
+            ret->_arr.bind(toShallowWrap);
+        }
+
+        return ret;
+    }
+
+    TEMPL
     void ME::rel() {
         for(chnIter e=beginChain(); e ;++e)
             e->getContainer().rel();
+    }
+
+    TEMPL
+    ncontainer& ME::getContainer() {
+        return *_arr;
     }
 
 #undef ME
