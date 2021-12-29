@@ -12,7 +12,7 @@ namespace wrd {
             return nulOf<me>();
 #pragma clang diagnostic pop
         tstr<me>& ret = _subs[name];
-        if(nul(ret))
+        if(!ret)
                 return nullSobj::get();
 
         return *ret;
