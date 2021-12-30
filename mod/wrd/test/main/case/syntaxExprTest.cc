@@ -66,6 +66,32 @@ TEST_F(syntaxExprTest, exprTest4) {
     )SRC");
 }
 
+TEST_F(syntaxExprTest, callFunc) {
+    parse(R"SRC(
+main() void
+    if 'wow'
+        foo()
+    )SRC");
+
+    parse(R"SRC(
+main() void
+    if 'wow'
+        a.foo()
+    )SRC");
+
+    parse(R"SRC(
+main() void
+    if 'wow'
+        --a++.foo()
+    )SRC");
+
+    parse(R"SRC(
+main() void
+    if 'wow'
+        (--a++.foo()).doo().goo()
+    )SRC");
+}
+
 /*TEST_F(syntaxExprTest, testParseHelloWorld) {
     parse(R"SRC(
         main() void
