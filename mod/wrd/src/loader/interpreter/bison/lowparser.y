@@ -131,6 +131,7 @@ unary: postfix {
    } | DOUBLE_MINUS unary {
    } | '+' unary {
    } | '-' unary {
+   }
 
 funcCall: NAME '(' args ')' {
       } | NAME '(' ')' {
@@ -146,6 +147,7 @@ postfix: primary {
      } | postfix '.' NAME {
      } | postfix '.' funcCall {
      } | funcCall {
+     }
 
 primary: INTVAL {
        WRD_DI("INTVAL(%d)", yylval.integer);
