@@ -82,7 +82,7 @@
 // nonterminal:
 %type <voidp> compilation-unit block indentblock
 //  term:
-%type <voidp> term unary postfix primary
+%type <voidp> term unary postfix primary funcCall args
 //      tier:
 %type <voidp> expr expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 
@@ -121,22 +121,40 @@ compilation-unit: block {
 block: expr NEWLINE {
    } | block expr NEWLINE {
    }
-unary: primary {
-   } | unary postfix {
+
+// term:
+term: unary {
    }
-postfix: DOUBLE_MINUS {
-     } | DOUBLE_PLUS {
-     }
+
+unary: postfix {
+   } | DOUBLE_PLUS unary { // prefix:
+   } | DOUBLE_MINUS unary {
+   } | '+' unary {
+   } | '-' unary {
+
+funcCall: NAME '(' args ')' {
+      } | NAME '(' ')' {
+      }
+
+args: NAME {
+  } | args ',' NAME {
+  }
+
+postfix: primary {
+     } | postfix DOUBLE_MINUS {
+     } | postfix DOUBLE_PLUS {
+     } | postfix '.' NAME {
+     } | postfix '.' funcCall {
+     } | funcCall {
+
 primary: INTVAL {
        WRD_DI("INTVAL(%d)", yylval.integer);
      } | STRVAL {
        WRD_DI("STRVAL(%s)", yylval.string);
      } | '(' expr ')' {
+     } | NAME {
      }
 
-// term:
-term: unary {
-   }
 
 // expr:
 expr: expr10 {
