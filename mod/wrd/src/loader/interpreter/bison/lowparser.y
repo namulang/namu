@@ -69,7 +69,7 @@
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT
 
 // valueless-token:
-%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS
+%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS IMPORT PACK
 //  primitive-type:
 %token VOID INT STR BOOL FLT NUL
 //  reserved-keyword:
@@ -80,21 +80,23 @@
 %token <str> NAME STRVAL
 
 // nonterminal:
-%type <voidp> compilation-unit block indentblock
+%type <voidp> compilation-unit block indentblock dotname
 //  term:
 %type <voidp> term unary postfix primary funcCall args
 //      tier:
 %type <voidp> expr expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 
 //  keyword:
-%type <voidp> keywordexpr if
+%type <voidp> keywordexpr if import pack
 //  def:
-%type <voidp> defexpr
+%type <voidp> defexpr defblock
 //      value:
-%type <voidp> defval-exp-no-initial-value
+%type <voidp> defvar-exp-no-initial-value
 //      func:
 %type <voidp> param params paramlist
 %type <voidp> deffunc-default
+//      pack:
+%type <voidp> defpack imports
 
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
@@ -112,7 +114,7 @@
     ============================================================================================  */
 %%
 
-compilation-unit: block {
+compilation-unit: defpack {
     // TODO:
     auto* eventer = yyget_extra(scanner);
     eventer->getRoot().bind(new wInt(5));
@@ -136,6 +138,13 @@ unary: postfix {
 funcCall: NAME '(' args ')' {
       } | NAME '(' ')' {
       }
+
+import: IMPORT dotname NEWLINE {
+    }
+
+dotname: NAME {
+    } | dotname '.' NAME {
+    }
 
 args: NAME {
   } | args ',' NAME {
@@ -199,7 +208,15 @@ if: IF expr indentblock {
     }
 
 // defs:
-//      type:
+//  structure:
+defexpr: defvar {
+     } | deffunc {
+     }
+defblock: defblock defexpr NEWLINE {
+      } | %empty {
+      }
+
+//  type:
 type: VOID {
   } | INT {
   } | STR {
@@ -208,15 +225,14 @@ type: VOID {
   } | NAME {
   }
 
-//      variable:
-defexpr: defval-exp-no-initial-value {
-     } | deffunc-default {
-     }
-defval-exp-no-initial-value: NAME type { // exp means 'explicitly'
+//  variable:
+defvar: defvar-exp-no-initial-value {
+    }
+defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
                          }
 
-//      param:
-param: defval-exp-no-initial-value {
+//  param:
+param: defvar-exp-no-initial-value {
    }
 params: param {
     } | params ',' param {
@@ -225,12 +241,24 @@ paramlist: '(' params ')' {
        } | '(' ')' {
        }
 
-//      func:
+//  func:
+deffunc: deffunc-default {
+     }
 deffunc-default: NAME paramlist type indentblock {
              }
 
 indentblock: NEWLINE INDENT block DEDENT {
          }
+
+//  pack:
+imports: imports import {
+     } | %empty {
+     }
+defpack: pack imports defblock {
+     } | imports defblock {
+     }
+pack: PACK dotname NEWLINE {
+  }
 
 
 
