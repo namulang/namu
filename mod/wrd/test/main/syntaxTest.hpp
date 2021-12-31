@@ -18,7 +18,7 @@ struct syntaxTest : public ::testing::Test {
         wrd::parser p;
         wrd::errReport rpt;
         wrd::str ret = p.setReport(rpt).parse(src);
-        EXPECT_FALSE(rpt || !ret) << "test code: " << src << "\n";
+        EXPECT_TRUE(rpt || !ret) << "test code: " << src << "\n";
     }
 
     wrd::wbool assertSame(wrd::str unit, const wrd::wchar* expect) {

@@ -9,6 +9,7 @@ namespace {
 
 TEST_F(syntaxExprTest, exprTest) {
     parse(R"SRC(
+pack demo
 main() void
     if 11
                 22
@@ -18,6 +19,7 @@ main() void
 
 TEST_F(syntaxExprTest, exprTest1) {
     parse(R"SRC(
+ pack demo
  foo(abc int) int
     if "hello"
                 'hell  "  o'
@@ -27,6 +29,7 @@ TEST_F(syntaxExprTest, exprTest1) {
 
 TEST_F(syntaxExprTest, stringLiteralShouldFail) {
     parseFail(R"SRC(
+ pack demo
  foo(abc int) int
     if 'hello'
                 'he
@@ -37,6 +40,7 @@ TEST_F(syntaxExprTest, stringLiteralShouldFail) {
 
 TEST_F(syntaxExprTest, exprTest3) {
     parse(R"SRC(
+ pack demo
  main() void
     if 'good'
       2 + 3*27 + 44 - 27/34*43 - 1
@@ -45,6 +49,7 @@ TEST_F(syntaxExprTest, exprTest3) {
 
 TEST_F(syntaxExprTest, exprTest4) {
     parse(R"SRC(
+ pack demo
  main() void
     if 'good'
       2 + (if 3
@@ -52,12 +57,14 @@ TEST_F(syntaxExprTest, exprTest4) {
       )+ 44 - 27/34*43 - 1
     )SRC");
     parseFail(R"SRC(
+ pack demo
  main() void
     if 'good'
       2 + (if 3
        3*27)+ 44 - 27/34*43 - 1
     )SRC");
     parseFail(R"SRC(
+ pack demo
  main() void
     if 'good'
       2 + if 3
@@ -68,6 +75,7 @@ TEST_F(syntaxExprTest, exprTest4) {
 
 TEST_F(syntaxExprTest, callFunc) {
     parse(R"SRC(
+pack demo
 main() void
     if 'wow'
         foo()

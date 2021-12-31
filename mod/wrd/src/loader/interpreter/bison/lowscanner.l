@@ -33,7 +33,7 @@
 /* actual-pattern: */
 %%
 
-[*+-/\(\)] { return yytext[0]; }
+[*+-/\(\)\.\,] { return yytext[0]; }
 \-\- { return DOUBLE_MINUS; }
 \+\+ { return DOUBLE_PLUS; }
 [ \t]+ ;
@@ -50,29 +50,35 @@ str { return STR; }
 bool { return BOOL; }
 flt { return FLT; }
 null { return NUL; }
+import { return IMPORT; }
+pack { return PACK; }
 
 [[:digit:]]+ {
     yylval->integer = atoi(yytext);
+    WRD_DI("scanner: INTVAL[%s]", yytext);
     return INTVAL;
 }
 
 [[:alpha:]]+[[:alnum:]]* {
     yylval->string = yytext;
+    WRD_DI("scanner: NAME[%s]", yytext);
     return NAME;
 }
 
 \'[^\r\f\n\']*\' {
     yylval->string = yytext;
+    WRD_DI("scanner: STRVAL[%s]", yytext);
     return STRVAL;
 }
 
 \"[^\r\f\n\"]*\" {
     yylval->string = yytext;
+    WRD_DI("scanner: STRVAL[%s]", yytext);
     return STRVAL;
 }
 
 <<EOF>> {
-    std::cout << "---EOF!\n";
+    WRD_DI("scanner: ENDOFFILE");
     yylloc->colcnt = 0;
     return ENDOFFILE;
 }
