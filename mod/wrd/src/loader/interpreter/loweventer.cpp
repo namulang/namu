@@ -57,4 +57,9 @@ namespace wrd {
         if(_indents.size() >= 1)
             _dispatcher.add(SCAN_MODE_INDENT);
     }
+
+    wchar me::onScanUnexpected(wchar token) {
+        WRD_E("unexpected %c token found.", token);
+        return token;
+    }
 }

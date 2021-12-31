@@ -55,25 +55,25 @@ pack { return PACK; }
 
 [[:digit:]]+ {
     yylval->integer = atoi(yytext);
-    WRD_DI("scanner: INTVAL[%s]", yytext);
+    WRD_DI("scanner: INTVAL=%s", yytext);
     return INTVAL;
 }
 
 [[:alpha:]]+[[:alnum:]]* {
     yylval->string = yytext;
-    WRD_DI("scanner: NAME[%s]", yytext);
+    WRD_DI("scanner: NAME='%s'", yytext);
     return NAME;
 }
 
 \'[^\r\f\n\']*\' {
     yylval->string = yytext;
-    WRD_DI("scanner: STRVAL[%s]", yytext);
+    WRD_DI("scanner: STRVAL='%s'", yytext);
     return STRVAL;
 }
 
 \"[^\r\f\n\"]*\" {
     yylval->string = yytext;
-    WRD_DI("scanner: STRVAL[%s]", yytext);
+    WRD_DI("scanner: STRVAL='%s'", yytext);
     return STRVAL;
 }
 
@@ -81,6 +81,10 @@ pack { return PACK; }
     WRD_DI("scanner: ENDOFFILE");
     yylloc->colcnt = 0;
     return ENDOFFILE;
+}
+
+<*>. {
+    return yyget_extra(yyscanner)->onScanUnexpected(yytext[0]);
 }
 
 %%

@@ -36,6 +36,7 @@ namespace wrd {
         wint onIndent(wcnt col, wint tok);
         wint onDedent(wcnt col, wint tok);
         void onNewLine();
+        wchar onScanUnexpected(wchar token);
 
     private:
         tokenScan* _mode;
