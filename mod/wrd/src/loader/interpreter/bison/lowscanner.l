@@ -33,7 +33,8 @@
 /* actual-pattern: */
 %%
 
-[*+-/\(\)\.\,] { return yytext[0]; }
+[\)] { return yytext[0]; }
+[*+-/\(\.\,] { return yyget_extra(yyscanner)->onIgnoreIndent(yytext[0]); }
 \-\- { return DOUBLE_MINUS; }
 \+\+ { return DOUBLE_PLUS; }
 [ \t]+ ;

@@ -100,6 +100,40 @@ main() void
     )SRC");
 }
 
+TEST_F(syntaxExprTest, IgnoreWhitespaceOnBinaryOperator) {
+    parse(R"SRC(
+main() void
+    2 +
+        3)SRC");
+
+    parse(R"SRC(
+main() void
+    activateFrame(ContextManager,
+    view.update(context),
+    22,
+    34) + 2 +
+        3)SRC");
+
+    parse(R"SRC(
+main() void
+    activateFrame(ContextManager,
+        view.update(context),
+22,
+                    34) + 2 +
+        3)SRC");
+
+    parse(R"SRC(
+main() void
+    activateFrame(
+     ContextManager,
+       view.update(
+        context),
+22,
+                    34) +
+                     2 +
+        3)SRC");
+}
+
 /*TEST_F(syntaxExprTest, testParseHelloWorld) {
     parse(R"SRC(
         main() void

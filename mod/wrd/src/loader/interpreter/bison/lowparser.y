@@ -66,7 +66,7 @@
 %start compilation-unit
 
 // mode:
-%token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT
+%token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE
 
 // valueless-token:
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS IMPORT PACK
@@ -136,7 +136,6 @@ unary: postfix {
    }
 
 funcCall: NAME '(' args ')' {
-      } | NAME '(' ')' {
       }
 
 import: IMPORT dotname NEWLINE {
@@ -146,8 +145,8 @@ dotname: NAME {
     } | dotname '.' NAME {
     }
 
-args: NAME {
-  } | args ',' NAME {
+args: %empty {
+  } | args ',' term {
   }
 
 postfix: primary {

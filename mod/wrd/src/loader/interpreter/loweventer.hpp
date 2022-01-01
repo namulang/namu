@@ -13,7 +13,7 @@ namespace wrd {
         friend class tokenScanModable;
 
     public:
-        loweventer(): _mode(nullptr) {}
+        loweventer(): _mode(nullptr), _isIgnoreWhitespace(false) {}
 
     public:
         str& getRoot() { return _root; }
@@ -35,11 +35,16 @@ namespace wrd {
         wint onEndOfFile();
         wint onIndent(wcnt col, wint tok);
         wint onDedent(wcnt col, wint tok);
+        wint onIgnoreIndent(wint tok);
         void onNewLine();
         wchar onScanUnexpected(wchar token);
 
     private:
+        wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
+
+    private:
         tokenScan* _mode;
+        wbool _isIgnoreWhitespace;
         str _root;
         tokenDispatcher _dispatcher;
         std::vector<wcnt> _indents;
