@@ -100,12 +100,47 @@ main() void
     )SRC");
 }
 
+TEST_F(syntaxExprTest, callFuncWithExprInside) {
+    parse(R"SRC(
+main() void
+    if 'test'
+        a.foo(22, 34)
+    )SRC");
+}
+
+TEST_F(syntaxExprTest, callFuncWithExprInside1) {
+    parse(R"SRC(
+main() void
+    if 'test'
+        a.foo(22, 34, boo(22))
+    )SRC");
+}
+
+TEST_F(syntaxExprTest, callFuncWithExprInside2) {
+    parseFail(R"SRC(
+main() void
+    if 'test'
+        a.foo(22, 34, boo(a int) void
+            b.boo(a)
+        )
+    )SRC");
+
+    parse(R"SRC(
+main() void
+    if 'test'
+        a.foo(22, 34, (boo(a int) void
+            b.boo(a)
+        ))
+    )SRC");
+}
+
 TEST_F(syntaxExprTest, IgnoreWhitespaceOnBinaryOperator) {
     parse(R"SRC(
 main() void
     2 +
         3)SRC");
-
+}
+TEST_F(syntaxExprTest, IgnoreWhitespaceOnBinaryOperator1) {
     parse(R"SRC(
 main() void
     activateFrame(ContextManager,
@@ -113,7 +148,8 @@ main() void
     22,
     34) + 2 +
         3)SRC");
-
+}
+TEST_F(syntaxExprTest, IgnoreWhitespaceOnBinaryOperator2) {
     parse(R"SRC(
 main() void
     activateFrame(ContextManager,
@@ -121,7 +157,8 @@ main() void
 22,
                     34) + 2 +
         3)SRC");
-
+}
+TEST_F(syntaxExprTest, IgnoreWhitespaceOnBinaryOperator3) {
     parse(R"SRC(
 main() void
     activateFrame(
