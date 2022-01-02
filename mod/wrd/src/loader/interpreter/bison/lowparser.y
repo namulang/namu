@@ -93,7 +93,7 @@
 //      value:
 %type <voidp> defvar-exp-no-initial-value
 //      func:
-%type <voidp> param params paramlist
+%type <voidp> param params
 %type <voidp> deffunc-default
 //      pack:
 %type <voidp> defpack imports
@@ -136,6 +136,7 @@ unary: postfix {
    }
 
 funcCall: NAME '(' args ')' {
+      } | NAME '(' ')' {
       }
 
 import: IMPORT dotname NEWLINE {
@@ -145,7 +146,7 @@ dotname: NAME {
     } | dotname '.' NAME {
     }
 
-args: %empty {
+args: term {
   } | args ',' term {
   }
 
@@ -236,14 +237,11 @@ param: defvar-exp-no-initial-value {
 params: param {
     } | params ',' param {
     }
-paramlist: '(' params ')' {
-       } | '(' ')' {
-       }
-
 //  func:
 deffunc: deffunc-default {
      }
-deffunc-default: NAME paramlist type indentblock {
+deffunc-default: NAME '(' params ')' type indentblock {
+             } | NAME '(' ')' type indentblock {
              }
 
 indentblock: NEWLINE INDENT block DEDENT {
