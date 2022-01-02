@@ -84,12 +84,12 @@
 //  term:
 %type <voidp> term unary postfix primary funcCall args
 //      tier:
-%type <voidp> expr expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
+%type <voidp> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 
 //  keyword:
-%type <voidp> keywordexpr if import pack
+%type <voidp> if import pack
 //  def:
-%type <voidp> defexpr defblock
+%type <voidp> defstmt defexpr-line defexpr-compound defblock
 //      value:
 %type <voidp> defvar-exp-no-initial-value
 //      func:
@@ -120,8 +120,16 @@ compilation-unit: defpack {
     eventer->getRoot().bind(new wInt(5));
 }
 
-block: expr NEWLINE {
-   } | block expr NEWLINE {
+expr: expr-line {
+  } | expr-compound {
+  }
+
+stmt: expr-line NEWLINE {
+  } | expr-compound {
+  }
+
+block: %empty {
+   } | block stmt {
    }
 
 // term:
@@ -168,11 +176,16 @@ primary: INTVAL {
 
 
 // expr:
-expr: expr10 {
-  } | keywordexpr {
-  } | defexpr {
-  }
+//  structure:
+expr-line: defexpr-line {
+       } | expr10 {
+       } | defexpr-line {
+       }
+expr-compound: defexpr-compound {
+           } | if {
+           }
 
+//  expr-line:
 expr10: expr9 {
     }
 expr9: expr8 {
@@ -199,21 +212,22 @@ expr1: term {
    } | expr1 '/' term {
    }
 
-
 // keyword:
-keywordexpr: if {
-         }
 if: IF expr indentblock {
     // TODO:
     }
 
 // defs:
 //  structure:
-defexpr: defvar {
-     } | deffunc {
+defexpr-line: defvar {
+          }
+defexpr-compound: deffunc {
+          }
+defstmt: defexpr-line NEWLINE {
+     } | defexpr-compound {
      }
-defblock: defblock defexpr NEWLINE {
-      } | %empty {
+defblock: %empty {
+      } | defblock defstmt {
       }
 
 //  type:

@@ -53,13 +53,11 @@ namespace wrd {
         WRD_DI("tokenEvent: onDedent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
 
         _indents.pop_back();
-        _dispatcher.add(NEWLINE);
 
         while(_indents.back() > col) {
             WRD_DI("tokenEvent: onDedent: indentlv become %d -> %d", _indents.back(), _indents[_indents.size()-2]);
-            _dispatcher.add(DEDENT);
-            _dispatcher.add(NEWLINE);
             _indents.pop_back();
+            _dispatcher.add(DEDENT);
         }
 
         _dispatcher.add(tok);
