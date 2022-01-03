@@ -73,6 +73,24 @@ TEST_F(syntaxExprTest, exprTest4) {
     )SRC");
 }
 
+TEST_F(syntaxExprTest, exprAddFuncCall) {
+    parse(R"SRC(
+ pack demo
+ main() void
+    if 'good'
+      2 + 3*27 + 44 - foo(2) * 27/34*43
+    )SRC");
+}
+
+TEST_F(syntaxExprTest, exprAddFuncCall2) {
+    parse(R"SRC(
+ pack demo
+ main() void
+    if 'good'
+      2 + 3*27 + 44 - foo(2) * 27/34*43 - a.foo(b.boo(c.goo()))
+    )SRC");
+}
+
 TEST_F(syntaxExprTest, callFunc) {
     parse(R"SRC(
 pack demo
