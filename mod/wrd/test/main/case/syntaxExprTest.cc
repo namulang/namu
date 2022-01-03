@@ -73,6 +73,17 @@ TEST_F(syntaxExprTest, exprTest4) {
     )SRC");
 }
 
+TEST_F(syntaxExprTest, defexprAsTerm) {
+    parse(R"SRC(
+ pack demo
+ main() void
+    if 'good'
+      (age int) + (if 3
+       3*27
+      ) + (grade flt) - 27/34*43 - 1
+    )SRC");
+}
+
 TEST_F(syntaxExprTest, exprAddFuncCall) {
     parse(R"SRC(
  pack demo
@@ -149,6 +160,14 @@ main() void
         a.foo(22, 34, (boo(a int) void
             b.boo(a)
         ))
+    )SRC");
+}
+
+TEST_F(syntaxExprTest, lambda1) {
+    parse(R"SRC(
+main() void
+    a.sendPacket(packet ->
+        doSomething()
     )SRC");
 }
 
