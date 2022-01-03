@@ -69,7 +69,7 @@
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE
 
 // valueless-token:
-%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS IMPORT PACK
+%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS IMPORT PACK ARROW
 //  primitive-type:
 %token VOID INT STR BOOL FLT NUL
 //  reserved-keyword:
@@ -179,7 +179,6 @@ primary: INTVAL {
 //  structure:
 expr-line: defexpr-line {
        } | expr10 {
-       } | defexpr-line {
        }
 expr-compound: defexpr-compound {
            } | if {
@@ -253,10 +252,23 @@ params: param {
     }
 //  func:
 deffunc: deffunc-default {
+     } | deffunc-lambda-default {
+     } | deffunc-lambda-deduction {
      }
 deffunc-default: NAME '(' params ')' type indentblock {
              } | NAME '(' ')' type indentblock {
              }
+
+params-lambda: NAME {
+           } | params-lambda ',' NAME {
+           }
+
+deffunc-lambda-default : params-lambda ARROW type indentblock {
+                     } | ARROW type indentblock {
+                     }
+deffunc-lambda-deduction: params-lambda ARROW indentblock {
+                      } | ARROW indentblock {
+                      }
 
 indentblock: NEWLINE INDENT block DEDENT {
          }
