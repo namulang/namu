@@ -82,7 +82,7 @@
 // nonterminal:
 %type <voidp> compilation-unit block indentblock dotname
 //  term:
-%type <voidp> term unary postfix primary funcCall args
+%type <voidp> term unary postfix primary funcCall list list-items
 //      tier:
 %type <voidp> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 
@@ -91,10 +91,10 @@
 //  def:
 %type <voidp> defstmt defexpr-line defexpr-compound defblock
 //      value:
-%type <voidp> defvar-exp-no-initial-value
+%type <voidp> defvar defvar-exp-no-initial-value
 //      func:
-%type <voidp> param params
 %type <voidp> deffunc-default
+%type <voidp> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
 //      pack:
 %type <voidp> defpack imports
 
@@ -143,8 +143,7 @@ unary: postfix {
    } | '-' unary {
    }
 
-funcCall: NAME '(' args ')' {
-      } | NAME '(' ')' {
+funcCall: NAME list {
       }
 
 import: IMPORT dotname NEWLINE {
@@ -154,8 +153,12 @@ dotname: NAME {
     } | dotname '.' NAME {
     }
 
-args: term {
-  } | args ',' term {
+list-items: expr {
+        } | list-items ',' expr {
+        }
+
+list: '(' list-items ')' {
+  } | '(' ')' {
   }
 
 postfix: primary {
@@ -170,7 +173,8 @@ primary: INTVAL {
        WRD_DI("INTVAL(%d)", yylval.integer);
      } | STRVAL {
        WRD_DI("STRVAL(%s)", yylval.string);
-     } | '(' expr ')' {
+     } | list {
+       // TODO: list should contain 1 element.
      } | NAME {
      }
 
@@ -244,30 +248,23 @@ defvar: defvar-exp-no-initial-value {
 defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
                          }
 
-//  param:
-param: defvar-exp-no-initial-value {
-   }
-params: param {
-    } | params ',' param {
-    }
 //  func:
 deffunc: deffunc-default {
-     } | deffunc-lambda-default {
-     } | deffunc-lambda-deduction {
+     } | deffunc-lambda {
      }
-deffunc-default: NAME '(' params ')' type indentblock {
-             } | NAME '(' ')' type indentblock {
+deffunc-default: NAME list type indentblock {
+                // TODO: checks list that it's defvar
              }
 
-params-lambda: NAME {
-           } | params-lambda ',' NAME {
-           }
+deffunc-lambda: deffunc-lambda-default {
+            } | deffunc-lambda-deduction {
+            }
 
-deffunc-lambda-default : params-lambda ARROW type indentblock {
-                     } | ARROW type indentblock {
+deffunc-lambda-default : list ARROW type indentblock {
+                    // checks list that it's NAME.
                      }
-deffunc-lambda-deduction: params-lambda ARROW indentblock {
-                      } | ARROW indentblock {
+deffunc-lambda-deduction: list ARROW indentblock {
+                    // checks list that it's NAME.
                       }
 
 indentblock: NEWLINE INDENT block DEDENT {
