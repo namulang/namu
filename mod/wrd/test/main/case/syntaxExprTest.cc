@@ -166,7 +166,7 @@ main() void
 TEST_F(syntaxExprTest, lambda1) {
     parse(R"SRC(
 main() void
-    a.sendPacket((packet) ->
+    a.sendPacket((packet)
         doSomething()
     ))SRC");
 }
@@ -174,7 +174,7 @@ main() void
 TEST_F(syntaxExprTest, lambda2) {
     parse(R"SRC(
 main() void
-    a.sendPacket((packet) ->
+    a.sendPacket((packet)
         doSomething()
     ))SRC");
 }
