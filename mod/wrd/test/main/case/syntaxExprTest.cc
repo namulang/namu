@@ -146,7 +146,7 @@ main() void
 }
 
 TEST_F(syntaxExprTest, callFuncWithExprInside2) {
-    parseFail(R"SRC(
+    parse(R"SRC(
 main() void
     if 'test'
         a.foo(22, 34, boo(a int) void
@@ -166,9 +166,33 @@ main() void
 TEST_F(syntaxExprTest, lambda1) {
     parse(R"SRC(
 main() void
-    a.sendPacket(packet ->
+    a.sendPacket((packet) ->
         doSomething()
-    )SRC");
+    ))SRC");
+}
+
+TEST_F(syntaxExprTest, lambda2) {
+    parse(R"SRC(
+main() void
+    a.sendPacket((packet) ->
+        doSomething()
+    ))SRC");
+}
+
+TEST_F(syntaxExprTest, lambda3) {
+    parse(R"SRC(
+main() void
+    a.sendPacket(foo() void
+        doSomething()
+    ))SRC");
+}
+
+TEST_F(syntaxExprTest, lambda4) {
+    parse(R"SRC(
+main() void
+    a.sendPacket((foo() void
+        doSomething()
+    )))SRC");
 }
 
 TEST_F(syntaxExprTest, IgnoreWhitespaceOnBinaryOperator) {
