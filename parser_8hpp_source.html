@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/worldlang/worldlang/mod/wrd/src/loader/interpreter/parser.hpp Source File</title>
+<title>world-doc: /home/runner/work/wrd/wrd/mod/wrd/loader/interpreter/parser.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_2a714905afdaf79fc50a4fe91ffff2bf.html">src</a></li><li class="navelem"><a class="el" href="dir_71992a1be29a3da0dc4179bee8771a2c.html">loader</a></li><li class="navelem"><a class="el" href="dir_4ebfb47c37143178c10c685bcd06a7d2.html">interpreter</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_2cbbd415afc490c36007fd78392f3f9d.html">loader</a></li><li class="navelem"><a class="el" href="dir_baa7b637623cdf9624a179aa46e5ea0d.html">interpreter</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -85,25 +85,29 @@ $(function() {
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        me&amp; setReport(<a class="code" href="classwrd_1_1err_report.html">errReport</a>&amp; report) {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            _report.bind(report);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            _eventer.getReport().bind(report);</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        }</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> <a class="code" href="classwrd_1_1parser.html#a5b69137a1ddc805362ce5d8ac48d2a54">parse</a>(<span class="keyword">const</span> wchar* script);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> rel();</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a> _report;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classwrd_1_1loweventer.html">loweventer</a> _eventer;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    };</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        me&amp; setTray(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; tray) {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            _eventer.setTray(tray);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;narr&gt;</a> <a class="code" href="classwrd_1_1parser.html#aedda25866368a35db28b6f6183dd5395">parse</a>(<span class="keyword">const</span> wchar* script);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> rel();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <a class="code" href="classwrd_1_1loweventer.html">loweventer</a> _eventer;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    };</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
-<div class="ttc" id="aclasswrd_1_1parser_html_a5b69137a1ddc805362ce5d8ac48d2a54"><div class="ttname"><a href="classwrd_1_1parser.html#a5b69137a1ddc805362ce5d8ac48d2a54">wrd::parser::parse</a></div><div class="ttdeci">str parse(const wchar *script)</div></div>
+<div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1err_report_html"><div class="ttname"><a href="classwrd_1_1err_report.html">wrd::errReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:10</div></div>
+<div class="ttc" id="aclasswrd_1_1parser_html_aedda25866368a35db28b6f6183dd5395"><div class="ttname"><a href="classwrd_1_1parser.html#aedda25866368a35db28b6f6183dd5395">wrd::parser::parse</a></div><div class="ttdeci">tstr&lt; narr &gt; parse(const wchar *script)</div></div>
 <div class="ttc" id="aclasswrd_1_1type_providable_html"><div class="ttname"><a href="classwrd_1_1type_providable.html">wrd::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:4</div></div>
-<div class="ttc" id="aclasswrd_1_1loweventer_html"><div class="ttname"><a href="classwrd_1_1loweventer.html">wrd::loweventer</a></div><div class="ttdef"><b>Definition:</b> loweventer.hpp:11</div></div>
+<div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr&lt; node &gt;</a></div></div>
+<div class="ttc" id="aclasswrd_1_1loweventer_html"><div class="ttname"><a href="classwrd_1_1loweventer.html">wrd::loweventer</a></div><div class="ttdef"><b>Definition:</b> loweventer.hpp:12</div></div>
 <div class="ttc" id="aclasswrd_1_1parser_html"><div class="ttname"><a href="classwrd_1_1parser.html">wrd::parser</a></div><div class="ttdef"><b>Definition:</b> parser.hpp:23</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

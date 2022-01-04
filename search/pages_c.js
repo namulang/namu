@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['reference_525',['reference',['../md__home_runner_work_worldlang_worldlang_doc_ref_syntax_reference.html',1,'']]],
-  ['ret_526',['ret',['../md__home_runner_work_worldlang_worldlang_doc_ref_syntax_ret.html',1,'']]]
+  ['reference_499',['reference',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_reference.html',1,'']]],
+  ['ret_500',['ret',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_ret.html',1,'']]]
 ];

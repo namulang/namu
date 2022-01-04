@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['def_502',['def',['../md__home_runner_work_worldlang_worldlang_doc_ref_syntax_def.html',1,'']]],
-  ['delegator_503',['delegator',['../md__home_runner_work_worldlang_worldlang_doc_ref_syntax_delegator.html',1,'']]]
+  ['def_477',['def',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_def.html',1,'']]],
+  ['delegator_478',['delegator',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_delegator.html',1,'']]]
 ];

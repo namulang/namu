@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/worldlang/worldlang/mod/wrd/src/loader/interpreter/loweventer.hpp Source File</title>
+<title>world-doc: /home/runner/work/wrd/wrd/mod/wrd/loader/interpreter/loweventer.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_2a714905afdaf79fc50a4fe91ffff2bf.html">src</a></li><li class="navelem"><a class="el" href="dir_71992a1be29a3da0dc4179bee8771a2c.html">loader</a></li><li class="navelem"><a class="el" href="dir_4ebfb47c37143178c10c685bcd06a7d2.html">interpreter</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_2cbbd415afc490c36007fd78392f3f9d.html">loader</a></li><li class="navelem"><a class="el" href="dir_baa7b637623cdf9624a179aa46e5ea0d.html">interpreter</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -76,55 +76,83 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../../ast/node.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;tokenDispatcher.hpp&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;bison/tokenScan.hpp&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>wrd {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="classwrd_1_1loweventer.html">   11</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1loweventer.html">loweventer</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1token_scan.html">tokenScan</a> {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1loweventer.html">loweventer</a>, <a class="code" href="classwrd_1_1token_scan.html">tokenScan</a>))</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span>tokenScanModable;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classwrd_1_1loweventer.html">loweventer</a>(): _mode(<span class="keyword">nullptr</span>), _isIgnoreWhitespace(<span class="keyword">false</span>) {}</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a>&amp; getRoot() { <span class="keywordflow">return</span> _root; }</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classwrd_1_1token_dispatcher.html">tokenDispatcher</a>&amp; getDispatcher() { <span class="keywordflow">return</span> _dispatcher; }</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        std::vector&lt;wcnt&gt;&amp; getIndents() { <span class="keywordflow">return</span> _indents; }</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        wbool isInit()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _mode; }</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">void</span> setScan() {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            WRD_DI(<span class="stringliteral">&quot;change scanmode(%s -&gt; %s)&quot;</span>, !_mode ? <span class="stringliteral">&quot;&lt;null&gt;&quot;</span> : _mode-&gt;getType().getName().c_str(),</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;                    T::_instance-&gt;getType().getName().c_str());</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            _mode = T::_instance;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        }</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;../errReport.hpp&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classwrd_1_1loweventer.html">   12</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1loweventer.html">loweventer</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1token_scan.html">tokenScan</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1loweventer.html">loweventer</a>, <a class="code" href="classwrd_1_1token_scan.html">tokenScan</a>))</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span>tokenScanModable;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classwrd_1_1loweventer.html">loweventer</a>() { rel(); }</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;narr&gt;</a>&amp; getTray() {</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            <span class="keywordflow">if</span>(!_tray)</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                _tray.bind(<span class="keyword">new</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>());</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keywordflow">return</span> _tray;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        }</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">void</span> setTray(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; new1) { _tray.bind(new1); }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a>&amp; getReport() { <span class="keywordflow">return</span> _report; }</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <a class="code" href="classwrd_1_1token_dispatcher.html">tokenDispatcher</a>&amp; getDispatcher() { <span class="keywordflow">return</span> _dispatcher; }</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        std::vector&lt;wcnt&gt;&amp; getIndents() { <span class="keywordflow">return</span> _indents; }</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        wbool isInit()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _mode; }</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="comment">// events:</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">using</span> super::onScan;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        wint onScan(<a class="code" href="classwrd_1_1loweventer.html">loweventer</a>&amp; eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool&amp; isBypass) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        wint onEndOfFile();</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        wint onIndent(wcnt col, wint tok);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        wint onDedent(wcnt col, wint tok);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        wint onIgnoreIndent(wint tok);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">void</span> onNewLine();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        wchar onScanUnexpected(wchar token);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="classwrd_1_1token_scan.html">tokenScan</a>* _mode;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        wbool _isIgnoreWhitespace;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _root;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="classwrd_1_1token_dispatcher.html">tokenDispatcher</a> _dispatcher;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::vector&lt;wcnt&gt; _indents;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    };</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;}</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordtype">void</span> setScan() {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            WRD_DI(<span class="stringliteral">&quot;change scanmode(%s -&gt; %s)&quot;</span>, !_mode ? <span class="stringliteral">&quot;&lt;null&gt;&quot;</span> : _mode-&gt;getType().getName().c_str(),</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                    T::_instance-&gt;getType().getName().c_str());</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            _mode = T::_instance;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> rel() {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            _report.bind(dummyErrReport::singletone);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            _tray.rel();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            prepareParse();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">void</span> prepareParse() {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            _mode = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            _isIgnoreWhitespace = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            _dispatcher.rel();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            _indents.clear();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        }</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="comment">// events:</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">using</span> super::onScan;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        wint onScan(<a class="code" href="classwrd_1_1loweventer.html">loweventer</a>&amp; eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool&amp; isBypass) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        wint onEndOfFile(<span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; loc);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        wint onIndent(wcnt col, wint tok);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        wint onDedent(wcnt col, wint tok, <span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; loc);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        wint onIgnoreIndent(wint tok);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">void</span> onNewLine();</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        wchar onScanUnexpected(<span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, <span class="keyword">const</span> wchar* token);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">void</span> onErr(<span class="keyword">const</span> <a class="code" href="structwrd_1_1err.html">err</a>* new1);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">void</span> onEndParse(<span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; pt);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="classwrd_1_1token_scan.html">tokenScan</a>* _mode;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        wbool _isIgnoreWhitespace;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="classwrd_1_1token_dispatcher.html">tokenDispatcher</a> _dispatcher;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        std::vector&lt;wcnt&gt; _indents;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a> _report;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;narr&gt;</a> _tray;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    };</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
+<div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
+<div class="ttc" id="astructwrd_1_1area_html"><div class="ttname"><a href="structwrd_1_1area.html">wrd::area</a></div><div class="ttdef"><b>Definition:</b> point.hpp:11</div></div>
 <div class="ttc" id="aclasswrd_1_1token_scan_html"><div class="ttname"><a href="classwrd_1_1token_scan.html">wrd::tokenScan</a></div><div class="ttdef"><b>Definition:</b> tokenScan.hpp:14</div></div>
-<div class="ttc" id="aclasswrd_1_1loweventer_html"><div class="ttname"><a href="classwrd_1_1loweventer.html">wrd::loweventer</a></div><div class="ttdef"><b>Definition:</b> loweventer.hpp:11</div></div>
+<div class="ttc" id="aclasswrd_1_1src_html"><div class="ttname"><a href="classwrd_1_1src.html">wrd::src</a></div><div class="ttdef"><b>Definition:</b> src.hpp:10</div></div>
+<div class="ttc" id="astructwrd_1_1point_html"><div class="ttname"><a href="structwrd_1_1point.html">wrd::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>
+<div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:9</div></div>
+<div class="ttc" id="astructwrd_1_1err_html"><div class="ttname"><a href="structwrd_1_1err.html">wrd::err</a></div><div class="ttdef"><b>Definition:</b> err.hpp:12</div></div>
+<div class="ttc" id="aclasswrd_1_1loweventer_html"><div class="ttname"><a href="classwrd_1_1loweventer.html">wrd::loweventer</a></div><div class="ttdef"><b>Definition:</b> loweventer.hpp:12</div></div>
 <div class="ttc" id="aclasswrd_1_1token_dispatcher_html"><div class="ttname"><a href="classwrd_1_1token_dispatcher.html">wrd::tokenDispatcher</a></div><div class="ttdef"><b>Definition:</b> tokenDispatcher.hpp:8</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

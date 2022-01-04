@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/worldlang/worldlang/mod/wrd/test/main/syntaxTest.hpp Source File</title>
+<title>world-doc: /home/runner/work/wrd/wrd/mod/test/syntaxTest.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_7d9806b7a7f3e3e652e3a80203222e71.html">test</a></li><li class="navelem"><a class="el" href="dir_5894fe370c1149d4099267dbf878b10f.html">main</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_c9e4accd437b4eaa892cf32ae18cb868.html">test</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -78,25 +78,33 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keywordtype">void</span> TearDown() {}</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <a class="code" href="classwrd_1_1tstr.html">wrd::str</a> parse(<span class="keyword">const</span> wrd::wchar* src) {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <a class="code" href="classwrd_1_1parser.html">wrd::parser</a> p;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a> rpt;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">wrd::str</a> ret = p.setReport(rpt).parse(src);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        EXPECT_TRUE(!rpt &amp;&amp; ret) &lt;&lt; <span class="stringliteral">&quot;test code: &quot;</span> &lt;&lt; src &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    }</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">void</span> parseFail(<span class="keyword">const</span> wrd::wchar* src) {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="classwrd_1_1parser.html">wrd::parser</a> p;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a> rpt;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">wrd::str</a> ret = p.setReport(rpt).parse(src);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        EXPECT_TRUE(rpt || !ret) &lt;&lt; <span class="stringliteral">&quot;test code: &quot;</span> &lt;&lt; src &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    }</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    wrd::wbool assertSame(<a class="code" href="classwrd_1_1tstr.html">wrd::str</a> unit, <span class="keyword">const</span> wrd::wchar* expect) {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="comment">// TODO: run unit and gather output and compare it to expect</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;};</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a> rpt;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keywordflow">return</span> parse(src, rpt);</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    }</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="classwrd_1_1tstr.html">wrd::tstr&lt;wrd::narr&gt;</a> parse(<span class="keyword">const</span> wrd::wchar* src, <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a>&amp; rpt) {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classwrd_1_1parser.html">wrd::parser</a> p;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">auto</span> ret = p.setReport(rpt).parse(src);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        EXPECT_TRUE(!rpt &amp;&amp; ret-&gt;len() &gt; 0) &lt;&lt; <span class="stringliteral">&quot;test code: &quot;</span> &lt;&lt; src &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    }</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">void</span> parseFail(<span class="keyword">const</span> wrd::wchar* src) {</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a> rpt;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        parseFail(src, rpt);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    }</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">void</span> parseFail(<span class="keyword">const</span> wrd::wchar* src, <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a>&amp; rpt) {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <a class="code" href="classwrd_1_1parser.html">wrd::parser</a> p;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">auto</span> ret = p.setReport(rpt).parse(src);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        EXPECT_TRUE(rpt || ret-&gt;len() &lt;= 0) &lt;&lt; <span class="stringliteral">&quot;test code: &quot;</span> &lt;&lt; src &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    wrd::wbool assertSame(<a class="code" href="classwrd_1_1tstr.html">wrd::str</a> unit, <span class="keyword">const</span> wrd::wchar* expect) {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="comment">// TODO: run unit and gather output and compare it to expect</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1err_report_html"><div class="ttname"><a href="classwrd_1_1err_report.html">wrd::errReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:10</div></div>
