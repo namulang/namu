@@ -260,10 +260,10 @@ deffunc-lambda: deffunc-lambda-default {
             } | deffunc-lambda-deduction {
             }
 
-deffunc-lambda-default : list ARROW type indentblock {
+deffunc-lambda-default : list type indentblock {
                     // checks list that it's NAME.
                      }
-deffunc-lambda-deduction: list ARROW indentblock {
+deffunc-lambda-deduction: list indentblock {
                     // checks list that it's NAME.
                       }
 
