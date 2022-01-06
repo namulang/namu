@@ -55,6 +55,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
+%expect 1
 
 
 
@@ -173,8 +174,15 @@ primary: INTVAL {
        WRD_DI("INTVAL(%d)", yylval.integer);
      } | STRVAL {
        WRD_DI("STRVAL(%s)", yylval.string);
-     } | list {
-       // TODO: list should contain 1 element.
+     } | list %expect 1 {
+        //  known shift/reduce conflict on the syntax:
+        //      First example: list • NEWLINE INDENT block DEDENT block DEDENT $end
+        //          e.g. (a) •
+        //                  expectLambdaDoSometing()
+        //      Second example: list • NEWLINE DEDENT $end
+        //          e.g. (just_primary) •
+
+        // TODO: list should contain 1 element.
      } | NAME {
      }
 
