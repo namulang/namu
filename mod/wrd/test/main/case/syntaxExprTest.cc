@@ -177,6 +177,12 @@ main() void
     a.sendPacket((packet)
         doSomething()
     ))SRC");
+    parse(R"SRC(
+main() void
+    a.sendPacket((packet))
+    (packet)
+    a + 5
+    )SRC");
 }
 
 TEST_F(syntaxExprTest, lambda3) {
