@@ -43,7 +43,6 @@
     yyget_extra(yyscanner)->onNewLine();
     return NEWLINE;
 }
--> { return ARROW; }
 
 if { return IF; }
 void { return VOID; }

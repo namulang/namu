@@ -29,6 +29,6 @@ namespace wrd {
     }
 
     void me::rel() {
-        _report.bind(dummyErrReport::singletone);
+        _eventer.rel();
     }
 }

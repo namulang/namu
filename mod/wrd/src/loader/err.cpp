@@ -16,12 +16,13 @@ namespace wrd {
         static msgMap inner {
         WRD_EACH(_ON_MSG,
             "unknown", /* is 0 */
-            "this expr doesn't have row info.", /* == 1 */
+            "this expr doesn't have row info", /* == 1 */
             "this expr evaludated as nulled type",
-            "obj to be accessed was null.",
-            "obj can't be cast into node class.",
-            "obj can't execute with this argument types.", /* == 5 */
-            "this expr doesn't have col info.",
+            "obj to be accessed was null",
+            "obj can't be cast into node class",
+            "obj can't execute with this argument types", /* == 5 */
+            "this expr doesn't have col info",
+            "unexpected syntax error",
 
             /* to be continue... */
 

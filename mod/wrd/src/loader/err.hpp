@@ -34,7 +34,7 @@ namespace wrd {
         }
 
 	public:
-		void log() const {
+		virtual void log() const {
 			switch(fType) {
 				case ERR: WRD_E("%s", msg.c_str()); break;
 				case WARN: WRD_W("%s", msg.c_str()); break;
@@ -63,5 +63,14 @@ namespace wrd {
         srcErr(err::type t, wcnt errCode, const area& newArea, Args... args): super(t, errCode, args...), srcArea(newArea) {}
 
 		area srcArea;
+
+    public:
+        void log() const override {
+            switch(fType) {
+                case ERR: WRD_E("err: %s at %d, %d", msg.c_str(), srcArea.start.row, srcArea.start.col); break;
+                case WARN: WRD_W("err: %s at %d, %d", msg.c_str(), srcArea.start.row, srcArea.start.col); break;
+                case INFO: WRD_I("err: %s at %d, %d", msg.c_str(), srcArea.start.row, srcArea.start.col); break;
+            }
+        }
 	};
 }

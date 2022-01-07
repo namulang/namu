@@ -5,6 +5,7 @@
 #include "../../ast/node.hpp"
 #include "tokenDispatcher.hpp"
 #include "bison/tokenScan.hpp"
+#include "../errReport.hpp"
 
 namespace wrd {
 
@@ -13,10 +14,11 @@ namespace wrd {
         friend class tokenScanModable;
 
     public:
-        loweventer(): _mode(nullptr), _isIgnoreWhitespace(false) {}
+        loweventer(): _mode(nullptr), _isIgnoreWhitespace(false) { rel(); }
 
     public:
         str& getRoot() { return _root; }
+        tstr<errReport>& getReport() { return _report; }
         tokenDispatcher& getDispatcher() { return _dispatcher; }
         std::vector<wcnt>& getIndents() { return _indents; }
         wbool isInit() const { return _mode; }
@@ -26,6 +28,10 @@ namespace wrd {
             WRD_DI("change scanmode(%s -> %s)", !_mode ? "<null>" : _mode->getType().getName().c_str(),
                     T::_instance->getType().getName().c_str());
             _mode = T::_instance;
+        }
+
+        void rel() {
+            _report.bind(dummyErrReport::singletone);
         }
 
     public:
@@ -38,6 +44,7 @@ namespace wrd {
         wint onIgnoreIndent(wint tok);
         void onNewLine();
         wchar onScanUnexpected(wchar token);
+        void onErr(const err* new1);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
@@ -48,5 +55,6 @@ namespace wrd {
         str _root;
         tokenDispatcher _dispatcher;
         std::vector<wcnt> _indents;
+        tstr<errReport> _report;
     };
 }

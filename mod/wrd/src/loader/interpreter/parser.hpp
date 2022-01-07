@@ -28,7 +28,7 @@ namespace wrd {
 
     public:
 		me& setReport(errReport& report) {
-            _report.bind(report);
+            _eventer.getReport().bind(report);
 			return *this;
 		}
 
@@ -38,7 +38,6 @@ namespace wrd {
 		virtual void rel();
 
     private:
-        tstr<errReport> _report;
         loweventer _eventer;
     };
 }
