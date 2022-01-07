@@ -70,7 +70,7 @@
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE
 
 // valueless-token:
-%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS IMPORT PACK ARROW
+%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS IMPORT PACK
 //  primitive-type:
 %token VOID INT STR BOOL FLT NUL
 //  reserved-keyword:
@@ -296,6 +296,13 @@ pack: PACK dotname NEWLINE {
     |                                         EPILOGUE                                         |
     ============================================================================================  */
 
+// when bison claims that it can't parse any further, this func will be called.
+// it means that error recovery has been failed already.
 void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
-    // TODO:
+    auto* eventer = yyget_extra(scanner);
+    area srcArea = {{loc->first_line, loc->first_column}, {loc->last_line, loc->last_column}};
+
+    // TODO: error trace..
+
+    eventer->onErr(new srcErr(err::ERR, 7, srcArea));
 }

@@ -79,4 +79,9 @@ namespace wrd {
         _dispatcher.add(SCAN_MODE_INDENT_IGNORE);
         return tok;
     }
+
+    void me::onErr(const err* new1) {
+        new1->log();
+        _report->add(new1);
+    }
 }
