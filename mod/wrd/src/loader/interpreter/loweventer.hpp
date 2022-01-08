@@ -45,6 +45,7 @@ namespace wrd {
         void onNewLine();
         wchar onScanUnexpected(wchar token);
         void onErr(const err* new1);
+        void onEndParse(const point& pt);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);

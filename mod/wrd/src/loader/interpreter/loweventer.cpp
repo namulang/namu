@@ -84,4 +84,8 @@ namespace wrd {
         new1->log();
         _report->add(new1);
     }
+
+    void me::onEndParse(const point& pt) {
+        WRD_DI("tokenEvent: onEndParse(%d,%d)", pt.row, pt.col);
+    }
 }

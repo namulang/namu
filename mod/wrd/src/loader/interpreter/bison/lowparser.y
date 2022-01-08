@@ -20,6 +20,10 @@
         int first_line, first_column;
         int last_line, last_column;
         int colcnt;
+
+        void rel() {
+            first_line = first_column = last_line = last_column = colcnt = 0;
+        }
     };
 }
 
@@ -34,8 +38,11 @@
     extern "C" {
         int yylex(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg);
+        void yyset_lineno(int linenumber, yyscan_t scanner);
         wrd::loweventer* yyget_extra(yyscan_t scanner);
     }
+
+    void _onEndParse(YYLTYPE* loc, yyscan_t scanner);
 }
 
 /*  ============================================================================================
@@ -119,6 +126,7 @@ compilation-unit: defpack {
     // TODO:
     auto* eventer = yyget_extra(scanner);
     eventer->getRoot().bind(new wInt(5));
+    _onEndParse(yylocp, scanner);
 }
 
 expr: expr-line {
@@ -305,4 +313,11 @@ void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
     // TODO: error trace..
 
     eventer->onErr(new srcErr(err::ERR, 7, srcArea));
+    _onEndParse(loc, scanner);
+}
+
+void _onEndParse(YYLTYPE* loc, yyscan_t scanner) {
+    yyset_lineno(0, scanner);
+    loc->rel();
+    yyget_extra(scanner)->onEndParse({loc->first_line, loc->first_column});
 }
