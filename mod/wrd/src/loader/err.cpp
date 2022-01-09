@@ -22,7 +22,8 @@ namespace wrd {
             "obj can't be cast into node class",
             "obj can't execute with this argument types", /* == 5 */
             "this expr doesn't have col info",
-            "unexpected syntax error",
+            "unexpected syntax error '%s'",
+            "%s",
 
             /* to be continue... */
 

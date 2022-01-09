@@ -37,9 +37,10 @@
 
     extern "C" {
         int yylex(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
-        void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg);
         void yyset_lineno(int linenumber, yyscan_t scanner);
         wrd::loweventer* yyget_extra(yyscan_t scanner);
+        char* yyget_text(yyscan_t scanner);
+        void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg);
     }
 
     void _onEndParse(YYLTYPE* loc, yyscan_t scanner);
@@ -56,6 +57,7 @@
 }
 
 %define api.pure
+%define parse.error custom
 %glr-parser
 %locations
 
@@ -63,9 +65,7 @@
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
 %expect 1
-
-
-
+%require "3.8.1"
 
 /*  ============================================================================================
     |                                        BISON SYMBOLS                                     |
@@ -306,18 +306,26 @@ pack: PACK dotname NEWLINE {
 
 // when bison claims that it can't parse any further, this func will be called.
 // it means that error recovery has been failed already.
-void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
+static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     auto* eventer = yyget_extra(scanner);
+    const YYLTYPE* loc = yypcontext_location(ctx);
     area srcArea = {{loc->first_line, loc->first_column}, {loc->last_line, loc->last_column}};
+    yysymbol_kind_t symbol = yypcontext_token(ctx);
 
     // TODO: error trace..
 
-    eventer->onErr(new srcErr(err::ERR, 7, srcArea));
-    _onEndParse(loc, scanner);
+    eventer->onErr(new srcErr(err::ERR, 7, srcArea, yysymbol_name(symbol)));
+    _onEndParse((YYLTYPE*) loc, scanner);
+    return 0;
 }
 
 void _onEndParse(YYLTYPE* loc, yyscan_t scanner) {
     yyset_lineno(0, scanner);
     loc->rel();
     yyget_extra(scanner)->onEndParse({loc->first_line, loc->first_column});
+}
+
+// errors except syntax will come here. for instance, when available memory doesn't exist.
+void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
+    yyget_extra(scanner)->onErr(new err(err::ERR, 8, msg));
 }
