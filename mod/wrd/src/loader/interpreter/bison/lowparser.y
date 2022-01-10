@@ -3,6 +3,7 @@
     |                                          PROLOGUE                                        |
     ============================================================================================  */
     #include <iostream>
+    #include <sstream>
     using std::cout;
     #include "../loweventer.hpp"
     #include "../../../builtin/primitive/wInt.hpp"
@@ -309,6 +310,22 @@ pack: PACK dotname NEWLINE {
     |                                         EPILOGUE                                         |
     ============================================================================================  */
 
+static std::string traceErr(const yypcontext_t* ctx, yyscan_t scanner) {
+    constexpr wint TOKEN_MAX = 5;
+    yysymbol_kind_t tokens[TOKEN_MAX];
+    wcnt expected = yypcontext_expected_tokens(ctx, tokens, TOKEN_MAX);
+    if(expected <= 0)
+        return "nothing";
+
+    std::stringstream ss;
+    ss << "'" << yysymbol_name(tokens[0]) << "'";
+    for(int n=1; n < expected ;n++)
+        ss << ", '" << yysymbol_name(tokens[n]) << "'";
+    return ss.str();
+
+    // TODO: high quality error trace..
+}
+
 // when bison claims that it can't parse any further, this func will be called.
 // it means that error recovery has been failed already.
 static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
@@ -317,9 +334,7 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     area srcArea = {{loc->first_line, loc->first_column}, {loc->last_line, loc->last_column}};
     yysymbol_kind_t symbol = yypcontext_token(ctx);
 
-    // TODO: error trace..
-
-    eventer->onErr(new srcErr(err::ERR, 7, srcArea, yysymbol_name(symbol)));
+    eventer->onErr(new srcErr(err::ERR, 7, srcArea, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol)));
     _onEndParse((YYLTYPE*) loc, scanner);
     return 0;
 }
