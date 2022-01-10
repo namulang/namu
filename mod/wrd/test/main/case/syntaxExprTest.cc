@@ -22,7 +22,7 @@ TEST_F(syntaxExprTest, exprTest1) {
  pack demo
  foo(abc int) int
     if "hello"
-                'hell  "  o'
+                "hell  '  o"
                 if 33
                         "hel'lo")SRC");
 }
@@ -31,10 +31,10 @@ TEST_F(syntaxExprTest, stringLiteralShouldFail) {
     parseFail(R"SRC(
  pack demo
  foo(abc int) int
-    if 'hello'
-                'he
-                ll'
-                if 'false'
+    if "hello"
+                "he
+                ll"
+                if "false"
                         "hel'lo")SRC");
 }
 
@@ -42,7 +42,7 @@ TEST_F(syntaxExprTest, exprTest3) {
     parse(R"SRC(
  pack demo
  main() void
-    if 'good'
+    if "good"
       2 + 3*27 + 44 - 27/34*43 - 1
     )SRC");
 }
@@ -51,7 +51,7 @@ TEST_F(syntaxExprTest, exprTest4) {
     parse(R"SRC(
  pack demo
  main() void
-    if 'good'
+    if "good"
       2 + (if 3
        3*27
       )+ 44 - 27/34*43 - 1
@@ -59,14 +59,14 @@ TEST_F(syntaxExprTest, exprTest4) {
     parseFail(R"SRC(
  pack demo
  main() void
-    if 'good'
+    if "good"
       2 + (if 3
        3*27)+ 44 - 27/34*43 - 1
     )SRC");
     parseFail(R"SRC(
  pack demo
  main() void
-    if 'good'
+    if "good"
       2 + if 3
        3*27
       + 44 - 27/34*43 - 1
@@ -77,7 +77,7 @@ TEST_F(syntaxExprTest, defexprAsTerm) {
     parse(R"SRC(
  pack demo
  main() void
-    if 'good'
+    if "good"
       (age int) + (if 3
        3*27
       ) + (grade flt) - 27/34*43 - 1
@@ -88,7 +88,7 @@ TEST_F(syntaxExprTest, exprAddFuncCall) {
     parse(R"SRC(
  pack demo
  main() void
-    if 'good'
+    if "good"
       2 + 3*27 + 44 - foo(2) * 27/34*43
     )SRC");
 }
@@ -97,8 +97,15 @@ TEST_F(syntaxExprTest, exprAddFuncCall2) {
     parse(R"SRC(
  pack demo
  main() void
-    if 'good'
-      2 + 3*27 + 44 - foo(2) * 27/34*43 - a.foo(b.boo(c.goo()))
+    if "good"
+      2 + 3*27 + 44 - foo('a') * 27/34*43 - a.foo(b.boo(c.goo()))
+    )SRC");
+
+    parseFail(R"SRC(
+ pack demo
+ main() void
+    if "good"
+      2 + 3*27 + 44 - foo('a12') * 27/34*43 - a.foo(b.boo(c.goo()))
     )SRC");
 }
 
@@ -106,25 +113,25 @@ TEST_F(syntaxExprTest, callFunc) {
     parse(R"SRC(
 pack demo
 main() void
-    if 'wow'
+    if "wow"
         foo()
     )SRC");
 
     parse(R"SRC(
 main() void
-    if 'wow'
+    if "wow"
         a.foo()
     )SRC");
 
     parse(R"SRC(
 main() void
-    if 'wow'
+    if "wow"
         --a++.foo()
     )SRC");
 
     parse(R"SRC(
 main() void
-    if 'wow'
+    if "wow"
         (--a++.foo()).doo().goo()
     )SRC");
 }
@@ -132,7 +139,7 @@ main() void
 TEST_F(syntaxExprTest, callFuncWithExprInside) {
     parse(R"SRC(
 main() void
-    if 'test'
+    if "test"
         a.foo(22, 34)
     )SRC");
 }
@@ -140,7 +147,7 @@ main() void
 TEST_F(syntaxExprTest, callFuncWithExprInside1) {
     parse(R"SRC(
 main() void
-    if 'test'
+    if "test"
         a.foo(22, 34, boo(22))
     )SRC");
 }
@@ -148,7 +155,7 @@ main() void
 TEST_F(syntaxExprTest, callFuncWithExprInside2) {
     parse(R"SRC(
 main() void
-    if 'test'
+    if "test"
         a.foo(22, 34, boo(a int) void
             b.boo(a)
         )
@@ -156,7 +163,7 @@ main() void
 
     parse(R"SRC(
 main() void
-    if 'test'
+    if "test"
         a.foo(22, 34, (boo(a int) void
             b.boo(a)
         ))

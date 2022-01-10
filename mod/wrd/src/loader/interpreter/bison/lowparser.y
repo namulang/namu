@@ -52,6 +52,7 @@
 
 %union {
     int integer;
+    char character;
     void* voidp;
     char* string;
 }
@@ -79,12 +80,13 @@
 // valueless-token:
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS IMPORT PACK
 //  primitive-type:
-%token VOID INT STR BOOL FLT NUL
+%token VOID INT STR BOOL FLT NUL CHAR
 //  reserved-keyword:
 %token IF
 
 // value-holding-token:
 %token <integer> INTVAL
+%token <character> CHARVAR
 %token <str> NAME STRVAL
 
 // nonterminal:
@@ -179,9 +181,11 @@ postfix: primary {
      }
 
 primary: INTVAL {
-       WRD_DI("INTVAL(%d)", yylval.integer);
+        WRD_DI("INTVAL(%d)", yylval.integer);
      } | STRVAL {
-       WRD_DI("STRVAL(%s)", yylval.string);
+        WRD_DI("STRVAL(%s)", yylval.string);
+     } | CHARVAR {
+        WRD_DI("CHARVAL(%c)", yylval.character);
      } | list %expect 1 {
         //  known shift/reduce conflict on the syntax:
         //      First example: list • NEWLINE INDENT block DEDENT block DEDENT $end
@@ -252,6 +256,7 @@ defblock: %empty {
 //  type:
 type: VOID {
   } | INT {
+  } | CHAR {
   } | STR {
   } | BOOL {
   } | FLT {
