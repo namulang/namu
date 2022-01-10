@@ -49,6 +49,7 @@ void { return VOID; }
 int { return INT; }
 str { return STR; }
 bool { return BOOL; }
+char { return CHAR; }
 flt { return FLT; }
 null { return NUL; }
 import { return IMPORT; }
@@ -62,19 +63,19 @@ pack { return PACK; }
 
 [[:alpha:]]+[[:alnum:]]* {
     yylval->string = yytext;
-    WRD_DI("scanner: NAME='%s'", yytext);
+    WRD_DI("scanner: NAME=%s", yytext);
     return NAME;
 }
 
-\'[^\r\f\n\']*\' {
+\'[^\r\f\n\']\' {
     yylval->string = yytext;
-    WRD_DI("scanner: STRVAL='%s'", yytext);
-    return STRVAL;
+    WRD_DI("scanner: CHARVAR='%s'", yytext);
+    return CHARVAR;
 }
 
 \"[^\r\f\n\"]*\" {
     yylval->string = yytext;
-    WRD_DI("scanner: STRVAL='%s'", yytext);
+    WRD_DI("scanner: STRVAL=\"%s\"", yytext);
     return STRVAL;
 }
 
