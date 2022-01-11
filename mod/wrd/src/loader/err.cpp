@@ -24,6 +24,7 @@ namespace wrd {
             "this expr doesn't have col info",
             "syntax error %s expected, but %s found",
             "%s",
+            "unexpected token '%s' found",
 
             /* to be continue... */
 

@@ -86,7 +86,7 @@ pack { return PACK; }
 }
 
 <*>. {
-    return yyget_extra(yyscanner)->onScanUnexpected(yytext[0]);
+    return yyget_extra(yyscanner)->onScanUnexpected({yylloc->first_line, yylloc->first_column}, yytext);
 }
 
 %%
