@@ -334,7 +334,8 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     area srcArea = {{loc->first_line, loc->first_column}, {loc->last_line, loc->last_column}};
     yysymbol_kind_t symbol = yypcontext_token(ctx);
 
-    eventer->onErr(new srcErr(err::ERR, 7, srcArea, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol)));
+    if(symbol != YYSYMBOL_YYUNDEF)
+        eventer->onErr(new srcErr(err::ERR, 7, srcArea, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol)));
     _onEndParse((YYLTYPE*) loc, scanner);
     return 0;
 }

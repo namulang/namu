@@ -69,9 +69,9 @@ namespace wrd {
             _dispatcher.add(SCAN_MODE_INDENT);
     }
 
-    wchar me::onScanUnexpected(wchar token) {
-        WRD_E("unexpected %c token found.", token);
-        return token;
+    wchar me::onScanUnexpected(const area& src, const wchar* token) {
+        onErr(new srcErr(err::ERR, 9, src, token));
+        return token[0];
     }
 
     wint me::onIgnoreIndent(wint tok) {

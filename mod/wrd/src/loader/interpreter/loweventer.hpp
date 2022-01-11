@@ -43,7 +43,7 @@ namespace wrd {
         wint onDedent(wcnt col, wint tok);
         wint onIgnoreIndent(wint tok);
         void onNewLine();
-        wchar onScanUnexpected(wchar token);
+        wchar onScanUnexpected(const area& src, const wchar* token);
         void onErr(const err* new1);
         void onEndParse(const point& pt);
 
