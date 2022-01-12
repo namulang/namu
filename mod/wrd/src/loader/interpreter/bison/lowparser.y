@@ -66,7 +66,7 @@
 %lex-param {yyscan_t scanner}
 %parse-param {yyscan_t scanner}
 %define api.location.type {lloc}
-%expect 1
+%expect 2
 %require "3.8.1"
 
 /*  ============================================================================================
@@ -104,7 +104,7 @@
 //      value:
 %type <voidp> defvar defvar-exp-no-initial-value
 //      func:
-%type <voidp> deffunc-default
+%type <voidp> deffunc-default deffunc-deduction
 %type <voidp> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
 //      pack:
 %type <voidp> defpack imports
@@ -155,7 +155,13 @@ unary: postfix {
    } | '-' unary {
    }
 
-funcCall: NAME list {
+funcCall: NAME list %expect 1 {
+        //  known shift/reduce conflict on the syntax:
+        //      First example: NAME list • NEWLINE INDENT block
+        //          e.g. foo(a) •
+        //                  expectLambdaDoSometing()
+        //      Second example: NAME list • NEWLINE DEDENT $end
+        //          e.g. foo(just_primary) •
       }
 
 import: IMPORT dotname NEWLINE {
@@ -272,11 +278,14 @@ defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
 
 //  func:
 deffunc: deffunc-default {
+     } | deffunc-deduction {
      } | deffunc-lambda {
      }
 deffunc-default: NAME list type indentblock {
                 // TODO: checks list that it's defvar
              }
+deffunc-deduction: NAME list indentblock {
+               }
 
 deffunc-lambda: deffunc-lambda-default {
             } | deffunc-lambda-deduction {

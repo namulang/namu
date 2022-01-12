@@ -170,44 +170,6 @@ main() void
     )SRC");
 }
 
-TEST_F(syntaxExprTest, lambda1) {
-    parse(R"SRC(
-main() void
-    a.sendPacket((packet)
-        doSomething()
-    ))SRC");
-}
-
-TEST_F(syntaxExprTest, lambda2) {
-    parse(R"SRC(
-main() void
-    a.sendPacket((packet)
-        doSomething()
-    ))SRC");
-    parse(R"SRC(
-main() void
-    a.sendPacket((packet))
-    (packet)
-    a + 5
-    )SRC");
-}
-
-TEST_F(syntaxExprTest, lambda3) {
-    parse(R"SRC(
-main() void
-    a.sendPacket(foo() void
-        doSomething()
-    ))SRC");
-}
-
-TEST_F(syntaxExprTest, lambda4) {
-    parse(R"SRC(
-main() void
-    a.sendPacket((foo() void
-        doSomething()
-    )))SRC");
-}
-
 TEST_F(syntaxExprTest, IgnoreWhitespaceOnBinaryOperator) {
     parse(R"SRC(
 main() void
