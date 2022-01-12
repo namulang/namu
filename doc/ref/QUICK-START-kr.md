@@ -133,17 +133,12 @@ c.print("how many apple do you have = $map['apple']") // "how many apple do you 
 
 
 # 함수
-
-   <function-name>* '(' (<arg> ,)* ')' <return-type>*
+   <function-name> '(' <arg> ',' <arg>... ')' <return-type>
        <stmt>+
 
-* 함수는 본문이 있는 소괄호로 정의합니다.
-    * 반환형을 없어도 된다는 얘기입니다.
-    * 함수명이 없어도 된다는 얘기입니다.
-    * 인자가 없어도 된다는 얘기입니다.
-* 함수 안에서라면 인자타입이 없어도 됩니다.
 * 정의시, 역시 type은 항상 뒤에 옵니다.
 * 함수의 반환형에는 expr이 올 수 없습니다. 타입만 올 수 있습니다.
+* 반드시 함수의 body를 정의해야 합니다.
 
 ```wrd
 getLen(b int...) int // '...' means varidic argument
