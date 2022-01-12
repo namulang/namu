@@ -3,7 +3,7 @@ pack wrd.lang.example.builtInTypes
 _age := 0
 
 main() void
-    sys.cons aka c
+    aka sys.cons -> c
     _age:=0
     ++_age++ *= 2
 

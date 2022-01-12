@@ -1,34 +1,44 @@
 # pack import
 
-## pack을 import 하려면 manifest에 선언해야 한다.
+## 다른 언어와 다르게 wrd는 import를 명시적으로 할 필요가 없다.
+
+* interpreter가 시작 하기 전에 지정한 디렉토리를 재귀탐색해서 pack 파일을 찾아 pack객체를 생성해둔다.
+  이 시점에서 pack load가 시작된 것은 아니다.
+* pack 객체에 접근해서 subs()를 시도한 순간 packloading이 시작된다.
+
+## pack이 가지고 있는 origin object에 쉽게 접근하기 위해서는 aka를 사용한다.
+
+```wrd
+pack example1
+
+aka -> sys.console.monitor
+// same as 'aka sys.console.monitor -> monitor'
+
+main() void
+    monitor.print("...")
+    // same as 'sys.console.monitor.print("...")'
+```
+
+## pack loading시 같은 pack 경로로 여러개의 버전이 있을 수 있다.
+
+* 이 경우 가장 최신 버전을 기본적으로 loading한다.
+* pack의 manifest에 dependencies를 선언한 경우, 해당 버전을 로드한다.
+
 ```swrd
 dependencies := [
     {id: 'mymodule', ver: 0.1.2, ....},
 ]
 ```
 
-```wrd
-with mymodule
-```
+## 전혀 다른 2개 이상의 모듈이름이 중복될 수 있다. 
 
-## 모듈이름이 중복될 수 있다. 이 경우 manifest에 name 을 별도로 정의하면 된다.
+* 이 경우 manifest에 name 을 별도로 정의하면 된다.
 ```swrd
 dependencies := [
     {id: 'mymodule', ver: 0.1.+, at: https://github.com/...},
     {id: 'kniz/mymodule', name: 'mymodule2' at: ./module/path.pak} // rename to mymodule2 to solve name confliction
 ]
 ```
-
-```wrd
-with mymodule, mymodule2
-```
-
-## import를 두는 이유는 속도 최적화 때문이다.
-* 이론상 import가 없더라도 동작에는 문제가 없다.
-* 단 시스템은 type을 import 할 수 있더라도, 현재 프로그램을 돌리기 위한 최소한의 type만 load 해두는 것이 속도에 매우 이익이 된다.
-    * 매우 많은 모듈이 worldlang으로 시스템에 존재한다고 가정하자.
-    * 이러한 최적화가 없다면 hello world 프로그램을 돌리기 위해서 필요하지도 않은 directx, socket, opencv 등을 load를 해두거나
-    * 2 pass 를 돌릴때 의존 관계를 유추하여 만들어 낼 수 있어야 한다. 많은 시간이 소요될 것이다.
 
 ## pack 안에 있는 srcfile은 모두 pack scope를 가짐
 * pack 안에서 바로 정의한 객체들은 모두 pack 객체 밑에 sub()로 놓여지게 된다는 것
