@@ -1,5 +1,5 @@
 pack wrd.lang.example.part
-import sys.cons aka c
+aka -> sys.cons
 
 def part
     name := str
@@ -9,7 +9,7 @@ def part
     say() void = null
 
 def body from part
-    say() void: c.out("'I'm a body'") // ' inside of a pair of ''.
+    say() void: cons.out("'I'm a body'") // ' inside of a pair of ''.
 
 def button() from part
 def mouse() from part
@@ -17,8 +17,8 @@ def mouse() from part
     me(a new): super() // do nothing
 
 main() void
-    c.out(mouse.name == mouse().name)
-    c.out(mouse(1).name)
+    cons.out(mouse.name == mouse().name)
+    cons.out(mouse(1).name)
 
 arr := part{}
 tuple := part;?str // :?

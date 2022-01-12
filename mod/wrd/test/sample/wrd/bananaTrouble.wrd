@@ -1,6 +1,5 @@
 pack wrd.lang.example.bananaTrouble
-import sys
-sys.cons aka c
+aka sys.cons -> c
 
 def hello
     def a

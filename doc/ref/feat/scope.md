@@ -30,13 +30,13 @@
 def sample
     foo(n int) void
         foo := 5 // ok
-        foo aka boo // ok
-        foo aka koo // ok
-        foo aka foo // err. 'foo' is on same scope, local scope, already.
+        aka foo -> boo // ok
+        aka foo -> koo // ok
+        aka foo -> foo // err. 'foo' is on same scope, local scope, already.
             with boo
             n := it++ // err. n is on local scope. duplicated.
             $n := it // err. static n var is on local scope too.
-            ($b := it) aka n // err. 'n' is on local scope already.
+            aka $b := it -> n // err. 'n' is on local scope already.
 ```
 
 ## 하나의 scope에 복수의 subs()가 할당되어야 하는 경우에는 ndeepChain을 넣는다.

@@ -148,18 +148,18 @@ def app
 * 메소드를 갖는 클래스가 다르더라도 signature만 동일하다면 호출이 가능하다.
 
 ```go
-import sys.cons aka c
+aka -> sys.cons
 
 def person
-    do() void = null aka d
+    aka do() void = null -> d
     do(@d)
         d.do()
 
 def boy()
-    do() void: c.out("shopping!")
+    do() void: cons.out("shopping!")
 
 def girl()
-    do() void: c.out("exercise hardly!")
+    do() void: cons.out("exercise hardly!")
 
 def app
     main() void

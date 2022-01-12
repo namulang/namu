@@ -33,7 +33,7 @@ main() void
     flat().print()
     complex := constructBuilding(complexHouse)
 
-    sys.cons aka c
+    aka->sys.cons
     if complex != complexHouse: return
     if complex == complexHouse: return
 

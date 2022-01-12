@@ -127,7 +127,7 @@ pair1.val = "money?"
 
 map := {pair1, 2.5;"apple"} // map as float[str]
 
-sys.cons aka c
+aka sys.cons ->
 c.print("how many apple do you have = $map['apple']") // "how many apple do you have = 2.0"
 ```
 
@@ -175,7 +175,7 @@ lifeFptr() == 0 // true
 # 객체정의
 
 ```wrd
-sys.cons aka c
+aka sys.cons -> c
 
 def base // base is incomplete origin object
     _realAge := 0 // "_" means protected

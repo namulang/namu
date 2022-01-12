@@ -41,7 +41,7 @@ def deck
 
     _cards str{}
 
-sys.cons aka c // affects to all statement inside of each classes.
+aka -> sys.cons // affects to all statement inside of each classes.
 
 main() void: with deck
     shuffle()

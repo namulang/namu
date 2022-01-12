@@ -1,6 +1,6 @@
 pack wrd.lang.example.keyboard
 
-import sys.cons aka c
+aka -> sys.cons
 
 def unit
     // name := int // err. if you define refer for immutable obj, then @get or @set should be define.
@@ -16,7 +16,7 @@ def key from unit
         stroke = newStroke
 
     type() void
-        c.out('user types $val with $stroke stroke.')
+        cons.out('user types $val with $stroke stroke.')
 
     _value := 'a'
     _stroke := 0.0

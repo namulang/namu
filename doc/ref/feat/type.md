@@ -22,7 +22,11 @@
 
 * 식별자의 별칭을 만들 수 있다.
 
-    <원본식별자> aka <별칭이름>
+    aka <path> '->' <alias-id>
+
+### 축약 형태
+
+    aka '->' <path>
 
 ### 정의와 동시에 aka를 쓰는 경우 문법이 조금 생소할 수 있다.
 
@@ -31,42 +35,28 @@
 * 괄호를 사용하면 최종expr도 중간expr로 변환할 수 있다. 그러므로 aka를 괄호 안에 넣어서 다른 expr에 포함시킬 수 있다.
 
 ```wrd
-def person obj() 
-    callback() void aka c // "void aka c"(X) "(callback() void) aka c"(O)
+aka def person obj() 
+    aka callback() void -> c
+    aka callback(whatever flt) void = null -> c2
 
-    callback(whatever flt) void = null aka c2 // "null aka c2"(X) "void = null aka c2"(X) "(callback(whatever flt) void = null) aka c2"(O)
-
-    callback(whatever str) void
+    aka -> callback(whatever str) void
         doSomething()
         ...
-        return (lamb,da) -> str aka l // err.
+        return aka (lamb,da) str
             ....
+            ->l
 
-        return (lamb,da) -> str
+        aka (lamb, da) -> str
             ....
-        aka l // err. returnExpr is not identifier.
+        ->l2
 
-        (lamb, da) -> str
+        return aka ((labm, da) -> str
             ....
-        aka l
-        return l // ok.
-
-        return ((labm, da) -> str
-            ....
-        aka l) // ok.
-
-    aka c3
-
-aka p
+        ) -> l3 // ok.
+-> p
 ```
 
-* 정의는 식별자를 대신한다.
-* 따라서 정의가 모두 끝나고 난 뒤에 aka가 나와야 한다.
-* 그러나 정의는 대부분 개행을 가지고 있다.
-* 그러니 개행이 끝나고 정의블록문의 시작했던 indent 앞에 바로 aka가 나오면 된다.
-* 블록문이 없는 정의라면 바로 이어서 같은 라인에 aka가 나온다.
-
-## aka도 statement다.
+## aka도 expression 이다.
 
 ## type을 정의하면 그것의 unique object가 그 type이름에 대신들어간다.
 
