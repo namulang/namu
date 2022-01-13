@@ -17,6 +17,10 @@
 %code requires {
     typedef void* yyscan_t;
 
+    namespace wrd {
+        class node;
+    }
+
     struct lloc {
         int first_line, first_column;
         int last_line, last_column;
@@ -29,7 +33,6 @@
 }
 
 %code provides {
-    //extern wrd::sobj* root;
     extern int yylineno;
     extern char* yytext;
     namespace wrd {
@@ -52,10 +55,10 @@
     ============================================================================================  */
 
 %union {
-    int integer;
-    char character;
-    void* voidp;
-    char* string;
+    char asChar;
+    int asInt;
+    wrd::node* asNode;
+    char* asStr;
 }
 
 %define api.pure
@@ -86,28 +89,28 @@
 %token IF
 
 // value-holding-token:
-%token <integer> INTVAL
-%token <character> CHARVAR
-%token <str> NAME STRVAL
+%token <asChar> CHARVAR
+%token <asInt> INTVAL
+%token <asStr> NAME STRVAL
 
 // nonterminal:
-%type <voidp> compilation-unit block indentblock dotname
+%type <node> compilation-unit block indentblock dotname
 //  term:
-%type <voidp> term unary postfix primary funcCall list list-items
+%type <asNode> term unary postfix primary funcCall list list-items
 //      tier:
-%type <voidp> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
+%type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 
 //  keyword:
-%type <voidp> if import pack
+%type <asNode> if import pack
 //  def:
-%type <voidp> defstmt defexpr-line defexpr-compound defblock
+%type <asNode> defstmt defexpr-line defexpr-compound defblock
 //      value:
-%type <voidp> defvar defvar-exp-no-initial-value
+%type <asNode> defvar defvar-exp-no-initial-value
 //      func:
-%type <voidp> deffunc-default deffunc-deduction
-%type <voidp> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
+%type <asNode> deffunc-default deffunc-deduction
+%type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
 //      pack:
-%type <voidp> defpack imports
+%type <asNode> defpack imports
 
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
@@ -188,11 +191,11 @@ postfix: primary {
      }
 
 primary: INTVAL {
-        WRD_DI("INTVAL(%d)", yylval.integer);
+        WRD_DI("INTVAL(%d)", yylval.asInt);
      } | STRVAL {
-        WRD_DI("STRVAL(%s)", yylval.string);
+        WRD_DI("STRVAL(%s)", yylval.asStr);
      } | CHARVAR {
-        WRD_DI("CHARVAL(%c)", yylval.character);
+        WRD_DI("CHARVAL(%c)", yylval.asChar);
      } | list %expect 1 {
         //  known shift/reduce conflict on the syntax:
         //      First example: list • NEWLINE INDENT block DEDENT block DEDENT $end
