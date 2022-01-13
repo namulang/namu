@@ -56,25 +56,25 @@ import { return IMPORT; }
 pack { return PACK; }
 
 [[:digit:]]+ {
-    yylval->integer = atoi(yytext);
+    yylval->asInt = atoi(yytext);
     WRD_DI("scanner: INTVAL=%s", yytext);
     return INTVAL;
 }
 
 [[:alpha:]]+[[:alnum:]]* {
-    yylval->string = yytext;
+    yylval->asStr = yytext;
     WRD_DI("scanner: NAME=%s", yytext);
     return NAME;
 }
 
 \'[^\r\f\n\']\' {
-    yylval->string = yytext;
-    WRD_DI("scanner: CHARVAR='%s'", yytext);
+    yylval->asChar = yytext[0];
+    WRD_DI("scanner: CHARVAR='%c'", yytext[0]);
     return CHARVAR;
 }
 
 \"[^\r\f\n\"]*\" {
-    yylval->string = yytext;
+    yylval->asStr = yytext;
     WRD_DI("scanner: STRVAL=\"%s\"", yytext);
     return STRVAL;
 }
