@@ -101,7 +101,7 @@
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 
 //  keyword:
-%type <asNode> if import pack
+%type <asNode> if pack
 //  def:
 %type <asNode> defstmt defexpr-line defexpr-compound defblock
 //      value:
@@ -110,7 +110,7 @@
 %type <asNode> deffunc-default deffunc-deduction
 %type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
 //      pack:
-%type <asNode> defpack imports
+%type <asNode> defpack
 
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
@@ -166,9 +166,6 @@ funcCall: NAME list %expect 1 {
         //      Second example: NAME list • NEWLINE DEDENT $end
         //          e.g. foo(just_primary) •
       }
-
-import: IMPORT dotname NEWLINE {
-    }
 
 dotname: NAME {
     } | dotname '.' NAME {
@@ -305,11 +302,8 @@ indentblock: NEWLINE INDENT block DEDENT {
          }
 
 //  pack:
-imports: imports import {
-     } | %empty {
-     }
-defpack: pack imports defblock {
-     } | imports defblock {
+defpack: pack defblock {
+     } | defblock {
      }
 pack: PACK dotname NEWLINE {
   }
