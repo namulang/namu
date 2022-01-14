@@ -19,6 +19,9 @@
 
     namespace wrd {
         class node;
+        template <typename T>
+        class tnarr;
+        typedef tnarr<node> narr;
     }
 
     struct lloc {
@@ -57,8 +60,9 @@
 %union {
     char asChar;
     int asInt;
-    wrd::node* asNode;
     char* asStr;
+    wrd::node* asNode;
+    wrd::narr* asNodeArr;
 }
 
 %define api.pure
@@ -94,23 +98,21 @@
 %token <asStr> NAME STRVAL
 
 // nonterminal:
-%type <node> compilation-unit block indentblock dotname
+%type <asNode> compilation-unit block indentblock dotname
 //  term:
-%type <asNode> term unary postfix primary funcCall list list-items
-//      tier:
-%type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
-
+%type <asNode> term unary postfix primary funcCall
+%type <asNodeArr> list list-items
 //  keyword:
-%type <asNode> if pack
-//  def:
+%type <asNode> if
+%type pack
+//  expr:
+%type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 %type <asNode> defstmt defexpr-line defexpr-compound defblock
-//      value:
+//          value:
 %type <asNode> defvar defvar-exp-no-initial-value
-//      func:
+//          func:
 %type <asNode> deffunc-default deffunc-deduction
 %type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
-//      pack:
-%type <asNode> defpack
 
 /*  ============================================================================================
     |                                     OPERATOR PRECEDENCE                                  |
@@ -128,12 +130,12 @@
     ============================================================================================  */
 %%
 
-compilation-unit: defpack {
-    // TODO:
-    auto* eventer = yyget_extra(scanner);
-    eventer->getRoot().bind(new wInt(5));
-    _onEndParse(yylocp, scanner);
-}
+compilation-unit: pack defblock {
+                // TODO:
+                auto* eventer = yyget_extra(scanner);
+                eventer->getRoot().bind(new wInt(5));
+                _onEndParse(yylocp, scanner);
+              }
 
 expr: expr-line {
   } | expr-compound {
@@ -302,10 +304,8 @@ indentblock: NEWLINE INDENT block DEDENT {
          }
 
 //  pack:
-defpack: pack defblock {
-     } | defblock {
-     }
 pack: PACK dotname NEWLINE {
+  } | %empty {
   }
 
 
