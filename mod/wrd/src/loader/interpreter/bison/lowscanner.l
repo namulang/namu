@@ -35,11 +35,16 @@
 
 [\)] { return yytext[0]; }
 [*+-/\(\.\,] { return yyget_extra(yyscanner)->onIgnoreIndent(yytext[0]); }
-\-\- { return DOUBLE_MINUS; }
+\.* { return AKA_ALL; }
+\-\- {
+    WRD_E("DOUBLE_MINUS");
+    return DOUBLE_MINUS;
+}
+\-> { return ARROW; }
 \+\+ { return DOUBLE_PLUS; }
 [ \t]+ ;
 \n {
-    yylloc->colcnt = 0;
+    yylloc->colcnt = yylloc->first_column = yylloc->last_column = 0;
     yyget_extra(yyscanner)->onNewLine();
     return NEWLINE;
 }
@@ -52,8 +57,8 @@ bool { return BOOL; }
 char { return CHAR; }
 flt { return FLT; }
 null { return NUL; }
-import { return IMPORT; }
 pack { return PACK; }
+aka { return AKA; }
 
 [[:digit:]]+ {
     yylval->asInt = atoi(yytext);
