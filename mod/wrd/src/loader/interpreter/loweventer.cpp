@@ -65,6 +65,8 @@ namespace wrd {
     }
 
     void me::onNewLine() {
+        WRD_DI("tokenEvent: onNewLine: _isIgnoreWhitespace=%s, _indents.size()=%d",
+            _isIgnoreWhitespace ? "true" : "false", _indents.size());
         if(!_isIgnoreWhitespace && _indents.size() >= 1)
             _dispatcher.add(SCAN_MODE_INDENT);
     }

@@ -33,9 +33,9 @@
 /* actual-pattern: */
 %%
 
-[\)] { return yytext[0]; }
 [*+-/\(\.\,] { return yyget_extra(yyscanner)->onIgnoreIndent(yytext[0]); }
-\.* { return AKA_ALL; }
+[\)] { return yytext[0]; }
+\.\* { return AKA_ALL; }
 \-\- {
     WRD_E("DOUBLE_MINUS");
     return DOUBLE_MINUS;
