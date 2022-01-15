@@ -38,7 +38,9 @@ namespace wrd {
 
         wcnt cur = loc->first_column;
         std::vector<wcnt>& ind = eventer.getIndents();
-        if(ind.size() == 0) { WRD_DI("indentScan: initial indent lv: %d", cur); ind.push_back(cur);
+        if(ind.size() == 0) {
+            WRD_DI("indentScan: initial indent lv: %d", cur);
+            ind.push_back(cur);
         }
 
         wcnt prev = ind.back();

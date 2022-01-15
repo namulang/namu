@@ -86,11 +86,11 @@
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE
 
 // valueless-token:
-%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS IMPORT PACK
+%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS AKA_ALL PACK ARROW
 //  primitive-type:
 %token VOID INT STR BOOL FLT NUL CHAR
 //  reserved-keyword:
-%token IF
+%token IF AKA
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -104,6 +104,7 @@
 %type <asNodeArr> list list-items
 //  keyword:
 %type <asNode> if
+%type <asNode> aka aka-default aka-deduced aka-dotname aka-dotname-item
 %type pack
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
@@ -248,13 +249,32 @@ expr1: term {
 if: IF expr indentblock {
     // TODO:
     }
+aka: aka-default {
+ } | aka-deduced {
+ }
+
+aka-dotname-item: NAME {
+              } | funcCall {
+              }
+aka-dotname: aka-dotname-item {
+         } | aka-dotname '.' aka-dotname-item {
+         }
+aka-item: aka-dotname {
+      } | defexpr-line {
+      } | defexpr-compound {
+      }
+aka-default: AKA aka-item ARROW NAME {
+         }
+aka-deduced: AKA aka-dotname AKA_ALL {
+         }
 
 // defs:
 //  structure:
 defexpr-line: defvar {
+          } | aka {
           }
 defexpr-compound: deffunc {
-          }
+              }
 defstmt: defexpr-line NEWLINE {
      } | defexpr-compound {
      }
