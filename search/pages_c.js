@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['reference_499',['reference',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_reference.html',1,'']]],
-  ['ret_500',['ret',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_ret.html',1,'']]]
+  ['quick_20start_20in_20kr_498',['Quick Start in KR',['../md__home_runner_work_wrd_wrd_doc_ref__q_u_i_c_k-_s_t_a_r_t-kr.html',1,'']]]
 ];

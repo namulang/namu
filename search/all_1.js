@@ -6,5 +6,6 @@ var searchData=
   ['area_7',['area',['../structwrd_1_1area.html',1,'wrd']]],
   ['arrcontainable_8',['arrContainable',['../classwrd_1_1arr_containable.html',1,'wrd']]],
   ['asable_9',['asable',['../classwrd_1_1asable.html',1,'wrd']]],
-  ['ases_10',['ases',['../classwrd_1_1ases.html',1,'wrd']]]
+  ['ases_10',['ases',['../classwrd_1_1ases.html',1,'wrd']]],
+  ['aka_11',['aka',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_aka.html',1,'']]]
 ];

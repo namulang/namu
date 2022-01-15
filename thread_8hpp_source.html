@@ -79,9 +79,9 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classwrd_1_1thread.html">    9</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1thread.html">thread</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1node.html">node</a> {</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1thread.html">thread</a>, <a class="code" href="classwrd_1_1node.html">node</a>))</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1obj.html">obj</a>; <span class="comment">// to access stackFrame.</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1mgd_obj.html">mgdObj</a>; <span class="comment">// to access stackFrame.</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1mgd_func.html">mgdFunc</a>; <span class="comment">// to access stackFrame.</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1frame_interact.html">frameInteract</a>; <span class="comment">// to access stackFrame.</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>; <span class="comment">// to access stackFrame.</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classwrd_1_1thread.html">thread</a>() {} <span class="comment">// for singleton</span></div>
@@ -135,17 +135,17 @@ $(function() {
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
-<div class="ttc" id="aclasswrd_1_1frame_interact_html"><div class="ttname"><a href="classwrd_1_1frame_interact.html">wrd::frameInteract</a></div><div class="ttdef"><b>Definition:</b> frameInteract.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1instancer_html"><div class="ttname"><a href="classwrd_1_1instancer.html">wrd::instancer</a></div><div class="ttdef"><b>Definition:</b> instancer.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1thread_html_af416439443a2638181290b170f4069fa"><div class="ttname"><a href="classwrd_1_1thread.html#af416439443a2638181290b170f4069fa">wrd::thread::rel</a></div><div class="ttdeci">void rel() override</div><div class="ttdef"><b>Definition:</b> thread.hpp:44</div></div>
-<div class="ttc" id="aclasswrd_1_1mgd_func_html"><div class="ttname"><a href="classwrd_1_1mgd_func.html">wrd::mgdFunc</a></div><div class="ttdef"><b>Definition:</b> mgdFunc.hpp:9</div></div>
+<div class="ttc" id="aclasswrd_1_1block_expr_html"><div class="ttname"><a href="classwrd_1_1block_expr.html">wrd::blockExpr</a></div><div class="ttdef"><b>Definition:</b> blockExpr.hpp:7</div></div>
+<div class="ttc" id="aclasswrd_1_1mgd_func_html"><div class="ttname"><a href="classwrd_1_1mgd_func.html">wrd::mgdFunc</a></div><div class="ttdef"><b>Definition:</b> mgdFunc.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1thread_html"><div class="ttname"><a href="classwrd_1_1thread.html">wrd::thread</a></div><div class="ttdef"><b>Definition:</b> thread.hpp:9</div></div>
+<div class="ttc" id="aclasswrd_1_1mgd_obj_html"><div class="ttname"><a href="classwrd_1_1mgd_obj.html">wrd::mgdObj</a></div><div class="ttdef"><b>Definition:</b> mgdObj.hpp:10</div></div>
 <div class="ttc" id="aclasswrd_1_1ncontainer_html"><div class="ttname"><a href="classwrd_1_1ncontainer.html">wrd::ncontainer</a></div><div class="ttdef"><b>Definition:</b> ncontainer.hpp:7</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:12</div></div>
 <div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1stack_frame_html"><div class="ttname"><a href="classwrd_1_1stack_frame.html">wrd::stackFrame</a></div><div class="ttdef"><b>Definition:</b> stackFrame.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1containable_html"><div class="ttname"><a href="classwrd_1_1containable.html">wrd::containable</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:13</div></div>
-<div class="ttc" id="aclasswrd_1_1obj_html"><div class="ttname"><a href="classwrd_1_1obj.html">wrd::obj</a></div><div class="ttdoc">obj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> obj.hpp:13</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

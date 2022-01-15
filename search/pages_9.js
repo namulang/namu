@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['operator_492',['operator',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_operator.html',1,'']]],
-  ['overloading_493',['overloading',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_overloading.html',1,'']]]
+  ['null_20safety_491',['null safety',['../md__home_runner_work_wrd_wrd_doc_ref_feat_null_safety.html',1,'']]]
 ];

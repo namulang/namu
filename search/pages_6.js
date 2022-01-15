@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['immutable_487',['Immutable',['../md__home_runner_work_wrd_wrd_doc_ref_feat_immutable.html',1,'']]],
-  ['interoperability_488',['Interoperability',['../md__home_runner_work_wrd_wrd_doc_ref_feat_interoperability.html',1,'']]],
-  ['if_489',['if',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_if.html',1,'']]]
+  ['goals_485',['goals',['../md__home_runner_work_wrd_wrd_doc_ref_goal__g_o_a_l.html',1,'']]],
+  ['generic_486',['generic',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_generic.html',1,'']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['variable_20declaration_506',['variable declaration',['../md__home_runner_work_wrd_wrd_doc_ref_feat_variable-declaration.html',1,'']]],
-  ['variable_507',['variable',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_variable.html',1,'']]],
-  ['void_508',['void',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_void.html',1,'']]]
+  ['type_504',['type',['../md__home_runner_work_wrd_wrd_doc_ref_feat_type.html',1,'']]],
+  ['type_20deduction_505',['Type deduction',['../md__home_runner_work_wrd_wrd_doc_ref_feat__type_deduction.html',1,'']]]
 ];
