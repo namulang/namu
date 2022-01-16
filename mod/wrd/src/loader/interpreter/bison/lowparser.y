@@ -83,7 +83,7 @@
 %start compilation-unit
 
 // mode:
-%token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE
+%token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE SCAN_MODE_END
 
 // valueless-token:
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS AKA_ALL PACK ARROW
@@ -143,6 +143,7 @@ expr: expr-line {
   }
 
 stmt: expr-line NEWLINE {
+  } | expr-line ENDOFFILE {
   } | expr-compound {
   }
 
@@ -276,6 +277,7 @@ defexpr-line: defvar {
 defexpr-compound: deffunc {
               }
 defstmt: defexpr-line NEWLINE {
+     } | defexpr-line ENDOFFILE {
      } | defexpr-compound {
      }
 defblock: %empty {
@@ -325,6 +327,7 @@ indentblock: NEWLINE INDENT block DEDENT {
 
 //  pack:
 pack: PACK dotname NEWLINE {
+  } | PACK dotname ENDOFFILE {
   } | %empty {
   }
 

@@ -9,14 +9,13 @@ namespace wrd {
     wint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
         tokenDispatcher& disp = eventer.getDispatcher();
         wint tok;
-        isBypass = disp.pop(tok);
-        WRD_DI("%s: dispatcher[%d]%s(token: %c[%d]) at %d,%d", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", tok <= 127 ? (char) tok : '?', tok, loc->first_line, loc->first_column);
 
-        if(!isBypass)
+        if(!(isBypass = disp.pop(tok)))
             tok = yylexOrigin(val, loc, scanner);
-
         if(tok == ENDOFFILE)
-            return eventer.onEndOfFile();
+            tok = eventer.onEndOfFile(loc);
+
+        WRD_DI("%s: dispatcher[%d]%s(token: %c[%d]) at %d,%d", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", tok <= 127 ? (char) tok : '?', tok, loc->first_line, loc->first_column);
         return tok;
     }
 
@@ -49,7 +48,7 @@ namespace wrd {
         if(cur > prev)
             return eventer.onIndent(cur, tok);
         else if(cur < prev)
-            return eventer.onDedent(cur, tok);
+            return eventer.onDedent(cur, tok, loc);
 
         return tok;
     }
