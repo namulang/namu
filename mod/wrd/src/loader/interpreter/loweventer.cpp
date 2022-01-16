@@ -34,11 +34,12 @@ namespace wrd {
 
     wint me::onEndOfFile(YYLTYPE* loc) {
         WRD_DI("tokenEvent: onEndOfFile() indents.size()=%d", _indents.size());
-        if(_indents.size() > 1)
-            _dispatcher.addFront(onDedent(_indents.front(), ENDOFFILE, loc));
+        if(_indents.size() <= 1)
+            _dispatcher.add(SCAN_MODE_END);
+        else
+            _dispatcher.addFront(onDedent(_indents.front(), SCAN_MODE_END, loc));
 
         WRD_DI("tokenEvent: onEndOfFile: finalize by adding 'NEWLINE', then dispatch end-of-file.");
-        _dispatcher.add(SCAN_MODE_END);
         return NEWLINE;
     }
 
