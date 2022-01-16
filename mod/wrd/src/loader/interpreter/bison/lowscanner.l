@@ -9,8 +9,8 @@
 #include <functional>
 
 #define YY_DECL int yylexOrigin(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner)
-#define YY_USER_ACTION yylloc->first_line = yylloc->last_line = yyget_lineno(yyscanner); \
-                       yylloc->first_column = yylloc->colcnt; yylloc->last_column = yylloc->colcnt+yyleng-1; \
+#define YY_USER_ACTION yylloc->start.row = yylloc->end.row = yyget_lineno(yyscanner); \
+                       yylloc->start.col = yylloc->colcnt; yylloc->end.col = yylloc->colcnt+yyleng-1; \
                        yylloc->colcnt += yyleng;
 }
 
@@ -44,7 +44,7 @@
 \+\+ { return DOUBLE_PLUS; }
 [ \t]+ ;
 \n {
-    yylloc->colcnt = yylloc->first_column = yylloc->last_column = 0;
+    yylloc->colcnt = yylloc->start.col = yylloc->end.col= 0;
     yyget_extra(yyscanner)->onNewLine();
     return NEWLINE;
 }
@@ -91,7 +91,7 @@ aka { return AKA; }
 }
 
 <*>. {
-    return yyget_extra(yyscanner)->onScanUnexpected({{yylloc->first_line, yylloc->first_column}}, yytext);
+    return yyget_extra(yyscanner)->onScanUnexpected(*yylloc, yytext);
 }
 
 %%

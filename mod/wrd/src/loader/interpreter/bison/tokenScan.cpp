@@ -13,9 +13,9 @@ namespace wrd {
         if(!(isBypass = disp.pop(tok)))
             tok = yylexOrigin(val, loc, scanner);
         if(tok == ENDOFFILE)
-            tok = eventer.onEndOfFile(loc);
+            tok = eventer.onEndOfFile(*loc);
 
-        WRD_DI("%s: dispatcher[%d]%s(token: %c[%d]) at %d,%d", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", tok <= 127 ? (char) tok : '?', tok, loc->first_line, loc->first_column);
+        WRD_DI("%s: dispatcher[%d]%s(token: %c[%d]) at %d,%d", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", tok <= 127 ? (char) tok : '?', tok, loc->start.row, loc->start.col);
         return tok;
     }
 
@@ -35,7 +35,7 @@ namespace wrd {
         eventer.setScan<normalScan>();
         if(isBypass) return tok;
 
-        wcnt cur = loc->first_column;
+        wcnt cur = loc->start.col;
         std::vector<wcnt>& ind = eventer.getIndents();
         if(ind.size() == 0) {
             WRD_DI("indentScan: initial indent lv: %d", cur);
@@ -48,7 +48,7 @@ namespace wrd {
         if(cur > prev)
             return eventer.onIndent(cur, tok);
         else if(cur < prev)
-            return eventer.onDedent(cur, tok, loc);
+            return eventer.onDedent(cur, tok, *loc);
 
         return tok;
     }

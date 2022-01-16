@@ -32,7 +32,7 @@ namespace wrd {
         return tok;
     }
 
-    wint me::onEndOfFile(YYLTYPE* loc) {
+    wint me::onEndOfFile(const area& loc) {
         WRD_DI("tokenEvent: onEndOfFile() indents.size()=%d", _indents.size());
         if(_indents.size() <= 1)
             _dispatcher.add(SCAN_MODE_END);
@@ -50,13 +50,13 @@ namespace wrd {
         return INDENT;
     }
 
-    wint me::onDedent(wcnt col, wint tok, YYLTYPE* loc) {
+    wint me::onDedent(wcnt col, wint tok, const area& loc) {
         WRD_DI("tokenEvent: onDedent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
 
         _indents.pop_back();
         wint now = _indents.back();
         if(now < col)
-            onErr(new srcErr(err::WARN, 10, {{loc->first_line, loc->first_column}}, col, now, now));
+            onErr(new srcErr(err::WARN, 10, loc, col, now, now));
 
         while(_indents.back() > col) {
             WRD_DI("tokenEvent: onDedent: indentlv become %d -> %d", _indents.back(), _indents[_indents.size()-2]);
