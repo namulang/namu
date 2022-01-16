@@ -143,7 +143,6 @@ expr: expr-line {
   }
 
 stmt: expr-line NEWLINE {
-  } | expr-line ENDOFFILE {
   } | expr-compound {
   }
 
@@ -277,7 +276,6 @@ defexpr-line: defvar {
 defexpr-compound: deffunc {
               }
 defstmt: defexpr-line NEWLINE {
-     } | defexpr-line ENDOFFILE {
      } | defexpr-compound {
      }
 defblock: %empty {
@@ -327,7 +325,6 @@ indentblock: NEWLINE INDENT block DEDENT {
 
 //  pack:
 pack: PACK dotname NEWLINE {
-  } | PACK dotname ENDOFFILE {
   } | %empty {
   }
 
