@@ -3,6 +3,8 @@
 #include <fstream>
 #include "flex.hpp"
 
+void yyrestart(FILE*);
+
 namespace wrd {
 
     WRD_DEF_ME(sinterpreter)
@@ -18,6 +20,7 @@ namespace wrd {
     }
     tstr<sobj> me::interpFile(const wchar* path) {
         yyin = fopen(path, "r");
+        yyrestart(yyin);
         if(!yyin)
             return WRD_E("invalid file path %s.", path), tstr<sobj>();
 
