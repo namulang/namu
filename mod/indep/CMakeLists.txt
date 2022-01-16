@@ -1,7 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-message("building ${CMAKE_CURRENT_SOURCE_DIR}...")
-
+message("building ${moduleName}...")
 set(moduleName "indep")
 set(defCandidates "WRD_TAG=\"${moduleName}\"")
 foreach(def ${defCandidates})
@@ -10,8 +9,29 @@ foreach(def ${defCandidates})
 endforeach(def)
 add_definitions(${defines})
 
-#   In fact, this lists shows like REVERSED stack diagram.
-#   it depicts the exactly dependencies for which program should be come first.
-#   The faster, The lower on Stack diagram.
-add_subdirectory(src)
-add_subdirectory(test)
+message("\tconfigure_files...")
+#  expanding:
+set(configures
+	"def/buildInformation.hpp.in"
+)
+foreach(e ${configures})
+    #  extract output filepath:
+    string(FIND ${e} ".in" n REVERSE)
+    string(SUBSTRING ${e} 0 ${n} output_path)
+	message("\texpanding ${CMAKE_CURRENT_SOURCE_DIR}/${output_path}")
+	configure_file(${e} ${CMAKE_CURRENT_SOURCE_DIR}/${output_path})
+endforeach(e)
+#  defines:
+#      define sources:
+file(GLOB_RECURSE sources
+    "*.c"
+    "*.cpp"
+)
+#          logging sources:
+foreach(e ${sources})
+    message("\tembeding ${e}")
+endforeach(e)
+
+#  execute:
+add_library(${moduleName} SHARED ${sources})
+set_target_properties(${moduleName} PROPERTIES SUFFIX ".${WRD_LIBRARY_EXTENSION}")

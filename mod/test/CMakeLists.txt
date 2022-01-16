@@ -1,8 +1,10 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
+set(moduleName "test")
+set(dependencies indep clog memlite meta wrd swrd dl ${pathGtest})
+
 message("building ${moduleName}...")
 
-set(moduleName "meta")
 set(defCandidates "WRD_TAG=\"${moduleName}\"")
 foreach(def ${defCandidates})
     message("\tadd define ${def}")
@@ -10,25 +12,31 @@ foreach(def ${defCandidates})
 endforeach(def)
 add_definitions(${defines})
 
-message("\tconfigure_files...")
+find_library(pathGtest
+    NAMES libgtest.a
+    REQUIRED)
+foreach(d ${dependencies})
+    set(libraries ${libraries} PUBLIC ${d})
+endforeach(d)
 
-#  defines:
+message("\tbuilding ${moduleName} dependents to ${dependencies}")
+
 #      define sources:
 file(GLOB_RECURSE sources
-    "*.c"
-    "*.cpp"
+    "*.cc"
 )
 #          logging sources:
 foreach(e ${sources})
     message("\tembeding ${e}")
 endforeach(e)
-set(dependencies indep clog)
 foreach(e ${dependencies})
     message("\tlinking ${e}")
 endforeach(e)
 
+add_executable(${moduleName} ${sources})
 
-#  execute:
-add_library(${moduleName} SHARED ${sources})
-set_target_properties(${moduleName} PROPERTIES SUFFIX ".${WRD_LIBRARY_EXTENSION}")
-target_link_libraries(${moduleName} ${dependencies})
+find_package(Threads REQUIRED)
+target_link_libraries(${moduleName} ${libraries}
+    PRIVATE Threads::Threads)
+
+add_subdirectory(bundle)

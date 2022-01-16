@@ -70,8 +70,7 @@ def branch(command):
         return dbgBuild();
     elif command == "test":
         arg1 = "" if len(sys.argv) < 3 else sys.argv[2]
-        arg2 = "" if len(sys.argv) < 4 else sys.argv[3]
-        return test(arg1, arg2);
+        return test(arg1);
     elif command == "run":
         return run()
     elif command == "doc":
@@ -384,7 +383,7 @@ def build(incVer):
     return 0
 
 # arg is "" for dbg or "silent" for rel
-def test(filename, arg):
+def test(arg):
     if build(False) != 0:
         return -1;
 
@@ -396,23 +395,11 @@ def test(filename, arg):
     os.chdir(binDir)
     failedCnt = 0
     ret = 0
-    print("fileName = " + filename)
-    if filename is None or filename == "":
-        files = os.listdir('.')
-        for file in files:
-            if len(file) < 4 or file[-4:] != "Test":
-                continue
-            res = os.system("./" + file + " " + arg)
-            if res != 0:
-                printErr(file + " was failed!")
-                ret = res;
-                failedCnt += 1
-    else:
-        res = os.system("./" + filename + " " + arg)
-        if res != 0:
-            printErr(filename + " was failed!")
-            ret = res
-            failedCnt += 1
+    res = os.system("./test " + arg)
+    if res != 0:
+        printErr("test was failed!")
+        ret = res
+        failedCnt += 1
 
     if failedCnt > 0:
         printErr("total " + str(failedCnt) + " TC files has reported that failed.")
