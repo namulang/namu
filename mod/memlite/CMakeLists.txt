@@ -1,7 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-message("building ${CMAKE_CURRENT_SOURCE_DIR}...")
-
+message("building ${moduleName}...")
 set(moduleName "memlite")
 set(defCandidates "WRD_TAG=\"${moduleName}\"")
 foreach(def ${defCandidates})
@@ -10,8 +9,24 @@ foreach(def ${defCandidates})
 endforeach(def)
 add_definitions(${defines})
 
-#   In fact, this lists shows like REVERSED stack diagram.
-#   it depicts the exactly dependencies for which program should be come first.
-#   The faster, The lower on Stack diagram.
-add_subdirectory(src)
-add_subdirectory(test)
+message("\tconfigure_files...")
+
+#  defines:
+#      define sources:
+file(GLOB_RECURSE sources
+    "*.c"
+    "*.cpp"
+)
+#          logging sources:
+foreach(e ${sources})
+    message("\tembeding ${e}")
+endforeach(e)
+set(dependencies meta)
+foreach(e ${dependencies})
+    message("\tlinking ${e}")
+endforeach(e)
+
+#  execute:
+add_library(${moduleName} SHARED ${sources})
+set_target_properties(${moduleName} PROPERTIES SUFFIX ".${WRD_LIBRARY_EXTENSION}")
+target_link_libraries(${moduleName} ${dependencies})

@@ -6,7 +6,7 @@ set(SHOW_CMAKE_VARIABLES 1)
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
 set(VERSION_FIX 6)
-set(BUILD_COUNT 275)
+set(BUILD_COUNT 284)
 set(VERSION_NAME "Essence Update")
 set(VERSION_VALUE "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_FIX}")
 set(VERSION "${PROJECT_NAME} ${UPDATE_NAME} v${VERSION_VALUE}")
@@ -51,12 +51,12 @@ set(WRD_LIBRARY_EXTENSION "so")
 set(WRD_PACK_EXTENSION "pack")
 get_filename_component(WRD_DIR ${CMAKE_SOURCE_DIR} DIRECTORY)
 set(WRD_DEFAULT_INC_DIR
-    ${WRD_DIR}/mod/indep/src
-    ${WRD_DIR}/mod/clog/src
-    ${WRD_DIR}/mod/meta/src
-    ${WRD_DIR}/mod/memlite/src
-    ${WRD_DIR}/mod/wrd/src
-    ${WRD_DIR}/mod/swrd/src
+    ${WRD_DIR}/mod/indep
+    ${WRD_DIR}/mod/clog
+    ${WRD_DIR}/mod/meta
+    ${WRD_DIR}/mod/memlite
+    ${WRD_DIR}/mod/wrd
+    ${WRD_DIR}/mod/swrd
     /usr/local/include)
 include_directories(${WRD_DEFAULT_INC_DIR})
 
