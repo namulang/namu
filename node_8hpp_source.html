@@ -131,70 +131,73 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> canRun(createTypesFromArgs(args));</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; args);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; args) = 0;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> std::string&amp; name);</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">   71</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">rel</a>() {}</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> std::string&amp; getName()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keyword">static</span> std::string dummy = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordflow">return</span> dummy;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        wbool is()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="keywordflow">return</span> is(ttype&lt;T&gt;::get());</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        wbool is(<span class="keyword">const</span> type&amp; to)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="keywordflow">return</span> getType().is(to);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> wtypes&amp; <a class="code" href="classwrd_1_1node.html#a289c6241782089c607e401fe59cc6bb8">getParams</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; args);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; args) = 0;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> std::string&amp; name);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">   74</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">rel</a>() {}</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> std::string&amp; getName()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keyword">static</span> std::string dummy = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">return</span> dummy;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        wbool is()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="keywordflow">return</span> is(ttype&lt;T&gt;::get());</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        tstr&lt;T&gt; as()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">return</span> as(ttype&lt;T&gt;::get());</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        str as(<span class="keyword">const</span> type&amp; to)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">return</span> getType().as(*<span class="keyword">this</span>, to);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        wbool is(<span class="keyword">const</span> type&amp; to)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">return</span> getType().is(to);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        tstr&lt;T&gt; as()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">return</span> as(ttype&lt;T&gt;::get());</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        }</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        wbool isImpli()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="keywordflow">return</span> isImpli(ttype&lt;T&gt;::get());</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        wbool isImpli(<span class="keyword">const</span> type&amp; to)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <span class="keywordflow">return</span> getType().isImpli(to);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        str as(<span class="keyword">const</span> type&amp; to)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="keywordflow">return</span> getType().as(*<span class="keyword">this</span>, to);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        }</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        wbool isImpli()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <span class="keywordflow">return</span> isImpli(ttype&lt;T&gt;::get());</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        tstr&lt;T&gt; asImpli()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <span class="keywordflow">return</span> asImpli(ttype&lt;T&gt;::get());</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        str asImpli(<span class="keyword">const</span> type&amp; to)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="keywordflow">return</span> getType().asImpli(*<span class="keyword">this</span>, to);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        wbool isImpli(<span class="keyword">const</span> type&amp; to)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            <span class="keywordflow">return</span> getType().isImpli(to);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        tstr&lt;T&gt; asImpli()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="keywordflow">return</span> asImpli(ttype&lt;T&gt;::get());</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        }</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">  116</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; <a class="code" href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">getEvalType</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            <span class="keywordflow">return</span> getType();</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        }</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keyword">static</span> wtypes createTypesFromArgs(<span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; args) {</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            wtypes ret;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <span class="keywordflow">for</span>(<a class="code" href="classwrd_1_1titer.html">iter</a> e=args.begin(); e ;e++)</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                ret.push_back((<a class="code" href="classwrd_1_1wtype.html">wtype</a>*) &amp;e-&gt;getEvalType());</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        }</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    };</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;}</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        str asImpli(<span class="keyword">const</span> type&amp; to)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keywordflow">return</span> getType().asImpli(*<span class="keyword">this</span>, to);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        }</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">  119</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; <a class="code" href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">getEvalType</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <span class="keywordflow">return</span> getType();</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        }</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keyword">static</span> wtypes createTypesFromArgs(<span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; args) {</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            wtypes ret;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <span class="keywordflow">for</span>(<a class="code" href="classwrd_1_1titer.html">iter</a> e=args.begin(); e ;e++)</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                ret.push_back((<a class="code" href="classwrd_1_1wtype.html">wtype</a>*) &amp;e-&gt;getEvalType());</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;            <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        }</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    };</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1instance_html"><div class="ttname"><a href="classwrd_1_1instance.html">wrd::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1clonable_html"><div class="ttname"><a href="classwrd_1_1clonable.html">wrd::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <div class="ttc" id="aclasswrd_1_1titer_html"><div class="ttname"><a href="classwrd_1_1titer.html">wrd::titer&lt; node &gt;</a></div></div>
-<div class="ttc" id="aclasswrd_1_1node_html_aa135ead010cb500b4e683f26440cbd95"><div class="ttname"><a href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">wrd::node::getEvalType</a></div><div class="ttdeci">virtual const wtype &amp; getEvalType() const</div><div class="ttdef"><b>Definition:</b> node.hpp:116</div></div>
-<div class="ttc" id="aclasswrd_1_1node_html_a732b2152a09d164a579c69fe1cfb62e3"><div class="ttname"><a href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">wrd::node::rel</a></div><div class="ttdeci">virtual void rel()</div><div class="ttdef"><b>Definition:</b> node.hpp:71</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html_aa135ead010cb500b4e683f26440cbd95"><div class="ttname"><a href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">wrd::node::getEvalType</a></div><div class="ttdeci">virtual const wtype &amp; getEvalType() const</div><div class="ttdef"><b>Definition:</b> node.hpp:119</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html_a732b2152a09d164a579c69fe1cfb62e3"><div class="ttname"><a href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">wrd::node::rel</a></div><div class="ttdeci">virtual void rel()</div><div class="ttdef"><b>Definition:</b> node.hpp:74</div></div>
 <div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1ncontainer_html"><div class="ttname"><a href="classwrd_1_1ncontainer.html">wrd::ncontainer</a></div><div class="ttdef"><b>Definition:</b> ncontainer.hpp:7</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html_a289c6241782089c607e401fe59cc6bb8"><div class="ttname"><a href="classwrd_1_1node.html#a289c6241782089c607e401fe59cc6bb8">wrd::node::getParams</a></div><div class="ttdeci">virtual const wtypes &amp; getParams() const</div></div>
 <div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:12</div></div>
 <div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:9</div></div>
