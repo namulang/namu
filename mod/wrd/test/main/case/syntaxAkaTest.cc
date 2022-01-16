@@ -55,12 +55,19 @@ TEST_F(syntaxAkaTest, withDeffunc) {
 aka foo(a int, b str)
     doSomething()
 -> b)SRC");
+}
 
-    parseFail(R"SRC(
+TEST_F(syntaxAkaTest, withDeffunc2) {
+    errReport rpt;
+    parse(R"SRC(
 aka foo(a int, b str)
     doSomething()
- -> b)SRC");
+ -> b)SRC", rpt);
+    ASSERT_FALSE(rpt); // rpt.operator bool() return true if error exists
+    ASSERT_TRUE(rpt.hasWarn());
+}
 
+TEST_F(syntaxAkaTest, withDeffunc3) {
     parseFail(R"SRC(
 aka foo(a int, b str)
     doSomething()

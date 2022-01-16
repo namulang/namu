@@ -13,6 +13,7 @@ namespace wrd {
             case SCAN_MODE_NORMAL: setScan<normalScan>(); return SCAN_AGAIN;
             case SCAN_MODE_INDENT: setScan<indentScan>(); return SCAN_AGAIN;
             case SCAN_MODE_INDENT_IGNORE: _isIgnoreWhitespace = true; return SCAN_AGAIN;
+            case SCAN_MODE_END: tok = 0;
         }
 
         return tok;
@@ -31,15 +32,14 @@ namespace wrd {
         return tok;
     }
 
-    wint me::onEndOfFile() {
+    wint me::onEndOfFile(YYLTYPE* loc) {
         WRD_DI("tokenEvent: onEndOfFile() indents.size()=%d", _indents.size());
-        if(_indents.size() > 1) {
-            _dispatcher.addFront(onDedent(_indents.front(), ENDOFFILE));
-            return NEWLINE;
-        }
+        if(_indents.size() > 1)
+            _dispatcher.addFront(onDedent(_indents.front(), ENDOFFILE, loc));
 
-        WRD_DI("tokenEvent: onEndOfFile: it's really end of file.");
-        return 0;
+        WRD_DI("tokenEvent: onEndOfFile: finalize by adding 'NEWLINE', then dispatch end-of-file.");
+        _dispatcher.add(SCAN_MODE_END);
+        return NEWLINE;
     }
 
     wint me::onIndent(wcnt col, wint tok) {
@@ -49,10 +49,13 @@ namespace wrd {
         return INDENT;
     }
 
-    wint me::onDedent(wcnt col, wint tok) {
+    wint me::onDedent(wcnt col, wint tok, YYLTYPE* loc) {
         WRD_DI("tokenEvent: onDedent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
 
         _indents.pop_back();
+        wint now = _indents.back();
+        if(now < col)
+            onErr(new srcErr(err::WARN, 10, {{loc->first_line, loc->first_column}}, col, now, now));
 
         while(_indents.back() > col) {
             WRD_DI("tokenEvent: onDedent: indentlv become %d -> %d", _indents.back(), _indents[_indents.size()-2]);
