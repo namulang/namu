@@ -2,33 +2,55 @@
 
 using namespace wrd;
 
-struct A : public instance {
-    A(): age(0) {}
-    A(int newAge): age(newAge) {}
+namespace {
+    struct A : public instance {
+        A(): age(0) {}
+        A(int newAge): age(newAge) {}
 
-    int age;
+        int age;
 
-    const type& getType() const override {
-        return ttype<A>::get();
+        const type& getType() const override {
+            return ttype<A>::get();
+        }
+    };
+
+    struct B : public instance {
+        B() { ++get(); }
+        B(const B&) { ++get(); }
+        ~B() { --get(); }
+
+        float grade;
+
+        static wcnt& get() {
+            static wcnt n = 0;
+            return n;
+        }
+
+        const type& getType() const override {
+            return ttype<B>::get();
+        }
+    };
+
+    void integrity(int cnt) {
+        std::vector<tstr<A>> tray;
+        std::vector<id> ids;
+        for(int n=0; n < cnt; n++) {
+            A* new1 = new A(n);
+            tray.push_back(tstr<A>(new1));
+            ids.push_back(new1->getId());
+        }
+
+        const watcher& watcher = instancer::get().getWatcher();
+        for(int n=0; n < cnt;n++) {
+            id i = ids[n];
+            ASSERT_EQ(tray[n]->getId(), i);
+
+            const bindTag& tag = watcher[i].blk;
+            ASSERT_EQ(i, tag.getId());
+        }
     }
-};
 
-struct B : public instance {
-    B() { ++get(); }
-    B(const B&) { ++get(); }
-    ~B() { --get(); }
-
-    float grade;
-
-    static wcnt& get() {
-        static wcnt n = 0;
-        return n;
-    }
-
-    const type& getType() const override {
-        return ttype<B>::get();
-    }
-};
+}
 
 TEST(bindTest, defaultBehaviorTest) {
     tstr<A> b1(new A());
@@ -160,25 +182,6 @@ TEST(bindTest, assignTest) {
     ASSERT_FALSE(strA1.getItsId().isValid());
     strA = strA1;
     ASSERT_FALSE(strA.getItsId().isValid());
-}
-
-void integrity(int cnt) {
-    std::vector<tstr<A>> tray;
-    std::vector<id> ids;
-    for(int n=0; n < cnt; n++) {
-        A* new1 = new A(n);
-        tray.push_back(tstr<A>(new1));
-        ids.push_back(new1->getId());
-    }
-
-    const watcher& watcher = instancer::get().getWatcher();
-    for(int n=0; n < cnt;n++) {
-        id i = ids[n];
-        ASSERT_EQ(tray[n]->getId(), i);
-
-        const bindTag& tag = watcher[i].blk;
-        ASSERT_EQ(i, tag.getId());
-    }
 }
 
 TEST(bindTest, bindMultiplTimesIntegrityTest) {

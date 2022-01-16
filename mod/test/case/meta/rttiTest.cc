@@ -1,13 +1,15 @@
 #include "../../common/dep.hpp"
 
-struct noSuper {
-    virtual void abstract() = 0;
-    static void staticMethod() {}
-};
-struct hasSuper : public noSuper {
-    typedef noSuper super;
-    void abstract() {}
-};
+namespace {
+    struct noSuper {
+        virtual void abstract() = 0;
+        static void staticMethod() {}
+    };
+    struct hasSuper : public noSuper {
+        typedef noSuper super;
+        void abstract() {}
+    };
+}
 
 using namespace wrd;
 

@@ -3,21 +3,59 @@
 using namespace std;
 using namespace wrd;
 
-struct A : public instance {
-    int age;
+namespace {
+    struct A : public instance {
+        int age;
 
-    const type& getType() const override {
-        return ttype<A>::get();
+        const type& getType() const override {
+            return ttype<A>::get();
+        }
+    };
+
+    struct B : public A {
+        float grade;
+
+        const type& getType() const override {
+            return ttype<B>::get();
+        }
+    };
+
+    void addRemoveIntegrityTest(int cnt) {
+        vector<A*> tray;
+        vector<id> ids;
+
+        for(int n=0; n < cnt ;n++) {
+            A* new1 = new B();
+            tray.push_back(new1);
+
+            id newId = new1->getId();
+            ASSERT_EQ(newId, new1->getBindTag().getId());
+            ids.push_back(newId);
+        }
+
+        for(int n=0; n < cnt; n++) {
+            ASSERT_EQ(tray[n]->getId(), ids[n]);
+        }
     }
-};
 
-struct B : public A {
-    float grade;
+    void addIntegrityTest(int cnt) {
+        vector<A*> tray;
+        vector<id> ids;
 
-    const type& getType() const override {
-        return ttype<B>::get();
+        for(int n=0; n < cnt ;n++) {
+            A* new1 = new B();
+            tray.push_back(new1);
+
+            id newId = new1->getId();
+            ASSERT_EQ(newId, new1->getBindTag().getId());
+            ids.push_back(newId);
+        }
+
+        for(int n=0; n < cnt; n++) {
+            ASSERT_EQ(tray[n]->getId(), ids[n]);
+        }
     }
-};
+}
 
 TEST(watcherTest, localVariableBindTagTest) {
     A a;
@@ -87,49 +125,12 @@ TEST(watcherTest, heapVariableBindTagTest) {
     arr.clear();
 }
 
-void addIntegrityTest(int cnt) {
-    vector<A*> tray;
-    vector<id> ids;
-
-    for(int n=0; n < cnt ;n++) {
-        A* new1 = new B();
-        tray.push_back(new1);
-
-        id newId = new1->getId();
-        ASSERT_EQ(newId, new1->getBindTag().getId());
-        ids.push_back(newId);
-    }
-
-    for(int n=0; n < cnt; n++) {
-        ASSERT_EQ(tray[n]->getId(), ids[n]);
-    }
-}
-
 TEST(watcherTest, addIntegrityTest100) {
     addIntegrityTest(100);
 }
 
 TEST(watcherTest, addIntegrityTest10000) {
     addIntegrityTest(1000);
-}
-
-void addRemoveIntegrityTest(int cnt) {
-    vector<A*> tray;
-    vector<id> ids;
-
-    for(int n=0; n < cnt ;n++) {
-        A* new1 = new B();
-        tray.push_back(new1);
-
-        id newId = new1->getId();
-        ASSERT_EQ(newId, new1->getBindTag().getId());
-        ids.push_back(newId);
-    }
-
-    for(int n=0; n < cnt; n++) {
-        ASSERT_EQ(tray[n]->getId(), ids[n]);
-    }
-
 }
 
 TEST(watcherTest, addRemoveIntegrityTest100) {

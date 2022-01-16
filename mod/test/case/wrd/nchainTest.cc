@@ -3,50 +3,90 @@
 using namespace wrd;
 using namespace std;
 
-class myNode : public node {
-    WRD(CLASS(myNode, node))
+namespace {
+    class myNode : public node {
+        WRD(CLASS(myNode, node))
 
-public:
-    myNode(int num): number(num) {}
+    public:
+        myNode(int num): number(num) {}
 
-    ncontainer& subs() override { return nulOf<ncontainer>(); }
-    wbool canRun(const wtypes& types) const override { return false; }
-    str run(const containable& args) override { return str(); }
+        ncontainer& subs() override { return nulOf<ncontainer>(); }
+        wbool canRun(const wtypes& types) const override { return false; }
+        str run(const containable& args) override { return str(); }
 
-    int number;
-};
+        int number;
+    };
+
+    void simpleAddDelTest(int cnt) {
+        tnarr<myNode>* arr = new tnarr<myNode>();
+        nchain chn(*arr);
+        ASSERT_EQ(0, arr->len());
+        ASSERT_EQ(chn.len(), arr->len());
+        ASSERT_TRUE(nul(chn.getNext()));
+
+        vector<myNode*> tray;
+        for(int n=0; n < cnt ;n++) {
+            myNode* new1 = new myNode(n);
+            arr->add(new1);
+            tray.push_back(new1);
+        }
+
+        ASSERT_EQ(chn.len(), cnt);
+        ASSERT_EQ(chn.len(), cnt);
+        ASSERT_EQ(chn.len(), cnt);
+        ASSERT_EQ(chn.len(), cnt);
+
+        int index = 0;
+        ASSERT_TRUE(nul(chn.getNext()));
+        for(titer<myNode> e=chn.begin<myNode>(); e ;++e) {
+            const myNode& elem = *e;
+            ASSERT_EQ(&elem, tray[index]);
+            ASSERT_EQ(elem.number, index++);
+        }
+    }
+
+    class myMyNode : public myNode {
+        WRD(CLASS(myMyNode, myNode))
+
+    public:
+        myMyNode(int num): super(num) {}
+    };
+
+    void examineChain2Element(nchain& chn, int val1, int val2) {
+        myNode* elem = &chn.begin()->cast<myNode>();
+        ASSERT_FALSE(nul(elem));
+        ASSERT_EQ(elem->number, val1);
+
+        elem = &(++chn.begin())->cast<myNode>();
+        ASSERT_FALSE(nul(elem));
+        ASSERT_EQ(elem->number, val2);
+    }
+
+    struct myNode2 : public myNode {
+        WRD(CLASS(myNode2, myNode))
+
+    public:
+        myNode2(int val) : super(val) {}
+    };
+
+    template <typename T = myNode>
+    static wbool isMyNodesHasEqualIntArray(const tnchain<myNode>& root, int expects[], int expectSize) {
+        titer<T> myE = root.begin<T>();
+        for(int n=0; n < expectSize ;n++) {
+            if(myE.isEnd()) return false;
+            if(expects[n] != myE->number) return false;
+
+            myE++;
+        }
+
+        return true;
+    }
+
+}
 
 TEST(nchainTest, instantiateTest) {
     nchain chn;
     ASSERT_FALSE(nul(chn.getContainer()));
-}
-
-void simpleAddDelTest(int cnt) {
-    tnarr<myNode>* arr = new tnarr<myNode>();
-    nchain chn(*arr);
-    ASSERT_EQ(0, arr->len());
-    ASSERT_EQ(chn.len(), arr->len());
-    ASSERT_TRUE(nul(chn.getNext()));
-
-    vector<myNode*> tray;
-    for(int n=0; n < cnt ;n++) {
-        myNode* new1 = new myNode(n);
-        arr->add(new1);
-        tray.push_back(new1);
-    }
-
-    ASSERT_EQ(chn.len(), cnt);
-    ASSERT_EQ(chn.len(), cnt);
-    ASSERT_EQ(chn.len(), cnt);
-    ASSERT_EQ(chn.len(), cnt);
-
-    int index = 0;
-    ASSERT_TRUE(nul(chn.getNext()));
-    for(titer<myNode> e=chn.begin<myNode>(); e ;++e) {
-        const myNode& elem = *e;
-        ASSERT_EQ(&elem, tray[index]);
-        ASSERT_EQ(elem.number, index++);
-    }
 }
 
 TEST(nchainTest, simpleAddDelTest10) {
@@ -59,12 +99,6 @@ TEST(nchainTest, simpleAddDelTest10000) {
     simpleAddDelTest(10000);
 }
 
-class myMyNode : public myNode {
-    WRD(CLASS(myMyNode, myNode))
-
-public:
-    myMyNode(int num): super(num) {}
-};
 TEST(nchainTest, testcontainableAPI) {
     //  initial state:
     tstr<nchain> arr(new nchain());
@@ -194,16 +228,6 @@ TEST(nchainTest, testcontainableAPI) {
     elem = &(++e)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
-}
-
-void examineChain2Element(nchain& chn, int val1, int val2) {
-    myNode* elem = &chn.begin()->cast<myNode>();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, val1);
-
-    elem = &(++chn.begin())->cast<myNode>();
-    ASSERT_FALSE(nul(elem));
-    ASSERT_EQ(elem->number, val2);
 }
 
 TEST(nchainTest, testLinkedChainWithOnly1Element) {
@@ -530,26 +554,6 @@ TEST(nchainTest, testDeepChainIteration) {
         ASSERT_EQ(expect, e.cast<myNode>().number);
         expect++;
     }
-}
-
-struct myNode2 : public myNode {
-    WRD(CLASS(myNode2, myNode))
-
-public:
-    myNode2(int val) : super(val) {}
-};
-
-template <typename T = myNode>
-static wbool isMyNodesHasEqualIntArray(const tnchain<myNode>& root, int expects[], int expectSize) {
-    titer<T> myE = root.begin<T>();
-    for(int n=0; n < expectSize ;n++) {
-        if(myE.isEnd()) return false;
-        if(expects[n] != myE->number) return false;
-
-        myE++;
-    }
-
-    return true;
 }
 
 TEST(nchainTest, testTIterator) {

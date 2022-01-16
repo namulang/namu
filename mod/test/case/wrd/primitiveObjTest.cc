@@ -3,9 +3,6 @@
 using namespace wrd;
 using namespace std;
 
-namespace {
-}
-
 TEST(primitiveObjTest, testCreateWIntInMgd) {
     wInt origin(1);
 

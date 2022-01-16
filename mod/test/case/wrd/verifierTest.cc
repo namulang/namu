@@ -3,17 +3,6 @@
 using namespace wrd;
 using namespace std;
 
-struct verifierTest : public ::testing::Test {
-	void SetUp();
-	void TearDown();
-
-	verifications& getVerifications(const type& typ) {
-		return veri._getVerifications(typ);
-	}
-
-	verifier veri;
-};
-
 namespace {
     struct myObj : public mgdObj {
         WRD(CLASS(myObj, mgdObj))
@@ -57,10 +46,17 @@ namespace {
 	})
 }
 
-void verifierTest::SetUp() {
-}
-void verifierTest::TearDown() {
-}
+struct verifierTest : public ::testing::Test {
+    void SetUp() {}
+    void TearDown() {}
+
+    verifications& getVerifications(const type& typ) {
+        return veri._getVerifications(typ);
+    }
+
+    verifier veri;
+};
+
 
 TEST_F(verifierTest, verificationLoaded) {
 	verifications& veris = getVerifications(ttype<myObj>::get());

@@ -4,6 +4,20 @@
 using namespace wrd;
 using namespace std;
 
+namespace {
+    void addIntegrityTest(chunk& chk, int cnt) {
+        for(int n=0; n < cnt ; n++) {
+            int* val = (int*) chk.new1();
+            *val = n;
+        }
+
+        for(int n=0; n < cnt ;n++) {
+            int* actual = (int*) chk[n];
+            EXPECT_EQ(*actual, n);
+        }
+    }
+}
+
 TEST(chunkTest, memoryHaverTest) {
     chunk chk(4);
 
@@ -85,18 +99,6 @@ TEST(chunkTest, chunkListTest) {
     EXPECT_TRUE(chk.isFull());
     EXPECT_FALSE(chk.isCapable());
 
-}
-
-void addIntegrityTest(chunk& chk, int cnt) {
-    for(int n=0; n < cnt ; n++) {
-        int* val = (int*) chk.new1();
-        *val = n;
-    }
-
-    for(int n=0; n < cnt ;n++) {
-        int* actual = (int*) chk[n];
-        EXPECT_EQ(*actual, n);
-    }
 }
 
 TEST(chunkTest, addIntegrityTest100) {
