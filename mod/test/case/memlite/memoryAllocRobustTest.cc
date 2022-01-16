@@ -32,34 +32,35 @@ namespace {
 
         float grade;
     };
-}
 
-time_t run1(int& crc, int n)
-{
-    PA* parr[100000] = {0, };
-    time_t start = clock();
-    crc = 0;
-    for(int i=0; i < n ;i++) {
-        parr[i] = new PB();
-        crc += *(int*) parr[i];
+    time_t run1(int& crc, int n)
+    {
+        PA* parr[100000] = {0, };
+        time_t start = clock();
+        crc = 0;
+        for(int i=0; i < n ;i++) {
+            parr[i] = new PB();
+            crc += *(int*) parr[i];
+        }
+        for(int i=0; i < n ;i++)
+            delete parr[i];
+        return clock() - start;
     }
-    for(int i=0; i < n ;i++)
-        delete parr[i];
-    return clock() - start;
-}
 
-time_t run2(int& crc, int n)
-{
-    crc = 0;
-    A* arr[100000] = {0, };
-    time_t start = clock();
-    for(int i=0; i < n ;i++) {
-        arr[i] = new B();
-        crc += *(int*) arr[i];
+    time_t run2(int& crc, int n)
+    {
+        crc = 0;
+        A* arr[100000] = {0, };
+        time_t start = clock();
+        for(int i=0; i < n ;i++) {
+            arr[i] = new B();
+            crc += *(int*) arr[i];
+        }
+        for(int i=0; i < n ;i++)
+            delete arr[i];
+        return clock() - start;
     }
-    for(int i=0; i < n ;i++)
-        delete arr[i];
-    return clock() - start;
+
 }
 
 #define SPRINT(n) \

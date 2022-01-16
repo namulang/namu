@@ -2,19 +2,6 @@
 
 using namespace wrd;
 
-class heap {
-public:
-    void new1(chunks& chk, wcnt cnt) {
-        for(int n=0; n < cnt ; n++)
-            ptrs.push_back(chk.new1());
-    }
-    void rel(chunks& chk) {
-        chk.rel();
-        ptrs.clear();
-    }
-    std::vector<void*> ptrs;
-};
-
 struct chunksTest : public ::testing::Test {
     void tearDown() {
         instance::_vault.getVaults().clear();
@@ -24,6 +11,22 @@ struct chunksTest : public ::testing::Test {
         return instance::_vault.getVaults().size();
     }
 };
+
+namespace {
+    class heap {
+    public:
+        void new1(chunks& chk, wcnt cnt) {
+            for(int n=0; n < cnt ; n++)
+                ptrs.push_back(chk.new1());
+        }
+        void rel(chunks& chk) {
+            chk.rel();
+            ptrs.clear();
+        }
+        std::vector<void*> ptrs;
+    };
+
+}
 
 TEST_F(chunksTest, initialStateTest) {
     chunks chks1;

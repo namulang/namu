@@ -39,9 +39,7 @@ namespace {
     private:
         wbool _executed;
     };
-}
 
-namespace {
     struct myObj : public mgdObj {
         WRD(CLASS(myObj, mgdObj))
 
@@ -60,6 +58,59 @@ namespace {
             static funcs inner;
             return inner;
         }
+    };
+
+    class food : public mgdObj {
+        WRD(CLASS(food, mgdObj))
+
+    public:
+        food(string newName, int newCalorie): name(newName), calorie(newCalorie) {}
+
+        string name;
+        int calorie;
+
+        using super::getCtors;
+        funcs& getCtors() override {
+            static funcs inner;
+            return inner;
+        }
+    };
+
+    class chef : public mgdObj {
+
+		class myType : public wtype {
+            WRD_DECL_ME(myType, wtype);
+
+        protected:
+            const ases& _getImpliAses() const override {
+                static ases* inner = nullptr;
+                if(inner) return *inner;
+
+                inner = new ases();
+                struct tofood : public tas<food> {
+                    str as(const node& it, const type& to) const override {
+                        const chef& chef1 = it.cast<chef>();
+                        if(nul(chef1)) return str();
+
+                        return str(new food(chef1.foodName, chef1.foodCalorie));
+                    }
+                };
+                inner->add(new tofood());
+
+                return *inner;
+            }
+        };
+        WRD(CLASS(chef, mgdObj, myType))
+
+        using super::getCtors;
+        funcs& getCtors() override {
+            static funcs inner;
+            return inner;
+        }
+
+    public:
+        string foodName;
+        int foodCalorie;
     };
 }
 
@@ -148,62 +199,6 @@ TEST(nodeTest, testImmutableNegative) {
 
     r1->cast<myObj>().val = 2;
     ASSERT_EQ(*r1, *r2);
-}
-
-namespace {
-
-    class food : public mgdObj {
-        WRD(CLASS(food, mgdObj))
-
-    public:
-        food(string newName, int newCalorie): name(newName), calorie(newCalorie) {}
-
-        string name;
-        int calorie;
-
-        using super::getCtors;
-        funcs& getCtors() override {
-            static funcs inner;
-            return inner;
-        }
-    };
-
-    class chef : public mgdObj {
-
-		class myType : public wtype {
-            WRD_DECL_ME(myType, wtype);
-
-        protected:
-            const ases& _getImpliAses() const override {
-                static ases* inner = nullptr;
-                if(inner) return *inner;
-
-                inner = new ases();
-                struct tofood : public tas<food> {
-                    str as(const node& it, const type& to) const override {
-                        const chef& chef1 = it.cast<chef>();
-                        if(nul(chef1)) return str();
-
-                        return str(new food(chef1.foodName, chef1.foodCalorie));
-                    }
-                };
-                inner->add(new tofood());
-
-                return *inner;
-            }
-        };
-        WRD(CLASS(chef, mgdObj, myType))
-
-        using super::getCtors;
-        funcs& getCtors() override {
-            static funcs inner;
-            return inner;
-        }
-
-    public:
-        string foodName;
-        int foodCalorie;
-    };
 }
 
 TEST(nodeTest, testchefImplicitCastTofood) {

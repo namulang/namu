@@ -2,16 +2,42 @@
 
 using namespace wrd;
 
+namespace {
+    struct B {
+        WRD_INIT_META(B);
+
+        B(wbool newValue): value(newValue) {}
+        wbool value;
+    };
+
+    class myClass {
+        WRD_INIT_META(myClass);
+    };
+
+    struct myDerivedClass : public myClass {
+        WRD_INIT_META(myDerivedClass);
+        typedef myClass super;
+    };
+
+    struct A {
+        WRD_INIT_META(A);
+
+        A(): value(true) {}
+        wbool value;
+    };
+
+    struct myDerivedClass2 : public myClass {
+        WRD_INIT_META(myDerivedClass2);
+        typedef myClass super;
+    };
+
+    struct myDerivedClass3 : public myDerivedClass {
+        WRD_INIT_META(myDerivedClass3);
+        typedef myDerivedClass super;
+    };
+}
+
 TEST(ttypeTest, initSystem) {}
-
-class myClass {
-    WRD_INIT_META(myClass);
-};
-
-struct myDerivedClass : public myClass {
-    WRD_INIT_META(myDerivedClass);
-    typedef myClass super;
-};
 
 TEST(ttypeTest, basicBehavior) {
     ASSERT_FALSE(ttype<myClass>().isTemplate());
@@ -47,13 +73,6 @@ TEST(ttypeTest, customTypeInheritTest) {
     EXPECT_EQ(ttype<customA>::get().foo(), fooRet);
 }
 
-
-struct A {
-    WRD_INIT_META(A);
-
-    A(): value(true) {}
-    wbool value;
-};
 TEST(ttypeTest, makeInstanceTest) {
     ttype<A> type;
     A* arr[] = {(A*) type.make(), type.makeAs<A>()};
@@ -62,26 +81,10 @@ TEST(ttypeTest, makeInstanceTest) {
     ASSERT_NE(arr[0], arr[1]);
 }
 
-struct B {
-    WRD_INIT_META(B);
-
-    B(wbool newValue): value(newValue) {}
-    wbool value;
-};
 TEST(ttypeTest, makeInstanceNegativeTest) {
     ttype<B> type;
     ASSERT_FALSE(type.make());
 }
-
-struct myDerivedClass2 : public myClass {
-    WRD_INIT_META(myDerivedClass2);
-    typedef myClass super;
-};
-
-struct myDerivedClass3 : public myDerivedClass {
-    WRD_INIT_META(myDerivedClass3);
-    typedef myDerivedClass super;
-};
 
 TEST(ttypeTest, iterateLeafClassTest) {
     const type& typ = ttype<myClass>();

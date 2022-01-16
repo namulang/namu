@@ -4,42 +4,44 @@
 using namespace std;
 using namespace wrd;
 
-typedef struct consoleStreamTest : public ::testing::Test {
-    void SetUp() {
-        delLogFile();
-        ASSERT_FALSE(consoleStreamTest::hasLogFile());
-    }
-    void TearDown() {
-        delLogFile();
-    }
+namespace {
+    typedef struct consoleStreamTest : public ::testing::Test {
+        void SetUp() {
+            delLogFile();
+            ASSERT_FALSE(consoleStreamTest::hasLogFile());
+        }
+        void TearDown() {
+            delLogFile();
+        }
 
-    static void delLogFile() {
-        WRD_I("delLogFile");
-        std::remove(getLogFilePath());
-    }
+        static void delLogFile() {
+            WRD_I("delLogFile");
+            std::remove(getLogFilePath());
+        }
 
-    static const char* getLogFilePath() {
-        static const char* name = NULL;
+        static const char* getLogFilePath() {
+            static const char* name = NULL;
 
-        if(name == NULL) {
-            logger& log = logger::get();
-            for (int n=0; n < log.getStreamCount() ;n++) {
-                fileLogStream* as = dynamic_cast<fileLogStream*>(&log[n]);
-                if(as) {
-                    name = as->getPath().c_str();
-                    break;
+            if(name == NULL) {
+                logger& log = logger::get();
+                for (int n=0; n < log.getStreamCount() ;n++) {
+                    fileLogStream* as = dynamic_cast<fileLogStream*>(&log[n]);
+                    if(as) {
+                        name = as->getPath().c_str();
+                        break;
+                    }
                 }
             }
+            return name;
         }
-        return name;
-    }
 
-    static wbool hasLogFile() {
-        struct stat buffer;
-        return stat(getLogFilePath(), &buffer) == 0;
-    }
+        static wbool hasLogFile() {
+            struct stat buffer;
+            return stat(getLogFilePath(), &buffer) == 0;
+        }
 
-} thisTest;
+    } thisTest;
+}
 
 TEST_F(consoleStreamTest, dumpFormat) {
     logger::get().dumpFormat("hello");

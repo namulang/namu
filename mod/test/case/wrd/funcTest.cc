@@ -66,38 +66,33 @@ namespace {
     private:
         wtypes _types;
     };
-}
 
-const char* func1Name = "obj1func1";
-const char* func2Name = "obj1func2";
+    wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj& obj, const char* funcNames[], int funcNameSize) {
+        if(nul(fr)) return false;
 
-wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj& obj, const char* funcNames[], int funcNameSize) {
-    if(nul(fr)) return false;
+        int n = 0;
+        WRD_I("fr.len=%d", fr.subs().len());
+        for(iter e=fr.subs().begin(); e ;e++)
+            WRD_I(" - func(\"%s\") calls: fr[%d]=%s", func.getName().c_str(), n++, e->getType().getName().c_str());
 
-    int n = 0;
-    WRD_I("fr.len=%d", fr.subs().len());
-    for(iter e=fr.subs().begin(); e ;e++)
-        WRD_I(" - func(\"%s\") calls: fr[%d]=%s", func.getName().c_str(), n++, e->getType().getName().c_str());
+        const nchain& funcScope = fr.subs().cast<nchain>();
+        if(nul(funcScope)) return WRD_I("nul(funcScope)"), false;
+        if(&func.subs() != &funcScope.getContainer())
+            return WRD_I("func.subs(%x) != funcScope(%x)", &func.subs(), &funcScope), false;
 
-    const nchain& funcScope = fr.subs().cast<nchain>();
-    if(nul(funcScope)) return WRD_I("nul(funcScope)"), false;
-    if(&func.subs() != &funcScope.getContainer())
-        return WRD_I("func.subs(%x) != funcScope(%x)", &func.subs(), &funcScope), false;
+        for(int n=0; n < funcNameSize; n++) {
+            const char* name = funcNames[n];
+            if(fr.subAll(name).len() != 1)
+                return WRD_I("fr.sub(%s) is 0 or +2 founds", name), false;
+        }
 
-    for(int n=0; n < funcNameSize; n++) {
-        const char* name = funcNames[n];
-        if(fr.subAll(name).len() != 1)
-            return WRD_I("fr.sub(%s) is 0 or +2 founds", name), false;
+        narr foundfunc = fr.subAll(func.getName());
+        if(foundfunc.len() != 1)
+            return WRD_I("couldn't find %s func on frame(%x)", func.getName().c_str(), &fr), false;
+
+        return true;
     }
 
-    narr foundfunc = fr.subAll(func.getName());
-    if(foundfunc.len() != 1)
-        return WRD_I("couldn't find %s func on frame(%x)", func.getName().c_str(), &fr), false;
-
-    return true;
-}
-
-namespace {
     struct myObj : public mgdObj {
         WRD(CLASS(myObj, mgdObj))
 
@@ -108,6 +103,9 @@ namespace {
             return inner;
         }
     };
+
+    const char* func1Name = "obj1func1";
+    const char* func2Name = "obj1func2";
 }
 
 TEST(funcTest, testfuncConstructNewFrame) {

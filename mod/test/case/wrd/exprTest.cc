@@ -3,6 +3,17 @@
 using namespace wrd;
 using namespace std;
 
+namespace {
+    struct helloWorld {
+        void main(const string msg) {
+            cout << "wow, how do you feel? ==> " << msg << "\n";
+            isRun = true;
+        }
+
+        static inline wbool isRun = false;
+    };
+}
+
 struct exprTest : public ::testing::Test {
     void SetUp();
     void TearDown();
@@ -13,18 +24,6 @@ struct exprTest : public ::testing::Test {
         exp._pos = {row, col};
     }
 };
-
-namespace {
-    struct helloWorld {
-        void main(const string msg) {
-            cout << "wow, how do you feel? ==> " << msg << "\n";
-            isRun = true;
-        }
-
-        static inline wbool isRun = false;
-    };
-
-}
 
 void exprTest::SetUp() {
     bridge.bind(tcppBridge<helloWorld>::def()

@@ -4,18 +4,68 @@
 using namespace wrd;
 using namespace std;
 
-class myNode : public node {
-    WRD(CLASS(myNode, node))
+namespace {
+    class myNode : public node {
+        WRD(CLASS(myNode, node))
 
-public:
-    myNode(int num): number(num) {}
+    public:
+        myNode(int num): number(num) {}
 
-    ncontainer& subs() override { return nulOf<ncontainer>(); }
-    wbool canRun(const wtypes& types) const override { return false; }
-    str run(const containable& args) override { return str(); }
+        ncontainer& subs() override { return nulOf<ncontainer>(); }
+        wbool canRun(const wtypes& types) const override { return false; }
+        str run(const containable& args) override { return str(); }
 
-    int number;
-};
+        int number;
+    };
+
+    class myMyNode : public myNode {
+        WRD(CLASS(myMyNode, myNode))
+
+    public:
+        myMyNode(int num): super(num) {}
+    };
+
+    void benchMarkArr(int cnt) {
+        logger::get().setEnable(false);
+        vector<str> vec;
+
+        auto start = chrono::steady_clock::now();
+        for(int n=0; n < cnt; n++) {
+
+            vec.push_back(str(new myNode(n)));
+        }
+        int sz = vec.size();
+        auto startDeleting = chrono::steady_clock::now();
+        vec.clear();
+        auto end = chrono::steady_clock::now();
+
+        auto addingElapsed = startDeleting - start;
+        auto removingElapsed = end - startDeleting;
+        auto totalElapsed = end - start;
+
+        logger::get().setEnable(true);
+        WRD_I("[benchMarkArr]: vector took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
+        logger::get().setEnable(false);
+
+
+        arr arr;
+        start = chrono::steady_clock::now();
+        for(int n=0; n < cnt; n++) {
+            arr.add(*(new myNode(n)));
+        }
+        sz = arr.len();
+        startDeleting = chrono::steady_clock::now();
+        arr.rel();
+        end = chrono::steady_clock::now();
+
+        addingElapsed = startDeleting - start;
+        removingElapsed = end - startDeleting;
+        totalElapsed = end - start;
+
+        logger::get().setEnable(true);
+        WRD_I("[benchMarkArr]: arr took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
+    }
+}
 
 TEST(arrTest, instantiateTest) {
     arr arr;
@@ -60,59 +110,11 @@ TEST(arrTest, addDel10Elems) {
     ASSERT_EQ(arr.len(), cnt);
 }
 
-void benchMarkArr(int cnt) {
-    logger::get().setEnable(false);
-    vector<str> vec;
-
-    auto start = chrono::steady_clock::now();
-    for(int n=0; n < cnt; n++) {
-
-        vec.push_back(str(new myNode(n)));
-    }
-    int sz = vec.size();
-    auto startDeleting = chrono::steady_clock::now();
-    vec.clear();
-    auto end = chrono::steady_clock::now();
-
-    auto addingElapsed = startDeleting - start;
-    auto removingElapsed = end - startDeleting;
-    auto totalElapsed = end - start;
-
-    logger::get().setEnable(true);
-    WRD_I("[benchMarkArr]: vector took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
-    logger::get().setEnable(false);
-
-
-    arr arr;
-    start = chrono::steady_clock::now();
-    for(int n=0; n < cnt; n++) {
-        arr.add(*(new myNode(n)));
-    }
-    sz = arr.len();
-    startDeleting = chrono::steady_clock::now();
-    arr.rel();
-    end = chrono::steady_clock::now();
-
-    addingElapsed = startDeleting - start;
-    removingElapsed = end - startDeleting;
-    totalElapsed = end - start;
-
-    logger::get().setEnable(true);
-    WRD_I("[benchMarkArr]: arr took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
-}
-
 TEST(arrTest, benchMarkArrTest) {
     benchMarkArr(100);
     benchMarkArr(1000);
     benchMarkArr(10000);
 }
-
-class myMyNode : public myNode {
-    WRD(CLASS(myMyNode, myNode))
-
-public:
-    myMyNode(int num): super(num) {}
-};
 
 TEST(arrTest, testIter) {
     arr arr;
