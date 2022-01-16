@@ -38,9 +38,9 @@ namespace wrd {
         // events:
         using super::onScan;
         wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) override;
-        wint onEndOfFile(YYLTYPE* loc);
+        wint onEndOfFile(const area& loc);
         wint onIndent(wcnt col, wint tok);
-        wint onDedent(wcnt col, wint tok, YYLTYPE* loc);
+        wint onDedent(wcnt col, wint tok, const area& loc);
         wint onIgnoreIndent(wint tok);
         void onNewLine();
         wchar onScanUnexpected(const area& src, const wchar* token);

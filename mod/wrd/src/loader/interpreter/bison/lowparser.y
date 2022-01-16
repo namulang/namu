@@ -8,6 +8,17 @@
     #include "../loweventer.hpp"
     #include "../../../builtin/primitive/wInt.hpp"
     using namespace wrd;
+
+    #define YYLLOC_DEFAULT(Current, Rhs, N) \
+        do { \
+          if(N) { \
+              (Current).start = YYRHSLOC (Rhs, 1).start ; \
+              (Current).end = YYRHSLOC (Rhs, N).end; \
+          } else { \
+              (Current).start.row = (Current).end.row = YYRHSLOC (Rhs, 0).end.row; \
+              (Current).start.col = (Current).end.col = YYRHSLOC (Rhs, 0).end.col; \
+          } \
+        } while(0)
 }
 
 /*  ============================================================================================
@@ -15,6 +26,8 @@
     ============================================================================================  */
 
 %code requires {
+    #include "../../../ast/point.hpp"
+
     typedef void* yyscan_t;
 
     namespace wrd {
@@ -24,13 +37,11 @@
         typedef tnarr<node> narr;
     }
 
-    struct lloc {
-        int first_line, first_column;
-        int last_line, last_column;
+    struct lloc : public wrd::area {
         int colcnt;
 
         void rel() {
-            first_line = first_column = last_line = last_column = colcnt = 0;
+            start.row = start.col = end.row = end.col = colcnt = 0;
         }
     };
 }
@@ -357,11 +368,10 @@ static std::string traceErr(const yypcontext_t* ctx, yyscan_t scanner) {
 static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     auto* eventer = yyget_extra(scanner);
     const YYLTYPE* loc = yypcontext_location(ctx);
-    area srcArea = {{loc->first_line, loc->first_column}, {loc->last_line, loc->last_column}};
     yysymbol_kind_t symbol = yypcontext_token(ctx);
 
     if(symbol != YYSYMBOL_YYUNDEF)
-        eventer->onErr(new srcErr(err::ERR, 7, srcArea, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol)));
+        eventer->onErr(new srcErr(err::ERR, 7, *loc, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol)));
     _onEndParse((YYLTYPE*) loc, scanner);
     return 0;
 }
@@ -369,7 +379,7 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
 void _onEndParse(YYLTYPE* loc, yyscan_t scanner) {
     yyset_lineno(0, scanner);
     loc->rel();
-    yyget_extra(scanner)->onEndParse({loc->first_line, loc->first_column});
+    yyget_extra(scanner)->onEndParse(loc->start);
 }
 
 // errors except syntax will come here. for instance, when available memory doesn't exist.
