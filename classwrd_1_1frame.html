@@ -88,6 +88,8 @@ Inheritance diagram for wrd::frame:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ad4e3ccddc872027f306405701a63930a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structwrd_1_1tpair.html">tpair</a>&lt; <a class="el" href="classwrd_1_1tstr.html">str</a>, <a class="el" href="classwrd_1_1tstr.html">str</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1frame.html#ad4e3ccddc872027f306405701a63930a">subAndOwner</a> (const std::string &amp;name, const <a class="el" href="classwrd_1_1containable.html">containable</a> &amp;args)</td></tr>
+<tr class="separator:ad4e3ccddc872027f306405701a63930a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54e20504efa37d1139613220b047b2ef"><td class="memItemLeft" align="right" valign="top"><a id="a54e20504efa37d1139613220b047b2ef"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>pushLocal</b> (<a class="el" href="classwrd_1_1ncontainer.html">ncontainer</a> *con)</td></tr>
 <tr class="separator:a54e20504efa37d1139613220b047b2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -315,6 +317,43 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
 <p>release all holding resources and ready to be terminated. </p><dl class="section remark"><dt>Remarks</dt><dd>some class won't be able to reinitialize after <a class="el" href="classwrd_1_1frame.html#a8d9f527521d22905b69aea7781e045b8">rel()</a> got called. </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">wrd::node</a>.</p>
+
+</div>
+</div>
+<a id="ad4e3ccddc872027f306405701a63930a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4e3ccddc872027f306405701a63930a">&#9670;&nbsp;</a></span>subAndOwner()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structwrd_1_1tpair.html">tpair</a>&lt;<a class="el" href="classwrd_1_1tstr.html">str</a>, <a class="el" href="classwrd_1_1tstr.html">str</a>&gt; wrd::frame::subAndOwner </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classwrd_1_1containable.html">containable</a> &amp;&#160;</td>
+          <td class="paramname"><em>args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>returns tpair&lt;node, itsOwner&gt;. the owner has the container holding the node which can run with given name &amp; argument. </dd></dl>
 
 </div>
 </div>

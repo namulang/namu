@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tweak_465',['tweak',['../classwrd_1_1tweak.html#ab9c8ee3cfc4fadcfd6d64a870453415d',1,'wrd::tweak']]]
+  ['subandowner_466',['subAndOwner',['../classwrd_1_1frame.html#ad4e3ccddc872027f306405701a63930a',1,'wrd::frame']]]
 ];

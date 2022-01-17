@@ -12,5 +12,6 @@ var searchData=
   ['stackframe_136',['stackFrame',['../classwrd_1_1stack_frame.html',1,'wrd']]],
   ['stream_137',['stream',['../classwrd_1_1stream.html',1,'wrd']]],
   ['strtactic_138',['strTactic',['../classwrd_1_1str_tactic.html',1,'wrd']]],
-  ['syntaxtest_139',['syntaxTest',['../structsyntax_test.html',1,'']]]
+  ['subandowner_139',['subAndOwner',['../classwrd_1_1frame.html#ad4e3ccddc872027f306405701a63930a',1,'wrd::frame']]],
+  ['syntaxtest_140',['syntaxTest',['../structsyntax_test.html',1,'']]]
 ];

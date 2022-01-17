@@ -78,7 +78,7 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> L, <span class="keyword">typename</span> R&gt;</div>
 <div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="structwrd_1_1tpair.html">    8</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tpair.html">tpair</a> {</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <a class="code" href="structwrd_1_1tpair.html">tpair</a>() {}</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <a class="code" href="structwrd_1_1tpair.html">tpair</a>(L&amp; newL, R&amp; newR): l(newL), r(newR) {}</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <a class="code" href="structwrd_1_1tpair.html">tpair</a>(<span class="keyword">const</span> L&amp; newL, <span class="keyword">const</span> R&amp; newR): l(newL), r(newR) {}</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        L l;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        R r;</div>
@@ -87,7 +87,7 @@ $(function() {
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> L, <span class="keyword">typename</span> R&gt;</div>
 <div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="structwrd_1_1tpair_3_01_l_01_6_00_01_r_01_4.html">   17</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tpair.html">tpair</a>&lt;L&amp;, R&gt; {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="structwrd_1_1tpair.html">tpair</a>(): l(nulOf&lt;L&gt;()) {}</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="structwrd_1_1tpair.html">tpair</a>(L&amp; newL, R newR): l(newL), r(newR) {}</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="structwrd_1_1tpair.html">tpair</a>(L&amp; newL, <span class="keyword">const</span> R&amp; newR): l(newL), r(newR) {}</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        L&amp; l;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        R r;</div>
@@ -96,7 +96,7 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> L, <span class="keyword">typename</span> R&gt;</div>
 <div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structwrd_1_1tpair_3_01_l_00_01_r_01_6_01_4.html">   26</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tpair.html">tpair</a>&lt;L, R&amp;&gt; {</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <a class="code" href="structwrd_1_1tpair.html">tpair</a>(): r(nulOf&lt;R&gt;()) {}</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <a class="code" href="structwrd_1_1tpair.html">tpair</a>(L newL, R&amp; newR): l(newL), r(newR) {}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <a class="code" href="structwrd_1_1tpair.html">tpair</a>(<span class="keyword">const</span> L&amp; newL, R&amp; newR): l(newL), r(newR) {}</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        L l;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        R&amp; r;</div>
