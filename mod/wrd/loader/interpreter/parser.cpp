@@ -7,7 +7,7 @@ namespace wrd {
 
     WRD_DEF_ME(parser)
 
-    str me::parse(const wchar* script) {
+    tstr<narr> me::parse(const wchar* script) {
         yyscan_t scanner;
         yylex_init_extra(&_eventer, &scanner);
 
@@ -25,7 +25,7 @@ namespace wrd {
 
         yylex_destroy(scanner);
         rel();
-        return _eventer.getRoot();
+        return _eventer.getTray();
     }
 
     void me::rel() {

@@ -145,7 +145,7 @@
 compilation-unit: pack defblock {
                 // TODO:
                 auto* eventer = yyget_extra(scanner);
-                eventer->getRoot().bind(new wInt(5));
+                eventer->getTray()->add(new wInt(5));
                 _onEndParse(yylocp, scanner);
               }
 

@@ -31,9 +31,13 @@ namespace wrd {
             _eventer.getReport().bind(report);
 			return *this;
 		}
+        me& setTray(narr& tray) {
+            _eventer.setTray(tray);
+            return *this;
+        }
 
         /// @param script is null terminated cstring.
-        str parse(const wchar* script);
+        tstr<narr> parse(const wchar* script);
 
 		virtual void rel();
 

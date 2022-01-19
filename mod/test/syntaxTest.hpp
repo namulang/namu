@@ -11,10 +11,10 @@ struct syntaxTest : public ::testing::Test {
         return parse(src, rpt);
     }
 
-    wrd::str parse(const wrd::wchar* src, wrd::errReport& rpt) {
+    wrd::tstr<wrd::narr> parse(const wrd::wchar* src, wrd::errReport& rpt) {
         wrd::parser p;
-        wrd::str ret = p.setReport(rpt).parse(src);
-        EXPECT_TRUE(!rpt && ret) << "test code: " << src << "\n";
+        auto ret = p.setReport(rpt).parse(src);
+        EXPECT_TRUE(!rpt && ret->len() > 0) << "test code: " << src << "\n";
         return ret;
     }
 
@@ -25,8 +25,8 @@ struct syntaxTest : public ::testing::Test {
 
     void parseFail(const wrd::wchar* src, wrd::errReport& rpt) {
         wrd::parser p;
-        wrd::str ret = p.setReport(rpt).parse(src);
-        EXPECT_TRUE(rpt || !ret) << "test code: " << src << "\n";
+        auto ret = p.setReport(rpt).parse(src);
+        EXPECT_TRUE(rpt || ret->len() <= 0) << "test code: " << src << "\n";
     }
 
     wrd::wbool assertSame(wrd::str unit, const wrd::wchar* expect) {
