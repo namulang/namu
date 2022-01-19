@@ -22,6 +22,7 @@ jobs:
         ./configure
         sudo make
         sudo make install
+        sudo mv /usr/bin/bison /usr/bin/bison-prev
         sudo ln -s /usr/local/bin/bison /usr/bin/bison
 
     - name: checkout repository codes
