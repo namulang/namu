@@ -20,15 +20,18 @@ namespace wrd {
 	protected:
 		template <typename ErrT, typename... Args>
 		wbool _warn(Args... args) {
-			return _report->add(new ErrT(err::WARN, args...));
+			_report->add(new ErrT(err::WARN, args...));
+            return false;
 		}
 		template <typename ErrT, typename... Args>
 		wbool _err(Args... args) {
-			return _report->add(new ErrT(err::ERR, args...));
+			_report->add(new ErrT(err::ERR, args...));
+            return true;
 		}
 		template <typename ErrT, typename... Args>
 		wbool _info(Args... args) {
-			return _report->add(new ErrT(err::INFO, args...));
+			_report->add(new ErrT(err::INFO, args...));
+            return false;
 		}
 
 		wbool _verify(const typeProvidable& it, errReport& report);

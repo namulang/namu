@@ -28,6 +28,10 @@ namespace wrd {
             return _toks.size();
         }
 
+        void rel() {
+            _toks.clear();
+        }
+
     private:
         std::list<wint> _toks;
     };

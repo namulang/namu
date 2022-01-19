@@ -8,12 +8,17 @@ namespace wrd {
     WRD_DEF_ME(parser)
 
     tstr<narr> me::parse(const wchar* script) {
+        WRD_I("parse starts.");
+
         yyscan_t scanner;
         yylex_init_extra(&_eventer, &scanner);
 
         YY_BUFFER_STATE bufState = yy_scan_string((wchar*) script, scanner); // +2 is for space of END_OF_BUFFER, nullptr.
-        if(!bufState)
-            return WRD_E("bufState == nullptr"), str();
+        if(!bufState) {
+            _eventer.getReport()->add(new err(err::ERR, 11, "bufState")).log();
+            return str();
+        }
+        yy_switch_to_buffer(bufState, scanner);
 
 #if YYDEBUG
         yyset_debug(1, scanner); // For Flex (no longer a global, but rather a member of yyguts_t)
@@ -21,10 +26,14 @@ namespace wrd {
 #endif
 
         int res = yyparse(scanner);
-        // TODO: handle ret.
+        if(res) {
+            _eventer.getReport()->add(new err(err::WARN, 12, res)).log();
+            return str();
+        }
 
+        yy_delete_buffer(bufState, scanner);
         yylex_destroy(scanner);
-        rel();
+        _eventer.prepareParse();
         return _eventer.getTray();
     }
 
