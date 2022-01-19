@@ -26,6 +26,8 @@ namespace wrd {
             "%s",
             "unexpected token '%s' found",
             "invalid indentation level found. expected %d columns but it was %d. I'm assuming you were trying to give %d columns"  // 10
+            "%s is null",
+            "parsing has done. but something went wrong: %d",
 
             /* to be continue... */
 

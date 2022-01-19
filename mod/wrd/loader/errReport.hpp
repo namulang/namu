@@ -32,9 +32,9 @@ namespace wrd {
 
 		wcnt len() const { return _errs.size(); }
 
-		virtual wbool add(const err* new1) {
+		virtual const err& add(const err* new1) {
 			_errs.push_back(new1);
-			return true;
+			return *new1;
 		}
 
 		std::vector<tstr<err>>::const_iterator begin() const {
@@ -59,10 +59,13 @@ namespace wrd {
     };
 
 	class dummyErrReport : public errReport {
-		WRD(CLASS(dummyErrReport, errReport))
+        WRD(CLASS(dummyErrReport, errReport))
 
-	public:
-		wbool add(const err* new1) override { return false; }
+    public:
+        const err& add(const err* new1) override {
+            static dummyErr dum;
+            return dum;
+        }
 
 		static me singletone;
 	};

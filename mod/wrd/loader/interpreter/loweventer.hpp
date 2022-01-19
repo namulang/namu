@@ -14,7 +14,7 @@ namespace wrd {
         friend class tokenScanModable;
 
     public:
-        loweventer(): _mode(nullptr), _isIgnoreWhitespace(false) { rel(); }
+        loweventer() { rel(); }
 
     public:
         tstr<narr>& getTray() {
@@ -37,6 +37,15 @@ namespace wrd {
 
         void rel() {
             _report.bind(dummyErrReport::singletone);
+            _tray.rel();
+            prepareParse();
+        }
+
+        void prepareParse() {
+            _mode = nullptr;
+            _isIgnoreWhitespace = false;
+            _dispatcher.rel();
+            _indents.clear();
         }
 
     public:

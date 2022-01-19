@@ -13,7 +13,6 @@ TEST(parserTest, testHelloWorld) {
     tstr<narr> rootBinder = p.parse(script.c_str());
     ASSERT_TRUE(rootBinder);
     ASSERT_TRUE(rootBinder->len() == 1);
-
     rootBinder = p.parse(stringScript);
     ASSERT_TRUE(rootBinder);
     ASSERT_TRUE(rootBinder->len() == 2);

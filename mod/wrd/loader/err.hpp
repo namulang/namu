@@ -53,6 +53,18 @@ namespace wrd {
         std::string _format(const std::string& fmt, va_list args);
 	};
 
+    struct dummyErr : public err {
+        WRD(ME(dummyErr, err),
+            TYPE(wtype),
+            INIT_META(me))
+
+    public:
+        dummyErr(): super(err::ERR, 0) {}
+
+    public:
+        void log() const override {}
+    };
+
 	struct srcErr : public err {
 		WRD(ME(srcErr, err),
 			TYPE(wtype),
