@@ -17,7 +17,12 @@ namespace wrd {
         loweventer(): _mode(nullptr), _isIgnoreWhitespace(false) { rel(); }
 
     public:
-        str& getRoot() { return _root; }
+        tstr<narr>& getTray() {
+            if(!_tray)
+                _tray.bind(new narr());
+            return _tray;
+        }
+        void setTray(narr& new1) { _tray.bind(new1); }
         tstr<errReport>& getReport() { return _report; }
         tokenDispatcher& getDispatcher() { return _dispatcher; }
         std::vector<wcnt>& getIndents() { return _indents; }
@@ -53,9 +58,9 @@ namespace wrd {
     private:
         tokenScan* _mode;
         wbool _isIgnoreWhitespace;
-        str _root;
         tokenDispatcher _dispatcher;
         std::vector<wcnt> _indents;
         tstr<errReport> _report;
+        tstr<narr> _tray;
     };
 }
