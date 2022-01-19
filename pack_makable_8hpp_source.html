@@ -76,30 +76,27 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>wrd {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">class </span>pack;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> defaultContainer&gt; <span class="keyword">class </span>tnchain;</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">typedef</span> tnchain&lt;pack&gt; packChain;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">class </span>src;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">typedef</span> std::vector&lt;src&gt; srcs;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">class </span>obj;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span>tnarr;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">typedef</span> <a class="code" href="classwrd_1_1tnarr.html">wrd::tnarr&lt;wrd::obj&gt;</a> <a class="code" href="classwrd_1_1tnarr.html">origins</a>;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classwrd_1_1pack_makable.html">   17</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1pack_makable.html">packMakable</a> {</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        WRD_DECL_ME(<a class="code" href="classwrd_1_1pack_makable.html">packMakable</a>)</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        WRD_INIT_META(me)</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="structwrd_1_1tpair.html">tpair&lt;origins&amp;, srcs&amp;&gt;</a> make() = 0;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">virtual</span> wbool verify(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tnchain.html">packChain</a>&amp; mergedPacks) = 0;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">virtual</span> wbool link(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tnchain.html">packChain</a>&amp; mergedPacks) = 0;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    };</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">class </span>src;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">class </span>errReport;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">class </span>containable;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">class </span>tnarr;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">typedef</span> tnarr&lt;src&gt; srcs;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classwrd_1_1pack_makable.html">   14</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1pack_makable.html">packMakable</a> {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        WRD_DECL_ME(<a class="code" href="classwrd_1_1pack_makable.html">packMakable</a>)</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        WRD_INIT_META(me)</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classwrd_1_1tstr.html">tstr&lt;srcs&gt;</a> parse(<a class="code" href="classwrd_1_1err_report.html">errReport</a>&amp; rpt, <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; tray) = 0;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">virtual</span> wbool verify(<a class="code" href="classwrd_1_1err_report.html">errReport</a>&amp; rpt, <a class="code" href="classwrd_1_1pack.html">pack</a>&amp; pak) = 0;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    };</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1tnchain_html"><div class="ttname"><a href="classwrd_1_1tnchain.html">wrd::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:12</div></div>
-<div class="ttc" id="aclasswrd_1_1pack_makable_html"><div class="ttname"><a href="classwrd_1_1pack_makable.html">wrd::packMakable</a></div><div class="ttdef"><b>Definition:</b> packMakable.hpp:17</div></div>
-<div class="ttc" id="astructwrd_1_1tpair_html"><div class="ttname"><a href="structwrd_1_1tpair.html">wrd::tpair</a></div><div class="ttdef"><b>Definition:</b> tpair.hpp:8</div></div>
-<div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr&lt; wrd::obj &gt;</a></div></div>
+<div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
+<div class="ttc" id="aclasswrd_1_1err_report_html"><div class="ttname"><a href="classwrd_1_1err_report.html">wrd::errReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:10</div></div>
+<div class="ttc" id="aclasswrd_1_1pack_html"><div class="ttname"><a href="classwrd_1_1pack.html">wrd::pack</a></div><div class="ttdef"><b>Definition:</b> pack.hpp:14</div></div>
+<div class="ttc" id="aclasswrd_1_1pack_makable_html"><div class="ttname"><a href="classwrd_1_1pack_makable.html">wrd::packMakable</a></div><div class="ttdef"><b>Definition:</b> packMakable.hpp:14</div></div>
+<div class="ttc" id="aclasswrd_1_1containable_html"><div class="ttname"><a href="classwrd_1_1containable.html">wrd::containable</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:13</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

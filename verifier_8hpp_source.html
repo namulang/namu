@@ -77,38 +77,47 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>wrd {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classwrd_1_1verifier.html">    9</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1verifier.html">verifier</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1type_providable.html">typeProvidable</a>, <a class="code" href="classwrd_1_1clonable.html">clonable</a> {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1verifier.html">verifier</a>))</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">friend</span> struct ::verifierTest;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keywordtype">void</span> add(<span class="keyword">const</span> <a class="code" href="classwrd_1_1verification.html">verification</a>* new1)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            <span class="keywordflow">if</span>(!new1) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            _getVerifications(new1-&gt;getType()).push_back(<span class="keyword">const_cast&lt;</span><a class="code" href="classwrd_1_1verification.html">verification</a>*<span class="keyword">&gt;</span>(new1));</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        }</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keywordtype">void</span> verify(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type_providable.html">typeProvidable</a>&amp; it, <a class="code" href="classwrd_1_1err_report.html">errReport</a>&amp; report)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            _verifyWithType(it, report, it.getType());</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        }</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">void</span> _verifyWithType(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type_providable.html">typeProvidable</a>&amp; it, <a class="code" href="classwrd_1_1err_report.html">errReport</a>&amp; report, <span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; typ)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keywordflow">if</span>(typ == <a class="code" href="classwrd_1_1ttype.html">ttype&lt;adam&gt;::get</a>()) <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            _verifyWithType(it, report, typ.getSuper());</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            verifications&amp; veris = _getVerifications(typ);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">auto</span>* elem : veris)</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;                elem-&gt;verify(*<span class="keyword">this</span>, it, report);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        }</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">static</span> verifications&amp; _getVerifications(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; typ) {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keyword">static</span> verificationMap inner;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordflow">return</span> inner[(<span class="keywordtype">void</span>*) &amp;typ];</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        }</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    };</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="comment">// TODO:</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="comment">//  if verifier detects an access to a pack:</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="comment">//      void onGetPack(targetPack, currentPack) {</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="comment">//          targetPack.setReport(currentPack.getReport());</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="comment">//          targetPack.subs();</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="comment">//          if(!targetPack.isValid())</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="comment">//              currentPack.setValid(false); // never set to valid again if it&#39;s invalid once.</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="comment">//          targetPack.addDepedent(currentPack);</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="comment">//      }</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classwrd_1_1verifier.html">   18</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1verifier.html">verifier</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1type_providable.html">typeProvidable</a>, <a class="code" href="classwrd_1_1clonable.html">clonable</a> {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1verifier.html">verifier</a>))</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">friend</span> struct ::verifierTest;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">void</span> add(<span class="keyword">const</span> <a class="code" href="classwrd_1_1verification.html">verification</a>* new1)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <span class="keywordflow">if</span>(!new1) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            _getVerifications(new1-&gt;getType()).push_back(<span class="keyword">const_cast&lt;</span><a class="code" href="classwrd_1_1verification.html">verification</a>*<span class="keyword">&gt;</span>(new1));</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        }</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">void</span> verify(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type_providable.html">typeProvidable</a>&amp; it, <a class="code" href="classwrd_1_1err_report.html">errReport</a>&amp; report)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            _verifyWithType(it, report, it.getType());</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        }</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordtype">void</span> _verifyWithType(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type_providable.html">typeProvidable</a>&amp; it, <a class="code" href="classwrd_1_1err_report.html">errReport</a>&amp; report, <span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; typ)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">if</span>(typ == <a class="code" href="classwrd_1_1ttype.html">ttype&lt;adam&gt;::get</a>()) <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            _verifyWithType(it, report, typ.getSuper());</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            verifications&amp; veris = _getVerifications(typ);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">auto</span>* elem : veris)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                elem-&gt;verify(*<span class="keyword">this</span>, it, report);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        }</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">static</span> verifications&amp; _getVerifications(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; typ) {</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keyword">static</span> verificationMap inner;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordflow">return</span> inner[(<span class="keywordtype">void</span>*) &amp;typ];</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        }</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    };</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructverifier_test_html"><div class="ttname"><a href="structverifier_test.html">verifierTest</a></div><div class="ttdef"><b>Definition:</b> verifierTest.cc:49</div></div>
 <div class="ttc" id="aclasswrd_1_1clonable_html"><div class="ttname"><a href="classwrd_1_1clonable.html">wrd::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
@@ -117,7 +126,7 @@ $(function() {
 <div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
 <div class="ttc" id="aclasswrd_1_1ttype_html"><div class="ttname"><a href="classwrd_1_1ttype.html">wrd::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:15</div></div>
 <div class="ttc" id="aclasswrd_1_1type_providable_html"><div class="ttname"><a href="classwrd_1_1type_providable.html">wrd::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:4</div></div>
-<div class="ttc" id="aclasswrd_1_1verifier_html"><div class="ttname"><a href="classwrd_1_1verifier.html">wrd::verifier</a></div><div class="ttdef"><b>Definition:</b> verifier.hpp:9</div></div>
+<div class="ttc" id="aclasswrd_1_1verifier_html"><div class="ttname"><a href="classwrd_1_1verifier.html">wrd::verifier</a></div><div class="ttdef"><b>Definition:</b> verifier.hpp:18</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
