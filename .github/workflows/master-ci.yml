@@ -22,8 +22,11 @@ jobs:
         ./configure
         sudo make
         sudo make install
+        cd ..
+        sudo rm -rf bison-3.8.2
         sudo mv /usr/bin/bison /usr/bin/bison-prev
         sudo ln -s /usr/local/bin/bison /usr/bin/bison
+
 
     - name: checkout repository codes
       uses: actions/checkout@v2
