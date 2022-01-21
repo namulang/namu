@@ -496,7 +496,7 @@ def clean():
     _cleanIntermediates()
     _cleanDir(binDir)
     _cleanDir(cwd + "/mod")
-    bisonDir = cwd + "/../mod/wrd/src/loader/interpreter/bison"
+    bisonDir = cwd + "/../mod/wrd/loader/interpreter/bison"
     try:
         os.remove(bisonDir + "/lowparser.hpp")
         os.remove(bisonDir + "/lowparser.cpp")
