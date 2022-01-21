@@ -17,47 +17,6 @@
 
 ## mgdType은 origin객체를 반환할 수 있다.
 
-
-## aka
-
-* 식별자의 별칭을 만들 수 있다.
-
-    aka <path> '->' <alias-id>
-
-### 축약 형태
-
-    aka '->' <path>
-
-### 정의와 동시에 aka를 쓰는 경우 문법이 조금 생소할 수 있다.
-
-* aka는 앞에 있는 식별자를 최대한 크게 인식하려고 한다.
-* aka는 다른 expr 안에 들어갈 수 없다. aka가 항상 최종 expr 밖에 있어야 한다.
-* 괄호를 사용하면 최종expr도 중간expr로 변환할 수 있다. 그러므로 aka를 괄호 안에 넣어서 다른 expr에 포함시킬 수 있다.
-
-```wrd
-aka def person obj() 
-    aka callback() void -> c
-    aka callback(whatever flt) void = null -> c2
-
-    aka -> callback(whatever str) void
-        doSomething()
-        ...
-        return aka (lamb,da) str
-            ....
-            ->l
-
-        aka (lamb, da) -> str
-            ....
-        ->l2
-
-        return aka ((labm, da) -> str
-            ....
-        ) -> l3 // ok.
--> p
-```
-
-## aka도 expression 이다.
-
 ## type을 정의하면 그것의 unique object가 그 type이름에 대신들어간다.
 
 * 메소드도 마찬가지다.
