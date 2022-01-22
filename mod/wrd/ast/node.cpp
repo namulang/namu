@@ -14,6 +14,13 @@ namespace wrd {
         return run(empty);
     }
 
+    str me::run(const std::string& name, const containable& args) {
+        me& found = sub(name, args);
+        if(nul(found)) return str();
+
+        return found.run(args);
+    }
+
 	WRD_VERIFY(node, {
 		for(auto& elem : it.subs())
 			_verify(elem, report);

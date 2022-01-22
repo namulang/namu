@@ -33,11 +33,11 @@ namespace wrd {
         template <typename T = me>
         T& sub(const std::string& name) const;
         template <typename T = me>
-        T& sub(const std::string& name, const ncontainer& args);
+        T& sub(const std::string& name, const containable& args);
         template <typename T = me>
         T& sub(const std::string& name, const wtypes& types);
         template <typename T = me>
-        T& sub(const std::string& name, const ncontainer& args) const;
+        T& sub(const std::string& name, const containable& args) const;
         template <typename T = me>
         T& sub(const std::string& name, const wtypes& types) const;
 
@@ -61,6 +61,7 @@ namespace wrd {
             return canRun(createTypesFromArgs(args));
         }
 
+        virtual str run(const std::string& name, const containable& args);
         virtual str run(const containable& args) = 0;
         str run();
 

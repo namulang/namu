@@ -14,7 +14,7 @@ namespace wrd {
     }
 
     template <typename T>
-    T& ME::sub(const std::string& name, const ncontainer& args) {
+    T& ME::sub(const std::string& name, const containable& args) {
         if(nul(args))
             return sub<T>(name);
 
@@ -29,7 +29,7 @@ namespace wrd {
     }
 
     template <typename T>
-    T& ME::sub(const std::string& name, const ncontainer& args) const WRD_UNCONST_FUNC(sub<T>(name, args))
+    T& ME::sub(const std::string& name, const containable& args) const WRD_UNCONST_FUNC(sub<T>(name, args))
 
     template <typename T>
     T& ME::sub(const std::string& name, const wtypes& types) const WRD_UNCONST_FUNC(sub<T>(name, types))
