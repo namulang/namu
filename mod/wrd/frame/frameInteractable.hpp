@@ -5,7 +5,7 @@
 namespace wrd {
 
     class frame;
-    class ncontainer;
+    class containable;
     class frameInteractable {
         WRD_DECL_ME(frameInteractable)
         WRD_INIT_META(frameInteractable)
@@ -14,7 +14,7 @@ namespace wrd {
         friend class frameInteract;
 
     protected:
-        virtual wbool _onInFrame(frame& sf, const ncontainer& args) = 0;
-        virtual wbool _onOutFrame(frame& sf, const ncontainer& args) = 0;
+        virtual wbool _onInFrame(frame& sf, const containable& args) = 0;
+        virtual wbool _onOutFrame(frame& sf, const containable& args) = 0;
     };
 }

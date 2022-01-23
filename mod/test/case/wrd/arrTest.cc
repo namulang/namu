@@ -13,6 +13,7 @@ namespace {
 
         ncontainer& subs() override { return nulOf<ncontainer>(); }
         wbool canRun(const wtypes& types) const override { return false; }
+        using super::run;
         str run(const containable& args) override { return str(); }
 
         int number;

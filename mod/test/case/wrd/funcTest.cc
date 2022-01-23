@@ -110,9 +110,8 @@ namespace {
 
 TEST(funcTest, testfuncConstructNewFrame) {
     myObj obj;
-    myfunc func("test");
-    func.getTypes().push_back(&obj.getType());
     const char* funcNames[] = {"test"};
+    myfunc func(funcNames[0]);
 
     obj.subs().add(func);
     WRD_I("obj.len=%d", obj.subs().len());
@@ -133,8 +132,14 @@ TEST(funcTest, testfuncConstructNewFrame) {
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
     func.run(args);
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_FALSE(func.isRun());
+
+    ASSERT_FALSE(func.isSuccess());
+
+    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    obj.run(funcNames[0], args);
+    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
     ASSERT_TRUE(func.isRun());
-    ASSERT_TRUE(func.isSuccess());
     ASSERT_TRUE(func.isSuccess());
     func.setLambda(nullptr);
 }

@@ -22,8 +22,8 @@ namespace wrd {
 
     protected:
         str _onCast(narr& castedArgs) override;
-        wbool _onInFrame(frame& sf, const ncontainer& args) override;
-        wbool _onOutFrame(frame& sf, const ncontainer& args) override;
+        wbool _onInFrame(frame& sf, const containable& args) override;
+        wbool _onOutFrame(frame& sf, const containable& args) override;
 
     private:
         tstr<blockExpr> _blk;

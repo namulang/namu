@@ -9,14 +9,14 @@ namespace wrd {
 
     WRD_DEF_ME(mgdFunc)
 
-    wbool me::_onInFrame(frame& fr, const ncontainer& args) {
+    wbool me::_onInFrame(frame& fr, const containable& args) {
         WRD_DI("%s._onInFrame()", getName().c_str());
 
         fr.add(subs());
         return true;
     }
 
-    wbool me::_onOutFrame(frame& fr, const ncontainer& args) {
+    wbool me::_onOutFrame(frame& fr, const containable& args) {
         WRD_DI("%s._onOutFrame()", getName().c_str());
 
         fr.del();
@@ -24,15 +24,12 @@ namespace wrd {
     }
 
     str me::_onCast(narr& castedArgs) {
-        obj& meObj = castedArgs[0].cast<obj>();
         stackFrame& sf = thread::get()._getStackFrame();
         sf.add(new frame());
 
         str ret;
-        { frameInteract inter(meObj, castedArgs);
-            { frameInteract inter(*this, castedArgs);
-                ret = _blk->run(castedArgs);
-            }
+        frameInteract inter(*this, castedArgs); {
+            ret = _blk->run(castedArgs);
         }
 
         sf.del();

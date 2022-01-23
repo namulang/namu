@@ -11,4 +11,17 @@ namespace wrd {
 
         return *this;
     }
+
+    wbool me::_onInFrame(frame& fr, const containable& args) {
+        WRD_DI("%s._onInFrame()", getName().c_str());
+
+        return fr.add(*nchain::wrapDeep(subs()));
+    }
+
+    wbool me::_onOutFrame(frame& fr, const containable& args) {
+        WRD_DI("%s._onOutFrame()", getName().c_str());
+
+        fr.del();
+        return true;
+    }
 }

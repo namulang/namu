@@ -35,19 +35,19 @@ namespace wrd {
             return _assign(rhs);
         }
 
-        nchain& getShares() {
-            return *_shares;
-        }
+        nchain& getShares() { return *_shares; }
         const nchain& getShares() const WRD_UNCONST_FUNC(getShares())
 
-        narr& getOwns() {
-            return *_owns;
-        }
+        narr& getOwns() { return *_owns; }
         const narr& getOwns() const WRD_UNCONST_FUNC(getOwns())
 
         const obj& getOrigin() const override {
             return *_org;
         }
+
+    protected:
+        wbool _onInFrame(frame& fr, const containable& args) override;
+        wbool _onOutFrame(frame& fr, const containable& args) override;
 
     private:
         nchain* _makeNewSubs() {

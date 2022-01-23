@@ -28,6 +28,7 @@ namespace wrd {
 
         using super::run;
         str run(const containable& args) override;
+        str run(const std::string& name, const containable& args) override;
 
         using super::canRun;
         wbool canRun(const wtypes& types) const override;
@@ -41,8 +42,8 @@ namespace wrd {
         }
 
     protected:
-        wbool _onInFrame(frame& fr, const ncontainer& args) override;
-        wbool _onOutFrame(frame& fr, const ncontainer& args) override;
+        wbool _onInFrame(frame& fr, const containable& args) override { return true; }
+        wbool _onOutFrame(frame& fr, const containable& args) override { return true; }
 
     protected:
         std::string _name;
