@@ -38,8 +38,8 @@ namespace wrd {
         }
 
     protected:
-        wbool _onInFrame(frame& fr, const ncontainer& args) override;
-        wbool _onOutFrame(frame& fr, const ncontainer& args) override;
+        wbool _onInFrame(frame& fr, const containable& args) override;
+        wbool _onOutFrame(frame& fr, const containable& args) override;
 
     private:
         tnarr<expr> _exprs;
