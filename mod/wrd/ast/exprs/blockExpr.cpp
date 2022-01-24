@@ -1,20 +1,22 @@
 #include "blockExpr.hpp"
-#include "../../frame/frame.hpp"
+#include "../../frame/thread.hpp"
 
 namespace wrd {
-
     WRD_DEF_ME(blockExpr)
 
-    wbool me::_onInFrame(frame& fr, const containable& args) {
+    str me::run(const containable& args) {
         WRD_DI("%s._onInFrame()", getName().c_str());
+        frame& fr = wrd::thread::get()._getStackFrame().getCurrentFrame();
+        if(nul(fr))
+            return WRD_E("fr == null"), str();
+        fr.add(new narr());
 
-        return fr.add(new narr());
-    }
+        str ret;
+        for(auto e=_exprs.begin<expr>(); e ; ++e)
+            ret = e->run(nulOf<containable>());
 
-    wbool me::_onOutFrame(frame& fr, const containable& args) {
         WRD_DI("%s._onOutFrame()", getName().c_str());
-
         fr.del();
-        return true;
+        return ret;
     }
 }

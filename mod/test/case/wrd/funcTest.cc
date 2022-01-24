@@ -130,14 +130,14 @@ TEST(funcTest, testfuncConstructNewFrame) {
     });
 
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
-    func.run(args);
+    func.run();
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
     ASSERT_FALSE(func.isRun());
 
     ASSERT_FALSE(func.isSuccess());
 
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
-    obj.run(funcNames[0], args);
+    obj.run(funcNames[0]);
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
     ASSERT_TRUE(func.isRun());
     ASSERT_TRUE(func.isSuccess());
@@ -196,6 +196,12 @@ TEST(funcTest, testCallfuncInsidefunc) {
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
     obj1func1.run(args);
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_FALSE(obj1func1.isSuccess());
+    obj1.run(func1Name);
+    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_FALSE(obj1func1.isSuccess());
+    obj1.run(func1Name, args);
+    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
     ASSERT_TRUE(obj1func1.isSuccess());
 }
 
@@ -226,5 +232,11 @@ TEST(funcTest, testfuncHasStrParameter) {
     iter e = args.iter(1);
 
     func1.run(args);
+    ASSERT_FALSE(func1.isSuccess());
+
+    obj.run("myfunc", narr());
+    ASSERT_FALSE(func1.isSuccess());
+
+    obj.run("myfunc", args);
     ASSERT_TRUE(func1.isSuccess());
 }

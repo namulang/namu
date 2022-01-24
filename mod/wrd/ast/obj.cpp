@@ -2,7 +2,6 @@
 #include "func.hpp"
 #include "../builtin/container/containable.inl"
 #include "../frame/stackFrame.hpp"
-#include "../frame/frameInteract.hpp"
 
 namespace wrd {
 
@@ -21,12 +20,6 @@ namespace wrd {
             return WRD_E("%s object isn't constructable with given args", getType().getName().c_str()), str();
 
         return fun.run(args);
-    }
-
-    str me::run(const std::string& name, const containable& args) {
-        frameInteract objInteract(*this, args); {
-            return super::run(name, args);
-        }
     }
 
     wbool me::canRun(const wtypes& typs) const {

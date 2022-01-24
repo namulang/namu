@@ -63,6 +63,7 @@ namespace wrd {
 
         virtual str run(const std::string& name, const containable& args);
         virtual str run(const containable& args) = 0;
+        str run(const std::string& name);
         str run();
 
         /// release all holding resources and ready to be terminated.
