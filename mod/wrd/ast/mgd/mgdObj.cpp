@@ -1,4 +1,5 @@
 #include "mgdObj.hpp"
+#include "../../frame/thread.hpp"
 
 namespace wrd {
 
@@ -12,16 +13,17 @@ namespace wrd {
         return *this;
     }
 
-    wbool me::_onInFrame(frame& fr, const containable& args) {
+    str me::run(const std::string& name, const containable& args) {
         WRD_DI("%s._onInFrame()", getName().c_str());
+        stackFrame& sf = wrd::thread::get()._getStackFrame();
+        frame& fr = *new frame();
+        sf.add(fr);
+        fr.add(*nchain::wrapDeep(subs()));
 
-        return fr.add(*nchain::wrapDeep(subs()));
-    }
+        str ret = super::run(name, args);
 
-    wbool me::_onOutFrame(frame& fr, const containable& args) {
         WRD_DI("%s._onOutFrame()", getName().c_str());
-
-        fr.del();
-        return true;
+        sf.del();
+        return ret;
     }
 }

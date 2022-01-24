@@ -1,11 +1,10 @@
 #pragma once
 
 #include "../expr.hpp"
-#include "../../frame/frameInteractable.hpp"
 
 namespace wrd {
 
-    class blockExpr : public expr, public frameInteractable {
+    class blockExpr : public expr {
         WRD(CLASS(blockExpr, expr, expr::exprType))
         friend class mgdFunc;
 
@@ -22,13 +21,7 @@ namespace wrd {
         }
 
         using super::run;
-        str run(const containable& args) override {
-            str ret;
-            for(auto e=_exprs.begin<expr>(); e ; ++e)
-                ret = e->run(nulOf<containable>());
-
-            return ret;
-        }
+        str run(const containable& args) override;
 
         const wtype& getEvalType() const override {
             wcnt len = _exprs.len();
@@ -36,10 +29,6 @@ namespace wrd {
 
             return _exprs[len-1].getEvalType();
         }
-
-    protected:
-        wbool _onInFrame(frame& fr, const containable& args) override;
-        wbool _onOutFrame(frame& fr, const containable& args) override;
 
     private:
         tnarr<expr> _exprs;

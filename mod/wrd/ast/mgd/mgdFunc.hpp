@@ -1,12 +1,11 @@
 #pragma once
 
 #include "../func.hpp"
-#include "../../frame/frameInteractable.hpp"
 #include "../exprs/blockExpr.hpp"
 
 namespace wrd {
 
-    class mgdFunc : public func, public frameInteractable {
+    class mgdFunc : public func {
         WRD(INTERFACE(mgdFunc, func))
 
     public:
@@ -22,8 +21,6 @@ namespace wrd {
 
     protected:
         str _onCast(narr& castedArgs) override;
-        wbool _onInFrame(frame& sf, const containable& args) override;
-        wbool _onOutFrame(frame& sf, const containable& args) override;
 
     private:
         tstr<blockExpr> _blk;
