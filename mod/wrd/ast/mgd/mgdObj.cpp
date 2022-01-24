@@ -18,7 +18,7 @@ namespace wrd {
         stackFrame& sf = wrd::thread::get()._getStackFrame();
         frame& fr = *new frame();
         sf.add(fr);
-        fr.add(*nchain::wrapDeep(subs()));
+        fr.setObj(subs());
 
         str ret = super::run(name, args);
 

@@ -9,14 +9,14 @@ namespace wrd {
         frame& fr = wrd::thread::get()._getStackFrame().getCurrentFrame();
         if(nul(fr))
             return WRD_E("fr == null"), str();
-        fr.add(new narr());
+        fr.pushLocal(new narr());
 
         str ret;
         for(auto e=_exprs.begin<expr>(); e ; ++e)
             ret = e->run(nulOf<containable>());
 
         WRD_DI("%s._onOutFrame()", getName().c_str());
-        fr.del();
+        fr.popLocal();
         return ret;
     }
 }
