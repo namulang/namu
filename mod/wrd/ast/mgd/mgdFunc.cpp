@@ -15,12 +15,12 @@ namespace wrd {
 
         str ret;
         WRD_DI("%s._onInFrame()", getName().c_str());
-        fr.add(subs());
+        fr.pushLocal(subs());
         // TODO: put argument into new narr object.
-        ret = _blk->run(castedArgs);
+        ret = _blk->run();
 
         WRD_DI("%s._onOutFrame()", getName().c_str());
-        fr.del();
+        fr.popLocal();
         return ret;
     }
 }
