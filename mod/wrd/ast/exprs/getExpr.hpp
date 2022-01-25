@@ -24,7 +24,7 @@ namespace wrd {
         const wtype& getEvalType() const override;
         const node& getFrom() const { return *_from; }
         const std::string& getName() const override { return _name; }
-        const wtypes& getTypes() const { return _types; }
+        const wtypes& getTypes() const override { return _types; }
 
     private:
         str _from;

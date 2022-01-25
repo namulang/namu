@@ -61,6 +61,9 @@ namespace wrd {
             return canRun(createTypesFromArgs(args));
         }
 
+        /// @return object and parameter types.
+        virtual const wtypes& getTypes() const;
+
         virtual str run(const std::string& name, const containable& args);
         virtual str run(const containable& args) = 0;
         str run(const std::string& name);
