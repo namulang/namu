@@ -22,8 +22,6 @@ namespace wrd {
         using super::canRun;
         wbool canRun(const wtypes& typs) const override;
 
-        /// @return object and parameter types.
-        virtual const wtypes& getTypes() const;
         const std::string& getName() const override {
             return _name;
         }

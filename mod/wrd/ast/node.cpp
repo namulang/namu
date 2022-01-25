@@ -9,6 +9,11 @@ namespace wrd {
 
     WRD_DEF_ME(node)
 
+    const wtypes& me::getTypes() const {
+        static wtypes inner;
+        return inner;
+    }
+
     str me::run() {
         static narr empty;
         return run(empty);

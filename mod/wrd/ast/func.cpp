@@ -29,11 +29,6 @@ namespace wrd {
         return _onCast(*castedArgs);
     }
 
-    const wtypes& me::getTypes() const {
-        static wtypes inner;
-        return inner;
-    }
-
     wbool me::canRun(const wtypes& typs) const {
         const wtypes& mine = getTypes();
         wcnt len = mine.size();
