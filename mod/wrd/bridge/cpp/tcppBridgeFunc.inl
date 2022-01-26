@@ -8,7 +8,7 @@ namespace wrd {
 #define TEMPL template <typename Ret, typename T, typename... Args>
 #define ME tcppBridgeFuncBase<Ret, T, Args...>
 
-    TEMPL const wtypes& ME::getTypes() const {
+    TEMPL const wtypes& ME::getParams() const {
         static wtypes* inner = nullptr;
         if(!inner) {
             inner = new wtypes();

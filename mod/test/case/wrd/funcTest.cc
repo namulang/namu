@@ -60,8 +60,8 @@ namespace {
             return ttype<node>::get();
         }
 
-        const wtypes& getTypes() const override { return _types; }
-        wtypes& getTypes() { return _types; }
+        const wtypes& getParams() const override { return _types; }
+        wtypes& getParams() { return _types; }
 
     private:
         wtypes _types;
@@ -147,16 +147,16 @@ TEST(funcTest, testfuncConstructNewFrame) {
 TEST(funcTest, testCallfuncInsidefunc) {
     myObj obj1;
     myfunc obj1func1(func1Name);
-    obj1func1.getTypes().push_back(&obj1.getType());
+    obj1func1.getParams().push_back(&obj1.getType());
     myfunc obj1func2(func2Name);
-    obj1func2.getTypes().push_back(&obj1.getType());
+    obj1func2.getParams().push_back(&obj1.getType());
     obj1.subs().add(obj1func1);
     obj1.subs().add(obj1func2);
     const char* obj1FuncNames[] = {func1Name, func2Name};
 
     myObj obj2;
     myfunc obj2func1("obj2func1");
-    obj2func1.getTypes().push_back(&obj2.getType());
+    obj2func1.getParams().push_back(&obj2.getType());
     const char* obj2FuncNames[] = {"obj2func1"};
     obj2.subs().add(obj2func1);
 
@@ -212,7 +212,7 @@ TEST(funcTest, testfuncHasStrParameter) {
     myObj obj;
     obj.subs().add(func1);
 
-    wtypes& types = func1.getTypes();
+    wtypes& types = func1.getParams();
     types.push_back(&obj.getType());
     types.push_back(&ttype<wStr>::get());
     func1.setLambda([&](const auto& args, const stackFrame& sf) { return true; });
