@@ -9,7 +9,7 @@ namespace wrd {
 
     WRD_DEF_ME(node)
 
-    const wtypes& me::getTypes() const {
+    const wtypes& me::getParams() const {
         static wtypes inner;
         return inner;
     }

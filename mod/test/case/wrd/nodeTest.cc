@@ -28,7 +28,7 @@ namespace {
             return ttype<node>::get();
         }
 
-        const wtypes& getTypes() const override {
+        const wtypes& getParams() const override {
             static wtypes inner;
             if(inner.size() == 0)
                 inner.push_back(&ttype<obj>::get());

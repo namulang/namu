@@ -5,7 +5,7 @@ namespace wrd {
     WRD_DEF_ME(func)
 
     tstr<narr> me::_asArgs(const containable& args) {
-        const wtypes& typs = getTypes();
+        const wtypes& typs = getParams();
         if(args.len() != typs.size())
             return WRD_E("length of args(%d) and typs(%d) doesn't match.",
                 args.len(), typs.size()), tstr<narr>();
@@ -30,7 +30,7 @@ namespace wrd {
     }
 
     wbool me::canRun(const wtypes& typs) const {
-        const wtypes& mine = getTypes();
+        const wtypes& mine = getParams();
         wcnt len = mine.size();
         if(typs.size() != len) return false;
 
