@@ -2,6 +2,7 @@
 
 #include "../ast/node.hpp"
 #include "scopeStack.hpp"
+#include "../builtin/res/tpair.hpp"
 
 struct frameTest;
 
@@ -14,6 +15,28 @@ namespace wrd {
     public:
         ~frame() {
             _rel();
+        }
+
+        /// @return returns tpair<node, itsOwner>. the owner has the container holding the node
+        ///         which can run with given name & argument.
+        tpair<str, str> subAndOwner(const std::string& name, const containable& args) {
+            nchain& chn = subs().cast<nchain>();
+            if(nul(chn)) return tpair<str, str>();
+
+            for(auto e=chn.beginChain(); e ;++e) {
+                node& owner = _getOwnerFrom(*e);
+                if(nul(owner)) {
+                    WRD_W("couldn't find owner from chain[%x]", &e.get());
+                    continue;
+                }
+
+                node& ret = owner.sub(name, args);
+                if(nul(ret)) continue;
+
+                return tpair<str, str>(str(owner), str(ret));
+            }
+
+            return tpair<str, str>();
         }
 
         wbool pushLocal(ncontainer* con) { return pushLocal(*con); }
@@ -59,6 +82,11 @@ namespace wrd {
         void _rel() {
             _obj.rel();
             _local.rel();
+        }
+
+        node& _getOwnerFrom(containable& con) {
+            // TODO: use hashmap. save ptr into hashmap when all of pushXXX() funcs called.
+            return nulOf<node>(); // TODO: remove this line
         }
 
     private:
