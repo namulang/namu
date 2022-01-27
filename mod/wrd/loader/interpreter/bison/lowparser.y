@@ -97,7 +97,7 @@
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE SCAN_MODE_END
 
 // valueless-token:
-%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS AKA_ALL PACK ARROW
+%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS PACK ARROW
 //  primitive-type:
 %token VOID INT STR BOOL FLT NUL CHAR
 //  reserved-keyword:
@@ -276,7 +276,7 @@ aka-item: aka-dotname {
       }
 aka-default: AKA aka-item ARROW NAME {
          }
-aka-deduced: AKA aka-dotname AKA_ALL {
+aka-deduced: AKA aka-dotname {
          }
 
 // defs:
