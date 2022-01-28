@@ -5,22 +5,18 @@
 namespace wrd {
 
     class pack;
-    template <typename T, typename defaultContainer> class tnchain;
-    typedef tnchain<pack> packChain;
     class src;
-    typedef std::vector<src> srcs;
-
-    class obj;
+    class errReport;
+    class containable;
     template <typename T> class tnarr;
-    typedef wrd::tnarr<wrd::obj> origins;
+    typedef tnarr<src> srcs;
 
     class packMakable {
         WRD_DECL_ME(packMakable)
         WRD_INIT_META(me)
 
     public:
-        virtual tpair<origins&, srcs&> make() = 0;
-        virtual wbool verify(const packChain& mergedPacks) = 0;
-        virtual wbool link(const packChain& mergedPacks) = 0;
+        virtual tstr<srcs> parse(errReport& rpt, containable& tray) = 0;
+        virtual wbool verify(errReport& rpt, pack& pak) = 0;
     };
 }

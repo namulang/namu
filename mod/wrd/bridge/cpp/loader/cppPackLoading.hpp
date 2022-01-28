@@ -11,10 +11,10 @@ namespace wrd {
 
     class cppPackLoading : public opaquePackLoading{
         WRD(CLASS(cppPackLoading, opaquePackLoading))
-        typedef void (*entrypointFunc)(origins*);
+        typedef void (*entrypointFunc)(containable*);
 
     public:
-        tpair<origins&, srcs&> make() override;
+        tstr<srcs> parse(errReport& rpt, containable& tray) override;
 
         const std::string& getName() const override {
             static std::string inner = "cpp";
@@ -31,7 +31,7 @@ namespace wrd {
         }
 
     private:
-        wbool _loadLibs();
+        wbool _loadLibs(errReport& rpt, containable& tray);
 
     private:
         libHandles _handles;

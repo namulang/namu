@@ -11,25 +11,8 @@ namespace wrd {
     tstr<packs> me::load() {
         // TODO: returns result when it's fail
         packs* ret = new packs();
-        packChain merged(ret);
-        if(_basePacks)
-            merged.link(*_basePacks);
 
-        // MAKE PACK step:
         _makePacks(*ret);
-
-        // MAKE ORIGIN step:
-        for(titer<pack> e=ret->begin<pack>(); e ;++e)
-            e->make();
-
-        // VERIFY step:
-        for(titer<pack> e=ret->begin<pack>(); e ;++e)
-            e->verify(merged);
-
-        // LINK step:
-        for(titer<pack> e=ret->begin<pack>(); e ;++e)
-            e->link(merged);
-
         return tstr(*ret);
     }
 
