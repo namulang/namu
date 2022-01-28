@@ -4,49 +4,60 @@
 #include "manifest.hpp"
 #include "../loader/pack/packLoading.hpp"
 #include "../loader/pack/packMakable.hpp"
-
-typedef wrd::tnarr<wrd::obj> origins;
+#include "../loader/errReport.hpp"
 
 namespace wrd {
 
-    class pack : public node, public packMakable {
-        WRD(CLASS(pack, node))
+    class func;
+    typedef tnarr<func> funcs;
+
+    class pack : public obj, public packMakable {
+        WRD(CLASS(pack, obj))
 
     public:
-        pack(const manifest& manifest, const packLoadings& loadingsInHeap)
-            : super(), _loadings(loadingsInHeap), _manifest(manifest), _isVerified(false) {}
+        enum state {
+            RELEASED = 0,
+            PARSED = 1,
+            VERIFIED,
+            LINKED,
+        };
 
+    public:
+        pack(const manifest& manifest, const packLoadings& loadingsInHeap);
+        ~pack() override;
+
+    public:
         using super::subs;
         ncontainer& subs() override {
-            return _origins;
+            ncontainer& subs = super::subs();
+            if(_state == RELEASED) {
+                WRD_I("%s pack is about to interpret lazy.", getName().c_str());
+                // TODO: check _rpt error count increased or not.
+                //       if increased, then parse() function has been failed.
+                parse(*_rpt, subs); // recursive call wasn't allowed.
+                verify(*_rpt, *this);
+                link();
+            }
+
+            return subs;
         }
 
         manifest& getManifest() { return _manifest; }
         const manifest& getManifest() const { return _manifest; }
-
-        tpair<origins&, srcs&> make() override {
-            for(packLoading* load : _loadings) {
-                auto res = load->make();
-                _origins.add(res.l);
-                _srcs.insert(_srcs.end(), res.r.begin(), res.r.end());
-            }
-            return tpair<origins&, srcs&>(_origins, _srcs);
+        state getState() const { return _state; }
+        wbool isValid() const { return _isValid; }
+        /// this report will be used while interpret pack source code.
+        /// @remark when 'subs()' func of the pack has been called, it interprets src codes
+        ///         if it's first time. during parsing and verification, this report will
+        ///         collects warning & errors.
+        ///         this func usually will be called by verifier when it detects the access
+        ///         to a pack.
+        ///         please refer 'verifier' class if you want to know further.
+        void setReport(errReport& rpt) {
+            _rpt.bind(rpt);
         }
 
-        wbool verify(const packChain& mergedPacks) override {
-            for(packLoading* load : _loadings)
-                if(!load->verify(mergedPacks))
-                    return false;
-
-            return true;
-        }
-
-        wbool link(const packChain& mergedPacks) override {
-            for(packLoading* load : _loadings)
-                if(!load->link(mergedPacks))
-                    return false;
-            return true;
-        }
+        funcs& getCtors() override;
 
         using super::run;
         str run(const containable& args) override { return str(); }
@@ -58,25 +69,68 @@ namespace wrd {
             return _manifest.name;
         }
 
+        const obj& getOrigin() const override { return *this; }
+
         void rel() override {
             super::rel();
-
-            _origins.rel();
-            _srcs.clear();
-            _isVerified = false;
-            for(packLoading* e : _loadings) {
-                e->rel();
-                delete e;
-            }
-            _loadings.clear();
+            _rel();
         }
+
+        void addDependent(pack& dependent) {
+            _dependents.add(dependent);
+        }
+
+        const tnarr<pack>& getDependents() const {
+            return _dependents;
+        }
+
+        void setValid(wbool valid) {
+            _isValid = valid;
+        }
+
+    private:
+        tstr<srcs> parse(errReport& rpt, containable& tray) override {
+            for(packLoading* load : _loadings) {
+                auto res = load->parse(rpt, tray);
+                _srcs.add(*res);
+            }
+            _state = PARSED;
+            return tstr<srcs>(_srcs);
+        }
+
+        wbool verify(errReport& rpt, pack& pak) override {
+            for(packLoading* load : _loadings)
+                load->verify(rpt, pak);
+
+            _state = VERIFIED;
+            return true;
+        }
+
+        wbool link() {
+            _state = LINKED;
+            return !isValid() ? invalidate() : true;
+        }
+
+        wbool invalidate() {
+            setValid(false);
+            if(_state != LINKED) return false;
+
+            // propagate result only if it's not valid.
+            for(auto e = _dependents.begin<pack>(); e ; ++e)
+                e->invalidate();
+            return true;
+        }
+
+        void _rel();
 
     private:
         packLoadings _loadings;
         manifest _manifest;
-        wbool _isVerified;
-        origins _origins;
+        state _state;
+        wbool _isValid;
         srcs _srcs;
+        tnarr<pack> _dependents;
+        tstr<errReport> _rpt;
     };
 
     typedef tnarr<pack> packs;

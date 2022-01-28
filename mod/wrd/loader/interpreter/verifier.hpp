@@ -6,6 +6,15 @@ struct verifierTest;
 
 namespace wrd {
 
+    // TODO:
+    //  if verifier detects an access to a pack:
+    //      void onGetPack(targetPack, currentPack) {
+    //          targetPack.setReport(currentPack.getReport());
+    //          targetPack.subs();
+    //          if(!targetPack.isValid())
+    //              currentPack.setValid(false); // never set to valid again if it's invalid once.
+    //          targetPack.addDepedent(currentPack);
+    //      }
 	class verifier : public typeProvidable, clonable {
 		WRD(CLASS(verifier))
 		friend struct ::verifierTest;

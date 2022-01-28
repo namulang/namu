@@ -29,5 +29,7 @@ namespace wrd {
         nchain _subs;
     };
 
-    typedef std::vector<src> srcs;
+    template <typename T>
+    class tnarr;
+    typedef tnarr<src> srcs;
 }
