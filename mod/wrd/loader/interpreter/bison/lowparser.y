@@ -119,7 +119,7 @@
 %type pack
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
-%type <asNode> defstmt defexpr-line defexpr-compound defblock
+%type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound defblock
 //          value:
 %type <asNode> defvar defvar-exp-no-initial-value
 //          func:
@@ -270,20 +270,22 @@ aka-dotname-item: NAME {
 aka-dotname: aka-dotname-item {
          } | aka-dotname '.' aka-dotname-item {
          }
-aka-item: aka-dotname {
-      } | defexpr-line {
+aka-item: defexpr-line-except-aka {
       } | defexpr-compound {
       }
 aka-default: AKA aka-item ARROW NAME {
+         } | AKA aka-dotname ARROW NAME {
          }
 aka-deduced: AKA aka-dotname {
          }
 
 // defs:
 //  structure:
-defexpr-line: defvar {
+defexpr-line: defexpr-line-except-aka {
           } | aka {
           }
+defexpr-line-except-aka: defvar {
+                     }
 defexpr-compound: deffunc {
               }
 defstmt: defexpr-line NEWLINE {
@@ -338,7 +340,6 @@ indentblock: NEWLINE INDENT block DEDENT {
 pack: PACK dotname NEWLINE {
   } | %empty {
   }
-
 
 
 %%
