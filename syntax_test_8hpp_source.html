@@ -72,44 +72,71 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;common/dep.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="structsyntax_test.html">    5</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structsyntax_test.html">syntaxTest</a> : <span class="keyword">public</span> ::testing::Test {</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    <span class="keywordtype">void</span> SetUp() {}</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keywordtype">void</span> TearDown() {}</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <a class="code" href="classwrd_1_1tstr.html">wrd::str</a> parse(<span class="keyword">const</span> wrd::wchar* src) {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a> rpt;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keywordflow">return</span> parse(src, rpt);</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    }</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="structsyntax_test.html">    6</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structsyntax_test.html">syntaxTest</a> : <span class="keyword">public</span> ::testing::Test {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keywordtype">void</span> SetUp() {}</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keywordtype">void</span> TearDown() { _rel(); }</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <a class="code" href="classwrd_1_1node.html">wrd::node</a>&amp; getSubPack() { <span class="keywordflow">return</span> *_subpack; }</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <a class="code" href="classwrd_1_1pack.html">wrd::pack</a>&amp; getPack() { <span class="keywordflow">return</span> *_pack; }</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a>&amp; getReport() { <span class="keywordflow">return</span> _rpt; }</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="classwrd_1_1tstr.html">wrd::tstr&lt;wrd::narr&gt;</a> parse(<span class="keyword">const</span> wrd::wchar* src, <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a>&amp; rpt) {</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classwrd_1_1parser.html">wrd::parser</a> p;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">auto</span> ret = p.setReport(rpt).parse(src);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        EXPECT_TRUE(!rpt &amp;&amp; ret-&gt;len() &gt; 0) &lt;&lt; <span class="stringliteral">&quot;test code: &quot;</span> &lt;&lt; src &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    }</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">void</span> parseFail(<span class="keyword">const</span> wrd::wchar* src) {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a> rpt;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        parseFail(src, rpt);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    }</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">void</span> parseFail(<span class="keyword">const</span> wrd::wchar* src, <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a>&amp; rpt) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <a class="code" href="classwrd_1_1parser.html">wrd::parser</a> p;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">auto</span> ret = p.setReport(rpt).parse(src);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        EXPECT_TRUE(rpt || ret-&gt;len() &lt;= 0) &lt;&lt; <span class="stringliteral">&quot;test code: &quot;</span> &lt;&lt; src &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    wrd::wbool assertSame(<a class="code" href="classwrd_1_1tstr.html">wrd::str</a> unit, <span class="keyword">const</span> wrd::wchar* expect) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="comment">// TODO: run unit and gather output and compare it to expect</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    }</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;};</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="structsyntax_test.html">syntaxTest</a>&amp; make() {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keywordflow">return</span> make(<a class="code" href="structwrd_1_1manifest.html">wrd::manifest</a>());</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    }</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="structsyntax_test.html">syntaxTest</a>&amp; make(<span class="keyword">const</span> <a class="code" href="structwrd_1_1manifest.html">wrd::manifest</a>&amp; mani) {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        _rel();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        _pack.bind(<span class="keyword">new</span> <a class="code" href="classwrd_1_1pack.html">wrd::pack</a>(mani, wrd::packLoadings()));</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    }</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <a class="code" href="structsyntax_test.html">syntaxTest</a>&amp; parse(<span class="keyword">const</span> wrd::wchar* src) {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classwrd_1_1parser.html">wrd::parser</a> p;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        _subpack = p.setPack(*_pack).setReport(_rpt).parse(_src = src);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    }</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    wrd::wbool isSuccess()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">return</span> _subpack &amp;&amp; _pack &amp;&amp; !_rpt;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> expect(wrd::wbool expected)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        EXPECT_TRUE(isSuccess() == expected);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">if</span>(isSuccess() != expected)</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            _log(expected);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    }</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> _log(wrd::wbool expected)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        std::cout   &lt;&lt; <span class="stringliteral">&quot;test expected to be &quot;</span> &lt;&lt; (expected ? <span class="stringliteral">&quot;success&quot;</span> : <span class="stringliteral">&quot;fail&quot;</span>) &lt;&lt; <span class="stringliteral">&quot; but it wasn&#39;t.\n&quot;</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                    &lt;&lt; <span class="stringliteral">&quot;code: &quot;</span> &lt;&lt; _src &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                    &lt;&lt; <span class="stringliteral">&quot;errReport:\n&quot;</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        _rpt.log();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span> _rel() {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        _src = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        _subpack.rel();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        _pack.rel();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        _rpt.rel();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">const</span> wrd::wchar* _src;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="classwrd_1_1tstr.html">wrd::str</a> _subpack;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="classwrd_1_1tstr.html">wrd::tstr&lt;wrd::pack&gt;</a> _pack;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="classwrd_1_1err_report.html">wrd::errReport</a> _rpt;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1err_report_html"><div class="ttname"><a href="classwrd_1_1err_report.html">wrd::errReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:10</div></div>
-<div class="ttc" id="astructsyntax_test_html"><div class="ttname"><a href="structsyntax_test.html">syntaxTest</a></div><div class="ttdef"><b>Definition:</b> syntaxTest.hpp:5</div></div>
-<div class="ttc" id="aclasswrd_1_1parser_html"><div class="ttname"><a href="classwrd_1_1parser.html">wrd::parser</a></div><div class="ttdef"><b>Definition:</b> parser.hpp:23</div></div>
+<div class="ttc" id="aclasswrd_1_1pack_html"><div class="ttname"><a href="classwrd_1_1pack.html">wrd::pack</a></div><div class="ttdef"><b>Definition:</b> pack.hpp:14</div></div>
+<div class="ttc" id="astructsyntax_test_html"><div class="ttname"><a href="structsyntax_test.html">syntaxTest</a></div><div class="ttdef"><b>Definition:</b> syntaxTest.hpp:6</div></div>
+<div class="ttc" id="astructwrd_1_1manifest_html"><div class="ttname"><a href="structwrd_1_1manifest.html">wrd::manifest</a></div><div class="ttdef"><b>Definition:</b> manifest.hpp:25</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:12</div></div>
+<div class="ttc" id="aclasswrd_1_1parser_html"><div class="ttname"><a href="classwrd_1_1parser.html">wrd::parser</a></div><div class="ttdef"><b>Definition:</b> parser.hpp:24</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

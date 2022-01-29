@@ -121,77 +121,73 @@ $(function() {
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> std::string&amp; path : _paths) {</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                WRD_I(<span class="stringliteral">&quot;try pack path: %s&quot;</span>, path.c_str());</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                _makePackAt(tray, cwd + path);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">void</span> _makePackAt(<a class="code" href="classwrd_1_1tnarr.html">packs</a>&amp; tray, <span class="keyword">const</span> std::string&amp; dirPath) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keyword">auto</span> e = fsystem::find(dirPath);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordflow">while</span>(e.next())</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;                <span class="keywordflow">if</span>(e.getName() == MANIFEST_FILENAME)</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                    _addNewPack(tray, e.getDir(), e.getName());</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">void</span> _addNewPack(<a class="code" href="classwrd_1_1tnarr.html">packs</a>&amp; tray, <span class="keyword">const</span> std::string&amp; dirPath, <span class="keyword">const</span> std::string&amp; manifestName) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            std::string manifestPath = dirPath + DELIMITER + manifestName;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <a class="code" href="structwrd_1_1manifest.html">manifest</a> mani = _interpManifest(dirPath, manifestPath);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordflow">if</span>(!mani.isValid()) {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                WRD_E(<span class="stringliteral">&quot;invalid manifest[%s] found.&quot;</span>, manifestPath.c_str());</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            }</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            packLoadings loadings;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordflow">for</span>(<a class="code" href="structwrd_1_1entrypoint.html">entrypoint</a>&amp; <a class="code" href="structwrd_1_1point.html">point</a> : mani.points) {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                <a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>* newLoading = _makeLoading(<a class="code" href="structwrd_1_1point.html">point</a>.lang);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                <span class="keywordflow">if</span>(!newLoading) {</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                    WRD_W(<span class="stringliteral">&quot;%s language not supported for loading %s pack.&quot;</span>, mani.points[0].lang.c_str(), mani.name.c_str());</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                    <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                }</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;                <span class="keyword">auto</span> e = fsystem::find(cwd + path);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                <span class="keywordflow">while</span>(e.next())</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;                    <span class="keywordflow">if</span>(e.getName() == MANIFEST_FILENAME)</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                        _addNewPack(tray, e.getDir(), e.getName());</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">void</span> _addNewPack(<a class="code" href="classwrd_1_1tnarr.html">packs</a>&amp; tray, <span class="keyword">const</span> std::string&amp; dirPath, <span class="keyword">const</span> std::string&amp; manifestName) {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            std::string manifestPath = dirPath + DELIMITER + manifestName;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <a class="code" href="structwrd_1_1manifest.html">manifest</a> mani = _interpManifest(dirPath, manifestPath);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordflow">if</span>(!mani.isValid()) {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                WRD_E(<span class="stringliteral">&quot;invalid manifest[%s] found.&quot;</span>, manifestPath.c_str());</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            packLoadings loadings;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">for</span>(<a class="code" href="structwrd_1_1entrypoint.html">entrypoint</a>&amp; <a class="code" href="structwrd_1_1point.html">point</a> : mani.points) {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;                <a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>* newLoading = _makeLoading(<a class="code" href="structwrd_1_1point.html">point</a>.lang);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                <span class="keywordflow">if</span>(!newLoading) {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                    WRD_W(<span class="stringliteral">&quot;%s language not supported for loading %s pack.&quot;</span>, mani.points[0].lang.c_str(), mani.name.c_str());</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;                    <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                newLoading-&gt;addPath(<a class="code" href="structwrd_1_1point.html">point</a>.paths);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                loadings.push_back(newLoading);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            }</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                newLoading-&gt;addPath(<a class="code" href="structwrd_1_1point.html">point</a>.paths);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                loadings.push_back(newLoading);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            }</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <a class="code" href="classwrd_1_1pack.html">pack</a>* new1 = <span class="keyword">new</span> <a class="code" href="classwrd_1_1pack.html">pack</a>(mani, loadings);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            tray.add(new1);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            _logPack(*new1);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordtype">void</span> _logPack(<span class="keyword">const</span> <a class="code" href="classwrd_1_1pack.html">pack</a>&amp; pak)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            WRD_I(<span class="stringliteral">&quot;new pack [%s] has been added.&quot;</span>, pak.getName().c_str());</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <span class="keyword">const</span> <a class="code" href="structwrd_1_1manifest.html">manifest</a>&amp; mani = pak.getManifest();</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            WRD_DI(<span class="stringliteral">&quot;\t.filePath=%s&quot;</span>, mani.filePath.c_str());</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            WRD_DI(<span class="stringliteral">&quot;\t.author=%s&quot;</span>, mani.author.c_str());</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            WRD_DI(<span class="stringliteral">&quot;\t.ver=%s&quot;</span>, mani.ver.c_str());</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            WRD_DI(<span class="stringliteral">&quot;\t.entrypoints=&quot;</span>);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <a class="code" href="structwrd_1_1entrypoint.html">entrypoint</a>&amp; <a class="code" href="structwrd_1_1point.html">point</a> : mani.points) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                WRD_DI(<span class="stringliteral">&quot;\t\t.lang=%s&quot;</span>, <a class="code" href="structwrd_1_1point.html">point</a>.lang.c_str());</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;                WRD_DI(<span class="stringliteral">&quot;\t\t.paths=%s&quot;</span>, <a class="code" href="structwrd_1_1point.html">point</a>.paths[0].c_str());</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            }</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        }</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <a class="code" href="structwrd_1_1manifest.html">manifest</a> _interpManifest(<span class="keyword">const</span> std::string&amp; dir, <span class="keyword">const</span> std::string&amp; manPath) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>* _makeLoading(<span class="keyword">const</span> std::string&amp; name)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>* e : _getLoadings())</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                <span class="keywordflow">if</span>(e-&gt;getName() == name)</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                    <span class="keywordflow">return</span> (<a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>*) e-&gt;clone();</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            WRD_E(<span class="stringliteral">&quot;can&#39;t find exact packLoading like %s&quot;</span>, name.c_str());</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        }</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keyword">const</span> packLoadings&amp; _getLoadings() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">packs</a>* _basePacks;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a> _report;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        std::vector&lt;std::string&gt; _paths;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keyword">static</span> constexpr wchar DELIMITER = <span class="charliteral">&#39;/&#39;</span>;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    };</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <a class="code" href="classwrd_1_1pack.html">pack</a>* new1 = <span class="keyword">new</span> <a class="code" href="classwrd_1_1pack.html">pack</a>(mani, loadings);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            tray.add(new1);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            _logPack(*new1);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordtype">void</span> _logPack(<span class="keyword">const</span> <a class="code" href="classwrd_1_1pack.html">pack</a>&amp; pak)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            WRD_I(<span class="stringliteral">&quot;new pack [%s] has been added.&quot;</span>, pak.getName().c_str());</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="keyword">const</span> <a class="code" href="structwrd_1_1manifest.html">manifest</a>&amp; mani = pak.getManifest();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            WRD_DI(<span class="stringliteral">&quot;\t.filePath=%s&quot;</span>, mani.filePath.c_str());</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            WRD_DI(<span class="stringliteral">&quot;\t.author=%s&quot;</span>, mani.author.c_str());</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            WRD_DI(<span class="stringliteral">&quot;\t.ver=%s&quot;</span>, mani.ver.c_str());</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            WRD_DI(<span class="stringliteral">&quot;\t.entrypoints=&quot;</span>);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <a class="code" href="structwrd_1_1entrypoint.html">entrypoint</a>&amp; <a class="code" href="structwrd_1_1point.html">point</a> : mani.points) {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                WRD_DI(<span class="stringliteral">&quot;\t\t.lang=%s&quot;</span>, <a class="code" href="structwrd_1_1point.html">point</a>.lang.c_str());</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                WRD_DI(<span class="stringliteral">&quot;\t\t.paths=%s&quot;</span>, <a class="code" href="structwrd_1_1point.html">point</a>.paths[0].c_str());</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            }</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        }</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <a class="code" href="structwrd_1_1manifest.html">manifest</a> _interpManifest(<span class="keyword">const</span> std::string&amp; dir, <span class="keyword">const</span> std::string&amp; manPath) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>* _makeLoading(<span class="keyword">const</span> std::string&amp; name)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>* e : _getLoadings())</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                <span class="keywordflow">if</span>(e-&gt;getName() == name)</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                    <span class="keywordflow">return</span> (<a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>*) e-&gt;clone();</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            WRD_E(<span class="stringliteral">&quot;can&#39;t find exact packLoading like %s&quot;</span>, name.c_str());</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keyword">const</span> packLoadings&amp; _getLoadings() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">packs</a>* _basePacks;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a> _report;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        std::vector&lt;std::string&gt; _paths;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keyword">static</span> constexpr wchar DELIMITER = <span class="charliteral">&#39;/&#39;</span>;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    };</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1clonable_html"><div class="ttname"><a href="classwrd_1_1clonable.html">wrd::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>

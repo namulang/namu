@@ -113,57 +113,68 @@ $(function() {
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            }</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        }</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> msgMap&amp; getErrMsgs();</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        err::type fType;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        wcnt code;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        std::string msg;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">static</span> constexpr wint BASE_TEST_CODE = 99999990; <span class="comment">// not to be duplicated.</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newErr(wcnt errCode, ...);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newErr(<span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, wcnt errCode, ...);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newWarn(wcnt errCode, ...);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newWarn(<span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, wcnt errCode, ...);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newInfo(wcnt errCode, ...);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newInfo(<span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, wcnt errCode, ...);</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        std::string _format(<span class="keyword">const</span> std::string&amp; fmt, va_list args);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    };</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="structwrd_1_1dummy_err.html">   56</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1dummy_err.html">dummyErr</a> : <span class="keyword">public</span> <a class="code" href="structwrd_1_1err.html">err</a> {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        WRD(ME(<a class="code" href="structwrd_1_1dummy_err.html">dummyErr</a>, <a class="code" href="structwrd_1_1err.html">err</a>),</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            TYPE(<a class="code" href="classwrd_1_1wtype.html">wtype</a>),</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            INIT_META(me))</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="structwrd_1_1dummy_err.html">dummyErr</a>(): super(err::ERR, 0) {}</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> log()<span class="keyword"> const override </span>{}</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    };</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structwrd_1_1src_err.html">   68</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1src_err.html">srcErr</a> : <span class="keyword">public</span> <a class="code" href="structwrd_1_1err.html">err</a> {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        WRD(ME(<a class="code" href="structwrd_1_1src_err.html">srcErr</a>, <a class="code" href="structwrd_1_1err.html">err</a>),</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            TYPE(<a class="code" href="classwrd_1_1wtype.html">wtype</a>),</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            INIT_META(me))</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <a class="code" href="structwrd_1_1src_err.html">srcErr</a>(err::type t, wcnt errCode, <span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; newArea, Args... args): super(t, errCode, args...), srcArea(newArea) {}</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="structwrd_1_1area.html">area</a> srcArea;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordtype">void</span> log()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordflow">switch</span>(fType) {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                <span class="keywordflow">case</span> ERR: WRD_E(<span class="stringliteral">&quot;%d:%d: err: %s&quot;</span>, srcArea.start.row, srcArea.start.col, msg.c_str()); <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <span class="keywordflow">case</span> WARN: WRD_W(<span class="stringliteral">&quot;:%d:%d: warn: %s&quot;</span>, srcArea.start.row, srcArea.start.col, msg.c_str()); <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                <span class="keywordflow">case</span> INFO: WRD_I(<span class="stringliteral">&quot;:%d:%d: info: %s&quot;</span>, srcArea.start.row, srcArea.start.col, msg.c_str()); <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    };</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        err::type fType;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        wcnt code;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        std::string msg;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">static</span> constexpr wint BASE_TEST_CODE = 99999990; <span class="comment">// not to be duplicated.</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        std::string _format(<span class="keyword">const</span> std::string&amp; fmt, va_list args);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <a class="code" href="structwrd_1_1err.html">err</a>* _newRes(<a class="code" href="classwrd_1_1type.html">type</a> t, wcnt errCode, va_list args) {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="structwrd_1_1err.html">err</a>(t, errCode, args);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="structwrd_1_1err.html">err</a>* _newRes(<span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, <a class="code" href="classwrd_1_1type.html">type</a> t, wcnt errCode, va_list args);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    };</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="structwrd_1_1dummy_err.html">   66</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1dummy_err.html">dummyErr</a> : <span class="keyword">public</span> <a class="code" href="structwrd_1_1err.html">err</a> {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        WRD(ME(<a class="code" href="structwrd_1_1dummy_err.html">dummyErr</a>, <a class="code" href="structwrd_1_1err.html">err</a>),</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            TYPE(<a class="code" href="classwrd_1_1wtype.html">wtype</a>),</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            INIT_META(me))</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="structwrd_1_1dummy_err.html">dummyErr</a>(): super(err::ERR, 0) {}</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordtype">void</span> log()<span class="keyword"> const override </span>{}</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    };</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structwrd_1_1src_err.html">   78</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1src_err.html">srcErr</a> : <span class="keyword">public</span> <a class="code" href="structwrd_1_1err.html">err</a> {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        WRD(ME(<a class="code" href="structwrd_1_1src_err.html">srcErr</a>, <a class="code" href="structwrd_1_1err.html">err</a>),</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            TYPE(<a class="code" href="classwrd_1_1wtype.html">wtype</a>),</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            INIT_META(me))</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <a class="code" href="structwrd_1_1src_err.html">srcErr</a>(err::type t, <span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, wcnt errCode, Args... args): super(t, errCode, args...), srcArea(<a class="code" href="classwrd_1_1src.html">src</a>) {}</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <a class="code" href="structwrd_1_1area.html">area</a> srcArea;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordtype">void</span> log()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keywordflow">switch</span>(fType) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;                <span class="keywordflow">case</span> ERR: WRD_E(<span class="stringliteral">&quot;%d:%d: err(%d): %s&quot;</span>, code, srcArea.start.row, srcArea.start.col, msg.c_str()); <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                <span class="keywordflow">case</span> WARN: WRD_W(<span class="stringliteral">&quot;:%d:%d: warn(%d): %s&quot;</span>, code, srcArea.start.row, srcArea.start.col, msg.c_str()); <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                <span class="keywordflow">case</span> INFO: WRD_I(<span class="stringliteral">&quot;:%d:%d: info(%d): %s&quot;</span>, code, srcArea.start.row, srcArea.start.col, msg.c_str()); <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            }</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    };</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1instance_html"><div class="ttname"><a href="classwrd_1_1instance.html">wrd::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
-<div class="ttc" id="astructwrd_1_1area_html"><div class="ttname"><a href="structwrd_1_1area.html">wrd::area</a></div><div class="ttdef"><b>Definition:</b> point.hpp:11</div></div>
+<div class="ttc" id="astructwrd_1_1area_html"><div class="ttname"><a href="structwrd_1_1area.html">wrd::area</a></div><div class="ttdef"><b>Definition:</b> point.hpp:15</div></div>
 <div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
-<div class="ttc" id="astructwrd_1_1src_err_html"><div class="ttname"><a href="structwrd_1_1src_err.html">wrd::srcErr</a></div><div class="ttdef"><b>Definition:</b> err.hpp:68</div></div>
+<div class="ttc" id="astructwrd_1_1src_err_html"><div class="ttname"><a href="structwrd_1_1src_err.html">wrd::srcErr</a></div><div class="ttdef"><b>Definition:</b> err.hpp:78</div></div>
 <div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
-<div class="ttc" id="astructwrd_1_1dummy_err_html"><div class="ttname"><a href="structwrd_1_1dummy_err.html">wrd::dummyErr</a></div><div class="ttdef"><b>Definition:</b> err.hpp:56</div></div>
+<div class="ttc" id="aclasswrd_1_1src_html"><div class="ttname"><a href="classwrd_1_1src.html">wrd::src</a></div><div class="ttdef"><b>Definition:</b> src.hpp:10</div></div>
+<div class="ttc" id="astructwrd_1_1dummy_err_html"><div class="ttname"><a href="structwrd_1_1dummy_err.html">wrd::dummyErr</a></div><div class="ttdef"><b>Definition:</b> err.hpp:66</div></div>
 <div class="ttc" id="astructwrd_1_1err_html"><div class="ttname"><a href="structwrd_1_1err.html">wrd::err</a></div><div class="ttdef"><b>Definition:</b> err.hpp:12</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
