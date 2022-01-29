@@ -61,9 +61,9 @@
 	WRD_INITIATOR(verification, { \
 		class __unnamed_verifi : public tverification<ME> { \
 		protected: \
-			wbool _onVerify(const ME& it, errReport& report) override BODY \
+			wbool _onVerify(const ME& it) override BODY \
 		}; \
-		verifier().add(new __unnamed_verifi()); \
+        verifier::add(new __unnamed_verifi()); \
 	})
 #define WRD_VERIFY_1(BODY) WRD_VERIFY_2(me, BODY)
 #define WRD_VERIFY(...) WRD_OVERLOAD(WRD_VERIFY, __VA_ARGS__)
