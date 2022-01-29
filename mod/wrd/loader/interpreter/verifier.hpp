@@ -20,30 +20,38 @@ namespace wrd {
 		friend struct ::verifierTest;
 
 	public:
-		void add(const verification* new1) const {
+		static void add(const verification* new1) const {
 			if(!new1) return;
 
 			_getVerifications(new1->getType()).push_back(const_cast<verification*>(new1));
 		}
 
-		void verify(const typeProvidable& it, errReport& report) const {
-			_verifyWithType(it, report, it.getType());
+        me& setReport(errReport& rpt) {
+            _rpt.bind(rpt);
+            return *this;
+        }
+
+		void verify(const typeProvidable& it) const {
+			_verifyWithType(it, it.getType());
 		}
 
 	private:
-		void _verifyWithType(const typeProvidable& it, errReport& report, const type& typ) const {
+		void _verifyWithType(const typeProvidable& it, const type& typ) const {
 			if(typ == ttype<adam>::get()) return;
 
-			_verifyWithType(it, report, typ.getSuper());
+			_verifyWithType(it, typ.getSuper());
 
 			verifications& veris = _getVerifications(typ);
 			for(auto* elem : veris)
-				elem->verify(*this, it, report);
+				elem->verify(*this, it, *_rpt);
 		}
 
 		static verifications& _getVerifications(const type& typ) {
 			static verificationMap inner;
 			return inner[(void*) &typ];
 		}
+
+    private:
+        tstr<errReport> _rpt;
 	};
 }

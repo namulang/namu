@@ -36,6 +36,8 @@ namespace wrd {
 
 		wbool _verify(const typeProvidable& it, errReport& report);
 
+        const verifier& _getVerifier() const { return *_verifier; }
+
 	protected:
 		tstr<errReport> _report;
 		const verifier* _verifier;
