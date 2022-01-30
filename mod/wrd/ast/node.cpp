@@ -32,7 +32,7 @@ namespace wrd {
 
 	WRD_VERIFY(node, {
 		for(auto& elem : it.subs())
-			_verify(elem, report);
+			_getVerifier().verify(elem);
 		return false;
 	})
 }

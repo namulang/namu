@@ -1,6 +1,6 @@
 #pragma once
 
-#include "verification.hpp"
+#include "verification.inl"
 
 namespace wrd {
 
@@ -14,7 +14,8 @@ namespace wrd {
 		const wtype& getType() const override {
 			return ttype<T>::get();
 		}
-		void verify(const verifier& veri, const typeProvidable& it) override {
+
+		void verify(verifier& veri, const typeProvidable& it) override {
 			super::verify(veri, it);
 			_onVerify((T&) it);
 		}
