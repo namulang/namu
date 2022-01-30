@@ -68,7 +68,7 @@ TEST_F(verifierTest, verifyMyObj) {
 	myObj obj;
 	verifier veri;
 	errReport report;
-	veri.verify(obj, report);
+	veri.setReport(report).verify(obj);
 
 	ASSERT_TRUE(report); // should have an err.
 	ASSERT_EQ(report.len(), 1);
@@ -83,7 +83,7 @@ TEST_F(verifierTest, verifyMyObj) {
 	report.rel();
 
 	obj.val = 1;
-	veri.verify(obj, report);
+	veri.verify(obj);
 	ASSERT_FALSE(report);
 }
 
@@ -100,7 +100,7 @@ TEST_F(verifierTest, verifyInheritedClass) {
 
 	errReport report;
 	verifier veri;
-	veri.verify(it, report);
+	veri.setReport(report).verify(it);
 
 	ASSERT_TRUE(report);
 	ASSERT_EQ(report.len(), 2);
@@ -140,7 +140,7 @@ TEST_F(verifierTest, verifyNestedObject) {
 
 	errReport report;
 	verifier veri;
-	veri.verify(o1, report);
+	veri.setReport(report).verify(o1);
 	ASSERT_FALSE(report);
 	ASSERT_FALSE(report.hasErr());
 	ASSERT_TRUE(report.hasWarn());

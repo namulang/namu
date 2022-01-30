@@ -12,35 +12,22 @@ namespace wrd {
 			INIT_META(me))
 
 	public:
-		virtual void verify(const verifier& veri, const typeProvidable& it, errReport& report) {
-			_report.bind(report);
+		virtual void verify(verifier& veri, const typeProvidable& it) {
 			_verifier = &veri;
 		}
 
 	protected:
 		template <typename ErrT, typename... Args>
-		wbool _warn(Args... args) {
-			_report->add(new ErrT(err::WARN, args...));
-            return false;
-		}
+		wbool _warn(Args... args);
 		template <typename ErrT, typename... Args>
-		wbool _err(Args... args) {
-			_report->add(new ErrT(err::ERR, args...));
-            return true;
-		}
+		wbool _err(Args... args);
 		template <typename ErrT, typename... Args>
-		wbool _info(Args... args) {
-			_report->add(new ErrT(err::INFO, args...));
-            return false;
-		}
+		wbool _info(Args... args);
 
-		wbool _verify(const typeProvidable& it, errReport& report);
-
-        const verifier& _getVerifier() const { return *_verifier; }
+        verifier& _getVerifier() { return *_verifier; }
 
 	protected:
-		tstr<errReport> _report;
-		const verifier* _verifier;
+		verifier* _verifier;
 	};
 
 	typedef std::vector<verification*> verifications;

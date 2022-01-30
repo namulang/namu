@@ -55,13 +55,13 @@ TEST_F(exprTest, simpleGetExpr) {
     getExpr exp(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
     errReport rep;
     verifier veri;
-    veri.verify(exp, rep);
+    veri.setReport(rep).verify(exp);
     ASSERT_TRUE(rep); // should have some errors.
     setLine(exp, 1, 1);
 
     rep.rel();
     ASSERT_FALSE(rep);
-    veri.verify(exp, rep);
+    veri.verify(exp);
     ASSERT_FALSE(rep);
 
     str res = exp.run();
@@ -75,13 +75,13 @@ TEST_F(exprTest, simpleGetExprNegative) {
     setLine(exp, 1, 1);
     errReport rep;
     verifier veri;
-    veri.verify(exp, rep);
+    veri.setReport(rep).verify(exp);
     ASSERT_TRUE(rep); // should have some errs.
 
     getExpr exp2(bridge.get(), "main", wtypes({&ttype<wStr>::get()}));
     setLine(exp2, 1, 1);
     rep.rel();
-    veri.verify(exp, rep);
+    veri.verify(exp);
     ASSERT_TRUE(rep);
 }
 
@@ -89,12 +89,12 @@ TEST_F(exprTest, simpleRunExpr) {
     runExpr exp1(bridge->sub("main"), narr({&bridge.get(), new wStr("kniz!")}));
     errReport rep;
     verifier veri;
-    veri.verify(exp1, rep);
+    veri.setReport(rep).verify(exp1);
     ASSERT_TRUE(rep);
 
     setLine(exp1, 1, 1);
     rep.rel();
-    veri.verify(exp1, rep);
+    veri.setReport(rep).verify(exp1);
     ASSERT_FALSE(rep);
 
     ASSERT_FALSE(helloWorld::isRun);
@@ -112,7 +112,7 @@ TEST_F(exprTest, simpleRunExprNegative) {
     setLine(exp1, 1, 1);
     errReport rep;
     verifier veri;
-    veri.verify(exp1, rep);
+    veri.setReport(rep).verify(exp1);
     ASSERT_TRUE(rep);
 
     ASSERT_FALSE(helloWorld::isRun);
