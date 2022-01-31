@@ -50,15 +50,11 @@ namespace wrd {
             for(const std::string& path : _paths) {
                 WRD_I("try pack path: %s", path.c_str());
 
-                _makePackAt(tray, cwd + path);
+                auto e = fsystem::find(cwd + path);
+                while(e.next())
+                    if(e.getName() == MANIFEST_FILENAME)
+                        _addNewPack(tray, e.getDir(), e.getName());
             }
-        }
-
-        void _makePackAt(packs& tray, const std::string& dirPath) {
-            auto e = fsystem::find(dirPath);
-            while(e.next())
-                if(e.getName() == MANIFEST_FILENAME)
-                    _addNewPack(tray, e.getDir(), e.getName());
         }
 
         void _addNewPack(packs& tray, const std::string& dirPath, const std::string& manifestName) {

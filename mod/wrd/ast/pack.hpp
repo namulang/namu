@@ -11,8 +11,8 @@ namespace wrd {
     class func;
     typedef tnarr<func> funcs;
 
-    class pack : public obj, public packMakable {
-        WRD(CLASS(pack, obj))
+    class pack : public node, public packMakable {
+        WRD(CLASS(pack, node))
 
     public:
         enum state {
@@ -29,17 +29,16 @@ namespace wrd {
     public:
         using super::subs;
         ncontainer& subs() override {
-            ncontainer& subs = super::subs();
             if(_state == RELEASED) {
                 WRD_I("%s pack is about to interpret lazy.", getName().c_str());
                 // TODO: check _rpt error count increased or not.
                 //       if increased, then parse() function has been failed.
-                parse(*_rpt, subs); // recursive call wasn't allowed.
+                parse(*_rpt, _subs); // recursive call wasn't allowed.
                 verify(*_rpt, *this);
                 link();
             }
 
-            return subs;
+            return _subs;
         }
 
         manifest& getManifest() { return _manifest; }
@@ -57,8 +56,6 @@ namespace wrd {
             _rpt.bind(rpt);
         }
 
-        funcs& getCtors() override;
-
         using super::run;
         str run(const containable& args) override { return str(); }
 
@@ -68,8 +65,6 @@ namespace wrd {
         const std::string& getName() const override {
             return _manifest.name;
         }
-
-        const obj& getOrigin() const override { return *this; }
 
         void rel() override {
             super::rel();
@@ -124,6 +119,7 @@ namespace wrd {
         void _rel();
 
     private:
+        narr _subs;
         packLoadings _loadings;
         manifest _manifest;
         state _state;

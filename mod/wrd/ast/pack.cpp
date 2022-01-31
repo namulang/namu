@@ -6,11 +6,14 @@ namespace wrd {
     WRD_DEF_ME(pack)
 
     me::pack(const manifest& manifest, const packLoadings& loadingsInHeap)
-        : super(manifest.name, nchain()), _loadings(loadingsInHeap), _manifest(manifest) {
+        : super(), _loadings(loadingsInHeap), _manifest(manifest) {
             _rel();
         }
 
     me::~pack() {
+        // release all instance allocated inside of shared object first,
+        // before release the handle of it by releasing packLoading instance.
+        _subs.rel();
         for(packLoading* e : _loadings) {
             e->rel();
             delete e;
@@ -19,14 +22,8 @@ namespace wrd {
 
     void me::_rel() {
         _state = RELEASED;
-        _srcs.rel();
         _isValid = true;
+        _dependents.rel();
         _rpt.bind(dummyErrReport::singletone);
-        _loadings.clear();
-    }
-
-    funcs& me::getCtors() {
-        static funcs inner;
-        return inner;
     }
 }
