@@ -24,8 +24,8 @@ c
 )SRC");
 }
 
-TEST_F(syntaxAkaTest, deducedAllDef) {
-    parse(R"SRC(
+TEST_F(syntaxAkaTest, deducedAllDefNegative) {
+    parseFail(R"SRC(
 aka console.*
 )SRC");
     parseFail(R"SRC(
