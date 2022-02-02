@@ -17,6 +17,7 @@ namespace wrd {
 
     public:
         wStr() {}
+        wStr(const wchar* val): super(std::string(val)) {}
         wStr(const std::string& val): super(val) {}
 
     protected:

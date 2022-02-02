@@ -26,7 +26,7 @@ namespace wrd {
         tstr<narr> castedArgs = _asArgs(args);
         if(!castedArgs) return WRD_E("invalid args to call %s func.", getType().getName().c_str()), str();
 
-        return _onCast(*castedArgs);
+        return _onCastArgs(*castedArgs);
     }
 
     wbool me::canRun(const wtypes& typs) const {

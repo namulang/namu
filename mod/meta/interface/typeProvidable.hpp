@@ -32,10 +32,7 @@ namespace wrd {
                 return nulOf<T>();
 #pragma clang diagnostic pop
 
-            if(!getType().isSub(ttype<T>::get()))
-                return nulOf<T>();
-
-            return (T&) *this;
+            return *(T*) _onCast(ttype<T>::get());
         }
 
         template <typename T>
@@ -44,6 +41,13 @@ namespace wrd {
     protected:
         virtual wbool _onSame(const me& rhs) const {
             return this == &rhs;
+        }
+
+        virtual void* _onCast(const type& to) {
+            if(!getType().isSub(to))
+                return nullptr;
+
+            return this;
         }
     };
 }

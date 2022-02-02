@@ -27,7 +27,7 @@ namespace wrd {
         }
 
     protected:
-        virtual str _onCast(narr& castedArgs) = 0;
+        virtual str _onCastArgs(narr& castedArgs) = 0;
 
     private:
         tstr<narr> _asArgs(const containable& args);
