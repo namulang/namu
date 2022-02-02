@@ -37,7 +37,7 @@ namespace wrd {
         tcppBridgeFunc(const std::string& name, typename __super::fptrType fptr): super(name, fptr) {}
 
     protected:
-        str _onCast(narr& args) override {
+        str _onCastArgs(narr& args) override {
             return _marshal(args, std::index_sequence_for<Args...>());
         }
 
@@ -54,7 +54,7 @@ namespace wrd {
         tcppBridgeFunc(const std::string& name, typename __super::fptrType fptr): super(name, fptr) {}
 
     protected:
-        str _onCast(narr& args) override {
+        str _onCastArgs(narr& args) override {
             return _marshal(args, std::index_sequence_for<Args...>());
         }
 

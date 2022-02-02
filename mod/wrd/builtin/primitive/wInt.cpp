@@ -19,7 +19,7 @@ namespace wrd {
             WRD(CLASS(defaultCtor, wIntCtor))
 
         public:
-            str _onCast(narr& args) override {
+            str _onCastArgs(narr& args) override {
                 return str(new wInt());
             }
             const wtypes& getParams() const override {
@@ -31,7 +31,7 @@ namespace wrd {
             WRD(CLASS(cpyCtor, wIntCtor))
 
         public:
-            str _onCast(narr& args) override {
+            str _onCastArgs(narr& args) override {
                 int val = args[0].as<wInt>()->get();
 
                 return str(new wInt(val));

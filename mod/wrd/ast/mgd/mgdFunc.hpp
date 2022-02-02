@@ -20,7 +20,7 @@ namespace wrd {
         }
 
     protected:
-        str _onCast(narr& castedArgs) override;
+        str _onCastArgs(narr& castedArgs) override;
 
     private:
         tstr<blockExpr> _blk;

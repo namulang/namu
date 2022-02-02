@@ -8,7 +8,7 @@ namespace wrd {
 
     WRD_DEF_ME(mgdFunc)
 
-    str me::_onCast(narr& castedArgs) {
+    str me::_onCastArgs(narr& castedArgs) {
         frame& fr = thread::get()._getStackFrame().getCurrentFrame();
         if(nul(fr))
             return WRD_E("fr == null"), str();

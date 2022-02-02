@@ -35,6 +35,13 @@ namespace wrd {
             return _val == cast._val;
         }
 
+        void* _onCast(const type& to) override {
+            if(to == ttype<T>::get())
+                return &_val;
+
+            return typeProvidable::_onCast(to);
+        }
+
         virtual void _onCreateCtors(funcs& tray) const = 0;
 
     private:
