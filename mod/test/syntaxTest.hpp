@@ -4,33 +4,51 @@
 
 struct syntaxTest : public ::testing::Test {
     void SetUp() {}
-    void TearDown() {}
+    void TearDown() { _rel(); }
 
-    wrd::str parse(const wrd::wchar* src) {
-        wrd::errReport rpt;
-        return parse(src, rpt);
+    wrd::node& getSubPack() { return *_subpack; }
+    wrd::pack& getPack() { return *_pack; }
+    wrd::errReport& getReport() { return _rpt; }
+
+    syntaxTest& make() {
+        return make(wrd::manifest());
     }
 
-    wrd::tstr<wrd::narr> parse(const wrd::wchar* src, wrd::errReport& rpt) {
+    syntaxTest& make(const wrd::manifest& mani) {
+        _rel();
+        _pack.bind(new wrd::pack(mani, wrd::packLoadings()));
+        return *this;
+    }
+
+    syntaxTest& parse(const wrd::wchar* src) {
         wrd::parser p;
-        auto ret = p.setReport(rpt).parse(src);
-        EXPECT_TRUE(!rpt && ret->len() > 0) << "test code: " << src << "\n";
-        return ret;
+        _subpack = p.setReport(_rpt).parse(_src = src);
+        return *this;
     }
 
-    void parseFail(const wrd::wchar* src) {
-        wrd::errReport rpt;
-        parseFail(src, rpt);
+    wrd::wbool isSuccess() const {
+        return _subpack && _subpack->subs().len() > 0 && !_rpt;
     }
 
-    void parseFail(const wrd::wchar* src, wrd::errReport& rpt) {
-        wrd::parser p;
-        auto ret = p.setReport(rpt).parse(src);
-        EXPECT_TRUE(rpt || ret->len() <= 0) << "test code: " << src << "\n";
+    void expect(wrd::wbool success) const {
+        EXPECT_TRUE(isSuccess() == success) << "test code: " << _src << "\n";
     }
 
-    wrd::wbool assertSame(wrd::str unit, const wrd::wchar* expect) {
-        // TODO: run unit and gather output and compare it to expect
-        return true;
+    void should(wrd::wbool success) const {
+        ASSERT_TRUE(isSuccess() == success) << "test code: " << _src << "\n";
     }
+
+private:
+    void _rel() {
+        _src = "";
+        _subpack.rel();
+        _pack.rel();
+        _rpt.rel();
+    }
+
+private:
+    const wrd::wchar* _src;
+    wrd::str _subpack;
+    wrd::tstr<wrd::pack> _pack;
+    wrd::errReport _rpt;
 };
