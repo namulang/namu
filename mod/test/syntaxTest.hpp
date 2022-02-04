@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common/dep.hpp"
+#include <iostream>
 
 struct syntaxTest : public ::testing::Test {
     void SetUp() {}
@@ -30,15 +31,20 @@ struct syntaxTest : public ::testing::Test {
         return _subpack && _subpack->subs().len() > 0 && !_rpt;
     }
 
-    void expect(wrd::wbool success) const {
-        EXPECT_TRUE(isSuccess() == success) << "test code: " << _src << "\n";
-    }
-
-    void should(wrd::wbool success) const {
-        ASSERT_TRUE(isSuccess() == success) << "test code: " << _src << "\n";
+    void expect(wrd::wbool expected) const {
+        EXPECT_TRUE(isSuccess() == expected);
+        if(isSuccess() != expected)
+            _log(expected);
     }
 
 private:
+    void _log(wrd::wbool expected) const {
+        std::cout   << "test expected to be " << (expected ? "success" : "fail") << " but it wasn't.\n"
+                    << "code: " << _src << "\n"
+                    << "errReport:\n";
+        _rpt.log();
+    }
+
     void _rel() {
         _src = "";
         _subpack.rel();
