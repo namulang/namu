@@ -1,5 +1,6 @@
 #include "parser.hpp"
 #include "bison/lowscanner.hpp"
+#include "../../ast/pack.hpp"
 
 YY_DECL;
 
@@ -7,7 +8,12 @@ namespace wrd {
 
     WRD_DEF_ME(parser)
 
-    tstr<narr> me::parse(const wchar* script) {
+    me& me::setPack(pack& pak) {
+        _eventer.getPack().bind(pak);
+        return *this;
+    }
+
+    str me::parse(const wchar* script) {
         WRD_I("parse starts.");
 
         yyscan_t scanner;
@@ -33,8 +39,9 @@ namespace wrd {
 
         yy_delete_buffer(bufState, scanner);
         yylex_destroy(scanner);
+        str ret = _eventer.getSubPack();
         _eventer.prepareParse();
-        return _eventer.getTray();
+        return ret;
     }
 
     void me::rel() {

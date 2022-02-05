@@ -20,6 +20,7 @@ namespace wrd {
     /// implementation which was defined at lowparser/scanner.
     ///
     /// lowparser/scanner should be dependent to THIS.
+    class pack;
     class parser : public typeProvidable {
         WRD(INTERFACE(parser, typeProvidable))
 
@@ -31,13 +32,10 @@ namespace wrd {
             _eventer.getReport().bind(report);
 			return *this;
 		}
-        me& setTray(narr& tray) {
-            _eventer.setTray(tray);
-            return *this;
-        }
+        me& setPack(pack& pak);
 
         /// @param script is null terminated cstring.
-        tstr<narr> parse(const wchar* script);
+        str parse(const wchar* script);
 
 		virtual void rel();
 

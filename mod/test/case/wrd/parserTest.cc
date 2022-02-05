@@ -17,8 +17,10 @@ TEST(parserTest, testHelloWorld) {
     ASSERT_TRUE(rootBinder);
     ASSERT_TRUE(rootBinder->len() == 2);
 
-    narr tray;
-    p.setTray(tray);
+    pack pak((manifest()), (packLoadings()));
+    narr& tray = pak.subs().cast<narr>();
+    ASSERT_FALSE(nul(tray));
+    p.setPack(pak);
     tray.add(new wStr("hello"));
     ASSERT_TRUE(tray.len() == 1);
 

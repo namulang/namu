@@ -8,81 +8,81 @@ namespace {
 }
 
 TEST_F(syntaxFuncTest, distinguishDefineFuncOrCall) {
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     foo(a, 22)
-    )SRC");
+    )SRC").expect(true);
 
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     foo(a, 22)
         a.doSomething(22)
     foo(a, 22)
-    )SRC");
+    )SRC").expect(true);
 
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     foo(a, 22)
         a.doSomething(22)
-    foo(a, 22))SRC");
+    foo(a, 22))SRC").expect(true);
 }
 
 TEST_F(syntaxFuncTest, distinguishDefineLambdaOrCall) {
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     (a, 22)
-    )SRC");
+    )SRC").expect(true);
 
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     (a, 22)
         a.doSomething(22)
     foo(a, 22)
-    )SRC");
+    )SRC").expect(true);
 
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     (a, 22)
         a.doSomething(22)
-    foo(a, 22))SRC");
+    foo(a, 22))SRC").expect(true);
 }
 
 TEST_F(syntaxFuncTest, lambda1) {
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     a.sendPacket((packet)
         doSomething()
-    ))SRC");
+    ))SRC").expect(true);
 }
 
 TEST_F(syntaxFuncTest, lambda2) {
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     a.sendPacket((packet)
         doSomething()
-    ))SRC");
+    ))SRC").expect(true);
 
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     a.sendPacket((packet))
     (packet)
     a + 5
-    )SRC");
+    )SRC").expect(true);
 }
 
 TEST_F(syntaxFuncTest, lambda3) {
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     a.sendPacket(foo() void
         doSomething()
-    ))SRC");
+    ))SRC").expect(true);
 }
 
 TEST_F(syntaxFuncTest, lambda4) {
-    parse(R"SRC(
+    make().parse(R"SRC(
 main() void
     a.sendPacket((foo() void
         doSomething()
-    )))SRC");
+    )))SRC").expect(true);
 }
 

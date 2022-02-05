@@ -6,6 +6,7 @@
 #include "tokenDispatcher.hpp"
 #include "bison/tokenScan.hpp"
 #include "../errReport.hpp"
+#include "../../ast/pack.hpp"
 
 namespace wrd {
 
@@ -17,12 +18,8 @@ namespace wrd {
         loweventer() { rel(); }
 
     public:
-        tstr<narr>& getTray() {
-            if(!_tray)
-                _tray.bind(new narr());
-            return _tray;
-        }
-        void setTray(narr& new1) { _tray.bind(new1); }
+        tstr<pack>& getPack() { return _pack; }
+        str& getSubPack() { return _subpack; }
         tstr<errReport>& getReport() { return _report; }
         tokenDispatcher& getDispatcher() { return _dispatcher; }
         std::vector<wcnt>& getIndents() { return _indents; }
@@ -37,12 +34,13 @@ namespace wrd {
 
         void rel() {
             _report.bind(dummyErrReport::singletone);
-            _tray.rel();
+            _pack.rel();
             prepareParse();
         }
 
         void prepareParse() {
             _mode = nullptr;
+            _subpack.rel();
             _isIgnoreWhitespace = false;
             _dispatcher.rel();
             _indents.clear();
@@ -50,6 +48,7 @@ namespace wrd {
 
     public:
         // events:
+        //  scan:
         using super::onScan;
         wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) override;
         wint onEndOfFile(const area& loc);
@@ -58,11 +57,20 @@ namespace wrd {
         wint onIgnoreIndent(wint tok);
         void onNewLine();
         wchar onScanUnexpected(const area& src, const wchar* token);
-        void onErr(const err* new1);
         void onEndParse(const point& pt);
+
+        //  err:
+        void onErr(const err* new1);
+        //  keyword:
+        str onPack(const area& src, const narr& dotname);
+        str onPackWithout();
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
+        str _onFindSubPack(node& subpack) {
+            _subpack.bind(subpack);
+            return _subpack;
+        }
 
     private:
         tokenScan* _mode;
@@ -70,6 +78,7 @@ namespace wrd {
         tokenDispatcher _dispatcher;
         std::vector<wcnt> _indents;
         tstr<errReport> _report;
-        tstr<narr> _tray;
+        tstr<pack> _pack;
+        str _subpack;
     };
 }
