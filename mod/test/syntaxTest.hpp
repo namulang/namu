@@ -23,12 +23,12 @@ struct syntaxTest : public ::testing::Test {
 
     syntaxTest& parse(const wrd::wchar* src) {
         wrd::parser p;
-        _subpack = p.setReport(_rpt).parse(_src = src);
+        _subpack = p.setPack(*_pack).setReport(_rpt).parse(_src = src);
         return *this;
     }
 
     wrd::wbool isSuccess() const {
-        return _subpack && _subpack->subs().len() > 0 && !_rpt;
+        return _subpack && _pack && !_rpt;
     }
 
     void expect(wrd::wbool expected) const {
