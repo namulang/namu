@@ -8,69 +8,68 @@ namespace {
 }
 
 TEST_F(syntaxAkaTest, defaultDef) {
-    parse(R"SRC(
+    make().parse(R"SRC(
 aka console -> c
-)SRC");
-    parseFail(R"SRC(
+)SRC").expect(true);
+    make().parse(R"SRC(
 aka console ->
 c
-)SRC");
-    parse(R"SRC(
+)SRC").expect(false);
+    make().parse(R"SRC(
 aka sys.console -> c
-)SRC");
-    parseFail(R"SRC(
+)SRC").expect(true);
+    make().parse(R"SRC(
 aka sys.console ->
 c
-)SRC");
+)SRC").expect(false);
 }
 
 TEST_F(syntaxAkaTest, deducedAllDefNegative) {
-    parseFail(R"SRC(
+    make().parse(R"SRC(
 aka console.*
-)SRC");
-    parseFail(R"SRC(
+)SRC").expect(false);
+    make().parse(R"SRC(
 aka console. *
-)SRC");
-    parseFail(R"SRC(
+)SRC").expect(false);
+    make().parse(R"SRC(
 aka console.
  *
-)SRC");
-    parseFail(R"SRC(
+)SRC").expect(false);
+    make().parse(R"SRC(
 aka console.
-)SRC");
+)SRC").expect(false);
 }
 
 TEST_F(syntaxAkaTest, withDefvar) {
-    parse(R"SRC(
+    make().parse(R"SRC(
 aka a int -> b
-    )SRC");
+    )SRC").expect(true);
 
-    parse(R"SRC(
+    make().parse(R"SRC(
 aka a -> b
-    )SRC");
+    )SRC").expect(true);
 }
 
 TEST_F(syntaxAkaTest, withDeffunc) {
-    parse(R"SRC(
+    make().parse(R"SRC(
 aka foo(a int, b str)
     doSomething()
--> b)SRC");
+-> b)SRC").expect(true);
 }
 
 TEST_F(syntaxAkaTest, withDeffunc2) {
-    errReport rpt;
-    parse(R"SRC(
+    make().parse(R"SRC(
 aka foo(a int, b str)
     doSomething()
- -> b)SRC", rpt);
-    ASSERT_FALSE(rpt); // rpt.operator bool() return true if error exists
-    ASSERT_TRUE(rpt.hasWarn());
+ -> b)SRC").expect(true);
+    ASSERT_FALSE(getReport()); // rpt.operator bool() return true if error exists
+    ASSERT_TRUE(getReport().hasWarn());
 }
 
 TEST_F(syntaxAkaTest, withDeffunc3) {
-    parseFail(R"SRC(
+    make().parse(R"SRC(
 aka foo(a int, b str)
     doSomething()
 ->
- b)SRC");
+ b)SRC").expect(false);
 }

@@ -1,8 +1,20 @@
 #include "loweventer.hpp"
 #include "bison/lowparser.hpp"
+#include "../../ast/subpack.hpp"
 
 namespace wrd {
+
+    using std::string;
     WRD_DEF_ME(loweventer)
+
+    namespace {
+        string merge(const narr& dotname) {
+            string ret;
+            for(auto& e : dotname)
+                ret += e.cast<std::string>();
+            return ret;
+        }
+    }
 
     wint me::_onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
         int tok = _mode->onScan(*this, val, loc, scanner);
@@ -93,5 +105,54 @@ namespace wrd {
 
     void me::onEndParse(const point& pt) {
         WRD_DI("tokenEvent: onEndParse(%d,%d)", pt.row, pt.col);
+    }
+
+    str me::onPack(const area& src, const narr& dotname) {
+        std::string firstName = dotname[0].cast<std::string>();
+        WRD_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
+
+        pack& pak = *getPack();
+        if(nul(pak)) {
+            onErr(new srcErr(err::ERR, 13, src, dotname[0].cast<std::string>().c_str()));
+            return _onFindSubPack(*(new pack(manifest(), packLoadings())));
+        }
+        if(dotname.len() == 1)
+            return _onFindSubPack(pak);
+
+        // pack syntax rule #1:
+        //     middle name automatically created if not exist.
+        //     on interpreting 'mypack' pack, user may uses 'pack' keyword with dotted-name.
+        //     for instance,
+        //         'pack mypack.component.ui'
+        //     in this scenario, mypack instance should be created before. and component sub
+        //     pack object can be created in this parsing keyword.
+        node* e = &pak;
+        for(int n=1; n < dotname.len()-1; n++) {
+            const std::string& name = dotname[1].cast<std::string>();
+            node* sub = &e->sub(name);
+            if(nul(sub))
+                e->subs().add(sub = new subpack(name));
+            e = sub;
+        }
+
+        // pack syntax rule #2:
+        //     however, if subpack has already existed as a subpack in 'component' instance,
+        //     it's definately an error. because I don't allow for user to redefine or extend
+        //     pack interpreted.
+        const string& lastName = dotname.last()->cast<std::string>();
+        node* ret = &e->sub(lastName);
+        if(ret) {
+            onErr(new srcErr(err::ERR, 14, src, lastName.c_str(), merge(dotname).c_str()));
+            return ret;
+        }
+        e->subs().add(ret = new subpack(lastName));
+        return _onFindSubPack(*ret);
+    }
+
+    str me::onPackWithout() {
+        WRD_DI("tokenEvent: onPackWithout()");
+
+        onErr(new err(err::WARN, 14));
+        return str(new pack(manifest(), packLoadings())); // this is a default pack containing name as '{default}'.
     }
 }

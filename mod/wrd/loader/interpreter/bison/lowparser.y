@@ -73,7 +73,7 @@
     int asInt;
     char* asStr;
     wrd::node* asNode;
-    wrd::narr* asNodeArr;
+    wrd::narr* asNarr;
 }
 
 %define api.pure
@@ -109,13 +109,15 @@
 %token <asStr> NAME STRVAL
 
 // nonterminal:
-%type <asNode> compilation-unit block indentblock dotname
+%type <asNode> compilation-unit block indentblock
+%type <asNarr> dotname
 //  term:
 %type <asNode> term unary postfix primary funcCall
-%type <asNodeArr> list list-items
+%type <asNarr> list list-items
 //  keyword:
 %type <asNode> if
-%type <asNode> aka aka-default aka-deduced aka-dotname aka-dotname-item
+%type <asNode> aka aka-default aka-deduced
+%type <asNarr> aka-dotname aka-dotname-item
 %type pack
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
@@ -143,9 +145,8 @@
 %%
 
 compilation-unit: pack defblock {
-                // TODO:
                 auto* eventer = yyget_extra(scanner);
-                eventer->getTray()->add(new wInt(5));
+                // TODO:
                 _onEndParse(yylocp, scanner);
               }
 
@@ -182,6 +183,8 @@ funcCall: NAME list %expect 1 {
       }
 
 dotname: NAME {
+       $$ = new narr();
+       $$->add(new wStr($1));
     } | dotname '.' NAME {
     }
 
@@ -338,7 +341,9 @@ indentblock: NEWLINE INDENT block DEDENT {
 
 //  pack:
 pack: PACK dotname NEWLINE {
+    yyget_extra(scanner)->onPack(*yylocp, *$2);
   } | %empty {
+    yyget_extra(scanner)->onPackWithout();
   }
 
 

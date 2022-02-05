@@ -24,7 +24,10 @@ namespace wrd {
 
     struct manifest : public validable {
 
-        manifest() {}
+        static constexpr const wchar* DEFAULT_NAME = "{default}";
+
+        manifest(): name(DEFAULT_NAME), filePath(""), author("unknown"), ver("") {}
+        manifest(const std::string& newName): name(newName), filePath(""), author("unknown"), ver("") {}
         manifest(const std::string& newName, const std::string& newFilePath,
             const std::string& newAuthor, const std::string& newVer, const entrypoints& newPoints)
             : name(newName), filePath(newFilePath), author(newAuthor), ver(newVer), points(newPoints) {}
