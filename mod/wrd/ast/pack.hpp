@@ -85,6 +85,10 @@ namespace wrd {
 
     private:
         tstr<srcs> parse(errReport& rpt, containable& tray) override {
+            // You shouldn't release instances which _subs is holding:
+            //  there is a scenario which _subs containing parsed instance when
+            //  this function called.
+            //  Only you can do here is adding new parsed instances into _subs.
             for(packLoading* load : _loadings) {
                 auto res = load->parse(rpt, tray);
                 _srcs.add(*res);

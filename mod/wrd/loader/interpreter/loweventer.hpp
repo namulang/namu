@@ -67,7 +67,7 @@ namespace wrd {
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
-        str _onFindSubPack(node& subpack) {
+        str _onFindSubPack(node* subpack) {
             _subpack.bind(subpack);
             return _subpack;
         }
