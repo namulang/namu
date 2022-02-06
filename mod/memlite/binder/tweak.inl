@@ -14,7 +14,7 @@ namespace wrd {
     TEMPL ME::tweak(const T& it): SUPER(ttype<T>::get(), weakTactic::singletone) { this->bind(it); }
     TEMPL ME::tweak(const T* it): SUPER(ttype<T>::get(), weakTactic::singletone) { this->bind(*it); }
     TEMPL ME::tweak(const ME& rhs): SUPER(ttype<T>::get(), weakTactic::singletone) { this->_assign(rhs); }
-    TEMPL ME::tweak(const binder& rhs): SUPER(ttype<T>::get(), weakTactic::singletone) { this->_assign(rhs); }
+    TEMPL ME::tweak(const binder& rhs): SUPER(ttype<T>::get(), weakTactic::singletone) { this->bind(*rhs); }
     TEMPL ME::tweak(bindTacticable& tactic): SUPER(ttype<T>::get(), tactic) {}
 
 	TEMPL T* ME::operator->() { return &this->get(); }

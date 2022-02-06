@@ -14,7 +14,7 @@ namespace wrd {
     TEMPL ME::tstr(const T& it): SUPER(strTactic::singletone) { this->bind(it); }
     TEMPL ME::tstr(const T* it): SUPER(strTactic::singletone) { this->bind(*it); }
     TEMPL ME::tstr(const ME& rhs): SUPER(strTactic::singletone) { this->_assign(rhs); }
-    TEMPL ME::tstr(const binder& rhs): SUPER(strTactic::singletone) { this->_assign(rhs); }
+    TEMPL ME::tstr(const binder& rhs): SUPER(strTactic::singletone) { this->bind(*rhs); }
 
 #undef SUPER
 #undef ME
