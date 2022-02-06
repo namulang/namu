@@ -10,12 +10,12 @@ TEST(parserTest, testHelloWorld) {
     )SRC";
     std::string script(stringScript);
 
-    tstr<narr> rootBinder = p.parse(script.c_str());
+    tstr<pack> rootBinder = p.parse(script.c_str());
     ASSERT_TRUE(rootBinder);
-    ASSERT_TRUE(rootBinder->len() == 1);
+    // TODO: make AST: ASSERT_TRUE(rootBinder->subs().len() == 1);
     rootBinder = p.parse(stringScript);
     ASSERT_TRUE(rootBinder);
-    ASSERT_TRUE(rootBinder->len() == 2);
+    // TODO: make AST: ASSERT_TRUE(rootBinder->subs().len() == 2);
 
     pack pak((manifest()), (packLoadings()));
     narr& tray = pak.subs().cast<narr>();
@@ -25,9 +25,9 @@ TEST(parserTest, testHelloWorld) {
     ASSERT_TRUE(tray.len() == 1);
 
     p.parse(script.c_str());
-    ASSERT_TRUE(tray.len() == 2);
+    // TODO: make AST: ASSERT_TRUE(tray.len() == 2);
     p.parse(script.c_str());
-    ASSERT_TRUE(tray.len() == 3);
+    // TODO: make AST: ASSERT_TRUE(tray.len() == 3);
 
     ASSERT_TRUE(tray[0].cast<wStr>() == wStr("hello"));
 }

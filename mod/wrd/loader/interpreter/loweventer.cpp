@@ -114,10 +114,10 @@ namespace wrd {
         pack& pak = *getPack();
         if(nul(pak)) {
             onErr(new srcErr(err::ERR, 13, src, dotname[0].cast<std::string>().c_str()));
-            return _onFindSubPack(*(new pack(manifest(), packLoadings())));
+            return _onFindSubPack(new pack(manifest(), packLoadings()));
         }
         if(dotname.len() == 1)
-            return _onFindSubPack(pak);
+            return _onFindSubPack(&pak);
 
         // pack syntax rule #1:
         //     middle name automatically created if not exist.
@@ -146,13 +146,16 @@ namespace wrd {
             return ret;
         }
         e->subs().add(ret = new subpack(lastName));
-        return _onFindSubPack(*ret);
+        return _onFindSubPack(ret);
     }
 
     str me::onPackWithout() {
         WRD_DI("tokenEvent: onPackWithout()");
 
         onErr(new err(err::WARN, 14));
-        return str(new pack(manifest(), packLoadings())); // this is a default pack containing name as '{default}'.
+
+        pack* newPack = new pack(manifest(), packLoadings());
+        _pack.bind(newPack);
+        return _onFindSubPack(newPack); // this is a default pack containing name as '{default}'.
     }
 }
