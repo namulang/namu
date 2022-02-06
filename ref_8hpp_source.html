@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/worldlang/worldlang/mod/wrd/src/ast/ref.hpp Source File</title>
+<title>world-doc: /home/runner/work/wrd/wrd/mod/wrd/ast/ref.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_2a714905afdaf79fc50a4fe91ffff2bf.html">src</a></li><li class="navelem"><a class="el" href="dir_109388aab0cff750e4a842e7413b3d12.html">ast</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_d7957865358bb59c3579d9e621e84477.html">ast</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -71,103 +71,43 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;node.hpp&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>wrd {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classwrd_1_1ref.html">    7</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1ref.html">ref</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1node.html">node</a>, <span class="keyword">public</span> <a class="code" href="classwrd_1_1tbindable.html">tbindable</a>&lt;node&gt; {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="structwrd_1_1ref_1_1ref_type.html">   10</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="structwrd_1_1ref_1_1ref_type.html">refType</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a> {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;            wbool isImmutable()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <span class="keyword">const</span> <a class="code" href="classwrd_1_1ases.html">ases</a>&amp; _getImpliAses()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;                <span class="keyword">static</span> <a class="code" href="classwrd_1_1ases.html">ases</a> inner;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                <span class="keywordflow">return</span> inner;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            }</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        };</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1ref.html">ref</a>, <a class="code" href="classwrd_1_1node.html">node</a>, <a class="code" href="structwrd_1_1ref_1_1ref_type.html">refType</a>))</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classwrd_1_1ref.html">ref</a>() {}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classwrd_1_1ref.html">ref</a>(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; new1): _str(new1) {}</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">explicit</span> ref(<span class="keyword">const</span> node* new1): _str(new1) {}</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        ref(<span class="keyword">const</span> me&amp; rhs): super(rhs) {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            bind(*rhs);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        }</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        node* operator-&gt;() { <span class="keywordflow">return</span> &amp;get(); }</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        node&amp; operator*() { <span class="keywordflow">return</span> get(); }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">const</span> node* operator-&gt;() const WRD_UNCONST_FUNC(operator-&gt;())</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        const node&amp; operator*() const WRD_UNCONST_FUNC(operator*())</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="comment">// node:</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        ncontainer&amp; subs()<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keywordflow">if</span> (!_str) <span class="keywordflow">return</span> nulOf&lt;ncontainer&gt;();</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keywordflow">return</span> _str-&gt;subs();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        }</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">using</span> super::canRun;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        wbool canRun(<span class="keyword">const</span> wtypes&amp; types)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordflow">if</span> (!_str) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">return</span> _str-&gt;canRun(types);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        }</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">using</span> super::run;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        str run(<span class="keyword">const</span> containable&amp; args)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">if</span> (!_str) <span class="keywordflow">return</span> str();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keywordflow">return</span> _str-&gt;run(args);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="comment">// tbindable:</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">using</span> tbindable::bind;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        wbool bind(<span class="keyword">const</span> node&amp; it)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">if</span>(!it.getType().isImmutable())</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                <span class="keywordflow">return</span> _str.bind(it);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordflow">return</span> _str.bind((node*) it.clone());</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">using</span> tbindable::rel;</div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classwrd_1_1ref.html#adc0dc5664b14854e286252e5da3375ce">   61</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classwrd_1_1ref.html#adc0dc5664b14854e286252e5da3375ce">rel</a>()<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            _str.rel();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>&amp; get() {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">return</span> _str.get();</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">const</span> node&amp; get() const WRD_UNCONST_FUNC(get())</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        template &lt;typename E&gt;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        E&amp; get() {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            node&amp; got = get();</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keywordflow">if</span>(nul(got)) <span class="keywordflow">return</span> nulOf&lt;E&gt;();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordflow">return</span> got.template cast&lt;E&gt;();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> E&gt;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">const</span> E&amp; get() const WRD_UNCONST_FUNC(get&lt;E&gt;())</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        using tbindable::canBind;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        wbool canBind(const type&amp; it)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordflow">return</span> _str.canBind(it);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        wbool isBind()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordflow">return</span> _str.isBind();</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        }</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        str _str;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    };</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classwrd_1_1ref.html">    7</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1ref.html">ref</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1tstr.html">str</a> {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        WRD(ME(<a class="code" href="classwrd_1_1ref.html">ref</a>, <a class="code" href="classwrd_1_1tstr.html">str</a>),</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;            INIT_META(me))</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <a class="code" href="classwrd_1_1ref.html">ref</a>(<span class="keyword">const</span> std::string&amp; name = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classwrd_1_1ref.html">ref</a>(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; it, <span class="keyword">const</span> std::string&amp; name = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <a class="code" href="classwrd_1_1ref.html">ref</a>(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>* it, <span class="keyword">const</span> std::string&amp; name = <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classwrd_1_1ref.html">ref</a>(<span class="keyword">const</span> me&amp; rhs);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classwrd_1_1ref.html">ref</a>(<span class="keyword">const</span> <a class="code" href="classwrd_1_1binder.html">binder</a>&amp; rhs);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        me&amp; operator=(<span class="keyword">const</span> super&amp; rhs) {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="keywordflow">if</span>(<span class="keyword">this</span> == &amp;rhs) <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            <span class="keywordflow">return</span> _assign(rhs);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        }</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">const</span> std::string&amp; getName()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _name; }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordtype">void</span> setName(<span class="keyword">const</span> std::string&amp; new1) { _name = new1; }</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        me&amp; _assign(<span class="keyword">const</span> super&amp; rhs);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        std::string _name;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    };</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:10</div></div>
-<div class="ttc" id="aclasswrd_1_1ases_html"><div class="ttname"><a href="classwrd_1_1ases.html">wrd::ases</a></div><div class="ttdef"><b>Definition:</b> ases.hpp:7</div></div>
+<div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1ref_html"><div class="ttname"><a href="classwrd_1_1ref.html">wrd::ref</a></div><div class="ttdef"><b>Definition:</b> ref.hpp:7</div></div>
-<div class="ttc" id="astructwrd_1_1ref_1_1ref_type_html"><div class="ttname"><a href="structwrd_1_1ref_1_1ref_type.html">wrd::ref::refType</a></div><div class="ttdef"><b>Definition:</b> ref.hpp:10</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:12</div></div>
-<div class="ttc" id="aclasswrd_1_1ref_html_adc0dc5664b14854e286252e5da3375ce"><div class="ttname"><a href="classwrd_1_1ref.html#adc0dc5664b14854e286252e5da3375ce">wrd::ref::rel</a></div><div class="ttdeci">void rel() override</div><div class="ttdef"><b>Definition:</b> ref.hpp:61</div></div>
-<div class="ttc" id="aclasswrd_1_1tbindable_html"><div class="ttname"><a href="classwrd_1_1tbindable.html">wrd::tbindable</a></div><div class="ttdef"><b>Definition:</b> tbindable.hpp:8</div></div>
+<div class="ttc" id="aclasswrd_1_1binder_html"><div class="ttname"><a href="classwrd_1_1binder.html">wrd::binder</a></div><div class="ttdef"><b>Definition:</b> binder.hpp:46</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

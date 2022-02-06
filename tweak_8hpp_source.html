@@ -93,16 +93,18 @@ $(function() {
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">const</span> T* operator-&gt;() <span class="keyword">const</span> WRD_UNCONST_FUNC(operator-&gt;())</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">const</span> T&amp; <span class="keyword">operator</span>*() <span class="keyword">const</span> WRD_UNCONST_FUNC(<span class="keyword">operator</span>*())</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        me&amp; operator=(<span class="keyword">const</span> <a class="code" href="classwrd_1_1binder.html">binder</a>&amp; rhs);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        T&amp; get();</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">const</span> T&amp; get() <span class="keyword">const</span> WRD_UNCONST_FUNC(get())</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">using</span> tbindable::bind;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        wbool bind(<span class="keyword">const</span> T&amp; new1);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="classwrd_1_1tweak.html#ab9c8ee3cfc4fadcfd6d64a870453415d">tweak</a>(<a class="code" href="classwrd_1_1bind_tacticable.html">bindTacticable</a>&amp; tactic);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    };</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">using</span> super::get;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        T&amp; get();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">const</span> T&amp; get() <span class="keyword">const</span> WRD_UNCONST_FUNC(get())</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">using</span> tbindable::bind;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        wbool bind(<span class="keyword">const</span> T&amp; new1);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <a class="code" href="classwrd_1_1tweak.html#ab9c8ee3cfc4fadcfd6d64a870453415d">tweak</a>(<a class="code" href="classwrd_1_1bind_tacticable.html">bindTacticable</a>&amp; tactic);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    };</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1bind_tag_html"><div class="ttname"><a href="classwrd_1_1bind_tag.html">wrd::bindTag</a></div><div class="ttdef"><b>Definition:</b> bindTag.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1tweak_html_ab9c8ee3cfc4fadcfd6d64a870453415d"><div class="ttname"><a href="classwrd_1_1tweak.html#ab9c8ee3cfc4fadcfd6d64a870453415d">wrd::tweak::tweak</a></div><div class="ttdeci">tweak()</div><div class="ttdoc">tweak:</div></div>

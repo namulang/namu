@@ -103,10 +103,10 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a056b8d5377774caaefb0a5ca3a327034"><td class="memItemLeft" align="right" valign="top"><a id="a056b8d5377774caaefb0a5ca3a327034"></a>
 <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (std::function&lt; wbool(const <a class="el" href="classwrd_1_1node.html">node</a> &amp;)&gt; l) const</td></tr>
 <tr class="separator:a056b8d5377774caaefb0a5ca3a327034"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaede9f5b81be7bc95486186b1b80052d"><td class="memTemplParams" colspan="2"><a id="aaede9f5b81be7bc95486186b1b80052d"></a>
+<tr class="memitem:a56c625541c57b8a4a120d5af89558982"><td class="memTemplParams" colspan="2"><a id="a56c625541c57b8a4a120d5af89558982"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aaede9f5b81be7bc95486186b1b80052d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classwrd_1_1tnarr.html">tnarr</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>getAll</b> (std::function&lt; wbool(const T &amp;)&gt; l) const</td></tr>
-<tr class="separator:aaede9f5b81be7bc95486186b1b80052d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56c625541c57b8a4a120d5af89558982"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classwrd_1_1tnarr.html">tnarr</a>&lt; T, <a class="el" href="classwrd_1_1tstr.html">str</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>getAll</b> (std::function&lt; wbool(const T &amp;)&gt; l) const</td></tr>
+<tr class="separator:a56c625541c57b8a4a120d5af89558982"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad908a38585af5b2b065aa379228e605a"><td class="memItemLeft" align="right" valign="top"><a id="ad908a38585af5b2b065aa379228e605a"></a>
 <a class="el" href="classwrd_1_1tnarr.html">narr</a>&#160;</td><td class="memItemRight" valign="bottom"><b>getAll</b> (std::function&lt; wbool(const <a class="el" href="classwrd_1_1node.html">node</a> &amp;)&gt; l) const</td></tr>
 <tr class="separator:ad908a38585af5b2b065aa379228e605a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,12 +148,18 @@ template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a9f0585a798720fb7dd7a5d444cabc557"><td class="memItemLeft" align="right" valign="top"><a id="a9f0585a798720fb7dd7a5d444cabc557"></a>
 virtual wbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;at, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;new1)=0</td></tr>
 <tr class="separator:a9f0585a798720fb7dd7a5d444cabc557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dbff9699da5016e958dafea860d254b"><td class="memItemLeft" align="right" valign="top"><a id="a4dbff9699da5016e958dafea860d254b"></a>
+virtual wbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;at, const <a class="el" href="classwrd_1_1tstr.html">str</a> &amp;new1)</td></tr>
+<tr class="separator:a4dbff9699da5016e958dafea860d254b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e34c8f6a00e8ee594faf123289c9718"><td class="memItemLeft" align="right" valign="top"><a id="a3e34c8f6a00e8ee594faf123289c9718"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;at, const <a class="el" href="classwrd_1_1node.html">node</a> *new1)</td></tr>
 <tr class="separator:a3e34c8f6a00e8ee594faf123289c9718"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7a0a9ac2d08208a22d6fd595c3bdb50"><td class="memItemLeft" align="right" valign="top"><a id="af7a0a9ac2d08208a22d6fd595c3bdb50"></a>
 virtual wbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;at, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;new1)=0</td></tr>
 <tr class="separator:af7a0a9ac2d08208a22d6fd595c3bdb50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81095f10d10dfbba077a29ef235e6d04"><td class="memItemLeft" align="right" valign="top"><a id="a81095f10d10dfbba077a29ef235e6d04"></a>
+virtual wbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;at, const <a class="el" href="classwrd_1_1tstr.html">str</a> &amp;new1)</td></tr>
+<tr class="separator:a81095f10d10dfbba077a29ef235e6d04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e121a6dcc74539dde4d1011846b86c5"><td class="memItemLeft" align="right" valign="top"><a id="a1e121a6dcc74539dde4d1011846b86c5"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (std::initializer_list&lt; const <a class="el" href="classwrd_1_1node.html">node</a> * &gt; elems)</td></tr>
 <tr class="separator:a1e121a6dcc74539dde4d1011846b86c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,6 +169,9 @@ wbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a cl
 <tr class="memitem:aac3748889473109caa3e0a68961f37e5"><td class="memItemLeft" align="right" valign="top"><a id="aac3748889473109caa3e0a68961f37e5"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classwrd_1_1node.html">node</a> &amp;new1)</td></tr>
 <tr class="separator:aac3748889473109caa3e0a68961f37e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac87041322d6b0ceed19ed5b257102f07"><td class="memItemLeft" align="right" valign="top"><a id="ac87041322d6b0ceed19ed5b257102f07"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classwrd_1_1tstr.html">str</a> &amp;new1)</td></tr>
+<tr class="separator:ac87041322d6b0ceed19ed5b257102f07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae672b82ebd37e1aac4d1fbfac2aea8b1"><td class="memItemLeft" align="right" valign="top"><a id="ae672b82ebd37e1aac4d1fbfac2aea8b1"></a>
 wcnt&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;from, const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;to)</td></tr>
 <tr class="separator:ae672b82ebd37e1aac4d1fbfac2aea8b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
