@@ -10,6 +10,8 @@
 
 namespace wrd {
 
+    class blockExpr;
+    class expr;
     class loweventer : public tokenScan {
         WRD(CLASS(loweventer, tokenScan))
         friend class tokenScanModable;
@@ -63,7 +65,9 @@ namespace wrd {
         void onErr(const err* new1);
         //  keyword:
         str onPack(const area& src, const narr& dotname);
-        str onPackWithout();
+        str onPack();
+        blockExpr* onBlock();
+        blockExpr* onBlock(const area& src, blockExpr& blk, expr& exp);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
