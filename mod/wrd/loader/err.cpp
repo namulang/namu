@@ -31,6 +31,7 @@ namespace wrd {
             "\'%s\' pack hasn't be created before.",
             "no pack has been specified.",
             "\'%s\' subpack already exists at %s", // 15
+            "unexpected expression.",
 
             /* to be continue... */
 

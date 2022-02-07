@@ -149,13 +149,28 @@ namespace wrd {
         return _onFindSubPack(ret);
     }
 
-    str me::onPackWithout() {
-        WRD_DI("tokenEvent: onPackWithout()");
+    str me::onPack() {
+        WRD_DI("tokenEvent: onPack()");
 
         onErr(new err(err::WARN, 14));
 
         pack* newPack = new pack(manifest(), packLoadings());
         _pack.bind(newPack);
         return _onFindSubPack(newPack); // this is a default pack containing name as '{default}'.
+    }
+
+    blockExpr* me::onBlock() {
+        return new blockExpr();
+    }
+
+    blockExpr* me::onBlock(const ares& src, blockExpr& blk, node& expr) {
+        if(nul(blk))
+            return onErr(new srcErr(err::ERR, 11, src, "blk")), onBlock();
+        expr& cast = expr.cast<expr>();
+        if(nul(cast))
+            return onErr(new srcErr(err::ERR, 16, src)), &blk;
+
+        blk.subs().add(expr);
+        return &blk;
     }
 }

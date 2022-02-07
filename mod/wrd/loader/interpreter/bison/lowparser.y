@@ -159,7 +159,9 @@ stmt: expr-line NEWLINE {
   }
 
 block: %empty {
+     $$ = yyget_extra(scanner).onBlock();
    } | block stmt {
+     $$ = yyget_extra(scanner).onBlock($1->cast<blockExpr>(), *$2);
    }
 
 // term:
@@ -337,6 +339,7 @@ deffunc-lambda-deduction: list indentblock {
                       }
 
 indentblock: NEWLINE INDENT block DEDENT {
+           $$ = $3;
          }
 
 //  pack:
