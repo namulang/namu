@@ -66,8 +66,8 @@ namespace wrd {
         //  keyword:
         str onPack(const area& src, const narr& dotname);
         str onPack();
-        blockExpr* onBlock();
-        blockExpr* onBlock(const area& src, blockExpr& blk, expr& exp);
+        node* onBlock();
+        node* onBlock(const area& src, blockExpr& blk, node& exp);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);

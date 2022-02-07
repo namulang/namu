@@ -41,7 +41,8 @@
         int colcnt;
 
         void rel() {
-            start.row = start.col = end.row = end.col = colcnt = 0;
+            colcnt = 0;
+            wrd::area::rel();
         }
     };
 }
@@ -61,7 +62,7 @@
         void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg);
     }
 
-    void _onEndParse(YYLTYPE* loc, yyscan_t scanner);
+    void _onEndParse(wrd::area& loc, yyscan_t scanner);
 }
 
 /*  ============================================================================================
@@ -147,7 +148,7 @@
 compilation-unit: pack defblock {
                 auto* eventer = yyget_extra(scanner);
                 // TODO:
-                _onEndParse(yylocp, scanner);
+                _onEndParse(*yylocp, scanner);
               }
 
 expr: expr-line {
@@ -159,9 +160,9 @@ stmt: expr-line NEWLINE {
   }
 
 block: %empty {
-     $$ = yyget_extra(scanner).onBlock();
+     $$ = yyget_extra(scanner)->onBlock();
    } | block stmt {
-     $$ = yyget_extra(scanner).onBlock($1->cast<blockExpr>(), *$2);
+     $$ = yyget_extra(scanner)->onBlock(*yylocp, $1->cast<blockExpr>(), *$2);
    }
 
 // term:
@@ -346,7 +347,7 @@ indentblock: NEWLINE INDENT block DEDENT {
 pack: PACK dotname NEWLINE {
     yyget_extra(scanner)->onPack(*yylocp, *$2);
   } | %empty {
-    yyget_extra(scanner)->onPackWithout();
+    yyget_extra(scanner)->onPack();
   }
 
 
@@ -381,14 +382,14 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
 
     if(symbol != YYSYMBOL_YYUNDEF)
         eventer->onErr(new srcErr(err::ERR, 7, *loc, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol)));
-    _onEndParse((YYLTYPE*) loc, scanner);
+    _onEndParse(const_cast<YYLTYPE&>(*loc), scanner);
     return 0;
 }
 
-void _onEndParse(YYLTYPE* loc, yyscan_t scanner) {
+void _onEndParse(wrd::area& loc, yyscan_t scanner) {
     yyset_lineno(0, scanner);
-    loc->rel();
-    yyget_extra(scanner)->onEndParse(loc->start);
+    loc.rel();
+    yyget_extra(scanner)->onEndParse(loc.start);
 }
 
 // errors except syntax will come here. for instance, when available memory doesn't exist.

@@ -1,6 +1,6 @@
 #include "loweventer.hpp"
 #include "bison/lowparser.hpp"
-#include "../../ast/subpack.hpp"
+#include "../../ast.hpp"
 
 namespace wrd {
 
@@ -159,18 +159,18 @@ namespace wrd {
         return _onFindSubPack(newPack); // this is a default pack containing name as '{default}'.
     }
 
-    blockExpr* me::onBlock() {
+    node* me::onBlock() {
         return new blockExpr();
     }
 
-    blockExpr* me::onBlock(const ares& src, blockExpr& blk, node& expr) {
+    node* me::onBlock(const area& src, blockExpr& blk, node& candidate) {
         if(nul(blk))
             return onErr(new srcErr(err::ERR, 11, src, "blk")), onBlock();
-        expr& cast = expr.cast<expr>();
+        expr& cast = candidate.cast<expr>();
         if(nul(cast))
             return onErr(new srcErr(err::ERR, 16, src)), &blk;
 
-        blk.subs().add(expr);
+        blk.subs().add(cast);
         return &blk;
     }
 }
