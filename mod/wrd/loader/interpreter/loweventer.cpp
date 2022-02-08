@@ -16,8 +16,8 @@ namespace wrd {
         }
     }
 
-    wint me::_onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
-        int tok = _mode->onScan(*this, val, loc, scanner);
+    wint me::_onScan(YYSTYPE* val, yyscan_t scanner) {
+        int tok = _mode->onScan(*this, val, scanner);
         if (_isIgnoreWhitespace && tok == NEWLINE) return SCAN_AGAIN;
         _isIgnoreWhitespace = false;
 
@@ -31,25 +31,25 @@ namespace wrd {
         return tok;
     }
 
-    wint me::onScan(loweventer& ev, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
+    wint me::onScan(loweventer& ev, YYSTYPE* val, yyscan_t scanner, wbool& isBypass) {
         int tok;
         do
             // why do you put redundant _onScan() func?:
             //  because of definately, clang++ bug. when I use continue at switch statement inside of
             //  do-while loop here, it doesn't work like usual 'continue' keyword does, but it does like
             //  'break'.
-            tok = _onScan(val, loc, scanner);
+            tok = _onScan(val, scanner);
         while(tok == SCAN_AGAIN);
 
         return tok;
     }
 
-    wint me::onEndOfFile(const area& loc) {
+    wint me::onEndOfFile() {
         WRD_DI("tokenEvent: onEndOfFile() indents.size()=%d", _indents.size());
         if(_indents.size() <= 1)
             _dispatcher.add(SCAN_MODE_END);
         else
-            _dispatcher.addFront(onDedent(_indents.front(), SCAN_MODE_END, loc));
+            _dispatcher.addFront(onDedent(_indents.front(), SCAN_MODE_END));
 
         WRD_DI("tokenEvent: onEndOfFile: finalize by adding 'NEWLINE', then dispatch end-of-file.");
         return NEWLINE;
@@ -62,13 +62,13 @@ namespace wrd {
         return INDENT;
     }
 
-    wint me::onDedent(wcnt col, wint tok, const area& loc) {
+    wint me::onDedent(wcnt col, wint tok) {
         WRD_DI("tokenEvent: onDedent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
 
         _indents.pop_back();
         wint now = _indents.back();
         if(now < col)
-            onWarn(loc, 10, col, now, now);
+            onSrcWarn(10, col, now, now);
 
         while(_indents.back() > col) {
             WRD_DI("tokenEvent: onDedent: indentlv become %d -> %d", _indents.back(), _indents[_indents.size()-2]);
@@ -87,8 +87,8 @@ namespace wrd {
             _dispatcher.add(SCAN_MODE_INDENT);
     }
 
-    wchar me::onScanUnexpected(const area& src, const wchar* token) {
-        onErr(src, 9, token);
+    wchar me::onScanUnexpected(const wchar* token) {
+        onSrcErr(9, token);
         return token[0];
     }
 
@@ -98,17 +98,20 @@ namespace wrd {
         return tok;
     }
 
-    void me::onEndParse(const point& pt) {
+    void me::onEndParse() {
+        area& area = *_srcArea;
+        const point& pt = area.start;
         WRD_DI("tokenEvent: onEndParse(%d,%d)", pt.row, pt.col);
+        area.rel();
     }
 
-    str me::onPack(const area& src, const narr& dotname) {
+    str me::onPack(const narr& dotname) {
         std::string firstName = dotname[0].cast<std::string>();
         WRD_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
 
         pack& pak = *getPack();
         if(nul(pak)) {
-            onErr(src, 13, dotname[0].cast<std::string>().c_str());
+            onSrcErr(13, dotname[0].cast<std::string>().c_str());
             return _onFindSubPack(new pack(manifest(), packLoadings()));
         }
         if(dotname.len() == 1)
@@ -137,7 +140,7 @@ namespace wrd {
         const string& lastName = dotname.last()->cast<std::string>();
         node* ret = &e->sub(lastName);
         if(ret) {
-            onErr(src, 14, lastName.c_str(), merge(dotname).c_str());
+            onSrcErr(14, lastName.c_str(), merge(dotname).c_str());
             return ret;
         }
         e->subs().add(ret = new subpack(lastName));
@@ -158,14 +161,28 @@ namespace wrd {
         return new blockExpr();
     }
 
-    node* me::onBlock(const area& src, blockExpr& blk, node& candidate) {
+    node* me::onBlock(blockExpr& blk, node& candidate) {
         if(nul(blk))
-            return onErr(src, 11, "blk"), onBlock();
+            return onSrcErr(11, "blk"), onBlock();
         expr& cast = candidate.cast<expr>();
         if(nul(cast))
-            return onErr(src, 16), &blk;
+            return onSrcErr(16), &blk;
 
         blk.subs().add(cast);
         return &blk;
+    }
+
+    str me::_onFindSubPack(node* subpack) {
+        _subpack.bind(subpack);
+        return _subpack;
+    }
+
+    void me::onSrcArea(area& area) {
+        _srcArea = &area;
+    }
+
+    void me::_onRes(err* new1) {
+        new1->log();
+        _report->add(new1);
     }
 }

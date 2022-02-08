@@ -25,6 +25,7 @@ namespace wrd {
         tstr<errReport>& getReport() { return _report; }
         tokenDispatcher& getDispatcher() { return _dispatcher; }
         std::vector<wcnt>& getIndents() { return _indents; }
+        const area& getArea() const { return *_srcArea; }
         wbool isInit() const { return _mode; }
 
         template <typename T>
@@ -46,53 +47,41 @@ namespace wrd {
             _isIgnoreWhitespace = false;
             _dispatcher.rel();
             _indents.clear();
+            _srcArea = nullptr;
         }
 
     public:
         // events:
         //  scan:
         using super::onScan;
-        wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) override;
-        wint onEndOfFile(const area& loc);
+        wint onScan(loweventer& eventer, YYSTYPE* val, yyscan_t scanner, wbool& isBypass) override;
+        wint onEndOfFile();
         wint onIndent(wcnt col, wint tok);
-        wint onDedent(wcnt col, wint tok, const area& loc);
+        wint onDedent(wcnt col, wint tok);
         wint onIgnoreIndent(wint tok);
         void onNewLine();
-        wchar onScanUnexpected(const area& src, const wchar* token);
-        void onEndParse(const point& pt);
+        wchar onScanUnexpected(const wchar* token);
+        void onEndParse();
+        void onSrcArea(area& area);
 
         //  err:
-        template <typename... Args>
-        void onErr(Args... args) {
-            err* new1 = err::newErr(args...);
-            new1->log();
-            _report->add(new1);
-        }
-        template <typename... Args>
-        void onWarn(Args... args) {
-            err* new1 = err::newWarn(args...);
-            new1->log();
-            _report->add(new1);
-        }
-        template <typename... Args>
-        void onInfo(Args... args) {
-            err* new1 = err::newInfo(args...);
-            new1->log();
-            _report->add(new1);
-        }
+        template <typename... Args> void onErr(Args... args) { _onRes(err::newErr(args...)); }
+        template <typename... Args> void onWarn(Args... args) { _onRes(err::newWarn(args...)); }
+        template <typename... Args> void onInfo(Args... args) { _onRes(err::newInfo(args...)); }
+        template <typename... Args> void onSrcErr(Args... args) { _onRes(err::newErr(getArea(), args...)); }
+        template <typename... Args> void onSrcWarn(Args... args) { _onRes(err::newWarn(getArea(), args...)); }
+        template <typename... Args> void onSrcInfo(Args... args) { _onRes(err::newInfo(getArea(), args...)); }
 
         //  keyword:
-        str onPack(const area& src, const narr& dotname);
+        str onPack(const narr& dotname);
         str onPack();
         node* onBlock();
-        node* onBlock(const area& src, blockExpr& blk, node& exp);
+        node* onBlock(blockExpr& blk, node& exp);
 
     private:
-        wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
-        str _onFindSubPack(node* subpack) {
-            _subpack.bind(subpack);
-            return _subpack;
-        }
+        wint _onScan(YYSTYPE* val, yyscan_t scanner);
+        str _onFindSubPack(node* subpack);
+        void _onRes(err* new1);
 
     private:
         tokenScan* _mode;
@@ -102,5 +91,6 @@ namespace wrd {
         tstr<errReport> _report;
         tstr<pack> _pack;
         str _subpack;
+        area* _srcArea;
     };
 }
