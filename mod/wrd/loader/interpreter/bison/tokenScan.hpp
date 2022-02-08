@@ -15,11 +15,11 @@ namespace wrd {
         WRD(INTERFACE(tokenScan))
 
     public:
-        wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
+        wint onScan(loweventer& eventer, YYSTYPE* val, yyscan_t scanner) {
             wbool dum;
-            return onScan(eventer, val, loc, scanner, dum);
+            return onScan(eventer, val, scanner, dum);
         }
-        virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner, wbool& isBypass);
+        virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, yyscan_t yyscanner, wbool& isBypass);
     };
 
     class normalScan: public tokenScan {
@@ -28,7 +28,7 @@ namespace wrd {
 
     public:
         using super::onScan;
-        wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner, wbool& isBypass) override;
+        wint onScan(loweventer& eventer, YYSTYPE* yylval, yyscan_t yyscanner, wbool& isBypass) override;
 
     private:
         static normalScan* _instance;
@@ -40,7 +40,7 @@ namespace wrd {
 
     public:
         using super::onScan;
-        wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner, wbool& isBypass) override;
+        wint onScan(loweventer& eventer, YYSTYPE* yylval, yyscan_t yyscanner, wbool& isBypass) override;
 
     private:
         wint _onIndent(loweventer& ev, wcnt col, wint tok);
