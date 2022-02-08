@@ -68,7 +68,7 @@ namespace wrd {
         _indents.pop_back();
         wint now = _indents.back();
         if(now < col)
-            onErr(new srcErr(err::WARN, 10, loc, col, now, now));
+            onWarn(loc, 10, col, now, now);
 
         while(_indents.back() > col) {
             WRD_DI("tokenEvent: onDedent: indentlv become %d -> %d", _indents.back(), _indents[_indents.size()-2]);
@@ -88,7 +88,7 @@ namespace wrd {
     }
 
     wchar me::onScanUnexpected(const area& src, const wchar* token) {
-        onErr(new srcErr(err::ERR, 9, src, token));
+        onErr(src, 9, token);
         return token[0];
     }
 
@@ -96,11 +96,6 @@ namespace wrd {
         WRD_DI("tokenEvent: onIgnoreIndent(%d)", tok);
         _dispatcher.add(SCAN_MODE_INDENT_IGNORE);
         return tok;
-    }
-
-    void me::onErr(const err* new1) {
-        new1->log();
-        _report->add(new1);
     }
 
     void me::onEndParse(const point& pt) {
@@ -113,7 +108,7 @@ namespace wrd {
 
         pack& pak = *getPack();
         if(nul(pak)) {
-            onErr(new srcErr(err::ERR, 13, src, dotname[0].cast<std::string>().c_str()));
+            onErr(src, 13, dotname[0].cast<std::string>().c_str());
             return _onFindSubPack(new pack(manifest(), packLoadings()));
         }
         if(dotname.len() == 1)
@@ -142,7 +137,7 @@ namespace wrd {
         const string& lastName = dotname.last()->cast<std::string>();
         node* ret = &e->sub(lastName);
         if(ret) {
-            onErr(new srcErr(err::ERR, 14, src, lastName.c_str(), merge(dotname).c_str()));
+            onErr(src, 14, lastName.c_str(), merge(dotname).c_str());
             return ret;
         }
         e->subs().add(ret = new subpack(lastName));
@@ -152,7 +147,7 @@ namespace wrd {
     str me::onPack() {
         WRD_DI("tokenEvent: onPack()");
 
-        onErr(new err(err::WARN, 14));
+        onWarn(14);
 
         pack* newPack = new pack(manifest(), packLoadings());
         _pack.bind(newPack);
@@ -165,10 +160,10 @@ namespace wrd {
 
     node* me::onBlock(const area& src, blockExpr& blk, node& candidate) {
         if(nul(blk))
-            return onErr(new srcErr(err::ERR, 11, src, "blk")), onBlock();
+            return onErr(src, 11, "blk"), onBlock();
         expr& cast = candidate.cast<expr>();
         if(nul(cast))
-            return onErr(new srcErr(err::ERR, 16, src)), &blk;
+            return onErr(src, 16), &blk;
 
         blk.subs().add(cast);
         return &blk;

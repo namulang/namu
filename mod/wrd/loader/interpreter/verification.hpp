@@ -17,11 +17,11 @@ namespace wrd {
 		}
 
 	protected:
-		template <typename ErrT, typename... Args>
+		template <typename... Args>
 		wbool _warn(Args... args);
-		template <typename ErrT, typename... Args>
+		template <typename... Args>
 		wbool _err(Args... args);
-		template <typename ErrT, typename... Args>
+		template <typename... Args>
 		wbool _info(Args... args);
 
         verifier& _getVerifier() { return *_verifier; }

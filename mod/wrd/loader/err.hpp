@@ -42,6 +42,12 @@ namespace wrd {
 			}
 		}
 		static const msgMap& getErrMsgs();
+        static err* newErr(wcnt errCode, ...);
+        static err* newErr(const area& src, wcnt errCode, ...);
+        static err* newWarn(wcnt errCode, ...);
+        static err* newWarn(const area& src, wcnt errCode, ...);
+        static err* newInfo(wcnt errCode, ...);
+        static err* newInfo(const area& src, wcnt errCode, ...);
 
 	public:
 		err::type fType;
@@ -51,6 +57,10 @@ namespace wrd {
 
     private:
         std::string _format(const std::string& fmt, va_list args);
+        err* _newRes(type t, wcnt errCode, va_list args) {
+            return new err(t, errCode, args);
+        }
+        err* _newRes(const area& src, type t, wcnt errCode, va_list args);
 	};
 
     struct dummyErr : public err {
@@ -72,7 +82,7 @@ namespace wrd {
 
 	public:
         template <typename... Args>
-        srcErr(err::type t, wcnt errCode, const area& newArea, Args... args): super(t, errCode, args...), srcArea(newArea) {}
+        srcErr(err::type t, const area& src, wcnt errCode, Args... args): super(t, errCode, args...), srcArea(src) {}
 
 		area srcArea;
 

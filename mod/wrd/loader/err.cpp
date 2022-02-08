@@ -54,4 +54,32 @@ namespace wrd {
 
         return buf;
     }
+
+#define _EXPAND_VA(EXPR) \
+        va_list args; \
+        va_start(args, errCode); \
+        err* ret = EXPR; \
+        va_end(args); \
+        return ret
+
+    err* me::newErr(wcnt errCode, ...) {
+        _EXPAND_VA(new err(err::ERR, errCode, args));
+    }
+    err* me::newErr(const area& src, wcnt errCode, ...) {
+        _EXPAND_VA(new srcErr(err::ERR, src, errCode, args));
+    }
+    err* me::newWarn(wcnt errCode, ...) {
+        _EXPAND_VA(new err(err::WARN, errCode, args));
+    }
+    err* me::newWarn(const area& src, wcnt errCode, ...) {
+        _EXPAND_VA(new srcErr(err::WARN, src, errCode, args));
+    }
+    err* me::newInfo(wcnt errCode, ...) {
+        _EXPAND_VA(new err(err::INFO, errCode, args));
+    }
+    err* me::newInfo(const area& src, wcnt errCode, ...) {
+        _EXPAND_VA(new srcErr(err::INFO, src, errCode, args));
+    }
+
+#undef _EXPAND_VA
 }

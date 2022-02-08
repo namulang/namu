@@ -26,7 +26,7 @@ namespace {
 
 	WRD_VERIFY(myObj, {
 		if(it.val == 0)
-			return _err<err>(err::BASE_TEST_CODE + 1);
+			return _err(err::BASE_TEST_CODE + 1);
 		return false;
 	})
 
@@ -41,7 +41,7 @@ namespace {
 
 	WRD_VERIFY(mymyObj, {
 		if(it.grade <= 0.0f)
-			return _warn<srcErr>(err::BASE_TEST_CODE + 2, area {{1, 1}, {1, 5}});
+			return _warn(area {{1, 1}, {1, 5}}, err::BASE_TEST_CODE + 2);
 		return false;
 	})
 }

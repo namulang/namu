@@ -62,7 +62,25 @@ namespace wrd {
         void onEndParse(const point& pt);
 
         //  err:
-        void onErr(const err* new1);
+        template <typename... Args>
+        void onErr(Args... args) {
+            err* new1 = err::newErr(args...);
+            new1->log();
+            _report->add(new1);
+        }
+        template <typename... Args>
+        void onWarn(Args... args) {
+            err* new1 = err::newWarn(args...);
+            new1->log();
+            _report->add(new1);
+        }
+        template <typename... Args>
+        void onInfo(Args... args) {
+            err* new1 = err::newInfo(args...);
+            new1->log();
+            _report->add(new1);
+        }
+
         //  keyword:
         str onPack(const area& src, const narr& dotname);
         str onPack();
