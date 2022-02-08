@@ -381,7 +381,7 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     yysymbol_kind_t symbol = yypcontext_token(ctx);
 
     if(symbol != YYSYMBOL_YYUNDEF)
-        eventer->onErr(new srcErr(err::ERR, 7, *loc, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol)));
+        eventer->onErr(*loc, 7, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol));
     _onEndParse(const_cast<YYLTYPE&>(*loc), scanner);
     return 0;
 }
@@ -394,5 +394,5 @@ void _onEndParse(wrd::area& loc, yyscan_t scanner) {
 
 // errors except syntax will come here. for instance, when available memory doesn't exist.
 void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
-    yyget_extra(scanner)->onErr(new err(err::ERR, 8, msg));
+    yyget_extra(scanner)->onErr(8, msg);
 }

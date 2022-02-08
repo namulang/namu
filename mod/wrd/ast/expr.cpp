@@ -13,9 +13,9 @@ namespace wrd {
     }
 
 	WRD_VERIFY(expr, {
-		if(it.getPos().row < 1) return _err<err>(1); // 1: this expr doesn't have row info.
-		if(it.getPos().col < 1) return _err<err>(6); // 6: this expr doesn't have col info.
-		if(nul(it.getEvalType())) return _err<err>(2);
+        if(it.getPos().row < 1) return _err(1); // 1: this expr doesn't have row info.
+        if(it.getPos().col < 1) return _err(6); // 6: this expr doesn't have col info.
+        if(nul(it.getEvalType())) return _err(2);
 
 		return true;
 	})

@@ -7,19 +7,19 @@ namespace wrd {
 
 #define ME verification 
 
-    template <typename ErrT, typename... Args>
+    template <typename... Args>
     wbool ME::_warn(Args... args) {
-        _getVerifier().getReport().add(new ErrT(err::WARN, args...));
+        _getVerifier().getReport().add(err::newWarn(args...));
         return false;
     }
-    template <typename ErrT, typename... Args>
+    template <typename... Args>
     wbool ME::_err(Args... args) {
-        _getVerifier().getReport().add(new ErrT(err::ERR, args...));
+        _getVerifier().getReport().add(err::newErr(args...));
         return true;
     }
-    template <typename ErrT, typename... Args>
+    template <typename... Args>
     wbool ME::_info(Args... args) {
-        _getVerifier().getReport().add(new ErrT(err::INFO, args...));
+        _getVerifier().getReport().add(err::newInfo(args...));
         return false;
     }
 
