@@ -54,7 +54,7 @@ namespace wrd {
         // events:
         //  scan:
         using super::onScan;
-        wint onScan(loweventer& eventer, YYSTYPE* val, yyscan_t scanner, wbool& isBypass) override;
+        wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) override;
         wint onEndOfFile();
         wint onIndent(wcnt col, wint tok);
         wint onDedent(wcnt col, wint tok);
@@ -79,7 +79,7 @@ namespace wrd {
         node* onBlock(blockExpr& blk, node& exp);
 
     private:
-        wint _onScan(YYSTYPE* val, yyscan_t scanner);
+        wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         str _onFindSubPack(node* subpack);
         void _onRes(err* new1);
 

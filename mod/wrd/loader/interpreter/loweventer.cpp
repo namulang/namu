@@ -16,8 +16,8 @@ namespace wrd {
         }
     }
 
-    wint me::_onScan(YYSTYPE* val, yyscan_t scanner) {
-        int tok = _mode->onScan(*this, val, scanner);
+    wint me::_onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
+        int tok = _mode->onScan(*this, val, loc, scanner);
         if (_isIgnoreWhitespace && tok == NEWLINE) return SCAN_AGAIN;
         _isIgnoreWhitespace = false;
 
@@ -31,14 +31,14 @@ namespace wrd {
         return tok;
     }
 
-    wint me::onScan(loweventer& ev, YYSTYPE* val, yyscan_t scanner, wbool& isBypass) {
+    wint me::onScan(loweventer& ev, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
         int tok;
         do
             // why do you put redundant _onScan() func?:
             //  because of definately, clang++ bug. when I use continue at switch statement inside of
             //  do-while loop here, it doesn't work like usual 'continue' keyword does, but it does like
             //  'break'.
-            tok = _onScan(val, scanner);
+            tok = _onScan(val, loc, scanner);
         while(tok == SCAN_AGAIN);
 
         return tok;
@@ -158,10 +158,12 @@ namespace wrd {
     }
 
     node* me::onBlock() {
+        WRD_DI("tokenEvent: onBlock()");
         return new blockExpr();
     }
 
     node* me::onBlock(blockExpr& blk, node& candidate) {
+        WRD_DI("tokenEvent: onBlock()");
         if(nul(blk))
             return onSrcErr(11, "blk"), onBlock();
         expr& cast = candidate.cast<expr>();
