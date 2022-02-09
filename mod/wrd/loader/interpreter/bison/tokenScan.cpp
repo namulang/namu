@@ -6,28 +6,27 @@ YY_DECL;
 
 namespace wrd {
 
-    wint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, yyscan_t scanner, wbool& isBypass) {
+    wint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
         tokenDispatcher& disp = eventer.getDispatcher();
         wint tok;
-        const area& loc = eventer.getArea();
 
         if(!(isBypass = disp.pop(tok)))
-            tok = yylexOrigin(val, (YYLTYPE*) &loc, scanner);
+            tok = yylexOrigin(val, loc, scanner);
         if(tok == ENDOFFILE)
             tok = eventer.onEndOfFile();
 
-        WRD_DI("%s: dispatcher[%d]%s(token: %c[%d]) at %d,%d", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", tok <= 127 ? (char) tok : '?', tok, loc.start.row, loc.start.col);
+        WRD_DI("%s: dispatcher[%d]%s(token: %c[%d]) at %d,%d", getType().getName().c_str(), disp.len(), isBypass ? ".dispatch" : " lowscanner", tok <= 127 ? (char) tok : '?', tok, loc->start.row, loc->start.col);
         return tok;
     }
 
-    wint normalScan::onScan(loweventer& eventer, YYSTYPE* val, yyscan_t scanner, wbool& isBypass) {
-        return super::onScan(eventer, val, scanner, isBypass);
+    wint normalScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
+        return super::onScan(eventer, val, loc, scanner, isBypass);
     }
 
     normalScan* normalScan::_instance = new normalScan();
 
-    wint indentScan::onScan(loweventer& eventer, YYSTYPE* val, yyscan_t scanner, wbool& isBypass) {
-        wint tok = super::onScan(eventer, val, scanner, isBypass);
+    wint indentScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
+        wint tok = super::onScan(eventer, val, loc, scanner, isBypass);
         if(!isBypass && tok == NEWLINE) {
             WRD_DI("indentScan: ignore NEWLINE");
             return SCAN_AGAIN;
@@ -36,7 +35,7 @@ namespace wrd {
         eventer.setScan<normalScan>();
         if(isBypass) return tok;
 
-        wcnt cur = eventer.getArea().start.col;
+        wcnt cur = loc->start.col;
         std::vector<wcnt>& ind = eventer.getIndents();
         if(ind.size() == 0) {
             WRD_DI("indentScan: initial indent lv: %d", cur);

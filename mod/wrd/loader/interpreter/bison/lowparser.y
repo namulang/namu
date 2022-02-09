@@ -153,11 +153,15 @@ compilation-unit: pack defblock {
               }
 
 expr: expr-line {
+    $$ = new blockExpr(); // TODO: remove
   } | expr-compound {
+    $$ = new blockExpr(); // TODO: remove
   }
 
 stmt: expr-line NEWLINE {
+    $$ = $1;
   } | expr-compound {
+    $$ = $1;
   }
 
 block: %empty {
@@ -230,10 +234,14 @@ primary: INTVAL {
 // expr:
 //  structure:
 expr-line: defexpr-line {
+        $$ = new blockExpr(); // TODO: remove
        } | expr10 {
+        $$ = new blockExpr(); // TODO: remove
        }
 expr-compound: defexpr-compound {
+            $$ = new blockExpr(); // TODO: remove
            } | if {
+            $$ = new blockExpr(); // TODO: remove
            }
 
 //  expr-line:

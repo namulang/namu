@@ -110,7 +110,7 @@ int yylex(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner) {
 
     int tok;
     do
-        tok = eventer->onScan(*eventer, yylval_param, yyscanner);
+        tok = eventer->onScan(*eventer, yylval_param, yylloc_param, yyscanner);
     while(tok == SCAN_AGAIN ||
           tok == SCAN_MODE_INDENT ||
           tok == SCAN_MODE_NORMAL);
