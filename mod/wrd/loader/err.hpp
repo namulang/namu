@@ -89,9 +89,9 @@ namespace wrd {
     public:
         void log() const override {
             switch(fType) {
-                case ERR: WRD_E("%d:%d: err(%d): %s", code, srcArea.start.row, srcArea.start.col, msg.c_str()); break;
-                case WARN: WRD_W(":%d:%d: warn(%d): %s", code, srcArea.start.row, srcArea.start.col, msg.c_str()); break;
-                case INFO: WRD_I(":%d:%d: info(%d): %s", code, srcArea.start.row, srcArea.start.col, msg.c_str()); break;
+                case ERR: WRD_E("%d:%d: err(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
+                case WARN: WRD_W(":%d:%d: warn(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
+                case INFO: WRD_I(":%d:%d: info(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
             }
         }
 	};
