@@ -31,7 +31,7 @@ namespace {
         };
 
     public:
-        myfunc(std::string name = "myfunc"): super(name, new myBlock()) {
+        myfunc(std::string name = "myfunc"): super(name, wtypes(), ttype<node>::get(), *new myBlock()) {
             WRD_I("myfunc(%x) new", this);
         }
         ~myfunc() {

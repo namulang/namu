@@ -6,7 +6,7 @@
     #include <sstream>
     using std::cout;
     #include "../loweventer.hpp"
-    #include "../../../builtin/primitive/wInt.hpp"
+    #include "../../../builtin.hpp"
     using namespace wrd;
 
     #define YYLLOC_DEFAULT(Current, Rhs, N) \
@@ -123,11 +123,12 @@
 %type pack
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
+%type <asNode> type
 %type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound defblock
 //          value:
 %type <asNode> defvar defvar-exp-no-initial-value
 //          func:
-%type <asNode> deffunc-default deffunc-deduction
+%type <asNode> deffunc deffunc-default deffunc-deduction
 %type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
 
 /*  ============================================================================================
@@ -197,11 +198,15 @@ dotname: NAME {
     }
 
 list-items: expr {
+            $$ = yyget_extra(scanner)->onList(&$1->cast<expr>());
         } | list-items ',' expr {
+            $$ = yyget_extra(scanner)->onList(*$1, &$3->cast<expr>());
         }
 
 list: '(' list-items ')' {
+    $$ = $2;
   } | '(' ')' {
+    $$ = yyget_extra(scanner)->onList();
   }
 
 postfix: primary {
@@ -213,11 +218,8 @@ postfix: primary {
      }
 
 primary: INTVAL {
-        WRD_DI("INTVAL(%d)", yylval.asInt);
      } | STRVAL {
-        WRD_DI("STRVAL(%s)", yylval.asStr);
      } | CHARVAR {
-        WRD_DI("CHARVAL(%c)", yylval.asChar);
      } | list %expect 1 {
         //  known shift/reduce conflict on the syntax:
         //      First example: list • NEWLINE INDENT block DEDENT block DEDENT $end
@@ -299,26 +301,26 @@ aka-deduced: AKA aka-dotname {
 defexpr-line: defexpr-line-except-aka {
           } | aka {
           }
-defexpr-line-except-aka: defvar {
-                     }
-defexpr-compound: deffunc {
-              }
-defstmt: defexpr-line NEWLINE {
-     } | defexpr-compound {
-     }
+defexpr-line-except-aka: defvar {}
+defexpr-compound: deffunc { $$ = $1; }
+defstmt: defexpr-line NEWLINE { $$ = new blockExpr(); }
+       | defexpr-compound { $$ = $1; }
 defblock: %empty {
+        $$ = yyget_extra(scanner)->onBlock();
       } | defblock defstmt {
+        $$ = yyget_extra(scanner)->onBlock($1->cast<blockExpr>(), *$2);
       }
 
 //  type:
-type: VOID {
-  } | INT {
-  } | CHAR {
-  } | STR {
-  } | BOOL {
-  } | FLT {
-  } | NAME {
-  }
+type: VOID { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
+    | INT { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | CHAR { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | STR { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | BOOL { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | FLT { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | NAME {
+        $$ = new blockExpr(); // TODO:
+    }
 
 //  variable:
 defvar: defvar-exp-no-initial-value {
@@ -327,12 +329,13 @@ defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
                          }
 
 //  func:
-deffunc: deffunc-default {
-     } | deffunc-deduction {
-     } | deffunc-lambda {
-     }
+deffunc: deffunc-default { $$ = $1; }
+       | deffunc-deduction { $$ = new blockExpr(); /* TODO: */ }
+       | deffunc-lambda { $$ = new blockExpr(); /* TODO: */ }
 deffunc-default: NAME list type indentblock {
-                // TODO: checks list that it's defvar
+                tstr<narr> list($2);
+                str type($3);
+                $$ = yyget_extra(scanner)->onFunc(std::string($1), *list, *type, $4->cast<blockExpr>());
              }
 deffunc-deduction: NAME list indentblock {
                }
