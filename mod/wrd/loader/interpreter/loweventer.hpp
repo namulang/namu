@@ -10,8 +10,9 @@
 
 namespace wrd {
 
-    class blockExpr;
     class expr;
+    class mgdFunc;
+    class blockExpr;
     class loweventer : public tokenScan {
         WRD(CLASS(loweventer, tokenScan))
         friend class tokenScanModable;
@@ -77,6 +78,20 @@ namespace wrd {
         str onPack();
         node* onBlock();
         node* onBlock(blockExpr& blk, node& exp);
+
+        //  defexpr:
+        //      func:
+        mgdFunc* onFunc(const std::string& name, const narr& params, const node& evalType, const blockExpr& blk);
+        //      list:
+        narr* onList();
+        narr* onList(const expr* newExpr);
+        narr* onList(narr& list, const expr* newExpr);
+        //      var:
+        template <typename T, typename... Args>
+        node* onPrimitive(Args... args) {
+            WRD_DI("on%s(...)", ttype<T>::get().getName().c_str());
+            return new T(args...);
+        }
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);

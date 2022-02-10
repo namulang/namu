@@ -8,7 +8,7 @@ namespace {
         WRD(CLASS(myFunc, mgdFunc))
 
     public:
-        myFunc(): super("myFunc") {}
+        myFunc(): super("myFunc", wtypes(), ttype<node>::get()) {}
 
         void setUp() {
             _executed = false;

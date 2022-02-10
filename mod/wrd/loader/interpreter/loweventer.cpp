@@ -1,6 +1,7 @@
 #include "loweventer.hpp"
 #include "bison/lowparser.hpp"
 #include "../../ast.hpp"
+#include "../../ast/mgd/mgdFunc.hpp"
 
 namespace wrd {
 
@@ -166,11 +167,8 @@ namespace wrd {
         WRD_DI("tokenEvent: onBlock()");
         if(nul(blk))
             return onSrcErr(11, "blk"), onBlock();
-        expr& cast = candidate.cast<expr>();
-        if(nul(cast))
-            return onSrcErr(16), &blk;
 
-        blk.subs().add(cast);
+        blk.subs().add(candidate);
         return &blk;
     }
 
@@ -186,5 +184,28 @@ namespace wrd {
     void me::_onRes(err* new1) {
         new1->log();
         _report->add(new1);
+    }
+
+    mgdFunc* me::onFunc(const std::string& name, const narr& params, const node& evalObj, const blockExpr& blk) {
+        const wtype& evalType = evalObj.getType();
+        WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s", name.c_str(), &params, evalType.getName().c_str());
+        // TODO: check that params should be defexprs.
+        return new mgdFunc(name, node::createTypesFromArgs(params), evalType, blk);
+    }
+
+    narr* me::onList() {
+        narr* ret = new narr();
+        WRD_DI("tokenEvent: onList()=%x", ret);
+        return ret;
+    }
+    narr* me::onList(const expr* newExpr) {
+        narr* ret = new narr({newExpr});
+        WRD_DI("tokenEvent: onList(expr[%x])=%x", newExpr, ret);
+        return ret;
+    }
+    narr* me::onList(narr& list, const expr* newExpr) {
+        WRD_DI("tokenEvent: onList(list[%x], expr[%x])", &list, newExpr);
+        list.add(newExpr);
+        return &list;
     }
 }
