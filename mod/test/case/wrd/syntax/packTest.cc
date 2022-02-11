@@ -1,13 +1,13 @@
-#include "../../syntaxTest.hpp"
+#include "../../../syntaxTest.hpp"
 
 using namespace wrd;
 using namespace std;
 
 namespace {
-    struct syntaxPackTest : public syntaxTest {};
+    struct packTest : public syntaxTest {};
 }
 
-TEST_F(syntaxPackTest, parsePackTest) {
+TEST_F(packTest, parsePackTest) {
     make(manifest("demo")).parse(R"SRC(
 pack demo
     )SRC").expect(true);
