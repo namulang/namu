@@ -30,6 +30,7 @@ namespace wrd {
         using super::subs;
         ncontainer& subs() override;
 
+        using super::canRun;
         wbool canRun(const wtypes& args) const override {
             return args.size() == 0;
         }
