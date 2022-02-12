@@ -1,11 +1,11 @@
 #pragma once
 
-#include "node.hpp"
+#include "expr.hpp"
 
 namespace wrd {
 
-    class func : public node {
-        WRD(INTERFACE(func, node))
+    class func : public expr {
+        WRD(INTERFACE(func, expr))
 
     public:
         explicit func(const std::string& name): _name(name) {}
