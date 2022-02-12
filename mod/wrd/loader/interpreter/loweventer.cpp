@@ -167,8 +167,11 @@ namespace wrd {
         WRD_DI("tokenEvent: onBlock()");
         if(nul(blk))
             return onSrcErr(11, "blk"), onBlock();
+        expr& e = candidate.cast<expr>();
+        if(nul(e))
+            return onSrcErr(16, candidate.getType().getName().c_str()), &blk;
 
-        blk.subs().add(candidate);
+        blk.subs().add(e);
         return &blk;
     }
 
