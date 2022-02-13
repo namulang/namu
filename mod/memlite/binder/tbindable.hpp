@@ -20,7 +20,7 @@ namespace wrd {
             if(!canBind(it)) return false;
             return true;
         }
-        wbool bind(const instance* it) { return bind(*it); }
+        wbool bind(const T* it) { return bind(*it); }
         virtual void rel() = 0;
         wbool canBind(const T& it) const;
         virtual wbool canBind(const type& it) const = 0;
