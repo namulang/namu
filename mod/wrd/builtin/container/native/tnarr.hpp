@@ -5,16 +5,16 @@
 
 namespace wrd {
 
-    template <typename T>
+    template <typename T, typename WRAPPER = str>
     class tnarr : public narrContainer {
         WRD(CLASS(tnarr, narrContainer))
         template <typename E> friend class tarr;
+        typedef WRAPPER wrapper;
 
     public:
         friend class narrIteration;
         class narrIteration : public iteration {
             WRD(CLASS(narrIteration, iteration))
-            template<typename E>
             friend class tnarr;
 
         public:
@@ -121,8 +121,8 @@ namespace wrd {
         wbool _isValidN(widx n) const;
 
     private:
-        std::vector<str> _vec;
+        std::vector<WRAPPER> _vec;
     };
 
-    typedef tnarr<node> narr;
+    typedef tnarr<node, str> narr;
 }

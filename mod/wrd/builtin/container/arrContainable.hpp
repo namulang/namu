@@ -21,16 +21,14 @@ namespace wrd {
 
         // set:
         virtual wbool set(widx n, const node& new1) = 0;
-        wbool set(widx n, const node* new1) {
-            return set(n, *new1);
-        }
+        virtual wbool set(widx n, const str& new1) { return set(n, *new1); }
+        wbool set(widx n, const node* new1) { return set(n, *new1); }
 
         // add:
         /// @return how many element has been added from rhs.
         virtual wbool add(widx n, const node& new1) = 0;
-        wbool add(widx n, const node* new1) {
-        	return add(n, *new1);
-        }
+        virtual wbool add(widx n, const str& new1) { return add(n, *new1); }
+        wbool add(widx n, const node* new1) { return add(n, *new1); }
 
         // del:
         /// delete last element if exists.

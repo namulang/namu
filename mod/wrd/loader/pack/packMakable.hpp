@@ -8,8 +8,8 @@ namespace wrd {
     class src;
     class errReport;
     class containable;
-    template <typename T> class tnarr;
-    typedef tnarr<src> srcs;
+    template <typename T, typename WRAPPER> class tnarr;
+    typedef tnarr<src, str> srcs;
 
     class packMakable {
         WRD_DECL_ME(packMakable)

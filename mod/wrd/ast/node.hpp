@@ -42,19 +42,19 @@ namespace wrd {
         T& sub(const std::string& name, const wtypes& types) const;
 
         template <typename T>
-        tnarr<T> subAll(std::function<wbool(const T&)> l) const {
+        tnarr<T, str> subAll(std::function<wbool(const T&)> l) const {
             return subs().getAll<T>(l);
         }
         template <typename T = me>
-        tnarr<T> subAll(const std::string& name) const;
+        tnarr<T, str> subAll(const std::string& name) const;
         template <typename T = me>
-        tnarr<T> subAll(const std::string& name, const ncontainer& args);
+        tnarr<T, str> subAll(const std::string& name, const ncontainer& args);
         template <typename T = me>
-        tnarr<T> subAll(const std::string& name, const wtypes& types);
+        tnarr<T, str> subAll(const std::string& name, const wtypes& types);
         template <typename T = me>
-        tnarr<T> subAll(const std::string& name, const ncontainer& args) const;
+        tnarr<T, str> subAll(const std::string& name, const ncontainer& args) const;
         template <typename T = me>
-        tnarr<T> subAll(const std::string& name, const wtypes& types) const;
+        tnarr<T, str> subAll(const std::string& name, const wtypes& types) const;
 
         virtual wbool canRun(const wtypes& typs) const = 0;
         wbool canRun(const containable& args) const {
