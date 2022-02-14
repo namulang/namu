@@ -6,8 +6,8 @@ namespace wrd {
 
 
     class node;
-    template <typename T> class tnarr;
-    typedef tnarr<node> narr;
+    template <typename T, typename WRAPPER> class tnarr;
+    typedef tnarr<node, str> narr;
 
     /// @remark containable has API treating iter ref and element as its parameter.
     class containable {
@@ -24,7 +24,7 @@ namespace wrd {
         T& get(std::function<wbool(const T&)> l) const;
         node& get(std::function<wbool(const node&)> l) const;
         template <typename T>
-        tnarr<T> getAll(std::function<wbool(const T&)> l) const;
+        tnarr<T, str> getAll(std::function<wbool(const T&)> l) const;
         narr getAll(std::function<wbool(const node&)> l) const;
 
         // iter:
@@ -50,10 +50,12 @@ namespace wrd {
 
         // set:
         virtual wbool set(const wrd::iter& at, const node& new1) = 0;
+        virtual wbool set(const wrd::iter& at, const str& new1);
         wbool set(const wrd::iter& at, const node* new1) { return set(at, *new1); }
 
         // add:
         virtual wbool add(const wrd::iter& at, const node& new1) = 0;
+        virtual wbool add(const wrd::iter& at, const str& new1);
         wbool add(std::initializer_list<const node*> elems) {
             wbool ret = false;
             for(auto* elem : elems)
@@ -61,9 +63,8 @@ namespace wrd {
             return ret;
         }
         wbool add(const node* new1) { return add(*new1); }
-        wbool add(const node& new1) {
-            return add(end(), new1);
-        }
+        wbool add(const node& new1) { return add(end(), new1); }
+        wbool add(const str& new1) { return add(end(), new1); }
         wcnt add(const wrd::iter& from, const wrd::iter& to) {
             int ret = 0;
             for(wrd::iter e=from; e != to ;++e)
@@ -71,9 +72,7 @@ namespace wrd {
                     ret++;
             return ret;
         }
-        wcnt add(const containable& rhs) {
-            return add(rhs.begin(), rhs.end());
-        }
+        wcnt add(const containable& rhs) { return add(rhs.begin(), rhs.end()); }
         wbool add(const wrd::iter& at, const node* new1) { return add(at, *new1); }
 
         // del:
@@ -93,5 +92,4 @@ namespace wrd {
     protected:
         virtual iteration* _onMakeIteration(wcnt step) const = 0;
     };
-
 }

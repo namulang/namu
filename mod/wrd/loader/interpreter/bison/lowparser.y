@@ -28,14 +28,15 @@
 
 %code requires {
     #include "../../../ast/point.hpp"
+    #include "../../../ast/node.hpp"
 
     typedef void* yyscan_t;
 
     namespace wrd {
         class node;
-        template <typename T>
-        class tnarr;
-        typedef tnarr<node> narr;
+        typedef tstr<node> str;
+        template <typename T, typename WRAPPER> class tnarr;
+        typedef tnarr<node, str> narr;
     }
 
     struct lloc : public wrd::area {

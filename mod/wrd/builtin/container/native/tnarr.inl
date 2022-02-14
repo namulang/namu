@@ -6,8 +6,8 @@
 
 namespace wrd {
 
-#define TEMPL template <typename T>
-#define ME tnarr<T>
+#define TEMPL template <typename T, typename WRAPPER>
+#define ME tnarr<T, WRAPPER>
 
     TEMPL
     T& ME::get(widx n) {
