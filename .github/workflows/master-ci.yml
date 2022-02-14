@@ -35,6 +35,7 @@ jobs:
       run: |
         export C=clang CXX=clang++ PYTHON=$(which python3)
         ls -l ${{github.workspace}}/mod/swrd/parser
+        sudo $PYTHON ${{github.workspace}}/build/builder.py dbg
         sudo $PYTHON ${{github.workspace}}/build/builder.py test
 
   build-on-macos:
@@ -56,6 +57,7 @@ jobs:
         export C=clang CXX=clang++ PYTHON=$(which python3)
         ls -l ${{github.workspace}}/mod/swrd/parser
         sudo $PYTHON ${{github.workspace}}/build/builder.py dbg
+        sudo $PYTHON ${{github.workspace}}/build/builder.py test
 
   publish-doc:
     needs: [build-on-linux, build-on-macos]
