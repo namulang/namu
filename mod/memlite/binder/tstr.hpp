@@ -8,6 +8,7 @@ namespace wrd {
     class tstr : public tweak<T> {
         WRD_DECL_ME(tstr, tweak<T>)
         WRD_INIT_META(me)
+        friend class ref;
 
     public:
         //  tstr:
