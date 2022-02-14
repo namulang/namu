@@ -32,22 +32,23 @@ namespace wrd {
                 return nulOf<T>();
 #pragma clang diagnostic pop
 
-            return *(T*) _onCast(ttype<T>::get());
+            return *(T*) cast(ttype<T>::get());
         }
 
         template <typename T>
         const T& cast() const WRD_UNCONST_FUNC(cast<T>())
 
-    protected:
-        virtual wbool _onSame(const me& rhs) const {
-            return this == &rhs;
-        }
-
-        virtual void* _onCast(const type& to) {
+        virtual void* cast(const type& to) {
             if(!getType().isSub(to))
                 return nullptr;
 
             return this;
+        }
+        const void* cast(const type& to) const WRD_UNCONST_FUNC(cast(to))
+
+    protected:
+        virtual wbool _onSame(const me& rhs) const {
+            return this == &rhs;
         }
     };
 }

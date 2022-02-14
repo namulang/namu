@@ -49,6 +49,7 @@ namespace wrd {
         friend class weakTactic;
         friend class strTactic;
         friend class bindTag; // for _get()
+        friend class ref; // for _type
 
     public:
         binder(const type& type, bindTacticable& tactic);
@@ -85,6 +86,12 @@ namespace wrd {
 
         //  typeProvidable:
         const type& getType() const override;
+
+        using typeProvidable::cast;
+        void* cast(const type& to) override {
+            if(!isBind()) return nullptr;
+            return get().cast(to);
+        }
 
     protected:
         wbool _assign(const binder& rhs);
