@@ -68,6 +68,7 @@ namespace wrd {
         void rel() override;
         using tbindable::canBind;
         wbool canBind(const type& cls) const override;
+        using tbindable::bind;
         wbool bind(const instance& it) override;
 
         instance& get();
