@@ -184,7 +184,7 @@ TEST(nodeTest, testImmutablePositive) {
     r1->get() = 0.5f;
     ASSERT_EQ(*r1, *r2);
 
-	wrd::ref r3(r1);
+	wrd::ref r3(*r1);
 	ASSERT_TRUE(r3);
 	ASSERT_EQ(r3->cast<wFlt>().get(), r1->get());
 	ASSERT_TRUE(&(r3->cast<wFlt>()) != &r1.get());

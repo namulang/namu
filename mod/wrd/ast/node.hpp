@@ -73,6 +73,9 @@ namespace wrd {
         /// @remark some class won't be able to reinitialize after rel() got called.
         virtual void rel() {}
 
+        virtual wbool isRef() const { return false; }
+
+        // TODO: remove
         virtual const std::string& getName() const {
             static std::string dummy = "";
             return dummy;
