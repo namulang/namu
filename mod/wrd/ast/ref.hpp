@@ -113,6 +113,8 @@ namespace wrd {
         me& _assign(const me& rhs);
 
     private:
+        // name is unique var:
+        //  unique variable should not be assigned after creation.
         std::string _name;
         str _ref;
 	};
