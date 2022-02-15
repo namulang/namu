@@ -30,7 +30,7 @@ namespace wrd {
         const node& operator*() const WRD_UNCONST_FUNC(operator*())
 
     public:
-        const std::string& getName() const { return _name; }
+        const std::string& getName() const override { return _name; }
         void setName(const std::string& new1) { _name = new1; }
 
         const wtype& getType() const override {
