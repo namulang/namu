@@ -30,9 +30,16 @@ namespace  {
             return inner;
         }
     };
+
+    struct dummy {
+        dummy() {}
+        dummy(const std::string& newName): name(newName) {}
+
+        std::string name;
+    };
 }
 
-TEST(arrSpeedTest, testBenchmark) {
+TEST(speedTest, benchmarkArr) {
     int clc = 0;
     myObj obj1;
     benchMark("create narr 10000 times", 10000, [&clc]() {
@@ -81,4 +88,28 @@ TEST(arrSpeedTest, testBenchmark) {
         ar.add(obj1);
         clc += ((int64_t) &ar) % 2;
     });
+}
+
+TEST(speedTest, benchmarkNodeCreation) {
+    int i = 0;
+    benchMark("create 10000 dummy object", 10000, [&]() {
+        dummy dum;
+        i += *(int*) &dum;
+    });
+    benchMark("create 10000 dummy object with string", 10000, [&]() {
+        dummy dum("wow");
+        i += *(int*) &dum;
+    });
+    myObj* p2 = nullptr;
+    benchMark("create 10000 myObj object", 10000, [&]() {
+        myObj dum;
+        i += dum.getId().serial + 1;
+    });
+
+    benchMark("create 10000 wInt object", 10000, [&]() {
+        wInt dum;
+        i += dum.getId().serial + 1;
+    });
+
+    ASSERT_TRUE(i > 4);
 }
