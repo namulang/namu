@@ -41,3 +41,8 @@ TEST(wtypeTest, basicWTypeAPITest) {
     ASSERT_FALSE(myO.getType().is<wInt>());
 }
 
+TEST(wtypeTest, makeTest) {
+    tstr<wInt> new1 = ttype<wInt>().makeAs<wInt>();
+    ASSERT_TRUE(new1);
+    ASSERT_EQ(new1->get(), 0);
+}
