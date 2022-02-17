@@ -22,9 +22,8 @@ namespace wrd {
         using super::canRun;
         wbool canRun(const wtypes& typs) const override;
 
-        const std::string& getName() const override {
-            return _name;
-        }
+        const std::string& getName() const override { return _name; }
+        // modifying name of func is not permitted.
 
     protected:
         virtual str _onCastArgs(narr& castedArgs) = 0;

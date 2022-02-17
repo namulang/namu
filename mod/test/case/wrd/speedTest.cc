@@ -100,7 +100,6 @@ TEST(speedTest, benchmarkNodeCreation) {
         dummy dum("wow");
         i += *(int*) &dum;
     });
-    myObj* p2 = nullptr;
     benchMark("create 10000 myObj object", 10000, [&]() {
         myObj dum;
         i += dum.getId().serial + 1;
