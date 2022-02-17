@@ -7,34 +7,34 @@ namespace wrd {
     WRD_DEF_ME(ref)
 
     ref::ref(const std::string& name): _name(name), _ref(refTactic::_singletone) {
-        _setType(ttype<node>::get());
+        setType(ttype<node>::get());
     }
     ref::ref(const node& it, const std::string& name): _ref(refTactic::_singletone) {
-        _setType(it.getType());
+        setType(it.getType());
         bind(it);
     }
     ref::ref(const node* it, const std::string& name): _name(name), _ref(refTactic::_singletone) {
-        _setType(it->getType());
+        setType(it->getType());
         bind(it);
     }
     ref::ref(const me& rhs): _name(rhs._name), _ref(refTactic::_singletone) {
-        _setType(rhs.getType());
+        setType(rhs.getType());
         _assign(rhs);
     }
 
     ref::ref(const type& t, const std::string& name): _name(name), _ref(refTactic::_singletone) {
-        _setType(t);
+        setType(t);
     }
     ref::ref(const node& it, const type& t, const std::string& name): _ref(refTactic::_singletone) {
-        _setType(t);
+        setType(t);
         bind(it);
     }
     ref::ref(const node* it, const type& t, const std::string& name): _name(name), _ref(refTactic::_singletone) {
-        _setType(t);
+        setType(t);
         bind(it);
     }
     ref::ref(const me& rhs, const type& t): _name(rhs._name), _ref(refTactic::_singletone) {
-        _setType(t);
+        setType(t);
         _assign(rhs);
     }
 

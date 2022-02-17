@@ -31,11 +31,15 @@ namespace wrd {
 
     public:
         const std::string& getName() const override { return _name; }
-        void setName(const std::string& new1) { _name = new1; }
+        wbool setName(const std::string& new1) override {
+            _name = new1;
+            return true;
+        }
 
         const wtype& getType() const override {
             return (const wtype&) _ref.getType(); // always can cast to wtype.
         }
+        void setType(const type& t) { _ref._type = &t; }
 
         using tbindable<node>::bind;
         wbool bind(const node& it) override {
@@ -107,9 +111,6 @@ namespace wrd {
         }
 
     private:
-        void _setType(const type& t) {
-            _ref._type = &t;
-        }
         me& _assign(const me& rhs);
 
     private:

@@ -80,6 +80,10 @@ namespace wrd {
             return dummy;
         }
 
+        virtual wbool setName(const std::string& new1) {
+            return false; // usually modifying name is not permitted.
+        }
+
         template <typename T>
         wbool is() const {
             return is(ttype<T>::get());

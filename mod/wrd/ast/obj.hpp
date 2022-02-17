@@ -34,9 +34,11 @@ namespace wrd {
         virtual funcs& getCtors() = 0;
         const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
         virtual const obj& getOrigin() const = 0;
-        const std::string& getName() const override {
-            if(_name.empty()) return super::getName();
-            return _name;
+
+        const std::string& getName() const override { return _name; }
+        wbool setName(const std::string& new1) override {
+            _name = new1;
+            return true;
         }
 
     protected:
