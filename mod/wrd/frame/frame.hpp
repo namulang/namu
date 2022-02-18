@@ -48,8 +48,17 @@ namespace wrd {
                 new1.link(*_obj);
             return ret;
         }
+        wbool pushLocal(node& n) {
+            nchain& scope = *_local.getTop();
+            if(nul(con))
+                return WRD_E("couldn't push new node. the top scope is null"), false;
+
+            containable& con = scope.getContainer();
+            return con.add(con.begin(), n);
+        }
 
         tstr<nchain> popLocal() { return _local.pop(); }
+        // I won't provide API for poping a single node from the scope.
 
         void setObj(ncontainer& con) { setObj(*nchain::wrap(con)); }
         void setObj(nchain& new1) {
