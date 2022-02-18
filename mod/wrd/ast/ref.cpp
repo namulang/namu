@@ -22,22 +22,6 @@ namespace wrd {
         _assign(rhs);
     }
 
-    ref::ref(const type& t, const std::string& name): _name(name), _ref(refTactic::_singletone) {
-        setType(t);
-    }
-    ref::ref(const node& it, const type& t, const std::string& name): _ref(refTactic::_singletone) {
-        setType(t);
-        bind(it);
-    }
-    ref::ref(const node* it, const type& t, const std::string& name): _name(name), _ref(refTactic::_singletone) {
-        setType(t);
-        bind(it);
-    }
-    ref::ref(const me& rhs, const type& t): _name(rhs._name), _ref(refTactic::_singletone) {
-        setType(t);
-        _assign(rhs);
-    }
-
     me& ref::_assign(const me& rhs) {
         bind(*rhs);
         return *this;
