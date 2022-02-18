@@ -14,10 +14,6 @@ namespace wrd {
 		ref(const node& it, const std::string& name = "");
 		ref(const node* it, const std::string& name = "");
 		ref(const me& rhs);
-		ref(const type& t, const std::string& name = "");
-		ref(const node& it, const type& t, const std::string& name = "");
-		ref(const node* it, const type& t, const std::string& name = "");
-		ref(const me& rhs, const type& t);
 
     public:
         me& operator=(const me& rhs) {
