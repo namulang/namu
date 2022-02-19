@@ -50,7 +50,7 @@ namespace wrd {
         }
         wbool pushLocal(node& n) {
             nchain& scope = *_local.getTop();
-            if(nul(con))
+            if(nul(scope))
                 return WRD_E("couldn't push new node. the top scope is null"), false;
 
             containable& con = scope.getContainer();
