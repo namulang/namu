@@ -1,6 +1,7 @@
 #include "../../common/dep.hpp"
 #include <functional>
 #include <chrono>
+#include <cstdint>
 
 using namespace wrd;
 using namespace std;
@@ -91,24 +92,22 @@ TEST(speedTest, benchmarkArr) {
 }
 
 TEST(speedTest, benchmarkNodeCreation) {
-    int i = 0;
+    std::uintptr_t i = 0;
     benchMark("create 10000 dummy object", 10000, [&]() {
         dummy dum;
-        i += *(int*) &dum;
+        i += reinterpret_cast<std::uintptr_t>(&dum);
     });
     benchMark("create 10000 dummy object with string", 10000, [&]() {
         dummy dum("wow");
-        i += *(int*) &dum;
+        i += reinterpret_cast<std::uintptr_t>(&dum);
     });
     benchMark("create 10000 myObj object", 10000, [&]() {
         myObj dum;
         i += dum.getId().serial + 1;
     });
-
     benchMark("create 10000 wInt object", 10000, [&]() {
         wInt dum;
         i += dum.getId().serial + 1;
     });
-
-    ASSERT_TRUE(i > 4);
+    ASSERT_TRUE(i >= 40000);
 }
