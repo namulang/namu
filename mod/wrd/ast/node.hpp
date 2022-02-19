@@ -7,6 +7,7 @@
 namespace wrd {
 
 	class ases;
+    typedef tnarr<ref> params;
 
     /// node provides common API to manipulate its sub nodes.
     class node : public instance, public clonable {
@@ -61,8 +62,13 @@ namespace wrd {
             return canRun(createTypesFromArgs(args));
         }
 
-        /// @return object and parameter types.
-        virtual const wtypes& getParams() const;
+        /// @return parameters of run() func.
+        ///         parameter is just a type. and I don't care about the value of each parameters.
+        ///         that is the reason why I uses a ref to represents parameter.
+        ///
+        ///         I need the name and which types should be casted and binded from given arguments
+        ///         are matters.
+        virtual const params& getParams() const;
 
         virtual str run(const std::string& name, const containable& args);
         virtual str run(const containable& args) = 0;
@@ -85,34 +91,27 @@ namespace wrd {
         }
 
         template <typename T>
-        wbool is() const {
-            return is(ttype<T>::get());
-        }
-        wbool is(const type& to) const {
-			return getType().is(to);
-        }
+        wbool is() const { return is(ttype<T>::get()); }
+        wbool is(const typeProvidable& to) const { return is(to.getType()); }
+        wbool is(const type& to) const { return getType().is(to); }
+
         template <typename T>
-        tstr<T> as() const {
-            return as(ttype<T>::get());
-        }
-        str as(const type& to) const {
-			return getType().as(*this, to);
-		}
+        tstr<T> as() const { return as(ttype<T>::get()); }
+        str as(const typeProvidable& to) const { return as(to.getType()); }
+        str as(const type& to) const { return getType().as(*this, to); }
 
         template <typename T>
         wbool isImpli() const {
             return isImpli(ttype<T>::get());
         }
-        wbool isImpli(const type& to) const {
-			return getType().isImpli(to);
-        }
+        wbool isImpli(const typeProvidable& to) const { return isImpli(to.getType()); }
+        wbool isImpli(const type& to) const { return getType().isImpli(to); }
+
         template <typename T>
         tstr<T> asImpli() const {
-			return asImpli(ttype<T>::get());
-		}
-        str asImpli(const type& to) const {
-			return getType().asImpli(*this, to);
-		}
+        tstr<T> asImpli() const { return asImpli(ttype<T>::get()); }
+        str asImpli(const typeProvidable& to) const { return asImpli(to.getType()); }
+        str asImpli(const type& to) const { return getType().asImpli(*this, to); }
 
         /// getType() returns what it is. opposite to it, this returns what this class will
         /// represents after evaluation.
