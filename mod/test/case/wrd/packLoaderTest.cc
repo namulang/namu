@@ -19,7 +19,7 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
         ASSERT_FALSE(nul(sayFunc));
 
         ASSERT_EQ(sayFunc.getEvalType(), wVoid().getType());
-        ASSERT_EQ(sayFunc.getParams().size(), 1); // 1 for originObj as "me"
+        ASSERT_EQ(sayFunc.getParams().len(), 1); // 1 for originObj as "me"
 
         str res = sayFunc.run(narr {&origin} );
         ASSERT_TRUE(res);
@@ -30,10 +30,10 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
         func& add = origin["add"].cast<func>();
         ASSERT_FALSE(nul(add));
 
-        const wtypes& argTypes = add.getParams();
-        ASSERT_EQ(argTypes.size(), 3);
-        ASSERT_EQ(*argTypes[0], origin.getType());
-        ASSERT_EQ(*argTypes[1], ttype<wInt>());
+        const params& argTypes = add.getParams();
+        ASSERT_EQ(argTypes.len(), 3);
+        ASSERT_EQ(argTypes[0].getType(), origin.getType());
+        ASSERT_EQ(argTypes[1].getType(), ttype<wInt>());
 
         wInt arg1(5);
         str retVal = add.run(narr {&origin, &arg1} ); // should nothing happen

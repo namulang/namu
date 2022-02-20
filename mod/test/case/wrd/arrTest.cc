@@ -12,7 +12,7 @@ namespace {
         myNode(int num): number(num) {}
 
         ncontainer& subs() override { return nulOf<ncontainer>(); }
-        wbool canRun(const wtypes& types) const override { return false; }
+        wbool canRun(const containable& types) const override { return false; }
         using super::run;
         str run(const containable& args) override { return str(); }
 

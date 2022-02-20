@@ -18,21 +18,13 @@ namespace wrd {
         if(nul(args))
             return sub<T>(name);
 
-        return sub<T>(name, createTypesFromArgs(args));
-    }
-
-    template <typename T>
-    T& ME::sub(const std::string& name, const wtypes& types) {
         return subs().get<T>([&](const T& elem) {
-            return elem.getName() == name && elem.canRun(types);
+            return elem.getName() == name && elem.canRun(args);
         });
     }
 
     template <typename T>
     T& ME::sub(const std::string& name, const containable& args) const WRD_UNCONST_FUNC(sub<T>(name, args))
-
-    template <typename T>
-    T& ME::sub(const std::string& name, const wtypes& types) const WRD_UNCONST_FUNC(sub<T>(name, types))
 
     template <typename T>
     tnarr<T> ME::subAll(const std::string& name) const {
@@ -42,25 +34,17 @@ namespace wrd {
     }
 
     template <typename T>
-    tnarr<T> ME::subAll(const std::string& name, const ncontainer& args) {
+    tnarr<T> ME::subAll(const std::string& name, const containable& args) {
         if(nul(args))
             return subAll<T>(name);
 
-        return subAll<T>(name, createTypesFromArgs(args));
-    }
-
-    template <typename T>
-    tnarr<T> ME::subAll(const std::string& name, const wtypes& types) {
         return subs().getAll<T>([&](const T& elem) {
-            return elem.getName() == name && elem.canRun(types);
+            return elem.getName() == name && elem.canRun(args);
         });
     }
 
     template <typename T>
-    tnarr<T> ME::subAll(const std::string& name, const ncontainer& args) const WRD_UNCONST_FUNC(subAll<T>(name, args))
-
-    template <typename T>
-    tnarr<T> ME::subAll(const std::string& name, const wtypes& types) const WRD_UNCONST_FUNC(subAll<T>(name, types))
+    tnarr<T> ME::subAll(const std::string& name, const containable& args) const WRD_UNCONST_FUNC(subAll<T>(name, args))
 
 #undef ME
 }

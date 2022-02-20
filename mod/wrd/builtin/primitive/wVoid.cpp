@@ -22,10 +22,6 @@ namespace wrd {
             str _onCastArgs(narr& args) override {
                 return str(new wVoid());
             }
-            const wtypes& getParams() const override {
-                static wtypes inner;
-                return inner;
-            }
         };
         struct cpyCtor: public wVoidCtor {
             WRD(CLASS(cpyCtor, wVoidCtor))
@@ -34,11 +30,11 @@ namespace wrd {
             str _onCastArgs(narr& args) override {
                 return str(new wVoid());
             }
-            const wtypes& getParams() const override {
-                static wtypes* inner = nullptr;
+            const params& getParams() const override {
+                static params* inner = nullptr;
                 if(!inner) {
-                    inner = new wtypes();
-                    inner->push_back(&ttype<wVoid>::get());
+                    inner = new params();
+                    inner->add(new ref(ttype<wVoid>::get()));
                 }
                 return *inner;
             }

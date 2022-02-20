@@ -15,6 +15,12 @@ namespace wrd {
 		ref(const node* it, const std::string& name = "");
 		ref(const me& rhs);
 
+        /// on copyctor, all unique variables, name and type, will be copied.
+        ref(const type& t, const std::string& name = "");
+        ref(const type& t, const node& it, const std::string& name = "");
+        ref(const type& t, const node* it, const std::string& name = "");
+        ref(const type& t, const me& rhs);
+
     public:
         me& operator=(const me& rhs) {
             if(this == &rhs) return *this;
@@ -73,9 +79,9 @@ namespace wrd {
             return nulOf<ncontainer>();
         }
 
-        wbool canRun(const wtypes& typs) const override {
+        wbool canRun(const containable& args) const override {
             if(_ref)
-                return _ref->canRun(typs);
+                return _ref->canRun(args);
             return false;
         }
 

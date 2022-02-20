@@ -7,14 +7,15 @@
 namespace wrd {
 
 	class ases;
-    typedef tnarr<ref> params;
+    class ref;
+    typedef tnarr<ref, str> params;
 
     /// node provides common API to manipulate its sub nodes.
     class node : public instance, public clonable {
         WRD(INTERFACE(node, instance))
 
     public:
-        node& operator[](const std::string& name) const { return sub(name); }
+        node& operator[](const std::string& name) const;
 
     public:
         wbool isSub(const type& it) const { return getType().isSub(it); }
@@ -31,36 +32,20 @@ namespace wrd {
         T& sub(std::function<wbool(const T&)> l) const {
             return subs().get<T>(l);
         }
-        template <typename T = me>
-        T& sub(const std::string& name) const;
-        template <typename T = me>
-        T& sub(const std::string& name, const containable& args);
-        template <typename T = me>
-        T& sub(const std::string& name, const wtypes& types);
-        template <typename T = me>
-        T& sub(const std::string& name, const containable& args) const;
-        template <typename T = me>
-        T& sub(const std::string& name, const wtypes& types) const;
+        template <typename T = me> T& sub(const std::string& name) const;
+        template <typename T = me> T& sub(const std::string& name, const containable& args);
+        template <typename T = me> T& sub(const std::string& name, const containable& args) const;
 
         template <typename T>
         tnarr<T, str> subAll(std::function<wbool(const T&)> l) const {
             return subs().getAll<T>(l);
         }
-        template <typename T = me>
-        tnarr<T, str> subAll(const std::string& name) const;
-        template <typename T = me>
-        tnarr<T, str> subAll(const std::string& name, const ncontainer& args);
-        template <typename T = me>
-        tnarr<T, str> subAll(const std::string& name, const wtypes& types);
-        template <typename T = me>
-        tnarr<T, str> subAll(const std::string& name, const ncontainer& args) const;
-        template <typename T = me>
-        tnarr<T, str> subAll(const std::string& name, const wtypes& types) const;
 
-        virtual wbool canRun(const wtypes& typs) const = 0;
-        wbool canRun(const containable& args) const {
-            return canRun(createTypesFromArgs(args));
-        }
+        template <typename T = me> tnarr<T, str> subAll(const std::string& name) const;
+        template <typename T = me> tnarr<T, str> subAll(const std::string& name, const containable& args);
+        template <typename T = me> tnarr<T, str> subAll(const std::string& name, const containable& args) const;
+
+        virtual wbool canRun(const containable& args) const = 0;
 
         /// @return parameters of run() func.
         ///         parameter is just a type. and I don't care about the value of each parameters.
@@ -90,13 +75,11 @@ namespace wrd {
             return false; // usually modifying name is not permitted.
         }
 
-        template <typename T>
-        wbool is() const { return is(ttype<T>::get()); }
+        template <typename T> wbool is() const { return is(ttype<T>::get()); }
         wbool is(const typeProvidable& to) const { return is(to.getType()); }
         wbool is(const type& to) const { return getType().is(to); }
 
-        template <typename T>
-        tstr<T> as() const { return as(ttype<T>::get()); }
+        template <typename T> tstr<T> as() const { return as(ttype<T>::get()); }
         str as(const typeProvidable& to) const { return as(to.getType()); }
         str as(const type& to) const { return getType().as(*this, to); }
 
@@ -107,9 +90,7 @@ namespace wrd {
         wbool isImpli(const typeProvidable& to) const { return isImpli(to.getType()); }
         wbool isImpli(const type& to) const { return getType().isImpli(to); }
 
-        template <typename T>
-        tstr<T> asImpli() const {
-        tstr<T> asImpli() const { return asImpli(ttype<T>::get()); }
+        template <typename T> tstr<T> asImpli() const { return asImpli(ttype<T>::get()); }
         str asImpli(const typeProvidable& to) const { return asImpli(to.getType()); }
         str asImpli(const type& to) const { return getType().asImpli(*this, to); }
 
@@ -124,13 +105,5 @@ namespace wrd {
         virtual const wtype& getEvalType() const {
             return getType();
         }
-
-        static wtypes createTypesFromArgs(const containable& args) {
-            wtypes ret;
-            for(iter e=args.begin(); e ;e++)
-                ret.push_back((wtype*) &e->getEvalType());
-            return ret;
-        }
     };
-
 }

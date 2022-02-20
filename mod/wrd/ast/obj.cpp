@@ -22,13 +22,16 @@ namespace wrd {
         return fun.run(args);
     }
 
-    wbool me::canRun(const wtypes& typs) const {
-        func& fun = getCtors().get<func>([&typs](const func& f) {
-            return f.canRun(typs);
-        });
+    wbool me::canRun(const containable& args) const {
+        wcnt n = getCtors().getAll<func>([&args](const func& f) {
+            return f.canRun(args);
+        }).len();
 
-        if(nul(fun))
-            return WRD_E("%s object isn't constructable with given args", getType().getName().c_str()), false;
-        return true;
+        switch(n) {
+            case 0: return WRD_E("%s object isn't constructible with given args.", getType().getName().c_str()), false;
+            case 1: return true;
+        }
+
+        return WRD_E("%s object have %d ctors. it's ambigious.", getType().getName().c_str(), n), false;
     }
 }

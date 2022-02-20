@@ -22,8 +22,8 @@ namespace wrd {
             str _onCastArgs(narr& args) override {
                 return str(new wInt());
             }
-            const wtypes& getParams() const override {
-                static wtypes inner;
+            const params& getParams() const override {
+                static params inner;
                 return inner;
             }
         };
@@ -36,11 +36,11 @@ namespace wrd {
 
                 return str(new wInt(val));
             }
-            const wtypes& getParams() const override {
-                static wtypes* inner = nullptr;
+            const params& getParams() const override {
+                static params* inner = nullptr;
                 if(!inner) {
-                    inner = new wtypes();
-                    inner->push_back(&ttype<wInt>::get());
+                    inner = new params();
+                    inner->add(new ref(ttype<wInt>::get()));
                 }
                 return *inner;
             }
