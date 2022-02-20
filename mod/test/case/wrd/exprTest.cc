@@ -41,8 +41,8 @@ TEST_F(exprTest, standbyHelloWorldBridgeObj) {
     node& mainFunc = bridge->sub("main", args);
     ASSERT_FALSE(nul(mainFunc));
     ASSERT_TRUE(mainFunc.canRun(args));
-    ASSERT_FALSE(mainFunc.canRun(wtypes({&msg->getType()})));
-    ASSERT_TRUE(mainFunc.canRun(wtypes({&bridge->getType(), &msg->getType()})));
+    ASSERT_FALSE(mainFunc.canRun(narr(*msg)));
+    ASSERT_TRUE(mainFunc.canRun(narr(*bridge, *msg)));
     ASSERT_FALSE(helloWorld::isRun);
     str res = mainFunc.run(args);
     ASSERT_TRUE(res.isBind());
@@ -52,7 +52,7 @@ TEST_F(exprTest, standbyHelloWorldBridgeObj) {
 }
 
 TEST_F(exprTest, simpleGetExpr) {
-    getExpr exp(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
+    getExpr exp(bridge.get(), "main", params(wrd::ref(*bridge), wrd::ref(ttype<wStr>::get())));
     errReport rep;
     verifier veri;
     veri.setReport(rep).verify(exp);
@@ -71,14 +71,14 @@ TEST_F(exprTest, simpleGetExpr) {
 }
 
 TEST_F(exprTest, simpleGetExprNegative) {
-    getExpr exp(bridge.get(), "main?", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
+    getExpr exp(bridge.get(), "main?", params(wrd::ref(*bridge), wrd::ref(ttype<wStr>::get())));
     setLine(exp, 1, 1);
     errReport rep;
     verifier veri;
     veri.setReport(rep).verify(exp);
     ASSERT_TRUE(rep); // should have some errs.
 
-    getExpr exp2(bridge.get(), "main", wtypes({&ttype<wStr>::get()}));
+    getExpr exp2(bridge.get(), "main", params(wrd::ref(ttype<wStr>::get())));
     setLine(exp2, 1, 1);
     rep.rel();
     veri.verify(exp);
@@ -124,9 +124,9 @@ TEST_F(exprTest, simpleRunExprNegative) {
 }
 
 TEST_F(exprTest, constructExprInManual) {
-	getExpr g(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()}));
+	getExpr g(bridge.get(), "main", params(wrd::ref(bridge->getType()), wrd::ref(ttype<wStr>::get())));
 	setLine(g, 1, 1);
-	runExpr r(g, narr({&bridge.get(), new wStr("kniz!")}));
+	runExpr r(g, narr(*bridge, *new wStr("kniz!")));
 	setLine(r, 1, 1);
 
 	str res = r.run();
@@ -136,11 +136,11 @@ TEST_F(exprTest, constructExprInManual) {
 }
 
 TEST_F(exprTest, constructExprWithMaker) {
-	exprMaker maker;
-	tstr<runExpr> r = maker.addRow().make<runExpr>(
-		*maker.make<getExpr>(bridge.get(), "main", wtypes({&bridge->getType(), &ttype<wStr>::get()})),
-		narr({&bridge.get(), new wStr("kniz!")})
-	);
+    exprMaker maker;
+    tstr<runExpr> r = maker.addRow().make<runExpr>(
+        *maker.make<getExpr>(bridge.get(), "main", params(wrd::ref(*bridge), wrd::ref(ttype<wStr>::get()))),
+        narr(*bridge, *new wStr("kniz!"))
+    );
 
 	ASSERT_EQ(r->getPos().row, 1);
 

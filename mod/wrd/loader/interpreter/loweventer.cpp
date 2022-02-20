@@ -189,11 +189,12 @@ namespace wrd {
         _report->add(new1);
     }
 
-    mgdFunc* me::onFunc(const std::string& name, const narr& params, const node& evalObj, const blockExpr& blk) {
+    mgdFunc* me::onFunc(const std::string& name, const narr& p, const node& evalObj, const blockExpr& blk) {
         const wtype& evalType = evalObj.getType();
-        WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s", name.c_str(), &params, evalType.getName().c_str());
-        // TODO: check that params should be defexprs.
-        return new mgdFunc(name, node::createTypesFromArgs(params), evalType, blk);
+        WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s", name.c_str(), &p, evalType.getName().c_str());
+
+        // TODO: should convert p(defexprs) to params;
+        return new mgdFunc(name, params()/*<-- TODO: */, evalType, blk);
     }
 
     narr* me::onList() {

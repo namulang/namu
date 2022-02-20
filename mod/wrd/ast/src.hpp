@@ -14,8 +14,7 @@ namespace wrd {
         src(const std::string& fileName): _fileName(fileName) {}
 
     public:
-        using super::canRun;
-        wbool canRun(const wtypes& types) const override { return false; }
+        wbool canRun(const containable& args) const override { return false; }
 
         using super::run;
         str run(const containable& args) override { return str(); }

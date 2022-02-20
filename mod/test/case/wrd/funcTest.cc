@@ -31,7 +31,7 @@ namespace {
         };
 
     public:
-        myfunc(std::string name = "myfunc"): super(name, wtypes(), ttype<node>::get(), *new myBlock()) {
+        myfunc(std::string name = "myfunc"): super(name, params(), ttype<node>::get(), *new myBlock()) {
             WRD_I("myfunc(%x) new", this);
         }
         ~myfunc() {
@@ -60,11 +60,11 @@ namespace {
             return ttype<node>::get();
         }
 
-        const wtypes& getParams() const override { return _types; }
-        wtypes& getParams() { return _types; }
+        const params& getParams() const override { return _params; }
+        params& getParams() { return _params; }
 
     private:
-        wtypes _types;
+        params _params;
     };
 
     wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj& obj, const char* funcNames[], int funcNameSize) {
@@ -147,16 +147,16 @@ TEST(funcTest, testfuncConstructNewFrame) {
 TEST(funcTest, testCallfuncInsidefunc) {
     myObj obj1;
     myfunc obj1func1(func1Name);
-    obj1func1.getParams().push_back(&obj1.getType());
+    obj1func1.getParams().add(new wrd::ref(obj1));
     myfunc obj1func2(func2Name);
-    obj1func2.getParams().push_back(&obj1.getType());
+    obj1func2.getParams().add(new wrd::ref(obj1.getType()));
     obj1.subs().add(obj1func1);
     obj1.subs().add(obj1func2);
     const char* obj1FuncNames[] = {func1Name, func2Name};
 
     myObj obj2;
     myfunc obj2func1("obj2func1");
-    obj2func1.getParams().push_back(&obj2.getType());
+    obj2func1.getParams().add(new wrd::ref(obj2));
     const char* obj2FuncNames[] = {"obj2func1"};
     obj2.subs().add(obj2func1);
 
@@ -212,9 +212,9 @@ TEST(funcTest, testfuncHasStrParameter) {
     myObj obj;
     obj.subs().add(func1);
 
-    wtypes& types = func1.getParams();
-    types.push_back(&obj.getType());
-    types.push_back(&ttype<wStr>::get());
+    params& types = func1.getParams();
+    types.add(new wrd::ref(obj));
+    types.add(new wrd::ref(ttype<wStr>::get()));
     func1.setLambda([&](const auto& args, const stackFrame& sf) { return true; });
 
     narr args;

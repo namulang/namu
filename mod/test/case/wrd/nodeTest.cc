@@ -8,7 +8,7 @@ namespace {
         WRD(CLASS(myFunc, mgdFunc))
 
     public:
-        myFunc(): super("myFunc", wtypes(), ttype<node>::get()) {}
+        myFunc(): super("myFunc", params(), ttype<node>::get()) {}
 
         void setUp() {
             _executed = false;
@@ -28,10 +28,10 @@ namespace {
             return ttype<node>::get();
         }
 
-        const wtypes& getParams() const override {
-            static wtypes inner;
-            if(inner.size() == 0)
-                inner.push_back(&ttype<obj>::get());
+        const params& getParams() const override {
+            static params inner;
+            if(inner.len() == 0)
+                inner.add(new wrd::ref(ttype<obj>::get()));
 
             return inner;
         }

@@ -20,8 +20,7 @@ namespace wrd {
             return str();
         }
 
-        using super::canRun;
-        wbool canRun(const wtypes& types) const override {
+        wbool canRun(const containable& args) const override {
             return false;
         }
 

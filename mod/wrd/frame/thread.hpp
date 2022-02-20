@@ -36,8 +36,7 @@ namespace wrd {
             return _root->subs();
         }
 
-        using super::canRun;
-        wbool canRun(const wtypes& types) const override { return false; }
+        wbool canRun(const containable& args) const override { return false; }
 
         str run(const containable& args) override;
 

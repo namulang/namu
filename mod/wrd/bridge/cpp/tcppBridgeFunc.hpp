@@ -22,7 +22,7 @@ namespace wrd {
             return ttype<typename tmarshaling<Ret>::mgdType>::get();
         }
 
-        const wtypes& getParams() const override;
+        const params& getParams() const override;
 
     protected:
         fptrType _fptr;

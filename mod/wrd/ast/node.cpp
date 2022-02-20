@@ -3,14 +3,19 @@
 #include "../builtin/container/native/tnarr.inl"
 #include "../type/as.hpp"
 #include "../loader/interpreter/tverification.hpp"
+#include "ref.hpp"
 #include "../loader/interpreter/verifier.hpp"
 
 namespace wrd {
 
     WRD_DEF_ME(node)
 
-    const wtypes& me::getParams() const {
-        static wtypes inner;
+    node& me::operator[](const std::string& name) const {
+        return sub(name);
+    }
+
+    const params& me::getParams() const {
+        static params inner;
         return inner;
     }
 

@@ -59,8 +59,7 @@ namespace wrd {
         using super::run;
         str run(const containable& args) override { return str(); }
 
-        using super::canRun;
-        wbool canRun(const wtypes& types) const override { return false; }
+        wbool canRun(const containable& args) const override { return false; }
 
         const std::string& getName() const override {
             return _manifest.name;

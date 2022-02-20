@@ -19,8 +19,7 @@ namespace wrd {
         using super::run;
         str run(const containable& args) override;
 
-        using super::canRun;
-        wbool canRun(const wtypes& typs) const override;
+        wbool canRun(const containable& typs) const override;
 
         const std::string& getName() const override { return _name; }
         // modifying name of func is not permitted.

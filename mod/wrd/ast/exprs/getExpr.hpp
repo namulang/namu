@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../ref.hpp"
 #include "../expr.hpp"
 
 namespace wrd {
@@ -8,8 +9,8 @@ namespace wrd {
         WRD(CLASS(getExpr, expr, expr::exprType))
 
     public:
-        getExpr(const node& from, const std::string& name, const wtypes& args = wtypes())
-            : _from(from), _name(name), _types(args) {}
+        getExpr(const node& from, const std::string& name, const params& p = params())
+            : _from(from), _name(name), _params(p) {}
 
     public:
         using super::run;
@@ -18,17 +19,17 @@ namespace wrd {
             str me = _from->as<node>();
             if(!me) return WRD_E("_from as node == null"), str();
 
-            return str(me->sub(_name, _types));
+            return str(me->sub(_name, _params));
         }
 
         const wtype& getEvalType() const override;
         const node& getFrom() const { return *_from; }
         const std::string& getName() const override { return _name; }
-        const wtypes& getParams() const override { return _types; }
+        const params& getParams() const override { return _params; }
 
     private:
         str _from;
         std::string _name;
-        wtypes _types;
+        params _params;
     };
 }

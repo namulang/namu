@@ -31,8 +31,8 @@ namespace wrd {
         ncontainer& subs() override;
 
         using super::canRun;
-        wbool canRun(const wtypes& args) const override {
-            return args.size() == 0;
+        wbool canRun(const containable& args) const override {
+            return args.len() == 0;
         }
 
         const src& getSrc() const {

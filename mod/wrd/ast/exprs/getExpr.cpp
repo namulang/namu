@@ -11,7 +11,7 @@ namespace wrd {
         str me = _from->as<node>();
         if(!me) return nulOf<wtype>();
 
-        narr res = _from->subAll(_name, _types);
+        narr res = _from->subAll(_name, _params);
         if(res.len() != 1) return nulOf<wtype>();
 
         // I don't return it as getEvalType() here. getExpr is a previous step before evaluation.
@@ -21,7 +21,7 @@ namespace wrd {
     WRD_VERIFY(getExpr, {
         if(nul(it.getFrom())) return _err(3); // 3: obj to be accessed was null.
 
-        // TODO: I have to check that the evalType has what matched to given _types.
+        // TODO: I have to check that the evalType has what matched to given _params.
         // Until then, I rather use as() func and it makes slow emmersively.
         if(nul(it.getEvalType())) return _err(2); // 2: evaludated as nulled type.
         return true;
