@@ -173,14 +173,18 @@ block: %empty {
    }
 
 // term:
-term: unary {
-   }
+term: unary { $$ = $1; }
 
 unary: postfix {
+     $$ = $1;
    } | DOUBLE_PLUS unary { // prefix:
+     $$ = $2; // TODO:
    } | DOUBLE_MINUS unary {
+     $$ = $2; // TODO:
    } | '+' unary {
+     $$ = $2; // TODO:
    } | '-' unary {
+     $$ = $2; // TODO:
    }
 
 funcCall: NAME list %expect 1 {
@@ -211,16 +215,26 @@ list: '(' list-items ')' {
   }
 
 postfix: primary {
+       $$ = $1;
      } | postfix DOUBLE_MINUS {
+        $$ = $1; // TODO:
      } | postfix DOUBLE_PLUS {
+        $$ = $1; // TODO:
      } | postfix '.' NAME {
+        $$ = $1; // TODO:
      } | postfix '.' funcCall {
+        $$ = $1; // TODO:
      } | funcCall {
+        $$ = new blockExpr(); // TODO:
      }
 
 primary: INTVAL {
+       $$ = yyget_extra(scanner)->onPrimitive<wInt>($1);
      } | STRVAL {
+       $$ = yyget_extra(scanner)->onPrimitive<wStr>($1);
      } | CHARVAR {
+       //TODO: $$ = yyget_extra(scanner)->onPrimitive<wChar>($1);
+       $$ = yyget_extra(scanner)->onPrimitive<wInt>($1);
      } | list %expect 1 {
         //  known shift/reduce conflict on the syntax:
         //      First example: list • NEWLINE INDENT block DEDENT block DEDENT $end
@@ -230,17 +244,17 @@ primary: INTVAL {
         //          e.g. (just_primary) •
 
         // TODO: list should contain 1 element.
+        $$ = new blockExpr(); // TODO:
      } | NAME {
+        // TODO: getExpr(frame, $1)
+        $$ = new blockExpr();
      }
-
 
 // expr:
 //  structure:
 expr-line: defexpr-line {
         $$ = new blockExpr(); // TODO: remove
-       } | expr10 {
-        $$ = new blockExpr(); // TODO: remove
-       }
+       } | expr10 { $$ = $1; }
 expr-compound: defexpr-compound {
             $$ = new blockExpr(); // TODO: remove
            } | if {
@@ -248,30 +262,28 @@ expr-compound: defexpr-compound {
            }
 
 //  expr-line:
-expr10: expr9 {
-    }
-expr9: expr8 {
-   }
-expr8: expr7 {
-   }
-expr7: expr6 {
-   }
-expr6: expr5 {
-   }
-expr5: expr4 {
-   }
-expr4: expr3 {
-   }
-expr3: expr2 {
-   }
+expr10: expr9 { $$ = $1; }
+expr9: expr8 { $$ = $1; }
+expr8: expr7 { $$ = $1; }
+expr7: expr6 { $$ = $1; }
+expr6: expr5 { $$ = $1; }
+expr5: expr4 { $$ = $1; }
+expr4: expr3 { $$ = $1; }
+expr3: expr2 { $$ = $1; }
 expr2: expr1 {
+    $$ = $1;
    } | expr2 '+' expr1 {
+    $$ = $1; // TODO:
    } | expr2 '-' expr1 {
+    $$ = $1; // TODO:
    }
 
 expr1: term {
+    $$ = $1;
    } | expr1 '*' term {
+    $$ = $1; // TODO:
    } | expr1 '/' term {
+    $$ = $1; // TODO:
    }
 
 // keyword:
