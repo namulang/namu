@@ -11,14 +11,14 @@ namespace wrd {
 
 	public:
 		ref(const std::string& name = "");
-		ref(const node& it, const std::string& name = "");
-		ref(const node* it, const std::string& name = "");
+		ref(const node& it, const std::string& name);
+		ref(const node* it, const std::string& name);
 		ref(const me& rhs);
 
         /// on copyctor, all unique variables, name and type, will be copied.
         ref(const type& t, const std::string& name = "");
-        ref(const type& t, const node& it, const std::string& name = "");
-        ref(const type& t, const node* it, const std::string& name = "");
+        ref(const type& t, const node& it, const std::string& name);
+        ref(const type& t, const node* it, const std::string& name);
         ref(const type& t, const me& rhs);
 
     public:

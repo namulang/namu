@@ -147,7 +147,7 @@ TEST(funcTest, testfuncConstructNewFrame) {
 TEST(funcTest, testCallfuncInsidefunc) {
     myObj obj1;
     myfunc obj1func1(func1Name);
-    obj1func1.getParams().add(new wrd::ref(obj1));
+    obj1func1.getParams().add(new wrd::ref(obj1, ""));
     myfunc obj1func2(func2Name);
     obj1func2.getParams().add(new wrd::ref(obj1.getType()));
     obj1.subs().add(obj1func1);
@@ -156,7 +156,7 @@ TEST(funcTest, testCallfuncInsidefunc) {
 
     myObj obj2;
     myfunc obj2func1("obj2func1");
-    obj2func1.getParams().add(new wrd::ref(obj2));
+    obj2func1.getParams().add(new wrd::ref(obj2, ""));
     const char* obj2FuncNames[] = {"obj2func1"};
     obj2.subs().add(obj2func1);
 
@@ -213,7 +213,7 @@ TEST(funcTest, testfuncHasStrParameter) {
     obj.subs().add(func1);
 
     params& types = func1.getParams();
-    types.add(new wrd::ref(obj));
+    types.add(new wrd::ref(obj, ""));
     types.add(new wrd::ref(ttype<wStr>::get()));
     func1.setLambda([&](const auto& args, const stackFrame& sf) { return true; });
 
