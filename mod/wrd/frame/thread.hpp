@@ -8,9 +8,10 @@ namespace wrd {
 
     class thread : public node {
         WRD(CLASS(thread, node))
-        friend class mgdObj; // to access stackFrame.
-        friend class mgdFunc; // to access stackFrame.
-        friend class blockExpr; // to access stackFrame.
+        friend class mgdObj; // for stackFrame.
+        friend class mgdFunc; // for stackFrame.
+        friend class blockExpr; // for stackFrame.
+        friend class defVarExpr; // for stackFrame
 
     private:
         thread() {} // for singleton

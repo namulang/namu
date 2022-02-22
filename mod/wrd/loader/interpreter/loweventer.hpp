@@ -92,6 +92,7 @@ namespace wrd {
             WRD_DI("on%s(...)", ttype<T>::get().getName().c_str());
             return new T(args...);
         }
+        node* onDefVar(const wtype& t, const std::string& name);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);

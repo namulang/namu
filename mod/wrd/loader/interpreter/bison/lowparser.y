@@ -253,7 +253,7 @@ primary: INTVAL {
 // expr:
 //  structure:
 expr-line: defexpr-line {
-        $$ = new blockExpr(); // TODO: remove
+        $$ = $1;
        } | expr10 { $$ = $1; }
 expr-compound: defexpr-compound {
             $$ = new blockExpr(); // TODO: remove
@@ -312,9 +312,11 @@ aka-deduced: AKA aka-dotname {
 // defs:
 //  structure:
 defexpr-line: defexpr-line-except-aka {
+            $$ = new blockExpr(); // TODO:
           } | aka {
+            $$ = new blockExpr(); // TODO:
           }
-defexpr-line-except-aka: defvar {}
+defexpr-line-except-aka: defvar { $$ = $1; }
 defexpr-compound: deffunc { $$ = $1; }
 defstmt: defexpr-line NEWLINE { $$ = new blockExpr(); }
        | defexpr-compound { $$ = $1; }
@@ -337,8 +339,10 @@ type: VOID { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
 
 //  variable:
 defvar: defvar-exp-no-initial-value {
+      $$ = $1;
     }
 defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
+                            $$ = yyget_extra(scanner)->onDefVar($2->getType(), std::string($1));
                          }
 
 //  func:
