@@ -12,5 +12,7 @@ namespace wrd {
         frame& getCurrentFrame() {
             return get(len() - 1);
         }
+
+        const frame& getCurrentFrame() const WRD_UNCONST_FUNC(getCurrentFrame())
     };
 }

@@ -12,8 +12,10 @@ namespace wrd {
         fr.pushLocal(new narr());
 
         str ret;
-        for(auto e=_exprs.begin<expr>(); e ; ++e)
+        for(auto e=_exprs.begin<expr>(); e ; ++e) {
             ret = e->run(nulOf<containable>());
+            if(fr.isReturned()) break;
+        }
 
         WRD_DI("%s._onOutFrame()", getName().c_str());
         fr.popLocal();
