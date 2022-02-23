@@ -72,8 +72,8 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;clonable.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../builtin/container/native/tnarr.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;validable.hpp&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;validable.hpp&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../builtin/container/native/tnarr.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>wrd {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
@@ -159,12 +159,23 @@ $(function() {
 <div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">  105</a></span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; <a class="code" href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">getEvalType</a>()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="keywordflow">return</span> getType();</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        }</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    };</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="classwrd_1_1node.html#ab01ce4317558840579b9ff9cc7ffc6e4">  111</a></span>&#160;        <span class="keyword">virtual</span> wbool <a class="code" href="classwrd_1_1node.html#ab01ce4317558840579b9ff9cc7ffc6e4">doesNeedScope</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> _inFrame() {</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            WRD_DI(<span class="stringliteral">&quot;%s._inFrame()&quot;</span>, getName().c_str());</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> _outFrame() {</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            WRD_DI(<span class="stringliteral">&quot;%s._outFrame()&quot;</span>, getName().c_str());</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        }</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    };</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1instance_html"><div class="ttname"><a href="classwrd_1_1instance.html">wrd::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1clonable_html"><div class="ttname"><a href="classwrd_1_1clonable.html">wrd::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html_ab01ce4317558840579b9ff9cc7ffc6e4"><div class="ttname"><a href="classwrd_1_1node.html#ab01ce4317558840579b9ff9cc7ffc6e4">wrd::node::doesNeedScope</a></div><div class="ttdeci">virtual wbool doesNeedScope() const</div><div class="ttdef"><b>Definition:</b> node.hpp:111</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html_aa135ead010cb500b4e683f26440cbd95"><div class="ttname"><a href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">wrd::node::getEvalType</a></div><div class="ttdeci">virtual const wtype &amp; getEvalType() const</div><div class="ttdef"><b>Definition:</b> node.hpp:105</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html_a732b2152a09d164a579c69fe1cfb62e3"><div class="ttname"><a href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">wrd::node::rel</a></div><div class="ttdeci">virtual void rel()</div><div class="ttdef"><b>Definition:</b> node.hpp:65</div></div>
 <div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>

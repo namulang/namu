@@ -67,6 +67,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classwrd_1_1node-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">wrd::node Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -209,6 +210,8 @@ template&lt;typename T &gt; </td></tr>
 <tr class="separator:a8ff4efacc5b36e1d7357ed00ad0857b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa135ead010cb500b4e683f26440cbd95"><td class="memItemLeft" align="right" valign="top">virtual const <a class="el" href="classwrd_1_1wtype.html">wtype</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">getEvalType</a> () const</td></tr>
 <tr class="separator:aa135ead010cb500b4e683f26440cbd95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab01ce4317558840579b9ff9cc7ffc6e4"><td class="memItemLeft" align="right" valign="top">virtual wbool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1node.html#ab01ce4317558840579b9ff9cc7ffc6e4">doesNeedScope</a> () const</td></tr>
+<tr class="separator:ab01ce4317558840579b9ff9cc7ffc6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwrd_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwrd_1_1instance')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwrd_1_1instance.html">wrd::instance</a></td></tr>
 <tr class="memitem:aef5e80a97d661d7722ec28367dc45b1c inherit pub_methods_classwrd_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="aef5e80a97d661d7722ec28367dc45b1c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>instance</b> (<a class="el" href="structwrd_1_1id.html">id</a> newId)</td></tr>
@@ -254,12 +257,21 @@ template&lt;typename T &gt; </td></tr>
 virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () const =0</td></tr>
 <tr class="separator:a3834594c34f9fc28b8337979b7402735 inherit pub_methods_classwrd_1_1clonable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:adfd569b251b9189afadea390d65c1b92"><td class="memItemLeft" align="right" valign="top"><a id="adfd569b251b9189afadea390d65c1b92"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>_inFrame</b> ()</td></tr>
+<tr class="separator:adfd569b251b9189afadea390d65c1b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89cf63b0e010f743aa9cb31ca4d558ed"><td class="memItemLeft" align="right" valign="top"><a id="a89cf63b0e010f743aa9cb31ca4d558ed"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>_outFrame</b> ()</td></tr>
+<tr class="separator:a89cf63b0e010f743aa9cb31ca4d558ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classwrd_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwrd_1_1instance')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwrd_1_1instance.html">wrd::instance</a></td></tr>
 <tr class="memitem:ac721ad5b23f313c4d29c1ee3ebf58ce9 inherit pro_methods_classwrd_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="ac721ad5b23f313c4d29c1ee3ebf58ce9"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>_setId</b> (<a class="el" href="structwrd_1_1id.html">id</a> new1)</td></tr>
 <tr class="separator:ac721ad5b23f313c4d29c1ee3ebf58ce9 inherit pro_methods_classwrd_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_static_methods_classwrd_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_classwrd_1_1instance')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="classwrd_1_1instance.html">wrd::instance</a></td></tr>
 <tr class="memitem:a652f6aa776b0743f0d6726971f02b54f inherit pro_static_methods_classwrd_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a652f6aa776b0743f0d6726971f02b54f"></a>
 static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getMgr</b> ()</td></tr>
@@ -268,6 +280,34 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>node provides common API to manipulate its sub nodes. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab01ce4317558840579b9ff9cc7ffc6e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab01ce4317558840579b9ff9cc7ffc6e4">&#9670;&nbsp;</a></span>doesNeedScope()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual wbool wrd::node::doesNeedScope </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>true if this class needs to get mgd subnodes from frame instance. the owner of this instance will interact current frame if subnodes returns true. </dd></dl>
+
+<p>Reimplemented in <a class="el" href="classwrd_1_1mgd_func.html#aaddfff4f8387748a885303a277365973">wrd::mgdFunc</a>.</p>
+
+</div>
+</div>
 <a id="aa135ead010cb500b4e683f26440cbd95"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa135ead010cb500b4e683f26440cbd95">&#9670;&nbsp;</a></span>getEvalType()</h2>
 
