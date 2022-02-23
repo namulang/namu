@@ -37,6 +37,11 @@ namespace wrd {
             return *this;
         }
 
+        static me& singletone() {
+            static me inner;
+            return inner;
+        }
+
     protected:
         wbool _onSame(const typeProvidable& rhs) const override {
             return !nul(rhs);

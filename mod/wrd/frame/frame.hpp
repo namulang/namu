@@ -86,6 +86,14 @@ namespace wrd {
             super::rel();
         }
 
+        wbool pushReturn(const str& toReturn) const { return _ret.bind(*toReturn); }
+        wbool isReturned() const { return _ret.isBind(); }
+        str popReturn() const {
+            str ret = _ret;
+            _ret.rel();
+            return ret;
+        }
+
     private:
         void _rel() {
             _obj.rel();
@@ -100,5 +108,6 @@ namespace wrd {
     private:
         tstr<nchain> _obj;
         scopeStack _local;
+        mutable str _ret;
     };
 }

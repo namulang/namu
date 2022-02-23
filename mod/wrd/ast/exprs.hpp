@@ -6,3 +6,4 @@
 #include "exprs/exprMaker.hpp"
 #include "exprs/defVarExpr.hpp"
 #include "exprs/literalExpr.hpp"
+#include "exprs/returnExpr.hpp"
