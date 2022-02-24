@@ -12,7 +12,6 @@
 #include "macro/singletoneGetter.hpp"
 #include "macro/initiator.hpp"
 #include "macro/typeTrait.hpp"
-#include "macro/nul.hpp"
 #include "macro/gets.hpp"
 #include "macro/unconstFunc.hpp"
 #include "macro/staticAsserts.hpp"
