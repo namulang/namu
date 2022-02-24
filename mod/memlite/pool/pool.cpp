@@ -15,7 +15,8 @@ namespace wrd {
 
     wbool me::has(const instance& it) const {
         const chunks& got = get(it.getType().size());
-        WRD_NUL(got, false)
+        if(nul(got))
+            return WRD_W("got == null"), false;
 
         return got.has(it);
     }
