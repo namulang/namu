@@ -195,6 +195,7 @@ funcCall: NAME list %expect 1 {
       }
 
 dotname: NAME {
+       // TODO: uses loweventer:
        $$ = new narr();
        $$->add(new wStr($1));
     } | dotname '.' NAME {
@@ -347,8 +348,6 @@ deffunc: deffunc-default { $$ = $1; }
        | deffunc-deduction { $$ = new blockExpr(); /* TODO: */ }
        | deffunc-lambda { $$ = new blockExpr(); /* TODO: */ }
 deffunc-default: NAME list type indentblock {
-                std::string nn($1);
-                WRD_E("name=%s, string=%s", $1, nn.c_str());
                 tstr<narr> list($2);
                 str type($3);
                 $$ = yyget_extra(scanner)->onFunc(std::string($1), *list, *type, $4->cast<blockExpr>());

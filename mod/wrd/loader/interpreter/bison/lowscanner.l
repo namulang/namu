@@ -66,7 +66,7 @@ aka { return AKA; }
 }
 
 [[:alpha:]]+[[:alnum:]]* {
-    yylval->asStr = yytext;
+    yylval->asStr = strdup(yytext);
     WRD_DI("scanner: NAME=%s", yytext);
     return NAME;
 }
@@ -78,7 +78,7 @@ aka { return AKA; }
 }
 
 \"[^\r\f\n\"]*\" {
-    yylval->asStr = yytext;
+    yylval->asStr = strdup(yytext);
     WRD_DI("scanner: STRVAL=\"%s\"", yytext);
     return STRVAL;
 }

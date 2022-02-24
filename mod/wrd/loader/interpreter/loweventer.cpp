@@ -210,12 +210,7 @@ namespace wrd {
     mgdFunc* me::onFunc(const std::string& name, const narr& exprs, const node& evalObj, const blockExpr& blk) {
         WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s", name.c_str(), &exprs, evalType.getName().c_str());
 
-        // take bind of exprs instance: because it's on heap. I need to free.
-        tstr<narr> exprsLife(exprs);
-        str evalObjLife(evalObj);
-
-        params p = _convertParams(*exprsLife);
-        return new mgdFunc(name, p, evalObjLife->getType(), blk);
+        return new mgdFunc(name, _convertParams(exprs), evalType, blk);
     }
 
     narr* me::onList() {
