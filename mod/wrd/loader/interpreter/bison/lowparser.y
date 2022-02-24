@@ -156,9 +156,7 @@ compilation-unit: pack defblock {
 
 expr: expr-line {
     $$ = new blockExpr(); // TODO: remove
-  } | expr-compound {
-    $$ = new blockExpr(); // TODO: remove
-  }
+  } | expr-compound { $$ = $1; }
 
 stmt: expr-line NEWLINE {
     $$ = $1;
@@ -255,9 +253,8 @@ primary: INTVAL {
 expr-line: defexpr-line {
         $$ = $1;
        } | expr10 { $$ = $1; }
-expr-compound: defexpr-compound {
-            $$ = new blockExpr(); // TODO: remove
-           } | if {
+expr-compound: defexpr-compound { $$ = $1; }
+             | if {
             $$ = new blockExpr(); // TODO: remove
            }
 
@@ -350,6 +347,8 @@ deffunc: deffunc-default { $$ = $1; }
        | deffunc-deduction { $$ = new blockExpr(); /* TODO: */ }
        | deffunc-lambda { $$ = new blockExpr(); /* TODO: */ }
 deffunc-default: NAME list type indentblock {
+                std::string nn($1);
+                WRD_E("name=%s, string=%s", $1, nn.c_str());
                 tstr<narr> list($2);
                 str type($3);
                 $$ = yyget_extra(scanner)->onFunc(std::string($1), *list, *type, $4->cast<blockExpr>());
