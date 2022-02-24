@@ -194,12 +194,28 @@ namespace wrd {
         _report->add(new1);
     }
 
-    mgdFunc* me::onFunc(const std::string& name, const narr& p, const node& evalObj, const blockExpr& blk) {
-        const wtype& evalType = evalObj.getType();
-        WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s", name.c_str(), &p, evalType.getName().c_str());
+    params me::_convertParams(const narr& exprs) {
+        params ret;
+        for(auto& expr: exprs) {
+            defVarExpr& cast = expr.cast<defVarExpr>();
+            if(nul(cast)) return onSrcErr(16, expr.getType().getName().c_str()), ret;
+            if(cast.getParam()) return onSrcErr(17), ret;
 
-        // TODO: should convert p(defexprs) to params;
-        return new mgdFunc(name, params()/*<-- TODO: */, evalType, blk);
+            ret.add(cast.getParam());
+        }
+
+        return ret;
+    }
+
+    mgdFunc* me::onFunc(const std::string& name, const narr& exprs, const node& evalObj, const blockExpr& blk) {
+        WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s", name.c_str(), &exprs, evalType.getName().c_str());
+
+        // take bind of exprs instance: because it's on heap. I need to free.
+        tstr<narr> exprsLife(exprs);
+        str evalObjLife(evalObj);
+
+        params p = _convertParams(*exprsLife);
+        return new mgdFunc(name, p, evalObjLife->getType(), blk);
     }
 
     narr* me::onList() {

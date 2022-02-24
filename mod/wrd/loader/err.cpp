@@ -32,6 +32,8 @@ namespace wrd {
             "no pack has been specified",
             "\'%s\' subpack already exists at %s", // 15
             "\'%s\' isn't a expression",
+            "wrong parameter syntax: %s",
+            "parameter shouldn't have a value",
 
             /* to be continue... */
 

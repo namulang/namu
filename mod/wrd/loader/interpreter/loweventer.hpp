@@ -98,6 +98,7 @@ namespace wrd {
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         str _onFindSubPack(node* subpack);
         void _onRes(err* new1);
+        params _convertParams(const narr& exprs);
 
     private:
         tokenScan* _mode;
