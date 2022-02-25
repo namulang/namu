@@ -154,15 +154,11 @@ compilation-unit: pack defblock {
                 _onEndParse(scanner);
               }
 
-expr: expr-line {
-    $$ = new blockExpr(); // TODO: remove
-  } | expr-compound { $$ = $1; }
+expr: expr-line { $$ = $1; }
+    | expr-compound { $$ = $1; }
 
-stmt: expr-line NEWLINE {
-    $$ = $1;
-  } | expr-compound {
-    $$ = $1;
-  }
+stmt: expr-line NEWLINE { $$ = $1; }
+    | expr-compound { $$ = $1; }
 
 block: %empty {
      $$ = yyget_extra(scanner)->onBlock();
@@ -251,9 +247,8 @@ primary: INTVAL {
 
 // expr:
 //  structure:
-expr-line: defexpr-line {
-        $$ = $1;
-       } | expr10 { $$ = $1; }
+expr-line: defexpr-line { $$ = $1; }
+         | expr10 { $$ = $1; }
 expr-compound: defexpr-compound { $$ = $1; }
              | if {
             $$ = new blockExpr(); // TODO: remove
@@ -309,9 +304,8 @@ aka-deduced: AKA aka-dotname {
 
 // defs:
 //  structure:
-defexpr-line: defexpr-line-except-aka {
-            $$ = new blockExpr(); // TODO:
-          } | aka {
+defexpr-line: defexpr-line-except-aka { $$ = $1; }
+            | aka {
             $$ = new blockExpr(); // TODO:
           }
 defexpr-line-except-aka: defvar { $$ = $1; }
@@ -348,6 +342,7 @@ deffunc: deffunc-default { $$ = $1; }
        | deffunc-deduction { $$ = new blockExpr(); /* TODO: */ }
        | deffunc-lambda { $$ = new blockExpr(); /* TODO: */ }
 deffunc-default: NAME list type indentblock {
+                // take bind of exprs instance: because it's on heap. I need to free.
                 tstr<narr> list($2);
                 str type($3);
                 $$ = yyget_extra(scanner)->onFunc(std::string($1), *list, *type, $4->cast<blockExpr>());
