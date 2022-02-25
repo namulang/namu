@@ -208,6 +208,7 @@ namespace wrd {
     }
 
     mgdFunc* me::onFunc(const std::string& name, const narr& exprs, const node& evalObj, const blockExpr& blk) {
+        const wtype& evalType = evalObj.getType();
         WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s", name.c_str(), &exprs, evalType.getName().c_str());
 
         return new mgdFunc(name, _convertParams(exprs), evalType, blk);
