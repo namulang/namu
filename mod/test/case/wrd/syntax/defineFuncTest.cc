@@ -98,3 +98,38 @@ TEST_F(defineFuncTest, lambda5) {
     )SRC").expect(true);
 }
 
+TEST_F(defineFuncTest, noBodyNegative) {
+    make().parse(R"SRC(
+        main() void)SRC").expect(false);
+
+    make().parse(R"SRC(
+        main(n int) void
+    )SRC").expect(false);
+}
+
+TEST_F(defineFuncTest, wrongParamNegative) {
+    make().parse(R"SRC(
+        main(a) void
+            22
+    )SRC").expect(false);
+
+    make().parse(R"SRC(
+        main(age int()) void
+            22
+    )SRC").expect(false);
+
+    make().parse(R"SRC(
+        main(age + 22, age int) void
+            22
+    )SRC").expect(false);
+
+    make().parse(R"SRC(
+        main(age + 22, age int) void
+            22
+    )SRC").expect(false);
+
+    make().parse(R"SRC(
+        main(aka int -> i) void
+            22
+    )SRC").expect(false);
+}
