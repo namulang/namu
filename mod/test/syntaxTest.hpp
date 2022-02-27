@@ -22,6 +22,10 @@ struct syntaxTest : public ::testing::Test {
     }
 
     syntaxTest& parse(const wrd::wchar* src) {
+        WRD_I("====================================");
+        WRD_I("parsing src:");
+        WRD_I("%s", src);
+        WRD_I("====================================");
         wrd::parser p;
         _subpack = p.setPack(*_pack).setReport(_rpt).parse(_src = src);
         return *this;
