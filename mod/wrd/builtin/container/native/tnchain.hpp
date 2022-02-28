@@ -114,6 +114,7 @@ namespace wrd {
             tstr<tnchain> _chn;
         };
 
+    public:
         typedef titer<me> chnIter;
 
     public:
