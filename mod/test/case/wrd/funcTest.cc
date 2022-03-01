@@ -67,6 +67,14 @@ namespace {
         params _params;
     };
 
+    wbool _isFrameLinkScope(const frame& fr, const nchain& scope) {
+        const nchain& subs = fr.subs().cast<nchain>();
+        for(nchain::chnIter e=subs.beginChain() ; e ; ++e)
+            if(&e.get() == &scope)
+                return true;
+        return false;
+    }
+
     wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const obj& obj, const char* funcNames[], int funcNameSize) {
         if(nul(fr)) return false;
 
@@ -77,8 +85,8 @@ namespace {
 
         const nchain& funcScope = fr.subs().cast<nchain>();
         if(nul(funcScope)) return WRD_I("nul(funcScope)"), false;
-        if(&func.subs() != &funcScope.getContainer())
-            return WRD_I("func.subs(%x) != funcScope(%x)", &func.subs(), &funcScope), false;
+        if(!_isFrameLinkScope(fr, funcScope))
+            return WRD_I("frame not contain the funcScope(%x)", &funcScope), false;
 
         for(int n=0; n < funcNameSize; n++) {
             const char* name = funcNames[n];
@@ -130,10 +138,9 @@ TEST(funcTest, testfuncConstructNewFrame) {
     });
 
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
-    func.run();
+    func.run(args);
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
     ASSERT_FALSE(func.isRun());
-
     ASSERT_FALSE(func.isSuccess());
 
     ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);

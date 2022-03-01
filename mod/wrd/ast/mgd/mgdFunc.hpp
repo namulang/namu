@@ -26,6 +26,9 @@ namespace wrd {
         str _onCastArgs(narr& castedArgs) override;
 
     private:
+        narr& _nameArgs(narr& args);
+
+    private:
         narr _shares;
         params _params;
         const wtype* _evalType;
