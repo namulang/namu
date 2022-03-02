@@ -238,3 +238,32 @@ TEST(funcTest, testfuncHasStrParameter) {
     obj.run("myfunc", args);
     ASSERT_TRUE(func1.isSuccess());
 }
+
+TEST(funcTest, testArgsAttachedName) {
+    myObj o;
+    myfunc f;
+    o.subs().add(f);
+    params& ps = f.getParams();
+    ps.add(new wrd::ref(ttype<wStr>::get(), "msg"/*NAME*/));
+    ps.add(new wrd::ref(ttype<wInt>::get(), "age"/*NAME*/));
+    f.setLambda([&](const auto& args, const stackFrame& sf) {
+        const frame& fr = sf.getCurrentFrame();
+        return  fr["msg"].cast<wStr>().get() == "hello world" &&
+                fr["age"].cast<wInt>().get() == 55;
+    });
+
+    o.run("myfunc");
+    ASSERT_FALSE(f.isRun());
+
+    narr args;
+    wStr msg("hello world");
+    msg.setName("this_is_not_msg");
+    args.add(msg);
+    wInt age(55);
+    age.setName("this_is_not_age");
+    args.add(age);
+
+    o.run("myfunc", args);
+    ASSERT_TRUE(f.isRun());
+    ASSERT_TRUE(f.isSuccess());
+}
