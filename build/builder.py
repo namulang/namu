@@ -543,7 +543,10 @@ def _where(name):
         return ""
 
     print("cmd=" + cmd + ", name=" + name)
-    ret = prefix + cmdstr(cmd + " " + name) + prefix
+    res = cmdstr(cmd + " " + name)
+    ret = ""
+    if res:
+        ret = prefix + res + prefix
     print(ret)
     return ret
 
