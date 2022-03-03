@@ -121,7 +121,7 @@
 %type <asNode> if
 %type <asNode> aka aka-default aka-deduced
 %type <asNarr> aka-dotname aka-dotname-item
-%type pack
+%type <asNode> pack
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 %type <asNode> type
@@ -149,8 +149,7 @@
 %%
 
 compilation-unit: pack defblock {
-                auto* eventer = yyget_extra(scanner);
-                // TODO:
+                yyget_extra(scanner)->onCompilationUnit(*$1, $2->cast<blockExpr>());
                 _onEndParse(scanner);
               }
 
@@ -367,9 +366,9 @@ indentblock: NEWLINE INDENT block DEDENT {
 
 //  pack:
 pack: PACK dotname NEWLINE {
-    yyget_extra(scanner)->onPack(*$2);
+    $$ = yyget_extra(scanner)->onPack(*$2);
   } | %empty {
-    yyget_extra(scanner)->onPack();
+    $$ = yyget_extra(scanner)->onPack();
   }
 
 
