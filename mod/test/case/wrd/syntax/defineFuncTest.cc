@@ -8,10 +8,18 @@ namespace {
 }
 
 TEST_F(defineFuncTest, distinguishDefineFuncOrCall) {
-    make().parse(R"SRC(
+    if(make().parse(R"SRC(
         main() void
             foo(a, 22)
-    )SRC").expect(true);
+    )SRC").expect(true)) {
+        node& res = getSubPack();
+        ASSERT_FALSE(nul(res));
+
+        const func& f = res.sub<func>("main", narr());
+        ASSERT_FALSE(nul(f));
+        ASSERT_EQ(f.getName(), "main");
+        ASSERT_EQ(f.getParams().len(), 0);
+    }
 }
 
 TEST_F(defineFuncTest, distinguishDefineFuncOrCall2) {
