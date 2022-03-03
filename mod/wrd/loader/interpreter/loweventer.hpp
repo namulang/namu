@@ -22,7 +22,7 @@ namespace wrd {
 
     public:
         tstr<pack>& getPack() { return _pack; }
-        str& getSubPack() { return _subpack; }
+        str& getSubPack() { return _subpack; } // TODO: can I remove subpack variable?
         tstr<errReport>& getReport() { return _report; }
         tokenDispatcher& getDispatcher() { return _dispatcher; }
         std::vector<wcnt>& getIndents() { return _indents; }
@@ -74,10 +74,10 @@ namespace wrd {
         template <typename... Args> void onSrcInfo(Args... args) { _onRes(err::newInfo(getArea(), args...)); }
 
         //  keyword:
-        str onPack(const narr& dotname);
-        str onPack();
-        node* onBlock();
-        node* onBlock(blockExpr& blk, node& exp);
+        node* onPack(const narr& dotname);
+        node* onPack();
+        blockExpr* onBlock();
+        blockExpr* onBlock(blockExpr& blk, node& exp);
 
         //  defexpr:
         //      func:
@@ -93,10 +93,11 @@ namespace wrd {
             return new T(args...);
         }
         node* onDefVar(const wtype& t, const std::string& name);
+        void onCompilationUnit(node& subpack, blockExpr& blk);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
-        str _onFindSubPack(node* subpack);
+        node* _onFindSubPack(node* subpack);
         void _onRes(err* new1);
         params _convertParams(const narr& exprs);
 

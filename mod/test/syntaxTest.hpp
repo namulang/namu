@@ -31,14 +31,16 @@ struct syntaxTest : public ::testing::Test {
         return *this;
     }
 
-    wrd::wbool isSuccess() const {
-        return _subpack && _pack && !_rpt;
+    wrd::wbool expect(wrd::wbool expected) const {
+        wrd::wbool ret = isSuccess() == expected;
+        EXPECT_TRUE(ret);
+        if(!ret)
+            _log(expected);
+        return ret;
     }
 
-    void expect(wrd::wbool expected) const {
-        EXPECT_TRUE(isSuccess() == expected);
-        if(isSuccess() != expected)
-            _log(expected);
+    wrd::wbool isSuccess() const {
+        return _subpack && _pack && !_rpt;
     }
 
 private:

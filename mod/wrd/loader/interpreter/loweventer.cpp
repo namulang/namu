@@ -106,7 +106,7 @@ namespace wrd {
         area.rel();
     }
 
-    str me::onPack(const narr& dotname) {
+    node* me::onPack(const narr& dotname) {
         std::string firstName = dotname[0].cast<std::string>();
         WRD_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
 
@@ -148,7 +148,7 @@ namespace wrd {
         return _onFindSubPack(ret);
     }
 
-    str me::onPack() {
+    node* me::onPack() {
         WRD_DI("tokenEvent: onPack()");
 
         onWarn(14);
@@ -158,12 +158,12 @@ namespace wrd {
         return _onFindSubPack(newPack); // this is a default pack containing name as '{default}'.
     }
 
-    node* me::onBlock() {
+    blockExpr* me::onBlock() {
         WRD_DI("tokenEvent: onBlock()");
         return new blockExpr();
     }
 
-    node* me::onBlock(blockExpr& blk, node& candidate) {
+    blockExpr* me::onBlock(blockExpr& blk, node& candidate) {
         WRD_DI("tokenEvent: onBlock()");
         if(nul(blk))
             return onSrcErr(11, "blk"), onBlock();
@@ -180,9 +180,9 @@ namespace wrd {
         return new defVarExpr(*new ref(t, name));
     }
 
-    str me::_onFindSubPack(node* subpack) {
+    node* me::_onFindSubPack(node* subpack) {
         _subpack.bind(subpack);
-        return _subpack;
+        return subpack;
     }
 
     void me::onSrcArea(area& area) {
@@ -228,5 +228,16 @@ namespace wrd {
         WRD_DI("tokenEvent: onList(list[%x], expr[%x])", &list, newExpr);
         list.add(newExpr);
         return &list;
+    }
+
+    void me::onCompilationUnit(node& subpack, blockExpr& blk) {
+        wbool hasPack = !nul(subpack);
+        std::string name = hasPack ? subpack.getName() : "";
+        WRD_DI("tokenEvent: onCompilationUnit(%s[%x], block[%x])", name.c_str(), &subpack, &blk);
+        if(!hasPack) return;
+
+        containable& con = subpack.subs();
+        for(const node& stmt: blk.subs())
+            con.add(stmt);
     }
 }
