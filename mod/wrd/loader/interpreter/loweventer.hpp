@@ -90,11 +90,11 @@ namespace wrd {
         narr* onList(narr& list, const expr* newExpr);
         //      var:
         template <typename T, typename... Args>
-        node* onPrimitive(Args... args) {
+        T* onPrimitive(Args... args) {
             WRD_DI("on%s(...)", ttype<T>::get().getName().c_str());
             return new T(args...);
         }
-        node* onDefVar(const wtype& t, const std::string& name);
+        expr* onDefVar(const wtype& t, const std::string& name);
         void onCompilationUnit(node& subpack, narr& blk);
 
     private:
