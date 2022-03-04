@@ -34,6 +34,7 @@ namespace wrd {
             "\'%s\' isn't a expression",
             "wrong parameter syntax: %s",
             "parameter shouldn't have a value",
+            "%s is not a expression declaring something",
 
             /* to be continue... */
 

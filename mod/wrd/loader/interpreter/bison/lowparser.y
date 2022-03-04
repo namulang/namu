@@ -125,7 +125,8 @@
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 %type <asNode> type
-%type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound defblock
+%type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
+%type <asNarr> defblock
 //          value:
 %type <asNode> defvar defvar-exp-no-initial-value
 //          func:
@@ -149,7 +150,9 @@
 %%
 
 compilation-unit: pack defblock {
-                yyget_extra(scanner)->onCompilationUnit(*$1, $2->cast<blockExpr>());
+                tstr<narr> defBlock($2); str pack($1);
+
+                yyget_extra(scanner)->onCompilationUnit(*pack, *defBlock);
                 _onEndParse(scanner);
               }
 
@@ -312,9 +315,9 @@ defexpr-compound: deffunc { $$ = $1; }
 defstmt: defexpr-line NEWLINE { $$ = new blockExpr(); }
        | defexpr-compound { $$ = $1; }
 defblock: %empty {
-        $$ = yyget_extra(scanner)->onBlock();
+        $$ = yyget_extra(scanner)->onDefBlock();
       } | defblock defstmt {
-        $$ = yyget_extra(scanner)->onBlock($1->cast<blockExpr>(), *$2);
+        $$ = yyget_extra(scanner)->onDefBlock(*$1, *$2);
       }
 
 //  type:
@@ -360,16 +363,11 @@ deffunc-lambda-deduction: list indentblock {
                     // checks list that it's NAME.
                       }
 
-indentblock: NEWLINE INDENT block DEDENT {
-           $$ = $3;
-         }
+indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
 
 //  pack:
-pack: PACK dotname NEWLINE {
-    $$ = yyget_extra(scanner)->onPack(*$2);
-  } | %empty {
-    $$ = yyget_extra(scanner)->onPack();
-  }
+pack: PACK dotname NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
+    | %empty { $$ = yyget_extra(scanner)->onPack(); }
 
 
 %%
