@@ -192,7 +192,7 @@ namespace wrd {
         return &blk;
     }
 
-    node* me::onDefVar(const wtype& t, const std::string& name) {
+    expr* me::onDefVar(const wtype& t, const std::string& name) {
         WRD_DI("tokenEvent: onDefVar(%s, %s)", t.getName().c_str(), name.c_str());
         return new defVarExpr(*new ref(t, name));
     }
