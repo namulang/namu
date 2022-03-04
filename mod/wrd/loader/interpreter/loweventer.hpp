@@ -78,6 +78,8 @@ namespace wrd {
         node* onPack();
         blockExpr* onBlock();
         blockExpr* onBlock(blockExpr& blk, node& exp);
+        narr* onDefBlock();
+        narr* onDefBlock(narr& blk, node& exp);
 
         //  defexpr:
         //      func:
@@ -93,7 +95,7 @@ namespace wrd {
             return new T(args...);
         }
         node* onDefVar(const wtype& t, const std::string& name);
-        void onCompilationUnit(node& subpack, blockExpr& blk);
+        void onCompilationUnit(node& subpack, narr& blk);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);

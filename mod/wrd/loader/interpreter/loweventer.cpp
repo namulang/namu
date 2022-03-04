@@ -175,6 +175,23 @@ namespace wrd {
         return &blk;
     }
 
+    narr* me::onDefBlock() {
+        WRD_DI("tokenEvent: onDefBlock()");
+        return new narr();
+    }
+
+    narr* me::onDefBlock(narr& blk, node& candidate) {
+        WRD_DI("tokenEvent: onDefBlock()");
+        if(nul(blk))
+            return onSrcErr(11, "blk"), onDefBlock();
+        expr* e = &candidate.cast<expr>();
+        if(nul(e))
+            return onSrcErr(18, candidate.getType().getName().c_str()), onDefBlock();
+
+        blk.add(e);
+        return &blk;
+    }
+
     node* me::onDefVar(const wtype& t, const std::string& name) {
         WRD_DI("tokenEvent: onDefVar(%s, %s)", t.getName().c_str(), name.c_str());
         return new defVarExpr(*new ref(t, name));
@@ -230,14 +247,14 @@ namespace wrd {
         return &list;
     }
 
-    void me::onCompilationUnit(node& subpack, blockExpr& blk) {
+    void me::onCompilationUnit(node& subpack, narr& arr) {
         wbool hasPack = !nul(subpack);
         std::string name = hasPack ? subpack.getName() : "";
-        WRD_DI("tokenEvent: onCompilationUnit(%s[%x], block[%x])", name.c_str(), &subpack, &blk);
+        WRD_DI("tokenEvent: onCompilationUnit(%s[%x], arr[%x])", name.c_str(), &subpack, &arr);
         if(!hasPack) return;
 
         containable& con = subpack.subs();
-        for(const node& stmt: blk.subs())
+        for(const node& stmt : arr)
             con.add(stmt);
     }
 }
