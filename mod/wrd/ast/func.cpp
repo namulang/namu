@@ -1,5 +1,6 @@
 #include "func.hpp"
 #include "ref.hpp"
+#include "../loader/interpreter/tverification.hpp"
 
 namespace wrd {
 
@@ -42,4 +43,10 @@ namespace wrd {
 
         return true;
     }
+
+    WRD_VERIFY(func, {
+        if(nul(it.getName()) || it.getName().empty()) return _err(19);
+
+        return true;
+    })
 }

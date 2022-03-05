@@ -3,6 +3,7 @@
 #include "../../builtin/container/native/tnarr.inl"
 #include "../../builtin/container/native/tnchain.inl"
 #include "../../frame/thread.hpp"
+#include "../../loader/interpreter/tverification.hpp"
 
 namespace wrd {
 
@@ -35,4 +36,15 @@ namespace wrd {
             args[n].setName(params[n].getName());
         return args;
     }
+
+    WRD_VERIFY(mgdFunc, {
+        const wtype& eval = it.getEvalType();
+        if(nul(eval)) return _err(21);
+        if(!eval.isSub(ttype<node>::get())) return _err(20, eval.getName().c_str());
+
+        const blockExpr& blk = it.getBlock();
+        if(nul(blk) || blk.subs().len() <= 0) return _err(22);
+
+        return true;
+    })
 }
