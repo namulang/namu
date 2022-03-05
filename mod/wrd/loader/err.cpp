@@ -28,13 +28,17 @@ namespace wrd {
             "invalid indentation level found. expected %d columns but it was %d. I'm assuming you were trying to give %d columns", // 10
             "%s is null",
             "parsing has done. but something went wrong: %d",
-            "\'%s\' pack hasn't be created before",
+            "\'%s\' pack hasn't been created before",
             "no pack has been specified",
             "\'%s\' subpack already exists at %s", // 15
             "\'%s\' isn't a expression",
             "wrong parameter syntax: %s",
             "parameter shouldn't have a value",
             "%s is not a expression declaring something",
+            "a function should have a name",
+            "%s is not a valid return type", // 20
+            "return type is not specified",
+            "function need to contain more than 1 statement inside",
 
             /* to be continue... */
 
