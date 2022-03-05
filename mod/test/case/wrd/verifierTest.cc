@@ -156,3 +156,24 @@ TEST_F(verifierTest, verifyNestedObject) {
 	ASSERT_EQ(e.srcArea.end.row, 1);
 	ASSERT_EQ(e.srcArea.end.col, 5);
 }
+
+TEST_F(verifierTest, verifySubedObject) {
+    mymyObj o1;
+    o1.val = 1;
+    o1.grade = 2.5f;
+
+    myObj o2; // o2.val = 0 so it will occur an error.
+    o1.subs().add(o2);
+
+    errReport rpt;
+    verifier v;
+    // by verification of node class, this makes verifier iterate all subs nodes including o2.
+    v.setReport(rpt).verify(o1);
+    ASSERT_TRUE(rpt); // should contain some error.
+
+    ASSERT_EQ(rpt.len(), 1);
+
+    const err& e = rpt[0];
+    ASSERT_EQ(e.fType, err::ERR);
+    ASSERT_EQ(e.code, err::BASE_TEST_CODE + 1);
+}
