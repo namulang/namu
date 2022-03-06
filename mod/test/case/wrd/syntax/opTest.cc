@@ -12,7 +12,7 @@ TEST_F(opTest, simpleBinaryOp1) {
         pack demo
         main() void
             2 + 3*27 + 44 - 27/34*43 - 1
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(opTest, BinaryOpWithParan) {
@@ -22,7 +22,7 @@ TEST_F(opTest, BinaryOpWithParan) {
          2 + (if 3
           3*27
          )+ 44 - 27/34*43 - 1
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(opTest, BinaryOpWithParan2) {
@@ -31,7 +31,7 @@ TEST_F(opTest, BinaryOpWithParan2) {
         main() void
          2 + (if 3
           3*27)+ 44 - 27/34*43 - 1
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(opTest, BinaryOpWithParan3) {
@@ -41,7 +41,7 @@ TEST_F(opTest, BinaryOpWithParan3) {
           2 + if 3
            3*27
           + 44 - 27/34*43 - 1
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(opTest, defexprAsTerm) {
@@ -51,7 +51,7 @@ TEST_F(opTest, defexprAsTerm) {
            (age int) + (if 3
             3*27
            ) + (grade flt) - 27/34*43 - 1
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(opTest, exprAddFuncCall) {
@@ -59,7 +59,7 @@ TEST_F(opTest, exprAddFuncCall) {
         pack demo
         main() void
             2 + 3*27 + 44 - foo(2) * 27/34*43
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(opTest, exprAddFuncCall2) {
@@ -67,7 +67,7 @@ TEST_F(opTest, exprAddFuncCall2) {
         pack demo
         main() void
             2 + 3*27 + 44 - foo('a') * 27/34*43 - a.foo(b.boo(c.goo()))
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(opTest, exprAddFuncCall3) {
@@ -75,14 +75,14 @@ TEST_F(opTest, exprAddFuncCall3) {
         pack demo
         main() void
             2 + 3*27 + 44 - foo('a12') * 27/34*43 - a.foo(b.boo(c.goo()))
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(opTest, IgnoreWhitespaceAfterBinaryOpAndComma) {
     make().parse(R"SRC(
     main() void
         2 +
-      3)SRC").expect(true);
+      3)SRC").shouldParsed(true);
 }
 
 TEST_F(opTest, IgnoreWhitespaceAfterBinaryOpAndComma2) {
@@ -92,7 +92,7 @@ TEST_F(opTest, IgnoreWhitespaceAfterBinaryOpAndComma2) {
             view.update(context),
             22,
             34) + 2 +
-      3)SRC").expect(true);
+      3)SRC").shouldParsed(true);
 }
 
 TEST_F(opTest, IgnoreWhitespaceAfterBinaryOpAndComma3) {
@@ -104,7 +104,7 @@ TEST_F(opTest, IgnoreWhitespaceAfterBinaryOpAndComma3) {
                             34) + 2 +
       3
             butNextLine.ShouldStartHere()
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(opTest, IgnoreWhitespaceAfterBinaryOpAndComma4) {
@@ -117,5 +117,5 @@ TEST_F(opTest, IgnoreWhitespaceAfterBinaryOpAndComma4) {
         22,
                             34) +
                              2 +
-    3)SRC").expect(true);
+    3)SRC").shouldParsed(true);
 }

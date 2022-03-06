@@ -10,71 +10,71 @@ namespace {
 TEST_F(akaTest, defaultDef) {
     make().parse(R"SRC(
         aka console -> c
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(akaTest, defaultDef2) {
     make().parse(R"SRC(
         aka console ->
         c
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, defaultDef3) {
     make().parse(R"SRC(
         aka sys.console -> c
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(akaTest, defaultDef4) {
     make().parse(R"SRC(
         aka sys.console ->
         c
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, deducedAllDefNegative) {
     make().parse(R"SRC(
     aka console.*
-        )SRC").expect(false);
+        )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, deducedAllDefNegative2) {
     make().parse(R"SRC(
         aka console. *
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, deducedAllDefNegative3) {
     make().parse(R"SRC(
         aka console.
          *
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, deducedAllDefNegative4) {
     make().parse(R"SRC(
         aka console.
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, withDefvar) {
     make().parse(R"SRC(
         aka a int -> b
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(akaTest, withDefvar2) {
     make().parse(R"SRC(
         aka a -> b
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(akaTest, withDeffunc) {
     make().parse(R"SRC(
         aka foo(a int, b str)
             doSomething()
-        -> b)SRC").expect(true);
+        -> b)SRC").shouldParsed(true);
 }
 
 TEST_F(akaTest, withDeffunc2) {
@@ -82,8 +82,7 @@ TEST_F(akaTest, withDeffunc2) {
         aka foo(a int, b str)
             doSomething()
          -> b
-    )SRC").expect(true);
-    ASSERT_FALSE(getReport()); // rpt.operator bool() return true if error exists
+    )SRC").shouldParsed(true);
     ASSERT_TRUE(getReport().hasWarn());
 }
 
@@ -93,5 +92,5 @@ TEST_F(akaTest, withDeffunc3) {
             doSomething()
         ->
          b
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }

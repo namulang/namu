@@ -218,7 +218,7 @@ namespace wrd {
             if(nul(cast)) return onSrcErr(16, expr.getType().getName().c_str()), ret;
             if(cast.getParam()) return onSrcErr(17), ret;
 
-            ret.add(cast.getParam());
+            ret.add(cast.getParam().clone());
         }
 
         return ret;

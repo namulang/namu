@@ -324,9 +324,9 @@ defblock: %empty {
 type: VOID { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
     | INT { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
     | CHAR { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
-    | STR { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | STR { $$ = yyget_extra(scanner)->onPrimitive<wStr>(); }
     | BOOL { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
-    | FLT { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | FLT { $$ = yyget_extra(scanner)->onPrimitive<wFlt>(); }
     | NAME {
         $$ = new blockExpr(); // TODO:
     }

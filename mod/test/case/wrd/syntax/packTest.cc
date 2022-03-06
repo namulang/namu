@@ -10,7 +10,7 @@ namespace {
 TEST_F(packTest, parsePackTest) {
     make(manifest("demo")).parse(R"SRC(
 pack demo
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
     ASSERT_FALSE(nul(getSubPack()));
     ASSERT_FALSE(nul(getPack().subs()));
     ASSERT_EQ(getPack().subs().len(), 0);

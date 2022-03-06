@@ -16,5 +16,5 @@ TEST_F(literalTest, stringLiteralShouldFail) {
                        ll"
                        if "false"
                                "hel'lo"
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }

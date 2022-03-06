@@ -12,41 +12,41 @@ TEST_F(callTest, callFunc) {
         pack demo
         main() void
             foo()
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(callTest, callFunc1) {
     make().parse(R"SRC(
         main() void
             a.foo()
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(callTest, callFunc2) {
     make().parse(R"SRC(
         main() void
             --a++.foo()
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(callTest, callFunc3) {
     make().parse(R"SRC(
         main() void
             (--a++.foo()).doo().goo()
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(callTest, callFuncShouldNotExistOnPack) {
     make().parse(R"SRC(
         foo()
-    )SRC").expect(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(callTest, callFuncWithExprInside) {
     make().parse(R"SRC(
         main() void
             a.foo(22, 34)
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(callTest, callFuncWithExprInside1) {
@@ -54,7 +54,7 @@ TEST_F(callTest, callFuncWithExprInside1) {
         main() void
             if "test"
                 a.foo(22, 34, boo(22))
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(callTest, callFuncWithExprInside2) {
@@ -64,7 +64,7 @@ TEST_F(callTest, callFuncWithExprInside2) {
                 a.foo(22, 34, boo(a int) void
                     b.boo(a)
                 )
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
 
 TEST_F(callTest, callFuncWithExprInside3) {
@@ -74,5 +74,5 @@ TEST_F(callTest, callFuncWithExprInside3) {
                 a.foo(22, 34, (boo(a int) void
                     b.boo(a)
                 ))
-    )SRC").expect(true);
+    )SRC").shouldParsed(true);
 }
