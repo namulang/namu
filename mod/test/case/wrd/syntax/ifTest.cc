@@ -14,7 +14,7 @@ TEST_F(ifTest, simpleNestedTest) {
             if 11
                         22
                         if 22
-                                33)SRC").expect(true);
+                                33)SRC").shouldParsed(true);
 }
 
 TEST_F(ifTest, NestIfTest) {
@@ -24,5 +24,5 @@ TEST_F(ifTest, NestIfTest) {
            if "hello"
                        "hell  '  o"
                        if 33
-                               "hel'lo")SRC").expect(true);
+                               "hel'lo")SRC").shouldParsed(true);
 }

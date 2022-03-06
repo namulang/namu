@@ -28,11 +28,8 @@ struct syntaxTest : public ::testing::Test {
         WRD_I("====================================");
         wrd::parser p;
         _subpack = p.setPack(*_pack).setReport(_rpt).parse(_src = src);
-        if(!_pack) {
-            _rpt.add(wrd::err::newErr(13, ""));
-            return *this;
-        }
-        if(!_subpack) return *this;
+        _isParsed = _subpack && _pack && !_rpt;
+        if(!_isParsed) return *this;
 
         wrd::packChain verifying(new wrd::packs(*_pack));
         verifying.link(wrd::thread::get().getSystemPacks());
@@ -42,23 +39,27 @@ struct syntaxTest : public ::testing::Test {
         return *this;
     }
 
-    wrd::wbool expect(wrd::wbool expected) const {
-        wrd::wbool ret = isSuccess() == expected;
-        EXPECT_TRUE(ret);
+    wrd::wbool shouldParsed(wrd::wbool well) const {
+        EXPECT_EQ(_isParsed, well);
+        wrd::wbool ret = _isParsed == well;
         if(!ret)
-            _log(expected);
+            _log(well);
         return ret;
     }
+    wrd::wbool shouldVerified(wrd::wbool well) const {
+        wrd::wbool verified = _isParsed && !_rpt;
+        EXPECT_EQ(verified, well);
 
-    wrd::wbool isSuccess() const {
-        return _subpack && _pack && !_rpt;
+        wrd::wbool ret = verified == well;
+        if(!ret)
+            _log(well);
+        return ret;
     }
 
 private:
     void _log(wrd::wbool expected) const {
-        std::cout   << "test expected to be " << (expected ? "success" : "fail") << " but it wasn't.\n"
-                    << "code: " << _src << "\n"
-                    << "errReport:\n";
+        std::cout   << "  code: " << _src << "\n"
+                    << "  errReport:\n";
         _rpt.log();
     }
 
@@ -67,6 +68,7 @@ private:
         _subpack.rel();
         _pack.rel();
         _rpt.rel();
+        _isParsed = false;
     }
 
 private:
@@ -74,4 +76,5 @@ private:
     wrd::str _subpack;
     wrd::tstr<wrd::pack> _pack;
     wrd::errReport _rpt;
+    wrd::wbool _isParsed;
 };
