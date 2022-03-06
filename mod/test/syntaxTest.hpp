@@ -28,6 +28,17 @@ struct syntaxTest : public ::testing::Test {
         WRD_I("====================================");
         wrd::parser p;
         _subpack = p.setPack(*_pack).setReport(_rpt).parse(_src = src);
+        if(!_pack) {
+            _rpt.add(wrd::err::newErr(13, ""));
+            return *this;
+        }
+        if(!_subpack) return *this;
+
+        wrd::packChain verifying(new wrd::packs(*_pack));
+        verifying.link(wrd::thread::get().getSystemPacks());
+
+        wrd::verifier v;
+        v.setReport(_rpt).setPacks(verifying).verify(*_subpack);
         return *this;
     }
 

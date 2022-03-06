@@ -12,6 +12,7 @@ namespace wrd {
         friend class mgdFunc; // for stackFrame.
         friend class blockExpr; // for stackFrame.
         friend class defVarExpr; // for stackFrame
+        friend class verifier;
 
     private:
         thread() {} // for singleton

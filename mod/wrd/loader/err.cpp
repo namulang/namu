@@ -28,7 +28,7 @@ namespace wrd {
             "invalid indentation level found. expected %d columns but it was %d. I'm assuming you were trying to give %d columns", // 10
             "%s is null",
             "parsing has done. but something went wrong: %d",
-            "\'%s\' pack hasn't been created before",
+            "%s pack hasn't been created before",
             "no pack has been specified",
             "\'%s\' subpack already exists at %s", // 15
             "\'%s\' isn't a expression",
