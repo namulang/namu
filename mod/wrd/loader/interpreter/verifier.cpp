@@ -1,4 +1,5 @@
 #include "verifier.hpp"
+#include "../../frame/thread.hpp"
 
 namespace wrd {
 
@@ -6,5 +7,6 @@ namespace wrd {
 
     void me::rel() {
         setReport(dummyErrReport::singletone);
+        setPacks(thread::get().getSystemPacks());
     }
 }
