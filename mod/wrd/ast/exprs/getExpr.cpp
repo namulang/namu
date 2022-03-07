@@ -18,7 +18,7 @@ namespace wrd {
         return res[0].getType();
     }
 
-    WRD_VERIFY(getExpr, {
+    WRD_VERIFY({
         if(nul(it.getFrom())) return _err(3); // 3: obj to be accessed was null.
 
         // TODO: I have to check that the evalType has what matched to given _params.

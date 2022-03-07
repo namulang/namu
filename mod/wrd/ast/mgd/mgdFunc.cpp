@@ -26,15 +26,13 @@ namespace wrd {
         WRD_DI("%s._onInFrame()", getName().c_str());
         fr.pushLocal(subs());
         fr.pushLocal(_nameArgs(args));
-        // TODO: put argument into new narr object.
-
-        WRD_DI("%s._onOutFrame()", getName().c_str());
-        fr.popLocal();
         return true;
     }
 
     void me::_outLocalFrame() {
         frame& fr = thread::get()._getStackFrame().getCurrentFrame();
+        WRD_DI("%s._onOutFrame()", getName().c_str());
+        fr.popLocal();
     }
 
     narr& me::_nameArgs(narr& args) {
@@ -48,7 +46,7 @@ namespace wrd {
         return args;
     }
 
-    WRD_VERIFY(mgdFunc, {
+    WRD_VERIFY({
         const wtype& eval = it.getEvalType();
         if(nul(eval)) return _err(21);
         if(!eval.isSub(ttype<node>::get())) return _err(20, eval.getName().c_str());
@@ -58,4 +56,10 @@ namespace wrd {
 
         return true;
     })
+
+    /*WRD_VERIFY(mgdFunc, visitSubNodes, {
+        it._inLocalFrame();
+        it._outLocalFrame();
+        return true;
+    })*/
 }

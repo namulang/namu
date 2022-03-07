@@ -44,7 +44,7 @@ namespace wrd {
         return true;
     }
 
-    WRD_VERIFY(func, {
+    WRD_VERIFY({
         if(nul(it.getName()) || it.getName().empty()) return _err(19);
 
         return true;
