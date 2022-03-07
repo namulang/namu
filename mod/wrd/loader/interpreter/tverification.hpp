@@ -15,12 +15,12 @@ namespace wrd {
 			return ttype<T>::get();
 		}
 
-		void verify(verifier& veri, const typeProvidable& it) override {
-			super::verify(veri, it);
+        void verify(verifier& veri, typeProvidable& it) override {
+            super::verify(veri, it);
 			_onVerify((T&) it);
 		}
 
 	protected:
-		virtual wbool _onVerify(const T& it) = 0;
+        virtual wbool _onVerify(T& it) = 0;
 	};
 }

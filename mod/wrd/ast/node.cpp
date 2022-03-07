@@ -41,7 +41,7 @@ namespace wrd {
         return ret;
     }
 
-	WRD_VERIFY(node, {
+    WRD_VERIFY({
 		for(auto& elem : it.subs())
 			_getVerifier().verify(elem);
 		return false;

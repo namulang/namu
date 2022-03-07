@@ -43,12 +43,12 @@ namespace wrd {
         }
         const ncontainer& getPacks() { return *_packs; }
 
-		void verify(const typeProvidable& it) {
+        void verify(typeProvidable& it) {
 			_verify(it, it.getType());
 		}
 
 	private:
-		void _verify(const typeProvidable& it, const type& typ) {
+        void _verify(typeProvidable& it, const type& typ) {
 			if(typ == ttype<adam>::get()) return;
 
 			_verify(it, typ.getSuper());

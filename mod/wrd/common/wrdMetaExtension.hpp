@@ -57,17 +57,31 @@
 
 // VERIFY:
 //		add new verification info to verify the type of specific object.
-#define WRD_VERIFY_2(ME, BODY) \
+#define WRD_VERIFY_NAME(name) __auto_verify_##name##__
+#define WRD_VERIFY_2(TYPE, BODY) \
 	WRD_INITIATOR(verification, { \
-		class __unnamed_verifi : public tverification<ME> { \
+        typedef TYPE trait; \
+        class WRD_VERIFY_NAME(TYPE) : public tverification<TYPE> { \
 		protected: \
-			wbool _onVerify(const ME& it) override BODY \
+            wbool _onVerify(trait& it) override BODY \
 		}; \
-        verifier::add(new __unnamed_verifi()); \
+        verifier::add(new WRD_VERIFY_NAME(TYPE)()); \
 	})
 #define WRD_VERIFY_1(BODY) WRD_VERIFY_2(me, BODY)
+#define WRD_VERIFY_3(TYPE, NAME, BODY) \
+    typedef TYPE trait; \
+    class WRD_VERIFY_NAME(TYPE##_##NAME) : public tverification<TYPE> { \
+    protected: \
+        wbool _onVerify(trait& it) override BODY \
+    }; \
+	WRD_INITIATOR(verification, { \
+        verifier::add(new WRD_VERIFY_NAME(TYPE##_##NAME)()); \
+	})
 #define WRD_VERIFY(...) WRD_OVERLOAD(WRD_VERIFY, __VA_ARGS__)
 
-#define __WRD__DECL_VERIFY_2(ME, BODY) WRD_VERIFY_2(ME, BODY)
+#define __WRD__DECL_FRIEND_VERIFY(TYPE, NAME) friend class WRD_VERIFY_NAME(TYPE##_##NAME);
+
+#define __WRD__DECL_VERIFY_3(TYPE, NAME, BODY) WRD_VERIFY_3(TYPE, NAME, BODY)
+#define __WRD__DECL_VERIFY_2(TYPE, BODY) WRD_VERIFY_2(TYPE, BODY)
 #define __WRD__DECL_VERIFY_1(BODY) WRD_VERIFY_2(me, BODY)
 #define __WRD__DECL_VERIFY(...) WRD_OVERLOAD(__WRD__DECL_VERIFY, __VA_ARGS__)

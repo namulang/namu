@@ -6,7 +6,7 @@ namespace wrd {
 
     WRD_DEF_ME(runExpr)
 
-    WRD_VERIFY(runExpr, {
+    WRD_VERIFY({
         if(nul(it.getMe())) return _err(3); // 3: obj to be accessed was null.
 
         str me = it.getMe().as<node>();

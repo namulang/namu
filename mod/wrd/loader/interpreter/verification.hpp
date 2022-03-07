@@ -12,7 +12,7 @@ namespace wrd {
 			INIT_META(me))
 
 	public:
-		virtual void verify(verifier& veri, const typeProvidable& it) {
+        virtual void verify(verifier& veri, typeProvidable& it) {
 			_verifier = &veri;
 		}
 
