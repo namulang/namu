@@ -9,21 +9,32 @@ namespace wrd {
 
     WRD_DEF_ME(mgdFunc)
 
-    str me::_onCastArgs(narr& castedArgs) {
+    str me::_onCastArgs(narr& args) {
+        if(!_inLocalFrame(args))
+            return str();
+
+        str ret = _blk->run();
+        _outLocalFrame();
+        return ret;
+    }
+
+    wbool me::_inLocalFrame(narr& args) {
         frame& fr = thread::get()._getStackFrame().getCurrentFrame();
         if(nul(fr))
-            return WRD_E("fr == null"), str();
+            return WRD_E("fr == null"), false;
 
-        str ret;
         WRD_DI("%s._onInFrame()", getName().c_str());
         fr.pushLocal(subs());
-        fr.pushLocal(_nameArgs(castedArgs));
+        fr.pushLocal(_nameArgs(args));
         // TODO: put argument into new narr object.
-        ret = _blk->run();
 
         WRD_DI("%s._onOutFrame()", getName().c_str());
         fr.popLocal();
-        return ret;
+        return true;
+    }
+
+    void me::_outLocalFrame() {
+        frame& fr = thread::get()._getStackFrame().getCurrentFrame();
     }
 
     narr& me::_nameArgs(narr& args) {

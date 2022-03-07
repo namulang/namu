@@ -32,7 +32,13 @@ namespace wrd {
         me& found = sub(name, args);
         if(nul(found)) return str();
 
-        return found.run(args);
+        if(!found.doesNeedScope())
+            return found.run(args);
+
+        _inFrame();
+        str ret = found.run(args);
+        _outFrame();
+        return ret;
     }
 
 	WRD_VERIFY(node, {

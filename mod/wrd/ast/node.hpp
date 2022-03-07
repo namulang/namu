@@ -105,5 +105,17 @@ namespace wrd {
         virtual const wtype& getEvalType() const {
             return getType();
         }
+
+        /// @return true if this class needs to get mgd subnodes from frame instance.
+        ///         the owner of this instance will interact current frame if subnodes returns true.
+        virtual wbool doesNeedScope() const { return false; }
+
+    protected:
+        virtual void _inFrame() {
+            WRD_DI("%s._inFrame()", getName().c_str());
+        }
+        virtual void _outFrame() {
+            WRD_DI("%s._outFrame()", getName().c_str());
+        }
     };
 }

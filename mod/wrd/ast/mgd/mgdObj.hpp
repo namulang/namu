@@ -45,8 +45,9 @@ namespace wrd {
             return *_org;
         }
 
-        using super::run;
-        str run(const std::string& name, const containable& args) override;
+    protected:
+        void _inFrame() override;
+        void _outFrame() override;
 
     private:
         nchain* _makeNewSubs() {
