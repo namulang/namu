@@ -13,17 +13,17 @@ namespace wrd {
         return *this;
     }
 
-    str me::run(const std::string& name, const containable& args) {
-        WRD_DI("%s._onInFrame()", getName().c_str());
-        stackFrame& sf = wrd::thread::get()._getStackFrame();
+    void me::_inFrame() {
+        super::_inFrame();
+
         frame& fr = *new frame();
-        sf.add(fr);
         fr.setObj(subs());
+        wrd::thread::get()._getStackFrame().add(fr);
+    }
 
-        str ret = super::run(name, args);
+    void me::_outFrame() {
+        super::_outFrame();
 
-        WRD_DI("%s._onOutFrame()", getName().c_str());
-        sf.del();
-        return ret;
+        wrd::thread::get()._getStackFrame().del();
     }
 }

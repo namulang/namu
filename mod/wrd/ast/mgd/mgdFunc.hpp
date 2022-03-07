@@ -21,12 +21,15 @@ namespace wrd {
         const params& getParams() const override { return _params; }
         const wtype& getEvalType() const override { return *_evalType; }
         ncontainer& subs() override { return _shares; }
+        wbool doesNeedScope() const override { return true; }
 
     protected:
         str _onCastArgs(narr& castedArgs) override;
 
     private:
         narr& _nameArgs(narr& args);
+        wbool _inLocalFrame(narr& args);
+        void _outLocalFrame();
 
     private:
         narr _shares;
