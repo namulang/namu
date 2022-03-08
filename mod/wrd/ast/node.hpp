@@ -1,8 +1,8 @@
 #pragma once
 
 #include "clonable.hpp"
-#include "../builtin/container/native/tnarr.hpp"
 #include "validable.hpp"
+#include "../builtin/container/native/tnarr.hpp"
 
 namespace wrd {
 
