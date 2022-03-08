@@ -15,6 +15,7 @@ namespace wrd {
 			return ttype<T>::get();
 		}
 
+        using super::verify;
         void verify(verifier& veri, typeProvidable& it) override {
             super::verify(veri, it);
 			_onVerify((T&) it);

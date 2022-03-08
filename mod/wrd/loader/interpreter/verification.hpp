@@ -15,6 +15,7 @@ namespace wrd {
         virtual void verify(verifier& veri, typeProvidable& it) {
 			_verifier = &veri;
 		}
+        void verify(typeProvidable& it);
 
 	protected:
 		template <typename... Args>
