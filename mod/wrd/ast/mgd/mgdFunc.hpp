@@ -8,7 +8,7 @@ namespace wrd {
 
     class mgdFunc : public func {
         WRD(CLASS(mgdFunc, func),
-            FRIEND_VERIFY(mgdFunc, visitSubNodes))
+            FRIEND_VERIFY(mgdFunc, subNodes))
 
     public:
         explicit mgdFunc(const std::string& name, const params& p, const wtype& evalType)

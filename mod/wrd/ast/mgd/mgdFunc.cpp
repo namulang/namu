@@ -57,9 +57,15 @@ namespace wrd {
         return true;
     })
 
-    /*WRD_VERIFY(mgdFunc, visitSubNodes, {
-        it._inLocalFrame();
+    void _prepareArgsAlongParam(const params&, narr&);
+
+    WRD_VERIFY(mgdFunc, subNodes, {
+        narr args;
+        _prepareArgsAlongParam(it.getParams(), args);
+
+        it._inLocalFrame(args);
+        // TODO: verify(*it.blk);
         it._outLocalFrame();
         return true;
-    })*/
+    })
 }

@@ -40,10 +40,4 @@ namespace wrd {
         _outFrame();
         return ret;
     }
-
-    WRD_VERIFY({
-		for(auto& elem : it.subs())
-			_getVerifier().verify(elem);
-		return false;
-	})
 }

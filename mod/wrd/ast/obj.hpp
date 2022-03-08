@@ -10,7 +10,8 @@ namespace wrd {
 
     /// obj handles frame injection event of all objects.
     class obj : public node {
-        WRD(INTERFACE(obj, node))
+        WRD(INTERFACE(obj, node),
+            FRIEND_VERIFY(obj, subNodes))
         friend class mgdObj;
 
     public:
