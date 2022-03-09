@@ -24,6 +24,5 @@ namespace wrd {
         // TODO: I have to check that the evalType has what matched to given _params.
         // Until then, I rather use as() func and it makes slow emmersively.
         if(nul(it.getEvalType())) return _err(2); // 2: evaludated as nulled type.
-        return true;
     })
 }

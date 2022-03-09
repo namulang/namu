@@ -22,6 +22,6 @@ namespace wrd {
 		}
 
 	protected:
-        virtual wbool _onVerify(T& it) = 0;
+        virtual void _onVerify(T& it) = 0;
 	};
 }
