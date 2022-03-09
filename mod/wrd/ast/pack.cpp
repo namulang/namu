@@ -1,5 +1,6 @@
 #include "pack.hpp"
 #include "func.hpp"
+#include "../loader/interpreter/tverification.hpp"
 
 namespace wrd {
 
@@ -26,4 +27,9 @@ namespace wrd {
         _dependents.rel();
         _rpt.bind(dummyErrReport::singletone);
     }
+
+    WRD_VERIFY({ // visitSubNodes
+        for(auto& sub : it.subs())
+            verify(sub);
+    })
 }

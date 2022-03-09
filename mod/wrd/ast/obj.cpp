@@ -36,16 +36,8 @@ namespace wrd {
         return WRD_E("%s object have %d ctors. it's ambigious.", getType().getName().c_str(), n), false;
     }
 
-    void _prepareArgsAlongParam(const params& ps, narr& tray) {
-        for(auto& param : ps)
-            tray.add(param.getType().makeAs<node>());
-    }
-
     WRD_VERIFY(obj, subNodes, {
         for(auto& sub : it.subs()) {
-            narr tray;
-            _prepareArgsAlongParam(sub.getParams(), tray);
-
             if(!sub.doesNeedScope()) {
                 verify(sub);
                 continue;
