@@ -57,7 +57,12 @@ namespace wrd {
             return _err(22);
     })
 
-    void _prepareArgsAlongParam(const params&, narr&);
+    namespace {
+        void _prepareArgsAlongParam(const params& ps, narr& tray) {
+            for(auto& param : ps)
+                tray.add(param.getType().makeAs<node>());
+        }
+    }
 
     WRD_VERIFY(mgdFunc, subNodes, {
         narr args;
