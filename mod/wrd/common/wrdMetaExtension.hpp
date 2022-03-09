@@ -63,7 +63,7 @@
         typedef TYPE trait; \
         class WRD_VERIFY_NAME(TYPE) : public tverification<TYPE> { \
 		protected: \
-            wbool _onVerify(trait& it) override BODY \
+            void _onVerify(trait& it) override BODY \
 		}; \
         verifier::add(new WRD_VERIFY_NAME(TYPE)()); \
 	})
@@ -72,7 +72,7 @@
     typedef TYPE trait; \
     class WRD_VERIFY_NAME(TYPE##_##NAME) : public tverification<TYPE> { \
     protected: \
-        wbool _onVerify(trait& it) override BODY \
+        void _onVerify(trait& it) override BODY \
     }; \
 	WRD_INITIATOR(verification, { \
         verifier::add(new WRD_VERIFY_NAME(TYPE##_##NAME)()); \

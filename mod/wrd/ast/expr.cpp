@@ -18,7 +18,5 @@ namespace wrd {
         if(it.getPos().col < 1) return _err(6); // 6: this expr doesn't have col info.
         */
         if(nul(it.getEvalType())) return _err(2);
-
-		return true;
 	})
 }

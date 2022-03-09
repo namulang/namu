@@ -49,12 +49,12 @@ namespace wrd {
     WRD_VERIFY({
         const wtype& eval = it.getEvalType();
         if(nul(eval)) return _err(21);
-        if(!eval.isSub(ttype<node>::get())) return _err(20, eval.getName().c_str());
+        if(!eval.isSub(ttype<node>::get()))
+            return _err(20, eval.getName().c_str());
 
         const blockExpr& blk = it.getBlock();
-        if(nul(blk) || blk.subs().len() <= 0) return _err(22);
-
-        return true;
+        if(nul(blk) || blk.subs().len() <= 0)
+            return _err(22);
     })
 
     void _prepareArgsAlongParam(const params&, narr&);
@@ -66,6 +66,5 @@ namespace wrd {
         it._inLocalFrame(args);
         // TODO: verify(*it.blk);
         it._outLocalFrame();
-        return true;
     })
 }

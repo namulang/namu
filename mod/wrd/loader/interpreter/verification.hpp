@@ -19,11 +19,11 @@ namespace wrd {
 
 	protected:
 		template <typename... Args>
-		wbool _warn(Args... args);
+        void _warn(Args... args);
 		template <typename... Args>
-		wbool _err(Args... args);
+        void _err(Args... args);
 		template <typename... Args>
-		wbool _info(Args... args);
+        void _info(Args... args);
 
         verifier& _getVerifier() { return *_verifier; }
 

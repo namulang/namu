@@ -55,6 +55,5 @@ namespace wrd {
             verify(sub);
             it._outFrame();
         }
-        return true;
     })
 }

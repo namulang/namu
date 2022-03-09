@@ -12,7 +12,5 @@ namespace wrd {
         str me = it.getMe().as<node>();
         if(!me) return _err(4);
         if(!me->canRun(it.getArgs())) return _err(5); // 5: can't execute with this arguments
-
-        return true;
     })
 }
