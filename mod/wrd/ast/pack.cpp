@@ -12,9 +12,11 @@ namespace wrd {
         }
 
     me::~pack() {
-        // release all instance allocated inside of shared object first,
-        // before release the handle of it by releasing packLoading instance.
-        _subs.rel();
+        // release all instance first:
+        //  I must release allocated shared object first,
+        //  before release the handle of it by releasing packLoading instance.
+        _rel();
+
         for(packLoading* e : _loadings) {
             e->rel();
             delete e;
@@ -22,6 +24,8 @@ namespace wrd {
     }
 
     void me::_rel() {
+        if(_state != RELEASED)
+            subs().rel();
         _state = RELEASED;
         _isValid = true;
         _dependents.rel();
