@@ -45,10 +45,6 @@ namespace wrd {
             return *_org;
         }
 
-    protected:
-        void _inFrame() override;
-        void _outFrame() override;
-
     private:
         nchain* _makeNewSubs() {
             nchain* ret = new nchain(*_owns);
