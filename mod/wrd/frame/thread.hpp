@@ -8,7 +8,7 @@ namespace wrd {
 
     class thread : public node {
         WRD(CLASS(thread, node))
-        friend class mgdObj; // for stackFrame.
+        friend class obj; // for stackFrame.
         friend class mgdFunc; // for stackFrame.
         friend class blockExpr; // for stackFrame.
         friend class defVarExpr; // for stackFrame

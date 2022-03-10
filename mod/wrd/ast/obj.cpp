@@ -3,6 +3,7 @@
 #include "../builtin/container/containable.inl"
 #include "../frame/stackFrame.hpp"
 #include "../loader/interpreter/tverification.hpp"
+#include "../frame/thread.hpp"
 
 namespace wrd {
 
@@ -34,6 +35,20 @@ namespace wrd {
         }
 
         return WRD_E("%s object have %d ctors. it's ambigious.", getType().getName().c_str(), n), false;
+    }
+
+    void me::_inFrame() {
+        super::_inFrame();
+
+        frame& fr = *new frame();
+        fr.setObj(subs());
+        wrd::thread::get()._getStackFrame().add(fr);
+    }
+
+    void me::_outFrame() {
+        super::_outFrame();
+
+        wrd::thread::get()._getStackFrame().del();
     }
 
     WRD_VERIFY(obj, subNodes, {

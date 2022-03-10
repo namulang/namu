@@ -42,6 +42,10 @@ namespace wrd {
         }
 
     protected:
+        void _inFrame() override;
+        void _outFrame() override;
+
+    protected:
         std::string _name;
         tstr<nchain> _subs;
     };
