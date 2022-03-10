@@ -7,7 +7,7 @@ namespace wrd {
     WRD_DEF_ME(pack)
 
     me::pack(const manifest& manifest, const packLoadings& loadingsInHeap)
-        : super(), _loadings(loadingsInHeap), _manifest(manifest) {
+        : super(manifest.name, *new nchain()), _loadings(loadingsInHeap), _manifest(manifest) {
             _rel();
         }
 
@@ -28,8 +28,8 @@ namespace wrd {
         _rpt.bind(dummyErrReport::singletone);
     }
 
-    WRD_VERIFY({ // visitSubNodes
-        for(auto& sub : it.subs())
-            verify(sub);
-    })
+    funcs& me::getCtors() {
+        static funcs inner;
+        return inner;
+    }
 }
