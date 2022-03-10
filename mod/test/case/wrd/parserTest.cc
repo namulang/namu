@@ -18,7 +18,7 @@ TEST(parserTest, testHelloWorld) {
     // TODO: make AST: ASSERT_TRUE(rootBinder->subs().len() == 2);
 
     pack pak((manifest()), (packLoadings()));
-    narr& tray = pak.subs().cast<narr>();
+    ncontainer& tray = pak.subs();
     ASSERT_FALSE(nul(tray));
     p.setPack(pak);
     tray.add(new wStr("hello"));
@@ -29,5 +29,5 @@ TEST(parserTest, testHelloWorld) {
     p.parse(script.c_str());
     // TODO: make AST: ASSERT_TRUE(tray.len() == 3);
 
-    ASSERT_TRUE(tray[0].cast<wStr>() == wStr("hello"));
+    ASSERT_TRUE(tray.begin()->cast<wStr>() == wStr("hello"));
 }
