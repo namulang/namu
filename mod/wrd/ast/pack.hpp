@@ -135,7 +135,6 @@ namespace wrd {
         void _rel();
 
     private:
-        narr _subs;
         packLoadings _loadings;
         manifest _manifest;
         state _state;

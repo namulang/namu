@@ -13,7 +13,6 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
     ASSERT_EQ(pak.subs().len(), 1);
     node& origin = pak["helloWorld"];
     ASSERT_FALSE(nul(origin));
-
     {
         func& sayFunc = origin["say"].cast<func>();
         ASSERT_FALSE(nul(sayFunc));
