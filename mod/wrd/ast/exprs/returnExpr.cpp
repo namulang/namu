@@ -1,6 +1,7 @@
 #include "returnExpr.hpp"
 #include "../../builtin/primitive/wVoid.hpp"
 #include "../../frame/thread.hpp"
+#include "../../loader/interpreter/tverification.hpp"
 
 namespace wrd {
 
@@ -15,4 +16,12 @@ namespace wrd {
         fr.pushReturn(ret);
         return ret;
     }
+
+    WRD_VERIFY({ // checks evalType of func is matched to me
+        const func& f = thread::get().getStackFrame().getCurrentFrame().getFunc();
+        if(nul(f)) return _err(23);
+
+        if(!it.getEvalType().isImpli(f.getEvalType()))
+            return _err(24, it.getEvalType().getName().c_str(), f.getEvalType().getName().c_str());
+    })
 }

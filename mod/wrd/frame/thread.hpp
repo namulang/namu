@@ -13,6 +13,7 @@ namespace wrd {
         friend class blockExpr; // for stackFrame.
         friend class defVarExpr; // for stackFrame
         friend class verifier;
+        friend class func; // for stackFrame.
 
     private:
         thread() {} // for singleton
