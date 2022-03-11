@@ -17,7 +17,7 @@ namespace wrd {
         WRD_EACH(_ON_MSG,
             "unknown", /* is 0 */
             "this expr doesn't have row info", // 1
-            "this expr evaludated as nulled type",
+            "this expr evaluated as nulled type",
             "obj to be accessed was null",
             "obj can't be cast into node class",
             "obj can't execute with this argument types", // 5
