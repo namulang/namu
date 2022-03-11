@@ -70,6 +70,7 @@ namespace wrd {
 
         it._inLocalFrame(args);
         // TODO: verify(*it.blk);
+        verify(*it._blk);
         it._outLocalFrame();
     })
 }

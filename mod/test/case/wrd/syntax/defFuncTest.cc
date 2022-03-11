@@ -11,7 +11,7 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
     if(make().parse(R"SRC(
         main() void
             foo(a, 22)
-    )SRC").shouldVerified(true)) {
+    )SRC").shouldParsed(true)) {
         node& res = getSubPack();
         ASSERT_FALSE(nul(res));
 
@@ -25,7 +25,7 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
     if(make().parse(R"SRC(
         main(argc int, argv str) void
             foo(a, 22)
-    )SRC").shouldVerified(true)) {
+    )SRC").shouldParsed(true)) {
         node& res = getSubPack();
         ASSERT_FALSE(nul(res));
 
