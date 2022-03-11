@@ -25,13 +25,15 @@ namespace wrd {
 
         WRD_DI("%s._onInFrame()", getName().c_str());
         fr.pushLocal(subs());
-        fr.pushLocal(_nameArgs(args));
-        return true;
+        fr.setFunc(*this);
+        return fr.pushLocal(_nameArgs(args));
     }
 
     void me::_outLocalFrame() {
         frame& fr = thread::get()._getStackFrame().getCurrentFrame();
         WRD_DI("%s._onOutFrame()", getName().c_str());
+        fr.setFunc(nulOf<func>());
+        fr.popLocal();
         fr.popLocal();
     }
 

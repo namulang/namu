@@ -39,6 +39,8 @@ namespace wrd {
             "%s is not a valid return type", // 20
             "return type is not specified",
             "function need to contain more than 1 statement inside",
+            "function info doesn't exist",
+            "%d return type isn't valid to %s return type of func",
 
             /* to be continue... */
 

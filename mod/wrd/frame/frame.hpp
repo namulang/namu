@@ -67,6 +67,17 @@ namespace wrd {
             if(!nul(bottom))
                 bottom.link(new1);
         }
+
+        void setFunc(func& new1) {
+            _func.bind(new1);
+        }
+
+        func& getFunc() {
+            return *_func;
+        }
+
+        const func& getFunc() const WRD_UNCONST_FUNC(getFunc())
+
         void clearObj() {
             setObj(nulOf<nchain>());
         }
@@ -97,6 +108,7 @@ namespace wrd {
     private:
         void _rel() {
             _obj.rel();
+            _func.rel();
             _local.rel();
         }
 
@@ -107,6 +119,7 @@ namespace wrd {
 
     private:
         tstr<nchain> _obj;
+        tstr<func> _func;
         scopeStack _local;
         mutable str _ret;
     };
