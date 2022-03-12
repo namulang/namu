@@ -19,7 +19,7 @@ namespace wrd {
     }
 
     wbool me::_inFrame(narr& args) {
-        frame& fr = thread::get()._getStackFrame().getCurrentFrame();
+        frame& fr = thread::get()._getNowFrame();
         if(nul(fr))
             return WRD_E("fr == null"), false;
 
@@ -30,7 +30,7 @@ namespace wrd {
     }
 
     void me::_outFrame() {
-        frame& fr = thread::get()._getStackFrame().getCurrentFrame();
+        frame& fr = thread::get()._getNowFrame();
         WRD_DI("%s._onOutFrame()", getName().c_str());
         fr.setFunc(nulOf<func>());
         fr.popLocal();

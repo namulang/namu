@@ -18,15 +18,15 @@ namespace {
                 _executed = true;
 
                 if(_lambda)
-                    _res = _lambda(args, (stackFrame&) wrd::thread::get().getStackFrame());
+                    _res = _lambda(args, (frames&) wrd::thread::get().getFrames());
                 return str();
             }
 
-            void setLambda(function<wbool(const containable&, const stackFrame&)> lambda) {
+            void setLambda(function<wbool(const containable&, const frames&)> lambda) {
                 _lambda = lambda;
             }
 
-            function<wbool(const containable&, const stackFrame&)> _lambda;
+            function<wbool(const containable&, const frames&)> _lambda;
             wbool _res;
             wbool _executed;
         };
@@ -43,7 +43,7 @@ namespace {
             return getBlock().cast<myBlock>()._executed;
         }
 
-        void setLambda(function<wbool(const containable&, const stackFrame&)> lambda) {
+        void setLambda(function<wbool(const containable&, const frames&)> lambda) {
             getBlock().cast<myBlock>()._lambda = lambda;
         }
 
@@ -70,7 +70,7 @@ namespace {
 
         wbool isRun() const { return _executed; }
 
-        void setLambda(function<wbool(const containable&, const stackFrame&)> lambda) {
+        void setLambda(function<wbool(const containable&, const frames&)> lambda) {
             _lambda = lambda;
         }
 
@@ -88,12 +88,12 @@ namespace {
     protected:
         str _onCastArgs(narr& castedArgs) override {
             _executed = true;
-            _res = _lambda(castedArgs, (stackFrame&) wrd::thread::get().getStackFrame());
+            _res = _lambda(castedArgs, (frames&) wrd::thread::get().getFrames());
             return str();
         }
 
     private:
-        function<wbool(const containable&, const stackFrame&)> _lambda;
+        function<wbool(const containable&, const frames&)> _lambda;
         params _params;
         wbool _res;
         wbool _executed;
@@ -119,7 +119,7 @@ TEST_F(packTest, packIsInFrameWhenCallMgdFunc) {
     ps.add(new wrd::ref(ttype<wInt>::get(), "age"));
     ps.add(new wrd::ref(ttype<wFlt>::get(), "grade"));
     f1.setLambda([](const auto& contain, const auto& sf) {
-        const frame& fr = sf.getCurrentFrame();
+        const frame& fr = sf[sf.len() - 1];
         if(nul(fr)) return false;
 
         // checks pack is in frame:
@@ -158,7 +158,7 @@ TEST_F(packTest, packIsNotInFrameWhenCallNativeFunc) {
     ps.add(new wrd::ref(ttype<wInt>::get(), "age"));
     ps.add(new wrd::ref(ttype<wFlt>::get(), "grade"));
     f1.setLambda([](const auto& contain, const auto& sf) {
-        const frame& fr = sf.getCurrentFrame();
+        const frame& fr = sf[sf.len() - 1];
         if(!nul(fr)) return WRD_E("fr == null"), false;
 
         return true;

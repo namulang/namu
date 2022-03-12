@@ -18,12 +18,12 @@ namespace {
 }
 
 struct frameTest : public ::testing::Test {
-    stackFrame& getStackFrame() {
-        return (stackFrame&) thread::get().getStackFrame();
+    frames& getFrames() {
+        return (frames&) thread::get().getFrames();
     }
 
     void SetUp() {
-        getStackFrame().add(new frame());
+        getFrames().add(new frame());
     }
 
     void TearDown() {
@@ -36,11 +36,11 @@ struct frameTest : public ::testing::Test {
 };
 
 TEST_F(frameTest, testAccessFrame) {
-    getStackFrame().add(new frame);
+    getFrames().add(new frame);
 }
 
 TEST_F(frameTest, testFrameManipulateChainObjNegative) {
-    frame& fr = getStackFrame().getCurrentFrame();
+    frame& fr = getFrames()[getFrames().len() - 1];
     scopeStack& ss = getScopeStack(fr);
     ASSERT_FALSE(ss.getBottom().isBind());
 

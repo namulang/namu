@@ -1,7 +1,6 @@
 #include "obj.hpp"
 #include "func.hpp"
 #include "../builtin/container/containable.inl"
-#include "../frame/stackFrame.hpp"
 #include "../loader/interpreter/tverification.hpp"
 #include "../frame/thread.hpp"
 
@@ -52,13 +51,13 @@ namespace wrd {
 
         frame& fr = *new frame();
         fr.setObj(subs());
-        wrd::thread::get()._getStackFrame().add(fr);
+        wrd::thread::get()._getFrames().add(fr);
     }
 
     void me::_outFrame() {
         WRD_DI("%s._outFrame()", getName().c_str());
 
-        wrd::thread::get()._getStackFrame().del();
+        wrd::thread::get()._getFrames().del();
     }
 
     WRD_VERIFY(obj, subNodes, {

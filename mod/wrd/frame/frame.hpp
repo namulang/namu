@@ -97,9 +97,9 @@ namespace wrd {
             super::rel();
         }
 
-        wbool pushReturn(const str& toReturn) const { return _ret.bind(*toReturn); }
+        wbool pushReturn(const str& toReturn) { return _ret.bind(*toReturn); }
         wbool isReturned() const { return _ret.isBind(); }
-        str popReturn() const {
+        str popReturn() {
             str ret = _ret;
             _ret.rel();
             return ret;
@@ -121,6 +121,6 @@ namespace wrd {
         tstr<nchain> _obj;
         tstr<func> _func;
         scopeStack _local;
-        mutable str _ret;
+        str _ret;
     };
 }
