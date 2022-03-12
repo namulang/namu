@@ -32,12 +32,6 @@ namespace wrd {
         me& found = sub(name, args);
         if(nul(found)) return str();
 
-        if(!found.doesNeedScope())
-            return found.run(args);
-
-        _inFrame();
-        str ret = found.run(args);
-        _outFrame();
-        return ret;
+        return _onRunSub(found, args);
     }
 }

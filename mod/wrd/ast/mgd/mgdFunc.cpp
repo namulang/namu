@@ -10,15 +10,15 @@ namespace wrd {
     WRD_DEF_ME(mgdFunc)
 
     str me::_onCastArgs(narr& args) {
-        if(!_inLocalFrame(args))
+        if(!_inFrame(args))
             return str();
 
         str ret = _blk->run();
-        _outLocalFrame();
+        _outFrame();
         return ret;
     }
 
-    wbool me::_inLocalFrame(narr& args) {
+    wbool me::_inFrame(narr& args) {
         frame& fr = thread::get()._getStackFrame().getCurrentFrame();
         if(nul(fr))
             return WRD_E("fr == null"), false;
@@ -29,7 +29,7 @@ namespace wrd {
         return fr.pushLocal(_nameArgs(args));
     }
 
-    void me::_outLocalFrame() {
+    void me::_outFrame() {
         frame& fr = thread::get()._getStackFrame().getCurrentFrame();
         WRD_DI("%s._onOutFrame()", getName().c_str());
         fr.setFunc(nulOf<func>());
@@ -70,9 +70,9 @@ namespace wrd {
         narr args;
         _prepareArgsAlongParam(it.getParams(), args);
 
-        it._inLocalFrame(args);
+        it._inFrame(args);
         // TODO: verify(*it.blk);
         verify(*it._blk);
-        it._outLocalFrame();
+        it._outFrame();
     })
 }

@@ -55,8 +55,8 @@ namespace wrd {
         ///         are matters.
         virtual const params& getParams() const;
 
-        virtual str run(const std::string& name, const containable& args);
         virtual str run(const containable& args) = 0;
+        str run(const std::string& name, const containable& args);
         str run(const std::string& name);
         str run();
 
@@ -111,11 +111,8 @@ namespace wrd {
         virtual wbool doesNeedScope() const { return false; }
 
     protected:
-        virtual void _inFrame() {
-            WRD_DI("%s._inFrame()", getName().c_str());
-        }
-        virtual void _outFrame() {
-            WRD_DI("%s._outFrame()", getName().c_str());
+        virtual str _onRunSub(node& sub, const containable& args) {
+            return sub.run(args);
         }
     };
 }

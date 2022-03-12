@@ -24,6 +24,16 @@ namespace wrd {
         return fun.run(args);
     }
 
+    str me::_onRunSub(node& sub, const containable& args) {
+        if(!sub.doesNeedScope())
+            return super::_onRunSub(sub, args);
+
+        _inFrame();
+        str ret = super::_onRunSub(sub, args);
+        _outFrame();
+        return ret;
+    }
+
     wbool me::canRun(const containable& args) const {
         wcnt n = getCtors().getAll<func>([&args](const func& f) {
             return f.canRun(args);
@@ -38,7 +48,7 @@ namespace wrd {
     }
 
     void me::_inFrame() {
-        super::_inFrame();
+        WRD_DI("%s._inFrame()", getName().c_str());
 
         frame& fr = *new frame();
         fr.setObj(subs());
@@ -46,7 +56,7 @@ namespace wrd {
     }
 
     void me::_outFrame() {
-        super::_outFrame();
+        WRD_DI("%s._outFrame()", getName().c_str());
 
         wrd::thread::get()._getStackFrame().del();
     }
