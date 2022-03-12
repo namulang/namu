@@ -42,8 +42,11 @@ namespace wrd {
         }
 
     protected:
-        void _inFrame() override;
-        void _outFrame() override;
+        str _onRunSub(node& sub, const containable& args) override;
+
+    private:
+        void _inFrame();
+        void _outFrame();
 
     protected:
         std::string _name;

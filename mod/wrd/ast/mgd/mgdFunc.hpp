@@ -29,8 +29,8 @@ namespace wrd {
 
     private:
         narr& _nameArgs(narr& args);
-        wbool _inLocalFrame(narr& args);
-        void _outLocalFrame();
+        wbool _inFrame(narr& args);
+        void _outFrame();
 
     private:
         narr _shares;
