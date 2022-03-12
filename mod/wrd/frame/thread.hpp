@@ -1,28 +1,30 @@
 #pragma once
 
-#include "stackFrame.hpp"
+#include "../builtin/container/mgd/tarr.hpp"
+#include "frame.hpp"
 
 namespace wrd {
 
     class packLoader;
+    typedef tnarr<frame> frames;
 
     class thread : public node {
         WRD(CLASS(thread, node))
-        friend class obj; // for stackFrame.
-        friend class mgdFunc; // for stackFrame.
-        friend class blockExpr; // for stackFrame.
-        friend class defVarExpr; // for stackFrame
+        friend class obj; // for frames.
+        friend class mgdFunc; // for frames.
+        friend class blockExpr; // for frames.
+        friend class defVarExpr; // for frames
         friend class verifier;
-        friend class func; // for stackFrame.
+        friend class returnExpr;
+        friend class func; // for frames.
 
     private:
         thread() {} // for singleton
         thread(const node& root): _root(root) {}
 
     public:
-        const stackFrame& getStackFrame() const {
-            return _sframe;
-        }
+        const frames& getFrames() const WRD_UNCONST_FUNC(_getFrames())
+        const frame& getNowFrame() const WRD_UNCONST_FUNC(_getNowFrame())
 
         static thread& get() {
             return **_get();
@@ -43,13 +45,16 @@ namespace wrd {
 
         str run(const containable& args) override;
 
-        void rel() override { _sframe.rel(); }
+        void rel() override { _frames.rel(); }
 
         const packs& getSystemPacks();
 
     protected:
-        stackFrame& _getStackFrame() {
-            return _sframe;
+        frames& _getFrames() {
+            return _frames;
+        }
+        frame& _getNowFrame() {
+            return _frames[_frames.len() - 1];
         }
 
     private:
@@ -59,7 +64,7 @@ namespace wrd {
         }
 
     private:
-        stackFrame _sframe;
+        frames _frames;
         str _root;
     };
 

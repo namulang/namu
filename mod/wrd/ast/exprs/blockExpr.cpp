@@ -6,7 +6,7 @@ namespace wrd {
 
     str me::run(const containable& args) {
         WRD_DI("%s._onInFrame()", getName().c_str());
-        frame& fr = wrd::thread::get()._getStackFrame().getCurrentFrame();
+        frame& fr = wrd::thread::get()._getNowFrame();
         if(nul(fr))
             return WRD_E("fr == null"), str();
         fr.pushLocal(new narr());

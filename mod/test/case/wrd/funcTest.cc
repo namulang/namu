@@ -17,15 +17,15 @@ namespace {
                 _executed = true;
 
                 if(_lambda)
-                    _res = _lambda(args, (stackFrame&) wrd::thread::get().getStackFrame());
+                    _res = _lambda(args, (frames&) wrd::thread::get().getFrames());
                 return str();
             }
 
-            void setLambda(function<wbool(const containable&, const stackFrame&)> lambda) {
+            void setLambda(function<wbool(const containable&, const frames&)> lambda) {
                 _lambda = lambda;
             }
 
-            function<wbool(const containable&, const stackFrame&)> _lambda;
+            function<wbool(const containable&, const frames&)> _lambda;
             wbool _res;
             wbool _executed;
         };
@@ -48,7 +48,7 @@ namespace {
             return getBlock().cast<myBlock>()._executed;
         }
 
-        void setLambda(function<wbool(const containable&, const stackFrame&)> lambda) {
+        void setLambda(function<wbool(const containable&, const frames&)> lambda) {
             getBlock().cast<myBlock>()._lambda = lambda;
         }
 
@@ -137,15 +137,15 @@ TEST(funcTest, testfuncConstructNewFrame) {
         return checkFrameHasfuncAndObjScope(sf[0], func, obj, funcNames, 1);
     });
 
-    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     func.run(args);
-    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_FALSE(func.isRun());
     ASSERT_FALSE(func.isSuccess());
 
-    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     obj.run(funcNames[0]);
-    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_TRUE(func.isRun());
     ASSERT_TRUE(func.isSuccess());
     func.setLambda(nullptr);
@@ -200,15 +200,15 @@ TEST(funcTest, testCallfuncInsidefunc) {
 
     narr args;
     args.add(obj1);
-    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     obj1func1.run(args);
-    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_FALSE(obj1func1.isSuccess());
     obj1.run(func1Name);
-    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_FALSE(obj1func1.isSuccess());
     obj1.run(func1Name, args);
-    ASSERT_EQ(wrd::thread::get().getStackFrame().len(), 0);
+    ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_TRUE(obj1func1.isSuccess());
 }
 
@@ -222,7 +222,7 @@ TEST(funcTest, testfuncHasStrParameter) {
     params& types = func1.getParams();
     types.add(new wrd::ref(obj, ""));
     types.add(new wrd::ref(ttype<wStr>::get()));
-    func1.setLambda([&](const auto& args, const stackFrame& sf) { return true; });
+    func1.setLambda([&](const auto& args, const frames& sf) { return true; });
 
     narr args;
     args.add(obj);
@@ -246,8 +246,8 @@ TEST(funcTest, testArgsAttachedName) {
     params& ps = f.getParams();
     ps.add(new wrd::ref(ttype<wStr>::get(), "msg"/*NAME*/));
     ps.add(new wrd::ref(ttype<wInt>::get(), "age"/*NAME*/));
-    f.setLambda([&](const auto& args, const stackFrame& sf) {
-        const frame& fr = sf.getCurrentFrame();
+    f.setLambda([&](const auto& args, const frames& sf) {
+        const frame& fr = sf[sf.len() - 1];
         return  fr["msg"].cast<wStr>().get() == "hello world" &&
                 fr["age"].cast<wInt>().get() == 55;
     });

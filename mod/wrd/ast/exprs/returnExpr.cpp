@@ -12,13 +12,12 @@ namespace wrd {
     str me::run(const containable& args) {
         str ret = _ret ? _ret->run(args) : wVoid::singletone();
 
-        const frame& fr = thread::get().getStackFrame().getCurrentFrame();
-        fr.pushReturn(ret);
+        thread::get()._getNowFrame().pushReturn(ret);
         return ret;
     }
 
     WRD_VERIFY({ // checks evalType of func is matched to me
-        const func& f = thread::get().getStackFrame().getCurrentFrame().getFunc();
+        const func& f = thread::get().getNowFrame().getFunc();
         if(nul(f)) return _err(23);
 
         if(!it.getEvalType().isImpli(f.getEvalType()))
