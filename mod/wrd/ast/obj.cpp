@@ -61,6 +61,9 @@ namespace wrd {
     }
 
     WRD_VERIFY(obj, subNodes, {
+        WRD_DI("verify: obj: %s[type=%s] iterateSubNodes[%d]", it.getName().c_str(), it.getType().getName().c_str(),
+            it.subs().len());
+
         for(auto& sub : it.subs()) {
             if(!sub.doesNeedScope()) {
                 verify(sub);

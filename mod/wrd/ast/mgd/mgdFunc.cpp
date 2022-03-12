@@ -67,6 +67,7 @@ namespace wrd {
     }
 
     WRD_VERIFY(mgdFunc, subNodes, {
+        WRD_DI("verify: mgdFunc: %s iterateBlock[%d]", it.getType().getName().c_str(), it._blk->subs().len());
         narr args;
         _prepareArgsAlongParam(it.getParams(), args);
 
