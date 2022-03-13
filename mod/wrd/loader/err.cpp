@@ -41,6 +41,7 @@ namespace wrd {
             "function need to contain more than 1 statement inside",
             "function info doesn't exist",
             "%d return type isn't valid to %s return type of func",
+            "block statement failed to construct frame structure", // 25
 
             /* to be continue... */
 

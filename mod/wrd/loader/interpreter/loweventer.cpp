@@ -257,4 +257,11 @@ namespace wrd {
         for(const node& stmt : arr)
             con.add(stmt);
     }
+
+    returnExpr* me::onReturn() {
+        return new returnExpr();
+    }
+    returnExpr* me::onReturn(node& exp) {
+        return new returnExpr(exp);
+    }
 }

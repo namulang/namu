@@ -13,6 +13,7 @@ namespace wrd {
     class expr;
     class mgdFunc;
     class blockExpr;
+    class returnExpr;
     class loweventer : public tokenScan {
         WRD(CLASS(loweventer, tokenScan))
         friend class tokenScanModable;
@@ -96,6 +97,8 @@ namespace wrd {
         }
         expr* onDefVar(const wtype& t, const std::string& name);
         void onCompilationUnit(node& subpack, narr& blk);
+        returnExpr* onReturn();
+        returnExpr* onReturn(node& exp);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
