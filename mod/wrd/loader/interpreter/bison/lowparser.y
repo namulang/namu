@@ -104,7 +104,7 @@
 //  primitive-type:
 %token VOID INT STR BOOL FLT NUL CHAR
 //  reserved-keyword:
-%token IF AKA
+%token IF AKA RETURN
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -118,6 +118,7 @@
 %type <asNode> term unary postfix primary funcCall
 %type <asNarr> list list-items
 //  keyword:
+%type <asNode> return
 %type <asNode> if
 %type <asNode> aka aka-default aka-deduced
 %type <asNarr> aka-dotname aka-dotname-item
@@ -251,6 +252,7 @@ primary: INTVAL {
 //  structure:
 expr-line: defexpr-line { $$ = $1; }
          | expr10 { $$ = $1; }
+         | return { $$ = $1; }
 expr-compound: defexpr-compound { $$ = $1; }
              | if {
             $$ = new blockExpr(); // TODO: remove
@@ -282,6 +284,12 @@ expr1: term {
    }
 
 // keyword:
+return: RETURN {
+        $$ = yyget_extra(scanner)->onReturn();
+    } | RETURN expr {
+        $$ = yyget_extra(scanner)->onReturn(*$2);
+    }
+
 if: IF expr indentblock {
     // TODO:
     }

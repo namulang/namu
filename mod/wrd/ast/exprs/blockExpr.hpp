@@ -5,7 +5,8 @@
 namespace wrd {
 
     class blockExpr : public expr {
-        WRD(CLASS(blockExpr, expr, expr::exprType))
+        WRD(CLASS(blockExpr, expr, expr::exprType),
+            FRIEND_VERIFY(blockExpr, visitSubNodes))
         friend class mgdFunc;
 
     public:
@@ -29,6 +30,10 @@ namespace wrd {
 
             return _exprs[len-1].getEvalType();
         }
+
+    private:
+        wbool _inFrame();
+        void _outFrame();
 
     private:
         tnarr<expr> _exprs;
