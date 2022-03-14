@@ -28,10 +28,12 @@ namespace wrd {
         const func& f = thread::get().getNowFrame().getFunc();
         if(nul(f)) return _err(24);
 
-        WRD_DI("verify: returnExpr: checks return[%s] == func[%s]", it.getEvalType().getName().c_str(),
-            f.getEvalType().getName().c_str());
+        const wtype& itType = it.getEvalType();
+        const wtype& fType = f.getEvalType();
+        WRD_DI("verify: returnExpr: checks return[%s] == func[%s]", itType.getName().c_str(),
+            fType.getName().c_str());
 
-        if(!it.getType().isImpli(f.getEvalType()))
-            return _err(25, it.getEvalType().getName().c_str(), f.getEvalType().getName().c_str());
+        if(!itType.isImpli(fType))
+            return _err(25, itType.getName().c_str(), fType.getName().c_str());
     })
 }
