@@ -50,13 +50,13 @@ namespace wrd {
 
     WRD_VERIFY({
         const wtype& eval = it.getEvalType();
-        if(nul(eval)) return _err(21);
+        if(nul(eval)) return _err(22);
         if(!eval.isSub(ttype<node>::get()))
-            return _err(20, eval.getName().c_str());
+            return _err(21, eval.getName().c_str());
 
         const blockExpr& blk = it.getBlock();
         if(nul(blk) || blk.subs().len() <= 0)
-            return _err(22);
+            return _err(23);
     })
 
     namespace {
