@@ -35,13 +35,13 @@ namespace wrd {
             "wrong parameter syntax: %s",
             "parameter shouldn't have a value",
             "%s is not a expression declaring something",
-            "a function should have a name",
-            "%s is not a valid return type", // 20
+            "a function should have a name", // 20
+            "%s is not a valid return type",
             "return type is not specified",
             "function need to contain more than 1 statement inside",
             "function info doesn't exist",
-            "%d return type isn't valid to %s return type of func",
-            "block statement failed to construct frame structure", // 25
+            "%d return type isn't valid to %s return type of func", // 25
+            "block statement failed to construct frame structure",
 
             /* to be continue... */
 
