@@ -33,6 +33,7 @@ namespace wrd {
 		wcnt len() const { return _errs.size(); }
 
 		virtual const err& add(const err* new1) {
+            new1->dbgLog();
 			_errs.push_back(new1);
 			return *new1;
 		}
