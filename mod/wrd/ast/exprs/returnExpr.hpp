@@ -21,9 +21,7 @@ namespace wrd {
             return super::canRun(args);
         }
 
-        const wtype& getEvalType() const override {
-            return (const wtype&) _ret.getType(); // I guarrantee that it's wtype.
-        }
+        const wtype& getEvalType() const override;
 
     private:
         str _ret;
