@@ -41,6 +41,11 @@ namespace wrd {
 				case INFO: WRD_I("%s", msg.c_str()); break;
 			}
 		}
+        void dbgLog() const {
+            if(buildFeature::config::isDbg())
+                log();
+        }
+
 		static const msgMap& getErrMsgs();
         static err* newErr(wcnt errCode, ...);
         static err* newErr(const area& src, wcnt errCode, ...);

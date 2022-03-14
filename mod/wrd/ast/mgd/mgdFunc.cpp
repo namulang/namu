@@ -72,7 +72,6 @@ namespace wrd {
         _prepareArgsAlongParam(it.getParams(), args);
 
         it._inFrame(args);
-        // TODO: verify(*it.blk);
         verify(*it._blk);
         it._outFrame();
     })
