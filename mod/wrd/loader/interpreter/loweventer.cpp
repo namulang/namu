@@ -2,6 +2,7 @@
 #include "bison/lowparser.hpp"
 #include "../../ast.hpp"
 #include "../../ast/mgd/mgdFunc.hpp"
+#include "../../builtin/primitive.hpp"
 
 namespace wrd {
 
@@ -263,5 +264,15 @@ namespace wrd {
     }
     returnExpr* me::onReturn(node& exp) {
         return new returnExpr(exp);
+    }
+
+    narr* me::onDotName(const std::string& name) {
+        narr* ret = new narr();
+        ret->add(new wStr(name));
+        return ret;
+    }
+    narr* me::onDotName(narr& names, const std::string& name) {
+        names.add(new wStr(name));
+        return &names;
     }
 }
