@@ -102,6 +102,8 @@ namespace wrd {
         /// but if that user call the 'getEvalType()' then the 'expr' object evaluate its terms and
         /// returns type of the output. it could be integer if it was 'addExpr' and all terms are
         /// constructed with integers.
+        /// and also this func requires frames. means that you have to interact frame first before
+        /// call this func.
         virtual const wtype& getEvalType() const {
             return getType();
         }

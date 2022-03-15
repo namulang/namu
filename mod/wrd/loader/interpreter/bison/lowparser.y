@@ -247,8 +247,8 @@ primary: INTVAL {
         // TODO: list should contain 1 element.
         $$ = new blockExpr(); // TODO:
      } | NAME {
-        // TODO: getExpr(frame, $1), free it
-        $$ = new blockExpr();
+        $$ = yyget_extra(scanner)->onGet(std::string($1));
+        free($1);
      }
 
 // expr:
