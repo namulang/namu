@@ -74,6 +74,11 @@ namespace wrd {
         template <typename... Args> void onSrcWarn(Args... args) { _onRes(err::newWarn(getArea(), args...)); }
         template <typename... Args> void onSrcInfo(Args... args) { _onRes(err::newInfo(getArea(), args...)); }
 
+        //  operator:
+        //      dot:
+        narr* onDotName(const std::string& name);
+        narr* onDotName(narr& names, const std::string& name);
+
         //  keyword:
         node* onPack(const narr& dotname);
         node* onPack();
@@ -96,7 +101,9 @@ namespace wrd {
             return new T(args...);
         }
         expr* onDefVar(const wtype& t, const std::string& name);
+        //      file:
         void onCompilationUnit(node& subpack, narr& blk);
+        //  return:
         returnExpr* onReturn();
         returnExpr* onReturn(node& exp);
 

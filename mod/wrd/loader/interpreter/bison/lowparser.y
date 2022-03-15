@@ -195,11 +195,11 @@ funcCall: NAME list %expect 1 {
 
 dotname: NAME {
        // TODO: uses loweventer:
-       $$ = new narr();
-       $$->add(new wStr($1));
+       $$ = yyget_extra(scanner)->onDotName(std::string($1));
        free($1);
     } | dotname '.' NAME {
-        // TODO: free NAME after it
+       $$ = yyget_extra(scanner)->onDotName(*$1, std::string($3));
+       free($3);
     }
 
 list-items: expr {
