@@ -197,7 +197,9 @@ dotname: NAME {
        // TODO: uses loweventer:
        $$ = new narr();
        $$->add(new wStr($1));
+       free($1);
     } | dotname '.' NAME {
+        // TODO: free NAME after it
     }
 
 list-items: expr {
@@ -230,6 +232,7 @@ primary: INTVAL {
        $$ = yyget_extra(scanner)->onPrimitive<wInt>($1);
      } | STRVAL {
        $$ = yyget_extra(scanner)->onPrimitive<wStr>($1);
+       free($1);
      } | CHARVAR {
        //TODO: $$ = yyget_extra(scanner)->onPrimitive<wChar>($1);
        $$ = yyget_extra(scanner)->onPrimitive<wInt>($1);
@@ -244,7 +247,7 @@ primary: INTVAL {
         // TODO: list should contain 1 element.
         $$ = new blockExpr(); // TODO:
      } | NAME {
-        // TODO: getExpr(frame, $1)
+        // TODO: getExpr(frame, $1), free it
         $$ = new blockExpr();
      }
 
@@ -298,6 +301,7 @@ aka: aka-default {
  }
 
 aka-dotname-item: NAME {
+                // TODO: then free it
               } | funcCall {
               }
 aka-dotname: aka-dotname-item {
@@ -307,7 +311,9 @@ aka-item: defexpr-line-except-aka {
       } | defexpr-compound {
       }
 aka-default: AKA aka-item ARROW NAME {
+            // TODO: then free it
          } | AKA aka-dotname ARROW NAME {
+            // TODO: then free it
          }
 aka-deduced: AKA aka-dotname {
          }
@@ -336,7 +342,7 @@ type: VOID { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
     | BOOL { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
     | FLT { $$ = yyget_extra(scanner)->onPrimitive<wFlt>(); }
     | NAME {
-        $$ = new blockExpr(); // TODO:
+        $$ = new blockExpr(); // TODO: then free it
     }
 
 //  variable:
@@ -345,6 +351,7 @@ defvar: defvar-exp-no-initial-value {
     }
 defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
                             $$ = yyget_extra(scanner)->onDefVar($2->getType(), std::string($1));
+                            free($1);
                          }
 
 //  func:
@@ -356,8 +363,10 @@ deffunc-default: NAME list type indentblock {
                 tstr<narr> list($2);
                 str type($3);
                 $$ = yyget_extra(scanner)->onFunc(std::string($1), *list, *type, $4->cast<blockExpr>());
+                free($1);
              }
 deffunc-deduction: NAME list indentblock {
+                // TODO: then free it
                }
 
 deffunc-lambda: deffunc-lambda-default {
