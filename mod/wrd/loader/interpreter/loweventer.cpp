@@ -275,4 +275,11 @@ namespace wrd {
         names.add(new wStr(name));
         return &names;
     }
+
+    node* me::onGet(const std::string& name, const params& p) {
+        return new getExpr(name, p);
+    }
+    node* me::onGet(node& from, const std::string& name, const params& p) {
+        return new getExpr(from, name, p);
+    }
 }

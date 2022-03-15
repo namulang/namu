@@ -18,7 +18,7 @@ namespace wrd {
             "unknown", /* is 0 */
             "this expr doesn't have row info", // 1
             "this expr evaluated as nulled type",
-            "obj to be accessed was null",
+            "%s[%s] tried to access '%s' but nothing exist",
             "obj can't be cast into node class",
             "obj can't execute with this argument types", // 5
             "this expr doesn't have col info",
