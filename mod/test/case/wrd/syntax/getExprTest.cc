@@ -14,19 +14,20 @@ TEST_F(getExprTest, getSymbolOnPackScope) {
             main
     )SRC").shouldVerified(true);
 
-    make().parse(R"SRC( // control group.
+    // control group.
+    make().parse(R"SRC(
         age int
         main() int
             return 0
     )SRC").shouldVerified(true);
 
-    make().parse(R"SRC( // experimental group.
+    // experimental group.
+    make().parse(R"SRC(
         age int
         main() int
             return age
     )SRC").shouldVerified(true);
-
-    make().parse(R"SRC( // experimental group.
+    make().parse(R"SRC(
         age str
         main() int
             return age
