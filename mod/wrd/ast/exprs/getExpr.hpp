@@ -6,7 +6,8 @@
 namespace wrd {
 
     class getExpr : public expr {
-        WRD(CLASS(getExpr, expr, expr::exprType))
+        WRD(CLASS(getExpr, expr, expr::exprType),
+            FRIEND_VERIFY(getExpr, isRunnable))
 
     public:
         getExpr(const std::string& name, const params& p = nulOf<params>())
@@ -27,7 +28,7 @@ namespace wrd {
         const params& getParams() const override { return *_params; }
 
     private:
-        const node& _get() {
+        const node& _get() const {
             const node& from = getFrom();
             if(nul(from))
                 return WRD_E("from == null"), nulOf<node>();
@@ -42,6 +43,6 @@ namespace wrd {
         str _from;
         std::string _name;
         /// if params set to null, it means that this expr only finds variables from _from.
-        params _params;
+        tstr<params> _params;
     };
 }
