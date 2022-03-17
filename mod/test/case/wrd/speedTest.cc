@@ -111,3 +111,16 @@ TEST(speedTest, benchmarkNodeCreation) {
     });
     ASSERT_TRUE(i >= 40000);
 }
+
+TEST(speedTest, benchmarkStringCreation) {
+    std::uintptr_t i = 0;
+    benchMark("create 10000 std::string", 10000, [&]() {
+        std::string dum("hello world");
+        i += reinterpret_cast<std::uintptr_t>(&dum);
+    });
+    benchMark("create 10000 wStr", 10000, [&]() {
+        wStr dum("hello world");
+        i += reinterpret_cast<std::uintptr_t>(&dum);
+    });
+    ASSERT_TRUE(i >= 20000);
+}
