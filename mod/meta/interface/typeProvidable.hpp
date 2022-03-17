@@ -16,6 +16,12 @@ namespace wrd {
         }
 
         virtual const type& getType() const = 0;
+        wbool isSub(const type& it) const { return getType().isSub(it); }
+        wbool isSuper(const type& it) const { return getType().isSuper(it); }
+        template <typename T>
+        wbool isSub() const { return getType().isSub<T>(); }
+        template <typename T>
+        wbool isSuper() const { return getType().isSuper<T>(); }
 
         template <typename T>
         T& cast() {
