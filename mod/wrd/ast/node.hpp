@@ -18,13 +18,6 @@ namespace wrd {
         node& operator[](const std::string& name) const;
 
     public:
-        wbool isSub(const type& it) const { return getType().isSub(it); }
-        wbool isSuper(const type& it) const { return getType().isSuper(it); }
-        template <typename T>
-        wbool isSub() const { return getType().isSub<T>(); }
-        template <typename T>
-        wbool isSuper() const { return getType().isSuper<T>(); }
-
         virtual ncontainer& subs() = 0;
         const ncontainer& subs() const WRD_UNCONST_FUNC(subs())
 
