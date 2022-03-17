@@ -4,12 +4,12 @@
 
 namespace wrd {
 
-    /// @remark arrContainable has API treating index as its parameter.
-    class arrContainable {
-        WRD_DECL_ME(arrContainable)
+    /// @remark ucontainable has API treating index as its parameter.
+    class ucontainable {
+        WRD_DECL_ME(ucontainable)
 
     public:
-        virtual ~arrContainable() {}
+        virtual ~ucontainable() {}
 
         // operator:
         virtual node& operator[](widx n) = 0;

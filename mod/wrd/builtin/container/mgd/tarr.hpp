@@ -5,7 +5,7 @@
 namespace wrd {
 
     template <typename T>
-    class tarr : public mgdObj, public containable, public arrContainable {
+    class tarr : public mgdObj, public containable, public ucontainable {
         WRD(CLASS(tarr, mgdObj))
 
     public:
@@ -32,13 +32,13 @@ namespace wrd {
 
         //  set:
         using containable::set;
-        using arrContainable::set;
+        using ucontainable::set;
         wbool set(const wrd::iter& at, const node& new1) override { return _arr.set(at, new1); }
         wbool set(widx n, const node& new1) override { return _arr.set(n, new1); }
 
         //  add:
         using containable::add;
-        using arrContainable::add;
+        using ucontainable::add;
         wbool add(std::initializer_list<T*> elems) {
             wbool ret = false;
             for(auto* elem : elems)
