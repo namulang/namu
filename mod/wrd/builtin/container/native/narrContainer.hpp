@@ -1,24 +1,24 @@
 #pragma once
 
 #include "ncontainer.hpp"
-#include "../arrContainable.hpp"
+#include "../ucontainable.hpp"
 
 namespace wrd {
 
-    class narrContainer : public ncontainer, public arrContainable {
+    class narrContainer : public ncontainer, public ucontainable {
         WRD(INTERFACE(narrContainer, ncontainer))
 
     public:
         using super::get;
-        using arrContainable::get;
+        using ucontainable::get;
 
         using super::set;
-        using arrContainable::set;
+        using ucontainable::set;
 
         using super::add;
-        using arrContainable::add;
+        using ucontainable::add;
 
         using super::del;
-        using arrContainable::del;
+        using ucontainable::del;
     };
 }
