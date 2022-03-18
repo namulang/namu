@@ -67,10 +67,10 @@ public:
     }
 
     tucontainer<T>& getContainer() override {
-        if(!_step) return nulOf<tuncontainer>();
+        if(!_step) return nulOf<tnucontainer>();
         return _step->getContainer();
     }
-    const tuncontainer<T>& getContainer() const WRD_UNCONST_FUNC(getContainer());
+    const tnucontainer<T>& getContainer() const WRD_UNCONST_FUNC(getContainer());
 
 private:
     me& _assign(const me& rhs) {

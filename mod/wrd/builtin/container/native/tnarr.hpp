@@ -1,13 +1,13 @@
 #pragma once
 
-#include "tuncontainer.hpp"
+#include "tnucontainer.hpp"
 #include "../../../ast/node.hpp"
 
 namespace wrd {
 
     template <typename T>
-    class tnarr : public tuncontainer<T> {
-        WRD(CLASS(tnarr, tuncontainer))
+    class tnarr : public tnucontainer<T> {
+        WRD(CLASS(tnarr, tnucontainer))
         template <typename E> friend class tarr;
 
     public:
