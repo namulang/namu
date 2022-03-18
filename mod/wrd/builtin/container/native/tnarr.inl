@@ -2,7 +2,7 @@
 
 #include "tnarr.hpp"
 #include "../../../ast/node.hpp"
-#include "iter/titer.inl"
+#include "tnucontainer.inl"
 
 namespace wrd {
 
@@ -18,7 +18,7 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::set(const wrd::iter& at, const str& new1) {
+    wbool ME::set(const iter& at, const T& new1) {
         narrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;
         if(cast.isEnd()) return false;
@@ -32,15 +32,14 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::set(widx n, const str& new1) {
+    wbool ME::set(widx n, const T& new1) {
         if(!_isValidN(n)) return false;
 
-        _vec[n] = new1;
-        return true;
+        return _vec[n].bind(new1);
     }
 
     TEMPL
-    wbool ME::add(const wrd::iter& e, const str& new1) {
+    wbool ME::add(const iter& e, const T& new1) {
         if(nul(e) || nul(new1)) return false;
         if(!e.isFrom(*this)) return false;
         narrIteration& cast = (narrIteration&) *e._step;
@@ -50,16 +49,16 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::add(widx n, const str& new1) {
+    wbool ME::add(widx n, const T& new1) {
         if(n < 0 || n > len()) return false; // if n equals to len(), it means that will be added at end of container.
 
         if(!wrap) return false;
-        _vec.insert(_vec.begin() + n, new1);
+        _vec.insert(_vec.begin() + n, WRP(new1));
         return true;
     }
 
     TEMPL
-    wbool ME::del(const wrd::iter& at) {
+    wbool ME::del(const iter& at) {
         narrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;
         if(cast.isEnd()) return false;
@@ -75,7 +74,7 @@ namespace wrd {
     }
 
     TEMPL
-    wcnt ME::del(const wrd::iter& from, const wrd::iter& end) {
+    wcnt ME::del(const iter& from, const iter& end) {
         narrIteration&  endIter = _getIterationFrom(end),
                     &   fromIter = _getIterationFrom(from);
         if(nul(endIter) || nul(fromIter))

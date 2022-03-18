@@ -28,6 +28,6 @@ namespace wrd {
         nchain _subs;
     };
 
-    template <typename T> class tnarr;
+    template <typename T, typename WRP> class tnarr;
     typedef tnarr<src> srcs;
 }

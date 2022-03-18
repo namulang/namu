@@ -5,7 +5,7 @@
 namespace wrd {
 
     template <typename T>
-    typedef tuncontainable<T> me;
+    typedef tucontainable<T> me;
 
     T& me::get(std::function<wbool(const T&)> l) const {
         return get<T>(l);

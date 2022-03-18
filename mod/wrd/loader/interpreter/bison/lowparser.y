@@ -35,7 +35,7 @@
     namespace wrd {
         class node;
         typedef tstr<node> str;
-        template <typename T> class tnarr;
+        template <typename T, typename WRP> class tnarr;
         typedef tnarr<node> narr;
     }
 
