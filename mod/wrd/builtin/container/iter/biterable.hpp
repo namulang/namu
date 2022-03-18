@@ -1,4 +1,4 @@
-// nested class of ucontainable.hpp
+// nested class of bicontainable.hpp
 class iterable {
     WRD_DECL_ME(iterable)
 
@@ -13,9 +13,11 @@ public:
     ///         it won't be counted as returning value.
     ///         it'll return '0' if it already reached to the end.
     virtual wcnt next(wcnt step) = 0;
-    virtual T& get() = 0;
-    const T& get() const WRD_UNCONST_FUNC(get())
-    virtual wbool isFrom(const tucontainable& it) const = 0;
-    virtual tnucontainer<T>& getContainer() = 0;
-    const tnucontainer<T>& getContainer() const WRD_UNCONST_FUNC(getContainer())
+    virtual K& getKey() = 0;
+    const K& getKey() const WRD_UNCONST_FUNC(get())
+    virtual V& getVal() = 0;
+    const V& getVal() const WRD_UNCONST_FUNC(get())
+    virtual wbool isFrom(const tbicontainable& it) const = 0;
+    virtual tnbicontainer<K, V>& getContainer() = 0;
+    const tnbicontainer<K, V>& getContainer() const WRD_UNCONST_FUNC(getContainer())
 };

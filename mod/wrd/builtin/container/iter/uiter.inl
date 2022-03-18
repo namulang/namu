@@ -1,9 +1,9 @@
-// nested class of ucontainable.hpp:
-//  this file allows to be refered by 'ucontainable.hpp' file only.
+// nested class of tucontainable.hpp:
+//  this file allows to be refered by 'tucontainable.hpp' file only.
 #pragma once
 
-#include "tuiterable.inl"
-#include "../../../../ast/node.hpp"
+#include "uiterable.hpp"
+#include "../../../ast/node.hpp"
 
 namespace wrd {
 

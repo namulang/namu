@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    template <typename T>
+    template <typename T, typename WRP = str>
     class tnarr : public tnucontainer<T> {
         WRD(CLASS(tnarr, tnucontainer))
         template <typename E> friend class tarr;
@@ -40,18 +40,18 @@ namespace wrd {
 
         // set:
         using super::set;
-        wbool set(const wrd::iter& at, const str& new1) override;
-        wbool set(widx n, const str& new1) override;
+        wbool set(const iter& at, const T& new1) override;
+        wbool set(widx n, const T& new1) override;
 
         // add:
         using super::add;
-        wbool add(const wrd::iter& e, const str& new1) override;
+        wbool add(const iter& e, const str& new1) override;
         wbool add(widx n, const str& new1) override;
 
         // del:
         using super::del;
-        wcnt del(const wrd::iter& from, const wrd::iter& end) override;
-        wbool del(const wrd::iter& it) override;
+        wcnt del(const iter& from, const iter& end) override;
+        wbool del(const iter& it) override;
         wbool del(widx n) override;
 
         // etc:
@@ -66,7 +66,7 @@ namespace wrd {
         }
 
     private:
-        narrIteration& _getIterationFrom(const wrd::iter& it) {
+        narrIteration& _getIterationFrom(const iter& it) {
             if(nul(it)) return nulOf<narrIteration>();
             if(!it.isFrom(*this)) return nulOf<narrIteration>();
             return (narrIteration&) *it._step;

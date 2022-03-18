@@ -1,11 +1,10 @@
-#include "uiteration.hpp"
+#include "biteration.hpp"
 
-// nested class of tucontainable.hpp:
-//  this file allows to be refered by 'tucontainable.hpp' file only.
+// nested class of tbicontainable.hpp:
+//  this file allows to be refered by 'tbicontainable.hpp' file only.
 class iter : public iterable, public clonable, public typeProvidable {
     WRD(CLASS(iter))
     friend class iteration;
-    template <typename E> friend class tnarr;
     template <typename E> friend class tnchain;
 
 public:
@@ -31,13 +30,9 @@ public:
         return *this;
     }
 
-    T& operator*() { return get(); }
-    T* operator->() { return &get(); }
-    const T& operator*() const WRD_UNCONST_FUNC(operator*())
-    const T* operator->() const WRD_UNCONST_FUNC(operator->())
     explicit operator wbool() const { return !isEnd(); }
 
-    wbool isFrom(const tucontainable& it) const override {
+    wbool isFrom(const tbicontainable& it) const override {
         if(!_step) return false;
         return _step->isFrom(it);
     }
@@ -58,19 +53,24 @@ public:
         return step;
     }
 
-    using iterable::get;
-    T& get() override;
-
+    using iterable::getKey;
+    K& getKey() override;
     template <typename E>
-    E& get() {
-        return get().template cast<E>();
+    E& getKey() {
+        return getKey().template cast<E>();
+    }
+    using iterable::getVal;
+    V& getVal() override;
+    template <typename E>
+    E& getVal() {
+        return getVal().template cast<E>();
     }
 
-    tucontainer<T>& getContainer() override {
-        if(!_step) return nulOf<tnucontainer>();
+    tnbicontainer<K, V>& getContainer() override {
+        if(!_step) return nulOf<tnbicontainer<K, V> >();
         return _step->getContainer();
     }
-    const tnucontainer<T>& getContainer() const WRD_UNCONST_FUNC(getContainer());
+    const tnbicontainer<K, V>& getContainer() const WRD_UNCONST_FUNC(getContainer());
 
 private:
     me& _assign(const me& rhs) {
