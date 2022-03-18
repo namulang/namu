@@ -16,6 +16,6 @@ public:
     virtual T& get() = 0;
     const T& get() const WRD_UNCONST_FUNC(get())
     virtual wbool isFrom(const tucontainable<T>& it) const = 0;
-    virtual tuncontainer<T>& getContainer() = 0;
-    const tuncontainer<T>& getContainer() const WRD_UNCONST_FUNC(getContainer())
+    virtual tnucontainer<T>& getContainer() = 0;
+    const tnucontainer<T>& getContainer() const WRD_UNCONST_FUNC(getContainer())
 };

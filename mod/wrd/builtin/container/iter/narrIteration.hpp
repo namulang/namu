@@ -33,8 +33,8 @@ public:
         if(isEnd()) return nulOf<T>();
         return _own.get(_n);
     }
-    uncontainer& getContainer() override { return _own; }
-    const uncontainer& getContainer() const WRD_UNCONST_FUNC(getContainer())
+    tnucontainer& getContainer() override { return _own; }
+    const tnucontainer& getContainer() const WRD_UNCONST_FUNC(getContainer())
 
 protected:
     wbool _onSame(const typeProvidable& rhs) const override {

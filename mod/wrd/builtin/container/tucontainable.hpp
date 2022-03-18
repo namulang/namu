@@ -6,7 +6,7 @@
 namespace wrd {
 
     class node;
-    class tuncontainer;
+    class tnucontainer;
     template <typename T> class tnarr;
     typedef tnarr<node> narr;
 
