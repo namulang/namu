@@ -35,8 +35,8 @@
     namespace wrd {
         class node;
         typedef tstr<node> str;
-        template <typename T, typename WRAPPER> class tnarr;
-        typedef tnarr<node, str> narr;
+        template <typename T> class tnarr;
+        typedef tnarr<node> narr;
     }
 
     struct lloc : public wrd::area {
