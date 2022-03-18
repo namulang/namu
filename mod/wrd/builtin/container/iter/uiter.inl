@@ -1,12 +1,14 @@
+// nested class of ucontainable.hpp:
+//  this file allows to be refered by 'ucontainable.hpp' file only.
 #pragma once
 
-#include "titer.hpp"
+#include "tuiterable.inl"
 #include "../../../../ast/node.hpp"
 
 namespace wrd {
 
 #define TEMPL template <typename T>
-#define ME titer<T>
+#define ME tucontainable<T>::iter
 
     TEMPL
     T& ME::get() {
@@ -18,4 +20,3 @@ namespace wrd {
 #undef ME
 #undef TEMPL
 }
-

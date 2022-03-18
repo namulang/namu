@@ -8,7 +8,7 @@ namespace wrd {
 
 	class ases;
     class ref;
-    typedef tnarr<ref, str> params;
+    typedef tnarr<str> params;
 
     /// node provides common API to manipulate its sub nodes.
     class node : public instance, public clonable {
@@ -30,13 +30,13 @@ namespace wrd {
         template <typename T = me> T& sub(const std::string& name, const containable& args) const;
 
         template <typename T>
-        tnarr<T, str> subAll(std::function<wbool(const T&)> l) const {
+        tnarr<T> subAll(std::function<wbool(const T&)> l) const {
             return subs().getAll<T>(l);
         }
 
-        template <typename T = me> tnarr<T, str> subAll(const std::string& name) const;
-        template <typename T = me> tnarr<T, str> subAll(const std::string& name, const containable& args);
-        template <typename T = me> tnarr<T, str> subAll(const std::string& name, const containable& args) const;
+        template <typename T = me> tnarr<T> subAll(const std::string& name) const;
+        template <typename T = me> tnarr<T> subAll(const std::string& name, const containable& args);
+        template <typename T = me> tnarr<T> subAll(const std::string& name, const containable& args) const;
 
         virtual wbool canRun(const containable& args) const = 0;
 
