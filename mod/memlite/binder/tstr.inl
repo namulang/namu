@@ -6,15 +6,15 @@
 
 namespace wrd {
 
-#define TEMPL	template <typename T>
-#define ME	tstr<T>
-#define SUPER   tweak<T>
+#define TEMPL	template <typename T, typename TACTIC>
+#define ME	tstr<T, TACTIC>
+#define SUPER   tweak<T, TACTIC>
 
-    TEMPL ME::tstr(): SUPER(strTactic::singletone) {}
-    TEMPL ME::tstr(const T& it): SUPER(strTactic::singletone) { this->bind(it); }
-    TEMPL ME::tstr(const T* it): SUPER(strTactic::singletone) { this->bind(*it); }
-    TEMPL ME::tstr(const ME& rhs): SUPER(strTactic::singletone) { this->_assign(rhs); }
-    TEMPL ME::tstr(const binder& rhs): SUPER(strTactic::singletone) { this->bind(*rhs); }
+    TEMPL ME::tstr(): SUPER() {}
+    TEMPL ME::tstr(const T& it): SUPER() { this->bind(it); }
+    TEMPL ME::tstr(const T* it): SUPER() { this->bind(*it); }
+    TEMPL ME::tstr(const ME& rhs): SUPER() { this->_assign(rhs); }
+    TEMPL ME::tstr(const binder& rhs): SUPER() { this->bind(*rhs); }
 
 #undef SUPER
 #undef ME
