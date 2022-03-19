@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    template <typename T>
+    template <typename T, typename TACTIC = weakTactic>
     class tweak : public binder {
         WRD_DECL_ME(tweak, binder)
         WRD_INIT_META(me)
@@ -30,8 +30,5 @@ namespace wrd {
 
         using tbindable::bind;
         wbool bind(const T& new1);
-
-    protected:
-        tweak(bindTacticable& tactic);
     };
 }

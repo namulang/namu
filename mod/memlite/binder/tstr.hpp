@@ -4,9 +4,10 @@
 
 namespace wrd {
 
-    template <typename T>
-    class tstr : public tweak<T> {
-        WRD_DECL_ME(tstr, tweak<T>)
+    template <typename T, typename TACTIC = strTactic>
+    class tstr : public tweak<T, TACTIC> {
+        typedef tweak<T, TACTIC> __super;
+        WRD_DECL_ME(tstr, __super)
         WRD_INIT_META(me)
         friend class ref;
 
@@ -19,8 +20,5 @@ namespace wrd {
         tstr(const binder& rhs);
 
         using super::operator=;
-
-	protected:
-		tstr(bindTacticable& tactic): super(tactic) {}
     };
 }
