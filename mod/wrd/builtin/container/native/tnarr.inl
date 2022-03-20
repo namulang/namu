@@ -9,7 +9,7 @@ namespace wrd {
 #define TEMPL template <typename T>
 #define ME tnarr<T>
 
-    TEMPL
+T    TEMPL
     T& ME::get(widx n) {
         if(!_isValidN(n)) return nulOf<T>();
 
