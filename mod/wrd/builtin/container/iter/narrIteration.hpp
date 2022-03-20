@@ -29,12 +29,14 @@ public:
         }
         return step;
     }
+    using super::get;
     T& get() override {
         if(isEnd()) return nulOf<T>();
         return _own.get(_n);
     }
+
+    using super::getContainer;
     tnucontainer& getContainer() override { return _own; }
-    const tnucontainer& getContainer() const WRD_UNCONST_FUNC(getContainer())
 
 protected:
     wbool _onSame(const typeProvidable& rhs) const override {
