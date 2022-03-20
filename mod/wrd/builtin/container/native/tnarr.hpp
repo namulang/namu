@@ -5,10 +5,11 @@
 
 namespace wrd {
 
-    template <typename T, typename WRP = str>
+    template <typename T, typename TACTIC = strTactic>
     class tnarr : public tnucontainer<T> {
         WRD(CLASS(tnarr, tnucontainer))
         template <typename E> friend class tarr;
+        typedef tstr<T, TACTIC> wrap;
 
     public:
         friend class narrIteration;
@@ -45,8 +46,8 @@ namespace wrd {
 
         // add:
         using super::add;
-        wbool add(const iter& e, const str& new1) override;
-        wbool add(widx n, const str& new1) override;
+        wbool add(const iter& e, const T& new1) override;
+        wbool add(widx n, const T& new1) override;
 
         // del:
         using super::del;
@@ -75,8 +76,8 @@ namespace wrd {
         wbool _isValidN(widx n) const;
 
     private:
-        std::vector<str> _vec;
+        std::vector<tstr<node, TACTIC> > _vec;
     };
 
-    typedef tnarr<node, str> narr;
+    typedef tnarr<wrap> narr;
 }
