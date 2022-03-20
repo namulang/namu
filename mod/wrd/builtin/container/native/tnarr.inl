@@ -9,9 +9,9 @@ namespace wrd {
 #define TEMPL template <typename T>
 #define ME tnarr<T>
 
-T    TEMPL
+    TEMPL
     T& ME::get(widx n) {
-        if(!_isValidN(n)) return nulOf<T>();
+        if(!has(n)) return nulOf<T>();
 
         binder& ret = _vec[n];
         return (T&) *ret;
@@ -27,13 +27,8 @@ T    TEMPL
     }
 
     TEMPL
-    wbool ME::_isValidN(widx n) const {
-        return 0 <= n && n < len();
-    }
-
-    TEMPL
     wbool ME::set(widx n, const T& new1) {
-        if(!_isValidN(n)) return false;
+        if(!has(n)) return false;
 
         return _vec[n].bind(new1);
     }
@@ -68,7 +63,7 @@ T    TEMPL
 
     TEMPL
     wbool ME::del(widx n) {
-        if(!_isValidN(n)) return false;
+        if(!has(n)) return false;
         _vec.erase(_vec.begin() + n);
         return true;
     }

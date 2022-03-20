@@ -34,6 +34,11 @@ namespace wrd {
         // len:
         wcnt len() const override;
 
+        // has:
+        wbool has(widx n) const override {
+            return 0 <= n && n < len();
+        }
+
         // get:
         using super::get;
         T& get(widx n) override;
@@ -73,7 +78,6 @@ namespace wrd {
             return (narrIteration&) *it._step;
         }
 
-        wbool _isValidN(widx n) const;
 
     private:
         std::vector<tstr<node, TACTIC> > _vec;

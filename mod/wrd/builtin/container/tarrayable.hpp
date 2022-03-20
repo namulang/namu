@@ -17,6 +17,9 @@ namespace wrd {
         virtual T& operator[](widx n) = 0;
         virtual const T& operator[](widx n) const = 0;
 
+        // has:
+        virtual wbool has(widx n) const = 0;
+
         // get:
         virtual T& get(widx n) = 0;
         virtual const T& get(widx n) const = 0;
