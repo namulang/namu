@@ -24,6 +24,9 @@ namespace wrd {
         // len:
         virtual wcnt len() const = 0;
 
+        // has:
+        virtual wbool has(const K& key) const = 0;
+
         // get:
         template <typename K1, typename V1>
         V1& get(std::function<wbool(const K1&, const V1&)> l) const;
