@@ -24,12 +24,12 @@ namespace wrd {
 
     public:
         using super::subs;
-        ncontainer& subs() override { return *_subs; }
+        nucontainer& subs() override { return *_subs; }
 
         using super::run;
-        str run(const containable& args) override;
+        str run(const ucontainable& args) override;
 
-        wbool canRun(const containable& args) const override;
+        wbool canRun(const ucontainable& args) const override;
 
         virtual funcs& getCtors() = 0;
         const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
@@ -42,7 +42,7 @@ namespace wrd {
         }
 
     protected:
-        str _onRunSub(node& sub, const containable& args) override;
+        str _onRunSub(node& sub, const ucontainable& args) override;
 
     private:
         void _inFrame();

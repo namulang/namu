@@ -7,7 +7,7 @@ namespace wrd {
 
     WRD_DEF_ME(func)
 
-    tstr<narr> me::_asArgs(const containable& args) {
+    tstr<narr> me::_asArgs(const ucontainable& args) {
         const params& params = getParams();
         if(args.len() != params.len())
             return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), params.len()),
@@ -25,7 +25,7 @@ namespace wrd {
         return ret;
     }
 
-    str me::run(const containable& args) {
+    str me::run(const ucontainable& args) {
         tstr<narr> castedArgs = _asArgs(args);
         if(!castedArgs)
             return WRD_E("invalid args to call %s func.", getType().getName().c_str()), str();
@@ -33,7 +33,7 @@ namespace wrd {
         return _onCastArgs(*castedArgs);
     }
 
-    wbool me::canRun(const containable& args) const {
+    wbool me::canRun(const ucontainable& args) const {
         const params& mine = getParams();
         wcnt len = mine.len();
         if(args.len() != len) return false;

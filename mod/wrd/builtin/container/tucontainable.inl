@@ -12,21 +12,21 @@ namespace wrd {
 
     TEMPL
     template <typename E>
-    E& ME::get(std::function<wbool(const T&)> l) const {
+    E& ME::get(std::function<wbool(const E&)> l) const {
         for(const T& elem : this) {
-            if(elem.isSub<T>() && l(elem)) // elem should be typeProvidable.
-                return const_cast<T&>(elem);
+            if(elem.template isSub<E>() && l(elem)) // elem should be typeProvidable.
+                return const_cast<E&>(elem);
         }
 
-        return nulOf<T>();
+        return nulOf<E>();
     }
 
     TEMPL
-    template <typename T>
-    tnarr<T> ME::getAll(std::function<wbool(const T&)> l) const {
-        tnarr<T> ret;
+    template <typename E>
+    tnarr<E> ME::getAll(std::function<wbool(const E&)> l) const {
+        tnarr<E> ret;
         for(const T& elem : this)
-            if(elem.isSub<T>() && l(elem))
+            if(elem.template isSub<E>() && l(elem))
                 ret.add(elem);
 
         return ret;

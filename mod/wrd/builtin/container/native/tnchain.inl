@@ -15,63 +15,61 @@ namespace wrd {
     wcnt ME::len() const {
         wcnt len = 0;
 
-        for(chnIter e=beginChain(); e ;++e)
+        for(const me* e=this; e ;e=&e->getNext())
             len += e->getContainer().len();
-
         return len;
     }
 
     TEMPL
     wcnt ME::chainLen() const {
         wcnt len = 0;
-        for(chnIter e = beginChain(); e ;++e)
+        for(const me* e=this; e ;e=&e->getNext())
             len++;
 
         return len;
     }
 
     TEMPL
-    wbool ME::set(const wrd::iter& at, const node& new1) {
-        wrd::iter& containerIter = _getArrIterFromChainIter(at);
+    wbool ME::set(const iter& at, const node& new1) {
+        iter& containerIter = _getArrIterFromChainIter(at);
 
         return containerIter.getContainer().set(containerIter, new1);
     }
 
     TEMPL
-    wbool ME::add(const wrd::iter& at, const node& new1) {
-        wrd::iter& containerIter = _getArrIterFromChainIter(at);
+    wbool ME::add(const iter& at, const node& new1) {
+        iter& containerIter = _getArrIterFromChainIter(at);
 
         return containerIter.getContainer().add(containerIter, new1);
     }
 
     TEMPL
-    wbool ME::del(const wrd::iter& at) {
-        wrd::iter& containerIter = _getArrIterFromChainIter(at);
+    wbool ME::del(const iter& at) {
+        iter& containerIter = _getArrIterFromChainIter(at);
 
         return containerIter.getContainer().del(containerIter);
     }
 
     TEMPL
-    wcnt ME::del(const wrd::iter& from, const wrd::iter& end) {
-        const me& fromChain = from.getContainer().cast<me>();
-        const me& endChain = end.getContainer().cast<me>();
+    wcnt ME::del(const iter& from, const iter& end) {
+        const me& fromChain = from.getContainer().template cast<me>();
+        const me& endChain = end.getContainer().template cast<me>();
 
-        chnIter e = _iterChain(fromChain);
+        me* e = (me*) &fromChain;
         wcnt ret = 0;
         do {
-            me& eChain = *e;
-            ncontainer& eArr = eChain.getContainer();
-            wrd::iter   arrBegin = &eChain == &fromChain ? _getArrIterFromChainIter(from) : eArr.begin(),
-                        arrEnd = &eChain == &endChain ? _getArrIterFromChainIter(end) : eArr.end();
-
+            tnucontainer<T>& eArr = e->getContainer();
+            iter arrBegin = e == &fromChain ? _getArrIterFromChainIter(from) : eArr.begin(),
+                 arrEnd = e == &endChain ? _getArrIterFromChainIter(end) : eArr.end();
             ret += eArr.del(arrBegin, arrEnd);
-        } while(&(e++).get() != &endChain);
+            e = &e->getNext();
+        } while(e != &endChain);
 
         return ret;
     }
 
     TEMPL
-    tstr<ME> ME::link(const ncontainer& new1) {
+    tstr<ME> ME::link(const tnucontainer<T>& new1) {
         if(nul(new1)) return tstr<ME>();
 
         ME& ret = *wrap(new1);
@@ -95,8 +93,8 @@ namespace wrd {
     }
 
     TEMPL
-    ME* ME::wrap(const ncontainer& toShallowWrap) {
-        ME* ret = const_cast<me*>(&toShallowWrap.cast<ME>());
+    ME* ME::wrap(const tnucontainer<T>& toShallowWrap) {
+        ME* ret = const_cast<me*>(&toShallowWrap.template cast<ME>());
         if(nul(ret)) {
             ret = new me();
             ret->_arr.bind(toShallowWrap);
@@ -107,12 +105,12 @@ namespace wrd {
 
     TEMPL
     void ME::rel() {
-        for(chnIter e=beginChain(); e ;++e)
+        for(me* e=this; e ;e=&e->getNext())
             e->getContainer().rel();
     }
 
     TEMPL
-    ncontainer& ME::getContainer() {
+    tnucontainer<T>& ME::getContainer() {
         return *_arr;
     }
 

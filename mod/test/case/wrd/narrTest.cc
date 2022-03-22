@@ -11,9 +11,9 @@ namespace {
     public:
         myNode(int num): number(num) {}
 
-        ncontainer& subs() override { return nulOf<ncontainer>(); }
-        wbool canRun(const containable& types) const override { return false; }
-        str run(const containable& args) override { return str(); }
+        nucontainer& subs() override { return nulOf<nucontainer>(); }
+        wbool canRun(const ucontainable& types) const override { return false; }
+        str run(const ucontainable& args) override { return str(); }
 
         int number;
     };
@@ -131,10 +131,10 @@ TEST(narrTest, testIter) {
     ASSERT_EQ(e.next(1), 0);
 }
 
-TEST(narrTest, testcontainableAPI) {
+TEST(narrTest, testucontainableAPI) {
     //  initial state:
     tnarr<myNode>* arr = new tnarr<myNode>();
-    containable* con = arr;
+    ucontainable* con = arr;
     ASSERT_EQ(con->len(), 0);
 
     iter head = con->begin();

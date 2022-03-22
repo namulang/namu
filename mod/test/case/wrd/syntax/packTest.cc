@@ -13,7 +13,7 @@ namespace {
             WRD(CLASS(myBlock, blockExpr))
 
         public:
-            str run(const containable& args) override {
+            str run(const ucontainable& args) override {
                 WRD_I("hello world!");
                 _executed = true;
 
@@ -22,11 +22,11 @@ namespace {
                 return str();
             }
 
-            void setLambda(function<wbool(const containable&, const frames&)> lambda) {
+            void setLambda(function<wbool(const ucontainable&, const frames&)> lambda) {
                 _lambda = lambda;
             }
 
-            function<wbool(const containable&, const frames&)> _lambda;
+            function<wbool(const ucontainable&, const frames&)> _lambda;
             wbool _res;
             wbool _executed;
         };
@@ -43,7 +43,7 @@ namespace {
             return getBlock().cast<myBlock>()._executed;
         }
 
-        void setLambda(function<wbool(const containable&, const frames&)> lambda) {
+        void setLambda(function<wbool(const ucontainable&, const frames&)> lambda) {
             getBlock().cast<myBlock>()._lambda = lambda;
         }
 
@@ -70,7 +70,7 @@ namespace {
 
         wbool isRun() const { return _executed; }
 
-        void setLambda(function<wbool(const containable&, const frames&)> lambda) {
+        void setLambda(function<wbool(const ucontainable&, const frames&)> lambda) {
             _lambda = lambda;
         }
 
@@ -93,7 +93,7 @@ namespace {
         }
 
     private:
-        function<wbool(const containable&, const frames&)> _lambda;
+        function<wbool(const ucontainable&, const frames&)> _lambda;
         params _params;
         wbool _res;
         wbool _executed;

@@ -12,7 +12,7 @@ namespace wrd {
 
     public:
         using super::run;
-        str run(const containable& args) override {
+        str run(const ucontainable& args) override {
             if(!_me) return WRD_E("_me == null"), str();
 
             str me = _me->as<node>();

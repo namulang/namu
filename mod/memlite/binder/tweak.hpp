@@ -1,6 +1,7 @@
 #pragma once
 
 #include "binder.hpp"
+#include "weakTactic.hpp"
 
 namespace wrd {
 

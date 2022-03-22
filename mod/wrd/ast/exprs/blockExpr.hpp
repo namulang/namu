@@ -17,12 +17,12 @@ namespace wrd {
 
     public:
         using super::subs;
-        ncontainer& subs() override {
+        nucontainer& subs() override {
             return _exprs;
         }
 
         using super::run;
-        str run(const containable& args) override;
+        str run(const ucontainable& args) override;
 
         const wtype& getEvalType() const override {
             wcnt len = _exprs.len();
@@ -36,6 +36,6 @@ namespace wrd {
         void _outFrame();
 
     private:
-        tnarr<expr> _exprs;
+        narr _exprs;
     };
 }

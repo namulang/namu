@@ -1,8 +1,7 @@
-// nested class of tbicontainable.hpp:
-//  this file allows to be refered by 'tbicontainable.hpp' file only.
+// nested class of tbicontainable.inl:
+//  this file allows to be refered by 'tbicontainable.inl' file only.
 #pragma once
 
-#include "biterable.hpp"
 #include "../../../ast/node.hpp"
 
 namespace wrd {

@@ -11,15 +11,15 @@ namespace wrd {
         explicit func(const std::string& name): _name(name) {}
 
         using super::subs;
-        ncontainer& subs() override {
+        nucontainer& subs() override {
             static narr empty;
             return empty;
         }
 
         using super::run;
-        str run(const containable& args) override;
+        str run(const ucontainable& args) override;
 
-        wbool canRun(const containable& typs) const override;
+        wbool canRun(const ucontainable& typs) const override;
 
         const std::string& getName() const override { return _name; }
         // modifying name of func is not permitted.
@@ -28,7 +28,7 @@ namespace wrd {
         virtual str _onCastArgs(narr& castedArgs) = 0;
 
     private:
-        tstr<narr> _asArgs(const containable& args);
+        tstr<narr> _asArgs(const ucontainable& args);
 
     private:
         std::string _name;

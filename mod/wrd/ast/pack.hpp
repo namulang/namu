@@ -28,8 +28,8 @@ namespace wrd {
 
     public:
         using super::subs;
-        ncontainer& subs() override {
-            ncontainer& subs = super::subs();
+        nucontainer& subs() override {
+            nucontainer& subs = super::subs();
             if(_state == RELEASED) {
                 WRD_I("%s pack is about to interpret lazy.", getName().c_str());
                 // TODO: check _rpt error count increased or not.
@@ -59,9 +59,9 @@ namespace wrd {
 
         using super::run;
         // running of a pack is prohibited.
-        str run(const containable& args) override { return str(); }
+        str run(const ucontainable& args) override { return str(); }
 
-        wbool canRun(const containable& args) const override { return false; }
+        wbool canRun(const ucontainable& args) const override { return false; }
 
         const std::string& getName() const override {
             return _manifest.name;
@@ -96,7 +96,7 @@ namespace wrd {
         }
 
     private:
-        tstr<srcs> parse(errReport& rpt, containable& tray) override {
+        tstr<srcs> parse(errReport& rpt, ucontainable& tray) override {
             // You shouldn't release instances which _subs is holding:
             //  there is a scenario which _subs containing parsed instance when
             //  this function called.
@@ -127,8 +127,9 @@ namespace wrd {
             if(_state != LINKED) return false;
 
             // propagate result only if it's not valid.
-            for(auto e = _dependents.begin<pack>(); e ; ++e)
-                e->invalidate();
+            for(auto& e : _dependents)
+                if(e.isSub<pack>())
+                    e.cast<pack>().invalidate();
             return true;
         }
 

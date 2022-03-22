@@ -254,7 +254,7 @@ namespace wrd {
         WRD_DI("tokenEvent: onCompilationUnit(%s[%x], arr[%x])", name.c_str(), &subpack, &arr);
         if(!hasPack) return;
 
-        containable& con = subpack.subs();
+        ucontainable& con = subpack.subs();
         for(const node& stmt : arr)
             con.add(stmt);
     }

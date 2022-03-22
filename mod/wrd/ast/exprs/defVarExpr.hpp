@@ -14,7 +14,7 @@ namespace wrd {
 
     public:
         using super::run;
-        str run(const containable& args) override {
+        str run(const ucontainable& args) override {
             const wtype& type = getEvalType();
             if(type.isImmutable()) {
                 str ret = _addFrame(*type.makeAs<node>());

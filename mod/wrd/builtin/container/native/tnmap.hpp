@@ -7,12 +7,14 @@ namespace wrd {
 
     template <typename K, typename V, typename TACTIC = strTactic>
     class tnmap : public tnbicontainer<K, V> {
-        WRD(CLASS(tnmap, tnbicontainer))
+        typedef tnbicontainer<K, V> __super;
+        WRD(CLASS(tnmap, __super))
         template <typename K, typename V> friend class tmap;
         typedef tstr<V, TACTIC> wrap;
         typedef std::map<K, wrap> cmap;
         typedef cmap::iterator citer;
         typedef std::pair<K, V> cpair;
+        typedef typename super::iter iter;
 
     public:
         friend class nmapIteration;

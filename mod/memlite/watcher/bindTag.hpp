@@ -9,8 +9,8 @@ namespace wrd {
     class bindTag : public typeProvidable, public tbindable<instance> {
         WRD_DECL_ME(bindTag)
         WRD_INIT_META(me)
-        template <typename T> friend class tweak;
-        template <typename T> friend class tstr;
+        template <typename T, typename TACTIC> friend class tweak;
+        template <typename T, typename TACTIC> friend class tstr;
         friend class weakTactic;
         friend class strTactic;
 

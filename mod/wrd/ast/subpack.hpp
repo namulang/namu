@@ -13,14 +13,14 @@ namespace wrd {
 
     public:
         using super::subs;
-        ncontainer& subs() override { return _subs; }
+        nucontainer& subs() override { return _subs; }
 
         using super::run;
-        str run(const containable& args) override {
+        str run(const ucontainable& args) override {
             return str();
         }
 
-        wbool canRun(const containable& args) const override {
+        wbool canRun(const ucontainable& args) const override {
             return false;
         }
 

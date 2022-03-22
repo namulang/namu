@@ -73,19 +73,19 @@ namespace wrd {
         template <typename E>
         const E& get() const WRD_UNCONST_FUNC(get<E>())
 
-        ncontainer& subs() override {
+        nucontainer& subs() override {
             if(_ref)
                 return _ref->subs();
-            return nulOf<ncontainer>();
+            return nulOf<nucontainer>();
         }
 
-        wbool canRun(const containable& args) const override {
+        wbool canRun(const ucontainable& args) const override {
             if(_ref)
                 return _ref->canRun(args);
             return false;
         }
 
-        str run(const containable& args) override {
+        str run(const ucontainable& args) override {
             if(_ref)
                 return _ref->run(args);
             return str();

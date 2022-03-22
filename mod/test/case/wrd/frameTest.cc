@@ -9,9 +9,9 @@ namespace {
     public:
         myNode(int n): num(n) {}
 
-        ncontainer& subs() override { return nulOf<ncontainer>(); }
-        wbool canRun(const containable& types) const override { return false; }
-        str run(const containable& args) override { return str(); }
+        nucontainer& subs() override { return nulOf<nucontainer>(); }
+        wbool canRun(const ucontainable& types) const override { return false; }
+        str run(const ucontainable& args) override { return str(); }
 
         int num;
     };

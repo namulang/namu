@@ -12,7 +12,7 @@ struct helloWorld {
     }
 };
 
-extern "C" void wrd_bridge_cpp_entrypoint(containable* tray) {
+extern "C" void wrd_bridge_cpp_entrypoint(ucontainable* tray) {
     tray->add(tcppBridge<helloWorld>::def()
         ->func("say", &helloWorld::say)
         ->func("add", &helloWorld::add));

@@ -6,8 +6,8 @@
 
 namespace wrd {
 
-#define TEMPL template <typename T>
-#define ME tnarr<T>
+#define TEMPL template <typename T, typename TACTIC>
+#define ME tnarr<T, TACTIC>
 
     TEMPL
     T& ME::get(widx n) {
@@ -46,9 +46,9 @@ namespace wrd {
     TEMPL
     wbool ME::add(widx n, const T& new1) {
         if(n < 0 || n > len()) return false; // if n equals to len(), it means that will be added at end of container.
+        if(!nul(new1)) return false;
 
-        if(!wrap) return false;
-        _vec.insert(_vec.begin() + n, WRP(new1));
+        _vec.insert(_vec.begin() + n, wrap(new1));
         return true;
     }
 
@@ -97,7 +97,7 @@ namespace wrd {
     TEMPL
     tstr<instance> ME::deepClone() const {
         me* ret = new me();
-        for(auto e=begin(); e ;e++)
+        for(auto e=this->begin(); e ;e++)
             ret->add((T*) e->clone());
 
         return tstr<instance>(ret);

@@ -23,14 +23,14 @@ namespace wrd {
         fr.popLocal();
     }
 
-    str me::run(const containable& args) {
+    str me::run(const ucontainable& args) {
         if(!_inFrame())
             return str();
 
         str ret;
         frame& fr = wrd::thread::get()._getNowFrame();
         for(auto e=_exprs.begin<expr>(); e ; ++e) {
-            ret = e->run(nulOf<containable>());
+            ret = e->run(nulOf<ucontainable>());
             if(fr.isReturned()) break;
         }
 

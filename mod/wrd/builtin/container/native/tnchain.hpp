@@ -1,121 +1,21 @@
 #pragma once
 
-#include "ncontainer.hpp"
+#include "tnucontainer.hpp"
 #include "../../../ast/node.hpp"
-#include "iter/titer.inl"
 
 namespace wrd {
 
     class node;
 
     template <typename T, typename defaultContainer = narr>
-    class tnchain : public ncontainer {
-        WRD(CLASS(tnchain, ncontainer))
-
-        friend class elemIteration;
-        class elemIteration : public iteration {
-            WRD(CLASS(elemIteration, iteration))
-            friend class tnchain;
-
-        public:
-            elemIteration(const tnchain& iteratingChain, const wrd::iter& conIter)
-                : _ownIter(iteratingChain), _iter(conIter) {
-                    if(!_iter) next(1);
-                }
-
-            wbool isEnd() const override {
-                return !_ownIter->_next && !_iter;
-            }
-
-            wcnt next(wcnt step) override {
-                wcnt remain = step;
-
-                // if _ownIter was invalidated then _iter too.
-                while(remain > 0) {
-                    remain -= _iter.next(remain);
-                    if(remain <= 0) break;
-
-                    // _iter moved to 'End' state now.
-                    if(isEnd()) break;
-                    _ownIter = _ownIter->_next;
-                    _iter = _ownIter->_arr->begin();
-                    if(_iter) remain--;
-                }
-
-                return step - remain;
-            }
-
-            ncontainer& getContainer() override {
-                if(!_ownIter) return nulOf<ncontainer>();
-                return _ownIter->template cast<ncontainer>();
-            }
-            const ncontainer& getContainer() const WRD_UNCONST_FUNC(getContainer())
-
-            instance& get() override {
-                return *_iter;
-            }
-
-            wrd::iter& getContainerIter() { return _iter; }
-
-        protected:
-            wbool _onSame(const typeProvidable& rhs) const override {
-                const me& cast = (const me&) rhs;
-                return  (isEnd() && cast.isEnd()) ||
-                        _iter == cast._iter;
-            }
-
-        private:
-            tstr<tnchain> _ownIter; // _ownIter shouldn't be null always.
-            wrd::iter _iter;
-        };
-
-        friend class chnIteration;
-        class chnIteration : public iteration {
-            WRD(CLASS(chnIteration, iteration))
-            friend class tnchain;
-
-        public:
-            chnIteration(const tnchain& start): _chn(start) {}
-            chnIteration() {}
-
-            wbool isEnd() const override {
-                return !_chn;
-            }
-
-            wcnt next(wcnt step) override {
-                wcnt n=0;
-                for(; n < step ;n++) {
-                    if(isEnd()) return n;
-
-                    _chn.bind(_chn->getNext());
-                }
-
-                return n;
-            }
-
-            instance& get() override {
-                return *_chn;
-            }
-
-            ncontainer& getContainer() override {
-                return *_chn;
-            }
-
-        protected:
-            wbool _onSame(const typeProvidable& rhs) const override {
-                if(!super::_onSame(rhs)) return false;
-
-                const me& trg = (const me&) rhs;
-                return  (isEnd() && trg.isEnd()) ||
-                        _chn == trg._chn;
-            }
-
-        private:
-            tstr<tnchain> _chn;
-        };
+    class tnchain : public tnucontainer<T> {
+        WRD(CLASS(tnchain, tnucontainer<T>))
+        typedef typename super::iter iter;
+        typedef typename super::iteration iteration;
 
     public:
-        typedef titer<me> chnIter;
+        friend class elemIteration;
+#include "../iter/nchainIteration.hpp"
 
     public:
         tnchain();
@@ -128,48 +28,29 @@ namespace wrd {
         wcnt len() const override;
         wcnt chainLen() const;
 
-        // iter:
-        chnIter beginChain() const { return iterChain(0); }
-        chnIter endChain() const {
-            return chnIter(new chnIteration());
-        }
-        chnIter lastChain() const {
-            me* last = nullptr;
-            for(chnIter e=beginChain(); e ; ++e)
-                last = &e.get();
-
-            return chnIter(new chnIteration(*last));
-        }
-        chnIter iterChain(wcnt step) const {
-            chnIter ret = _iterChain(*this);
-            ret.next(step);
-            return ret;
-        }
-
-
         // set:
         using super::set;
-        wbool set(const wrd::iter& at, const node& new1) override;
+        wbool set(const iter& at, const node& new1) override;
 
         // add:
         using super::add;
-        wbool add(const wrd::iter& at, const node& new1) override;
+        wbool add(const iter& at, const node& new1) override;
 
         // link:
-        tstr<me> link(const ncontainer& new1);
+        tstr<me> link(const tnucontainer<T>& new1);
         wbool link(const me& new1);
         wbool unlink();
 
         // del:
         using super::del;
-        wbool del(const wrd::iter& at) override;
-        wcnt del(const wrd::iter& from, const wrd::iter& end) override;
+        wbool del(const iter& at) override;
+        wcnt del(const iter& from, const iter& end) override;
 
         // etc:
         void rel() override;
 
-        ncontainer& getContainer();
-        const ncontainer& getContainer() const { return *_arr; }
+        tnucontainer<T>& getContainer();
+        const tnucontainer<T>& getContainer() const { return *_arr; }
 
         me& getNext() { return *_next; }
         const me& getNext() const { return *_next; }
@@ -179,7 +60,7 @@ namespace wrd {
         ///         only this object will be deep cloned. cloned instance has the same linkage like
         ///         which the original chain object has.
         tstr<instance> deepClone() const override {
-            me* ret = wrap(getContainer().deepClone()->template cast<ncontainer>());
+            me* ret = wrap(getContainer().deepClone()->template cast<tnucontainer<T>>());
             ret->link(getNext());
             return tstr<instance>(ret);
         }
@@ -189,13 +70,13 @@ namespace wrd {
         ///        if this is a chain, then the wrap func returns it as it is.
         ///        if this is any container except chain, then it returns after
         ///        wrapping given container.
-        static me* wrap(const ncontainer& toShallowWrap);
-        static me* wrap(const ncontainer* toShallowWrap) {
+        static me* wrap(const tnucontainer<T>& toShallowWrap);
+        static me* wrap(const tnucontainer<T>* toShallowWrap) {
             return wrap(*toShallowWrap);
         }
 
         /// wrap given container no matter what it is.
-        static me* wrapDeep(const ncontainer& toDeepWrap) {
+        static me* wrapDeep(const tnucontainer<T>& toDeepWrap) {
             me* innerChn = wrap(toDeepWrap);
 
             me* ret = new me();
@@ -203,7 +84,7 @@ namespace wrd {
             return ret;
         }
 
-        static me* wrapDeep(const ncontainer* toDeepWrap) {
+        static me* wrapDeep(const tnucontainer<T>* toDeepWrap) {
             return wrapDeep(*toDeepWrap);
         }
 
@@ -216,22 +97,18 @@ namespace wrd {
             return ret;
         }
 
-        chnIter _iterChain(const me& start) const {
-            return chnIter(new chnIteration(start));
-        }
-
     private:
-        wrd::iter& _getArrIterFromChainIter(const wrd::iter& wrapper) {
-            if(nul(wrapper)) return nulOf<wrd::iter>();
-            if(!wrapper._step->getType().isSub<elemIteration>()) return nulOf<wrd::iter>();
+        iter& _getArrIterFromChainIter(const iter& wrapper) {
+            if(nul(wrapper)) return nulOf<iter>();
+            if(!wrapper._step->getType().template isSub<elemIteration>()) return nulOf<iter>();
             elemIteration& cast = (elemIteration&) *wrapper._step;
-            if(nul(cast)) return nulOf<wrd::iter>();
+            if(nul(cast)) return nulOf<iter>();
 
-            return cast.getContainerIter();
+            return cast._iter;
         }
 
     private:
-        tstr<ncontainer> _arr;
+        tstr<tnucontainer<T>> _arr;
         tstr<me> _next;
     };
 

@@ -14,12 +14,12 @@ namespace wrd {
         src(const std::string& fileName): _fileName(fileName) {}
 
     public:
-        wbool canRun(const containable& args) const override { return false; }
+        wbool canRun(const ucontainable& args) const override { return false; }
 
         using super::run;
-        str run(const containable& args) override { return str(); }
+        str run(const ucontainable& args) override { return str(); }
 
-        ncontainer& subs() override { return _subs; }
+        nucontainer& subs() override { return _subs; }
 
         const std::string& getFileName() const { return _fileName; }
 

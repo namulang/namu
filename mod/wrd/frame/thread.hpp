@@ -35,15 +35,15 @@ namespace wrd {
         }
 
         // node:
-        ncontainer& subs() override {
-            if(!_root) return nulOf<ncontainer>();
+        nucontainer& subs() override {
+            if(!_root) return nulOf<nucontainer>();
 
             return _root->subs();
         }
 
-        wbool canRun(const containable& args) const override { return false; }
+        wbool canRun(const ucontainable& args) const override { return false; }
 
-        str run(const containable& args) override;
+        str run(const ucontainable& args) override;
 
         void rel() override { _frames.rel(); }
 

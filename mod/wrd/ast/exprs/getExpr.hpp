@@ -17,7 +17,7 @@ namespace wrd {
 
     public:
         using super::run;
-        str run(const containable& args) override {
+        str run(const ucontainable& args) override {
             // believe that this expression was checked to be valid.
             return str(_get());
         }

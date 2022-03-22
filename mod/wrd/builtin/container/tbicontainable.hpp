@@ -6,9 +6,10 @@
 namespace wrd {
 
     class node;
+    template <typename K, typename V>
     class tnbicontainer;
-    template <typename T, typename WRP> class tnarr;
-    typedef tnarr<node> narr;
+    template <typename T, typename TACTIC> class tnarr;
+    typedef tnarr<node, strTactic> narr;
 
     /// @remark tbicontainable has API treating iter ref and element as its parameter.
     template <typename K, typename V>
@@ -32,7 +33,7 @@ namespace wrd {
         V1& get(std::function<wbool(const K1&, const V1&)> l) const;
         V& get(std::function<wbool(const K&, const V&)> l) const;
         template <typename E>
-        tnarr<E> getAll(std::function<wbool(const K&, const V&)> l) const;
+        tnarr<E, strTactic> getAll(std::function<wbool(const K&, const V&)> l) const;
         narr getAll(std::function<wbool(const K&, const V&)> l) const;
 
         // iter:

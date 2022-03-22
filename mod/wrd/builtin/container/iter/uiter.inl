@@ -1,8 +1,7 @@
-// nested class of tucontainable.hpp:
-//  this file allows to be refered by 'tucontainable.hpp' file only.
+// nested class of tucontainable.inl:
+//  this file allows to be refered by 'tucontainable.inl' file only.
 #pragma once
 
-#include "uiterable.hpp"
 #include "../../../ast/node.hpp"
 
 namespace wrd {
@@ -13,7 +12,7 @@ namespace wrd {
     TEMPL
     T& ME::get() {
         if(!_step) return nulOf<T>();
-        return _step->get().cast<T>();
+        return _step->get().template cast<T>();
     }
 
 
