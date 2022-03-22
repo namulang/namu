@@ -5,8 +5,8 @@
 class iter : public iterable, public clonable, public typeProvidable {
     WRD(CLASS(iter))
     friend class iteration;
-    template <typename E> friend class tnarr;
-    template <typename E> friend class tnchain;
+    template <typename E, typename TACTIC> friend class tnarr;
+    template <typename E, typename defaultContainer> friend class tnchain;
 
 public:
     iter() { _nextToMatchParamType(); }
@@ -66,8 +66,8 @@ public:
         return get().template cast<E>();
     }
 
-    tucontainer<T>& getContainer() override {
-        if(!_step) return nulOf<tnucontainer>();
+    tnucontainer<T>& getContainer() override {
+        if(!_step) return nulOf<tnucontainer<T>>();
         return _step->getContainer();
     }
     const tnucontainer<T>& getContainer() const WRD_UNCONST_FUNC(getContainer());

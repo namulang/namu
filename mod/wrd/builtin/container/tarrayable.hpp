@@ -30,7 +30,7 @@ namespace wrd {
 
         // add:
         /// @return how many element has been added from rhs.
-        virtual wbool add(widx n, const T& new1) = 0
+        virtual wbool add(widx n, const T& new1) = 0;
         wbool add(widx n, const T* new1) { return add(n, *new1); }
 
         // del:

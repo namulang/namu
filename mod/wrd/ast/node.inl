@@ -14,7 +14,7 @@ namespace wrd {
     }
 
     template <typename T>
-    T& ME::sub(const std::string& name, const containable& args) {
+    T& ME::sub(const std::string& name, const ucontainable& args) {
         if(nul(args))
             return sub<T>(name);
 
@@ -24,7 +24,7 @@ namespace wrd {
     }
 
     template <typename T>
-    T& ME::sub(const std::string& name, const containable& args) const WRD_UNCONST_FUNC(sub<T>(name, args))
+    T& ME::sub(const std::string& name, const ucontainable& args) const WRD_UNCONST_FUNC(sub<T>(name, args))
 
     template <typename T>
     tnarr<T> ME::subAll(const std::string& name) const {
@@ -34,7 +34,7 @@ namespace wrd {
     }
 
     template <typename T>
-    tnarr<T> ME::subAll(const std::string& name, const containable& args) {
+    tnarr<T> ME::subAll(const std::string& name, const ucontainable& args) {
         if(nul(args))
             return subAll<T>(name);
 
@@ -44,7 +44,7 @@ namespace wrd {
     }
 
     template <typename T>
-    tnarr<T> ME::subAll(const std::string& name, const containable& args) const WRD_UNCONST_FUNC(subAll<T>(name, args))
+    tnarr<T> ME::subAll(const std::string& name, const ucontainable& args) const WRD_UNCONST_FUNC(subAll<T>(name, args))
 
 #undef ME
 }

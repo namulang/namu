@@ -1,6 +1,6 @@
 #include "obj.hpp"
 #include "func.hpp"
-#include "../builtin/container/ucontainable.inl"
+#include "../builtin/container/uucontainable.inl"
 #include "../loader/interpreter/tverification.hpp"
 #include "../frame/thread.hpp"
 
@@ -12,7 +12,7 @@ namespace wrd {
     me::obj(const string& name): _name(name) {}
     me::obj(const string& name, const nchain& subs): _name(name), _subs(subs) {}
 
-    str me::run(const containable& args) {
+    str me::run(const ucontainable& args) {
         func& fun = getCtors().get<func>([&args](const func& candidate) {
             return candidate.canRun(args);
         });
@@ -23,7 +23,7 @@ namespace wrd {
         return fun.run(args);
     }
 
-    str me::_onRunSub(node& sub, const containable& args) {
+    str me::_onRunSub(node& sub, const ucontainable& args) {
         if(!sub.doesNeedScope())
             return super::_onRunSub(sub, args);
 
@@ -33,7 +33,7 @@ namespace wrd {
         return ret;
     }
 
-    wbool me::canRun(const containable& args) const {
+    wbool me::canRun(const ucontainable& args) const {
         wcnt n = getCtors().getAll<func>([&args](const func& f) {
             return f.canRun(args);
         }).len();

@@ -5,7 +5,7 @@
 namespace wrd {
 
     template <typename T>
-    class tarr : public mgdObj, public containable, public ucontainable {
+    class tarr : public mgdObj, public ucontainable, public uucontainable {
         WRD(CLASS(tarr, mgdObj))
 
     public:
@@ -16,7 +16,7 @@ namespace wrd {
         tnarr<T>& getNative() { return _arr; }
         const tnarr<T>& getNative() const { return _arr; }
 
-        // containable:
+        // ucontainable:
         //  operator:
         T& operator[](widx n) override { return _arr[n]; }
         const T& operator[](widx n) const override { return _arr[n]; }
@@ -31,14 +31,14 @@ namespace wrd {
         template <typename E> E& get(std::function<wbool(const E&)> l) const { return _arr.template get<E>(l); }
 
         //  set:
-        using containable::set;
         using ucontainable::set;
+        using uucontainable::set;
         wbool set(const wrd::iter& at, const node& new1) override { return _arr.set(at, new1); }
         wbool set(widx n, const node& new1) override { return _arr.set(n, new1); }
 
         //  add:
-        using containable::add;
         using ucontainable::add;
+        using uucontainable::add;
         wbool add(std::initializer_list<T*> elems) {
             wbool ret = false;
             for(auto* elem : elems)
@@ -49,7 +49,7 @@ namespace wrd {
         wbool add(widx n, const node& new1) override { return _arr.add(n, new1); }
 
         //  del:
-        using containable::del;
+        using ucontainable::del;
         wbool del(widx n) override { return _arr.del(n); }
         wbool del(const wrd::iter& it) override { return _arr.del(it); }
         wcnt del(const wrd::iter& from, const wrd::iter& to) override { return _arr.del(from, to); }

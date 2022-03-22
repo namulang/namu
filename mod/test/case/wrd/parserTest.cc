@@ -18,7 +18,7 @@ TEST(parserTest, testHelloWorld) {
     // TODO: make AST: ASSERT_TRUE(rootBinder->subs().len() == 2);
 
     pack pak((manifest()), (packLoadings()));
-    ncontainer& tray = pak.subs();
+    nucontainer& tray = pak.subs();
     ASSERT_FALSE(nul(tray));
     p.setPack(pak);
     tray.add(new wStr("hello"));

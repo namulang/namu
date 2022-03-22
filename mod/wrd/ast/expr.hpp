@@ -28,10 +28,10 @@ namespace wrd {
 
     public:
         using super::subs;
-        ncontainer& subs() override;
+        nucontainer& subs() override;
 
         using super::canRun;
-        wbool canRun(const containable& args) const override {
+        wbool canRun(const ucontainable& args) const override {
             return args.len() == 0;
         }
 

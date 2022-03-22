@@ -6,9 +6,10 @@
 namespace wrd {
 
     class node;
+    template <typename T>
     class tnucontainer;
-    template <typename T, typename WRP> class tnarr;
-    typedef tnarr<node> narr;
+    template <typename T, typename TACTIC> class tnarr;
+    typedef tnarr<node, strTactic> narr;
 
     /// @remark tucontainable has API treating iter ref and element as its parameter.
     template <typename T>
@@ -29,7 +30,7 @@ namespace wrd {
         E& get(std::function<wbool(const E&)> l) const;
         T& get(std::function<wbool(const T&)> l) const;
         template <typename E>
-        tnarr<E> getAll(std::function<wbool(const E&)> l) const;
+        tnarr<E, strTactic> getAll(std::function<wbool(const E&)> l) const;
         narr getAll(std::function<wbool(const T&)> l) const;
 
         // iter:
@@ -86,4 +87,6 @@ namespace wrd {
     protected:
         virtual iteration* _onMakeIteration(wcnt step) const = 0;
     };
+
+    typedef tucontainable<node> ucontainable;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "tweak.hpp"
+#include "strTactic.hpp"
 
 namespace wrd {
 

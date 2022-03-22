@@ -13,9 +13,9 @@ namespace wrd {
 
     public:
         using super::run;
-        str run(const containable& args) override;
+        str run(const ucontainable& args) override;
 
-        wbool canRun(const containable& args) const override {
+        wbool canRun(const ucontainable& args) const override {
             if(_ret)
                 return _ret->canRun(args);
             return super::canRun(args);

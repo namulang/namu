@@ -1,14 +1,14 @@
 // nested class of tnarr.hpp:
 //  this file allows to be refered by 'tnarr.hpp' file only.
-class narrIteration : public iteration {
-    WRD(CLASS(narrIteration, iteration))
+class narrIteration : public super::iteration {
+    WRD(CLASS(narrIteration, typename super::iteration))
     friend class tnarr;
 
 public:
     narrIteration(tnarr& own, widx n): _n(n), _own(own) {}
 
     wbool isEnd() const override {
-        return !_own._isValidN(_n);
+        return !_own.has(_n);
     }
 
     /// if iteration reached to the last element to iterate, it can precede to next,
@@ -36,12 +36,12 @@ public:
     }
 
     using super::getContainer;
-    tnucontainer& getContainer() override { return _own; }
+    tnucontainer<T>& getContainer() override { return _own; }
 
 protected:
     wbool _onSame(const typeProvidable& rhs) const override {
         const me& cast = (const me&) rhs;
-        return isFrom(cast.getContainer()) && _n == cast._n;
+        return this->isFrom(cast.getContainer()) && _n == cast._n;
     }
 
 private:

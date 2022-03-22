@@ -21,7 +21,7 @@ namespace wrd {
         const blockExpr& getBlock() const { return *_blk; }
         const params& getParams() const override { return _params; }
         const wtype& getEvalType() const override { return *_evalType; }
-        ncontainer& subs() override { return _shares; }
+        nucontainer& subs() override { return _shares; }
         wbool doesNeedScope() const override { return true; }
 
     protected:

@@ -10,9 +10,9 @@ namespace {
     public:
         myNode(int num): number(num) {}
 
-        ncontainer& subs() override { return nulOf<ncontainer>(); }
-        wbool canRun(const containable& types) const override { return false; }
-        str run(const containable& args) override { return str(); }
+        nucontainer& subs() override { return nulOf<nucontainer>(); }
+        wbool canRun(const ucontainable& types) const override { return false; }
+        str run(const ucontainable& args) override { return str(); }
 
         int number;
     };
@@ -99,10 +99,10 @@ TEST(nchainTest, simpleAddDelTest10000) {
     simpleAddDelTest(10000);
 }
 
-TEST(nchainTest, testcontainableAPI) {
+TEST(nchainTest, testucontainableAPI) {
     //  initial state:
     tstr<nchain> arr(new nchain());
-    containable* con = &arr.get();
+    ucontainable* con = &arr.get();
     ASSERT_EQ(con->len(), 0);
 
     iter head = arr->begin();
@@ -317,7 +317,7 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
 
     // each with link:
     int cnt = 0;
-    auto lambda = [&cnt, &expectElementNums](const ncontainer& chn) -> void {
+    auto lambda = [&cnt, &expectElementNums](const nucontainer& chn) -> void {
         for(titer<myNode> e=chn.begin<myNode>() ; e ;++e) {
             const myNode& elem = *e;
             if(nul(elem)) {

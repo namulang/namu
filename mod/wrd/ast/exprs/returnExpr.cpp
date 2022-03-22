@@ -9,7 +9,7 @@ namespace wrd {
 
     me::returnExpr(): _ret(wVoid::singletone()) {}
 
-    str me::run(const containable& args) {
+    str me::run(const ucontainable& args) {
         str ret = _ret ? _ret->run(args) : wVoid::singletone();
 
         thread::get()._getNowFrame().pushReturn(ret);

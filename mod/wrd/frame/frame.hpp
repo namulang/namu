@@ -19,7 +19,7 @@ namespace wrd {
 
         /// @return returns tpair<node, itsOwner>. the owner has the container holding the node
         ///         which can run with given name & argument.
-        tpair<str, str> subAndOwner(const std::string& name, const containable& args) {
+        tpair<str, str> subAndOwner(const std::string& name, const ucontainable& args) {
             nchain& chn = subs().cast<nchain>();
             if(nul(chn)) return tpair<str, str>();
 
@@ -39,8 +39,8 @@ namespace wrd {
             return tpair<str, str>();
         }
 
-        wbool pushLocal(ncontainer* con) { return pushLocal(*con); }
-        wbool pushLocal(ncontainer& con) { return pushLocal(*nchain::wrap(con)); }
+        wbool pushLocal(nucontainer* con) { return pushLocal(*con); }
+        wbool pushLocal(nucontainer& con) { return pushLocal(*nchain::wrap(con)); }
         wbool pushLocal(nchain* new1) { return _local.push(*new1); }
         wbool pushLocal(nchain& new1) {
             wbool ret = _local.push(new1);
@@ -53,14 +53,14 @@ namespace wrd {
             if(nul(scope))
                 return WRD_E("couldn't push new node. the top scope is null"), false;
 
-            containable& con = scope.getContainer();
+            ucontainable& con = scope.getContainer();
             return con.add(con.begin(), n);
         }
 
         tstr<nchain> popLocal() { return _local.pop(); }
         // I won't provide API for poping a single node from the scope.
 
-        void setObj(ncontainer& con) { setObj(*nchain::wrap(con)); }
+        void setObj(nucontainer& con) { setObj(*nchain::wrap(con)); }
         void setObj(nchain& new1) {
             _obj.bind(new1);
             nchain& bottom = *_local.getBottom();
@@ -84,14 +84,14 @@ namespace wrd {
 
         // node:
         using node::subs;
-        ncontainer& subs() override {
+        nucontainer& subs() override {
             nchain& top = *_local.getTop();
             return nul(top) ? *_obj : top;
         }
 
-        wbool canRun(const containable& args) const override { return false; }
+        wbool canRun(const ucontainable& args) const override { return false; }
 
-        str run(const containable& args) override { return str(); }
+        str run(const ucontainable& args) override { return str(); }
         void rel() override {
             _rel();
             super::rel();
@@ -112,7 +112,7 @@ namespace wrd {
             _local.rel();
         }
 
-        node& _getOwnerFrom(containable& con) {
+        node& _getOwnerFrom(ucontainable& con) {
             // TODO: use hashmap. save ptr into hashmap when all of pushXXX() funcs called.
             return nulOf<node>(); // TODO: remove this line
         }

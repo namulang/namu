@@ -36,7 +36,7 @@ namespace wrd {
         return *inner;
     }
 
-    str me::run(const containable& args) {
+    str me::run(const ucontainable& args) {
         // TODO: args validness check.
 
         // find 'main' func:

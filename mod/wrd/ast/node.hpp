@@ -18,16 +18,16 @@ namespace wrd {
         node& operator[](const std::string& name) const;
 
     public:
-        virtual ncontainer& subs() = 0;
-        const ncontainer& subs() const WRD_UNCONST_FUNC(subs())
+        virtual nucontainer& subs() = 0;
+        const nucontainer& subs() const WRD_UNCONST_FUNC(subs())
 
         template <typename T>
         T& sub(std::function<wbool(const T&)> l) const {
             return subs().get<T>(l);
         }
         template <typename T = me> T& sub(const std::string& name) const;
-        template <typename T = me> T& sub(const std::string& name, const containable& args);
-        template <typename T = me> T& sub(const std::string& name, const containable& args) const;
+        template <typename T = me> T& sub(const std::string& name, const ucontainable& args);
+        template <typename T = me> T& sub(const std::string& name, const ucontainable& args) const;
 
         template <typename T>
         tnarr<T> subAll(std::function<wbool(const T&)> l) const {
@@ -35,10 +35,10 @@ namespace wrd {
         }
 
         template <typename T = me> tnarr<T> subAll(const std::string& name) const;
-        template <typename T = me> tnarr<T> subAll(const std::string& name, const containable& args);
-        template <typename T = me> tnarr<T> subAll(const std::string& name, const containable& args) const;
+        template <typename T = me> tnarr<T> subAll(const std::string& name, const ucontainable& args);
+        template <typename T = me> tnarr<T> subAll(const std::string& name, const ucontainable& args) const;
 
-        virtual wbool canRun(const containable& args) const = 0;
+        virtual wbool canRun(const ucontainable& args) const = 0;
 
         /// @return parameters of run() func.
         ///         parameter is just a type. and I don't care about the value of each parameters.
@@ -48,8 +48,8 @@ namespace wrd {
         ///         are matters.
         virtual const params& getParams() const;
 
-        virtual str run(const containable& args) = 0;
-        str run(const std::string& name, const containable& args);
+        virtual str run(const ucontainable& args) = 0;
+        str run(const std::string& name, const ucontainable& args);
         str run(const std::string& name);
         str run();
 
@@ -106,7 +106,7 @@ namespace wrd {
         virtual wbool doesNeedScope() const { return false; }
 
     protected:
-        virtual str _onRunSub(node& sub, const containable& args) {
+        virtual str _onRunSub(node& sub, const ucontainable& args) {
             return sub.run(args);
         }
     };

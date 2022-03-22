@@ -1,15 +1,18 @@
 #pragma once
 
 #include "tnucontainer.hpp"
+#include "../tarrayable.hpp"
 #include "../../../ast/node.hpp"
 
 namespace wrd {
 
     template <typename T, typename TACTIC = strTactic>
-    class tnarr : public tnucontainer<T> {
-        WRD(CLASS(tnarr, tnucontainer))
+    class tnarr : public tnucontainer<T>, public tarrayable<T> {
+        WRD(CLASS(tnarr, tnucontainer<T>))
         template <typename E> friend class tarr;
         typedef tstr<T, TACTIC> wrap;
+        typedef typename super::iter iter;
+        typedef typename super::iteration iteration;
 
     public:
         friend class narrIteration;
@@ -80,8 +83,8 @@ namespace wrd {
 
 
     private:
-        std::vector<tstr<node, TACTIC> > _vec;
+        std::vector<wrap> _vec;
     };
 
-    typedef tnarr<wrap> narr;
+    typedef tnarr<node> narr;
 }

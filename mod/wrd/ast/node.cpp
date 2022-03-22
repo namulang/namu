@@ -28,7 +28,7 @@ namespace wrd {
         return run(name, narr());
     }
 
-    str me::run(const std::string& name, const containable& args) {
+    str me::run(const std::string& name, const ucontainable& args) {
         me& found = sub(name, args);
         if(nul(found)) return str();
 

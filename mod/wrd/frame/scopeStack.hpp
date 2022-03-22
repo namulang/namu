@@ -20,7 +20,7 @@ namespace wrd {
 
         wbool push(nchain& scope) {
             // bind scope first:
-            //  variable 'scope' can be a 'new'ed variable by push(ncontainer&) func.
+            //  variable 'scope' can be a 'new'ed variable by push(nucontainer&) func.
             //  the 'chain' class uses binder when it iterates element.
             //  so if you call chainLen(), then our fresh 'scope' variable will be binded
             //  to binder of a iterater.

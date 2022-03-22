@@ -7,7 +7,7 @@ namespace wrd {
 
     WRD_DEF_ME(expr)
 
-    ncontainer& me::subs() {
+    nucontainer& me::subs() {
         static narr inner;
         return inner;
     }
