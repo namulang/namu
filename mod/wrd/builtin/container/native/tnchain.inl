@@ -9,7 +9,7 @@ namespace wrd {
 #define ME tnchain<T, defaultContainer>
 
     TEMPL
-    ME::tnchain(): _arr(new defaultContainer()) {}
+    ME::tnchain(): _map(new defaultContainer()) {}
 
     TEMPL
     wcnt ME::len() const {
@@ -30,24 +30,24 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::set(const iter& at, const node& new1) {
-        iter& containerIter = _getArrIterFromChainIter(at);
-
-        return containerIter.getContainer().set(containerIter, new1);
+    wbool ME::set(const K& key, const V& new1) {
+        for(me* e=this; e ;e=&e->getNext())
+            if(e->has(key))
+                return e->getContainer().set(key, new1);
+        return false;
     }
 
     TEMPL
-    wbool ME::add(const iter& at, const node& new1) {
-        iter& containerIter = _getArrIterFromChainIter(at);
-
-        return containerIter.getContainer().add(containerIter, new1);
+    wbool ME::add(const K& key, const V& new1) {
+        return getContainer().add(key, new1);
     }
 
     TEMPL
-    wbool ME::del(const iter& at) {
-        iter& containerIter = _getArrIterFromChainIter(at);
-
-        return containerIter.getContainer().del(containerIter);
+    wbool ME::del(const K& key) {
+        for(me* e=this; e ;e=&e->getNext())
+            if(e->has(key))
+                return e->getContainer().del(key);
+        return false;
     }
 
     TEMPL
@@ -58,9 +58,9 @@ namespace wrd {
         me* e = (me*) &fromChain;
         wcnt ret = 0;
         do {
-            tnucontainer<T>& eArr = e->getContainer();
-            iter arrBegin = e == &fromChain ? _getArrIterFromChainIter(from) : eArr.begin(),
-                 arrEnd = e == &endChain ? _getArrIterFromChainIter(end) : eArr.end();
+            super& eArr = e->getContainer();
+            iter arrBegin = e == &fromChain ? _getMapIterFromChainIter(from) : eArr.begin(),
+                 arrEnd = e == &endChain ? _getMapIterFromChainIter(end) : eArr.end();
             ret += eArr.del(arrBegin, arrEnd);
             e = &e->getNext();
         } while(e != &endChain);
@@ -69,7 +69,7 @@ namespace wrd {
     }
 
     TEMPL
-    tstr<ME> ME::link(const tnucontainer<T>& new1) {
+    tstr<ME> ME::link(const super& new1) {
         if(nul(new1)) return tstr<ME>();
 
         ME& ret = *wrap(new1);
@@ -93,11 +93,11 @@ namespace wrd {
     }
 
     TEMPL
-    ME* ME::wrap(const tnucontainer<T>& toShallowWrap) {
+    ME* ME::wrap(const super& toShallowWrap) {
         ME* ret = const_cast<me*>(&toShallowWrap.template cast<ME>());
         if(nul(ret)) {
             ret = new me();
-            ret->_arr.bind(toShallowWrap);
+            ret->_map.bind(toShallowWrap);
         }
 
         return ret;
@@ -110,8 +110,8 @@ namespace wrd {
     }
 
     TEMPL
-    tnucontainer<T>& ME::getContainer() {
-        return *_arr;
+    tnbicontainer<T>& ME::getContainer() {
+        return *_map;
     }
 
 #undef ME

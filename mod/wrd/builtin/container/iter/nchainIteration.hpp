@@ -1,11 +1,11 @@
 // nested class of tnchain.hpp:
 //  this file allows to be refered by 'tnchain.hpp' file only.
-class elemIteration : public iteration {
-    WRD(CLASS(elemIteration, iteration))
+class chainIteration : public iteration {
+    WRD(CLASS(chainIteration, iteration))
     friend class tnchain;
 
 public:
-    elemIteration(const tnchain& iteratingChain, const iter& conIter)
+    chainIteration(const tnchain& iteratingChain, const iter& conIter)
         : _ownIter(iteratingChain), _iter(conIter) {
             if(!_iter) next(1);
         }
@@ -25,7 +25,7 @@ public:
             // _iter moved to 'End' state now.
             if(isEnd()) break;
             _ownIter = _ownIter->_next;
-            _iter = _ownIter->_arr->begin();
+            _iter = _ownIter->_map->begin();
             if(_iter) remain--;
         }
 
@@ -33,14 +33,19 @@ public:
     }
 
     using super::getContainer;
-    tnucontainer<T>& getContainer() override {
-        if(!_ownIter) return nulOf<tnucontainer<T>>();
-        return _ownIter->template cast<tnucontainer<T>>();
+    tnbicontainer<K, V>& getContainer() override {
+        if(!_ownIter) return nulOf<super>();
+        return _ownIter->template cast<tnbicontainer<K, V>>();
     }
 
-    using super::get;
-    T& get() override {
-        return *_iter;
+    using super::getKey;
+    K& getKey() override {
+        return _iter.getKey();
+    }
+
+    using super::getVal;
+    V& getVal() override {
+        return _iter.getVal();
     }
 
 protected:

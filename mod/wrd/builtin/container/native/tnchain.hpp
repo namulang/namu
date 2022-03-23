@@ -1,28 +1,27 @@
 #pragma once
 
-#include "tnucontainer.hpp"
+#include "tnbicontainer.hpp"
 #include "../../../ast/node.hpp"
 
 namespace wrd {
 
     class node;
 
-    template <typename T, typename defaultContainer = narr>
-    class tnchain : public tnucontainer<T> {
-        WRD(CLASS(tnchain, tnucontainer<T>))
+    template <typename K, typename V, typename defaultContainer = nmap>
+    class tnchain : public tnbicontainer<K ,V> {
+        typedef tnbicontainer<K, V> __super;
+        WRD(CLASS(tnchain, __super))
         typedef typename super::iter iter;
         typedef typename super::iteration iteration;
 
     public:
-        friend class elemIteration;
+        friend class chainIteration;
 #include "../iter/nchainIteration.hpp"
 
     public:
         tnchain();
-        template <typename E>
-        explicit tnchain(const tnarr<E>& arr): _arr(arr) {}
-        template <typename E>
-        explicit tnchain(const tnarr<E>* arr): _arr(arr) {}
+        explicit tnchain(const super& arr): _map(arr) {}
+        explicit tnchain(const super* arr): _map(arr) {}
 
         // len:
         wcnt len() const override;
@@ -30,27 +29,27 @@ namespace wrd {
 
         // set:
         using super::set;
-        wbool set(const iter& at, const node& new1) override;
+        wbool set(const K& key, const V& val) override;
 
         // add:
         using super::add;
-        wbool add(const iter& at, const node& new1) override;
+        wbool add(const K& key, const V& val) override;
 
         // link:
-        tstr<me> link(const tnucontainer<T>& new1);
+        tstr<me> link(const super& new1);
         wbool link(const me& new1);
         wbool unlink();
 
         // del:
         using super::del;
-        wbool del(const iter& at) override;
+        wbool del(const K& at) override;
         wcnt del(const iter& from, const iter& end) override;
 
         // etc:
         void rel() override;
 
-        tnucontainer<T>& getContainer();
-        const tnucontainer<T>& getContainer() const { return *_arr; }
+        super& getContainer();
+        const super& getContainer() const { return *_map; }
 
         me& getNext() { return *_next; }
         const me& getNext() const { return *_next; }
@@ -60,7 +59,7 @@ namespace wrd {
         ///         only this object will be deep cloned. cloned instance has the same linkage like
         ///         which the original chain object has.
         tstr<instance> deepClone() const override {
-            me* ret = wrap(getContainer().deepClone()->template cast<tnucontainer<T>>());
+            me* ret = wrap(getContainer().deepClone()->template cast<super>());
             ret->link(getNext());
             return tstr<instance>(ret);
         }
@@ -70,21 +69,21 @@ namespace wrd {
         ///        if this is a chain, then the wrap func returns it as it is.
         ///        if this is any container except chain, then it returns after
         ///        wrapping given container.
-        static me* wrap(const tnucontainer<T>& toShallowWrap);
-        static me* wrap(const tnucontainer<T>* toShallowWrap) {
+        static me* wrap(const super& toShallowWrap);
+        static me* wrap(const super* toShallowWrap) {
             return wrap(*toShallowWrap);
         }
 
         /// wrap given container no matter what it is.
-        static me* wrapDeep(const tnucontainer<T>& toDeepWrap) {
+        static me* wrapDeep(const super& toDeepWrap) {
             me* innerChn = wrap(toDeepWrap);
 
             me* ret = new me();
-            ret->_arr.bind(innerChn);
+            ret->_map.bind(innerChn);
             return ret;
         }
 
-        static me* wrapDeep(const tnucontainer<T>* toDeepWrap) {
+        static me* wrapDeep(const super* toDeepWrap) {
             return wrapDeep(*toDeepWrap);
         }
 
@@ -92,25 +91,24 @@ namespace wrd {
         iteration* _onMakeIteration(wcnt step) const override {
             // TODO: optimize using containerIteration
             me* unconst = const_cast<me*>(this);
-            iteration* ret = new elemIteration(*unconst, _arr->begin());
+            iteration* ret = new chainIteration(*unconst, _map->begin());
             ret->next(step);
             return ret;
         }
 
     private:
-        iter& _getArrIterFromChainIter(const iter& wrapper) {
-            if(nul(wrapper)) return nulOf<iter>();
-            if(!wrapper._step->getType().template isSub<elemIteration>()) return nulOf<iter>();
-            elemIteration& cast = (elemIteration&) *wrapper._step;
+        iter& _getMapIterFromChainIter(const iter& wrapper) {
+            if(!wrapper._step->getType().template isSub<chainIteration>()) return nulOf<iter>();
+            chainIteration& cast = (chainIteration&) *wrapper._step;
             if(nul(cast)) return nulOf<iter>();
 
             return cast._iter;
         }
 
     private:
-        tstr<tnucontainer<T>> _arr;
+        tstr<super> _map;
         tstr<me> _next;
     };
 
-    typedef tnchain<node> nchain;
+    typedef tnchain<std::string, node> nchain;
 }
