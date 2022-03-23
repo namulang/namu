@@ -75,6 +75,5 @@ namespace wrd {
         cmap _map;
     };
 
-    typedef tnmap<node, str> narr;
-    typedef tnmap<node, tstr<node, refTactic> scope;
+    typedef tnmap<node, str> nmap;
 }
