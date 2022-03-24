@@ -1,11 +1,11 @@
-#include "refTactic.hpp"
+#include "immutableTactic.hpp"
 #include "node.hpp"
 
 namespace wrd {
 
-	WRD_DEF_ME(refTactic)
+	WRD_DEF_ME(immutableTactic)
 
-	me me:: _singletone;
+	me me:: singletone;
 
 	wbool me::bind(binder& me, const instance& it) {
 		const node* new1 = &it.cast<node>(); // I can guarantee that it is a node type.
