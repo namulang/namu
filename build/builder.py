@@ -6,8 +6,25 @@ import shutil
 import platform
 import subprocess
 from operator import eq
+from tempfile import gettempdir
 
 frame = "======================================================="
+
+def beep(waveform=(79, 45, 32, 50, 99, 113, 126, 127)):
+    """Cross-platform Sound Playing with StdLib only,No Sound file required."""
+    global resDir
+    wavefile = os.path.join(resDir, "beep.wav")
+    if not os.path.isfile(wavefile) or not os.access(wavefile, os.R_OK):
+        with open(wavefile, "w+") as wave_file:
+            for sample in range(0, 1000, 1):
+                for wav in range(0, 8, 1):
+                    wave_file.write(chr(waveform[wav]))
+    if sys.platform.startswith("linux"):
+        return subprocess.call("chrt -i 0 aplay '{fyle}'".format(fyle=wavefile), shell=1)
+    if sys.platform.startswith("darwin"):
+        return subprocess.call("afplay '{fyle}'".format(fyle=wavefile), shell=True)
+    if sys.platform.startswith("win"):  # FIXME: This is Ugly.
+        return subprocess.call("start /low /min '{fyle}'".format(fyle=wavefile), shell=1)
 
 class bcolors:
     HEADER = '\033[95m'
@@ -77,6 +94,8 @@ def branch(command):
         return doc()
     elif command == "pubdoc":
         return _publishDoc()
+    elif command == "make":
+        return build(False)
 
     printErr(command + " is unknown command.")
     return -1
@@ -320,6 +339,7 @@ def _make():
         if result != 0:
             printErr("failed")
             return -1
+
     printOk("done")
 
 def _checkMCSS():
@@ -369,6 +389,7 @@ def rebuild():
 def build(incVer):
     if checkDependencies(["git", "cmake", "clang", "bison", "flex", "dot"]):
         printErr("This program needs following softwares to be fully functional.")
+        beep()
         return -1
 
     _checkGTest()
@@ -376,10 +397,15 @@ def build(incVer):
     if incVer:
         _injectBuildInfo()
         if _createMakefiles():
+            beep()
             return -1
+
         _incBuildCnt()
     if _make():
+        beep()
         return -1
+
+    beep()
     return 0
 
 # arg is "" for dbg or "silent" for rel
@@ -561,14 +587,16 @@ def _extractEnv():
         return python3 == ""
 cwd = ""
 wrdDir = ""
+resDir = ""
 binDir = ""
 externalDir = ""
 
 def _init():
-    global cwd, wrdDir, binDir, externalDir
+    global cwd, wrdDir, binDir, externalDir, resDir
     cwd = os.path.dirname(os.path.realpath(sys.argv[0]))
     wrdDir = cwd + "/.."
     binDir = wrdDir + "/bin"
+    resDir = wrdDir + "/res"
     externalDir = wrdDir + "/external"
 
     _extractBuildInfo()
