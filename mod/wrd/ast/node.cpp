@@ -1,9 +1,8 @@
 #include "node.inl"
-#include "../builtin/container/native/tnchain.inl"
+#include "scope.inl"
 #include "../builtin/container/native/tnarr.inl"
 #include "../type/as.hpp"
 #include "../loader/interpreter/tverification.hpp"
-#include "ref.hpp"
 #include "../loader/interpreter/verifier.hpp"
 
 namespace wrd {
@@ -12,11 +11,6 @@ namespace wrd {
 
     node& me::operator[](const std::string& name) const {
         return sub(name);
-    }
-
-    const params& me::getParams() const {
-        static params inner;
-        return inner;
     }
 
     str me::run() {
@@ -29,6 +23,7 @@ namespace wrd {
     }
 
     str me::run(const std::string& name, const ucontainable& args) {
+        if(name.empty()) return run(args);
         me& found = sub(name, args);
         if(nul(found)) return str();
 
