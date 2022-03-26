@@ -2,13 +2,12 @@
 
 #include "clonable.hpp"
 #include "validable.hpp"
-#include "../builtin/container/native/tnarr.hpp"
+#include "../builtin/container/native/tnbicontainer.hpp"
+#include "signature.hpp"
 
 namespace wrd {
 
 	class ases;
-    class ref;
-    typedef tnarr<str> params;
 
     /// node provides common API to manipulate its sub nodes.
     class node : public instance, public clonable {
@@ -18,35 +17,29 @@ namespace wrd {
         node& operator[](const std::string& name) const;
 
     public:
-        virtual nucontainer& subs() = 0;
-        const nucontainer& subs() const WRD_UNCONST_FUNC(subs())
+        virtual nbicontainer& subs() = 0;
+        const nbicontainer& subs() const WRD_UNCONST_FUNC(subs())
 
         template <typename T>
-        T& sub(std::function<wbool(const T&)> l) const {
+        T& sub(std::function<wbool(const std::string&, const T&)> l) const {
             return subs().get<T>(l);
         }
+        template <typename T = me> T& sub(const signature& sig) const;
         template <typename T = me> T& sub(const std::string& name) const;
         template <typename T = me> T& sub(const std::string& name, const ucontainable& args);
         template <typename T = me> T& sub(const std::string& name, const ucontainable& args) const;
 
         template <typename T>
-        tnarr<T> subAll(std::function<wbool(const T&)> l) const {
+        tnarr<T> subAll(std::function<wbool(const std::string&, const T&)> l) const {
             return subs().getAll<T>(l);
         }
 
+        template <typename T = me> tnarr<T> subAll(const signature& sig) const;
         template <typename T = me> tnarr<T> subAll(const std::string& name) const;
         template <typename T = me> tnarr<T> subAll(const std::string& name, const ucontainable& args);
         template <typename T = me> tnarr<T> subAll(const std::string& name, const ucontainable& args) const;
 
         virtual wbool canRun(const ucontainable& args) const = 0;
-
-        /// @return parameters of run() func.
-        ///         parameter is just a type. and I don't care about the value of each parameters.
-        ///         that is the reason why I uses a ref to represents parameter.
-        ///
-        ///         I need the name and which types should be casted and binded from given arguments
-        ///         are matters.
-        virtual const params& getParams() const;
 
         virtual str run(const ucontainable& args) = 0;
         str run(const std::string& name, const ucontainable& args);
@@ -57,15 +50,19 @@ namespace wrd {
         /// @remark some class won't be able to reinitialize after rel() got called.
         virtual void rel() {}
 
-        virtual wbool isRef() const { return false; }
-
-        virtual const std::string& getName() const {
-            static std::string dummy = "";
-            return dummy;
+        /// @return parameters of run() func.
+        ///         parameter is just a type. and I don't care about the value of each parameters.
+        ///         that is the reason why I uses a ref to represents parameter.
+        ///
+        ///         I need the name and which types should be casted and binded from given arguments
+        ///         are matters.
+        virtual const signature& getSignature() const {
+            static signature inner;
+            return inner;
         }
 
-        virtual wbool setName(const std::string& new1) {
-            return false; // usually modifying name is not permitted.
+        virtual wbool setSignature(const signature& rhs) {
+            return false; // usually modifying a signature is not permitted.
         }
 
         template <typename T> wbool is() const { return is(ttype<T>::get()); }
