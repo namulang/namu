@@ -7,9 +7,16 @@ namespace wrd {
 #define ME node
 
     template <typename T>
+    T& ME::sub(const signature& sig) const {
+        return subs().get<T>([&](const std::string& key, const T& val) {
+            return key == sig.get();
+        });
+    }
+
+    template <typename T>
     T& ME::sub(const std::string& name) const {
-        return subs().get<T>([&](const T& elem) {
-            return elem.getName() == name;
+        return subs().get<T>([&](const std::string& key, const T& val) {
+            return key == name;
         });
     }
 
@@ -18,8 +25,8 @@ namespace wrd {
         if(nul(args))
             return sub<T>(name);
 
-        return subs().get<T>([&](const T& elem) {
-            return elem.getName() == name && elem.canRun(args);
+        return subs().get<T>([&](const std::string& key, const T& val) {
+            return key == name && val.canRun(args);
         });
     }
 
@@ -27,9 +34,16 @@ namespace wrd {
     T& ME::sub(const std::string& name, const ucontainable& args) const WRD_UNCONST_FUNC(sub<T>(name, args))
 
     template <typename T>
+    tnarr<T> ME::subAll(const signature& sig) const {
+        return subs().getAll<T>([&](const std::string& key, const T& val) {
+            return key == sig.get();
+        });
+    }
+
+    template <typename T>
     tnarr<T> ME::subAll(const std::string& name) const {
-        return subs().getAll<T>([&](const T& elem) {
-            return elem.getName() == name;
+        return subs().getAll<T>([&](const std::string& key, const T& val) {
+            return key == name;
         });
     }
 
@@ -38,8 +52,8 @@ namespace wrd {
         if(nul(args))
             return subAll<T>(name);
 
-        return subs().getAll<T>([&](const T& elem) {
-            return elem.getName() == name && elem.canRun(args);
+        return subs().getAll<T>([&](const std::string& key, const T& val) {
+            return key == name && val.canRun(args);
         });
     }
 
