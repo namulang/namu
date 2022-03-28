@@ -29,8 +29,8 @@ namespace wrd {
         virtual wbool has(const K& key) const = 0;
 
         // get:
-        template <typename K1, typename V1>
-        V1& get(std::function<wbool(const K1&, const V1&)> l) const;
+        template <typename V1>
+        V1& get(std::function<wbool(const K&, const V1&)> l) const;
         V& get(std::function<wbool(const K&, const V&)> l) const;
         template <typename E>
         tnarr<E, strTactic> getAll(std::function<wbool(const K&, const V&)> l) const;
@@ -44,11 +44,11 @@ namespace wrd {
 
         // set:
         virtual wbool set(const K& key, const V& new1) = 0;
-        wbool set(const K& key, const V* new1) { return set(at, *new1); }
+        wbool set(const K& key, const V* new1) { return set(key, *new1); }
 
         // add:
         virtual wbool add(const K& key, const V& val) = 0;
-        wbool add(const K& key, const V* val) { return add(at, *new1); }
+        wbool add(const K& key, const V* val) { return add(key, *val); }
         wcnt add(const iter& from, const iter& to) {
             int ret = 0;
             for(iter e=from; e != to ;++e)
@@ -70,6 +70,6 @@ namespace wrd {
         virtual tstr<instance> deepClone() const = 0;
 
     protected:
-        virtual iteration* _onMakeIteration(const k& key) const = 0;
+        virtual iteration* _onMakeIteration(const K& key) const = 0;
     };
 }

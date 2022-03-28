@@ -1,5 +1,5 @@
 #include "expr.hpp"
-#include "../builtin/container/native/tnarr.inl"
+#include "../builtin/container/native/tnmap.inl"
 #include "../loader/interpreter/tverification.hpp"
 #include "../loader/interpreter/verifier.hpp"
 
@@ -7,8 +7,8 @@ namespace wrd {
 
     WRD_DEF_ME(expr)
 
-    nucontainer& me::subs() {
-        static narr inner;
+    nbicontainer& me::subs() {
+        static nmap inner;
         return inner;
     }
 

@@ -12,7 +12,7 @@ namespace wrd {
         typedef Ret (T::*fptrType)(Args...);
 
     public:
-        tcppBridgeFuncBase(const std::string& name, fptrType fptr): super(name), _fptr(fptr) {}
+        tcppBridgeFuncBase(const std::string& name, fptrType fptr): super(), _sig(name), _fptr(fptr) {}
 
         static_assert(allTrues<(sizeof(tmarshaling<Args>::canMarshal() ) == sizeof(metaIf::yes))...>::value,
             "can't marshal one of this func's parameter wtypes.");
@@ -22,9 +22,11 @@ namespace wrd {
             return ttype<typename tmarshaling<Ret>::mgdType>::get();
         }
 
-        const params& getParams() const override;
+        const signature& getSignature() const override;
 
     protected:
+        signature _sig;
+        wbool _isInit;
         fptrType _fptr;
     };
 

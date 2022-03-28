@@ -15,7 +15,7 @@ namespace wrd {
         friend class mgdObj;
 
     public:
-        explicit obj(const string& name, const nchain& subs);
+        explicit obj(const signature& sig, const nchain& subs);
 
     protected:
         /// if you don't give any subs when construct an obj you should assign _subs to new nchain instance on ctor of derived class.
@@ -35,9 +35,9 @@ namespace wrd {
         const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
         virtual const obj& getOrigin() const = 0;
 
-        const std::string& getName() const override { return _name; }
-        wbool setName(const std::string& new1) override {
-            _name = new1;
+        const signature& getSignature() const override { return _sig; }
+        wbool setSignature(const signature& new1) override {
+            _sig = new1;
             return true;
         }
 
@@ -49,7 +49,7 @@ namespace wrd {
         void _outFrame();
 
     protected:
-        std::string _name;
+        signature _sig;
         tstr<nchain> _subs;
     };
 }

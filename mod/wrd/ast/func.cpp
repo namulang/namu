@@ -8,15 +8,15 @@ namespace wrd {
     WRD_DEF_ME(func)
 
     tstr<narr> me::_asArgs(const ucontainable& args) {
-        const params& params = getParams();
-        if(args.len() != params.len())
-            return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), params.len()),
+        const signature& sig = getSignature();
+        if(args.len() != sig.len())
+            return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), sig.len()),
                tstr<narr>();
 
         tstr<narr> ret(new narr());
         int n = 0;
         for(const node& e: args) {
-            str ased = e.as(params[n++]);
+            str ased = e.as(sig[n++].type);
             if(!ased) return tstr<narr>();
 
             ret->add(*ased);
@@ -34,19 +34,19 @@ namespace wrd {
     }
 
     wbool me::canRun(const ucontainable& args) const {
-        const params& mine = getParams();
-        wcnt len = mine.len();
-        if(args.len() != len) return false;
+        const sig& sig = getSignature();
+        if(args.len() != sig.len) return false;
 
         int n = 0;
         for(const auto& e : args)
-            if(!e.isImpli(mine[n++])) return false;
+            if(!e.isImpli(sig[n++].type)) return false;
 
         return true;
     }
 
     WRD_VERIFY({
-        if(nul(it.getName()) || it.getName().empty())
+        const std::string& name = it.getSignature().get();
+        if(nul(name) || name.empty())
             return _err(19);
     })
 }

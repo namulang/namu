@@ -16,11 +16,6 @@ namespace wrd {
         blockExpr(const Es&... elems): _exprs(elems...) {}
 
     public:
-        using super::subs;
-        nucontainer& subs() override {
-            return _exprs;
-        }
-
         using super::run;
         str run(const ucontainable& args) override;
 
@@ -30,6 +25,9 @@ namespace wrd {
 
             return _exprs[len-1].getEvalType();
         }
+
+        const narr& getBlocks() const { return _exprs; }
+        narr& getBlocks() { return _exprs; }
 
     private:
         wbool _inFrame();

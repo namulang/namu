@@ -38,13 +38,13 @@ namespace wrd {
     }
 
     narr& me::_nameArgs(narr& args) {
-        const params& params = getParams();
-        if(args.len() != params.len())
-            return WRD_E("length of args[%d] doesn't match to params[%d]", args.len(), params.len()),
+        const signature& sig = getSignature();
+        if(args.len() != sig.len())
+            return WRD_E("length of args[%d] doesn't match to params[%d]", args.len(), sig.len()),
                    args;
 
         for(int n=0; n < args.len(); n++)
-            args[n].setName(params[n].getName());
+            args[n].setName(sig[n].name);
         return args;
     }
 
@@ -60,16 +60,16 @@ namespace wrd {
     })
 
     namespace {
-        void _prepareArgsAlongParam(const params& ps, narr& tray) {
-            for(auto& param : ps)
-                tray.add(param.getType().makeAs<node>());
+        void _prepareArgsAlongParam(const signature& sig, narr& tray) {
+            for(const auto& p : sig)
+                tray.add(p.type.makeAs<node>());
         }
     }
 
     WRD_VERIFY(mgdFunc, subNodes, {
         WRD_DI("verify: mgdFunc: %s iterateBlock[%d]", it.getType().getName().c_str(), it._blk->subs().len());
         narr args;
-        _prepareArgsAlongParam(it.getParams(), args);
+        _prepareArgsAlongParam(it.getSignature(), args);
 
         it._inFrame(args);
         verify(*it._blk);
