@@ -39,13 +39,13 @@ namespace wrd {
             return tpair<str, str>();
         }
 
-        wbool pushLocal(nucontainer* con) { return pushLocal(*con); }
-        wbool pushLocal(nucontainer& con) { return pushLocal(*nchain::wrap(con)); }
+        wbool pushLocal(nbicontainer* con) { return pushLocal(*con); }
+        wbool pushLocal(nbicontainer& con) { return pushLocal(*nchain::wrap(con)); }
         wbool pushLocal(nchain* new1) { return _local.push(*new1); }
         wbool pushLocal(nchain& new1) {
             wbool ret = _local.push(new1);
             if(ret && _local.chainLen() == 1)
-                new1.link(*_obj);
+                new1.link(_obj->subs());
             return ret;
         }
         wbool pushLocal(node& n) {
@@ -60,13 +60,15 @@ namespace wrd {
         tstr<nchain> popLocal() { return _local.pop(); }
         // I won't provide API for poping a single node from the scope.
 
-        void setObj(nucontainer& con) { setObj(*nchain::wrap(con)); }
-        void setObj(nchain& new1) {
+        void setObj(const obj& new1) {
             _obj.bind(new1);
             nchain& bottom = *_local.getBottom();
             if(!nul(bottom))
-                bottom.link(new1);
+                bottom.link(new1.subs());
         }
+
+        const obj& getObj() const { return *_obj; }
+        obj& getObj() { return *_obj; }
 
         void setFunc(func& new1) {
             _func.bind(new1);
@@ -84,9 +86,9 @@ namespace wrd {
 
         // node:
         using node::subs;
-        nucontainer& subs() override {
+        nbicontainer& subs() override {
             nchain& top = *_local.getTop();
-            return nul(top) ? *_obj : top;
+            return nul(top) ? _obj->subs() : top;
         }
 
         wbool canRun(const ucontainable& args) const override { return false; }
@@ -112,13 +114,8 @@ namespace wrd {
             _local.rel();
         }
 
-        node& _getOwnerFrom(ucontainable& con) {
-            // TODO: use hashmap. save ptr into hashmap when all of pushXXX() funcs called.
-            return nulOf<node>(); // TODO: remove this line
-        }
-
     private:
-        tstr<nchain> _obj;
+        tstr<obj> _obj;
         tstr<func> _func;
         scopeStack _local;
         str _ret;

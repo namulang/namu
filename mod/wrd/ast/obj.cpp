@@ -9,8 +9,8 @@ namespace wrd {
     WRD_DEF_ME(obj)
 
     me::obj() {}
-    me::obj(const string& name): _name(name) {}
-    me::obj(const string& name, const nchain& subs): _name(name), _subs(subs) {}
+    me::obj(const signature& sig): _sig(sig) {}
+    me::obj(const signature& sig, const nchain& subs): _sig(sig), _subs(subs) {}
 
     str me::run(const ucontainable& args) {
         func& fun = getCtors().get<func>([&args](const func& candidate) {

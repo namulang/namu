@@ -28,7 +28,7 @@ namespace wrd {
 
     public:
         using super::subs;
-        nucontainer& subs() override;
+        nbicontainer& subs() override;
 
         using super::canRun;
         wbool canRun(const ucontainable& args) const override {

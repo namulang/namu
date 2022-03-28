@@ -30,8 +30,8 @@ namespace wrd {
             return new me(new T());
         }
 
-        const std::string& getName() const override {
-            static const std::string& inner = ttype<T>::get().getName();
+        const signature& getSignature() const override {
+            static signature inner(ttype<T>::get().getName());
             return inner;
         }
 

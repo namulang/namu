@@ -16,6 +16,7 @@ namespace wrd {
         friend class defVarExpr; // for frames
         friend class verifier;
         friend class returnExpr;
+        friend class runExpr;
         friend class func; // for frames.
 
     private:

@@ -19,7 +19,7 @@ namespace wrd {
         using super::run;
         str run(const ucontainable& args) override { return str(); }
 
-        nucontainer& subs() override { return _subs; }
+        nbicontainer& subs() override { return _subs; }
 
         const std::string& getFileName() const { return _fileName; }
 
