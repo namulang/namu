@@ -36,8 +36,8 @@ namespace wrd {
         }
 
         // node:
-        nucontainer& subs() override {
-            if(!_root) return nulOf<nucontainer>();
+        nbicontainer& subs() override {
+            if(!_root) return nulOf<nbicontainer>();
 
             return _root->subs();
         }
