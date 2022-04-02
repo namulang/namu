@@ -28,8 +28,8 @@ namespace wrd {
 
     public:
         using super::subs;
-        nucontainer& subs() override {
-            nucontainer& subs = super::subs();
+        nbicontainer& subs() override {
+            nbicontainer& subs = super::subs();
             if(_state == RELEASED) {
                 WRD_I("%s pack is about to interpret lazy.", getName().c_str());
                 // TODO: check _rpt error count increased or not.
@@ -96,7 +96,7 @@ namespace wrd {
         }
 
     private:
-        tstr<srcs> parse(errReport& rpt, ucontainable& tray) override {
+        tstr<srcs> parse(errReport& rpt, bicontainable& tray) override {
             // You shouldn't release instances which _subs is holding:
             //  there is a scenario which _subs containing parsed instance when
             //  this function called.

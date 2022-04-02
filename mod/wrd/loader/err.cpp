@@ -30,7 +30,7 @@ namespace wrd {
             "parsing has done. but something went wrong: %d",
             "%s pack hasn't been created before",
             "no pack has been specified",
-            "\'%s\' subpack already exists at %s", // 15
+            "\'%s\' object already exists at %s", // 15
             "\'%s\' isn't a expression",
             "wrong parameter syntax: %s",
             "parameter shouldn't have a value",

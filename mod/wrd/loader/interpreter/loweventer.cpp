@@ -131,12 +131,12 @@ namespace wrd {
             const std::string& name = dotname[1].cast<std::string>();
             node* sub = &e->sub(name);
             if(nul(sub))
-                e->subs().add(sub = new subpack(name));
+                e->subs().add(sub = new mgdObj(signature(name)));
             e = sub;
         }
 
         // pack syntax rule #2:
-        //     however, if subpack has already existed as a subpack in 'component' instance,
+        //     however, if obj has already existed as a obj in 'component' instance,
         //     it's definately an error. because I don't allow for user to redefine or extend
         //     pack interpreted.
         const string& lastName = dotname.last()->cast<std::string>();
@@ -145,7 +145,7 @@ namespace wrd {
             onSrcErr(14, lastName.c_str(), merge(dotname).c_str());
             return ret;
         }
-        e->subs().add(ret = new subpack(lastName));
+        e->subs().add(ret = new mgdObj(signature(lastName)));
         return _onFindSubPack(ret);
     }
 
