@@ -9,10 +9,8 @@ namespace wrd {
             FRIEND_VERIFY(getExpr, isRunnable))
 
     public:
-        getExpr(const std::string& name, const params& p = nulOf<params>())
-            : _name(name), _params(p) {}
-        getExpr(const node& from, const std::string& name, const params& p = nulOf<params>())
-            : _from(from), _name(name), _params(p) {}
+        getExpr(const signature& sig): _sig(sig) {}
+        getExpr(const node& from, const signature& sig): _from(from), _sig(sig) {}
 
     public:
         using super::run;
@@ -23,8 +21,7 @@ namespace wrd {
 
         const wtype& getEvalType() const override;
         const node& getFrom() const;
-        const std::string& getName() const override { return _name; }
-        const params& getParams() const override { return *_params; }
+        const signature& getSubSignature() const { return _sig; }
 
     private:
         const node& _get() const {
@@ -32,16 +29,11 @@ namespace wrd {
             if(nul(from))
                 return WRD_E("from == null"), nulOf<node>();
 
-            const params& p = getParams();
-            if(nul(p))
-                return getFrom().sub(_name);
-            return getFrom().sub(_name, p);
+            return getFrom().sub(_sig);
         }
 
     private:
         str _from;
-        std::string _name;
-        /// if params set to null, it means that this expr only finds variables from _from.
-        tstr<params> _params;
+        signature _sig;
     };
 }

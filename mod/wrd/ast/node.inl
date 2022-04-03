@@ -8,16 +8,12 @@ namespace wrd {
 
     template <typename T>
     T& ME::sub(const signature& sig) const {
-        return subs().get<T>([&](const std::string& key, const T& val) {
-            return key == sig.get();
-        });
+        return sub<T>(sig.getName(), sig);
     }
 
     template <typename T>
     T& ME::sub(const std::string& name) const {
-        return subs().get<T>([&](const std::string& key, const T& val) {
-            return key == name;
-        });
+        return sub<T>(name, narr());
     }
 
     template <typename T>
@@ -35,16 +31,12 @@ namespace wrd {
 
     template <typename T>
     tnarr<T> ME::subAll(const signature& sig) const {
-        return subs().getAll<T>([&](const std::string& key, const T& val) {
-            return key == sig.get();
-        });
+        return subAll<T>(sig.getName(), sig);
     }
 
     template <typename T>
     tnarr<T> ME::subAll(const std::string& name) const {
-        return subs().getAll<T>([&](const std::string& key, const T& val) {
-            return key == name;
-        });
+        return subAll<T>(name, narr());
     }
 
     template <typename T>
