@@ -6,8 +6,8 @@
 
 namespace wrd {
 
-#define TEMPL template <typename K, typename V>
-#define ME tnmap<K, V>
+#define TEMPL template <typename K, typename V, typename TACTIC>
+#define ME tnmap<K, V, TACTIC>
 
     TEMPL
     wbool ME::has(const K& key) const {
@@ -16,7 +16,7 @@ namespace wrd {
 
     TEMPL
     V& ME::get(const K& key) {
-        if(!has(key)) return nulOf<T>();
+        if(!has(key)) return nulOf<V>();
 
         return _map[key].get();
     }
@@ -26,15 +26,29 @@ namespace wrd {
         if(!has(at))
             return false;
 
-        _map[at] = wrap(new1);
+        _map[at].bind(new1);
+        return true;
+    }
+
+    TEMPL
+    wbool ME::set(const K& at, const str& new1) {
+        if(!has(at))
+            return false;
+
+        _map[at] = new1;
         return true;
     }
 
     TEMPL
     wbool ME::add(const K& key, const V& new1) {
+        return add(key, wrap(new1));
+    }
+
+    TEMPL
+    wbool ME::add(const K& key, const str& new1) {
         if(nul(key) || nul(new1)) return false;
 
-        _map.insert({key, wrap(new1)});
+        _map.insert({key, new1});
         return true;
     }
 
@@ -51,7 +65,7 @@ namespace wrd {
         wcnt ret = 0;
         for(iter e=from; e ;++e)
             ret += del(e.getKey());
-        return cnt;
+        return ret;
     }
 
     TEMPL
@@ -67,7 +81,7 @@ namespace wrd {
     TEMPL
     tstr<instance> ME::deepClone() const {
         me* ret = new me();
-        for(iter e=begin(); e ;++e)
+        for(iter e=this->begin(); e ;++e)
             ret->add(e.getKey(), (V*) e.getVal().clone());
 
         return tstr<instance>(ret);

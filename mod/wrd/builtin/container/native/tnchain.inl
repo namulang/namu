@@ -1,15 +1,23 @@
 #pragma once
 
 #include "tnchain.hpp"
-#include "tnarr.hpp"
+#include "tnmap.inl"
 
 namespace wrd {
 
-#define TEMPL template <typename T, typename defaultContainer>
-#define ME tnchain<T, defaultContainer>
+#define TEMPL template <typename K, typename V, typename defaultContainer>
+#define ME tnchain<K, V, defaultContainer>
 
     TEMPL
     ME::tnchain(): _map(new defaultContainer()) {}
+
+    TEMPL
+    wbool ME::has(const K& key) const {
+        for(const me* e=this; e ;e=&e->getNext())
+            if(e->getContainer().has(key))
+                return true;
+        return false;
+    }
 
     TEMPL
     wcnt ME::len() const {
@@ -30,6 +38,17 @@ namespace wrd {
     }
 
     TEMPL
+    V& ME::get(const K& key) {
+        for(const me* e=this; e ;e=&e->getNext()) {
+            V& got = e->getContainer().get(key);
+            if(!nul(got))
+                return got;
+        }
+
+        return nulOf<V>();
+    }
+
+    TEMPL
     wbool ME::set(const K& key, const V& new1) {
         for(me* e=this; e ;e=&e->getNext())
             if(e->has(key))
@@ -38,7 +57,20 @@ namespace wrd {
     }
 
     TEMPL
+    wbool ME::set(const K& key, const str& new1) {
+        for(me* e=this; e ;e=&e->getNext())
+            if(e->has(key))
+                return e->getContainer().set(key, new1);
+        return false;
+    }
+
+    TEMPL
     wbool ME::add(const K& key, const V& new1) {
+        return getContainer().add(key, new1);
+    }
+
+    TEMPL
+    wbool ME::add(const K& key, const str& new1) {
         return getContainer().add(key, new1);
     }
 
@@ -110,7 +142,7 @@ namespace wrd {
     }
 
     TEMPL
-    tnbicontainer<T>& ME::getContainer() {
+    tnbicontainer<K, V>& ME::getContainer() {
         return *_map;
     }
 

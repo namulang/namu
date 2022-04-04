@@ -31,8 +31,8 @@ namespace wrd {
         }
 
         // operator:
+        using super::operator[];
         T& operator[](widx n) override { return get(n); }
-        const T& operator[](widx n) const override { return get(n); }
 
         // len:
         wcnt len() const override;
@@ -45,17 +45,20 @@ namespace wrd {
         // get:
         using super::get;
         T& get(widx n) override;
-        const T& get(widx n) const override WRD_UNCONST_FUNC(get(n))
 
         // set:
         using super::set;
         wbool set(const iter& at, const T& new1) override;
+        wbool set(const iter& at, const str& new1) override;
         wbool set(widx n, const T& new1) override;
+        wbool set(widx n, const str& new1) override;
 
         // add:
         using super::add;
         wbool add(const iter& e, const T& new1) override;
+        wbool add(const iter& e, const str& new1) override;
         wbool add(widx n, const T& new1) override;
+        wbool add(widx n, const str& new1) override;
 
         // del:
         using super::del;
