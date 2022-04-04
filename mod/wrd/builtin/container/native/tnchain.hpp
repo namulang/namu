@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tnbicontainer.hpp"
+#include "tnmap.hpp"
 #include "../../../ast/node.hpp"
 
 namespace wrd {
@@ -8,7 +8,7 @@ namespace wrd {
     class node;
 
     template <typename K, typename V, typename defaultContainer = nmap>
-    class tnchain : public tnbicontainer<K ,V> {
+    class tnchain : public tnbicontainer<K, V> {
         typedef tnbicontainer<K, V> __super;
         WRD(CLASS(tnchain, __super))
         typedef typename super::iter iter;
@@ -23,17 +23,25 @@ namespace wrd {
         explicit tnchain(const super& arr): _map(arr) {}
         explicit tnchain(const super* arr): _map(arr) {}
 
+        // has:
+        wbool has(const K& key) const override;
+
         // len:
         wcnt len() const override;
         wcnt chainLen() const;
 
+        using super::get;
+        V& get(const K& key) override;
+
         // set:
         using super::set;
         wbool set(const K& key, const V& val) override;
+        wbool set(const K& key, const str& val) override;
 
         // add:
         using super::add;
         wbool add(const K& key, const V& val) override;
+        wbool add(const K& key, const str& val) override;
 
         // link:
         tstr<me> link(const super& new1);

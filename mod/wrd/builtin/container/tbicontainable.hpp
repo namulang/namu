@@ -22,6 +22,10 @@ namespace wrd {
     public:
         virtual ~tbicontainable() {}
 
+        // operator:
+        V& operator[](const K& key) { return get(key); }
+        const V& operator[](const K& key) const { return get(key); }
+
         // len:
         virtual wcnt len() const = 0;
 
@@ -29,25 +33,29 @@ namespace wrd {
         virtual wbool has(const K& key) const = 0;
 
         // get:
+        virtual V& get(const K& key) = 0;
+        const V& get(const K& key) const WRD_UNCONST_FUNC(get(key))
         template <typename V1>
         V1& get(std::function<wbool(const K&, const V1&)> l) const;
         V& get(std::function<wbool(const K&, const V&)> l) const;
-        template <typename E>
-        tnarr<E, strTactic> getAll(std::function<wbool(const K&, const V&)> l) const;
+        template <typename V1>
+        tnarr<V1, strTactic> getAll(std::function<wbool(const K&, const V1&)> l) const;
         narr getAll(std::function<wbool(const K&, const V&)> l) const;
 
         // iter:
         iter begin() const { return iterate(0); }
         virtual iter end() const { return iterate(len()); }
         virtual iter last() const { return iterate(len()-1); }
-        iter iterate(const K& key) const { return iter(_onMakeIteration(key)); }
+        iter iterate(wcnt step) const { return iter(_onMakeIteration(step)); }
 
         // set:
         virtual wbool set(const K& key, const V& new1) = 0;
+        virtual wbool set(const K& key, const str& new1) = 0;
         wbool set(const K& key, const V* new1) { return set(key, *new1); }
 
         // add:
         virtual wbool add(const K& key, const V& val) = 0;
+        virtual wbool add(const K& key, const str& val) = 0;
         wbool add(const K& key, const V* val) { return add(key, *val); }
         wcnt add(const iter& from, const iter& to) {
             int ret = 0;
@@ -70,6 +78,6 @@ namespace wrd {
         virtual tstr<instance> deepClone() const = 0;
 
     protected:
-        virtual iteration* _onMakeIteration(const K& key) const = 0;
+        virtual iteration* _onMakeIteration(wcnt step) const = 0;
     };
 }

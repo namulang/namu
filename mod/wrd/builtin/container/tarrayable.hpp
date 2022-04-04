@@ -15,22 +15,24 @@ namespace wrd {
 
         // operator:
         virtual T& operator[](widx n) = 0;
-        virtual const T& operator[](widx n) const = 0;
+        const T& operator[](widx n) const override { return get(n); }
 
         // has:
         virtual wbool has(widx n) const = 0;
 
         // get:
         virtual T& get(widx n) = 0;
-        virtual const T& get(widx n) const = 0;
+        const T& get(widx n) const WRD_UNCONST_FUNC(get(n))
 
         // set:
         virtual wbool set(widx n, const T& new1) = 0;
+        virtual wbool set(widx n, const str& new1) = 0;
         wbool set(widx n, const T* new1) { return set(n, *new1); }
 
         // add:
         /// @return how many element has been added from rhs.
         virtual wbool add(widx n, const T& new1) = 0;
+        virtual wbool add(widx n, const str& new1) = 0;
         wbool add(widx n, const T* new1) { return add(n, *new1); }
 
         // del:

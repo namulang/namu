@@ -9,12 +9,13 @@ namespace wrd {
     class tnmap : public tnbicontainer<K, V> {
         typedef tnbicontainer<K, V> __super;
         WRD(CLASS(tnmap, __super))
-        template <typename K, typename V> friend class tmap;
+        template <typename K1, typename V1> friend class tmap;
         typedef tstr<V, TACTIC> wrap;
         typedef std::map<K, wrap> cmap;
-        typedef cmap::iterator citer;
+        typedef typename cmap::iterator citer;
         typedef std::pair<K, V> cpair;
         typedef typename super::iter iter;
+        typedef typename super::iteration iteration;
 
     public:
         friend class nmapIteration;
@@ -22,10 +23,6 @@ namespace wrd {
 
     public:
         tnmap() {}
-
-        // operator:
-        V& operator[](const K& key) override { return get(key); }
-        const V& operator[](const K& key) const override { return get(key); }
 
         // len:
         wcnt len() const override;
@@ -36,15 +33,16 @@ namespace wrd {
         // get:
         using super::get;
         V& get(const K& key) override;
-        const V& get(const K& key) const override WRD_UNCONST_FUNC(get(key))
 
         // set:
         using super::set;
         wbool set(const K& at, const V& new1) override;
+        wbool set(const K& at, const str& new1) override;
 
         // add:
         using super::add;
         wbool add(const K& key, const V& new1) override;
+        wbool add(const K& key, const str& new1) override;
 
         // del:
         using super::del;
