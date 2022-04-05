@@ -14,6 +14,7 @@ namespace wrd {
     public:
         /// tweak:
         tweak();
+        tweak(const type& subtype);
         tweak(const T& it);
         tweak(const T* it);
         tweak(const me& rhs);

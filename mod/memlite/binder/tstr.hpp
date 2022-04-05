@@ -15,6 +15,8 @@ namespace wrd {
     public:
         //  tstr:
         tstr();
+        /// @param subType  subType is should be sub type of 'T' or type 'T' will be used from base class.
+        tstr(const type& subtype);
         tstr(const T& it);
         tstr(const T* it);
         tstr(const me& rhs);

@@ -11,6 +11,7 @@ namespace wrd {
 #define SUPER   tweak<T, TACTIC>
 
     TEMPL ME::tstr(): SUPER() {}
+    TEMPL ME::tstr(const type& subtype): SUPER(subtype) {}
     TEMPL ME::tstr(const T& it): SUPER() { this->bind(it); }
     TEMPL ME::tstr(const T* it): SUPER() { this->bind(*it); }
     TEMPL ME::tstr(const ME& rhs): SUPER() { this->_assign(rhs); }

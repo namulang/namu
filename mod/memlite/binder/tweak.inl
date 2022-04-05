@@ -11,6 +11,7 @@ namespace wrd {
 #define SUPER binder
 
     TEMPL ME::tweak() : SUPER(ttype<T>::get(), TACTIC::singletone) {}
+    TEMPL ME::tweak(const type& subtype): SUPER(subtype.isSub(ttype<T>::get()) ? subtype : ttype<T>::get(), TACTIC::singletone) {}
     TEMPL ME::tweak(const T& it): SUPER(ttype<T>::get(), TACTIC::singletone) { this->bind(it); }
     TEMPL ME::tweak(const T* it): SUPER(ttype<T>::get(), TACTIC::singletone) { this->bind(*it); }
     TEMPL ME::tweak(const ME& rhs): SUPER(ttype<T>::get(), TACTIC::singletone) { this->_assign(rhs); }
