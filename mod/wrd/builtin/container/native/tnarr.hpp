@@ -31,7 +31,7 @@ namespace wrd {
         }
 
         // operator:
-        using super::operator[];
+        using tarrayable<T>::operator[];
         T& operator[](widx n) override { return get(n); }
 
         // len:
@@ -49,16 +49,12 @@ namespace wrd {
         // set:
         using super::set;
         wbool set(const iter& at, const T& new1) override;
-        wbool set(const iter& at, const str& new1) override;
         wbool set(widx n, const T& new1) override;
-        wbool set(widx n, const str& new1) override;
 
         // add:
         using super::add;
         wbool add(const iter& e, const T& new1) override;
-        wbool add(const iter& e, const str& new1) override;
         wbool add(widx n, const T& new1) override;
-        wbool add(widx n, const str& new1) override;
 
         // del:
         using super::del;

@@ -2,6 +2,8 @@
 
 #include "tbindable.hpp"
 
+class binderTest;
+
 namespace wrd {
 
     class bindTacticable;
@@ -49,7 +51,7 @@ namespace wrd {
         friend class weakTactic;
         friend class strTactic;
         friend class bindTag; // for _get()
-        friend class ref; // for _type
+        friend class binderTest;
 
     public:
         binder(const type& type, bindTacticable& tactic);

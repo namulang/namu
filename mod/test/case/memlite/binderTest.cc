@@ -235,3 +235,16 @@ TEST(bindTest, bindStaticVariable) {
     tstr<myInstance> binder;
     binder.bind(variable); // this statement makes watchell of 'variable'.
 }
+
+TEST(binderTest, testTacticIsImmutable) {
+    tstr<A> strA; // has strTactic
+    ASSERT_EQ(strA._tactic, &strTactic::singletone);
+    tweak<A> weakA;
+    ASSERT_EQ(weakA._tactic, &weakTactic::singletone);
+    tstr<A> strA1(weakA);
+    ASSERT_EQ(strA1._tactic, &strTactic::singletone);
+    strA1.bind(*weakA);
+    ASSERT_EQ(strA._tactic, &strTactic::singletone);
+    strA1 = weakA;
+    ASSERT_EQ(strA._tactic, &strTactic::singletone);
+}

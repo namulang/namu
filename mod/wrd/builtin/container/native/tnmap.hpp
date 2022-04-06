@@ -37,12 +37,10 @@ namespace wrd {
         // set:
         using super::set;
         wbool set(const K& at, const V& new1) override;
-        wbool set(const K& at, const str& new1) override;
 
         // add:
         using super::add;
         wbool add(const K& key, const V& new1) override;
-        wbool add(const K& key, const str& new1) override;
 
         // del:
         using super::del;
@@ -73,5 +71,5 @@ namespace wrd {
         cmap _map;
     };
 
-    typedef tnmap<node, str> nmap;
+    typedef tnmap<std::string, node> nmap;
 }

@@ -50,12 +50,10 @@ namespace wrd {
 
         // set:
         virtual wbool set(const K& key, const V& new1) = 0;
-        virtual wbool set(const K& key, const str& new1) = 0;
         wbool set(const K& key, const V* new1) { return set(key, *new1); }
 
         // add:
         virtual wbool add(const K& key, const V& val) = 0;
-        virtual wbool add(const K& key, const str& val) = 0;
         wbool add(const K& key, const V* val) { return add(key, *val); }
         wcnt add(const iter& from, const iter& to) {
             int ret = 0;
