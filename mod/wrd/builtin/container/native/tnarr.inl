@@ -27,15 +27,6 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::set(const iter& at, const str& new1) {
-        narrIteration& cast = _getIterationFrom(at);
-        if(nul(cast)) return false;
-        if(cast.isEnd()) return false;
-
-        return set(cast._n, new1);
-    }
-
-    TEMPL
     wbool ME::set(widx n, const T& new1) {
         if(!has(n)) return false;
 
@@ -43,19 +34,7 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::set(widx n, const str& new1) {
-        if(!has(n)) return false;
-
-        return _vec[n] = new1;
-    }
-
-    TEMPL
     wbool ME::add(const iter& e, const T& new1) {
-        return add(e, wrap(new1));
-    }
-
-    TEMPL
-    wbool ME::add(const iter& e, const str& new1) {
         if(nul(e) || nul(new1)) return false;
         if(!e.isFrom(*this)) return false;
         narrIteration& cast = (narrIteration&) *e._step;
@@ -66,15 +45,10 @@ namespace wrd {
 
     TEMPL
     wbool ME::add(widx n, const T& new1) {
-        return add(n, wrap(new1));
-    }
-
-    TEMPL
-    wbool ME::add(widx n, const str& new1) {
         if(n < 0 || n > len()) return false; // if n equals to len(), it means that will be added at end of container.
         if(!nul(new1)) return false;
 
-        _vec.insert(_vec.begin() + n, new1);
+        _vec.insert(_vec.begin() + n, wrap(new1));
         return true;
     }
 

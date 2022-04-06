@@ -31,24 +31,10 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::set(const K& at, const str& new1) {
-        if(!has(at))
-            return false;
-
-        _map[at] = new1;
-        return true;
-    }
-
-    TEMPL
     wbool ME::add(const K& key, const V& new1) {
-        return add(key, wrap(new1));
-    }
-
-    TEMPL
-    wbool ME::add(const K& key, const str& new1) {
         if(nul(key) || nul(new1)) return false;
 
-        _map.insert({key, new1});
+        _map.insert({key, wrap(new1)});
         return true;
     }
 

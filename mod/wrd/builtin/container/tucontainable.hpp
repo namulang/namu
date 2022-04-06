@@ -48,12 +48,10 @@ namespace wrd {
 
         // set:
         virtual wbool set(const iter& at, const T& new1) = 0;
-        virtual wbool set(const iter& at, const str& new1) = 0;
         wbool set(const iter& at, const T* new1) { return set(at, *new1); }
 
         // add:
         virtual wbool add(const iter& at, const T& new1) = 0;
-        virtual wbool add(const iter& at, const str& new1) = 0;
         wbool add(const iter& at, const T* new1) { return add(at, new1); }
         wbool add(std::initializer_list<const T*> elems) {
             wbool ret = false;
