@@ -10,15 +10,15 @@ namespace wrd {
 #define ME tbicontainable<K, V>::iter
 
     TEMPL
-    K& ME::getKey() {
-        if(!_step) return nulOf<T>();
-        return _step->getKey().cast<T>();
+    const K& ME::getKey() const {
+        if(!_step) return nulOf<K>();
+        return _step->getKey();
     }
 
     TEMPL
     V& ME::getVal() {
         if(!_step) return nulOf<V>();
-        return _step->getVal().cast<V>();
+        return _step->getVal();
     }
 
 #undef ME

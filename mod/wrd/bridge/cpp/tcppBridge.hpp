@@ -1,7 +1,7 @@
 #pragma once
 
 #include "tcppBridgeFunc.hpp"
-#include "../../ast/mgd/mgdObj.hpp"
+#include "../../ast/obj.hpp"
 
 namespace wrd {
 
@@ -21,18 +21,13 @@ namespace wrd {
 
     private:
         tcppBridge(T* real) : _real(real) {
-            _subs.bind(new nchain());
+            _subs.bind(new scope());
         }
 
     public:
         static me* def() {
             // TODO: need to handle ctor with argument.
             return new me(new T());
-        }
-
-        const signature& getSignature() const override {
-            static signature inner(ttype<T>::get().getName());
-            return inner;
         }
 
         using super::getCtors;
@@ -44,7 +39,7 @@ namespace wrd {
 
         template <typename Ret, typename... Args>
         me* func(const std::string& name, Ret(T::*fptr)(Args...)) {
-            subs().add(new tcppBridgeFunc<Ret, T, Args...>(name, fptr));
+            subs().add(name, new tcppBridgeFunc<Ret, T, Args...>(fptr));
             return this;
         }
 

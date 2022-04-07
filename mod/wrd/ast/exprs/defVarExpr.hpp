@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../expr.hpp"
-#include "../ref.hpp"
+#include "../param.hpp"
 
 namespace wrd {
 
@@ -10,21 +10,15 @@ namespace wrd {
         friend class mgdFunc;
 
     public:
-        defVarExpr(const ref& param): _param(param) {}
+        defVarExpr(const param& p): _param(p) {}
 
     public:
         using super::run;
         str run(const ucontainable& args) override {
-            const wtype& type = getEvalType();
-            if(type.isImmutable()) {
-                str ret = _addFrame(*type.makeAs<node>());
-                ret->setName(_param.getName());
-                return ret;
-            }
-
-            // mutable: _param may bind some object.
             return _addFrame(_param);
         }
+
+        const param& getParam() const { return _param; }
 
         const wtype& getEvalType() const override {
             // I need to return static eval type:
@@ -33,14 +27,11 @@ namespace wrd {
             return _param.getType();
         }
 
-        ref& getParam() { return _param; }
-        const ref& getParam() const { return _param; }
+    private:
+        str _addFrame(param& p) const;
 
     private:
-        str _addFrame(node& new1);
-
-    private:
-        ref _param;
+        param _param;
     };
 
     /*WRD_VERIFY(

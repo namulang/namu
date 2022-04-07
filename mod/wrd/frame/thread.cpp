@@ -21,14 +21,15 @@ namespace wrd {
 
 #ifdef WRD_IS_DBG
             WRD_I("next following is list for them.");
-            for(const node& pak : *inner) {
-                const pack& cast = pak.cast<pack>();
-                if(nul(cast)) {
+            for(const auto& e : *inner) {
+                const pack& pak = e.getVal();
+                if(nul(pak)) {
                     WRD_E("cast isn't type of pack&");
                     continue;
                 }
 
-                WRD_DI(" - %s v%s", cast.getName().c_str(), cast.getManifest().version.c_str());
+                const manifest& mani = pak.getManifest();
+                WRD_DI(" - %s v%s", mani.name.c_str(), mani.version.c_str());
             }
 #endif
         }

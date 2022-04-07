@@ -114,10 +114,10 @@ namespace wrd {
         pack& pak = *getPack();
         if(nul(pak)) {
             onSrcErr(13, dotname[0].cast<std::string>().c_str());
-            return _onFindSubPack(new pack(manifest(), packLoadings()));
+            return _onFindSubPack("", new pack(manifest(), packLoadings()));
         }
         if(dotname.len() == 1)
-            return _onFindSubPack(&pak);
+            return _onFindSubPack(pak.getManifest().name, &pak);
 
         // pack syntax rule #1:
         //     middle name automatically created if not exist.
@@ -131,7 +131,7 @@ namespace wrd {
             const std::string& name = dotname[1].cast<std::string>();
             node* sub = &e->sub(name);
             if(nul(sub))
-                e->subs().add(sub = new mgdObj(signature(name)));
+                e->subs().add(name, sub = new mgdObj());
             e = sub;
         }
 
@@ -145,7 +145,7 @@ namespace wrd {
             onSrcErr(14, lastName.c_str(), merge(dotname).c_str());
             return ret;
         }
-        e->subs().add(ret = new mgdObj(signature(lastName)));
+        e->subs().add(lastName, ret = new mgdObj());
         return _onFindSubPack(ret);
     }
 
@@ -156,7 +156,7 @@ namespace wrd {
 
         pack* newPack = new pack(manifest(), packLoadings());
         _pack.bind(newPack);
-        return _onFindSubPack(newPack); // this is a default pack containing name as '{default}'.
+        return _onFindSubPack(newPack->getManifest().name, newPack); // this is a default pack containing name as '{default}'.
     }
 
     blockExpr* me::onBlock() {
@@ -172,30 +172,35 @@ namespace wrd {
         if(nul(e))
             e = new literalExpr(candidate);
 
-        blk.subs().add(e);
+        blk.getBlocks().add(e);
         return &blk;
     }
 
-    narr* me::onDefBlock() {
+    scope* me::onDefBlock() {
         WRD_DI("tokenEvent: onDefBlock()");
-        return new narr();
+        return new scope();
     }
 
-    narr* me::onDefBlock(narr& blk, node& candidate) {
+    scope* me::onDefBlock(scope& s, node& candidate) {
         WRD_DI("tokenEvent: onDefBlock()");
-        if(nul(blk))
-            return onSrcErr(11, "blk"), onDefBlock();
+        if(nul(s))
+            return onSrcErr(11, "s"), onDefBlock();
         expr* e = &candidate.cast<expr>();
         if(nul(e))
             return onSrcErr(18, candidate.getType().getName().c_str()), onDefBlock();
 
-        blk.add(e);
-        return &blk;
+        s.add(_onPopName(*e), e);
+        return &s;
     }
 
-    expr* me::onDefVar(const wtype& t, const std::string& name) {
-        WRD_DI("tokenEvent: onDefVar(%s, %s)", t.getName().c_str(), name.c_str());
-        return new defVarExpr(*new ref(t, name));
+    expr* me::onDefVar(const std::string& name, const node& origin) {
+        WRD_DI("tokenEvent: onDefVar(%s, %s)", origin.getType().getName().c_str(), name.c_str());
+        return new defVarExpr(*new param(name, origin));
+    }
+
+    node* me::_onFindSubPack(const std::string& name, node* subpack) {
+        _onPushName(name, *subpack);
+        return _onFindSubPack(subpack);
     }
 
     node* me::_onFindSubPack(node* subpack) {
@@ -217,7 +222,7 @@ namespace wrd {
         for(auto& expr: exprs) {
             defVarExpr& cast = expr.cast<defVarExpr>();
             if(nul(cast)) return onSrcErr(16, expr.getType().getName().c_str()), ret;
-            if(cast.getParam()) return onSrcErr(17), ret;
+            if(nul(cast.getParam())) return onSrcErr(18), ret;
 
             ret.add(cast.getParam().clone());
         }
@@ -229,7 +234,9 @@ namespace wrd {
         const wtype& evalType = evalObj.getType();
         WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s", name.c_str(), &exprs, evalType.getName().c_str());
 
-        return new mgdFunc(name, _convertParams(exprs), evalType, blk);
+        mgdFunc* ret = new mgdFunc(_convertParams(exprs), evalType, blk);
+        _onPushName(name, *ret);
+        return ret;
     }
 
     narr* me::onList() {
@@ -248,15 +255,15 @@ namespace wrd {
         return &list;
     }
 
-    void me::onCompilationUnit(node& subpack, narr& arr) {
+    void me::onCompilationUnit(node& subpack, scope& arr) {
         wbool hasPack = !nul(subpack);
-        std::string name = hasPack ? subpack.getName() : "";
+        std::string name = hasPack ? _onPopName(subpack) : "";
         WRD_DI("tokenEvent: onCompilationUnit(%s[%x], arr[%x])", name.c_str(), &subpack, &arr);
         if(!hasPack) return;
 
-        ucontainable& con = subpack.subs();
-        for(const node& stmt : arr)
-            con.add(stmt);
+        bicontainable& con = subpack.subs();
+        for(const auto& p : arr)
+            con.add(p.getKey(), p.getVal());
     }
 
     returnExpr* me::onReturn() {
@@ -276,10 +283,20 @@ namespace wrd {
         return &names;
     }
 
-    node* me::onGet(const std::string& name, const params& p) {
-        return new getExpr(name, p);
+    node* me::onGet(const std::string& name, const narr& args) {
+        return new getExpr(name, args);
     }
-    node* me::onGet(node& from, const std::string& name, const params& p) {
-        return new getExpr(from, name, p);
+    node* me::onGet(node& from, const std::string& name, const narr& args) {
+        return new getExpr(from, name, args);
+    }
+
+    void me::_onPushName(const std::string& name, node& n) {
+        _nameMap[&n] = name;
+    }
+
+    std::string me::_onPopName(node& n) {
+        std::string ret = _nameMap[&n];
+        _nameMap.erase(&n);
+        return ret;
     }
 }

@@ -15,14 +15,7 @@ namespace wrd {
         using super::run;
         str run(const ucontainable& args) override;
 
-        const wtype& getEvalType() const override {
-            if(!_me) return nulOf<wtype>();
-
-            str me = _me->as<node>();
-            if(!me) return nulOf<wtype>();
-
-            return _me->getEvalType();
-        }
+        const wtype& getEvalType() const override;
 
         node& getMe() { return *_me; }
         const node& getMe() const { return *_me; }

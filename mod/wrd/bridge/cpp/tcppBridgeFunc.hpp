@@ -12,21 +12,44 @@ namespace wrd {
         typedef Ret (T::*fptrType)(Args...);
 
     public:
-        tcppBridgeFuncBase(const std::string& name, fptrType fptr): super(), _sig(name), _fptr(fptr) {}
+        tcppBridgeFuncBase(fptrType fptr): super(), _fptr(fptr) {}
 
         static_assert(allTrues<(sizeof(tmarshaling<Args>::canMarshal() ) == sizeof(metaIf::yes))...>::value,
             "can't marshal one of this func's parameter wtypes.");
 
-    protected:
+    public:
+        using super::run;
+        str run(const ucontainable& args) override {
+            return _runNative(_evalArgs(args));
+        }
+
         const wtype& getEvalType() const override {
             return ttype<typename tmarshaling<Ret>::mgdType>::get();
         }
 
-        const signature& getSignature() const override;
+        const params& getParams() const override;
 
     protected:
-        signature _sig;
-        wbool _isInit;
+        virtual str _runNative(narr& args) = 0;
+
+    private:
+        narr _evalArgs(const ucontainable& args) {
+            const params& ps = getParams();
+            if(args.len() != ps.len())
+                return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()), str();
+
+            narr ret;
+            int n = 0;
+            for(const node& e: args) {
+                str ased = e.as(ps[n++].getOrigin());
+                if(!ased) return str();
+
+                ret.add(*ased);
+            }
+            return ret;
+        }
+
+    protected:
         fptrType _fptr;
     };
 
@@ -36,15 +59,15 @@ namespace wrd {
         WRD(CLASS(tcppBridgeFunc, __super))
 
     public:
-        tcppBridgeFunc(const std::string& name, typename __super::fptrType fptr): super(name, fptr) {}
+        tcppBridgeFunc(typename __super::fptrType fptr): super(fptr) {}
 
     protected:
-        str _onCastArgs(narr& args) override {
+        str _runNative(narr& args) override {
             return _marshal(args, std::index_sequence_for<Args...>());
         }
 
         template <size_t... index>
-        str _marshal(narr& args, std::index_sequence<index...>);
+        str _marshal(scope& args, std::index_sequence<index...>);
     };
 
     template <typename T, typename... Args>
@@ -53,14 +76,14 @@ namespace wrd {
         WRD(CLASS(tcppBridgeFunc, __super))
 
     public:
-        tcppBridgeFunc(const std::string& name, typename __super::fptrType fptr): super(name, fptr) {}
+        tcppBridgeFunc(typename __super::fptrType fptr): super(fptr) {}
 
     protected:
-        str _onCastArgs(narr& args) override {
+        str _runNative(narr& args) override {
             return _marshal(args, std::index_sequence_for<Args...>());
         }
 
         template <size_t... index>
-        str _marshal(narr& args, std::index_sequence<index...>);
+        str _marshal(scope& args, std::index_sequence<index...>);
     };
 }

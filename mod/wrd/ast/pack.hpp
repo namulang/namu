@@ -31,7 +31,7 @@ namespace wrd {
         nbicontainer& subs() override {
             nbicontainer& subs = super::subs();
             if(_state == RELEASED) {
-                WRD_I("%s pack is about to interpret lazy.", getName().c_str());
+                WRD_I("%s pack is about to interpret lazy.", _manifest.name.c_str());
                 // TODO: check _rpt error count increased or not.
                 //       if increased, then parse() function has been failed.
                 parse(*_rpt, subs); // recursive call wasn't allowed.
@@ -62,15 +62,6 @@ namespace wrd {
         str run(const ucontainable& args) override { return str(); }
 
         wbool canRun(const ucontainable& args) const override { return false; }
-
-        const std::string& getName() const override {
-            return _manifest.name;
-        }
-
-        wbool setName(const std::string& new1) override {
-            _manifest.name = new1;
-            return true;
-        }
 
         const pack& getOrigin() const override {
             return *this;
@@ -145,6 +136,7 @@ namespace wrd {
         tstr<errReport> _rpt;
     };
 
-    typedef tnarr<pack> packs;
-    typedef tnchain<pack> packChain;
+    typedef tnmap<std::string, pack> packs;
+    typedef tnchain<std::string, pack> packChain;
+    typedef tnbicontainer<std::string, pack> packContainer;
 }

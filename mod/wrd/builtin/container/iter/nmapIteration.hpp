@@ -8,7 +8,7 @@ public:
     nmapIteration(tnmap& own, citer citer): _own(own), _citer(citer) {}
 
     wbool isEnd() const override {
-        return _citer == _own.end();
+        return _citer == _own._map.end();
     }
 
     /// if iteration reached to the last element to iterate, it can precede to next,
@@ -18,23 +18,25 @@ public:
         std::advance(_citer, step);
         return step;
     }
-    using super::getKey;
-    K& getKey() override {
+
+    const K& getKey() const override {
         if(isEnd()) return nulOf<K>();
         return _citer->first;
     }
+
     using super::getVal;
     V& getVal() override {
         if(isEnd()) return nulOf<V>();
         return *_citer->second;
     }
+
     using super::getContainer;
     tnbicontainer<K, V>& getContainer() override { return _own; }
 
 protected:
     wbool _onSame(const typeProvidable& rhs) const override {
         const me& cast = (const me&) rhs;
-        return isFrom(cast.getContainer()) && _citer == rhs._citer;
+        return this->isFrom(cast.getContainer()) && _citer == cast._citer;
     }
 
 private:

@@ -7,7 +7,7 @@ namespace wrd {
 
     class node;
 
-    template <typename K, typename V, typename defaultContainer = nmap>
+    template <typename K, typename V, typename defaultContainer = tnmap<K, V>>
     class tnchain : public tnbicontainer<K, V> {
         typedef tnbicontainer<K, V> __super;
         WRD(CLASS(tnchain, __super))
@@ -36,12 +36,10 @@ namespace wrd {
         // set:
         using super::set;
         wbool set(const K& key, const V& val) override;
-        wbool set(const K& key, const str& val) override;
 
         // add:
         using super::add;
         wbool add(const K& key, const V& val) override;
-        wbool add(const K& key, const str& val) override;
 
         // link:
         tstr<me> link(const super& new1);

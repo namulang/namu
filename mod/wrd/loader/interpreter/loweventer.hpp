@@ -7,6 +7,7 @@
 #include "bison/tokenScan.hpp"
 #include "../errReport.hpp"
 #include "../../ast/pack.hpp"
+#include "../../ast/params.hpp"
 
 namespace wrd {
 
@@ -40,6 +41,7 @@ namespace wrd {
         void rel() {
             _report.bind(dummyErrReport::singletone);
             _pack.rel();
+            _nameMap.clear();
             prepareParse();
         }
 
@@ -78,16 +80,16 @@ namespace wrd {
         //      dot:
         narr* onDotName(const std::string& name);
         narr* onDotName(narr& names, const std::string& name);
-        node* onGet(const std::string& name, const params& p = nulOf<params>());
-        node* onGet(node& from, const std::string& name, const params& p = nulOf<params>());
+        node* onGet(const std::string& name, const narr& args = nulOf<narr>());
+        node* onGet(node& from, const std::string& name, const narr& args = nulOf<narr>());
 
         //  keyword:
         node* onPack(const narr& dotname);
         node* onPack();
         blockExpr* onBlock();
         blockExpr* onBlock(blockExpr& blk, node& exp);
-        narr* onDefBlock();
-        narr* onDefBlock(narr& blk, node& exp);
+        scope* onDefBlock();
+        scope* onDefBlock(scope& blk, node& exp);
 
         //  defexpr:
         //      func:
@@ -102,18 +104,21 @@ namespace wrd {
             WRD_DI("on%s(...)", ttype<T>::get().getName().c_str());
             return new T(args...);
         }
-        expr* onDefVar(const wtype& t, const std::string& name);
+        expr* onDefVar(const std::string& name, const node& origin);
         //      file:
-        void onCompilationUnit(node& subpack, narr& blk);
+        void onCompilationUnit(node& subpack, scope& blk);
         //  return:
         returnExpr* onReturn();
         returnExpr* onReturn(node& exp);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
+        node* _onFindSubPack(const std::string& name, node* subpack);
         node* _onFindSubPack(node* subpack);
         void _onRes(err* new1);
         params _convertParams(const narr& exprs);
+        void _onPushName(const std::string& name, node& n);
+        std::string _onPopName(node& n);
 
     private:
         tokenScan* _mode;
@@ -124,5 +129,6 @@ namespace wrd {
         tstr<pack> _pack;
         str _subpack;
         area* _srcArea;
+        std::map<node*, std::string> _nameMap;
     };
 }

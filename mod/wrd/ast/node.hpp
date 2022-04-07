@@ -3,7 +3,7 @@
 #include "clonable.hpp"
 #include "validable.hpp"
 #include "../builtin/container/native/tnbicontainer.hpp"
-#include "signature.hpp"
+#include "../builtin/container/native/tnarr.hpp"
 
 namespace wrd {
 
@@ -24,7 +24,6 @@ namespace wrd {
         T& sub(std::function<wbool(const std::string&, const T&)> l) const {
             return subs().get<T>(l);
         }
-        template <typename T = me> T& sub(const signature& sig) const;
         template <typename T = me> T& sub(const std::string& name) const;
         template <typename T = me> T& sub(const std::string& name, const ucontainable& args);
         template <typename T = me> T& sub(const std::string& name, const ucontainable& args) const;
@@ -34,10 +33,9 @@ namespace wrd {
             return subs().getAll<T>(l);
         }
 
-        template <typename T = me> tnarr<T> subAll(const signature& sig) const;
-        template <typename T = me> tnarr<T> subAll(const std::string& name) const;
-        template <typename T = me> tnarr<T> subAll(const std::string& name, const ucontainable& args);
-        template <typename T = me> tnarr<T> subAll(const std::string& name, const ucontainable& args) const;
+        template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name) const;
+        template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name, const ucontainable& args);
+        template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name, const ucontainable& args) const;
 
         virtual wbool canRun(const ucontainable& args) const = 0;
 
@@ -49,21 +47,6 @@ namespace wrd {
         /// release all holding resources and ready to be terminated.
         /// @remark some class won't be able to reinitialize after rel() got called.
         virtual void rel() {}
-
-        /// @return parameters of run() func.
-        ///         parameter is just a type. and I don't care about the value of each parameters.
-        ///         that is the reason why I uses a ref to represents parameter.
-        ///
-        ///         I need the name and which types should be casted and binded from given arguments
-        ///         are matters.
-        virtual const signature& getSignature() const {
-            static signature inner;
-            return inner;
-        }
-
-        virtual wbool setSignature(const signature& rhs) {
-            return false; // usually modifying a signature is not permitted.
-        }
 
         template <typename T> wbool is() const { return is(ttype<T>::get()); }
         wbool is(const typeProvidable& to) const { return is(to.getType()); }

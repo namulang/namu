@@ -6,5 +6,7 @@ class iteration : public instance, public iterable, public clonable {
     friend class iter;
 
 public:
-    wbool isFrom(const tucontainable& rhs) const override;
+    wbool isFrom(const tucontainable& rhs) const override {
+        return &this->getContainer() == &rhs;
+    }
 };

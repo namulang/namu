@@ -5,9 +5,9 @@ namespace wrd {
 
     WRD_DEF_ME(defVarExpr)
 
-    str me::_addFrame(node& new1) {
-        if(thread::get()._getNowFrame().pushLocal(new1))
-            return str(new1);
+    str me::_addFrame(param& p) const {
+        if(thread::get()._getNowFrame().pushLocal(p.getName(), p.getOrigin()))
+            return str(p.getOrigin());
         return str();
     }
 }

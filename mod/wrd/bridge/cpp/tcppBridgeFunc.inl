@@ -3,16 +3,18 @@
 #include "tcppBridgeFunc.hpp"
 #include "tcppBridge.hpp"
 #include "../../frame/thread.hpp"
+#include "../../ast/params.hpp"
 
 namespace wrd {
 
 #define TEMPL template <typename Ret, typename T, typename... Args>
 #define ME tcppBridgeFuncBase<Ret, T, Args...>
 
-    TEMPL const signature& ME::getSignature() const {
-        if(!_isInit) {
-            (_sig.add({"", ttype<typename tmarshaling<Args>::mgdType>::get()}), ...);
-            _isInit = true;
+    TEMPL const params& ME::getParams() const {
+        static params* inner = nullptr;
+        if(nul(inner)) {
+            inner = new params();
+            (inner->add({"", ttype<typename tmarshaling<Args>::mgdType>::get()}), ...);
         }
 
         return *inner;
@@ -23,7 +25,7 @@ namespace wrd {
 
     TEMPL
     template <size_t... index>
-    str ME::_marshal(narr& args, std::index_sequence<index...>) {
+    str ME::_marshal(scope& args, std::index_sequence<index...>) {
         auto& me = (tcppBridge<T>&) thread::get().getNowFrame().getObj();
 
         return tmarshaling<Ret>::toMgd((me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index])...));
@@ -36,7 +38,7 @@ namespace wrd {
 
     TEMPL
     template <size_t... index>
-    str ME::_marshal(narr& args, std::index_sequence<index...>) {
+    str ME::_marshal(scope& args, std::index_sequence<index...>) {
         auto& me = (tcppBridge<T>&) thread::get().getNowFrame().getObj();
 
         (me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index])...);

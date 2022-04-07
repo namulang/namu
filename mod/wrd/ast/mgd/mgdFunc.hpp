@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../func.hpp"
+#include "../scope.hpp"
 #include "../exprs/blockExpr.hpp"
-#include "../ref.hpp"
 
 namespace wrd {
 
@@ -11,10 +11,10 @@ namespace wrd {
             FRIEND_VERIFY(mgdFunc, subNodes))
 
     public:
-        explicit mgdFunc(const signature& sig, const wtype& evalType)
-            : super(), _sig(sig), _evalType(&evalType), _blk(new blockExpr()) {}
-        explicit mgdFunc(const signature& sig, const wtype& evalType, const blockExpr& newBlock)
-            : super(sig), _evalType(&evalType), _blk(newBlock) {}
+        explicit mgdFunc(const params& ps, const wtype& evalType)
+            : super(), _params(ps), _evalType(&evalType), _blk(new blockExpr()) {}
+        explicit mgdFunc(const params& ps, const wtype& evalType, const blockExpr& newBlock)
+            : super(), _params(ps), _evalType(&evalType), _blk(newBlock) {}
 
     public:
         blockExpr& getBlock() { return *_blk; }
@@ -22,18 +22,18 @@ namespace wrd {
         const wtype& getEvalType() const override { return *_evalType; }
         nbicontainer& subs() override { return _shares; }
         wbool doesNeedScope() const override { return true; }
-        const signature& getSignature() const override { return _sig; }
+        const params& getParams() const override { return _params; }
 
-    protected:
-        str _onCastArgs(narr& castedArgs) override;
+        using super::run;
+        str run(const ucontainable& args) override;
 
     private:
-        narr& _nameArgs(narr& args);
-        wbool _inFrame(narr& args);
+        wbool _inFrame(scope& args);
         void _outFrame();
+        scope* _evalArgs(const ucontainable& args);
 
     private:
-        signature _sig;
+        params _params;
         nmap _shares;
         const wtype* _evalType;
         tstr<blockExpr> _blk;
