@@ -1,16 +1,16 @@
 #include "mgdFunc.hpp"
 #include "../obj.hpp"
-#include "../../builtin/container/native/tnarr.inl"
 #include "../../builtin/container/native/tnchain.inl"
 #include "../../frame/thread.hpp"
 #include "../../loader/interpreter/tverification.hpp"
+#include "../params.hpp"
 
 namespace wrd {
 
     WRD_DEF_ME(mgdFunc)
 
-    str me::_onCastArgs(narr& args) {
-        if(!_inFrame(args))
+    str me::run(const ucontainable& args) {
+        if(!_inFrame(*_evalArgs(args)))
             return str();
 
         str ret = _blk->run();
@@ -18,34 +18,40 @@ namespace wrd {
         return ret;
     }
 
-    wbool me::_inFrame(narr& args) {
-        frame& fr = thread::get()._getNowFrame();
-        if(nul(fr))
-            return WRD_E("fr == null"), false;
+    scope* me::_evalArgs(const ucontainable& args) {
+        const params& ps = getParams();
+        if(args.len() != ps.len())
+            return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()), nullptr;
 
-        WRD_DI("%s._onInFrame()", getName().c_str());
+        scope* ret = new scope();
+        int n = 0;
+        for(const node& e: args) {
+            const param& p = ps[n++];
+            str evaluated = e.as(p.getOrigin());
+            if(!evaluated) return nullptr;
+
+            ret->add(p.getName(), *evaluated);
+        }
+        return ret;
+    }
+
+    wbool me::_inFrame(scope& s) {
+        frame& fr = thread::get()._getNowFrame();
+        if(nul(fr)) return WRD_E("fr == null"), false;
+        if(nul(s)) return WRD_E("s == null"), false;
+
+        WRD_DI("%s._onInFrame()", getType().getName().c_str());
         fr.pushLocal(subs());
         fr.setFunc(*this);
-        return fr.pushLocal(_nameArgs(args));
+        return fr.pushLocal(s);
     }
 
     void me::_outFrame() {
         frame& fr = thread::get()._getNowFrame();
-        WRD_DI("%s._onOutFrame()", getName().c_str());
+        WRD_DI("%s._onOutFrame()", getType().getName().c_str());
         fr.setFunc(nulOf<func>());
         fr.popLocal();
         fr.popLocal();
-    }
-
-    narr& me::_nameArgs(narr& args) {
-        const signature& sig = getSignature();
-        if(args.len() != sig.len())
-            return WRD_E("length of args[%d] doesn't match to params[%d]", args.len(), sig.len()),
-                   args;
-
-        for(int n=0; n < args.len(); n++)
-            args[n].setName(sig[n].name);
-        return args;
     }
 
     WRD_VERIFY({
@@ -60,18 +66,20 @@ namespace wrd {
     })
 
     namespace {
-        void _prepareArgsAlongParam(const signature& sig, narr& tray) {
-            for(const auto& p : sig)
-                tray.add(p.type.makeAs<node>());
+        void _prepareArgsAlongParam(const params& ps, scope& s) {
+            for(const auto& p : ps)
+                s.add(p.getName(), p.getOrigin());
         }
     }
 
+    // TODO: verify arguments
+
     WRD_VERIFY(mgdFunc, subNodes, {
         WRD_DI("verify: mgdFunc: %s iterateBlock[%d]", it.getType().getName().c_str(), it._blk->subs().len());
-        narr args;
-        _prepareArgsAlongParam(it.getSignature(), args);
+        scope s;
+        _prepareArgsAlongParam(it.getParams(), s);
 
-        it._inFrame(args);
+        it._inFrame(s);
         verify(*it._blk);
         it._outFrame();
     })

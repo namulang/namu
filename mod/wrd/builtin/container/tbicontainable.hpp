@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../../ast/clonable.hpp"
-#include "../../type/wtype.hpp"
+#include "../../ast/param.hpp"
 
 namespace wrd {
 
@@ -78,4 +77,6 @@ namespace wrd {
     protected:
         virtual iteration* _onMakeIteration(wcnt step) const = 0;
     };
+
+    typedef tbicontainable<std::string, node> bicontainable;
 }

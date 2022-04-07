@@ -33,13 +33,12 @@ public:
     }
 
     using super::getContainer;
-    tnbicontainer<K, V>& getContainer() override {
-        if(!_ownIter) return nulOf<super>();
-        return _ownIter->template cast<tnbicontainer<K, V>>();
+    __super& getContainer() override {
+        if(!_ownIter) return nulOf<__super>();
+        return _ownIter->template cast<__super>();
     }
 
-    using super::getKey;
-    K& getKey() override {
+    const K& getKey() const override {
         return _iter.getKey();
     }
 

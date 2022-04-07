@@ -39,7 +39,7 @@ namespace wrd {
 
     TEMPL
     V& ME::get(const K& key) {
-        for(const me* e=this; e ;e=&e->getNext()) {
+        for(me* e=this; e ;e=&e->getNext()) {
             V& got = e->getContainer().get(key);
             if(!nul(got))
                 return got;
@@ -57,20 +57,7 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::set(const K& key, const str& new1) {
-        for(me* e=this; e ;e=&e->getNext())
-            if(e->has(key))
-                return e->getContainer().set(key, new1);
-        return false;
-    }
-
-    TEMPL
     wbool ME::add(const K& key, const V& new1) {
-        return getContainer().add(key, new1);
-    }
-
-    TEMPL
-    wbool ME::add(const K& key, const str& new1) {
         return getContainer().add(key, new1);
     }
 

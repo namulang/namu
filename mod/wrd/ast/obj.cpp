@@ -1,6 +1,6 @@
 #include "obj.hpp"
 #include "func.hpp"
-#include "../builtin/container/uucontainable.inl"
+#include "../builtin/container/tucontainable.inl"
 #include "../loader/interpreter/tverification.hpp"
 #include "../frame/thread.hpp"
 
@@ -9,8 +9,7 @@ namespace wrd {
     WRD_DEF_ME(obj)
 
     me::obj() {}
-    me::obj(const signature& sig): _sig(sig) {}
-    me::obj(const signature& sig, const nchain& subs): _sig(sig), _subs(subs) {}
+    me::obj(const scopes& subs): _subs(subs) {}
 
     str me::run(const ucontainable& args) {
         func& fun = getCtors().get<func>([&args](const func& candidate) {
@@ -46,32 +45,37 @@ namespace wrd {
         return WRD_E("%s object have %d ctors. it's ambigious.", getType().getName().c_str(), n), false;
     }
 
+    funcs& me::getCtors() {
+        static funcs inner;
+        return inner;
+    }
+
     void me::_inFrame() {
-        WRD_DI("%s._inFrame()", getName().c_str());
+        WRD_DI("%s._inFrame()", getType().getName().c_str());
 
         frame& fr = *new frame();
-        fr.setObj(subs());
+        fr.setObj(*this);
         wrd::thread::get()._getFrames().add(fr);
     }
 
     void me::_outFrame() {
-        WRD_DI("%s._outFrame()", getName().c_str());
+        WRD_DI("%s._outFrame()", getType().getName().c_str());
 
         wrd::thread::get()._getFrames().del();
     }
 
     WRD_VERIFY(obj, subNodes, {
-        WRD_DI("verify: obj: %s[type=%s] iterateSubNodes[%d]", it.getName().c_str(), it.getType().getName().c_str(),
-            it.subs().len());
+        WRD_DI("verify: obj: %s iterateSubNodes[%d]", it.getType().getName().c_str(), it.subs().len());
 
-        for(auto& sub : it.subs()) {
-            if(!sub.doesNeedScope()) {
-                verify(sub);
+        for(auto& p : it.subs()) {
+            node& val = p.getVal();
+            if(!val.doesNeedScope()) {
+                verify(val);
                 continue;
             }
 
             it._inFrame();
-            verify(sub);
+            verify(val);
             it._outFrame();
         }
     })

@@ -12,8 +12,8 @@ struct helloWorld {
     }
 };
 
-extern "C" void wrd_bridge_cpp_entrypoint(ucontainable* tray) {
-    tray->add(tcppBridge<helloWorld>::def()
+extern "C" void wrd_bridge_cpp_entrypoint(bicontainable* tray) {
+    tray->add("helloWorld", tcppBridge<helloWorld>::def()
         ->func("say", &helloWorld::say)
         ->func("add", &helloWorld::add));
 }

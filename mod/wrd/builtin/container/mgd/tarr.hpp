@@ -5,18 +5,20 @@
 namespace wrd {
 
     template <typename T>
-    class tarr : public mgdObj, public ucontainable, public uucontainable {
+    class tarr : public mgdObj, public tucontainable<T>, tarrayable<T> {
         WRD(CLASS(tarr, mgdObj))
+        typedef typename tucontainable<T>::iter iter;
+        typedef typename tucontainable<T>::iteration iteration;
 
     public:
         tarr() {}
-        explicit tarr(std::initializer_list<const T*> elems) { add(elems); }
+        explicit tarr(std::initializer_list<const T*> elems) { this->add(elems); }
         explicit tarr(const tnarr<T>& nativeArr): _arr(nativeArr) {}
 
         tnarr<T>& getNative() { return _arr; }
         const tnarr<T>& getNative() const { return _arr; }
 
-        // ucontainable:
+        // tucontainable:
         //  operator:
         T& operator[](widx n) override { return _arr[n]; }
         const T& operator[](widx n) const override { return _arr[n]; }
@@ -31,28 +33,28 @@ namespace wrd {
         template <typename E> E& get(std::function<wbool(const E&)> l) const { return _arr.template get<E>(l); }
 
         //  set:
-        using ucontainable::set;
-        using uucontainable::set;
-        wbool set(const wrd::iter& at, const node& new1) override { return _arr.set(at, new1); }
-        wbool set(widx n, const node& new1) override { return _arr.set(n, new1); }
+        using tucontainable<T>::set;
+        using tarrayable<T>::set;
+        wbool set(const iter& at, const T& new1) override { return _arr.set(at, new1); }
+        wbool set(widx n, const T& new1) override { return _arr.set(n, new1); }
 
         //  add:
-        using ucontainable::add;
-        using uucontainable::add;
+        using tucontainable<T>::add;
+        using tarrayable<T>::add;
         wbool add(std::initializer_list<T*> elems) {
             wbool ret = false;
             for(auto* elem : elems)
                 ret = _arr.add(elem);
             return ret;
         }
-        wbool add(const wrd::iter& at, const node& new1) override { return _arr.add(at, new1); }
-        wbool add(widx n, const node& new1) override { return _arr.add(n, new1); }
+        wbool add(const iter& at, const T& new1) override { return _arr.add(at, new1); }
+        wbool add(widx n, const T& new1) override { return _arr.add(n, new1); }
 
         //  del:
-        using ucontainable::del;
+        using tucontainable<T>::del;
         wbool del(widx n) override { return _arr.del(n); }
-        wbool del(const wrd::iter& it) override { return _arr.del(it); }
-        wcnt del(const wrd::iter& from, const wrd::iter& to) override { return _arr.del(from, to); }
+        wbool del(const iter& it) override { return _arr.del(it); }
+        wcnt del(const iter& from, const iter& to) override { return _arr.del(from, to); }
 
         //  etc:
         tstr<instance> deepClone() const override {

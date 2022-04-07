@@ -34,6 +34,9 @@
 
     namespace wrd {
         class node;
+        class immutableTactic;
+        template <typename K, typename V, typename TACTIC> class tnmap;
+        typedef tnmap<std::string, node, immutableTactic> scope;
         typedef tstr<node> str;
         template <typename T, typename WRP> class tnarr;
         typedef tnarr<node> narr;
@@ -77,6 +80,7 @@
     char* asStr;
     wrd::node* asNode;
     wrd::narr* asNarr;
+    wrd::scope* asScope;
 }
 
 %define api.pure
@@ -127,7 +131,7 @@
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 %type <asNode> type
 %type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
-%type <asNarr> defblock
+%type <asScope> defblock
 //          value:
 %type <asNode> defvar defvar-exp-no-initial-value
 //          func:
@@ -151,7 +155,7 @@
 %%
 
 compilation-unit: pack defblock {
-                tstr<narr> defBlock($2); str pack($1);
+                tstr<scope> defBlock($2); str pack($1);
 
                 yyget_extra(scanner)->onCompilationUnit(*pack, *defBlock);
                 _onEndParse(scanner);
@@ -326,7 +330,7 @@ defexpr-line: defexpr-line-except-aka { $$ = $1; }
           }
 defexpr-line-except-aka: defvar { $$ = $1; }
 defexpr-compound: deffunc { $$ = $1; }
-defstmt: defexpr-line NEWLINE { $$ = new blockExpr(); }
+defstmt: defexpr-line NEWLINE { $$ = $1; }
        | defexpr-compound { $$ = $1; }
 defblock: %empty {
         $$ = yyget_extra(scanner)->onDefBlock();
@@ -346,11 +350,10 @@ type: VOID { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
     }
 
 //  variable:
-defvar: defvar-exp-no-initial-value {
-      $$ = $1;
-    }
+defvar: defvar-exp-no-initial-value { $$ = $1; }
+
 defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
-                            $$ = yyget_extra(scanner)->onDefVar($2->getType(), std::string($1));
+                            $$ = yyget_extra(scanner)->onDefVar(std::string($1), *$2);
                             free($1);
                          }
 

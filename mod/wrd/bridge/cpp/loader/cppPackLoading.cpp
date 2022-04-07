@@ -7,7 +7,7 @@ namespace wrd {
     static constexpr const wchar* ENTRYPOINT_NAME = "wrd_bridge_cpp_entrypoint";
     static srcs dummySrcs;
 
-    tstr<srcs> me::parse(errReport& rpt, ucontainable& tray) {
+    tstr<srcs> me::parse(errReport& rpt, bicontainable& tray) {
         tstr<srcs> ret(dummySrcs);
         for(const std::string& path : _getPaths()) {
             // With the current implementation, it is not yet possible to create an srcs
@@ -22,7 +22,7 @@ namespace wrd {
         return ret;
     }
 
-    wbool me::_loadLibs(errReport& rpt, ucontainable& tray) {
+    wbool me::_loadLibs(errReport& rpt, bicontainable& tray) {
         // TODO: use 'rpt' variable.
         libHandle newHandle = nullptr;
         for(const std::string& path : _getPaths()) {

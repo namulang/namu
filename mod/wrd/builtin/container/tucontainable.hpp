@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../../ast/clonable.hpp"
-#include "../../type/wtype.hpp"
+#include "../../ast/param.hpp"
 
 namespace wrd {
 
@@ -72,9 +71,9 @@ namespace wrd {
 
         // del:
         /// delete last element if exists.
-        wbool del() { return del(iter(len() - 1)); }
+        wbool del() { return del(iterate(len() - 1)); }
         wbool del(const T* it) { return del(*it); }
-        wbool del(const T& it) { return del(iter(it)); }
+        wbool del(const T& it) { return del(iterate(it)); }
         virtual wbool del(const iter& it) = 0;
         virtual wcnt del(const iter& from, const iter& end) = 0;
         wcnt del(const tucontainable& rhs) { return del(rhs.begin(), rhs.end()); }

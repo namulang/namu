@@ -9,8 +9,6 @@ namespace wrd {
             WRD(INTERFACE(wVoidCtor, func))
 
         public:
-            wVoidCtor(): super("") {}
-
             const wtype& getEvalType() const override {
                 return ttype<wVoid>::get();
             }
@@ -19,7 +17,7 @@ namespace wrd {
             WRD(CLASS(defaultCtor, wVoidCtor))
 
         public:
-            str _onCastArgs(narr& args) override {
+            str run(const ucontainable& args) override {
                 return str(new wVoid());
             }
         };
@@ -27,14 +25,14 @@ namespace wrd {
             WRD(CLASS(cpyCtor, wVoidCtor))
 
         public:
-            str _onCastArgs(narr& args) override {
+            str run(const ucontainable& args) override {
                 return str(new wVoid());
             }
             const params& getParams() const override {
                 static params* inner = nullptr;
                 if(!inner) {
                     inner = new params();
-                    inner->add(new ref(ttype<wVoid>::get()));
+                    inner->add({"", ttype<wVoid>::get()});
                 }
                 return *inner;
             }

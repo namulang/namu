@@ -2,7 +2,6 @@
 
 #include "tnucontainer.hpp"
 #include "../tarrayable.hpp"
-#include "../../../ast/node.hpp"
 
 namespace wrd {
 
@@ -20,8 +19,9 @@ namespace wrd {
 
     public:
         tnarr() {}
-        tnarr(std::initializer_list<const T*> elems) {
-            for(const T* e : elems)
+        template <typename E>
+        tnarr(std::initializer_list<const E*> elems) {
+            for(const E* e : elems)
                 add(e);
         }
         template <typename... Es>
@@ -85,5 +85,6 @@ namespace wrd {
         std::vector<wrap> _vec;
     };
 
+    class node;
     typedef tnarr<node> narr;
 }

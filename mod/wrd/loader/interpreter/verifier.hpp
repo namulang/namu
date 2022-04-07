@@ -1,7 +1,7 @@
 #pragma once
 
 #include "verification.hpp"
-#include "../../builtin/container/native/tnucontainer.hpp"
+#include "../../ast/pack.hpp"
 
 struct verifierTest;
 
@@ -37,11 +37,11 @@ namespace wrd {
             return *this;
         }
         errReport& getReport() { return *_rpt; }
-        me& setPacks(const nucontainer& packs) {
+        me& setPacks(const packContainer& packs) {
             _packs.bind(packs);
             return *this;
         }
-        const nucontainer& getPacks() { return *_packs; }
+        const packContainer& getPacks() { return *_packs; }
 
         void verify(typeProvidable& it) {
 			_verify(it, it.getType());
@@ -65,6 +65,6 @@ namespace wrd {
 
     private:
         tstr<errReport> _rpt;
-        tstr<nucontainer> _packs;
+        tstr<packContainer> _packs;
 	};
 }

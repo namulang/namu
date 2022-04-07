@@ -13,7 +13,7 @@ namespace wrd {
         packs* ret = new packs();
 
         _makePacks(*ret);
-        return tstr(*ret);
+        return tstr<packs>(*ret);
     }
 
     manifest me::_interpManifest(const std::string& dir, const std::string& manPath) const {

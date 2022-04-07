@@ -1,4 +1,5 @@
 #include "wInt.hpp"
+#include "../../ast/param.hpp"
 
 namespace wrd {
 
@@ -9,8 +10,6 @@ namespace wrd {
             WRD(INTERFACE(wIntCtor, func))
 
         public:
-            wIntCtor(): super("") {}
-
             const wtype& getEvalType() const override {
                 return ttype<wInt>::get();
             }
@@ -19,7 +18,7 @@ namespace wrd {
             WRD(CLASS(defaultCtor, wIntCtor))
 
         public:
-            str _onCastArgs(narr& args) override {
+            str run(const ucontainable& args) override {
                 return str(new wInt());
             }
             const params& getParams() const override {
@@ -31,8 +30,8 @@ namespace wrd {
             WRD(CLASS(cpyCtor, wIntCtor))
 
         public:
-            str _onCastArgs(narr& args) override {
-                int val = args[0].as<wInt>()->get();
+            str run(const ucontainable& args) override {
+                int val = args.begin()->as<wInt>()->get();
 
                 return str(new wInt(val));
             }
@@ -40,7 +39,7 @@ namespace wrd {
                 static params* inner = nullptr;
                 if(!inner) {
                     inner = new params();
-                    inner->add(new ref(ttype<wInt>::get()));
+                    inner->add(param("", ttype<wInt>::get()));
                 }
                 return *inner;
             }

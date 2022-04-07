@@ -5,7 +5,7 @@
 class iter : public iterable, public clonable, public typeProvidable {
     WRD(CLASS(iter))
     friend class iteration;
-    template <typename E> friend class tnchain;
+    template <typename K1, typename V1, typename defaultContainer1> friend class tnchain;
 
 public:
     iter() { _nextToMatchParamType(); }
@@ -30,6 +30,11 @@ public:
         return *this;
     }
 
+    me& operator*() { return *this; }
+    me* operator->() { return this; }
+    const me& operator*() const WRD_UNCONST_FUNC(operator*())
+    const me* operator->() const WRD_UNCONST_FUNC(operator->())
+
     explicit operator wbool() const { return !isEnd(); }
 
     wbool isFrom(const tbicontainable& it) const override {
@@ -53,10 +58,9 @@ public:
         return step;
     }
 
-    using iterable::getKey;
-    K& getKey() override;
+    const K& getKey() const override;
     template <typename E>
-    E& getKey() {
+    const E& getKey() const {
         return getKey().template cast<E>();
     }
     using iterable::getVal;
@@ -87,7 +91,7 @@ private:
     /// iter should be alwyas stable state which points to object of proper type.
     void _nextToMatchParamType() {
         while(!isEnd()) {
-            if(!nul(get())) return;
+            if(!nul(getVal())) return;
 
             next(1);
         }

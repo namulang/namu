@@ -28,7 +28,7 @@ namespace wrd {
         const node& got = it._get();
         if(nul(got)) {
             const node& from = it.getFrom();
-            return _err(3, from.getType().getName().c_str(), from.getName().c_str(), it._name.c_str());
+            return _err(3, from.getType().getName().c_str(), it._name.c_str());
         }
     })
 }

@@ -1,7 +1,7 @@
 #include "runExpr.hpp"
 #include "../../loader/interpreter/tverification.hpp"
 #include "../../loader/interpreter/verifier.hpp"
-#include "../../thread/thread.hpp"
+#include "../../frame/thread.hpp"
 
 namespace wrd {
 
@@ -30,7 +30,7 @@ namespace wrd {
         if(!me) return _err(4);
 
         str sub = me->sub(it.getName(), it.getArgs());
-        if(!sub) return _err(3, me->getType().c_str(), it.getName().c_str());
+        if(!sub) return _err(3, me->getType().getName().c_str(), it.getName().c_str());
         if(!sub->canRun(it.getArgs())) return _err(5); // 5: can't execute with this arguments
     })
 }

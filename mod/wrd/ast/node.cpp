@@ -4,6 +4,7 @@
 #include "../type/as.hpp"
 #include "../loader/interpreter/tverification.hpp"
 #include "../loader/interpreter/verifier.hpp"
+#include "params.hpp"
 
 namespace wrd {
 

@@ -79,12 +79,12 @@ namespace wrd {
             }
 
             pack* new1 = new pack(mani, loadings);
-            tray.add(new1);
+            tray.add(mani.name, new1);
             _logPack(*new1);
         }
 
         void _logPack(const pack& pak) const {
-            WRD_I("new pack [%s] has been added.", pak.getName().c_str());
+            WRD_I("new pack [%s] has been added.", pak.getManifest().name.c_str());
 
             const manifest& mani = pak.getManifest();
             WRD_DI("\t.filePath=%s", mani.filePath.c_str());

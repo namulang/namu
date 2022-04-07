@@ -1,4 +1,5 @@
 #include "verification.hpp"
+#include "../../ast/node.hpp"
 #include "verifier.hpp"
 
 namespace wrd {

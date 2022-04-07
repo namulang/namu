@@ -4,14 +4,19 @@
 
 namespace wrd {
 
-    template <typename K, typename V>
-    typedef tbicontainable<K, V> me;
+#define TEMPL template <typename K, typename V>
+#define ME tbicontainable<K, V>
 
-    T& me::get(std::function<wbool(const K&, const V&)> l) const {
-        return get<K, V>(l);
+    TEMPL
+    V& ME::get(std::function<wbool(const K&, const V&)> l) const {
+        return this->get<K, V>(l);
     }
 
-    narr me::getAll(std::function<wbool(const K&, const V&)> l) const {
-        return getAll<K, V>(l);
+    TEMPL
+    narr ME::getAll(std::function<wbool(const K&, const V&)> l) const {
+        return this->getAll<K, V>(l);
     }
+
+#undef ME
+#undef TEMPL
 }

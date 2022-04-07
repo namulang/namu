@@ -1,7 +1,7 @@
 // nested class of tnarr.hpp:
 //  this file allows to be refered by 'tnarr.hpp' file only.
-class narrIteration : public super::iteration {
-    WRD(CLASS(narrIteration, typename super::iteration))
+class narrIteration : public iteration {
+    WRD(CLASS(narrIteration, iteration))
     friend class tnarr;
 
 public:

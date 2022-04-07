@@ -6,18 +6,18 @@ namespace wrd {
     WRD_DEF_ME(blockExpr)
 
     wbool me::_inFrame() {
-        WRD_DI("%s._onInFrame()", getName().c_str());
+        WRD_DI("%s._onInFrame()", getType().getName().c_str());
 
         frame& fr = wrd::thread::get()._getNowFrame();
         if(nul(fr))
             return WRD_E("fr == null"), false;
 
-        fr.pushLocal(new narr());
+        fr.pushLocal(new scope());
         return true;
     }
 
     void me::_outFrame() {
-        WRD_DI("%s._onOutFrame()", getName().c_str());
+        WRD_DI("%s._onOutFrame()", getType().getName().c_str());
 
         frame& fr = wrd::thread::get()._getNowFrame();
         fr.popLocal();
@@ -29,8 +29,8 @@ namespace wrd {
 
         str ret;
         frame& fr = wrd::thread::get()._getNowFrame();
-        for(auto e=_exprs.begin<expr>(); e ; ++e) {
-            ret = e->run(nulOf<ucontainable>());
+        for(auto& e : _exprs) {
+            ret = e.run();
             if(fr.isReturned()) break;
         }
 
@@ -39,10 +39,10 @@ namespace wrd {
     }
 
     WRD_VERIFY(blockExpr, visitSubNodes, { // visit sub nodes.
-        WRD_DI("verify: blockExpr: visit sub nodes[%d]", it.subs().len());
+        WRD_DI("verify: blockExpr: visit sub nodes[%d]", it._exprs.len());
         if(!it._inFrame()) return _err(25);
 
-        for(node& e : it.subs())
+        for(auto& e : it._exprs)
             verify(e);
 
         it._outFrame();

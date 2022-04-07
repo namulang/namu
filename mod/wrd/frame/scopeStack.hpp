@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../ast/scope.hpp"
 #include "../builtin/container/native/tnchain.inl"
 
 namespace wrd {
@@ -8,8 +9,8 @@ namespace wrd {
         WRD(CLASS(scopeStack, instance))
 
     public:
-        tstr<nchain>& getTop() { return _top; }
-        tstr<nchain>& getBottom() { return _bottom; }
+        tstr<scopes>& getTop() { return _top; }
+        tstr<scopes>& getBottom() { return _bottom; }
 
         wcnt len() const {
             return _top ? _top->len() : 0;
@@ -18,7 +19,7 @@ namespace wrd {
             return _top ? _top->chainLen() : 0;
         }
 
-        wbool push(nchain& scope) {
+        wbool push(scopes& new1) {
             // bind scope first:
             //  variable 'scope' can be a 'new'ed variable by push(nbicontainer&) func.
             //  the 'chain' class uses binder when it iterates element.
@@ -29,25 +30,25 @@ namespace wrd {
             //  passed from the heap. or you will encounter the annoying BAD_ACCESS crash.
             //
             //      so REMEMBER. bind it first or put it into a container first.
-            tstr<nchain> lifeSpanner(scope);
-            wcnt len = scope.chainLen();
+            tstr<scopes> lifeSpanner(new1);
+            wcnt len = new1.chainLen();
             if(len == 0) return true;
             if(len != 1)
                 return WRD_E("can't bind scopes into local stack if it's more than 2."), false;
 
             if(_top)
-                scope.link(*_top);
+                new1.link(*_top);
             else
-                _bottom.bind(scope);
+                _bottom.bind(new1);
 
-            WRD_DI("localStack.push(Chain(%x))", this, &scope);
-            return _top.bind(scope);
+            WRD_DI("localStack.push(Chain(%x))", this, &new1);
+            return _top.bind(new1);
         }
 
-        tstr<nchain> pop() {
-            if(!_top) return tstr<nchain>();
+        tstr<scopes> pop() {
+            if(!_top) return tstr<scopes>();
 
-            tstr<nchain> ret(_top);
+            tstr<scopes> ret(_top);
             _top.bind(_top->getNext());
             if(!_top)
                 _bottom.rel();
@@ -61,7 +62,7 @@ namespace wrd {
         }
 
     private:
-        tstr<nchain> _top;
-        tstr<nchain> _bottom;
+        tstr<scopes> _top;
+        tstr<scopes> _bottom;
     };
 }

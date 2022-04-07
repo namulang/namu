@@ -8,19 +8,15 @@ namespace wrd {
     /// owned sub nodes of a object can only be manipulated through API provided mgdObj.
     /// because native object won't have owned nodes but only shared ones.
     class mgdObj : public obj {
-        WRD(INTERFACE(mgdObj, obj))
+        WRD(CLASS(mgdObj, obj))
 
     public:
         explicit mgdObj()
-            : super(), _shares(new nchain()), _owns(new narr()), _org(this) {
+            : super(), _shares(new scopes()), _owns(new scope()), _org(this) {
             _subs.bind(_makeNewSubs());
         }
-        explicit mgdObj(const signature& sig)
-            : super(sig), _shares(new nchain()), _owns(new narr()), _org(this) {
-            _subs.bind(_makeNewSubs());
-        }
-        explicit mgdObj(const signature& sig, const nchain& shares, const narr& owns)
-            : super(sig), _shares(shares), _owns(owns), _org(this) {
+        explicit mgdObj(const scopes& shares, const scope& owns)
+            : super(), _shares(shares), _owns(owns), _org(this) {
             _subs.bind(_makeNewSubs());
         }
         explicit mgdObj(const me& rhs): super(rhs) {
@@ -35,19 +31,19 @@ namespace wrd {
             return _assign(rhs);
         }
 
-        nchain& getShares() { return *_shares; }
-        const nchain& getShares() const WRD_UNCONST_FUNC(getShares())
+        scopes& getShares() { return *_shares; }
+        const scopes& getShares() const WRD_UNCONST_FUNC(getShares())
 
-        narr& getOwns() { return *_owns; }
-        const narr& getOwns() const WRD_UNCONST_FUNC(getOwns())
+        scope& getOwns() { return *_owns; }
+        const scope& getOwns() const WRD_UNCONST_FUNC(getOwns())
 
         const obj& getOrigin() const override {
             return *_org;
         }
 
     private:
-        nchain* _makeNewSubs() {
-            nchain* ret = new nchain(*_owns);
+        scopes* _makeNewSubs() {
+            scopes* ret = new scopes(*_owns);
             ret->link(*_shares);
 
             return ret;
@@ -56,8 +52,8 @@ namespace wrd {
         me& _assign(const me& rhs);
 
     private:
-        tstr<nchain> _shares;
-        tstr<narr> _owns;
+        tstr<scopes> _shares;
+        tstr<scope> _owns;
         obj* _org;
     };
 }
