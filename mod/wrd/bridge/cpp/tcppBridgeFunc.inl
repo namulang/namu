@@ -25,7 +25,7 @@ namespace wrd {
 
     TEMPL
     template <size_t... index>
-    str ME::_marshal(scope& args, std::index_sequence<index...>) {
+    str ME::_marshal(narr& args, std::index_sequence<index...>) {
         auto& me = (tcppBridge<T>&) thread::get().getNowFrame().getObj();
 
         return tmarshaling<Ret>::toMgd((me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index])...));
@@ -38,7 +38,7 @@ namespace wrd {
 
     TEMPL
     template <size_t... index>
-    str ME::_marshal(scope& args, std::index_sequence<index...>) {
+    str ME::_marshal(narr& args, std::index_sequence<index...>) {
         auto& me = (tcppBridge<T>&) thread::get().getNowFrame().getObj();
 
         (me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index])...);

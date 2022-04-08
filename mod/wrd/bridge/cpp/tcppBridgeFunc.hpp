@@ -67,7 +67,7 @@ namespace wrd {
         }
 
         template <size_t... index>
-        str _marshal(scope& args, std::index_sequence<index...>);
+        str _marshal(narr& args, std::index_sequence<index...>);
     };
 
     template <typename T, typename... Args>
@@ -84,6 +84,6 @@ namespace wrd {
         }
 
         template <size_t... index>
-        str _marshal(scope& args, std::index_sequence<index...>);
+        str _marshal(narr& args, std::index_sequence<index...>);
     };
 }
