@@ -2,7 +2,7 @@
 
 #include "tbindable.hpp"
 
-class binderTest;
+struct binderTest;
 
 namespace wrd {
 
@@ -51,7 +51,7 @@ namespace wrd {
         friend class weakTactic;
         friend class strTactic;
         friend class bindTag; // for _get()
-        friend class binderTest;
+        friend struct ::binderTest; // for UT
 
     public:
         binder(const type& type, bindTacticable& tactic);

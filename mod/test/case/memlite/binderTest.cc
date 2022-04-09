@@ -2,6 +2,12 @@
 
 using namespace wrd;
 
+struct binderTest : public ::testing::Test {
+    const bindTacticable& getTactic(const binder& b) {
+        return *b._tactic;
+    }
+};
+
 namespace {
     struct A : public instance {
         A(): age(0) {}
@@ -52,7 +58,7 @@ namespace {
 
 }
 
-TEST(bindTest, defaultBehaviorTest) {
+TEST_F(binderTest, defaultBehaviorTest) {
     tstr<A> b1(new A());
     ASSERT_FALSE(nul(*b1));
     ASSERT_FALSE(nul(b1->getType()));
@@ -66,7 +72,7 @@ TEST(bindTest, defaultBehaviorTest) {
     ASSERT_GE(i.tagN,  0);
 }
 
-TEST(bindTest, shouldBindTagInaccessibleAfterInstanceTermination) {
+TEST_F(binderTest, shouldBindTagInaccessibleAfterInstanceTermination) {
     id i;
     const watcher& watcher = instancer::get().getWatcher();
     const bindTag* tag;
@@ -81,7 +87,7 @@ TEST(bindTest, shouldBindTagInaccessibleAfterInstanceTermination) {
     ASSERT_TRUE(nul(watcher[i]));
 }
 
-TEST(bindTest, supportLocalBindingTest) {
+TEST_F(binderTest, supportLocalBindingTest) {
     tstr<B> bind;
     ASSERT_FALSE(bind);
 
@@ -96,7 +102,7 @@ TEST(bindTest, supportLocalBindingTest) {
     ASSERT_TRUE(nul(*bind));
 }
 
-TEST(bindTest, bindSameInstanceFewTimesTest) {
+TEST_F(binderTest, bindSameInstanceFewTimesTest) {
     ASSERT_EQ(B::get(), 0);
 
     {
@@ -134,7 +140,7 @@ TEST(bindTest, bindSameInstanceFewTimesTest) {
     ASSERT_EQ(B::get(), 0);
 }
 
-TEST(bindTest, StrongAndWeakTest) {
+TEST_F(binderTest, StrongAndWeakTest) {
     tstr<A> strA(new A());
     ASSERT_TRUE(strA.isBind());
 
@@ -149,7 +155,7 @@ TEST(bindTest, StrongAndWeakTest) {
     ASSERT_EQ(tagWeak.getStrongCnt(), 1);
 }
 
-TEST(bindTest, bindByValueTest) {
+TEST_F(binderTest, bindByValueTest) {
     tstr<A> strA(new A());
     const bindTag& tag = strA->getBindTag();
     ASSERT_FALSE(nul(tag));
@@ -173,7 +179,7 @@ TEST(bindTest, bindByValueTest) {
     ASSERT_EQ(tag.getStrongCnt(), 0);
 }
 
-TEST(bindTest, assignTest) {
+TEST_F(binderTest, assignTest) {
     tstr<A> strA(new A());
     tstr<A> strA1;
 
@@ -184,13 +190,13 @@ TEST(bindTest, assignTest) {
     ASSERT_FALSE(strA.getItsId().isValid());
 }
 
-TEST(bindTest, bindMultiplTimesIntegrityTest) {
+TEST_F(binderTest, bindMultiplTimesIntegrityTest) {
     integrity(10);
     integrity(100);
     integrity(1000);
 }
 
-TEST(bindTest, WeakBindButInstanceGoneTest) {
+TEST_F(binderTest, WeakBindButInstanceGoneTest) {
     tstr<A> strA(new A());
     tweak<A> weakA(*strA);
 
@@ -203,7 +209,7 @@ TEST(bindTest, WeakBindButInstanceGoneTest) {
     ASSERT_TRUE(nul(*weakA));
 }
 
-TEST(bindTest, bindNullShouldUnbindPrevious) {
+TEST_F(binderTest, bindNullShouldUnbindPrevious) {
     tstr<A> strA(new A(18));
     ASSERT_TRUE(strA);
     ASSERT_EQ(strA->age, 18);
@@ -219,7 +225,7 @@ TEST(bindTest, bindNullShouldUnbindPrevious) {
 // static variable could exists longer than watcher. in this situtation, trying to get
 // watchcell info would be failed by returning null reference.
 // we will verify that this memlite module can handle the situation properly.
-TEST(bindTest, bindStaticVariable) {
+TEST_F(binderTest, bindStaticVariable) {
     class myInstance : public instance {
         WRD(ME(myInstance, instance))
 
@@ -236,15 +242,15 @@ TEST(bindTest, bindStaticVariable) {
     binder.bind(variable); // this statement makes watchell of 'variable'.
 }
 
-TEST(binderTest, testTacticIsImmutable) {
+TEST_F(binderTest, testTacticIsImmutable) {
     tstr<A> strA; // has strTactic
-    ASSERT_EQ(strA._tactic, &strTactic::singletone);
+    ASSERT_EQ(&getTactic(strA), &strTactic::singletone);
     tweak<A> weakA;
-    ASSERT_EQ(weakA._tactic, &weakTactic::singletone);
+    ASSERT_EQ(&getTactic(weakA), &weakTactic::singletone);
     tstr<A> strA1(weakA);
-    ASSERT_EQ(strA1._tactic, &strTactic::singletone);
+    ASSERT_EQ(&getTactic(strA1), &strTactic::singletone);
     strA1.bind(*weakA);
-    ASSERT_EQ(strA._tactic, &strTactic::singletone);
+    ASSERT_EQ(&getTactic(strA), &strTactic::singletone);
     strA1 = weakA;
-    ASSERT_EQ(strA._tactic, &strTactic::singletone);
+    ASSERT_EQ(&getTactic(strA), &strTactic::singletone);
 }

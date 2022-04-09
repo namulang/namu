@@ -14,8 +14,9 @@ namespace wrd {
     template <typename E>
     E& ME::get(std::function<wbool(const E&)> l) const {
         for(const T& elem : *this) {
-            if(elem.template isSub<E>() && l(elem)) // elem should be typeProvidable.
-                return const_cast<E&>(elem);
+            const E& cast = elem.template cast<E>();
+            if(!nul(cast) && l(cast)) // elem should be typeProvidable.
+                return (E&) cast;
         }
 
         return nulOf<E>();
@@ -25,9 +26,11 @@ namespace wrd {
     template <typename E>
     tnarr<E> ME::getAll(std::function<wbool(const E&)> l) const {
         tnarr<E> ret;
-        for(const T& elem : *this)
-            if(elem.template isSub<E>() && l(elem))
-                ret.add(elem);
+        for(const T& elem : *this) {
+            const E& cast = elem.template cast<E>();
+            if(!nul(cast) && l(cast))
+                ret.add(cast);
+        }
 
         return ret;
     }
