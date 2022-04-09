@@ -15,22 +15,23 @@ namespace wrd {
         explicit tarr(std::initializer_list<const T*> elems) { this->add(elems); }
         explicit tarr(const tnarr<T>& nativeArr): _arr(nativeArr) {}
 
+    public:
+        using tarrayable<T>::operator[];
+        T& operator[](widx n) override { return _arr[n]; }
+
+    public:
         tnarr<T>& getNative() { return _arr; }
         const tnarr<T>& getNative() const { return _arr; }
-
-        // tucontainable:
-        //  operator:
-        T& operator[](widx n) override { return _arr[n]; }
-        const T& operator[](widx n) const override { return _arr[n]; }
 
         //  len:
         wcnt len() const override { return _arr.len(); }
 
+        wbool has(widx n) const override { return _arr.has(n); }
+
         //  get:
+        using tarrayable<T>::get;
+        using tucontainable<T>::get;
         T& get(widx n) override { return _arr.get(n); }
-        const T& get(widx n) const override { return _arr.get(n); }
-        template <typename E> tnarr<E> getAll(std::function<wbool(const E&)> l) const { return _arr.template getAll<E>(l); }
-        template <typename E> E& get(std::function<wbool(const E&)> l) const { return _arr.template get<E>(l); }
 
         //  set:
         using tucontainable<T>::set;

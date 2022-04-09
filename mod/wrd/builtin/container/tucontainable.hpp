@@ -51,7 +51,7 @@ namespace wrd {
 
         // add:
         virtual wbool add(const iter& at, const T& new1) = 0;
-        wbool add(const iter& at, const T* new1) { return add(at, new1); }
+        wbool add(const iter& at, const T* new1) { return add(at, *new1); }
         wbool add(std::initializer_list<const T*> elems) {
             wbool ret = false;
             for(auto* elem : elems)
