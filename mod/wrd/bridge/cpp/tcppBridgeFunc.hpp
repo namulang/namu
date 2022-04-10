@@ -20,7 +20,8 @@ namespace wrd {
     public:
         using super::run;
         str run(const ucontainable& args) override {
-            return _runNative(_evalArgs(args));
+            narr evaluated = _evalArgs(args);
+            return _runNative(evaluated);
         }
 
         const wtype& getEvalType() const override {
@@ -36,13 +37,13 @@ namespace wrd {
         narr _evalArgs(const ucontainable& args) {
             const params& ps = getParams();
             if(args.len() != ps.len())
-                return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()), str();
+                return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()), narr();
 
             narr ret;
             int n = 0;
             for(const node& e: args) {
                 str ased = e.as(ps[n++].getOrigin());
-                if(!ased) return str();
+                if(!ased) return narr();
 
                 ret.add(*ased);
             }

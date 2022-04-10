@@ -47,10 +47,12 @@ TEST_F(bridgeCPPTest, testNormalWrapping) {
 }
 
 TEST_F(bridgeCPPTest, testHasName) {
-
     tstr<obj> bridge(tcppBridge<kniz>::def()
         ->func<int, string>("say", &kniz::say));
-
+    nmap m;
     ASSERT_TRUE(bridge);
-    ASSERT_STREQ(bridge->getName().c_str(), "kniz");
+    m.add("kniz", *bridge);
+
+    func& say = m["kniz"]["say"].cast<func>();
+    ASSERT_FALSE(nul(say));
 }
