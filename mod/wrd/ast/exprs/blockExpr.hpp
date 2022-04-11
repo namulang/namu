@@ -11,7 +11,6 @@ namespace wrd {
 
     public:
         blockExpr() {}
-        blockExpr(std::initializer_list<const expr*> elems): _exprs(elems) {}
         template <typename... Es>
         blockExpr(const Es&... elems): _exprs(elems...) {}
 
