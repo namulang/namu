@@ -245,7 +245,7 @@ namespace wrd {
         return ret;
     }
     narr* me::onList(const expr* newExpr) {
-        narr* ret = new narr({newExpr});
+        narr* ret = new narr(*newExpr);
         WRD_DI("tokenEvent: onList(expr[%x])=%x", newExpr, ret);
         return ret;
     }

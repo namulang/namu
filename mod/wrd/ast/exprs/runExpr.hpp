@@ -9,7 +9,8 @@ namespace wrd {
 
     public:
         runExpr(const node& meObj, const std::string& name, const narr& args)
-            : _me(meObj), _name(name), _args(args) {}
+            : _me(meObj), _args(args), _name(name)  {}
+        runExpr(const node& meObj, const narr& args): _me(meObj), _args(args) {}
 
     public:
         using super::run;
@@ -28,7 +29,7 @@ namespace wrd {
 
     private:
         str _me;
-        std::string _name;
         narr _args;
+        std::string _name;
     };
 }
