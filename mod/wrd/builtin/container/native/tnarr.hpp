@@ -19,14 +19,9 @@ namespace wrd {
 
     public:
         tnarr() {}
-        template <typename E>
-        tnarr(std::initializer_list<const E*> elems) {
-            for(const E* e : elems)
-                add(e);
-        }
         template <typename... Es>
         tnarr(const Es&... elems) {
-            static_assert(areBaseOfT<T, Es...>::value);
+            static_assert(areBaseOfT<T, Es...>::value, "some of type of args are not base of type 'T'");
             add( { (T*) &elems... } );
         }
 
