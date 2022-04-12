@@ -10,21 +10,23 @@ namespace wrd {
         WRD(CLASS(param, instance))
 
     public:
-        param(const std::string& newName, const node& origin): _name(newName) { setOrigin(origin); }
-        param(const std::string& newName, const type& origin): _name(newName) { setOrigin(origin); }
+        param(const std::string& newName, const node& origin);
+        param(const std::string& newName, const wtype& orgType): _name(newName), _type(&orgType) {}
 
     public:
         const std::string& getName() const { return _name; }
         void setName(const std::string& new1) { _name = new1; }
         const node& getOrigin() const { return *_org; }
         node& getOrigin() { return *_org; }
+        const wtype& getOriginType() const { return *_type; }
         void setOrigin(const node& new1);
-        void setOrigin(const type& new1) {
-            _org = str(new1);
+        void setOriginType(const wtype& new1) {
+            _type = &new1;
         }
 
     public:
         std::string _name;
+        const wtype* _type;
         str _org;
     };
 }
