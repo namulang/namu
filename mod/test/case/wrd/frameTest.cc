@@ -9,7 +9,7 @@ namespace {
     public:
         myNode(int n): num(n) {}
 
-        nucontainer& subs() override { return nulOf<nucontainer>(); }
+        nbicontainer& subs() override { return nulOf<nbicontainer>(); }
         wbool canRun(const ucontainable& types) const override { return false; }
         str run(const ucontainable& args) override { return str(); }
 
@@ -44,32 +44,35 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     scopeStack& ss = getScopeStack(fr);
     ASSERT_FALSE(ss.getBottom().isBind());
 
-    nchain local;
-    local.add(new myNode(1));
-    local.add(new myNode(2));
+    scope local;
+    local.add("myNode1", new myNode(1));
+    local.add("myNode2", new myNode(2));
     fr.pushLocal(local);
     ASSERT_TRUE(ss.getBottom().isBind());
 
-    nchain shares;
-    shares.add(new myNode(4));
-    nchain owns;
-    owns.add(new myNode(3));
-    owns.link(shares);
-    ASSERT_EQ(owns.len(), 2);
-    auto lambda = [](const myNode& elem) {
+    scopes shares;
+    shares.add("myNode4", new myNode(4));
+    scope owns;
+    owns.add("myNode3", new myNode(3));
+    ASSERT_EQ(owns.len(), 1);
+    auto lambda = [](const std::string& name, const myNode& elem) {
         return true;
     };
     ASSERT_FALSE(nul(owns.get<myNode>(lambda)));
 
-    fr.setObj(*nchain::wrapDeep(owns));
+    mgdObj obj1(shares, owns);
+    ASSERT_EQ(obj1.subs().len(), 2);
+
+    fr.setObj(obj1);
     ASSERT_TRUE(ss.getBottom().isBind());
     ASSERT_EQ(fr.subAll<myNode>(lambda).len(), 4);
     ASSERT_EQ(owns.getAll<myNode>(lambda).len(), 2);
 
     int expects[] = {1, 2, 3, 4};
-    titer<myNode> e = ss.getTop()->begin<myNode>();
+    auto e = ss.getTop()->begin();
     for (int expect : expects) {
-        ASSERT_EQ(expect, e->num);
+        if(nul(e.getVal<myNode>())) continue;
+        ASSERT_EQ(expect, e.getVal<myNode>().num);
         ++e;
     }
 }
