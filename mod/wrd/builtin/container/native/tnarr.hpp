@@ -39,20 +39,24 @@ namespace wrd {
 
         // get:
         using super::get;
+        using tarrayable<T>::get;
         T& get(widx n) override;
 
         // set:
         using super::set;
+        using tarrayable<T>::set;
         wbool set(const iter& at, const T& new1) override;
         wbool set(widx n, const T& new1) override;
 
         // add:
         using super::add;
+        using tarrayable<T>::add;
         wbool add(const iter& e, const T& new1) override;
         wbool add(widx n, const T& new1) override;
 
         // del:
         using super::del;
+        using tarrayable<T>::del;
         wcnt del(const iter& from, const iter& end) override;
         wbool del(const iter& it) override;
         wbool del(widx n) override;

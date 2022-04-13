@@ -11,7 +11,7 @@ namespace {
     public:
         myNode(int num): number(num) {}
 
-        nucontainer& subs() override { return nulOf<nucontainer>(); }
+        nbicontainer& subs() override { return nulOf<nbicontainer>(); }
         wbool canRun(const ucontainable& types) const override { return false; }
         str run(const ucontainable& args) override { return str(); }
 
@@ -121,9 +121,9 @@ TEST(narrTest, testIter) {
     arr.add(new myNode(1));
     arr.add(new myNode(2));
 
-    iter e = arr.begin();
-    iter head = e++;
-    iter index2 = ++e;
+    auto e = arr.begin();
+    auto head = e++;
+    auto index2 = ++e;
 
     EXPECT_TRUE(arr.begin()+2 == index2);
     EXPECT_TRUE(arr.begin() == head);
@@ -134,12 +134,12 @@ TEST(narrTest, testIter) {
 TEST(narrTest, testucontainableAPI) {
     //  initial state:
     tnarr<myNode>* arr = new tnarr<myNode>();
-    ucontainable* con = arr;
+    tucontainable<myNode>* con = arr;
     ASSERT_EQ(con->len(), 0);
 
-    iter head = con->begin();
+    auto head = con->begin();
     ASSERT_TRUE(head.isEnd());
-    iter tail = con->end();
+    auto tail = con->end();
     ASSERT_TRUE(tail.isEnd());
 
     ASSERT_TRUE(con->add(con->begin(), new myNode(0)));
@@ -148,7 +148,7 @@ TEST(narrTest, testucontainableAPI) {
 
     // add:
     int expectVal = 0;
-    for(iter e=con->begin(); e != con->end() ;e++) {
+    for(auto e=con->begin(); e != con->end() ;e++) {
         myNode& elem = e->cast<myNode>();
         ASSERT_FALSE(nul(elem));
         ASSERT_EQ(elem.number, expectVal++);
@@ -197,7 +197,7 @@ TEST(narrTest, testucontainableAPI) {
     ASSERT_EQ(arr2[3].number, 3);
     ASSERT_EQ(arr2.len(), 4);
 
-    iter e = arr2.begin();
+    auto e = arr2.begin();
     e = e + 2;
     ASSERT_EQ(e.get<myNode>().number, 2);
     ASSERT_TRUE(arr2.add(e, new myNode(5)));
@@ -211,10 +211,10 @@ TEST(narrTest, testucontainableAPI) {
     ASSERT_EQ(arr2[5].cast<myNode>().number, 3);
 
     ASSERT_EQ(con->len(), 1);
-    ASSERT_EQ(con->add(arr2.iter(1), arr2.iter(3)), 2);
+    ASSERT_EQ(con->add(arr2.iterate(1), arr2.iterate(3)), 2);
     ASSERT_EQ(con->len(), 3);
-    titer<myNode> e2=arr->begin<myNode>();
-    myNode* elem = &e2->cast<myNode>();
+    auto e2=arr->begin();
+    myNode* elem = &e2.get();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 0);
 
@@ -233,30 +233,30 @@ TEST(narrTest, testucontainableAPI) {
     ASSERT_TRUE(con->len() == 0);
 
     ASSERT_EQ(con->add(arr2.begin() + 2, arr2.end()), 4);
-    e2 = arr->begin<myNode>();
-    elem = &e2->cast<myNode>();
+    e2 = arr->begin();
+    elem = &e2.get();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
 
-    elem = &(++e2)->cast<myNode>();
+    elem = &(++e2).get();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 5);
 
-    elem = &(++e2)->cast<myNode>();
+    elem = &(++e2).get();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 2);
 
-    elem = &(++e2)->cast<myNode>();
+    elem = &(++e2).get();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 
     ASSERT_EQ(con->del(con->begin() + 1, con->begin() + 3), 2);
-    e2 = arr->begin<myNode>();
-    elem = &e2->cast<myNode>();
+    e2 = arr->begin();
+    elem = &e2.get();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
 
-    elem = &(++e2)->cast<myNode>();
+    elem = &(++e2).get();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 
