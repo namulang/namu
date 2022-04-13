@@ -60,14 +60,19 @@ namespace wrd {
         }
         wbool add(const T* new1) { return add(*new1); }
         wbool add(const T& new1) { return add(end(), new1); }
-        wcnt add(const iter& from, const iter& to) {
+        template <typename E>
+        wcnt add(const typename tucontainable<E>::iter& from, const typename tucontainable<E>::iter& to) {
+            static_assert(areBaseOfT<T, E>::value, "given type 'E' is not subtype of 'T'");
             int ret = 0;
-            for(iter e=from; e != to ;++e)
+            for(auto e=from; e != to ;++e)
                 if(add(*e))
                     ret++;
             return ret;
         }
-        wcnt add(const tucontainable& rhs) { return add(rhs.begin(), rhs.end()); }
+        wcnt add(const iter& from, const iter& to) { return add<T>(from, to); }
+        template <typename E>
+        wcnt add(const tucontainable<E>& rhs) { return add(rhs.begin(), rhs.end()); }
+        wcnt add(const me& rhs) { return add<T>(rhs); }
 
         // del:
         /// delete last element if exists.
