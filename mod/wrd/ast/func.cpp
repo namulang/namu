@@ -13,7 +13,7 @@ namespace wrd {
 
         int n = 0;
         for(const auto& e : args)
-            if(!e.isImpli(ps[n++].getOrigin()))
+            if(!e.isImpli(ps[n++].getOriginType()))
                 return false;
 
         return true;
