@@ -42,7 +42,7 @@ namespace wrd {
             narr ret;
             int n = 0;
             for(const node& e: args) {
-                str ased = e.as(ps[n++].getOrigin());
+                str ased = e.as(ps[n++].getOriginType());
                 if(!ased) return narr();
 
                 ret.add(*ased);

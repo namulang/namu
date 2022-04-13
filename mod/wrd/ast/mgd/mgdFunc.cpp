@@ -27,7 +27,7 @@ namespace wrd {
         int n = 0;
         for(const node& e: args) {
             const param& p = ps[n++];
-            str evaluated = e.as(p.getOrigin());
+            str evaluated = e.as(p.getOriginType());
             if(!evaluated) return nullptr;
 
             ret->add(p.getName(), *evaluated);
