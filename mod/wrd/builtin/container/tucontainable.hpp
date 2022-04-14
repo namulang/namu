@@ -9,6 +9,7 @@ namespace wrd {
     class tnucontainer;
     template <typename T, typename TACTIC> class tnarr;
     typedef tnarr<node, strTactic> narr;
+    template <typename K, typename V> class tbicontainable;
 
     /// @remark tucontainable has API treating iter ref and element as its parameter.
     template <typename T>
@@ -73,6 +74,8 @@ namespace wrd {
         template <typename E>
         wcnt add(const tucontainable<E>& rhs) { return add(rhs.begin(), rhs.end()); }
         wcnt add(const me& rhs) { return add<T>(rhs); }
+        template <typename K, typename V>
+        wcnt add(const tbicontainable<K, V>& rhs);
 
         // del:
         /// delete last element if exists.

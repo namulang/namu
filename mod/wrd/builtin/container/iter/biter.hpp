@@ -30,8 +30,8 @@ public:
         return *this;
     }
 
-    V& operator*() { return *this; }
-    V* operator->() { return this; }
+    V& operator*() { return getVal(); }
+    V* operator->() { return &getVal(); }
     const V& operator*() const WRD_UNCONST_FUNC(operator*())
     const V* operator->() const WRD_UNCONST_FUNC(operator->())
 

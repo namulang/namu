@@ -68,14 +68,13 @@ namespace wrd {
         WRD_DI("verify: obj: %s iterateSubNodes[%d]", it.getType().getName().c_str(), it.subs().len());
 
         for(auto& p : it.subs()) {
-            node& val = p.getVal();
-            if(!val.doesNeedScope()) {
-                verify(val);
+            if(!p.doesNeedScope()) {
+                verify(p);
                 continue;
             }
 
             it._inFrame();
-            verify(val);
+            verify(p);
             it._outFrame();
         }
     })
