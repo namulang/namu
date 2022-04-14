@@ -9,7 +9,6 @@ namespace wrd {
 
     class pack;
     struct manifest;
-    template<typename K, typename V, typename defaultContainer> class tnchain;
     typedef tnchain<std::string, pack> packChain;
 
     class packLoading : public instance, public packMakable, public clonable {
