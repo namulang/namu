@@ -10,7 +10,7 @@ namespace {
     public:
         myNode(int num): number(num) {}
 
-        nucontainer& subs() override { return nulOf<nucontainer>(); }
+        nbicontainer& subs() override { return nulOf<nbicontainer>(); }
         wbool canRun(const ucontainable& types) const override { return false; }
         str run(const ucontainable& args) override { return str(); }
 
@@ -18,17 +18,17 @@ namespace {
     };
 
     void simpleAddDelTest(int cnt) {
-        tnarr<myNode>* arr = new tnarr<myNode>();
-        nchain chn(*arr);
-        ASSERT_EQ(0, arr->len());
-        ASSERT_EQ(chn.len(), arr->len());
+        tnmap<std::string, myNode>* m = new tnmap<std::string, myNode>();
+        tnchain<std::string, myNode> chn(*m);
+        ASSERT_EQ(0, m->len());
+        ASSERT_EQ(chn.len(), m->len());
         ASSERT_TRUE(nul(chn.getNext()));
 
-        vector<myNode*> tray;
+        std::map<std::string, myNode*> tray;
         for(int n=0; n < cnt ;n++) {
             myNode* new1 = new myNode(n);
-            arr->add(new1);
-            tray.push_back(new1);
+            m->add("name" + std::to_string(n), new1);
+            tray.insert({"name" + std::to_string(n), new1});
         }
 
         ASSERT_EQ(chn.len(), cnt);
@@ -36,12 +36,14 @@ namespace {
         ASSERT_EQ(chn.len(), cnt);
         ASSERT_EQ(chn.len(), cnt);
 
-        int index = 0;
         ASSERT_TRUE(nul(chn.getNext()));
-        for(titer<myNode> e=chn.begin<myNode>(); e ;++e) {
-            const myNode& elem = *e;
-            ASSERT_EQ(&elem, tray[index]);
-            ASSERT_EQ(elem.number, index++);
+        for(auto e=chn.begin(); e ;++e) {
+            ASSERT_FALSE(nul(e.getKey()));
+            ASSERT_NE(e.getKey(), "");
+            const myNode& elem = e.getVal();
+            const myNode& answer = *tray[e.getKey()];
+            ASSERT_EQ(&elem, &answer);
+            ASSERT_EQ("name" + std::to_string(elem.number), e.getKey());
         }
     }
 
@@ -70,8 +72,8 @@ namespace {
     };
 
     template <typename T = myNode>
-    static wbool isMyNodesHasEqualIntArray(const tnchain<myNode>& root, int expects[], int expectSize) {
-        titer<T> myE = root.begin<T>();
+    static wbool isMyNodesHasEqualIntArray(const tnchain<std::string, myNode>& root, int expects[], int expectSize) {
+        auto myE = root.begin();
         for(int n=0; n < expectSize ;n++) {
             if(myE.isEnd()) return false;
             if(expects[n] != myE->number) return false;
@@ -102,16 +104,16 @@ TEST(nchainTest, simpleAddDelTest10000) {
 TEST(nchainTest, testucontainableAPI) {
     //  initial state:
     tstr<nchain> arr(new nchain());
-    ucontainable* con = &arr.get();
+    bicontainable* con = &arr.get();
     ASSERT_EQ(con->len(), 0);
 
-    iter head = arr->begin();
+    auto head = arr->begin();
     ASSERT_TRUE(head.isEnd());
-    iter tail = con->end();
+    auto tail = con->end();
     ASSERT_TRUE(tail.isEnd());
 
-    ASSERT_TRUE(con->add(con->begin(), new myNode(0)));
-    ASSERT_TRUE(con->add(con->end(), new myMyNode(1)));
+    ASSERT_TRUE(con->add("0", new myNode(0)));
+    ASSERT_TRUE(con->add("1", new myMyNode(1)));
     ASSERT_EQ(con->len(), 2);
     ASSERT_EQ(con->len(), 2);
     ASSERT_EQ(con->len(), 2);
@@ -121,21 +123,18 @@ TEST(nchainTest, testucontainableAPI) {
 
     //  add:
     int expectVal = 0;
-    for(iter e=con->begin(); e != con->end() ;e++) {
-        myNode& elem = e->cast<myNode>();
-        ASSERT_FALSE(nul(elem));
-        ASSERT_EQ(elem.number, expectVal++);
-    }
+    for(int n=0; n < con->len() ;n++)
+        ASSERT_EQ(con->get(std::to_string(n)).cast<myNode>().number, n);
 
     //  get & each:
     {
-        tnarr<myNode> tray = arr->getAll<myNode>([](const myNode& elem) {
+        tnarr<myNode> tray = arr->getAll<myNode>([](const std::string& name, const myNode& elem) {
             return true;
         });
         ASSERT_EQ(tray.len(), 2);
 
         int cnt = 0;
-        tray = arr->getAll<myNode>([&cnt](const myNode& elem) {
+        tray = arr->getAll<myNode>([&cnt](const std::string& name, const myNode& elem) {
             if(cnt >= 1) return false;
             cnt++;
             return true;
@@ -143,14 +142,14 @@ TEST(nchainTest, testucontainableAPI) {
         ASSERT_EQ(tray.len(), 1);
     }
 
-    tnarr<myMyNode> tray = arr->getAll<myMyNode>([](const myMyNode& elem) {
+    tnarr<myMyNode> tray = arr->getAll<myMyNode>([](const std::string& name, const myMyNode& elem) {
         if(elem.number == 1) return true;
         return false;
     });
     ASSERT_EQ(tray.len(), 1);
 
     //  del:
-    ASSERT_TRUE(con->del());
+    ASSERT_TRUE(con->del("1"));
     ASSERT_EQ(con->len(), 1);
     ASSERT_EQ(con->begin()->cast<myNode>().number, 0);
 

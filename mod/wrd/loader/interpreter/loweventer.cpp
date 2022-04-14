@@ -262,8 +262,8 @@ namespace wrd {
         if(!hasPack) return;
 
         bicontainable& con = subpack.subs();
-        for(const auto& p : arr)
-            con.add(p.getKey(), p.getVal());
+        for(auto e=arr.begin(); e ;++e)
+            con.add(e.getKey(), *e);
     }
 
     returnExpr* me::onReturn() {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "tucontainable.hpp"
+#include "tbicontainable.hpp"
 #include "iter/uiter.inl"
 #include "../../ast/node.hpp"
 #include "native/tnarr.inl"
@@ -32,6 +33,16 @@ namespace wrd {
                 ret.add(cast);
         }
 
+        return ret;
+    }
+
+    TEMPL
+    template <typename K, typename V>
+    wcnt ME::add(const tbicontainable<K, V>& rhs) {
+        static_assert(areBaseOfT<T, V>::value, "given type 'V' is not subtype of 'T'");
+        wcnt ret = 0;
+        for(auto e=rhs.begin(); e ;++e)
+            ret += add(*e);
         return ret;
     }
 

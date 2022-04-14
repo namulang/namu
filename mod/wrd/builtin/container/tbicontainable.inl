@@ -13,7 +13,7 @@ namespace wrd {
     TEMPL
     template <typename V1>
     V1& ME::get(std::function<wbool(const K&, const V1&)> l) const {
-        for(const auto& e : *this) {
+        for(auto e=begin(); e ;++e) {
             const V1& val = e.getVal().template cast<V1>();
             if(nul(val) || !l(e.getKey(), val)) continue;
                 return (V1&) val;
@@ -26,7 +26,7 @@ namespace wrd {
     template <typename V1>
     tnarr<V1> ME::getAll(std::function<wbool(const K&, const V1&)> l) const {
         tnarr<V1> ret;
-        for(const auto& e : *this) {
+        for(auto e=begin(); e ;++e) {
             const V1& val = e.getVal().template cast<V1>();
             if(nul(val) || !l(e.getKey(), val)) continue;
 

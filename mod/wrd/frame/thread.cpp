@@ -21,8 +21,7 @@ namespace wrd {
 
 #ifdef WRD_IS_DBG
             WRD_I("next following is list for them.");
-            for(const auto& e : *inner) {
-                const pack& pak = e.getVal();
+            for(const auto& pak : *inner) {
                 if(nul(pak)) {
                     WRD_E("cast isn't type of pack&");
                     continue;
