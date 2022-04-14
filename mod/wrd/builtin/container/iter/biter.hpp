@@ -30,10 +30,10 @@ public:
         return *this;
     }
 
-    me& operator*() { return *this; }
-    me* operator->() { return this; }
-    const me& operator*() const WRD_UNCONST_FUNC(operator*())
-    const me* operator->() const WRD_UNCONST_FUNC(operator->())
+    V& operator*() { return *this; }
+    V* operator->() { return this; }
+    const V& operator*() const WRD_UNCONST_FUNC(operator*())
+    const V* operator->() const WRD_UNCONST_FUNC(operator->())
 
     explicit operator wbool() const { return !isEnd(); }
 
