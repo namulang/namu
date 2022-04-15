@@ -542,7 +542,6 @@ TEST(nchainTest, testDeepChainIteration) {
     root->link(chn3);
     ASSERT_EQ(root->len(), 6);
 
-    int expect = 1;
     std::vector<int> tray;
     for(auto e=root->begin(); e ;++e) {
         ASSERT_EQ(e.getKey(), e->cast<myNode>().number);

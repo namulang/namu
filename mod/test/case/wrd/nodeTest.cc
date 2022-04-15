@@ -8,7 +8,7 @@ namespace {
         WRD(CLASS(myFunc, mgdFunc))
 
     public:
-        myFunc(): super("myFunc", params(), ttype<node>::get()) {}
+        myFunc(): super(params(), ttype<node>::get()) {}
 
         void setUp() {
             _executed = false;
@@ -31,7 +31,7 @@ namespace {
         const params& getParams() const override {
             static params inner;
             if(inner.len() == 0)
-                inner.add(new wrd::ref(ttype<obj>::get()));
+                inner.add({"", ttype<obj>::get()});
 
             return inner;
         }
@@ -121,9 +121,9 @@ TEST(nodeTest, testManuallyMakeNodeStructure) {
     myFunc func;
     WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
 
-    obj.subs().add(func);
+    obj.subs().add("myFunc", func);
     myFunc funcOffunc;
-    func.subs().add(funcOffunc);
+    func.subs().add("funcOfFunc", funcOffunc);
 
     WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
     WRD_E("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
@@ -160,11 +160,11 @@ TEST(nodeTest, testManualNativefuncCall) {
     myFunc func;
 
     myObj obj;
-    obj.subs().add(func);
+    obj.subs().add("myFunc", func);
 
     narr args;
     args.add(obj);
-    narr subs = ((const myObj&) obj).subAll(func.getName(), args);
+    narr subs = ((const myObj&) obj).subAll("myFunc", args);
     ASSERT_EQ(subs.len(), 1);
     ASSERT_TRUE(subs[0].canRun(args));
 
@@ -184,10 +184,17 @@ TEST(nodeTest, testImmutablePositive) {
     r1->get() = 0.5f;
     ASSERT_EQ(*r1, *r2);
 
-	wrd::ref r3(*r1, "");
-	ASSERT_TRUE(r3);
-	ASSERT_EQ(r3->cast<wFlt>().get(), r1->get());
-	ASSERT_TRUE(&(r3->cast<wFlt>()) != &r1.get());
+	param r3("", *r1);
+	ASSERT_FALSE(nul(r3.getOrigin()));
+    ASSERT_EQ(r3.getOriginType(), ttype<wFlt>::get());
+	ASSERT_EQ(r3.getOrigin().cast<wFlt>().get(), r1->get());
+
+    scope s;
+    s.add("r1", *r1);
+    const wFlt& cast = s["r1"].cast<wFlt>();
+    ASSERT_FALSE(nul(cast));
+    ASSERT_NE(&r1.get(), &cast);
+    ASSERT_EQ(*r1, cast);
 }
 
 TEST(nodeTest, testImmutableNegative) {
