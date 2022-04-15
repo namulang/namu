@@ -34,6 +34,8 @@ namespace wrd {
         // get:
         virtual V& get(const K& key) = 0;
         const V& get(const K& key) const WRD_UNCONST_FUNC(get(key))
+        template <typename V1> V1& get(const K& key) { return get(key).template cast<V1>(); }
+        template <typename V1> const V1& get(const K& key) const WRD_UNCONST_FUNC(get<V1>(key))
         template <typename V1>
         V1& get(std::function<wbool(const K&, const V1&)> l) const;
         V& get(std::function<wbool(const K&, const V&)> l) const;

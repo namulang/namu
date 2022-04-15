@@ -71,16 +71,24 @@ namespace {
         myNode2(int val) : super(val) {}
     };
 
+    bool vectorHas(std::vector<int>& v, int val) {
+        for(int n=0; n < v.size() ;n++)
+            if(v[n] == val)
+                return true;
+        return false;
+    }
+
     template <typename T = myNode>
-    static wbool isMyNodesHasEqualIntArray(const tnchain<std::string, myNode>& root, int expects[], int expectSize) {
+    static wbool isMyNodesHasEqualIntArray(const tnchain<int, myNode>& root, int expects[], int expectSize) {
         auto myE = root.begin();
-        for(int n=0; n < expectSize ;n++) {
-            if(myE.isEnd()) return false;
-            if(expects[n] != myE->number) return false;
+        vector<int> actuals;
+        for(const auto& elem : root)
+            if(elem.isSub<T>())
+                actuals.push_back(elem.number);
 
-            myE++;
-        }
-
+        if(actuals.size() != expectSize) return false;
+        for(int n=0; n < expectSize ;n++)
+            if(!vectorHas(actuals, expects[n])) return false;
         return true;
     }
 
@@ -122,7 +130,6 @@ TEST(nchainTest, testucontainableAPI) {
     ASSERT_EQ(con->len(), 2);
 
     //  add:
-    int expectVal = 0;
     for(int n=0; n < con->len() ;n++)
         ASSERT_EQ(con->get(std::to_string(n)).cast<myNode>().number, n);
 
@@ -163,7 +170,7 @@ TEST(nchainTest, testucontainableAPI) {
     ASSERT_EQ(arr2[3].cast<myNode>().number, 3);
     ASSERT_EQ(arr2.len(), 4);
 
-    iter e = arr2.begin();
+    auto e = arr2.begin();
     e = e + 2;
     ASSERT_EQ(e->cast<myNode>().number, 2);
     ASSERT_TRUE(arr2.add(e, new myNode(5)));
@@ -177,97 +184,103 @@ TEST(nchainTest, testucontainableAPI) {
     ASSERT_EQ(arr2[5].cast<myNode>().number, 3);
 
     ASSERT_EQ(con->len(), 1);
-    ASSERT_EQ(con->add(arr2.iter(1), arr2.iter(3)), 2);
+    wcnt count = 0;
+    for(auto e=arr2.iterate(1); e != arr2.iterate(3) ;++e)
+        count += con->add(to_string(count), *e);
+    ASSERT_EQ(count, 2);
     ASSERT_EQ(con->len(), 3);
 
     // con = {0, 1, 6}
 
-    e=con->begin();
-    myNode* elem = &e->cast<myNode>();
+    auto e2=con->begin();
+    myNode* elem = &e2->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 0);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 1);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
-    ASSERT_FALSE(++e);
+    ASSERT_FALSE(++e2);
 
     ASSERT_TRUE(con->len() > 0);
     con->rel();
     ASSERT_TRUE(con->len() == 0);
 
-    ASSERT_EQ(con->add(arr2.iter(2), arr2.end()), 4);
-    e = con->begin();
-    elem = &e->cast<myNode>();
+    count = 0;
+    for(auto e=arr2.iterate(2); e ;++e)
+        count += con->add(to_string(count), *e);
+    ASSERT_EQ(count, 4);
+    e2 = con->begin();
+    elem = &e2->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 5);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 2);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 
     ASSERT_EQ(con->del(con->begin() + 1, con->begin() + 3), 2);
-    e = con->begin();
-    elem = &e->cast<myNode>();
+    e2 = con->begin();
+    elem = &e2->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 6);
 
-    elem = &(++e)->cast<myNode>();
+    elem = &(++e2)->cast<myNode>();
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 }
 
 TEST(nchainTest, testLinkedChainWithOnly1Element) {
-    narr arr1;
-    arr1.add(new myNode(0));
-    nchain chn1(arr1);
+    nmap map1;
+    map1.add("0", new myNode(0));
+    nchain chn1(map1);
     ASSERT_EQ(chn1.len(), 1);
 
-    narr arr2;
-    arr2.add(new myNode(0));
-    nchain chn2(arr2);
+    nmap map2;
+    map2.add("1", new myNode(0));
+    nchain chn2(map2);
     ASSERT_EQ(chn2.len(), 1);
     chn2.link(chn1);
     ASSERT_EQ(chn2.len(), 2);
 
     int n=0;
-    for(iter e=chn2.begin(); e ;e++)
+    for(auto e=chn2.begin(); e ;++e)
         n++;
     ASSERT_EQ(n, 2);
 }
 
 TEST(nchainTest, testLinkedChainWithNContainerAPI) {
-    narr arr1;
-    nchain chn1(arr1);
-    narr arr2;
-    nchain chn2(arr2);
+    nmap map1;
+    nchain chn1(map1);
+    nmap map2;
+    nchain chn2(map2);
     vector<int> expectElementNums;
 
     // add each chains:
-    ASSERT_TRUE(chn2.add(new myNode(6)));
-    ASSERT_TRUE(chn2.add(new myMyNode(5)));
+    ASSERT_TRUE(chn2.add("6", new myNode(6)));
+    ASSERT_TRUE(chn2.add("5", new myMyNode(5)));
     examineChain2Element(chn2, 6, 5);
 
-    narr arr3;
+    nmap arr3;
     nchain chn3(arr3);
-    ASSERT_TRUE(chn3.add(new myNode(2)));
-    ASSERT_TRUE(chn3.add(new myMyNode(3)));
+    ASSERT_TRUE(chn3.add("2", new myNode(2)));
+    ASSERT_TRUE(chn3.add("3", new myMyNode(3)));
     examineChain2Element(chn3, 2, 3);
 
-    ASSERT_TRUE(arr1.add(new myNode(0)));
-    ASSERT_TRUE(chn1.add(new myMyNode(1)));
+    ASSERT_TRUE(map1.add("0", new myNode(0)));
+    ASSERT_TRUE(chn1.add("1", new myMyNode(1)));
     examineChain2Element(chn1, 0, 1);
 
     expectElementNums.push_back(0);
@@ -289,36 +302,18 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
     ASSERT_EQ(chn1.len(), 6);
 
     // add with link:
-    iter e = chn1.begin();
-    myNode* mynode = &(e++)->cast<myNode>();
-    ASSERT_FALSE(nul(mynode));
-    ASSERT_EQ(mynode->number, 0);
-
-    mynode = &(e++)->cast<myNode>();
-    ASSERT_FALSE(nul(mynode));
-    ASSERT_EQ(mynode->number, 1);
-
-    mynode = &(e++)->cast<myNode>();
-    ASSERT_FALSE(nul(mynode));
-    ASSERT_EQ(mynode->number, 6);
-
-    mynode = &(e++)->cast<myNode>();
-    ASSERT_FALSE(nul(mynode));
-    ASSERT_EQ(mynode->number, 5);
-
-    mynode = &(e++)->cast<myNode>();
-    ASSERT_FALSE(nul(mynode));
-    ASSERT_EQ(mynode->number, 2);
-
-    mynode = &(e++)->cast<myNode>();
-    ASSERT_FALSE(nul(mynode));
-    ASSERT_EQ(mynode->number, 3);
+    ASSERT_EQ(chn1.get<myNode>("0").number, 0);
+    ASSERT_EQ(chn1.get<myNode>("1").number, 1);
+    ASSERT_EQ(chn1.get<myNode>("6").number, 6);
+    ASSERT_EQ(chn1.get<myNode>("5").number, 5);
+    ASSERT_EQ(chn1.get<myNode>("2").number, 2);
+    ASSERT_EQ(chn1.get<myNode>("3").number, 3);
 
     // each with link:
     int cnt = 0;
-    auto lambda = [&cnt, &expectElementNums](const nucontainer& chn) -> void {
-        for(titer<myNode> e=chn.begin<myNode>() ; e ;++e) {
-            const myNode& elem = *e;
+    auto lambda = [&cnt, &expectElementNums](const nbicontainer& chn) -> void {
+        for(const auto& e : chn) {
+            const myNode& elem = e.cast<myNode>();
             if(nul(elem)) {
                 cnt = -1;
                 return;
@@ -357,89 +352,89 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
 
 TEST(nchainTest, testIfnchainLinkItself) {
     nchain chn;
-    chn.add(new myNode(0));
-    chn.add(new myNode(1));
+    chn.add("0", new myNode(0));
+    chn.add("1", new myNode(1));
     ASSERT_FALSE(chn.link(chn));
     ASSERT_EQ(chn.len(), 2);
 }
 
 TEST(nchainTest, testShouldLinkOverwritePrevious) {
-    tstr<narr> arr1Str(new narr());
-    const bindTag* arr1tag = &bindTag::getBindTag(arr1Str.getItsId());
-    ASSERT_FALSE(nul(arr1tag));
-    ASSERT_EQ(arr1tag->getStrongCnt(), 1);
+    tstr<nmap> map1Str(new nmap());
+    const bindTag* map1tag = &bindTag::getBindTag(map1Str.getItsId());
+    ASSERT_FALSE(nul(map1tag));
+    ASSERT_EQ(map1tag->getStrongCnt(), 1);
 
-    tweak<narr> arr1Weak = arr1Str;
-    arr1Str->add(new myNode(0));
-    arr1Str->add(new myNode(1));
-    ASSERT_EQ(arr1Str->len(), 2);
-    ASSERT_EQ(arr1tag->getStrongCnt(), 1);
+    tweak<nmap> map1Weak = *map1Str;
+    map1Str->add("0", new myNode(0));
+    map1Str->add("1", new myNode(1));
+    ASSERT_EQ(map1Str->len(), 2);
+    ASSERT_EQ(map1tag->getStrongCnt(), 1);
 
 
     nchain chn2;
-    chn2.add(new myNode(2));
-    chn2.add(new myNode(3));
+    chn2.add("2", new myNode(2));
+    chn2.add("3", new myNode(3));
     ASSERT_EQ(chn2.len(), 2);
 
-    ASSERT_TRUE(chn2.link(*arr1Str));
-    ASSERT_EQ(arr1tag->getStrongCnt(), 2);
-    // chn2 --> unknown chain instance holding arr1
+    ASSERT_TRUE(chn2.link(*map1Str));
+    ASSERT_EQ(map1tag->getStrongCnt(), 2);
+    // chn2 --> unknown chain instance holding map1
     ASSERT_EQ(chn2.len(), 4);
 
-    arr1Str.rel();
-    ASSERT_EQ(arr1tag->getStrongCnt(), 1);
+    map1Str.rel();
+    ASSERT_EQ(map1tag->getStrongCnt(), 1);
     ASSERT_EQ(chn2.len(), 4);
-    ASSERT_TRUE(arr1Weak.isBind());
+    ASSERT_TRUE(map1Weak.isBind());
 
-    narr arr2;
-    ASSERT_TRUE(arr1Weak.isBind());
-    chn2.link(arr2);
-    ASSERT_EQ(arr1tag->getStrongCnt(), 0);
-    // this overwrites chain containing arr1. it's now dangling.
-    // chn2(2, 3) --> unknown chain instance holding arr2(null)
-    //   |--- X --> unknown chain instance holding arr1(0, 1)
-    ASSERT_FALSE(arr1Weak.isBind());
+    nmap map2;
+    ASSERT_TRUE(map1Weak.isBind());
+    chn2.link(map2);
+    ASSERT_EQ(map1tag->getStrongCnt(), 0);
+    // this overwrites chain containing map1. it's now dangling.
+    // chn2(2, 3) --> unknown chain instance holding map2(null)
+    //   |--- X --> unknown chain instance holding map1(0, 1)
+    ASSERT_FALSE(map1Weak.isBind());
 
     ASSERT_EQ(chn2.len(), 2);
 }
 
 TEST(nchainTest, testDelWithLink) {
     nchain chn;
-    chn.add(new myNode(1));
+    chn.add("1", new myNode(1));
     ASSERT_EQ(chn.len(), 1);
 
     {
-        narr arr1;
-        arr1.add(new myNode(2));
-        arr1.add(new myNode(3));
+        nmap map1;
+        map1.add("2", new myNode(2));
+        map1.add("3", new myNode(3));
 
-        auto arr1Str = chn.link(arr1);
-        // chn --> arr1Str with arr1
+        auto map1Str = chn.link(map1);
+        // chn --> map1Str with map1
         //  ^
         //  |
         // head
         ASSERT_EQ(chn.len(), 3);
-        tweak<nchain> arr2Weak;
+        tweak<nchain> map2Weak;
         {
-            narr arr2;
-            arr2.add(new myNode(4));
-            arr2.add(new myNode(5));
-            arr2.add(new myNode(6));
-            auto arr2Str = arr1Str->link(arr2);
-            arr2Weak = arr2Str;
-            // now, chn --> arr1Str with arr1 --> arr2Str with arr2
-            ASSERT_EQ(arr2Str->len(), 3);
-            ASSERT_EQ(arr1Str->len(), 3 + arr1.len());
-            ASSERT_EQ(chn.len(), 1 + arr1.len() + arr2.len());
+            nmap map2;
+            map2.add("4", new myNode(4));
+            map2.add("5", new myNode(5));
+            map2.add("6", new myNode(6));
+            auto map2Str = map1Str->link(map2);
+            map2Weak = map2Str;
+            // now, chn --> map1Str with map1 --> map2Str with map2
+            ASSERT_EQ(map2Str->len(), 3);
+            ASSERT_EQ(map1Str->len(), 3 + map1.len());
+            ASSERT_EQ(chn.len(), 1 + map1.len() + map2.len());
         }
 
-        arr1Str->unlink();
-        // now, chn --> arr1Str with arr1
-        ASSERT_FALSE(arr2Weak.isBind());
-        ASSERT_EQ(chn.len(), 1 + arr1.len());
+        map1Str->unlink();
+        // now, chn --> map1Str with map1
+        ASSERT_FALSE(map2Weak.isBind());
+        ASSERT_EQ(chn.len(), 1 + map1.len());
 
         WRD_DI("chn.len()=%d", chn.len());
-        iter e = chn.iter(chn.len() - 1);
+        auto e = chn.iterate(chn.len() - 1);
 
         myNode& last = e->cast<myNode>();
         ASSERT_EQ(last.number, 3);
@@ -451,41 +446,41 @@ TEST(nchainTest, testDelWithLink) {
 TEST(nchainTest, testLastIterator) {
     nchain chn;
     ASSERT_EQ(chn.len(), 0);
-    chn.add(new myNode(1));
-    chn.add(new myNode(3));
-    chn.add(chn.last(), new myNode(2));
+    chn.add("1", new myNode(1));
+    chn.add("3", new myNode(3));
+    chn.add("4", new myNode(2));
 
-    wint checker = 0;
     wbool sorted = true;
-    for(titer<myNode> e=chn.begin<myNode>(); e ; ++e)
-        ASSERT_EQ(e->number, ++checker);
+    ASSERT_TRUE(chn.has("1"));
+    ASSERT_TRUE(chn.has("3"));
+    ASSERT_TRUE(chn.has("4"));
     ASSERT_TRUE(sorted);
 }
 
 TEST(nchainTest, testRangeBasedForLoop) {
-    nchain arr1;
-    arr1.add(new myNode(3));
-    arr1.add(new myNode(7));
-    nchain arr2;
-    arr2.add(new myNode(1));
-    arr2.add(new myNode(2));
-    arr1.link(arr2);
+    nchain map1;
+    map1.add("3", new myNode(3));
+    map1.add("7", new myNode(7));
+    nchain map2;
+    map2.add("1", new myNode(1));
+    map2.add("2", new myNode(2));
+    map1.link(map2);
 
     int sum = 0;
-    for(auto& e : arr1) {
+    for(auto& e : map1) {
         myNode& cast = e.cast<myNode>();
         sum += cast.number;
     }
 
     int sum2 = 0;
-    for(const node& e : arr1) {
+    for(const node& e : map1) {
         const myNode& cast = e.cast<myNode>();
         sum2 += cast.number;
     }
     ASSERT_EQ(sum2, sum);
 
     int expect = 0;
-    for(iter e=arr1.begin(); e ; e++)
+    for(auto e=map1.begin(); e ; e++)
         expect += e->cast<myNode>().number;
 
     ASSERT_EQ(sum, expect);
@@ -493,140 +488,95 @@ TEST(nchainTest, testRangeBasedForLoop) {
 
 TEST(nchainTest, testLinkArrayAndChain) {
 
-    narr arr1;
-    arr1.add(new myNode(1));
-    arr1.add(new myNode(2));
-    nchain chn(arr1);
+    nmap map1;
+    map1.add("1", new myNode(1));
+    map1.add("2", new myNode(2));
+    nchain chn(map1);
     ASSERT_EQ(chn.len(), 2);
     ASSERT_TRUE(nul(chn.getNext()));
 
     nchain chn2;
-    chn2.add(new myNode(3));
-    narr arr2;
-    arr2.add(new myNode(4));
-    arr2.add(new myNode(5));
-    chn2.link(arr2);
+    chn2.add("3", new myNode(3));
+    nmap map2;
+    map2.add("4", new myNode(4));
+    map2.add("5", new myNode(5));
+    chn2.link(map2);
     ASSERT_EQ(chn2.len(), 3);
     ASSERT_FALSE(nul(chn2.getNext()));
-    ASSERT_EQ(&chn2.getNext().getContainer(), &arr2);
+    ASSERT_EQ(&chn2.getNext().getContainer(), &map2);
 
     chn.link(chn2);
     int cnt = 5;
     ASSERT_EQ(chn.len(), cnt);
 
-    int expect[] = {1, 2, 3, 4, 5};
-    int n=0;
-    for(node& e : chn) {
-        myNode& cast = e.cast<myNode>();
-        ASSERT_EQ(cast.number, expect[n++]);
+    for(int n=0; n < 5; n++) {
+        std::string key = std::to_string(n);
+        ASSERT_TRUE(chn.has(key));
+        ASSERT_EQ(chn[key].cast<myNode>().number, n);
     }
 }
 
 TEST(nchainTest, testDeepChainIteration) {
-    tnchain<myNode> chn1;
-    chn1.add(new myNode(1));
-    chn1.add(new myNode(2));
+    tnchain<int, myNode> chn1;
+    chn1.add(1, new myNode(1));
+    chn1.add(2, new myNode(2));
     ASSERT_EQ(chn1.len(), 2);
 
-    tnchain<myNode> chn2;
-    chn2.add(new myNode(3));
-    chn2.add(new myNode(4));
+    tnchain<int, myNode> chn2;
+    chn2.add(3, new myNode(3));
+    chn2.add(4, new myNode(4));
     ASSERT_EQ(chn2.len(), 2);
 
-    tstr<tnchain<myNode>> root(tnchain<myNode>::wrapDeep(chn1));
+    tstr<tnchain<int, myNode>> root(tnchain<int, myNode>::wrapDeep(chn1));
     ASSERT_EQ(root->len(), 2);
 
     chn1.link(chn2);
     ASSERT_EQ(chn1.len(), 4);
     ASSERT_EQ(root->len(), 4);
 
-    tnchain<myNode> chn3;
-    chn3.add(new myNode(5));
-    chn3.add(new myNode(6));
+    tnchain<int, myNode> chn3;
+    chn3.add(5, new myNode(5));
+    chn3.add(6, new myNode(6));
     ASSERT_EQ(chn3.len(), 2);
 
     root->link(chn3);
     ASSERT_EQ(root->len(), 6);
 
     int expect = 1;
-    for(const node& e : *root) {
-        ASSERT_EQ(expect, e.cast<myNode>().number);
-        expect++;
-    }
-}
-
-TEST(nchainTest, testTIterator) {
-    tnchain<myNode> chn1;
-    chn1.add(new myNode(1));
-    chn1.add(new myNode(1));
-    chn1.add(new myNode2(2));
-    chn1.add(new myNode(1));
-    ASSERT_EQ(chn1.len(), 4);
-    {
-        titer<myNode2> e2 = chn1.begin<myNode2>();
-        ASSERT_FALSE(e2.isEnd());
-        ASSERT_EQ(e2->number, 2);
+    std::vector<int> tray;
+    for(auto e=root->begin(); e ;++e) {
+        ASSERT_EQ(e.getKey(), e->cast<myNode>().number);
+        tray.push_back(e.getKey());
     }
 
-    tnchain<myNode> chn2;
-    chn2.add(new myNode(1));
-    ASSERT_EQ(chn2.len(), 1);
-    {
-        titer<myNode2> e2 = chn2.begin<myNode2>();
-        ASSERT_TRUE(e2.isEnd());
-    }
-
-    tnchain<myNode> chn3;
-    chn3.add(new myNode2(2));
-    {
-        titer<myNode2> e2 = chn3.begin<myNode2>();
-        ASSERT_FALSE(e2.isEnd());
-        ASSERT_EQ(e2->number, 2);
-    }
-
-    chn1.link(chn2);
-    chn2.link(chn3);
-
-    {
-        ASSERT_EQ(chn1.len(), 6);
-        int expects[] = {1, 1, 2, 1, 1, 2};
-        ASSERT_TRUE(isMyNodesHasEqualIntArray<>(chn1, expects, 6));
-    }
-
-    {
-        titer<myNode2> e2 = chn1.begin<myNode2>();
-        ASSERT_FALSE(e2.isEnd());
-        e2++;
-        ASSERT_NE(&e2.get(), (&(chn1.begin() + 3).get()));
-        ASSERT_EQ(&e2.get(), (&chn1.last().get()));
-    }
-
+    for(int n=0; n < 6; n++)
+        ASSERT_TRUE(vectorHas(tray, n));
 }
 
 TEST(nchainTest, testDeepChainAddDel) {
-    tnchain<myNode> chn1;
-    chn1.add(new myNode(1));
-    chn1.add(new myNode2(2));
+    tnchain<int, myNode> chn1;
+    chn1.add(1, new myNode(1));
+    chn1.add(2, new myNode2(2));
 
-    tnchain<myNode> chn2;
-    chn2.add(new myNode2(3));
-    chn2.add(new myNode(4));
+    tnchain<int, myNode> chn2;
+    chn2.add(3, new myNode2(3));
+    chn2.add(4, new myNode(4));
     chn1.link(chn2);
 
-    tstr<tnchain<myNode>> root(tnchain<myNode>::wrapDeep(chn1));
+    tstr<tnchain<int, myNode>> root(tnchain<int, myNode>::wrapDeep(chn1));
 
-    tnchain<myNode> chn3;
-    chn3.add(new myNode2(5));
-    chn3.add(new myNode(6));
+    tnchain<int, myNode> chn3;
+    chn3.add(5, new myNode2(5));
+    chn3.add(6, new myNode(6));
 
     root->link(chn3);
 
-    iter e = root->begin();
+    auto e = root->begin();
     e = e + 2;
     ASSERT_FALSE(nul(*e));
 
-    ASSERT_EQ(root->len(), 6);
-    root->del(e);
+    ASSERT_EQ(root->get(6).number, 6);
+    root->del(3);
     ASSERT_EQ(root->len(), 5);
 
     {
@@ -648,6 +598,11 @@ TEST(nchainTest, testDeepChainAddDel) {
         ASSERT_TRUE(isMyNodesHasEqualIntArray<>(*root, expects, 2));
     }
 
-    titer<myNode2> emptyE = root->begin<myNode2>();
-    ASSERT_TRUE(emptyE.isEnd());
+    bool found = false;
+    for(const auto& elem : *root)
+        if(elem.isSub<myNode2>()) {
+            found = true;
+            break;
+        }
+    ASSERT_FALSE(found);
 }
