@@ -7,7 +7,7 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
     const packs& systemPacks = wrd::thread::get().getSystemPacks();
     ASSERT_FALSE(nul(systemPacks));
 
-    node& pak = systemPacks.get<node>([](const node& e) { return e.getName() == "samplePack"; });
+    pack& pak = systemPacks.get([](const std::string& name, const pack& e) { return name == "samplePack"; });
     ASSERT_FALSE(nul(pak));
 
     ASSERT_EQ(pak.subs().len(), 1);
@@ -20,7 +20,7 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
         ASSERT_EQ(sayFunc.getEvalType(), wVoid().getType());
         ASSERT_EQ(sayFunc.getParams().len(), 1); // 1 for originObj as "me"
 
-        str res = sayFunc.run(narr {&origin} );
+        str res = sayFunc.run(narr {origin} );
         ASSERT_TRUE(res);
         ASSERT_EQ(res->cast<wVoid>(), wVoid());
     }
@@ -35,7 +35,7 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
         ASSERT_EQ(argTypes[1].getType(), ttype<wInt>());
 
         wInt arg1(5);
-        str retVal = add.run(narr {&origin, &arg1} ); // should nothing happen
+        str retVal = add.run(narr {origin, arg1} ); // should nothing happen
         ASSERT_FALSE(retVal);
 
         retVal = add.run(narr(origin, wInt(5), wInt(3)));
