@@ -10,22 +10,6 @@ from tempfile import gettempdir
 
 frame = "======================================================="
 
-def beep(waveform=(79, 45, 32, 50, 99, 113, 126, 127)):
-    """Cross-platform Sound Playing with StdLib only,No Sound file required."""
-    global resDir
-    wavefile = os.path.join(resDir, "beep.wav")
-    if not os.path.isfile(wavefile) or not os.access(wavefile, os.R_OK):
-        with open(wavefile, "w+") as wave_file:
-            for sample in range(0, 1000, 1):
-                for wav in range(0, 8, 1):
-                    wave_file.write(chr(waveform[wav]))
-    if sys.platform.startswith("linux"):
-        return subprocess.call("chrt -i 0 aplay '{fyle}'".format(fyle=wavefile), shell=1)
-    if sys.platform.startswith("darwin"):
-        return subprocess.call("afplay '{fyle}'".format(fyle=wavefile), shell=True)
-    if sys.platform.startswith("win"):  # FIXME: This is Ugly.
-        return subprocess.call("start /low /min '{fyle}'".format(fyle=wavefile), shell=1)
-
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -324,7 +308,7 @@ def _incBuildCnt():
 
 def _make():
     print("")
-    make_option = "-j4 -s"  # j4 -> 4 multithread.
+    make_option = "-j8 -s"  # j4 -> 4 multithread.
                             # s ->  don't print command.
     printInfoEnd("making " + make_option + "...")
     if isWindow():
@@ -389,7 +373,6 @@ def rebuild():
 def build(incVer):
     if checkDependencies(["git", "cmake", "clang", "bison", "flex", "dot"]):
         printErr("This program needs following softwares to be fully functional.")
-        beep()
         return -1
 
     _checkGTest()
@@ -397,15 +380,12 @@ def build(incVer):
     if incVer:
         _injectBuildInfo()
         if _createMakefiles():
-            beep()
             return -1
 
         _incBuildCnt()
     if _make():
-        beep()
         return -1
 
-    beep()
     return 0
 
 # arg is "" for dbg or "silent" for rel
