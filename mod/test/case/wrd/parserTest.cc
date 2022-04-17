@@ -18,10 +18,10 @@ TEST(parserTest, testHelloWorld) {
     // TODO: make AST: ASSERT_TRUE(rootBinder->subs().len() == 2);
 
     pack pak((manifest()), (packLoadings()));
-    nucontainer& tray = pak.subs();
+    nbicontainer& tray = pak.subs();
     ASSERT_FALSE(nul(tray));
     p.setPack(pak);
-    tray.add(new wStr("hello"));
+    tray.add("hello", new wStr("hello"));
     ASSERT_TRUE(tray.len() == 1);
 
     p.parse(script.c_str());
