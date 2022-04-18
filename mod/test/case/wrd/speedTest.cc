@@ -86,7 +86,7 @@ TEST(speedTest, benchmarkArr) {
 
     benchMark("add nchain 10000 times", 10000, [&]() {
         nchain ar;
-        ar.add(obj1);
+        ar.add("", obj1);
         clc += ((int64_t) &ar) % 2;
     });
 }
