@@ -17,7 +17,6 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
 
         const func& f = res.sub<func>("main", narr());
         ASSERT_FALSE(nul(f));
-        ASSERT_EQ(f.getName(), "main");
         ASSERT_EQ(f.getParams().len(), 0);
         ASSERT_EQ(f.getEvalType(), ttype<wVoid>());
     }
@@ -33,7 +32,6 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
         ASSERT_TRUE(nul(fwrong));
         const func& f = res.sub<func>("main", narr(wInt(), wStr()));
         ASSERT_FALSE(nul(f));
-        ASSERT_EQ(f.getName(), "main");
         ASSERT_EQ(f.getParams().len(), 2);
         ASSERT_EQ(f.getEvalType(), ttype<wVoid>());
 
@@ -41,14 +39,14 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
         ASSERT_FALSE(nul(ps));
         ASSERT_EQ(ps.len(), 2);
 
-        const node& arg1 = ps[0];
+        const param& arg1 = ps[0];
         ASSERT_EQ(arg1.getName(), "argc");
-        ASSERT_EQ(arg1.getType(), ttype<wInt>());
-        ASSERT_TRUE(nul(arg1.cast<wrd::ref>().get()));
-        const node& arg2 = ps[1];
+        ASSERT_EQ(arg1.getOriginType(), ttype<wInt>());
+        ASSERT_TRUE(nul(arg1.getOrigin()));
+        const param& arg2 = ps[1];
         ASSERT_EQ(arg2.getName(), "argv");
-        ASSERT_EQ(arg2.getType(), ttype<wStr>());
-        ASSERT_TRUE(nul(arg2.cast<wrd::ref>().get()));
+        ASSERT_EQ(arg2.getOriginType(), ttype<wStr>());
+        ASSERT_TRUE(nul(arg2.getOrigin()));
     }
 }
 
