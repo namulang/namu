@@ -31,7 +31,9 @@ struct syntaxTest : public ::testing::Test {
         _isParsed = _subpack && _pack && !_rpt;
         if(!_isParsed) return *this;
 
-        wrd::packChain verifying(new wrd::packs(*_pack));
+        wrd::packs* paks = new wrd::packs();
+        paks->add(_pack->getManifest().name, *_pack);
+        wrd::packChain verifying(paks);
         verifying.link(wrd::thread::get().getSystemPacks());
 
         wrd::verifier v;
