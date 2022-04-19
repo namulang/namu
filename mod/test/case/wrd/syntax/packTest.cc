@@ -32,7 +32,7 @@ namespace {
         };
 
     public:
-        myfunc(std::string name = "myfunc"): super(name, params(), ttype<node>::get(), *new myBlock()) {
+        myfunc(): super(params(), ttype<node>::get(), *new myBlock()) {
             WRD_I("myfunc(%x) new", this);
         }
         ~myfunc() {
@@ -66,7 +66,7 @@ namespace {
         WRD(CLASS(nativeFunc, func))
 
     public:
-        nativeFunc(std::string name = "nativeFunc"): super(name) {}
+        nativeFunc(): super() {}
 
         wbool isRun() const { return _executed; }
 
@@ -85,10 +85,9 @@ namespace {
         const params& getParams() const override { return _params; }
         params& getParams() { return _params; }
 
-    protected:
-        str _onCastArgs(narr& castedArgs) override {
+        str run(const ucontainable& args) override {
             _executed = true;
-            _res = _lambda(castedArgs, (frames&) wrd::thread::get().getFrames());
+            _res = _lambda(args, (frames&) wrd::thread::get().getFrames());
             return str();
         }
 
@@ -107,17 +106,17 @@ pack demo
     ASSERT_FALSE(nul(getSubPack()));
     ASSERT_FALSE(nul(getPack().subs()));
     ASSERT_EQ(getPack().subs().len(), 0);
-    ASSERT_EQ(getPack().getName(), "demo");
+    ASSERT_EQ(getPack().getManifest().name, "demo");
 }
 
 TEST_F(packTest, packIsInFrameWhenCallMgdFunc) {
     // check whether pack's subnodes registered into frame when it calls:
     pack testPack(manifest("demo"), packLoadings());
-    myfunc f1("foo");
+    myfunc f1;
 
     params& ps = f1.getParams();
-    ps.add(new wrd::ref(ttype<wInt>::get(), "age"));
-    ps.add(new wrd::ref(ttype<wFlt>::get(), "grade"));
+    ps.add(new param("age", ttype<wInt>::get()));
+    ps.add(new param("grade", ttype<wFlt>::get()));
     f1.setLambda([](const auto& contain, const auto& sf) {
         const frame& fr = sf[sf.len() - 1];
         if(nul(fr)) return false;
@@ -144,7 +143,7 @@ TEST_F(packTest, packIsInFrameWhenCallMgdFunc) {
         return true;
     });
 
-    testPack.subs().add(f1);
+    testPack.subs().add("foo", f1);
     testPack.run("foo", narr(wInt(1), wFlt(3.5f)));
     ASSERT_TRUE(f1.isRun());
     ASSERT_TRUE(f1.isSuccess());
@@ -153,17 +152,17 @@ TEST_F(packTest, packIsInFrameWhenCallMgdFunc) {
 TEST_F(packTest, packIsNotInFrameWhenCallNativeFunc) {
     // check whether pack's subnodes not registered into frame when it calls:
     pack testPack(manifest("demo"), packLoadings());
-    nativeFunc f1("foo");
+    nativeFunc f1;
     params& ps = f1.getParams();
-    ps.add(new wrd::ref(ttype<wInt>::get(), "age"));
-    ps.add(new wrd::ref(ttype<wFlt>::get(), "grade"));
+    ps.add(new param("age", ttype<wInt>::get()));
+    ps.add(new param("grade", ttype<wFlt>::get()));
     f1.setLambda([](const auto& contain, const auto& sf) {
         const frame& fr = sf[sf.len() - 1];
         if(!nul(fr)) return WRD_E("fr == null"), false;
 
         return true;
     });
-    testPack.subs().add(f1);
+    testPack.subs().add("foo", f1);
 
     testPack.run("foo", narr(wInt(1), wFlt(3.5f)));
     ASSERT_TRUE(f1.isRun());

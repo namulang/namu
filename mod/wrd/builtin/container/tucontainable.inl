@@ -46,6 +46,16 @@ namespace wrd {
         return ret;
     }
 
+    TEMPL
+    T& ME::get(std::function<wbool(const T&)> l) const {
+        return this->get<T>(l);
+    }
+
+    TEMPL
+    narr ME::getAll(std::function<wbool(const T&)> l) const {
+        return this->getAll<T>(l);
+    }
+
 #undef ME
 #undef TEMPL
 }
