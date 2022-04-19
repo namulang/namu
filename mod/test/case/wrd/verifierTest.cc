@@ -130,9 +130,9 @@ TEST_F(verifierTest, verifyNestedObject) {
 	mymyObj o2;
 	o2.val = 1;
 	o2.grade = 0.0f; // err
-	o1.subs().add(o2);
+	o1.subs().add("o2", o2);
 	ASSERT_EQ(o1.subs().len(), 1);
-	mymyObj& o2Candidate = o1.sub<mymyObj>([](const auto& elem) { return true; });
+	mymyObj& o2Candidate = o1.sub<mymyObj>([](const std::string& name, const auto& elem) { return true; });
 	ASSERT_FALSE(nul(o2Candidate));
 	ASSERT_EQ(&o2, &o2Candidate);
 
@@ -161,7 +161,7 @@ TEST_F(verifierTest, verifySubedObject) {
     o1.grade = 2.5f;
 
     myObj o2; // o2.val = 0 so it will occur an error.
-    o1.subs().add(o2);
+    o1.subs().add("o2", o2);
 
     errReport rpt;
     verifier v;
