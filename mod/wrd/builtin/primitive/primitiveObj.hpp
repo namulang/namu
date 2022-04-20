@@ -25,6 +25,13 @@ namespace wrd {
 
             return *ctors;
         }
+
+        using super::subs;
+        nbicontainer& subs() override {
+            static nmap inner;
+            return inner;
+        }
+
         const obj& getOrigin() const override {
             return *this;
         }

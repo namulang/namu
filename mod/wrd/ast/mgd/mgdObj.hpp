@@ -31,6 +31,9 @@ namespace wrd {
             return _assign(rhs);
         }
 
+        using super::subs;
+        nbicontainer& subs() override { return *_subs; }
+
         scopes& getShares() { return *_shares; }
         const scopes& getShares() const WRD_UNCONST_FUNC(getShares())
 
@@ -52,6 +55,7 @@ namespace wrd {
         me& _assign(const me& rhs);
 
     private:
+        tstr<scopes> _subs;
         tstr<scopes> _shares;
         tstr<scope> _owns;
         obj* _org;

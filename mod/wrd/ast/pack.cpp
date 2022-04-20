@@ -7,7 +7,7 @@ namespace wrd {
     WRD_DEF_ME(pack)
 
     me::pack(const manifest& manifest, const packLoadings& loadingsInHeap)
-        : super(*new scopes()), _loadings(loadingsInHeap), _manifest(manifest) {
+        : _subs(*new scopes()), _loadings(loadingsInHeap), _manifest(manifest) {
             _rel();
         }
 

@@ -9,7 +9,6 @@ namespace wrd {
     WRD_DEF_ME(obj)
 
     me::obj() {}
-    me::obj(const scopes& subs): _subs(subs) {}
 
     str me::run(const ucontainable& args) {
         func& fun = getCtors().get<func>([&args](const func& candidate) {
