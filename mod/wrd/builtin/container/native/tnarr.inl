@@ -46,7 +46,7 @@ namespace wrd {
     TEMPL
     wbool ME::add(widx n, const T& new1) {
         if(n < 0 || n > len()) return false; // if n equals to len(), it means that will be added at end of container.
-        if(!nul(new1)) return false;
+        if(nul(new1)) return false;
 
         _vec.insert(_vec.begin() + n, wrap(new1));
         return true;
