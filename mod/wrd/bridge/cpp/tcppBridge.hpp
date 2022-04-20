@@ -30,6 +30,9 @@ namespace wrd {
             return new me(new T());
         }
 
+        using super::subs;
+        nbicontainer& subs() override { return *_subs; }
+
         using super::getCtors;
         funcs& getCtors() override {
             // TODO: pass real constructor of given type T.
@@ -51,5 +54,6 @@ namespace wrd {
 
     private:
         T* _real;
+        tstr<scope> _subs;
     };
 }

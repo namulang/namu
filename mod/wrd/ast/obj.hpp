@@ -14,18 +14,12 @@ namespace wrd {
             FRIEND_VERIFY(obj, subNodes))
         friend class mgdObj;
 
-    public:
-        explicit obj(const scopes& subs);
-
     protected:
         /// if you don't give any subs when construct an obj you should assign _subs to new scopes
         /// instance on ctor of derived class.
         explicit obj();
 
     public:
-        using super::subs;
-        nbicontainer& subs() override { return *_subs; }
-
         using super::run;
         str run(const ucontainable& args) override;
 
@@ -42,8 +36,5 @@ namespace wrd {
     private:
         void _inFrame();
         void _outFrame();
-
-    protected:
-        tstr<scopes> _subs;
     };
 }

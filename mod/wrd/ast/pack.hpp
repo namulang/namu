@@ -29,7 +29,7 @@ namespace wrd {
     public:
         using super::subs;
         nbicontainer& subs() override {
-            nbicontainer& subs = super::subs();
+            nbicontainer& subs = *_subs;
             if(_state == RELEASED) {
                 WRD_I("%s pack is about to interpret lazy.", _manifest.name.c_str());
                 // TODO: check _rpt error count increased or not.
@@ -127,6 +127,7 @@ namespace wrd {
         void _rel();
 
     private:
+        tstr<scopes> _subs;
         packLoadings _loadings;
         manifest _manifest;
         state _state;

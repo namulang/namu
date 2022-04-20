@@ -8,8 +8,8 @@ namespace {
         WRD(CLASS(originObj, obj))
 
     public:
-        originObj(): super(*new scopes()) {}
-        originObj(const scopes& subs): super(subs) {}
+        originObj(): _subs(*new scopes()) {}
+        originObj(const scopes& subs): _subs(subs) {}
         originObj(const me& rhs) {
             _subs = rhs._subs;
         }
@@ -29,6 +29,12 @@ namespace {
             _subs = rhs._subs;
             return *this;
         }
+
+        using super::subs;
+        nbicontainer& subs() override { return *_subs; }
+
+    private:
+        tstr<scopes> _subs;
     };
 }
 
