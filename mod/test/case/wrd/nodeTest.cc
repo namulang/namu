@@ -31,7 +31,7 @@ namespace {
         const params& getParams() const override {
             static params inner;
             if(inner.len() == 0)
-                inner.add({"", ttype<obj>::get()});
+                inner.add(new param("", ttype<obj>::get()));
 
             return inner;
         }

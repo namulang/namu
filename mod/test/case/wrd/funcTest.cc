@@ -161,7 +161,7 @@ TEST(funcTest, testCallfuncInsidefunc) {
 
     myObj obj2;
     myfunc obj2func1;
-    obj2func1.getParams().add({"obj2", obj2});
+    obj2func1.getParams().add(new param("obj2", obj2));
     const char* obj2FuncNames[] = {"obj2func1"};
     obj2.subs().add("obj2func1", obj2func1);
 
