@@ -39,7 +39,7 @@ namespace wrd {
                 static params* inner = nullptr;
                 if(!inner) {
                     inner = new params();
-                    inner->add(param("", ttype<wInt>::get()));
+                    inner->add(new param("", ttype<wInt>::get()));
                 }
                 return *inner;
             }
