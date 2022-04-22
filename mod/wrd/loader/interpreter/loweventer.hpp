@@ -80,8 +80,8 @@ namespace wrd {
         //      dot:
         narr* onDotName(const std::string& name);
         narr* onDotName(narr& names, const std::string& name);
-        node* onGet(const std::string& name, const narr& args = nulOf<narr>());
-        node* onGet(node& from, const std::string& name, const narr& args = nulOf<narr>());
+        node* onGet(const std::string& name, const narr& args = narr());
+        node* onGet(node& from, const std::string& name, const narr& args = narr());
 
         //  keyword:
         node* onPack(const narr& dotname);
