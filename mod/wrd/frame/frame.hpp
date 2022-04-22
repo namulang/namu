@@ -44,7 +44,7 @@ namespace wrd {
         wbool pushLocal(scopes* new1) { return _local.push(*new1); }
         wbool pushLocal(scopes& new1) {
             wbool ret = _local.push(new1);
-            if(ret && _local.chainLen() == 1)
+            if(ret && _local.chainLen() == 1 && _obj)
                 new1.link(_obj->subs());
             return ret;
         }
