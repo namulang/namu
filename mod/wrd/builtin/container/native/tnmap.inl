@@ -45,7 +45,7 @@ namespace wrd {
 
     TEMPL
     wcnt ME::del(const iter& from, const iter& end) {
-        if(!from.isFrom(*this) || end.isFrom(*this))
+        if(!from.isFrom(*this) || !end.isFrom(*this))
             return WRD_W("from or end is not an iterator of this container"), 0;
 
         wcnt ret = 0;
