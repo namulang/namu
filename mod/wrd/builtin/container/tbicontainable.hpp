@@ -59,7 +59,7 @@ namespace wrd {
         wcnt add(const iter& from, const iter& to) {
             int ret = 0;
             for(iter e=from; e != to ;++e)
-                if(add(e->getKey(), e->getVal()))
+                if(add(e.getKey(), e.getVal()))
                     ret++;
             return ret;
         }

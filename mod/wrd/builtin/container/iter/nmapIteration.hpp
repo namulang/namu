@@ -15,9 +15,13 @@ public:
     /// which means to the End of a buffer.
     /// however, this step wasn't regarded to a step even though it proceeds.
     wcnt next(wcnt step) override {
-        for(int n=0; n < step; n++, ++_citer)
+        if(isEnd()) return 0;
+
+        for(int n=0; n < step; n++) {
+            ++_citer;
             if(isEnd())
                 return n;
+        }
         return step;
     }
 
