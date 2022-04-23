@@ -1,0 +1,257 @@
+#include "../../common/dep.hpp"
+#include <chrono>
+
+using namespace wrd;
+using namespace std;
+
+namespace {
+    class myNode : public node {
+        WRD(CLASS(myNode, node))
+
+    public:
+        myNode(int num): number(num) {}
+
+        nbicontainer& subs() override { return nulOf<nbicontainer>(); }
+        wbool canRun(const ucontainable& types) const override { return false; }
+        str run(const ucontainable& args) override { return str(); }
+
+        int number;
+    };
+
+    void benchMarkNMap(int cnt) {
+        logger::get().setEnable(false);
+        map<std::string, str> vec;
+
+        auto start = chrono::steady_clock::now();
+        for(int n=0; n < cnt; n++) {
+            vec.insert({"hello", str(new myNode(n))});
+        }
+        int sz = vec.size();
+        auto startDeleting = chrono::steady_clock::now();
+        vec.clear();
+        auto end = chrono::steady_clock::now();
+
+        auto addingElapsed = startDeleting - start;
+        auto removingElapsed = end - startDeleting;
+        auto totalElapsed = end - start;
+
+        logger::get().setEnable(true);
+        WRD_I("[benchMarkNMap]: map took total %d ms for adding(%dms) & removing(%dms) of %d elems.",
+                totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1),
+                removingElapsed / chrono::milliseconds(1), sz);
+        logger::get().setEnable(false);
+
+
+        nmap map1;
+        start = chrono::steady_clock::now();
+        for(int n=0; n < cnt; n++) {
+            map1.add("hello", *(new myNode(n)));
+        }
+        sz = map1.len();
+        startDeleting = chrono::steady_clock::now();
+        map1.rel();
+        end = chrono::steady_clock::now();
+
+        addingElapsed = startDeleting - start;
+        removingElapsed = end - startDeleting;
+        totalElapsed = end - start;
+
+        logger::get().setEnable(true);
+        WRD_I("[benchMarkNMap]: nmap took total %d ms for adding(%dms) & removing(%dms) of %d elems.",
+                totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1),
+                removingElapsed / chrono::milliseconds(1), sz);
+    }
+
+    class myMyNode : public myNode {
+        WRD(CLASS(myMyNode, myNode))
+
+    public:
+        myMyNode(int num): super(num) {}
+    };
+}
+
+TEST(nmapTest, instantiateTest) {
+    nmap map1;
+}
+
+TEST(nmapTest, shouldNotCanAddLocalObject) {
+    tnmap<std::string, myNode> map1;
+    ASSERT_EQ(map1.len(), 0);
+
+    {
+        myNode localObj(5);
+        ASSERT_TRUE(map1.add("local", localObj));
+        ASSERT_FALSE(nul(map1["local"]));
+        ASSERT_EQ(map1.len(), 1);
+    }
+
+    ASSERT_EQ(map1.len(), 1);
+    auto& elem = map1["local"];
+    ASSERT_TRUE(nul(elem));
+}
+
+TEST(nmapTest, simpleAddDelTest) {
+    tnmap<std::string, myNode> map1;
+    ASSERT_EQ(map1.len(), 0);
+
+    const int EXPECT_NUMBER = 5;
+    map1.add("5", *(new myNode(EXPECT_NUMBER)));
+    ASSERT_EQ(map1.len(), 1);
+
+    auto& elem1 = map1["5"];
+    ASSERT_FALSE(nul(elem1));
+    ASSERT_EQ(elem1.number, EXPECT_NUMBER);
+}
+
+TEST(nmapTest, addDel10Elems) {
+    tnmap<int, myNode> map1;
+    const int cnt = 10;
+    for(int n=0; n < cnt; n++) {
+        ASSERT_TRUE(map1.add(n, *(new myNode(n))));
+    }
+
+    ASSERT_EQ(map1.len(), cnt);
+}
+
+TEST(nmapTest, benchMarkNMapTest) {
+    benchMarkNMap(100);
+    benchMarkNMap(1000);
+    benchMarkNMap(10000);
+}
+
+TEST(nmapTest, testIter) {
+    nmap map1;
+    map1.add("0", new myNode(0));
+    map1.add("1", new myNode(1));
+    map1.add("2", new myNode(2));
+
+    auto e = map1.begin();
+    auto head = e++;
+    auto index2 = ++e;
+
+    EXPECT_TRUE(map1.begin()+2 == index2);
+    EXPECT_TRUE(map1.begin() == head);
+
+    ASSERT_FALSE(e.isEnd());
+    ASSERT_EQ(std::to_string(e.getVal<myNode>().number), e.getKey());
+    ASSERT_EQ(e.next(1), 0);
+}
+
+wbool hasSequentialValueOf(int val, tbicontainable<std::string, myNode>& from) {
+    std::vector<int> tray;
+    for(auto& elem : from)
+        tray.push_back(elem.number);
+
+    for(int n=0; n < val ;n++) {
+        wbool found = false;
+        for(int n2=0; n < tray.size() ;n2++)
+            if(tray[n2] == n) {
+                found = true;
+                break;
+            }
+        if(!found)
+            return false;
+    }
+    return true;
+}
+
+TEST(nmapTest, testucontainableAPI) {
+    //  initial state:
+    tnmap<std::string, myNode>* map1 = new tnmap<std::string, myNode>();
+    tbicontainable<std::string, myNode>* con = map1;
+    ASSERT_EQ(con->len(), 0);
+
+    auto head = con->begin();
+    ASSERT_TRUE(head.isEnd());
+    auto tail = con->end();
+    ASSERT_TRUE(tail.isEnd());
+
+    ASSERT_TRUE(con->add("0", new myNode(0)));
+    ASSERT_TRUE(con->add("end", new myMyNode(1)));
+    ASSERT_EQ(con->len(), 2);
+
+    // add:
+    ASSERT_TRUE(hasSequentialValueOf(1, *con));
+    ASSERT_TRUE(hasSequentialValueOf(1, *con));
+
+    {
+        tnarr<myNode> tray = map1->getAll<myNode>([](const std::string&, const myNode& elem) {
+            return true;
+        });
+        ASSERT_EQ(tray.len(), 2);
+
+        int cnt = 0;
+        tray = map1->getAll<myNode>([&cnt](const std::string&, const myNode& elem) {
+            if(cnt++ >= 1) return false;
+            return true;
+        });
+        ASSERT_EQ(tray.len(), 1);
+    }
+
+    myMyNode& tray = map1->get<myMyNode>([](const std::string&, const myMyNode& elem) {
+        if(elem.number == 1) return true;
+        return false;
+    });
+    ASSERT_FALSE(nul(tray));
+
+    //  del:
+    ASSERT_TRUE(con->del("end"));
+    ASSERT_EQ(con->len(), 1);
+    ASSERT_EQ(map1->get("0").number, 0);
+
+    //  add with element:
+    tnmap<std::string, myNode> map2;
+    ASSERT_EQ(map2.add(*con), 1);
+    ASSERT_TRUE(map2.add("1", new myNode(1)));
+    ASSERT_TRUE(map2.add("2", new myMyNode(2)));
+    ASSERT_TRUE(map2.add("3", new myNode(3)));
+    ASSERT_EQ(map2["2"].number, 2);
+    ASSERT_EQ(map2["3"].number, 3);
+    ASSERT_EQ(map2.len(), 4);
+
+    auto e = map2.begin();
+    e = e + 2;
+    ASSERT_EQ(e.getKey(), std::to_string(e.getVal<myNode>().number));
+    ASSERT_TRUE(map2.add("5", new myNode(5)));
+    ASSERT_TRUE(map2.add("6", new myNode(6)));
+
+    ASSERT_EQ(map2["0"].cast<myNode>().number, 0);
+    ASSERT_EQ(map2["1"].cast<myNode>().number, 1);
+    ASSERT_EQ(map2["6"].cast<myNode>().number, 6);
+    ASSERT_EQ(map2["5"].cast<myNode>().number, 5);
+    ASSERT_EQ(map2["2"].cast<myNode>().number, 2);
+    ASSERT_EQ(map2["3"].cast<myNode>().number, 3);
+
+    ASSERT_EQ(con->len(), 1);
+    ASSERT_EQ(con->add(map2.iterate(1), map2.iterate(3)), 2);
+    ASSERT_EQ(con->len(), 3);
+    con->rel();
+    ASSERT_TRUE(con->len() == 0);
+
+    ASSERT_EQ(con->add(map2.begin() + 2, map2.end()), 4);
+    ASSERT_EQ(con->len(), 4);
+    ASSERT_EQ(con->del(con->begin() + 1, con->begin() + 3), 2);
+    ASSERT_EQ(con->len(), 2);
+
+    delete con;
+}
+
+TEST(nmapTest, testRangeBasedForLoop) {
+
+    nmap map1;
+    map1.add("3", new myNode(3));
+    map1.add("7", new myNode(7));
+
+    int sum = 0;
+    for(auto& e : map1) {
+        myNode& cast = e.cast<myNode>();
+        sum += cast.number;
+    }
+
+    int sum2 = 0;
+    for(const node& e : map1) {
+        const myNode& cast = e.cast<myNode>();
+        sum2 += cast.number;
+    }
+    ASSERT_EQ(sum2, sum);
+}
