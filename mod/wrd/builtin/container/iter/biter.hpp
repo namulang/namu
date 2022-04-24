@@ -6,6 +6,7 @@ class iter : public iterable, public clonable, public typeProvidable {
     WRD(CLASS(iter))
     friend class iteration;
     template <typename K1, typename V1, typename defaultContainer1> friend class tnchain;
+    template <typename K1, typename V1, typename TACTIC> friend class tnmap;
 
 public:
     iter() { _nextToMatchParamType(); }

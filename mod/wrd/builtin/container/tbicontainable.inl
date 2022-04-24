@@ -46,6 +46,13 @@ namespace wrd {
         return this->getAll<V>(l);
     }
 
+    TEMPL
+    narr ME::getAll(const K& key) const {
+        narr ret;
+        _getAll(key, ret);
+        return ret;
+    }
+
 #undef ME
 #undef TEMPL
 }

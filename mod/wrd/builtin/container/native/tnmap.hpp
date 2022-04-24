@@ -11,7 +11,7 @@ namespace wrd {
         WRD(CLASS(tnmap, __super))
         template <typename K1, typename V1> friend class tmap;
         typedef tstr<V, TACTIC> wrap;
-        typedef std::map<K, wrap> cmap;
+        typedef std::multimap<K, wrap> cmap;
         typedef typename cmap::iterator citer;
         typedef std::pair<K, V> cpair;
         typedef typename super::iter iter;
@@ -34,17 +34,14 @@ namespace wrd {
         using super::get;
         V& get(const K& key) override;
 
-        // set:
-        using super::set;
-        wbool set(const K& at, const V& new1) override;
-
         // add:
         using super::add;
         wbool add(const K& key, const V& new1) override;
 
         // del:
         using super::del;
-        wbool del(const K& it) override;
+        wcnt del(const K& it) override;
+        wbool del(const iter& at) override;
         wcnt del(const iter& from, const iter& end) override;
 
         // etc:
@@ -59,6 +56,7 @@ namespace wrd {
             ret->next(step);
             return ret;
         }
+        void _getAll(const K& key, narr& tray) const override;
 
     private:
         nmapIteration& _getIterationFrom(const iter& it) {
