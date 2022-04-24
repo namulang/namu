@@ -254,7 +254,9 @@ TEST(arrTest, testContainableAPI) {
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 
-    ASSERT_EQ(con->del(con->begin() + 1, con->begin() + 3), 2);
+    ASSERT_TRUE(con->del(con->begin() + 1, con->begin() + 3));
+    ASSERT_EQ(con->len(), 2);
+
     e2 = arr1->begin();
     elem = &e2->cast<myNode>();
     ASSERT_FALSE(nul(elem));

@@ -67,10 +67,10 @@ namespace wrd {
 
         // del:
         /// delete last element if exists.
-        virtual wcnt del(const K& it) = 0;
+        virtual wbool del(const K& it) = 0;
         virtual wbool del(const iter& at) = 0;
-        virtual wcnt del(const iter& from, const iter& end) = 0;
-        wcnt del(const tbicontainable& rhs) { return del(rhs.begin(), rhs.end()); }
+        virtual wbool del(const iter& from, const iter& end) = 0;
+        wbool del(const tbicontainable& rhs) { return del(rhs.begin(), rhs.end()); }
 
         // etc:
         virtual void rel() = 0;

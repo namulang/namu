@@ -233,6 +233,7 @@ TEST(narrTest, testucontainableAPI) {
     ASSERT_TRUE(con->len() == 0);
 
     ASSERT_EQ(con->add(arr2.begin() + 2, arr2.end()), 4);
+    ASSERT_EQ(con->len(), 4);
     e2 = arr->begin();
     elem = &e2.get();
     ASSERT_FALSE(nul(elem));
@@ -250,7 +251,8 @@ TEST(narrTest, testucontainableAPI) {
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 
-    ASSERT_EQ(con->del(con->begin() + 1, con->begin() + 3), 2);
+    ASSERT_TRUE(con->del(con->begin() + 1, con->begin() + 3));
+    ASSERT_EQ(con->len(), 2);
     e2 = arr->begin();
     elem = &e2.get();
     ASSERT_FALSE(nul(elem));

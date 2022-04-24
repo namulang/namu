@@ -83,8 +83,8 @@ namespace wrd {
         wbool del(const T* it) { return del(*it); }
         wbool del(const T& it) { return del(iterate(it)); }
         virtual wbool del(const iter& it) = 0;
-        virtual wcnt del(const iter& from, const iter& end) = 0;
-        wcnt del(const tucontainable& rhs) { return del(rhs.begin(), rhs.end()); }
+        virtual wbool del(const iter& from, const iter& end) = 0;
+        wbool del(const tucontainable& rhs) { return del(rhs.begin(), rhs.end()); }
 
         // etc:
         virtual void rel() = 0;

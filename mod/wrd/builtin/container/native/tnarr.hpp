@@ -57,7 +57,7 @@ namespace wrd {
         // del:
         using super::del;
         using tarrayable<T>::del;
-        wcnt del(const iter& from, const iter& end) override;
+        wbool del(const iter& from, const iter& end) override;
         wbool del(const iter& it) override;
         wbool del(widx n) override;
 

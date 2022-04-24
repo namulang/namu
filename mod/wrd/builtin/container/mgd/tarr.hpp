@@ -55,7 +55,7 @@ namespace wrd {
         using tucontainable<T>::del;
         wbool del(widx n) override { return _arr.del(n); }
         wbool del(const iter& it) override { return _arr.del(it); }
-        wcnt del(const iter& from, const iter& to) override { return _arr.del(from, to); }
+        wbool del(const iter& from, const iter& to) override { return _arr.del(from, to); }
 
         //  etc:
         tstr<instance> deepClone() const override {

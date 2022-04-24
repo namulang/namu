@@ -69,19 +69,19 @@ namespace wrd {
     }
 
     TEMPL
-    wcnt ME::del(const iter& from, const iter& end) {
+    wbool ME::del(const iter& from, const iter& end) {
         narrIteration&  endIter = _getIterationFrom(end),
                     &   fromIter = _getIterationFrom(from);
         if(nul(endIter) || nul(fromIter))
-            return WRD_E("from(%x) or end(%x) one of these is null.", &endIter, &fromIter), 0;
+            return WRD_E("from(%x) or end(%x) one of these is null.", &endIter, &fromIter), false;
 
         widx fromN = fromIter.isEnd() ? len()-1 : fromIter._n;
         wcnt cnt = endIter._n - fromN;
-        if(cnt <= 0) return 0;
+        if(cnt <= 0) return false;
 
         for(int n=0; n < cnt ;n++)
             _vec.erase(_vec.begin() + fromN);
-        return cnt;
+        return true;
     }
 
     TEMPL

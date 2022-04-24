@@ -231,7 +231,8 @@ TEST(nchainTest, testucontainableAPI) {
     ASSERT_FALSE(nul(elem));
     ASSERT_EQ(elem->number, 3);
 
-    ASSERT_EQ(con->del(con->begin() + 1, con->begin() + 3), 2);
+    ASSERT_TRUE(con->del(con->begin() + 1, con->begin() + 3));
+    ASSERT_EQ(con->len(), 2);
     e2 = con->begin();
     elem = &e2->cast<myNode>();
     ASSERT_FALSE(nul(elem));
@@ -345,7 +346,7 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
     ASSERT_EQ(chn3.len(), 2);
     ASSERT_EQ(chn3.getContainer().len(), 2);
 
-    ASSERT_EQ(chn1.del(chn1.begin()+1, chn2.begin()+1), 2);
+    ASSERT_TRUE(chn1.del(chn1.begin()+1, chn2.begin()+1));
     ASSERT_EQ(chn1.len(), 4);
     ASSERT_EQ(chn2.len(), 3);
 }
