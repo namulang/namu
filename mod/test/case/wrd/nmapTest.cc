@@ -255,3 +255,74 @@ TEST(nmapTest, testRangeBasedForLoop) {
     }
     ASSERT_EQ(sum2, sum);
 }
+
+TEST(nmapTest, addMultipleKey) {
+    nmap m;
+    m.add("1", new myNode(1));
+    m.add("2", new myNode(2));
+    m.add("1", new myNode(3));
+    m.add("3", new myNode(4));
+
+    wcnt key1found = 0;
+    for(auto e=m.begin(); e ;++e)
+        if(e.getKey() == "1")
+            key1found++;
+    ASSERT_EQ(key1found, 2);
+}
+
+TEST(nmapTest, searchMultipleKey) {
+    nmap m;
+    m.add("1", new myNode(1));
+    m.add("2", new myNode(2));
+    m.add("1", new myNode(3));
+    m.add("3", new myNode(4));
+
+    wint val = m.get("1").cast<myNode>().number;
+    ASSERT_TRUE(val == 1 || val == 3);
+
+    auto founds = m.getAll("1");
+    ASSERT_EQ(founds.len(), 2);
+    auto e = founds.begin();
+    wint val1 = e++.get<myNode>().number,
+         val2 = e.get<myNode>().number;
+    ASSERT_TRUE(val1 == 1 || val1 == 3);
+    ASSERT_TRUE(val2 == 1 || val2 == 3);
+    ASSERT_NE(val1, val2);
+}
+
+TEST(nmapTest, testDeletionByKey) {
+    nmap m;
+    m.add("1", new myNode(1));
+    m.add("2", new myNode(2));
+    m.add("1", new myNode(3));
+
+    ASSERT_EQ(m.del("1"), 2);
+    ASSERT_EQ(m.len(), 1);
+
+    auto e = m.begin();
+    ASSERT_EQ(e.getKey(), std::string("2"));
+    ASSERT_EQ(e.getVal<myNode>().number, 2);
+}
+
+TEST(nmapTest, testDeletionByIter) {
+    nmap m;
+    m.add("1", new myNode(1));
+    m.add("2", new myNode(2));
+    m.add("1", new myNode(3));
+
+    auto e = m.begin();
+    while(e.getKey() == "1")
+        ++e;
+    ASSERT_TRUE(m.del(e));
+    ASSERT_EQ(m.len(), 2);
+
+    e = m.begin();
+    ASSERT_EQ(e.getKey(), "1");
+    wint val1 = e++.getVal<myNode>().number,
+         val2 = e.getVal<myNode>().number;
+    ASSERT_EQ(e.getKey(), "1");
+
+    ASSERT_TRUE(val1 == 1 || val1 == 3);
+    ASSERT_TRUE(val2 == 1 || val2 == 3);
+    ASSERT_NE(val1, val2);
+}
