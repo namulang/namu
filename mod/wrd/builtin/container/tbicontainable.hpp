@@ -14,6 +14,8 @@ namespace wrd {
     template <typename K, typename V>
     class tbicontainable {
         WRD_DECL_ME(tbicontainable)
+        template <typename K1, typename V1, typename defaultContainer>
+        friend class tnchain;
 
     public:
         #include "iter/biter.hpp"
@@ -39,6 +41,8 @@ namespace wrd {
         template <typename V1>
         V1& get(std::function<wbool(const K&, const V1&)> l) const;
         V& get(std::function<wbool(const K&, const V&)> l) const;
+
+        narr getAll(const K& key) const;
         template <typename V1>
         tnarr<V1, strTactic> getAll(std::function<wbool(const K&, const V1&)> l) const;
         narr getAll(std::function<wbool(const K&, const V&)> l) const;
@@ -48,10 +52,6 @@ namespace wrd {
         virtual iter end() const { return iterate(len()); }
         virtual iter last() const { return iterate(len()-1); }
         iter iterate(wcnt step) const { return iter(_onMakeIteration(step)); }
-
-        // set:
-        virtual wbool set(const K& key, const V& new1) = 0;
-        wbool set(const K& key, const V* new1) { return set(key, *new1); }
 
         // add:
         virtual wbool add(const K& key, const V& val) = 0;
@@ -67,7 +67,8 @@ namespace wrd {
 
         // del:
         /// delete last element if exists.
-        virtual wbool del(const K& it) = 0;
+        virtual wcnt del(const K& it) = 0;
+        virtual wbool del(const iter& at) = 0;
         virtual wcnt del(const iter& from, const iter& end) = 0;
         wcnt del(const tbicontainable& rhs) { return del(rhs.begin(), rhs.end()); }
 
@@ -78,6 +79,7 @@ namespace wrd {
 
     protected:
         virtual iteration* _onMakeIteration(wcnt step) const = 0;
+        virtual void _getAll(const K& key, narr& tray) const = 0;
     };
 
     typedef tbicontainable<std::string, node> bicontainable;

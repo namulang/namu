@@ -49,11 +49,9 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::set(const K& key, const V& new1) {
-        for(me* e=this; e ;e=&e->getNext())
-            if(e->has(key))
-                return e->getContainer().set(key, new1);
-        return false;
+    void ME::_getAll(const K& key, narr& tray) const {
+        for(const me* e=this; e ;e=&e->getNext())
+            e->getContainer()._getAll(key, tray);
     }
 
     TEMPL
@@ -62,10 +60,21 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::del(const K& key) {
+    wcnt ME::del(const K& key) {
+        wcnt ret = 0;
         for(me* e=this; e ;e=&e->getNext())
             if(e->has(key))
-                return e->getContainer().del(key);
+                ret += e->getContainer().del(key);
+        return ret;
+    }
+
+    TEMPL
+    wbool ME::del(const iter& at) {
+        const me& owner = at.getContainer().template cast<me>();
+
+        for(me* e=this; e ;e=&e->getNext())
+            if(e == &owner)
+                return e->getContainer().del(_getMapIterFromChainIter(at));
         return false;
     }
 

@@ -33,10 +33,6 @@ namespace wrd {
         using super::get;
         V& get(const K& key) override;
 
-        // set:
-        using super::set;
-        wbool set(const K& key, const V& val) override;
-
         // add:
         using super::add;
         wbool add(const K& key, const V& val) override;
@@ -48,7 +44,8 @@ namespace wrd {
 
         // del:
         using super::del;
-        wbool del(const K& at) override;
+        wcnt del(const K& at) override;
+        wbool del(const iter& at) override;
         wcnt del(const iter& from, const iter& end) override;
 
         // etc:
@@ -101,6 +98,7 @@ namespace wrd {
             ret->next(step);
             return ret;
         }
+        void _getAll(const K& key, narr& tray) const override;
 
     private:
         iter& _getMapIterFromChainIter(const iter& wrapper) {
