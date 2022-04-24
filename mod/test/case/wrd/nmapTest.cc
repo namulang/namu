@@ -230,7 +230,7 @@ TEST(nmapTest, testucontainableAPI) {
 
     ASSERT_EQ(con->add(map2.begin() + 2, map2.end()), 4);
     ASSERT_EQ(con->len(), 4);
-    ASSERT_EQ(con->del(con->begin() + 1, con->begin() + 3), 2);
+    ASSERT_TRUE(con->del(con->begin() + 1, con->begin() + 3));
     ASSERT_EQ(con->len(), 2);
 
     delete con;
@@ -296,7 +296,7 @@ TEST(nmapTest, testDeletionByKey) {
     m.add("2", new myNode(2));
     m.add("1", new myNode(3));
 
-    ASSERT_EQ(m.del("1"), 2);
+    ASSERT_TRUE(m.del("1"));
     ASSERT_EQ(m.len(), 1);
 
     auto e = m.begin();

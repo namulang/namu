@@ -37,8 +37,9 @@ namespace wrd {
     }
 
     TEMPL
-    wcnt ME::del(const K& it) {
-        return _map.erase(it);
+    wbool ME::del(const K& it) {
+        _map.erase(it);
+        return true;
     }
 
     TEMPL
@@ -51,14 +52,12 @@ namespace wrd {
     }
 
     TEMPL
-    wcnt ME::del(const iter& from, const iter& end) {
+    wbool ME::del(const iter& from, const iter& end) {
         if(!from.isFrom(*this) || !end.isFrom(*this))
-            return WRD_W("from or end is not an iterator of this container"), 0;
+            return WRD_W("from or end is not an iterator of this container"), false;
 
-        wcnt ret = 0;
-        for(iter e=from; e ;++e)
-            ret += del(e.getKey());
-        return ret;
+        _map.erase(_getIterationFrom(from)._citer, _getIterationFrom(end)._citer);
+        return true;
     }
 
     TEMPL

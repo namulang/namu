@@ -60,11 +60,11 @@ namespace wrd {
     }
 
     TEMPL
-    wcnt ME::del(const K& key) {
-        wcnt ret = 0;
+    wbool ME::del(const K& key) {
+        wbool ret = true;
         for(me* e=this; e ;e=&e->getNext())
             if(e->has(key))
-                ret += e->getContainer().del(key);
+                ret = e->getContainer().del(key) ? ret : false;
         return ret;
     }
 
@@ -79,19 +79,21 @@ namespace wrd {
     }
 
     TEMPL
-    wcnt ME::del(const iter& from, const iter& end) {
-        const me& fromChain = from.getContainer().template cast<me>();
-        const me& endChain = end.getContainer().template cast<me>();
+    wbool ME::del(const iter& from, const iter& end) {
+        const me* fromChain = &from.getContainer().template cast<me>();
+        const me* endChain = &end.getContainer().template cast<me>();
+        if(nul(endChain)) return WRD_W("iterator 'end' owned by null chain instance."), false;
+        endChain = &endChain->getNext(); // now, endChain can be null but it's okay.
 
-        me* e = (me*) &fromChain;
-        wcnt ret = 0;
+        me* e = (me*) fromChain;
+        wbool ret = true;
         do {
             super& eArr = e->getContainer();
-            iter arrBegin = e == &fromChain ? _getMapIterFromChainIter(from) : eArr.begin(),
-                 arrEnd = e == &endChain ? _getMapIterFromChainIter(end) : eArr.end();
-            ret += eArr.del(arrBegin, arrEnd);
+            iter arrBegin = e == fromChain ? _getMapIterFromChainIter(from) : eArr.begin(),
+                 arrEnd = e == endChain ? _getMapIterFromChainIter(end) : eArr.end();
+            ret = eArr.del(arrBegin, arrEnd) ? ret : false;
             e = &e->getNext();
-        } while(e != &endChain);
+        } while(e != endChain);
 
         return ret;
     }

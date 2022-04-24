@@ -40,9 +40,9 @@ namespace wrd {
 
         // del:
         using super::del;
-        wcnt del(const K& it) override;
+        wbool del(const K& it) override;
         wbool del(const iter& at) override;
-        wcnt del(const iter& from, const iter& end) override;
+        wbool del(const iter& from, const iter& end) override;
 
         // etc:
         void rel() override;
