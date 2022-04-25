@@ -79,19 +79,19 @@ namespace wrd {
     }
 
     TEMPL
-    wbool ME::del(const iter& from, const iter& end) {
+    wbool ME::del(const iter& from, const iter& last) {
         const me* fromChain = &from.getContainer().template cast<me>();
-        const me* endChain = &end.getContainer().template cast<me>();
-        if(nul(endChain)) return WRD_W("iterator 'end' owned by null chain instance."), false;
-        endChain = &endChain->getNext(); // now, endChain can be null but it's okay.
+        const me* lastChain = &last.getContainer().template cast<me>();
+        if(nul(lastChain)) return WRD_W("iterator 'end' owned by null chain instance."), false;
+        const me* endChain = &lastChain->getNext(); // now, endChain can be null but it's okay.
 
         me* e = (me*) fromChain;
         wbool ret = true;
         do {
             super& eArr = e->getContainer();
             iter arrBegin = e == fromChain ? _getMapIterFromChainIter(from) : eArr.begin(),
-                 arrEnd = e == endChain ? _getMapIterFromChainIter(end) : eArr.end();
-            ret = eArr.del(arrBegin, arrEnd) ? ret : false;
+                 arrLast = e == lastChain ? _getMapIterFromChainIter(last) : eArr.end();
+            ret = eArr.del(arrBegin, arrLast) ? ret : false;
             e = &e->getNext();
         } while(e != endChain);
 

@@ -55,13 +55,8 @@ namespace {
     };
 
     void examineChain2Element(nchain& chn, int val1, int val2) {
-        myNode* elem = &chn.begin()->cast<myNode>();
-        ASSERT_FALSE(nul(elem));
-        ASSERT_EQ(elem->number, val1);
-
-        elem = &(++chn.begin())->cast<myNode>();
-        ASSERT_FALSE(nul(elem));
-        ASSERT_EQ(elem->number, val2);
+        ASSERT_TRUE(chn.has(std::to_string(val1)));
+        ASSERT_TRUE(chn.has(std::to_string(val2)));
     }
 
     struct myNode2 : public myNode {
@@ -320,11 +315,13 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
                 return;
             }
 
-            if(elem.number != expectElementNums[cnt++]) {
+        }
+
+        for(int n=0; n < chn.len() ;++n, cnt++)
+            if(!chn.has(std::to_string(expectElementNums[cnt]))) {
                 cnt = -1;
                 return;
             }
-        }
     };
     lambda(chn1);
     ASSERT_EQ(cnt, 6);
@@ -510,7 +507,7 @@ TEST(nchainTest, testLinkArrayAndChain) {
     int cnt = 5;
     ASSERT_EQ(chn.len(), cnt);
 
-    for(int n=0; n < 5; n++) {
+    for(int n=1; n <= 5; n++) {
         std::string key = std::to_string(n);
         ASSERT_TRUE(chn.has(key));
         ASSERT_EQ(chn[key].cast<myNode>().number, n);
@@ -549,7 +546,7 @@ TEST(nchainTest, testDeepChainIteration) {
         tray.push_back(e.getKey());
     }
 
-    for(int n=0; n < 6; n++)
+    for(int n=1; n <= 6; n++)
         ASSERT_TRUE(vectorHas(tray, n));
 }
 
