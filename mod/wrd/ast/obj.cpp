@@ -22,9 +22,6 @@ namespace wrd {
     }
 
     str me::_onRunSub(node& sub, const ucontainable& args) {
-        if(!sub.doesNeedScope())
-            return super::_onRunSub(sub, args);
-
         _inFrame();
         str ret = super::_onRunSub(sub, args);
         _outFrame();
@@ -67,11 +64,6 @@ namespace wrd {
         WRD_DI("verify: obj: %s iterateSubNodes[%d]", it.getType().getName().c_str(), it.subs().len());
 
         for(auto& p : it.subs()) {
-            if(!p.doesNeedScope()) {
-                verify(p);
-                continue;
-            }
-
             it._inFrame();
             verify(p);
             it._outFrame();

@@ -21,7 +21,6 @@ namespace wrd {
         const blockExpr& getBlock() const { return *_blk; }
         const wtype& getEvalType() const override { return *_evalType; }
         nbicontainer& subs() override { return _shares; }
-        wbool doesNeedScope() const override { return true; }
         const params& getParams() const override { return _params; }
 
         using super::run;

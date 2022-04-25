@@ -81,10 +81,6 @@ namespace wrd {
             return getType();
         }
 
-        /// @return true if this class needs to get mgd subnodes from frame instance.
-        ///         the owner of this instance will interact current frame if subnodes returns true.
-        virtual wbool doesNeedScope() const { return false; }
-
     protected:
         virtual str _onRunSub(node& sub, const ucontainable& args) {
             return sub.run(args);
