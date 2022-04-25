@@ -45,7 +45,10 @@ TEST_F(exprTest, standbyHelloWorldBridgeObj) {
     ASSERT_FALSE(mainFunc.canRun(narr(*bridge, *msg)));
     ASSERT_FALSE(helloWorld::isRun);
     str res = mainFunc.run(args);
+    ASSERT_FALSE(res.isBind());
+    res = bridge->run("main", args);
     ASSERT_TRUE(res.isBind());
+
     ASSERT_TRUE(res.getType() == ttype<node>::get());
     ASSERT_TRUE(res->getType() == ttype<wVoid>::get());
     ASSERT_TRUE(helloWorld::isRun);
