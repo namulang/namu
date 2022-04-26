@@ -186,7 +186,7 @@ TEST(nodeTest, testImmutablePositive) {
 
 	param r3("", *r1);
 	ASSERT_FALSE(nul(r3.getOrigin()));
-    ASSERT_EQ(r3.getOriginType(), ttype<wFlt>::get());
+    ASSERT_EQ(r3.getOrigin().getType(), ttype<wFlt>::get());
 	ASSERT_EQ(r3.getOrigin().cast<wFlt>().get(), r1->get());
 
     scope s;

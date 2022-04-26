@@ -41,12 +41,12 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
 
         const param& arg1 = ps[0];
         ASSERT_EQ(arg1.getName(), "argc");
-        ASSERT_EQ(arg1.getOriginType(), ttype<wInt>());
-        ASSERT_TRUE(nul(arg1.getOrigin()));
+        ASSERT_EQ(arg1.getOrigin().getType(), ttype<wInt>());
+        ASSERT_FALSE(nul(arg1.getOrigin())); // primitive type is set to real instance of origin.
         const param& arg2 = ps[1];
         ASSERT_EQ(arg2.getName(), "argv");
-        ASSERT_EQ(arg2.getOriginType(), ttype<wStr>());
-        ASSERT_TRUE(nul(arg2.getOrigin()));
+        ASSERT_EQ(arg2.getOrigin().getType(), ttype<wStr>());
+        ASSERT_FALSE(nul(arg2.getOrigin()));
     }
 }
 
