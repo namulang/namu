@@ -66,7 +66,7 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     fr.setObj(obj1);
     ASSERT_TRUE(ss.getBottom().isBind());
     ASSERT_EQ(fr.subAll<myNode>(lambda).len(), 4);
-    ASSERT_EQ(owns.getAll<myNode>(lambda).len(), 2);
+    ASSERT_EQ(owns.getAll<myNode>(lambda).len(), 1);
 
     int expects[] = {1, 2, 3, 4};
     auto e = ss.getTop()->begin();
