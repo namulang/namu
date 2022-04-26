@@ -54,7 +54,8 @@ TEST(objTest, testMakeOriginObj) {
     newSubs->add(o2Name, o2);
     ASSERT_EQ(o3.subs().len(), 2);
 
-    ASSERT_TRUE(nul(o3["o1"]));
+    ASSERT_TRUE(nul(o3[""]));
+    ASSERT_FALSE(nul(o3["o1"]));
     node& found = o3[o2Name];
     ASSERT_FALSE(nul(found));
     ASSERT_EQ(&found, &o2);

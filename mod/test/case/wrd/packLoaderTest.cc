@@ -18,7 +18,7 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
         ASSERT_FALSE(nul(sayFunc));
 
         ASSERT_EQ(sayFunc.getEvalType(), wVoid().getType());
-        ASSERT_EQ(sayFunc.getParams().len(), 1); // 1 for originObj as "me"
+        ASSERT_EQ(sayFunc.getParams().len(), 0); // 'me' of func won't be passed as an argument.
 
         str res = sayFunc.run(narr {origin} );
         ASSERT_TRUE(res);
