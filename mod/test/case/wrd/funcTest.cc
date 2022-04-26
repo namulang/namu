@@ -13,6 +13,7 @@ namespace {
 
         public:
             str run(const ucontainable& args) override {
+                if(!canRun(args)) return str();
                 WRD_I("hello world!");
                 _executed = true;
 
@@ -202,10 +203,10 @@ TEST(funcTest, testCallfuncInsidefunc) {
     obj1func1.run(args);
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_FALSE(obj1func1.isSuccess());
-    obj1.run(func1Name);
+    obj1.run(func1Name, args);
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_FALSE(obj1func1.isSuccess());
-    obj1.run(func1Name, args);
+    obj1.run(func1Name);
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_TRUE(obj1func1.isSuccess());
 }
