@@ -2,7 +2,12 @@
 
 #include "../macro.hpp"
 #include "../common.hpp"
-#include <dirent.h>
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#   include <direct.h>
+#   include <io.h>
+#else
+#   include <dirent.h>
+#endif
 #include <vector>
 
 namespace wrd {
@@ -13,7 +18,12 @@ namespace wrd {
         WRD(ME(fsystem))
 
         struct entry {
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+            _finddata_t file;
+            intptr_t dir;
+#else
             DIR* dir;
+#endif
             std::string path;
         };
         typedef std::vector<entry> entries;
@@ -75,20 +85,34 @@ namespace wrd {
         private:
             void _addDir(const std::string& dirPath) {
                 std::string path = _filterPath(dirPath);
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+                _finddata_t file;
+                intptr_t newDir = _findfirst((path + "\\*.*").c_str(), &file);
+                if (newDir == -1) return;
+                _entries.push_back(entry {file, newDir, path});
+#else
                 DIR* newDir = opendir(path.c_str());
                 if(!newDir) return;
-
                 _entries.push_back(entry {newDir, path});
+#endif
             }
             void _popDir() {
                 entry& e = _entries[_entries.size()-1];
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+                _findclose(e.dir);
+#else
                 closedir(e.dir);
+#endif
                 _entries.pop_back();
             }
 
             std::string _filterPath(const std::string& org) {
                 int last = org.length() - 1;
-                if(org[last] == '/')
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+                if (last == '\\' || last == '/')
+#else
+                if (last == '/')
+#endif
                     return org.substr(0, last);
 
                 return org;

@@ -5,6 +5,8 @@
 #include <string.h> // for strerror
 #include <sys/stat.h>
 #include <stdio.h>
-#include <dirent.h> // not for winOS
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#	include <dirent.h> // not for winOS
+#	include <unistd.h> // not for winOS
+#endif
 #include <string>
-#include <unistd.h> // not for winOS
