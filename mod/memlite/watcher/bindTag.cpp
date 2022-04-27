@@ -43,7 +43,7 @@ namespace wrd {
 
         _strong += vote;
         if(_strong <= 0)
-			rel();
+            rel();
         return true;
     }
 

@@ -20,7 +20,12 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
         ASSERT_EQ(sayFunc.getEvalType(), wVoid().getType());
         ASSERT_EQ(sayFunc.getParams().len(), 0); // 'me' of func won't be passed as an argument.
 
-        str res = sayFunc.run(narr {origin} );
+        narr args {origin};
+        str res = sayFunc.run(args);
+        ASSERT_FALSE(res); // don't run func itself.
+        res = origin.run("say", args); // don't need to pass 'me' argument
+        ASSERT_FALSE(res);
+        res = origin.run("say", narr());
         ASSERT_TRUE(res);
         ASSERT_EQ(res->cast<wVoid>(), wVoid());
     }
@@ -30,15 +35,20 @@ TEST(packLoaderTest, testDefaultLoaderInit) {
         ASSERT_FALSE(nul(add));
 
         const params& argTypes = add.getParams();
-        ASSERT_EQ(argTypes.len(), 3);
-        ASSERT_EQ(argTypes[0].getType(), origin.getType());
-        ASSERT_EQ(argTypes[1].getType(), ttype<wInt>());
+        ASSERT_EQ(argTypes.len(), 2);
+        ASSERT_EQ(argTypes[0].getOrigin().getType(), ttype<wInt>());
+        ASSERT_EQ(argTypes[1].getOrigin().getType(), ttype<wInt>::get());
 
         wInt arg1(5);
-        str retVal = add.run(narr {origin, arg1} ); // should nothing happen
+        str retVal = add.run(narr {arg1} ); // should nothing happen
         ASSERT_FALSE(retVal);
 
-        retVal = add.run(narr(origin, wInt(5), wInt(3)));
+        narr args;
+        args.add(new wInt(5));
+        args.add(new wInt(3));
+        retVal = add.run(args); // don't run func itself as I said before
+        ASSERT_FALSE(retVal);
+        retVal = origin.run("add", args); // correct!
         ASSERT_TRUE(retVal);
         ASSERT_EQ(retVal->cast<wInt>().get(), 8);
     }
