@@ -1,7 +1,9 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 #include <ctime>
 
 using namespace wrd;
+
+struct memoryAllocRobustTest : public wrdTest {};
 
 namespace {
     struct A : public instance {
@@ -67,32 +69,32 @@ namespace {
 WRD_W("%d times new/delete : %f ms elapsed. crc=%d", n, ((float) run1(crc, (n))) / CLOCKS_PER_SEC*1000.0f, crc); \
 WRD_W("%d times mempool    : %f ms elapsed. crc=%d", n, ((float) run2(crc, (n))) / CLOCKS_PER_SEC*1000.0f, crc);
 
-TEST(memoryAllocRobustTest, sprint10) {
+TEST_F(memoryAllocRobustTest, sprint10) {
     int crc = 0;
     SPRINT(10)
 }
 
-TEST(memoryAllocRobustTest, sprint100) {
+TEST_F(memoryAllocRobustTest, sprint100) {
     int crc = 0;
     SPRINT(100)
 }
 
-TEST(memoryAllocRobustTest, sprint1000) {
+TEST_F(memoryAllocRobustTest, sprint1000) {
     int crc = 0;
     SPRINT(1000)
 }
 
-TEST(memoryAllocRobustTest, sprint10000) {
+TEST_F(memoryAllocRobustTest, sprint10000) {
     int crc = 0;
     SPRINT(10000)
 }
 
-TEST(memoryAllocRobustTest, sprint50000) {
+TEST_F(memoryAllocRobustTest, sprint50000) {
     int crc = 0;
     SPRINT(50000)
 }
 
-TEST(memoryAllocRobustTest, sprint100000) {
+TEST_F(memoryAllocRobustTest, sprint100000) {
     int crc = 0;
     SPRINT(100000)
 }

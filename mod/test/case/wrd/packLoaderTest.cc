@@ -1,9 +1,11 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 using namespace std;
 
-TEST(packLoaderTest, testDefaultLoaderInit) {
+struct packLoaderTest : public wrdTest {};
+
+TEST_F(packLoaderTest, testDefaultLoaderInit) {
     const packs& systemPacks = wrd::thread::get().getSystemPacks();
     ASSERT_FALSE(nul(systemPacks));
 

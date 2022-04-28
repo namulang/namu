@@ -1,9 +1,11 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 using namespace std;
 
-TEST(primitiveObjTest, testCreateWIntInMgd) {
+struct primitiveObjTest : public wrdTest {};
+
+TEST_F(primitiveObjTest, testCreateWIntInMgd) {
     wInt origin(1);
 
     tstr<wInt> inst = origin.run(narr({origin}));
@@ -12,7 +14,7 @@ TEST(primitiveObjTest, testCreateWIntInMgd) {
     ASSERT_NE(&origin, &(*inst));
 }
 
-TEST(primitiveObjTest, testCloneWIntInMgd) {
+TEST_F(primitiveObjTest, testCloneWIntInMgd) {
     wInt origin(1);
 
     tstr<wInt> inst(origin.clone());
@@ -21,7 +23,7 @@ TEST(primitiveObjTest, testCloneWIntInMgd) {
     ASSERT_NE(&origin, &(*inst));
 }
 
-TEST(primitiveObjTest, testDefaultCtor) {
+TEST_F(primitiveObjTest, testDefaultCtor) {
     wInt origin(1);
 
     tstr<wInt> inst = origin.run(narr());

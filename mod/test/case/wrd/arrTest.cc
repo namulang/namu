@@ -1,8 +1,10 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 #include <chrono>
 
 using namespace wrd;
 using namespace std;
+
+struct arrTest : public wrdTest {};
 
 namespace {
     class myNode : public node {
@@ -68,11 +70,11 @@ namespace {
     }
 }
 
-TEST(arrTest, instantiateTest) {
+TEST_F(arrTest, instantiateTest) {
     arr arr1;
 }
 
-TEST(arrTest, shouldNotCanAddLocalObject) {
+TEST_F(arrTest, shouldNotCanAddLocalObject) {
     tarr<myNode> arr1;
     ASSERT_EQ(arr1.len(), 0);
 
@@ -88,7 +90,7 @@ TEST(arrTest, shouldNotCanAddLocalObject) {
     ASSERT_TRUE(nul(elem));
 }
 
-TEST(arrTest, simpleAddDelTest) {
+TEST_F(arrTest, simpleAddDelTest) {
     tarr<myNode> arr1;
     ASSERT_EQ(arr1.len(), 0);
 
@@ -101,7 +103,7 @@ TEST(arrTest, simpleAddDelTest) {
     ASSERT_EQ(elem1.number, EXPECT_NUMBER);
 }
 
-TEST(arrTest, addDel10Elems) {
+TEST_F(arrTest, addDel10Elems) {
     tarr<myNode> arr1;
     const int cnt = 10;
     for(int n=0; n < cnt; n++) {
@@ -111,13 +113,13 @@ TEST(arrTest, addDel10Elems) {
     ASSERT_EQ(arr1.len(), cnt);
 }
 
-TEST(arrTest, benchMarkArrTest) {
+TEST_F(arrTest, benchMarkArrTest) {
     benchMarkArr(100);
     benchMarkArr(1000);
     benchMarkArr(10000);
 }
 
-TEST(arrTest, testIter) {
+TEST_F(arrTest, testIter) {
     arr arr1;
     arr1.add(new myNode(0));
     arr1.add(new myNode(1));
@@ -133,7 +135,7 @@ TEST(arrTest, testIter) {
     ASSERT_EQ(e.next(1), 0);
 }
 
-TEST(arrTest, testContainableAPI) {
+TEST_F(arrTest, testContainableAPI) {
     //  initial state:
     tarr<myNode>* arr1 = new tarr<myNode>();
     tucontainable<myNode>* con = arr1;
@@ -269,7 +271,7 @@ TEST(arrTest, testContainableAPI) {
     delete con;
 }
 
-TEST(arrTest, testDeepClone) {
+TEST_F(arrTest, testDeepClone) {
     narr arr1;
     arr1.add(new myNode(1));
     arr1.add(new myNode(2));
@@ -286,7 +288,7 @@ TEST(arrTest, testDeepClone) {
     }
 }
 
-TEST(arrTest, testRangeBasedForLoop) {
+TEST_F(arrTest, testRangeBasedForLoop) {
 
     narr arr1;
     arr1.add(new myNode(3));

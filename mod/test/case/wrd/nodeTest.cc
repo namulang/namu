@@ -1,7 +1,9 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 using namespace std;
+
+struct nodeTest : public wrdTest {};
 
 namespace {
     class myFunc : public mgdFunc {
@@ -114,7 +116,7 @@ namespace {
     };
 }
 
-TEST(nodeTest, testManuallyMakeNodeStructure) {
+TEST_F(nodeTest, testManuallyMakeNodeStructure) {
     // prepare:
     tstr<scopes> frameEmulator;
     myObj obj;
@@ -155,7 +157,7 @@ TEST(nodeTest, testManuallyMakeNodeStructure) {
     WRD_E("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 }
 
-TEST(nodeTest, testManualNativefuncCall) {
+TEST_F(nodeTest, testManualNativefuncCall) {
     // prepare:
     myFunc func;
 
@@ -174,7 +176,7 @@ TEST(nodeTest, testManualNativefuncCall) {
     ASSERT_TRUE(func.isRun());
 }
 
-TEST(nodeTest, testImmutablePositive) {
+TEST_F(nodeTest, testImmutablePositive) {
     tstr<wFlt> r1(new wFlt(1.0f));
     str r2 = r1;
     ASSERT_TRUE(r1);
@@ -197,7 +199,7 @@ TEST(nodeTest, testImmutablePositive) {
     ASSERT_EQ(*r1, cast);
 }
 
-TEST(nodeTest, testImmutableNegative) {
+TEST_F(nodeTest, testImmutableNegative) {
     str r1(new myObj(1));
     str r2 = r1;
     ASSERT_TRUE(r1);
@@ -208,7 +210,7 @@ TEST(nodeTest, testImmutableNegative) {
     ASSERT_EQ(*r1, *r2);
 }
 
-TEST(nodeTest, testchefImplicitCastTofood) {
+TEST_F(nodeTest, testchefImplicitCastTofood) {
     // prepare:
     const string expectName = "HealthPotion";
     const int expectCalorie = 350;

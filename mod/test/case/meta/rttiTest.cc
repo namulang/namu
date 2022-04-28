@@ -1,4 +1,4 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 namespace {
     struct noSuper {
@@ -13,7 +13,9 @@ namespace {
 
 using namespace wrd;
 
-TEST(rttiTest, metaTypeDefTest) {
+struct rttiTest : public wrdTest {};
+
+TEST_F(rttiTest, metaTypeDefTest) {
     ASSERT_FALSE(tifHasSuperTypedef<noSuper>::is);
     ASSERT_TRUE(tifHasSuperTypedef<hasSuper>::is);
 
@@ -37,7 +39,7 @@ TEST(rttiTest, metaTypeDefTest) {
     ASSERT_EQ(typeid(tadaptiveSuper<hasSuper>::super), typeid(noSuper));
 }
 
-TEST(rttiTest, superTypeDefTest) {
+TEST_F(rttiTest, superTypeDefTest) {
     struct A {};
     struct customA {
         typedef struct myType : type {

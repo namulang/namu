@@ -1,27 +1,29 @@
 #pragma once
 
-#include "common/dep.hpp"
+#include "wrdTest.hpp"
 #include <iostream>
 
-struct syntaxTest : public ::testing::Test {
-    void SetUp() {}
-    void TearDown() { _rel(); }
+struct wrdSyntaxTest : public wrdTest {
+    void TearDown() {
+        wrdTest::TearDown();
+        _rel();
+    }
 
     wrd::node& getSubPack() { return *_subpack; }
     wrd::pack& getPack() { return *_pack; }
     wrd::errReport& getReport() { return _rpt; }
 
-    syntaxTest& make() {
+    wrdSyntaxTest& make() {
         return make(wrd::manifest());
     }
 
-    syntaxTest& make(const wrd::manifest& mani) {
+    wrdSyntaxTest& make(const wrd::manifest& mani) {
         _rel();
         _pack.bind(new wrd::pack(mani, wrd::packLoadings()));
         return *this;
     }
 
-    syntaxTest& parse(const wrd::wchar* src) {
+    wrdSyntaxTest& parse(const wrd::wchar* src) {
         WRD_I("====================================");
         WRD_I("parsing src:");
         WRD_I("%s", src);

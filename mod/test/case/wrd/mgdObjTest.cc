@@ -1,7 +1,9 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 using namespace std;
+
+struct mgdObjTest : public wrdTest {};
 
 namespace {
     struct myObj : public mgdObj {
@@ -16,7 +18,7 @@ namespace {
     };
 }
 
-TEST(mgdObjTest, testGetOriginPointingThis) {
+TEST_F(mgdObjTest, testGetOriginPointingThis) {
     myObj obj1;
     ASSERT_FALSE(nul(obj1.getOrigin()));
     ASSERT_EQ(&obj1.getOrigin(), &obj1);

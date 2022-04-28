@@ -1,4 +1,4 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 using namespace std;
@@ -14,7 +14,7 @@ namespace {
     };
 }
 
-struct exprTest : public ::testing::Test {
+struct exprTest : public wrdTest {
     void SetUp();
     void TearDown();
 
@@ -26,11 +26,15 @@ struct exprTest : public ::testing::Test {
 };
 
 void exprTest::SetUp() {
+    wrdTest::SetUp();
     bridge.bind(tcppBridge<helloWorld>::def()
         ->func("main", &helloWorld::main));
 }
 
-void exprTest::TearDown() { helloWorld::isRun = false; }
+void exprTest::TearDown() {
+    wrdTest::TearDown();
+    helloWorld::isRun = false;
+}
 
 TEST_F(exprTest, standbyHelloWorldBridgeObj) {
     ASSERT_TRUE(bridge.isBind());

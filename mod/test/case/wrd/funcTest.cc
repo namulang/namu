@@ -1,8 +1,10 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 #include <functional>
 
 using namespace wrd;
 using namespace std;
+
+struct funcTest : public wrdTest {};
 
 namespace {
     class myfunc : public mgdFunc {
@@ -117,7 +119,7 @@ namespace {
     const char* func2Name = "obj1func2";
 }
 
-TEST(funcTest, testfuncConstructNewFrame) {
+TEST_F(funcTest, testfuncConstructNewFrame) {
     myObj obj;
     const char* funcNames[] = {"test"};
     myfunc func;
@@ -152,7 +154,7 @@ TEST(funcTest, testfuncConstructNewFrame) {
     func.setLambda(nullptr);
 }
 
-TEST(funcTest, testCallfuncInsidefunc) {
+TEST_F(funcTest, testCallfuncInsidefunc) {
     myObj obj1;
     myfunc obj1func1;
     myfunc obj1func2;
@@ -211,7 +213,7 @@ TEST(funcTest, testCallfuncInsidefunc) {
     ASSERT_TRUE(obj1func1.isSuccess());
 }
 
-TEST(funcTest, testfuncHasStrParameter) {
+TEST_F(funcTest, testfuncHasStrParameter) {
     // prepare:
     std::string expectVal = "hello world!";
     myfunc func1;
@@ -238,7 +240,7 @@ TEST(funcTest, testfuncHasStrParameter) {
     ASSERT_TRUE(func1.isSuccess());
 }
 
-TEST(funcTest, testArgsAttachedName) {
+TEST_F(funcTest, testArgsAttachedName) {
     myObj o;
     myfunc f;
     o.subs().add("myfunc", f);

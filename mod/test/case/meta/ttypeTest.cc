@@ -1,6 +1,8 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
+
+struct ttypeTest : public wrdTest {};
 
 namespace {
     struct B {
@@ -37,9 +39,9 @@ namespace {
     };
 }
 
-TEST(ttypeTest, initSystem) {}
+TEST_F(ttypeTest, initSystem) {}
 
-TEST(ttypeTest, basicBehavior) {
+TEST_F(ttypeTest, basicBehavior) {
     ASSERT_FALSE(ttype<myClass>().isTemplate());
     ASSERT_FALSE(ttype<myClass>().isAbstract());
 
@@ -53,7 +55,7 @@ TEST(ttypeTest, basicBehavior) {
     ASSERT_STREQ(type.getSuper().getName().c_str(), "adam");
 }
 
-TEST(ttypeTest, customTypeInheritTest) {
+TEST_F(ttypeTest, customTypeInheritTest) {
     static const std::string trg = "injected";
     static const int fooRet = 22;
 
@@ -73,7 +75,7 @@ TEST(ttypeTest, customTypeInheritTest) {
     EXPECT_EQ(ttype<customA>::get().foo(), fooRet);
 }
 
-TEST(ttypeTest, makeInstanceTest) {
+TEST_F(ttypeTest, makeInstanceTest) {
     ttype<A> type;
     A* arr[] = {(A*) type.make(), type.makeAs<A>()};
     ASSERT_TRUE(arr[0]);
@@ -81,12 +83,12 @@ TEST(ttypeTest, makeInstanceTest) {
     ASSERT_NE(arr[0], arr[1]);
 }
 
-TEST(ttypeTest, makeInstanceNegativeTest) {
+TEST_F(ttypeTest, makeInstanceNegativeTest) {
     ttype<B> type;
     ASSERT_FALSE(type.make());
 }
 
-TEST(ttypeTest, iterateLeafClassTest) {
+TEST_F(ttypeTest, iterateLeafClassTest) {
     const type& typ = ttype<myClass>();
     ASSERT_EQ(typ.getSubs().size(), 2);
 

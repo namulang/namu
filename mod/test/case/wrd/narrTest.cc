@@ -1,8 +1,10 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 #include <chrono>
 
 using namespace wrd;
 using namespace std;
+
+struct narrTest : public wrdTest {};
 
 namespace {
     class myNode : public node {
@@ -66,11 +68,11 @@ namespace {
     };
 }
 
-TEST(narrTest, instantiateTest) {
+TEST_F(narrTest, instantiateTest) {
     narr arr;
 }
 
-TEST(narrTest, shouldNotCanAddLocalObject) {
+TEST_F(narrTest, shouldNotCanAddLocalObject) {
     tnarr<myNode> arr;
     ASSERT_EQ(arr.len(), 0);
 
@@ -86,7 +88,7 @@ TEST(narrTest, shouldNotCanAddLocalObject) {
     ASSERT_TRUE(nul(elem));
 }
 
-TEST(narrTest, simpleAddDelTest) {
+TEST_F(narrTest, simpleAddDelTest) {
     tnarr<myNode> arr;
     ASSERT_EQ(arr.len(), 0);
 
@@ -99,7 +101,7 @@ TEST(narrTest, simpleAddDelTest) {
     ASSERT_EQ(elem1.number, EXPECT_NUMBER);
 }
 
-TEST(narrTest, addDel10Elems) {
+TEST_F(narrTest, addDel10Elems) {
     tnarr<myNode> arr;
     const int cnt = 10;
     for(int n=0; n < cnt; n++) {
@@ -109,13 +111,13 @@ TEST(narrTest, addDel10Elems) {
     ASSERT_EQ(arr.len(), cnt);
 }
 
-TEST(narrTest, benchMarkNArrTest) {
+TEST_F(narrTest, benchMarkNArrTest) {
     benchMarkNArr(100);
     benchMarkNArr(1000);
     benchMarkNArr(10000);
 }
 
-TEST(narrTest, testIter) {
+TEST_F(narrTest, testIter) {
     narr arr;
     arr.add(new myNode(0));
     arr.add(new myNode(1));
@@ -131,7 +133,7 @@ TEST(narrTest, testIter) {
     ASSERT_EQ(e.next(1), 0);
 }
 
-TEST(narrTest, testucontainableAPI) {
+TEST_F(narrTest, testucontainableAPI) {
     //  initial state:
     tnarr<myNode>* arr = new tnarr<myNode>();
     tucontainable<myNode>* con = arr;
@@ -265,7 +267,7 @@ TEST(narrTest, testucontainableAPI) {
     delete con;
 }
 
-TEST(narrTest, testRangeBasedForLoop) {
+TEST_F(narrTest, testRangeBasedForLoop) {
 
     narr arr1;
     arr1.add(new myNode(3));
