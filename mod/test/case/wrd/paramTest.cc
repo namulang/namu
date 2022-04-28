@@ -25,7 +25,7 @@ namespace {
     };
 }
 
-TEST(paramTest, testParamOrigin) {
+/*TEST(paramTest, testParamOrigin) {
     myObj obj1;
     param p1("hello", obj1);
     param p2("world", obj1.getType());
@@ -37,4 +37,4 @@ TEST(paramTest, testParamOrigin) {
     p1.setOrigin(wInt().getType());
     ASSERT_EQ(p1.getType(), ttype<wInt>::get());
     ASSERT_TRUE(nul(*p1.getOrigin()));
-}
+}*/

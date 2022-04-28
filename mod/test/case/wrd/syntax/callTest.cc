@@ -1,10 +1,10 @@
-#include "../../../syntaxTest.hpp"
+#include "../../../wrdSyntaxTest.hpp"
 
 using namespace wrd;
 using namespace std;
 
 namespace {
-    struct callTest : public syntaxTest {};
+    struct callTest : public wrdSyntaxTest {};
 }
 
 TEST_F(callTest, callFunc) {

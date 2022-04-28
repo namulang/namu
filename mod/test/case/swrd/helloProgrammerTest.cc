@@ -1,10 +1,11 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 using namespace std;
 
+struct helloProgrammerTest : public wrdTest {};
 
-TEST(helloProgrammerTest, testScript) {
+TEST_F(helloProgrammerTest, testScript) {
     const std::string script =
         "def programmer\n"
         "   say := 'html is not a programming language!'\n"
@@ -22,7 +23,7 @@ TEST(helloProgrammerTest, testScript) {
     ASSERT_STREQ(say.asStr().c_str(), "html is not a programming language!");
 }
 
-TEST(helloProgrammerTest, testScriptEndsWithEOF) {
+TEST_F(helloProgrammerTest, testScriptEndsWithEOF) {
     const std::string script =
         "def programmer\n"
         "   say := 'html is not a programming language!'\n"
@@ -43,7 +44,7 @@ TEST(helloProgrammerTest, testScriptEndsWithEOF) {
     ASSERT_EQ(age.asInt(), 12);
 }
 
-TEST(helloProgrammerTest, testScriptWithPackScope) {
+TEST_F(helloProgrammerTest, testScriptWithPackScope) {
     const std::string script =
         "say := 'html is not a programming language!'\n"
         "age := 12\n"
@@ -67,7 +68,7 @@ TEST(helloProgrammerTest, testScriptWithPackScope) {
     }
 }
 
-TEST(helloProgrammerTest, testNullObjNegative) {
+TEST_F(helloProgrammerTest, testNullObjNegative) {
 
     const std::string script =
         "say := 'html is not a programming language!'\n"
@@ -86,7 +87,7 @@ TEST(helloProgrammerTest, testNullObjNegative) {
     ASSERT_EQ(notExist.asChar(), '\0');
 }
 
-TEST(helloProgrammerTest, testVerObject) {
+TEST_F(helloProgrammerTest, testVerObject) {
     const std::string script =
         "def man\n" // TODO: swrd parser only believe that def keyword will be front of script.
         "   dummy := 5\n"
@@ -120,7 +121,7 @@ TEST(helloProgrammerTest, testVerObject) {
     ASSERT_TRUE(ver > verSobj(0, 2, 8));
 }
 
-TEST(helloProgrammerTest, testNullThisTest) {
+TEST_F(helloProgrammerTest, testNullThisTest) {
     const std::string script =
         "def empty\n"
         "  name := 'wow'\n";
@@ -134,7 +135,7 @@ TEST(helloProgrammerTest, testNullThisTest) {
     ASSERT_FALSE(shouldNotExist);
 }
 
-TEST(helloProgrammerTest, testIteration) {
+TEST_F(helloProgrammerTest, testIteration) {
     const std::string script =
         "def person\n"
         "   name := 'gorden freeman'\n"
@@ -159,7 +160,7 @@ TEST(helloProgrammerTest, testIteration) {
     }
 }
 
-TEST(helloProgrammerTest, testNullThisAccess) {
+TEST_F(helloProgrammerTest, testNullThisAccess) {
     const std::string script =
         "def empty\n"
         "  name := 'wow'\n";
@@ -172,7 +173,7 @@ TEST(helloProgrammerTest, testNullThisAccess) {
     ASSERT_STREQ(shouldExist.c_str(), "");
 }
 
-TEST(helloProgrammerTest, testManifestScript) {
+TEST_F(helloProgrammerTest, testManifestScript) {
     const std::string script =
         "def entrypoints\n"
         "   def cpp\n"

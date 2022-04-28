@@ -1,7 +1,9 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 using namespace std;
+
+struct nchainTest : public wrdTest {};
 
 namespace {
     class myNode : public node {
@@ -89,22 +91,22 @@ namespace {
 
 }
 
-TEST(nchainTest, instantiateTest) {
+TEST_F(nchainTest, instantiateTest) {
     nchain chn;
     ASSERT_FALSE(nul(chn.getContainer()));
 }
 
-TEST(nchainTest, simpleAddDelTest10) {
+TEST_F(nchainTest, simpleAddDelTest10) {
     simpleAddDelTest(10);
 }
-TEST(nchainTest, simpleAddDelTest1000) {
+TEST_F(nchainTest, simpleAddDelTest1000) {
     simpleAddDelTest(1000);
 }
-TEST(nchainTest, simpleAddDelTest10000) {
+TEST_F(nchainTest, simpleAddDelTest10000) {
     simpleAddDelTest(10000);
 }
 
-TEST(nchainTest, testucontainableAPI) {
+TEST_F(nchainTest, testucontainableAPI) {
     //  initial state:
     tstr<nchain> arr(new nchain());
     bicontainable* con = &arr.get();
@@ -238,7 +240,7 @@ TEST(nchainTest, testucontainableAPI) {
     ASSERT_EQ(elem->number, 3);
 }
 
-TEST(nchainTest, testLinkedChainWithOnly1Element) {
+TEST_F(nchainTest, testLinkedChainWithOnly1Element) {
     nmap map1;
     map1.add("0", new myNode(0));
     nchain chn1(map1);
@@ -257,7 +259,7 @@ TEST(nchainTest, testLinkedChainWithOnly1Element) {
     ASSERT_EQ(n, 2);
 }
 
-TEST(nchainTest, testLinkedChainWithNContainerAPI) {
+TEST_F(nchainTest, testLinkedChainWithNContainerAPI) {
     nmap map1;
     nchain chn1(map1);
     nmap map2;
@@ -348,7 +350,7 @@ TEST(nchainTest, testLinkedChainWithNContainerAPI) {
     ASSERT_EQ(chn2.len(), 3);
 }
 
-TEST(nchainTest, testIfnchainLinkItself) {
+TEST_F(nchainTest, testIfnchainLinkItself) {
     nchain chn;
     chn.add("0", new myNode(0));
     chn.add("1", new myNode(1));
@@ -356,7 +358,7 @@ TEST(nchainTest, testIfnchainLinkItself) {
     ASSERT_EQ(chn.len(), 2);
 }
 
-TEST(nchainTest, testShouldLinkOverwritePrevious) {
+TEST_F(nchainTest, testShouldLinkOverwritePrevious) {
     tstr<nmap> map1Str(new nmap());
     const bindTag* map1tag = &bindTag::getBindTag(map1Str.getItsId());
     ASSERT_FALSE(nul(map1tag));
@@ -396,7 +398,7 @@ TEST(nchainTest, testShouldLinkOverwritePrevious) {
     ASSERT_EQ(chn2.len(), 2);
 }
 
-TEST(nchainTest, testDelWithLink) {
+TEST_F(nchainTest, testDelWithLink) {
     nchain chn;
     chn.add("1", new myNode(1));
     ASSERT_EQ(chn.len(), 1);
@@ -441,7 +443,7 @@ TEST(nchainTest, testDelWithLink) {
     ASSERT_EQ(chn.len(), 1);
 }
 
-TEST(nchainTest, testLastIterator) {
+TEST_F(nchainTest, testLastIterator) {
     nchain chn;
     ASSERT_EQ(chn.len(), 0);
     chn.add("1", new myNode(1));
@@ -455,7 +457,7 @@ TEST(nchainTest, testLastIterator) {
     ASSERT_TRUE(sorted);
 }
 
-TEST(nchainTest, testRangeBasedForLoop) {
+TEST_F(nchainTest, testRangeBasedForLoop) {
     nchain map1;
     map1.add("3", new myNode(3));
     map1.add("7", new myNode(7));
@@ -484,7 +486,7 @@ TEST(nchainTest, testRangeBasedForLoop) {
     ASSERT_EQ(sum, expect);
 }
 
-TEST(nchainTest, testLinkArrayAndChain) {
+TEST_F(nchainTest, testLinkArrayAndChain) {
 
     nmap map1;
     map1.add("1", new myNode(1));
@@ -514,7 +516,7 @@ TEST(nchainTest, testLinkArrayAndChain) {
     }
 }
 
-TEST(nchainTest, testDeepChainIteration) {
+TEST_F(nchainTest, testDeepChainIteration) {
     tnchain<int, myNode> chn1;
     chn1.add(1, new myNode(1));
     chn1.add(2, new myNode(2));
@@ -550,7 +552,7 @@ TEST(nchainTest, testDeepChainIteration) {
         ASSERT_TRUE(vectorHas(tray, n));
 }
 
-TEST(nchainTest, testDeepChainAddDel) {
+TEST_F(nchainTest, testDeepChainAddDel) {
     tnchain<int, myNode> chn1;
     chn1.add(1, new myNode(1));
     chn1.add(2, new myNode2(2));

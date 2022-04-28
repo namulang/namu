@@ -3,7 +3,7 @@
 #include "id.hpp"
 #include <map>
 
-struct chunksTest;
+struct wrdTest;
 
 namespace wrd {
 
@@ -17,7 +17,7 @@ namespace wrd {
         friend class watcher; // for vault.
         friend class chunks; // for vault.
         friend class instancer; // for _id.
-        friend struct ::chunksTest; // for vault.
+        friend struct ::wrdTest; // for vault.
 
     public:
         class vault {
@@ -25,6 +25,7 @@ namespace wrd {
         public:
             wbool set(void* rcver, widx chkN);
             widx get(void* rcver);
+            wcnt len() const { return _vaults.size(); }
             wbool rel();
 
             std::map<void*, int>& getVaults() {

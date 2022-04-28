@@ -1,7 +1,9 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 using namespace std;
+
+struct objTest : public wrdTest {};
 
 namespace {
     class originObj : public obj {
@@ -38,7 +40,7 @@ namespace {
     };
 }
 
-TEST(objTest, testMakeOriginObj) {
+TEST_F(objTest, testMakeOriginObj) {
     const wchar* o2Name = "o2";
     originObj o1, o2(*new scopes());
     ASSERT_NE(o1.getId(), o2.getId());
@@ -61,7 +63,7 @@ TEST(objTest, testMakeOriginObj) {
     ASSERT_EQ(&found, &o2);
 }
 
-TEST(objTest, testCloneOriginObj) {
+TEST_F(objTest, testCloneOriginObj) {
     const wchar* o2Name = "wow";
     originObj o1, o2(*new scopes());
     scopes* newSubs = new scopes();

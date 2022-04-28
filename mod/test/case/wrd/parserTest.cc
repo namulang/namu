@@ -1,8 +1,10 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 
-TEST(parserTest, testHelloWorld) {
+struct parserTest : public wrdTest {};
+
+TEST_F(parserTest, testHelloWorld) {
     parser p;
     const wchar* stringScript = R"SRC(
         main()

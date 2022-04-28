@@ -1,4 +1,4 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 
@@ -17,7 +17,7 @@ namespace {
     };
 }
 
-struct frameTest : public ::testing::Test {
+struct frameTest : public wrdTest {
     frames& getFrames() {
         return (frames&) thread::get().getFrames();
     }

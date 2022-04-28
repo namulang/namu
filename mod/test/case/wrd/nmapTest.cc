@@ -1,8 +1,10 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 #include <chrono>
 
 using namespace wrd;
 using namespace std;
+
+struct nmapTest : public wrdTest {};
 
 namespace {
     class myNode : public node {
@@ -70,11 +72,11 @@ namespace {
     };
 }
 
-TEST(nmapTest, instantiateTest) {
+TEST_F(nmapTest, instantiateTest) {
     nmap map1;
 }
 
-TEST(nmapTest, shouldNotCanAddLocalObject) {
+TEST_F(nmapTest, shouldNotCanAddLocalObject) {
     tnmap<std::string, myNode> map1;
     ASSERT_EQ(map1.len(), 0);
 
@@ -90,7 +92,7 @@ TEST(nmapTest, shouldNotCanAddLocalObject) {
     ASSERT_TRUE(nul(elem));
 }
 
-TEST(nmapTest, simpleAddDelTest) {
+TEST_F(nmapTest, simpleAddDelTest) {
     tnmap<std::string, myNode> map1;
     ASSERT_EQ(map1.len(), 0);
 
@@ -103,7 +105,7 @@ TEST(nmapTest, simpleAddDelTest) {
     ASSERT_EQ(elem1.number, EXPECT_NUMBER);
 }
 
-TEST(nmapTest, addDel10Elems) {
+TEST_F(nmapTest, addDel10Elems) {
     tnmap<int, myNode> map1;
     const int cnt = 10;
     for(int n=0; n < cnt; n++) {
@@ -113,13 +115,13 @@ TEST(nmapTest, addDel10Elems) {
     ASSERT_EQ(map1.len(), cnt);
 }
 
-TEST(nmapTest, benchMarkNMapTest) {
+TEST_F(nmapTest, benchMarkNMapTest) {
     benchMarkNMap(100);
     benchMarkNMap(1000);
     benchMarkNMap(10000);
 }
 
-TEST(nmapTest, testIter) {
+TEST_F(nmapTest, testIter) {
     nmap map1;
     map1.add("0", new myNode(0));
     map1.add("1", new myNode(1));
@@ -155,7 +157,7 @@ wbool hasSequentialValueOf(int val, tbicontainable<std::string, myNode>& from) {
     return true;
 }
 
-TEST(nmapTest, testucontainableAPI) {
+TEST_F(nmapTest, testucontainableAPI) {
     //  initial state:
     tnmap<std::string, myNode>* map1 = new tnmap<std::string, myNode>();
     tbicontainable<std::string, myNode>* con = map1;
@@ -236,7 +238,7 @@ TEST(nmapTest, testucontainableAPI) {
     delete con;
 }
 
-TEST(nmapTest, testRangeBasedForLoop) {
+TEST_F(nmapTest, testRangeBasedForLoop) {
 
     nmap map1;
     map1.add("3", new myNode(3));
@@ -256,7 +258,7 @@ TEST(nmapTest, testRangeBasedForLoop) {
     ASSERT_EQ(sum2, sum);
 }
 
-TEST(nmapTest, addMultipleKey) {
+TEST_F(nmapTest, addMultipleKey) {
     nmap m;
     m.add("1", new myNode(1));
     m.add("2", new myNode(2));
@@ -270,7 +272,7 @@ TEST(nmapTest, addMultipleKey) {
     ASSERT_EQ(key1found, 2);
 }
 
-TEST(nmapTest, searchMultipleKey) {
+TEST_F(nmapTest, searchMultipleKey) {
     nmap m;
     m.add("1", new myNode(1));
     m.add("2", new myNode(2));
@@ -290,7 +292,7 @@ TEST(nmapTest, searchMultipleKey) {
     ASSERT_NE(val1, val2);
 }
 
-TEST(nmapTest, testDeletionByKey) {
+TEST_F(nmapTest, testDeletionByKey) {
     nmap m;
     m.add("1", new myNode(1));
     m.add("2", new myNode(2));
@@ -304,7 +306,7 @@ TEST(nmapTest, testDeletionByKey) {
     ASSERT_EQ(e.getVal<myNode>().number, 2);
 }
 
-TEST(nmapTest, testDeletionByIter) {
+TEST_F(nmapTest, testDeletionByIter) {
     nmap m;
     m.add("1", new myNode(1));
     m.add("2", new myNode(2));

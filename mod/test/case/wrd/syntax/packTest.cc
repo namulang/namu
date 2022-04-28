@@ -1,10 +1,10 @@
-#include "../../../syntaxTest.hpp"
+#include "../../../wrdSyntaxTest.hpp"
 
 using namespace wrd;
 using namespace std;
 
 namespace {
-    struct packTest : public syntaxTest {};
+    struct packTest : public wrdSyntaxTest {};
 
     class myfunc : public mgdFunc {
         WRD(CLASS(myfunc, mgdFunc))

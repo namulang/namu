@@ -1,7 +1,9 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace std;
 using namespace wrd;
+
+struct watcherTest : public wrdTest {};
 
 namespace {
     struct A : public instance {
@@ -57,7 +59,7 @@ namespace {
     }
 }
 
-TEST(watcherTest, localVariableBindTagTest) {
+TEST_F(watcherTest, localVariableBindTagTest) {
     A a;
     const bindTag& tag = a.getBindTag();
     ASSERT_FALSE(nul(tag));
@@ -67,7 +69,7 @@ TEST(watcherTest, localVariableBindTagTest) {
     ASSERT_TRUE(nul(chk));
 }
 
-TEST(watcherTest, NestedClassBindTest) {
+TEST_F(watcherTest, NestedClassBindTest) {
     class inner : public instance {
     public:
         const type& getType() const override {
@@ -91,7 +93,7 @@ TEST(watcherTest, NestedClassBindTest) {
     ASSERT_TRUE(b->inner->getId().isHeap());
 }
 
-TEST(watcherTest, heapVariableBindTagTest) {
+TEST_F(watcherTest, heapVariableBindTagTest) {
     vector<A*> arr;
 
     for(int n=0; n < 10; n++)
@@ -125,14 +127,14 @@ TEST(watcherTest, heapVariableBindTagTest) {
     arr.clear();
 }
 
-TEST(watcherTest, addIntegrityTest100) {
+TEST_F(watcherTest, addIntegrityTest100) {
     addIntegrityTest(100);
 }
 
-TEST(watcherTest, addIntegrityTest10000) {
+TEST_F(watcherTest, addIntegrityTest10000) {
     addIntegrityTest(1000);
 }
 
-TEST(watcherTest, addRemoveIntegrityTest100) {
+TEST_F(watcherTest, addRemoveIntegrityTest100) {
     addRemoveIntegrityTest(100);
 }

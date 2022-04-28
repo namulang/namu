@@ -6,6 +6,8 @@
 using namespace wrd;
 using namespace std;
 
+struct speedTest : public ::testing::Test {};
+
 namespace  {
     void benchMark(string name, int cnt, function<void(void)> func) {
         logger::get().setEnable(false);
@@ -40,7 +42,7 @@ namespace  {
     };
 }
 
-TEST(speedTest, benchmarkArr) {
+TEST_F(speedTest, benchmarkArr) {
     int clc = 0;
     myObj obj1;
     benchMark("create narr 10000 times", 10000, [&clc]() {
@@ -91,7 +93,7 @@ TEST(speedTest, benchmarkArr) {
     });
 }
 
-TEST(speedTest, benchmarkNodeCreation) {
+TEST_F(speedTest, benchmarkNodeCreation) {
     std::uintptr_t i = 0;
     benchMark("create 10000 dummy object", 10000, [&]() {
         dummy dum;
@@ -112,7 +114,7 @@ TEST(speedTest, benchmarkNodeCreation) {
     ASSERT_TRUE(i >= 40000);
 }
 
-TEST(speedTest, benchmarkStringCreation) {
+TEST_F(speedTest, benchmarkStringCreation) {
     std::uintptr_t i = 0;
     benchMark("create 10000 std::string", 10000, [&]() {
         std::string dum("hello world");
