@@ -13,20 +13,27 @@ TEST_F(getExprTest, getSymbolOnPackScope) {
         main() void
             main
     )SRC").shouldVerified(true);
+}
 
+TEST_F(getExprTest, getSymbolOnPackScope1) {
     // control group.
     make().parse(R"SRC(
         age int
         main() int
             return 0
     )SRC").shouldVerified(true);
+}
 
+TEST_F(getExprTest, getSymbolOnPackScope2) {
     // experimental group.
     make().parse(R"SRC(
         age int
         main() int
             return age
     )SRC").shouldVerified(true);
+}
+
+TEST_F(getExprTest, getSymbolOnPackScope3) {
     make().parse(R"SRC(
         age str
         main() int
