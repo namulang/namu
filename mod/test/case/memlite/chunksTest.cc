@@ -1,14 +1,14 @@
-#include "../../common/dep.hpp"
+#include "../../wrdTest.hpp"
 
 using namespace wrd;
 
-struct chunksTest : public ::testing::Test {
-    void tearDown() {
-        instance::_vault.getVaults().clear();
+struct chunksTest : public wrdTest {
+    void TearDown() {
+        _getVault().getVaults().clear();
     }
 
     int getVaultsSize() {
-        return instance::_vault.getVaults().size();
+        return _getVault().len();
     }
 };
 
@@ -72,32 +72,33 @@ TEST_F(chunksTest, resizeLotsOfTimesTest) {
     heap.rel(chks2);
     ASSERT_EQ(chks2.len(), 0);
     ASSERT_EQ(chks2.size(), 0);
-    tearDown();
+    TearDown();
     ASSERT_EQ(getVaultsSize(), 0);
 
     heap.new1(chks2, 100);
     heap.rel(chks2);
     ASSERT_EQ(chks2.len(), 0);
     ASSERT_EQ(chks2.size(), 0);
-    tearDown();
+    TearDown();
     ASSERT_EQ(getVaultsSize(), 0);
 
     heap.new1(chks2, 1000);
     heap.rel(chks2);
     ASSERT_EQ(chks2.len(), 0);
     ASSERT_EQ(chks2.size(), 0);
-    tearDown();
+    TearDown();
     ASSERT_EQ(getVaultsSize(), 0);
 
     heap.new1(chks2, 10000);
     heap.rel(chks2);
     ASSERT_EQ(chks2.len(), 0);
     ASSERT_EQ(chks2.size(), 0);
-    tearDown();
+    TearDown();
     ASSERT_EQ(getVaultsSize(), 0);
 
     heap.new1(chks2, 100000);
     heap.rel(chks2);
     ASSERT_EQ(chks2.len(), 0);
     ASSERT_EQ(chks2.size(), 0);
+    TearDown();
 }
