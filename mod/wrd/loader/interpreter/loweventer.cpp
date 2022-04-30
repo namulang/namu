@@ -194,6 +194,7 @@ namespace wrd {
         if(!nul(defVar)) {
             defVar->setWhere(s);
             defVar->run();
+            return &s;
         }
 
         s.add(_onPopName(*e), e);
@@ -291,6 +292,9 @@ namespace wrd {
         return &names;
     }
 
+    node* me::onGet(const std::string& name) {
+        return new getExpr(name);
+    }
     node* me::onGet(const std::string& name, const narr& args) {
         return new getExpr(name, args);
     }
