@@ -1,13 +1,25 @@
 #include "defVarExpr.hpp"
 #include "../../frame/thread.hpp"
+#include "../../loader/interpreter/tverification.hpp"
+#include "../../loader/interpreter/verifier.hpp"
 
 namespace wrd {
 
     WRD_DEF_ME(defVarExpr)
 
-    str me::_addFrame(param& p) const {
-        if(thread::get()._getNowFrame().pushLocal(p.getName(), (node&) *p.getOrigin()))
-            return str(p.getOrigin());
-        return str();
+    str me::run(const ucontainable& args) {
+        const std::string& name = _param.getName();
+        node& org = (node&) *_param.getOrigin();
+
+        if(_where)
+            _where->add(name, org);
+        else
+            thread::get()._getNowFrame().pushLocal(name, org);
+
+        return str(org);
     }
+
+    WRD_VERIFY(defVarExpr, defineVariable, {
+        it.run();
+    })
 }
