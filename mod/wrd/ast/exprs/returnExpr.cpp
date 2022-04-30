@@ -20,7 +20,7 @@ namespace wrd {
         if(!_ret)
             return ttype<wVoid>::get();
 
-        return (const wtype&) _ret->getType(); // I guarrantee that it's wtype.
+        return (const wtype&) _ret->getEvalType(); // I guarrantee that it's wtype.
     }
 
 
