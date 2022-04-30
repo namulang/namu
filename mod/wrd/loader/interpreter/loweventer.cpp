@@ -190,6 +190,12 @@ namespace wrd {
         if(nul(e))
             return onSrcErr(18, candidate.getType().getName().c_str()), onDefBlock();
 
+        defVarExpr* defVar = &e->cast<defVarExpr>();
+        if(!nul(defVar)) {
+            defVar->setWhere(s);
+            defVar->run();
+        }
+
         s.add(_onPopName(*e), e);
         return &s;
     }

@@ -335,7 +335,8 @@ defstmt: defexpr-line NEWLINE { $$ = $1; }
 defblock: %empty {
         $$ = yyget_extra(scanner)->onDefBlock();
       } | defblock defstmt {
-        $$ = yyget_extra(scanner)->onDefBlock(*$1, *$2);
+        str lifeStmt($2);
+        $$ = yyget_extra(scanner)->onDefBlock(*$1, *lifeStmt);
       }
 
 //  type:
