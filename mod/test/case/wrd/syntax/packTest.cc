@@ -128,7 +128,7 @@ TEST_F(packTest, packIsInFrameWhenCallMgdFunc) {
         const params& ps = cast.getParams();
         if(nul(ps)) return false;
         if(ps.len() != 2) return false;
-        if(ps[0].getType() != ttype<wInt>()) return false;
+        if(ps[0].getOrigin().getType() != ttype<wInt>()) return false;
         if(ps[1].getName() != "grade") return false;
 
         // checks args of funcs is in frame:
@@ -149,7 +149,8 @@ TEST_F(packTest, packIsInFrameWhenCallMgdFunc) {
     ASSERT_TRUE(f1.isSuccess());
 }
 
-TEST_F(packTest, packIsNotInFrameWhenCallNativeFunc) {
+/* Concept changed: now, native call also make a frame instance.
+ * TEST_F(packTest, packIsNotInFrameWhenCallNativeFunc) {
     // check whether pack's subnodes not registered into frame when it calls:
     pack testPack(manifest("demo"), packLoadings());
     nativeFunc f1;
@@ -167,4 +168,4 @@ TEST_F(packTest, packIsNotInFrameWhenCallNativeFunc) {
     testPack.run("foo", narr(wInt(1), wFlt(3.5f)));
     ASSERT_TRUE(f1.isRun());
     ASSERT_TRUE(f1.isSuccess());
-}
+}*/
