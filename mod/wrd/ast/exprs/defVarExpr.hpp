@@ -12,6 +12,7 @@ namespace wrd {
         friend class mgdFunc;
 
     public:
+        defVarExpr(const param& p): _param(p) {}
         defVarExpr(const param& p, const scope& where): _where(where), _param(p) {}
 
     public:

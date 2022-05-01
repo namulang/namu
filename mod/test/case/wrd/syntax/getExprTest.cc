@@ -13,6 +13,7 @@ TEST_F(getExprTest, getSymbolOnPackScope) {
         main() void
             main
     )SRC").shouldVerified(true);
+    ASSERT_EQ(getSubPack().subs().len(), 1); // 1 for main()
 }
 
 TEST_F(getExprTest, getSymbolOnPackScope1) {
@@ -22,6 +23,7 @@ TEST_F(getExprTest, getSymbolOnPackScope1) {
         main() int
             return 0
     )SRC").shouldVerified(true);
+    ASSERT_EQ(getSubPack().subs().len(), 2); // 1 for age, 1 for main()
 }
 
 TEST_F(getExprTest, getSymbolOnPackScope2) {
@@ -31,6 +33,7 @@ TEST_F(getExprTest, getSymbolOnPackScope2) {
         main() int
             return age
     )SRC").shouldVerified(true);
+    ASSERT_EQ(getSubPack().subs().len(), 2); // 1 for age, 1 for main()
 }
 
 TEST_F(getExprTest, getSymbolOnPackScope3) {

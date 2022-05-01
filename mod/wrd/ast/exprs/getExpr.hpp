@@ -25,20 +25,24 @@ namespace wrd {
         const wtype& getEvalType() const override;
         const node& getFrom() const;
         const std::string& getSubName() const { return _name; }
-        const narr& getSubArgs() const { return _args; }
+
+        /// @return nullable
+        const narr& getSubArgs() const { return *_args; }
 
     private:
         const node& _get() const {
             const node& from = getFrom();
             if(nul(from))
                 return WRD_E("from == null"), nulOf<node>();
+            if(!_args)
+                return getFrom().sub(_name);
 
-            return getFrom().sub(_name, _args);
+            return getFrom().sub(_name, *_args);
         }
 
     private:
         str _from;
         std::string _name;
-        narr _args;
+        tstr<narr> _args;
     };
 }
