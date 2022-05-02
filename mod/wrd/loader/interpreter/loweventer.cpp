@@ -172,8 +172,8 @@ namespace wrd {
         if(nul(e))
             e = new literalExpr(candidate);
 
-        blk.getBlocks().add(e);
-        WRD_DI("tokenEvent: onBlock().len=%d", blk.getBlocks().len());
+        blk.getStmts().add(e);
+        WRD_DI("tokenEvent: onBlock().len=%d", blk.getStmts().len());
         return &blk;
     }
 
@@ -240,7 +240,7 @@ namespace wrd {
     mgdFunc* me::onFunc(const std::string& name, const narr& exprs, const node& evalObj, const blockExpr& blk) {
         const wtype& evalType = evalObj.getType();
         WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s: blk.len()=%d", name.c_str(), &exprs,
-                evalType.getName().c_str(), blk.getBlocks().len());
+                evalType.getName().c_str(), blk.getStmts().len());
 
         mgdFunc* ret = new mgdFunc(_convertParams(exprs), evalType, blk);
         _onPushName(name, *ret);
