@@ -208,6 +208,13 @@ TEST_F(nodeTest, testImmutableNegative) {
 
     r1->cast<myObj>().val = 2;
     ASSERT_EQ(*r1, *r2);
+
+    nmap m;
+    m.add("r1", *r1);
+    const myObj& cast = m["r1"].cast<myObj>();
+    ASSERT_FALSE(nul(cast));
+    ASSERT_EQ(&r1.get(), &cast);
+    ASSERT_EQ(r1->cast<myObj>().val, cast.val);
 }
 
 TEST_F(nodeTest, testchefImplicitCastTofood) {
