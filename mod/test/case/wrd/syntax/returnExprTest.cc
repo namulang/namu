@@ -26,9 +26,9 @@ TEST_F(returnExprTest, simpleReturnTypeNegative) {
     ASSERT_FALSE(nul(make));
     blockExpr& blkExp = make.getBlock();
     ASSERT_FALSE(nul(blkExp));
-    nbicontainer& con = blkExp.subs();
+    nucontainer& con = blkExp.getBlocks();
     ASSERT_FALSE(nul(con));
-    returnExpr& ret = con.begin().getVal<returnExpr>();
+    returnExpr& ret = con.begin().get<returnExpr>();
     ASSERT_FALSE(nul(ret));
 
     ASSERT_TRUE(ret.getEvalType() == ttype<wVoid>());
