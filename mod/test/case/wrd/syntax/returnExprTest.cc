@@ -26,7 +26,7 @@ TEST_F(returnExprTest, simpleReturnTypeNegative) {
     ASSERT_FALSE(nul(make));
     blockExpr& blkExp = make.getBlock();
     ASSERT_FALSE(nul(blkExp));
-    nucontainer& con = blkExp.getBlocks();
+    nucontainer& con = blkExp.getStmts();
     ASSERT_FALSE(nul(con));
     returnExpr& ret = con.begin().get<returnExpr>();
     ASSERT_FALSE(nul(ret));

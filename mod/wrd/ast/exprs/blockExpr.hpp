@@ -25,8 +25,8 @@ namespace wrd {
             return _exprs[len-1].getEvalType();
         }
 
-        const narr& getBlocks() const { return _exprs; }
-        narr& getBlocks() { return _exprs; }
+        const narr& getStmts() const { return _exprs; }
+        narr& getStmts() { return _exprs; }
 
     private:
         wbool _inFrame();
