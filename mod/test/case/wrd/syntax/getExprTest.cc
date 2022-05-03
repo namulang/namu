@@ -34,6 +34,11 @@ TEST_F(getExprTest, getSymbolOnPackScope2) {
             return age
     )SRC").shouldVerified(true);
     ASSERT_EQ(getSubPack().subs().len(), 2); // 1 for age, 1 for main()
+    node& age = getSubPack().sub("age");
+    ASSERT_FALSE(nul(age));
+    wInt& cast = age.cast<wInt>();
+    ASSERT_FALSE(nul(cast));
+    ASSERT_EQ(cast.get(), 0); // default value of wInt
 }
 
 TEST_F(getExprTest, getSymbolOnPackScope3) {
@@ -44,6 +49,11 @@ TEST_F(getExprTest, getSymbolOnPackScope3) {
     )SRC").shouldParsed(true);
     shouldVerified(true);
     ASSERT_EQ(getSubPack().subs().len(), 2); // 1 for age, 1 for main()
+    node& age = getSubPack().sub("age");
+    ASSERT_FALSE(nul(age));
+    wStr& cast = age.cast<wStr>();
+    ASSERT_FALSE(nul(cast));
+    ASSERT_EQ(cast.get(), ""); // default value of wStr
 }
 
 TEST_F(getExprTest, getInnerScopeVar) {
