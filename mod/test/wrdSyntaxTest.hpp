@@ -63,8 +63,27 @@ struct wrdSyntaxTest : public wrdTest {
 private:
     void _log(wrd::wbool expected) const {
         std::cout   << "  code: " << _src << "\n"
-                    << "  errReport:\n";
+                    << "  structure:\n";
+        _logStructure(*_subpack, 0, 0, true, true);
+        std::cout   << "  errReport:\n";
         _rpt.log();
+    }
+
+    void _logStructure(const wrd::node& n, int idx, int level, bool isLast, bool isParentLast) const {
+        _logIndent(level, isParentLast);
+        std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: " << n.getType().getName() << " \"" << n.getName() << "\"\n";
+
+        int subN = -1;
+        for(const wrd::node& sub : n.subs()) {
+            subN++;
+            _logStructure(sub, subN, level + 2, subN == n.subs().len()-1, isLast);
+        }
+    }
+
+    void _logIndent(int level, bool isParentLast) const {
+        std::cout << "  ";
+        for(int n=0; n < level-1; n++)
+            std::cout << (isParentLast ? "  " : "┃ ");
     }
 
     void _rel() {
