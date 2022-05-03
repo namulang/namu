@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: wrd::tnarr&lt; T, WRAPPER &gt; Class Template Reference</title>
+<title>world-doc: wrd::tnarr&lt; T, TACTIC &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,72 +66,79 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="classwrd_1_1tnarr-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">wrd::tnarr&lt; T, WRAPPER &gt; Class Template Reference</div>  </div>
+<div class="title">wrd::tnarr&lt; T, TACTIC &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1tnarr_1_1narr_iteration.html">narrIteration</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a5cf76361e5b1f07efc7bf524ef6f7af8"><td class="memItemLeft" align="right" valign="top"><a id="a5cf76361e5b1f07efc7bf524ef6f7af8"></a>
+typedef <a class="el" href="classwrd_1_1tstr.html">tstr</a>&lt; T, TACTIC &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>wrap</b></td></tr>
+<tr class="separator:a5cf76361e5b1f07efc7bf524ef6f7af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78bf8bbaaa70c6384b6c7d2dc176c19f"><td class="memItemLeft" align="right" valign="top"><a id="a78bf8bbaaa70c6384b6c7d2dc176c19f"></a>
+typedef super::iter&#160;</td><td class="memItemRight" valign="bottom"><b>iter</b></td></tr>
+<tr class="separator:a78bf8bbaaa70c6384b6c7d2dc176c19f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97e183812f6e390a5125ce7bb6ea075c"><td class="memItemLeft" align="right" valign="top"><a id="a97e183812f6e390a5125ce7bb6ea075c"></a>
+typedef super::iteration&#160;</td><td class="memItemRight" valign="bottom"><b>iteration</b></td></tr>
+<tr class="separator:a97e183812f6e390a5125ce7bb6ea075c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2171669f2f95c9bdf69b26a494c2785c"><td class="memItemLeft" align="right" valign="top"><a id="a2171669f2f95c9bdf69b26a494c2785c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>tnarr</b> (std::initializer_list&lt; const T * &gt; elems)</td></tr>
-<tr class="separator:a2171669f2f95c9bdf69b26a494c2785c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46b77de288e5af482af66a34eb5e0cec"><td class="memTemplParams" colspan="2"><a id="a46b77de288e5af482af66a34eb5e0cec"></a>
+<tr class="memitem:aed78c9387230c0811f3797b9cc98f916"><td class="memTemplParams" colspan="2"><a id="aed78c9387230c0811f3797b9cc98f916"></a>
 template&lt;typename... Es&gt; </td></tr>
-<tr class="memitem:a46b77de288e5af482af66a34eb5e0cec"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>tnarr</b> (const Es &amp;... elems)</td></tr>
-<tr class="separator:a46b77de288e5af482af66a34eb5e0cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa627c0f6581321e96edc96ff8471d70"><td class="memItemLeft" align="right" valign="top"><a id="aaa627c0f6581321e96edc96ff8471d70"></a>
+<tr class="memitem:aed78c9387230c0811f3797b9cc98f916"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>tnarr</b> (const Es &amp;... elems)</td></tr>
+<tr class="separator:aed78c9387230c0811f3797b9cc98f916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9985e9dd63f9c8e783e52f3278c206d6"><td class="memItemLeft" align="right" valign="top"><a id="a9985e9dd63f9c8e783e52f3278c206d6"></a>
 T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (widx n) override</td></tr>
-<tr class="separator:aaa627c0f6581321e96edc96ff8471d70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb53af3ddb5b79ce5836d5130c695c3a"><td class="memItemLeft" align="right" valign="top"><a id="afb53af3ddb5b79ce5836d5130c695c3a"></a>
-const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (widx n) const override</td></tr>
-<tr class="separator:afb53af3ddb5b79ce5836d5130c695c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81d09fa8a5eb589adcbd831727fe8433"><td class="memItemLeft" align="right" valign="top"><a id="a81d09fa8a5eb589adcbd831727fe8433"></a>
+<tr class="separator:a9985e9dd63f9c8e783e52f3278c206d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02cffc181a7493254b038fec56554d35"><td class="memItemLeft" align="right" valign="top"><a id="a02cffc181a7493254b038fec56554d35"></a>
 wcnt&#160;</td><td class="memItemRight" valign="bottom"><b>len</b> () const override</td></tr>
-<tr class="separator:a81d09fa8a5eb589adcbd831727fe8433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e65abebb66205b42ceb005b4aeb81f0"><td class="memItemLeft" align="right" valign="top"><a id="a6e65abebb66205b42ceb005b4aeb81f0"></a>
+<tr class="separator:a02cffc181a7493254b038fec56554d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bf042ba70bb82101d40a60c49071854"><td class="memItemLeft" align="right" valign="top"><a id="a8bf042ba70bb82101d40a60c49071854"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>has</b> (widx n) const override</td></tr>
+<tr class="separator:a8bf042ba70bb82101d40a60c49071854"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3213dd7b7260c1b4e34b07d70cbdcf4e"><td class="memItemLeft" align="right" valign="top"><a id="a3213dd7b7260c1b4e34b07d70cbdcf4e"></a>
 T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (widx n) override</td></tr>
-<tr class="separator:a6e65abebb66205b42ceb005b4aeb81f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3b04c5c422b9dcba069671ca674fd48"><td class="memItemLeft" align="right" valign="top"><a id="aa3b04c5c422b9dcba069671ca674fd48"></a>
-wbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (widx n, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;new1) override</td></tr>
-<tr class="separator:aa3b04c5c422b9dcba069671ca674fd48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a535beb4731ec201328fcc5612c55f470"><td class="memItemLeft" align="right" valign="top"><a id="a535beb4731ec201328fcc5612c55f470"></a>
-wbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;e, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;new1) override</td></tr>
-<tr class="separator:a535beb4731ec201328fcc5612c55f470"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a004f27a10086d1cf64f21611a9ecc509"><td class="memItemLeft" align="right" valign="top"><a id="a004f27a10086d1cf64f21611a9ecc509"></a>
-wbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (widx n, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;new1) override</td></tr>
-<tr class="separator:a004f27a10086d1cf64f21611a9ecc509"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88f32d9ca7fbcea7258625bb007ea794"><td class="memItemLeft" align="right" valign="top"><a id="a88f32d9ca7fbcea7258625bb007ea794"></a>
-wcnt&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;from, const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;end) override</td></tr>
-<tr class="separator:a88f32d9ca7fbcea7258625bb007ea794"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4a18b2de1e0372224012b28956b0909"><td class="memItemLeft" align="right" valign="top"><a id="ab4a18b2de1e0372224012b28956b0909"></a>
-wbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classwrd_1_1titer.html">wrd::iter</a> &amp;it) override</td></tr>
-<tr class="separator:ab4a18b2de1e0372224012b28956b0909"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab2b34d7378999f7ef42218e02e2730b"><td class="memItemLeft" align="right" valign="top"><a id="aab2b34d7378999f7ef42218e02e2730b"></a>
+<tr class="separator:a3213dd7b7260c1b4e34b07d70cbdcf4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24dd1d694d50329cf4aad153ca990406"><td class="memItemLeft" align="right" valign="top"><a id="a24dd1d694d50329cf4aad153ca990406"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (const <a class="el" href="classiter.html">iter</a> &amp;at, const T &amp;new1) override</td></tr>
+<tr class="separator:a24dd1d694d50329cf4aad153ca990406"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a637b169c8e1c821f7ec92b380b286a1f"><td class="memItemLeft" align="right" valign="top"><a id="a637b169c8e1c821f7ec92b380b286a1f"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (widx n, const T &amp;new1) override</td></tr>
+<tr class="separator:a637b169c8e1c821f7ec92b380b286a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac290f9fc23afff86c674e0372e953970"><td class="memItemLeft" align="right" valign="top"><a id="ac290f9fc23afff86c674e0372e953970"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classiter.html">iter</a> &amp;e, const T &amp;new1) override</td></tr>
+<tr class="separator:ac290f9fc23afff86c674e0372e953970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a011552abb296acaeed7c170e7e9e16d3"><td class="memItemLeft" align="right" valign="top"><a id="a011552abb296acaeed7c170e7e9e16d3"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (widx n, const T &amp;new1) override</td></tr>
+<tr class="separator:a011552abb296acaeed7c170e7e9e16d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c4dd2afe66c0b9d4d80b231bee4940b"><td class="memItemLeft" align="right" valign="top"><a id="a1c4dd2afe66c0b9d4d80b231bee4940b"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;from, const <a class="el" href="classiter.html">iter</a> &amp;end) override</td></tr>
+<tr class="separator:a1c4dd2afe66c0b9d4d80b231bee4940b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f342321510fee0218c389a7df028d59"><td class="memItemLeft" align="right" valign="top"><a id="a5f342321510fee0218c389a7df028d59"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (const <a class="el" href="classiter.html">iter</a> &amp;it) override</td></tr>
+<tr class="separator:a5f342321510fee0218c389a7df028d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d1a00668e578e7e43b9831a6f6676d8"><td class="memItemLeft" align="right" valign="top"><a id="a6d1a00668e578e7e43b9831a6f6676d8"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>del</b> (widx n) override</td></tr>
-<tr class="separator:aab2b34d7378999f7ef42218e02e2730b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4a7bbfb93b1a1f139ccd905e49d226f"><td class="memItemLeft" align="right" valign="top"><a id="ae4a7bbfb93b1a1f139ccd905e49d226f"></a>
+<tr class="separator:a6d1a00668e578e7e43b9831a6f6676d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a595e758fc12bfd4848e765d404043065"><td class="memItemLeft" align="right" valign="top"><a id="a595e758fc12bfd4848e765d404043065"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>rel</b> () override</td></tr>
-<tr class="separator:ae4a7bbfb93b1a1f139ccd905e49d226f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6710b5278ade18a3e77f3c41effdebc4"><td class="memItemLeft" align="right" valign="top"><a id="a6710b5278ade18a3e77f3c41effdebc4"></a>
+<tr class="separator:a595e758fc12bfd4848e765d404043065"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c9a6e285848ccf6bf82a65723d22da2"><td class="memItemLeft" align="right" valign="top"><a id="a7c9a6e285848ccf6bf82a65723d22da2"></a>
 <a class="el" href="classwrd_1_1tstr.html">tstr</a>&lt; <a class="el" href="classwrd_1_1instance.html">instance</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>deepClone</b> () const override</td></tr>
-<tr class="separator:a6710b5278ade18a3e77f3c41effdebc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a7c9a6e285848ccf6bf82a65723d22da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:abc20a3f5c1e05b3590e7b78bb1fb7657"><td class="memItemLeft" align="right" valign="top"><a id="abc20a3f5c1e05b3590e7b78bb1fb7657"></a>
-<a class="el" href="classwrd_1_1iteration.html">iteration</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeIteration</b> (wcnt step) const override</td></tr>
-<tr class="separator:abc20a3f5c1e05b3590e7b78bb1fb7657"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1caf0ce8bc1a5c7b228f5f667ffed201"><td class="memItemLeft" align="right" valign="top"><a id="a1caf0ce8bc1a5c7b228f5f667ffed201"></a>
+<a class="el" href="classiteration.html">iteration</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>_onMakeIteration</b> (wcnt step) const override</td></tr>
+<tr class="separator:a1caf0ce8bc1a5c7b228f5f667ffed201"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -144,7 +151,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>narrIteration</b></t
 <tr class="separator:ac3b18c81d049b15d3752e028d2aead61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/runner/work/wrd/wrd/mod/wrd/ast/<a class="el" href="src_8hpp_source.html">src.hpp</a></li>
+<li>/home/runner/work/wrd/wrd/mod/wrd/ast/<a class="el" href="func_8hpp_source.html">func.hpp</a></li>
 <li>/home/runner/work/wrd/wrd/mod/wrd/builtin/container/native/<a class="el" href="tnarr_8hpp_source.html">tnarr.hpp</a></li>
 </ul>
 </div><!-- contents -->

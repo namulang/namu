@@ -72,64 +72,53 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../expr.hpp&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../ref.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>wrd {</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classwrd_1_1def_var_expr.html">    8</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1def_var_expr.html">defVarExpr</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1expr.html">expr</a> {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1def_var_expr.html">defVarExpr</a>, <a class="code" href="classwrd_1_1expr.html">expr</a>, <a class="code" href="classwrd_1_1expr_1_1expr_type.html">expr::exprType</a>))</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1mgd_func.html">mgdFunc</a>;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classwrd_1_1def_var_expr.html">defVarExpr</a>(<span class="keyword">const</span> <a class="code" href="classwrd_1_1ref.html">ref</a>&amp; param): _param(param) {}</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">using</span> super::run;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; args)<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; <a class="code" href="classwrd_1_1type.html">type</a> = <a class="code" href="classwrd_1_1def_var_expr.html#a321ab19e991f211725437fccd839eb94">getEvalType</a>();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="classwrd_1_1type.html">type</a>.isImmutable()) {</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                <a class="code" href="classwrd_1_1tstr.html">str</a> ret = _addFrame(*<a class="code" href="classwrd_1_1type.html">type</a>.makeAs&lt;<a class="code" href="classwrd_1_1node.html">node</a>&gt;());</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;                ret-&gt;setName(_param.getName());</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;                <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            }</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="comment">// mutable: _param may bind some object.</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keywordflow">return</span> _addFrame(_param);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        }</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classwrd_1_1def_var_expr.html#a321ab19e991f211725437fccd839eb94">   29</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; <a class="code" href="classwrd_1_1def_var_expr.html#a321ab19e991f211725437fccd839eb94">getEvalType</a>()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="comment">// I need to return static eval type:</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="comment">//  if I return _param-&gt;getType(), then actually it returns</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="comment">//  dynamic eval type.</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keywordflow">return</span> _param.getType();</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        }</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classwrd_1_1ref.html">ref</a>&amp; getParam() { <span class="keywordflow">return</span> _param; }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">const</span> ref&amp; getParam()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _param; }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        str _addFrame(node&amp; new1);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        ref _param;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    };</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">/*WRD_VERIFY(</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">     * if _param.type is immutable, _param should not bind any object.</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;}</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../param.hpp&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../scope.hpp&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classwrd_1_1def_var_expr.html">    9</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classwrd_1_1def_var_expr.html">defVarExpr</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1expr.html">expr</a> {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1def_var_expr.html">defVarExpr</a>, <a class="code" href="classwrd_1_1expr.html">expr</a>, <a class="code" href="classwrd_1_1expr_1_1expr_type.html">expr::exprType</a>),</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;            FRIEND_VERIFY(<a class="code" href="classwrd_1_1def_var_expr.html">defVarExpr</a>, defineVariable))</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1mgd_func.html">mgdFunc</a>;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classwrd_1_1def_var_expr.html">defVarExpr</a>(<span class="keyword">const</span> <a class="code" href="classwrd_1_1param.html">param</a>&amp; p): _param(p) {}</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classwrd_1_1def_var_expr.html">defVarExpr</a>(<span class="keyword">const</span> <a class="code" href="classwrd_1_1param.html">param</a>&amp; p, <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnmap.html">scope</a>&amp; where): _where(where), _param(p) {}</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">using</span> super::run;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1param.html">param</a>&amp; getParam()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _param; }</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classwrd_1_1def_var_expr.html#a1873180e1a2731c5fa92f4c0281dd5bd">   25</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnmap.html">scope</a>&amp; <a class="code" href="classwrd_1_1def_var_expr.html#a1873180e1a2731c5fa92f4c0281dd5bd">getWhere</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *_where; }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordtype">void</span> setWhere(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tnmap.html">scope</a>&amp; new1) { _where.bind(new1); }</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classwrd_1_1def_var_expr.html#a321ab19e991f211725437fccd839eb94">   28</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; <a class="code" href="classwrd_1_1def_var_expr.html#a321ab19e991f211725437fccd839eb94">getEvalType</a>()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="comment">// I need to return static eval type:</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="comment">//  if I return _param-&gt;getType(), then actually it returns</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="comment">//  dynamic eval type.</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordflow">return</span> _param.getType();</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;scope&gt;</a> _where;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <a class="code" href="classwrd_1_1param.html">param</a> _param;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    };</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classwrd_1_1expr_1_1expr_type.html">wrd::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:12</div></div>
 <div class="ttc" id="aclasswrd_1_1mgd_func_html"><div class="ttname"><a href="classwrd_1_1mgd_func.html">wrd::mgdFunc</a></div><div class="ttdef"><b>Definition:</b> mgdFunc.hpp:9</div></div>
+<div class="ttc" id="aclasswrd_1_1param_html"><div class="ttname"><a href="classwrd_1_1param.html">wrd::param</a></div><div class="ttdef"><b>Definition:</b> param.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1expr_html"><div class="ttname"><a href="classwrd_1_1expr.html">wrd::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:10</div></div>
-<div class="ttc" id="aclasswrd_1_1def_var_expr_html_a321ab19e991f211725437fccd839eb94"><div class="ttname"><a href="classwrd_1_1def_var_expr.html#a321ab19e991f211725437fccd839eb94">wrd::defVarExpr::getEvalType</a></div><div class="ttdeci">const wtype &amp; getEvalType() const override</div><div class="ttdef"><b>Definition:</b> defVarExpr.hpp:29</div></div>
+<div class="ttc" id="aclasswrd_1_1def_var_expr_html_a321ab19e991f211725437fccd839eb94"><div class="ttname"><a href="classwrd_1_1def_var_expr.html#a321ab19e991f211725437fccd839eb94">wrd::defVarExpr::getEvalType</a></div><div class="ttdeci">const wtype &amp; getEvalType() const override</div><div class="ttdef"><b>Definition:</b> defVarExpr.hpp:28</div></div>
 <div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
-<div class="ttc" id="aclasswrd_1_1ref_html"><div class="ttname"><a href="classwrd_1_1ref.html">wrd::ref</a></div><div class="ttdef"><b>Definition:</b> ref.hpp:7</div></div>
-<div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
-<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:14</div></div>
-<div class="ttc" id="aclasswrd_1_1def_var_expr_html"><div class="ttname"><a href="classwrd_1_1def_var_expr.html">wrd::defVarExpr</a></div><div class="ttdef"><b>Definition:</b> defVarExpr.hpp:8</div></div>
-<div class="ttc" id="aclasswrd_1_1containable_html"><div class="ttname"><a href="classwrd_1_1containable.html">wrd::containable</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:13</div></div>
+<div class="ttc" id="aclasswrd_1_1def_var_expr_html_a1873180e1a2731c5fa92f4c0281dd5bd"><div class="ttname"><a href="classwrd_1_1def_var_expr.html#a1873180e1a2731c5fa92f4c0281dd5bd">wrd::defVarExpr::getWhere</a></div><div class="ttdeci">const scope &amp; getWhere() const</div><div class="ttdef"><b>Definition:</b> defVarExpr.hpp:25</div></div>
+<div class="ttc" id="aclasswrd_1_1tucontainable_html"><div class="ttname"><a href="classwrd_1_1tucontainable.html">wrd::tucontainable</a></div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:16</div></div>
+<div class="ttc" id="aclasswrd_1_1def_var_expr_html"><div class="ttname"><a href="classwrd_1_1def_var_expr.html">wrd::defVarExpr</a></div><div class="ttdef"><b>Definition:</b> defVarExpr.hpp:9</div></div>
+<div class="ttc" id="aclasswrd_1_1tnmap_html"><div class="ttname"><a href="classwrd_1_1tnmap.html">wrd::tnmap</a></div><div class="ttdef"><b>Definition:</b> tnmap.hpp:9</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

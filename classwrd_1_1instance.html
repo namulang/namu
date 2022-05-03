@@ -82,15 +82,19 @@ Inheritance diagram for wrd::instance:</div>
  <div class="center">
   <img src="classwrd_1_1instance.png" usemap="#wrd::instance_map" alt=""/>
   <map id="wrd::instance_map" name="wrd::instance_map">
-<area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="0,0,124,24"/>
-<area href="structwrd_1_1err.html" alt="wrd::err" shape="rect" coords="134,112,258,136"/>
-<area href="classwrd_1_1err_report.html" alt="wrd::errReport" shape="rect" coords="134,168,258,192"/>
-<area href="classwrd_1_1iteration.html" alt="wrd::iteration" shape="rect" coords="134,224,258,248"/>
-<area href="classwrd_1_1ncontainer.html" alt="wrd::ncontainer" shape="rect" coords="134,280,258,304"/>
-<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="134,336,258,360"/>
-<area href="classwrd_1_1pack_loading.html" alt="wrd::packLoading" shape="rect" coords="134,392,258,416"/>
-<area href="classwrd_1_1scope_stack.html" alt="wrd::scopeStack" shape="rect" coords="134,448,258,472"/>
-<area href="classwrd_1_1sobj.html" alt="wrd::sobj" shape="rect" coords="134,504,258,528"/>
+<area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="0,0,226,24"/>
+<area href="classwrd_1_1tnbicontainer.html" alt="wrd::tnbicontainer&lt; std::string, node &gt;" shape="rect" coords="236,112,462,136"/>
+<area href="structwrd_1_1err.html" alt="wrd::err" shape="rect" coords="236,168,462,192"/>
+<area href="classwrd_1_1err_report.html" alt="wrd::errReport" shape="rect" coords="236,224,462,248"/>
+<area href="classwrd_1_1flag.html" alt="wrd::flag" shape="rect" coords="236,280,462,304"/>
+<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="236,336,462,360"/>
+<area href="classwrd_1_1pack_loading.html" alt="wrd::packLoading" shape="rect" coords="236,392,462,416"/>
+<area href="classwrd_1_1param.html" alt="wrd::param" shape="rect" coords="236,448,462,472"/>
+<area href="classwrd_1_1scope_stack.html" alt="wrd::scopeStack" shape="rect" coords="236,504,462,528"/>
+<area href="classwrd_1_1sobj.html" alt="wrd::sobj" shape="rect" coords="236,560,462,584"/>
+<area href="classwrd_1_1src_supply.html" alt="wrd::srcSupply" shape="rect" coords="236,616,462,640"/>
+<area href="classwrd_1_1tnbicontainer.html" alt="wrd::tnbicontainer&lt; K, V &gt;" shape="rect" coords="236,672,462,696"/>
+<area href="classwrd_1_1tnucontainer.html" alt="wrd::tnucontainer&lt; T &gt;" shape="rect" coords="236,728,462,752"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -132,6 +136,20 @@ wbool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (cons
 <tr class="memitem:ad7fe28b0705ff2d612455ac606211cb8 inherit pub_methods_classwrd_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="ad7fe28b0705ff2d612455ac606211cb8"></a>
 virtual const <a class="el" href="classwrd_1_1type.html">type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getType</b> () const =0</td></tr>
 <tr class="separator:ad7fe28b0705ff2d612455ac606211cb8 inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b42dea8a4cf5171b86e8ade88b00b6d inherit pub_methods_classwrd_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a0b42dea8a4cf5171b86e8ade88b00b6d"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classwrd_1_1type.html">type</a> &amp;it) const</td></tr>
+<tr class="separator:a0b42dea8a4cf5171b86e8ade88b00b6d inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f343dc5a1cd839de6cd647be31f1841 inherit pub_methods_classwrd_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a1f343dc5a1cd839de6cd647be31f1841"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSuper</b> (const <a class="el" href="classwrd_1_1type.html">type</a> &amp;it) const</td></tr>
+<tr class="separator:a1f343dc5a1cd839de6cd647be31f1841 inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80bd5e4ce0ab9df4a65600972c507154 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplParams" colspan="2"><a id="a80bd5e4ce0ab9df4a65600972c507154"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a80bd5e4ce0ab9df4a65600972c507154 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplItemLeft" align="right" valign="top">wbool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>isSub</b> () const</td></tr>
+<tr class="separator:a80bd5e4ce0ab9df4a65600972c507154 inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac571bd841bcd84fc1223c27997934956 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplParams" colspan="2"><a id="ac571bd841bcd84fc1223c27997934956"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ac571bd841bcd84fc1223c27997934956 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplItemLeft" align="right" valign="top">wbool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>isSuper</b> () const</td></tr>
+<tr class="separator:ac571bd841bcd84fc1223c27997934956 inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae19677661ca648312b36fe2b7fc7b294 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplParams" colspan="2"><a id="ae19677661ca648312b36fe2b7fc7b294"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ae19677661ca648312b36fe2b7fc7b294 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>cast</b> ()</td></tr>
@@ -167,9 +185,9 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>chunks</b></td></tr>
 <tr class="memitem:a964677938a490439c7c0510b7b0d22dd"><td class="memItemLeft" align="right" valign="top"><a id="a964677938a490439c7c0510b7b0d22dd"></a>
 class&#160;</td><td class="memItemRight" valign="bottom"><b>instancer</b></td></tr>
 <tr class="separator:a964677938a490439c7c0510b7b0d22dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a999b510fab3b9c2092eeeab894c0e9b3"><td class="memItemLeft" align="right" valign="top"><a id="a999b510fab3b9c2092eeeab894c0e9b3"></a>
-struct&#160;</td><td class="memItemRight" valign="bottom"><b>::chunksTest</b></td></tr>
-<tr class="separator:a999b510fab3b9c2092eeeab894c0e9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5f7f6ef0099dec4feeb8dffc0b56bed"><td class="memItemLeft" align="right" valign="top"><a id="af5f7f6ef0099dec4feeb8dffc0b56bed"></a>
+struct&#160;</td><td class="memItemRight" valign="bottom"><b>::wrdTest</b></td></tr>
+<tr class="separator:af5f7f6ef0099dec4feeb8dffc0b56bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>/home/runner/work/wrd/wrd/mod/memlite/interface/<a class="el" href="instance_8hpp_source.html">instance.hpp</a></li>

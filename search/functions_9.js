@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['setreport_489',['setReport',['../classwrd_1_1pack.html#a0ee849a6686a63fa494f28d4b54f3150',1,'wrd::pack']]],
-  ['subandowner_490',['subAndOwner',['../classwrd_1_1frame.html#ad4e3ccddc872027f306405701a63930a',1,'wrd::frame']]]
+  ['take_594',['take',['../classwrd_1_1flag.html#abd4da615906e3b333997f61e1e85aff5',1,'wrd::flag']]],
+  ['tstr_595',['tstr',['../classwrd_1_1tstr.html#a1296c2b64ba879d2ea6c6b2f9d01661b',1,'wrd::tstr']]],
+  ['tweak_596',['tweak',['../classwrd_1_1tweak.html#ad3b707947bf7e42cd6f03ef851a504c6',1,'wrd::tweak']]]
 ];

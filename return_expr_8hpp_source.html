@@ -75,7 +75,7 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>wrd {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classwrd_1_1return_expr.html">    7</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1return_expr.html">returnExpr</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1expr.html">expr</a> {</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classwrd_1_1return_expr.html">    7</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classwrd_1_1return_expr.html">returnExpr</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1expr.html">expr</a> {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1return_expr.html">returnExpr</a>, <a class="code" href="classwrd_1_1expr.html">expr</a>, <a class="code" href="classwrd_1_1expr_1_1expr_type.html">expr::exprType</a>))</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
@@ -84,31 +84,34 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">using</span> super::run;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; args) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        wbool canRun(<span class="keyword">const</span> <a class="code" href="classwrd_1_1containable.html">containable</a>&amp; args)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <span class="keywordflow">if</span>(_ret)</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;                <span class="keywordflow">return</span> _ret-&gt;canRun(args);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            <span class="keywordflow">return</span> super::canRun(args);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        }</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classwrd_1_1return_expr.html#ac15cf4f68e6e559f666f4d29a0653565">   24</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; <a class="code" href="classwrd_1_1return_expr.html#ac15cf4f68e6e559f666f4d29a0653565">getEvalType</a>()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">return</span> (<span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp;) _ret.getType(); <span class="comment">// I guarrantee that it&#39;s wtype.</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        }</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _ret;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    };</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>&amp; getRet() { <span class="keywordflow">return</span> *_ret; }</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; getRet() <span class="keyword">const</span> WRD_UNCONST_FUNC(getRet())</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        wbool canRun(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tucontainable.html">ucontainable</a>&amp; args)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            <span class="keywordflow">if</span>(_ret)</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;                <span class="keywordflow">return</span> _ret-&gt;canRun(args);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <span class="keywordflow">return</span> super::canRun(args);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        }</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; getEvalType() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _decideRet(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tucontainable.html">ucontainable</a>&amp; args);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _ret;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    };</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classwrd_1_1expr_1_1expr_type.html">wrd::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:12</div></div>
 <div class="ttc" id="aclasswrd_1_1expr_html"><div class="ttname"><a href="classwrd_1_1expr.html">wrd::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:10</div></div>
 <div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1return_expr_html"><div class="ttname"><a href="classwrd_1_1return_expr.html">wrd::returnExpr</a></div><div class="ttdef"><b>Definition:</b> returnExpr.hpp:7</div></div>
-<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:14</div></div>
-<div class="ttc" id="aclasswrd_1_1containable_html"><div class="ttname"><a href="classwrd_1_1containable.html">wrd::containable</a></div><div class="ttdef"><b>Definition:</b> containable.hpp:13</div></div>
-<div class="ttc" id="aclasswrd_1_1return_expr_html_ac15cf4f68e6e559f666f4d29a0653565"><div class="ttname"><a href="classwrd_1_1return_expr.html#ac15cf4f68e6e559f666f4d29a0653565">wrd::returnExpr::getEvalType</a></div><div class="ttdeci">const wtype &amp; getEvalType() const override</div><div class="ttdef"><b>Definition:</b> returnExpr.hpp:24</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:13</div></div>
+<div class="ttc" id="aclasswrd_1_1tucontainable_html"><div class="ttname"><a href="classwrd_1_1tucontainable.html">wrd::tucontainable</a></div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:16</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

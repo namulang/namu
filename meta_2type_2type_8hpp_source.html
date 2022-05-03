@@ -74,7 +74,7 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>wrd {</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classwrd_1_1type.html">   19</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1type.html">type</a> {</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classwrd_1_1type.html">   19</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classwrd_1_1type.html">type</a> {</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        WRD_DECL_ME(<a class="code" href="classwrd_1_1type.html">type</a>)</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">public</span>:</div>
@@ -87,12 +87,12 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">virtual</span> wbool isAbstract() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> std::string&amp; getName() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span>* <a class="code" href="classwrd_1_1type.html#a777769deea66780e1e356ab832deb937">make</a>() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span>* make() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        T* makeAs()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="comment">// c++ is not allow for covariant against void*.</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="comment">// that&#39;s is why I make another variant func of already made make().</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordflow">return</span> (T*) <a class="code" href="classwrd_1_1type.html#a777769deea66780e1e356ab832deb937">make</a>();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordflow">return</span> (T*) make();</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        }</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">virtual</span> wcnt size() <span class="keyword">const</span> = 0;</div>
@@ -101,7 +101,7 @@ $(function() {
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; getSuper() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> wbool&amp; isInit() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">const</span> types&amp; <a class="code" href="classwrd_1_1type.html#a2ad9762fa86da01bcd5ac41ceeac689d">getLeafs</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">const</span> types&amp; getLeafs() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">const</span> types&amp; getSubs()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordflow">return</span> (<span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>))-&gt;_getSubs();</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        }</div>
@@ -146,8 +146,6 @@ $(function() {
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    };</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1type_html_a2ad9762fa86da01bcd5ac41ceeac689d"><div class="ttname"><a href="classwrd_1_1type.html#a2ad9762fa86da01bcd5ac41ceeac689d">wrd::type::getLeafs</a></div><div class="ttdeci">const types &amp; getLeafs() const</div><div class="ttdoc">returns all most derived class from this class.</div></div>
-<div class="ttc" id="aclasswrd_1_1type_html_a777769deea66780e1e356ab832deb937"><div class="ttname"><a href="classwrd_1_1type.html#a777769deea66780e1e356ab832deb937">wrd::type::make</a></div><div class="ttdeci">virtual void * make() const =0</div><div class="ttdoc">create an instance to be refered this type.</div></div>
 <div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

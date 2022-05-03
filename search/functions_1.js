@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['add_475',['add',['../classwrd_1_1arr_containable.html#adf356d54e68541154da9a121b083aeea',1,'wrd::arrContainable::add()'],['../classwrd_1_1tarr.html#a562bedda6c1bec0a7d4fbaa3e465693b',1,'wrd::tarr::add()']]]
+  ['add_575',['add',['../classwrd_1_1tarr.html#a3cb767c4624f1033b7368f05a4574a36',1,'wrd::tarr::add()'],['../classwrd_1_1tarrayable.html#a1ac9754fb4f777b3f530f55a6ececf68',1,'wrd::tarrayable::add()']]]
 ];

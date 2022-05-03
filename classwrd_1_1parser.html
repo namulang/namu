@@ -87,11 +87,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:addcff16bd72ba2607ad155764a2c01dc"><td class="memItemLeft" align="right" valign="top"><a id="addcff16bd72ba2607ad155764a2c01dc"></a>
 me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>setReport</b> (<a class="el" href="classwrd_1_1err_report.html">errReport</a> &amp;report)</td></tr>
 <tr class="separator:addcff16bd72ba2607ad155764a2c01dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5b6af728f8cf4b1eae11fb3ff0deb49"><td class="memItemLeft" align="right" valign="top"><a id="af5b6af728f8cf4b1eae11fb3ff0deb49"></a>
-me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>setPack</b> (<a class="el" href="classwrd_1_1pack.html">pack</a> &amp;pak)</td></tr>
-<tr class="separator:af5b6af728f8cf4b1eae11fb3ff0deb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b69137a1ddc805362ce5d8ac48d2a54"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classwrd_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1parser.html#a5b69137a1ddc805362ce5d8ac48d2a54">parse</a> (const wchar *script)</td></tr>
-<tr class="separator:a5b69137a1ddc805362ce5d8ac48d2a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae26d5745dd9d6c780250cc7eadd857d6"><td class="memItemLeft" align="right" valign="top"><a id="ae26d5745dd9d6c780250cc7eadd857d6"></a>
+me &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>setPack</b> (const <a class="el" href="classwrd_1_1pack.html">pack</a> &amp;tray)</td></tr>
+<tr class="separator:ae26d5745dd9d6c780250cc7eadd857d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed8decf54ea8554a5de83ee4f15dc54b"><td class="memItemLeft" align="right" valign="top"><a id="aed8decf54ea8554a5de83ee4f15dc54b"></a>
+<a class="el" href="classwrd_1_1pack.html">pack</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPack</b> ()</td></tr>
+<tr class="separator:aed8decf54ea8554a5de83ee4f15dc54b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c28156c18ad36077c93b028f30d72d0"><td class="memItemLeft" align="right" valign="top"><a id="a7c28156c18ad36077c93b028f30d72d0"></a>
+const <a class="el" href="classwrd_1_1pack.html">pack</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPack</b> () const WRD_UNCONST_FUNC(getPack()) <a class="el" href="classwrd_1_1node.html">node</a> &amp;<a class="el" href="classwrd_1_1parser.html#a998478b295c39254362b34cb5bc0757f">getSubPack</a>()</td></tr>
+<tr class="separator:a7c28156c18ad36077c93b028f30d72d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a998478b295c39254362b34cb5bc0757f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1parser.html#a998478b295c39254362b34cb5bc0757f">getSubPack</a> () const WRD_UNCONST_FUNC(getSubPack()) <a class="el" href="classwrd_1_1tstr.html">str</a> parse(const wchar *script)</td></tr>
+<tr class="separator:a998478b295c39254362b34cb5bc0757f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35ba2da145e97f3b42c0b5b39002ed03"><td class="memItemLeft" align="right" valign="top"><a id="a35ba2da145e97f3b42c0b5b39002ed03"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>rel</b> ()</td></tr>
 <tr class="separator:a35ba2da145e97f3b42c0b5b39002ed03"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -105,6 +111,20 @@ wbool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (cons
 <tr class="memitem:ad7fe28b0705ff2d612455ac606211cb8 inherit pub_methods_classwrd_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="ad7fe28b0705ff2d612455ac606211cb8"></a>
 virtual const <a class="el" href="classwrd_1_1type.html">type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getType</b> () const =0</td></tr>
 <tr class="separator:ad7fe28b0705ff2d612455ac606211cb8 inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b42dea8a4cf5171b86e8ade88b00b6d inherit pub_methods_classwrd_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a0b42dea8a4cf5171b86e8ade88b00b6d"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classwrd_1_1type.html">type</a> &amp;it) const</td></tr>
+<tr class="separator:a0b42dea8a4cf5171b86e8ade88b00b6d inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f343dc5a1cd839de6cd647be31f1841 inherit pub_methods_classwrd_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a1f343dc5a1cd839de6cd647be31f1841"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSuper</b> (const <a class="el" href="classwrd_1_1type.html">type</a> &amp;it) const</td></tr>
+<tr class="separator:a1f343dc5a1cd839de6cd647be31f1841 inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80bd5e4ce0ab9df4a65600972c507154 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplParams" colspan="2"><a id="a80bd5e4ce0ab9df4a65600972c507154"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a80bd5e4ce0ab9df4a65600972c507154 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplItemLeft" align="right" valign="top">wbool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>isSub</b> () const</td></tr>
+<tr class="separator:a80bd5e4ce0ab9df4a65600972c507154 inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac571bd841bcd84fc1223c27997934956 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplParams" colspan="2"><a id="ac571bd841bcd84fc1223c27997934956"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ac571bd841bcd84fc1223c27997934956 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplItemLeft" align="right" valign="top">wbool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>isSuper</b> () const</td></tr>
+<tr class="separator:ac571bd841bcd84fc1223c27997934956 inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae19677661ca648312b36fe2b7fc7b294 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplParams" colspan="2"><a id="ae19677661ca648312b36fe2b7fc7b294"></a>
 template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ae19677661ca648312b36fe2b7fc7b294 inherit pub_methods_classwrd_1_1type_providable"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>cast</b> ()</td></tr>
@@ -115,18 +135,17 @@ template&lt;typename T &gt; </td></tr>
 <tr class="separator:a1ae4ac36d093c3bb760eb00e88e108ce inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5b69137a1ddc805362ce5d8ac48d2a54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b69137a1ddc805362ce5d8ac48d2a54">&#9670;&nbsp;</a></span>parse()</h2>
+<a id="a998478b295c39254362b34cb5bc0757f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a998478b295c39254362b34cb5bc0757f">&#9670;&nbsp;</a></span>getSubPack()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classwrd_1_1tstr.html">str</a> wrd::parser::parse </td>
+          <td class="memname">const <a class="el" href="classwrd_1_1node.html">node</a>&amp; wrd::parser::getSubPack </td>
           <td>(</td>
-          <td class="paramtype">const wchar *&#160;</td>
-          <td class="paramname"><em>script</em></td><td>)</td>
-          <td></td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
