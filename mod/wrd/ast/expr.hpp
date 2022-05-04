@@ -31,17 +31,9 @@ namespace wrd {
         nbicontainer& subs() override;
 
         using super::canRun;
-        wbool canRun(const ucontainable& args) const override {
-            return args.len() == 0;
-        }
-
-        const src& getSrc() const {
-            return *_src;
-        }
-
-        const point& getPos() const {
-            return _pos;
-        }
+        wbool canRun(const ucontainable& args) const override { return args.len() == 0; }
+        const src& getSrc() const { return *_src; }
+        const point& getPos() const { return _pos; }
 
     protected:
         void _setSrc(const src& newSrc) {

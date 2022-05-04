@@ -20,6 +20,9 @@ namespace wrd {
     }
 
     WRD_VERIFY(defVarExpr, defineVariable, {
-        it.run();
+        if(!it.run()) {
+            const ref& param = it.getParam();
+            _err(28, param.getName().c_str(), param.getOrigin().getType().getName().c_str());
+        }
     })
 }
