@@ -64,19 +64,41 @@ private:
     void _log(wrd::wbool expected) const {
         std::cout   << "  code: " << _src << "\n"
                     << "  structure:\n";
-        _logStructure(*_subpack, 0, 0, true, true);
+        _logStructure(*_subpack, _pack->getManifest().name, 0, 0, true, true);
         std::cout   << "  errReport:\n";
         _rpt.log();
     }
 
-    void _logStructure(const wrd::node& n, int idx, int level, bool isLast, bool isParentLast) const {
+    void _logStructure(const wrd::node& n, const std::string& name, int idx, int level, bool isLast, bool isParentLast) const {
         _logIndent(level, isParentLast);
-        std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: " << n.getType().getName() << " \"" << n.getName() << "\"\n";
+        std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: " << n.getType().getName() << " \"" << name << "\"\n";
 
         int subN = -1;
-        for(const wrd::node& sub : n.subs()) {
+        const wrd::bicontainable& subs = n.subs();
+        for(auto e=subs.begin(); e ;++e) {
             subN++;
-            _logStructure(sub, subN, level + 2, subN == n.subs().len()-1, isLast);
+            _logStructure(e.getVal(), e.getKey(), subN, level + 2, subN == subs.len()-1, isLast);
+        }
+
+        const wrd::mgdFunc& f = n.cast<wrd::mgdFunc>();
+        if(!nul(f)) {
+            subN++;
+            _logStructure(f.getBlock().getStmts(), subN, level+2, subN == subs.len(), isLast);
+        }
+    }
+
+    void _logStructure(const wrd::narr& blk, int idx, int level, bool isLast, bool isParentLast) const {
+        _logIndent(level, isParentLast);
+        std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: block \n";
+
+        int subN = -1;
+        for(const auto& stmt: blk) {
+            subN++;
+            const wrd::blockExpr& blkExpr = stmt.cast<wrd::blockExpr>();
+            if(!nul(blkExpr))
+                _logStructure(blkExpr.getStmts(), subN, level+2, subN == blk.len()-1, isLast);
+            else
+                _logStructure(stmt, "", subN, level + 2, subN == blk.len()-1, isLast);
         }
     }
 
