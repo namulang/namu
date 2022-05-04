@@ -40,8 +40,9 @@ namespace wrd {
             "return type is not specified",
             "function need to contain more than 1 statement inside",
             "function info doesn't exist",
-            "%d return type isn't valid to %s return type of func", // 25
+            "%s return type isn't valid to %s return type of func", // 25
             "block statement failed to construct frame structure",
+            "expression evaluated as null type",
 
             /* to be continue... */
 

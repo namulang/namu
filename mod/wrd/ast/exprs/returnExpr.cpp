@@ -29,6 +29,7 @@ namespace wrd {
         if(nul(f)) return _err(24);
 
         const wtype& itType = it.getEvalType();
+        if(nul(itType)) return _err(27);
         const wtype& fType = f.getEvalType();
         WRD_DI("verify: returnExpr: checks return[%s] == func[%s]", itType.getName().c_str(),
             fType.getName().c_str());
