@@ -32,12 +32,10 @@ namespace wrd {
     private:
         const node& _get() const {
             const node& from = getFrom();
-            if(nul(from))
-                return WRD_E("from == null"), nulOf<node>();
-            if(!_args)
-                return getFrom().sub(_name);
+            if(nul(from)) return WRD_E("from == null"), nulOf<node>();
+            if(!_args) return from.sub(_name);
 
-            return getFrom().sub(_name, *_args);
+            return from.sub(_name, *_args);
         }
 
     private:

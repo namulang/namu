@@ -29,6 +29,9 @@ namespace wrd {
         if(nul(got)) {
             const node& from = it.getFrom();
             return _err(3, from.getType().getName().c_str(), it._name.c_str());
+
+        WRD_DI("verify: getExpr: isRunnable: got=%s, it=%s", got.getType().getName().c_str(),
+                it.getType().getName().c_str());
         }
     })
 }

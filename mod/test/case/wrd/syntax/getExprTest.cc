@@ -4,8 +4,7 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    struct getExprTest : public wrdSyntaxTest {
-    };
+    struct getExprTest : public wrdSyntaxTest {};
 }
 
 TEST_F(getExprTest, getSymbolOnPackScope) {
