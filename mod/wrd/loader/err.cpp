@@ -43,6 +43,7 @@ namespace wrd {
             "%s return type isn't valid to %s return type of func", // 25
             "block statement failed to construct frame structure",
             "expression evaluated as null type",
+            "definining variable '%s %s' wouldn't allowed here",
 
             /* to be continue... */
 
