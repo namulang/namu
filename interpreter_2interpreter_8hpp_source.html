@@ -224,86 +224,92 @@ $(function() {
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            l.saveStreamEnable();</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            l.<a class="code" href="classwrd_1_1logger.html#a83d82821e9a6e5533fbcba5058d65d99">setEnable</a>(<span class="keyword">true</span>);</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            std::cout &lt;&lt; <span class="stringliteral">&quot; - frame:\n&quot;</span>;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            std::cout &lt;&lt; platformAPI::getConsoleFore(platformAPI::LIGHTGREEN) &lt;&lt; <span class="stringliteral">&quot; - frame:\n&quot;</span>;</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;            _logFrame(info);</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            <span class="keywordflow">if</span>(!nul(_pser.getSubPack()) &amp;&amp; _pak) {</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot; - structure:\n&quot;</span>;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                _logStructure(_pser.getSubPack(), _pak-&gt;getManifest().name, 0, 0, <span class="keyword">true</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            }</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            l.loadStreamEnable();</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        }</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        <span class="keywordtype">void</span> _logStructure(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; n, <span class="keyword">const</span> std::string&amp; name, <span class="keywordtype">int</span> idx, <span class="keywordtype">int</span> level, <span class="keywordtype">bool</span> isLast, <span class="keywordtype">bool</span> isParentLast)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            <span class="keywordflow">if</span>(nul(n)) {</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;                WRD_W(<span class="stringliteral">&quot;_logStructure(n == null)&quot;</span>);</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            }</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            _logIndent(level, isParentLast);</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            std::cout &lt;&lt; (isLast ? <span class="stringliteral">&quot;┗━[&quot;</span> : <span class="stringliteral">&quot;┣━[&quot;</span>) &lt;&lt; idx &lt;&lt; <span class="stringliteral">&quot;]: &quot;</span> &lt;&lt; n.getType().getName() &lt;&lt; <span class="stringliteral">&quot; \&quot;&quot;</span> &lt;&lt; name &lt;&lt; <span class="stringliteral">&quot;\&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                std::vector&lt;const char*&gt; indents;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                indents.push_back(<span class="stringliteral">&quot;  &quot;</span>);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                _logStructure(indents, _pser.getSubPack(), _pak-&gt;getManifest().name, 0, <span class="keyword">true</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;            }</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            l.loadStreamEnable();</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            std::cout &lt;&lt; platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        }</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        <span class="keywordtype">void</span> _logStructure(std::vector&lt;const char*&gt;&amp; indents, <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; n, <span class="keyword">const</span> std::string&amp; name, <span class="keywordtype">int</span> idx, <span class="keywordtype">bool</span> isLast, <span class="keywordtype">bool</span> isParentLast)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            <span class="keywordflow">if</span>(nul(n)) {</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                WRD_W(<span class="stringliteral">&quot;_logStructure(n == null)&quot;</span>);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;            }</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            <span class="keywordtype">int</span> subN = -1;</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            <span class="keyword">const</span> <a class="code" href="classwrd_1_1tbicontainable.html">bicontainable</a>&amp; subs = n.subs();</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">auto</span> e=subs.begin(); e ;++e) {</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                subN++;</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                _logStructure(e.getVal(), e.getKey(), subN, level + 2, subN == subs.len()-1, isLast);</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            }</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;            <span class="keyword">const</span> <a class="code" href="classwrd_1_1mgd_func.html">mgdFunc</a>&amp; f = n.cast&lt;<a class="code" href="classwrd_1_1mgd_func.html">mgdFunc</a>&gt;();</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;            <span class="keywordflow">if</span>(!nul(f)) {</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                subN++;</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                _logStructure(f.getBlock().getStmts(), subN, level+2, subN == subs.len(), isLast);</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            }</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        }</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;        <span class="keywordtype">void</span> _logStructure(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; blk, <span class="keywordtype">int</span> idx, <span class="keywordtype">int</span> level, <span class="keywordtype">bool</span> isLast, <span class="keywordtype">bool</span> isParentLast)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            _logIndent(level, isParentLast);</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            std::cout &lt;&lt; (isLast ? <span class="stringliteral">&quot;┗━[&quot;</span> : <span class="stringliteral">&quot;┣━[&quot;</span>) &lt;&lt; idx &lt;&lt; <span class="stringliteral">&quot;]: block \n&quot;</span>;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;            <span class="keywordtype">int</span> subN = -1;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; stmt: blk) {</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                subN++;</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                <span class="keyword">const</span> <a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>&amp; blkExpr = stmt.cast&lt;<a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>&gt;();</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                <span class="keywordflow">if</span>(!nul(blkExpr))</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                    _logStructure(blkExpr.getStmts(), subN, level+2, subN == blk.len()-1, isLast);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;                    _logStructure(stmt, <span class="stringliteral">&quot;&quot;</span>, subN, level + 2, subN == blk.len()-1, isLast);</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            }</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        }</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        <span class="keywordtype">void</span> _logIndent(<span class="keywordtype">int</span> level, <span class="keywordtype">bool</span> isParentLast)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;            std::cout &lt;&lt; <span class="stringliteral">&quot;  &quot;</span>;</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;            <span class="keywordflow">for</span>(<span class="keywordtype">int</span> n=0; n &lt; level-1; n++)</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                std::cout &lt;&lt; (isParentLast ? <span class="stringliteral">&quot;  &quot;</span> : <span class="stringliteral">&quot;┃ &quot;</span>);</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        }</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;        <span class="keywordtype">void</span> _logFrame(<span class="keyword">const</span> <a class="code" href="classwrd_1_1frame.html">frame</a>&amp; info)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;            <span class="keywordflow">if</span>(nul(info)) {</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot;    null\n&quot;</span>;</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;            }</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            indents.push_back((isParentLast ? <span class="stringliteral">&quot;    &quot;</span> : <span class="stringliteral">&quot;┃    &quot;</span>));</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            _logIndent(indents, isParentLast);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            std::cout &lt;&lt; (isLast ? <span class="stringliteral">&quot;┗━[&quot;</span> : <span class="stringliteral">&quot;┣━[&quot;</span>) &lt;&lt; idx &lt;&lt; <span class="stringliteral">&quot;]: &quot;</span> &lt;&lt; n.getType().getName() &lt;&lt; <span class="stringliteral">&quot; \&quot;&quot;</span> &lt;&lt; name &lt;&lt; <span class="stringliteral">&quot;\&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160; </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;            <span class="keywordtype">int</span> subN = -1;</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            <span class="keyword">const</span> <a class="code" href="classwrd_1_1tbicontainable.html">bicontainable</a>&amp; subs = n.subs();</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">auto</span> e=subs.begin(); e ;++e) {</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                subN++;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                _logStructure(indents, e.getVal(), e.getKey(), subN, subN == subs.len()-1, isLast);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;            }</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            <span class="keyword">const</span> <a class="code" href="classwrd_1_1mgd_func.html">mgdFunc</a>&amp; f = n.cast&lt;<a class="code" href="classwrd_1_1mgd_func.html">mgdFunc</a>&gt;();</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            <span class="keywordflow">if</span>(!nul(f)) {</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                subN++;</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;                _logStructure(indents, f.getBlock().getStmts(), subN, subN == subs.len(), isLast);</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            }</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;            indents.pop_back();</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        }</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;        <span class="keywordtype">void</span> _logStructure(std::vector&lt;const char*&gt;&amp; indents, <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; blk, <span class="keywordtype">int</span> idx, <span class="keywordtype">bool</span> isLast, <span class="keywordtype">bool</span> isParentLast)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;            indents.push_back(isParentLast ? <span class="stringliteral">&quot;    &quot;</span> : <span class="stringliteral">&quot;┃   &quot;</span>);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            _logIndent(indents, isParentLast);</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;            std::cout &lt;&lt; (isLast ? <span class="stringliteral">&quot;┗━[&quot;</span> : <span class="stringliteral">&quot;┣━[&quot;</span>) &lt;&lt; idx &lt;&lt; <span class="stringliteral">&quot;]: block \n&quot;</span>;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;            <span class="keywordtype">int</span> subN = -1;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; stmt: blk) {</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;                subN++;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;                <span class="keyword">const</span> <a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>&amp; blkExpr = stmt.cast&lt;<a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>&gt;();</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;                <span class="keywordflow">if</span>(!nul(blkExpr))</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                    _logStructure(indents, blkExpr.getStmts(), subN, subN == blk.len()-1, isLast);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                    _logStructure(indents, stmt, <span class="stringliteral">&quot;&quot;</span>, subN, subN == blk.len()-1, isLast);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            }</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            indents.pop_back();</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        }</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        <span class="keywordtype">void</span> _logIndent(<span class="keyword">const</span> std::vector&lt;const char*&gt;&amp; indents, <span class="keywordtype">bool</span> isParentLast)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;            <span class="keywordflow">for</span>(<span class="keywordtype">int</span> n=0; n &lt; indents.size(); n++)</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                std::cout &lt;&lt; indents[n];</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        }</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            <span class="keywordtype">int</span> n=0;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">auto</span> e = info.subs().begin(); e ;++e)</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot;    [&quot;</span> &lt;&lt; n++ &lt;&lt; <span class="stringliteral">&quot;]: &#39;&quot;</span> &lt;&lt; e.getKey() &lt;&lt; <span class="stringliteral">&quot;&#39; &quot;</span> &lt;&lt; e.getVal().getType().getName().c_str() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        }</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordtype">void</span> _logFrame(<span class="keyword">const</span> <a class="code" href="classwrd_1_1frame.html">frame</a>&amp; info)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            <span class="keywordflow">if</span>(nul(info)) {</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot;    null\n&quot;</span>;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;            }</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a> _rpt;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;pack&gt;</a> _pak;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        <a class="code" href="classwrd_1_1verifier.html">verifier</a> _veri;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        <a class="code" href="classwrd_1_1parser.html">parser</a> _pser;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;srcSupply&gt;</a> _srcs;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        wbool _isParsed;</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        wbool _isLogStructure;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        wbool _isLogInterpreter;</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    };</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;}</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            <span class="keywordtype">int</span> n=0;</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">auto</span> e = info.subs().begin(); e ;++e)</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;                std::cout &lt;&lt; <span class="stringliteral">&quot;    [&quot;</span> &lt;&lt; n++ &lt;&lt; <span class="stringliteral">&quot;]: &#39;&quot;</span> &lt;&lt; e.getKey() &lt;&lt; <span class="stringliteral">&quot;&#39; &quot;</span> &lt;&lt; e.getVal().getType().getName().c_str() &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        }</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a> _rpt;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;pack&gt;</a> _pak;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        <a class="code" href="classwrd_1_1verifier.html">verifier</a> _veri;</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        <a class="code" href="classwrd_1_1parser.html">parser</a> _pser;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;srcSupply&gt;</a> _srcs;</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        wbool _isParsed;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        wbool _isLogStructure;</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;        wbool _isLogInterpreter;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    };</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1frame_html"><div class="ttname"><a href="classwrd_1_1frame.html">wrd::frame</a></div><div class="ttdef"><b>Definition:</b> frame.hpp:11</div></div>
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
