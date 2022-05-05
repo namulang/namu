@@ -183,7 +183,7 @@ namespace wrd {
     }
 
     scope* me::onDefBlock(scope& s, node& candidate) {
-        WRD_DI("tokenEvent: onDefBlock()");
+        WRD_DI("tokenEvent: onDefBlock(candidate=%s)", candidate.getType().getName().c_str());
         if(nul(s))
             return onSrcErr(11, "s"), onDefBlock();
         expr* e = &candidate.cast<expr>();

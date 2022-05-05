@@ -46,7 +46,7 @@ TEST_F(getExprTest, getSymbolOnPackScope3) {
         main() int
             return age
     )SRC").shouldParsed(true);
-    shouldVerified(false);
+    shouldVerified(true);
     ASSERT_EQ(getSubPack().subs().len(), 2); // 1 for age, 1 for main()
     node& age = getSubPack().sub("age");
     ASSERT_FALSE(nul(age));
