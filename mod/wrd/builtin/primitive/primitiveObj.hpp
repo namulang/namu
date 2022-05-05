@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../ast/mgd.hpp"
+#include "../container/native/tndumChain.hpp"
 
 namespace wrd {
 
@@ -28,7 +29,7 @@ namespace wrd {
 
         using super::subs;
         nbicontainer& subs() override {
-            static nmap inner;
+            static ndumChain inner;
             return inner;
         }
 

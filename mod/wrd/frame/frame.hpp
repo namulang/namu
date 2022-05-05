@@ -55,6 +55,9 @@ namespace wrd {
 
             return top.add(name, n);
         }
+        wbool pushLocal(const std::string& name, node* n) {
+            return pushLocal(name, *n);
+        }
 
         tstr<scopes> popLocal() { return _local.pop(); }
         // I won't provide API for poping a single node from the scope.

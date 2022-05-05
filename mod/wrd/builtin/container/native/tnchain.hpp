@@ -39,7 +39,7 @@ namespace wrd {
 
         // link:
         tstr<me> link(const super& new1);
-        wbool link(const me& new1);
+        virtual wbool link(const me& new1);
         wbool unlink();
 
         // del:
