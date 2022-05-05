@@ -24,7 +24,9 @@ namespace wrd {
     }
 
 
-    WRD_VERIFY({ // checks evalType of func is matched to me
+    WRD_VERIFY({
+        WRD_DI("verify: returnExpr: checks evalType of func is matched to me");
+
         const func& f = thread::get().getNowFrame().getFunc();
         if(nul(f)) return _err(24);
 

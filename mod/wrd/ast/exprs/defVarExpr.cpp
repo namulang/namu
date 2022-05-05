@@ -18,9 +18,10 @@ namespace wrd {
     }
 
     WRD_VERIFY(defVarExpr, defineVariable, {
-        if(!it.run()) {
-            const param& p = it.getParam();
+        const param& p = it.getParam();
+        WRD_DI("verify: define variable %s", p.getName().c_str());
+
+        if(!it.run())
             _err(28, p.getName().c_str(), p.getOrigin().getType().getName().c_str());
-        }
     })
 }
