@@ -63,10 +63,9 @@ namespace wrd {
     WRD_VERIFY(obj, subNodes, {
         WRD_DI("verify: obj: %s iterateSubNodes[%d]", it.getType().getName().c_str(), it.subs().len());
 
-        for(auto& p : it.subs()) {
-            it._inFrame();
+        it._inFrame();
+        for(auto& p : it.subs())
             verify(p);
-            it._outFrame();
-        }
+        it._outFrame();
     })
 }

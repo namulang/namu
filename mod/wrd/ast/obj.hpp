@@ -15,7 +15,7 @@ namespace wrd {
         friend class mgdObj;
 
     protected:
-        /// if you don't give any subs when construct an obj you should assign _subs to new scopes
+        /// if you don't give any subs when construct an obj, _subs will be assigned to dummy array.
         /// instance on ctor of derived class.
         explicit obj();
 
