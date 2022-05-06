@@ -17,6 +17,7 @@ namespace wrd {
         wbool isImpli(const type& to) const {
             return _getImpliAses().is(*this, to);
         }
+        wbool isImpli(const typeProvidable& to) const { return isImpli(to.getType()); }
 
         template <typename T>
         tstr<T> asImpli(const node& it) const {

@@ -44,6 +44,7 @@ namespace wrd {
             "block statement failed to construct frame structure",
             "expression evaluated as null type",
             "definining variable '%s %s' wouldn't allowed here",
+            "duplicated variable '%s' found",
 
             /* to be continue... */
 
