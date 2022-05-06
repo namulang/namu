@@ -234,3 +234,27 @@ TEST_F(nodeTest, testchefImplicitCastTofood) {
     EXPECT_EQ(cast->calorie, expectCalorie);
 }
 
+TEST_F(nodeTest, ShouldNotSameNameVariableIntoSubs) {
+    chef c;
+    ASSERT_EQ(c.subs().len(), 0);
+    c.subs().add("age", new wInt(22));
+    ASSERT_EQ(c.subs().len(), 1);
+    ASSERT_EQ(c.sub<wInt>("age").get(), 22);
+    errReport rpt;
+    verifier v;
+    v.setReport(rpt).verify(c);
+    ASSERT_FALSE(rpt);
+
+    c.subs().add("age1", new wInt(22));
+    ASSERT_EQ(c.subs().len(), 2);
+    ASSERT_EQ(c.subAll<wInt>("age1")[0].get(), 22);
+    v.verify(c);
+    ASSERT_FALSE(rpt);
+
+    c.subs().add("age", new wInt(23));
+    ASSERT_EQ(c.subs().len(), 3);
+    ASSERT_EQ(c.subAll<wInt>("age").len(), 2);
+    v.verify(c);
+    ASSERT_TRUE(rpt);
+}
+
