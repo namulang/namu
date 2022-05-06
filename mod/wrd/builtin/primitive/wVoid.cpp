@@ -9,7 +9,7 @@ namespace wrd {
             WRD(INTERFACE(wVoidCtor, func))
 
         public:
-            const wtype& getEvalType() const override {
+            const wtype& getRetType() const override {
                 return ttype<wVoid>::get();
             }
         };

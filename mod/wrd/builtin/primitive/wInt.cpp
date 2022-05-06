@@ -10,7 +10,7 @@ namespace wrd {
             WRD(INTERFACE(wIntCtor, func))
 
         public:
-            const wtype& getEvalType() const override {
+            const wtype& getRetType() const override {
                 return ttype<wInt>::get();
             }
         };

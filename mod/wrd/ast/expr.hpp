@@ -30,6 +30,8 @@ namespace wrd {
         using super::subs;
         nbicontainer& subs() override;
 
+        /// run of expr class get treated like 'evaluate' in wrd.
+        /// it should not take any argument to run()
         using super::canRun;
         wbool canRun(const ucontainable& args) const override { return args.len() == 0; }
         const src& getSrc() const { return *_src; }

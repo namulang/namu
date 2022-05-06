@@ -11,15 +11,15 @@ namespace wrd {
             FRIEND_VERIFY(mgdFunc, subNodes))
 
     public:
-        explicit mgdFunc(const params& ps, const wtype& evalType)
-            : super(), _params(ps), _evalType(&evalType), _blk(new blockExpr()) {}
-        explicit mgdFunc(const params& ps, const wtype& evalType, const blockExpr& newBlock)
-            : super(), _params(ps), _evalType(&evalType), _blk(newBlock) {}
+        explicit mgdFunc(const params& ps, const wtype& retType)
+            : super(), _params(ps), _retType(&retType), _blk(new blockExpr()) {}
+        explicit mgdFunc(const params& ps, const wtype& retType, const blockExpr& newBlock)
+            : super(), _params(ps), _retType(&retType), _blk(newBlock) {}
 
     public:
         blockExpr& getBlock() { return *_blk; }
         const blockExpr& getBlock() const { return *_blk; }
-        const wtype& getEvalType() const override { return *_evalType; }
+        const wtype& getRetType() const override { return *_retType; }
         nbicontainer& subs() override { return _shares; }
         const params& getParams() const override { return _params; }
 
@@ -34,7 +34,7 @@ namespace wrd {
     private:
         params _params;
         nmap _shares;
-        const wtype* _evalType;
+        const wtype* _retType;
         tstr<blockExpr> _blk;
     };
 }
