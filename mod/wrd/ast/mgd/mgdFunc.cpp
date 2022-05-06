@@ -55,10 +55,10 @@ namespace wrd {
     }
 
     WRD_VERIFY({
-        const wtype& eval = it.getEvalType();
-        if(nul(eval)) return _err(22);
-        if(!eval.isSub(ttype<node>::get()))
-            return _err(21, eval.getName().c_str());
+        const wtype& retType = it.getRetType();
+        if(nul(retType)) return _err(22);
+        if(!retType.isSub(ttype<node>::get()))
+            return _err(21, retType.getName().c_str());
 
         const blockExpr& blk = it.getBlock();
         if(nul(blk) || blk.getStmts().len() <= 0)

@@ -51,7 +51,7 @@ namespace {
             return getBlock().cast<myBlock>()._res;
         }
 
-        const wtype& getEvalType() const override {
+        const wtype& getRetType() const override {
             return ttype<node>::get();
         }
 
@@ -78,7 +78,7 @@ namespace {
             return _res;
         }
 
-        const wtype& getEvalType() const override {
+        const wtype& getRetType() const override {
             return ttype<node>::get();
         }
 

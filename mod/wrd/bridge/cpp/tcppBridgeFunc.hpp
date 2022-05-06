@@ -24,7 +24,7 @@ namespace wrd {
             return _runNative(evaluated);
         }
 
-        const wtype& getEvalType() const override {
+        const wtype& getRetType() const override {
             return ttype<typename tmarshaling<Ret>::mgdType>::get();
         }
 

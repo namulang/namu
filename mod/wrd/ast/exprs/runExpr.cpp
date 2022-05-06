@@ -20,7 +20,8 @@ namespace wrd {
         str me = _me->as<node>();
         if(!me) return nulOf<wtype>();
 
-        return _me->getEvalType();
+        const func& f = _me->cast<func>();
+        return nul(f) ? _me->getEvalType() : f.getRetType();
     }
 
     WRD_VERIFY({
