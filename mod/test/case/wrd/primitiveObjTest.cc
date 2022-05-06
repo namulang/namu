@@ -30,3 +30,15 @@ TEST_F(primitiveObjTest, testDefaultCtor) {
     ASSERT_TRUE(inst);
     ASSERT_EQ(inst->get(), 0);
 }
+
+TEST_F(primitiveObjTest, subsIsDummy) {
+    wInt val(2);
+    ASSERT_EQ(val.subs().len(), 0);
+
+    bicontainable& subs = val.subs();
+    ASSERT_FALSE(nul(subs));
+    subs.add("not work", new wInt(3));
+    ASSERT_EQ(subs.len(), 0);
+    ASSERT_FALSE(subs.has("not work"));
+    ASSERT_TRUE(subs.begin().isEnd());
+}
