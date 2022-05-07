@@ -55,6 +55,15 @@ TEST_F(getExprTest, getSymbolOnPackScope3) {
     ASSERT_EQ(cast.get(), ""); // default value of wStr
 }
 
+TEST_F(getExprTest, getInvalidVariableNegative) {
+	make().parse(R"SRC(
+		age str
+		main() str
+			return age1
+	)SRC").shouldParsed(true);
+	shouldVerified(false);
+}
+
 TEST_F(getExprTest, getInnerScopeVar) {
     make().parse(R"SRC(
         age int
