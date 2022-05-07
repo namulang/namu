@@ -24,6 +24,7 @@ namespace wrd {
         T& sub(std::function<wbool(const std::string&, const T&)> l) const {
             return subs().get<T>(l);
         }
+		template <typename T = me> T& sub() const;
         template <typename T = me> T& sub(const std::string& name) const;
         template <typename T = me> T& sub(const std::string& name, const ucontainable& args);
         template <typename T = me> T& sub(const std::string& name, const ucontainable& args) const;
@@ -33,6 +34,7 @@ namespace wrd {
             return subs().getAll<T>(l);
         }
 
+		template <typename T = me> tnarr<T, strTactic> subAll() const;
         template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name) const;
         template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name, const ucontainable& args);
         template <typename T = me> tnarr<T, strTactic> subAll(const std::string& name, const ucontainable& args) const;

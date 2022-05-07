@@ -6,6 +6,13 @@ namespace wrd {
 
 #define ME node
 
+	template <typename T>
+	T& ME::sub() const {
+		return subs().get<T>([](const std::string& key, const T& val) {
+			return true;
+		});
+	}
+
     template <typename T>
     T& ME::sub(const std::string& name) const {
         return subs().get<T>([&](const std::string& key, const T& val) {
@@ -25,6 +32,13 @@ namespace wrd {
 
     template <typename T>
     T& ME::sub(const std::string& name, const ucontainable& args) const WRD_UNCONST_FUNC(sub<T>(name, args))
+
+	template <typename T>
+	tnarr<T, strTactic> ME::subAll() const {
+		return subs().getAll<T>([](const std::string& key, const T& val) {
+			return true;
+		});
+	}
 
     template <typename T>
     tnarr<T, strTactic> ME::subAll(const std::string& name) const {
