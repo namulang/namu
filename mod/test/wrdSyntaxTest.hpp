@@ -70,6 +70,11 @@ private:
     }
 
     void _logStructure(const wrd::node& n, const std::string& name, int idx, int level, bool isLast, bool isParentLast) const {
+		if(nul(n)) {
+			WRD_W("_logStructure(n == null)");
+			return;
+		}
+
         _logIndent(level, isParentLast);
         std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: " << n.getType().getName() << " \"" << name << "\"\n";
 
