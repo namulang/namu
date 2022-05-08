@@ -78,33 +78,21 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1buffer_src_supply.html">bufferSrcSupply</a>, <a class="code" href="classwrd_1_1src_supply.html">srcSupply</a>))</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <a class="code" href="classwrd_1_1buffer_src_supply.html">bufferSrcSupply</a>(<span class="keyword">const</span> std::vector&lt;string&gt;&amp; buf): _srcs(buf) { ret(); }</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <a class="code" href="classwrd_1_1buffer_src_supply.html">bufferSrcSupply</a>(<span class="keyword">const</span> std::vector&lt;string&gt;&amp; buf);</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classwrd_1_1buffer_src_supply.html#ac3b7a64043ed1322f6d15a6cc9091314">   13</a></span>&#160;        wbool <a class="code" href="classwrd_1_1buffer_src_supply.html#ac3b7a64043ed1322f6d15a6cc9091314">next</a>()<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            <span class="keywordflow">if</span>(++_cursor &gt;= _srcs.size()) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        }</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* get()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="keywordflow">return</span> _srcs[_cursor].c_str();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        }</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classwrd_1_1buffer_src_supply.html#a175944f33c9ae443a2cc01c9e35ae8e3">   23</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classwrd_1_1buffer_src_supply.html#a175944f33c9ae443a2cc01c9e35ae8e3">ret</a>()<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            _cursor = -1;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        }</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        std::vector&lt;string&gt; _srcs;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">int</span> _cursor;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    };</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        wbool next() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span>* get() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keywordtype">void</span> ret() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        std::vector&lt;string&gt; _srcs;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">int</span> _cursor;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    };</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1buffer_src_supply_html"><div class="ttname"><a href="classwrd_1_1buffer_src_supply.html">wrd::bufferSrcSupply</a></div><div class="ttdef"><b>Definition:</b> bufferSrcSupply.hpp:6</div></div>
 <div class="ttc" id="aclasswrd_1_1src_supply_html"><div class="ttname"><a href="classwrd_1_1src_supply.html">wrd::srcSupply</a></div><div class="ttdef"><b>Definition:</b> srcSupply.hpp:7</div></div>
-<div class="ttc" id="aclasswrd_1_1buffer_src_supply_html_ac3b7a64043ed1322f6d15a6cc9091314"><div class="ttname"><a href="classwrd_1_1buffer_src_supply.html#ac3b7a64043ed1322f6d15a6cc9091314">wrd::bufferSrcSupply::next</a></div><div class="ttdeci">wbool next() override</div><div class="ttdef"><b>Definition:</b> bufferSrcSupply.hpp:13</div></div>
-<div class="ttc" id="aclasswrd_1_1buffer_src_supply_html_a175944f33c9ae443a2cc01c9e35ae8e3"><div class="ttname"><a href="classwrd_1_1buffer_src_supply.html#a175944f33c9ae443a2cc01c9e35ae8e3">wrd::bufferSrcSupply::ret</a></div><div class="ttdeci">void ret() override</div><div class="ttdoc">return to first cursor.</div><div class="ttdef"><b>Definition:</b> bufferSrcSupply.hpp:23</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
