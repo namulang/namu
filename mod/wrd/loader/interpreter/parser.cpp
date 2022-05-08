@@ -8,13 +8,22 @@ namespace wrd {
 
     WRD_DEF_ME(parser)
 
-    me& me::setPack(pack& pak) {
+    me& me::setPack(const pack& pak) {
         _eventer.getPack().bind(pak);
         return *this;
     }
 
+	pack& me::getPack() {
+		return *_eventer.getPack();
+	}
+
+	node& me::getSubPack() {
+		return *_eventer.getSubPack();
+	}
+
     str me::parse(const wchar* script) {
         WRD_I("parse starts.");
+        _eventer.prepareParse();
 
         yyscan_t scanner;
         yylex_init_extra(&_eventer, &scanner);
@@ -39,9 +48,7 @@ namespace wrd {
 
         yy_delete_buffer(bufState, scanner);
         yylex_destroy(scanner);
-        str ret = _eventer.getSubPack();
-        _eventer.prepareParse();
-        return ret;
+        return _eventer.getSubPack();
     }
 
     void me::rel() {

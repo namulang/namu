@@ -31,12 +31,24 @@ TEST_F(defVarExprTest, simpleDefineVariable) {
     }
 }
 
-TEST_F(defVarExprTest, definePackVariable) {
+TEST_F(defVarExprTest, definePackVariableNegative) {
 	make().parse(R"SRC(
 		name str
 		age int
 		grade flt
 		main() void
+			age int
+			return age
+	)SRC").shouldParsed(true);
+	shouldVerified(false);
+}
+
+TEST_F(defVarExprTest, definePackVariable2) {
+	make().parse(R"SRC(
+		name str
+		age int
+		grade flt
+		main() int
 			age int
 			return age
 	)SRC").shouldParsed(true);

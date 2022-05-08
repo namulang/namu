@@ -32,7 +32,11 @@ namespace wrd {
             _eventer.getReport().bind(report);
 			return *this;
 		}
-        me& setPack(pack& pak);
+        me& setPack(const pack& tray);
+		pack& getPack();
+		const pack& getPack() const WRD_UNCONST_FUNC(getPack())
+		node& getSubPack();
+		const node& getSubPack() const WRD_UNCONST_FUNC(getSubPack())
 
         /// @param script is null terminated cstring.
         str parse(const wchar* script);
