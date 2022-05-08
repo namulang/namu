@@ -58,7 +58,7 @@ TEST_F(defVarExprTest, definePackVariable2) {
 
 	ASSERT_EQ(pak.subs().len(), 4); // 3 variable, 1 func
 	ASSERT_EQ(pak.subAll<obj>().len(), 3);
-	ASSERT_EQ(pak.subAll<mgdObj>().len(), 1);
+	ASSERT_EQ(pak.subAll<mgdFunc>().len(), 1);
 
 	wStr& name = pak.sub<wStr>("name");
 	ASSERT_FALSE(nul(name));

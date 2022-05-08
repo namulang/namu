@@ -8,7 +8,7 @@ namespace {
 }
 
 TEST_F(opTest, simpleBinaryOp1) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         main() void
             2 + 3*27 + 44 - 27/34*43 - 1
@@ -16,7 +16,7 @@ TEST_F(opTest, simpleBinaryOp1) {
 }
 
 TEST_F(opTest, BinaryOpWithParan) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         main() void
          2 + (if 3
@@ -26,7 +26,7 @@ TEST_F(opTest, BinaryOpWithParan) {
 }
 
 TEST_F(opTest, BinaryOpWithParan2) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         main() void
          2 + (if 3
@@ -35,7 +35,7 @@ TEST_F(opTest, BinaryOpWithParan2) {
 }
 
 TEST_F(opTest, BinaryOpWithParan3) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
          pack demo
          main() void
           2 + if 3
@@ -45,7 +45,7 @@ TEST_F(opTest, BinaryOpWithParan3) {
 }
 
 TEST_F(opTest, defexprAsTerm) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         main() void
            (age int) + (if 3
@@ -55,7 +55,7 @@ TEST_F(opTest, defexprAsTerm) {
 }
 
 TEST_F(opTest, exprAddFuncCall) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         main() void
             2 + 3*27 + 44 - foo(2) * 27/34*43
@@ -63,7 +63,7 @@ TEST_F(opTest, exprAddFuncCall) {
 }
 
 TEST_F(opTest, exprAddFuncCall2) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         main() void
             2 + 3*27 + 44 - foo('a') * 27/34*43 - a.foo(b.boo(c.goo()))
@@ -71,7 +71,7 @@ TEST_F(opTest, exprAddFuncCall2) {
 }
 
 TEST_F(opTest, exprAddFuncCall3) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         main() void
             2 + 3*27 + 44 - foo('a12') * 27/34*43 - a.foo(b.boo(c.goo()))

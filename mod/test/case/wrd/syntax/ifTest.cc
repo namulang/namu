@@ -8,7 +8,7 @@ namespace {
 }
 
 TEST_F(ifTest, simpleNestedTest) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         main() void
             if 11
@@ -18,7 +18,7 @@ TEST_F(ifTest, simpleNestedTest) {
 }
 
 TEST_F(ifTest, NestIfTest) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         foo(abc int) int
            if "hello"

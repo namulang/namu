@@ -8,7 +8,7 @@ namespace {
 }
 
 TEST_F(callTest, callFunc) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         main() void
             foo()

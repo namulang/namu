@@ -37,9 +37,7 @@ struct wrdSyntaxTest : public wrdTest {
         _pser.setReport(_rpt).parse(_src = src);
 
 		wrd::pack& pak = _pser.getPack();
-		EXPECT_FALSE(nul(pak));
 		wrd::node& subpack = _pser.getSubPack();
-		EXPECT_FALSE(nul(subpack));
 		WRD_DI("subpack=%x, pack=%x, _rpt=%d", &subpack, &pak, _rpt.hasErr());
         _isParsed = !nul(subpack) && !nul(pak) && !_rpt;
         if(!_isParsed) return *this;

@@ -68,3 +68,24 @@ TEST_F(parserTest, packNoOnTrayWithoutMake) {
 	mgdFunc& f = getSubPack().sub<mgdFunc>("main");
 	ASSERT_FALSE(nul(f));
 }
+
+TEST_F(parserTest, packNotSpecifiedButCodeSpecifyPackNegative) {
+	// make without name:
+	// 	pack will be generated. but its name is '{default}'.
+	make().parse(R"SRC(
+		pack demo
+		main() void
+			return
+	)SRC").shouldParsed(false);
+}
+
+TEST_F(parserTest, packProperlySpecified) {
+	// make with name:
+	// 	pack will be generated and its name is 'demo'.
+	make("demo").parse(R"SRC(
+		pack demo
+		main() void
+			return
+	)SRC").shouldParsed(true);
+	shouldVerified(true);
+}
