@@ -8,6 +8,10 @@
 #include <iostream>
 #include <functional>
 
+namespace {
+	static constexpr int TAB_WIDTH = 4;
+}
+
 #define YY_DECL int yylexOrigin(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner)
 #define YY_USER_ACTION yylloc->start.row = yylloc->end.row = yyget_lineno(yyscanner); \
                        yylloc->start.col = yylloc->colcnt; yylloc->end.col = yylloc->colcnt+yyleng-1; \
@@ -41,7 +45,12 @@
 }
 \-> { return ARROW; }
 \+\+ { return DOUBLE_PLUS; }
-[ \t]+ ;
+[ ]+ ;
+\t {
+	yylloc->start.col = (yylloc->start.col + TAB_WIDTH) & ~(TAB_WIDTH-1);
+	yylloc->colcnt = (yylloc->colcnt + TAB_WIDTH) & ~(TAB_WIDTH-1);
+}
+
 \n {
     yylloc->colcnt = yylloc->start.col = yylloc->end.col= 0;
     yyget_extra(yyscanner)->onNewLine();
