@@ -114,8 +114,6 @@ namespace wrd {
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
-        node* _onFindSubPack(const std::string& name, node* subpack);
-        node* _onFindSubPack(node* subpack);
         void _onRes(err* new1);
         params _convertParams(const narr& exprs);
         void _onPushName(const std::string& name, node& n);

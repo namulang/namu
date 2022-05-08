@@ -9,17 +9,23 @@ struct wrdSyntaxTest : public wrdTest {
         _rel();
     }
 
-    wrd::node& getSubPack() { return *_subpack; }
-    wrd::pack& getPack() { return *_pack; }
+    wrd::node& getSubPack() { return _pser.getSubPack(); }
+    const wrd::node& getSubPack() const { return _pser.getSubPack(); }
+    wrd::pack& getPack() { return _pser.getPack(); }
+    const wrd::pack& getPack() const { return _pser.getPack(); }
     wrd::errReport& getReport() { return _rpt; }
 
-    wrdSyntaxTest& make() {
-        return make(wrd::manifest());
+    wrdSyntaxTest& make(const std::string& name) {
+        return make(wrd::manifest(name));
     }
+
+	wrdSyntaxTest& make() {
+		return make(wrd::manifest());
+	}
 
     wrdSyntaxTest& make(const wrd::manifest& mani) {
         _rel();
-        _pack.bind(new wrd::pack(mani, wrd::packLoadings()));
+        _pser.setPack(*new wrd::pack(mani, wrd::packLoadings()));
         return *this;
     }
 
@@ -28,18 +34,23 @@ struct wrdSyntaxTest : public wrdTest {
         WRD_I("parsing src:");
         WRD_I("%s", src);
         WRD_I("====================================");
-        wrd::parser p;
-        _subpack = p.setPack(*_pack).setReport(_rpt).parse(_src = src);
-        _isParsed = _subpack && _pack && !_rpt;
+        _pser.setReport(_rpt).parse(_src = src);
+
+		wrd::pack& pak = _pser.getPack();
+		EXPECT_FALSE(nul(pak));
+		wrd::node& subpack = _pser.getSubPack();
+		EXPECT_FALSE(nul(subpack));
+		WRD_DI("subpack=%x, pack=%x, _rpt=%d", &subpack, &pak, _rpt.hasErr());
+        _isParsed = !nul(subpack) && !nul(pak) && !_rpt;
         if(!_isParsed) return *this;
 
         wrd::packs* paks = new wrd::packs();
-        paks->add(_pack->getManifest().name, *_pack);
+        paks->add(pak.getManifest().name, pak);
         wrd::packChain verifying(paks);
         verifying.link(wrd::thread::get().getSystemPacks());
 
         wrd::verifier v;
-        v.setReport(_rpt).setPacks(verifying).verify(*_subpack);
+        v.setReport(_rpt).setPacks(verifying).verify(subpack);
         return *this;
     }
 
@@ -64,7 +75,7 @@ private:
     void _log(wrd::wbool expected) const {
         std::cout   << "  code: " << _src << "\n"
                     << "  structure:\n";
-        _logStructure(*_subpack, _pack->getManifest().name, 0, 0, true, true);
+        _logStructure(getSubPack(), getPack().getManifest().name, 0, 0, true, true);
         std::cout   << "  errReport:\n";
         _rpt.log();
     }
@@ -115,16 +126,14 @@ private:
 
     void _rel() {
         _src = "";
-        _subpack.rel();
-        _pack.rel();
         _rpt.rel();
+		_pser.rel();
         _isParsed = false;
     }
 
 private:
     const wrd::wchar* _src;
-    wrd::str _subpack;
-    wrd::tstr<wrd::pack> _pack;
     wrd::errReport _rpt;
     wrd::wbool _isParsed;
+	wrd::parser _pser;
 };

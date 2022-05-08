@@ -108,45 +108,37 @@ namespace wrd {
     }
 
     node* me::onPack(const narr& dotname) {
-        std::string firstName = dotname[0].cast<std::string>();
         WRD_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
+        pack* pak = &getPack().get();
 
-        pack& pak = *getPack();
-        if(nul(pak)) {
-            onSrcErr(13, dotname[0].cast<std::string>().c_str());
-            return _onFindSubPack("", new pack(manifest(), packLoadings()));
-        }
-        if(dotname.len() == 1)
-            return _onFindSubPack(pak.getManifest().name, &pak);
+		// pack syntax rule #1:
+		//	if there is no specified name of pack, I create an one.
+        std::string firstName = dotname[0].cast<std::string>();
+		if(nul(pak))
+			getPack().bind(pak = new pack(manifest(firstName), packLoadings()));
 
-        // pack syntax rule #1:
-        //     middle name automatically created if not exist.
-        //     on interpreting 'mypack' pack, user may uses 'pack' keyword with dotted-name.
-        //     for instance,
-        //         'pack mypack.component.ui'
-        //     in this scenario, mypack instance should be created before. and component sub
-        //     pack object can be created in this parsing keyword.
-        node* e = &pak;
-        for(int n=1; n < dotname.len()-1; n++) {
-            const std::string& name = dotname[1].cast<std::string>();
+		const std::string& realName = pak->getManifest().name;
+		if(realName != firstName)
+			return onErr(30, firstName.c_str(), realName.c_str()), pak;
+
+        // pack syntax rule #2:
+        //	middle name automatically created if not exist.
+        //	on interpreting 'mypack' pack, user may uses 'pack' keyword with dotted-name.
+        //	for instance,
+        // 		'pack mypack.component.ui'
+        //	in this scenario, mypack instance should be created before. and component sub
+        //	pack object can be created in this parsing keyword.
+        node* e = pak;
+        for(int n=1; n < dotname.len(); n++) {
+            const std::string& name = dotname[n].cast<std::string>();
             node* sub = &e->sub(name);
             if(nul(sub))
                 e->subs().add(name, sub = new mgdObj());
             e = sub;
         }
 
-        // pack syntax rule #2:
-        //     however, if obj has already existed as a obj in 'component' instance,
-        //     it's definately an error. because I don't allow for user to redefine or extend
-        //     pack interpreted.
-        const string& lastName = dotname.last()->cast<std::string>();
-        node* ret = &e->sub(lastName);
-        if(ret) {
-            onSrcErr(14, lastName.c_str(), merge(dotname).c_str());
-            return ret;
-        }
-        e->subs().add(lastName, ret = new mgdObj());
-        return _onFindSubPack(ret);
+        _subpack.bind(e);
+		return e;
     }
 
     node* me::onPack() {
@@ -154,9 +146,16 @@ namespace wrd {
 
         onWarn(14);
 
-        pack* newPack = new pack(manifest(), packLoadings());
-        _pack.bind(newPack);
-        return _onFindSubPack(newPack->getManifest().name, newPack); // this is a default pack containing name as '{default}'.
+        pack* newPack = &_pack.get();
+		if(!_pack)
+			_pack.bind(newPack = new pack(manifest(), packLoadings()));
+
+		const std::string& name = _pack->getManifest().name;
+		if(name != manifest::DEFAULT_NAME)
+			return onErr(30, manifest::DEFAULT_NAME, name.c_str()), newPack;
+
+		_subpack.bind(newPack); // this is a default pack containing name as '{default}'.
+		return newPack;
     }
 
     blockExpr* me::onBlock() {
@@ -203,16 +202,6 @@ namespace wrd {
     expr* me::onDefVar(const std::string& name, const node& origin) {
         WRD_DI("tokenEvent: onDefVar(%s, %s)", origin.getType().getName().c_str(), name.c_str());
         return new defVarExpr(*new param(name, origin));
-    }
-
-    node* me::_onFindSubPack(const std::string& name, node* subpack) {
-        _onPushName(name, *subpack);
-        return _onFindSubPack(subpack);
-    }
-
-    node* me::_onFindSubPack(node* subpack) {
-        _subpack.bind(subpack);
-        return subpack;
     }
 
     void me::onSrcArea(area& area) {
@@ -264,10 +253,11 @@ namespace wrd {
     }
 
     void me::onCompilationUnit(node& subpack, scope& arr) {
-        wbool hasPack = !nul(subpack);
-        std::string name = hasPack ? _onPopName(subpack) : "";
-        WRD_DI("tokenEvent: onCompilationUnit(%s[%x], arr[%x])", name.c_str(), &subpack, &arr);
-        if(!hasPack) return;
+        WRD_DI("tokenEvent: onCompilationUnit(%x, arr[%x])", &subpack, &arr);
+        if(nul(subpack)) {
+			onErr(13);
+			return;
+		}
 
         bicontainable& con = subpack.subs();
         for(auto e=arr.begin(); e ;++e)
