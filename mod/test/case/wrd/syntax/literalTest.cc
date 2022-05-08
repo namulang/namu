@@ -8,7 +8,7 @@ namespace {
 }
 
 TEST_F(literalTest, stringLiteralShouldFail) {
-    make().parse(R"SRC(
+    make("demo").parse(R"SRC(
         pack demo
         foo(abc int) int
            if "hello"
