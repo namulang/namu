@@ -22,6 +22,6 @@ namespace wrd {
         WRD_DI("verify: define variable %s", p.getName().c_str());
 
         if(!it.run())
-            _err(28, p.getName().c_str(), p.getOrigin().getType().getName().c_str());
+            _err(errCode::CANT_DEF_VAR, p.getName().c_str(), p.getOrigin().getType().getName().c_str());
     })
 }

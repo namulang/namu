@@ -56,13 +56,13 @@ namespace wrd {
 
     WRD_VERIFY({
         const wtype& retType = it.getRetType();
-        if(nul(retType)) return _err(22);
+        if(nul(retType)) return _err(errCode::NO_RET_TYPE);
         if(!retType.isSub(ttype<node>::get()))
-            return _err(21, retType.getName().c_str());
+            return _err(errCode::WRONG_RET_TYPE, retType.getName().c_str());
 
         const blockExpr& blk = it.getBlock();
         if(nul(blk) || blk.getStmts().len() <= 0)
-            return _err(23);
+            return _err(errCode::NO_STMT_IN_FUNC);
     })
 
     namespace {

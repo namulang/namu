@@ -40,7 +40,7 @@ namespace wrd {
 
     WRD_VERIFY(blockExpr, visitSubNodes, { // visit sub nodes.
         WRD_DI("verify: blockExpr: visit sub nodes[%d]", it._exprs.len());
-        if(!it._inFrame()) return _err(26);
+        if(!it._inFrame()) return _err(errCode::BLK_CANT_MAKE_FRAME);
 
         for(auto& e : it._exprs)
             verify(e);

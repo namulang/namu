@@ -26,7 +26,7 @@ namespace {
 
 	WRD_VERIFY(myObj, {
 		if(it.val == 0)
-			_err(err::BASE_TEST_CODE + 1);
+			_err(errCode::ERR_CODE_END);
 	})
 
 	struct mymyObj : public myObj {
@@ -40,7 +40,7 @@ namespace {
 
 	WRD_VERIFY(mymyObj, {
 		if(it.grade <= 0.0f)
-			_warn(area {{1, 1}, {1, 5}}, err::BASE_TEST_CODE + 2);
+			_warn(area {{1, 1}, {1, 5}}, errCode::ERR_CODE_START);
 	})
 }
 
@@ -74,8 +74,8 @@ TEST_F(verifierTest, verifyMyObj) {
 	const err& e = report[0];
 	ASSERT_FALSE(nul(e));
 	ASSERT_EQ(e.fType, err::ERR);
-	ASSERT_EQ(e.code, err::BASE_TEST_CODE + 1);
-	ASSERT_EQ(e.msg, "val is 0");
+	ASSERT_EQ(e.code, errCode::ERR_CODE_END);
+	ASSERT_EQ(e.msg, err::getErrMsg(e.code));
 
 	report.log();
 	report.rel();
@@ -86,9 +86,8 @@ TEST_F(verifierTest, verifyMyObj) {
 }
 
 TEST_F(verifierTest, errMsgFor0ShouldExist) {
-	const msgMap& msgs = err::getErrMsgs();
-	ASSERT_TRUE(msgs.size() > 0);
-	ASSERT_EQ(msgs.at(0), "unknown");
+	ASSERT_TRUE(errCode::ERR_CODE_END > 0);
+	ASSERT_EQ(err::getErrMsg(UNKNOWN), "unknown");
 }
 
 TEST_F(verifierTest, verifyInheritedClass) {
@@ -106,14 +105,14 @@ TEST_F(verifierTest, verifyInheritedClass) {
 	const err& myObjE = report[0]; // verification of myObj
 	ASSERT_FALSE(nul(myObjE));
 	ASSERT_EQ(myObjE.fType, err::ERR);
-	ASSERT_EQ(myObjE.code, err::BASE_TEST_CODE + 1);
-	ASSERT_EQ(myObjE.msg, "val is 0");
+	ASSERT_EQ(myObjE.code, errCode::ERR_CODE_END);
+	ASSERT_EQ(myObjE.msg, err::getErrMsg(myObjE.code));
 
 	const err& mymyObjE = report[1]; // of mymyObj
 	ASSERT_FALSE(nul(mymyObjE));
 	ASSERT_EQ(mymyObjE.fType, err::WARN);
-	ASSERT_EQ(mymyObjE.code, err::BASE_TEST_CODE + 2);
-    ASSERT_EQ(mymyObjE.msg.substr(0, 5), "grade");
+	ASSERT_EQ(mymyObjE.code, errCode::ERR_CODE_START);
+    ASSERT_EQ(mymyObjE.msg, err::getErrMsg(mymyObjE.code));
 
 	const srcErr& cast = mymyObjE.cast<srcErr>();
 	ASSERT_FALSE(nul(cast));
@@ -147,8 +146,8 @@ TEST_F(verifierTest, verifyNestedObject) {
 	const srcErr& e = report[0].cast<srcErr>();
 	ASSERT_FALSE(nul(e));
 	ASSERT_EQ(e.fType, err::WARN);
-	ASSERT_EQ(e.code, err::BASE_TEST_CODE + 2);
-	ASSERT_EQ(e.msg.substr(0, 5), "grade");
+	ASSERT_EQ(e.code, errCode::ERR_CODE_START);
+	ASSERT_EQ(e.msg, err::getErrMsg(e.code));
 	ASSERT_EQ(e.srcArea.start.row, 1);
 	ASSERT_EQ(e.srcArea.start.col, 1);
 	ASSERT_EQ(e.srcArea.end.row, 1);
@@ -173,5 +172,5 @@ TEST_F(verifierTest, verifySubedObject) {
 
     const err& e = rpt[0];
     ASSERT_EQ(e.fType, err::ERR);
-    ASSERT_EQ(e.code, err::BASE_TEST_CODE + 1);
+    ASSERT_EQ(e.code, errCode::ERR_CODE_END);
 }

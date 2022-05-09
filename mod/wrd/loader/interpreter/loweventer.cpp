@@ -70,7 +70,7 @@ namespace wrd {
         _indents.pop_back();
         wint now = _indents.back();
         if(now < col)
-            onSrcWarn(10, col, now, now);
+            onSrcWarn(errCode::WRONG_INDENT_LV, col, now, now);
 
         while(_indents.back() > col) {
             WRD_DI("tokenEvent: onDedent: indentlv become %d -> %d", _indents.back(), _indents[_indents.size()-2]);
@@ -90,7 +90,7 @@ namespace wrd {
     }
 
     wchar me::onScanUnexpected(const wchar* token) {
-        onSrcErr(9, token);
+        onSrcErr(errCode::UNEXPECTED_TOK, token);
         return token[0];
     }
 
@@ -119,7 +119,7 @@ namespace wrd {
 
 		const std::string& realName = pak->getManifest().name;
 		if(realName != firstName)
-			return onErr(30, firstName.c_str(), realName.c_str()), pak;
+			return onErr(errCode::PACK_NOT_MATCH, firstName.c_str(), realName.c_str()), pak;
 
         // pack syntax rule #2:
         //	middle name automatically created if not exist.
@@ -144,7 +144,7 @@ namespace wrd {
     node* me::onPack() {
         WRD_DI("tokenEvent: onPack()");
 
-        onWarn(14);
+        onWarn(errCode::NO_PACK);
 
         pack* newPack = &_pack.get();
 		if(!_pack)
@@ -152,7 +152,7 @@ namespace wrd {
 
 		const std::string& name = _pack->getManifest().name;
 		if(name != manifest::DEFAULT_NAME)
-			return onErr(30, manifest::DEFAULT_NAME, name.c_str()), newPack;
+			return onErr(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), newPack;
 
 		_subpack.bind(newPack); // this is a default pack containing name as '{default}'.
 		return newPack;
@@ -166,7 +166,7 @@ namespace wrd {
     blockExpr* me::onBlock(blockExpr& blk, node& candidate) {
         WRD_DI("tokenEvent: onBlock()");
         if(nul(blk))
-            return onSrcErr(11, "blk"), onBlock();
+            return onSrcErr(errCode::IS_NULL, "blk"), onBlock();
         expr* e = &candidate.cast<expr>();
         if(nul(e))
             e = new literalExpr(candidate);
@@ -184,10 +184,10 @@ namespace wrd {
     scope* me::onDefBlock(scope& s, node& candidate) {
         WRD_DI("tokenEvent: onDefBlock(candidate=%s)", candidate.getType().getName().c_str());
         if(nul(s))
-            return onSrcErr(11, "s"), onDefBlock();
+            return onSrcErr(errCode::IS_NULL, "s"), onDefBlock();
         expr* e = &candidate.cast<expr>();
         if(nul(e))
-            return onSrcErr(18, candidate.getType().getName().c_str()), onDefBlock();
+            return onSrcErr(errCode::PARAM_HAS_VAL, candidate.getType().getName().c_str()), onDefBlock();
 
         defVarExpr& defVar = e->cast<defVarExpr>();
         if(!nul(defVar)) {
@@ -217,8 +217,8 @@ namespace wrd {
         params ret;
         for(auto& expr: exprs) {
             defVarExpr& cast = expr.cast<defVarExpr>();
-            if(nul(cast)) return onSrcErr(16, expr.getType().getName().c_str()), ret;
-            if(nul(cast.getParam())) return onSrcErr(18), ret;
+            if(nul(cast)) return onSrcErr(errCode::NOT_EXPR, expr.getType().getName().c_str()), ret;
+            if(nul(cast.getParam())) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
 
             ret.add(cast.getParam().clone());
         }
@@ -255,7 +255,7 @@ namespace wrd {
     void me::onCompilationUnit(node& subpack, scope& arr) {
         WRD_DI("tokenEvent: onCompilationUnit(%x, arr[%x])", &subpack, &arr);
         if(nul(subpack)) {
-			onErr(13);
+			onErr(errCode::NO_PACK_TRAY);
 			return;
 		}
 
