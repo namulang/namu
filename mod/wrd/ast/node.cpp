@@ -34,6 +34,6 @@ namespace wrd {
     WRD_VERIFY({ // no same variable.
         for(auto e=it.subs().begin(); e ;++e)
             if(it.subAll<obj>(e.getKey()).len() > 1)
-                return _err(29, e.getKey().c_str());
+                return _err(errCode::DUP_VAR, e.getKey().c_str());
     })
 }

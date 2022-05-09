@@ -422,7 +422,7 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     if(symbol != YYSYMBOL_YYUNDEF)
         // this's similar to call 'onSrcErr', but loweventer._srcArea is invalid.
         // so I can't use it now.
-        eventer->onErr(*yypcontext_location(ctx), 7, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol));
+        eventer->onErr(*yypcontext_location(ctx), errCode::SYNTAX_ERR, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol));
     _onEndParse(scanner);
     return 0;
 }
@@ -434,5 +434,5 @@ void _onEndParse(yyscan_t scanner) {
 
 // errors except syntax will come here. for instance, when available memory doesn't exist.
 void yyerror(YYLTYPE* loc, yyscan_t scanner, const char* msg) {
-    yyget_extra(scanner)->onErr(8, msg);
+    yyget_extra(scanner)->onErr(errCode::MSG, msg);
 }

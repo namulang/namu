@@ -1,5 +1,6 @@
 #pragma once
 
+#include "errCode.hpp"
 #include "../ast/point.hpp"
 #include "../common/wrdMetaExtension.hpp"
 #include "../type/wtype.hpp"
@@ -22,15 +23,15 @@ namespace wrd {
 		};
 
 	public:
-		err(err::type t, wcnt errCode, ...): super(), fType(t), code(errCode) {
+		err(err::type t, wint newCode, ...): super(), fType(t), code((errCode) newCode) {
             va_list args;
-            va_start(args, errCode);
+            va_start(args, newCode);
 
-            msg = _format(getErrMsgs().at(code), args);
+            msg = _format(getErrMsg(code), args);
             va_end(args);
 		}
-        err(err::type t, wcnt errCode, va_list args): super(), fType(t), code(errCode) {
-            msg = _format(getErrMsgs().at(code), args);
+        err(err::type t, int newCode, va_list args): super(), fType(t), code((errCode) newCode) {
+            msg = _format(getErrMsg(code), args);
         }
 
 	public:
@@ -46,26 +47,26 @@ namespace wrd {
                 log();
         }
 
-		static const msgMap& getErrMsgs();
-        static err* newErr(wcnt errCode, ...);
-        static err* newErr(const area& src, wcnt errCode, ...);
-        static err* newWarn(wcnt errCode, ...);
-        static err* newWarn(const area& src, wcnt errCode, ...);
-        static err* newInfo(wcnt errCode, ...);
-        static err* newInfo(const area& src, wcnt errCode, ...);
+		static const std::string& getErrMsg(errCode code);
+        static err* newErr(int code, ...);
+        static err* newErr(const area& src, int code, ...);
+        static err* newWarn(int code, ...);
+        static err* newWarn(const area& src, int code, ...);
+        static err* newInfo(int code, ...);
+        static err* newInfo(const area& src, int code, ...);
 
 	public:
 		err::type fType;
-		wcnt code;
+		errCode code;
 		std::string msg;
 		static constexpr wint BASE_TEST_CODE = 99999990; // not to be duplicated.
 
     private:
         std::string _format(const std::string& fmt, va_list args);
-        err* _newRes(type t, wcnt errCode, va_list args) {
-            return new err(t, errCode, args);
+        err* _newRes(type t, errCode code, va_list args) {
+            return new err(t, code, args);
         }
-        err* _newRes(const area& src, type t, wcnt errCode, va_list args);
+        err* _newRes(const area& src, type t, errCode code, va_list args);
 	};
 
     struct dummyErr : public err {
@@ -87,7 +88,7 @@ namespace wrd {
 
 	public:
         template <typename... Args>
-        srcErr(err::type t, const area& src, wcnt errCode, Args... args): super(t, errCode, args...), srcArea(src) {}
+        srcErr(err::type t, const area& src, int code, Args... args): super(t, code, args...), srcArea(src) {}
 
 		area srcArea;
 
