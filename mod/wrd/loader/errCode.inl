@@ -1,31 +1,47 @@
+// common:
 PAIRX(UNKNOWN,              "unknown")
+PAIRX(MSG,                  "%s")
+PAIRX(IS_NULL,              "%s is null")
+
+// location:
 PAIRX(NO_ROW_INFO,          "this expr doesn't have row info")
+PAIRX(NO_COL_INFO,          "this expr doesn't have col info")
+
+// node:
 PAIRX(EVAL_NULL_TYPE,       "this expr evaluated as nulled type")
 PAIRX(NOT_EXIST,            "%s tried to access '%s' but nothing exist")
+PAIRX(DUP_VAR,              "duplicated variable '%s' found")
+
+// obj:
 PAIRX(CANT_CAST_TO_NODE,    "obj can't be cast into node class")
 PAIRX(OBJ_WRONG_ARGS,       "obj can't execute with this argument types")
-PAIRX(NO_COL_INFO,          "this expr doesn't have col info")
+PAIRX(OBJ_ALREADY_EXIST,    "\'%s\' object already exists at %s")
+
+// parser:
 PAIRX(SYNTAX_ERR,           "syntax error %s expected, but %s found")
-PAIRX(MSG,                  "%s")
 PAIRX(UNEXPECTED_TOK,       "unexpected token '%s' found")
-PAIRX(WRONG_INDENT_LV,      "invalid indentation level found. expected %d columns but it was %d. I'm assuming you were trying to give %d columns") // 10
-PAIRX(IS_NULL,              "%s is null")
+PAIRX(WRONG_INDENT_LV,      "invalid indentation level found. expected %d columns but it was %d. I'm assuming you were trying to give %d columns")
 PAIRX(PARSING_HAS_ERR,      "parsing has done. but something went wrong: %d")
+
+// pack:
 PAIRX(NO_PACK_TRAY,         "pack tray hasn't been created before")
 PAIRX(NO_PACK,              "no pack has been specified")
-PAIRX(OBJ_ALREADY_EXIST,    "\'%s\' object already exists at %s")
+PAIRX(PACK_NOT_MATCH,       "pack %s expected, but it was %s")
+
+// expr:
 PAIRX(NOT_EXPR,             "\'%s\' isn't a expression")
-PAIRX(WRONG_PARAM,          "wrong parameter syntax: %s") // <--
+PAIRX(EXPR_EVAL_NULL,       "expression evaluated as null type")
+//  defVar:
+PAIRX(CANT_DEF_VAR,         "definining variable '%s %s' wouldn't allowed here")
+
+// func:
 PAIRX(PARAM_HAS_VAL,        "parameter shouldn't have a value")
-PAIRX(NOT_DECL_EXPR,        "%s is not a expression declaring something") // <--
 PAIRX(FUNC_HAS_NO_NAME,     "a function should have a name")
 PAIRX(WRONG_RET_TYPE,       "%s is not a valid return type")
 PAIRX(NO_RET_TYPE,          "return type is not specified")
-PAIRX(NO_STMT_IN_FUNC,      "function need to contain more than 1 statement inside")
 PAIRX(NO_FUNC_INFO,         "function info doesn't exist")
+PAIRX(NO_STMT_IN_FUNC,      "function need to contain more than 1 statement inside")
 PAIRX(RET_TYPE_NOT_MATCH,   "%s return type isn't valid to %s return type of func")
+
+// block:
 PAIRX(BLK_CANT_MAKE_FRAME,  "block statement failed to construct frame structure")
-PAIRX(EXPR_EVAL_NULL,       "expression evaluated as null type")
-PAIRX(CANT_DEF_VAR,         "definining variable '%s %s' wouldn't allowed here")
-PAIRX(DUP_VAR,              "duplicated variable '%s' found")
-PAIRX(PACK_NOT_MATCH,       "pack %s expected, but it was %s")
