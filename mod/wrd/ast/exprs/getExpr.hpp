@@ -30,12 +30,12 @@ namespace wrd {
         const narr& getSubArgs() const { return *_args; }
 
     private:
-        const node& _get() const {
-            const node& from = getFrom();
-            if(nul(from)) return WRD_E("from == null"), nulOf<node>();
-            if(!_args) return from.sub(_name);
+        node& _get() const {
+            str evalMe = getFrom().isSub<expr>() ? getFrom().as<node>() : getFrom();
+            if(!evalMe) return WRD_E("from == null"), nulOf<node>();
+            if(!_args) return evalMe->sub(_name);
 
-            return from.sub(_name, *_args);
+            return evalMe->sub(_name, *_args);
         }
 
     private:

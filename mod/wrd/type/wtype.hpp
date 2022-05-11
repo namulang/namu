@@ -14,7 +14,7 @@ namespace wrd {
         wbool isImpli() const {
             return this->isImpli(ttype<T>::get());
         }
-        wbool isImpli(const type& to) const {
+        virtual wbool isImpli(const type& to) const {
             return _getImpliAses().is(*this, to);
         }
         wbool isImpli(const typeProvidable& to) const { return isImpli(to.getType()); }
