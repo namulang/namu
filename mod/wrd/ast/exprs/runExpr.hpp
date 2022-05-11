@@ -20,6 +20,9 @@ namespace wrd {
 
         node& getMe() { return *_me; }
         const node& getMe() const { return *_me; }
+        void setMe(const node& newMe) {
+            _me.bind(newMe);
+        }
 
         const std::string& getName() const { return _name; }
         std::string& getName() { return _name; }

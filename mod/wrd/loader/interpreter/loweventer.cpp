@@ -300,4 +300,19 @@ namespace wrd {
         _nameMap.erase(&n);
         return ret;
     }
+
+    runExpr* me::onRunExpr(const std::string& name, const narr& args) {
+        WRD_DI("tokenEvent: onRunExpr(%s, narr[%d])", name.c_str(), args.len());
+
+        return new runExpr(nulOf<node>(), name, args);
+    }
+
+    // @param from  can be expr. so I need to evaluate it through 'as()'.
+    runExpr* me::onFillFromOfFuncCall(const node& me, runExpr& to) {
+        WRD_DI("tokenEvent: onFillFromOfFuncCall(%s, runExpr[%s])", me.getType().
+                getName().c_str(), to.getName().c_str());
+
+        to.setMe(me);
+        return &to;
+    }
 }
