@@ -49,9 +49,10 @@ namespace wrd {
 
 	private:
         void _verify(typeProvidable& it, const type& typ) {
-			if(typ == ttype<adam>::get()) return;
+            if(nul(it)) return;
+            if(typ == ttype<adam>::get()) return;
 
-			_verify(it, typ.getSuper());
+            _verify(it, typ.getSuper());
 
 			verifications& veris = _getVerifications(typ);
 			for(auto* elem : veris)

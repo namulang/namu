@@ -11,7 +11,8 @@ TEST_F(getExprTest, getSymbolOnPackScope) {
     make().parse(R"SRC(
         main() void
             main
-    )SRC").shouldVerified(true);
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
     ASSERT_EQ(getSubPack().subs().len(), 1); // 1 for main()
 }
 
@@ -46,7 +47,7 @@ TEST_F(getExprTest, getSymbolOnPackScope3) {
         main() int
             return age
     )SRC").shouldParsed(true);
-    shouldVerified(true);
+    shouldVerified(false);
     ASSERT_EQ(getSubPack().subs().len(), 2); // 1 for age, 1 for main()
     node& age = getSubPack().sub("age");
     ASSERT_FALSE(nul(age));
@@ -135,4 +136,5 @@ TEST_F(getExprTest, getExprEvalToExpr) {
     ASSERT_TRUE(ret);
     ASSERT_EQ(ret->get(), 22);
     ASSERT_TRUE(exp.executed);
+    ASSERT_EQ(exp2.getEvalType(), ttype<wInt>());
 }

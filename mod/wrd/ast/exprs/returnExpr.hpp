@@ -15,6 +15,9 @@ namespace wrd {
         using super::run;
         str run(const ucontainable& args) override;
 
+        node& getRet() { return *_ret; }
+        const node& getRet() const WRD_UNCONST_FUNC(getRet())
+
         wbool canRun(const ucontainable& args) const override {
             if(_ret)
                 return _ret->canRun(args);

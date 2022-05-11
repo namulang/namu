@@ -15,6 +15,13 @@ TEST_F(returnExprTest, simpleReturnTypeCheck) {
     )SRC").shouldVerified(true);
 }
 
+TEST_F(returnExprTest, simpleReturnTypeCheckStr) {
+    make().parse(R"SRC(
+        main() str
+            return "wow"
+    )SRC").shouldVerified(true);
+}
+
 TEST_F(returnExprTest, simpleReturnTypeNegative) {
     make().parse(R"SRC(
         make() int
@@ -34,6 +41,21 @@ TEST_F(returnExprTest, simpleReturnTypeNegative) {
     ASSERT_TRUE(ret.getEvalType() == ttype<wVoid>());
 }
 
+TEST_F(returnExprTest, implicitReturn) {
+    make().parse(R"SRC(
+        make() int
+            22
+    )SRC").shouldVerified(true);
+}
+
+
+TEST_F(returnExprTest, implicitReturnNegative) {
+    make().parse(R"SRC(
+        make() flt
+            "wow"
+    )SRC").shouldVerified(false);
+}
+
 TEST_F(returnExprTest, returnTypeImplicit) {
     /* TODO: make().parse(R"SRC(
         make() int
@@ -42,10 +64,3 @@ TEST_F(returnExprTest, returnTypeImplicit) {
     shouldVerified(true);*/
 }
 
-TEST_F(returnExprTest, implicitReturn) {
-    /* TODO: make().parse(R"SRC(
-        make() int
-            3.5
-        )SRC").shouldVerified(true);
-    */
-}
