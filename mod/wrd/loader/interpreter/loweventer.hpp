@@ -15,6 +15,7 @@ namespace wrd {
     class mgdFunc;
     class blockExpr;
     class returnExpr;
+    class runExpr;
     class loweventer : public tokenScan {
         WRD(CLASS(loweventer, tokenScan))
         friend class tokenScanModable;
@@ -92,7 +93,7 @@ namespace wrd {
         scope* onDefBlock();
         scope* onDefBlock(scope& blk, node& exp);
 
-        //  defexpr:
+        //  expr:
         //      func:
         mgdFunc* onFunc(const std::string& name, const narr& params, const node& evalType, const blockExpr& blk);
         //      list:
@@ -108,9 +109,12 @@ namespace wrd {
         expr* onDefVar(const std::string& name, const node& origin);
         //      file:
         void onCompilationUnit(node& subpack, scope& blk);
-        //  return:
+        //      return:
         returnExpr* onReturn();
         returnExpr* onReturn(node& exp);
+        //      run:
+        runExpr* onFillFromOfFuncCall(const node& me, runExpr& to);
+        runExpr* onRunExpr(const std::string& name, const narr& args);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);

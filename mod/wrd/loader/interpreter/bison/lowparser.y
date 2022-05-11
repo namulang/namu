@@ -195,6 +195,8 @@ funcCall: NAME list %expect 1 {
         //                  expectLambdaDoSometing()
         //      Second example: NAME list • NEWLINE DEDENT $end
         //          e.g. foo(just_primary) •
+        tstr<narr> argsLife($2);
+        $$ = yyget_extra(scanner)->onRunExpr(std::string($1), *argsLife);
       }
 
 dotname: NAME {
@@ -227,9 +229,10 @@ postfix: primary {
      } | postfix '.' NAME {
         $$ = $1; // TODO:
      } | postfix '.' funcCall {
-        $$ = $1; // TODO:
+        $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
      } | funcCall {
-        $$ = new blockExpr(); // TODO:
+        $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*new getExpr("me"), $1->cast<runExpr>());
+        // $1 is still on heap without binder
      }
 
 primary: INTVAL {
@@ -307,6 +310,7 @@ aka: aka-default {
 aka-dotname-item: NAME {
                 // TODO: then free it
               } | funcCall {
+                // TODO:
               }
 aka-dotname: aka-dotname-item {
          } | aka-dotname '.' aka-dotname-item {
