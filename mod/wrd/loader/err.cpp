@@ -20,9 +20,6 @@ namespace wrd {
         if(code < ERR_CODE_START) code = ERR_CODE_START;
         if(code > ERR_CODE_END) code = ERR_CODE_END;
 
-        WRD_DI("code=%d", code);
-        WRD_DI("msg=%s", msg[code].c_str());
-
         return msg[code];
     }
 

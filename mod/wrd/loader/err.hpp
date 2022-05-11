@@ -37,9 +37,9 @@ namespace wrd {
 	public:
 		virtual void log() const {
 			switch(fType) {
-                case ERR: WRD_E("(%d): %s", code, msg.c_str()); break;
-                case WARN: WRD_W("(%d): %s", code, msg.c_str()); break;
-                case INFO: WRD_I("(%d): %s", code, msg.c_str()); break;
+                case ERR: WRD_E("%s(%d): %s", getErrMsg(code).c_str(), code, msg.c_str()); break;
+                case WARN: WRD_W("%s(%d): %s", getErrMsg(code).c_str(), code, msg.c_str()); break;
+                case INFO: WRD_I("%s(%d): %s", getErrMsg(code).c_str(), code, msg.c_str()); break;
 			}
 		}
         void dbgLog() const {
