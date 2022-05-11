@@ -83,4 +83,15 @@ namespace wrd {
         verify(*it._blk);
         it._outFrame();
     })
+
+    WRD_VERIFY({ // last stmt should match to ret type
+        const narr& stmts = it.getBlock().getStmts();
+        if(nul(stmts) || stmts.len() <= 0) return; // will be catched to another verification.
+
+        const wtype& lastStmt = stmts.last()->getEvalType(); // to get type of expr, always uses evalType.
+        const wtype& retType = it.getRetType();
+        if(nul(lastStmt)) return _err(NO_RET_TYPE);
+        if(!lastStmt.isSub(retType)) return _err(errCode::RET_TYPE_NOT_MATCH, lastStmt.getName().c_str(),
+                retType.getName().c_str());
+    })
 }

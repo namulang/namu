@@ -39,4 +39,10 @@ namespace wrd {
         if(!itType.isImpli(fType))
             return _err(errCode::RET_TYPE_NOT_MATCH, itType.getName().c_str(), fType.getName().c_str());
     })
+
+    WRD_VERIFY({
+        WRD_DI("verify: visit sub variable: _ret");
+
+        verify(it.getRet());
+    })
 }

@@ -42,6 +42,19 @@ struct wrdSyntaxTest : public wrdTest {
         _isParsed = !nul(subpack) && !nul(pak) && !_rpt;
         if(!_isParsed) return *this;
 
+        return *this;
+    }
+
+    wrd::wbool shouldParsed(wrd::wbool well) {
+        EXPECT_EQ(_isParsed, well);
+        wrd::wbool ret = _isParsed == well;
+        if(!ret)
+            _log(well);
+        return ret;
+    }
+    wrd::wbool shouldVerified(wrd::wbool well) {
+		wrd::pack& pak = _pser.getPack();
+		wrd::node& subpack = _pser.getSubPack();
         wrd::packs* paks = new wrd::packs();
         paks->add(pak.getManifest().name, pak);
         wrd::packChain verifying(paks);
@@ -49,17 +62,7 @@ struct wrdSyntaxTest : public wrdTest {
 
         wrd::verifier v;
         v.setReport(_rpt).setPacks(verifying).verify(subpack);
-        return *this;
-    }
 
-    wrd::wbool shouldParsed(wrd::wbool well) const {
-        EXPECT_EQ(_isParsed, well);
-        wrd::wbool ret = _isParsed == well;
-        if(!ret)
-            _log(well);
-        return ret;
-    }
-    wrd::wbool shouldVerified(wrd::wbool well) const {
         wrd::wbool verified = _isParsed && !_rpt;
         EXPECT_EQ(verified, well);
 
