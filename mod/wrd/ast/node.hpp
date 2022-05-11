@@ -46,7 +46,7 @@ namespace wrd {
         str run(const std::string& name);
         str run();
 
-        /// release all holding resources and ready to be terminated.
+        /// release all holding resources and ready to be terminated.as(
         /// @remark some class won't be able to reinitialize after rel() got called.
         virtual void rel() {}
 

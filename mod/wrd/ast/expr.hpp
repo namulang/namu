@@ -14,6 +14,10 @@ namespace wrd {
 
         public:
             using super::asImpli;
+            wbool isImpli(const type& to) const override {
+                return to.isSub<node>();
+            }
+
             str asImpli(const node& from, const type& to) const override {
                 return str(((node&) from).run());
             }

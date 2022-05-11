@@ -84,3 +84,55 @@ TEST_F(getExprTest, getInnerScopeVarNegative) {
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
+
+struct myObj : public mgdObj {
+    WRD(CLASS(myObj, mgdObj))
+
+public:
+    myObj(): executed(false) {}
+
+    str run(const ucontainable& args) override {
+        executed = true;
+        return super::run(args);
+    }
+
+    wbool executed;
+};
+
+TEST_F(getExprTest, getExprSkipEvalToPrimitiveObj) {
+    myObj obj1;
+    obj1.subs().add("age", new wInt(22));
+
+    ASSERT_FALSE(obj1.executed);
+    getExpr exp(obj1, "age");
+    ASSERT_FALSE(obj1.executed);
+}
+
+struct myGetExpr : public getExpr {
+    WRD(CLASS(myGetExpr, getExpr, expr::exprType))
+
+public:
+    myGetExpr(const node& from, const std::string& name): super(from, name), executed(false) {}
+
+    str run(const ucontainable& args) override {
+        executed = true;
+        return super::run(args);
+    }
+
+    wbool executed;
+};
+
+TEST_F(getExprTest, getExprEvalToExpr) {
+    myObj obj1;
+    obj1.subs().add("age", new wInt(22));
+    myObj obj2;
+    obj2.subs().add("obj1", obj1);
+    myGetExpr exp(obj2, "obj1");
+    getExpr exp2(exp, "age"); // == obj2.obj1.age
+
+    ASSERT_FALSE(exp.executed);
+    tstr<wInt> ret = exp2.run();
+    ASSERT_TRUE(ret);
+    ASSERT_EQ(ret->get(), 22);
+    ASSERT_TRUE(exp.executed);
+}
