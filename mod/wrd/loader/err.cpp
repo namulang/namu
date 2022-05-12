@@ -23,6 +23,21 @@ namespace wrd {
         return msg[code];
     }
 
+    const std::string& err::getErrName(errCode code) {
+        static std::string msg[] = {
+            "ERR_CODE_START",
+#define PAIRX(A, B) #A,
+#include "errCode.inl"
+#undef PAIRX
+            "ERR_CODE_END",
+        };
+
+        if(code < ERR_CODE_START) code = ERR_CODE_START;
+        if(code > ERR_CODE_END) code = ERR_CODE_END;
+
+        return msg[code];
+    }
+
     std::string me::_format(const std::string& fmt, va_list args) {
         wchar buf[MAX_BUF] = {0, };
         vsnprintf(buf, MAX_BUF, fmt.c_str(), args);

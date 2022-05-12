@@ -37,9 +37,9 @@ namespace wrd {
 	public:
 		virtual void log() const {
 			switch(fType) {
-                case ERR: WRD_E("%s(%d): %s", getErrMsg(code).c_str(), code, msg.c_str()); break;
-                case WARN: WRD_W("%s(%d): %s", getErrMsg(code).c_str(), code, msg.c_str()); break;
-                case INFO: WRD_I("%s(%d): %s", getErrMsg(code).c_str(), code, msg.c_str()); break;
+                case ERR: WRD_E("%s(%d): %s", getErrName(code).c_str(), code, msg.c_str()); break;
+                case WARN: WRD_W("%s(%d): %s", getErrName(code).c_str(), code, msg.c_str()); break;
+                case INFO: WRD_I("%s(%d): %s", getErrName(code).c_str(), code, msg.c_str()); break;
 			}
 		}
         void dbgLog() const {
@@ -48,6 +48,7 @@ namespace wrd {
         }
 
 		static const std::string& getErrMsg(errCode code);
+        static const std::string& getErrName(errCode code);
         static err* newErr(int code, ...);
         static err* newErr(const area& src, int code, ...);
         static err* newWarn(int code, ...);
