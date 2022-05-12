@@ -33,6 +33,7 @@ namespace wrd {
         node& _get() const {
             str evalMe = getFrom().isSub<expr>() ? getFrom().as<node>() : getFrom();
             if(!evalMe) return WRD_E("from == null"), nulOf<node>();
+            WRD_DI("_name=%s", _name.c_str());
             if(!_args) return evalMe->sub(_name);
 
             return evalMe->sub(_name, *_args);

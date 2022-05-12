@@ -4,8 +4,7 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    struct returnExprTest : public wrdSyntaxTest {
-    };
+    struct returnExprTest : public wrdSyntaxTest {};
 }
 
 TEST_F(returnExprTest, simpleReturnTypeCheck) {

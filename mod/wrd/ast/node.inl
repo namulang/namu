@@ -16,6 +16,7 @@ namespace wrd {
     template <typename T>
     T& ME::sub(const std::string& name) const {
         return subs().get<T>([&](const std::string& key, const T& val) {
+            WRD_DI("key=%s name=%s", key.c_str(), name.c_str());
             return key == name;
         });
     }
