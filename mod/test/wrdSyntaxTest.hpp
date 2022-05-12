@@ -61,22 +61,31 @@ struct wrdSyntaxTest : public wrdTest {
         verifying.link(wrd::thread::get().getSystemPacks());
 
         wrd::verifier v;
-        v.setReport(_rpt).setPacks(verifying).verify(subpack);
+        wrd::tstr<wrd::frame> frameInfo;
+        v.setReport(_rpt)
+         .setPacks(verifying)
+         .setFrameInfo(frameInfo)
+         .verify(subpack);
 
         wrd::wbool verified = _isParsed && !_rpt;
         EXPECT_EQ(verified, well);
 
         wrd::wbool ret = verified == well;
         if(!ret)
-            _log(well);
+            _log(well, *frameInfo);
         return ret;
     }
 
 private:
     void _log(wrd::wbool expected) const {
+        _log(expected, wrd::nulOf<wrd::frame>());
+    }
+    void _log(wrd::wbool expected, const wrd::frame& info) const {
         std::cout   << "  code: " << _src << "\n"
                     << "  structure:\n";
         _logStructure(getSubPack(), getPack().getManifest().name, 0, 0, true, true);
+        std::cout   << "  frame:\n";
+        _logFrame(info);
         std::cout   << "  errReport:\n";
         _rpt.log();
     }
@@ -117,6 +126,17 @@ private:
             else
                 _logStructure(stmt, "", subN, level + 2, subN == blk.len()-1, isLast);
         }
+    }
+
+    void _logFrame(const wrd::frame& info) const {
+        if(nul(info)) {
+            std::cout << "    null\n";
+            return;
+        }
+
+        int n=0;
+        for(auto e = info.subs().begin(); e ;++e)
+            std::cout << "    [" << n++ << "]: '" << e.getKey() << "' " << e.getVal().getType().getName().c_str() << "\n";
     }
 
     void _logIndent(int level, bool isParentLast) const {
