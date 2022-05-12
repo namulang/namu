@@ -6,6 +6,7 @@
 namespace wrd {
 
 	class verifier;
+    class frame;
 
 	class verification : public typeProvidable {
 		WRD(ME(verification),
@@ -16,6 +17,7 @@ namespace wrd {
 			_verifier = &veri;
 		}
         void verify(typeProvidable& it);
+        wbool logFrameInfo(const frame& newFr);
 
 	protected:
 		template <typename... Args>

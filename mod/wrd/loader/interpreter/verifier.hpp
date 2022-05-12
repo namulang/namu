@@ -2,6 +2,7 @@
 
 #include "verification.hpp"
 #include "../../ast/pack.hpp"
+#include "../../frame/frame.hpp"
 
 struct verifierTest;
 
@@ -36,11 +37,18 @@ namespace wrd {
             _rpt.bind(rpt);
             return *this;
         }
-        errReport& getReport() { return *_rpt; }
         me& setPacks(const packContainer& packs) {
             _packs.bind(packs);
             return *this;
         }
+        // @param newInfo is not a heap instance.
+        me& setFrameInfo(tstr<frame>& newInfo) {
+            _frameInfo = &newInfo;
+            return *this;
+        }
+
+        errReport& getReport() { return *_rpt; }
+        tstr<frame>& getFrameInfo() { return *_frameInfo; }
         const packContainer& getPacks() { return *_packs; }
 
         void verify(typeProvidable& it) {
@@ -67,5 +75,6 @@ namespace wrd {
     private:
         tstr<errReport> _rpt;
         tstr<packContainer> _packs;
+        tstr<frame>* _frameInfo;
 	};
 }
