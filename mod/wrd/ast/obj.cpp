@@ -50,7 +50,11 @@ namespace wrd {
         WRD_DI("%s._inFrame()", getType().getName().c_str());
 
         frame& fr = *new frame();
+        scope* meScope = new scope();
+        meScope->add("me", *this);
+        fr.pushLocal(meScope);
         fr.setObj(*this);
+
         wrd::thread::get()._getFrames().add(fr);
     }
 
