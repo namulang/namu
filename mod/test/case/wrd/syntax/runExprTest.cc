@@ -49,6 +49,13 @@ TEST_F(runExprTest, runAndReturn) {
     )SRC").shouldVerified(true); // TODO: verify this as warning of infinite reculsive.
 }
 
+TEST_F(runExprTest, ArgumentMismatchNegative) {
+    make().parse(R"SRC(
+        main(str arg) int
+            main(3.5)
+    )SRC").shouldVerified(false);
+}
+
 TEST_F(runExprTest, runAndReturn2) {
     make().parse(R"SRC(
         foo() flt
