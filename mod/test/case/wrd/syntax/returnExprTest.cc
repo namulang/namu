@@ -55,6 +55,14 @@ TEST_F(returnExprTest, implicitReturnNegative) {
     )SRC").shouldVerified(false);
 }
 
+TEST_F(returnExprTest, implicitReturnShouldNotWorkOnVoid) {
+    make().parse(R"SRC(
+        main() void
+            35
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+}
+
 TEST_F(returnExprTest, returnTypeImplicit) {
     /* TODO: make().parse(R"SRC(
         make() int

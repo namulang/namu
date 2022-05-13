@@ -12,7 +12,7 @@ TEST_F(getExprTest, getSymbolOnPackScope) {
         main() void
             main
     )SRC").shouldParsed(true);
-    shouldVerified(false);
+    shouldVerified(true); // retType is void so implicit return won't work.
     ASSERT_EQ(getSubPack().subs().len(), 1); // 1 for main()
 }
 

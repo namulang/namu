@@ -4,6 +4,7 @@
 #include "../../frame/thread.hpp"
 #include "../../loader/interpreter/tverification.hpp"
 #include "../params.hpp"
+#include "../../builtin/primitive/wVoid.hpp"
 
 namespace wrd {
 
@@ -89,10 +90,15 @@ namespace wrd {
             const narr& stmts = it.getBlock().getStmts();
             if(nul(stmts) || stmts.len() <= 0) return; // will be catched to another verification.
 
-            const wtype& lastStmt = stmts.last()->getEvalType(); // to get type of expr, always uses evalType.
             const wtype& retType = it.getRetType();
-            if(nul(lastStmt)) return _err(NO_RET_TYPE);
-            if(!lastStmt.isSub(retType)) return _err(errCode::RET_TYPE_NOT_MATCH, lastStmt.getName().c_str(),
+            const node& lastStmt = *stmts.last();
+            if(!lastStmt.isSub<returnExpr>() && retType == ttype<wVoid>::get()) {
+                WRD_DI("implicit return won't verify when retType is void.");
+                return;
+            }
+            const wtype& lastType = lastStmt.getEvalType(); // to get type of expr, always uses evalType.
+            if(nul(lastType)) return _err(NO_RET_TYPE);
+            if(!lastType.isSub(retType)) return _err(errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
                     retType.getName().c_str());
         }
 
