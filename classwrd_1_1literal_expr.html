@@ -113,9 +113,12 @@ wbool&#160;</td><td class="memItemRight" valign="bottom"><b>canRun</b> (const <a
 <tr class="memitem:ab0a5d2954db98a2a8bd3fdfa6faa9b40 inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="ab0a5d2954db98a2a8bd3fdfa6faa9b40"></a>
 const <a class="el" href="classwrd_1_1src.html">src</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getSrc</b> () const</td></tr>
 <tr class="separator:ab0a5d2954db98a2a8bd3fdfa6faa9b40 inherit pub_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7b90c9bbb2b4d6126d64853abe6fe51 inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="aa7b90c9bbb2b4d6126d64853abe6fe51"></a>
-const <a class="el" href="structwrd_1_1point.html">point</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPos</b> () const</td></tr>
-<tr class="separator:aa7b90c9bbb2b4d6126d64853abe6fe51 inherit pub_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64e6f092a17145f25c19ef7d01192837 inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a64e6f092a17145f25c19ef7d01192837"></a>
+const <a class="el" href="structwrd_1_1point.html">point</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getPos</b> () const override</td></tr>
+<tr class="separator:a64e6f092a17145f25c19ef7d01192837 inherit pub_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0281442f91148aeced81f2be2c430c10 inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a0281442f91148aeced81f2be2c430c10"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setPos</b> (const <a class="el" href="structwrd_1_1point.html">point</a> &amp;newPos) override</td></tr>
+<tr class="separator:a0281442f91148aeced81f2be2c430c10 inherit pub_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwrd_1_1node"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwrd_1_1node')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwrd_1_1node.html">wrd::node</a></td></tr>
 <tr class="memitem:ace4803ab5db2163f9c186a5f7c17de93 inherit pub_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="ace4803ab5db2163f9c186a5f7c17de93"></a>
 <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const std::string &amp;name) const</td></tr>
@@ -270,9 +273,6 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:ae348ab8c19c6bbfd9a97fccb0b5644c0 inherit pro_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="ae348ab8c19c6bbfd9a97fccb0b5644c0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>_setSrc</b> (const <a class="el" href="classwrd_1_1src.html">src</a> &amp;newSrc)</td></tr>
 <tr class="separator:ae348ab8c19c6bbfd9a97fccb0b5644c0 inherit pro_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf2b369d28504d8ee63e62d130486700 inherit pro_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="aaf2b369d28504d8ee63e62d130486700"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>_setPos</b> (const <a class="el" href="structwrd_1_1point.html">point</a> &amp;newPos)</td></tr>
-<tr class="separator:aaf2b369d28504d8ee63e62d130486700 inherit pro_methods_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classwrd_1_1node"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwrd_1_1node')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwrd_1_1node.html">wrd::node</a></td></tr>
 <tr class="memitem:aebdae91d8e23a7a233f5f75ca4b60c31 inherit pro_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="aebdae91d8e23a7a233f5f75ca4b60c31"></a>
 virtual <a class="el" href="classwrd_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_onRunSub</b> (<a class="el" href="classwrd_1_1node.html">node</a> &amp;sub, const <a class="el" href="classwrd_1_1tucontainable.html">ucontainable</a> &amp;args)</td></tr>
@@ -285,6 +285,13 @@ wbool&#160;</td><td class="memItemRight" valign="bottom"><b>_setId</b> (<a class
 <tr class="memitem:a652f6aa776b0743f0d6726971f02b54f inherit pro_static_methods_classwrd_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="a652f6aa776b0743f0d6726971f02b54f"></a>
 static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>_getMgr</b> ()</td></tr>
 <tr class="separator:a652f6aa776b0743f0d6726971f02b54f inherit pro_static_methods_classwrd_1_1instance"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classwrd_1_1expr"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classwrd_1_1expr')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classwrd_1_1expr.html">wrd::expr</a></td></tr>
+<tr class="memitem:a1e6e163903a3b3cf5b50626ddcda2790 inherit pro_attribs_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a1e6e163903a3b3cf5b50626ddcda2790"></a>
+<a class="el" href="classwrd_1_1tstr.html">tstr</a>&lt; <a class="el" href="classwrd_1_1src.html">src</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_src</b></td></tr>
+<tr class="separator:a1e6e163903a3b3cf5b50626ddcda2790 inherit pro_attribs_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97e095b344ec9661e8286da21052ec9a inherit pro_attribs_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="a97e095b344ec9661e8286da21052ec9a"></a>
+<a class="el" href="structwrd_1_1point.html">point</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_pos</b></td></tr>
+<tr class="separator:a97e095b344ec9661e8286da21052ec9a inherit pro_attribs_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7d25c47902bc30319f88b4962e2ca582"></a>

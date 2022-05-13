@@ -104,11 +104,11 @@ $(function() {
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::string&amp; getErrMsg(errCode code);</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> std::string&amp; getErrName(errCode code);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newErr(<span class="keywordtype">int</span> code, ...);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newErr(<span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, <span class="keywordtype">int</span> code, ...);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newErr(<span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, <span class="keywordtype">int</span> code, ...);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newWarn(<span class="keywordtype">int</span> code, ...);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newWarn(<span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, <span class="keywordtype">int</span> code, ...);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newWarn(<span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, <span class="keywordtype">int</span> code, ...);</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newInfo(<span class="keywordtype">int</span> code, ...);</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newInfo(<span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, <span class="keywordtype">int</span> code, ...);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">static</span> <a class="code" href="structwrd_1_1err.html">err</a>* newInfo(<span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, <span class="keywordtype">int</span> code, ...);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        err::type fType;</div>
@@ -139,22 +139,23 @@ $(function() {
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="structwrd_1_1src_err.html">srcErr</a>(err::type t, <span class="keyword">const</span> <a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="classwrd_1_1src.html">src</a>, <span class="keywordtype">int</span> code, Args... args): super(t, code, args...), srcArea(<a class="code" href="classwrd_1_1src.html">src</a>) {}</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="structwrd_1_1src_err.html">srcErr</a>(err::type t, <span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; ps, <span class="keywordtype">int</span> code, Args... args): super(t, code, args...), pos(ps) {}</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="structwrd_1_1area.html">area</a> srcArea;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordtype">void</span> log() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    };</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordtype">void</span> log() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="structwrd_1_1point.html">point</a> pos;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    };</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1instance_html"><div class="ttname"><a href="classwrd_1_1instance.html">wrd::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
-<div class="ttc" id="astructwrd_1_1area_html"><div class="ttname"><a href="structwrd_1_1area.html">wrd::area</a></div><div class="ttdef"><b>Definition:</b> point.hpp:15</div></div>
 <div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
 <div class="ttc" id="astructwrd_1_1src_err_html"><div class="ttname"><a href="structwrd_1_1src_err.html">wrd::srcErr</a></div><div class="ttdef"><b>Definition:</b> err.hpp:64</div></div>
 <div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
 <div class="ttc" id="aclasswrd_1_1src_html"><div class="ttname"><a href="classwrd_1_1src.html">wrd::src</a></div><div class="ttdef"><b>Definition:</b> src.hpp:10</div></div>
 <div class="ttc" id="astructwrd_1_1dummy_err_html"><div class="ttname"><a href="structwrd_1_1dummy_err.html">wrd::dummyErr</a></div><div class="ttdef"><b>Definition:</b> err.hpp:52</div></div>
+<div class="ttc" id="astructwrd_1_1point_html"><div class="ttname"><a href="structwrd_1_1point.html">wrd::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>
 <div class="ttc" id="astructwrd_1_1err_html"><div class="ttname"><a href="structwrd_1_1err.html">wrd::err</a></div><div class="ttdef"><b>Definition:</b> err.hpp:13</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
