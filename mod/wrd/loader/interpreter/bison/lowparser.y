@@ -78,6 +78,8 @@
     char asChar;
     int asInt;
     char* asStr;
+    bool asBool;
+    float asFlt;
     wrd::node* asNode;
     wrd::narr* asNarr;
     wrd::scope* asScope;
@@ -113,6 +115,8 @@
 // value-holding-token:
 %token <asChar> CHARVAR
 %token <asInt> INTVAL
+%token <asFlt> FLTVAL
+%token <asBool> BOOLVAL
 %token <asStr> NAME STRVAL
 
 // nonterminal:
@@ -240,6 +244,10 @@ primary: INTVAL {
      } | STRVAL {
        $$ = yyget_extra(scanner)->onPrimitive<wStr>($1);
        free($1);
+     } | FLTVAL {
+       $$ = yyget_extra(scanner)->onPrimitive<wFlt>($1);
+     } | BOOLVAL {
+       //TODO: $$ = yyget_extra(scanner)->onPrimitive<wBool 
      } | CHARVAR {
        //TODO: $$ = yyget_extra(scanner)->onPrimitive<wChar>($1);
        $$ = yyget_extra(scanner)->onPrimitive<wInt>($1);

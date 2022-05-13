@@ -75,6 +75,24 @@ return { return RETURN; }
     return INTVAL;
 }
 
+[[:digit:]]+\.[[:digit:]]+ {
+    yylval->asFlt = std::stod(yytext);
+    WRD_DI("scanner: FLTVAL=%f", yylval->asFlt);
+    return FLTVAL;
+}
+
+true {
+    yylval->asBool = true;
+    WRD_DI("scanner: BOOLVAL=true");
+    return BOOLVAL;
+}
+
+false {
+    yylval->asBool = false;
+    WRD_DI("scanner: BOOLVAL=false");
+    return BOOLVAL;
+}
+
 [[:alpha:]]+[[:alnum:]]* {
     yylval->asStr = strdup(yytext);
     WRD_DI("scanner: NAME=%s", yytext);

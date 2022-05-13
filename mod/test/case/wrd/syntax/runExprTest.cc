@@ -35,7 +35,7 @@ TEST_F(runExprTest, runAnotherFunc) {
 
 TEST_F(runExprTest, runNotExistFuncNegative) {
     make().parse(R"SRC(
-        make() int
+        main() int
             me.foo()
             return 0
     )SRC").shouldParsed(true);
@@ -44,7 +44,7 @@ TEST_F(runExprTest, runNotExistFuncNegative) {
 
 TEST_F(runExprTest, runAndReturn) {
     make().parse(R"SRC(
-        make() int
+        main() int
             main()
     )SRC").shouldVerified(true); // TODO: verify this as warning of infinite reculsive.
 }
@@ -53,7 +53,7 @@ TEST_F(runExprTest, runAndReturn2) {
     make().parse(R"SRC(
         foo() flt
             return 3.5
-        make() flt
+        main() flt
             return foo()
     )SRC").shouldVerified(true);
 }
@@ -62,7 +62,7 @@ TEST_F(runExprTest, runAndReturn3) {
     make().parse(R"SRC(
         foo() flt
             3.5
-        make() flt
+        main() flt
             foo()
     )SRC").shouldVerified(true);
 }
@@ -71,7 +71,7 @@ TEST_F(runExprTest, runWithArgument) {
     make().parse(R"SRC(
         foo(age int, grade flt) flt
             return grade
-        make() flt
+        main() flt
             foo(22, 3.5)
     )SRC").shouldParsed(true);
     shouldVerified(true);
@@ -81,7 +81,7 @@ TEST_F(runExprTest, runWithArgumentNegative) {
     make().parse(R"SRC(
         foo(name str, grade flt) str
             return name
-        make() flt
+        main() flt
             foo("hello", 3.5)
     )SRC").shouldParsed(true);
     shouldVerified(false);

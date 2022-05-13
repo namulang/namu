@@ -20,8 +20,11 @@ namespace wrd {
         str me = _me->as<node>();
         if(!me) return nulOf<wtype>();
 
-        const func& f = _me->cast<func>();
-        return nul(f) ? _me->getEvalType() : f.getRetType();
+        const node& sub = me->sub(getName(), getArgs());
+        if(nul(sub)) return WRD_W("sub is null"), nulOf<wtype>();
+
+        const func& f = sub.cast<func>();
+        return nul(f) ? sub.getEvalType() : f.getRetType();
     }
 
     WRD_VERIFY({
