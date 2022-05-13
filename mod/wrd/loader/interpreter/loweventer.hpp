@@ -98,8 +98,8 @@ namespace wrd {
         mgdFunc* onFunc(const std::string& name, const narr& params, const node& evalType, const blockExpr& blk);
         //      list:
         narr* onList();
-        narr* onList(const expr* newExpr);
-        narr* onList(narr& list, const expr* newExpr);
+        narr* onList(node* newExpr);
+        narr* onList(narr& list, node* newExpr);
         //      var:
         template <typename T, typename... Args>
         T* onPrimitive(Args... args) {

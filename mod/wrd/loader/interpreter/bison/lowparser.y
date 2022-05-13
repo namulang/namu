@@ -213,9 +213,9 @@ dotname: NAME {
     }
 
 list-items: expr {
-            $$ = yyget_extra(scanner)->onList(&$1->cast<expr>());
+            $$ = yyget_extra(scanner)->onList($1);
         } | list-items ',' expr {
-            $$ = yyget_extra(scanner)->onList(*$1, &$3->cast<expr>());
+            $$ = yyget_extra(scanner)->onList(*$1, $3);
         }
 
 list: '(' list-items ')' {

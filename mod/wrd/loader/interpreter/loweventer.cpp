@@ -241,13 +241,13 @@ namespace wrd {
         WRD_DI("tokenEvent: onList()=%x", ret);
         return ret;
     }
-    narr* me::onList(const expr* newExpr) {
+    narr* me::onList(node* newExpr) {
         narr* ret = new narr(*newExpr);
-        WRD_DI("tokenEvent: onList(expr[%x])=%x", newExpr, ret);
+        WRD_DI("tokenEvent: onList(%s[%x])=%x", newExpr->getType().getName().c_str(), newExpr, ret);
         return ret;
     }
-    narr* me::onList(narr& list, const expr* newExpr) {
-        WRD_DI("tokenEvent: onList(list[%x], expr[%x])", &list, newExpr);
+    narr* me::onList(narr& list, node* newExpr) {
+        WRD_DI("tokenEvent: onList(list[%x], %s[%x])", &list, newExpr->getType().getName().c_str(), newExpr);
         list.add(newExpr);
         return &list;
     }
@@ -265,9 +265,13 @@ namespace wrd {
     }
 
     returnExpr* me::onReturn() {
+        WRD_DI("tokenEvent: onReturn()");
+
         return new returnExpr();
     }
     returnExpr* me::onReturn(node& exp) {
+        WRD_DI("tokenEvent: onReturn(%s)", exp.getType().getName().c_str());
+
         return new returnExpr(exp);
     }
 
@@ -282,12 +286,19 @@ namespace wrd {
     }
 
     node* me::onGet(const std::string& name) {
+        WRD_DI("tokenEvent: onGet(%s)", name.c_str());
+
         return new getExpr(name);
     }
     node* me::onGet(const std::string& name, const narr& args) {
+        WRD_DI("tokenEvent: onGet(%s, %d)", name.c_str(), args.len());
+
         return new getExpr(name, args);
     }
     node* me::onGet(node& from, const std::string& name, const narr& args) {
+        WRD_DI("tokenEvent: onGet(%s, %s, %d)", from.getType().getName().c_str(),
+                name.c_str(), args.len());
+
         return new getExpr(from, name, args);
     }
 
