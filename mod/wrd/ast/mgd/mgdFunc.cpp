@@ -79,10 +79,10 @@ namespace wrd {
 
     WRD_VERIFY(mgdFunc, subNodes, {
         WRD_DI("verify: mgdFunc: %s iterateBlock[%d]", it.getType().getName().c_str(), it._blk->subs().len());
-        scope s;
-        _prepareArgsAlongParam(it.getParams(), s);
+        scope* s = new scope();
+        _prepareArgsAlongParam(it.getParams(), *s);
 
-        it._inFrame(s);
+        it._inFrame(*s);
 
         {
             WRD_DI("last stmt should match to ret type");
