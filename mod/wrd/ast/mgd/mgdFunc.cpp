@@ -14,7 +14,8 @@ namespace wrd {
         if(!_inFrame(*_evalArgs(args)))
             return str();
 
-        str ret = _blk->run();
+        _blk->run();
+        str ret = thread::get()._getNowFrame().popReturn();
         _outFrame();
         return ret;
     }
