@@ -27,6 +27,9 @@ namespace wrd {
         const wtype& getEvalType() const override;
 
     private:
+        str _decideRet(const ucontainable& args);
+
+    private:
         str _ret;
     };
 }

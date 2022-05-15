@@ -10,10 +10,16 @@ namespace wrd {
     me::returnExpr(): _ret(wVoid::singletone()) {}
 
     str me::run(const ucontainable& args) {
-        str ret = _ret ? _ret->run(args) : wVoid::singletone();
-
+        str ret = _decideRet(args);
         thread::get()._getNowFrame().pushReturn(ret);
         return ret;
+    }
+
+    str me::_decideRet(const ucontainable& args) {
+        if(!_ret) return str(wVoid::singletone());
+        if(_ret->isSub<obj>()) return _ret; // case: obj
+
+        return _ret->run(args); // case: expr
     }
 
     const wtype& me::getEvalType() const {
