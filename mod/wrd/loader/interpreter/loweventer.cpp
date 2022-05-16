@@ -102,8 +102,10 @@ namespace wrd {
 
     void me::onEndParse() {
         area& area = *_srcArea;
+#if WRD_IS_DBG
         const point& pt = area.start;
         WRD_DI("tokenEvent: onEndParse(%d,%d)", pt.row, pt.col);
+#endif
         area.rel();
     }
 

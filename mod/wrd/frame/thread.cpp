@@ -19,7 +19,7 @@ namespace wrd {
             inner = loader.setReport(report).addPath("pack/").load();
             WRD_I("%d system packs has been loaded.", inner->len());
 
-#ifdef WRD_IS_DBG
+#if WRD_IS_DBG
             WRD_I("next following is list for them.");
             for(const auto& pak : *inner) {
                 if(nul(pak)) {

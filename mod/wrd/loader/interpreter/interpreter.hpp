@@ -129,7 +129,7 @@ namespace wrd {
         }
 
         void _log(const char* buf) const {
-            std::cout << " - code: " << buf << "\n";
+            std::cout << " - code: \n" << buf << "\n";
 
             if(!nul(_pser.getSubPack()) && _pak) {
                 std::cout << " - structure:\n";
