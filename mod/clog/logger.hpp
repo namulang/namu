@@ -18,6 +18,26 @@ namespace wrd {
         const stream& getStream(widx n) const;
         const stream& getStream(const wchar* c_message) const;
         stream& getStream(const wchar* message);
+
+        wbool isEnable() const override {
+            for(stream* : _streams)
+                if(stream->isEnable()) return true;
+            return false;
+        }
+
+        /// modify that all of streams are set to enable or not.
+        void setEnable(wbool enable) {
+            for(stream* : _streams)
+                stream->setEnable(enable);
+        }
+        void saveStreamEnable() override {
+            for(stream* : _streams)
+                stream->saveStreamEnable();
+        }
+        void loadStreamEnable() override {
+            for(stream* : _streams)
+                stream->loadStreamEnable();
+        }
         wcnt getStreamCount() const;
         wbool dumpFormat(const wchar* fmt, ...);
         wbool pushStream(stream* new_stream);

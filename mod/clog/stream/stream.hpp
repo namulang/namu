@@ -14,8 +14,10 @@ namespace wrd {
         /// @return true means an error.
         virtual wbool dump(const wchar* message);
         wbool isNull() const;
-        wbool isEnable() const;
-        void setEnable(wbool isEnable);
+        virtual wbool isEnable() const;
+        virtual void setEnable(wbool isEnable);
+        virtual void saveStreamEnable() { _save = _isEnable; }
+        virtual void loadStreamEnable() { _isEnable = _save; }
         virtual const wchar* getName() const = 0;
         virtual wbool init();
         virtual wbool isInit() const;
@@ -23,5 +25,6 @@ namespace wrd {
 
     private:
         wbool _isEnable;
+        wbool _save;
     };
 }
