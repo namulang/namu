@@ -1,9 +1,58 @@
 # Changelogs
+## v0.1.7 Essence Update Final
+released on 04-21 2022
+build# 365
+
+### major changes
+* c50f7fb0 cli: feat: implement cli
+* qd264caa4 wrd: feat: implement starter
+* q782ba8fd wrd: feat: implement interpreter
+* qbfdee5ae wrd: feat: add runExpr
+* qc6305dc5 wrd: feat: err code is managed by a enum
+* qe129020d wrd: feat: change concept of pack parsing
+* qb9f5e95a wrd: fix: scanner couldn't recognize 'tab' token
+* qf42eabf3 wrd: fix: evalType of func is the func, not return type
+* q3dcf9d5d wrd: feat: verify duplicated variable defined
+* qa010f8fe wrd: refactor: boost performance to verify subnodes
+* q3e1b1bbf wrd: fix: member variable couldn't be verified
+* qfd40cdbd wrd: feat: prints number of err
+* q8b367ed7 wrd: refactor: remove doesNeedScope()
+* q82d222ba wrd: feat: param can take default value and type
+* q05cfee2b wrd: refactor: massive refactoring to apply 'map' to subs()
+* q6752dc9f memlite: tactic instance won't be copied when binder assigned
+* q59e7604d wrd: feat: apply tnmap as subs
+* q403aaaf8 wrd: refactor: change how to implement immutable
+* q17562542 wrd: feat: add tnmap class
+* q5a1dc13e wrd: feat: add has() func on containers
+* qd11c3412 wrd: fix: container shouldn't takes str as param
+* q384a735f wrd: feat: add bicontainer
+* q5b154aaf wrd: refactor: redesign container classes for map
+* q54bff10c wrd: refactor: rename stackFrame to frames
+* q0d66f3b0 wrd: refactor: pack is a obj
+* q56509a60 wrd: refactor: obj class interact to frame if it needs
+* q4bd8db53 wrd: feat: class can be exposed as private to verfication
+* q6f7861da wrd: feat: add returnExpr
+* q2ce96c59 wrd: feat: add literalExpr
+* q792caf51 wrd: feat: add 'defVar' expression
+* qaea9d8f9 wrd: feat: show error code on report
+* qe8cba3b9 wrd: feat: parse 'block' expression
+* q2da39552 wrd: feat: parsing 'pack' keyword
+* q465c432b wrd: feat: make syntaxTest be resuable
+* q4a66304d wrd: refactor: pack lazy importing
+* qdea7b81d wrd: fix: remove '.*' syntax of aka
+* q8b0f78e4 wrd: feat: can parse 'aka' keyword
+* qd3ab6d6d wrd: feat: '' is for a character, "" is for a string
+* qce80c805 wrd: fix: can't build release mode
+* q1b50bc4a wrd: feat: parse can recognize 'func' definition
+* q414a491e wrd: refactor: restructure of lowparser and parser
+
+
+
 ## v0.1.6 Essence Update 0.6
 released on 09-22 2021
 build# 244
 
-## major changes
+### major changes
 * f1c9f95c - wrd: refactor: all expr now can holds row and col info
 * 7283c2ef - wrd: feat: err object can reports area of source code
 * 6694792b - wrd: feat: add verifier
