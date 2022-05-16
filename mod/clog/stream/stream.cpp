@@ -4,7 +4,7 @@ namespace wrd {
 
     WRD_DEF_ME(stream)
 
-    me::stream(): _isEnable(true) {}
+    me::stream(wbool isEnable): _isEnable(isEnable) {}
     me::~stream() {}
 
     wbool me::dump(const char* message) { return ! _isEnable; }
