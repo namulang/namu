@@ -85,8 +85,8 @@ $(function() {
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            <span class="keyword">using</span> super::asImpli;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            wbool isImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <a class="code" href="classwrd_1_1tstr.html">str</a> asImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            wbool isImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> to.isSub&lt;<a class="code" href="classwrd_1_1node.html">node</a>&gt;(); }</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <a class="code" href="classwrd_1_1tstr.html">str</a> asImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tstr.html">str</a>(((<a class="code" href="classwrd_1_1node.html">node</a>&amp;)from).run()); }</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        };</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        WRD(ADT(<a class="code" href="classwrd_1_1expr.html">expr</a>, <a class="code" href="classwrd_1_1node.html">node</a>, <a class="code" href="classwrd_1_1expr_1_1expr_type.html">exprType</a>))</div>
@@ -121,7 +121,7 @@ $(function() {
 <div class="ttc" id="aclasswrd_1_1expr_maker_html"><div class="ttname"><a href="classwrd_1_1expr_maker.html">wrd::exprMaker</a></div><div class="ttdef"><b>Definition:</b> exprMaker.hpp:7</div></div>
 <div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
 <div class="ttc" id="aclasswrd_1_1src_html"><div class="ttname"><a href="classwrd_1_1src.html">wrd::src</a></div><div class="ttdef"><b>Definition:</b> src.hpp:10</div></div>
-<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:14</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:15</div></div>
 <div class="ttc" id="aclasswrd_1_1tucontainable_html"><div class="ttname"><a href="classwrd_1_1tucontainable.html">wrd::tucontainable</a></div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:16</div></div>
 <div class="ttc" id="astructwrd_1_1point_html"><div class="ttname"><a href="structwrd_1_1point.html">wrd::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>
 <!-- start footer part -->
