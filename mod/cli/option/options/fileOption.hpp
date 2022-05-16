@@ -24,9 +24,6 @@ namespace wrd {
             return "[\\w\\.\\/]+\\.wrd$";
         }
 
-        wbool _onTake(const args& tray, cli& c, interpreter& ip) const override {
-            ip.setSrcSupply(*new bufferSrcSupply(tray));
-            return true;
-        };
+        wbool _onTake(const args& tray, cli& c, interpreter& ip) const override;
     };
 }
