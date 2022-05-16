@@ -36,8 +36,8 @@ namespace wrd {
         yy_switch_to_buffer(bufState, scanner);
 
 #if YYDEBUG
-        yyset_debug(1, scanner); // For Flex (no longer a global, but rather a member of yyguts_t)
-        yydebug = 1;             // For Bison (still global, even in a reentrant parser)
+        //yyset_debug(1, scanner); // For Flex (no longer a global, but rather a member of yyguts_t)
+        //yydebug = 1;             // For Bison (still global, even in a reentrant parser)
 #endif
 
         int res = yyparse(scanner);

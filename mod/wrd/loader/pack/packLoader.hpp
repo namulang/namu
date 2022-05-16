@@ -86,6 +86,7 @@ namespace wrd {
         void _logPack(const pack& pak) const {
             WRD_I("new pack [%s] has been added.", pak.getManifest().name.c_str());
 
+#if WRD_IS_DBG
             const manifest& mani = pak.getManifest();
             WRD_DI("\t.filePath=%s", mani.filePath.c_str());
             WRD_DI("\t.author=%s", mani.author.c_str());
@@ -96,6 +97,7 @@ namespace wrd {
                 WRD_DI("\t\t.lang=%s", point.lang.c_str());
                 WRD_DI("\t\t.paths=%s", point.paths[0].c_str());
             }
+#endif
         }
 
         manifest _interpManifest(const std::string& dir, const std::string& manPath) const;

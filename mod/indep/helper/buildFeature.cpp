@@ -55,7 +55,7 @@ namespace wrd {
     }
 
     wbool me::config::isDbg() {
-#ifdef WRD_IS_DBG
+#if WRD_IS_DBG
         return true;
 #else
         return false;
