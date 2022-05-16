@@ -8,7 +8,7 @@ namespace wrd {
         WRD_DECL_ME(stream)
 
     public:
-        stream();
+        stream(wbool isEnable = true);
         virtual ~stream();
 
         /// @return true means an error.

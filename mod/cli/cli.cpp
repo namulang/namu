@@ -16,6 +16,9 @@ namespace wrd {
 
 int main(int argc, char* argv[]) {
 
+    // disable console log:
+    logger::get()["consoleStream"].setEnable(false);
+
     cli ep;
 
     args a;
