@@ -2,7 +2,6 @@
 
 #include "parser.hpp"
 #include "srcSupply.hpp"
-#include "flag.hpp"
 #include "verifier.hpp"
 
 namespace wrd {
@@ -11,7 +10,7 @@ namespace wrd {
         WRD(CLASS(interpreter))
 
     public:
-        interpreter(): _isParsed(false) {}
+        interpreter(): _isParsed(false), _isLogStructure(false), _isLogInterpreter(false) {}
 
     public:
         me& setReport(errReport& report) {
@@ -26,15 +25,15 @@ namespace wrd {
             _srcs.bind(supply);
             return *this;
         }
-        me& addFlag(const flag& f) {
-            _flags.push_back(tstr<flag>(f));
+        me& setLogStructure(wbool enable) {
+            _isLogStructure = enable;
+            std::cout << "struct_enable=" << enable << "\n";
             return *this;
         }
-        me& delFlags() {
-            _flags.clear();
+        me& setLogInterpreter(wbool enable) {
+            _isLogInterpreter = enable;
             return *this;
         }
-
         wbool isParsed() const {
             return _isParsed;
         }
@@ -49,12 +48,22 @@ namespace wrd {
         pack& getPack() { return _pser.getPack(); }
         const pack& getPack() const WRD_UNCONST_FUNC(getPack())
 
-        pack& interpret() {
-            if(!_srcs) return WRD_E("_srcs not exists."), *_pak;
+        const errReport& getReport() const {
+            return *_rpt;
+        }
 
-            _processFlags();
+        pack& interpret() {
+            if(!_srcs) {
+                _rpt->add(err::newErr(NO_SRC));
+                return *_pak;
+            }
+
             _parse();
-            _verify();
+            tstr<frame> info;
+            if(*_rpt)
+                return *_pak;
+            _verify(info);
+            _logStructure(*info, _srcs->get());
 
             return *_pak;
         }
@@ -66,7 +75,19 @@ namespace wrd {
             _pser.rel();
             _srcs.rel();
             _pak.rel();
-            delFlags();
+        }
+
+        void log() const {
+            if(!_rpt && !*_rpt) return;
+
+            std::cout << "\n";
+            logger& l = logger::get();
+            l.saveStreamEnable();
+            l.setEnable(true);
+
+            _rpt->log();
+
+            l.loadStreamEnable();
         }
 
     private:
@@ -74,18 +95,16 @@ namespace wrd {
             return !nul(_pser.getSubPack()) && _pak;
         }
 
-        void _processFlags() {
-            for(auto& f : _flags)
-                f->update(*this);
-        }
-
         void _parse() {
+            logger& l = logger::get();
+            l.saveStreamEnable();
+            l.setEnable(_isLogInterpreter);
             while(_srcs->next()) {
                 _pser.rel(); // parser can only take 1 src.
 
                 const char* buf = _srcs->get();
                 WRD_DI("======================================");
-                WRD_DI("parse: %s", buf);
+                WRD_DI("                parse                 ");
                 WRD_DI("======================================");
 
                 _pser.setReport(*_rpt)
@@ -94,15 +113,21 @@ namespace wrd {
 
                 if(!_pak)
                     _pak.bind(_pser.getPack());
-
-                if(_isPackExist())
-                    _log(buf);
             }
 
             _isParsed = _isPackExist() && !_rpt->hasErr();
+            l.loadStreamEnable();
         }
 
-        void _verify() {
+        void _verify(tstr<frame>& info ) {
+            logger& l = logger::get();
+            l.saveStreamEnable();
+            l.setEnable(_isLogInterpreter);
+
+            WRD_DI("======================================");
+            WRD_DI("                verify                ");
+            WRD_DI("======================================");
+
             if(!_pak) {
                 WRD_E("_pak is null");
                 return;
@@ -112,36 +137,37 @@ namespace wrd {
             packs* paks = new packs();
             paks->add(_pak->getManifest().name, *_pak);
             packChain tray(paks);
-            tray.link(wrd::thread::get().getSystemPacks());
+            tray.link(thread::get().getSystemPacks());
 
             // verify:
-            tstr<frame> frameInfo;
             _veri.setReport(*_rpt)
                  .setPacks(tray)
-                 .setFrameInfo(frameInfo)
+                 .setFrameInfo(info)
                  .verify(*_pak);
+            l.loadStreamEnable();
 
-            std::cout   << " - frame:\n";
-            _logFrame(*frameInfo);
-            std::cout   << " - errReport:\n";
-            if(_rpt)
-                _rpt->log();
         }
 
-        void _log(const char* buf) const {
-            std::cout << " - code: \n" << buf << "\n";
+        void _logStructure(frame& info, const wchar* buf) {
+            if(!_isLogStructure) return;
+
+            logger& l = logger::get();
+            l.saveStreamEnable();
+            l.setEnable(true);
+
+            std::cout << " - code: \n" << (buf ? buf : "null") << "\n";
+            std::cout << " - frame:\n";
+            _logFrame(info);
 
             if(!nul(_pser.getSubPack()) && _pak) {
                 std::cout << " - structure:\n";
                 _logStructure(_pser.getSubPack(), _pak->getManifest().name, 0, 0, true, true);
             }
 
-            std::cout   << " - errReport:\n";
-            if(_rpt)
-                _rpt->log();
+            l.loadStreamEnable();
         }
 
-        void _logStructure(const wrd::node& n, const std::string& name, int idx, int level, bool isLast, bool isParentLast) const {
+        void _logStructure(const node& n, const std::string& name, int idx, int level, bool isLast, bool isParentLast) const {
             if(nul(n)) {
                 WRD_W("_logStructure(n == null)");
                 return;
@@ -151,27 +177,27 @@ namespace wrd {
             std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: " << n.getType().getName() << " \"" << name << "\"\n";
 
             int subN = -1;
-            const wrd::bicontainable& subs = n.subs();
+            const bicontainable& subs = n.subs();
             for(auto e=subs.begin(); e ;++e) {
                 subN++;
                 _logStructure(e.getVal(), e.getKey(), subN, level + 2, subN == subs.len()-1, isLast);
             }
 
-            const wrd::mgdFunc& f = n.cast<wrd::mgdFunc>();
+            const mgdFunc& f = n.cast<mgdFunc>();
             if(!nul(f)) {
                 subN++;
                 _logStructure(f.getBlock().getStmts(), subN, level+2, subN == subs.len(), isLast);
             }
         }
 
-        void _logStructure(const wrd::narr& blk, int idx, int level, bool isLast, bool isParentLast) const {
+        void _logStructure(const narr& blk, int idx, int level, bool isLast, bool isParentLast) const {
             _logIndent(level, isParentLast);
             std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: block \n";
 
             int subN = -1;
             for(const auto& stmt: blk) {
                 subN++;
-                const wrd::blockExpr& blkExpr = stmt.cast<wrd::blockExpr>();
+                const blockExpr& blkExpr = stmt.cast<blockExpr>();
                 if(!nul(blkExpr))
                     _logStructure(blkExpr.getStmts(), subN, level+2, subN == blk.len()-1, isLast);
                 else
@@ -185,7 +211,7 @@ namespace wrd {
                 std::cout << (isParentLast ? "  " : "┃ ");
         }
 
-        void _logFrame(const wrd::frame& info) const {
+        void _logFrame(const frame& info) const {
             if(nul(info)) {
                 std::cout << "    null\n";
                 return;
@@ -203,7 +229,8 @@ namespace wrd {
         verifier _veri;
         parser _pser;
         tstr<srcSupply> _srcs;
-        flags _flags;
         wbool _isParsed;
+        wbool _isLogStructure;
+        wbool _isLogInterpreter;
     };
 }
