@@ -81,10 +81,12 @@ $(function() {
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">virtual</span> <span class="keyword">const</span> K&amp; getKey() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">virtual</span> V&amp; getVal() = 0;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">const</span> V&amp; getVal() <span class="keyword">const</span> WRD_UNCONST_FUNC(getVal())</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">virtual</span> wbool isFrom(<span class="keyword">const</span> tbicontainable&amp; it) <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">virtual</span> tnbicontainer&lt;K, V&gt;&amp; getContainer() = 0;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">const</span> tnbicontainer&lt;K, V&gt;&amp; getContainer() <span class="keyword">const</span> WRD_UNCONST_FUNC(getContainer())</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;};</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> setVal(<span class="keyword">const</span> V&amp; newVal) = 0;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">void</span> setVal(<span class="keyword">const</span> V* newVal) { <span class="keywordflow">return</span> setVal(*newVal); }</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">virtual</span> wbool isFrom(<span class="keyword">const</span> tbicontainable&amp; it) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">virtual</span> tnbicontainer&lt;K, V&gt;&amp; getContainer() = 0;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">const</span> tnbicontainer&lt;K, V&gt;&amp; getContainer() <span class="keyword">const</span> WRD_UNCONST_FUNC(getContainer())</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassiterable_html_acf5781451e3d38a313044b4ec78bf717"><div class="ttname"><a href="classiterable.html#acf5781451e3d38a313044b4ec78bf717">iterable::next</a></div><div class="ttdeci">virtual wcnt next(wcnt step)=0</div></div>
 <div class="ttc" id="aclassiterable_html"><div class="ttname"><a href="classiterable.html">iterable</a></div><div class="ttdef"><b>Definition:</b> biterable.hpp:2</div></div>

@@ -131,6 +131,9 @@ V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getVal</b> () over
 template&lt;typename E &gt; </td></tr>
 <tr class="memitem:a04040fca4372463c00e486f2c643a60a"><td class="memTemplItemLeft" align="right" valign="top">E &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>getVal</b> ()</td></tr>
 <tr class="separator:a04040fca4372463c00e486f2c643a60a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab438605ca4682ed4d883a4407f362c4b"><td class="memItemLeft" align="right" valign="top"><a id="ab438605ca4682ed4d883a4407f362c4b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setVal</b> (const V &amp;new1) override</td></tr>
+<tr class="separator:ab438605ca4682ed4d883a4407f362c4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2436ae635d991a7a4da6f0ebce4b90d0"><td class="memItemLeft" align="right" valign="top"><a id="a2436ae635d991a7a4da6f0ebce4b90d0"></a>
 tnbicontainer&lt; K, V &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getContainer</b> () override</td></tr>
 <tr class="separator:a2436ae635d991a7a4da6f0ebce4b90d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,9 +191,12 @@ const tnucontainer&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="b
 <tr class="memitem:ac8d4bac39742f27fa61d0489c8714226"><td class="memItemLeft" align="right" valign="top"><a id="ac8d4bac39742f27fa61d0489c8714226"></a>
 virtual V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getVal</b> ()=0</td></tr>
 <tr class="separator:ac8d4bac39742f27fa61d0489c8714226"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b175cfad9f9858ef1dd7794e0c7aac5"><td class="memItemLeft" align="right" valign="top"><a id="a8b175cfad9f9858ef1dd7794e0c7aac5"></a>
-const V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getVal</b> () const WRD_UNCONST_FUNC(getVal()) virtual wbool isFrom(const tbicontainable &amp;it) const=0</td></tr>
-<tr class="separator:a8b175cfad9f9858ef1dd7794e0c7aac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b8034e889e94e004383a4e72661ce11"><td class="memItemLeft" align="right" valign="top"><a id="a0b8034e889e94e004383a4e72661ce11"></a>
+const V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getVal</b> () const WRD_UNCONST_FUNC(getVal()) virtual void setVal(const V &amp;new Val)=0</td></tr>
+<tr class="separator:a0b8034e889e94e004383a4e72661ce11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d69338f48f37413979e5cf45667a224"><td class="memItemLeft" align="right" valign="top"><a id="a3d69338f48f37413979e5cf45667a224"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setVal</b> (const V *newVal)</td></tr>
+<tr class="separator:a3d69338f48f37413979e5cf45667a224"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93ce22ae773e157234c2e1793c12a11e"><td class="memItemLeft" align="right" valign="top"><a id="a93ce22ae773e157234c2e1793c12a11e"></a>
 virtual T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()=0</td></tr>
 <tr class="separator:a93ce22ae773e157234c2e1793c12a11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,9 +204,12 @@ virtual T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> ()
 const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> () const WRD_UNCONST_FUNC(get()) virtual wbool isFrom(const tucontainable &amp;it) const=0</td></tr>
 <tr class="separator:ad47ba8270c8f4547a4e1a0df8965abe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classiterable"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classiterable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classiterable.html">iterable</a></td></tr>
-<tr class="memitem:a47b864af774e33522b2b00687db41017 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="a47b864af774e33522b2b00687db41017"></a>
-const V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getVal</b> () const WRD_UNCONST_FUNC(getVal()) virtual wbool isFrom(const tbicontainable &amp;it) const =0</td></tr>
-<tr class="separator:a47b864af774e33522b2b00687db41017 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b8034e889e94e004383a4e72661ce11 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="a0b8034e889e94e004383a4e72661ce11"></a>
+const V &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getVal</b> () const WRD_UNCONST_FUNC(getVal()) virtual void setVal(const V &amp;new Val)=0</td></tr>
+<tr class="separator:a0b8034e889e94e004383a4e72661ce11 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d69338f48f37413979e5cf45667a224 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="a3d69338f48f37413979e5cf45667a224"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setVal</b> (const V *newVal)</td></tr>
+<tr class="separator:a3d69338f48f37413979e5cf45667a224 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2ec6c66e8062590adcc206170a5b1e5 inherit pub_methods_classiterable"><td class="memItemLeft" align="right" valign="top"><a id="af2ec6c66e8062590adcc206170a5b1e5"></a>
 const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> () const WRD_UNCONST_FUNC(get()) virtual wbool isFrom(const tucontainable &amp;it) const =0</td></tr>
 <tr class="separator:af2ec6c66e8062590adcc206170a5b1e5 inherit pub_methods_classiterable"><td class="memSeparator" colspan="2">&#160;</td></tr>

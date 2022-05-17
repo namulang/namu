@@ -160,24 +160,29 @@ $(function() {
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            ret-&gt;<a class="code" href="classiterable.html#acf5781451e3d38a313044b4ec78bf717">next</a>(step);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordtype">void</span> _getAll(<span class="keyword">const</span> K&amp; key, narr&amp; tray) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <a class="code" href="classiter.html">iter</a>&amp; _getMapIterFromChainIter(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; wrapper) {</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="keywordflow">if</span>(!wrapper._step-&gt;getType().template isSub&lt;chainIteration&gt;()) <span class="keywordflow">return</span> nulOf&lt;iter&gt;();</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <a class="code" href="classchain_iteration.html">chainIteration</a>&amp; cast = (<a class="code" href="classchain_iteration.html">chainIteration</a>&amp;) *wrapper._step;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keywordflow">if</span>(nul(cast)) <span class="keywordflow">return</span> nulOf&lt;iter&gt;();</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="keywordflow">return</span> cast._iter;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        }</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        tstr&lt;super&gt; _map;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        tstr&lt;me&gt; _next;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    };</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(<span class="keyword">const</span> K&amp; key)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            me* unconst = <span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classchain_iteration.html">chainIteration</a>(*unconst, _map-&gt;iterate(key), key);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        }</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordtype">void</span> _getAll(<span class="keyword">const</span> K&amp; key, narr&amp; tray) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <a class="code" href="classiter.html">iter</a>&amp; _getMapIterFromChainIter(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; wrapper) {</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <span class="keywordflow">if</span>(!wrapper._step-&gt;getType().template isSub&lt;chainIteration&gt;()) <span class="keywordflow">return</span> nulOf&lt;iter&gt;();</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            <a class="code" href="classchain_iteration.html">chainIteration</a>&amp; cast = (<a class="code" href="classchain_iteration.html">chainIteration</a>&amp;) *wrapper._step;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            <span class="keywordflow">if</span>(nul(cast)) <span class="keywordflow">return</span> nulOf&lt;iter&gt;();</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="keywordflow">return</span> cast._iter;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        }</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keyword">typedef</span> tnchain&lt;std::string, node&gt; nchain;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        tstr&lt;super&gt; _map;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        tstr&lt;me&gt; _next;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    };</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keyword">typedef</span> tnchain&lt;std::string, node&gt; nchain;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; me &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1tarr_html"><div class="ttname"><a href="classwrd_1_1tarr.html">wrd::tarr</a></div><div class="ttdef"><b>Definition:</b> tarr.hpp:8</div></div>
