@@ -1,16 +1,17 @@
 #pragma once
 
-#include "option/options.hpp"
+#include "flag/flags.hpp"
 
 namespace wrd {
     struct cli {
-        const options& getOptions() const;
+        const flags& getFlags() const;
 
-        void run(args& a) {
+        wbool run(args& a) {
             interpreter ip;
 
-            for(const auto& op : getOptions()) {
+            for(const auto& op : getFlags()) {
                 op->take(ip, *this, a);
+
                 if(a.size() <= 0)
                     break;
             }
@@ -20,12 +21,26 @@ namespace wrd {
               .interpret();
 
             if(!ip.isVerified())
-                return;
+                return _finish(ip, -1);
 
             starter s;
             str res = s.run(narr(ip.getPack()));
-            if(res)
+            if(res && !rpt) {
+                return _finish(ip, 0);
+            }
+
+            return _finish(ip, -1);
+        }
+
+    private:
+        wint _finish(interpreter& ip, wint ret) {
+            ip.log();
+
+            const errReport& rpt = ip.getReport();
+            if(!nul(rpt) && !rpt)
                 std::cout << "end successfully.\n";
+
+            return ret;
         }
     };
 }

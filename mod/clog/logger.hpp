@@ -20,23 +20,23 @@ namespace wrd {
         stream& getStream(const wchar* message);
 
         wbool isEnable() const override {
-            for(stream* : _streams)
-                if(stream->isEnable()) return true;
+            for(stream* s : _streams)
+                if(s->isEnable()) return true;
             return false;
         }
 
         /// modify that all of streams are set to enable or not.
-        void setEnable(wbool enable) {
-            for(stream* : _streams)
-                stream->setEnable(enable);
+        void setEnable(wbool enable) override {
+            for(stream* s : _streams)
+                s->setEnable(enable);
         }
         void saveStreamEnable() override {
-            for(stream* : _streams)
-                stream->saveStreamEnable();
+            for(stream* s : _streams)
+                s->saveStreamEnable();
         }
         void loadStreamEnable() override {
-            for(stream* : _streams)
-                stream->loadStreamEnable();
+            for(stream* s : _streams)
+                s->loadStreamEnable();
         }
         wcnt getStreamCount() const;
         wbool dumpFormat(const wchar* fmt, ...);

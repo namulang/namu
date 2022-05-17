@@ -1,6 +1,6 @@
 #pragma once
 
-#include "flag.hpp"
+#include "../../common.hpp"
 
 namespace wrd {
     class srcSupply : public instance, public clonable {

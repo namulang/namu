@@ -36,10 +36,11 @@ namespace wrd {
 
 	public:
 		virtual void log() const {
+            auto& log = logger::get();
 			switch(fType) {
-                case ERR: WRD_E("%s(%d): %s", getErrName(code).c_str(), code, msg.c_str()); break;
-                case WARN: WRD_W("%s(%d): %s", getErrName(code).c_str(), code, msg.c_str()); break;
-                case INFO: WRD_I("%s(%d): %s", getErrName(code).c_str(), code, msg.c_str()); break;
+                case ERR: log.dumpFormat("err%d(%s): %s", code, getErrName(code).c_str(), msg.c_str()); break;
+                case WARN: log.dumpFormat("warn%d(%s): %s", code, getErrName(code).c_str(), msg.c_str()); break;
+                case INFO: log.dumpFormat("info%d(%s): %s", code, getErrName(code).c_str(), msg.c_str()); break;
 			}
 		}
         void dbgLog() const {

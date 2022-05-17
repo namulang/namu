@@ -22,6 +22,7 @@ PAIRX(SYNTAX_ERR,           "syntax error %s expected, but %s found")
 PAIRX(UNEXPECTED_TOK,       "unexpected token '%s' found")
 PAIRX(WRONG_INDENT_LV,      "invalid indentation level found. expected %d columns but it was %d. I'm assuming you were trying to give %d columns")
 PAIRX(PARSING_HAS_ERR,      "parsing has done. but something went wrong: %d")
+PAIRX(NO_SRC,               "source code not provided")
 
 // pack:
 PAIRX(NO_PACK_TRAY,         "pack tray hasn't been created before")
