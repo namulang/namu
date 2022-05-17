@@ -35,11 +35,6 @@ namespace wrd {
     private:
         wint _finish(interpreter& ip, wint ret) {
             ip.log();
-
-            const errReport& rpt = ip.getReport();
-            if(!nul(rpt) && !rpt)
-                std::cout << "end successfully.\n";
-
             return ret;
         }
     };

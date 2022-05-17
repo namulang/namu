@@ -27,7 +27,6 @@ namespace wrd {
         }
         me& setLogStructure(wbool enable) {
             _isLogStructure = enable;
-            std::cout << "struct_enable=" << enable << "\n";
             return *this;
         }
         me& setLogInterpreter(wbool enable) {
@@ -80,7 +79,6 @@ namespace wrd {
         void log() const {
             if(!_rpt && !*_rpt) return;
 
-            std::cout << "\n";
             logger& l = logger::get();
             l.saveStreamEnable();
             l.setEnable(true);
@@ -155,13 +153,14 @@ namespace wrd {
             l.saveStreamEnable();
             l.setEnable(true);
 
-            std::cout << " - code: \n" << (buf ? buf : "null") << "\n";
             std::cout << " - frame:\n";
             _logFrame(info);
+            std::cout << "\n";
 
             if(!nul(_pser.getSubPack()) && _pak) {
                 std::cout << " - structure:\n";
                 _logStructure(_pser.getSubPack(), _pak->getManifest().name, 0, 0, true, true);
+                std::cout << "\n";
             }
 
             l.loadStreamEnable();
