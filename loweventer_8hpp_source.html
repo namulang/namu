@@ -113,86 +113,100 @@ $(function() {
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">void</span> rel();</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">void</span> prepareParse();</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="comment">// events:</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="comment">//  scan:</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">using</span> super::onScan;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        wint onScan(<a class="code" href="classwrd_1_1loweventer.html">loweventer</a>&amp; eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool&amp; isBypass) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        wint onEndOfFile();</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        wint onIndent(wcnt col, wint tok);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        wint onDedent(wcnt col, wint tok);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        wint onIgnoreIndent(wint tok);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">void</span> onNewLine();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        wchar onScanUnexpected(<span class="keyword">const</span> wchar* token);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordtype">void</span> onEndParse();</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">void</span> onSrcArea(<a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="structwrd_1_1area.html">area</a>);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="comment">//  err:</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onErr(Args... args) { _onRes(err::newErr(args...)); }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onWarn(Args... args) { _onRes(err::newWarn(args...)); }</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onInfo(Args... args) { _onRes(err::newInfo(args...)); }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onSrcErr(Args... args) { _onRes(err::newErr(getArea().start, args...)); }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onSrcWarn(Args... args) { _onRes(err::newWarn(getArea().start, args...)); }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onSrcInfo(Args... args) { _onRes(err::newInfo(getArea().start, args...)); }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="comment">//  operator:</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="comment">//      dot:</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">narr</a>* onDotName(<span class="keyword">const</span> std::string&amp; name);</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">narr</a>* onDotName(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; names, <span class="keyword">const</span> std::string&amp; name);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>* onGet(<span class="keyword">const</span> std::string&amp; name);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>* onGet(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>* onGet(<a class="code" href="classwrd_1_1node.html">node</a>&amp; from, <span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="comment">//  keyword:</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>* onPack(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; dotname);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>* onPack();</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>* onBlock();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>* onBlock(<a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>&amp; blk, <a class="code" href="classwrd_1_1node.html">node</a>&amp; exp);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="classwrd_1_1tnmap.html">scope</a>* onDefBlock();</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="classwrd_1_1tnmap.html">scope</a>* onDefBlock(<a class="code" href="classwrd_1_1tnmap.html">scope</a>&amp; blk, <a class="code" href="classwrd_1_1node.html">node</a>&amp; exp);</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="comment">//  expr:</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="comment">//      func:</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <a class="code" href="classwrd_1_1mgd_func.html">mgdFunc</a>* onFunc(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; <a class="code" href="classwrd_1_1tnarr.html">params</a>, <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; evalType, <span class="keyword">const</span> <a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>&amp; blk);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="comment">//      list:</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">narr</a>* onList();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">narr</a>* onList(<a class="code" href="classwrd_1_1node.html">node</a>* newExpr);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">narr</a>* onList(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; list, <a class="code" href="classwrd_1_1node.html">node</a>* newExpr);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="comment">//      var:</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        T* onPrimitive(Args... args) {</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            WRD_DI(<span class="stringliteral">&quot;on%s(...)&quot;</span>, <a class="code" href="classwrd_1_1ttype.html">ttype&lt;T&gt;::get</a>().getName().c_str());</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">new</span> T(args...);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <a class="code" href="classwrd_1_1expr.html">expr</a>* onDefVar(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; origin);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="comment">//      file:</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keywordtype">void</span> onCompilationUnit(<a class="code" href="classwrd_1_1node.html">node</a>&amp; subpack, <a class="code" href="classwrd_1_1tnmap.html">scope</a>&amp; blk);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="comment">//      return:</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="classwrd_1_1return_expr.html">returnExpr</a>* onReturn();</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <a class="code" href="classwrd_1_1return_expr.html">returnExpr</a>* onReturn(<a class="code" href="classwrd_1_1node.html">node</a>&amp; exp);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="comment">//      run:</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="classwrd_1_1run_expr.html">runExpr</a>* onFillFromOfFuncCall(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; me, <a class="code" href="classwrd_1_1run_expr.html">runExpr</a>&amp; to);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="classwrd_1_1run_expr.html">runExpr</a>* onRunExpr(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args);</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordtype">void</span> _onRes(<a class="code" href="structwrd_1_1err.html">err</a>* new1);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">params</a> _convertParams(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; exprs);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keywordtype">void</span> _onPushName(<span class="keyword">const</span> std::string&amp; name, <a class="code" href="classwrd_1_1node.html">node</a>&amp; n);</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        std::string _onPopName(<a class="code" href="classwrd_1_1node.html">node</a>&amp; n);</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <a class="code" href="classwrd_1_1token_scan.html">tokenScan</a>* _mode;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        wbool _isIgnoreWhitespace;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <a class="code" href="classwrd_1_1token_dispatcher.html">tokenDispatcher</a> _dispatcher;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        std::vector&lt;wcnt&gt; _indents;</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a> _report;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;pack&gt;</a> _pack;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _subpack;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <a class="code" href="structwrd_1_1area.html">area</a>* _srcArea;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        std::map&lt;node*, std::string&gt; _nameMap;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    };</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">int</span> pushState(<span class="keywordtype">int</span> newState) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            WRD_I(<span class="stringliteral">&quot;push state %d -&gt; %d&quot;</span>, _states.back(), newState);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            _states.push_back(newState);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">return</span> _states.back();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        }</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">int</span> popState() {</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keywordtype">int</span> previous = _states.back();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            _states.pop_back();</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            WRD_I(<span class="stringliteral">&quot;pop state %d &lt;- %d&quot;</span>, _states.back(), previous);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keywordflow">return</span> _states.back();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="comment">// events:</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="comment">//  scan:</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">using</span> super::onScan;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        wint onScan(<a class="code" href="classwrd_1_1loweventer.html">loweventer</a>&amp; eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool&amp; isBypass) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        wint onEndOfFile();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        wint onIndent(wcnt col, wint tok);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        wint onDedent(wcnt col, wint tok);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        wint onIgnoreIndent(wint tok);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">void</span> onNewLine();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        wchar onScanUnexpected(<span class="keyword">const</span> wchar* token);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">void</span> onEndParse();</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">void</span> onSrcArea(<a class="code" href="structwrd_1_1area.html">area</a>&amp; <a class="code" href="structwrd_1_1area.html">area</a>);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="comment">//  err:</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onErr(Args... args) { _onRes(err::newErr(args...)); }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onWarn(Args... args) { _onRes(err::newWarn(args...)); }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onInfo(Args... args) { _onRes(err::newInfo(args...)); }</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onSrcErr(Args... args) { _onRes(err::newErr(getArea().start, args...)); }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onSrcWarn(Args... args) { _onRes(err::newWarn(getArea().start, args...)); }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt; <span class="keywordtype">void</span> onSrcInfo(Args... args) { _onRes(err::newInfo(getArea().start, args...)); }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="comment">//  operator:</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="comment">//      dot:</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">narr</a>* onDotName(<span class="keyword">const</span> std::string&amp; name);</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">narr</a>* onDotName(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; names, <span class="keyword">const</span> std::string&amp; name);</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>* onGet(<span class="keyword">const</span> std::string&amp; name);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>* onGet(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>* onGet(<a class="code" href="classwrd_1_1node.html">node</a>&amp; from, <span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="comment">//  keyword:</span></div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>* onPack(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; dotname);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>* onPack();</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>* onBlock();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>* onBlock(<a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>&amp; blk, <a class="code" href="classwrd_1_1node.html">node</a>&amp; exp);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <a class="code" href="classwrd_1_1tnmap.html">scope</a>* onDefBlock();</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <a class="code" href="classwrd_1_1tnmap.html">scope</a>* onDefBlock(<a class="code" href="classwrd_1_1tnmap.html">scope</a>&amp; blk, <a class="code" href="classwrd_1_1node.html">node</a>&amp; exp);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="comment">//  expr:</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="comment">//      func:</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <a class="code" href="classwrd_1_1mgd_func.html">mgdFunc</a>* onFunc(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; <a class="code" href="classwrd_1_1tnarr.html">params</a>, <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; evalType, <span class="keyword">const</span> <a class="code" href="classwrd_1_1block_expr.html">blockExpr</a>&amp; blk);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="comment">//      list:</span></div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">narr</a>* onList();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">narr</a>* onList(<a class="code" href="classwrd_1_1node.html">node</a>* newExpr);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">narr</a>* onList(<a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; list, <a class="code" href="classwrd_1_1node.html">node</a>* newExpr);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="comment">//      var:</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        T* onPrimitive(Args... args) {</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            WRD_DI(<span class="stringliteral">&quot;on%s(...)&quot;</span>, <a class="code" href="classwrd_1_1ttype.html">ttype&lt;T&gt;::get</a>().getName().c_str());</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">new</span> T(args...);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        }</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <a class="code" href="classwrd_1_1expr.html">expr</a>* onDefVar(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; origin);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="comment">//      file:</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordtype">void</span> onCompilationUnit(<a class="code" href="classwrd_1_1node.html">node</a>&amp; subpack, <a class="code" href="classwrd_1_1tnmap.html">scope</a>&amp; blk);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="comment">//      return:</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <a class="code" href="classwrd_1_1return_expr.html">returnExpr</a>* onReturn();</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <a class="code" href="classwrd_1_1return_expr.html">returnExpr</a>* onReturn(<a class="code" href="classwrd_1_1node.html">node</a>&amp; exp);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="comment">//      run:</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <a class="code" href="classwrd_1_1run_expr.html">runExpr</a>* onFillFromOfFuncCall(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; me, <a class="code" href="classwrd_1_1run_expr.html">runExpr</a>&amp; to);</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <a class="code" href="classwrd_1_1run_expr.html">runExpr</a>* onRunExpr(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; args);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordtype">void</span> _onRes(<a class="code" href="structwrd_1_1err.html">err</a>* new1);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">params</a> _convertParams(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tnarr.html">narr</a>&amp; exprs);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordtype">void</span> _onPushName(<span class="keyword">const</span> std::string&amp; name, <a class="code" href="classwrd_1_1node.html">node</a>&amp; n);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        std::string _onPopName(<a class="code" href="classwrd_1_1node.html">node</a>&amp; n);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <a class="code" href="classwrd_1_1token_scan.html">tokenScan</a>* _mode;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        wbool _isIgnoreWhitespace;</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <a class="code" href="classwrd_1_1token_dispatcher.html">tokenDispatcher</a> _dispatcher;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        std::vector&lt;wcnt&gt; _indents;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a> _report;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;pack&gt;</a> _pack;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> _subpack;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <a class="code" href="structwrd_1_1area.html">area</a>* _srcArea;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        std::vector&lt;wint&gt; _states;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        std::map&lt;node*, std::string&gt; _nameMap;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    };</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1block_expr_html"><div class="ttname"><a href="classwrd_1_1block_expr.html">wrd::blockExpr</a></div><div class="ttdef"><b>Definition:</b> blockExpr.hpp:7</div></div>
