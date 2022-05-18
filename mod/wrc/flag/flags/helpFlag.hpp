@@ -14,5 +14,6 @@ namespace wrd {
     protected:
         const wchar* _getRegExpr() const override;
         wbool _onTake(const args& tray, cli& c, interpreter& ip) const override;
+        void _printUsage() const;
     };
 }
