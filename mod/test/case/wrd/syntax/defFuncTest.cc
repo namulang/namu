@@ -169,3 +169,11 @@ TEST_F(defFuncTest, wrongParamNegative) {
             22
     )SRC").shouldParsed(false);
 }
+
+TEST_F(defFuncTest, nameLikeStr) {
+    make().parse(R"SRC(
+        main(str_ str) str
+            return "wow"
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+}

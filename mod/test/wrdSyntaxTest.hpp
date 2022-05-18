@@ -35,6 +35,8 @@ struct wrdSyntaxTest : public wrdTest {
         wrd::bufferSrcSupply buf(srcs);
 
         _ip.setSrcSupply(buf)
+           .setLogInterpreter(true)
+           .setLogStructure(true)
            .setReport(_rpt)
            .interpret();
         return *this;
