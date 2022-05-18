@@ -17,7 +17,10 @@ namespace wrd {
         return "^\\-h$";
     }
 
+
+
     wbool helpFlag::_onTake(const args& tray, cli& c, interpreter& ip) const {
+        _printUsage();
 
         const flags& opts = c.getFlags();
         for(int n=0; n < opts.size() ;n++) {
@@ -27,5 +30,11 @@ namespace wrd {
         }
 
         return true;
+    }
+
+    void helpFlag::_printUsage() const {
+        std::cout << "WRd Cli interpreter by kniz. " << buildFeature::config::getName() << " on " << buildFeature::date::getMonth()
+                << "-" << buildFeature::date::getYear() << ". v" << buildFeature::version::getValue() << "\n";
+        std::cout << "Usage: <option> <filepath>\n";
     }
 }

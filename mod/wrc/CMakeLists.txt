@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
-set(moduleName "cli")
+set(moduleName "wrc")
 set(dependencies indep clog memlite meta wrd swrd dl)
 
 message("building ${moduleName}...")
