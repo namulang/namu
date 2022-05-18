@@ -13,7 +13,7 @@ namespace wrd {
 
     TEMPL
     wbool ME::has(const K& key) const {
-        for(const me* e=this; e ;e=&e->getNext())
+        for(tstr<me> e(this); e ;e.bind(e->getNext()))
             if(e->getContainer().has(key))
                 return true;
         return false;
@@ -23,7 +23,7 @@ namespace wrd {
     wcnt ME::len() const {
         wcnt len = 0;
 
-        for(const me* e=this; e ;e=&e->getNext())
+        for(tstr<me> e(this); e ;e.bind(e->getNext()))
             len += e->getContainer().len();
         return len;
     }
@@ -31,7 +31,7 @@ namespace wrd {
     TEMPL
     wcnt ME::chainLen() const {
         wcnt len = 0;
-        for(const me* e=this; e ;e=&e->getNext())
+        for(tstr<me> e(this); e ;e.bind(e->getNext()))
             len++;
 
         return len;
@@ -39,7 +39,7 @@ namespace wrd {
 
     TEMPL
     V& ME::get(const K& key) {
-        for(me* e=this; e ;e=&e->getNext()) {
+        for(tstr<me> e(this); e ;e.bind(e->getNext())) {
             V& got = e->getContainer().get(key);
             if(!nul(got))
                 return got;
@@ -50,7 +50,7 @@ namespace wrd {
 
     TEMPL
     void ME::_getAll(const K& key, narr& tray) const {
-        for(const me* e=this; e ;e=&e->getNext())
+        for(tstr<me> e(this); e ;e.bind(e->getNext()))
             e->getContainer()._getAll(key, tray);
     }
 
@@ -72,8 +72,8 @@ namespace wrd {
     wbool ME::del(const iter& at) {
         const me& owner = at.getContainer().template cast<me>();
 
-        for(me* e=this; e ;e=&e->getNext())
-            if(e == &owner)
+        for(tstr<me> e(this); e ;e.bind(e->getNext()))
+            if(&e.get() == &owner)
                 return e->getContainer().del(_getMapIterFromChainIter(at));
         return false;
     }
