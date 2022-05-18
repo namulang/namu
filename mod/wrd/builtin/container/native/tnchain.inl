@@ -62,7 +62,7 @@ namespace wrd {
     TEMPL
     wbool ME::del(const K& key) {
         wbool ret = true;
-        for(me* e=this; e ;e=&e->getNext())
+        for(tstr<me> e(this); e ;e.bind(e->getNext()))
             if(e->has(key))
                 ret = e->getContainer().del(key) ? ret : false;
         return ret;
@@ -135,7 +135,7 @@ namespace wrd {
 
     TEMPL
     void ME::rel() {
-        for(me* e=this; e ;e=&e->getNext())
+        for(tstr<me> e(this); e ;e.bind(e->getNext()))
             e->getContainer().rel();
     }
 
