@@ -29,7 +29,11 @@ namespace wrd {
         tstr<errReport>& getReport() { return _report; }
         tokenDispatcher& getDispatcher() { return _dispatcher; }
         std::vector<wcnt>& getIndents() { return _indents; }
-        const area& getArea() const { return *_srcArea; }
+        const area& getArea() const {
+            static area dummy {{0, 0}, {0, 1}};
+
+            return _srcArea ? *_srcArea : dummy;
+        }
         wbool isInit() const { return _mode; }
 
         template <typename T>

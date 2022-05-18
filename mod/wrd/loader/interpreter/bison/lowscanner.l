@@ -93,7 +93,7 @@ false {
     return BOOLVAL;
 }
 
-[[:alpha:]]+[[:alnum:]]* {
+[a-zA-Z0-9_]+ {
     yylval->asStr = strdup(yytext);
     WRD_DI("scanner: NAME=%s", yytext);
     return NAME;
