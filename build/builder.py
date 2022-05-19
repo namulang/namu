@@ -102,8 +102,13 @@ def mv(directory):
 
 def _cleanIntermediates():
     printInfoEnd("removing intermediate outputs...")
-    os.system("rm -rf " + cwd + "/xml")
-    os.system("rm -rf " + cwd + "/*.tmp")
+    if isWindow():
+        print("del /s /f /q " + cwd + "\\xml")
+        os.system("del /s /f /q " + cwd + "\\xml")
+        os.system("del /s /f /q " + cwd + "\\*.tmp")
+    else:
+        os.system("rm -rf " + cwd + "/xml")
+        os.system("rm -rf " + cwd + "/*.tmp")
     os.system("git config --unset user.name") # remove local config only
     os.system("git config --unset user.email")
     printOk("done.")
@@ -118,11 +123,17 @@ def doc():
 
     _checkMCSS();
     _cleanIntermediates()
-    os.system("rm -rf " + cwd + "/html")
+    if isWindow():
+        os.system("del /s /f /q " + cwd + "\\html")
+    else:
+        os.system("rm -rf " + cwd + "/html")
 
     # standby gh-pages repo:
     printInfoEnd("cloning gh-pages branch...")
-    res = os.system("git clone -b gh-pages --depth 5 https://github.com/kniz/worldlang --single-branch " + cwd + "/html")
+    if isWindow():
+        res = os.system("git clone -b gh-pages --depth 5 https://github.com/kniz/worldlang --single-branch " + cwd + "\\html")
+    else:
+        res = os.system("git clone -b gh-pages --depth 5 https://github.com/kniz/worldlang --single-branch " + cwd + "/html")
     if res != 0:
         printErr("fail to clone gh-pages repo.")
         _cleanIntermediates()
@@ -131,7 +142,10 @@ def doc():
 
     # build doxygen + m.css:
     printInfoEnd("generating docs using doxygen...")
-    res = os.system(python3 + " " + externalDir + "/m.css/documentation/doxygen.py " + cwd + "/Doxyfile")
+    if isWindow():
+        res = os.system(python3 + " " + externalDir + "\\m.css\\documentation\\doxygen.py " + cwd + "\\Doxyfile")
+    else:
+        res = os.system(python3 + " " + externalDir + "/m.css/documentation/doxygen.py " + cwd + "/Doxyfile")
     if res != 0:
         printErr("fail to run m.css doxy parser.")
         _cleanIntermediates()
@@ -196,8 +210,9 @@ def isWindow():
 #                 os.system("astyle --style=world " + file_path)
 
 def _createMakefiles():
+    global generator
     print("")
-    generator = "MinGW Makefiles" if isWindow() else "Unix Makefiles"
+    
     printInfoEnd("generating makefiles as " + generator + "...")
 
     global config
@@ -217,7 +232,10 @@ ver_name = ""
 ver_buildcnt = 0
 def _extractBuildInfo(): # from CHANGELOGS at root directory.
     global cwd, ver_major, ver_minor, ver_fix, ver_name, ver_buildcnt
-    path = cwd + "/../CHANGELOGS"
+    if isWindow():
+        path = cwd + "\\..\\CHANGELOGS"
+    else:
+        path = cwd + "/../CHANGELOGS"
 
     fp = open(path, "r")
     while True:
@@ -258,7 +276,11 @@ def _updateLineString(lines, n, trg, basestr):
 
 def _injectBuildInfo():
     global cwd, ver_major, ver_minor, ver_fix, ver_name, ver_buildcnt
-    path = cwd + "/CMakeLists.txt"
+    if isWindow():
+        path = cwd + "\\CMakeLists.txt"
+    else:
+        path = cwd + "/CMakeLists.txt"
+        
 
     printInfoEnd("updating buildinfo on CMakeLists.txt...")
     global updated
@@ -288,7 +310,10 @@ def _injectBuildInfo():
 
 def _incBuildCnt():
     global cwd
-    path = cwd + "/CMakeLists.txt"
+    if isWindow():
+        path = cwd + "\\CMakeLists.txt"
+    else:
+        path = cwd + "/CMakeLists.txt"
     printInfoEnd("Increase Build count...")
     fp = open(path, "r")
     lines = fp.readlines()
@@ -307,17 +332,14 @@ def _incBuildCnt():
     printOk("done")
 
 def _make():
+    if isWindow():
+        print("please build using visual studio on your own")
+        return
     print("")
     make_option = "-j8 -s"  # j4 -> 4 multithread.
                             # s ->  don't print command.
     printInfoEnd("making " + make_option + "...")
-    if isWindow():
-        os.system("mingw32-make -v")
-        result = os.system("mingw32-make " + make_option)
-        if result != 0:
-            printErr("failed")
-            return -1
-    else:
+    if not isWindow():
         os.system("make -v")
         result = os.system("make " + make_option)
         if result != 0:
@@ -339,7 +361,8 @@ def _checkMCSS():
     printOk("cloned")
 
 def _checkGTest():
-    global externalDir
+    global externalDir, generator
+    
     dir = os.path.join(externalDir, "googletest")
     printInfoEnd("checking googletest repo at " + externalDir + "...")
     if _hasDir(dir):
@@ -348,11 +371,13 @@ def _checkGTest():
 
     _makeDir(dir)
     os.system("git clone https://github.com/google/googletest " + dir)
-    os.system("cmake " + os.path.join(dir, "CMakeLists.txt"))
-    originDir = os.getcwd()
-    os.chdir(dir)
-    os.system("sudo make install")
-    os.chdir(originDir)
+    res = os.system("cmake . -G \"" + generator + "\" " + config)
+    os.system("cmake " + os.path.join(dir, "CMakeLists.txt -G \"" + generator + "\""))
+    if not isWindow():
+        originDir = os.getcwd()
+        os.chdir(dir)
+        os.system("sudo make install")
+        os.chdir(originDir)
     printOk("installed.")
     _cleanIntermediates()
 
@@ -401,7 +426,10 @@ def test(arg):
     os.chdir(binDir)
     failedCnt = 0
     ret = 0
-    res = os.system("./test " + arg)
+    if isWindow():
+        res = os.system(".\\test " + arg)
+    else:
+        res = os.system("./test " + arg)
     if res != 0:
         printErr("test was failed!")
         ret = res
@@ -418,10 +446,14 @@ def commit():
     return 0
 
 def _extractPythonVersion(verstr):
+    print(verstr)
     if not verstr:
         printErr("couldn't get version of python.")
         return 0.0
-    return float(verstr[7:10])
+
+    verstr = verstr.split(' ')[1]
+    vver = verstr.split('.')
+    return float(vver[1] + "." + vver[2])
 
 flexVerExpect = [2, 6, 0]
 
@@ -448,11 +480,7 @@ def checkDependencies(deps):
 
     print("")
 
-    if isWindow():
-        if not shutil.which("mingw32-make"):
-            printErr("mingw32-make on Windows is NOT installed!")
-            return -1
-    elif not shutil.which("make"):
+    if not isWindow() and not shutil.which("make"):
         printErr("make for linux is NOT installed!")
         return -1
 
@@ -501,16 +529,29 @@ def clean():
     _clean(cwd)
     _cleanIntermediates()
     _cleanDir(binDir)
-    _cleanDir(cwd + "/mod")
-    bisonDir = cwd + "/../mod/wrd/loader/interpreter/bison"
+    if isWindow():
+        _cleanDir(cwd + "\\mod")
+        bisonDir = cwd + "\\..\\mod\\wrd\\loader\\interpreter\\bison"
+    else:
+        _cleanDir(cwd + "/mod")
+        bisonDir = cwd + "/../mod/wrd/loader/interpreter/bison"
     try:
-        os.remove(bisonDir + "/lowparser.hpp")
-        os.remove(bisonDir + "/lowparser.cpp")
-        os.remove(bisonDir + "/lowscanner.hpp")
-        os.remove(bisonDir + "/lowscanner.cpp")
+        if isWindow():
+            os.remove(bisonDir + "\\lowparser.hpp")
+            os.remove(bisonDir + "\\lowparser.cpp")
+            os.remove(bisonDir + "\\lowscanner.hpp")
+            os.remove(bisonDir + "\\lowscanner.cpp")
+        else:
+            os.remove(bisonDir + "/lowparser.hpp")
+            os.remove(bisonDir + "/lowparser.cpp")
+            os.remove(bisonDir + "/lowscanner.hpp")
+            os.remove(bisonDir + "/lowscanner.cpp")
     except FileNotFoundError:
         pass
-    os.system("rm -rf " + cwd + "/html")
+    if isWindow():
+        os.system("del /f /s /q " + cwd + "\\html")
+    else:
+        os.system("rm -rf " + cwd + "/html")
     printOk("was removed successfully.")
 
 def _clean(directory):
@@ -570,14 +611,21 @@ wrdDir = ""
 resDir = ""
 binDir = ""
 externalDir = ""
+generator = "Visual Studio 17 2022" if isWindow() else "Unix Makefiles"
 
 def _init():
     global cwd, wrdDir, binDir, externalDir, resDir
     cwd = os.path.dirname(os.path.realpath(sys.argv[0]))
-    wrdDir = cwd + "/.."
-    binDir = wrdDir + "/bin"
-    resDir = wrdDir + "/res"
-    externalDir = wrdDir + "/external"
+    if isWindow():
+        wrdDir = cwd + "\\.."
+        binDir = wrdDir + "\\bin"
+        resDir = wrdDir + "\\res"
+        externalDir = wrdDir + "\\external"
+    else:
+        wrdDir = cwd + "/.."
+        binDir = wrdDir + "/bin"
+        resDir = wrdDir + "/res"
+        externalDir = wrdDir + "/external"
 
     _extractBuildInfo()
     return _extractEnv()
