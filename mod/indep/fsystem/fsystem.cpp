@@ -33,7 +33,7 @@ namespace wrd {
 #endif
             if(name == ".." || name == ".")
                 continue;
-            std::string path = e.path + "/" + name;
+            std::string path = e.path + delimiter + name;
 #ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
             if(e.file.attrib & _A_SUBDIR) {
 #else

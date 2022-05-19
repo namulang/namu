@@ -5,8 +5,10 @@
 #ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
 #   include <direct.h>
 #   include <io.h>
+#   define getcwd _getcwd
 #else
 #   include <dirent.h>
+#   include <unistd.h>
 #endif
 #include <vector>
 
