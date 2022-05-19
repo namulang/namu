@@ -10,7 +10,9 @@ namespace wrd {
 
     public:
         tstr<scopes>& getTop() { return _top; }
+        const tstr<scopes>& getTop() const { return _top; }
         tstr<scopes>& getBottom() { return _bottom; }
+        const tstr<scopes>& getBottom() const { return _bottom; }
 
         wcnt len() const {
             return _top ? _top->len() : 0;

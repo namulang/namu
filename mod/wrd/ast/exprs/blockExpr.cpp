@@ -1,6 +1,7 @@
 #include "blockExpr.hpp"
 #include "../../frame/thread.hpp"
 #include "../../loader/interpreter/tverification.hpp"
+#include "../../builtin/primitive/wVoid.hpp"
 
 namespace wrd {
     WRD_DEF_ME(blockExpr)
@@ -45,6 +46,28 @@ namespace wrd {
         for(auto& e : it._exprs)
             verify(e);
 
+        {
+            WRD_DI("verify: last stmt should match to ret type");
+
+            const narr& stmts = it.getStmts();
+            if(nul(stmts) || stmts.len() <= 0) return; // will be catched to another verification.
+
+            const func& f = thread::get().getNowFrame().getFunc();
+            if (nul(f)) return;
+
+            const wtype& retType = f.getRetType();
+            const node& lastStmt = *stmts.last();
+            if(!lastStmt.isSub<returnExpr>() && retType == ttype<wVoid>::get()) {
+                WRD_DI("implicit return won't verify when retType is void.");
+                return;
+            }
+            const wtype& lastType = lastStmt.getEvalType(); // to get type of expr, always uses evalType.
+            if(nul(lastType)) return _err(NO_RET_TYPE);
+            if(!lastType.isSub(retType)) return _err(errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
+                    retType.getName().c_str());
+        }
+
+        WRD_DI("block.outFrame()\n");
         it._outFrame();
     })
 }

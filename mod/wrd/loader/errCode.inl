@@ -34,6 +34,7 @@ PAIRX(NOT_EXPR,             "\'%s\' isn't a expression")
 PAIRX(EXPR_EVAL_NULL,       "expression evaluated as null type")
 //  defVar:
 PAIRX(CANT_DEF_VAR,         "definining variable '%s %s' wouldn't allowed here")
+PAIRX(ALREADY_DEFINED_VAR,  "variable '%s %s' was already defined in this scope")
 
 // func:
 PAIRX(PARAM_HAS_VAL,        "parameter shouldn't have a value")

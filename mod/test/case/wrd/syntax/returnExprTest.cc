@@ -63,6 +63,15 @@ TEST_F(returnExprTest, implicitReturnShouldNotWorkOnVoid) {
     shouldVerified(true);
 }
 
+TEST_F(returnExprTest, returnLocalVariable) {
+    make().parse(R"SRC(
+        main() int
+            age int
+            return age
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+}
+
 TEST_F(returnExprTest, returnTypeImplicit) {
     /* TODO: make().parse(R"SRC(
         make() int
