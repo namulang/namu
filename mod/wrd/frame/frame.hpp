@@ -59,6 +59,9 @@ namespace wrd {
             return pushLocal(name, *n);
         }
 
+        scopes& getTop() { return *_local.getTop(); }
+        const scopes& getTop() const WRD_UNCONST_FUNC(getTop())
+
         tstr<scopes> popLocal() { return _local.pop(); }
         // I won't provide API for poping a single node from the scope.
 
