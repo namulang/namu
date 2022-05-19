@@ -13,7 +13,7 @@ endforeach(def)
 add_definitions(${defines})
 
 find_library(pathGtest
-    NAMES libgtest.a
+    NAMES gtest
     REQUIRED)
 foreach(d ${dependencies})
     set(libraries ${libraries} PUBLIC ${d})

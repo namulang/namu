@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project(World C CXX)
+project(wrd C CXX)
 
 #defines:
 set(SHOW_CMAKE_VARIABLES 1)
@@ -37,6 +37,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fdiagnostics-color=always")  #def
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-sign-compare -Wno-address -Wno-unused-local-typedefs -Wno-undefined-bool-conversion")  #compiler options.
 set(CXX_DEFINITIONS "${DEFINITIONS} -DUNICODE")
 set(CMAKE_CXX_STANDARD 17)
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
@@ -72,6 +73,8 @@ else (${CMAKE_BUILD_TYPE} STREQUAL Debug)
 endif (${CMAKE_BUILD_TYPE} STREQUAL Debug)
 
 if(SHOW_CMAKE_VARIABLES)
+    message(STATUS "CMAKE_FIND_LIBRARY_PREFIXES    " ${CMAKE_FIND_LIBRARY_PREFIXES})
+    message(STATUS "CMAKE_FIND_LIBRARY_SUFFIXES    " ${CMAKE_FIND_LIBRARY_SUFFIXES})
     message(STATUS "CMAKE_THREAD_LIBS_INIT      " ${CMAKE_THREAD_LIBS_INIT})
     message(STATUS "CMAKE_BINARY_DIR:           " ${CMAKE_BINARY_DIR})
     message(STATUS "CMAKE_CURRENT_BINARY_DIR:   " ${CMAKE_CURRENT_BINARY_DIR})
