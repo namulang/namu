@@ -11,6 +11,7 @@ Debug/
 *.idb
 *.dep
 *.res
+.vs/
 BuildLog.htm
 *.sdf
 Release/
@@ -36,6 +37,7 @@ CMakeFiles/
 *.sln
 *.vcproj
 *.vcxproj
+*.vcxproj.filters
 outputs/
 Makefile
 buildInformation.hpp
