@@ -6,8 +6,8 @@ namespace wrd {
 
     template <typename T, typename WRAPPER = str>
     class tndumArr: public tnarr<T, WRAPPER> {
-        typedef tnarr<T, WRAPPER> __super;
-        WRD(CLASS(tndumArr, __super))
+        typedef tnarr<T, WRAPPER> _super_;
+        WRD(CLASS(tndumArr, _super_))
 
     public:
         tndumArr() {}

@@ -6,8 +6,8 @@ namespace wrd {
 
     template <typename K, typename V, typename TACTIC = strTactic>
     class tndumMap : public tnmap<K, V, TACTIC> {
-        typedef tnmap<K, V, TACTIC> __super;
-        WRD(CLASS(tndumMap, __super))
+        typedef tnmap<K, V, TACTIC> _super_;
+        WRD(CLASS(tndumMap, _super_))
 
     public:
         // add:

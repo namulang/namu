@@ -6,8 +6,8 @@ namespace wrd {
 
     template <typename K, typename V, typename defaultContainer = nmap>
     class tndumChain : public tnchain<K, V, defaultContainer> {
-        typedef tnchain<K, V, defaultContainer> __super;
-        WRD(CLASS(tndumChain, __super))
+        typedef tnchain<K, V, defaultContainer> _super_;
+        WRD(CLASS(tndumChain, _super_))
 
     public:
         // add:

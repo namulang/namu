@@ -7,8 +7,8 @@ namespace wrd {
 
     template <typename T, typename TACTIC = strTactic>
     class tstr : public tweak<T, TACTIC> {
-        typedef tweak<T, TACTIC> __super;
-        WRD_DECL_ME(tstr, __super)
+        typedef tweak<T, TACTIC> _super_;
+        WRD_DECL_ME(tstr, _super_)
         WRD_INIT_META(me)
         friend class ref;
 
