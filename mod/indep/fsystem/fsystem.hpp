@@ -86,6 +86,7 @@ namespace wrd {
 
         private:
             void _addDir(const std::string& dirPath) {
+                if(dirPath.empty()) return;
                 std::string path = _filterPath(dirPath);
 #ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
                 _finddata_t file;
@@ -109,13 +110,14 @@ namespace wrd {
             }
 
             std::string _filterPath(const std::string& org) {
-                int last = org.length() - 1;
+                int idx = org.length() - 1;
+                char last = org[idx];
 #ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
                 if (last == '\\' || last == '/')
 #else
                 if (last == '/')
 #endif
-                    return org.substr(0, last);
+                    return org.substr(0, idx);
 
                 return org;
             }
