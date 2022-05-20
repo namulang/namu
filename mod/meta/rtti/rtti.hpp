@@ -57,6 +57,7 @@ namespace wrd {
     };
 
     struct nameDemangler {
+#ifndef WRD_BUILD_PLATFORM_IS_WINDOWS
         static std::string demangle(const wchar* org) {
             wchar* demangled = nullptr;
             int status = 0;
@@ -67,11 +68,16 @@ namespace wrd {
             free(demangled);
             return ret;
         }
+#endif
         static std::string filterDemangle(const wchar* org) {
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+            std::string raw = std::string(org);
+            int n = raw.rfind(" ");
+#else
             const std::string& raw = demangle(org);
             int n = raw.rfind(":");
-
-            return raw.substr(n + 1, raw.length());
+#endif
+            return raw.substr(n + 1);
         }
     };
 
