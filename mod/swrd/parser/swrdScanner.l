@@ -11,7 +11,7 @@ int nowIndent = 0;
 stack<int> indentLvs;
 static const int TAB_WIDTH = 4;
 
-static const char eof = 0x05;
+static const char _eof_ = 0x05;
 
 extern int nowRule;
 extern int prevRule;
@@ -43,6 +43,9 @@ void changePrevRule() {
 %x ARRAYING
 
 %s tfile
+
+%option nounistd
+
 
 %%
 
