@@ -7,8 +7,8 @@ namespace wrd {
 
     template <typename K, typename V, typename TACTIC = strTactic>
     class tnmap : public tnbicontainer<K, V> {
-        typedef tnbicontainer<K, V> __super;
-        WRD(CLASS(tnmap, __super))
+        typedef tnbicontainer<K, V> _super_;
+        WRD(CLASS(tnmap, _super_))
         template <typename K1, typename V1> friend class tmap;
         typedef tstr<V, TACTIC> wrap;
         typedef std::multimap<K, wrap> cmap;

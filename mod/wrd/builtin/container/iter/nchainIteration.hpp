@@ -33,9 +33,9 @@ public:
     }
 
     using super::getContainer;
-    __super& getContainer() override {
-        if(!_ownIter) return nulOf<__super>();
-        return _ownIter->template cast<__super>();
+    _super_& getContainer() override {
+        if(!_ownIter) return nulOf<_super_>();
+        return _ownIter->template cast<_super_>();
     }
 
     const K& getKey() const override {

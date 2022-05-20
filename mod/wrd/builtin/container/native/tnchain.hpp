@@ -9,8 +9,8 @@ namespace wrd {
 
     template <typename K, typename V, typename defaultContainer = tnmap<K, V>>
     class tnchain : public tnbicontainer<K, V> {
-        typedef tnbicontainer<K, V> __super;
-        WRD(CLASS(tnchain, __super))
+        typedef tnbicontainer<K, V> _super_;
+        WRD(CLASS(tnchain, _super_))
         typedef typename super::iter iter;
         typedef typename super::iteration iteration;
 

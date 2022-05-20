@@ -56,11 +56,11 @@ namespace wrd {
 
     template <typename Ret, typename T, typename... Args>
     class tcppBridgeFunc : public tcppBridgeFuncBase<Ret, T, Args...> {
-        typedef tcppBridgeFuncBase<Ret, T, Args...> __super;
-        WRD(CLASS(tcppBridgeFunc, __super))
+        typedef tcppBridgeFuncBase<Ret, T, Args...> _super_;
+        WRD(CLASS(tcppBridgeFunc, _super_))
 
     public:
-        tcppBridgeFunc(typename __super::fptrType fptr): super(fptr) {}
+        tcppBridgeFunc(typename _super_::fptrType fptr): super(fptr) {}
 
     protected:
         str _runNative(narr& args) override {
@@ -73,11 +73,11 @@ namespace wrd {
 
     template <typename T, typename... Args>
     class tcppBridgeFunc<void, T, Args...> : public tcppBridgeFuncBase<void, T, Args...> {
-        typedef tcppBridgeFuncBase<void, T, Args...> __super;
-        WRD(CLASS(tcppBridgeFunc, __super))
+        typedef tcppBridgeFuncBase<void, T, Args...> _super_;
+        WRD(CLASS(tcppBridgeFunc, _super_))
 
     public:
-        tcppBridgeFunc(typename __super::fptrType fptr): super(fptr) {}
+        tcppBridgeFunc(typename _super_::fptrType fptr): super(fptr) {}
 
     protected:
         str _runNative(narr& args) override {
