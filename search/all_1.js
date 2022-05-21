@@ -7,5 +7,6 @@ var searchData=
   ['arrtest_8',['arrTest',['../structarr_test.html',1,'']]],
   ['asable_9',['asable',['../classwrd_1_1asable.html',1,'wrd']]],
   ['ases_10',['ases',['../classwrd_1_1ases.html',1,'wrd']]],
-  ['aka_11',['aka',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_aka.html',1,'']]]
+  ['assignexpr_11',['assignExpr',['../classwrd_1_1assign_expr.html',1,'wrd']]],
+  ['aka_12',['aka',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_aka.html',1,'']]]
 ];
