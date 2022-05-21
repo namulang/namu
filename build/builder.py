@@ -332,9 +332,6 @@ def _incBuildCnt():
     printOk("done")
 
 def _make():
-    if isWindow():
-        print("please build using visual studio on your own")
-        return
     print("")
     make_option = "-j8 -s"  # j4 -> 4 multithread.
                             # s ->  don't print command.
@@ -611,7 +608,7 @@ wrdDir = ""
 resDir = ""
 binDir = ""
 externalDir = ""
-generator = "Visual Studio 17 2022" if isWindow() else "Unix Makefiles"
+generator = "Unix Makefiles"
 
 def _init():
     global cwd, wrdDir, binDir, externalDir, resDir
