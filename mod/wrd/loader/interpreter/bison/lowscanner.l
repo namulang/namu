@@ -25,6 +25,7 @@ namespace {
 %option reentrant bison-bridge bison-locations
 %option extra-type="wrd::loweventer*"
 %option yylineno
+%option nounistd
 
 
 

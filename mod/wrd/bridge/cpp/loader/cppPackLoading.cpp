@@ -26,15 +26,31 @@ namespace wrd {
         // TODO: use 'rpt' variable.
         libHandle newHandle = nullptr;
         for(const std::string& path : _getPaths()) {
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+            newHandle = LoadLibrary(path.c_str());
+#else
             newHandle = dlopen(path.c_str(), RTLD_LAZY);
+#endif
             if(!newHandle) {
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+                WRD_E("couldn't open %s pack: %d", path.c_str(), GetLastError());
+#else
                 WRD_E("couldn't open %s pack: %s", path.c_str(), dlerror());
+#endif
                 goto FINALIZE;
             }
 
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+            entrypointFunc ep = (entrypointFunc) GetProcAddress(newHandle, ENTRYPOINT_NAME);
+#else
             entrypointFunc ep = (entrypointFunc) dlsym(newHandle, ENTRYPOINT_NAME);
+#endif
             if(!ep) {
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+                WRD_E("couldn't locate entrypoint of %s pack: %d", path.c_str(), GetLastError());
+#else
                 WRD_E("couldn't locate entrypoint of %s pack: %s", path.c_str(), dlerror());
+#endif
                 goto FINALIZE;
             }
 
@@ -53,8 +69,25 @@ namespace wrd {
 
 FINALIZE:
         if(newHandle)
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+            FreeLibrary(newHandle);
+#else
             dlclose(newHandle);
+#endif
         me::rel();
         return false;
+    }
+
+    void me::rel() {
+        for (libHandle e : _handles)
+            if (e)
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+                FreeLibrary(e);
+#else
+                dlclose(e);
+#endif
+        _handles.clear();
+
+        super::rel();
     }
 }
