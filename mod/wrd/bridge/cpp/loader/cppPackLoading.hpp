@@ -6,7 +6,12 @@
 
 namespace wrd {
 
+    
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+    typedef HINSTANCE libHandle;
+#else
     typedef void* libHandle;
+#endif
     typedef std::vector<libHandle> libHandles;
 
     class cppPackLoading : public opaquePackLoading{
@@ -21,14 +26,7 @@ namespace wrd {
             return inner;
         }
 
-        void rel() override {
-            for(libHandle e : _handles)
-                if(e)
-                    dlclose(e);
-            _handles.clear();
-
-            super::rel();
-        }
+        void rel() override;
 
     private:
         wbool _loadLibs(errReport& rpt, bicontainable& tray);
