@@ -21,7 +21,7 @@ foreach(e ${sources})
     message("\tembeding ${e}")
 endforeach(e)
 #       define libraries:
-set(dependencies indep)
+set(dependencies ${dependencies} indep)
 foreach(e ${dependencies})
     message("\tlinking ${e}")
 endforeach(e)

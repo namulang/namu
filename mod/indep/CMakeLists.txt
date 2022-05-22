@@ -22,6 +22,10 @@ foreach(e ${configures})
 	configure_file(${e} ${CMAKE_CURRENT_SOURCE_DIR}/${output_path})
 endforeach(e)
 #  defines:
+#      define libraries:
+foreach(e ${dependencies})
+    message("\tlinking ${e}")
+endforeach(e)
 #      define sources:
 file(GLOB_RECURSE sources
     "*.c"
@@ -35,3 +39,4 @@ endforeach(e)
 #  execute:
 add_library(${moduleName} SHARED ${sources})
 set_target_properties(${moduleName} PROPERTIES SUFFIX ".${WRD_LIBRARY_EXTENSION}")
+target_link_libraries(${moduleName} ${dependencies})

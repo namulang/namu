@@ -22,7 +22,7 @@ file(GLOB_RECURSE sources
 foreach(e ${sources})
     message("\tembeding ${e}")
 endforeach(e)
-set(dependencies indep clog)
+set(dependencies ${dependencies} indep clog)
 foreach(e ${dependencies})
     message("\tlinking ${e}")
 endforeach(e)
