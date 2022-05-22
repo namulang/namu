@@ -1,23 +1,20 @@
 #pragma once
 
+#include "../common.hpp"
+
 namespace wrd {
     class _wout typeProvidable {
         WRD_DECL_ME(typeProvidable)
 
     public:
-        wbool operator==(const me& rhs) const {
-            if(nul(rhs)) return false;
-            if(getType() != rhs.getType()) return false;
-
-            return _onSame(rhs);
-        }
+        wbool operator==(const me& rhs) const;
         wbool operator!=(const me& rhs) const {
             return !operator==(rhs);
         }
 
         virtual const type& getType() const = 0;
-        wbool isSub(const type& it) const { return getType().isSub(it); }
-        wbool isSuper(const type& it) const { return getType().isSuper(it); }
+        wbool isSub(const type& it) const;
+        wbool isSuper(const type& it) const;
         template <typename T>
         wbool isSub() const { return getType().isSub<T>(); }
         template <typename T>
@@ -44,12 +41,7 @@ namespace wrd {
         template <typename T>
         const T& cast() const WRD_UNCONST_FUNC(cast<T>())
 
-        virtual void* cast(const type& to) {
-            if(!getType().isSub(to))
-                return nullptr;
-
-            return this;
-        }
+        virtual void* cast(const type& to);
         const void* cast(const type& to) const WRD_UNCONST_FUNC(cast(to))
 
     protected:
