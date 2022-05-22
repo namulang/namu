@@ -8,7 +8,7 @@ namespace wrd {
 
     struct cli;
     class flag : public instance, public clonable {
-        WRD(INTERFACE(flag, instance))
+        WRD(ADT(flag, instance))
 
     public:
         virtual const wchar* getName() const = 0;

@@ -23,7 +23,7 @@ namespace wrd {
             }
         };
 
-        WRD(INTERFACE(expr, node, exprType))
+        WRD(ADT(expr, node, exprType))
         friend class exprMaker;
         friend struct ::exprTest;
 

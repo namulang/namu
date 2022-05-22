@@ -7,7 +7,7 @@ namespace wrd {
 
     template <typename Ret, typename T, typename... Args>
     class tcppBridgeFuncBase : public func {
-        WRD(INTERFACE(tcppBridgeFuncBase, func))
+        WRD(ADT(tcppBridgeFuncBase, func))
     protected:
         typedef Ret (T::*fptrType)(Args...);
 

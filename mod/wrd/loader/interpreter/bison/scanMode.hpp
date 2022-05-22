@@ -10,7 +10,7 @@ namespace wrd {
     class loweventer;
 
     class scanMode : public typeProvidable, public clonable {
-        WRD(INTERFACE(scanMode))
+        WRD(ADT(scanMode))
 
     public:
         virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* yylloc, yyscan_t yyscanner) = 0;

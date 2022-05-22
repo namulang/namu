@@ -30,28 +30,28 @@
 
 // INTERFACE:
 //      marks that this class is abstract.
-#define __WRD__DECL_INTERFACE_1(ME) \
+#define __WRD__DECL_ADT_1(ME) \
         __WRD__DECL_ME_1(ME) \
         __WRD__DECL_TYPE(wtype) \
         __WRD__DECL_INIT_META(ME)
-#define __WRD__DECL_INTERFACE_2(ME, SUPER) \
-        __WRD__DECL_INTERFACE_3(ME, SUPER, wtype)
-#define __WRD__DECL_INTERFACE_3(ME, SUPER, SUPERTYPE) \
+#define __WRD__DECL_ADT_2(ME, SUPER) \
+        __WRD__DECL_ADT_3(ME, SUPER, wtype)
+#define __WRD__DECL_ADT_3(ME, SUPER, SUPERTYPE) \
         __WRD__DECL_ME_2(ME, SUPER) \
         __WRD__DECL_TYPE(SUPERTYPE) \
         __WRD__DECL_INIT_META(ME)
-#define __WRD__DECL_INTERFACE(...) WRD_OVERLOAD(__WRD__DECL_INTERFACE, __VA_ARGS__)
+#define __WRD__DECL_ADT(...) WRD_OVERLOAD(__WRD__DECL_ADT, __VA_ARGS__)
 
 // CLASS:
 //      marks that this class is concrete class.
 #define __WRD__DECL_CLASS_1(ME) \
-        __WRD__DECL_INTERFACE_1(ME) \
+        __WRD__DECL_ADT_1(ME) \
         __WRD__DECL_CLONE(ME)
 #define __WRD__DECL_CLASS_2(ME, SUPER) \
-        __WRD__DECL_INTERFACE_2(ME, SUPER) \
+        __WRD__DECL_ADT_2(ME, SUPER) \
         __WRD__DECL_CLONE(ME)
 #define __WRD__DECL_CLASS_3(ME, SUPER, SUPERTYPE) \
-        __WRD__DECL_INTERFACE_3(ME, SUPER, SUPERTYPE) \
+        __WRD__DECL_ADT_3(ME, SUPER, SUPERTYPE) \
         __WRD__DECL_CLONE(ME)
 #define __WRD__DECL_CLASS(...) WRD_OVERLOAD(__WRD__DECL_CLASS, __VA_ARGS__)
 

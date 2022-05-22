@@ -6,7 +6,7 @@ namespace wrd {
 
     namespace {
         class wVoidCtor : public func {
-            WRD(INTERFACE(wVoidCtor, func))
+            WRD(ADT(wVoidCtor, func))
 
         public:
             const wtype& getRetType() const override {

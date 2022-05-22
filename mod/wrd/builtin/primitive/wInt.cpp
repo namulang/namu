@@ -7,7 +7,7 @@ namespace wrd {
 
     namespace {
         class wIntCtor : public func {
-            WRD(INTERFACE(wIntCtor, func))
+            WRD(ADT(wIntCtor, func))
 
         public:
             const wtype& getRetType() const override {
