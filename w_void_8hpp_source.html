@@ -75,7 +75,7 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>wrd {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classwrd_1_1w_void.html">    7</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classwrd_1_1w_void.html">wVoid</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1mgd_obj.html">mgdObj</a> {</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classwrd_1_1w_void.html">    7</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classwrd_1_1w_void.html">wVoid</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1primitive_obj.html">primitiveObj</a>&lt;void&gt; {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">class </span>_wout wVoidType : <span class="keyword">public</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a> {</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">public</span>:</div>
@@ -90,24 +90,19 @@ $(function() {
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classwrd_1_1w_void.html">wVoid</a>();</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">using</span> super::getCtors;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classwrd_1_1tnarr.html">funcs</a>&amp; getCtors() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1obj.html">obj</a>&amp; getOrigin() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">static</span> me&amp; singletone();</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        wbool _onSame(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type_providable.html">typeProvidable</a>&amp; rhs) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">void</span> _onCreateCtors(<a class="code" href="classwrd_1_1tnarr.html">funcs</a>&amp; tray) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    };</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">static</span> me&amp; singletone();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classwrd_1_1tndum_map.html">dumScope</a>* _onMakeCtors() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    };</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclasswrd_1_1tndum_map_html"><div class="ttname"><a href="classwrd_1_1tndum_map.html">wrd::tndumMap</a></div><div class="ttdef"><b>Definition:</b> tndumMap.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1mgd_obj_html"><div class="ttname"><a href="classwrd_1_1mgd_obj.html">wrd::mgdObj</a></div><div class="ttdef"><b>Definition:</b> mgdObj.hpp:11</div></div>
 <div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1ases_html"><div class="ttname"><a href="classwrd_1_1ases.html">wrd::ases</a></div><div class="ttdef"><b>Definition:</b> ases.hpp:7</div></div>
 <div class="ttc" id="aclasswrd_1_1w_void_html"><div class="ttname"><a href="classwrd_1_1w_void.html">wrd::wVoid</a></div><div class="ttdef"><b>Definition:</b> wVoid.hpp:7</div></div>
-<div class="ttc" id="aclasswrd_1_1type_providable_html"><div class="ttname"><a href="classwrd_1_1type_providable.html">wrd::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:6</div></div>
-<div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr</a></div><div class="ttdef"><b>Definition:</b> func.hpp:8</div></div>
-<div class="ttc" id="aclasswrd_1_1obj_html"><div class="ttname"><a href="classwrd_1_1obj.html">wrd::obj</a></div><div class="ttdoc">obj handles frame injection event of all objects.</div><div class="ttdef"><b>Definition:</b> obj.hpp:11</div></div>
+<div class="ttc" id="aclasswrd_1_1primitive_obj_html"><div class="ttname"><a href="classwrd_1_1primitive_obj.html">wrd::primitiveObj</a></div><div class="ttdef"><b>Definition:</b> primitiveObj.hpp:9</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

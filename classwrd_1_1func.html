@@ -78,17 +78,20 @@ Inheritance diagram for wrd::func:</div>
  <div class="center">
   <img src="classwrd_1_1func.png" usemap="#wrd::func_map" alt=""/>
   <map id="wrd::func_map" name="wrd::func_map">
-<area href="classwrd_1_1expr.html" alt="wrd::expr" shape="rect" coords="418,168,687,192"/>
-<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="418,112,687,136"/>
-<area href="classwrd_1_1instance.html" alt="wrd::instance" shape="rect" coords="279,56,548,80"/>
-<area href="classwrd_1_1clonable.html" alt="wrd::clonable" shape="rect" coords="558,56,827,80"/>
-<area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="279,0,548,24"/>
+<area href="classwrd_1_1expr.html" alt="wrd::expr" shape="rect" coords="697,168,966,192"/>
+<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="697,112,966,136"/>
+<area href="classwrd_1_1instance.html" alt="wrd::instance" shape="rect" coords="558,56,827,80"/>
+<area href="classwrd_1_1clonable.html" alt="wrd::clonable" shape="rect" coords="837,56,1106,80"/>
+<area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="558,0,827,24"/>
 <area href="classwrd_1_1tcpp_bridge_func_base.html" alt="wrd::tcppBridgeFuncBase&lt; Ret, T, Args... &gt;" shape="rect" coords="0,280,269,304"/>
 <area href="classwrd_1_1tcpp_bridge_func_base.html" alt="wrd::tcppBridgeFuncBase&lt; void, T, Args... &gt;" shape="rect" coords="279,280,548,304"/>
-<area href="classwrd_1_1mgd_func.html" alt="wrd::mgdFunc" shape="rect" coords="558,280,827,304"/>
-<area href="classwrd_1_1tcpp_bridge_func_base.html" alt="wrd::tcppBridgeFuncBase&lt; Ret, T, Args &gt;" shape="rect" coords="837,280,1106,304"/>
+<area href="classwrd_1_1ctor.html" alt="wrd::ctor" shape="rect" coords="697,280,966,304"/>
+<area href="classwrd_1_1mgd_func.html" alt="wrd::mgdFunc" shape="rect" coords="976,280,1245,304"/>
+<area href="classwrd_1_1tcpp_bridge_func_base.html" alt="wrd::tcppBridgeFuncBase&lt; Ret, T, Args &gt;" shape="rect" coords="1255,280,1524,304"/>
 <area href="classwrd_1_1tcpp_bridge_func.html" alt="wrd::tcppBridgeFunc&lt; Ret, T, Args &gt;" shape="rect" coords="0,336,269,360"/>
 <area href="classwrd_1_1tcpp_bridge_func_3_01void_00_01_t_00_01_args_8_8_8_01_4.html" alt="wrd::tcppBridgeFunc&lt; void, T, Args... &gt;" shape="rect" coords="279,336,548,360"/>
+<area href="classwrd_1_1default_copy_ctor.html" alt="wrd::defaultCopyCtor" shape="rect" coords="558,336,827,360"/>
+<area href="classwrd_1_1default_ctor.html" alt="wrd::defaultCtor" shape="rect" coords="837,336,1106,360"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -313,7 +316,7 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
 <dl class="section return"><dt>Returns</dt><dd>parameters of run() func. parameter is just a type. and I don't care about the value of each parameters. that is the reason why I uses a ref to represents parameter.</dd></dl>
 <p>I need the name and which types should be casted and binded from given arguments are matters. </p>
 
-<p>Reimplemented in <a class="el" href="classwrd_1_1tcpp_bridge_func_base.html#ae33016129c2dd8871910e7a693a6dba8">wrd::tcppBridgeFuncBase&lt; Ret, T, Args &gt;</a>, and <a class="el" href="classwrd_1_1mgd_func.html#a7efe4f736eb121aa355e9f9181c3a9f0">wrd::mgdFunc</a>.</p>
+<p>Reimplemented in <a class="el" href="classwrd_1_1tcpp_bridge_func_base.html#ae33016129c2dd8871910e7a693a6dba8">wrd::tcppBridgeFuncBase&lt; Ret, T, Args &gt;</a>, <a class="el" href="classwrd_1_1mgd_func.html#a7efe4f736eb121aa355e9f9181c3a9f0">wrd::mgdFunc</a>, and <a class="el" href="classwrd_1_1default_copy_ctor.html#a850655519f145f17386697b5a81bf919">wrd::defaultCopyCtor</a>.</p>
 
 </div>
 </div>
@@ -339,9 +342,10 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
   </tr>
 </table>
 </div><div class="memdoc">
-<p>return type of this function. </p><dl class="section remark"><dt>Remarks</dt><dd>please don't confuse this to evalType. evaluate means program just read the code and expand or calculate then replace it to the accurate another identifier or variable. so evalType of the func is just the func itself because there is nothing to calculate or run. that's completely different to Return type of the function. if there is a <a class="el" href="classwrd_1_1run_expr.html">runExpr</a> instance, and it takes the func and proper argument, then it can be evaluated and its evalType is the return type of the func. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>type of this function. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>please don't confuse this to evalType. evaluate means program just read the code and expand or calculate then replace it to the accurate another identifier or variable. so evalType of the func is just the func itself because there is nothing to calculate or run. that's completely different to Return type of the function. if there is a <a class="el" href="classwrd_1_1run_expr.html">runExpr</a> instance, and it takes the func and proper argument, then it can be evaluated and its evalType is the return type of the func. </dd></dl>
 
-<p>Implemented in <a class="el" href="classwrd_1_1tcpp_bridge_func_base.html#a1b5abce99ca3d6203dc428654e8d64f4">wrd::tcppBridgeFuncBase&lt; Ret, T, Args &gt;</a>, and <a class="el" href="classwrd_1_1mgd_func.html#a925c4983dcc54785d4009f0cc6bff60c">wrd::mgdFunc</a>.</p>
+<p>Implemented in <a class="el" href="classwrd_1_1tcpp_bridge_func_base.html#a1b5abce99ca3d6203dc428654e8d64f4">wrd::tcppBridgeFuncBase&lt; Ret, T, Args &gt;</a>, <a class="el" href="classwrd_1_1mgd_func.html#a925c4983dcc54785d4009f0cc6bff60c">wrd::mgdFunc</a>, and <a class="el" href="classwrd_1_1ctor.html#ac58c018196c70ce7190457e1edb41726">wrd::ctor</a>.</p>
 
 </div>
 </div>
