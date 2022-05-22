@@ -5,7 +5,7 @@ set(dependencies ${dependencies} indep clog memlite meta wrd swrd dl)
 
 message("building ${moduleName}...")
 
-set(defCandidates "WRD_TAG=\"${moduleName}\"")
+set(defCandidates "WRD_TAG=\"${moduleName}\"" "${moduleName}=1")
 foreach(def ${defCandidates})
     message("\tadd define ${def}")
     set(defines ${defines} -D${def})
@@ -33,3 +33,8 @@ endforeach(e)
 
 add_executable(${moduleName} ${sources})
 target_link_libraries(${moduleName} ${libraries})
+
+#       let MSVC follow macro expansion of standard:
+if ((MSVC) AND (MSVC_VERSION GREATER_EQUAL 1914))
+    target_compile_options(${moduleName} PUBLIC "/Zc:preprocessor")
+endif()

@@ -6,7 +6,7 @@
 namespace wrd {
     using std::string;
 
-    class buildFeature {
+    class _wout buildFeature {
         WRD_DECL_ME(buildFeature)
 
     public:

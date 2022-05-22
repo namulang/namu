@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class platformAPI {
+    class _wout platformAPI {
         WRD_DECL_ME(platformAPI)
 
     public:

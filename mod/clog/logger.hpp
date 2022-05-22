@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class logger : public stream {
+    class _wout logger : public stream {
         WRD_DECL_ME(logger, stream)
 
     public:

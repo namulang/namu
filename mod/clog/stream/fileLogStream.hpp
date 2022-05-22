@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    class fileLogStream : public stream {
+    class _wout fileLogStream : public stream {
         WRD_DECL_ME(fileLogStream, stream)
 
     public:
