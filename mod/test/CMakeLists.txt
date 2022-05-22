@@ -3,7 +3,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 set(moduleName "test")
 set(dependencies ${dependencies} indep clog memlite meta wrd swrd dl ${pathGtest})
 
-message("building ${moduleName}...")
+message("building ${moduleName}..." "${moduleName}=1")
 
 set(defCandidates "WRD_TAG=\"${moduleName}\"")
 foreach(def ${defCandidates})
@@ -40,3 +40,8 @@ target_link_libraries(${moduleName} ${libraries}
     PRIVATE Threads::Threads)
 
 add_subdirectory(bundle)
+
+#       let MSVC follow macro expansion of standard:
+if ((MSVC) AND (MSVC_VERSION GREATER_EQUAL 1914))
+    target_compile_options(${moduleName} PUBLIC "/Zc:preprocessor")
+endif()

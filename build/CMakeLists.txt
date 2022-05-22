@@ -6,7 +6,7 @@ set(SHOW_CMAKE_VARIABLES 1)
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
 set(VERSION_FIX 7)
-set(BUILD_COUNT 392)
+set(BUILD_COUNT 396)
 set(VERSION_NAME "Essence Update F")
 set(VERSION_VALUE "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_FIX}")
 set(VERSION "${PROJECT_NAME} ${UPDATE_NAME} v${VERSION_VALUE}")
@@ -32,28 +32,31 @@ set(CMAKE_C_COMPILER "clang")
 set(CMAKE_CXX_COMPILER "clang++")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -O0 -DWRD_DEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O1")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fdiagnostics-color=always")  #default options.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-address -Wno-unused-local-typedefs -Wno-undefined-bool-conversion")  #compiler options.
 set(CXX_DEFINITIONS "${DEFINITIONS} -DUNICODE")
 set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
-IF(CMAKE_SYSTEM_NAME STREQUAL Darwin)
+IF(CMAKE_SYSTEM_NAME STREQUAL Darwin OR CMAKE_SYSTEM_NAME STREQUAL Linux)
     set(CMAKE_MACOSX_RPATH 1)
-ENDIF(CMAKE_SYSTEM_NAME STREQUAL Darwin)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fdiagnostics-color=always")  #default options.
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-address -Wno-unused-local-typedefs -Wno-undefined-bool-conversion")  #compiler options.
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -O0 -DWRD_DEBUG")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O1")
+    set(WRD_LIBRARY_EXTENSION "so")
+ENDIF(CMAKE_SYSTEM_NAME STREQUAL Darwin OR CMAKE_SYSTEM_NAME STREQUAL Linux)
 IF(CMAKE_SYSTEM_NAME STREQUAL Windows)
     set(defines -DWIN32)
-    set(dependencies kernel32 user32 gdi32 winspool comdlg32 advapi32 shell32 ole32 oleaut32 uuid odbc32 odbccp32)
+    set(WRD_LIBRARY_EXTENSION "dll")
 ENDIF(CMAKE_SYSTEM_NAME STREQUAL Windows)
 
 cmake_policy(SET CMP0015 NEW)
 cmake_policy(SET CMP0042 NEW)
 
-set(WRD_LIBRARY_EXTENSION "so")
+
 set(WRD_PACK_EXTENSION "pack")
 get_filename_component(WRD_DIR ${CMAKE_SOURCE_DIR} DIRECTORY)
 set(WRD_DEFAULT_INC_DIR

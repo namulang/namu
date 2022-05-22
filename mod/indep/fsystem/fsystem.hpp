@@ -16,7 +16,7 @@ namespace wrd {
 
     /// fsystem is going to be used before filesystem library fully supported.
     /// to apply fsystem on clang++ is quite hard now.
-    class fsystem {
+    class _wout fsystem {
         WRD(ME(fsystem))
 
         struct entry {

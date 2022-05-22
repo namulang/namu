@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class stream {
+    class _wout stream {
         WRD_DECL_ME(stream)
 
     public:

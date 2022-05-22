@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class consoleStream : public stream {
+    class _wout consoleStream : public stream {
         WRD_DECL_ME(consoleStream, stream)
 
     public:

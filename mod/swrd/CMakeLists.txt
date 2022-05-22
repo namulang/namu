@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 message("building ${moduleName}...")
 set(moduleName "swrd")
-set(defCandidates "WRD_TAG=\"${moduleName}\"")
+set(defCandidates "WRD_TAG=\"${moduleName}\"" "${moduleName}=1")
 foreach(def ${defCandidates})
     message("\tadd define ${def}")
     set(defines ${defines} -D${def})
@@ -46,3 +46,8 @@ endforeach(e)
 add_library(${moduleName} SHARED ${sources})
 set_target_properties(${moduleName} PROPERTIES SUFFIX ".${WRD_LIBRARY_EXTENSION}")
 target_link_libraries(${moduleName} ${dependencies})
+
+#       let MSVC follow macro expansion of standard:
+if ((MSVC) AND (MSVC_VERSION GREATER_EQUAL 1914))
+    target_compile_options(${moduleName} PUBLIC "/Zc:preprocessor")
+endif()

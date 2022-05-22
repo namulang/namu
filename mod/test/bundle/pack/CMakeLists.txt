@@ -24,3 +24,8 @@ set_target_properties(${packName} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${packOut
 target_link_libraries(${packName} ${dependencies})
 
 add_dependencies(${packName} ${moduleName})
+
+#       let MSVC follow macro expansion of standard:
+if ((MSVC) AND (MSVC_VERSION GREATER_EQUAL 1914))
+    target_compile_options(${packName} PUBLIC "/Zc:preprocessor")
+endif()
