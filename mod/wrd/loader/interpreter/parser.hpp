@@ -22,7 +22,7 @@ namespace wrd {
     /// lowparser/scanner should be dependent to THIS.
     class pack;
     class _wout parser : public typeProvidable {
-        WRD(INTERFACE(parser, typeProvidable))
+        WRD(ADT(parser, typeProvidable))
 
 	public:
 		parser() { me::rel(); }

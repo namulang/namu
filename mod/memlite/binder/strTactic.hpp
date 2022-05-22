@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class strTactic : public weakTactic {
+    class _wout strTactic : public weakTactic {
         WRD_DECL_ME(strTactic, weakTactic);
 
     public:

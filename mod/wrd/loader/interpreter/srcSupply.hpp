@@ -4,7 +4,7 @@
 
 namespace wrd {
     class _wout srcSupply : public instance, public clonable {
-        WRD(INTERFACE(srcSupply, instance))
+        WRD(ADT(srcSupply, instance))
 
     public:
         /// @return true if there is no more data to process.

@@ -6,7 +6,7 @@ namespace wrd {
 
     template <typename T>
     class tnucontainer : public instance, public tucontainable<T>, public clonable {
-        WRD(INTERFACE(tnucontainer, instance))
+        WRD(ADT(tnucontainer, instance))
     };
 
     class node;

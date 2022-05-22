@@ -11,7 +11,7 @@ namespace wrd {
 
     /// node provides common API to manipulate its sub nodes.
     class _wout node : public instance, public clonable {
-        WRD(INTERFACE(node, instance))
+        WRD(ADT(node, instance))
 
     public:
         node& operator[](const std::string& name) const;

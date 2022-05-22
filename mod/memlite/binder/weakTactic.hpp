@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    class weakTactic : public bindTacticable {
+    class _wout weakTactic : public bindTacticable {
         WRD_DECL_ME(weakTactic, bindTacticable);
 
     public:

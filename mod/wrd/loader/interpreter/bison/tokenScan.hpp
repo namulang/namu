@@ -12,7 +12,7 @@ namespace wrd {
     class loweventer;
 
     class _wout tokenScan : public typeProvidable, public clonable {
-        WRD(INTERFACE(tokenScan))
+        WRD(ADT(tokenScan))
 
     public:
         wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {

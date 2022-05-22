@@ -45,7 +45,7 @@ namespace wrd {
     ///             because it was declared to class template, user need to bind or get binded using type T.
     ///             of course these are based on class bind, user can use loose-check API case by case.
     ///
-    class binder : public typeProvidable, public tbindable<instance> {
+    class _wout binder : public typeProvidable, public tbindable<instance> {
         WRD_DECL_ME(binder, instance)
         WRD_INIT_META(me)
         friend class weakTactic;

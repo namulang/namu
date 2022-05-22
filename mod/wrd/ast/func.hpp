@@ -9,7 +9,7 @@ namespace wrd {
     typedef tnarr<param, strTactic> params;
 
     class _wout func : public expr {
-        WRD(INTERFACE(func, expr))
+        WRD(ADT(func, expr))
 
     public:
         wbool canRun(const ucontainable& args) const override;

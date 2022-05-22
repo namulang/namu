@@ -2,7 +2,7 @@
 
 // nested class of tucontainable.hpp
 class iteration : public instance, public iterable, public clonable {
-    WRD(INTERFACE(iteration, instance))
+    WRD(ADT(iteration, instance))
     friend class iter;
 
 public:

@@ -7,7 +7,7 @@ namespace wrd {
 
     template <typename T>
     class primitiveObj : public obj {
-        WRD(INTERFACE(primitiveObj, obj))
+        WRD(ADT(primitiveObj, obj))
 
     public:
         primitiveObj(): _val() {}
