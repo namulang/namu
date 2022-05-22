@@ -21,7 +21,7 @@ file(GLOB_RECURSE sources
 foreach(e ${sources})
     message("\tembeding ${e}")
 endforeach(e)
-set(dependencies meta)
+set(dependencies ${dependencies} meta)
 foreach(e ${dependencies})
     message("\tlinking ${e}")
 endforeach(e)

@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 set(moduleName "test")
-set(dependencies indep clog memlite meta wrd swrd dl ${pathGtest})
+set(dependencies ${dependencies} indep clog memlite meta wrd swrd dl ${pathGtest})
 
 message("building ${moduleName}...")
 
