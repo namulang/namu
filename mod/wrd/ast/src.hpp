@@ -7,7 +7,7 @@ namespace wrd {
 
     /// src represents src file of wrdlang source codes.
     class pack;
-    class src : public node {
+    class _wout src : public node {
         WRD(CLASS(src, node))
 
     public:

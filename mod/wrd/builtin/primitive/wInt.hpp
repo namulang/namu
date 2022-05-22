@@ -4,9 +4,9 @@
 
 namespace wrd {
 
-    class wInt : public primitiveObj<wint> {
+    class _wout wInt : public primitiveObj<wint> {
 
-        class wIntType : public wtype {
+        class _wout wIntType : public wtype {
         public:
             wbool isImmutable() const override { return true; }
 

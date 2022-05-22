@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-	class ases: public asable {
+	class _wout ases: public asable {
 	public:
 		void add(const asable& newCast) {
 			_casts.push_back((asable*) &newCast);

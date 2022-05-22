@@ -6,7 +6,7 @@
 namespace wrd {
 
     class chunk;
-    class bindTag : public typeProvidable, public tbindable<instance> {
+    class _wout bindTag : public typeProvidable, public tbindable<instance> {
         WRD_DECL_ME(bindTag)
         WRD_INIT_META(me)
         template <typename T, typename TACTIC> friend class tweak;

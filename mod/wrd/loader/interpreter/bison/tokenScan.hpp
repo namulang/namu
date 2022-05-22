@@ -11,7 +11,7 @@ namespace wrd {
 
     class loweventer;
 
-    class tokenScan : public typeProvidable, public clonable {
+    class _wout tokenScan : public typeProvidable, public clonable {
         WRD(INTERFACE(tokenScan))
 
     public:
@@ -22,7 +22,7 @@ namespace wrd {
         virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, wbool& isBypass);
     };
 
-    class normalScan: public tokenScan {
+    class _wout normalScan: public tokenScan {
         WRD(CLASS(normalScan, tokenScan))
         friend class loweventer;
 
@@ -34,7 +34,7 @@ namespace wrd {
         static normalScan* _instance;
     };
 
-    class indentScan : public tokenScan {
+    class _wout indentScan : public tokenScan {
         WRD(CLASS(indentScan, tokenScan))
         friend class loweventer;
 

@@ -3,7 +3,7 @@
 #include "../../common.hpp"
 
 namespace wrd {
-    class srcSupply : public instance, public clonable {
+    class _wout srcSupply : public instance, public clonable {
         WRD(INTERFACE(srcSupply, instance))
 
     public:

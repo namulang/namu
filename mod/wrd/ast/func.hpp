@@ -8,7 +8,7 @@ namespace wrd {
     template <typename T, typename TACTIC> class tnarr;
     typedef tnarr<param, strTactic> params;
 
-    class func : public expr {
+    class _wout func : public expr {
         WRD(INTERFACE(func, expr))
 
     public:

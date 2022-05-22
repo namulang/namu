@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class nullSobj : public sobj {
+    class _wout nullSobj : public sobj {
         WRD_DECL_ME(nullSobj, sobj)
         WRD_INIT_META(nullSobj)
 

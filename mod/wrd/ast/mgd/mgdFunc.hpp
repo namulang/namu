@@ -6,7 +6,7 @@
 
 namespace wrd {
 
-    class mgdFunc : public func {
+    class _wout mgdFunc : public func {
         WRD(CLASS(mgdFunc, func),
             FRIEND_VERIFY(mgdFunc, subNodes))
 

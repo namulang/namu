@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class sobj : public instance {
+    class _wout sobj : public instance {
         WRD_DECL_ME(sobj, instance)
         WRD_INIT_META(sobj)
 

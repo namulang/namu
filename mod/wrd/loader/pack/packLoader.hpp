@@ -7,7 +7,7 @@ namespace wrd {
 
     class errReport;
 
-    class packLoader : public typeProvidable, public clonable {
+    class _wout packLoader : public typeProvidable, public clonable {
         WRD(CLASS(packLoader))
 
     public:

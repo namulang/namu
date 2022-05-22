@@ -16,7 +16,7 @@ namespace wrd {
     class blockExpr;
     class returnExpr;
     class runExpr;
-    class loweventer : public tokenScan {
+    class _wout loweventer : public tokenScan {
         WRD(CLASS(loweventer, tokenScan))
         friend class tokenScanModable;
 

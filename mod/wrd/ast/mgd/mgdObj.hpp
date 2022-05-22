@@ -7,7 +7,7 @@ namespace wrd {
     /// mgdObj is a object structured in managed programming environment like 'wrd'.
     /// owned sub nodes of a object can only be manipulated through API provided mgdObj.
     /// because native object won't have owned nodes but only shared ones.
-    class mgdObj : public obj {
+    class _wout mgdObj : public obj {
         WRD(CLASS(mgdObj, obj))
 
     public:

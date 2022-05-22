@@ -30,7 +30,7 @@ namespace wrd {
         };
         typedef std::vector<entry> entries;
 
-        class iterator {
+        class _wout iterator {
             WRD(ME(iterator))
             friend class fsystem;
 

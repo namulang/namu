@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class clonable {
+    class _wout clonable {
         WRD_DECL_ME(clonable)
         WRD_INIT_META(me)
 

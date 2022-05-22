@@ -11,7 +11,7 @@ namespace wrd {
     class func;
     typedef tnarr<func> funcs;
 
-    class pack : public obj, public packMakable {
+    class _wout pack : public obj, public packMakable {
         WRD(CLASS(pack, obj))
 
     public:

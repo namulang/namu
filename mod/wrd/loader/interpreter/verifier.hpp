@@ -17,7 +17,7 @@ namespace wrd {
     //              currentPack.setValid(false); // never set to valid again if it's invalid once.
     //          targetPack.addDepedent(currentPack);
     //      }
-	class verifier : public typeProvidable, clonable {
+	class _wout verifier : public typeProvidable, clonable {
 		WRD(CLASS(verifier))
 		friend struct ::verifierTest;
 

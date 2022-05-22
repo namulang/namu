@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class sinterpreter {
+    class _wout sinterpreter {
         WRD_DECL_ME(sinterpreter)
 
     public:

@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class chunks : public allocator {
+    class _wout chunks : public allocator {
         WRD_DECL_ME(chunks, allocator)
         WRD_INIT_META(me)
 

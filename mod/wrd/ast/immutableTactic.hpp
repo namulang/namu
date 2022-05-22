@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-	class immutableTactic : public strTactic {
+	class _wout immutableTactic : public strTactic {
 		WRD(ME(immutableTactic, strTactic))
 
 	public:

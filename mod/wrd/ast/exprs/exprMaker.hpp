@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class exprMaker : public typeProvidable, public clonable {
+    class _wout exprMaker : public typeProvidable, public clonable {
         WRD(CLASS(exprMaker))
 
     public:

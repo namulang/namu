@@ -11,7 +11,7 @@ namespace wrd {
     struct manifest;
     typedef tnchain<std::string, pack> packChain;
 
-    class packLoading : public instance, public packMakable, public clonable {
+    class _wout packLoading : public instance, public packMakable, public clonable {
         WRD(INTERFACE(packLoading, instance))
 
         typedef wbool (me::*packEvent)(const packChain&);

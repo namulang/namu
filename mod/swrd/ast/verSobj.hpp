@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class verSobj : public termSobj {
+    class _wout verSobj : public termSobj {
         WRD_DECL_ME(verSobj, termSobj)
         WRD_INIT_META(verSobj)
 

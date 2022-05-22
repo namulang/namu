@@ -8,7 +8,7 @@ namespace wrd {
 	class verifier;
     class frame;
 
-	class verification : public typeProvidable {
+	class _wout verification : public typeProvidable {
 		WRD(ME(verification),
 			INIT_META(me))
 

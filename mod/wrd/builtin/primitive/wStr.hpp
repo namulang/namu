@@ -4,9 +4,9 @@
 
 namespace wrd {
 
-    class wStr : public primitiveObj<std::string> {
+    class _wout wStr : public primitiveObj<std::string> {
 
-		class wStrType : public wtype {
+		class _wout wStrType : public wtype {
 		public:
 			wbool isImmutable() const override { return true; }
 

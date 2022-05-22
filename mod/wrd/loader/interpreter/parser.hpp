@@ -21,7 +21,7 @@ namespace wrd {
     ///
     /// lowparser/scanner should be dependent to THIS.
     class pack;
-    class parser : public typeProvidable {
+    class _wout parser : public typeProvidable {
         WRD(INTERFACE(parser, typeProvidable))
 
 	public:

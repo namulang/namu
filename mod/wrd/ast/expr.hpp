@@ -7,7 +7,7 @@ struct exprTest;
 
 namespace wrd {
 
-    class expr : public node {
+    class _wout expr : public node {
     public:
         class exprType : public wtype {
             WRD(ME(exprType, wtype))

@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    class instancer {
+    class _wout instancer {
         WRD_DECL_ME(instancer)
         WRD_INIT_META(me)
         friend class instance;

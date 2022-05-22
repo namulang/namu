@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class returnExpr : public expr {
+    class _wout returnExpr : public expr {
         WRD(CLASS(returnExpr, expr, expr::exprType))
 
     public:

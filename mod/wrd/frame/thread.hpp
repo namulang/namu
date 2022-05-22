@@ -8,7 +8,7 @@ namespace wrd {
     class packLoader;
     typedef tnarr<frame> frames;
 
-    class thread : public node {
+    class _wout thread : public node {
         WRD(CLASS(thread, node))
         friend class obj; // for frames.
         friend class mgdFunc; // for frames.

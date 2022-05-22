@@ -4,9 +4,9 @@
 
 namespace wrd {
 
-    class wVoid : public mgdObj {
+    class _wout wVoid : public mgdObj {
 
-        class wVoidType : public wtype {
+        class _wout wVoidType : public wtype {
         public:
             wbool isImmutable() const override { return true; }
 

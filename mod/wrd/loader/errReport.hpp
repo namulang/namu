@@ -7,7 +7,7 @@
 
 namespace wrd {
 
-    class errReport : public instance, public clonable {
+    class _wout errReport : public instance, public clonable {
         WRD(CLASS(errReport, instance))
 
 	public:
@@ -59,7 +59,7 @@ namespace wrd {
 		std::vector<tstr<err>> _errs;
     };
 
-	class dummyErrReport : public errReport {
+	class _wout dummyErrReport : public errReport {
         WRD(CLASS(dummyErrReport, errReport))
 
     public:

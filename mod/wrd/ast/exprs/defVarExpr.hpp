@@ -6,7 +6,7 @@
 
 namespace wrd {
 
-    class defVarExpr : public expr {
+    class _wout defVarExpr : public expr {
         WRD(CLASS(defVarExpr, expr, expr::exprType),
             FRIEND_VERIFY(defVarExpr, defineVariable))
         friend class mgdFunc;

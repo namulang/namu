@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    class wtype : public type {
+    class _wout wtype : public type {
         WRD_DECL_ME(wtype, type)
 
     public:
