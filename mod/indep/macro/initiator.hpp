@@ -7,7 +7,7 @@ namespace wrd {
     /// Initiator can runs statements before main().
     /// @Usage  just @refer WRD_INITIATOR(myIniti) { <your codes> };
     ///         static<optional> Initiator <name>([]() { <your codes> });
-    struct Initiator {
+    struct _wout Initiator {
         template <typename T>
         Initiator(T func) { func(); }
     };

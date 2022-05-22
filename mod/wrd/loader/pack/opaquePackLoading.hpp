@@ -5,7 +5,7 @@
 namespace wrd {
 
     class errReport;
-    class opaquePackLoading : public packLoading {
+    class _wout opaquePackLoading : public packLoading {
         WRD(INTERFACE(opaquePackLoading, packLoading))
 
     public:

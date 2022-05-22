@@ -3,7 +3,7 @@
 #include "../common/dep.hpp"
 
 namespace wrd {
-	struct point {
+	struct _wout point {
 		wcnt row;
 		wcnt col;
 
@@ -12,7 +12,7 @@ namespace wrd {
         }
 	};
 
-	struct area {
+	struct _wout area {
 		point start;
 		point end;
 

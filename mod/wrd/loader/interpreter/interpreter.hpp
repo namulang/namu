@@ -6,7 +6,7 @@
 
 namespace wrd {
 
-    class interpreter : public typeProvidable, public clonable {
+    class _wout interpreter : public typeProvidable, public clonable {
         WRD(CLASS(interpreter))
 
     public:

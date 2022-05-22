@@ -16,7 +16,7 @@ namespace wrd {
     ///
     ///             // because type::getType() will return Ttype<Ttype<T> >,
     ///             // that stmt will be translated that checks object vs Ttype<T>.
-    class type {
+    class _wout type {
         WRD_DECL_ME(type)
 
     public:

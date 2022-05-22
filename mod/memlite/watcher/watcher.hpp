@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    class watcher : public chunk {
+    class _wout watcher : public chunk {
         WRD_DECL_ME(watcher, chunk)
         WRD_INIT_META(me)
         friend class instancer;

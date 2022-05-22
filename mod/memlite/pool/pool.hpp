@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class pool : public memoryHaver {
+    class _wout pool : public memoryHaver {
         WRD_DECL_ME(pool, memoryHaver)
         WRD_INIT_META(me)
 

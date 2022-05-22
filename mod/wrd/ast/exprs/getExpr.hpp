@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    class getExpr : public expr {
+    class _wout getExpr : public expr {
         WRD(CLASS(getExpr, expr, expr::exprType),
             FRIEND_VERIFY(getExpr, isRunnable))
 

@@ -21,7 +21,7 @@ namespace wrd {
     };
 
     template <>
-    struct tnormalMarshaling<void, wVoid> : public metaIf {
+    struct _wout tnormalMarshaling<void, wVoid> : public metaIf {
         typedef wVoid mgdType;
         typedef void nativeType;
 
@@ -49,16 +49,16 @@ namespace wrd {
     };
 
     template <>
-    struct tmarshaling<wint> : public tnormalMarshaling<wint, wInt> {};
+    struct _wout tmarshaling<wint> : public tnormalMarshaling<wint, wInt> {};
 
     template <>
-    struct tmarshaling<std::string> : public tnormalMarshaling<const std::string&, wStr> {};
+    struct _wout tmarshaling<std::string> : public tnormalMarshaling<const std::string&, wStr> {};
 
     template <>
-    struct tmarshaling<const std::string> : public tnormalMarshaling<const std::string&, wStr> {};
+    struct _wout tmarshaling<const std::string> : public tnormalMarshaling<const std::string&, wStr> {};
 
     template <>
-    struct tmarshaling<void> : public tnormalMarshaling<void, wVoid> {};
+    struct _wout tmarshaling<void> : public tnormalMarshaling<void, wVoid> {};
 
     // TODO: add more.
 }

@@ -9,7 +9,7 @@ namespace wrd {
     typedef tnarr<func> funcs;
 
     /// obj handles frame injection event of all objects.
-    class obj : public node {
+    class _wout obj : public node {
         WRD(INTERFACE(obj, node),
             FRIEND_VERIFY(obj, subNodes))
         friend class mgdObj;

@@ -6,7 +6,7 @@
 #include "../type/wtype.hpp"
 
 namespace wrd {
-    class param : public instance, public clonable {
+    class _wout param : public instance, public clonable {
         WRD(CLASS(param, instance))
 
     public:

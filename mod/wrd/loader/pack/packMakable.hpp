@@ -12,7 +12,7 @@ namespace wrd {
     template <typename T, typename WRP> class tnarr;
     typedef tnarr<src, strTactic> srcs;
 
-    class packMakable {
+    class _wout packMakable {
         WRD_DECL_ME(packMakable)
         WRD_INIT_META(me)
 

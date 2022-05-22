@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    struct id {
+    struct _wout id {
         id(wint new_tagN, wint newChkN, wuint newSerial);
         id();
 

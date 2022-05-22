@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class chunk : public allocator {
+    class _wout chunk : public allocator {
         WRD_DECL_ME(chunk, allocator)
         WRD_INIT_META(me)
         friend class watcher;

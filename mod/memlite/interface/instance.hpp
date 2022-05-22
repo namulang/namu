@@ -10,7 +10,7 @@ namespace wrd {
     class bindTag;
     class instancer;
 
-    class instance : public typeProvidable {
+    class _wout instance : public typeProvidable {
         WRD_DECL_ME(instance)
         WRD_INIT_META(me)
         friend class bindTag;

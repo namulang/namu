@@ -5,7 +5,7 @@
 namespace wrd {
 
     class instance;
-    class memoryHaver {
+    class _wout memoryHaver {
         WRD_DECL_ME(memoryHaver)
         WRD_INIT_META(me)
 

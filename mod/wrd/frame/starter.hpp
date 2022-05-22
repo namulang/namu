@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    class starter : public node {
+    class _wout starter : public node {
         WRD(CLASS(starter, node))
 
     public:

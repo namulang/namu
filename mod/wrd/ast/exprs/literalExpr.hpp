@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class literalExpr : public expr {
+    class _wout literalExpr : public expr {
         WRD(CLASS(literalExpr, expr, expr::exprType))
         friend class mgdFunc;
 

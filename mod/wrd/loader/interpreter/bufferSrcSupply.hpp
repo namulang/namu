@@ -3,7 +3,7 @@
 #include "srcSupply.hpp"
 
 namespace wrd {
-    class bufferSrcSupply : public srcSupply {
+    class _wout bufferSrcSupply : public srcSupply {
         WRD(CLASS(bufferSrcSupply, srcSupply))
 
     public:

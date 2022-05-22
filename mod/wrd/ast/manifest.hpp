@@ -6,7 +6,7 @@
 namespace wrd {
 
     // TODO: entrypoints[== filePath] can be various. but not language.
-    struct entrypoint : public validable {
+    struct _wout entrypoint : public validable {
 
         entrypoint(const std::string& newLang, const std::vector<std::string> newPaths)
             : lang(newLang), paths(newPaths) {}

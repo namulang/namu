@@ -1,7 +1,7 @@
 #pragma once
 
 namespace wrd {
-    class typeProvidable {
+    class _wout typeProvidable {
         WRD_DECL_ME(typeProvidable)
 
     public:

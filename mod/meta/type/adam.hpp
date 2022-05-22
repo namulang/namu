@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../common.hpp"
+
 namespace wrd {
-    class adam {};
+    class _wout adam {};
 }

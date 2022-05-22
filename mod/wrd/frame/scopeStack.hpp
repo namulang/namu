@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    class scopeStack : public instance, clonable {
+    class _wout scopeStack : public instance, clonable {
         WRD(CLASS(scopeStack, instance))
 
     public:

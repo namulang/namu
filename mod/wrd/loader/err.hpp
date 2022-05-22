@@ -10,7 +10,7 @@ namespace wrd {
 
 	typedef std::unordered_map<widx, std::string> msgMap;
 
-	struct err : public instance {
+	struct _wout err : public instance {
 		WRD(ME(err, instance),
 			TYPE(wtype),
 			INIT_META(me))
@@ -71,7 +71,7 @@ namespace wrd {
         err* _newRes(const area& src, type t, errCode code, va_list args);
 	};
 
-    struct dummyErr : public err {
+    struct _wout dummyErr : public err {
         WRD(ME(dummyErr, err),
             TYPE(wtype),
             INIT_META(me))
@@ -83,7 +83,7 @@ namespace wrd {
         void log() const override {}
     };
 
-	struct srcErr : public err {
+	struct _wout srcErr : public err {
 		WRD(ME(srcErr, err),
 			TYPE(wtype),
 			INIT_META(me))

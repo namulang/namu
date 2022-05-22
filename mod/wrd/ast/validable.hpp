@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class validable {
+    class _wout validable {
         WRD_DECL_ME(validable)
         WRD_INIT_META(me)
 

@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class allocator : public memoryHaver {
+    class _wout allocator : public memoryHaver {
         WRD_DECL_ME(allocator)
         WRD_INIT_META(me)
 

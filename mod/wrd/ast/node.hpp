@@ -10,7 +10,7 @@ namespace wrd {
 	class ases;
 
     /// node provides common API to manipulate its sub nodes.
-    class node : public instance, public clonable {
+    class _wout node : public instance, public clonable {
         WRD(INTERFACE(node, instance))
 
     public:

@@ -6,7 +6,6 @@
 
 namespace wrd {
 
-    
 #ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
     typedef HINSTANCE libHandle;
 #else
@@ -14,7 +13,7 @@ namespace wrd {
 #endif
     typedef std::vector<libHandle> libHandles;
 
-    class cppPackLoading : public opaquePackLoading{
+    class _wout cppPackLoading : public opaquePackLoading{
         WRD(CLASS(cppPackLoading, opaquePackLoading))
         typedef void (*entrypointFunc)(bicontainable*);
 

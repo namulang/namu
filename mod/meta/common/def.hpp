@@ -1,6 +1,7 @@
 #pragma once
 
 #include "dep.hpp"
+#include "common/_wout.hpp"
 
 namespace wrd {
     class type;

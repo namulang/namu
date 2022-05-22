@@ -14,7 +14,7 @@ namespace wrd {
     ///
     ///         and we need the blk that can be used after it freed, this is why we
     ///         put an additional value, next. see @Block to know the reason.
-    struct watchCell {
+    struct _wout watchCell {
         widx next;
         bindTag blk;
     };

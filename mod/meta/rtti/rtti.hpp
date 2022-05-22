@@ -6,7 +6,7 @@
 
 namespace wrd {
 
-    struct metaIf {
+    struct _wout metaIf {
         typedef short yes;
         typedef char no;
     };
@@ -56,7 +56,7 @@ namespace wrd {
         static void* make() { return new T(); }
     };
 
-    struct nameDemangler {
+    struct _wout nameDemangler {
 #ifndef WRD_BUILD_PLATFORM_IS_WINDOWS
         static std::string demangle(const wchar* org) {
             wchar* demangled = nullptr;

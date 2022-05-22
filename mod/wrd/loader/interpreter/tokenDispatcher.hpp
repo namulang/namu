@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    class tokenDispatcher {
+    class _wout tokenDispatcher {
     public:
         void add(wint newToken) {
             _toks.push_back(newToken);
