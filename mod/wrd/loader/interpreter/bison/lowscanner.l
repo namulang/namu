@@ -7,7 +7,9 @@
 #include "../loweventer.hpp"
 #include <iostream>
 #include <functional>
-
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#   define YY_NO_UNISTD_H 1
+#endif
 namespace {
 	static constexpr int TAB_WIDTH = 4;
 }
@@ -59,13 +61,13 @@ namespace {
 }
 
 if { return IF; }
-void { return VOID; }
-int { return INT; }
-str { return STR; }
-bool { return BOOL; }
-char { return CHAR; }
-flt { return FLT; }
-null { return NUL; }
+void { return VOIDTYPE; }
+int { return INTTYPE; }
+str { return STRTYPE; }
+bool { return BOOLTYPE; }
+char { return CHARTYPE; }
+flt { return FLTTYPE; }
+null { return NULTYPE; }
 pack { return PACK; }
 aka { return AKA; }
 return { return RETURN; }

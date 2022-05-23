@@ -27,7 +27,7 @@ namespace wrd {
         libHandle newHandle = nullptr;
         for(const std::string& path : _getPaths()) {
 #ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
-            newHandle = LoadLibrary(path.c_str());
+            newHandle = LoadLibraryA(path.c_str());
 #else
             newHandle = dlopen(path.c_str(), RTLD_LAZY);
 #endif

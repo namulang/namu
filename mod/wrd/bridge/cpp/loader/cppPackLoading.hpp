@@ -7,7 +7,7 @@
 namespace wrd {
 
 #ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
-    typedef HINSTANCE libHandle;
+    typedef HMODULE libHandle;
 #else
     typedef void* libHandle;
 #endif

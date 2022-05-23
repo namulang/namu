@@ -10,6 +10,9 @@ namespace wrd {
         WRD(CLASS(tndumChain, _super_))
 
     public:
+        tndumChain() {}
+            
+    public:
         // add:
         using super::add;
         wbool add(const K& key, const V& val) override { return false; }
@@ -19,7 +22,7 @@ namespace wrd {
         wbool link(const super& new1) override { return false; }
 
     public:
-        static inline me singletone;
+        static me singletone;
     };
 
     typedef tndumChain<std::string, node> ndumChain;

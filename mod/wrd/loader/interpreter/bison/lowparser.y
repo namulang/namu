@@ -108,7 +108,7 @@
 // valueless-token:
 %token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS PACK ARROW TAB
 //  primitive-type:
-%token VOID INT STR BOOL FLT NUL CHAR
+%token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
 %token IF AKA RETURN
 
@@ -352,12 +352,12 @@ defblock: %empty {
       }
 
 //  type:
-type: VOID { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
-    | INT { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
-    | CHAR { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
-    | STR { $$ = yyget_extra(scanner)->onPrimitive<wStr>(); }
-    | BOOL { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
-    | FLT { $$ = yyget_extra(scanner)->onPrimitive<wFlt>(); }
+type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
+    | INTTYPE { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | CHARTYPE { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | STRTYPE { $$ = yyget_extra(scanner)->onPrimitive<wStr>(); }
+    | BOOLTYPE { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | FLTTYPE { $$ = yyget_extra(scanner)->onPrimitive<wFlt>(); }
     | NAME {
         $$ = new blockExpr(); // TODO: then free it
     }

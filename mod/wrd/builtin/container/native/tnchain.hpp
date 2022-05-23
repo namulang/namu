@@ -11,10 +11,10 @@ namespace wrd {
     class tnchain : public tnbicontainer<K, V> {
         typedef tnbicontainer<K, V> _super_;
         WRD(CLASS(tnchain, _super_))
-        typedef typename super::iter iter;
-        typedef typename super::iteration iteration;
 
     public:
+        typedef typename super::iter iter;
+        typedef typename super::iteration iteration;
         friend class chainIteration;
 #include "../iter/nchainIteration.hpp"
 
