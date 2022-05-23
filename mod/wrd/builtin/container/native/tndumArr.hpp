@@ -4,9 +4,9 @@
 
 namespace wrd {
 
-    template <typename T, typename WRAPPER = str>
-    class tndumArr: public tnarr<T, WRAPPER> {
-        typedef tnarr<T, WRAPPER> _super_;
+    template <typename T, typename TACTIC = strTactic>
+    class tndumArr: public tnarr<T, TACTIC> {
+        typedef tnarr<T, TACTIC> _super_;
         WRD(CLASS(tndumArr, _super_))
 
     public:
@@ -21,5 +21,5 @@ namespace wrd {
         static me singletone;
     };
 
-    typedef tndumArr<node, str> ndumArr;
+    typedef tndumArr<node, strTactic> ndumArr;
 }
