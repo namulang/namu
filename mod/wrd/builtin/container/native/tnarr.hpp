@@ -8,12 +8,12 @@ namespace wrd {
     template <typename T, typename TACTIC = strTactic>
     class tnarr : public tnucontainer<T>, public tarrayable<T> {
         WRD(CLASS(tnarr, tnucontainer<T>))
+
+    public:
         template <typename E> friend class tarr;
         typedef tstr<T, TACTIC> wrap;
         typedef typename super::iter iter;
         typedef typename super::iteration iteration;
-
-    public:
         friend class narrIteration;
 #include "../iter/narrIteration.hpp"
 

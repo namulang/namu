@@ -21,5 +21,5 @@ namespace wrd {
         static me singletone;
     };
 
-    typedef tnarr<node, str> ndumArr;
+    typedef tndumArr<node, str> ndumArr;
 }

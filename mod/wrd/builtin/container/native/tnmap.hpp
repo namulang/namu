@@ -9,6 +9,8 @@ namespace wrd {
     class tnmap : public tnbicontainer<K, V> {
         typedef tnbicontainer<K, V> _super_;
         WRD(CLASS(tnmap, _super_))
+
+    public:
         template <typename K1, typename V1> friend class tmap;
         typedef tstr<V, TACTIC> wrap;
         typedef std::multimap<K, wrap> cmap;
@@ -16,8 +18,6 @@ namespace wrd {
         typedef std::pair<K, V> cpair;
         typedef typename super::iter iter;
         typedef typename super::iteration iteration;
-
-    public:
         friend class nmapIteration;
 #include "../iter/nmapIteration.hpp"
 

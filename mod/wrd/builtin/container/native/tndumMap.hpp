@@ -15,7 +15,7 @@ namespace wrd {
         wbool add(const K& key, const V& val) override { return false; }
 
     public:
-        static inline me singletone;
+        static me singletone;
     };
 
     typedef tndumMap<std::string, node> ndumMap;

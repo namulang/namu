@@ -1,3 +1,4 @@
+#include "../ast/node.hpp"
 #include "errReport.hpp"
 
 namespace wrd {
