@@ -1,7 +1,10 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 set(moduleName "wrc")
-set(dependencies ${dependencies} indep clog meta memlite wrd swrd dl)
+set(dependencies ${dependencies} indep clog meta memlite wrd swrd)
+IF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
+    set(dependencies ${dependencies} dl) # dynamic linking lib of posix compatiables.
+ENDIF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
 
 message("building ${moduleName}...")
 
