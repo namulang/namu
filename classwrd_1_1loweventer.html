@@ -175,12 +175,15 @@ template&lt;typename... Args&gt; </td></tr>
 template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:a5e4a38582c40e9f33f0424414fd31b75"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>onSrcInfo</b> (Args... args)</td></tr>
 <tr class="separator:a5e4a38582c40e9f33f0424414fd31b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7131d7896da029db822b504dc15c257f"><td class="memItemLeft" align="right" valign="top"><a id="a7131d7896da029db822b504dc15c257f"></a>
-<a class="el" href="classwrd_1_1tnarr.html">narr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDotName</b> (const std::string &amp;name)</td></tr>
-<tr class="separator:a7131d7896da029db822b504dc15c257f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7a456d57bf564eea29da70c69ce6a75"><td class="memItemLeft" align="right" valign="top"><a id="ae7a456d57bf564eea29da70c69ce6a75"></a>
-<a class="el" href="classwrd_1_1tnarr.html">narr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDotName</b> (<a class="el" href="classwrd_1_1tnarr.html">narr</a> &amp;names, const std::string &amp;name)</td></tr>
-<tr class="separator:ae7a456d57bf564eea29da70c69ce6a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e50a7b457a9e95a1963ec1ef4c4164a"><td class="memItemLeft" align="right" valign="top"><a id="a7e50a7b457a9e95a1963ec1ef4c4164a"></a>
+<a class="el" href="classwrd_1_1tnarr.html">narr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDotName</b> (const <a class="el" href="classwrd_1_1node.html">node</a> &amp;name)</td></tr>
+<tr class="separator:a7e50a7b457a9e95a1963ec1ef4c4164a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab51c63e31c97bcab7ce42291c3579295"><td class="memItemLeft" align="right" valign="top"><a id="ab51c63e31c97bcab7ce42291c3579295"></a>
+<a class="el" href="classwrd_1_1tnarr.html">narr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDotName</b> (<a class="el" href="classwrd_1_1tnarr.html">narr</a> &amp;names, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;name)</td></tr>
+<tr class="separator:ab51c63e31c97bcab7ce42291c3579295"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac99da52ffd87bc51b408e1c15939b52e"><td class="memItemLeft" align="right" valign="top"><a id="ac99da52ffd87bc51b408e1c15939b52e"></a>
+<a class="el" href="classwrd_1_1node.html">node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onName</b> (const std::string &amp;name)</td></tr>
+<tr class="separator:ac99da52ffd87bc51b408e1c15939b52e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d00126f5faba80b84d3c0cc6792377f"><td class="memItemLeft" align="right" valign="top"><a id="a5d00126f5faba80b84d3c0cc6792377f"></a>
 <a class="el" href="classwrd_1_1node.html">node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onGet</b> (const std::string &amp;name)</td></tr>
 <tr class="separator:a5d00126f5faba80b84d3c0cc6792377f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -230,6 +233,9 @@ template&lt;typename T , typename... Args&gt; </td></tr>
 <tr class="memitem:adb5e1a9bf227444875cfa50b6f995fe6"><td class="memItemLeft" align="right" valign="top"><a id="adb5e1a9bf227444875cfa50b6f995fe6"></a>
 <a class="el" href="classwrd_1_1expr.html">expr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDefVar</b> (const std::string &amp;name, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;origin)</td></tr>
 <tr class="separator:adb5e1a9bf227444875cfa50b6f995fe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a930020f39fa83e6040f17c96210e413c"><td class="memItemLeft" align="right" valign="top"><a id="a930020f39fa83e6040f17c96210e413c"></a>
+<a class="el" href="classwrd_1_1expr.html">expr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>onDefAssign</b> (const std::string &amp;name, <a class="el" href="classwrd_1_1node.html">node</a> &amp;rhs)</td></tr>
+<tr class="separator:a930020f39fa83e6040f17c96210e413c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d3f807554b4d58c3f138bd1ee239c09"><td class="memItemLeft" align="right" valign="top"><a id="a9d3f807554b4d58c3f138bd1ee239c09"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>onCompilationUnit</b> (<a class="el" href="classwrd_1_1node.html">node</a> &amp;subpack, <a class="el" href="classwrd_1_1tnmap.html">scope</a> &amp;blk)</td></tr>
 <tr class="separator:a9d3f807554b4d58c3f138bd1ee239c09"><td class="memSeparator" colspan="2">&#160;</td></tr>
