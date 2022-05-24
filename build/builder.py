@@ -371,12 +371,12 @@ def _checkGTest():
 
     _makeDir(dir)
     os.system("git clone https://github.com/google/googletest " + dir)
+    originDir = os.getcwd()
+    os.chdir(dir)
     os.system("cmake " + os.path.join(dir, "CMakeLists.txt -G \"" + generator + "\""))
     if not isWindow():
-        originDir = os.getcwd()
-        os.chdir(dir)
         os.system("sudo make install")
-        os.chdir(originDir)
+    os.chdir(originDir)
     printOk("installed.")
     _cleanIntermediates()
 
