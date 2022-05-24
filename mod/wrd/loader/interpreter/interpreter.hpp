@@ -160,7 +160,9 @@ namespace wrd {
 
             if(!nul(_pser.getSubPack()) && _pak) {
                 std::cout << " - structure:\n";
-                _logStructure(_pser.getSubPack(), _pak->getManifest().name, 0, 0, true, true);
+                std::vector<const char*> indents;
+                indents.push_back("  ");
+                _logStructure(indents, _pser.getSubPack(), _pak->getManifest().name, 0, true, true);
                 std::cout << "\n";
             }
 
@@ -168,31 +170,34 @@ namespace wrd {
             platformAPI::updateConsoleFore(platformAPI::LIGHTGRAY);
         }
 
-        void _logStructure(const node& n, const std::string& name, int idx, int level, bool isLast, bool isParentLast) const {
+        void _logStructure(std::vector<const char*>& indents, const node& n, const std::string& name, int idx, bool isLast, bool isParentLast) const {
             if(nul(n)) {
                 WRD_W("_logStructure(n == null)");
                 return;
             }
 
-            _logIndent(level, isParentLast);
+            indents.push_back((isParentLast ? "    " : "┃    "));
+            _logIndent(indents, isParentLast);
             std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: " << n.getType().getName() << " \"" << name << "\"\n";
 
             int subN = -1;
             const bicontainable& subs = n.subs();
             for(auto e=subs.begin(); e ;++e) {
                 subN++;
-                _logStructure(e.getVal(), e.getKey(), subN, level + 2, subN == subs.len()-1, isLast);
+                _logStructure(indents, e.getVal(), e.getKey(), subN, subN == subs.len()-1, isLast);
             }
 
             const mgdFunc& f = n.cast<mgdFunc>();
             if(!nul(f)) {
                 subN++;
-                _logStructure(f.getBlock().getStmts(), subN, level+2, subN == subs.len(), isLast);
+                _logStructure(indents, f.getBlock().getStmts(), subN, subN == subs.len(), isLast);
             }
+            indents.pop_back();
         }
 
-        void _logStructure(const narr& blk, int idx, int level, bool isLast, bool isParentLast) const {
-            _logIndent(level, isParentLast);
+        void _logStructure(std::vector<const char*>& indents, const narr& blk, int idx, bool isLast, bool isParentLast) const {
+            indents.push_back(isParentLast ? "    " : "┃   ");
+            _logIndent(indents, isParentLast);
             std::cout << (isLast ? "┗━[" : "┣━[") << idx << "]: block \n";
 
             int subN = -1;
@@ -200,16 +205,16 @@ namespace wrd {
                 subN++;
                 const blockExpr& blkExpr = stmt.cast<blockExpr>();
                 if(!nul(blkExpr))
-                    _logStructure(blkExpr.getStmts(), subN, level+2, subN == blk.len()-1, isLast);
+                    _logStructure(indents, blkExpr.getStmts(), subN, subN == blk.len()-1, isLast);
                 else
-                    _logStructure(stmt, "", subN, level + 2, subN == blk.len()-1, isLast);
+                    _logStructure(indents, stmt, "", subN, subN == blk.len()-1, isLast);
             }
+            indents.pop_back();
         }
 
-        void _logIndent(int level, bool isParentLast) const {
-            std::cout << "  ";
-            for(int n=0; n < level-1; n++)
-                std::cout << (isParentLast ? "  " : "┃ ");
+        void _logIndent(const std::vector<const char*>& indents, bool isParentLast) const {
+            for(int n=0; n < indents.size(); n++)
+                std::cout << indents[n];
         }
 
         void _logFrame(const frame& info) const {
