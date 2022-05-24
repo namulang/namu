@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../../common.hpp"
+#include "../../ast/clonable.hpp"
+#include "../../type/wtype.hpp"
 
 namespace wrd {
     class _wout srcSupply : public instance, public clonable {
