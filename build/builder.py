@@ -371,7 +371,6 @@ def _checkGTest():
 
     _makeDir(dir)
     os.system("git clone https://github.com/google/googletest " + dir)
-    res = os.system("cmake . -G \"" + generator + "\" " + config)
     os.system("cmake " + os.path.join(dir, "CMakeLists.txt -G \"" + generator + "\""))
     if not isWindow():
         originDir = os.getcwd()
