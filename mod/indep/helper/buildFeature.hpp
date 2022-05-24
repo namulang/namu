@@ -10,7 +10,7 @@ namespace wrd {
         WRD_DECL_ME(buildFeature)
 
     public:
-        struct date {
+        struct _wout date {
             WRD_DECL_ME(date)
 
         public:
@@ -20,7 +20,7 @@ namespace wrd {
             static wint getDay();
         };
 
-        struct time {
+        struct _wout time {
             WRD_DECL_ME(time)
 
         public:
@@ -30,7 +30,7 @@ namespace wrd {
             static wint getSec();
         };
 
-        struct version {
+        struct _wout version {
             WRD_DECL_ME(version)
 
         public:
@@ -51,7 +51,7 @@ namespace wrd {
             PLATFORM_TYPE_END,
         };
 
-        struct platform {
+        struct _wout platform {
             WRD_DECL_ME(platform)
 
         public:
@@ -67,7 +67,7 @@ namespace wrd {
             BUILD_TYPE_END,
         };
 
-        struct config {
+        struct _wout config {
             WRD_DECL_ME(config)
 
         public:

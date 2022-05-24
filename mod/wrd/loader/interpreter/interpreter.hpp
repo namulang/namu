@@ -135,7 +135,7 @@ namespace wrd {
             packs* paks = new packs();
             paks->add(_pak->getManifest().name, *_pak);
             packChain tray(paks);
-            tray.link(thread::get().getSystemPacks());
+            tray.link(wrd::thread::get().getSystemPacks());
 
             // verify:
             _veri.setReport(*_rpt)
