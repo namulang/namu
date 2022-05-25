@@ -152,9 +152,8 @@ namespace wrd {
             logger& l = logger::get();
             l.saveStreamEnable();
             l.setEnable(true);
-            platformAPI::updateConsoleFore(platformAPI::LIGHTGREEN);
 
-            std::cout << " - frame:\n";
+            std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGREEN) << " - frame:\n";
             _logFrame(info);
             std::cout << "\n";
 
@@ -167,7 +166,7 @@ namespace wrd {
             }
 
             l.loadStreamEnable();
-            platformAPI::updateConsoleFore(platformAPI::LIGHTGRAY);
+            std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
         }
 
         void _logStructure(std::vector<const char*>& indents, const node& n, const std::string& name, int idx, bool isLast, bool isParentLast) const {

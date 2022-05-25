@@ -17,8 +17,8 @@ namespace wrd {
             WHITE = CONSOLE_COLOR_END
         };
 
-        static void updateConsoleFore(consoleColor fore);
-        static void updateConsoleBack(consoleColor back);
-        static std::string createCurrentTime(const std::string& strftime_format);
+        static const std::string& getConsoleFore(consoleColor fore);
+        static const std::string& getConsoleBack(consoleColor back);
+        static std::string createNowTime(const std::string& strftime_format);
     };
 }
