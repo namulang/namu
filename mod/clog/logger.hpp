@@ -40,6 +40,7 @@ namespace wrd {
         }
         wcnt getStreamCount() const;
         wbool dumpFormat(const wchar* fmt, ...);
+        wbool dumpFormatLog(const wchar* level, const wchar* fmt, ...);
         wbool pushStream(stream* new_stream);
         static logger& get();
         //  stream:

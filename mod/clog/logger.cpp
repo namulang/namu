@@ -112,6 +112,32 @@ namespace wrd {
         return *inner;
     }
 
+    wbool me::dumpFormatLog(const wchar* level, const wchar* fmt, ...) {
+        std::cout << platformAPI::getConsoleFore(platformAPI::BROWN);
+        dumpFormat("%s ", platformAPI::createNowTime("%b %d %Y  %X").c_str());
+
+        platformAPI::consoleColor clrLv = platformAPI::WHITE;
+        switch(level[0]) {
+            case 'E': clrLv = platformAPI::LIGHTRED; break;
+            case 'W': clrLv = platformAPI::YELLOW; break;
+            case 'I': clrLv = platformAPI::LIGHTBLUE; break;
+        }
+
+        std::cout << ::wrd::platformAPI::getConsoleFore(clrLv);
+        dumpFormat("%s %s ", WRD_TAG, level);
+
+        std::cout << ::wrd::platformAPI::getConsoleFore(::wrd::platformAPI::GREEN);
+        dumpFormat("<%s::%s#%d> ", __FILENAME__, __func__, __LINE__);
+
+        std::cout << ::wrd::platformAPI::getConsoleFore(::wrd::platformAPI::LIGHTGRAY);
+        va_list va;
+        va_start(va, fmt);
+        wchar buf[1024];
+        vsnprintf(buf, 1024, fmt, va);
+        va_end(va);
+        dump(buf);
+    }
+
     me::logger() : super() {}
     me::logger(const me& rhs) : super(rhs) {}
 }
