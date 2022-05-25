@@ -30,15 +30,14 @@ namespace wrd {
     }
 #endif
 
-    void me::updateConsoleFore(consoleColor fore) {
+    const std::string& me::getConsoleFore(consoleColor fore) {
 #if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), platformAPI::BLACK << 4 | fore);
 #elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX
         static bool is_terminal_supporting = _isAnsiColorTerminal();
         if( ! is_terminal_supporting) {
-            // TODO: may need to print some error.
-            cout << "ERROR!";
-            return;
+            static std::string inner;
+            return inner;
         }
 
         static vector<string> fores = {
@@ -47,20 +46,20 @@ namespace wrd {
             "\x1B[1;30m", "\x1B[1;34m", "\x1B[1;32m", "\x1B[1;36m", // same ones but more lighter than above.
             "\x1B[1;31m", "\x1B[1;35m", "\x1B[1;33m", "\x1B[1;37m"
         };
-        cout << fores[fore];
+        return fores[fore];
     }
 #endif
 
-    void me::updateConsoleBack(consoleColor back) {
+    const std::string& me::getConsoleBack(consoleColor back) {
+        static std::string inner;
 #if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back << 4 | WHITE);
+        return inner;
+
 #elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX
         static bool is_terminal_supporting = _isAnsiColorTerminal();
-        if( ! is_terminal_supporting) {
-            // TODO: may need to print some error.
-            cout << "ERROR!";
-            return;
-        }
+        if( ! is_terminal_supporting)
+            return inner;
 
         static vector<string> backs = {
             "\x1B[0;40m", "\x1B[0;44m", "\x1B[0;42m", "\x1B[0;46m", // black, blue, green, cyan
@@ -68,11 +67,11 @@ namespace wrd {
             "\x1B[1;40m", "\x1B[1;44m", "\x1B[1;42m", "\x1B[1;46m", // black, blue, green, cyan
             "\x1B[1;41m", "\x1B[1;45m", "\x1B[1;43m", "\x1B[1;47m", // red, purple, yellow, white
         };
-        cout << backs[back];
+        return backs[back];
 #endif
     }
 
-    string me::createCurrentTime(const string& strftime_format) {
+    string me::createNowTime(const string& strftime_format) {
         time_t t = time(0);
         struct tm* timeinfo = localtime(&t);
 
