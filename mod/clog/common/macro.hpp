@@ -1,10 +1,7 @@
 #pragma once
 
-#define _LOG(func, level, fmt, ...) \
-    ::wrd::logger::get().func( \
-        "%s " WRD_TAG " %s <%s::%s#%d> " fmt "\n", \
-        wrd::platformAPI::createNowTime("%b %d %Y  %X").c_str(), \
-        level, __FILENAME__, __func__, __LINE__, ## __VA_ARGS__)
+#define _LOG(func, level, fmt, ...) {                                         \
+}
 
 //  Log macro:
 //      prints debug log on console and file.
@@ -17,15 +14,15 @@
 //      usage:
 //          WRD_I("just message.")
 //          WRD_I("with format=%x string=%s", &format, format.c_str())
-#define WRD_I(fmt, ...) _LOG(dumpFormat, "I", fmt, ## __VA_ARGS__)
-#define WRD_E(fmt, ...) _LOG(dumpFormat, "E", fmt, ## __VA_ARGS__)
-#define WRD_W(fmt, ...) _LOG(dumpFormat, "W", fmt, ## __VA_ARGS__)
+#define WRD_E(fmt, ...) ::wrd::logger::get().dumpFormatLog("E", fmt "\n", ## __VA_ARGS__)
+#define WRD_W(fmt, ...) ::wrd::logger::get().dumpFormatLog("W", fmt "\n", ## __VA_ARGS__)
+#define WRD_I(fmt, ...) ::wrd::logger::get().dumpFormatLog("I", fmt "\n", ## __VA_ARGS__)
 #ifdef WRD_DEBUG
+#   define WRD_DE(fmt, ...) WRD_E(fmt, ## __VA_ARGS__)
+#   define WRD_DW(fmt, ...) WRD_W(fmt, ## __VA_ARGS__)
 #   define WRD_DI(fmt, ...) WRD_I(fmt, ## __VA_ARGS__)
-#   define WRD_DE(fmt, ...) WRD_I(fmt, ## __VA_ARGS__)
-#   define WRD_DW(fmt, ...) WRD_I(fmt, ## __VA_ARGS__)
 #else
-#   define WRD_DI(fmt, ...)
 #   define WRD_DE(fmt, ...)
 #   define WRD_DW(fmt, ...)
+#   define WRD_DI(fmt, ...)
 #endif
