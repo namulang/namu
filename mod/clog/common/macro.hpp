@@ -2,7 +2,7 @@
 
 #define _LOG(func, level, fmt, ...) \
     ::wrd::logger::get().func( \
-        "%s " WRD_TAG " %s <%s::%s#%d> " fmt, \
+        "%s " WRD_TAG " %s <%s::%s#%d> " fmt "\n", \
         wrd::platformAPI::createNowTime("%b %d %Y  %X").c_str(), \
         level, __FILENAME__, __func__, __LINE__, ## __VA_ARGS__)
 

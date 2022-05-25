@@ -11,7 +11,7 @@ namespace wrd {
         using std::cout;
         if(super::dump(message)) return true;
 
-        cout << message << "\n";
+        cout << message;
         return false;
     }
 }

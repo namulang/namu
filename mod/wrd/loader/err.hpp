@@ -36,11 +36,29 @@ namespace wrd {
 
 	public:
 		virtual void log() const {
+
             auto& log = logger::get();
 			switch(fType) {
-                case ERR: log.dumpFormat("err%d(%s): %s", code, getErrName(code).c_str(), msg.c_str()); break;
-                case WARN: log.dumpFormat("warn%d(%s): %s", code, getErrName(code).c_str(), msg.c_str()); break;
-                case INFO: log.dumpFormat("info%d(%s): %s", code, getErrName(code).c_str(), msg.c_str()); break;
+                case ERR:
+                    std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTRED);
+                    log.dumpFormat("err%d(%s)", code, getErrName(code).c_str());
+                    std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+                    log.dumpFormat(": %s\n", msg.c_str());
+                    break;
+
+                case WARN:
+                    std::cout << platformAPI::getConsoleFore(platformAPI::YELLOW);
+                    log.dumpFormat("warn%d(%s)", code, getErrName(code).c_str());
+                    std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+                    log.dumpFormat(": %s\n", msg.c_str());
+                    break;
+
+                case INFO:
+                    std::cout << platformAPI::getConsoleFore(platformAPI::BLUE);
+                    log.dumpFormat("info%d(%s)", code, getErrName(code).c_str());
+                    std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+                    log.dumpFormat(": %s\n", msg.c_str());
+                    break;
 			}
 		}
         void dbgLog() const {
