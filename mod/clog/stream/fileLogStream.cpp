@@ -23,7 +23,7 @@ namespace wrd {
         if(super::dump(message)) return true;
 
         _file.open(_path.c_str(), std::fstream::out | std::fstream::app);
-        _file << message << "\n";
+        _file << message;
         _file.close();
         return false;
     }
