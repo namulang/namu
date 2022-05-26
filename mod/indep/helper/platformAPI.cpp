@@ -1,7 +1,7 @@
 #include "platformAPI.hpp"
 #if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
 #  include <windows.h>
-#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX
+#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX || WRD_BUILD_PLATFORM == WRD_TYPE_MACOS
 #    include <unistd.h>
 #    include <vector>
 #    include <string>
@@ -15,10 +15,10 @@ namespace wrd {
     WRD_DEF_ME(platformAPI)
     using namespace std;
 
-#ifdef WRD_BUILD_PLATFORM_IS_LINUX
+#if defined(WRD_BUILD_PLATFORM_IS_LINUX) || defined(WRD_BUILD_PLATFORM_IS_MAC)
     namespace {
         bool _isAnsiColorTerminal() {
-            static vector<string> samples = {
+            static vector<const wchar*> samples = {
                 "xterm", "rxvt", "vt100",
                 "linux", "screen",
             };
@@ -33,10 +33,10 @@ namespace wrd {
     const std::string& me::getConsoleFore(consoleColor fore) {
 #if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), platformAPI::BLACK << 4 | fore);
-#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX
+#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX || WRD_BUILD_PLATFORM == WRD_TYPE_MACOS
         static bool is_terminal_supporting = _isAnsiColorTerminal();
         if( ! is_terminal_supporting) {
-            static std::string inner;
+            static string inner;
             return inner;
         }
 
@@ -47,8 +47,8 @@ namespace wrd {
             "\x1B[1;31m", "\x1B[1;35m", "\x1B[1;33m", "\x1B[1;37m"
         };
         return fores[fore];
-    }
 #endif
+    }
 
     const std::string& me::getConsoleBack(consoleColor back) {
         static std::string inner;
@@ -56,7 +56,7 @@ namespace wrd {
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back << 4 | WHITE);
         return inner;
 
-#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX
+#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX || WRD_BUILD_PLATFORM == WRD_TYPE_MACOS
         static bool is_terminal_supporting = _isAnsiColorTerminal();
         if( ! is_terminal_supporting)
             return inner;
