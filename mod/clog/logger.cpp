@@ -135,7 +135,7 @@ namespace wrd {
         wchar buf[1024];
         vsnprintf(buf, 1024, fmt, va);
         va_end(va);
-        dump(buf);
+        return dump(buf);
     }
 
     me::logger() : super() {}
