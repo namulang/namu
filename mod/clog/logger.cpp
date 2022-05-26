@@ -112,7 +112,7 @@ namespace wrd {
         return *inner;
     }
 
-    wbool me::dumpFormatLog(const wchar* level, const wchar* fmt, ...) {
+    wbool me::dumpFormatLog(const wchar* level, const wchar* tag, const wchar* filename, const wchar* func, int line, const wchar* fmt, ...) {
         std::cout << platformAPI::getConsoleFore(platformAPI::BROWN);
         dumpFormat("%s ", platformAPI::createNowTime("%b %d %Y  %X").c_str());
 
@@ -124,10 +124,10 @@ namespace wrd {
         }
 
         std::cout << ::wrd::platformAPI::getConsoleFore(clrLv);
-        dumpFormat("%s %s ", WRD_TAG, level);
+        dumpFormat("%s %s ", tag, level);
 
         std::cout << ::wrd::platformAPI::getConsoleFore(::wrd::platformAPI::GREEN);
-        dumpFormat("<%s::%s#%d> ", __FILENAME__, __func__, __LINE__);
+        dumpFormat("<%s::%s#%d> ", filename, func, line);
 
         std::cout << ::wrd::platformAPI::getConsoleFore(::wrd::platformAPI::LIGHTGRAY);
         va_list va;
