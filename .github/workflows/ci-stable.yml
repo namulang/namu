@@ -36,11 +36,14 @@ jobs:
         sudo $PYTHON ${{github.workspace}}/build/builder.py rel
         sudo $PYTHON ${{github.workspace}}/build/builder.py test
 
+    - name: archive to tar files
+      run: tar -cvf wrd-release-ubuntu.tar ${{github.workspace}}/bin/
+
     - name: upload output files.
       uses: actions/upload-artifact@v3
       with:
         name: wrd-release-ubuntu
-        path: ${{github.workspace}}/bin/
+        path: wrd-release-ubuntu.tar
 
   build-on-macos:
     name: build on macos
@@ -63,8 +66,11 @@ jobs:
         sudo $PYTHON ${{github.workspace}}/build/builder.py rel
         sudo $PYTHON ${{github.workspace}}/build/builder.py test
 
+    - name: archive to tar files
+      run: tar -cvf wrd-release-macos.tar ${{github.workspace}}/bin/
+
     - name: upload output files.
       uses: actions/upload-artifact@v3
       with:
         name: wrd-release-macos
-        path: ${{github.workspace}}/bin/
+        path: wrd-release-macos.tar
