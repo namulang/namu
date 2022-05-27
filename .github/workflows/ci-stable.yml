@@ -7,7 +7,7 @@ on:
 jobs:
   build-on-linux:
     name: build on linux
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: install native dependencies.
@@ -44,7 +44,7 @@ jobs:
 
   build-on-macos:
     name: build on macos
-    runs-on: macos-latest
+    runs-on: macos-11
 
     steps:
     - name: install native dependencies.
