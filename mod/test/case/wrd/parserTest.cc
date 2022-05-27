@@ -37,55 +37,55 @@ TEST_F(parserTest, testHelloWorld) {
 }
 
 TEST_F(parserTest, packNoOnTray) {
-	make().parse(R"SRC(
-		main() void
-			return
-	)SRC");
-	shouldVerified(true);
+    make().parse(R"SRC(
+        main() void
+            return
+    )SRC");
+    shouldVerified(true);
 
-	ASSERT_EQ(getPack().subs().len(), 1);
-	ASSERT_EQ(getPack().getManifest().name, manifest::DEFAULT_NAME);
-	ASSERT_EQ(getSubPack().subs().len(), 1);
-	ASSERT_EQ(&getPack(), &getSubPack());
-	mgdFunc& f = getSubPack().sub<mgdFunc>("main");
-	ASSERT_FALSE(nul(f));
+    ASSERT_EQ(getPack().subs().len(), 1);
+    ASSERT_EQ(getPack().getManifest().name, manifest::DEFAULT_NAME);
+    ASSERT_EQ(getSubPack().subs().len(), 1);
+    ASSERT_EQ(&getPack(), &getSubPack());
+    mgdFunc& f = getSubPack().sub<mgdFunc>("main");
+    ASSERT_FALSE(nul(f));
 }
 
 TEST_F(parserTest, packNoOnTrayWithoutMake) {
-	// no make() call:
-	//	so setPack(new pack(manifest())) won't be called.
-	//	but it should works too.
-	parse(R"SRC(
-		main() void
-			return
-	)SRC");
-	shouldVerified(true);
+    // no make() call:
+    //  so setPack(new pack(manifest())) won't be called.
+    //  but it should works too.
+    parse(R"SRC(
+        main() void
+            return
+    )SRC");
+    shouldVerified(true);
 
-	ASSERT_EQ(getPack().subs().len(), 1);
-	ASSERT_EQ(getPack().getManifest().name, manifest::DEFAULT_NAME);
-	ASSERT_EQ(getSubPack().subs().len(), 1);
-	ASSERT_EQ(&getPack(), &getSubPack());
-	mgdFunc& f = getSubPack().sub<mgdFunc>("main");
-	ASSERT_FALSE(nul(f));
+    ASSERT_EQ(getPack().subs().len(), 1);
+    ASSERT_EQ(getPack().getManifest().name, manifest::DEFAULT_NAME);
+    ASSERT_EQ(getSubPack().subs().len(), 1);
+    ASSERT_EQ(&getPack(), &getSubPack());
+    mgdFunc& f = getSubPack().sub<mgdFunc>("main");
+    ASSERT_FALSE(nul(f));
 }
 
 TEST_F(parserTest, packNotSpecifiedButCodeSpecifyPackNegative) {
-	// make without name:
-	// 	pack will be generated. but its name is '{default}'.
-	make().parse(R"SRC(
-		pack demo
-		main() void
-			return
-	)SRC").shouldParsed(false);
+    // make without name:
+    //  pack will be generated. but its name is '{default}'.
+    make().parse(R"SRC(
+        pack demo
+        main() void
+            return
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(parserTest, packProperlySpecified) {
-	// make with name:
-	// 	pack will be generated and its name is 'demo'.
-	make("demo").parse(R"SRC(
-		pack demo
-		main() void
-			return
-	)SRC").shouldParsed(true);
-	shouldVerified(true);
+    // make with name:
+    //  pack will be generated and its name is 'demo'.
+    make("demo").parse(R"SRC(
+        pack demo
+        main() void
+            return
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
 }

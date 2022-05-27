@@ -17,21 +17,21 @@ namespace wrd {
     //              currentPack.setValid(false); // never set to valid again if it's invalid once.
     //          targetPack.addDepedent(currentPack);
     //      }
-	class _wout verifier : public typeProvidable, clonable {
-		WRD(CLASS(verifier))
-		friend struct ::verifierTest;
+    class _wout verifier : public typeProvidable, clonable {
+        WRD(CLASS(verifier))
+        friend struct ::verifierTest;
 
     public:
         verifier() { rel(); }
 
-	public:
+    public:
         void rel();
 
-		static void add(const verification* new1) {
-			if(!new1) return;
+        static void add(const verification* new1) {
+            if(!new1) return;
 
-			_getVerifications(new1->getType()).push_back(const_cast<verification*>(new1));
-		}
+            _getVerifications(new1->getType()).push_back(const_cast<verification*>(new1));
+        }
 
         me& setReport(errReport& rpt) {
             _rpt.bind(rpt);
@@ -52,29 +52,29 @@ namespace wrd {
         const packContainer& getPacks() { return *_packs; }
 
         void verify(typeProvidable& it) {
-			_verify(it, it.getType());
-		}
+            _verify(it, it.getType());
+        }
 
-	private:
+    private:
         void _verify(typeProvidable& it, const type& typ) {
             if(nul(it)) return;
             if(typ == ttype<adam>::get()) return;
 
             _verify(it, typ.getSuper());
 
-			verifications& veris = _getVerifications(typ);
-			for(auto* elem : veris)
-				elem->verify(*this, it);
-		}
+            verifications& veris = _getVerifications(typ);
+            for(auto* elem : veris)
+                elem->verify(*this, it);
+        }
 
-		static verifications& _getVerifications(const type& typ) {
-			static verificationMap inner;
-			return inner[(void*) &typ];
-		}
+        static verifications& _getVerifications(const type& typ) {
+            static verificationMap inner;
+            return inner[(void*) &typ];
+        }
 
     private:
         tstr<errReport> _rpt;
         tstr<packContainer> _packs;
         tstr<frame>* _frameInfo;
-	};
+    };
 }

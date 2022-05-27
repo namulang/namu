@@ -24,24 +24,24 @@ namespace wrd {
     class _wout parser : public typeProvidable {
         WRD(ADT(parser, typeProvidable))
 
-	public:
-		parser() { me::rel(); }
+    public:
+        parser() { me::rel(); }
 
     public:
-		me& setReport(errReport& report) {
+        me& setReport(errReport& report) {
             _eventer.getReport().bind(report);
-			return *this;
-		}
+            return *this;
+        }
         me& setPack(const pack& tray);
-		pack& getPack();
-		const pack& getPack() const WRD_UNCONST_FUNC(getPack())
-		node& getSubPack();
-		const node& getSubPack() const WRD_UNCONST_FUNC(getSubPack())
+        pack& getPack();
+        const pack& getPack() const WRD_UNCONST_FUNC(getPack())
+        node& getSubPack();
+        const node& getSubPack() const WRD_UNCONST_FUNC(getSubPack())
 
         /// @param script is null terminated cstring.
         str parse(const wchar* script);
 
-		virtual void rel();
+        virtual void rel();
 
     private:
         loweventer _eventer;

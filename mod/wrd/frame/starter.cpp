@@ -4,5 +4,5 @@
 
 namespace wrd {
 
-	WRD_DEF_ME(starter)
+    WRD_DEF_ME(starter)
 }

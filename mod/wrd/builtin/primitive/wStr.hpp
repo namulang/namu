@@ -6,13 +6,13 @@ namespace wrd {
 
     class _wout wStr : public primitiveObj<std::string> {
 
-		class _wout wStrType : public wtype {
-		public:
-			wbool isImmutable() const override { return true; }
+        class _wout wStrType : public wtype {
+        public:
+            wbool isImmutable() const override { return true; }
 
-		protected:
+        protected:
             const ases& _getImpliAses() const override;
-		};
+        };
         WRD(CLASS(wStr, primitiveObj, wStrType))
 
     public:

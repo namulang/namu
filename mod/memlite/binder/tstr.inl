@@ -6,8 +6,8 @@
 
 namespace wrd {
 
-#define TEMPL	template <typename T, typename TACTIC>
-#define ME	tstr<T, TACTIC>
+#define TEMPL   template <typename T, typename TACTIC>
+#define ME  tstr<T, TACTIC>
 #define SUPER   tweak<T, TACTIC>
 
     TEMPL ME::tstr(): SUPER() {}

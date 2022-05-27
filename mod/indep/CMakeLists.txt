@@ -12,14 +12,14 @@ add_definitions(${defines})
 message("\tconfigure_files...")
 #  expanding:
 set(configures
-	"def/buildInformation.hpp.in"
+    "def/buildInformation.hpp.in"
 )
 foreach(e ${configures})
     #  extract output filepath:
     string(FIND ${e} ".in" n REVERSE)
     string(SUBSTRING ${e} 0 ${n} output_path)
-	message("\texpanding ${CMAKE_CURRENT_SOURCE_DIR}/${output_path}")
-	configure_file(${e} ${CMAKE_CURRENT_SOURCE_DIR}/${output_path})
+    message("\texpanding ${CMAKE_CURRENT_SOURCE_DIR}/${output_path}")
+    configure_file(${e} ${CMAKE_CURRENT_SOURCE_DIR}/${output_path})
 endforeach(e)
 #  defines:
 #      define libraries:

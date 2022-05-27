@@ -3,7 +3,7 @@
 
 namespace wrd {
 
-	WRD_DEF_ME(errReport)
+    WRD_DEF_ME(errReport)
 
-	dummyErrReport dummyErrReport::singletone;
+    dummyErrReport dummyErrReport::singletone;
 }

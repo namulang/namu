@@ -19,9 +19,9 @@ struct wrdSyntaxTest : public wrdTest {
         return make(wrd::manifest(name));
     }
 
-	wrdSyntaxTest& make() {
-		return make(wrd::manifest());
-	}
+    wrdSyntaxTest& make() {
+        return make(wrd::manifest());
+    }
 
     wrdSyntaxTest& make(const wrd::manifest& mani) {
         _rel();

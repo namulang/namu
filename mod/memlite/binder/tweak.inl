@@ -17,17 +17,17 @@ namespace wrd {
     TEMPL ME::tweak(const ME& rhs): SUPER(ttype<T>::get(), TACTIC::singletone) { this->_assign(rhs); }
     TEMPL ME::tweak(const binder& rhs): SUPER(ttype<T>::get(), TACTIC::singletone) { this->bind(*rhs); }
 
-	TEMPL T* ME::operator->() { return &this->get(); }
-	TEMPL T& ME::operator*() { return this->get(); }
+    TEMPL T* ME::operator->() { return &this->get(); }
+    TEMPL T& ME::operator*() { return this->get(); }
 
-	TEMPL ME& ME::operator=(const binder& rhs) {
+    TEMPL ME& ME::operator=(const binder& rhs) {
         if(this == &rhs) return *this;
 
         SUPER::operator=(rhs);
-		return *this;
-	}
+        return *this;
+    }
 
-	TEMPL T& ME::get() {
+    TEMPL T& ME::get() {
         instance& got = SUPER::get();
         if(nul(got)) return nulOf<T>();
 

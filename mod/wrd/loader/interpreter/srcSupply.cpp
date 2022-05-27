@@ -2,5 +2,5 @@
 #include "srcSupply.hpp"
 
 namespace wrd {
-	WRD_DEF_ME(srcSupply)
+    WRD_DEF_ME(srcSupply)
 }

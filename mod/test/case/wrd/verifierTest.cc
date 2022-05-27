@@ -24,24 +24,24 @@ namespace {
         }
     };
 
-	WRD_VERIFY(myObj, {
-		if(it.val == 0)
-			_err(errCode::ERR_CODE_END);
-	})
+    WRD_VERIFY(myObj, {
+        if(it.val == 0)
+            _err(errCode::ERR_CODE_END);
+    })
 
-	struct mymyObj : public myObj {
-		WRD(CLASS(mymyObj, myObj))
+    struct mymyObj : public myObj {
+        WRD(CLASS(mymyObj, myObj))
 
-	public:
-		mymyObj(): grade(0.0f) {}
+    public:
+        mymyObj(): grade(0.0f) {}
 
-		wflt grade;
-	};
+        wflt grade;
+    };
 
-	WRD_VERIFY(mymyObj, {
-		if(it.grade <= 0.0f)
-			_warn(area {{1, 1}, {1, 5}}, errCode::ERR_CODE_START);
-	})
+    WRD_VERIFY(mymyObj, {
+        if(it.grade <= 0.0f)
+            _warn(area {{1, 1}, {1, 5}}, errCode::ERR_CODE_START);
+    })
 }
 
 struct verifierTest : public ::testing::Test {
@@ -57,101 +57,101 @@ struct verifierTest : public ::testing::Test {
 
 
 TEST_F(verifierTest, verificationLoaded) {
-	verifications& veris = getVerifications(ttype<myObj>::get());
-	wcnt len = veris.size();
-	ASSERT_TRUE(len > 0);
+    verifications& veris = getVerifications(ttype<myObj>::get());
+    wcnt len = veris.size();
+    ASSERT_TRUE(len > 0);
 }
 
 TEST_F(verifierTest, verifyMyObj) {
-	myObj obj;
-	verifier veri;
-	errReport report;
-	veri.setReport(report).verify(obj);
+    myObj obj;
+    verifier veri;
+    errReport report;
+    veri.setReport(report).verify(obj);
 
-	ASSERT_TRUE(report); // should have an err.
-	ASSERT_EQ(report.len(), 1);
+    ASSERT_TRUE(report); // should have an err.
+    ASSERT_EQ(report.len(), 1);
 
-	const err& e = report[0];
-	ASSERT_FALSE(nul(e));
-	ASSERT_EQ(e.fType, err::ERR);
-	ASSERT_EQ(e.code, errCode::ERR_CODE_END);
-	ASSERT_EQ(e.msg, err::getErrMsg(e.code));
+    const err& e = report[0];
+    ASSERT_FALSE(nul(e));
+    ASSERT_EQ(e.fType, err::ERR);
+    ASSERT_EQ(e.code, errCode::ERR_CODE_END);
+    ASSERT_EQ(e.msg, err::getErrMsg(e.code));
 
-	report.log();
-	report.rel();
+    report.log();
+    report.rel();
 
-	obj.val = 1;
-	veri.verify(obj);
-	ASSERT_FALSE(report);
+    obj.val = 1;
+    veri.verify(obj);
+    ASSERT_FALSE(report);
 }
 
 TEST_F(verifierTest, errMsgFor0ShouldExist) {
-	ASSERT_TRUE(errCode::ERR_CODE_END > 0);
-	ASSERT_EQ(err::getErrMsg(UNKNOWN), "unknown");
+    ASSERT_TRUE(errCode::ERR_CODE_END > 0);
+    ASSERT_EQ(err::getErrMsg(UNKNOWN), "unknown");
 }
 
 TEST_F(verifierTest, verifyInheritedClass) {
-	mymyObj it;
-	it.val = 0;
-	it.grade = -0.1f;
+    mymyObj it;
+    it.val = 0;
+    it.grade = -0.1f;
 
-	errReport report;
-	verifier veri;
-	veri.setReport(report).verify(it);
+    errReport report;
+    verifier veri;
+    veri.setReport(report).verify(it);
 
-	ASSERT_TRUE(report);
-	ASSERT_EQ(report.len(), 2);
+    ASSERT_TRUE(report);
+    ASSERT_EQ(report.len(), 2);
 
-	const err& myObjE = report[0]; // verification of myObj
-	ASSERT_FALSE(nul(myObjE));
-	ASSERT_EQ(myObjE.fType, err::ERR);
-	ASSERT_EQ(myObjE.code, errCode::ERR_CODE_END);
-	ASSERT_EQ(myObjE.msg, err::getErrMsg(myObjE.code));
+    const err& myObjE = report[0]; // verification of myObj
+    ASSERT_FALSE(nul(myObjE));
+    ASSERT_EQ(myObjE.fType, err::ERR);
+    ASSERT_EQ(myObjE.code, errCode::ERR_CODE_END);
+    ASSERT_EQ(myObjE.msg, err::getErrMsg(myObjE.code));
 
-	const err& mymyObjE = report[1]; // of mymyObj
-	ASSERT_FALSE(nul(mymyObjE));
-	ASSERT_EQ(mymyObjE.fType, err::WARN);
-	ASSERT_EQ(mymyObjE.code, errCode::ERR_CODE_START);
+    const err& mymyObjE = report[1]; // of mymyObj
+    ASSERT_FALSE(nul(mymyObjE));
+    ASSERT_EQ(mymyObjE.fType, err::WARN);
+    ASSERT_EQ(mymyObjE.code, errCode::ERR_CODE_START);
     ASSERT_EQ(mymyObjE.msg, err::getErrMsg(mymyObjE.code));
 
-	const srcErr& cast = mymyObjE.cast<srcErr>();
-	ASSERT_FALSE(nul(cast));
-	ASSERT_EQ(cast.srcArea.start.row, 1);
-	ASSERT_EQ(cast.srcArea.start.col, 1);
-	ASSERT_EQ(cast.srcArea.end.row, 1);
-	ASSERT_EQ(cast.srcArea.end.col, 5);
+    const srcErr& cast = mymyObjE.cast<srcErr>();
+    ASSERT_FALSE(nul(cast));
+    ASSERT_EQ(cast.srcArea.start.row, 1);
+    ASSERT_EQ(cast.srcArea.start.col, 1);
+    ASSERT_EQ(cast.srcArea.end.row, 1);
+    ASSERT_EQ(cast.srcArea.end.col, 5);
 }
 
 TEST_F(verifierTest, verifyNestedObject) {
-	myObj o1;
-	o1.val = 1;
+    myObj o1;
+    o1.val = 1;
 
-	mymyObj o2;
-	o2.val = 1;
-	o2.grade = 0.0f; // err
-	o1.subs().add("o2", o2);
-	ASSERT_EQ(o1.subs().len(), 1);
-	mymyObj& o2Candidate = o1.sub<mymyObj>([](const std::string& name, const auto& elem) { return true; });
-	ASSERT_FALSE(nul(o2Candidate));
-	ASSERT_EQ(&o2, &o2Candidate);
+    mymyObj o2;
+    o2.val = 1;
+    o2.grade = 0.0f; // err
+    o1.subs().add("o2", o2);
+    ASSERT_EQ(o1.subs().len(), 1);
+    mymyObj& o2Candidate = o1.sub<mymyObj>([](const std::string& name, const auto& elem) { return true; });
+    ASSERT_FALSE(nul(o2Candidate));
+    ASSERT_EQ(&o2, &o2Candidate);
 
-	errReport report;
-	verifier veri;
-	veri.setReport(report).verify(o1);
-	ASSERT_FALSE(report);
-	ASSERT_FALSE(report.hasErr());
-	ASSERT_TRUE(report.hasWarn());
-	ASSERT_EQ(report.len(), 1);
+    errReport report;
+    verifier veri;
+    veri.setReport(report).verify(o1);
+    ASSERT_FALSE(report);
+    ASSERT_FALSE(report.hasErr());
+    ASSERT_TRUE(report.hasWarn());
+    ASSERT_EQ(report.len(), 1);
 
-	const srcErr& e = report[0].cast<srcErr>();
-	ASSERT_FALSE(nul(e));
-	ASSERT_EQ(e.fType, err::WARN);
-	ASSERT_EQ(e.code, errCode::ERR_CODE_START);
-	ASSERT_EQ(e.msg, err::getErrMsg(e.code));
-	ASSERT_EQ(e.srcArea.start.row, 1);
-	ASSERT_EQ(e.srcArea.start.col, 1);
-	ASSERT_EQ(e.srcArea.end.row, 1);
-	ASSERT_EQ(e.srcArea.end.col, 5);
+    const srcErr& e = report[0].cast<srcErr>();
+    ASSERT_FALSE(nul(e));
+    ASSERT_EQ(e.fType, err::WARN);
+    ASSERT_EQ(e.code, errCode::ERR_CODE_START);
+    ASSERT_EQ(e.msg, err::getErrMsg(e.code));
+    ASSERT_EQ(e.srcArea.start.row, 1);
+    ASSERT_EQ(e.srcArea.start.col, 1);
+    ASSERT_EQ(e.srcArea.end.row, 1);
+    ASSERT_EQ(e.srcArea.end.col, 5);
 }
 
 TEST_F(verifierTest, verifySubedObject) {
