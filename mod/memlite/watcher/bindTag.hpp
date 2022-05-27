@@ -20,11 +20,13 @@ namespace wrd {
         explicit bindTag(id newId);
         ~bindTag();
 
-        instance* operator->() { return &get(); }
-        instance& operator*() { return get(); }
+    public:
+        instance* operator->();
+        instance& operator*();
         const instance* operator->() const WRD_UNCONST_FUNC(operator->())
         const instance& operator*() const WRD_UNCONST_FUNC(operator*())
 
+    public:
         const chunk& getChunk() const;
         wcnt getStrongCnt() const;
         //  tbindable:
@@ -50,9 +52,7 @@ namespace wrd {
         //  Instance:
         id getId() const;
         //  typeProvidable:
-        const type& getType() const override{
-            return ttype<bindTag>::get();
-        }
+        const type& getType() const override;
         static const bindTag& getBindTag(id newId);
 
     private:
@@ -61,6 +61,8 @@ namespace wrd {
         wbool _completeId(instance& it);
         wbool _sync(id new1);
 
+
+    private:
         instance* _pt;
         wcnt _strong;
         id _id;

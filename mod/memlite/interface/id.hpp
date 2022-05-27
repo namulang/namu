@@ -9,26 +9,16 @@ namespace wrd {
         id(wint new_tagN, wint newChkN, wuint newSerial);
         id();
 
-        wbool operator==(const id& rhs) const {
-            return tagN == rhs.tagN && chkN == rhs.chkN && serial == rhs.serial;
-        }
-        wbool operator!=(const id& rhs) const {
-            return !operator==(rhs);
-        }
+    public:
+        wbool operator==(const id& rhs) const;
+        wbool operator!=(const id& rhs) const;
 
-        void rel() {
-            tagN = chkN = WRD_INDEX_ERROR;
-            serial = 0;
-        }
+    public:
+        void rel();
+        wbool isHeap() const;
+        wbool isValid() const;
 
-        wbool isHeap() const {
-            return chkN >= 0;
-        }
-
-        wbool isValid() const {
-            return tagN >= 0;
-        }
-
+    public:
         wint tagN:21;
         wint chkN:22;
         wuint serial:21;

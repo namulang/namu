@@ -13,6 +13,12 @@ namespace wrd {
     }
     me::~instance() { _getMgr().rel(*this); }
 
+    wcnt me::vault::len() const { return _vaults.size(); }
+
+    std::map<void*, int>& me::vault::getVaults() {
+        return _vaults;
+    }
+
     void* me::operator new(size_t sz) { return _getMgr()._new1(sz); }
     void me::operator delete(void* pt, size_t sz) { _getMgr()._del(pt, sz); }
 
