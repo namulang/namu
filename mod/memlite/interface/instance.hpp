@@ -25,12 +25,9 @@ namespace wrd {
         public:
             wbool set(void* rcver, widx chkN);
             widx get(void* rcver);
-            wcnt len() const { return _vaults.size(); }
+            wcnt len() const;
             wbool rel();
-
-            std::map<void*, int>& getVaults() {
-                return _vaults;
-            }
+            std::map<void*, int>& getVaults();
 
         private:
             std::map<void*, int> _vaults;

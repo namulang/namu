@@ -74,4 +74,11 @@ namespace wrd {
     const bindTag& me::getBindTag(id newId) {
         return const_cast<bindTag&>(WRD_GETS(instancer::get().getWatcher()[newId], blk));
     }
+
+    instance* me::operator->() { return &get(); }
+    instance& me::operator*() { return get(); }
+
+    const type& me::getType() const {
+        return ttype<bindTag>::get();
+    }
  }

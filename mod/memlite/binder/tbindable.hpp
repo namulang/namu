@@ -13,14 +13,9 @@ namespace wrd {
         //  tbindable:
         explicit operator wbool() const;
 
-        virtual wbool bind(const T& it) {
-            // type checking before binding only is required to Bind class.
-            // Derived classes from this doesn't need it. because its type is specified.
-            // prevent wrong type providing by compiler.
-            if(!canBind(it)) return false;
-            return true;
-        }
-        wbool bind(const T* it) { return bind(*it); }
+    public:
+        virtual wbool bind(const T& it);
+        wbool bind(const T* it);
         virtual void rel() = 0;
         wbool canBind(const T& it) const;
         virtual wbool canBind(const type& it) const = 0;

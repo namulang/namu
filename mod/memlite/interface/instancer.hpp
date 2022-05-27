@@ -22,6 +22,8 @@ namespace wrd {
         void _del(void* pt, wcnt sz);
         wbool _hasBindTag(const instance& it) const;
 
+
+    private:
         pool _pool;
         watcher _watcher;
     };

@@ -90,10 +90,7 @@ namespace wrd {
         const type& getType() const override;
 
         using typeProvidable::cast;
-        void* cast(const type& to) override {
-            if(!isBind()) return nullptr;
-            return get().cast(to);
-        }
+        void* cast(const type& to) override;
 
     protected:
         wbool _assign(const binder& rhs);
