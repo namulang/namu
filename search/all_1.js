@@ -7,6 +7,7 @@ var searchData=
   ['arrtest_8',['arrTest',['../structarr_test.html',1,'']]],
   ['asable_9',['asable',['../classwrd_1_1asable.html',1,'wrd']]],
   ['ases_10',['ases',['../classwrd_1_1ases.html',1,'wrd']]],
-  ['assignexpr_11',['assignExpr',['../classwrd_1_1assign_expr.html',1,'wrd']]],
-  ['aka_12',['aka',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_aka.html',1,'']]]
+  ['asprimitive_11',['asPrimitive',['../classwrd_1_1primitive_obj_1_1as_primitive.html',1,'wrd::primitiveObj']]],
+  ['assignexpr_12',['assignExpr',['../classwrd_1_1assign_expr.html',1,'wrd']]],
+  ['aka_13',['aka',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_aka.html',1,'']]]
 ];
