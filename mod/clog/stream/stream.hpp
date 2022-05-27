@@ -16,8 +16,8 @@ namespace wrd {
         wbool isNull() const;
         virtual wbool isEnable() const;
         virtual void setEnable(wbool isEnable);
-        virtual void saveStreamEnable() { _save = _isEnable; }
-        virtual void loadStreamEnable() { _isEnable = _save; }
+        virtual void saveStreamEnable();
+        virtual void loadStreamEnable();
         virtual const wchar* getName() const = 0;
         virtual wbool init();
         virtual wbool isInit() const;

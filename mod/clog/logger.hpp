@@ -19,25 +19,12 @@ namespace wrd {
         const stream& getStream(const wchar* c_message) const;
         stream& getStream(const wchar* message);
 
-        wbool isEnable() const override {
-            for(stream* s : _streams)
-                if(s->isEnable()) return true;
-            return false;
-        }
+        wbool isEnable() const override;
 
         /// modify that all of streams are set to enable or not.
-        void setEnable(wbool enable) override {
-            for(stream* s : _streams)
-                s->setEnable(enable);
-        }
-        void saveStreamEnable() override {
-            for(stream* s : _streams)
-                s->saveStreamEnable();
-        }
-        void loadStreamEnable() override {
-            for(stream* s : _streams)
-                s->loadStreamEnable();
-        }
+        void setEnable(wbool enable) override;
+        void saveStreamEnable() override;
+        void loadStreamEnable() override;
         wcnt getStreamCount() const;
         wbool dumpFormat(const wchar* fmt, ...);
         wbool dumpFormatLog(const wchar* level, const wchar* tag, const wchar* filename, const wchar* func, int line, const wchar* fmt, ...);

@@ -8,7 +8,7 @@ namespace wrd {
         WRD_DECL_ME(consoleStream, stream)
 
     public:
-        consoleStream(): super(false) {}
+        consoleStream();
 
     public:
         //  Stream:

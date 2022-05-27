@@ -123,13 +123,13 @@ namespace wrd {
             case 'I': clrLv = platformAPI::LIGHTBLUE; break;
         }
 
-        std::cout << ::wrd::platformAPI::getConsoleFore(clrLv);
+        std::cout << platformAPI::getConsoleFore(clrLv);
         dumpFormat("%s %s ", tag, level);
 
-        std::cout << ::wrd::platformAPI::getConsoleFore(::wrd::platformAPI::GREEN);
+        std::cout << platformAPI::getConsoleFore(platformAPI::GREEN);
         dumpFormat("<%s::%s#%d> ", filename, func, line);
 
-        std::cout << ::wrd::platformAPI::getConsoleFore(::wrd::platformAPI::LIGHTGRAY);
+        std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
         va_list va;
         va_start(va, fmt);
         wchar buf[1024];
@@ -140,4 +140,23 @@ namespace wrd {
 
     me::logger() : super() {}
     me::logger(const me& rhs) : super(rhs) {}
+
+    wbool me::isEnable() const {
+        for(stream* s : _streams)
+            if(s->isEnable()) return true;
+        return false;
+    }
+
+    void me::setEnable(wbool enable) {
+        for(stream* s : _streams)
+            s->setEnable(enable);
+    }
+    void me::saveStreamEnable() {
+        for(stream* s : _streams)
+            s->saveStreamEnable();
+    }
+    void me::loadStreamEnable() {
+        for(stream* s : _streams)
+            s->loadStreamEnable();
+    }
 }
