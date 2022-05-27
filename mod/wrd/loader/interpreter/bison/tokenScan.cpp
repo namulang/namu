@@ -21,26 +21,26 @@ namespace wrd {
 
     wint normalScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
         wint tok = super::onScan(eventer, val, loc, scanner, isBypass);
-		switch(tok) {
-			case TAB:
-				return SCAN_AGAIN;
-		}
+        switch(tok) {
+            case TAB:
+                return SCAN_AGAIN;
+        }
 
-		return tok;
+        return tok;
     }
 
     normalScan* normalScan::_instance = new normalScan();
 
     wint indentScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
         wint tok = super::onScan(eventer, val, loc, scanner, isBypass);
-		switch(tok) {
-			case NEWLINE:
-				if(!isBypass) {
-					WRD_DI("indentScan: ignore NEWLINE");
-					return SCAN_AGAIN;
-				}
-				break;
-		}
+        switch(tok) {
+            case NEWLINE:
+                if(!isBypass) {
+                    WRD_DI("indentScan: ignore NEWLINE");
+                    return SCAN_AGAIN;
+                }
+                break;
+        }
 
         eventer.setScan<normalScan>();
         if(isBypass) return tok;

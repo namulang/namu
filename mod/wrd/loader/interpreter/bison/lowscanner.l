@@ -11,7 +11,7 @@
 #   define YY_NO_UNISTD_H 1
 #endif
 namespace {
-	static constexpr int TAB_WIDTH = 4;
+    static constexpr int TAB_WIDTH = 4;
 }
 
 #define YY_DECL int yylexOrigin(YYSTYPE* yylval_param, YYLTYPE* yylloc_param, yyscan_t yyscanner)
@@ -50,8 +50,8 @@ namespace {
 \+\+ { return DOUBLE_PLUS; }
 [ ]+ ;
 \t {
-	yylloc->start.col = (yylloc->start.col + TAB_WIDTH) & ~(TAB_WIDTH-1);
-	yylloc->colcnt = (yylloc->colcnt + TAB_WIDTH) & ~(TAB_WIDTH-1);
+    yylloc->start.col = (yylloc->start.col + TAB_WIDTH) & ~(TAB_WIDTH-1);
+    yylloc->colcnt = (yylloc->colcnt + TAB_WIDTH) & ~(TAB_WIDTH-1);
 }
 
 \n {

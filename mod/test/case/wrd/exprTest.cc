@@ -147,11 +147,11 @@ TEST_F(exprTest, simpleRunExprNegative) {
 }
 
 TEST_F(exprTest, constructExprInManual) {
-	runExpr r(*bridge, "main", narr(*new wStr("kniz!")));
-	setLine(r, 1, 1);
+    runExpr r(*bridge, "main", narr(*new wStr("kniz!")));
+    setLine(r, 1, 1);
 
-	str res = r.run();
-	ASSERT_TRUE(res);
+    str res = r.run();
+    ASSERT_TRUE(res);
     ASSERT_TRUE(res.getType() == ttype<node>::get());
     ASSERT_TRUE(res->getType() == ttype<wVoid>::get());
 }

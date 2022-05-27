@@ -113,23 +113,23 @@ namespace wrd {
         WRD_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
         pack* pak = &getPack().get();
 
-		// pack syntax rule #1:
-		//	if there is no specified name of pack, I create an one.
+        // pack syntax rule #1:
+        //  if there is no specified name of pack, I create an one.
         std::string firstName = dotname[0].cast<std::string>();
-		if(nul(pak))
-			getPack().bind(pak = new pack(manifest(firstName), packLoadings()));
+        if(nul(pak))
+            getPack().bind(pak = new pack(manifest(firstName), packLoadings()));
 
-		const std::string& realName = pak->getManifest().name;
-		if(realName != firstName)
-			return onErr(errCode::PACK_NOT_MATCH, firstName.c_str(), realName.c_str()), pak;
+        const std::string& realName = pak->getManifest().name;
+        if(realName != firstName)
+            return onErr(errCode::PACK_NOT_MATCH, firstName.c_str(), realName.c_str()), pak;
 
         // pack syntax rule #2:
-        //	middle name automatically created if not exist.
-        //	on interpreting 'mypack' pack, user may uses 'pack' keyword with dotted-name.
-        //	for instance,
-        // 		'pack mypack.component.ui'
-        //	in this scenario, mypack instance should be created before. and component sub
-        //	pack object can be created in this parsing keyword.
+        //  middle name automatically created if not exist.
+        //  on interpreting 'mypack' pack, user may uses 'pack' keyword with dotted-name.
+        //  for instance,
+        //      'pack mypack.component.ui'
+        //  in this scenario, mypack instance should be created before. and component sub
+        //  pack object can be created in this parsing keyword.
         node* e = pak;
         for(int n=1; n < dotname.len(); n++) {
             const std::string& name = dotname[n].cast<std::string>();
@@ -140,7 +140,7 @@ namespace wrd {
         }
 
         _subpack.bind(e);
-		return e;
+        return e;
     }
 
     node* me::onPack() {
@@ -149,15 +149,15 @@ namespace wrd {
         onWarn(errCode::NO_PACK);
 
         pack* newPack = &_pack.get();
-		if(!_pack)
-			_pack.bind(newPack = new pack(manifest(), packLoadings()));
+        if(!_pack)
+            _pack.bind(newPack = new pack(manifest(), packLoadings()));
 
-		const std::string& name = _pack->getManifest().name;
-		if(name != manifest::DEFAULT_NAME)
-			return onErr(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), newPack;
+        const std::string& name = _pack->getManifest().name;
+        if(name != manifest::DEFAULT_NAME)
+            return onErr(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), newPack;
 
-		_subpack.bind(newPack); // this is a default pack containing name as '{default}'.
-		return newPack;
+        _subpack.bind(newPack); // this is a default pack containing name as '{default}'.
+        return newPack;
     }
 
     blockExpr* me::onBlock() {
@@ -257,9 +257,9 @@ namespace wrd {
     void me::onCompilationUnit(node& subpack, scope& arr) {
         WRD_DI("tokenEvent: onCompilationUnit(%x, arr[%x])", &subpack, &arr);
         if(nul(subpack)) {
-			onErr(errCode::NO_PACK_TRAY);
-			return;
-		}
+            onErr(errCode::NO_PACK_TRAY);
+            return;
+        }
 
         bicontainable& con = subpack.subs();
         for(auto e=arr.begin(); e ;++e)

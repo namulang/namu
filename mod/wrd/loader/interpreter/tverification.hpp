@@ -4,24 +4,24 @@
 
 namespace wrd {
 
-	template <typename T>
-	class tverification : public verification {
-		WRD(ME(tverification, verification),
-			INIT_META(me))
-		typedef wtype metaType;
+    template <typename T>
+    class tverification : public verification {
+        WRD(ME(tverification, verification),
+            INIT_META(me))
+        typedef wtype metaType;
 
-	public:
-		const wtype& getType() const override {
-			return ttype<T>::get();
-		}
+    public:
+        const wtype& getType() const override {
+            return ttype<T>::get();
+        }
 
         using super::verify;
         void verify(verifier& veri, typeProvidable& it) override {
             super::verify(veri, it);
-			_onVerify((T&) it);
-		}
+            _onVerify((T&) it);
+        }
 
-	protected:
+    protected:
         virtual void _onVerify(T& it) = 0;
-	};
+    };
 }

@@ -13,13 +13,13 @@ namespace wrd {
         return *this;
     }
 
-	pack& me::getPack() {
-		return *_eventer.getPack();
-	}
+    pack& me::getPack() {
+        return *_eventer.getPack();
+    }
 
-	node& me::getSubPack() {
-		return *_eventer.getSubPack();
-	}
+    node& me::getSubPack() {
+        return *_eventer.getSubPack();
+    }
 
     str me::parse(const wchar* script) {
         WRD_I("parse starts.");

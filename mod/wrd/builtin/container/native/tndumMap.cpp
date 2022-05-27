@@ -2,5 +2,5 @@
 
 namespace wrd {
     template <>
-	ndumMap ndumMap::singletone;
+    ndumMap ndumMap::singletone;
 }

@@ -2,5 +2,5 @@
 
 namespace wrd {
     template <>
-	ndumArr ndumArr::singletone;
+    ndumArr ndumArr::singletone;
 }

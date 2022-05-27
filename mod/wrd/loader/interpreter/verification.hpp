@@ -5,34 +5,34 @@
 
 namespace wrd {
 
-	class verifier;
+    class verifier;
     class frame;
 
-	class _wout verification : public typeProvidable {
-		WRD(ME(verification),
-			INIT_META(me))
+    class _wout verification : public typeProvidable {
+        WRD(ME(verification),
+            INIT_META(me))
 
-	public:
+    public:
         virtual void verify(verifier& veri, typeProvidable& it) {
-			_verifier = &veri;
-		}
+            _verifier = &veri;
+        }
         void verify(typeProvidable& it);
         wbool logFrameInfo(const frame& newFr);
 
-	protected:
-		template <typename... Args>
+    protected:
+        template <typename... Args>
         void _warn(Args... args);
-		template <typename... Args>
+        template <typename... Args>
         void _err(Args... args);
-		template <typename... Args>
+        template <typename... Args>
         void _info(Args... args);
 
         verifier& _getVerifier() { return *_verifier; }
 
-	protected:
-		verifier* _verifier;
-	};
+    protected:
+        verifier* _verifier;
+    };
 
-	typedef std::vector<verification*> verifications;
-	typedef std::unordered_map<void*, verifications> verificationMap;
+    typedef std::vector<verification*> verifications;
+    typedef std::unordered_map<void*, verifications> verificationMap;
 }

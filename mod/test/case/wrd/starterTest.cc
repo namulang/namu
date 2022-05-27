@@ -5,11 +5,11 @@ using namespace wrd;
 struct starterTest : public wrdSyntaxTest {};
 
 TEST_F(starterTest, simpleStarter) {
-	make().parse(R"SRC(
-		main() void
-			return
-	)SRC");
-	shouldVerified(true);
+    make().parse(R"SRC(
+        main() void
+            return
+    )SRC");
+    shouldVerified(true);
 
     starter s;
     str res = s.run(narr(getPack()));
