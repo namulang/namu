@@ -5,6 +5,8 @@ namespace wrd {
 
     WRD_DEF_ME(consoleStream)
 
+    me::consoleStream(): super(false) {}
+
     const char* me::getName() const { return "consoleStream"; }
 
     wbool me::dump(const char* message) {
