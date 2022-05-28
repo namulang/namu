@@ -12,6 +12,10 @@ namespace wrd {
         return _onSame(rhs);
     }
 
+    wbool me::operator!=(const me& rhs) const {
+        return !operator==(rhs);
+    }
+
     wbool me::isSub(const type& it) const { return getType().isSub(it); }
     wbool me::isSuper(const type& it) const { return getType().isSuper(it); }
 
@@ -20,5 +24,9 @@ namespace wrd {
             return nullptr;
 
         return this;
+    }
+
+    wbool me::_onSame(const me& rhs) const {
+        return this == &rhs;
     }
 }

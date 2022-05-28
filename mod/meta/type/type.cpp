@@ -110,4 +110,28 @@ namespace wrd {
         WRD_DI("... %s class init completed.", getName().c_str());
         return res;
     }
+
+    const types& me::getSubs() const {
+        return (const_cast<me*>(this))->_getSubs();
+    }
+    const types& me::getSupers() const {
+        return (const_cast<me*>(this))->_getSupers();
+    }
+
+    void me::_setInit(wbool newState) {
+        const wbool& res = isInit();
+        wbool& isInit = const_cast<wbool&>(res);
+
+        isInit = newState;
+    }
+
+    void me::_setLeafs(types* newLeafs) const {
+        types** leafs = _onGetLeafs();
+        if(*leafs == newLeafs) return;
+
+        if(*leafs)
+            delete *leafs;
+
+        *leafs = newLeafs;
+    }
 }
