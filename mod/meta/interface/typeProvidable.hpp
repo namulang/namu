@@ -8,17 +8,14 @@ namespace wrd {
 
     public:
         wbool operator==(const me& rhs) const;
-        wbool operator!=(const me& rhs) const {
-            return !operator==(rhs);
-        }
+        wbool operator!=(const me& rhs) const;
 
+    public:
         virtual const type& getType() const = 0;
         wbool isSub(const type& it) const;
         wbool isSuper(const type& it) const;
-        template <typename T>
-        wbool isSub() const { return getType().isSub<T>(); }
-        template <typename T>
-        wbool isSuper() const { return getType().isSuper<T>(); }
+        template <typename T> wbool isSub() const { return getType().isSub<T>(); }
+        template <typename T> wbool isSuper() const { return getType().isSuper<T>(); }
 
         template <typename T>
         T& cast() {
@@ -38,15 +35,12 @@ namespace wrd {
             return *(T*) cast(ttype<T>::get());
         }
 
-        template <typename T>
-        const T& cast() const WRD_UNCONST_FUNC(cast<T>())
+        template <typename T> const T& cast() const WRD_UNCONST_FUNC(cast<T>())
 
         virtual void* cast(const type& to);
         const void* cast(const type& to) const WRD_UNCONST_FUNC(cast(to))
 
     protected:
-        virtual wbool _onSame(const me& rhs) const {
-            return this == &rhs;
-        }
+        virtual wbool _onSame(const me& rhs) const;
     };
 }

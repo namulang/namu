@@ -49,12 +49,8 @@ namespace wrd {
 
         /// returns all most derived class from this class.
         const types& getLeafs() const;
-        const types& getSubs() const {
-            return (const_cast<me*>(this))->_getSubs();
-        }
-        const types& getSupers() const {
-            return (const_cast<me*>(this))->_getSupers();
-        }
+        const types& getSubs() const;
+        const types& getSupers() const;
 
         wbool isSuper(const type& it) const;
         template <typename T> wbool isSuper() const;
@@ -67,25 +63,10 @@ namespace wrd {
         virtual types& _getSubs() = 0;
         virtual types& _getSupers() = 0;
         virtual type& _getStatic() const = 0;
-        void _setInit(wbool newState) {
-            const wbool& res = isInit();
-            wbool& isInit = const_cast<wbool&>(res);
-
-            isInit = newState;
-        }
-
+        void _setInit(wbool newState);
         virtual void _onAddSubClass(const me& subClass);
         virtual types** _onGetLeafs() const = 0;
-        void _setLeafs(types* newLeafs) const {
-            types** leafs = _onGetLeafs();
-            if(*leafs == newLeafs) return;
-
-            if(*leafs)
-                delete *leafs;
-
-            *leafs = newLeafs;
-        }
-        void foo() {}
+        void _setLeafs(types* newLeafs) const;
 
     private:
         wbool _logInitOk(wbool res);
