@@ -6,6 +6,11 @@ YY_DECL;
 
 namespace wrd {
 
+    wint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
+        wbool dum;
+        return onScan(eventer, val, loc, scanner, dum);
+    }
+
     wint tokenScan::onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
         tokenDispatcher& disp = eventer.getDispatcher();
         wint tok;

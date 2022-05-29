@@ -18,19 +18,11 @@ namespace wrd {
     public:
         using super::run;
         str run(const ucontainable& args) override;
-
-        const param& getParam() const { return _param; }
-
+        const param& getParam() const;
         /// @return null of scope if this variable will be defined to local scope.
-        const scope& getWhere() const { return *_where; }
-        void setWhere(const scope& new1) { _where.bind(new1); }
-
-        const wtype& getEvalType() const override {
-            // I need to return static eval type:
-            //  if I return _param->getType(), then actually it returns
-            //  dynamic eval type.
-            return _param.getType();
-        }
+        const scope& getWhere() const;
+        void setWhere(const scope& new1);
+        const wtype& getEvalType() const override;
 
     private:
         tstr<scope> _where;

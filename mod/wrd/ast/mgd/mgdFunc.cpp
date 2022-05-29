@@ -9,6 +9,17 @@ namespace wrd {
 
     WRD_DEF_ME(mgdFunc)
 
+    me::mgdFunc(const params& ps, const wtype& retType):
+            super(), _params(ps), _retType(&retType), _blk(new blockExpr()) {}
+    me::mgdFunc(const params& ps, const wtype& retType, const blockExpr& newBlock):
+            super(), _params(ps), _retType(&retType), _blk(newBlock) {}
+
+    blockExpr& me::getBlock() { return *_blk; }
+    const blockExpr& me::getBlock() const { return *_blk; }
+    const wtype& me::getRetType() const { return *_retType; }
+    nbicontainer& me::subs() { return _shares; }
+    const params& me::getParams() const { return _params; }
+
     str me::run(const ucontainable& args) {
         if(!_inFrame(*_evalArgs(args)))
             return str();

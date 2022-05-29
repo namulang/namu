@@ -9,31 +9,17 @@ namespace wrd {
         WRD_INIT_META(nullSobj)
 
     public:
-        nullSobj(): super() {}
+        nullSobj();
 
-        const std::string& asStr() const override {
-            static std::string inner = "";
-            return inner;
-        }
-        wchar asChar() const override {
-            return '\0';
-        }
-        wint asInt() const override {
-            return 0;
-        }
-        wbool asBool() const override {
-            return false;
-        }
-        const type& getType() const override {
-            return ttype<me>::get();
-        }
-        wbool isExist() const override {
-            return false;
-        }
+    public:
+        const std::string& asStr() const override;
+        wchar asChar() const override;
+        wint asInt() const override;
+        wbool asBool() const override;
+        const type& getType() const override;
+        wbool isExist() const override;
 
-        static me& get() {
-            static me inner;
-            return inner;
-        }
+    public:
+        static me& get();
     };
 }

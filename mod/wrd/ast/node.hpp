@@ -51,23 +51,21 @@ namespace wrd {
         virtual void rel() {}
 
         template <typename T> wbool is() const { return is(ttype<T>::get()); }
-        wbool is(const typeProvidable& to) const { return is(to.getType()); }
-        wbool is(const type& to) const { return getType().is(to); }
+        wbool is(const typeProvidable& to) const;
+        wbool is(const type& to) const;
 
         template <typename T> tstr<T> as() const { return as(ttype<T>::get()); }
-        str as(const typeProvidable& to) const { return as(to.getType()); }
-        str as(const type& to) const { return getType().as(*this, to); }
+        str as(const typeProvidable& to) const;
+        str as(const type& to) const;
 
         template <typename T>
-        wbool isImpli() const {
-            return isImpli(ttype<T>::get());
-        }
-        wbool isImpli(const typeProvidable& to) const { return isImpli(to.getType()); }
-        wbool isImpli(const type& to) const { return getType().isImpli(to); }
+        wbool isImpli() const { return isImpli(ttype<T>::get()); }
+        wbool isImpli(const typeProvidable& to) const;
+        wbool isImpli(const type& to) const;
 
         template <typename T> tstr<T> asImpli() const { return asImpli(ttype<T>::get()); }
-        str asImpli(const typeProvidable& to) const { return asImpli(to.getType()); }
-        str asImpli(const type& to) const { return getType().asImpli(*this, to); }
+        str asImpli(const typeProvidable& to) const;
+        str asImpli(const type& to) const;
 
         /// getType() returns what it is. opposite to it, this returns what this class will
         /// represents after evaluation.
@@ -79,13 +77,9 @@ namespace wrd {
         /// constructed with integers.
         /// and also this func requires frames. means that you have to interact frame first before
         /// call this func.
-        virtual const wtype& getEvalType() const {
-            return getType();
-        }
+        virtual const wtype& getEvalType() const;
 
     protected:
-        virtual str _onRunSub(node& sub, const ucontainable& args) {
-            return sub.run(args);
-        }
+        virtual str _onRunSub(node& sub, const ucontainable& args);
     };
 }

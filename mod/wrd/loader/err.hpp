@@ -23,48 +23,12 @@ namespace wrd {
         };
 
     public:
-        err(err::type t, wint newCode, ...): super(), fType(t), code((errCode) newCode) {
-            va_list args;
-            va_start(args, newCode);
-
-            msg = _format(getErrMsg(code), args);
-            va_end(args);
-        }
-        err(err::type t, int newCode, va_list args): super(), fType(t), code((errCode) newCode) {
-            msg = _format(getErrMsg(code), args);
-        }
+        err(err::type t, wint newCode, ...);
+        err(err::type t, int newCode, va_list args);
 
     public:
-        virtual void log() const {
-
-            auto& log = logger::get();
-            switch(fType) {
-                case ERR:
-                    std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTRED);
-                    log.dumpFormat("err%d(%s)", code, getErrName(code).c_str());
-                    std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
-                    log.dumpFormat(": %s\n", msg.c_str());
-                    break;
-
-                case WARN:
-                    std::cout << platformAPI::getConsoleFore(platformAPI::YELLOW);
-                    log.dumpFormat("warn%d(%s)", code, getErrName(code).c_str());
-                    std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
-                    log.dumpFormat(": %s\n", msg.c_str());
-                    break;
-
-                case INFO:
-                    std::cout << platformAPI::getConsoleFore(platformAPI::BLUE);
-                    log.dumpFormat("info%d(%s)", code, getErrName(code).c_str());
-                    std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
-                    log.dumpFormat(": %s\n", msg.c_str());
-                    break;
-            }
-        }
-        void dbgLog() const {
-            if(buildFeature::config::isDbg())
-                log();
-        }
+        virtual void log() const;
+        void dbgLog() const;
 
         static const std::string& getErrMsg(errCode code);
         static const std::string& getErrName(errCode code);
@@ -83,10 +47,6 @@ namespace wrd {
 
     private:
         std::string _format(const std::string& fmt, va_list args);
-        err* _newRes(type t, errCode code, va_list args) {
-            return new err(t, code, args);
-        }
-        err* _newRes(const area& src, type t, errCode code, va_list args);
     };
 
     struct _wout dummyErr : public err {
@@ -95,10 +55,10 @@ namespace wrd {
             INIT_META(me))
 
     public:
-        dummyErr(): super(err::ERR, 0) {}
+        dummyErr();
 
     public:
-        void log() const override {}
+        void log() const override;
     };
 
     struct _wout srcErr : public err {
@@ -113,12 +73,6 @@ namespace wrd {
         area srcArea;
 
     public:
-        void log() const override {
-            switch(fType) {
-                case ERR: WRD_E("%d:%d: err(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
-                case WARN: WRD_W(":%d:%d: warn(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
-                case INFO: WRD_I(":%d:%d: info(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
-            }
-        }
+        void log() const override;
     };
 }

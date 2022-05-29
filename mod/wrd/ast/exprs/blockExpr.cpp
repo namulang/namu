@@ -70,4 +70,11 @@ namespace wrd {
         WRD_DI("block.outFrame()\n");
         it._outFrame();
     })
+
+    const wtype& me::getEvalType() const {
+        wcnt len = _exprs.len();
+        if(len <= 0) return nulOf<wtype>();
+
+        return _exprs[len-1].getEvalType();
+    }
 }

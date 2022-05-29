@@ -8,9 +8,8 @@ namespace wrd {
         WRD(CLASS(runExpr, expr, expr::exprType))
 
     public:
-        runExpr(const node& meObj, const std::string& name, const narr& args)
-            : _me(meObj), _args(args), _name(name)  {}
-        runExpr(const node& meObj, const narr& args): _me(meObj), _args(args) {}
+        runExpr(const node& meObj, const std::string& name, const narr& args);
+        runExpr(const node& meObj, const narr& args);
 
     public:
         using super::run;
@@ -18,17 +17,15 @@ namespace wrd {
 
         const wtype& getEvalType() const override;
 
-        node& getMe() { return *_me; }
-        const node& getMe() const { return *_me; }
-        void setMe(const node& newMe) {
-            _me.bind(newMe);
-        }
+        node& getMe();
+        const node& getMe() const;
+        void setMe(const node& newMe);
 
-        const std::string& getName() const { return _name; }
-        std::string& getName() { return _name; }
+        const std::string& getName() const;
+        std::string& getName();
 
-        narr& getArgs() { return _args; }
-        const narr& getArgs() const { return _args; }
+        narr& getArgs();
+        const narr& getArgs() const;
 
     private:
         str _me;

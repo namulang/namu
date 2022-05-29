@@ -25,13 +25,10 @@ namespace wrd {
         WRD(ADT(parser, typeProvidable))
 
     public:
-        parser() { me::rel(); }
+        parser();
 
     public:
-        me& setReport(errReport& report) {
-            _eventer.getReport().bind(report);
-            return *this;
-        }
+        me& setReport(errReport& report);
         me& setPack(const pack& tray);
         pack& getPack();
         const pack& getPack() const WRD_UNCONST_FUNC(getPack())

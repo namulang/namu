@@ -328,4 +328,34 @@ namespace wrd {
         to.setMe(me);
         return &to;
     }
+
+    me::loweventer() { rel(); }
+
+    tstr<pack>& me::getPack() { return _pack; }
+    str& me::getSubPack() { return _subpack; } // TODO: can I remove subpack variable?
+    tstr<errReport>& me::getReport() { return _report; }
+    tokenDispatcher& me::getDispatcher() { return _dispatcher; }
+    std::vector<wcnt>& me::getIndents() { return _indents; }
+    const area& me::getArea() const {
+        static area dummy {{0, 0}, {0, 1}};
+
+        return _srcArea ? *_srcArea : dummy;
+    }
+    wbool me::isInit() const { return _mode; }
+
+    void me::rel() {
+        _report.bind(dummyErrReport::singletone);
+        _pack.rel();
+        _nameMap.clear();
+        prepareParse();
+    }
+
+    void me::prepareParse() {
+        _mode = nullptr;
+        _subpack.rel();
+        _isIgnoreWhitespace = false;
+        _dispatcher.rel();
+        _indents.clear();
+        _srcArea = nullptr;
+    }
 }

@@ -36,6 +36,8 @@ namespace wrd {
 
         private:
             iterator(const std::string& path);
+
+        public:
             ~iterator();
 
         public:

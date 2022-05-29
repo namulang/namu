@@ -11,17 +11,15 @@ namespace wrd {
             FRIEND_VERIFY(mgdFunc, subNodes))
 
     public:
-        explicit mgdFunc(const params& ps, const wtype& retType)
-            : super(), _params(ps), _retType(&retType), _blk(new blockExpr()) {}
-        explicit mgdFunc(const params& ps, const wtype& retType, const blockExpr& newBlock)
-            : super(), _params(ps), _retType(&retType), _blk(newBlock) {}
+        explicit mgdFunc(const params& ps, const wtype& retType);
+        explicit mgdFunc(const params& ps, const wtype& retType, const blockExpr& newBlock);
 
     public:
-        blockExpr& getBlock() { return *_blk; }
-        const blockExpr& getBlock() const { return *_blk; }
-        const wtype& getRetType() const override { return *_retType; }
-        nbicontainer& subs() override { return _shares; }
-        const params& getParams() const override { return _params; }
+        blockExpr& getBlock();
+        const blockExpr& getBlock() const;
+        const wtype& getRetType() const override;
+        nbicontainer& subs() override;
+        const params& getParams() const override;
 
         using super::run;
         str run(const ucontainable& args) override;

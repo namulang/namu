@@ -7,22 +7,12 @@ namespace wrd {
         WRD(CLASS(bufferSrcSupply, srcSupply))
 
     public:
-        bufferSrcSupply(const std::vector<string>& buf): _srcs(buf) { ret(); }
+        bufferSrcSupply(const std::vector<string>& buf);
 
     public:
-        wbool next() override {
-            if(++_cursor >= _srcs.size()) return false;
-
-            return true;
-        }
-
-        const char* get() const override {
-            return _srcs[_cursor].c_str();
-        }
-
-        void ret() override {
-            _cursor = -1;
-        }
+        wbool next() override;
+        const char* get() const override;
+        void ret() override;
 
     private:
         std::vector<string> _srcs;

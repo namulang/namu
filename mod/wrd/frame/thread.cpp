@@ -51,4 +51,38 @@ namespace wrd {
 
         return res;
     }
+
+    me::thread() {} // for singleton
+    me::thread(const node& root): _root(root) {}
+
+    thread& me::get() {
+        return **_get();
+    }
+
+    const instancer& me::getInstancer() {
+        return instancer::get();
+    }
+
+    // node:
+    nbicontainer& me::subs() {
+        if(!_root) return nulOf<nbicontainer>();
+
+        return _root->subs();
+    }
+
+    wbool me::canRun(const ucontainable& args) const { return false; }
+
+    void me::rel() { _frames.rel(); }
+
+    frames& me::_getFrames() {
+        return _frames;
+    }
+    frame& me::_getNowFrame() {
+        return _frames[_frames.len() - 1];
+    }
+
+    thread** me::_get() {
+        thread_local static thread* inner = new thread();
+        return &inner;
+    }
 }

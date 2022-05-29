@@ -29,4 +29,17 @@ namespace wrd {
         if(!it.run())
             _err(errCode::CANT_DEF_VAR, p.getName().c_str(), p.getOrigin().getType().getName().c_str());
     })
+
+    const param& me::getParam() const { return _param; }
+
+    /// @return null of scope if this variable will be defined to local scope.
+    const scope& me::getWhere() const { return *_where; }
+    void me::setWhere(const scope& new1) { _where.bind(new1); }
+
+    const wtype& me::getEvalType() const {
+        // I need to return static eval type:
+        //  if I return _param->getType(), then actually it returns
+        //  dynamic eval type.
+        return _param.getType();
+    }
 }

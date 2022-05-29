@@ -21,20 +21,16 @@ namespace wrd {
         friend class tokenScanModable;
 
     public:
-        loweventer() { rel(); }
+        loweventer();
 
     public:
-        tstr<pack>& getPack() { return _pack; }
-        str& getSubPack() { return _subpack; } // TODO: can I remove subpack variable?
-        tstr<errReport>& getReport() { return _report; }
-        tokenDispatcher& getDispatcher() { return _dispatcher; }
-        std::vector<wcnt>& getIndents() { return _indents; }
-        const area& getArea() const {
-            static area dummy {{0, 0}, {0, 1}};
-
-            return _srcArea ? *_srcArea : dummy;
-        }
-        wbool isInit() const { return _mode; }
+        tstr<pack>& getPack();
+        str& getSubPack();
+        tstr<errReport>& getReport();
+        tokenDispatcher& getDispatcher();
+        std::vector<wcnt>& getIndents();
+        const area& getArea() const;
+        wbool isInit() const;
 
         template <typename T>
         void setScan() {
@@ -43,21 +39,8 @@ namespace wrd {
             _mode = T::_instance;
         }
 
-        void rel() {
-            _report.bind(dummyErrReport::singletone);
-            _pack.rel();
-            _nameMap.clear();
-            prepareParse();
-        }
-
-        void prepareParse() {
-            _mode = nullptr;
-            _subpack.rel();
-            _isIgnoreWhitespace = false;
-            _dispatcher.rel();
-            _indents.clear();
-            _srcArea = nullptr;
-        }
+        void rel();
+        void prepareParse();
 
     public:
         // events:

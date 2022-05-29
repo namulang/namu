@@ -18,4 +18,10 @@ namespace wrd {
 
         return info.bind(newFr);
     }
+
+    void me::verify(verifier& veri, typeProvidable& it) {
+        _verifier = &veri;
+    }
+
+    verifier& me::_getVerifier() { return *_verifier; }
 }

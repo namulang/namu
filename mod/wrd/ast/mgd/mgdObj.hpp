@@ -11,46 +11,25 @@ namespace wrd {
         WRD(CLASS(mgdObj, obj))
 
     public:
-        explicit mgdObj()
-            : super(), _shares(new scopes()), _owns(new scope()), _org(this) {
-            _subs.bind(_makeNewSubs());
-        }
-        explicit mgdObj(const scopes& shares, const scope& owns)
-            : super(), _shares(shares), _owns(owns), _org(this) {
-            _subs.bind(_makeNewSubs());
-        }
-        explicit mgdObj(const me& rhs): super(rhs) {
-            _assign(rhs);
-        }
+        explicit mgdObj();
+        explicit mgdObj(const scopes& shares, const scope& owns);
+        explicit mgdObj(const me& rhs);
 
-        me& operator=(const me& rhs) {
-            if (&rhs == this) return *this;
-
-            super::operator=(rhs);
-
-            return _assign(rhs);
-        }
+        me& operator=(const me& rhs);
 
         using super::subs;
-        nbicontainer& subs() override { return *_subs; }
+        nbicontainer& subs() override;
 
-        scopes& getShares() { return *_shares; }
+        scopes& getShares();
         const scopes& getShares() const WRD_UNCONST_FUNC(getShares())
 
-        scope& getOwns() { return *_owns; }
+        scope& getOwns();
         const scope& getOwns() const WRD_UNCONST_FUNC(getOwns())
 
-        const obj& getOrigin() const override {
-            return *_org;
-        }
+        const obj& getOrigin() const override;
 
     private:
-        scopes* _makeNewSubs() {
-            scopes* ret = new scopes(*_owns);
-            ret->link(*_shares);
-
-            return ret;
-        }
+        scopes* _makeNewSubs();
 
         me& _assign(const me& rhs);
 

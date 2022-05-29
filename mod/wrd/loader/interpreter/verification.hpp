@@ -13,9 +13,7 @@ namespace wrd {
             INIT_META(me))
 
     public:
-        virtual void verify(verifier& veri, typeProvidable& it) {
-            _verifier = &veri;
-        }
+        virtual void verify(verifier& veri, typeProvidable& it);
         void verify(typeProvidable& it);
         wbool logFrameInfo(const frame& newFr);
 
@@ -27,7 +25,7 @@ namespace wrd {
         template <typename... Args>
         void _info(Args... args);
 
-        verifier& _getVerifier() { return *_verifier; }
+        verifier& _getVerifier();
 
     protected:
         verifier* _verifier;
