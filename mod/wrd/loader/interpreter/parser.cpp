@@ -54,4 +54,11 @@ namespace wrd {
     void me::rel() {
         _eventer.rel();
     }
+
+    me::parser() { me::rel(); }
+
+    me& me::setReport(errReport& report) {
+        _eventer.getReport().bind(report);
+        return *this;
+    }
 }

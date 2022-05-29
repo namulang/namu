@@ -7,6 +7,7 @@ namespace wrd {
 
     WRD_DEF_ME(returnExpr)
 
+    me::returnExpr(const node& ret): _ret(ret) {}
     me::returnExpr(): _ret(wVoid::singletone()) {}
 
     str me::run(const ucontainable& args) {
@@ -15,11 +16,19 @@ namespace wrd {
         return ret;
     }
 
+    node& me::getRet() { return *_ret; }
+
     str me::_decideRet(const ucontainable& args) {
         if(!_ret) return str(wVoid::singletone());
         if(_ret->isSub<obj>()) return _ret; // case: obj
 
         return _ret->run(args); // case: expr
+    }
+
+    wbool me::canRun(const ucontainable& args) const {
+        if(_ret)
+            return _ret->canRun(args);
+        return super::canRun(args);
     }
 
     const wtype& me::getEvalType() const {

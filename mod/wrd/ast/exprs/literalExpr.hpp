@@ -9,21 +9,14 @@ namespace wrd {
         friend class mgdFunc;
 
     public:
-        literalExpr(const node& n): _str(n) {}
+        literalExpr(const node& n);
 
     public:
         using super::run;
-        str run(const ucontainable& args) override {
-            return _str;
-        }
-
-        const wtype& getEvalType() const override {
-            // _str always binds to some object.
-            return _str->getType();
-        }
-
-        str& getStr() { return _str; }
-        const str& getStr() const { return _str; }
+        str run(const ucontainable& args) override;
+        const wtype& getEvalType() const override;
+        str& getStr();
+        const str& getStr() const;
 
     private:
         str _str;

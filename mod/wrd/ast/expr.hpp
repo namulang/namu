@@ -14,13 +14,8 @@ namespace wrd {
 
         public:
             using super::asImpli;
-            wbool isImpli(const type& to) const override {
-                return to.isSub<node>();
-            }
-
-            str asImpli(const node& from, const type& to) const override {
-                return str(((node&) from).run());
-            }
+            wbool isImpli(const type& to) const override;
+            str asImpli(const node& from, const type& to) const override;
         };
 
         WRD(ADT(expr, node, exprType))
@@ -28,7 +23,7 @@ namespace wrd {
         friend struct ::exprTest;
 
     public:
-        expr(): _pos{0, 0} {}
+        expr();
 
     public:
         using super::subs;
@@ -37,18 +32,13 @@ namespace wrd {
         /// run of expr class get treated like 'evaluate' in wrd.
         /// it should not take any argument to run()
         using super::canRun;
-        wbool canRun(const ucontainable& args) const override { return args.len() == 0; }
-        const src& getSrc() const { return *_src; }
-        const point& getPos() const { return _pos; }
+        wbool canRun(const ucontainable& args) const override;
+        const src& getSrc() const;
+        const point& getPos() const;
 
     protected:
-        void _setSrc(const src& newSrc) {
-            _src.bind(newSrc);
-        }
-
-        void _setPos(const point& newPos) {
-            _pos = newPos;
-        }
+        void _setSrc(const src& newSrc);
+        void _setPos(const point& newPos);
 
     private:
         tstr<src> _src;

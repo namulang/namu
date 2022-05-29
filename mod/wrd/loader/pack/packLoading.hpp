@@ -17,25 +17,15 @@ namespace wrd {
         typedef wbool (me::*packEvent)(const packChain&);
 
     public:
-        void addPath(const std::string& filePath) {
-            _paths.push_back(filePath);
-        }
-        void addPath(const std::vector<std::string> paths) {
-            if(&_paths == &paths) return;
+        void addPath(const std::string& filePath);
+        void addPath(const std::vector<std::string> paths);
 
-            _paths.insert(_paths.end(), paths.begin(), paths.end());
-        }
-
-        virtual void rel() {
-            _paths.clear();
-        }
+        virtual void rel();
 
         virtual const std::string& getName() const = 0;
 
     protected:
-        const std::vector<std::string>& _getPaths() const {
-            return _paths;
-        }
+        const std::vector<std::string>& _getPaths() const;
 
     private:
         std::vector<std::string> _paths;

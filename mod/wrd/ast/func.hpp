@@ -20,10 +20,7 @@ namespace wrd {
         ///
         ///         I need the name and which types should be casted and binded from given arguments
         ///         are matters.
-        virtual const params& getParams() const {
-            static params inner;
-            return inner;
-        }
+        virtual const params& getParams() const;
 
         /// return type of this function.
         /// @remark please don't confuse this to evalType.

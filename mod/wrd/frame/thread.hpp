@@ -20,49 +20,32 @@ namespace wrd {
         friend class func; // for frames.
 
     private:
-        thread() {} // for singleton
-        thread(const node& root): _root(root) {}
+        thread();
+        thread(const node& root);
 
     public:
         const frames& getFrames() const WRD_UNCONST_FUNC(_getFrames())
         const frame& getNowFrame() const WRD_UNCONST_FUNC(_getNowFrame())
 
-        static thread& get() {
-            return **_get();
-        }
-
-        static const instancer& getInstancer() {
-            return instancer::get();
-        }
+        static thread& get();
+        static const instancer& getInstancer();
 
         // node:
-        nbicontainer& subs() override {
-            if(!_root) return nulOf<nbicontainer>();
+        nbicontainer& subs() override;
 
-            return _root->subs();
-        }
-
-        wbool canRun(const ucontainable& args) const override { return false; }
-
+        wbool canRun(const ucontainable& args) const override;
         str run(const ucontainable& args) override;
 
-        void rel() override { _frames.rel(); }
+        void rel() override;
 
         const packs& getSystemPacks();
 
     protected:
-        frames& _getFrames() {
-            return _frames;
-        }
-        frame& _getNowFrame() {
-            return _frames[_frames.len() - 1];
-        }
+        frames& _getFrames();
+        frame& _getNowFrame();
 
     private:
-        static thread** _get() {
-            thread_local static thread* inner = new thread();
-            return &inner;
-        }
+        static thread** _get();
 
     private:
         frames _frames;

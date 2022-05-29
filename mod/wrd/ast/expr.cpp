@@ -7,8 +7,30 @@ namespace wrd {
 
     WRD_DEF_ME(expr)
 
+    wbool me::exprType::isImpli(const type& to) const {
+        return to.isSub<node>();
+    }
+
+    str me::exprType::asImpli(const node& from, const type& to) const {
+        return str(((node&) from).run());
+    }
+
     nbicontainer& me::subs() {
         static nmap inner;
         return inner;
+    }
+
+    me::expr(): _pos{0, 0} {}
+
+    wbool me::canRun(const ucontainable& args) const { return args.len() == 0; }
+    const src& me::getSrc() const { return *_src; }
+    const point& me::getPos() const { return _pos; }
+
+    void me::_setSrc(const src& newSrc) {
+        _src.bind(newSrc);
+    }
+
+    void me::_setPos(const point& newPos) {
+        _pos = newPos;
     }
 }

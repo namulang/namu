@@ -8,7 +8,7 @@ namespace wrd {
 
         class _wout wStrType : public wtype {
         public:
-            wbool isImmutable() const override { return true; }
+            wbool isImmutable() const override;
 
         protected:
             const ases& _getImpliAses() const override;
@@ -16,11 +16,11 @@ namespace wrd {
         WRD(CLASS(wStr, primitiveObj, wStrType))
 
     public:
-        wStr() {}
-        wStr(const wchar* val): super(std::string(val)) {}
-        wStr(const std::string& val): super(val) {}
+        wStr();
+        wStr(const wchar* val);
+        wStr(const std::string& val);
 
     protected:
-        void _onCreateCtors(funcs& tray) const override {}
+        void _onCreateCtors(funcs& tray) const override;
     };
 }

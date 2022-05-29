@@ -17,14 +17,7 @@ namespace wrd {
     public:
         using super::run;
         str run(const ucontainable& args) override;
-
-        const wtype& getEvalType() const override {
-            wcnt len = _exprs.len();
-            if(len <= 0) return nulOf<wtype>();
-
-            return _exprs[len-1].getEvalType();
-        }
-
+        const wtype& getEvalType() const override;
         const narr& getStmts() const { return _exprs; }
         narr& getStmts() { return _exprs; }
 

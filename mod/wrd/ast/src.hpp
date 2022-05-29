@@ -11,17 +11,15 @@ namespace wrd {
         WRD(CLASS(src, node))
 
     public:
-        src(const std::string& fileName): _fileName(fileName) {}
+        src(const std::string& fileName);
 
     public:
-        wbool canRun(const ucontainable& args) const override { return false; }
+        wbool canRun(const ucontainable& args) const override;
 
         using super::run;
-        str run(const ucontainable& args) override { return str(); }
-
-        nbicontainer& subs() override { return _subs; }
-
-        const std::string& getFileName() const { return _fileName; }
+        str run(const ucontainable& args) override;
+        nbicontainer& subs() override;
+        const std::string& getFileName() const;
 
     private:
         std::string _fileName;

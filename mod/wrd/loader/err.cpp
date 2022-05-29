@@ -73,4 +73,58 @@ namespace wrd {
     }
 
 #undef _EXPAND_VA
+
+    me::err(err::type t, wint newCode, ...): super(), fType(t), code((errCode) newCode) {
+        va_list args;
+        va_start(args, newCode);
+
+        msg = _format(getErrMsg(code), args);
+        va_end(args);
+    }
+    me::err(err::type t, int newCode, va_list args): super(), fType(t), code((errCode) newCode) {
+        msg = _format(getErrMsg(code), args);
+    }
+
+    void me::log() const {
+
+        auto& log = logger::get();
+        switch(fType) {
+            case ERR:
+                std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTRED);
+                log.dumpFormat("err%d(%s)", code, getErrName(code).c_str());
+                std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+                log.dumpFormat(": %s\n", msg.c_str());
+                break;
+
+            case WARN:
+                std::cout << platformAPI::getConsoleFore(platformAPI::YELLOW);
+                log.dumpFormat("warn%d(%s)", code, getErrName(code).c_str());
+                std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+                log.dumpFormat(": %s\n", msg.c_str());
+                break;
+
+            case INFO:
+                std::cout << platformAPI::getConsoleFore(platformAPI::BLUE);
+                log.dumpFormat("info%d(%s)", code, getErrName(code).c_str());
+                std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
+                log.dumpFormat(": %s\n", msg.c_str());
+                break;
+        }
+    }
+
+    void me::dbgLog() const {
+        if(buildFeature::config::isDbg())
+            log();
+    }
+
+    dummyErr::dummyErr(): super(err::ERR, 0) {}
+    void dummyErr::log() const {}
+
+    void srcErr::log() const {
+        switch(fType) {
+            case ERR: WRD_E("%d:%d: err(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
+            case WARN: WRD_W(":%d:%d: warn(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
+            case INFO: WRD_I(":%d:%d: info(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
+        }
+    }
 }

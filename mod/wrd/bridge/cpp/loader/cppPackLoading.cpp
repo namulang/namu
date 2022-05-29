@@ -90,4 +90,9 @@ FINALIZE:
 
         super::rel();
     }
+
+    const std::string& me::getName() const {
+        static std::string inner = "cpp";
+        return inner;
+    }
 }

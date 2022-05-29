@@ -7,11 +7,28 @@ namespace wrd {
 
     WRD_DEF_ME(runExpr)
 
+    me::runExpr(const node& meObj, const std::string& name, const narr& args):
+            _me(meObj), _args(args), _name(name)  {}
+    me::runExpr(const node& meObj, const narr& args): _me(meObj), _args(args) {}
+
     str me::run(const ucontainable& args) {
         str me = _me->as<node>();
         if(!me) return WRD_E("_me as node == null"), str();
 
         return me->run(_name, _args);
+    }
+
+    node& me::getMe() { return *_me; }
+    const node& me::getMe() const { return *_me; }
+
+    const std::string& me::getName() const { return _name; }
+    std::string& me::getName() { return _name; }
+
+    narr& me::getArgs() { return _args; }
+    const narr& me::getArgs() const { return _args; }
+
+    void me::setMe(const node& newMe) {
+        _me.bind(newMe);
     }
 
     const wtype& me::getEvalType() const {

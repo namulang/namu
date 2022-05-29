@@ -28,24 +28,13 @@ namespace wrd {
 
     public:
         using super::subs;
-        nbicontainer& subs() override {
-            nbicontainer& subs = *_subs;
-            if(_state == RELEASED) {
-                WRD_I("%s pack is about to interpret lazy.", _manifest.name.c_str());
-                // TODO: check _rpt error count increased or not.
-                //       if increased, then parse() function has been failed.
-                parse(*_rpt, subs); // recursive call wasn't allowed.
-                verify(*_rpt, *this);
-                link();
-            }
+        nbicontainer& subs() override;
 
-            return subs;
-        }
+        manifest& getManifest();
+        const manifest& getManifest() const;
+        state getState() const;
+        wbool isValid() const;
 
-        manifest& getManifest() { return _manifest; }
-        const manifest& getManifest() const { return _manifest; }
-        state getState() const { return _state; }
-        wbool isValid() const { return _isValid; }
         /// this report will be used while interpret pack source code.
         /// @remark when 'subs()' func of the pack has been called, it interprets src codes
         ///         if it's first time. during parsing and verification, this report will
@@ -53,77 +42,24 @@ namespace wrd {
         ///         this func usually will be called by verifier when it detects the access
         ///         to a pack.
         ///         please refer 'verifier' class if you want to know further.
-        void setReport(errReport& rpt) {
-            _rpt.bind(rpt);
-        }
+        void setReport(errReport& rpt);
 
         using super::run;
         // running of a pack is prohibited.
-        str run(const ucontainable& args) override { return str(); }
-
-        wbool canRun(const ucontainable& args) const override { return false; }
-
-        const pack& getOrigin() const override {
-            return *this;
-        }
-
+        str run(const ucontainable& args) override;
+        wbool canRun(const ucontainable& args) const override;
+        const pack& getOrigin() const override;
         funcs& getCtors() override;
-
-        void rel() override {
-            super::rel();
-            _rel();
-        }
-
-        void addDependent(pack& dependent) {
-            _dependents.add(dependent);
-        }
-
-        const tnarr<pack>& getDependents() const {
-            return _dependents;
-        }
-
-        void setValid(wbool valid) {
-            _isValid = valid;
-        }
+        void rel() override;
+        void addDependent(pack& dependent);
+        const tnarr<pack>& getDependents() const;
+        void setValid(wbool valid);
 
     private:
-        tstr<srcs> parse(errReport& rpt, bicontainable& tray) override {
-            // You shouldn't release instances which _subs is holding:
-            //  there is a scenario which _subs containing parsed instance when
-            //  this function called.
-            //  Only you can do here is adding new parsed instances into _subs.
-            for(packLoading* load : _loadings) {
-                auto res = load->parse(rpt, tray);
-                _srcs.add(*res);
-            }
-            _state = PARSED;
-            return tstr<srcs>(_srcs);
-        }
-
-        wbool verify(errReport& rpt, pack& pak) override {
-            for(packLoading* load : _loadings)
-                load->verify(rpt, pak);
-
-            _state = VERIFIED;
-            return true;
-        }
-
-        wbool link() {
-            _state = LINKED;
-            return !isValid() ? invalidate() : true;
-        }
-
-        wbool invalidate() {
-            setValid(false);
-            if(_state != LINKED) return false;
-
-            // propagate result only if it's not valid.
-            for(auto& e : _dependents)
-                if(e.isSub<pack>())
-                    e.cast<pack>().invalidate();
-            return true;
-        }
-
+        tstr<srcs> parse(errReport& rpt, bicontainable& tray) override;
+        wbool verify(errReport& rpt, pack& pak) override;
+        wbool link();
+        wbool invalidate();
         void _rel();
 
     private:

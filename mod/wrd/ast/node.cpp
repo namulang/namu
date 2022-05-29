@@ -31,6 +31,25 @@ namespace wrd {
         return _onRunSub(found, args);
     }
 
+    wbool me::is(const typeProvidable& to) const { return is(to.getType()); }
+    wbool me::is(const type& to) const { return getType().is(to); }
+    str me::as(const typeProvidable& to) const { return as(to.getType()); }
+    str me::as(const type& to) const { return getType().as(*this, to); }
+
+    wbool me::isImpli(const typeProvidable& to) const { return isImpli(to.getType()); }
+    wbool me::isImpli(const type& to) const { return getType().isImpli(to); }
+    str me::asImpli(const typeProvidable& to) const { return asImpli(to.getType()); }
+    str me::asImpli(const type& to) const { return getType().asImpli(*this, to); }
+
+    const wtype& me::getEvalType() const {
+        return getType();
+    }
+
+    str me::_onRunSub(node& sub, const ucontainable& args) {
+        return sub.run(args);
+    }
+
+
     WRD_VERIFY({ // no same variable.
         for(auto e=it.subs().begin(); e ;++e)
             if(it.subAll<obj>(e.getKey()).len() > 1)

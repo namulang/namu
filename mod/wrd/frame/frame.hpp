@@ -8,14 +8,14 @@ struct frameTest;
 
 namespace wrd {
 
+    class obj;
+    class func;
     class _wout frame : public node { // TODO: may be obj, not node.
         WRD(CLASS(frame, node))
         friend struct ::frameTest;
 
     public:
-        ~frame() {
-            _rel();
-        }
+        ~frame() override;
 
         /*/// @return returns tpair<node, itsOwner>. the owner has the container holding the node
         ///         which can run with given name & argument.
@@ -39,89 +39,45 @@ namespace wrd {
             return tpair<str, str>();
         }*/
 
-        wbool pushLocal(nbicontainer* con) { return pushLocal(*con); }
-        wbool pushLocal(nbicontainer& con) { return pushLocal(*scopes::wrap(con)); }
-        wbool pushLocal(scopes* new1) { return _local.push(*new1); }
-        wbool pushLocal(scopes& new1) {
-            wbool ret = _local.push(new1);
-            if(ret && _local.chainLen() == 1 && _obj)
-                new1.link(_obj->subs());
-            return ret;
-        }
-        wbool pushLocal(const std::string& name, node& n) {
-            scopes& top = *_local.getTop();
-            if(nul(top))
-                return WRD_E("couldn't push new node. the top scope is null"), false;
+        wbool pushLocal(nbicontainer* con);
+        wbool pushLocal(nbicontainer& con);
+        wbool pushLocal(scopes* new1);
+        wbool pushLocal(scopes& new1);
+        wbool pushLocal(const std::string& name, node& n);
+        wbool pushLocal(const std::string& name, node* n);
 
-            return top.add(name, n);
-        }
-        wbool pushLocal(const std::string& name, node* n) {
-            return pushLocal(name, *n);
-        }
-
-        scopes& getTop() { return *_local.getTop(); }
+        scopes& getTop();
         const scopes& getTop() const WRD_UNCONST_FUNC(getTop())
 
-        tstr<scopes> popLocal() { return _local.pop(); }
+        tstr<scopes> popLocal();
         // I won't provide API for poping a single node from the scope.
 
-        void setObj(const obj& new1) {
-            _obj.bind(new1);
-            scopes& bottom = *_local.getBottom();
-            if(!nul(bottom)) {
-                if(nul(new1))
-                    bottom.unlink();
-                else
-                    bottom.link(new1.subs());
-            }
-        }
+        void setObj(const obj& new1);
 
-        const obj& getObj() const { return *_obj; }
-        obj& getObj() { return *_obj; }
+        const obj& getObj() const;
+        obj& getObj();
 
-        void setFunc(func& new1) {
-            _func.bind(new1);
-        }
-
-        func& getFunc() {
-            return *_func;
-        }
-
+        void setFunc(func& new1);
+        func& getFunc();
         const func& getFunc() const WRD_UNCONST_FUNC(getFunc())
 
-        void clearObj() {
-            setObj(nulOf<obj>());
-        }
+        void clearObj();
 
         // node:
         using node::subs;
-        nbicontainer& subs() override {
-            scopes& top = *_local.getTop();
-            return nul(top) ? _obj->subs() : top;
-        }
+        nbicontainer& subs() override;
 
-        wbool canRun(const ucontainable& args) const override { return false; }
+        wbool canRun(const ucontainable& args) const override;
+        str run(const ucontainable& args) override;
 
-        str run(const ucontainable& args) override { return str(); }
-        void rel() override {
-            _rel();
-            super::rel();
-        }
+        void rel() override;
 
-        wbool pushReturn(const str& toReturn) { return _ret.bind(*toReturn); }
-        wbool isReturned() const { return _ret.isBind(); }
-        str popReturn() {
-            str ret = _ret;
-            _ret.rel();
-            return ret;
-        }
+        wbool pushReturn(const str& toReturn);
+        wbool isReturned() const;
+        str popReturn();
 
     private:
-        void _rel() {
-            _obj.rel();
-            _func.rel();
-            _local.rel();
-        }
+        void _rel();
 
     private:
         tstr<obj> _obj;

@@ -8,45 +8,24 @@ namespace wrd {
 
         class _wout wVoidType : public wtype {
         public:
-            wbool isImmutable() const override { return true; }
+            wbool isImmutable() const override;
 
         protected:
-            const ases& _getImpliAses() const override {
-                static ases inner;
-                return inner;
-            }
+            const ases& _getImpliAses() const override;
         };
         WRD(CLASS(wVoid, mgdObj, wVoidType))
 
     public:
-        wVoid() {}
+        wVoid();
 
     public:
         using super::getCtors;
-        funcs& getCtors() override {
-            static funcs* ctors = nullptr;
-            if(!ctors) {
-                ctors = new funcs();
-                _onCreateCtors(*ctors);
-            }
-
-            return *ctors;
-        }
-
-        const obj& getOrigin() const override {
-            return *this;
-        }
-
-        static me& singletone() {
-            static me inner;
-            return inner;
-        }
+        funcs& getCtors() override;
+        const obj& getOrigin() const override;
+        static me& singletone();
 
     protected:
-        wbool _onSame(const typeProvidable& rhs) const override {
-            return !nul(rhs);
-        }
-
+        wbool _onSame(const typeProvidable& rhs) const override;
         void _onCreateCtors(funcs& tray) const;
     };
 }

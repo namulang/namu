@@ -14,55 +14,33 @@ namespace wrd {
         wbool isImpli() const {
             return this->isImpli(ttype<T>::get());
         }
-        virtual wbool isImpli(const type& to) const {
-            return _getImpliAses().is(*this, to);
-        }
-        wbool isImpli(const typeProvidable& to) const { return isImpli(to.getType()); }
+        virtual wbool isImpli(const type& to) const;
+        wbool isImpli(const typeProvidable& to) const;
 
         template <typename T>
         tstr<T> asImpli(const node& it) const {
             return this->asImpli(ttype<T>::get());
         }
-        virtual str asImpli(const node& from, const type& to) const {
-            return _getImpliAses().as(from, to);
-        }
+        virtual str asImpli(const node& from, const type& to) const;
 
         template <typename T>
         wbool is() const {
             return this->is(ttype<T>::get());
         }
-        wbool is(const type& to) const {
-            if(isImpli(to)) return true;
-
-            return _getAses().is(*this, to);
-        }
+        wbool is(const type& to) const;
 
         template <typename T>
         tstr<T> as(const node& it) const {
             return this->as(it, ttype<T>::get());
         }
-        str as(const node& from, const type& to) const {
-            if(isImpli(to))
-                return asImpli(from, to);
+        str as(const node& from, const type& to) const;
 
-            return _getAses().as(from, to);
-        }
-
-        virtual wbool isImmutable() const {
-            return false;
-        }
+        virtual wbool isImmutable() const;
 
     protected:
         // wtype:
-        virtual const ases& _getImpliAses() const {
-            static ases inner;
-            return inner;
-        }
-
-        virtual const ases& _getAses() const {
-            static ases inner;
-            return inner;
-        }
+        virtual const ases& _getImpliAses() const;
+        virtual const ases& _getAses() const;
     };
 
     typedef std::vector<const wtype*> wtypes;

@@ -19,4 +19,12 @@ namespace wrd {
 
         return inner;
     }
+
+    wbool me::wStrType::isImmutable() const { return true; }
+
+    me::wStr() {}
+    me::wStr(const wchar* val): super(std::string(val)) {}
+    me::wStr(const std::string& val): super(val) {}
+
+    void me::_onCreateCtors(funcs& tray) const {}
 }

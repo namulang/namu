@@ -9,6 +9,6 @@ namespace wrd {
         WRD(ADT(opaquePackLoading, packLoading))
 
     public:
-        wbool verify(errReport& rpt, pack& pak) override { return true; }
+        wbool verify(errReport& rpt, pack& pak) override;
     };
 }

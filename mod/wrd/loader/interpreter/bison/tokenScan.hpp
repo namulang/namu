@@ -15,10 +15,7 @@ namespace wrd {
         WRD(ADT(tokenScan))
 
     public:
-        wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
-            wbool dum;
-            return onScan(eventer, val, loc, scanner, dum);
-        }
+        wint onScan(loweventer& eventer, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
         virtual wint onScan(loweventer& eventer, YYSTYPE* yylval, YYLTYPE* loc, yyscan_t yyscanner, wbool& isBypass);
     };
 

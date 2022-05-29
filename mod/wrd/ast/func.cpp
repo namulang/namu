@@ -19,6 +19,11 @@ namespace wrd {
         return true;
     }
 
+    const params& me::getParams() const {
+        static params inner;
+        return inner;
+    }
+
     WRD_VERIFY({
         for(const param& p : it.getParams()) {
             const std::string& name = p.getName();

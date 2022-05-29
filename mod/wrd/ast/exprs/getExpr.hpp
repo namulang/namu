@@ -17,27 +17,16 @@ namespace wrd {
 
     public:
         using super::run;
-        str run(const ucontainable& args) override {
-            // believe that this expression was checked to be valid.
-            return str(_get());
-        }
-
+        str run(const ucontainable& args) override;
         const wtype& getEvalType() const override;
         const node& getFrom() const;
-        const std::string& getSubName() const { return _name; }
+        const std::string& getSubName() const;
 
         /// @return nullable
-        const narr& getSubArgs() const { return *_args; }
+        const narr& getSubArgs() const;
 
     private:
-        node& _get() const {
-            str evalMe = getFrom().isSub<expr>() ? getFrom().as<node>() : getFrom();
-            if(!evalMe) return WRD_E("from == null"), nulOf<node>();
-            WRD_DI("_name=%s", _name.c_str());
-            if(!_args) return evalMe->sub(_name);
-
-            return evalMe->sub(_name, *_args);
-        }
+        node& _get() const;
 
     private:
         str _from;

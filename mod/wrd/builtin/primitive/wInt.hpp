@@ -8,29 +8,16 @@ namespace wrd {
 
         class _wout wIntType : public wtype {
         public:
-            wbool isImmutable() const override { return true; }
+            wbool isImmutable() const override;
 
         protected:
-            const ases& _getImpliAses() const override {
-                static ases inner;
-                if(inner.len() <= 0) {
-                    struct toWstr: public tas<wStr> {
-                        str as(const node& wInt, const type& to) const override {
-                            // TODO:
-                            return str();
-                        }
-                    };
-                    inner.add(new toWstr());
-                }
-
-                return inner;
-            }
+            const ases& _getImpliAses() const override;
         };
         WRD(CLASS(wInt, primitiveObj, wIntType))
 
     public:
-        wInt() {}
-        wInt(wint val): super(val) {}
+        wInt();
+        wInt(wint val);
 
     protected:
         void _onCreateCtors(funcs& tray) const override;

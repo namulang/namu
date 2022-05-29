@@ -43,4 +43,36 @@ namespace wrd {
         tray.add(new defaultCtor());
         tray.add(new cpyCtor());
     }
+
+    wbool me::wVoidType::isImmutable() const { return true; }
+
+    const ases& me::wVoidType::_getImpliAses() const {
+        static ases inner;
+        return inner;
+    }
+
+    me::wVoid() {}
+
+    funcs& me::getCtors() {
+        static funcs* ctors = nullptr;
+        if(!ctors) {
+            ctors = new funcs();
+            _onCreateCtors(*ctors);
+        }
+
+        return *ctors;
+    }
+
+    const obj& me::getOrigin() const {
+        return *this;
+    }
+
+    me& me::singletone() {
+        static me inner;
+        return inner;
+    }
+
+    wbool me::_onSame(const typeProvidable& rhs) const {
+        return !nul(rhs);
+    }
 }

@@ -14,4 +14,23 @@ namespace wrd {
                 return e->as(from, to);
         return str();
     }
+
+    void me::add(const asable& newCast) {
+        _casts.push_back((asable*) &newCast);
+    }
+    void me::add(const asable* newCast) {
+        _casts.push_back((asable*) newCast);
+    }
+
+    int me::len() const {
+        return _casts.size();
+    }
+
+    wbool me::is(const type& from, const type& to) const {
+        if(to.isSuper(from)) return true;
+
+        for(auto e : _casts)
+            if(e->is(from, to)) return true;
+        return false;
+    }
 }
