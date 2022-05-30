@@ -77,4 +77,4 @@ bin/
 **/proto/compiler/*.tab.cpp
 **/*dSYM/Contents/*
 *.deb
-build/debian/
+build/debian/usr/

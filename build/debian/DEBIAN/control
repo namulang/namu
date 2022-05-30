@@ -1,0 +1,10 @@
+Package: wrd
+Version: 0.1.7
+Maintainer: kniz <knizofficial@gmail.com>
+Description: first my test wrd pkg
+Homepage: http://github.com/kniz/wrd
+Architecture: amd64
+Section:devel
+Priority:optional
+Depends: git, graphviz, bison(>=2.8.1), flex(>=2.6.0), cmake, clang, make
+Recommends: python(>=3.0.0), python3(>=3.0.0)
