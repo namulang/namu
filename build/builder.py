@@ -80,6 +80,9 @@ def branch(command):
         return _publishDoc()
     elif command == "make":
         return build(False)
+    elif command == "pub":
+        arg2 = None if len(sys.argv) < 3 else sys.argv[2]
+        return pub(arg2);
 
     printErr(command + " is unknown command.")
     return -1
@@ -411,6 +414,55 @@ def build(incVer):
         return -1
 
     return 0
+
+def pub(arg):
+    global cwd, binDir, ver_major, ver_minor, ver_fix
+
+    if arg == None:
+        printErr("please input a platfrom after pub command: 'deb', 'mac'")
+        return -1
+
+    if arg == "deb":
+        printInfoEnd("cleaning previous outputs of publishing...")
+        debianDir = cwd + "/debian"
+        os.chdir(debianDir)
+        os.system("rm -rf ./usr")
+        os.system("mkdir usr")
+        os.system("mkdir usr/local")
+        os.system("mkdir usr/local/bin")
+        os.system("mkdir usr/local/lib")
+        os.system("mkdir usr/local/include")
+        printOk("done.")
+        os.chdir(cwd)
+
+        if relBuild() != 0:
+            printErr("release build failed. quit publishing.")
+            return -1
+
+        os.chdir(debianDir)
+        target = debianDir + "/usr/local/"
+        printInfoEnd("copy outputs into debian target directory")
+        os.system("cp " + binDir + "/wrc " + target + "bin")
+        os.system("cp " + binDir + "/*.so " + target + "lib")
+        printOk("done")
+
+        printInfoEnd("packaging...")
+        os.chdir(cwd)
+        os.system("dpkg -b debian")
+        printOk("done")
+
+        printInfoEnd("move package into bin/...")
+        os.system("mv debian.deb " + binDir + "/wrd-" + str(ver_major) + "." + str(ver_minor) +
+                "." + str(ver_fix) + "-1-amd64-release.deb")
+        printOk("done")
+
+        printInfoEnd("remove local shared libraries...")
+        os.system("rm " + binDir + "/*.so")
+        printOk("done")
+        return 0
+
+    printErr("unknown platform name: " + arg)
+    return -1
 
 # arg is "" for dbg or "silent" for rel
 def test(arg):
