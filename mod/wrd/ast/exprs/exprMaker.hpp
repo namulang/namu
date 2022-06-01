@@ -8,7 +8,7 @@ namespace wrd {
         WRD(CLASS(exprMaker))
 
     public:
-        exprMaker(): _src(nullptr), _pos{0, 0} {}
+        exprMaker(): _src(nullptr), _pos({0, 0}) {}
         exprMaker(const src& s, wcnt row, wcnt col) {
             setSrc(s);
             setCol(row);

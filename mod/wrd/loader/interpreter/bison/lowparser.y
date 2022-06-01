@@ -434,7 +434,7 @@ static int yyreport_syntax_error(const yypcontext_t* ctx, yyscan_t scanner) {
     if(symbol != YYSYMBOL_YYUNDEF)
         // this's similar to call 'onSrcErr', but loweventer._srcArea is invalid.
         // so I can't use it now.
-        eventer->onErr(*yypcontext_location(ctx), errCode::SYNTAX_ERR, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol));
+        eventer->onErr(yypcontext_location(ctx)->start, errCode::SYNTAX_ERR, traceErr(ctx, scanner).c_str(), yysymbol_name(symbol));
     _onEndParse(scanner);
     return 0;
 }

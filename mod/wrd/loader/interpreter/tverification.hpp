@@ -16,7 +16,7 @@ namespace wrd {
         }
 
         using super::verify;
-        void verify(verifier& veri, typeProvidable& it) override {
+        void verify(verifier& veri, node& it) override {
             super::verify(veri, it);
             _onVerify((T&) it);
         }

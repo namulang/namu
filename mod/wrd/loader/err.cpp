@@ -56,19 +56,19 @@ namespace wrd {
     err* me::newErr(int code, ...) {
         _EXPAND_VA(new err(err::ERR, code, args));
     }
-    err* me::newErr(const area& src, int code, ...) {
+    err* me::newErr(const point& src, int code, ...) {
         _EXPAND_VA(new srcErr(err::ERR, src, code, args));
     }
     err* me::newWarn(int code, ...) {
         _EXPAND_VA(new err(err::WARN, code, args));
     }
-    err* me::newWarn(const area& src, int code, ...) {
+    err* me::newWarn(const point& src, int code, ...) {
         _EXPAND_VA(new srcErr(err::WARN, src, code, args));
     }
     err* me::newInfo(int code, ...) {
         _EXPAND_VA(new err(err::INFO, code, args));
     }
-    err* me::newInfo(const area& src, int code, ...) {
+    err* me::newInfo(const point& src, int code, ...) {
         _EXPAND_VA(new srcErr(err::INFO, src, code, args));
     }
 
@@ -122,9 +122,9 @@ namespace wrd {
 
     void srcErr::log() const {
         switch(fType) {
-            case ERR: WRD_E("%d:%d: err(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
-            case WARN: WRD_W(":%d:%d: warn(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
-            case INFO: WRD_I(":%d:%d: info(%d): %s", srcArea.start.row, srcArea.start.col, code, msg.c_str()); break;
+            case ERR: WRD_E("%d:%d: err(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
+            case WARN: WRD_W(":%d:%d: warn(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
+            case INFO: WRD_I(":%d:%d: info(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
         }
     }
 }

@@ -38,11 +38,11 @@ namespace wrd {
     tstr<frame>& me::getFrameInfo() { return *_frameInfo; }
     const packContainer& me::getPacks() { return *_packs; }
 
-    void me::verify(typeProvidable& it) {
+    void me::verify(node& it) {
         _verify(it, it.getType());
     }
 
-    void me::_verify(typeProvidable& it, const type& typ) {
+    void me::_verify(node& it, const type& typ) {
         if(nul(it)) return;
         if(typ == ttype<adam>::get()) return;
 

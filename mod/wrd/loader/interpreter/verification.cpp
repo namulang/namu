@@ -8,7 +8,7 @@ namespace wrd {
 
     WRD_DEF_ME(verification)
 
-    void me::verify(typeProvidable& it) {
+    void me::verify(node& it) {
         _getVerifier().verify(it);
     }
 
@@ -19,9 +19,11 @@ namespace wrd {
         return info.bind(newFr);
     }
 
-    void me::verify(verifier& veri, typeProvidable& it) {
+    void me::verify(verifier& veri, node& it) {
+        _it = &it;
         _verifier = &veri;
     }
 
     verifier& me::_getVerifier() { return *_verifier; }
+    node& me::_getIt() { return *_it; }
 }

@@ -23,9 +23,6 @@ namespace wrd {
         friend struct ::exprTest;
 
     public:
-        expr();
-
-    public:
         using super::subs;
         nbicontainer& subs() override;
 
@@ -34,13 +31,13 @@ namespace wrd {
         using super::canRun;
         wbool canRun(const ucontainable& args) const override;
         const src& getSrc() const;
-        const point& getPos() const;
+        const point& getPos() const override;
+        void setPos(const point& newPos) override;
 
     protected:
         void _setSrc(const src& newSrc);
-        void _setPos(const point& newPos);
 
-    private:
+    protected:
         tstr<src> _src;
         point _pos;
     };

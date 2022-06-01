@@ -23,5 +23,20 @@ namespace wrd {
         _getVerifier().getReport().add(err::newInfo(args...));
     }
 
+    template <typename... Args>
+    void ME::_srcWarn(Args... args) {
+        _getVerifier().getReport().add(err::newWarn(_getIt().getPos(), args...));
+        logFrameInfo(thread::get().getNowFrame());
+    }
+    template <typename... Args>
+    void ME::_srcErr(Args... args) {
+        _getVerifier().getReport().add(err::newErr(_getIt().getPos(), args...));
+        logFrameInfo(thread::get().getNowFrame());
+    }
+    template <typename... Args>
+    void ME::_srcInfo(Args... args) {
+        _getVerifier().getReport().add(err::newInfo(_getIt().getPos(), args...));
+    }
+
 #undef ME
 }

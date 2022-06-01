@@ -28,7 +28,7 @@ namespace wrd {
         for(const param& p : it.getParams()) {
             const std::string& name = p.getName();
             if(nul(name) || name.empty())
-                return _err(errCode::FUNC_HAS_NO_NAME);
+                return _srcErr(errCode::FUNC_HAS_NO_NAME);
         }
     })
 }

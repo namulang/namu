@@ -38,10 +38,10 @@ namespace wrd {
         tstr<frame>& getFrameInfo();
         const packContainer& getPacks();
 
-        void verify(typeProvidable& it);
+        void verify(node& it);
 
     private:
-        void _verify(typeProvidable& it, const type& typ);
+        void _verify(node& it, const type& typ);
         static verifications& _getVerifications(const type& typ);
 
     private:

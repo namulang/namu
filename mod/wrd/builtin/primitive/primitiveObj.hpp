@@ -37,6 +37,14 @@ namespace wrd {
             return *this;
         }
 
+        const point& getPos() const override {
+            return _pos;
+        }
+
+        void setPos(const point& new1) override {
+            _pos = new1;
+        }
+
         using super::cast;
         void* cast(const type& to) override {
             if(to == ttype<T>::get())
@@ -55,5 +63,6 @@ namespace wrd {
 
     private:
         T _val;
+        point _pos;
     };
 }

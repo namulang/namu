@@ -40,7 +40,7 @@ namespace {
 
     WRD_VERIFY(mymyObj, {
         if(it.grade <= 0.0f)
-            _warn(area {{1, 1}, {1, 5}}, errCode::ERR_CODE_START);
+            _warn(point {1, 1}, errCode::ERR_CODE_START);
     })
 }
 
@@ -116,10 +116,8 @@ TEST_F(verifierTest, verifyInheritedClass) {
 
     const srcErr& cast = mymyObjE.cast<srcErr>();
     ASSERT_FALSE(nul(cast));
-    ASSERT_EQ(cast.srcArea.start.row, 1);
-    ASSERT_EQ(cast.srcArea.start.col, 1);
-    ASSERT_EQ(cast.srcArea.end.row, 1);
-    ASSERT_EQ(cast.srcArea.end.col, 5);
+    ASSERT_EQ(cast.pos.row, 1);
+    ASSERT_EQ(cast.pos.col, 1);
 }
 
 TEST_F(verifierTest, verifyNestedObject) {
@@ -148,10 +146,8 @@ TEST_F(verifierTest, verifyNestedObject) {
     ASSERT_EQ(e.fType, err::WARN);
     ASSERT_EQ(e.code, errCode::ERR_CODE_START);
     ASSERT_EQ(e.msg, err::getErrMsg(e.code));
-    ASSERT_EQ(e.srcArea.start.row, 1);
-    ASSERT_EQ(e.srcArea.start.col, 1);
-    ASSERT_EQ(e.srcArea.end.row, 1);
-    ASSERT_EQ(e.srcArea.end.col, 5);
+    ASSERT_EQ(e.pos.row, 1);
+    ASSERT_EQ(e.pos.col, 1);
 }
 
 TEST_F(verifierTest, verifySubedObject) {

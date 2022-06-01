@@ -70,13 +70,13 @@ namespace wrd {
         WRD_DI("verify: retType exists and stmts exist one at least");
 
         const wtype& retType = it.getRetType();
-        if(nul(retType)) return _err(errCode::NO_RET_TYPE);
+        if(nul(retType)) return _srcErr(errCode::NO_RET_TYPE);
         if(!retType.isSub(ttype<node>::get()))
-            return _err(errCode::WRONG_RET_TYPE, retType.getName().c_str());
+            return _srcErr(errCode::WRONG_RET_TYPE, retType.getName().c_str());
 
         const blockExpr& blk = it.getBlock();
         if(nul(blk) || blk.getStmts().len() <= 0)
-            return _err(errCode::NO_STMT_IN_FUNC);
+            return _err(blk.getPos(), errCode::NO_STMT_IN_FUNC);
     })
 
     namespace {
