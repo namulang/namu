@@ -20,8 +20,6 @@ namespace wrd {
         return inner;
     }
 
-    me::expr(): _pos{0, 0} {}
-
     wbool me::canRun(const ucontainable& args) const { return args.len() == 0; }
     const src& me::getSrc() const { return *_src; }
     const point& me::getPos() const { return _pos; }
@@ -30,7 +28,7 @@ namespace wrd {
         _src.bind(newSrc);
     }
 
-    void me::_setPos(const point& newPos) {
+    void me::setPos(const point& newPos) {
         _pos = newPos;
     }
 }

@@ -24,6 +24,14 @@ namespace wrd {
         using super::run;
         str run(const ucontainable& args) override;
 
+        void setPos(const point& new1) override {
+            _pos = new1;
+        }
+
+        const point& getPos() const override {
+            return _pos;
+        }
+
     private:
         wbool _inFrame(scope& args);
         void _outFrame();

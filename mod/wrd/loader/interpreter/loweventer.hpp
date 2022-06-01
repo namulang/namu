@@ -60,9 +60,9 @@ namespace wrd {
         template <typename... Args> void onErr(Args... args) { _onRes(err::newErr(args...)); }
         template <typename... Args> void onWarn(Args... args) { _onRes(err::newWarn(args...)); }
         template <typename... Args> void onInfo(Args... args) { _onRes(err::newInfo(args...)); }
-        template <typename... Args> void onSrcErr(Args... args) { _onRes(err::newErr(getArea(), args...)); }
-        template <typename... Args> void onSrcWarn(Args... args) { _onRes(err::newWarn(getArea(), args...)); }
-        template <typename... Args> void onSrcInfo(Args... args) { _onRes(err::newInfo(getArea(), args...)); }
+        template <typename... Args> void onSrcErr(Args... args) { _onRes(err::newErr(getArea().start, args...)); }
+        template <typename... Args> void onSrcWarn(Args... args) { _onRes(err::newWarn(getArea().start, args...)); }
+        template <typename... Args> void onSrcInfo(Args... args) { _onRes(err::newInfo(getArea().start, args...)); }
 
         //  operator:
         //      dot:

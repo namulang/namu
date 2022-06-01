@@ -8,6 +8,7 @@ namespace wrd {
         _owns = rhs._owns->deepClone();
         _subs.bind(_makeNewSubs());
         _org = rhs._org;
+        _pos = rhs._pos;
 
         return *this;
     }

@@ -43,16 +43,16 @@ namespace wrd {
         WRD_DI("verify: returnExpr: checks evalType of func is matched to me");
 
         const func& f = thread::get().getNowFrame().getFunc();
-        if(nul(f)) return _err(errCode::NO_FUNC_INFO);
+        if(nul(f)) return _srcErr(errCode::NO_FUNC_INFO);
 
         const wtype& itType = it.getEvalType();
-        if(nul(itType)) return _err(errCode::EXPR_EVAL_NULL);
+        if(nul(itType)) return _srcErr(errCode::EXPR_EVAL_NULL);
         const wtype& fType = f.getRetType();
         WRD_DI("verify: returnExpr: checks return[%s] == func[%s]", itType.getName().c_str(),
             fType.getName().c_str());
 
         if(!itType.isImpli(fType))
-            return _err(errCode::RET_TYPE_NOT_MATCH, itType.getName().c_str(), fType.getName().c_str());
+            return _srcErr(errCode::RET_TYPE_NOT_MATCH, itType.getName().c_str(), fType.getName().c_str());
     })
 
     WRD_VERIFY({

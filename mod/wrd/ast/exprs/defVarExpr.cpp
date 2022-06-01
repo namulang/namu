@@ -24,10 +24,10 @@ namespace wrd {
         const scopes& top = thread::get().getNowFrame().getTop();
         if(nul(top)) return;
         if(top.getContainer().has(p.getName()))
-            return _err(errCode::ALREADY_DEFINED_VAR, p.getName().c_str(), p.getOrigin().getType().getName().c_str());
+            return _srcErr(errCode::ALREADY_DEFINED_VAR, p.getName().c_str(), p.getOrigin().getType().getName().c_str());
 
         if(!it.run())
-            _err(errCode::CANT_DEF_VAR, p.getName().c_str(), p.getOrigin().getType().getName().c_str());
+            _srcErr(errCode::CANT_DEF_VAR, p.getName().c_str(), p.getOrigin().getType().getName().c_str());
     })
 
     const param& me::getParam() const { return _param; }

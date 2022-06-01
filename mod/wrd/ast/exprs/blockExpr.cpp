@@ -41,7 +41,7 @@ namespace wrd {
 
     WRD_VERIFY(blockExpr, visitSubNodes, { // visit sub nodes.
         WRD_DI("verify: blockExpr: visit sub nodes[%d]", it._exprs.len());
-        if(!it._inFrame()) return _err(errCode::BLK_CANT_MAKE_FRAME);
+        if(!it._inFrame()) return _srcErr(errCode::BLK_CANT_MAKE_FRAME);
 
         for(auto& e : it._exprs)
             verify(e);
@@ -62,8 +62,8 @@ namespace wrd {
                 return;
             }
             const wtype& lastType = lastStmt.getEvalType(); // to get type of expr, always uses evalType.
-            if(nul(lastType)) return _err(NO_RET_TYPE);
-            if(!lastType.isSub(retType)) return _err(errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
+            if(nul(lastType)) return _err(lastStmt.getPos(), NO_RET_TYPE);
+            if(!lastType.isSub(retType)) return _err(lastStmt.getPos(), errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
                     retType.getName().c_str());
         }
 

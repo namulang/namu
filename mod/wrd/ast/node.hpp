@@ -4,6 +4,7 @@
 #include "validable.hpp"
 #include "../builtin/container/native/tnbicontainer.hpp"
 #include "../builtin/container/native/tnarr.hpp"
+#include "point.hpp"
 
 namespace wrd {
 
@@ -66,6 +67,13 @@ namespace wrd {
         template <typename T> tstr<T> asImpli() const { return asImpli(ttype<T>::get()); }
         str asImpli(const typeProvidable& to) const;
         str asImpli(const type& to) const;
+
+        virtual const point& getPos() const {
+            static point inner;
+            return inner;
+        }
+
+        virtual void setPos(const point& new1) {}
 
         /// getType() returns what it is. opposite to it, this returns what this class will
         /// represents after evaluation.

@@ -33,11 +33,11 @@ namespace wrd {
         static const std::string& getErrMsg(errCode code);
         static const std::string& getErrName(errCode code);
         static err* newErr(int code, ...);
-        static err* newErr(const area& src, int code, ...);
+        static err* newErr(const point& src, int code, ...);
         static err* newWarn(int code, ...);
-        static err* newWarn(const area& src, int code, ...);
+        static err* newWarn(const point& src, int code, ...);
         static err* newInfo(int code, ...);
-        static err* newInfo(const area& src, int code, ...);
+        static err* newInfo(const point& src, int code, ...);
 
     public:
         err::type fType;
@@ -68,11 +68,12 @@ namespace wrd {
 
     public:
         template <typename... Args>
-        srcErr(err::type t, const area& src, int code, Args... args): super(t, code, args...), srcArea(src) {}
-
-        area srcArea;
+        srcErr(err::type t, const point& ps, int code, Args... args): super(t, code, args...), pos(ps) {}
 
     public:
         void log() const override;
+
+    public:
+        point pos;
     };
 }

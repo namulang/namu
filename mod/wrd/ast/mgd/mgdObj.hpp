@@ -28,6 +28,9 @@ namespace wrd {
 
         const obj& getOrigin() const override;
 
+        const point& getPos() const override { return _pos; }
+        void setPos(const point& new1) override { _pos = new1; }
+
     private:
         scopes* _makeNewSubs();
 
@@ -38,5 +41,6 @@ namespace wrd {
         tstr<scopes> _shares;
         tstr<scope> _owns;
         obj* _org;
+        point _pos;
     };
 }

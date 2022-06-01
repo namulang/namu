@@ -45,13 +45,13 @@ namespace wrd {
     }
 
     WRD_VERIFY({
-        if(nul(it.getMe())) return _err(errCode::CANT_CAST_TO_NODE);
+        if(nul(it.getMe())) return _srcErr(errCode::CANT_CAST_TO_NODE);
 
         str me = it.getMe().as<node>();
-        if(!me) return _err(errCode::CANT_CAST_TO_NODE);
+        if(!me) return _srcErr(errCode::CANT_CAST_TO_NODE);
 
         str sub = me->sub(it.getName(), it.getArgs());
-        if(!sub) return _err(errCode::NOT_EXIST, me->getType().getName().c_str(), it.getName().c_str());
-        if(!sub->canRun(it.getArgs())) return _err(errCode::OBJ_WRONG_ARGS);
+        if(!sub) return _srcErr(errCode::NOT_EXIST, me->getType().getName().c_str(), it.getName().c_str());
+        if(!sub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS);
     })
 }
