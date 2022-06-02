@@ -62,6 +62,7 @@ jobs:
         ls -l ${{github.workspace}}/mod/swrd/parser
         sudo $PYTHON ${{github.workspace}}/build/builder.py rel
         sudo $PYTHON ${{github.workspace}}/build/builder.py test
+        sudo $PYTHON ${{github.workspace}}/build/builder.py pub mac
 
     - name: archive to tar files
       run: tar -cvf wrd-release-macos.tar ${{github.workspace}}/bin/
