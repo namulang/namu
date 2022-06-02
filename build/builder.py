@@ -461,6 +461,26 @@ def pub(arg):
         printOk("done")
         return 0
 
+    elif arg == 'mac':
+        if relBuild() != 0:
+            printErr("release build failed. quit publishing.")
+            return -1
+
+        printInfoEnd("cleaning redandunt files to package")
+        os.chdir(binDir)
+        os.system("rm ./test")
+        os.system("rm ./logs")
+        os.system("cp ../LICENSE .")
+        os.system("cp ../README.md .")
+        os.system("cp ../CHANGELOGS .")
+
+        printOk("done")
+        printInfoEnd("make an archive")
+        os.chdir(binDir + "/..")
+        os.system("zip -r wrd-" + str(ver_major) + "." + str(ver_minor) + "." + str(ver_fix) + "-amd64-release-macos.zip bin")
+        printOk("done")
+        return 0
+
     printErr("unknown platform name: " + arg)
     return -1
 
