@@ -1,4 +1,27 @@
 # Changelogs
+## v0.2.0 Mana Update
+released on 05-14 2022
+build#444
+
+### major changes
+
+* 9598b6ce chore: supports rpath of macos
+* 6bb3b13a wrd: feat: add location info of a node when it's parsed
+* eacc8855 chore: builder can make a ubuntu deb package
+* c8aaae9f wrd: refactor: move prototype def into implementation files
+* 849fd435 chore: replace tab to 4-width spaces
+* e6f488f8 (origin/stables) chore: add github action for stable branch
+* 820b0297 clog: feat: colorize logs
+* 31585660 chore: fix not to build wrd twice
+* 0c8ef376 wrd: fix: fix for window compatibilities
+* 3021b43c wrd: refactor: rename INTERFACE macro -> ADT
+* e3605229 wrd: fix: rename __super to _super_
+* 9f95bd69 indep: fix: fsystem doesn't work when slash at the end
+* db1740a9 wrd: feat: handling all of stream at one function call
+* 0da3c982 cli: feat: starts with silent mode
+
+
+
 ## v0.1.7 Essence Update Final
 released on 04-21 2022
 build# 365
