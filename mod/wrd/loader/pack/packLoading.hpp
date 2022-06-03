@@ -1,13 +1,8 @@
 #pragma once
-#pragma message("packLoading1")
 #include "../../builtin/container/native/tnarr.inl"
-#pragma message("packLoading2")
 #include "../../builtin/container/native/tnchain.inl"
-#pragma message("packLoading3")
 #include "../../ast/obj.hpp"
-#pragma message("packLoading4")
 #include "packMakable.hpp"
-#pragma message("packLoading5")
 
 namespace wrd {
 
@@ -37,4 +32,3 @@ namespace wrd {
 
     typedef std::vector<packLoading*> packLoadings;
 }
-#pragma message("packLoading6")
