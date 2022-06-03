@@ -6,7 +6,6 @@
 namespace wrd {
 
     class node;
-#pragma message("4")
     template <typename K, typename V, typename defaultContainer = tnmap<K, V>>
     class tnchain : public tnbicontainer<K, V> {
         typedef tnbicontainer<K, V> _super_;
