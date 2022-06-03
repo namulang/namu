@@ -3,6 +3,7 @@
 #include "../builtin/container/tucontainable.inl"
 #include "../loader/interpreter/tverification.hpp"
 #include "../frame/thread.hpp"
+#include "../loader/interpreter/verifier.hpp"
 
 namespace wrd {
 

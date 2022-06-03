@@ -1,7 +1,7 @@
 #include "func.hpp"
 #include "params.hpp"
 #include "../loader/interpreter/tverification.hpp"
-#include "../frame/thread.hpp"
+#include "../loader/interpreter/verifier.hpp"
 
 namespace wrd {
 

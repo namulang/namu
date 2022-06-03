@@ -33,6 +33,7 @@ namespace wrd {
     const std::string& me::getConsoleFore(consoleColor fore) {
 #if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), platformAPI::BLACK << 4 | fore);
+        return "";
 #elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX || WRD_BUILD_PLATFORM == WRD_TYPE_MACOS
         static bool is_terminal_supporting = _isAnsiColorTerminal();
         if( ! is_terminal_supporting) {

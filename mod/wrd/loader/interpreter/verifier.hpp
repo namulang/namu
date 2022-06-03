@@ -2,11 +2,13 @@
 
 #include "verification.hpp"
 #include "../../ast/pack.hpp"
-#include "../../frame/frame.hpp"
 
 struct verifierTest;
-
 namespace wrd {
+
+    class pack;
+    class frame;
+    typedef tnbicontainer<std::string, pack> packContainer;
 
     // TODO:
     //  if verifier detects an access to a pack:
@@ -49,4 +51,7 @@ namespace wrd {
         tstr<packContainer> _packs;
         tstr<frame>* _frameInfo;
     };
+
+#include "../../common/MSVCHack.hpp"
+
 }

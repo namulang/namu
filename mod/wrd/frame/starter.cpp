@@ -1,5 +1,7 @@
 #include "../ast/obj.hpp"
 #include "../ast/func.hpp"
+#include "../ast/scope.inl"
+#include "../ast/pack.hpp"
 #include "starter.hpp"
 
 namespace wrd {

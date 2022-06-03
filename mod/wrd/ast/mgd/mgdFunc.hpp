@@ -1,11 +1,12 @@
 #pragma once
 
 #include "../func.hpp"
-#include "../scope.hpp"
 #include "../exprs/blockExpr.hpp"
+#include "../../builtin/container/native/tnmap.hpp"
 
 namespace wrd {
 
+    typedef tnmap<std::string, node, immutableTactic> scope;
     class _wout mgdFunc : public func {
         WRD(CLASS(mgdFunc, func),
             FRIEND_VERIFY(mgdFunc, subNodes))

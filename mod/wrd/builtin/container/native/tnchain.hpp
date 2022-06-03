@@ -6,11 +6,13 @@
 namespace wrd {
 
     class node;
-
+#pragma message("4")
     template <typename K, typename V, typename defaultContainer = tnmap<K, V>>
     class tnchain : public tnbicontainer<K, V> {
         typedef tnbicontainer<K, V> _super_;
-        WRD(CLASS(tnchain, _super_))
+        typedef tnchain<K, V, defaultContainer> _me_;
+
+        WRD(CLASS(_me_, _super_))
 
     public:
         typedef typename super::iter iter;

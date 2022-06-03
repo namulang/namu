@@ -1,12 +1,15 @@
 #pragma once
 
 #include "../builtin/container/mgd/tarr.hpp"
+#include "../builtin/container/native/tnmap.hpp"
 #include "frame.hpp"
 
 namespace wrd {
 
     class packLoader;
     typedef tnarr<frame> frames;
+    class pack;
+    typedef tnmap<std::string, pack> packs;
 
     class _wout thread : public node {
         WRD(CLASS(thread, node))

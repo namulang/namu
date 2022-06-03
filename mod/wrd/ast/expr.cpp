@@ -7,14 +7,6 @@ namespace wrd {
 
     WRD_DEF_ME(expr)
 
-    wbool me::exprType::isImpli(const type& to) const {
-        return to.isSub<node>();
-    }
-
-    str me::exprType::asImpli(const node& from, const type& to) const {
-        return str(((node&) from).run());
-    }
-
     nbicontainer& me::subs() {
         static nmap inner;
         return inner;

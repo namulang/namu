@@ -1,5 +1,5 @@
-#include "verifier.hpp"
 #include "../../frame/thread.hpp"
+#include "verifier.hpp"
 
 namespace wrd {
 
@@ -24,7 +24,7 @@ namespace wrd {
         return *this;
     }
 
-    me& me::setPacks(const packContainer& packs) {
+    me& me::setPacks(const tnbicontainer<std::string, pack>& packs) {
         _packs.bind(packs);
         return *this;
     }
