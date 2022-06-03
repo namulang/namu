@@ -5,6 +5,7 @@
 #include "../builtin/container/native/tnbicontainer.hpp"
 #include "../builtin/container/native/tnarr.hpp"
 #include "point.hpp"
+#include "../type/wtype.hpp"
 
 namespace wrd {
 

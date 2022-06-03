@@ -1,4 +1,5 @@
 #include "wtype.hpp"
+#include "../ast/node.hpp"
 
 namespace wrd {
 

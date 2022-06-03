@@ -1,7 +1,8 @@
 #pragma once
 
+#pragma message ("obj1")
 #include "src.hpp"
-#include "scope.hpp"
+#pragma message ("obj2")
 
 namespace wrd {
 
@@ -38,3 +39,4 @@ namespace wrd {
         void _outFrame();
     };
 }
+#pragma message ("obj3")

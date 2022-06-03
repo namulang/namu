@@ -19,4 +19,5 @@ namespace wrd {
         node& _findMain(node& pak, const ucontainable& args);
     };
 
+#include "../common/MSVCHack.hpp"
 }

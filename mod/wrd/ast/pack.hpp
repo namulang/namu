@@ -1,16 +1,17 @@
 #pragma once
 
-#include "obj.hpp"
 #include "manifest.hpp"
 #include "../loader/pack/packLoading.hpp"
 #include "../loader/pack/packMakable.hpp"
 #include "../loader/errReport.hpp"
+#include "scope.hpp"
 
 namespace wrd {
 
     class func;
     typedef tnarr<func> funcs;
-
+    typedef tnmap<std::string, node, immutableTactic> scope;
+    typedef tnchain<std::string, node, scope> scopes;
     class _wout pack : public obj, public packMakable {
         WRD(CLASS(pack, obj))
 
@@ -77,4 +78,6 @@ namespace wrd {
     typedef tnmap<std::string, pack> packs;
     typedef tnchain<std::string, pack> packChain;
     typedef tnbicontainer<std::string, pack> packContainer;
+
+#include "../common/MSVCHack.hpp"
 }

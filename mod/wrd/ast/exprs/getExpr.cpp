@@ -1,5 +1,6 @@
 #include "getExpr.hpp"
 #include "../../loader/interpreter/tverification.hpp"
+#include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
 #include "../node.inl"

@@ -28,4 +28,7 @@ namespace wrd {
     private:
         libHandles _handles;
     };
+
+#include "../../../common/MSVCHack.hpp"
+
 }

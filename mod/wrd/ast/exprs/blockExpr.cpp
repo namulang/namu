@@ -1,7 +1,9 @@
 #include "blockExpr.hpp"
 #include "../../frame/thread.hpp"
+#include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/tverification.hpp"
 #include "../../builtin/primitive/wVoid.hpp"
+#include "../../loader/interpreter/verifier.hpp"
 
 namespace wrd {
     WRD_DEF_ME(blockExpr)

@@ -2,8 +2,10 @@
 #include "../obj.hpp"
 #include "../../builtin/container/native/tnchain.inl"
 #include "../../frame/thread.hpp"
-#include "../../loader/interpreter/tverification.hpp"
 #include "../params.hpp"
+#include "../../loader/interpreter/tverification.hpp"
+#include "../../loader/interpreter/verification.inl"
+#include "../../loader/interpreter/verifier.hpp"
 
 namespace wrd {
 

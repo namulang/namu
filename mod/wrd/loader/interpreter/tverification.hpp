@@ -1,6 +1,6 @@
 #pragma once
 
-#include "verification.inl"
+#include "verification.hpp"
 
 namespace wrd {
 
