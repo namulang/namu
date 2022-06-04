@@ -21,6 +21,12 @@ namespace wrd {
         return _step->getVal();
     }
 
+    TEMPL
+    void ME::setVal(const V& new1) {
+        if(!_step) return;
+        return _step->setVal(new1);
+    }
+
 #undef ME
 #undef TEMPL
 }

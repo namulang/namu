@@ -54,12 +54,6 @@ namespace {
             const myObj& cast = (const myObj&) rhs;
             return val == cast.val;
         }
-
-        using super::getCtors;
-        funcs& getCtors() override {
-            static funcs inner;
-            return inner;
-        }
     };
 
     class food : public mgdObj {
@@ -174,47 +168,6 @@ TEST_F(nodeTest, testManualNativefuncCall) {
     func.setUp();
     subs[0].run(args);
     ASSERT_TRUE(func.isRun());
-}
-
-TEST_F(nodeTest, testImmutablePositive) {
-    tstr<wFlt> r1(new wFlt(1.0f));
-    str r2 = r1;
-    ASSERT_TRUE(r1);
-    ASSERT_TRUE(r2);
-    ASSERT_EQ(*r1, *r2);
-
-    r1->get() = 0.5f;
-    ASSERT_EQ(*r1, *r2);
-
-    param r3("", *r1);
-    ASSERT_FALSE(nul(r3.getOrigin()));
-    ASSERT_EQ(r3.getOrigin().getType(), ttype<wFlt>::get());
-    ASSERT_EQ(r3.getOrigin().cast<wFlt>().get(), r1->get());
-
-    scope s;
-    s.add("r1", *r1);
-    const wFlt& cast = s["r1"].cast<wFlt>();
-    ASSERT_FALSE(nul(cast));
-    ASSERT_NE(&r1.get(), &cast);
-    ASSERT_EQ(*r1, cast);
-}
-
-TEST_F(nodeTest, testImmutableNegative) {
-    str r1(new myObj(1));
-    str r2 = r1;
-    ASSERT_TRUE(r1);
-    ASSERT_TRUE(r2);
-    ASSERT_EQ(*r1, *r2);
-
-    r1->cast<myObj>().val = 2;
-    ASSERT_EQ(*r1, *r2);
-
-    nmap m;
-    m.add("r1", *r1);
-    const myObj& cast = m["r1"].cast<myObj>();
-    ASSERT_FALSE(nul(cast));
-    ASSERT_EQ(&r1.get(), &cast);
-    ASSERT_EQ(r1->cast<myObj>().val, cast.val);
 }
 
 TEST_F(nodeTest, testchefImplicitCastTofood) {

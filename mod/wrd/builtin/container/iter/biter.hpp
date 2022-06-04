@@ -71,6 +71,9 @@ public:
         return getVal().template cast<E>();
     }
 
+    using iterable::setVal;
+    void setVal(const V& new1) override;
+
     tnbicontainer<K, V>& getContainer() override {
         if(!_step) return nulOf<tnbicontainer<K, V> >();
         return _step->getContainer();

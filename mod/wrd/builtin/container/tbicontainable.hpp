@@ -52,6 +52,7 @@ namespace wrd {
         virtual iter end() const { return iterate(len()); }
         virtual iter last() const { return iterate(len()-1); }
         iter iterate(wcnt step) const { return iter(_onMakeIteration(step)); }
+        iter iterate(const K& key) const { return iter(_onMakeIteration(key)); }
 
         // add:
         virtual wbool add(const K& key, const V& val) = 0;
@@ -79,6 +80,7 @@ namespace wrd {
 
     protected:
         virtual iteration* _onMakeIteration(wcnt step) const = 0;
+        virtual iteration* _onMakeIteration(const K& key) const = 0;
         virtual void _getAll(const K& key, narr& tray) const = 0;
     };
 

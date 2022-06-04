@@ -68,7 +68,7 @@ namespace {
         myNode2(int val) : super(val) {}
     };
 
-    bool vectorHas(std::vector<int>& v, int val) {
+    bool vectorHas(std::vector<float>& v, float val) {
         for(int n=0; n < v.size() ;n++)
             if(v[n] == val)
                 return true;
@@ -76,12 +76,12 @@ namespace {
     }
 
     template <typename T = myNode>
-    static wbool isMyNodesHasEqualIntArray(const tnchain<int, myNode>& root, int expects[], int expectSize) {
+    static wbool isMyNodesHasEqualIntArray(const tnchain<float, myNode>& root, float expects[], int expectSize) {
         auto myE = root.begin();
-        vector<int> actuals;
+        vector<float> actuals;
         for(const auto& elem : root)
             if(elem.isSub<T>())
-                actuals.push_back(elem.number);
+                actuals.push_back((float) elem.number);
 
         if(actuals.size() != expectSize) return false;
         for(int n=0; n < expectSize ;n++)
@@ -517,34 +517,34 @@ TEST_F(nchainTest, testLinkArrayAndChain) {
 }
 
 TEST_F(nchainTest, testDeepChainIteration) {
-    tnchain<int, myNode> chn1;
-    chn1.add(1, new myNode(1));
-    chn1.add(2, new myNode(2));
+    tnchain<float, myNode> chn1;
+    chn1.add(1.0, new myNode(1));
+    chn1.add(2.0, new myNode(2));
     ASSERT_EQ(chn1.len(), 2);
 
-    tnchain<int, myNode> chn2;
-    chn2.add(3, new myNode(3));
-    chn2.add(4, new myNode(4));
+    tnchain<float, myNode> chn2;
+    chn2.add(3.0, new myNode(3));
+    chn2.add(4.0, new myNode(4));
     ASSERT_EQ(chn2.len(), 2);
 
-    tstr<tnchain<int, myNode>> root(tnchain<int, myNode>::wrapDeep(chn1));
+    tstr<tnchain<float, myNode>> root(tnchain<float, myNode>::wrapDeep(chn1));
     ASSERT_EQ(root->len(), 2);
 
     chn1.link(chn2);
     ASSERT_EQ(chn1.len(), 4);
     ASSERT_EQ(root->len(), 4);
 
-    tnchain<int, myNode> chn3;
-    chn3.add(5, new myNode(5));
-    chn3.add(6, new myNode(6));
+    tnchain<float, myNode> chn3;
+    chn3.add(5.0, new myNode(5));
+    chn3.add(6.0, new myNode(6));
     ASSERT_EQ(chn3.len(), 2);
 
     root->link(chn3);
     ASSERT_EQ(root->len(), 6);
 
-    std::vector<int> tray;
+    std::vector<float> tray;
     for(auto e=root->begin(); e ;++e) {
-        ASSERT_EQ(e.getKey(), e->cast<myNode>().number);
+        ASSERT_EQ(e.getKey(), (float) e->cast<myNode>().number);
         tray.push_back(e.getKey());
     }
 
@@ -553,20 +553,20 @@ TEST_F(nchainTest, testDeepChainIteration) {
 }
 
 TEST_F(nchainTest, testDeepChainAddDel) {
-    tnchain<int, myNode> chn1;
-    chn1.add(1, new myNode(1));
-    chn1.add(2, new myNode2(2));
+    tnchain<float, myNode> chn1;
+    chn1.add(1.0, new myNode(1));
+    chn1.add(2.0, new myNode2(2));
 
-    tnchain<int, myNode> chn2;
-    chn2.add(3, new myNode2(3));
-    chn2.add(4, new myNode(4));
+    tnchain<float, myNode> chn2;
+    chn2.add(3.0, new myNode2(3));
+    chn2.add(4.0, new myNode(4));
     chn1.link(chn2);
 
-    tstr<tnchain<int, myNode>> root(tnchain<int, myNode>::wrapDeep(chn1));
+    tstr<tnchain<float, myNode>> root(tnchain<float, myNode>::wrapDeep(chn1));
 
-    tnchain<int, myNode> chn3;
-    chn3.add(5, new myNode2(5));
-    chn3.add(6, new myNode(6));
+    tnchain<float, myNode> chn3;
+    chn3.add(5.0, new myNode2(5));
+    chn3.add(6.0, new myNode(6));
 
     root->link(chn3);
 
@@ -574,17 +574,17 @@ TEST_F(nchainTest, testDeepChainAddDel) {
     e = e + 2;
     ASSERT_FALSE(nul(*e));
 
-    ASSERT_EQ(root->get(6).number, 6);
-    root->del(3);
+    ASSERT_EQ(root->get(6.0).number, 6);
+    root->del(3.0);
     ASSERT_EQ(root->len(), 5);
 
     {
-        int expects[] = {1, 2, 4, 5, 6};
+        float expects[] = {1.0, 2.0, 4.0, 5.0, 6.0};
         ASSERT_TRUE(isMyNodesHasEqualIntArray<>(*root, expects, 5));
     }
 
     {
-        int expects[] = {2, 5};
+        float expects[] = {2.0, 5.0};
         ASSERT_TRUE(isMyNodesHasEqualIntArray<myNode2>(*root, expects, 2));
     }
 
@@ -593,7 +593,7 @@ TEST_F(nchainTest, testDeepChainAddDel) {
     ASSERT_EQ(root->len(), 2);
 
     {
-        int expects[] = {1, 6};
+        float expects[] = {1.0, 6.0};
         ASSERT_TRUE(isMyNodesHasEqualIntArray<>(*root, expects, 2));
     }
 

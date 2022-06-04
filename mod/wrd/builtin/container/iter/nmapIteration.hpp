@@ -36,6 +36,11 @@ public:
         return *_citer->second;
     }
 
+    void setVal(const V& new1) override {
+        if(isEnd()) return;
+        _citer->second.bind(new1);
+    }
+
     using super::getContainer;
     tnbicontainer<K, V>& getContainer() override { return _own; }
 
