@@ -30,6 +30,12 @@ namespace {
 %option nounistd
 
 
+/*  ============================================================================================
+    |                                           STATE                                          |
+    ============================================================================================  */
+
+%x stateComment
+
 
 /*  ============================================================================================
     |                                           RULES                                          |
@@ -120,7 +126,18 @@ false {
     return ENDOFFILE;
 }
 
-<*>. {
+\/\/[^\n]* {}
+
+\/\* {
+    BEGIN(yyget_extra(yyscanner)->pushState(stateComment));
+}
+
+<stateComment>"*/" {
+    BEGIN(yyget_extra(yyscanner)->popState());
+}
+<stateComment>. {}
+
+. {
     return yyget_extra(yyscanner)->onScanUnexpected(yytext);
 }
 

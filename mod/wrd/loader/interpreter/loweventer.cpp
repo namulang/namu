@@ -347,6 +347,8 @@ namespace wrd {
         _report.bind(dummyErrReport::singletone);
         _pack.rel();
         _nameMap.clear();
+        _states.clear();
+        _states.push_back(0); // 0 for default state
         prepareParse();
     }
 
