@@ -121,36 +121,37 @@ $(function() {
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        wbool add(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; at, <span class="keyword">const</span> T&amp; new1)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> _arr.add(at, new1); }</div>
 <div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classwrd_1_1tarr.html#a3cb767c4624f1033b7368f05a4574a36">   52</a></span>&#160;        wbool <a class="code" href="classwrd_1_1tarr.html#a3cb767c4624f1033b7368f05a4574a36">add</a>(widx n, <span class="keyword">const</span> T&amp; new1)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> _arr.add(n, new1); }</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="comment">//  del:</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">using</span> <a class="code" href="classwrd_1_1tucontainable.html">tucontainable&lt;T&gt;::del</a>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classwrd_1_1tarr.html#a1fde83193f2f9c2b80120999ca541166">   56</a></span>&#160;        wbool <a class="code" href="classwrd_1_1tarr.html#a1fde83193f2f9c2b80120999ca541166">del</a>(widx n)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> _arr.del(n); }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        wbool <a class="code" href="classwrd_1_1tucontainable.html#a6e7fdecb12db0ea780decaff6b0e62b0">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; it)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> _arr.del(it); }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        wbool <a class="code" href="classwrd_1_1tucontainable.html#a6e7fdecb12db0ea780decaff6b0e62b0">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; to)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> _arr.del(from, to); }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="comment">//  etc:</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        tstr&lt;instance&gt; deepClone()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordflow">return</span> _arr.deepClone();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        }</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">void</span> rel()<span class="keyword"> override </span>{</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            _arr.rel();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;           super::rel();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(wcnt step)<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keywordflow">return</span> _arr._onMakeIteration(step);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        tnarr&lt;T&gt; _arr;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    };</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keyword">typedef</span> tarr&lt;node&gt; arr;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">void</span> add(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; here, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; to)<span class="keyword"> override </span>{ _arr.add(here, from, to); }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="comment">//  del:</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">using</span> <a class="code" href="classwrd_1_1tucontainable.html#a6e7fdecb12db0ea780decaff6b0e62b0">tucontainable&lt;T&gt;::del</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classwrd_1_1tarr.html#a1fde83193f2f9c2b80120999ca541166">   57</a></span>&#160;        wbool <a class="code" href="classwrd_1_1tarr.html#a1fde83193f2f9c2b80120999ca541166">del</a>(widx n)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> _arr.del(n); }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        wbool <a class="code" href="classwrd_1_1tucontainable.html#a6e7fdecb12db0ea780decaff6b0e62b0">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; it)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> _arr.del(it); }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        wbool <a class="code" href="classwrd_1_1tucontainable.html#a6e7fdecb12db0ea780decaff6b0e62b0">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; to)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> _arr.del(from, to); }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="comment">//  etc:</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        tstr&lt;instance&gt; deepClone()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordflow">return</span> _arr.deepClone();</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> rel()<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            _arr.rel();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;           super::rel();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <a class="code" href="classiteration.html">iteration</a>* _onMakeIteration(wcnt step)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordflow">return</span> _arr._onMakeIteration(step);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        tnarr&lt;T&gt; _arr;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    };</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">typedef</span> tarr&lt;node&gt; arr;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tarr_html"><div class="ttname"><a href="classwrd_1_1tarr.html">wrd::tarr</a></div><div class="ttdef"><b>Definition:</b> tarr.hpp:8</div></div>
-<div class="ttc" id="aclasswrd_1_1tucontainable_html_a6e7fdecb12db0ea780decaff6b0e62b0"><div class="ttname"><a href="classwrd_1_1tucontainable.html#a6e7fdecb12db0ea780decaff6b0e62b0">wrd::tucontainable::del</a></div><div class="ttdeci">wbool del()</div><div class="ttdoc">delete last element if exists.</div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:82</div></div>
+<div class="ttc" id="aclasswrd_1_1tucontainable_html_a6e7fdecb12db0ea780decaff6b0e62b0"><div class="ttname"><a href="classwrd_1_1tucontainable.html#a6e7fdecb12db0ea780decaff6b0e62b0">wrd::tucontainable::del</a></div><div class="ttdeci">wbool del()</div><div class="ttdoc">delete last element if exists.</div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:84</div></div>
 <div class="ttc" id="aclasswrd_1_1tarr_html_a3cb767c4624f1033b7368f05a4574a36"><div class="ttname"><a href="classwrd_1_1tarr.html#a3cb767c4624f1033b7368f05a4574a36">wrd::tarr::add</a></div><div class="ttdeci">wbool add(widx n, const T &amp;new1) override</div><div class="ttdef"><b>Definition:</b> tarr.hpp:52</div></div>
 <div class="ttc" id="aclasswrd_1_1tarrayable_html"><div class="ttname"><a href="classwrd_1_1tarrayable.html">wrd::tarrayable</a></div><div class="ttdef"><b>Definition:</b> tarrayable.hpp:10</div></div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
@@ -158,7 +159,7 @@ $(function() {
 <div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr&lt; T &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1obj_html"><div class="ttname"><a href="classwrd_1_1obj.html">wrd::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:11</div></div>
 <div class="ttc" id="aclassiteration_html"><div class="ttname"><a href="classiteration.html">iteration</a></div><div class="ttdef"><b>Definition:</b> biteration.hpp:4</div></div>
-<div class="ttc" id="aclasswrd_1_1tarr_html_a1fde83193f2f9c2b80120999ca541166"><div class="ttname"><a href="classwrd_1_1tarr.html#a1fde83193f2f9c2b80120999ca541166">wrd::tarr::del</a></div><div class="ttdeci">wbool del(widx n) override</div><div class="ttdef"><b>Definition:</b> tarr.hpp:56</div></div>
+<div class="ttc" id="aclasswrd_1_1tarr_html_a1fde83193f2f9c2b80120999ca541166"><div class="ttname"><a href="classwrd_1_1tarr.html#a1fde83193f2f9c2b80120999ca541166">wrd::tarr::del</a></div><div class="ttdeci">wbool del(widx n) override</div><div class="ttdef"><b>Definition:</b> tarr.hpp:57</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

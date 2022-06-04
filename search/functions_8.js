@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['setenable_618',['setEnable',['../classwrd_1_1logger.html#a83d82821e9a6e5533fbcba5058d65d99',1,'wrd::logger']]],
-  ['setreport_619',['setReport',['../classwrd_1_1pack.html#a0ee849a6686a63fa494f28d4b54f3150',1,'wrd::pack']]]
+  ['setenable_626',['setEnable',['../classwrd_1_1logger.html#a83d82821e9a6e5533fbcba5058d65d99',1,'wrd::logger']]],
+  ['setreport_627',['setReport',['../classwrd_1_1autoslot.html#accd789cdfd0884b358c6f1a7135f0207',1,'wrd::autoslot']]]
 ];

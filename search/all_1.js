@@ -12,5 +12,6 @@ var searchData=
   ['asexpr_13',['asExpr',['../classwrd_1_1as_expr.html',1,'wrd']]],
   ['asprimitive_14',['asPrimitive',['../classwrd_1_1primitive_obj_1_1as_primitive.html',1,'wrd::primitiveObj']]],
   ['assignexpr_15',['assignExpr',['../classwrd_1_1assign_expr.html',1,'wrd']]],
-  ['aka_16',['aka',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_aka.html',1,'']]]
+  ['autoslot_16',['autoslot',['../classwrd_1_1autoslot.html',1,'wrd']]],
+  ['aka_17',['aka',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_aka.html',1,'']]]
 ];
