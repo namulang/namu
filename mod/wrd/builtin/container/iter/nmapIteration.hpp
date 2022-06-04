@@ -5,10 +5,10 @@ class nmapIteration : public iteration {
     friend class tnmap;
 
 public:
-    nmapIteration(tnmap& own, citer citer): _own(own), _citer(citer) {}
+    nmapIteration(tnmap& own, citer start, citer end): _own(own), _citer(start), _end(end) {}
 
     wbool isEnd() const override {
-        return _citer == _own._map.end();
+        return _citer == _end;
     }
 
     /// if iteration reached to the last element to iterate, it can precede to next,
@@ -53,4 +53,5 @@ protected:
 private:
     tnmap& _own;
     citer _citer; // cpp map's iterator.
+    citer _end;
 };

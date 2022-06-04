@@ -52,13 +52,13 @@ namespace wrd {
     protected:
         iteration* _onMakeIteration(wcnt step) const override {
             me* unconst = const_cast<me*>(this);
-            iteration* ret = new nmapIteration(*unconst, unconst->_map.begin());
+            iteration* ret = new nmapIteration(*unconst, unconst->_map.begin(), unconst->_map.end());
             ret->next(step);
             return ret;
         }
         iteration* _onMakeIteration(const K& key) const override {
             me* unconst = const_cast<me*>(this);
-            return new nmapIteration(*unconst, unconst->_map.lower_bound(key));
+            return new nmapIteration(*unconst, unconst->_map.lower_bound(key), unconst->_map.upper_bound(key));
         }
 
         void _getAll(const K& key, narr& tray) const override;

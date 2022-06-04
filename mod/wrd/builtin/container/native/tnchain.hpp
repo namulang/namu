@@ -101,7 +101,7 @@ namespace wrd {
         }
         iteration* _onMakeIteration(const K& key) const override {
             me* unconst = const_cast<me*>(this);
-            return new chainIteration(*unconst, _map->iterate(key));
+            return new chainIteration(*unconst, _map->iterate(key), key);
         }
 
         void _getAll(const K& key, narr& tray) const override;
