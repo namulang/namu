@@ -16,6 +16,8 @@ public:
     virtual const K& getKey() const = 0;
     virtual V& getVal() = 0;
     const V& getVal() const WRD_UNCONST_FUNC(getVal())
+    virtual void setVal(const V& newVal) = 0;
+    void setVal(const V* newVal) { return setVal(*newVal); }
     virtual wbool isFrom(const tbicontainable& it) const = 0;
     virtual tnbicontainer<K, V>& getContainer() = 0;
     const tnbicontainer<K, V>& getContainer() const WRD_UNCONST_FUNC(getContainer())

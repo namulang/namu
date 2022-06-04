@@ -56,6 +56,11 @@ namespace wrd {
             ret->next(step);
             return ret;
         }
+        iteration* _onMakeIteration(const K& key) const override {
+            me* unconst = const_cast<me*>(this);
+            return new nmapIteration(*unconst, unconst->_map.lower_bound(key));
+        }
+
         void _getAll(const K& key, narr& tray) const override;
 
     private:

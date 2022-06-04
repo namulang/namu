@@ -47,6 +47,10 @@ public:
         return _iter.getVal();
     }
 
+    void setVal(const V& new1) override {
+        _iter.setVal(new1);
+    }
+
 protected:
     wbool _onSame(const typeProvidable& rhs) const override {
         const me& cast = (const me&) rhs;
