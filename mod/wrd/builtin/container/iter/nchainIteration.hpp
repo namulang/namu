@@ -5,8 +5,8 @@ class chainIteration : public iteration {
     friend class tnchain;
 
 public:
-    chainIteration(const tnchain& iteratingChain, const iter& conIter)
-        : _ownIter(iteratingChain), _iter(conIter) {
+    chainIteration(const tnchain& iteratingChain, const iter& conIter, const K& byKey = nulOf<K>())
+        : _ownIter(iteratingChain), _iter(conIter), _byKey(byKey) {
             if(!_iter) next(1);
         }
 
@@ -25,7 +25,7 @@ public:
             // _iter moved to 'End' state now.
             if(isEnd()) break;
             _ownIter = _ownIter->_next;
-            _iter = _ownIter->_map->begin();
+            _iter = nul(_byKey) ? _ownIter->_map->begin() : _ownIter->_map->iterate(_byKey);
             if(_iter) remain--;
         }
 
@@ -55,10 +55,12 @@ protected:
     wbool _onSame(const typeProvidable& rhs) const override {
         const me& cast = (const me&) rhs;
         return  (isEnd() && cast.isEnd()) ||
-                _iter == cast._iter;
+                _iter == cast._iter ||
+                (nul(_byKey) ? nul(cast._byKey) : _byKey == cast._byKey);
     }
 
 private:
     tstr<tnchain> _ownIter; // _ownIter shouldn't be null always.
     iter _iter;
+    const K& _byKey;
 };

@@ -106,10 +106,10 @@ TEST_F(nmapTest, simpleAddDelTest) {
 }
 
 TEST_F(nmapTest, addDel10Elems) {
-    tnmap<int, myNode> map1;
-    const int cnt = 10;
+    tnmap<float, myNode> map1;
+    const float cnt = 10;
     for(int n=0; n < cnt; n++) {
-        ASSERT_TRUE(map1.add(n, *(new myNode(n))));
+        ASSERT_TRUE(map1.add((float) n, *(new myNode(n))));
     }
 
     ASSERT_EQ(map1.len(), cnt);
@@ -327,4 +327,27 @@ TEST_F(nmapTest, testDeletionByIter) {
     ASSERT_TRUE(val1 == 1 || val1 == 3);
     ASSERT_TRUE(val2 == 1 || val2 == 3);
     ASSERT_NE(val1, val2);
+}
+
+TEST_F(nmapTest, testSetValue) {
+    nmap m;
+    m.add("1", new myNode(1));
+    m.add("2", new myNode(2));
+    m.add("1", new myNode(3));
+
+    m.iterate("2").setVal(new myNode(4));
+    wbool found = false;
+    for(auto& e : m)
+       if(e.cast<myNode>().number == 4)
+           found = true;
+    ASSERT_TRUE(found);
+
+    for(auto e = m.iterate("1"); e ;++e)
+        if(e.getVal<myNode>().number == 3)
+            e.setVal(new myNode(1));
+
+    for(auto e = m.iterate("1"); e ;++e)
+        if(e.getVal<myNode>().number != 1)
+            found = false;
+    ASSERT_TRUE(found);
 }

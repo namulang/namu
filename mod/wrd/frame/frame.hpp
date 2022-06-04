@@ -4,6 +4,7 @@
 #include "scopeStack.hpp"
 #include "../builtin/res/tpair.hpp"
 
+struct immutableTest;
 struct frameTest;
 
 namespace wrd {
@@ -12,6 +13,7 @@ namespace wrd {
     class func;
     class _wout frame : public node { // TODO: may be obj, not node.
         WRD(CLASS(frame, node))
+        friend struct ::immutableTest;
         friend struct ::frameTest;
 
     public:
