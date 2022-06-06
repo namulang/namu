@@ -54,9 +54,11 @@ public:
 protected:
     wbool _onSame(const typeProvidable& rhs) const override {
         const me& cast = (const me&) rhs;
+        if(nul(_byKey) ? !nul(cast._byKey) : _byKey != cast._byKey)
+            return false;
+
         return  (isEnd() && cast.isEnd()) ||
-                _iter == cast._iter ||
-                (nul(_byKey) ? nul(cast._byKey) : _byKey == cast._byKey);
+                _iter == cast._iter;
     }
 
 private:
