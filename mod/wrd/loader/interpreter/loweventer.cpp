@@ -329,6 +329,12 @@ namespace wrd {
         return &to;
     }
 
+    node* me::onAssign(node& lhs, node& rhs) {
+        WRD_DI("tokenEvent: onAssign(%s, %s)", lhs.getType().getName().c_str(),
+                rhs.getType().getName().c_str());
+        return new assignExpr(lhs, rhs);
+    }
+
     me::loweventer() { rel(); }
 
     tstr<pack>& me::getPack() { return _pack; }

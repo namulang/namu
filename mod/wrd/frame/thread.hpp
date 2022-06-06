@@ -17,6 +17,7 @@ namespace wrd {
         friend class mgdFunc; // for frames.
         friend class blockExpr; // for frames.
         friend class defVarExpr; // for frames
+        friend class assignExpr;
         friend class verifier;
         friend class returnExpr;
         friend class runExpr;

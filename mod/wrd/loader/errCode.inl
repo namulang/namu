@@ -9,7 +9,8 @@ PAIRX(NO_COL_INFO,          "this expr doesn't have col info")
 
 // node:
 PAIRX(EVAL_NULL_TYPE,       "this expr evaluated as nulled type")
-PAIRX(NOT_EXIST,            "%s tried to access '%s' but nothing exist")
+PAIRX(CANT_ACCESS,          "%s tried to access '%s' but nothing exist")
+PAIRX(NOT_EXIST,            "%s not exist")
 PAIRX(DUP_VAR,              "duplicated variable '%s' found")
 
 // obj:
@@ -35,6 +36,9 @@ PAIRX(EXPR_EVAL_NULL,       "expression evaluated as null type")
 //  defVar:
 PAIRX(CANT_DEF_VAR,         "definining variable '%s %s' wouldn't allowed here")
 PAIRX(ALREADY_DEFINED_VAR,  "variable '%s %s' was already defined in this scope")
+//  assign:
+PAIRX(TYPE_NOT_COMPATIBLE,  "rhs type '%s' is not compatible to lhs '%s' of this assigment")
+PAIRX(ASSIGN_TO_RVALUE,     "you can't assign %s to this unamed %s. please define it first")
 
 // func:
 PAIRX(PARAM_HAS_VAL,        "parameter shouldn't have a value")

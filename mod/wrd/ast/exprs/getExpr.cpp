@@ -49,7 +49,7 @@ namespace wrd {
         const node& got = it._get();
         if(nul(got)) {
             const node& from = it.getFrom();
-            return _srcErr(errCode::NOT_EXIST, from.getType().getName().c_str(), it._name.c_str());
+            return _srcErr(errCode::CANT_ACCESS, from.getType().getName().c_str(), it._name.c_str());
 
         WRD_DI("verify: getExpr: isRunnable: got=%s, it=%s", got.getType().getName().c_str(),
                 it.getType().getName().c_str());
