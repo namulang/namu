@@ -106,7 +106,7 @@
 %token SCAN_AGAIN SCAN_EXIT SCAN_MODE_NORMAL SCAN_MODE_INDENT SCAN_MODE_INDENT_IGNORE SCAN_MODE_END
 
 // valueless-token:
-%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS PACK ARROW TAB
+%token NEWLINE INDENT DEDENT ENDOFFILE DOUBLE_MINUS DOUBLE_PLUS PACK ARROW TAB ASSIGN DEFASSIGN
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
@@ -278,6 +278,9 @@ expr-compound: defexpr-compound { $$ = $1; }
 
 //  expr-line:
 expr10: expr9 { $$ = $1; }
+      | expr10 ASSIGN expr9 {
+        $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
+      }
 expr9: expr8 { $$ = $1; }
 expr8: expr7 { $$ = $1; }
 expr7: expr6 { $$ = $1; }

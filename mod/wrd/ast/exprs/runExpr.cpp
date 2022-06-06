@@ -52,7 +52,7 @@ namespace wrd {
         if(!me) return _srcErr(errCode::CANT_CAST_TO_NODE);
 
         str sub = me->sub(it.getName(), it.getArgs());
-        if(!sub) return _srcErr(errCode::NOT_EXIST, me->getType().getName().c_str(), it.getName().c_str());
+        if(!sub) return _srcErr(errCode::CANT_ACCESS, me->getType().getName().c_str(), it.getName().c_str());
         if(!sub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS);
     })
 }

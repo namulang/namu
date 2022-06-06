@@ -54,6 +54,8 @@ namespace {
 }
 \-> { return ARROW; }
 \+\+ { return DOUBLE_PLUS; }
+\= { return ASSIGN; }
+":=" { return DEFASSIGN; }
 [ ]+ ;
 \t {
     yylloc->start.col = (yylloc->start.col + TAB_WIDTH) & ~(TAB_WIDTH-1);
