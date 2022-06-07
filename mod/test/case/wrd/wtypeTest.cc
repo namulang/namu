@@ -8,11 +8,6 @@ namespace {
         WRD(CLASS(myObj, obj))
 
     public:
-        funcs& getCtors() override {
-            static funcs inner;
-            return inner;
-        }
-
         const obj& getOrigin() const override { return *this; }
 
         using super::subs;

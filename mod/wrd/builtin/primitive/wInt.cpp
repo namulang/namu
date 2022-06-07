@@ -1,54 +1,15 @@
 #include "wInt.hpp"
 #include "../../ast/param.hpp"
+#include "../../ast/mgd/defaultCtor.hpp"
+#include "../../ast/mgd/defaultCopyCtor.hpp"
 
 namespace wrd {
 
     WRD_DEF_ME(wInt)
 
-    namespace {
-        class wIntCtor : public func {
-            WRD(ADT(wIntCtor, func))
-
-        public:
-            const wtype& getRetType() const override {
-                return ttype<wInt>::get();
-            }
-        };
-        struct defaultCtor : public wIntCtor {
-            WRD(CLASS(defaultCtor, wIntCtor))
-
-        public:
-            str run(const ucontainable& args) override {
-                return str(new wInt());
-            }
-            const params& getParams() const override {
-                static params inner;
-                return inner;
-            }
-        };
-        struct cpyCtor: public wIntCtor {
-            WRD(CLASS(cpyCtor, wIntCtor))
-
-        public:
-            str run(const ucontainable& args) override {
-                int val = args.begin()->as<wInt>()->get();
-
-                return str(new wInt(val));
-            }
-            const params& getParams() const override {
-                static params* inner = nullptr;
-                if(!inner) {
-                    inner = new params();
-                    inner->add(new param("", ttype<wInt>::get()));
-                }
-                return *inner;
-            }
-        };
-    }
-
-    void me::_onCreateCtors(tnarr<func>& tray) const {
-        tray.add(new defaultCtor());
-        tray.add(new cpyCtor());
+    void me::_onMakeCtors(scope& tray) const {
+        tray.add(obj::CTOR_NAME, new defaultCtor(getType()));
+        tray.add(obj::CTOR_NAME, new defaultCopyCtor(getType()));
     }
 
     wbool me::wIntType::isImmutable() const { return true; }

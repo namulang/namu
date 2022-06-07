@@ -16,34 +16,9 @@ namespace wrd {
         T& get() { return _val; }
         const T& get() const { return _val; }
 
-        using super::getCtors;
-        funcs& getCtors() override {
-            static funcs* ctors = nullptr;
-            if(!ctors) {
-                ctors = new funcs();
-                _onCreateCtors(*ctors);
-            }
-
-            return *ctors;
-        }
-
-        using super::subs;
-        nbicontainer& subs() override {
-            static ndumChain inner;
-            return inner;
-        }
-
-        const obj& getOrigin() const override {
-            return *this;
-        }
-
-        const point& getPos() const override {
-            return _pos;
-        }
-
-        void setPos(const point& new1) override {
-            _pos = new1;
-        }
+        const obj& getOrigin() const override { return *this; }
+        const point& getPos() const override { return _pos; }
+        void setPos(const point& new1) override { _pos = new1; }
 
         using super::cast;
         void* cast(const type& to) override {
@@ -53,16 +28,52 @@ namespace wrd {
             return super::cast(to);
         }
 
+        using super::subs;
+        nbicontainer& subs() override {
+            static scope* inner = nullptr;
+            if(nul(inner))
+                _onMakeCtors(*(inner = new scope()));
+
+            return *inner;
+        }
+
     protected:
         wbool _onSame(const typeProvidable& rhs) const override {
             const me& cast = (const me&) rhs;
             return _val == cast._val;
         }
-
-        virtual void _onCreateCtors(funcs& tray) const = 0;
+        virtual void _onMakeCtors(scope& tray) const = 0;
 
     private:
         T _val;
+        point _pos;
+    };
+
+    template <>
+    class primitiveObj<void> : public obj {
+        WRD(ADT(primitiveObj, obj))
+
+    public:
+        const obj& getOrigin() const override { return *this; }
+        const point& getPos() const override { return _pos; }
+        void setPos(const point& new1) override { _pos = new1; }
+
+        using super::subs;
+        nbicontainer& subs() override {
+            static scope* inner = nullptr;
+            if(nul(inner))
+                _onMakeCtors(*(inner = new scope()));
+
+            return *inner;
+        }
+
+    protected:
+        wbool _onSame(const typeProvidable& rhs) const override {
+            return !nul(rhs);
+        }
+        virtual void _onMakeCtors(scope& tray) const = 0;
+
+    private:
         point _pos;
     };
 }

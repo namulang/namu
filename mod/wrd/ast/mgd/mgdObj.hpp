@@ -23,12 +23,9 @@ namespace wrd {
 
         scopes& getShares();
         const scopes& getShares() const WRD_UNCONST_FUNC(getShares())
-
-            scope& getOwns();
+        scope& getOwns();
         const scope& getOwns() const WRD_UNCONST_FUNC(getOwns())
-
-            const obj& getOrigin() const override;
-
+        const obj& getOrigin() const override;
         const point& getPos() const override { return _pos; }
         void setPos(const point& new1) override { _pos = new1; }
 

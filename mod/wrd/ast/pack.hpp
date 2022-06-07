@@ -51,7 +51,6 @@ namespace wrd {
         wbool canRun(const ucontainable& args) const override;
         const pack& getOrigin() const override;
 
-        funcs& getCtors() override;
         void rel() override;
         void addDependent(pack& dependent);
         const tnarr<pack>& getDependents() const;

@@ -16,12 +16,6 @@ namespace {
             const myObj& cast = (const myObj&) rhs;
             return val == cast.val;
         }
-
-        using super::getCtors;
-        funcs& getCtors() override {
-            static funcs inner;
-            return inner;
-        }
     };
 
     WRD_VERIFY(myObj, {

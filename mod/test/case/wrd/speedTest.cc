@@ -25,13 +25,6 @@ namespace  {
 
     struct myObj : public mgdObj {
         WRD(CLASS(myObj, mgdObj))
-
-    public:
-        using super::getCtors;
-        funcs& getCtors() override {
-            static funcs inner;
-            return inner;
-        }
     };
 
     struct dummy {

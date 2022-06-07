@@ -12,14 +12,7 @@ namespace wrd {
     me::obj() {}
 
     str me::run(const ucontainable& args) {
-        func& fun = getCtors().get<func>([&args](const func& candidate) {
-            return candidate.canRun(args);
-        });
-
-        if(nul(fun))
-            return WRD_E("%s object isn't constructable with given args", getType().getName().c_str()), str();
-
-        return fun.run(args);
+        return str(this);
     }
 
     str me::_onRunSub(node& sub, const ucontainable& args) {
@@ -30,21 +23,7 @@ namespace wrd {
     }
 
     wbool me::canRun(const ucontainable& args) const {
-        wcnt n = getCtors().getAll<func>([&args](const func& f) {
-            return f.canRun(args);
-        }).len();
-
-        switch(n) {
-            case 0: return WRD_E("%s object isn't constructible with given args.", getType().getName().c_str()), false;
-            case 1: return true;
-        }
-
-        return WRD_E("%s object have %d ctors. it's ambigious.", getType().getName().c_str(), n), false;
-    }
-
-    funcs& me::getCtors() {
-        static funcs inner;
-        return inner;
+        return args.len() <= 0;
     }
 
     void me::_inFrame() {

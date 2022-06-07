@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class _wout wVoid : public mgdObj {
+    class _wout wVoid : public primitiveObj<void> {
 
         class _wout wVoidType : public wtype {
         public:
@@ -19,13 +19,9 @@ namespace wrd {
         wVoid();
 
     public:
-        using super::getCtors;
-        funcs& getCtors() override;
-        const obj& getOrigin() const override;
         static me& singletone();
 
     protected:
-        wbool _onSame(const typeProvidable& rhs) const override;
-        void _onCreateCtors(funcs& tray) const;
+        void _onMakeCtors(scope& tray) const override;
     };
 }

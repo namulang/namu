@@ -67,14 +67,6 @@ namespace wrd {
            super::rel();
         }
 
-        // node:
-        using super::getCtors;
-        funcs& getCtors() override {
-            static funcs inner;
-            // TODO:
-            return inner;
-        }
-
     protected:
         iteration* _onMakeIteration(wcnt step) const override {
             return _arr._onMakeIteration(step);

@@ -21,6 +21,6 @@ namespace wrd {
         wStr(const std::string& val);
 
     protected:
-        void _onCreateCtors(funcs& tray) const override;
+        void _onMakeCtors(scope& tray) const override;
     };
 }

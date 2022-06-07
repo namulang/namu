@@ -33,13 +33,6 @@ namespace wrd {
         using super::subs;
         nbicontainer& subs() override { return *_subs; }
 
-        using super::getCtors;
-        funcs& getCtors() override {
-            // TODO: pass real constructor of given type T.
-            static funcs inner;
-            return inner;
-        }
-
         template <typename Ret, typename... Args>
         me* func(const std::string& name, Ret(T::*fptr)(Args...)) {
             subs().add(name, new tcppBridgeFunc<Ret, T, Args...>(fptr));
@@ -51,6 +44,8 @@ namespace wrd {
             // are same and origin simulteneously.
             return *this;
         }
+
+        // TODO: add defaultCtor, defaultCopyCtor
 
     private:
         T* _real;
