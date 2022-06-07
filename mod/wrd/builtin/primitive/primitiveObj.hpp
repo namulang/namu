@@ -30,9 +30,11 @@ namespace wrd {
 
         using super::subs;
         nbicontainer& subs() override {
-            static scope* inner = nullptr;
-            if(nul(inner))
-                _onMakeCtors(*(inner = new scope()));
+            static tstr<scope> inner;
+            if(!inner) {
+                inner.bind(new scope());
+                _onMakeCtors(*inner);
+            }
 
             return *inner;
         }
@@ -60,6 +62,7 @@ namespace wrd {
 
         using super::subs;
         nbicontainer& subs() override {
+            WRD_E("primitiveObj::subs");
             static scope* inner = nullptr;
             if(nul(inner))
                 _onMakeCtors(*(inner = new scope()));

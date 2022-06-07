@@ -9,6 +9,9 @@ namespace wrd {
 
     public:
         defaultCtor(const wtype& t): super(t) {}
+        ~defaultCtor() {
+            WRD_I("~defaultCtor");
+        }
 
     public:
         using super::run;

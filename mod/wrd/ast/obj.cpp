@@ -27,7 +27,8 @@ namespace wrd {
     }
 
     void me::_inFrame() {
-        WRD_DI("%s._inFrame()", getType().getName().c_str());
+        frames& frs = wrd::thread::get()._getFrames();
+        WRD_DI("%s._inFrame()[%d]", getType().getName().c_str(), frs.len());
 
         frame& fr = *new frame();
         scope* meScope = new scope();
@@ -35,17 +36,18 @@ namespace wrd {
         fr.pushLocal(meScope);
         fr.setObj(*this);
 
-        wrd::thread::get()._getFrames().add(fr);
+        frs.add(fr);
     }
 
     void me::_outFrame() {
-        WRD_DI("%s._outFrame()", getType().getName().c_str());
+        frames& frs = wrd::thread::get()._getFrames();
+        WRD_DI("%s._outFrame()[%d]", getType().getName().c_str(), frs.len()-1);
 
-        wrd::thread::get()._getFrames().del();
+        frs.del();
     }
 
     WRD_VERIFY(obj, subNodes, {
-        WRD_DI("verify: obj: %s iterateSubNodes[%d]", it.getType().getName().c_str(), it.subs().len());
+        WRD_DI("verify: obj: %s iterateSubNodes. len=%d", it.getType().getName().c_str(), it.subs().len());
 
         it._inFrame();
         for(auto& p : it.subs())

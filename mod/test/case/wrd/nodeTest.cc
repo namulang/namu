@@ -179,6 +179,7 @@ TEST_F(nodeTest, ShouldNotSameNameVariableIntoSubs) {
     chef c;
     ASSERT_EQ(c.subs().len(), 0);
     c.subs().add("age", new wInt(22));
+
     ASSERT_EQ(c.subs().len(), 1);
     ASSERT_EQ(c.sub<wInt>("age").get(), 22);
     errReport rpt;
@@ -189,6 +190,7 @@ TEST_F(nodeTest, ShouldNotSameNameVariableIntoSubs) {
     c.subs().add("age1", new wInt(22));
     ASSERT_EQ(c.subs().len(), 2);
     ASSERT_EQ(c.subAll<wInt>("age1")[0].get(), 22);
+
     v.verify(c);
     ASSERT_FALSE(rpt);
 
