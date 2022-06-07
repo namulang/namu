@@ -20,11 +20,6 @@ namespace {
             return *this;
         }
 
-        funcs& getCtors() override {
-            static funcs inner;
-            return inner;
-        }
-
         me& operator=(const me& rhs) {
             if(this == &rhs) return *this;
 
@@ -83,4 +78,15 @@ TEST_F(objTest, testCloneOriginObj) {
     node& found = clone->sub(o2Name);
     ASSERT_FALSE(nul(found));
     ASSERT_EQ(&found, &o2);
+}
+
+TEST_F(objTest, cloneByRunFunc) {
+    wInt a(5);
+    wInt& a1 = *a.clone();
+    tstr<wInt> a2 = a.run(wrd::obj::CTOR_NAME, narr(a));
+    ASSERT_NE(&a, &a1);
+    ASSERT_EQ(a.cast<int>(), a1.cast<int>());
+
+    ASSERT_NE(&a, &a2.get());
+    ASSERT_EQ(a.cast<int>(), a2->cast<int>());
 }

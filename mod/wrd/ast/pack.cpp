@@ -32,11 +32,6 @@ namespace wrd {
         _rpt.bind(dummyErrReport::singletone);
     }
 
-    funcs& me::getCtors() {
-        static funcs inner;
-        return inner;
-    }
-
     nbicontainer& me::subs() {
         nbicontainer& subs = *_subs;
         if(_state == RELEASED) {

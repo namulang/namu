@@ -1,4 +1,6 @@
 #include "wFlt.hpp"
+#include "../../ast/mgd/defaultCtor.hpp"
+#include "../../ast/mgd/defaultCopyCtor.hpp"
 
 namespace wrd {
 
@@ -24,5 +26,8 @@ namespace wrd {
     me::wFlt() {}
     me::wFlt(wflt val): super(val) {}
 
-    void me::_onCreateCtors(funcs& tray) const {}
+    void me::_onMakeCtors(scope& tray) const {
+        tray.add(obj::CTOR_NAME, new defaultCtor(getType()));
+        tray.add(obj::CTOR_NAME, new defaultCopyCtor(getType()));
+    }
 }

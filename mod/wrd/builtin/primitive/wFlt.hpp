@@ -21,7 +21,6 @@ namespace wrd {
         wFlt(wflt val);
 
     protected:
-        void _onCreateCtors(funcs& tray) const override;
+        void _onMakeCtors(scope& tray) const override;
     };
-
 }

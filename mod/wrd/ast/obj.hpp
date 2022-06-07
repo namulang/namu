@@ -24,9 +24,6 @@ namespace wrd {
 
         wbool canRun(const ucontainable& args) const override;
 
-        virtual funcs& getCtors();
-        const funcs& getCtors() const WRD_UNCONST_FUNC(getCtors())
-
         virtual const obj& getOrigin() const = 0;
 
     protected:
@@ -35,5 +32,8 @@ namespace wrd {
     private:
         void _inFrame();
         void _outFrame();
+
+    public:
+         inline static const string CTOR_NAME = "@ctor";
     };
 }

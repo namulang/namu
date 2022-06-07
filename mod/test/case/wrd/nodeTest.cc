@@ -64,12 +64,6 @@ namespace {
 
         string name;
         int calorie;
-
-        using super::getCtors;
-        funcs& getCtors() override {
-            static funcs inner;
-            return inner;
-        }
     };
 
     class chef : public mgdObj {
@@ -97,12 +91,6 @@ namespace {
             }
         };
         WRD(CLASS(chef, mgdObj, myType))
-
-        using super::getCtors;
-        funcs& getCtors() override {
-            static funcs inner;
-            return inner;
-        }
 
     public:
         string foodName;

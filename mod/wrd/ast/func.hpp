@@ -22,7 +22,7 @@ namespace wrd {
         ///         are matters.
         virtual const params& getParams() const;
 
-        /// return type of this function.
+        /// @return type of this function.
         /// @remark please don't confuse this to evalType.
         ///         evaluate means program just read the code and expand or calculate then replace
         ///         it to the accurate another identifier or variable. so evalType of the func is
