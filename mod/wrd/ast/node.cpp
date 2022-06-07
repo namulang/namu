@@ -52,8 +52,12 @@ namespace wrd {
 
 
     WRD_VERIFY({ // no same variable.
-        for(auto e=it.subs().begin(); e ;++e)
+        WRD_E("verify: node: no same variable=%d", it.subs().len());
+
+        for(auto e=it.subs().begin(); e ;++e) {
+            WRD_E("e.getKey()=%s", e.getKey().c_str());
             if(it.subAll<obj>(e.getKey()).len() > 1)
                 return _err(e->getPos(), errCode::DUP_VAR, e.getKey().c_str());
+        }
     })
 }
