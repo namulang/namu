@@ -103,14 +103,14 @@ TEST_F(nodeTest, testManuallyMakeNodeStructure) {
     tstr<scopes> frameEmulator;
     myObj obj;
     myFunc func;
-    WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
+    WRD_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
 
     obj.subs().add("myFunc", func);
     myFunc funcOffunc;
     func.subs().add("funcOfFunc", funcOffunc);
 
-    WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
-    WRD_E("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
+    WRD_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
+    WRD_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 
     // when:
     frameEmulator.bind(obj.subs());
@@ -119,8 +119,8 @@ TEST_F(nodeTest, testManuallyMakeNodeStructure) {
     chnOffunc->link(*frameEmulator);
     frameEmulator.bind(*chnOffunc);
 
-    WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
-    WRD_E("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
+    WRD_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
+    WRD_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 
     // then:
     ASSERT_EQ(chnOffunc->len(), 2);
@@ -129,14 +129,14 @@ TEST_F(nodeTest, testManuallyMakeNodeStructure) {
 
     int n=0;
     for(const auto& elem : *chnOffunc)
-        WRD_E("[%d]=%s", n++, elem.getType().getName().c_str());
+        WRD_DI("[%d]=%s", n++, elem.getType().getName().c_str());
 
-    WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
-    WRD_E("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
+    WRD_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
+    WRD_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 
     ASSERT_EQ(n, 2);
-    WRD_E("func.tag.chkId=%d", func.getBindTag().getId().chkN);
-    WRD_E("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
+    WRD_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
+    WRD_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 }
 
 TEST_F(nodeTest, testManualNativefuncCall) {
