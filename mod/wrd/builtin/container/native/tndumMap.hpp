@@ -10,6 +10,9 @@ namespace wrd {
         WRD(CLASS(tndumMap, _super_))
 
     public:
+        tndumMap() {}
+        tndumMap(const super& rhs): super(rhs) {} // initialization is allowed.
+
         // add:
         using super::add;
         wbool add(const K& key, const V& val) override { return false; }

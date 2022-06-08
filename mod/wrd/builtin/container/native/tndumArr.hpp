@@ -11,6 +11,7 @@ namespace wrd {
 
     public:
         tndumArr() {}
+        tndumArr(const super& rhs): super(rhs) {}
 
         // add:
         using super::add;
