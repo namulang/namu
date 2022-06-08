@@ -11,7 +11,8 @@ namespace wrd {
 
     public:
         tndumChain() {}
-            
+        tndumChain(const super& rhs): super(rhs) {}
+
     public:
         // add:
         using super::add;
