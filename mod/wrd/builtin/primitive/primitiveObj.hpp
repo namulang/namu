@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../ast/mgd.hpp"
-#include "../container/native/tndumChain.hpp"
+#include "../../ast/scope.hpp"
 
 namespace wrd {
 
@@ -31,10 +31,8 @@ namespace wrd {
         using super::subs;
         nbicontainer& subs() override {
             static tstr<scope> inner;
-            if(!inner) {
-                inner.bind(new scope());
-                _onMakeCtors(*inner);
-            }
+            if(!inner)
+                inner.bind(_onMakeCtors());
 
             return *inner;
         }
@@ -44,7 +42,7 @@ namespace wrd {
             const me& cast = (const me&) rhs;
             return _val == cast._val;
         }
-        virtual void _onMakeCtors(scope& tray) const = 0;
+        virtual dumScope* _onMakeCtors() const = 0;
 
     private:
         T _val;
@@ -64,8 +62,7 @@ namespace wrd {
         nbicontainer& subs() override {
             static tstr<scope> inner;
             if(!inner) {
-                inner.bind(new scope());
-                _onMakeCtors(*inner);
+                inner.bind(_onMakeCtors());
             }
 
             return *inner;
@@ -75,7 +72,7 @@ namespace wrd {
         wbool _onSame(const typeProvidable& rhs) const override {
             return !nul(rhs);
         }
-        virtual void _onMakeCtors(scope& tray) const = 0;
+        virtual dumScope* _onMakeCtors() const = 0;
 
     private:
         point _pos;

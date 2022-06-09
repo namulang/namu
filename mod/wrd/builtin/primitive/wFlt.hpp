@@ -20,17 +20,7 @@ namespace wrd {
         wFlt();
         wFlt(wflt val);
 
-    public:
-        using super::subs;
-        nbicontainer& subs() override {
-            static scope* inner = nullptr;
-            if(nul(inner))
-                _onMakeCtors(*(inner = new scope()));
-
-            return *inner;
-        }
-
     protected:
-        void _onMakeCtors(scope& tray) const override;
+        dumScope* _onMakeCtors() const override;
     };
 }

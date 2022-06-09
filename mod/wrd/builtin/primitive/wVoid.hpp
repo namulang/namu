@@ -22,6 +22,6 @@ namespace wrd {
         static me& singletone();
 
     protected:
-        void _onMakeCtors(scope& tray) const override;
+        dumScope* _onMakeCtors() const override;
     };
 }

@@ -20,6 +20,6 @@ namespace wrd {
         wInt(wint val);
 
     protected:
-        void _onMakeCtors(scope& tray) const override;
+        dumScope* _onMakeCtors() const override;
     };
 }
