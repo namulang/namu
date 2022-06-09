@@ -20,18 +20,7 @@ namespace wrd {
         wStr(const wchar* val);
         wStr(const std::string& val);
 
-    public:
-        using super::subs;
-        nbicontainer& subs() override {
-            static scope* inner = nullptr;
-            if(nul(inner))
-                _onMakeCtors(*(inner = new scope()));
-
-            return *inner;
-        }
-
     protected:
-        void _onMakeCtors(scope& tray) const override;
-
+        dumScope* _onMakeCtors() const override;
     };
 }

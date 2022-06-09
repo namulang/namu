@@ -20,8 +20,10 @@ namespace wrd {
         return inner;
     }
 
-    void me::_onMakeCtors(scope& tray) const {
-        tray.add(obj::CTOR_NAME, new defaultCtor(getType()));
-        tray.add(obj::CTOR_NAME, new defaultCopyCtor(getType()));
+    dumScope* me::_onMakeCtors() const {
+        scope scapegoat;
+        scapegoat.add(obj::CTOR_NAME, new defaultCtor(getType()));
+        scapegoat.add(obj::CTOR_NAME, new defaultCopyCtor(getType()));
+        return new dumScope(scapegoat);
     }
 }
