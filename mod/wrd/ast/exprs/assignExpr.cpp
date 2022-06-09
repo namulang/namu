@@ -79,7 +79,7 @@ namespace wrd {
         //          e.g. A.B.NAME = 5
         //
         //      the structure of above sample will be,
-        //          AssignExpr(getExpr(getExpr(A, B), NAME), literalExpr(wInt(5))
+        //          AssignExpr(getExpr(getExpr(A, B), NAME), wInt(5))
         //      so, only I need to check is, lhs of AssignExpr is kind of getExpr() or not.
         //      I can care about that the last expression is valid.
         WRD_DI("verify: checks rvalue");
