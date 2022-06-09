@@ -34,7 +34,7 @@ namespace wrd {
     })
 
     WRD_VERIFY({
-        WRD_DI("verify: set _evalType");
+        WRD_DI("verify: set evalType");
 
         const wtype& ltype = it.getLeft().getEvalType();
         const wtype& rtype = it.getRight().getEvalType();

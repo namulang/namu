@@ -22,6 +22,7 @@ namespace wrd {
             return WRD_E("argument doesn't match to main func()"), str();
 
         node& pak = *args.begin();
+        WRD_I("run a pack");
         node& main = _findMain(pak, args);
         if(nul(main))
             return WRD_E("there is 0 or more than 2 main() found."), str();
