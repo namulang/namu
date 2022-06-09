@@ -165,15 +165,11 @@ namespace wrd {
         return new blockExpr();
     }
 
-    blockExpr* me::onBlock(blockExpr& blk, node& candidate) {
+    blockExpr* me::onBlock(blockExpr& blk, node& stmt) {
         WRD_DI("tokenEvent: onBlock()");
         if(nul(blk))
             return onSrcErr(errCode::IS_NULL, "blk"), onBlock();
-        expr* e = &candidate.cast<expr>();
-        if(nul(e))
-            e = new literalExpr(candidate);
-
-        blk.getStmts().add(e);
+        blk.getStmts().add(stmt);
         WRD_DI("tokenEvent: onBlock().len=%d", blk.getStmts().len());
         return &blk;
     }
