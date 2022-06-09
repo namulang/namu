@@ -25,10 +25,7 @@ namespace wrd {
             return ret;
         }
         const wtype& getEvalType() const override {
-            if(nul(_evalType))
-                return _rhs->getEvalType();
-
-            return *_evalType;
+            return _rhs->getEvalType();
         }
 
         const node& getLeft() const {
@@ -45,6 +42,5 @@ namespace wrd {
     private:
         str _lhs; // name of variable or lambda.
         str _rhs;
-        const wtype* _evalType; // set by verifier
     };
 }
