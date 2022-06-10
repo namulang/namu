@@ -367,6 +367,7 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
 
 //  variable:
 defvar: defvar-exp-no-initial-value { $$ = $1; }
+      | defvar-exp-initial-value { $$ = $1; }
 
 defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
                              $$ = yyget_extra(scanner)->onDefVar(std::string($1), *$2);
