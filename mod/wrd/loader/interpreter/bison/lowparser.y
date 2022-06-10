@@ -137,7 +137,7 @@
 %type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
 %type <asScope> defblock
 //          value:
-%type <asNode> defvar defvar-exp-no-initial-value
+%type <asNode> defvar defvar-exp-no-initial-value defvar-exp-initial-value
 //          func:
 %type <asNode> deffunc deffunc-default deffunc-deduction
 %type <asNode> deffunc-lambda deffunc-lambda-default deffunc-lambda-deduction
@@ -280,7 +280,7 @@ expr-compound: defexpr-compound { $$ = $1; }
 expr10: expr9 { $$ = $1; }
       | expr10 ASSIGN expr9 {
         $$ = yyget_extra(scanner)->onAssign(*$1, *$3);
-      }
+    }
 expr9: expr8 { $$ = $1; }
 expr8: expr7 { $$ = $1; }
 expr7: expr6 { $$ = $1; }
@@ -369,9 +369,14 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
 defvar: defvar-exp-no-initial-value { $$ = $1; }
 
 defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
-                            $$ = yyget_extra(scanner)->onDefVar(std::string($1), *$2);
-                            free($1);
+                             $$ = yyget_extra(scanner)->onDefVar(std::string($1), *$2);
+                             free($1);
                          }
+defvar-exp-initial-value: NAME DEFASSIGN expr {
+                          $$ = yyget_extra(scanner)->onDefAssign(std::string($1), *$3);
+                          free($1);
+                      }
+
 
 //  func:
 deffunc: deffunc-default { $$ = $1; }

@@ -331,6 +331,11 @@ namespace wrd {
         return new assignExpr(lhs, rhs);
     }
 
+    expr* me::onDefAssign(const std::string& name, node& rhs) {
+        WRD_DI("tokenEvent: onDefAssign(%s, %s)", name.c_str(), rhs.getType().getName().c_str());
+        return new defAssignExpr(name, rhs);
+    }
+
     me::loweventer() { rel(); }
 
     tstr<pack>& me::getPack() { return _pack; }
