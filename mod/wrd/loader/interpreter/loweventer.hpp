@@ -109,6 +109,7 @@ namespace wrd {
             return new T(args...);
         }
         expr* onDefVar(const std::string& name, const node& origin);
+        expr* onDefAssign(const std::string& name, node& rhs);
         //      file:
         void onCompilationUnit(node& subpack, scope& blk);
         //      return:
