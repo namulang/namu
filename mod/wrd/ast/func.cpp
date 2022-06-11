@@ -27,10 +27,7 @@ namespace wrd {
     WRD_VERIFY({
         WRD_DI("verify: func: param check");
 
-        for(const param& p : it.getParams()) {
-            const std::string& name = p.getName();
-            if(nul(name) || name.empty())
-                return _srcErr(errCode::FUNC_HAS_NO_NAME);
-        }
+        /*for(const param& p : it.getParams()) {
+        }*/
     })
 }
