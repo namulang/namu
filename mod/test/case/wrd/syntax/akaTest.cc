@@ -33,6 +33,12 @@ TEST_F(akaTest, defaultDef4) {
     )SRC").shouldParsed(false);
 }
 
+TEST_F(akaTest, defaultDef5) {
+    make().parse(R"SRC(
+        aka -> sys.console
+    )SRC").shouldParsed(true);
+}
+
 TEST_F(akaTest, deducedAllDefNegative) {
     make().parse(R"SRC(
     aka console.*
