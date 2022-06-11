@@ -122,6 +122,7 @@
 // nonterminal:
 %type <asNode> compilation-unit block indentblock
 %type <asNarr> dotname
+%type <asNode> dotname-item
 //  term:
 %type <asNode> term unary postfix primary func-call
 %type <asNarr> list list-items
@@ -202,14 +203,21 @@ func-call: NAME list %expect 1 {
         $$ = yyget_extra(scanner)->onRunExpr(std::string($1), *argsLife);
       }
 
-dotname: NAME {
-       // TODO: uses loweventer:
-       $$ = yyget_extra(scanner)->onDotName(std::string($1));
-       free($1);
-    } | dotname '.' NAME {
-       $$ = yyget_extra(scanner)->onDotName(*$1, std::string($3));
-       free($3);
-    }
+dotname-item: NAME {
+            $$ = yyget_extra(scanner)->onName(std::string($1));
+            free($1);
+          } | func-call {
+            // $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*new getExpr("me"), $1->cast<runExpr>());
+            // $1 is still on heap without binder
+            // TODO: convert $1 into getExpr
+          }
+
+
+dotname: dotname-item {
+       $$ = yyget_extra(scanner)->onDotName(*$1);
+     } | dotname '.' dotname-item {
+       $$ = yyget_extra(scanner)->onDotName(*$1, *$3);
+     }
 
 list-items: expr {
             $$ = yyget_extra(scanner)->onList($1);
@@ -250,7 +258,7 @@ primary: INTVAL {
      } | CHARVAR {
        //TODO: $$ = yyget_extra(scanner)->onPrimitive<wChar>($1);
        $$ = yyget_extra(scanner)->onPrimitive<wInt>($1);
-     } | list %expect 1 {
+     } | '(' expr ')' {
         //  known shift/reduce conflict on the syntax:
         //      First example: list • NEWLINE INDENT block DEDENT block DEDENT $end
         //          e.g. (a) •
@@ -323,7 +331,7 @@ aka-item: defexpr-line-except-aka {
 aka-default: AKA aka-item ARROW NAME {
             // TODO: then free it
          } | AKA dotname ARROW NAME {
-            // dotname only available NAME or NAME(NAME, NAME)
+            // dotname only available getExpr. need to verify in akaExpr
             // TODO: then free it
          }
 aka-deduced: AKA ARROW dotname {

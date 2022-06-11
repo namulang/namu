@@ -273,13 +273,17 @@ namespace wrd {
         return new returnExpr(exp);
     }
 
-    narr* me::onDotName(const std::string& name) {
+    node* me::onName(const std::string& name) {
+        return new wStr(name);
+    }
+
+    narr* me::onDotName(const node& name) {
         narr* ret = new narr();
-        ret->add(new wStr(name));
+        ret->add(name);
         return ret;
     }
-    narr* me::onDotName(narr& names, const std::string& name) {
-        names.add(new wStr(name));
+    narr* me::onDotName(narr& names, const node& name) {
+        names.add(name);
         return &names;
     }
 
