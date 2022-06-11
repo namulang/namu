@@ -123,13 +123,12 @@
 %type <asNode> compilation-unit block indentblock
 %type <asNarr> dotname
 //  term:
-%type <asNode> term unary postfix primary funcCall
+%type <asNode> term unary postfix primary func-call
 %type <asNarr> list list-items
 //  keyword:
 %type <asNode> return
 %type <asNode> if
 %type <asNode> aka aka-default aka-deduced
-%type <asNarr> aka-dotname aka-dotname-item
 %type <asNode> pack
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
@@ -192,7 +191,7 @@ unary: postfix {
      $$ = $2; // TODO:
    }
 
-funcCall: NAME list %expect 1 {
+func-call: NAME list %expect 1 {
         //  known shift/reduce conflict on the syntax:
         //      First example: NAME list • NEWLINE INDENT block
         //          e.g. foo(a) •
@@ -232,9 +231,9 @@ postfix: primary {
         $$ = $1; // TODO:
      } | postfix '.' NAME {
         $$ = $1; // TODO:
-     } | postfix '.' funcCall {
+     } | postfix '.' func-call {
         $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
-     } | funcCall {
+     } | func-call {
         $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*new getExpr("me"), $1->cast<runExpr>());
         // $1 is still on heap without binder
      }
@@ -318,23 +317,16 @@ aka: aka-default {
  } | aka-deduced {
  }
 
-aka-dotname-item: NAME {
-                // TODO: then free it
-              } | funcCall {
-                // TODO:
-              }
-aka-dotname: aka-dotname-item {
-         } | aka-dotname '.' aka-dotname-item {
-         }
 aka-item: defexpr-line-except-aka {
       } | defexpr-compound {
       }
 aka-default: AKA aka-item ARROW NAME {
             // TODO: then free it
-         } | AKA aka-dotname ARROW NAME {
+         } | AKA dotname ARROW NAME {
+            // dotname only available NAME or NAME(NAME, NAME)
             // TODO: then free it
          }
-aka-deduced: AKA aka-dotname {
+aka-deduced: AKA ARROW dotname {
          }
 
 // defs:
