@@ -55,4 +55,9 @@ namespace wrd {
         if(!sub) return _srcErr(errCode::CANT_ACCESS, me->getType().getName().c_str(), it.getName().c_str());
         if(!sub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS);
     })
+
+    WRD_VERIFY({
+        WRD_DI("verify: runExpr: visit subNodes");
+        verify(it.getMe());
+    })
 }

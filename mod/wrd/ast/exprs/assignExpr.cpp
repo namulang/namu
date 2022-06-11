@@ -89,4 +89,11 @@ namespace wrd {
             return _srcErr(errCode::ASSIGN_TO_RVALUE, it.getRight().getType().getName().c_str(),
                     lhs.getType().getName().c_str());
     })
+
+    WRD_VERIFY({
+        WRD_DI("verify: assignExpr: visit subNodes");
+
+        verify((node&) it.getLeft());
+        verify((node&) it.getRight());
+    })
 }

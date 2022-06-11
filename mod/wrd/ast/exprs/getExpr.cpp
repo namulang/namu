@@ -55,4 +55,10 @@ namespace wrd {
                 it.getType().getName().c_str());
         }
     })
+
+    WRD_VERIFY({
+        WRD_DI("verify: getExpr: visit 'from' subnodes");
+
+        verify((node&) it.getFrom());
+    })
 }

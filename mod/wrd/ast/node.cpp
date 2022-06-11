@@ -53,6 +53,7 @@ namespace wrd {
 
     WRD_VERIFY({ // no same variable.
         WRD_DI("verify: node: no same variable=%d", it.subs().len());
+        if(it.isSub<frame>()) return;
 
         for(auto e=it.subs().begin(); e ;++e) {
             if(it.subAll<obj>(e.getKey()).len() > 1)

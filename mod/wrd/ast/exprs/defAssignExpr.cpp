@@ -38,6 +38,7 @@ namespace wrd {
 
     WRD_VERIFY({
         WRD_DI("verify: defAssignExpr: visitSubNodes");
-        // TODO:
+
+        verify(it.getRight());
     })
 }
