@@ -79,8 +79,9 @@ namespace wrd {
 
         //  operator:
         //      dot:
-        narr* onDotName(const std::string& name);
-        narr* onDotName(narr& names, const std::string& name);
+        narr* onDotName(const node& name);
+        narr* onDotName(narr& names, const node& name);
+        node* onName(const std::string& name);
         node* onGet(const std::string& name);
         node* onGet(const std::string& name, const narr& args);
         node* onGet(node& from, const std::string& name, const narr& args);

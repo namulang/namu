@@ -71,8 +71,8 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall3) {
 TEST_F(defFuncTest, distinguishDefineLambdaOrCall) {
     make().parse(R"SRC(
         main() void
-            (a, 22)
-    )SRC").shouldParsed(true);
+            (a, 22) // this is not lambda
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(defFuncTest, distinguishDefineLambdaOrCall2) {
