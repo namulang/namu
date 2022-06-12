@@ -2,6 +2,9 @@
 #include "../../ast/param.hpp"
 #include "../../ast/mgd/defaultCtor.hpp"
 #include "../../ast/mgd/defaultCopyCtor.hpp"
+#include "wFlt.hpp"
+#include "wChar.hpp"
+#include "wBool.hpp"
 
 namespace wrd {
 
@@ -19,13 +22,9 @@ namespace wrd {
     const ases& me::wIntType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            struct toWstr: public tas<wStr> {
-                str as(const node& wInt, const type& to) const override {
-                    // TODO:
-                    return str();
-                }
-            };
-            inner.add(new toWstr());
+            inner.add(new asPrimitive<wFlt, wflt>());
+            inner.add(new asPrimitive<wChar, wchar>());
+            inner.add(new asPrimitive<wBool, wbool>());
         }
 
         return inner;
