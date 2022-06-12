@@ -49,3 +49,46 @@ TEST(wtypeTest, makeTest) {
     ASSERT_TRUE(new1);
     ASSERT_EQ(new1->get(), 0);
 }
+
+TEST(wtypeTest, allImplicitCastingForPrimitives) {
+    wInt i;
+    wFlt f;
+    wBool b;
+    wChar c;
+    wStr s;
+
+    // int:
+    ASSERT_TRUE(i.isImpli<wInt>());
+    ASSERT_TRUE(i.isImpli<wFlt>());
+    ASSERT_TRUE(i.isImpli<wBool>());
+    ASSERT_TRUE(i.isImpli<wChar>());
+    ASSERT_FALSE(i.isImpli<wStr>());
+
+    // float:
+    ASSERT_TRUE(f.isImpli<wInt>());
+    ASSERT_TRUE(f.isImpli<wFlt>());
+    ASSERT_TRUE(f.isImpli<wBool>());
+    ASSERT_TRUE(f.isImpli<wChar>());
+    ASSERT_FALSE(f.isImpli<wStr>());
+
+    // bool:
+    ASSERT_TRUE(b.isImpli<wInt>());
+    ASSERT_TRUE(b.isImpli<wFlt>());
+    ASSERT_TRUE(b.isImpli<wBool>());
+    ASSERT_TRUE(b.isImpli<wChar>());
+    ASSERT_FALSE(b.isImpli<wStr>());
+
+    // char:
+    ASSERT_TRUE(c.isImpli<wInt>());
+    ASSERT_TRUE(c.isImpli<wFlt>());
+    ASSERT_TRUE(c.isImpli<wBool>());
+    ASSERT_TRUE(c.isImpli<wChar>());
+    ASSERT_FALSE(c.isImpli<wStr>());
+
+    // str:
+    ASSERT_FALSE(s.isImpli<wInt>());
+    ASSERT_FALSE(s.isImpli<wFlt>());
+    ASSERT_FALSE(s.isImpli<wBool>());
+    ASSERT_FALSE(s.isImpli<wChar>());
+    ASSERT_TRUE(s.isImpli<wStr>());
+}
