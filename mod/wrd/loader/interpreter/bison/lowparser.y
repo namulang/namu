@@ -254,10 +254,9 @@ primary: INTVAL {
      } | FLTVAL {
        $$ = yyget_extra(scanner)->onPrimitive<wFlt>($1);
      } | BOOLVAL {
-       //TODO: $$ = yyget_extra(scanner)->onPrimitive<wBool 
+       $$ = yyget_extra(scanner)->onPrimitive<wBool>($1);
      } | CHARVAR {
-       //TODO: $$ = yyget_extra(scanner)->onPrimitive<wChar>($1);
-       $$ = yyget_extra(scanner)->onPrimitive<wInt>($1);
+       $$ = yyget_extra(scanner)->onPrimitive<wChar>($1);
      } | '(' expr ')' {
         //  known shift/reduce conflict on the syntax:
         //      First example: list • NEWLINE INDENT block DEDENT block DEDENT $end
