@@ -1,6 +1,9 @@
 #include "wFlt.hpp"
 #include "../../ast/mgd/defaultCtor.hpp"
 #include "../../ast/mgd/defaultCopyCtor.hpp"
+#include "wInt.hpp"
+#include "wChar.hpp"
+#include "wBool.hpp"
 
 namespace wrd {
 
@@ -11,13 +14,9 @@ namespace wrd {
     const ases& me::wFltType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            struct toWstr: public tas<wStr> {
-                str as(const node& wFlt, const type& to) const override {
-                    // TODO:
-                    return str();
-                }
-            };
-            inner.add(new toWstr());
+            inner.add(new asPrimitive<wInt, wint>());
+            inner.add(new asPrimitive<wChar, wchar>());
+            inner.add(new asPrimitive<wBool, wbool>());
         }
 
         return inner;

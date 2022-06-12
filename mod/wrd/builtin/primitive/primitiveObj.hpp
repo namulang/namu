@@ -9,6 +9,14 @@ namespace wrd {
     class primitiveObj : public obj {
         WRD(ADT(primitiveObj, obj))
 
+    protected:
+        template <typename E, typename RAW>
+        class asPrimitive : public tas<E> {
+            str as(const node& me, const type& to) const override {
+                return str(new E(me.cast<RAW>()));
+            }
+        };
+
     public:
         primitiveObj(): _val() {}
         primitiveObj(const T& val): _val(val) {}
