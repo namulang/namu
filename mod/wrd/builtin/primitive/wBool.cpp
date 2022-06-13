@@ -11,17 +11,6 @@ namespace wrd {
 
     wbool me::wBoolType::isImmutable() const { return true; }
 
-    const ases& me::wBoolType::_getImpliAses() const {
-        static ases inner;
-        if(inner.len() <= 0) {
-            inner.add(new asPrimitive<wInt, wint>());
-            inner.add(new asPrimitive<wFlt, wflt>());
-            inner.add(new asPrimitive<wChar, wchar>());
-        }
-
-        return inner;
-    }
-
     me::wBool() {}
     me::wBool(wbool val): super(val) {}
 

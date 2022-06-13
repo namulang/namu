@@ -9,9 +9,6 @@ namespace wrd {
         class _wout wBoolType : public wtype {
         public:
             wbool isImmutable() const override;
-
-        protected:
-            const ases& _getImpliAses() const override;
         };
 
         WRD(CLASS(wBool, primitiveObj, wBoolType))
