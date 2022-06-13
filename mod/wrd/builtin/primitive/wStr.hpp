@@ -6,9 +6,12 @@ namespace wrd {
 
     class _wout wStr : public primitiveObj<std::string> {
 
-        class _wout wStrType : public wtype {
+        struct _wout wStrType : public wtype {
         public:
             wbool isImmutable() const override;
+
+        protected:
+            const ases& _getAses() const override;
         };
         WRD(CLASS(wStr, primitiveObj, wStrType))
 

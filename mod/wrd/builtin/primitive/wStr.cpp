@@ -1,7 +1,10 @@
 #include "wStr.hpp"
-#include "wInt.hpp"
 #include "../../ast/mgd/defaultCtor.hpp"
 #include "../../ast/mgd/defaultCopyCtor.hpp"
+#include "wBool.hpp"
+#include "wInt.hpp"
+#include "wFlt.hpp"
+#include "wChar.hpp"
 
 namespace wrd {
 
@@ -18,5 +21,56 @@ namespace wrd {
         scapegoat.add(obj::CTOR_NAME, new defaultCtor(getType()));
         scapegoat.add(obj::CTOR_NAME, new defaultCopyCtor(getType()));
         return new dumScope(scapegoat);
+    }
+
+    const ases& me::wStrType::_getAses() const {
+        static ases inner;
+        if(inner.len() <= 0) {
+            struct asBool : public tas<wBool> {
+                str as(const node& me, const type& to) const override {
+                    const std::string& val = me.cast<std::string>();
+                    try {
+                        bool boolean = val == "false" ? false : stoi(val) == 0;
+                        return str(new wBool(boolean));
+                    } catch (std::invalid_argument& ex) {
+                        return str();
+                    }
+                }
+            };
+            inner.add(new asBool());
+            struct asFlt : public tas<wFlt> {
+                str as(const node& me, const type& to) const override {
+                    const std::string& val = me.cast<std::string>();
+                    try {
+                        return str(new wFlt(stof(val)));
+                    } catch (std::invalid_argument& ex) {
+                        return str();
+                    }
+                }
+            };
+            inner.add(new asFlt());
+            struct asInt: public tas<wInt> {
+                str as(const node& me, const type& to) const override {
+                    const std::string& val = me.cast<std::string>();
+                    try {
+                        return str(new wInt(stoi(val)));
+                    } catch (std::invalid_argument& ex) {
+                        return str();
+                    }
+                }
+            };
+            inner.add(new asInt());
+            struct asChar : public tas<wChar> {
+                str as(const node& me, const type& to) const override {
+                    const std::string& val = me.cast<std::string>();
+                    if (val.length() > 1) return str();
+
+                    return str(new wChar(val.at(0)));
+                }
+            };
+            inner.add(new asChar());
+        }
+
+        return inner;
     }
 }
