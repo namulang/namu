@@ -72,10 +72,10 @@ TEST(wtypeTest, allImplicitCastingForPrimitives) {
     ASSERT_FALSE(f.isImpli<wStr>());
 
     // bool:
-    ASSERT_TRUE(b.isImpli<wInt>());
-    ASSERT_TRUE(b.isImpli<wFlt>());
+    ASSERT_FALSE(b.isImpli<wInt>());
+    ASSERT_FALSE(b.isImpli<wFlt>());
     ASSERT_TRUE(b.isImpli<wBool>());
-    ASSERT_TRUE(b.isImpli<wChar>());
+    ASSERT_FALSE(b.isImpli<wChar>());
     ASSERT_FALSE(b.isImpli<wStr>());
 
     // char:

@@ -356,9 +356,9 @@ defblock: %empty {
 //  type:
 type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
     | INTTYPE { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
-    | CHARTYPE { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | CHARTYPE { $$ = yyget_extra(scanner)->onPrimitive<wChar>(); }
     | STRTYPE { $$ = yyget_extra(scanner)->onPrimitive<wStr>(); }
-    | BOOLTYPE { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
+    | BOOLTYPE { $$ = yyget_extra(scanner)->onPrimitive<wBool>(); }
     | FLTTYPE { $$ = yyget_extra(scanner)->onPrimitive<wFlt>(); }
     | NAME {
         $$ = new blockExpr(); // TODO: then free it
