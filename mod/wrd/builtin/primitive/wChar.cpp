@@ -22,6 +22,22 @@ namespace wrd {
         return inner;
     }
 
+    const ases& me::wCharType::_getAses() const {
+        static ases inner;
+        if(inner.len() <= 0) {
+            struct asStr : public tas<wStr> {
+                str as(const node& me, const type& to) const override {
+                    std::string val;
+                    val.push_back(me.cast<wchar>());
+                    return str(new wStr(val));
+                }
+            };
+            inner.add(new asStr());
+        }
+
+        return inner;
+    }
+
     me::wChar() {}
     me::wChar(wchar val): super(val) {}
 
