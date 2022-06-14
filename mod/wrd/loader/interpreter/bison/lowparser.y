@@ -311,6 +311,7 @@ expr2: expr1 {
 
 expr1: term { $$ = $1;
    } | expr1 AS type {
+     $$ = yyget_extra(scanner)->onAs(*$1, *$3);
    }
 
 // keyword:
@@ -363,7 +364,7 @@ type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
     | STRTYPE { $$ = yyget_extra(scanner)->onPrimitive<wStr>(); }
     | BOOLTYPE { $$ = yyget_extra(scanner)->onPrimitive<wBool>(); }
     | FLTTYPE { $$ = yyget_extra(scanner)->onPrimitive<wFlt>(); }
-    | NAME {
+    | NAME { // TODO: handle 'as' expr
         $$ = new blockExpr(); // TODO: then free it
     }
 

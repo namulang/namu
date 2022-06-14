@@ -40,7 +40,11 @@ PAIRX(ALREADY_DEFINED_VAR,  "variable '%s %s' was already defined in this scope"
 PAIRX(TYPE_NOT_COMPATIBLE,  "rhs type '%s' is not compatible to lhs '%s' of this assigment")
 PAIRX(ASSIGN_TO_RVALUE,     "you can't assign %s to this unamed %s. please define it first")
 //  casting:
-PAIRX(CAST_NOT_AVAILABLE,   "couldn't cast %s type to %s")
+PAIRX(CAST_NOT_AVAILABLE,   "couldn't cast %s type as %s")
+PAIRX(LHS_IS_NULL,          "lhs of the expression is null")
+PAIRX(RHS_IS_NULL,          "rhs of the expression is null")
+PAIRX(EXPR_SHOULDNT_BE_HERE,"expression shouldn't be here")
+
 
 // func:
 PAIRX(PARAM_HAS_VAL,        "parameter shouldn't have a value")

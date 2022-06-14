@@ -16,6 +16,7 @@ namespace wrd {
     class blockExpr;
     class returnExpr;
     class runExpr;
+    class asExpr;
     class _wout loweventer : public tokenScan {
         WRD(CLASS(loweventer, tokenScan))
         friend class tokenScanModable;
@@ -119,6 +120,8 @@ namespace wrd {
         //      run:
         runExpr* onFillFromOfFuncCall(const node& me, runExpr& to);
         runExpr* onRunExpr(const std::string& name, const narr& args);
+        //      cast:
+        asExpr* onAs(const node& me, const node& as);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);
