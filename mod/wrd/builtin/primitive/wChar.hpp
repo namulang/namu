@@ -12,6 +12,7 @@ namespace wrd {
 
         protected:
             const ases& _getImpliAses() const override;
+            const ases& _getAses() const override;
         };
 
         WRD(CLASS(wChar, primitiveObj, wCharType))

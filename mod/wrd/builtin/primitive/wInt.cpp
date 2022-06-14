@@ -30,6 +30,20 @@ namespace wrd {
         return inner;
     }
 
+    const ases& me::wIntType::_getAses() const {
+        static ases inner;
+        if(inner.len() <= 0) {
+            struct asStr : public tas<wStr> {
+                str as(const node& me, const type& to) const override {
+                    return str(new wStr(std::to_string(me.cast<wint>())));
+                }
+            };
+            inner.add(new asStr());
+        }
+
+        return inner;
+    }
+
     me::wInt() {}
     me::wInt(wint val): super(val) {}
 }

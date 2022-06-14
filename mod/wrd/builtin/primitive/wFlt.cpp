@@ -22,6 +22,20 @@ namespace wrd {
         return inner;
     }
 
+    const ases& me::wFltType::_getAses() const {
+        static ases inner;
+        if(inner.len() <= 0) {
+            struct asStr : public tas<wStr> {
+                str as(const node& me, const type& to) const override {
+                    return str(new wStr(std::to_string(me.cast<wflt>())));
+                }
+            };
+            inner.add(new asStr());
+        }
+
+        return inner;
+    }
+
     me::wFlt() {}
     me::wFlt(wflt val): super(val) {}
 
