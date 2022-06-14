@@ -14,9 +14,9 @@ namespace wrd {
     const ases& me::wCharType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            inner.add(new asPrimitive<wInt, wint>());
-            inner.add(new asPrimitive<wFlt, wflt>());
-            inner.add(new asPrimitive<wBool, wbool>());
+            inner.add(new asPrimitive<wInt, wchar>());
+            inner.add(new asPrimitive<wFlt, wchar>());
+            inner.add(new asPrimitive<wBool, wchar>());
         }
 
         return inner;

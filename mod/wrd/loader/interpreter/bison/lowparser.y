@@ -110,7 +110,7 @@
 //  primitive-type:
 %token VOIDTYPE INTTYPE STRTYPE BOOLTYPE FLTTYPE NULTYPE CHARTYPE
 //  reserved-keyword:
-%token IF AKA RETURN
+%token IF AKA RETURN AS
 
 // value-holding-token:
 %token <asChar> CHARVAR
@@ -293,21 +293,24 @@ expr7: expr6 { $$ = $1; }
 expr6: expr5 { $$ = $1; }
 expr5: expr4 { $$ = $1; }
 expr4: expr3 { $$ = $1; }
-expr3: expr2 { $$ = $1; }
-expr2: expr1 {
+expr3: expr2 {
     $$ = $1;
-   } | expr2 '+' expr1 {
+   } | expr3 '+' expr2 {
     $$ = $1; // TODO:
-   } | expr2 '-' expr1 {
+   } | expr3 '-' expr2 {
     $$ = $1; // TODO:
    }
 
-expr1: term {
+expr2: expr1 {
     $$ = $1;
-   } | expr1 '*' term {
+   } | expr2 '*' expr1 {
     $$ = $1; // TODO:
-   } | expr1 '/' term {
+   } | expr2 '/' expr1 {
     $$ = $1; // TODO:
+   }
+
+expr1: term { $$ = $1;
+   } | expr1 AS type {
    }
 
 // keyword:

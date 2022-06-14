@@ -79,6 +79,7 @@ null { return NULTYPE; }
 pack { return PACK; }
 aka { return AKA; }
 return { return RETURN; }
+as { return AS; }
 
 [[:digit:]]+ {
     yylval->asInt = atoi(yytext);

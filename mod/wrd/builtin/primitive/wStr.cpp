@@ -30,7 +30,13 @@ namespace wrd {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
                     try {
-                        bool boolean = val == "false" ? false : stoi(val) == 0;
+                        bool boolean = false;
+                        if(val == "false")
+                            boolean = false;
+                        else if(val == "true")
+                            boolean = "true";
+                        else
+                            boolean = stoi(val) == 0;
                         return str(new wBool(boolean));
                     } catch (std::invalid_argument& ex) {
                         return str();
