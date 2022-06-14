@@ -271,12 +271,13 @@ TEST_F(castingTest, simpleAsInt4) {
 }
 
 TEST_F(castingTest, simpleAsInt5) {
-    /* TODO: uncomment this after add asExpr
-     * make().parse(R"SRC(
+    make().parse(R"SRC(
         foo(age str) void
             main()
         main() void
             foo(23 as str)
     )SRC").shouldParsed(true);
-    shouldVerified(true); */
+    shouldVerified(true);
 }
+
+// TODO: make a TC for 'as' nonprimitive types

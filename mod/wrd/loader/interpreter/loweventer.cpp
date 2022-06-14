@@ -340,6 +340,12 @@ namespace wrd {
         return new defAssignExpr(name, rhs);
     }
 
+    asExpr* me::onAs(const node& me, const node& as) {
+        WRD_DI("tokenEvent: onAs(%s, %s)", me.getType().getName().c_str(), as.getType().getName().c_str());
+
+        return new asExpr(me, as);
+    }
+
     me::loweventer() { rel(); }
 
     tstr<pack>& me::getPack() { return _pack; }
