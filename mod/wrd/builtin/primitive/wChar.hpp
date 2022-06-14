@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class _wout wChar : public primitiveObj<wflt> {
+    class _wout wChar : public primitiveObj<wchar> {
 
         class _wout wCharType : public wtype {
         public:

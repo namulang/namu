@@ -22,9 +22,9 @@ namespace wrd {
     const ases& me::wIntType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            inner.add(new asPrimitive<wFlt, wflt>());
-            inner.add(new asPrimitive<wChar, wchar>());
-            inner.add(new asPrimitive<wBool, wbool>());
+            inner.add(new asPrimitive<wFlt, wint>());
+            inner.add(new asPrimitive<wChar, wint>());
+            inner.add(new asPrimitive<wBool, wint>());
         }
 
         return inner;

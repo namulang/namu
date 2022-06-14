@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class _wout wBool : public primitiveObj<wflt> {
+    class _wout wBool : public primitiveObj<wbool> {
 
         class _wout wBoolType : public wtype {
         public:
