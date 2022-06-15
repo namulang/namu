@@ -79,42 +79,29 @@ Inheritance diagram for wrd::frameInteractable:</div>
  <div class="center">
   <img src="classwrd_1_1frame_interactable.png" usemap="#wrd::frameInteractable_map" alt=""/>
   <map id="wrd::frameInteractable_map" name="wrd::frameInteractable_map">
-<area href="classwrd_1_1block_expr.html" alt="wrd::blockExpr" shape="rect" coords="0,56,183,80"/>
-<area href="classwrd_1_1mgd_func.html" alt="wrd::mgdFunc" shape="rect" coords="193,56,376,80"/>
-<area href="classwrd_1_1obj.html" title="obj handles frame injection event of all objects." alt="wrd::obj" shape="rect" coords="579,56,762,80"/>
-<area href="classwrd_1_1primitive_obj.html" alt="wrd::primitiveObj&lt; std::string &gt;" shape="rect" coords="0,112,183,136"/>
-<area href="classwrd_1_1primitive_obj.html" alt="wrd::primitiveObj&lt; wflt &gt;" shape="rect" coords="193,112,376,136"/>
-<area href="classwrd_1_1primitive_obj.html" alt="wrd::primitiveObj&lt; wint &gt;" shape="rect" coords="386,112,569,136"/>
-<area href="classwrd_1_1mgd_obj.html" alt="wrd::mgdObj" shape="rect" coords="772,112,955,136"/>
-<area href="classwrd_1_1primitive_obj.html" alt="wrd::primitiveObj&lt; T &gt;" shape="rect" coords="965,112,1148,136"/>
-<area href="classwrd_1_1tcpp_bridge.html" title="bridge object only can shares &#39;shared&#39; sub nodes." alt="wrd::tcppBridge&lt; T &gt;" shape="rect" coords="1158,112,1341,136"/>
-<area href="classwrd_1_1w_str.html" alt="wrd::wStr" shape="rect" coords="0,168,183,192"/>
-<area href="classwrd_1_1w_flt.html" alt="wrd::wFlt" shape="rect" coords="193,168,376,192"/>
-<area href="classwrd_1_1w_int.html" alt="wrd::wInt" shape="rect" coords="386,168,569,192"/>
-<area href="classwrd_1_1tarr.html" alt="wrd::tarr&lt; frame &gt;" shape="rect" coords="579,168,762,192"/>
-<area href="classwrd_1_1tarr.html" alt="wrd::tarr&lt; T &gt;" shape="rect" coords="772,168,955,192"/>
-<area href="classwrd_1_1w_void.html" alt="wrd::wVoid" shape="rect" coords="965,168,1148,192"/>
-<area href="classwrd_1_1stack_frame.html" alt="wrd::stackFrame" shape="rect" coords="579,224,762,248"/>
+<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="0,56,137,80"/>
+<area href="classwrd_1_1base_obj.html" title="baseObj handles frame injection event of all objects." alt="wrd::baseObj" shape="rect" coords="147,112,284,136"/>
+<area href="classwrd_1_1expr.html" alt="wrd::expr" shape="rect" coords="147,168,284,192"/>
+<area href="classwrd_1_1frame.html" alt="wrd::frame" shape="rect" coords="147,224,284,248"/>
+<area href="classwrd_1_1slot.html" alt="wrd::slot" shape="rect" coords="147,280,284,304"/>
+<area href="classwrd_1_1src.html" title="src represents src file of wrdlang source codes." alt="wrd::src" shape="rect" coords="147,336,284,360"/>
+<area href="classwrd_1_1starter.html" alt="wrd::starter" shape="rect" coords="147,392,284,416"/>
+<area href="classwrd_1_1thread.html" alt="wrd::thread" shape="rect" coords="147,448,284,472"/>
+<area href="classwrd_1_1type_node.html" alt="wrd::typeNode" shape="rect" coords="147,504,284,528"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a61db061f7eac9ee1d1093a4e97a343ac"><td class="memItemLeft" align="right" valign="top"><a id="a61db061f7eac9ee1d1093a4e97a343ac"></a>
-virtual wbool&#160;</td><td class="memItemRight" valign="bottom"><b>_onInFrame</b> (<a class="el" href="classwrd_1_1frame.html">frame</a> &amp;sf, const <a class="el" href="classwrd_1_1ncontainer.html">ncontainer</a> &amp;args)=0</td></tr>
-<tr class="separator:a61db061f7eac9ee1d1093a4e97a343ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82695cbdab1ec29b2578f1883b55e463"><td class="memItemLeft" align="right" valign="top"><a id="a82695cbdab1ec29b2578f1883b55e463"></a>
-virtual wbool&#160;</td><td class="memItemRight" valign="bottom"><b>_onOutFrame</b> (<a class="el" href="classwrd_1_1frame.html">frame</a> &amp;sf, const <a class="el" href="classwrd_1_1ncontainer.html">ncontainer</a> &amp;args)=0</td></tr>
-<tr class="separator:a82695cbdab1ec29b2578f1883b55e463"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3277ee1d74531e88cecd267bee29b51"><td class="memItemLeft" align="right" valign="top"><a id="af3277ee1d74531e88cecd267bee29b51"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>_inFrame</b> (const <a class="el" href="classwrd_1_1tbicontainable.html">bicontainable</a> &amp;args)=0</td></tr>
+<tr class="separator:af3277ee1d74531e88cecd267bee29b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09ed9ac382fe405aef4c039c59da7637"><td class="memItemLeft" align="right" valign="top"><a id="a09ed9ac382fe405aef4c039c59da7637"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>_outFrame</b> ()=0</td></tr>
+<tr class="separator:a09ed9ac382fe405aef4c039c59da7637"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:a6a1225a3b57cb94258907f91becf994f"><td class="memItemLeft" align="right" valign="top"><a id="a6a1225a3b57cb94258907f91becf994f"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>func</b></td></tr>
-<tr class="separator:a6a1225a3b57cb94258907f91becf994f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24ec25a21b433e519ae9b888cf8511d9"><td class="memItemLeft" align="right" valign="top"><a id="a24ec25a21b433e519ae9b888cf8511d9"></a>
-class&#160;</td><td class="memItemRight" valign="bottom"><b>obj</b></td></tr>
-<tr class="separator:a24ec25a21b433e519ae9b888cf8511d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24eafafceaf8cdf7857b4f5358664ce7"><td class="memItemLeft" align="right" valign="top"><a id="a24eafafceaf8cdf7857b4f5358664ce7"></a>
 class&#160;</td><td class="memItemRight" valign="bottom"><b>frameInteract</b></td></tr>
 <tr class="separator:a24eafafceaf8cdf7857b4f5358664ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>

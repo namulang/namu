@@ -78,28 +78,32 @@ Inheritance diagram for wrd::defVarExpr:</div>
  <div class="center">
   <img src="classwrd_1_1def_var_expr.png" usemap="#wrd::defVarExpr_map" alt=""/>
   <map id="wrd::defVarExpr_map" name="wrd::defVarExpr_map">
-<area href="classwrd_1_1expr.html" alt="wrd::expr" shape="rect" coords="67,168,191,192"/>
-<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="67,112,191,136"/>
-<area href="classwrd_1_1instance.html" alt="wrd::instance" shape="rect" coords="0,56,124,80"/>
-<area href="classwrd_1_1clonable.html" alt="wrd::clonable" shape="rect" coords="134,56,258,80"/>
-<area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="0,0,124,24"/>
+<area href="classwrd_1_1expr.html" alt="wrd::expr" shape="rect" coords="147,168,284,192"/>
+<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="147,112,284,136"/>
+<area href="classwrd_1_1instance.html" alt="wrd::instance" shape="rect" coords="0,56,137,80"/>
+<area href="classwrd_1_1clonable.html" alt="wrd::clonable" shape="rect" coords="147,56,284,80"/>
+<area href="classwrd_1_1frame_interactable.html" alt="wrd::frameInteractable" shape="rect" coords="294,56,431,80"/>
+<area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="0,0,137,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a737fad6154b42186a179e30e1a834991"><td class="memItemLeft" align="right" valign="top"><a id="a737fad6154b42186a179e30e1a834991"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>defVarExpr</b> (const <a class="el" href="classwrd_1_1param.html">param</a> &amp;p)</td></tr>
-<tr class="separator:a737fad6154b42186a179e30e1a834991"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ff0d259d4204d033cc37ea12489ac96"><td class="memItemLeft" align="right" valign="top"><a id="a7ff0d259d4204d033cc37ea12489ac96"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>defVarExpr</b> (const <a class="el" href="classwrd_1_1param.html">param</a> &amp;p, const <a class="el" href="classwrd_1_1tnmap.html">scope</a> &amp;where)</td></tr>
-<tr class="separator:a7ff0d259d4204d033cc37ea12489ac96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad01083b943d70f1c45b2198d6b4798ef"><td class="memItemLeft" align="right" valign="top"><a id="ad01083b943d70f1c45b2198d6b4798ef"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>defVarExpr</b> (const std::string &amp;name, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;org)</td></tr>
+<tr class="separator:ad01083b943d70f1c45b2198d6b4798ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16610eb9f1428cda13d8c2d77eb43413"><td class="memItemLeft" align="right" valign="top"><a id="a16610eb9f1428cda13d8c2d77eb43413"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>defVarExpr</b> (const std::string &amp;name, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;org, const <a class="el" href="classwrd_1_1tnmap.html">scope</a> &amp;where)</td></tr>
+<tr class="separator:a16610eb9f1428cda13d8c2d77eb43413"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46b1dbe7c1d9fcc2b9086c17ce843378"><td class="memItemLeft" align="right" valign="top"><a id="a46b1dbe7c1d9fcc2b9086c17ce843378"></a>
 <a class="el" href="classwrd_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classwrd_1_1tucontainable.html">ucontainable</a> &amp;args) override</td></tr>
 <tr class="separator:a46b1dbe7c1d9fcc2b9086c17ce843378"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66e10959e182d2c3e381fa1cdbadb3c1"><td class="memItemLeft" align="right" valign="top"><a id="a66e10959e182d2c3e381fa1cdbadb3c1"></a>
-const <a class="el" href="classwrd_1_1param.html">param</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getParam</b> () const</td></tr>
-<tr class="separator:a66e10959e182d2c3e381fa1cdbadb3c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c352f16d12f5b01a5fef4b33e1ca52f"><td class="memItemLeft" align="right" valign="top"><a id="a3c352f16d12f5b01a5fef4b33e1ca52f"></a>
+const <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getOrigin</b> () const</td></tr>
+<tr class="separator:a3c352f16d12f5b01a5fef4b33e1ca52f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9de5f4f577ccf1ee6306f6fa43eb062"><td class="memItemLeft" align="right" valign="top"><a id="ae9de5f4f577ccf1ee6306f6fa43eb062"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getName</b> () const</td></tr>
+<tr class="separator:ae9de5f4f577ccf1ee6306f6fa43eb062"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1873180e1a2731c5fa92f4c0281dd5bd"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classwrd_1_1tnmap.html">scope</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1def_var_expr.html#a1873180e1a2731c5fa92f4c0281dd5bd">getWhere</a> () const</td></tr>
 <tr class="separator:a1873180e1a2731c5fa92f4c0281dd5bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc071e79a6db5641dc68e6db9a1613e0"><td class="memItemLeft" align="right" valign="top"><a id="adc071e79a6db5641dc68e6db9a1613e0"></a>
@@ -275,6 +279,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>_setSrc</b> (const <a
 <tr class="memitem:aebdae91d8e23a7a233f5f75ca4b60c31 inherit pro_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="aebdae91d8e23a7a233f5f75ca4b60c31"></a>
 virtual <a class="el" href="classwrd_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_onRunSub</b> (<a class="el" href="classwrd_1_1node.html">node</a> &amp;sub, const <a class="el" href="classwrd_1_1tucontainable.html">ucontainable</a> &amp;args)</td></tr>
 <tr class="separator:aebdae91d8e23a7a233f5f75ca4b60c31 inherit pro_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2802493ed3ba915eaaf746848404b654 inherit pro_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a2802493ed3ba915eaaf746848404b654"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_inFrame</b> (const <a class="el" href="classwrd_1_1tbicontainable.html">bicontainable</a> &amp;args) override</td></tr>
+<tr class="separator:a2802493ed3ba915eaaf746848404b654 inherit pro_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ccca40b91ae283553acde313c73932 inherit pro_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a77ccca40b91ae283553acde313c73932"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_outFrame</b> () override</td></tr>
+<tr class="separator:a77ccca40b91ae283553acde313c73932 inherit pro_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classwrd_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwrd_1_1instance')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwrd_1_1instance.html">wrd::instance</a></td></tr>
 <tr class="memitem:ac721ad5b23f313c4d29c1ee3ebf58ce9 inherit pro_methods_classwrd_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="ac721ad5b23f313c4d29c1ee3ebf58ce9"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>_setId</b> (<a class="el" href="structwrd_1_1id.html">id</a> new1)</td></tr>

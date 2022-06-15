@@ -80,12 +80,13 @@ Inheritance diagram for wrd::wInt:</div>
  <div class="center">
   <img src="classwrd_1_1w_int.png" usemap="#wrd::wInt_map" alt=""/>
   <map id="wrd::wInt_map" name="wrd::wInt_map">
-<area href="classwrd_1_1primitive_obj.html" alt="wrd::primitiveObj&lt; wint &gt;" shape="rect" coords="81,280,233,304"/>
-<area href="classwrd_1_1arithmetic_obj.html" alt="wrd::arithmeticObj" shape="rect" coords="81,224,233,248"/>
-<area href="classwrd_1_1base_obj.html" title="baseObj handles frame injection event of all objects." alt="wrd::baseObj" shape="rect" coords="81,168,233,192"/>
-<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="81,112,233,136"/>
+<area href="classwrd_1_1primitive_obj.html" alt="wrd::primitiveObj&lt; wint &gt;" shape="rect" coords="162,280,314,304"/>
+<area href="classwrd_1_1arithmetic_obj.html" alt="wrd::arithmeticObj" shape="rect" coords="162,224,314,248"/>
+<area href="classwrd_1_1base_obj.html" title="baseObj handles frame injection event of all objects." alt="wrd::baseObj" shape="rect" coords="162,168,314,192"/>
+<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="162,112,314,136"/>
 <area href="classwrd_1_1instance.html" alt="wrd::instance" shape="rect" coords="0,56,152,80"/>
 <area href="classwrd_1_1clonable.html" alt="wrd::clonable" shape="rect" coords="162,56,314,80"/>
+<area href="classwrd_1_1frame_interactable.html" alt="wrd::frameInteractable" shape="rect" coords="324,56,476,80"/>
 <area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="0,0,152,24"/>
   </map>
 </div></div>
@@ -320,9 +321,22 @@ virtual <a class="el" href="classwrd_1_1tndum_map.html">dumScope</a> *&#160;</td
 <tr class="inherit_header pro_methods_classwrd_1_1base_obj"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwrd_1_1base_obj')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwrd_1_1base_obj.html">wrd::baseObj</a></td></tr>
 <tr class="memitem:aac446868a3056df81bc184eaa7b75f1e inherit pro_methods_classwrd_1_1base_obj"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1base_obj.html#aac446868a3056df81bc184eaa7b75f1e">baseObj</a> ()</td></tr>
 <tr class="separator:aac446868a3056df81bc184eaa7b75f1e inherit pro_methods_classwrd_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a329ec3f1ce81e53e56e30bc5c33f921d inherit pro_methods_classwrd_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a329ec3f1ce81e53e56e30bc5c33f921d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_inFrame</b> (const <a class="el" href="classwrd_1_1tbicontainable.html">bicontainable</a> &amp;args) override</td></tr>
+<tr class="separator:a329ec3f1ce81e53e56e30bc5c33f921d inherit pro_methods_classwrd_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a9c96439611aab3c03d24cb7c7ac7a7 inherit pro_methods_classwrd_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="a0a9c96439611aab3c03d24cb7c7ac7a7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_outFrame</b> () override</td></tr>
+<tr class="separator:a0a9c96439611aab3c03d24cb7c7ac7a7 inherit pro_methods_classwrd_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaba3a9b2a20fd6474bb122e720a7f6db inherit pro_methods_classwrd_1_1base_obj"><td class="memItemLeft" align="right" valign="top"><a id="aaba3a9b2a20fd6474bb122e720a7f6db"></a>
 <a class="el" href="classwrd_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_onRunSub</b> (<a class="el" href="classwrd_1_1node.html">node</a> &amp;sub, const <a class="el" href="classwrd_1_1tucontainable.html">ucontainable</a> &amp;args) override</td></tr>
 <tr class="separator:aaba3a9b2a20fd6474bb122e720a7f6db inherit pro_methods_classwrd_1_1base_obj"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classwrd_1_1node"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwrd_1_1node')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwrd_1_1node.html">wrd::node</a></td></tr>
+<tr class="memitem:a2802493ed3ba915eaaf746848404b654 inherit pro_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a2802493ed3ba915eaaf746848404b654"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_inFrame</b> (const <a class="el" href="classwrd_1_1tbicontainable.html">bicontainable</a> &amp;args) override</td></tr>
+<tr class="separator:a2802493ed3ba915eaaf746848404b654 inherit pro_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ccca40b91ae283553acde313c73932 inherit pro_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a77ccca40b91ae283553acde313c73932"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_outFrame</b> () override</td></tr>
+<tr class="separator:a77ccca40b91ae283553acde313c73932 inherit pro_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classwrd_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwrd_1_1instance')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwrd_1_1instance.html">wrd::instance</a></td></tr>
 <tr class="memitem:ac721ad5b23f313c4d29c1ee3ebf58ce9 inherit pro_methods_classwrd_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="ac721ad5b23f313c4d29c1ee3ebf58ce9"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>_setId</b> (<a class="el" href="structwrd_1_1id.html">id</a> new1)</td></tr>

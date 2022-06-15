@@ -78,12 +78,13 @@ Inheritance diagram for wrd::mgdFunc:</div>
  <div class="center">
   <img src="classwrd_1_1mgd_func.png" usemap="#wrd::mgdFunc_map" alt=""/>
   <map id="wrd::mgdFunc_map" name="wrd::mgdFunc_map">
-<area href="classwrd_1_1func.html" alt="wrd::func" shape="rect" coords="67,224,191,248"/>
-<area href="classwrd_1_1expr.html" alt="wrd::expr" shape="rect" coords="67,168,191,192"/>
-<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="67,112,191,136"/>
-<area href="classwrd_1_1instance.html" alt="wrd::instance" shape="rect" coords="0,56,124,80"/>
-<area href="classwrd_1_1clonable.html" alt="wrd::clonable" shape="rect" coords="134,56,258,80"/>
-<area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="0,0,124,24"/>
+<area href="classwrd_1_1func.html" alt="wrd::func" shape="rect" coords="147,224,284,248"/>
+<area href="classwrd_1_1expr.html" alt="wrd::expr" shape="rect" coords="147,168,284,192"/>
+<area href="classwrd_1_1node.html" title="node provides common API to manipulate its sub nodes." alt="wrd::node" shape="rect" coords="147,112,284,136"/>
+<area href="classwrd_1_1instance.html" alt="wrd::instance" shape="rect" coords="0,56,137,80"/>
+<area href="classwrd_1_1clonable.html" alt="wrd::clonable" shape="rect" coords="147,56,284,80"/>
+<area href="classwrd_1_1frame_interactable.html" alt="wrd::frameInteractable" shape="rect" coords="294,56,431,80"/>
+<area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="0,0,137,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -265,6 +266,10 @@ virtual me *&#160;</td><td class="memItemRight" valign="bottom"><b>clone</b> () 
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_static_attribs_classwrd_1_1func"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classwrd_1_1func')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classwrd_1_1func.html">wrd::func</a></td></tr>
+<tr class="memitem:ae55ca07f26d52b6c3bd583f45a346845 inherit pub_static_attribs_classwrd_1_1func"><td class="memItemLeft" align="right" valign="top"><a id="ae55ca07f26d52b6c3bd583f45a346845"></a>
+static const std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ME</b> = &quot;me&quot;</td></tr>
+<tr class="separator:ae55ca07f26d52b6c3bd583f45a346845 inherit pub_static_attribs_classwrd_1_1func"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classwrd_1_1expr"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwrd_1_1expr')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwrd_1_1expr.html">wrd::expr</a></td></tr>
 <tr class="memitem:ae348ab8c19c6bbfd9a97fccb0b5644c0 inherit pro_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="ae348ab8c19c6bbfd9a97fccb0b5644c0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>_setSrc</b> (const <a class="el" href="classwrd_1_1src.html">src</a> &amp;newSrc)</td></tr>
@@ -273,6 +278,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>_setSrc</b> (const <a
 <tr class="memitem:aebdae91d8e23a7a233f5f75ca4b60c31 inherit pro_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="aebdae91d8e23a7a233f5f75ca4b60c31"></a>
 virtual <a class="el" href="classwrd_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_onRunSub</b> (<a class="el" href="classwrd_1_1node.html">node</a> &amp;sub, const <a class="el" href="classwrd_1_1tucontainable.html">ucontainable</a> &amp;args)</td></tr>
 <tr class="separator:aebdae91d8e23a7a233f5f75ca4b60c31 inherit pro_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2802493ed3ba915eaaf746848404b654 inherit pro_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a2802493ed3ba915eaaf746848404b654"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_inFrame</b> (const <a class="el" href="classwrd_1_1tbicontainable.html">bicontainable</a> &amp;args) override</td></tr>
+<tr class="separator:a2802493ed3ba915eaaf746848404b654 inherit pro_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77ccca40b91ae283553acde313c73932 inherit pro_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="a77ccca40b91ae283553acde313c73932"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>_outFrame</b> () override</td></tr>
+<tr class="separator:a77ccca40b91ae283553acde313c73932 inherit pro_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classwrd_1_1instance"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classwrd_1_1instance')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classwrd_1_1instance.html">wrd::instance</a></td></tr>
 <tr class="memitem:ac721ad5b23f313c4d29c1ee3ebf58ce9 inherit pro_methods_classwrd_1_1instance"><td class="memItemLeft" align="right" valign="top"><a id="ac721ad5b23f313c4d29c1ee3ebf58ce9"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>_setId</b> (<a class="el" href="structwrd_1_1id.html">id</a> new1)</td></tr>
