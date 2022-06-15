@@ -42,7 +42,7 @@ namespace wrd {
         return inner;
     }
 
-    const wtype& me::reduce(const wtype& r) {
+    const wtype& me::reduce(const wtype& r) const {
         return reduce(*this, r);
     }
 
