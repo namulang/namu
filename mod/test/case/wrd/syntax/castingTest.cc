@@ -280,4 +280,53 @@ TEST_F(castingTest, simpleAsInt5) {
     shouldVerified(true);
 }
 
+TEST_F(castingTest, asExprNotAllowed) {
+    make().parse(R"SRC(
+        foo(age str) void
+            main()
+        main() void
+            foo(23 as foo("wow"))
+    )SRC").shouldParsed(false);
+}
+
+TEST_F(castingTest, exprAsAllowed) {
+    make().parse(R"SRC(
+        foo(age str) void
+            main()
+        main() void
+            foo(foo("wow") as str)
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+}
+
+TEST_F(castingTest, asAs) {
+    make().parse(R"SRC(
+        foo(age str) void
+            main()
+        main() void
+            foo(23.5 as int as str)
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+}
+
+TEST_F(castingTest, asAsNegative) {
+    make().parse(R"SRC(
+        foo(age str) void
+            main()
+        main() void
+            foo(23.5 as str as int)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(castingTest, AsAllowed) {
+    make().parse(R"SRC(
+        foo(age str) void
+            main()
+        main() void
+            foo("False" as str) // "False" will cause runtime error
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+}
+
 // TODO: make a TC for 'as' nonprimitive types
