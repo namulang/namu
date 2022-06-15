@@ -8,6 +8,10 @@ namespace wrd {
     class _wout wtype : public type {
         WRD_DECL_ME(wtype, type)
 
+    private:
+        typedef std::map<const wtype*, const wtype*> reducer;
+        typedef std::map<const wtype*, reducer> reducers;
+
     public:
         // wtype:
         template <typename T>
@@ -36,11 +40,19 @@ namespace wrd {
         str as(const node& from, const type& to) const;
 
         virtual wbool isImmutable() const;
+        /// @return null if it's not relative between l & r.
+        const wtype& reduce(const wtype& r);
+        /// @return null it it's not relative between l & r.
+        static const wtype& reduce(const wtype& l, const wtype& r);
 
     protected:
         // wtype:
         virtual const ases& _getImpliAses() const;
         virtual const ases& _getAses() const;
+
+    private:
+        static reducers* _makeReducers();
+        static const wtype& _reduceSuperType(const wtype& l, const wtype& r);
     };
 
     typedef std::vector<const wtype*> wtypes;
