@@ -329,4 +329,27 @@ TEST_F(castingTest, AsAllowed) {
     shouldVerified(true);
 }
 
+TEST_F(castingTest, reduceTest1) {
+    const wtype& it = ttype<wInt>::get();
+    const wtype* res = &it.reduce<wFlt>();
+    ASSERT_FALSE(nul(res));
+    ASSERT_EQ(*res, ttype<wFlt>::get());
+
+    res = &it.reduce<wInt>();
+    ASSERT_FALSE(nul(res));
+    ASSERT_EQ(*res, ttype<wInt>::get());
+
+    res = &it.reduce<wBool>();
+    ASSERT_FALSE(nul(res));
+    ASSERT_EQ(*res, ttype<wInt>::get());
+
+    res = &it.reduce<wChar>();
+    ASSERT_FALSE(nul(res));
+    ASSERT_EQ(*res, ttype<wInt>::get());
+
+    res = &it.reduce<wStr>();
+    ASSERT_FALSE(nul(res));
+    ASSERT_EQ(*res, ttype<wStr>::get());
+}
+
 // TODO: make a TC for 'as' nonprimitive types
