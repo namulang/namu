@@ -44,9 +44,15 @@ PAIRX(CAST_NOT_AVAILABLE,   "couldn't cast %s type as %s")
 PAIRX(LHS_IS_NULL,          "lhs of the expression is null")
 PAIRX(RHS_IS_NULL,          "rhs of the expression is null")
 PAIRX(EXPR_SHOULDNT_BE_HERE,"expression shouldn't be here")
+//  arithmetic operation:
+PAIRX(LHS_IS_NOT_ARITH,     "lhs '%s' is not arithmetic type")
+PAIRX(RHS_IS_NOT_ARITH,     "rhs '%s' is not arithmetic type")
 
 
-// func:
+// func:("verify: arithmeticExpr: lhs & rhs should bind something.");
+//
+// if(nul(it.getLeft) || nul(it.getRight()))
+//
 PAIRX(PARAM_HAS_VAL,        "parameter shouldn't have a value")
 PAIRX(FUNC_HAS_NO_NAME,     "a function should have a name")
 PAIRX(WRONG_RET_TYPE,       "%s is not a valid return type")

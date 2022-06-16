@@ -1,13 +1,15 @@
 #pragma once
 
+#include "arithmeticObj.hpp"
 #include "../../ast/mgd.hpp"
 #include "../../ast/scope.hpp"
 
 namespace wrd {
 
     template <typename T>
-    class primitiveObj : public obj {
-        WRD(ADT(primitiveObj, obj))
+    class primitiveObj : public arithmeticObj {
+        WRD(ADT(primitiveObj, arithmeticObj))
+        typedef T trait;
 
     protected:
         template <typename E, typename RAW>
@@ -24,7 +26,6 @@ namespace wrd {
         T& get() { return _val; }
         const T& get() const { return _val; }
 
-        const obj& getOrigin() const override { return *this; }
         const point& getPos() const override { return _pos; }
         void setPos(const point& new1) override { _pos = new1; }
 
@@ -58,7 +59,7 @@ namespace wrd {
     };
 
     template <>
-    class primitiveObj<void> : public obj {
+    class primitiveObj<void> : public arithmeticObj {
         WRD(ADT(primitiveObj, obj))
 
     public:

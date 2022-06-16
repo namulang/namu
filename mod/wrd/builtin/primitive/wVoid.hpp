@@ -23,5 +23,21 @@ namespace wrd {
 
     protected:
         dumScope* _onMakeCtors() const override;
+
+        tstr<arithmeticObj> _add(const arithmeticObj& rhs) const override {
+            return *this;
+        }
+        tstr<arithmeticObj> _sub(const arithmeticObj& rhs) const override {
+            return *this;
+        }
+        tstr<arithmeticObj> _mul(const arithmeticObj& rhs) const override {
+            return *this;
+        }
+        tstr<arithmeticObj> _div(const arithmeticObj& rhs) const override {
+            return *this;
+        }
+        tstr<arithmeticObj> _mod(const arithmeticObj& rhs) const override {
+            return *this;
+        }
     };
 }

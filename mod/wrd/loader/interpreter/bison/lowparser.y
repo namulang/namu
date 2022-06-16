@@ -296,7 +296,7 @@ expr4: expr3 { $$ = $1; }
 expr3: expr2 {
     $$ = $1;
    } | expr3 '+' expr2 {
-    $$ = $1; // TODO:
+    $$ = yyget_extra(scanner)->onAdd(*$1, *$3);
    } | expr3 '-' expr2 {
     $$ = $1; // TODO:
    }
