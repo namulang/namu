@@ -42,6 +42,9 @@ namespace wrd {
         virtual wbool isImmutable() const;
         /// @return null if it's not relative between l & r.
         const wtype& reduce(const wtype& r) const;
+        const wtype& reduce(const typeProvidable& r) const {
+            return reduce((const wtype&) r.getType());
+        }
         template <typename T>
         const wtype& reduce() const {
             return reduce(ttype<T>::get());

@@ -346,6 +346,15 @@ namespace wrd {
         return new asExpr(me, as);
     }
 
+    addExpr* me::onAdd(const node& lhs, const node& rhs) {
+        WRD_DI("tokenEvent: onAdd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new addExpr(lhs, rhs);
+    }
+
+
+
     me::loweventer() { rel(); }
 
     tstr<pack>& me::getPack() { return _pack; }
