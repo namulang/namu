@@ -8,6 +8,7 @@
 #include "../errReport.hpp"
 #include "../../ast/pack.hpp"
 #include "../../ast/params.hpp"
+#include "defBlock.hpp"
 
 namespace wrd {
 
@@ -95,8 +96,8 @@ namespace wrd {
         node* onPack();
         blockExpr* onBlock();
         blockExpr* onBlock(blockExpr& blk, node& exp);
-        scope* onDefBlock();
-        scope* onDefBlock(scope& blk, node& exp);
+        defBlock* onDefBlock();
+        defBlock* onDefBlock(defBlock& blk, node& exp);
 
         //  expr:
         //      func:
@@ -114,7 +115,7 @@ namespace wrd {
         expr* onDefVar(const std::string& name, const node& origin);
         expr* onDefAssign(const std::string& name, node& rhs);
         //      file:
-        void onCompilationUnit(node& subpack, scope& blk);
+        void onCompilationUnit(node& subpack, defBlock& blk);
         //      return:
         returnExpr* onReturn();
         returnExpr* onReturn(node& exp);
@@ -132,6 +133,7 @@ namespace wrd {
         params _convertParams(const narr& exprs);
         void _onPushName(const std::string& name, node& n);
         std::string _onPopName(node& n);
+        void _onPastePreCtors(node& it, narr& blk);
 
     private:
         tokenScan* _mode;
