@@ -192,6 +192,11 @@ namespace wrd {
             s.add(defVar.getParam().getName(), *defVar.getParam().getOrigin());
             return &s;
         }
+        defAssignExpr& defAssign = e->cast<defAssignExpr>();
+        if(!nul(defAssign)) {
+            s.add(defAssign.getSubName(), defAssign.getRight());
+            return &s;
+        }
 
         s.add(_onPopName(*e), e);
         return &s;
