@@ -25,6 +25,7 @@ namespace wrd {
             return lhs->add(*rhs);
         }
 
+        const wtype& getEvalType() const override;
         const node& getLeft() const { return *_lhs; }
         const node& getRight() const { return *_rhs; }
 

@@ -174,31 +174,33 @@ namespace wrd {
         return &blk;
     }
 
-    scope* me::onDefBlock() {
+    defBlock* me::onDefBlock() {
         WRD_DI("tokenEvent: onDefBlock()");
-        return new scope();
+        return new defBlock();
     }
 
-    scope* me::onDefBlock(scope& s, node& candidate) {
+    defBlock* me::onDefBlock(defBlock& s, node& candidate) {
         WRD_DI("tokenEvent: onDefBlock(candidate=%s)", candidate.getType().getName().c_str());
         if(nul(s))
             return onSrcErr(errCode::IS_NULL, "s"), onDefBlock();
+
         expr* e = &candidate.cast<expr>();
         if(nul(e))
             return onSrcErr(errCode::PARAM_HAS_VAL, candidate.getType().getName().c_str()), onDefBlock();
 
         defVarExpr& defVar = e->cast<defVarExpr>();
         if(!nul(defVar)) {
-            s.add(defVar.getParam().getName(), *defVar.getParam().getOrigin());
+            s.asScope->add(defVar.getParam().getName(), *defVar.getParam().getOrigin());
             return &s;
         }
         defAssignExpr& defAssign = e->cast<defAssignExpr>();
         if(!nul(defAssign)) {
-            s.add(defAssign.getSubName(), defAssign.getRight());
+            s.asScope->add(defAssign.getSubName(), nullptr);
+            s.asPreCtor->add(new assignExpr(*new getExpr(defAssign.getSubName()), defAssign.getRight()));
             return &s;
         }
 
-        s.add(_onPopName(*e), e);
+        s.asScope->add(_onPopName(*e), e);
         return &s;
     }
 
@@ -255,16 +257,30 @@ namespace wrd {
         return &list;
     }
 
-    void me::onCompilationUnit(node& subpack, scope& arr) {
-        WRD_DI("tokenEvent: onCompilationUnit(%x, arr[%x])", &subpack, &arr);
+    void me::onCompilationUnit(node& subpack, defBlock& blk) {
+        WRD_DI("tokenEvent: onCompilationUnit(%x, defBlock[%x])", &subpack, &blk);
         if(nul(subpack)) {
             onErr(errCode::NO_PACK_TRAY);
             return;
         }
 
         bicontainable& con = subpack.subs();
-        for(auto e=arr.begin(); e ;++e)
+        for(auto e=blk.asScope->begin(); e ;++e)
             con.add(e.getKey(), *e);
+
+        _onPastePreCtors(subpack, *blk.asPreCtor);
+    }
+
+    void me::_onPastePreCtors(node& it, narr& preCtor) {
+        WRD_DI("tokenEvent: onPastePreCtors(%s, %x)", it.getType().getName().c_str(), &preCtor);
+
+        auto e = it.subs().iterate(obj::CTOR_NAME);
+        while(e) {
+            mgdFunc& f = e.getVal<mgdFunc>();
+            if(!nul(f))
+                f.getBlock().getStmts().add(preCtor);
+            ++e;
+        }
     }
 
     returnExpr* me::onReturn() {

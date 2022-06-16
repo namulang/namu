@@ -29,6 +29,7 @@
 %code requires {
     #include "../../../ast/point.hpp"
     #include "../../../ast/node.hpp"
+    #include "../defBlock.hpp"
 
     typedef void* yyscan_t;
 
@@ -83,6 +84,7 @@
     wrd::node* asNode;
     wrd::narr* asNarr;
     wrd::scope* asScope;
+    wrd::defBlock* asDefBlock;
 }
 
 %define api.pure
@@ -135,7 +137,7 @@
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 %type <asNode> type
 %type <asNode> defstmt defexpr-line defexpr-line-except-aka defexpr-compound
-%type <asScope> defblock
+%type <asDefBlock> defblock
 //          value:
 %type <asNode> defvar defvar-exp-no-initial-value defvar-exp-initial-value
 //          func:
@@ -159,9 +161,9 @@
 %%
 
 compilation-unit: pack defblock {
-                tstr<scope> defBlock($2); str pack($1);
-
-                yyget_extra(scanner)->onCompilationUnit(*pack, *defBlock);
+                str pack(*$1);
+                tstr<defBlock> lifeBlock($2);
+                yyget_extra(scanner)->onCompilationUnit(*pack, *lifeBlock);
                 _onEndParse(scanner);
               }
 
