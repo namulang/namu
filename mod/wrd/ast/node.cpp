@@ -56,7 +56,7 @@ namespace wrd {
         if(it.isSub<frame>()) return;
 
         for(auto e=it.subs().begin(); e ;++e) {
-            if(it.subAll<obj>(e.getKey()).len() > 1)
+            if(it.subAll<baseObj>(e.getKey()).len() > 1)
                 return _err(e->getPos(), errCode::DUP_VAR, e.getKey().c_str());
         }
     })

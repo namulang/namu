@@ -57,7 +57,7 @@ TEST_F(defVarExprTest, definePackVariable2) {
     ASSERT_EQ(pak.getManifest().name, manifest::DEFAULT_NAME);
 
     ASSERT_EQ(pak.subs().len(), 4); // 3 variable, 1 func
-    ASSERT_EQ(pak.subAll<obj>().len(), 3);
+    ASSERT_EQ(pak.subAll<baseObj>().len(), 3);
     ASSERT_EQ(pak.subAll<mgdFunc>().len(), 1);
 
     wStr& name = pak.sub<wStr>("name");

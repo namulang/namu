@@ -58,7 +58,7 @@ namespace wrd {
     }
 
     void me::clearObj() {
-        setObj(nulOf<obj>());
+        setObj(nulOf<baseObj>());
     }
 
     // node:

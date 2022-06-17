@@ -22,7 +22,7 @@ namespace wrd {
 
     str me::_decideRet(const ucontainable& args) {
         if(!_ret) return str(wVoid::singletone());
-        if(_ret->isSub<obj>()) return _ret; // case: obj
+        if(_ret->isSub<baseObj>()) return _ret; // case: obj
 
         return _ret->run(args); // case: expr
     }

@@ -82,7 +82,7 @@ namespace wrd {
         void _rel();
 
     private:
-        tstr<obj> _obj;
+        tstr<baseObj> _obj;
         tstr<func> _func;
         scopeStack _local;
         str _ret;
