@@ -104,8 +104,8 @@ namespace {
         return true;
     }
 
-    struct myObj : public mgdObj {
-        WRD(CLASS(myObj, mgdObj))
+    struct myObj : public obj {
+        WRD(CLASS(myObj, obj))
     };
 
     const char* func1Name = "obj1func1";

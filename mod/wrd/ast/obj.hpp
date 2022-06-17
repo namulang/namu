@@ -1,39 +1,60 @@
 #pragma once
 
-#include "src.hpp"
+#include "baseObj.hpp"
+#include "scope.hpp"
 
 namespace wrd {
 
-    class func;
-    typedef tnarr<func> funcs;
-
-    /// obj handles frame injection event of all objects.
-    class _wout obj : public node {
-        WRD(ADT(obj, node),
-            FRIEND_VERIFY(obj, subNodes))
-        friend class mgdObj;
-
-    protected:
-        /// if you don't give any subs when construct an obj, _subs will be assigned to dummy array.
-        /// instance on ctor of derived class.
-        explicit obj();
+    /// obj is a object structured in managed programming environment like 'wrd'.
+    /// owned sub nodes of a object can only be manipulated through API provided obj.
+    /// because native object won't have owned nodes but only shared ones.
+    class _wout obj : public baseObj {
+        WRD(CLASS(obj, baseObj))
 
     public:
-        using super::run;
-        str run(const ucontainable& args) override;
+        explicit obj();
+        explicit obj(const scopes& shares, const scope& owns);
+        explicit obj(const me& rhs);
 
-        wbool canRun(const ucontainable& args) const override;
+        me& operator=(const me& rhs);
 
-        virtual const obj& getOrigin() const = 0;
+        using super::subs;
+        nbicontainer& subs() override;
 
-    protected:
-        str _onRunSub(node& sub, const ucontainable& args) override;
+        scopes& getShares();
+        const scopes& getShares() const WRD_UNCONST_FUNC(getShares())
+        scope& getOwns();
+        const scope& getOwns() const WRD_UNCONST_FUNC(getOwns())
+        const obj& getOrigin() const override;
+        const point& getPos() const override { return _pos; }
+        void setPos(const point& new1) override { _pos = new1; }
 
     private:
-        void _inFrame();
-        void _outFrame();
+        scopes* _makeNewSubs();
 
-    public:
-         inline static const string CTOR_NAME = "@ctor";
+        me& _assign(const me& rhs);
+
+    private:
+        tstr<scopes> _subs;
+        tstr<scopes> _shares;
+        tstr<scope> _owns;
+        obj* _org;
+        point _pos;
     };
+
+#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+    // f***ing annoying another MSVC bug here:
+    //  first of all, I'm so sorry to start my slang. but I couldn't help spitting it out after
+    //  I used plenty hours of heading to the ground.
+    //
+    //  I don't know why, but unless define below variable here, I'll observe that the member-variable
+    //  '_subs' above was tried to be instantiated but failed.
+    //  error message said that 'You've used undefined type "identifiertstr<scopes>"'.
+    //  however, MSVC definately knows about tstr<T> and scopes types.
+    //
+    //  clang, gcc didn't complain about this.
+    namespace {
+        static const inline scopes a3;
+    }
+#endif
 }

@@ -135,7 +135,7 @@ namespace wrd {
             const std::string& name = dotname[n].cast<std::string>();
             node* sub = &e->sub(name);
             if(nul(sub))
-                e->subs().add(name, sub = new mgdObj());
+                e->subs().add(name, sub = new obj());
             e = sub;
         }
 

@@ -41,8 +41,8 @@ namespace wrd {
 
     dumScope* me::_onMakeCtors() const {
         scope scapegoat;
-        scapegoat.add(obj::CTOR_NAME, new defaultCtor(getType()));
-        scapegoat.add(obj::CTOR_NAME, new defaultCopyCtor(getType()));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(getType()));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(getType()));
         return new dumScope(scapegoat);
     }
 }

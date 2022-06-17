@@ -35,7 +35,7 @@ namespace wrd {
     tstr<scopes> me::popLocal() { return _local.pop(); }
     // I won't provide API for poping a single node from the scope.
 
-    void me::setObj(const obj& new1) {
+    void me::setObj(const baseObj& new1) {
         _obj.bind(new1);
         scopes& bottom = *_local.getBottom();
         if(!nul(bottom)) {
@@ -46,8 +46,8 @@ namespace wrd {
         }
     }
 
-    const obj& me::getObj() const { return *_obj; }
-    obj& me::getObj() { return *_obj; }
+    const baseObj& me::getObj() const { return *_obj; }
+    baseObj& me::getObj() { return *_obj; }
 
     void me::setFunc(func& new1) {
         _func.bind(new1);

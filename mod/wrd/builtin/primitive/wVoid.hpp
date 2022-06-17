@@ -13,7 +13,7 @@ namespace wrd {
         protected:
             const ases& _getImpliAses() const override;
         };
-        WRD(CLASS(wVoid, mgdObj, wVoidType))
+        WRD(CLASS(wVoid, primitiveObj<void>, wVoidType))
 
     public:
         wVoid();

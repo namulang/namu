@@ -1,26 +1,26 @@
 #pragma once
 
-#include "../../ast/mgd.hpp"
 #include "../../ast/scope.hpp"
+#include "../../ast/baseObj.hpp"
 
 namespace wrd {
 
-    class arithmeticObj : public obj {
-        WRD(ADT(arithmeticObj, obj))
+    class arithmeticObj : public baseObj {
+        WRD(ADT(arithmeticObj, baseObj))
 
     public:
-        const obj& getOrigin() const override { return *this; }
-        tstr<arithmeticObj> add(const arithmeticObj& rhs);
-        tstr<arithmeticObj> sub(const arithmeticObj& rhs);
-        tstr<arithmeticObj> mul(const arithmeticObj& rhs);
-        tstr<arithmeticObj> div(const arithmeticObj& rhs);
-        tstr<arithmeticObj> mod(const arithmeticObj& rhs);
+        const me& getOrigin() const override { return *this; }
+        tstr<me> add(const me& rhs);
+        tstr<me> sub(const me& rhs);
+        tstr<me> mul(const me& rhs);
+        tstr<me> div(const me& rhs);
+        tstr<me> mod(const me& rhs);
 
     private:
-        virtual tstr<arithmeticObj> _add(const arithmeticObj& rhs) const = 0;
-        virtual tstr<arithmeticObj> _sub(const arithmeticObj& rhs) const = 0;
-        virtual tstr<arithmeticObj> _mul(const arithmeticObj& rhs) const = 0;
-        virtual tstr<arithmeticObj> _div(const arithmeticObj& rhs) const = 0;
-        virtual tstr<arithmeticObj> _mod(const arithmeticObj& rhs) const = 0;
+        virtual tstr<me> _add(const me& rhs) const = 0;
+        virtual tstr<me> _sub(const me& rhs) const = 0;
+        virtual tstr<me> _mul(const me& rhs) const = 0;
+        virtual tstr<me> _div(const me& rhs) const = 0;
+        virtual tstr<me> _mod(const me& rhs) const = 0;
     };
 }

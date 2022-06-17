@@ -13,7 +13,7 @@ namespace wrd {
 
     class _wout thread : public node {
         WRD(CLASS(thread, node))
-        friend class obj; // for frames.
+        friend class baseObj; // for frames.
         friend class mgdFunc; // for frames.
         friend class blockExpr; // for frames.
         friend class defVarExpr; // for frames

@@ -1,57 +1,54 @@
 #include "obj.hpp"
-#include "func.hpp"
-#include "../builtin/container/tucontainable.inl"
-#include "../loader/interpreter/tverification.hpp"
-#include "../frame/thread.hpp"
-#include "../loader/interpreter/verifier.hpp"
 
 namespace wrd {
 
     WRD_DEF_ME(obj)
 
-    me::obj() {}
+    me& me::_assign(const me& rhs) {
+        _owns = rhs._owns->deepClone();
+        _subs.bind(_makeNewSubs());
+        _org = rhs._org;
+        _pos = rhs._pos;
 
-    str me::run(const ucontainable& args) {
-        return str(this);
+        return *this;
     }
 
-    str me::_onRunSub(node& sub, const ucontainable& args) {
-        _inFrame();
-        str ret = super::_onRunSub(sub, args);
-        _outFrame();
+    me::obj():
+            super(), _shares(new scopes()), _owns(new scope()), _org(this) {
+        _subs.bind(_makeNewSubs());
+    }
+
+    me::obj(const scopes& shares, const scope& owns):
+            super(), _shares(shares), _owns(owns), _org(this) {
+        _subs.bind(_makeNewSubs());
+    }
+
+    me::obj(const me& rhs): super(rhs) {
+        _assign(rhs);
+    }
+
+    me& me::operator=(const me& rhs) {
+        if (&rhs == this) return *this;
+
+        super::operator=(rhs);
+
+        return _assign(rhs);
+    }
+
+    nbicontainer& me::subs() { return *_subs; }
+
+    scopes& me::getShares() { return *_shares; }
+
+    scope& me::getOwns() { return *_owns; }
+
+    const obj& me::getOrigin() const {
+        return *_org;
+    }
+
+    scopes* me::_makeNewSubs() {
+        scopes* ret = new scopes(*_owns);
+        ret->link(*_shares);
+
         return ret;
     }
-
-    wbool me::canRun(const ucontainable& args) const {
-        return args.len() <= 0;
-    }
-
-    void me::_inFrame() {
-        frames& frs = wrd::thread::get()._getFrames();
-        WRD_DI("%s._inFrame()[%d]", getType().getName().c_str(), frs.len());
-
-        frame& fr = *new frame();
-        scope* meScope = new scope();
-        meScope->add("me", *this);
-        fr.pushLocal(meScope);
-        fr.setObj(*this);
-
-        frs.add(fr);
-    }
-
-    void me::_outFrame() {
-        frames& frs = wrd::thread::get()._getFrames();
-        WRD_DI("%s._outFrame()[%d]", getType().getName().c_str(), frs.len()-1);
-
-        frs.del();
-    }
-
-    WRD_VERIFY(obj, subNodes, {
-        WRD_DI("verify: obj: %s iterateSubNodes. len=%d", it.getType().getName().c_str(), it.subs().len());
-
-        it._inFrame();
-        for(auto& p : it.subs())
-            verify(p);
-        it._outFrame();
-    })
 }
