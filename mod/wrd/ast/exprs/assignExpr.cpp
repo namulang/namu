@@ -18,7 +18,7 @@ namespace wrd {
 
         iter ret = cast.getFrom().subs().iterate(cast.getSubName());
         while(ret) {
-            if(!nul(ret.getVal<obj>()))
+            if(!nul(ret.getVal<baseObj>()))
                 return ret;
 
             ++ret;
