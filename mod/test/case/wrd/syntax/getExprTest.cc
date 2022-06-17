@@ -86,8 +86,8 @@ TEST_F(getExprTest, getInnerScopeVarNegative) {
     shouldVerified(false);
 }
 
-struct myObj : public mgdObj {
-    WRD(CLASS(myObj, mgdObj))
+struct myObj : public obj {
+    WRD(CLASS(myObj, obj))
 
 public:
     myObj(): executed(false) {}

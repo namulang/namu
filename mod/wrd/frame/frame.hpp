@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ast/node.hpp"
+#include "../ast/baseObj.hpp"
 #include "scopeStack.hpp"
 #include "../builtin/res/tpair.hpp"
 
@@ -54,10 +54,10 @@ namespace wrd {
         tstr<scopes> popLocal();
         // I won't provide API for poping a single node from the scope.
 
-        void setObj(const obj& new1);
+        void setObj(const baseObj& new1);
 
-        const obj& getObj() const;
-        obj& getObj();
+        const baseObj& getObj() const;
+        baseObj& getObj();
 
         void setFunc(func& new1);
         func& getFunc();

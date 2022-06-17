@@ -5,8 +5,8 @@
 namespace wrd {
 
     template <typename T>
-    class tarr : public mgdObj, public tucontainable<T>, tarrayable<T> {
-        WRD(CLASS(tarr, mgdObj))
+    class tarr : public obj, public tucontainable<T>, tarrayable<T> {
+        WRD(CLASS(tarr, obj))
         typedef typename tucontainable<T>::iter iter;
         typedef typename tucontainable<T>::iteration iteration;
 

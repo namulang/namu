@@ -3,15 +3,15 @@
 using namespace wrd;
 using namespace std;
 
-struct mgdObjTest : public wrdTest {};
+struct objTest : public wrdTest {};
 
 namespace {
-    struct myObj : public mgdObj {
-        WRD(CLASS(myObj, mgdObj))
+    struct myObj : public obj {
+        WRD(CLASS(myObj, obj))
     };
 }
 
-TEST_F(mgdObjTest, testGetOriginPointingThis) {
+TEST_F(objTest, testGetOriginPointingThis) {
     myObj obj1;
     ASSERT_FALSE(nul(obj1.getOrigin()));
     ASSERT_EQ(&obj1.getOrigin(), &obj1);

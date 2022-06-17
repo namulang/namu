@@ -60,7 +60,7 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     };
     ASSERT_FALSE(nul(owns.get<myNode>(lambda)));
 
-    mgdObj obj1(shares, owns);
+    obj obj1(shares, owns);
     ASSERT_EQ(obj1.subs().len(), 2);
 
     fr.setObj(obj1);

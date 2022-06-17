@@ -60,10 +60,10 @@ namespace wrd {
 
     template <>
     class primitiveObj<void> : public arithmeticObj {
-        WRD(ADT(primitiveObj, obj))
+        WRD(ADT(primitiveObj, arithmeticObj))
 
     public:
-        const obj& getOrigin() const override { return *this; }
+        const super& getOrigin() const override { return *this; }
         const point& getPos() const override { return _pos; }
         void setPos(const point& new1) override { _pos = new1; }
 

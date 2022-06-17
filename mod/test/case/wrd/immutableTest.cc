@@ -4,8 +4,8 @@ using namespace wrd;
 
 namespace {
 
-    struct myObj : public mgdObj {
-        WRD(CLASS(myObj, mgdObj))
+    struct myObj : public obj {
+        WRD(CLASS(myObj, obj))
 
     public:
         myObj(int newVal = 0): val(newVal) {}

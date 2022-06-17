@@ -42,8 +42,8 @@ namespace {
         wbool _executed;
     };
 
-    struct myObj : public mgdObj {
-        WRD(CLASS(myObj, mgdObj))
+    struct myObj : public obj {
+        WRD(CLASS(myObj, obj))
 
     public:
         myObj(int newVal = 0): val(newVal) {}
@@ -56,8 +56,8 @@ namespace {
         }
     };
 
-    class food : public mgdObj {
-        WRD(CLASS(food, mgdObj))
+    class food : public obj {
+        WRD(CLASS(food, obj))
 
     public:
         food(string newName, int newCalorie): name(newName), calorie(newCalorie) {}
@@ -66,7 +66,7 @@ namespace {
         int calorie;
     };
 
-    class chef : public mgdObj {
+    class chef : public obj {
 
         class myType : public wtype {
             WRD_DECL_ME(myType, wtype);
@@ -90,7 +90,7 @@ namespace {
                 return *inner;
             }
         };
-        WRD(CLASS(chef, mgdObj, myType))
+        WRD(CLASS(chef, obj, myType))
 
     public:
         string foodName;
