@@ -6,14 +6,14 @@
 
 namespace wrd {
 
-    class pack;
+    class slot;
     struct manifest;
-    typedef tnchain<std::string, pack> packChain;
+    typedef tnchain<std::string, slot> slotChain;
 
     class _wout packLoading : public instance, public packMakable, public clonable {
         WRD(ADT(packLoading, instance))
 
-        typedef wbool (me::*packEvent)(const packChain&);
+        typedef wbool (me::*packEvent)(const slotChain&);
 
     public:
         void addPath(const std::string& filePath);

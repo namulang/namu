@@ -1,24 +1,15 @@
 #pragma once
 
 #include "verification.hpp"
-#include "../../ast/pack.hpp"
+#include "../../ast/slot.hpp"
 
 struct verifierTest;
 namespace wrd {
 
-    class pack;
+    class slot;
     class frame;
-    typedef tnbicontainer<std::string, pack> packContainer;
+    typedef tnbicontainer<std::string, slot> slotContainer;
 
-    // TODO:
-    //  if verifier detects an access to a pack:
-    //      void onGetPack(targetPack, currentPack) {
-    //          targetPack.setReport(currentPack.getReport());
-    //          targetPack.subs();
-    //          if(!targetPack.isValid())
-    //              currentPack.setValid(false); // never set to valid again if it's invalid once.
-    //          targetPack.addDepedent(currentPack);
-    //      }
     class _wout verifier : public typeProvidable, clonable {
         WRD(CLASS(verifier))
         friend struct ::verifierTest;
@@ -32,13 +23,13 @@ namespace wrd {
         static void add(const verification* new1);
 
         me& setReport(errReport& rpt);
-        me& setPacks(const packContainer& packs);
+        me& setSlots(const slotContainer& slots);
         // @param newInfo is not a heap instance.
         me& setFrameInfo(tstr<frame>& newInfo);
 
         errReport& getReport();
         tstr<frame>& getFrameInfo();
-        const packContainer& getPacks();
+        const slotContainer& getSlots();
 
         void verify(node& it);
 
@@ -48,7 +39,7 @@ namespace wrd {
 
     private:
         tstr<errReport> _rpt;
-        tstr<packContainer> _packs;
+        tstr<slotContainer> _slots;
         tstr<frame>* _frameInfo;
     };
 

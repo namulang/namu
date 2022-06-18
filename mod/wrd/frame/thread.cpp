@@ -1,5 +1,5 @@
 #include "thread.hpp"
-#include "../loader/pack/packLoader.hpp"
+#include "../loader/slot/slotLoader.hpp"
 #include "../loader/errReport.hpp"
 #include "../ast/node.inl"
 #include "../ast/func.hpp"
@@ -8,22 +8,21 @@ namespace wrd {
 
     WRD_DEF_ME(thread)
 
-    const packs& me::getSystemPacks() {
-        static tstr<packs> inner;
+    const slots& me::getSystemPacks() {
+        static tstr<slots> inner;
 
         if(!inner) {
-            packLoader loader;
 
-            WRD_I("initiates loading system packs.");
+            WRD_I("initiates loading system slots.");
             errReport report;
-            inner = loader.setReport(report).addPath("pack/").load();
-            WRD_I("%d system packs has been loaded.", inner->len());
+            inner = slotLoader().setReport(report).addPath("pack/").load();
+            WRD_I("%d system slots has been loaded.", inner->len());
 
 #if WRD_IS_DBG
             WRD_I("next following is list for them.");
-            for(const auto& pak : *inner) {
-                if(nul(pak)) {
-                    WRD_E("cast isn't type of pack&");
+            for(const auto& slot : *inner) {
+                if(nul(slot)) {
+                    WRD_E("cast isn't type of slot&");
                     continue;
                 }
 

@@ -33,9 +33,9 @@ namespace wrd {
 #endif
             if(!newHandle) {
 #ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
-                WRD_E("couldn't open %s pack: %d", path.c_str(), GetLastError());
+                WRD_E("couldn't open %s slot: %d", path.c_str(), GetLastError());
 #else
-                WRD_E("couldn't open %s pack: %s", path.c_str(), dlerror());
+                WRD_E("couldn't open %s slot: %s", path.c_str(), dlerror());
 #endif
                 goto FINALIZE;
             }
@@ -47,24 +47,24 @@ namespace wrd {
 #endif
             if(!ep) {
 #ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
-                WRD_E("couldn't locate entrypoint of %s pack: %d", path.c_str(), GetLastError());
+                WRD_E("couldn't locate entrypoint of %s slot: %d", path.c_str(), GetLastError());
 #else
-                WRD_E("couldn't locate entrypoint of %s pack: %s", path.c_str(), dlerror());
+                WRD_E("couldn't locate entrypoint of %s slot: %s", path.c_str(), dlerror());
 #endif
                 goto FINALIZE;
             }
 
             ep(&tray);
             if(tray.len() <= 0) {
-                WRD_W("pack returns no origin object.");
+                WRD_W("slot returns no origin object.");
                 goto FINALIZE;
             }
 
             _handles.push_back(newHandle); // don't close yet.
-            WRD_I("pack[%s] loads origins from %s", getName().c_str(), path.c_str());
+            WRD_I("slot[%s] loads origins from %s", getName().c_str(), path.c_str());
         }
 
-        WRD_I("pack[%s] origins loaded.", getName().c_str());
+        WRD_I("slot[%s] origins loaded.", getName().c_str());
         return true;
 
 FINALIZE:
