@@ -53,6 +53,7 @@ namespace wrd {
         using tarrayable<T>::add;
         wbool add(const iter& e, const T& new1) override;
         wbool add(widx n, const T& new1) override;
+        void add(const iter& here, const iter& from, const iter& to) override;
 
         // del:
         using super::del;
