@@ -53,6 +53,16 @@ namespace wrd {
     }
 
     TEMPL
+    void ME::add(const iter& here, const iter& from, const iter& to) {
+        if(n < 0 || n > len()) return;
+        if(!e.isFrom(*this)) return;
+        narrIteration& cast = (narrIteration&) *e._step;
+        if(nul(cast)) return;
+
+        _vec.insert(_vec.begin() + n, from, to);
+    }
+
+    TEMPL
     wbool ME::del(const iter& at) {
         narrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;

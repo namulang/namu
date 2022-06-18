@@ -61,6 +61,10 @@ namespace wrd {
         }
         wbool add(const T* new1) { return add(*new1); }
         wbool add(const T& new1) { return add(end(), new1); }
+        virtual void add(const iter& here, const iter& from, const iter& to) = 0;
+        wcnt add(const iter& from, const iter& to) { return add(end(), from, to); }
+        wcnt add(const iter& here, me& rhs) { return add(here, rhs.begin(), rhs.end()); }
+        wcnt add(const me& rhs) { return add(end(), rhs.begin(), rhs.end()); }
         template <typename E>
         wcnt add(const typename tucontainable<E>::iter& from, const typename tucontainable<E>::iter& to) {
             static_assert(areBaseOfT<T, E>::value, "given type 'E' is not subtype of 'T'");
@@ -70,10 +74,8 @@ namespace wrd {
                     ret++;
             return ret;
         }
-        wcnt add(const iter& from, const iter& to) { return add<T>(from, to); }
         template <typename E>
         wcnt add(const tucontainable<E>& rhs) { return add(rhs.begin(), rhs.end()); }
-        wcnt add(const me& rhs) { return add<T>(rhs); }
         template <typename K, typename V>
         wcnt add(const tbicontainable<K, V>& rhs);
 
