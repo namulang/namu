@@ -161,9 +161,9 @@
 %%
 
 compilation-unit: pack defblock {
-                str pack(*$1);
+                tstr<obj> pak(*$1);
                 tstr<defBlock> lifeBlock($2);
-                yyget_extra(scanner)->onCompilationUnit(*pack, *lifeBlock);
+                yyget_extra(scanner)->onCompilationUnit(*pak, *lifeBlock);
                 _onEndParse(scanner);
               }
 

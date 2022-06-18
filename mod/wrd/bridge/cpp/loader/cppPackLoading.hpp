@@ -2,7 +2,7 @@
 
 #include "../../../loader/pack/opaquePackLoading.hpp"
 #include "../../../ast/src.hpp"
-#include "../../../ast/pack.hpp"
+#include "../../../ast/slot.hpp"
 
 namespace wrd {
 

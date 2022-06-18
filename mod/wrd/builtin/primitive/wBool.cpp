@@ -1,6 +1,6 @@
 #include "wBool.hpp"
-#include "../../ast/mgd/defaultCtor.hpp"
-#include "../../ast/mgd/defaultCopyCtor.hpp"
+#include "../../ast/defaultCtor.hpp"
+#include "../../ast/defaultCopyCtor.hpp"
 #include "wInt.hpp"
 #include "wFlt.hpp"
 #include "wChar.hpp"

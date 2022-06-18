@@ -6,10 +6,10 @@
 
 namespace wrd {
 
-    class packLoader;
+    class slotLoader;
     typedef tnarr<frame> frames;
-    class pack;
-    typedef tnmap<std::string, pack> packs;
+    class slot;
+    typedef tnmap<std::string, slot> slots;
 
     class _wout thread : public node {
         WRD(CLASS(thread, node))
@@ -17,7 +17,7 @@ namespace wrd {
         friend class mgdFunc; // for frames.
         friend class blockExpr; // for frames.
         friend class defVarExpr; // for frames
-        friend class defAssignExpr;;
+        friend class defAssignExpr;
         friend class assignExpr;
         friend class verifier;
         friend class returnExpr;
@@ -43,7 +43,7 @@ namespace wrd {
 
         void rel() override;
 
-        const packs& getSystemPacks();
+        const slots& getSystemSlots();
 
     protected:
         frames& _getFrames();

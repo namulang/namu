@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../ast/pack.hpp"
+#include "../../ast/slot.hpp"
 #include "packLoading.hpp"
 
 namespace wrd {
@@ -19,15 +19,15 @@ namespace wrd {
         me& addPath(std::initializer_list<const wchar*> paths);
 
         me& setReport(errReport& report);
-        me& setBasePacks(packs& basis);
+        me& setBaseSlots(slots& basis);
 
-        tstr<packs> load();
+        tstr<slots> load();
 
     private:
-        void _makePacks(packs& tray);
-        void _addNewPack(packs& tray, const std::string& dirPath, const std::string& manifestName);
+        void _makeSlots(slots& tray);
+        void _addNewSlot(slots& tray, const std::string& dirPath, const std::string& manifestName);
 
-        void _logPack(const pack& pak) const;
+        void _logSlot(const slot& pak) const;
 
         manifest _interpManifest(const std::string& dir, const std::string& manPath) const;
 
@@ -35,7 +35,7 @@ namespace wrd {
         const packLoadings& _getLoadings() const;
 
     private:
-        packs* _basePacks;
+        slots* _baseSlots;
         tstr<errReport> _report;
         std::vector<std::string> _paths;
         static constexpr wchar DELIMITER = '/';

@@ -4,7 +4,7 @@
 
 namespace wrd {
 
-    class pack;
+    class obj;
     class src;
     class errReport;
     template <typename K, typename V> class tbicontainable;
@@ -18,6 +18,6 @@ namespace wrd {
 
     public:
         virtual tstr<srcs> parse(errReport& rpt, bicontainable& tray) = 0;
-        virtual wbool verify(errReport& rpt, pack& pak) = 0;
+        virtual wbool verify(errReport& rpt, obj& pak) = 0;
     };
 }

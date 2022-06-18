@@ -14,7 +14,7 @@ namespace wrd {
 
     public:
         me& setReport(errReport& report);
-        me& setPack(pack& pak);
+        me& setSlot(slot& pak);
         me& setSrcSupply(const srcSupply& supply);
         me& setLogStructure(wbool enable);
         me& setLogInterpreter(wbool enable);
@@ -22,11 +22,11 @@ namespace wrd {
         wbool isVerified() const;
         node& getSubPack();
         const node& getSubPack() const WRD_UNCONST_FUNC(getSubPack())
-        pack& getPack();
-        const pack& getPack() const WRD_UNCONST_FUNC(getPack())
+        slot& getPack();
+        const slot& getPack() const WRD_UNCONST_FUNC(getPack())
         const errReport& getReport() const;
 
-        pack& interpret();
+        slot& interpret();
 
         void rel();
 
@@ -46,7 +46,7 @@ namespace wrd {
 
     private:
         tstr<errReport> _rpt;
-        tstr<pack> _pak;
+        tstr<slot> _pak;
         verifier _veri;
         parser _pser;
         tstr<srcSupply> _srcs;

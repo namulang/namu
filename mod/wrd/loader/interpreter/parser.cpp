@@ -1,6 +1,6 @@
 #include "parser.hpp"
 #include "bison/lowscanner.hpp"
-#include "../../ast/pack.hpp"
+#include "../../ast/slot.hpp"
 
 YY_DECL;
 
@@ -8,20 +8,20 @@ namespace wrd {
 
     WRD_DEF_ME(parser)
 
-    me& me::setPack(const pack& pak) {
-        _eventer.getPack().bind(pak);
+    me& me::setSlot(const slot& tray) {
+        _eventer.getSlot().bind(tray);
         return *this;
     }
 
-    pack& me::getPack() {
-        return *_eventer.getPack();
+    slot& me::getSlot() {
+        return *_eventer.getSlot();
     }
 
-    node& me::getSubPack() {
+    obj& me::getSubPack() {
         return *_eventer.getSubPack();
     }
 
-    str me::parse(const wchar* script) {
+    tstr<obj> me::parse(const wchar* script) {
         WRD_I("parse starts.");
         _eventer.prepareParse();
 
@@ -31,7 +31,7 @@ namespace wrd {
         YY_BUFFER_STATE bufState = yy_scan_string((wchar*) script, scanner); // +2 is for space of END_OF_BUFFER, nullptr.
         if(!bufState) {
             _eventer.getReport()->add(new err(err::ERR, errCode::IS_NULL, "bufState")).log();
-            return str();
+            return tstr<obj>();
         }
         yy_switch_to_buffer(bufState, scanner);
 
@@ -43,7 +43,7 @@ namespace wrd {
         int res = yyparse(scanner);
         if(res) {
             _eventer.getReport()->add(new err(err::WARN, errCode::PARSING_HAS_ERR, res)).log();
-            return str();
+            return tstr<obj>();
         }
 
         yy_delete_buffer(bufState, scanner);

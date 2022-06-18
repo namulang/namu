@@ -111,13 +111,13 @@ namespace wrd {
 
     node* me::onPack(const narr& dotname) {
         WRD_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
-        pack* pak = &getPack().get();
+        obj* pak = &_slot->getPack();
 
         // pack syntax rule #1:
         //  if there is no specified name of pack, I create an one.
         std::string firstName = dotname[0].cast<std::string>();
         if(nul(pak))
-            getPack().bind(pak = new pack(manifest(firstName), packLoadings()));
+            _slot->setPack(pak = new obj(manifest(firstName));
 
         const std::string& realName = pak->getManifest().name;
         if(realName != firstName)
@@ -148,16 +148,16 @@ namespace wrd {
 
         onWarn(errCode::NO_PACK);
 
-        pack* newPack = &_pack.get();
-        if(!_pack)
-            _pack.bind(newPack = new pack(manifest(), packLoadings()));
+        slot* newSlot = &_slot.get();
+        if(nul(newSlot))
+            _slot.bind(newSlot = new slot(manifest());
 
-        const std::string& name = _pack->getManifest().name;
+        const std::string& name = _slot->getManifest().name;
         if(name != manifest::DEFAULT_NAME)
             return onErr(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), newPack;
 
-        _subpack.bind(newPack); // this is a default pack containing name as '{default}'.
-        return newPack;
+        _subpack.bind(newSlot->getPack()); // this is a default pack containing name as '{default}'.
+        return *_subpack;
     }
 
     blockExpr* me::onBlock() {
@@ -257,30 +257,72 @@ namespace wrd {
         return &list;
     }
 
-    void me::onCompilationUnit(node& subpack, defBlock& blk) {
+    obj* me::onDef(const std::string& name, defBlock& blk) {
+        WRD_DI("tokenEvent: onDef(%s, defBlock[%x])", name.c_str(), &blk);
+
+        obj& ret = *new obj();
+        _onInjectObjSubs(ret, blk);
+        _onPushName(name, ret);
+        return &ret;
+    }
+
+    void me::onCompilationUnit(obj& subpack, defBlock& blk) {
         WRD_DI("tokenEvent: onCompilationUnit(%x, defBlock[%x])", &subpack, &blk);
         if(nul(subpack)) {
             onErr(errCode::NO_PACK_TRAY);
             return;
         }
 
-        bicontainable& con = subpack.subs();
-        for(auto e=blk.asScope->begin(); e ;++e)
-            con.add(e.getKey(), *e);
-
-        _onPastePreCtors(subpack, *blk.asPreCtor);
+        _onInjectObjSubs(subpack, blk);
     }
 
-    void me::_onPastePreCtors(node& it, narr& preCtor) {
+    wbool me::_onInjectObjSubs(obj& it, defBlock& blk) {
+        WRD_DI("tokenEvent: _onInjectObjSubs(%s, defBlock[%x])", obj.getType().getName().c_str(), &blk);
+        if(nul(it)) return false;
+
+        bicontainable& share = it.getShares().getContainer();
+        bicontainable& own = it.getOwns();
+        for(auto e=blk.asScope->begin(); e ;++e) {
+            bicontainable& con = nul(e.getVal<func>()) ? own : share;
+            con.add(e.getKey(), *e);
+        }
+
+        _onInjectDefaultCtor(it);
+        return _onPastePreCtors(it, *blk.asPreCtor);
+    }
+
+    wbool me::_onInjectDefaultCtor(obj& it) {
+        wbool hasCtor = nul(it.sub(baseObj::CTOR_NAME));
+        WRD_DI("tokenEvent: _onInjectDefaultCtor(%s, has=%d)", obj.getType().getName().c_str(), hasCtor);
+        if(hasCtor) return false;
+
+        class _wout mgdDefaultCtor : public mgdFunc {
+            WRD(CLASS(mgdDefaultCtor, mgdFunc))
+
+        public:
+            mgdDefaultCtor(const node& org) {
+                getBlock().getStmts().add(new makeExpr(org));
+            }
+        };
+        it.subs().add(*new mgdDefaultCtor(it.getOrigin()));
+        return true;
+    }
+
+    wbool me::_onPastePreCtors(obj& it, narr& preCtor) {
         WRD_DI("tokenEvent: onPastePreCtors(%s, %x)", it.getType().getName().c_str(), &preCtor);
 
         auto e = it.subs().iterate(obj::CTOR_NAME);
         while(e) {
             mgdFunc& f = e.getVal<mgdFunc>();
-            if(!nul(f))
-                f.getBlock().getStmts().add(preCtor);
+            if(!nul(f)) {
+                auto stmts = f.getBlock().getStmts();
+                stmts.add(stmts.begin(), preCtor);
+            }
+
             ++e;
         }
+
+        return true;
     }
 
     returnExpr* me::onReturn() {
@@ -378,8 +420,8 @@ namespace wrd {
 
     me::loweventer() { rel(); }
 
-    tstr<pack>& me::getPack() { return _pack; }
-    str& me::getSubPack() { return _subpack; } // TODO: can I remove subpack variable?
+    tstr<slot>& me::getPack() { return _slot; }
+    tstr<obj>& me::getSubPack() { return _subpack; } // TODO: can I remove subpack variable?
     tstr<errReport>& me::getReport() { return _report; }
     tokenDispatcher& me::getDispatcher() { return _dispatcher; }
     std::vector<wcnt>& me::getIndents() { return _indents; }
@@ -392,7 +434,7 @@ namespace wrd {
 
     void me::rel() {
         _report.bind(dummyErrReport::singletone);
-        _pack.rel();
+        _slot.rel();
         _nameMap.clear();
         _states.clear();
         _states.push_back(0); // 0 for default state

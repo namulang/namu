@@ -6,18 +6,18 @@ namespace wrd {
 
     WRD_DEF_ME(packLoader)
 
-    me::packLoader(): _basePacks(nullptr), _report(dummyErrReport::singletone) {}
+    me::packLoader(): _baseSlots(nullptr), _report(dummyErrReport::singletone) {}
 
-    tstr<packs> me::load() {
+    tstr<slots> me::load() {
         // TODO: returns result when it's fail
-        packs* ret = new packs();
+        slots* ret = new slots();
 
-        _makePacks(*ret);
-        return tstr<packs>(*ret);
+        _makeSlots(*ret);
+        return tstr<slots>(*ret);
     }
 
     manifest me::_interpManifest(const std::string& dir, const std::string& manPath) const {
-        // TODO: open pack zip file -> extract manifest.swrd file -> interpret it & load values
+        // TODO: open slot zip file -> extract manifest.swrd file -> interpret it & load values
         tstr<sobj> loaded = sinterpreter().interpFile(manPath);
         if(!loaded)
             return WRD_E("error to load %s: interpretion err", manPath.c_str()), manifest();
@@ -48,7 +48,7 @@ namespace wrd {
             for(const type* sub : ttype<packLoading>::get().getLeafs()) {
                 packLoading* new1 = sub->makeAs<packLoading>();
                 if(nul(new1)) {
-                    WRD_E("fail to make packMaking named to %s", sub->getName().c_str());
+                    WRD_E("fail to make slotMaking named to %s", sub->getName().c_str());
                     continue;
                 }
 
@@ -80,26 +80,26 @@ namespace wrd {
         return *this;
     }
 
-    me& me::setBasePacks(packs& basis) {
-        _basePacks = &basis;
+    me& me::setBaseSlots(slots& basis) {
+        _baseSlots = &basis;
         return *this;
     }
 
-    void me::_makePacks(packs& tray) {
+    void me::_makeSlots(slots& tray) {
         std::string cwd = fsystem::getCurrentDir() + "/";
-        WRD_I("finding packs relative to %s or absolute", cwd.c_str());
+        WRD_I("finding slots relative to %s or absolute", cwd.c_str());
 
         for(const std::string& path : _paths) {
-            WRD_I("try pack path: %s", path.c_str());
+            WRD_I("try slot path: %s", path.c_str());
 
             auto e = fsystem::find(cwd + path);
             while(e.next())
                 if(e.getName() == MANIFEST_FILENAME)
-                    _addNewPack(tray, e.getDir(), e.getName());
+                    _addNewSlot(tray, e.getDir(), e.getName());
         }
     }
 
-    void me::_addNewPack(packs& tray, const std::string& dirPath, const std::string& manifestName) {
+    void me::_addNewSlot(slots& tray, const std::string& dirPath, const std::string& manifestName) {
         std::string manifestPath = dirPath + DELIMITER + manifestName;
 
         manifest mani = _interpManifest(dirPath, manifestPath);
@@ -112,7 +112,7 @@ namespace wrd {
         for(entrypoint& point : mani.points) {
             packLoading* newLoading = _makeLoading(point.lang);
             if(!newLoading) {
-                WRD_W("%s language not supported for loading %s pack.", mani.points[0].lang.c_str(), mani.name.c_str());
+                WRD_W("%s language not supported for loading %s slot.", mani.points[0].lang.c_str(), mani.name.c_str());
                 continue;
             }
 
@@ -120,13 +120,13 @@ namespace wrd {
             loadings.push_back(newLoading);
         }
 
-        pack* new1 = new pack(mani, loadings);
+        slot* new1 = new autoslot(mani, loadings);
         tray.add(mani.name, new1);
-        _logPack(*new1);
+        _logSlot(*new1);
     }
 
-    void me::_logPack(const pack& pak) const {
-        WRD_I("new pack [%s] has been added.", pak.getManifest().name.c_str());
+    void me::_logSlot(const slot& pak) const {
+        WRD_I("new slot [%s] has been added.", pak.getManifest().name.c_str());
 
 #if WRD_IS_DBG
         const manifest& mani = pak.getManifest();

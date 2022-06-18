@@ -6,7 +6,7 @@
 #include "tokenDispatcher.hpp"
 #include "bison/tokenScan.hpp"
 #include "../errReport.hpp"
-#include "../../ast/pack.hpp"
+#include "../../ast/slot.hpp"
 #include "../../ast/params.hpp"
 #include "defBlock.hpp"
 
@@ -27,8 +27,8 @@ namespace wrd {
         loweventer();
 
     public:
-        tstr<pack>& getPack();
-        str& getSubPack();
+        tstr<slot>& getSlot();
+        tstr<obj>& getSubPack();
         tstr<errReport>& getReport();
         tokenDispatcher& getDispatcher();
         std::vector<wcnt>& getIndents();
@@ -114,8 +114,10 @@ namespace wrd {
         }
         expr* onDefVar(const std::string& name, const node& origin);
         expr* onDefAssign(const std::string& name, node& rhs);
+        //      obj:
+        obj* onDef(const std::string& name, defBlock& blk);
         //      file:
-        void onCompilationUnit(node& subpack, defBlock& blk);
+        void onCompilationUnit(obj& subpack, defBlock& blk);
         //      return:
         returnExpr* onReturn();
         returnExpr* onReturn(node& exp);
@@ -133,7 +135,9 @@ namespace wrd {
         params _convertParams(const narr& exprs);
         void _onPushName(const std::string& name, node& n);
         std::string _onPopName(node& n);
-        void _onPastePreCtors(node& it, narr& blk);
+        wbool _onPastePreCtors(obj& it, narr& blk);
+        wbool _onInjectObjSubs(obj& it, defBlock& blk);
+        wbool _onInjectDefaultCtor(obj& it);
 
     private:
         tokenScan* _mode;
@@ -141,8 +145,8 @@ namespace wrd {
         tokenDispatcher _dispatcher;
         std::vector<wcnt> _indents;
         tstr<errReport> _report;
-        tstr<pack> _pack;
-        str _subpack;
+        tstr<slot> _slot;
+        tstr<obj> _subpack;
         area* _srcArea;
         std::vector<wint> _states;
         std::map<node*, std::string> _nameMap;

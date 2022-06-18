@@ -20,7 +20,7 @@ namespace wrd {
     /// implementation which was defined at lowparser/scanner.
     ///
     /// lowparser/scanner should be dependent to THIS.
-    class pack;
+    class slot;
     class _wout parser : public typeProvidable {
         WRD(ADT(parser, typeProvidable))
 
@@ -29,14 +29,14 @@ namespace wrd {
 
     public:
         me& setReport(errReport& report);
-        me& setPack(const pack& tray);
-        pack& getPack();
-        const pack& getPack() const WRD_UNCONST_FUNC(getPack())
-        node& getSubPack();
-        const node& getSubPack() const WRD_UNCONST_FUNC(getSubPack())
+        me& setSlot(const slot& tray);
+        slot& getSlot();
+        const slot& getSlot() const WRD_UNCONST_FUNC(getSlot())
+        obj& getSubPack();
+        const obj& getSubPack() const WRD_UNCONST_FUNC(getSubPack())
 
         /// @param script is null terminated cstring.
-        str parse(const wchar* script);
+        tstr<obj> parse(const wchar* script);
 
         virtual void rel();
 

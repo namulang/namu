@@ -13,8 +13,8 @@ namespace wrd {
         _rpt.bind(report);
         return *this;
     }
-    me& me::setPack(pack& pak) {
-        _pak.bind(pak);
+    me& me::setSlot(slot& tray) {
+        _slot.bind(tray);
         return *this;
     }
     me& me::setSrcSupply(const srcSupply& supply) {
@@ -39,26 +39,26 @@ namespace wrd {
 
     node& me::getSubPack() { return _pser.getSubPack(); }
 
-    pack& me::getPack() { return _pser.getPack(); }
+    slot& me::getSlot() { return _pser.getSlot(); }
 
     const errReport& me::getReport() const {
         return *_rpt;
     }
 
-    pack& me::interpret() {
+    slot& me::interpret() {
         if(!_srcs) {
             _rpt->add(err::newErr(NO_SRC));
-            return *_pak;
+            return *_slot;
         }
 
         _parse();
         tstr<frame> info;
         if(*_rpt)
-            return *_pak;
+            return *_slot;
         _verify(info);
         _logStructure(*info, _srcs->get());
 
-        return *_pak;
+        return *_slot;
     }
 
     void me::rel() {
@@ -67,7 +67,7 @@ namespace wrd {
         _veri.rel();
         _pser.rel();
         _srcs.rel();
-        _pak.rel();
+        _slot.rel();
     }
 
     void me::log() const {
@@ -83,7 +83,7 @@ namespace wrd {
     }
 
     wbool me::_isPackExist() {
-        return !nul(_pser.getSubPack()) && _pak;
+        return !nul(_pser.getSubPack()) && _slot;
     }
 
     void me::_parse() {
@@ -99,11 +99,11 @@ namespace wrd {
             WRD_DI("======================================");
 
             _pser.setReport(*_rpt)
-                 .setPack(*_pak)
+                 .setSlot(*_slot)
                  .parse(buf);
 
-            if(!_pak)
-                _pak.bind(_pser.getPack());
+            if(!_slot)
+                _slot.bind(_pser.getSlot());
         }
 
         _isParsed = _isPackExist() && !_rpt->hasErr();
@@ -119,22 +119,22 @@ namespace wrd {
         WRD_DI("                verify                ");
         WRD_DI("======================================");
 
-        if(!_pak) {
-            WRD_E("_pak is null");
+        if(!_slot) {
+            WRD_E("_slot is null");
             return;
         }
 
         // make tray:
-        packs* paks = new packs();
-        paks->add(_pak->getManifest().name, *_pak);
-        packChain tray(paks);
-        tray.link(wrd::thread::get().getSystemPacks());
+        slots* ss = new slots();
+        ss->add(_slot->getManifest().name, _slot->getPack());
+        slotChain tray(ss);
+        tray.link(wrd::thread::get().getSystemSlots());
 
         // verify:
         _veri.setReport(*_rpt)
              .setPacks(tray)
              .setFrameInfo(info)
-             .verify(*_pak);
+             .verify(_slot->getPack());
         l.loadStreamEnable();
 
     }
@@ -150,11 +150,11 @@ namespace wrd {
         _logFrame(info);
         std::cout << "\n";
 
-        if(!nul(_pser.getSubPack()) && _pak) {
+        if(!nul(_pser.getSubPack()) && _slot) {
             std::cout << " - structure:\n";
             std::vector<const char*> indents;
             indents.push_back("  ");
-            _logStructure(indents, _pser.getSubPack(), _pak->getManifest().name, 0, true, true);
+            _logStructure(indents, _pser.getSubPack(), _slot->getManifest().name, 0, true, true);
             std::cout << "\n";
         }
 
