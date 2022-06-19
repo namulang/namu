@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../func.hpp"
+#include "func.hpp"
 
 namespace wrd {
 

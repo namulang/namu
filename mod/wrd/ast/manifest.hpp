@@ -31,7 +31,7 @@ namespace wrd {
         wbool isValid() const override;
 
     public:
-        std::string name;
+        std::string name; // manifest name should not contain '.'(dot) character.
         std::string filePath;
         std::string author;
         std::string version;

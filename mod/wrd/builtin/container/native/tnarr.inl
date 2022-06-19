@@ -54,12 +54,16 @@ namespace wrd {
 
     TEMPL
     void ME::add(const iter& here, const iter& from, const iter& to) {
-        if(n < 0 || n > len()) return;
-        if(!e.isFrom(*this)) return;
-        narrIteration& cast = (narrIteration&) *e._step;
-        if(nul(cast)) return;
+        if(!from.isFrom(to.getContainer())) return;
+        const narrIteration& hereCast = _getIterationFrom(here);
+        const narrIteration& fromCast = (narrIteration&) *from._step;
+        const narrIteration& toCast = (narrIteration&) *to._step;
+        if(nul(hereCast) || nul(fromCast) || nul(toCast)) return;
 
-        _vec.insert(_vec.begin() + n, from, to);
+        if(hereCast._n < 0 || hereCast._n > len()) return; // if n equals to len(), it means that will be added at end of container.
+
+        auto fromBegin = ((me&) from.getContainer())._vec.begin();
+        _vec.insert(_vec.begin() + hereCast._n, fromBegin + fromCast._n, fromBegin + toCast._n);
     }
 
     TEMPL

@@ -6,51 +6,48 @@ namespace wrd {
 
     WRD_DEF_ME(autoslot)
 
-    me::autoslot(const manifest& manifest, const packLoadings& loadings): _manifest(manifest),
-            _loadings(loadings) {
-    }
+    me::autoslot(const manifest& manifest, const packLoadings& loadings): super(manifest),
+            _loadings(loadings) { _rel(); }
 
     me::~autoslot() {
         // release all instance first:
         //  I must release allocated shared object first,
         //  before release the handle of it by releasing packLoading instance.
-        rel();
-    }
+        me::rel();
 
-    void me::_rel() {
         for(auto* e : _loadings)
             delete e;
         _loadings.clear();
-        state = RELEASED;
+    }
+
+    void me::_rel() {
+        _state = RELEASED;
         _rpt.bind(dummyErrReport::singletone);
     }
 
     obj& me::getPack() {
         if(_state == RELEASED) {
-            obj* new1 = new obj();
+            _pak.bind(new obj());
             WRD_I("%s pack is about to interpret lazy.", getManifest().name.c_str());
             // TODO: check _rpt error count increased or not.
             //       if increased, then parse() function has been failed.
-            parse(*_rpt, new1->getShares()); // recursive call wasn't allowed.
-            verify(*_rpt, *new1);
+            parse(*_rpt, _pak->getShares()); // recursive call wasn't allowed.
+            verify(*_rpt, *_pak);
             link();
         }
 
-        return subs;
+        return super::getPack();
     }
 
-    manifest& me::getManifest() { return _manifest; }
-    const manifest& me::getManifest() const { return _manifest; }
     me::state me::getState() const { return _state; }
-    wbool me::isValid() const { return _isValid; }
 
     void me::setReport(errReport& rpt) {
         _rpt.bind(rpt);
     }
 
     void me::rel() {
-        super::rel();
         _rel();
+        super::rel();
     }
 
     tstr<srcs> me::parse(errReport& rpt, bicontainable& tray) {
@@ -78,5 +75,12 @@ namespace wrd {
     wbool me::link() {
         _state = LINKED;
         return !isValid() ? _invalidate() : true;
+    }
+
+    wbool me::_invalidate() {
+        _setValid(false);
+        if(_state != LINKED) return false;
+
+        return super::_invalidate();
     }
 }

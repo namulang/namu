@@ -92,8 +92,8 @@ namespace wrd {
         node* onAssign(node& lhs, node& rhs);
 
         //  keyword:
-        node* onPack(const narr& dotname);
-        node* onPack();
+        obj* onPack(const narr& dotname);
+        obj* onPack();
         blockExpr* onBlock();
         blockExpr* onBlock(blockExpr& blk, node& exp);
         defBlock* onDefBlock();

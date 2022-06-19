@@ -35,6 +35,7 @@
 
     namespace wrd {
         class node;
+        class obj;
         class immutableTactic;
         template <typename K, typename V, typename TACTIC> class tnmap;
         typedef tnmap<std::string, node, immutableTactic> scope;
@@ -82,6 +83,7 @@
     bool asBool;
     float asFlt;
     wrd::node* asNode;
+    wrd::obj* asObj;
     wrd::narr* asNarr;
     wrd::scope* asScope;
     wrd::defBlock* asDefBlock;
@@ -132,7 +134,7 @@
 %type <asNode> return
 %type <asNode> if
 %type <asNode> aka aka-default aka-deduced
-%type <asNode> pack
+%type <asObj> pack
 //  expr:
 %type <asNode> stmt expr expr-line expr-compound expr1 expr2 expr3 expr4 expr5 expr6 expr7 expr8 expr9 expr10
 %type <asNode> type
