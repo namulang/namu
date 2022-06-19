@@ -8,6 +8,7 @@ namespace wrd {
 
     me::slot(const manifest& manifest): _manifest(manifest) {
         _rel();
+        _pak.bind(new obj());
     }
 
     me::slot(const manifest& manifest, const obj& pack): _manifest(manifest) {
@@ -25,41 +26,32 @@ namespace wrd {
         return *_pak;
     }
 
-    wbool me::setPack(const obj& newPack) {
-        return _pak.bind(newPack);
-    }
-
     manifest& me::getManifest() { return _manifest; }
     const manifest& me::getManifest() const { return _manifest; }
     wbool me::isValid() const { return _isValid; }
 
-    void me::setReport(errReport& rpt) {
-        _rpt.bind(rpt);
-    }
-
     void me::rel() {
-        super::rel();
         _rel();
     }
 
-    void me::addDependent(pack& dependent) {
+    void me::addDependent(slot& dependent) {
         _dependents.add(dependent);
     }
 
-    const tnarr<pack>& me::getDependents() const {
+    const tnarr<slot>& me::getDependents() const {
         return _dependents;
     }
 
-    void me::setValid(wbool valid) {
+    void me::_setValid(wbool valid) {
         _isValid = valid;
     }
 
     wbool me::_invalidate() {
-        if(_state != LINKED) return false;
+        _setValid(false);
 
         // propagate result only if it's not valid.
         for(auto& e : _dependents)
-            if(e._invalidate();
+            e._invalidate();
         return true;
     }
 }

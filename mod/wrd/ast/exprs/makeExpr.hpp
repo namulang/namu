@@ -14,13 +14,13 @@ namespace wrd {
     public:
         using super::run;
         str run(const ucontainable& args) override {
-            tstr<obj> out(_from.run());
+            tstr<obj> out(_from->run());
             if(!out) return str();
 
             return str(out->getOrigin().clone());
         }
         const wtype& getEvalType() const override {
-            return _from.getEvalType();
+            return _from->getEvalType();
         }
         const node& getFrom() const {
             return *_from;

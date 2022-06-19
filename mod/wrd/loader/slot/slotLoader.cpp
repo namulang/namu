@@ -1,12 +1,12 @@
-#include "packLoader.hpp"
+#include "slotLoader.hpp"
 #include "../../frame/thread.hpp"
 #include "../errReport.hpp"
 
 namespace wrd {
 
-    WRD_DEF_ME(packLoader)
+    WRD_DEF_ME(slotLoader)
 
-    me::packLoader(): _baseSlots(nullptr), _report(dummyErrReport::singletone) {}
+    me::slotLoader(): _baseSlots(nullptr), _report(dummyErrReport::singletone) {}
 
     tstr<slots> me::load() {
         // TODO: returns result when it's fail

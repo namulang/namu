@@ -1,17 +1,17 @@
 #pragma once
 
 #include "../../ast/slot.hpp"
-#include "packLoading.hpp"
+#include "../pack/packLoading.hpp"
 
 namespace wrd {
 
     class errReport;
 
-    class _wout packLoader : public typeProvidable, public clonable {
-        WRD(CLASS(packLoader))
+    class _wout slotLoader : public typeProvidable, public clonable {
+        WRD(CLASS(slotLoader))
 
     public:
-        packLoader();
+        slotLoader();
 
     public:
         me& addPath(const std::string& filePath);

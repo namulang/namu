@@ -8,7 +8,7 @@ namespace wrd {
 
     WRD_DEF_ME(thread)
 
-    const slots& me::getSystemPacks() {
+    const slots& me::getSystemSlots() {
         static tstr<slots> inner;
 
         if(!inner) {
@@ -20,13 +20,13 @@ namespace wrd {
 
 #if WRD_IS_DBG
             WRD_I("next following is list for them.");
-            for(const auto& slot : *inner) {
-                if(nul(slot)) {
+            for(const auto& s : *inner) {
+                if(nul(s)) {
                     WRD_E("cast isn't type of slot&");
                     continue;
                 }
 
-                const manifest& mani = pak.getManifest();
+                const manifest& mani = s.getManifest();
                 WRD_DI(" - %s v%s", mani.name.c_str(), mani.version.c_str());
             }
 #endif

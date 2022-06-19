@@ -8,7 +8,7 @@
 namespace wrd {
 
     class _wout autoslot : public slot, public packMakable {
-        WRD(CLASS(autoSlot, slot))
+        WRD(CLASS(autoslot, slot))
 
     public:
         enum state {
@@ -36,6 +36,9 @@ namespace wrd {
         ///         please refer 'verifier' class if you want to know further.
         void setReport(errReport& rpt);
 
+    protected:
+        wbool _invalidate() override;
+
     private:
         tstr<srcs> parse(errReport& rpt, bicontainable& tray) override;
         wbool verify(errReport& rpt, obj& pak) override;
@@ -45,6 +48,7 @@ namespace wrd {
     private:
         packLoadings _loadings;
         state _state;
+        srcs _srcs;
         tstr<errReport> _rpt;
     };
 }

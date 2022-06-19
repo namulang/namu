@@ -22,8 +22,8 @@ namespace wrd {
         wbool isVerified() const;
         node& getSubPack();
         const node& getSubPack() const WRD_UNCONST_FUNC(getSubPack())
-        slot& getPack();
-        const slot& getPack() const WRD_UNCONST_FUNC(getPack())
+        slot& getSlot();
+        const slot& getSlot() const WRD_UNCONST_FUNC(getSlot())
         const errReport& getReport() const;
 
         slot& interpret();
@@ -46,7 +46,7 @@ namespace wrd {
 
     private:
         tstr<errReport> _rpt;
-        tstr<slot> _pak;
+        tstr<slot> _slot;
         verifier _veri;
         parser _pser;
         tstr<srcSupply> _srcs;

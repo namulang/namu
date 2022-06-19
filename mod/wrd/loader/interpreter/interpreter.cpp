@@ -126,15 +126,15 @@ namespace wrd {
 
         // make tray:
         slots* ss = new slots();
-        ss->add(_slot->getManifest().name, _slot->getPack());
+        ss->add(_slot->getManifest().name, *_slot);
         slotChain tray(ss);
         tray.link(wrd::thread::get().getSystemSlots());
 
         // verify:
         _veri.setReport(*_rpt)
-             .setPacks(tray)
+             .setSlots(tray)
              .setFrameInfo(info)
-             .verify(_slot->getPack());
+             .verify(*_slot);
         l.loadStreamEnable();
 
     }

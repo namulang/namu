@@ -92,9 +92,7 @@ namespace wrd {
     wchar me::onScanUnexpected(const wchar* token) {
         onSrcErr(errCode::UNEXPECTED_TOK, token);
         return token[0];
-    }
-
-    wint me::onIgnoreIndent(wint tok) {
+    } wint me::onIgnoreIndent(wint tok) {
         WRD_DI("tokenEvent: onIgnoreIndent(%d)", tok);
         _dispatcher.add(SCAN_MODE_INDENT_IGNORE);
         return tok;
@@ -109,19 +107,19 @@ namespace wrd {
         area.rel();
     }
 
-    node* me::onPack(const narr& dotname) {
+    obj* me::onPack(const narr& dotname) {
         WRD_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
-        obj* pak = &_slot->getPack();
 
         // pack syntax rule #1:
         //  if there is no specified name of pack, I create an one.
         std::string firstName = dotname[0].cast<std::string>();
-        if(nul(pak))
-            _slot->setPack(pak = new obj(manifest(firstName));
+        if(!_slot)
+            _slot.bind(new slot(manifest(firstName)));
+        obj* e = &_slot->getPack();
 
-        const std::string& realName = pak->getManifest().name;
+        const std::string& realName = _slot->getManifest().name;
         if(realName != firstName)
-            return onErr(errCode::PACK_NOT_MATCH, firstName.c_str(), realName.c_str()), pak;
+            return onErr(errCode::PACK_NOT_MATCH, firstName.c_str(), realName.c_str()), e;
 
         // pack syntax rule #2:
         //  middle name automatically created if not exist.
@@ -130,10 +128,9 @@ namespace wrd {
         //      'pack mypack.component.ui'
         //  in this scenario, mypack instance should be created before. and component sub
         //  pack object can be created in this parsing keyword.
-        node* e = pak;
         for(int n=1; n < dotname.len(); n++) {
             const std::string& name = dotname[n].cast<std::string>();
-            node* sub = &e->sub(name);
+            obj* sub = &e->sub<obj>(name);
             if(nul(sub))
                 e->subs().add(name, sub = new obj());
             e = sub;
@@ -143,21 +140,21 @@ namespace wrd {
         return e;
     }
 
-    node* me::onPack() {
+    obj* me::onPack() {
         WRD_DI("tokenEvent: onPack()");
 
         onWarn(errCode::NO_PACK);
 
         slot* newSlot = &_slot.get();
         if(nul(newSlot))
-            _slot.bind(newSlot = new slot(manifest());
+            _slot.bind(newSlot = new slot(manifest()));
 
         const std::string& name = _slot->getManifest().name;
         if(name != manifest::DEFAULT_NAME)
-            return onErr(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), newPack;
+            return onErr(errCode::PACK_NOT_MATCH, manifest::DEFAULT_NAME, name.c_str()), &newSlot->getPack();
 
         _subpack.bind(newSlot->getPack()); // this is a default pack containing name as '{default}'.
-        return *_subpack;
+        return &_subpack.get();
     }
 
     blockExpr* me::onBlock() {
@@ -277,7 +274,7 @@ namespace wrd {
     }
 
     wbool me::_onInjectObjSubs(obj& it, defBlock& blk) {
-        WRD_DI("tokenEvent: _onInjectObjSubs(%s, defBlock[%x])", obj.getType().getName().c_str(), &blk);
+        WRD_DI("tokenEvent: _onInjectObjSubs(%s, defBlock[%x])", it.getType().getName().c_str(), &blk);
         if(nul(it)) return false;
 
         bicontainable& share = it.getShares().getContainer();
@@ -291,27 +288,30 @@ namespace wrd {
         return _onPastePreCtors(it, *blk.asPreCtor);
     }
 
-    wbool me::_onInjectDefaultCtor(obj& it) {
-        wbool hasCtor = nul(it.sub(baseObj::CTOR_NAME));
-        WRD_DI("tokenEvent: _onInjectDefaultCtor(%s, has=%d)", obj.getType().getName().c_str(), hasCtor);
-        if(hasCtor) return false;
-
+    namespace {
         class _wout mgdDefaultCtor : public mgdFunc {
             WRD(CLASS(mgdDefaultCtor, mgdFunc))
 
         public:
-            mgdDefaultCtor(const node& org) {
+            mgdDefaultCtor(const node& org): super(params(), org.getEvalType()) {
                 getBlock().getStmts().add(new makeExpr(org));
             }
         };
-        it.subs().add(*new mgdDefaultCtor(it.getOrigin()));
+    }
+
+    wbool me::_onInjectDefaultCtor(obj& it) {
+        wbool hasCtor = nul(it.sub(baseObj::CTOR_NAME));
+        WRD_DI("tokenEvent: _onInjectDefaultCtor(%s, has=%d)", it.getType().getName().c_str(), hasCtor);
+        if(hasCtor) return false;
+
+        it.subs().add(baseObj::CTOR_NAME, *new mgdDefaultCtor(it.getOrigin()));
         return true;
     }
 
     wbool me::_onPastePreCtors(obj& it, narr& preCtor) {
         WRD_DI("tokenEvent: onPastePreCtors(%s, %x)", it.getType().getName().c_str(), &preCtor);
 
-        auto e = it.subs().iterate(obj::CTOR_NAME);
+        auto e = it.subs().iterate(baseObj::CTOR_NAME);
         while(e) {
             mgdFunc& f = e.getVal<mgdFunc>();
             if(!nul(f)) {
@@ -420,7 +420,7 @@ namespace wrd {
 
     me::loweventer() { rel(); }
 
-    tstr<slot>& me::getPack() { return _slot; }
+    tstr<slot>& me::getSlot() { return _slot; }
     tstr<obj>& me::getSubPack() { return _subpack; } // TODO: can I remove subpack variable?
     tstr<errReport>& me::getReport() { return _report; }
     tokenDispatcher& me::getDispatcher() { return _dispatcher; }
