@@ -53,22 +53,22 @@ TEST_F(defVarExprTest, definePackVariable2) {
             return age
     )SRC").shouldParsed(true);
     shouldVerified(true);
-    pack& pak = getPack();
-    ASSERT_EQ(pak.getManifest().name, manifest::DEFAULT_NAME);
+    slot& s = getSlot();
+    ASSERT_EQ(s.getManifest().name, manifest::DEFAULT_NAME);
 
-    ASSERT_EQ(pak.subs().len(), 4); // 3 variable, 1 func
-    ASSERT_EQ(pak.subAll<baseObj>().len(), 3);
-    ASSERT_EQ(pak.subAll<mgdFunc>().len(), 1);
+    ASSERT_EQ(s.subs().len(), 4); // 3 variable, 1 func
+    ASSERT_EQ(s.subAll<baseObj>().len(), 3);
+    ASSERT_EQ(s.subAll<mgdFunc>().len(), 1);
 
-    wStr& name = pak.sub<wStr>("name");
+    wStr& name = s.sub<wStr>("name");
     ASSERT_FALSE(nul(name));
     ASSERT_EQ(name.get(), "");
 
-    wInt& age = pak.sub<wInt>("age");
+    wInt& age = s.sub<wInt>("age");
     ASSERT_FALSE(nul(age));
     ASSERT_EQ(age.get(), 0); // 0 is default value.
 
-    wFlt& grade = pak.sub<wFlt>("grade");
+    wFlt& grade = s.sub<wFlt>("grade");
     ASSERT_FALSE(nul(grade));
     ASSERT_EQ(grade.get(), 0.0f);
 }

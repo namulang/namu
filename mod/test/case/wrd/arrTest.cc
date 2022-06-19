@@ -193,7 +193,7 @@ TEST_F(arrTest, testContainableAPI) {
 
     //  add with element:
     tarr<myNode> arr2;
-    ASSERT_EQ(arr2.add(*con), 1);
+    arr2.add(*con);
     ASSERT_TRUE(arr2.add(new myNode(1)));
     ASSERT_TRUE(arr2.add(new myMyNode(2)));
     ASSERT_TRUE(arr2.add(new myNode(3)));
@@ -217,7 +217,7 @@ TEST_F(arrTest, testContainableAPI) {
     ASSERT_EQ(con->len(), 1);
     tucontainable<myNode>::iter e11 = arr2.iterate(1),
                                 e12 = arr2.iterate(3);
-    ASSERT_EQ(con->add(e11, e12), 2);
+    con->add(e11, e12);
     ASSERT_EQ(con->len(), 3);
     e=arr1->begin();
     myNode* elem = &e->cast<myNode>();
@@ -238,7 +238,7 @@ TEST_F(arrTest, testContainableAPI) {
     con->rel();
     ASSERT_TRUE(con->len() == 0);
 
-    ASSERT_EQ(con->add(arr2.begin() + 2, arr2.end()), 4);
+    con->add(arr2.begin() + 2, arr2.end());
     auto e2 = arr1->begin();
     elem = &e2.get();
     ASSERT_FALSE(nul(elem));

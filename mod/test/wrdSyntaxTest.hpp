@@ -11,8 +11,8 @@ struct wrdSyntaxTest : public wrdTest {
 
     wrd::node& getSubPack() { return _ip.getSubPack(); }
     const wrd::node& getSubPack() const { return _ip.getSubPack(); }
-    wrd::pack& getPack() { return _ip.getPack(); }
-    const wrd::pack& getPack() const { return _ip.getPack(); }
+    wrd::slot& getSlot() { return _ip.getSlot(); }
+    const wrd::slot& getSlot() const { return _ip.getSlot(); }
     wrd::errReport& getReport() { return _rpt; }
 
     wrdSyntaxTest& make(const std::string& name) {
@@ -25,7 +25,7 @@ struct wrdSyntaxTest : public wrdTest {
 
     wrdSyntaxTest& make(const wrd::manifest& mani) {
         _rel();
-        _ip.setPack(*new wrd::pack(mani, wrd::packLoadings()));
+        _ip.setSlot(*new wrd::slot(mani));
         return *this;
     }
 

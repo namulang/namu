@@ -50,7 +50,7 @@ namespace wrd {
         }
         wbool add(const iter& at, const T& new1) override { return _arr.add(at, new1); }
         wbool add(widx n, const T& new1) override { return _arr.add(n, new1); }
-        void add(const iter& here, const iter& from, const iter& to) { _arr.add(here, from, to); }
+        void add(const iter& here, const iter& from, const iter& to) override { _arr.add(here, from, to); }
 
         //  del:
         using tucontainable<T>::del;
