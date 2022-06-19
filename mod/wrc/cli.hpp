@@ -24,7 +24,7 @@ namespace wrd {
                 return _finish(ip, -1);
 
             starter s;
-            str res = s.run(narr(ip.getPack()));
+            str res = s.run(narr(ip.getSlot()));
             if(res && !rpt) {
                 return _finish(ip, 0);
             }

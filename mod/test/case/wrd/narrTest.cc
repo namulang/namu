@@ -191,7 +191,7 @@ TEST_F(narrTest, testucontainableAPI) {
 
     //  add with element:
     tnarr<myNode> arr2;
-    ASSERT_EQ(arr2.add(*con), 1);
+    arr2.add(*con);
     ASSERT_TRUE(arr2.add(new myNode(1)));
     ASSERT_TRUE(arr2.add(new myMyNode(2)));
     ASSERT_TRUE(arr2.add(new myNode(3)));
@@ -213,7 +213,7 @@ TEST_F(narrTest, testucontainableAPI) {
     ASSERT_EQ(arr2[5].cast<myNode>().number, 3);
 
     ASSERT_EQ(con->len(), 1);
-    ASSERT_EQ(con->add(arr2.iterate(1), arr2.iterate(3)), 2);
+    con->add(arr2.iterate(1), arr2.iterate(3));
     ASSERT_EQ(con->len(), 3);
     auto e2=arr->begin();
     myNode* elem = &e2.get();
@@ -234,7 +234,7 @@ TEST_F(narrTest, testucontainableAPI) {
     con->rel();
     ASSERT_TRUE(con->len() == 0);
 
-    ASSERT_EQ(con->add(arr2.begin() + 2, arr2.end()), 4);
+    con->add(arr2.begin() + 2, arr2.end());
     ASSERT_EQ(con->len(), 4);
     e2 = arr->begin();
     elem = &e2.get();

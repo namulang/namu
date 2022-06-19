@@ -12,7 +12,6 @@ namespace wrd {
     public:
         slot(const manifest& manifest);
         slot(const manifest& manifest, const obj& pack);
-        ~slot() override;
 
     public:
         manifest& getManifest();

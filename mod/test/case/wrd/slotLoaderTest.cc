@@ -3,13 +3,13 @@
 using namespace wrd;
 using namespace std;
 
-struct packLoaderTest : public wrdTest {};
+struct slotLoaderTest : public wrdTest {};
 
-TEST_F(packLoaderTest, testDefaultLoaderInit) {
-    const packs& systemPacks = wrd::thread::get().getSystemPacks();
-    ASSERT_FALSE(nul(systemPacks));
+TEST_F(slotLoaderTest, testDefaultLoaderInit) {
+    const slots& systemSlots = wrd::thread::get().getSystemSlots();
+    ASSERT_FALSE(nul(systemSlots));
 
-    pack& pak = systemPacks.get([](const std::string& name, const pack& e) { return name == "samplePack"; });
+    slot& pak = systemSlots.get([](const std::string& name, const slot& e) { return name == "samplePack"; });
     ASSERT_FALSE(nul(pak));
 
     ASSERT_EQ(pak.subs().len(), 1);

@@ -4,7 +4,7 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    struct packTest : public wrdSyntaxTest {};
+    struct slotTest : public wrdSyntaxTest {};
 
     class myfunc : public mgdFunc {
         WRD(CLASS(myfunc, mgdFunc))
@@ -99,19 +99,19 @@ namespace {
     };
 }
 
-TEST_F(packTest, parsePackTest) {
+TEST_F(slotTest, parsePackTest) {
     make(manifest("demo")).parse(R"SRC(
 pack demo
     )SRC").shouldParsed(true);
     ASSERT_FALSE(nul(getSubPack()));
-    ASSERT_FALSE(nul(getPack().subs()));
-    ASSERT_EQ(getPack().subs().len(), 0);
-    ASSERT_EQ(getPack().getManifest().name, "demo");
+    ASSERT_FALSE(nul(getSlot().subs()));
+    ASSERT_EQ(getSlot().subs().len(), 0);
+    ASSERT_EQ(getSlot().getManifest().name, "demo");
 }
 
-TEST_F(packTest, packIsInFrameWhenCallMgdFunc) {
+TEST_F(slotTest, slotIsInFrameWhenCallMgdFunc) {
     // check whether pack's subnodes registered into frame when it calls:
-    pack testPack(manifest("demo"), packLoadings());
+    slot testSlot(manifest("demo"));
     myfunc f1;
 
     params& ps = f1.getParams();
@@ -121,7 +121,7 @@ TEST_F(packTest, packIsInFrameWhenCallMgdFunc) {
         const frame& fr = sf[sf.len() - 1];
         if(nul(fr)) return false;
 
-        // checks pack is in frame:
+        // checks slot is in frame:
         myfunc& cast = fr.sub<myfunc>("foo", narr(wInt(), wFlt()));
         if(nul(cast)) return false;
 
@@ -143,16 +143,16 @@ TEST_F(packTest, packIsInFrameWhenCallMgdFunc) {
         return true;
     });
 
-    testPack.subs().add("foo", f1);
-    testPack.run("foo", narr(wInt(1), wFlt(3.5f)));
+    testSlot.subs().add("foo", f1);
+    testSlot.run("foo", narr(wInt(1), wFlt(3.5f)));
     ASSERT_TRUE(f1.isRun());
     ASSERT_TRUE(f1.isSuccess());
 }
 
 /* Concept changed: now, native call also make a frame instance.
- * TEST_F(packTest, packIsNotInFrameWhenCallNativeFunc) {
-    // check whether pack's subnodes not registered into frame when it calls:
-    pack testPack(manifest("demo"), packLoadings());
+ * TEST_F(slotTest, slotIsNotInFrameWhenCallNativeFunc) {
+    // check whether slot's subnodes not registered into frame when it calls:
+    slot testPack(manifest("demo"), packLoadings());
     nativeFunc f1;
     params& ps = f1.getParams();
     ps.add(new param("age", ttype<wInt>::get()));

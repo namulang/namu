@@ -12,17 +12,17 @@ TEST_F(parserTest, testHelloWorld) {
     )SRC";
     std::string script(stringScript);
 
-    tstr<pack> rootBinder = p.parse(script.c_str());
+    tstr<slot> rootBinder = p.parse(script.c_str());
     ASSERT_TRUE(rootBinder);
     // TODO: make AST: ASSERT_TRUE(rootBinder->subs().len() == 1);
     rootBinder = p.parse(stringScript);
     ASSERT_TRUE(rootBinder);
     // TODO: make AST: ASSERT_TRUE(rootBinder->subs().len() == 2);
 
-    pack pak((manifest()), (packLoadings()));
-    nbicontainer& tray = pak.subs();
+    slot s((manifest()));
+    nbicontainer& tray = s.subs();
     ASSERT_FALSE(nul(tray));
-    p.setPack(pak);
+    p.setSlot(s);
     tray.add("hello", new wStr("hello"));
     ASSERT_TRUE(tray.len() == 1);
 
@@ -36,24 +36,24 @@ TEST_F(parserTest, testHelloWorld) {
     ASSERT_TRUE(tray.get<wStr>("hello") == wStr("hello"));
 }
 
-TEST_F(parserTest, packNoOnTray) {
+TEST_F(parserTest, slotNoOnTray) {
     make().parse(R"SRC(
         main() void
             return
     )SRC");
     shouldVerified(true);
 
-    ASSERT_EQ(getPack().subs().len(), 1);
-    ASSERT_EQ(getPack().getManifest().name, manifest::DEFAULT_NAME);
+    ASSERT_EQ(getSlot().subs().len(), 1);
+    ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
     ASSERT_EQ(getSubPack().subs().len(), 1);
-    ASSERT_EQ(&getPack(), &getSubPack());
+    ASSERT_EQ(&getSlot(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");
     ASSERT_FALSE(nul(f));
 }
 
-TEST_F(parserTest, packNoOnTrayWithoutMake) {
+TEST_F(parserTest, slotNoOnTrayWithoutMake) {
     // no make() call:
-    //  so setPack(new pack(manifest())) won't be called.
+    //  so setPack(new slot(manifest())) won't be called.
     //  but it should works too.
     parse(R"SRC(
         main() void
@@ -61,17 +61,17 @@ TEST_F(parserTest, packNoOnTrayWithoutMake) {
     )SRC");
     shouldVerified(true);
 
-    ASSERT_EQ(getPack().subs().len(), 1);
-    ASSERT_EQ(getPack().getManifest().name, manifest::DEFAULT_NAME);
+    ASSERT_EQ(getSlot().subs().len(), 1);
+    ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
     ASSERT_EQ(getSubPack().subs().len(), 1);
-    ASSERT_EQ(&getPack(), &getSubPack());
+    ASSERT_EQ(&getSlot(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");
     ASSERT_FALSE(nul(f));
 }
 
-TEST_F(parserTest, packNotSpecifiedButCodeSpecifyPackNegative) {
+TEST_F(parserTest, slotNotSpecifiedButCodeSpecifyPackNegative) {
     // make without name:
-    //  pack will be generated. but its name is '{default}'.
+    //  slot will be generated. but its name is '{default}'.
     make().parse(R"SRC(
         pack demo
         main() void
@@ -79,7 +79,7 @@ TEST_F(parserTest, packNotSpecifiedButCodeSpecifyPackNegative) {
     )SRC").shouldParsed(false);
 }
 
-TEST_F(parserTest, packProperlySpecified) {
+TEST_F(parserTest, slotProperlySpecified) {
     // make with name:
     //  pack will be generated and its name is 'demo'.
     make("demo").parse(R"SRC(
