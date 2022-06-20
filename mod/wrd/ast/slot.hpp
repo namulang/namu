@@ -24,20 +24,20 @@ namespace wrd {
         const tnarr<me>& getDependents() const;
 
         using super::subs;
-        nbicontainer& subs() override { return _pak->subs(); }
+        nbicontainer& subs() override { return getPack().subs(); }
 
-        wbool canRun(const ucontainable& args) const override { return _pak->canRun(args); }
+        wbool canRun(const ucontainable& args) const override { return getPack().canRun(args); }
 
         using super::run;
-        str run(const ucontainable& args) override { return _pak->run(args); }
+        str run(const ucontainable& args) override { return getPack().run(args); }
 
-        const wtype& getEvalType() const override { return _pak->getEvalType(); }
+        const wtype& getEvalType() const override { return getPack().getEvalType(); }
 
     protected:
         virtual wbool _invalidate();
         void _setValid(wbool valid);
         virtual str _onRunSub(node& sub, const ucontainable& args) override {
-            return _pak->_onRunSub(sub, args);
+            return getPack()._onRunSub(sub, args);
         }
 
 
