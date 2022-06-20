@@ -192,7 +192,7 @@ namespace wrd {
         }
         defAssignExpr& defAssign = e->cast<defAssignExpr>();
         if(!nul(defAssign)) {
-            s.asScope->add(defAssign.getSubName(), nullptr);
+            s.asScope->add(defAssign.getSubName(), (node*) defAssign.getEvalType().make());
             s.asPreCtor->add(new assignExpr(*new getExpr(defAssign.getSubName()), defAssign.getRight()));
             return &s;
         }
@@ -271,6 +271,15 @@ namespace wrd {
         }
 
         _onInjectObjSubs(subpack, blk);
+        _onRunPreCtor(subpack, *blk.asPreCtor); // manually run preconstructor.
+    }
+
+    void me::_onRunPreCtor(obj& subpack, narr& preCtor) {
+        WRD_DI("tokenEvent: onCompilationUnit: run preconstructor(%d lines)", nul(preCtor) ? 0 : preCtor.len());
+        if(nul(preCtor)) return;
+
+        for(auto& line : preCtor)
+            line.run();
     }
 
     wbool me::_onInjectObjSubs(obj& it, defBlock& blk) {
@@ -284,7 +293,7 @@ namespace wrd {
             con.add(e.getKey(), *e);
         }
 
-        _onInjectDefaultCtor(it);
+        _onInjectMakeCtor(it);
         return _onPastePreCtors(it, *blk.asPreCtor);
     }
 
@@ -299,18 +308,28 @@ namespace wrd {
         };
     }
 
-    wbool me::_onInjectDefaultCtor(obj& it) {
-        wbool hasCtor = nul(it.sub(baseObj::CTOR_NAME));
+    wbool me::_onInjectMakeCtor(obj& it) {
+        wbool hasCtor = !nul(it.sub(baseObj::CTOR_NAME));
         WRD_DI("tokenEvent: _onInjectDefaultCtor(%s, has=%d)", it.getType().getName().c_str(), hasCtor);
         if(hasCtor) return false;
 
-        it.subs().add(baseObj::CTOR_NAME, *new mgdDefaultCtor(it.getOrigin()));
+        // TODO: ctor need to call superclass's ctor.
+        it.subs().add(baseObj::MAKE_NAME, *new defaultMakeCtor(it.getOrigin()));
         return true;
     }
 
     wbool me::_onPastePreCtors(obj& it, narr& preCtor) {
-        WRD_DI("tokenEvent: onPastePreCtors(%s, %x)", it.getType().getName().c_str(), &preCtor);
+        int len = nul(preCtor) ? 0 : preCtor.len();
+        WRD_DI("tokenEvent: onPastePreCtors(%s, preCtor[%x].size=%d)", it.getType().getName().c_str(),
+                &preCtor, len);
+        if(len <= 0) return true;
 
+        // make a default ctor if not exist:
+        wbool hasCtor = !nul(it.sub(baseObj::CTOR_NAME));
+        if(!hasCtor)
+            it.subs().add(baseObj::CTOR_NAME, new mgdFunc(params(), it.getOrigin().getEvalType()));
+
+        // inject preconstructor in ctors:
         auto e = it.subs().iterate(baseObj::CTOR_NAME);
         while(e) {
             mgdFunc& f = e.getVal<mgdFunc>();
