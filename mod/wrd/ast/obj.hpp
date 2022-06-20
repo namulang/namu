@@ -10,6 +10,7 @@ namespace wrd {
     /// because native object won't have owned nodes but only shared ones.
     class _wout obj : public baseObj {
         WRD(CLASS(obj, baseObj))
+        friend class slot; // for _onRunSub
 
     public:
         explicit obj();
