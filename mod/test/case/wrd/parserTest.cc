@@ -12,7 +12,7 @@ TEST_F(parserTest, testHelloWorld) {
     )SRC";
     std::string script(stringScript);
 
-    tstr<slot> rootBinder = p.parse(script.c_str());
+    tstr<obj> rootBinder = p.parse(script.c_str());
     ASSERT_TRUE(rootBinder);
     // TODO: make AST: ASSERT_TRUE(rootBinder->subs().len() == 1);
     rootBinder = p.parse(stringScript);
@@ -46,7 +46,7 @@ TEST_F(parserTest, slotNoOnTray) {
     ASSERT_EQ(getSlot().subs().len(), 1);
     ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
     ASSERT_EQ(getSubPack().subs().len(), 1);
-    ASSERT_EQ(&getSlot(), &getSubPack());
+    ASSERT_EQ(&getSlot().getPack(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");
     ASSERT_FALSE(nul(f));
 }
@@ -64,7 +64,7 @@ TEST_F(parserTest, slotNoOnTrayWithoutMake) {
     ASSERT_EQ(getSlot().subs().len(), 1);
     ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
     ASSERT_EQ(getSubPack().subs().len(), 1);
-    ASSERT_EQ(&getSlot(), &getSubPack());
+    ASSERT_EQ(&getSlot().getPack(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");
     ASSERT_FALSE(nul(f));
 }

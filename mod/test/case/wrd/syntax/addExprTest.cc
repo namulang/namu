@@ -4,10 +4,10 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    struct addTest : public wrdSyntaxTest {};
+    struct addExprTest : public wrdSyntaxTest {};
 }
 
-TEST_F(addTest, simpleAdd) {
+TEST_F(addExprTest, simpleAdd) {
     make().parse(R"SRC(
         a := 5
         b := 2
@@ -26,7 +26,7 @@ TEST_F(addTest, simpleAdd) {
     ASSERT_EQ(res->get(), 7);
 }
 
-TEST_F(addTest, addWithDefAssign) {
+TEST_F(addExprTest, addWithDefAssign) {
     make().parse(R"SRC(
         a := 5
         b := a + 2
@@ -45,7 +45,7 @@ TEST_F(addTest, addWithDefAssign) {
     ASSERT_EQ(res->get(), 12);
 }
 
-TEST_F(addTest, addIntAndStrNegative) {
+TEST_F(addExprTest, addIntAndStrNegative) {
     make().parse(R"SRC(
         a := "hello" + 12
         main() int
@@ -54,7 +54,7 @@ TEST_F(addTest, addIntAndStrNegative) {
     shouldVerified(false);
 }
 
-TEST_F(addTest, addIntAndStr) {
+TEST_F(addExprTest, addIntAndStr) {
     make().parse(R"SRC(
         a := "hello" + 12
         main() int

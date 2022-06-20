@@ -9,11 +9,11 @@ TEST_F(slotLoaderTest, testDefaultLoaderInit) {
     const slots& systemSlots = wrd::thread::get().getSystemSlots();
     ASSERT_FALSE(nul(systemSlots));
 
-    slot& pak = systemSlots.get([](const std::string& name, const slot& e) { return name == "samplePack"; });
-    ASSERT_FALSE(nul(pak));
+    slot& s = systemSlots.get([](const std::string& name, const slot& e) { return name == "samplePack"; });
+    ASSERT_FALSE(nul(s));
 
-    ASSERT_EQ(pak.subs().len(), 1);
-    node& origin = pak["helloWorld"];
+    ASSERT_EQ(s.subs().len(), 1);
+    node& origin = s["helloWorld"];
     ASSERT_FALSE(nul(origin));
     {
         func& sayFunc = origin["say"].cast<func>();
