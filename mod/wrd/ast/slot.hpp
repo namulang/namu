@@ -36,6 +36,10 @@ namespace wrd {
     protected:
         virtual wbool _invalidate();
         void _setValid(wbool valid);
+        virtual str _onRunSub(node& sub, const ucontainable& args) override {
+            return _pak->_onRunSub(sub, args);
+        }
+
 
     private:
         void _rel();
