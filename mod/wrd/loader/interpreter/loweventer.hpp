@@ -137,7 +137,8 @@ namespace wrd {
         std::string _onPopName(node& n);
         wbool _onPastePreCtors(obj& it, narr& blk);
         wbool _onInjectObjSubs(obj& it, defBlock& blk);
-        wbool _onInjectDefaultCtor(obj& it);
+        wbool _onInjectMakeCtor(obj& it);
+        void _onRunPreCtor(obj& it, narr& preCtor);
 
     private:
         tokenScan* _mode;

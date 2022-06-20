@@ -1,14 +1,14 @@
 #pragma once
 
-#include "ctor.hpp"
+#include "makeCtor.hpp"
 
 namespace wrd {
 
-    class _wout defaultCopyCtor : public ctor {
-        WRD(CLASS(defaultCopyCtor, ctor))
+    class _wout defaultMakeCopyCtor : public makeCtor {
+        WRD(CLASS(defaultMakeCopyCtor, makeCtor))
 
     public:
-        defaultCopyCtor(const wtype& t): super(t) {}
+        defaultMakeCopyCtor(const node& org): super(org) {}
 
     public:
         using super::run;

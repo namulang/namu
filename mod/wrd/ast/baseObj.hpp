@@ -35,5 +35,6 @@ namespace wrd {
 
     public:
          inline static const string CTOR_NAME = "@ctor";
+         inline static const string MAKE_NAME = "@make";
     };
 }

@@ -30,7 +30,6 @@ namespace wrd {
 
     TEMPL
     wbool ME::add(const K& key, const V& new1) {
-        if(nul(key) || nul(new1)) return false;
 
         _map.insert({key, wrap(new1)});
         return true;
