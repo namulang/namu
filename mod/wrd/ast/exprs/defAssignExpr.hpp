@@ -13,7 +13,9 @@ namespace wrd {
         typedef scopes::iter iter;
 
     public:
-        defAssignExpr(const std::string& name, const node& rhs): _name(name), _rhs(rhs) {}
+        defAssignExpr(const std::string& name, const node& rhs): _rhs(rhs), _name(name) {}
+        defAssignExpr(const node& to, const std::string& name, const node& rhs): _to(to),
+                _rhs(rhs), _name(name) {}
 
     public:
         using super::run;
@@ -23,9 +25,12 @@ namespace wrd {
         const std::string& getSubName() const { return _name; }
         const node& getRight() const { return *_rhs; }
         node& getRight() { return *_rhs; }
+        const node& getTo() const WRD_UNCONST_FUNC(getTo())
+        node& getTo();
 
     private:
-        std::string _name; // name of variable or lambda.
+        str _to;
         str _rhs;
+        std::string _name; // name of variable or lambda.
     };
 }

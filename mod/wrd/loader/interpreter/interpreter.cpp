@@ -56,9 +56,33 @@ namespace wrd {
         if(*_rpt)
             return *_slot;
         _verify(info);
+        _preEvaluation(_slot->getPack());
         _logStructure(*info, _srcs->get());
 
         return *_slot;
+    }
+
+    void me::_preEvaluation(node& eval) {
+        std::map<string, int> checker;
+
+        // double-checking algorithm:
+        //  while iterating and run preCtor, new variable can be added into eval object.
+        //  to handle properly that scenario, I prepared checker and run evalutation twice.
+        _preEvaluation(checker, eval);
+        _preEvaluation(checker, eval);
+    }
+
+    void me::_preEvaluation(std::map<string, int>& checker, node& eval) {
+        for(auto e=eval.subs().begin(); e ;++e) {
+            if(checker.find(e.getKey()) != checker.end())
+                continue;
+
+            obj& cast = e.cast<obj>();
+            if(!nul(cast))
+                cast.run(baseObj::PRECTOR_NAME);
+            _preEvaluation(*e);
+            checker.insert({e.getKey(), 1});//actually, this value doesn't matter
+        }
     }
 
     void me::rel() {
@@ -134,7 +158,7 @@ namespace wrd {
         _veri.setReport(*_rpt)
              .setSlots(tray)
              .setFrameInfo(info)
-             .verify(*_slot);
+             .verify(_slot->getPack());
         l.loadStreamEnable();
 
     }

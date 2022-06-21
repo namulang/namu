@@ -14,28 +14,36 @@ TEST_F(castingTest, castInt) {
         main() void
             foo(23)
     )SRC").shouldVerified(true);
+}
 
+TEST_F(castingTest, castInt1) {
     make().parse(R"SRC(
         foo(age flt) void
             main()
         main() void
             foo(23)
     )SRC").shouldVerified(true);
+}
 
+TEST_F(castingTest, castInt2) {
     make().parse(R"SRC(
         foo(age bool) void
             main()
         main() void
             foo(23)
     )SRC").shouldVerified(true);
+}
 
+TEST_F(castingTest, castInt3) {
     make().parse(R"SRC(
         foo(age char) void
             main()
         main() void
             foo(23)
     )SRC").shouldVerified(true);
+}
 
+TEST_F(castingTest, castInt4) {
     make().parse(R"SRC(
         foo(age str) void
             main()

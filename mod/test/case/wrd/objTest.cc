@@ -83,10 +83,16 @@ TEST_F(objTest, testCloneOriginObj) {
 TEST_F(objTest, cloneByRunFunc) {
     wInt a(5);
     wInt& a1 = *a.clone();
-    tstr<wInt> a2 = a.run(wrd::obj::CTOR_NAME, narr(a));
     ASSERT_NE(&a, &a1);
     ASSERT_EQ(a.cast<int>(), a1.cast<int>());
+}
 
-    ASSERT_NE(&a, &a2.get());
-    ASSERT_EQ(a.cast<int>(), a2->cast<int>());
+TEST_F(objTest, addElementIntoOwns) {
+    obj my;
+    ASSERT_EQ(my.subs().len(), 0);
+
+    my.subs().add("banana", new wInt(1));
+    ASSERT_EQ(my.getShares().len(), 0);
+    ASSERT_EQ(my.getOwns().len(), 1);
+    ASSERT_EQ(my.getOwns()["banana"].cast<int>(), 1);
 }

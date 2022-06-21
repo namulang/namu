@@ -111,15 +111,18 @@ false {
     return NAME;
 }
 
-\'[^\r\f\n\']\' {
-    yylval->asChar = yytext[0];
+\'([^\r\f\n\'])\' {
+    yylval->asChar = yytext[1];
     WRD_DI("scanner: CHARVAR='%c'", yytext[0]);
     return CHARVAR;
 }
 
-\"[^\r\f\n\"]*\" {
-    yylval->asStr = strdup(yytext);
-    WRD_DI("scanner: STRVAL=\"%s\"", yytext);
+\"([^\r\f\n\"]*)\" {
+    int len = strlen(yytext) - 2; // without double-quotes
+    yylval->asStr = new char[len+1];
+    strncpy(yylval->asStr, yytext+1, len);
+    yylval->asStr[len] = '\0';
+    WRD_DI("scanner: STRVAL=\"%s\"", yylval->asStr);
     return STRVAL;
 }
 

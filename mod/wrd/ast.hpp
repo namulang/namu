@@ -8,5 +8,5 @@
 #include "ast/point.hpp"
 #include "ast/exprs.hpp"
 #include "ast/params.hpp"
-#include "ast/defaultMakeCtor.hpp"
-#include "ast/defaultMakeCopyCtor.hpp"
+#include "ast/defaultCtor.hpp"
+#include "ast/defaultCopyCtor.hpp"

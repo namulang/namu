@@ -27,10 +27,10 @@ TEST_F(parserTest, testHelloWorld) {
     ASSERT_TRUE(tray.len() == 1);
 
     p.parse(script.c_str());
-    ASSERT_TRUE(tray.len() == 2);
+    ASSERT_TRUE(tray.len() == 3); // hello + @ctor + main: @preCtor doesn't exist.
     // TODO: make AST: ASSERT_TRUE(tray.len() == 2);
     p.parse(script.c_str());
-    ASSERT_TRUE(tray.len() == 3); // add func main on every parse() call.
+    ASSERT_TRUE(tray.len() == 4); // add func main on every parse() call.
     // TODO: make AST: ASSERT_TRUE(tray.len() == 3);
 
     ASSERT_TRUE(tray.get<wStr>("hello") == wStr("hello"));
@@ -43,9 +43,9 @@ TEST_F(parserTest, slotNoOnTray) {
     )SRC");
     shouldVerified(true);
 
-    ASSERT_EQ(getSlot().subs().len(), 1);
+    ASSERT_EQ(getSlot().subs().len(), 2);
     ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
-    ASSERT_EQ(getSubPack().subs().len(), 1);
+    ASSERT_EQ(getSubPack().subs().len(), 2);
     ASSERT_EQ(&getSlot().getPack(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");
     ASSERT_FALSE(nul(f));
@@ -61,9 +61,9 @@ TEST_F(parserTest, slotNoOnTrayWithoutMake) {
     )SRC");
     shouldVerified(true);
 
-    ASSERT_EQ(getSlot().subs().len(), 1);
+    ASSERT_EQ(getSlot().subs().len(), 2);
     ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
-    ASSERT_EQ(getSubPack().subs().len(), 1);
+    ASSERT_EQ(getSubPack().subs().len(), 2);
     ASSERT_EQ(&getSlot().getPack(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");
     ASSERT_FALSE(nul(f));

@@ -4,11 +4,11 @@
 
 namespace wrd {
 
-    class makeCtor: public func {
-        WRD(ADT(makeCtor, func))
+    class ctor: public func {
+        WRD(ADT(ctor, func))
 
     public:
-        makeCtor(const node& org): _org(org) {}
+        ctor(const node& org): _org(org) {}
 
     public:
         const wtype& getRetType() const override { return _org->getEvalType(); }
