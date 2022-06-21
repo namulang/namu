@@ -105,7 +105,7 @@ pack demo
     )SRC").shouldParsed(true);
     ASSERT_FALSE(nul(getSubPack()));
     ASSERT_FALSE(nul(getSlot().subs()));
-    ASSERT_EQ(getSlot().subs().len(), 0);
+    ASSERT_EQ(getSlot().subs().len(), 1); // 1 for @ctor
     ASSERT_EQ(getSlot().getManifest().name, "demo");
 }
 

@@ -56,7 +56,7 @@ TEST_F(defVarExprTest, definePackVariable2) {
     slot& s = getSlot();
     ASSERT_EQ(s.getManifest().name, manifest::DEFAULT_NAME);
 
-    ASSERT_EQ(s.subs().len(), 4); // 3 variable, 1 func
+    ASSERT_EQ(s.subs().len(), 5); // 3 variable, 1 func, 1 @ctor
     ASSERT_EQ(s.subAll<baseObj>().len(), 3);
     ASSERT_EQ(s.subAll<mgdFunc>().len(), 1);
 

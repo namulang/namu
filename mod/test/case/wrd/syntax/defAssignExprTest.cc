@@ -4,10 +4,10 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    struct defAssignTest : public wrdSyntaxTest {};
+    struct defAssignExprTest : public wrdSyntaxTest {};
 }
 
-TEST_F(defAssignTest, simpleGlobalDefAssign) {
+TEST_F(defAssignExprTest, simpleGlobalDefAssign) {
     // control group.
     make().parse(R"SRC(
         age int // age is age
@@ -15,12 +15,12 @@ TEST_F(defAssignTest, simpleGlobalDefAssign) {
             age := 5
             return 0
     )SRC").shouldVerified(true);
-    ASSERT_EQ(getSubPack().subs().len(), 2); // 1 for age, 1 for main()
+    ASSERT_EQ(getSubPack().subs().len(), 3); // 1 for age, 1 for main() 1 for @ctor
     run();
     ASSERT_EQ(getSubPack().sub<wInt>("age").cast<int>(), 0);
 }
 
-TEST_F(defAssignTest, simpleLocalDefAssign) {
+TEST_F(defAssignExprTest, simpleLocalDefAssign) {
     // control group.
     make().parse(R"SRC(
         age int // age is age
