@@ -37,6 +37,8 @@ namespace wrd {
 
         void _parse();
         void _verify(tstr<frame>& info );
+        void _preEvaluation(node& eval);
+        void _preEvaluation(std::map<string, int>& checker, node& eval);
 
         void _logStructure(frame& info, const wchar* buf);
         void _logStructure(std::vector<const char*>& indents, const node& n, const std::string& name, int idx, bool isLast, bool isParentLast) const;

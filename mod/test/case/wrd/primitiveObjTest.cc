@@ -5,15 +5,6 @@ using namespace std;
 
 struct primitiveObjTest : public wrdTest {};
 
-TEST_F(primitiveObjTest, testCreateWIntInMgd) {
-    wInt origin(1);
-
-    tstr<wInt> inst = origin.run(obj::CTOR_NAME, narr(origin));
-    ASSERT_TRUE(inst);
-    ASSERT_EQ(origin.get(), inst->get());
-    ASSERT_NE(&origin, &(*inst));
-}
-
 TEST_F(primitiveObjTest, testCloneWIntInMgd) {
     wInt origin(1);
 
@@ -21,14 +12,6 @@ TEST_F(primitiveObjTest, testCloneWIntInMgd) {
     ASSERT_TRUE(inst);
     ASSERT_EQ(origin.get(), inst->get());
     ASSERT_NE(&origin, &(*inst));
-}
-
-TEST_F(primitiveObjTest, testDefaultCtor) {
-    wInt origin(1);
-
-    tstr<wInt> inst = origin.run(obj::CTOR_NAME, narr());
-    ASSERT_TRUE(inst);
-    ASSERT_EQ(inst->get(), 0);
 }
 
 TEST_F(primitiveObjTest, subsIsDummy) {

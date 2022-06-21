@@ -12,6 +12,8 @@ namespace wrd {
         WRD(ADT(baseObj, node),
             FRIEND_VERIFY(baseObj, subNodes))
         friend class obj;
+        friend class defaultMakeCtor;
+        friend class loweventer;
 
     protected:
         /// if you don't give any subs when construct an baseObj, _subs will be assigned to dummy array.
@@ -35,6 +37,6 @@ namespace wrd {
 
     public:
          inline static const string CTOR_NAME = "@ctor";
-         inline static const string MAKE_NAME = "@make";
+         inline static const string PRECTOR_NAME = "@preCtor";
     };
 }

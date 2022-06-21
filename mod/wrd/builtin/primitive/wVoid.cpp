@@ -1,6 +1,6 @@
 #include "wVoid.hpp"
-#include "../../ast/defaultMakeCtor.hpp"
-#include "../../ast/defaultMakeCopyCtor.hpp"
+#include "../../ast/defaultCtor.hpp"
+#include "../../ast/defaultCopyCtor.hpp"
 
 namespace wrd {
 
@@ -22,8 +22,8 @@ namespace wrd {
 
     dumScope* me::_onMakeCtors() const {
         scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCtor(*this));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCopyCtor(*this));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(*this));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(*this));
         return new dumScope(scapegoat);
     }
 }

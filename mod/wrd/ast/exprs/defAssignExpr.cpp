@@ -8,14 +8,20 @@ namespace wrd {
     WRD_DEF_ME(defAssignExpr)
 
     str me::run(const ucontainable& args) {
-        frame& fr = thread::get()._getNowFrame();
         str new1 = _rhs->run();
         if(!new1)
             return WRD_E("new1 is null"), str();
 
-        fr.pushLocal(_name, *new1);
+        node& to = getTo();
+        if(nul(to))
+            thread::get()._getNowFrame().pushLocal(_name, *new1);
+        else
+            to.run()->subs().add(_name, *new1);
+
         return new1;
     }
+
+    node& me::getTo() { return *_to; }
 
     WRD_VERIFY({
         WRD_DI("verify: defAssignExpr: duplication of variable.");
@@ -31,7 +37,7 @@ namespace wrd {
     WRD_VERIFY({
         WRD_DI("verify: defAssignExpr: isRunnable");
 
-        if(!it.getRight().run())
+        if(!it.run())
             _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), it.getEvalType().getName()
                     .c_str());
     })

@@ -1,6 +1,6 @@
 #include "wStr.hpp"
-#include "../../ast/defaultMakeCtor.hpp"
-#include "../../ast/defaultMakeCopyCtor.hpp"
+#include "../../ast/defaultCtor.hpp"
+#include "../../ast/defaultCopyCtor.hpp"
 #include "wBool.hpp"
 #include "wInt.hpp"
 #include "wFlt.hpp"
@@ -19,8 +19,8 @@ namespace wrd {
     dumScope* me::_onMakeCtors() const {
         static wStr inner;
         scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCtor(inner));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCopyCtor(inner));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
         return new dumScope(scapegoat);
     }
 
