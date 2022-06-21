@@ -1,6 +1,6 @@
 #include "wFlt.hpp"
-#include "../../ast/defaultCtor.hpp"
-#include "../../ast/defaultCopyCtor.hpp"
+#include "../../ast/defaultMakeCtor.hpp"
+#include "../../ast/defaultMakeCopyCtor.hpp"
 #include "wInt.hpp"
 #include "wChar.hpp"
 #include "wBool.hpp"
@@ -40,9 +40,10 @@ namespace wrd {
     me::wFlt(wflt val): super(val) {}
 
     dumScope* me::_onMakeCtors() const {
+        static wFlt inner;
         scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(getType()));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(getType()));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCtor(inner));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCopyCtor(inner));
         return new dumScope(scapegoat);
     }
 }

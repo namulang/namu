@@ -1,6 +1,6 @@
 #include "wChar.hpp"
-#include "../../ast/defaultCtor.hpp"
-#include "../../ast/defaultCopyCtor.hpp"
+#include "../../ast/defaultMakeCtor.hpp"
+#include "../../ast/defaultMakeCopyCtor.hpp"
 #include "wInt.hpp"
 #include "wFlt.hpp"
 #include "wBool.hpp"
@@ -42,9 +42,10 @@ namespace wrd {
     me::wChar(wchar val): super(val) {}
 
     dumScope* me::_onMakeCtors() const {
+        static wChar inner;
         scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(getType()));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(getType()));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCtor(inner));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCopyCtor(inner));
         return new dumScope(scapegoat);
     }
 }

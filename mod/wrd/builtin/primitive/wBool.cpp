@@ -1,6 +1,6 @@
 #include "wBool.hpp"
-#include "../../ast/defaultCtor.hpp"
-#include "../../ast/defaultCopyCtor.hpp"
+#include "../../ast/defaultMakeCtor.hpp"
+#include "../../ast/defaultMakeCopyCtor.hpp"
 #include "wInt.hpp"
 #include "wFlt.hpp"
 #include "wChar.hpp"
@@ -16,9 +16,10 @@ namespace wrd {
     me::wBool(wbool val): super(val) {}
 
     dumScope* me::_onMakeCtors() const {
+        static wBool inner;
         scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(getType()));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(getType()));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCtor(inner));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCopyCtor(inner));
         return new dumScope(scapegoat);
     }
 

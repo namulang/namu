@@ -1,7 +1,7 @@
 #include "wInt.hpp"
 #include "../../ast/param.hpp"
-#include "../../ast/defaultCtor.hpp"
-#include "../../ast/defaultCopyCtor.hpp"
+#include "../../ast/defaultMakeCtor.hpp"
+#include "../../ast/defaultMakeCopyCtor.hpp"
 #include "wFlt.hpp"
 #include "wChar.hpp"
 #include "wBool.hpp"
@@ -11,9 +11,10 @@ namespace wrd {
     WRD_DEF_ME(wInt)
 
     dumScope* me::_onMakeCtors() const {
+        static wInt inner;
         scope scapegoat;
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(getType()));
-        scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(getType()));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCtor(inner));
+        scapegoat.add(baseObj::CTOR_NAME, new defaultMakeCopyCtor(inner));
         return new dumScope(scapegoat);
     }
 
