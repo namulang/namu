@@ -19,6 +19,7 @@ namespace wrd {
     class runExpr;
     class asExpr;
     class addExpr;
+    class FAOExpr;
     class _wout loweventer : public tokenScan {
         WRD(CLASS(loweventer, tokenScan))
         friend class tokenScanModable;
@@ -127,7 +128,11 @@ namespace wrd {
         //      cast:
         asExpr* onAs(const node& me, const node& as);
         //      binary operation:
-        addExpr* onAdd(const node& lhs, const node& rhs);
+        FAOExpr* onAdd(const node& lhs, const node& rhs);
+        FAOExpr* onSub(const node& lhs, const node& rhs);
+        FAOExpr* onMul(const node& lhs, const node& rhs);
+        FAOExpr* onDiv(const node& lhs, const node& rhs);
+        FAOExpr* onMod(const node& lhs, const node& rhs);
 
     private:
         wint _onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner);

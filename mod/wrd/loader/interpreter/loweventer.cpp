@@ -92,7 +92,9 @@ namespace wrd {
     wchar me::onScanUnexpected(const wchar* token) {
         onSrcErr(errCode::UNEXPECTED_TOK, token);
         return token[0];
-    } wint me::onIgnoreIndent(wint tok) {
+    }
+
+    wint me::onIgnoreIndent(wint tok) {
         WRD_DI("tokenEvent: onIgnoreIndent(%d)", tok);
         _dispatcher.add(SCAN_MODE_INDENT_IGNORE);
         return tok;
@@ -392,13 +394,40 @@ namespace wrd {
         return new asExpr(me, as);
     }
 
-    addExpr* me::onAdd(const node& lhs, const node& rhs) {
+    FAOExpr* me::onAdd(const node& lhs, const node& rhs) {
         WRD_DI("tokenEvent: onAdd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
-        return new addExpr(lhs, rhs);
+        return new FAOExpr(FAOExpr::ADD, lhs, rhs);
     }
 
+    FAOExpr* me::onSub(const node& lhs, const node& rhs) {
+        WRD_DI("tokenEvent: onSub(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::SUB, lhs, rhs);
+    }
+
+    FAOExpr* me::onMul(const node& lhs, const node& rhs) {
+        WRD_DI("tokenEvent: onMul(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::MUL, lhs, rhs);
+    }
+
+    FAOExpr* me::onDiv(const node& lhs, const node& rhs) {
+        WRD_DI("tokenEvent: onDiv(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::DIV, lhs, rhs);
+    }
+
+    FAOExpr* me::onMod(const node& lhs, const node& rhs) {
+        WRD_DI("tokenEvent: onMod(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+                .c_str());
+
+        return new FAOExpr(FAOExpr::MOD, lhs, rhs);
+    }
 
 
     me::loweventer() { rel(); }

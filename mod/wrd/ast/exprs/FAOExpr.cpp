@@ -1,4 +1,4 @@
-#include "addExpr.hpp"
+#include "FAOExpr.hpp"
 #include "../../loader/interpreter/tverification.hpp"
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
@@ -7,7 +7,7 @@
 
 namespace wrd {
 
-    WRD_DEF_ME(addExpr)
+    WRD_DEF_ME(FAOExpr)
 
     namespace {
         const wtype* primitives[] = {
@@ -35,7 +35,7 @@ namespace wrd {
     }
 
     WRD_VERIFY({
-        WRD_DI("verify: addExpr: lhs & rhs should bind something.");
+        WRD_DI("verify: FAOExpr: lhs & rhs should bind something.");
 
         const node& lhs = it.getLeft();
         const node& rhs = it.getRight();
