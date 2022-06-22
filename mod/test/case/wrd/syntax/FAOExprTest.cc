@@ -4,10 +4,10 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    struct addExprTest : public wrdSyntaxTest {};
+    struct FAOExprTest : public wrdSyntaxTest {};
 }
 
-TEST_F(addExprTest, simpleAdd) {
+TEST_F(FAOExprTest, simpleAdd) {
     make().parse(R"SRC(
         a := 5
         b := 2
@@ -26,7 +26,7 @@ TEST_F(addExprTest, simpleAdd) {
     ASSERT_EQ(res->get(), 7);
 }
 
-TEST_F(addExprTest, addWithDefAssign) {
+TEST_F(FAOExprTest, addWithDefAssign) {
     make().parse(R"SRC(
         a := 5
         b := a + 2
@@ -45,7 +45,7 @@ TEST_F(addExprTest, addWithDefAssign) {
     ASSERT_EQ(res->get(), 12);
 }
 
-TEST_F(addExprTest, addWithDefAssignReversedNegative) {
+TEST_F(FAOExprTest, addWithDefAssignReversedNegative) {
     make().parse(R"SRC(
         b := a + 2
         a := 5
@@ -60,7 +60,7 @@ TEST_F(addExprTest, addWithDefAssignReversedNegative) {
     ASSERT_TRUE(nul(b));
 }
 
-TEST_F(addExprTest, addIntAndStrNegative) {
+TEST_F(FAOExprTest, addIntAndStrNegative) {
     make().parse(R"SRC(
         a := "hello" + 12
         main() int
@@ -69,7 +69,7 @@ TEST_F(addExprTest, addIntAndStrNegative) {
     shouldVerified(false);
 }
 
-TEST_F(addExprTest, addIntAndStr) {
+TEST_F(FAOExprTest, addIntAndStr) {
     make().parse(R"SRC(
         a := "hello" + 12
         main() int
@@ -80,4 +80,42 @@ TEST_F(addExprTest, addIntAndStr) {
     wStr& a = getSubPack().sub<wStr>("a");
     ASSERT_FALSE(nul(a));
     ASSERT_EQ(a.get(), std::string("hello12"));
+}
+
+TEST_F(FAOExprTest, simpleSub) {
+    make().parse(R"SRC(
+        a := 5
+        b := 2
+        main() int
+            return a - b
+    )SRC").shouldVerified(true);
+
+    wInt& a = getSubPack().sub<wInt>("a");
+    ASSERT_FALSE(nul(a));
+    ASSERT_EQ(a.get(), 5);
+    wInt b = getSubPack().sub<wInt>("b");
+    ASSERT_EQ(b.get(), 2);
+
+    tstr<wInt> res(getSubPack().run("main"));
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->get(), 3);
+}
+
+TEST_F(FAOExprTest, modWithDefAssign) {
+    make().parse(R"SRC(
+        a := 10
+        b := a / 2
+        main() int
+            return a * b % 7
+    )SRC").shouldVerified(true);
+
+    wInt& a = getSubPack().sub<wInt>("a");
+    ASSERT_FALSE(nul(a));
+    ASSERT_EQ(a.get(), 10);
+    wInt b = getSubPack().sub<wInt>("b");
+    ASSERT_EQ(b.get(), 5);
+
+    tstr<wInt> res(getSubPack().run("main"));
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res->get(), 1);
 }

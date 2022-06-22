@@ -302,15 +302,17 @@ expr3: expr2 {
    } | expr3 '+' expr2 {
     $$ = yyget_extra(scanner)->onAdd(*$1, *$3);
    } | expr3 '-' expr2 {
-    $$ = $1; // TODO:
+    $$ = yyget_extra(scanner)->onSub(*$1, *$3);
    }
 
 expr2: expr1 {
     $$ = $1;
    } | expr2 '*' expr1 {
-    $$ = $1; // TODO:
+    $$ = yyget_extra(scanner)->onMul(*$1, *$3);
    } | expr2 '/' expr1 {
-    $$ = $1; // TODO:
+    $$ = yyget_extra(scanner)->onDiv(*$1, *$3);
+   } | expr2 '%' expr1 {
+    $$ = yyget_extra(scanner)->onMod(*$1, *$3);
    }
 
 expr1: term { $$ = $1;
