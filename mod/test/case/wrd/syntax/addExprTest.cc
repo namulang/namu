@@ -45,6 +45,21 @@ TEST_F(addExprTest, addWithDefAssign) {
     ASSERT_EQ(res->get(), 12);
 }
 
+TEST_F(addExprTest, addWithDefAssignReversedNegative) {
+    make().parse(R"SRC(
+        b := a + 2
+        a := 5
+        main() int
+            return a + b
+    )SRC").shouldVerified(false);
+
+    wInt& a = getSubPack().sub<wInt>("a");
+    ASSERT_FALSE(nul(a));
+    ASSERT_EQ(a.get(), 5);
+    wInt& b = getSubPack().sub<wInt>("b");
+    ASSERT_TRUE(nul(b));
+}
+
 TEST_F(addExprTest, addIntAndStrNegative) {
     make().parse(R"SRC(
         a := "hello" + 12
