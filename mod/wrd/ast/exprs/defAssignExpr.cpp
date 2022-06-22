@@ -37,9 +37,11 @@ namespace wrd {
     WRD_VERIFY({
         WRD_DI("verify: defAssignExpr: isRunnable");
 
-        if(!it.run())
-            _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), it.getEvalType().getName()
-                    .c_str());
+        if(!it.run()) {
+            const wtype& evalType = it.getEvalType();
+            std::string name = nul(evalType) ? "unknown" : evalType.getName().c_str();
+            _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), name.c_str());
+        }
     })
 
     WRD_VERIFY({
