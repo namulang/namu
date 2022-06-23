@@ -48,17 +48,12 @@ namespace wrd {
         static no canMarshal();
     };
 
-    template <>
-    struct _wout tmarshaling<wint> : public tnormalMarshaling<wint, wInt> {};
-
-    template <>
-    struct _wout tmarshaling<std::string> : public tnormalMarshaling<const std::string&, wStr> {};
-
-    template <>
-    struct _wout tmarshaling<const std::string> : public tnormalMarshaling<const std::string&, wStr> {};
-
-    template <>
-    struct _wout tmarshaling<void> : public tnormalMarshaling<void, wVoid> {};
+    template <> struct _wout tmarshaling<wint> : public tnormalMarshaling<wint, wInt> {};
+    template <> struct _wout tmarshaling<std::string> : public tnormalMarshaling<const std::string&, wStr> {};
+    template <> struct _wout tmarshaling<std::string&> : public tnormalMarshaling<const std::string&, wStr> {};
+    template <> struct _wout tmarshaling<const std::string&> : public tnormalMarshaling<const std::string&, wStr> {};
+    template <> struct _wout tmarshaling<const std::string> : public tnormalMarshaling<const std::string&, wStr> {};
+    template <> struct _wout tmarshaling<void> : public tnormalMarshaling<void, wVoid> {};
 
     // TODO: add more.
 }
