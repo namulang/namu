@@ -15,7 +15,13 @@ TEST_F(defAssignExprTest, simpleGlobalDefAssign) {
             age := 5
             return 0
     )SRC").shouldVerified(true);
-    ASSERT_EQ(getSubPack().subs().len(), 3); // 1 for age, 1 for main() 1 for @ctor
+    scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
+    scope& shares = (scope&) (((scopes&) getSlot().subs()).getNext().getContainer());
+    ASSERT_FALSE(nul(shares));
+    ASSERT_FALSE(nul(owns));
+    ASSERT_EQ(owns.len(), 1);
+    ASSERT_EQ(shares.len(), 2);
+
     run();
     ASSERT_EQ(getSubPack().sub<wInt>("age").cast<int>(), 0);
 }
