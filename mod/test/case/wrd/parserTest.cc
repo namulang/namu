@@ -7,33 +7,29 @@ struct parserTest : public wrdSyntaxTest {};
 TEST_F(parserTest, testHelloWorld) {
     parser p;
     const wchar* stringScript = R"SRC(
-        main()
+        main() void
             console.print("hello world!")
     )SRC";
     std::string script(stringScript);
 
     tstr<obj> rootBinder = p.parse(script.c_str());
     ASSERT_TRUE(rootBinder);
-    // TODO: make AST: ASSERT_TRUE(rootBinder->subs().len() == 1);
     rootBinder = p.parse(stringScript);
     ASSERT_TRUE(rootBinder);
-    // TODO: make AST: ASSERT_TRUE(rootBinder->subs().len() == 2);
 
     slot s((manifest()));
-    nbicontainer& tray = s.subs();
-    ASSERT_FALSE(nul(tray));
+    scope& shares = (scope&) (((scopes&) s.subs()).getNext().getContainer());
+    ASSERT_FALSE(nul(shares));
     p.setSlot(s);
-    tray.add("hello", new wStr("hello"));
-    ASSERT_TRUE(tray.len() == 1);
+    shares.add("hello", new wStr("hello"));
+    ASSERT_TRUE(shares.len() == 1);
 
     p.parse(script.c_str());
-    ASSERT_TRUE(tray.len() == 3); // hello + @ctor + main: @preCtor doesn't exist.
-    // TODO: make AST: ASSERT_TRUE(tray.len() == 2);
+    ASSERT_EQ(shares.len(), 2); // @ctor + main: @preCtor doesn't exist.
     p.parse(script.c_str());
-    ASSERT_TRUE(tray.len() == 4); // add func main on every parse() call.
-    // TODO: make AST: ASSERT_TRUE(tray.len() == 3);
+    ASSERT_EQ(shares.len(), 3); // add func main on every parse() call.
 
-    ASSERT_TRUE(tray.get<wStr>("hello") == wStr("hello"));
+    ASSERT_TRUE(shares.get<wStr>("hello") == wStr("hello"));
 }
 
 TEST_F(parserTest, slotNoOnTray) {
@@ -43,9 +39,10 @@ TEST_F(parserTest, slotNoOnTray) {
     )SRC");
     shouldVerified(true);
 
-    ASSERT_EQ(getSlot().subs().len(), 2);
+    nbicontainer& shares = (getSlot().subs().begin() + 1).getContainer();
+    ASSERT_EQ(shares.len(), 2);
     ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
-    ASSERT_EQ(getSubPack().subs().len(), 2);
+    ASSERT_EQ((getSubPack().subs().begin() + 1).getContainer().len(), 2);
     ASSERT_EQ(&getSlot().getPack(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");
     ASSERT_FALSE(nul(f));
@@ -61,9 +58,9 @@ TEST_F(parserTest, slotNoOnTrayWithoutMake) {
     )SRC");
     shouldVerified(true);
 
-    ASSERT_EQ(getSlot().subs().len(), 2);
+    nbicontainer& shares = (getSlot().subs().begin() + 1).getContainer();
+    ASSERT_EQ(shares.len(), 2);
     ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
-    ASSERT_EQ(getSubPack().subs().len(), 2);
     ASSERT_EQ(&getSlot().getPack(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");
     ASSERT_FALSE(nul(f));

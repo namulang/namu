@@ -23,13 +23,11 @@ namespace wrd {
         static void add(const verification* new1);
 
         me& setReport(errReport& rpt);
-        me& setSlots(const slotContainer& slots);
         // @param newInfo is not a heap instance.
         me& setFrameInfo(tstr<frame>& newInfo);
 
         errReport& getReport();
         tstr<frame>& getFrameInfo();
-        const slotContainer& getSlots();
 
         void verify(node& it);
 
@@ -39,7 +37,6 @@ namespace wrd {
 
     private:
         tstr<errReport> _rpt;
-        tstr<slotContainer> _slots;
         tstr<frame>* _frameInfo;
     };
 

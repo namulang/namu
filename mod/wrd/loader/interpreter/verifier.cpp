@@ -7,7 +7,6 @@ namespace wrd {
 
     void me::rel() {
         setReport(dummyErrReport::singletone);
-        setSlots(thread::get().getSystemSlots());
         _frameInfo = nullptr;
     }
 
@@ -24,11 +23,6 @@ namespace wrd {
         return *this;
     }
 
-    me& me::setSlots(const tnbicontainer<std::string, slot>& slots) {
-        _slots.bind(slots);
-        return *this;
-    }
-
     me& me::setFrameInfo(tstr<frame>& newInfo) {
         _frameInfo = &newInfo;
         return *this;
@@ -36,7 +30,6 @@ namespace wrd {
 
     errReport& me::getReport() { return *_rpt; }
     tstr<frame>& me::getFrameInfo() { return *_frameInfo; }
-    const slotContainer& me::getSlots() { return *_slots; }
 
     void me::verify(node& it) {
         _verify(it, it.getType());

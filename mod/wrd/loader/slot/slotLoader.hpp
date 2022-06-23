@@ -17,15 +17,14 @@ namespace wrd {
         me& addPath(const std::string& filePath);
         me& addPath(const std::vector<std::string> paths);
         me& addPath(std::initializer_list<const wchar*> paths);
-
+        me& setBaseSlots(nmap& s);
         me& setReport(errReport& report);
-        me& setBaseSlots(slots& basis);
 
-        tstr<slots> load();
+        void load();
 
     private:
-        void _makeSlots(slots& tray);
-        void _addNewSlot(slots& tray, const std::string& dirPath, const std::string& manifestName);
+        void _makeSlots(nmap& tray);
+        void _addNewSlot(nmap& tray, const std::string& dirPath, const std::string& manifestName);
 
         void _logSlot(const slot& pak) const;
 
@@ -35,8 +34,8 @@ namespace wrd {
         const packLoadings& _getLoadings() const;
 
     private:
-        slots* _baseSlots;
         tstr<errReport> _report;
+        tstr<nmap> _slots;
         std::vector<std::string> _paths;
         static constexpr wchar DELIMITER = '/';
     };
