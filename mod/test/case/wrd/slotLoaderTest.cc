@@ -6,10 +6,10 @@ using namespace std;
 struct slotLoaderTest : public wrdTest {};
 
 TEST_F(slotLoaderTest, testDefaultLoaderInit) {
-    const slots& systemSlots = wrd::thread::get().getSystemSlots();
+    const nmap& systemSlots = wrd::thread::get().getSlots();
     ASSERT_FALSE(nul(systemSlots));
 
-    slot& s = systemSlots.get([](const std::string& name, const slot& e) { return name == "samplePack"; });
+    slot& s = systemSlots.get<slot>([](const std::string& name, const slot& e) { return name == "samplePack"; });
     ASSERT_FALSE(nul(s));
 
     ASSERT_EQ(s.subs().len(), 1);

@@ -3,6 +3,7 @@
 #include "../../ast.hpp"
 #include "../../ast/mgd/mgdFunc.hpp"
 #include "../../builtin/primitive.hpp"
+#include "../../frame/thread.hpp"
 
 namespace wrd {
 
@@ -289,6 +290,10 @@ namespace wrd {
             bicontainable& con = nul(e.getVal<func>()) ? own : share;
             con.add(e.getKey(), *e);
         }
+
+        // link system slots:
+        it.getShares().link(thread::get().getSlots());
+        WRD_DI("link system slots[%d]: len=%d", thread::get().getSlots().len(), it.subs().len());
 
         return _onInjectCtor(it, blk);
     }

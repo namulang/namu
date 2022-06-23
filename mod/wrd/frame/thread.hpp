@@ -8,8 +8,6 @@ namespace wrd {
 
     class slotLoader;
     typedef tnarr<frame> frames;
-    class slot;
-    typedef tnmap<std::string, slot> slots;
 
     class _wout thread : public node {
         WRD(CLASS(thread, node))
@@ -43,7 +41,9 @@ namespace wrd {
 
         void rel() override;
 
-        const slots& getSystemSlots();
+        /// @return slot instances loaded by internal system.
+        ///         you can cast these to 'slot' types.
+        const nmap& getSlots() const;
 
     protected:
         frames& _getFrames();

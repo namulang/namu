@@ -8,14 +8,14 @@ namespace wrd {
 
     WRD_DEF_ME(thread)
 
-    const slots& me::getSystemSlots() {
-        static tstr<slots> inner;
+    const nmap& me::getSlots() const {
+        static tstr<nmap> inner;
 
         if(!inner) {
-
             WRD_I("initiates loading system slots.");
+            inner.bind(new nmap());
             errReport report;
-            inner = slotLoader().setReport(report).addPath("pack/").load();
+            slotLoader().setReport(report).setBaseSlots(*inner).addPath("pack/").load();
             WRD_I("%d system slots has been loaded.", inner->len());
 
 #if WRD_IS_DBG
@@ -26,7 +26,7 @@ namespace wrd {
                     continue;
                 }
 
-                const manifest& mani = s.getManifest();
+                const manifest& mani = s.cast<slot>().getManifest();
                 WRD_DI(" - %s v%s", mani.name.c_str(), mani.version.c_str());
             }
 #endif

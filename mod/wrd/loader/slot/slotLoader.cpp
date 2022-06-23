@@ -6,14 +6,14 @@ namespace wrd {
 
     WRD_DEF_ME(slotLoader)
 
-    me::slotLoader(): _baseSlots(nullptr), _report(dummyErrReport::singletone) {}
+    me::slotLoader(): _report(dummyErrReport::singletone) {}
 
-    tstr<slots> me::load() {
+    void me::load() {
         // TODO: returns result when it's fail
-        slots* ret = new slots();
+        if(!_slots)
+            _slots.bind(new nmap());
 
-        _makeSlots(*ret);
-        return tstr<slots>(*ret);
+        _makeSlots(*_slots);
     }
 
     manifest me::_interpManifest(const std::string& dir, const std::string& manPath) const {
@@ -80,12 +80,12 @@ namespace wrd {
         return *this;
     }
 
-    me& me::setBaseSlots(slots& basis) {
-        _baseSlots = &basis;
+    me& me::setBaseSlots(nmap& s) {
+        _slots.bind(s);
         return *this;
     }
 
-    void me::_makeSlots(slots& tray) {
+    void me::_makeSlots(nmap& tray) {
         std::string cwd = fsystem::getCurrentDir() + "/";
         WRD_I("finding slots relative to %s or absolute", cwd.c_str());
 
@@ -99,7 +99,7 @@ namespace wrd {
         }
     }
 
-    void me::_addNewSlot(slots& tray, const std::string& dirPath, const std::string& manifestName) {
+    void me::_addNewSlot(nmap& tray, const std::string& dirPath, const std::string& manifestName) {
         std::string manifestPath = dirPath + DELIMITER + manifestName;
 
         manifest mani = _interpManifest(dirPath, manifestPath);
