@@ -342,18 +342,19 @@ namespace wrd {
 
     node* me::onGet(const std::string& name) {
         WRD_DI("tokenEvent: onGet(%s)", name.c_str());
-
         return new getExpr(name);
     }
     node* me::onGet(const std::string& name, const narr& args) {
         WRD_DI("tokenEvent: onGet(%s, %d)", name.c_str(), args.len());
-
         return new getExpr(name, args);
     }
+    node* me::onGet(node& from, const std::string& name) {
+        WRD_DI("tokenEvent: onGet(%s, %s)", from.getType().getName().c_str(), name.c_str());
+        return new getExpr(from, name);
+    }
     node* me::onGet(node& from, const std::string& name, const narr& args) {
-        WRD_DI("tokenEvent: onGet(%s, %s, %d)", from.getType().getName().c_str(),
-                name.c_str(), args.len());
-
+        WRD_DI("tokenEvent: onGet(%s, %s, %d)", from.getType().getName().c_str(), name.c_str(),
+                args.len());
         return new getExpr(from, name, args);
     }
 

@@ -12,4 +12,14 @@ TEST_F(bundlePackTest, defaultDef) {
         main() void
             samplePack.helloWorld.print("hello world!\n")
     )SRC").shouldVerified(true);
+    run();
 }
+
+/*TEST_F(bundlePackTest, defaultDef2) {
+    make().parse(R"SRC(
+        msg := "hello "
+        main() void
+            samplePack.helloWorld.print(msg + "world!\n")
+    )SRC").shouldVerified(true);
+    run();
+}*/

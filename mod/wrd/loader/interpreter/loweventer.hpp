@@ -88,6 +88,7 @@ namespace wrd {
         node* onName(const std::string& name);
         node* onGet(const std::string& name);
         node* onGet(const std::string& name, const narr& args);
+        node* onGet(node& from, const std::string& name);
         node* onGet(node& from, const std::string& name, const narr& args);
         //      assign:
         node* onAssign(node& lhs, node& rhs);
