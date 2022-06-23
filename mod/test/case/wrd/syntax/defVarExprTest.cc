@@ -56,7 +56,12 @@ TEST_F(defVarExprTest, definePackVariable2) {
     slot& s = getSlot();
     ASSERT_EQ(s.getManifest().name, manifest::DEFAULT_NAME);
 
-    ASSERT_EQ(s.subs().len(), 5); // 3 variable, 1 func, 1 @ctor
+    scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
+    scope& shares = (scope&) (((scopes&) getSlot().subs()).getNext().getContainer());
+    ASSERT_FALSE(nul(owns));
+    ASSERT_FALSE(nul(shares));
+    ASSERT_EQ(owns.len(), 3);
+    ASSERT_EQ(shares.len(), 2);
     ASSERT_EQ(s.subAll<baseObj>().len(), 3);
     ASSERT_EQ(s.subAll<mgdFunc>().len(), 1);
 

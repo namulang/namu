@@ -25,9 +25,9 @@ TEST_F(parserTest, testHelloWorld) {
     ASSERT_TRUE(shares.len() == 1);
 
     p.parse(script.c_str());
-    ASSERT_EQ(shares.len(), 2); // @ctor + main: @preCtor doesn't exist.
+    ASSERT_EQ(shares.len(), 3); // @ctor + main + 'hello': @preCtor doesn't exist.
     p.parse(script.c_str());
-    ASSERT_EQ(shares.len(), 3); // add func main on every parse() call.
+    ASSERT_EQ(shares.len(), 4); // add func main on every parse() call.
 
     ASSERT_TRUE(shares.get<wStr>("hello") == wStr("hello"));
 }
@@ -39,10 +39,13 @@ TEST_F(parserTest, slotNoOnTray) {
     )SRC");
     shouldVerified(true);
 
-    nbicontainer& shares = (getSlot().subs().begin() + 1).getContainer();
-    ASSERT_EQ(shares.len(), 2);
+    scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
+    ASSERT_FALSE(nul(owns));
+    ASSERT_EQ(owns.len(), 0);
     ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
-    ASSERT_EQ((getSubPack().subs().begin() + 1).getContainer().len(), 2);
+    scope& shares = (scope&) (((scopes&) getSlot().subs()).getNext().getContainer());
+    ASSERT_FALSE(nul(shares));
+    ASSERT_EQ(shares.len(), 2);
     ASSERT_EQ(&getSlot().getPack(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");
     ASSERT_FALSE(nul(f));
@@ -58,8 +61,8 @@ TEST_F(parserTest, slotNoOnTrayWithoutMake) {
     )SRC");
     shouldVerified(true);
 
-    nbicontainer& shares = (getSlot().subs().begin() + 1).getContainer();
-    ASSERT_EQ(shares.len(), 2);
+    scope& shares = (scope&) (((scopes&) getSlot().subs()).getNext().getContainer());
+    ASSERT_FALSE(nul(shares));
     ASSERT_EQ(getSlot().getManifest().name, manifest::DEFAULT_NAME);
     ASSERT_EQ(&getSlot().getPack(), &getSubPack());
     mgdFunc& f = getSubPack().sub<mgdFunc>("main");

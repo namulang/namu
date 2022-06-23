@@ -14,7 +14,13 @@ TEST_F(commentTest, singleLineComment) {
         main() int // main is also a main
             return 0
     )SRC").shouldVerified(true);
-    ASSERT_EQ(getSubPack().subs().len(), 3); // 1 for age, 1 for main() 1 for @ctor
+
+    scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
+    scope& shares = (scope&) (((scopes&) getSubPack().subs()).getNext().getContainer());
+    ASSERT_FALSE(nul(shares));
+    ASSERT_FALSE(nul(owns));
+    ASSERT_EQ(owns.len(), 1); // 1 for age
+    ASSERT_EQ(shares.len(), 2); // 1 for main() 1 for @ctor
 }
 
 TEST_F(commentTest, multiLineComment) {
@@ -25,7 +31,12 @@ TEST_F(commentTest, multiLineComment) {
         main() flt
             return 2.5
     )SRC").shouldVerified(true);
-    ASSERT_EQ(getSubPack().subs().len(), 3);
+    scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
+    scope& shares = (scope&) (((scopes&) getSubPack().subs()).getNext().getContainer());
+    ASSERT_FALSE(nul(shares));
+    ASSERT_FALSE(nul(owns));
+    ASSERT_EQ(owns.len(), 1); // 1 for age
+    ASSERT_EQ(shares.len(), 2); // 1 for main() 1 for @ctor
 }
 
 TEST_F(commentTest, multiLineComment2) {
@@ -37,7 +48,12 @@ TEST_F(commentTest, multiLineComment2) {
         main() void
             return
     )SRC").shouldVerified(true);
-    ASSERT_EQ(getSubPack().subs().len(), 3);
+    scope& owns = (scope&) (((scopes&) getSlot().subs()).getContainer());
+    scope& shares = (scope&) (((scopes&) getSubPack().subs()).getNext().getContainer());
+    ASSERT_FALSE(nul(shares));
+    ASSERT_FALSE(nul(owns));
+    ASSERT_EQ(owns.len(), 1); // 1 for age
+    ASSERT_EQ(shares.len(), 2); // 1 for main() 1 for @ctor
 }
 
 TEST_F(commentTest, multiLineComment3) {
