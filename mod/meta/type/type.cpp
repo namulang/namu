@@ -21,7 +21,6 @@ namespace wrd {
 
     void me::_findLeafs(const type& cls, types& tray) const {
         for(const type* sub : cls.getSubs()) {
-            WRD_E("findLeafs: sub=%s, getSubs().size()=%d", sub->getName().c_str(), sub->getSubs().size());
             if(sub->getSubs().size() == 0)
                 tray.push_back(const_cast<type*>(sub));
 
@@ -51,7 +50,6 @@ namespace wrd {
         //      will leds us to here, however nothing serius happen because init flag was set
         //      to true.
         _setInit(true);
-        WRD_DI("initializing %s type's meta info...", getName().c_str());
         //  get Supers info from Super:
         //      at this point TType<Super> is instantiated, and "Super" also is all of this
         //      sequences.
@@ -103,11 +101,6 @@ namespace wrd {
             return res;
         }
 
-#define _FUNC(func) WRD_DI("\t  ." #func "=%s", func ? "true" : "false");
-        WRD_EACH(_FUNC, isTemplate(), isAbstract())
-#undef _FUNC
-
-        WRD_DI("... %s class init completed.", getName().c_str());
         return res;
     }
 
