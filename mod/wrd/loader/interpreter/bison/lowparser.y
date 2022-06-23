@@ -242,7 +242,8 @@ postfix: primary {
      } | postfix DOUBLE_PLUS {
         $$ = $1; // TODO:
      } | postfix '.' NAME {
-        $$ = $1; // TODO:
+        $$ = yyget_extra(scanner)->onGet(*$1, std::string($3));
+        free($3);
      } | postfix '.' func-call {
         $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
      } | func-call {
