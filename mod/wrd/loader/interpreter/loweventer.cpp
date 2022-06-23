@@ -304,7 +304,7 @@ namespace wrd {
         if(hasCtor) return false;
 
         // TODO: ctor need to call superclass's ctor.
-        it.subs().add(baseObj::CTOR_NAME, *new defaultCtor(it.getOrigin()));
+        it.getShares().getContainer().add(baseObj::CTOR_NAME, *new defaultCtor(it.getOrigin()));
 
         // add preCtor:
         if(blk.asPreCtor && blk.asPreCtor->len()) {
