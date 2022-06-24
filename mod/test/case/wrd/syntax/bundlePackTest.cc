@@ -10,7 +10,7 @@ namespace {
 TEST_F(bundlePackTest, defaultDef) {
     make().parse(R"SRC(
         main() void
-            samplePack.helloWorld.print("hello world!\n")
+            samplePack.helloWorld.print("hello \\tworld!\n")
     )SRC").shouldVerified(true);
     run();
 }

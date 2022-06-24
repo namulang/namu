@@ -35,6 +35,7 @@ namespace {
     ============================================================================================  */
 
 %x stateComment
+%x escSeq
 
 
 /*  ============================================================================================
@@ -117,9 +118,23 @@ false {
     return CHARVAR;
 }
 
-\"([^\r\f\n\"]*)\" {
+\"([^\r\f\n\"\\]*)\" {
     yylval->asStr = new std::string(yytext + 1, yyleng - 2);
     WRD_DI("scanner: STRVAL=\"%s\"", yylval->asStr->c_str());
+    return STRVAL;
+}
+
+\"[^"\\]* { yylval->asStr = new std::string(yytext + 1, yyleng - 1);
+    BEGIN(yyget_extra(yyscanner)->pushState(escSeq));
+}
+
+<escSeq>[^"\\]+ { yylval->asStr->append(yytext, yyleng); }
+<escSeq>\\n     { (*yylval->asStr) += '\n'; }
+<escSeq>\\t     { (*yylval->asStr) += '\t'; }
+<escSeq>\\\n    { /* A backslash at the end of the line. Do nothing */ }
+<escSeq>\\.     { (*yylval->asStr) += yytext[1]; }
+<escSeq>\"      {
+    BEGIN(yyget_extra(yyscanner)->popState());
     return STRVAL;
 }
 
