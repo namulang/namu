@@ -79,7 +79,7 @@
 %union {
     char asChar;
     int asInt;
-    char* asStr;
+    std::string* asStr;
     bool asBool;
     float asFlt;
     wrd::node* asNode;
@@ -204,11 +204,12 @@ func-call: NAME list %expect 1 {
         //      Second example: NAME list • NEWLINE DEDENT $end
         //          e.g. foo(just_primary) •
         tstr<narr> argsLife($2);
-        $$ = yyget_extra(scanner)->onRunExpr(std::string($1), *argsLife);
+        $$ = yyget_extra(scanner)->onRunExpr(*$1, *argsLife);
+        free($1);
       }
 
 dotname-item: NAME {
-            $$ = yyget_extra(scanner)->onName(std::string($1));
+            $$ = yyget_extra(scanner)->onName(*$1);
             free($1);
           } | func-call {
             // $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*new getExpr("me"), $1->cast<runExpr>());
@@ -242,7 +243,7 @@ postfix: primary {
      } | postfix DOUBLE_PLUS {
         $$ = $1; // TODO:
      } | postfix '.' NAME {
-        $$ = yyget_extra(scanner)->onGet(*$1, std::string($3));
+        $$ = yyget_extra(scanner)->onGet(*$1, *$3);
         free($3);
      } | postfix '.' func-call {
         $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*$1, $3->cast<runExpr>());
@@ -254,7 +255,7 @@ postfix: primary {
 primary: INTVAL {
        $$ = yyget_extra(scanner)->onPrimitive<wInt>($1);
      } | STRVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<wStr>($1);
+       $$ = yyget_extra(scanner)->onPrimitive<wStr>(*$1);
        free($1);
      } | FLTVAL {
        $$ = yyget_extra(scanner)->onPrimitive<wFlt>($1);
@@ -273,7 +274,7 @@ primary: INTVAL {
         // TODO: list should contain 1 element.
         $$ = new blockExpr(); // TODO:
      } | NAME {
-        $$ = yyget_extra(scanner)->onGet(std::string($1));
+        $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
      }
 
@@ -380,11 +381,11 @@ defvar: defvar-exp-no-initial-value { $$ = $1; }
       | defvar-exp-initial-value { $$ = $1; }
 
 defvar-exp-no-initial-value: NAME type { // exp means 'explicitly'
-                             $$ = yyget_extra(scanner)->onDefVar(std::string($1), *$2);
+                             $$ = yyget_extra(scanner)->onDefVar(*$1, *$2);
                              free($1);
                          }
 defvar-exp-initial-value: NAME DEFASSIGN expr {
-                          $$ = yyget_extra(scanner)->onDefAssign(std::string($1), *$3);
+                          $$ = yyget_extra(scanner)->onDefAssign(*$1, *$3);
                           free($1);
                       }
 
@@ -397,7 +398,7 @@ deffunc-default: NAME list type indentblock {
                 // take bind of exprs instance: because it's on heap. I need to free.
                 tstr<narr> list($2);
                 str type($3);
-                $$ = yyget_extra(scanner)->onFunc(std::string($1), *list, *type, $4->cast<blockExpr>());
+                $$ = yyget_extra(scanner)->onFunc(*$1, *list, *type, $4->cast<blockExpr>());
                 free($1);
              }
 deffunc-deduction: NAME list indentblock {
