@@ -106,7 +106,7 @@ false {
 }
 
 [a-zA-Z0-9_]+ {
-    yylval->asStr = strdup(yytext);
+    yylval->asStr = new std::string(yytext);
     WRD_DI("scanner: NAME=%s", yytext);
     return NAME;
 }
@@ -118,11 +118,8 @@ false {
 }
 
 \"([^\r\f\n\"]*)\" {
-    int len = strlen(yytext) - 2; // without double-quotes
-    yylval->asStr = new char[len+1];
-    strncpy(yylval->asStr, yytext+1, len);
-    yylval->asStr[len] = '\0';
-    WRD_DI("scanner: STRVAL=\"%s\"", yylval->asStr);
+    yylval->asStr = new std::string(yytext + 1, yyleng - 2);
+    WRD_DI("scanner: STRVAL=\"%s\"", yylval->asStr->c_str());
     return STRVAL;
 }
 
