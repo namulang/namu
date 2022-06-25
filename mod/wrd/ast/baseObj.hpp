@@ -1,6 +1,7 @@
 #pragma once
 
 #include "src.hpp"
+#include "../frame/frameInteractable.hpp"
 
 namespace wrd {
 
@@ -31,9 +32,9 @@ namespace wrd {
     protected:
         str _onRunSub(node& sub, const ucontainable& args) override;
 
-    private:
-        void _inFrame();
-        void _outFrame();
+    protected:
+        void _inFrame(const bicontainable& args) override;
+        void _outFrame() override;
 
     public:
          inline static const string CTOR_NAME = "@ctor";
