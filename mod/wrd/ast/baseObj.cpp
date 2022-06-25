@@ -15,11 +15,6 @@ namespace wrd {
         return str(this);
     }
 
-    str me::_onRunSub(node& sub, const ucontainable& args) {
-        str ret = super::_onRunSub(sub, args);
-        return ret;
-    }
-
     wbool me::canRun(const ucontainable& args) const {
         return args.len() <= 0;
     }

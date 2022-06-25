@@ -116,7 +116,7 @@ TEST_F(funcTest, testfuncConstructNewFrame) {
     myObj obj;
     const char* funcNames[] = {"test"};
     myfunc func;
-    func.getParams().add(new param(func::ME, obj.getType()));
+    func.getParams().add(new param(func::ME, obj));
 
     obj.subs().add(funcNames[0], func);
     WRD_I("obj.len=%d", obj.subs().len());
@@ -218,7 +218,7 @@ TEST_F(funcTest, testfuncHasStrParameter) {
 
     params& types = func1.getParams();
     types.add(new param(func::ME, obj));
-    types.add(new param("", ttype<wStr>::get()));
+    types.add(new param("", new wStr()));
     func1.setLambda([&](const auto& args, const frames& sf) { return true; });
 
     narr args;
@@ -242,8 +242,8 @@ TEST_F(funcTest, testArgsAttachedName) {
     o.subs().add("myfunc", f);
     params& ps = f.getParams();
     ps.add(new param(func::ME, o));
-    ps.add(new param("msg", ttype<wStr>::get()));
-    ps.add(new param("age", ttype<wInt>::get()));
+    ps.add(new param("msg", new wStr()));
+    ps.add(new param("age", new wInt()));
     f.setLambda([&](const auto& args, const frames& sf) {
         const frame& fr = sf[sf.len() - 1];
         return  fr["msg"].cast<wStr>().get() == "hello world" &&
