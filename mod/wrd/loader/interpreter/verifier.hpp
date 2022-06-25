@@ -30,9 +30,10 @@ namespace wrd {
         tstr<frame>& getFrameInfo();
 
         void verify(node& it);
+        void verify(node& it, const bicontainable& tray);
+        void verify(node& it, const type& typ, const bicontainable& tray);
 
     private:
-        void _verify(node& it, const type& typ);
         static verifications& _getVerifications(const type& typ);
 
     private:

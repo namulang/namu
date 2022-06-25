@@ -14,14 +14,5 @@ namespace wrd {
         const wtype& getType() const override {
             return ttype<T>::get();
         }
-
-        using super::verify;
-        void verify(verifier& veri, node& it) override {
-            super::verify(veri, it);
-            _onVerify((T&) it);
-        }
-
-    protected:
-        virtual void _onVerify(T& it) = 0;
     };
 }

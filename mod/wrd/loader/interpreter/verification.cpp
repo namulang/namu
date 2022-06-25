@@ -9,7 +9,11 @@ namespace wrd {
     WRD_DEF_ME(verification)
 
     void me::verify(node& it) {
-        _getVerifier().verify(it);
+        verify(it, nmap());
+    }
+
+    void me::verify(node& it, const bicontinable& tray) {
+        _getVerifier().verify(it, tray);
     }
 
     wbool me::logFrameInfo(const frame& newFr) {
@@ -19,7 +23,7 @@ namespace wrd {
         return info.bind(newFr);
     }
 
-    void me::verify(verifier& veri, node& it) {
+    void me::_onVerify(verifier& veri, node& it, const bicontainable& tray) {
         _it = &it;
         _verifier = &veri;
     }
