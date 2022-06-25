@@ -6,13 +6,14 @@
 #include "../builtin/container/native/tnarr.hpp"
 #include "point.hpp"
 #include "../type/wtype.hpp"
+#include "../frame/frameInteractable.hpp"
 
 namespace wrd {
 
     class ases;
 
     /// node provides common API to manipulate its sub nodes.
-    class _wout node : public instance, public clonable {
+    class _wout node : public instance, public clonable, public frameInteractable {
         WRD(ADT(node, instance))
 
     public:
@@ -90,5 +91,7 @@ namespace wrd {
 
     protected:
         virtual str _onRunSub(node& sub, const ucontainable& args);
+        void _inFrame(const bicontainable& args) override {}
+        void _outFrame() override {}
     };
 }

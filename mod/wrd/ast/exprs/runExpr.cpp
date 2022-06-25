@@ -45,6 +45,8 @@ namespace wrd {
         return nul(f) ? sub.getEvalType() : f.getRetType();
     }
 
+
+
     WRD_VERIFY({
         if(nul(it.getMe())) return _srcErr(errCode::CANT_CAST_TO_NODE);
 

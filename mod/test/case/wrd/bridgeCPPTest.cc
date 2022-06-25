@@ -36,12 +36,10 @@ TEST_F(bridgeCPPTest, testNormalWrapping) {
         // TODO: how to handle void return & void parameter
         //.func<void, void>(&kniz::say);
 
-    narr args;
-    args.add(new wStr("hello native!"));
     node& func = bridge->sub("say");
     ASSERT_FALSE(nul(func));
 
-    bridge->run("say", args);
+    bridge->run("say", narr(*bridge, *new wStr("hello native!")));
     ASSERT_TRUE(kniz::isRun);
 }
 
@@ -52,7 +50,6 @@ TEST_F(bridgeCPPTest, testFuncDoesntHaveObjNegative) {
         //.func<void, void>(&kniz::say);
 
     narr args;
-    args.add(*bridge);
     args.add(new wStr("hello native!"));
     bridge->run("say", args);
     ASSERT_FALSE(kniz::isRun);

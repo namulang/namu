@@ -12,6 +12,9 @@ namespace wrd {
         WRD(ADT(func, expr))
 
     public:
+        static inline const std::string ME = "me";
+
+    public:
         wbool canRun(const ucontainable& args) const override;
 
         /// @return parameters of run() func.

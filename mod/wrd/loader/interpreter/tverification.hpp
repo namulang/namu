@@ -14,5 +14,15 @@ namespace wrd {
         const wtype& getType() const override {
             return ttype<T>::get();
         }
+
+    protected:
+        void _onPrepareVerify(verifier& veri, node& it, bicontainable& tray) override {
+            _it = &it;
+            _verifier = &veri;
+            _tray = &tray;
+
+            _onVerify((T&) it);
+        }
+        virtual void _onVerify(T& it) = 0;
     };
 }

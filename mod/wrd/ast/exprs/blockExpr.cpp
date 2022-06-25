@@ -4,19 +4,21 @@
 #include "../../loader/interpreter/tverification.hpp"
 #include "../../builtin/primitive/wVoid.hpp"
 #include "../../loader/interpreter/verifier.hpp"
+#include "../../frame/frameInteract.hpp"
 
 namespace wrd {
     WRD_DEF_ME(blockExpr)
 
-    wbool me::_inFrame() {
+    void me::_inFrame(const bicontainable& args) {
         WRD_DI("%s._onInFrame()", getType().getName().c_str());
 
         frame& fr = wrd::thread::get()._getNowFrame();
-        if(nul(fr))
-            return WRD_E("fr == null"), false;
+        if(nul(fr)) {
+            WRD_E("fr == null");
+            return;
+        }
 
         fr.pushLocal(new scope());
-        return true;
     }
 
     void me::_outFrame() {
@@ -27,28 +29,33 @@ namespace wrd {
     }
 
     str me::run(const ucontainable& args) {
-        if(!_inFrame())
-            return str();
-
-        str ret;
-        frame& fr = wrd::thread::get()._getNowFrame();
-        for(auto& e : _exprs) {
-            ret = e.run();
-            if(fr.isReturned()) break;
+        frameInteract f1(*this); {
+            str ret;
+            frame& fr = wrd::thread::get()._getNowFrame();
+            for(auto& e : _exprs) {
+                ret = e.run();
+                if(fr.isReturned()) break;
+            }
+            return ret;
         }
-
-        _outFrame();
-        return ret;
     }
+
+    const wtype& me::getEvalType() const {
+        wcnt len = _exprs.len();
+        if(len <= 0) return nulOf<wtype>();
+
+        return _exprs[len-1].getEvalType();
+    }
+
+
 
     WRD_VERIFY(blockExpr, visitSubNodes, { // visit sub nodes.
         WRD_DI("verify: blockExpr: visit sub nodes[%d]", it._exprs.len());
-        if(!it._inFrame()) return _srcErr(errCode::BLK_CANT_MAKE_FRAME);
 
-        for(auto& e : it._exprs)
-            verify(e);
+        frameInteract f1(it); {
+            for(auto& e : it._exprs)
+                verify(e);
 
-        {
             WRD_DI("verify: last stmt should match to ret type");
 
             const narr& stmts = it.getStmts();
@@ -67,16 +74,8 @@ namespace wrd {
             if(nul(lastType)) return _err(lastStmt.getPos(), NO_RET_TYPE);
             if(!lastType.isSub(retType)) return _err(lastStmt.getPos(), errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
                     retType.getName().c_str());
+
+            WRD_DI("block.outFrame()\n");
         }
-
-        WRD_DI("block.outFrame()\n");
-        it._outFrame();
     })
-
-    const wtype& me::getEvalType() const {
-        wcnt len = _exprs.len();
-        if(len <= 0) return nulOf<wtype>();
-
-        return _exprs[len-1].getEvalType();
-    }
 }

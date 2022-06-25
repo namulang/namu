@@ -34,8 +34,8 @@ namespace wrd {
         }
 
     private:
-        wbool _inFrame(scope& args);
-        void _outFrame();
+        void _inFrame(const bicontainable& args) override;
+        void _outFrame() override;
         scope* _evalArgs(const ucontainable& args);
 
     private:

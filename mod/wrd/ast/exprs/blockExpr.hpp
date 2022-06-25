@@ -22,8 +22,8 @@ namespace wrd {
         narr& getStmts() { return _exprs; }
 
     private:
-        wbool _inFrame();
-        void _outFrame();
+        void _inFrame(const bicontainable& args) override;
+        void _outFrame() override;
 
     private:
         narr _exprs;

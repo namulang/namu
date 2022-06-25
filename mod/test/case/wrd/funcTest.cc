@@ -116,6 +116,7 @@ TEST_F(funcTest, testfuncConstructNewFrame) {
     myObj obj;
     const char* funcNames[] = {"test"};
     myfunc func;
+    func.getParams().add(new param(func::ME, obj.getType()));
 
     obj.subs().add(funcNames[0], func);
     WRD_I("obj.len=%d", obj.subs().len());
@@ -136,8 +137,8 @@ TEST_F(funcTest, testfuncConstructNewFrame) {
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     func.run(args);
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
-    ASSERT_FALSE(func.isRun());
-    ASSERT_FALSE(func.isSuccess());
+    ASSERT_TRUE(func.isRun());
+    ASSERT_TRUE(func.isSuccess());
 
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     obj.run(funcNames[0]);
@@ -150,7 +151,9 @@ TEST_F(funcTest, testfuncConstructNewFrame) {
 TEST_F(funcTest, testCallfuncInsidefunc) {
     myObj obj1;
     myfunc obj1func1;
+    obj1func1.getParams().add(new param(func::ME, obj1));
     myfunc obj1func2;
+    obj1func2.getParams().add(new param(func::ME, obj1));
     obj1.subs().add(func1Name, obj1func1);
     obj1.subs().add(func2Name, obj1func2);
     const char* obj1FuncNames[] = {func1Name, func2Name};
@@ -197,10 +200,10 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     obj1func1.run(args);
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
-    ASSERT_FALSE(obj1func1.isSuccess());
+    ASSERT_TRUE(obj1func1.isSuccess());
     obj1.run(func1Name, args);
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
-    ASSERT_FALSE(obj1func1.isSuccess());
+    ASSERT_TRUE(obj1func1.isSuccess());
     obj1.run(func1Name);
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_TRUE(obj1func1.isSuccess());
@@ -214,7 +217,7 @@ TEST_F(funcTest, testfuncHasStrParameter) {
     obj.subs().add("myfunc", func1);
 
     params& types = func1.getParams();
-    types.add(new param("", obj));
+    types.add(new param(func::ME, obj));
     types.add(new param("", ttype<wStr>::get()));
     func1.setLambda([&](const auto& args, const frames& sf) { return true; });
 
@@ -224,7 +227,7 @@ TEST_F(funcTest, testfuncHasStrParameter) {
     auto e = args.iterate(1);
 
     func1.run(args);
-    ASSERT_FALSE(func1.isSuccess());
+    ASSERT_TRUE(func1.isSuccess());
 
     obj.run("myfunc", narr());
     ASSERT_FALSE(func1.isSuccess());
@@ -238,6 +241,7 @@ TEST_F(funcTest, testArgsAttachedName) {
     myfunc f;
     o.subs().add("myfunc", f);
     params& ps = f.getParams();
+    ps.add(new param(func::ME, o));
     ps.add(new param("msg", ttype<wStr>::get()));
     ps.add(new param("age", ttype<wInt>::get()));
     f.setLambda([&](const auto& args, const frames& sf) {
@@ -249,12 +253,19 @@ TEST_F(funcTest, testArgsAttachedName) {
     o.run("myfunc");
     ASSERT_FALSE(f.isRun());
 
-    narr args;
     wStr msg("hello world");
-    args.add(msg);
     wInt age(55);
+    narr args;
+    args.add(msg);
     args.add(age);
 
+    o.run("myfunc", args);
+    ASSERT_FALSE(f.isRun());
+
+    args.rel();
+    args.add(o);
+    args.add(msg);
+    args.add(age);
     o.run("myfunc", args);
     ASSERT_TRUE(f.isRun());
     ASSERT_TRUE(f.isSuccess());

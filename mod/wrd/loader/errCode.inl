@@ -18,6 +18,9 @@ PAIRX(CANT_CAST_TO_NODE,    "obj can't be cast into node class")
 PAIRX(OBJ_WRONG_ARGS,       "obj can't execute with this argument types")
 PAIRX(OBJ_ALREADY_EXIST,    "\'%s\' object already exists at %s")
 
+// func:
+PAIRX(FUNC_DONT_HAVE_ME,    "parameters of func not included 'me'")
+
 // parser:
 PAIRX(SYNTAX_ERR,           "syntax error %s expected, but %s found")
 PAIRX(UNEXPECTED_TOK,       "unexpected token '%s' found")

@@ -5,18 +5,25 @@
 
 namespace wrd {
 
-    class verifier;
+    class node;
     class frame;
+    class verifier;
+    template <typename K, typename V> class tbicontainable;
+    typedef tbicontainable<std::string, node> bicontainable;
 
     class _wout verification : public typeProvidable {
         WRD(ME(verification),
             INIT_META(me))
-        friend class verifier;
+        friend class verifier; // for _onPrepareVerify
 
     public:
         void verify(node& it);
-        void verify(node& it, const bicontainable& tray);
+        void verify(node& it, bicontainable& tray);
         wbool logFrameInfo(const frame& newFr);
+        verifier& getVerifier();
+        const verifier& getVerifier() const WRD_UNCONST_FUNC(getVerifier())
+        bicontainable& getTray();
+        const bicontainable& getTray() const WRD_UNCONST_FUNC(getTray())
 
     protected:
         template <typename... Args> void _warn(Args... args);
@@ -26,13 +33,13 @@ namespace wrd {
         template <typename... Args> void _srcErr(Args... args);
         template <typename... Args> void _srcInfo(Args... args);
 
-        verifier& _getVerifier();
         node& _getIt();
-        virtual void _onVerify(verifier& veri, node& it, const bicontainable& tray);
+        virtual void _onPrepareVerify(verifier& veri, node& it, bicontainable& tray) = 0;
 
     protected:
         node* _it;
         verifier* _verifier;
+        bicontainable* _tray;
     };
 
     typedef std::vector<verification*> verifications;

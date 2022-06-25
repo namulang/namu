@@ -6,6 +6,7 @@
 #include "../../loader/interpreter/tverification.hpp"
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
+#include "../../frame/frameInteract.hpp"
 
 namespace wrd {
 
@@ -23,12 +24,21 @@ namespace wrd {
     const params& me::getParams() const { return _params; }
 
     str me::run(const ucontainable& args) {
-        if(!_inFrame(*_evalArgs(args)))
-            return str();
+        str ret;
+        if(nul(args)) return WRD_E("args == null"), ret;
+        if(args.len() <= 0) return WRD_E("args.len=0"), ret;
 
-        _blk->run();
-        str ret = thread::get()._getNowFrame().popReturn();
-        _outFrame();
+        // s is from heap space. but freed by _outFrame() of this class.
+        scope& s = *_evalArgs(args);
+        node& meObj = s[func::ME];
+        if(nul(meObj)) return WRD_E("meObj == null"), ret;
+
+        frameInteract f1(meObj); {
+            frameInteract f2(*this, s); {
+                _blk->run();
+                ret = thread::get()._getNowFrame().popReturn();
+            }
+        }
         return ret;
     }
 
@@ -49,20 +59,23 @@ namespace wrd {
         return ret;
     }
 
-    wbool me::_inFrame(scope& s) {
+    void me::_inFrame(const bicontainable& args) {
         frame& fr = thread::get()._getNowFrame();
-        if(nul(fr)) return WRD_E("fr == null"), false;
-        if(nul(s)) return WRD_E("s == null"), false;
+        if(nul(fr)) {
+            WRD_E("fr == null");
+            return;
+        }
 
         WRD_DI("%s._onInFrame()", getType().getName().c_str());
         fr.pushLocal(subs());
         fr.setFunc(*this);
-        return fr.pushLocal(s);
+        fr.pushLocal((nbicontainer&) args); // including 'me'
     }
 
     void me::_outFrame() {
-        frame& fr = thread::get()._getNowFrame();
         WRD_DI("%s._onOutFrame()", getType().getName().c_str());
+
+        frame& fr = thread::get()._getNowFrame();
         fr.setFunc(nulOf<func>());
         fr.popLocal();
         fr.popLocal();
@@ -95,10 +108,16 @@ namespace wrd {
         scope* s = new scope();
         _prepareArgsAlongParam(it.getParams(), *s);
 
-        it._inFrame(*s);
+        node& meObj = getTray()[func::ME];
+        if(nul(meObj)) {
+            _err(errCode::FUNC_DONT_HAVE_ME);
+            return;
+        }
 
-        verify(*it._blk);
-
-        it._outFrame();
+        frameInteract f1(meObj); {
+            frameInteract f2(it, *s); {
+                verify(*it._blk);
+            }
+        }
     })
 }

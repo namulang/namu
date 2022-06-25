@@ -32,14 +32,15 @@ namespace wrd {
     tstr<frame>& me::getFrameInfo() { return *_frameInfo; }
 
     void me::verify(node& it) {
-        verify(it, it.getType(), nmap());
+        nmap m;
+        verify(it, it.getType(), m);
     }
 
-    void me::verify(node& it, const bicontainable& tray) {
+    void me::verify(node& it, bicontainable& tray) {
         verify(it, it.getType(), tray);
     }
 
-    void me::verify(node& it, const type& typ, const bicontainable& tray) {
+    void me::verify(node& it, const type& typ, bicontainable& tray) {
         if(nul(it)) return;
         if(typ == ttype<adam>::get()) return;
 
@@ -47,7 +48,7 @@ namespace wrd {
 
         verifications& veris = _getVerifications(typ);
         for(auto* elem : veris)
-            elem->_onVerify(*this, it, tray);
+            elem->_onPrepareVerify(*this, it, tray);
     }
 
     verifications& me::_getVerifications(const type& typ) {

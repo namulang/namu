@@ -16,12 +16,11 @@ namespace wrd {
     }
 
     str me::run() {
-        static narr empty;
-        return run(empty);
+        return run(narr(*this));
     }
 
     str me::run(const std::string& name) {
-        return run(name, narr());
+        return run(name, narr(*this));
     }
 
     str me::run(const std::string& name, const ucontainable& args) {
