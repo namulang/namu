@@ -27,8 +27,8 @@ namespace wrd {
         if(nul(main))
             return WRD_E("there is 0 or more than 2 main() found."), str();
 
-        if(main.canRun(narr()))
-            return pak.run("main", narr());
+        if(main.canRun(narr(pak)))
+            return pak.run("main", narr(pak));
 
         /* TODO: str[] args
         if(main.canRun(narr(k*/
@@ -37,7 +37,7 @@ namespace wrd {
     }
 
     node& me::_findMain(node& pak, const ucontainable& args) {
-        node& ret = pak.sub("main", narr());
+        node& ret = pak.sub("main", narr(pak));
         if(nul(ret))
             WRD_E("could'nt find main().");
 

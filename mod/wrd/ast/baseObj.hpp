@@ -30,9 +30,6 @@ namespace wrd {
         virtual const baseObj& getOrigin() const = 0;
 
     protected:
-        str _onRunSub(node& sub, const ucontainable& args) override;
-
-    protected:
         void _inFrame(const bicontainable& args) override;
         void _outFrame() override;
 

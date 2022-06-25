@@ -11,14 +11,12 @@ namespace wrd {
 
     public:
         param(const std::string& newName, const node& origin);
-        param(const std::string& newName, const wtype& orgType);
 
     public:
         const std::string& getName() const;
         void setName(const std::string& new1);
         const str& getOrigin() const;
         void setOrigin(const node& new1);
-        void setOrigin(const wtype& new1);
 
     public:
         std::string _name;
