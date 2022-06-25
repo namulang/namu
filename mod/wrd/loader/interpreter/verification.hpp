@@ -11,10 +11,11 @@ namespace wrd {
     class _wout verification : public typeProvidable {
         WRD(ME(verification),
             INIT_META(me))
+        friend class verifier;
 
     public:
-        virtual void verify(verifier& veri, node& it);
         void verify(node& it);
+        void verify(node& it, const bicontainable& tray);
         wbool logFrameInfo(const frame& newFr);
 
     protected:
@@ -27,6 +28,7 @@ namespace wrd {
 
         verifier& _getVerifier();
         node& _getIt();
+        virtual void _onVerify(verifier& veri, node& it, const bicontainable& tray);
 
     protected:
         node* _it;
