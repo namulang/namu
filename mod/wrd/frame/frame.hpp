@@ -47,6 +47,7 @@ namespace wrd {
         wbool pushLocal(scopes& new1);
         wbool pushLocal(const std::string& name, node& n);
         wbool pushLocal(const std::string& name, node* n);
+        void applyObjScope();
 
         scopes& getTop();
         const scopes& getTop() const WRD_UNCONST_FUNC(getTop())

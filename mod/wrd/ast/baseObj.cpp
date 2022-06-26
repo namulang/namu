@@ -11,6 +11,15 @@ namespace wrd {
 
     me::baseObj() {}
 
+    str me::_onRunSub(node& sub, const ucontainable& args) {
+        frames& frs = wrd::thread::get()._getFrames();
+        frame& fr = *new frame();
+        fr.setObj(*this);
+        frs.add(fr);
+
+        return super::_onRunSub(sub, args);
+    }
+
     str me::run(const ucontainable& args) {
         return str(this);
     }
@@ -20,12 +29,13 @@ namespace wrd {
     }
 
     void me::_inFrame(const bicontainable& args) {
-        frames& frs = wrd::thread::get()._getFrames();
-        WRD_DI("%s._inFrame()[%d]", getType().getName().c_str(), frs.len());
+        WRD_DI("%s._inFrame()", getType().getName().c_str());
 
-        frame& fr = *new frame();
-        fr.setObj(*this);
-        frs.add(fr);
+        frame& fr = wrd::thread::get()._getNowFrame();
+        fr.applyObjScope();
+        scope* s = new scope();
+        s->add("me", *this);
+        fr.pushLocal(s);
     }
 
     void me::_outFrame() {

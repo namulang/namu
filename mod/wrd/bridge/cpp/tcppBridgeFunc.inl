@@ -14,7 +14,6 @@ namespace wrd {
         static params* inner = nullptr;
         if(nul(inner)) {
             inner = new params();
-            inner->add(new param("me", ttype<tcppBridge<T>>::get()));
             (inner->add(new param("", ttype<typename tmarshaling<Args>::mgdType>::get())), ...);
         }
 
@@ -29,7 +28,7 @@ namespace wrd {
     str ME::_marshal(narr& args, std::index_sequence<index...>) {
         const frame& fr = thread::get().getNowFrame();
         if(nul(fr)) return WRD_E("frame not exists."), str();
-        auto& me = (tcppBridge<T>&) args[0];
+        auto& me = (tcppBridge<T>&) fr.getObj();
 
         return tmarshaling<Ret>::toMgd((me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index])...));
     }
@@ -44,7 +43,8 @@ namespace wrd {
     str ME::_marshal(narr& args, std::index_sequence<index...>) {
         const frame& fr = thread::get().getNowFrame();
         if(nul(fr)) return WRD_E("frame not exists."), str();
-        auto& me = (tcppBridge<T>&) args[0];
+        auto& me = fr.getObj().cast<tcppBridge<T>>();
+        if(nul(me)) return WRD_E("me cast failed."), str();
 
         (me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index])...);
         return tmarshaling<void>::toMgd();
