@@ -112,9 +112,9 @@ namespace wrd {
         _prepareArgsAlongParam(it.getParams(), *s);
 
         frame& fr = (frame&) thread::get().getNowFrame();
-        if(nul(fr)) return _err(errCode::FUNC_REDIRECTED_OBJ);
+        if(nul(fr)) return _srcErr(errCode::FUNC_REDIRECTED_OBJ);
         baseObj& meObj = fr.getObj();
-        if(nul(meObj)) return _err(errCode::FUNC_REDIRECTED_OBJ);
+        if(nul(meObj)) return _srcErr(errCode::FUNC_REDIRECTED_OBJ);
 
         frameInteract f1(meObj); {
             frameInteract f2(it, *s); {

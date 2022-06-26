@@ -23,6 +23,8 @@ namespace wrd {
 
     node& me::getTo() { return *_to; }
 
+
+
     WRD_VERIFY({
         WRD_DI("verify: defAssignExpr: duplication of variable.");
 
