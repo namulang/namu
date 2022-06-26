@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['wrap_639',['wrap',['../classwrd_1_1tnchain.html#acbfe69d521a968452023e205f76a209c',1,'wrd::tnchain']]],
-  ['wrapdeep_640',['wrapDeep',['../classwrd_1_1tnchain.html#a263c7c6e5a1dd2f4e94a608270ce3106',1,'wrd::tnchain']]]
+  ['take_638',['take',['../classwrd_1_1flag.html#abd4da615906e3b333997f61e1e85aff5',1,'wrd::flag']]],
+  ['tstr_639',['tstr',['../classwrd_1_1tstr.html#a1296c2b64ba879d2ea6c6b2f9d01661b',1,'wrd::tstr']]],
+  ['tweak_640',['tweak',['../classwrd_1_1tweak.html#ad3b707947bf7e42cd6f03ef851a504c6',1,'wrd::tweak']]]
 ];

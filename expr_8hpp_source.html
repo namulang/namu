@@ -80,50 +80,56 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classwrd_1_1expr.html">   10</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classwrd_1_1expr.html">expr</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1node.html">node</a> {</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classwrd_1_1expr_1_1expr_type.html">   12</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classwrd_1_1expr_1_1expr_type.html">exprType</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a> {</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            WRD(ME(<a class="code" href="classwrd_1_1expr_1_1expr_type.html">exprType</a>, <a class="code" href="classwrd_1_1wtype.html">wtype</a>))</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            <span class="keyword">using</span> super::asImpli;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            wbool isImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> to.isSub&lt;<a class="code" href="classwrd_1_1node.html">node</a>&gt;(); }</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <a class="code" href="classwrd_1_1tstr.html">str</a> asImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tstr.html">str</a>(((<a class="code" href="classwrd_1_1node.html">node</a>&amp;)from).run()); }</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        };</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        WRD(ADT(<a class="code" href="classwrd_1_1expr.html">expr</a>, <a class="code" href="classwrd_1_1node.html">node</a>, <a class="code" href="classwrd_1_1expr_1_1expr_type.html">exprType</a>))</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1expr_maker.html">exprMaker</a>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">friend</span> struct ::exprTest;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">using</span> super::subs;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <a class="code" href="classwrd_1_1tnbicontainer.html">nbicontainer</a>&amp; subs() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">using</span> super::canRun;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        wbool canRun(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1src.html">src</a>&amp; getSrc() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; getPos() <span class="keyword">const override</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">void</span> setPos(<span class="keyword">const</span> <a class="code" href="structwrd_1_1point.html">point</a>&amp; newPos) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> _setSrc(<span class="keyword">const</span> <a class="code" href="classwrd_1_1src.html">src</a>&amp; newSrc);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;src&gt;</a> _src;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="structwrd_1_1point.html">point</a> _pos;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    };</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;}</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="comment">// expr can be casted to node. it&#39;s proxy of a node.</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classwrd_1_1expr_1_1expr_type.html">   13</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classwrd_1_1expr_1_1expr_type.html">exprType</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            WRD(ME(<a class="code" href="classwrd_1_1expr_1_1expr_type.html">exprType</a>, <a class="code" href="classwrd_1_1wtype.html">wtype</a>))</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            <span class="keyword">using</span> super::asImpli;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            wbool isImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> to.isSub&lt;<a class="code" href="classwrd_1_1node.html">node</a>&gt;(); }</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <a class="code" href="classwrd_1_1tstr.html">str</a> asImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tstr.html">str</a>(((<a class="code" href="classwrd_1_1node.html">node</a>&amp;)from).run()); }</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        };</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        WRD(ADT(<a class="code" href="classwrd_1_1expr.html">expr</a>, <a class="code" href="classwrd_1_1node.html">node</a>, <a class="code" href="classwrd_1_1expr_1_1expr_type.html">exprType</a>))</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classwrd_1_1expr_maker.html">exprMaker</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">friend</span> struct ::exprTest;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">using</span> super::subs;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <a class="code" href="classwrd_1_1tnbicontainer.html">nbicontainer</a>&amp; subs() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        wbool isImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordflow">return</span> getEvalType().isSub(to);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classwrd_1_1tstr.html">str</a> asImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            me* unconst = <span class="keyword">const_cast&lt;</span>me*<span class="keyword">&gt;</span>(<span class="keyword">this</span>);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tstr.html">str</a>((unconst-&gt;run()-&gt;asImpli(to)));</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">using</span> super::canRun;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        wbool canRun(<span class="keyword">const</span> ucontainable&amp; args) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">const</span> src&amp; getSrc() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">const</span> point&amp; getPos() <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">void</span> setPos(<span class="keyword">const</span> point&amp; newPos) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordtype">void</span> _setSrc(<span class="keyword">const</span> src&amp; newSrc);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        tstr&lt;src&gt; _src;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        point _pos;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    };</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
-<div class="ttc" id="aclasswrd_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classwrd_1_1expr_1_1expr_type.html">wrd::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:12</div></div>
+<div class="ttc" id="aclasswrd_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classwrd_1_1expr_1_1expr_type.html">wrd::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:13</div></div>
 <div class="ttc" id="aclasswrd_1_1expr_html"><div class="ttname"><a href="classwrd_1_1expr.html">wrd::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:10</div></div>
 <div class="ttc" id="aclasswrd_1_1tnbicontainer_html"><div class="ttname"><a href="classwrd_1_1tnbicontainer.html">wrd::tnbicontainer&lt; std::string, node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
 <div class="ttc" id="astructexpr_test_html"><div class="ttname"><a href="structexpr_test.html">exprTest</a></div><div class="ttdef"><b>Definition:</b> exprTest.cc:17</div></div>
 <div class="ttc" id="aclasswrd_1_1expr_maker_html"><div class="ttname"><a href="classwrd_1_1expr_maker.html">wrd::exprMaker</a></div><div class="ttdef"><b>Definition:</b> exprMaker.hpp:7</div></div>
 <div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
-<div class="ttc" id="aclasswrd_1_1src_html"><div class="ttname"><a href="classwrd_1_1src.html">wrd::src</a></div><div class="ttdoc">src represents src file of wrdlang source codes.</div><div class="ttdef"><b>Definition:</b> src.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:16</div></div>
-<div class="ttc" id="aclasswrd_1_1tucontainable_html"><div class="ttname"><a href="classwrd_1_1tucontainable.html">wrd::tucontainable</a></div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:16</div></div>
-<div class="ttc" id="astructwrd_1_1point_html"><div class="ttname"><a href="structwrd_1_1point.html">wrd::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

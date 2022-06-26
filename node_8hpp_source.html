@@ -132,11 +132,11 @@ $(function() {
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        wbool isImpli()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> isImpli(ttype&lt;T&gt;::get()); }</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        wbool isImpli(<span class="keyword">const</span> typeProvidable&amp; to) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        wbool isImpli(<span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">virtual</span> wbool isImpli(<span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; tstr&lt;T&gt; asImpli()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> asImpli(ttype&lt;T&gt;::get()); }</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        str asImpli(<span class="keyword">const</span> typeProvidable&amp; to) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        str asImpli(<span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keyword">virtual</span> str asImpli(<span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> point&amp; getPos()<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keyword">static</span> point inner;</div>
