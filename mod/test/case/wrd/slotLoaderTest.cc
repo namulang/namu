@@ -38,8 +38,8 @@ TEST_F(slotLoaderTest, testDefaultLoaderInit) {
 
         const params& argTypes = add.getParams();
         ASSERT_EQ(argTypes.len(), 2);
-        ASSERT_EQ(argTypes[0].getOrigin().getType(), ttype<wInt>());
-        ASSERT_EQ(argTypes[1].getOrigin().getType(), ttype<wInt>::get());
+        ASSERT_EQ(argTypes[0].getOrgType(), ttype<wInt>());
+        ASSERT_EQ(argTypes[1].getOrgType(), ttype<wInt>::get());
 
         wInt arg1(5);
         str retVal = add.run(narr {arg1} ); // should nothing happen

@@ -7,6 +7,7 @@
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/frameInteract.hpp"
+#include "../typeNode.hpp"
 
 namespace wrd {
 
@@ -51,7 +52,7 @@ namespace wrd {
         int n = 0;
         for(const node& e: args) {
             const param& p = ps[n++];
-            str evaluated = e.as(p.getOrigin());
+            str evaluated = e.as(p.getOrgType());
             if(!evaluated) return nullptr;
 
             ret->add(p.getName(), *evaluated);
@@ -97,7 +98,7 @@ namespace wrd {
     namespace {
         void _prepareArgsAlongParam(const params& ps, scope& s) {
             for(const auto& p : ps)
-                s.add(p.getName(), *p.getOrigin());
+                s.add(p.getName(), new typeNode(p.getOrgType()));
         }
     }
 

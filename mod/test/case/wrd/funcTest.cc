@@ -218,7 +218,7 @@ TEST_F(funcTest, testfuncHasStrParameter) {
 
     params& types = func1.getParams();
     types.add(new param(func::ME, obj));
-    types.add(new param("", new wStr()));
+    types.add(new param("", ttype<wStr>::get()));
     func1.setLambda([&](const auto& args, const frames& sf) { return true; });
 
     narr args;
@@ -242,8 +242,8 @@ TEST_F(funcTest, testArgsAttachedName) {
     o.subs().add("myfunc", f);
     params& ps = f.getParams();
     ps.add(new param(func::ME, o));
-    ps.add(new param("msg", new wStr()));
-    ps.add(new param("age", new wInt()));
+    ps.add(new param("msg", ttype<wStr>::get()));
+    ps.add(new param("age", ttype<wInt>::get()));
     f.setLambda([&](const auto& args, const frames& sf) {
         const frame& fr = sf[sf.len() - 1];
         return  fr["msg"].cast<wStr>().get() == "hello world" &&

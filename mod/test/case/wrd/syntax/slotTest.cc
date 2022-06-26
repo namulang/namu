@@ -130,7 +130,7 @@ TEST_F(slotTest, slotIsInFrameWhenCallMgdFunc) {
         const params& ps = cast.getParams();
         if(nul(ps)) return false;
         if(ps.len() != 2) return false;
-        if(ps[0].getOrigin().getType() != ttype<wInt>()) return false;
+        if(ps[0].getOrgType() != ttype<wInt>()) return false;
         if(ps[1].getName() != "grade") return false;
 
         // checks args of funcs is in frame:
