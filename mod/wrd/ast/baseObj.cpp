@@ -50,6 +50,11 @@ namespace wrd {
     WRD_VERIFY(baseObj, subNodes, {
         WRD_DI("verify: baseObj: %s iterateSubNodes. len=%d", it.getType().getName().c_str(), it.subs().len());
 
+        frames& frs = (frames&) wrd::thread::get().getFrames();
+        frame& fr = *new frame();
+        fr.setObj(it);
+        frs.add(fr);
+
         nmap tray;
         tray.add(func::ME, it);
         for(auto& p : it.subs())

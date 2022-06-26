@@ -166,8 +166,7 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
         if(!checkFrameHasfuncAndObjScope(sf[0], obj1func1, func1Name, obj1, obj1FuncNames, 2)) return false;
 
         narr funcArgs;
-        funcArgs.add(obj1);
-        obj1func2.run(funcArgs);
+        obj1.run(func2Name, funcArgs);
         if(sf.len() != 1)
             return WRD_I("return of %s: sf.len() != 1", func1Name), false;
         return true;
@@ -179,8 +178,7 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
 
         narr funcArgs;
         funcArgs.add(obj2);
-
-        obj2func1.run(funcArgs);
+        obj2.run(obj2FuncNames[0], funcArgs);
         if(sf.len() != 2)
             return WRD_I("return of %s: sf.len() != 2", func2Name), false;
         return true;
