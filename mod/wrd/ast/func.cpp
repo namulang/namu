@@ -25,15 +25,6 @@ namespace wrd {
     }
 
     WRD_VERIFY({
-        WRD_DI("verify: func: params lengthed 0 or first of params should be 'me'");
-
-        const param& me = it.getParams()[0];
-        if(nul(me)) return;
-
-        if(me.getName() != func::ME) return _srcErr(errCode::FUNC_DONT_HAVE_ME);
-    })
-
-    WRD_VERIFY({
         WRD_DI("verify: func: param check");
 
         /*for(const param& p : it.getParams()) {

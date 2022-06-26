@@ -32,6 +32,7 @@ namespace wrd {
     protected:
         void _inFrame(const bicontainable& args) override;
         void _outFrame() override;
+        str _onRunSub(node& sub, const ucontainable& args) override;
 
     public:
          inline static const string CTOR_NAME = "@ctor";

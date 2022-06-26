@@ -16,11 +16,11 @@ namespace wrd {
     }
 
     str me::run() {
-        return run(narr(*this));
+        return run(narr());
     }
 
     str me::run(const std::string& name) {
-        return run(name, narr(*this));
+        return run(name, narr());
     }
 
     str me::run(const std::string& name, const ucontainable& args) {
@@ -48,6 +48,7 @@ namespace wrd {
     str me::_onRunSub(node& sub, const ucontainable& args) {
         return sub.run(args);
     }
+
 
 
     WRD_VERIFY({ // no same variable.

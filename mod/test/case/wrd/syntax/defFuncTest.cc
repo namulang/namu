@@ -32,20 +32,17 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
         ASSERT_TRUE(nul(fwrong));
         const func& f = res.sub<func>("main", narr(wInt(), wStr()));
         ASSERT_FALSE(nul(f));
-        ASSERT_EQ(f.getParams().len(), 3);
+        ASSERT_EQ(f.getParams().len(), 2);
         ASSERT_EQ(f.getRetType(), ttype<wVoid>());
 
         const params& ps = f.getParams();
         ASSERT_FALSE(nul(ps));
-        ASSERT_EQ(ps.len(), 3);
+        ASSERT_EQ(ps.len(), 2);
 
-        const param& arg0 = ps[0];
-        ASSERT_EQ(arg0.getName(), func::ME);
-        ASSERT_EQ(arg0.getOrgType(), ttype<obj>());
-        const param& arg1 = ps[1];
+        const param& arg1 = ps[0];
         ASSERT_EQ(arg1.getName(), "argc");
         ASSERT_EQ(arg1.getOrgType(), ttype<wInt>());
-        const param& arg2 = ps[2];
+        const param& arg2 = ps[1];
         ASSERT_EQ(arg2.getName(), "argv");
         ASSERT_EQ(arg2.getOrgType(), ttype<wStr>());
     }

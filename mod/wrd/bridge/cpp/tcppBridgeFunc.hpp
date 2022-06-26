@@ -20,7 +20,10 @@ namespace wrd {
     public:
         using super::run;
         str run(const ucontainable& args) override {
-            narr evaluated = _evalArgs(args);
+            narr tray;
+            narr& evaluated = _evalArgs(args, tray);
+            if(nul(evaluated)) return WRD_E("evaluated == null"), str();
+
             return _runNative(evaluated);
         }
 
@@ -34,20 +37,20 @@ namespace wrd {
         virtual str _runNative(narr& args) = 0;
 
     private:
-        narr _evalArgs(const ucontainable& args) {
+        narr& _evalArgs(const ucontainable& args, narr& tray) {
             const params& ps = getParams();
             if(args.len() != ps.len())
-                return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()), narr();
+                return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()),
+                       nulOf<narr>();
 
-            narr ret;
             int n = 0;
             for(const node& e: args) {
                 str ased = e.as(ps[n++].getOrgType());
-                if(!ased) return narr();
+                if(!ased) return nulOf<narr>();
 
-                ret.add(*ased);
+                tray.add(*ased);
             }
-            return ret;
+            return tray;
         }
 
     protected:

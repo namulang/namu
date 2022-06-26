@@ -221,7 +221,6 @@ namespace wrd {
 
     params me::_convertParams(const narr& exprs) {
         params ret;
-        ret.add(new param(func::ME, ttype<obj>::get()));
         for(auto& expr: exprs) {
             defVarExpr& cast = expr.cast<defVarExpr>();
             if(nul(cast)) return onSrcErr(errCode::NOT_EXPR, expr.getType().getName().c_str()), ret;

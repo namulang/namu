@@ -27,11 +27,12 @@ namespace wrd {
     str me::run(const ucontainable& args) {
         str ret;
         if(nul(args)) return WRD_E("args == null"), ret;
-        if(args.len() <= 0) return WRD_E("args.len=0"), ret;
 
         // s is from heap space. but freed by _outFrame() of this class.
         scope& s = *_evalArgs(args);
-        node& meObj = s[func::ME];
+        frame& fr = thread::get()._getNowFrame();
+        if(nul(fr)) return WRD_E("fr == null"), ret;
+        baseObj& meObj = fr.getObj();
         if(nul(meObj)) return WRD_E("meObj == null"), ret;
 
         frameInteract f1(meObj); {
@@ -77,6 +78,7 @@ namespace wrd {
         WRD_DI("%s._onOutFrame()", getType().getName().c_str());
 
         frame& fr = thread::get()._getNowFrame();
+        // TODO: is it safe to delete below lines?
         fr.setFunc(nulOf<func>());
         fr.popLocal();
         fr.popLocal();
@@ -109,11 +111,10 @@ namespace wrd {
         scope* s = new scope();
         _prepareArgsAlongParam(it.getParams(), *s);
 
-        node& meObj = getTray()[func::ME];
-        if(nul(meObj)) {
-            _err(errCode::FUNC_DONT_HAVE_ME);
-            return;
-        }
+        frame& fr = (frame&) thread::get().getNowFrame();
+        if(nul(fr)) return _err(errCode::FUNC_REDIRECTED_OBJ);
+        baseObj& meObj = fr.getObj();
+        if(nul(meObj)) return _err(errCode::FUNC_REDIRECTED_OBJ);
 
         frameInteract f1(meObj); {
             frameInteract f2(it, *s); {

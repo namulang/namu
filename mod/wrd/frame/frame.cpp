@@ -37,12 +37,17 @@ namespace wrd {
 
     void me::setObj(const baseObj& new1) {
         _obj.bind(new1);
+    }
+
+    void me::applyObjScope() {
+        if(!_obj) return;
+
         scopes& bottom = *_local.getBottom();
         if(!nul(bottom)) {
-            if(nul(new1))
+            if(_obj)
                 bottom.unlink();
             else
-                bottom.link(new1.subs());
+                bottom.link(_obj->subs());
         }
     }
 

@@ -131,7 +131,7 @@ TEST_F(exprTest, simpleRunExpr) {
 }
 
 TEST_F(exprTest, simpleRunExprNegative) {
-    runExpr exp1(bridge->sub("main"), narr(bridge.get(), *new wStr("hello")));
+    runExpr exp1(bridge->sub("main"), narr());
     setLine(exp1, 1, 1);
     errReport rep;
     verifier veri;

@@ -32,9 +32,6 @@ namespace {
 
         const params& getParams() const override {
             static params inner;
-            if(inner.len() == 0)
-                inner.add(new param("", ttype<obj>::get()));
-
             return inner;
         }
 
@@ -147,7 +144,6 @@ TEST_F(nodeTest, testManualNativefuncCall) {
     obj.subs().add("myFunc", func);
 
     narr args;
-    args.add(obj);
     narr subs = ((const myObj&) obj).subAll("myFunc", args);
     ASSERT_EQ(subs.len(), 1);
     ASSERT_TRUE(subs[0].canRun(args));

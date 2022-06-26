@@ -23,12 +23,12 @@ namespace wrd {
 
         node& pak = *args.begin();
         WRD_I("run a pack");
-        node& main = _findMain(pak, args);
+        node& main = _findMain(pak, narr());
         if(nul(main))
             return WRD_E("there is 0 or more than 2 main() found."), str();
 
-        if(main.canRun(narr(pak)))
-            return pak.run("main", narr(pak));
+        if(main.canRun(narr()))
+            return pak.run("main");
 
         /* TODO: str[] args
         if(main.canRun(narr(k*/
@@ -37,7 +37,8 @@ namespace wrd {
     }
 
     node& me::_findMain(node& pak, const ucontainable& args) {
-        node& ret = pak.sub("main", narr(pak));
+        // TODO: now, only find to main() but I need to find main(argc, argv) case, too.
+        node& ret = pak.sub("main", narr());
         if(nul(ret))
             WRD_E("could'nt find main().");
 
