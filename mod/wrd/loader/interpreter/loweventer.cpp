@@ -4,6 +4,7 @@
 #include "../../ast/mgd/mgdFunc.hpp"
 #include "../../builtin/primitive.hpp"
 #include "../../frame/thread.hpp"
+#include "../../ast/obj.hpp"
 
 namespace wrd {
 
@@ -190,7 +191,7 @@ namespace wrd {
 
         defVarExpr& defVar = e->cast<defVarExpr>();
         if(!nul(defVar)) {
-            s.asScope->add(defVar.getParam().getName(), *defVar.getParam().getOrigin());
+            s.asScope->add(defVar.getName(), defVar.getOrigin());
             return &s;
         }
 
@@ -206,7 +207,7 @@ namespace wrd {
 
     expr* me::onDefVar(const std::string& name, const node& origin) {
         WRD_DI("tokenEvent: onDefVar(%s, %s)", origin.getType().getName().c_str(), name.c_str());
-        return new defVarExpr(*new param(name, origin));
+        return new defVarExpr(name, origin);
     }
 
     void me::onSrcArea(area& area) {
@@ -224,9 +225,9 @@ namespace wrd {
         for(auto& expr: exprs) {
             defVarExpr& cast = expr.cast<defVarExpr>();
             if(nul(cast)) return onSrcErr(errCode::NOT_EXPR, expr.getType().getName().c_str()), ret;
-            if(nul(cast.getParam())) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
+            if(nul(cast.getOrigin())) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
 
-            ret.add(cast.getParam().clone());
+            ret.add(new param(cast.getName(), cast.getOrigin()));
         }
 
         return ret;

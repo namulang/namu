@@ -19,7 +19,7 @@ namespace wrd {
         }
 
         const params& getParams() const override {
-            static params inner(*new param("rhs", getEvalType()));
+            static params inner(*new param("rhs", getOrigin()));
             return inner;
         }
     };

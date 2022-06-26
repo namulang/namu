@@ -48,6 +48,8 @@ namespace wrd {
 
 
     WRD_VERIFY({
+        WRD_DI("verify: runExpr: is it possible to run?");
+
         if(nul(it.getMe())) return _srcErr(errCode::CANT_CAST_TO_NODE);
 
         str me = it.getMe().as<node>();

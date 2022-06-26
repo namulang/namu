@@ -23,11 +23,8 @@ TEST_F(defVarExprTest, simpleDefineVariable) {
         ASSERT_EQ(stmts.len(), 2);
         const defVarExpr& defVar = stmts[0].cast<defVarExpr>();
         ASSERT_FALSE(nul(defVar));
-        const param& p = defVar.getParam();
-        ASSERT_EQ(p.getName(), "age");
-        ASSERT_EQ(p.getOrigin().getType(), ttype<wInt>());
-        ASSERT_TRUE(p.getOrigin());
-        ASSERT_EQ(p.getOrigin()->getType(), ttype<wInt>());
+        ASSERT_EQ(defVar.getName(), "age");
+        ASSERT_EQ(defVar.getOrigin().getType(), ttype<wInt>());
     }
 }
 

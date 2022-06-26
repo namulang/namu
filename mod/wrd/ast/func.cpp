@@ -13,7 +13,7 @@ namespace wrd {
 
         int n = 0;
         for(const auto& e : args)
-            if(!e.getEvalType().isImpli(ps[n++].getOrigin()))
+            if(!e.getEvalType().isImpli(ps[n++].getOrgType()))
                 return false;
 
         return true;
