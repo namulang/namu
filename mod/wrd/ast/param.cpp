@@ -8,7 +8,7 @@ namespace wrd {
         setOrgType(orgType);
     }
 
-    me::param(const std::string& newName, const node& org) {
+    me::param(const std::string& newName, const node& org): _name(newName) {
         setOrgType(org.getType());
     }
 
