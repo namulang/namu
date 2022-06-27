@@ -40,7 +40,6 @@ namespace wrd {
     TEMPL
     template <size_t... index>
     str ME::_marshal(narr& args, std::index_sequence<index...>) {
-        const frame& fr = thread::get().getNowFrame();
         auto& me = (tcppBridge<T>&) frame::getObj();
         if(nul(me)) return WRD_E("object from frame does not exists."), str();
 
