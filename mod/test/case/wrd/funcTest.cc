@@ -169,9 +169,9 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
         return true;
     });
     obj1func2.setLambda([&](const auto& args, const auto& sf) {
-        if(sf.len() != 2) return WRD_I("%s: sf.len() != 2", func2Name), false;
+        if(sf.len() != 2) return WRD_I("%s: sf.len(%d) > 2", func2Name, sf.len()), false;
 
-        if(!checkFrameHasfuncAndObjScope(sf[1], obj1func2, "obj2func1", obj1, obj1FuncNames, 2)) return false;
+        if(!checkFrameHasfuncAndObjScope(sf[1], obj1func2, func2Name, obj1, obj1FuncNames, 2)) return false;
 
         narr funcArgs;
         funcArgs.add(obj2);
@@ -192,16 +192,15 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
     obj1.run(func1Name, args);
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_TRUE(obj1func1.isSuccess());
-    obj1.run(func2Name);
-    ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
-    ASSERT_TRUE(obj1func2.isSuccess());
 
+    obj2func1.setUp();
     obj2.run(func2Name);
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_FALSE(obj2func1.isSuccess());
-    obj2.run(func2Name, narr(obj2));
+    obj2func1.setUp();
+    obj2.run("obj2func1", narr(obj2));
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
-    ASSERT_TRUE(obj2func1.isSuccess());
+    ASSERT_FALSE(obj2func1.isSuccess());
 }
 
 TEST_F(funcTest, testfuncHasStrParameter) {
@@ -255,6 +254,8 @@ TEST_F(funcTest, testArgsAttachedName) {
     ASSERT_TRUE(f.isRun());
     ASSERT_TRUE(f.isSuccess());
 
+    f.setUp();
+    ASSERT_FALSE(f.isRun());
     args.rel();
     args.add(o);
     args.add(msg);
