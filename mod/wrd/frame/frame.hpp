@@ -12,9 +12,11 @@ namespace wrd {
     class obj;
     class func;
     class _wout frame : public node { // TODO: may be obj, not node.
-        WRD(CLASS(frame, node))
+        WRD(CLASS(frame, node),
+            FRIEND_VERIFY(baseObj, subNodes))
         friend struct ::immutableTest;
         friend struct ::frameTest;
+        friend class baseObj;
 
     public:
         ~frame() override;
@@ -47,24 +49,19 @@ namespace wrd {
         wbool pushLocal(scopes& new1);
         wbool pushLocal(const std::string& name, node& n);
         wbool pushLocal(const std::string& name, node* n);
-        void applyObjScope();
+        void pushObj(const baseObj& obj);
 
         scopes& getTop();
         const scopes& getTop() const WRD_UNCONST_FUNC(getTop())
 
-        tstr<scopes> popLocal();
         // I won't provide API for poping a single node from the scope.
+        tstr<scopes> popLocal();
 
-        void setObj(const baseObj& new1);
-
-        const baseObj& getObj() const;
-        baseObj& getObj();
+        static baseObj& getObj();
 
         void setFunc(func& new1);
         func& getFunc();
         const func& getFunc() const WRD_UNCONST_FUNC(getFunc())
-
-        void clearObj();
 
         // node:
         using node::subs;
@@ -78,6 +75,10 @@ namespace wrd {
         wbool pushReturn(const str& toReturn);
         wbool isReturned() const;
         str popReturn();
+
+    protected:
+        static baseObj& _setObj(baseObj& new1);
+        static baseObj& _setObj();
 
     private:
         void _rel();

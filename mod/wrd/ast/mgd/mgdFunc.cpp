@@ -30,9 +30,7 @@ namespace wrd {
 
         // s is from heap space. but freed by _outFrame() of this class.
         scope& s = *_evalArgs(args);
-        frame& fr = thread::get()._getNowFrame();
-        if(nul(fr)) return WRD_E("fr == null"), ret;
-        baseObj& meObj = fr.getObj();
+        baseObj& meObj = frame::getObj();
         if(nul(meObj)) return WRD_E("meObj == null"), ret;
 
         frameInteract f1(meObj); {
@@ -84,6 +82,8 @@ namespace wrd {
         fr.popLocal();
     }
 
+
+
     WRD_VERIFY({
         WRD_DI("verify: retType exists and stmts exist one at least");
 
@@ -111,9 +111,7 @@ namespace wrd {
         scope* s = new scope();
         _prepareArgsAlongParam(it.getParams(), *s);
 
-        frame& fr = (frame&) thread::get().getNowFrame();
-        if(nul(fr)) return _srcErr(errCode::FUNC_REDIRECTED_OBJ);
-        baseObj& meObj = fr.getObj();
+        baseObj& meObj = frame::getObj();
         if(nul(meObj)) return _srcErr(errCode::FUNC_REDIRECTED_OBJ);
 
         frameInteract f1(meObj); {

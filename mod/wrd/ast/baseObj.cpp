@@ -12,12 +12,11 @@ namespace wrd {
     me::baseObj() {}
 
     str me::_onRunSub(node& sub, const ucontainable& args) {
-        frames& frs = wrd::thread::get()._getFrames();
-        frame& fr = *new frame();
-        fr.setObj(*this);
-        frs.add(fr);
+        baseObj& prev = frame::_setObj(*this);
+        str ret = super::_onRunSub(sub, args);
+        frame::_setObj(prev);
 
-        return super::_onRunSub(sub, args);
+        return ret;
     }
 
     str me::run(const ucontainable& args) {
@@ -29,13 +28,15 @@ namespace wrd {
     }
 
     void me::_inFrame(const bicontainable& args) {
-        WRD_DI("%s._inFrame()", getType().getName().c_str());
+        frames& frs = wrd::thread::get()._getFrames();
+        WRD_DI("%s._inFrame()[%d]", getType().getName().c_str(), frs.len());
 
-        frame& fr = wrd::thread::get()._getNowFrame();
-        fr.applyObjScope();
+        frame& fr = *new frame();
         scope* s = new scope();
         s->add("me", *this);
         fr.pushLocal(s);
+        fr.pushObj(frame::getObj());
+        frs.add(fr);
     }
 
     void me::_outFrame() {
@@ -50,14 +51,13 @@ namespace wrd {
     WRD_VERIFY(baseObj, subNodes, {
         WRD_DI("verify: baseObj: %s iterateSubNodes. len=%d", it.getType().getName().c_str(), it.subs().len());
 
-        frames& frs = (frames&) wrd::thread::get().getFrames();
-        frame& fr = *new frame();
-        fr.setObj(it);
-        frs.add(fr);
+        baseObj& prev = frame::_setObj(it);
 
         nmap tray;
         tray.add(func::ME, it);
         for(auto& p : it.subs())
             verify(p, tray);
+
+        frame::_setObj(prev);
     })
 }
