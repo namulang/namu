@@ -26,9 +26,8 @@ namespace wrd {
     TEMPL
     template <size_t... index>
     str ME::_marshal(narr& args, std::index_sequence<index...>) {
-        const frame& fr = thread::get().getNowFrame();
-        if(nul(fr)) return WRD_E("frame not exists."), str();
-        auto& me = (tcppBridge<T>&) fr.getObj();
+        auto& me = (tcppBridge<T>&) frame::getObj();
+        if(nul(me)) return WRD_E("object from frame does not exists."), str();
 
         return tmarshaling<Ret>::toMgd((me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index])...));
     }
@@ -42,9 +41,8 @@ namespace wrd {
     template <size_t... index>
     str ME::_marshal(narr& args, std::index_sequence<index...>) {
         const frame& fr = thread::get().getNowFrame();
-        if(nul(fr)) return WRD_E("frame not exists."), str();
-        auto& me = fr.getObj().cast<tcppBridge<T>>();
-        if(nul(me)) return WRD_E("me cast failed."), str();
+        auto& me = (tcppBridge<T>&) frame::getObj();
+        if(nul(me)) return WRD_E("object from frame does not exists."), str();
 
         (me._real->*(this->_fptr))(tmarshaling<Args>::toNative(args[index])...);
         return tmarshaling<void>::toMgd();

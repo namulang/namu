@@ -63,7 +63,6 @@ TEST_F(frameTest, testFrameManipulateChainObjNegative) {
     obj obj1(shares, owns);
     ASSERT_EQ(obj1.subs().len(), 2);
 
-    fr.setObj(obj1);
     ASSERT_TRUE(ss.getBottom().isBind());
     ASSERT_EQ(fr.subAll<myNode>(lambda).len(), 4);
     ASSERT_EQ(owns.getAll<myNode>(lambda).len(), 1);

@@ -30,29 +30,34 @@ namespace wrd {
         return pushLocal(name, *n);
     }
 
+    void me::pushObj(const baseObj& obj) {
+        scopes& bottom = *_local.getBottom();
+        if(!nul(bottom)) {
+            if(nul(obj))
+                bottom.unlink();
+            else
+                bottom.link(obj.subs());
+        }
+    }
+
+    namespace {
+        thread_local static baseObj* inner = nullptr;
+    }
+
+    baseObj& me::_setObj(baseObj& new1) {
+        baseObj& ret = *inner;
+        inner = &new1;
+        return ret;
+    }
+    baseObj& me::_setObj() {
+        return _setObj(nulOf<baseObj>());
+    }
+    baseObj& me::getObj() { return *inner; }
+
     scopes& me::getTop() { return *_local.getTop(); }
 
     tstr<scopes> me::popLocal() { return _local.pop(); }
     // I won't provide API for poping a single node from the scope.
-
-    void me::setObj(const baseObj& new1) {
-        _obj.bind(new1);
-    }
-
-    void me::applyObjScope() {
-        if(!_obj) return;
-
-        scopes& bottom = *_local.getBottom();
-        if(!nul(bottom)) {
-            if(_obj)
-                bottom.unlink();
-            else
-                bottom.link(_obj->subs());
-        }
-    }
-
-    const baseObj& me::getObj() const { return *_obj; }
-    baseObj& me::getObj() { return *_obj; }
 
     void me::setFunc(func& new1) {
         _func.bind(new1);
@@ -60,10 +65,6 @@ namespace wrd {
 
     func& me::getFunc() {
         return *_func;
-    }
-
-    void me::clearObj() {
-        setObj(nulOf<baseObj>());
     }
 
     // node:

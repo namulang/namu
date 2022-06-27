@@ -124,9 +124,6 @@ TEST_F(funcTest, testfuncConstructNewFrame) {
         WRD_I(" - fr[%d]=%s", n++, e->getType().getName().c_str());
     }
 
-    narr args;
-    args.add(obj);
-
     func.setLambda([&](const auto& args, const auto& sf) {
         if(sf.len() != 1) return false;
 
@@ -134,7 +131,7 @@ TEST_F(funcTest, testfuncConstructNewFrame) {
     });
 
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
-    func.run(args);
+    obj.run(funcNames[0], narr());
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_TRUE(func.isRun());
     ASSERT_TRUE(func.isSuccess());
@@ -192,9 +189,6 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
 
     narr args;
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
-    obj1func1.run(args);
-    ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
-    ASSERT_FALSE(obj1func1.isSuccess());
     obj1.run(func1Name, args);
     ASSERT_EQ(wrd::thread::get().getFrames().len(), 0);
     ASSERT_TRUE(obj1func1.isSuccess());
