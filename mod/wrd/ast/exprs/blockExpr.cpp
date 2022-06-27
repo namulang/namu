@@ -25,6 +25,11 @@ namespace wrd {
         WRD_DI("%s._onOutFrame()", getType().getName().c_str());
 
         frame& fr = wrd::thread::get()._getNowFrame();
+        if(nul(fr)) {
+            WRD_E("fr == null");
+            return;
+        }
+
         fr.popLocal();
     }
 
