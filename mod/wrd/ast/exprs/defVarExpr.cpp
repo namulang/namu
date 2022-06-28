@@ -36,17 +36,34 @@ namespace wrd {
 
 
     WRD_VERIFY(defVarExpr, defineVariable, {
-        const wchar* name = it.getName().c_str();
-        const wchar* typeName = it.getOrigin().getType().getName().c_str();
-        WRD_DI("verify: define variable %s", name);
+        std::string name = it.getName();
+        WRD_DI("verify: defVarExpr: is %s definable?", name.c_str());
+        if(name == "") return _srcErr(errCode::HAS_NO_NAME);
+        const node& org = it.getOrigin();
+        if(nul(org)) return _srcErr(errCode::NO_ORIGIN, name.c_str());
+        const wtype& t = it.getEvalType();
+        const wchar* typeName = nul(t) ? "null" : t.getName().c_str();
 
-        const scopes& top = thread::get().getNowFrame().getTop();
-        if(nul(top)) return;
-        if(top.getContainer().has(it.getName()))
-            return _srcErr(errCode::ALREADY_DEFINED_VAR, name, typeName);
+        if(nul(t))
+            _srcErr(errCode::CANT_DEF_VAR, name.c_str(), typeName);
 
-        if(!it.run())
-            _srcErr(errCode::CANT_DEF_VAR, name, typeName);
+        node& new1 = *new typeNode(t);
+        wbool res = it._where ? it._where->add(name.c_str(), new1) : thread::get()._getNowFrame().pushLocal(name, new1);
+        if(!res)
+            WRD_E("define variable %s is failed.", name.c_str());
     })
 
+    WRD_VERIFY({
+        WRD_DI("verify: defVarExpr: check duplication");
+
+        const scopes& top = thread::get().getNowFrame().getTop();
+        const wtype& t = it.getEvalType();
+        const wchar* typeName = nul(t) ? "null" : t.getName().c_str();
+        if(nul(top)) return;
+        if(top.getContainer().has(it.getName()))
+            return _srcErr(errCode::ALREADY_DEFINED_VAR, it.getName().c_str(), typeName);
+    })
+
+    WRD_VERIFY({
+    })
 }

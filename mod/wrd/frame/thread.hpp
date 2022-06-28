@@ -10,7 +10,10 @@ namespace wrd {
     typedef tnarr<frame> frames;
 
     class _wout thread : public node {
-        WRD(CLASS(thread, node))
+        WRD(CLASS(thread, node),
+            FRIEND_VERIFY(defAssignExpr, isDefinable),
+            FRIEND_VERIFY(defVarExpr, defineVariable))
+
         friend class baseObj; // for frames.
         friend class mgdFunc; // for frames.
         friend class blockExpr; // for frames.
