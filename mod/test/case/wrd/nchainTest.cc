@@ -605,3 +605,26 @@ TEST_F(nchainTest, testDeepChainAddDel) {
         }
     ASSERT_FALSE(found);
 }
+
+TEST_F(nchainTest, delWhileIteration) {
+    nchain m;
+    m.add("meat", new wInt(1));
+    m.add("banana", new wInt(2));
+    m.add("apple", new wInt(3));
+    m.add("banana", new wInt(4));
+    m.add("meat", new wInt(5));
+    m.add("banana", new wInt(6));
+    m.add("meat", new wInt(7));
+    m.add("banana", new wInt(8));
+
+    for(auto e = m.begin(); e ;) {
+        if(e.getKey() == "banana")
+            m.del(e++);
+        else
+            ++e;
+    }
+
+    ASSERT_EQ(m.len(), 4);
+    ASSERT_EQ(m.get("apple").cast<int>(), 3);
+    ASSERT_EQ(m.getAll("meat").len(), 3);
+}
