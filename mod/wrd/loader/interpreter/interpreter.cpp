@@ -56,15 +56,30 @@ namespace wrd {
         if(*_rpt)
             return *_slot;
         _verify(info);
+
+        WRD_DI("======================================");
+        WRD_DI("           preEvaluation");
+        WRD_DI("======================================");
         _preEvaluation(_slot->getPack());
+
         _logStructure(*info, _srcs->get());
 
         return *_slot;
     }
 
+    void me::_preEvalObject(node& eval) {
+        obj& cast = eval.cast<obj>();
+        if(nul(cast)) return;
+
+        _delTypeNodes(eval);
+        WRD_DI("run %s.@preCtor", cast.getType().getName().c_str());
+        cast.run(baseObj::PRECTOR_NAME);
+    }
+
     void me::_preEvaluation(node& eval) {
         std::map<string, int> checker;
 
+        _preEvalObject(eval);
         // double-checking algorithm:
         //  while iterating and run preCtor, new variable can be added into eval object.
         //  to handle properly that scenario, I prepared checker and run evalutation twice.
@@ -72,16 +87,25 @@ namespace wrd {
         _preEvaluation(checker, eval);
     }
 
+    void me::_delTypeNodes(node& eval) {
+        int cnt = 0;
+        nbicontainer& con = eval.subs();
+        for(auto e=con.begin(); e ;)
+            if(!nul(e.getVal<typeNode>()))
+                con.del(e++), cnt++; // typeNode is variable.
+            else
+                ++e;
+
+        WRD_DI("delete type nodes of %s: %d", eval.getType().getName().c_str(), cnt);
+    }
+
     void me::_preEvaluation(std::map<string, int>& checker, node& eval) {
         for(auto e=eval.subs().begin(); e ;++e) {
             if(checker.find(e.getKey()) != checker.end())
                 continue;
 
-            obj& cast = e.cast<obj>();
-            if(!nul(cast))
-                cast.run(baseObj::PRECTOR_NAME);
-            _preEvaluation(*e);
             checker.insert({e.getKey(), 1});//actually, this value doesn't matter
+            _preEvaluation(*e);
         }
     }
 

@@ -45,6 +45,8 @@ namespace wrd {
         void _logStructure(std::vector<const char*>& indents, const narr& blk, int idx, bool isLast, bool isParentLast) const;
         void _logIndent(const std::vector<const char*>& indents, bool isParentLast) const;
         void _logFrame(const frame& info) const;
+        void _delTypeNodes(node& eval);
+        void _preEvalObject(node& eval);
 
     private:
         tstr<errReport> _rpt;
