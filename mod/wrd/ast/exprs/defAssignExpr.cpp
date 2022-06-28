@@ -36,14 +36,19 @@ namespace wrd {
                     .c_str());
     })
 
-    WRD_VERIFY({
-        WRD_DI("verify: defAssignExpr: isRunnable");
+    WRD_VERIFY(defAssignExpr, isDefinable, {
+        WRD_DI("verify: defAssignExpr: is definable?");
 
-        if(!it.run()) {
-            const wtype& evalType = it.getEvalType();
-            std::string name = nul(evalType) ? "unknown" : evalType.getName().c_str();
-            _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), name.c_str());
-        }
+        const wtype& t = it.getEvalType();
+        if(nul(t))
+            _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
+
+        node& new1 = *new typeNode(t);
+        node& to = it.getTo();
+        if(nul(to))
+            thread::get()._getNowFrame().pushLocal(it.getSubName(), new1);
+        else
+            to.run()->subs().add(it.getSubName(), new1);
     })
 
     WRD_VERIFY({
