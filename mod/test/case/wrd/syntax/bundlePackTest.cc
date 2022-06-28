@@ -23,13 +23,3 @@ TEST_F(bundlePackTest, defaultDef2) {
     )SRC").shouldVerified(true);
     run();
 }
-
-TEST_F(bundlePackTest, defaultDef3) {
-    make().parse(R"SRC(
-        main() void
-            sys.con.print("please enter your name: ")
-            name := sys.con.input()
-            sys.con.print("hello, " + name + "!\n")
-    )SRC").shouldVerified(true);
-    run();
-}
