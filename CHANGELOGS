@@ -1,4 +1,38 @@
 # Changelogs
+## v0.2.1 Mana Update
+released on 06-18 2022
+build#495
+
+### major changes
+* 39355eb3 bundle: feat: add input() func
+* b96c3c56 wrd: fix: when parse 'aka' it makes a blockexpr
+* 1cc87161 wrd: refactor: add 'frame::_setObj' to store obj reference
+* 2b1ffc88 wrd: feat: add frameInteract
+* 5c82285a wrd: feat: add a tray between verifications
+* 5d336854 wrd: fix: parser can recognize escape sequence
+* f521fe13 wrd: refactor: use std::string for asStr
+* 87fdf6c9 wrd: fix: 3 identifier concatenating with dot doesn't work
+* ff37fd75 wrd: fix: default ctors has been added into owns area
+* fc3d3c08 wrd: refactor: refine slot loading logic
+* 889cdfc5 wrd: feat: mashaling for string& reference types
+* 46cf36ac wrd: feat: add 4 more fundermental arithmetic operation
+* 1de7e847 wrd: doc: remove prototypings
+* a713c5ea wrd: refactor: preconstructor
+* 8faa6738 wrd: fix: apply new refactoring of slot to TC files
+* 2118cf34 wrd: refactor: pack -> slot and apply autoslot, preconstructor
+* d8af510f wrd: feat: add(iter, iter, iter) new func on ucontainer
+* 8493d0ec wrd: refactor: rename obj -> baseObj
+* 33d1daf9 wrd: feat: add 'addExpr'
+* 6b3c8eff wrd: feat: add 'asExpr'
+* 88b48011 wrd: fix: type casting & as()
+* f8f73429 wrd: feat: add defAssignExpr
+* e854d62b wrd: refactor: change syntax of aka-deduced
+* 8fd64ebf wrd: feat: add defAssign expr
+* 4ab7b541 wrd: refactor: remove redundant expr, literalExpr
+* c5eb689c wrd: fix: apply dum containers into primitives
+* 5d33e74a wrd: feat: add assignExpr
+* 623c390e wrd: feat: add 'comment' syntax
+
 ## v0.2.0 Mana Update
 released on 05-14 2022
 build#444
