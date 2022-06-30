@@ -84,32 +84,18 @@ Inheritance diagram for wrd::node:</div>
  <div class="center">
   <img src="classwrd_1_1node.png" usemap="#wrd::node_map" alt=""/>
   <map id="wrd::node_map" name="wrd::node_map">
-<area href="classwrd_1_1instance.html" alt="wrd::instance" shape="rect" coords="441,56,578,80"/>
-<area href="classwrd_1_1clonable.html" alt="wrd::clonable" shape="rect" coords="588,56,725,80"/>
-<area href="classwrd_1_1frame_interactable.html" alt="wrd::frameInteractable" shape="rect" coords="735,56,872,80"/>
-<area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="441,0,578,24"/>
-<area href="classwrd_1_1base_obj.html" title="baseObj handles frame injection event of all objects." alt="wrd::baseObj" shape="rect" coords="0,168,137,192"/>
-<area href="classwrd_1_1expr.html" alt="wrd::expr" shape="rect" coords="294,168,431,192"/>
-<area href="classwrd_1_1frame.html" alt="wrd::frame" shape="rect" coords="441,168,578,192"/>
-<area href="classwrd_1_1slot.html" alt="wrd::slot" shape="rect" coords="588,168,725,192"/>
-<area href="classwrd_1_1src.html" title="src represents src file of wrdlang source codes." alt="wrd::src" shape="rect" coords="735,168,872,192"/>
-<area href="classwrd_1_1starter.html" alt="wrd::starter" shape="rect" coords="882,168,1019,192"/>
-<area href="classwrd_1_1thread.html" alt="wrd::thread" shape="rect" coords="1029,168,1166,192"/>
-<area href="classwrd_1_1arithmetic_obj.html" alt="wrd::arithmeticObj" shape="rect" coords="147,224,284,248"/>
-<area href="classwrd_1_1obj.html" alt="wrd::obj" shape="rect" coords="147,280,284,304"/>
-<area href="classwrd_1_1type_node.html" alt="wrd::typeNode" shape="rect" coords="147,336,284,360"/>
-<area href="classwrd_1_1as_expr.html" alt="wrd::asExpr" shape="rect" coords="441,224,578,248"/>
-<area href="classwrd_1_1assign_expr.html" alt="wrd::assignExpr" shape="rect" coords="441,280,578,304"/>
-<area href="classwrd_1_1block_expr.html" alt="wrd::blockExpr" shape="rect" coords="441,336,578,360"/>
-<area href="classwrd_1_1def_assign_expr.html" alt="wrd::defAssignExpr" shape="rect" coords="441,392,578,416"/>
-<area href="classwrd_1_1def_var_expr.html" alt="wrd::defVarExpr" shape="rect" coords="441,448,578,472"/>
-<area href="classwrd_1_1_f_a_o_expr.html" alt="wrd::FAOExpr" shape="rect" coords="441,504,578,528"/>
-<area href="classwrd_1_1func.html" alt="wrd::func" shape="rect" coords="441,560,578,584"/>
-<area href="classwrd_1_1get_expr.html" alt="wrd::getExpr" shape="rect" coords="441,616,578,640"/>
-<area href="classwrd_1_1make_expr.html" alt="wrd::makeExpr" shape="rect" coords="441,672,578,696"/>
-<area href="classwrd_1_1return_expr.html" alt="wrd::returnExpr" shape="rect" coords="441,728,578,752"/>
-<area href="classwrd_1_1run_expr.html" alt="wrd::runExpr" shape="rect" coords="441,784,578,808"/>
-<area href="classwrd_1_1autoslot.html" alt="wrd::autoslot" shape="rect" coords="588,224,725,248"/>
+<area href="classwrd_1_1instance.html" alt="wrd::instance" shape="rect" coords="0,56,137,80"/>
+<area href="classwrd_1_1clonable.html" alt="wrd::clonable" shape="rect" coords="147,56,284,80"/>
+<area href="classwrd_1_1frame_interactable.html" alt="wrd::frameInteractable" shape="rect" coords="294,56,431,80"/>
+<area href="classwrd_1_1type_providable.html" alt="wrd::typeProvidable" shape="rect" coords="0,0,137,24"/>
+<area href="classwrd_1_1base_obj.html" title="baseObj handles frame injection event of all objects." alt="wrd::baseObj" shape="rect" coords="294,168,431,192"/>
+<area href="classwrd_1_1expr.html" alt="wrd::expr" shape="rect" coords="294,224,431,248"/>
+<area href="classwrd_1_1frame.html" alt="wrd::frame" shape="rect" coords="294,280,431,304"/>
+<area href="classwrd_1_1muna.html" alt="wrd::muna" shape="rect" coords="294,336,431,360"/>
+<area href="classwrd_1_1slot.html" alt="wrd::slot" shape="rect" coords="294,392,431,416"/>
+<area href="classwrd_1_1src.html" title="src represents src file of wrdlang source codes." alt="wrd::src" shape="rect" coords="294,448,431,472"/>
+<area href="classwrd_1_1starter.html" alt="wrd::starter" shape="rect" coords="294,504,431,528"/>
+<area href="classwrd_1_1thread.html" alt="wrd::thread" shape="rect" coords="294,560,431,584"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -324,7 +310,7 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
 <p>getType() returns what it is. opposite to it, this returns what this class will represents after evaluation.</p>
 <p>for example, the 'expr' class has derived from this node class. and if an user call the funcs to get type of it, class 'wtype' of 'expr' will be returned. but if that user call the '<a class="el" href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">getEvalType()</a>' then the 'expr' object evaluate its terms and returns type of the output. it could be integer if it was 'addExpr' and all terms are constructed with integers. and also this func requires frames. means that you have to interact frame first before call this func. </p>
 
-<p>Reimplemented in <a class="el" href="classwrd_1_1_f_a_o_expr.html#a2a74abb801b1772b87677e8d46380af4">wrd::FAOExpr</a>, <a class="el" href="classwrd_1_1slot.html#acf4bd06cd8daaf88534a2d88eda1cd77">wrd::slot</a>, <a class="el" href="classwrd_1_1as_expr.html#a9d780122dc8758b01a6a9060bb246d52">wrd::asExpr</a>, <a class="el" href="classwrd_1_1assign_expr.html#aa43a11179702cbb263a5bd3054a438a4">wrd::assignExpr</a>, <a class="el" href="classwrd_1_1def_var_expr.html#a321ab19e991f211725437fccd839eb94">wrd::defVarExpr</a>, <a class="el" href="classwrd_1_1def_assign_expr.html#a71318176acf423ea164f04c24b732a8f">wrd::defAssignExpr</a>, <a class="el" href="classwrd_1_1make_expr.html#ac52c9350595fb6bea47a38a8d618a524">wrd::makeExpr</a>, <a class="el" href="classwrd_1_1get_expr.html#a161283465543a55484b142534330d4f8">wrd::getExpr</a>, <a class="el" href="classwrd_1_1return_expr.html#ac15cf4f68e6e559f666f4d29a0653565">wrd::returnExpr</a>, <a class="el" href="classwrd_1_1block_expr.html#a02a06472b4ff09e299ebec818ba210ee">wrd::blockExpr</a>, <a class="el" href="classwrd_1_1type_node.html#a6fc5a1013e50a98cf60d425bb4ffad2b">wrd::typeNode</a>, <a class="el" href="classwrd_1_1run_expr.html#a8030251fef4c0d314d1f2c211b2b127b">wrd::runExpr</a>, and <a class="el" href="classwrd_1_1ctor.html#a06537b232035c39aafd1ba1e803e3682">wrd::ctor</a>.</p>
+<p>Reimplemented in <a class="el" href="classwrd_1_1_f_a_o_expr.html#a2a74abb801b1772b87677e8d46380af4">wrd::FAOExpr</a>, <a class="el" href="classwrd_1_1slot.html#acf4bd06cd8daaf88534a2d88eda1cd77">wrd::slot</a>, <a class="el" href="classwrd_1_1aka_expr.html#ac702d732e3c4f4b52689ffaa6c613f0a">wrd::akaExpr</a>, <a class="el" href="classwrd_1_1as_expr.html#a9d780122dc8758b01a6a9060bb246d52">wrd::asExpr</a>, <a class="el" href="classwrd_1_1assign_expr.html#aa43a11179702cbb263a5bd3054a438a4">wrd::assignExpr</a>, <a class="el" href="classwrd_1_1def_var_expr.html#a321ab19e991f211725437fccd839eb94">wrd::defVarExpr</a>, <a class="el" href="classwrd_1_1def_assign_expr.html#a71318176acf423ea164f04c24b732a8f">wrd::defAssignExpr</a>, <a class="el" href="classwrd_1_1make_expr.html#ac52c9350595fb6bea47a38a8d618a524">wrd::makeExpr</a>, <a class="el" href="classwrd_1_1get_expr.html#a161283465543a55484b142534330d4f8">wrd::getExpr</a>, <a class="el" href="classwrd_1_1return_expr.html#ac15cf4f68e6e559f666f4d29a0653565">wrd::returnExpr</a>, <a class="el" href="classwrd_1_1block_expr.html#a02a06472b4ff09e299ebec818ba210ee">wrd::blockExpr</a>, <a class="el" href="classwrd_1_1type_node.html#a6fc5a1013e50a98cf60d425bb4ffad2b">wrd::typeNode</a>, <a class="el" href="classwrd_1_1run_expr.html#a8030251fef4c0d314d1f2c211b2b127b">wrd::runExpr</a>, and <a class="el" href="classwrd_1_1ctor.html#a06537b232035c39aafd1ba1e803e3682">wrd::ctor</a>.</p>
 
 </div>
 </div>
