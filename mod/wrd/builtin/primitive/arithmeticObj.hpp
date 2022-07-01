@@ -17,10 +17,10 @@ namespace wrd {
         tstr<me> mod(const me& rhs);
 
     private:
-        virtual tstr<me> _add(const me& rhs) const = 0;
-        virtual tstr<me> _sub(const me& rhs) const = 0;
-        virtual tstr<me> _mul(const me& rhs) const = 0;
-        virtual tstr<me> _div(const me& rhs) const = 0;
-        virtual tstr<me> _mod(const me& rhs) const = 0;
+        virtual tstr<me> _add(const me& rhs, wbool reversed) const = 0;
+        virtual tstr<me> _sub(const me& rhs, wbool reversed) const = 0;
+        virtual tstr<me> _mul(const me& rhs, wbool reversed) const = 0;
+        virtual tstr<me> _div(const me& rhs, wbool reversed) const = 0;
+        virtual tstr<me> _mod(const me& rhs, wbool reversed) const = 0;
     };
 }
