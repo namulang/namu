@@ -52,10 +52,9 @@ struct wrdSyntaxTest : public wrdTest {
         EXPECT_EQ(ret, well);
         return ret;
     }
-    wrdSyntaxTest& run() {
+    wrd::str run() {
         wrd::starter s;
-        s.run(wrd::narr(getSubPack()));
-        return *this;
+        return s.run(wrd::narr(getSubPack()));
     }
 
 private:
