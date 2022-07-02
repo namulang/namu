@@ -12,9 +12,12 @@ namespace wrd {
         if(args.len() != ps.len()) return false;
 
         int n = 0;
-        for(const auto& e : args)
-            if(!e.getEvalType().isImpli(ps[n++].getOrgType()))
+        for(const auto& e : args) {
+            const wtype& t = e.getEvalType();
+            if(nul(t)) return WRD_W("t == null"), false;
+            if(!t.isImpli(ps[n++].getOrgType()))
                 return false;
+        }
 
         return true;
     }
