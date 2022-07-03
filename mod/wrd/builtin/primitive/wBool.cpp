@@ -23,12 +23,20 @@ namespace wrd {
         return new dumScope(scapegoat);
     }
 
-    const ases& me::wBoolType::_getAses() const {
+    const ases& me::wBoolType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
             inner.add(new asPrimitive<wInt, wbool>());
-            inner.add(new asPrimitive<wFlt, wbool>());
             inner.add(new asPrimitive<wChar, wbool>());
+        }
+
+        return inner;
+    }
+
+    const ases& me::wBoolType::_getAses() const {
+        static ases inner;
+        if(inner.len() <= 0) {
+            inner.add(new asPrimitive<wFlt, wbool>());
             struct asStr : public tas<wStr> {
                 str as(const node& me, const type& to) const override {
                     return str(new wStr(me.cast<wbool>() ? "true" : "false"));
