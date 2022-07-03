@@ -272,7 +272,7 @@ primary: INTVAL {
         //          e.g. (just_primary) •
 
         // TODO: list should contain 1 element.
-        $$ = new blockExpr(); // TODO:
+        $$ = $2;
      } | NAME {
         $$ = yyget_extra(scanner)->onGet(*$1);
         free($1);
