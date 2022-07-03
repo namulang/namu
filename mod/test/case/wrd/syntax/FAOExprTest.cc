@@ -132,3 +132,17 @@ TEST_F(FAOExprTest, testStringAddSequence) {
     wrd::str res = run();
     ASSERT_EQ(res->cast<std::string>(), "4low\n");
 }
+
+TEST_F(FAOExprTest, testStringAddBoolean) {
+    make().parse(R"SRC(
+    Helloworld(age int) int
+        return age
+
+    main() str
+        return (Helloworld(false) + "low\n" )
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+
+    wrd::str res = run();
+    ASSERT_EQ(res->cast<std::string>(), "0low\n");
+}

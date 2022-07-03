@@ -11,6 +11,7 @@ namespace wrd {
             wbool isImmutable() const override;
 
         protected:
+            const ases& _getImpliAses() const override;
             const ases& _getAses() const override;
         };
 

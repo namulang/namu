@@ -14,8 +14,6 @@ namespace wrd {
     const ases& me::wCharType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            inner.add(new asPrimitive<wInt, wchar>());
-            inner.add(new asPrimitive<wFlt, wchar>());
             inner.add(new asPrimitive<wBool, wchar>());
         }
 
@@ -25,6 +23,8 @@ namespace wrd {
     const ases& me::wCharType::_getAses() const {
         static ases inner;
         if(inner.len() <= 0) {
+            inner.add(new asPrimitive<wInt, wchar>());
+            inner.add(new asPrimitive<wFlt, wchar>());
             struct asStr : public tas<wStr> {
                 str as(const node& me, const type& to) const override {
                     std::string val;
