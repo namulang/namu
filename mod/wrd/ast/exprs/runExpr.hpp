@@ -5,7 +5,7 @@
 namespace wrd {
 
     class _wout runExpr : public expr {
-        WRD(CLASS(runExpr, expr))
+        WRD(CLASS(runExpr, expr, expr::exprType))
 
     public:
         runExpr(const node& meObj, const std::string& name, const narr& args);

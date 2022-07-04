@@ -47,6 +47,15 @@ namespace wrd {
 
 
 
+    namespace {
+        narr _evalArgs(const narr& args) {
+            narr ret;
+            for(auto& e : args)
+                ret.add(new typeNode(e.getEvalType()));
+            return ret;
+        }
+    }
+
     WRD_VERIFY({
         WRD_DI("verify: runExpr: is it possible to run?");
 
@@ -55,7 +64,7 @@ namespace wrd {
         str me = it.getMe().as<node>();
         if(!me) return _srcErr(errCode::CANT_CAST_TO_NODE);
 
-        str sub = me->sub(it.getName(), it.getArgs());
+        str sub = me->sub(it.getName(), _evalArgs(it.getArgs()));
         if(!sub) return _srcErr(errCode::CANT_ACCESS, me->getType().getName().c_str(), it.getName().c_str());
         if(!sub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS);
     })

@@ -9,7 +9,17 @@ namespace wrd {
 
     class _wout expr : public node {
     public:
-        WRD(ADT(expr, node))
+        // expr can be casted to node. it's proxy of a node.
+        class exprType : public wtype {
+            WRD(ME(exprType, wtype))
+
+        public:
+            using super::asImpli;
+            wbool isImpli(const type& to) const override { return to.isSub<node>(); }
+            str asImpli(const node& from, const type& to) const override { return str(((node&)from).run()); }
+        };
+
+        WRD(ADT(expr, node, exprType))
         friend class exprMaker;
         friend struct ::exprTest;
 
