@@ -5,7 +5,7 @@
 namespace wrd {
 
     class _wout returnExpr : public expr {
-        WRD(CLASS(returnExpr, expr))
+        WRD(CLASS(returnExpr, expr, expr::exprType))
 
     public:
         returnExpr(const node& ret);

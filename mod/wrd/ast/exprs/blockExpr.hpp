@@ -5,7 +5,7 @@
 namespace wrd {
 
     class _wout blockExpr : public expr {
-        WRD(CLASS(blockExpr, expr),
+        WRD(CLASS(blockExpr, expr, expr::exprType),
             FRIEND_VERIFY(blockExpr, visitSubNodes))
         friend class mgdFunc;
 

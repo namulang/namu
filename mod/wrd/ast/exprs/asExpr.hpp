@@ -7,7 +7,7 @@
 namespace wrd {
 
     class _wout asExpr : public expr {
-        WRD(CLASS(asExpr, expr),
+        WRD(CLASS(asExpr, expr, expr::exprType),
             FRIEND_VERIFY(asExpr, verifyIter))
         friend class mgdFunc;
         typedef scopes::iter iter;
@@ -20,7 +20,10 @@ namespace wrd {
         str run(const ucontainable& args) override {
             if(!_me || !_as) return str();
 
-            return str(_me->as(*_as));
+            str eval = _me->run();
+            if(!eval) WRD_E("!eval.isBind()"), str();
+
+            return str(eval->as(*_as));
         }
 
         const wtype& getEvalType() const override { return _as->getType(); }
