@@ -118,7 +118,7 @@ TEST_F(getExprTest, getExprSkipEvalToPrimitiveObj) {
 }
 
 struct myGetExpr : public getExpr {
-    WRD(CLASS(myGetExpr, getExpr, expr::exprType))
+    WRD(CLASS(myGetExpr, getExpr))
 
 public:
     myGetExpr(const node& from, const std::string& name): super(from, name), executed(false) {}

@@ -9,7 +9,7 @@ namespace wrd {
 
     // FAO: Five fundermental Arithmetic Operation.
     class _wout FAOExpr : public expr {
-        WRD(CLASS(FAOExpr, expr, expr::exprType))
+        WRD(CLASS(FAOExpr, expr))
 
     public:
         enum Rule {

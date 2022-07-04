@@ -23,3 +23,29 @@ TEST_F(bundlePackTest, defaultDef2) {
     )SRC").shouldVerified(true);
     run();
 }
+
+TEST_F(bundlePackTest, withAsNegative) {
+    make().parse(R"SRC(
+        Helloworld(age int) int
+            return age
+
+        main() int
+            a := Helloworld('g')
+            sys.con.print(a as str)
+            return 0
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(bundlePackTest, withAs) {
+    make().parse(R"SRC(
+        Helloworld(age int) int
+            return age
+
+        main() int
+            a := Helloworld('g' as int)
+            sys.con.print(a as str)
+            return 0
+    )SRC").shouldVerified(true);
+    run();
+}

@@ -36,7 +36,12 @@ namespace wrd {
         if(inner.len() <= 0) {
             struct asStr : public tas<wStr> {
                 str as(const node& me, const type& to) const override {
-                    return str(new wStr(std::to_string(me.cast<wint>())));
+                    wint val = me.cast<wint>();
+                    WRD_E("------------val=%d", val);
+                    wStr* ret = new wStr(std::to_string(me.cast<wint>()));
+                    WRD_E("------------ret=%s", ret->get().c_str());
+
+                    return str(ret);
                 }
             };
             inner.add(new asStr());

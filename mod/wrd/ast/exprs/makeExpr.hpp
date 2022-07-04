@@ -6,7 +6,7 @@
 namespace wrd {
 
     class _wout makeExpr : public expr {
-        WRD(CLASS(makeExpr, expr, expr::exprType))
+        WRD(CLASS(makeExpr, expr))
 
     public:
         makeExpr(const node& from): _from(from) {}
