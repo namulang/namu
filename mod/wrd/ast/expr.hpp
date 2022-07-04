@@ -9,22 +9,21 @@ namespace wrd {
 
     class _wout expr : public node {
     public:
-        class exprType : public wtype {
-            WRD(ME(exprType, wtype))
-
-        public:
-            using super::asImpli;
-            wbool isImpli(const type& to) const override { return to.isSub<node>(); }
-            str asImpli(const node& from, const type& to) const override { return str(((node&)from).run()); }
-        };
-
-        WRD(ADT(expr, node, exprType))
+        WRD(ADT(expr, node))
         friend class exprMaker;
         friend struct ::exprTest;
 
     public:
         using super::subs;
         nbicontainer& subs() override;
+
+        wbool isImpli(const type& to) const override {
+            return getEvalType().isSub(to);
+        }
+        virtual str asImpli(const type& to) const override {
+            me* unconst = const_cast<me*>(this);
+            return str((unconst->run()->asImpli(to)));
+        }
 
         /// run of expr class get treated like 'evaluate' in wrd.
         /// it should not take any argument to run()

@@ -14,6 +14,7 @@ namespace wrd {
 
     public:
         // wtype:
+        /// whether variable 'it' can be a subtype of T
         template <typename T>
         wbool isImpli() const {
             return this->isImpli(ttype<T>::get());

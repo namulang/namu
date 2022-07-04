@@ -7,7 +7,7 @@
 namespace wrd {
 
     class _wout asExpr : public expr {
-        WRD(CLASS(asExpr, expr, expr::exprType),
+        WRD(CLASS(asExpr, expr),
             FRIEND_VERIFY(asExpr, verifyIter))
         friend class mgdFunc;
         typedef scopes::iter iter;

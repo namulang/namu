@@ -64,11 +64,11 @@ namespace wrd {
         template <typename T>
         wbool isImpli() const { return isImpli(ttype<T>::get()); }
         wbool isImpli(const typeProvidable& to) const;
-        wbool isImpli(const type& to) const;
+        virtual wbool isImpli(const type& to) const;
 
         template <typename T> tstr<T> asImpli() const { return asImpli(ttype<T>::get()); }
         str asImpli(const typeProvidable& to) const;
-        str asImpli(const type& to) const;
+        virtual str asImpli(const type& to) const;
 
         virtual const point& getPos() const {
             static point inner;

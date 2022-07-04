@@ -12,6 +12,12 @@ struct con {
     }
 
     const string& print(const std::string& msg) {
+        WRD_W("=========================");
+        for(int n = 0; n < 10; n++) {
+            const wchar* c = msg.c_str();
+            WRD_W("[%d]=%d", n, (int) c[n]);
+        }
+        WRD_W("=========================");
         std::cout << msg;
         return msg;
     }
