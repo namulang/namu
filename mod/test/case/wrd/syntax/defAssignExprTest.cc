@@ -39,3 +39,36 @@ TEST_F(defAssignExprTest, simpleLocalDefAssign) {
     run();
     ASSERT_EQ(getSubPack().sub("age").cast<int>(), 3);
 }
+
+TEST_F(defAssignExprTest, testCircularDependencies) {
+    make("holymoly").parse(R"SRC(
+        pack holymoly
+
+        a := c
+        b := a
+        c := b // type can't be defined.
+
+        main() int
+            return 0
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+    // however when runs it, it throws an error.
+}
+
+TEST_F(defAssignExprTest, testNearCircularDependencies) {
+    make("holymoly").parse(R"SRC(
+        pack holymoly
+
+        a := c
+        b := a
+        c := 1 // type can be defined.
+
+        main() int
+            sys.con.print(a as str)
+            sys.con.print(b as str)
+            return 0
+    )SRC").shouldParsed(true);
+    shouldVerified(true);
+    // however when runs it, it throws an error.
+    // because assigning 1 to c will be done after evaluating of assignment of the 'a'.
+}
