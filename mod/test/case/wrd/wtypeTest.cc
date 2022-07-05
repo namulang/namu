@@ -79,8 +79,8 @@ TEST(wtypeTest, allImplicitCastingForPrimitives) {
     ASSERT_FALSE(b.isImpli<wStr>());
 
     // char:
-    ASSERT_TRUE(c.isImpli<wInt>());
-    ASSERT_TRUE(c.isImpli<wFlt>());
+    ASSERT_FALSE(c.isImpli<wInt>());
+    ASSERT_FALSE(c.isImpli<wFlt>());
     ASSERT_TRUE(c.isImpli<wBool>());
     ASSERT_TRUE(c.isImpli<wChar>());
     ASSERT_FALSE(c.isImpli<wStr>());

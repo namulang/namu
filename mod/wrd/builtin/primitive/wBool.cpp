@@ -25,11 +25,6 @@ namespace wrd {
 
     const ases& me::wBoolType::_getImpliAses() const {
         static ases inner;
-        if(inner.len() <= 0) {
-            inner.add(new asPrimitive<wInt, wbool>());
-            inner.add(new asPrimitive<wChar, wbool>());
-        }
-
         return inner;
     }
 
@@ -37,6 +32,8 @@ namespace wrd {
         static ases inner;
         if(inner.len() <= 0) {
             inner.add(new asPrimitive<wFlt, wbool>());
+            inner.add(new asPrimitive<wInt, wbool>());
+            inner.add(new asPrimitive<wChar, wbool>());
             struct asStr : public tas<wStr> {
                 str as(const node& me, const type& to) const override {
                     return str(new wStr(me.cast<wbool>() ? "true" : "false"));

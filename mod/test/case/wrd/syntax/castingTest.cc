@@ -92,19 +92,23 @@ TEST_F(castingTest, castFlt) {
 }
 
 TEST_F(castingTest, castChar) {
+    // implicit casting of char:
+    //  -> wbool
     make().parse(R"SRC(
         foo(age int) void
             main()
         main() void
             foo('a')
-    )SRC").shouldVerified(true);
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
 
     make().parse(R"SRC(
         foo(age flt) void
             main()
         main() void
             foo('a')
-    )SRC").shouldVerified(true);
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
 
     make().parse(R"SRC(
         foo(age char) void
@@ -130,6 +134,8 @@ TEST_F(castingTest, castChar) {
 }
 
 TEST_F(castingTest, castBool) {
+    // implicit casting of wbool:
+    //  N/A
     make().parse(R"SRC(
         foo(age int) void
             main()
