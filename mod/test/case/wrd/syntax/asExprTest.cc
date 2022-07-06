@@ -4,10 +4,10 @@ using namespace wrd;
 using namespace std;
 
 namespace {
-    struct castingTest : public wrdSyntaxTest {};
+    struct asExprTest : public wrdSyntaxTest {};
 }
 
-TEST_F(castingTest, castInt) {
+TEST_F(asExprTest, castInt) {
     make().parse(R"SRC(
         foo(age int) void
             main()
@@ -16,7 +16,7 @@ TEST_F(castingTest, castInt) {
     )SRC").shouldVerified(true);
 }
 
-TEST_F(castingTest, castInt1) {
+TEST_F(asExprTest, castInt1) {
     make().parse(R"SRC(
         foo(age flt) void
             main()
@@ -25,7 +25,7 @@ TEST_F(castingTest, castInt1) {
     )SRC").shouldVerified(true);
 }
 
-TEST_F(castingTest, castInt2) {
+TEST_F(asExprTest, castInt2) {
     make().parse(R"SRC(
         foo(age bool) void
             main()
@@ -34,7 +34,7 @@ TEST_F(castingTest, castInt2) {
     )SRC").shouldVerified(true);
 }
 
-TEST_F(castingTest, castInt3) {
+TEST_F(asExprTest, castInt3) {
     make().parse(R"SRC(
         foo(age char) void
             main()
@@ -43,7 +43,7 @@ TEST_F(castingTest, castInt3) {
     )SRC").shouldVerified(true);
 }
 
-TEST_F(castingTest, castInt4) {
+TEST_F(asExprTest, castInt4) {
     make().parse(R"SRC(
         foo(age str) void
             main()
@@ -53,7 +53,7 @@ TEST_F(castingTest, castInt4) {
     shouldVerified(false);
 }
 
-TEST_F(castingTest, castFlt) {
+TEST_F(asExprTest, castFlt) {
     make().parse(R"SRC(
         foo(age int) void
             main()
@@ -91,7 +91,7 @@ TEST_F(castingTest, castFlt) {
     shouldVerified(false);
 }
 
-TEST_F(castingTest, castChar) {
+TEST_F(asExprTest, castChar) {
     // implicit casting of char:
     //  -> wbool
     make().parse(R"SRC(
@@ -133,7 +133,7 @@ TEST_F(castingTest, castChar) {
     shouldVerified(false);
 }
 
-TEST_F(castingTest, castBool) {
+TEST_F(asExprTest, castBool) {
     // implicit casting of wbool:
     //  N/A
     make().parse(R"SRC(
@@ -153,7 +153,7 @@ TEST_F(castingTest, castBool) {
     shouldVerified(false);
 }
 
-TEST_F(castingTest, castBool1) {
+TEST_F(asExprTest, castBool1) {
     make().parse(R"SRC(
         foo(age char) void
             main()
@@ -163,7 +163,7 @@ TEST_F(castingTest, castBool1) {
     shouldVerified(false);
 }
 
-TEST_F(castingTest, castBool2) {
+TEST_F(asExprTest, castBool2) {
     make().parse(R"SRC(
         foo(age bool) void
             main()
@@ -172,7 +172,7 @@ TEST_F(castingTest, castBool2) {
     )SRC").shouldVerified(true);
 }
 
-TEST_F(castingTest, castBool3) {
+TEST_F(asExprTest, castBool3) {
     make().parse(R"SRC(
         foo(age str) void
             main()
@@ -182,7 +182,7 @@ TEST_F(castingTest, castBool3) {
     shouldVerified(false);
 }
 
-TEST_F(castingTest, castStr) {
+TEST_F(asExprTest, castStr) {
     make().parse(R"SRC(
         foo(age int) void
             main()
@@ -223,7 +223,7 @@ TEST_F(castingTest, castStr) {
     )SRC").shouldVerified(true);
 }
 
-TEST_F(castingTest, manualAsInt) {
+TEST_F(asExprTest, manualAsInt) {
     wInt a = 55;
     str as = a.as<wStr>();
     ASSERT_TRUE(as);
@@ -248,7 +248,7 @@ TEST_F(castingTest, manualAsInt) {
     ASSERT_TRUE(as->cast<wbool>()); // except for 0 -> true
 }
 
-TEST_F(castingTest, simpleAsInt1) {
+TEST_F(asExprTest, simpleAsInt1) {
     make().parse(R"SRC(
         foo(age int) void
             main()
@@ -257,7 +257,7 @@ TEST_F(castingTest, simpleAsInt1) {
     )SRC").shouldVerified(true);
 }
 
-TEST_F(castingTest, simpleAsInt2) {
+TEST_F(asExprTest, simpleAsInt2) {
     make().parse(R"SRC(
         foo(age flt) void
             main()
@@ -266,7 +266,7 @@ TEST_F(castingTest, simpleAsInt2) {
     )SRC").shouldVerified(true);
 }
 
-TEST_F(castingTest, simpleAsInt3) {
+TEST_F(asExprTest, simpleAsInt3) {
     make().parse(R"SRC(
         foo(age bool) void
             main()
@@ -275,7 +275,7 @@ TEST_F(castingTest, simpleAsInt3) {
     )SRC").shouldVerified(true);
 }
 
-TEST_F(castingTest, simpleAsInt4) {
+TEST_F(asExprTest, simpleAsInt4) {
     make().parse(R"SRC(
         foo(age char) void
             main()
@@ -284,7 +284,7 @@ TEST_F(castingTest, simpleAsInt4) {
     )SRC").shouldVerified(true);
 }
 
-TEST_F(castingTest, simpleAsInt5) {
+TEST_F(asExprTest, simpleAsInt5) {
     make().parse(R"SRC(
         foo(age str) void
             main()
@@ -294,7 +294,7 @@ TEST_F(castingTest, simpleAsInt5) {
     shouldVerified(true);
 }
 
-TEST_F(castingTest, asExprNotAllowed) {
+TEST_F(asExprTest, asExprNotAllowed) {
     make().parse(R"SRC(
         foo(age str) void
             main()
@@ -303,7 +303,7 @@ TEST_F(castingTest, asExprNotAllowed) {
     )SRC").shouldParsed(false);
 }
 
-TEST_F(castingTest, exprAsAllowed) {
+TEST_F(asExprTest, exprAsAllowed) {
     make().parse(R"SRC(
         foo(age str) void
             main()
@@ -313,7 +313,7 @@ TEST_F(castingTest, exprAsAllowed) {
     shouldVerified(true);
 }
 
-TEST_F(castingTest, asAs) {
+TEST_F(asExprTest, asAs) {
     make().parse(R"SRC(
         foo(age str) void
             main()
@@ -323,7 +323,7 @@ TEST_F(castingTest, asAs) {
     shouldVerified(true);
 }
 
-TEST_F(castingTest, asAsNegative) {
+TEST_F(asExprTest, asAsNegative) {
     make().parse(R"SRC(
         foo(age str) void
             main()
@@ -333,7 +333,7 @@ TEST_F(castingTest, asAsNegative) {
     shouldVerified(false);
 }
 
-TEST_F(castingTest, AsAllowed) {
+TEST_F(asExprTest, AsAllowed) {
     make().parse(R"SRC(
         foo(age str) void
             main()
@@ -343,7 +343,7 @@ TEST_F(castingTest, AsAllowed) {
     shouldVerified(true);
 }
 
-TEST_F(castingTest, reduceTest1) {
+TEST_F(asExprTest, reduceTest1) {
     const wtype& it = ttype<wInt>::get();
     const wtype* res = &it.reduce<wFlt>();
     ASSERT_FALSE(nul(res));
@@ -364,6 +364,20 @@ TEST_F(castingTest, reduceTest1) {
     res = &it.reduce<wStr>();
     ASSERT_FALSE(nul(res));
     ASSERT_EQ(*res, ttype<wStr>::get());
+}
+
+TEST_F(asExprTest, doubleAs) {
+    make().parse(R"SRC(
+        foo(idx int) int
+           return idx
+
+        main() int
+            sys.con.print(foo("54634" as int) as str)
+            return 0
+    )SRC").shouldVerified(true);
+    str ret = run();
+    ASSERT_TRUE(ret);
+    ASSERT_EQ(ret->cast<int>(), 0);
 }
 
 // TODO: make a TC for 'as' nonprimitive types

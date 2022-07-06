@@ -59,9 +59,9 @@ TEST_F(defAssignExprTest, testNearCircularDependencies) {
     make("holymoly").parse(R"SRC(
         pack holymoly
 
+        c := 1 // type can be defined.
         a := c
         b := a
-        c := 1 // type can be defined.
 
         main() int
             sys.con.print(a as str)
