@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../ast/node.hpp"
+#include "../ast/baseObj.hpp"
 
 namespace wrd {
 
     /// typeNode is containing type only.
     /// it does nothing except returning evalType.
-    class typeNode : public node {
-        WRD(CLASS(typeNode, node))
+    class typeNode : public baseObj {
+        WRD(CLASS(typeNode, baseObj))
 
     public:
         typeNode(const wtype& existType): _type(existType) {}
@@ -17,6 +17,7 @@ namespace wrd {
         wbool canRun(const ucontainable& args) const override { return false; }
         str run(const ucontainable& args) override;
         const wtype& getEvalType() const override;
+        const baseObj& getOrigin() const override { return *this; }
 
     private:
         const wtype& _type;

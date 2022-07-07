@@ -66,14 +66,3 @@ TEST_F(bundlePackTest, defaultDef3) {
     ASSERT_TRUE(res);
     ASSERT_EQ(res.cast<int>(), 48268 + 3985);
 }
-
-TEST_F(bundlePackTest, mysteriousDeath) {
-    make().parse(R"SRC(
-        age := 0
-        main() int
-            return age = age + 1
-    )SRC").shouldVerified(true);
-    str res = run();
-    ASSERT_TRUE(res);
-    ASSERT_EQ(res.cast<int>(), 1);
-}
