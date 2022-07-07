@@ -59,6 +59,17 @@ TEST_F(assignExprTest, assignTypeNegative) {
     shouldVerified(false);
 }
 
+TEST_F(assignExprTest, mysteriousDeath) {
+    make().parse(R"SRC(
+        age := 0
+        main() int
+            return age = age + 1
+    )SRC").shouldVerified(true);
+    str res = run();
+    ASSERT_TRUE(res);
+    ASSERT_EQ(res.cast<int>(), 1);
+}
+
 // TODO: assignNegative inheritence
 // TODO: assignDotChain: A.B.name
 // TODO: assignComplexDotChain: B[A.foo() + 3].name
