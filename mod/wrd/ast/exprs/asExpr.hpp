@@ -21,7 +21,7 @@ namespace wrd {
             if(!_me || !_as) return str();
 
             str eval = _me->run();
-            if(!eval) WRD_E("!eval.isBind()"), str();
+            if(!eval) return WRD_E("!eval.isBind()"), str();
 
             return str(eval->as(*_as));
         }
