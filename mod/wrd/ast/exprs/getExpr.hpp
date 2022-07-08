@@ -21,6 +21,7 @@ namespace wrd {
         const wtype& getEvalType() const override;
         const node& getFrom() const;
         const std::string& getSubName() const;
+        void setFrom(const node& newFrom) { _from.bind(newFrom); }
 
         /// @return nullable
         const narr& getSubArgs() const;

@@ -20,6 +20,7 @@ namespace wrd {
     class asExpr;
     class addExpr;
     class FAOExpr;
+    class getExpr;
     class _wout loweventer : public tokenScan {
         WRD(CLASS(loweventer, tokenScan))
         friend class tokenScanModable;
@@ -83,9 +84,10 @@ namespace wrd {
 
         //  operator:
         //      dot:
-        narr* onDotName(const node& name);
-        narr* onDotName(narr& names, const node& name);
-        node* onName(const std::string& name);
+        getExpr* onDotname(const getExpr& names, getExpr& name);
+        getExpr* onDotname(const std::string& name);
+        narr* onPackDotname(const std::string& name);
+        narr* onPackDotname(narr& names, const std::string& name);
         node* onGet(const std::string& name);
         node* onGet(const std::string& name, const narr& args);
         node* onGet(node& from, const std::string& name);
@@ -100,6 +102,8 @@ namespace wrd {
         blockExpr* onBlock(blockExpr& blk, node& exp);
         defBlock* onDefBlock();
         defBlock* onDefBlock(defBlock& blk, node& exp);
+        //      aka:
+        node* onAkaDefault(const getExpr& dotname, const std::string& newName);
 
         //  expr:
         //      func:
