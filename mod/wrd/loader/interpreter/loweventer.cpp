@@ -5,6 +5,7 @@
 #include "../../builtin/primitive.hpp"
 #include "../../frame/thread.hpp"
 #include "../../ast/obj.hpp"
+#include "muna.hpp"
 
 namespace wrd {
 
@@ -170,6 +171,13 @@ namespace wrd {
         WRD_DI("tokenEvent: onBlock()");
         if(nul(blk))
             return onSrcErr(errCode::IS_NULL, "blk"), onBlock();
+
+        muna& m = stmt.cast<muna>();
+        if(!nul(m)) {
+            blk.getStmts().add(m.onBlock());
+            return &blk;
+        }
+
         blk.getStmts().add(stmt);
         WRD_DI("tokenEvent: onBlock().len=%d", blk.getStmts().len());
         return &blk;
@@ -185,29 +193,20 @@ namespace wrd {
         if(nul(s))
             return onSrcErr(errCode::IS_NULL, "s"), onDefBlock();
 
-        expr* e = &candidate.cast<expr>();
-        if(nul(e))
-            return onSrcErr(errCode::PARAM_HAS_VAL, candidate.getType().getName().c_str()), onDefBlock();
+        muna& m = candidate.cast<muna>();
+        if(!nul(m))
+            return &m.onDefBlock(s);
 
-        defVarExpr& defVar = e->cast<defVarExpr>();
-        if(!nul(defVar)) {
-            s.asScope->add(defVar.getName(), defVar.getOrigin());
-            return &s;
-        }
-
-        defAssignExpr& defAssign = e->cast<defAssignExpr>();
-        if(!nul(defAssign)) {
-            s.asPreCtor->add(new defAssignExpr(*new getExpr("me"), defAssign.getSubName(), defAssign.getRight()));
-            return &s;
-        }
-
-        s.asScope->add(_onPopName(*e), e);
+        s.asScope->add(_onPopName(candidate), &candidate);
         return &s;
     }
 
-    expr* me::onDefVar(const std::string& name, const node& origin) {
+    node* me::onDefVar(const std::string& name, const node& origin) {
         WRD_DI("tokenEvent: onDefVar(%s, %s)", origin.getType().getName().c_str(), name.c_str());
-        return new defVarExpr(name, origin);
+        return new muna([&, name]() { return new defVarExpr(name, origin); },
+                [&, name](defBlock& blk) {
+                        blk.asScope->add(name, origin);
+                });
     }
 
     void me::onSrcArea(area& area) {
@@ -219,14 +218,16 @@ namespace wrd {
         _report->add(new1);
     }
 
-    params me::_convertParams(const narr& exprs) {
+    params me::_convertParams(const narr& ps) {
         params ret;
-        for(auto& expr: exprs) {
-            defVarExpr& cast = expr.cast<defVarExpr>();
-            if(nul(cast)) return onSrcErr(errCode::NOT_EXPR, expr.getType().getName().c_str()), ret;
-            if(nul(cast.getOrigin())) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
+        for(auto& p : ps) {
+            muna& cast = p.cast<muna>();
+            if(nul(cast)) return onSrcErr(errCode::NOT_EXPR, p.getType().getName().c_str()), ret;
 
-            ret.add(new param(cast.getName(), cast.getOrigin()));
+            tstr<defVarExpr> defVar(cast.onBlock()->cast<defVarExpr>());
+            if(!defVar) return onSrcErr(errCode::PARAM_HAS_VAL), ret;
+
+            ret.add(new param(defVar->getName(), defVar->getOrigin()));
         }
 
         return ret;
@@ -390,9 +391,12 @@ namespace wrd {
         return new assignExpr(lhs, rhs);
     }
 
-    expr* me::onDefAssign(const std::string& name, node& rhs) {
+    node* me::onDefAssign(const std::string& name, node& rhs) {
         WRD_DI("tokenEvent: onDefAssign(%s, %s)", name.c_str(), rhs.getType().getName().c_str());
-        return new defAssignExpr(name, rhs);
+        return new muna([&, name]() { return new defAssignExpr(name, rhs); },
+                [&, name](defBlock& blk) {
+                        blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), name, rhs));
+                });
     }
 
     asExpr* me::onAs(const node& me, const node& as) {

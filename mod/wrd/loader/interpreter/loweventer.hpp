@@ -114,8 +114,8 @@ namespace wrd {
             WRD_DI("on%s(...)", ttype<T>::get().getName().c_str());
             return new T(args...);
         }
-        expr* onDefVar(const std::string& name, const node& origin);
-        expr* onDefAssign(const std::string& name, node& rhs);
+        node* onDefVar(const std::string& name, const node& origin);
+        node* onDefAssign(const std::string& name, node& rhs);
         //      obj:
         obj* onDef(const std::string& name, defBlock& blk);
         //      file:
