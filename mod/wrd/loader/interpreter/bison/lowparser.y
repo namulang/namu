@@ -125,8 +125,8 @@
 
 // nonterminal:
 %type <asNode> compilation-unit block indentblock
-%type <asNarr> dotname
-%type <asNode> dotname-item
+%type <asNarr> packDotname
+%type <asNode> dotname dotname-item
 //  term:
 %type <asNode> term unary postfix primary func-call
 %type <asNarr> list list-items
@@ -209,7 +209,7 @@ func-call: NAME list %expect 1 {
       }
 
 dotname-item: NAME {
-            $$ = yyget_extra(scanner)->onName(*$1);
+            $$ = yyget_extra(scanner)->onDotname(std::string(*$1));
             free($1);
           } | func-call {
             // $$ = yyget_extra(scanner)->onFillFromOfFuncCall(*new getExpr("me"), $1->cast<runExpr>());
@@ -219,9 +219,9 @@ dotname-item: NAME {
 
 
 dotname: dotname-item {
-       $$ = yyget_extra(scanner)->onDotName(*$1);
+       $$ = $1;
      } | dotname '.' dotname-item {
-       $$ = yyget_extra(scanner)->onDotName(*$1, *$3);
+       $$ = yyget_extra(scanner)->onDotname($1->cast<getExpr>(), $3->cast<getExpr>());
      }
 
 list-items: expr {
@@ -332,28 +332,24 @@ return: RETURN {
 if: IF expr indentblock {
     // TODO:
     }
-aka: aka-default {
- } | aka-deduced {
- }
-
-aka-item: defexpr-line-except-aka {
-      } | defexpr-compound {
-      }
-aka-default: AKA aka-item ARROW NAME {
+aka: aka-default { $$ = $1; }
+   | aka-deduced { $$ = $1; }
+aka-default: AKA defexpr-compound ARROW NAME {
             // TODO: then free it
          } | AKA dotname ARROW NAME {
             // dotname only available getExpr. need to verify in akaExpr
-            // TODO: then free it
+            $$ = yyget_extra(scanner)->onAkaDefault($2->cast<getExpr>(), std::string(*$4));
+            free($4);
          }
 aka-deduced: AKA ARROW dotname {
+            const getExpr& e = $3->cast<getExpr>();
+            $$ = yyget_extra(scanner)->onAkaDefault(e, e.getSubName());
          }
 
 // defs:
 //  structure:
 defexpr-line: defexpr-line-except-aka { $$ = $1; }
-            | aka {
-            $$ = new blockExpr(); // TODO:
-          }
+            | aka { $$ = $1; }
 defexpr-line-except-aka: defvar { $$ = $1; }
 defexpr-compound: deffunc { $$ = $1; }
 defstmt: defexpr-line NEWLINE { $$ = $1; }
@@ -419,7 +415,14 @@ deffunc-lambda-deduction: list indentblock {
 indentblock: NEWLINE INDENT block DEDENT { $$ = $3; }
 
 //  pack:
-pack: PACK dotname NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
+packDotname: NAME {
+             $$ = yyget_extra(scanner)->onPackDotname(std::string(*$1));
+             free($1);
+         } | packDotname '.' NAME {
+             $$ = yyget_extra(scanner)->onPackDotname(*$1, std::string(*$3));
+             free($3);
+         }
+pack: PACK packDotname NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
     | %empty { $$ = yyget_extra(scanner)->onPack(); }
 
 

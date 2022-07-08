@@ -11,6 +11,7 @@ TEST_F(akaTest, defaultDef) {
     make().parse(R"SRC(
         aka console -> c
     )SRC").shouldParsed(true);
+    shouldVerified(false);
 }
 
 TEST_F(akaTest, defaultDef2) {
@@ -24,31 +25,33 @@ TEST_F(akaTest, defaultDef3) {
     make().parse(R"SRC(
         aka sys.console -> c
     )SRC").shouldParsed(true);
+    shouldVerified(false);
 }
 
 TEST_F(akaTest, defaultDef4) {
     make().parse(R"SRC(
-        aka sys.console ->
-        c
-    )SRC").shouldParsed(false);
+        aka sys.con -> c
+    )SRC").shouldVerified(true);
 }
 
 TEST_F(akaTest, defaultDef5) {
     make().parse(R"SRC(
         aka -> sys.console
     )SRC").shouldParsed(true);
+    shouldVerified(false);
 }
 
 TEST_F(akaTest, deducedAllDefNegative) {
     make().parse(R"SRC(
     aka console.*
-        )SRC").shouldParsed(false);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, deducedAllDefNegative2) {
     make().parse(R"SRC(
         aka console. *
     )SRC").shouldParsed(false);
+    shouldVerified(false);
 }
 
 TEST_F(akaTest, deducedAllDefNegative3) {
@@ -67,7 +70,7 @@ TEST_F(akaTest, deducedAllDefNegative4) {
 TEST_F(akaTest, withDefvar) {
     make().parse(R"SRC(
         aka a int -> b
-    )SRC").shouldParsed(true);
+    )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, withDefvar2) {
@@ -76,6 +79,7 @@ TEST_F(akaTest, withDefvar2) {
     )SRC").shouldParsed(true);
 }
 
+/* TODO:
 TEST_F(akaTest, withDeffunc) {
     make().parse(R"SRC(
         aka foo(a int, b str)
@@ -100,3 +104,4 @@ TEST_F(akaTest, withDeffunc3) {
          b
     )SRC").shouldParsed(false);
 }
+}*/

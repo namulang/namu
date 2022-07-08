@@ -328,18 +328,22 @@ namespace wrd {
         return new returnExpr(exp);
     }
 
-    node* me::onName(const std::string& name) {
-        return new wStr(name);
-    }
-
-    narr* me::onDotName(const node& name) {
+    narr* me::onPackDotname(const std::string& name) {
         narr* ret = new narr();
-        ret->add(name);
+        ret->add(new wStr(name));
         return ret;
     }
-    narr* me::onDotName(narr& names, const node& name) {
-        names.add(name);
+    narr* me::onPackDotname(narr& names, const std::string& name) {
+        names.add(new wStr(name));
         return &names;
+    }
+
+    getExpr* me::onDotname(const getExpr& from, getExpr& name) {
+        name.setFrom(from);
+        return &name;
+    }
+    getExpr* me::onDotname(const std::string& name) {
+        return new getExpr(name);
     }
 
     node* me::onGet(const std::string& name) {
@@ -439,6 +443,15 @@ namespace wrd {
 
         return new FAOExpr(FAOExpr::MOD, lhs, rhs);
     }
+
+    node* me::onAkaDefault(const getExpr& dotname, const std::string& newName) {
+        WRD_DI("tokenEvent: onAkaDefault(%s..., %s)", dotname.getSubName().c_str(), newName.c_str());
+        return new muna([&, newName]() { return new defAssignExpr(newName, dotname); },
+                [&, newName](defBlock& blk) {
+                        blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), newName, dotname));
+                });
+    }
+
 
 
     me::loweventer() { rel(); }
