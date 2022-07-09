@@ -92,7 +92,7 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">using</span> super::run;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classwrd_1_1def_assign_expr.html#a71318176acf423ea164f04c24b732a8f">   24</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; <a class="code" href="classwrd_1_1def_assign_expr.html#a71318176acf423ea164f04c24b732a8f">getEvalType</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> _rhs-&gt;getEvalType(); }</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classwrd_1_1def_assign_expr.html#af06c34a6199ef97d1e3a452532fc7dc2">   24</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; <a class="code" href="classwrd_1_1def_assign_expr.html#af06c34a6199ef97d1e3a452532fc7dc2">getEval</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> _rhs-&gt;<a class="code" href="classwrd_1_1node.html#a8e37639bb00a07211a9ac7f91d92f5b5">getEval</a>(); }</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">const</span> std::string&amp; getSubName()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> _name; }</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">const</span> node&amp; getRight()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *_rhs; }</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        node&amp; getRight() { <span class="keywordflow">return</span> *_rhs; }</div>
@@ -106,16 +106,16 @@ $(function() {
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    };</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1def_assign_expr_html_a71318176acf423ea164f04c24b732a8f"><div class="ttname"><a href="classwrd_1_1def_assign_expr.html#a71318176acf423ea164f04c24b732a8f">wrd::defAssignExpr::getEvalType</a></div><div class="ttdeci">const wtype &amp; getEvalType() const override</div><div class="ttdef"><b>Definition:</b> defAssignExpr.hpp:24</div></div>
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1expr_1_1expr_type_html"><div class="ttname"><a href="classwrd_1_1expr_1_1expr_type.html">wrd::expr::exprType</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:13</div></div>
 <div class="ttc" id="aclasswrd_1_1mgd_func_html"><div class="ttname"><a href="classwrd_1_1mgd_func.html">wrd::mgdFunc</a></div><div class="ttdef"><b>Definition:</b> mgdFunc.hpp:10</div></div>
 <div class="ttc" id="aclasswrd_1_1expr_html"><div class="ttname"><a href="classwrd_1_1expr.html">wrd::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:10</div></div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
-<div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html_a8e37639bb00a07211a9ac7f91d92f5b5"><div class="ttname"><a href="classwrd_1_1node.html#a8e37639bb00a07211a9ac7f91d92f5b5">wrd::node::getEval</a></div><div class="ttdeci">virtual const node &amp; getEval() const</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:16</div></div>
 <div class="ttc" id="aclasswrd_1_1tucontainable_html"><div class="ttname"><a href="classwrd_1_1tucontainable.html">wrd::tucontainable</a></div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:16</div></div>
 <div class="ttc" id="aclasswrd_1_1def_assign_expr_html"><div class="ttname"><a href="classwrd_1_1def_assign_expr.html">wrd::defAssignExpr</a></div><div class="ttdef"><b>Definition:</b> defAssignExpr.hpp:9</div></div>
+<div class="ttc" id="aclasswrd_1_1def_assign_expr_html_af06c34a6199ef97d1e3a452532fc7dc2"><div class="ttname"><a href="classwrd_1_1def_assign_expr.html#af06c34a6199ef97d1e3a452532fc7dc2">wrd::defAssignExpr::getEval</a></div><div class="ttdeci">const node &amp; getEval() const override</div><div class="ttdef"><b>Definition:</b> defAssignExpr.hpp:24</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

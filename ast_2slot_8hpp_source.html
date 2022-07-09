@@ -102,7 +102,7 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">using</span> super::run;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tucontainable.html">ucontainable</a>&amp; args)<span class="keyword"> override </span>{ <span class="keywordflow">return</span> getPack().run(args); }</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classwrd_1_1slot.html#acf4bd06cd8daaf88534a2d88eda1cd77">   34</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; <a class="code" href="classwrd_1_1slot.html#acf4bd06cd8daaf88534a2d88eda1cd77">getEvalType</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> getPack().<a class="code" href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">getEvalType</a>(); }</div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="classwrd_1_1slot.html#a9465fb2a78e7eb74a6f041ea1485df10">   34</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; <a class="code" href="classwrd_1_1slot.html#a9465fb2a78e7eb74a6f041ea1485df10">getEval</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> getPack().<a class="code" href="classwrd_1_1node.html#a8e37639bb00a07211a9ac7f91d92f5b5">getEval</a>(); }</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">virtual</span> wbool _invalidate();</div>
@@ -132,14 +132,13 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
-<div class="ttc" id="aclasswrd_1_1slot_html_acf4bd06cd8daaf88534a2d88eda1cd77"><div class="ttname"><a href="classwrd_1_1slot.html#acf4bd06cd8daaf88534a2d88eda1cd77">wrd::slot::getEvalType</a></div><div class="ttdeci">const wtype &amp; getEvalType() const override</div><div class="ttdef"><b>Definition:</b> slot.hpp:34</div></div>
-<div class="ttc" id="aclasswrd_1_1node_html_aa135ead010cb500b4e683f26440cbd95"><div class="ttname"><a href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">wrd::node::getEvalType</a></div><div class="ttdeci">virtual const wtype &amp; getEvalType() const</div></div>
 <div class="ttc" id="astructwrd_1_1manifest_html"><div class="ttname"><a href="structwrd_1_1manifest.html">wrd::manifest</a></div><div class="ttdef"><b>Definition:</b> manifest.hpp:21</div></div>
 <div class="ttc" id="aclasswrd_1_1tnbicontainer_html"><div class="ttname"><a href="classwrd_1_1tnbicontainer.html">wrd::tnbicontainer&lt; std::string, node &gt;</a></div></div>
-<div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
 <div class="ttc" id="aclasswrd_1_1slot_html"><div class="ttname"><a href="classwrd_1_1slot.html">wrd::slot</a></div><div class="ttdef"><b>Definition:</b> slot.hpp:9</div></div>
+<div class="ttc" id="aclasswrd_1_1node_html_a8e37639bb00a07211a9ac7f91d92f5b5"><div class="ttname"><a href="classwrd_1_1node.html#a8e37639bb00a07211a9ac7f91d92f5b5">wrd::node::getEval</a></div><div class="ttdeci">virtual const node &amp; getEval() const</div></div>
 <div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:16</div></div>
 <div class="ttc" id="aclasswrd_1_1tucontainable_html"><div class="ttname"><a href="classwrd_1_1tucontainable.html">wrd::tucontainable</a></div><div class="ttdef"><b>Definition:</b> tucontainable.hpp:16</div></div>
+<div class="ttc" id="aclasswrd_1_1slot_html_a9465fb2a78e7eb74a6f041ea1485df10"><div class="ttname"><a href="classwrd_1_1slot.html#a9465fb2a78e7eb74a6f041ea1485df10">wrd::slot::getEval</a></div><div class="ttdeci">const node &amp; getEval() const override</div><div class="ttdef"><b>Definition:</b> slot.hpp:34</div></div>
 <div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr&lt; me &gt;</a></div></div>
 <div class="ttc" id="aclasswrd_1_1obj_html"><div class="ttname"><a href="classwrd_1_1obj.html">wrd::obj</a></div><div class="ttdef"><b>Definition:</b> obj.hpp:11</div></div>
 <!-- start footer part -->

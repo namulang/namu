@@ -95,10 +95,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a542911d600c5d5aa39d8b3a56670c5ee"><td class="memItemLeft" align="right" valign="top"><a id="a542911d600c5d5aa39d8b3a56670c5ee"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ctor</b> (const <a class="el" href="classwrd_1_1node.html">node</a> &amp;org)</td></tr>
 <tr class="separator:a542911d600c5d5aa39d8b3a56670c5ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac58c018196c70ce7190457e1edb41726"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classwrd_1_1wtype.html">wtype</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1ctor.html#ac58c018196c70ce7190457e1edb41726">getRetType</a> () const override</td></tr>
-<tr class="separator:ac58c018196c70ce7190457e1edb41726"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06537b232035c39aafd1ba1e803e3682"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classwrd_1_1wtype.html">wtype</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1ctor.html#a06537b232035c39aafd1ba1e803e3682">getEvalType</a> () const override</td></tr>
-<tr class="separator:a06537b232035c39aafd1ba1e803e3682"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eae44c7facec85cfe8cdddbd46fe4c7"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1ctor.html#a7eae44c7facec85cfe8cdddbd46fe4c7">getRet</a> () const override</td></tr>
+<tr class="separator:a7eae44c7facec85cfe8cdddbd46fe4c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14e8eb01e8648bb14074c01889f92ecc"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1ctor.html#a14e8eb01e8648bb14074c01889f92ecc">getEval</a> () const override</td></tr>
+<tr class="separator:a14e8eb01e8648bb14074c01889f92ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9364c2fcfb4c352f9de135148334cc80"><td class="memItemLeft" align="right" valign="top"><a id="a9364c2fcfb4c352f9de135148334cc80"></a>
 const <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getOrigin</b> () const</td></tr>
 <tr class="separator:a9364c2fcfb4c352f9de135148334cc80"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,6 +131,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setPos</b> (const <a 
 <tr class="memitem:ace4803ab5db2163f9c186a5f7c17de93 inherit pub_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top"><a id="ace4803ab5db2163f9c186a5f7c17de93"></a>
 <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator[]</b> (const std::string &amp;name) const</td></tr>
 <tr class="separator:ace4803ab5db2163f9c186a5f7c17de93 inherit pub_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcd5b761708b21e1969e116ba9793443 inherit pub_methods_classwrd_1_1node"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classwrd_1_1tnbicontainer.html">nbicontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classwrd_1_1node.html#abcd5b761708b21e1969e116ba9793443">subs</a> () const WRD_UNCONST_FUNC(subs()) const <a class="el" href="classwrd_1_1node.html">node</a> &amp;reduce(const <a class="el" href="classwrd_1_1node.html">node</a> &amp;r) const</td></tr>
+<tr class="separator:abcd5b761708b21e1969e116ba9793443 inherit pub_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a522a34944ecccb12276e5d039f171d7f inherit pub_methods_classwrd_1_1node"><td class="memTemplParams" colspan="2"><a id="a522a34944ecccb12276e5d039f171d7f"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a522a34944ecccb12276e5d039f171d7f inherit pub_methods_classwrd_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (std::function&lt; wbool(const std::string &amp;, const T &amp;)&gt; l) const</td></tr>
+<tr class="separator:a522a34944ecccb12276e5d039f171d7f inherit pub_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1b45b6eb649cbf29518a3b5070df069 inherit pub_methods_classwrd_1_1node"><td class="memTemplParams" colspan="2"><a id="ae1b45b6eb649cbf29518a3b5070df069"></a>
+template&lt;typename T  = me&gt; </td></tr>
+<tr class="memitem:ae1b45b6eb649cbf29518a3b5070df069 inherit pub_methods_classwrd_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> () const</td></tr>
+<tr class="separator:ae1b45b6eb649cbf29518a3b5070df069 inherit pub_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37ab065cc520c9adc797d30eb73af6f8 inherit pub_methods_classwrd_1_1node"><td class="memTemplParams" colspan="2"><a id="a37ab065cc520c9adc797d30eb73af6f8"></a>
+template&lt;typename T  = me&gt; </td></tr>
+<tr class="memitem:a37ab065cc520c9adc797d30eb73af6f8 inherit pub_methods_classwrd_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (const std::string &amp;name) const</td></tr>
+<tr class="separator:a37ab065cc520c9adc797d30eb73af6f8 inherit pub_methods_classwrd_1_1node"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28269c45ee7c5d8b79ecc0406f4616d6 inherit pub_methods_classwrd_1_1node"><td class="memTemplParams" colspan="2"><a id="a28269c45ee7c5d8b79ecc0406f4616d6"></a>
 template&lt;typename T  = me&gt; </td></tr>
 <tr class="memitem:a28269c45ee7c5d8b79ecc0406f4616d6 inherit pub_methods_classwrd_1_1node"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sub</b> (const std::string &amp;name, const <a class="el" href="classwrd_1_1tucontainable.html">ucontainable</a> &amp;args)</td></tr>
@@ -242,6 +256,9 @@ virtual const <a class="el" href="classwrd_1_1type.html">type</a> &amp;&#160;</t
 <tr class="memitem:a0b42dea8a4cf5171b86e8ade88b00b6d inherit pub_methods_classwrd_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a0b42dea8a4cf5171b86e8ade88b00b6d"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classwrd_1_1type.html">type</a> &amp;it) const</td></tr>
 <tr class="separator:a0b42dea8a4cf5171b86e8ade88b00b6d inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3980bf2509dfa544a3686ba4d03517b9 inherit pub_methods_classwrd_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a3980bf2509dfa544a3686ba4d03517b9"></a>
+wbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSub</b> (const <a class="el" href="classwrd_1_1type_providable.html">typeProvidable</a> &amp;it) const</td></tr>
+<tr class="separator:a3980bf2509dfa544a3686ba4d03517b9 inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f343dc5a1cd839de6cd647be31f1841 inherit pub_methods_classwrd_1_1type_providable"><td class="memItemLeft" align="right" valign="top"><a id="a1f343dc5a1cd839de6cd647be31f1841"></a>
 wbool&#160;</td><td class="memItemRight" valign="bottom"><b>isSuper</b> (const <a class="el" href="classwrd_1_1type.html">type</a> &amp;it) const</td></tr>
 <tr class="separator:a1f343dc5a1cd839de6cd647be31f1841 inherit pub_methods_classwrd_1_1type_providable"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -303,8 +320,8 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
 <tr class="separator:a97e095b344ec9661e8286da21052ec9a inherit pro_attribs_classwrd_1_1expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a06537b232035c39aafd1ba1e803e3682"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06537b232035c39aafd1ba1e803e3682">&#9670;&nbsp;</a></span>getEvalType()</h2>
+<a id="a14e8eb01e8648bb14074c01889f92ecc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14e8eb01e8648bb14074c01889f92ecc">&#9670;&nbsp;</a></span>getEval()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -313,7 +330,7 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classwrd_1_1wtype.html">wtype</a>&amp; wrd::ctor::getEvalType </td>
+          <td class="memname">const <a class="el" href="classwrd_1_1node.html">node</a>&amp; wrd::ctor::getEval </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -326,14 +343,15 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
 </table>
 </div><div class="memdoc">
 <p>getType() returns what it is. opposite to it, this returns what this class will represents after evaluation.</p>
-<p>for example, the 'expr' class has derived from this node class. and if an user call the funcs to get type of it, class 'wtype' of 'expr' will be returned. but if that user call the '<a class="el" href="classwrd_1_1ctor.html#a06537b232035c39aafd1ba1e803e3682">getEvalType()</a>' then the 'expr' object evaluate its terms and returns type of the output. it could be integer if it was 'addExpr' and all terms are constructed with integers. and also this func requires frames. means that you have to interact frame first before call this func. </p>
+<p>for example, the 'expr' class has derived from this node class. and if an user call the funcs to get type of it, class 'wtype' of 'expr' will be returned. but if that user call the '<a class="el" href="classwrd_1_1ctor.html#a14e8eb01e8648bb14074c01889f92ecc">getEval()</a>' then the 'expr' object evaluate its terms and returns it as a node from the output. it could be an integer if it was 'addExpr' and all terms are constructed with integers.</p>
+<p>and also this func requires frames. means that you have to interact frame first before call this func. </p>
 
-<p>Reimplemented from <a class="el" href="classwrd_1_1node.html#aa135ead010cb500b4e683f26440cbd95">wrd::node</a>.</p>
+<p>Reimplemented from <a class="el" href="classwrd_1_1node.html#a8e37639bb00a07211a9ac7f91d92f5b5">wrd::node</a>.</p>
 
 </div>
 </div>
-<a id="ac58c018196c70ce7190457e1edb41726"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac58c018196c70ce7190457e1edb41726">&#9670;&nbsp;</a></span>getRetType()</h2>
+<a id="a7eae44c7facec85cfe8cdddbd46fe4c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7eae44c7facec85cfe8cdddbd46fe4c7">&#9670;&nbsp;</a></span>getRet()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -342,7 +360,7 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classwrd_1_1wtype.html">wtype</a>&amp; wrd::ctor::getRetType </td>
+          <td class="memname">const <a class="el" href="classwrd_1_1node.html">node</a>&amp; wrd::ctor::getRet </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -354,10 +372,10 @@ static <a class="el" href="classwrd_1_1instancer.html">instancer</a> &amp;&#160;
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>type of this function. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>node which has same type of the func. in wrd lang, even type is an object. that's why I return this as a node. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>please don't confuse this to evalType. evaluate means program just read the code and expand or calculate then replace it to the accurate another identifier or variable. so evalType of the func is just the func itself because there is nothing to calculate or run. that's completely different to Return type of the function. if there is a <a class="el" href="classwrd_1_1run_expr.html">runExpr</a> instance, and it takes the func and proper argument, then it can be evaluated and its evalType is the return type of the func. </dd></dl>
 
-<p>Implements <a class="el" href="classwrd_1_1func.html#a6a05f96ad19df3ff13cd68d640467dae">wrd::func</a>.</p>
+<p>Implements <a class="el" href="classwrd_1_1func.html#ab889e0b3e7469e9fa9f98f559e12115c">wrd::func</a>.</p>
 
 </div>
 </div>

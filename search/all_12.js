@@ -112,9 +112,8 @@ var searchData=
   ['tweak_3c_20wrd_3a_3atnchain_2c_20strtactic_20_3e_304',['tweak&lt; wrd::tnchain, strTactic &gt;',['../classwrd_1_1tweak.html',1,'wrd']]],
   ['tweak_3c_20wrd_3a_3atnmap_2c_20strtactic_20_3e_305',['tweak&lt; wrd::tnmap, strTactic &gt;',['../classwrd_1_1tweak.html',1,'wrd']]],
   ['type_306',['type',['../classwrd_1_1type.html',1,'wrd']]],
-  ['typenode_307',['typeNode',['../classwrd_1_1type_node.html',1,'wrd']]],
-  ['typeprovidable_308',['typeProvidable',['../classwrd_1_1type_providable.html',1,'wrd']]],
-  ['typetrait_309',['TypeTrait',['../classwrd_1_1_type_trait.html',1,'wrd']]],
-  ['typetrait_3c_20t_20_26_20_3e_310',['TypeTrait&lt; T &amp; &gt;',['../classwrd_1_1_type_trait_3_01_t_01_6_01_4.html',1,'wrd']]],
-  ['typetrait_3c_20t_20_2a_20_3e_311',['TypeTrait&lt; T * &gt;',['../classwrd_1_1_type_trait_3_01_t_01_5_01_4.html',1,'wrd']]]
+  ['typeprovidable_307',['typeProvidable',['../classwrd_1_1type_providable.html',1,'wrd']]],
+  ['typetrait_308',['TypeTrait',['../classwrd_1_1_type_trait.html',1,'wrd']]],
+  ['typetrait_3c_20t_20_26_20_3e_309',['TypeTrait&lt; T &amp; &gt;',['../classwrd_1_1_type_trait_3_01_t_01_6_01_4.html',1,'wrd']]],
+  ['typetrait_3c_20t_20_2a_20_3e_310',['TypeTrait&lt; T * &gt;',['../classwrd_1_1_type_trait_3_01_t_01_5_01_4.html',1,'wrd']]]
 ];
