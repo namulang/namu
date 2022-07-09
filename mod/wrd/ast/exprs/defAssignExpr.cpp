@@ -44,6 +44,7 @@ namespace wrd {
             _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
 
         node& new1 = *new typeNode(t);
+        WRD_DI("verify: defAssignExpr: typeNode of %s has defined.", nul(t) ? "name" : t.getName().c_str());
         node& to = it.getTo();
         if(nul(to))
             thread::get()._getNowFrame().pushLocal(it.getSubName(), new1);
