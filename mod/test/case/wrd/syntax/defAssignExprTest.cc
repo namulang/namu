@@ -72,3 +72,17 @@ TEST_F(defAssignExprTest, testNearCircularDependencies) {
     // however when runs it, it throws an error.
     // because assigning 1 to c will be done after evaluating of assignment of the 'a'.
 }
+
+TEST_F(defAssignExprTest, testDefAssign1) {
+    make().parse(R"SRC(
+        foo() int
+            return a = 2
+
+        a := foo() + 5
+
+        main() int
+            sys.con.print("a=" + a)
+            return 0
+    )SRC").shouldVerified(true);
+    run();
+}

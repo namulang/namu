@@ -79,6 +79,15 @@ TEST_F(akaTest, withDefvar2) {
     )SRC").shouldParsed(true);
 }
 
+TEST_F(akaTest, akaHelloWorld) {
+    make().parse(R"SRC(
+        aka -> sys.con
+        main() void
+            con.print("hello world!")
+    )SRC").shouldVerified(true);
+    run();
+}
+
 /* TODO:
 TEST_F(akaTest, withDeffunc) {
     make().parse(R"SRC(
