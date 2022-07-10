@@ -49,7 +49,7 @@ namespace wrd {
 
         const wtype& itType = it.getEvalType();
         if(nul(itType)) return _srcErr(errCode::EXPR_EVAL_NULL);
-        const wtype& fType = f.getRetType();
+        const wtype& fType = f.getRet()->getType();
         WRD_DI("verify: returnExpr: checks return[%s] == func[%s]", itType.getName().c_str(),
             fType.getName().c_str());
 

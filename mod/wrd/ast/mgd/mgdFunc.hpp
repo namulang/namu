@@ -12,13 +12,15 @@ namespace wrd {
             FRIEND_VERIFY(mgdFunc, subNodes))
 
     public:
-        explicit mgdFunc(const params& ps, const wtype& retType);
-        explicit mgdFunc(const params& ps, const wtype& retType, const blockExpr& newBlock);
+        explicit mgdFunc(const params& ps, const node& retType);
+        explicit mgdFunc(const params& ps, const node* retType);
+        explicit mgdFunc(const params& ps, const node& retType, const blockExpr& newBlock);
+        explicit mgdFunc(const params& ps, const node* retType, const blockExpr& newBlock);
 
     public:
         blockExpr& getBlock();
         const blockExpr& getBlock() const;
-        const wtype& getRetType() const override;
+        str getRet() const override;
         nbicontainer& subs() override;
         const params& getParams() const override;
 
@@ -41,7 +43,7 @@ namespace wrd {
     private:
         params _params;
         nmap _shares;
-        const wtype* _retType;
+        str _retType;
         tstr<blockExpr> _blk;
     };
 }

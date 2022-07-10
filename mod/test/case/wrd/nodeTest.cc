@@ -26,8 +26,9 @@ namespace {
             return _executed;
         }
 
-        const wtype& getRetType() const override {
-            return ttype<node>::get();
+        str getRet() const override {
+            static wVoid inner;
+            return inner;
         }
 
         const params& getParams() const override {

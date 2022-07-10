@@ -42,7 +42,7 @@ namespace wrd {
         if(nul(sub)) return WRD_W("sub is null"), nulOf<wtype>();
 
         const func& f = sub.cast<func>();
-        return nul(f) ? sub.getEvalType() : f.getRetType();
+        return nul(f) ? sub.getEvalType() : f.getRet().getType();
     }
 
 

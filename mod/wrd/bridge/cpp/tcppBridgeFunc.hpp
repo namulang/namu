@@ -27,8 +27,9 @@ namespace wrd {
             return _runNative(evaluated);
         }
 
-        const wtype& getRetType() const override {
-            return ttype<typename tmarshaling<Ret>::mgdType>::get();
+        str getRet() const override {
+            static str inner(new typename tmarshaling<Ret>::mgdType());
+            return inner;
         }
 
         const params& getParams() const override;
