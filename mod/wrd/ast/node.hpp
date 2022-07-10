@@ -87,7 +87,7 @@ namespace wrd {
         /// constructed with integers.
         /// and also this func requires frames. means that you have to interact frame first before
         /// call this func.
-        virtual const wtype& getEvalType() const;
+        virtual str getEval() const;
 
     protected:
         virtual str _onRunSub(node& sub, const ucontainable& args);

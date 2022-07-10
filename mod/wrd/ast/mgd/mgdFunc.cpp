@@ -13,14 +13,18 @@ namespace wrd {
 
     WRD_DEF_ME(mgdFunc)
 
-    me::mgdFunc(const params& ps, const wtype& retType):
-            super(), _params(ps), _retType(&retType), _blk(new blockExpr()) {}
-    me::mgdFunc(const params& ps, const wtype& retType, const blockExpr& newBlock):
-            super(), _params(ps), _retType(&retType), _blk(newBlock) {}
+    me::mgdFunc(const params& ps, const node& retType):
+            super(), _params(ps), _retType(retType), _blk(new blockExpr()) {}
+    me::mgdFunc(const params& ps, const node* retType):
+            super(), _params(ps), _retType(retType), _blk(new blockExpr()) {}
+    me::mgdFunc(const params& ps, const node& retType, const blockExpr& newBlock):
+            super(), _params(ps), _retType(retType), _blk(newBlock) {}
+    me::mgdFunc(const params& ps, const node* retType, const blockExpr& newBlock):
+            super(), _params(ps), _retType(retType), _blk(newBlock) {}
 
     blockExpr& me::getBlock() { return *_blk; }
     const blockExpr& me::getBlock() const { return *_blk; }
-    const wtype& me::getRetType() const { return *_retType; }
+    str me::getRet() const { return _retType; }
     nbicontainer& me::subs() { return _shares; }
     const params& me::getParams() const { return _params; }
 
@@ -87,10 +91,10 @@ namespace wrd {
     WRD_VERIFY({
         WRD_DI("verify: retType exists and stmts exist one at least");
 
-        const wtype& retType = it.getRetType();
+        const node& retType = *it.getRet();
         if(nul(retType)) return _srcErr(errCode::NO_RET_TYPE);
         if(!retType.isSub(ttype<node>::get()))
-            return _srcErr(errCode::WRONG_RET_TYPE, retType.getName().c_str());
+            return _srcErr(errCode::WRONG_RET_TYPE, retType.getType().getName().c_str());
 
         const blockExpr& blk = it.getBlock();
         if(nul(blk) || blk.getStmts().len() <= 0)

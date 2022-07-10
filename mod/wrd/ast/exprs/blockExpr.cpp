@@ -69,7 +69,7 @@ namespace wrd {
             const func& f = thread::get().getNowFrame().getFunc();
             if (nul(f)) return;
 
-            const wtype& retType = f.getRetType();
+            const wtype& retType = f.getRet()->getType();
             const node& lastStmt = *stmts.last();
             if(!lastStmt.isSub<returnExpr>() && retType == ttype<wVoid>::get()) {
                 WRD_DI("implicit return won't verify when retType is void.");

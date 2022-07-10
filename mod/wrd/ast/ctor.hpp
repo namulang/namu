@@ -11,8 +11,8 @@ namespace wrd {
         ctor(const node& org): _org(org) {}
 
     public:
-        const wtype& getRetType() const override { return _org->getEvalType(); }
-        const wtype& getEvalType() const override { return getRetType(); }
+        str getRet() const override { return _org->getEval(); }
+        str getEval() const override { return getRet(); }
         const node& getOrigin() const { return *_org; }
 
     private:

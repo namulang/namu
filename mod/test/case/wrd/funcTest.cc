@@ -59,8 +59,9 @@ namespace {
             return getBlock().cast<myBlock>()._res;
         }
 
-        const wtype& getRetType() const override {
-            return ttype<node>::get();
+        str getRet() const override {
+            static wVoid inner;
+            return inner;
         }
 
         const params& getParams() const override { return _params; }
