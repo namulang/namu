@@ -58,6 +58,28 @@ jobs:
         ls -l ${{github.workspace}}/mod/swrd/parser
         sudo $PYTHON ${{github.workspace}}/build/builder.py dbg
         sudo $PYTHON ${{github.workspace}}/build/builder.py test
+  
+  build-on-windows:
+    name: build on windows
+    runs-on: windows-latest
+    
+    steps:
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+      
+    - name: generates csproj files
+      run: |
+        $PYTHON ${{github.workspace}}/build builder.py rel
+      
+    - name: Build app for release
+      run: |
+        msbuild ${{github.workspace}}\build\mod\indep\indep.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+        msbuild ${{github.workspace}}\build\mod\clog\clog.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+        msbuild ${{github.workspace}}\build\mod\meta\meta.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+        msbuild ${{github.workspace}}\build\mod\memlite\memlite.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+        msbuild ${{github.workspace}}\build\mod\swrd\swrd.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+        msbuild ${{github.workspace}}\build\mod\wrd\wrd.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+        msbuild ${{github.workspace}}\build\mod\wrc\wrc.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
 
   publish-doc:
     needs: [build-on-linux, build-on-macos]
