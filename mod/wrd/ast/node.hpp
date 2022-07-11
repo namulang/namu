@@ -23,6 +23,14 @@ namespace wrd {
         virtual nbicontainer& subs() = 0;
         const nbicontainer& subs() const WRD_UNCONST_FUNC(subs())
 
+        /// @return null if it's not relative between l & r.
+        const node& reduce(const node& r) const {
+            const wtype& mine = getType();
+            const wtype& res = mine.reduce(r.getType());
+
+            return res == mine ? *this : r;
+        }
+
         template <typename T>
         T& sub(std::function<wbool(const std::string&, const T&)> l) const {
             return subs().get<T>(l);
@@ -82,9 +90,10 @@ namespace wrd {
         ///
         /// for example, the 'expr' class has derived from this node class. and if an user call the
         /// funcs to get type of it, class 'wtype' of 'expr' will be returned.
-        /// but if that user call the 'getEvalType()' then the 'expr' object evaluate its terms and
-        /// returns type of the output. it could be integer if it was 'addExpr' and all terms are
-        /// constructed with integers.
+        /// but if that user call the 'getEval()' then the 'expr' object evaluate its terms and
+        /// returns it as a node from the output. it could be an integer if it was 'addExpr' and all
+        /// terms are constructed with integers.
+        ///
         /// and also this func requires frames. means that you have to interact frame first before
         /// call this func.
         virtual str getEval() const;
