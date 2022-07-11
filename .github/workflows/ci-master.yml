@@ -69,7 +69,7 @@ jobs:
       
     - name: generates csproj files
       run: |
-        $PYTHON ${{github.workspace}}/build builder.py rel
+        $PYTHON ${{github.workspace}}/build/builder.py rel
       
     - name: Build app for release
       run: |
