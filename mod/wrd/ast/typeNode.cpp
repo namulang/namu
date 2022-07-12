@@ -13,7 +13,7 @@ namespace wrd {
         return str();
     }
 
-    const wtype& me::getEvalType() const {
+    const wtype& me::getEval() const {
         return _type;
     }
 }

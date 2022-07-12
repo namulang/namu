@@ -32,7 +32,7 @@ namespace wrd {
         _me.bind(newMe);
     }
 
-    const wtype& me::getEvalType() const {
+    const wtype& me::getEval() const {
         if(!_me) return nulOf<wtype>();
 
         str me = _me->as<node>();
@@ -42,7 +42,7 @@ namespace wrd {
         if(nul(sub)) return WRD_W("sub is null"), nulOf<wtype>();
 
         const func& f = sub.cast<func>();
-        return nul(f) ? sub.getEvalType() : f.getRet().getType();
+        return nul(f) ? sub.getEval() : f.getRet().getType();
     }
 
 
@@ -51,7 +51,7 @@ namespace wrd {
         narr _evalArgs(const narr& args) {
             narr ret;
             for(auto& e : args)
-                ret.add(new typeNode(e.getEvalType()));
+                ret.add(new typeNode(e.getEval()));
             return ret;
         }
     }

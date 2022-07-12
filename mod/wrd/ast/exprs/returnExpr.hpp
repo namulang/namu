@@ -18,7 +18,7 @@ namespace wrd {
         node& getRet();
         const node& getRet() const WRD_UNCONST_FUNC(getRet())
         wbool canRun(const ucontainable& args) const override;
-        const wtype& getEvalType() const override;
+        const wtype& getEval() const override;
 
     private:
         str _decideRet(const ucontainable& args);

@@ -23,7 +23,7 @@ namespace wrd {
         /// @return null of scope if this variable will be defined to local scope.
         const scope& getWhere() const;
         void setWhere(const scope& new1);
-        const wtype& getEvalType() const override;
+        const wtype& getEval() const override;
 
     private:
         str _org;

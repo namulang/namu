@@ -29,8 +29,8 @@ namespace wrd {
     const scope& me::getWhere() const { return *_where; }
     void me::setWhere(const scope& new1) { _where.bind(new1); }
 
-    const wtype& me::getEvalType() const {
-        return _org->getEvalType();
+    const node& me::getEval() const {
+        return _org->getEval();
     }
 
 
@@ -38,7 +38,7 @@ namespace wrd {
     WRD_VERIFY(defVarExpr, defineVariable, {
         WRD_DI("verify: defVarExpr: check duplication");
         const scopes& top = thread::get().getNowFrame().getTop();
-        const wtype& t = it.getEvalType();
+        const wtype& t = it.getEval();
         const wchar* typeName = nul(t) ? "null" : t.getName().c_str();
         if(nul(top)) return;
         if(top.getContainer().has(it.getName()))

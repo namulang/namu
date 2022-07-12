@@ -63,7 +63,7 @@ namespace {
             return getBlock().cast<myBlock>()._res;
         }
 
-        str getRet() const override {
+        const node& getRet() const override {
             static wVoid inner;
             return inner;
         }

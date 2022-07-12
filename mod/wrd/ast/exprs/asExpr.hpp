@@ -26,7 +26,7 @@ namespace wrd {
             return str(eval->as(*_as));
         }
 
-        const wtype& getEvalType() const override { return _as->getType(); }
+        const node& getEval() const override { return getAs(); }
         const node& getMe() const { return *_me; }
         const node& getAs() const { return *_as; }
 
