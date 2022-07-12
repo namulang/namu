@@ -34,7 +34,7 @@ namespace wrd {
         ///         that's completely different to Return type of the function.
         ///         if there is a runExpr instance, and it takes the func and proper argument,
         ///         then it can be evaluated and its evalType is the return type of the func.
-        virtual const wtype& getRet() const = 0;
+        virtual const node& getRet() const = 0;
     };
 
     typedef tnarr<func> funcs;

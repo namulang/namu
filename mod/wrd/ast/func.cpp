@@ -13,7 +13,7 @@ namespace wrd {
 
         int n = 0;
         for(const auto& e : args) {
-            const wtype& t = e.getEvalType();
+            const wtype& t = e.getEval();
             if(nul(t)) return WRD_W("t == null"), false;
             if(!t.isImpli(ps[n++].getOrgType()))
                 return false;

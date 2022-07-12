@@ -24,8 +24,8 @@ namespace wrd {
             e.setVal(*ret);
             return ret;
         }
-        const wtype& getEvalType() const override {
-            return _rhs->getEvalType();
+        const node& getEval() const override {
+            return _rhs->getEval();
         }
 
         const node& getLeft() const {

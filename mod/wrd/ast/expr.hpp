@@ -28,7 +28,7 @@ namespace wrd {
         nbicontainer& subs() override;
 
         wbool isImpli(const type& to) const override {
-            return getEvalType().isSub(to);
+            return getEval().isSub(to);
         }
         virtual str asImpli(const type& to) const override {
             me* unconst = const_cast<me*>(this);

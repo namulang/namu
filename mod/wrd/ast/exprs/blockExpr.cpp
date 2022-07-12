@@ -45,11 +45,11 @@ namespace wrd {
         }
     }
 
-    const wtype& me::getEvalType() const {
+    const node& me::getEval() const {
         wcnt len = _exprs.len();
-        if(len <= 0) return nulOf<wtype>();
+        if(len <= 0) return nulOf<node>();
 
-        return _exprs[len-1].getEvalType();
+        return _exprs[len-1].getEval();
     }
 
 
@@ -69,13 +69,13 @@ namespace wrd {
             const func& f = thread::get().getNowFrame().getFunc();
             if (nul(f)) return;
 
-            const wtype& retType = f.getRet()->getType();
+            const wtype& retType = f.getRet().getType();
             const node& lastStmt = *stmts.last();
             if(!lastStmt.isSub<returnExpr>() && retType == ttype<wVoid>::get()) {
                 WRD_DI("implicit return won't verify when retType is void.");
                 return;
             }
-            const wtype& lastType = lastStmt.getEvalType(); // to get type of expr, always uses evalType.
+            const wtype& lastType = lastStmt.getEval().getType(); // to get type of expr, always uses evalType.
             if(nul(lastType)) return _err(lastStmt.getPos(), NO_RET_TYPE);
             if(!lastType.isSub(retType)) return _err(lastStmt.getPos(), errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
                     retType.getName().c_str());

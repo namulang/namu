@@ -16,7 +16,7 @@ namespace wrd {
         nbicontainer& subs() override;
         wbool canRun(const ucontainable& args) const override { return false; }
         str run(const ucontainable& args) override;
-        const wtype& getEvalType() const override;
+        const wtype& getEval() const override;
         const baseObj& getOrigin() const override { return *this; }
 
     private:

@@ -32,24 +32,26 @@ namespace wrd {
         if(nul(top)) return;
         const std::string name = it.getSubName();
         if(top.getContainer().has(name))
-            return _srcErr(errCode::ALREADY_DEFINED_VAR, name.c_str(), it.getEvalType().getName()
+            return _srcErr(errCode::ALREADY_DEFINED_VAR, name.c_str(), it.getEval().getType().getName()
                     .c_str());
     })
 
     WRD_VERIFY(defAssignExpr, isDefinable, {
         WRD_DI("verify: defAssignExpr: is definable?");
 
-        const wtype& t = it.getEvalType();
-        if(nul(t))
+        const node& eval = it.getEval();
+        if(nul(eval))
             _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
 
-        node& new1 = *new typeNode(t);
-        WRD_DI("verify: defAssignExpr: typeNode of %s has defined.", nul(t) ? "name" : t.getName().c_str());
+        WRD_DI("verify: defAssignExpr: typeNode of %s has defined.",
+                nul(eval) ? "name" : eval.getType()..getName().c_str());
+
         node& to = it.getTo();
+        str new1 = eval.as<node>();
         if(nul(to))
-            thread::get()._getNowFrame().pushLocal(it.getSubName(), new1);
+            thread::get()._getNowFrame().pushLocal(it.getSubName(), *new1);
         else
-            to.run()->subs().add(it.getSubName(), new1);
+            to.run()->subs().add(it.getSubName(), *new1);
     })
 
     WRD_VERIFY({

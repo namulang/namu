@@ -27,8 +27,8 @@ namespace wrd {
             return _runNative(evaluated);
         }
 
-        str getRet() const override {
-            static str inner(new typename tmarshaling<Ret>::mgdType());
+        const node& getRet() const override {
+            static typename tmarshaling<Ret>::mgdType inner;
             return inner;
         }
 

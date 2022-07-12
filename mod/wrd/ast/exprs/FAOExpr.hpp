@@ -45,7 +45,7 @@ namespace wrd {
             }
         }
 
-        const wtype& getEvalType() const override;
+        const node& getEval() const override;
         const node& getLeft() const { return *_lhs; }
         const node& getRight() const { return *_rhs; }
 

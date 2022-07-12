@@ -19,8 +19,8 @@ namespace wrd {
 
             return str(out->getOrigin().clone());
         }
-        const wtype& getEvalType() const override {
-            return _from->getEvalType();
+        const wtype& getEval() const override {
+            return _from->getEval();
         }
         const node& getFrom() const {
             return *_from;

@@ -15,11 +15,11 @@ namespace wrd {
         return *_from;
     }
 
-    const wtype& me::getEvalType() const {
+    const wtype& me::getEval() const {
         const node& got = _get();
         if(nul(got))
             return nulOf<wtype>();
-        return got.getEvalType();
+        return got.getEval();
     }
 
     str me::run(const ucontainable& args) {
@@ -45,7 +45,7 @@ namespace wrd {
     WRD_VERIFY(getExpr, isRunnable, {
         // TODO: I have to check that the evalType has what matched to given _params.
         // Until then, I rather use as() func and it makes slow emmersively.
-        if(nul(it.getEvalType())) return _srcErr(errCode::EVAL_NULL_TYPE);
+        if(nul(it.getEval())) return _srcErr(errCode::EVAL_NULL_TYPE);
         const node& got = it._get();
         if(nul(got)) {
             const node& from = it.getFrom();

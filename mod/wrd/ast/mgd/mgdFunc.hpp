@@ -20,7 +20,7 @@ namespace wrd {
     public:
         blockExpr& getBlock();
         const blockExpr& getBlock() const;
-        str getRet() const override;
+        const node& getRet() const override;
         nbicontainer& subs() override;
         const params& getParams() const override;
 

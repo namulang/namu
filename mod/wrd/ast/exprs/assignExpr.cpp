@@ -35,8 +35,8 @@ namespace wrd {
     WRD_VERIFY({
         WRD_DI("verify: set evalType");
 
-        const wtype& ltype = it.getLeft().getEvalType();
-        const wtype& rtype = it.getRight().getEvalType();
+        const wtype& ltype = it.getLeft().getEval().getType();
+        const wtype& rtype = it.getRight().getEval().getType();
 
         if(!ltype.isImpli(rtype))
             return _srcErr(errCode::TYPE_NOT_COMPATIBLE, ltype.getName().c_str(), rtype.getName()

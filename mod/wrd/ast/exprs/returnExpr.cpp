@@ -33,11 +33,11 @@ namespace wrd {
         return super::canRun(args);
     }
 
-    const wtype& me::getEvalType() const {
+    const wtype& me::getEval() const {
         if(!_ret)
             return ttype<wVoid>::get();
 
-        return (const wtype&) _ret->getEvalType(); // I guarrantee that it's wtype.
+        return (const wtype&) _ret->getEval(); // I guarrantee that it's wtype.
     }
 
 
@@ -47,9 +47,9 @@ namespace wrd {
         const func& f = thread::get().getNowFrame().getFunc();
         if(nul(f)) return _srcErr(errCode::NO_FUNC_INFO);
 
-        const wtype& itType = it.getEvalType();
+        const wtype& itType = it.getEval();
         if(nul(itType)) return _srcErr(errCode::EXPR_EVAL_NULL);
-        const wtype& fType = f.getRet()->getType();
+        const wtype& fType = f.getRet().getType();
         WRD_DI("verify: returnExpr: checks return[%s] == func[%s]", itType.getName().c_str(),
             fType.getName().c_str());
 
