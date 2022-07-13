@@ -47,8 +47,8 @@ namespace wrd {
         wbool pushLocal(nbicontainer& con);
         wbool pushLocal(scopes* new1);
         wbool pushLocal(scopes& new1);
-        wbool pushLocal(const std::string& name, node& n);
-        wbool pushLocal(const std::string& name, node* n);
+        wbool pushLocal(const std::string& name, const node& n);
+        wbool pushLocal(const std::string& name, const node* n);
         void pushObj(const baseObj& obj);
 
         scopes& getTop();

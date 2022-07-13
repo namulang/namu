@@ -34,7 +34,7 @@ namespace {
         };
 
     public:
-        myfunc(): super(params(), ttype<node>::get(), *new myBlock()) {
+        myfunc(): super(params(), *new wVoid(), *new myBlock()) {
             WRD_I("myfunc(%x) new", this);
         }
         ~myfunc() {
@@ -212,7 +212,7 @@ TEST_F(funcTest, testfuncHasStrParameter) {
     obj.subs().add("myfunc", func1);
 
     params& types = func1.getParams();
-    types.add(new param("", ttype<wStr>::get()));
+    types.add(new param("", new wStr()));
     func1.setLambda([&](const auto& args, const frames& sf) { return true; });
 
     narr args;
@@ -234,8 +234,8 @@ TEST_F(funcTest, testArgsAttachedName) {
     myfunc f;
     o.subs().add("myfunc", f);
     params& ps = f.getParams();
-    ps.add(new param("msg", ttype<wStr>::get()));
-    ps.add(new param("age", ttype<wInt>::get()));
+    ps.add(new param("msg", new wStr()));
+    ps.add(new param("age", new wInt()));
     f.setLambda([&](const auto& args, const frames& sf) {
         const frame& fr = sf[sf.len() - 1];
         return  fr["msg"].cast<wStr>().get() == "hello world" &&

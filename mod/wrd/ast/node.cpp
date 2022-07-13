@@ -41,7 +41,7 @@ namespace wrd {
     str me::asImpli(const typeProvidable& to) const { return asImpli(to.getType()); }
     str me::asImpli(const type& to) const { return getType().asImpli(*this, to); }
 
-    str me::getEval() const {
+    const node& me::getEval() const {
         return *this;
     }
 

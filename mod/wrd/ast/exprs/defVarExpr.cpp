@@ -38,7 +38,8 @@ namespace wrd {
     WRD_VERIFY(defVarExpr, defineVariable, {
         WRD_DI("verify: defVarExpr: check duplication");
         const scopes& top = thread::get().getNowFrame().getTop();
-        const wtype& t = it.getEval();
+        const node& eval = it.getEval();
+        const wtype& t = eval.getType();
         const wchar* typeName = nul(t) ? "null" : t.getName().c_str();
         if(nul(top)) return;
         if(top.getContainer().has(it.getName()))
@@ -55,8 +56,8 @@ namespace wrd {
         if(nul(t))
             _srcErr(errCode::CANT_DEF_VAR, name.c_str(), typeName);
 
-        node& new1 = *new typeNode(t);
-        wbool res = it._where ? it._where->add(name.c_str(), new1) : thread::get()._getNowFrame().pushLocal(name, new1);
+        wbool res = it._where ? it._where->add(name.c_str(), eval) : thread::get()._getNowFrame()
+                .pushLocal(name, eval);
         if(!res)
             WRD_E("define variable %s is failed.", name.c_str());
     })

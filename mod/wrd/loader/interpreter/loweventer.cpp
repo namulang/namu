@@ -238,7 +238,7 @@ namespace wrd {
         WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s: blk.len()=%d", name.c_str(), &exprs,
                 evalType.getName().c_str(), blk.getStmts().len());
 
-        mgdFunc* ret = new mgdFunc(_convertParams(exprs), evalType, blk);
+        mgdFunc* ret = new mgdFunc(_convertParams(exprs), evalObj, blk);
         _onPushName(name, *ret);
         return ret;
     }
@@ -310,7 +310,7 @@ namespace wrd {
 
         // add preCtor:
         if(blk.asPreCtor && blk.asPreCtor->len()) {
-            mgdFunc* preCtor = new mgdFunc(params(), ttype<wVoid>::get());
+            mgdFunc* preCtor = new mgdFunc(params(), new wVoid());
             preCtor->getBlock().getStmts().add(*blk.asPreCtor);
             it.subs().add(baseObj::PRECTOR_NAME, preCtor);
         }

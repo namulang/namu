@@ -41,10 +41,10 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
 
         const param& arg1 = ps[0];
         ASSERT_EQ(arg1.getName(), "argc");
-        ASSERT_EQ(arg1.getOrgType(), ttype<wInt>());
+        ASSERT_EQ(arg1.getOrigin().getType(), ttype<wInt>());
         const param& arg2 = ps[1];
         ASSERT_EQ(arg2.getName(), "argv");
-        ASSERT_EQ(arg2.getOrgType(), ttype<wStr>());
+        ASSERT_EQ(arg2.getOrigin().getType(), ttype<wStr>());
     }
 }
 

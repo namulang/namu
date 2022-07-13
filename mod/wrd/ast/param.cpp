@@ -4,12 +4,11 @@
 namespace wrd {
     WRD_DEF_ME(param)
 
-    me::param(const std::string& newName, const wtype& orgType): _name(newName) {
-        setOrgType(orgType);
-    }
-
     me::param(const std::string& newName, const node& org): _name(newName) {
-        setOrgType(org.getType());
+        setOrigin(org);
+    }
+    me::param(const std::string& newName, const node* org): _name(newName) {
+        setOrigin(*org);
     }
 
     void me::setOrgType(const wtype& newType) {
@@ -20,5 +19,5 @@ namespace wrd {
 
     void me::setName(const std::string& new1) { _name = new1; }
 
-    const wtype& me::getOrgType() const { return *_type; }
+    const node& me::getOrigin() const { return *_org; }
 }

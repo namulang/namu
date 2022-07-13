@@ -46,7 +46,7 @@ namespace wrd {
 
             int n = 0;
             for(const node& e: args) {
-                str ased = e.as(ps[n++].getOrgType());
+                str ased = e.as(ps[n++].getOrigin());
                 if(!ased) return nulOf<narr>();
 
                 tray.add(*ased);

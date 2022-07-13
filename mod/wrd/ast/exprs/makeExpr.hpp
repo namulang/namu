@@ -19,7 +19,7 @@ namespace wrd {
 
             return str(out->getOrigin().clone());
         }
-        const wtype& getEval() const override {
+        const node& getEval() const override {
             return _from->getEval();
         }
         const node& getFrom() const {

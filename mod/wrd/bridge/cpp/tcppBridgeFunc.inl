@@ -14,7 +14,7 @@ namespace wrd {
         static params* inner = nullptr;
         if(nul(inner)) {
             inner = new params();
-            (inner->add(new param("", ttype<typename tmarshaling<Args>::mgdType>::get())), ...);
+            (inner->add(new param("", *new typename tmarshaling<Args>::mgdType())), ...);
         }
 
         return *inner;

@@ -10,7 +10,7 @@ namespace {
         WRD(CLASS(myFunc, mgdFunc))
 
     public:
-        myFunc(): super(params(), ttype<node>::get()) {}
+        myFunc(): super(params(), new wVoid()) {}
 
         void setUp() {
             _executed = false;

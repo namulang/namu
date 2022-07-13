@@ -31,7 +31,7 @@ namespace wrd {
         using super::run;
         str run(const ucontainable& args) override { return getPack().run(args); }
 
-        const wtype& getEval() const override { return getPack().getEval(); }
+        const node& getEval() const override { return getPack().getEval(); }
 
     protected:
         virtual wbool _invalidate();

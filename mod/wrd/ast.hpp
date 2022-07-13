@@ -10,4 +10,3 @@
 #include "ast/params.hpp"
 #include "ast/defaultCtor.hpp"
 #include "ast/defaultCopyCtor.hpp"
-#include "ast/typeNode.hpp"

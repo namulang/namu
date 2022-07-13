@@ -15,10 +15,10 @@ namespace wrd {
         return *_from;
     }
 
-    const wtype& me::getEval() const {
+    const node& me::getEval() const {
         const node& got = _get();
         if(nul(got))
-            return nulOf<wtype>();
+            return nulOf<node>();
         return got.getEval();
     }
 
