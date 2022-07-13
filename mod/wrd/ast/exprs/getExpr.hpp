@@ -18,7 +18,7 @@ namespace wrd {
     public:
         using super::run;
         str run(const ucontainable& args) override;
-        const wtype& getEval() const override;
+        const node& getEval() const override;
         const node& getFrom() const;
         const std::string& getSubName() const;
         void setFrom(const node& newFrom) { _from.bind(newFrom); }

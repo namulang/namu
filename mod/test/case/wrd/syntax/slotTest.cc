@@ -32,7 +32,7 @@ namespace {
         };
 
     public:
-        myfunc(): super(params(), ttype<node>::get(), *new myBlock()) {
+        myfunc(): super(params(), new wVoid(), *new myBlock()) {
             WRD_I("myfunc(%x) new", this);
         }
         ~myfunc() {
@@ -119,8 +119,8 @@ TEST_F(slotTest, slotIsInFrameWhenCallMgdFunc) {
     myfunc f1;
 
     params& ps = f1.getParams();
-    ps.add(new param("age", ttype<wInt>::get()));
-    ps.add(new param("grade", ttype<wFlt>::get()));
+    ps.add(new param("age", new wInt()));
+    ps.add(new param("grade", new wFlt()));
     f1.setLambda([](const auto& contain, const auto& sf) {
         const frame& fr = sf[sf.len() - 1];
         if(nul(fr)) return false;
@@ -132,7 +132,7 @@ TEST_F(slotTest, slotIsInFrameWhenCallMgdFunc) {
         const params& ps = cast.getParams();
         if(nul(ps)) return false;
         if(ps.len() != 2) return false;
-        if(ps[0].getOrgType() != ttype<wInt>()) return false;
+        if(ps[0].getOrigin().getType() != ttype<wInt>()) return false;
         if(ps[1].getName() != "grade") return false;
 
         // checks args of funcs is in frame:

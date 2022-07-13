@@ -29,9 +29,12 @@ namespace wrd {
     }
 
     const node& me::getEval() const {
-        if(!_lhs || !_rhs) return str();
+        static wVoid inner;
+        if(!_lhs || !_rhs) return inner;
+        const node& lhsEval = _lhs->getEval();
+        if(nul(lhsEval)) return inner;
 
-        return _lhs->getEval().reduce(_rhs->getEval());
+        return lhsEval.reduce(_rhs->getEval());
     }
 
     WRD_VERIFY({
@@ -46,8 +49,8 @@ namespace wrd {
         if(nul(lEval)) return _srcErr(errCode::LHS_IS_NULL);
         if(nul(rEval)) return _srcErr(errCode::RHS_IS_NULL);
 
-        if(!checkEvalType(lEval)) return _srcErr(errCode::LHS_IS_NOT_ARITH, lEval->getType().getName().c_str());
-        if(!checkEvalType(rEval)) return _srcErr(errCode::RHS_IS_NOT_ARITH, rEval->getType().getName().c_str());
+        if(!checkEvalType(lEval)) return _srcErr(errCode::LHS_IS_NOT_ARITH, lEval.getType().getName().c_str());
+        if(!checkEvalType(rEval)) return _srcErr(errCode::RHS_IS_NOT_ARITH, rEval.getType().getName().c_str());
     })
 
 }

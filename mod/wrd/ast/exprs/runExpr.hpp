@@ -15,7 +15,7 @@ namespace wrd {
         using super::run;
         str run(const ucontainable& args) override;
 
-        const wtype& getEval() const override;
+        const node& getEval() const override;
 
         node& getMe();
         const node& getMe() const;

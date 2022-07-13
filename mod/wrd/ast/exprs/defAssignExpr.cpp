@@ -43,8 +43,8 @@ namespace wrd {
         if(nul(eval))
             _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
 
-        WRD_DI("verify: defAssignExpr: typeNode of %s has defined.",
-                nul(eval) ? "name" : eval.getType()..getName().c_str());
+        WRD_DI("verify: defAssignExpr: %s has defined.",
+                nul(eval) ? "name" : eval.getType().getName().c_str());
 
         node& to = it.getTo();
         str new1 = eval.as<node>();

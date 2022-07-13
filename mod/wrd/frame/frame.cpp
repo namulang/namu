@@ -19,14 +19,14 @@ namespace wrd {
             new1.link(_obj->subs());
         return ret;
     }
-    wbool me::pushLocal(const std::string& name, node& n) {
+    wbool me::pushLocal(const std::string& name, const node& n) {
         scopes& top = *_local.getTop();
         if(nul(top))
             return WRD_E("couldn't push new node. the top scope is null"), false;
 
         return top.add(name, n);
     }
-    wbool me::pushLocal(const std::string& name, node* n) {
+    wbool me::pushLocal(const std::string& name, const node* n) {
         return pushLocal(name, *n);
     }
 

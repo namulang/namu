@@ -44,7 +44,7 @@ namespace {
         };
 
     public:
-        myfunc(): super(params(), ttype<node>::get(), *new myBlock()) {
+        myfunc(): super(params(), *new wVoid(), *new myBlock()) {
             WRD_I("myfunc(%x) new", this);
         }
         ~myfunc() {
@@ -104,9 +104,9 @@ TEST_F(immutableTest, testImmutablePositive) {
     r1->get() = 0.5f;
     ASSERT_EQ(*r1, *r2);
 
-    param r3("", r1->getType());
-    ASSERT_FALSE(nul(r3.getOrgType()));
-    ASSERT_EQ(r3.getOrgType(), ttype<wFlt>::get());
+    param r3("", *r1);
+    ASSERT_FALSE(nul(r3.getOrigin()));
+    ASSERT_EQ(r3.getOrigin().getType(), ttype<wFlt>::get());
 
     scope s;
     s.add("r1", *r1);
