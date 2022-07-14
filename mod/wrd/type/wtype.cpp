@@ -115,14 +115,14 @@ namespace wrd {
 
         const types& lAncestor = l.getSupers();
         const types& rAncestor = r.getSupers();
-        wcnt lTier = lAncestor.size(),
-             rTier = rAncestor.size();
+        wcnt lTier = lAncestor.size() - 1, // tier is the index
+             rTier = rAncestor.size() - 1;
         wcnt minTier = lTier > rTier ? rTier : lTier;
 
         //  main:
         for(int n = minTier; n >= 0 ;n--)
             if(lAncestor[n] == rAncestor[n]) {
-                const wtype& ret = (const wtype&) lAncestor[n];
+                const wtype& ret = (const wtype&) *lAncestor[n];
                 if(ret.isSuper(ttype<node>::get()))
                     break;
                 return ret;
