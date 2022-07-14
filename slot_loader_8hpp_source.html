@@ -88,29 +88,30 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        me&amp; addPath(<span class="keyword">const</span> std::string&amp; filePath);</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        me&amp; addPath(<span class="keyword">const</span> std::vector&lt;std::string&gt; paths);</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        me&amp; addPath(std::initializer_list&lt;const wchar*&gt; paths);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        me&amp; setBaseSlots(<a class="code" href="classwrd_1_1tnmap.html">nmap</a>&amp; s);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        me&amp; setReport(<a class="code" href="classwrd_1_1err_report.html">errReport</a>&amp; report);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">void</span> load();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordtype">void</span> _makeSlots(<a class="code" href="classwrd_1_1tnmap.html">nmap</a>&amp; tray);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordtype">void</span> _addNewSlot(<a class="code" href="classwrd_1_1tnmap.html">nmap</a>&amp; tray, <span class="keyword">const</span> std::string&amp; dirPath, <span class="keyword">const</span> std::string&amp; manifestName);</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">void</span> _logSlot(<span class="keyword">const</span> <a class="code" href="classwrd_1_1slot.html">slot</a>&amp; pak) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="structwrd_1_1manifest.html">manifest</a> _interpManifest(<span class="keyword">const</span> std::string&amp; dir, <span class="keyword">const</span> std::string&amp; manPath) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>* _makeLoading(<span class="keyword">const</span> std::string&amp; name) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">const</span> packLoadings&amp; _getLoadings() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a> _report;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;nmap&gt;</a> _slots;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        std::vector&lt;std::string&gt; _paths;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">static</span> constexpr wchar DELIMITER = <span class="charliteral">&#39;/&#39;</span>;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    };</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        me&amp; addRelativePath(<span class="keyword">const</span> std::string&amp; path);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        me&amp; setBaseSlots(<a class="code" href="classwrd_1_1tnmap.html">nmap</a>&amp; s);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        me&amp; setReport(<a class="code" href="classwrd_1_1err_report.html">errReport</a>&amp; report);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">void</span> load();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordtype">void</span> _makeSlots(<a class="code" href="classwrd_1_1tnmap.html">nmap</a>&amp; tray);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> _addNewSlot(<a class="code" href="classwrd_1_1tnmap.html">nmap</a>&amp; tray, <span class="keyword">const</span> std::string&amp; dirPath, <span class="keyword">const</span> std::string&amp; manifestName);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordtype">void</span> _logSlot(<span class="keyword">const</span> <a class="code" href="classwrd_1_1slot.html">slot</a>&amp; pak) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="structwrd_1_1manifest.html">manifest</a> _interpManifest(<span class="keyword">const</span> std::string&amp; dir, <span class="keyword">const</span> std::string&amp; manPath) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>* _makeLoading(<span class="keyword">const</span> std::string&amp; name) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">const</span> packLoadings&amp; _getLoadings() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;errReport&gt;</a> _report;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;nmap&gt;</a> _slots;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        std::vector&lt;std::string&gt; _paths;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keyword">static</span> constexpr wchar DELIMITER = <span class="charliteral">&#39;/&#39;</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    };</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
 <div class="ttc" id="aclasswrd_1_1clonable_html"><div class="ttname"><a href="classwrd_1_1clonable.html">wrd::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>

@@ -89,12 +89,12 @@ Inheritance diagram for wrd::defAssignExpr:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afd764c9f87e00e5eddf41aad7a1aded5"><td class="memItemLeft" align="right" valign="top"><a id="afd764c9f87e00e5eddf41aad7a1aded5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>defAssignExpr</b> (const std::string &amp;name, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:afd764c9f87e00e5eddf41aad7a1aded5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58af7d4caa454756c4e795d8a69f4f69"><td class="memItemLeft" align="right" valign="top"><a id="a58af7d4caa454756c4e795d8a69f4f69"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>defAssignExpr</b> (const <a class="el" href="classwrd_1_1node.html">node</a> &amp;to, const std::string &amp;name, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;rhs)</td></tr>
-<tr class="separator:a58af7d4caa454756c4e795d8a69f4f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a9240092c2184e73d8ce5ebb5f638b0"><td class="memItemLeft" align="right" valign="top"><a id="a2a9240092c2184e73d8ce5ebb5f638b0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>defAssignExpr</b> (const std::string &amp;name, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;rhs, wbool isOnDefBlock=false)</td></tr>
+<tr class="separator:a2a9240092c2184e73d8ce5ebb5f638b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4788ff925f09e6af12b0f368afa6840d"><td class="memItemLeft" align="right" valign="top"><a id="a4788ff925f09e6af12b0f368afa6840d"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>defAssignExpr</b> (const <a class="el" href="classwrd_1_1node.html">node</a> &amp;to, const std::string &amp;name, const <a class="el" href="classwrd_1_1node.html">node</a> &amp;rhs, wbool isOnDefBlock=false)</td></tr>
+<tr class="separator:a4788ff925f09e6af12b0f368afa6840d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee108f52950cbf1b8813f9a7e7b21a8e"><td class="memItemLeft" align="right" valign="top"><a id="aee108f52950cbf1b8813f9a7e7b21a8e"></a>
 <a class="el" href="classwrd_1_1tstr.html">str</a>&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> (const <a class="el" href="classwrd_1_1tucontainable.html">ucontainable</a> &amp;args) override</td></tr>
 <tr class="separator:aee108f52950cbf1b8813f9a7e7b21a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,9 +109,12 @@ const <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td cl
 <tr class="memitem:a258e2fb3b3b134b47a0dcbccbc996f3a"><td class="memItemLeft" align="right" valign="top"><a id="a258e2fb3b3b134b47a0dcbccbc996f3a"></a>
 <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getRight</b> ()</td></tr>
 <tr class="separator:a258e2fb3b3b134b47a0dcbccbc996f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0980e47c67e3b197348011efcfb0c806"><td class="memItemLeft" align="right" valign="top"><a id="a0980e47c67e3b197348011efcfb0c806"></a>
-const <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getTo</b> () const WRD_UNCONST_FUNC(getTo()) <a class="el" href="classwrd_1_1node.html">node</a> &amp;getTo()</td></tr>
-<tr class="separator:a0980e47c67e3b197348011efcfb0c806"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc32db49501694a440207f78f58ad0a3"><td class="memItemLeft" align="right" valign="top"><a id="adc32db49501694a440207f78f58ad0a3"></a>
+const <a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getTo</b> () const WRD_UNCONST_FUNC(getTo()) wbool isOnDefBlock() const</td></tr>
+<tr class="separator:adc32db49501694a440207f78f58ad0a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59e3fba3a4e269fab7578ffc4d49ee2c"><td class="memItemLeft" align="right" valign="top"><a id="a59e3fba3a4e269fab7578ffc4d49ee2c"></a>
+<a class="el" href="classwrd_1_1node.html">node</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getTo</b> ()</td></tr>
+<tr class="separator:a59e3fba3a4e269fab7578ffc4d49ee2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classwrd_1_1expr"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classwrd_1_1expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classwrd_1_1expr.html">wrd::expr</a></td></tr>
 <tr class="memitem:aaa62105b1cf3cb1bc2818fc756758626 inherit pub_methods_classwrd_1_1expr"><td class="memItemLeft" align="right" valign="top"><a id="aaa62105b1cf3cb1bc2818fc756758626"></a>
 <a class="el" href="classwrd_1_1tnbicontainer.html">nbicontainer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>subs</b> () override</td></tr>
