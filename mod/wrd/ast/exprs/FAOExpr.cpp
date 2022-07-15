@@ -29,12 +29,13 @@ namespace wrd {
     }
 
     const node& me::getEval() const {
-        static wVoid inner;
-        if(!_lhs || !_rhs) return inner;
+        if(!_lhs || !_rhs) return nulOf<node>();
         const node& lhsEval = _lhs->getEval();
-        if(nul(lhsEval)) return inner;
+        if(nul(lhsEval)) return nulOf<node>();
+        const node& rhsEval = _rhs->getEval();
+        if(nul(rhsEval)) return nulOf<node>();
 
-        return lhsEval.reduce(_rhs->getEval());
+        return lhsEval.reduce(rhsEval);
     }
 
     WRD_VERIFY({

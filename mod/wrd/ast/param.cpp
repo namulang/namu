@@ -11,8 +11,8 @@ namespace wrd {
         setOrigin(*org);
     }
 
-    void me::setOrgType(const wtype& newType) {
-        _type = &newType;
+    void me::setOrigin(const node& newType) {
+        _org.bind(newType);
     }
 
     const std::string& me::getName() const { return _name; }

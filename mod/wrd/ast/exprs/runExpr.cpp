@@ -3,6 +3,7 @@
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
+#include "../../builtin/primitive/wVoid.hpp"
 
 namespace wrd {
 
@@ -33,14 +34,13 @@ namespace wrd {
     }
 
     const node& me::getEval() const {
-        static wVoid inner;
-        if(!_me) return inner;
+        if(!_me) return nulOf<node>();
 
         str me = _me->as<node>();
-        if(!me) return inner;
+        if(!me) return nulOf<node>();
 
         const node& sub = me->sub(getName(), getArgs());
-        if(nul(sub)) return WRD_W("sub is null"), inner;
+        if(nul(sub)) return WRD_W("sub is null"), nulOf<node>();
 
         const func& f = sub.cast<func>();
         return nul(f) ? sub.getEval() : f.getRet();

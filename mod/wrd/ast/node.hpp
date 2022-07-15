@@ -27,6 +27,7 @@ namespace wrd {
         const node& reduce(const node& r) const {
             const wtype& mine = getType();
             const wtype& res = mine.reduce(r.getType());
+            if(nul(res) || nul(mine)) return nulOf<node>();
 
             return res == mine ? *this : r;
         }
