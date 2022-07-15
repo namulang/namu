@@ -60,7 +60,7 @@ namespace wrd {
         WRD_DI("======================================");
         WRD_DI("           preEvaluation");
         WRD_DI("======================================");
-        _preEvaluation(_slot->getPack());
+        //_preEvaluation(_slot->getPack());
 
         _logStructure(*info, _srcs->get());
 

@@ -39,15 +39,15 @@ namespace wrd {
     WRD_VERIFY(defAssignExpr, isDefinable, {
         WRD_DI("verify: defAssignExpr: is definable?");
 
-        const node& eval = it.getEval();
-        if(nul(eval))
+        const node& rhs = it.getRight();
+        if(nul(rhs))
             return _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
 
         WRD_DI("verify: defAssignExpr: %s has defined.",
-                nul(eval) ? "name" : eval.getType().getName().c_str());
+                nul(rhs) ? "name" : rhs.getType().getName().c_str());
 
         node& to = it.getTo();
-        str new1 = eval.as<node>();
+        str new1 = rhs.as<node>();
         if(nul(to))
             thread::get()._getNowFrame().pushLocal(it.getSubName(), *new1);
         else
