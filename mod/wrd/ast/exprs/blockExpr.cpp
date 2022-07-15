@@ -75,7 +75,9 @@ namespace wrd {
                 WRD_DI("implicit return won't verify when retType is void.");
                 return;
             }
-            const wtype& lastType = lastStmt.getEval().getType(); // to get type of expr, always uses evalType.
+            const node& lastEval = lastStmt.getEval();
+            if(nul(lastEval)) return _err(lastStmt.getPos(), NO_RET_TYPE);
+            const wtype& lastType = lastEval.getType(); // to get type of expr, always uses evalType.
             if(nul(lastType)) return _err(lastStmt.getPos(), NO_RET_TYPE);
             if(!lastType.isSub(retType)) return _err(lastStmt.getPos(), errCode::RET_TYPE_NOT_MATCH, lastType.getName().c_str(),
                     retType.getName().c_str());

@@ -41,7 +41,7 @@ namespace wrd {
 
         const node& eval = it.getEval();
         if(nul(eval))
-            _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
+            return _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
 
         WRD_DI("verify: defAssignExpr: %s has defined.",
                 nul(eval) ? "name" : eval.getType().getName().c_str());

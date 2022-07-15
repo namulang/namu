@@ -10,7 +10,7 @@ namespace wrd {
         WRD(CLASS(param, instance))
 
     public:
-        param(const std::string& newName, const node& org):
+        param(const std::string& newName, const node& org);
         param(const std::string& newName, const node* org);
 
     public:
