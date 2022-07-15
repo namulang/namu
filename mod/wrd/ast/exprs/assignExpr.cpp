@@ -35,8 +35,14 @@ namespace wrd {
     WRD_VERIFY({
         WRD_DI("verify: set evalType");
 
+        const node& leftEval = it.getLeft().getEval();
+        if(nul(leftEval)) return _srcErr(errCode::LHS_IS_NULL);
         const wtype& ltype = it.getLeft().getEval().getType();
+        if(nul(ltype)) return _srcErr(errCode::LHS_IS_NULL);
+        const node& rightEval = it.getRight().getEval();
+        if(nul(rightEval)) return _srcErr(errCode::RHS_IS_NULL);
         const wtype& rtype = it.getRight().getEval().getType();
+        if(nul(rtype)) return _srcErr(errCode::RHS_IS_NULL);
 
         if(!ltype.isImpli(rtype))
             return _srcErr(errCode::TYPE_NOT_COMPATIBLE, ltype.getName().c_str(), rtype.getName()
