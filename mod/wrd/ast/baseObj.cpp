@@ -49,14 +49,19 @@ namespace wrd {
 
 
     WRD_VERIFY(baseObj, subNodes, {
-        WRD_DI("verify: baseObj: %s iterateSubNodes. len=%d", it.getType().getName().c_str(), it.subs().len());
+        WRD_DI("verify: baseObj: %s iterateSubNodes. len=%d", it.getType().getName().c_str(),
+                it.subs().len());
 
         baseObj& prev = frame::_setObj(it);
 
         nmap tray;
         tray.add(func::ME, it);
-        for(auto& p : it.subs())
-            verify(p, tray);
+        for(auto e = it.subs().begin(); e ;++e) {
+            node& val = e.getVal();
+            WRD_DI("verify: baseObj: iterateSubNode[%s]=%s", e.getKey().c_str(), val.getType()
+                    .getName().c_str());
+            verify(val, tray);
+        }
 
         frame::_setObj(prev);
     })
