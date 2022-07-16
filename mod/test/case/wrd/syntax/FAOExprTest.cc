@@ -28,6 +28,8 @@ TEST_F(FAOExprTest, simpleAdd) {
 
 TEST_F(FAOExprTest, addWithDefAssign) {
     make().parse(R"SRC(
+        foo() int
+            1 + 2
         a := 5
         b := a + 2
         main() int
