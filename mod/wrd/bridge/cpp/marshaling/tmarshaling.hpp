@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../../builtin/primitive.hpp"
+
 namespace wrd {
 
     struct marshalErr {};
@@ -54,6 +56,4 @@ namespace wrd {
     template <> struct _wout tmarshaling<const std::string&> : public tnormalMarshaling<const std::string&, wStr> {};
     template <> struct _wout tmarshaling<const std::string> : public tnormalMarshaling<const std::string&, wStr> {};
     template <> struct _wout tmarshaling<void> : public tnormalMarshaling<void, wVoid> {};
-
-    // TODO: add more.
 }
