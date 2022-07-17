@@ -9,34 +9,34 @@ namespace {
 
 TEST_F(akaTest, defaultDef) {
     make().parse(R"SRC(
-        aka console -> c
+        aka console c
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
 
 TEST_F(akaTest, defaultDef2) {
     make().parse(R"SRC(
-        aka console ->
+        aka console
         c
     )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, defaultDef3) {
     make().parse(R"SRC(
-        aka sys.console -> c
+        aka sys.console c
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
 
 TEST_F(akaTest, defaultDef4) {
     make().parse(R"SRC(
-        aka sys.con -> c
+        aka sys.con c
     )SRC").shouldVerified(true);
 }
 
 TEST_F(akaTest, defaultDef5) {
     make().parse(R"SRC(
-        aka -> sys.console
+        aka sys.console
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
@@ -69,19 +69,19 @@ TEST_F(akaTest, deducedAllDefNegative4) {
 
 TEST_F(akaTest, withDefvar) {
     make().parse(R"SRC(
-        aka a int -> b
+        aka a int b
     )SRC").shouldParsed(false);
 }
 
 TEST_F(akaTest, withDefvar2) {
     make().parse(R"SRC(
-        aka a -> b
+        aka a b
     )SRC").shouldParsed(true);
 }
 
 TEST_F(akaTest, akaHelloWorld) {
     make().parse(R"SRC(
-        aka -> sys.con
+        aka sys.con
         main() void
             con.print("hello world!")
     )SRC").shouldVerified(true);
@@ -90,8 +90,8 @@ TEST_F(akaTest, akaHelloWorld) {
 
 TEST_F(akaTest, akaHelloWorld2) {
     make().parse(R"SRC(
-        aka sys.con -> c
-        aka -> sys.con
+        aka sys.con c
+        aka sys.con
         main() void
             c.print("hello world x1\n")
             con.print("hello world x2\n")

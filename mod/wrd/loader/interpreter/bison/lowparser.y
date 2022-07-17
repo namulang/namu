@@ -334,15 +334,13 @@ if: IF expr indentblock {
     }
 aka: aka-default { $$ = $1; }
    | aka-deduced { $$ = $1; }
-aka-default: AKA defexpr-compound ARROW NAME {
-            // TODO: then free it
-         } | AKA dotname ARROW NAME {
+aka-default: AKA dotname NAME {
             // dotname only available getExpr. need to verify in akaExpr
-            $$ = yyget_extra(scanner)->onAkaDefault($2->cast<getExpr>(), std::string(*$4));
-            free($4);
+            $$ = yyget_extra(scanner)->onAkaDefault($2->cast<getExpr>(), std::string(*$3));
+            free($3);
          }
-aka-deduced: AKA ARROW dotname {
-            const getExpr& e = $3->cast<getExpr>();
+aka-deduced: AKA dotname {
+            const getExpr& e = $2->cast<getExpr>();
             $$ = yyget_extra(scanner)->onAkaDefault(e, e.getSubName());
          }
 
