@@ -12,7 +12,7 @@ var searchData=
   ['iter_104',['iter',['../classiter.html',1,'']]],
   ['iterable_105',['iterable',['../classiterable.html',1,'']]],
   ['iteration_106',['iteration',['../classiteration.html',1,'']]],
-  ['immutable_107',['Immutable',['../md__home_runner_work_wrd_wrd_doc_ref_feat_immutable.html',1,'']]],
-  ['interoperability_108',['Interoperability',['../md__home_runner_work_wrd_wrd_doc_ref_feat_interoperability.html',1,'']]],
-  ['if_109',['if',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_if.html',1,'']]]
+  ['immutable_107',['Immutable',['../md__home_runner_work_namu_namu_doc_ref_feat_immutable.html',1,'']]],
+  ['interoperability_108',['Interoperability',['../md__home_runner_work_namu_namu_doc_ref_feat_interoperability.html',1,'']]],
+  ['if_109',['if',['../md__home_runner_work_namu_namu_doc_ref_syntax_if.html',1,'']]]
 ];

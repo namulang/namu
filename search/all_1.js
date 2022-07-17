@@ -12,5 +12,5 @@ var searchData=
   ['asprimitive_13',['asPrimitive',['../classwrd_1_1primitive_obj_1_1as_primitive.html',1,'wrd::primitiveObj']]],
   ['assignexpr_14',['assignExpr',['../classwrd_1_1assign_expr.html',1,'wrd']]],
   ['autoslot_15',['autoslot',['../classwrd_1_1autoslot.html',1,'wrd']]],
-  ['aka_16',['aka',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_aka.html',1,'']]]
+  ['aka_16',['aka',['../md__home_runner_work_namu_namu_doc_ref_syntax_aka.html',1,'']]]
 ];

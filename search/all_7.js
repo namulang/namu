@@ -9,6 +9,6 @@ var searchData=
   ['getsubargs_88',['getSubArgs',['../classwrd_1_1get_expr.html#a85435efb994ddf066d66b539786bddbe',1,'wrd::getExpr']]],
   ['getsubpack_89',['getSubPack',['../classwrd_1_1parser.html#a557837c8462023edbb215eb671f2175f',1,'wrd::parser']]],
   ['getwhere_90',['getWhere',['../classwrd_1_1def_var_expr.html#a1873180e1a2731c5fa92f4c0281dd5bd',1,'wrd::defVarExpr']]],
-  ['goals_91',['goals',['../md__home_runner_work_wrd_wrd_doc_ref_goal__g_o_a_l.html',1,'']]],
-  ['generic_92',['generic',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_generic.html',1,'']]]
+  ['goals_91',['goals',['../md__home_runner_work_namu_namu_doc_ref_goal__g_o_a_l.html',1,'']]],
+  ['generic_92',['generic',['../md__home_runner_work_namu_namu_doc_ref_syntax_generic.html',1,'']]]
 ];

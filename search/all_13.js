@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['variable_20declaration_311',['variable declaration',['../md__home_runner_work_wrd_wrd_doc_ref_feat_variable-declaration.html',1,'']]],
-  ['variable_312',['variable',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_variable.html',1,'']]],
-  ['void_313',['void',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_void.html',1,'']]],
+  ['variable_20declaration_311',['variable declaration',['../md__home_runner_work_namu_namu_doc_ref_feat_variable-declaration.html',1,'']]],
+  ['variable_312',['variable',['../md__home_runner_work_namu_namu_doc_ref_syntax_variable.html',1,'']]],
+  ['void_313',['void',['../md__home_runner_work_namu_namu_doc_ref_syntax_void.html',1,'']]],
   ['validable_314',['validable',['../classwrd_1_1validable.html',1,'wrd']]],
   ['vault_315',['vault',['../classwrd_1_1instance_1_1vault.html',1,'wrd::instance']]],
   ['verification_316',['verification',['../classwrd_1_1verification.html',1,'wrd']]],

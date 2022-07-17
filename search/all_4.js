@@ -11,6 +11,6 @@ var searchData=
   ['dummyerr_53',['dummyErr',['../structwrd_1_1dummy_err.html',1,'wrd']]],
   ['dummyerrreport_54',['dummyErrReport',['../classwrd_1_1dummy_err_report.html',1,'wrd']]],
   ['dump_55',['dump',['../classwrd_1_1logger.html#a7cc68ab4253fda7c273fbb485ce15a3b',1,'wrd::logger::dump()'],['../classwrd_1_1console_stream.html#a5e4605722b8b75cd6c28fea484a89573',1,'wrd::consoleStream::dump()'],['../classwrd_1_1file_log_stream.html#a528f6eec8754618185fd2845d58bf28c',1,'wrd::fileLogStream::dump()'],['../classwrd_1_1stream.html#a9527cd2faa10b4ad1804b28c1f924e0d',1,'wrd::stream::dump()']]],
-  ['def_56',['def',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_def.html',1,'']]],
-  ['delegator_57',['delegator',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_delegator.html',1,'']]]
+  ['def_56',['def',['../md__home_runner_work_namu_namu_doc_ref_syntax_def.html',1,'']]],
+  ['delegator_57',['delegator',['../md__home_runner_work_namu_namu_doc_ref_syntax_delegator.html',1,'']]]
 ];

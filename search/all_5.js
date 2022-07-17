@@ -7,8 +7,8 @@ var searchData=
   ['exprmaker_62',['exprMaker',['../classwrd_1_1expr_maker.html',1,'wrd']]],
   ['exprtest_63',['exprTest',['../structexpr_test.html',1,'']]],
   ['exprtype_64',['exprType',['../classwrd_1_1expr_1_1expr_type.html',1,'wrd::expr']]],
-  ['entrypoint_65',['entrypoint',['../md__home_runner_work_wrd_wrd_doc_ref_feat_entrypoint.html',1,'']]],
-  ['exception_20handling_66',['Exception handling',['../md__home_runner_work_wrd_wrd_doc_ref_feat_exception_handling.html',1,'']]],
-  ['expression_20based_67',['Expression based',['../md__home_runner_work_wrd_wrd_doc_ref_feat_expression_based.html',1,'']]],
-  ['expression_68',['Expression',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_expression.html',1,'']]]
+  ['entrypoint_65',['entrypoint',['../md__home_runner_work_namu_namu_doc_ref_feat_entrypoint.html',1,'']]],
+  ['exception_20handling_66',['Exception handling',['../md__home_runner_work_namu_namu_doc_ref_feat_exception_handling.html',1,'']]],
+  ['expression_20based_67',['Expression based',['../md__home_runner_work_namu_namu_doc_ref_feat_expression_based.html',1,'']]],
+  ['expression_68',['Expression',['../md__home_runner_work_namu_namu_doc_ref_syntax_expression.html',1,'']]]
 ];

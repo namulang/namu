@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['scope_174',['scope',['../md__home_runner_work_wrd_wrd_doc_ref_feat_scope.html',1,'']]],
-  ['specifier_175',['specifier',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_specifier.html',1,'']]],
-  ['switch_176',['switch',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_switch.html',1,'']]],
+  ['scope_174',['scope',['../md__home_runner_work_namu_namu_doc_ref_feat_scope.html',1,'']]],
+  ['specifier_175',['specifier',['../md__home_runner_work_namu_namu_doc_ref_syntax_specifier.html',1,'']]],
+  ['switch_176',['switch',['../md__home_runner_work_namu_namu_doc_ref_syntax_switch.html',1,'']]],
   ['scopestack_177',['scopeStack',['../classwrd_1_1scope_stack.html',1,'wrd']]],
   ['setenable_178',['setEnable',['../classwrd_1_1logger.html#a83d82821e9a6e5533fbcba5058d65d99',1,'wrd::logger']]],
   ['setreport_179',['setReport',['../classwrd_1_1autoslot.html#accd789cdfd0884b358c6f1a7135f0207',1,'wrd::autoslot']]],

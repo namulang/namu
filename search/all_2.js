@@ -9,6 +9,6 @@ var searchData=
   ['boolpack_23',['boolPack',['../structwrd_1_1bool_pack.html',1,'wrd']]],
   ['buffersrcsupply_24',['bufferSrcSupply',['../classwrd_1_1buffer_src_supply.html',1,'wrd']]],
   ['buildfeature_25',['buildFeature',['../classwrd_1_1build_feature.html',1,'wrd']]],
-  ['branch_26',['Branch',['../md__home_runner_work_wrd_wrd_doc_ref__h_o_w-_t_o-_c_o_n_t_r_i_b_u_t_e.html',1,'']]],
-  ['block_20stmt_27',['block stmt',['../md__home_runner_work_wrd_wrd_doc_ref_syntax_blockstmt.html',1,'']]]
+  ['branch_26',['Branch',['../md__home_runner_work_namu_namu_doc_ref__h_o_w-_t_o-_c_o_n_t_r_i_b_u_t_e.html',1,'']]],
+  ['block_20stmt_27',['block stmt',['../md__home_runner_work_namu_namu_doc_ref_syntax_blockstmt.html',1,'']]]
 ];

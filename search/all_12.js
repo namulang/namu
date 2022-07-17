@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['type_195',['type',['../md__home_runner_work_wrd_wrd_doc_ref_feat_type.html',1,'']]],
-  ['type_20deduction_196',['Type deduction',['../md__home_runner_work_wrd_wrd_doc_ref_feat__type_deduction.html',1,'']]],
+  ['type_195',['type',['../md__home_runner_work_namu_namu_doc_ref_feat_type.html',1,'']]],
+  ['type_20deduction_196',['Type deduction',['../md__home_runner_work_namu_namu_doc_ref_feat__type_deduction.html',1,'']]],
   ['tadaptivesuper_197',['tadaptiveSuper',['../structwrd_1_1tadaptive_super.html',1,'wrd']]],
   ['tadaptivesuper_3c_20t_2c_20true_20_3e_198',['tadaptiveSuper&lt; T, true &gt;',['../structwrd_1_1tadaptive_super_3_01_t_00_01true_01_4.html',1,'wrd']]],
   ['taemptycan_199',['taEmptyCan',['../structwrd_1_1ta_empty_can.html',1,'wrd']]],
