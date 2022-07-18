@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/namu/namu/mod/wrd/ast/node.hpp Source File</title>
+<title>world-doc: /home/runner/work/namu/namu/mod/core/ast/node.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_d7957865358bb59c3579d9e621e84477.html">ast</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_81012edf5ad7491088324f5f1efbb7fa.html">core</a></li><li class="navelem"><a class="el" href="dir_8b7d6232d8bd9d190320bc3cd69b00fe.html">ast</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -79,23 +79,23 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;../type/wtype.hpp&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;../frame/frameInteractable.hpp&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">class </span>ases;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classwrd_1_1node.html">   16</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classwrd_1_1node.html">node</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classwrd_1_1clonable.html">clonable</a>, <span class="keyword">public</span> <a class="code" href="classwrd_1_1frame_interactable.html">frameInteractable</a> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        WRD(ADT(<a class="code" href="classwrd_1_1node.html">node</a>, <a class="code" href="classwrd_1_1instance.html">instance</a>))</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classnamu_1_1node.html">   16</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classnamu_1_1node.html">node</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1clonable.html">clonable</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1frame_interactable.html">frameInteractable</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        WRD(ADT(<a class="code" href="classnamu_1_1node.html">node</a>, <a class="code" href="classnamu_1_1instance.html">instance</a>))</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classwrd_1_1node.html">node</a>&amp; operator[](<span class="keyword">const</span> std::string&amp; name) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classnamu_1_1node.html">node</a>&amp; operator[](<span class="keyword">const</span> std::string&amp; name) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classwrd_1_1tnbicontainer.html">nbicontainer</a>&amp; subs() = 0;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classwrd_1_1node.html#abcd5b761708b21e1969e116ba9793443">   24</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classwrd_1_1tnbicontainer.html">nbicontainer</a>&amp; <a class="code" href="classwrd_1_1node.html#abcd5b761708b21e1969e116ba9793443">subs</a>() const WRD_UNCONST_FUNC(subs())</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; subs() = 0;</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classnamu_1_1node.html#a0d94c425c40790379896170aec4aed86">   24</a></span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; <a class="code" href="classnamu_1_1node.html#a0d94c425c40790379896170aec4aed86">subs</a>() const WRD_UNCONST_FUNC(subs())</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        const <a class="code" href="classwrd_1_1node.html">node</a>&amp; reduce(const <a class="code" href="classwrd_1_1node.html">node</a>&amp; r)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; mine = getType();</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="keyword">const</span> <a class="code" href="classwrd_1_1wtype.html">wtype</a>&amp; res = mine.<a class="code" href="classwrd_1_1wtype.html#ada4016df379d95c91b0b7ffd4e4b6a53">reduce</a>(r.getType());</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        const <a class="code" href="classnamu_1_1node.html">node</a>&amp; reduce(const <a class="code" href="classnamu_1_1node.html">node</a>&amp; r)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keyword">const</span> <a class="code" href="classnamu_1_1wtype.html">wtype</a>&amp; mine = getType();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="keyword">const</span> <a class="code" href="classnamu_1_1wtype.html">wtype</a>&amp; res = mine.<a class="code" href="classnamu_1_1wtype.html#abaebdbeb11a67cb91b43e481bd71dbd8">reduce</a>(r.getType());</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keywordflow">if</span>(nul(res) || nul(mine)) <span class="keywordflow">return</span> nulOf&lt;node&gt;();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordflow">return</span> res == mine ? *this : r;</div>
@@ -127,9 +127,9 @@ $(function() {
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        str run(<span class="keyword">const</span> std::string&amp; name);</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        str run();</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">   63</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">rel</a>() {}</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classnamu_1_1node.html#a2f0b986e1fae7fd99d2c257fbfe607b8">   63</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classnamu_1_1node.html#a2f0b986e1fae7fd99d2c257fbfe607b8">rel</a>() {}</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; wbool is()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> is(<a class="code" href="classwrd_1_1ttype.html">ttype&lt;T&gt;::get</a>()); }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; wbool is()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> is(<a class="code" href="classnamu_1_1ttype.html">ttype&lt;T&gt;::get</a>()); }</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        wbool is(<span class="keyword">const</span> typeProvidable&amp; to) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        wbool is(<span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
@@ -162,16 +162,16 @@ $(function() {
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    };</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1instance_html"><div class="ttname"><a href="classwrd_1_1instance.html">wrd::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
-<div class="ttc" id="aclasswrd_1_1clonable_html"><div class="ttname"><a href="classwrd_1_1clonable.html">wrd::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
-<div class="ttc" id="aclasswrd_1_1frame_interactable_html"><div class="ttname"><a href="classwrd_1_1frame_interactable.html">wrd::frameInteractable</a></div><div class="ttdef"><b>Definition:</b> frameInteractable.hpp:11</div></div>
-<div class="ttc" id="aclasswrd_1_1node_html_a732b2152a09d164a579c69fe1cfb62e3"><div class="ttname"><a href="classwrd_1_1node.html#a732b2152a09d164a579c69fe1cfb62e3">wrd::node::rel</a></div><div class="ttdeci">virtual void rel()</div><div class="ttdef"><b>Definition:</b> node.hpp:63</div></div>
-<div class="ttc" id="aclasswrd_1_1wtype_html_ada4016df379d95c91b0b7ffd4e4b6a53"><div class="ttname"><a href="classwrd_1_1wtype.html#ada4016df379d95c91b0b7ffd4e4b6a53">wrd::wtype::reduce</a></div><div class="ttdeci">const wtype &amp; reduce(const wtype &amp;r) const</div></div>
-<div class="ttc" id="aclasswrd_1_1tnbicontainer_html"><div class="ttname"><a href="classwrd_1_1tnbicontainer.html">wrd::tnbicontainer&lt; std::string, node &gt;</a></div></div>
-<div class="ttc" id="aclasswrd_1_1node_html_abcd5b761708b21e1969e116ba9793443"><div class="ttname"><a href="classwrd_1_1node.html#abcd5b761708b21e1969e116ba9793443">wrd::node::subs</a></div><div class="ttdeci">const nbicontainer &amp; subs() const WRD_UNCONST_FUNC(subs()) const node &amp;reduce(const node &amp;r) const</div><div class="ttdef"><b>Definition:</b> node.hpp:24</div></div>
-<div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
-<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:16</div></div>
-<div class="ttc" id="aclasswrd_1_1ttype_html"><div class="ttname"><a href="classwrd_1_1ttype.html">wrd::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:15</div></div>
+<div class="ttc" id="aclassnamu_1_1frame_interactable_html"><div class="ttname"><a href="classnamu_1_1frame_interactable.html">namu::frameInteractable</a></div><div class="ttdef"><b>Definition:</b> frameInteractable.hpp:11</div></div>
+<div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer&lt; std::string, node &gt;</a></div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:16</div></div>
+<div class="ttc" id="aclassnamu_1_1instance_html"><div class="ttname"><a href="classnamu_1_1instance.html">namu::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
+<div class="ttc" id="aclassnamu_1_1ttype_html"><div class="ttname"><a href="classnamu_1_1ttype.html">namu::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:15</div></div>
+<div class="ttc" id="aclassnamu_1_1wtype_html"><div class="ttname"><a href="classnamu_1_1wtype.html">namu::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html_a2f0b986e1fae7fd99d2c257fbfe607b8"><div class="ttname"><a href="classnamu_1_1node.html#a2f0b986e1fae7fd99d2c257fbfe607b8">namu::node::rel</a></div><div class="ttdeci">virtual void rel()</div><div class="ttdef"><b>Definition:</b> node.hpp:63</div></div>
+<div class="ttc" id="aclassnamu_1_1clonable_html"><div class="ttname"><a href="classnamu_1_1clonable.html">namu::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
+<div class="ttc" id="aclassnamu_1_1wtype_html_abaebdbeb11a67cb91b43e481bd71dbd8"><div class="ttname"><a href="classnamu_1_1wtype.html#abaebdbeb11a67cb91b43e481bd71dbd8">namu::wtype::reduce</a></div><div class="ttdeci">const wtype &amp; reduce(const wtype &amp;r) const</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html_a0d94c425c40790379896170aec4aed86"><div class="ttname"><a href="classnamu_1_1node.html#a0d94c425c40790379896170aec4aed86">namu::node::subs</a></div><div class="ttdeci">const nbicontainer &amp; subs() const WRD_UNCONST_FUNC(subs()) const node &amp;reduce(const node &amp;r) const</div><div class="ttdef"><b>Definition:</b> node.hpp:24</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

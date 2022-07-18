@@ -75,15 +75,15 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;./type/adam.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="structwrd_1_1meta_if.html">    9</a></span>&#160;    <span class="keyword">struct </span>_wout <a class="code" href="structwrd_1_1meta_if.html">metaIf</a> {</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="structnamu_1_1meta_if.html">    9</a></span>&#160;    <span class="keyword">struct </span>_wout <a class="code" href="structnamu_1_1meta_if.html">metaIf</a> {</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <span class="keyword">typedef</span> <span class="keywordtype">short</span> yes;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">typedef</span> <span class="keywordtype">char</span> no;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    };</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="structwrd_1_1tif_template.html">   15</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tif_template.html">tifTemplate</a> : <span class="keyword">public</span> <a class="code" href="structwrd_1_1meta_if.html">metaIf</a> {</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="structnamu_1_1tif_template.html">   15</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tif_template.html">tifTemplate</a> : <span class="keyword">public</span> <a class="code" href="structnamu_1_1meta_if.html">metaIf</a> {</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">template</span>&lt;<span class="keyword">typename</span>&gt; <span class="keyword">class </span>Template, <span class="keyword">typename</span> X&gt;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">static</span> yes _foo(Template&lt;X&gt;*);</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">static</span> no _foo(...);</div>
@@ -92,42 +92,42 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    };</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> super&gt; <span class="comment">// is T is sub of super</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="structwrd_1_1tif_sub.html">   24</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tif_sub.html">tifSub</a> {</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="structnamu_1_1tif_sub.html">   24</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tif_sub.html">tifSub</a> {</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">static</span> <span class="keyword">inline</span> constexpr wbool is = std::is_base_of&lt;super, T&gt;::value;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    };</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="structwrd_1_1ta_empty_can.html">   29</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1ta_empty_can.html">taEmptyCan</a> {</div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="structnamu_1_1ta_empty_can.html">   29</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1ta_empty_can.html">taEmptyCan</a> {</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keyword">typedef</span> <span class="keywordtype">void</span> is;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    };</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> = <span class="keywordtype">void</span>&gt;</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="structwrd_1_1tif_has_super_typedef.html">   33</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tif_has_super_typedef.html">tifHasSuperTypedef</a> : <span class="keyword">public</span> <a class="code" href="structwrd_1_1meta_if.html">metaIf</a> {</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="structnamu_1_1tif_has_super_typedef.html">   33</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tif_has_super_typedef.html">tifHasSuperTypedef</a> : <span class="keyword">public</span> <a class="code" href="structnamu_1_1meta_if.html">metaIf</a> {</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">static</span> <span class="keyword">inline</span> constexpr wbool is = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    };</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="structwrd_1_1tif_has_super_typedef_3_01_t_00_01typename_01ta_empty_can_3_01typename_01_t_1_1super_01_4_1_1is_01_4.html">   37</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tif_has_super_typedef.html">tifHasSuperTypedef</a>&lt;T, typename <a class="code" href="structwrd_1_1ta_empty_can.html">taEmptyCan</a>&lt;typename T::super&gt;::is&gt; : <span class="keyword">public</span> <a class="code" href="structwrd_1_1meta_if.html">metaIf</a> {</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="structnamu_1_1tif_has_super_typedef_3_01_t_00_01typename_01ta_empty_can_3_01typename_01_t_1_1super_01_4_1_1is_01_4.html">   37</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tif_has_super_typedef.html">tifHasSuperTypedef</a>&lt;T, typename <a class="code" href="structnamu_1_1ta_empty_can.html">taEmptyCan</a>&lt;typename T::super&gt;::is&gt; : <span class="keyword">public</span> <a class="code" href="structnamu_1_1meta_if.html">metaIf</a> {</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">static</span> <span class="keyword">inline</span> constexpr wbool is = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    };</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    template &lt;typename T, wbool typedefsuper = tifHasSuperTypedef&lt;T&gt;::is&gt;</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structwrd_1_1tadaptive_super.html">   42</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tadaptive_super.html">tadaptiveSuper</a> : <a class="code" href="structwrd_1_1meta_if.html">metaIf</a> {</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classwrd_1_1adam.html">adam</a> <a class="code" href="classwrd_1_1adam.html">super</a>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="structnamu_1_1tadaptive_super.html">   42</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tadaptive_super.html">tadaptiveSuper</a> : <a class="code" href="structnamu_1_1meta_if.html">metaIf</a> {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1adam.html">adam</a> <a class="code" href="classnamu_1_1adam.html">super</a>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    };</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structwrd_1_1tadaptive_super_3_01_t_00_01true_01_4.html">   46</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tadaptive_super.html">tadaptiveSuper</a>&lt;T, true&gt; {</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structnamu_1_1tadaptive_super_3_01_t_00_01true_01_4.html">   46</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tadaptive_super.html">tadaptiveSuper</a>&lt;T, true&gt; {</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> T::super super;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    };</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    template &lt;typename T, wbool canMake = std::is_constructible&lt;T&gt;::value&gt;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="structwrd_1_1tinstance_maker.html">   51</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tinstance_maker.html">tinstanceMaker</a> {</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="structnamu_1_1tinstance_maker.html">   51</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tinstance_maker.html">tinstanceMaker</a> {</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span>* make() { <span class="keywordflow">return</span> <span class="keyword">nullptr</span>; }</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    };</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="structwrd_1_1tinstance_maker_3_01_t_00_01true_01_4.html">   55</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tinstance_maker.html">tinstanceMaker</a>&lt;T, true&gt; {</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="structnamu_1_1tinstance_maker_3_01_t_00_01true_01_4.html">   55</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tinstance_maker.html">tinstanceMaker</a>&lt;T, true&gt; {</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span>* make() { <span class="keywordflow">return</span> <span class="keyword">new</span> T(); }</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    };</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structwrd_1_1name_demangler.html">   59</a></span>&#160;    <span class="keyword">struct </span>_wout <a class="code" href="structwrd_1_1name_demangler.html">nameDemangler</a> {</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structnamu_1_1name_demangler.html">   59</a></span>&#160;    <span class="keyword">struct </span>_wout <a class="code" href="structnamu_1_1name_demangler.html">nameDemangler</a> {</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#ifndef WRD_BUILD_PLATFORM_IS_WINDOWS</span></div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">static</span> std::string demangle(<span class="keyword">const</span> wchar* org) {</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            wchar* demangled = <span class="keyword">nullptr</span>;</div>
@@ -153,7 +153,7 @@ $(function() {
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    };</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="structwrd_1_1tname_getter.html">   97</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tname_getter.html">tnameGetter</a> {</div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="structnamu_1_1tname_getter.html">   97</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tname_getter.html">tnameGetter</a> {</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> wchar* getRawName() { <span class="keywordflow">return</span> <span class="keyword">typeid</span>(T).name(); }</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keyword">static</span> std::string getName() {</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            std::string ret = nameDemangler::filterDemangle(getRawName());</div>
@@ -171,11 +171,11 @@ $(function() {
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="comment">//  if user defined metaType on their own, we let their TType classes inherit their superType class.</span></div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="comment">//  otherwise, just use Type as base class.</span></div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> = <span class="keywordtype">void</span>&gt;</div>
-<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="structwrd_1_1tmeta_type_def.html">  115</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tmeta_type_def.html">tmetaTypeDef</a> {</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keyword">using</span> <a class="code" href="classwrd_1_1type.html">is</a> = <a class="code" href="classwrd_1_1type.html">type</a>;</div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="structnamu_1_1tmeta_type_def.html">  115</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tmeta_type_def.html">tmetaTypeDef</a> {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keyword">using</span> <a class="code" href="classnamu_1_1type.html">is</a> = <a class="code" href="classnamu_1_1type.html">type</a>;</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    };</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="structwrd_1_1tmeta_type_def_3_01_t_00_01void__t_3_01int_01_t_1_1meta_type_1_1_5_01_4_01_4.html">  119</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1tmeta_type_def.html">tmetaTypeDef</a>&lt;T, void_t&lt;int T::metaType::*&gt;&gt; {</div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="structnamu_1_1tmeta_type_def_3_01_t_00_01void__t_3_01int_01_t_1_1meta_type_1_1_5_01_4_01_4.html">  119</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tmeta_type_def.html">tmetaTypeDef</a>&lt;T, void_t&lt;int T::metaType::*&gt;&gt; {</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keyword">using</span> is = <span class="keyword">typename</span> T::metaType;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    };</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
@@ -183,18 +183,18 @@ $(function() {
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keyword">using</span> areBaseOfT = std::conjunction&lt;std::is_base_of&lt;T, Es&gt;...&gt;;</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructwrd_1_1tif_template_html"><div class="ttname"><a href="structwrd_1_1tif_template.html">wrd::tifTemplate</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:15</div></div>
-<div class="ttc" id="aclasswrd_1_1adam_html"><div class="ttname"><a href="classwrd_1_1adam.html">wrd::adam</a></div><div class="ttdef"><b>Definition:</b> adam.hpp:6</div></div>
-<div class="ttc" id="astructwrd_1_1tinstance_maker_html"><div class="ttname"><a href="structwrd_1_1tinstance_maker.html">wrd::tinstanceMaker</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:51</div></div>
-<div class="ttc" id="astructwrd_1_1name_demangler_html"><div class="ttname"><a href="structwrd_1_1name_demangler.html">wrd::nameDemangler</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:59</div></div>
-<div class="ttc" id="astructwrd_1_1tmeta_type_def_html"><div class="ttname"><a href="structwrd_1_1tmeta_type_def.html">wrd::tmetaTypeDef</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:115</div></div>
-<div class="ttc" id="astructwrd_1_1tadaptive_super_html"><div class="ttname"><a href="structwrd_1_1tadaptive_super.html">wrd::tadaptiveSuper</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:42</div></div>
-<div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
-<div class="ttc" id="astructwrd_1_1tname_getter_html"><div class="ttname"><a href="structwrd_1_1tname_getter.html">wrd::tnameGetter</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:97</div></div>
-<div class="ttc" id="astructwrd_1_1tif_sub_html"><div class="ttname"><a href="structwrd_1_1tif_sub.html">wrd::tifSub</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:24</div></div>
-<div class="ttc" id="astructwrd_1_1meta_if_html"><div class="ttname"><a href="structwrd_1_1meta_if.html">wrd::metaIf</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:9</div></div>
-<div class="ttc" id="astructwrd_1_1tif_has_super_typedef_html"><div class="ttname"><a href="structwrd_1_1tif_has_super_typedef.html">wrd::tifHasSuperTypedef</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:33</div></div>
-<div class="ttc" id="astructwrd_1_1ta_empty_can_html"><div class="ttname"><a href="structwrd_1_1ta_empty_can.html">wrd::taEmptyCan</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:29</div></div>
+<div class="ttc" id="astructnamu_1_1name_demangler_html"><div class="ttname"><a href="structnamu_1_1name_demangler.html">namu::nameDemangler</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:59</div></div>
+<div class="ttc" id="astructnamu_1_1tif_template_html"><div class="ttname"><a href="structnamu_1_1tif_template.html">namu::tifTemplate</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:15</div></div>
+<div class="ttc" id="aclassnamu_1_1type_html"><div class="ttname"><a href="classnamu_1_1type.html">namu::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
+<div class="ttc" id="astructnamu_1_1tif_has_super_typedef_html"><div class="ttname"><a href="structnamu_1_1tif_has_super_typedef.html">namu::tifHasSuperTypedef</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:33</div></div>
+<div class="ttc" id="astructnamu_1_1tinstance_maker_html"><div class="ttname"><a href="structnamu_1_1tinstance_maker.html">namu::tinstanceMaker</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:51</div></div>
+<div class="ttc" id="astructnamu_1_1tname_getter_html"><div class="ttname"><a href="structnamu_1_1tname_getter.html">namu::tnameGetter</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:97</div></div>
+<div class="ttc" id="astructnamu_1_1meta_if_html"><div class="ttname"><a href="structnamu_1_1meta_if.html">namu::metaIf</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:9</div></div>
+<div class="ttc" id="astructnamu_1_1tadaptive_super_html"><div class="ttname"><a href="structnamu_1_1tadaptive_super.html">namu::tadaptiveSuper</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:42</div></div>
+<div class="ttc" id="astructnamu_1_1tmeta_type_def_html"><div class="ttname"><a href="structnamu_1_1tmeta_type_def.html">namu::tmetaTypeDef</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:115</div></div>
+<div class="ttc" id="astructnamu_1_1tif_sub_html"><div class="ttname"><a href="structnamu_1_1tif_sub.html">namu::tifSub</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:24</div></div>
+<div class="ttc" id="astructnamu_1_1ta_empty_can_html"><div class="ttname"><a href="structnamu_1_1ta_empty_can.html">namu::taEmptyCan</a></div><div class="ttdef"><b>Definition:</b> rtti.hpp:29</div></div>
+<div class="ttc" id="aclassnamu_1_1adam_html"><div class="ttname"><a href="classnamu_1_1adam.html">namu::adam</a></div><div class="ttdef"><b>Definition:</b> adam.hpp:6</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['add_617',['add',['../classwrd_1_1tarr.html#a3cb767c4624f1033b7368f05a4574a36',1,'wrd::tarr::add()'],['../classwrd_1_1tarrayable.html#a1ac9754fb4f777b3f530f55a6ececf68',1,'wrd::tarrayable::add()']]]
+  ['add_617',['add',['../classnamu_1_1tarr.html#a8f1c35ceb65a40d597ca5132c6e02e4b',1,'namu::tarr::add()'],['../classnamu_1_1tarrayable.html#ad5506608556d3c8cf0cd0d7fce6ce30b',1,'namu::tarrayable::add()']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/namu/namu/mod/wrc/cli.hpp Source File</title>
+<title>world-doc: /home/runner/work/namu/namu/mod/namu/cli.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_d9786ed05cf5986eadc43d36ae9511f1.html">wrc</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_07d9c950664f8af848c407c5759db1d1.html">namu</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -73,12 +73,12 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;flag/flags.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>wrd {</div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="structwrd_1_1cli.html">    6</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structwrd_1_1cli.html">cli</a> {</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
+<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="structnamu_1_1cli.html">    6</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1cli.html">cli</a> {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;        <span class="keyword">const</span> flags&amp; getFlags() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        wbool run(args&amp; a) {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;            <a class="code" href="classwrd_1_1interpreter.html">interpreter</a> ip;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;            <a class="code" href="classnamu_1_1interpreter.html">interpreter</a> ip;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;            <span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; op : getFlags()) {</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                op-&gt;take(ip, *<span class="keyword">this</span>, a);</div>
@@ -87,15 +87,15 @@ $(function() {
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                    <span class="keywordflow">break</span>;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            }</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <a class="code" href="classwrd_1_1err_report.html">errReport</a> rpt;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <a class="code" href="classnamu_1_1err_report.html">errReport</a> rpt;</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            ip.setReport(rpt)</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;              .interpret();</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keywordflow">if</span>(!ip.isVerified())</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                <span class="keywordflow">return</span> _finish(ip, -1);</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <a class="code" href="classwrd_1_1starter.html">starter</a> s;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <a class="code" href="classwrd_1_1tstr.html">str</a> res = s.run(<a class="code" href="classwrd_1_1tnarr.html">narr</a>(ip.getSlot()));</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <a class="code" href="classnamu_1_1starter.html">starter</a> s;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <a class="code" href="classnamu_1_1tstr.html">str</a> res = s.run(<a class="code" href="classnamu_1_1tnarr.html">narr</a>(ip.getSlot()));</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            <span class="keywordflow">if</span>(res &amp;&amp; !rpt) {</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;                <span class="keywordflow">return</span> _finish(ip, 0);</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            }</div>
@@ -104,19 +104,19 @@ $(function() {
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        }</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        wint _finish(<a class="code" href="classwrd_1_1interpreter.html">interpreter</a>&amp; ip, wint ret) {</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        wint _finish(<a class="code" href="classnamu_1_1interpreter.html">interpreter</a>&amp; ip, wint ret) {</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            ip.log();</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        }</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    };</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1starter_html"><div class="ttname"><a href="classwrd_1_1starter.html">wrd::starter</a></div><div class="ttdef"><b>Definition:</b> starter.hpp:9</div></div>
-<div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; node &gt;</a></div></div>
-<div class="ttc" id="aclasswrd_1_1err_report_html"><div class="ttname"><a href="classwrd_1_1err_report.html">wrd::errReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:10</div></div>
-<div class="ttc" id="astructwrd_1_1cli_html"><div class="ttname"><a href="structwrd_1_1cli.html">wrd::cli</a></div><div class="ttdef"><b>Definition:</b> cli.hpp:6</div></div>
-<div class="ttc" id="aclasswrd_1_1interpreter_html"><div class="ttname"><a href="classwrd_1_1interpreter.html">wrd::interpreter</a></div><div class="ttdef"><b>Definition:</b> interpreter.hpp:9</div></div>
-<div class="ttc" id="aclasswrd_1_1tnarr_html"><div class="ttname"><a href="classwrd_1_1tnarr.html">wrd::tnarr&lt; node &gt;</a></div></div>
+<div class="ttc" id="aclassnamu_1_1err_report_html"><div class="ttname"><a href="classnamu_1_1err_report.html">namu::errReport</a></div><div class="ttdef"><b>Definition:</b> errReport.hpp:10</div></div>
+<div class="ttc" id="aclassnamu_1_1starter_html"><div class="ttname"><a href="classnamu_1_1starter.html">namu::starter</a></div><div class="ttdef"><b>Definition:</b> starter.hpp:9</div></div>
+<div class="ttc" id="astructnamu_1_1cli_html"><div class="ttname"><a href="structnamu_1_1cli.html">namu::cli</a></div><div class="ttdef"><b>Definition:</b> cli.hpp:6</div></div>
+<div class="ttc" id="aclassnamu_1_1interpreter_html"><div class="ttname"><a href="classnamu_1_1interpreter.html">namu::interpreter</a></div><div class="ttdef"><b>Definition:</b> interpreter.hpp:9</div></div>
+<div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
+<div class="ttc" id="aclassnamu_1_1tnarr_html"><div class="ttname"><a href="classnamu_1_1tnarr.html">namu::tnarr&lt; node &gt;</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

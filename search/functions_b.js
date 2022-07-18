@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['wrap_643',['wrap',['../classwrd_1_1tnchain.html#acbfe69d521a968452023e205f76a209c',1,'wrd::tnchain']]],
-  ['wrapdeep_644',['wrapDeep',['../classwrd_1_1tnchain.html#a263c7c6e5a1dd2f4e94a608270ce3106',1,'wrd::tnchain']]]
+  ['wrap_643',['wrap',['../classnamu_1_1tnchain.html#a6f16e48495d3d1b45787589768a67160',1,'namu::tnchain']]],
+  ['wrapdeep_644',['wrapDeep',['../classnamu_1_1tnchain.html#aeef6fd46bd1cf148a23e1837148046f4',1,'namu::tnchain']]]
 ];

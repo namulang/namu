@@ -74,15 +74,15 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../macro.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">using</span> std::string;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classwrd_1_1build_feature.html">    9</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classwrd_1_1build_feature.html">buildFeature</a> {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        WRD_DECL_ME(<a class="code" href="classwrd_1_1build_feature.html">buildFeature</a>)</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classnamu_1_1build_feature.html">    9</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classnamu_1_1build_feature.html">buildFeature</a> {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        WRD_DECL_ME(<a class="code" href="classnamu_1_1build_feature.html">buildFeature</a>)</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structwrd_1_1build_feature_1_1date.html">   13</a></span>&#160;        <span class="keyword">struct </span>_wout <a class="code" href="structwrd_1_1build_feature_1_1date.html">date</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            WRD_DECL_ME(<a class="code" href="structwrd_1_1build_feature_1_1date.html">date</a>)</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structnamu_1_1build_feature_1_1date.html">   13</a></span>&#160;        <span class="keyword">struct </span>_wout <a class="code" href="structnamu_1_1build_feature_1_1date.html">date</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            WRD_DECL_ME(<a class="code" href="structnamu_1_1build_feature_1_1date.html">date</a>)</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            <span class="keyword">static</span> WRD_SINGLETON_GETTER(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; get(), <span class="keywordtype">string</span>, WRD_BUILD_DATE)</div>
@@ -91,8 +91,8 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="keyword">static</span> wint getDay();</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        };</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structwrd_1_1build_feature_1_1time.html">   23</a></span>&#160;        <span class="keyword">struct </span>_wout <a class="code" href="structwrd_1_1build_feature_1_1time.html">time</a> {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            WRD_DECL_ME(<a class="code" href="structwrd_1_1build_feature_1_1time.html">time</a>)</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structnamu_1_1build_feature_1_1time.html">   23</a></span>&#160;        <span class="keyword">struct </span>_wout <a class="code" href="structnamu_1_1build_feature_1_1time.html">time</a> {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            WRD_DECL_ME(<a class="code" href="structnamu_1_1build_feature_1_1time.html">time</a>)</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="keyword">static</span> WRD_SINGLETON_GETTER(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; get(), <span class="keywordtype">string</span>, WRD_BUILD_TIME)</div>
@@ -101,8 +101,8 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keyword">static</span> wint getSec();</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        };</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="structwrd_1_1build_feature_1_1version.html">   33</a></span>&#160;        <span class="keyword">struct </span>_wout <a class="code" href="structwrd_1_1build_feature_1_1version.html">version</a> {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            WRD_DECL_ME(<a class="code" href="structwrd_1_1build_feature_1_1version.html">version</a>)</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="structnamu_1_1build_feature_1_1version.html">   33</a></span>&#160;        <span class="keyword">struct </span>_wout <a class="code" href="structnamu_1_1build_feature_1_1version.html">version</a> {</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            WRD_DECL_ME(<a class="code" href="structnamu_1_1build_feature_1_1version.html">version</a>)</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keyword">static</span> WRD_SINGLETON_GETTER(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; get(), <span class="keywordtype">string</span>, WRD_BUILD_VERSION)</div>
@@ -122,8 +122,8 @@ $(function() {
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            PLATFORM_TYPE_END,</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        };</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structwrd_1_1build_feature_1_1platform.html">   54</a></span>&#160;        <span class="keyword">struct </span>_wout <a class="code" href="structwrd_1_1build_feature_1_1platform.html">platform</a> {</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            WRD_DECL_ME(<a class="code" href="structwrd_1_1build_feature_1_1platform.html">platform</a>)</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structnamu_1_1build_feature_1_1platform.html">   54</a></span>&#160;        <span class="keyword">struct </span>_wout <a class="code" href="structnamu_1_1build_feature_1_1platform.html">platform</a> {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            WRD_DECL_ME(<a class="code" href="structnamu_1_1build_feature_1_1platform.html">platform</a>)</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keyword">static</span> platformType get();</div>
@@ -138,8 +138,8 @@ $(function() {
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            BUILD_TYPE_END,</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        };</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="structwrd_1_1build_feature_1_1config.html">   70</a></span>&#160;        <span class="keyword">struct </span>_wout <a class="code" href="structwrd_1_1build_feature_1_1config.html">config</a> {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            WRD_DECL_ME(<a class="code" href="structwrd_1_1build_feature_1_1config.html">config</a>)</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="structnamu_1_1build_feature_1_1config.html">   70</a></span>&#160;        <span class="keyword">struct </span>_wout <a class="code" href="structnamu_1_1build_feature_1_1config.html">config</a> {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            WRD_DECL_ME(<a class="code" href="structnamu_1_1build_feature_1_1config.html">config</a>)</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keyword">static</span> buildType get();</div>
@@ -149,12 +149,12 @@ $(function() {
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    };</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructwrd_1_1build_feature_1_1platform_html"><div class="ttname"><a href="structwrd_1_1build_feature_1_1platform.html">wrd::buildFeature::platform</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:54</div></div>
-<div class="ttc" id="astructwrd_1_1build_feature_1_1version_html"><div class="ttname"><a href="structwrd_1_1build_feature_1_1version.html">wrd::buildFeature::version</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:33</div></div>
-<div class="ttc" id="astructwrd_1_1build_feature_1_1date_html"><div class="ttname"><a href="structwrd_1_1build_feature_1_1date.html">wrd::buildFeature::date</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:13</div></div>
-<div class="ttc" id="aclasswrd_1_1build_feature_html"><div class="ttname"><a href="classwrd_1_1build_feature.html">wrd::buildFeature</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:9</div></div>
-<div class="ttc" id="astructwrd_1_1build_feature_1_1time_html"><div class="ttname"><a href="structwrd_1_1build_feature_1_1time.html">wrd::buildFeature::time</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:23</div></div>
-<div class="ttc" id="astructwrd_1_1build_feature_1_1config_html"><div class="ttname"><a href="structwrd_1_1build_feature_1_1config.html">wrd::buildFeature::config</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:70</div></div>
+<div class="ttc" id="astructnamu_1_1build_feature_1_1date_html"><div class="ttname"><a href="structnamu_1_1build_feature_1_1date.html">namu::buildFeature::date</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:13</div></div>
+<div class="ttc" id="aclassnamu_1_1build_feature_html"><div class="ttname"><a href="classnamu_1_1build_feature.html">namu::buildFeature</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:9</div></div>
+<div class="ttc" id="astructnamu_1_1build_feature_1_1version_html"><div class="ttname"><a href="structnamu_1_1build_feature_1_1version.html">namu::buildFeature::version</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:33</div></div>
+<div class="ttc" id="astructnamu_1_1build_feature_1_1config_html"><div class="ttname"><a href="structnamu_1_1build_feature_1_1config.html">namu::buildFeature::config</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:70</div></div>
+<div class="ttc" id="astructnamu_1_1build_feature_1_1platform_html"><div class="ttname"><a href="structnamu_1_1build_feature_1_1platform.html">namu::buildFeature::platform</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:54</div></div>
+<div class="ttc" id="astructnamu_1_1build_feature_1_1time_html"><div class="ttname"><a href="structnamu_1_1build_feature_1_1time.html">namu::buildFeature::time</a></div><div class="ttdef"><b>Definition:</b> buildFeature.hpp:23</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

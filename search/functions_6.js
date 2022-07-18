@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['make_631',['make',['../classwrd_1_1ttype_base_3_01void_00_01type_01_4.html#a7c7c7fff238715b74102c07dadb31f95',1,'wrd::ttypeBase&lt; void, type &gt;::make()'],['../classwrd_1_1type.html#a777769deea66780e1e356ab832deb937',1,'wrd::type::make()']]]
+  ['make_631',['make',['../classnamu_1_1ttype_base_3_01void_00_01type_01_4.html#a823ba5a0c6c8dbde62e0f84299323f58',1,'namu::ttypeBase&lt; void, type &gt;::make()'],['../classnamu_1_1type.html#a9dd9bd3805f00deefbf50b3eb0f4ef73',1,'namu::type::make()']]]
 ];

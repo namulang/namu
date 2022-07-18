@@ -73,7 +73,7 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    T&amp; nulOf() {</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        T* ret = 0;</div>
@@ -91,7 +91,7 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="comment">//  in c++ standard reference, it&#39;s not allow to check pointer of reference whether</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="comment">//  it&#39;s null or not, it&#39;s always regarded to not null.</span></div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="comment">//</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="comment">//  however, in wrd project, I decided to use only reference for some reason and</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="comment">//  however, in namu project, I decided to use only reference for some reason and</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="comment">//  treat it like a pointer. instead, I won&#39;t declare a pointer at all.</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="comment">//</span></div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="comment">//  so we need to check nulity of a reference but compiler always optimize it to true</span></div>

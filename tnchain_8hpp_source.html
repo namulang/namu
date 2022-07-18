@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/namu/namu/mod/wrd/builtin/container/native/tnchain.hpp Source File</title>
+<title>world-doc: /home/runner/work/namu/namu/mod/core/builtin/container/native/tnchain.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_98688ef049d8dc6d8353225cd477bb18.html">builtin</a></li><li class="navelem"><a class="el" href="dir_94ae94e02aeeab756b2005ff177ecf88.html">container</a></li><li class="navelem"><a class="el" href="dir_1ad8393062f0a7be49076e3f955f15ea.html">native</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_81012edf5ad7491088324f5f1efbb7fa.html">core</a></li><li class="navelem"><a class="el" href="dir_72b9e27b763ef069b0a0a66c0969c0dd.html">builtin</a></li><li class="navelem"><a class="el" href="dir_059159aed19cc5917c0d79357615884f.html">container</a></li><li class="navelem"><a class="el" href="dir_a1ab1a487448f3c038cba14f768b7786.html">native</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -74,15 +74,15 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;tnmap.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../../ast/node.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">class </span>node;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> K, <span class="keyword">typename</span> V, <span class="keyword">typename</span> defaultContainer = tnmap&lt;K, V&gt;&gt;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classwrd_1_1tnchain.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1tnchain.html">tnchain</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1tnbicontainer.html">tnbicontainer</a>&lt;K, V&gt; {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classwrd_1_1tnbicontainer.html">tnbicontainer&lt;K, V&gt;</a> <a class="code" href="classwrd_1_1tnbicontainer.html">_super_</a>;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classwrd_1_1tnchain.html">tnchain&lt;K, V, defaultContainer&gt;</a> <a class="code" href="classwrd_1_1tnchain.html">_me_</a>;</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1tnchain.html">tnchain</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1tnbicontainer.html">tnbicontainer</a>&lt;K, V&gt; {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnbicontainer.html">tnbicontainer&lt;K, V&gt;</a> <a class="code" href="classnamu_1_1tnbicontainer.html">_super_</a>;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">typedef</span> <a class="code" href="classnamu_1_1tnchain.html">tnchain&lt;K, V, defaultContainer&gt;</a> <a class="code" href="classnamu_1_1tnchain.html">_me_</a>;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        WRD(CLASS(<a class="code" href="classwrd_1_1tnchain.html">_me_</a>, <a class="code" href="classwrd_1_1tnbicontainer.html">_super_</a>))</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        WRD(CLASS(<a class="code" href="classnamu_1_1tnchain.html">_me_</a>, <a class="code" href="classnamu_1_1tnbicontainer.html">_super_</a>))</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">typedef</span> <span class="keyword">typename</span> super::iter <a class="code" href="classiter.html">iter</a>;</div>
@@ -91,9 +91,9 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;../iter/nchainIteration.hpp&quot;</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classwrd_1_1tnchain.html">tnchain</a>();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classwrd_1_1tnchain.html">tnchain</a>(<span class="keyword">const</span> super&amp; <a class="code" href="classwrd_1_1tarr.html">arr</a>): _map(<a class="code" href="classwrd_1_1tarr.html">arr</a>) {}</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classwrd_1_1tnchain.html">tnchain</a>(<span class="keyword">const</span> super* <a class="code" href="classwrd_1_1tarr.html">arr</a>): _map(<a class="code" href="classwrd_1_1tarr.html">arr</a>) {}</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classnamu_1_1tnchain.html">tnchain</a>();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1tnchain.html">tnchain</a>(<span class="keyword">const</span> super&amp; <a class="code" href="classnamu_1_1tarr.html">arr</a>): _map(<a class="code" href="classnamu_1_1tarr.html">arr</a>) {}</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classnamu_1_1tnchain.html">tnchain</a>(<span class="keyword">const</span> super* <a class="code" href="classnamu_1_1tarr.html">arr</a>): _map(<a class="code" href="classnamu_1_1tarr.html">arr</a>) {}</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="comment">// has:</span></div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        wbool has(<span class="keyword">const</span> K&amp; key) <span class="keyword">const override</span>;</div>
@@ -110,15 +110,15 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        wbool add(<span class="keyword">const</span> K&amp; key, <span class="keyword">const</span> V&amp; val) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="comment">// link:</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;me&gt;</a> link(<span class="keyword">const</span> super&amp; new1);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;me&gt;</a> link(<span class="keyword">const</span> super&amp; new1);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">virtual</span> wbool link(<span class="keyword">const</span> me&amp; new1);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        wbool unlink();</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="comment">// del:</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">using</span> super::del;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        wbool <a class="code" href="classwrd_1_1tnchain.html#ae1fe5fefaa82a16aaf0b5e2427af3ef6">del</a>(<span class="keyword">const</span> K&amp; at) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        wbool <a class="code" href="classwrd_1_1tnchain.html#ae1fe5fefaa82a16aaf0b5e2427af3ef6">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; at) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        wbool <a class="code" href="classwrd_1_1tnchain.html#ae1fe5fefaa82a16aaf0b5e2427af3ef6">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; end) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        wbool <a class="code" href="classnamu_1_1tnchain.html#ab5121d729fc47337cc2c70c51f578bcd">del</a>(<span class="keyword">const</span> K&amp; at) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        wbool <a class="code" href="classnamu_1_1tnchain.html#ab5121d729fc47337cc2c70c51f578bcd">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; at) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        wbool <a class="code" href="classnamu_1_1tnchain.html#ab5121d729fc47337cc2c70c51f578bcd">del</a>(<span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classiter.html">iter</a>&amp; end) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="comment">// etc:</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">void</span> rel() <span class="keyword">override</span>;</div>
@@ -129,27 +129,27 @@ $(function() {
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        me&amp; getNext() { <span class="keywordflow">return</span> *_next; }</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">const</span> me&amp; getNext()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> *_next; }</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classwrd_1_1tnchain.html#a8f04fce673c843b5868c623a028ca8e7">   65</a></span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;instance&gt;</a> <a class="code" href="classwrd_1_1tnchain.html#a8f04fce673c843b5868c623a028ca8e7">deepClone</a>()<span class="keyword"> const override </span>{</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            me* ret = <a class="code" href="classwrd_1_1tnchain.html#acbfe69d521a968452023e205f76a209c">wrap</a>(getContainer().<a class="code" href="classwrd_1_1tnchain.html#a8f04fce673c843b5868c623a028ca8e7">deepClone</a>()-&gt;<span class="keyword">template</span> cast&lt;super&gt;());</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#a15bb9f8047d947225758a46dd194fce6">   65</a></span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;instance&gt;</a> <a class="code" href="classnamu_1_1tnchain.html#a15bb9f8047d947225758a46dd194fce6">deepClone</a>()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            me* ret = <a class="code" href="classnamu_1_1tnchain.html#a6f16e48495d3d1b45787589768a67160">wrap</a>(getContainer().<a class="code" href="classnamu_1_1tnchain.html#a15bb9f8047d947225758a46dd194fce6">deepClone</a>()-&gt;<span class="keyword">template</span> cast&lt;super&gt;());</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            ret-&gt;link(getNext());</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tstr.html">tstr&lt;instance&gt;</a>(ret);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classnamu_1_1tstr.html">tstr&lt;instance&gt;</a>(ret);</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        }</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">static</span> me* <a class="code" href="classwrd_1_1tnchain.html#acbfe69d521a968452023e205f76a209c">wrap</a>(<span class="keyword">const</span> super&amp; toShallowWrap);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">static</span> me* <a class="code" href="classwrd_1_1tnchain.html#acbfe69d521a968452023e205f76a209c">wrap</a>(<span class="keyword">const</span> super* toShallowWrap) {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tnchain.html#acbfe69d521a968452023e205f76a209c">wrap</a>(*toShallowWrap);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">static</span> me* <a class="code" href="classnamu_1_1tnchain.html#a6f16e48495d3d1b45787589768a67160">wrap</a>(<span class="keyword">const</span> super&amp; toShallowWrap);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">static</span> me* <a class="code" href="classnamu_1_1tnchain.html#a6f16e48495d3d1b45787589768a67160">wrap</a>(<span class="keyword">const</span> super* toShallowWrap) {</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classnamu_1_1tnchain.html#a6f16e48495d3d1b45787589768a67160">wrap</a>(*toShallowWrap);</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classwrd_1_1tnchain.html#a263c7c6e5a1dd2f4e94a608270ce3106">   82</a></span>&#160;        <span class="keyword">static</span> me* <a class="code" href="classwrd_1_1tnchain.html#a263c7c6e5a1dd2f4e94a608270ce3106">wrapDeep</a>(<span class="keyword">const</span> super&amp; toDeepWrap) {</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            me* innerChn = <a class="code" href="classwrd_1_1tnchain.html#acbfe69d521a968452023e205f76a209c">wrap</a>(toDeepWrap);</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="classnamu_1_1tnchain.html#aeef6fd46bd1cf148a23e1837148046f4">   82</a></span>&#160;        <span class="keyword">static</span> me* <a class="code" href="classnamu_1_1tnchain.html#aeef6fd46bd1cf148a23e1837148046f4">wrapDeep</a>(<span class="keyword">const</span> super&amp; toDeepWrap) {</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            me* innerChn = <a class="code" href="classnamu_1_1tnchain.html#a6f16e48495d3d1b45787589768a67160">wrap</a>(toDeepWrap);</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            me* ret = <span class="keyword">new</span> me();</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            ret-&gt;_map.bind(innerChn);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        }</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keyword">static</span> me* <a class="code" href="classwrd_1_1tnchain.html#a263c7c6e5a1dd2f4e94a608270ce3106">wrapDeep</a>(<span class="keyword">const</span> super* toDeepWrap) {</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classwrd_1_1tnchain.html#a263c7c6e5a1dd2f4e94a608270ce3106">wrapDeep</a>(*toDeepWrap);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keyword">static</span> me* <a class="code" href="classnamu_1_1tnchain.html#aeef6fd46bd1cf148a23e1837148046f4">wrapDeep</a>(<span class="keyword">const</span> super* toDeepWrap) {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classnamu_1_1tnchain.html#aeef6fd46bd1cf148a23e1837148046f4">wrapDeep</a>(*toDeepWrap);</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        }</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">protected</span>:</div>
@@ -184,18 +184,18 @@ $(function() {
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="keyword">typedef</span> tnchain&lt;std::string, node&gt; nchain;</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr&lt; me &gt;</a></div></div>
-<div class="ttc" id="aclasswrd_1_1tarr_html"><div class="ttname"><a href="classwrd_1_1tarr.html">wrd::tarr</a></div><div class="ttdef"><b>Definition:</b> tarr.hpp:8</div></div>
-<div class="ttc" id="aclasswrd_1_1tnchain_html"><div class="ttname"><a href="classwrd_1_1tnchain.html">wrd::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:10</div></div>
+<div class="ttc" id="aclassnamu_1_1tnbicontainer_html"><div class="ttname"><a href="classnamu_1_1tnbicontainer.html">namu::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
 <div class="ttc" id="aclassiterable_html_acf5781451e3d38a313044b4ec78bf717"><div class="ttname"><a href="classiterable.html#acf5781451e3d38a313044b4ec78bf717">iterable::next</a></div><div class="ttdeci">virtual wcnt next(wcnt step)=0</div></div>
-<div class="ttc" id="aclasswrd_1_1tnchain_html_ae1fe5fefaa82a16aaf0b5e2427af3ef6"><div class="ttname"><a href="classwrd_1_1tnchain.html#ae1fe5fefaa82a16aaf0b5e2427af3ef6">wrd::tnchain::del</a></div><div class="ttdeci">wbool del(const K &amp;at) override</div><div class="ttdoc">delete last element if exists.</div></div>
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
-<div class="ttc" id="aclasswrd_1_1tnchain_html_a8f04fce673c843b5868c623a028ca8e7"><div class="ttname"><a href="classwrd_1_1tnchain.html#a8f04fce673c843b5868c623a028ca8e7">wrd::tnchain::deepClone</a></div><div class="ttdeci">tstr&lt; instance &gt; deepClone() const override</div><div class="ttdef"><b>Definition:</b> tnchain.hpp:65</div></div>
-<div class="ttc" id="aclasswrd_1_1tnbicontainer_html"><div class="ttname"><a href="classwrd_1_1tnbicontainer.html">wrd::tnbicontainer</a></div><div class="ttdef"><b>Definition:</b> tnbicontainer.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html_ab5121d729fc47337cc2c70c51f578bcd"><div class="ttname"><a href="classnamu_1_1tnchain.html#ab5121d729fc47337cc2c70c51f578bcd">namu::tnchain::del</a></div><div class="ttdeci">wbool del(const K &amp;at) override</div><div class="ttdoc">delete last element if exists.</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html_aeef6fd46bd1cf148a23e1837148046f4"><div class="ttname"><a href="classnamu_1_1tnchain.html#aeef6fd46bd1cf148a23e1837148046f4">namu::tnchain::wrapDeep</a></div><div class="ttdeci">static me * wrapDeep(const super &amp;toDeepWrap)</div><div class="ttdoc">wrap given container no matter what it is.</div><div class="ttdef"><b>Definition:</b> tnchain.hpp:82</div></div>
 <div class="ttc" id="aclasschain_iteration_html"><div class="ttname"><a href="classchain_iteration.html">chainIteration</a></div><div class="ttdef"><b>Definition:</b> nchainIteration.hpp:3</div></div>
-<div class="ttc" id="aclasswrd_1_1tnchain_html_a263c7c6e5a1dd2f4e94a608270ce3106"><div class="ttname"><a href="classwrd_1_1tnchain.html#a263c7c6e5a1dd2f4e94a608270ce3106">wrd::tnchain::wrapDeep</a></div><div class="ttdeci">static me * wrapDeep(const super &amp;toDeepWrap)</div><div class="ttdoc">wrap given container no matter what it is.</div><div class="ttdef"><b>Definition:</b> tnchain.hpp:82</div></div>
-<div class="ttc" id="aclasswrd_1_1tnchain_html_acbfe69d521a968452023e205f76a209c"><div class="ttname"><a href="classwrd_1_1tnchain.html#acbfe69d521a968452023e205f76a209c">wrd::tnchain::wrap</a></div><div class="ttdeci">static me * wrap(const super &amp;toShallowWrap)</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html"><div class="ttname"><a href="classnamu_1_1tnchain.html">namu::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:10</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html_a15bb9f8047d947225758a46dd194fce6"><div class="ttname"><a href="classnamu_1_1tnchain.html#a15bb9f8047d947225758a46dd194fce6">namu::tnchain::deepClone</a></div><div class="ttdeci">tstr&lt; instance &gt; deepClone() const override</div><div class="ttdef"><b>Definition:</b> tnchain.hpp:65</div></div>
+<div class="ttc" id="aclassnamu_1_1tarr_html"><div class="ttname"><a href="classnamu_1_1tarr.html">namu::tarr</a></div><div class="ttdef"><b>Definition:</b> tarr.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html_a6f16e48495d3d1b45787589768a67160"><div class="ttname"><a href="classnamu_1_1tnchain.html#a6f16e48495d3d1b45787589768a67160">namu::tnchain::wrap</a></div><div class="ttdeci">static me * wrap(const super &amp;toShallowWrap)</div></div>
 <div class="ttc" id="aclassiteration_html"><div class="ttname"><a href="classiteration.html">iteration</a></div><div class="ttdef"><b>Definition:</b> biteration.hpp:4</div></div>
+<div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; me &gt;</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

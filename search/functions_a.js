@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['take_640',['take',['../classwrd_1_1flag.html#abd4da615906e3b333997f61e1e85aff5',1,'wrd::flag']]],
-  ['tstr_641',['tstr',['../classwrd_1_1tstr.html#a1296c2b64ba879d2ea6c6b2f9d01661b',1,'wrd::tstr']]],
-  ['tweak_642',['tweak',['../classwrd_1_1tweak.html#ad3b707947bf7e42cd6f03ef851a504c6',1,'wrd::tweak']]]
+  ['take_640',['take',['../classnamu_1_1flag.html#ac75cdd202676e9d2d073db0c77e7c73e',1,'namu::flag']]],
+  ['tstr_641',['tstr',['../classnamu_1_1tstr.html#a103b945a25ac15fb296f7e617cbca009',1,'namu::tstr']]],
+  ['tweak_642',['tweak',['../classnamu_1_1tweak.html#aef31199aa7db95425a4b7631b070bae9',1,'namu::tweak']]]
 ];

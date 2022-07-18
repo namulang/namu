@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/namu/namu/mod/wrd/type/wtype.hpp Source File</title>
+<title>world-doc: /home/runner/work/namu/namu/mod/core/type/wtype.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_3f4ccd82f3d572807fe1ad4f22769180.html">type</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_81012edf5ad7491088324f5f1efbb7fa.html">core</a></li><li class="navelem"><a class="el" href="dir_ecadd9aa9e412d49ca2ee41ddf1ab41e.html">type</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -74,10 +74,10 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;as/ases.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classwrd_1_1wtype.html">    8</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classwrd_1_1wtype.html">wtype</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1type.html">type</a> {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        WRD_DECL_ME(<a class="code" href="classwrd_1_1wtype.html">wtype</a>, <a class="code" href="classwrd_1_1type.html">type</a>)</div>
+<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classnamu_1_1wtype.html">    8</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classnamu_1_1wtype.html">wtype</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1type.html">type</a> {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        WRD_DECL_ME(<a class="code" href="classnamu_1_1wtype.html">wtype</a>, <a class="code" href="classnamu_1_1type.html">type</a>)</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">typedef</span> std::map&lt;const wtype*, const wtype*&gt; reducer;</div>
@@ -86,15 +86,15 @@ $(function() {
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="comment">// wtype:</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"></span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classwrd_1_1wtype.html#a98c383235411f6b8c4cee6e781809890">   19</a></span>&#160;        wbool <a class="code" href="classwrd_1_1wtype.html#a98c383235411f6b8c4cee6e781809890">isImpli</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="keywordflow">return</span> this-&gt;isImpli(<a class="code" href="classwrd_1_1ttype.html">ttype&lt;T&gt;::get</a>());</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classnamu_1_1wtype.html#a7cb7aff8196e832b2cc20286ddf96a0d">   19</a></span>&#160;        wbool <a class="code" href="classnamu_1_1wtype.html#a7cb7aff8196e832b2cc20286ddf96a0d">isImpli</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            <span class="keywordflow">return</span> this-&gt;isImpli(<a class="code" href="classnamu_1_1ttype.html">ttype&lt;T&gt;::get</a>());</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        }</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">virtual</span> wbool isImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type.html">type</a>&amp; to) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        wbool isImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1type_providable.html">typeProvidable</a>&amp; to) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">virtual</span> wbool isImpli(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; to) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        wbool isImpli(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type_providable.html">typeProvidable</a>&amp; to) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classwrd_1_1tstr.html">tstr&lt;T&gt;</a> asImpli(<span class="keyword">const</span> <a class="code" href="classwrd_1_1node.html">node</a>&amp; it)<span class="keyword"> const </span>{</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="keywordflow">return</span> this-&gt;asImpli(<a class="code" href="classwrd_1_1ttype.html">ttype&lt;T&gt;::get</a>());</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;T&gt;</a> asImpli(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; it)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="keywordflow">return</span> this-&gt;asImpli(<a class="code" href="classnamu_1_1ttype.html">ttype&lt;T&gt;::get</a>());</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        }</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">virtual</span> str asImpli(<span class="keyword">const</span> node&amp; from, <span class="keyword">const</span> type&amp; to) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
@@ -134,13 +134,13 @@ $(function() {
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">typedef</span> std::vector&lt;const wtype*&gt; wtypes;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1tstr_html"><div class="ttname"><a href="classwrd_1_1tstr.html">wrd::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
-<div class="ttc" id="aclasswrd_1_1wtype_html"><div class="ttname"><a href="classwrd_1_1wtype.html">wrd::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
-<div class="ttc" id="aclasswrd_1_1wtype_html_a98c383235411f6b8c4cee6e781809890"><div class="ttname"><a href="classwrd_1_1wtype.html#a98c383235411f6b8c4cee6e781809890">wrd::wtype::isImpli</a></div><div class="ttdeci">wbool isImpli() const</div><div class="ttdoc">whether variable 'it' can be a subtype of T</div><div class="ttdef"><b>Definition:</b> wtype.hpp:19</div></div>
-<div class="ttc" id="aclasswrd_1_1type_html"><div class="ttname"><a href="classwrd_1_1type.html">wrd::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
-<div class="ttc" id="aclasswrd_1_1node_html"><div class="ttname"><a href="classwrd_1_1node.html">wrd::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:16</div></div>
-<div class="ttc" id="aclasswrd_1_1ttype_html"><div class="ttname"><a href="classwrd_1_1ttype.html">wrd::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:15</div></div>
-<div class="ttc" id="aclasswrd_1_1type_providable_html"><div class="ttname"><a href="classwrd_1_1type_providable.html">wrd::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:6</div></div>
+<div class="ttc" id="aclassnamu_1_1type_providable_html"><div class="ttname"><a href="classnamu_1_1type_providable.html">namu::typeProvidable</a></div><div class="ttdef"><b>Definition:</b> typeProvidable.hpp:6</div></div>
+<div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:16</div></div>
+<div class="ttc" id="aclassnamu_1_1type_html"><div class="ttname"><a href="classnamu_1_1type.html">namu::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
+<div class="ttc" id="aclassnamu_1_1wtype_html_a7cb7aff8196e832b2cc20286ddf96a0d"><div class="ttname"><a href="classnamu_1_1wtype.html#a7cb7aff8196e832b2cc20286ddf96a0d">namu::wtype::isImpli</a></div><div class="ttdeci">wbool isImpli() const</div><div class="ttdoc">whether variable 'it' can be a subtype of T</div><div class="ttdef"><b>Definition:</b> wtype.hpp:19</div></div>
+<div class="ttc" id="aclassnamu_1_1ttype_html"><div class="ttname"><a href="classnamu_1_1ttype.html">namu::ttype</a></div><div class="ttdef"><b>Definition:</b> ttype.hpp:15</div></div>
+<div class="ttc" id="aclassnamu_1_1wtype_html"><div class="ttname"><a href="classnamu_1_1wtype.html">namu::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
+<div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr</a></div><div class="ttdef"><b>Definition:</b> tstr.hpp:9</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

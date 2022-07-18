@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/namu/namu/mod/wrd/loader/pack/packLoading.hpp Source File</title>
+<title>world-doc: /home/runner/work/namu/namu/mod/core/loader/pack/packLoading.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_3732d76799a5e269b513f94c6249e70d.html">wrd</a></li><li class="navelem"><a class="el" href="dir_2cbbd415afc490c36007fd78392f3f9d.html">loader</a></li><li class="navelem"><a class="el" href="dir_cbb66a6ae8cbdea713f94ece8a4c7b0a.html">pack</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_81012edf5ad7491088324f5f1efbb7fa.html">core</a></li><li class="navelem"><a class="el" href="dir_a78d4a8d33b1a8b18fa67f3db22d7e2c.html">loader</a></li><li class="navelem"><a class="el" href="dir_697bd2fea714e1b573073a87ac707dc8.html">pack</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -75,16 +75,16 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../../ast/obj.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;packMakable.hpp&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">class </span>slot;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">struct </span>manifest;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">typedef</span> tnchain&lt;std::string, slot&gt; slotChain;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classwrd_1_1pack_loading.html">   13</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classwrd_1_1pack_loading.html">packLoading</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classwrd_1_1pack_makable.html">packMakable</a>, <span class="keyword">public</span> <a class="code" href="classwrd_1_1clonable.html">clonable</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        WRD(ADT(<a class="code" href="classwrd_1_1pack_loading.html">packLoading</a>, <a class="code" href="classwrd_1_1instance.html">instance</a>))</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classnamu_1_1pack_loading.html">   13</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classnamu_1_1pack_loading.html">packLoading</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1pack_makable.html">packMakable</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1clonable.html">clonable</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        WRD(ADT(<a class="code" href="classnamu_1_1pack_loading.html">packLoading</a>, <a class="code" href="classnamu_1_1instance.html">instance</a>))</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">typedef</span> wbool (me::*packEvent)(<span class="keyword">const</span> <a class="code" href="classwrd_1_1tnchain.html">slotChain</a>&amp;);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">typedef</span> wbool (me::*packEvent)(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tnchain.html">slotChain</a>&amp;);</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">void</span> addPath(<span class="keyword">const</span> std::string&amp; filePath);</div>
@@ -104,11 +104,11 @@ $(function() {
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">typedef</span> std::vector&lt;packLoading*&gt; packLoadings;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1instance_html"><div class="ttname"><a href="classwrd_1_1instance.html">wrd::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
-<div class="ttc" id="aclasswrd_1_1clonable_html"><div class="ttname"><a href="classwrd_1_1clonable.html">wrd::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
-<div class="ttc" id="aclasswrd_1_1tnchain_html"><div class="ttname"><a href="classwrd_1_1tnchain.html">wrd::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:10</div></div>
-<div class="ttc" id="aclasswrd_1_1pack_makable_html"><div class="ttname"><a href="classwrd_1_1pack_makable.html">wrd::packMakable</a></div><div class="ttdef"><b>Definition:</b> packMakable.hpp:15</div></div>
-<div class="ttc" id="aclasswrd_1_1pack_loading_html"><div class="ttname"><a href="classwrd_1_1pack_loading.html">wrd::packLoading</a></div><div class="ttdef"><b>Definition:</b> packLoading.hpp:13</div></div>
+<div class="ttc" id="aclassnamu_1_1instance_html"><div class="ttname"><a href="classnamu_1_1instance.html">namu::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
+<div class="ttc" id="aclassnamu_1_1pack_loading_html"><div class="ttname"><a href="classnamu_1_1pack_loading.html">namu::packLoading</a></div><div class="ttdef"><b>Definition:</b> packLoading.hpp:13</div></div>
+<div class="ttc" id="aclassnamu_1_1tnchain_html"><div class="ttname"><a href="classnamu_1_1tnchain.html">namu::tnchain</a></div><div class="ttdef"><b>Definition:</b> tnchain.hpp:10</div></div>
+<div class="ttc" id="aclassnamu_1_1clonable_html"><div class="ttname"><a href="classnamu_1_1clonable.html">namu::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
+<div class="ttc" id="aclassnamu_1_1pack_makable_html"><div class="ttname"><a href="classnamu_1_1pack_makable.html">namu::packMakable</a></div><div class="ttdef"><b>Definition:</b> packMakable.hpp:15</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

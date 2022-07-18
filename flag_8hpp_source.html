@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>world-doc: /home/runner/work/namu/namu/mod/wrc/flag/flag.hpp Source File</title>
+<title>world-doc: /home/runner/work/namu/namu/mod/namu/flag/flag.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,7 +61,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_d9786ed05cf5986eadc43d36ae9511f1.html">wrc</a></li><li class="navelem"><a class="el" href="dir_b839c1cc160865558ace1dde0c86288a.html">flag</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d41ce877eb409a4791b288730010abe2.html">mod</a></li><li class="navelem"><a class="el" href="dir_07d9c950664f8af848c407c5759db1d1.html">namu</a></li><li class="navelem"><a class="el" href="dir_babee1b84d423d3fdbf5a762bb5c9147.html">flag</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -75,17 +75,17 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../common.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;regex&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>wrd {</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">struct </span>cli;</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classwrd_1_1flag.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classwrd_1_1flag.html">flag</a> : <span class="keyword">public</span> <a class="code" href="classwrd_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classwrd_1_1clonable.html">clonable</a> {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        WRD(ADT(<a class="code" href="classwrd_1_1flag.html">flag</a>, <a class="code" href="classwrd_1_1instance.html">instance</a>))</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnamu_1_1flag.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classnamu_1_1flag.html">flag</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1instance.html">instance</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1clonable.html">clonable</a> {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        WRD(ADT(<a class="code" href="classnamu_1_1flag.html">flag</a>, <a class="code" href="classnamu_1_1instance.html">instance</a>))</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> wchar* getName() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> wchar* getDescription() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">virtual</span> wbool <a class="code" href="classwrd_1_1flag.html#abd4da615906e3b333997f61e1e85aff5">take</a>(<a class="code" href="classwrd_1_1interpreter.html">interpreter</a>&amp; ip, <a class="code" href="structwrd_1_1cli.html">cli</a>&amp; c, args&amp; a) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">virtual</span> wbool <a class="code" href="classnamu_1_1flag.html#ac75cdd202676e9d2d073db0c77e7c73e">take</a>(<a class="code" href="classnamu_1_1interpreter.html">interpreter</a>&amp; ip, <a class="code" href="structnamu_1_1cli.html">cli</a>&amp; c, args&amp; a) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordtype">void</span> _delArgs(args&amp; a, std::vector&lt;int&gt; indices)<span class="keyword"> const </span>{</div>
@@ -95,18 +95,18 @@ $(function() {
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        }</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">virtual</span> <span class="keyword">const</span> wchar* _getRegExpr() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">virtual</span> wbool _onTake(<span class="keyword">const</span> args&amp; tray, <a class="code" href="structwrd_1_1cli.html">cli</a>&amp; c, <a class="code" href="classwrd_1_1interpreter.html">interpreter</a>&amp; ip) <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">virtual</span> wbool _onTake(<span class="keyword">const</span> args&amp; tray, <a class="code" href="structnamu_1_1cli.html">cli</a>&amp; c, <a class="code" href="classnamu_1_1interpreter.html">interpreter</a>&amp; ip) <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    };</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">typedef</span> std::vector&lt;tstr&lt;flag&gt;&gt; flags;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasswrd_1_1instance_html"><div class="ttname"><a href="classwrd_1_1instance.html">wrd::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
-<div class="ttc" id="aclasswrd_1_1clonable_html"><div class="ttname"><a href="classwrd_1_1clonable.html">wrd::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
-<div class="ttc" id="aclasswrd_1_1flag_html_abd4da615906e3b333997f61e1e85aff5"><div class="ttname"><a href="classwrd_1_1flag.html#abd4da615906e3b333997f61e1e85aff5">wrd::flag::take</a></div><div class="ttdeci">virtual wbool take(interpreter &amp;ip, cli &amp;c, args &amp;a) const</div></div>
-<div class="ttc" id="aclasswrd_1_1flag_html"><div class="ttname"><a href="classwrd_1_1flag.html">wrd::flag</a></div><div class="ttdef"><b>Definition:</b> flag.hpp:10</div></div>
-<div class="ttc" id="astructwrd_1_1cli_html"><div class="ttname"><a href="structwrd_1_1cli.html">wrd::cli</a></div><div class="ttdef"><b>Definition:</b> cli.hpp:6</div></div>
-<div class="ttc" id="aclasswrd_1_1interpreter_html"><div class="ttname"><a href="classwrd_1_1interpreter.html">wrd::interpreter</a></div><div class="ttdef"><b>Definition:</b> interpreter.hpp:9</div></div>
+<div class="ttc" id="aclassnamu_1_1instance_html"><div class="ttname"><a href="classnamu_1_1instance.html">namu::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
+<div class="ttc" id="aclassnamu_1_1flag_html_ac75cdd202676e9d2d073db0c77e7c73e"><div class="ttname"><a href="classnamu_1_1flag.html#ac75cdd202676e9d2d073db0c77e7c73e">namu::flag::take</a></div><div class="ttdeci">virtual wbool take(interpreter &amp;ip, cli &amp;c, args &amp;a) const</div></div>
+<div class="ttc" id="astructnamu_1_1cli_html"><div class="ttname"><a href="structnamu_1_1cli.html">namu::cli</a></div><div class="ttdef"><b>Definition:</b> cli.hpp:6</div></div>
+<div class="ttc" id="aclassnamu_1_1interpreter_html"><div class="ttname"><a href="classnamu_1_1interpreter.html">namu::interpreter</a></div><div class="ttdef"><b>Definition:</b> interpreter.hpp:9</div></div>
+<div class="ttc" id="aclassnamu_1_1flag_html"><div class="ttname"><a href="classnamu_1_1flag.html">namu::flag</a></div><div class="ttdef"><b>Definition:</b> flag.hpp:10</div></div>
+<div class="ttc" id="aclassnamu_1_1clonable_html"><div class="ttname"><a href="classnamu_1_1clonable.html">namu::clonable</a></div><div class="ttdef"><b>Definition:</b> clonable.hpp:7</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

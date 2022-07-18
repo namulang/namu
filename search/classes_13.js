@@ -1,16 +1,14 @@
 var searchData=
 [
-  ['watchcell_603',['watchCell',['../structwrd_1_1watch_cell.html',1,'wrd']]],
-  ['watcher_604',['watcher',['../classwrd_1_1watcher.html',1,'wrd']]],
-  ['watchertest_605',['watcherTest',['../structwatcher_test.html',1,'']]],
-  ['wbool_606',['wBool',['../classwrd_1_1w_bool.html',1,'wrd']]],
-  ['wchar_607',['wChar',['../classwrd_1_1w_char.html',1,'wrd']]],
-  ['weaktactic_608',['weakTactic',['../classwrd_1_1weak_tactic.html',1,'wrd']]],
-  ['wflt_609',['wFlt',['../classwrd_1_1w_flt.html',1,'wrd']]],
-  ['wint_610',['wInt',['../classwrd_1_1w_int.html',1,'wrd']]],
-  ['wrdsyntaxtest_611',['wrdSyntaxTest',['../structwrd_syntax_test.html',1,'']]],
-  ['wrdtest_612',['wrdTest',['../structwrd_test.html',1,'']]],
-  ['wstr_613',['wStr',['../classwrd_1_1w_str.html',1,'wrd']]],
-  ['wtype_614',['wtype',['../classwrd_1_1wtype.html',1,'wrd']]],
-  ['wvoid_615',['wVoid',['../classwrd_1_1w_void.html',1,'wrd']]]
+  ['watchcell_605',['watchCell',['../structnamu_1_1watch_cell.html',1,'namu']]],
+  ['watcher_606',['watcher',['../classnamu_1_1watcher.html',1,'namu']]],
+  ['watchertest_607',['watcherTest',['../structwatcher_test.html',1,'']]],
+  ['wbool_608',['wBool',['../classnamu_1_1w_bool.html',1,'namu']]],
+  ['wchar_609',['wChar',['../classnamu_1_1w_char.html',1,'namu']]],
+  ['weaktactic_610',['weakTactic',['../classnamu_1_1weak_tactic.html',1,'namu']]],
+  ['wflt_611',['wFlt',['../classnamu_1_1w_flt.html',1,'namu']]],
+  ['wint_612',['wInt',['../classnamu_1_1w_int.html',1,'namu']]],
+  ['wstr_613',['wStr',['../classnamu_1_1w_str.html',1,'namu']]],
+  ['wtype_614',['wtype',['../classnamu_1_1wtype.html',1,'namu']]],
+  ['wvoid_615',['wVoid',['../classnamu_1_1w_void.html',1,'namu']]]
 ];
