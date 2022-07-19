@@ -21,7 +21,7 @@ namespace wrd {
 
     protected:
         const wchar* _getRegExpr() const override {
-            return "[\\w\\.\\/]+\\.wrd$";
+            return "[\\\\\\w\\.\\/:]+\\.wrd$";
         }
 
         wbool _onTake(const args& tray, cli& c, interpreter& ip) const override;
