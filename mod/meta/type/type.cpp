@@ -3,7 +3,14 @@
 namespace wrd {
     WRD_DEF_ME(type)
 
-    wbool me::operator==(const me& rhs) const { return &getName() == &rhs.getName(); }
+    wbool me:operator==(const me& rhs) const {
+#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
+        return getName() == rhs.getName();
+#else
+        return &getName() == &rhs.getName();
+#endif
+    }
+
     wbool me::operator!=(const me& rhs) const { return !operator==(rhs); }
 
     const types& me::getLeafs() const {
