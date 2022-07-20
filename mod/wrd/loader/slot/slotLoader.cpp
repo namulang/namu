@@ -29,7 +29,7 @@ namespace wrd {
         entrypoints points;
         sobj& entrypoints = loaded->sub("entrypoints");
         for(auto& pair: entrypoints) {
-            const std::string& path = dir + DELIMITER + pair.second->sub("path").asStr();
+            const std::string& path = dir + fsystem::DELIMITER + pair.second->sub("path").asStr();
             if(nul(path))
                 return WRD_E("error to load %s: no entrypoint path", manPath.c_str()), manifest();
 
@@ -86,7 +86,7 @@ namespace wrd {
     }
 
     void me::_makeSlots(nmap& tray) {
-        std::string cwd = fsystem::getCurrentDir() + "/";
+        std::string cwd = fsystem::getCurrentDir() + fsystem::DELIMITER;
         WRD_I("finding slots relative to %s or absolute", cwd.c_str());
 
         for(const std::string& path : _paths) {
@@ -100,7 +100,7 @@ namespace wrd {
     }
 
     void me::_addNewSlot(nmap& tray, const std::string& dirPath, const std::string& manifestName) {
-        std::string manifestPath = dirPath + DELIMITER + manifestName;
+        std::string manifestPath = dirPath + fsystem::DELIMITER + manifestName;
 
         manifest mani = _interpManifest(dirPath, manifestPath);
         if(!mani.isValid()) {
