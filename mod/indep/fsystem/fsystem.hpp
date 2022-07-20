@@ -66,5 +66,12 @@ namespace wrd {
     public:
         static iterator find(const std::string& path);
         static std::string getCurrentDir();
+
+    public:
+#if WRD_BILD_PLATFORM == WRD_TYPE_WINDOWS
+        static inline std::string DELIMITER = "\\";
+#else
+        static inline std::string DELIMITER = "/";
+#endif
     };
 }

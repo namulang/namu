@@ -1,5 +1,6 @@
 #include <wrd.hpp>
 #include <iostream>
+#include "common.hpp"
 using namespace wrd;
 
 struct con {
@@ -29,7 +30,7 @@ struct con {
     }
 };
 
-extern "C" void wrd_bridge_cpp_entrypoint(bicontainable* tray) {
+extern "C" _wout void wrd_bridge_cpp_entrypoint(bicontainable* tray) {
     tray->add("con", tcppBridge<con>::def()
         ->func("say", &con::say)
         ->func("add", &con::add)

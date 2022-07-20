@@ -2,7 +2,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 message("building ${moduleName}...")
 set(moduleName "swrd")
-set(defCandidates "WRD_TAG=\"${moduleName}\"" "${moduleName}=1")
+set(defCandidates "WRD_TAG=\"${moduleName}\"" "__${moduleName}=1")
 foreach(def ${defCandidates})
     message("\tadd define ${def}")
     set(defines ${defines} -D${def})

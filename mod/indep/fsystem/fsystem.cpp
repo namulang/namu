@@ -79,13 +79,21 @@ namespace wrd {
 
     std::string me::iterator::getName() const {
         const std::string& path = get();
+#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
+        widx slash = path.rfind('\\');
+#else
         widx slash = path.rfind('/');
+#endif
         return path.substr(slash + 1);
     }
 
     std::string me::iterator::getDir() const {
         const std::string& path = get();
+#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
+        widx slash = path.rfind('\\');
+#else
         widx slash = path.rfind('/');
+#endif
         return path.substr(0, slash);
     }
 
