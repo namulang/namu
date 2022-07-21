@@ -399,7 +399,7 @@ namespace wrd {
         WRD_DI("tokenEvent: onDefAssign(%s, %s)", name.c_str(), rhs.getType().getName().c_str());
         return new muna([&, name]() { return new defAssignExpr(name, rhs); },
                 [&, name](defBlock& blk) {
-                    blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), name, rhs));
+                    blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), name, rhs, true));
                 });
     }
 
@@ -448,7 +448,7 @@ namespace wrd {
         WRD_DI("tokenEvent: onAkaDefault(%s..., %s)", dotname.getSubName().c_str(), newName.c_str());
         return new muna([&, newName]() { return new defAssignExpr(newName, dotname); },
                 [&, newName](defBlock& blk) {
-                        blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), newName, dotname));
+                        blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), newName, dotname, true));
                 });
     }
 

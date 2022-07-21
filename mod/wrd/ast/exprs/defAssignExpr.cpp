@@ -47,7 +47,7 @@ namespace wrd {
                 nul(rhs) ? "name" : rhs.getType().getName().c_str());
 
         node& to = it.getTo();
-        str new1 = rhs.as<node>();
+        str new1 = it.isOnDefBlock() ? rhs.as<node>() : rhs.getEval();
         if(nul(to))
             thread::get()._getNowFrame().pushLocal(it.getSubName(), *new1);
         else
