@@ -13,9 +13,10 @@ namespace wrd {
         typedef scopes::iter iter;
 
     public:
-        defAssignExpr(const std::string& name, const node& rhs): _rhs(rhs), _name(name) {}
-        defAssignExpr(const node& to, const std::string& name, const node& rhs): _to(to),
-                _rhs(rhs), _name(name) {}
+        defAssignExpr(const std::string& name, const node& rhs, wbool isOnDefBlock = false): _rhs(rhs),
+                _isOnDefBlock(isOnDefBlock), _name(name) {}
+        defAssignExpr(const node& to, const std::string& name, const node& rhs, wbool isOnDefBlock = false):
+                _to(to), _rhs(rhs), _isOnDefBlock(isOnDefBlock), _name(name) {}
 
     public:
         using super::run;
@@ -26,11 +27,13 @@ namespace wrd {
         const node& getRight() const { return *_rhs; }
         node& getRight() { return *_rhs; }
         const node& getTo() const WRD_UNCONST_FUNC(getTo())
+        wbool isOnDefBlock() const { return _isOnDefBlock; }
         node& getTo();
 
     private:
         str _to;
         str _rhs;
+        wbool _isOnDefBlock;
         std::string _name; // name of variable or lambda.
     };
 }
