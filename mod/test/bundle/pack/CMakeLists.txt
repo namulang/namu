@@ -4,7 +4,7 @@ set(packName "sys")
 set(packOutDir "${WRD_PACK_OUTPUT_DIRECTORY}/${packName}")
 set(dependencies ${dependencies} wrd ${pathGtest})
 
-set(defCandidates "WRD_TAG=\"${packName}\"" "__${packName}=1")
+set(defCandidates "__${packName}=1")
 foreach(def ${defCandidates})
     message("\tadd define ${def}")
     set(defines ${defines} -D${def})
