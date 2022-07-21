@@ -71,21 +71,21 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// nested class of ucontainable.hpp</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="keyword">class </span><a class="code" href="classiterable.html">iterable</a> {</div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    WRD_DECL_ME(<a class="code" href="classiterable.html">iterable</a>)</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    NAMU_DECL_ME(<a class="code" href="classiterable.html">iterable</a>)</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classiterable.html">iterable</a>() {}</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">virtual</span> wbool isEnd() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">virtual</span> wcnt <a class="code" href="classiterable.html#acf5781451e3d38a313044b4ec78bf717">next</a>(wcnt step) = 0;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">virtual</span> nbool isEnd() <span class="keyword">const</span> = 0;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">virtual</span> ncnt <a class="code" href="classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f">next</a>(ncnt step) = 0;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">virtual</span> T&amp; get() = 0;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">const</span> T&amp; get() const WRD_UNCONST_FUNC(get())</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    virtual wbool isFrom(const tucontainable&amp; it) const = 0;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">const</span> T&amp; get() const NAMU_UNCONST_FUNC(get())</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    virtual nbool isFrom(const tucontainable&amp; it) const = 0;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    virtual tnucontainer&lt;T&gt;&amp; getContainer() = 0;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    const tnucontainer&lt;T&gt;&amp; getContainer() const WRD_UNCONST_FUNC(getContainer())</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    const tnucontainer&lt;T&gt;&amp; getContainer() const NAMU_UNCONST_FUNC(getContainer())</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassiterable_html_acf5781451e3d38a313044b4ec78bf717"><div class="ttname"><a href="classiterable.html#acf5781451e3d38a313044b4ec78bf717">iterable::next</a></div><div class="ttdeci">virtual wcnt next(wcnt step)=0</div></div>
+<div class="ttc" id="aclassiterable_html_af3fe3f73cc02ce60a46b93d6e630798f"><div class="ttname"><a href="classiterable.html#af3fe3f73cc02ce60a46b93d6e630798f">iterable::next</a></div><div class="ttdeci">virtual ncnt next(ncnt step)=0</div></div>
 <div class="ttc" id="aclassiterable_html"><div class="ttname"><a href="classiterable.html">iterable</a></div><div class="ttdef"><b>Definition:</b> biterable.hpp:2</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -75,7 +75,7 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">class </span>wtype;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">class </span>ntype;</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="structnamu_1_1tas.html">    9</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structnamu_1_1tas.html">tas</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1asable.html">asable</a>, <span class="keyword">public</span> <a class="code" href="classnamu_1_1type_providable.html">typeProvidable</a> {</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
@@ -84,7 +84,7 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classnamu_1_1ttype.html">ttype&lt;T&gt;::get</a>();</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        }</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        wbool is(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        nbool is(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            <span class="keywordflow">return</span> getType() == to;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        }</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    };</div>

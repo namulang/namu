@@ -74,16 +74,16 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;errCode.hpp&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;../ast/point.hpp&quot;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../common/namuMetaExtension.hpp&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;../type/wtype.hpp&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;../type/ntype.hpp&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">typedef</span> std::unordered_map&lt;widx, std::string&gt; msgMap;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">typedef</span> std::unordered_map&lt;nidx, std::string&gt; msgMap;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structnamu_1_1err.html">   13</a></span>&#160;    <span class="keyword">struct </span>_wout <a class="code" href="structnamu_1_1err.html">err</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1instance.html">instance</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structnamu_1_1err.html">   13</a></span>&#160;    <span class="keyword">struct </span>_nout <a class="code" href="structnamu_1_1err.html">err</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1instance.html">instance</a> {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        WRD(ME(<a class="code" href="structnamu_1_1err.html">err</a>, <a class="code" href="classnamu_1_1instance.html">instance</a>),</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            TYPE(<a class="code" href="classnamu_1_1wtype.html">wtype</a>),</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            TYPE(<a class="code" href="classnamu_1_1ntype.html">ntype</a>),</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            INIT_META(me))</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">public</span>:</div>
@@ -94,7 +94,7 @@ $(function() {
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        };</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="structnamu_1_1err.html">err</a>(err::type t, wint newCode, ...);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="structnamu_1_1err.html">err</a>(err::type t, nint newCode, ...);</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <a class="code" href="structnamu_1_1err.html">err</a>(err::type t, <span class="keywordtype">int</span> newCode, va_list args);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">public</span>:</div>
@@ -114,15 +114,15 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        err::type fType;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        errCode code;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::string msg;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">static</span> constexpr wint BASE_TEST_CODE = 99999990; <span class="comment">// not to be duplicated.</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">static</span> constexpr nint BASE_TEST_CODE = 99999990; <span class="comment">// not to be duplicated.</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        std::string _format(<span class="keyword">const</span> std::string&amp; fmt, va_list args);</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    };</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="structnamu_1_1dummy_err.html">   52</a></span>&#160;    <span class="keyword">struct </span>_wout <a class="code" href="structnamu_1_1dummy_err.html">dummyErr</a> : <span class="keyword">public</span> <a class="code" href="structnamu_1_1err.html">err</a> {</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="structnamu_1_1dummy_err.html">   52</a></span>&#160;    <span class="keyword">struct </span>_nout <a class="code" href="structnamu_1_1dummy_err.html">dummyErr</a> : <span class="keyword">public</span> <a class="code" href="structnamu_1_1err.html">err</a> {</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        WRD(ME(<a class="code" href="structnamu_1_1dummy_err.html">dummyErr</a>, <a class="code" href="structnamu_1_1err.html">err</a>),</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            TYPE(<a class="code" href="classnamu_1_1wtype.html">wtype</a>),</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            TYPE(<a class="code" href="classnamu_1_1ntype.html">ntype</a>),</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            INIT_META(me))</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keyword">public</span>:</div>
@@ -132,9 +132,9 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">void</span> log() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    };</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structnamu_1_1src_err.html">   64</a></span>&#160;    <span class="keyword">struct </span>_wout <a class="code" href="structnamu_1_1src_err.html">srcErr</a> : <span class="keyword">public</span> <a class="code" href="structnamu_1_1err.html">err</a> {</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structnamu_1_1src_err.html">   64</a></span>&#160;    <span class="keyword">struct </span>_nout <a class="code" href="structnamu_1_1src_err.html">srcErr</a> : <span class="keyword">public</span> <a class="code" href="structnamu_1_1err.html">err</a> {</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        WRD(ME(<a class="code" href="structnamu_1_1src_err.html">srcErr</a>, <a class="code" href="structnamu_1_1err.html">err</a>),</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            TYPE(<a class="code" href="classnamu_1_1wtype.html">wtype</a>),</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            TYPE(<a class="code" href="classnamu_1_1ntype.html">ntype</a>),</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            INIT_META(me))</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keyword">public</span>:</div>
@@ -151,9 +151,9 @@ $(function() {
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructnamu_1_1src_err_html"><div class="ttname"><a href="structnamu_1_1src_err.html">namu::srcErr</a></div><div class="ttdef"><b>Definition:</b> err.hpp:64</div></div>
 <div class="ttc" id="aclassnamu_1_1type_html"><div class="ttname"><a href="classnamu_1_1type.html">namu::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
+<div class="ttc" id="aclassnamu_1_1ntype_html"><div class="ttname"><a href="classnamu_1_1ntype.html">namu::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1instance_html"><div class="ttname"><a href="classnamu_1_1instance.html">namu::instance</a></div><div class="ttdef"><b>Definition:</b> instance.hpp:13</div></div>
 <div class="ttc" id="astructnamu_1_1dummy_err_html"><div class="ttname"><a href="structnamu_1_1dummy_err.html">namu::dummyErr</a></div><div class="ttdef"><b>Definition:</b> err.hpp:52</div></div>
-<div class="ttc" id="aclassnamu_1_1wtype_html"><div class="ttname"><a href="classnamu_1_1wtype.html">namu::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
 <div class="ttc" id="astructnamu_1_1err_html"><div class="ttname"><a href="structnamu_1_1err.html">namu::err</a></div><div class="ttdef"><b>Definition:</b> err.hpp:13</div></div>
 <div class="ttc" id="aclassnamu_1_1src_html"><div class="ttname"><a href="classnamu_1_1src.html">namu::src</a></div><div class="ttdoc">src represents src file of namulang source codes.</div><div class="ttdef"><b>Definition:</b> src.hpp:9</div></div>
 <div class="ttc" id="astructnamu_1_1point_html"><div class="ttname"><a href="structnamu_1_1point.html">namu::point</a></div><div class="ttdef"><b>Definition:</b> point.hpp:6</div></div>

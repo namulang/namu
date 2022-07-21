@@ -82,7 +82,7 @@ $(function() {
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">class </span>obj;</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">class </span>func;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classnamu_1_1frame.html">   14</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classnamu_1_1frame.html">frame</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1node.html">node</a> { <span class="comment">// TODO: may be obj, not node.</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="classnamu_1_1frame.html">   14</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1frame.html">frame</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1node.html">node</a> { <span class="comment">// TODO: may be obj, not node.</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        WRD(CLASS(<a class="code" href="classnamu_1_1frame.html">frame</a>, <a class="code" href="classnamu_1_1node.html">node</a>),</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;            FRIEND_VERIFY(<a class="code" href="classnamu_1_1base_obj.html">baseObj</a>, subNodes))</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">friend</span> struct ::immutableTest;</div>
@@ -100,7 +100,7 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">            for(scopes* e=&amp;chn; e ;e=&amp;e-&gt;getNext()) {</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">                node&amp; owner = _getOwnerFrom(*e);</span></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">                if(nul(owner)) {</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">                    WRD_W(&quot;couldn&#39;t find owner from chain[%x]&quot;, &amp;e.get());</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">                    NAMU_W(&quot;couldn&#39;t find owner from chain[%x]&quot;, &amp;e.get());</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">                    continue;</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">                }</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment"></span> </div>
@@ -113,16 +113,16 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">            return tpair&lt;str, str&gt;();</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">        }*/</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        wbool pushLocal(<a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>* <a class="code" href="structcon.html">con</a>);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        wbool pushLocal(<a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; <a class="code" href="structcon.html">con</a>);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        wbool pushLocal(<a class="code" href="classnamu_1_1tnchain.html">scopes</a>* new1);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        wbool pushLocal(<a class="code" href="classnamu_1_1tnchain.html">scopes</a>&amp; new1);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        wbool pushLocal(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; n);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        wbool pushLocal(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>* n);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        nbool pushLocal(<a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>* <a class="code" href="structcon.html">con</a>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        nbool pushLocal(<a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; <a class="code" href="structcon.html">con</a>);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        nbool pushLocal(<a class="code" href="classnamu_1_1tnchain.html">scopes</a>* new1);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        nbool pushLocal(<a class="code" href="classnamu_1_1tnchain.html">scopes</a>&amp; new1);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        nbool pushLocal(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; n);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        nbool pushLocal(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>* n);</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">void</span> pushObj(<span class="keyword">const</span> <a class="code" href="classnamu_1_1base_obj.html">baseObj</a>&amp; <a class="code" href="classnamu_1_1obj.html">obj</a>);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <a class="code" href="classnamu_1_1tnchain.html">scopes</a>&amp; getTop();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnchain.html">scopes</a>&amp; getTop() <span class="keyword">const</span> WRD_UNCONST_FUNC(getTop())</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnchain.html">scopes</a>&amp; getTop() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getTop())</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="comment">// I won&#39;t provide API for poping a single node from the scope.</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">tstr&lt;scopes&gt;</a> popLocal();</div>
@@ -131,19 +131,19 @@ $(function() {
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">void</span> setFunc(<a class="code" href="classnamu_1_1func.html">func</a>&amp; new1);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <a class="code" href="classnamu_1_1func.html">func</a>&amp; getFunc();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1func.html">func</a>&amp; getFunc() <span class="keyword">const</span> WRD_UNCONST_FUNC(getFunc())</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1func.html">func</a>&amp; getFunc() <span class="keyword">const</span> NAMU_UNCONST_FUNC(getFunc())</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="comment">// node:</span></div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">using</span> node::subs;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; subs() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        wbool canRun(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        nbool canRun(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">void</span> rel() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        wbool pushReturn(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tstr.html">str</a>&amp; toReturn);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        wbool isReturned() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        nbool pushReturn(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tstr.html">str</a>&amp; toReturn);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        nbool isReturned() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> popReturn();</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">protected</span>:</div>

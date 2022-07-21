@@ -105,7 +105,7 @@ $(function() {
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">//  The second one is derived types that can fire and catch events when visited.</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define __WRD__DECL_TRAVERSE_FOOTER \</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define __NAMU__DECL_TRAVERSE_FOOTER \</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">        visitor._onEnter(*this); \</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">        visitor.traverse(*this); \</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">        visitor._onLeave(*this); \</span></div>
@@ -114,15 +114,15 @@ $(function() {
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="comment">//  BASE_VISIT:</span></div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">//      used this macro when it&#39;s the base type and at the same type it&#39;s the base type</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">//      that helps the visitor to traverse to another object.</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#define __WRD__DECL_BASE_VISIT(VISITOR) \</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#define __NAMU__DECL_BASE_VISIT(VISITOR) \</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">    virtual void allowVisit(VISITOR&amp; visitor) { \</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">        __WRD__DECL_TRAVERSE_FOOTER</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">        __NAMU__DECL_TRAVERSE_FOOTER</span></div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment">//  VISIT:</span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="comment">//      this macro is used in the case of a derived type that a give class can visit.</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#define __WRD__DECL_VISIT(VISITOR) \</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#define __NAMU__DECL_VISIT(VISITOR) \</span></div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">    void allowVisit(VISITOR&amp; visitor) override { \</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">        __WRD__DECL_TRAVERSE_FOOTER</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">        __NAMU__DECL_TRAVERSE_FOOTER</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassnamu_1_1visitor_html"><div class="ttname"><a href="classnamu_1_1visitor.html">namu::visitor</a></div><div class="ttdef"><b>Definition:</b> visitor.hpp:8</div></div>
 <!-- start footer part -->

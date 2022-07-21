@@ -110,12 +110,12 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#define _GET(exp) _TGet&lt;TypeTrait&lt;decltype(exp)&gt;::Org&gt;::get()</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define _NULR(exp) nulOf&lt;TypeTrait&lt;decltype(exp)&gt;::Org&gt;()</span></div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#define WRD_GETS_1(e1) (nul(_PUT((e1))) ? _NULR((e1)) : (_GET((e1))))</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define WRD_GETS_2(e1, e2) (nul(_PUT((e1))) ? _NULR((e1.e2)) : _PUT(_GET(e1).e2))</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#define WRD_GETS_3(e1, e2, e3) (nul(WRD_GETS_2(e1, e2)) ? _NULR(e1.e2.e3) : _PUT((_GET(e1.e2).e3)))</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define WRD_GETS_4(e1, e2, e3, e4) (nul(WRD_GETS_3(e1, e2, e3)) ? _NULR(e1.e2.e3.e4) : _PUT((_GET(e1.e2.e3).e4)))</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">//#define WRD_GETS_4(e1, e2, e3, e4) _PUT(e1).isNull() ? _NULR(e1.e2.e3.e4) : (_PUT(e1.e2).isNull() ? _NULR(e1.e2.e3.e4) : (_PUT(e1.e2.e3).isNull() ? _NULR(e1.e2.e3.e4) : _PUT(e1.e2.e3.e4)))</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define WRD_GETS(...)   WRD_OVERLOAD(WRD_GETS, __VA_ARGS__)</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#define NAMU_GETS_1(e1) (nul(_PUT((e1))) ? _NULR((e1)) : (_GET((e1))))</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#define NAMU_GETS_2(e1, e2) (nul(_PUT((e1))) ? _NULR((e1.e2)) : _PUT(_GET(e1).e2))</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#define NAMU_GETS_3(e1, e2, e3) (nul(NAMU_GETS_2(e1, e2)) ? _NULR(e1.e2.e3) : _PUT((_GET(e1.e2).e3)))</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#define NAMU_GETS_4(e1, e2, e3, e4) (nul(NAMU_GETS_3(e1, e2, e3)) ? _NULR(e1.e2.e3.e4) : _PUT((_GET(e1.e2.e3).e4)))</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">//#define NAMU_GETS_4(e1, e2, e3, e4) _PUT(e1).isNull() ? _NULR(e1.e2.e3.e4) : (_PUT(e1.e2).isNull() ? _NULR(e1.e2.e3.e4) : (_PUT(e1.e2.e3).isNull() ? _NULR(e1.e2.e3.e4) : _PUT(e1.e2.e3.e4)))</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define NAMU_GETS(...)   NAMU_OVERLOAD(NAMU_GETS, __VA_ARGS__)</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:10</div></div>
 <div class="ttc" id="aclassnamu_1_1___t_get_html"><div class="ttname"><a href="classnamu_1_1___t_get.html">namu::_TGet</a></div><div class="ttdef"><b>Definition:</b> gets.hpp:7</div></div>

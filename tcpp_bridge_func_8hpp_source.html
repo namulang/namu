@@ -86,14 +86,14 @@ $(function() {
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="classnamu_1_1tcpp_bridge_func_base.html">tcppBridgeFuncBase</a>(fptrType fptr): super(), _fptr(fptr) {}</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        static_assert(allTrues&lt;(<span class="keyword">sizeof</span>(<a class="code" href="structnamu_1_1tmarshaling.html">tmarshaling&lt;Args&gt;::canMarshal</a>() ) == <span class="keyword">sizeof</span>(metaIf::yes))...&gt;::value,</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <span class="stringliteral">&quot;can&#39;t marshal one of this func&#39;s parameter wtypes.&quot;</span>);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            <span class="stringliteral">&quot;can&#39;t marshal one of this func&#39;s parameter ntypes.&quot;</span>);</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">using</span> super::run;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; args)<span class="keyword"> override </span>{</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <a class="code" href="classnamu_1_1tnarr.html">narr</a> tray;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <a class="code" href="classnamu_1_1tnarr.html">narr</a>&amp; evaluated = _evalArgs(args, tray);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">if</span>(nul(evaluated)) <span class="keywordflow">return</span> WRD_E(<span class="stringliteral">&quot;evaluated == null&quot;</span>), <a class="code" href="classnamu_1_1tstr.html">str</a>();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">if</span>(nul(evaluated)) <span class="keywordflow">return</span> NAMU_E(<span class="stringliteral">&quot;evaluated == null&quot;</span>), <a class="code" href="classnamu_1_1tstr.html">str</a>();</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="keywordflow">return</span> _runNative(evaluated);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        }</div>
@@ -112,7 +112,7 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <a class="code" href="classnamu_1_1tnarr.html">narr</a>&amp; _evalArgs(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; args, <a class="code" href="classnamu_1_1tnarr.html">narr</a>&amp; tray) {</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">params</a>&amp; ps = <a class="code" href="classnamu_1_1tcpp_bridge_func_base.html#a66d6bfc636595d62f06416048c0c9ee5">getParams</a>();</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordflow">if</span>(args.len() != ps.len())</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                <span class="keywordflow">return</span> WRD_E(<span class="stringliteral">&quot;length of args(%d) and typs(%d) doesn&#39;t match.&quot;</span>, args.len(), ps.len()),</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                <span class="keywordflow">return</span> NAMU_E(<span class="stringliteral">&quot;length of args(%d) and typs(%d) doesn&#39;t match.&quot;</span>, args.len(), ps.len()),</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                       nulOf&lt;narr&gt;();</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keywordtype">int</span> n = 0;</div>

@@ -100,7 +100,7 @@ $(function() {
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    }</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="structnamu_syntax_test.html">namuSyntaxTest</a>&amp; parse(<span class="keyword">const</span> namu::wchar* src) {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="structnamu_syntax_test.html">namuSyntaxTest</a>&amp; parse(<span class="keyword">const</span> namu::nchar* src) {</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        std::vector&lt;std::string&gt; srcs;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        srcs.push_back(src);</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <a class="code" href="classnamu_1_1buffer_src_supply.html">namu::bufferSrcSupply</a> buf(srcs);</div>
@@ -113,13 +113,13 @@ $(function() {
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    namu::wbool shouldParsed(namu::wbool well) {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        namu::wbool ret = _ip.isParsed();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    namu::nbool shouldParsed(namu::nbool well) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        namu::nbool ret = _ip.isParsed();</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        EXPECT_EQ(ret, well);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    namu::wbool shouldVerified(namu::wbool well) {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        namu::wbool ret = _ip.isVerified();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    namu::nbool shouldVerified(namu::nbool well) {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        namu::nbool ret = _ip.isVerified();</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        EXPECT_EQ(ret, well);</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
@@ -136,7 +136,7 @@ $(function() {
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    }</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">const</span> namu::wchar* _src;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keyword">const</span> namu::nchar* _src;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="classnamu_1_1err_report.html">namu::errReport</a> _rpt;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="classnamu_1_1interpreter.html">namu::interpreter</a> _ip;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;};</div>

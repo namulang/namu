@@ -148,7 +148,7 @@ $(function() {
 <div class="line">    void set(int n);</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line">WRD_BRIDGE_CPP(....) {</div>
+<div class="line">NAMU_BRIDGE_CPP(....) {</div>
 <div class="line">    return def(...)</div>
 <div class="line">        .func(....)</div>
 <div class="line">        .property(...)</div>
@@ -187,13 +187,13 @@ $(function() {
 </ul>
 <h2>primitive에 대해 마샬링을 지원한다.</h2>
 <ul>
-<li>wint &lt;--&gt; int, unsigned short int</li>
-<li>wint64 &lt;--&gt; long long, unsigned int, int64, wint64_t</li>
+<li>nint &lt;--&gt; int, unsigned short int</li>
+<li>nint64 &lt;--&gt; long long, unsigned int, int64, nint64_t</li>
 <li>wint16 &lt;--&gt; short int, unsigned char</li>
 <li>wint8 &lt;--&gt; char</li>
-<li>wflt &lt;--&gt; float</li>
+<li>nflt &lt;--&gt; float</li>
 <li>wflt64 &lt;--&gt; double</li>
-<li>wstr &lt;--&gt; const char*, std::string</li>
+<li>nstr &lt;--&gt; const char*, std::string</li>
 <li>wT &lt;--&gt; 위 primitive 들의 const T*</li>
 </ul>
 <h2>T** 도 지원하지 않는다.</h2>
@@ -235,7 +235,7 @@ $(function() {
 <div class="fragment"><div class="line"><span class="comment">// Boost코드를 참고함.</span></div>
 <div class="line"><span class="keyword">class </span>My : <span class="keyword">public</span> obj {</div>
 <div class="line"> </div>
-<div class="line">  WRD_DEF(My) {</div>
+<div class="line">  NAMU_DEF(My) {</div>
 <div class="line">      def()</div>
 <div class="line">          .func(&amp;My::sayMsg)</div>
 <div class="line">  }</div>
@@ -266,7 +266,7 @@ $(function() {
 <h2>worldlang 타입을 C++ 메소드에 인자로 넣어도 호환이 가능하다.</h2>
 <ul>
 <li>T &lt;--&gt; T</li>
-<li>wint &lt;--&gt; Wrapper&lt;wint&gt;</li>
+<li>nint &lt;--&gt; Wrapper&lt;nint&gt;</li>
 <li>최적화를 한다면, 아예 마샬링을 건너뛰게 하면 좋을 것이다.</li>
 </ul>
 <h2>반환형을 wlist, warr 등으로 사용자가 직접 작성할 수도 있어야 한다.</h2>

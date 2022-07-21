@@ -78,15 +78,15 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span>namu {</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnamu_1_1expr.html">   10</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classnamu_1_1expr.html">expr</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1node.html">node</a> {</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classnamu_1_1expr.html">   10</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1expr.html">expr</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1node.html">node</a> {</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="comment">// expr can be casted to node. it&#39;s proxy of a node.</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classnamu_1_1expr_1_1expr_type.html">   13</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classnamu_1_1expr_1_1expr_type.html">exprType</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1wtype.html">wtype</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            WRD(ME(<a class="code" href="classnamu_1_1expr_1_1expr_type.html">exprType</a>, <a class="code" href="classnamu_1_1wtype.html">wtype</a>))</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classnamu_1_1expr_1_1expr_type.html">   13</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classnamu_1_1expr_1_1expr_type.html">exprType</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1ntype.html">ntype</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            WRD(ME(<a class="code" href="classnamu_1_1expr_1_1expr_type.html">exprType</a>, <a class="code" href="classnamu_1_1ntype.html">ntype</a>))</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;            <span class="keyword">using</span> super::asImpli;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            wbool isImpli(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> to.isSub&lt;<a class="code" href="classnamu_1_1node.html">node</a>&gt;(); }</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;            nbool isImpli(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> to.isSub&lt;<a class="code" href="classnamu_1_1node.html">node</a>&gt;(); }</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;            <a class="code" href="classnamu_1_1tstr.html">str</a> asImpli(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; from, <span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <a class="code" href="classnamu_1_1tstr.html">str</a>(((<a class="code" href="classnamu_1_1node.html">node</a>&amp;)from).run()); }</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        };</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
@@ -98,7 +98,7 @@ $(function() {
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">using</span> super::subs;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; subs() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        wbool isImpli(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        nbool isImpli(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordflow">return</span> getEval().isSub(to);</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        }</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">virtual</span> <a class="code" href="classnamu_1_1tstr.html">str</a> asImpli(<span class="keyword">const</span> <a class="code" href="classnamu_1_1type.html">type</a>&amp; to)<span class="keyword"> const override </span>{</div>
@@ -107,7 +107,7 @@ $(function() {
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">using</span> super::canRun;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        wbool canRun(<span class="keyword">const</span> ucontainable&amp; args) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        nbool canRun(<span class="keyword">const</span> ucontainable&amp; args) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keyword">const</span> src&amp; getSrc() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">const</span> point&amp; getPos() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">void</span> setPos(<span class="keyword">const</span> point&amp; newPos) <span class="keyword">override</span>;</div>
@@ -126,8 +126,8 @@ $(function() {
 <div class="ttc" id="aclassnamu_1_1node_html"><div class="ttname"><a href="classnamu_1_1node.html">namu::node</a></div><div class="ttdoc">node provides common API to manipulate its sub nodes.</div><div class="ttdef"><b>Definition:</b> node.hpp:16</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_html"><div class="ttname"><a href="classnamu_1_1expr.html">namu::expr</a></div><div class="ttdef"><b>Definition:</b> expr.hpp:10</div></div>
 <div class="ttc" id="aclassnamu_1_1type_html"><div class="ttname"><a href="classnamu_1_1type.html">namu::type</a></div><div class="ttdef"><b>Definition:</b> type.hpp:19</div></div>
+<div class="ttc" id="aclassnamu_1_1ntype_html"><div class="ttname"><a href="classnamu_1_1ntype.html">namu::ntype</a></div><div class="ttdef"><b>Definition:</b> ntype.hpp:8</div></div>
 <div class="ttc" id="astructexpr_test_html"><div class="ttname"><a href="structexpr_test.html">exprTest</a></div><div class="ttdef"><b>Definition:</b> exprTest.cc:17</div></div>
-<div class="ttc" id="aclassnamu_1_1wtype_html"><div class="ttname"><a href="classnamu_1_1wtype.html">namu::wtype</a></div><div class="ttdef"><b>Definition:</b> wtype.hpp:8</div></div>
 <div class="ttc" id="aclassnamu_1_1expr_maker_html"><div class="ttname"><a href="classnamu_1_1expr_maker.html">namu::exprMaker</a></div><div class="ttdef"><b>Definition:</b> exprMaker.hpp:7</div></div>
 <div class="ttc" id="aclassnamu_1_1tstr_html"><div class="ttname"><a href="classnamu_1_1tstr.html">namu::tstr&lt; node &gt;</a></div></div>
 <!-- start footer part -->

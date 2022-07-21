@@ -8,7 +8,7 @@ var searchData=
   ['instance_100',['instance',['../classnamu_1_1instance.html',1,'namu']]],
   ['instancer_101',['instancer',['../classnamu_1_1instancer.html',1,'namu']]],
   ['interpreter_102',['interpreter',['../classnamu_1_1interpreter.html',1,'namu']]],
-  ['isimpli_103',['isImpli',['../classnamu_1_1wtype.html#a7cb7aff8196e832b2cc20286ddf96a0d',1,'namu::wtype']]],
+  ['isimpli_103',['isImpli',['../classnamu_1_1ntype.html#a17246c59e1ac5db4c74069d842ce2cd0',1,'namu::ntype']]],
   ['iter_104',['iter',['../classiter.html',1,'']]],
   ['iterable_105',['iterable',['../classiterable.html',1,'']]],
   ['iteration_106',['iteration',['../classiteration.html',1,'']]],

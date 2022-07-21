@@ -80,7 +80,7 @@ $(function() {
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">class </span>slotLoader;</div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">typedef</span> tnarr&lt;frame&gt; frames;</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classnamu_1_1thread.html">   12</a></span>&#160;    <span class="keyword">class </span>_wout <a class="code" href="classnamu_1_1thread.html">thread</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1node.html">node</a> {</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classnamu_1_1thread.html">   12</a></span>&#160;    <span class="keyword">class </span>_nout <a class="code" href="classnamu_1_1thread.html">thread</a> : <span class="keyword">public</span> <a class="code" href="classnamu_1_1node.html">node</a> {</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        WRD(CLASS(<a class="code" href="classnamu_1_1thread.html">thread</a>, <a class="code" href="classnamu_1_1node.html">node</a>),</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            FRIEND_VERIFY(<a class="code" href="classnamu_1_1def_assign_expr.html">defAssignExpr</a>, isDefinable),</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            FRIEND_VERIFY(<a class="code" href="classnamu_1_1def_var_expr.html">defVarExpr</a>, defineVariable))</div>
@@ -101,8 +101,8 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classnamu_1_1thread.html">thread</a>(<span class="keyword">const</span> <a class="code" href="classnamu_1_1node.html">node</a>&amp; root);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">frames</a>&amp; getFrames() <span class="keyword">const</span> WRD_UNCONST_FUNC(_getFrames())</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1frame.html">frame</a>&amp; getNowFrame() <span class="keyword">const</span> WRD_UNCONST_FUNC(_getNowFrame())</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1tnarr.html">frames</a>&amp; getFrames() <span class="keyword">const</span> NAMU_UNCONST_FUNC(_getFrames())</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">const</span> <a class="code" href="classnamu_1_1frame.html">frame</a>&amp; getNowFrame() <span class="keyword">const</span> NAMU_UNCONST_FUNC(_getNowFrame())</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">static</span> <a class="code" href="classnamu_1_1thread.html">thread</a>&amp; get();</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="classnamu_1_1instancer.html">instancer</a>&amp; getInstancer();</div>
@@ -110,7 +110,7 @@ $(function() {
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="comment">// node:</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <a class="code" href="classnamu_1_1tnbicontainer.html">nbicontainer</a>&amp; subs() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        wbool canRun(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">const override</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        nbool canRun(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="classnamu_1_1tstr.html">str</a> run(<span class="keyword">const</span> <a class="code" href="classnamu_1_1tucontainable.html">ucontainable</a>&amp; args) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">void</span> rel() <span class="keyword">override</span>;</div>

@@ -84,41 +84,41 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classiter.html">iter</a>(<a class="code" href="classiteration.html">iteration</a>* newStep): _step(newStep) { _nextToMatchParamType(); }</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <a class="code" href="classiter.html">iter</a>(<span class="keyword">const</span> me&amp; rhs) { _assign(rhs); }</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    me operator+(wcnt step) {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classiter.html#a97dc263051c254a76e179f7202372aeb">next</a>(step);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    me operator+(ncnt step) {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <a class="code" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">next</a>(step);</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    }</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    me&amp; operator++() {</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classiter.html#a97dc263051c254a76e179f7202372aeb">next</a>(1);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">next</a>(1);</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    }</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    me operator++(<span class="keywordtype">int</span>) {</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        me ret = *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classiter.html#a97dc263051c254a76e179f7202372aeb">next</a>(1);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">next</a>(1);</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordflow">return</span> ret;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    }</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    me&amp; operator+=(wcnt step) {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classiter.html#a97dc263051c254a76e179f7202372aeb">next</a>(step);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    me&amp; operator+=(ncnt step) {</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">next</a>(step);</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    }</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    T&amp; operator*() { <span class="keywordflow">return</span> get(); }</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    T* operator-&gt;() { <span class="keywordflow">return</span> &amp;get(); }</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">const</span> T&amp; operator*() const WRD_UNCONST_FUNC(operator*())</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    const T* operator-&gt;() const WRD_UNCONST_FUNC(operator-&gt;())</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    explicit operator wbool()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> !isEnd(); }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">const</span> T&amp; operator*() const NAMU_UNCONST_FUNC(operator*())</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    const T* operator-&gt;() const NAMU_UNCONST_FUNC(operator-&gt;())</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    explicit operator nbool()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> !isEnd(); }</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    wbool isFrom(<span class="keyword">const</span> tucontainable&amp; it)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    nbool isFrom(<span class="keyword">const</span> tucontainable&amp; it)<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordflow">if</span>(!_step) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordflow">return</span> _step-&gt;isFrom(it);</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    }</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    wbool isEnd()<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    nbool isEnd()<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">if</span>(!_step) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">return</span> _step-&gt;isEnd();</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classiter.html#a97dc263051c254a76e179f7202372aeb">   50</a></span>&#160;    wcnt <a class="code" href="classiter.html#a97dc263051c254a76e179f7202372aeb">next</a>(wcnt step)<span class="keyword"> override </span>{</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">   50</a></span>&#160;    ncnt <a class="code" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">next</a>(ncnt step)<span class="keyword"> override </span>{</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">if</span>(!_step) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> n=0; n &lt; step ; n++) {</div>
@@ -141,7 +141,7 @@ $(function() {
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordflow">if</span>(!_step) <span class="keywordflow">return</span> nulOf&lt;tnucontainer&lt;T&gt;&gt;();</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">return</span> _step-&gt;getContainer();</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    }</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">const</span> tnucontainer&lt;T&gt;&amp; getContainer() const WRD_UNCONST_FUNC(getContainer());</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keyword">const</span> tnucontainer&lt;T&gt;&amp; getContainer() const NAMU_UNCONST_FUNC(getContainer());</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;private:</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    me&amp; _assign(const me&amp; rhs) {</div>
@@ -149,7 +149,7 @@ $(function() {
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    wbool _onSame(<span class="keyword">const</span> typeProvidable&amp; rhs)<span class="keyword"> const override </span>{</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    nbool _onSame(<span class="keyword">const</span> typeProvidable&amp; rhs)<span class="keyword"> const override </span>{</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <span class="keyword">const</span> me&amp; cast = (<span class="keyword">const</span> me&amp;) rhs;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordflow">return</span> _step == cast._step;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
@@ -158,7 +158,7 @@ $(function() {
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordflow">while</span>(!isEnd()) {</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            <span class="keywordflow">if</span>(!nul(get())) <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            <a class="code" href="classiter.html#a97dc263051c254a76e179f7202372aeb">next</a>(1);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            <a class="code" href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">next</a>(1);</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        }</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    }</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
@@ -167,8 +167,8 @@ $(function() {
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassiter_html"><div class="ttname"><a href="classiter.html">iter</a></div><div class="ttdef"><b>Definition:</b> biter.hpp:5</div></div>
+<div class="ttc" id="aclassiter_html_a79b17f1cb6a7aa6d8b595dac778f73ab"><div class="ttname"><a href="classiter.html#a79b17f1cb6a7aa6d8b595dac778f73ab">iter::next</a></div><div class="ttdeci">ncnt next(ncnt step) override</div><div class="ttdef"><b>Definition:</b> biter.hpp:51</div></div>
 <div class="ttc" id="aclassiterable_html"><div class="ttname"><a href="classiterable.html">iterable</a></div><div class="ttdef"><b>Definition:</b> biterable.hpp:2</div></div>
-<div class="ttc" id="aclassiter_html_a97dc263051c254a76e179f7202372aeb"><div class="ttname"><a href="classiter.html#a97dc263051c254a76e179f7202372aeb">iter::next</a></div><div class="ttdeci">wcnt next(wcnt step) override</div><div class="ttdef"><b>Definition:</b> biter.hpp:51</div></div>
 <div class="ttc" id="aclassiteration_html"><div class="ttname"><a href="classiteration.html">iteration</a></div><div class="ttdef"><b>Definition:</b> biteration.hpp:4</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
