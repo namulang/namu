@@ -116,3 +116,36 @@ TEST_F(defAssignExprTest, defAssignInObjectRefersInvalidFuncNegative2) {
     )SRC").shouldParsed(true);
     shouldVerified(false);
 }
+
+TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative) {
+    make().parse(R"SRC(
+        aka sys.con
+        con := con.add(1, 2)
+
+        main() void
+            sys.con.print("res=" + con)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative2) {
+    make().parse(R"SRC(
+        aka sys.con
+        con := con.add(1, 2)
+
+        main() void
+            sys.con.print("res=" + con)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(defAssignExprTest, defAssignRefersItsIdentifierNegative3) {
+    make().parse(R"SRC(
+        aka sys.con
+        con := con.add(1, 2)
+
+        main() void
+            sys.con.print("res=" + con.add(1, 2))
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}

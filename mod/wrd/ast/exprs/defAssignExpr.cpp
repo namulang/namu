@@ -48,10 +48,21 @@ namespace wrd {
 
         node& to = it.getTo();
         str new1 = it.isOnDefBlock() ? rhs.as<node>() : rhs.getEval();
-        if(nul(to))
-            thread::get()._getNowFrame().pushLocal(it.getSubName(), *new1);
-        else
-            to.run()->subs().add(it.getSubName(), *new1);
+        if(nul(to)) {
+            frame& fr = thread::get()._getNowFrame();
+            scopes& sc = (scopes&) fr.subs();
+            if(sc.getContainer().has(it.getSubName()))
+                return _srcErr(errCode::ALREADY_DEFINED_VAR, it.getSubName().c_str(),
+                        rhs.getType().getName().c_str());
+            fr.pushLocal(it.getSubName(), *new1);
+
+        } else {
+            scopes& sc = (scopes&) to.run()->subs();
+            if(sc.getContainer().has(it.getSubName()))
+                return _srcErr(errCode::ALREADY_DEFINED_VAR, it.getSubName().c_str(),
+                        rhs.getType().getName().c_str());
+            sc.add(it.getSubName(), *new1);
+        }
     })
 
     WRD_VERIFY({
