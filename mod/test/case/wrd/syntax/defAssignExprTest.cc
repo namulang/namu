@@ -86,3 +86,33 @@ TEST_F(defAssignExprTest, testDefAssign1) {
     )SRC").shouldVerified(true);
     run();
 }
+
+TEST_F(defAssignExprTest, defAssignInObjectRefersInvalidFuncNegative) {
+    make().parse(R"SRC(
+        aka sys.con c
+        nickname := foo()
+
+        foo() str
+            c.print("I'm foo!\n")
+            return 1 // this is invalid function.
+
+        main() void
+            c.print("your nickname is " + nickname)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
+
+TEST_F(defAssignExprTest, defAssignInObjectRefersInvalidFuncNegative2) {
+    make().parse(R"SRC(
+        aka sys.con c
+        nickname := boo() // refers the func that doesn't exist.
+
+        foo() str
+            c.print("I'm foo!\n")
+            return 1 // this is invalid function.
+
+        main() void
+            c.print("your nickname is " + nickname)
+    )SRC").shouldParsed(true);
+    shouldVerified(false);
+}
