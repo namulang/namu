@@ -54,6 +54,7 @@ namespace wrd {
 
     private:
         static thread** _get();
+        std::string _getDefaultPackPath() const;
 
     private:
         frames _frames;

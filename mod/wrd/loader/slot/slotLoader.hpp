@@ -17,6 +17,7 @@ namespace wrd {
         me& addPath(const std::string& filePath);
         me& addPath(const std::vector<std::string> paths);
         me& addPath(std::initializer_list<const wchar*> paths);
+        me& addRelativePath(const std::string& path);
         me& setBaseSlots(nmap& s);
         me& setReport(errReport& report);
 
