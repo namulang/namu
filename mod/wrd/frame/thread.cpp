@@ -8,6 +8,14 @@ namespace wrd {
 
     WRD_DEF_ME(thread)
 
+    std::string me::_getDefaultPackPath() const {
+#ifdef WRD_BUILD_PLATFORM_IS_LINUX
+        return "/usr/share/wrd/pack/";
+#else
+        return "pack/";
+#endif
+    }
+
     const nmap& me::getSlots() const {
         static tstr<nmap> inner;
 
@@ -15,7 +23,7 @@ namespace wrd {
             WRD_I("initiates loading system slots.");
             inner.bind(new nmap());
             errReport report;
-            slotLoader().setReport(report).setBaseSlots(*inner).addPath("pack/").load();
+            slotLoader().setReport(report).setBaseSlots(*inner).addPath(_getDefaultPackPath()).load();
             WRD_I("%d system slots has been loaded.", inner->len());
 
 #if WRD_IS_DBG

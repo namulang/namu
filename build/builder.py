@@ -426,12 +426,11 @@ def pub(arg):
         printInfoEnd("cleaning previous outputs of publishing...")
         debianDir = cwd + "/debian"
         os.chdir(debianDir)
-        os.system("rm -rf ./usr")
-        os.system("mkdir usr")
-        os.system("mkdir usr/local")
-        os.system("mkdir usr/local/bin")
-        os.system("mkdir usr/local/lib")
-        os.system("mkdir usr/local/include")
+        os.system("mkdir usr/bin")
+        os.system("mkdir usr/lib")
+        os.system("mkdir usr/include")
+        os.system("mkdir usr/share")
+        os.system("mkdir usr/share/wrd")
         printOk("done.")
         os.chdir(cwd)
 
@@ -440,10 +439,11 @@ def pub(arg):
             return -1
 
         os.chdir(debianDir)
-        target = debianDir + "/usr/local/"
+        target = debianDir + "/usr/"
         printInfoEnd("copy outputs into debian target directory")
         os.system("cp " + binDir + "/wrc " + target + "bin")
         os.system("cp " + binDir + "/*.so " + target + "lib")
+        os.system("cp -r " + binDir + "/pack " + target + "share/wrd")
         printOk("done")
 
         printInfoEnd("packaging...")

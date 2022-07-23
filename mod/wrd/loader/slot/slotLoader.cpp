@@ -74,6 +74,11 @@ namespace wrd {
             addPath(e);
         return *this;
     }
+    me& me::addRelativePath(const std::string& path) {
+        std::string cwd = fsystem::getCurrentDir() + fsystem::DELIMITER;
+        WRD_I("finding slots relative to %s or absolute", cwd.c_str());
+        return addPath(cwd + path);
+    }
 
     me& me::setReport(errReport& report) {
         _report.bind(report);
@@ -86,13 +91,10 @@ namespace wrd {
     }
 
     void me::_makeSlots(nmap& tray) {
-        std::string cwd = fsystem::getCurrentDir() + fsystem::DELIMITER;
-        WRD_I("finding slots relative to %s or absolute", cwd.c_str());
-
         for(const std::string& path : _paths) {
             WRD_I("try slot path: %s", path.c_str());
 
-            auto e = fsystem::find(cwd + path);
+            auto e = fsystem::find(path);
             while(e.next())
                 if(e.getName() == MANIFEST_FILENAME)
                     _addNewSlot(tray, e.getDir(), e.getName());
@@ -101,6 +103,7 @@ namespace wrd {
 
     void me::_addNewSlot(nmap& tray, const std::string& dirPath, const std::string& manifestName) {
         std::string manifestPath = dirPath + fsystem::DELIMITER + manifestName;
+        WRD_I("manifest path: %s", manifestPath.c_str());
 
         manifest mani = _interpManifest(dirPath, manifestPath);
         if(!mani.isValid()) {
