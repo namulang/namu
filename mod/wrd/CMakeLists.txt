@@ -62,14 +62,16 @@ set_target_properties(${moduleName} PROPERTIES SUFFIX ".${WRD_LIBRARY_EXTENSION}
 target_link_libraries(${moduleName} ${dependencies})
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
-    add_custom_command(
-        TARGET ${moduleName}
-        POST_BUILD
-        COMMENT "bison will generate a report for generated parser by bison."
-        COMMAND dot -Tjpg ${PARSER_SRC_DIR}/${BISON_REPORT_FILENAME}.gv
-            -o ${PARSER_SRC_DIR}/${BISON_REPORT_FILENAME}.jpg
-            DEPENDS ${PARSER_SRC_DIR}/${BISON_REPORT_FILENAME}.gv
-        VERBATIM)
+    IF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
+        add_custom_command(
+            TARGET ${moduleName}
+            POST_BUILD
+            COMMENT "bison will generate a report for generated parser by bison."
+            COMMAND dot -Tjpg ${PARSER_SRC_DIR}/${BISON_REPORT_FILENAME}.gv
+                -o ${PARSER_SRC_DIR}/${BISON_REPORT_FILENAME}.jpg
+                DEPENDS ${PARSER_SRC_DIR}/${BISON_REPORT_FILENAME}.gv
+            VERBATIM)
+    ENDIF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
 endif (${CMAKE_BUILD_TYPE} STREQUAL Debug)
 
 #       let MSVC follow macro expansion of standard:

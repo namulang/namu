@@ -335,9 +335,17 @@ def _incBuildCnt():
     printOk("done")
 
 def _make():
+    global cwd
     if isWindow():
-        print("please build using visual studio on your own.")
+        printInfoEnd("build the generated solution using visual studio's msbuild tool...")
+        res = os.system("msbuild " + cwd + "\\wrd.sln")
+        if res != 0:
+            printErr("failed")
+        else:
+            printOkEnd("built.")
+        printInfo("please check your bin/{configuration} directory for these output files.")
         return
+
     print("")
     make_option = "-j8 -s"  # j4 -> 4 multithread.
                             # s ->  don't print command.
@@ -557,6 +565,10 @@ def checkDependencies(deps):
 
     if _extractPythonVersion(cmdstr(python3 + " --version")) < 3.6:
         printErr("requires python over v3.6")
+        return -1
+
+    if isWindow() and not shutil.which("msbuild"):
+        printErr("couldn't find 'msbuild.exe' on your $PATH env. please add it.")
         return -1
 
     return 0
