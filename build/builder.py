@@ -477,7 +477,7 @@ def pub(arg):
         printOk("done")
         printInfoEnd("make an archive")
         os.chdir(binDir + "/..")
-        os.system("zip -r wrd-" + str(ver_major) + "." + str(ver_minor) + "." + str(ver_fix) + "-amd64-release-macos.zip bin")
+        os.system("tar -zcvf wrd-" + str(ver_major) + "." + str(ver_minor) + "." + str(ver_fix) + "-amd64-release-macos.tar.gz bin")
         printOk("done")
         return 0
 
