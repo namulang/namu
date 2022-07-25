@@ -184,14 +184,16 @@ config=""
 def dbgBuild():
     global config
 
+    winProp="-t:Rebuild -p:Configuration=Debug"
     config="-DCMAKE_BUILD_TYPE=Debug"
     clean()
     return build(True)
 
 def relBuild():
-    global config
+    global config, winProp
 
     clean()
+    winProp="-t:Rebuild -p:Configuration=Release"
     config="-DCMAKE_BUILD_TYPE=Release"
     return build(True)
 
@@ -218,7 +220,6 @@ def _createMakefiles():
     
     printInfoEnd("generating makefiles as " + generator + "...")
 
-    global config
     res = os.system("cmake . -G \"" + generator + "\" " + config)
     if res != 0:
         return -1
@@ -335,10 +336,10 @@ def _incBuildCnt():
     printOk("done")
 
 def _make():
-    global cwd
+    global cwd, config, winProp
     if isWindow():
         printInfoEnd("build the generated solution using visual studio's msbuild tool...")
-        res = os.system("msbuild " + cwd + "\\wrd.sln")
+        res = os.system("msbuild " + winProp + " " + cwd + "\\wrd.sln")
         if res != 0:
             printErr("failed")
         else:
@@ -695,6 +696,7 @@ resDir = ""
 binDir = ""
 externalDir = ""
 generator = "Visual Studio 17 2022" if isWindow() else "Unix Makefiles"
+winProp = ""
 
 def _init():
     global cwd, wrdDir, binDir, externalDir, resDir
