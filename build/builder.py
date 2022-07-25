@@ -490,6 +490,26 @@ def pub(arg):
         printOk("done")
         return 0
 
+    elif arg == 'win':
+        if relBuild() != 0:
+            printErr("release build failed. but keep publishing.")
+            
+        printInfoEnd("cleaning redandunt files to package")
+        os.chdir(binDir)
+        os.system("del /S test\\*")
+        os.system("rmdir test")
+        os.system("del logs")
+        os.system("copy ..\\LICENSE .")
+        os.system("copy ..\\README.md .")
+        os.system("copy ..\\CHANGELOGS .")
+        os.system("copy Release\\* .")
+        os.system("del /S /Q Release\\*")
+        os.system("rmdir Release")
+
+        printOk("done")
+        printInfoEnd("please make an archive.")
+        return 0
+
     printErr("unknown platform name: " + arg)
     return -1
 
