@@ -69,8 +69,8 @@ jobs:
 
     - name: install apps from choco
       uses: crazy-max/ghaction-chocolatey@v2.0.0
-        with:
-          args: install -y wget unzip
+      with:
+        args: install -y wget unzip
 
     - name: get flex_bison for windows & unzip
       uses: |
