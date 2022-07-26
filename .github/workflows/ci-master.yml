@@ -66,20 +66,26 @@ jobs:
     steps:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
-      
+
+    - name: install apps from choco
+      uses: crazy-max/ghaction-chocolatey@v2.0.0
+        with:
+          args: install -y wget unzip
+
+    - name: get flex_bison for windows & unzip
+      uses: |
+        mkdir ${{github.workspace}}\flex_bison
+        wget -O flex_bison\flex_bison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.25/win_flex_bison-2.5.25.zip
+        cd flex_bison
+        unzip flex_bison.zip
+        set PATH=%PATH%;${{github.workspace}}\flex_bison
+
+    - name: checkout repository codes
+      uses: actions/checkout@v2
+
     - name: generates csproj files
       run: |
-        $PYTHON ${{github.workspace}}/build/builder.py rel
-      
-    - name: Build app for release
-      run: |
-        msbuild ${{github.workspace}}\build\mod\indep\indep.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
-        msbuild ${{github.workspace}}\build\mod\clog\clog.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
-        msbuild ${{github.workspace}}\build\mod\meta\meta.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
-        msbuild ${{github.workspace}}\build\mod\memlite\memlite.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
-        msbuild ${{github.workspace}}\build\mod\swrd\swrd.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
-        msbuild ${{github.workspace}}\build\mod\wrd\wrd.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
-        msbuild ${{github.workspace}}\build\mod\wrc\wrc.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+        $PYTHON ${{github.workspace}}/build/builder.py dbg
 
   publish-doc:
     needs: [build-on-linux, build-on-macos]
