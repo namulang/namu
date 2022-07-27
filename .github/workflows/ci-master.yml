@@ -85,7 +85,7 @@ jobs:
 
     - name: generates csproj files
       run: |
-        $PYTHON ${{github.workspace}}\build\builder.py dbg
+        python ${{github.workspace}}\build\builder.py dbg
 
   publish-doc:
     needs: [build-on-linux, build-on-macos]
