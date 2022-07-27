@@ -22,7 +22,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 def printErr(msg):
-    print(bcolors.WARNING + " ✘ " + bcolors.ENDC + msg)
+    print(bcolors.WARNING + " × " + bcolors.ENDC + msg)
 
 def printInfo(msg):
     print(bcolors.OKCYAN + msg + bcolors.ENDC)
@@ -31,10 +31,10 @@ def printInfoEnd(msg):
     print(bcolors.OKCYAN + msg + bcolors.ENDC, end=" ")
 
 def printOk(msg):
-    print(bcolors.OKGREEN + " ✓ " + bcolors.ENDC + msg)
+    print(bcolors.OKGREEN + " v " + bcolors.ENDC + msg)
 
 def printOkEnd(msg):
-    print(bcolors.OKGREEN + " ✓ " + bcolors.ENDC + msg, end=' ')
+    print(bcolors.OKGREEN + " v " + bcolors.ENDC + msg, end=' ')
 
 def cmdstr(cmd):
     try:
