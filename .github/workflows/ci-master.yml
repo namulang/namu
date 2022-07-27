@@ -66,6 +66,7 @@ jobs:
     steps:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
+      shell: cmd
 
     - name: install apps from choco
       uses: crazy-max/ghaction-chocolatey@v2.0.0
@@ -78,7 +79,7 @@ jobs:
         wget -O flex_bison\flex_bison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.25/win_flex_bison-2.5.25.zip
         cd flex_bison
         unzip flex_bison.zip
-        set PATH=%PATH%;${{github.workspace}}\flex_bison
+        $env:PATH = "$env:PATH;${{github.workspace}}\flex_bison
 
     - name: checkout repository codes
       uses: actions/checkout@v2
