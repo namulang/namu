@@ -81,6 +81,8 @@ jobs:
         wget -O flex_bison\flex_bison.zip https://github.com/lexxmark/winflexbison/releases/download/v2.5.25/win_flex_bison-2.5.25.zip
         cd flex_bison
         unzip flex_bison.zip
+        ren win-flex.exe flex.exe
+        ren win-bison.exe bison.exe
         $env:PATH = "$env:PATH;${{github.workspace}}\flex_bison"
         echo $env:PATH
         python ${{github.workspace}}\build\builder.py dbg
