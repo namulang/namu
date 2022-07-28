@@ -1,7 +1,7 @@
 def entrypoints
     def cpp
-        path := './libsamplePack.pack'
+        path := './libsys.pack'
 
-name := 'samplePack'
-ver := 2.1.0
+name := 'sys'
+ver := 0.0.1
 author := 'kniz'

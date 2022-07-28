@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace wrd;
 
-struct helloWorld {
+struct con {
     void say() {
         std::cout << "hello world!\n";
     }
@@ -15,11 +15,18 @@ struct helloWorld {
         std::cout << msg;
         return msg;
     }
+
+    std::string input() {
+        std::string ret;
+        std::cin >> ret;
+        return ret;
+    }
 };
 
 extern "C" void wrd_bridge_cpp_entrypoint(bicontainable* tray) {
-    tray->add("helloWorld", tcppBridge<helloWorld>::def()
-        ->func("say", &helloWorld::say)
-        ->func("add", &helloWorld::add)
-        ->func("print", &helloWorld::print));
+    tray->add("con", tcppBridge<con>::def()
+        ->func("say", &con::say)
+        ->func("add", &con::add)
+        ->func("print", &con::print)
+        ->func("input", &con::input));
 }
