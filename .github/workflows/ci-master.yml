@@ -64,6 +64,9 @@ jobs:
     runs-on: windows-latest
     
     steps:
+    - name: checkout repository codes
+      uses: actions/checkout@v2
+
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.1
 
@@ -79,13 +82,6 @@ jobs:
         cd flex_bison
         unzip flex_bison.zip
         $env:PATH = "$env:PATH;${{github.workspace}}\flex_bison"
-        echo $env:PATH
-
-    - name: checkout repository codes
-      uses: actions/checkout@v2
-
-    - name: generates csproj files
-      run: |
         echo $env:PATH
         python ${{github.workspace}}\build\builder.py dbg
 
