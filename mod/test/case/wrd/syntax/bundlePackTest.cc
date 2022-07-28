@@ -10,7 +10,7 @@ namespace {
 TEST_F(bundlePackTest, defaultDef) {
     make().parse(R"SRC(
         main() void
-            samplePack.helloWorld.print("hello \\tworld!\n")
+            sys.con.print("hello \\tworld!\n")
     )SRC").shouldVerified(true);
     run();
 }
@@ -19,7 +19,17 @@ TEST_F(bundlePackTest, defaultDef2) {
     make().parse(R"SRC(
         msg := "hello\t"
         main() void
-            samplePack.helloWorld.print(msg + "world!\n")
+            sys.con.print(msg + "world!\n")
+    )SRC").shouldVerified(true);
+    run();
+}
+
+TEST_F(bundlePackTest, defaultDef3) {
+    make().parse(R"SRC(
+        main() void
+            sys.con.print("please enter your name: ")
+            name := sys.con.input()
+            sys.con.print("hello, " + name + "!\n")
     )SRC").shouldVerified(true);
     run();
 }
