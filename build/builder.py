@@ -407,7 +407,7 @@ def rebuild():
     return build(true)
 
 def build(incVer):
-    if checkDependencies(["git", "cmake", "clang", "bison", "flex", "dot"]):
+    if checkDependencies(["git", "cmake", "clang", "bison", "flex"]):
         printErr("This program needs following softwares to be fully functional.")
         return -1
 
@@ -581,7 +581,11 @@ def checkDependencies(deps):
     print("")
 
     if not isWindow() and not shutil.which("make"):
-        printErr("make for linux is NOT installed!")
+        printErr("make is NOT installed!")
+        return -1
+
+    if not isWindow() and not shutil.which("dot"):
+        printErr("dot is NOT installed!")
         return -1
 
     if _extractPythonVersion(cmdstr(python3 + " --version")) < 3.6:
