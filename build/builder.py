@@ -221,7 +221,7 @@ def _createMakefiles():
     printInfoEnd("generating makefiles as " + generator + "...")
 
     res = os.system("cmake . -G \"" + generator + "\" " + config)
-    if res != 0:
+    if not isWindow() and res != 0:
         return -1
 
     printOk("done")
