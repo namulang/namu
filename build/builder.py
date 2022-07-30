@@ -339,10 +339,9 @@ def _make():
     global cwd, config, winProp
     if isWindow():
         printInfoEnd("build the generated solution using visual studio's msbuild tool...")
-        printInfo("msbuild " + winProp + " " + cwd + "\\wrd.sln")
-        os.system("dir " + cwd)
-        os.system("msbuild -h")
-        res = os.system("msbuild " + winProp + " " + cwd + "\\wrd.sln")
+        os.system("dir " + cwd + "\\mod")
+        os.system("dir " + cwd + "\\mod\\wrc")
+        res = os.system("msbuild " + winProp + " " + cwd + "\\mod\\wrc\\wrc.vcxproj")
         if res != 0:
             printErr("failed")
         else:
