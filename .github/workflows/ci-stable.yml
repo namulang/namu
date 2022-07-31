@@ -73,10 +73,10 @@ jobs:
         name: wrd-release-macos
         path: wrd-release-macos.tar
 
-release-on-windows:
+  release-on-windows:
     name: release on windows
     runs-on: windows-latest
-    
+
     steps:
     - name: checkout repository codes
       uses: actions/checkout@v2
