@@ -1,4 +1,20 @@
 # Changelogs
+## v0.2.2 Mana Update
+released on 07-17 2022
+build#520
+
+### major changes
+* cae5b20b (HEAD -> master, origin/master, origin/HEAD) builder: feat: release outputs for Windows on stable branch
+* 64b27401 wrd: fix: compatiblity issue for windows
+* 6533a5a4 wrd: feat: keyword 'aka' changed to new syntax
+* 12420876 wrd: refactor: replace wtype to node of getEvalType()
+* 22df5700 wrd: feat: add 'aka'
+* b9966971 wrd: feat: add muna
+* b949093c wrd: fix: missing implicit casting
+* 5e9ef105 wrd: fix: core crashed when iterpret paranthesis '(', ')'
+
+
+
 ## v0.2.1 Mana Update
 released on 06-18 2022
 build#495
@@ -32,6 +48,8 @@ build#495
 * c5eb689c wrd: fix: apply dum containers into primitives
 * 5d33e74a wrd: feat: add assignExpr
 * 623c390e wrd: feat: add 'comment' syntax
+
+
 
 ## v0.2.0 Mana Update
 released on 05-14 2022
