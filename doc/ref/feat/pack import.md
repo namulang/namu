@@ -52,7 +52,7 @@ main() void
 * 이 경우 가장 최신 버전을 기본적으로 loading한다.
 * pack의 manifest에 dependencies를 선언한 경우, 해당 버전을 로드한다.
 
-```swrd
+```seedling
 dependencies := [
     {id: 'mymodule', ver: 0.1.2, ....},
 ]
@@ -61,7 +61,7 @@ dependencies := [
 ## 전혀 다른 2개 이상의 모듈이름이 중복될 수 있다. 
 
 * 이 경우 manifest에 name 을 별도로 정의하면 된다.
-```swrd
+```seedling
 dependencies := [
     {id: 'mymodule', ver: 0.1.+, at: https://github.com/...},
     {id: 'kniz/mymodule', name: 'mymodule2' at: ./module/path.pak} // rename to mymodule2 to solve name confliction

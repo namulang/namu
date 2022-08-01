@@ -10,7 +10,7 @@
 #   doc:        changes to documentation
 #   test:       adding or refactoring tests. no production code change
 #   chore:      updating grunt tasks etc. no production code change
-# Module is one of sub module like 'interp', 'swrd' or blank if
+# Module is one of sub module like 'interp', 'seedling' or blank if
 # the commit affects entire this repository.
 # e.g.
 #chore: change build envrionment.

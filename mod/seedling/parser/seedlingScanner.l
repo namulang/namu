@@ -2,7 +2,7 @@
 namespace wrd {
     class sobj;
 }
-#include "swrdParser.hpp"
+#include "seedlingParser.hpp"
 #include "../common.hpp"
 using namespace std;
 using namespace wrd;

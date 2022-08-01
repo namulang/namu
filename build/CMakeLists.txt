@@ -6,7 +6,7 @@ set(SHOW_CMAKE_VARIABLES 1)
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 2)
 set(VERSION_FIX 2)
-set(BUILD_COUNT 527)
+set(BUILD_COUNT 530)
 set(VERSION_NAME "Mana")
 set(VERSION_VALUE "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_FIX}")
 set(VERSION "${PROJECT_NAME} ${UPDATE_NAME} v${VERSION_VALUE}")
@@ -72,7 +72,7 @@ set(WRD_DEFAULT_INC_DIR
     ${WRD_DIR}/mod/meta
     ${WRD_DIR}/mod/memlite
     ${WRD_DIR}/mod/wrd
-    ${WRD_DIR}/mod/swrd
+    ${WRD_DIR}/mod/seedling
     /usr/local/include)
 include_directories(${WRD_DEFAULT_INC_DIR})
 

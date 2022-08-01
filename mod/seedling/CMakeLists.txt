@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 message("building ${moduleName}...")
-set(moduleName "swrd")
+set(moduleName "seedling")
 set(defCandidates "WRD_TAG=\"${moduleName}\"" "__${moduleName}=1")
 foreach(def ${defCandidates})
     message("\tadd define ${def}")
@@ -14,9 +14,9 @@ message("\tconfigure_files...")
 find_package(BISON)
 find_package(FLEX)
 
-bison_target(swrdParser parser/swrdParser.y ${CMAKE_CURRENT_SOURCE_DIR}/parser/swrdParser.cpp COMPILE_FLAGS "-l")
-flex_target(swrdScanner parser/swrdScanner.l ${CMAKE_CURRENT_SOURCE_DIR}/parser/swrdScanner.cpp COMPILE_FLAGS "-L")
-add_flex_bison_dependency(swrdScanner swrdParser)
+bison_target(seedlingParser parser/seedlingParser.y ${CMAKE_CURRENT_SOURCE_DIR}/parser/seedlingParser.cpp COMPILE_FLAGS "-l")
+flex_target(seedlingScanner parser/seedlingScanner.l ${CMAKE_CURRENT_SOURCE_DIR}/parser/seedlingScanner.cpp COMPILE_FLAGS "-L")
+add_flex_bison_dependency(seedlingScanner seedlingParser)
 
 #  defines:
 #      define sources:
@@ -25,11 +25,11 @@ file(GLOB_RECURSE sources
     "*.cpp"
 )
 
-foreach(file ${BISON_swrdParser_OUTPUTS})
+foreach(file ${BISON_seedlingParser_OUTPUTS})
     list(APPEND sources ${file})
 endforeach(file)
 
-foreach(file ${FLEX_swrdScanner_OUTPUTS})
+foreach(file ${FLEX_seedlingScanner_OUTPUTS})
     list(APPEND sources ${file})
 endforeach(file)
 

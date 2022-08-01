@@ -15,7 +15,7 @@ foreach(d ${dependencies})
     set(libraries ${libraries} PUBLIC ${d})
 endforeach(d)
 
-configure_file("manifest.swrd" "${packOutDir}/manifest.swrd")
+configure_file("manifest.seedling" "${packOutDir}/manifest.seedling")
 
 #      define sources:
 file(GLOB_RECURSE sources
