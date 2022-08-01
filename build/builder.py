@@ -437,6 +437,7 @@ def pub(arg):
         printInfoEnd("cleaning previous outputs of publishing...")
         debianDir = cwd + "/debian"
         os.chdir(debianDir)
+        os.system("mkdir usr")
         os.system("mkdir usr/bin")
         os.system("mkdir usr/lib")
         os.system("mkdir usr/include")
@@ -470,6 +471,9 @@ def pub(arg):
         printInfoEnd("remove local shared libraries...")
         os.system("rm " + binDir + "/*.so")
         printOk("done")
+
+        printInfoEnd("remove debian intermediate files...")
+        os.system("rm -rf " + "debian/usr/")
         return 0
 
     elif arg == 'mac':
