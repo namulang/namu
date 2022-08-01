@@ -66,10 +66,10 @@ bin/
 **/interpreter/bison/*.output
 **/interpreter/bison/*.gv
 **/interpreter/bison/*.jpg
-**/parser/swrdParser.cpp
-**/parser/swrdParser.hpp
-**/parser/swrdScanner.cpp
-**/parser/swrdScanner.hpp
+**/parser/seedlingParser.cpp
+**/parser/seedlingParser.hpp
+**/parser/seedlingScanner.cpp
+**/parser/seedlingScanner.hpp
 **/parser/*.output
 **/parser/*.gv
 **/src/parser/*.jpg

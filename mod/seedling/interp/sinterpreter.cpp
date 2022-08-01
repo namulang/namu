@@ -1,5 +1,5 @@
-#include "swrd.hpp"
-#include "../parser/swrdParser.hpp"
+#include "seedling.hpp"
+#include "../parser/seedlingParser.hpp"
 #include <fstream>
 #include "flex.hpp"
 
@@ -31,7 +31,7 @@ namespace wrd {
 
         ret->setName(fileName);
         fclose(yyin);
-        WRD_I("%s swrd file interpreted.", fileName.c_str());
+        WRD_I("%s seedling file interpreted.", fileName.c_str());
         return ret;
     }
     tstr<sobj> me::interpFile(const std::string& path) {

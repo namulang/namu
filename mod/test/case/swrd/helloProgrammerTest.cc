@@ -89,7 +89,7 @@ TEST_F(helloProgrammerTest, testNullObjNegative) {
 
 TEST_F(helloProgrammerTest, testVerObject) {
     const std::string script =
-        "def man\n" // TODO: swrd parser only believe that def keyword will be front of script.
+        "def man\n" // TODO: seedling parser only believe that def keyword will be front of script.
         "   dummy := 5\n"
         "   name := 'dark souls'\n"
         "   ver := 1.0.8\n";

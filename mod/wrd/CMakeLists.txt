@@ -47,7 +47,7 @@ endforeach(file)
 foreach(e ${sources})
     message("\tembeding ${e}")
 endforeach(e)
-set(dependencies ${dependencies} indep clog meta memlite swrd)
+set(dependencies ${dependencies} indep clog meta memlite seedling)
 IF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
     set(dependencies ${dependencies} dl) # dynamic linking lib of posix compatiables.
 ENDIF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)

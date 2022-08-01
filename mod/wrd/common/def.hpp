@@ -5,7 +5,7 @@
 
 namespace wrd {
 
-    const std::string MANIFEST_FILENAME = "manifest.swrd";
+    const std::string MANIFEST_FILENAME = "manifest.seedling";
 
     class node;
     class wtype;

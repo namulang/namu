@@ -2,7 +2,7 @@
 
 #ifdef WIN32
 #	undef _wout
-#	ifdef __swrd = 1 // I'm currently building module
+#	ifdef __seedling = 1 // I'm currently building module
 #		define _wout __declspec(dllexport)
 #	else
 #		define _wout __declspec(dllimport)

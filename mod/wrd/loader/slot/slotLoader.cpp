@@ -17,7 +17,7 @@ namespace wrd {
     }
 
     manifest me::_interpManifest(const std::string& dir, const std::string& manPath) const {
-        // TODO: open slot zip file -> extract manifest.swrd file -> interpret it & load values
+        // TODO: open slot zip file -> extract manifest.seedling file -> interpret it & load values
         tstr<sobj> loaded = sinterpreter().interpFile(manPath);
         if(!loaded)
             return WRD_E("error to load %s: interpretion err", manPath.c_str()), manifest();
