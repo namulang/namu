@@ -3,10 +3,10 @@
 #include "../common.hpp"
 #include "clonable.hpp"
 #include "immutableTactic.hpp"
-#include "../type/wtype.hpp"
+#include "../type/ntype.hpp"
 
 namespace namu {
-    class _wout param : public instance, public clonable {
+    class _nout param : public instance, public clonable {
         WRD(CLASS(param, instance))
 
     public:

@@ -3,23 +3,23 @@
 
 namespace namu {
 
-    const wchar* helpFlag::getName() const {
+    const nchar* helpFlag::getName() const {
         return "-h";
     }
 
-    const wchar* helpFlag::getDescription() const {
+    const nchar* helpFlag::getDescription() const {
         return R"DESC(
         show help documents.
         list all of available commands and description for how to use them.)DESC";
     }
 
-    const wchar* helpFlag::_getRegExpr() const {
+    const nchar* helpFlag::_getRegExpr() const {
         return "^\\-h$";
     }
 
 
 
-    wbool helpFlag::_onTake(const args& tray, cli& c, interpreter& ip) const {
+    nbool helpFlag::_onTake(const args& tray, cli& c, interpreter& ip) const {
         _printUsage();
 
         const flags& opts = c.getFlags();

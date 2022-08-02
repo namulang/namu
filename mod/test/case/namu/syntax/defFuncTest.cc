@@ -18,7 +18,7 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
         const func& f = res.sub<func>("main", narr());
         ASSERT_FALSE(nul(f));
         ASSERT_EQ(f.getParams().len(), 0);
-        ASSERT_EQ(f.getRet().getType(), ttype<wVoid>());
+        ASSERT_EQ(f.getRet().getType(), ttype<nVoid>());
     }
 
     if(make().parse(R"SRC(
@@ -30,10 +30,10 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
 
         const func& fwrong = res.sub<func>("main", narr());
         ASSERT_TRUE(nul(fwrong));
-        const func& f = res.sub<func>("main", narr(wInt(), wStr()));
+        const func& f = res.sub<func>("main", narr(nInt(), nStr()));
         ASSERT_FALSE(nul(f));
         ASSERT_EQ(f.getParams().len(), 2);
-        ASSERT_EQ(f.getRet().getType(), ttype<wVoid>());
+        ASSERT_EQ(f.getRet().getType(), ttype<nVoid>());
 
         const params& ps = f.getParams();
         ASSERT_FALSE(nul(ps));
@@ -41,10 +41,10 @@ TEST_F(defFuncTest, distinguishDefineFuncOrCall) {
 
         const param& arg1 = ps[0];
         ASSERT_EQ(arg1.getName(), "argc");
-        ASSERT_EQ(arg1.getOrigin().getType(), ttype<wInt>());
+        ASSERT_EQ(arg1.getOrigin().getType(), ttype<nInt>());
         const param& arg2 = ps[1];
         ASSERT_EQ(arg2.getName(), "argv");
-        ASSERT_EQ(arg2.getOrigin().getType(), ttype<wStr>());
+        ASSERT_EQ(arg2.getOrigin().getType(), ttype<nStr>());
     }
 }
 

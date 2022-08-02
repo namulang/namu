@@ -4,9 +4,9 @@
 
 namespace namu {
 
-    class _wout verSobj : public termSobj {
-        WRD_DECL_ME(verSobj, termSobj)
-        WRD_INIT_META(verSobj)
+    class _nout verSobj : public termSobj {
+        NAMU_DECL_ME(verSobj, termSobj)
+        NAMU_INIT_META(verSobj)
 
     public:
         verSobj(int major, int minor, int fix)
@@ -19,12 +19,12 @@ namespace namu {
         explicit verSobj(const std::string& verStr): super(verStr) {
             _parseVerStr(verStr);
         }
-        explicit verSobj(const wchar* verStr): super(verStr) {
+        explicit verSobj(const nchar* verStr): super(verStr) {
             _parseVerStr(std::string(verStr));
         }
 
-        wbool operator>(const me& rhs) const {
-            wint res = _isFromBigger(_maj, rhs._maj);
+        nbool operator>(const me& rhs) const {
+            nint res = _isFromBigger(_maj, rhs._maj);
             if(res != 0) return res == 1;
 
             res = _isFromBigger(_min, rhs._min);
@@ -33,8 +33,8 @@ namespace namu {
             return _isFromBigger(_fix, rhs._fix) > 0;
         }
 
-        wbool operator<(const me& rhs) const {
-            wint res = _isFromBigger(rhs._maj, _maj);
+        nbool operator<(const me& rhs) const {
+            nint res = _isFromBigger(rhs._maj, _maj);
             if(res != 0) return res == 1;
 
             res = _isFromBigger(rhs._min, _min);
@@ -42,20 +42,20 @@ namespace namu {
 
             return _isFromBigger(rhs._fix, _fix) > 0;
         }
-        wbool operator==(const me& rhs) const {
+        nbool operator==(const me& rhs) const {
             if(this == &rhs) return true;
 
             return _maj == rhs._maj &&
                 _min == rhs._min &&
                 _fix == rhs._fix;
         }
-        wbool operator!=(const me& rhs) const { return !operator==(rhs); }
-        wbool operator<=(const me& rhs) const { return !operator>(rhs); }
-        wbool operator>=(const me& rhs) const { return !operator<(rhs); }
+        nbool operator!=(const me& rhs) const { return !operator==(rhs); }
+        nbool operator<=(const me& rhs) const { return !operator>(rhs); }
+        nbool operator>=(const me& rhs) const { return !operator<(rhs); }
 
-        wint asMajor() const { return _maj; }
-        wint asMinor() const { return _min; }
-        wint asFix() const { return _fix; }
+        nint asMajor() const { return _maj; }
+        nint asMinor() const { return _min; }
+        nint asFix() const { return _fix; }
 
         const type& getType() const override {
             return ttype<me>::get();
@@ -63,7 +63,7 @@ namespace namu {
 
 
     private:
-        static wint _isFromBigger(wint from, wint to) {
+        static nint _isFromBigger(nint from, nint to) {
             if(from > to) return 1;
             if(from == to) return 0;
             return -1;
@@ -73,10 +73,10 @@ namespace namu {
             std::stringstream ss(verStr);
             std::string token;
 
-            wint* them[] = {&_maj, &_min, &_fix};
+            nint* them[] = {&_maj, &_min, &_fix};
             for(int n = 0; n < VER_LEN; n++) {
                 if(!std::getline(ss, token, DELIMITER[0])) {
-                    WRD_E("error parsing to %s", verStr.c_str());
+                    NAMU_E("error parsing to %s", verStr.c_str());
                     return;
                 }
 
@@ -85,11 +85,11 @@ namespace namu {
         }
 
     private:
-        wint _maj;
-        wint _min;
-        wint _fix;
-        static constexpr wint VER_LEN = 3;
-        static constexpr const wchar* DELIMITER = ".";
+        nint _maj;
+        nint _min;
+        nint _fix;
+        static constexpr nint VER_LEN = 3;
+        static constexpr const nchar* DELIMITER = ".";
     };
 }
 

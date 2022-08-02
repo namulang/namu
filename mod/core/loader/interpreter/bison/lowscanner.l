@@ -7,7 +7,7 @@
 #include "../loweventer.hpp"
 #include <iostream>
 #include <functional>
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
 #   define YY_NO_UNISTD_H 1
 #endif
 namespace {
@@ -50,7 +50,7 @@ namespace {
 [%*+-/\(\.\,] { return yyget_extra(yyscanner)->onIgnoreIndent(yytext[0]); }
 [\)] { return yytext[0]; }
 \-\- {
-    WRD_E("DOUBLE_MINUS");
+    NAMU_E("DOUBLE_MINUS");
     return DOUBLE_MINUS;
 }
 \-> { return ARROW; }
@@ -84,43 +84,43 @@ as { return AS; }
 
 [[:digit:]]+ {
     yylval->asInt = atoi(yytext);
-    WRD_DI("scanner: INTVAL=%s", yytext);
+    NAMU_DI("scanner: INTVAL=%s", yytext);
     return INTVAL;
 }
 
 [[:digit:]]+\.[[:digit:]]+ {
     yylval->asFlt = std::stod(yytext);
-    WRD_DI("scanner: FLTVAL=%f", yylval->asFlt);
+    NAMU_DI("scanner: FLTVAL=%f", yylval->asFlt);
     return FLTVAL;
 }
 
 true {
     yylval->asBool = true;
-    WRD_DI("scanner: BOOLVAL=true");
+    NAMU_DI("scanner: BOOLVAL=true");
     return BOOLVAL;
 }
 
 false {
     yylval->asBool = false;
-    WRD_DI("scanner: BOOLVAL=false");
+    NAMU_DI("scanner: BOOLVAL=false");
     return BOOLVAL;
 }
 
 [a-zA-Z0-9_]+ {
     yylval->asStr = new std::string(yytext);
-    WRD_DI("scanner: NAME=%s", yytext);
+    NAMU_DI("scanner: NAME=%s", yytext);
     return NAME;
 }
 
 \'([^\r\f\n\'])\' {
     yylval->asChar = yytext[1];
-    WRD_DI("scanner: CHARVAR='%c'", yytext[0]);
+    NAMU_DI("scanner: CHARVAR='%c'", yytext[0]);
     return CHARVAR;
 }
 
 \"([^\r\f\n\"\\]*)\" {
     yylval->asStr = new std::string(yytext + 1, yyleng - 2);
-    WRD_DI("scanner: STRVAL=\"%s\"", yylval->asStr->c_str());
+    NAMU_DI("scanner: STRVAL=\"%s\"", yylval->asStr->c_str());
     return STRVAL;
 }
 
@@ -139,7 +139,7 @@ false {
 }
 
 <<EOF>> {
-    WRD_DI("scanner: ENDOFFILE");
+    NAMU_DI("scanner: ENDOFFILE");
     yylloc->colcnt = 0;
     return ENDOFFILE;
 }

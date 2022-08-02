@@ -2,11 +2,11 @@
 
 namespace namu {
 
-    WRD_DEF_ME(arithmeticObj)
+    NAMU_DEF_ME(arithmeticObj)
 
 #define _X(FUNC) \
-        const wtype& reduced = getType().reduce(rhs); \
-        wbool normalOrder = getType() == reduced; \
+        const ntype& reduced = getType().reduce(rhs); \
+        nbool normalOrder = getType() == reduced; \
         const arithmeticObj& winner = getType() == reduced ? *this : rhs; \
         const arithmeticObj& loser = getType() == reduced ? rhs : *this; \
 

@@ -7,7 +7,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(assignExpr)
+    NAMU_DEF_ME(assignExpr)
 
     me::iter me::_getScopeIterOfLhs() {
         if(!_lhs) return iter();
@@ -27,21 +27,21 @@ namespace namu {
         return iter();
     }
 
-    WRD_VERIFY(assignExpr, verifyIter, {
+    NAMU_VERIFY(assignExpr, verifyIter, {
         if(!it._getScopeIterOfLhs())
             _srcErr(errCode::NOT_EXIST, getType().getName().c_str());
     })
 
-    WRD_VERIFY({
-        WRD_DI("verify: set evalType");
+    NAMU_VERIFY({
+        NAMU_DI("verify: set evalType");
 
         const node& leftEval = it.getLeft().getEval();
         if(nul(leftEval)) return _srcErr(errCode::LHS_IS_NULL);
-        const wtype& ltype = it.getLeft().getEval().getType();
+        const ntype& ltype = it.getLeft().getEval().getType();
         if(nul(ltype)) return _srcErr(errCode::LHS_IS_NULL);
         const node& rightEval = it.getRight().getEval();
         if(nul(rightEval)) return _srcErr(errCode::RHS_IS_NULL);
-        const wtype& rtype = it.getRight().getEval().getType();
+        const ntype& rtype = it.getRight().getEval().getType();
         if(nul(rtype)) return _srcErr(errCode::RHS_IS_NULL);
 
         if(!ltype.isImpli(rtype))
@@ -49,7 +49,7 @@ namespace namu {
                     .c_str());
     })
 
-    WRD_VERIFY({
+    NAMU_VERIFY({
         // verify rvalue and lvalue:
         //  first of all:
         //      in namulang there is no lvalue concept. to involve lvalue concept,
@@ -84,10 +84,10 @@ namespace namu {
         //          e.g. A.B.NAME = 5
         //
         //      the structure of above sample will be,
-        //          AssignExpr(getExpr(getExpr(A, B), NAME), wInt(5))
+        //          AssignExpr(getExpr(getExpr(A, B), NAME), nInt(5))
         //      so, only I need to check is, lhs of AssignExpr is kind of getExpr() or not.
         //      I can care about that the last expression is valid.
-        WRD_DI("verify: checks rvalue");
+        NAMU_DI("verify: checks rvalue");
 
         const node& lhs = it.getLeft();
         if(!lhs.isSub<getExpr>()/* TODO: && !lhs.isSub<ElementExpr>()*/)
@@ -95,8 +95,8 @@ namespace namu {
                     lhs.getType().getName().c_str());
     })
 
-    WRD_VERIFY({
-        WRD_DI("verify: assignExpr: visit subNodes");
+    NAMU_VERIFY({
+        NAMU_DI("verify: assignExpr: visit subNodes");
 
         verify((node&) it.getLeft());
         verify((node&) it.getRight());

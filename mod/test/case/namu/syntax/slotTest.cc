@@ -14,7 +14,7 @@ namespace {
 
         public:
             str run(const ucontainable& args) override {
-                WRD_I("hello world!");
+                NAMU_I("hello world!");
                 _executed = true;
 
                 if(_lambda)
@@ -22,37 +22,37 @@ namespace {
                 return str();
             }
 
-            void setLambda(function<wbool(const ucontainable&, const frames&)> lambda) {
+            void setLambda(function<nbool(const ucontainable&, const frames&)> lambda) {
                 _lambda = lambda;
             }
 
-            function<wbool(const ucontainable&, const frames&)> _lambda;
-            wbool _res;
-            wbool _executed;
+            function<nbool(const ucontainable&, const frames&)> _lambda;
+            nbool _res;
+            nbool _executed;
         };
 
     public:
-        myfunc(): super(params(), new wVoid(), *new myBlock()) {
-            WRD_I("myfunc(%x) new", this);
+        myfunc(): super(params(), new nVoid(), *new myBlock()) {
+            NAMU_I("myfunc(%x) new", this);
         }
         ~myfunc() {
-            WRD_I("myfunc(%x) delete", this);
+            NAMU_I("myfunc(%x) delete", this);
         }
 
-        wbool isRun() const {
+        nbool isRun() const {
             return getBlock().cast<myBlock>()._executed;
         }
 
-        void setLambda(function<wbool(const ucontainable&, const frames&)> lambda) {
+        void setLambda(function<nbool(const ucontainable&, const frames&)> lambda) {
             getBlock().cast<myBlock>()._lambda = lambda;
         }
 
-        wbool isSuccess() const {
+        nbool isSuccess() const {
             return getBlock().cast<myBlock>()._res;
         }
 
         const node& getRet() const override {
-            static wVoid inner;
+            static nVoid inner;
             return inner;
         }
 
@@ -69,18 +69,18 @@ namespace {
     public:
         nativeFunc(): super() {}
 
-        wbool isRun() const { return _executed; }
+        nbool isRun() const { return _executed; }
 
-        void setLambda(function<wbool(const ucontainable&, const frames&)> lambda) {
+        void setLambda(function<nbool(const ucontainable&, const frames&)> lambda) {
             _lambda = lambda;
         }
 
-        wbool isSuccess() const {
+        nbool isSuccess() const {
             return _res;
         }
 
         const node& getRet() const override {
-            static wVoid inner;
+            static nVoid inner;
             return inner;
         }
 
@@ -94,10 +94,10 @@ namespace {
         }
 
     private:
-        function<wbool(const ucontainable&, const frames&)> _lambda;
+        function<nbool(const ucontainable&, const frames&)> _lambda;
         params _params;
-        wbool _res;
-        wbool _executed;
+        nbool _res;
+        nbool _executed;
     };
 }
 
@@ -119,28 +119,28 @@ TEST_F(slotTest, slotIsInFrameWhenCallMgdFunc) {
     myfunc f1;
 
     params& ps = f1.getParams();
-    ps.add(new param("age", new wInt()));
-    ps.add(new param("grade", new wFlt()));
+    ps.add(new param("age", new nInt()));
+    ps.add(new param("grade", new nFlt()));
     f1.setLambda([](const auto& contain, const auto& sf) {
         const frame& fr = sf[sf.len() - 1];
         if(nul(fr)) return false;
 
         // checks slot is in frame:
-        myfunc& cast = fr.sub<myfunc>("foo", narr(wInt(), wFlt()));
+        myfunc& cast = fr.sub<myfunc>("foo", narr(nInt(), nFlt()));
         if(nul(cast)) return false;
 
         const params& ps = cast.getParams();
         if(nul(ps)) return false;
         if(ps.len() != 2) return false;
-        if(ps[0].getOrigin().getType() != ttype<wInt>()) return false;
+        if(ps[0].getOrigin().getType() != ttype<nInt>()) return false;
         if(ps[1].getName() != "grade") return false;
 
         // checks args of funcs is in frame:
-        wInt& age = fr.sub<wInt>("age");
+        nInt& age = fr.sub<nInt>("age");
         if(nul(age)) return false;
         if(age.cast<int>() != 1) return false;
 
-        wFlt& grade = fr.sub("grade").cast<wFlt>();
+        nFlt& grade = fr.sub("grade").cast<nFlt>();
         if(nul(grade)) return false;
         if(grade.get() < 3.4f || grade.get() > 3.6f) return false;
 
@@ -148,7 +148,7 @@ TEST_F(slotTest, slotIsInFrameWhenCallMgdFunc) {
     });
 
     testSlot.subs().add("foo", f1);
-    testSlot.run("foo", narr(wInt(1), wFlt(3.5f)));
+    testSlot.run("foo", narr(nInt(1), nFlt(3.5f)));
     ASSERT_TRUE(f1.isRun());
     ASSERT_TRUE(f1.isSuccess());
 }
@@ -159,17 +159,17 @@ TEST_F(slotTest, slotIsInFrameWhenCallMgdFunc) {
     slot testPack(manifest("demo"), packLoadings());
     nativeFunc f1;
     params& ps = f1.getParams();
-    ps.add(new param("age", ttype<wInt>::get()));
-    ps.add(new param("grade", ttype<wFlt>::get()));
+    ps.add(new param("age", ttype<nInt>::get()));
+    ps.add(new param("grade", ttype<nFlt>::get()));
     f1.setLambda([](const auto& contain, const auto& sf) {
         const frame& fr = sf[sf.len() - 1];
-        if(!nul(fr)) return WRD_E("fr == null"), false;
+        if(!nul(fr)) return NAMU_E("fr == null"), false;
 
         return true;
     });
     testPack.subs().add("foo", f1);
 
-    testPack.run("foo", narr(wInt(1), wFlt(3.5f)));
+    testPack.run("foo", narr(nInt(1), nFlt(3.5f)));
     ASSERT_TRUE(f1.isRun());
     ASSERT_TRUE(f1.isSuccess());
 }*/

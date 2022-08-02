@@ -4,28 +4,28 @@
 
 namespace namu {
 
-    WRD_DEF_ME(logger)
+    NAMU_DEF_ME(logger)
     typedef std::string string;
 
-    const wchar* me::getName() const { return "logger"; }
-    const stream& me::operator[](widx n) const { return getStream(n); }
-    stream& me::operator[](widx n) { return getStream(n); }
-    const stream& me::operator[](const wchar* message) const { return getStream(message); }
-    stream& me::operator[](const wchar* message) { return getStream(message); }
+    const nchar* me::getName() const { return "logger"; }
+    const stream& me::operator[](nidx n) const { return getStream(n); }
+    stream& me::operator[](nidx n) { return getStream(n); }
+    const stream& me::operator[](const nchar* message) const { return getStream(message); }
+    stream& me::operator[](const nchar* message) { return getStream(message); }
 
-    stream& me::getStream(widx n) {
+    stream& me::getStream(nidx n) {
         if(n < 0 || n >= getStreamCount())
             return nulOf<stream>();
 
         return *_streams[n];
     }
 
-    const stream& me::getStream(widx n) const {
-        WRD_UNCONST()
+    const stream& me::getStream(nidx n) const {
+        NAMU_UNCONST()
         return unconst.getStream(n);
     }
 
-    const stream& me::getStream(const wchar* c_message) const {
+    const stream& me::getStream(const nchar* c_message) const {
         string message = c_message;
         for(auto e : _streams)
             if(string(e->getName()) == message)
@@ -34,35 +34,35 @@ namespace namu {
         return nulOf<stream>();
     }
 
-    stream& me::getStream(const wchar* message) {
+    stream& me::getStream(const nchar* message) {
         const me* consted = this;
 
         return const_cast<stream&>(consted->getStream(message));
     }
 
-    wcnt me::getStreamCount() const { return _streams.size(); }
+    ncnt me::getStreamCount() const { return _streams.size(); }
 
-    wbool me::dump(const wchar* message) {
+    nbool me::dump(const nchar* message) {
         if(!isEnable()) return false;
 
-        wbool result = false;
+        nbool result = false;
         for(auto e : _streams)
             result |= e->dump(message);
 
         return result;
     }
 
-    wbool me::dumpFormat(const wchar* fmt, ...) {
+    nbool me::dumpFormat(const nchar* fmt, ...) {
         va_list va;
         va_start(va, fmt);
-        wchar buf[1024];
+        nchar buf[1024];
         vsnprintf(buf, 1024, fmt, va);
         va_end(va);
 
         return dump(buf);
     }
 
-    wbool me::pushStream(stream* new_stream) {
+    nbool me::pushStream(stream* new_stream) {
         if( ! new_stream) return true;
 
         _streams.push_back(new_stream);
@@ -71,7 +71,7 @@ namespace namu {
         return false;
     }
 
-    wbool me::init() {
+    nbool me::init() {
         rel();
         super::init();
 
@@ -83,7 +83,7 @@ namespace namu {
         return false;
     }
 
-    wbool me::isInit() const {
+    nbool me::isInit() const {
         for(auto e : _streams)
             if( ! e->isInit())
                 return false;
@@ -91,7 +91,7 @@ namespace namu {
         return true;
     }
 
-    wbool me::rel() {
+    nbool me::rel() {
         for(auto e : _streams)
         {
             e->rel();
@@ -112,7 +112,7 @@ namespace namu {
         return *inner;
     }
 
-    wbool me::dumpFormatLog(const wchar* level, const wchar* tag, const wchar* filename, const wchar* func, int line, const wchar* fmt, ...) {
+    nbool me::dumpFormatLog(const nchar* level, const nchar* tag, const nchar* filename, const nchar* func, int line, const nchar* fmt, ...) {
         std::cout << platformAPI::getConsoleFore(platformAPI::BROWN);
         dumpFormat("%s ", platformAPI::createNowTime("%b %d %Y  %X").c_str());
 
@@ -132,7 +132,7 @@ namespace namu {
         std::cout << platformAPI::getConsoleFore(platformAPI::LIGHTGRAY);
         va_list va;
         va_start(va, fmt);
-        wchar buf[1024];
+        nchar buf[1024];
         vsnprintf(buf, 1024, fmt, va);
         va_end(va);
         return dump(buf);
@@ -141,13 +141,13 @@ namespace namu {
     me::logger() : super() {}
     me::logger(const me& rhs) : super(rhs) {}
 
-    wbool me::isEnable() const {
+    nbool me::isEnable() const {
         for(stream* s : _streams)
             if(s->isEnable()) return true;
         return false;
     }
 
-    void me::setEnable(wbool enable) {
+    void me::setEnable(nbool enable) {
         for(stream* s : _streams)
             s->setEnable(enable);
     }

@@ -2,7 +2,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(obj)
+    NAMU_DEF_ME(obj)
 
     me& me::_assign(const me& rhs) {
         _owns = rhs._owns->deepClone();

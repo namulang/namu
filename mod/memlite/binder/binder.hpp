@@ -45,9 +45,9 @@ namespace namu {
     ///             because it was declared to class template, user need to bind or get binded using type T.
     ///             of course these are based on class bind, user can use loose-check API case by case.
     ///
-    class _wout binder : public typeProvidable, public tbindable<instance> {
-        WRD_DECL_ME(binder, instance)
-        WRD_INIT_META(me)
+    class _nout binder : public typeProvidable, public tbindable<instance> {
+        NAMU_DECL_ME(binder, instance)
+        NAMU_INIT_META(me)
         friend class weakTactic;
         friend class strTactic;
         friend class bindTag; // for _get()
@@ -60,22 +60,22 @@ namespace namu {
 
         instance* operator->() { return &get(); }
         instance& operator*() { return get(); }
-        const instance* operator->() const WRD_UNCONST_FUNC(operator->())
-        const instance& operator*() const WRD_UNCONST_FUNC(operator*())
+        const instance* operator->() const NAMU_UNCONST_FUNC(operator->())
+        const instance& operator*() const NAMU_UNCONST_FUNC(operator*())
         me& operator=(const me& rhs);
 
         //  binder:
         id getItsId() const;
         //  tbindable:
-        wbool isBind() const override;
+        nbool isBind() const override;
         void rel() override;
         using tbindable::canBind;
-        wbool canBind(const type& cls) const override;
+        nbool canBind(const type& cls) const override;
         using tbindable::bind;
-        wbool bind(const instance& it) override;
+        nbool bind(const instance& it) override;
 
         instance& get();
-        const instance& get() const WRD_UNCONST_FUNC(get())
+        const instance& get() const NAMU_UNCONST_FUNC(get())
         template <typename E>
         E& get() {
             instance& got = get();
@@ -84,7 +84,7 @@ namespace namu {
             return got.template cast<E>();
         }
         template <typename E>
-        const E& get() const WRD_UNCONST_FUNC(get<E>())
+        const E& get() const NAMU_UNCONST_FUNC(get<E>())
 
         //  typeProvidable:
         const type& getType() const override;
@@ -93,8 +93,8 @@ namespace namu {
         void* cast(const type& to) override;
 
     protected:
-        wbool _assign(const binder& rhs);
-        wbool _onSame(const typeProvidable& rhs) const override;
+        nbool _assign(const binder& rhs);
+        nbool _onSame(const typeProvidable& rhs) const override;
 
     protected:
         bindTag& _getBindTag() const;

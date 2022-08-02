@@ -11,11 +11,11 @@ namespace namu {
         WRD(ADT(flag, instance))
 
     public:
-        virtual const wchar* getName() const = 0;
-        virtual const wchar* getDescription() const = 0;
+        virtual const nchar* getName() const = 0;
+        virtual const nchar* getDescription() const = 0;
 
         /// @return how many argument taken by this flag.
-        virtual wbool take(interpreter& ip, cli& c, args& a) const;
+        virtual nbool take(interpreter& ip, cli& c, args& a) const;
 
     protected:
         void _delArgs(args& a, std::vector<int> indices) const {
@@ -24,8 +24,8 @@ namespace namu {
                 a.erase(a.begin() + *e);
         }
 
-        virtual const wchar* _getRegExpr() const = 0;
-        virtual wbool _onTake(const args& tray, cli& c, interpreter& ip) const = 0;
+        virtual const nchar* _getRegExpr() const = 0;
+        virtual nbool _onTake(const args& tray, cli& c, interpreter& ip) const = 0;
     };
 
     typedef std::vector<tstr<flag>> flags;

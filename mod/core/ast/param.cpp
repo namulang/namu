@@ -2,7 +2,7 @@
 #include "node.hpp"
 
 namespace namu {
-    WRD_DEF_ME(param)
+    NAMU_DEF_ME(param)
 
     me::param(const std::string& newName, const node& org): _name(newName) {
         setOrigin(org);

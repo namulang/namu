@@ -15,7 +15,7 @@ namespace namu {
 
         // add:
         using super::add;
-        wbool add(const K& key, const V& val) override { return false; }
+        nbool add(const K& key, const V& val) override { return false; }
 
     public:
         static me singletone;

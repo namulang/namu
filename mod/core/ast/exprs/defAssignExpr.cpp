@@ -5,12 +5,12 @@
 #include "../../loader/interpreter/verifier.hpp"
 
 namespace namu {
-    WRD_DEF_ME(defAssignExpr)
+    NAMU_DEF_ME(defAssignExpr)
 
     str me::run(const ucontainable& args) {
         str new1 = _rhs->run();
         if(!new1)
-            return WRD_E("new1 is null"), str();
+            return NAMU_E("new1 is null"), str();
 
         node& to = getTo();
         if(nul(to))
@@ -25,8 +25,8 @@ namespace namu {
 
 
 
-    WRD_VERIFY({
-        WRD_DI("verify: defAssignExpr: duplication of variable.");
+    NAMU_VERIFY({
+        NAMU_DI("verify: defAssignExpr: duplication of variable.");
 
         const scopes& top = thread::get().getNowFrame().getTop();
         if(nul(top)) return;
@@ -36,14 +36,14 @@ namespace namu {
                     .c_str());
     })
 
-    WRD_VERIFY(defAssignExpr, isDefinable, {
-        WRD_DI("verify: defAssignExpr: is definable?");
+    NAMU_VERIFY(defAssignExpr, isDefinable, {
+        NAMU_DI("verify: defAssignExpr: is definable?");
 
         const node& rhs = it.getRight();
         if(nul(rhs))
             return _srcErr(errCode::CANT_DEF_VAR, it.getSubName().c_str(), "null");
 
-        WRD_DI("verify: defAssignExpr: %s has defined.",
+        NAMU_DI("verify: defAssignExpr: %s has defined.",
                 nul(rhs) ? "name" : rhs.getType().getName().c_str());
 
         node& to = it.getTo();
@@ -65,8 +65,8 @@ namespace namu {
         }
     })
 
-    WRD_VERIFY({
-        WRD_DI("verify: defAssignExpr: visitSubNodes");
+    NAMU_VERIFY({
+        NAMU_DI("verify: defAssignExpr: visitSubNodes");
 
         verify(it.getRight());
     })

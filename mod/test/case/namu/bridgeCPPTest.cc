@@ -20,7 +20,7 @@ namespace {
             return isRun = true;
         }
 
-        static inline wbool isRun = false;
+        static inline nbool isRun = false;
     };
 
     struct bridgeCPPTest : public ::testing::Test {
@@ -39,7 +39,7 @@ TEST_F(bridgeCPPTest, testNormalWrapping) {
     node& func = bridge->sub("say");
     ASSERT_FALSE(nul(func));
 
-    bridge->run("say", narr(*new wStr("hello native!")));
+    bridge->run("say", narr(*new nStr("hello native!")));
     ASSERT_TRUE(kniz::isRun);
 }
 
@@ -51,8 +51,8 @@ TEST_F(bridgeCPPTest, testFuncDoesntHaveObjNegative) {
 
     narr args;
     args.add(*bridge);
-    args.add(new wStr("hello native!"));
-    bridge->run("say", narr(*bridge, *new wStr("hello native!")));
+    args.add(new nStr("hello native!"));
+    bridge->run("say", narr(*bridge, *new nStr("hello native!")));
     ASSERT_FALSE(kniz::isRun);
 }
 

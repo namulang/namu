@@ -13,7 +13,7 @@ namespace {
         myNode(int num): number(num) {}
 
         nbicontainer& subs() override { return nulOf<nbicontainer>(); }
-        wbool canRun(const ucontainable& types) const override { return false; }
+        nbool canRun(const ucontainable& types) const override { return false; }
         str run(const ucontainable& args) override { return str(); }
 
         int number;
@@ -76,7 +76,7 @@ namespace {
     }
 
     template <typename T = myNode>
-    static wbool isMyNodesHasEqualIntArray(const tnchain<float, myNode>& root, float expects[], int expectSize) {
+    static nbool isMyNodesHasEqualIntArray(const tnchain<float, myNode>& root, float expects[], int expectSize) {
         auto myE = root.begin();
         vector<float> actuals;
         for(const auto& elem : root)
@@ -181,7 +181,7 @@ TEST_F(nchainTest, testucontainableAPI) {
     ASSERT_EQ(arr2[5].cast<myNode>().number, 3);
 
     ASSERT_EQ(con->len(), 1);
-    wcnt count = 0;
+    ncnt count = 0;
     for(auto e=arr2.iterate(1); e != arr2.iterate(3) ;++e)
         count += con->add(to_string(count), *e);
     ASSERT_EQ(count, 2);
@@ -433,7 +433,7 @@ TEST_F(nchainTest, testDelWithLink) {
         ASSERT_FALSE(map2Weak.isBind());
         ASSERT_EQ(chn.len(), 1 + map1.len());
 
-        WRD_DI("chn.len()=%d", chn.len());
+        NAMU_DI("chn.len()=%d", chn.len());
         auto e = chn.iterate(chn.len() - 1);
 
         myNode& last = e->cast<myNode>();
@@ -450,7 +450,7 @@ TEST_F(nchainTest, testLastIterator) {
     chn.add("3", new myNode(3));
     chn.add("4", new myNode(2));
 
-    wbool sorted = true;
+    nbool sorted = true;
     ASSERT_TRUE(chn.has("1"));
     ASSERT_TRUE(chn.has("3"));
     ASSERT_TRUE(chn.has("4"));
@@ -608,14 +608,14 @@ TEST_F(nchainTest, testDeepChainAddDel) {
 
 TEST_F(nchainTest, delWhileIteration) {
     nchain m;
-    m.add("meat", new wInt(1));
-    m.add("banana", new wInt(2));
-    m.add("apple", new wInt(3));
-    m.add("banana", new wInt(4));
-    m.add("meat", new wInt(5));
-    m.add("banana", new wInt(6));
-    m.add("meat", new wInt(7));
-    m.add("banana", new wInt(8));
+    m.add("meat", new nInt(1));
+    m.add("banana", new nInt(2));
+    m.add("apple", new nInt(3));
+    m.add("banana", new nInt(4));
+    m.add("meat", new nInt(5));
+    m.add("banana", new nInt(6));
+    m.add("meat", new nInt(7));
+    m.add("banana", new nInt(8));
 
     for(auto e = m.begin(); e ;) {
         if(e.getKey() == "banana")

@@ -253,16 +253,16 @@ postfix: primary {
      }
 
 primary: INTVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<wInt>($1);
+       $$ = yyget_extra(scanner)->onPrimitive<nInt>($1);
      } | STRVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<wStr>(*$1);
+       $$ = yyget_extra(scanner)->onPrimitive<nStr>(*$1);
        free($1);
      } | FLTVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<wFlt>($1);
+       $$ = yyget_extra(scanner)->onPrimitive<nFlt>($1);
      } | BOOLVAL {
-       $$ = yyget_extra(scanner)->onPrimitive<wBool>($1);
+       $$ = yyget_extra(scanner)->onPrimitive<nBool>($1);
      } | CHARVAR {
-       $$ = yyget_extra(scanner)->onPrimitive<wChar>($1);
+       $$ = yyget_extra(scanner)->onPrimitive<nChar>($1);
      } | '(' expr ')' {
         //  known shift/reduce conflict on the syntax:
         //      First example: list • NEWLINE INDENT block DEDENT block DEDENT $end
@@ -360,12 +360,12 @@ defblock: %empty {
       }
 
 //  type:
-type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<wVoid>(); }
-    | INTTYPE { $$ = yyget_extra(scanner)->onPrimitive<wInt>(); }
-    | CHARTYPE { $$ = yyget_extra(scanner)->onPrimitive<wChar>(); }
-    | STRTYPE { $$ = yyget_extra(scanner)->onPrimitive<wStr>(); }
-    | BOOLTYPE { $$ = yyget_extra(scanner)->onPrimitive<wBool>(); }
-    | FLTTYPE { $$ = yyget_extra(scanner)->onPrimitive<wFlt>(); }
+type: VOIDTYPE { $$ = yyget_extra(scanner)->onPrimitive<nVoid>(); }
+    | INTTYPE { $$ = yyget_extra(scanner)->onPrimitive<nInt>(); }
+    | CHARTYPE { $$ = yyget_extra(scanner)->onPrimitive<nChar>(); }
+    | STRTYPE { $$ = yyget_extra(scanner)->onPrimitive<nStr>(); }
+    | BOOLTYPE { $$ = yyget_extra(scanner)->onPrimitive<nBool>(); }
+    | FLTTYPE { $$ = yyget_extra(scanner)->onPrimitive<nFlt>(); }
     | NAME { // TODO: handle 'as' expr
         $$ = new blockExpr(); // TODO: then free it
     }
@@ -431,9 +431,9 @@ pack: PACK packDotname NEWLINE { $$ = yyget_extra(scanner)->onPack(*$2); }
     ============================================================================================  */
 
 static std::string traceErr(const yypcontext_t* ctx, yyscan_t scanner) {
-    constexpr wint TOKEN_MAX = 5;
+    constexpr nint TOKEN_MAX = 5;
     yysymbol_kind_t tokens[TOKEN_MAX];
-    wcnt expected = yypcontext_expected_tokens(ctx, tokens, TOKEN_MAX);
+    ncnt expected = yypcontext_expected_tokens(ctx, tokens, TOKEN_MAX);
     if(expected <= 0)
         return "nothing";
 

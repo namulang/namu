@@ -340,8 +340,8 @@ def _make():
     if isWindow():
         printInfoEnd("build the generated solution using visual studio's msbuild tool...")
         os.system("dir " + cwd + "\\mod")
-        os.system("dir " + cwd + "\\mod\\frontend")
-        res = os.system("msbuild " + winProp + " " + cwd + "\\mod\\frontend\\frontend.vcxproj")
+        os.system("dir " + cwd + "\\mod\\namu")
+        res = os.system("msbuild " + winProp + " " + cwd + "\\mod\\namu\\namu.vcxproj")
         if res != 0:
             printErr("failed")
         else:

@@ -6,7 +6,7 @@
 
 namespace namu {
 
-    class _wout asExpr : public expr {
+    class _nout asExpr : public expr {
         WRD(CLASS(asExpr, expr, expr::exprType),
             FRIEND_VERIFY(asExpr, verifyIter))
         friend class mgdFunc;
@@ -21,7 +21,7 @@ namespace namu {
             if(!_me || !_as) return str();
 
             str eval = _me->run();
-            if(!eval) return WRD_E("!eval.isBind()"), str();
+            if(!eval) return NAMU_E("!eval.isBind()"), str();
 
             return str(eval->as(*_as));
         }

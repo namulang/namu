@@ -2,8 +2,8 @@
 
 namespace namu {
 
-    WRD_DEF_ME(memoryHaver)
+    NAMU_DEF_ME(memoryHaver)
 
-    wbool me::isFull() const { return len() >= size(); }
-    wbool me::isCapable() const { return len() < size(); }
+    nbool me::isFull() const { return len() >= size(); }
+    nbool me::isCapable() const { return len() < size(); }
 }

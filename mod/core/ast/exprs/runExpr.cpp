@@ -3,11 +3,11 @@
 #include "../../loader/interpreter/verification.inl"
 #include "../../loader/interpreter/verifier.hpp"
 #include "../../frame/thread.hpp"
-#include "../../builtin/primitive/wVoid.hpp"
+#include "../../builtin/primitive/nVoid.hpp"
 
 namespace namu {
 
-    WRD_DEF_ME(runExpr)
+    NAMU_DEF_ME(runExpr)
 
     me::runExpr(const node& meObj, const std::string& name, const narr& args):
             _me(meObj), _args(args), _name(name)  {}
@@ -15,7 +15,7 @@ namespace namu {
 
     str me::run(const ucontainable& args) {
         str me = _me->as<node>();
-        if(!me) return WRD_E("_me as node == null"), str();
+        if(!me) return NAMU_E("_me as node == null"), str();
 
         return me->run(_name, _args);
     }
@@ -40,7 +40,7 @@ namespace namu {
         if(!me) return nulOf<node>();
 
         const node& sub = me->sub(getName(), getArgs());
-        if(nul(sub)) return WRD_W("sub is null"), nulOf<node>();
+        if(nul(sub)) return NAMU_W("sub is null"), nulOf<node>();
 
         const func& f = sub.cast<func>();
         return nul(f) ? sub.getEval() : f.getRet();
@@ -57,8 +57,8 @@ namespace namu {
         }
     }
 
-    WRD_VERIFY({
-        WRD_DI("verify: runExpr: is it possible to run?");
+    NAMU_VERIFY({
+        NAMU_DI("verify: runExpr: is it possible to run?");
 
         if(nul(it.getMe())) return _srcErr(errCode::CANT_CAST_TO_NODE);
 
@@ -70,8 +70,8 @@ namespace namu {
         if(!sub->canRun(it.getArgs())) return _srcErr(errCode::OBJ_WRONG_ARGS);
     })
 
-    WRD_VERIFY({
-        WRD_DI("verify: runExpr: visit subNodes");
+    NAMU_VERIFY({
+        NAMU_DI("verify: runExpr: visit subNodes");
         verify(it.getMe());
     })
 }

@@ -4,9 +4,9 @@
 
 namespace namu {
 
-    class _wout asable {
+    class _nout asable {
     public:
-        virtual wbool is(const type& from, const type& to) const = 0;
+        virtual nbool is(const type& from, const type& to) const = 0;
         virtual str as(const node& from, const type& to) const = 0;
     };
 

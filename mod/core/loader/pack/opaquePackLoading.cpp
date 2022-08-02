@@ -2,7 +2,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(opaquePackLoading)
+    NAMU_DEF_ME(opaquePackLoading)
 
-    wbool me::verify(errReport& rpt, obj& pak) { return true; }
+    nbool me::verify(errReport& rpt, obj& pak) { return true; }
 }

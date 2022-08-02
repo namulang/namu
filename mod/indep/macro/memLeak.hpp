@@ -18,8 +18,8 @@
 
 //      macro:  다음 매크로를 프로그램이 시작하는 함수 최상단에 사용한다
 //              메모리누수 메세지는 디버그창에 나옴
-#   define WRD_MEMORYLEAK _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#   define NAMU_MEMORYLEAK _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 #else
-#   define WRD_MEMORYLEAK
+#   define NAMU_MEMORYLEAK
 #endif

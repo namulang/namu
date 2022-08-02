@@ -16,7 +16,7 @@ namespace namu {
     template <typename T>
     T& ME::sub(const std::string& name) const {
         return subs().get<T>([&](const std::string& key, const T& val) {
-            WRD_DI("this=%s[%x]: key=%s name=%s", getType().getName().c_str(), this, key.c_str(), name.c_str());
+            NAMU_DI("this=%s[%x]: key=%s name=%s", getType().getName().c_str(), this, key.c_str(), name.c_str());
             return key == name;
         });
     }
@@ -32,7 +32,7 @@ namespace namu {
     }
 
     template <typename T>
-    T& ME::sub(const std::string& name, const ucontainable& args) const WRD_UNCONST_FUNC(sub<T>(name, args))
+    T& ME::sub(const std::string& name, const ucontainable& args) const NAMU_UNCONST_FUNC(sub<T>(name, args))
 
     template <typename T>
     tnarr<T, strTactic> ME::subAll() const {
@@ -59,7 +59,7 @@ namespace namu {
     }
 
     template <typename T>
-    tnarr<T, strTactic> ME::subAll(const std::string& name, const ucontainable& args) const WRD_UNCONST_FUNC(subAll<T>(name, args))
+    tnarr<T, strTactic> ME::subAll(const std::string& name, const ucontainable& args) const NAMU_UNCONST_FUNC(subAll<T>(name, args))
 
 #undef ME
 }

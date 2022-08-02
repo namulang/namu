@@ -6,7 +6,7 @@
 
 namespace namu {
 
-    class _wout slot : public node {
+    class _nout slot : public node {
         WRD(CLASS(slot, node))
 
     public:
@@ -16,9 +16,9 @@ namespace namu {
     public:
         manifest& getManifest();
         const manifest& getManifest() const;
-        wbool isValid() const;
+        nbool isValid() const;
         virtual obj& getPack();
-        const obj& getPack() const WRD_UNCONST_FUNC(getPack())
+        const obj& getPack() const NAMU_UNCONST_FUNC(getPack())
         void rel() override;
         void addDependent(me& dependent);
         const tnarr<me>& getDependents() const;
@@ -26,7 +26,7 @@ namespace namu {
         using super::subs;
         nbicontainer& subs() override { return getPack().subs(); }
 
-        wbool canRun(const ucontainable& args) const override { return getPack().canRun(args); }
+        nbool canRun(const ucontainable& args) const override { return getPack().canRun(args); }
 
         using super::run;
         str run(const ucontainable& args) override { return getPack().run(args); }
@@ -34,8 +34,8 @@ namespace namu {
         const node& getEval() const override { return getPack().getEval(); }
 
     protected:
-        virtual wbool _invalidate();
-        void _setValid(wbool valid);
+        virtual nbool _invalidate();
+        void _setValid(nbool valid);
         virtual str _onRunSub(node& sub, const ucontainable& args) override {
             return getPack()._onRunSub(sub, args);
         }
@@ -49,7 +49,7 @@ namespace namu {
 
     private:
         manifest _manifest;
-        wbool _isValid;
+        nbool _isValid;
         tnarr<me> _dependents;
     };
 

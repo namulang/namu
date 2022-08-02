@@ -3,16 +3,16 @@
 #include "../common/dep.hpp"
 
 namespace namu {
-    struct _wout point {
-        wcnt row;
-        wcnt col;
+    struct _nout point {
+        ncnt row;
+        ncnt col;
 
         void rel() {
             row = col = 0;
         }
     };
 
-    struct _wout area {
+    struct _nout area {
         point start;
         point end;
 

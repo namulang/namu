@@ -2,7 +2,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(fileLogStream)
+    NAMU_DEF_ME(fileLogStream)
     typedef std::string string;
 
     me::fileLogStream() {}
@@ -10,7 +10,7 @@ namespace namu {
 
     const char* me::getName() const { return "fileLogStream"; }
 
-    wbool me::setPath(const string& new_path) {
+    nbool me::setPath(const string& new_path) {
         rel();
         _path = new_path;
         return false;
@@ -18,7 +18,7 @@ namespace namu {
 
     const string& me::getPath() const { return _path; }
 
-    wbool me::dump(const char* message) {
+    nbool me::dump(const char* message) {
         if(!isInit()) return true;
         if(super::dump(message)) return true;
 

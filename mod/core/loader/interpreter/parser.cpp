@@ -6,7 +6,7 @@ YY_DECL;
 
 namespace namu {
 
-    WRD_DEF_ME(parser)
+    NAMU_DEF_ME(parser)
 
     me& me::setSlot(const slot& tray) {
         _eventer.getSlot().bind(tray);
@@ -21,14 +21,14 @@ namespace namu {
         return *_eventer.getSubPack();
     }
 
-    tstr<obj> me::parse(const wchar* script) {
-        WRD_I("parse starts.");
+    tstr<obj> me::parse(const nchar* script) {
+        NAMU_I("parse starts.");
         _eventer.prepareParse();
 
         yyscan_t scanner;
         yylex_init_extra(&_eventer, &scanner);
 
-        YY_BUFFER_STATE bufState = yy_scan_string((wchar*) script, scanner); // +2 is for space of END_OF_BUFFER, nullptr.
+        YY_BUFFER_STATE bufState = yy_scan_string((nchar*) script, scanner); // +2 is for space of END_OF_BUFFER, nullptr.
         if(!bufState) {
             _eventer.getReport()->add(new err(err::ERR, errCode::IS_NULL, "bufState")).log();
             return tstr<obj>();

@@ -7,15 +7,15 @@ namespace namu {
 #define TEMPL template <typename T>
 #define ME tbindable<T>
 
-    TEMPL ME::operator wbool() const { return isBind(); }
+    TEMPL ME::operator nbool() const { return isBind(); }
 
-    TEMPL wbool ME::canBind(const T& it) const {
+    TEMPL nbool ME::canBind(const T& it) const {
         if(nul(it)) return false;
         return canBind(it.getType());
     }
 
     TEMPL
-    wbool ME::bind(const T& it) {
+    nbool ME::bind(const T& it) {
         // type checking before binding only is required to Bind class.
         // Derived classes from this doesn't need it. because its type is specified.
         // prevent wrong type providing by compiler.
@@ -24,7 +24,7 @@ namespace namu {
     }
 
     TEMPL
-    wbool ME::bind(const T* it) { return bind(*it); }
+    nbool ME::bind(const T* it) { return bind(*it); }
 
 #undef ME
 #undef TEMPL

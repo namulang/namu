@@ -2,7 +2,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(nullSobj)
+    NAMU_DEF_ME(nullSobj)
 
     me::nullSobj(): super() {}
 
@@ -11,15 +11,15 @@ namespace namu {
         return inner;
     }
 
-    wchar me::asChar() const {
+    nchar me::asChar() const {
         return '\0';
     }
 
-    wint me::asInt() const {
+    nint me::asInt() const {
         return 0;
     }
 
-    wbool me::asBool() const {
+    nbool me::asBool() const {
         return false;
     }
 
@@ -27,7 +27,7 @@ namespace namu {
         return ttype<me>::get();
     }
 
-    wbool me::isExist() const {
+    nbool me::isExist() const {
         return false;
     }
 

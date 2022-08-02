@@ -35,7 +35,7 @@ namespace namu {
                 _onDefBlock(newOnDefBlock) {}
 
         str run(const ucontainable& args) override { return str(); }
-        wbool canRun(const ucontainable& args) const override { return false; }
+        nbool canRun(const ucontainable& args) const override { return false; }
         nbicontainer& subs() override;
 
         node* onBlock() {

@@ -5,22 +5,22 @@
 
 namespace namu {
 
-    struct _wout id {
-        id(wint new_tagN, wint newChkN, wuint newSerial);
+    struct _nout id {
+        id(nint new_tagN, nint newChkN, nuint newSerial);
         id();
 
     public:
-        wbool operator==(const id& rhs) const;
-        wbool operator!=(const id& rhs) const;
+        nbool operator==(const id& rhs) const;
+        nbool operator!=(const id& rhs) const;
 
     public:
         void rel();
-        wbool isHeap() const;
-        wbool isValid() const;
+        nbool isHeap() const;
+        nbool isValid() const;
 
     public:
-        wint tagN:21;
-        wint chkN:22;
-        wuint serial:21;
+        nint tagN:21;
+        nint chkN:22;
+        nuint serial:21;
     };
 }

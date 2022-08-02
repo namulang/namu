@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    class wtype;
+    class ntype;
     template <typename T>
     struct tas : public asable, public typeProvidable {
 
@@ -13,7 +13,7 @@ namespace namu {
             return ttype<T>::get();
         }
 
-        wbool is(const type& from, const type& to) const override {
+        nbool is(const type& from, const type& to) const override {
             return getType() == to;
         }
     };

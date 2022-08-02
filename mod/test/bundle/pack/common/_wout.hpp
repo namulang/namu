@@ -1,13 +1,13 @@
 #pragma once
 
 #ifdef WIN32
-#	undef _wout
+#	undef _nout
 #	ifdef __sys = 1 // I'm currently building module
-#		define _wout __declspec(dllexport)
+#		define _nout __declspec(dllexport)
 #	else
-#		define _wout __declspec(dllimport)
+#		define _nout __declspec(dllimport)
 #	endif
 #else
-#	undef _wout
-#	define _wout
+#	undef _nout
+#	define _nout
 #endif

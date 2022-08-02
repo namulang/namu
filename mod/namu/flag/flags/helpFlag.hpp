@@ -8,12 +8,12 @@ namespace namu {
         WRD(CLASS(helpFlag, flag))
 
     public:
-        const wchar* getName() const override;
-        const wchar* getDescription() const override;
+        const nchar* getName() const override;
+        const nchar* getDescription() const override;
 
     protected:
-        const wchar* _getRegExpr() const override;
-        wbool _onTake(const args& tray, cli& c, interpreter& ip) const override;
+        const nchar* _getRegExpr() const override;
+        nbool _onTake(const args& tray, cli& c, interpreter& ip) const override;
         void _printUsage() const;
     };
 }

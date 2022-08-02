@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(binder)
+    NAMU_DEF_ME(binder)
 
     binder::binder(const type& type, bindTacticable& tactic): _type(&type.getStatic()), _tactic(&tactic) {}
     binder::binder(const me& rhs): _type(rhs._type), _tactic(rhs._tactic) { _assign(rhs); }
@@ -18,7 +18,7 @@ namespace namu {
         return *this;
     }
 
-    wbool me::isBind() const {
+    nbool me::isBind() const {
         const bindTag& tag = _getBindTag();
         if(nul(tag)) return false;
 
@@ -30,10 +30,10 @@ namespace namu {
     }
 
     id me::getItsId() const { return _itsId; }
-    wbool me::canBind(const type& type) const { return getType().isSuper(type); }
+    nbool me::canBind(const type& type) const { return getType().isSuper(type); }
     const type& me::getType() const { return *_type; }
 
-    wbool me::bind(const instance& it) {
+    nbool me::bind(const instance& it) {
         rel();
         if(!tbindable<instance>::bind(it)) return false;
 
@@ -41,10 +41,10 @@ namespace namu {
     }
 
     instance& me::get() {
-        return WRD_GETS(_getBindTag(),get());
+        return NAMU_GETS(_getBindTag(),get());
     }
 
-    wbool me::_assign(const binder& rhs) {
+    nbool me::_assign(const binder& rhs) {
         rel();
         _type = rhs._type;
         if (nul(_tactic))
@@ -52,7 +52,7 @@ namespace namu {
         return bind(rhs.get());
     }
 
-    wbool me::_onSame(const typeProvidable& rhs) const {
+    nbool me::_onSame(const typeProvidable& rhs) const {
         const me& cast = (const me&) rhs;
         return get() == cast.get();
     }

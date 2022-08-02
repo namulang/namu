@@ -12,7 +12,7 @@ namespace {
 
         int val;
 
-        wbool _onSame(const typeProvidable& rhs) const override {
+        nbool _onSame(const typeProvidable& rhs) const override {
             const myObj& cast = (const myObj&) rhs;
             return val == cast.val;
         }
@@ -26,7 +26,7 @@ namespace {
 
         public:
             str run(const ucontainable& args) override {
-                WRD_I("hello world!");
+                NAMU_I("hello world!");
                 _executed = true;
 
                 if(_lambda)
@@ -34,37 +34,37 @@ namespace {
                 return str();
             }
 
-            void setLambda(std::function<wbool(const ucontainable&, const frames&)> lambda) {
+            void setLambda(std::function<nbool(const ucontainable&, const frames&)> lambda) {
                 _lambda = lambda;
             }
 
-            std::function<wbool(const ucontainable&, const frames&)> _lambda;
-            wbool _res;
-            wbool _executed;
+            std::function<nbool(const ucontainable&, const frames&)> _lambda;
+            nbool _res;
+            nbool _executed;
         };
 
     public:
-        myfunc(): super(params(), *new wVoid(), *new myBlock()) {
-            WRD_I("myfunc(%x) new", this);
+        myfunc(): super(params(), *new nVoid(), *new myBlock()) {
+            NAMU_I("myfunc(%x) new", this);
         }
         ~myfunc() {
-            WRD_I("myfunc(%x) delete", this);
+            NAMU_I("myfunc(%x) delete", this);
         }
 
-        wbool isRun() const {
+        nbool isRun() const {
             return getBlock().cast<myBlock>()._executed;
         }
 
-        void setLambda(std::function<wbool(const ucontainable&, const frames&)> lambda) {
+        void setLambda(std::function<nbool(const ucontainable&, const frames&)> lambda) {
             getBlock().cast<myBlock>()._lambda = lambda;
         }
 
-        wbool isSuccess() const {
+        nbool isSuccess() const {
             return getBlock().cast<myBlock>()._res;
         }
 
         const node& getRet() const override {
-            static wVoid inner;
+            static nVoid inner;
             return inner;
         }
 
@@ -95,7 +95,7 @@ struct immutableTest : public namuTest {
 };
 
 TEST_F(immutableTest, testImmutablePositive) {
-    tstr<wFlt> r1(new wFlt(1.0f));
+    tstr<nFlt> r1(new nFlt(1.0f));
     str r2 = r1;
     ASSERT_TRUE(r1);
     ASSERT_TRUE(r2);
@@ -106,11 +106,11 @@ TEST_F(immutableTest, testImmutablePositive) {
 
     param r3("", *r1);
     ASSERT_FALSE(nul(r3.getOrigin()));
-    ASSERT_EQ(r3.getOrigin().getType(), ttype<wFlt>::get());
+    ASSERT_EQ(r3.getOrigin().getType(), ttype<nFlt>::get());
 
     scope s;
     s.add("r1", *r1);
-    const wFlt& cast = s["r1"].cast<wFlt>();
+    const nFlt& cast = s["r1"].cast<nFlt>();
     ASSERT_FALSE(nul(cast));
     ASSERT_NE(&r1.get(), &cast);
     ASSERT_EQ(*r1, cast);
@@ -136,7 +136,7 @@ TEST_F(immutableTest, testImmutableNegative) {
 
 TEST_F(immutableTest, testFrameImmutability) {
     myObj o1;
-    o1.subs().add("age", new wInt(18));
+    o1.subs().add("age", new nInt(18));
     node& age = o1.subs().begin().getVal();
 
     myfunc mf;
@@ -144,13 +144,13 @@ TEST_F(immutableTest, testFrameImmutability) {
         frame& fr = (frame&) namu::thread::get().getNowFrame();
         // test assign:
         auto e = fr.subs().iterate("age");
-        if(e.isEnd()) return WRD_E("there is no key"), false;
+        if(e.isEnd()) return NAMU_E("there is no key"), false;
 
         fr.pushLocal("age1", age);
 
-        wInt& age1 = fr.sub<wInt>("age1");
-        if(age1 != age) return WRD_E("age1 != age"), false;
-        if(&age1 == &age) return WRD_E("address of age1 and age are different"), false;
+        nInt& age1 = fr.sub<nInt>("age1");
+        if(age1 != age) return NAMU_E("age1 != age"), false;
+        if(&age1 == &age) return NAMU_E("address of age1 and age are different"), false;
 
         return true;
     });

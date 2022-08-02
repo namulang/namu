@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(autoslot)
+    NAMU_DEF_ME(autoslot)
 
     me::autoslot(const manifest& manifest, const packLoadings& loadings): super(manifest),
             _loadings(loadings) { _rel(); }
@@ -28,7 +28,7 @@ namespace namu {
     obj& me::getPack() {
         if(_state == RELEASED) {
             _pak.bind(new obj());
-            WRD_I("%s pack is about to interpret lazy.", getManifest().name.c_str());
+            NAMU_I("%s pack is about to interpret lazy.", getManifest().name.c_str());
             // TODO: check _rpt error count increased or not.
             //       if increased, then parse() function has been failed.
             parse(*_rpt, _pak->getShares()); // recursive call wasn't allowed.
@@ -63,7 +63,7 @@ namespace namu {
         return tstr<srcs>(_srcs);
     }
 
-    wbool me::verify(errReport& rpt, obj& pak) {
+    nbool me::verify(errReport& rpt, obj& pak) {
         for(packLoading* load : _loadings)
             load->verify(rpt, pak);
 
@@ -72,12 +72,12 @@ namespace namu {
         return true;
     }
 
-    wbool me::link() {
+    nbool me::link() {
         _state = LINKED;
         return !isValid() ? _invalidate() : true;
     }
 
-    wbool me::_invalidate() {
+    nbool me::_invalidate() {
         _setValid(false);
         if(_state != LINKED) return false;
 

@@ -3,7 +3,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(ases)
+    NAMU_DEF_ME(ases)
 
     str me::as(const node& from, const type& to) const {
         const type& fromType = from.getType();
@@ -26,7 +26,7 @@ namespace namu {
         return _casts.size();
     }
 
-    wbool me::is(const type& from, const type& to) const {
+    nbool me::is(const type& from, const type& to) const {
         if(to.isSuper(from)) return true;
 
         for(auto e : _casts)

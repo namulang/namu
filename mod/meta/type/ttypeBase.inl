@@ -11,13 +11,13 @@ namespace namu {
 #define SUPER S
 
     TEMPL ME::ttypeBase() { this->init(); }
-    TEMPL wbool ME::isTemplate() const {
-        static wbool inner = tifTemplate<T>::is;
+    TEMPL nbool ME::isTemplate() const {
+        static nbool inner = tifTemplate<T>::is;
         return inner;
     }
 
-    TEMPL wbool ME::isAbstract() const {
-        static wbool inner = !std::is_constructible<T>::value;
+    TEMPL nbool ME::isAbstract() const {
+        static nbool inner = !std::is_constructible<T>::value;
         return inner;
     }
 
@@ -27,14 +27,14 @@ namespace namu {
     }
 
     TEMPL void* ME::make() const { return tinstanceMaker<T>::make(); }
-    TEMPL wcnt ME::size() const { return sizeof(T); }
+    TEMPL ncnt ME::size() const { return sizeof(T); }
 
     TEMPL const type& ME::getSuper() const {
         return ttype<typename tadaptiveSuper<T>::super>::get();
     }
 
-    TEMPL const wbool& ME::isInit() const {
-        static wbool inner = typeid(T) == typeid(adam);
+    TEMPL const nbool& ME::isInit() const {
+        static nbool inner = typeid(T) == typeid(adam);
         return inner;
     }
 
@@ -72,7 +72,7 @@ namespace namu {
     }
 
     TEMPL type& ME::_getStatic() const { return const_cast<ME&>(get()); }
-    TEMPL ME::ttypeBase(wbool) {}
+    TEMPL ME::ttypeBase(nbool) {}
 
 #undef TEMPL
 #undef ME

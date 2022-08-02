@@ -15,13 +15,13 @@ TEST_F(FAOExprTest, simpleAdd) {
             return a + b
     )SRC").shouldVerified(true);
 
-    wInt& a = getSubPack().sub<wInt>("a");
+    nInt& a = getSubPack().sub<nInt>("a");
     ASSERT_FALSE(nul(a));
     ASSERT_EQ(a.get(), 5);
-    wInt b = getSubPack().sub<wInt>("b");
+    nInt b = getSubPack().sub<nInt>("b");
     ASSERT_EQ(b.get(), 2);
 
-    tstr<wInt> res(getSubPack().run("main"));
+    tstr<nInt> res(getSubPack().run("main"));
     ASSERT_TRUE(res);
     ASSERT_EQ(res->get(), 7);
 }
@@ -36,13 +36,13 @@ TEST_F(FAOExprTest, addWithDefAssign) {
             return a + b
     )SRC").shouldVerified(true);
 
-    wInt& a = getSubPack().sub<wInt>("a");
+    nInt& a = getSubPack().sub<nInt>("a");
     ASSERT_FALSE(nul(a));
     ASSERT_EQ(a.get(), 5);
-    wInt b = getSubPack().sub<wInt>("b");
+    nInt b = getSubPack().sub<nInt>("b");
     ASSERT_EQ(b.get(), 7);
 
-    tstr<wInt> res(getSubPack().run("main"));
+    tstr<nInt> res(getSubPack().run("main"));
     ASSERT_TRUE(res);
     ASSERT_EQ(res->get(), 12);
 }
@@ -55,10 +55,10 @@ TEST_F(FAOExprTest, addWithDefAssignReversedNegative) {
             return a + b
     )SRC").shouldVerified(false);
 
-    wInt& a = getSubPack().sub<wInt>("a");
+    nInt& a = getSubPack().sub<nInt>("a");
     ASSERT_FALSE(nul(a));
     ASSERT_EQ(a.get(), 5);
-    wInt& b = getSubPack().sub<wInt>("b");
+    nInt& b = getSubPack().sub<nInt>("b");
     ASSERT_TRUE(nul(b));
 }
 
@@ -79,7 +79,7 @@ TEST_F(FAOExprTest, addIntAndStr) {
     )SRC").shouldParsed(true);
     shouldVerified(true);
 
-    wStr& a = getSubPack().sub<wStr>("a");
+    nStr& a = getSubPack().sub<nStr>("a");
     ASSERT_FALSE(nul(a));
     ASSERT_EQ(a.get(), std::string("hello12"));
 }
@@ -92,13 +92,13 @@ TEST_F(FAOExprTest, simpleSub) {
             return a - b
     )SRC").shouldVerified(true);
 
-    wInt& a = getSubPack().sub<wInt>("a");
+    nInt& a = getSubPack().sub<nInt>("a");
     ASSERT_FALSE(nul(a));
     ASSERT_EQ(a.get(), 5);
-    wInt b = getSubPack().sub<wInt>("b");
+    nInt b = getSubPack().sub<nInt>("b");
     ASSERT_EQ(b.get(), 2);
 
-    tstr<wInt> res(getSubPack().run("main"));
+    tstr<nInt> res(getSubPack().run("main"));
     ASSERT_TRUE(res);
     ASSERT_EQ(res->get(), 3);
 }
@@ -111,13 +111,13 @@ TEST_F(FAOExprTest, modWithDefAssign) {
             return a * b % 7
     )SRC").shouldVerified(true);
 
-    wInt& a = getSubPack().sub<wInt>("a");
+    nInt& a = getSubPack().sub<nInt>("a");
     ASSERT_FALSE(nul(a));
     ASSERT_EQ(a.get(), 10);
-    wInt b = getSubPack().sub<wInt>("b");
+    nInt b = getSubPack().sub<nInt>("b");
     ASSERT_EQ(b.get(), 5);
 
-    tstr<wInt> res(getSubPack().run("main"));
+    tstr<nInt> res(getSubPack().run("main"));
     ASSERT_TRUE(res);
     ASSERT_EQ(res->get(), 1);
 }

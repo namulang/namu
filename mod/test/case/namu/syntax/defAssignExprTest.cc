@@ -23,7 +23,7 @@ TEST_F(defAssignExprTest, simpleGlobalDefAssign) {
     ASSERT_EQ(shares.len(), 2);
 
     run();
-    ASSERT_EQ(getSubPack().sub<wInt>("age").cast<int>(), 0);
+    ASSERT_EQ(getSubPack().sub<nInt>("age").cast<int>(), 0);
 }
 
 TEST_F(defAssignExprTest, simpleLocalDefAssign) {

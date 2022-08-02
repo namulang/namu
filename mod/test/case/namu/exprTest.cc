@@ -10,7 +10,7 @@ namespace {
             isRun = true;
         }
 
-        static inline wbool isRun = false;
+        static inline nbool isRun = false;
     };
 }
 
@@ -20,7 +20,7 @@ struct exprTest : public namuTest {
 
     tstr<obj> bridge;
 
-    static void setLine(expr& exp, wcnt row, wcnt col) {
+    static void setLine(expr& exp, ncnt row, ncnt col) {
         exp._pos = {row, col};
     }
 };
@@ -39,7 +39,7 @@ void exprTest::TearDown() {
 TEST_F(exprTest, standbyHelloWorldBridgeObj) {
     ASSERT_TRUE(bridge.isBind());
 
-    tstr<wStr> msg(new wStr());
+    tstr<nStr> msg(new nStr());
     narr args {msg.get()};
 
     node& mainFunc = bridge->sub("main", args);
@@ -53,12 +53,12 @@ TEST_F(exprTest, standbyHelloWorldBridgeObj) {
     res = bridge->run("main", args);
     ASSERT_TRUE(res.isBind());
     ASSERT_TRUE(res.getType() == ttype<node>::get());
-    ASSERT_TRUE(res->getType() == ttype<wVoid>::get());
+    ASSERT_TRUE(res->getType() == ttype<nVoid>::get());
     ASSERT_TRUE(helloWorld::isRun);
 }
 
 TEST_F(exprTest, simpleGetExpr) {
-    getExpr exp(bridge.get(), "main", narr(*new wStr()));
+    getExpr exp(bridge.get(), "main", narr(*new nStr()));
     errReport rep;
     verifier veri;
     veri.setReport(rep).verify(exp);
@@ -78,14 +78,14 @@ TEST_F(exprTest, simpleGetExpr) {
 }
 
 TEST_F(exprTest, simpleGetExprNegative) {
-    getExpr exp(bridge.get(), "main?", narr(*new wStr()));
+    getExpr exp(bridge.get(), "main?", narr(*new nStr()));
     setLine(exp, 1, 1);
     errReport rep;
     verifier veri;
     veri.setReport(rep).verify(exp);
     ASSERT_TRUE(rep); // should have some errs.
 
-    getExpr exp2(bridge.get(), "main", narr(*new wStr()));
+    getExpr exp2(bridge.get(), "main", narr(*new nStr()));
     setLine(exp2, 1, 1);
     rep.rel();
     veri.verify(exp);
@@ -93,7 +93,7 @@ TEST_F(exprTest, simpleGetExprNegative) {
 }
 
 TEST_F(exprTest, simpleRunExprWithoutMeObjNegative) {
-    runExpr exp1(bridge->sub("main"), narr(*new wStr("kniz!")));
+    runExpr exp1(bridge->sub("main"), narr(*new nStr("kniz!")));
     errReport rep;
     verifier veri;
     veri.setReport(rep).verify(exp1);
@@ -108,7 +108,7 @@ TEST_F(exprTest, simpleRunExprWithoutMeObjNegative) {
 }
 
 TEST_F(exprTest, simpleRunExpr) {
-    runExpr exp1(*bridge, "main", narr(*new wStr("kniz!")));
+    runExpr exp1(*bridge, "main", narr(*new nStr("kniz!")));
     errReport rep;
     verifier veri;
     veri.setReport(rep).verify(exp1);
@@ -125,7 +125,7 @@ TEST_F(exprTest, simpleRunExpr) {
     str res = exp1.run();
     ASSERT_TRUE(res.isBind());
     ASSERT_TRUE(res.getType() == ttype<node>::get());
-    ASSERT_TRUE(res->getType() == ttype<wVoid>::get());
+    ASSERT_TRUE(res->getType() == ttype<nVoid>::get());
 
     ASSERT_TRUE(helloWorld::isRun);
 }
@@ -147,13 +147,13 @@ TEST_F(exprTest, simpleRunExprNegative) {
 }
 
 TEST_F(exprTest, constructExprInManual) {
-    runExpr r(*bridge, "main", narr(*new wStr("kniz!")));
+    runExpr r(*bridge, "main", narr(*new nStr("kniz!")));
     setLine(r, 1, 1);
 
     str res = r.run();
     ASSERT_TRUE(res);
     ASSERT_TRUE(res.getType() == ttype<node>::get());
-    ASSERT_TRUE(res->getType() == ttype<wVoid>::get());
+    ASSERT_TRUE(res->getType() == ttype<nVoid>::get());
 }
 
 TEST_F(exprTest, defVarExpr) {

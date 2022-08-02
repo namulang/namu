@@ -2,7 +2,7 @@
 
 #include "../macro.hpp"
 #include "../common.hpp"
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
 #   include <direct.h>
 #   include <io.h>
 #   define getcwd _getcwd
@@ -16,11 +16,11 @@ namespace namu {
 
     /// fsystem is going to be used before filesystem library fully supported.
     /// to apply fsystem on clang++ is quite hard now.
-    class _wout fsystem {
+    class _nout fsystem {
         WRD(ME(fsystem))
 
         struct entry {
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
             _finddata_t file;
             intptr_t dir;
 #else
@@ -30,7 +30,7 @@ namespace namu {
         };
         typedef std::vector<entry> entries;
 
-        class _wout iterator {
+        class _nout iterator {
             WRD(ME(iterator))
             friend class fsystem;
 
@@ -43,15 +43,15 @@ namespace namu {
         public:
             const std::string& operator*();
             me& operator++(int);
-            operator wbool() const;
+            operator nbool() const;
 
         public:
             void rel();
-            wbool next();
+            nbool next();
             const std::string& get() const;
             std::string getName() const;
             std::string getDir() const;
-            wbool isEnd() const;
+            nbool isEnd() const;
 
         private:
             void _addDir(const std::string& dirPath);
@@ -68,7 +68,7 @@ namespace namu {
         static std::string getCurrentDir();
 
     public:
-#if WRD_BILD_PLATFORM == WRD_TYPE_WINDOWS
+#if NAMU_BILD_PLATFORM == NAMU_TYPE_WINDOWS
         static inline std::string DELIMITER = "\\";
 #else
         static inline std::string DELIMITER = "/";

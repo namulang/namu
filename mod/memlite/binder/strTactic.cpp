@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(strTactic)
+    NAMU_DEF_ME(strTactic)
 
     void me::rel(binder& me) {
         if(!me.isBind()) return;
@@ -15,10 +15,10 @@ namespace namu {
         super::rel(me);
     }
 
-    wbool me::bind(binder& me, const instance& it) {
-        wbool res = super::bind(me, it);
+    nbool me::bind(binder& me, const instance& it) {
+        nbool res = super::bind(me, it);
         if(!res) {
-            WRD_E("super::bind() was failed.");
+            NAMU_E("super::bind() was failed.");
             return res;
         }
 

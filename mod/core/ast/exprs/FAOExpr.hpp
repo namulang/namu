@@ -8,7 +8,7 @@
 namespace namu {
 
     // FAO: Five fundermental Arithmetic Operation.
-    class _wout FAOExpr : public expr {
+    class _nout FAOExpr : public expr {
         WRD(CLASS(FAOExpr, expr, expr::exprType))
 
     public:

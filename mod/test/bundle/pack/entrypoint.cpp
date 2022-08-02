@@ -13,12 +13,12 @@ struct con {
     }
 
     const string& print(const std::string& msg) {
-        WRD_W("=========================");
+        NAMU_W("=========================");
         for(int n = 0; n < 10; n++) {
-            const wchar* c = msg.c_str();
-            WRD_W("[%d]=%d", n, (int) c[n]);
+            const nchar* c = msg.c_str();
+            NAMU_W("[%d]=%d", n, (int) c[n]);
         }
-        WRD_W("=========================");
+        NAMU_W("=========================");
         std::cout << msg;
         return msg;
     }
@@ -30,7 +30,7 @@ struct con {
     }
 };
 
-extern "C" _wout void namu_bridge_cpp_entrypoint(bicontainable* tray) {
+extern "C" _nout void namu_bridge_cpp_entrypoint(bicontainable* tray) {
     tray->add("con", tcppBridge<con>::def()
         ->func("say", &con::say)
         ->func("add", &con::add)

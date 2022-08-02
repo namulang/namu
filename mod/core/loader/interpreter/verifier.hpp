@@ -10,7 +10,7 @@ namespace namu {
     class frame;
     typedef tnbicontainer<std::string, slot> slotContainer;
 
-    class _wout verifier : public typeProvidable, clonable {
+    class _nout verifier : public typeProvidable, clonable {
         WRD(CLASS(verifier))
         friend struct ::verifierTest;
 

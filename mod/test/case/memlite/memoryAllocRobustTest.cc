@@ -7,14 +7,14 @@ struct memoryAllocRobustTest : public namuTest {};
 
 namespace {
     struct A : public instance {
-        WRD_SINGLETON_GETTER(const type& getType() const, ttype<A>)
+        NAMU_SINGLETON_GETTER(const type& getType() const, ttype<A>)
 
         int age;
     };
 
 
     struct B : public A {
-        WRD_SINGLETON_GETTER(const type& getType() const, ttype<B>)
+        NAMU_SINGLETON_GETTER(const type& getType() const, ttype<B>)
 
         float grade;
     };
@@ -24,13 +24,13 @@ namespace {
     struct pobject : public pnode {};
 
     struct PA : public pobject {
-        WRD_SINGLETON_GETTER(const type& getType() const, ttype<PA>)
+        NAMU_SINGLETON_GETTER(const type& getType() const, ttype<PA>)
 
         int age;
     };
 
     struct PB : public PA {
-        WRD_SINGLETON_GETTER(const type& getType() const, ttype<PB>)
+        NAMU_SINGLETON_GETTER(const type& getType() const, ttype<PB>)
 
         float grade;
     };
@@ -66,8 +66,8 @@ namespace {
 }
 
 #define SPRINT(n) \
-WRD_W("%d times new/delete : %f ms elapsed. crc=%d", n, ((float) run1(crc, (n))) / CLOCKS_PER_SEC*1000.0f, crc); \
-WRD_W("%d times mempool    : %f ms elapsed. crc=%d", n, ((float) run2(crc, (n))) / CLOCKS_PER_SEC*1000.0f, crc);
+NAMU_W("%d times new/delete : %f ms elapsed. crc=%d", n, ((float) run1(crc, (n))) / CLOCKS_PER_SEC*1000.0f, crc); \
+NAMU_W("%d times mempool    : %f ms elapsed. crc=%d", n, ((float) run2(crc, (n))) / CLOCKS_PER_SEC*1000.0f, crc);
 
 TEST_F(memoryAllocRobustTest, sprint10) {
     int crc = 0;

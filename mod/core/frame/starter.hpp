@@ -6,14 +6,14 @@
 
 namespace namu {
 
-    class _wout starter : public node {
+    class _nout starter : public node {
         WRD(CLASS(starter, node))
 
     public:
         // node:
         nbicontainer& subs() override;
 
-        wbool canRun(const ucontainable& args) const override;
+        nbool canRun(const ucontainable& args) const override;
         str run(const ucontainable& args) override;
 
     private:

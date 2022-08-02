@@ -8,12 +8,12 @@ namespace namu {
 #define ME type
 
     template <typename T>
-    wbool ME::isSuper() const {
+    nbool ME::isSuper() const {
         return isSuper(ttype<T>::get());
     }
 
     template <typename T>
-    wbool ME::isSub() const {
+    nbool ME::isSub() const {
         return ttype<T>::get().isSuper(*this);
     }
 

@@ -7,32 +7,31 @@ void yyrestart(FILE*);
 
 namespace namu {
 
-    WRD_DEF_ME(sinterpreter)
+    NAMU_DEF_ME(sinterpreter)
 
-    tstr<sobj> me::interp(const wchar* script) {
+    tstr<sobj> me::interp(const nchar* script) {
         YY_BUFFER_STATE buffer = yy_scan_string(script);
         tstr<sobj> ret = _runParser();
         yy_delete_buffer(buffer);
-        yylex_destroy();
         return ret;
     }
     tstr<sobj> me::interp(const std::string& script) {
         return interp(script.c_str());
     }
-    tstr<sobj> me::interpFile(const wchar* path) {
+    tstr<sobj> me::interpFile(const nchar* path) {
         yyin = fopen(path, "r");
         yyrestart(yyin);
         if(!yyin)
-            return WRD_E("invalid file path %s.", path), tstr<sobj>();
+            return NAMU_E("invalid file path %s.", path), tstr<sobj>();
 
         std::string fileName = _extractFileName(path);
-        WRD_I("interpreting file '%s'...", fileName.c_str());
+        NAMU_I("interpreting file '%s'...", fileName.c_str());
 
         tstr<sobj> ret = _runParser();
 
         ret->setName(fileName);
         fclose(yyin);
-        WRD_I("%s seedling file interpreted.", fileName.c_str());
+        NAMU_I("%s seedling file interpreted.", fileName.c_str());
         return ret;
     }
     tstr<sobj> me::interpFile(const std::string& path) {
@@ -42,9 +41,9 @@ namespace namu {
     tstr<sobj> me::_runParser() {
         int res = yyparse();
         if(res)
-            return WRD_E("interpretion has been failed. res=%d", res), tstr<sobj>();
+            return NAMU_E("interpretion has been failed. res=%d", res), tstr<sobj>();
         if(!root)
-            WRD_E("nothing interpreted.");
+            NAMU_E("nothing interpreted.");
 
         return tstr<sobj>(root);
     }

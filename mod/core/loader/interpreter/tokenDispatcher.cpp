@@ -2,17 +2,17 @@
 
 namespace namu {
 
-    WRD_DEF_ME(tokenDispatcher)
+    NAMU_DEF_ME(tokenDispatcher)
 
-    void me::add(wint newToken) {
+    void me::add(nint newToken) {
         _toks.push_back(newToken);
     }
 
-    void me::addFront(wint newToken) {
+    void me::addFront(nint newToken) {
         _toks.insert(_toks.begin(), newToken);
     }
 
-    wbool me::pop(wint& output) {
+    nbool me::pop(nint& output) {
         if(_toks.size() <= 0)
             return false;
 
@@ -21,7 +21,7 @@ namespace namu {
         return true;
     }
 
-    wcnt me::len() const {
+    ncnt me::len() const {
         return _toks.size();
     }
 

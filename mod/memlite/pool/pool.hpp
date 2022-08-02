@@ -4,34 +4,34 @@
 
 namespace namu {
 
-    class _wout pool : public memoryHaver {
-        WRD_DECL_ME(pool, memoryHaver)
-        WRD_INIT_META(me)
+    class _nout pool : public memoryHaver {
+        NAMU_DECL_ME(pool, memoryHaver)
+        NAMU_INIT_META(me)
 
     public:
         //  pool:
         pool();
         virtual ~pool();
 
-        chunks& operator[](widx n);
+        chunks& operator[](nidx n);
         chunks& operator[](const instance& inst);
-        const chunks& operator[](widx n) const WRD_UNCONST_FUNC(operator[](n))
-        const chunks& operator[](const instance& inst) const WRD_UNCONST_FUNC(operator[](inst))
+        const chunks& operator[](nidx n) const NAMU_UNCONST_FUNC(operator[](n))
+        const chunks& operator[](const instance& inst) const NAMU_UNCONST_FUNC(operator[](inst))
 
 
         chunks& get(const instance& inst);
-        chunks& get(widx n);
-        const chunks& get(const instance& inst) const WRD_UNCONST_FUNC(get(inst))
-        const chunks& get(widx n) const WRD_UNCONST_FUNC(get(n))
+        chunks& get(nidx n);
+        const chunks& get(const instance& inst) const NAMU_UNCONST_FUNC(get(inst))
+        const chunks& get(nidx n) const NAMU_UNCONST_FUNC(get(n))
         //  memoryHaver:
-        wbool has(const instance& it) const override;
-        wcnt size() const override;
-        wcnt len() const override;
-        wbool rel() override;
+        nbool has(const instance& it) const override;
+        ncnt size() const override;
+        ncnt len() const override;
+        nbool rel() override;
 
     protected:
         //  memoryHaver:
-        void* _get(widx n) override;
+        void* _get(nidx n) override;
 
     private:
         std::vector<chunks*> _chunks;

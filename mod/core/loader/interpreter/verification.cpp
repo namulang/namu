@@ -6,7 +6,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(verification)
+    NAMU_DEF_ME(verification)
 
     void me::verify(node& it) {
         nmap tray;
@@ -17,7 +17,7 @@ namespace namu {
         getVerifier().verify(it, tray);
     }
 
-    wbool me::logFrameInfo(const frame& newFr) {
+    nbool me::logFrameInfo(const frame& newFr) {
         tstr<frame>& info = _verifier->getFrameInfo();
         if(nul(info)) return false;
 

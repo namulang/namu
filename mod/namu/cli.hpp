@@ -6,7 +6,7 @@ namespace namu {
     struct cli {
         const flags& getFlags() const;
 
-        wbool run(args& a) {
+        nbool run(args& a) {
             interpreter ip;
 
             for(const auto& op : getFlags()) {
@@ -33,7 +33,7 @@ namespace namu {
         }
 
     private:
-        wint _finish(interpreter& ip, wint ret) {
+        nint _finish(interpreter& ip, nint ret) {
             ip.log();
             return ret;
         }

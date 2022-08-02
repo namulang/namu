@@ -11,7 +11,7 @@ namespace namu {
 
     class obj;
     class func;
-    class _wout frame : public node { // TODO: may be obj, not node.
+    class _nout frame : public node { // TODO: may be obj, not node.
         WRD(CLASS(frame, node),
             FRIEND_VERIFY(baseObj, subNodes))
         friend struct ::immutableTest;
@@ -30,7 +30,7 @@ namespace namu {
             for(scopes* e=&chn; e ;e=&e->getNext()) {
                 node& owner = _getOwnerFrom(*e);
                 if(nul(owner)) {
-                    WRD_W("couldn't find owner from chain[%x]", &e.get());
+                    NAMU_W("couldn't find owner from chain[%x]", &e.get());
                     continue;
                 }
 
@@ -43,16 +43,16 @@ namespace namu {
             return tpair<str, str>();
         }*/
 
-        wbool pushLocal(nbicontainer* con);
-        wbool pushLocal(nbicontainer& con);
-        wbool pushLocal(scopes* new1);
-        wbool pushLocal(scopes& new1);
-        wbool pushLocal(const std::string& name, const node& n);
-        wbool pushLocal(const std::string& name, const node* n);
+        nbool pushLocal(nbicontainer* con);
+        nbool pushLocal(nbicontainer& con);
+        nbool pushLocal(scopes* new1);
+        nbool pushLocal(scopes& new1);
+        nbool pushLocal(const std::string& name, const node& n);
+        nbool pushLocal(const std::string& name, const node* n);
         void pushObj(const baseObj& obj);
 
         scopes& getTop();
-        const scopes& getTop() const WRD_UNCONST_FUNC(getTop())
+        const scopes& getTop() const NAMU_UNCONST_FUNC(getTop())
 
         // I won't provide API for poping a single node from the scope.
         tstr<scopes> popLocal();
@@ -61,19 +61,19 @@ namespace namu {
 
         void setFunc(func& new1);
         func& getFunc();
-        const func& getFunc() const WRD_UNCONST_FUNC(getFunc())
+        const func& getFunc() const NAMU_UNCONST_FUNC(getFunc())
 
         // node:
         using node::subs;
         nbicontainer& subs() override;
 
-        wbool canRun(const ucontainable& args) const override;
+        nbool canRun(const ucontainable& args) const override;
         str run(const ucontainable& args) override;
 
         void rel() override;
 
-        wbool pushReturn(const str& toReturn);
-        wbool isReturned() const;
+        nbool pushReturn(const str& toReturn);
+        nbool isReturned() const;
         str popReturn();
 
     protected:

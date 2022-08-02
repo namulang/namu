@@ -16,11 +16,11 @@ namespace namu {
     public:
         // add:
         using super::add;
-        wbool add(const K& key, const V& val) override { return false; }
+        nbool add(const K& key, const V& val) override { return false; }
 
         // link:
         using super::link;
-        wbool link(const super& new1) override { return false; }
+        nbool link(const super& new1) override { return false; }
 
     public:
         static me singletone;

@@ -9,7 +9,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(node)
+    NAMU_DEF_ME(node)
 
     node& me::operator[](const std::string& name) const {
         return sub(name);
@@ -31,13 +31,13 @@ namespace namu {
         return _onRunSub(found, args);
     }
 
-    wbool me::is(const typeProvidable& to) const { return is(to.getType()); }
-    wbool me::is(const type& to) const { return getType().is(to); }
+    nbool me::is(const typeProvidable& to) const { return is(to.getType()); }
+    nbool me::is(const type& to) const { return getType().is(to); }
     str me::as(const typeProvidable& to) const { return as(to.getType()); }
     str me::as(const type& to) const { return getType().as(*this, to); }
 
-    wbool me::isImpli(const typeProvidable& to) const { return isImpli(to.getType()); }
-    wbool me::isImpli(const type& to) const { return getType().isImpli(to); }
+    nbool me::isImpli(const typeProvidable& to) const { return isImpli(to.getType()); }
+    nbool me::isImpli(const type& to) const { return getType().isImpli(to); }
     str me::asImpli(const typeProvidable& to) const { return asImpli(to.getType()); }
     str me::asImpli(const type& to) const { return getType().asImpli(*this, to); }
 
@@ -51,8 +51,8 @@ namespace namu {
 
 
 
-    WRD_VERIFY({ // no same variable.
-        WRD_DI("verify: node: no same variable=%d", it.subs().len());
+    NAMU_VERIFY({ // no same variable.
+        NAMU_DI("verify: node: no same variable=%d", it.subs().len());
         if(it.isSub<frame>()) return;
 
         for(auto e=it.subs().begin(); e ;++e) {

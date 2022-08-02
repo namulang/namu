@@ -2,19 +2,19 @@
 
 namespace namu {
 
-    WRD_DEF_ME(fsystem)
+    NAMU_DEF_ME(fsystem)
 
     const std::string& me::iterator::get() const {
         return _nowPath;
     }
 
-    wbool me::iterator::next() {
+    nbool me::iterator::next() {
         // assume that all of data to _entries was valid:
         //  which means, if returning value from readdir() was null,
         //  then the most top element of entries should be removed.
         while(!isEnd()) {
             entry& e = _entries[_entries.size()-1];
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
             int res = _findnext(e.dir, &e.file);
             if(res == -1) {
 #else
@@ -24,7 +24,7 @@ namespace namu {
                 _popDir();
                 continue;
             }
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
             std::string name = e.file.name;
             char delimiter = '\\';
 #else
@@ -34,7 +34,7 @@ namespace namu {
             if(name == ".." || name == ".")
                 continue;
             std::string path = e.path + delimiter + name;
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
             if(e.file.attrib & _A_SUBDIR) {
 #else
             if(file->d_type == DT_DIR) {
@@ -68,7 +68,7 @@ namespace namu {
         return *this;
     }
 
-    me::iterator::operator wbool() const {
+    me::iterator::operator nbool() const {
         return !isEnd();
     }
 
@@ -79,32 +79,32 @@ namespace namu {
 
     std::string me::iterator::getName() const {
         const std::string& path = get();
-#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
-        widx slash = path.rfind('\\');
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
+        nidx slash = path.rfind('\\');
 #else
-        widx slash = path.rfind('/');
+        nidx slash = path.rfind('/');
 #endif
         return path.substr(slash + 1);
     }
 
     std::string me::iterator::getDir() const {
         const std::string& path = get();
-#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
-        widx slash = path.rfind('\\');
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
+        nidx slash = path.rfind('\\');
 #else
-        widx slash = path.rfind('/');
+        nidx slash = path.rfind('/');
 #endif
         return path.substr(0, slash);
     }
 
-    wbool me::iterator::isEnd() const {
+    nbool me::iterator::isEnd() const {
         return _entries.size() == 0;
     }
 
     void me::iterator::_addDir(const std::string& dirPath) {
         if(dirPath.empty()) return;
         std::string path = _filterPath(dirPath);
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
         _finddata_t file;
         intptr_t newDir = _findfirst((path + "\\*.*").c_str(), &file);
         if (newDir == -1) return;
@@ -118,7 +118,7 @@ namespace namu {
 
     void me::iterator::_popDir() {
         entry& e = _entries[_entries.size()-1];
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
         _findclose(e.dir);
 #else
         closedir(e.dir);
@@ -129,7 +129,7 @@ namespace namu {
     std::string me::iterator::_filterPath(const std::string& org) {
         int idx = org.length() - 1;
         char last = org[idx];
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
         if (last == '\\' || last == '/')
 #else
         if (last == '/')

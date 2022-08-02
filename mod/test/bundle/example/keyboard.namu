@@ -11,9 +11,9 @@ def unit
     init() void := null
 
 def key from unit
-    me(newVal char, newStroke int)
+    me(newVal char, nenStroke int)
         value = newVal
-        stroke = newStroke
+        stroke = nenStroke
 
     type() void
         cons.out('user types $val with $stroke stroke.')

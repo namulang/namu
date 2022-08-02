@@ -10,24 +10,24 @@ namespace {
         WRD(CLASS(myFunc, mgdFunc))
 
     public:
-        myFunc(): super(params(), new wVoid()) {}
+        myFunc(): super(params(), new nVoid()) {}
 
         void setUp() {
             _executed = false;
         }
 
         str run(const ucontainable& args) override {
-            WRD_I("hello world!");
+            NAMU_I("hello world!");
             _executed = true;
             return str();
         }
 
-        wbool isRun() const {
+        nbool isRun() const {
             return _executed;
         }
 
         const node& getRet() const override {
-            static wVoid inner;
+            static nVoid inner;
             return inner;
         }
 
@@ -37,7 +37,7 @@ namespace {
         }
 
     private:
-        wbool _executed;
+        nbool _executed;
     };
 
     struct myObj : public obj {
@@ -48,7 +48,7 @@ namespace {
 
         int val;
 
-        wbool _onSame(const typeProvidable& rhs) const override {
+        nbool _onSame(const typeProvidable& rhs) const override {
             const myObj& cast = (const myObj&) rhs;
             return val == cast.val;
         }
@@ -66,8 +66,8 @@ namespace {
 
     class chef : public obj {
 
-        class myType : public wtype {
-            WRD_DECL_ME(myType, wtype);
+        class myType : public ntype {
+            NAMU_DECL_ME(myType, ntype);
 
         protected:
             const ases& _getImpliAses() const override {
@@ -101,14 +101,14 @@ TEST_F(nodeTest, testManuallyMakeNodeStructure) {
     tstr<scopes> frameEmulator;
     myObj obj;
     myFunc func;
-    WRD_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
+    NAMU_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
 
     obj.subs().add("myFunc", func);
     myFunc funcOffunc;
     func.subs().add("funcOfFunc", funcOffunc);
 
-    WRD_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
-    WRD_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
+    NAMU_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
+    NAMU_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 
     // when:
     frameEmulator.bind(obj.subs());
@@ -117,8 +117,8 @@ TEST_F(nodeTest, testManuallyMakeNodeStructure) {
     chnOffunc->link(*frameEmulator);
     frameEmulator.bind(*chnOffunc);
 
-    WRD_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
-    WRD_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
+    NAMU_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
+    NAMU_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 
     // then:
     ASSERT_EQ(chnOffunc->len(), 2);
@@ -127,14 +127,14 @@ TEST_F(nodeTest, testManuallyMakeNodeStructure) {
 
     int n=0;
     for(const auto& elem : *chnOffunc)
-        WRD_DI("[%d]=%s", n++, elem.getType().getName().c_str());
+        NAMU_DI("[%d]=%s", n++, elem.getType().getName().c_str());
 
-    WRD_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
-    WRD_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
+    NAMU_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
+    NAMU_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 
     ASSERT_EQ(n, 2);
-    WRD_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
-    WRD_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
+    NAMU_DI("func.tag.chkId=%d", func.getBindTag().getId().chkN);
+    NAMU_DI("funcOffunc.tag.chkId=%d", funcOffunc.getBindTag().getId().chkN);
 }
 
 TEST_F(nodeTest, testManualNativefuncCall) {
@@ -163,7 +163,7 @@ TEST_F(nodeTest, testchefImplicitCastTofood) {
     chef.foodName = expectName;
     chef.foodCalorie = expectCalorie;
 
-    const wtype& chefType = chef.getType();
+    const ntype& chefType = chef.getType();
     ASSERT_TRUE(chefType.isImpli<food>());
     tstr<food> cast = chef.asImpli<food>();
     ASSERT_TRUE(cast);
@@ -175,25 +175,25 @@ TEST_F(nodeTest, testchefImplicitCastTofood) {
 TEST_F(nodeTest, ShouldNotSameNameVariableIntoSubs) {
     chef c;
     ASSERT_EQ(c.subs().len(), 0);
-    c.subs().add("age", new wInt(22));
+    c.subs().add("age", new nInt(22));
 
     ASSERT_EQ(c.subs().len(), 1);
-    ASSERT_EQ(c.sub<wInt>("age").get(), 22);
+    ASSERT_EQ(c.sub<nInt>("age").get(), 22);
     errReport rpt;
     verifier v;
     v.setReport(rpt).verify(c);
     ASSERT_FALSE(rpt);
 
-    c.subs().add("age1", new wInt(22));
+    c.subs().add("age1", new nInt(22));
     ASSERT_EQ(c.subs().len(), 2);
-    ASSERT_EQ(c.subAll<wInt>("age1")[0].get(), 22);
+    ASSERT_EQ(c.subAll<nInt>("age1")[0].get(), 22);
 
     v.verify(c);
     ASSERT_FALSE(rpt);
 
-    c.subs().add("age", new wInt(23));
+    c.subs().add("age", new nInt(23));
     ASSERT_EQ(c.subs().len(), 3);
-    ASSERT_EQ(c.subAll<wInt>("age").len(), 2);
+    ASSERT_EQ(c.subAll<nInt>("age").len(), 2);
     v.verify(c);
     ASSERT_TRUE(rpt);
 }

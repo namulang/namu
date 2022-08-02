@@ -15,14 +15,14 @@ namespace namu {
         tcppBridgeFuncBase(fptrType fptr): super(), _fptr(fptr) {}
 
         static_assert(allTrues<(sizeof(tmarshaling<Args>::canMarshal() ) == sizeof(metaIf::yes))...>::value,
-            "can't marshal one of this func's parameter wtypes.");
+            "can't marshal one of this func's parameter ntypes.");
 
     public:
         using super::run;
         str run(const ucontainable& args) override {
             narr tray;
             narr& evaluated = _evalArgs(args, tray);
-            if(nul(evaluated)) return WRD_E("evaluated == null"), str();
+            if(nul(evaluated)) return NAMU_E("evaluated == null"), str();
 
             return _runNative(evaluated);
         }
@@ -41,7 +41,7 @@ namespace namu {
         narr& _evalArgs(const ucontainable& args, narr& tray) {
             const params& ps = getParams();
             if(args.len() != ps.len())
-                return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()),
+                return NAMU_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()),
                        nulOf<narr>();
 
             int n = 0;

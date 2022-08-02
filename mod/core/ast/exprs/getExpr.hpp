@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    class _wout getExpr : public expr {
+    class _nout getExpr : public expr {
         WRD(CLASS(getExpr, expr, expr::exprType),
             FRIEND_VERIFY(getExpr, isRunnable))
 

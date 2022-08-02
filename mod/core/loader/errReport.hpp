@@ -1,27 +1,27 @@
 #pragma once
 
 #include "err.hpp"
-#include "../type/wtype.hpp"
+#include "../type/ntype.hpp"
 #include "../ast/clonable.hpp"
 #include "../common.hpp"
 
 namespace namu {
 
-    class _wout errReport : public instance, public clonable {
+    class _nout errReport : public instance, public clonable {
         WRD(CLASS(errReport, instance))
 
     public:
-        const err& operator[](widx n) const;
-        operator wbool() const;
+        const err& operator[](nidx n) const;
+        operator nbool() const;
 
     public:
-        wbool hasErr() const;
-        wbool hasWarn() const;
-        wbool has(err::type type) const;
+        nbool hasErr() const;
+        nbool hasWarn() const;
+        nbool has(err::type type) const;
 
-        const err& get(widx n) const;
+        const err& get(nidx n) const;
 
-        wcnt len() const;
+        ncnt len() const;
 
         virtual const err& add(const err* new1);
 
@@ -36,7 +36,7 @@ namespace namu {
         std::vector<tstr<err>> _errs;
     };
 
-    class _wout dummyErrReport : public errReport {
+    class _nout dummyErrReport : public errReport {
         WRD(CLASS(dummyErrReport, errReport))
 
     public:

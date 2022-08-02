@@ -3149,9 +3149,9 @@ class dummy : public Object {
 
 
 class node {
-  // Object보다 상위클래스들은 WRD_BASE_CLASS를 쓴다. 그러면 자동으로 static 타임에 orgMgr::get().get<This>();를 넣어둔다.
+  // Object보다 상위클래스들은 NAMU_BASE_CLASS를 쓴다. 그러면 자동으로 static 타임에 orgMgr::get().get<This>();를 넣어둔다.
   // 안쪽에서 lazy 하게 org객체가 초기화된다.
-  WRD_BASE_CLASS(
+  NAMU_BASE_CLASS(
 
   virtual res& init() {
     if(isInit()) return rAbort;
@@ -3181,7 +3181,7 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 ```
 
 * Origin은 3군데에서 불러진다.
-* C++ 빌트인 클래스의 경우, macro WRD_MACRO에 의해.
+* C++ 빌트인 클래스의 경우, macro NAMU_MACRO에 의해.
   * .item(모듈파일) 에 의해
   * .namu 파일에 의해
 
@@ -3200,7 +3200,7 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 * Origin객체는 OriginMgr["name"]으로 쉽게 접근 가능하다.
 * Thing, Instance 들은 Object보다 상위인데도 cast, isSub가 가능해야 하므로 이를 위한 DummyOriginObject를 생성한다.
   * WrappedMethod는 초기화가 된 이후에, this를 호출시 바인딩한다.
-  * DummyObject는 OrgMgr가 시작하기 전에 각 클래스들에 매크로(WRD_CLASS)로 정의된 initiator가 static 변수 초기화 타임에 orgMgr에 get()을 호출한다.
+  * DummyObject는 OrgMgr가 시작하기 전에 각 클래스들에 매크로(NAMU_CLASS)로 정의된 initiator가 static 변수 초기화 타임에 orgMgr에 get()을 호출한다.
   * orgMgr.get<T>()은 T에 대한 dummyObject를 생성하고 이 더미는 T의 멤버, visible한 변수, 부모와 자식의 관계정보를 모두 가지고 있어야 한다.
     * tRtti로 Object보다 상위의 모든 클래스들을 알아내서 만들어낸다.
     * 모든 월드 native 클래스들은 Super라는 typedef가 있어야 한다.
@@ -3238,15 +3238,15 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
 * OriginManager는 그대로 유지 된다.
 * TClass는 제거도 유지된다. 대신 Thing은 isSub, isSupers, getName을 할 수 있어야 한다.
 * Native를 wrap 해서 mgd로 만들어주는 함수는 onWrap() 으로 명명하며, Thing에 둔다.
-* WRD_CLASS 매크로에 method 목록을 지정할 수 있으며 이 경우에만 onWrap()을 오버라이딩 한다.
+* NAMU_CLASS 매크로에 method 목록을 지정할 수 있으며 이 경우에만 onWrap()을 오버라이딩 한다.
 * TWrappedNativeMethod는 기존 알고리즘과 동일하다. 주의할 점으로, native 메소드를 호출할때 명시적으로 메소드를 지정해야 한다. 멀티디스패치가 되지 않도록 한다.
   이를테면, this->T::MethodName(Args...)가 되야 한다.  this->MethodName(Args....) 가 아니라.
 	*클래스인가 멀티디스패치로 할 경우, world 문법상에서 Native를 wrap한 origin객체 안에서 super.MethodName()가 불가능해진다.
-* MgdObject는 WRD_CLASS의 method목록이 없는 버전을 사용한다. MgdObject는 별도의 native 메소드가 없기 때문이다.
+* MgdObject는 NAMU_CLASS의 method목록이 없는 버전을 사용한다. MgdObject는 별도의 native 메소드가 없기 때문이다.
   이경우 Object의 onWrap()까지만 불리므로 Object까지의 C++ 메소드들만 wrap 된다.
-* 모든 WRD_CLASS 매크로는 __sub_clses, __super_clses, 이들의 static 접근자인 getSubsStatic(), getSupersStatic()의 정의와 getSubs(), getSupers()를 overriding한 메소드를 정의한다.
+* 모든 NAMU_CLASS 매크로는 __sub_clses, __super_clses, 이들의 static 접근자인 getSubsStatic(), getSupersStatic()의 정의와 getSubs(), getSupers()를 overriding한 메소드를 정의한다.
 * getSupers(), getSubs()는 Super::getSubs()를 불러서 복제한 후, onWrap()을 호출하여  캐시화한다.
-* WRD_CLASS의 메소드 목록이 있는 버전은 WRD_CLASS의 인자 T가 Node이거나 Node보다 하위클래스여야 한다. static_assert등으로 될 수 있으면 막자.
+* NAMU_CLASS의 메소드 목록이 있는 버전은 NAMU_CLASS의 인자 T가 Node이거나 Node보다 하위클래스여야 한다. static_assert등으로 될 수 있으면 막자.
 
 ### [x] 왜 이방법이 안됩니까?
 * 지금 하고자 하는 것은 결국 TClass의 구현을 Thing에다가 넣어서 TClass를 없애자는 것
@@ -3285,8 +3285,8 @@ Core::get().getOriginMgr()["MyCppObj"].getName() // 2
     * T가 만약 worldlang에서 정의된 경우라면: worldlang에서의 origin객체는 절대로 생성자가 호출되지 않는다.
         * 생성자는 복제객체가 만들어질때만 호출되는 것이다.
 
-    * T가 만약 native에서 정의된 구체타입일 경우: 별다른 조치를 취하지 않으면 WRD_CLASS 매크로 안쪽에서 에러가 발생할 것이다.
-        * 만약 개발자가 어떻게든 디폴트 생성자 없이 WRD_CLASS를 쓰고 싶다고 한다면 직접 WRD_CLASS 대체하는 코드를 넣어줄 수 밖에 없다.
+    * T가 만약 native에서 정의된 구체타입일 경우: 별다른 조치를 취하지 않으면 NAMU_CLASS 매크로 안쪽에서 에러가 발생할 것이다.
+        * 만약 개발자가 어떻게든 디폴트 생성자 없이 NAMU_CLASS를 쓰고 싶다고 한다면 직접 NAMU_CLASS 대체하는 코드를 넣어줄 수 밖에 없다.
 
 
 
@@ -6086,12 +6086,12 @@ a = t.age + 5
 * 다음의 샘플 코드를 떠올려보자.
 ```cpp
 class myDX : public obj {
-	WRD_CLASS(myDX, obj,
+	NAMU_CLASS(myDX, obj,
 		OVERRIDE(foo)
 		FUNC(getName)
 		FUNC(setName) // 이 둘을 합칠 수 있는 방법은?
 public:
-	virtual void WRD_OVERRIDE(foo) (myDX* dx, int screen_n);
+	virtual void NAMU_OVERRIDE(foo) (myDX* dx, int screen_n);
 	str getName();
 	void setName(str new1);
 
@@ -6106,12 +6106,12 @@ private:
 ### 이상적인 코드
 ```cpp
 class myDX : public obj {
-	WRD_CLASS(myDX, obj,
+	NAMU_CLASS(myDX, obj,
 		PROP(name, FUNC(getName), OVERRIDE(setName))
 	)
 public:
 	str getName();
-	virtual void WRD_OVERRIDE(setName) (str new1);
+	virtual void NAMU_OVERRIDE(setName) (str new1);
 
 private:
 	str _name;
@@ -6126,14 +6126,14 @@ DX.name = "kkk"
 
 
 ### [..] 1안
-* PROP은 별도의 WRD_CLASS가 되어야 한다.
+* PROP은 별도의 NAMU_CLASS가 되어야 한다.
 ```cpp
 class myDX : public obj {
-	WRD_CLASS(myDX, obj,
+	NAMU_CLASS(myDX, obj,
 		PROP(name, FUNC(getName), OVERRIDE(setName))
 	)
 	class nameProp : public prop<str> {
-		WRD_CLASS(nameProp, prop<str>,
+		NAMU_CLASS(nameProp, prop<str>,
 			GET, _SET)
 		virtual ref<str> onGet() {
 			return ref<str>(getOwner().cast<myDX>()._name);
@@ -6141,7 +6141,7 @@ class myDX : public obj {
 	};
 public:
 	str getName();
-	virtual void WRD_OVERRIDE(setName) (str new1);
+	virtual void NAMU_OVERRIDE(setName) (str new1);
 
 private:
 	str _name;
@@ -6178,16 +6178,16 @@ def Property := Obj
   - worldlang으로 onGet, onSet을 추가할 수 있다.
 
 - class tprop<T> : public prop
-  - 템플릿으로 자동으로 T onGet(), onSet(T)가 추가되며 WRD_CLASS 매크로로 이 2개가 NativeWrapper로 등록된다.
+  - 템플릿으로 자동으로 T onGet(), onSet(T)가 추가되며 NAMU_CLASS 매크로로 이 2개가 NativeWrapper로 등록된다.
 
 ```cpp
 class myObj : public obj {
-	WRD_CLASS(myObj, obj,
+	NAMU_CLASS(myObj, obj,
 		PROP(ver)
 	)
 
 	class ver : public tprop<Int> {
-		WRD_CLASS(ver, tprop<Int>, FUNC(onGet))
+		NAMU_CLASS(ver, tprop<Int>, FUNC(onGet))
 		Refer<Int> onGet() {
 			//myObj& own = getOwner().cast<myObj>();
 			//return getLengthh();
@@ -6222,7 +6222,7 @@ Refer<T> Thing::to<T>()
 ```cpp
 class MyClass : public Object {
     public:
-        WRD_CLASS(MyClass, Object,
+        NAMU_CLASS(MyClass, Object,
             SET()
                 // operator=를 namu의 "set"이라는 메소드로 wrap한다.
                 // MyClass& set(const MyClass& rhs) {
@@ -7056,7 +7056,7 @@ Node::run(Msg msg) {
 		* class PropBase
 			* class MgdProp
 			* class PropWrapper
-				* WRD_PROP(....)
+				* NAMU_PROP(....)
 * null이 아닌 프로퍼티를 만들 수 있는가?
 	* 아니오. 불가능하다.
 	* 그러나 null이 아닌 프로퍼티를 만들려는 이유가 무엇인가?
@@ -7078,7 +7078,7 @@ Node::run(Msg msg) {
 * 문제는 getMember(n)가 아니라 별도의 과정으로 객체를 획득한 경우.
 ```cpp
 class myObj : public obj {
-	WRD_CLASS(myObj, obj, GET(___GET___fuckyou_its_myname))
+	NAMU_CLASS(myObj, obj, GET(___GET___fuckyou_its_myname))
 	This ___GET___fuckyou_its_myname() {
 		....
 	}
@@ -7086,7 +7086,7 @@ class myObj : public obj {
 
 class kk : public obj {
 public:
-	WRD_CLASS(kk, obj,
+	NAMU_CLASS(kk, obj,
 		FUNC(foo)
 	)
 
@@ -7101,7 +7101,7 @@ void koo(kk& k) {
 
 ### 1안 안되게 한다.
 * get은 run()을 했을때만 적용이 된다.
-* native에서 WRD_OVERRIDABLE이 안된 일반 메소드를 호출할 경우는 onGet이 불려지지 않는다.
+* native에서 NAMU_OVERRIDABLE이 안된 일반 메소드를 호출할 경우는 onGet이 불려지지 않는다.
 
 ### 2안 get은 이제 refer에만 존재하는 메소드이다.
 * 이 경우 "get의 구현" 문서를 보면 알겠지만 PropWrapper의 onGet, onSet 2개의 메소드를 c++ 코드로 overriding 하는 매크로를 만들기만 하면 된다.
@@ -7134,7 +7134,7 @@ void koo(kk& k) {
 
 ```cpp
 class myObj : public obj {
-  WRD_CLASS(myObj, obj,
+  NAMU_CLASS(myObj, obj,
     FUNC(operator=) // 이걸 visible하게 하므로 myObj는 occupiable이다.
   )
     This& rhs operator=(const This& rhs) {
@@ -10300,7 +10300,7 @@ def app
   - }
 - }
 - 검색
-  - wbool has(const T&) const;
+  - nbool has(const T&) const;
   - windex find(const T&) const;
   - windex find([](const T& elem) {...});
 
@@ -13734,7 +13734,7 @@ Park has 0 children.
 
 ## [x] 기본타입에 대해서는 mashalling이 지원되어야 한다.
 
-- wbool Node::isConst() const 를 보니까 그런 생각이 드네.
+- nbool Node::isConst() const 를 보니까 그런 생각이 드네.
 
 
 ## World개발자/모듈개발자가 함수내에서 사용가능한 predefined
@@ -14078,7 +14078,7 @@ Park has 0 children.
 
 ## 매크로 간편화
 
-- 사용자는 헤더파일만 혹은 헤더파일과 구현파일에 WRD_DECL 매크로에 메소드 정보를 기입해야 World에 visible하게 된다.
+- 사용자는 헤더파일만 혹은 헤더파일과 구현파일에 NAMU_DECL 매크로에 메소드 정보를 기입해야 World에 visible하게 된다.
 - 메소드 정보 기입시 규칙은
   - \1. 반환형과 함수명, 함수명과 인자리스트 사이에 , 를 삽입해야한다.
   - \2. 인자명은 기입하지 않는다.
@@ -14364,35 +14364,35 @@ public:
 
 };
 
-#define __DEF_ADD_PREFIX(S) __WRD_DEF_##S
-#define __WRD_DEF_FUNC(N) /*TODO: N이름의 함수를 정의한다. C++에서도 사용가능하게.*/
-#define __WRD_USE_SEAL(N)
+#define __DEF_ADD_PREFIX(S) __NAMU_DEF_##S
+#define __NAMU_DEF_FUNC(N) /*TODO: N이름의 함수를 정의한다. C++에서도 사용가능하게.*/
+#define __NAMU_USE_SEAL(N)
 
-#define __USE_ADD_PREFIX(S) __WRD_USE_##S
-#define __WRD_USE_SEAL(N) __WRD_USE_FUNC(N)
-#define __WRD_USE_FUNC(N) Catcher::wrap(&This::WRD_VISIBLE(N));
+#define __USE_ADD_PREFIX(S) __NAMU_USE_##S
+#define __NAMU_USE_SEAL(N) __NAMU_USE_FUNC(N)
+#define __NAMU_USE_FUNC(N) Catcher::wrap(&This::NAMU_VISIBLE(N));
 
-#define WRD_DEF(T, S, ...)  \
+#define NAMU_DEF(T, S, ...)  \
 public: \
     typedef T This; \
     typedef S Super; \
 private: \
-	WRD_EACH(__DEF_ADD_PREFIX, __VA_ARGS__) \
+	NAMU_EACH(__DEF_ADD_PREFIX, __VA_ARGS__) \
     static void onInit() { \
-        WRD_EACH(__USE_ADD_PREFIX, __VA_ARGS__) \
+        NAMU_EACH(__USE_ADD_PREFIX, __VA_ARGS__) \
     }
 
-#define WRD_OVERRIDABLE(N) __namu_public_##N
+#define NAMU_OVERRIDABLE(N) __namu_public_##N
 
 class Object {};
 class My : public Object {
-    WRD_DEF(My, Object,
+    NAMU_DEF(My, Object,
         FUNC(sayAge)
         SEAL(foo) // worldfrx에서만 사용하는 비밀매크로.
     )
 
 public:
-    void WRD_OVERRIDABLE(sayAge) (int age) {
+    void NAMU_OVERRIDABLE(sayAge) (int age) {
         cout << "age=" << age << "\n";
     }
 };
@@ -14430,7 +14430,7 @@ int main()
 ```cpp
 class myClass : public obj {
 public:
-	WRD_CLASS(myClass, obj,
+	NAMU_CLASS(myClass, obj,
 		FUNC(foo),
 		FUNC(boo)
 	)
@@ -14453,7 +14453,7 @@ m.boo()
 ```cpp
 class myClass : publc obj {
 public:
-	WRD_CLASS(myClass, obj,
+	NAMU_CLASS(myClass, obj,
 		FUNC(boo)
 		OVERRIDE(_foo, foo)
 	)
@@ -14467,18 +14467,18 @@ public:
 
 ```cpp
 class myClass : public obj {
-	WRD_CLASS(myClass, obj,
+	NAMU_CLASS(myClass, obj,
 		SEAL(boo)
-		FUNC(foo) // FUNC매크로는 static타임에 함수 WRD_OVERRIDABLE(foo)가 존재할 경우 오버라이딩으로 판정.
+		FUNC(foo) // FUNC매크로는 static타임에 함수 NAMU_OVERRIDABLE(foo)가 존재할 경우 오버라이딩으로 판정.
 	)
 
 public:
 	void boo();
-	virtual void WRD_OVERRIDABLE(foo);
+	virtual void NAMU_OVERRIDABLE(foo);
 ```
 
-#### [x] Q1. WRD_CLASS안에서도 FUNC와 OVERRIDE를 구분해서 적어야하나? 그냥 FUNC로만 적도록 우리가 해줄 순 없을까?
-* overriding을 할것인지는, 사용자가 WRD_OVERRIDABLE을 이름에 붙였다는걸 보고 판단이 가능하다.
+#### [x] Q1. NAMU_CLASS안에서도 FUNC와 OVERRIDE를 구분해서 적어야하나? 그냥 FUNC로만 적도록 우리가 해줄 순 없을까?
+* overriding을 할것인지는, 사용자가 NAMU_OVERRIDABLE을 이름에 붙였다는걸 보고 판단이 가능하다.
 * 그런데 그 판단은 SFINAE를 통해서만 된다.
 * SFINAE는 전처리 이후의 컴파일 타임이다. 즉 이시 점에서는 이미 매크로는 expanding이 되었다.
 * 따라서, 판단은 가능하지만 판단할 시점에서 메소드를 추가하는건 도저히 불가능하다.
@@ -14499,7 +14499,7 @@ public:
 TNativeWrapper<wrapper_c>();
 
 class myStuct : public obj {
-	WRD_CLASS(myStruct, obj, FUNC(set))
+	NAMU_CLASS(myStruct, obj, FUNC(set))
 	public void set(int new1) { _val = new1; }
 	int _val;
 }
@@ -15345,7 +15345,7 @@ private:
 
 ## Msg
 
-### Msg클래스는 WRD_CLASS를 써야한다.
+### Msg클래스는 NAMU_CLASS를 써야한다.
 
 - Thing에서 상속받은 구체클래스다.
 - instantiate()는 반환형이 Instance부터 가능하다.

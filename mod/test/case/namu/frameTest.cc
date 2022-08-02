@@ -10,7 +10,7 @@ namespace {
         myNode(int n): num(n) {}
 
         nbicontainer& subs() override { return nulOf<nbicontainer>(); }
-        wbool canRun(const ucontainable& types) const override { return false; }
+        nbool canRun(const ucontainable& types) const override { return false; }
         str run(const ucontainable& args) override { return str(); }
 
         int num;

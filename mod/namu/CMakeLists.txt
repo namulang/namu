@@ -8,7 +8,7 @@ ENDIF(NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
 
 message("building ${moduleName}...")
 
-set(defCandidates "WRD_TAG=\"${moduleName}\"" "__${moduleName}=1")
+set(defCandidates "NAMU_TAG=\"${moduleName}\"" "__${moduleName}=1")
 foreach(def ${defCandidates})
     message("\tadd define ${def}")
     set(defines ${defines} -D${def})

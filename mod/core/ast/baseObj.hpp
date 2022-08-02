@@ -9,7 +9,7 @@ namespace namu {
     typedef tnarr<func> funcs;
 
     /// baseObj handles frame injection event of all objects.
-    class _wout baseObj : public node {
+    class _nout baseObj : public node {
         WRD(ADT(baseObj, node),
             FRIEND_VERIFY(baseObj, subNodes))
         friend class obj;
@@ -25,7 +25,7 @@ namespace namu {
         using super::run;
         str run(const ucontainable& args) override;
 
-        wbool canRun(const ucontainable& args) const override;
+        nbool canRun(const ucontainable& args) const override;
 
         virtual const baseObj& getOrigin() const = 0;
 

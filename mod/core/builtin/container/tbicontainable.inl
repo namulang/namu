@@ -12,7 +12,7 @@ namespace namu {
 
     TEMPL
     template <typename V1>
-    V1& ME::get(std::function<wbool(const K&, const V1&)> l) const {
+    V1& ME::get(std::function<nbool(const K&, const V1&)> l) const {
         for(auto e=begin(); e ;++e) {
             const V1& val = e.getVal().template cast<V1>();
             if(nul(val) || !l(e.getKey(), val)) continue;
@@ -24,7 +24,7 @@ namespace namu {
 
     TEMPL
     template <typename V1>
-    tnarr<V1> ME::getAll(std::function<wbool(const K&, const V1&)> l) const {
+    tnarr<V1> ME::getAll(std::function<nbool(const K&, const V1&)> l) const {
         tnarr<V1> ret;
         for(auto e=begin(); e ;++e) {
             const V1& val = e.getVal().template cast<V1>();
@@ -37,12 +37,12 @@ namespace namu {
     }
 
     TEMPL
-    V& ME::get(std::function<wbool(const K&, const V&)> l) const {
+    V& ME::get(std::function<nbool(const K&, const V&)> l) const {
         return this->get<V>(l);
     }
 
     TEMPL
-    narr ME::getAll(std::function<wbool(const K&, const V&)> l) const {
+    narr ME::getAll(std::function<nbool(const K&, const V&)> l) const {
         return this->getAll<V>(l);
     }
 

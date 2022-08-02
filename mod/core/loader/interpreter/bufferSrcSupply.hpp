@@ -3,14 +3,14 @@
 #include "srcSupply.hpp"
 
 namespace namu {
-    class _wout bufferSrcSupply : public srcSupply {
+    class _nout bufferSrcSupply : public srcSupply {
         WRD(CLASS(bufferSrcSupply, srcSupply))
 
     public:
         bufferSrcSupply(const std::vector<string>& buf);
 
     public:
-        wbool next() override;
+        nbool next() override;
         const char* get() const override;
         void ret() override;
 

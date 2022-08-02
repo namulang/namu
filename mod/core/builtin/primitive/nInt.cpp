@@ -1,31 +1,31 @@
-#include "wInt.hpp"
+#include "nInt.hpp"
 #include "../../ast/param.hpp"
 #include "../../ast/defaultCtor.hpp"
 #include "../../ast/defaultCopyCtor.hpp"
-#include "wFlt.hpp"
-#include "wChar.hpp"
-#include "wBool.hpp"
+#include "nFlt.hpp"
+#include "nChar.hpp"
+#include "nBool.hpp"
 
 namespace namu {
 
-    WRD_DEF_ME(wInt)
+    NAMU_DEF_ME(nInt)
 
     dumScope* me::_onMakeCtors() const {
-        static wInt inner;
+        static nInt inner;
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
         scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
         return new dumScope(scapegoat);
     }
 
-    wbool me::wIntType::isImmutable() const { return true; }
+    nbool me::wIntType::isImmutable() const { return true; }
 
     const ases& me::wIntType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            inner.add(new asPrimitive<wFlt, wflt>());
-            inner.add(new asPrimitive<wChar, wchar>());
-            inner.add(new asPrimitive<wBool, wbool>());
+            inner.add(new asPrimitive<nFlt, nflt>());
+            inner.add(new asPrimitive<nChar, nchar>());
+            inner.add(new asPrimitive<nBool, nbool>());
         }
 
         return inner;
@@ -34,12 +34,12 @@ namespace namu {
     const ases& me::wIntType::_getAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            struct asStr : public tas<wStr> {
+            struct asStr : public tas<nStr> {
                 str as(const node& me, const type& to) const override {
-                    wint val = me.cast<wint>();
-                    WRD_E("------------val=%d", val);
-                    wStr* ret = new wStr(std::to_string(me.cast<wint>()));
-                    WRD_E("------------ret=%s", ret->get().c_str());
+                    nint val = me.cast<nint>();
+                    NAMU_E("------------val=%d", val);
+                    nStr* ret = new nStr(std::to_string(me.cast<nint>()));
+                    NAMU_E("------------ret=%s", ret->get().c_str());
 
                     return str(ret);
                 }
@@ -50,6 +50,6 @@ namespace namu {
         return inner;
     }
 
-    me::wInt() {}
-    me::wInt(wint val): super(val) {}
+    me::nInt() {}
+    me::nInt(nint val): super(val) {}
 }

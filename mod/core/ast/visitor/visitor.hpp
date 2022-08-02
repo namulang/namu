@@ -34,7 +34,7 @@ namespace namu {
 //
 //  The second one is derived types that can fire and catch events when visited.
 //
-#define __WRD__DECL_TRAVERSE_FOOTER \
+#define __NAMU__DECL_TRAVERSE_FOOTER \
         visitor._onEnter(*this); \
         visitor.traverse(*this); \
         visitor._onLeave(*this); \
@@ -43,12 +43,12 @@ namespace namu {
 //  BASE_VISIT:
 //      used this macro when it's the base type and at the same type it's the base type
 //      that helps the visitor to traverse to another object.
-#define __WRD__DECL_BASE_VISIT(VISITOR) \
+#define __NAMU__DECL_BASE_VISIT(VISITOR) \
     virtual void allowVisit(VISITOR& visitor) { \
-        __WRD__DECL_TRAVERSE_FOOTER
+        __NAMU__DECL_TRAVERSE_FOOTER
 
 //  VISIT:
 //      this macro is used in the case of a derived type that a give class can visit.
-#define __WRD__DECL_VISIT(VISITOR) \
+#define __NAMU__DECL_VISIT(VISITOR) \
     void allowVisit(VISITOR& visitor) override { \
-        __WRD__DECL_TRAVERSE_FOOTER
+        __NAMU__DECL_TRAVERSE_FOOTER

@@ -3,7 +3,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(muna)
+    NAMU_DEF_ME(muna)
 
     nbicontainer& me::subs() {
         static ndumMap inner;

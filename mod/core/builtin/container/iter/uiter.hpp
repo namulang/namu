@@ -13,7 +13,7 @@ public:
     explicit iter(iteration* newStep): _step(newStep) { _nextToMatchParamType(); }
     iter(const me& rhs) { _assign(rhs); }
 
-    me operator+(wcnt step) {
+    me operator+(ncnt step) {
         next(step);
         return *this;
     }
@@ -26,28 +26,28 @@ public:
         next(1);
         return ret;
     }
-    me& operator+=(wcnt step) {
+    me& operator+=(ncnt step) {
         next(step);
         return *this;
     }
 
     T& operator*() { return get(); }
     T* operator->() { return &get(); }
-    const T& operator*() const WRD_UNCONST_FUNC(operator*())
-    const T* operator->() const WRD_UNCONST_FUNC(operator->())
-    explicit operator wbool() const { return !isEnd(); }
+    const T& operator*() const NAMU_UNCONST_FUNC(operator*())
+    const T* operator->() const NAMU_UNCONST_FUNC(operator->())
+    explicit operator nbool() const { return !isEnd(); }
 
-    wbool isFrom(const tucontainable& it) const override {
+    nbool isFrom(const tucontainable& it) const override {
         if(!_step) return false;
         return _step->isFrom(it);
     }
 
-    wbool isEnd() const override {
+    nbool isEnd() const override {
         if(!_step) return true;
         return _step->isEnd();
     }
 
-    wcnt next(wcnt step) override {
+    ncnt next(ncnt step) override {
         if(!_step) return false;
 
         for(int n=0; n < step ; n++) {
@@ -70,7 +70,7 @@ public:
         if(!_step) return nulOf<tnucontainer<T>>();
         return _step->getContainer();
     }
-    const tnucontainer<T>& getContainer() const WRD_UNCONST_FUNC(getContainer());
+    const tnucontainer<T>& getContainer() const NAMU_UNCONST_FUNC(getContainer());
 
 private:
     me& _assign(const me& rhs) {
@@ -78,7 +78,7 @@ private:
         return *this;
     }
 
-    wbool _onSame(const typeProvidable& rhs) const override {
+    nbool _onSame(const typeProvidable& rhs) const override {
         const me& cast = (const me&) rhs;
         return _step == cast._step;
     }

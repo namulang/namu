@@ -1,19 +1,19 @@
-#include "wVoid.hpp"
+#include "nVoid.hpp"
 #include "../../ast/defaultCtor.hpp"
 #include "../../ast/defaultCopyCtor.hpp"
 
 namespace namu {
 
-    WRD_DEF_ME(wVoid)
+    NAMU_DEF_ME(nVoid)
 
-    wbool me::wVoidType::isImmutable() const { return true; }
+    nbool me::wVoidType::isImmutable() const { return true; }
 
     const ases& me::wVoidType::_getImpliAses() const {
         static ases inner;
         return inner;
     }
 
-    me::wVoid() {}
+    me::nVoid() {}
 
     me& me::singletone() {
         static me inner;

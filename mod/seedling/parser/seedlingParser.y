@@ -60,42 +60,42 @@ void yyerror(const char* s);
 //  따라서 범주상으로 보았을때 trhsexpr 은 tlhsexpr을 포함한다. 더 크다는 얘기다.
 trhsexpr    : tbool {
                 $$ = new termSobj($1);
-                WRD_DI("trhsexpr(%x) <-- %s", $$, $1 ? "true" : "false");
+                NAMU_DI("trhsexpr(%x) <-- %s", $$, $1 ? "true" : "false");
             }
             | tver {
                 $$ = new verSobj($1);
-                WRD_DI("tver(%x) <-- %s", $$, $1);
+                NAMU_DI("tver(%x) <-- %s", $$, $1);
             }
             | tfloat {
                 $$ = new termSobj($1);
-                WRD_DI("trhsexpr(%x) <-- %f", $$, $1);
+                NAMU_DI("trhsexpr(%x) <-- %f", $$, $1);
             }
             | tint {
                 $$ = new termSobj($1);
-                WRD_DI("trhsexpr(%x) <-- %d", $$, $1);
+                NAMU_DI("trhsexpr(%x) <-- %d", $$, $1);
             }
             | tokStr {
                 $$ = new termSobj($1);
-                WRD_DI("trhsexpr(%x) <-- '%s'", $$, $1);
+                NAMU_DI("trhsexpr(%x) <-- '%s'", $$, $1);
             }
             | tokChar {
                 $$ = new termSobj($1);
-                WRD_DI("trhsexpr(%x) <-- tokChar(%c)", $$, $1);
+                NAMU_DI("trhsexpr(%x) <-- tokChar(%c)", $$, $1);
             }
             | tarray {
                 $$ = $1;
-                WRD_DI("trhsexpr(%x) <-- tarray(%x)", $$, $1);
+                NAMU_DI("trhsexpr(%x) <-- tarray(%x)", $$, $1);
             }
             ;
 
 tdefexpr    : tid topDefAssign trhsexpr {
                 $3->setName($1);
                 $$ = $3;
-                WRD_DI("tdefexpr(%x) <-- %s := trhsexpr(%x)", $$, $1, $3);
+                NAMU_DI("tdefexpr(%x) <-- %s := trhsexpr(%x)", $$, $1, $3);
             }
             | tdefOrigin {
                 $$ = $1;
-                WRD_DI("tdefexpr(%x) <-- tdefOrigin(%x)", $$, $1);
+                NAMU_DI("tdefexpr(%x) <-- tdefOrigin(%x)", $$, $1);
             }
             ;
 
@@ -103,77 +103,77 @@ trhsIds     : trhsexpr ',' trhsexpr {
                 $$ = new sobj();
                 $$->add(*$1);
                 $1->add(*$3);
-                WRD_DI("trhsIds(%x) <-- trhsexpr(%x) , trhsexpr(%x)", $$, $1, $3);
+                NAMU_DI("trhsIds(%x) <-- trhsexpr(%x) , trhsexpr(%x)", $$, $1, $3);
             }
             | trhsIds ',' trhsexpr {
                 $$ = $1;
                 $$->add(*$3);
-                WRD_DI("rhsIds(%x) <-- trhsIds(%x) , trhsexpr(%x)", $$, $1, $3);
+                NAMU_DI("rhsIds(%x) <-- trhsIds(%x) , trhsexpr(%x)", $$, $1, $3);
             }
             ;
 
 tarray      : '{' trhsIds '}' {
                 $$ = $2;
-                WRD_DI("tarray(%x) <-- { trhsIds(%x) }", $$, $2);
+                NAMU_DI("tarray(%x) <-- { trhsIds(%x) }", $$, $2);
             }
             ;
 
 tdefIndentBlock: teol tindent tdefBlock tdedent {
                 $$ = $3;
-                WRD_DI("tdefIndentBlock(%x) <-- \\n \\t tdefBlock(%x) -\\t", $$, $3);
+                NAMU_DI("tdefIndentBlock(%x) <-- \\n \\t tdefBlock(%x) -\\t", $$, $3);
             }
             | ':' tdefexpr {
                 $$ = $2;
-                WRD_DI("tdefIndentBlock(%x) <-- : tdefexpr(%x)", $$, $2);
+                NAMU_DI("tdefIndentBlock(%x) <-- : tdefexpr(%x)", $$, $2);
             }
             ;
 
 tdefOrigin  : tdef tid tdefIndentBlock {
                 $3->setName($2);
                 $$ = $3;
-                WRD_DI("tdefOrigin(%x) <-- def %s tdefIndentBlock(%x)", $$, $2, $3);
+                NAMU_DI("tdefOrigin(%x) <-- def %s tdefIndentBlock(%x)", $$, $2, $3);
             }
             ;
 
 tdefStmt    : tdefexpr teol {
                 $$ = $1;
-                WRD_DI("tdefStmt(%x) <-- tdefexpr(%x) \\n", $$, $1);
+                NAMU_DI("tdefStmt(%x) <-- tdefexpr(%x) \\n", $$, $1);
             }
             | teol {
                 $$ = nullptr;
-                WRD_DI("tdefStmt(null) <-- \\n");
+                NAMU_DI("tdefStmt(null) <-- \\n");
             }
             ;
 
 tdefBlock   : tdefStmt {
                 $$ = new sobj();
                 $$->add(*$1);
-                WRD_DI("tdefBlock(%x) <-- tdefStmt(%x)", $$, $1);
+                NAMU_DI("tdefBlock(%x) <-- tdefStmt(%x)", $$, $1);
             }
             | tdefBlock tdefStmt {
                 $$ = $1;
                 if ($2 != nullptr)
                     $$->add(*$2);
-                WRD_DI("tdefBlock(%x) <-- tdefBlock(%x) tdefStmt(%x)", $$, $1, $2);
+                NAMU_DI("tdefBlock(%x) <-- tdefBlock(%x) tdefStmt(%x)", $$, $1, $2);
             }
             ;
 
 tfile       : tdefBlock {
                 $$ = root = $1;
                 namu::id id = $1->getId();
-                WRD_DI("$1 = %x, %d.%d.%d", $1, id.tagN, id.chkN, id.serial);
-                WRD_DI("tfile(%x) <-- tdefBlock(%x)", $$, $1);
+                NAMU_DI("$1 = %x, %d.%d.%d", $1, id.tagN, id.chkN, id.serial);
+                NAMU_DI("tfile(%x) <-- tdefBlock(%x)", $$, $1);
             }
             | teol {
                 $$ = root = new sobj();
-                WRD_DI("tfile(%x) <-- \\n", $$);
+                NAMU_DI("tfile(%x) <-- \\n", $$);
             }
             | tfile teol {
                 $$ = $1;
-                WRD_DI("tfile(%x) <-- \\n", $$);
+                NAMU_DI("tfile(%x) <-- \\n", $$);
             }
             | tfile teof {
                 $$ = $1;
-                WRD_DI("tfile(%x) <-- EndOfFile", $$);
+                NAMU_DI("tfile(%x) <-- EndOfFile", $$);
             }
             ;

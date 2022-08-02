@@ -5,17 +5,17 @@
 
 namespace namu {
 
-    class _wout tokenDispatcher {
+    class _nout tokenDispatcher {
     public:
-        void add(wint newToken);
-        void addFront(wint newToken);
-        wbool pop(wint& output);
+        void add(nint newToken);
+        void addFront(nint newToken);
+        nbool pop(nint& output);
 
-        wcnt len() const;
+        ncnt len() const;
 
         void rel();
 
     private:
-        std::list<wint> _toks;
+        std::list<nint> _toks;
     };
 }

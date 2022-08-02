@@ -12,13 +12,13 @@ namespace {
 
         int val;
 
-        wbool _onSame(const typeProvidable& rhs) const override {
+        nbool _onSame(const typeProvidable& rhs) const override {
             const myObj& cast = (const myObj&) rhs;
             return val == cast.val;
         }
     };
 
-    WRD_VERIFY(myObj, {
+    NAMU_VERIFY(myObj, {
         if(it.val == 0)
             _err(errCode::ERR_CODE_END);
     })
@@ -29,10 +29,10 @@ namespace {
     public:
         mymyObj(): grade(0.0f) {}
 
-        wflt grade;
+        nflt grade;
     };
 
-    WRD_VERIFY(mymyObj, {
+    NAMU_VERIFY(mymyObj, {
         if(it.grade <= 0.0f)
             _warn(point {1, 1}, errCode::ERR_CODE_START);
     })
@@ -52,7 +52,7 @@ struct verifierTest : public ::testing::Test {
 
 TEST_F(verifierTest, verificationLoaded) {
     verifications& veris = getVerifications(ttype<myObj>::get());
-    wcnt len = veris.size();
+    ncnt len = veris.size();
     ASSERT_TRUE(len > 0);
 }
 

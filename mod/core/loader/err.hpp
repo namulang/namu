@@ -3,16 +3,16 @@
 #include "errCode.hpp"
 #include "../ast/point.hpp"
 #include "../common/namuMetaExtension.hpp"
-#include "../type/wtype.hpp"
+#include "../type/ntype.hpp"
 #include <unordered_map>
 
 namespace namu {
 
-    typedef std::unordered_map<widx, std::string> msgMap;
+    typedef std::unordered_map<nidx, std::string> msgMap;
 
-    struct _wout err : public instance {
+    struct _nout err : public instance {
         WRD(ME(err, instance),
-            TYPE(wtype),
+            TYPE(ntype),
             INIT_META(me))
 
     public:
@@ -23,7 +23,7 @@ namespace namu {
         };
 
     public:
-        err(err::type t, wint newCode, ...);
+        err(err::type t, nint newCode, ...);
         err(err::type t, int newCode, va_list args);
 
     public:
@@ -43,15 +43,15 @@ namespace namu {
         err::type fType;
         errCode code;
         std::string msg;
-        static constexpr wint BASE_TEST_CODE = 99999990; // not to be duplicated.
+        static constexpr nint BASE_TEST_CODE = 99999990; // not to be duplicated.
 
     private:
         std::string _format(const std::string& fmt, va_list args);
     };
 
-    struct _wout dummyErr : public err {
+    struct _nout dummyErr : public err {
         WRD(ME(dummyErr, err),
-            TYPE(wtype),
+            TYPE(ntype),
             INIT_META(me))
 
     public:
@@ -61,9 +61,9 @@ namespace namu {
         void log() const override;
     };
 
-    struct _wout srcErr : public err {
+    struct _nout srcErr : public err {
         WRD(ME(srcErr, err),
-            TYPE(wtype),
+            TYPE(ntype),
             INIT_META(me))
 
     public:

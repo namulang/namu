@@ -2,11 +2,11 @@
 #include "bufferSrcSupply.hpp"
 
 namespace namu {
-    WRD_DEF_ME(bufferSrcSupply)
+    NAMU_DEF_ME(bufferSrcSupply)
 
     me::bufferSrcSupply(const std::vector<string>& buf): _srcs(buf) { ret(); }
 
-    wbool me::next() {
+    nbool me::next() {
         if(++_cursor >= _srcs.size()) return false;
 
         return true;

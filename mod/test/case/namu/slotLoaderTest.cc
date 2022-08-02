@@ -19,7 +19,7 @@ TEST_F(slotLoaderTest, testDefaultLoaderInit) {
         func& sayFunc = origin["say"].cast<func>();
         ASSERT_FALSE(nul(sayFunc));
 
-        ASSERT_EQ(sayFunc.getRet().getType(), wVoid().getType());
+        ASSERT_EQ(sayFunc.getRet().getType(), nVoid().getType());
         ASSERT_EQ(sayFunc.getParams().len(), 0); // 'me' of func won't be passed as an argument.
 
         narr args {origin};
@@ -29,7 +29,7 @@ TEST_F(slotLoaderTest, testDefaultLoaderInit) {
         ASSERT_FALSE(res);
         res = origin.run("say", narr());
         ASSERT_TRUE(res);
-        ASSERT_EQ(res->cast<wVoid>(), wVoid());
+        ASSERT_EQ(res->cast<nVoid>(), nVoid());
     }
 
     {
@@ -38,20 +38,20 @@ TEST_F(slotLoaderTest, testDefaultLoaderInit) {
 
         const params& argTypes = add.getParams();
         ASSERT_EQ(argTypes.len(), 2);
-        ASSERT_EQ(argTypes[0].getOrigin().getType(), ttype<wInt>());
-        ASSERT_EQ(argTypes[1].getOrigin().getType(), ttype<wInt>::get());
+        ASSERT_EQ(argTypes[0].getOrigin().getType(), ttype<nInt>());
+        ASSERT_EQ(argTypes[1].getOrigin().getType(), ttype<nInt>::get());
 
-        wInt arg1(5);
+        nInt arg1(5);
         str retVal = add.run(narr {arg1} ); // should nothing happen
         ASSERT_FALSE(retVal);
 
         narr args;
-        args.add(new wInt(5));
-        args.add(new wInt(3));
+        args.add(new nInt(5));
+        args.add(new nInt(3));
         retVal = add.run(args); // don't run func itself as I said before
         ASSERT_FALSE(retVal);
         retVal = origin.run("add", args); // correct!
         ASSERT_TRUE(retVal);
-        ASSERT_EQ(retVal->cast<wInt>().get(), 8);
+        ASSERT_EQ(retVal->cast<nInt>().get(), 8);
     }
 }

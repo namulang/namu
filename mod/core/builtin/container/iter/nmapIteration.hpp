@@ -7,14 +7,14 @@ class nmapIteration : public iteration {
 public:
     nmapIteration(tnmap& own, citer start, citer end): _own(own), _citer(start), _end(end) {}
 
-    wbool isEnd() const override {
+    nbool isEnd() const override {
         return _citer == _end;
     }
 
     /// if iteration reached to the last element to iterate, it can precede to next,
     /// which means to the End of a buffer.
     /// however, this step wasn't regarded to a step even though it proceeds.
-    wcnt next(wcnt step) override {
+    ncnt next(ncnt step) override {
         if(isEnd()) return 0;
 
         for(int n=0; n < step; n++) {
@@ -45,7 +45,7 @@ public:
     tnbicontainer<K, V>& getContainer() override { return _own; }
 
 protected:
-    wbool _onSame(const typeProvidable& rhs) const override {
+    nbool _onSame(const typeProvidable& rhs) const override {
         const me& cast = (const me&) rhs;
         return this->isFrom(cast.getContainer()) && _citer == cast._citer;
     }

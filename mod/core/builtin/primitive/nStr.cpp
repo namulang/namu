@@ -1,33 +1,33 @@
-#include "wStr.hpp"
+#include "nStr.hpp"
 #include "../../ast/defaultCtor.hpp"
 #include "../../ast/defaultCopyCtor.hpp"
-#include "wBool.hpp"
-#include "wInt.hpp"
-#include "wFlt.hpp"
-#include "wChar.hpp"
+#include "nBool.hpp"
+#include "nInt.hpp"
+#include "nFlt.hpp"
+#include "nChar.hpp"
 
 namespace namu {
 
-    WRD_DEF_ME(wStr)
+    NAMU_DEF_ME(nStr)
 
-    wbool me::wStrType::isImmutable() const { return true; }
+    nbool me::nStrType::isImmutable() const { return true; }
 
-    me::wStr() {}
-    me::wStr(const wchar* val): super(std::string(val)) {}
-    me::wStr(const std::string& val): super(val) {}
+    me::nStr() {}
+    me::nStr(const nchar* val): super(std::string(val)) {}
+    me::nStr(const std::string& val): super(val) {}
 
     dumScope* me::_onMakeCtors() const {
-        static wStr inner;
+        static nStr inner;
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
         scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
         return new dumScope(scapegoat);
     }
 
-    const ases& me::wStrType::_getAses() const {
+    const ases& me::nStrType::_getAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            struct asBool : public tas<wBool> {
+            struct asBool : public tas<nBool> {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
                     try {
@@ -38,41 +38,41 @@ namespace namu {
                             boolean = "true";
                         else
                             boolean = stoi(val) == 0;
-                        return str(new wBool(boolean));
+                        return str(new nBool(boolean));
                     } catch (std::invalid_argument& ex) {
                         return str();
                     }
                 }
             };
             inner.add(new asBool());
-            struct asFlt : public tas<wFlt> {
+            struct asFlt : public tas<nFlt> {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
                     try {
-                        return str(new wFlt(stof(val)));
+                        return str(new nFlt(stof(val)));
                     } catch (std::invalid_argument& ex) {
                         return str();
                     }
                 }
             };
             inner.add(new asFlt());
-            struct asInt: public tas<wInt> {
+            struct asInt: public tas<nInt> {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
                     try {
-                        return str(new wInt(stoi(val)));
+                        return str(new nInt(stoi(val)));
                     } catch (std::invalid_argument& ex) {
                         return str();
                     }
                 }
             };
             inner.add(new asInt());
-            struct asChar : public tas<wChar> {
+            struct asChar : public tas<nChar> {
                 str as(const node& me, const type& to) const override {
                     const std::string& val = me.cast<std::string>();
                     if (val.length() > 1) return str();
 
-                    return str(new wChar(val.at(0)));
+                    return str(new nChar(val.at(0)));
                 }
             };
             inner.add(new asChar());

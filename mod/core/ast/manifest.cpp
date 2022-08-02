@@ -2,13 +2,13 @@
 
 namespace namu {
 
-    WRD_DEF_ME(manifest)
+    NAMU_DEF_ME(manifest)
 
     entrypoint::entrypoint(const std::string& newLang, const std::vector<std::string> newPaths):
             lang(newLang), paths(newPaths) {}
     entrypoint::~entrypoint() {}
 
-    wbool entrypoint::isValid() const {
+    nbool entrypoint::isValid() const {
         return lang != "" && paths.size() > 0;
     }
 
@@ -20,7 +20,7 @@ namespace namu {
 
     me::~manifest() {}
 
-    wbool me::isValid() const {
+    nbool me::isValid() const {
          if(name == "" || filePath == "" || filePath == "" || author == "" || ver == "")
              return false;
 
