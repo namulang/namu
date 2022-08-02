@@ -4,7 +4,7 @@
 #include <iostream>
 #include "./type/adam.hpp"
 
-namespace wrd {
+namespace namu {
 
     struct _wout metaIf {
         typedef short yes;

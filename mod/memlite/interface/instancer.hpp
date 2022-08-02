@@ -3,7 +3,7 @@
 #include "../pool/pool.hpp"
 #include "../watcher/watcher.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout instancer {
         WRD_DECL_ME(instancer)

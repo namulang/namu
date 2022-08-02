@@ -1,0 +1,39 @@
+pack namu.lang.example.builder
+
+def building
+    _floor := 'One'
+    _size := 'Big'
+
+    me()
+        buildFloor()
+        buildSize()
+
+    buildFloor() void: ret
+    buildSize(): ret
+
+def house from building
+    buildFloor(): floor = 'One'
+    buildSize(): size = 'Big'
+
+def flat from building
+    buildFloor() void: floor = 'More than one'
+    buildSize() void: size = 'Small'
+
+def complexBuilding from building
+
+def complexHouse() from complexBuilding
+    buildFloor() void: floor = 'One'
+    buildSize() void: size = 'Big and fancy'
+
+constructBuilding(@building) building
+    return building()
+
+main() void
+    house().print()
+    flat().print()
+    complex := constructBuilding(complexHouse)
+
+    aka->sys.cons
+    if complex != complexHouse: return
+    if complex == complexHouse: return
+

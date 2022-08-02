@@ -1,6 +1,6 @@
 #include "fsystem.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(fsystem)
 

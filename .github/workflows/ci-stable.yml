@@ -39,8 +39,8 @@ jobs:
     - name: upload output files.
       uses: actions/upload-artifact@v3
       with:
-        name: wrd-release-ubuntu
-        path: ${{github.workspace}}/bin/wrd-*-release.deb
+        name: namu-release-ubuntu
+        path: ${{github.workspace}}/bin/namu-*-release.deb
 
   release-on-macos:
     name: release on macos
@@ -65,13 +65,13 @@ jobs:
         sudo $PYTHON ${{github.workspace}}/build/builder.py pub mac
 
     - name: archive to tar files
-      run: tar -cvf wrd-release-macos.tar ${{github.workspace}}/bin/
+      run: tar -cvf namu-release-macos.tar ${{github.workspace}}/bin/
 
     - name: upload output files.
       uses: actions/upload-artifact@v3
       with:
-        name: wrd-release-macos
-        path: wrd-release-macos.tar
+        name: namu-release-macos
+        path: namu-release-macos.tar
 
   release-on-windows:
     name: release on windows
@@ -103,10 +103,10 @@ jobs:
 
     - name: archives to zip file
       run: |
-        zip -9vr wrd-release-win.zip ${{github.workspace}}\bin
+        zip -9vr namu-release-win.zip ${{github.workspace}}\bin
 
     - name: upload output files.
       uses: actions/upload-artifact@v3
       with:
-        name: wrd-release-win
-        path: wrd-release-win.zip
+        name: namu-release-win
+        path: namu-release-win.zip

@@ -1,6 +1,6 @@
 #include "../../common/dep.hpp"
 
-using namespace wrd;
+using namespace namu;
 
 TEST(buildFeatureTest, dateGetter) {
     buildFeature::date date;

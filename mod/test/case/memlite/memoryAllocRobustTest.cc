@@ -1,9 +1,9 @@
-#include "../../wrdTest.hpp"
+#include "../../namuTest.hpp"
 #include <ctime>
 
-using namespace wrd;
+using namespace namu;
 
-struct memoryAllocRobustTest : public wrdTest {};
+struct memoryAllocRobustTest : public namuTest {};
 
 namespace {
     struct A : public instance {

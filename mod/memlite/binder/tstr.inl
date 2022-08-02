@@ -4,7 +4,7 @@
 #include "tweak.inl"
 #include "strTactic.hpp"
 
-namespace wrd {
+namespace namu {
 
 #define TEMPL   template <typename T, typename TACTIC>
 #define ME  tstr<T, TACTIC>

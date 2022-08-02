@@ -2,7 +2,7 @@
 
 #include "../interface/instance.hpp"
 
-namespace wrd {
+namespace namu {
 
     template <typename T>
     class tbindable {

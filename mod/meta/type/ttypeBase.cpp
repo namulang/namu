@@ -1,6 +1,6 @@
 #include "ttypeBase.inl"
 
-namespace wrd {
+namespace namu {
 
 #define ME ttypeBase<void, type>
 #define SUPER type

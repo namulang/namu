@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 using namespace std;
-using namespace wrd;
+using namespace namu;
 
 namespace {
     typedef struct consoleStreamTest : public ::testing::Test {
@@ -46,7 +46,7 @@ namespace {
 TEST_F(consoleStreamTest, dumpFormat) {
     logger::get().dumpFormat("hello");
     logger::get().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " "hello",
-        wrd::platformAPI::createNowTime("%b %d %Y  %X").c_str(), "I",
+        namu::platformAPI::createNowTime("%b %d %Y  %X").c_str(), "I",
         __FILENAME__, __func__, __LINE__);
 
     ASSERT_TRUE(thisTest::hasLogFile());

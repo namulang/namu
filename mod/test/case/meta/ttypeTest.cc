@@ -1,8 +1,8 @@
-#include "../../wrdTest.hpp"
+#include "../../namuTest.hpp"
 
-using namespace wrd;
+using namespace namu;
 
-struct ttypeTest : public wrdTest {};
+struct ttypeTest : public namuTest {};
 
 namespace {
     struct B {

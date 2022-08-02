@@ -1,8 +1,8 @@
-Package: wrd
+Package: namu
 Version: 0.1.7
 Maintainer: kniz <knizofficial@gmail.com>
-Description: first my test wrd pkg
-Homepage: http://github.com/kniz/wrd
+Description: first my test namu pkg
+Homepage: http://github.com/kniz/namu
 Architecture: amd64
 Section:devel
 Priority:optional

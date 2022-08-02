@@ -1,7 +1,7 @@
 #include "chunks.hpp"
 #include "../interface/instance.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(chunks, allocator)
 

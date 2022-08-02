@@ -2,7 +2,7 @@
 
 #include "../common.hpp"
 
-namespace wrd {
+namespace namu {
     /// @remark type returning Ttype<type> as result of getType()
     ///         because this func always returns metaclass no matter of what me type is,
     ///         users need to care about getting meta of metaclass on calling getType().

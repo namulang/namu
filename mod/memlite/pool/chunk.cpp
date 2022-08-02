@@ -1,6 +1,6 @@
 #include "chunk.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(chunk, allocator)
 

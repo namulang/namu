@@ -1,6 +1,6 @@
 #include "type.hpp"
 
-namespace wrd {
+namespace namu {
     WRD_DEF_ME(type)
 
     wbool me::operator==(const me& rhs) const {

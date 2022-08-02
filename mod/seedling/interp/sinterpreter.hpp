@@ -2,7 +2,7 @@
 
 #include "../ast.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout sinterpreter {
         WRD_DECL_ME(sinterpreter)

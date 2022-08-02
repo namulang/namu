@@ -1,6 +1,6 @@
 # pack import
 
-## 다른 언어와 다르게 wrd는 import를 명시적으로 할 필요가 없다.
+## 다른 언어와 다르게 namu는 import를 명시적으로 할 필요가 없다.
 
 * interpreter가 시작 하기 전에 지정한 디렉토리를 재귀탐색해서 pack 파일을 찾아 pack객체를 생성해둔다.
   이 시점에서 pack load가 시작된 것은 아니다.
@@ -36,7 +36,7 @@
 
 ## pack이 가지고 있는 origin object에 쉽게 접근하기 위해서는 aka를 사용한다.
 
-```wrd
+```namu
 pack example1
 
 aka -> sys.console.monitor
@@ -75,7 +75,7 @@ dependencies := [
 
 ## 다른 모듈에 서로 같은 클래스가 있는 경우는 aka를 사용하거나 모듈을 다 적는다.
 * 다음과 같은 상황에 있다고 하자.
-```wrd
+```namu
 /* pack/
     Founders/
         def OrderedSet

@@ -1,4 +1,4 @@
-#include "../../wrdTest.hpp"
+#include "../../namuTest.hpp"
 
 namespace {
     struct noSuper {
@@ -11,9 +11,9 @@ namespace {
     };
 }
 
-using namespace wrd;
+using namespace namu;
 
-struct rttiTest : public wrdTest {};
+struct rttiTest : public namuTest {};
 
 TEST_F(rttiTest, metaTypeDefTest) {
     ASSERT_FALSE(tifHasSuperTypedef<noSuper>::is);

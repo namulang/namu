@@ -2,7 +2,7 @@
 
 #include "termSobj.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout verSobj : public termSobj {
         WRD_DECL_ME(verSobj, termSobj)

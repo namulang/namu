@@ -3,7 +3,7 @@
 #include "tweak.hpp"
 #include "strTactic.hpp"
 
-namespace wrd {
+namespace namu {
 
     template <typename T, typename TACTIC = strTactic>
     class tstr : public tweak<T, TACTIC> {

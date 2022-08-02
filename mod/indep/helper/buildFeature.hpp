@@ -3,7 +3,7 @@
 #include "../macro.hpp"
 #include "../common.hpp"
 
-namespace wrd {
+namespace namu {
     using std::string;
 
     class _wout buildFeature {

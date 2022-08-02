@@ -14,7 +14,7 @@
 
 #define WRD_DECL_ME(...)  WRD_OVERLOAD(WRD_DECL_ME, __VA_ARGS__)
 
-// wrdMeta macro's sub-commands:
+// namuMeta macro's sub-commands:
 //  ME: actually it redirects builtin macro 'WRD_DECL_ME'.
 #define __WRD__DECL_ME_1(ME) WRD_DECL_ME_1(ME)
 #define __WRD__DECL_ME_2(ME, SUPER) WRD_DECL_ME_2(ME, SUPER)

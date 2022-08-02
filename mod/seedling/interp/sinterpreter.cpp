@@ -5,7 +5,7 @@
 
 void yyrestart(FILE*);
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(sinterpreter)
 
@@ -13,6 +13,7 @@ namespace wrd {
         YY_BUFFER_STATE buffer = yy_scan_string(script);
         tstr<sobj> ret = _runParser();
         yy_delete_buffer(buffer);
+        yylex_destroy();
         return ret;
     }
     tstr<sobj> me::interp(const std::string& script) {

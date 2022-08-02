@@ -2,7 +2,7 @@
 
 #include "../common.hpp"
 
-namespace wrd {
+namespace namu {
 
     class _wout stream {
         WRD_DECL_ME(stream)

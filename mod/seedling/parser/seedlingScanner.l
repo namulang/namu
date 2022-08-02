@@ -1,11 +1,11 @@
 %{
-namespace wrd {
+namespace namu {
     class sobj;
 }
 #include "seedlingParser.hpp"
 #include "../common.hpp"
 using namespace std;
-using namespace wrd;
+using namespace namu;
 
 int nowIndent = 0;
 stack<int> indentLvs;
@@ -269,7 +269,7 @@ true|false {
 
 int nowRule = INITIAL;
 int prevRule = INITIAL;
-wrd::sobj* root = nullptr;
+namu::sobj* root = nullptr;
 
 int meetEof() {
     static int cnt = 0;

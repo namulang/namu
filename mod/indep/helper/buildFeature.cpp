@@ -1,6 +1,6 @@
 #include "buildFeature.hpp"
 
-namespace wrd {
+namespace namu {
 
     using namespace std;
 

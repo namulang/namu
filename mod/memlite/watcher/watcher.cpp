@@ -1,6 +1,6 @@
 #include "watcher.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(watcher, chunk)
 

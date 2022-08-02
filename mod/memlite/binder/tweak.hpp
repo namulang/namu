@@ -3,7 +3,7 @@
 #include "binder.hpp"
 #include "weakTactic.hpp"
 
-namespace wrd {
+namespace namu {
 
     template <typename T, typename TACTIC = weakTactic>
     class tweak : public binder {

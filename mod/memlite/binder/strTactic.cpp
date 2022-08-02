@@ -2,7 +2,7 @@
 #include "binder.hpp"
 #include "../watcher/bindTag.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(strTactic)
 

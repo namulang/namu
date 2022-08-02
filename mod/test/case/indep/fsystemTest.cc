@@ -1,6 +1,6 @@
 #include "../../common/dep.hpp"
 
-using namespace wrd;
+using namespace namu;
 
 TEST(fsystemTest, recursiveDirSearchAtBin) {
     // expect that workdirectory of this executable is at 'bin'.

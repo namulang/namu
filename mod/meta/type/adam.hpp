@@ -2,6 +2,6 @@
 
 #include "../common.hpp"
 
-namespace wrd {
+namespace namu {
     class _wout adam {};
 }

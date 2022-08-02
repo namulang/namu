@@ -27,24 +27,24 @@
 * attacher는 built in 이다.
 * attacher는 진입점에 접근할 수 있다.
 
-## wrd 파일 안에서 다른 언어의 메소드를 직접 호출 할 수 없다.
+## namu 파일 안에서 다른 언어의 메소드를 직접 호출 할 수 없다.
 
-* 그러나 다른 언어로 빌드 > AST의 형태로 모듈매니저가 import > import 한 것을 wrd 소스코드 내에서 메소드 콜
+* 그러나 다른 언어로 빌드 > AST의 형태로 모듈매니저가 import > import 한 것을 namu 소스코드 내에서 메소드 콜
   이러한 흐름은 물론 가능하다.
 
-## java와 같이 native 메소드를 wrd 안에서 정의할 수 없다.
+## java와 같이 native 메소드를 namu 안에서 정의할 수 없다.
 
 * 이는 간결한 문법을 유지 하기 위한 것이다.
-* native 메소드를 놓고 여기서 wrd클래스를 상속해서 일부 메소드만 native를 사용하는 효과를 내는 것은
+* native 메소드를 놓고 여기서 namu클래스를 상속해서 일부 메소드만 native를 사용하는 효과를 내는 것은
   추천하지 않는다.
-  * 대신 작은 helper native 클래스를 만들고, 이를 redirection 하는 식으로 wrd 클래스를 만드는 것이 더 좋다.
+  * 대신 작은 helper native 클래스를 만들고, 이를 redirection 하는 식으로 namu 클래스를 만드는 것이 더 좋다.
   * 물론 helper native클래스는 package class여야 한다.
 
 ## 하나의 패키지는 여러가지 언어로 작성될 수 있다.
 
 * 예를들어
-    * .wrd 와 .c 로 작성된 패키지가 있다면 .c를 위한 C API entrypoint에서 .c로 빌드된 ast를 가져온다.
-    * .wrd 파일은 모듈매니져가 .wrd 파일을 위한 entrypoint에서 가져온다.
+    * .namu 와 .c 로 작성된 패키지가 있다면 .c를 위한 C API entrypoint에서 .c로 빌드된 ast를 가져온다.
+    * .namu 파일은 모듈매니져가 .namu 파일을 위한 entrypoint에서 가져온다.
 
 ## 일단 모듈이 attach가 되면 결국은 AST 구조로 나온다.
 

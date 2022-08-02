@@ -1,7 +1,7 @@
 #include "instance.hpp"
 #include "instancer.hpp"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(instance)
     me::vault instance::_vault;

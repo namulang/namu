@@ -3,7 +3,7 @@
 #include "../interface/instance.hpp"
 #include "../binder/tbindable.hpp"
 
-namespace wrd {
+namespace namu {
 
     class chunk;
     class _wout bindTag : public typeProvidable, public tbindable<instance> {

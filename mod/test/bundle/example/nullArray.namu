@@ -1,0 +1,26 @@
+pack namu.lang.example.nullArray
+
+main() void
+    def myObj
+        age := 0
+        name := 'cherry'
+        price := 53
+
+        me(): ok()
+        me(@price)
+            me.price = price
+
+    myObj1 := myObj()
+    myObj2 := myObj
+    //objs := myObj[5] // err! argument can't exist in [].
+
+    objs := {myObj(), myObj()}
+    objs2 := myObj{}() // new myObj instance.
+    objs3 := myObj{}(23) // new myObj with ctor(price int).
+
+    objsRef := myObj{} // ref to myObj[]
+    objsRef := objs
+
+    // all containers are mutable type.
+    objs3 = objsRef // objs3 now refers what objsRef points.
+    objs3.price==23 // false

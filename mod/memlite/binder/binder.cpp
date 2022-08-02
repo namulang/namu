@@ -3,7 +3,7 @@
 #include "bindTacticable.hpp"
 #include "tbindable.inl"
 
-namespace wrd {
+namespace namu {
 
     WRD_DEF_ME(binder)
 

@@ -1,12 +1,12 @@
 cmake_minimum_required (VERSION 2.6)
-project(wrd C CXX)
+project(namu C CXX)
 
 #defines:
 set(SHOW_CMAKE_VARIABLES 1)
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 2)
 set(VERSION_FIX 2)
-set(BUILD_COUNT 530)
+set(BUILD_COUNT 534)
 set(VERSION_NAME "Mana")
 set(VERSION_VALUE "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_FIX}")
 set(VERSION "${PROJECT_NAME} ${UPDATE_NAME} v${VERSION_VALUE}")
@@ -71,7 +71,7 @@ set(WRD_DEFAULT_INC_DIR
     ${WRD_DIR}/mod/clog
     ${WRD_DIR}/mod/meta
     ${WRD_DIR}/mod/memlite
-    ${WRD_DIR}/mod/wrd
+    ${WRD_DIR}/mod/core/
     ${WRD_DIR}/mod/seedling
     /usr/local/include)
 include_directories(${WRD_DEFAULT_INC_DIR})
