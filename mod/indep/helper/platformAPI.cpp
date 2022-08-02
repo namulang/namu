@@ -1,7 +1,7 @@
 #include "platformAPI.hpp"
-#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
 #  include <windows.h>
-#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX || WRD_BUILD_PLATFORM == WRD_TYPE_MACOS
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
 #    include <unistd.h>
 #    include <vector>
 #    include <string>
@@ -12,13 +12,13 @@
 
 namespace namu {
 
-    WRD_DEF_ME(platformAPI)
+    NAMU_DEF_ME(platformAPI)
     using namespace std;
 
-#if defined(WRD_BUILD_PLATFORM_IS_LINUX) || defined(WRD_BUILD_PLATFORM_IS_MAC)
+#if defined(NAMU_BUILD_PLATFORM_IS_LINUX) || defined(NAMU_BUILD_PLATFORM_IS_MAC)
     namespace {
         bool _isAnsiColorTerminal() {
-            static vector<const wchar*> samples = {
+            static vector<const nchar*> samples = {
                 "xterm", "rxvt", "vt100",
                 "linux", "screen",
             };
@@ -31,11 +31,11 @@ namespace namu {
 #endif
 
     const std::string& me::getConsoleFore(consoleColor fore) {
-#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), platformAPI::BLACK << 4 | fore);
         static std::string inner;
         return inner;
-#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX || WRD_BUILD_PLATFORM == WRD_TYPE_MACOS
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
         static bool is_terminal_supporting = _isAnsiColorTerminal();
         if( ! is_terminal_supporting) {
             static string inner;
@@ -54,11 +54,11 @@ namespace namu {
 
     const std::string& me::getConsoleBack(consoleColor back) {
         static std::string inner;
-#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
         SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), back << 4 | WHITE);
         return inner;
 
-#elif WRD_BUILD_PLATFORM == WRD_TYPE_LINUX || WRD_BUILD_PLATFORM == WRD_TYPE_MACOS
+#elif NAMU_BUILD_PLATFORM == NAMU_TYPE_LINUX || NAMU_BUILD_PLATFORM == NAMU_TYPE_MACOS
         static bool is_terminal_supporting = _isAnsiColorTerminal();
         if( ! is_terminal_supporting)
             return inner;

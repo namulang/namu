@@ -4,27 +4,27 @@
 
 namespace namu {
 
-    class _wout stream {
-        WRD_DECL_ME(stream)
+    class _nout stream {
+        NAMU_DECL_ME(stream)
 
     public:
-        stream(wbool isEnable = true);
+        stream(nbool isEnable = true);
         virtual ~stream();
 
         /// @return true means an error.
-        virtual wbool dump(const wchar* message);
-        wbool isNull() const;
-        virtual wbool isEnable() const;
-        virtual void setEnable(wbool isEnable);
+        virtual nbool dump(const nchar* message);
+        nbool isNull() const;
+        virtual nbool isEnable() const;
+        virtual void setEnable(nbool isEnable);
         virtual void saveStreamEnable();
         virtual void loadStreamEnable();
-        virtual const wchar* getName() const = 0;
-        virtual wbool init();
-        virtual wbool isInit() const;
-        virtual wbool rel();
+        virtual const nchar* getName() const = 0;
+        virtual nbool init();
+        virtual nbool isInit() const;
+        virtual nbool rel();
 
     private:
-        wbool _isEnable;
-        wbool _save;
+        nbool _isEnable;
+        nbool _save;
     };
 }

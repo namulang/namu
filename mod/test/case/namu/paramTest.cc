@@ -12,7 +12,7 @@ namespace {
 
         int val;
 
-        wbool _onSame(const typeProvidable& rhs) const override {
+        nbool _onSame(const typeProvidable& rhs) const override {
             const myObj& cast = (const myObj&) rhs;
             return val == cast.val;
         }
@@ -28,7 +28,7 @@ namespace {
     ASSERT_EQ(p1.getOrigin()->getType(), obj1.getType());
     ASSERT_EQ(p2.getOrigin().getType(), obj1.getType());
 
-    p1.setOrigin(wInt().getType());
-    ASSERT_EQ(p1.getType(), ttype<wInt>::get());
+    p1.setOrigin(nInt().getType());
+    ASSERT_EQ(p1.getType(), ttype<nInt>::get());
     ASSERT_TRUE(nul(*p1.getOrigin()));
 }*/

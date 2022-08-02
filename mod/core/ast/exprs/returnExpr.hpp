@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    class _wout returnExpr : public expr {
+    class _nout returnExpr : public expr {
         WRD(CLASS(returnExpr, expr, expr::exprType))
 
     public:
@@ -16,8 +16,8 @@ namespace namu {
         str run(const ucontainable& args) override;
 
         node& getRet();
-        const node& getRet() const WRD_UNCONST_FUNC(getRet())
-        wbool canRun(const ucontainable& args) const override;
+        const node& getRet() const NAMU_UNCONST_FUNC(getRet())
+        nbool canRun(const ucontainable& args) const override;
         const node& getEval() const override;
 
     private:

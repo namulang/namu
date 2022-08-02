@@ -3,5 +3,5 @@
 #include "../errReport.hpp"
 
 namespace namu {
-    WRD_DEF_ME(packMakable)
+    NAMU_DEF_ME(packMakable)
 }

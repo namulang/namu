@@ -7,7 +7,7 @@ namespace namu {
 
     class errReport;
 
-    class _wout slotLoader : public typeProvidable, public clonable {
+    class _nout slotLoader : public typeProvidable, public clonable {
         WRD(CLASS(slotLoader))
 
     public:
@@ -16,7 +16,7 @@ namespace namu {
     public:
         me& addPath(const std::string& filePath);
         me& addPath(const std::vector<std::string> paths);
-        me& addPath(std::initializer_list<const wchar*> paths);
+        me& addPath(std::initializer_list<const nchar*> paths);
         me& addRelativePath(const std::string& path);
         me& setBaseSlots(nmap& s);
         me& setReport(errReport& report);
@@ -38,6 +38,6 @@ namespace namu {
         tstr<errReport> _report;
         tstr<nmap> _slots;
         std::vector<std::string> _paths;
-        static constexpr wchar DELIMITER = '/';
+        static constexpr nchar DELIMITER = '/';
     };
 }

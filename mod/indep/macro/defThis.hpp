@@ -2,10 +2,10 @@
 
 #include "overload.hpp"
 
-#define WRD_DEF_ME_2(ME, SUPER) \
-    WRD_DEF_ME_1(WRD_UNWRAP(ME)) \
-    typedef WRD_UNWRAP(SUPER) super;
+#define NAMU_DEF_ME_2(ME, SUPER) \
+    NAMU_DEF_ME_1(NAMU_UNWRAP(ME)) \
+    typedef NAMU_UNWRAP(SUPER) super;
 
-#define WRD_DEF_ME_1(ME) typedef WRD_UNWRAP(ME) me;
+#define NAMU_DEF_ME_1(ME) typedef NAMU_UNWRAP(ME) me;
 
-#define WRD_DEF_ME(...) WRD_OVERLOAD(WRD_DEF_ME, __VA_ARGS__)
+#define NAMU_DEF_ME(...) NAMU_OVERLOAD(NAMU_DEF_ME, __VA_ARGS__)

@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    class _wout scopeStack : public instance, clonable {
+    class _nout scopeStack : public instance, clonable {
         WRD(CLASS(scopeStack, instance))
 
     public:
@@ -14,10 +14,10 @@ namespace namu {
         tstr<scopes>& getBottom();
         const tstr<scopes>& getBottom() const;
 
-        wcnt len() const;
-        wcnt chainLen() const;
+        ncnt len() const;
+        ncnt chainLen() const;
 
-        wbool push(scopes& new1);
+        nbool push(scopes& new1);
 
         tstr<scopes> pop();
 

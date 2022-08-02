@@ -15,7 +15,7 @@ struct chunksTest : public namuTest {
 namespace {
     class heap {
     public:
-        void new1(chunks& chk, wcnt cnt) {
+        void new1(chunks& chk, ncnt cnt) {
             for(int n=0; n < cnt ; n++)
                 ptrs.push_back(chk.new1());
         }

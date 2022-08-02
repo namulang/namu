@@ -16,7 +16,7 @@ namespace {
         public:
             str run(const ucontainable& args) override {
                 if(!canRun(args)) return str();
-                WRD_I("hello world!");
+                NAMU_I("hello world!");
                 _executed = true;
 
                 if(_lambda)
@@ -24,21 +24,21 @@ namespace {
                 return str();
             }
 
-            void setLambda(function<wbool(const ucontainable&, const frames&)> lambda) {
+            void setLambda(function<nbool(const ucontainable&, const frames&)> lambda) {
                 _lambda = lambda;
             }
 
-            function<wbool(const ucontainable&, const frames&)> _lambda;
-            wbool _res;
-            wbool _executed;
+            function<nbool(const ucontainable&, const frames&)> _lambda;
+            nbool _res;
+            nbool _executed;
         };
 
     public:
-        myfunc(): super(params(), *new wVoid(), *new myBlock()) {
-            WRD_I("myfunc(%x) new", this);
+        myfunc(): super(params(), *new nVoid(), *new myBlock()) {
+            NAMU_I("myfunc(%x) new", this);
         }
         ~myfunc() {
-            WRD_I("myfunc(%x) delete", this);
+            NAMU_I("myfunc(%x) delete", this);
         }
 
         void setUp() {
@@ -47,20 +47,20 @@ namespace {
             blk._res = false;
         }
 
-        wbool isRun() const {
+        nbool isRun() const {
             return getBlock().cast<myBlock>()._executed;
         }
 
-        void setLambda(function<wbool(const ucontainable&, const frames&)> lambda) {
+        void setLambda(function<nbool(const ucontainable&, const frames&)> lambda) {
             getBlock().cast<myBlock>()._lambda = lambda;
         }
 
-        wbool isSuccess() const {
+        nbool isSuccess() const {
             return getBlock().cast<myBlock>()._res;
         }
 
         const node& getRet() const override {
-            static wVoid inner;
+            static nVoid inner;
             return inner;
         }
 
@@ -71,36 +71,36 @@ namespace {
         params _params;
     };
 
-    wbool _isFrameLinkScope(const frame& fr, const scopes& subs) {
+    nbool _isFrameLinkScope(const frame& fr, const scopes& subs) {
         for(const scopes* e=&fr.subs().cast<scopes>(); e ; e=&e->getNext())
             if(e == &subs)
                 return true;
         return false;
     }
 
-    wbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const std::string& name,
+    nbool checkFrameHasfuncAndObjScope(const frame& fr, const func& func, const std::string& name,
         const obj& obj, const char* funcNames[], int funcNameSize) {
         if(nul(fr)) return false;
 
         int n = 0;
-        WRD_I("fr.len=%d", fr.subs().len());
+        NAMU_I("fr.len=%d", fr.subs().len());
         for(auto e=fr.subs().begin(); e ;e++)
-            WRD_I(" - func(\"%s\") calls: fr[%d]=%s", e.getKey().c_str(), n++, e.getVal().getType().getName().c_str());
+            NAMU_I(" - func(\"%s\") calls: fr[%d]=%s", e.getKey().c_str(), n++, e.getVal().getType().getName().c_str());
 
         const scopes& funcScope = fr.subs().cast<scopes>();
-        if(nul(funcScope)) return WRD_I("nul(funcScope)"), false;
+        if(nul(funcScope)) return NAMU_I("nul(funcScope)"), false;
         if(!_isFrameLinkScope(fr, funcScope))
-            return WRD_I("frame not contain the funcScope(%x)", &funcScope), false;
+            return NAMU_I("frame not contain the funcScope(%x)", &funcScope), false;
 
         for(int n=0; n < funcNameSize; n++) {
             const char* name = funcNames[n];
             if(fr.subAll(name).len() != 1)
-                return WRD_I("fr.sub(%s) is 0 or +2 founds", name), false;
+                return NAMU_I("fr.sub(%s) is 0 or +2 founds", name), false;
         }
 
         narr foundfunc = fr.subAll(name);
         if(foundfunc.len() != 1)
-            return WRD_I("couldn't find %s func on frame(%x)", name.c_str(), &fr), false;
+            return NAMU_I("couldn't find %s func on frame(%x)", name.c_str(), &fr), false;
 
         return true;
     }
@@ -119,10 +119,10 @@ TEST_F(funcTest, testfuncConstructNewFrame) {
     myfunc func;
 
     obj.subs().add(funcNames[0], func);
-    WRD_I("obj.len=%d", obj.subs().len());
+    NAMU_I("obj.len=%d", obj.subs().len());
     int n = 0;
     for(auto e=obj.subs().begin(); e ;e++) {
-        WRD_I(" - fr[%d]=%s", n++, e->getType().getName().c_str());
+        NAMU_I(" - fr[%d]=%s", n++, e->getType().getName().c_str());
     }
 
     func.setLambda([&](const auto& args, const auto& sf) {
@@ -160,17 +160,17 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
     obj2.subs().add("obj2func1", obj2func1);
 
     obj1func1.setLambda([&](const auto& args, const auto& sf) {
-        if(sf.len() != 1) return WRD_I("%s: sf.len() != 1", func1Name), false;
+        if(sf.len() != 1) return NAMU_I("%s: sf.len() != 1", func1Name), false;
         if(!checkFrameHasfuncAndObjScope(sf[0], obj1func1, func1Name, obj1, obj1FuncNames, 2)) return false;
 
         narr funcArgs;
         obj1.run(func2Name, funcArgs);
         if(sf.len() != 1)
-            return WRD_I("return of %s: sf.len() != 1", func1Name), false;
+            return NAMU_I("return of %s: sf.len() != 1", func1Name), false;
         return true;
     });
     obj1func2.setLambda([&](const auto& args, const auto& sf) {
-        if(sf.len() != 2) return WRD_I("%s: sf.len(%d) > 2", func2Name, sf.len()), false;
+        if(sf.len() != 2) return NAMU_I("%s: sf.len(%d) > 2", func2Name, sf.len()), false;
 
         if(!checkFrameHasfuncAndObjScope(sf[1], obj1func2, func2Name, obj1, obj1FuncNames, 2)) return false;
 
@@ -178,7 +178,7 @@ TEST_F(funcTest, testCallfuncInsidefunc) {
         funcArgs.add(obj2);
         obj2.run(obj2FuncNames[0], funcArgs);
         if(sf.len() != 2)
-            return WRD_I("return of %s: sf.len() != 2", func2Name), false;
+            return NAMU_I("return of %s: sf.len() != 2", func2Name), false;
         return true;
     });
     obj2func1.setLambda([&](const auto& args, const auto& sf) {
@@ -212,11 +212,11 @@ TEST_F(funcTest, testfuncHasStrParameter) {
     obj.subs().add("myfunc", func1);
 
     params& types = func1.getParams();
-    types.add(new param("", new wStr()));
+    types.add(new param("", new nStr()));
     func1.setLambda([&](const auto& args, const frames& sf) { return true; });
 
     narr args;
-    args.add(new wStr(expectVal));
+    args.add(new nStr(expectVal));
     auto e = args.iterate(1);
 
     func1.run(args);
@@ -234,19 +234,19 @@ TEST_F(funcTest, testArgsAttachedName) {
     myfunc f;
     o.subs().add("myfunc", f);
     params& ps = f.getParams();
-    ps.add(new param("msg", new wStr()));
-    ps.add(new param("age", new wInt()));
+    ps.add(new param("msg", new nStr()));
+    ps.add(new param("age", new nInt()));
     f.setLambda([&](const auto& args, const frames& sf) {
         const frame& fr = sf[sf.len() - 1];
-        return  fr["msg"].cast<wStr>().get() == "hello world" &&
-                fr["age"].cast<wInt>().get() == 55;
+        return  fr["msg"].cast<nStr>().get() == "hello world" &&
+                fr["age"].cast<nInt>().get() == 55;
     });
 
     o.run("myfunc");
     ASSERT_FALSE(f.isRun());
 
-    wStr msg("hello world");
-    wInt age(55);
+    nStr msg("hello world");
+    nInt age(55);
     narr args;
     args.add(msg);
     args.add(age);

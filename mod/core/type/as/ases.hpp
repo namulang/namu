@@ -4,14 +4,14 @@
 
 namespace namu {
 
-    class _wout ases: public asable {
+    class _nout ases: public asable {
     public:
         void add(const asable& newCast);
         void add(const asable* newCast);
 
         int len() const;
 
-        wbool is(const type& from, const type& to) const override;
+        nbool is(const type& from, const type& to) const override;
 
         str as(const node& from, const type& to) const override;
 

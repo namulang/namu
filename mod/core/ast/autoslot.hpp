@@ -7,7 +7,7 @@
 
 namespace namu {
 
-    class _wout autoslot : public slot, public packMakable {
+    class _nout autoslot : public slot, public packMakable {
         WRD(CLASS(autoslot, slot))
 
     public:
@@ -37,12 +37,12 @@ namespace namu {
         void setReport(errReport& rpt);
 
     protected:
-        wbool _invalidate() override;
+        nbool _invalidate() override;
 
     private:
         tstr<srcs> parse(errReport& rpt, bicontainable& tray) override;
-        wbool verify(errReport& rpt, obj& pak) override;
-        wbool link();
+        nbool verify(errReport& rpt, obj& pak) override;
+        nbool link();
         void _rel();
 
     private:

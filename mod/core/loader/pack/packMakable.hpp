@@ -12,12 +12,12 @@ namespace namu {
     template <typename T, typename WRP> class tnarr;
     typedef tnarr<src, strTactic> srcs;
 
-    class _wout packMakable {
-        WRD_DECL_ME(packMakable)
-        WRD_INIT_META(me)
+    class _nout packMakable {
+        NAMU_DECL_ME(packMakable)
+        NAMU_INIT_META(me)
 
     public:
         virtual tstr<srcs> parse(errReport& rpt, bicontainable& tray) = 0;
-        virtual wbool verify(errReport& rpt, obj& pak) = 0;
+        virtual nbool verify(errReport& rpt, obj& pak) = 0;
     };
 }

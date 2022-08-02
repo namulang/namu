@@ -6,14 +6,14 @@
 namespace namu {
 
     /// src represents src file of namulang source codes.
-    class _wout src : public node {
+    class _nout src : public node {
         WRD(CLASS(src, node))
 
     public:
         src(const std::string& fileName);
 
     public:
-        wbool canRun(const ucontainable& args) const override;
+        nbool canRun(const ucontainable& args) const override;
 
         using super::run;
         str run(const ucontainable& args) override;

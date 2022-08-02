@@ -14,7 +14,7 @@ namespace {
         myNode(int num): number(num) {}
 
         nbicontainer& subs() override { return nulOf<nbicontainer>(); }
-        wbool canRun(const ucontainable& types) const override { return false; }
+        nbool canRun(const ucontainable& types) const override { return false; }
         str run(const ucontainable& args) override { return str(); }
 
         int number;
@@ -38,7 +38,7 @@ namespace {
         auto totalElapsed = end - start;
 
         logger::get().setEnable(true);
-        WRD_I("[benchMarkNMap]: map took total %d ms for adding(%dms) & removing(%dms) of %d elems.",
+        NAMU_I("[benchMarkNMap]: map took total %d ms for adding(%dms) & removing(%dms) of %d elems.",
                 totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1),
                 removingElapsed / chrono::milliseconds(1), sz);
         logger::get().setEnable(false);
@@ -59,7 +59,7 @@ namespace {
         totalElapsed = end - start;
 
         logger::get().setEnable(true);
-        WRD_I("[benchMarkNMap]: nmap took total %d ms for adding(%dms) & removing(%dms) of %d elems.",
+        NAMU_I("[benchMarkNMap]: nmap took total %d ms for adding(%dms) & removing(%dms) of %d elems.",
                 totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1),
                 removingElapsed / chrono::milliseconds(1), sz);
     }
@@ -139,13 +139,13 @@ TEST_F(nmapTest, testIter) {
     ASSERT_EQ(e.next(1), 0);
 }
 
-wbool hasSequentialValueOf(int val, tbicontainable<std::string, myNode>& from) {
+nbool hasSequentialValueOf(int val, tbicontainable<std::string, myNode>& from) {
     std::vector<int> tray;
     for(auto& elem : from)
         tray.push_back(elem.number);
 
     for(int n=0; n < val ;n++) {
-        wbool found = false;
+        nbool found = false;
         for(int n2=0; n < tray.size() ;n2++)
             if(tray[n2] == n) {
                 found = true;
@@ -265,7 +265,7 @@ TEST_F(nmapTest, addMultipleKey) {
     m.add("1", new myNode(3));
     m.add("3", new myNode(4));
 
-    wcnt key1found = 0;
+    ncnt key1found = 0;
     for(auto e=m.begin(); e ;++e)
         if(e.getKey() == "1")
             key1found++;
@@ -279,13 +279,13 @@ TEST_F(nmapTest, searchMultipleKey) {
     m.add("1", new myNode(3));
     m.add("3", new myNode(4));
 
-    wint val = m.get("1").cast<myNode>().number;
+    nint val = m.get("1").cast<myNode>().number;
     ASSERT_TRUE(val == 1 || val == 3);
 
     auto founds = m.getAll("1");
     ASSERT_EQ(founds.len(), 2);
     auto e = founds.begin();
-    wint val1 = e++.get<myNode>().number,
+    nint val1 = e++.get<myNode>().number,
          val2 = e.get<myNode>().number;
     ASSERT_TRUE(val1 == 1 || val1 == 3);
     ASSERT_TRUE(val2 == 1 || val2 == 3);
@@ -320,7 +320,7 @@ TEST_F(nmapTest, testDeletionByIter) {
 
     e = m.begin();
     ASSERT_EQ(e.getKey(), "1");
-    wint val1 = e++.getVal<myNode>().number,
+    nint val1 = e++.getVal<myNode>().number,
          val2 = e.getVal<myNode>().number;
     ASSERT_EQ(e.getKey(), "1");
 
@@ -336,7 +336,7 @@ TEST_F(nmapTest, testSetValue) {
     m.add("1", new myNode(3));
 
     m.iterate("2").setVal(new myNode(4));
-    wbool found = false;
+    nbool found = false;
     for(auto& e : m)
        if(e.cast<myNode>().number == 4)
            found = true;
@@ -354,14 +354,14 @@ TEST_F(nmapTest, testSetValue) {
 
 TEST_F(nmapTest, delWhileIteration) {
     nmap m;
-    m.add("meat", new wInt(1));
-    m.add("banana", new wInt(2));
-    m.add("apple", new wInt(3));
-    m.add("banana", new wInt(4));
-    m.add("meat", new wInt(5));
-    m.add("banana", new wInt(6));
-    m.add("meat", new wInt(7));
-    m.add("banana", new wInt(8));
+    m.add("meat", new nInt(1));
+    m.add("banana", new nInt(2));
+    m.add("apple", new nInt(3));
+    m.add("banana", new nInt(4));
+    m.add("meat", new nInt(5));
+    m.add("banana", new nInt(6));
+    m.add("meat", new nInt(7));
+    m.add("banana", new nInt(8));
 
     for(auto e = m.begin(); e ;) {
         if(e.getKey() == "banana")

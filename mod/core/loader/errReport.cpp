@@ -3,27 +3,27 @@
 
 namespace namu {
 
-    WRD_DEF_ME(errReport)
+    NAMU_DEF_ME(errReport)
 
-    const err& me::operator[](widx n) const { return get(n); }
-    me::operator wbool() const { return hasErr(); }
+    const err& me::operator[](nidx n) const { return get(n); }
+    me::operator nbool() const { return hasErr(); }
 
-    wbool me::hasErr() const {
+    nbool me::hasErr() const {
         return has(err::ERR);
     }
-    wbool me::hasWarn() const {
+    nbool me::hasWarn() const {
         return has(err::WARN);
     }
-    wbool me::has(err::type type) const {
+    nbool me::has(err::type type) const {
         for(auto& elem : _errs)
             if(elem->fType == type)
                 return true;
         return false;
     }
 
-    const err& me::get(widx n) const { return *_errs[n]; }
+    const err& me::get(nidx n) const { return *_errs[n]; }
 
-    wcnt me::len() const { return _errs.size(); }
+    ncnt me::len() const { return _errs.size(); }
 
     const err& me::add(const err* new1) {
         new1->dbgLog();

@@ -33,46 +33,46 @@
 #include "helper.hpp"
 #include "evaluator.hpp"
 
-#define _WRD_EACH_GET_END2() 0, WRD_CONSUME_ARGS
-#define _WRD_EACH_GET_END1(...) _WRD_EACH_GET_END2
-#define _WRD_EACH_GET_END(...) _WRD_EACH_GET_END1
-#define _WRD_EACH_NEXT0(test, next, ...) next WRD_VOID()
-#define _WRD_EACH_NEXT1(test, next) _WRD_EACH_NEXT0(test, next, 0)
-#define _WRD_EACH_NEXT(test, next)  _WRD_EACH_NEXT1(_WRD_EACH_GET_END test, next)
+#define _NAMU_EACH_GET_END2() 0, NAMU_CONSUME_ARGS
+#define _NAMU_EACH_GET_END1(...) _NAMU_EACH_GET_END2
+#define _NAMU_EACH_GET_END(...) _NAMU_EACH_GET_END1
+#define _NAMU_EACH_NEXT0(test, next, ...) next NAMU_VOID()
+#define _NAMU_EACH_NEXT1(test, next) _NAMU_EACH_NEXT0(test, next, 0)
+#define _NAMU_EACH_NEXT(test, next)  _NAMU_EACH_NEXT1(_NAMU_EACH_GET_END test, next)
 
-#define _WRD_EACH_LIST_NEXT1(test, next) _WRD_EACH_NEXT0(test, WRD_COMMA next, 0)
-#define _WRD_EACH_LIST_NEXT(test, next)  _WRD_EACH_LIST_NEXT1(_WRD_EACH_GET_END test, next)
+#define _NAMU_EACH_LIST_NEXT1(test, next) _NAMU_EACH_NEXT0(test, NAMU_COMMA next, 0)
+#define _NAMU_EACH_LIST_NEXT(test, next)  _NAMU_EACH_LIST_NEXT1(_NAMU_EACH_GET_END test, next)
 
 //    Applies the function macro `f` to each of the remaining parameters.
-#define _WRD_EACH0(f, x, peek, ...) f(x) _WRD_EACH_NEXT(peek, _WRD_EACH1)(f, peek, __VA_ARGS__)
-#define _WRD_EACH1(f, x, peek, ...) f(x) _WRD_EACH_NEXT(peek, _WRD_EACH0)(f, peek, __VA_ARGS__)
-#define WRD_EACH(f, ...) WRD_EVAL(_WRD_EACH1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+#define _NAMU_EACH0(f, x, peek, ...) f(x) _NAMU_EACH_NEXT(peek, _NAMU_EACH1)(f, peek, __VA_ARGS__)
+#define _NAMU_EACH1(f, x, peek, ...) f(x) _NAMU_EACH_NEXT(peek, _NAMU_EACH0)(f, peek, __VA_ARGS__)
+#define NAMU_EACH(f, ...) NAMU_EVAL(_NAMU_EACH1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
 //    EACH macro for various parametered function:
 //        usage:
 //            #define X(x, y) cout << (x+y);
-//            WRD_EACH_TUPLE(X, (1,2), (2,3)) // please be careful to wrap with a paranthesis each set of parameters.
+//            NAMU_EACH_TUPLE(X, (1,2), (2,3)) // please be careful to wrap with a paranthesis each set of parameters.
 //
 //        output:
 //            37
-#define _WRD_EACH_TUPLE0(f, x, peek, ...) f x _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE1)(f, peek, __VA_ARGS__)
-#define _WRD_EACH_TUPLE1(f, x, peek, ...) f x _WRD_EACH_NEXT(peek, _WRD_EACH_TUPLE0)(f, peek, __VA_ARGS__)
-#define WRD_EACH_TUPLE(f, ...) WRD_EVAL(_WRD_EACH_TUPLE1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+#define _NAMU_EACH_TUPLE0(f, x, peek, ...) f x _NAMU_EACH_NEXT(peek, _NAMU_EACH_TUPLE1)(f, peek, __VA_ARGS__)
+#define _NAMU_EACH_TUPLE1(f, x, peek, ...) f x _NAMU_EACH_NEXT(peek, _NAMU_EACH_TUPLE0)(f, peek, __VA_ARGS__)
+#define NAMU_EACH_TUPLE(f, ...) NAMU_EVAL(_NAMU_EACH_TUPLE1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
 //    EACH macro for expanding:
 //        usage:
 //            #define X(x, y) cout << (x+y);
 //            int b = 5;
-//            WRD_EACH_EXPAND(X, b, 1,2,3)
+//            NAMU_EACH_EXPAND(X, b, 1,2,3)
 //            //== cout << (b+1); cout << (b+2); cout << (b+3);
 //
 //        output:
 //            678
-#define _WRD_EACH_EXPAND0(f, s, x, peek, ...) f(s, x) _WRD_EACH_NEXT(peek, _WRD_EACH_EXPAND1)(f, s, peek, __VA_ARGS__)
-#define _WRD_EACH_EXPAND1(f, s, x, peek, ...) f(s, x) _WRD_EACH_NEXT(peek, _WRD_EACH_EXPAND0)(f, s, peek, __VA_ARGS__)
-#define WRD_EACH_EXPAND(f, ...) WRD_EVAL(_WRD_EACH_EXPAND1(f, s, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+#define _NAMU_EACH_EXPAND0(f, s, x, peek, ...) f(s, x) _NAMU_EACH_NEXT(peek, _NAMU_EACH_EXPAND1)(f, s, peek, __VA_ARGS__)
+#define _NAMU_EACH_EXPAND1(f, s, x, peek, ...) f(s, x) _NAMU_EACH_NEXT(peek, _NAMU_EACH_EXPAND0)(f, s, peek, __VA_ARGS__)
+#define NAMU_EACH_EXPAND(f, ...) NAMU_EVAL(_NAMU_EACH_EXPAND1(f, s, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
 
 //    Applies the function macro `f` to each of the remaining parameters and inserts commas between the results.
-#define _WRD_EACH_LIST0(f, x, peek, ...) f(x) _WRD_EACH_LIST_NEXT(peek, _WRD_EACH_LIST1)(f, peek, __VA_ARGS__)
-#define _WRD_EACH_LIST1(f, x, peek, ...) f(x) _WRD_EACH_LIST_NEXT(peek, _WRD_EACH_LIST0)(f, peek, __VA_ARGS__)
-#define WRD_EACH_LIST(f, ...) WRD_EVAL(_WRD_EACH_LIST1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))
+#define _NAMU_EACH_LIST0(f, x, peek, ...) f(x) _NAMU_EACH_LIST_NEXT(peek, _NAMU_EACH_LIST1)(f, peek, __VA_ARGS__)
+#define _NAMU_EACH_LIST1(f, x, peek, ...) f(x) _NAMU_EACH_LIST_NEXT(peek, _NAMU_EACH_LIST0)(f, peek, __VA_ARGS__)
+#define NAMU_EACH_LIST(f, ...) NAMU_EVAL(_NAMU_EACH_LIST1(f, __VA_ARGS__, ()()(), ()()(), ()()(), 0))

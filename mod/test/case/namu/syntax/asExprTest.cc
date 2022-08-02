@@ -93,7 +93,7 @@ TEST_F(asExprTest, castFlt) {
 
 TEST_F(asExprTest, castChar) {
     // implicit casting of char:
-    //  -> wbool
+    //  -> nbool
     make().parse(R"SRC(
         foo(age int) void
             main()
@@ -134,7 +134,7 @@ TEST_F(asExprTest, castChar) {
 }
 
 TEST_F(asExprTest, castBool) {
-    // implicit casting of wbool:
+    // implicit casting of nbool:
     //  N/A
     make().parse(R"SRC(
         foo(age int) void
@@ -224,28 +224,28 @@ TEST_F(asExprTest, castStr) {
 }
 
 TEST_F(asExprTest, manualAsInt) {
-    wInt a = 55;
-    str as = a.as<wStr>();
+    nInt a = 55;
+    str as = a.as<nStr>();
     ASSERT_TRUE(as);
     ASSERT_EQ(as->cast<std::string>(), "55");
 
-    wFlt b(3.5);
-    as = b.as<wInt>();
+    nFlt b(3.5);
+    as = b.as<nInt>();
     ASSERT_TRUE(as);
-    ASSERT_EQ(as->cast<wint>(), (int) 3.5);
+    ASSERT_EQ(as->cast<nint>(), (int) 3.5);
 
-    as = wStr("False").as<wBool>();
+    as = nStr("False").as<nBool>();
     ASSERT_FALSE(as);
-    as = wStr("false").as<wBool>();
+    as = nStr("false").as<nBool>();
     ASSERT_TRUE(as);
-    ASSERT_FALSE(as->cast<wbool>()); // false -> false
-    as = wFlt(0.1f).as<wBool>();
+    ASSERT_FALSE(as->cast<nbool>()); // false -> false
+    as = nFlt(0.1f).as<nBool>();
     ASSERT_TRUE(as);
-    ASSERT_EQ(as->cast<wbool>(), (bool) 0.1f); // 0 -> false
+    ASSERT_EQ(as->cast<nbool>(), (bool) 0.1f); // 0 -> false
 
-    as = wFlt(1.1f).as<wBool>();
+    as = nFlt(1.1f).as<nBool>();
     ASSERT_TRUE(as);
-    ASSERT_TRUE(as->cast<wbool>()); // except for 0 -> true
+    ASSERT_TRUE(as->cast<nbool>()); // except for 0 -> true
 }
 
 TEST_F(asExprTest, simpleAsInt1) {
@@ -344,26 +344,26 @@ TEST_F(asExprTest, AsAllowed) {
 }
 
 TEST_F(asExprTest, reduceTest1) {
-    const wtype& it = ttype<wInt>::get();
-    const wtype* res = &it.reduce<wFlt>();
+    const ntype& it = ttype<nInt>::get();
+    const ntype* res = &it.reduce<nFlt>();
     ASSERT_FALSE(nul(res));
-    ASSERT_EQ(*res, ttype<wFlt>::get());
+    ASSERT_EQ(*res, ttype<nFlt>::get());
 
-    res = &it.reduce<wInt>();
+    res = &it.reduce<nInt>();
     ASSERT_FALSE(nul(res));
-    ASSERT_EQ(*res, ttype<wInt>::get());
+    ASSERT_EQ(*res, ttype<nInt>::get());
 
-    res = &it.reduce<wBool>();
+    res = &it.reduce<nBool>();
     ASSERT_FALSE(nul(res));
-    ASSERT_EQ(*res, ttype<wInt>::get());
+    ASSERT_EQ(*res, ttype<nInt>::get());
 
-    res = &it.reduce<wChar>();
+    res = &it.reduce<nChar>();
     ASSERT_FALSE(nul(res));
-    ASSERT_EQ(*res, ttype<wInt>::get());
+    ASSERT_EQ(*res, ttype<nInt>::get());
 
-    res = &it.reduce<wStr>();
+    res = &it.reduce<nStr>();
     ASSERT_FALSE(nul(res));
-    ASSERT_EQ(*res, ttype<wStr>::get());
+    ASSERT_EQ(*res, ttype<nStr>::get());
 }
 
 TEST_F(asExprTest, doubleAs) {

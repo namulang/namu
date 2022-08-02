@@ -21,7 +21,7 @@ namespace namu {
     ///
     /// lowparser/scanner should be dependent to THIS.
     class slot;
-    class _wout parser : public typeProvidable {
+    class _nout parser : public typeProvidable {
         WRD(ADT(parser, typeProvidable))
 
     public:
@@ -31,12 +31,12 @@ namespace namu {
         me& setReport(errReport& report);
         me& setSlot(const slot& tray);
         slot& getSlot();
-        const slot& getSlot() const WRD_UNCONST_FUNC(getSlot())
+        const slot& getSlot() const NAMU_UNCONST_FUNC(getSlot())
         obj& getSubPack();
-        const obj& getSubPack() const WRD_UNCONST_FUNC(getSubPack())
+        const obj& getSubPack() const NAMU_UNCONST_FUNC(getSubPack())
 
         /// @param script is null terminated cstring.
-        tstr<obj> parse(const wchar* script);
+        tstr<obj> parse(const nchar* script);
 
         virtual void rel();
 

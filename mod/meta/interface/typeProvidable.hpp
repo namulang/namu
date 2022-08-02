@@ -3,22 +3,22 @@
 #include "../common.hpp"
 
 namespace namu {
-    class _wout typeProvidable {
-        WRD_DECL_ME(typeProvidable)
+    class _nout typeProvidable {
+        NAMU_DECL_ME(typeProvidable)
 
     public:
-        wbool operator==(const me& rhs) const;
-        wbool operator!=(const me& rhs) const;
+        nbool operator==(const me& rhs) const;
+        nbool operator!=(const me& rhs) const;
 
     public:
         virtual const type& getType() const = 0;
-        wbool isSub(const type& it) const;
-        wbool isSub(const typeProvidable& it) const {
+        nbool isSub(const type& it) const;
+        nbool isSub(const typeProvidable& it) const {
             return isSub(it.getType());
         }
-        wbool isSuper(const type& it) const;
-        template <typename T> wbool isSub() const { return getType().isSub<T>(); }
-        template <typename T> wbool isSuper() const { return getType().isSuper<T>(); }
+        nbool isSuper(const type& it) const;
+        template <typename T> nbool isSub() const { return getType().isSub<T>(); }
+        template <typename T> nbool isSuper() const { return getType().isSuper<T>(); }
 
         template <typename T>
         T& cast() {
@@ -38,12 +38,12 @@ namespace namu {
             return *(T*) cast(ttype<T>::get());
         }
 
-        template <typename T> const T& cast() const WRD_UNCONST_FUNC(cast<T>())
+        template <typename T> const T& cast() const NAMU_UNCONST_FUNC(cast<T>())
 
         virtual void* cast(const type& to);
-        const void* cast(const type& to) const WRD_UNCONST_FUNC(cast(to))
+        const void* cast(const type& to) const NAMU_UNCONST_FUNC(cast(to))
 
     protected:
-        virtual wbool _onSame(const me& rhs) const;
+        virtual nbool _onSame(const me& rhs) const;
     };
 }

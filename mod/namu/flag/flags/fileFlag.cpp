@@ -3,9 +3,9 @@
 #include <sstream>
 
 namespace namu {
-    WRD_DEF_ME(fileFlag)
+    NAMU_DEF_ME(fileFlag)
 
-    wbool me::_onTake(const args& tray, cli& c, interpreter& ip) const {
+    nbool me::_onTake(const args& tray, cli& c, interpreter& ip) const {
         std::vector<string> buf;
 
         for(const auto& filePath : tray) {

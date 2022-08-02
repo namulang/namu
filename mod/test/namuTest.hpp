@@ -20,7 +20,7 @@ protected:
 private:
     void _assertVault() {
         auto& v = _getVault();
-        WRD_DI("vault[%x].len()=%d", &v, v.len());
+        NAMU_DI("vault[%x].len()=%d", &v, v.len());
         ASSERT_EQ(v.len(), 0);
     }
 };

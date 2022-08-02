@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(interpreter)
+    NAMU_DEF_ME(interpreter)
 
     me::interpreter(): _isParsed(false), _isLogStructure(false), _isLogInterpreter(false) {}
 
@@ -21,19 +21,19 @@ namespace namu {
         _srcs.bind(supply);
         return *this;
     }
-    me& me::setLogStructure(wbool enable) {
+    me& me::setLogStructure(nbool enable) {
         _isLogStructure = enable;
         return *this;
     }
-    me& me::setLogInterpreter(wbool enable) {
+    me& me::setLogInterpreter(nbool enable) {
         _isLogInterpreter = enable;
         return *this;
     }
-    wbool me::isParsed() const {
+    nbool me::isParsed() const {
         return _isParsed;
     }
 
-    wbool me::isVerified() const {
+    nbool me::isVerified() const {
         return isParsed() && (_rpt && !_rpt->hasErr());
     }
 
@@ -57,9 +57,9 @@ namespace namu {
             return *_slot;
         _verify(info);
 
-        WRD_DI("======================================");
-        WRD_DI("           preEvaluation");
-        WRD_DI("======================================");
+        NAMU_DI("======================================");
+        NAMU_DI("           preEvaluation");
+        NAMU_DI("======================================");
         //_preEvaluation(_slot->getPack());
 
         _logStructure(*info, _srcs->get());
@@ -71,7 +71,7 @@ namespace namu {
         obj& cast = eval.cast<obj>();
         if(nul(cast)) return;
 
-        WRD_DI("run %s.@preCtor", cast.getType().getName().c_str());
+        NAMU_DI("run %s.@preCtor", cast.getType().getName().c_str());
         cast.run(baseObj::PRECTOR_NAME);
     }
 
@@ -117,7 +117,7 @@ namespace namu {
         l.loadStreamEnable();
     }
 
-    wbool me::_isPackExist() {
+    nbool me::_isPackExist() {
         return !nul(_pser.getSubPack()) && _slot;
     }
 
@@ -129,9 +129,9 @@ namespace namu {
             _pser.rel(); // parser can only take 1 src.
 
             const char* buf = _srcs->get();
-            WRD_DI("======================================");
-            WRD_DI("                parse                 ");
-            WRD_DI("======================================");
+            NAMU_DI("======================================");
+            NAMU_DI("                parse                 ");
+            NAMU_DI("======================================");
 
             _pser.setReport(*_rpt)
                  .setSlot(*_slot)
@@ -150,12 +150,12 @@ namespace namu {
         l.saveStreamEnable();
         l.setEnable(_isLogInterpreter);
 
-        WRD_DI("======================================");
-        WRD_DI("                verify                ");
-        WRD_DI("======================================");
+        NAMU_DI("======================================");
+        NAMU_DI("                verify                ");
+        NAMU_DI("======================================");
 
         if(!_slot) {
-            WRD_E("_slot is null");
+            NAMU_E("_slot is null");
             return;
         }
 
@@ -167,7 +167,7 @@ namespace namu {
 
     }
 
-    void me::_logStructure(frame& info, const wchar* buf) {
+    void me::_logStructure(frame& info, const nchar* buf) {
         if(!_isLogStructure) return;
 
         logger& l = logger::get();
@@ -192,7 +192,7 @@ namespace namu {
 
     void me::_logStructure(std::vector<const char*>& indents, const node& n, const std::string& name, int idx, bool isLast, bool isParentLast) const {
         if(nul(n)) {
-            WRD_W("_logStructure(n == null)");
+            NAMU_W("_logStructure(n == null)");
             return;
         }
 

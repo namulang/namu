@@ -4,8 +4,8 @@
 
 namespace namu {
 
-    class _wout platformAPI {
-        WRD_DECL_ME(platformAPI)
+    class _nout platformAPI {
+        NAMU_DECL_ME(platformAPI)
 
     public:
         enum consoleColor {

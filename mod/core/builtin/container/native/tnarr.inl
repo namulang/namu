@@ -10,7 +10,7 @@ namespace namu {
 #define ME tnarr<T, TACTIC>
 
     TEMPL
-    T& ME::get(widx n) {
+    T& ME::get(nidx n) {
         if(!has(n)) return nulOf<T>();
 
         binder& ret = _vec[n];
@@ -18,7 +18,7 @@ namespace namu {
     }
 
     TEMPL
-    wbool ME::set(const iter& at, const T& new1) {
+    nbool ME::set(const iter& at, const T& new1) {
         narrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;
         if(cast.isEnd()) return false;
@@ -27,14 +27,14 @@ namespace namu {
     }
 
     TEMPL
-    wbool ME::set(widx n, const T& new1) {
+    nbool ME::set(nidx n, const T& new1) {
         if(!has(n)) return false;
 
         return _vec[n].bind(new1);
     }
 
     TEMPL
-    wbool ME::add(const iter& e, const T& new1) {
+    nbool ME::add(const iter& e, const T& new1) {
         if(nul(e) || nul(new1)) return false;
         if(!e.isFrom(*this)) return false;
         narrIteration& cast = (narrIteration&) *e._step;
@@ -44,7 +44,7 @@ namespace namu {
     }
 
     TEMPL
-    wbool ME::add(widx n, const T& new1) {
+    nbool ME::add(nidx n, const T& new1) {
         if(n < 0 || n > len()) return false; // if n equals to len(), it means that will be added at end of container.
         if(nul(new1)) return false;
 
@@ -67,7 +67,7 @@ namespace namu {
     }
 
     TEMPL
-    wbool ME::del(const iter& at) {
+    nbool ME::del(const iter& at) {
         narrIteration& cast = _getIterationFrom(at);
         if(nul(cast)) return false;
         if(cast.isEnd()) return false;
@@ -76,21 +76,21 @@ namespace namu {
     }
 
     TEMPL
-    wbool ME::del(widx n) {
+    nbool ME::del(nidx n) {
         if(!has(n)) return false;
         _vec.erase(_vec.begin() + n);
         return true;
     }
 
     TEMPL
-    wbool ME::del(const iter& from, const iter& end) {
+    nbool ME::del(const iter& from, const iter& end) {
         narrIteration&  endIter = _getIterationFrom(end),
                     &   fromIter = _getIterationFrom(from);
         if(nul(endIter) || nul(fromIter))
-            return WRD_E("from(%x) or end(%x) one of these is null.", &endIter, &fromIter), false;
+            return NAMU_E("from(%x) or end(%x) one of these is null.", &endIter, &fromIter), false;
 
-        widx fromN = fromIter.isEnd() ? len()-1 : fromIter._n;
-        wcnt cnt = endIter._n - fromN;
+        nidx fromN = fromIter.isEnd() ? len()-1 : fromIter._n;
+        ncnt cnt = endIter._n - fromN;
         if(cnt <= 0) return false;
 
         for(int n=0; n < cnt ;n++)
@@ -99,7 +99,7 @@ namespace namu {
     }
 
     TEMPL
-    wcnt ME::len() const {
+    ncnt ME::len() const {
         return _vec.size();
     };
 

@@ -5,22 +5,22 @@
 
 namespace namu {
 
-    class _wout wtype : public type {
-        WRD_DECL_ME(wtype, type)
+    class _nout ntype : public type {
+        NAMU_DECL_ME(ntype, type)
 
     private:
-        typedef std::map<const wtype*, const wtype*> reducer;
-        typedef std::map<const wtype*, reducer> reducers;
+        typedef std::map<const ntype*, const ntype*> reducer;
+        typedef std::map<const ntype*, reducer> reducers;
 
     public:
-        // wtype:
+        // ntype:
         /// whether variable 'it' can be a subtype of T
         template <typename T>
-        wbool isImpli() const {
+        nbool isImpli() const {
             return this->isImpli(ttype<T>::get());
         }
-        virtual wbool isImpli(const type& to) const;
-        wbool isImpli(const typeProvidable& to) const;
+        virtual nbool isImpli(const type& to) const;
+        nbool isImpli(const typeProvidable& to) const;
 
         template <typename T>
         tstr<T> asImpli(const node& it) const {
@@ -29,10 +29,10 @@ namespace namu {
         virtual str asImpli(const node& from, const type& to) const;
 
         template <typename T>
-        wbool is() const {
+        nbool is() const {
             return this->is(ttype<T>::get());
         }
-        wbool is(const type& to) const;
+        nbool is(const type& to) const;
 
         template <typename T>
         tstr<T> as(const node& it) const {
@@ -40,28 +40,28 @@ namespace namu {
         }
         str as(const node& from, const type& to) const;
 
-        virtual wbool isImmutable() const;
+        virtual nbool isImmutable() const;
         /// @return null if it's not relative between l & r.
-        const wtype& reduce(const wtype& r) const;
-        const wtype& reduce(const typeProvidable& r) const {
-            return reduce((const wtype&) r.getType());
+        const ntype& reduce(const ntype& r) const;
+        const ntype& reduce(const typeProvidable& r) const {
+            return reduce((const ntype&) r.getType());
         }
         template <typename T>
-        const wtype& reduce() const {
+        const ntype& reduce() const {
             return reduce(ttype<T>::get());
         }
         /// @return null it it's not relative between l & r.
-        static const wtype& reduce(const wtype& l, const wtype& r);
+        static const ntype& reduce(const ntype& l, const ntype& r);
 
     protected:
-        // wtype:
+        // ntype:
         virtual const ases& _getImpliAses() const;
         virtual const ases& _getAses() const;
 
     private:
         static reducers* _makeReducers();
-        static const wtype& _reduceSuperType(const wtype& l, const wtype& r);
+        static const ntype& _reduceSuperType(const ntype& l, const ntype& r);
     };
 
-    typedef std::vector<const wtype*> wtypes;
+    typedef std::vector<const ntype*> ntypes;
 }

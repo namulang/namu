@@ -8,8 +8,8 @@ namespace namu {
     template <typename T, typename TACTIC = strTactic>
     class tstr : public tweak<T, TACTIC> {
         typedef tweak<T, TACTIC> _super_;
-        WRD_DECL_ME(tstr, _super_)
-        WRD_INIT_META(me)
+        NAMU_DECL_ME(tstr, _super_)
+        NAMU_INIT_META(me)
         friend class ref;
 
     public:

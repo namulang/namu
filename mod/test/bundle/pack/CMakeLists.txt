@@ -1,7 +1,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 set(packName "sys")
-set(packOutDir "${WRD_PACK_OUTPUT_DIRECTORY}/${packName}")
+set(packOutDir "${NAMU_PACK_OUTPUT_DIRECTORY}/${packName}")
 set(dependencies ${dependencies} core ${pathGtest})
 
 set(defCandidates "__${packName}=1")
@@ -23,10 +23,10 @@ file(GLOB_RECURSE sources
     "*.cpp"
 )
 
-message("put module to ${WRD_PACK_OUTPUT_DIRECTORY}")
+message("put module to ${NAMU_PACK_OUTPUT_DIRECTORY}")
 
 add_library(${packName} SHARED ${sources})
-set_target_properties(${packName} PROPERTIES SUFFIX ".${WRD_PACK_EXTENSION}")
+set_target_properties(${packName} PROPERTIES SUFFIX ".${NAMU_PACK_EXTENSION}")
 set_target_properties(${packName} PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${packOutDir}")
 target_link_libraries(${packName} ${dependencies})
 

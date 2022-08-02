@@ -84,7 +84,7 @@ public:
     void set(int n);
 };
 
-WRD_BRIDGE_CPP(....) {
+NAMU_BRIDGE_CPP(....) {
     return def(...)
         .func(....)
         .property(...)
@@ -129,13 +129,13 @@ WRD_BRIDGE_CPP(....) {
 
 ## primitive에 대해 마샬링을 지원한다.
 
-* wint <--> int, unsigned short int
-* wint64 <--> long long, unsigned int, int64, wint64_t
+* nint <--> int, unsigned short int
+* nint64 <--> long long, unsigned int, int64, nint64_t
 * wint16 <--> short int, unsigned char
 * wint8 <--> char
-* wflt <--> float
+* nflt <--> float
 * wflt64 <--> double
-* wstr <--> const char*, std::string
+* nstr <--> const char*, std::string
 * wT <--> 위 primitive 들의 const T*
 
 ## T** 도 지원하지 않는다.
@@ -177,7 +177,7 @@ WRD_BRIDGE_CPP(....) {
 // Boost코드를 참고함.
 class My : public obj {
 
-  WRD_DEF(My) {
+  NAMU_DEF(My) {
       def()
           .func(&My::sayMsg)
   }
@@ -208,7 +208,7 @@ class My : public obj {
 ## worldlang 타입을 C++ 메소드에 인자로 넣어도 호환이 가능하다.
 
 * T <--> T
-* wint <--> Wrapper<wint>
+* nint <--> Wrapper<nint>
 * 최적화를 한다면, 아예 마샬링을 건너뛰게 하면 좋을 것이다.
 
 ## 반환형을 wlist, warr 등으로 사용자가 직접 작성할 수도 있어야 한다.

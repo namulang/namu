@@ -4,29 +4,29 @@
 
 namespace namu {
 
-    WRD_DEF_ME(frame)
+    NAMU_DEF_ME(frame)
 
     me::~frame() {
         _rel();
     }
 
-    wbool me::pushLocal(nbicontainer* con) { return pushLocal(*con); }
-    wbool me::pushLocal(nbicontainer& con) { return pushLocal(*scopes::wrap(con)); }
-    wbool me::pushLocal(scopes* new1) { return _local.push(*new1); }
-    wbool me::pushLocal(scopes& new1) {
-        wbool ret = _local.push(new1);
+    nbool me::pushLocal(nbicontainer* con) { return pushLocal(*con); }
+    nbool me::pushLocal(nbicontainer& con) { return pushLocal(*scopes::wrap(con)); }
+    nbool me::pushLocal(scopes* new1) { return _local.push(*new1); }
+    nbool me::pushLocal(scopes& new1) {
+        nbool ret = _local.push(new1);
         if(ret && _local.chainLen() == 1 && _obj)
             new1.link(_obj->subs());
         return ret;
     }
-    wbool me::pushLocal(const std::string& name, const node& n) {
+    nbool me::pushLocal(const std::string& name, const node& n) {
         scopes& top = *_local.getTop();
         if(nul(top))
-            return WRD_E("couldn't push new node. the top scope is null"), false;
+            return NAMU_E("couldn't push new node. the top scope is null"), false;
 
         return top.add(name, n);
     }
-    wbool me::pushLocal(const std::string& name, const node* n) {
+    nbool me::pushLocal(const std::string& name, const node* n) {
         return pushLocal(name, *n);
     }
 
@@ -73,7 +73,7 @@ namespace namu {
         return nul(top) ? _obj->subs() : top;
     }
 
-    wbool me::canRun(const ucontainable& args) const { return false; }
+    nbool me::canRun(const ucontainable& args) const { return false; }
 
     str me::run(const ucontainable& args) { return str(); }
 
@@ -82,8 +82,8 @@ namespace namu {
         super::rel();
     }
 
-    wbool me::pushReturn(const str& toReturn) { return _ret.bind(*toReturn); }
-    wbool me::isReturned() const { return _ret.isBind(); }
+    nbool me::pushReturn(const str& toReturn) { return _ret.bind(*toReturn); }
+    nbool me::isReturned() const { return _ret.isBind(); }
     str me::popReturn() {
         str ret = _ret;
         _ret.rel();

@@ -23,12 +23,12 @@ namespace namu {
     };
 
     template <>
-    struct _wout tnormalMarshaling<void, wVoid> : public metaIf {
-        typedef wVoid mgdType;
+    struct _nout tnormalMarshaling<void, nVoid> : public metaIf {
+        typedef nVoid mgdType;
         typedef void nativeType;
 
         static str toMgd() {
-            return str(new wVoid());
+            return str(new nVoid());
         }
 
         static yes canMarshal();
@@ -50,10 +50,10 @@ namespace namu {
         static no canMarshal();
     };
 
-    template <> struct _wout tmarshaling<wint> : public tnormalMarshaling<wint, wInt> {};
-    template <> struct _wout tmarshaling<std::string> : public tnormalMarshaling<const std::string&, wStr> {};
-    template <> struct _wout tmarshaling<std::string&> : public tnormalMarshaling<const std::string&, wStr> {};
-    template <> struct _wout tmarshaling<const std::string&> : public tnormalMarshaling<const std::string&, wStr> {};
-    template <> struct _wout tmarshaling<const std::string> : public tnormalMarshaling<const std::string&, wStr> {};
-    template <> struct _wout tmarshaling<void> : public tnormalMarshaling<void, wVoid> {};
+    template <> struct _nout tmarshaling<nint> : public tnormalMarshaling<nint, nInt> {};
+    template <> struct _nout tmarshaling<std::string> : public tnormalMarshaling<const std::string&, nStr> {};
+    template <> struct _nout tmarshaling<std::string&> : public tnormalMarshaling<const std::string&, nStr> {};
+    template <> struct _nout tmarshaling<const std::string&> : public tnormalMarshaling<const std::string&, nStr> {};
+    template <> struct _nout tmarshaling<const std::string> : public tnormalMarshaling<const std::string&, nStr> {};
+    template <> struct _nout tmarshaling<void> : public tnormalMarshaling<void, nVoid> {};
 }

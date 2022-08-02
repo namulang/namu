@@ -1,8 +1,8 @@
 #pragma once
 
-#include "primitive/wFlt.hpp"
-#include "primitive/wInt.hpp"
-#include "primitive/wStr.hpp"
-#include "primitive/wVoid.hpp"
-#include "primitive/wBool.hpp"
-#include "primitive/wChar.hpp"
+#include "primitive/nFlt.hpp"
+#include "primitive/nInt.hpp"
+#include "primitive/nStr.hpp"
+#include "primitive/nVoid.hpp"
+#include "primitive/nBool.hpp"
+#include "primitive/nChar.hpp"

@@ -8,14 +8,14 @@ namespace namu {
     template <typename T, typename TACTIC> class tnarr;
     typedef tnarr<param, strTactic> params;
 
-    class _wout func : public expr {
+    class _nout func : public expr {
         WRD(ADT(func, expr))
 
     public:
         static inline const std::string ME = "me";
 
     public:
-        wbool canRun(const ucontainable& args) const override;
+        nbool canRun(const ucontainable& args) const override;
 
         /// @return parameters of run() func.
         ///         parameter is just a type. and I don't care about the value of each parameters.

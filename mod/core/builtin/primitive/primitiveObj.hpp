@@ -47,7 +47,7 @@ namespace namu {
         }
 
     protected:
-        wbool _onSame(const typeProvidable& rhs) const override {
+        nbool _onSame(const typeProvidable& rhs) const override {
             const me& cast = (const me&) rhs;
             return _val == cast._val;
         }
@@ -78,7 +78,7 @@ namespace namu {
         }
 
     protected:
-        wbool _onSame(const typeProvidable& rhs) const override {
+        nbool _onSame(const typeProvidable& rhs) const override {
             return !nul(rhs);
         }
         virtual dumScope* _onMakeCtors() const = 0;

@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    class _wout makeExpr : public expr {
+    class _nout makeExpr : public expr {
         WRD(CLASS(makeExpr, expr, expr::exprType))
 
     public:

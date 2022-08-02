@@ -25,29 +25,29 @@ namespace namu {
         explicit tnchain(const super* arr): _map(arr) {}
 
         // has:
-        wbool has(const K& key) const override;
+        nbool has(const K& key) const override;
 
         // len:
-        wcnt len() const override;
-        wcnt chainLen() const;
+        ncnt len() const override;
+        ncnt chainLen() const;
 
         using super::get;
         V& get(const K& key) override;
 
         // add:
         using super::add;
-        wbool add(const K& key, const V& val) override;
+        nbool add(const K& key, const V& val) override;
 
         // link:
         tstr<me> link(const super& new1);
-        virtual wbool link(const me& new1);
-        wbool unlink();
+        virtual nbool link(const me& new1);
+        nbool unlink();
 
         // del:
         using super::del;
-        wbool del(const K& at) override;
-        wbool del(const iter& at) override;
-        wbool del(const iter& from, const iter& end) override;
+        nbool del(const K& at) override;
+        nbool del(const iter& at) override;
+        nbool del(const iter& from, const iter& end) override;
 
         // etc:
         void rel() override;
@@ -92,7 +92,7 @@ namespace namu {
         }
 
     protected:
-        iteration* _onMakeIteration(wcnt step) const override {
+        iteration* _onMakeIteration(ncnt step) const override {
             // TODO: optimize using containerIteration
             me* unconst = const_cast<me*>(this);
             iteration* ret = new chainIteration(*unconst, _map->begin());

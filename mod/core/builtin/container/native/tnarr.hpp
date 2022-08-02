@@ -27,40 +27,40 @@ namespace namu {
 
         // operator:
         using tarrayable<T>::operator[];
-        T& operator[](widx n) override { return get(n); }
+        T& operator[](nidx n) override { return get(n); }
 
         // len:
-        wcnt len() const override;
+        ncnt len() const override;
 
         // has:
-        wbool has(widx n) const override {
+        nbool has(nidx n) const override {
             return 0 <= n && n < len();
         }
 
         // get:
         using super::get;
         using tarrayable<T>::get;
-        T& get(widx n) override;
+        T& get(nidx n) override;
 
         // set:
         using super::set;
         using tarrayable<T>::set;
-        wbool set(const iter& at, const T& new1) override;
-        wbool set(widx n, const T& new1) override;
+        nbool set(const iter& at, const T& new1) override;
+        nbool set(nidx n, const T& new1) override;
 
         // add:
         using super::add;
         using tarrayable<T>::add;
-        wbool add(const iter& e, const T& new1) override;
-        wbool add(widx n, const T& new1) override;
+        nbool add(const iter& e, const T& new1) override;
+        nbool add(nidx n, const T& new1) override;
         void add(const iter& here, const iter& from, const iter& to) override;
 
         // del:
         using super::del;
         using tarrayable<T>::del;
-        wbool del(const iter& from, const iter& end) override;
-        wbool del(const iter& it) override;
-        wbool del(widx n) override;
+        nbool del(const iter& from, const iter& end) override;
+        nbool del(const iter& it) override;
+        nbool del(nidx n) override;
 
         // etc:
         void rel() override;
@@ -68,7 +68,7 @@ namespace namu {
         tstr<instance> deepClone() const override;
 
     protected:
-        iteration* _onMakeIteration(wcnt step) const override {
+        iteration* _onMakeIteration(ncnt step) const override {
             me* unconst = const_cast<me*>(this);
             return new narrIteration(*unconst, step);
         }

@@ -5,7 +5,7 @@
 
 namespace namu {
 
-    template <wbool...> struct boolPack;
-    template <wbool... bp>
+    template <nbool...> struct boolPack;
+    template <nbool... bp>
     using allTrues = std::is_same<boolPack<bp..., true>, boolPack<true, bp...>>;
 }

@@ -1,20 +1,20 @@
-#include "wChar.hpp"
+#include "nChar.hpp"
 #include "../../ast/defaultCtor.hpp"
 #include "../../ast/defaultCopyCtor.hpp"
-#include "wInt.hpp"
-#include "wFlt.hpp"
-#include "wBool.hpp"
+#include "nInt.hpp"
+#include "nFlt.hpp"
+#include "nBool.hpp"
 
 namespace namu {
 
-    WRD_DEF_ME(wChar)
+    NAMU_DEF_ME(nChar)
 
-    wbool me::wCharType::isImmutable() const { return true; }
+    nbool me::wCharType::isImmutable() const { return true; }
 
     const ases& me::wCharType::_getImpliAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            inner.add(new asPrimitive<wBool, wchar>());
+            inner.add(new asPrimitive<nBool, nchar>());
         }
 
         return inner;
@@ -23,13 +23,13 @@ namespace namu {
     const ases& me::wCharType::_getAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            inner.add(new asPrimitive<wInt, wchar>());
-            inner.add(new asPrimitive<wFlt, wchar>());
-            struct asStr : public tas<wStr> {
+            inner.add(new asPrimitive<nInt, nchar>());
+            inner.add(new asPrimitive<nFlt, nchar>());
+            struct asStr : public tas<nStr> {
                 str as(const node& me, const type& to) const override {
                     std::string val;
-                    val.push_back(me.cast<wchar>());
-                    return str(new wStr(val));
+                    val.push_back(me.cast<nchar>());
+                    return str(new nStr(val));
                 }
             };
             inner.add(new asStr());
@@ -38,11 +38,11 @@ namespace namu {
         return inner;
     }
 
-    me::wChar() {}
-    me::wChar(wchar val): super(val) {}
+    me::nChar() {}
+    me::nChar(nchar val): super(val) {}
 
     dumScope* me::_onMakeCtors() const {
-        static wChar inner;
+        static nChar inner;
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
         scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));

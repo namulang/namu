@@ -3,9 +3,9 @@
 
 namespace namu {
 
-    WRD_DEF_ME(flag)
+    NAMU_DEF_ME(flag)
 
-    wbool me::take(interpreter& ip, cli& c, args& a) const {
+    nbool me::take(interpreter& ip, cli& c, args& a) const {
         std::regex re(_getRegExpr());
         std::vector<int> del;
         args tray;
@@ -17,7 +17,7 @@ namespace namu {
         }
         if(tray.empty()) return false;
 
-        wbool res = _onTake(tray, c, ip);
+        nbool res = _onTake(tray, c, ip);
         if(!res) return false;
 
         _delArgs(a, del);

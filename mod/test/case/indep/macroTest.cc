@@ -4,20 +4,20 @@ using namespace namu;
 
 TEST(macroTest, nul) {
 
-    wint a = 5;
-    wint* aPtr = &a;
-    wint* aNul = nullptr;
-    wint& refNul = nulOf<wint>();
-    wint& refA = *aPtr;
+    nint a = 5;
+    nint* aPtr = &a;
+    nint* aNul = nullptr;
+    nint& refNul = nulOf<nint>();
+    nint& refA = *aPtr;
 
     ASSERT_TRUE(nul(refNul));
     ASSERT_FALSE(nul(refA));
-    wbool isNul = nul(aNul);
+    nbool isNul = nul(aNul);
     ASSERT_TRUE((void*) isNul);
     ASSERT_FALSE(nul(aPtr));
 }
 
-TEST(macroTest, WRD_GETtest) {
+TEST(macroTest, NAMU_GETtest) {
     struct A {};
     struct B {
         A& getA() {
@@ -47,39 +47,39 @@ TEST(macroTest, WRD_GETtest) {
         C c;
     } d;
 
-    A& a = WRD_GETS(b, getA());
+    A& a = NAMU_GETS(b, getA());
     ASSERT_FALSE(nul(a));
-    A* aNul = &WRD_GETS(b, getNul());
+    A* aNul = &NAMU_GETS(b, getNul());
     ASSERT_TRUE(nul(aNul));
 
-    A& a0 = WRD_GETS(b.getNul());
+    A& a0 = NAMU_GETS(b.getNul());
     ASSERT_TRUE(nul(a0));
 
-    A& a2 = WRD_GETS(c,getB(),getA());
+    A& a2 = NAMU_GETS(c,getB(),getA());
     ASSERT_FALSE(nul(a2));
-    A* a2Nul = &WRD_GETS(c,getNul(),getA());
+    A* a2Nul = &NAMU_GETS(c,getNul(),getA());
     ASSERT_TRUE(nul(a2Nul));
 
-    A& a3 = WRD_GETS(d,getC(),getB(),getA());
+    A& a3 = NAMU_GETS(d,getC(),getB(),getA());
     ASSERT_FALSE(nul(a3));
-    A* a3Nul = &WRD_GETS(d,getNul(),getB(),getA());
+    A* a3Nul = &NAMU_GETS(d,getNul(),getB(),getA());
     ASSERT_TRUE(nul(a3Nul));
 
-    A& a4 = WRD_GETS(d.getC().getB(),getA());
+    A& a4 = NAMU_GETS(d.getC().getB(),getA());
     ASSERT_FALSE(nul(a4));
-    A* a4Nul = &WRD_GETS(d.getC().getB(),getNul());
+    A* a4Nul = &NAMU_GETS(d.getC().getB(),getNul());
     ASSERT_TRUE(nul(a4Nul));
 }
 
 TEST(macroTest, UnconstCalltest) {
     struct A {
-        WRD_DECL_ME(A)
+        NAMU_DECL_ME(A)
 
     public:
-        wbool foo() {
+        nbool foo() {
             return true;
         }
-        wbool foo() const WRD_UNCONST_FUNC(foo())
+        nbool foo() const NAMU_UNCONST_FUNC(foo())
     } a;
 
     const A& aConst = a;

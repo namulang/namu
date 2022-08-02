@@ -3,7 +3,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(sobj)
+    NAMU_DEF_ME(sobj)
 
     me& me::sub(const std::string& name) {
 #pragma clang diagnostic push
@@ -30,15 +30,15 @@ namespace namu {
         return sub(name);
     }
 
-    me& me::operator[](widx n) {
+    me& me::operator[](nidx n) {
         return *std::next(begin(), n)->second;
     }
 
-    me::operator wbool() const {
+    me::operator nbool() const {
         return isExist();
     }
 
-    wbool me::has(const std::string& name) const {
+    nbool me::has(const std::string& name) const {
         return _subs.find(name) != _subs.end();
     }
 
@@ -69,7 +69,7 @@ namespace namu {
         _name = newName;
     }
 
-    wcnt me::len() const {
+    ncnt me::len() const {
         return _subs.size();
     }
 
@@ -85,18 +85,18 @@ namespace namu {
         return ttype<me>::get();
     }
 
-    wint me::asInt() const { return 0; }
+    nint me::asInt() const { return 0; }
 
-    wchar me::asChar() const { return '\0'; }
+    nchar me::asChar() const { return '\0'; }
 
     const std::string& me::asStr() const {
         static std::string inner;
         return inner;
     }
 
-    wbool me::asBool() const { return false; }
+    nbool me::asBool() const { return false; }
 
-    wbool me::isExist() const {
+    nbool me::isExist() const {
         return true;
     }
 }

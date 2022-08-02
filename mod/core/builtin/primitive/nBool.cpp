@@ -1,22 +1,22 @@
-#include "wBool.hpp"
+#include "nBool.hpp"
 #include "../../ast/defaultCtor.hpp"
 #include "../../ast/defaultCopyCtor.hpp"
-#include "wInt.hpp"
-#include "wFlt.hpp"
-#include "wChar.hpp"
-#include "wStr.hpp"
+#include "nInt.hpp"
+#include "nFlt.hpp"
+#include "nChar.hpp"
+#include "nStr.hpp"
 
 namespace namu {
 
-    WRD_DEF_ME(wBool)
+    NAMU_DEF_ME(nBool)
 
-    wbool me::wBoolType::isImmutable() const { return true; }
+    nbool me::wBoolType::isImmutable() const { return true; }
 
-    me::wBool() {}
-    me::wBool(wbool val): super(val) {}
+    me::nBool() {}
+    me::nBool(nbool val): super(val) {}
 
     dumScope* me::_onMakeCtors() const {
-        static wBool inner;
+        static nBool inner;
         scope scapegoat;
         scapegoat.add(baseObj::CTOR_NAME, new defaultCtor(inner));
         scapegoat.add(baseObj::CTOR_NAME, new defaultCopyCtor(inner));
@@ -31,12 +31,12 @@ namespace namu {
     const ases& me::wBoolType::_getAses() const {
         static ases inner;
         if(inner.len() <= 0) {
-            inner.add(new asPrimitive<wFlt, wbool>());
-            inner.add(new asPrimitive<wInt, wbool>());
-            inner.add(new asPrimitive<wChar, wbool>());
-            struct asStr : public tas<wStr> {
+            inner.add(new asPrimitive<nFlt, nbool>());
+            inner.add(new asPrimitive<nInt, nbool>());
+            inner.add(new asPrimitive<nChar, nbool>());
+            struct asStr : public tas<nStr> {
                 str as(const node& me, const type& to) const override {
-                    return str(new wStr(me.cast<wbool>() ? "true" : "false"));
+                    return str(new nStr(me.cast<nbool>() ? "true" : "false"));
                 }
             };
             inner.add(new asStr());

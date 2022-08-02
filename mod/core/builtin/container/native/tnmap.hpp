@@ -25,10 +25,10 @@ namespace namu {
         tnmap() {}
 
         // len:
-        wcnt len() const override;
+        ncnt len() const override;
 
         // has:
-        wbool has(const K& key) const override;
+        nbool has(const K& key) const override;
 
         // get:
         using super::get;
@@ -36,13 +36,13 @@ namespace namu {
 
         // add:
         using super::add;
-        wbool add(const K& key, const V& new1) override;
+        nbool add(const K& key, const V& new1) override;
 
         // del:
         using super::del;
-        wbool del(const K& it) override;
-        wbool del(const iter& at) override;
-        wbool del(const iter& from, const iter& end) override;
+        nbool del(const K& it) override;
+        nbool del(const iter& at) override;
+        nbool del(const iter& from, const iter& end) override;
 
         // etc:
         void rel() override;
@@ -50,7 +50,7 @@ namespace namu {
         tstr<instance> deepClone() const override;
 
     protected:
-        iteration* _onMakeIteration(wcnt step) const override {
+        iteration* _onMakeIteration(ncnt step) const override {
             me* unconst = const_cast<me*>(this);
             iteration* ret = new nmapIteration(*unconst, unconst->_map.begin(), unconst->_map.end());
             ret->next(step);

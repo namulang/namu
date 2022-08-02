@@ -8,11 +8,11 @@ namespace namu {
         WRD(CLASS(fileFlag, flag))
 
     public:
-        const wchar* getName() const override {
+        const nchar* getName() const override {
             return "<filePath>";
         }
 
-        const wchar* getDescription() const override {
+        const nchar* getDescription() const override {
             return R"DESC(
         file path of namu language script file.
         extension of file should be end with 'namu'.
@@ -20,10 +20,10 @@ namespace namu {
         }
 
     protected:
-        const wchar* _getRegExpr() const override {
+        const nchar* _getRegExpr() const override {
             return "[\\\\\\w\\.\\/:\\-\\(\\)\\d]+\\.namu$";
         }
 
-        wbool _onTake(const args& tray, cli& c, interpreter& ip) const override;
+        nbool _onTake(const args& tray, cli& c, interpreter& ip) const override;
     };
 }

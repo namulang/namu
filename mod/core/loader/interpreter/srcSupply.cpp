@@ -2,5 +2,5 @@
 #include "srcSupply.hpp"
 
 namespace namu {
-    WRD_DEF_ME(srcSupply)
+    NAMU_DEF_ME(srcSupply)
 }

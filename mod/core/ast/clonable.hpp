@@ -4,9 +4,9 @@
 
 namespace namu {
 
-    class _wout clonable {
-        WRD_DECL_ME(clonable)
-        WRD_INIT_META(me)
+    class _nout clonable {
+        NAMU_DECL_ME(clonable)
+        NAMU_INIT_META(me)
 
     public:
         virtual ~clonable() {}

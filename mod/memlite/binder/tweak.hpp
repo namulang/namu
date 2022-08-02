@@ -7,8 +7,8 @@ namespace namu {
 
     template <typename T, typename TACTIC = weakTactic>
     class tweak : public binder {
-        WRD_DECL_ME(tweak, binder)
-        WRD_INIT_META(me)
+        NAMU_DECL_ME(tweak, binder)
+        NAMU_INIT_META(me)
         friend class bindTag;
 
     public:
@@ -22,15 +22,15 @@ namespace namu {
 
         T* operator->();
         T& operator*();
-        const T* operator->() const WRD_UNCONST_FUNC(operator->())
-        const T& operator*() const WRD_UNCONST_FUNC(operator*())
+        const T* operator->() const NAMU_UNCONST_FUNC(operator->())
+        const T& operator*() const NAMU_UNCONST_FUNC(operator*())
         me& operator=(const binder& rhs);
 
         using super::get;
         T& get();
-        const T& get() const WRD_UNCONST_FUNC(get())
+        const T& get() const NAMU_UNCONST_FUNC(get())
 
         using tbindable::bind;
-        wbool bind(const T& new1);
+        nbool bind(const T& new1);
     };
 }

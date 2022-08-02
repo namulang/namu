@@ -4,13 +4,13 @@
 
 namespace namu {
 
-    class _wout sinterpreter {
-        WRD_DECL_ME(sinterpreter)
+    class _nout sinterpreter {
+        NAMU_DECL_ME(sinterpreter)
 
     public:
-        static tstr<sobj> interp(const wchar* script);
+        static tstr<sobj> interp(const nchar* script);
         static tstr<sobj> interp(const std::string& script);
-        static tstr<sobj> interpFile(const wchar* path);
+        static tstr<sobj> interpFile(const nchar* path);
         static tstr<sobj> interpFile(const std::string& path);
         static const std::string& getFileName();
 

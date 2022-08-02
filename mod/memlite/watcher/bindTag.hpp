@@ -6,9 +6,9 @@
 namespace namu {
 
     class chunk;
-    class _wout bindTag : public typeProvidable, public tbindable<instance> {
-        WRD_DECL_ME(bindTag)
-        WRD_INIT_META(me)
+    class _nout bindTag : public typeProvidable, public tbindable<instance> {
+        NAMU_DECL_ME(bindTag)
+        NAMU_INIT_META(me)
         template <typename T, typename TACTIC> friend class tweak;
         template <typename T, typename TACTIC> friend class tstr;
         friend class weakTactic;
@@ -23,20 +23,20 @@ namespace namu {
     public:
         instance* operator->();
         instance& operator*();
-        const instance* operator->() const WRD_UNCONST_FUNC(operator->())
-        const instance& operator*() const WRD_UNCONST_FUNC(operator*())
+        const instance* operator->() const NAMU_UNCONST_FUNC(operator->())
+        const instance& operator*() const NAMU_UNCONST_FUNC(operator*())
 
     public:
         const chunk& getChunk() const;
-        wcnt getStrongCnt() const;
+        ncnt getStrongCnt() const;
         //  tbindable:
         void rel() override;
-        wbool isBind() const override;
+        nbool isBind() const override;
         const type& getBindable() const;
         using tbindable::canBind;
 
         instance& get();
-        const instance& get() const WRD_UNCONST_FUNC(get())
+        const instance& get() const NAMU_UNCONST_FUNC(get())
         template <typename E>
         E& get() {
             instance& got = get();
@@ -45,10 +45,10 @@ namespace namu {
             return got.template cast<E>();
         }
         template <typename E>
-        const E& get() const WRD_UNCONST_FUNC(get<E>())
+        const E& get() const NAMU_UNCONST_FUNC(get<E>())
 
-        wbool canBind(const type& cls) const override;
-        wbool bind(const instance& new1) override;
+        nbool canBind(const type& cls) const override;
+        nbool bind(const instance& new1) override;
         //  Instance:
         id getId() const;
         //  typeProvidable:
@@ -57,14 +57,14 @@ namespace namu {
 
     private:
         //  bindTag:
-        wbool _onStrong(wcnt vote);
-        wbool _completeId(instance& it);
-        wbool _sync(id new1);
+        nbool _onStrong(ncnt vote);
+        nbool _completeId(instance& it);
+        nbool _sync(id new1);
 
 
     private:
         instance* _pt;
-        wcnt _strong;
+        ncnt _strong;
         id _id;
     };
 }

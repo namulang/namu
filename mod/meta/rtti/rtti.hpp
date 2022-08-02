@@ -6,7 +6,7 @@
 
 namespace namu {
 
-    struct _wout metaIf {
+    struct _nout metaIf {
         typedef short yes;
         typedef char no;
     };
@@ -17,12 +17,12 @@ namespace namu {
         static yes _foo(Template<X>*);
         static no _foo(...);
 
-        static inline constexpr wbool is = sizeof(_foo((T*)0)) == sizeof(yes);
+        static inline constexpr nbool is = sizeof(_foo((T*)0)) == sizeof(yes);
     };
 
     template <typename T, typename super> // is T is sub of super
     struct tifSub {
-        static inline constexpr wbool is = std::is_base_of<super, T>::value;
+        static inline constexpr nbool is = std::is_base_of<super, T>::value;
     };
 
     template <typename T>
@@ -31,14 +31,14 @@ namespace namu {
     };
     template <typename T, typename = void>
     struct tifHasSuperTypedef : public metaIf {
-        static inline constexpr wbool is = false;
+        static inline constexpr nbool is = false;
     };
     template <typename T>
     struct tifHasSuperTypedef<T, typename taEmptyCan<typename T::super>::is> : public metaIf {
-        static inline constexpr wbool is = true;
+        static inline constexpr nbool is = true;
     };
 
-    template <typename T, wbool typedefsuper = tifHasSuperTypedef<T>::is>
+    template <typename T, nbool typedefsuper = tifHasSuperTypedef<T>::is>
     struct tadaptiveSuper : metaIf {
         typedef adam super;
     };
@@ -47,7 +47,7 @@ namespace namu {
         typedef typename T::super super;
     };
 
-    template <typename T, wbool canMake = std::is_constructible<T>::value>
+    template <typename T, nbool canMake = std::is_constructible<T>::value>
     struct tinstanceMaker {
         static void* make() { return nullptr; }
     };
@@ -56,10 +56,10 @@ namespace namu {
         static void* make() { return new T(); }
     };
 
-    struct _wout nameDemangler {
-#ifndef WRD_BUILD_PLATFORM_IS_WINDOWS
-        static std::string demangle(const wchar* org) {
-            wchar* demangled = nullptr;
+    struct _nout nameDemangler {
+#ifndef NAMU_BUILD_PLATFORM_IS_WINDOWS
+        static std::string demangle(const nchar* org) {
+            nchar* demangled = nullptr;
             int status = 0;
 
             demangled = ::abi::__cxa_demangle(org, 0, 0, &status);
@@ -69,8 +69,8 @@ namespace namu {
             return ret;
         }
 #endif
-        static std::string filterDemangle(const wchar* org) {
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+        static std::string filterDemangle(const nchar* org) {
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
             std::string raw = std::string(org);
             int n = raw.rfind(" ");
 #else
@@ -95,7 +95,7 @@ namespace namu {
     ///         additional consideration.
     template <typename T>
     struct tnameGetter {
-        static const wchar* getRawName() { return typeid(T).name(); }
+        static const nchar* getRawName() { return typeid(T).name(); }
         static std::string getName() {
             std::string ret = nameDemangler::filterDemangle(getRawName());
 

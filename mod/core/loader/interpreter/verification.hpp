@@ -11,7 +11,7 @@ namespace namu {
     template <typename K, typename V> class tbicontainable;
     typedef tbicontainable<std::string, node> bicontainable;
 
-    class _wout verification : public typeProvidable {
+    class _nout verification : public typeProvidable {
         WRD(ME(verification),
             INIT_META(me))
         friend class verifier; // for _onPrepareVerify
@@ -19,11 +19,11 @@ namespace namu {
     public:
         void verify(node& it);
         void verify(node& it, bicontainable& tray);
-        wbool logFrameInfo(const frame& newFr);
+        nbool logFrameInfo(const frame& newFr);
         verifier& getVerifier();
-        const verifier& getVerifier() const WRD_UNCONST_FUNC(getVerifier())
+        const verifier& getVerifier() const NAMU_UNCONST_FUNC(getVerifier())
         bicontainable& getTray();
-        const bicontainable& getTray() const WRD_UNCONST_FUNC(getTray())
+        const bicontainable& getTray() const NAMU_UNCONST_FUNC(getTray())
 
     protected:
         template <typename... Args> void _warn(Args... args);

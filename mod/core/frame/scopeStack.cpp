@@ -2,21 +2,21 @@
 
 namespace namu {
 
-    WRD_DEF_ME(scopeStack)
+    NAMU_DEF_ME(scopeStack)
 
     tstr<scopes>& me::getTop() { return _top; }
     const tstr<scopes>& me::getTop() const { return _top; }
     tstr<scopes>& me::getBottom() { return _bottom; }
     const tstr<scopes>& me::getBottom() const { return _bottom; }
 
-    wcnt me::len() const {
+    ncnt me::len() const {
         return _top ? _top->len() : 0;
     }
-    wcnt me::chainLen() const {
+    ncnt me::chainLen() const {
         return _top ? _top->chainLen() : 0;
     }
 
-    wbool me::push(scopes& new1) {
+    nbool me::push(scopes& new1) {
         // bind scope first:
         //  variable 'scope' can be a 'new'ed variable by push(nbicontainer&) func.
         //  the 'chain' class uses binder when it iterates element.
@@ -28,17 +28,17 @@ namespace namu {
         //
         //      so REMEMBER. bind it first or put it into a container first.
         tstr<scopes> lifeSpanner(new1);
-        wcnt len = new1.chainLen();
+        ncnt len = new1.chainLen();
         if(len == 0) return true;
         if(len != 1)
-            return WRD_E("can't bind scopes into local stack if it's more than 2."), false;
+            return NAMU_E("can't bind scopes into local stack if it's more than 2."), false;
 
         if(_top)
             new1.link(*_top);
         else
             _bottom.bind(new1);
 
-        WRD_DI("localStack.push(Chain(%x))", this, &new1);
+        NAMU_DI("localStack.push(Chain(%x))", this, &new1);
         return _top.bind(new1);
     }
 
@@ -49,7 +49,7 @@ namespace namu {
         _top.bind(_top->getNext());
         if(!_top)
             _bottom.rel();
-        WRD_DI("localStack.pop(%x), .next=%x", &ret.get(), &_top.get());
+        NAMU_DI("localStack.pop(%x), .next=%x", &ret.get(), &_top.get());
         return ret;
     }
 

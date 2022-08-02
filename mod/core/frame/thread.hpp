@@ -9,7 +9,7 @@ namespace namu {
     class slotLoader;
     typedef tnarr<frame> frames;
 
-    class _wout thread : public node {
+    class _nout thread : public node {
         WRD(CLASS(thread, node),
             FRIEND_VERIFY(defAssignExpr, isDefinable),
             FRIEND_VERIFY(defVarExpr, defineVariable))
@@ -30,8 +30,8 @@ namespace namu {
         thread(const node& root);
 
     public:
-        const frames& getFrames() const WRD_UNCONST_FUNC(_getFrames())
-        const frame& getNowFrame() const WRD_UNCONST_FUNC(_getNowFrame())
+        const frames& getFrames() const NAMU_UNCONST_FUNC(_getFrames())
+        const frame& getNowFrame() const NAMU_UNCONST_FUNC(_getNowFrame())
 
         static thread& get();
         static const instancer& getInstancer();
@@ -39,7 +39,7 @@ namespace namu {
         // node:
         nbicontainer& subs() override;
 
-        wbool canRun(const ucontainable& args) const override;
+        nbool canRun(const ucontainable& args) const override;
         str run(const ucontainable& args) override;
 
         void rel() override;

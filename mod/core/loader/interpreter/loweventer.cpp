@@ -10,7 +10,7 @@
 namespace namu {
 
     using std::string;
-    WRD_DEF_ME(loweventer)
+    NAMU_DEF_ME(loweventer)
 
     namespace {
         string merge(const narr& dotname) {
@@ -21,7 +21,7 @@ namespace namu {
         }
     }
 
-    wint me::_onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
+    nint me::_onScan(YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner) {
         int tok = _mode->onScan(*this, val, loc, scanner);
         if (_isIgnoreWhitespace && tok == NEWLINE) return SCAN_AGAIN;
         _isIgnoreWhitespace = false;
@@ -36,7 +36,7 @@ namespace namu {
         return tok;
     }
 
-    wint me::onScan(loweventer& ev, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, wbool& isBypass) {
+    nint me::onScan(loweventer& ev, YYSTYPE* val, YYLTYPE* loc, yyscan_t scanner, nbool& isBypass) {
         int tok;
         do
             // why do you put redundant _onScan() func?:
@@ -49,34 +49,34 @@ namespace namu {
         return tok;
     }
 
-    wint me::onEndOfFile() {
-        WRD_DI("tokenEvent: onEndOfFile() indents.size()=%d", _indents.size());
+    nint me::onEndOfFile() {
+        NAMU_DI("tokenEvent: onEndOfFile() indents.size()=%d", _indents.size());
         if(_indents.size() <= 1)
             _dispatcher.add(SCAN_MODE_END);
         else
             _dispatcher.addFront(onDedent(_indents.front(), SCAN_MODE_END));
 
-        WRD_DI("tokenEvent: onEndOfFile: finalize by adding 'NEWLINE', then dispatch end-of-file.");
+        NAMU_DI("tokenEvent: onEndOfFile: finalize by adding 'NEWLINE', then dispatch end-of-file.");
         return NEWLINE;
     }
 
-    wint me::onIndent(wcnt col, wint tok) {
-        WRD_DI("tokenEvent: onIndent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
+    nint me::onIndent(ncnt col, nint tok) {
+        NAMU_DI("tokenEvent: onIndent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
         _indents.push_back(col);
         _dispatcher.add(tok);
         return INDENT;
     }
 
-    wint me::onDedent(wcnt col, wint tok) {
-        WRD_DI("tokenEvent: onDedent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
+    nint me::onDedent(ncnt col, nint tok) {
+        NAMU_DI("tokenEvent: onDedent(col: %d, tok: %d) indents.size()=%d", col, tok, _indents.size());
 
         _indents.pop_back();
-        wint now = _indents.back();
+        nint now = _indents.back();
         if(now < col)
             onSrcWarn(errCode::WRONG_INDENT_LV, col, now, now);
 
         while(_indents.back() > col) {
-            WRD_DI("tokenEvent: onDedent: indentlv become %d -> %d", _indents.back(), _indents[_indents.size()-2]);
+            NAMU_DI("tokenEvent: onDedent: indentlv become %d -> %d", _indents.back(), _indents[_indents.size()-2]);
             _indents.pop_back();
             _dispatcher.add(DEDENT);
         }
@@ -86,34 +86,34 @@ namespace namu {
     }
 
     void me::onNewLine() {
-        WRD_DI("tokenEvent: onNewLine: _isIgnoreWhitespace=%s, _indents.size()=%d",
+        NAMU_DI("tokenEvent: onNewLine: _isIgnoreWhitespace=%s, _indents.size()=%d",
             _isIgnoreWhitespace ? "true" : "false", _indents.size());
         if(!_isIgnoreWhitespace && _indents.size() >= 1)
             _dispatcher.add(SCAN_MODE_INDENT);
     }
 
-    wchar me::onScanUnexpected(const wchar* token) {
+    nchar me::onScanUnexpected(const nchar* token) {
         onSrcErr(errCode::UNEXPECTED_TOK, token);
         return token[0];
     }
 
-    wint me::onIgnoreIndent(wint tok) {
-        WRD_DI("tokenEvent: onIgnoreIndent(%d)", tok);
+    nint me::onIgnoreIndent(nint tok) {
+        NAMU_DI("tokenEvent: onIgnoreIndent(%d)", tok);
         _dispatcher.add(SCAN_MODE_INDENT_IGNORE);
         return tok;
     }
 
     void me::onEndParse() {
         area& area = *_srcArea;
-#if WRD_IS_DBG
+#if NAMU_IS_DBG
         const point& pt = area.start;
-        WRD_DI("tokenEvent: onEndParse(%d,%d)", pt.row, pt.col);
+        NAMU_DI("tokenEvent: onEndParse(%d,%d)", pt.row, pt.col);
 #endif
         area.rel();
     }
 
     obj* me::onPack(const narr& dotname) {
-        WRD_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
+        NAMU_DI("tokenEvent: onPack(%s)", merge(dotname).c_str());
 
         // pack syntax rule #1:
         //  if there is no specified name of pack, I create an one.
@@ -146,7 +146,7 @@ namespace namu {
     }
 
     obj* me::onPack() {
-        WRD_DI("tokenEvent: onPack()");
+        NAMU_DI("tokenEvent: onPack()");
 
         onWarn(errCode::NO_PACK);
 
@@ -163,12 +163,12 @@ namespace namu {
     }
 
     blockExpr* me::onBlock() {
-        WRD_DI("tokenEvent: onBlock()");
+        NAMU_DI("tokenEvent: onBlock()");
         return new blockExpr();
     }
 
     blockExpr* me::onBlock(blockExpr& blk, node& stmt) {
-        WRD_DI("tokenEvent: onBlock()");
+        NAMU_DI("tokenEvent: onBlock()");
         if(nul(blk))
             return onSrcErr(errCode::IS_NULL, "blk"), onBlock();
 
@@ -179,17 +179,17 @@ namespace namu {
         }
 
         blk.getStmts().add(stmt);
-        WRD_DI("tokenEvent: onBlock().len=%d", blk.getStmts().len());
+        NAMU_DI("tokenEvent: onBlock().len=%d", blk.getStmts().len());
         return &blk;
     }
 
     defBlock* me::onDefBlock() {
-        WRD_DI("tokenEvent: onDefBlock()");
+        NAMU_DI("tokenEvent: onDefBlock()");
         return new defBlock();
     }
 
     defBlock* me::onDefBlock(defBlock& s, node& candidate) {
-        WRD_DI("tokenEvent: onDefBlock(candidate=%s)", candidate.getType().getName().c_str());
+        NAMU_DI("tokenEvent: onDefBlock(candidate=%s)", candidate.getType().getName().c_str());
         if(nul(s))
             return onSrcErr(errCode::IS_NULL, "s"), onDefBlock();
 
@@ -202,7 +202,7 @@ namespace namu {
     }
 
     node* me::onDefVar(const std::string& name, const node& origin) {
-        WRD_DI("tokenEvent: onDefVar(%s, %s)", origin.getType().getName().c_str(), name.c_str());
+        NAMU_DI("tokenEvent: onDefVar(%s, %s)", origin.getType().getName().c_str(), name.c_str());
         return new muna([&, name]() { return new defVarExpr(name, origin); },
                 [&, name](defBlock& blk) {
                         blk.asScope->add(name, origin);
@@ -234,8 +234,8 @@ namespace namu {
     }
 
     mgdFunc* me::onFunc(const std::string& name, const narr& exprs, const node& evalObj, const blockExpr& blk) {
-        const wtype& evalType = evalObj.getType();
-        WRD_DI("tokenEvent: onFunc: %s(...[%x]) %s: blk.len()=%d", name.c_str(), &exprs,
+        const ntype& evalType = evalObj.getType();
+        NAMU_DI("tokenEvent: onFunc: %s(...[%x]) %s: blk.len()=%d", name.c_str(), &exprs,
                 evalType.getName().c_str(), blk.getStmts().len());
 
         mgdFunc* ret = new mgdFunc(_convertParams(exprs), evalObj, blk);
@@ -245,22 +245,22 @@ namespace namu {
 
     narr* me::onList() {
         narr* ret = new narr();
-        WRD_DI("tokenEvent: onList()=%x", ret);
+        NAMU_DI("tokenEvent: onList()=%x", ret);
         return ret;
     }
     narr* me::onList(node* newExpr) {
         narr* ret = new narr(*newExpr);
-        WRD_DI("tokenEvent: onList(%s[%x])=%x", newExpr->getType().getName().c_str(), newExpr, ret);
+        NAMU_DI("tokenEvent: onList(%s[%x])=%x", newExpr->getType().getName().c_str(), newExpr, ret);
         return ret;
     }
     narr* me::onList(narr& list, node* newExpr) {
-        WRD_DI("tokenEvent: onList(list[%x], %s[%x])", &list, newExpr->getType().getName().c_str(), newExpr);
+        NAMU_DI("tokenEvent: onList(list[%x], %s[%x])", &list, newExpr->getType().getName().c_str(), newExpr);
         list.add(newExpr);
         return &list;
     }
 
     obj* me::onDef(const std::string& name, defBlock& blk) {
-        WRD_DI("tokenEvent: onDef(%s, defBlock[%x])", name.c_str(), &blk);
+        NAMU_DI("tokenEvent: onDef(%s, defBlock[%x])", name.c_str(), &blk);
 
         obj& ret = *new obj();
         _onInjectObjSubs(ret, blk);
@@ -269,7 +269,7 @@ namespace namu {
     }
 
     void me::onCompilationUnit(obj& subpack, defBlock& blk) {
-        WRD_DI("tokenEvent: onCompilationUnit(%x, defBlock[%x])", &subpack, &blk);
+        NAMU_DI("tokenEvent: onCompilationUnit(%x, defBlock[%x])", &subpack, &blk);
         if(nul(subpack)) {
             onErr(errCode::NO_PACK_TRAY);
             return;
@@ -278,12 +278,12 @@ namespace namu {
         _onInjectObjSubs(subpack, blk);
         int len = (blk.asPreCtor) ? blk.asPreCtor->len() : 0;
         // at this far, subpack must have at least 1 default ctor created just before:
-        WRD_DI("tokenEvent: onCompilationUnit: run preconstructor(%d lines)", len);
+        NAMU_DI("tokenEvent: onCompilationUnit: run preconstructor(%d lines)", len);
         subpack.run(baseObj::CTOR_NAME); // don't need argument. it's default ctor.
     }
 
-    wbool me::_onInjectObjSubs(obj& it, defBlock& blk) {
-        WRD_DI("tokenEvent: _onInjectObjSubs(%s, defBlock[%x])", it.getType().getName().c_str(), &blk);
+    nbool me::_onInjectObjSubs(obj& it, defBlock& blk) {
+        NAMU_DI("tokenEvent: _onInjectObjSubs(%s, defBlock[%x])", it.getType().getName().c_str(), &blk);
         if(nul(it)) return false;
 
         bicontainable& share = it.getShares().getContainer();
@@ -295,14 +295,14 @@ namespace namu {
 
         // link system slots:
         it.getShares().link(thread::get().getSlots());
-        WRD_DI("link system slots[%d]: len=%d", thread::get().getSlots().len(), it.subs().len());
+        NAMU_DI("link system slots[%d]: len=%d", thread::get().getSlots().len(), it.subs().len());
 
         return _onInjectCtor(it, blk);
     }
 
-    wbool me::_onInjectCtor(obj& it, defBlock& blk) {
-        wbool hasCtor = !nul(it.sub(baseObj::CTOR_NAME));
-        WRD_DI("tokenEvent: _onInjectDefaultCtor(%s, has=%d)", it.getType().getName().c_str(), hasCtor);
+    nbool me::_onInjectCtor(obj& it, defBlock& blk) {
+        nbool hasCtor = !nul(it.sub(baseObj::CTOR_NAME));
+        NAMU_DI("tokenEvent: _onInjectDefaultCtor(%s, has=%d)", it.getType().getName().c_str(), hasCtor);
         if(hasCtor) return false;
 
         // TODO: ctor need to call superclass's ctor.
@@ -310,7 +310,7 @@ namespace namu {
 
         // add preCtor:
         if(blk.asPreCtor && blk.asPreCtor->len()) {
-            mgdFunc* preCtor = new mgdFunc(params(), new wVoid());
+            mgdFunc* preCtor = new mgdFunc(params(), new nVoid());
             preCtor->getBlock().getStmts().add(*blk.asPreCtor);
             it.subs().add(baseObj::PRECTOR_NAME, preCtor);
         }
@@ -318,23 +318,23 @@ namespace namu {
     }
 
     returnExpr* me::onReturn() {
-        WRD_DI("tokenEvent: onReturn()");
+        NAMU_DI("tokenEvent: onReturn()");
 
         return new returnExpr();
     }
     returnExpr* me::onReturn(node& exp) {
-        WRD_DI("tokenEvent: onReturn(%s)", exp.getType().getName().c_str());
+        NAMU_DI("tokenEvent: onReturn(%s)", exp.getType().getName().c_str());
 
         return new returnExpr(exp);
     }
 
     narr* me::onPackDotname(const std::string& name) {
         narr* ret = new narr();
-        ret->add(new wStr(name));
+        ret->add(new nStr(name));
         return ret;
     }
     narr* me::onPackDotname(narr& names, const std::string& name) {
-        names.add(new wStr(name));
+        names.add(new nStr(name));
         return &names;
     }
 
@@ -347,19 +347,19 @@ namespace namu {
     }
 
     node* me::onGet(const std::string& name) {
-        WRD_DI("tokenEvent: onGet(%s)", name.c_str());
+        NAMU_DI("tokenEvent: onGet(%s)", name.c_str());
         return new getExpr(name);
     }
     node* me::onGet(const std::string& name, const narr& args) {
-        WRD_DI("tokenEvent: onGet(%s, %d)", name.c_str(), args.len());
+        NAMU_DI("tokenEvent: onGet(%s, %d)", name.c_str(), args.len());
         return new getExpr(name, args);
     }
     node* me::onGet(node& from, const std::string& name) {
-        WRD_DI("tokenEvent: onGet(%s, %s)", from.getType().getName().c_str(), name.c_str());
+        NAMU_DI("tokenEvent: onGet(%s, %s)", from.getType().getName().c_str(), name.c_str());
         return new getExpr(from, name);
     }
     node* me::onGet(node& from, const std::string& name, const narr& args) {
-        WRD_DI("tokenEvent: onGet(%s, %s, %d)", from.getType().getName().c_str(), name.c_str(),
+        NAMU_DI("tokenEvent: onGet(%s, %s, %d)", from.getType().getName().c_str(), name.c_str(),
                 args.len());
         return new getExpr(from, name, args);
     }
@@ -375,14 +375,14 @@ namespace namu {
     }
 
     runExpr* me::onRunExpr(const std::string& name, const narr& args) {
-        WRD_DI("tokenEvent: onRunExpr(%s, narr[%d])", name.c_str(), args.len());
+        NAMU_DI("tokenEvent: onRunExpr(%s, narr[%d])", name.c_str(), args.len());
 
         return new runExpr(nulOf<node>(), name, args);
     }
 
     // @param from  can be expr. so I need to evaluate it through 'as()'.
     runExpr* me::onFillFromOfFuncCall(const node& me, runExpr& to) {
-        WRD_DI("tokenEvent: onFillFromOfFuncCall(%s, runExpr[%s])", me.getType().
+        NAMU_DI("tokenEvent: onFillFromOfFuncCall(%s, runExpr[%s])", me.getType().
                 getName().c_str(), to.getName().c_str());
 
         to.setMe(me);
@@ -390,13 +390,13 @@ namespace namu {
     }
 
     node* me::onAssign(node& lhs, node& rhs) {
-        WRD_DI("tokenEvent: onAssign(%s, %s)", lhs.getType().getName().c_str(),
+        NAMU_DI("tokenEvent: onAssign(%s, %s)", lhs.getType().getName().c_str(),
                 rhs.getType().getName().c_str());
         return new assignExpr(lhs, rhs);
     }
 
     node* me::onDefAssign(const std::string& name, node& rhs) {
-        WRD_DI("tokenEvent: onDefAssign(%s, %s)", name.c_str(), rhs.getType().getName().c_str());
+        NAMU_DI("tokenEvent: onDefAssign(%s, %s)", name.c_str(), rhs.getType().getName().c_str());
         return new muna([&, name]() { return new defAssignExpr(name, rhs); },
                 [&, name](defBlock& blk) {
                     blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), name, rhs, true));
@@ -404,48 +404,48 @@ namespace namu {
     }
 
     asExpr* me::onAs(const node& me, const node& as) {
-        WRD_DI("tokenEvent: onAs(%s, %s)", me.getType().getName().c_str(), as.getType().getName().c_str());
+        NAMU_DI("tokenEvent: onAs(%s, %s)", me.getType().getName().c_str(), as.getType().getName().c_str());
 
         return new asExpr(me, as);
     }
 
     FAOExpr* me::onAdd(const node& lhs, const node& rhs) {
-        WRD_DI("tokenEvent: onAdd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+        NAMU_DI("tokenEvent: onAdd(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
         return new FAOExpr(FAOExpr::ADD, lhs, rhs);
     }
 
     FAOExpr* me::onSub(const node& lhs, const node& rhs) {
-        WRD_DI("tokenEvent: onSub(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+        NAMU_DI("tokenEvent: onSub(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
         return new FAOExpr(FAOExpr::SUB, lhs, rhs);
     }
 
     FAOExpr* me::onMul(const node& lhs, const node& rhs) {
-        WRD_DI("tokenEvent: onMul(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+        NAMU_DI("tokenEvent: onMul(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
         return new FAOExpr(FAOExpr::MUL, lhs, rhs);
     }
 
     FAOExpr* me::onDiv(const node& lhs, const node& rhs) {
-        WRD_DI("tokenEvent: onDiv(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+        NAMU_DI("tokenEvent: onDiv(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
         return new FAOExpr(FAOExpr::DIV, lhs, rhs);
     }
 
     FAOExpr* me::onMod(const node& lhs, const node& rhs) {
-        WRD_DI("tokenEvent: onMod(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
+        NAMU_DI("tokenEvent: onMod(%s, %s)", lhs.getType().getName().c_str(), rhs.getType().getName()
                 .c_str());
 
         return new FAOExpr(FAOExpr::MOD, lhs, rhs);
     }
 
     node* me::onAkaDefault(const getExpr& dotname, const std::string& newName) {
-        WRD_DI("tokenEvent: onAkaDefault(%s..., %s)", dotname.getSubName().c_str(), newName.c_str());
+        NAMU_DI("tokenEvent: onAkaDefault(%s..., %s)", dotname.getSubName().c_str(), newName.c_str());
         return new muna([&, newName]() { return new defAssignExpr(newName, dotname); },
                 [&, newName](defBlock& blk) {
                         blk.asPreCtor->add(new defAssignExpr(*new getExpr("me"), newName, dotname, true));
@@ -460,13 +460,13 @@ namespace namu {
     tstr<obj>& me::getSubPack() { return _subpack; } // TODO: can I remove subpack variable?
     tstr<errReport>& me::getReport() { return _report; }
     tokenDispatcher& me::getDispatcher() { return _dispatcher; }
-    std::vector<wcnt>& me::getIndents() { return _indents; }
+    std::vector<ncnt>& me::getIndents() { return _indents; }
     const area& me::getArea() const {
         static area dummy {{0, 0}, {0, 1}};
 
         return _srcArea ? *_srcArea : dummy;
     }
-    wbool me::isInit() const { return _mode; }
+    nbool me::isInit() const { return _mode; }
 
     void me::rel() {
         _report.bind(dummyErrReport::singletone);

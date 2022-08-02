@@ -4,11 +4,11 @@
 
 namespace namu {
 
-    class _wout immutableTactic : public strTactic {
+    class _nout immutableTactic : public strTactic {
         WRD(ME(immutableTactic, strTactic))
 
     public:
-        wbool bind(binder& me, const instance& it) override;
+        nbool bind(binder& me, const instance& it) override;
 
     public:
         static me singletone;

@@ -7,15 +7,15 @@ struct exprTest;
 
 namespace namu {
 
-    class _wout expr : public node {
+    class _nout expr : public node {
     public:
         // expr can be casted to node. it's proxy of a node.
-        class exprType : public wtype {
-            WRD(ME(exprType, wtype))
+        class exprType : public ntype {
+            WRD(ME(exprType, ntype))
 
         public:
             using super::asImpli;
-            wbool isImpli(const type& to) const override { return to.isSub<node>(); }
+            nbool isImpli(const type& to) const override { return to.isSub<node>(); }
             str asImpli(const node& from, const type& to) const override { return str(((node&)from).run()); }
         };
 
@@ -27,7 +27,7 @@ namespace namu {
         using super::subs;
         nbicontainer& subs() override;
 
-        wbool isImpli(const type& to) const override {
+        nbool isImpli(const type& to) const override {
             return getEval().isSub(to);
         }
         virtual str asImpli(const type& to) const override {
@@ -38,7 +38,7 @@ namespace namu {
         /// run of expr class get treated like 'evaluate' in namu.
         /// it should not take any argument to run()
         using super::canRun;
-        wbool canRun(const ucontainable& args) const override;
+        nbool canRun(const ucontainable& args) const override;
         const src& getSrc() const;
         const point& getPos() const override;
         void setPos(const point& newPos) override;

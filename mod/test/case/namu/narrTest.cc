@@ -14,7 +14,7 @@ namespace {
         myNode(int num): number(num) {}
 
         nbicontainer& subs() override { return nulOf<nbicontainer>(); }
-        wbool canRun(const ucontainable& types) const override { return false; }
+        nbool canRun(const ucontainable& types) const override { return false; }
         str run(const ucontainable& args) override { return str(); }
 
         int number;
@@ -38,7 +38,7 @@ namespace {
         auto totalElapsed = end - start;
 
         logger::get().setEnable(true);
-        WRD_I("[benchMarkNArr]: vector took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
+        NAMU_I("[benchMarkNArr]: vector took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
         logger::get().setEnable(false);
 
 
@@ -57,7 +57,7 @@ namespace {
         totalElapsed = end - start;
 
         logger::get().setEnable(true);
-        WRD_I("[benchMarkNArr]: narr took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
+        NAMU_I("[benchMarkNArr]: narr took total %d ms for adding(%dms) & removing(%dms) of %d elems.", totalElapsed / chrono::milliseconds(1), addingElapsed / chrono::milliseconds(1), removingElapsed / chrono::milliseconds(1), sz);
     }
 
     class myMyNode : public myNode {

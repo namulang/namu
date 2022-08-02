@@ -4,51 +4,51 @@
 
 namespace namu {
 
-    class _wout chunk : public allocator {
-        WRD_DECL_ME(chunk, allocator)
-        WRD_INIT_META(me)
+    class _nout chunk : public allocator {
+        NAMU_DECL_ME(chunk, allocator)
+        NAMU_INIT_META(me)
         friend class watcher;
 
     public:
         //  chunk:
-        static constexpr wcnt MIN_SZ = 20;
+        static constexpr ncnt MIN_SZ = 20;
 
-        explicit chunk(wcnt blockSz=1, wcnt sz=MIN_SZ);
+        explicit chunk(ncnt blockSz=1, ncnt sz=MIN_SZ);
         ~chunk();
 
-        void* operator[](widx n) { return get(n); }
+        void* operator[](nidx n) { return get(n); }
 
-        void* get(widx n) { return _get(n); }
+        void* get(nidx n) { return _get(n); }
 
         //  allocator:
         void* new1() override;
-        wbool del(void* used, wcnt) override;
+        nbool del(void* used, ncnt) override;
         //  MemoryHaver:
-        wcnt len() const override;
-        wcnt size() const override;
-        wbool rel() override;
-        wbool has(const instance& it) const override;
+        ncnt len() const override;
+        ncnt size() const override;
+        nbool rel() override;
+        nbool has(const instance& it) const override;
 
     protected:
         //  MemoryHaver:
         /// @return returns regarding current size, not length.
         ///         can return garbage if size is bigger than n.
-        void* _get(widx n) override;
-        wuchar* _getHeap();
-        const wuchar* _getHeap() const WRD_UNCONST_FUNC(_getHeap())
-        wbool _resize(wcnt newSz);
+        void* _get(nidx n) override;
+        nuchar* _getHeap();
+        const nuchar* _getHeap() const NAMU_UNCONST_FUNC(_getHeap())
+        nbool _resize(ncnt newSz);
 
     private:
         //  chunk:
-        const wuchar* _getEOB() const WRD_UNCONST_FUNC(_getEOB())
-        wuchar* _getEOB();
-        wbool _index(widx start);
-        wcnt _getRealBlkSize();
-        void* _allocHeap(wcnt new_sz);
-        wbool _freeHeap(wuchar** heap);
+        const nuchar* _getEOB() const NAMU_UNCONST_FUNC(_getEOB())
+        nuchar* _getEOB();
+        nbool _index(nidx start);
+        ncnt _getRealBlkSize();
+        void* _allocHeap(ncnt new_sz);
+        nbool _freeHeap(nuchar** heap);
 
-        widx _head;
-        wcnt _len, _sz;
-        wuchar* _heap;
+        nidx _head;
+        ncnt _len, _sz;
+        nuchar* _heap;
     };
 }

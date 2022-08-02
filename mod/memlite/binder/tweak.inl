@@ -34,7 +34,7 @@ namespace namu {
         return got.cast<T>();
     }
 
-    TEMPL wbool ME::bind(const T& new1) { return SUPER::bind(new1); }
+    TEMPL nbool ME::bind(const T& new1) { return SUPER::bind(new1); }
 
 #undef SUPER
 #undef ME

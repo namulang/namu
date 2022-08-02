@@ -24,7 +24,7 @@ TEST_F(defVarExprTest, simpleDefineVariable) {
         const defVarExpr& defVar = stmts[0].cast<defVarExpr>();
         ASSERT_FALSE(nul(defVar));
         ASSERT_EQ(defVar.getName(), "age");
-        ASSERT_EQ(defVar.getOrigin().getType(), ttype<wInt>());
+        ASSERT_EQ(defVar.getOrigin().getType(), ttype<nInt>());
     }
 }
 
@@ -62,15 +62,15 @@ TEST_F(defVarExprTest, definePackVariable2) {
     ASSERT_EQ(s.subAll<baseObj>().len(), 3);
     ASSERT_EQ(s.subAll<mgdFunc>().len(), 1);
 
-    wStr& name = s.sub<wStr>("name");
+    nStr& name = s.sub<nStr>("name");
     ASSERT_FALSE(nul(name));
     ASSERT_EQ(name.get(), "");
 
-    wInt& age = s.sub<wInt>("age");
+    nInt& age = s.sub<nInt>("age");
     ASSERT_FALSE(nul(age));
     ASSERT_EQ(age.get(), 0); // 0 is default value.
 
-    wFlt& grade = s.sub<wFlt>("grade");
+    nFlt& grade = s.sub<nFlt>("grade");
     ASSERT_FALSE(nul(grade));
     ASSERT_EQ(grade.get(), 0.0f);
 }

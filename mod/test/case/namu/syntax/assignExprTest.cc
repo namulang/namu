@@ -17,9 +17,9 @@ TEST_F(assignExprTest, simpleAssignPositive) {
         node& res = getSubPack();
         ASSERT_FALSE(nul(res));
 
-        const wInt& o = res.sub<wInt>("age");
+        const nInt& o = res.sub<nInt>("age");
         ASSERT_FALSE(nul(o));
-        ASSERT_EQ(o.cast<wint>(), 5);
+        ASSERT_EQ(o.cast<nint>(), 5);
     }
 }
 
@@ -44,7 +44,7 @@ TEST_F(assignExprTest, assignLocalVariable) {
         node& res = getSubPack();
         ASSERT_FALSE(nul(res));
 
-        const wInt& o = res.sub<wInt>("age");
+        const nInt& o = res.sub<nInt>("age");
         ASSERT_FALSE(nul(o));
         ASSERT_EQ(o.cast<int>(), 5);
     }

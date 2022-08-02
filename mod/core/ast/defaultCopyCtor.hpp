@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    class _wout defaultCopyCtor : public ctor {
+    class _nout defaultCopyCtor : public ctor {
         WRD(CLASS(defaultCopyCtor, ctor))
 
     public:

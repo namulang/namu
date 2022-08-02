@@ -4,11 +4,11 @@
 
 namespace namu {
 
-    class _wout validable {
-        WRD_DECL_ME(validable)
-        WRD_INIT_META(me)
+    class _nout validable {
+        NAMU_DECL_ME(validable)
+        NAMU_INIT_META(me)
 
     public:
-        virtual wbool isValid() const = 0;
+        virtual nbool isValid() const = 0;
     };
 }

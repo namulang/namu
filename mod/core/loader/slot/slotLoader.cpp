@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(slotLoader)
+    NAMU_DEF_ME(slotLoader)
 
     me::slotLoader(): _report(dummyErrReport::singletone) {}
 
@@ -20,7 +20,7 @@ namespace namu {
         // TODO: open slot zip file -> extract manifest.seedling file -> interpret it & load values
         tstr<sobj> loaded = sinterpreter().interpFile(manPath);
         if(!loaded)
-            return WRD_E("error to load %s: interpretion err", manPath.c_str()), manifest();
+            return NAMU_E("error to load %s: interpretion err", manPath.c_str()), manifest();
 
         std::string name = loaded->sub("name").asStr();
         std::string ver = loaded->sub("ver").asStr();
@@ -31,7 +31,7 @@ namespace namu {
         for(auto& pair: entrypoints) {
             const std::string& path = dir + fsystem::DELIMITER + pair.second->sub("path").asStr();
             if(nul(path))
-                return WRD_E("error to load %s: no entrypoint path", manPath.c_str()), manifest();
+                return NAMU_E("error to load %s: no entrypoint path", manPath.c_str()), manifest();
 
             // TODO: path should be multiple
             points.push_back(entrypoint {pair.first, {path}});
@@ -48,7 +48,7 @@ namespace namu {
             for(const type* sub : ttype<packLoading>::get().getLeafs()) {
                 packLoading* new1 = sub->makeAs<packLoading>();
                 if(nul(new1)) {
-                    WRD_E("fail to make slotMaking named to %s", sub->getName().c_str());
+                    NAMU_E("fail to make slotMaking named to %s", sub->getName().c_str());
                     continue;
                 }
 
@@ -69,14 +69,14 @@ namespace namu {
         _paths.insert(_paths.end(), paths.begin(), paths.end());
         return *this;
     }
-    me& me::addPath(std::initializer_list<const wchar*> paths) {
-        for(const wchar* e : paths)
+    me& me::addPath(std::initializer_list<const nchar*> paths) {
+        for(const nchar* e : paths)
             addPath(e);
         return *this;
     }
     me& me::addRelativePath(const std::string& path) {
         std::string cwd = fsystem::getCurrentDir() + fsystem::DELIMITER;
-        WRD_I("finding slots relative to %s or absolute", cwd.c_str());
+        NAMU_I("finding slots relative to %s or absolute", cwd.c_str());
         return addPath(cwd + path);
     }
 
@@ -92,7 +92,7 @@ namespace namu {
 
     void me::_makeSlots(nmap& tray) {
         for(const std::string& path : _paths) {
-            WRD_I("try slot path: %s", path.c_str());
+            NAMU_I("try slot path: %s", path.c_str());
 
             auto e = fsystem::find(path);
             while(e.next())
@@ -103,11 +103,11 @@ namespace namu {
 
     void me::_addNewSlot(nmap& tray, const std::string& dirPath, const std::string& manifestName) {
         std::string manifestPath = dirPath + fsystem::DELIMITER + manifestName;
-        WRD_I("manifest path: %s", manifestPath.c_str());
+        NAMU_I("manifest path: %s", manifestPath.c_str());
 
         manifest mani = _interpManifest(dirPath, manifestPath);
         if(!mani.isValid()) {
-            WRD_E("invalid manifest[%s] found.", manifestPath.c_str());
+            NAMU_E("invalid manifest[%s] found.", manifestPath.c_str());
             return;
         }
 
@@ -115,7 +115,7 @@ namespace namu {
         for(entrypoint& point : mani.points) {
             packLoading* newLoading = _makeLoading(point.lang);
             if(!newLoading) {
-                WRD_W("%s language not supported for loading %s slot.", mani.points[0].lang.c_str(), mani.name.c_str());
+                NAMU_W("%s language not supported for loading %s slot.", mani.points[0].lang.c_str(), mani.name.c_str());
                 continue;
             }
 
@@ -129,18 +129,18 @@ namespace namu {
     }
 
     void me::_logSlot(const slot& pak) const {
-        WRD_I("new slot [%s] has been added.", pak.getManifest().name.c_str());
+        NAMU_I("new slot [%s] has been added.", pak.getManifest().name.c_str());
 
-#if WRD_IS_DBG
+#if NAMU_IS_DBG
         const manifest& mani = pak.getManifest();
-        WRD_DI("\t.filePath=%s", mani.filePath.c_str());
-        WRD_DI("\t.author=%s", mani.author.c_str());
-        WRD_DI("\t.ver=%s", mani.ver.c_str());
+        NAMU_DI("\t.filePath=%s", mani.filePath.c_str());
+        NAMU_DI("\t.author=%s", mani.author.c_str());
+        NAMU_DI("\t.ver=%s", mani.ver.c_str());
 
-        WRD_DI("\t.entrypoints=");
+        NAMU_DI("\t.entrypoints=");
         for(const entrypoint& point : mani.points) {
-            WRD_DI("\t\t.lang=%s", point.lang.c_str());
-            WRD_DI("\t\t.paths=%s", point.paths[0].c_str());
+            NAMU_DI("\t\t.lang=%s", point.lang.c_str());
+            NAMU_DI("\t\t.paths=%s", point.paths[0].c_str());
         }
 #endif
     }
@@ -150,7 +150,7 @@ namespace namu {
             if(e->getName() == name)
                 return (packLoading*) e->clone();
 
-        WRD_E("can't find exact packLoading like %s", name.c_str());
+        NAMU_E("can't find exact packLoading like %s", name.c_str());
         return nullptr;
     }
 }

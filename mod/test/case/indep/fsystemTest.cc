@@ -5,7 +5,7 @@ using namespace namu;
 TEST(fsystemTest, recursiveDirSearchAtBin) {
     // expect that workdirectory of this executable is at 'bin'.
     auto root = fsystem::find("..");
-    wbool buildFound = false;
+    nbool buildFound = false;
 
     while(root.next()) {
         if(*root == "../build/CMakeLists.txt") {
@@ -21,7 +21,7 @@ TEST(fsystemTest, recursiveDirSearchAtBin) {
 
 TEST(fsystemTest, dirSearchWithPathEndsWithSlash) {
     auto root = fsystem::find("../");
-    wbool buildFound = false;
+    nbool buildFound = false;
 
     while(root.next()) {
         if(*root == "../build/CMakeLists.txt") {

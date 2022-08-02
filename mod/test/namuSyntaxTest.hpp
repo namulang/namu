@@ -29,7 +29,7 @@ struct namuSyntaxTest : public namuTest {
         return *this;
     }
 
-    namuSyntaxTest& parse(const namu::wchar* src) {
+    namuSyntaxTest& parse(const namu::nchar* src) {
         std::vector<std::string> srcs;
         srcs.push_back(src);
         namu::bufferSrcSupply buf(srcs);
@@ -42,13 +42,13 @@ struct namuSyntaxTest : public namuTest {
         return *this;
     }
 
-    namu::wbool shouldParsed(namu::wbool well) {
-        namu::wbool ret = _ip.isParsed();
+    namu::nbool shouldParsed(namu::nbool well) {
+        namu::nbool ret = _ip.isParsed();
         EXPECT_EQ(ret, well);
         return ret;
     }
-    namu::wbool shouldVerified(namu::wbool well) {
-        namu::wbool ret = _ip.isVerified();
+    namu::nbool shouldVerified(namu::nbool well) {
+        namu::nbool ret = _ip.isVerified();
         EXPECT_EQ(ret, well);
         return ret;
     }
@@ -65,7 +65,7 @@ private:
     }
 
 private:
-    const namu::wchar* _src;
+    const namu::nchar* _src;
     namu::errReport _rpt;
     namu::interpreter _ip;
 };

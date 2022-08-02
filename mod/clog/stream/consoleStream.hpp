@@ -4,8 +4,8 @@
 
 namespace namu {
 
-    class _wout consoleStream : public stream {
-        WRD_DECL_ME(consoleStream, stream)
+    class _nout consoleStream : public stream {
+        NAMU_DECL_ME(consoleStream, stream)
 
     public:
         consoleStream();
@@ -13,6 +13,6 @@ namespace namu {
     public:
         //  Stream:
         const char* getName() const override;
-        wbool dump(const char* message) override;
+        nbool dump(const char* message) override;
     };
 }

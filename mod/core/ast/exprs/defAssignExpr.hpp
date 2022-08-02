@@ -6,16 +6,16 @@
 
 namespace namu {
 
-    class _wout defAssignExpr : public expr {
+    class _nout defAssignExpr : public expr {
         WRD(CLASS(defAssignExpr, expr, expr::exprType),
             FRIEND_VERIFY(defAssignExpr, verifyIter))
         friend class mgdFunc;
         typedef scopes::iter iter;
 
     public:
-        defAssignExpr(const std::string& name, const node& rhs, wbool isOnDefBlock = false): _rhs(rhs),
+        defAssignExpr(const std::string& name, const node& rhs, nbool isOnDefBlock = false): _rhs(rhs),
                 _isOnDefBlock(isOnDefBlock), _name(name) {}
-        defAssignExpr(const node& to, const std::string& name, const node& rhs, wbool isOnDefBlock = false):
+        defAssignExpr(const node& to, const std::string& name, const node& rhs, nbool isOnDefBlock = false):
                 _to(to), _rhs(rhs), _isOnDefBlock(isOnDefBlock), _name(name) {}
 
     public:
@@ -26,14 +26,14 @@ namespace namu {
         const std::string& getSubName() const { return _name; }
         const node& getRight() const { return *_rhs; }
         node& getRight() { return *_rhs; }
-        const node& getTo() const WRD_UNCONST_FUNC(getTo())
-        wbool isOnDefBlock() const { return _isOnDefBlock; }
+        const node& getTo() const NAMU_UNCONST_FUNC(getTo())
+        nbool isOnDefBlock() const { return _isOnDefBlock; }
         node& getTo();
 
     private:
         str _to;
         str _rhs;
-        wbool _isOnDefBlock;
+        nbool _isOnDefBlock;
         std::string _name; // name of variable or lambda.
     };
 }

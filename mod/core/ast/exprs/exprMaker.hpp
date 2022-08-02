@@ -4,12 +4,12 @@
 
 namespace namu {
 
-    class _wout exprMaker : public typeProvidable, public clonable {
+    class _nout exprMaker : public typeProvidable, public clonable {
         WRD(CLASS(exprMaker))
 
     public:
         exprMaker(): _src(nullptr), _pos({0, 0}) {}
-        exprMaker(const src& s, wcnt row, wcnt col) {
+        exprMaker(const src& s, ncnt row, ncnt col) {
             setSrc(s);
             setCol(row);
             setCol(col);
@@ -17,16 +17,16 @@ namespace namu {
 
     public:
         me& addRow() { return addRow(1); }
-        me& addRow(wcnt step) { return setRow(_pos.row + step); }
+        me& addRow(ncnt step) { return setRow(_pos.row + step); }
         me& addCol() { return addCol(1); }
-        me& addCol(wcnt step) { return setCol(_pos.col + step); }
+        me& addCol(ncnt step) { return setCol(_pos.col + step); }
 
-        me& setRow(wcnt row) {
+        me& setRow(ncnt row) {
             _pos.row = row;
             return *this;
         }
 
-        me& setCol(wcnt col) {
+        me& setCol(ncnt col) {
             _pos.col = col;
             return *this;
         }

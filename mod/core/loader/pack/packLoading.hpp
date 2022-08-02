@@ -10,10 +10,10 @@ namespace namu {
     struct manifest;
     typedef tnchain<std::string, slot> slotChain;
 
-    class _wout packLoading : public instance, public packMakable, public clonable {
+    class _nout packLoading : public instance, public packMakable, public clonable {
         WRD(ADT(packLoading, instance))
 
-        typedef wbool (me::*packEvent)(const slotChain&);
+        typedef nbool (me::*packEvent)(const slotChain&);
 
     public:
         void addPath(const std::string& filePath);

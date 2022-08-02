@@ -18,12 +18,12 @@ namespace {
     };
 }
 
-TEST(wtypeTest, basicWTypeAPITest) {
-    wInt intObj;
+TEST(ntypeTest, basicWTypeAPITest) {
+    nInt intObj;
     myObj myO;
-    const wtype& myType = myO.getType();
-    const wtype& intType = intObj.getType();
-    const wtype& inttType = ttype<wInt>::get();
+    const ntype& myType = myO.getType();
+    const ntype& intType = intObj.getType();
+    const ntype& inttType = ttype<nInt>::get();
 
     ASSERT_EQ(&intType, &inttType);
     ASSERT_EQ(intType, inttType);
@@ -31,64 +31,64 @@ TEST(wtypeTest, basicWTypeAPITest) {
     ASSERT_FALSE(myType.isImmutable());
     ASSERT_TRUE(intType.isImmutable());
 
-    ASSERT_FALSE(intType.isImpli<wStr>());
-    ASSERT_FALSE(intObj.isImpli<wStr>());
-    ASSERT_TRUE(intType.isImpli<wFlt>());
-    ASSERT_TRUE(intObj.isImpli<wFlt>());
+    ASSERT_FALSE(intType.isImpli<nStr>());
+    ASSERT_FALSE(intObj.isImpli<nStr>());
+    ASSERT_TRUE(intType.isImpli<nFlt>());
+    ASSERT_TRUE(intObj.isImpli<nFlt>());
     ASSERT_FALSE(inttType.isImpli<myObj>());
-    ASSERT_FALSE(myO.isImpli<wInt>());
+    ASSERT_FALSE(myO.isImpli<nInt>());
 
-    ASSERT_TRUE(intType.is<wBool>());
-    ASSERT_TRUE(intObj.is<wBool>());
+    ASSERT_TRUE(intType.is<nBool>());
+    ASSERT_TRUE(intObj.is<nBool>());
     ASSERT_FALSE(inttType.is<myObj>());
-    ASSERT_FALSE(myO.getType().is<wInt>());
+    ASSERT_FALSE(myO.getType().is<nInt>());
 }
 
-TEST(wtypeTest, makeTest) {
-    tstr<wInt> new1 = ttype<wInt>().makeAs<wInt>();
+TEST(ntypeTest, makeTest) {
+    tstr<nInt> new1 = ttype<nInt>().makeAs<nInt>();
     ASSERT_TRUE(new1);
     ASSERT_EQ(new1->get(), 0);
 }
 
-TEST(wtypeTest, allImplicitCastingForPrimitives) {
-    wInt i;
-    wFlt f;
-    wBool b;
-    wChar c;
-    wStr s;
+TEST(ntypeTest, allImplicitCastingForPrimitives) {
+    nInt i;
+    nFlt f;
+    nBool b;
+    nChar c;
+    nStr s;
 
     // int:
-    ASSERT_TRUE(i.isImpli<wInt>());
-    ASSERT_TRUE(i.isImpli<wFlt>());
-    ASSERT_TRUE(i.isImpli<wBool>());
-    ASSERT_TRUE(i.isImpli<wChar>());
-    ASSERT_FALSE(i.isImpli<wStr>());
+    ASSERT_TRUE(i.isImpli<nInt>());
+    ASSERT_TRUE(i.isImpli<nFlt>());
+    ASSERT_TRUE(i.isImpli<nBool>());
+    ASSERT_TRUE(i.isImpli<nChar>());
+    ASSERT_FALSE(i.isImpli<nStr>());
 
     // float:
-    ASSERT_TRUE(f.isImpli<wInt>());
-    ASSERT_TRUE(f.isImpli<wFlt>());
-    ASSERT_TRUE(f.isImpli<wBool>());
-    ASSERT_TRUE(f.isImpli<wChar>());
-    ASSERT_FALSE(f.isImpli<wStr>());
+    ASSERT_TRUE(f.isImpli<nInt>());
+    ASSERT_TRUE(f.isImpli<nFlt>());
+    ASSERT_TRUE(f.isImpli<nBool>());
+    ASSERT_TRUE(f.isImpli<nChar>());
+    ASSERT_FALSE(f.isImpli<nStr>());
 
     // bool:
-    ASSERT_FALSE(b.isImpli<wInt>());
-    ASSERT_FALSE(b.isImpli<wFlt>());
-    ASSERT_TRUE(b.isImpli<wBool>());
-    ASSERT_FALSE(b.isImpli<wChar>());
-    ASSERT_FALSE(b.isImpli<wStr>());
+    ASSERT_FALSE(b.isImpli<nInt>());
+    ASSERT_FALSE(b.isImpli<nFlt>());
+    ASSERT_TRUE(b.isImpli<nBool>());
+    ASSERT_FALSE(b.isImpli<nChar>());
+    ASSERT_FALSE(b.isImpli<nStr>());
 
     // char:
-    ASSERT_FALSE(c.isImpli<wInt>());
-    ASSERT_FALSE(c.isImpli<wFlt>());
-    ASSERT_TRUE(c.isImpli<wBool>());
-    ASSERT_TRUE(c.isImpli<wChar>());
-    ASSERT_FALSE(c.isImpli<wStr>());
+    ASSERT_FALSE(c.isImpli<nInt>());
+    ASSERT_FALSE(c.isImpli<nFlt>());
+    ASSERT_TRUE(c.isImpli<nBool>());
+    ASSERT_TRUE(c.isImpli<nChar>());
+    ASSERT_FALSE(c.isImpli<nStr>());
 
     // str:
-    ASSERT_FALSE(s.isImpli<wInt>());
-    ASSERT_FALSE(s.isImpli<wFlt>());
-    ASSERT_FALSE(s.isImpli<wBool>());
-    ASSERT_FALSE(s.isImpli<wChar>());
-    ASSERT_TRUE(s.isImpli<wStr>());
+    ASSERT_FALSE(s.isImpli<nInt>());
+    ASSERT_FALSE(s.isImpli<nFlt>());
+    ASSERT_FALSE(s.isImpli<nBool>());
+    ASSERT_FALSE(s.isImpli<nChar>());
+    ASSERT_TRUE(s.isImpli<nStr>());
 }

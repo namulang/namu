@@ -15,8 +15,8 @@ namespace namu {
 
         // add:
         using super::add;
-        wbool add(const typename super::iter& e, const node& new1) override { return false; }
-        wbool add(widx n, const node& new1) override { return false; }
+        nbool add(const typename super::iter& e, const node& new1) override { return false; }
+        nbool add(nidx n, const node& new1) override { return false; }
 
     public:
         static me singletone;

@@ -5,9 +5,9 @@
 
 namespace namu {
 
-    class _wout watcher : public chunk {
-        WRD_DECL_ME(watcher, chunk)
-        WRD_INIT_META(me)
+    class _nout watcher : public chunk {
+        NAMU_DECL_ME(watcher, chunk)
+        NAMU_INIT_META(me)
         friend class instancer;
         friend class bindTag;
 
@@ -15,23 +15,23 @@ namespace namu {
         //  watcher:
         watcher();
 
-        watchCell& operator[](widx n);
+        watchCell& operator[](nidx n);
         watchCell& operator[](id newId);
-        const watchCell& operator[](widx n) const WRD_UNCONST_FUNC(operator[](n))
-        const watchCell& operator[](id newId) const WRD_UNCONST_FUNC(operator[](newId))
+        const watchCell& operator[](nidx n) const NAMU_UNCONST_FUNC(operator[](n))
+        const watchCell& operator[](id newId) const NAMU_UNCONST_FUNC(operator[](newId))
 
-        watchCell& get(widx n);
+        watchCell& get(nidx n);
         watchCell& get(id newId);
-        const watchCell& get(widx n) const WRD_UNCONST_FUNC(get(n));
-        const watchCell& get(id newId) const WRD_UNCONST_FUNC(get(newId));
+        const watchCell& get(nidx n) const NAMU_UNCONST_FUNC(get(n));
+        const watchCell& get(id newId) const NAMU_UNCONST_FUNC(get(newId));
         //  Allocator:
         void* new1() override;
 
-        wbool del(void* used, wcnt sz) override;
+        nbool del(void* used, ncnt sz) override;
 
     protected:
         //  watcher:
         id _genId(void* pt) const;
-        widx _getIdx(void* it) const;
+        nidx _getIdx(void* it) const;
     };
 }

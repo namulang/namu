@@ -7,7 +7,7 @@
 namespace namu {
 
     typedef tnmap<std::string, node, immutableTactic> scope;
-    class _wout mgdFunc : public func {
+    class _nout mgdFunc : public func {
         WRD(CLASS(mgdFunc, func),
             FRIEND_VERIFY(mgdFunc, subNodes))
 

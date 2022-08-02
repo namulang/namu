@@ -13,7 +13,7 @@ TEST_F(starterTest, simpleStarter) {
 
     starter s;
     str res = s.run(narr(getSlot()));
-    ASSERT_EQ(*res, wVoid());
+    ASSERT_EQ(*res, nVoid());
 }
 
 TEST_F(starterTest, mainReturnInt) {
@@ -23,8 +23,8 @@ TEST_F(starterTest, mainReturnInt) {
     )SRC").shouldVerified(true);
 
     starter s;
-    tstr<wInt> res = s.run(narr(getSlot()));
-    ASSERT_EQ(res->cast<wInt>().get(), 23);
+    tstr<nInt> res = s.run(narr(getSlot()));
+    ASSERT_EQ(res->cast<nInt>().get(), 23);
     ASSERT_EQ(res->cast<int>(), 23);
 }
 
@@ -37,7 +37,7 @@ TEST_F(starterTest, mainCallFuncAndCheckReturn) {
     )SRC").shouldVerified(true);
 
     starter s;
-    tstr<wInt> res = s.run(narr(getSlot()));
-    ASSERT_EQ(res->cast<wInt>().get(), 23);
+    tstr<nInt> res = s.run(narr(getSlot()));
+    ASSERT_EQ(res->cast<nInt>().get(), 23);
     ASSERT_EQ(res->cast<int>(), 23);
 }

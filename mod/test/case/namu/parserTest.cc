@@ -6,7 +6,7 @@ struct parserTest : public namuSyntaxTest {};
 
 TEST_F(parserTest, testHelloWorld) {
     parser p;
-    const wchar* stringScript = R"SRC(
+    const nchar* stringScript = R"SRC(
         main() void
             console.print("hello world!")
     )SRC";
@@ -21,7 +21,7 @@ TEST_F(parserTest, testHelloWorld) {
     scope& shares = (scope&) (((scopes&) s.subs()).getNext().getContainer());
     ASSERT_FALSE(nul(shares));
     p.setSlot(s);
-    shares.add("hello", new wStr("hello"));
+    shares.add("hello", new nStr("hello"));
     ASSERT_TRUE(shares.len() == 1);
 
     p.parse(script.c_str());
@@ -29,7 +29,7 @@ TEST_F(parserTest, testHelloWorld) {
     p.parse(script.c_str());
     ASSERT_EQ(shares.len(), 4); // add func main on every parse() call.
 
-    ASSERT_TRUE(shares.get<wStr>("hello") == wStr("hello"));
+    ASSERT_TRUE(shares.get<nStr>("hello") == nStr("hello"));
 }
 
 TEST_F(parserTest, slotNoOnTray) {

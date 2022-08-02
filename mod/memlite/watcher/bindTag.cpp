@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(bindTag)
+    NAMU_DEF_ME(bindTag)
 
     me::bindTag() : _pt(NULL), _strong(0) {}
     me::bindTag(id newId) : _pt(NULL), _strong(0), _id(newId) {}
@@ -19,7 +19,7 @@ namespace namu {
         return instancer::get().getPool()[*_pt][*_pt];
     }
 
-    wcnt me::getStrongCnt() const { return _strong; }
+    ncnt me::getStrongCnt() const { return _strong; }
 
     void me::rel() {
         if(_pt && _id.isHeap())
@@ -29,15 +29,15 @@ namespace namu {
         _strong = 0;
     }
 
-    wbool me::isBind() const { return _pt; }
+    nbool me::isBind() const { return _pt; }
     const type& me::getBindable() const { return ttype<instance>::get(); }
-    wbool me::canBind(const type& type) const { return type.isSub(getBindable()); }
+    nbool me::canBind(const type& type) const { return type.isSub(getBindable()); }
     id me::getId() const { return _id; }
 
-    wbool me::_onStrong(wcnt vote) {
+    nbool me::_onStrong(ncnt vote) {
         if(!_id.isHeap()) return false;
         if(!vote) {
-            WRD_I("vote is 0");
+            NAMU_I("vote is 0");
             return false;
         }
 
@@ -49,14 +49,14 @@ namespace namu {
 
     instance& me::get() { return *_pt; }
 
-    wbool me::bind(const instance& it) {
+    nbool me::bind(const instance& it) {
         rel();
 
         _pt = (instance*) &it;
         return _completeId(*_pt);
     }
 
-    wbool me::_completeId(instance& it) {
+    nbool me::_completeId(instance& it) {
         //  complete mine:
         id mine = getId();
         mine.chkN = it._id.chkN;
@@ -64,7 +64,7 @@ namespace namu {
         return _sync(mine);
     }
 
-    wbool me::_sync(id new1) {
+    nbool me::_sync(id new1) {
         if(_pt)
             _pt->_setId(new1);
         _id = new1;
@@ -72,7 +72,7 @@ namespace namu {
     }
 
     const bindTag& me::getBindTag(id newId) {
-        return const_cast<bindTag&>(WRD_GETS(instancer::get().getWatcher()[newId], blk));
+        return const_cast<bindTag&>(NAMU_GETS(instancer::get().getWatcher()[newId], blk));
     }
 
     instance* me::operator->() { return &get(); }

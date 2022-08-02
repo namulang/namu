@@ -15,7 +15,7 @@ namespace {
         }
 
         static void delLogFile() {
-            WRD_I("delLogFile");
+            NAMU_I("delLogFile");
             std::remove(getLogFilePath());
         }
 
@@ -35,7 +35,7 @@ namespace {
             return name;
         }
 
-        static wbool hasLogFile() {
+        static nbool hasLogFile() {
             struct stat buffer;
             return stat(getLogFilePath(), &buffer) == 0;
         }
@@ -45,7 +45,7 @@ namespace {
 
 TEST_F(consoleStreamTest, dumpFormat) {
     logger::get().dumpFormat("hello");
-    logger::get().dumpFormat("%s " WRD_TAG " %s <%s::%s#%d> " "hello",
+    logger::get().dumpFormat("%s " NAMU_TAG " %s <%s::%s#%d> " "hello",
         namu::platformAPI::createNowTime("%b %d %Y  %X").c_str(), "I",
         __FILENAME__, __func__, __LINE__);
 
@@ -55,16 +55,16 @@ TEST_F(consoleStreamTest, dumpFormat) {
 TEST_F(consoleStreamTest, macro) {
     ASSERT_FALSE(thisTest::hasLogFile());
 
-    WRD_W("world!");
-    WRD_E("this is not an error.");
+    NAMU_W("world!");
+    NAMU_E("this is not an error.");
 
     ASSERT_TRUE(thisTest::hasLogFile());
 }
 
 TEST_F(consoleStreamTest, debugDumpFormat) {
-    wbool isDbg = buildFeature::config::get() == buildFeature::DEBUG;
+    nbool isDbg = buildFeature::config::get() == buildFeature::DEBUG;
 
-    WRD_DW("if it's debug mode, this msg should be shown.");
+    NAMU_DW("if it's debug mode, this msg should be shown.");
 
     ASSERT_EQ(isDbg, thisTest::hasLogFile());
 }

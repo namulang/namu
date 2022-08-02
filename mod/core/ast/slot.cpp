@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(slot)
+    NAMU_DEF_ME(slot)
 
     me::slot(const manifest& manifest): _manifest(manifest) {
         _rel();
@@ -28,7 +28,7 @@ namespace namu {
 
     manifest& me::getManifest() { return _manifest; }
     const manifest& me::getManifest() const { return _manifest; }
-    wbool me::isValid() const { return _isValid; }
+    nbool me::isValid() const { return _isValid; }
 
     void me::rel() {
         _rel();
@@ -42,11 +42,11 @@ namespace namu {
         return _dependents;
     }
 
-    void me::_setValid(wbool valid) {
+    void me::_setValid(nbool valid) {
         _isValid = valid;
     }
 
-    wbool me::_invalidate() {
+    nbool me::_invalidate() {
         _setValid(false);
 
         // propagate result only if it's not valid.

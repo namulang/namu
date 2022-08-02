@@ -2,7 +2,7 @@
 
 #include "dep.hpp"
 
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
 // f***ing annoying another MSVC bug here:
 //  first of all, I'm so sorry to start my slang. but I couldn't help spitting it out after
 //  I used plenty hours of heading to the ground.

@@ -28,10 +28,10 @@ void changeRule(const char* name, int new1) {
 
     shiftRules(new1);
     BEGIN(new1);
-    WRD_DI(" ---- CHANGE RULE to %s(%d)", name, new1);
+    NAMU_DI(" ---- CHANGE RULE to %s(%d)", name, new1);
 }
 void changePrevRule() {
-    WRD_DI(" ---- CHANGE PREV RULE TO %d", prevRule);
+    NAMU_DI(" ---- CHANGE PREV RULE TO %d", prevRule);
     BEGIN(prevRule);
 }
 %}
@@ -66,13 +66,13 @@ true|false {
 }
 
 <DEDENTING>\/\/[^\n]* {
-    WRD_DI("!!!!2");
+    NAMU_DI("!!!!2");
 }
 <INDENTING>\/\/[^\n]* {
-    WRD_DI("!!!!3");
+    NAMU_DI("!!!!3");
 }
 \/\/[^\n]* {
-    WRD_DI("!!!!1");
+    NAMU_DI("!!!!1");
 }
 
 "/*" {
@@ -86,13 +86,13 @@ true|false {
 }
 <COMMENTING>"*/" {
     changePrevRule();
-    WRD_DI("!!!!!!!!!!!end");
+    NAMU_DI("!!!!!!!!!!!end");
 }
 <COMMENTING>. {
-    WRD_DI("1");
+    NAMU_DI("1");
 }
 <COMMENTING>\n {
-    WRD_DI("2");
+    NAMU_DI("2");
 }
 
 
@@ -111,7 +111,7 @@ true|false {
 }
 
 <ARRAYING>\{ {
-    WRD_DI("----------lex: found '{' ");
+    NAMU_DI("----------lex: found '{' ");
     return yytext[0];
 }
 <ARRAYING>\}\{ {
@@ -120,7 +120,7 @@ true|false {
 }
 <ARRAYING>\} {
     changePrevRule();
-    WRD_DI("----------lex: found '}' ");
+    NAMU_DI("----------lex: found '}' ");
     return yytext[0];
 }
 <ARRAYING>[a-zA-Z0-9_]+\} {
@@ -128,7 +128,7 @@ true|false {
     temp = temp.substr(0, temp.size()-1);
     unput('}');
     yylval.strVal = strdup(temp.c_str());
-    WRD_DI("----------lex: tid is %s ----", yylval.strVal);
+    NAMU_DI("----------lex: tid is %s ----", yylval.strVal);
     return tid;
 }
 
@@ -161,7 +161,7 @@ true|false {
     return teol;
 }
 <DEDENTING>[ ] {
-    WRD_DI("<DEDENTING> nowIndent=%d", nowIndent);
+    NAMU_DI("<DEDENTING> nowIndent=%d", nowIndent);
     nowIndent++;
 }
 <DEDENTING>\t {
@@ -172,7 +172,7 @@ true|false {
     char ch = yytext[0];
 
     int prevIndentLv = indentLvs.size() ? indentLvs.top() : 0;
-    WRD_DI("  ---  ch=%c(%d) dedent check finish. prevIndentLv=%d intentLvs.size()=%d nowIndent=%d",
+    NAMU_DI("  ---  ch=%c(%d) dedent check finish. prevIndentLv=%d intentLvs.size()=%d nowIndent=%d",
         ch, ch, prevIndentLv, indentLvs.size(), nowIndent);
 
     if (nowIndent < prevIndentLv) {
@@ -219,16 +219,16 @@ true|false {
     nowIndent = (nowIndent + TAB_WIDTH) & ~(TAB_WIDTH - 1);
 }
 <INDENTING>\n {
-    WRD_DI("---------------- indent newline");
+    NAMU_DI("---------------- indent newline");
     nowIndent = 0;
 }
 <INDENTING>. {
     char ch = yytext[0];
 
     int prevIndentLv = indentLvs.size() ? indentLvs.top() : 0;
-    WRD_DI("  ---  indent check finish. nowIndent=%d, prevIndentLv=%d indentLvs.size()=%d", nowIndent, prevIndentLv, indentLvs.size());
+    NAMU_DI("  ---  indent check finish. nowIndent=%d, prevIndentLv=%d indentLvs.size()=%d", nowIndent, prevIndentLv, indentLvs.size());
     if (nowIndent > prevIndentLv) {
-        WRD_DI("nowIndent(%d) > prevIndentLv(%d)", nowIndent, prevIndentLv);
+        NAMU_DI("nowIndent(%d) > prevIndentLv(%d)", nowIndent, prevIndentLv);
         indentLvs.push(nowIndent);
         unput(ch);
         return tindent;
@@ -241,13 +241,13 @@ true|false {
 }
 
 <INDENTING><<EOF>> {
-    WRD_DI("----------------------EOF!!!!!");
+    NAMU_DI("----------------------EOF!!!!!");
     if (goOutdent(yytext[0]) == tdedent) {
-        WRD_DI("----------- return tdedent from EOF!");
+        NAMU_DI("----------- return tdedent from EOF!");
         return tdedent;
     }
 
-    WRD_DI("----------- return meetEof()");
+    NAMU_DI("----------- return meetEof()");
     return meetEof();
 }
 
@@ -273,13 +273,13 @@ namu::sobj* root = nullptr;
 
 int meetEof() {
     static int cnt = 0;
-    WRD_DI("----------- meetEOF(%d)", cnt);
+    NAMU_DI("----------- meetEOF(%d)", cnt);
     switch (++cnt) {
         case 0:
-            WRD_DI("-------- return teol");
+            NAMU_DI("-------- return teol");
             return teol;
         case 1:
-            WRD_DI("-------- return teof");
+            NAMU_DI("-------- return teof");
             return teof;
     }
     return 0;
@@ -292,24 +292,24 @@ int goOutdent(char prev)
 
     indentLvs.pop();
     unput(prev);
-    WRD_DI(" ----- prev=%d nowIndent=%d", prev, nowIndent);
+    NAMU_DI(" ----- prev=%d nowIndent=%d", prev, nowIndent);
     for (int n=0; n < nowIndent ;n++)
         unput(' ');
     if (prev != ',' && prev != ')' || top - nowIndent != TAB_WIDTH) {
-        WRD_DI(" ----- dedent and newline!");
+        NAMU_DI(" ----- dedent and newline!");
         unput('\n');
     } else {
-        WRD_DI(" ----- dedent only!");
+        NAMU_DI(" ----- dedent only!");
     }
 
     changeRule("DEDENTING", DEDENTING);
-    WRD_DI(" ----- dedent: pop! now %d dedentLv left.", indentLvs.size());
+    NAMU_DI(" ----- dedent: pop! now %d dedentLv left.", indentLvs.size());
     nowIndent = 0;
     return tdedent;
 }
 
 void yyerror(const char* s) {
-    WRD_E("error #%d: %s, %s", yylineno, s, yytext);
+    NAMU_E("error #%d: %s, %s", yylineno, s, yytext);
 }
 
 int yywrap() {

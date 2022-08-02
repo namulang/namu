@@ -8,7 +8,7 @@ namespace namu {
     /// obj is a object structured in managed programming environment like 'namu'.
     /// owned sub nodes of a object can only be manipulated through API provided obj.
     /// because native object won't have owned nodes but only shared ones.
-    class _wout obj : public baseObj {
+    class _nout obj : public baseObj {
         WRD(CLASS(obj, baseObj))
         friend class slot; // for _onRunSub
 
@@ -23,9 +23,9 @@ namespace namu {
         nbicontainer& subs() override;
 
         scopes& getShares();
-        const scopes& getShares() const WRD_UNCONST_FUNC(getShares())
+        const scopes& getShares() const NAMU_UNCONST_FUNC(getShares())
         scope& getOwns();
-        const scope& getOwns() const WRD_UNCONST_FUNC(getOwns())
+        const scope& getOwns() const NAMU_UNCONST_FUNC(getOwns())
         const obj& getOrigin() const override;
         const point& getPos() const override { return _pos; }
         void setPos(const point& new1) override { _pos = new1; }
@@ -43,7 +43,7 @@ namespace namu {
         point _pos;
     };
 
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
     // f***ing annoying another MSVC bug here:
     //  first of all, I'm so sorry to start my slang. but I couldn't help spitting it out after
     //  I used plenty hours of heading to the ground.

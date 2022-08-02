@@ -1,51 +1,51 @@
 #pragma once
 
-#include "wStr.hpp"
+#include "nStr.hpp"
 
 namespace namu {
 
-    class _wout wFlt : public primitiveObj<wflt> {
+    class _nout nInt : public primitiveObj<nint> {
 
-        class _wout wFltType : public wtype {
+        class _nout wIntType : public ntype {
         public:
-            wbool isImmutable() const override;
+            nbool isImmutable() const override;
 
         protected:
             const ases& _getImpliAses() const override;
             const ases& _getAses() const override;
         };
-
-        WRD(CLASS(wFlt, primitiveObj, wFltType))
+        WRD(CLASS(nInt, primitiveObj, wIntType))
 
     public:
-        wFlt();
-        wFlt(wflt val);
+        nInt();
+        nInt(nint val);
 
     protected:
         dumScope* _onMakeCtors() const override;
-        tstr<arithmeticObj> _add(const arithmeticObj& rhs, wbool reversed) const override {
+        tstr<arithmeticObj> _add(const arithmeticObj& rhs, nbool reversed) const override {
             return reversed ?
                     new me(rhs.as<me>()->get() + get()):
                     new me(get() + rhs.as<me>()->get());
         }
-        tstr<arithmeticObj> _sub(const arithmeticObj& rhs, wbool reversed) const override {
+        tstr<arithmeticObj> _sub(const arithmeticObj& rhs, nbool reversed) const override {
             return reversed ?
                     new me(rhs.as<me>()->get() - get()):
                     new me(get() - rhs.as<me>()->get());
         }
-        tstr<arithmeticObj> _mul(const arithmeticObj& rhs, wbool reversed) const override {
+        tstr<arithmeticObj> _mul(const arithmeticObj& rhs, nbool reversed) const override {
             return reversed ?
                     new me(rhs.as<me>()->get() * get()):
                     new me(get() * rhs.as<me>()->get());
         }
-        tstr<arithmeticObj> _div(const arithmeticObj& rhs, wbool reversed) const override {
+        tstr<arithmeticObj> _div(const arithmeticObj& rhs, nbool reversed) const override {
             return reversed ?
                     new me(rhs.as<me>()->get() / get()):
                     new me(get() / rhs.as<me>()->get());
         }
-        tstr<arithmeticObj> _mod(const arithmeticObj& rhs, wbool reversed) const override {
-            return *this;
-            // TODO: throw error
+        tstr<arithmeticObj> _mod(const arithmeticObj& rhs, nbool reversed) const override {
+            return reversed ?
+                    new me(rhs.as<me>()->get() % get()):
+                    new me(get() % rhs.as<me>()->get());
         }
     };
 }

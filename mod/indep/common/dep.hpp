@@ -5,7 +5,7 @@
 #include <string.h> // for strerror
 #include <sys/stat.h>
 #include <stdio.h>
-#ifdef WRD_BUILD_PLATFORM_IS_WINDOWS
+#ifdef NAMU_BUILD_PLATFORM_IS_WINDOWS
 #	include <dirent.h> // not for winOS
 #	include <unistd.h> // not for winOS
 #endif

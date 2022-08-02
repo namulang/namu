@@ -11,12 +11,12 @@ namespace namu {
     }
 
     template <typename T>
-    wbool nul(T* any) {
+    nbool nul(T* any) {
         return !any;
     }
 
     template <typename T>
-    inline wbool nul(T& any) {
+    inline nbool nul(T& any) {
         // reference-null-check hack:
         //  in c++ standard reference, it's not allow to check pointer of reference whether
         //  it's null or not, it's always regarded to not null.

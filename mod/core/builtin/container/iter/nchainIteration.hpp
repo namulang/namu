@@ -10,12 +10,12 @@ public:
             if(!_iter) next(1);
         }
 
-    wbool isEnd() const override {
+    nbool isEnd() const override {
         return !_ownIter->_next && !_iter;
     }
 
-    wcnt next(wcnt step) override {
-        wcnt remain = step;
+    ncnt next(ncnt step) override {
+        ncnt remain = step;
 
         // if _ownIter was invalidated then _iter too.
         while(remain > 0) {
@@ -52,7 +52,7 @@ public:
     }
 
 protected:
-    wbool _onSame(const typeProvidable& rhs) const override {
+    nbool _onSame(const typeProvidable& rhs) const override {
         const me& cast = (const me&) rhs;
         if(nul(_byKey) ? !nul(cast._byKey) : _byKey != cast._byKey)
             return false;

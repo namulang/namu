@@ -4,9 +4,9 @@
 
 namespace namu {
 
-    class _wout sobj : public instance {
-        WRD_DECL_ME(sobj, instance)
-        WRD_INIT_META(sobj)
+    class _nout sobj : public instance {
+        NAMU_DECL_ME(sobj, instance)
+        NAMU_INIT_META(sobj)
 
         typedef std::map<std::string, tstr<me>> myMap;
         typedef myMap::iterator iterator;
@@ -18,16 +18,16 @@ namespace namu {
 
     public:
         me& operator[](const std::string& name);
-        const me& operator[](const std::string& name) const WRD_UNCONST_FUNC(operator[](name))
-        me& operator[](widx n);
-        const me& operator[](widx n) const WRD_UNCONST_FUNC(operator[](n))
+        const me& operator[](const std::string& name) const NAMU_UNCONST_FUNC(operator[](name))
+        me& operator[](nidx n);
+        const me& operator[](nidx n) const NAMU_UNCONST_FUNC(operator[](n))
 
-        explicit operator wbool() const;
+        explicit operator nbool() const;
 
         me& sub(const std::string& name);
-        const me& sub(const std::string& name) const WRD_UNCONST_FUNC(sub(name))
+        const me& sub(const std::string& name) const NAMU_UNCONST_FUNC(sub(name))
 
-        wbool has(const std::string& name) const;
+        nbool has(const std::string& name) const;
 
         void add(const sobj& new1);
         void add(std::initializer_list<sobj*> subs);
@@ -37,18 +37,18 @@ namespace namu {
         const std::string& getName() const;
         void setName(const std::string& newName);
 
-        wcnt len() const;
+        ncnt len() const;
 
         iterator begin();
         iterator end();
 
         const type& getType() const override;
 
-        virtual wint asInt() const;
-        virtual wchar asChar() const;
+        virtual nint asInt() const;
+        virtual nchar asChar() const;
         virtual const std::string& asStr() const;
-        virtual wbool asBool() const;
-        virtual wbool isExist() const;
+        virtual nbool asBool() const;
+        virtual nbool isExist() const;
 
     private:
         myMap _subs;

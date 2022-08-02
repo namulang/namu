@@ -19,7 +19,7 @@ namespace  {
         auto totalElapsed = end - start;
 
         logger::get().setEnable(true);
-        WRD_I("[%s]: it took total %d ms.", name.c_str(), totalElapsed / chrono::milliseconds(1));
+        NAMU_I("[%s]: it took total %d ms.", name.c_str(), totalElapsed / chrono::milliseconds(1));
         logger::get().setEnable(false);
     }
 
@@ -100,8 +100,8 @@ TEST_F(speedTest, benchmarkNodeCreation) {
         myObj dum;
         i += dum.getId().serial + 1;
     });
-    benchMark("create 10000 wInt object", 10000, [&]() {
-        wInt dum;
+    benchMark("create 10000 nInt object", 10000, [&]() {
+        nInt dum;
         i += dum.getId().serial + 1;
     });
     ASSERT_TRUE(i >= 40000);
@@ -113,8 +113,8 @@ TEST_F(speedTest, benchmarkStringCreation) {
         std::string dum("hello world");
         i += reinterpret_cast<std::uintptr_t>(&dum);
     });
-    benchMark("create 10000 wStr", 10000, [&]() {
-        wStr dum("hello world");
+    benchMark("create 10000 nStr", 10000, [&]() {
+        nStr dum("hello world");
         i += reinterpret_cast<std::uintptr_t>(&dum);
     });
     ASSERT_TRUE(i >= 20000);

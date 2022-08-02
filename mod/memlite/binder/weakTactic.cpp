@@ -3,13 +3,13 @@
 
 namespace namu {
 
-    WRD_DEF_ME(weakTactic)
+    NAMU_DEF_ME(weakTactic)
 
     void me::rel(binder& me) {
         me._itsId.rel();
     }
 
-    wbool me::bind(binder& me, const instance& it) {
+    nbool me::bind(binder& me, const instance& it) {
         //  regardless of result from _onStrong binder can bind:
         //      there are two reasons:
         //          because Block has equal lifecycle to what it bind, if there is

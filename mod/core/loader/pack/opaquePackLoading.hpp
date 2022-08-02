@@ -5,10 +5,10 @@
 namespace namu {
 
     class errReport;
-    class _wout opaquePackLoading : public packLoading {
+    class _nout opaquePackLoading : public packLoading {
         WRD(ADT(opaquePackLoading, packLoading))
 
     public:
-        wbool verify(errReport& rpt, obj& pak) override;
+        nbool verify(errReport& rpt, obj& pak) override;
     };
 }

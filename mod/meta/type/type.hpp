@@ -10,23 +10,23 @@ namespace namu {
     ///             Thing& thing1 = ...; // let's assume that got from outside.
     ///             Object obj;
     ///
-    ///             wbool compare = obj.isSub(thing1.getType()); // user intend to get class of Thing.
+    ///             nbool compare = obj.isSub(thing1.getType()); // user intend to get class of Thing.
     ///             // however, value 'compare' will definitely be false if
     ///             // thing was actually a retrived one by calling Thing.getType() before.
     ///
     ///             // because type::getType() will return Ttype<Ttype<T> >,
     ///             // that stmt will be translated that checks object vs Ttype<T>.
-    class _wout type {
-        WRD_DECL_ME(type)
+    class _nout type {
+        NAMU_DECL_ME(type)
 
     public:
         virtual ~type() {}
 
-        wbool operator==(const me& rhs) const;
-        wbool operator!=(const me& rhs) const;
+        nbool operator==(const me& rhs) const;
+        nbool operator!=(const me& rhs) const;
 
-        virtual wbool isTemplate() const = 0;
-        virtual wbool isAbstract() const = 0;
+        virtual nbool isTemplate() const = 0;
+        virtual nbool isAbstract() const = 0;
         virtual const std::string& getName() const = 0;
 
         /// @brief  create an instance to be refered this type.
@@ -41,35 +41,35 @@ namespace namu {
             return (T*) make();
         }
 
-        virtual wcnt size() const = 0;
-        virtual wbool init();
-        virtual wbool rel();
+        virtual ncnt size() const = 0;
+        virtual nbool init();
+        virtual nbool rel();
         virtual const type& getSuper() const = 0;
-        virtual const wbool& isInit() const = 0;
+        virtual const nbool& isInit() const = 0;
 
         /// returns all most derived class from this class.
         const types& getLeafs() const;
         const types& getSubs() const;
         const types& getSupers() const;
 
-        wbool isSuper(const type& it) const;
-        template <typename T> wbool isSuper() const;
-        wbool isSub(const type& it) const { return it.isSuper(*this); }
-        template <typename T> wbool isSub() const;
-        const type& getStatic() const WRD_UNCONST_FUNC(_getStatic())
+        nbool isSuper(const type& it) const;
+        template <typename T> nbool isSuper() const;
+        nbool isSub(const type& it) const { return it.isSuper(*this); }
+        template <typename T> nbool isSub() const;
+        const type& getStatic() const NAMU_UNCONST_FUNC(_getStatic())
 
     protected:
         //  type:
         virtual types& _getSubs() = 0;
         virtual types& _getSupers() = 0;
         virtual type& _getStatic() const = 0;
-        void _setInit(wbool newState);
+        void _setInit(nbool newState);
         virtual void _onAddSubClass(const me& subClass);
         virtual types** _onGetLeafs() const = 0;
         void _setLeafs(types* newLeafs) const;
 
     private:
-        wbool _logInitOk(wbool res);
+        nbool _logInitOk(nbool res);
         void _findLeafs(const type& cls, types& tray) const;
     };
 }

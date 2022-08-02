@@ -43,7 +43,7 @@ TEST(chunkTest, allocatorTest) {
 TEST(chunkTest, chunkListTest) {
     class heap {
     public:
-        wbool new1(chunk& chk, wcnt cnt) {
+        nbool new1(chunk& chk, ncnt cnt) {
             for(int n=0; n < cnt ; n++)
             {
                 void* ptr = chk.new1();

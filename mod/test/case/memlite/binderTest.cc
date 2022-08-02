@@ -27,8 +27,8 @@ namespace {
 
         float grade;
 
-        static wcnt& get() {
-            static wcnt n = 0;
+        static ncnt& get() {
+            static ncnt n = 0;
             return n;
         }
 

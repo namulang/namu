@@ -3,7 +3,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 message("\nbuilding ${moduleName}...")
 
 set(moduleName "clog")
-set(defCandidates "WRD_TAG=\"${moduleName}\"" "__${moduleName}=1")
+set(defCandidates "NAMU_TAG=\"${moduleName}\"" "__${moduleName}=1")
 foreach(def ${defCandidates})
     message("\tadd define ${def}")
     set(defines ${defines} -D${def})
@@ -29,7 +29,7 @@ endforeach(e)
 
 #   execute:
 add_library(${moduleName} SHARED ${sources})
-set_target_properties(${moduleName} PROPERTIES SUFFIX ".${WRD_LIBRARY_EXTENSION}")
+set_target_properties(${moduleName} PROPERTIES SUFFIX ".${NAMU_LIBRARY_EXTENSION}")
 target_link_libraries(${moduleName} ${dependencies})
 
 #       let MSVC follow macro expansion of standard:

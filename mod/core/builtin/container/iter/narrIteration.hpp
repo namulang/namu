@@ -5,16 +5,16 @@ class narrIteration : public iteration {
     friend class tnarr;
 
 public:
-    narrIteration(tnarr& own, widx n): _n(n), _own(own) {}
+    narrIteration(tnarr& own, nidx n): _n(n), _own(own) {}
 
-    wbool isEnd() const override {
+    nbool isEnd() const override {
         return !_own.has(_n);
     }
 
     /// if iteration reached to the last element to iterate, it can precede to next,
     /// which means to the End of a buffer.
     /// however, this step wasn't regarded to a step even though it proceeds.
-    wcnt next(wcnt step) override {
+    ncnt next(ncnt step) override {
         if(step <= 0) return 0;
         if(isEnd()) return 0;
 
@@ -39,12 +39,12 @@ public:
     tnucontainer<T>& getContainer() override { return _own; }
 
 protected:
-    wbool _onSame(const typeProvidable& rhs) const override {
+    nbool _onSame(const typeProvidable& rhs) const override {
         const me& cast = (const me&) rhs;
         return this->isFrom(cast.getContainer()) && _n == cast._n;
     }
 
 private:
-    widx _n;
+    nidx _n;
     tnarr& _own;
 };

@@ -4,7 +4,7 @@
 
 namespace namu {
 
-    class _wout runExpr : public expr {
+    class _nout runExpr : public expr {
         WRD(CLASS(runExpr, expr, expr::exprType))
 
     public:

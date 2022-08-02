@@ -6,33 +6,33 @@
 
 namespace namu {
 
-    WRD_DEF_ME(thread)
+    NAMU_DEF_ME(thread)
 
     const nmap& me::getSlots() const {
         static tstr<nmap> inner;
 
         if(!inner) {
-            WRD_I("initiates loading system slots.");
+            NAMU_I("initiates loading system slots.");
             inner.bind(new nmap());
             errReport report;
             slotLoader().setReport(report).setBaseSlots(*inner)
-#ifdef WRD_BUILD_PLATFORM_IS_LINUX
+#ifdef NAMU_BUILD_PLATFORM_IS_LINUX
                 .addPath("/usr/share/namu/pack/")
 #endif
                 .addPath("pack/")
                 .load();
-            WRD_I("%d system slots has been loaded.", inner->len());
+            NAMU_I("%d system slots has been loaded.", inner->len());
 
-#if WRD_IS_DBG
-            WRD_I("next following is list for them.");
+#if NAMU_IS_DBG
+            NAMU_I("next following is list for them.");
             for(const auto& s : *inner) {
                 if(nul(s)) {
-                    WRD_E("cast isn't type of slot&");
+                    NAMU_E("cast isn't type of slot&");
                     continue;
                 }
 
                 const manifest& mani = s.cast<slot>().getManifest();
-                WRD_DI(" - %s v%s", mani.name.c_str(), mani.version.c_str());
+                NAMU_DI(" - %s v%s", mani.name.c_str(), mani.version.c_str());
             }
 #endif
         }
@@ -46,7 +46,7 @@ namespace namu {
         // find 'main' func:
         func& fun = _root->sub<func>("main"); // TODO: support generic type of str[]
         if(nul(fun))
-            return WRD_E("there is no 'main' func."), str();
+            return NAMU_E("there is no 'main' func."), str();
 
         thread* prev = *_get();
         *_get() = this;
@@ -74,7 +74,7 @@ namespace namu {
         return _root->subs();
     }
 
-    wbool me::canRun(const ucontainable& args) const { return false; }
+    nbool me::canRun(const ucontainable& args) const { return false; }
 
     void me::rel() { _frames.rel(); }
 

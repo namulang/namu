@@ -4,29 +4,29 @@
 
 namespace namu {
 
-    class _wout termSobj : public sobj {
-        WRD_DECL_ME(termSobj, sobj)
-        WRD_INIT_META(termSobj)
+    class _nout termSobj : public sobj {
+        NAMU_DECL_ME(termSobj, sobj)
+        NAMU_INIT_META(termSobj)
 
     public:
         termSobj(const std::string& rawVal, const std::string& name = ""): _rawVal(rawVal) {}
-        termSobj(wbool val, const std::string& name = ""): super(name), _rawVal(val ? "true" : "false") {}
-        termSobj(wint val, const std::string& name = ""): super(name), _rawVal(std::to_string(val)) {}
-        termSobj(wflt val, const std::string& name = ""): super(name), _rawVal(std::to_string(val)) {}
-        termSobj(const wchar* val, const std::string& name = ""): super(name), _rawVal(val) {}
-        termSobj(const wchar val, const std::string& name = ""): super(name), _rawVal(1, val) {}
+        termSobj(nbool val, const std::string& name = ""): super(name), _rawVal(val ? "true" : "false") {}
+        termSobj(nint val, const std::string& name = ""): super(name), _rawVal(std::to_string(val)) {}
+        termSobj(nflt val, const std::string& name = ""): super(name), _rawVal(std::to_string(val)) {}
+        termSobj(const nchar* val, const std::string& name = ""): super(name), _rawVal(val) {}
+        termSobj(const nchar val, const std::string& name = ""): super(name), _rawVal(1, val) {}
         termSobj(const me& rhs, const std::string& name = ""): super(rhs, name), _rawVal(rhs._rawVal) {}
 
         const std::string& asStr() const override {
             return _rawVal;
         }
-        wchar asChar() const override {
+        nchar asChar() const override {
             return _rawVal[0];
         }
-        wint asInt() const override {
+        nint asInt() const override {
             return std::stoi(_rawVal);
         }
-        wbool asBool() const override {
+        nbool asBool() const override {
             std::string low = toLower(_rawVal);
 
             if(low == "false") return false;

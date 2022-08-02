@@ -8,10 +8,10 @@ namespace namu {
     class tverification : public verification {
         WRD(ME(tverification, verification),
             INIT_META(me))
-        typedef wtype metaType;
+        typedef ntype metaType;
 
     public:
-        const wtype& getType() const override {
+        const ntype& getType() const override {
             return ttype<T>::get();
         }
 

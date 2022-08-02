@@ -7,7 +7,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(baseObj)
+    NAMU_DEF_ME(baseObj)
 
     me::baseObj() {}
 
@@ -23,13 +23,13 @@ namespace namu {
         return str(this);
     }
 
-    wbool me::canRun(const ucontainable& args) const {
+    nbool me::canRun(const ucontainable& args) const {
         return args.len() <= 0;
     }
 
     void me::_inFrame(const bicontainable& args) {
         frames& frs = namu::thread::get()._getFrames();
-        WRD_DI("%s._inFrame()[%d]", getType().getName().c_str(), frs.len());
+        NAMU_DI("%s._inFrame()[%d]", getType().getName().c_str(), frs.len());
 
         frame& fr = *new frame();
         scope* s = new scope();
@@ -41,15 +41,15 @@ namespace namu {
 
     void me::_outFrame() {
         frames& frs = namu::thread::get()._getFrames();
-        WRD_DI("%s._outFrame()[%d]", getType().getName().c_str(), frs.len()-1);
+        NAMU_DI("%s._outFrame()[%d]", getType().getName().c_str(), frs.len()-1);
 
         frs.del();
     }
 
 
 
-    WRD_VERIFY(baseObj, subNodes, {
-        WRD_DI("verify: baseObj: %s iterateSubNodes. len=%d", it.getType().getName().c_str(),
+    NAMU_VERIFY(baseObj, subNodes, {
+        NAMU_DI("verify: baseObj: %s iterateSubNodes. len=%d", it.getType().getName().c_str(),
                 it.subs().len());
 
         baseObj& prev = frame::_setObj(it);
@@ -58,7 +58,7 @@ namespace namu {
         tray.add(func::ME, it);
         for(auto e = it.subs().begin(); e ;++e) {
             node& val = e.getVal();
-            WRD_DI("verify: baseObj: iterateSubNode[%s]=%s", e.getKey().c_str(), val.getType()
+            NAMU_DI("verify: baseObj: iterateSubNode[%s]=%s", e.getKey().c_str(), val.getType()
                     .getName().c_str());
             verify(val, tray);
         }

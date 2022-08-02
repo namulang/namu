@@ -1,17 +1,17 @@
 #include "type.hpp"
 
 namespace namu {
-    WRD_DEF_ME(type)
+    NAMU_DEF_ME(type)
 
-    wbool me::operator==(const me& rhs) const {
-#if WRD_BUILD_PLATFORM == WRD_TYPE_WINDOWS
+    nbool me::operator==(const me& rhs) const {
+#if NAMU_BUILD_PLATFORM == NAMU_TYPE_WINDOWS
         return getName() == rhs.getName();
 #else
         return &getName() == &rhs.getName();
 #endif
     }
 
-    wbool me::operator!=(const me& rhs) const { return !operator==(rhs); }
+    nbool me::operator!=(const me& rhs) const { return !operator==(rhs); }
 
     const types& me::getLeafs() const {
         types* leafs = *_onGetLeafs();
@@ -35,7 +35,7 @@ namespace namu {
         }
     }
 
-    wbool me::init() {
+    nbool me::init() {
         // pre:
         //  Caution for not refering metaclass and binding inside of this:
         //  while this func is called, a structuring for metaclass doesn't finished.
@@ -76,13 +76,13 @@ namespace namu {
         _getSubs().push_back(&subClass._getStatic());
     }
 
-    wbool me::rel() {
+    nbool me::rel() {
         // TODO:
         _setInit(false);
         return true;
     }
 
-    wbool me::isSuper(const type& it) const {
+    nbool me::isSuper(const type& it) const {
         //  checking class hierarchy algorithm:
         //        Use the "Tier" of the class hierarchy info to check it.
         //        "Tier" means that how this class are inherited far from the Root class, that is, Object.
@@ -90,7 +90,7 @@ namespace namu {
         //        would must be the class of "this".
         if(nul(it)) return false;
         const types& its = it.getSupers();
-        wcnt myTier = getSupers().size(),
+        ncnt myTier = getSupers().size(),
              itsTier = its.size();
         if(myTier > itsTier) return false;
 
@@ -102,9 +102,9 @@ namespace namu {
         return *this == target; // operator== is virtual func.
     }
 
-    wbool me::_logInitOk(wbool res) {
+    nbool me::_logInitOk(nbool res) {
         if(!res) {
-            WRD_E("couldn't init meta of %s class.", getName().c_str());
+            NAMU_E("couldn't init meta of %s class.", getName().c_str());
             return res;
         }
 
@@ -118,9 +118,9 @@ namespace namu {
         return (const_cast<me*>(this))->_getSupers();
     }
 
-    void me::_setInit(wbool newState) {
-        const wbool& res = isInit();
-        wbool& isInit = const_cast<wbool&>(res);
+    void me::_setInit(nbool newState) {
+        const nbool& res = isInit();
+        nbool& isInit = const_cast<nbool&>(res);
 
         isInit = newState;
     }

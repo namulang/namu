@@ -5,12 +5,12 @@
 namespace namu {
 
     // TODO: entrypoints[== filePath] can be various. but not language.
-    struct _wout entrypoint : public validable {
+    struct _nout entrypoint : public validable {
         entrypoint(const std::string& newLang, const std::vector<std::string> newPaths);
         virtual ~entrypoint();
 
     public:
-        wbool isValid() const override;
+        nbool isValid() const override;
 
     public:
         std::string lang;
@@ -20,7 +20,7 @@ namespace namu {
 
     struct manifest : public validable {
 
-        static constexpr const wchar* DEFAULT_NAME = "{default}";
+        static constexpr const nchar* DEFAULT_NAME = "{default}";
 
         manifest();
         manifest(const std::string& newName);
@@ -28,7 +28,7 @@ namespace namu {
                 const std::string& newVer, const entrypoints& newPoints);
         virtual ~manifest();
 
-        wbool isValid() const override;
+        nbool isValid() const override;
 
     public:
         std::string name; // manifest name should not contain '.'(dot) character.

@@ -7,18 +7,18 @@
 
 namespace namu {
 
-    WRD_DEF_ME(FAOExpr)
+    NAMU_DEF_ME(FAOExpr)
 
     namespace {
         str primitives[] = {
-            new wInt(),
-            new wFlt(),
-            new wStr(),
-            new wChar(),
-            new wBool(),
+            new nInt(),
+            new nFlt(),
+            new nStr(),
+            new nChar(),
+            new nBool(),
         };
 
-        wbool checkEvalType(const node& eval) {
+        nbool checkEvalType(const node& eval) {
             if(nul(eval)) return false;
             for(str e : primitives)
                 if(eval.isSub(*e))
@@ -38,8 +38,8 @@ namespace namu {
         return lhsEval.reduce(rhsEval);
     }
 
-    WRD_VERIFY({
-        WRD_DI("verify: FAOExpr: lhs & rhs should bind something.");
+    NAMU_VERIFY({
+        NAMU_DI("verify: FAOExpr: lhs & rhs should bind something.");
 
         const node& lhs = it.getLeft();
         const node& rhs = it.getRight();

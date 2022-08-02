@@ -5,14 +5,14 @@
 
 namespace namu {
 
-    WRD_DEF_ME(expr)
+    NAMU_DEF_ME(expr)
 
     nbicontainer& me::subs() {
         static nmap inner;
         return inner;
     }
 
-    wbool me::canRun(const ucontainable& args) const { return args.len() == 0; }
+    nbool me::canRun(const ucontainable& args) const { return args.len() == 0; }
     const src& me::getSrc() const { return *_src; }
     const point& me::getPos() const { return _pos; }
 

@@ -3,5 +3,5 @@
 #include "ttypeBase.inl"
 
 namespace namu {
-    WRD_INIT_META(adam)
+    NAMU_INIT_META(adam)
 }

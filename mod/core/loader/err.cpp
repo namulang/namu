@@ -3,10 +3,10 @@
 
 namespace namu {
 
-    WRD_DEF_ME(err)
+    NAMU_DEF_ME(err)
 
     namespace {
-        constexpr wint MAX_BUF = 512;
+        constexpr nint MAX_BUF = 512;
     }
 
     const std::string& err::getErrMsg(errCode code) {
@@ -40,7 +40,7 @@ namespace namu {
     }
 
     std::string me::_format(const std::string& fmt, va_list args) {
-        wchar buf[MAX_BUF] = {0, };
+        nchar buf[MAX_BUF] = {0, };
         vsnprintf(buf, MAX_BUF, fmt.c_str(), args);
 
         return buf;
@@ -74,7 +74,7 @@ namespace namu {
 
 #undef _EXPAND_VA
 
-    me::err(err::type t, wint newCode, ...): super(), fType(t), code((errCode) newCode) {
+    me::err(err::type t, nint newCode, ...): super(), fType(t), code((errCode) newCode) {
         va_list args;
         va_start(args, newCode);
 
@@ -122,9 +122,9 @@ namespace namu {
 
     void srcErr::log() const {
         switch(fType) {
-            case ERR: WRD_E("%d:%d: err(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
-            case WARN: WRD_W(":%d:%d: warn(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
-            case INFO: WRD_I(":%d:%d: info(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
+            case ERR: NAMU_E("%d:%d: err(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
+            case WARN: NAMU_W(":%d:%d: warn(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
+            case INFO: NAMU_I(":%d:%d: info(%d): %s", pos.row, pos.col, code, msg.c_str()); break;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace namu {
         //  it returns its type object.
         //
         //  however, type object is dynamically belongs to this bridge object, when user
-        //  tries to get ttype<T>, it's not derived from wtype so it won't have any 'as()'
+        //  tries to get ttype<T>, it's not derived from ntype so it won't have any 'as()'
         //  func. user can't operate conversion in this way.
         WRD(CLASS(tcppBridge, obj))
         template <typename Ret, typename T1, typename...Args>

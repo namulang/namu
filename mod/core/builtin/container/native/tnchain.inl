@@ -12,7 +12,7 @@ namespace namu {
     ME::tnchain(): _map(new defaultContainer()) {}
 
     TEMPL
-    wbool ME::has(const K& key) const {
+    nbool ME::has(const K& key) const {
         for(tstr<me> e(this); e ;e.bind(e->getNext()))
             if(e->getContainer().has(key))
                 return true;
@@ -20,8 +20,8 @@ namespace namu {
     }
 
     TEMPL
-    wcnt ME::len() const {
-        wcnt len = 0;
+    ncnt ME::len() const {
+        ncnt len = 0;
 
         for(tstr<me> e(this); e ;e.bind(e->getNext()))
             len += e->getContainer().len();
@@ -29,8 +29,8 @@ namespace namu {
     }
 
     TEMPL
-    wcnt ME::chainLen() const {
-        wcnt len = 0;
+    ncnt ME::chainLen() const {
+        ncnt len = 0;
         for(tstr<me> e(this); e ;e.bind(e->getNext()))
             len++;
 
@@ -55,13 +55,13 @@ namespace namu {
     }
 
     TEMPL
-    wbool ME::add(const K& key, const V& new1) {
+    nbool ME::add(const K& key, const V& new1) {
         return getContainer().add(key, new1);
     }
 
     TEMPL
-    wbool ME::del(const K& key) {
-        wbool ret = true;
+    nbool ME::del(const K& key) {
+        nbool ret = true;
         for(tstr<me> e(this); e ;e.bind(e->getNext()))
             if(e->has(key))
                 ret = e->getContainer().del(key) ? ret : false;
@@ -69,7 +69,7 @@ namespace namu {
     }
 
     TEMPL
-    wbool ME::del(const iter& at) {
+    nbool ME::del(const iter& at) {
         const me& owner = at.getContainer().template cast<me>();
 
         for(tstr<me> e(this); e ;e.bind(e->getNext()))
@@ -79,14 +79,14 @@ namespace namu {
     }
 
     TEMPL
-    wbool ME::del(const iter& from, const iter& last) {
+    nbool ME::del(const iter& from, const iter& last) {
         const me* fromChain = &from.getContainer().template cast<me>();
         const me* lastChain = &last.getContainer().template cast<me>();
-        if(nul(lastChain)) return WRD_W("iterator 'end' owned by null chain instance."), false;
+        if(nul(lastChain)) return NAMU_W("iterator 'end' owned by null chain instance."), false;
         const me* endChain = &lastChain->getNext(); // now, endChain can be null but it's okay.
 
         me* e = (me*) fromChain;
-        wbool ret = true;
+        nbool ret = true;
         do {
             super& eArr = e->getContainer();
             iter arrBegin = e == fromChain ? _getMapIterFromChainIter(from) : eArr.begin(),
@@ -108,16 +108,16 @@ namespace namu {
     }
 
     TEMPL
-    wbool ME::link(const ME& new1) {
+    nbool ME::link(const ME& new1) {
         if(nul(new1) || nul(new1.getContainer())) return false;
         if(&new1.getContainer() == &getContainer())
-            return WRD_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), false;
+            return NAMU_W("recursive link detected!! new1(%x) is chain(%x)'s container.", &new1, &getContainer()), false;
 
         return _next.bind(new1);
     }
 
     TEMPL
-    wbool ME::unlink() {
+    nbool ME::unlink() {
         _next.rel();
         return true;
     }

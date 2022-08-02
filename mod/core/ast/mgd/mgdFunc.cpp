@@ -10,7 +10,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(mgdFunc)
+    NAMU_DEF_ME(mgdFunc)
 
     me::mgdFunc(const params& ps, const node& retType):
             super(), _params(ps), _retType(retType), _blk(new blockExpr()) {}
@@ -29,12 +29,12 @@ namespace namu {
 
     str me::run(const ucontainable& args) {
         str ret;
-        if(nul(args)) return WRD_E("args == null"), ret;
+        if(nul(args)) return NAMU_E("args == null"), ret;
 
         // s is from heap space. but freed by _outFrame() of this class.
         scope& s = *_evalArgs(args);
         baseObj& meObj = frame::getObj();
-        if(nul(meObj)) return WRD_E("meObj == null"), ret;
+        if(nul(meObj)) return NAMU_E("meObj == null"), ret;
 
         frameInteract f1(meObj); {
             frameInteract f2(*this, s); {
@@ -48,7 +48,7 @@ namespace namu {
     scope* me::_evalArgs(const ucontainable& args) {
         const params& ps = getParams();
         if(args.len() != ps.len())
-            return WRD_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()), nullptr;
+            return NAMU_E("length of args(%d) and typs(%d) doesn't match.", args.len(), ps.len()), nullptr;
 
         scope* ret = new scope();
         int n = 0;
@@ -65,18 +65,18 @@ namespace namu {
     void me::_inFrame(const bicontainable& args) {
         frame& fr = thread::get()._getNowFrame();
         if(nul(fr)) {
-            WRD_E("fr == null");
+            NAMU_E("fr == null");
             return;
         }
 
-        WRD_DI("%s._onInFrame()", getType().getName().c_str());
+        NAMU_DI("%s._onInFrame()", getType().getName().c_str());
         fr.pushLocal(subs());
         fr.setFunc(*this);
         fr.pushLocal((nbicontainer&) args); // including 'me'
     }
 
     void me::_outFrame() {
-        WRD_DI("%s._onOutFrame()", getType().getName().c_str());
+        NAMU_DI("%s._onOutFrame()", getType().getName().c_str());
 
         frame& fr = thread::get()._getNowFrame();
         // TODO: is it safe to delete below lines?
@@ -87,8 +87,8 @@ namespace namu {
 
 
 
-    WRD_VERIFY({
-        WRD_DI("verify: retType exists and stmts exist one at least");
+    NAMU_VERIFY({
+        NAMU_DI("verify: retType exists and stmts exist one at least");
 
         const node& retType = it.getRet();
         if(nul(retType)) return _srcErr(errCode::NO_RET_TYPE);
@@ -109,8 +109,8 @@ namespace namu {
 
     // TODO: verify arguments
 
-    WRD_VERIFY(mgdFunc, subNodes, {
-        WRD_DI("verify: mgdFunc: %s iterateBlock[%d]", it.getType().getName().c_str(), it._blk->subs().len());
+    NAMU_VERIFY(mgdFunc, subNodes, {
+        NAMU_DI("verify: mgdFunc: %s iterateBlock[%d]", it.getType().getName().c_str(), it._blk->subs().len());
         scope* s = new scope();
         _prepareArgsAlongParam(it.getParams(), *s);
 

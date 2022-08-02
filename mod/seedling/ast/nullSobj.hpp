@@ -4,20 +4,20 @@
 
 namespace namu {
 
-    class _wout nullSobj : public sobj {
-        WRD_DECL_ME(nullSobj, sobj)
-        WRD_INIT_META(nullSobj)
+    class _nout nullSobj : public sobj {
+        NAMU_DECL_ME(nullSobj, sobj)
+        NAMU_INIT_META(nullSobj)
 
     public:
         nullSobj();
 
     public:
         const std::string& asStr() const override;
-        wchar asChar() const override;
-        wint asInt() const override;
-        wbool asBool() const override;
+        nchar asChar() const override;
+        nint asInt() const override;
+        nbool asBool() const override;
         const type& getType() const override;
-        wbool isExist() const override;
+        nbool isExist() const override;
 
     public:
         static me& get();

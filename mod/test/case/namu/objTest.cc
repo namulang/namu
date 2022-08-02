@@ -36,7 +36,7 @@ namespace {
 }
 
 TEST_F(objTest, testMakeOriginObj) {
-    const wchar* o2Name = "o2";
+    const nchar* o2Name = "o2";
     originObj o1, o2(*new scopes());
     ASSERT_NE(o1.getId(), o2.getId());
     ASSERT_FALSE(nul(o1.subs()));
@@ -59,7 +59,7 @@ TEST_F(objTest, testMakeOriginObj) {
 }
 
 TEST_F(objTest, testCloneOriginObj) {
-    const wchar* o2Name = "wow";
+    const nchar* o2Name = "wow";
     originObj o1, o2(*new scopes());
     scopes* newSubs = new scopes();
     originObj o3(*newSubs);
@@ -81,8 +81,8 @@ TEST_F(objTest, testCloneOriginObj) {
 }
 
 TEST_F(objTest, cloneByRunFunc) {
-    wInt a(5);
-    wInt& a1 = *a.clone();
+    nInt a(5);
+    nInt& a1 = *a.clone();
     ASSERT_NE(&a, &a1);
     ASSERT_EQ(a.cast<int>(), a1.cast<int>());
 }
@@ -91,7 +91,7 @@ TEST_F(objTest, addElementIntoOwns) {
     obj my;
     ASSERT_EQ(my.subs().len(), 0);
 
-    my.subs().add("banana", new wInt(1));
+    my.subs().add("banana", new nInt(1));
     ASSERT_EQ(my.getShares().len(), 0);
     ASSERT_EQ(my.getOwns().len(), 1);
     ASSERT_EQ(my.getOwns()["banana"].cast<int>(), 1);

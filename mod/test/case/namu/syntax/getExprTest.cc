@@ -42,9 +42,9 @@ TEST_F(getExprTest, getSymbolOnPackScope2) {
     ASSERT_EQ(shares.len(), 2);
     node& age = getSubPack().sub("age");
     ASSERT_FALSE(nul(age));
-    wInt& cast = age.cast<wInt>();
+    nInt& cast = age.cast<nInt>();
     ASSERT_FALSE(nul(cast));
-    ASSERT_EQ(cast.get(), 0); // default value of wInt
+    ASSERT_EQ(cast.get(), 0); // default value of nInt
 }
 
 TEST_F(getExprTest, getSymbolOnPackScope3) {
@@ -59,9 +59,9 @@ TEST_F(getExprTest, getSymbolOnPackScope3) {
     ASSERT_EQ(shares.len(), 2);
     node& age = getSubPack().sub("age");
     ASSERT_FALSE(nul(age));
-    wStr& cast = age.cast<wStr>();
+    nStr& cast = age.cast<nStr>();
     ASSERT_FALSE(nul(cast));
-    ASSERT_EQ(cast.get(), ""); // default value of wStr
+    ASSERT_EQ(cast.get(), ""); // default value of nStr
 }
 
 TEST_F(getExprTest, getInvalidVariableNegative) {
@@ -105,12 +105,12 @@ public:
         return super::run(args);
     }
 
-    wbool executed;
+    nbool executed;
 };
 
 TEST_F(getExprTest, getExprSkipEvalToPrimitiveObj) {
     myObj obj1;
-    obj1.subs().add("age", new wInt(22));
+    obj1.subs().add("age", new nInt(22));
 
     ASSERT_FALSE(obj1.executed);
     getExpr exp(obj1, "age");
@@ -128,21 +128,21 @@ public:
         return super::run(args);
     }
 
-    wbool executed;
+    nbool executed;
 };
 
 TEST_F(getExprTest, getExprEvalToExpr) {
     myObj obj1;
-    obj1.subs().add("age", new wInt(22));
+    obj1.subs().add("age", new nInt(22));
     myObj obj2;
     obj2.subs().add("obj1", obj1);
     myGetExpr exp(obj2, "obj1");
     getExpr exp2(exp, "age"); // == obj2.obj1.age
 
     ASSERT_FALSE(exp.executed);
-    tstr<wInt> ret = exp2.run();
+    tstr<nInt> ret = exp2.run();
     ASSERT_TRUE(ret);
     ASSERT_EQ(ret->get(), 22);
     ASSERT_TRUE(exp.executed);
-    ASSERT_EQ(exp2.getEval().getType(), ttype<wInt>());
+    ASSERT_EQ(exp2.getEval().getType(), ttype<nInt>());
 }

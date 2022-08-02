@@ -3,7 +3,7 @@
 
 namespace namu {
 
-    WRD_DEF_ME(packLoading)
+    NAMU_DEF_ME(packLoading)
 
     void me::addPath(const std::string& filePath) {
         _paths.push_back(filePath);
